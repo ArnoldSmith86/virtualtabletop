@@ -218,7 +218,12 @@
         "func": "SHUFFLE",
         "holder": "${PROPERTY parent}"
       }
-    ]
+    ],
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "temples": {
     "type": "deck",
@@ -285,7 +290,12 @@
           ]
         }
       ]
-    }
+    },
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "1wuxB": {
     "id": "1wuxB",
@@ -311,12 +321,17 @@
         "func": "SHUFFLE",
         "holder": "${PROPERTY parent}"
       }
-    ]
+    ],
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "setup": {
     "type": "button",
     "id": "setup",
-    "z": 79362,
+    "z": 79363,
     "clickRoutine": [
       {
         "note": "Get player count",
@@ -691,18 +706,8 @@
             "count": 1
           },
           {
-            "func": "MOVE",
-            "from": "blank_oracle_holder",
-            "to": "oracle_holder",
-            "count": 23
-          },
-          {
-            "func": "SHUFFLE",
-            "holder": "oracle_holder"
-          },
-          {
             "func": "SELECT",
-            "property": "temple_holder",
+            "property": "oracle_holder",
             "value": true
           },
           {
@@ -711,18 +716,25 @@
             "aggregation": "array",
             "variable": "holders"
           },
+          "var holders = shuffle ${holders}",
           {
-            "func": "MOVE",
-            "from": "oracle_holder",
-            "to": "${holders}"
+            "func": "FOREACH",
+            "range": [
+              0,
+              8,
+              1
+            ],
+            "loopRoutine": [
+              {
+                "func": "MOVE",
+                "from": "oracle_holder",
+                "to": "${holders.$value}",
+                "count": 1
+              }
+            ]
           },
           {
-            "func": "RECALL",
-            "holder": "blank_oracle_holder",
-            "owned": false
-          },
-          {
-            "note": "Removes 2 temples if less than 4 people are playing",
+            "note": "Removes 2 oracles if less than 4 people are playing",
             "func": "IF",
             "operand1": "${player_count}",
             "relation": "<",
@@ -732,13 +744,13 @@
                 "func": "SELECT",
                 "property": "2p3p_remove",
                 "value": true,
-                "collection": "temples_to_remove"
+                "collection": "oracles_to_remove"
               },
               {
                 "func": "SET",
-                "collection": "temples_to_remove",
+                "collection": "oracles_to_remove",
                 "property": "parent",
-                "value": "oracleholder"
+                "value": "oracle_holder"
               }
             ]
           },
@@ -908,159 +920,143 @@
         "border": "2px solid black"
       }
     },
-    "x": 10,
+    "x": 12,
     "borderRadius": 10,
     "width": 70,
-    "height": 70
+    "height": 70,
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "vigj": {
     "deck": "temples",
     "type": "card",
     "cardType": "temple",
     "id": "vigj",
-    "z": 27076,
+    "z": 27641,
     "2p3p_remove": true,
     "rotation": 330,
-    "parent": "xz09"
+    "parent": "rot5",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "hrka": {
     "deck": "temples",
     "type": "card",
     "cardType": "temple",
     "id": "hrka",
-    "z": 27068,
+    "z": 27638,
     "rotation": 330,
-    "parent": "xz09"
+    "parent": "rot5",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "x3i8": {
     "deck": "temples",
     "type": "card",
     "cardType": "temple",
     "id": "x3i8",
-    "z": 27070,
+    "z": 27643,
     "rotation": 330,
-    "parent": "xz09"
+    "parent": "rot5",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "bep8": {
     "deck": "temples",
     "type": "card",
     "cardType": "temple",
     "id": "bep8",
-    "z": 27071,
+    "z": 27637,
     "2p3p_remove": true,
-    "parent": "xz09",
-    "rotation": 330
+    "parent": "rot5",
+    "rotation": 330,
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "z16s": {
     "deck": "temples",
     "type": "card",
     "cardType": "temple",
     "id": "z16s",
-    "z": 27075,
+    "z": 27642,
     "rotation": 330,
-    "parent": "xz09"
+    "parent": "rot5",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "hsii": {
     "deck": "temples",
     "type": "card",
     "cardType": "temple",
     "id": "hsii",
-    "z": 27072,
+    "z": 27645,
     "rotation": 330,
-    "parent": "xz09"
+    "parent": "rot5",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "4yta": {
     "deck": "temples",
     "type": "card",
     "cardType": "temple",
     "id": "4yta",
-    "z": 27074,
+    "z": 27639,
     "rotation": 330,
-    "parent": "xz09"
+    "parent": "rot5",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "20g5": {
     "deck": "temples",
     "type": "card",
     "cardType": "temple",
     "id": "20g5",
-    "z": 27073,
-    "rotation": 330,
-    "parent": "xz09"
+    "z": 27644,
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b",
+    "parent": "rot5",
+    "rotation": 330
   },
   "xo7j": {
     "deck": "temples",
     "type": "card",
     "cardType": "temple",
     "id": "xo7j",
-    "z": 27069,
+    "z": 27640,
     "rotation": 330,
-    "parent": "xz09"
-  },
-  "52h8B": {
-    "id": "52h8B",
-    "parent": "blank_oracle_holder",
-    "fixedParent": true,
-    "y": 171.36,
-    "width": 111,
-    "height": 40,
-    "type": "button",
-    "text": "Recall & Shuffle",
-    "movableInEdit": false,
-    "clickRoutine": [
-      {
-        "func": "RECALL",
-        "holder": "${PROPERTY parent}"
-      },
-      {
-        "func": "FLIP",
-        "holder": "${PROPERTY parent}",
-        "face": 0
-      },
-      {
-        "func": "SHUFFLE",
-        "holder": "${PROPERTY parent}"
-      }
-    ]
-  },
-  "blank temple deck": {
-    "type": "deck",
-    "id": "blank temple deck",
-    "parent": "blank_oracle_holder",
-    "x": 4,
-    "y": 4,
-    "z": 12,
-    "cardTypes": {
-      "blank": {
-        "image": ""
-      }
-    },
-    "faceTemplates": [
-      {
-        "border": false,
-        "radius": false,
-        "objects": [
-          {
-            "type": "image",
-            "x": 0,
-            "y": 0,
-            "width": 69,
-            "height": 69,
-            "color": "transparent",
-            "dynamicProperties": {
-              "value": "image"
-            }
-          }
-        ]
-      }
-    ]
-  },
-  "blank temple original": {
-    "type": "card",
-    "id": "blank temple original",
-    "deck": "blank temple deck",
-    "cardType": "blank",
-    "z": 28912,
-    "parent": "3hiu"
+    "parent": "rot5",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "a0p0": {
     "type": "label",
@@ -1079,9 +1075,12 @@
         "text-shadow": "-1px -1px 0 ${PROPERTY contrast_color}, 1px -1px 0 ${PROPERTY contrast_color}, -1px 1px 0 ${PROPERTY contrast_color}, 1px 1px 0 ${PROPERTY contrast_color}, 0 1px 5px ${PROPERTY contrast_color}"
       }
     },
-    "background_color_solid": "black",
-    "contrast_color": "white",
-    "y": 1
+    "background_color_solid": "#ffeb3b",
+    "contrast_color": "#000000",
+    "y": 1,
+    "color": "#ffeb3b",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48"
   },
   "a0p1": {
     "type": "label",
@@ -1100,9 +1099,12 @@
         "text-shadow": "-1px -1px 0 ${PROPERTY contrast_color}, 1px -1px 0 ${PROPERTY contrast_color}, -1px 1px 0 ${PROPERTY contrast_color}, 1px 1px 0 ${PROPERTY contrast_color}, 0 1px 5px ${PROPERTY contrast_color}"
       }
     },
-    "background_color_solid": "black",
-    "contrast_color": "white",
-    "y": 1
+    "background_color_solid": "#ffeb3b",
+    "contrast_color": "#000000",
+    "y": 1,
+    "color": "#ffeb3b",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48"
   },
   "2wuxB": {
     "id": "2wuxB",
@@ -1128,7 +1130,12 @@
         "func": "SHUFFLE",
         "holder": "${PROPERTY parent}"
       }
-    ]
+    ],
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "3wuxB": {
     "id": "3wuxB",
@@ -1154,7 +1161,12 @@
         "func": "SHUFFLE",
         "holder": "${PROPERTY parent}"
       }
-    ]
+    ],
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "4wuxB": {
     "id": "4wuxB",
@@ -1180,7 +1192,12 @@
         "func": "SHUFFLE",
         "holder": "${PROPERTY parent}"
       }
-    ]
+    ],
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "5wuxB": {
     "id": "5wuxB",
@@ -1206,14 +1223,19 @@
         "func": "SHUFFLE",
         "holder": "${PROPERTY parent}"
       }
-    ]
+    ],
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "j880": {
     "deck": "1_cards_deck",
     "type": "card",
     "cardType": "mo20",
     "id": "j880",
-    "z": 28964,
+    "z": 31399,
     "turn1_color": "transparent",
     "turn2_color": "transparent",
     "turn3_color": "transparent",
@@ -1226,14 +1248,19 @@
     "turn2_selected": "transparent",
     "turn3_selected": "transparent",
     "turn4_selected": "transparent",
-    "parent": "vheo"
+    "parent": "m7hp",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "nqsj": {
     "deck": "1_cards_deck",
     "type": "card",
     "cardType": "v8qu",
     "id": "nqsj",
-    "z": 28962,
+    "z": 31398,
     "onPileCreation": {},
     "turn1_color": "transparent",
     "turn2_color": "transparent",
@@ -1247,34 +1274,19 @@
     "turn2_selected": "transparent",
     "turn3_selected": "transparent",
     "turn4_selected": "transparent",
-    "parent": "vheo"
+    "parent": "m7hp",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "9wnw": {
     "deck": "1_cards_deck",
     "type": "card",
     "cardType": "678m",
     "id": "9wnw",
-    "z": 28963,
-    "turn1_color": "transparent",
-    "turn2_color": "transparent",
-    "turn3_color": "transparent",
-    "turn4_color": "transparent",
-    "turn1_contrast_color": "transparent",
-    "turn2_contrast_color": "transparent",
-    "turn3_contrast_color": "transparent",
-    "turn4_contrast_color": "transparent",
-    "turn1_selected": "transparent",
-    "turn2_selected": "transparent",
-    "turn3_selected": "transparent",
-    "turn4_selected": "transparent",
-    "parent": "vheo"
-  },
-  "b256": {
-    "deck": "2_cards_deck",
-    "type": "card",
-    "cardType": "3dk1",
-    "id": "b256",
-    "z": 28972,
+    "z": 31397,
     "turn1_color": "transparent",
     "turn2_color": "transparent",
     "turn3_color": "transparent",
@@ -1287,14 +1299,44 @@
     "turn2_selected": "transparent",
     "turn3_selected": "transparent",
     "turn4_selected": "transparent",
-    "parent": "zzd0"
+    "parent": "m7hp",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
+  },
+  "b256": {
+    "deck": "2_cards_deck",
+    "type": "card",
+    "cardType": "3dk1",
+    "id": "b256",
+    "z": 31407,
+    "turn1_color": "transparent",
+    "turn2_color": "transparent",
+    "turn3_color": "transparent",
+    "turn4_color": "transparent",
+    "turn1_contrast_color": "transparent",
+    "turn2_contrast_color": "transparent",
+    "turn3_contrast_color": "transparent",
+    "turn4_contrast_color": "transparent",
+    "turn1_selected": "transparent",
+    "turn2_selected": "transparent",
+    "turn3_selected": "transparent",
+    "turn4_selected": "transparent",
+    "parent": "e764",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "rmie": {
     "deck": "2_cards_deck",
     "type": "card",
     "cardType": "4dw8",
     "id": "rmie",
-    "z": 28971,
+    "z": 31406,
     "turn1_color": "transparent",
     "turn2_color": "transparent",
     "turn3_color": "transparent",
@@ -1307,14 +1349,19 @@
     "turn2_selected": "transparent",
     "turn3_selected": "transparent",
     "turn4_selected": "transparent",
-    "parent": "zzd0"
+    "parent": "e764",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "hkez": {
     "deck": "2_cards_deck",
     "type": "card",
     "cardType": "sh2l",
     "id": "hkez",
-    "z": 28970,
+    "z": 31405,
     "turn1_color": "transparent",
     "turn2_color": "transparent",
     "turn3_color": "transparent",
@@ -1327,14 +1374,19 @@
     "turn2_selected": "transparent",
     "turn3_selected": "transparent",
     "turn4_selected": "transparent",
-    "parent": "zzd0"
+    "parent": "e764",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "egvn": {
     "deck": "3_cards_deck",
     "type": "card",
     "cardType": "kliq",
     "id": "egvn",
-    "z": 28978,
+    "z": 31414,
     "turn1_color": "transparent",
     "turn2_color": "transparent",
     "turn3_color": "transparent",
@@ -1347,14 +1399,19 @@
     "turn2_selected": "transparent",
     "turn3_selected": "transparent",
     "turn4_selected": "transparent",
-    "parent": "e1t8"
+    "parent": "an9i",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "xmrg": {
     "deck": "3_cards_deck",
     "type": "card",
     "cardType": "0646",
     "id": "xmrg",
-    "z": 28980,
+    "z": 31413,
     "turn1_color": "transparent",
     "turn2_color": "transparent",
     "turn3_color": "transparent",
@@ -1367,14 +1424,19 @@
     "turn2_selected": "transparent",
     "turn3_selected": "transparent",
     "turn4_selected": "transparent",
-    "parent": "e1t8"
+    "parent": "an9i",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "lu10": {
     "deck": "3_cards_deck",
     "type": "card",
     "cardType": "4ftb",
     "id": "lu10",
-    "z": 28979,
+    "z": 31415,
     "turn1_color": "transparent",
     "turn2_color": "transparent",
     "turn3_color": "transparent",
@@ -1387,14 +1449,19 @@
     "turn2_selected": "transparent",
     "turn3_selected": "transparent",
     "turn4_selected": "transparent",
-    "parent": "e1t8"
+    "parent": "an9i",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "1vdk": {
     "deck": "4_cards_deck",
     "type": "card",
     "cardType": "ptah",
     "id": "1vdk",
-    "z": 28987,
+    "z": 31421,
     "turn1_color": "transparent",
     "turn2_color": "transparent",
     "turn3_color": "transparent",
@@ -1407,14 +1474,19 @@
     "turn2_selected": "transparent",
     "turn3_selected": "transparent",
     "turn4_selected": "transparent",
-    "parent": "ga0b"
+    "parent": "pd1s",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "0map": {
     "deck": "4_cards_deck",
     "type": "card",
     "cardType": "ti61",
     "id": "0map",
-    "z": 28988,
+    "z": 31423,
     "turn1_color": "transparent",
     "turn2_color": "transparent",
     "turn3_color": "transparent",
@@ -1427,14 +1499,19 @@
     "turn2_selected": "transparent",
     "turn3_selected": "transparent",
     "turn4_selected": "transparent",
-    "parent": "ga0b"
+    "parent": "pd1s",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "nvz2": {
     "deck": "4_cards_deck",
     "type": "card",
     "cardType": "4io3",
     "id": "nvz2",
-    "z": 28986,
+    "z": 31422,
     "turn1_color": "transparent",
     "turn2_color": "transparent",
     "turn3_color": "transparent",
@@ -1447,14 +1524,19 @@
     "turn2_selected": "transparent",
     "turn3_selected": "transparent",
     "turn4_selected": "transparent",
-    "parent": "ga0b"
+    "parent": "pd1s",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "2s7y": {
     "deck": "1_markets_deck",
     "type": "card",
     "cardType": "market",
     "id": "2s7y",
-    "z": 88875,
+    "z": 474,
     "parent": "a6e6",
     "color": "#b4b4b4",
     "contrast_color": "#000000",
@@ -1468,7 +1550,7 @@
     "type": "card",
     "cardType": "market",
     "id": "u92u",
-    "z": 88876,
+    "z": 475,
     "parent": "a6e6",
     "color": "#b4b4b4",
     "contrast_color": "#000000",
@@ -1482,7 +1564,7 @@
     "type": "card",
     "cardType": "market",
     "id": "dr2j",
-    "z": 88877,
+    "z": 476,
     "parent": "a6e6",
     "color": "#b4b4b4",
     "contrast_color": "#000000",
@@ -1496,7 +1578,7 @@
     "type": "card",
     "cardType": "market",
     "id": "inhm",
-    "z": 88878,
+    "z": 477,
     "parent": "a6e6",
     "color": "#b4b4b4",
     "contrast_color": "#000000",
@@ -1510,7 +1592,7 @@
     "type": "card",
     "cardType": "market",
     "id": "jfm4",
-    "z": 88879,
+    "z": 478,
     "parent": "a6e6",
     "color": "#b4b4b4",
     "contrast_color": "#000000",
@@ -1524,7 +1606,7 @@
     "type": "card",
     "cardType": "market",
     "id": "8n5n",
-    "z": 88880,
+    "z": 479,
     "parent": "a6e6",
     "color": "#b4b4b4",
     "contrast_color": "#000000",
@@ -1538,7 +1620,7 @@
     "type": "card",
     "cardType": "market",
     "id": "0r7r",
-    "z": 88881,
+    "z": 480,
     "parent": "a6e6",
     "color": "#b4b4b4",
     "contrast_color": "#000000",
@@ -1552,7 +1634,7 @@
     "type": "card",
     "cardType": "market",
     "id": "s0zn",
-    "z": 88882,
+    "z": 481,
     "parent": "a6e6",
     "color": "#b4b4b4",
     "contrast_color": "#000000",
@@ -1566,7 +1648,7 @@
     "type": "card",
     "cardType": "market",
     "id": "qdai",
-    "z": 88883,
+    "z": 482,
     "parent": "a6e6",
     "color": "#b4b4b4",
     "contrast_color": "#000000",
@@ -1580,7 +1662,7 @@
     "type": "card",
     "cardType": "market",
     "id": "qvbn",
-    "z": 88884,
+    "z": 483,
     "parent": "a6e6",
     "color": "#b4b4b4",
     "contrast_color": "#000000",
@@ -1594,7 +1676,7 @@
     "type": "card",
     "cardType": "market",
     "id": "79y5",
-    "z": 88885,
+    "z": 484,
     "color": "#b4b4b4",
     "contrast_color": "#000000",
     "background_color_transparent": "#b4b4b4",
@@ -1608,7 +1690,7 @@
     "type": "card",
     "cardType": "market",
     "id": "z1jb",
-    "z": 88886,
+    "z": 485,
     "color": "#b4b4b4",
     "contrast_color": "#000000",
     "background_color_transparent": "#b4b4b4",
@@ -1622,7 +1704,7 @@
     "type": "card",
     "cardType": "market",
     "id": "efat",
-    "z": 88887,
+    "z": 486,
     "color": "#b4b4b4",
     "contrast_color": "#000000",
     "background_color_transparent": "#b4b4b4",
@@ -1636,7 +1718,7 @@
     "type": "card",
     "cardType": "market",
     "id": "6x4o",
-    "z": 88888,
+    "z": 487,
     "color": "#b4b4b4",
     "contrast_color": "#000000",
     "background_color_transparent": "#b4b4b4",
@@ -1650,7 +1732,7 @@
     "type": "card",
     "cardType": "market",
     "id": "ge96",
-    "z": 88889,
+    "z": 488,
     "color": "#b4b4b4",
     "contrast_color": "#000000",
     "background_color_transparent": "#b4b4b4",
@@ -1664,7 +1746,7 @@
     "type": "card",
     "cardType": "market",
     "id": "70zh",
-    "z": 88890,
+    "z": 489,
     "color": "#b4b4b4",
     "contrast_color": "#000000",
     "background_color_transparent": "#b4b4b4",
@@ -1678,7 +1760,7 @@
     "type": "card",
     "cardType": "market",
     "id": "qdfz",
-    "z": 88891,
+    "z": 490,
     "color": "#b4b4b4",
     "contrast_color": "#000000",
     "background_color_transparent": "#b4b4b4",
@@ -1692,7 +1774,7 @@
     "type": "card",
     "cardType": "market",
     "id": "lyna",
-    "z": 88892,
+    "z": 491,
     "color": "#b4b4b4",
     "contrast_color": "#000000",
     "background_color_transparent": "#b4b4b4",
@@ -1706,7 +1788,7 @@
     "type": "card",
     "cardType": "market",
     "id": "dqow",
-    "z": 88893,
+    "z": 492,
     "color": "#b4b4b4",
     "contrast_color": "#000000",
     "background_color_transparent": "#b4b4b4",
@@ -1785,7 +1867,12 @@
         "border": "2px solid black"
       }
     },
-    "borderRadius": 10
+    "borderRadius": 10,
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "minus town1": {
     "type": "button",
@@ -1858,7 +1945,12 @@
         "border": "2px solid black"
       }
     },
-    "borderRadius": 10
+    "borderRadius": 10,
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "qxdp": {
     "image": "/assets/-1642913739_1264",
@@ -1870,7 +1962,12 @@
     "height": 40,
     "movable": false,
     "parent": "click_market_holder",
-    "fixedParent": true
+    "fixedParent": true,
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "qxdp1": {
     "image": "/assets/909132033_1360",
@@ -1882,7 +1979,12 @@
     "height": 40,
     "movable": false,
     "parent": "click_market_holder",
-    "fixedParent": true
+    "fixedParent": true,
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "qxdp2": {
     "image": "/assets/-1615009455_1072",
@@ -1894,7 +1996,12 @@
     "height": 40,
     "movable": false,
     "parent": "click_market_holder",
-    "fixedParent": true
+    "fixedParent": true,
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "cax1": {
     "type": "basic",
@@ -1915,11 +2022,14 @@
     "parent": "click_market_holder",
     "fixedParent": true,
     "width": 70,
-    "background_color_solid": "black",
-    "contrast_color": "white",
+    "background_color_solid": "#ffeb3b",
+    "contrast_color": "#000000",
     "height": 20,
     "x": 90,
-    "movable": false
+    "movable": false,
+    "color": "#ffeb3b",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48"
   },
   "cax2": {
     "type": "basic",
@@ -1941,10 +2051,13 @@
     "parent": "click_market_holder",
     "fixedParent": true,
     "width": 70,
-    "background_color_solid": "black",
-    "contrast_color": "white",
+    "background_color_solid": "#ffeb3b",
+    "contrast_color": "#000000",
     "height": 20,
-    "movable": false
+    "movable": false,
+    "color": "#ffeb3b",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48"
   },
   "cax3": {
     "type": "basic",
@@ -1966,10 +2079,13 @@
     "fixedParent": true,
     "width": 70,
     "height": 20,
-    "background_color_solid": "black",
-    "contrast_color": "white",
+    "background_color_solid": "#ffeb3b",
+    "contrast_color": "#000000",
     "x": 2,
-    "movable": false
+    "movable": false,
+    "color": "#ffeb3b",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48"
   },
   "b80l": {
     "type": "basic",
@@ -1987,14 +2103,17 @@
     "width": 300,
     "z": 85851,
     "id": "b80l",
-    "contrast_color": "white",
-    "background_color_solid": "black",
+    "contrast_color": "#000000",
+    "background_color_solid": "#ffeb3b",
     "height": 25,
     "parent": "click_market_holder",
     "fixedParent": true,
     "x": -23,
     "y": 3,
-    "movable": false
+    "movable": false,
+    "color": "#ffeb3b",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48"
   },
   "qxdp3": {
     "image": "/assets/1645587872_5182",
@@ -2013,183 +2132,12 @@
       }
     ],
     "parent": "rotate_holder",
-    "fixedParent": true
-  },
-  "lore": {
-    "deck": "blank temple deck",
-    "type": "card",
-    "cardType": "blank",
-    "id": "lore",
-    "z": 28914,
-    "parent": "3hiu"
-  },
-  "q4pt": {
-    "deck": "blank temple deck",
-    "type": "card",
-    "cardType": "blank",
-    "id": "q4pt",
-    "z": 28916,
-    "parent": "3hiu"
-  },
-  "uyfg": {
-    "deck": "blank temple deck",
-    "type": "card",
-    "cardType": "blank",
-    "id": "uyfg",
-    "z": 28918,
-    "parent": "3hiu"
-  },
-  "0ax6": {
-    "deck": "blank temple deck",
-    "type": "card",
-    "cardType": "blank",
-    "id": "0ax6",
-    "z": 28920,
-    "parent": "3hiu"
-  },
-  "cnyy": {
-    "deck": "blank temple deck",
-    "type": "card",
-    "cardType": "blank",
-    "id": "cnyy",
-    "z": 28922,
-    "parent": "3hiu"
-  },
-  "q6q5": {
-    "deck": "blank temple deck",
-    "type": "card",
-    "cardType": "blank",
-    "id": "q6q5",
-    "z": 28924,
-    "parent": "3hiu"
-  },
-  "ohzr": {
-    "deck": "blank temple deck",
-    "type": "card",
-    "cardType": "blank",
-    "id": "ohzr",
-    "z": 28926,
-    "parent": "3hiu"
-  },
-  "eh9x": {
-    "deck": "blank temple deck",
-    "type": "card",
-    "cardType": "blank",
-    "id": "eh9x",
-    "z": 28928,
-    "parent": "3hiu"
-  },
-  "zcs7": {
-    "deck": "blank temple deck",
-    "type": "card",
-    "cardType": "blank",
-    "id": "zcs7",
-    "z": 28930,
-    "parent": "3hiu"
-  },
-  "89bj": {
-    "deck": "blank temple deck",
-    "type": "card",
-    "cardType": "blank",
-    "id": "89bj",
-    "z": 28932,
-    "parent": "3hiu"
-  },
-  "w4uz": {
-    "deck": "blank temple deck",
-    "type": "card",
-    "cardType": "blank",
-    "id": "w4uz",
-    "z": 28934,
-    "parent": "3hiu"
-  },
-  "j7wo": {
-    "deck": "blank temple deck",
-    "type": "card",
-    "cardType": "blank",
-    "id": "j7wo",
-    "z": 28936,
-    "parent": "3hiu"
-  },
-  "pquh": {
-    "deck": "blank temple deck",
-    "type": "card",
-    "cardType": "blank",
-    "id": "pquh",
-    "z": 28938,
-    "parent": "3hiu"
-  },
-  "n3de": {
-    "deck": "blank temple deck",
-    "type": "card",
-    "cardType": "blank",
-    "id": "n3de",
-    "z": 28940,
-    "parent": "3hiu"
-  },
-  "sr7r": {
-    "deck": "blank temple deck",
-    "type": "card",
-    "cardType": "blank",
-    "id": "sr7r",
-    "z": 28942,
-    "parent": "3hiu"
-  },
-  "cbne": {
-    "deck": "blank temple deck",
-    "type": "card",
-    "cardType": "blank",
-    "id": "cbne",
-    "z": 28944,
-    "parent": "3hiu"
-  },
-  "b1p5": {
-    "deck": "blank temple deck",
-    "type": "card",
-    "cardType": "blank",
-    "id": "b1p5",
-    "z": 28946,
-    "parent": "3hiu"
-  },
-  "h8wk": {
-    "deck": "blank temple deck",
-    "type": "card",
-    "cardType": "blank",
-    "id": "h8wk",
-    "z": 28948,
-    "parent": "3hiu"
-  },
-  "fnsg": {
-    "deck": "blank temple deck",
-    "type": "card",
-    "cardType": "blank",
-    "id": "fnsg",
-    "z": 28950,
-    "parent": "3hiu"
-  },
-  "cpcq": {
-    "deck": "blank temple deck",
-    "type": "card",
-    "cardType": "blank",
-    "id": "cpcq",
-    "z": 28952,
-    "parent": "3hiu"
-  },
-  "hd62": {
-    "deck": "blank temple deck",
-    "type": "card",
-    "cardType": "blank",
-    "id": "hd62",
-    "z": 28954,
-    "parent": "3hiu"
-  },
-  "oqve": {
-    "deck": "blank temple deck",
-    "type": "card",
-    "cardType": "blank",
-    "id": "oqve",
-    "z": 28956,
-    "parent": "3hiu"
+    "fixedParent": true,
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "a6e6": {
     "type": "pile",
@@ -2243,7 +2191,12 @@
     "parent": "rotate_holder",
     "fixedParent": true,
     "rotation": 330,
-    "movable": false
+    "movable": false,
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "city value holder": {
     "type": "holder",
@@ -2263,7 +2216,7 @@
     "preventPiles": true,
     "active": true,
     "activeFace": 0,
-    "color": "#999999",
+    "color": "#ffeb3b",
     "enterRoutine": [
       {
         "func": "GET",
@@ -2339,7 +2292,11 @@
     "dropOffsetY": 7,
     "dropOffsetX": 2,
     "parent": "counters_holder",
-    "fixedParent": true
+    "fixedParent": true,
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "1_seat": {
     "type": "seat",
@@ -2397,7 +2354,7 @@
     "layer": 2,
     "movableInEdit": false,
     "audio_enabled": true,
-    "background_color_solid": "#f06292",
+    "background_color_solid": "#ff9800",
     "background_color_transparent": "white",
     "color_options": [
       "#000000",
@@ -2890,6 +2847,8 @@
         ]
       }
     ],
+    "contrast_color_opposite": "#FFFFFF",
+    "turn": true,
     "hideWhenUnused": true
   },
   "1_money_edit": {
@@ -3055,7 +3014,12 @@
     ],
     "leaveRoutine": [],
     "linkedToSeat": "1_seat",
-    "y": -73
+    "y": -73,
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "1_player_money": {
     "type": "basic",
@@ -3078,8 +3042,8 @@
         "text-shadow": "-1px -1px 0 ${PROPERTY contrast_color}, 1px -1px 0 ${PROPERTY contrast_color}, -1px 1px 0 ${PROPERTY contrast_color}, 1px 1px 0 ${PROPERTY contrast_color}, 0 1px 5px ${PROPERTY contrast_color}"
       }
     },
-    "text": 15,
-    "money": 15,
+    "text": 12,
+    "money": 12,
     "player_money": true,
     "changeRoutine": [
       {
@@ -3319,7 +3283,12 @@
     ],
     "parent": "1_board_anchor",
     "fixedParent": true,
-    "y": 11
+    "y": 11,
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "1_road_straight_holder": {
     "type": "holder",
@@ -3376,7 +3345,7 @@
     },
     "preventPiles": true,
     "active": true,
-    "color": "white",
+    "color": "#ffeb3b",
     "doubleLeaveRoutineCompensation": true,
     "supply_total": 80,
     "UpdateCountRoutine": [
@@ -3525,7 +3494,11 @@
       }
     ],
     "y": -55,
-    "clear_hovers": true
+    "clear_hovers": true,
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "1_road_gentle_holder": {
     "type": "holder",
@@ -3717,7 +3690,7 @@
     },
     "preventPiles": true,
     "active": true,
-    "color": "white",
+    "color": "#ffeb3b",
     "doubleLeaveRoutineCompensation": true,
     "supply_total": 80,
     "UpdateCountRoutine": [
@@ -3865,7 +3838,11 @@
         ]
       }
     ],
-    "clear_hovers": true
+    "clear_hovers": true,
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "1_city_supply_count": {
     "type": "basic",
@@ -4046,7 +4023,12 @@
       }
     ],
     "parent": "1_board_anchor",
-    "fixedParent": true
+    "fixedParent": true,
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "1_city_BLOCKER": {
     "type": "holder",
@@ -4076,7 +4058,12 @@
     "defaultX": 0,
     "x": 0,
     "defaultParent": "1_board_anchor",
-    "parent": "1_board_anchor"
+    "parent": "1_board_anchor",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "1_city_holder": {
     "type": "holder",
@@ -4104,7 +4091,7 @@
     "type": "card",
     "cardType": "market",
     "id": "rfdh",
-    "z": 88894,
+    "z": 493,
     "color": "#b4b4b4",
     "contrast_color": "#000000",
     "contrast_color_opposite": "#FFFFFF",
@@ -4184,7 +4171,12 @@
         "border": "2px solid black"
       }
     },
-    "borderRadius": 10
+    "borderRadius": 10,
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "minus town2": {
     "type": "button",
@@ -4257,7 +4249,12 @@
         "border": "2px solid black"
       }
     },
-    "borderRadius": 10
+    "borderRadius": 10,
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "1_cards_deck": {
     "type": "deck",
@@ -4415,7 +4412,12 @@
       }
     ],
     "hoverParent": "1_cards_holder",
-    "parent": "1_cards_holder"
+    "parent": "1_cards_holder",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "2_cards_deck": {
     "type": "deck",
@@ -4572,7 +4574,12 @@
       }
     ],
     "hoverParent": "2_cards_holder",
-    "parent": "2_cards_holder"
+    "parent": "2_cards_holder",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "3_cards_deck": {
     "type": "deck",
@@ -4729,7 +4736,12 @@
         ]
       }
     ],
-    "hoverParent": "1_cards_holder"
+    "hoverParent": "1_cards_holder",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "4_cards_deck": {
     "type": "deck",
@@ -4886,7 +4898,12 @@
         ]
       }
     ],
-    "hoverParent": "1_cards_holder"
+    "hoverParent": "1_cards_holder",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "1_cards_holder": {
     "type": "holder",
@@ -4898,7 +4915,12 @@
       "type": "card"
     },
     "activeFace": 0,
-    "recall_with_setup": true
+    "recall_with_setup": true,
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "2_cards_holder": {
     "type": "holder",
@@ -4910,7 +4932,12 @@
       "type": "card"
     },
     "activeFace": 0,
-    "recall_with_setup": true
+    "recall_with_setup": true,
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "3_cards_holder": {
     "type": "holder",
@@ -4922,7 +4949,12 @@
       "type": "card"
     },
     "activeFace": 0,
-    "recall_with_setup": true
+    "recall_with_setup": true,
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "4_cards_holder": {
     "type": "holder",
@@ -4934,7 +4966,12 @@
       "type": "card"
     },
     "activeFace": 0,
-    "recall_with_setup": true
+    "recall_with_setup": true,
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "1_road_BLOCKER": {
     "type": "holder",
@@ -4965,7 +5002,12 @@
     "blockingX": -571,
     "defaultX": 0,
     "defaultParent": "1_board_anchor",
-    "parent": "1_board_anchor"
+    "parent": "1_board_anchor",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "2_seat": {
     "type": "seat",
@@ -4974,7 +5016,7 @@
     "parent": "2_seat_anchor",
     "fixedParent": true,
     "audio_enabled": true,
-    "background_color_solid": "#9c27b0",
+    "background_color_solid": "#607d8b",
     "background_color_transparent": "white",
     "contrast_color": "#000000",
     "mainColor": "#dddddd",
@@ -4992,7 +5034,8 @@
         "!color"
       ]
     },
-    "turn": true
+    "turn": false,
+    "contrast_color_opposite": "#FFFFFF"
   },
   "2_money_edit": {
     "type": "button",
@@ -5038,7 +5081,12 @@
     "parent": "2_board_anchor",
     "fixedParent": true,
     "linkedToSeat": "2_seat",
-    "inheritFrom": "1_turn_holder"
+    "inheritFrom": "1_turn_holder",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "2_player_money": {
     "type": "basic",
@@ -5050,8 +5098,8 @@
         "!onlyVisibleForSeat"
       ]
     },
-    "money": 15,
-    "text": 15,
+    "money": 12,
+    "text": 12,
     "color": "#b4b4b4",
     "contrast_color": "#000000",
     "contrast_color_opposite": "#000000",
@@ -5171,7 +5219,12 @@
       }
     ],
     "parent": "2_board_anchor",
-    "fixedParent": true
+    "fixedParent": true,
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "2_road_straight_holder": {
     "type": "holder",
@@ -5350,7 +5403,12 @@
       }
     ],
     "parent": "2_board_anchor",
-    "fixedParent": true
+    "fixedParent": true,
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "2_city_BLOCKER": {
     "type": "holder",
@@ -5380,7 +5438,12 @@
     "defaultX": 0,
     "x": 0,
     "defaultParent": "2_board_anchor",
-    "parent": "2_board_anchor"
+    "parent": "2_board_anchor",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "2_city_holder": {
     "type": "holder",
@@ -5437,14 +5500,19 @@
     "blockingX": -571,
     "defaultX": 0,
     "defaultParent": "2_board_anchor",
-    "parent": "2_board_anchor"
+    "parent": "2_board_anchor",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "ahss": {
     "deck": "2_markets_deck",
     "type": "card",
     "cardType": "market",
     "id": "ahss",
-    "z": 88895,
+    "z": 494,
     "parent": "it33",
     "color": "#b4b4b4",
     "contrast_color": "#000000",
@@ -5458,7 +5526,7 @@
     "type": "card",
     "cardType": "market",
     "id": "vgr4",
-    "z": 88896,
+    "z": 495,
     "parent": "it33",
     "color": "#b4b4b4",
     "contrast_color": "#000000",
@@ -5484,7 +5552,7 @@
     "type": "card",
     "cardType": "market",
     "id": "dkcz",
-    "z": 88897,
+    "z": 496,
     "parent": "it33",
     "color": "#b4b4b4",
     "contrast_color": "#000000",
@@ -5498,7 +5566,7 @@
     "type": "card",
     "cardType": "market",
     "id": "tv39",
-    "z": 88898,
+    "z": 497,
     "parent": "it33",
     "color": "#b4b4b4",
     "contrast_color": "#000000",
@@ -5512,7 +5580,7 @@
     "type": "card",
     "cardType": "market",
     "id": "1v3p",
-    "z": 88899,
+    "z": 498,
     "parent": "it33",
     "color": "#b4b4b4",
     "contrast_color": "#000000",
@@ -5526,7 +5594,7 @@
     "type": "card",
     "cardType": "market",
     "id": "ucua",
-    "z": 88900,
+    "z": 499,
     "parent": "it33",
     "color": "#b4b4b4",
     "contrast_color": "#000000",
@@ -5540,7 +5608,7 @@
     "type": "card",
     "cardType": "market",
     "id": "d7ja",
-    "z": 88901,
+    "z": 500,
     "parent": "it33",
     "color": "#b4b4b4",
     "contrast_color": "#000000",
@@ -5554,7 +5622,7 @@
     "type": "card",
     "cardType": "market",
     "id": "3yg2",
-    "z": 88902,
+    "z": 501,
     "parent": "it33",
     "color": "#b4b4b4",
     "contrast_color": "#000000",
@@ -5568,7 +5636,7 @@
     "type": "card",
     "cardType": "market",
     "id": "xj0d",
-    "z": 88903,
+    "z": 502,
     "parent": "it33",
     "color": "#b4b4b4",
     "contrast_color": "#000000",
@@ -5582,7 +5650,7 @@
     "type": "card",
     "cardType": "market",
     "id": "qleb",
-    "z": 88904,
+    "z": 503,
     "color": "#b4b4b4",
     "contrast_color": "#000000",
     "contrast_color_opposite": "#000000",
@@ -5596,7 +5664,7 @@
     "type": "card",
     "cardType": "market",
     "id": "bk3f",
-    "z": 88905,
+    "z": 504,
     "color": "#b4b4b4",
     "contrast_color": "#000000",
     "contrast_color_opposite": "#000000",
@@ -5610,7 +5678,7 @@
     "type": "card",
     "cardType": "market",
     "id": "xrsk",
-    "z": 88906,
+    "z": 505,
     "color": "#b4b4b4",
     "contrast_color": "#000000",
     "contrast_color_opposite": "#000000",
@@ -5624,7 +5692,7 @@
     "type": "card",
     "cardType": "market",
     "id": "nh2o",
-    "z": 88907,
+    "z": 506,
     "color": "#b4b4b4",
     "contrast_color": "#000000",
     "contrast_color_opposite": "#000000",
@@ -5638,7 +5706,7 @@
     "type": "card",
     "cardType": "market",
     "id": "7mhr",
-    "z": 88908,
+    "z": 507,
     "color": "#b4b4b4",
     "contrast_color": "#000000",
     "contrast_color_opposite": "#000000",
@@ -5652,7 +5720,7 @@
     "type": "card",
     "cardType": "market",
     "id": "e1bm",
-    "z": 88909,
+    "z": 508,
     "color": "#b4b4b4",
     "contrast_color": "#000000",
     "contrast_color_opposite": "#000000",
@@ -5666,7 +5734,7 @@
     "type": "card",
     "cardType": "market",
     "id": "sdm4",
-    "z": 88910,
+    "z": 509,
     "color": "#b4b4b4",
     "contrast_color": "#000000",
     "contrast_color_opposite": "#000000",
@@ -5680,7 +5748,7 @@
     "type": "card",
     "cardType": "market",
     "id": "7zzi",
-    "z": 88911,
+    "z": 510,
     "color": "#b4b4b4",
     "contrast_color": "#000000",
     "contrast_color_opposite": "#000000",
@@ -5694,7 +5762,7 @@
     "type": "card",
     "cardType": "market",
     "id": "tif4",
-    "z": 88912,
+    "z": 511,
     "color": "#b4b4b4",
     "contrast_color": "#000000",
     "contrast_color_opposite": "#000000",
@@ -5708,7 +5776,7 @@
     "type": "card",
     "cardType": "market",
     "id": "qhkd",
-    "z": 88913,
+    "z": 512,
     "color": "#b4b4b4",
     "contrast_color": "#000000",
     "contrast_color_opposite": "#000000",
@@ -5722,7 +5790,7 @@
     "type": "card",
     "cardType": "market",
     "id": "f1ct",
-    "z": 88914,
+    "z": 513,
     "color": "#b4b4b4",
     "contrast_color": "#000000",
     "contrast_color_opposite": "#000000",
@@ -5738,7 +5806,7 @@
     "parent": "3_seat_anchor",
     "fixedParent": true,
     "audio_enabled": true,
-    "background_color_solid": "#4caf50",
+    "background_color_solid": "#ffeb3b",
     "background_color_transparent": "white",
     "contrast_color": "#000000",
     "mainColor": "#dddddd",
@@ -5756,7 +5824,8 @@
       ]
     },
     "turn": false,
-    "colorContrast": "#000000"
+    "colorContrast": "#000000",
+    "contrast_color_opposite": "#FFFFFF"
   },
   "3_money_edit": {
     "type": "button",
@@ -5802,7 +5871,12 @@
     "parent": "3_board_anchor",
     "fixedParent": true,
     "linkedToSeat": "3_seat",
-    "inheritFrom": "1_turn_holder"
+    "inheritFrom": "1_turn_holder",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "3_player_money": {
     "type": "basic",
@@ -5810,8 +5884,8 @@
     "parent": "3_board_anchor",
     "fixedParent": true,
     "inheritFrom": "1_player_money",
-    "money": 15,
-    "text": 15,
+    "money": 12,
+    "text": 12,
     "color": "#b4b4b4",
     "contrast_color": "#000000",
     "contrast_color_opposite": "#FFFFFF",
@@ -5932,7 +6006,12 @@
       }
     ],
     "parent": "3_board_anchor",
-    "fixedParent": true
+    "fixedParent": true,
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "3_road_straight_holder": {
     "type": "holder",
@@ -6112,7 +6191,12 @@
       }
     ],
     "parent": "3_board_anchor",
-    "fixedParent": true
+    "fixedParent": true,
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "3_city_BLOCKER": {
     "type": "holder",
@@ -6142,7 +6226,12 @@
     "defaultX": 0,
     "x": 0,
     "defaultParent": "3_board_anchor",
-    "parent": "3_board_anchor"
+    "parent": "3_board_anchor",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "3_city_holder": {
     "type": "holder",
@@ -6199,14 +6288,19 @@
     "blockingX": -571,
     "defaultX": 0,
     "defaultParent": "3_board_anchor",
-    "parent": "3_board_anchor"
+    "parent": "3_board_anchor",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "q6xm": {
     "deck": "3_markets_deck",
     "type": "card",
     "cardType": "market",
     "id": "q6xm",
-    "z": 88915,
+    "z": 514,
     "color": "#b4b4b4",
     "contrast_color": "#000000",
     "contrast_color_opposite": "#FFFFFF",
@@ -6316,7 +6410,12 @@
           }
         ]
       }
-    ]
+    ],
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "2_markets_deck": {
     "type": "deck",
@@ -6419,7 +6518,12 @@
           }
         ]
       }
-    ]
+    ],
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "3_markets_deck": {
     "type": "deck",
@@ -6522,7 +6626,12 @@
           }
         ]
       }
-    ]
+    ],
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "markets_holder_template": {
     "type": "holder",
@@ -6551,7 +6660,12 @@
     "onLeave": {
       "activeFace": 0
     },
-    "recall_with_setup": true
+    "recall_with_setup": true,
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "4_seat": {
     "type": "seat",
@@ -6560,7 +6674,7 @@
     "parent": "4_seat_anchor",
     "fixedParent": true,
     "audio_enabled": true,
-    "background_color_solid": "#3f51b5",
+    "background_color_solid": "#bf360c",
     "background_color_transparent": "white",
     "contrast_color": "#000000",
     "mainColor": "#dddddd",
@@ -6578,7 +6692,8 @@
       ]
     },
     "turn": false,
-    "colorContrast": "#000000"
+    "colorContrast": "#000000",
+    "contrast_color_opposite": "#FFFFFF"
   },
   "4_money_edit": {
     "type": "button",
@@ -6623,7 +6738,7 @@
     "type": "card",
     "cardType": "market",
     "id": "izhq1",
-    "z": 88916,
+    "z": 515,
     "parent": "pw5a",
     "color": "#b4b4b4",
     "contrast_color": "#000000",
@@ -6637,7 +6752,7 @@
     "type": "card",
     "cardType": "market",
     "id": "77xd",
-    "z": 88917,
+    "z": 516,
     "parent": "pw5a",
     "color": "#b4b4b4",
     "contrast_color": "#000000",
@@ -6651,7 +6766,7 @@
     "type": "card",
     "cardType": "market",
     "id": "puru1",
-    "z": 88918,
+    "z": 517,
     "parent": "pw5a",
     "color": "#b4b4b4",
     "contrast_color": "#000000",
@@ -6665,7 +6780,7 @@
     "type": "card",
     "cardType": "market",
     "id": "iiws1",
-    "z": 88919,
+    "z": 518,
     "parent": "pw5a",
     "color": "#b4b4b4",
     "contrast_color": "#000000",
@@ -6679,7 +6794,7 @@
     "type": "card",
     "cardType": "market",
     "id": "9qnz",
-    "z": 88920,
+    "z": 519,
     "parent": "pw5a",
     "color": "#b4b4b4",
     "contrast_color": "#000000",
@@ -6693,7 +6808,7 @@
     "type": "card",
     "cardType": "market",
     "id": "za7l",
-    "z": 88921,
+    "z": 520,
     "parent": "pw5a",
     "color": "#b4b4b4",
     "contrast_color": "#000000",
@@ -6707,7 +6822,7 @@
     "type": "card",
     "cardType": "market",
     "id": "y4ey",
-    "z": 88922,
+    "z": 521,
     "color": "#b4b4b4",
     "contrast_color": "#000000",
     "contrast_color_opposite": "#FFFFFF",
@@ -6721,7 +6836,7 @@
     "type": "card",
     "cardType": "market",
     "id": "5bhm",
-    "z": 88923,
+    "z": 522,
     "color": "#b4b4b4",
     "contrast_color": "#000000",
     "contrast_color_opposite": "#FFFFFF",
@@ -6735,7 +6850,7 @@
     "type": "card",
     "cardType": "market",
     "id": "a57l",
-    "z": 88924,
+    "z": 523,
     "color": "#b4b4b4",
     "contrast_color": "#000000",
     "contrast_color_opposite": "#FFFFFF",
@@ -6749,7 +6864,7 @@
     "type": "card",
     "cardType": "market",
     "id": "lyg1",
-    "z": 88925,
+    "z": 524,
     "color": "#b4b4b4",
     "contrast_color": "#000000",
     "contrast_color_opposite": "#FFFFFF",
@@ -6763,7 +6878,7 @@
     "type": "card",
     "cardType": "market",
     "id": "2ta7",
-    "z": 88926,
+    "z": 525,
     "color": "#b4b4b4",
     "contrast_color": "#000000",
     "contrast_color_opposite": "#FFFFFF",
@@ -6777,7 +6892,7 @@
     "type": "card",
     "cardType": "market",
     "id": "lc2f",
-    "z": 88927,
+    "z": 526,
     "color": "#b4b4b4",
     "contrast_color": "#000000",
     "contrast_color_opposite": "#FFFFFF",
@@ -6791,7 +6906,7 @@
     "type": "card",
     "cardType": "market",
     "id": "k23w",
-    "z": 88928,
+    "z": 527,
     "color": "#b4b4b4",
     "contrast_color": "#000000",
     "contrast_color_opposite": "#FFFFFF",
@@ -6805,7 +6920,7 @@
     "type": "card",
     "cardType": "market",
     "id": "unuu1",
-    "z": 88929,
+    "z": 528,
     "color": "#b4b4b4",
     "contrast_color": "#000000",
     "contrast_color_opposite": "#FFFFFF",
@@ -6819,7 +6934,7 @@
     "type": "card",
     "cardType": "market",
     "id": "qtdz1",
-    "z": 88930,
+    "z": 529,
     "color": "#b4b4b4",
     "contrast_color": "#000000",
     "contrast_color_opposite": "#FFFFFF",
@@ -6833,7 +6948,7 @@
     "type": "card",
     "cardType": "market",
     "id": "i58z",
-    "z": 88931,
+    "z": 530,
     "color": "#b4b4b4",
     "contrast_color": "#000000",
     "contrast_color_opposite": "#FFFFFF",
@@ -6847,7 +6962,7 @@
     "type": "card",
     "cardType": "market",
     "id": "2caz",
-    "z": 88932,
+    "z": 531,
     "color": "#b4b4b4",
     "contrast_color": "#000000",
     "contrast_color_opposite": "#FFFFFF",
@@ -6861,7 +6976,7 @@
     "type": "card",
     "cardType": "market",
     "id": "tc10f",
-    "z": 88933,
+    "z": 532,
     "color": "#b4b4b4",
     "contrast_color": "#000000",
     "contrast_color_opposite": "#FFFFFF",
@@ -6875,7 +6990,7 @@
     "type": "card",
     "cardType": "market",
     "id": "55r9",
-    "z": 88934,
+    "z": 533,
     "color": "#b4b4b4",
     "contrast_color": "#000000",
     "contrast_color_opposite": "#FFFFFF",
@@ -6889,7 +7004,7 @@
     "type": "card",
     "cardType": "market",
     "id": "q7xm",
-    "z": 88935,
+    "z": 534,
     "color": "#b4b4b4",
     "contrast_color": "#000000",
     "contrast_color_opposite": "#000000",
@@ -7000,7 +7115,12 @@
           }
         ]
       }
-    ]
+    ],
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "4_turn_holder": {
     "type": "holder",
@@ -7008,7 +7128,12 @@
     "parent": "4_board_anchor",
     "fixedParent": true,
     "linkedToSeat": "4_seat",
-    "inheritFrom": "1_turn_holder"
+    "inheritFrom": "1_turn_holder",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "4_player_money": {
     "type": "basic",
@@ -7016,8 +7141,8 @@
     "parent": "4_board_anchor",
     "fixedParent": true,
     "inheritFrom": "1_player_money",
-    "money": 15,
-    "text": 15,
+    "money": 12,
+    "text": 12,
     "color": "#b4b4b4",
     "contrast_color": "#000000",
     "contrast_color_opposite": "#000000",
@@ -7137,7 +7262,12 @@
       }
     ],
     "parent": "4_board_anchor",
-    "fixedParent": true
+    "fixedParent": true,
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "4_road_straight_holder": {
     "type": "holder",
@@ -7316,7 +7446,12 @@
       }
     ],
     "parent": "4_board_anchor",
-    "fixedParent": true
+    "fixedParent": true,
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "4_city_BLOCKER": {
     "type": "holder",
@@ -7346,7 +7481,12 @@
     "defaultX": 0,
     "x": 0,
     "defaultParent": "4_board_anchor",
-    "parent": "4_board_anchor"
+    "parent": "4_board_anchor",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "4_city_holder": {
     "type": "holder",
@@ -7403,7 +7543,12 @@
     "blockingX": -571,
     "defaultX": 0,
     "defaultParent": "4_board_anchor",
-    "parent": "4_board_anchor"
+    "parent": "4_board_anchor",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "history_recent_label": {
     "id": "history_recent_label",
@@ -7453,7 +7598,12 @@
         }
       }
     ],
-    "borderRadius": 8
+    "borderRadius": 8,
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "history_holder": {
     "type": "holder",
@@ -7475,7 +7625,12 @@
     "x": 298,
     "onlyVisibleForSeat": [
       null
-    ]
+    ],
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "full_history_label": {
     "type": "label",
@@ -7496,7 +7651,12 @@
     },
     "text": "Full Game History",
     "y": 3,
-    "movableInEdit": false
+    "movableInEdit": false,
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "history_label": {
     "id": "history_label",
@@ -7548,7 +7708,12 @@
         "relation": "=",
         "value": "${PROPERTY text}"
       }
-    ]
+    ],
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "history_toggle": {
     "type": "button",
@@ -7624,16 +7789,18 @@
     "y": 885,
     "width": 100,
     "movableInEdit": false,
-    "background_color_solid": "#009688",
-    "background_color_transparent": "#00968848",
+    "background_color_solid": "#ffeb3b",
+    "background_color_transparent": "#ffeb3b48",
     "color_background": "grey",
     "color_border_default": "white",
     "color_border_hover": "black",
     "color_text": "white",
     "color_text_shadow": "#000000bb",
-    "contrast_color": "black",
+    "contrast_color": "#000000",
     "textShadowBlur": 2,
-    "textShadowDistance": 0
+    "textShadowDistance": 0,
+    "color": "#ffeb3b",
+    "contrast_color_opposite": "#FFFFFF"
   },
   "recent_history_label": {
     "type": "basic",
@@ -7666,7 +7833,12 @@
         "relation": "=",
         "value": "${PROPERTY score} points"
       }
-    ]
+    ],
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "turn_button": {
     "type": "button",
@@ -8182,11 +8354,15 @@
         ]
       }
     ],
-    "target_player_index": 2,
-    "button_border_color": "#9c27b0",
-    "parent": "2_turn_holder",
-    "y": -426,
-    "x": 91
+    "target_player_index": 1,
+    "button_border_color": "#ff9800",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b",
+    "parent": "1_turn_holder",
+    "y": 4
   },
   "your_turn_alert_anchor": {
     "id": "your_turn_alert_anchor",
@@ -8195,7 +8371,7 @@
     "width": 35,
     "height": 40,
     "z": 78752,
-    "color": "#1fa84f",
+    "color": "#ffeb3b",
     "css": "border-radius: 80% 80% 40% 110%",
     "image": "/i/game-pieces/3D/Pin-3D.svg",
     "svgReplaces": {
@@ -8207,7 +8383,11 @@
     "borderWidth": "1",
     "layer": 100,
     "movable": false,
-    "onlyVisibleForSeat": "2_seat"
+    "onlyVisibleForSeat": "1_seat",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "your_turn_label_animate": {
     "type": "basic",
@@ -8242,9 +8422,9 @@
       }
     },
     "text": "It's Your Turn!",
-    "background_color_solid": "#9c27b0",
+    "background_color_solid": "#ff9800",
     "background_color_transparent": "#ffeb3b48",
-    "clickCount": 2101,
+    "clickCount": 2119,
     "animatePropertyChange": [
       {
         "property": "clickCount",
@@ -8260,9 +8440,11 @@
         "value": 1
       }
     ],
-    "contrast_color": "#FFFFFF",
+    "contrast_color": "#000000",
     "parent": "your_turn_alert_anchor",
-    "fixedParent": true
+    "fixedParent": true,
+    "color": "#ffeb3b",
+    "contrast_color_opposite": "#FFFFFF"
   },
   "your_turn_label_border": {
     "type": "basic",
@@ -8283,8 +8465,8 @@
         "box-shadow": "3px 3px 10px black, -1px -1px 3px black inset"
       }
     },
-    "background_color_solid": "#bf360c",
-    "background_color_transparent": "#bf360c48",
+    "background_color_solid": "#ffeb3b",
+    "background_color_transparent": "#ffeb3b48",
     "passed": false,
     "x": -438,
     "y": 543,
@@ -8304,10 +8486,13 @@
         "value": 1
       }
     ],
-    "clickCount": 1965,
+    "clickCount": 1983,
     "borderRadius": 20,
     "movable": false,
-    "movableInEdit": false
+    "movableInEdit": false,
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF"
   },
   "settings_lawdawg": {
     "type": "button",
@@ -8552,16 +8737,18 @@
         ]
       }
     ],
-    "background_color_solid": "#009688",
-    "background_color_transparent": "#00968848",
+    "background_color_solid": "#ffeb3b",
+    "background_color_transparent": "#ffeb3b48",
     "color_background": "grey",
     "color_border_default": "white",
     "color_border_hover": "black",
     "color_text": "white",
     "color_text_shadow": "#000000bb",
-    "contrast_color": "black",
+    "contrast_color": "#000000",
     "textShadowBlur": 2,
-    "textShadowDistance": 0
+    "textShadowDistance": 0,
+    "color": "#ffeb3b",
+    "contrast_color_opposite": "#FFFFFF"
   },
   "current_round_holder": {
     "type": "holder",
@@ -8585,7 +8772,12 @@
       "round_card": true
     },
     "preventPiles": true,
-    "activeFace": 0
+    "activeFace": 0,
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "oracle_holder": {
     "type": "holder",
@@ -8597,19 +8789,12 @@
       "type": "card"
     },
     "recall_with_setup": true,
-    "activeFace": 0
-  },
-  "blank_oracle_holder": {
-    "type": "holder",
-    "id": "blank_oracle_holder",
-    "x": 349,
-    "y": -240,
-    "z": 223,
-    "dropTarget": {
-      "type": "card"
-    },
     "activeFace": 0,
-    "recall_with_setup": true
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "round_cards_temp_holder": {
     "type": "holder",
@@ -8620,7 +8805,12 @@
     "dropTarget": {
       "type": "card"
     },
-    "activeFace": 0
+    "activeFace": 0,
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "next_round_holder": {
     "type": "holder",
@@ -8682,7 +8872,12 @@
       }
     },
     "dropOffsetX": 0,
-    "dropOffsetY": 0
+    "dropOffsetY": 0,
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "1_road_remaining_count": {
     "type": "basic",
@@ -8889,7 +9084,12 @@
     "borderRadius": 10,
     "width": 70,
     "height": 103,
-    "movableInEdit": false
+    "movableInEdit": false,
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "round_counter": {
     "type": "basic",
@@ -8962,7 +9162,7 @@
     "type": "card",
     "cardType": "market",
     "id": "gnth",
-    "z": 88936,
+    "z": 535,
     "parent": "ruv8",
     "x": null,
     "y": null,
@@ -8990,7 +9190,7 @@
     "type": "card",
     "cardType": "market",
     "id": "v2us",
-    "z": 88937,
+    "z": 536,
     "parent": "ruv8",
     "x": null,
     "y": null,
@@ -9006,7 +9206,7 @@
     "type": "card",
     "cardType": "market",
     "id": "lgtx",
-    "z": 88938,
+    "z": 537,
     "parent": "ruv8",
     "x": null,
     "y": null,
@@ -9022,7 +9222,7 @@
     "type": "card",
     "cardType": "market",
     "id": "b462",
-    "z": 88939,
+    "z": 538,
     "parent": "ruv8",
     "x": null,
     "y": null,
@@ -9038,7 +9238,7 @@
     "type": "card",
     "cardType": "market",
     "id": "wdz9",
-    "z": 88940,
+    "z": 539,
     "parent": "ruv8",
     "x": null,
     "y": null,
@@ -9054,7 +9254,7 @@
     "type": "card",
     "cardType": "market",
     "id": "z2m9",
-    "z": 88941,
+    "z": 540,
     "parent": "ruv8",
     "x": null,
     "y": null,
@@ -9070,7 +9270,7 @@
     "type": "card",
     "cardType": "market",
     "id": "i5cw",
-    "z": 88942,
+    "z": 541,
     "parent": "ruv8",
     "x": null,
     "y": null,
@@ -9086,7 +9286,7 @@
     "type": "card",
     "cardType": "market",
     "id": "07ea",
-    "z": 88943,
+    "z": 542,
     "parent": "ruv8",
     "x": null,
     "y": null,
@@ -9102,7 +9302,7 @@
     "type": "card",
     "cardType": "market",
     "id": "kxl6",
-    "z": 88944,
+    "z": 543,
     "parent": "ruv8",
     "x": null,
     "y": null,
@@ -9118,7 +9318,7 @@
     "type": "card",
     "cardType": "market",
     "id": "v447",
-    "z": 88945,
+    "z": 544,
     "color": "#b4b4b4",
     "background_color_transparent": "#b4b4b4",
     "background_color_solid": "#b4b4b4",
@@ -9132,7 +9332,7 @@
     "type": "card",
     "cardType": "market",
     "id": "y6ug",
-    "z": 88946,
+    "z": 545,
     "color": "#b4b4b4",
     "background_color_transparent": "#b4b4b4",
     "background_color_solid": "#b4b4b4",
@@ -9146,7 +9346,7 @@
     "type": "card",
     "cardType": "market",
     "id": "1e8d",
-    "z": 88947,
+    "z": 546,
     "color": "#b4b4b4",
     "background_color_transparent": "#b4b4b4",
     "background_color_solid": "#b4b4b4",
@@ -9160,7 +9360,7 @@
     "type": "card",
     "cardType": "market",
     "id": "asup",
-    "z": 88948,
+    "z": 547,
     "color": "#b4b4b4",
     "background_color_transparent": "#b4b4b4",
     "background_color_solid": "#b4b4b4",
@@ -9174,7 +9374,7 @@
     "type": "card",
     "cardType": "market",
     "id": "w1bz",
-    "z": 88949,
+    "z": 548,
     "color": "#b4b4b4",
     "background_color_transparent": "#b4b4b4",
     "background_color_solid": "#b4b4b4",
@@ -9188,7 +9388,7 @@
     "type": "card",
     "cardType": "market",
     "id": "16fn",
-    "z": 88950,
+    "z": 549,
     "color": "#b4b4b4",
     "background_color_transparent": "#b4b4b4",
     "background_color_solid": "#b4b4b4",
@@ -9202,7 +9402,7 @@
     "type": "card",
     "cardType": "market",
     "id": "yc4q",
-    "z": 88951,
+    "z": 550,
     "color": "#b4b4b4",
     "background_color_transparent": "#b4b4b4",
     "background_color_solid": "#b4b4b4",
@@ -9216,7 +9416,7 @@
     "type": "card",
     "cardType": "market",
     "id": "dvks",
-    "z": 88952,
+    "z": 551,
     "color": "#b4b4b4",
     "background_color_transparent": "#b4b4b4",
     "background_color_solid": "#b4b4b4",
@@ -9230,7 +9430,7 @@
     "type": "card",
     "cardType": "market",
     "id": "8nwu",
-    "z": 88953,
+    "z": 552,
     "color": "#b4b4b4",
     "background_color_transparent": "#b4b4b4",
     "background_color_solid": "#b4b4b4",
@@ -9244,7 +9444,7 @@
     "type": "card",
     "cardType": "market",
     "id": "4rxd",
-    "z": 88954,
+    "z": 553,
     "color": "#b4b4b4",
     "background_color_transparent": "#b4b4b4",
     "background_color_solid": "#b4b4b4",
@@ -9285,7 +9485,12 @@
     "image": "/assets/118013932_10357",
     "movable": false,
     "movableInEdit": false,
-    "x": -303
+    "x": -303,
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_start_template": {
     "id": "map_start_template",
@@ -9319,49 +9524,84 @@
     ],
     "image": "/assets/1104093679_11132",
     "movable": false,
-    "movableInEdit": false
+    "movableInEdit": false,
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_start1": {
     "id": "map_start1",
     "x": 952.0784,
     "y": 153.35,
     "inheritFrom": "map_start_template",
-    "z": 16906
+    "z": 16906,
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_start2": {
     "id": "map_start2",
     "x": 981.9121,
     "y": 515.075,
     "inheritFrom": "map_start_template",
-    "z": 16907
+    "z": 16907,
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_start3": {
     "id": "map_start3",
     "x": 743.2425000000001,
     "y": 205.025,
     "inheritFrom": "map_start_template",
-    "z": 16908
+    "z": 16908,
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_start4": {
     "id": "map_start4",
     "x": 594.074,
     "y": 256.7,
     "inheritFrom": "map_start_template",
-    "z": 16909
+    "z": 16909,
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_start5": {
     "id": "map_start5",
     "x": 474.7392,
     "y": 153.35,
     "inheritFrom": "map_start_template",
-    "z": 16910
+    "z": 16910,
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_start6": {
     "id": "map_start6",
     "x": 116.7348,
     "y": 153.35,
     "inheritFrom": "map_start_template",
-    "z": 16911
+    "z": 16911,
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map": {
     "id": "map",
@@ -9382,84 +9622,144 @@
         "background": "#f1e1c2",
         "box-shadow": "2px 2px 5px black, -1px -1px 0px black"
       }
-    }
+    },
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_start7": {
     "id": "map_start7",
     "x": 57.067400000000006,
     "y": 463.4,
     "inheritFrom": "map_start_template",
-    "z": 16912
+    "z": 16912,
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_start8": {
     "id": "map_start8",
     "x": 504.5729,
     "y": 928.4749999999999,
     "inheritFrom": "map_start_template",
-    "z": 16913
+    "z": 16913,
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_start9": {
     "id": "map_start9",
     "x": 27.233699999999992,
     "y": 928.4749999999999,
     "inheritFrom": "map_start_template",
-    "z": 16914
+    "z": 16914,
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_start10": {
     "id": "map_start10",
     "x": 922.2447,
     "y": 928.4749999999999,
     "inheritFrom": "map_start_template",
-    "z": 16915
+    "z": 16915,
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_village1": {
     "id": "map_village1",
     "x": 862.5773,
     "y": 308.375,
     "z": 16924,
-    "inheritFrom": "map_village_template"
+    "inheritFrom": "map_village_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_village2": {
     "id": "map_village2",
     "x": 743.2425000000001,
     "y": 411.725,
     "z": 16923,
-    "inheritFrom": "map_village_template"
+    "inheritFrom": "map_village_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_village3": {
     "id": "map_village3",
     "x": 325.5707,
     "y": 205.025,
     "z": 16926,
-    "inheritFrom": "map_village_template"
+    "inheritFrom": "map_village_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_village4": {
     "id": "map_village4",
     "x": 444.9055,
     "y": 308.375,
     "z": 16925,
-    "inheritFrom": "map_village_template"
+    "inheritFrom": "map_village_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_village5": {
     "id": "map_village5",
     "x": 802.9099,
     "y": 515.075,
     "z": 16927,
-    "inheritFrom": "map_village_template"
+    "inheritFrom": "map_village_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_village6": {
     "id": "map_village6",
     "x": 862.5773,
     "y": 618.425,
     "z": 16928,
-    "inheritFrom": "map_village_template"
+    "inheritFrom": "map_village_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_village7": {
     "id": "map_village7",
     "x": 922.2447,
     "y": 721.7749999999999,
     "z": 16929,
-    "inheritFrom": "map_village_template"
+    "inheritFrom": "map_village_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_village_template": {
     "id": "map_village_template",
@@ -9493,217 +9793,372 @@
     ],
     "image": "/assets/1281393487_10347",
     "movable": false,
-    "movableInEdit": false
+    "movableInEdit": false,
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_village8": {
     "id": "map_village8",
     "x": 653.7414,
     "y": 463.4,
     "z": 16924,
-    "inheritFrom": "map_village_template"
+    "inheritFrom": "map_village_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_village9": {
     "id": "map_village9",
     "x": 534.4066,
     "y": 463.4,
     "z": 16925,
-    "inheritFrom": "map_village_template"
+    "inheritFrom": "map_village_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_village10": {
     "id": "map_village10",
     "x": 385.23810000000003,
     "y": 411.725,
     "z": 16926,
-    "inheritFrom": "map_village_template"
+    "inheritFrom": "map_village_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_village11": {
     "id": "map_village11",
     "x": 236.06959999999998,
     "y": 360.04999999999995,
     "z": 16927,
-    "inheritFrom": "map_village_template"
+    "inheritFrom": "map_village_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_village12": {
     "id": "map_village12",
     "x": 146.5685,
     "y": 308.375,
     "z": 16928,
-    "inheritFrom": "map_village_template"
+    "inheritFrom": "map_village_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_village13": {
     "id": "map_village13",
     "x": 683.5751,
     "y": 618.425,
     "z": 16929,
-    "inheritFrom": "map_village_template"
+    "inheritFrom": "map_village_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_village14": {
     "id": "map_village14",
     "x": 594.074,
     "y": 566.75,
     "z": 16930,
-    "inheritFrom": "map_village_template"
+    "inheritFrom": "map_village_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_village15": {
     "id": "map_village15",
     "x": 743.2425000000001,
     "y": 721.7749999999999,
     "z": 16932,
-    "inheritFrom": "map_village_template"
+    "inheritFrom": "map_village_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_village16": {
     "id": "map_village16",
     "x": 474.7392,
     "y": 773.4499999999999,
     "z": 16936,
-    "inheritFrom": "map_village_template"
+    "inheritFrom": "map_village_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_village17": {
     "id": "map_village17",
     "x": 444.9055,
     "y": 618.425,
     "z": 16937,
-    "inheritFrom": "map_village_template"
+    "inheritFrom": "map_village_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_village18": {
     "id": "map_village18",
     "x": 802.9099,
     "y": 825.1249999999999,
     "z": 16931,
-    "inheritFrom": "map_village_template"
+    "inheritFrom": "map_village_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_village19": {
     "id": "map_village19",
     "x": 594.074,
     "y": 773.4499999999999,
     "z": 16933,
-    "inheritFrom": "map_village_template"
+    "inheritFrom": "map_village_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_village20": {
     "id": "map_village20",
     "x": 594.074,
     "y": 670.0999999999999,
     "z": 16934,
-    "inheritFrom": "map_village_template"
+    "inheritFrom": "map_village_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_village21": {
     "id": "map_village21",
     "x": 653.7414,
     "y": 876.8,
     "z": 16935,
-    "inheritFrom": "map_village_template"
+    "inheritFrom": "map_village_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_village22": {
     "id": "map_village22",
     "x": 295.73699999999997,
     "y": 463.4,
     "z": 16939,
-    "inheritFrom": "map_village_template"
+    "inheritFrom": "map_village_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_village23": {
     "id": "map_village23",
     "x": 385.23810000000003,
     "y": 721.7749999999999,
     "z": 16942,
-    "inheritFrom": "map_village_template"
+    "inheritFrom": "map_village_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_village24": {
     "id": "map_village24",
     "x": 444.9055,
     "y": 515.075,
     "z": 16938,
-    "inheritFrom": "map_village_template"
+    "inheritFrom": "map_village_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_village25": {
     "id": "map_village25",
     "x": 355.4044,
     "y": 566.75,
     "z": 16940,
-    "inheritFrom": "map_village_template"
+    "inheritFrom": "map_village_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_village26": {
     "id": "map_village26",
     "x": 236.06959999999998,
     "y": 566.75,
     "z": 16941,
-    "inheritFrom": "map_village_template"
+    "inheritFrom": "map_village_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_village27": {
     "id": "map_village27",
     "x": 236.06959999999998,
     "y": 670.0999999999999,
     "z": 16944,
-    "inheritFrom": "map_village_template"
+    "inheritFrom": "map_village_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_village28": {
     "id": "map_village28",
     "x": 57.067400000000006,
     "y": 773.4499999999999,
     "z": 16946,
-    "inheritFrom": "map_village_template"
+    "inheritFrom": "map_village_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_village29": {
     "id": "map_village29",
     "x": 295.73699999999997,
     "y": 773.4499999999999,
     "z": 16943,
-    "inheritFrom": "map_village_template"
+    "inheritFrom": "map_village_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_village30": {
     "id": "map_village30",
     "x": 86.9011,
     "y": 618.425,
     "z": 16945,
-    "inheritFrom": "map_village_template"
+    "inheritFrom": "map_village_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_village31": {
     "id": "map_village31",
     "x": 176.4022,
     "y": 773.4499999999999,
     "z": 16947,
-    "inheritFrom": "map_village_template"
+    "inheritFrom": "map_village_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_village32": {
     "id": "map_village32",
     "x": 236.06959999999998,
     "y": 876.8,
     "z": 16948,
-    "inheritFrom": "map_village_template"
+    "inheritFrom": "map_village_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base1": {
     "id": "map_base1",
     "x": 176.4022,
     "y": 153.35,
     "z": 16955,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base2": {
     "id": "map_base2",
     "x": 295.73699999999997,
     "y": 153.35,
     "z": 16953,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base3": {
     "id": "map_base3",
     "x": 355.4044,
     "y": 153.35,
     "z": 16951,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base5": {
     "id": "map_base5",
     "x": 236.06959999999998,
     "y": 153.35,
     "z": 16956,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base6": {
     "id": "map_base6",
     "x": 415.0718,
     "y": 153.35,
     "z": 16958,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base7": {
     "id": "map_base7",
@@ -9711,21 +10166,36 @@
     "y": 153.35,
     "z": 16957,
     "inheritFrom": "map_base_template",
-    "activeFace": 0
+    "activeFace": 0,
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base8": {
     "id": "map_base8",
     "x": 1011.7458000000001,
     "y": 153.35,
     "z": 16959,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base9": {
     "id": "map_base9",
     "x": 981.9121,
     "y": 205.025,
     "z": 16960,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base10": {
     "id": "map_base10",
@@ -9733,56 +10203,96 @@
     "y": 256.7,
     "z": 16961,
     "inheritFrom": "map_base_template",
-    "activeFace": 0
+    "activeFace": 0,
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base11": {
     "id": "map_base11",
     "x": 981.9121,
     "y": 308.375,
     "z": 16962,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base12": {
     "id": "map_base12",
     "x": 952.0784,
     "y": 360.04999999999995,
     "z": 16963,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base13": {
     "id": "map_base13",
     "x": 922.2447,
     "y": 411.725,
     "z": 16964,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base14": {
     "id": "map_base14",
     "x": 952.0784,
     "y": 463.4,
     "z": 16965,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base15": {
     "id": "map_base15",
     "x": 981.9121,
     "y": 618.425,
     "z": 16967,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base16": {
     "id": "map_base16",
     "x": 952.0784,
     "y": 566.75,
     "z": 16966,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base17": {
     "id": "map_base17",
     "x": 952.0784,
     "y": 670.0999999999999,
     "z": 16968,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base18": {
     "id": "map_base18",
@@ -9790,21 +10300,36 @@
     "y": 721.7749999999999,
     "z": 16969,
     "inheritFrom": "map_base_template",
-    "activeFace": 0
+    "activeFace": 0,
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base19": {
     "id": "map_base19",
     "x": 922.2447,
     "y": 825.1249999999999,
     "z": 16971,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base20": {
     "id": "map_base20",
     "x": 952.0784,
     "y": 773.4499999999999,
     "z": 16970,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base21": {
     "id": "map_base21",
@@ -9812,77 +10337,132 @@
     "y": 876.8,
     "z": 16972,
     "inheritFrom": "map_base_template",
-    "activeFace": 0
+    "activeFace": 0,
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base22": {
     "id": "map_base22",
     "x": 862.5773,
     "y": 928.4749999999999,
     "z": 16973,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base23": {
     "id": "map_base23",
     "x": 743.2425000000001,
     "y": 928.4749999999999,
     "z": 16982,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base24": {
     "id": "map_base24",
     "x": 683.5751,
     "y": 928.4749999999999,
     "z": 16981,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base25": {
     "id": "map_base25",
     "x": 623.9077,
     "y": 928.4749999999999,
     "z": 16980,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base26": {
     "id": "map_base26",
     "x": 564.2403,
     "y": 928.4749999999999,
     "z": 16979,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base27": {
     "id": "map_base27",
     "x": 86.9011,
     "y": 928.4749999999999,
     "z": 16974,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base28": {
     "id": "map_base28",
     "x": 444.9055,
     "y": 928.4749999999999,
     "z": 16978,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base29": {
     "id": "map_base29",
     "x": 385.23810000000003,
     "y": 928.4749999999999,
     "z": 16976,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base30": {
     "id": "map_base30",
     "x": 325.5707,
     "y": 928.4749999999999,
     "z": 16989,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base31": {
     "id": "map_base31",
     "x": 206.23590000000002,
     "y": 928.4749999999999,
     "z": 16991,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base32": {
     "id": "map_base32",
@@ -9890,7 +10470,12 @@
     "y": 928.4749999999999,
     "z": 16983,
     "inheritFrom": "map_base_template",
-    "activeFace": 0
+    "activeFace": 0,
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base33": {
     "id": "map_base33",
@@ -9898,105 +10483,180 @@
     "y": 928.4749999999999,
     "z": 16990,
     "inheritFrom": "map_base_template",
-    "activeFace": 0
+    "activeFace": 0,
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base34": {
     "id": "map_base34",
     "x": 146.5685,
     "y": 928.4749999999999,
     "z": 16992,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base35": {
     "id": "map_base35",
     "x": -2.6000000000000014,
     "y": 876.8,
     "z": 16993,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base36": {
     "id": "map_base36",
     "x": 27.2337,
     "y": 825.1249999999999,
     "z": 16994,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base37": {
     "id": "map_base37",
     "x": -2.6000000000000014,
     "y": 773.4499999999999,
     "z": 16995,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base38": {
     "id": "map_base38",
     "x": 27.233699999999992,
     "y": 721.7749999999999,
     "z": 16996,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base39": {
     "id": "map_base39",
     "x": -2.6000000000000014,
     "y": 670.0999999999999,
     "z": 16997,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base40": {
     "id": "map_base40",
     "x": 27.2337,
     "y": 618.425,
     "z": 16998,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base41": {
     "id": "map_base41",
     "x": 57.067400000000006,
     "y": 566.75,
     "z": 16999,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base42": {
     "id": "map_base42",
     "x": 27.233699999999992,
     "y": 515.075,
     "z": 17000,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base43": {
     "id": "map_base43",
     "x": 86.9011,
     "y": 411.725,
     "z": 17001,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base44": {
     "id": "map_base44",
     "x": 236.06959999999998,
     "y": 256.7,
     "z": 17072,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base45": {
     "id": "map_base45",
     "x": 86.9011,
     "y": 308.375,
     "z": 17006,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base46": {
     "id": "map_base46",
     "x": 146.5685,
     "y": 205.025,
     "z": 17003,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base47": {
     "id": "map_base47",
     "x": 116.7348,
     "y": 256.7,
     "z": 17007,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base48": {
     "id": "map_base48",
@@ -10004,7 +10664,12 @@
     "y": 205.025,
     "z": 17008,
     "inheritFrom": "map_base_template",
-    "activeFace": 0
+    "activeFace": 0,
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base49": {
     "id": "map_base49",
@@ -10012,7 +10677,12 @@
     "y": 205.025,
     "z": 17009,
     "inheritFrom": "map_base_template",
-    "activeFace": 0
+    "activeFace": 0,
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base50": {
     "id": "map_base50",
@@ -10020,7 +10690,12 @@
     "y": 256.7,
     "z": 17090,
     "inheritFrom": "map_base_template",
-    "activeFace": 0
+    "activeFace": 0,
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base51": {
     "id": "map_base51",
@@ -10028,7 +10703,12 @@
     "y": 256.7,
     "z": 17088,
     "inheritFrom": "map_base_template",
-    "activeFace": 0
+    "activeFace": 0,
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base52": {
     "id": "map_base52",
@@ -10036,7 +10716,12 @@
     "y": 256.7,
     "z": 17013,
     "inheritFrom": "map_base_template",
-    "activeFace": 0
+    "activeFace": 0,
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base53": {
     "id": "map_base53",
@@ -10044,35 +10729,60 @@
     "y": 205.025,
     "z": 17014,
     "inheritFrom": "map_base_template",
-    "activeFace": 0
+    "activeFace": 0,
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base54": {
     "id": "map_base54",
     "x": 862.5773,
     "y": 721.7749999999999,
     "z": 17016,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base55": {
     "id": "map_base55",
     "x": 892.411,
     "y": 566.75,
     "z": 17019,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base56": {
     "id": "map_base56",
     "x": 892.411,
     "y": 773.4499999999999,
     "z": 17015,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base57": {
     "id": "map_base57",
     "x": 892.411,
     "y": 670.0999999999999,
     "z": 17017,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base58": {
     "id": "map_base58",
@@ -10080,14 +10790,24 @@
     "y": 618.425,
     "z": 17018,
     "inheritFrom": "map_base_template",
-    "activeFace": 0
+    "activeFace": 0,
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base59": {
     "id": "map_base59",
     "x": 832.7436,
     "y": 566.75,
     "z": 17031,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base60": {
     "id": "map_base60",
@@ -10095,119 +10815,204 @@
     "y": 566.75,
     "z": 17028,
     "inheritFrom": "map_base_template",
-    "activeFace": 0
+    "activeFace": 0,
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base61": {
     "id": "map_base61",
     "x": 713.4087999999999,
     "y": 566.75,
     "z": 17029,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base62": {
     "id": "map_base62",
     "x": 474.7392,
     "y": 566.75,
     "z": 17026,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base63": {
     "id": "map_base63",
     "x": 534.4066,
     "y": 566.75,
     "z": 17027,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base64": {
     "id": "map_base64",
     "x": 415.0718,
     "y": 566.75,
     "z": 17025,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base65": {
     "id": "map_base65",
     "x": 325.5707,
     "y": 618.425,
     "z": 17119,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base66": {
     "id": "map_base66",
     "x": 773.0762,
     "y": 566.75,
     "z": 17032,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base67": {
     "id": "map_base67",
     "x": 295.73699999999997,
     "y": 566.75,
     "z": 17022,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base68": {
     "id": "map_base68",
     "x": 176.4022,
     "y": 566.75,
     "z": 17021,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base69": {
     "id": "map_base69",
     "x": 116.7348,
     "y": 566.75,
     "z": 17020,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base70": {
     "id": "map_base70",
     "x": 892.411,
     "y": 463.4,
     "z": 17033,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base71": {
     "id": "map_base71",
     "x": 832.7436,
     "y": 463.4,
     "z": 17034,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base72": {
     "id": "map_base72",
     "x": 773.0762,
     "y": 463.4,
     "z": 17035,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base73": {
     "id": "map_base73",
     "x": 713.4087999999999,
     "y": 463.4,
     "z": 17036,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base74": {
     "id": "map_base74",
     "x": 594.074,
     "y": 463.4,
     "z": 17037,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base75": {
     "id": "map_base75",
     "x": 534.4066,
     "y": 463.4,
     "z": 17038,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base76": {
     "id": "map_base76",
     "x": 474.7392,
     "y": 463.4,
     "z": 17039,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base77": {
     "id": "map_base77",
@@ -10215,28 +11020,48 @@
     "y": 463.4,
     "z": 17040,
     "inheritFrom": "map_base_template",
-    "activeFace": 0
+    "activeFace": 0,
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base78": {
     "id": "map_base78",
     "x": 355.4044,
     "y": 463.4,
     "z": 17041,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base79": {
     "id": "map_base79",
     "x": 236.06959999999998,
     "y": 463.4,
     "z": 17042,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base80": {
     "id": "map_base80",
     "x": 176.4022,
     "y": 463.4,
     "z": 17043,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base81": {
     "id": "map_base81",
@@ -10244,21 +11069,36 @@
     "y": 411.725,
     "z": 17044,
     "inheritFrom": "map_base_template",
-    "activeFace": 0
+    "activeFace": 0,
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base82": {
     "id": "map_base82",
     "x": 802.9099,
     "y": 411.725,
     "z": 17045,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base83": {
     "id": "map_base83",
     "x": 683.5751,
     "y": 411.725,
     "z": 17046,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base84": {
     "id": "map_base84",
@@ -10266,14 +11106,24 @@
     "y": 411.725,
     "z": 17047,
     "inheritFrom": "map_base_template",
-    "activeFace": 0
+    "activeFace": 0,
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base85": {
     "id": "map_base85",
     "x": 564.2403,
     "y": 411.725,
     "z": 17048,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base86": {
     "id": "map_base86",
@@ -10281,126 +11131,216 @@
     "y": 411.725,
     "z": 17049,
     "inheritFrom": "map_base_template",
-    "activeFace": 0
+    "activeFace": 0,
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base87": {
     "id": "map_base87",
     "x": 444.9055,
     "y": 411.725,
     "z": 17050,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base88": {
     "id": "map_base88",
     "x": 325.5707,
     "y": 411.725,
     "z": 17051,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base89": {
     "id": "map_base89",
     "x": 265.9033,
     "y": 411.725,
     "z": 17052,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base90": {
     "id": "map_base90",
     "x": 206.23590000000002,
     "y": 411.725,
     "z": 17053,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base91": {
     "id": "map_base91",
     "x": 146.5685,
     "y": 411.725,
     "z": 17054,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base92": {
     "id": "map_base92",
     "x": 892.411,
     "y": 360.04999999999995,
     "z": 17069,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base93": {
     "id": "map_base93",
     "x": 773.0762,
     "y": 360.04999999999995,
     "z": 17068,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base94": {
     "id": "map_base94",
     "x": 713.4087999999999,
     "y": 360.04999999999995,
     "z": 17066,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base95": {
     "id": "map_base95",
     "x": 653.7414,
     "y": 360.04999999999995,
     "z": 17067,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base96": {
     "id": "map_base96",
     "x": 594.074,
     "y": 360.04999999999995,
     "z": 17065,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base97": {
     "id": "map_base97",
     "x": 534.4066,
     "y": 360.04999999999995,
     "z": 17064,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base98": {
     "id": "map_base98",
     "x": 474.7392,
     "y": 360.04999999999995,
     "z": 17063,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base99": {
     "id": "map_base99",
     "x": 415.0718,
     "y": 360.04999999999995,
     "z": 17062,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base100": {
     "id": "map_base100",
     "x": 355.4044,
     "y": 360.04999999999995,
     "z": 17061,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base101": {
     "id": "map_base101",
     "x": 295.73699999999997,
     "y": 360.04999999999995,
     "z": 17060,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base102": {
     "id": "map_base102",
     "x": 176.4022,
     "y": 360.04999999999995,
     "z": 17055,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base103": {
     "id": "map_base103",
     "x": 116.7348,
     "y": 360.04999999999995,
     "z": 17058,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base104": {
     "id": "map_base104",
@@ -10408,21 +11348,36 @@
     "y": 360.04999999999995,
     "z": 17070,
     "inheritFrom": "map_base_template",
-    "activeFace": 0
+    "activeFace": 0,
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base105": {
     "id": "map_base105",
     "x": 922.2447,
     "y": 308.375,
     "z": 17083,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base106": {
     "id": "map_base106",
     "x": 802.9099,
     "y": 308.375,
     "z": 17082,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base107": {
     "id": "map_base107",
@@ -10430,21 +11385,36 @@
     "y": 308.375,
     "z": 17081,
     "inheritFrom": "map_base_template",
-    "activeFace": 0
+    "activeFace": 0,
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base108": {
     "id": "map_base108",
     "x": 683.5751,
     "y": 308.375,
     "z": 17080,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base109": {
     "id": "map_base109",
     "x": 623.9077,
     "y": 308.375,
     "z": 17079,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base110": {
     "id": "map_base110",
@@ -10452,49 +11422,84 @@
     "y": 308.375,
     "z": 17078,
     "inheritFrom": "map_base_template",
-    "activeFace": 0
+    "activeFace": 0,
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base111": {
     "id": "map_base111",
     "x": 504.5729,
     "y": 308.375,
     "z": 17077,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base112": {
     "id": "map_base112",
     "x": 385.23810000000003,
     "y": 308.375,
     "z": 17076,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base113": {
     "id": "map_base113",
     "x": 325.5707,
     "y": 308.375,
     "z": 17075,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base114": {
     "id": "map_base114",
     "x": 265.9033,
     "y": 308.375,
     "z": 17074,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base115": {
     "id": "map_base115",
     "x": 206.23590000000002,
     "y": 308.375,
     "z": 17073,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base116": {
     "id": "map_base116",
     "x": 206.23590000000002,
     "y": 205.025,
     "z": 17097,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base117": {
     "id": "map_base117",
@@ -10502,154 +11507,264 @@
     "y": 256.7,
     "z": 17084,
     "inheritFrom": "map_base_template",
-    "activeFace": 0
+    "activeFace": 0,
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base118": {
     "id": "map_base118",
     "x": 922.2447,
     "y": 205.025,
     "z": 17085,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base119": {
     "id": "map_base119",
     "x": 892.411,
     "y": 256.7,
     "z": 17087,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base120": {
     "id": "map_base120",
     "x": 773.0762,
     "y": 256.7,
     "z": 17089,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base121": {
     "id": "map_base121",
     "x": 653.7414,
     "y": 256.7,
     "z": 17091,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base122": {
     "id": "map_base122",
     "x": 444.9055,
     "y": 205.025,
     "z": 17092,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base123": {
     "id": "map_base123",
     "x": 528.7458000000001,
     "y": 256.7,
     "z": 16961,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base124": {
     "id": "map_base124",
     "x": 474.7392,
     "y": 256.7,
     "z": 17093,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base125": {
     "id": "map_base125",
     "x": 415.0718,
     "y": 256.7,
     "z": 17094,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base126": {
     "id": "map_base126",
     "x": 355.4044,
     "y": 256.7,
     "z": 17095,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base127": {
     "id": "map_base127",
     "x": 295.73699999999997,
     "y": 256.7,
     "z": 17096,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base128": {
     "id": "map_base128",
     "x": 176.4022,
     "y": 256.7,
     "z": 17098,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base129": {
     "id": "map_base129",
     "x": 265.9033,
     "y": 205.025,
     "z": 17099,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base130": {
     "id": "map_base130",
     "x": 385.23810000000003,
     "y": 205.025,
     "z": 17100,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base131": {
     "id": "map_base131",
     "x": 86.9011,
     "y": 515.075,
     "z": 17101,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base132": {
     "id": "map_base132",
     "x": 146.5685,
     "y": 515.075,
     "z": 17103,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base133": {
     "id": "map_base133",
     "x": 206.23590000000002,
     "y": 515.075,
     "z": 17104,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base134": {
     "id": "map_base134",
     "x": 265.9033,
     "y": 515.075,
     "z": 17105,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base135": {
     "id": "map_base135",
     "x": 325.5707,
     "y": 515.075,
     "z": 17106,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base136": {
     "id": "map_base136",
     "x": 385.23810000000003,
     "y": 515.075,
     "z": 17107,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base137": {
     "id": "map_base137",
     "x": 504.5729,
     "y": 515.075,
     "z": 17108,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base138": {
     "id": "map_base138",
     "x": 564.2403,
     "y": 515.075,
     "z": 17109,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base139": {
     "id": "map_base139",
@@ -10657,84 +11772,144 @@
     "y": 515.075,
     "z": 17110,
     "inheritFrom": "map_base_template",
-    "activeFace": 0
+    "activeFace": 0,
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base140": {
     "id": "map_base140",
     "x": 683.5751,
     "y": 515.075,
     "z": 17111,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base141": {
     "id": "map_base141",
     "x": 743.2425000000001,
     "y": 515.075,
     "z": 17112,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base142": {
     "id": "map_base142",
     "x": 862.5773,
     "y": 515.075,
     "z": 17114,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base143": {
     "id": "map_base143",
     "x": 922.2447,
     "y": 515.075,
     "z": 17115,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base144": {
     "id": "map_base144",
     "x": 116.7348,
     "y": 463.4,
     "z": 17102,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base145": {
     "id": "map_base145",
     "x": 802.9099,
     "y": 618.425,
     "z": 17127,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base146": {
     "id": "map_base146",
     "x": 832.7436,
     "y": 670.0999999999999,
     "z": 17126,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base147": {
     "id": "map_base147",
     "x": 743.2425000000001,
     "y": 618.425,
     "z": 17125,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base148": {
     "id": "map_base148",
     "x": 623.9077,
     "y": 618.425,
     "z": 17124,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base149": {
     "id": "map_base149",
     "x": 564.2403,
     "y": 618.425,
     "z": 17123,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base150": {
     "id": "map_base150",
     "x": 504.5729,
     "y": 618.425,
     "z": 17122,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base151": {
     "id": "map_base151",
@@ -10742,35 +11917,60 @@
     "y": 670.0999999999999,
     "z": 17134,
     "inheritFrom": "map_base_template",
-    "activeFace": 0
+    "activeFace": 0,
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base152": {
     "id": "map_base152",
     "x": 385.23810000000003,
     "y": 618.425,
     "z": 17120,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base153": {
     "id": "map_base153",
     "x": 265.9033,
     "y": 618.425,
     "z": 17118,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base154": {
     "id": "map_base154",
     "x": 206.23590000000002,
     "y": 618.425,
     "z": 17117,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base155": {
     "id": "map_base155",
     "x": 146.5685,
     "y": 618.425,
     "z": 17116,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base156": {
     "id": "map_base156",
@@ -10778,70 +11978,120 @@
     "y": 670.0999999999999,
     "z": 17138,
     "inheritFrom": "map_base_template",
-    "activeFace": 0
+    "activeFace": 0,
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base157": {
     "id": "map_base157",
     "x": 713.4087999999999,
     "y": 670.0999999999999,
     "z": 17137,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base158": {
     "id": "map_base158",
     "x": 653.7414,
     "y": 670.0999999999999,
     "z": 17136,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base159": {
     "id": "map_base159",
     "x": 534.4066,
     "y": 670.0999999999999,
     "z": 17135,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base160": {
     "id": "map_base160",
     "x": 415.0718,
     "y": 670.0999999999999,
     "z": 17133,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base161": {
     "id": "map_base161",
     "x": 355.4044,
     "y": 670.0999999999999,
     "z": 17132,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base162": {
     "id": "map_base162",
     "x": 295.73699999999997,
     "y": 670.0999999999999,
     "z": 17131,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base163": {
     "id": "map_base163",
     "x": 176.4022,
     "y": 670.0999999999999,
     "z": 17130,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base164": {
     "id": "map_base164",
     "x": 57.067400000000006,
     "y": 670.0999999999999,
     "z": 17129,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base165": {
     "id": "map_base165",
     "x": 116.7348,
     "y": 670.0999999999999,
     "z": 17128,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base166": {
     "id": "map_base166",
@@ -10849,70 +12099,120 @@
     "y": 721.7749999999999,
     "z": 17148,
     "inheritFrom": "map_base_template",
-    "activeFace": 0
+    "activeFace": 0,
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base167": {
     "id": "map_base167",
     "x": 564.2403,
     "y": 721.7749999999999,
     "z": 17146,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base168": {
     "id": "map_base168",
     "x": 623.9077,
     "y": 721.7749999999999,
     "z": 17147,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base169": {
     "id": "map_base169",
     "x": 504.5729,
     "y": 721.7749999999999,
     "z": 17145,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base170": {
     "id": "map_base170",
     "x": 444.9055,
     "y": 721.7749999999999,
     "z": 17144,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base171": {
     "id": "map_base171",
     "x": 325.5707,
     "y": 721.7749999999999,
     "z": 17143,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base172": {
     "id": "map_base172",
     "x": 206.23590000000002,
     "y": 721.7749999999999,
     "z": 17142,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base173": {
     "id": "map_base173",
     "x": 146.5685,
     "y": 721.7749999999999,
     "z": 17141,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base174": {
     "id": "map_base174",
     "x": 265.9033,
     "y": 721.7749999999999,
     "z": 17140,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base175": {
     "id": "map_base175",
     "x": 86.9011,
     "y": 721.7749999999999,
     "z": 17139,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base176": {
     "id": "map_base176",
@@ -10920,84 +12220,144 @@
     "y": 721.7749999999999,
     "z": 17149,
     "inheritFrom": "map_base_template",
-    "activeFace": 0
+    "activeFace": 0,
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base177": {
     "id": "map_base177",
     "x": 832.7436,
     "y": 773.4499999999999,
     "z": 17160,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base178": {
     "id": "map_base178",
     "x": 713.4087999999999,
     "y": 773.4499999999999,
     "z": 17159,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base179": {
     "id": "map_base179",
     "x": 653.7414,
     "y": 773.4499999999999,
     "z": 17158,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base180": {
     "id": "map_base180",
     "x": 564.2403,
     "y": 825.1249999999999,
     "z": 17157,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base181": {
     "id": "map_base181",
     "x": 534.4066,
     "y": 773.4499999999999,
     "z": 17156,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base182": {
     "id": "map_base182",
     "x": 504.5729,
     "y": 825.1249999999999,
     "z": 17155,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base183": {
     "id": "map_base183",
     "x": 415.0718,
     "y": 773.4499999999999,
     "z": 17154,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base184": {
     "id": "map_base184",
     "x": 355.4044,
     "y": 773.4499999999999,
     "z": 17153,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base185": {
     "id": "map_base185",
     "x": 236.06959999999998,
     "y": 773.4499999999999,
     "z": 17152,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base186": {
     "id": "map_base186",
     "x": 146.5685,
     "y": 825.1249999999999,
     "z": 17151,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base187": {
     "id": "map_base187",
     "x": 116.7348,
     "y": 773.4499999999999,
     "z": 17150,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base188": {
     "id": "map_base188",
@@ -11005,84 +12365,144 @@
     "y": 773.4499999999999,
     "z": 17161,
     "inheritFrom": "map_base_template",
-    "activeFace": 0
+    "activeFace": 0,
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base189": {
     "id": "map_base189",
     "x": 892.411,
     "y": 876.8,
     "z": 17173,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base190": {
     "id": "map_base190",
     "x": 832.7436,
     "y": 876.8,
     "z": 17172,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base191": {
     "id": "map_base191",
     "x": 773.0762,
     "y": 876.8,
     "z": 17171,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base192": {
     "id": "map_base192",
     "x": 713.4087999999999,
     "y": 876.8,
     "z": 17170,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base193": {
     "id": "map_base193",
     "x": 594.074,
     "y": 876.8,
     "z": 17169,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base194": {
     "id": "map_base194",
     "x": 534.4066,
     "y": 876.8,
     "z": 17168,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base195": {
     "id": "map_base195",
     "x": 474.7392,
     "y": 876.8,
     "z": 17167,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base196": {
     "id": "map_base196",
     "x": 415.0718,
     "y": 876.8,
     "z": 17166,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base197": {
     "id": "map_base197",
     "x": 355.4044,
     "y": 876.8,
     "z": 17165,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base198": {
     "id": "map_base198",
     "x": 295.73699999999997,
     "y": 876.8,
     "z": 17164,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base199": {
     "id": "map_base199",
     "x": 176.4022,
     "y": 876.8,
     "z": 17163,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base200": {
     "id": "map_base200",
@@ -11090,35 +12510,60 @@
     "y": 876.8,
     "z": 17184,
     "inheritFrom": "map_base_template",
-    "activeFace": 0
+    "activeFace": 0,
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base201": {
     "id": "map_base201",
     "x": 862.5773,
     "y": 825.1249999999999,
     "z": 17174,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base202": {
     "id": "map_base202",
     "x": 444.9055,
     "y": 825.1249999999999,
     "z": 17187,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base203": {
     "id": "map_base203",
     "x": 683.5751,
     "y": 825.1249999999999,
     "z": 17177,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base204": {
     "id": "map_base204",
     "x": 623.9077,
     "y": 825.1249999999999,
     "z": 17176,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base205": {
     "id": "map_base205",
@@ -11126,49 +12571,84 @@
     "y": 825.1249999999999,
     "z": 17178,
     "inheritFrom": "map_base_template",
-    "activeFace": 0
+    "activeFace": 0,
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base206": {
     "id": "map_base206",
     "x": 325.5707,
     "y": 825.1249999999999,
     "z": 17182,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base207": {
     "id": "map_base207",
     "x": 265.9033,
     "y": 825.1249999999999,
     "z": 17181,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base208": {
     "id": "map_base208",
     "x": 206.23590000000002,
     "y": 825.1249999999999,
     "z": 17180,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base209": {
     "id": "map_base209",
     "x": 86.9011,
     "y": 825.1249999999999,
     "z": 17179,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base210": {
     "id": "map_base210",
     "x": 57.067400000000006,
     "y": 876.8,
     "z": 17185,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "map_base211": {
     "id": "map_base211",
     "x": 385.23810000000003,
     "y": 825.1249999999999,
     "z": 17188,
-    "inheritFrom": "map_base_template"
+    "inheritFrom": "map_base_template",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "69du": {
     "type": "holder",
@@ -11176,7 +12656,12 @@
     "y": 773.4499999999999,
     "id": "69du",
     "inheritFrom": "oracle_holder1",
-    "z": 51417
+    "z": 51417,
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "oracle_holder1": {
     "type": "holder",
@@ -11192,7 +12677,6 @@
       "deck": "temples"
     },
     "activeFace": 0,
-    "temple_holder": true,
     "grid": [
       {
         "x": 59.6674,
@@ -11214,7 +12698,13 @@
         "minX": 0,
         "minY": 125
       }
-    ]
+    ],
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b",
+    "oracle_holder": true
   },
   "70du": {
     "type": "holder",
@@ -11222,7 +12712,12 @@
     "y": 515.075,
     "id": "70du",
     "inheritFrom": "oracle_holder1",
-    "z": 51412
+    "z": 51412,
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "71du": {
     "type": "holder",
@@ -11230,7 +12725,12 @@
     "y": 566.75,
     "id": "71du",
     "inheritFrom": "oracle_holder1",
-    "z": 51411
+    "z": 51411,
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "72du": {
     "type": "holder",
@@ -11238,7 +12738,12 @@
     "y": 463.4,
     "id": "72du",
     "inheritFrom": "oracle_holder1",
-    "z": 51410
+    "z": 51410,
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "73du": {
     "type": "holder",
@@ -11246,7 +12751,12 @@
     "y": 411.725,
     "id": "73du",
     "inheritFrom": "oracle_holder1",
-    "z": 51409
+    "z": 51409,
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "74du": {
     "type": "holder",
@@ -11254,7 +12764,12 @@
     "y": 308.375,
     "id": "74du",
     "inheritFrom": "oracle_holder1",
-    "z": 51408
+    "z": 51408,
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "75du": {
     "type": "holder",
@@ -11262,7 +12777,12 @@
     "y": 618.425,
     "id": "75du",
     "inheritFrom": "oracle_holder1",
-    "z": 51421
+    "z": 51421,
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "76du": {
     "type": "holder",
@@ -11270,7 +12790,12 @@
     "y": 618.425,
     "id": "76du",
     "inheritFrom": "oracle_holder1",
-    "z": 51416
+    "z": 51416,
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "77du": {
     "type": "holder",
@@ -11278,7 +12803,12 @@
     "y": 876.8,
     "id": "77du",
     "inheritFrom": "oracle_holder1",
-    "z": 51418
+    "z": 51418,
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "78du": {
     "type": "holder",
@@ -11286,7 +12816,12 @@
     "y": 825.1249999999999,
     "id": "78du",
     "inheritFrom": "oracle_holder1",
-    "z": 51414
+    "z": 51414,
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "79du": {
     "type": "holder",
@@ -11294,7 +12829,12 @@
     "y": 721.7749999999999,
     "id": "79du",
     "inheritFrom": "oracle_holder1",
-    "z": 51422
+    "z": 51422,
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "80du": {
     "type": "holder",
@@ -11302,7 +12842,12 @@
     "y": 721.7749999999999,
     "id": "80du",
     "inheritFrom": "oracle_holder1",
-    "z": 51415
+    "z": 51415,
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "81du": {
     "type": "holder",
@@ -11310,7 +12855,12 @@
     "y": 773.4499999999999,
     "id": "81du",
     "inheritFrom": "oracle_holder1",
-    "z": 51435
+    "z": 51435,
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "82du": {
     "type": "holder",
@@ -11318,7 +12868,12 @@
     "y": 670.0999999999999,
     "id": "82du",
     "inheritFrom": "oracle_holder1",
-    "z": 51423
+    "z": 51423,
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "83du": {
     "type": "holder",
@@ -11326,7 +12881,12 @@
     "y": 618.425,
     "id": "83du",
     "inheritFrom": "oracle_holder1",
-    "z": 51424
+    "z": 51424,
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "84du": {
     "type": "holder",
@@ -11334,7 +12894,12 @@
     "y": 515.075,
     "id": "84du",
     "inheritFrom": "oracle_holder1",
-    "z": 51431
+    "z": 51431,
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "85du": {
     "type": "holder",
@@ -11342,7 +12907,12 @@
     "y": 411.725,
     "id": "85du",
     "inheritFrom": "oracle_holder1",
-    "z": 51430
+    "z": 51430,
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "86du": {
     "type": "holder",
@@ -11350,15 +12920,25 @@
     "y": 463.4,
     "id": "86du",
     "inheritFrom": "oracle_holder1",
-    "z": 51427
+    "z": 51427,
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "87du": {
     "type": "holder",
-    "x": 86.9011,
+    "x": 146.5685,
     "y": 308.375,
     "id": "87du",
     "inheritFrom": "oracle_holder1",
-    "z": 51550
+    "z": 52432,
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "88du": {
     "type": "holder",
@@ -11366,7 +12946,12 @@
     "y": 308.375,
     "id": "88du",
     "inheritFrom": "oracle_holder1",
-    "z": 51429
+    "z": 51429,
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "89du": {
     "type": "holder",
@@ -11374,7 +12959,12 @@
     "y": 721.7749999999999,
     "id": "89du",
     "inheritFrom": "oracle_holder1",
-    "z": 51433
+    "z": 51433,
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "90du": {
     "type": "holder",
@@ -11382,7 +12972,12 @@
     "y": 773.4499999999999,
     "id": "90du",
     "inheritFrom": "oracle_holder1",
-    "z": 51436
+    "z": 51436,
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "91du": {
     "type": "holder",
@@ -11390,7 +12985,12 @@
     "y": 773.4499999999999,
     "id": "91du",
     "inheritFrom": "oracle_holder1",
-    "z": 51434
+    "z": 51434,
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "92du": {
     "type": "holder",
@@ -11398,7 +12998,12 @@
     "y": 773.4499999999999,
     "id": "92du",
     "inheritFrom": "oracle_holder1",
-    "z": 51437
+    "z": 51437,
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "93du": {
     "type": "holder",
@@ -11406,7 +13011,12 @@
     "y": 876.8,
     "id": "93du",
     "inheritFrom": "oracle_holder1",
-    "z": 51432
+    "z": 51432,
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "94du": {
     "type": "holder",
@@ -11414,7 +13024,12 @@
     "y": 618.425,
     "id": "94du",
     "inheritFrom": "oracle_holder1",
-    "z": 51438
+    "z": 51438,
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "95du": {
     "type": "holder",
@@ -11422,7 +13037,12 @@
     "y": 670.0999999999999,
     "id": "95du",
     "inheritFrom": "oracle_holder1",
-    "z": 51439
+    "z": 51439,
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "96du": {
     "type": "holder",
@@ -11430,7 +13050,12 @@
     "y": 566.75,
     "id": "96du",
     "inheritFrom": "oracle_holder1",
-    "z": 51440
+    "z": 51440,
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "98du": {
     "type": "holder",
@@ -11438,15 +13063,25 @@
     "y": 566.75,
     "id": "98du",
     "inheritFrom": "oracle_holder1",
-    "z": 51442
+    "z": 51442,
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "97du": {
     "type": "holder",
-    "x": 146.5685,
-    "y": 308.375,
+    "x": 236.06959999999998,
+    "y": 360.04999999999995,
     "id": "97du",
     "inheritFrom": "oracle_holder1",
-    "z": 51444
+    "z": 52431,
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "click_market_holder": {
     "id": "click_market_holder",
@@ -11462,7 +13097,12 @@
       }
     },
     "x": 12,
-    "movable": false
+    "movable": false,
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "rotate_holder": {
     "id": "rotate_holder",
@@ -11478,7 +13118,12 @@
         "box-shadow": "2px 2px 5px black, -1px -1px 0px black"
       }
     },
-    "movable": false
+    "movable": false,
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "b80dfsdfl": {
     "type": "basic",
@@ -11500,10 +13145,13 @@
       }
     },
     "text": "CLICK TO ROTATE",
-    "background_color_solid": "black",
-    "contrast_color": "white",
+    "background_color_solid": "#ffeb3b",
+    "contrast_color": "#000000",
     "width": 200,
-    "movable": false
+    "movable": false,
+    "color": "#ffeb3b",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48"
   },
   "resupply_holder": {
     "id": "resupply_holder",
@@ -11520,7 +13168,12 @@
       }
     },
     "movable": false,
-    "height": 105
+    "height": 105,
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "b80dfdsadfsdfl": {
     "type": "basic",
@@ -11540,12 +13193,15 @@
       }
     },
     "text": "CLICK TO RESUPPLY",
-    "background_color_solid": "black",
-    "contrast_color": "white",
+    "background_color_solid": "#ffeb3b",
+    "contrast_color": "#000000",
     "y": 3,
     "width": 200,
     "x": 1,
-    "movable": false
+    "movable": false,
+    "color": "#ffeb3b",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48"
   },
   "b81dfdsadfsdfl": {
     "type": "basic",
@@ -11567,10 +13223,13 @@
       }
     },
     "text": "TRACKS",
-    "background_color_solid": "black",
-    "contrast_color": "white",
+    "background_color_solid": "#ffeb3b",
+    "contrast_color": "#000000",
     "width": 80,
-    "movable": false
+    "movable": false,
+    "color": "#ffeb3b",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48"
   },
   "b82dfdsadfsdfl": {
     "type": "basic",
@@ -11592,10 +13251,13 @@
       }
     },
     "text": "CITIES",
-    "background_color_solid": "black",
-    "contrast_color": "white",
+    "background_color_solid": "#ffeb3b",
+    "contrast_color": "#000000",
     "width": 80,
-    "movable": false
+    "movable": false,
+    "color": "#ffeb3b",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48"
   },
   "counters_holder": {
     "id": "counters_holder",
@@ -11612,7 +13274,12 @@
       }
     },
     "height": 145,
-    "movable": false
+    "movable": false,
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "b80dfddfl": {
     "type": "basic",
@@ -11632,12 +13299,15 @@
       }
     },
     "text": "DRAG TO CITY & CLICK TO INCREASE",
-    "background_color_solid": "black",
-    "contrast_color": "white",
+    "background_color_solid": "#ffeb3b",
+    "contrast_color": "#000000",
     "width": 82,
     "x": 5,
     "y": 5,
-    "movable": false
+    "movable": false,
+    "color": "#ffeb3b",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48"
   },
   "info_turn_parent": {
     "id": "info_turn_parent",
@@ -11656,7 +13326,12 @@
       }
     },
     "note": "The overflow CSS declaration means anything larger than this widget won't be visible.",
-    "borderRadius": 10
+    "borderRadius": 10,
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "info_turn_asset": {
     "id": "info_turn_asset",
@@ -11668,7 +13343,12 @@
     "movableInEdit": false,
     "enlarge": 3,
     "image": "/assets/-1946658716_194642",
-    "note": "Make sure to set movable and movableInEdit to false so you can drag around the whole icon."
+    "note": "Make sure to set movable and movableInEdit to false so you can drag around the whole icon.",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "info_turn_icon": {
     "id": "info_turn_icon",
@@ -11697,13 +13377,23 @@
     },
     "inheritFrom": "info_template_icon",
     "text": "Hover for\nturn info",
-    "note": "The pointer-events CSS declaration means it won't stand in the way of the item under it but you also can't select it by clicking on it so you have to find it in the tree. Make sure the z here is greater than the z on the item you're enlarging."
+    "note": "The pointer-events CSS declaration means it won't stand in the way of the item under it but you also can't select it by clicking on it so you have to find it in the tree. Make sure the z here is greater than the z on the item you're enlarging.",
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "duf9": {
     "id": "duf9",
     "z": 87101,
     "x": 80,
-    "y": -8
+    "y": -8,
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "1_board_anchor": {
     "id": "1_board_anchor",
@@ -11714,7 +13404,7 @@
     "z": 83852,
     "movable": false,
     "movableInEdit": false,
-    "color": "#1f5ca6",
+    "color": "#ffeb3b",
     "css": "border-radius: 80% 80% 40% 110%",
     "image": "/i/game-pieces/3D/Pin-3D.svg",
     "svgReplaces": {
@@ -11726,6 +13416,10 @@
     "borderWidth": "1",
     "passed": false,
     "layer": 2,
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b",
     "onlyVisibleForSeat": "none"
   },
   "2_board_anchor": {
@@ -11737,7 +13431,7 @@
     "z": 83893,
     "movable": false,
     "movableInEdit": false,
-    "color": "#1f5ca6",
+    "color": "#ffeb3b",
     "css": "border-radius: 80% 80% 40% 110%",
     "image": "/i/game-pieces/3D/Pin-3D.svg",
     "svgReplaces": {
@@ -11749,6 +13443,10 @@
     "borderWidth": "1",
     "passed": false,
     "layer": 2,
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b",
     "onlyVisibleForSeat": "none"
   },
   "3_board_anchor": {
@@ -11760,7 +13458,7 @@
     "z": 83891,
     "movable": false,
     "movableInEdit": false,
-    "color": "#1f5ca6",
+    "color": "#ffeb3b",
     "css": "border-radius: 80% 80% 40% 110%",
     "image": "/i/game-pieces/3D/Pin-3D.svg",
     "svgReplaces": {
@@ -11772,6 +13470,10 @@
     "borderWidth": "1",
     "passed": false,
     "layer": 2,
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b",
     "onlyVisibleForSeat": "none"
   },
   "4_board_anchor": {
@@ -11783,7 +13485,7 @@
     "z": 83894,
     "movable": false,
     "movableInEdit": false,
-    "color": "#1f5ca6",
+    "color": "#ffeb3b",
     "css": "border-radius: 80% 80% 40% 110%",
     "image": "/i/game-pieces/3D/Pin-3D.svg",
     "svgReplaces": {
@@ -11795,6 +13497,10 @@
     "borderWidth": "1",
     "passed": false,
     "layer": 2,
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b",
     "onlyVisibleForSeat": "none"
   },
   "1_seat_anchor": {
@@ -11805,7 +13511,7 @@
     "z": 83852,
     "movable": false,
     "movableInEdit": false,
-    "color": "pink",
+    "color": "#ffeb3b",
     "css": "border-radius: 80% 80% 40% 110%",
     "image": "/i/game-pieces/3D/Pin-3D.svg",
     "svgReplaces": {
@@ -11816,7 +13522,11 @@
     "borderColor": "pink",
     "borderWidth": "1",
     "passed": false,
-    "layer": 5
+    "layer": 5,
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "2_seat_anchor": {
     "id": "2_seat_anchor",
@@ -11827,7 +13537,7 @@
     "z": 83852,
     "movable": false,
     "movableInEdit": false,
-    "color": "pink",
+    "color": "#ffeb3b",
     "css": "border-radius: 80% 80% 40% 110%",
     "image": "/i/game-pieces/3D/Pin-3D.svg",
     "svgReplaces": {
@@ -11838,7 +13548,11 @@
     "borderColor": "pink",
     "borderWidth": "1",
     "passed": false,
-    "layer": 5
+    "layer": 5,
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "3_seat_anchor": {
     "id": "3_seat_anchor",
@@ -11849,7 +13563,7 @@
     "z": 83852,
     "movable": false,
     "movableInEdit": false,
-    "color": "pink",
+    "color": "#ffeb3b",
     "css": "border-radius: 80% 80% 40% 110%",
     "image": "/i/game-pieces/3D/Pin-3D.svg",
     "svgReplaces": {
@@ -11860,7 +13574,11 @@
     "borderColor": "pink",
     "borderWidth": "1",
     "passed": false,
-    "layer": 5
+    "layer": 5,
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "4_seat_anchor": {
     "id": "4_seat_anchor",
@@ -11871,7 +13589,7 @@
     "z": 83852,
     "movable": false,
     "movableInEdit": false,
-    "color": "pink",
+    "color": "#ffeb3b",
     "css": "border-radius: 80% 80% 40% 110%",
     "image": "/i/game-pieces/3D/Pin-3D.svg",
     "svgReplaces": {
@@ -11882,7 +13600,11 @@
     "borderColor": "pink",
     "borderWidth": "1",
     "passed": false,
-    "layer": 5
+    "layer": 5,
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "4t20": {
     "deck": "4_road_deck",
@@ -11990,7 +13712,7 @@
     "layer": 60,
     "z": 183,
     "movable": true,
-    "color": "#999999",
+    "color": "#ffeb3b",
     "css": {
       "default": {
         "color": "black",
@@ -12026,7 +13748,11 @@
     "hoverParent": "city value holder",
     "dragging": "Ryan",
     "id": "g4mu",
-    "parent": "city value holder"
+    "parent": "city value holder",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
   "wddk": {
     "deck": "3_city_deck",
@@ -12320,61 +14046,57 @@
           }
         ]
       }
-    ]
+    ],
+    "color": "#ffeb3b",
+    "contrast_color": "#000000",
+    "contrast_color_opposite": "#FFFFFF",
+    "background_color_transparent": "#ffeb3b48",
+    "background_color_solid": "#ffeb3b"
   },
-  "3hiu": {
-    "type": "pile",
-    "parent": "blank_oracle_holder",
-    "x": 4,
-    "y": 4,
-    "width": 103,
-    "height": 160,
-    "id": "3hiu"
-  },
-  "xz09": {
+  "rot5": {
     "type": "pile",
     "parent": "oracle_holder",
     "x": 4,
     "y": 4,
     "width": 60,
     "height": 60,
-    "id": "xz09"
+    "id": "rot5"
   },
-  "vheo": {
+  "m7hp": {
     "type": "pile",
     "parent": "1_cards_holder",
     "x": 4,
     "y": 4,
     "width": 118,
     "height": 175,
-    "id": "vheo"
+    "id": "m7hp"
   },
-  "zzd0": {
+  "e764": {
     "type": "pile",
     "parent": "2_cards_holder",
     "x": 4,
     "y": 4,
     "width": 118,
     "height": 175,
-    "id": "zzd0"
+    "id": "e764"
   },
-  "e1t8": {
+  "an9i": {
     "type": "pile",
     "parent": "3_cards_holder",
     "x": 4,
     "y": 4,
     "width": 118,
     "height": 175,
-    "id": "e1t8"
+    "id": "an9i"
   },
-  "ga0b": {
+  "pd1s": {
     "type": "pile",
     "parent": "4_cards_holder",
     "x": 4,
     "y": 4,
     "width": 118,
     "height": 175,
-    "id": "ga0b"
+    "id": "pd1s"
   },
   "_meta": {
     "version": 15,
@@ -12387,7 +14109,7 @@
       "mode": "vs",
       "time": "90",
       "attribution": "The graphical assets were modified from a design created by Stephan Suhar. They are used with their full permission. All graphical modifications, layout design, library image, and coding were completed by Jonathan Cox.&nbsp;",
-      "lastUpdate": 1717424249723,
+      "lastUpdate": 1717616639163,
       "showName": true,
       "skill": "",
       "description": "Build sprawling trade empires while competing for the attention of powerful Oracles, and investing in opponent's cities.",
