@@ -2760,8 +2760,10 @@
       0,
       0
     ],
-    "turn": false,
-    "player": ""
+    "player": "",
+    "mainColor": "#ffffff",
+    "textColor": "#000000",
+    "glowColor": "#000000"
   },
   "bidValue3": {
     "inheritFrom": {
@@ -8382,10 +8384,10 @@
     ],
     "roundLabel": "",
     "y": 650,
+    "scale": 0,
     "rounds": [
       "Card Points"
-    ],
-    "scale": 0
+    ]
   },
   "seat1": {
     "type": "seat",
@@ -13512,6 +13514,10 @@
       ],
       [
         "rankIndicator",
+        0
+      ],
+      [
+        "secretAgentLabel",
         0
       ]
     ],
@@ -26244,7 +26250,8 @@
       "Do not have to follow suit to play. If suit of Mighty led and only card left in that suit, must play it. If Mighty led, other players follow suit if able (not trumps).",
       "Do not have to follow suit to play. If Ripper leads, Joker is lowest card. If Joker leads 1st or last trick, Joker is lowest card and second player's card determines trick suit. If Joker leads any other trick, that player declears trick suit.",
       "If led and player asks, then Joker must be played and loses. Cannot play on 1st trick."
-    ]
+    ],
+    "player": "Who's Your Agent?"
   },
   "playerAid7": {
     "type": "scoreboard",
@@ -32453,6 +32460,10 @@
       [
         "bidWinner",
         0
+      ],
+      [
+        "secretAgentLabel",
+        1
       ]
     ],
     "gameID": true,
@@ -32495,134 +32506,35 @@
     "dealRoutine": [
       {
         "func": "SELECT",
-        "type": "card",
-        "property": "deck",
-        "value": "crowDeck",
-        "collection": "crowDeck"
-      },
-      {
-        "func": "SELECT",
-        "source": "crowDeck",
-        "collection": "agentCards",
-        "mode": "add",
-        "type": "card",
-        "property": "cardType",
-        "value": "1 red"
-      },
-      {
-        "func": "SELECT",
-        "source": "crowDeck",
-        "collection": "agentCards",
-        "mode": "add",
-        "type": "card",
-        "property": "cardType",
-        "value": "1 green"
-      },
-      {
-        "func": "SELECT",
-        "source": "crowDeck",
-        "collection": "agentCards",
-        "mode": "add",
-        "type": "card",
-        "property": "cardType",
-        "value": "1 black"
-      },
-      {
-        "func": "SELECT",
-        "source": "crowDeck",
-        "collection": "agentCards",
-        "mode": "add",
-        "type": "card",
-        "property": "cardType",
-        "value": "0 crow"
-      },
-      {
-        "func": "SET",
-        "collection": "agentCards",
-        "property": "parent",
-        "value": "tempHolder"
-      },
-      {
-        "func": "SHUFFLE",
-        "holder": "tempHolder"
-      },
-      {
-        "func": "MOVE",
-        "from": "tempHolder",
-        "to": [
+        "property": "id",
+        "relation": "in",
+        "value": [
           "seat1",
           "seat2",
           "seat3",
-          "seat4",
-          "seat5",
-          "seat6",
-          "seat7",
-          "seat8"
-        ],
-        "count": 1
-      }
-    ],
-    "recallRoutine": [
-      {
-        "func": "SELECT",
-        "type": "card",
-        "property": "deck",
-        "value": "crowDeck",
-        "collection": "crowDeck"
+          "seat4"
+        ]
       },
       {
-        "func": "SELECT",
-        "source": "crowDeck",
-        "collection": "agentCards",
-        "mode": "add",
-        "type": "card",
-        "property": "cardType",
-        "value": "1 red"
+        "func": "GET",
+        "property": "id",
+        "aggregation": "array"
       },
+      "var id = shuffle ${id}",
       {
-        "func": "SELECT",
-        "source": "crowDeck",
-        "collection": "agentCards",
-        "mode": "add",
-        "type": "card",
-        "property": "cardType",
-        "value": "1 green"
-      },
-      {
-        "func": "SELECT",
-        "source": "crowDeck",
-        "collection": "agentCards",
-        "mode": "add",
-        "type": "card",
-        "property": "cardType",
-        "value": "1 black"
-      },
-      {
-        "func": "SELECT",
-        "source": "crowDeck",
-        "collection": "agentCards",
-        "mode": "add",
-        "type": "card",
-        "property": "cardType",
-        "value": "0 crow"
-      },
-      {
-        "func": "SET",
-        "collection": "agentCards",
-        "property": "parent",
-        "value": "tempHolder"
-      },
-      {
-        "func": "SET",
-        "collection": "agentCards",
-        "property": "activeFace",
-        "value": 0
-      },
-      {
-        "func": "MOVE",
-        "from": "tempHolder",
-        "to": "offHolder",
-        "count": 0
+        "func": "FOREACH",
+        "in": "${id}",
+        "loopRoutine": [
+          "var key = ${key} + 1",
+          {
+            "func": "SET",
+            "collection": [
+              "secretAgent${key}"
+            ],
+            "property": "onlyVisibleForSeat",
+            "value": "${value}"
+          }
+        ]
       }
     ],
     "sortExceptionsRoutine": [
@@ -32633,7 +32545,20 @@
       }
     ],
     "playerAidDetail2": "Who's Your Agent?",
-    "movable": false
+    "movable": false,
+    "recallRoutine": [
+      {
+        "func": "SET",
+        "collection": [
+          "secretAgent1",
+          "secretAgent2",
+          "secretAgent3",
+          "secretAgent4"
+        ],
+        "property": "onlyVisibleForSeat",
+        "value": []
+      }
+    ]
   },
   "playerAid34": {
     "type": "scoreboard",
@@ -32663,38 +32588,6 @@
       "Winning no tricks gives a multiplier of 10."
     ],
     "seats": ""
-  },
-  "playerAid34a": {
-    "type": "scoreboard",
-    "id": "playerAid34a",
-    "width": 360,
-    "height": 155,
-    "movable": false,
-    "movableInEdit": false,
-    "clickable": false,
-    "css": {
-      ".scoreboard tbody tr:nth-child(1) td": {
-        "background": "#a9c6e8"
-      },
-      ".scoreboard td": {
-        "text-align": "left"
-      }
-    },
-    "roundLabel": "Agent Card",
-    "rounds": [
-      "heart",
-      "square",
-      "triangle",
-      "stars"
-    ],
-    "seats": "playerAidDetail2",
-    "showAllRounds": true,
-    "showPlayerColors": false,
-    "showTotals": false,
-    "parent": "playerAid34",
-    "fixedParent": true,
-    "y": 90,
-    "scoreProperty": "score34"
   },
   "gameID35": {
     "id": "gameID35",
@@ -40045,7 +39938,7 @@
       "mode": "vs",
       "time": "5-60",
       "attribution": "The room and most game elements and mechanics are by LawDawg96 and are released into the Public Domain under CC0.<div><br></div><div>Additional contributions to game pre-sets&nbsp;<span style=\"color: var(--overlayFontColor);\">released into the Public Domain under CC0&nbsp;</span><span style=\"color: var(--overlayFontColor);\">by anewcar, jade-alarm, and Shobu.</span></div><div><div><br></div><div>Items (CC BY 3.0):</div><div><ul><li>Caro Asercion</li><ul><li>Fox, https://game-icons.net/1x1/caro-asercion/fox.html</li></ul><li>Delapouite</li><ul><li>Barrel,&nbsp;https://game-icons.net/1x1/delapouite/barrel.html</li><li>Lovers, https://game-icons.net/1x1/delapouite/lovers.html</li></ul><li><span style=\"color: var(--overlayFontColor);\">Lorc</span></li><ul><li>Screw, https://game-icons.net/1x1/lorc/screw.html</li></ul></ul><div>Player Aids:</div><div><ul><li>Doppelkopf by jkandell</li><li>Königrufen by jkandell<br></li><li>Felõs by Shobu</li><li>Israeli Whist by jkandell</li><li>Color Whist by jkandell</li></ul><div>Decks and Cards</div></div></div><div><ul><li>Crow</li><ul><li>Card design by LawDawg96 and released to the Public Domain under CC0.</li><li>Ally/friend icon used in Auction pre-set by Random Panda and available under CC BY 3.0 at https://thenounproject.com/icon/friend-96006/</li></ul></ul></div></div>",
-      "lastUpdate": 1716657280293,
+      "lastUpdate": 1717885089022,
       "showName": true,
       "skill": "",
       "description": "This room can be used to play many types of card games. It is especially suited for trick taking and point-trick types of games.  It is highly customizable with many games available with pre-set configurations including:\n\n99, 200, 1000, Agony Aunt, Auctions (similar to Bids), Bid Whist, Bouncers, Coiffeur Jass, Chwech, Coinche, Collusion, Color Whist, Counterpoint, Cross Purposes, Crow (Similar to Rook), Czech Taroky, Differenzler Jass, Doppelkopf, Felsõs, French Tarot, Gong Zhu, Hearts, Hold My Beer Huutopussi, Israeli Whist, Klaverjassen, Königrufen, La Bâtarde, Mighty, Mittlere Jass, Molotow Jass, Papayou, Pitch Pawnee 10 Point, Schafkopf, Schieber Jass, Secret Agent, Sidi Barrani Jass, Slovenian Tarok, Spades, State (Similar to Ohio), Tracktrick, Truco, and Tute Subastado\n\nv2.0",
@@ -43042,5 +42935,95 @@
       }
     },
     "text": "General"
+  },
+  "secretAgentLabel": {
+    "id": "secretAgentLabel",
+    "y": 754,
+    "height": 30,
+    "text": "Your agent is:",
+    "movable": false,
+    "x": 720,
+    "layer": -2,
+    "css": {
+      "font-size": "25px"
+    },
+    "width": 160,
+    "scale": 0
+  },
+  "secretAgent1": {
+    "id": "secretAgent1",
+    "height": 30,
+    "movable": false,
+    "text": "Clockwise player",
+    "width": 290,
+    "parent": "secretAgentLabel",
+    "fixedParent": true,
+    "x": -64,
+    "onlyVisibleForSeat": [],
+    "y": 30,
+    "css": {
+      "default": {
+        "display": "flex",
+        "justify-content": "center",
+        "align-items": "center"
+      }
+    }
+  },
+  "secretAgent2": {
+    "id": "secretAgent2",
+    "height": 30,
+    "movable": false,
+    "text": "Counter-clockwise player",
+    "width": 290,
+    "parent": "secretAgentLabel",
+    "fixedParent": true,
+    "onlyVisibleForSeat": [],
+    "y": 30,
+    "css": {
+      "default": {
+        "display": "flex",
+        "justify-content": "center",
+        "align-items": "center"
+      }
+    },
+    "x": -60
+  },
+  "secretAgent3": {
+    "id": "secretAgent3",
+    "height": 30,
+    "movable": false,
+    "text": "Opposite player",
+    "width": 290,
+    "parent": "secretAgentLabel",
+    "fixedParent": true,
+    "onlyVisibleForSeat": [],
+    "y": 30,
+    "css": {
+      "default": {
+        "display": "flex",
+        "justify-content": "center",
+        "align-items": "center"
+      }
+    },
+    "x": -65
+  },
+  "secretAgent4": {
+    "id": "secretAgent4",
+    "height": 30,
+    "movable": false,
+    "width": 290,
+    "parent": "secretAgentLabel",
+    "fixedParent": true,
+    "x": -60,
+    "text": "Yourself",
+    "onlyVisibleForSeat": [],
+    "y": 30,
+    "css": {
+      "default": {
+        "display": "flex",
+        "justify-content": "center",
+        "align-items": "center"
+      }
+    }
   }
 }
