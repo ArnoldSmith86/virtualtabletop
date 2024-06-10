@@ -40,7 +40,13 @@ function initializeEditor(currentMetaData) {
 
     new ToolbarDivider(),
 
-    new GroupButton()
+    new GroupButton(),
+
+    new ToolbarDivider(),
+
+    new TutorialsButton(),
+    new WikiButton()
+    
   ]);
 
   renderDragToolbar(dragToolbarButtons = [
