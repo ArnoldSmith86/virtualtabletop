@@ -6,7 +6,7 @@ VTT is an open-source, free to use platform for creating and playing games. This
 
 ## Playing games
 
-We have over 170 games in our public library that are ready to play right now.  That includes classic games like Chinese checkers, backgammon, mancala, Nine Men’s Morris, Reversi, tangrams, and hangman.  It includes modern games that are similar to many popular card and board games available around the world today.  Most of the games are in English, but quite a few are “universal” and require no ability to read or understand English.  And a handful are offered in German and Portuguese and a few more in Spanish and French. See [Games](https://github.com/ArnoldSmith86/virtualtabletop/wiki/Games) for more detail.
+We have hundreds of games in our public library that are ready to play right now.  That includes classic games like Chinese checkers, backgammon, mancala, Nine Men’s Morris, Reversi, tangrams, and hangman.  It includes modern games that are similar to many popular card and board games available around the world today.  Most of the games are in English, but quite a few are “universal” and require no ability to read or understand English.  And a handful are offered in German and Portuguese and a few more in Spanish and French. See [Games](https://github.com/ArnoldSmith86/virtualtabletop/wiki/Games) for more detail.
 
 ## Creating games
 
@@ -38,41 +38,7 @@ This project started after [a reddit post](https://www.reddit.com/r/PlayingCards
 
 ### Download this repository and get all dependencies
 
-#### Linux
-
-This assumes a Debian based Linux. Find Node.js repositories for other Linux distributions at https://node.dev/node-binary. Consult your distribution's documentation for how to install the git and nodejs packages if your distribution does not use apt.
-
-```
-curl -sL https://deb.nodesource.com/setup_16.x | sudo -E bash -    # adds a repository for Node.js v16
-sudo apt install -y git nodejs                                     # installs the required software
-git clone https://github.com/ArnoldSmith86/virtualtabletop.git     # downloads everything in this repository
-cd virtualtabletop                                                 # changes to the newly created directory
-npm install                                                        # uses the Node.js package manager to install all dependencies
-```
-
-#### MacOS
-Using [brew](https://brew.sh/):
-
-    brew install node
-    git clone https://github.com/ArnoldSmith86/virtualtabletop.git
-    cd virtualtabletop
-    npm install
-
-#### Windows
-
-1. Install [Git](https://git-scm.com/download/win) and [Node.js](https://nodejs.org/en/download/current/).
-2. Open the command prompt and [cd](https://www.digitalcitizen.life/command-prompt-how-use-basic-commands/) to a directory where you want the project to live.
-3. Do `git clone https://github.com/ArnoldSmith86/virtualtabletop.git` which downloads the project.
-4. Do `cd virtualtabletop` to get into the project directory git created.
-5. Do `npm install` so Node.js downloads all the dependencies of the project.
-
-If you use "GitHub Desktop" you should follow these steps:
-
-1. Install [GitHub Desktop](https://desktop.github.com/) and [Node.js](https://nodejs.org/en/download/current/).
-2. Follow steps to setup the programs. Then open GitHub Desktop.
-3. Go to Current repository -> Add -> Clone a repository and select this one or your fork.
-4. Go to Repository -> Open in Command Prompt.
-5. Do `npm install` so Node.js downloads all the dependencies of the project.
+Follow the steps in [Download Repository](https://github.com/ArnoldSmith86/virtualtabletop/wiki/Download-Repository).
 
 ### Starting the server
 
