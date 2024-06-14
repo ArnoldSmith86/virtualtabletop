@@ -16,6 +16,7 @@ class Scoreboard extends Widget {
       roundLabel: 'Round',
       totalsLabel: 'Totals',
       scoreProperty: 'score',
+      firstColWidth: 50,
       verticalHeader: false,
       seats: null,
       showAllRounds: false,
@@ -131,6 +132,21 @@ class Scoreboard extends Widget {
         console.log('The input overlay for the scoreboard failed to load.', e);
       }
     }
+  }
+
+  css() {
+    let css = super.css();
+
+    css += '; --firstColWidth:' + this.get('firstColWidth') + 'px';
+    css += '; --columns:' + this.numCols;
+
+    return css;
+  }
+
+  cssProperties() {
+    const p = super.cssProperties();
+    p.push('firstColWidth');
+    return p;
   }
 
   get(property) {
@@ -419,7 +435,7 @@ class Scoreboard extends Widget {
           this.tableDOM.rows[r].cells[numCols-1].classList.add('totalsLine');
       }
     }
-    this.domElement.style.setProperty('--firstColWidth', '50px');
-    this.domElement.style.setProperty('--columns', numCols);
+    this.numCols = numCols;
+    this.domElement.style.cssText = mapAssetURLs(this.css());
   }
 }
