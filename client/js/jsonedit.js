@@ -552,6 +552,44 @@ const jeCommands = [
     }
   },
   {
+    id: 'je_hexGrid',
+    name: 'calculated hex grid',
+    context: '^[^ ]* ↦ grid',
+    call: async function() {
+      const w = widgets.get(jeStateNow.id);
+      let hexType = w.get('hexType');
+      let isFlat = hexType === 'flat';
+      let hexSide = isFlat ? w.get('height') : w.get('width');
+
+      let long = hexSide;
+      let short = parseFloat((long * Math.sqrt(3) / 2).toFixed(2));
+      let long15 = long * 1.5;
+      let long75 = long * 0.75;
+      let shortHalf = short / 2;
+
+      let xHex = isFlat ? long15 : short;
+      let yHex = isFlat ? short : long15;
+      let offsetXHex = isFlat ? long75 : shortHalf;
+      let offsetYHex = isFlat ? shortHalf : long75;
+
+      jeStateNow.grid.push(
+        {
+          "x": '###SELECT ME###',
+          "y": yHex,
+          "offsetX": offsetXHex,
+          "offsetY": offsetYHex
+        },
+        {
+          "x": xHex,
+          "y": yHex,
+          "offsetX": 0,
+          "offsetY": 0
+        }       
+      );
+      jeSetAndSelect(xHex);
+    }
+  },
+  {
     id: 'je_imageTemplate',
     name: 'image template',
     context: '^deck ↦ faceTemplates ↦ [0-9]+ ↦ objects',
@@ -1304,6 +1342,20 @@ function jeAddGridCommand(key, value) {
     }
   });
 }
+
+function jeAddHexGridCommand(key, value) {
+  jeCommands.push({
+    id: 'hexGrid_' + key,
+    name: key,
+    context: '^[^ ]* ↦ grid ↦ [0-9]+',
+    show: _=>!(key in jeStateNow.hexGrid[+jeContext[2]]),
+    call: async function() {
+      jeStateNow.hexGrid[+jeContext[2]][key] = '###SELECT ME###';
+      jeSetAndSelect(value);
+    }
+  });
+}
+    
 
 function jeAddLimitCommand(key, value) {
   jeCommands.push({
