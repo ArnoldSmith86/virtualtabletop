@@ -33,6 +33,14 @@ body {
   font-family: 'Roboto', sans-serif;
 }
 
+body.darkMode input {
+  --overlayFontColor: #ffffff;
+}
+
+body.darkMode input::placeholder {
+  color: #ffffff;
+}
+
 body.loadingEditMode * {
   cursor: wait;
 }
