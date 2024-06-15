@@ -50,6 +50,18 @@ export default class Room {
     }
   }
 
+  async addShare(shareID) {
+    if(shareID.match(/^PL:/)) {
+      const state = this.getStateDetails(shareID);
+      if(!this.state._meta.starred[state.publicLibrary])
+        this.toggleStateStar(null, state.publicLibrary);
+      return state.id;
+    } else {
+      await this.addState(shareID, 'link', `${Config.get('externalURL')}/s/${shareID}/name.vtt`, '');
+      return shareID;
+    }
+  }
+
   async addState(id, type, src, srcName, addAsVariant) {
     const initialAddAsVariant = addAsVariant;
     let stateID = addAsVariant || id;
@@ -104,7 +116,7 @@ export default class Room {
           return;
         }
 
-        if(type != 'link')
+        if(type != 'link' || meta.importerTemp)
           fs.writeFileSync(this.variantFilename(stateID, newVariantID), JSON.stringify(variant));
 
         let variantMeta = {
@@ -123,7 +135,7 @@ export default class Room {
           };
         }
 
-        if(type == 'link') {
+        if(type == 'link' && !meta.importerTemp) {
           const baseLink = src.replace(/#[^#]*$/, '');
           meta.link = `${baseLink}#${state}`;
           if(!variantMeta.link && !variantMeta.plStateID) {
@@ -143,7 +155,7 @@ export default class Room {
         if(addAsVariant) {
           if(!this.state._meta.states[stateID].variants[newVariantID])
             this.state._meta.states[stateID].variants[newVariantID] = variantMeta;
-          else if(type != 'link')
+          else if(type != 'link' || meta.importerTemp)
             delete this.state._meta.states[stateID].variants[newVariantID].link;
           if(!this.state._meta.states[stateID].attribution)
             this.state._meta.states[stateID].attribution = meta.attribution;
@@ -158,6 +170,11 @@ export default class Room {
 
         if(type == 'state')
           this.state._meta.activeState = { stateID, variantID: newVariantID };
+
+        if(meta.importerTemp) {
+          meta.importer = meta.importerTemp;
+          delete meta.importerTemp;
+        }
       }
 
 
@@ -255,13 +272,7 @@ export default class Room {
         state = JSON.parse(fs.readFileSync(this.variantFilename(stateID, vID)));
       state._meta = { version: state._meta.version, info: { ...s } };
       Object.assign(state._meta.info, state._meta.info.variants[vID]);
-      delete state._meta.info.variants;
-      delete state._meta.info.link;
-      delete state._meta.info.publicLibrary;
-      delete state._meta.info.publicLibraryCategory;
-      delete state._meta.info.starred;
-      delete state._meta.info.stars;
-      delete state._meta.info.timePlayed;
+      this.unsetMetadataForWritingFile(state._meta.info);
 
       zip.file(`${vID}.json`, JSON.stringify(state, null, '  '));
       if(includeAssets)
@@ -420,6 +431,23 @@ export default class Room {
     }
     Statistics.updateDataInsideStates(Room.publicLibrary);
     return Room.publicLibrary;
+  }
+
+  getStateDetails(stateID) {
+    if(stateID.match(/^PL:/)) {
+      const [ , category, name ] = stateID.split(':');
+      for(const [ id, state ] of Object.entries(this.state._meta.states))
+        if(state.publicLibrary && state.publicLibraryCategory.toLowerCase() == `${category}s` && state.name.replace(/[^A-Za-z]+/g, '-').toLowerCase().replace(/^-+/, '').replace(/-+$/, '') == name)
+          return Object.assign({}, state, { id });
+    } else {
+      return this.state._meta.states[stateID];
+    }
+  }
+
+  getVariantMetadata(stateID, variantID) {
+    const meta = Object.assign({}, this.state._meta.states[stateID], this.state._meta.states[stateID].variants[variantID]);
+    this.unsetMetadataForWritingFile(meta);
+    return meta;
   }
 
   async load(fileOrLink, player, delayForGameStartRoutine) {
@@ -811,6 +839,52 @@ export default class Room {
     return Config.directory('save') + '/rooms/' + this.id + '.json';
   }
 
+  saveCurrentState(mode, name) {
+    const active = this.state._meta.activeState;
+    if(mode == 'activeVariant' && active) {
+      if(active.stateID.match(/^PL:/) && !Config.get('allowPublicLibraryEdits'))
+        return;
+      this.saveCurrentState_write(active.stateID, active.variantID, this.getVariantMetadata(active.stateID, active.variantID));
+      if(active.stateID.match(/^PL:/))
+        this.writePublicLibraryAssetsToFilesystem(active.stateID);
+    }
+    if(mode == 'addVariant' && active) {
+      if(active.stateID.match(/^PL:/) && !Config.get('allowPublicLibraryEdits'))
+        return;
+      this.saveCurrentState_write(active.stateID, this.state._meta.states[active.stateID].variants.length, Object.assign(this.getVariantMetadata(active.stateID, active.variantID), { language: '', variant: '', players: '' }));
+      if(active.stateID.match(/^PL:/))
+        this.writePublicLibraryAssetsToFilesystem(active.stateID);
+    }
+    if(mode == 'addState')
+      this.saveCurrentState_write(Math.random().toString(36).substring(3, 7), 0, { name });
+    if(mode == 'quickSave')
+      this.saveCurrentState_write('quicksave', this.state._meta.states['quicksave'] ? this.state._meta.states['quicksave'].variants.length : 0, { name: 'Quicksave', variant: `${new Date().toISOString().substr(0,16).replace(/T/, ' ')}` }, false);
+  }
+
+  saveCurrentState_write(stateID, variantID, metadata, setToActiveState=true) {
+    const newState = {...this.state};
+    newState._meta = {
+      version: this.state._meta.version,
+      info: metadata
+    };
+    if(!this.state._meta.states[stateID]) {
+      this.state._meta.states[stateID] = Object.assign({}, metadata);
+      this.state._meta.states[stateID].variants = [];
+      delete this.state._meta.states[stateID].players;
+      delete this.state._meta.states[stateID].language;
+      delete this.state._meta.states[stateID].variant;
+    }
+    this.state._meta.states[stateID].variants[variantID] = {
+      players:  metadata.players,
+      language: metadata.language,
+      variant:  metadata.variant
+    };
+    fs.writeFileSync(this.variantFilename(stateID, variantID), JSON.stringify(newState, null, '  '));
+    if(setToActiveState)
+      this.state._meta.activeState = { stateID, variantID };
+    this.sendMetaUpdate();
+  }
+
   saveState(player, players, updateCurrentSave) {
     if(updateCurrentSave) {
       const stateID = this.state._meta.activeState.saveStateID;
@@ -840,12 +914,7 @@ export default class Room {
     this.state._meta.states[id].savePlayers = players;
     this.state._meta.states[id].saveDate = +new Date();
 
-    delete this.state._meta.states[id].publicLibrary;
-    delete this.state._meta.states[id].publicLibraryCategory;
-    delete this.state._meta.states[id].starred;
-    delete this.state._meta.states[id].stars;
-    delete this.state._meta.states[id].timePlayed;
-    delete this.state._meta.states[id].link;
+    this.unsetMetadataForWritingFile(this.state._meta.states[id], false);
 
     this.addState(id, 'room', null, null, id);
 
@@ -1003,6 +1072,18 @@ export default class Room {
     this.unloadCallback();
   }
 
+  unsetMetadataForWritingFile(meta, deleteVariants=true) {
+    delete meta.id;
+    delete meta.publicLibrary;
+    delete meta.publicLibraryCategory;
+    delete meta.starred;
+    delete meta.stars;
+    delete meta.timePlayed;
+    delete meta.link;
+    if(deleteVariants)
+      delete meta.variants;
+  }
+
   async updateLinkedStates() {
     for(const [ id, state ] of Object.entries(this.state._meta.states)) {
       if(state.link) {
@@ -1029,6 +1110,9 @@ export default class Room {
     const assetsDir = this.variantFilename(stateID, 0).replace(/\/[0-9]+\.json$/, '/assets');
     const usedAssets = this.getAssetListForState(stateID);
 
+    if(!fs.existsSync(assetsDir))
+      fs.mkdirSync(assetsDir);
+
     const savedAssets = {};
     for(const file of fs.readdirSync(assetsDir))
       savedAssets[file] = true;
@@ -1051,13 +1135,7 @@ export default class Room {
 
       state._meta.info = Object.assign(JSON.parse(JSON.stringify(meta)), JSON.parse(JSON.stringify(meta.variants[variantID])));
 
-      delete state._meta.info.id;
-      delete state._meta.info.variants;
-      delete state._meta.info.starred;
-      delete state._meta.info.stars;
-      delete state._meta.info.timePlayed;
-      delete state._meta.info.publicLibrary;
-      delete state._meta.info.publicLibraryCategory;
+      this.unsetMetadataForWritingFile(state._meta.info);
 
       state._meta.info.lastUpdate = +new Date();
 
@@ -1080,13 +1158,7 @@ export default class Room {
       info: JSON.parse(JSON.stringify(this.state._meta.states[stateID].variants[variantID]))
     };
 
-    delete copy._meta.info.publicLibrary;
-    delete copy._meta.info.publicLibraryCategory;
-    delete copy._meta.info.starred;
-    delete copy._meta.info.stars;
-    delete copy._meta.info.timePlayed;
-    delete copy._meta.info.link;
-    delete copy._meta.info.variants;
+    this.unsetMetadataForWritingFile(copy._meta.info);
 
     copy._meta.info.lastUpdate = +new Date();
 

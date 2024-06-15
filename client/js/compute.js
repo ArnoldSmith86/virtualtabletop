@@ -262,7 +262,7 @@ const compute_ops = [
     name: 'random',
     desc: 'returns a decimal number in the range 0 to less than 1',
     sample: 'var a = random',
-    call: function(v) { return v = Math.random() },
+    call: function(v) { return v = rand() },
     hash: 'a41526e7d6ab47d459c67c38585b4088'
   },
   {
@@ -560,6 +560,20 @@ const compute_ops = [
     hash: 'fef9edc84f4e64e3ea51c35520be35d0'
   },
   {
+    name: 'jsonParse',
+    desc: 'parses a JSON string',
+    sample: 'var a = jsonParse ${x}',
+    call: function(v, x, y, z) { return v = JSON.parse(x) },
+    hash: '3e11e14212173cd56ec8b69f83576631'
+  },
+  {
+    name: 'jsonStringify',
+    desc: 'turns any type of variable into a JSON string',
+    sample: 'var a = jsonStringify ${x}',
+    call: function(v, x, y, z) { return v = JSON.stringify(x) },
+    hash: '35f5463c508a58eeaff4deccc25a33c7'
+  },
+  {
     name: 'getIndex',
     desc: 'returns index y of a string or array x',
     sample: 'var a = ${x.$y}\nvar a = ${x} getIndex ${y}',
@@ -689,14 +703,14 @@ const compute_ops = [
     name: 'randInt',
     desc: 'returns a random integer inbetween (and including) two numbers',
     sample: 'var a = randInt ${x} ${y}',
-    call: function(v, x, y) { return v = Math.floor((Math.random() * (y - x + 1)) + x) },
+    call: function(v, x, y) { return v = Math.floor((rand() * (y - x + 1)) + x) },
     hash: '9b07533fb8ae4903272900ea6fbb94d8'
   },
   {
     name: 'randRange',
     desc: 'returns a random integer inbetween two numbers but excluding the endpoint, optionally in z increments (defaults to 1)',
     sample: 'var a = randRange ${x} ${y} ${z}',
-    call: function(v, x, y, z) { return v = Math.round(Math.floor((Math.random() * (y - x) / (z || 1))) * (z || 1) + x) },
+    call: function(v, x, y, z) { return v = Math.round(Math.floor((rand() * (y - x) / (z || 1))) * (z || 1) + x) },
     hash: '5a75b342f9b9a0c11c2a8d0b6ea9e37d'
   },
   {
@@ -740,6 +754,13 @@ const compute_ops = [
     sample: 'var a = colorCreateHue',
     call: function(v, x) { return v = randomHue(x); },
     hash: '29a04e79e53168e3680ee1483a451f4e'
+  },
+  {
+    name: 'fetch',
+    desc: 'downloads a given URL and returns its content as a string',
+    sample: 'var a = fetch ${x}',
+    call: async function(v, x, y) { return v = await ((typeof y === 'object' && y !== null) ? await fetch(x, y) : await fetch(x)).text() },
+    hash: 'e1aebce1c5225dc5f624f3ccb3ff104d'
   }
 ];
 

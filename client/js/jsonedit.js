@@ -258,14 +258,56 @@ const jeCommands = [
   {
     id: 'je_uploadAsset',
     name: 'upload a different asset',
-    context: '.*"(/assets/[0-9_-]+)"|^.* ↦ image$|^deck ↦ faceTemplates ↦ [0-9]+ ↦ objects ↦ [0-9]+ ↦ value$',
+    context: '.*"(/assets/[0-9_-]+|/i/[^"]+)"|^.* ↦ image$|^deck ↦ faceTemplates ↦ [0-9]+ ↦ objects ↦ [0-9]+ ↦ value$',
+    show: _=>!jeGetValue()||!String(jeGetValue()[jeGetLastKey()]).match(/^\/assets\/[0-9_-]+$/),
     call: async function() {
-      uploadAsset().then(a=> {
-        if(a) {
-          jeInsert(null, jeGetLastKey(), a);
-          jeApplyChanges();
-        }
-      });
+      const a = await uploadAsset();
+      if(a) {
+        jeInsert(null, jeGetLastKey(), a);
+        await jeApplyChanges();
+      }
+    }
+  },
+  {
+    id: 'je_uploadAssetGeneric',
+    name: 'upload a different asset',
+    context: '.*',
+    show: _=>jeGetValue()&&String(jeGetValue()[jeGetLastKey()]).match(/^\/assets\/[0-9_-]+$/),
+    call: async function() {
+      const a = await uploadAsset();
+      if(a) {
+        jeInsert(null, jeGetLastKey(), a);
+        await jeApplyChanges();
+      }
+    }
+  },
+  {
+    id: 'je_symbolPickerAsset',
+    name: 'pick an asset from the symbol picker',
+    context: '.*"(/assets/[0-9_-]+|/i/[^"]+)"|^.* ↦ image$|^deck ↦ faceTemplates ↦ [0-9]+ ↦ objects ↦ [0-9]+ ↦ value$',
+    call: async function() {
+      const a = await pickSymbol('images');
+      if(a) {
+        jeInsert(null, jeGetLastKey(), a.url);
+        await jeApplyChanges();
+      }
+    }
+  },
+  {
+    id: 'je_symbolPickerText',
+    name: 'pick an asset from the symbol picker',
+    context: '^button ↦ text$',
+    call: async function() {
+      const a = await pickSymbol('fonts');
+      if(a) {
+        jeStateNow.classes = a.type;
+        jeStateNow.text = a.symbol;
+        jeSetAndSelect();
+        await jeApplyChanges();
+      }
+    },
+    show: function() {
+      return [ 'symbols', 'material-icons' ].indexOf(jeStateNow.classes) != -1;
     }
   },
   {
@@ -273,12 +315,11 @@ const jeCommands = [
     name: 'upload audio file',
     context: '^.*\\(AUDIO\\) ↦ source|^.* ↦ clickSound',
     call: async function() {
-      uploadAsset().then(a=> {
-        if(a) {
-          jeInsert(null, jeGetLastKey(), a);
-          jeApplyChanges();
-        }
-      });
+      const a = await uploadAsset();
+      if(a) {
+        jeInsert(null, jeGetLastKey(), a);
+        await jeApplyChanges();
+      }
     }
   },
   {
@@ -831,6 +872,20 @@ function jeAddRoutineExpressionCommands(variable, expression) {
   });
 }
 
+function jeAddRoutineCommentCommand() {
+  jeCommands.push({
+    id: 'comment_',
+    name: 'Comment',
+    class: 'comment',
+    context: '^.*Routine',
+    call: jeRoutineCall(function (routineIndex, routine, operationIndex) {
+      routine.splice(operationIndex+1, 0, `// ###SELECT ME###`);
+      jeSetAndSelect('Comment', true);
+    }),
+    show: jeRoutineCall((_, routine) => Array.isArray(routine), true)
+  });
+}
+
 function jeAddRoutineOperationCommands(command, defaults) {
   jeCommands.push({
     id: 'operation_' + command,
@@ -845,6 +900,18 @@ function jeAddRoutineOperationCommands(command, defaults) {
       jeSetAndSelect(command);
     }),
     show: jeRoutineCall((_, routine)=>Array.isArray(routine), true)
+  });
+
+  jeCommands.push({
+    id: 'default_' + command + '_comment',
+    name: 'comment',
+    context: `^.* ↦ \\(${command}\\) ↦ `,
+    call: jeRoutineCall(function(routineIndex, routine, operationIndex, operation) {
+      jeInsert(jeContext.slice(1, routineIndex+2), 'comment', 'Write a quick comment to make the operation more human-readable.');
+    }),
+    show: jeRoutineCall(function(routineIndex, routine, operationIndex, operation) {
+      return operation && operation['comment'] === undefined;
+    }, true)
   });
 
   for(const property in defaults) {
@@ -892,19 +959,19 @@ function jeAddCommands() {
   jeAddRoutineOperationCommands('AUDIO', { source: '', type: 'audio/mpeg', maxVolume: 1.0, length: null, player: null });
   jeAddRoutineOperationCommands('CALL', { widget: 'id', routine: 'clickRoutine', return: true, arguments: {}, variable: 'result' });
   jeAddRoutineOperationCommands('CANVAS', { canvas: null, mode: 'reset', x: 0, y: 0, value: 1 ,color:'#1F5CA6' });
-  jeAddRoutineOperationCommands('CLICK', { collection: 'DEFAULT', count: 1 , mode:'respect'});
-  jeAddRoutineOperationCommands('COUNT', { collection: 'DEFAULT', holder: null, variable: 'COUNT', owner: null });
+  jeAddRoutineOperationCommands('CLICK', { collection: 'DEFAULT', count: 1 , mode:'respect' });
   jeAddRoutineOperationCommands('CLONE', { source: 'DEFAULT', collection: 'DEFAULT', xOffset: 0, yOffset: 0, count: 1, recursive: false, properties: null });
+  jeAddRoutineOperationCommands('COUNT', { collection: 'DEFAULT', holder: null, variable: 'COUNT', owner: null });
   jeAddRoutineOperationCommands('DELETE', { collection: 'DEFAULT'});
   jeAddRoutineOperationCommands('FLIP', { count: 0, face: null, faceCycle: 'forward', holder: null, collection: 'DEFAULT' });
   jeAddRoutineOperationCommands('FOREACH', { loopRoutine: [], in: [], range: [], collection: 'DEFAULT' });
   jeAddRoutineOperationCommands('GET', { variable: 'id', collection: 'DEFAULT', property: 'id', aggregation: 'first', skipMissing: false });
   jeAddRoutineOperationCommands('IF', { condition: null, operand1: null, relation: '==', operand2: null, thenRoutine: [], elseRoutine: [] });
-  jeAddRoutineOperationCommands('INPUT', { cancelButtonIcon: null, cancelButtonText: "Cancel", confirmButtonIcon: null, confirmButtonText: "OK", fields: [] } );
+  jeAddRoutineOperationCommands('INPUT', { cancelButtonIcon: null, cancelButtonText: "Cancel", confirmButtonIcon: null, confirmButtonText: "Go", fields: [], header: "" } );
   jeAddRoutineOperationCommands('LABEL', { value: 0, mode: 'set', label: null, collection: 'DEFAULT' });
-  jeAddRoutineOperationCommands('MOVE', { count: 1, face: null, from: null, to: null });
+  jeAddRoutineOperationCommands('MOVE', { count: 1, face: null, from: null, to: null, fillTo: null, collection: 'DEFAULT' });
   jeAddRoutineOperationCommands('MOVEXY', { count: 1, face: null, from: null, x: 0, y: 0, snapToGrid: true, resetOwner: true });
-  jeAddRoutineOperationCommands('RECALL', { owned: true, inHolder: true, holder: null });
+  jeAddRoutineOperationCommands('RECALL', { owned: true, inHolder: true, holder: null, excludeCollection: null });
   jeAddRoutineOperationCommands('ROTATE', { count: 1, angle: 90, mode: 'add', holder: null, collection: 'DEFAULT' });
   jeAddRoutineOperationCommands('SCORE', { mode: 'set', property: 'score', seats: null, round: null, value: null });
   jeAddRoutineOperationCommands('SELECT', { type: 'all', property: 'parent', relation: '==', value: null, max: 999999, collection: 'DEFAULT', mode: 'set', source: 'all', sortBy: '###SEE jeAddRoutineOperation###'});
@@ -916,6 +983,8 @@ function jeAddCommands() {
 
   jeAddRoutineExpressionCommands('random', 'randInt 1 10');
   jeAddRoutineExpressionCommands('increment', '${variableName} + 1');
+
+  jeAddRoutineCommentCommand();
 
   jeAddCSScommands();
 
@@ -944,13 +1013,25 @@ function jeAddCommands() {
   jeAddLimitCommand('maxY');
 
   jeAddFieldCommand('text', 'subtitle|title|text', '');
-  jeAddFieldCommand('label', 'checkbox|color|number|palette|select|string|switch', '');
-  jeAddFieldCommand('value', 'checkbox|color|number|palette|select|string|switch', '');
-  jeAddFieldCommand('variable', 'checkbox|color|number|palette|select|string|switch', '');
+  jeAddFieldCommand('label', 'checkbox|choose|color|number|palette|select|string|switch', '');
+  jeAddFieldCommand('value', 'checkbox|choose|color|number|palette|select|string|switch', '');
+  jeAddFieldCommand('variable', 'checkbox|choose|color|number|palette|select|string|switch', '');
   jeAddFieldCommand('colors', 'palette', [ '#000000' ]);
   jeAddFieldCommand('min', 'number', 0);
   jeAddFieldCommand('max', 'number', 10);
   jeAddFieldCommand('options', 'select', [ { value: 'value', text: 'text' } ]);
+  jeAddFieldCommand('regex', 'string', '');
+  jeAddFieldCommand('regexHint', 'string', '');
+
+  jeAddFieldCommand('source', 'choose', 'DEFAULT');
+  jeAddFieldCommand('collection', 'choose', 'DEFAULT');
+  jeAddFieldCommand('holder', 'choose', '');
+  jeAddFieldCommand('min', 'choose', 0);
+  jeAddFieldCommand('max', 'choose', 1);
+  jeAddFieldCommand('mode', 'choose', 'widgets');
+  jeAddFieldCommand('faces', 'choose', null);
+  jeAddFieldCommand('scale', 'choose', 1);
+  jeAddFieldCommand('propertyOverride', 'choose', {});
 
   jeAddEnumCommands('^[a-z]+ ↦ type', widgetTypes.slice(1));
   jeAddEnumCommands('^.*\\([A-Z]+\\) ↦ value', [ '${}' ]);
@@ -963,7 +1044,8 @@ function jeAddCommands() {
   jeAddEnumCommands('^.*\\(GET\\) ↦ aggregation', [ 'first', 'last', 'array', 'average', 'median', 'min', 'max', 'sum' ]);
   jeAddEnumCommands('^.*\\(IF\\) ↦ relation', [ '<', '<=', '==', '!=', '>', '>=' ]);
   jeAddEnumCommands('^.*\\(IF\\) ↦ (operand1|operand2|condition)', [ '${}' ]);
-  jeAddEnumCommands('^.*\\(INPUT\\) ↦ fields ↦ [0-9]+ ↦ type', [ 'checkbox', 'color', 'number', 'palette', 'select', 'string', 'subtitle', 'switch', 'text', 'title' ]);
+  jeAddEnumCommands('^.*\\(INPUT\\) ↦ fields ↦ [0-9]+ ↦ mode', [ 'widgets', 'faces' ]);
+  jeAddEnumCommands('^.*\\(INPUT\\) ↦ fields ↦ [0-9]+ ↦ type', [ 'checkbox', 'choose', 'color', 'number', 'palette', 'select', 'string', 'subtitle', 'switch', 'text', 'title' ]);
   jeAddEnumCommands('^.*\\(LABEL\\) ↦ mode', [ 'set', 'dec', 'inc', 'append' ]);
   jeAddEnumCommands('^.*\\(ROTATE\\) ↦ angle', [ 45, 60, 90, 135, 180 ]);
   jeAddEnumCommands('^.*\\(ROTATE\\) ↦ mode', [ 'set', 'add' ]);
@@ -974,7 +1056,7 @@ function jeAddCommands() {
   jeAddEnumCommands('^.*\\(SET\\) ↦ relation', [ '+', '-', '=', "*", "/",'!' ]);
   jeAddEnumCommands('^.*\\(TIMER\\) ↦ mode', [ 'pause', 'start', 'toggle', 'set', 'dec', 'inc', 'reset']);
   jeAddEnumCommands('^.*\\(TIMER\\) ↦ value', [ 0, 'start', 'end', 'milliseconds']);
-  jeAddEnumCommands('^.*\\(TURN\\) ↦ turnCycle', [ 'forward', 'backward', 'random', 'position']);
+  jeAddEnumCommands('^.*\\(TURN\\) ↦ turnCycle', [ 'forward', 'backward', 'random', 'position', 'seat']);
   jeAddEnumCommands('^.*\\([A-Z]+\\) ↦ property', [ 'id', 'parent', 'type', 'rotation' ]);
 
   jeAddEnumCommands('^.*\\((CLICK|COUNT|DELETE|FLIP|GET|LABEL|ROTATE|SET|SORT|SHUFFLE|TIMER)\\) ↦ collection', collectionNames.slice(1));
@@ -1268,7 +1350,7 @@ function jeAddWidgetPropertyCommands(object, widgetBase) {
     context: 'No widget selected.',
     onEmpty: true,
     call: async function() {
-      setSelection([ widgets.get(await addWidgetLocal({type})) ]);
+      setSelection([ widgets.get(await addWidgetLocal(type == 'basic' ? {} : {type})) ]);
     }
   });
   return type == 'basic' ? null : type;
@@ -1376,6 +1458,12 @@ async function jeApplyChangesMulti() {
 
 function jeApplyDelta(delta) {
   if(jeMode == 'widget') {
+    if(delta.s[jeStateNow.id] && delta.s[jeStateNow.id].type !== undefined) {
+      const w = widgets.get(jeStateNow.id);
+      jePlainWidget = new w.constructor();
+      jeColorize();
+    }
+
     for(const field of [ 'id', 'deck' ]) {
       if(!jeDeltaIsOurs && jeStateNow && jeStateNow[field] && delta.s[jeStateNow[field]] !== undefined) {
         if(delta.s[jeStateNow[field]] === null) {
@@ -1935,6 +2023,7 @@ function jeInsert(context, key, value) {
 // START routine logging
 
 let jeRoutineResetOnNextLog = true;
+let jeRoutineAutoReset = true;
 let jeRoutineResult = '';
 let jeLoggingHTML = '';
 let jeLoggingDepth = 0;
@@ -2471,7 +2560,7 @@ function jeInitEventListeners() {
     $('#jeWidgetLayer1').parentNode.scrollTop = $('#jeWidgetLayer1').offsetTop;
 
     if((getRoomRectangle().left <= e.clientX && e.clientX <= getRoomRectangle().right && getRoomRectangle().top <= e.clientY && e.clientY <= getRoomRectangle().bottom)) {
-      $('#jeMouseCoords').innerHTML = "(" + jeState.mouseX + ", " + jeState.mouseY + ")";
+      $('#jeMouseCoords').innerHTML = "Cursor at " + jeState.mouseX + ", " + jeState.mouseY;
     } else {
       $('#jeMouseCoords').innerHTML = ""
     }
@@ -2479,9 +2568,9 @@ function jeInitEventListeners() {
 
   window.addEventListener('mousedown', _=>jeMouseButtonIsDown = jeEnabled);
   window.addEventListener('mouseup', async function(e) {
+    jeRoutineResetOnNextLog = jeRoutineAutoReset;
     if(!jeEnabled)
       return;
-    jeRoutineResetOnNextLog = true;
     jeMouseButtonIsDown = false;
 
     if(e.target == $('#jeText') && jeContext != 'macro') // Click in widget text, fix context

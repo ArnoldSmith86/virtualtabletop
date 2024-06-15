@@ -9,8 +9,8 @@
       "year": "2019",
       "mode": "vs",
       "time": "60",
-      "attribution": "Game layout and scripting by Andy Pymont, provided under the MIT license. Tile graphics are from https://game-icons.net/ and https://thenounproject.com/ and are used under the CC BY 3.0 license:\n\nAaron A. Kim:\n- Hand: https://thenounproject.com/icon/hand-123919/\n\nAndy Pymont\n- Ziggurat: originates in this project.\n\nAyub Irawan\n- Scythe: https://thenounproject.com/icon/scythe-4338250/\n\nDelapouite:\n- Amphora: https://game-icons.net/1x1/delapouite/amphora.html/\n\nLorc:\n- Crown: https://game-icons.net/1x1/lorc/queen-crown.html\n\nNorbert Kucsera:\n- Corn: https://thenounproject.com/icon/corn-2144640/\n\nPaul Verhulst:\n- Circle arrow: https://thenounproject.com/icon/circle-arrow-1979672/\n\nSiri Masriatun:\n- Star: https://thenounproject.com/icon/star-5662351/",
-      "lastUpdate": 1681595644894,
+      "attribution": "Game layout and scripting by Andy Pymont, released to the Public Domain under CC0. Tile graphics are from https://game-icons.net/ and https://thenounproject.com/ and are used under the CC BY 3.0 license:\n\nAaron A. Kim:\n- Hand: https://thenounproject.com/icon/hand-123919/\n\nAndy Pymont\n- Ziggurat: originates in this project.\n\nAyub Irawan\n- Scythe: https://thenounproject.com/icon/scythe-4338250/\n\nDelapouite:\n- Amphora: https://game-icons.net/1x1/delapouite/amphora.html/\n\nLorc:\n- Crown: https://game-icons.net/1x1/lorc/queen-crown.html\n\nNorbert Kucsera:\n- Corn: https://thenounproject.com/icon/corn-2144640/\n\nPaul Verhulst:\n- Circle arrow: https://thenounproject.com/icon/circle-arrow-1979672/\n\nSiri Masriatun:\n- Star: https://thenounproject.com/icon/star-5662351/",
+      "lastUpdate": 1699281916000,
       "showName": true,
       "description": "Compete for the land and cities between the rivers while commanding mighty ziggurats",
       "helpText": "Have every player take a seat and then press the Setup button to select the appropriate board for the player count, set up initial city and crop tiles, deal every player a starting hand and randomly select a start player.\n\nWhen you take a seat, your player pieces will be changed to match your player colour set in virtualtabletop. You can stand up, change your colour, and sit down again if you need to update these to e.g. ensure good contrast with other players.\n\nPlayers can use the +1 and +X buttons to add to their score. The +X prompts you for how many points you are scoring and adds them to your existing score.\n\nAfter scoring a crop tile, or if a city is scored and then not collected by a player (because of a tie for a majority of surrounding tiles), you can discard the tile to original draw pile for city & crop tiles on the right hand side of the table, below the Setup button.\n\nStore your collected city tiles and ziggurat tiles in the appropriate holders in your player area. After adding a city, click the Score Cities button to score every player's city tiles. (This will also take into account ziggurat 7 for a player that owns it and has placed it in their ziggurat holder.)\n\nAt the end of your turn, press the End Turn button to re-draw to your hand size and set the next player as active.",
@@ -19,11 +19,12 @@
       "similarImage": "",
       "similarName": "Babylonia",
       "similarAwards": "",
-      "ruleText": "",
+      "ruleText": "PLAYER DECK:\nEach player has a deck of tiles containing 12 farmers and 6 each of three different suits of nobles, for 30 tiles in total. The default hand size is five tiles.\n\nPLACING TILES:\nOn their turn, a player places either two tiles or three or more face-up farmers. (Exception: During the first turn of the game, the first player may place only one tile and the second player may place only two tiles.)\n\nTiles are placed face-up in unoccupied land spaces, or face-down in unoccupied water spaces. A tile may instead be placed onto a farm tile, claiming and scoring it immediately, but only if the player placing the tile already has a player tile in a hex adjacent to the farm tile. The farm tile showing a grey hex is worth X points, where X is the total number of city tiles collected by all players during the game so far.\n\nWhen a player places next to a red ziggurat, they immediately score X points, where X is the number of ziggurats they now have a tile next to, including the latest placement.\n\nFINISHING YOUR TURN:\nAfter making their two placements, a player scores all cities and ziggurats on the board which have been newly surrounded (counting land spaces only - the water spaces may optionally be occupied but are not required) during their turn, and then draws back up to their hand size of five tiles.\n\nSCORING CITIES:\nWhen a city scores, first each player scores for all noble tiles matching any of the symbols on the city and connected to it through a contiguous chain of their own player tiles. For each such noble, they score 2 points.\n\nNext, check whether one player has more tiles directly surrounding the city than any other. If they do, then this player collects the city tile. At any point when a player collects a city tile, all players immediately score points equal to the number of cities they have collected during the game, including the newly-collected city. If two or more players are tied for the number of tiles directly adjacent to the newly-surrounded city, then the city tile is instead discarded and players do not score for their existing city tiles.\n\nSCORING ZIGGURATS:\nIf one player has more tiles directly adjacent to a newly-surrounded ziggurat than any other player, then they collect one ziggurat tile of their choice from the public display and now benefit from its power.\n\nZIGGURAT POWERS:\n\n1: Immediately gain 10 points.\n2: On any one turn, either this turn or a future one, you may after drawing tiles at the end of their turn decide and declare that they are taking an immediate extra turn following the full standard turn sequence.\n3: Your hand size is now 7 tiles instead of 5 for the remainder of the game.\n4: Instead of the usual placement options on your turn, you may place 1 noble tile of each suit, all face up.\n5: When placing 3 or more farmer tiles as your placement for the turn, you may additionally place 1 noble. All these placements must be face up.\n6: You may place nobles directly onto farm tiles, claiming them and not requiring any already-adjacent tile as is normally the case for claiming them with a farmer.\n7: Any time you score for your collected city tiles, you score 1 extra point for every pair of collected cities.\n8: Unoccupied land spaces on the central land area between the two rivers form part of your chains of connected pieces for noble scoring when a city is scored.\n9: Unoccipied water spaces form part of your chains of connected pieces for noble scoring when a city is scored.\n\nEND OF THE GAME:\nThe game ends at the end of any player's turn where either: (a) they have no pieces remaining (they have all been placed on the board); or (b) there are 0 or 1 cities left on the game board.",
       "variantImage": "",
       "variant": "",
       "language": "en-GB",
-      "players": "2-4"
+      "players": "2-4",
+      "similarDesigner": "Reiner Knizia"
     }
   },
   "board-4": {
@@ -89,8 +90,14 @@
     "movable": false,
     "movableInEdit": false,
     "css": {
-      "background-color": "transparent",
-      "border": "transparent"
+      "default": {
+        "background": "transparent",
+        "border-color": "transparent",
+        "clip-path": "polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0 50%)"
+      },
+      ".droptarget": {
+        "background": "#00000050"
+      }
     }
   },
   "board-4-space-a4": {
@@ -3558,7 +3565,9 @@
         "loopRoutine": [
           {
             "func": "GET",
-            "collection": ["${value}"],
+            "collection": [
+              "${value}"
+            ],
             "property": "player",
             "variable": "pID"
           },
@@ -3637,11 +3646,28 @@
     "parent": "area-p1",
     "fixedParent": true,
     "x": 5,
-    "y": 10,
-    "height": 25,
-    "width": 290,
+    "y": 8,
+    "height": 40,
+    "width": 295,
     "index": 1,
     "hideWhenUnused": true,
+    "foreground": "#000000",
+    "css": {
+      "default": {
+        "border": "5px solid #999999",
+        "box-shadow": "0 2px 5px #00000066",
+        "color": "#000000",
+        "font-size": "30px"
+      },
+      ".seated": {
+        "background": "${PROPERTY color}",
+        "border": "5px solid #000000",
+        "color": "${PROPERTY foreground}"
+      },
+      ".seated.turn": {
+        "border": "5px dotted ${PROPERTY foreground}"
+      }
+    },
     "clickRoutine": [
       {
         "func": "CLICK",
@@ -3669,6 +3695,14 @@
         "func": "SET",
         "property": "color",
         "value": "${foreground}"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "${PROPERTY id}"
+        ],
+        "property": "foreground",
+        "value": "${foreground}"
       }
     ]
   },
@@ -3678,12 +3712,14 @@
     "parent": "area-p2",
     "fixedParent": true,
     "index": 2,
+    "foreground": "#000000",
     "inheritFrom": {
       "seat-p1": [
         "x",
         "y",
         "height",
         "width",
+        "css",
         "hideWhenUnused",
         "clickRoutine"
       ]
@@ -3695,12 +3731,14 @@
     "parent": "area-p3",
     "fixedParent": true,
     "index": 3,
+    "foreground": "#000000",
     "inheritFrom": {
       "seat-p1": [
         "x",
         "y",
         "height",
         "width",
+        "css",
         "hideWhenUnused",
         "clickRoutine"
       ]
@@ -3712,12 +3750,14 @@
     "parent": "area-p4",
     "fixedParent": true,
     "index": 4,
+    "foreground": "#000000",
     "inheritFrom": {
       "seat-p1": [
         "x",
         "y",
         "height",
         "width",
+        "css",
         "hideWhenUnused",
         "clickRoutine"
       ]
@@ -3737,7 +3777,7 @@
     },
     "editable": false,
     "text": 0
- },
+  },
   "label-score-p1": {
     "id": "label-score-p1",
     "type": "label",
@@ -4155,14 +4195,6 @@
     "cardType": "disc-farmer",
     "playerIndex": 1
   },
-  "disc-farmer-p1-04": {
-    "id": "disc-farmer-p1-04",
-    "parent": "pile-discs-p1",
-    "type": "card",
-    "deck": "deck-discs",
-    "cardType": "disc-farmer",
-    "playerIndex": 1
-  },
   "disc-farmer-p1-05": {
     "id": "disc-farmer-p1-05",
     "parent": "pile-discs-p1",
@@ -4187,7 +4219,7 @@
     "cardType": "disc-farmer",
     "playerIndex": 1
   },
-   "disc-farmer-p1-08": {
+  "disc-farmer-p1-08": {
     "id": "disc-farmer-p1-08",
     "parent": "pile-discs-p1",
     "type": "card",
@@ -4424,14 +4456,6 @@
     "cardType": "disc-farmer",
     "playerIndex": 2
   },
-  "disc-farmer-p2-04": {
-    "id": "disc-farmer-p2-04",
-    "parent": "pile-discs-p2",
-    "type": "card",
-    "deck": "deck-discs",
-    "cardType": "disc-farmer",
-    "playerIndex": 2
-  },
   "disc-farmer-p2-05": {
     "id": "disc-farmer-p2-05",
     "parent": "pile-discs-p2",
@@ -4456,7 +4480,7 @@
     "cardType": "disc-farmer",
     "playerIndex": 2
   },
-   "disc-farmer-p2-08": {
+  "disc-farmer-p2-08": {
     "id": "disc-farmer-p2-08",
     "parent": "pile-discs-p2",
     "type": "card",
@@ -4693,14 +4717,6 @@
     "cardType": "disc-farmer",
     "playerIndex": 3
   },
-  "disc-farmer-p3-04": {
-    "id": "disc-farmer-p3-04",
-    "parent": "pile-discs-p3",
-    "type": "card",
-    "deck": "deck-discs",
-    "cardType": "disc-farmer",
-    "playerIndex": 3
-  },
   "disc-farmer-p3-05": {
     "id": "disc-farmer-p3-05",
     "parent": "pile-discs-p3",
@@ -4725,7 +4741,7 @@
     "cardType": "disc-farmer",
     "playerIndex": 3
   },
-   "disc-farmer-p3-08": {
+  "disc-farmer-p3-08": {
     "id": "disc-farmer-p3-08",
     "parent": "pile-discs-p3",
     "type": "card",
@@ -4962,14 +4978,6 @@
     "cardType": "disc-farmer",
     "playerIndex": 4
   },
-  "disc-farmer-p4-04": {
-    "id": "disc-farmer-p4-04",
-    "parent": "pile-discs-p4",
-    "type": "card",
-    "deck": "deck-discs",
-    "cardType": "disc-farmer",
-    "playerIndex": 4
-  },
   "disc-farmer-p4-05": {
     "id": "disc-farmer-p4-05",
     "parent": "pile-discs-p4",
@@ -4994,7 +5002,7 @@
     "cardType": "disc-farmer",
     "playerIndex": 4
   },
-   "disc-farmer-p4-08": {
+  "disc-farmer-p4-08": {
     "id": "disc-farmer-p4-08",
     "parent": "pile-discs-p4",
     "type": "card",

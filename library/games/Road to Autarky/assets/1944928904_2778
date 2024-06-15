@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="71.5"
+   height="193.5"
+   viewBox="0 0 18.917708 51.196875"
+   version="1.1"
+   id="svg1530"
+   inkscape:version="1.2.2 (732a01da63, 2022-12-09)"
+   sodipodi:docname="0d.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1532"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="px"
+     showgrid="false"
+     inkscape:zoom="0.74564394"
+     inkscape:cx="191.10998"
+     inkscape:cy="240.06096"
+     inkscape:window-width="1920"
+     inkscape:window-height="1017"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs1527">
+    <filter
+       id="shadow-1-7-9-9-4-7-4-1-1"
+       height="1.3495146"
+       width="1.1558442"
+       x="-0.077922078"
+       y="-0.17475728">
+      <feFlood
+         flood-color="rgba(0, 0, 0, 1)"
+         result="flood"
+         id="feFlood11079-27-7-9-9-4-2-6-2" />
+      <feComposite
+         in="flood"
+         in2="SourceGraphic"
+         operator="atop"
+         result="composite"
+         id="feComposite11081-9-3-6-9-0-0-0-7" />
+      <feGaussianBlur
+         in="composite"
+         stdDeviation="15"
+         result="blur"
+         id="feGaussianBlur11083-7-3-4-9-2-6-9-6" />
+      <feOffset
+         dx="0"
+         dy="0"
+         result="offset"
+         id="feOffset11085-0-3-9-0-4-6-3-5" />
+      <feComposite
+         in="SourceGraphic"
+         in2="offset"
+         operator="over"
+         id="feComposite11087-2-3-0-3-1-49-1-8" />
+    </filter>
+  </defs>
+  <g
+     inkscape:label="Calque 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <g
+       class=""
+       transform="matrix(0.02583822,0,0,0.02583822,6.6364174,25.674016)"
+       id="g11096-0-9-8-9-1-8-4">
+      <path
+         id="rect2252-1-0-9-6-6-1-0"
+         style="display:inline;fill:#3f3f3f;stroke-width:0.688105;stroke-miterlimit:5;stroke-opacity:0.498039"
+         transform="rotate(45)"
+         d="m -811.82217,-593.40397 c 0,0 1126.40556,904.58977 1846.90387,904.5898 720.4984,3e-5 1809.6862,-868.38582 1809.6862,-868.38582 l 72.4078,72.40772 c 0,0 -1161.5957,898.36264 -1882.094,898.36261 -720.49808,-3e-5 -1919.31148,-934.56645 -1919.31148,-934.56645 z"
+         sodipodi:nodetypes="csccscc" />
+    </g>
+  </g>
+</svg>

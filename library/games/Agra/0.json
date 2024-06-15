@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "version": 6,
+    "version": 15,
     "info": {
       "name": "Agra",
       "image": "/assets/282668642_38680",
@@ -13,12 +13,13 @@
       "similarName": "Jaipur",
       "description": "Players take turns either taking cards from common market area or selling cards in exchange for 6 different goods tokens worth varying points. Play until card pile is depleted or 3 types of goods are depleted. Most points at end of round wins the round. First to win 2 rounds is overall winner.",
       "showName": true,
-      "helpText": "Players take seats. Press restart button in upper right to begin game. After each player's turn, press skip-next button to advance turn indicator and auto-fill market with 5 cards. Each player can only see the count of camel cards for themself. At end of round, each player press the sigma/sum button to calculate and show score. Drag victory point token to circle holder by player name and press restart button to go to next round.",
+      "helpText": "Players take seats. Press restart button in upper right to begin game. After each player's turn, press skip-next button to advance turn indicator and auto-fill market with 5 cards. Each player can only see the count of camel cards for themself. After trading cards for resources, drag cards discard holder and the resource tokens to the scoring holder area near the sigma button for your seat.<div><br></div><div>At end of round, determine which player gets the camel bonus and drag the camel icon to the scoring holder area. Each player press the sigma/sum button to calculate and show score. Drag victory point token to circle holder by player name and press restart button to go to next round.</div>",
       "skill": "",
       "similarImage": "",
       "similarAwards": "2014 Juego del Año Winner\n2014 Juego del Año Finalist\n2011 Games Magazine Best New Family Card Game Winner\n2010 Tric Trac Nominee\n2010 Spiel des Jahres Recommended\n2010 Lys Grand Public Finalist\n2010 International Gamers Award - General Strategy: Two-players\n2010 Golden Geek Best Card Game Nominee\n2010 Golden Geek Best 2-Player Board Game Nominee\n2010 Fairplay À la carte Winner",
       "ruleText": "",
-      "lastUpdate": 1670775305000,
+      "lastUpdate": 1713909141881,
+      "similarDesigner": "Sébastien Pauchon",
       "variantImage": "",
       "variant": "",
       "language": "",
@@ -84,7 +85,8 @@
         ]
       }
     ],
-    "css": "background:#ffffff80"
+    "css": "background:#ffffff80",
+    "hidePlayerCursors": true
   },
   "dgi4": {
     "type": "card",
@@ -2265,7 +2267,8 @@
         "func": "SORT",
         "key": "points"
       }
-    ]
+    ],
+    "css": "background:#ffffff80"
   },
   "camelDeck": {
     "type": "deck",
@@ -3010,7 +3013,7 @@
     "type": "card",
     "cardType": "camelToken",
     "id": "qcoq",
-    "z": 20483,
+    "z": 1,
     "parent": "camelDeckHolder"
   },
   "fill": {
@@ -3055,109 +3058,6 @@
     ],
     "classes": "symbols",
     "text": "skip_next"
-  },
-  "seat1": {
-    "type": "seat",
-    "id": "seat1",
-    "x": 10,
-    "y": 940,
-    "z": 10119,
-    "movableInEdit": false,
-    "turnChangeRoutine": [
-      {
-        "func": "IF",
-        "condition": "${PROPERTY turn}",
-        "thenRoutine": [
-          "var dragColor = ${PROPERTY color} + '80'",
-          {
-            "func": "SET",
-            "collection": [
-              "points1"
-            ],
-            "property": "dragColor",
-            "value": "${dragColor}"
-          },
-          {
-            "func": "SET",
-            "collection": [
-              "points1"
-            ],
-            "property": "dropColor",
-            "value": "${PROPERTY color}"
-          }
-        ],
-        "elseRoutine": [
-          {
-            "func": "SET",
-            "collection": [
-              "points1"
-            ],
-            "property": "dragColor",
-            "value": "#ffffff80"
-          },
-          {
-            "func": "SET",
-            "collection": [
-              "points1"
-            ],
-            "property": "dropColor",
-            "value": "#ffffff80"
-          }
-        ]
-      }
-    ]
-  },
-  "seat2": {
-    "type": "seat",
-    "id": "seat2",
-    "x": 1430,
-    "y": 940,
-    "z": 10119,
-    "index": 2,
-    "movableInEdit": false,
-    "turnChangeRoutine": [
-      {
-        "func": "IF",
-        "condition": "${PROPERTY turn}",
-        "thenRoutine": [
-          "var dragColor = ${PROPERTY color} + '80'",
-          {
-            "func": "SET",
-            "collection": [
-              "points2"
-            ],
-            "property": "dragColor",
-            "value": "${dragColor}"
-          },
-          {
-            "func": "SET",
-            "collection": [
-              "points2"
-            ],
-            "property": "dropColor",
-            "value": "${PROPERTY color}"
-          }
-        ],
-        "elseRoutine": [
-          {
-            "func": "SET",
-            "collection": [
-              "points2"
-            ],
-            "property": "dragColor",
-            "value": "#ffffff80"
-          },
-          {
-            "func": "SET",
-            "collection": [
-              "points2"
-            ],
-            "property": "dropColor",
-            "value": "#ffffff80"
-          }
-        ]
-      }
-    ]
   },
   "cardDeck2": {
     "type": "deck",
@@ -3337,7 +3237,8 @@
     "movable": false,
     "movableInEdit": false,
     "onlyVisibleForSeat": "seat1",
-    "layer": -1
+    "layer": -1,
+    "hoverInheritVisibleForSeat": false
   },
   "camelSymbol1": {
     "id": "camelSymbol1",
@@ -3528,7 +3429,8 @@
     "movable": false,
     "movableInEdit": false,
     "onlyVisibleForSeat": "seat2",
-    "layer": -1
+    "layer": -1,
+    "hoverInheritVisibleForSeat": false
   },
   "camelSymbol2": {
     "id": "camelSymbol2",
@@ -3578,6 +3480,9 @@
       },
       {
         "deck": "5Deck"
+      },
+      {
+        "deck": "camelDeck"
       }
     ],
     "css": {
@@ -3631,6 +3536,9 @@
       },
       {
         "deck": "5Deck"
+      },
+      {
+        "deck": "camelDeck"
       }
     ],
     "y": 620,
@@ -3861,5 +3769,204 @@
     "width": 100,
     "height": 100,
     "id": "9cf2"
+  },
+  "fer8C": {
+    "id": "fer8C",
+    "parent": "seat1",
+    "fixedParent": true,
+    "x": -20,
+    "y": -20,
+    "width": 30,
+    "height": 30,
+    "borderRadius": 100,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "css": {
+      "font-size": "18px",
+      "display": "flex",
+      "align-items": "center",
+      "justify-content": "center",
+      "color": "#6d6d6d",
+      "background": "#e4e4e4",
+      "border": "2px solid #999999"
+    },
+    "text": "0",
+    "ownerGlobalUpdateRoutine": [
+      "var parent = ${PROPERTY parent}",
+      "var COUNT = 0",
+      {
+        "func": "SELECT",
+        "property": "_ancestor",
+        "value": "${PROPERTY hand OF $parent}"
+      },
+      {
+        "func": "COUNT",
+        "owner": "${PROPERTY player OF $parent}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "text",
+        "value": "${COUNT}"
+      }
+    ],
+    "playerGlobalUpdateRoutine": [
+      {
+        "func": "CALL",
+        "routine": "ownerGlobalUpdateRoutine",
+        "widget": "${PROPERTY id}"
+      }
+    ]
+  },
+  "seat1": {
+    "type": "seat",
+    "id": "seat1",
+    "x": 15,
+    "y": 940,
+    "movableInEdit": false,
+    "turnChangeRoutine": [
+      {
+        "func": "IF",
+        "condition": "${PROPERTY turn}",
+        "thenRoutine": [
+          "var dragColor = ${PROPERTY color} + '80'",
+          {
+            "func": "SET",
+            "collection": [
+              "points1"
+            ],
+            "property": "dragColor",
+            "value": "${dragColor}"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "points1"
+            ],
+            "property": "dropColor",
+            "value": "${PROPERTY color}"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "points1"
+            ],
+            "property": "dragColor",
+            "value": "#ffffff80"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "points1"
+            ],
+            "property": "dropColor",
+            "value": "#ffffff80"
+          }
+        ]
+      }
+    ]
+  },
+  "bh3lC": {
+    "id": "bh3lC",
+    "parent": "seat2",
+    "fixedParent": true,
+    "x": -20,
+    "y": -20,
+    "width": 30,
+    "height": 30,
+    "borderRadius": 100,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "css": {
+      "font-size": "18px",
+      "display": "flex",
+      "align-items": "center",
+      "justify-content": "center",
+      "color": "#6d6d6d",
+      "background": "#e4e4e4",
+      "border": "2px solid #999999"
+    },
+    "text": "0",
+    "ownerGlobalUpdateRoutine": [
+      "var parent = ${PROPERTY parent}",
+      "var COUNT = 0",
+      {
+        "func": "SELECT",
+        "property": "_ancestor",
+        "value": "${PROPERTY hand OF $parent}"
+      },
+      {
+        "func": "COUNT",
+        "owner": "${PROPERTY player OF $parent}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "text",
+        "value": "${COUNT}"
+      }
+    ],
+    "playerGlobalUpdateRoutine": [
+      {
+        "func": "CALL",
+        "routine": "ownerGlobalUpdateRoutine",
+        "widget": "${PROPERTY id}"
+      }
+    ]
+  },
+  "seat2": {
+    "type": "seat",
+    "id": "seat2",
+    "index": 2,
+    "x": 1430,
+    "y": 940,
+    "movableInEdit": false,
+    "turnChangeRoutine": [
+      {
+        "func": "IF",
+        "condition": "${PROPERTY turn}",
+        "thenRoutine": [
+          "var dragColor = ${PROPERTY color} + '80'",
+          {
+            "func": "SET",
+            "collection": [
+              "points2"
+            ],
+            "property": "dragColor",
+            "value": "${dragColor}"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "points2"
+            ],
+            "property": "dropColor",
+            "value": "${PROPERTY color}"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "points2"
+            ],
+            "property": "dragColor",
+            "value": "#ffffff80"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "points2"
+            ],
+            "property": "dropColor",
+            "value": "#ffffff80"
+          }
+        ]
+      }
+    ]
   }
 }

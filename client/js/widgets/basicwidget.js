@@ -15,7 +15,8 @@ class BasicWidget extends Widget {
       color: 'black',
       svgReplaces: {},
       layer: 1,
-      text: ''
+      text: '',
+      html: null
     });
   }
 
@@ -40,8 +41,18 @@ class BasicWidget extends Widget {
         this.previouslyActiveFace = face;
       }
     }
-    if(delta.text !== undefined)
-      setText(this.domElement, this.get('text'));
+    if(delta.html !== undefined || delta.text !== undefined || this.getWithPropertyReplacements_checkDelta('html', delta)) {
+      const childNodes = [...this.domElement.childNodes];
+      this.domElement.innerHTML = '';
+      if(this.get('html') === null) {
+        setText(this.domElement, this.get('text'));
+      } else {
+        this.domElement.innerHTML = DOMPurify.sanitize(mapAssetURLs(this.getWithPropertyReplacements('html')), { USE_PROFILES: { html: true } });
+      }
+      for(const child of childNodes)
+        if(String(child.className).match(/widget/))
+          this.domElement.appendChild(child);
+  }
 
     for(const property of Object.values(this.get('svgReplaces') || {}))
       if(delta[property] !== undefined)
@@ -98,7 +109,7 @@ class BasicWidget extends Widget {
       if (fC == 'backward')
         await this.set('activeFace', this.get('activeFace') == 0 ? this.faces().length-1 : this.get('activeFace') -1);
       else
-        await this.set('activeFace', Math.floor(this.get('activeFace') + (fC == 'random' ? Math.random()*99999 : 1)) % this.faces().length);
+        await this.set('activeFace', Math.floor(this.get('activeFace') + (fC == 'random' ? rand()*99999 : 1)) % this.faces().length);
     }
   }
 
@@ -109,6 +120,10 @@ class BasicWidget extends Widget {
     if(d !== undefined)
       return d;
     return super.get(property);
+  }
+
+  getFaceCount() {
+    return this.faces().length || 1;
   }
 
   getImage() {

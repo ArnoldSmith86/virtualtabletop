@@ -3,6 +3,7 @@ import { $, $a, onLoad, unescapeID } from './domhelpers.js';
 import { getElementTransformRelativeTo } from './geometry.js';
 
 let roomID = self.location.pathname.replace(/.*\//, '');
+let isLoading = true;
 
 export const widgets = new Map();
 
@@ -22,7 +23,7 @@ let undoProtocol = [];
 function generateUniqueWidgetID() {
   let id;
   do {
-    id = Math.random().toString(36).substring(3, 7);
+    id = rand().toString(36).substring(3, 7);
   } while (widgets.has(id));
   return id;
 }
@@ -115,6 +116,16 @@ async function addWidgetLocal(widget) {
     return null;
   }
 
+  if(widget.type == 'card' && widget.deck && !widgets.has(widget.deck)) {
+    console.error(`Refusing to add widget ${widget.id} with invalid deck ${widget.deck}.`);
+    return null;
+  }
+
+  if(widget.type == 'card' && widget.deck && !widgets.get(widget.deck).get('cardTypes')[widget.cardType]) {
+    console.error(`Refusing to add widget ${widget.id} with invalid cardType ${widget.cardType}.`);
+    return null;
+  }
+
   const isNewWidget = !widgets.has(widget.id);
   if(isNewWidget)
     addWidget(widget);
@@ -163,9 +174,19 @@ function receiveDelta(delta) {
     if(delta.s[widgetID] !== null && !widgets.has(widgetID))
       addWidget(delta.s[widgetID]);
 
-  for(const widgetID in delta.s)
-    if(delta.s[widgetID] !== null && widgets.has(widgetID)) // check widgets.has because addWidget above MIGHT have failed
-      widgets.get(widgetID).applyDelta(delta.s[widgetID]);
+  for(const widgetID in delta.s) {
+    if(delta.s[widgetID] !== null && widgets.has(widgetID)) { // check widgets.has because addWidget above MIGHT have failed
+      if(delta.s[widgetID].type !== undefined && delta.s[widgetID].type !== widgets.get(widgetID).get('type')) {
+        const currentState = widgets.get(widgetID).state;
+        removeWidget(widgetID);
+        addWidget(Object.assign(currentState, delta.s[widgetID]));
+        for(const child of widgetFilter(w=>w.get('parent')===widgetID))
+          child.applyDelta({ parent: widgetID });
+      } else {
+        widgets.get(widgetID).applyDelta(delta.s[widgetID]);
+      }
+    }
+  }
 
   for(const widgetID in delta.s)
     if(delta.s[widgetID] === null && widgets.has(widgetID))
@@ -311,14 +332,25 @@ function receiveStateFromServer(args) {
     deferredChildren = {};
   }
 
+  if(isLoading) {
+    $('#loadingRoomIndicator').remove();
+    $('body').classList.remove('loading');
+    isLoading = false;
+    if(!$('.active.toolbarTab'))
+      $('#activeGameButton').click();
+  }
+
   if(isEmpty && !edit && !overlayShownForEmptyRoom && !urlProperties.load && !urlProperties.askID) {
     $('#statesButton').click();
     overlayShownForEmptyRoom = true;
   }
+
   toServer('confirm');
 
   if(typeof jeEnabled != 'undefined' && jeEnabled)
     jeApplyState(args);
+
+  cancelInputOverlay();
 
   if(triggerGameStartRoutineOnNextStateLoad) {
     triggerGameStartRoutineOnNextStateLoad = false;
@@ -329,6 +361,18 @@ function receiveStateFromServer(args) {
           await w.evaluateRoutine('gameStartRoutine', { widgetID: id }, { widget: [ w ] });
       batchEnd();
     })();
+  }
+}
+
+function cancelInputOverlay() {
+  if($('#activeGameButton[data-overlay=buttonInputOverlay]')) {
+    delete $('#activeGameButton').dataset.overlay;
+    if($('#buttonInputOverlay').style.display == 'flex')
+      showOverlay();
+
+    delta = { s: {} };
+    deltaChanged = false;
+    batchDepth = 0;
   }
 }
 

@@ -10,6 +10,7 @@ class Seat extends Widget {
 
       index: 1,
       turn: false,
+      skipTurn: false,
       player: '',
       display: 'playerName',
       displayEmpty: 'click to sit',
@@ -42,6 +43,12 @@ class Seat extends Widget {
   applyInitialDelta(delta) {
     super.applyInitialDelta(delta);
     this.updateLinkedWidgets();
+  }
+
+  children() {
+    if(this.get('hand') && this.get('player') && widgets.has(this.get('hand')))
+      return widgetFilter(w=>w.get('parent')==this.get('hand')&&w.get('owner')==this.get('player'));
+    return [];
   }
 
   classes(includeTemporary=true) {
@@ -92,6 +99,11 @@ class Seat extends Widget {
       await this.set('player', null);
       await this.set('color', this.get('colorEmpty'));
     }
+  }
+
+  updateAfterShuffle() {
+    if(this.get('hand') && widgets.has(this.get('hand')))
+      widgets.get(this.get('hand')).updateAfterShuffle();
   }
 
   updateScoreboards(delta) {

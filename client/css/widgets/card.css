@@ -1,18 +1,19 @@
 .card {
   overflow: hidden;
+  color: black;
 }
 
 .card > .cardFace {
   display: none;
+}
+
+.card > .active.cardFace {
+  display: block;
   overflow: hidden;
   width: 100%;
   height: 100%;
   position: absolute;
   box-sizing: border-box;
-}
-
-.card > .active.cardFace {
-  display: block;
 }
 
 .card > .cardFace > .cardFaceObject {

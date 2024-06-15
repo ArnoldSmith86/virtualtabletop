@@ -11,7 +11,7 @@ function eventCoords(name, e) {
     coords = e;
   let x = (coords.clientX - roomRectangle.left) / scale;
   let y = (coords.clientY - roomRectangle.top) / scale;
-  if(!zoom) {
+  if (!edit || zoom == 1) {
     x = Math.max(0, Math.min(1600, x));
     y = Math.max(0, Math.min(1000, y));
   }
@@ -23,7 +23,7 @@ async function inputHandler(name, e) {
   if(edit && !isMiddleMouseButton && editInputHandler(name, e))
     return;
 
-  if(overlayActive || e.target.id == 'jeText' || e.target.id == 'jeCommands')
+  if(isLoading || overlayActive || e.target.id == 'jeText' || e.target.id == 'jeCommands')
     return;
 
   const editMovable = !isMiddleMouseButton && (edit || jeEnabled && e.ctrlKey);

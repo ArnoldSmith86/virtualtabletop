@@ -148,7 +148,7 @@ test('Dynamic expressions', async t => {
   await setName(t);
   await t
     .click('#editButton')
-    .click('#editorToolbar [icon=add]')
+    .click('#editorToolbar > div > [icon=add]')
     .click('#addBasicWidget')
     .click('#room',{offsetX: 1, offsetY: 1, modifiers:{ctrl:true}})
     .click(Selector('button').withAttribute('icon', 'data_object'))
