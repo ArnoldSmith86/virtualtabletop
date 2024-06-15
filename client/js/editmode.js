@@ -1222,6 +1222,8 @@ async function updateWidget(currentState, oldState, applyChangesFromUI) {
 
   if(widget.id !== previousState.id || widget.type !== previousState.type) {
     const id = await addWidgetLocal(widget);
+    if(widget.type === undefined && widget.type !== previousState.type)
+      sendPropertyUpdate(id, 'type', null);
 
     for(const child of children)
       sendPropertyUpdate(child.get('id'), 'parent', id);

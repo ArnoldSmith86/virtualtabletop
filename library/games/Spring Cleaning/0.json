@@ -1,39 +1,4 @@
 {
-  "3774": {
-    "deck": "main_deck",
-    "type": "card",
-    "cardType": "2sls",
-    "id": "3774",
-    "z": 12348,
-    "parent": "p93s"
-  },
-  "_meta": {
-    "version": 14,
-    "info": {
-      "name": "Spring Cleaning",
-      "image": "/assets/1259383691_187927",
-      "rules": "https://docs.google.com/document/d/1OznPvz6h_4DaKRbSWTMR9AnIjdB207-7dtMVVtMhufo/edit?usp=sharing",
-      "bgg": "https://www.jongetsgames.com/springcleaning",
-      "year": "",
-      "mode": "vs",
-      "time": "15 - 45",
-      "attribution": "The game room, game design, and game layout are by Jonathan Cox. Art assets used with permission from the rights holder, Jonathan Cox. Illustrations created by Lananh Vo. No permission is given for the further use of any Spring Cleaning art assets.",
-      "lastUpdate": 1698886067234,
-      "showName": true,
-      "skill": "low",
-      "description": "In this climbing/shedding game you must offer your cards to opponents, and play each others cards as you race to play them all.",
-      "similarImage": "",
-      "similarName": "",
-      "similarDesigner": "Jonathan Cox",
-      "similarAwards": "",
-      "ruleText": "",
-      "helpText": "Have every player take a seat and then click the \"SETUP NEW GAME\" button. This will randomly a starting player and deal each player their starting hand of cards.<div><div><br></div><div>Once done with their turn, the player should click the \"CLICK TO END TURN\" arrow button, which will move to the next player in order.<br><div><br></div><div>When playing cards, click and drag them into the large open area in the middle of the screen. It is best to line them up horizontally with your seat name and offered cards area.</div><div><br></div><div>When offering cards, click and drag them to the \"Offered Cards\" window under the player's name.&nbsp;</div><div><br></div><div>Once a trick is over, the winner of the trick should click the \"CLEAR CARDS\" button in the bottom left. This will remove all played cards, and also assign the current turn to the trick winner.</div></div><div><br></div><div>The \"Total Cards: #\" value counts all cards in that player's hidden hand as well as all cards in their offer area.</div><div><br></div><div>At the end of a round players will score trash by taking the appropriate value token from the \"Trash Supply\". Place gained track tokens into the skinny vertical column to the right of the player's name.</div><div><br></div><div>Once trash has been scored at the end of the round, if the game isn't over then click the \"CLICK FOR NEW ROUND\" button. The turn order arrow will be moved to the player with the most total trash, who will take the first turn of the next round.</div><div><br></div><div>2 Player Implementation Note:</div><div>After both players have selected seats, click on an unused seat and give it a name like \"Neutral Player\". This implementation does not currently automatically deal with and refresh the neutral offer, so this must be done manually by the players.</div></div>",
-      "variantImage": "",
-      "variant": "",
-      "language": "en-US",
-      "players": "2-4"
-    }
-  },
   "2jur": {
     "deck": "z3kdD",
     "type": "card",
@@ -62,35 +27,55 @@
       "width": 107,
       "height": 170,
       "borderRadius": 13,
-      "layer": 1
+      "layer": 1,
+      "hoverTargetChangeRoutine": [
+        "var maybe_h = ${PROPERTY hoverT-arget} charAt 1",
+        {
+          "func": "IF",
+          "operand1": "${maybe_h}",
+          "relation": "==",
+          "operand2": "h",
+          "thenRoutine": [
+            {
+              "func": "SET",
+              "collection": [
+                "${thisID}"
+              ],
+              "property": "activeFace",
+              "relation": "=",
+              "value": 1
+            }
+          ]
+        }
+      ]
     },
     "cardTypes": {
       "dykj": {
-        "image": "/assets/-144550471_252727"
+        "image": "/assets/-591262877_9644"
       },
       "gco2": {
-        "image": "/assets/-1632136897_281272"
+        "image": "/assets/-992759430_10614"
       },
       "dcrr": {
-        "image": "/assets/605136899_222200"
+        "image": "/assets/-2099847120_10526"
       },
       "2sls": {
-        "image": "/assets/1787747762_221161"
+        "image": "/assets/1817473309_9366"
       },
       "vecg": {
-        "image": "/assets/2125545053_215121"
+        "image": "/assets/1227878576_8866"
       },
       "w4id": {
-        "image": "/assets/747354153_182239"
+        "image": "/assets/2027753747_8510"
       },
       "rqsv": {
-        "image": "/assets/-1273217503_264940"
+        "image": "/assets/-1102663282_9362"
       },
       "236k": {
-        "image": "/assets/866880531_284975"
+        "image": "/assets/-856051398_11696"
       },
       "vpsw": {
-        "image": "/assets/1412155391_223339"
+        "image": "/assets/-1711539631_10204"
       }
     },
     "faceTemplates": [
@@ -105,7 +90,7 @@
             "width": 107,
             "height": 170,
             "color": "transparent",
-            "value": "/assets/-95539708_80591"
+            "value": "/assets/995141016_3278"
           }
         ]
       },
@@ -128,501 +113,437 @@
       }
     ]
   },
-  "vjcj": {
-    "deck": "main_deck",
-    "type": "card",
-    "cardType": "dykj",
-    "id": "vjcj",
-    "z": 12376,
-    "parent": "p93s"
-  },
-  "0w7t": {
-    "deck": "main_deck",
-    "type": "card",
-    "cardType": "gco2",
-    "id": "0w7t",
-    "z": 12321,
-    "parent": "p93s"
-  },
-  "mqgj": {
-    "deck": "main_deck",
-    "type": "card",
-    "cardType": "dcrr",
-    "id": "mqgj",
-    "z": 12326,
-    "parent": "p93s"
-  },
   "hd6g": {
     "deck": "main_deck",
     "type": "card",
     "cardType": "2sls",
     "id": "hd6g",
-    "z": 12377,
-    "parent": "p93s"
-  },
-  "zoh4": {
-    "deck": "main_deck",
-    "type": "card",
-    "cardType": "vecg",
-    "id": "zoh4",
-    "z": 12325,
-    "parent": "p93s"
-  },
-  "89ui": {
-    "deck": "main_deck",
-    "type": "card",
-    "cardType": "w4id",
-    "id": "89ui",
-    "z": 12324,
-    "parent": "p93s"
-  },
-  "cips": {
-    "deck": "main_deck",
-    "type": "card",
-    "cardType": "rqsv",
-    "id": "cips",
-    "z": 12337,
-    "parent": "p93s"
-  },
-  "95x9": {
-    "deck": "main_deck",
-    "type": "card",
-    "cardType": "236k",
-    "id": "95x9",
-    "z": 12369,
-    "parent": "p93s"
-  },
-  "uoyg": {
-    "deck": "main_deck",
-    "type": "card",
-    "cardType": "vpsw",
-    "id": "uoyg",
-    "z": 12351,
-    "parent": "p93s"
+    "z": 47732,
+    "parent": "6vls"
   },
   "dpvg": {
     "deck": "main_deck",
     "type": "card",
     "cardType": "dykj",
     "id": "dpvg",
-    "z": 12370,
-    "parent": "p93s"
+    "z": 47696,
+    "parent": "6vls"
   },
   "gysf": {
     "deck": "main_deck",
     "type": "card",
     "cardType": "gco2",
     "id": "gysf",
-    "z": 12338,
-    "parent": "p93s"
+    "z": 47711,
+    "parent": "6vls"
   },
   "j8qx": {
     "deck": "main_deck",
     "type": "card",
     "cardType": "dcrr",
     "id": "j8qx",
-    "z": 12328,
-    "parent": "p93s"
+    "z": 47677,
+    "parent": "6vls"
   },
   "hvc9": {
     "deck": "main_deck",
     "type": "card",
     "cardType": "2sls",
     "id": "hvc9",
-    "z": 12329,
-    "parent": "p93s"
+    "z": 47731,
+    "parent": "6vls"
   },
   "6tgi": {
     "deck": "main_deck",
     "type": "card",
     "cardType": "vecg",
     "id": "6tgi",
-    "z": 12340,
-    "parent": "p93s"
+    "z": 47691,
+    "parent": "6vls"
   },
   "28b4": {
     "deck": "main_deck",
     "type": "card",
     "cardType": "w4id",
     "id": "28b4",
-    "z": 12365,
-    "parent": "p93s"
+    "z": 47712,
+    "parent": "6vls"
   },
   "kwrt": {
     "deck": "main_deck",
     "type": "card",
     "cardType": "rqsv",
     "id": "kwrt",
-    "z": 12349,
-    "parent": "p93s"
+    "z": 47719,
+    "parent": "6vls"
   },
   "0k5i": {
     "deck": "main_deck",
     "type": "card",
     "cardType": "236k",
     "id": "0k5i",
-    "z": 12322,
-    "parent": "p93s"
+    "z": 47727,
+    "parent": "6vls"
   },
   "9d08": {
     "deck": "main_deck",
     "type": "card",
     "cardType": "vpsw",
     "id": "9d08",
-    "z": 12353,
-    "parent": "p93s"
+    "z": 47697,
+    "parent": "6vls"
   },
   "yxmx": {
     "deck": "main_deck",
     "type": "card",
     "cardType": "dykj",
     "id": "yxmx",
-    "z": 12346,
-    "parent": "p93s"
+    "z": 47723,
+    "parent": "6vls"
   },
   "krzj": {
     "deck": "main_deck",
     "type": "card",
     "cardType": "gco2",
     "id": "krzj",
-    "z": 12368,
-    "parent": "p93s"
+    "z": 47703,
+    "parent": "6vls"
   },
   "sv8o": {
     "deck": "main_deck",
     "type": "card",
     "cardType": "dcrr",
     "id": "sv8o",
-    "z": 12378,
-    "parent": "p93s"
+    "z": 47689,
+    "parent": "6vls"
   },
   "1i5n": {
     "deck": "main_deck",
     "type": "card",
     "cardType": "2sls",
     "id": "1i5n",
-    "z": 12319,
-    "parent": "p93s"
+    "z": 47690,
+    "parent": "6vls"
   },
   "6agt": {
     "deck": "main_deck",
     "type": "card",
     "cardType": "vecg",
     "id": "6agt",
-    "z": 12330,
-    "parent": "p93s"
+    "z": 47684,
+    "parent": "6vls"
   },
   "mkv8": {
     "deck": "main_deck",
     "type": "card",
     "cardType": "w4id",
     "id": "mkv8",
-    "z": 12344,
-    "parent": "p93s"
+    "z": 47728,
+    "parent": "6vls"
   },
   "hu3a": {
     "deck": "main_deck",
     "type": "card",
     "cardType": "rqsv",
     "id": "hu3a",
-    "z": 12335,
-    "parent": "p93s"
+    "z": 47701,
+    "parent": "6vls"
   },
   "scdy": {
     "deck": "main_deck",
     "type": "card",
     "cardType": "236k",
     "id": "scdy",
-    "z": 12363,
-    "parent": "p93s"
+    "z": 47692,
+    "parent": "6vls"
   },
   "q0oo": {
     "deck": "main_deck",
     "type": "card",
     "cardType": "vpsw",
     "id": "q0oo",
-    "z": 12356,
-    "parent": "p93s"
+    "z": 47706,
+    "parent": "6vls"
   },
   "tg41": {
     "deck": "main_deck",
     "type": "card",
     "cardType": "dykj",
     "id": "tg41",
-    "z": 12380,
-    "parent": "p93s"
+    "z": 47680,
+    "parent": "6vls"
   },
   "ryr2": {
     "deck": "main_deck",
     "type": "card",
     "cardType": "gco2",
     "id": "ryr2",
-    "z": 12333,
-    "parent": "p93s"
+    "z": 47730,
+    "parent": "6vls"
   },
   "1fx0": {
     "deck": "main_deck",
     "type": "card",
     "cardType": "dcrr",
     "id": "1fx0",
-    "z": 12371,
-    "parent": "p93s"
+    "z": 47695,
+    "parent": "6vls"
   },
   "ck6d": {
     "deck": "main_deck",
     "type": "card",
     "cardType": "2sls",
     "id": "ck6d",
-    "z": 12334,
-    "parent": "p93s"
+    "z": 47724,
+    "parent": "6vls"
   },
   "3cqj": {
     "deck": "main_deck",
     "type": "card",
     "cardType": "vecg",
     "id": "3cqj",
-    "z": 12341,
-    "parent": "p93s"
+    "z": 47694,
+    "parent": "6vls"
   },
   "k6cn": {
     "deck": "main_deck",
     "type": "card",
     "cardType": "w4id",
     "id": "k6cn",
-    "z": 12359,
-    "parent": "p93s"
+    "z": 47717,
+    "parent": "6vls"
   },
   "ngmq": {
     "deck": "main_deck",
     "type": "card",
     "cardType": "rqsv",
     "id": "ngmq",
-    "z": 12381,
-    "parent": "p93s"
+    "z": 47710,
+    "parent": "6vls"
   },
   "ugqo": {
     "deck": "main_deck",
     "type": "card",
     "cardType": "236k",
     "id": "ugqo",
-    "z": 12355,
-    "parent": "p93s"
+    "z": 47720,
+    "parent": "6vls"
   },
   "hxmb": {
     "deck": "main_deck",
     "type": "card",
     "cardType": "vpsw",
     "id": "hxmb",
-    "z": 12332,
-    "parent": "p93s"
+    "z": 47729,
+    "parent": "6vls"
   },
   "q998": {
     "deck": "main_deck",
     "type": "card",
     "cardType": "dykj",
     "id": "q998",
-    "z": 12357,
-    "parent": "p93s"
+    "z": 47687,
+    "parent": "6vls"
   },
   "f43c": {
     "deck": "main_deck",
     "type": "card",
     "cardType": "gco2",
     "id": "f43c",
-    "z": 12373,
-    "parent": "p93s"
+    "z": 47735,
+    "parent": "6vls"
   },
   "jgjt": {
     "deck": "main_deck",
     "type": "card",
     "cardType": "dcrr",
     "id": "jgjt",
-    "z": 12374,
-    "parent": "p93s"
+    "z": 47676,
+    "parent": "6vls"
   },
   "ngz6": {
     "deck": "main_deck",
     "type": "card",
     "cardType": "vecg",
     "id": "ngz6",
-    "z": 12350,
-    "parent": "p93s"
+    "z": 47679,
+    "parent": "6vls"
   },
   "qzrh": {
     "deck": "main_deck",
     "type": "card",
     "cardType": "w4id",
     "id": "qzrh",
-    "z": 12327,
-    "parent": "p93s"
+    "z": 47683,
+    "parent": "6vls"
   },
   "1u26": {
     "deck": "main_deck",
     "type": "card",
     "cardType": "rqsv",
     "id": "1u26",
-    "z": 12372,
-    "parent": "p93s"
+    "z": 47713,
+    "parent": "6vls"
   },
   "lq4c": {
     "deck": "main_deck",
     "type": "card",
     "cardType": "236k",
     "id": "lq4c",
-    "z": 12360,
-    "parent": "p93s"
+    "z": 47733,
+    "parent": "6vls"
   },
   "keoj": {
     "deck": "main_deck",
     "type": "card",
     "cardType": "vpsw",
     "id": "keoj",
-    "z": 12362,
-    "parent": "p93s"
+    "z": 47734,
+    "parent": "6vls"
   },
   "e8gg": {
     "deck": "main_deck",
     "type": "card",
     "cardType": "dykj",
     "id": "e8gg",
-    "z": 12358,
-    "parent": "p93s"
+    "z": 47693,
+    "parent": "6vls"
   },
   "6sub": {
     "deck": "main_deck",
     "type": "card",
     "cardType": "gco2",
     "id": "6sub",
-    "z": 12367,
-    "parent": "p93s"
+    "z": 47737,
+    "parent": "6vls"
   },
   "dnlb": {
     "deck": "main_deck",
     "type": "card",
     "cardType": "dcrr",
     "id": "dnlb",
-    "z": 12366,
-    "parent": "p93s"
+    "z": 47721,
+    "parent": "6vls"
   },
   "ipmw": {
     "deck": "main_deck",
     "type": "card",
     "cardType": "2sls",
     "id": "ipmw",
-    "z": 12364,
-    "parent": "p93s"
+    "z": 47699,
+    "parent": "6vls"
   },
   "ytu6": {
     "deck": "main_deck",
     "type": "card",
     "cardType": "vecg",
     "id": "ytu6",
-    "z": 12379,
-    "parent": "p93s"
+    "z": 47702,
+    "parent": "6vls"
   },
   "48o4": {
     "deck": "main_deck",
     "type": "card",
     "cardType": "w4id",
     "id": "48o4",
-    "z": 12320,
-    "parent": "p93s"
+    "z": 47681,
+    "parent": "6vls"
   },
   "ay3c": {
     "deck": "main_deck",
     "type": "card",
     "cardType": "rqsv",
     "id": "ay3c",
-    "z": 12361,
-    "parent": "p93s"
+    "z": 47704,
+    "parent": "6vls"
   },
   "u595": {
     "deck": "main_deck",
     "type": "card",
     "cardType": "236k",
     "id": "u595",
-    "z": 12343,
-    "parent": "p93s"
+    "z": 47718,
+    "parent": "6vls"
   },
   "nkzc": {
     "deck": "main_deck",
     "type": "card",
     "cardType": "vpsw",
     "id": "nkzc",
-    "z": 12345,
-    "parent": "p93s"
+    "z": 47738,
+    "parent": "6vls"
   },
   "gk31": {
     "deck": "main_deck",
     "type": "card",
     "cardType": "dykj",
     "id": "gk31",
-    "z": 12354,
-    "parent": "p93s"
+    "z": 47726,
+    "parent": "6vls"
   },
   "x7xi": {
     "deck": "main_deck",
     "type": "card",
     "cardType": "gco2",
     "id": "x7xi",
-    "z": 12336,
-    "parent": "p93s"
+    "z": 47707,
+    "parent": "6vls"
   },
   "5z49": {
     "deck": "main_deck",
     "type": "card",
     "cardType": "dcrr",
     "id": "5z49",
-    "z": 12323,
-    "parent": "p93s"
+    "z": 47685,
+    "parent": "6vls"
   },
   "q4cz": {
     "deck": "main_deck",
     "type": "card",
     "cardType": "2sls",
     "id": "q4cz",
-    "z": 12342,
-    "parent": "p93s"
+    "z": 47682,
+    "parent": "6vls"
   },
   "hftn": {
     "deck": "main_deck",
     "type": "card",
     "cardType": "vecg",
     "id": "hftn",
-    "z": 12339,
-    "parent": "p93s"
+    "z": 47722,
+    "parent": "6vls"
   },
   "mr7v": {
     "deck": "main_deck",
     "type": "card",
     "cardType": "w4id",
     "id": "mr7v",
-    "z": 12375,
-    "parent": "p93s"
+    "z": 47700,
+    "parent": "6vls"
   },
   "vjjx": {
     "deck": "main_deck",
     "type": "card",
     "cardType": "rqsv",
     "id": "vjjx",
-    "z": 12331,
-    "parent": "p93s"
+    "z": 47686,
+    "parent": "6vls"
   },
   "uh2r": {
     "deck": "main_deck",
     "type": "card",
     "cardType": "236k",
     "id": "uh2r",
-    "z": 12352,
-    "parent": "p93s"
+    "z": 47678,
+    "parent": "6vls"
   },
   "bord": {
     "deck": "main_deck",
     "type": "card",
     "cardType": "vpsw",
     "id": "bord",
-    "z": 12347,
-    "parent": "p93s"
+    "z": 47715,
+    "parent": "6vls"
   },
   "1hand": {
     "type": "holder",
@@ -632,7 +553,7 @@
     "z": 6,
     "movableInEdit": false,
     "width": 590,
-    "y": 60,
+    "y": -312,
     "onlyVisibleForSeat": "1seat",
     "stackOffsetX": 123,
     "enterRoutine": [
@@ -684,7 +605,7 @@
         ],
         "elseRoutine": [
           "var modCount = ${COUNT} - 1",
-          "var available = ${PROPERTY width} - ${cardWidth}",
+          "var available = ${PROPERTY width} - ${cardWidth}+10",
           "var dropOffset = ${PROPERTY dropOffsetX} * 2",
           "var available = ${available} - ${dropOffset}",
           "var perCard = ${available} / ${modCount}",
@@ -698,16 +619,24 @@
         ]
       }
     ],
-    "height": 180,
-    "x": 810,
-    "layer": -1
+    "height": 185,
+    "x": -140,
+    "layer": -1,
+    "color_change_index": 1,
+    "color": "#b4b4b4",
+    "background_color_transparent": "#b4b4b4",
+    "background_color_solid": "#b4b4b4",
+    "css": {
+      "background": "",
+      "border": "5px solid ${PROPERTY background_color_solid}"
+    }
   },
   "draw_deck_holder": {
     "type": "holder",
     "id": "draw_deck_holder",
-    "x": 272,
-    "y": 818,
-    "z": 667,
+    "x": 1177,
+    "y": 628,
+    "z": 622,
     "dropTarget": {
       "type": "card"
     },
@@ -717,10 +646,10 @@
   },
   "hands_anchor": {
     "id": "hands_anchor",
-    "y": 757,
+    "y": 1122,
     "width": 35,
     "height": 40,
-    "z": 1345,
+    "z": 44406,
     "color": "#1f5ca6",
     "css": "border-radius: 80% 80% 40% 110%",
     "image": "/i/game-pieces/3D/Pin-3D.svg",
@@ -731,7 +660,9 @@
     },
     "borderColor": "black",
     "borderWidth": "1",
-    "x": -298
+    "x": 1143,
+    "movable": false,
+    "movableInEdit": false
   },
   "2hand": {
     "type": "holder",
@@ -740,7 +671,11 @@
     "fixedParent": true,
     "onlyVisibleForSeat": "2seat",
     "inheritFrom": "1hand",
-    "stackOffsetX": 123
+    "stackOffsetX": 123,
+    "color_change_index": 2,
+    "background_color_transparent": "#b4b4b4",
+    "color": "#b4b4b4",
+    "background_color_solid": "#b4b4b4"
   },
   "3hand": {
     "type": "holder",
@@ -749,7 +684,11 @@
     "fixedParent": true,
     "onlyVisibleForSeat": "3seat",
     "inheritFrom": "1hand",
-    "stackOffsetX": 123
+    "stackOffsetX": 123,
+    "color_change_index": 3,
+    "background_color_transparent": "#b4b4b4",
+    "color": "#b4b4b4",
+    "background_color_solid": "#b4b4b4"
   },
   "4hand": {
     "type": "holder",
@@ -758,12 +697,16 @@
     "fixedParent": true,
     "inheritFrom": "1hand",
     "onlyVisibleForSeat": "4seat",
-    "stackOffsetX": 123
+    "stackOffsetX": 123,
+    "color_change_index": 4,
+    "background_color_transparent": "#b4b4b4",
+    "color": "#b4b4b4",
+    "background_color_solid": "#b4b4b4"
   },
   "1offer": {
     "type": "holder",
     "id": "1offer",
-    "y": 39,
+    "y": 37,
     "height": 115,
     "z": 1409,
     "enterRoutine": [
@@ -852,18 +795,17 @@
       "deck": "main_deck"
     },
     "linkedToSeat": "1seat",
-    "x": 31,
+    "x": 67,
     "stackOffsetX": 170,
     "css": {
       "background": "",
-      "border": "5px solid var(--color)"
+      "border": "5px solid ${PROPERTY background_color_solid}"
     },
-    "inheritFrom": {
-      "1seat": [
-        "color"
-      ]
-    },
-    "movableInEdit": true
+    "movableInEdit": false,
+    "color_change_index": 1,
+    "background_color_transparent": "#b4b4b4",
+    "background_color_solid": "#b4b4b4",
+    "color": "#b4b4b4"
   },
   "1_card_count": {
     "type": "label",
@@ -887,7 +829,7 @@
       }
     },
     "text": "Total Cards: 0",
-    "x": 172,
+    "x": 208,
     "linkedToSeat": "1seat",
     "offer_count": 0,
     "changeRoutine": [
@@ -939,13 +881,14 @@
       }
     ],
     "hand_count": 0,
-    "movableInEdit": false
+    "movableInEdit": false,
+    "y": -2
   },
   "2seat": {
     "type": "seat",
     "id": "2seat",
     "x": 82,
-    "y": 216,
+    "y": 230,
     "index": 2,
     "inheritFrom": {
       "1seat": [
@@ -954,9 +897,14 @@
     },
     "turn": false,
     "player": "",
-    "mainColor": "#dddddd",
     "textColor": "#000000",
-    "z": 78316
+    "z": 78323,
+    "background_color_transparent": "white",
+    "turn_alert_enabled": true,
+    "audio_enabled": true,
+    "color": "#dddddd",
+    "mainColor": "#dddddd",
+    "background_color_solid": "#00bcd4"
   },
   "2_card_count": {
     "type": "label",
@@ -978,13 +926,18 @@
         "!color"
       ]
     },
-    "z": 78311,
+    "z": 78774,
     "x": 82,
-    "y": 423,
-    "mainColor": "#dddddd",
+    "y": 431,
     "textColor": "#000000",
     "player": "",
-    "turn": false
+    "turn": false,
+    "background_color_transparent": "white",
+    "audio_enabled": true,
+    "turn_alert_enabled": true,
+    "color": "#dddddd",
+    "mainColor": "#dddddd",
+    "background_color_solid": "#9c27b0"
   },
   "3offer": {
     "type": "holder",
@@ -993,7 +946,11 @@
     "fixedParent": true,
     "inheritFrom": "1offer",
     "stackOffsetX": 170,
-    "linkedToSeat": "3seat"
+    "linkedToSeat": "3seat",
+    "background_color_transparent": "#b4b4b4",
+    "color_change_index": 3,
+    "color": "#b4b4b4",
+    "background_color_solid": "#b4b4b4"
   },
   "3_card_count": {
     "type": "label",
@@ -1015,13 +972,18 @@
         "!color"
       ]
     },
-    "z": 78313,
+    "z": 78778,
     "x": 82,
-    "y": 629,
-    "mainColor": "#dddddd",
+    "y": 633,
     "textColor": "#000000",
     "turn": false,
-    "player": ""
+    "player": "",
+    "background_color_transparent": "white",
+    "turn_alert_enabled": false,
+    "audio_enabled": false,
+    "color": "#dddddd",
+    "mainColor": "#dddddd",
+    "background_color_solid": "#607d8b"
   },
   "4offer": {
     "type": "holder",
@@ -1030,7 +992,11 @@
     "fixedParent": true,
     "inheritFrom": "1offer",
     "stackOffsetX": 170,
-    "linkedToSeat": "4seat"
+    "linkedToSeat": "4seat",
+    "background_color_transparent": "#b4b4b4",
+    "color_change_index": 4,
+    "color": "#b4b4b4",
+    "background_color_solid": "#b4b4b4"
   },
   "4_card_count": {
     "type": "label",
@@ -1046,7 +1012,7 @@
   "infinite_trash3": {
     "type": "holder",
     "id": "infinite_trash3",
-    "y": 40,
+    "y": 42,
     "width": 40,
     "height": 45,
     "z": 650,
@@ -1126,12 +1092,12 @@
     "parent": "trash_label",
     "fixedParent": true,
     "rotation": 90,
-    "x": 2
+    "x": 44
   },
   "infinite_trash1": {
     "type": "holder",
     "id": "infinite_trash1",
-    "x": 97,
+    "x": 139,
     "width": 40,
     "height": 45,
     "z": 674,
@@ -1211,12 +1177,12 @@
     "parent": "trash_label",
     "fixedParent": true,
     "rotation": 90,
-    "y": 40
+    "y": 43
   },
   "infinite_trash2": {
     "type": "holder",
     "id": "infinite_trash2",
-    "x": 49,
+    "x": 91,
     "width": 40,
     "height": 45,
     "z": 672,
@@ -1296,16 +1262,16 @@
     "parent": "trash_label",
     "fixedParent": true,
     "rotation": 90,
-    "y": 40
+    "y": 42
   },
   "trash_label": {
     "type": "label",
     "id": "trash_label",
-    "y": 893,
+    "y": 693,
     "width": 160,
     "height": 40,
-    "layer": 4,
-    "z": 33,
+    "layer": -4,
+    "z": 1,
     "css": {
       "font-size": "24px",
       "background": "#dddddd",
@@ -1314,16 +1280,16 @@
     },
     "text": "Trash Supply",
     "rotation": 270,
-    "x": 361
+    "x": 1411
   },
   "setup": {
     "type": "button",
     "id": "setup",
-    "x": 1412,
-    "y": 834,
-    "width": 120,
-    "z": 324,
-    "text": "SETUP\nNEW GAME",
+    "x": 1422,
+    "y": 460,
+    "width": 160,
+    "z": 627,
+    "text": "NEW GAME",
     "clickRoutine": [
       {
         "note": "Get player count",
@@ -1340,8 +1306,19 @@
         "variable": "player_count"
       },
       {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "player_count",
+        "relation": "=",
+        "value": "${player_count}"
+      },
+      {
         "func": "INPUT",
         "fields": [
+          {
+            "type": "title",
+            "text": "Setup New Game?"
+          },
           {
             "type": "checkbox",
             "label": "Check this box and click the green button to reset the game.",
@@ -1503,56 +1480,6 @@
             ]
           },
           {
-            "note": "Determine starting money",
-            "func": "IF",
-            "operand1": "${player_count}",
-            "relation": "<=",
-            "operand2": 2,
-            "thenRoutine": [
-              "var starting_money = 12"
-            ]
-          },
-          {
-            "note": "Determine starting money",
-            "func": "IF",
-            "operand1": "${player_count}",
-            "relation": "==",
-            "operand2": 3,
-            "thenRoutine": [
-              "var starting_money = 12"
-            ]
-          },
-          {
-            "note": "Determine starting money",
-            "func": "IF",
-            "operand1": "${player_count}",
-            "relation": "==",
-            "operand2": 4,
-            "thenRoutine": [
-              "var starting_money = 12"
-            ]
-          },
-          {
-            "note": "Determine starting money",
-            "func": "IF",
-            "operand1": "${player_count}",
-            "relation": "==",
-            "operand2": 5,
-            "thenRoutine": [
-              "var starting_money = 12"
-            ]
-          },
-          {
-            "note": "Determine starting money",
-            "func": "IF",
-            "operand1": "${player_count}",
-            "relation": "==",
-            "operand2": 6,
-            "thenRoutine": [
-              "var starting_money = 12"
-            ]
-          },
-          {
             "note": "Grabs all money labels",
             "func": "SELECT",
             "property": "money_counter",
@@ -1623,11 +1550,16 @@
             "value": []
           },
           {
-            "func": "SET",
+            "func": "FOREACH",
             "collection": "trash_holders",
-            "property": "total_trash_value",
-            "relation": "=",
-            "value": 0
+            "loopRoutine": [
+              {
+                "func": "MOVE",
+                "from": "infinite_trash0",
+                "to": "${widgetID}",
+                "count": 1
+              }
+            ]
           },
           {
             "func": "SET",
@@ -1650,16 +1582,17 @@
         ]
       }
     ],
-    "layer": 2,
+    "layer": -2,
     "css": "color: white; font-size: 17px;border:5px solid grey;background-color: #eb4e72",
-    "height": 55,
-    "borderRadius": 20
+    "height": 35,
+    "borderRadius": 10,
+    "player_count": 0
   },
   "discard_holder": {
     "type": "holder",
     "id": "discard_holder",
-    "x": 129,
-    "y": 818,
+    "x": 1303,
+    "y": 628,
     "width": 115,
     "height": 180,
     "z": 656,
@@ -1670,41 +1603,19 @@
       "activeFace": 1
     }
   },
-  "ihfn": {
-    "image": "/assets/-2035310327_217112",
-    "id": "ihfn",
-    "x": 1109,
-    "width": 490,
-    "height": 250,
-    "movable": false,
-    "y": -15,
-    "movableInEdit": false
-  },
   "za96": {
-    "x": 1107,
-    "y": -88,
+    "x": 992,
+    "y": -51,
     "width": 0,
     "borderRadius": "3px",
     "css": {
       "border": "3px solid #666"
     },
-    "z": 255,
+    "z": 637,
     "id": "za96",
     "height": 1100,
-    "layer": 2
-  },
-  "x6z8": {
-    "x": 1110,
-    "y": 216,
-    "width": 800,
-    "height": 0,
-    "borderRadius": "3px",
-    "css": {
-      "border": "3px solid #666"
-    },
-    "z": 293,
-    "id": "x6z8",
-    "layer": 2
+    "layer": -2,
+    "movable": false
   },
   "h8up": {
     "type": "button",
@@ -1782,14 +1693,29 @@
         "func": "CALL",
         "widget": "arrow",
         "routine": "clearRoutine"
+      },
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY player_count OF setup}",
+        "relation": "==",
+        "operand2": 2,
+        "thenRoutine": [
+          {
+            "func": "MOVE",
+            "from": "draw_deck_holder",
+            "to": "dummy_offer",
+            "face": 1,
+            "fillTo": 2
+          }
+        ]
       }
     ],
-    "x": 13,
-    "y": 834,
-    "z": 321,
+    "x": 1042,
+    "y": 647,
+    "z": 638,
     "id": "h8up",
-    "borderRadius": 20,
-    "layer": 2,
+    "borderRadius": 10,
+    "layer": -2,
     "css": "color: black; font-size: 17px;border:5px solid grey;background-color: #c8b8f9",
     "height": 130,
     "width": 90,
@@ -1798,8 +1724,8 @@
   "arrow": {
     "id": "arrow",
     "width": 70,
-    "z": 78319,
-    "height": 37,
+    "z": 78784,
+    "height": 150,
     "clickRoutine": [
       {
         "func": "TURN",
@@ -1808,14 +1734,17 @@
       {
         "func": "CALL",
         "routine": "MoveArrowRoutine"
+      },
+      {
+        "func": "CALL",
+        "routine": "AlertPlayerRoutine"
       }
     ],
-    "parent": "1current_turn",
     "clearRoutine": [
       {
         "func": "TURN",
-        "turn": "${seatIndex}",
-        "turnCycle": "position"
+        "turn": "${seatIndex}seat",
+        "turnCycle": "seat"
       },
       {
         "func": "CALL",
@@ -1854,6 +1783,19 @@
         "property": "parent",
         "relation": "=",
         "value": "${index}current_turn"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "arrow"
+        ],
+        "property": "current_player_index",
+        "relation": "=",
+        "value": "${index}"
+      },
+      {
+        "func": "CALL",
+        "routine": "ModifyButtonRoutine"
       }
     ],
     "NewRoundRoutine": [
@@ -1892,25 +1834,166 @@
       {
         "func": "CALL",
         "routine": "MoveArrowRoutine"
+      },
+      {
+        "func": "CALL",
+        "routine": "AlertPlayerRoutine"
       }
     ],
     "type": "button",
     "borderRadius": 10,
-    "backgroundColor": "grey",
     "css": {
       "default": {
         "color": "white",
-        "font-size": "13px",
-        "border": "0px solid #d12027",
-        "text-shadow": "none"
-      },
-      " > textarea": {
-        "text-shadow": "0px 0px 0 #000000, 0px 0px 0 #000000, 0px 0px 0 #000000, 0px 0px 0 #000000, 0 0px 0px #00000099"
+        "font-size": "15px",
+        "border": "2px solid black",
+        "font-weight": "900",
+        "background": "${PROPERTY button_border_color}",
+        "text-align": "center"
       }
     },
-    "text": "CLICK TO\nEND TURN",
-    "x": 2,
-    "y": 13
+    "text": "CLICK\nTO END TURN",
+    "x": -100,
+    "y": -115,
+    "TurnSoundRoutine": [
+      {
+        "func": "AUDIO",
+        "source": "/assets/687121058_105325",
+        "maxVolume": 0.5,
+        "length": 2000,
+        "player": "${player_name}"
+      }
+    ],
+    "AlertPlayerRoutine": [
+      {
+        "func": "GET",
+        "collection": [
+          "${PROPERTY current_player_index}seat"
+        ],
+        "property": "player",
+        "variable": "player_name"
+      },
+      {
+        "func": "GET",
+        "collection": [
+          "${PROPERTY current_player_index}seat"
+        ],
+        "property": "background_color_solid"
+      },
+      {
+        "func": "GET",
+        "collection": [
+          "${PROPERTY current_player_index}seat"
+        ],
+        "property": "background_color_transparent"
+      },
+      {
+        "func": "GET",
+        "collection": [
+          "${PROPERTY current_player_index}seat"
+        ],
+        "property": "turn_alert_enabled"
+      },
+      {
+        "func": "IF",
+        "operand1": "${turn_alert_enabled}",
+        "relation": "==",
+        "operand2": true,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "your_turn_label"
+            ],
+            "property": "background_color_solid",
+            "relation": "=",
+            "value": "${background_color_solid}"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "your_turn_button"
+            ],
+            "property": "background_color_solid",
+            "relation": "=",
+            "value": "${background_color_solid}"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "your_turn_button"
+            ],
+            "property": "background_color_transparent",
+            "relation": "=",
+            "value": "${background_color_transparent}"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "your_turn_label"
+            ],
+            "property": "background_color_transparent",
+            "relation": "=",
+            "value": "${background_color_transparent}"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "your_turn_button"
+            ],
+            "property": "onlyVisibleForSeat",
+            "relation": "=",
+            "value": "${PROPERTY current_player_index}seat"
+          }
+        ]
+      },
+      {
+        "func": "GET",
+        "collection": [
+          "${PROPERTY current_player_index}seat"
+        ],
+        "property": "audio_enabled",
+        "variable": "audio_enabled"
+      },
+      {
+        "func": "IF",
+        "operand1": "${audio_enabled}",
+        "relation": "==",
+        "operand2": true,
+        "thenRoutine": [
+          {
+            "func": "CALL",
+            "routine": "TurnSoundRoutine"
+          }
+        ]
+      }
+    ],
+    "current_player_index": 0,
+    "ModifyButtonRoutine": [
+      {
+        "func": "GET",
+        "collection": [
+          "${PROPERTY current_player_index}seat"
+        ],
+        "property": "player",
+        "variable": "current_player"
+      },
+      {
+        "func": "GET",
+        "collection": [
+          "${PROPERTY current_player_index}seat"
+        ],
+        "property": "color",
+        "variable": "current_player_color"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "relation": "=",
+        "property": "button_border_color",
+        "value": "${current_player_color}"
+      }
+    ]
   },
   "1current_turn": {
     "type": "holder",
@@ -1926,7 +2009,7 @@
     "classes": "transparent",
     "layer": 1,
     "x": -82,
-    "y": -16,
+    "y": -15,
     "parent": "1seat",
     "fixedParent": true,
     "movableInEdit": false
@@ -1952,23 +2035,13 @@
     "parent": "4seat",
     "fixedParent": true
   },
-  "fd3j": {
-    "image": "/assets/1110190640_12032",
-    "id": "fd3j",
-    "z": 1336,
-    "y": 813,
-    "x": 464,
-    "width": 40,
-    "height": 40,
-    "movable": false
-  },
   "1trash_holder": {
     "type": "holder",
     "id": "1trash_holder",
     "parent": "1seat",
     "fixedParent": true,
-    "x": 379,
-    "y": -11,
+    "x": 415,
+    "y": -13,
     "width": 45,
     "height": 166,
     "z": 1410,
@@ -2023,7 +2096,24 @@
             "value": false
           },
           "var trash_array = from ${PROPERTY trash_array}",
-          "var useless = shift ${trash_array}",
+          {
+            "func": "GET",
+            "collection": "child",
+            "property": "trash_value",
+            "variable": "leaving_trash_value"
+          },
+          {
+            "func": "IF",
+            "operand1": "${leaving_trash_value}",
+            "relation": "==",
+            "operand2": 0,
+            "thenRoutine": [
+              "var useless = pop ${trash_array}"
+            ],
+            "elseRoutine": [
+              "var useless = shift ${trash_array}"
+            ]
+          },
           {
             "func": "SET",
             "collection": [
@@ -2049,7 +2139,9 @@
         ]
       }
     ],
-    "trash_array": [],
+    "trash_array": [
+      0
+    ],
     "total_trash_value": 0,
     "doubleLeaveRoutineCompensation": true,
     "trash_holder": true,
@@ -2079,13 +2171,14 @@
         "value": "${current_trash}"
       }
     ],
-    "inheritFrom": {
-      "1seat": "color"
-    },
     "css": {
       "background": "",
       "border": "5px solid var(--color)"
-    }
+    },
+    "color_change_index": 1,
+    "color": "#b4b4b4",
+    "background_color_transparent": "#b4b4b4",
+    "background_color_solid": "#b4b4b4"
   },
   "2trash_holder": {
     "type": "holder",
@@ -2095,9 +2188,15 @@
     "linkedToSeat": "2seat",
     "inheritFrom": "1trash_holder",
     "trash_value": 0,
-    "trash_array": [],
-    "doubleLeaveRoutineCompensation": false,
-    "total_trash_value": 0
+    "trash_array": [
+      0
+    ],
+    "doubleLeaveRoutineCompensation": true,
+    "total_trash_value": 0,
+    "color_change_index": 2,
+    "background_color_transparent": "#b4b4b4",
+    "color": "#b4b4b4",
+    "background_color_solid": "#b4b4b4"
   },
   "3trash_holder": {
     "type": "holder",
@@ -2108,8 +2207,14 @@
     "inheritFrom": "1trash_holder",
     "trash_value": 0,
     "total_trash_value": 0,
-    "trash_array": [],
-    "doubleLeaveRoutineCompensation": false
+    "trash_array": [
+      0
+    ],
+    "doubleLeaveRoutineCompensation": true,
+    "color_change_index": 3,
+    "background_color_transparent": "#b4b4b4",
+    "color": "#b4b4b4",
+    "background_color_solid": "#b4b4b4"
   },
   "4trash_holder": {
     "type": "holder",
@@ -2120,8 +2225,14 @@
     "inheritFrom": "1trash_holder",
     "trash_value": 0,
     "total_trash_value": 0,
-    "trash_array": [],
-    "doubleLeaveRoutineCompensation": true
+    "trash_array": [
+      0
+    ],
+    "doubleLeaveRoutineCompensation": true,
+    "color_change_index": 4,
+    "background_color_transparent": "#b4b4b4",
+    "color": "#b4b4b4",
+    "background_color_solid": "#b4b4b4"
   },
   "0trash_holder": {
     "type": "holder",
@@ -2130,24 +2241,34 @@
     "fixedParent": true,
     "inheritFrom": "1trash_holder",
     "total_trash_value": 0,
-    "trash_array": [],
+    "trash_array": [
+      0
+    ],
     "trash_value": -1,
     "x": 535,
     "movableInEdit": true,
     "z": 666,
-    "y": -906
+    "y": -906,
+    "color": "#b4b4b4",
+    "background_color_transparent": "#b4b4b4",
+    "background_color_solid": "#b4b4b4",
+    "doubleLeaveRoutineCompensation": true
   },
   "new_round_button": {
     "type": "button",
     "id": "new_round_button",
-    "x": 1153,
-    "y": 939,
-    "z": 319,
-    "text": "CLICK FOR\nNEW ROUND",
+    "x": 1422,
+    "y": 536,
+    "z": 628,
+    "text": "NEW ROUND",
     "clickRoutine": [
       {
         "func": "INPUT",
         "fields": [
+          {
+            "type": "title",
+            "text": "Start New Round?"
+          },
           {
             "type": "checkbox",
             "label": "Check this box and click the green button to start the next round game.",
@@ -2173,7 +2294,7 @@
     ],
     "current_round": 1,
     "highest_trash_ID": "0trash_holder",
-    "layer": 2,
+    "layer": -2,
     "NewRoundRoutine": [
       {
         "func": "RECALL",
@@ -2210,6 +2331,23 @@
         "value": ""
       },
       {
+        "func": "COUNT",
+        "collection": "seatedPlayers",
+        "variable": "player_count"
+      },
+      {
+        "func": "IF",
+        "operand1": "${player_count}",
+        "relation": "<=",
+        "operand2": 4,
+        "thenRoutine": [
+          "var hand_size = 12"
+        ],
+        "elseRoutine": [
+          "var hand_size = 10"
+        ]
+      },
+      {
         "func": "FOREACH",
         "collection": "seatedPlayers",
         "loopRoutine": [
@@ -2219,7 +2357,54 @@
             "from": "draw_deck_holder",
             "to": "${index}hand",
             "face": 1,
-            "count": 12
+            "count": "${hand_size}"
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${player_count}",
+        "relation": "==",
+        "operand2": 2,
+        "thenRoutine": [
+          {
+            "func": "MOVE",
+            "from": "draw_deck_holder",
+            "to": "dummy_offer",
+            "face": 1,
+            "count": 2
+          },
+          {
+            "func": "GET",
+            "collection": [
+              "dummy_offer"
+            ],
+            "property": "activeX"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "dummy_offer"
+            ],
+            "property": "x",
+            "relation": "=",
+            "value": "${activeX}"
+          },
+          {
+            "func": "GET",
+            "collection": [
+              "dummy_offer_label"
+            ],
+            "property": "activeX"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "dummy_offer_label"
+            ],
+            "property": "x",
+            "relation": "=",
+            "value": "${activeX}"
           }
         ]
       },
@@ -2246,6 +2431,48 @@
                 "property": "movable",
                 "relation": "=",
                 "value": false
+              },
+              {
+                "func": "IF",
+                "operand1": "${PROPERTY total_trash_value OF $parentID}",
+                "relation": ">",
+                "operand2": 0,
+                "thenRoutine": [
+                  {
+                    "func": "IF",
+                    "operand1": "${PROPERTY trash_value OF $widgetID}",
+                    "relation": "==",
+                    "operand2": 0,
+                    "thenRoutine": [
+                      {
+                        "func": "SET",
+                        "collection": [
+                          "${widgetID}"
+                        ],
+                        "property": "parent",
+                        "relation": "=",
+                        "value": "infinite_trash0"
+                      },
+                      {
+                        "func": "SELECT",
+                        "property": "parent",
+                        "relation": "==",
+                        "value": "${parentID}",
+                        "collection": "remaining_trash"
+                      },
+                      {
+                        "func": "MOVE",
+                        "from": "${parentID}",
+                        "to": "temporary_trash_holder"
+                      },
+                      {
+                        "func": "MOVE",
+                        "from": "temporary_trash_holder",
+                        "to": "${parentID}"
+                      }
+                    ]
+                  }
+                ]
               }
             ]
           }
@@ -2344,8 +2571,8 @@
       }
     ],
     "css": "color: white; font-size: 17px;border:5px solid grey;background-color: #61c3c5",
-    "width": 150,
-    "borderRadius": 20,
+    "width": 160,
+    "borderRadius": 10,
     "height": 55
   },
   "normal_text_template": {
@@ -2373,7 +2600,7 @@
   "asfqwe": {
     "type": "label",
     "id": "asfqwe",
-    "x": 1672,
+    "x": 1820,
     "y": 431,
     "inheritFrom": "normal_text_template",
     "text": "Any size or type combo, ONLY from hidden hand.",
@@ -2383,7 +2610,7 @@
   "asfasdfqwe": {
     "type": "label",
     "id": "asfasdfqwe",
-    "x": 1651,
+    "x": 1799,
     "y": 352,
     "z": 588,
     "inheritFrom": "heading_text_template",
@@ -2392,7 +2619,7 @@
   "asfasdfqwe1": {
     "type": "label",
     "id": "asfasdfqwe1",
-    "x": 1659,
+    "x": 1807,
     "y": 748,
     "z": 611,
     "inheritFrom": "heading_text_template",
@@ -2401,7 +2628,7 @@
   "asfasdfqwe2": {
     "type": "label",
     "id": "asfasdfqwe2",
-    "x": 1651,
+    "x": 1799,
     "y": 275,
     "z": 586,
     "inheritFrom": "heading_text_template",
@@ -2410,7 +2637,7 @@
   "asfasdfqwe3": {
     "type": "label",
     "id": "asfasdfqwe3",
-    "x": 1670,
+    "x": 1818,
     "y": 397,
     "z": 604,
     "inheritFrom": "subheading_text_template",
@@ -2419,7 +2646,7 @@
   "asfasdfqwe4": {
     "type": "label",
     "id": "asfasdfqwe4",
-    "x": 1653,
+    "x": 1801,
     "y": 645,
     "z": 607,
     "inheritFrom": "heading_text_template",
@@ -2428,7 +2655,7 @@
   "asfasdfqwe5": {
     "type": "label",
     "id": "asfasdfqwe5",
-    "x": 1650,
+    "x": 1798,
     "y": 567,
     "z": 599,
     "inheritFrom": "heading_text_template",
@@ -2437,7 +2664,7 @@
   "asfqwe1": {
     "type": "label",
     "id": "asfqwe1",
-    "x": 1653,
+    "x": 1801,
     "y": 245,
     "inheritFrom": "normal_text_template",
     "text": "Deck Makeup: 1 - 9, seven of each",
@@ -2446,7 +2673,7 @@
   "asfqwe2": {
     "type": "label",
     "id": "asfqwe2",
-    "x": 1654,
+    "x": 1802,
     "y": 613,
     "inheritFrom": "normal_text_template",
     "text": "Single, Set (2+ identical), & Run (2+ consecutive)",
@@ -2455,26 +2682,27 @@
   "asfqwe3": {
     "type": "label",
     "id": "asfqwe3",
-    "x": 1655,
+    "x": 1803,
     "y": 685,
     "inheritFrom": "normal_text_template",
     "text": "• Same size AND type combo, higher value.",
     "z": 606
   },
   "d4i7": {
-    "image": "/assets/188827192_1681353",
+    "image": "/assets/61117290_1650183",
     "id": "d4i7",
-    "x": 1108,
-    "y": 215,
+    "x": 996,
     "height": 860,
-    "width": 500,
+    "width": 610,
     "movable": false,
-    "z": 1274
+    "z": 8,
+    "layer": -5,
+    "y": 87
   },
   "asfqwe7": {
     "type": "label",
     "id": "asfqwe7",
-    "x": 1651,
+    "x": 1799,
     "y": 315,
     "inheritFrom": "normal_text_template",
     "text": "All players simultaneously offer 1 card.",
@@ -2495,7 +2723,7 @@
   "asfasdfqwe6": {
     "type": "label",
     "id": "asfasdfqwe6",
-    "x": 1672,
+    "x": 1820,
     "y": 469,
     "z": 603,
     "inheritFrom": "subheading_text_template",
@@ -2504,7 +2732,7 @@
   "asfqwe8": {
     "type": "label",
     "id": "asfqwe8",
-    "x": 1670,
+    "x": 1818,
     "y": 502,
     "inheritFrom": "normal_text_template",
     "text": "A) Play stronger combo, may use ANY offers.",
@@ -2514,7 +2742,7 @@
   "asfqwe9": {
     "type": "label",
     "id": "asfqwe9",
-    "x": 1672,
+    "x": 1820,
     "y": 529,
     "inheritFrom": "normal_text_template",
     "text": "B) Draw 1 card, then offer 1 card.",
@@ -2524,7 +2752,7 @@
   "asfqwe10": {
     "type": "label",
     "id": "asfqwe10",
-    "x": 1655,
+    "x": 1803,
     "y": 710,
     "inheritFrom": "normal_text_template",
     "text": "• Size exactly +1, ANY combo type.",
@@ -2533,7 +2761,7 @@
   "asfqwe11": {
     "type": "label",
     "id": "asfqwe11",
-    "x": 1659,
+    "x": 1807,
     "y": 787,
     "inheritFrom": "normal_text_template",
     "text": "• No sorting.",
@@ -2542,7 +2770,7 @@
   "asfqwe12": {
     "type": "label",
     "id": "asfqwe12",
-    "x": 1659,
+    "x": 1807,
     "y": 812,
     "inheritFrom": "normal_text_template",
     "text": "• Played cards must be adjacent and in order.",
@@ -2551,50 +2779,11 @@
   "asfqwe13": {
     "type": "label",
     "id": "asfqwe13",
-    "x": 1659,
+    "x": 1807,
     "y": 837,
     "inheritFrom": "normal_text_template",
     "text": "• Used offers can be placed anywhere when played.",
     "z": 613
-  },
-  "x6z9": {
-    "x": 1110,
-    "y": 568,
-    "width": 800,
-    "height": 0,
-    "borderRadius": "3px",
-    "css": {
-      "border": "3px solid #666"
-    },
-    "z": 294,
-    "id": "x6z9",
-    "layer": 2
-  },
-  "x6z10": {
-    "x": 1108,
-    "y": 737,
-    "width": 800,
-    "height": 0,
-    "borderRadius": "3px",
-    "css": {
-      "border": "3px solid #666"
-    },
-    "z": 295,
-    "id": "x6z10",
-    "layer": 2
-  },
-  "x6z11": {
-    "x": 1111,
-    "y": 307,
-    "width": 800,
-    "height": 0,
-    "borderRadius": "3px",
-    "css": {
-      "border": "3px solid #666"
-    },
-    "z": 264,
-    "id": "x6z11",
-    "layer": 2
   },
   "1move_offers": {
     "id": "1move_offers",
@@ -2603,7 +2792,7 @@
     "height": 90,
     "z": 1220,
     "movable": false,
-    "image": "/assets/905543181_22476",
+    "image": "/assets/372054288_3836",
     "visibleX": -1,
     "visibleY": 79,
     "defaultX": -100,
@@ -2660,21 +2849,12 @@
     "visibleY": 681,
     "x": -100
   },
-  "p93s": {
-    "type": "pile",
-    "parent": "draw_deck_holder",
-    "x": 4,
-    "y": 4,
-    "width": 107,
-    "height": 170,
-    "id": "p93s"
-  },
   "n7z2": {
     "type": "label",
     "text": "Draw",
-    "x": 279,
-    "y": 791,
-    "z": 620,
+    "x": 1185,
+    "y": 596,
+    "z": 33,
     "id": "n7z2",
     "css": {
       "default": {
@@ -2688,9 +2868,9 @@
   "n7z3": {
     "type": "label",
     "text": "Discard",
-    "x": 138,
-    "y": 791,
-    "z": 622,
+    "x": 1310,
+    "y": 596,
+    "z": 623,
     "id": "n7z3",
     "css": {
       "default": {
@@ -2704,23 +2884,25 @@
   "1_offered_cards_image_holder": {
     "id": "1_offered_cards_image_holder",
     "type": "holder",
-    "x": -29,
-    "y": 39,
+    "y": 35,
     "width": 61,
     "height": 115,
-    "z": 1407,
-    "movable": true,
+    "z": 1422,
     "movableInEdit": false,
     "css": {
       "background": "var(--color)",
       "border-color": ""
     },
-    "inheritFrom": {
-      "1seat": "color"
-    },
     "parent": "1seat",
     "fixedParent": true,
-    "linkedToSeat": "1seat"
+    "linkedToSeat": "1seat",
+    "dropTarget": {
+      "offer_card_asset": true
+    },
+    "color_change_index": 1,
+    "color": "#b4b4b4",
+    "background_color_transparent": "#b4b4b4",
+    "background_color_solid": "#b4b4b4"
   },
   "2_offered_cards_image_holder": {
     "id": "2_offered_cards_image_holder",
@@ -2732,7 +2914,12 @@
     "css": {
       "background": "var(--color)",
       "border-color": ""
-    }
+    },
+    "z": 1419,
+    "color_change_index": 2,
+    "background_color_transparent": "#b4b4b4",
+    "color": "#b4b4b4",
+    "background_color_solid": "#b4b4b4"
   },
   "3_offered_cards_image_holder": {
     "id": "3_offered_cards_image_holder",
@@ -2744,7 +2931,12 @@
     "css": {
       "background": "var(--color)",
       "border-color": ""
-    }
+    },
+    "z": 1420,
+    "color_change_index": 3,
+    "background_color_transparent": "#b4b4b4",
+    "color": "#b4b4b4",
+    "background_color_solid": "#b4b4b4"
   },
   "4_offered_cards_image_holder": {
     "id": "4_offered_cards_image_holder",
@@ -2756,17 +2948,346 @@
     "css": {
       "background": "var(--color)",
       "border-color": ""
-    }
+    },
+    "color_change_index": 4,
+    "background_color_transparent": "#b4b4b4",
+    "color": "#b4b4b4",
+    "background_color_solid": "#b4b4b4"
+  },
+  "1_offered_cards_asset": {
+    "id": "1_offered_cards_asset",
+    "parent": "1_offered_cards_image_holder",
+    "fixedParent": true,
+    "y": -6,
+    "width": 50,
+    "height": 126,
+    "borderRadius": 10,
+    "layer": 2,
+    "z": 317,
+    "movable": false,
+    "movableInEdit": false,
+    "image": "/assets/-1283016571_11990",
+    "x": 5,
+    "offer_card_asset": true
+  },
+  "2_offered_cards_asset": {
+    "id": "2_offered_cards_asset",
+    "parent": "2_offered_cards_image_holder",
+    "fixedParent": true,
+    "inheritFrom": "1_offered_cards_asset"
+  },
+  "3_offered_cards_asset": {
+    "id": "3_offered_cards_asset",
+    "parent": "3_offered_cards_image_holder",
+    "fixedParent": true,
+    "inheritFrom": "1_offered_cards_asset"
+  },
+  "4_offered_cards_asset": {
+    "id": "4_offered_cards_asset",
+    "parent": "4_offered_cards_image_holder",
+    "fixedParent": true,
+    "inheritFrom": "1_offered_cards_asset"
+  },
+  "2offer": {
+    "type": "holder",
+    "id": "2offer",
+    "parent": "2seat",
+    "fixedParent": true,
+    "inheritFrom": "1offer",
+    "linkedToSeat": "2seat",
+    "stackOffsetX": 170,
+    "background_color_transparent": "#b4b4b4",
+    "color_change_index": 2,
+    "color": "#b4b4b4",
+    "background_color_solid": "#b4b4b4"
+  },
+  "5seat": {
+    "type": "seat",
+    "id": "5seat",
+    "index": 5,
+    "inheritFrom": {
+      "1seat": [
+        "!color"
+      ]
+    },
+    "z": 78780,
+    "x": 82,
+    "y": 835,
+    "mainColor": "#dddddd",
+    "textColor": "#000000",
+    "turn": false,
+    "player": "",
+    "color": "#dddddd",
+    "background_color_solid": "#ffeb3b",
+    "background_color_transparent": "white",
+    "turn_alert_enabled": false,
+    "audio_enabled": false
+  },
+  "5offer": {
+    "type": "holder",
+    "id": "5offer",
+    "parent": "5seat",
+    "fixedParent": true,
+    "inheritFrom": "1offer",
+    "stackOffsetX": 170,
+    "linkedToSeat": "5seat",
+    "background_color_transparent": "#b4b4b4",
+    "background_color_solid": "#b4b4b4",
+    "color": "#b4b4b4",
+    "color_change_index": 5
+  },
+  "5_card_count": {
+    "type": "label",
+    "id": "5_card_count",
+    "parent": "5seat",
+    "fixedParent": true,
+    "text": "Total Cards: 0",
+    "linkedToSeat": "5seat",
+    "offer_count": 0,
+    "inheritFrom": "1_card_count",
+    "hand_count": 0
+  },
+  "5current_turn": {
+    "type": "holder",
+    "id": "5current_turn",
+    "inheritFrom": "1current_turn",
+    "parent": "5seat",
+    "fixedParent": true
+  },
+  "5trash_holder": {
+    "type": "holder",
+    "id": "5trash_holder",
+    "parent": "5seat",
+    "fixedParent": true,
+    "linkedToSeat": "5seat",
+    "inheritFrom": "1trash_holder",
+    "trash_value": 0,
+    "total_trash_value": 0,
+    "trash_array": [
+      0
+    ],
+    "doubleLeaveRoutineCompensation": true,
+    "color_change_index": 5,
+    "color": "#b4b4b4",
+    "background_color_transparent": "#b4b4b4",
+    "background_color_solid": "#b4b4b4"
+  },
+  "5_offered_cards_image_holder": {
+    "id": "5_offered_cards_image_holder",
+    "type": "holder",
+    "inheritFrom": "1_offered_cards_image_holder",
+    "parent": "5seat",
+    "fixedParent": true,
+    "linkedToSeat": "5seat",
+    "css": {
+      "background": "var(--color)",
+      "border-color": ""
+    },
+    "color_change_index": 51
+  },
+  "5_offered_cards_asset": {
+    "id": "5_offered_cards_asset",
+    "parent": "5_offered_cards_image_holder",
+    "fixedParent": true,
+    "inheritFrom": "1_offered_cards_asset"
+  },
+  "5hand": {
+    "type": "holder",
+    "id": "5hand",
+    "parent": "hands_anchor",
+    "fixedParent": true,
+    "inheritFrom": "1hand",
+    "onlyVisibleForSeat": "5seat",
+    "stackOffsetX": 123,
+    "color_change_index": 5,
+    "color": "#b4b4b4",
+    "background_color_transparent": "#b4b4b4",
+    "background_color_solid": "#b4b4b4"
+  },
+  "infinite_trash4": {
+    "type": "holder",
+    "id": "infinite_trash4",
+    "y": 42,
+    "width": 40,
+    "height": 45,
+    "z": 650,
+    "dropOffsetX": 2,
+    "dropOffsetY": 2,
+    "dropTarget": {
+      "trash": true
+    },
+    "onEnter": {},
+    "onLeave": {
+      "isClone": true
+    },
+    "preventPiles": true,
+    "active": true,
+    "activeFace": 0,
+    "color": "#999999",
+    "enterRoutine": [
+      {
+        "func": "GET",
+        "property": "id",
+        "collection": "child"
+      },
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "${thisID}"
+      },
+      {
+        "func": "SELECT",
+        "property": "isClone",
+        "relation": "==",
+        "value": true,
+        "source": "DEFAULT"
+      },
+      {
+        "func": "DELETE"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "IF",
+        "condition": "${PROPERTY active}",
+        "thenRoutine": [
+          {
+            "func": "SELECT",
+            "property": "parent",
+            "value": "${thisID}"
+          },
+          {
+            "func": "COUNT"
+          },
+          {
+            "func": "IF",
+            "operand1": 0,
+            "relation": "==",
+            "operand2": "${COUNT}",
+            "thenRoutine": [
+              {
+                "func": "CLONE",
+                "source": "child"
+              },
+              {
+                "func": "SET",
+                "property": "parent",
+                "value": "${thisID}"
+              },
+              {
+                "func": "MOVE",
+                "from": "${thisID}",
+                "to": "${thisID}"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "parent": "trash_label",
+    "fixedParent": true,
+    "rotation": 90,
+    "x": -4
+  },
+  "9auh": {
+    "type": "basic",
+    "id": "9auh",
+    "css": {
+      "": {
+        "background": "#FFFFFF"
+      }
+    },
+    "z": 3,
+    "y": -43,
+    "x": 995,
+    "height": 1100,
+    "width": 700,
+    "layer": -10,
+    "movable": false,
+    "movableInEdit": false
+  },
+  "fhyp": {
+    "deck": "main_deck",
+    "type": "card",
+    "cardType": "dykj",
+    "id": "fhyp",
+    "z": 47714,
+    "parent": "6vls"
+  },
+  "bi3q": {
+    "deck": "main_deck",
+    "type": "card",
+    "cardType": "gco2",
+    "id": "bi3q",
+    "z": 47698,
+    "parent": "6vls"
+  },
+  "ry40": {
+    "deck": "main_deck",
+    "type": "card",
+    "cardType": "dcrr",
+    "id": "ry40",
+    "z": 47736,
+    "parent": "6vls"
+  },
+  "g812": {
+    "deck": "main_deck",
+    "type": "card",
+    "cardType": "2sls",
+    "id": "g812",
+    "z": 47725,
+    "parent": "6vls"
+  },
+  "mufq": {
+    "deck": "main_deck",
+    "type": "card",
+    "cardType": "vecg",
+    "id": "mufq",
+    "z": 47716,
+    "parent": "6vls"
+  },
+  "6tja": {
+    "deck": "main_deck",
+    "type": "card",
+    "cardType": "w4id",
+    "id": "6tja",
+    "z": 47709,
+    "parent": "6vls"
+  },
+  "g8zv": {
+    "deck": "main_deck",
+    "type": "card",
+    "cardType": "rqsv",
+    "id": "g8zv",
+    "z": 47708,
+    "parent": "6vls"
+  },
+  "u5oz": {
+    "deck": "main_deck",
+    "type": "card",
+    "cardType": "236k",
+    "id": "u5oz",
+    "z": 47688,
+    "parent": "6vls"
+  },
+  "qm3w": {
+    "deck": "main_deck",
+    "type": "card",
+    "cardType": "vpsw",
+    "id": "qm3w",
+    "z": 47705,
+    "parent": "6vls"
   },
   "1seat": {
     "type": "seat",
     "id": "1seat",
     "x": 82,
-    "y": 12,
-    "width": 185,
-    "height": 31,
+    "y": 29,
+    "width": 10,
+    "height": 25,
     "borderRadius": 8,
-    "z": 78318,
+    "z": 78663,
+    "color": "#dddddd",
     "css": {
       "default": {
         "min-width": "172px",
@@ -2781,12 +3302,12 @@
         "box-sizing": "border-box",
         "padding": "0 15px"
       },
-      ".seated.turn": {
+      ".sea ted.turn": {
         "box-shadow": "0px 0px 20px 5px ${PROPERTY glowColor}"
       },
       ".seated.turn::after": {
         "xcontent": "'Active Player'",
-        "content": "'!'",
+        "content": "",
         "font-size": "18px",
         "line-height": "1em",
         "white-space": "wrap",
@@ -2800,20 +3321,26 @@
         "text-align": "center",
         "text-transform": "uppercase",
         "position": "absolute",
-        "right": "-12px",
-        "top": "1px",
+        "right": "205px",
+        "top": "2px",
         "padding": "2px",
         "border-radius": "100px",
         "box-shadow": "0 0 5px #000000bb",
         "pointer-events": "none"
       }
     },
+    "audio_enabled": true,
+    "background_color_solid": "#4caf50",
+    "background_color_transparent": "white",
     "colorContrast": "#000000",
     "mainColor": "#dddddd",
     "outlineColor": "#000000bb",
+    "passed": false,
+    "text": "C",
     "textColor": "#000000",
     "textShadowBlur": 2,
     "textShadowDistance": 2,
+    "turn_alert_enabled": true,
     "clickRoutine": [
       "var LeaveSeat = false",
       "var name = ${PROPERTY player}",
@@ -2947,13 +3474,18 @@
             "func": "SET",
             "collection": "thisButton",
             "property": "color",
-            "value": null
+            "value": "#dddddd"
           },
           {
             "func": "SET",
             "collection": "thisButton",
             "property": "player",
             "value": ""
+          },
+          {
+            "func": "SET",
+            "property": "color",
+            "value": "#000000"
           }
         ],
         "elseRoutine": [
@@ -3009,6 +3541,7 @@
               },
               "var newText = colorContrast ${PROPERTY mainColor}",
               "var newGlow = colorContrast ${PROPERTY mainColor} 0.3",
+              "var color_transparent = ${PROPERTY mainColor} concat '48'",
               {
                 "func": "SET",
                 "collection": "thisButton",
@@ -3020,6 +3553,39 @@
                 "collection": "thisButton",
                 "property": "glowColor",
                 "value": "${newGlow}"
+              },
+              {
+                "func": "SELECT",
+                "property": "color_change_index",
+                "value": "${PROPERTY index}",
+                "mode": "set"
+              },
+              {
+                "func": "SET",
+                "property": "color",
+                "value": "${color}"
+              },
+              {
+                "func": "SET",
+                "property": "background_color_transparent",
+                "value": "${color_transparent}"
+              },
+              {
+                "func": "SET",
+                "property": "background_color_solid",
+                "value": "${color}"
+              },
+              {
+                "func": "SET",
+                "collection": "thisButton",
+                "property": "background_color_solid",
+                "value": "${color}"
+              },
+              {
+                "func": "SET",
+                "collection": "thisButton",
+                "property": "background_color_transparent",
+                "value": "${color_transparent}"
               }
             ]
           }
@@ -3046,102 +3612,710 @@
           {
             "func": "SET",
             "collection": "thisButton",
+            "property": "background_color_transparent",
+            "value": "white"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
             "property": "glowColor",
             "value": null
+          },
+          {
+            "func": "SELECT",
+            "property": "color_change_index",
+            "value": "${PROPERTY index}",
+            "mode": "set"
+          },
+          {
+            "func": "SET",
+            "property": "background_color_transparent",
+            "value": "#b4b4b4"
+          },
+          {
+            "func": "SET",
+            "property": "background_color_solid",
+            "value": "#b4b4b4"
+          },
+          {
+            "func": "SET",
+            "property": "color",
+            "value": "#b4b4b4"
           }
         ],
         "elseRoutine": []
       }
+    ],
+    "hideWhenUnused": true
+  },
+  "twbb": {
+    "image": "/assets/823911279_26306",
+    "id": "twbb",
+    "z": 20194,
+    "x": 1008,
+    "movable": false,
+    "width": 580,
+    "height": 160,
+    "y": -1
+  },
+  "infinite_trash0": {
+    "type": "holder",
+    "id": "infinite_trash0",
+    "parent": "trash_label",
+    "fixedParent": true,
+    "x": 144,
+    "y": 143,
+    "width": 40,
+    "height": 45,
+    "rotation": 90,
+    "z": 674,
+    "dropOffsetX": 2,
+    "dropOffsetY": 2,
+    "dropTarget": {
+      "trash": true
+    },
+    "onEnter": {},
+    "onLeave": {
+      "isClone": true
+    },
+    "preventPiles": true,
+    "active": true,
+    "activeFace": 0,
+    "color": "#999999",
+    "enterRoutine": [
+      {
+        "func": "GET",
+        "property": "id",
+        "collection": "child"
+      },
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "${thisID}"
+      },
+      {
+        "func": "SELECT",
+        "property": "isClone",
+        "relation": "==",
+        "value": true,
+        "source": "DEFAULT"
+      },
+      {
+        "func": "DELETE"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "IF",
+        "condition": "${PROPERTY active}",
+        "thenRoutine": [
+          {
+            "func": "SELECT",
+            "property": "parent",
+            "value": "${thisID}"
+          },
+          {
+            "func": "COUNT"
+          },
+          {
+            "func": "IF",
+            "operand1": 0,
+            "relation": "==",
+            "operand2": "${COUNT}",
+            "thenRoutine": [
+              {
+                "func": "CLONE",
+                "source": "child"
+              },
+              {
+                "func": "SET",
+                "property": "parent",
+                "value": "${thisID}"
+              },
+              {
+                "func": "MOVE",
+                "from": "${thisID}",
+                "to": "${thisID}"
+              }
+            ]
+          }
+        ]
+      }
     ]
   },
-  "1_offered_cards_asset": {
-    "id": "1_offered_cards_asset",
-    "parent": "1_offered_cards_image_holder",
-    "fixedParent": true,
-    "y": -6,
-    "width": 50,
-    "height": 126,
-    "borderRadius": 10,
-    "layer": 2,
-    "z": 317,
-    "movable": false,
-    "movableInEdit": false,
-    "image": "/assets/716961149_87238",
-    "x": 5
-  },
-  "2_offered_cards_asset": {
-    "id": "2_offered_cards_asset",
-    "parent": "2_offered_cards_image_holder",
-    "fixedParent": true,
-    "inheritFrom": "1_offered_cards_asset"
-  },
-  "3_offered_cards_asset": {
-    "id": "3_offered_cards_asset",
-    "parent": "3_offered_cards_image_holder",
-    "fixedParent": true,
-    "inheritFrom": "1_offered_cards_asset"
-  },
-  "4_offered_cards_asset": {
-    "id": "4_offered_cards_asset",
-    "parent": "4_offered_cards_image_holder",
-    "fixedParent": true,
-    "inheritFrom": "1_offered_cards_asset"
-  },
-  "2offer": {
+  "temporary_trash_holder": {
     "type": "holder",
-    "id": "2offer",
-    "parent": "2seat",
-    "fixedParent": true,
-    "inheritFrom": "1offer",
-    "linkedToSeat": "2seat",
-    "stackOffsetX": 170
+    "id": "temporary_trash_holder",
+    "x": 757,
+    "y": -225,
+    "z": 1427,
+    "dropTarget": {
+      "trash": true
+    }
   },
-  "nbdt": {
-    "image": "/assets/2132500640_14972",
-    "z": 10558,
+  "turn_settings_button": {
+    "type": "button",
+    "id": "turn_settings_button",
+    "x": 1422,
+    "y": 498,
+    "width": 160,
+    "height": 35,
+    "borderRadius": 10,
+    "z": 78773,
+    "backgroundColor": "grey",
+    "color": "#4caf50",
+    "css": {
+      "default": {
+        "color": "black",
+        "font-size": "18px",
+        "background-color": "white",
+        "border": "5px solid grey"
+      }
+    },
+    "text": "TURN SETTINGS",
+    "clickRoutine": [
+      {
+        "func": "GET",
+        "collection": [
+          "${seatIndex}seat"
+        ],
+        "property": "audio_enabled"
+      },
+      {
+        "func": "GET",
+        "collection": [
+          "${seatIndex}seat"
+        ],
+        "property": "turn_alert_enabled"
+      },
+      {
+        "func": "INPUT",
+        "confirmButtonText": "Turn Settings",
+        "cancelButtonIcon": "cancel",
+        "fields": [
+          {
+            "type": "title",
+            "text": "Player Settings"
+          },
+          {
+            "type": "checkbox",
+            "label": "Play a sound when it is your turn?",
+            "variable": "audio_check",
+            "value": "${audio_enabled}"
+          },
+          {
+            "type": "checkbox",
+            "label": "Show the 'Its Your Turn!' box?",
+            "variable": "banner_check",
+            "value": "${turn_alert_enabled}"
+          }
+        ]
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "${seatIndex}seat"
+        ],
+        "property": "audio_enabled",
+        "relation": "=",
+        "value": "${audio_check}"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "${seatIndex}seat"
+        ],
+        "property": "turn_alert_enabled",
+        "relation": "=",
+        "value": "${banner_check}"
+      }
+    ]
+  },
+  "dummy_offer": {
+    "type": "holder",
+    "id": "dummy_offer",
+    "stackOffsetX": 170,
+    "background_color_solid": "#b4b4b4",
+    "background_color_transparent": "#b4b4b4",
+    "color": "#b4b4b4",
+    "x": -615,
+    "y": 847,
+    "activeX": 615,
+    "defaultX": -615,
+    "css": {
+      "background": "",
+      "border": "5px solid ${PROPERTY background_color_solid}"
+    },
+    "dropTarget": {
+      "deck": "main_deck"
+    },
+    "enterRoutine": [
+      {
+        "func": "CALL",
+        "routine": "offSetRoutine"
+      },
+      {
+        "func": "SET",
+        "collection": "child",
+        "property": "rotation",
+        "relation": "=",
+        "value": 270
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "CALL",
+        "routine": "offSetRoutine"
+      },
+      {
+        "func": "SET",
+        "collection": "child",
+        "property": "rotation",
+        "relation": "=",
+        "value": 0
+      }
+    ],
+    "offSetRoutine": [
+      "var cardWidth = 115",
+      "var normalOffset = 170",
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "${PROPERTY id}"
+      },
+      {
+        "func": "COUNT"
+      },
+      "var new_count = ${COUNT} - 0",
+      "var index = ${PROPERTY id} charAt 0",
+      {
+        "func": "SET",
+        "collection": [
+          "${index}_card_count"
+        ],
+        "property": "offer_count",
+        "relation": "=",
+        "value": "${new_count}"
+      },
+      {
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "relation": "<=",
+        "operand2": 1,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "stackOffsetX",
+            "value": "${normalOffset}"
+          }
+        ],
+        "elseRoutine": [
+          "var modCount = ${COUNT} - 1",
+          "var available = ${PROPERTY width} - ${cardWidth}",
+          "var dropOffset = ${PROPERTY dropOffsetX} * 2",
+          "var available = ${available} - ${dropOffset}",
+          "var perCard = ${available} / ${modCount}",
+          "var offset = ${perCard} min ${normalOffset}",
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "stackOffsetX",
+            "value": "${offset}"
+          }
+        ]
+      }
+    ],
+    "width": 350,
+    "height": 115,
+    "z": 1409,
+    "movableInEdit": false,
+    "dropOffsetX": 32,
+    "dropOffsetY": -31
+  },
+  "dummy_offer_label": {
+    "type": "label",
+    "id": "dummy_offer_label",
+    "x": -589,
+    "y": 809,
+    "width": 400,
+    "height": 42,
+    "z": 633,
+    "movableInEdit": false,
+    "css": "font-size: 30px",
+    "text": "Two Player Neutral Offer",
+    "activeX": 589,
+    "defaultX": -589
+  },
+  "6vls": {
+    "type": "pile",
+    "width": 107,
+    "height": 170,
+    "id": "6vls",
+    "z": 2,
+    "parent": "draw_deck_holder"
+  },
+  "ub44": {
+    "image": "/assets/-405535666_1714",
+    "z": 44896,
     "width": 35,
     "height": 40,
     "trash": true,
     "borderRadius": 5,
+    "clonedFrom": "vawz",
+    "x": 2,
+    "trash_value": 4,
     "y": 2,
-    "clonedFrom": "her0",
-    "x": 2,
-    "trash_value": 2,
-    "dragging": "gvfdsdf",
-    "hoverParent": "infinite_trash2",
-    "id": "nbdt",
-    "parent": "infinite_trash2"
+    "hoverParent": "infinite_trash4",
+    "dragging": "Max",
+    "id": "ub44",
+    "parent": "infinite_trash4"
   },
-  "w67j": {
-    "image": "/assets/-1877962591_11360",
-    "z": 11296,
+  "x2ef": {
+    "image": "/assets/-1576134704_1552",
+    "z": 44898,
     "width": 35,
     "height": 40,
     "trash": true,
     "borderRadius": 5,
-    "y": 2,
-    "clonedFrom": "togb",
+    "clonedFrom": "f6d6",
     "x": 2,
-    "dragging": "Mike",
-    "trash_value": 1,
-    "hoverParent": "infinite_trash1",
-    "id": "w67j",
-    "parent": "infinite_trash1"
-  },
-  "8a95": {
-    "image": "/assets/-1437369679_17872",
-    "z": 11533,
-    "width": 35,
-    "height": 40,
-    "trash": true,
-    "borderRadius": 5,
-    "clonedFrom": "x76i",
-    "x": 2,
-    "dragging": "Mike",
+    "dragging": "Richard",
     "trash_value": 3,
     "y": 2,
     "hoverParent": "infinite_trash3",
-    "id": "8a95",
+    "id": "x2ef",
     "parent": "infinite_trash3"
+  },
+  "9cme": {
+    "image": "/assets/1804259984_1344",
+    "z": 44900,
+    "width": 35,
+    "height": 40,
+    "trash": true,
+    "borderRadius": 5,
+    "y": 2,
+    "clonedFrom": "9k82",
+    "x": 2,
+    "trash_value": 2,
+    "dragging": "Hilko",
+    "hoverParent": "infinite_trash2",
+    "id": "9cme",
+    "parent": "infinite_trash2"
+  },
+  "ecnn": {
+    "image": "/assets/1905965947_1098",
+    "z": 44905,
+    "width": 35,
+    "height": 40,
+    "trash": true,
+    "borderRadius": 5,
+    "y": 2,
+    "x": 2,
+    "trash_value": 1,
+    "hoverParent": "infinite_trash1",
+    "clonedFrom": "r7x9",
+    "id": "ecnn",
+    "parent": "infinite_trash1"
+  },
+  "56gh": {
+    "image": "/assets/1905965947_1098",
+    "z": 44906,
+    "width": 35,
+    "height": 40,
+    "trash": true,
+    "borderRadius": 5,
+    "y": 2,
+    "x": 2,
+    "trash_value": 1,
+    "dragging": "Max",
+    "hoverParent": "infinite_trash1",
+    "clonedFrom": "ecnn",
+    "id": "56gh",
+    "parent": "infinite_trash1"
+  },
+  "your_turn_button": {
+    "type": "button",
+    "id": "your_turn_button",
+    "width": 1600,
+    "height": 1000,
+    "borderRadius": 0,
+    "layer": 100,
+    "z": 78732,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "default": {
+        "border-radius": "5px",
+        "border": "0px solid ${PROPERTY background_color_solid}",
+        "background": "transparent",
+        "font-size": "120px",
+        "font-weight": "900",
+        "text-align": "center",
+        "padding-top": "400px",
+        "color": "${PROPERTY background_color_solid}"
+      },
+      " > textarea": {
+        "text-shadow": "-3px -3px 0 #000000, 3px -3px 0 #000000, -3px 3px 0 #000000, 3px 3px 0 #000000, 0 3px 5px #00000099"
+      }
+    },
+    "onlyVisibleForSeat": "",
+    "passed": false,
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": [
+          "your_turn_button"
+        ],
+        "property": "onlyVisibleForSeat",
+        "value": ""
+      }
+    ],
+    "background_color_solid": "#00bcd4",
+    "background_color_transparent": "#00bcd448"
+  },
+  "your_turn_label": {
+    "type": "label",
+    "id": "your_turn_label",
+    "parent": "your_turn_button",
+    "fixedParent": true,
+    "x": 418,
+    "y": 400,
+    "width": 700,
+    "height": 135,
+    "layer": 10,
+    "z": 531,
+    "movableInEdit": false,
+    "css": {
+      "default": {
+        "background": "white",
+        "border-radius": "5px",
+        "border": "30px solid ${PROPERTY background_color_solid}",
+        "font-size": "90px",
+        "font-weight": "900",
+        "text-align": "center",
+        "pointer-events": "none",
+        "color": "${PROPERTY background_color_solid}"
+      },
+      " > textarea": {
+        "text-shadow": "-3px -3px 0 #000000, 3px -3px 0 #000000, -3px 3px 0 #000000, 3px 3px 0 #000000, 0 3px 5px #00000099"
+      }
+    },
+    "text": "It's Your Turn!",
+    "passed": false,
+    "background_color_solid": "#00bcd4",
+    "background_color_transparent": "#00bcd448"
+  },
+  "your_turn_label_border": {
+    "type": "label",
+    "id": "your_turn_label_border",
+    "parent": "your_turn_button",
+    "fixedParent": true,
+    "x": 413,
+    "y": 395,
+    "width": 710,
+    "height": 146,
+    "z": 531,
+    "movableInEdit": false,
+    "css": {
+      "default": {
+        "background": "white",
+        "border-radius": "5px",
+        "border": "30px solid black",
+        "font-size": "90px",
+        "font-weight": "900",
+        "text-align": "center",
+        "pointer-events": "none",
+        "color": "${PROPERTY background_color_solid}"
+      },
+      " > textarea": {
+        "text-shadow": "-3px -3px 0 #000000, 3px -3px 0 #000000, -3px 3px 0 #000000, 3px 3px 0 #000000, 0 3px 5px #00000099"
+      }
+    },
+    "background_color_solid": "#bf360c",
+    "background_color_transparent": "#bf360c48",
+    "passed": false
+  },
+  "your_turn_click_to_exit_label": {
+    "type": "label",
+    "id": "your_turn_click_to_exit_label",
+    "parent": "your_turn_button",
+    "fixedParent": true,
+    "x": 462,
+    "y": 525,
+    "width": 700,
+    "height": 60,
+    "layer": 10,
+    "z": 531,
+    "movableInEdit": false,
+    "css": {
+      "default": {
+        "background": "transparent",
+        "border-radius": "5px",
+        "font-size": "30px",
+        "font-weight": "900",
+        "text-align": "center",
+        "pointer-events": "none",
+        "color": "black"
+      },
+      " > text area": {
+        "text-shadow": "-3px -3px 0 #000000, 3px -3px 0 #000000, -3px 3px 0 #000000, 3px 3px 0 #000000, 0 3px 5px #00000099"
+      }
+    },
+    "text": "Click anywhere to continue.",
+    "background_color_solid": "#9c27b0",
+    "background_color_transparent": "#9c27b048",
+    "passed": false
+  },
+  "ov5g": {
+    "image": "/assets/1777628233_1186",
+    "z": 1,
+    "width": 35,
+    "height": 40,
+    "trash": true,
+    "borderRadius": 5,
+    "y": 2,
+    "x": 1,
+    "trash_value": 0,
+    "dragging": "Jonny",
+    "clonedFrom": "li7a",
+    "movable": false,
+    "id": "ov5g",
+    "parent": "2trash_holder",
+    "isClone": true
+  },
+  "45fg": {
+    "image": "/assets/1777628233_1186",
+    "z": 1,
+    "width": 35,
+    "height": 40,
+    "trash": true,
+    "borderRadius": 5,
+    "y": 2,
+    "x": 1,
+    "trash_value": 0,
+    "dragging": "Jonny",
+    "hoverParent": null,
+    "clonedFrom": "ov5g",
+    "movable": false,
+    "id": "45fg",
+    "parent": "3trash_holder",
+    "isClone": true
+  },
+  "m4q1": {
+    "image": "/assets/1777628233_1186",
+    "z": 1,
+    "width": 35,
+    "height": 40,
+    "trash": true,
+    "borderRadius": 5,
+    "y": 2,
+    "x": 1,
+    "trash_value": 0,
+    "dragging": "Jonny",
+    "hoverParent": null,
+    "clonedFrom": "45fg",
+    "movable": false,
+    "id": "m4q1",
+    "parent": "4trash_holder",
+    "isClone": true
+  },
+  "ze32": {
+    "image": "/assets/1777628233_1186",
+    "z": 1,
+    "width": 35,
+    "height": 40,
+    "trash": true,
+    "borderRadius": 5,
+    "y": 2,
+    "x": 1,
+    "trash_value": 0,
+    "dragging": "Jonny",
+    "hoverParent": null,
+    "clonedFrom": "m4q1",
+    "movable": false,
+    "id": "ze32",
+    "parent": "0trash_holder",
+    "isClone": true
+  },
+  "mpgd": {
+    "image": "/assets/1777628233_1186",
+    "z": 1,
+    "width": 35,
+    "height": 40,
+    "trash": true,
+    "borderRadius": 5,
+    "y": 2,
+    "x": 1,
+    "trash_value": 0,
+    "dragging": "Jonny",
+    "hoverParent": null,
+    "clonedFrom": "ze32",
+    "movable": false,
+    "id": "mpgd",
+    "parent": "5trash_holder",
+    "isClone": true
+  },
+  "lt8k": {
+    "image": "/assets/1777628233_1186",
+    "z": 1,
+    "width": 35,
+    "height": 40,
+    "trash": true,
+    "borderRadius": 5,
+    "y": 2,
+    "x": 1,
+    "trash_value": 0,
+    "dragging": "Jonny",
+    "hoverParent": null,
+    "clonedFrom": "mpgd",
+    "movable": false,
+    "id": "lt8k",
+    "parent": "1trash_holder",
+    "isClone": true
+  },
+  "di8d": {
+    "image": "/assets/1777628233_1186",
+    "z": 47750,
+    "width": 35,
+    "height": 40,
+    "trash": true,
+    "borderRadius": 5,
+    "y": 2,
+    "x": 2,
+    "trash_value": 0,
+    "dragging": "Jonny",
+    "hoverParent": "infinite_trash0",
+    "clonedFrom": "lt8k",
+    "movable": false,
+    "id": "di8d",
+    "parent": "infinite_trash0"
+  },
+  "_meta": {
+    "version": 15,
+    "info": {
+      "name": "Spring Cleaning",
+      "image": "/assets/1259383691_187927",
+      "rules": "https://docs.google.com/document/d/1OznPvz6h_4DaKRbSWTMR9AnIjdB207-7dtMVVtMhufo/edit?usp=sharing",
+      "bgg": "https://www.jongetsgames.com/springcleaning",
+      "year": "",
+      "mode": "vs",
+      "time": "15 - 45",
+      "attribution": "The game room, game design, and game layout are by Jonathan Cox. Art assets used with permission from the rights holder, Jonathan Cox. Illustrations created by Lananh Vo. No permission is given for the further use of any Spring Cleaning art assets.",
+      "lastUpdate": 1717422810256,
+      "showName": false,
+      "skill": "low",
+      "description": "In this climbing/shedding game you must offer your cards to opponents, and play each others cards as you race to play them all.",
+      "similarImage": "",
+      "similarName": "",
+      "similarDesigner": "Jonathan Cox",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": "Have every player take a seat and then click the \"NEW GAME\" button. This will randomly choose a starting player and deal each player their starting hand of cards.<div><div><br></div><div>Once done with their turn, the player should click the \"CLICK TO END TURN\" button, which will move it to the next player in order.<br><div><br></div><div>When playing cards, click and drag them into the large open area in the middle of the screen. It is best to line them up horizontally with your seat name and offered cards area. You may click once on a card to turn it over.</div><div><br></div><div>When offering cards, click and drag them to the \"Offered Cards\" window under the player's name.&nbsp;</div><div><br></div><div>Once a trick is over, the winner of the trick should click the \"TRICK WINNER CLICK TO CLEAR CARDS\" button in the bottom right. This will remove all played cards, and also assign the current turn to the trick winner.</div></div><div><br></div><div>The \"Total Cards: #\" value counts all cards in that player's hidden hand as well as all cards in their offer area.</div><div><br></div><div>At the end of a round players will score trash by clicking and dragging the appropriate trash token from the \"Trash Supply\". Place gained track tokens into the skinny vertical column to the right of the player's name.</div><div><br></div><div>Once trash has been scored at the end of the round, if the game isn't over then click the \"NEW ROUND\" button. The turn order button will be moved to the player with the most total trash, who will take the first turn of the next round.</div><div><br></div><div>2 Player Implementation Note:</div><div>Neither player should use the bottom-most seat, this area will be used by the Neutral Offer, which appears after starting a 2 player game.</div></div>",
+      "variantImage": "",
+      "variant": "Spring Cleaning",
+      "language": "en-US",
+      "players": "2 - 5"
+    }
   }
 }
