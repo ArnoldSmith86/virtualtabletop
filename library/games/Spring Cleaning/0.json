@@ -2344,7 +2344,7 @@
           "var hand_size = 12"
         ],
         "elseRoutine": [
-          "var hand_size = 11"
+          "var hand_size = 10"
         ]
       },
       {
@@ -4302,7 +4302,7 @@
       "mode": "vs",
       "time": "15 - 45",
       "attribution": "The game room, game design, and game layout are by Jonathan Cox. Art assets used with permission from the rights holder, Jonathan Cox. Illustrations created by Lananh Vo. No permission is given for the further use of any Spring Cleaning art assets.",
-      "lastUpdate": 1711632108161,
+      "lastUpdate": 1717422810256,
       "showName": false,
       "skill": "low",
       "description": "In this climbing/shedding game you must offer your cards to opponents, and play each others cards as you race to play them all.",

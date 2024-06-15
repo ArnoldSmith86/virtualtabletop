@@ -1,0 +1,2203 @@
+{
+  "_meta": {
+    "version": 15,
+    "info": {
+      "name": "Hexagonal Checkers",
+      "image": "/assets/2043006020_83666",
+      "rules": "https://www.kruzno.com/hexcheckers.html",
+      "bgg": "https://www.kruzno.com/hexcheckers.html",
+      "year": "",
+      "mode": "vs",
+      "time": "20",
+      "attribution": "Game layout, design, and library image by LawDawg96. Released to the Public Domain under CC0.",
+      "lastUpdate": 1716261070542,
+      "showName": true,
+      "skill": "",
+      "description": "Checkers, but on a hexagonal board.",
+      "similarImage": "",
+      "similarName": "",
+      "similarDesigner": "",
+      "similarAwards": "",
+      "ruleText": "Follow the rules for traditional checkers except:<div><ul><li>There are no promotions.</li><li>Pieces can move forwards, backwards, or sideways.</li><li>A piece can pass through the outer dark gray ring during jumps or may move into the outer ring and stay there until the next turn. The piece must move out of the ring at the next available opportunity (the next turn, unless movement is blocked).</li></ul></div>",
+      "helpText": "",
+      "variantImage": "",
+      "variant": "",
+      "language": "",
+      "players": "2"
+    }
+  },
+  "hexMaster": {
+    "type": "holder",
+    "id": "hexMaster",
+    "x": 174,
+    "y": -203,
+    "width": 86.6,
+    "height": 86.6,
+    "z": 1,
+    "css": {
+      "border-radius": "100%",
+      "background": "transparent",
+      "border": "none"
+    },
+    "grid": [
+      {
+        "x": 150,
+        "y": 86.6,
+        "offsetX": -68.3,
+        "offsetY": -19.6
+      },
+      {
+        "x": 150,
+        "y": 86.6,
+        "offsetX": 6.7,
+        "offsetY": 23.7
+      }
+    ],
+    "dropTarget": {},
+    "movableInEdit": false,
+    "dropOffsetX": 12,
+    "dropOffsetY": 12,
+    "rotation": -30,
+    "dropLimit": 2
+  },
+  "hexA1": {
+    "type": "holder",
+    "id": "hexA1",
+    "x": 0,
+    "y": 649.5,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack"
+  },
+  "hexA2": {
+    "type": "holder",
+    "id": "hexA2",
+    "x": 0,
+    "y": 565.2998046875,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack"
+  },
+  "hexA3": {
+    "type": "holder",
+    "id": "hexA3",
+    "x": 0,
+    "y": 478.2998046875,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack"
+  },
+  "hexA4": {
+    "type": "holder",
+    "id": "hexA4",
+    "x": 0,
+    "y": 391.2998046875,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack"
+  },
+  "hexA5": {
+    "type": "holder",
+    "id": "hexA5",
+    "x": 0,
+    "y": 303.099609375,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack"
+  },
+  "hexA6": {
+    "type": "holder",
+    "id": "hexA6",
+    "x": 0,
+    "y": 216.5,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack"
+  },
+  "hexB1": {
+    "type": "holder",
+    "id": "hexB1",
+    "x": 75,
+    "y": 692.7998046875,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack"
+  },
+  "hexB2": {
+    "type": "holder",
+    "id": "hexB2",
+    "x": 75,
+    "y": 606.2001953125,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack"
+  },
+  "hexB3": {
+    "type": "holder",
+    "id": "hexB3",
+    "x": 75,
+    "y": 519.599609375,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack"
+  },
+  "hexB4": {
+    "type": "holder",
+    "id": "hexB4",
+    "x": 75,
+    "y": 433,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack"
+  },
+  "hexB5": {
+    "type": "holder",
+    "id": "hexB5",
+    "x": 75,
+    "y": 346.400390625,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack"
+  },
+  "hexB6": {
+    "type": "holder",
+    "id": "hexB6",
+    "x": 75,
+    "y": 259.7998046875,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack"
+  },
+  "hexB7": {
+    "type": "holder",
+    "id": "hexB7",
+    "x": 75,
+    "y": 173.2001953125,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack"
+  },
+  "hexC1": {
+    "type": "holder",
+    "id": "hexC1",
+    "x": 150,
+    "y": 736.099609375,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack"
+  },
+  "hexD1": {
+    "type": "holder",
+    "id": "hexD1",
+    "x": 225,
+    "y": 779.400390625,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack"
+  },
+  "hexE1": {
+    "type": "holder",
+    "id": "hexE1",
+    "x": 300,
+    "y": 822.7001953125,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack"
+  },
+  "hexF1": {
+    "type": "holder",
+    "id": "hexF1",
+    "x": 375,
+    "y": 866,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack"
+  },
+  "hexG1": {
+    "type": "holder",
+    "id": "hexG1",
+    "x": 450,
+    "y": 822.7001953125,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack"
+  },
+  "hexH1": {
+    "type": "holder",
+    "id": "hexH1",
+    "x": 525,
+    "y": 779.400390625,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack"
+  },
+  "hexI1": {
+    "type": "holder",
+    "id": "hexI1",
+    "x": 600,
+    "y": 736.099609375,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack"
+  },
+  "hexK1": {
+    "type": "holder",
+    "id": "hexK1",
+    "x": 675,
+    "y": 692.7998046875,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack"
+  },
+  "hexL1": {
+    "type": "holder",
+    "id": "hexL1",
+    "x": 750,
+    "y": 649.5,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack"
+  },
+  "hexC2": {
+    "type": "holder",
+    "id": "hexC2",
+    "x": 150,
+    "y": 649.5,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack"
+  },
+  "hexC3": {
+    "type": "holder",
+    "id": "hexC3",
+    "x": 150,
+    "y": 562.900390625,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack"
+  },
+  "hexC4": {
+    "type": "holder",
+    "id": "hexC4",
+    "x": 150,
+    "y": 476.2998046875,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack"
+  },
+  "hexC5": {
+    "type": "holder",
+    "id": "hexC5",
+    "x": 150,
+    "y": 389.7001953125,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack"
+  },
+  "hexC6": {
+    "type": "holder",
+    "id": "hexC6",
+    "x": 150,
+    "y": 303.099609375,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack"
+  },
+  "hexC7": {
+    "type": "holder",
+    "id": "hexC7",
+    "x": 150,
+    "y": 216.5,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack"
+  },
+  "hexC8": {
+    "type": "holder",
+    "id": "hexC8",
+    "x": 150,
+    "y": 129.900390625,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack"
+  },
+  "hexD2": {
+    "type": "holder",
+    "id": "hexD2",
+    "x": 225,
+    "y": 692.7998046875,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack"
+  },
+  "hexD3": {
+    "type": "holder",
+    "id": "hexD3",
+    "x": 225,
+    "y": 606.2001953125,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack"
+  },
+  "hexD4": {
+    "type": "holder",
+    "id": "hexD4",
+    "x": 225,
+    "y": 519.599609375,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack"
+  },
+  "hexD5": {
+    "type": "holder",
+    "id": "hexD5",
+    "x": 225,
+    "y": 433,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack"
+  },
+  "hexD6": {
+    "type": "holder",
+    "id": "hexD6",
+    "x": 225,
+    "y": 346.400390625,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack"
+  },
+  "hexD7": {
+    "type": "holder",
+    "id": "hexD7",
+    "x": 225,
+    "y": 259.7998046875,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack"
+  },
+  "hexD8": {
+    "type": "holder",
+    "id": "hexD8",
+    "x": 225,
+    "y": 173.2001953125,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack"
+  },
+  "hexD9": {
+    "type": "holder",
+    "id": "hexD9",
+    "x": 225,
+    "y": 86.599609375,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack"
+  },
+  "hexE2": {
+    "type": "holder",
+    "id": "hexE2",
+    "x": 300,
+    "y": 736.099609375,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack"
+  },
+  "hexE3": {
+    "type": "holder",
+    "id": "hexE3",
+    "x": 300,
+    "y": 649.5,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack"
+  },
+  "hexE4": {
+    "type": "holder",
+    "id": "hexE4",
+    "x": 300,
+    "y": 562.900390625,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack"
+  },
+  "hexE5": {
+    "type": "holder",
+    "id": "hexE5",
+    "x": 300,
+    "y": 476.2998046875,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack"
+  },
+  "hexE6": {
+    "type": "holder",
+    "id": "hexE6",
+    "x": 300,
+    "y": 389.7001953125,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack"
+  },
+  "hexE7": {
+    "type": "holder",
+    "id": "hexE7",
+    "x": 300,
+    "y": 303.099609375,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack"
+  },
+  "hexE8": {
+    "type": "holder",
+    "id": "hexE8",
+    "x": 300,
+    "y": 216.5,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack"
+  },
+  "hexE9": {
+    "type": "holder",
+    "id": "hexE9",
+    "x": 300,
+    "y": 129.900390625,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack"
+  },
+  "hexE10": {
+    "type": "holder",
+    "id": "hexE10",
+    "x": 300,
+    "y": 43.2998046875,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack"
+  },
+  "hexF2": {
+    "type": "holder",
+    "id": "hexF2",
+    "x": 375,
+    "y": 779.400390625,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack"
+  },
+  "hexF3": {
+    "type": "holder",
+    "id": "hexF3",
+    "x": 375,
+    "y": 692.7998046875,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack"
+  },
+  "hexF4": {
+    "type": "holder",
+    "id": "hexF4",
+    "x": 375,
+    "y": 606.2001953125,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack"
+  },
+  "hexF5": {
+    "type": "holder",
+    "id": "hexF5",
+    "x": 375,
+    "y": 519.599609375,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack"
+  },
+  "hexF6": {
+    "type": "holder",
+    "id": "hexF6",
+    "x": 375,
+    "y": 433,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack"
+  },
+  "hexF7": {
+    "type": "holder",
+    "id": "hexF7",
+    "x": 375,
+    "y": 346.400390625,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack"
+  },
+  "hexF8": {
+    "type": "holder",
+    "id": "hexF8",
+    "x": 375,
+    "y": 259.7998046875,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack"
+  },
+  "hexF9": {
+    "type": "holder",
+    "id": "hexF9",
+    "x": 375,
+    "y": 173.2001953125,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack"
+  },
+  "hexF10": {
+    "type": "holder",
+    "id": "hexF10",
+    "x": 375,
+    "y": 86.599609375,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack"
+  },
+  "hexF11": {
+    "type": "holder",
+    "id": "hexF11",
+    "x": 375,
+    "y": 0,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack"
+  },
+  "hexG2": {
+    "type": "holder",
+    "id": "hexG2",
+    "x": 450,
+    "y": 736.099609375,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack"
+  },
+  "hexG3": {
+    "type": "holder",
+    "id": "hexG3",
+    "x": 450,
+    "y": 649.5,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack"
+  },
+  "hexG4": {
+    "type": "holder",
+    "id": "hexG4",
+    "x": 450,
+    "y": 562.900390625,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack"
+  },
+  "hexG5": {
+    "type": "holder",
+    "id": "hexG5",
+    "x": 450,
+    "y": 476.2998046875,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack"
+  },
+  "hexG6": {
+    "type": "holder",
+    "id": "hexG6",
+    "x": 450,
+    "y": 389.7001953125,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack"
+  },
+  "hexG7": {
+    "type": "holder",
+    "id": "hexG7",
+    "x": 450,
+    "y": 303.099609375,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack"
+  },
+  "hexG8": {
+    "type": "holder",
+    "id": "hexG8",
+    "x": 450,
+    "y": 216.5,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack"
+  },
+  "hexG9": {
+    "type": "holder",
+    "id": "hexG9",
+    "x": 450,
+    "y": 129.900390625,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack"
+  },
+  "hexG10": {
+    "type": "holder",
+    "id": "hexG10",
+    "x": 450,
+    "y": 43.2998046875,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack"
+  },
+  "hexH2": {
+    "type": "holder",
+    "id": "hexH2",
+    "x": 525,
+    "y": 692.7998046875,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack"
+  },
+  "hexH3": {
+    "type": "holder",
+    "id": "hexH3",
+    "x": 525,
+    "y": 606.2001953125,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack"
+  },
+  "hexH4": {
+    "type": "holder",
+    "id": "hexH4",
+    "x": 525,
+    "y": 519.599609375,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack"
+  },
+  "hexH5": {
+    "type": "holder",
+    "id": "hexH5",
+    "x": 525,
+    "y": 433,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack"
+  },
+  "hexH6": {
+    "type": "holder",
+    "id": "hexH6",
+    "x": 525,
+    "y": 346.400390625,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack"
+  },
+  "hexH7": {
+    "type": "holder",
+    "id": "hexH7",
+    "x": 525,
+    "y": 259.7998046875,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack"
+  },
+  "hexH8": {
+    "type": "holder",
+    "id": "hexH8",
+    "x": 525,
+    "y": 173.2001953125,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack"
+  },
+  "hexH9": {
+    "type": "holder",
+    "id": "hexH9",
+    "x": 525,
+    "y": 86.599609375,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack"
+  },
+  "hexI2": {
+    "type": "holder",
+    "id": "hexI2",
+    "x": 600,
+    "y": 649.5,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack"
+  },
+  "hexI3": {
+    "type": "holder",
+    "id": "hexI3",
+    "x": 600,
+    "y": 562.900390625,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack"
+  },
+  "hexI4": {
+    "type": "holder",
+    "id": "hexI4",
+    "x": 600,
+    "y": 476.2998046875,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack"
+  },
+  "hexI5": {
+    "type": "holder",
+    "id": "hexI5",
+    "x": 600,
+    "y": 389.7001953125,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack"
+  },
+  "hexI6": {
+    "type": "holder",
+    "id": "hexI6",
+    "x": 600,
+    "y": 303.099609375,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack"
+  },
+  "hexI7": {
+    "type": "holder",
+    "id": "hexI7",
+    "x": 600,
+    "y": 216.5,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack"
+  },
+  "hexI8": {
+    "type": "holder",
+    "id": "hexI8",
+    "x": 600,
+    "y": 129.900390625,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack"
+  },
+  "hexK2": {
+    "type": "holder",
+    "id": "hexK2",
+    "x": 675,
+    "y": 606.2001953125,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack"
+  },
+  "hexK3": {
+    "type": "holder",
+    "id": "hexK3",
+    "x": 675,
+    "y": 519.599609375,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack"
+  },
+  "hexK4": {
+    "type": "holder",
+    "id": "hexK4",
+    "x": 675,
+    "y": 433,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack"
+  },
+  "hexK5": {
+    "type": "holder",
+    "id": "hexK5",
+    "x": 675,
+    "y": 346.400390625,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack"
+  },
+  "hexK6": {
+    "type": "holder",
+    "id": "hexK6",
+    "x": 675,
+    "y": 259.7998046875,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack"
+  },
+  "hexK7": {
+    "type": "holder",
+    "id": "hexK7",
+    "x": 675,
+    "y": 173.2001953125,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack"
+  },
+  "hexL2": {
+    "type": "holder",
+    "id": "hexL2",
+    "x": 750,
+    "y": 562.900390625,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack"
+  },
+  "hexL3": {
+    "type": "holder",
+    "id": "hexL3",
+    "x": 750,
+    "y": 476.2998046875,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack"
+  },
+  "hexL4": {
+    "type": "holder",
+    "id": "hexL4",
+    "x": 750,
+    "y": 389.7001953125,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack"
+  },
+  "hexL5": {
+    "type": "holder",
+    "id": "hexL5",
+    "x": 750,
+    "y": 303.099609375,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack"
+  },
+  "hexL6": {
+    "type": "holder",
+    "id": "hexL6",
+    "x": 750,
+    "y": 216.5,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack"
+  },
+  "hexBack": {
+    "id": "hexBack",
+    "x": 381,
+    "y": 23.7,
+    "width": 837,
+    "height": 953,
+    "layer": -3,
+    "movable": false,
+    "rotation": 30,
+    "z": 1
+  },
+  "ghn1": {
+    "deck": "vwam",
+    "type": "card",
+    "cardType": "",
+    "id": "ghn1"
+  },
+  "ue6y": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "ue6y",
+    "z": 1,
+    "parent": "hexB6"
+  },
+  "z3u7": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "dark",
+    "id": "z3u7",
+    "z": 1,
+    "parent": "hexC8"
+  },
+  "n39t": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "n39t",
+    "z": 1,
+    "parent": "hexB5"
+  },
+  "k1ul": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "dark",
+    "id": "k1ul",
+    "z": 1,
+    "parent": "hexF11"
+  },
+  "ny12": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "ny12",
+    "z": 1,
+    "parent": "hexD8"
+  },
+  "2t6m": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "dark",
+    "id": "2t6m",
+    "z": 1,
+    "parent": "hexB7"
+  },
+  "swpi": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "swpi",
+    "z": 1,
+    "parent": "hexC7"
+  },
+  "t0bj": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "dark",
+    "id": "t0bj",
+    "z": 1,
+    "parent": "hexE10"
+  },
+  "vtjp": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "vtjp",
+    "z": 1,
+    "parent": "hexF10"
+  },
+  "inah": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "dark",
+    "id": "inah",
+    "z": 1,
+    "parent": "hexA6"
+  },
+  "r5gc": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "r5gc",
+    "z": 1,
+    "parent": "hexE9"
+  },
+  "e79r": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "dark",
+    "id": "e79r",
+    "z": 1,
+    "parent": "hexD9"
+  },
+  "ugxz": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "dark",
+    "id": "ugxz",
+    "z": 1,
+    "parent": "hexB1"
+  },
+  "pmmj": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "dark",
+    "id": "pmmj",
+    "z": 1,
+    "parent": "hexC1"
+  },
+  "q8qa": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "dark",
+    "id": "q8qa",
+    "z": 1,
+    "parent": "hexD1"
+  },
+  "v2l5": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "dark",
+    "id": "v2l5",
+    "z": 1,
+    "parent": "hexE1"
+  },
+  "z6zz": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "dark",
+    "id": "z6zz",
+    "z": 1,
+    "parent": "hexF1"
+  },
+  "5f35": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "dark",
+    "id": "5f35",
+    "z": 1,
+    "parent": "hexG1"
+  },
+  "zkb1": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "dark",
+    "id": "zkb1",
+    "z": 1,
+    "parent": "hexH1"
+  },
+  "9a5y": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "dark",
+    "id": "9a5y",
+    "z": 1,
+    "parent": "hexI1"
+  },
+  "wuob": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "dark",
+    "id": "wuob",
+    "z": 1,
+    "parent": "hexK1"
+  },
+  "dlkx": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "dark",
+    "id": "dlkx",
+    "z": 1,
+    "parent": "hexL1"
+  },
+  "tspn": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "dark",
+    "id": "tspn",
+    "z": 1,
+    "parent": "hexL2"
+  },
+  "qdob": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "dark",
+    "id": "qdob",
+    "z": 1,
+    "parent": "hexL3"
+  },
+  "tl47": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "dark",
+    "id": "tl47",
+    "z": 1,
+    "parent": "hexL4"
+  },
+  "4f55": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "dark",
+    "id": "4f55",
+    "z": 1,
+    "parent": "hexL5"
+  },
+  "fmxz": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "dark",
+    "id": "fmxz",
+    "z": 1,
+    "parent": "hexL6"
+  },
+  "k9w3": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "dark",
+    "id": "k9w3",
+    "z": 1,
+    "parent": "hexK7"
+  },
+  "lotp": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "dark",
+    "id": "lotp",
+    "z": 1,
+    "parent": "hexI8"
+  },
+  "jtlu": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "dark",
+    "id": "jtlu",
+    "z": 1,
+    "parent": "hexH9"
+  },
+  "qe9d": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "dark",
+    "id": "qe9d",
+    "z": 1,
+    "parent": "hexG10"
+  },
+  "3mf5": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "dark",
+    "id": "3mf5",
+    "z": 1,
+    "parent": "hexA1"
+  },
+  "moba": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "dark",
+    "id": "moba",
+    "z": 1,
+    "parent": "hexA2"
+  },
+  "k8gs": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "dark",
+    "id": "k8gs",
+    "z": 1,
+    "hoverParent": "hexA3",
+    "parent": "hexA3"
+  },
+  "dn4u": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "dark",
+    "id": "dn4u",
+    "z": 1,
+    "hoverParent": "hexA4",
+    "parent": "hexA4"
+  },
+  "l7pb": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "dark",
+    "id": "l7pb",
+    "z": 1,
+    "hoverParent": "hexA5",
+    "parent": "hexA5"
+  },
+  "v55u": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "v55u",
+    "z": 1,
+    "parent": "hexD2"
+  },
+  "9v35": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "9v35",
+    "z": 1,
+    "parent": "hexK5"
+  },
+  "i48f": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "i48f",
+    "z": 1,
+    "parent": "hexI5"
+  },
+  "3b4p": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "3b4p",
+    "z": 1,
+    "parent": "hexH5"
+  },
+  "e4uf": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "e4uf",
+    "z": 1,
+    "parent": "hexG5"
+  },
+  "xzcy": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "xzcy",
+    "z": 1,
+    "parent": "hexF5"
+  },
+  "k0m7": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "k0m7",
+    "z": 1,
+    "parent": "hexE4"
+  },
+  "5tjh": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "5tjh",
+    "z": 1,
+    "parent": "hexD3"
+  },
+  "k7gy": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "k7gy",
+    "z": 1,
+    "parent": "hexC2"
+  },
+  "shjm": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "shjm",
+    "z": 1,
+    "parent": "hexK6"
+  },
+  "cjp9": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "cjp9",
+    "z": 1,
+    "parent": "hexI6"
+  },
+  "23j6": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "23j6",
+    "z": 1,
+    "parent": "hexH6"
+  },
+  "bm0e": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "bm0e",
+    "z": 1,
+    "parent": "hexG6"
+  },
+  "9s8b": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "9s8b",
+    "z": 1,
+    "parent": "hexF6"
+  },
+  "iqo6": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "iqo6",
+    "z": 1,
+    "parent": "hexE5"
+  },
+  "miwq": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "miwq",
+    "z": 1,
+    "parent": "hexD4"
+  },
+  "f9xa": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "f9xa",
+    "z": 1,
+    "parent": "hexC3"
+  },
+  "b5dg": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "b5dg",
+    "z": 1,
+    "parent": "hexB2"
+  },
+  "k3za": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "k3za",
+    "z": 1,
+    "parent": "hexI7"
+  },
+  "sqkn": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "sqkn",
+    "z": 1,
+    "parent": "hexH7"
+  },
+  "88zf": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "88zf",
+    "z": 1,
+    "parent": "hexG7"
+  },
+  "aju7": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "aju7",
+    "z": 1,
+    "parent": "hexF7"
+  },
+  "88aw": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "88aw",
+    "z": 1,
+    "parent": "hexE6"
+  },
+  "vlyz": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "vlyz",
+    "z": 1,
+    "parent": "hexD5"
+  },
+  "u7rf": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "u7rf",
+    "z": 1,
+    "parent": "hexC4"
+  },
+  "cfmq": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "cfmq",
+    "z": 1,
+    "parent": "hexB3"
+  },
+  "vhmb": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "vhmb",
+    "z": 1,
+    "parent": "hexH8"
+  },
+  "230a": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "230a",
+    "z": 1,
+    "parent": "hexG8"
+  },
+  "gu84": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "gu84",
+    "z": 1,
+    "parent": "hexF8"
+  },
+  "nsxw": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "nsxw",
+    "z": 1,
+    "parent": "hexE7"
+  },
+  "4f8i": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "4f8i",
+    "z": 1,
+    "parent": "hexD6"
+  },
+  "nkbu": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "nkbu",
+    "z": 1,
+    "parent": "hexC5"
+  },
+  "fdm8": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "fdm8",
+    "z": 1,
+    "parent": "hexB4"
+  },
+  "gjl1": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "gjl1",
+    "z": 1,
+    "parent": "hexG9"
+  },
+  "mk0q": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "mk0q",
+    "z": 1,
+    "parent": "hexF9"
+  },
+  "vj2r": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "vj2r",
+    "z": 1,
+    "parent": "hexE8"
+  },
+  "so9h": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "so9h",
+    "z": 1,
+    "parent": "hexD7"
+  },
+  "5x5a": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "5x5a",
+    "z": 1,
+    "parent": "hexC6"
+  },
+  "hck1": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "hck1",
+    "z": 1,
+    "parent": "hexI2"
+  },
+  "5va0": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "5va0",
+    "z": 1,
+    "parent": "hexH2"
+  },
+  "3wrc": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "3wrc",
+    "z": 1,
+    "parent": "hexG2"
+  },
+  "mj9n": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "mj9n",
+    "z": 1,
+    "parent": "hexF2"
+  },
+  "edfa": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "edfa",
+    "z": 1,
+    "parent": "hexK3"
+  },
+  "pfzm": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "pfzm",
+    "z": 1,
+    "parent": "hexI3"
+  },
+  "k41u": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "k41u",
+    "z": 1,
+    "parent": "hexH3"
+  },
+  "ssp0": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "ssp0",
+    "z": 1,
+    "parent": "hexG3"
+  },
+  "nysm": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "nysm",
+    "z": 1,
+    "parent": "hexF3"
+  },
+  "57ns": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "57ns",
+    "z": 1,
+    "parent": "hexE2"
+  },
+  "zyn4": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "zyn4",
+    "z": 1,
+    "parent": "hexK4"
+  },
+  "b2i3": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "b2i3",
+    "z": 1,
+    "parent": "hexI4"
+  },
+  "z876": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "z876",
+    "z": 1,
+    "hoverParent": "hexH4",
+    "parent": "hexH4"
+  },
+  "qoc7": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "qoc7",
+    "z": 1,
+    "parent": "hexG4"
+  },
+  "im20": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "im20",
+    "z": 1,
+    "parent": "hexF4"
+  },
+  "yp4o": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "yp4o",
+    "z": 1,
+    "parent": "hexE3"
+  },
+  "stib": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "light",
+    "id": "stib",
+    "z": 1,
+    "parent": "hexK2"
+  },
+  "red1": {
+    "id": "red1",
+    "x": 12,
+    "y": 12,
+    "width": 75,
+    "height": 75,
+    "z": 1,
+    "classes": "chip",
+    "color": "#ff0000",
+    "faces": [
+      {
+        "image": "i/game-pieces/2D/Checkers-2D.svg",
+        "crowned": false
+      },
+      {
+        "image": "i/game-pieces/2D/Crowned-Checkers-2D.svg",
+        "crowned": true
+      }
+    ],
+    "image": "i/game-pieces/2D/Crowned-Checkers-2D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#ff0000",
+    "borderWidth": 1,
+    "crowned": true,
+    "secondaryColor": "#ffffff",
+    "resetProperties": {
+      "parent": "hexF2",
+      "x": 12,
+      "y": 12
+    },
+    "parent": "hexF2"
+  },
+  "black1": {
+    "id": "black1",
+    "x": 12,
+    "y": 12,
+    "width": 75,
+    "height": 75,
+    "z": 1,
+    "classes": "chip",
+    "color": "#000000",
+    "faces": [
+      {
+        "image": "i/game-pieces/2D/Checkers-2D.svg",
+        "crowned": false
+      },
+      {
+        "image": "i/game-pieces/2D/Crowned-Checkers-2D.svg",
+        "crowned": true
+      }
+    ],
+    "image": "i/game-pieces/2D/Crowned-Checkers-2D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 1,
+    "crowned": true,
+    "secondaryColor": "#ffffff",
+    "resetProperties": {
+      "parent": "hexB6",
+      "x": 12,
+      "y": 12
+    },
+    "parent": "hexB6"
+  },
+  "red2": {
+    "inheritFrom": {
+      "red1": "!parent"
+    },
+    "id": "red2",
+    "x": 12,
+    "y": 12,
+    "z": 1,
+    "activeFace": 0,
+    "resetProperties": {
+      "parent": "hexG2",
+      "x": 12,
+      "y": 12
+    },
+    "parent": "hexG2"
+  },
+  "red3": {
+    "inheritFrom": {
+      "red1": "!parent"
+    },
+    "id": "red3",
+    "x": 12,
+    "y": 12,
+    "z": 1,
+    "activeFace": 0,
+    "resetProperties": {
+      "parent": "hexH2",
+      "x": 12,
+      "y": 12
+    },
+    "parent": "hexH2"
+  },
+  "red4": {
+    "inheritFrom": {
+      "red1": "!parent"
+    },
+    "id": "red4",
+    "x": 12,
+    "y": 12,
+    "z": 1,
+    "activeFace": 0,
+    "resetProperties": {
+      "parent": "hexI2",
+      "x": 12,
+      "y": 12
+    },
+    "parent": "hexI2"
+  },
+  "red5": {
+    "inheritFrom": {
+      "red1": "!parent"
+    },
+    "id": "red5",
+    "x": 12,
+    "y": 12,
+    "z": 1,
+    "activeFace": 0,
+    "resetProperties": {
+      "parent": "hexK2",
+      "x": 12,
+      "y": 12
+    },
+    "parent": "hexK2"
+  },
+  "red6": {
+    "inheritFrom": {
+      "red1": "!parent"
+    },
+    "id": "red6",
+    "x": 12,
+    "y": 12,
+    "z": 1,
+    "activeFace": 0,
+    "resetProperties": {
+      "parent": "hexF3",
+      "x": 12,
+      "y": 12
+    },
+    "parent": "hexF3"
+  },
+  "red7": {
+    "inheritFrom": {
+      "red1": "!parent"
+    },
+    "id": "red7",
+    "x": 12,
+    "y": 12,
+    "z": 1,
+    "activeFace": 0,
+    "resetProperties": {
+      "parent": "hexG3",
+      "x": 12,
+      "y": 12
+    },
+    "parent": "hexG3"
+  },
+  "red8": {
+    "inheritFrom": {
+      "red1": "!parent"
+    },
+    "id": "red8",
+    "x": 12,
+    "y": 12,
+    "z": 1,
+    "activeFace": 0,
+    "resetProperties": {
+      "parent": "hexH3",
+      "x": 12,
+      "y": 12
+    },
+    "parent": "hexH3"
+  },
+  "red9": {
+    "inheritFrom": {
+      "red1": "!parent"
+    },
+    "id": "red9",
+    "x": 12,
+    "y": 12,
+    "z": 1,
+    "activeFace": 0,
+    "resetProperties": {
+      "parent": "hexI3",
+      "x": 12,
+      "y": 12
+    },
+    "parent": "hexI3"
+  },
+  "red10": {
+    "inheritFrom": {
+      "red1": "!parent"
+    },
+    "id": "red10",
+    "x": 12,
+    "y": 12,
+    "z": 1,
+    "activeFace": 0,
+    "resetProperties": {
+      "parent": "hexF4",
+      "x": 12,
+      "y": 12
+    },
+    "parent": "hexF4"
+  },
+  "red11": {
+    "inheritFrom": {
+      "red1": "!parent"
+    },
+    "id": "red11",
+    "x": 12,
+    "y": 12,
+    "z": 1,
+    "activeFace": 0,
+    "resetProperties": {
+      "parent": "hexG4",
+      "x": 12,
+      "y": 12
+    },
+    "parent": "hexG4"
+  },
+  "red12": {
+    "inheritFrom": {
+      "red1": "!parent"
+    },
+    "id": "red12",
+    "x": 12,
+    "y": 12,
+    "z": 1,
+    "activeFace": 0,
+    "resetProperties": {
+      "parent": "hexH4",
+      "x": 12,
+      "y": 12
+    },
+    "parent": "hexH4"
+  },
+  "black2": {
+    "inheritFrom": {
+      "black1": "!parent"
+    },
+    "id": "black2",
+    "x": 12,
+    "y": 12,
+    "z": 1,
+    "activeFace": 0,
+    "resetProperties": {
+      "parent": "hexC7",
+      "x": 12,
+      "y": 12
+    },
+    "parent": "hexC7"
+  },
+  "black3": {
+    "inheritFrom": {
+      "black1": "!parent"
+    },
+    "id": "black3",
+    "x": 12,
+    "y": 12,
+    "z": 1,
+    "activeFace": 0,
+    "resetProperties": {
+      "parent": "hexD8",
+      "x": 12,
+      "y": 12
+    },
+    "parent": "hexD8"
+  },
+  "black4": {
+    "inheritFrom": {
+      "black1": "!parent"
+    },
+    "id": "black4",
+    "x": 12,
+    "y": 12,
+    "z": 1,
+    "activeFace": 0,
+    "resetProperties": {
+      "parent": "hexE9",
+      "x": 12,
+      "y": 12
+    },
+    "parent": "hexE9"
+  },
+  "black5": {
+    "inheritFrom": {
+      "black1": "!parent"
+    },
+    "id": "black5",
+    "x": 12,
+    "y": 12,
+    "z": 1,
+    "activeFace": 0,
+    "resetProperties": {
+      "parent": "hexF10",
+      "x": 12,
+      "y": 12
+    },
+    "parent": "hexF10"
+  },
+  "black6": {
+    "inheritFrom": {
+      "black1": "!parent"
+    },
+    "id": "black6",
+    "x": 12,
+    "y": 12,
+    "z": 1,
+    "activeFace": 0,
+    "resetProperties": {
+      "parent": "hexC6",
+      "x": 12,
+      "y": 12
+    },
+    "parent": "hexC6"
+  },
+  "black7": {
+    "inheritFrom": {
+      "black1": "!parent"
+    },
+    "id": "black7",
+    "x": 12,
+    "y": 12,
+    "z": 1,
+    "activeFace": 0,
+    "resetProperties": {
+      "parent": "hexD7",
+      "x": 12,
+      "y": 12
+    },
+    "parent": "hexD7"
+  },
+  "black8": {
+    "inheritFrom": {
+      "black1": "!parent"
+    },
+    "id": "black8",
+    "x": 12,
+    "y": 12,
+    "z": 1,
+    "activeFace": 0,
+    "resetProperties": {
+      "parent": "hexE8",
+      "x": 12,
+      "y": 12
+    },
+    "parent": "hexE8"
+  },
+  "black9": {
+    "inheritFrom": {
+      "black1": "!parent"
+    },
+    "id": "black9",
+    "x": 12,
+    "y": 12,
+    "z": 1,
+    "activeFace": 0,
+    "resetProperties": {
+      "parent": "hexF9",
+      "x": 12,
+      "y": 12
+    },
+    "parent": "hexF9"
+  },
+  "black10": {
+    "inheritFrom": {
+      "black1": "!parent"
+    },
+    "id": "black10",
+    "x": 12,
+    "y": 12,
+    "z": 1,
+    "activeFace": 0,
+    "resetProperties": {
+      "parent": "hexD6",
+      "x": 12,
+      "y": 12
+    },
+    "parent": "hexD6"
+  },
+  "black11": {
+    "inheritFrom": {
+      "black1": "!parent"
+    },
+    "id": "black11",
+    "x": 12,
+    "y": 12,
+    "z": 1,
+    "activeFace": 0,
+    "resetProperties": {
+      "parent": "hexE7",
+      "x": 12,
+      "y": 12
+    },
+    "parent": "hexE7"
+  },
+  "black12": {
+    "inheritFrom": {
+      "black1": "!parent"
+    },
+    "id": "black12",
+    "x": 12,
+    "y": 12,
+    "z": 1,
+    "activeFace": 0,
+    "resetProperties": {
+      "parent": "hexF8",
+      "x": 12,
+      "y": 12
+    },
+    "parent": "hexF8"
+  },
+  "restart": {
+    "type": "button",
+    "id": "restart",
+    "x": 1550,
+    "y": 1,
+    "width": 50,
+    "height": 50,
+    "z": 1,
+    "movable": false,
+    "classes": "symbols",
+    "color": "white",
+    "css": {
+      "default": {
+        "font-size": "40px",
+        "--wcMain": "black",
+        "--wcBorder": "white",
+        "--wcMainOH": "grey",
+        "--wcBorderOH": "black"
+      },
+      "::after": {
+        "content": "\"Reset\"",
+        "display": "none",
+        "position": "absolute",
+        "margin-top": "71px",
+        "color": "black",
+        "font-size": "14px",
+        "font-family": "Roboto"
+      },
+      ":hover::after": {
+        "display": "block"
+      }
+    },
+    "text": "restart",
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "fields": [
+          {
+            "type": "title",
+            "text": "Restarting ..."
+          },
+          {
+            "type": "subtitle",
+            "text": "Are you sure you want to restart the game?"
+          }
+        ]
+      },
+      {
+        "func": "SELECT",
+        "property": "resetProperties",
+        "relation": "!=",
+        "value": null
+      },
+      {
+        "func": "FOREACH",
+        "loopRoutine": [
+          {
+            "func": "FOREACH",
+            "in": "${PROPERTY resetProperties OF $widgetID}",
+            "loopRoutine": [
+              {
+                "func": "SET",
+                "property": "${key}",
+                "value": "${value}"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "relation": "!=",
+        "value": null
+      },
+      {
+        "func": "SET",
+        "property": "z",
+        "value": 1
+      }
+    ]
+  },
+  "background": {
+    "id": "background",
+    "width": 1600,
+    "height": 1000,
+    "layer": -10,
+    "z": 1,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "default": {
+        "background": "#eee6d9"
+      }
+    }
+  },
+  "hexDeck": {
+    "type": "deck",
+    "id": "hexDeck",
+    "x": 336,
+    "y": -197,
+    "z": 1,
+    "movable": false,
+    "movableInEdit": false,
+    "cardDefaults": {
+      "movable": false,
+      "movableInEdit": false,
+      "layer": -10,
+      "width": 100,
+      "height": 100
+    },
+    "cardTypes": {
+      "light": {
+        "fillColor": "#c0c0c0",
+        "strokeColor": "#ffffff",
+        "rotDeg": 0
+      },
+      "dark": {
+        "fillColor": "#808080",
+        "strokeColor": "#ffffff",
+        "rotDeg": 0
+      }
+    },
+    "faceTemplates": [
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 100,
+            "height": 100,
+            "color": "transparent",
+            "value": "/assets/1000076354_385",
+            "svgReplaces": {
+              "fillColor": "fillColor",
+              "strokeColor": "strokeColor",
+              "rotDeg": "rotDeg"
+            }
+          }
+        ]
+      }
+    ]
+  }
+}
