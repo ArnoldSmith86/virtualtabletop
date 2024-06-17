@@ -793,6 +793,116 @@ function populateAddWidgetOverlay() {
     borderWidth: 1
   });
 
+   //Sixth row (hexagons)
+
+   addPieceToAddWidgetOverlay(new BasicWidget('HexFlat'), {
+    x: 390,
+    y: 600,
+    width: 50,
+    height: 50,
+    color: VTTblue,
+    image: "i/game-pieces/2D/Hex-Flat.svg",
+    svgReplaces: {
+      "#primaryColor": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    borderColor: "#000000",
+    borderWidth: 2,
+    hexType: "flat"
+  });
+
+  addPieceToAddWidgetOverlay(new BasicWidget('HexPoint'), {
+    x: 465,
+    y: 600,
+    width: 50,
+    height: 50,
+    color: VTTblue,
+    image: "i/game-pieces/2D/Hex-Point.svg",
+    svgReplaces: {
+      "#primaryColor": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    borderColor: "#000000",
+    borderWidth: 2,
+    hexType: "point"
+  });
+
+  //This is added only to provide a visual background for the actual piece "HexFlatImage" since the css there does not show on the overlay
+
+  addPieceToAddWidgetOverlay(new BasicWidget('HexFlatImageBack'), {
+    x: 530,
+    y: 590,
+    width: 70,
+    height: 70,
+    color: VTTblue,
+    image: "i/icons/hexagon_horizontal.svg",
+    svgReplaces: {
+      "currentColor": "color"
+    }
+  });
+
+  addPieceToAddWidgetOverlay(new BasicWidget('HexFlatImage'), {
+    x: 540,
+    y: 600,
+    width: 50,
+    height: 50,
+    imageColor: '#ffffff',
+    image: "i/icons/zoom_in.svg",
+    svgReplaces: {
+      "currentColor": "imageColor"
+    },
+    css: {
+      "default": {
+        "background-color": "${PROPERTY color}",
+        "background-image": "url('${PROPERTY image}')",
+        "background-size": "75% 75%",
+        "background-repeat": "no repeat",
+        "background-position": "center center",
+        "clip-path": "polygon(25% 6.67%, 75% 6.67%, 100% 50%, 75% 93.33%, 25% 93.33%, 0% 50%)"
+      }
+    },
+    hexType: "flat"
+  });
+
+  //This is added only to provide a visual background for the actual piece "HexPointImage" since the css there does not show on the overlay
+
+  addPieceToAddWidgetOverlay(new BasicWidget('HexFlatImageBack'), {
+    x: 605,
+    y: 590,
+    width: 70,
+    height: 70,
+    color: VTTblue,
+    image: "i/icons/hexagon_vertical.svg",
+    svgReplaces: {
+      "currentColor": "color"
+    }
+  });
+
+  addPieceToAddWidgetOverlay(new BasicWidget('HexPointImage'), {
+    x: 615,
+    y: 600,
+    width: 50,
+    height: 50,
+    imageColor: '#ffffff',
+    image: "i/icons/zoom_out.svg",
+    svgReplaces: {
+      "currentColor": "imageColor"
+    },
+    css: {
+      "default": {
+        "background-color": "${PROPERTY color}",
+        "background-image": "url('${PROPERTY image}')",
+        "background-size": "75% 75%",
+        "background-repeat": "no repeat",
+        "background-position": "center center",
+        "clip-path": "polygon(93.3% 25%, 93.3% 75%, 50% 100%, 6.7% 75%, 6.7% 25%, 50% 0%)"
+      }
+    },
+    hexType: "point"
+  });
+
   //Poker chips
 
   addWidgetToAddWidgetOverlay(new BasicWidget('EmptyPoker2DSVG'), {
@@ -1222,6 +1332,8 @@ async function updateWidget(currentState, oldState, applyChangesFromUI) {
 
   if(widget.id !== previousState.id || widget.type !== previousState.type) {
     const id = await addWidgetLocal(widget);
+    if(widget.type === undefined && widget.type !== previousState.type)
+      sendPropertyUpdate(id, 'type', null);
 
     for(const child of children)
       sendPropertyUpdate(child.get('id'), 'parent', id);

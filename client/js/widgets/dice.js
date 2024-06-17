@@ -284,7 +284,7 @@ class Dice extends Widget {
         if(Array.isArray(o) && o.length > this.activeFace())
           return o[this.activeFace()];
       }
-      const faceProps = this.get('faces')[this.activeFace()];
+      const faceProps = this.faces()[this.activeFace()];
       if(typeof faceProps == 'object' && Object.hasOwnProperty(faceProps, property))
         return faceProps[property];
     }
