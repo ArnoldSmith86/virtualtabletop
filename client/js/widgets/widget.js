@@ -1794,19 +1794,19 @@ export class Widget extends StateManaged {
       }
 
       if(a.func == 'SWAPHANDS') {
-        setDefaults(a, { turn: 1, turnCycle: 'forward', source: 'all' });
-        if(['forward', 'backward', 'random'].indexOf(a.turnCycle) == -1) {
-          problems.push(`Warning: turnCycle ${a.turnCycle} interpreted as forward.`);
-          a.turnCycle = 'forward'
+        setDefaults(a, { interval: 1, direction: 'forward', source: 'all' });
+        if(['forward', 'backward', 'random'].indexOf(a.direction) == -1) {
+          problems.push(`Warning: direction ${a.direction} interpreted as forward.`);
+          a.direction = 'forward'
         }
         let allSeats = Array.from(widgets.values()).filter(w=>w.get('type')=='seat');
         let c = (a.source=='all' ? allSeats : collections[getCollection(a.source)].filter(w=>w.get('type')=='seat')).filter(w=>w.get('player'));
         if (c.length > 1) {
-          if(a.turnCycle == 'forward') {
+          if(a.direction == 'forward') {
             c.sort((a, b)=>a.get('index')-b.get('index'));
-          } else if(a.turnCycle == 'backward') {
+          } else if(a.direction == 'backward') {
             c.sort((a, b)=>b.get('index')-a.get('index'));
-          } else if (a.turnCycle == 'random') {
+          } else if (a.direction == 'random') {
             for (let i = c.length - 1; i > 0; i--) {
               const rand = Math.floor(Math.random() * (i + 1));
               [c[i], c[rand]] = [c[rand], c[i]];
@@ -1815,7 +1815,7 @@ export class Widget extends StateManaged {
           let moves = [];
           for (let i = 0; i < c.length; i++) {
             let source = c[i];
-            let target = c[(i + a.turn) % c.length];
+            let target = c[(i + a.interval) % c.length];
             let hand = source.get('hand');
             if (this.isValidID(hand, problems)) {
               let perOwner = widgets.get(hand).get('childrenPerOwner');
