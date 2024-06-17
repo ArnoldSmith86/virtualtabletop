@@ -2532,13 +2532,13 @@
                 "thenRoutine": [
                   {
                     "func": "SWAPHANDS",
-                    "turnCycle": "backward"
+                    "direction": "backward"
                   }
                 ],
                 "elseRoutine": [
                   {
                     "func": "SWAPHANDS",
-                    "turnCycle": "backward",
+                    "direction": "backward",
                     "source": "usedSeats"
                   }
                 ]
@@ -2552,13 +2552,13 @@
                 "thenRoutine": [
                   {
                     "func": "SWAPHANDS",
-                    "turnCycle": "forward"
+                    "direction": "forward"
                   }
                 ],
                 "elseRoutine": [
                   {
                     "func": "SWAPHANDS",
-                    "turnCycle": "forward",
+                    "direction": "forward",
                     "source": "usedSeats"
                   }
                 ]
