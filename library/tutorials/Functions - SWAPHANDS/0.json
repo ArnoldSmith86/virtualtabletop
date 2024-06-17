@@ -1148,7 +1148,7 @@
     "clickRoutine": [
       {
         "func": "SWAPHANDS",
-        "turnCycle": "backward"
+        "direction": "backward"
       }
     ]
   },
@@ -1163,7 +1163,7 @@
     "clickRoutine": [
       {
         "func": "SWAPHANDS",
-        "turnCycle": "random"
+        "direction": "random"
       }
     ]
   },
