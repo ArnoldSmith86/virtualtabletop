@@ -1,0 +1,6946 @@
+{
+  "_meta": {
+    "version": 15,
+    "info": {
+      "name": "Union Station",
+      "image": "/assets/1369480150_778635",
+      "rules": "",
+      "bgg": "",
+      "year": "",
+      "mode": "vs",
+      "time": "30-45",
+      "attribution": "Layout design and coding by Jonathan Cox (email: JonGetsGames@gmail.com for inquiries). Game name and all art assets used with permission from the rights holders, Travis Hill &amp; New Mill Industries. \"Wrong Answer\" audio source&nbsp;by [UNIVERSFIELD] via&nbsp;https://pixabay.com/sound-effects/wrong-answer-129254/.",
+      "lastUpdate": 1718882034183,
+      "showName": false,
+      "skill": "medium",
+      "description": "Lay track, buy stock, and dump companies at opportune times to get big payouts.",
+      "similarImage": "",
+      "similarName": "",
+      "similarDesigner": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": "Players choose a seat by clicking any \"click to sit\" buttons, then type in their name and select their desired color in the popup window. Sit down by clicking the green \"Go\" button.<div><br></div><div>After all players have chosen seats,&nbsp; any one player must click the \"Setup\" button, click the check box in the popup window, and then click the \"Reset the game!\" button. This will randomly determine the starting player and reveal the initial auction interface.</div><div><br></div><div><b>INITIAL AUCTION</b></div><div>Click and drag the left-most stock from the auction row, and place it into the grey box to the right. A bidding interface will appear, and clicking on the + and - buttons will increase and decrease your bid value for the current stock. To buy the stock, click the \"Buy Company Color Stock\" button on this interface. The purchased stock will automatically be placed in the winning player's portfolio, the bid value will be deducted from their money, and the associated stock price token will be place on the railroad value matching the bid value. Then, drag the next stock into the grey box to begin the following auction.</div><div><br></div><div><b>Standard Turns</b></div><div>After the auction is complete, the player who bought the cheapest stock will automatically become the active player.<b><br></b><div><div><br></div><div>Once done with their turn, the player should click the \"Click to end turn\" button button to the left of their name, which will move to the next player in order. The next player will hear a soft sound and a text alert on screen, reminding them that their turn has begun.&nbsp; Any players who do not want to hear the sound and/or see the text alert when it is their turn can click the \"Turn Options\" button in the bottom left corner and change their preference.<br><div><br></div><div>Hovering your mouse over the white box above the Railroad Value chart will reveal helpful player aids.</div><div><br></div><div>In order to edit their current total money amount, the player must left click on the \"edit money\" button to the left of their money value, type a number into the box, and press enter (or click the green \"pay\" button). A positive number inputted will increase the resource by that amount, a negative number will decrease by that amount.&nbsp;</div><div><br></div><div>Stocks and track that are removed from play can be dragged into the trash basket above the Dividends track on the right side of the screen. Any item placed into the trash can be brought back out by clicking and dragging on the basket icon.</div></div></div></div>",
+      "players": "2-5",
+      "language": "en-US",
+      "variant": "Union Station",
+      "variantImage": ""
+    }
+  },
+  "1_seat_anchor": {
+    "id": "1_seat_anchor",
+    "x": -357,
+    "y": -44,
+    "width": 35,
+    "height": 40,
+    "z": 79958,
+    "movable": false,
+    "movableInEdit": false,
+    "color": "#1f5ca6",
+    "css": "border-radius: 80% 80% 40% 110%",
+    "image": "/i/game-pieces/3D/Pin-3D.svg",
+    "svgReplaces": {
+      "#borderWidth": "borderWidth",
+      "#borderColor": "borderColor",
+      "#primaryColor": "color"
+    },
+    "borderColor": "black",
+    "borderWidth": "1",
+    "passed": false
+  },
+  "2_seat_anchor": {
+    "id": "2_seat_anchor",
+    "x": -357,
+    "y": 153,
+    "width": 35,
+    "height": 40,
+    "z": 79894,
+    "movable": false,
+    "movableInEdit": false,
+    "color": "#1f5ca6",
+    "css": "border-radius: 80% 80% 40% 110%",
+    "image": "/i/game-pieces/3D/Pin-3D.svg",
+    "svgReplaces": {
+      "#borderWidth": "borderWidth",
+      "#borderColor": "borderColor",
+      "#primaryColor": "color"
+    },
+    "borderColor": "black",
+    "borderWidth": "1",
+    "passed": false
+  },
+  "3_seat_anchor": {
+    "id": "3_seat_anchor",
+    "x": -357,
+    "y": 353,
+    "width": 35,
+    "height": 40,
+    "z": 79964,
+    "movable": false,
+    "movableInEdit": false,
+    "color": "#1f5ca6",
+    "css": "border-radius: 80% 80% 40% 110%",
+    "image": "/i/game-pieces/3D/Pin-3D.svg",
+    "svgReplaces": {
+      "#borderWidth": "borderWidth",
+      "#borderColor": "borderColor",
+      "#primaryColor": "color"
+    },
+    "borderColor": "black",
+    "borderWidth": "1",
+    "passed": false
+  },
+  "4_seat_anchor": {
+    "id": "4_seat_anchor",
+    "x": -357,
+    "y": 551,
+    "width": 35,
+    "height": 40,
+    "z": 79980,
+    "movable": false,
+    "movableInEdit": false,
+    "color": "#1f5ca6",
+    "css": "border-radius: 80% 80% 40% 110%",
+    "image": "/i/game-pieces/3D/Pin-3D.svg",
+    "svgReplaces": {
+      "#borderWidth": "borderWidth",
+      "#borderColor": "borderColor",
+      "#primaryColor": "color"
+    },
+    "borderColor": "black",
+    "borderWidth": "1",
+    "passed": false
+  },
+  "5_seat_anchor": {
+    "id": "5_seat_anchor",
+    "x": -357,
+    "y": 751,
+    "width": 35,
+    "height": 40,
+    "z": 79988,
+    "movable": false,
+    "movableInEdit": false,
+    "color": "#1f5ca6",
+    "css": "border-radius: 80% 80% 40% 110%",
+    "image": "/i/game-pieces/3D/Pin-3D.svg",
+    "svgReplaces": {
+      "#borderWidth": "borderWidth",
+      "#borderColor": "borderColor",
+      "#primaryColor": "color"
+    },
+    "borderColor": "black",
+    "borderWidth": "1",
+    "passed": false
+  },
+  "1_seat": {
+    "type": "seat",
+    "id": "1_seat",
+    "parent": "1_seat_anchor",
+    "fixedParent": true,
+    "x": 373,
+    "y": 65,
+    "width": 10,
+    "height": 35,
+    "borderRadius": 8,
+    "z": 78659,
+    "movableInEdit": false,
+    "color": "#dddddd",
+    "css": {
+      "default": {
+        "min-width": "193px",
+        "cursor": "pointer",
+        "gap": "5px",
+        "font-size": "21px",
+        "box-shadow": "0 2px 5px #00000066",
+        "text-shadow": "${PROPERTY textShadowDistance}px ${PROPERTY textShadowDistance}px ${PROPERTY textShadowBlur}px ${PROPERTY outlineColor}, -${PROPERTY textShadowDistance}px ${PROPERTY textShadowDistance}px ${PROPERTY textShadowBlur}px ${PROPERTY outlineColor}, ${PROPERTY textShadowDistance}px -${PROPERTY textShadowDistance}px ${PROPERTY textShadowBlur}px ${PROPERTY outlineColor}, -${PROPERTY textShadowDistance}px -${PROPERTY textShadowDistance}px ${PROPERTY textShadowBlur}px ${PROPERTY outlineColor}",
+        "background": "${PROPERTY mainColor}",
+        "color": "white",
+        "border": "${PROPERTY textShadowDistance}px solid ${PROPERTY contrast_color}",
+        "box-sizing": "border-box",
+        "padding": "0 15px"
+      },
+      ".sea ted.turn": {
+        "box-shadow": "0px 0px 20px 5px ${PROPERTY glowColor}"
+      },
+      ".seated.turn::after": {
+        "xcontent": "'Active Player'",
+        "content": "",
+        "font-size": "18px",
+        "line-height": "1em",
+        "white-space": "wrap",
+        "background-color": "white",
+        "border": "${PROPERTY textShadowDistance}px solid ${PROPERTY mainColor}",
+        "background-size": "200% auto",
+        "color": "${PROPERTY mainColor}",
+        "text-shadow": "0 1px 5px #000000cc",
+        "width": "1em",
+        "height": "1em",
+        "text-align": "center",
+        "text-transform": "uppercase",
+        "position": "absolute",
+        "right": "205px",
+        "top": "2px",
+        "padding": "2px",
+        "border-radius": "100px",
+        "box-shadow": "0 0 5px #000000bb",
+        "pointer-events": "none"
+      }
+    },
+    "mainColor": "#dddddd",
+    "outlineColor": "#000000bb",
+    "text": "C",
+    "textColor": "#000000",
+    "textShadowBlur": 2,
+    "textShadowDistance": 2,
+    "clickRoutine": [
+      "var LeaveSeat = false",
+      "var name = ${PROPERTY player}",
+      "var color = ${PROPERTY color}",
+      "var colors_array = ${PROPERTY color_options}",
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY player}",
+        "relation": "==",
+        "operand2": "",
+        "thenRoutine": [
+          {
+            "func": "INPUT",
+            "header": "Enter your name and choice of player color.",
+            "fields": [
+              {
+                "type": "string",
+                "label": "Your Name:",
+                "variable": "name",
+                "value": "${playerName}"
+              },
+              {
+                "type": "palette",
+                "label": "Your Color:",
+                "colors": "${colors_array}",
+                "variable": "color",
+                "value": "${playerColor}"
+              }
+            ]
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "IF",
+            "operand1": "${PROPERTY player}",
+            "relation": "==",
+            "operand2": "${playerName}",
+            "thenRoutine": [
+              {
+                "func": "INPUT",
+                "header": "Enter your name and choice of player color.",
+                "fields": [
+                  {
+                    "type": "string",
+                    "label": "Your Name:",
+                    "variable": "name",
+                    "value": "${playerName}"
+                  },
+                  {
+                    "type": "palette",
+                    "label": "Your Color:",
+                    "colors": "${colors_array}",
+                    "variable": "color",
+                    "value": "${playerColor}"
+                  },
+                  {
+                    "type": "subtitle",
+                    "text": "All done?",
+                    "css": "background-color: var(--VTTblue);color:white;"
+                  },
+                  {
+                    "type": "checkbox",
+                    "label": "Stand up from seat",
+                    "variable": "LeaveSeat",
+                    "value": false
+                  }
+                ]
+              }
+            ],
+            "elseRoutine": [
+              {
+                "func": "INPUT",
+                "header": "Are you sure you want to remove ${PROPERTY player} from this seat?",
+                "cancelButtonText": "Cancel",
+                "confirmButtonText": "Okay",
+                "fields": [
+                  {
+                    "type": "checkbox",
+                    "label": "Remove this player from their seat",
+                    "variable": "LeaveSeat",
+                    "value": false
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "condition": "${LeaveSeat}",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "color",
+            "value": "#dddddd"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "player",
+            "value": ""
+          },
+          {
+            "func": "SET",
+            "property": "color",
+            "value": "#000000"
+          }
+        ],
+        "elseRoutine": [
+          "var updatePlayerandColor = false",
+          {
+            "func": "IF",
+            "operand1": "${PROPERTY player}",
+            "relation": "==",
+            "operand2": "${playerName}",
+            "thenRoutine": [
+              "var updatePlayerandColor = true"
+            ]
+          },
+          {
+            "func": "IF",
+            "operand1": "${PROPERTY player}",
+            "relation": "==",
+            "operand2": "",
+            "thenRoutine": [
+              "var updatePlayerandColor = true"
+            ]
+          },
+          {
+            "func": "IF",
+            "condition": "${name}",
+            "elseRoutine": [
+              "var updatePlayerandColor = false"
+            ]
+          },
+          {
+            "func": "IF",
+            "condition": "${updatePlayerandColor}",
+            "thenRoutine": [
+              {
+                "func": "IF",
+                "operand1": "${color}",
+                "relation": "==",
+                "operand2": null,
+                "thenRoutine": [
+                  "var color = '#607d8b'",
+                  "var contrast_color = 'white'"
+                ],
+                "elseRoutine": [
+                  "var color_reference_array = ${PROPERTY color_references}",
+                  {
+                    "func": "FOREACH",
+                    "in": "${color_reference_array}",
+                    "loopRoutine": [
+                      {
+                        "func": "IF",
+                        "operand1": "${value.color}",
+                        "relation": "==",
+                        "operand2": "${color}",
+                        "thenRoutine": [
+                          "var contrast_color = ${value.contrast_color}"
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "func": "SET",
+                "collection": "thisButton",
+                "property": "color",
+                "value": "${color}"
+              },
+              {
+                "func": "SET",
+                "collection": "thisButton",
+                "property": "contrast_color",
+                "value": "${contrast_color}"
+              },
+              "var playerColor = ${color}",
+              {
+                "func": "SET",
+                "collection": "thisButton",
+                "property": "player",
+                "value": "${name}"
+              },
+              "var playerName = ${name}",
+              {
+                "func": "SET",
+                "collection": "thisButton",
+                "property": "mainColor",
+                "value": "${playerColor}"
+              },
+              "var newText = colorContrast ${PROPERTY mainColor}",
+              "var newGlow = colorContrast ${PROPERTY mainColor} 0.3",
+              "var color_transparent = ${PROPERTY mainColor} concat '48'",
+              {
+                "func": "SET",
+                "collection": "thisButton",
+                "property": "textColor",
+                "value": "${newText}"
+              },
+              {
+                "func": "SET",
+                "collection": "thisButton",
+                "property": "glowColor",
+                "value": "${newGlow}"
+              },
+              {
+                "func": "SELECT",
+                "property": "color_change_index",
+                "value": "${PROPERTY index}",
+                "mode": "set"
+              },
+              {
+                "func": "SET",
+                "property": "color",
+                "value": "${color}"
+              },
+              {
+                "func": "SET",
+                "property": "contrast_color",
+                "value": "${contrast_color}"
+              },
+              {
+                "func": "SET",
+                "property": "background_color_transparent",
+                "value": "${color_transparent}"
+              },
+              {
+                "func": "SET",
+                "property": "background_color_solid",
+                "value": "${color}"
+              },
+              {
+                "func": "SET",
+                "collection": "thisButton",
+                "property": "background_color_solid",
+                "value": "${color}"
+              },
+              {
+                "func": "SET",
+                "collection": "thisButton",
+                "property": "background_color_transparent",
+                "value": "${color_transparent}"
+              },
+              {
+                "func": "LABEL",
+                "label": "${PROPERTY index}_edit_player_name",
+                "mode": "set",
+                "value": "${name}"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY player}",
+        "relation": "==",
+        "operand2": "",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "mainColor",
+            "value": "#dddddd"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "textColor",
+            "value": "#000000"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "background_color_transparent",
+            "value": "white"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "glowColor",
+            "value": null
+          },
+          {
+            "func": "SELECT",
+            "property": "color_change_index",
+            "value": "${PROPERTY index}",
+            "mode": "set"
+          },
+          {
+            "func": "SET",
+            "property": "color",
+            "value": "#b4b4b4"
+          },
+          {
+            "func": "SET",
+            "property": "background_color_transparent",
+            "value": "#b4b4b4"
+          },
+          {
+            "func": "SET",
+            "property": "background_color_solid",
+            "value": "#b4b4b4"
+          },
+          {
+            "func": "SET",
+            "property": "contrast_color",
+            "value": "#FFFFFF"
+          },
+          {
+            "func": "LABEL",
+            "label": "${PROPERTY index}_edit_player_name",
+            "mode": "set",
+            "value": ""
+          }
+        ],
+        "elseRoutine": []
+      }
+    ],
+    "passed": false,
+    "background_color_solid": "#9c27b0",
+    "background_color_transparent": "white",
+    "color_options": [
+      "#000000",
+      "#dddddd",
+      "#f44336",
+      "#f06292",
+      "#9c27b0",
+      "#3f51b5",
+      "#1976d2",
+      "#00bcd4",
+      "#009688",
+      "#4caf50",
+      "#8bc34a",
+      "#cddc39",
+      "#ffeb3b",
+      "#ffc107",
+      "#ff9800",
+      "#bf360c",
+      "#795548",
+      "#607d8b"
+    ],
+    "color_references": [
+      {
+        "color": "#000000",
+        "contrast_color": "white"
+      },
+      {
+        "color": "#dddddd",
+        "contrast_color": "black"
+      },
+      {
+        "color": "#f44336",
+        "contrast_color": "black"
+      },
+      {
+        "color": "#f06292",
+        "contrast_color": "black"
+      },
+      {
+        "color": "#9c27b0",
+        "contrast_color": "white"
+      },
+      {
+        "color": "#3f51b5",
+        "contrast_color": "white"
+      },
+      {
+        "color": "#1976d2",
+        "contrast_color": "white"
+      },
+      {
+        "color": "#00bcd4",
+        "contrast_color": "black"
+      },
+      {
+        "color": "#009688",
+        "contrast_color": "white"
+      },
+      {
+        "color": "#4caf50",
+        "contrast_color": "black"
+      },
+      {
+        "color": "#8bc34a",
+        "contrast_color": "black"
+      },
+      {
+        "color": "#cddc39",
+        "contrast_color": "black"
+      },
+      {
+        "color": "#ffeb3b",
+        "contrast_color": "black"
+      },
+      {
+        "color": "#ffc107",
+        "contrast_color": "black"
+      },
+      {
+        "color": "#ff9800",
+        "contrast_color": "black"
+      },
+      {
+        "color": "#bf360c",
+        "contrast_color": "white"
+      },
+      {
+        "color": "#795548",
+        "contrast_color": "white"
+      },
+      {
+        "color": "#607d8b",
+        "contrast_color": "white"
+      }
+    ],
+    "contrast_color": "white",
+    "money": 10,
+    "layer": 2,
+    "audio_enabled": true,
+    "turn_alert_enabled": true,
+    "hideWhenUnused": true
+  },
+  "2_seat": {
+    "type": "seat",
+    "id": "2_seat",
+    "parent": "2_seat_anchor",
+    "fixedParent": true,
+    "index": 2,
+    "color": "#dddddd",
+    "inheritFrom": {
+      "1_seat": [
+        "!color"
+      ]
+    },
+    "player": "",
+    "turn": false,
+    "audio_enabled": true,
+    "colorContrast": "#000000",
+    "mainColor": "#dddddd",
+    "outlineColor": "#000000bb",
+    "textColor": "#000000",
+    "textShadowBlur": 2,
+    "textShadowDistance": 2,
+    "background_color_transparent": "white",
+    "background_color_solid": "#607d8b",
+    "passed": false,
+    "turn_alert_enabled": true,
+    "contrast_color": "white"
+  },
+  "3_seat": {
+    "type": "seat",
+    "id": "3_seat",
+    "parent": "3_seat_anchor",
+    "fixedParent": true,
+    "index": 3,
+    "color": "#dddddd",
+    "inheritFrom": {
+      "1_seat": [
+        "!color"
+      ]
+    },
+    "player": "",
+    "turn": false,
+    "audio_enabled": true,
+    "colorContrast": "#000000",
+    "mainColor": "#dddddd",
+    "outlineColor": "#000000bb",
+    "textColor": "#000000",
+    "textShadowBlur": 2,
+    "textShadowDistance": 2,
+    "passed": false,
+    "turn_alert_enabled": true,
+    "background_color_transparent": "white",
+    "background_color_solid": "#9c27b0",
+    "contrast_color": "white"
+  },
+  "4_seat": {
+    "type": "seat",
+    "id": "4_seat",
+    "parent": "4_seat_anchor",
+    "fixedParent": true,
+    "index": 4,
+    "color": "#dddddd",
+    "inheritFrom": {
+      "1_seat": [
+        "!color"
+      ]
+    },
+    "player": "",
+    "turn": true,
+    "audio_enabled": true,
+    "colorContrast": "#000000",
+    "mainColor": "#dddddd",
+    "outlineColor": "#000000bb",
+    "passed": false,
+    "textColor": "#000000",
+    "textShadowBlur": 2,
+    "textShadowDistance": 2,
+    "turn_alert_enabled": true,
+    "background_color_transparent": "white",
+    "background_color_solid": "#009688",
+    "contrast_color": "white"
+  },
+  "5_seat": {
+    "type": "seat",
+    "id": "5_seat",
+    "parent": "5_seat_anchor",
+    "fixedParent": true,
+    "index": 5,
+    "color": "#dddddd",
+    "inheritFrom": {
+      "1_seat": [
+        "!color"
+      ]
+    },
+    "player": "",
+    "turn": false,
+    "audio_enabled": true,
+    "colorContrast": "#000000",
+    "mainColor": "#dddddd",
+    "outlineColor": "#000000bb",
+    "passed": false,
+    "textColor": "#000000",
+    "textShadowBlur": 2,
+    "textShadowDistance": 2,
+    "background_color_transparent": "white",
+    "background_color_solid": "#009688",
+    "turn_alert_enabled": true,
+    "contrast_color": "black"
+  },
+  "1_board": {
+    "type": "holder",
+    "id": "1_board",
+    "parent": "1_seat_anchor",
+    "fixedParent": true,
+    "x": 365,
+    "y": 57,
+    "width": 210,
+    "height": 180,
+    "z": 180,
+    "movableInEdit": false,
+    "alignChildren": false,
+    "css": {
+      "default": {
+        "border-radius": "5px",
+        "border": "10px solid ${PROPERTY color}",
+        "background": "${PROPERTY background_color_transparent}"
+      }
+    },
+    "dropTarget": {
+      "no_drops": true
+    },
+    "inheritFrom": {
+      "1_seat": [
+        "color"
+      ]
+    },
+    "linkedToSeat": "1_seat",
+    "background_color": "#b4b4b4",
+    "background_color_solid": "#b4b4b4",
+    "background_color_transparent": "#b4b4b4",
+    "color": "#b4b4b4",
+    "color_change_index": 1,
+    "textColor": "#FFFFFF",
+    "background_color_transparentChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "background_color",
+        "relation": "=",
+        "value": "${PROPERTY background_color_transparent}"
+      }
+    ],
+    "contrast_color": "#FFFFFF",
+    "layer": 1
+  },
+  "2_board": {
+    "type": "holder",
+    "id": "2_board",
+    "parent": "2_seat_anchor",
+    "fixedParent": true,
+    "inheritFrom": {
+      "1_board": [
+        "!color"
+      ]
+    },
+    "linkedToSeat": "2_seat",
+    "background_color": "#b4b4b4",
+    "background_color_solid": "#b4b4b4",
+    "background_color_transparent": "#b4b4b4",
+    "color": "#b4b4b4",
+    "color_change_index": 2,
+    "contrast_color": "#FFFFFF"
+  },
+  "3_board": {
+    "type": "holder",
+    "id": "3_board",
+    "parent": "3_seat_anchor",
+    "fixedParent": true,
+    "inheritFrom": {
+      "1_board": [
+        "!color"
+      ]
+    },
+    "linkedToSeat": "3_seat",
+    "background_color": "#b4b4b4",
+    "background_color_solid": "#b4b4b4",
+    "background_color_transparent": "#b4b4b4",
+    "color": "#b4b4b4",
+    "color_change_index": 3,
+    "contrast_color": "#FFFFFF"
+  },
+  "4_board": {
+    "type": "holder",
+    "id": "4_board",
+    "parent": "4_seat_anchor",
+    "fixedParent": true,
+    "inheritFrom": {
+      "1_board": [
+        "!color"
+      ]
+    },
+    "linkedToSeat": "4_seat",
+    "background_color": "#b4b4b4",
+    "background_color_solid": "#b4b4b4",
+    "background_color_transparent": "#b4b4b4",
+    "color": "#b4b4b4",
+    "color_change_index": 4,
+    "passed": false,
+    "contrast_color": "#FFFFFF"
+  },
+  "5_board": {
+    "type": "holder",
+    "id": "5_board",
+    "parent": "5_seat_anchor",
+    "fixedParent": true,
+    "inheritFrom": {
+      "1_board": [
+        "!color"
+      ]
+    },
+    "linkedToSeat": "5_seat",
+    "background_color": "#b4b4b4",
+    "background_color_solid": "#b4b4b4",
+    "background_color_transparent": "#b4b4b4",
+    "color": "#b4b4b4",
+    "color_change_index": 5,
+    "passed": false,
+    "contrast_color": "#FFFFFF"
+  },
+  "1_turn_holder": {
+    "type": "holder",
+    "id": "1_turn_holder",
+    "parent": "1_seat_anchor",
+    "fixedParent": true,
+    "x": 492,
+    "width": 80,
+    "height": 38,
+    "layer": 5,
+    "z": 184,
+    "movableInEdit": false,
+    "css": {
+      "default": {
+        "background-color": "transparent",
+        "border": "0px solid black",
+        "border-radius": "5px",
+        "display": "flex",
+        "text-align": "center",
+        "font-size": "11px",
+        "align-items": "center"
+      }
+    },
+    "dropTarget": {
+      "turn_holder": true
+    },
+    "enterRoutine": [],
+    "leaveRoutine": [],
+    "linkedToSeat": "1_seat",
+    "y": 105
+  },
+  "2_turn_holder": {
+    "type": "holder",
+    "id": "2_turn_holder",
+    "parent": "2_seat_anchor",
+    "fixedParent": true,
+    "inheritFrom": "1_turn_holder",
+    "linkedToSeat": "2_seat"
+  },
+  "3_turn_holder": {
+    "type": "holder",
+    "id": "3_turn_holder",
+    "parent": "3_seat_anchor",
+    "fixedParent": true,
+    "inheritFrom": "1_turn_holder",
+    "linkedToSeat": "3_seat"
+  },
+  "4_turn_holder": {
+    "type": "holder",
+    "id": "4_turn_holder",
+    "parent": "4_seat_anchor",
+    "fixedParent": true,
+    "inheritFrom": "1_turn_holder",
+    "linkedToSeat": "4_seat"
+  },
+  "5_turn_holder": {
+    "type": "holder",
+    "id": "5_turn_holder",
+    "parent": "5_seat_anchor",
+    "fixedParent": true,
+    "inheritFrom": "1_turn_holder",
+    "linkedToSeat": "5_seat"
+  },
+  "turn_button": {
+    "type": "button",
+    "id": "turn_button",
+    "height": 43,
+    "borderRadius": 10,
+    "layer": 10,
+    "z": 50853,
+    "movableInEdit": false,
+    "css": {
+      "default": {
+        "color": "white",
+        "font-size": "14px",
+        "border": "2px solid black",
+        "font-weight": "900",
+        "background": "${PROPERTY button_border_color}",
+        "text-align": "center",
+        "box-shadow": "2px 2px 5px black, -1px -1px 3px black inset",
+        "text-shadow": "-1px -1px 0 #000000, 1px -1px 0 #000000, -1px 1px 0 #000000, 1px 1px 0 #000000, 0 1px 5px #00000099"
+      },
+      ":hover": {
+        "border": "2px solid white"
+      }
+    },
+    "button_background_color": "grey",
+    "button_border_color": "#009688",
+    "current_turn_index": "4",
+    "defaultX": 1093,
+    "defaultY": -144,
+    "passed": false,
+    "turn_holder": true,
+    "ModifyButtonRoutine": [
+      {
+        "func": "GET",
+        "collection": [
+          "${PROPERTY current_turn_index}_seat"
+        ],
+        "property": "player",
+        "variable": "current_player"
+      },
+      {
+        "func": "GET",
+        "collection": [
+          "${PROPERTY current_turn_index}_seat"
+        ],
+        "property": "color",
+        "variable": "current_player_color"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "relation": "=",
+        "property": "button_border_color",
+        "value": "${current_player_color}"
+      }
+    ],
+    "SetCurrentTurnIndexRoutine": [
+      {
+        "func": "SELECT",
+        "type": "seat",
+        "collection": "seatedPlayers",
+        "property": "player",
+        "relation": "!=",
+        "value": ""
+      },
+      {
+        "func": "FOREACH",
+        "collection": "seatedPlayers",
+        "loopRoutine": [
+          {
+            "func": "IF",
+            "operand1": "${PROPERTY turn OF $widgetID}",
+            "relation": "==",
+            "operand2": true,
+            "thenRoutine": [
+              "var index = ${widgetID} charAt 0",
+              {
+                "func": "SET",
+                "collection": "thisButton",
+                "property": "current_turn_index",
+                "relation": "=",
+                "value": "${index}"
+              },
+              {
+                "func": "SET",
+                "collection": "thisButton",
+                "property": "parent",
+                "relation": "=",
+                "value": "${index}_turn_holder"
+              },
+              {
+                "func": "CALL",
+                "routine": "ModifyButtonRoutine"
+              },
+              {
+                "func": "CALL",
+                "routine": "AlertPlayerRoutine"
+              },
+              {
+                "func": "GET",
+                "collection": [
+                  "${index}_seat"
+                ],
+                "property": "player",
+                "variable": "player_name"
+              },
+              {
+                "note": "ADDENDUM ADDED TO HISTORY",
+                "func": "CALL",
+                "widget": "history_label",
+                "routine": "AddendumRoutine",
+                "arguments": {
+                  "addendum": "--- ${player_name}'s Turn ---"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "TurnSoundRoutine": [
+      {
+        "func": "AUDIO",
+        "source": "/assets/687121058_105325",
+        "maxVolume": 0.5,
+        "length": 2000,
+        "player": "${player_name}"
+      }
+    ],
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "type": "seat",
+        "collection": "seatedPlayers",
+        "property": "player",
+        "relation": "!=",
+        "value": ""
+      },
+      {
+        "func": "SET",
+        "collection": "seatedPlayers",
+        "property": "turn",
+        "relation": "=",
+        "value": false
+      },
+      "var new_index = 0",
+      "var next_index = ${PROPERTY current_turn_index}",
+      {
+        "func": "FOREACH",
+        "range": [
+          1,
+          5,
+          1
+        ],
+        "loopRoutine": [
+          {
+            "func": "IF",
+            "operand1": "${new_index}",
+            "relation": "==",
+            "operand2": 0,
+            "thenRoutine": [
+              {
+                "note": "set direction forward or backward",
+                "func": "IF",
+                "operand1": "${PROPERTY turn_direction OF turn_direction_button}",
+                "relation": "==",
+                "operand2": "up",
+                "thenRoutine": [
+                  {
+                    "func": "IF",
+                    "operand1": "${next_index}",
+                    "relation": "==",
+                    "operand2": 1,
+                    "thenRoutine": [
+                      "var next_index = 5"
+                    ],
+                    "elseRoutine": [
+                      "var next_index = ${next_index} - 1"
+                    ]
+                  }
+                ],
+                "elseRoutine": [
+                  {
+                    "func": "IF",
+                    "operand1": "${next_index}",
+                    "relation": "==",
+                    "operand2": 5,
+                    "thenRoutine": [
+                      "var next_index = 1"
+                    ],
+                    "elseRoutine": [
+                      "var next_index = ${next_index} + 1"
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "func": "GET",
+            "collection": [
+              "${next_index}_seat"
+            ],
+            "property": "player"
+          },
+          {
+            "func": "IF",
+            "operand1": "${player}",
+            "relation": "!=",
+            "operand2": "",
+            "thenRoutine": [
+              {
+                "func": "GET",
+                "collection": [
+                  "${next_index}_seat"
+                ],
+                "property": "passed"
+              },
+              {
+                "func": "IF",
+                "operand1": "${passed}",
+                "relation": "==",
+                "operand2": false,
+                "thenRoutine": [
+                  "var new_index = ${next_index}"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "${new_index}_seat"
+        ],
+        "property": "turn",
+        "relation": "=",
+        "value": true
+      },
+      {
+        "func": "CALL",
+        "routine": "SetCurrentTurnIndexRoutine"
+      }
+    ],
+    "AlertPlayerRoutine": [
+      {
+        "func": "GET",
+        "collection": [
+          "${PROPERTY current_turn_index}_seat"
+        ],
+        "property": "player",
+        "variable": "player_name"
+      },
+      {
+        "func": "GET",
+        "collection": [
+          "${PROPERTY current_turn_index}_seat"
+        ],
+        "property": "background_color_solid"
+      },
+      {
+        "func": "GET",
+        "collection": [
+          "${PROPERTY current_turn_index}_seat"
+        ],
+        "property": "background_color_transparent"
+      },
+      {
+        "func": "GET",
+        "collection": [
+          "${PROPERTY current_turn_index}_seat"
+        ],
+        "property": "contrast_color"
+      },
+      {
+        "func": "GET",
+        "collection": [
+          "${PROPERTY current_turn_index}_seat"
+        ],
+        "property": "turn_alert_enabled"
+      },
+      {
+        "func": "IF",
+        "operand1": "${turn_alert_enabled}",
+        "relation": "==",
+        "operand2": true,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "your_turn_alert_anchor"
+            ],
+            "property": "onlyVisibleForSeat",
+            "relation": "=",
+            "value": "${PROPERTY current_turn_index}_seat"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "your_turn_label_animate"
+            ],
+            "property": "background_color_solid",
+            "relation": "=",
+            "value": "${background_color_solid}"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "your_turn_label_animate"
+            ],
+            "property": "contrast_color",
+            "relation": "=",
+            "value": "${contrast_color}"
+          },
+          {
+            "func": "CALL",
+            "routine": "RevealRoutine",
+            "widget": "your_turn_label_animate"
+          },
+          {
+            "func": "CALL",
+            "routine": "RevealRoutine",
+            "widget": "your_turn_label_border"
+          }
+        ]
+      },
+      {
+        "func": "GET",
+        "collection": [
+          "${PROPERTY current_turn_index}_seat"
+        ],
+        "property": "audio_your_turn_enabled"
+      },
+      {
+        "func": "IF",
+        "operand1": "${audio_your_turn_enabled}",
+        "relation": "==",
+        "operand2": true,
+        "thenRoutine": [
+          {
+            "func": "CALL",
+            "routine": "TurnSoundRoutine"
+          }
+        ]
+      }
+    ],
+    "text": "Click to\nend turn",
+    "width": 70,
+    "x": 1093,
+    "y": -144
+  },
+  "turn_direction_button": {
+    "type": "button",
+    "id": "turn_direction_button",
+    "x": 1659,
+    "y": 79,
+    "height": 60,
+    "borderRadius": 10,
+    "z": 78813,
+    "backgroundColor": "grey",
+    "css": {
+      "default": {
+        "color": "white",
+        "font-size": "18px",
+        "border": "2px solid white",
+        "font-weight": "900",
+        "padding-left": "60px",
+        "background": "${PROPERTY backgroundColor}",
+        "text-align": "center",
+        "box-shadow": "2px 2px 5px black, -1px -1px 3px black inset",
+        "text-shadow": "-1px -1px 0 #000000, 1px -1px 0 #000000, -1px 1px 0 #000000, 1px 1px 0 #000000, 0 1px 5px #00000099"
+      },
+      ":hover": {
+        "border": "2px solid black"
+      }
+    },
+    "passed": false,
+    "turn_direction": "down",
+    "turn_holder": true,
+    "clickRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY turn_direction}",
+        "relation": "==",
+        "operand2": "down",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "turn_direction",
+            "relation": "=",
+            "value": "up"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "text",
+            "relation": "=",
+            "value": "Upward\nTurn Order"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "turn_direction",
+            "relation": "=",
+            "value": "down"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "text",
+            "relation": "=",
+            "value": "Downward Turn Order"
+          }
+        ]
+      }
+    ],
+    "width": 110
+  },
+  "your_turn_label_border": {
+    "type": "basic",
+    "id": "your_turn_label_border",
+    "parent": "your_turn_alert_anchor",
+    "fixedParent": true,
+    "x": -499,
+    "y": 514,
+    "width": 832,
+    "z": 11466,
+    "movableInEdit": false,
+    "css": {
+      "default": {
+        "background": "transparent",
+        "border": "30px solid transparent",
+        "pointer-events": "none",
+        "box-shadow": "3px 3px 10px transparent, -1px -1px 3px transparent inset"
+      },
+      ".animate_clickCount": {
+        "border": "30px solid white",
+        "box-shadow": "3px 3px 10px black, -1px -1px 3px black inset"
+      }
+    },
+    "background_color_solid": "#bf360c",
+    "background_color_transparent": "#bf360c48",
+    "passed": false,
+    "animatePropertyChange": [
+      {
+        "property": "clickCount",
+        "duration": 2000
+      }
+    ],
+    "RevealRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "clickCount",
+        "relation": "+",
+        "value": 1
+      }
+    ],
+    "clickCount": 1208,
+    "borderRadius": 20,
+    "movable": false,
+    "height": 65
+  },
+  "history_toggle": {
+    "type": "button",
+    "id": "history_toggle",
+    "x": 1191,
+    "height": 60,
+    "borderRadius": 10,
+    "z": 78821,
+    "backgroundColor": "grey",
+    "css": {
+      "default": {
+        "color": "white",
+        "font-size": "16px",
+        "border": "2px solid white",
+        "font-weight": "900",
+        "background": "${PROPERTY backgroundColor}",
+        "text-align": "center",
+        "box-shadow": "2px 2px 5px black, -1px -1px 3px black inset",
+        "text-shadow": "-1px -1px 0 #000000, 1px -1px 0 #000000, -1px 1px 0 #000000, 1px 1px 0 #000000, 0 1px 5px #00000099"
+      },
+      ":hover": {
+        "border": "2px solid black"
+      }
+    },
+    "text": "VIEW FULL HISTORY",
+    "CopyThisToMakeAddendumRoutine": [
+      {
+        "note": "ADDENDUM ADDED TO HISTORY",
+        "func": "CALL",
+        "widget": "history_label",
+        "routine": "AddendumRoutine",
+        "arguments": {
+          "addendum": ""
+        }
+      }
+    ],
+    "clickRoutine": [
+      "var visibleToSeats = ${PROPERTY onlyVisibleForSeat OF history_holder}",
+      "var checkArray = ${visibleToSeats} isArray",
+      {
+        "func": "IF",
+        "condition": "${checkArray}",
+        "elseRoutine": [
+          "var visibleToSeats = []"
+        ]
+      },
+      "var inVisibility = ${visibleToSeats} indexOf ${seatID}",
+      {
+        "func": "IF",
+        "operand1": "${inVisibility}",
+        "relation": ">",
+        "operand2": -1,
+        "thenRoutine": [
+          "var visibleToSeats = remove ${inVisibility} 1"
+        ],
+        "elseRoutine": [
+          "var visibleToSeats = push ${seatID}"
+        ]
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "history_holder"
+        ],
+        "property": "onlyVisibleForSeat",
+        "value": "${visibleToSeats}"
+      }
+    ],
+    "y": 88,
+    "width": 100,
+    "movableInEdit": false
+  },
+  "history_holder": {
+    "type": "holder",
+    "id": "history_holder",
+    "x": 421,
+    "y": 313,
+    "width": 530,
+    "height": 455,
+    "layer": 230,
+    "z": 1272,
+    "movable": false,
+    "css": {
+      "": {
+        "border": "5px solid white",
+        "background": "#ca9f6a"
+      }
+    },
+    "dropTarget": {
+      "label": "ledger_label"
+    },
+    "onlyVisibleForSeat": []
+  },
+  "full_history_label": {
+    "type": "label",
+    "id": "full_history_label",
+    "parent": "history_holder",
+    "fixedParent": true,
+    "x": 146,
+    "y": 3,
+    "width": 300,
+    "height": 50,
+    "z": 502,
+    "movable": false,
+    "css": {
+      "default": {
+        "font-size": "27px",
+        "color": "white",
+        "text-align": "left",
+        "padding": "0 15px"
+      }
+    },
+    "text": "Full Game History"
+  },
+  "history_label": {
+    "id": "history_label",
+    "parent": "history_holder",
+    "fixedParent": true,
+    "x": 7,
+    "y": 36,
+    "width": 510,
+    "height": 405,
+    "layer": 5,
+    "z": 4,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "default": {
+        "overflow": "scroll",
+        "background": "#FFFFFF"
+      }
+    },
+    "AddendumRoutine": [
+      "var previous_ledger = ${PROPERTY text}",
+      {
+        "func": "SET",
+        "property": "text",
+        "value": "${addendum}\n${previous_ledger}",
+        "collection": [
+          "${PROPERTY id}"
+        ]
+      }
+    ],
+    "CopyThisToMakeAddendumRoutine": [
+      {
+        "note": "ADDENDUM ADDED TO HISTORY",
+        "func": "CALL",
+        "widget": "history_label",
+        "routine": "AddendumRoutine",
+        "arguments": {
+          "addendum": ""
+        }
+      }
+    ]
+  },
+  "setup": {
+    "type": "button",
+    "id": "setup",
+    "x": 1301,
+    "y": 88,
+    "width": 88,
+    "height": 60,
+    "borderRadius": 10,
+    "z": 78822,
+    "backgroundColor": "grey",
+    "css": {
+      "default": {
+        "color": "white",
+        "font-size": "18px",
+        "border": "2px solid white",
+        "font-weight": "900",
+        "background": "${PROPERTY backgroundColor}",
+        "text-align": "center",
+        "box-shadow": "2px 2px 5px black, -1px -1px 3px black inset",
+        "text-shadow": "-1px -1px 0 #000000, 1px -1px 0 #000000, -1px 1px 0 #000000, 1px 1px 0 #000000, 0 1px 5px #00000099"
+      },
+      ":hover": {
+        "border": "2px solid black"
+      }
+    },
+    "text": "Setup",
+    "player_count": 0,
+    "clickRoutine": [
+      {
+        "note": "Get player count",
+        "func": "SELECT",
+        "type": "seat",
+        "collection": "seatedPlayers",
+        "property": "player",
+        "relation": "!=",
+        "value": ""
+      },
+      {
+        "func": "COUNT",
+        "collection": "seatedPlayers",
+        "variable": "player_count"
+      },
+      {
+        "func": "SET",
+        "property": "player_count",
+        "relation": "=",
+        "value": "${player_count}",
+        "collection": [
+          "setup"
+        ]
+      },
+      {
+        "func": "INPUT",
+        "fields": [
+          {
+            "type": "checkbox",
+            "label": "Check this box and click the green button to reset the game.",
+            "variable": "checkbox",
+            "value": false
+          }
+        ],
+        "confirmButtonText": "Reset the game!",
+        "cancelButtonIcon": "cancel"
+      },
+      {
+        "func": "IF",
+        "operand1": "${checkbox}",
+        "relation": "==",
+        "operand2": true,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "property": "setup_complete",
+            "relation": "=",
+            "value": false,
+            "collection": [
+              "general_routines"
+            ]
+          },
+          {
+            "note": "Place widgets on default positions"
+          },
+          {
+            "note": "Recall all necessary holders",
+            "func": "SELECT",
+            "type": "holder",
+            "property": "recall_with_setup",
+            "relation": "==",
+            "value": true,
+            "collection": "recall_holders"
+          },
+          {
+            "func": "FOREACH",
+            "collection": "recall_holders",
+            "loopRoutine": [
+              {
+                "func": "RECALL",
+                "holder": "${widgetID}",
+                "owned": false
+              }
+            ]
+          },
+          {
+            "func": "SELECT",
+            "property": "isClone",
+            "relation": "==",
+            "value": true
+          },
+          {
+            "func": "DELETE"
+          },
+          {
+            "func": "SELECT",
+            "property": "defaultParent",
+            "relation": "!=",
+            "value": null,
+            "collection": "widgets_to_move"
+          },
+          {
+            "func": "FOREACH",
+            "collection": "widgets_to_move",
+            "loopRoutine": [
+              {
+                "func": "SET",
+                "property": "parent",
+                "value": "${PROPERTY defaultParent OF $widgetID}",
+                "collection": [
+                  "${widgetID}"
+                ]
+              }
+            ]
+          },
+          {
+            "func": "CLICK",
+            "collection": [
+              "recall_shuffle_deck_button"
+            ]
+          },
+          {
+            "func": "SELECT",
+            "property": "defaultX",
+            "relation": "!=",
+            "value": null,
+            "collection": "holdersXpos"
+          },
+          {
+            "func": "SELECT",
+            "property": "defaultY",
+            "relation": "!=",
+            "value": null,
+            "collection": "holdersYpos"
+          },
+          {
+            "func": "FOREACH",
+            "collection": "holdersXpos",
+            "loopRoutine": [
+              {
+                "func": "GET",
+                "collection": [
+                  "${widgetID}"
+                ],
+                "property": "defaultParent"
+              },
+              {
+                "func": "IF",
+                "operand1": "${defaultParent}",
+                "relation": "==",
+                "operand2": null,
+                "thenRoutine": [
+                  {
+                    "func": "SET",
+                    "property": "parent",
+                    "value": null,
+                    "collection": [
+                      "${widgetID}"
+                    ]
+                  }
+                ]
+              },
+              {
+                "func": "GET",
+                "collection": [
+                  "${widgetID}"
+                ],
+                "property": "defaultX",
+                "aggregation": "first",
+                "variable": "newX"
+              },
+              {
+                "func": "SET",
+                "property": "x",
+                "value": "${newX}",
+                "collection": [
+                  "${widgetID}"
+                ]
+              }
+            ]
+          },
+          {
+            "func": "FOREACH",
+            "collection": "holdersYpos",
+            "loopRoutine": [
+              {
+                "func": "GET",
+                "collection": [
+                  "${widgetID}"
+                ],
+                "property": "defaultParent"
+              },
+              {
+                "func": "IF",
+                "operand1": "${defaultParent}",
+                "relation": "==",
+                "operand2": null,
+                "thenRoutine": [
+                  {
+                    "func": "SET",
+                    "property": "parent",
+                    "value": null,
+                    "collection": [
+                      "${widgetID}"
+                    ]
+                  }
+                ]
+              },
+              {
+                "func": "GET",
+                "collection": [
+                  "${widgetID}"
+                ],
+                "property": "defaultY",
+                "aggregation": "first",
+                "variable": "newY"
+              },
+              {
+                "func": "SET",
+                "property": "y",
+                "value": "${newY}",
+                "collection": [
+                  "${widgetID}"
+                ]
+              }
+            ]
+          },
+          {
+            "note": "Reset all labels counters",
+            "func": "SELECT",
+            "type": "label",
+            "property": "zero_on_setup",
+            "relation": "==",
+            "value": true,
+            "collection": "reset_counters"
+          },
+          {
+            "func": "FOREACH",
+            "collection": "reset_counters",
+            "loopRoutine": [
+              {
+                "func": "LABEL",
+                "label": "${widgetID}",
+                "mode": "set",
+                "value": 0
+              }
+            ]
+          },
+          {
+            "note": "Player count specific stuff",
+            "func": "IF",
+            "operand1": "${player_count}",
+            "relation": "<=",
+            "operand2": 2,
+            "thenRoutine": []
+          },
+          {
+            "func": "IF",
+            "operand1": "${player_count}",
+            "relation": "==",
+            "operand2": 3,
+            "thenRoutine": []
+          },
+          {
+            "func": "IF",
+            "operand1": "${player_count}",
+            "relation": "==",
+            "operand2": 4,
+            "thenRoutine": []
+          },
+          {
+            "func": "IF",
+            "operand1": "${player_count}",
+            "relation": "==",
+            "operand2": 5,
+            "thenRoutine": []
+          },
+          {
+            "func": "IF",
+            "operand1": "${player_count}",
+            "relation": "==",
+            "operand2": 6,
+            "thenRoutine": []
+          },
+          {
+            "func": "SELECT",
+            "property": "player_money",
+            "relation": "==",
+            "value": true,
+            "collection": "player_money_counters"
+          },
+          {
+            "func": "SET",
+            "collection": "player_money_counters",
+            "property": "money",
+            "relation": "=",
+            "value": 30
+          },
+          {
+            "func": "SELECT",
+            "property": "initial_auction",
+            "relation": "==",
+            "value": true,
+            "collection": "initial_stocks"
+          },
+          {
+            "func": "SET",
+            "collection": "initial_stocks",
+            "property": "parent",
+            "relation": "=",
+            "value": "initial_auction_holder"
+          },
+          {
+            "func": "SHUFFLE",
+            "holder": "initial_auction_holder"
+          },
+          {
+            "func": "LABEL",
+            "collection": [
+              "history_label"
+            ],
+            "mode": "set",
+            "value": ""
+          },
+          {
+            "func": "TURN",
+            "turnCycle": "random"
+          },
+          {
+            "func": "CALL",
+            "routine": "SetCurrentTurnIndexRoutine",
+            "widget": "turn_button"
+          },
+          {
+            "func": "SET",
+            "property": "setup_complete",
+            "relation": "=",
+            "value": true,
+            "collection": [
+              "general_routines"
+            ]
+          }
+        ]
+      }
+    ],
+    "movableInEdit": false
+  },
+  "auction_block": {
+    "type": "holder",
+    "id": "auction_block",
+    "x": 1025,
+    "y": 55,
+    "width": 95,
+    "height": 68,
+    "z": 1188,
+    "css": {
+      "default": {
+        "color": "white",
+        "background-color": "grey",
+        "border": "5px solid white"
+      },
+      ".droppable": {
+        "border": "5px dotted white"
+      },
+      ".droptarget": {
+        "border": "4px dashed white"
+      }
+    },
+    "dropOffsetX": -21,
+    "dropOffsetY": -64,
+    "dropTarget": {
+      "stock": true
+    },
+    "defaultX": 1025,
+    "doubleLeaveRoutineCompensation": true,
+    "hiddenX": -200,
+    "enterRoutine": [
+      {
+        "func": "SET",
+        "property": "doubleLeaveRoutineCompensation",
+        "value": true,
+        "collection": "thisButton"
+      },
+      {
+        "func": "GET",
+        "collection": "child",
+        "property": "company_index",
+        "aggregation": "first",
+        "variable": "company_index"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "transfer_counter"
+        ],
+        "property": "auctioned_company_index",
+        "value": "${company_index}"
+      },
+      {
+        "note": "Move instructions & auction panel"
+      },
+      {
+        "func": "GET",
+        "collection": [
+          "variables"
+        ],
+        "property": "${company_index}_company_color",
+        "variable": "company_color"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "buy_stock"
+        ],
+        "property": "borderColor",
+        "value": "${company_color}"
+      },
+      {
+        "func": "GET",
+        "collection": [
+          "variables"
+        ],
+        "property": "${company_index}_company_name",
+        "variable": "company_name"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "buy_stock"
+        ],
+        "property": "text",
+        "value": "Buy ${company_name} stock"
+      },
+      {
+        "note": "Move auction panel"
+      },
+      {
+        "func": "GET",
+        "collection": [
+          "transfer_counter"
+        ],
+        "property": "y",
+        "aggregation": "first",
+        "variable": "currentY"
+      },
+      "var newY = ${currentY} * -1",
+      {
+        "func": "SET",
+        "property": "y",
+        "value": "${newY}",
+        "collection": [
+          "transfer_counter"
+        ]
+      },
+      {
+        "func": "LABEL",
+        "label": "high_bidder",
+        "mode": "set",
+        "value": "Bid by pressing +/- buttons"
+      },
+      {
+        "func": "LABEL",
+        "label": "transfer_counter",
+        "mode": "set",
+        "value": "0"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "transfer_counter"
+        ],
+        "property": "borderColor",
+        "value": "grey"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY doubleLeaveRoutineCompensation}",
+        "operand2": true,
+        "thenRoutine": [
+          {
+            "note": "this branch of the IF is called directly after you start dragging the card",
+            "func": "SET",
+            "property": "doubleLeaveRoutineCompensation",
+            "collection": "thisButton",
+            "value": false
+          },
+          {
+            "note": "Move auction panel"
+          },
+          {
+            "func": "GET",
+            "collection": [
+              "transfer_counter"
+            ],
+            "property": "y",
+            "aggregation": "first",
+            "variable": "currentY"
+          },
+          "var newY = ${currentY} * -1",
+          {
+            "func": "SET",
+            "property": "y",
+            "value": "${newY}",
+            "collection": [
+              "transfer_counter"
+            ]
+          },
+          {
+            "func": "CALL",
+            "widget": "general_routines",
+            "routine": "UpdateStockAssetLabelsRoutine"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "note": "this branch of the IF is called when the card exits the holder entirely",
+            "func": "SET",
+            "property": "doubleLeaveRoutineCompensation",
+            "value": true,
+            "collection": "thisButton"
+          }
+        ]
+      }
+    ],
+    "onEnter": {
+      "scale": 0.46,
+      "activeFace": 1
+    },
+    "onLeave": {
+      "scale": 1
+    },
+    "defaultY": 55,
+    "layer": 3
+  },
+  "auction_instructions": {
+    "type": "basic",
+    "id": "auction_instructions",
+    "parent": "auction_block",
+    "fixedParent": true,
+    "x": -43,
+    "y": 71,
+    "width": 170,
+    "height": 60,
+    "z": 2365,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "default": {
+        "color": "white",
+        "font-size": "18px",
+        "line-height": "18px",
+        "border": "4px white",
+        "font-weight": "900",
+        "background": "transparent",
+        "text-align": "center",
+        "text-shadow": "-1px -1px 0 #000000, 1px -1px 0 #000000, -1px 1px 0 #000000, 1px 1px 0 #000000, 0 1px 5px #00000099"
+      }
+    },
+    "text": "Place 1 stock above to start an auction."
+  },
+  "transfer_counter": {
+    "type": "label",
+    "id": "transfer_counter",
+    "x": 1039,
+    "width": 68,
+    "height": 58,
+    "layer": 2,
+    "z": 80824,
+    "css": {
+      "default": {
+        "color": "black",
+        "font-size": "50px",
+        "background-color": "${PROPERTY backgroundColor}",
+        "border-radius": "7%",
+        "border": "8px solid ${PROPERTY borderColor}"
+      }
+    },
+    "text": 0,
+    "auctioned_company_index": 5,
+    "backgroundColor": "white",
+    "borderColor": "grey",
+    "current_winner": "",
+    "defaultX": 1039,
+    "defaultY": -363,
+    "y": -363
+  },
+  "buy_stock": {
+    "type": "button",
+    "id": "buy_stock",
+    "parent": "transfer_counter",
+    "fixedParent": true,
+    "x": -64,
+    "y": 71,
+    "width": 200,
+    "height": 30,
+    "z": 78753,
+    "backgroundColor": "grey",
+    "css": {
+      "default": {
+        "color": "${PROPERTY textColor}",
+        "font-size": "18px",
+        "background-color": "${PROPERTY backgroundColor}",
+        "border": "5px solid ${PROPERTY borderColor}"
+      }
+    },
+    "text": "Buy White stock",
+    "clickRoutine": [
+      "var transfer_amount = ${PROPERTY text OF transfer_counter}",
+      "var winner_index = ${PROPERTY current_winner OF transfer_counter}",
+      "var target_company_index = ${PROPERTY auctioned_company_index OF transfer_counter}",
+      {
+        "func": "IF",
+        "operand1": "${transfer_amount}",
+        "relation": ">=",
+        "operand2": 5,
+        "thenRoutine": [
+          {
+            "func": "IF",
+            "operand1": "${winner_index}",
+            "relation": "!=",
+            "operand2": "",
+            "thenRoutine": [
+              {
+                "func": "LABEL",
+                "label": "${target_company_index}_treasury",
+                "mode": "inc",
+                "value": "${transfer_amount}"
+              },
+              {
+                "func": "GET",
+                "collection": [
+                  "${winner_index}_player_money"
+                ],
+                "property": "text",
+                "variable": "previous_amount"
+              },
+              {
+                "func": "LABEL",
+                "label": "${winner_index}_player_money",
+                "mode": "dec",
+                "value": "${transfer_amount}"
+              },
+              {
+                "func": "GET",
+                "collection": [
+                  "${winner_index}_player_money"
+                ],
+                "property": "text",
+                "variable": "new_amount"
+              },
+              {
+                "func": "GET",
+                "collection": [
+                  "variables"
+                ],
+                "property": "${target_company_index}_company_name",
+                "variable": "company_name"
+              },
+              {
+                "func": "GET",
+                "collection": [
+                  "${winner_index}_seat"
+                ],
+                "property": "player",
+                "variable": "current_player"
+              },
+              {
+                "note": "ADDENDUM ADDED TO HISTORY",
+                "func": "CALL",
+                "widget": "history_label",
+                "routine": "AddendumRoutine",
+                "arguments": {
+                  "addendum": "${current_player} bought a ${company_name} stock"
+                }
+              },
+              {
+                "func": "LABEL",
+                "label": "transfer_counter",
+                "mode": "set",
+                "value": "0"
+              },
+              {
+                "func": "SET",
+                "collection": [
+                  "${target_company_index}_stock_marker"
+                ],
+                "property": "parent",
+                "value": "${transfer_amount}_stock_market_holder",
+                "relation": "="
+              },
+              {
+                "func": "SET",
+                "collection": [
+                  "transfer_counter"
+                ],
+                "property": "borderColor",
+                "value": "grey"
+              },
+              {
+                "func": "SET",
+                "collection": [
+                  "transfer_counter"
+                ],
+                "property": "auctioned_company_index",
+                "value": ""
+              },
+              {
+                "func": "SET",
+                "collection": [
+                  "transfer_counter"
+                ],
+                "property": "current_winner",
+                "value": ""
+              },
+              {
+                "func": "MOVE",
+                "from": "auction_block",
+                "to": "${winner_index}_stock_holder",
+                "count": 1
+              },
+              {
+                "note": "Checks charter to see if it is still in the unused assets holder",
+                "func": "GET",
+                "collection": [
+                  "${target_company_index}_charter"
+                ],
+                "property": "parent",
+                "variable": "charter_parent"
+              },
+              {
+                "func": "IF",
+                "operand1": "${charter_parent}",
+                "relation": "==",
+                "operand2": "unused_assets_holder",
+                "thenRoutine": [
+                  {
+                    "func": "COUNT",
+                    "variable": "remaining_initial_stocks",
+                    "holder": "initial_auction_order"
+                  },
+                  {
+                    "func": "GET",
+                    "collection": [
+                      "${winner_index}_seat"
+                    ],
+                    "property": "x",
+                    "variable": "playerX"
+                  },
+                  "var modifyX = ${remaining_initial_stocks} * 30",
+                  "var playerX = ${playerX} - ${modifyX} + 60",
+                  {
+                    "func": "SET",
+                    "collection": [
+                      "${target_company_index}_charter"
+                    ],
+                    "property": "parent",
+                    "relation": "=",
+                    "value": null
+                  },
+                  {
+                    "func": "SET",
+                    "collection": [
+                      "${target_company_index}_charter"
+                    ],
+                    "property": "x",
+                    "relation": "=",
+                    "value": "${playerX}"
+                  },
+                  {
+                    "func": "SET",
+                    "collection": [
+                      "${target_company_index}_charter"
+                    ],
+                    "property": "y",
+                    "relation": "=",
+                    "value": 687
+                  },
+                  {
+                    "note": "Move initial auction arrow and holder away",
+                    "func": "IF",
+                    "operand1": "${remaining_initial_stocks}",
+                    "relation": "==",
+                    "operand2": 0,
+                    "thenRoutine": [
+                      {
+                        "func": "SET",
+                        "collection": [
+                          "phases_auction_arrow_asset"
+                        ],
+                        "property": "y",
+                        "relation": "=",
+                        "value": -1000
+                      },
+                      {
+                        "func": "SET",
+                        "collection": [
+                          "initial_auction_order"
+                        ],
+                        "property": "y",
+                        "relation": "=",
+                        "value": -1000
+                      },
+                      {
+                        "func": "SET",
+                        "collection": [
+                          "phase_marker"
+                        ],
+                        "property": "parent",
+                        "relation": "=",
+                        "value": "CR_midgame"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "movableInEdit": false,
+    "borderColor": "white"
+  },
+  "high_bidder": {
+    "type": "label",
+    "id": "high_bidder",
+    "parent": "transfer_counter",
+    "fixedParent": true,
+    "x": -65,
+    "y": -33,
+    "width": 200,
+    "height": 30,
+    "z": 30,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "default": {
+        "color": "white",
+        "font-size": "15px",
+        "line-height": "20px",
+        "border": "4px white",
+        "font-weight": "500",
+        "background": "transparent"
+      },
+      " > textarea": {
+        "text-shadow": "-1px -1px 0 #000000, 1px -1px 0 #000000, -1px 1px 0 #000000, 1px 1px 0 #000000, 0 1px 5px #00000099"
+      }
+    },
+    "text": "Bid by pressing +/- buttons"
+  },
+  "avmnU": {
+    "type": "button",
+    "id": "avmnU",
+    "parent": "transfer_counter",
+    "fixedParent": true,
+    "x": 81,
+    "y": -9,
+    "width": 36,
+    "height": 36,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "font-size: 20px;border-radius:20%;border:3px solid black;background-color: #909090",
+    "text": "+1",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 1
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "transfer_counter"
+        ],
+        "property": "borderColor",
+        "value": "${playerColor}"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "high_bidder"
+        ],
+        "property": "text",
+        "value": "${playerName} winning"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "transfer_counter"
+        ],
+        "property": "current_winner",
+        "value": "${seatIndex}"
+      }
+    ]
+  },
+  "avmnU1": {
+    "type": "button",
+    "id": "avmnU1",
+    "parent": "transfer_counter",
+    "fixedParent": true,
+    "x": 80,
+    "y": 31,
+    "width": 36,
+    "height": 36,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "font-size: 20px;border-radius:20%;border:3px solid black;background-color: #909090",
+    "text": "+5",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 5
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "transfer_counter"
+        ],
+        "property": "borderColor",
+        "value": "${playerColor}"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "high_bidder"
+        ],
+        "property": "text",
+        "value": "${playerName} winning"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "transfer_counter"
+        ],
+        "property": "current_winner",
+        "value": "${seatIndex}"
+      }
+    ]
+  },
+  "avmnD": {
+    "type": "button",
+    "id": "avmnD",
+    "parent": "transfer_counter",
+    "fixedParent": true,
+    "x": -47,
+    "y": -7,
+    "width": 36,
+    "height": 36,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "font-size: 20px;border-radius:20%;border:3px solid black;background-color: #909090",
+    "text": "-1",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 1
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "transfer_counter"
+        ],
+        "property": "borderColor",
+        "value": "${playerColor}"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "high_bidder"
+        ],
+        "property": "text",
+        "value": "${playerName} winning"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "transfer_counter"
+        ],
+        "property": "current_winner",
+        "value": "${seatIndex}"
+      }
+    ]
+  },
+  "avmnU2": {
+    "type": "button",
+    "id": "avmnU2",
+    "parent": "transfer_counter",
+    "fixedParent": true,
+    "x": -47,
+    "y": 31,
+    "width": 36,
+    "height": 36,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "font-size: 20px;border-radius:20%;border:3px solid black;background-color: #909090",
+    "text": "-5",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 5
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "transfer_counter"
+        ],
+        "property": "borderColor",
+        "value": "${playerColor}"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "high_bidder"
+        ],
+        "property": "text",
+        "value": "${playerName} winning"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "transfer_counter"
+        ],
+        "property": "current_winner",
+        "value": "${seatIndex}"
+      }
+    ]
+  },
+  "variables": {
+    "id": "variables",
+    "x": 260,
+    "y": -206,
+    "z": 2032,
+    "classes": "chip",
+    "color": "red",
+    "faces": [
+      {
+        "image": "i/game-pieces/2D/Checkers-2D.svg",
+        "crowned": false
+      }
+    ],
+    "image": "i/game-pieces/2D/Crowned-Checkers-2D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "1_company_color": "blue",
+    "1_company_name": "Blue",
+    "2_company_color": "green",
+    "2_company_name": "Green",
+    "3_company_color": "black",
+    "3_company_name": "Black",
+    "4_company_color": "orange",
+    "4_company_name": "Orange",
+    "5_company_color": "white",
+    "5_company_name": "White",
+    "6_company_color": "brown",
+    "6_company_name": "Brown Corp",
+    "currency": "$"
+  },
+  "1_player_money": {
+    "type": "basic",
+    "id": "1_player_money",
+    "parent": "1_seat_anchor",
+    "fixedParent": true,
+    "x": 427,
+    "y": 112,
+    "width": 80,
+    "height": 50,
+    "z": 82061,
+    "movableInEdit": false,
+    "css": {
+      "default": {
+        "color": "${PROPERTY background_color_forced}",
+        "font-size": "35px",
+        "font-weight": "700",
+        "background": "transparent",
+        "text-align": "left",
+        "text-shadow": "-1px -1px 0 ${PROPERTY border_color_forced}, 1px -1px 0 ${PROPERTY border_color_forced}, -1px 1px 0 ${PROPERTY border_color_forced}, 1px 1px 0 ${PROPERTY border_color_forced}, 0 1px 5px ${PROPERTY contrast_color}"
+      }
+    },
+    "linkedToSeat": "1_seat",
+    "text": 30,
+    "money": 30,
+    "player_money": true,
+    "changeRoutine": [
+      {
+        "Note": "DETERMINE IF USER HAS PRESSED THE ENTER KEY",
+        "func": "GET",
+        "collection": "thisButton",
+        "property": "text",
+        "variable": "myChat"
+      },
+      "var isCR = ${myChat} includes '\\u000a'",
+      {
+        "Note": "If user has pressed Enter, do the thenRoutine; otherwise do nothing.",
+        "func": "IF",
+        "operand1": "${isCR}",
+        "operand2": true,
+        "relation": "==",
+        "thenRoutine": [
+          "var myChat = ${myChat} replace '\\u000a' '' // Erase the carriage return.",
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "text",
+            "value": "${myChat}"
+          },
+          "var player_index = ${PROPERTY id} charAt 0",
+          {
+            "func": "CLICK",
+            "collection": [
+              "${player_index}_modify"
+            ],
+            "count": 1
+          }
+        ]
+      }
+    ],
+    "moneyChangeRoutine": [
+      {
+        "func": "SET",
+        "property": "text",
+        "value": "${PROPERTY money}",
+        "collection": "thisButton"
+      },
+      "var index = ${PROPERTY id} charAt 0",
+      {
+        "func": "SET",
+        "property": "text",
+        "value": "${PROPERTY text}",
+        "collection": [
+          "${index}_player_liquid_assets"
+        ]
+      }
+    ],
+    "textChangeRoutine": [
+      "var index = ${PROPERTY id} charAt 0",
+      "var new_total = ${PROPERTY text}",
+      "var previous_total = ${PROPERTY money}",
+      "var new_money = ${previous_money} + ${value_change}",
+      "var value_change = ${new_total} - ${previous_total}",
+      {
+        "func": "IF",
+        "operand1": "${value_change}",
+        "relation": "!=",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "func": "GET",
+            "collection": [
+              "${index}_seat"
+            ],
+            "property": "player",
+            "variable": "player_name"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "${index}_player_money"
+            ],
+            "property": "money",
+            "relation": "=",
+            "value": "${new_total}"
+          },
+          {
+            "note": "ADDENDUM ADDED TO HISTORY",
+            "func": "CALL",
+            "widget": "history_label",
+            "routine": "AddendumRoutine",
+            "arguments": {
+              "addendum": "${player_name} modifies money by $${value_change} [ ${previous_total} -> ${new_total} ]"
+            }
+          }
+        ]
+      }
+    ],
+    "color_change_index": 1,
+    "color": "#b4b4b4",
+    "background_color_transparent": "#b4b4b4",
+    "background_color_solid": "#b4b4b4",
+    "contrast_color": "#FFFFFF",
+    "background_color_forced": "white",
+    "border_color_forced": "black"
+  },
+  "2_player_money": {
+    "type": "basic",
+    "id": "2_player_money",
+    "parent": "2_seat_anchor",
+    "fixedParent": true,
+    "inheritFrom": "1_player_money",
+    "linkedToSeat": "2_seat",
+    "text": 30,
+    "money": 30,
+    "color_change_index": 2,
+    "color": "#b4b4b4",
+    "background_color_transparent": "#b4b4b4",
+    "background_color_solid": "#b4b4b4",
+    "contrast_color": "#FFFFFF",
+    "z": 82198,
+    "x": 427,
+    "y": 110
+  },
+  "3_player_money": {
+    "type": "basic",
+    "id": "3_player_money",
+    "parent": "3_seat_anchor",
+    "fixedParent": true,
+    "inheritFrom": "1_player_money",
+    "linkedToSeat": "3_seat",
+    "text": 30,
+    "color_change_index": 3,
+    "money": 30,
+    "color": "#b4b4b4",
+    "background_color_transparent": "#b4b4b4",
+    "background_color_solid": "#b4b4b4",
+    "contrast_color": "#FFFFFF",
+    "z": 82247,
+    "x": 426,
+    "y": 110
+  },
+  "4_player_money": {
+    "type": "basic",
+    "id": "4_player_money",
+    "parent": "4_seat_anchor",
+    "fixedParent": true,
+    "inheritFrom": "1_player_money",
+    "linkedToSeat": "4_seat",
+    "text": 30,
+    "color_change_index": 4,
+    "money": 30,
+    "color": "#b4b4b4",
+    "background_color_transparent": "#b4b4b4",
+    "background_color_solid": "#b4b4b4",
+    "contrast_color": "#FFFFFF"
+  },
+  "5_player_money": {
+    "type": "basic",
+    "id": "5_player_money",
+    "parent": "5_seat_anchor",
+    "fixedParent": true,
+    "inheritFrom": "1_player_money",
+    "linkedToSeat": "5_seat",
+    "text": 30,
+    "color_change_index": 5,
+    "money": 30,
+    "color": "#b4b4b4",
+    "background_color_transparent": "#b4b4b4",
+    "background_color_solid": "#b4b4b4",
+    "contrast_color": "#FFFFFF"
+  },
+  "1_money_edit": {
+    "type": "button",
+    "id": "1_money_edit",
+    "parent": "1_player_money",
+    "fixedParent": true,
+    "x": -54,
+    "y": 5,
+    "width": 50,
+    "height": 31,
+    "borderRadius": 10,
+    "z": 78734,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "font-size: 12px;text-shadow:none;border: 4px solid grey;color: grey;background: white;line-height: 0.8",
+    "text": "edit\nmoney",
+    "clickRoutine": [
+      "var index = ${PROPERTY id} charAt 0",
+      {
+        "func": "GET",
+        "collection": [
+          "${index}_seat"
+        ],
+        "property": "player",
+        "variable": "player_name"
+      },
+      {
+        "func": "INPUT",
+        "fields": [
+          {
+            "type": "title",
+            "text": "Modify ${player_name}'s Money",
+            "css": "background-color:var(--VTTblue);color:white;"
+          },
+          {
+            "type": "number",
+            "label": "Type the number of money gained or lost. Put a - before the number to lose money.",
+            "variable": "value_change",
+            "value": 0
+          }
+        ],
+        "confirmButtonText": "Modify Money",
+        "cancelButtonIcon": "cancel"
+      },
+      {
+        "func": "GET",
+        "collection": [
+          "${index}_player_money"
+        ],
+        "property": "money",
+        "variable": "previous_money"
+      },
+      "var new_money = ${previous_money} + ${value_change}",
+      {
+        "func": "SET",
+        "collection": [
+          "${index}_player_money"
+        ],
+        "property": "money",
+        "relation": "=",
+        "value": "${new_money}"
+      },
+      {
+        "note": "ADDENDUM ADDED TO HISTORY",
+        "func": "CALL",
+        "widget": "history_label",
+        "routine": "AddendumRoutine",
+        "arguments": {
+          "addendum": "${player_name} modifies money by $${value_change} [ ${previous_money} -> ${new_money} ]"
+        }
+      }
+    ]
+  },
+  "2_money_edit": {
+    "type": "button",
+    "id": "2_money_edit",
+    "parent": "2_player_money",
+    "fixedParent": true,
+    "inheritFrom": "1_money_edit"
+  },
+  "3_money_edit": {
+    "type": "button",
+    "id": "3_money_edit",
+    "parent": "3_player_money",
+    "fixedParent": true,
+    "inheritFrom": "1_money_edit"
+  },
+  "4_money_edit": {
+    "type": "button",
+    "id": "4_money_edit",
+    "parent": "4_player_money",
+    "fixedParent": true,
+    "inheritFrom": "1_money_edit"
+  },
+  "5_money_edit": {
+    "type": "button",
+    "id": "5_money_edit",
+    "parent": "5_player_money",
+    "fixedParent": true,
+    "inheritFrom": "1_money_edit"
+  },
+  "1_stock_holder": {
+    "type": "holder",
+    "id": "1_stock_holder",
+    "parent": "1_seat_anchor",
+    "fixedParent": true,
+    "x": 371,
+    "y": 161,
+    "width": 198,
+    "height": 69,
+    "z": 1000,
+    "movableInEdit": false,
+    "css": {
+      "default": {
+        "color": "white",
+        "font-size": "30px",
+        "background-color": "transparent",
+        "border": "5px solid ${PROPERTY background_color_solid}",
+        "align-items": "center",
+        "justify-content": "center",
+        "display": "flex"
+      },
+      ".droppable": {
+        "border": "5px dotted black"
+      },
+      ".droptarget": {
+        "border": "5px dashed black"
+      }
+    },
+    "dropOffsetX": -21,
+    "dropOffsetY": -64,
+    "dropTarget": {
+      "stock": true
+    },
+    "linkedToSeat": "1_seat",
+    "onEnter": {
+      "purchased_stock": true,
+      "scale": 0.46
+    },
+    "onLeave": {
+      "purchased_stock": false,
+      "scale": 1
+    },
+    "stackOffsetX": 28,
+    "stock_holder": true,
+    "enterRoutine": [
+      {
+        "func": "CALL",
+        "routine": "offSetRoutine"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "CALL",
+        "routine": "offSetRoutine"
+      }
+    ],
+    "offSetRoutine": [
+      "var cardWidth = 129",
+      "var normalOffset = 28",
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "${PROPERTY id}"
+      },
+      {
+        "func": "COUNT"
+      },
+      "var new_count = ${COUNT} - 0",
+      "var index = ${PROPERTY id} charAt 0",
+      {
+        "func": "SET",
+        "collection": [
+          "${index}_card_count"
+        ],
+        "property": "hand_count",
+        "relation": "=",
+        "value": "${new_count}"
+      },
+      {
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "relation": "<=",
+        "operand2": 1,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "stackOffsetX",
+            "value": "${normalOffset}"
+          }
+        ],
+        "elseRoutine": [
+          "var modCount = ${COUNT} - 1",
+          "var available = ${PROPERTY width} - ${cardWidth} - 7",
+          "var dropOffset = ${PROPERTY dropOffsetX} * 2",
+          "var available = ${available} - ${dropOffset}",
+          "var perCard = ${available} / ${modCount}",
+          "var offset = ${perCard} min ${normalOffset}",
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "stackOffsetX",
+            "value": "${offset}"
+          }
+        ]
+      }
+    ],
+    "color_change_index": 1,
+    "color": "#b4b4b4",
+    "background_color_transparent": "#b4b4b4",
+    "background_color_solid": "#b4b4b4",
+    "contrast_color": "#FFFFFF",
+    "layer": 2
+  },
+  "2_stock_holder": {
+    "type": "holder",
+    "id": "2_stock_holder",
+    "parent": "2_seat_anchor",
+    "fixedParent": true,
+    "inheritFrom": "1_stock_holder",
+    "linkedToSeat": "2_seat",
+    "stackOffsetX": 28,
+    "color_change_index": 2,
+    "color": "#b4b4b4",
+    "background_color_transparent": "#b4b4b4",
+    "background_color_solid": "#b4b4b4",
+    "contrast_color": "#FFFFFF"
+  },
+  "3_stock_holder": {
+    "type": "holder",
+    "id": "3_stock_holder",
+    "parent": "3_seat_anchor",
+    "fixedParent": true,
+    "inheritFrom": "1_stock_holder",
+    "linkedToSeat": "3_seat",
+    "stackOffsetX": 28,
+    "background_color_solid": "#b4b4b4",
+    "background_color_transparent": "#b4b4b4",
+    "color": "#b4b4b4",
+    "color_change_index": 3,
+    "contrast_color": "#FFFFFF"
+  },
+  "4_stock_holder": {
+    "type": "holder",
+    "id": "4_stock_holder",
+    "parent": "4_seat_anchor",
+    "fixedParent": true,
+    "inheritFrom": "1_stock_holder",
+    "linkedToSeat": "4_seat",
+    "stackOffsetX": 28,
+    "background_color_solid": "#b4b4b4",
+    "background_color_transparent": "#b4b4b4",
+    "color": "#b4b4b4",
+    "color_change_index": 4,
+    "contrast_color": "#FFFFFF"
+  },
+  "5_stock_holder": {
+    "type": "holder",
+    "id": "5_stock_holder",
+    "parent": "5_seat_anchor",
+    "fixedParent": true,
+    "inheritFrom": "1_stock_holder",
+    "linkedToSeat": "5_seat",
+    "stackOffsetX": 28,
+    "background_color_solid": "#b4b4b4",
+    "background_color_transparent": "#b4b4b4",
+    "color": "#b4b4b4",
+    "color_change_index": 5,
+    "contrast_color": "#FFFFFF"
+  },
+  "info_game_structure_parent": {
+    "id": "info_game_structure_parent",
+    "x": 1241,
+    "y": 499,
+    "width": 200,
+    "height": 17,
+    "z": 81772,
+    "movable": false,
+    "movableInEdit": true,
+    "activeFace": 0,
+    "css": {
+      "default": {
+        "border": "3px solid black",
+        "border-radius": "0%",
+        "overflow": "hidden",
+        "cursor": "pointer"
+      }
+    },
+    "inheritFrom": "info_template_parent",
+    "note": "The overflow CSS declaration means anything larger than this widget won't be visible."
+  },
+  "info_game_structure_asset": {
+    "id": "info_game_structure_asset",
+    "parent": "info_game_structure_parent",
+    "width": 300,
+    "height": 300,
+    "z": 1,
+    "movable": false,
+    "movableInEdit": false,
+    "enlarge": 3,
+    "image": "/assets/1916241723_1205345",
+    "note": "Make sure to set movable and movableInEdit to false so you can drag around the whole icon."
+  },
+  "info_game_structure_icon": {
+    "id": "info_game_structure_icon",
+    "parent": "info_game_structure_parent",
+    "x": -1,
+    "y": -1,
+    "width": 200,
+    "height": 17,
+    "layer": 10,
+    "z": 3,
+    "movable": true,
+    "movableInEdit": true,
+    "css": {
+      "default": {
+        "border": "1px solid black",
+        "border-radius": "0%",
+        "background": "white",
+        "text-align": "center",
+        "line-height": "16px",
+        "font-size": "15px",
+        "pointer-events": "none"
+      }
+    },
+    "inheritFrom": "info_template_icon",
+    "text": "On Your Turn / Stocks Count",
+    "note": "The pointer-events CSS declaration means it won't stand in the way of the item under it but you also can't select it by clicking on it so you have to find it in the tree. Make sure the z here is greater than the z on the item you're enlarging."
+  },
+  "settings_lawdawg": {
+    "type": "button",
+    "id": "settings_lawdawg",
+    "x": 1398,
+    "width": 88,
+    "height": 60,
+    "borderRadius": 10,
+    "z": 78829,
+    "backgroundColor": "grey",
+    "color": "#4caf50",
+    "css": {
+      "default": {
+        "color": "white",
+        "font-size": "18px",
+        "border": "2px solid white",
+        "font-weight": "900",
+        "background": "${PROPERTY backgroundColor}",
+        "text-align": "center",
+        "box-shadow": "2px 2px 5px black, -1px -1px 3px black inset",
+        "text-shadow": "-1px -1px 0 #000000, 1px -1px 0 #000000, -1px 1px 0 #000000, 1px 1px 0 #000000, 0 1px 5px #00000099"
+      },
+      ":hover": {
+        "border": "2px solid black"
+      },
+      "cursorHack, #playerCursors": {
+        "--cursorActiveOpacity": 1,
+        "--cursorPressedOpacity": 1,
+        "--cursorActiveDuration": 9999
+      },
+      "cursorHack, .cursor.pressed": {
+        "border": "4px solid var(--playerColor)"
+      }
+    },
+    "text": "Play Settings",
+    "cursorCSS_default": {
+      "default": {
+        "color": "white",
+        "font-size": "18px",
+        "border": "2px solid white",
+        "font-weight": "900",
+        "background": "${PROPERTY backgroundColor}",
+        "text-align": "center",
+        "box-shadow": "2px 2px 5px black, -1px -1px 3px black inset",
+        "text-shadow": "-1px -1px 0 #000000, 1px -1px 0 #000000, -1px 1px 0 #000000, 1px 1px 0 #000000, 0 1px 5px #00000099"
+      },
+      ":hover": {
+        "border": "2px solid black"
+      }
+    },
+    "cursorCSS_invisible": {
+      "display": "none"
+    },
+    "cursorCSS_solid_1": {
+      "--cursorActiveOpacity": 1,
+      "--cursorPressedOpacity": 1,
+      "--cursorActiveDuration": 9999
+    },
+    "cursorCSS_solid_2": {
+      "border": "4px solid var(--playerColor)"
+    },
+    "cursorCSS_solid_player_name": {
+      "content": "attr(data-player)",
+      "position": "relative",
+      "top": "-5px",
+      "left": "19px",
+      "font-size": "15px",
+      "color": "var(--playerColor)"
+    },
+    "cursor_style": "solid_no_name",
+    "clickRoutine": [
+      {
+        "func": "GET",
+        "collection": [
+          "${seatIndex}_seat"
+        ],
+        "property": "audio_enabled"
+      },
+      {
+        "func": "GET",
+        "collection": [
+          "${seatIndex}_seat"
+        ],
+        "property": "turn_alert_enabled"
+      },
+      {
+        "func": "INPUT",
+        "confirmButtonText": "Turn Settings",
+        "cancelButtonIcon": "cancel",
+        "fields": [
+          {
+            "type": "title",
+            "text": "Player Settings"
+          },
+          {
+            "type": "checkbox",
+            "label": "Play a sound when it is your turn?",
+            "variable": "audio_check",
+            "value": "${audio_enabled}"
+          },
+          {
+            "type": "checkbox",
+            "label": "Show the 'Its Your Turn!' box?",
+            "variable": "banner_check",
+            "value": "${turn_alert_enabled}"
+          },
+          {
+            "type": "title",
+            "text": "Universal Settings"
+          },
+          {
+            "type": "select",
+            "label": "Choose cursor style for all players.",
+            "variable": "cursor_stle",
+            "value": "${PROPERTY cursor_style}",
+            "options": [
+              {
+                "text": "Translucent (VTT default)",
+                "value": "default"
+              },
+              {
+                "text": "Solid - No Name",
+                "value": "solid_no_name"
+              },
+              {
+                "text": "Solid & Player Name (don't use spaces in name)",
+                "value": "solid_player_name"
+              },
+              {
+                "text": "Invisible",
+                "value": "invisible"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "${seatIndex}_seat"
+        ],
+        "property": "audio_enabled",
+        "relation": "=",
+        "value": "${audio_check}"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "${seatIndex}_seat"
+        ],
+        "property": "turn_alert_enabled",
+        "relation": "=",
+        "value": "${banner_check}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "cursor_style",
+        "relation": "=",
+        "value": "${cursor_stle}"
+      }
+    ],
+    "cursor_styleChangeRoutine": [
+      "var newCSS = {}",
+      "var newCSS = ${PROPERTY cursorCSS_default}",
+      "var newProp1 = 'cursorHack, \\u0023playerCursors'",
+      "var newProp2 = 'cursorHack, .cursor.pressed'",
+      "var newProp3 = 'cursorHack, .cursor\\u003a\\u003abefore'",
+      "var newProp4 = 'cursorHack, .cursor'",
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY cursor_style}",
+        "relation": "==",
+        "operand2": "default",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "property": "css",
+            "value": "${newCSS}",
+            "collection": "thisButton"
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY cursor_style}",
+        "relation": "==",
+        "operand2": "solid_no_name",
+        "thenRoutine": [
+          "var newCSS.$newProp1 = ${PROPERTY cursorCSS_solid_1}",
+          "var newCSS.$newProp2 = ${PROPERTY cursorCSS_solid_2}",
+          {
+            "func": "SET",
+            "property": "css",
+            "value": "${newCSS}",
+            "collection": "thisButton"
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY cursor_style}",
+        "relation": "==",
+        "operand2": "solid_player_name",
+        "thenRoutine": [
+          "var newCSS.$newProp1 = ${PROPERTY cursorCSS_solid_1}",
+          "var newCSS.$newProp2 = ${PROPERTY cursorCSS_solid_2}",
+          "var newCSS.$newProp3 = ${PROPERTY cursorCSS_solid_player_name}",
+          {
+            "func": "SET",
+            "property": "css",
+            "value": "${newCSS}",
+            "collection": "thisButton"
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY cursor_style}",
+        "relation": "==",
+        "operand2": "invisible",
+        "thenRoutine": [
+          "var newCSS.$newProp4 = ${PROPERTY cursorCSS_invisible}",
+          {
+            "func": "SET",
+            "property": "css",
+            "value": "${newCSS}",
+            "collection": "thisButton"
+          }
+        ]
+      }
+    ],
+    "y": 88,
+    "cursor_default_selected": false,
+    "cursor_solid_no_name_selected": false,
+    "cursor_solid_player_name_selected": true,
+    "cursor_invisible_selected": false
+  },
+  "trash_count_label": {
+    "type": "label",
+    "id": "trash_count_label",
+    "layer": 0,
+    "z": 6156,
+    "css": "font-size: 16px;color: white;text-align: left",
+    "text": "0 Trash",
+    "passed": false,
+    "y": 81,
+    "x": 1532,
+    "background_color_transparent": "#00968848",
+    "background_color_solid": "#009688",
+    "contrast_color": "black"
+  },
+  "trash_can": {
+    "type": "holder",
+    "id": "trash_can",
+    "width": 51,
+    "height": 49,
+    "layer": 0,
+    "z": 69,
+    "movableInEdit": false,
+    "css": {
+      "default": {
+        "background-color": "white",
+        "border": "5px solid white",
+        "border-radius": "5px",
+        "background-image": "url('${PROPERTY image}')",
+        "background-position": "center center",
+        "background-size": "40px 40px",
+        "background-repeat": "no-repeat",
+        "overflow": "hidden"
+      },
+      ".droppable": {
+        "border": "5px dotted white"
+      },
+      ".droptarget": {
+        "border": "5px dotted white"
+      }
+    },
+    "dropOffsetX": 5,
+    "dropOffsetY": -35,
+    "dropTarget": {},
+    "preventPiles": true,
+    "image": "/i/noto-emoji/emoji_u1f5d1.svg",
+    "CountChildrenRoutine": [
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "${PROPERTY id}",
+        "collection": "all_children"
+      },
+      {
+        "func": "COUNT",
+        "collection": "all_children",
+        "variable": "children_count"
+      },
+      "var children_count = ${children_count} - 1",
+      {
+        "func": "SET",
+        "collection": [
+          "trash_count_label"
+        ],
+        "property": "text",
+        "relation": "=",
+        "value": "${children_count} Trash"
+      }
+    ],
+    "enterRoutine": [
+      {
+        "func": "CALL",
+        "routine": "CountChildrenRoutine"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "CALL",
+        "routine": "CountChildrenRoutine"
+      }
+    ],
+    "parent": "trash_count_label",
+    "y": 18,
+    "x": 1,
+    "background_color_transparent": "#00968848",
+    "background_color_solid": "#009688",
+    "contrast_color": "black"
+  },
+  "trash_can_icon": {
+    "id": "trash_can_icon",
+    "parent": "trash_can",
+    "x": -4,
+    "y": -5,
+    "width": 49,
+    "height": 49,
+    "layer": 10,
+    "z": 3,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "default": {
+        "border": "1px solid black",
+        "border-radius": "0%",
+        "background": "white",
+        "text-align": "center",
+        "line-height": "16px",
+        "font-size": "15px",
+        "pointer-events": "none",
+        "background-position": "center center",
+        "background-size": "40px 40px",
+        "background-repeat": "no-repeat"
+      }
+    },
+    "image": "/i/noto-emoji/emoji_u1f5d1.svg",
+    "note": "The pointer-events CSS declaration means it won't stand in the way of the item under it but you also can't select it by clicking on it so you have to find it in the tree. Make sure the z here is greater than the z on the item you're enlarging.",
+    "passed": false,
+    "background_color_transparent": "#00968848",
+    "background_color_solid": "#009688",
+    "contrast_color": "black"
+  },
+  "89yo": {
+    "image": "/assets/1350532543_2136419",
+    "movable": false,
+    "width": 1600,
+    "layer": -4,
+    "id": "89yo",
+    "z": 5,
+    "y": 155,
+    "height": 850,
+    "x": 119,
+    "movableInEdit": false
+  },
+  "hxrk stock black.png": {
+    "type": "card",
+    "id": "hxrk stock black.png",
+    "deck": "stocks",
+    "cardType": "stock black.png",
+    "z": 1047,
+    "purchased_stock": false,
+    "activeFace": 1,
+    "parent": "it45"
+  },
+  "hxrk stock blue.png": {
+    "type": "card",
+    "id": "hxrk stock blue.png",
+    "deck": "stocks",
+    "cardType": "stock blue.png",
+    "z": 1066,
+    "activeFace": 1,
+    "purchased_stock": false,
+    "parent": "it45"
+  },
+  "hxrk stock_orange.png": {
+    "type": "card",
+    "id": "hxrk stock_orange.png",
+    "deck": "stocks",
+    "cardType": "stock_orange.png",
+    "z": 1048,
+    "purchased_stock": false,
+    "activeFace": 1,
+    "parent": "it45"
+  },
+  "hxrk stock green.png": {
+    "type": "card",
+    "id": "hxrk stock green.png",
+    "deck": "stocks",
+    "cardType": "stock green.png",
+    "z": 2,
+    "purchased_stock": false,
+    "initial_auction": true,
+    "activeFace": 1,
+    "parentChangeRoutine": [
+      {
+        "func": "CALL",
+        "routine": "InitialAuctionCountRoutine",
+        "widget": "initial_auction_holder"
+      }
+    ],
+    "parent": "initial_auction_holder",
+    "x": 96,
+    "y": -29
+  },
+  "hxrk stock_white.png": {
+    "type": "card",
+    "id": "hxrk stock_white.png",
+    "deck": "stocks",
+    "cardType": "stock_white.png",
+    "z": 1065,
+    "purchased_stock": false,
+    "activeFace": 1,
+    "parent": "it45"
+  },
+  "stocks": {
+    "type": "deck",
+    "id": "stocks",
+    "cardDefaults": {
+      "rotation": 90,
+      "layer": 4,
+      "stock": true,
+      "width": 126,
+      "height": 185,
+      "borderRadius": 10,
+      "css": {
+        "default": {
+          "background-color": "transparent",
+          "border": "2px solid black"
+        }
+      },
+      "onPileCreation": {
+        "width": 75,
+        "height": 75,
+        "handleCSS": "background:white;left:127px;width:50px;top:15px;height:50px;border-radius:100px;color:black;font-size:35px;background-size:100%;display:block;line-height:50px",
+        "handleOffset": 0,
+        "clickRoutine": []
+      }
+    },
+    "cardTypes": {
+      "stock black.png": {
+        "image": "/assets/-63120753_548336",
+        "company_index": 3
+      },
+      "stock blue.png": {
+        "image": "/assets/811986065_551837",
+        "company_index": 1
+      },
+      "stock_orange.png": {
+        "image": "/assets/-255933220_584253",
+        "company_index": 4
+      },
+      "stock green.png": {
+        "image": "/assets/1126063734_606688",
+        "company_index": 2
+      },
+      "stock_white.png": {
+        "image": "/assets/-1193022774_621467",
+        "company_index": 5
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "color": "#172854",
+            "width": 126,
+            "height": 185,
+            "value": "/assets/580101143_436130"
+          }
+        ]
+      },
+      {
+        "objects": [
+          {
+            "type": "image",
+            "color": "transparent",
+            "width": 126,
+            "height": 185,
+            "dynamicProperties": {
+              "value": "image"
+            }
+          }
+        ]
+      }
+    ],
+    "parent": "card_holder0",
+    "fixedParent": true,
+    "z": 7480,
+    "x": 162,
+    "y": 176,
+    "activeFace": 1
+  },
+  "4xas": {
+    "deck": "stocks",
+    "type": "card",
+    "cardType": "stock black.png",
+    "id": "4xas",
+    "z": 1063,
+    "activeFace": 1,
+    "purchased_stock": false,
+    "parent": "it45"
+  },
+  "f66e": {
+    "deck": "stocks",
+    "type": "card",
+    "cardType": "stock black.png",
+    "id": "f66e",
+    "z": 5,
+    "initial_auction": true,
+    "activeFace": 1,
+    "purchased_stock": false,
+    "parentChangeRoutine": [
+      {
+        "func": "CALL",
+        "routine": "InitialAuctionCountRoutine",
+        "widget": "initial_auction_holder"
+      }
+    ],
+    "parent": "initial_auction_holder",
+    "x": 306,
+    "y": -29
+  },
+  "fm25": {
+    "deck": "stocks",
+    "type": "card",
+    "cardType": "stock black.png",
+    "id": "fm25",
+    "z": 1057,
+    "purchased_stock": false,
+    "activeFace": 1,
+    "parent": "it45"
+  },
+  "6z26": {
+    "deck": "stocks",
+    "type": "card",
+    "cardType": "stock blue.png",
+    "id": "6z26",
+    "z": 1055,
+    "activeFace": 1,
+    "purchased_stock": false,
+    "parent": "it45"
+  },
+  "w39g": {
+    "deck": "stocks",
+    "type": "card",
+    "cardType": "stock blue.png",
+    "id": "w39g",
+    "z": 1059,
+    "activeFace": 1,
+    "purchased_stock": false,
+    "parent": "it45"
+  },
+  "ioem": {
+    "deck": "stocks",
+    "type": "card",
+    "cardType": "stock blue.png",
+    "id": "ioem",
+    "z": 3,
+    "purchased_stock": false,
+    "initial_auction": true,
+    "activeFace": 1,
+    "parentChangeRoutine": [
+      {
+        "func": "CALL",
+        "routine": "InitialAuctionCountRoutine",
+        "widget": "initial_auction_holder"
+      }
+    ],
+    "parent": "initial_auction_holder",
+    "x": 166,
+    "y": -29
+  },
+  "x5pj": {
+    "deck": "stocks",
+    "type": "card",
+    "cardType": "stock blue.png",
+    "id": "x5pj",
+    "z": 1050,
+    "activeFace": 1,
+    "purchased_stock": false,
+    "parent": "it45"
+  },
+  "8bf9": {
+    "deck": "stocks",
+    "type": "card",
+    "cardType": "stock blue.png",
+    "id": "8bf9",
+    "z": 1056,
+    "activeFace": 1,
+    "purchased_stock": false,
+    "parent": "it45"
+  },
+  "tj8t": {
+    "deck": "stocks",
+    "type": "card",
+    "cardType": "stock_orange.png",
+    "id": "tj8t",
+    "z": 1,
+    "purchased_stock": false,
+    "initial_auction": true,
+    "activeFace": 1,
+    "parentChangeRoutine": [
+      {
+        "func": "CALL",
+        "routine": "InitialAuctionCountRoutine",
+        "widget": "initial_auction_holder"
+      }
+    ],
+    "parent": "initial_auction_holder",
+    "x": 26,
+    "y": -29
+  },
+  "to1c": {
+    "deck": "stocks",
+    "type": "card",
+    "cardType": "stock_orange.png",
+    "id": "to1c",
+    "z": 1051,
+    "rotation": 90,
+    "purchased_stock": false,
+    "activeFace": 1,
+    "parent": "it45"
+  },
+  "7t28": {
+    "deck": "stocks",
+    "type": "card",
+    "cardType": "stock_orange.png",
+    "id": "7t28",
+    "z": 1075,
+    "purchased_stock": false,
+    "parent": "it45",
+    "activeFace": 1
+  },
+  "gcpm": {
+    "deck": "stocks",
+    "type": "card",
+    "cardType": "stock_orange.png",
+    "id": "gcpm",
+    "z": 1053,
+    "activeFace": 1,
+    "parent": "it45",
+    "purchased_stock": false
+  },
+  "o5ft": {
+    "deck": "stocks",
+    "type": "card",
+    "cardType": "stock_orange.png",
+    "id": "o5ft",
+    "z": 1058,
+    "activeFace": 1,
+    "purchased_stock": false,
+    "parent": "it45"
+  },
+  "7i01": {
+    "deck": "stocks",
+    "type": "card",
+    "cardType": "stock_orange.png",
+    "id": "7i01",
+    "z": 1064,
+    "activeFace": 1,
+    "purchased_stock": false,
+    "parent": "it45"
+  },
+  "on8x": {
+    "deck": "stocks",
+    "type": "card",
+    "cardType": "stock green.png",
+    "id": "on8x",
+    "z": 1070,
+    "activeFace": 1,
+    "purchased_stock": false,
+    "parent": "it45"
+  },
+  "wvjy": {
+    "deck": "stocks",
+    "type": "card",
+    "cardType": "stock green.png",
+    "id": "wvjy",
+    "z": 1068,
+    "rotation": 90,
+    "purchased_stock": false,
+    "activeFace": 1,
+    "parent": "it45"
+  },
+  "mz4q": {
+    "deck": "stocks",
+    "type": "card",
+    "cardType": "stock green.png",
+    "id": "mz4q",
+    "z": 1076,
+    "purchased_stock": false,
+    "activeFace": 1,
+    "parent": "it45"
+  },
+  "evj5": {
+    "deck": "stocks",
+    "type": "card",
+    "cardType": "stock green.png",
+    "id": "evj5",
+    "z": 1074,
+    "activeFace": 1,
+    "parent": "it45",
+    "purchased_stock": false
+  },
+  "2xvd": {
+    "deck": "stocks",
+    "type": "card",
+    "cardType": "stock_white.png",
+    "id": "2xvd",
+    "z": 1052,
+    "purchased_stock": false,
+    "activeFace": 1,
+    "parent": "it45"
+  },
+  "zpk8": {
+    "deck": "stocks",
+    "type": "card",
+    "cardType": "stock_white.png",
+    "id": "zpk8",
+    "z": 1054,
+    "activeFace": 1,
+    "purchased_stock": false,
+    "parent": "it45"
+  },
+  "600p": {
+    "deck": "stocks",
+    "type": "card",
+    "cardType": "stock_white.png",
+    "id": "600p",
+    "z": 1061,
+    "purchased_stock": false,
+    "activeFace": 1,
+    "parent": "it45"
+  },
+  "0ti4": {
+    "deck": "stocks",
+    "type": "card",
+    "cardType": "stock_white.png",
+    "id": "0ti4",
+    "z": 1072,
+    "activeFace": 1,
+    "parent": "it45",
+    "purchased_stock": false
+  },
+  "3l6o": {
+    "deck": "stocks",
+    "type": "card",
+    "cardType": "stock_white.png",
+    "id": "3l6o",
+    "z": 1069,
+    "activeFace": 1,
+    "parent": "it45",
+    "purchased_stock": false
+  },
+  "49gg": {
+    "deck": "stocks",
+    "type": "card",
+    "cardType": "stock_white.png",
+    "id": "49gg",
+    "z": 4,
+    "initial_auction": true,
+    "activeFace": 1,
+    "purchased_stock": false,
+    "parentChangeRoutine": [
+      {
+        "func": "CALL",
+        "routine": "InitialAuctionCountRoutine",
+        "widget": "initial_auction_holder"
+      }
+    ],
+    "parent": "initial_auction_holder",
+    "x": 236,
+    "y": -29
+  },
+  "8xyj": {
+    "deck": "stocks",
+    "type": "card",
+    "cardType": "stock_white.png",
+    "id": "8xyj",
+    "z": 1060,
+    "purchased_stock": false,
+    "activeFace": 1,
+    "parent": "it45"
+  },
+  "1_stock_marker": {
+    "id": "1_stock_marker",
+    "x": 2,
+    "y": -16,
+    "color": "blue",
+    "inheritFrom": {
+      "stock_marker_template": [
+        "!color",
+        "!parent"
+      ]
+    },
+    "z": 3,
+    "defaultParent": "5_stock_market_holder",
+    "text": "\n5",
+    "previous_value": 5,
+    "parent": "5_stock_market_holder"
+  },
+  "stock_marker_template": {
+    "id": "stock_marker_template",
+    "x": 6,
+    "y": 6,
+    "width": 42,
+    "height": 42,
+    "z": 1,
+    "color": "pink",
+    "css": {
+      "default": {
+        "color": "${PROPERTY color_text}",
+        "font-size": "25px",
+        "font-weight": "700",
+        "text-align": "center",
+        "line-height": "14px",
+        "text-shadow": "-1px -1px 0 ${PROPERTY color_text_stroke}, 1px -1px 0 ${PROPERTY color_text_stroke}, -1px 1px 0 ${PROPERTY color_text_stroke}, 1px 1px 0 ${PROPERTY color_text_stroke}, 0 1px 5px ${PROPERTY color_text_stroke}"
+      }
+    },
+    "image": "/i/game-pieces/3D/Marble-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#ffffff",
+    "borderWidth": 14,
+    "secondaryColor": "#000000",
+    "stock_marker": true,
+    "borderRadius": 50,
+    "color_text": "white",
+    "color_text_stroke": "black",
+    "parentChangeRoutine": [
+      {
+        "func": "GET",
+        "collection": [
+          "${PROPERTY parent}"
+        ],
+        "property": "stock_holder"
+      },
+      {
+        "func": "IF",
+        "operand1": "${stock_holder}",
+        "relation": "==",
+        "operand2": true,
+        "thenRoutine": [
+          {
+            "func": "GET",
+            "collection": [
+              "${PROPERTY parent}"
+            ],
+            "property": "stock_value"
+          },
+          {
+            "func": "GET",
+            "collection": [
+              "${thisID}"
+            ],
+            "property": "previous_value"
+          },
+          "var company_index = ${thisID} charAt 0",
+          "var company_array_index = ${company_index} - 1",
+          "var company_names_array = ${PROPERTY company_colors}",
+          "var company_color = ${company_names_array.$company_array_index}",
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "text",
+            "relation": "=",
+            "value": "\n${stock_value}"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "previous_value",
+            "relation": "=",
+            "value": "${stock_value}"
+          },
+          "var value_change = ${stock_value} - ${previous_value}",
+          {
+            "func": "IF",
+            "operand1": "${value_change}",
+            "relation": ">",
+            "operand2": 0,
+            "thenRoutine": [
+              "var modifier = 'increased'"
+            ],
+            "elseRoutine": [
+              "var modifier = 'decreased'",
+              "var value_change = ${value_change} * -1"
+            ]
+          },
+          {
+            "note": "ADDENDUM ADDED TO HISTORY",
+            "func": "CALL",
+            "widget": "history_label",
+            "routine": "AddendumRoutine",
+            "arguments": {
+              "addendum": "${company_color} Railroad value ${modifier} by ${value_change} [ ${previous_value} - ${stock_value} ]"
+            }
+          }
+        ]
+      }
+    ],
+    "company_colors": [
+      "Blue",
+      "Green",
+      "Black",
+      "Red",
+      "White"
+    ],
+    "hoverParent": "stock_market_holder_template",
+    "parent": "stock_market_holder_template",
+    "text": "\nnull"
+  },
+  "2_stock_marker": {
+    "id": "2_stock_marker",
+    "x": 2,
+    "y": 2,
+    "color": "#1ca348",
+    "inheritFrom": {
+      "stock_marker_template": [
+        "!color",
+        "!parent"
+      ]
+    },
+    "z": 1,
+    "defaultParent": "5_stock_market_holder",
+    "text": "\n5",
+    "previous_value": 5,
+    "parent": "5_stock_market_holder"
+  },
+  "3_stock_marker": {
+    "id": "3_stock_marker",
+    "x": 2,
+    "y": -34,
+    "color": "black",
+    "inheritFrom": {
+      "stock_marker_template": [
+        "!color",
+        "!parent"
+      ]
+    },
+    "z": 5,
+    "defaultParent": "5_stock_market_holder",
+    "text": "\n5",
+    "previous_value": 5,
+    "parent": "5_stock_market_holder"
+  },
+  "4_stock_marker": {
+    "id": "4_stock_marker",
+    "x": 2,
+    "y": -7,
+    "color": "#fa592a",
+    "inheritFrom": {
+      "stock_marker_template": [
+        "!color",
+        "!parent"
+      ]
+    },
+    "z": 2,
+    "defaultParent": "5_stock_market_holder",
+    "text": "\n5",
+    "previous_value": 5,
+    "parent": "5_stock_market_holder"
+  },
+  "5_stock_marker": {
+    "id": "5_stock_marker",
+    "x": 2,
+    "y": -25,
+    "color": "white",
+    "inheritFrom": {
+      "stock_marker_template": [
+        "!color",
+        "!parent"
+      ]
+    },
+    "z": 4,
+    "defaultParent": "5_stock_market_holder",
+    "text": "\n5",
+    "previous_value": 5,
+    "parent": "5_stock_market_holder"
+  },
+  "stock_market_holder_template": {
+    "type": "holder",
+    "id": "stock_market_holder_template",
+    "x": 1636,
+    "y": 172,
+    "width": 44,
+    "z": 1167,
+    "borderRadius": 100,
+    "height": 44,
+    "dropTarget": {
+      "stock_marker": true
+    },
+    "stackOffsetY": -9,
+    "css": {
+      "default": {
+        "background-color": "transparent",
+        "border": "0px solid grey"
+      }
+    },
+    "dropOffsetY": 2,
+    "dropOffsetX": 2,
+    "movableInEdit": false,
+    "stock_holder": true
+  },
+  "stock_market_holder65": {
+    "type": "holder",
+    "id": "stock_market_holder65",
+    "x": 1187,
+    "y": 289,
+    "z": 1160,
+    "inheritFrom": "union_holder_template",
+    "stock_value": 0
+  },
+  "1_union_marker": {
+    "id": "1_union_marker",
+    "x": 6,
+    "y": 6,
+    "z": 1,
+    "color": "blue",
+    "inheritFrom": {
+      "union_marker_template": [
+        "!color",
+        "!parent"
+      ]
+    },
+    "defaultParent": "stock_market_holder65",
+    "parent": "stock_market_holder65"
+  },
+  "2_union_marker": {
+    "id": "2_union_marker",
+    "x": 6,
+    "y": 6,
+    "z": 1,
+    "color": "#1ca348",
+    "inheritFrom": {
+      "union_marker_template": [
+        "!color",
+        "!parent"
+      ]
+    },
+    "defaultParent": "stock_market_holder66",
+    "parent": "stock_market_holder66"
+  },
+  "3_union_marker": {
+    "id": "3_union_marker",
+    "x": 6,
+    "y": 6,
+    "z": 1,
+    "color": "black",
+    "inheritFrom": {
+      "union_marker_template": [
+        "!color",
+        "!parent"
+      ]
+    },
+    "defaultParent": "stock_market_holder67",
+    "parent": "stock_market_holder67"
+  },
+  "4_union_marker": {
+    "id": "4_union_marker",
+    "x": 6,
+    "y": 6,
+    "z": 1,
+    "color": "#fa592a",
+    "inheritFrom": {
+      "union_marker_template": [
+        "!color",
+        "!parent"
+      ]
+    },
+    "defaultParent": "stock_market_holder68",
+    "parent": "stock_market_holder68"
+  },
+  "5_union_marker": {
+    "id": "5_union_marker",
+    "x": 6,
+    "y": 6,
+    "z": 1,
+    "color": "white",
+    "inheritFrom": {
+      "union_marker_template": [
+        "!color",
+        "!parent"
+      ]
+    },
+    "defaultParent": "stock_market_holder69",
+    "parent": "stock_market_holder69"
+  },
+  "union_holder_template": {
+    "type": "holder",
+    "id": "union_holder_template",
+    "x": 1686,
+    "y": 174,
+    "width": 44,
+    "height": 44,
+    "borderRadius": 100,
+    "z": 1167,
+    "movableInEdit": false,
+    "css": {
+      "default": {
+        "background-color": "transparent",
+        "border": "0px solid grey"
+      }
+    },
+    "dropOffsetX": 6,
+    "dropOffsetY": 6,
+    "dropTarget": {
+      "union_station": true
+    },
+    "stackOffsetY": -10
+  },
+  "union_marker_template": {
+    "id": "union_marker_template",
+    "parent": "union_holder_template",
+    "x": 6,
+    "y": 6,
+    "width": 38,
+    "height": 38,
+    "z": 1,
+    "color": "purple",
+    "css": "border-radius: 50%;",
+    "image": "/i/game-pieces/3D/Marble-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#ffffff",
+    "borderWidth": 14,
+    "secondaryColor": "#000000",
+    "stock_marker": true,
+    "union_station": true
+  },
+  "stock_market_holder66": {
+    "type": "holder",
+    "id": "stock_market_holder66",
+    "x": 1235,
+    "y": 289,
+    "z": 1160,
+    "inheritFrom": "union_holder_template",
+    "stock_value": 0
+  },
+  "stock_market_holder67": {
+    "type": "holder",
+    "id": "stock_market_holder67",
+    "x": 1283,
+    "y": 289,
+    "z": 1160,
+    "inheritFrom": "union_holder_template",
+    "stock_value": 0
+  },
+  "stock_market_holder68": {
+    "type": "holder",
+    "id": "stock_market_holder68",
+    "x": 1331,
+    "y": 289,
+    "z": 1160,
+    "inheritFrom": "union_holder_template",
+    "stock_value": 0
+  },
+  "stock_market_holder69": {
+    "type": "holder",
+    "id": "stock_market_holder69",
+    "x": 1379,
+    "y": 289,
+    "z": 1160,
+    "inheritFrom": "union_holder_template",
+    "stock_value": 0
+  },
+  "stock_market_holder70": {
+    "type": "holder",
+    "id": "stock_market_holder70",
+    "x": 1187,
+    "y": 340,
+    "z": 1160,
+    "inheritFrom": "union_holder_template",
+    "stock_value": 0
+  },
+  "stock_market_holder71": {
+    "type": "holder",
+    "id": "stock_market_holder71",
+    "x": 1187,
+    "y": 391,
+    "z": 1160,
+    "inheritFrom": "union_holder_template",
+    "stock_value": 0
+  },
+  "stock_market_holder72": {
+    "type": "holder",
+    "id": "stock_market_holder72",
+    "x": 1187,
+    "y": 442,
+    "z": 1160,
+    "inheritFrom": "union_holder_template",
+    "stock_value": 0
+  },
+  "stock_market_holder73": {
+    "type": "holder",
+    "id": "stock_market_holder73",
+    "x": 1234,
+    "y": 340,
+    "z": 1160,
+    "inheritFrom": "union_holder_template",
+    "stock_value": 0
+  },
+  "stock_market_holder74": {
+    "type": "holder",
+    "id": "stock_market_holder74",
+    "x": 1234,
+    "y": 391,
+    "z": 1160,
+    "inheritFrom": "union_holder_template",
+    "stock_value": 0
+  },
+  "stock_market_holder75": {
+    "type": "holder",
+    "id": "stock_market_holder75",
+    "x": 1234,
+    "y": 442,
+    "z": 1160,
+    "inheritFrom": "union_holder_template",
+    "stock_value": 0
+  },
+  "stock_market_holder76": {
+    "type": "holder",
+    "id": "stock_market_holder76",
+    "x": 1283,
+    "y": 340,
+    "z": 1160,
+    "inheritFrom": "union_holder_template",
+    "stock_value": 0
+  },
+  "stock_market_holder77": {
+    "type": "holder",
+    "id": "stock_market_holder77",
+    "x": 1283,
+    "y": 391,
+    "z": 1160,
+    "inheritFrom": "union_holder_template",
+    "stock_value": 0
+  },
+  "stock_market_holder78": {
+    "type": "holder",
+    "id": "stock_market_holder78",
+    "x": 1283,
+    "y": 442,
+    "z": 1160,
+    "inheritFrom": "union_holder_template",
+    "stock_value": 0
+  },
+  "stock_market_holder79": {
+    "type": "holder",
+    "id": "stock_market_holder79",
+    "x": 1331,
+    "y": 340,
+    "z": 1160,
+    "inheritFrom": "union_holder_template",
+    "stock_value": 0
+  },
+  "stock_market_holder80": {
+    "type": "holder",
+    "id": "stock_market_holder80",
+    "x": 1331,
+    "y": 391,
+    "z": 1160,
+    "inheritFrom": "union_holder_template",
+    "stock_value": 0
+  },
+  "stock_market_holder81": {
+    "type": "holder",
+    "id": "stock_market_holder81",
+    "x": 1331,
+    "y": 442,
+    "z": 1160,
+    "inheritFrom": "union_holder_template",
+    "stock_value": 0
+  },
+  "stock_market_holder82": {
+    "type": "holder",
+    "id": "stock_market_holder82",
+    "x": 1379,
+    "y": 340,
+    "z": 1160,
+    "inheritFrom": "union_holder_template",
+    "stock_value": 0
+  },
+  "stock_market_holder83": {
+    "type": "holder",
+    "id": "stock_market_holder83",
+    "x": 1379,
+    "y": 391,
+    "z": 1160,
+    "inheritFrom": "union_holder_template",
+    "stock_value": 0
+  },
+  "stock_market_holder84": {
+    "type": "holder",
+    "id": "stock_market_holder84",
+    "x": 1379,
+    "y": 442,
+    "z": 1160,
+    "inheritFrom": "union_holder_template",
+    "stock_value": 0
+  },
+  "dividend_holder1": {
+    "type": "holder",
+    "id": "dividend_holder1",
+    "x": 1540,
+    "y": 939,
+    "width": 44,
+    "height": 44,
+    "borderRadius": 100,
+    "z": 1167,
+    "movableInEdit": false,
+    "css": {
+      "default": {
+        "background-color": "transparent",
+        "border": "0px solid grey"
+      }
+    },
+    "dropOffsetX": 6,
+    "dropOffsetY": 6,
+    "dropTarget": {
+      "dividend": true
+    },
+    "stackOffsetY": -10,
+    "div_holder": true,
+    "div_number": 1
+  },
+  "dividend_holder2": {
+    "type": "holder",
+    "id": "dividend_holder2",
+    "x": 1540,
+    "y": 897,
+    "inheritFrom": "dividend_holder1",
+    "div_number": 2
+  },
+  "dividend_holder3": {
+    "type": "holder",
+    "id": "dividend_holder3",
+    "x": 1540,
+    "y": 858,
+    "inheritFrom": "dividend_holder1",
+    "div_number": 3
+  },
+  "dividend_holder4": {
+    "type": "holder",
+    "id": "dividend_holder4",
+    "x": 1540,
+    "y": 818,
+    "inheritFrom": "dividend_holder1",
+    "div_number": 4
+  },
+  "dividend_holder5": {
+    "type": "holder",
+    "id": "dividend_holder5",
+    "x": 1540,
+    "y": 777,
+    "inheritFrom": "dividend_holder1",
+    "div_number": 5
+  },
+  "dividend_holder6": {
+    "type": "holder",
+    "id": "dividend_holder6",
+    "x": 1540,
+    "y": 737,
+    "inheritFrom": "dividend_holder1",
+    "div_number": 6
+  },
+  "dividend_holder7": {
+    "type": "holder",
+    "id": "dividend_holder7",
+    "x": 1540,
+    "y": 696,
+    "inheritFrom": "dividend_holder1",
+    "div_number": 7
+  },
+  "dividend_holder8": {
+    "type": "holder",
+    "id": "dividend_holder8",
+    "x": 1540,
+    "y": 656,
+    "inheritFrom": "dividend_holder1",
+    "div_number": 8
+  },
+  "dividend_holder9": {
+    "type": "holder",
+    "id": "dividend_holder9",
+    "x": 1540,
+    "y": 617,
+    "inheritFrom": "dividend_holder1",
+    "div_number": 9
+  },
+  "dividend_holder10": {
+    "type": "holder",
+    "id": "dividend_holder10",
+    "x": 1540,
+    "y": 577,
+    "inheritFrom": "dividend_holder1",
+    "div_number": 10
+  },
+  "dividend_holder11": {
+    "type": "holder",
+    "id": "dividend_holder11",
+    "x": 1540,
+    "y": 536,
+    "inheritFrom": "dividend_holder1",
+    "div_number": 11
+  },
+  "dividend_holder12": {
+    "type": "holder",
+    "id": "dividend_holder12",
+    "x": 1540,
+    "y": 496,
+    "inheritFrom": "dividend_holder1",
+    "div_number": 12
+  },
+  "dividend_holder13": {
+    "type": "holder",
+    "id": "dividend_holder13",
+    "x": 1540,
+    "y": 456,
+    "inheritFrom": "dividend_holder1",
+    "div_number": 13
+  },
+  "dividend_holder14": {
+    "type": "holder",
+    "id": "dividend_holder14",
+    "x": 1540,
+    "y": 415,
+    "inheritFrom": "dividend_holder1",
+    "div_number": 14
+  },
+  "dividend_holder15": {
+    "type": "holder",
+    "id": "dividend_holder15",
+    "x": 1540,
+    "y": 375,
+    "inheritFrom": "dividend_holder1",
+    "div_number": 15
+  },
+  "dividend_holder16": {
+    "type": "holder",
+    "id": "dividend_holder16",
+    "x": 1540,
+    "y": 334,
+    "inheritFrom": "dividend_holder1",
+    "div_number": 16
+  },
+  "dividend_holder17": {
+    "type": "holder",
+    "id": "dividend_holder17",
+    "x": 1540,
+    "y": 295,
+    "inheritFrom": "dividend_holder1",
+    "div_number": 17
+  },
+  "dividend_holder18": {
+    "type": "holder",
+    "id": "dividend_holder18",
+    "x": 1540,
+    "y": 255,
+    "inheritFrom": "dividend_holder1",
+    "div_number": 18
+  },
+  "dividend_holder19": {
+    "type": "holder",
+    "id": "dividend_holder19",
+    "x": 1540,
+    "y": 214,
+    "inheritFrom": "dividend_holder1",
+    "div_number": 19
+  },
+  "union_marker_template2": {
+    "id": "union_marker_template2",
+    "x": 1498,
+    "y": 720,
+    "width": 43,
+    "height": 43,
+    "z": 1,
+    "color": "grey",
+    "css": {
+      "default": {
+        "color": "${PROPERTY color_text}",
+        "font-size": "25px",
+        "font-weight": "700",
+        "text-align": "center",
+        "line-height": "15px",
+        "text-shadow": "-1px -1px 0 ${PROPERTY color_text_stroke}, 1px -1px 0 ${PROPERTY color_text_stroke}, -1px 1px 0 ${PROPERTY color_text_stroke}, 1px 1px 0 ${PROPERTY color_text_stroke}, 0 1px 5px ${PROPERTY color_text_stroke}"
+      }
+    },
+    "image": "/i/game-pieces/3D/Marble-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#ffffff",
+    "borderWidth": 14,
+    "secondaryColor": "#000000",
+    "dividend": true,
+    "defaultX": 1498,
+    "defaultY": 720,
+    "parentChangeRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY parent}",
+        "relation": "!=",
+        "operand2": null,
+        "thenRoutine": [
+          {
+            "func": "GET",
+            "collection": [
+              "${PROPERTY parent}"
+            ],
+            "property": "div_holder"
+          },
+          {
+            "func": "IF",
+            "operand1": "${div_holder}",
+            "relation": "==",
+            "operand2": true,
+            "thenRoutine": [
+              {
+                "func": "GET",
+                "collection": [
+                  "${PROPERTY parent}"
+                ],
+                "property": "div_number"
+              },
+              {
+                "func": "SET",
+                "collection": "thisButton",
+                "property": "text",
+                "relation": "=",
+                "value": "\n${div_number}"
+              },
+              {
+                "note": "ADDENDUM ADDED TO HISTORY",
+                "func": "CALL",
+                "widget": "history_label",
+                "routine": "AddendumRoutine",
+                "arguments": {
+                  "addendum": "Dividend #${div_number}"
+                }
+              }
+            ]
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "text",
+            "relation": "=",
+            "value": ""
+          }
+        ]
+      }
+    ],
+    "borderRadius": 50,
+    "color_text": "white",
+    "color_text_stroke": "black"
+  },
+  "dividend_holder20": {
+    "type": "holder",
+    "id": "dividend_holder20",
+    "x": 1540,
+    "y": 174,
+    "inheritFrom": "dividend_holder1",
+    "div_number": 20
+  },
+  "card_holder0": {
+    "type": "holder",
+    "id": "card_holder0",
+    "x": 249,
+    "y": 19,
+    "width": 185,
+    "height": 126,
+    "z": 82248,
+    "dropOffsetX": 26,
+    "dropOffsetY": -29,
+    "dropTarget": {
+      "type": "card"
+    },
+    "classes": "transparent",
+    "layer": 1
+  },
+  "card_holder1": {
+    "type": "holder",
+    "id": "card_holder1",
+    "x": 482,
+    "y": 20,
+    "inheritFrom": "card_holder0"
+  },
+  "card_holder2": {
+    "type": "holder",
+    "id": "card_holder2",
+    "x": 717,
+    "y": 20,
+    "inheritFrom": "card_holder0"
+  },
+  "card_holder3": {
+    "type": "holder",
+    "id": "card_holder3",
+    "x": 953,
+    "y": 20,
+    "inheritFrom": "card_holder0",
+    "z": 1202
+  },
+  "blue_background": {
+    "id": "blue_background",
+    "z": 81749,
+    "css": {
+      "default": {
+        "border-radius": "0px",
+        "border": "0px solid ${PROPERTY color}",
+        "background": "#1e2c5e"
+      }
+    },
+    "width": 1600,
+    "height": 1000,
+    "layer": -10,
+    "movable": false,
+    "movableInEdit": false
+  },
+  "1_board_base": {
+    "type": "holder",
+    "id": "1_board_base",
+    "inheritFrom": "1_board",
+    "linkedToSeat": "1_seat",
+    "css": {
+      "default": {
+        "border-radius": "5px",
+        "border": "10px solid ${PROPERTY contrast_color}",
+        "background": "white"
+      }
+    },
+    "layer": -5,
+    "x": 363,
+    "y": 55,
+    "width": 214,
+    "height": 184,
+    "color_change_index": 1,
+    "color": "#b4b4b4",
+    "contrast_color": "#FFFFFF",
+    "background_color_transparent": "#b4b4b4",
+    "background_color": "#b4b4b4",
+    "background_color_solid": "#b4b4b4"
+  },
+  "1_board_top_background": {
+    "type": "holder",
+    "id": "1_board_top_background",
+    "layer": -3,
+    "css": {
+      "default": {
+        "background": "${PROPERTY background_color_solid}"
+      }
+    },
+    "inheritFrom": "1_board",
+    "linkedToSeat": "1_seat",
+    "height": 108,
+    "color": "#b4b4b4",
+    "contrast_color": "#FFFFFF",
+    "background_color_transparent": "#b4b4b4",
+    "background_color": "#b4b4b4",
+    "background_color_solid": "#b4b4b4",
+    "color_change_index": 1
+  },
+  "2_board_top_background": {
+    "type": "holder",
+    "id": "2_board_top_background",
+    "inheritFrom": {
+      "1_board_top_background": [
+        "!background_color_solid"
+      ]
+    },
+    "linkedToSeat": "2_seat",
+    "parent": "2_seat_anchor",
+    "color": "#b4b4b4",
+    "contrast_color": "#FFFFFF",
+    "background_color_transparent": "#b4b4b4",
+    "background_color": "#b4b4b4",
+    "background_color_solid": "#b4b4b4",
+    "color_change_index": 2
+  },
+  "2_board_base": {
+    "type": "holder",
+    "id": "2_board_base",
+    "parent": "2_seat_anchor",
+    "inheritFrom": {
+      "1_board_base": [
+        "!background_color_solid"
+      ]
+    },
+    "linkedToSeat": "2_seat",
+    "color_change_index": 2,
+    "color": "#b4b4b4",
+    "background_color_transparent": "#b4b4b4",
+    "background_color": "#b4b4b4",
+    "background_color_solid": "#b4b4b4",
+    "contrast_color": "#FFFFFF"
+  },
+  "3_board_base": {
+    "type": "holder",
+    "id": "3_board_base",
+    "parent": "3_seat_anchor",
+    "inheritFrom": {
+      "1_board_base": [
+        "!background_color_solid"
+      ]
+    },
+    "linkedToSeat": "3_seat",
+    "color_change_index": 3,
+    "color": "#b4b4b4",
+    "background_color_transparent": "#b4b4b4",
+    "background_color": "#b4b4b4",
+    "background_color_solid": "#b4b4b4",
+    "contrast_color": "#FFFFFF"
+  },
+  "4_board_base": {
+    "type": "holder",
+    "id": "4_board_base",
+    "parent": "4_seat_anchor",
+    "inheritFrom": {
+      "1_board_base": [
+        "!background_color_solid"
+      ]
+    },
+    "linkedToSeat": "4_seat",
+    "color_change_index": 4,
+    "color": "#b4b4b4",
+    "background_color_transparent": "#b4b4b4",
+    "background_color": "#b4b4b4",
+    "background_color_solid": "#b4b4b4",
+    "contrast_color": "#FFFFFF"
+  },
+  "5_board_base": {
+    "type": "holder",
+    "id": "5_board_base",
+    "parent": "5_seat_anchor",
+    "inheritFrom": {
+      "1_board_base": [
+        "!background_color_solid"
+      ]
+    },
+    "linkedToSeat": "5_seat",
+    "color_change_index": 5,
+    "color": "#b4b4b4",
+    "contrast_color": "#FFFFFF",
+    "background_color_transparent": "#b4b4b4",
+    "background_color": "#b4b4b4",
+    "background_color_solid": "#b4b4b4"
+  },
+  "3_board_top_background": {
+    "type": "holder",
+    "id": "3_board_top_background",
+    "parent": "3_seat_anchor",
+    "inheritFrom": {
+      "1_board_top_background": [
+        "!background_color_solid"
+      ]
+    },
+    "linkedToSeat": "3_seat",
+    "color": "#b4b4b4",
+    "contrast_color": "#FFFFFF",
+    "background_color_transparent": "#b4b4b4",
+    "background_color": "#b4b4b4",
+    "background_color_solid": "#b4b4b4",
+    "color_change_index": 3
+  },
+  "4_board_top_background": {
+    "type": "holder",
+    "id": "4_board_top_background",
+    "parent": "4_seat_anchor",
+    "inheritFrom": {
+      "1_board_top_background": [
+        "!background_color_solid"
+      ]
+    },
+    "linkedToSeat": "4_seat",
+    "color": "#b4b4b4",
+    "contrast_color": "#FFFFFF",
+    "background_color_transparent": "#b4b4b4",
+    "background_color": "#b4b4b4",
+    "background_color_solid": "#b4b4b4",
+    "color_change_index": 4
+  },
+  "5_board_top_background": {
+    "type": "holder",
+    "id": "5_board_top_background",
+    "parent": "5_seat_anchor",
+    "inheritFrom": {
+      "1_board_top_background": [
+        "!background_color_solid"
+      ]
+    },
+    "linkedToSeat": "5_seat",
+    "color": "#b4b4b4",
+    "contrast_color": "#FFFFFF",
+    "background_color_transparent": "#b4b4b4",
+    "background_color": "#b4b4b4",
+    "background_color_solid": "#b4b4b4",
+    "color_change_index": 5
+  },
+  "5_stock_market_holder": {
+    "type": "holder",
+    "id": "5_stock_market_holder",
+    "x": 1211,
+    "y": 942,
+    "z": 1170,
+    "inheritFrom": "stock_market_holder_template",
+    "stock_value": 5
+  },
+  "6_stock_market_holder": {
+    "type": "holder",
+    "id": "6_stock_market_holder",
+    "x": 1256,
+    "y": 942,
+    "z": 1170,
+    "inheritFrom": "stock_market_holder_template",
+    "stock_value": 6
+  },
+  "7_stock_market_holder": {
+    "type": "holder",
+    "id": "7_stock_market_holder",
+    "x": 1300,
+    "y": 942,
+    "z": 1170,
+    "inheritFrom": "stock_market_holder_template",
+    "stock_value": 7
+  },
+  "8_stock_market_holder": {
+    "type": "holder",
+    "id": "8_stock_market_holder",
+    "x": 1346,
+    "y": 942,
+    "z": 1170,
+    "inheritFrom": "stock_market_holder_template",
+    "stock_value": 8
+  },
+  "9_stock_market_holder": {
+    "type": "holder",
+    "id": "9_stock_market_holder",
+    "x": 1390,
+    "y": 942,
+    "z": 1170,
+    "inheritFrom": "stock_market_holder_template",
+    "stock_value": 9
+  },
+  "10_stock_market_holder": {
+    "type": "holder",
+    "id": "10_stock_market_holder",
+    "x": 1435,
+    "y": 942,
+    "z": 1170,
+    "inheritFrom": "stock_market_holder_template",
+    "stock_value": 10
+  },
+  "11_stock_market_holder": {
+    "type": "holder",
+    "id": "11_stock_market_holder",
+    "x": 1211,
+    "y": 898,
+    "z": 1160,
+    "inheritFrom": "stock_market_holder_template",
+    "stock_value": 11
+  },
+  "12_stock_market_holder": {
+    "type": "holder",
+    "id": "12_stock_market_holder",
+    "x": 1256,
+    "y": 898,
+    "z": 1160,
+    "inheritFrom": "stock_market_holder_template",
+    "stock_value": 12
+  },
+  "13_stock_market_holder": {
+    "type": "holder",
+    "id": "13_stock_market_holder",
+    "x": 1300,
+    "y": 898,
+    "z": 1160,
+    "inheritFrom": "stock_market_holder_template",
+    "dividend": true,
+    "stock_value": 13
+  },
+  "14_stock_market_holder": {
+    "type": "holder",
+    "id": "14_stock_market_holder",
+    "x": 1346,
+    "y": 898,
+    "z": 1160,
+    "inheritFrom": "stock_market_holder_template",
+    "stock_value": 14
+  },
+  "15_stock_market_holder": {
+    "type": "holder",
+    "id": "15_stock_market_holder",
+    "x": 1390,
+    "y": 898,
+    "z": 1160,
+    "inheritFrom": "stock_market_holder_template",
+    "stock_value": 15
+  },
+  "16_stock_market_holder": {
+    "type": "holder",
+    "id": "16_stock_market_holder",
+    "x": 1435,
+    "y": 898,
+    "z": 1160,
+    "inheritFrom": "stock_market_holder_template",
+    "stock_value": 16
+  },
+  "17_stock_market_holder": {
+    "type": "holder",
+    "id": "17_stock_market_holder",
+    "x": 1211,
+    "y": 852,
+    "z": 1150,
+    "inheritFrom": "stock_market_holder_template",
+    "stock_value": 17
+  },
+  "18_stock_market_holder": {
+    "type": "holder",
+    "id": "18_stock_market_holder",
+    "x": 1256,
+    "y": 852,
+    "z": 1150,
+    "inheritFrom": "stock_market_holder_template",
+    "stock_value": 18
+  },
+  "19_stock_market_holder": {
+    "type": "holder",
+    "id": "19_stock_market_holder",
+    "x": 1300,
+    "y": 852,
+    "z": 1150,
+    "inheritFrom": "stock_market_holder_template",
+    "dividend": true,
+    "stock_value": 19
+  },
+  "20_stock_market_holder": {
+    "type": "holder",
+    "id": "20_stock_market_holder",
+    "x": 1346,
+    "y": 852,
+    "z": 1150,
+    "inheritFrom": "stock_market_holder_template",
+    "stock_value": 20
+  },
+  "21_stock_market_holder": {
+    "type": "holder",
+    "id": "21_stock_market_holder",
+    "x": 1390,
+    "y": 852,
+    "z": 1150,
+    "inheritFrom": "stock_market_holder_template",
+    "stock_value": 21
+  },
+  "22_stock_market_holder": {
+    "type": "holder",
+    "id": "22_stock_market_holder",
+    "x": 1435,
+    "y": 852,
+    "z": 1150,
+    "inheritFrom": "stock_market_holder_template",
+    "stock_value": 22
+  },
+  "23_stock_market_holder": {
+    "type": "holder",
+    "id": "23_stock_market_holder",
+    "x": 1211,
+    "y": 805,
+    "z": 1140,
+    "inheritFrom": "stock_market_holder_template",
+    "stock_value": 23
+  },
+  "24_stock_market_holder": {
+    "type": "holder",
+    "id": "24_stock_market_holder",
+    "x": 1256,
+    "y": 805,
+    "z": 1140,
+    "inheritFrom": "stock_market_holder_template",
+    "stock_value": 24
+  },
+  "25_stock_market_holder": {
+    "type": "holder",
+    "id": "25_stock_market_holder",
+    "x": 1300,
+    "y": 805,
+    "z": 1140,
+    "inheritFrom": "stock_market_holder_template",
+    "dividend": true,
+    "stock_value": 25
+  },
+  "26_stock_market_holder": {
+    "type": "holder",
+    "id": "26_stock_market_holder",
+    "x": 1346,
+    "y": 805,
+    "z": 1140,
+    "inheritFrom": "stock_market_holder_template",
+    "stock_value": 26
+  },
+  "27_stock_market_holder": {
+    "type": "holder",
+    "id": "27_stock_market_holder",
+    "x": 1390,
+    "y": 805,
+    "z": 1140,
+    "inheritFrom": "stock_market_holder_template",
+    "stock_value": 27
+  },
+  "28_stock_market_holder": {
+    "type": "holder",
+    "id": "28_stock_market_holder",
+    "x": 1435,
+    "y": 805,
+    "z": 1140,
+    "inheritFrom": "stock_market_holder_template",
+    "stock_value": 28
+  },
+  "29_stock_market_holder": {
+    "type": "holder",
+    "id": "29_stock_market_holder",
+    "x": 1211,
+    "y": 760,
+    "z": 1130,
+    "inheritFrom": "stock_market_holder_template",
+    "stock_value": 29
+  },
+  "30_stock_market_holder": {
+    "type": "holder",
+    "id": "30_stock_market_holder",
+    "x": 1256,
+    "y": 760,
+    "z": 1130,
+    "inheritFrom": "stock_market_holder_template",
+    "stock_value": 30
+  },
+  "31_stock_market_holder": {
+    "type": "holder",
+    "id": "31_stock_market_holder",
+    "x": 1300,
+    "y": 760,
+    "z": 1130,
+    "inheritFrom": "stock_market_holder_template",
+    "stock_value": 31
+  },
+  "32_stock_market_holder": {
+    "type": "holder",
+    "id": "32_stock_market_holder",
+    "x": 1346,
+    "y": 760,
+    "z": 1130,
+    "inheritFrom": "stock_market_holder_template",
+    "dividend": true,
+    "stock_value": 32
+  },
+  "33_stock_market_holder": {
+    "type": "holder",
+    "id": "33_stock_market_holder",
+    "x": 1390,
+    "y": 760,
+    "z": 1130,
+    "inheritFrom": "stock_market_holder_template",
+    "stock_value": 33
+  },
+  "34_stock_market_holder": {
+    "type": "holder",
+    "id": "34_stock_market_holder",
+    "x": 1435,
+    "y": 760,
+    "z": 1130,
+    "inheritFrom": "stock_market_holder_template",
+    "stock_value": 34
+  },
+  "35_stock_market_holder": {
+    "type": "holder",
+    "id": "35_stock_market_holder",
+    "x": 1211,
+    "y": 714,
+    "z": 1120,
+    "inheritFrom": "stock_market_holder_template",
+    "stock_value": 35
+  },
+  "36_stock_market_holder": {
+    "type": "holder",
+    "id": "36_stock_market_holder",
+    "x": 1256,
+    "y": 714,
+    "z": 1120,
+    "inheritFrom": "stock_market_holder_template",
+    "stock_value": 36
+  },
+  "37_stock_market_holder": {
+    "type": "holder",
+    "id": "37_stock_market_holder",
+    "x": 1300,
+    "y": 714,
+    "z": 1120,
+    "inheritFrom": "stock_market_holder_template",
+    "stock_value": 37
+  },
+  "38_stock_market_holder": {
+    "type": "holder",
+    "id": "38_stock_market_holder",
+    "x": 1346,
+    "y": 714,
+    "z": 1120,
+    "inheritFrom": "stock_market_holder_template",
+    "stock_value": 38
+  },
+  "39_stock_market_holder": {
+    "type": "holder",
+    "id": "39_stock_market_holder",
+    "x": 1390,
+    "y": 714,
+    "z": 1120,
+    "inheritFrom": "stock_market_holder_template",
+    "dividend": true,
+    "stock_value": 39
+  },
+  "40_stock_market_holder": {
+    "type": "holder",
+    "id": "40_stock_market_holder",
+    "x": 1435,
+    "y": 714,
+    "z": 1120,
+    "inheritFrom": "stock_market_holder_template",
+    "stock_value": 40
+  },
+  "41_stock_market_holder": {
+    "type": "holder",
+    "id": "41_stock_market_holder",
+    "x": 1211,
+    "y": 669,
+    "z": 1110,
+    "inheritFrom": "stock_market_holder_template",
+    "stock_value": 41
+  },
+  "42_stock_market_holder": {
+    "type": "holder",
+    "id": "42_stock_market_holder",
+    "x": 1256,
+    "y": 669,
+    "z": 1110,
+    "inheritFrom": "stock_market_holder_template",
+    "stock_value": 42
+  },
+  "43_stock_market_holder": {
+    "type": "holder",
+    "id": "43_stock_market_holder",
+    "x": 1300,
+    "y": 669,
+    "z": 1110,
+    "inheritFrom": "stock_market_holder_template",
+    "stock_value": 43
+  },
+  "44_stock_market_holder": {
+    "type": "holder",
+    "id": "44_stock_market_holder",
+    "x": 1346,
+    "y": 669,
+    "z": 1110,
+    "inheritFrom": "stock_market_holder_template",
+    "stock_value": 44
+  },
+  "45_stock_market_holder": {
+    "type": "holder",
+    "id": "45_stock_market_holder",
+    "x": 1390,
+    "y": 669,
+    "z": 1110,
+    "inheritFrom": "stock_market_holder_template",
+    "stock_value": 45
+  },
+  "46_stock_market_holder": {
+    "type": "holder",
+    "id": "46_stock_market_holder",
+    "x": 1435,
+    "y": 669,
+    "z": 1110,
+    "inheritFrom": "stock_market_holder_template",
+    "dividend": true,
+    "stock_value": 46
+  },
+  "47_stock_market_holder": {
+    "type": "holder",
+    "id": "47_stock_market_holder",
+    "x": 1211,
+    "y": 624,
+    "z": 1100,
+    "inheritFrom": "stock_market_holder_template",
+    "stock_value": 47
+  },
+  "48_stock_market_holder": {
+    "type": "holder",
+    "id": "48_stock_market_holder",
+    "x": 1256,
+    "y": 624,
+    "z": 1100,
+    "inheritFrom": "stock_market_holder_template",
+    "stock_value": 48
+  },
+  "49_stock_market_holder": {
+    "type": "holder",
+    "id": "49_stock_market_holder",
+    "x": 1300,
+    "y": 624,
+    "z": 1100,
+    "inheritFrom": "stock_market_holder_template",
+    "stock_value": 49
+  },
+  "50_stock_market_holder": {
+    "type": "holder",
+    "id": "50_stock_market_holder",
+    "x": 1346,
+    "y": 624,
+    "z": 1100,
+    "inheritFrom": "stock_market_holder_template",
+    "stock_value": 50
+  },
+  "51_stock_market_holder": {
+    "type": "holder",
+    "id": "51_stock_market_holder",
+    "x": 1390,
+    "y": 624,
+    "z": 1100,
+    "inheritFrom": "stock_market_holder_template",
+    "stock_value": 51
+  },
+  "52_stock_market_holder": {
+    "type": "holder",
+    "id": "52_stock_market_holder",
+    "x": 1435,
+    "y": 624,
+    "z": 1100,
+    "inheritFrom": "stock_market_holder_template",
+    "stock_value": 52
+  },
+  "53_stock_market_holder": {
+    "type": "holder",
+    "id": "53_stock_market_holder",
+    "x": 1211,
+    "y": 577,
+    "z": 1070,
+    "inheritFrom": "stock_market_holder_template",
+    "dividend": true,
+    "stock_value": 53
+  },
+  "54_stock_market_holder": {
+    "type": "holder",
+    "id": "54_stock_market_holder",
+    "x": 1256,
+    "y": 577,
+    "z": 1070,
+    "inheritFrom": "stock_market_holder_template",
+    "stock_value": 54
+  },
+  "55_stock_market_holder": {
+    "type": "holder",
+    "id": "55_stock_market_holder",
+    "x": 1300,
+    "y": 577,
+    "z": 1070,
+    "inheritFrom": "stock_market_holder_template",
+    "stock_value": 55
+  },
+  "56_stock_market_holder": {
+    "type": "holder",
+    "id": "56_stock_market_holder",
+    "x": 1346,
+    "y": 577,
+    "z": 1070,
+    "inheritFrom": "stock_market_holder_template",
+    "stock_value": 56
+  },
+  "57_stock_market_holder": {
+    "type": "holder",
+    "id": "57_stock_market_holder",
+    "x": 1390,
+    "y": 577,
+    "z": 1070,
+    "inheritFrom": "stock_market_holder_template",
+    "stock_value": 57
+  },
+  "58_stock_market_holder": {
+    "type": "holder",
+    "id": "58_stock_market_holder",
+    "x": 1435,
+    "y": 577,
+    "z": 1070,
+    "inheritFrom": "stock_market_holder_template",
+    "stock_value": 58
+  },
+  "59_stock_market_holder": {
+    "type": "holder",
+    "id": "59_stock_market_holder",
+    "x": 1211,
+    "y": 531,
+    "z": 1160,
+    "inheritFrom": "stock_market_holder_template",
+    "stock_value": 59
+  },
+  "60_stock_market_holder": {
+    "type": "holder",
+    "id": "60_stock_market_holder",
+    "x": 1256,
+    "y": 531,
+    "z": 1160,
+    "inheritFrom": "stock_market_holder_template",
+    "dividend": true,
+    "stock_value": 60
+  },
+  "61_stock_market_holder": {
+    "type": "holder",
+    "id": "61_stock_market_holder",
+    "x": 1300,
+    "y": 531,
+    "z": 1160,
+    "inheritFrom": "stock_market_holder_template",
+    "stock_value": 61
+  },
+  "62_stock_market_holder": {
+    "type": "holder",
+    "id": "62_stock_market_holder",
+    "x": 1346,
+    "y": 531,
+    "z": 1160,
+    "inheritFrom": "stock_market_holder_template",
+    "stock_value": 62
+  },
+  "63_stock_market_holder": {
+    "type": "holder",
+    "id": "63_stock_market_holder",
+    "x": 1390,
+    "y": 531,
+    "z": 1160,
+    "inheritFrom": "stock_market_holder_template",
+    "stock_value": 63
+  },
+  "64_stock_market_holder": {
+    "type": "holder",
+    "id": "64_stock_market_holder",
+    "x": 1435,
+    "y": 531,
+    "z": 1160,
+    "inheritFrom": "stock_market_holder_template",
+    "stock_value": 64
+  },
+  "recall_shuffle_deck_button": {
+    "type": "button",
+    "id": "recall_shuffle_deck_button",
+    "parent": "card_holder0",
+    "fixedParent": true,
+    "x": 160,
+    "y": -122,
+    "width": 111,
+    "height": 40,
+    "movableInEdit": false,
+    "text": "Recall & Shuffle",
+    "clickRoutine": [
+      {
+        "func": "RECALL",
+        "holder": "${PROPERTY parent}"
+      },
+      {
+        "func": "FLIP",
+        "holder": "${PROPERTY parent}",
+        "face": 1
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "${PROPERTY parent}"
+      }
+    ],
+    "activeFace": 1
+  },
+  "initial_auction_holder": {
+    "type": "holder",
+    "id": "initial_auction_holder",
+    "x": 472,
+    "width": 685,
+    "height": 176,
+    "z": 1183,
+    "dropOffsetX": 26,
+    "dropOffsetY": -29,
+    "dropTarget": {
+      "type": "card"
+    },
+    "css": {
+      "default": {
+        "border-radius": "0px",
+        "border": "0px solid white",
+        "background": "#1e2c5e"
+      }
+    },
+    "preventPiles": true,
+    "stackOffsetX": 70,
+    "onEnter": {
+      "activeFace": 1
+    },
+    "defaultX": 472,
+    "defaultY": 43,
+    "movableInEdit": false,
+    "hiddenX": -700,
+    "doubleLeaveRoutineCompensation": true,
+    "InitialAuctionCountRoutine": [
+      "var purchased_count = 0",
+      {
+        "func": "SELECT",
+        "property": "initial_auction",
+        "relation": "==",
+        "value": true,
+        "collection": "initial_stocks"
+      },
+      {
+        "func": "FOREACH",
+        "collection": "initial_stocks",
+        "loopRoutine": [
+          {
+            "func": "GET",
+            "collection": [
+              "${widgetID}"
+            ],
+            "property": "parent",
+            "variable": "parent_id"
+          },
+          "var stock_holder = false",
+          {
+            "func": "GET",
+            "collection": [
+              "${parent_id}"
+            ],
+            "property": "stock_holder"
+          },
+          {
+            "func": "IF",
+            "operand1": "${stock_holder}",
+            "relation": "==",
+            "operand2": true,
+            "thenRoutine": [
+              "var purchased_count = ${purchased_count} + 1"
+            ]
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${purchased_count}",
+        "relation": ">=",
+        "operand2": 5,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "initial_auction_holder"
+            ],
+            "property": "x",
+            "relation": "=",
+            "value": "${PROPERTY hiddenX}"
+          },
+          {
+            "func": "GET",
+            "collection": "auction_block",
+            "property": "hiddenX"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "auction_block"
+            ],
+            "property": "x",
+            "relation": "=",
+            "value": "${PROPERTY hiddenX}"
+          },
+          {
+            "func": "MOVE",
+            "from": "card_holder0",
+            "to": "card_holder1",
+            "count": 1
+          }
+        ]
+      }
+    ],
+    "layer": 2,
+    "y": 43
+  },
+  "initial_auction_label": {
+    "id": "initial_auction_label",
+    "text": "Inital Stocks: Auction --> left to right -->",
+    "x": -1,
+    "css": {
+      "default": {
+        "color": "white",
+        "font-size": "25px",
+        "border-radius": "0px",
+        "border": "0px solid white",
+        "background": "#1e2c5e"
+      }
+    },
+    "z": 81760,
+    "y": -34,
+    "parent": "initial_auction_holder",
+    "fixedParent": true,
+    "height": 40,
+    "width": 500,
+    "movable": false,
+    "movableInEdit": false
+  },
+  "history_recent_label": {
+    "id": "history_recent_label",
+    "x": 1197,
+    "y": 2,
+    "width": 390,
+    "height": 77,
+    "layer": 5,
+    "z": 30369,
+    "movable": false,
+    "movableInEdit": false,
+    "activeFace": 0,
+    "css": {
+      "background": "transparent",
+      "font-size": "16px",
+      "color": "white",
+      "overflow": "hidden"
+    },
+    "inheritFrom": {
+      "history_label": [
+        "text"
+      ]
+    },
+    "passed": false,
+    "AddendumRoutine": [
+      "var previous_ledger = ${PROPERTY text}",
+      {
+        "func": "SET",
+        "property": "text",
+        "value": "${addendum}\n${previous_ledger}",
+        "collection": [
+          "${PROPERTY id}"
+        ]
+      }
+    ],
+    "CopyThisToMakeAddendumRoutine": [
+      {
+        "note": "ADDENDUM ADDED TO HISTORY",
+        "func": "CALL",
+        "widget": "history_label",
+        "routine": "AddendumRoutine",
+        "arguments": {
+          "addendum": ""
+        }
+      }
+    ]
+  },
+  "track_holder_template": {
+    "type": "holder",
+    "id": "track_holder_template",
+    "x": 1662,
+    "y": 206,
+    "width": 44,
+    "height": 44,
+    "borderRadius": 100,
+    "z": 1167,
+    "css": {
+      "default": {
+        "background-color": "transparent",
+        "border": "0px solid grey"
+      }
+    },
+    "dropOffsetX": 6,
+    "dropOffsetY": 6,
+    "dropTarget": {
+      "track": true
+    },
+    "preventPiles": true,
+    "enterRoutine": [
+      {
+        "func": "SET",
+        "property": "doubleLeaveRoutineCompensation",
+        "value": true,
+        "collection": "thisButton"
+      },
+      {
+        "func": "CALL",
+        "routine": "UpdateTrackCountRoutine"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY doubleLeaveRoutineCompensation}",
+        "operand2": true,
+        "thenRoutine": [
+          {
+            "note": "this branch of the IF is called directly after you start dragging the card",
+            "func": "SET",
+            "property": "doubleLeaveRoutineCompensation",
+            "collection": "thisButton",
+            "value": false
+          },
+          {
+            "func": "CALL",
+            "routine": "UpdateTrackCountRoutine"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "note": "this branch of the IF is called when the card exits the holder entirely",
+            "func": "SET",
+            "property": "doubleLeaveRoutineCompensation",
+            "value": true,
+            "collection": "thisButton"
+          }
+        ]
+      }
+    ],
+    "UpdateTrackCountRoutine": [
+      {
+        "func": "COUNT",
+        "holder": "${thisID}",
+        "variable": "COUNT"
+      },
+      "var track_count = ${COUNT} - 0",
+      "var index = ${thisID} charAt 0",
+      {
+        "func": "IF",
+        "operand1": "${track_count}",
+        "relation": "==",
+        "operand2": 0,
+        "thenRoutine": [
+          "var track_count = ''"
+        ]
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "${index}_track_counter"
+        ],
+        "property": "text",
+        "relation": "=",
+        "value": "${track_count}"
+      }
+    ],
+    "recall_with_setup": true
+  },
+  "1_track_holder": {
+    "type": "holder",
+    "id": "1_track_holder",
+    "x": 995,
+    "y": 517,
+    "inheritFrom": "track_holder_template",
+    "z": 1193,
+    "doubleLeaveRoutineCompensation": true
+  },
+  "1_track": {
+    "type": "deck",
+    "id": "1_track",
+    "z": 7478,
+    "y": -13,
+    "x": -162,
+    "parent": "1_track_holder",
+    "fixedParent": true,
+    "cardDefaults": {
+      "width": 34,
+      "height": 34,
+      "track": true,
+      "borderColor": "#ffffff",
+      "borderWidth": 14,
+      "secondaryColor": "#000000"
+    },
+    "cardTypes": {
+      "1_track": {
+        "image": "/i/game-pieces/3D/Marble-3D.svg",
+        "color": "blue"
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 34,
+            "height": 34,
+            "css": "border-radius: 50%;",
+            "svgReplaces": {
+              "#primaryColor": "color",
+              "#secondaryColor": "secondaryColor",
+              "#borderColor": "borderColor",
+              "#borderWidth": "borderWidth"
+            },
+            "dynamicProperties": {
+              "value": "image",
+              "color": "color"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "xifa": {
+    "deck": "1_track",
+    "type": "card",
+    "cardType": "1_track",
+    "id": "xifa",
+    "z": 7860,
+    "x": 6,
+    "y": 6,
+    "parent": "1_track_holder"
+  },
+  "1_track_counter": {
+    "type": "basic",
+    "id": "1_track_counter",
+    "parent": "1_track_holder",
+    "fixedParent": true,
+    "x": 8,
+    "y": 4,
+    "width": 30,
+    "height": 30,
+    "layer": 500,
+    "z": 20,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "default": {
+        "color": "white",
+        "font-size": "21px",
+        "line-height": "38px",
+        "border": "4px white",
+        "font-weight": "900",
+        "background": "transparent",
+        "pointer-events": "none",
+        "text-align": "center",
+        "text-shadow": "-1px -1px 0 #000000, 1px -1px 0 #000000, -1px 1px 0 #000000, 1px 1px 0 #000000, 0 1px 5px #00000099"
+      }
+    },
+    "counter": true,
+    "text": 12
+  },
+  "2_track_holder": {
+    "type": "holder",
+    "id": "2_track_holder",
+    "x": 1015,
+    "y": 556,
+    "inheritFrom": "track_holder_template",
+    "z": 1201,
+    "doubleLeaveRoutineCompensation": true
+  },
+  "2_track": {
+    "type": "deck",
+    "id": "2_track",
+    "z": 7475,
+    "x": -147,
+    "parent": "2_track_holder",
+    "fixedParent": true,
+    "cardDefaults": {
+      "width": 34,
+      "height": 34,
+      "track": true,
+      "borderColor": "#ffffff",
+      "borderWidth": 14,
+      "secondaryColor": "#000000"
+    },
+    "cardTypes": {
+      "1_track": {
+        "image": "/i/game-pieces/3D/Marble-3D.svg",
+        "color": "green"
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 34,
+            "height": 34,
+            "css": "border-radius: 50%;",
+            "svgReplaces": {
+              "#primaryColor": "color",
+              "#secondaryColor": "secondaryColor",
+              "#borderColor": "borderColor",
+              "#borderWidth": "borderWidth"
+            },
+            "dynamicProperties": {
+              "value": "image",
+              "color": "color"
+            }
+          }
+        ]
+      }
+    ],
+    "recall_on_setup": true,
+    "y": 88
+  },
+  "2_track_counter": {
+    "type": "basic",
+    "id": "2_track_counter",
+    "parent": "2_track_holder",
+    "fixedParent": true,
+    "x": 8,
+    "y": 4,
+    "width": 30,
+    "height": 30,
+    "layer": 500,
+    "z": 20,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "default": {
+        "color": "white",
+        "font-size": "21px",
+        "line-height": "38px",
+        "border": "4px white",
+        "font-weight": "900",
+        "background": "transparent",
+        "pointer-events": "none",
+        "text-align": "center",
+        "text-shadow": "-1px -1px 0 #000000, 1px -1px 0 #000000, -1px 1px 0 #000000, 1px 1px 0 #000000, 0 1px 5px #00000099"
+      }
+    },
+    "counter": true,
+    "text": 12
+  },
+  "3_track_holder": {
+    "type": "holder",
+    "id": "3_track_holder",
+    "x": 1061,
+    "y": 556,
+    "inheritFrom": "track_holder_template",
+    "z": 1200,
+    "doubleLeaveRoutineCompensation": true
+  },
+  "3_track": {
+    "type": "deck",
+    "id": "3_track",
+    "z": 7477,
+    "x": -169,
+    "parent": "3_track_holder",
+    "fixedParent": true,
+    "cardDefaults": {
+      "width": 34,
+      "height": 34,
+      "track": true,
+      "borderColor": "#ffffff",
+      "borderWidth": 14,
+      "secondaryColor": "#000000"
+    },
+    "cardTypes": {
+      "1_track": {
+        "image": "/i/game-pieces/3D/Marble-3D.svg",
+        "color": "black"
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 34,
+            "height": 34,
+            "css": "border-radius: 50%;",
+            "svgReplaces": {
+              "#primaryColor": "color",
+              "#secondaryColor": "secondaryColor",
+              "#borderColor": "borderColor",
+              "#borderWidth": "borderWidth"
+            },
+            "dynamicProperties": {
+              "value": "image",
+              "color": "color"
+            }
+          }
+        ]
+      }
+    ],
+    "recall_on_setup": true,
+    "y": 7
+  },
+  "3_track_counter": {
+    "type": "basic",
+    "id": "3_track_counter",
+    "parent": "3_track_holder",
+    "fixedParent": true,
+    "x": 8,
+    "y": 4,
+    "width": 30,
+    "height": 30,
+    "layer": 500,
+    "z": 20,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "default": {
+        "color": "white",
+        "font-size": "21px",
+        "line-height": "38px",
+        "border": "4px white",
+        "font-weight": "900",
+        "background": "transparent",
+        "pointer-events": "none",
+        "text-align": "center",
+        "text-shadow": "-1px -1px 0 #000000, 1px -1px 0 #000000, -1px 1px 0 #000000, 1px 1px 0 #000000, 0 1px 5px #00000099"
+      }
+    },
+    "counter": true,
+    "text": 12
+  },
+  "4_track_holder": {
+    "type": "holder",
+    "id": "4_track_holder",
+    "x": 1039,
+    "y": 517,
+    "inheritFrom": "track_holder_template",
+    "z": 1196,
+    "doubleLeaveRoutineCompensation": true
+  },
+  "4_track": {
+    "type": "deck",
+    "id": "4_track",
+    "z": 7233,
+    "y": 65,
+    "x": -228,
+    "parent": "4_track_holder",
+    "fixedParent": true,
+    "cardDefaults": {
+      "width": 34,
+      "height": 34,
+      "track": true,
+      "borderColor": "#ffffff",
+      "borderWidth": 14,
+      "secondaryColor": "#000000"
+    },
+    "cardTypes": {
+      "1_track": {
+        "image": "/i/game-pieces/3D/Marble-3D.svg",
+        "color": "orange"
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 34,
+            "height": 34,
+            "css": "border-radius: 50%;",
+            "svgReplaces": {
+              "#primaryColor": "color",
+              "#secondaryColor": "secondaryColor",
+              "#borderColor": "borderColor",
+              "#borderWidth": "borderWidth"
+            },
+            "dynamicProperties": {
+              "value": "image",
+              "color": "color"
+            }
+          }
+        ]
+      }
+    ],
+    "recall_on_setup": true
+  },
+  "4_track_counter": {
+    "type": "basic",
+    "id": "4_track_counter",
+    "parent": "4_track_holder",
+    "fixedParent": true,
+    "x": 8,
+    "y": 4,
+    "width": 30,
+    "height": 30,
+    "layer": 500,
+    "z": 20,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "default": {
+        "color": "white",
+        "font-size": "21px",
+        "line-height": "38px",
+        "border": "4px white",
+        "font-weight": "900",
+        "background": "transparent",
+        "pointer-events": "none",
+        "text-align": "center",
+        "text-shadow": "-1px -1px 0 #000000, 1px -1px 0 #000000, -1px 1px 0 #000000, 1px 1px 0 #000000, 0 1px 5px #00000099"
+      }
+    },
+    "counter": true,
+    "text": 12
+  },
+  "5_track_holder": {
+    "type": "holder",
+    "id": "5_track_holder",
+    "x": 1082,
+    "y": 517,
+    "inheritFrom": "track_holder_template",
+    "z": 1198,
+    "doubleLeaveRoutineCompensation": true
+  },
+  "5_track": {
+    "type": "deck",
+    "id": "5_track",
+    "z": 7479,
+    "y": 107,
+    "x": -132,
+    "parent": "5_track_holder",
+    "fixedParent": true,
+    "cardDefaults": {
+      "width": 34,
+      "height": 34,
+      "track": true,
+      "borderColor": "#ffffff",
+      "borderWidth": 14,
+      "secondaryColor": "#000000"
+    },
+    "cardTypes": {
+      "1_track": {
+        "image": "/i/game-pieces/3D/Marble-3D.svg",
+        "color": "white"
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 34,
+            "height": 34,
+            "css": "border-radius: 50%;",
+            "svgReplaces": {
+              "#primaryColor": "color",
+              "#secondaryColor": "secondaryColor",
+              "#borderColor": "borderColor",
+              "#borderWidth": "borderWidth"
+            },
+            "dynamicProperties": {
+              "value": "image",
+              "color": "color"
+            }
+          }
+        ]
+      }
+    ],
+    "recall_on_setup": true
+  },
+  "5_track_counter": {
+    "type": "basic",
+    "id": "5_track_counter",
+    "parent": "5_track_holder",
+    "fixedParent": true,
+    "x": 8,
+    "y": 4,
+    "width": 30,
+    "height": 30,
+    "layer": 500,
+    "z": 20,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "default": {
+        "color": "white",
+        "font-size": "21px",
+        "line-height": "38px",
+        "border": "4px white",
+        "font-weight": "900",
+        "background": "transparent",
+        "pointer-events": "none",
+        "text-align": "center",
+        "text-shadow": "-1px -1px 0 #000000, 1px -1px 0 #000000, -1px 1px 0 #000000, 1px 1px 0 #000000, 0 1px 5px #00000099"
+      }
+    },
+    "counter": true,
+    "text": 12
+  },
+  "e18r": {
+    "deck": "2_track",
+    "type": "card",
+    "cardType": "1_track",
+    "id": "e18r",
+    "z": 7872,
+    "parent": "2_track_holder",
+    "x": 6,
+    "y": 6
+  },
+  "nmo9": {
+    "deck": "2_track",
+    "type": "card",
+    "cardType": "1_track",
+    "id": "nmo9",
+    "z": 7873,
+    "parent": "2_track_holder",
+    "x": 6,
+    "y": 6
+  },
+  "jfhs": {
+    "deck": "2_track",
+    "type": "card",
+    "cardType": "1_track",
+    "id": "jfhs",
+    "z": 7874,
+    "x": 6,
+    "y": 6,
+    "parent": "2_track_holder"
+  },
+  "6odf": {
+    "deck": "2_track",
+    "type": "card",
+    "cardType": "1_track",
+    "id": "6odf",
+    "z": 7875,
+    "x": 6,
+    "y": 6,
+    "parent": "2_track_holder"
+  },
+  "ks77": {
+    "deck": "2_track",
+    "type": "card",
+    "cardType": "1_track",
+    "id": "ks77",
+    "z": 7876,
+    "x": 6,
+    "y": 6,
+    "parent": "2_track_holder"
+  },
+  "cpu5": {
+    "deck": "2_track",
+    "type": "card",
+    "cardType": "1_track",
+    "id": "cpu5",
+    "z": 7877,
+    "x": 6,
+    "y": 6,
+    "parent": "2_track_holder"
+  },
+  "kvdt": {
+    "deck": "2_track",
+    "type": "card",
+    "cardType": "1_track",
+    "id": "kvdt",
+    "z": 7878,
+    "x": 6,
+    "y": 6,
+    "parent": "2_track_holder"
+  },
+  "bkbi": {
+    "deck": "2_track",
+    "type": "card",
+    "cardType": "1_track",
+    "id": "bkbi",
+    "z": 7879,
+    "x": 6,
+    "y": 6,
+    "parent": "2_track_holder"
+  },
+  "tigp": {
+    "deck": "2_track",
+    "type": "card",
+    "cardType": "1_track",
+    "id": "tigp",
+    "z": 7880,
+    "x": 6,
+    "y": 6,
+    "parent": "2_track_holder"
+  },
+  "1k8y": {
+    "deck": "2_track",
+    "type": "card",
+    "cardType": "1_track",
+    "id": "1k8y",
+    "z": 7881,
+    "x": 6,
+    "y": 6,
+    "parent": "2_track_holder"
+  },
+  "b8fn": {
+    "deck": "2_track",
+    "type": "card",
+    "cardType": "1_track",
+    "id": "b8fn",
+    "z": 7882,
+    "x": 6,
+    "y": 6,
+    "parent": "2_track_holder"
+  },
+  "3r3n": {
+    "deck": "2_track",
+    "type": "card",
+    "cardType": "1_track",
+    "id": "3r3n",
+    "z": 7883,
+    "x": 6,
+    "y": 6,
+    "parent": "2_track_holder"
+  },
+  "s3i6": {
+    "deck": "4_track",
+    "type": "card",
+    "cardType": "1_track",
+    "id": "s3i6",
+    "z": 7896,
+    "parent": "4_track_holder",
+    "x": 6,
+    "y": 6
+  },
+  "5mmz": {
+    "deck": "4_track",
+    "type": "card",
+    "cardType": "1_track",
+    "id": "5mmz",
+    "z": 7897,
+    "parent": "4_track_holder",
+    "x": 6,
+    "y": 6
+  },
+  "mr4y": {
+    "deck": "4_track",
+    "type": "card",
+    "cardType": "1_track",
+    "id": "mr4y",
+    "z": 7898,
+    "parent": "4_track_holder",
+    "x": 6,
+    "y": 6
+  },
+  "5inc": {
+    "deck": "4_track",
+    "type": "card",
+    "cardType": "1_track",
+    "id": "5inc",
+    "z": 7899,
+    "parent": "4_track_holder",
+    "x": 6,
+    "y": 6
+  },
+  "vsuj": {
+    "deck": "4_track",
+    "type": "card",
+    "cardType": "1_track",
+    "id": "vsuj",
+    "z": 7900,
+    "parent": "4_track_holder",
+    "x": 6,
+    "y": 6
+  },
+  "vk0m": {
+    "deck": "4_track",
+    "type": "card",
+    "cardType": "1_track",
+    "id": "vk0m",
+    "z": 7901,
+    "parent": "4_track_holder",
+    "x": 6,
+    "y": 6
+  },
+  "77jo": {
+    "deck": "4_track",
+    "type": "card",
+    "cardType": "1_track",
+    "id": "77jo",
+    "z": 7902,
+    "parent": "4_track_holder",
+    "x": 6,
+    "y": 6
+  },
+  "5gkr": {
+    "deck": "4_track",
+    "type": "card",
+    "cardType": "1_track",
+    "id": "5gkr",
+    "z": 7903,
+    "parent": "4_track_holder",
+    "x": 6,
+    "y": 6
+  },
+  "nh0c": {
+    "deck": "4_track",
+    "type": "card",
+    "cardType": "1_track",
+    "id": "nh0c",
+    "z": 7904,
+    "x": 6,
+    "y": 6,
+    "parent": "4_track_holder"
+  },
+  "9xay": {
+    "deck": "4_track",
+    "type": "card",
+    "cardType": "1_track",
+    "id": "9xay",
+    "z": 7905,
+    "x": 6,
+    "y": 6,
+    "parent": "4_track_holder"
+  },
+  "ve7r": {
+    "deck": "4_track",
+    "type": "card",
+    "cardType": "1_track",
+    "id": "ve7r",
+    "z": 7906,
+    "x": 6,
+    "y": 6,
+    "parent": "4_track_holder"
+  },
+  "h5zq": {
+    "deck": "4_track",
+    "type": "card",
+    "cardType": "1_track",
+    "id": "h5zq",
+    "z": 7907,
+    "x": 6,
+    "y": 6,
+    "parent": "4_track_holder"
+  },
+  "jvgl": {
+    "deck": "1_track",
+    "type": "card",
+    "cardType": "1_track",
+    "id": "jvgl",
+    "z": 7861,
+    "x": 6,
+    "y": 6,
+    "parent": "1_track_holder"
+  },
+  "bccu": {
+    "deck": "1_track",
+    "type": "card",
+    "cardType": "1_track",
+    "id": "bccu",
+    "z": 7862,
+    "x": 6,
+    "y": 6,
+    "parent": "1_track_holder"
+  },
+  "nby0": {
+    "deck": "1_track",
+    "type": "card",
+    "cardType": "1_track",
+    "id": "nby0",
+    "z": 7863,
+    "x": 6,
+    "y": 6,
+    "parent": "1_track_holder"
+  },
+  "wf25": {
+    "deck": "1_track",
+    "type": "card",
+    "cardType": "1_track",
+    "id": "wf25",
+    "z": 7864,
+    "x": 6,
+    "y": 6,
+    "parent": "1_track_holder"
+  },
+  "mj6y": {
+    "deck": "1_track",
+    "type": "card",
+    "cardType": "1_track",
+    "id": "mj6y",
+    "z": 7865,
+    "x": 6,
+    "y": 6,
+    "parent": "1_track_holder"
+  },
+  "7t33": {
+    "deck": "1_track",
+    "type": "card",
+    "cardType": "1_track",
+    "id": "7t33",
+    "z": 7866,
+    "x": 6,
+    "y": 6,
+    "parent": "1_track_holder"
+  },
+  "4u1w": {
+    "deck": "1_track",
+    "type": "card",
+    "cardType": "1_track",
+    "id": "4u1w",
+    "z": 7867,
+    "x": 6,
+    "y": 6,
+    "parent": "1_track_holder"
+  },
+  "jco9": {
+    "deck": "1_track",
+    "type": "card",
+    "cardType": "1_track",
+    "id": "jco9",
+    "z": 7868,
+    "x": 6,
+    "y": 6,
+    "parent": "1_track_holder"
+  },
+  "6xfi": {
+    "deck": "1_track",
+    "type": "card",
+    "cardType": "1_track",
+    "id": "6xfi",
+    "z": 7869,
+    "parent": "1_track_holder",
+    "x": 6,
+    "y": 6
+  },
+  "a6yq": {
+    "deck": "1_track",
+    "type": "card",
+    "cardType": "1_track",
+    "id": "a6yq",
+    "z": 7870,
+    "x": 6,
+    "y": 6,
+    "parent": "1_track_holder"
+  },
+  "e8ya": {
+    "deck": "1_track",
+    "type": "card",
+    "cardType": "1_track",
+    "id": "e8ya",
+    "z": 7871,
+    "x": 6,
+    "y": 6,
+    "parent": "1_track_holder"
+  },
+  "es4y": {
+    "deck": "3_track",
+    "type": "card",
+    "cardType": "1_track",
+    "id": "es4y",
+    "z": 7884,
+    "x": 6,
+    "y": 6,
+    "parent": "3_track_holder"
+  },
+  "grjf": {
+    "deck": "3_track",
+    "type": "card",
+    "cardType": "1_track",
+    "id": "grjf",
+    "z": 7885,
+    "x": 6,
+    "y": 6,
+    "parent": "3_track_holder"
+  },
+  "cemj": {
+    "deck": "3_track",
+    "type": "card",
+    "cardType": "1_track",
+    "id": "cemj",
+    "z": 7886,
+    "x": 6,
+    "y": 6,
+    "parent": "3_track_holder"
+  },
+  "09as": {
+    "deck": "3_track",
+    "type": "card",
+    "cardType": "1_track",
+    "id": "09as",
+    "z": 7887,
+    "x": 6,
+    "y": 6,
+    "parent": "3_track_holder"
+  },
+  "zhxk": {
+    "deck": "3_track",
+    "type": "card",
+    "cardType": "1_track",
+    "id": "zhxk",
+    "z": 7888,
+    "x": 6,
+    "y": 6,
+    "parent": "3_track_holder"
+  },
+  "ny5o": {
+    "deck": "3_track",
+    "type": "card",
+    "cardType": "1_track",
+    "id": "ny5o",
+    "z": 7889,
+    "x": 6,
+    "y": 6,
+    "parent": "3_track_holder"
+  },
+  "nqqo": {
+    "deck": "3_track",
+    "type": "card",
+    "cardType": "1_track",
+    "id": "nqqo",
+    "z": 7890,
+    "x": 6,
+    "y": 6,
+    "parent": "3_track_holder"
+  },
+  "larb": {
+    "deck": "3_track",
+    "type": "card",
+    "cardType": "1_track",
+    "id": "larb",
+    "z": 7891,
+    "x": 6,
+    "y": 6,
+    "parent": "3_track_holder"
+  },
+  "qw5f": {
+    "deck": "3_track",
+    "type": "card",
+    "cardType": "1_track",
+    "id": "qw5f",
+    "z": 7892,
+    "x": 6,
+    "y": 6,
+    "parent": "3_track_holder"
+  },
+  "kepk": {
+    "deck": "3_track",
+    "type": "card",
+    "cardType": "1_track",
+    "id": "kepk",
+    "z": 7893,
+    "x": 6,
+    "y": 6,
+    "parent": "3_track_holder"
+  },
+  "b828": {
+    "deck": "3_track",
+    "type": "card",
+    "cardType": "1_track",
+    "id": "b828",
+    "z": 7894,
+    "x": 6,
+    "y": 6,
+    "parent": "3_track_holder"
+  },
+  "pds6": {
+    "deck": "3_track",
+    "type": "card",
+    "cardType": "1_track",
+    "id": "pds6",
+    "z": 7895,
+    "x": 6,
+    "y": 6,
+    "parent": "3_track_holder"
+  },
+  "1cke": {
+    "deck": "5_track",
+    "type": "card",
+    "cardType": "1_track",
+    "id": "1cke",
+    "z": 7908,
+    "x": 6,
+    "y": 6,
+    "parent": "5_track_holder"
+  },
+  "l14f": {
+    "deck": "5_track",
+    "type": "card",
+    "cardType": "1_track",
+    "id": "l14f",
+    "z": 7909,
+    "x": 6,
+    "y": 6,
+    "parent": "5_track_holder"
+  },
+  "vg4b": {
+    "deck": "5_track",
+    "type": "card",
+    "cardType": "1_track",
+    "id": "vg4b",
+    "z": 7910,
+    "x": 6,
+    "y": 6,
+    "parent": "5_track_holder"
+  },
+  "nx86": {
+    "deck": "5_track",
+    "type": "card",
+    "cardType": "1_track",
+    "id": "nx86",
+    "z": 7911,
+    "x": 6,
+    "y": 6,
+    "parent": "5_track_holder"
+  },
+  "fkqx": {
+    "deck": "5_track",
+    "type": "card",
+    "cardType": "1_track",
+    "id": "fkqx",
+    "z": 7912,
+    "x": 6,
+    "y": 6,
+    "parent": "5_track_holder"
+  },
+  "rhtb": {
+    "deck": "5_track",
+    "type": "card",
+    "cardType": "1_track",
+    "id": "rhtb",
+    "z": 7913,
+    "x": 6,
+    "y": 6,
+    "parent": "5_track_holder"
+  },
+  "b90f": {
+    "deck": "5_track",
+    "type": "card",
+    "cardType": "1_track",
+    "id": "b90f",
+    "z": 7914,
+    "x": 6,
+    "y": 6,
+    "parent": "5_track_holder"
+  },
+  "hwv3": {
+    "deck": "5_track",
+    "type": "card",
+    "cardType": "1_track",
+    "id": "hwv3",
+    "z": 7915,
+    "x": 6,
+    "y": 6,
+    "parent": "5_track_holder"
+  },
+  "7smd": {
+    "deck": "5_track",
+    "type": "card",
+    "cardType": "1_track",
+    "id": "7smd",
+    "z": 7916,
+    "x": 6,
+    "y": 6,
+    "parent": "5_track_holder"
+  },
+  "pfgo": {
+    "deck": "5_track",
+    "type": "card",
+    "cardType": "1_track",
+    "id": "pfgo",
+    "z": 7917,
+    "x": 6,
+    "y": 6,
+    "parent": "5_track_holder"
+  },
+  "u5w1": {
+    "deck": "5_track",
+    "type": "card",
+    "cardType": "1_track",
+    "id": "u5w1",
+    "z": 7918,
+    "x": 6,
+    "y": 6,
+    "parent": "5_track_holder"
+  },
+  "inu6": {
+    "deck": "5_track",
+    "type": "card",
+    "cardType": "1_track",
+    "id": "inu6",
+    "z": 7919,
+    "x": 6,
+    "y": 6,
+    "parent": "5_track_holder"
+  },
+  "track_supply_label": {
+    "id": "track_supply_label",
+    "x": 993,
+    "y": 489,
+    "height": 40,
+    "z": 81768,
+    "css": {
+      "default": {
+        "color": "white",
+        "font-size": "25px",
+        "border-radius": "0px",
+        "border": "0px solid white",
+        "background": "transparent"
+      }
+    },
+    "text": "Track Supply",
+    "width": 200,
+    "movable": false
+  },
+  "your_turn_alert_anchor": {
+    "id": "your_turn_alert_anchor",
+    "x": 742,
+    "y": -304,
+    "width": 35,
+    "height": 40,
+    "z": 78752,
+    "color": "#1fa84f",
+    "css": "border-radius: 80% 80% 40% 110%",
+    "image": "/i/game-pieces/3D/Pin-3D.svg",
+    "svgReplaces": {
+      "#borderWidth": "borderWidth",
+      "#borderColor": "borderColor",
+      "#primaryColor": "color"
+    },
+    "borderColor": "black",
+    "borderWidth": "1",
+    "layer": 100,
+    "onlyVisibleForSeat": "4_seat",
+    "movable": false
+  },
+  "your_turn_label_animate": {
+    "type": "basic",
+    "id": "your_turn_label_animate",
+    "x": -493,
+    "y": 522,
+    "width": 860,
+    "height": 90,
+    "layer": 10,
+    "z": 531,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "default": {
+        "background": "TRANSPARENT",
+        "border-radius": "10px",
+        "border": "10px solid transparent",
+        "font-size": "90px",
+        "font-weight": "900",
+        "text-align": "center",
+        "display": "flex",
+        "align-items": "center",
+        "justify-content": "center",
+        "pointer-events": "none",
+        "color": "transparent"
+      },
+      ".animate_clickCount": {
+        "background": "white",
+        "border": "10px dotted ${PROPERTY background_color_solid}",
+        "color": "${PROPERTY background_color_solid}",
+        "text-shadow": "-3px -3px 0 ${PROPERTY contrast_color}, 3px -3px 0 ${PROPERTY contrast_color}, -3px 3px 0 ${PROPERTY contrast_color}, 3px 3px 0 ${PROPERTY contrast_color}, 0 3px 5px ${PROPERTY contrast_color}99"
+      }
+    },
+    "text": "It's Your Turn!",
+    "background_color_solid": "#009688",
+    "background_color_transparent": "#ffeb3b48",
+    "clickCount": 1344,
+    "animatePropertyChange": [
+      {
+        "property": "clickCount",
+        "duration": 2000
+      }
+    ],
+    "RevealRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "clickCount",
+        "relation": "+",
+        "value": 1
+      }
+    ],
+    "contrast_color": "white",
+    "parent": "your_turn_alert_anchor",
+    "fixedParent": true
+  },
+  "it45": {
+    "type": "pile",
+    "parent": "card_holder0",
+    "x": 26,
+    "y": -29,
+    "width": 75,
+    "height": 75,
+    "handleCSS": "background:white;left:127px;width:50px;top:15px;height:50px;border-radius:100px;color:black;font-size:35px;background-size:100%;display:block;line-height:50px",
+    "handleOffset": 0,
+    "clickRoutine": [],
+    "id": "it45"
+  }
+}
