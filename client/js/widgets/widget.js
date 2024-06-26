@@ -1877,8 +1877,7 @@ export class Widget extends StateManaged {
           }
 
           // filter out seats with skipTurn set to true
-          let includeCurrent = (a.turnCycle != 'position' && a.turnCycle != 'seat');
-          let unskipped = c.filter(w=>(includeCurrent && w.get('turn')) || !w.get('skipTurn'));
+          let unskipped = c.filter(w=>!w.get('skipTurn'));
           let target = unskipped[0];
 
           // identify the correct target seat
@@ -1897,7 +1896,8 @@ export class Widget extends StateManaged {
             }
           } else {
             const turn = Number.isFinite(a.turn) ? a.turn : 1;
-            target = unskipped[turn % unskipped.length];
+            const offset = (c[0] == unskipped[0] ? 0 : 1);
+            target = unskipped[(turn - offset) % unskipped.length];
           }
 
           // execute the change in turn properties and collect turn seats into output collection
