@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "version": 14,
+    "version": 15,
     "info": {
       "name": "Egyptian Epochs",
       "image": "/assets/1301779629_162792",
@@ -351,13 +351,15 @@
     "value": 16,
     "parent": "pile-suns"
   },
-  "holder-suns-active-p1": {
+  "holder-suns-future-p1": {
     "type": "holder",
-    "id": "holder-suns-active-p1",
+    "id": "holder-suns-future-p1",
     "parent": "seat-p1",
-    "y": 72,
+    "x": 0,
+    "y": 112,
     "width": 130,
     "height": 40,
+    "dropLimit": 4,
     "dropOffsetX": 3.5,
     "dropOffsetY": 5,
     "dropTarget": {
@@ -367,7 +369,6 @@
     "css": {
       "border-color": "#888888"
     },
-    "dropLimit": 4,
     "dropLimitChangeRoutine": [
       "var dropOffsetX = 3.5",
       {
@@ -388,13 +389,43 @@
       }
     ]
   },
-  "holder-suns-future-p1": {
+  "holder-suns-active-p1": {
     "type": "holder",
-    "id": "holder-suns-future-p1",
-    "inheritFrom": "holder-suns-active-p1",
-    "y": 112,
-    "dropLimit": 4,
-    "dropOffsetX": 3.5
+    "id": "holder-suns-active-p1",
+    "parent": "seat-p1",
+    "inheritFrom": "holder-suns-future-p1",
+    "y": 72,
+    "enterRoutine": [
+      {
+        "func": "SET",
+        "collection": [
+          "${PROPERTY parent}"
+        ],
+        "property": "skipTurn",
+        "value": false
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "COUNT",
+        "holder": "${PROPERTY id}"
+      },
+      {
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "${PROPERTY parent}"
+            ],
+            "property": "skipTurn",
+            "value": true
+          }
+        ]
+      }
+    ]
   },
   "holder-suns-bid-p1": {
     "type": "holder",
@@ -3868,51 +3899,7 @@
     "text": "End Turn",
     "clickRoutine": [
       {
-        "func": "CALL",
-        "widget": "button-new-game",
-        "routine": "getPlayerCountRoutine",
-        "variable": "playerCount"
-      },
-      "var otherPlayers = ${playerCount} - 1",
-      {
-        "func": "TURN",
-        "turnCycle": "forward"
-      },
-      {
-        "func": "FOREACH",
-        "range": "${otherPlayers}",
-        "loopRoutine": [
-          {
-            "func": "SELECT",
-            "type": "seat",
-            "property": "turn",
-            "value": true
-          },
-          {
-            "func": "GET",
-            "property": "index"
-          },
-          {
-            "func": "SELECT",
-            "type": "card",
-            "property": "parent",
-            "value": "holder-suns-active-p${index}"
-          },
-          {
-            "func": "COUNT"
-          },
-          {
-            "func": "IF",
-            "operand1": "${COUNT}",
-            "operand2": 0,
-            "thenRoutine": [
-              {
-                "func": "TURN",
-                "turnCycle": "forward"
-              }
-            ]
-          }
-        ]
+        "func": "TURN"
       }
     ]
   },
@@ -4122,18 +4109,9 @@
         "operand2": 0,
         "thenRoutine": [
           {
-            "func": "SET",
-            "collection": "seats",
-            "property": "turn",
-            "value": false
-          },
-          {
-            "func": "SET",
-            "collection": [
-              "seat-p${startPlayer}"
-            ],
-            "property": "turn",
-            "value": true
+            "func": "TURN",
+            "turnCycle": "seat",
+            "turn": "seat-p${startPlayer}"
           }
         ]
       }
