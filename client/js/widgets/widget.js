@@ -1850,65 +1850,68 @@ export class Widget extends StateManaged {
           a.turnCycle = 'forward'
         }
         
-        let allSeats = Array.from(widgets.values()).filter(w=>w.get('type')=='seat')
-        let c = a.source=='all' ? allSeats: collections[getCollection(a.source)].filter(w=>w.get('type')=='seat')
+        let allSeats = Array.from(widgets.values()).filter(w=>w.get('type')=='seat');
+        let c = (a.source=='all' ? allSeats : collections[getCollection(a.source)].filter(w=>w.get('type')=='seat')).filter(w=>w.get('player'));
 
-        //this get the list of valid index
-        const indexList = [];
-        let previousTurn = 1;
-        for(const w of c) {
-          if(indexList.indexOf(w.get('index')) == -1 && w.get('player'))
-            indexList.push(w.get('index'));
-          if(w.get('turn'))
-            previousTurn = w.get('index');
-        }
-
-        if(indexList.length) {
-          indexList.sort((a,b)=>a-b);
-          let nextTurnIndex = 0;
-
-          if(a.turnCycle == 'position') {
-            if(a.turn == 'first') {
-              nextTurnIndex = 0;
-            } else if(a.turn == 'last') {
-              nextTurnIndex = indexList.length - 1;
-            } else if(a.turn > 0) {
-              nextTurnIndex = a.turn - 1;
-            } else {
-              nextTurnIndex = a.turn;
+        if (c.length == 0) {
+          jeLoggingRoutineOperationSummary(`no active seats found in collection ${a.source}`);
+        } else {
+          if (c.length > 1) {
+            if (a.turnCycle == 'forward' || a.turnCycle == 'position') {
+              c.sort((x, y) => x.get('index')-y.get('index'));
+            } else if (a.turnCycle == 'backward') {
+              c.sort((x, y) => y.get('index')-x.get('index'));
+            } else if (a.turnCycle == 'random') {
+              for (let i = c.length - 1; i > 0; i--) {
+                const rand = Math.floor(Math.random() * (i + 1));
+                [c[i], c[rand]] = [c[rand], c[i]];
+              }
             }
-          } else if(a.turnCycle == 'random') {
-            nextTurnIndex = Math.floor(rand() * indexList.length);
-          } else if(a.turnCycle == 'seat') {
-            let setSeat = c.find(w => w.get('id') === a.turn);
-            if(setSeat){
-              nextTurnIndex = indexList.indexOf(setSeat.get('index'));
-            } else {
-              problems.push(`Seat ${a.turn} is not a valid seat id in collection ${a.source}.`);
-            }
-          } else {
-            const turnIndexOffset = a.turnCycle == 'forward' ? a.turn : -a.turn;
-            nextTurnIndex = indexList.indexOf(previousTurn) + turnIndexOffset;
           }
 
-          //makes sure nextTurnIndex is a valid index of indexList
-          nextTurnIndex = Math.floor(nextTurnIndex);
-          if(typeof nextTurnIndex != 'number' || !isFinite(nextTurnIndex))
-            nextTurnIndex = 0;
-          const turn = indexList[mod(nextTurnIndex, indexList.length)];
+          if (a.turnCycle != 'position' && a.turnCycle != 'seat') {
+            // rotate the set of seats so the current turn is first
+            for (let i = 0; i < c.length && !c[0].get('turn'); i++) {
+              c.unshift(c.pop());
+            }
+          }
 
+          // filter out seats with skipTurn set to true
+          let unskipped = c.filter(w=>w.get('turn') || !w.get('skipTurn'));
+          let target = unskipped[0];
+
+          // identify the correct target seat
+          if (a.turnCycle == 'position') {
+            if (a.turn == 'last') {
+              target = unskipped[unskipped.length - 1];
+            } else if (Number.isFinite(a.turn)) {
+              target = unskipped[(a.turn - 1) % unskipped.length];
+            }
+          } else if (a.turnCycle == 'seat') {
+            // Selecting a specific seat so in this case skipTurn will be ignored
+            target = c.find(w => w.get('id') == a.turn);
+            if (!target) {
+              problems.push(`Seat ${a.turn} is not a valid seat id in collection ${a.source}.`);
+              target = c[0];
+            }
+          } else {
+            const turn = Number.isFinite(a.turn) ? a.turn : 1;
+            target = unskipped[turn % unskipped.length];
+          }
+
+          // execute the change in turn properties and collect turn seats into output collection
           collections[a.collection] = [];
-          //saves turn into all seats and creates output collection with turn seats
-          for(const w of allSeats) {
-            await w.set('turn', w.get('index') == turn);
-            if(w.get('turn') && w.get('player'))
+          for (const w of allSeats) {
+            await w.set('turn', w.get('index') == target.get('index'));
+            if (w.get('turn') && w.get('player'))
               collections[a.collection].push(w);
           }
 
-          if(jeRoutineLogging)
-            jeLoggingRoutineOperationSummary(`changed turn of seats from ${previousTurn} to ${turn} - active seats: ${JSON.stringify(indexList)}`);
-        } else if(jeRoutineLogging) {
-          jeLoggingRoutineOperationSummary(`no active seats found in collection ${a.source}`);
+          if(jeRoutineLogging) {
+            const indexList = c.map(w=>w.get('index'));
+            const turn = target.get('index');
+            jeLoggingRoutineOperationSummary(`changed turn of seats to ${turn} - active seats: ${JSON.stringify(indexList)}`);
+          }
         }
       }
 
