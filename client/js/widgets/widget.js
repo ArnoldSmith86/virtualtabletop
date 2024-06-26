@@ -1877,7 +1877,8 @@ export class Widget extends StateManaged {
           }
 
           // filter out seats with skipTurn set to true
-          let unskipped = c.filter(w=>w.get('turn') || !w.get('skipTurn'));
+          let includeCurrent = (a.turnCycle != 'position' && a.turnCycle != 'seat');
+          let unskipped = c.filter(w=>(includeCurrent && w.get('turn')) || !w.get('skipTurn'));
           let target = unskipped[0];
 
           // identify the correct target seat
