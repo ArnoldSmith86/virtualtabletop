@@ -6880,9 +6880,9 @@
     "type": "holder",
     "id": "holder-hex-f-o18",
     "parent": "board-map-farmer",
-    "inheritFrom": "holder-farm-a6",
     "x": 672,
-    "y": 498.87
+    "y": 498.87,
+    "inheritFrom": "holder-hex-a4"
   },
   "holder-hex-f-o20": {
     "type": "holder",
