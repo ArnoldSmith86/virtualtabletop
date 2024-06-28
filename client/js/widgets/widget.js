@@ -1444,13 +1444,18 @@ export class Widget extends StateManaged {
                 if(widgets.has(target.get('hand'))) {
                   const targetHand = widgets.get(target.get('hand'));
                   await applyFlip();
-                  c.targetPlayer = target.get('player');
-                  await c.moveToHolder(targetHand);
-                  delete c.targetPlayer;
+                  if (targetHand == source) {
+                    // cards are already in hand: only an owner update is needed
+                    await c.set('owner', target.get('player'));
+                  } else {
+                    c.targetPlayer = target.get('player');
+                    await c.moveToHolder(targetHand);
+                    delete c.targetPlayer;
+                  }
                   await c.bringToFront();
-                  ++moved;
                   if(targetHand.get('type') == 'holder')
-                    await targetHand.updateAfterShuffle(); // this arranges the cards in the new owner's hand
+                      await targetHand.updateAfterShuffle(); // this arranges the cards in the new owner's hand
+                  ++moved;
                 } else {
                   problems.push(`Seat ${target.id} declares 'hand: ${target.get('hand')}' which does not exist.`);
                 }
@@ -1785,6 +1790,58 @@ export class Widget extends StateManaged {
           }
           if(jeRoutineLogging)
             jeLoggingRoutineOperationSummary(`widgets in '${a.collection}' by ${key}${reverse}`);
+        }
+      }
+
+      if(a.func == 'SWAPHANDS') {
+        setDefaults(a, { interval: 1, direction: 'forward', source: 'all' });
+        if(['forward', 'backward', 'random'].indexOf(a.direction) == -1) {
+          problems.push(`Warning: direction ${a.direction} interpreted as forward.`);
+          a.direction = 'forward'
+        }
+        let allSeats = Array.from(widgets.values()).filter(w=>w.get('type')=='seat');
+        let c = (a.source=='all' ? allSeats : collections[getCollection(a.source)].filter(w=>w.get('type')=='seat')).filter(w=>w.get('player'));
+        if (c.length > 1) {
+          if(a.direction == 'forward') {
+            c.sort((a, b)=>a.get('index')-b.get('index'));
+          } else if(a.direction == 'backward') {
+            c.sort((a, b)=>b.get('index')-a.get('index'));
+          } else if (a.direction == 'random') {
+            for (let i = c.length - 1; i > 0; i--) {
+              const rand = Math.floor(Math.random() * (i + 1));
+              [c[i], c[rand]] = [c[rand], c[i]];
+            }
+          }
+          let moves = [];
+          for (let i = 0; i < c.length; i++) {
+            let source = c[i];
+            let target = c[(i + a.interval) % c.length];
+            let hand = source.get('hand');
+            if (this.isValidID(hand, problems)) {
+              let perOwner = widgets.get(hand).get('childrenPerOwner');
+              let contents = widgets.get(hand).children().reduce(
+                function (collect, w) {
+                  if (!perOwner || w.get('owner') == source.get('player')) {
+                    collect.unshift(w.get('id'));
+                  }
+                  return collect
+                },
+                []
+              );
+              moves.push({
+                func: "MOVE",
+                collection: contents,
+                to: target.get('id'),
+              });
+            }
+          }
+          if(jeRoutineLogging) {
+            jeLoggingRoutineOperationStart("Moves", "Moves");
+          }
+          await this.evaluateRoutine(moves, variables, collections, (depth || 0) + 1, true);
+          if(jeRoutineLogging) {
+          jeLoggingRoutineOperationEnd([], variables, collections, false);
+          }
         }
       }
 
