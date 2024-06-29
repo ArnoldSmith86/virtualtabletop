@@ -1,5 +1,8 @@
 .holder {
-  background: white;
+  background-color: white;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: 100% 100%;
   box-sizing: border-box;
   border-width: 1px;
   border-style: solid;
