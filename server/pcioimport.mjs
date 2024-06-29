@@ -259,7 +259,7 @@ export default async function convertPCIO(content) {
       if(widget.layoutType == 'spread') {
         if(widget.spreadDirection == 'down') {
           w.stackOffsetY = 168;
-        } else if(widget.spreadDirection == 'down') {
+        } else if(widget.spreadDirection == 'up') {
           w.dropOffsetY = (w.height || 168) - 168;
           w.stackOffsetY = -168;
         } else if(widget.spreadDirection == 'left') {
