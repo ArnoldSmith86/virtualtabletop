@@ -25,6 +25,39 @@ class ToolboxModule extends SidebarModule {
     batchEnd();
   }
 
+  async button_searchAndReplace() {
+    const globalSearchText = $('#globalSearchText').value;
+    const globalReplaceText = $('#globalReplaceText').value;
+    const globalReplaceRegex = $('#globalReplaceRegex').checked;
+
+    batchStart();
+    setDeltaCause(`${getPlayerDetails().playerName} searched and replaced text in widgets in editor`);
+    for(const widget of [...widgets.values()]) {
+      const oldState = JSON.stringify(widget.state);
+      let newState = oldState;
+      if(globalReplaceRegex) {
+        try {
+          newState = newState.replace(new RegExp(globalSearchText, 'g'), globalReplaceText);
+        } catch(e) {
+          alert('Invalid regular expression');
+          batchEnd();
+          return;
+        }
+      } else {
+        newState = newState.replace(globalSearchText, globalReplaceText);
+      }
+      try {
+        newState = JSON.stringify(JSON.parse(newState));
+      } catch(e) {
+        alert('Replacement resulted in invalid JSON. This feauture is working on the JSON level, so make sure the replacement is valid JSON.');
+        batchEnd();
+        return;
+      }
+      await updateWidget(newState, oldState)
+    }
+    batchEnd();
+  }
+
   renderModule(target) {
     this.addHeader('Toolbox');
     this.widgetBuffer(target);
@@ -54,5 +87,15 @@ class ToolboxModule extends SidebarModule {
       list += `<li>${html(state.id)}</li>`;
     this.currentContents = div(target);
     this.renderWidgetBuffer();
+
+    this.addSubHeader('Search and Replace');
+    div(target, 'buttonBar', `
+      <p>Here you can search for text in all widgets of the current room state and replace it by something else.</p>
+      <input id=globalSearchText placeholder="Search text">
+      <input id=globalReplaceText placeholder="Replace text">
+      <input type=checkbox id=globalReplaceRegex><label for=globalReplaceRegex>Use regular expressions</label>
+      <button icon=search id=searchAndReplace>Search and replace</button>
+    `);
+    $('#searchAndReplace').onclick = e=>this.button_searchAndReplace();
   }
 }
