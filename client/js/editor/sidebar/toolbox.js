@@ -92,9 +92,9 @@ class ToolboxModule extends SidebarModule {
     this.addSubHeader('Search and Replace');
     div(target, 'buttonBar', `
       <p>Here you can search for text in all widgets of the current room state and replace it by something else.</p>
-      <input id=globalSearchText placeholder="Search text">
-      <input id=globalReplaceText placeholder="Replace text">
-      <input type=checkbox id=globalReplaceRegex><label for=globalReplaceRegex>Use regular expressions</label>
+      <input id=globalSearchText placeholder="Search text"><br>
+      <input id=globalReplaceText placeholder="Replace text"><br><br>
+      <input type=checkbox id=globalReplaceRegex><label for=globalReplaceRegex> Regular expression (<code>$1</code> references first capture group)</label><br><br>
       <button icon=search id=searchAndReplace>Search and replace</button>
     `);
     $('#searchAndReplace').onclick = e=>this.button_searchAndReplace();
