@@ -1911,7 +1911,8 @@ export class Widget extends StateManaged {
         let c = (a.source=='all' ? allSeats : collections[getCollection(a.source)].filter(w=>w.get('type')=='seat')).filter(w=>w.get('player'));
 
         if (c.length == 0) {
-          jeLoggingRoutineOperationSummary(`no active seats found in collection ${a.source}`);
+          if(jeRoutineLogging)
+            jeLoggingRoutineOperationSummary(`no active seats found in collection ${a.source}`);
         } else {
           if (c.length > 1) {
             if (a.turnCycle == 'forward' || a.turnCycle == 'position') {
