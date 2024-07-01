@@ -44,7 +44,7 @@ class ToolboxModule extends SidebarModule {
           return;
         }
       } else {
-        const regexPattern = new RegExp(`\\b${globalSearchText}\\b`, 'g');
+        const regexPattern = new RegExp(`\\b${regexEscape(globalSearchText)}\\b`, 'g');
         newState = newState.replace(regexPattern, globalReplaceText);
       }
       try {
