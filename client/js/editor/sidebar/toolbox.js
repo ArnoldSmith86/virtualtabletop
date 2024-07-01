@@ -40,18 +40,18 @@ class ToolboxModule extends SidebarModule {
     }
     const flags = globalReplaceCase ? 'g' : 'gi';
 
+    try {
+      regex = new RegExp(regex, flags);
+    } catch(e) {
+      alert('Invalid regular expression');
+      return;
+    }
+
     batchStart();
     setDeltaCause(`${getPlayerDetails().playerName} searched and replaced text in widgets in editor`);
     for(const widget of [...widgets.values()]) {
       const oldState = JSON.stringify(widget.state);
-      let newState = oldState;
-      try {
-        newState = newState.replace(new RegExp(regex, flags), globalReplaceText);
-      } catch(e) {
-        alert('Invalid regular expression');
-        batchEnd();
-        return;
-      }
+      let newState = oldState.replace(regex, globalReplaceText);
       try {
         newState = JSON.stringify(JSON.parse(newState));
       } catch(e) {
