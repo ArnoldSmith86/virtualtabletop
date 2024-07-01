@@ -21,8 +21,11 @@ class ToolboxModule extends SidebarModule {
     batchStart();
     setDeltaCause(`${getPlayerDetails().playerName} loaded widgets from the widget buffer in editor`);
     for(const state of widgetBuffer) {
-      if(!widgetBuffer.filter(w=>w.id==state.parent).length && !widgets.has(state.parent))
+      if(!widgetBuffer.filter(w=>w.id==state.parent).length && !widgets.has(state.parent)) {
         delete state.parent;
+        delete state.x;
+        delete state.y;
+      }
       if(state.type == 'card' && !widgetBuffer.filter(w=>w.id==state.deck).length && !widgets.has(state.deck))
         alert(`Widget ${state.id} references a deck that is not in the buffer and is not already in the room. It will not be loaded.`);
       else
