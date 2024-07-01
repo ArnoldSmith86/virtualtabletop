@@ -29,23 +29,28 @@ class ToolboxModule extends SidebarModule {
     const globalSearchText = $('#globalSearchText').value;
     const globalReplaceText = $('#globalReplaceText').value;
     const globalReplaceRegex = $('#globalReplaceRegex').checked;
+    const globalReplaceCase = $('#globalReplaceCase').checked;
+    const globalReplaceWhole = $('#globalReplaceWhole').checked;
+
+    let regex = globalSearchText;
+    if(!globalReplaceRegex) {
+      regex = regexEscape(regex);
+      if(globalReplaceWhole)
+        regex = `\\b${regex}\\b`;
+    }
+    const flags = globalReplaceCase ? 'g' : 'gi';
 
     batchStart();
     setDeltaCause(`${getPlayerDetails().playerName} searched and replaced text in widgets in editor`);
     for(const widget of [...widgets.values()]) {
       const oldState = JSON.stringify(widget.state);
       let newState = oldState;
-      if(globalReplaceRegex) {
-        try {
-          newState = newState.replace(new RegExp(globalSearchText, 'g'), globalReplaceText);
-        } catch(e) {
-          alert('Invalid regular expression');
-          batchEnd();
-          return;
-        }
-      } else {
-        const regexPattern = new RegExp(`\\b${regexEscape(globalSearchText)}\\b`, 'g');
-        newState = newState.replace(regexPattern, globalReplaceText);
+      try {
+        newState = newState.replace(new RegExp(regex, flags), globalReplaceText);
+      } catch(e) {
+        alert('Invalid regular expression');
+        batchEnd();
+        return;
       }
       try {
         newState = JSON.stringify(JSON.parse(newState));
@@ -90,12 +95,18 @@ class ToolboxModule extends SidebarModule {
     this.renderWidgetBuffer();
 
     this.addSubHeader('Search and Replace');
-    div(target, 'buttonBar', `
+    div(target, '', `
       <p>Here you can search for text in all widgets of the current room state and replace it by something else.</p>
       <input id=globalSearchText placeholder="Search text"><br>
       <input id=globalReplaceText placeholder="Replace text"><br><br>
-      <input type=checkbox id=globalReplaceRegex><label for=globalReplaceRegex> Regular expression (<code>$1</code> references first capture group)</label><br><br>
-      <button icon=search id=searchAndReplace>Search and replace</button>
+      <div>
+        <input type=checkbox id=globalReplaceCase><label for=globalReplaceCase> Match case</label><br>
+        <input type=checkbox id=globalReplaceWhole><label for=globalReplaceWhole> Match whole word</label><br>
+        <input type=checkbox id=globalReplaceRegex><label for=globalReplaceRegex> Regular expression (<code>$1</code> references first capture group)</label><br><br>
+      </div>
+      <div class=buttonBar>
+        <button icon=search id=searchAndReplace>Search and replace</button>
+      </div>
     `);
     $('#searchAndReplace').onclick = e=>this.button_searchAndReplace();
   }
