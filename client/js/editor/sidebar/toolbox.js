@@ -100,8 +100,8 @@ class ToolboxModule extends SidebarModule {
       <input id=globalSearchText placeholder="Search text"><br>
       <input id=globalReplaceText placeholder="Replace text"><br><br>
       <div>
-        <input type=checkbox id=globalReplaceCase><label for=globalReplaceCase> Match case</label><br>
-        <input type=checkbox id=globalReplaceWhole><label for=globalReplaceWhole> Match whole word</label><br>
+        <input type=checkbox id=globalReplaceCase checked><label for=globalReplaceCase> Match case</label><br>
+        <input type=checkbox id=globalReplaceWhole checked><label for=globalReplaceWhole> Match whole word</label><br>
         <input type=checkbox id=globalReplaceRegex><label for=globalReplaceRegex> Regular expression (<code>$1</code> references first capture group)</label><br><br>
       </div>
       <div class=buttonBar>
