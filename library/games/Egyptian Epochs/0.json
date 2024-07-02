@@ -431,7 +431,7 @@
     "type": "holder",
     "id": "holder-suns-bid-p1",
     "y": 75,
-    "inheritFrom": "holder-suns-active-p1",
+    "inheritFrom": "holder-suns-future-p1",
     "x": 140,
     "width": 40,
     "dropOffsetX": 5,
