@@ -419,6 +419,9 @@ export class Widget extends StateManaged {
     if(this.get('enlarge'))
       className += ' enlarge';
 
+    if(!this.get('display'))
+      className += ' hidden';
+
     if(this.isHighlighted)
       className += ' selectedInEdit';
 
@@ -429,7 +432,7 @@ export class Widget extends StateManaged {
   }
 
   classesProperties() {
-    return [ 'classes', 'dragging', 'dropShadowOwner', 'hoverTarget', 'linkedToSeat', 'onlyVisibleForSeat', 'owner', 'typeClasses', 'movable', 'enlarge', 'clickable' ];
+    return [ 'classes', 'display', 'dragging', 'dropShadowOwner', 'hoverTarget', 'linkedToSeat', 'onlyVisibleForSeat', 'owner', 'typeClasses', 'movable', 'enlarge', 'clickable' ];
   }
 
   async click(mode='respect') {
@@ -548,8 +551,6 @@ export class Widget extends StateManaged {
     css += '; height:' + this.get('height') + 'px';
     css += '; z-index:' + this.calculateZ();
     css += '; transform:' + this.cssTransform();
-    if(!this.get('display'))
-      css += '; display: none';
 
     return css;
   }
@@ -591,7 +592,7 @@ export class Widget extends StateManaged {
   }
 
   cssProperties() {
-    return [ 'borderRadius', 'css', 'display', 'height', 'inheritChildZ', 'layer', 'width' ].concat(this.propertiesUsedInProperty['css']||[]);
+    return [ 'borderRadius', 'css', 'height', 'inheritChildZ', 'layer', 'width' ].concat(this.propertiesUsedInProperty['css']||[]);
   }
 
   cssReplaceProperties(css, usedProperties) {
