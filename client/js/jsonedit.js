@@ -730,6 +730,16 @@ const jeCommands = [
     }
   },
   {
+    id: 'je_display',
+    name: 'display',
+    context: '^deck ↦ faceTemplates ↦ [0-9]+ ↦ objects ↦ [0-9]+',
+    show: _=>!jeStateNow.faceTemplates[+jeContext[2]].objects[+jeContext[4]].display,
+    call: async function() {
+      jeStateNow.faceTemplates[+jeContext[2]].objects[+jeContext[4]].display = '###SELECT ME###';
+      jeSetAndSelect(true);
+    }
+  },
+  {
     id: 'je_dynamicProperties',
     name: 'dynamicProperties',
     context: '^deck ↦ faceTemplates ↦ [0-9]+ ↦ objects ↦ [0-9]+',

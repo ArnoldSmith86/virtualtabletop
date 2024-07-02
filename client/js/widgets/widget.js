@@ -35,6 +35,7 @@ export class Widget extends StateManaged {
       StateManaged.inheritFromMapping[id] = [];
 
     this.addDefaults({
+      display: true,
       x: 0,
       y: 0,
       z: 0,
@@ -547,6 +548,8 @@ export class Widget extends StateManaged {
     css += '; height:' + this.get('height') + 'px';
     css += '; z-index:' + this.calculateZ();
     css += '; transform:' + this.cssTransform();
+    if(!this.get('display'))
+      css += '; display: none';
 
     return css;
   }
@@ -588,7 +591,7 @@ export class Widget extends StateManaged {
   }
 
   cssProperties() {
-    return [ 'borderRadius', 'css', 'height', 'inheritChildZ', 'layer', 'width' ].concat(this.propertiesUsedInProperty['css']||[]);
+    return [ 'borderRadius', 'css', 'display', 'height', 'inheritChildZ', 'layer', 'width' ].concat(this.propertiesUsedInProperty['css']||[]);
   }
 
   cssReplaceProperties(css, usedProperties) {

@@ -125,6 +125,8 @@ class Card extends Widget {
           let css = object.css ? this.cssAsText(object.css,usedProperties,true) + '; ' : '';
           css += `left: ${x}px; top: ${y}px; width: ${object.width}px; height: ${object.height}px; font-size: ${object.fontSize}px; text-align: ${object.textAlign}`;
           css += object.rotation ? `; transform: rotate(${object.rotation}deg)` : '';
+          if(typeof object.display !== 'undefined' && !object.display)
+            css += '; display: none';
           objectDiv.style.cssText = mapAssetURLs(css);
           if(object.classes)
             objectDiv.classList.add(object.classes);

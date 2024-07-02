@@ -20,6 +20,7 @@ function initializeEditor(currentMetaData) {
     new UndoButton(),
     new SelectModeButton(),
     new ZoomOutButton(),
+    new ToggleDisplayButton(),
 
     new ToolbarDivider(),
 
