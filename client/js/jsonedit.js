@@ -1822,6 +1822,7 @@ function jeColorize() {
 
 /* Displaying and controlling tree subpane of edit area */
 
+const isNodeCollapsed = {};
 function jeDisplayTree() {
   const allWidgets = Array.from(widgets.values());
   const oldFilterValue = $('#jeWidgetSearchBox') && $('#jeWidgetSearchBox').value;
@@ -1836,6 +1837,7 @@ function jeDisplayTree() {
     if(e.target.classList.contains('jeTreeExpander')) {
       $('.nested', e.target.parentElement).classList.toggle('active');
       e.target.classList.toggle('jeTreeExpander-down');
+      isNodeCollapsed[e.target.parentNode.dataset.filter] = !e.target.classList.contains('jeTreeExpander-down');
       e.stopImmediatePropagation();
     }
   });
@@ -1873,17 +1875,19 @@ function jeDisplayTreeAddWidgets(allWidgets, parent, selectedIDs) {
   for(const widget of (allWidgets.filter(w=>w.get('parent')==parent)).sort((w1,w2)=>w1.get('id').localeCompare(w2.get('id'), 'en', {numeric: true, ignorePunctuation: true}))) {
     const children = jeDisplayTreeAddWidgets(allWidgets, widget.get('id'), selectedIDs);
     const isSelected = selectedIDs.indexOf(widget.get('id')) != -1 ? 'jeHighlightRow' : '';
-    const filterText = `data-filter="${html(widget.get('id')+(widget.get('type')||'basic')+(widget.get('cardType')||'')).toLowerCase()}"`;
+    const filter = html(widget.get('id')+(widget.get('type')||'basic')+(widget.get('cardType')||'')).toLowerCase();
+    const filterText = `data-filter="${filter}"`;
+    const isCollapsed = isNodeCollapsed[filter] || widget.get('type')=='pile';
 
     if(children)
-      result += `<li ${filterText} class="jeTreeWidget"><span class="jeTreeWidget ${isSelected} jeTreeExpander ${(widget.get('type')=='pile') ? '' : 'jeTreeExpander-down'}">`;
+      result += `<li ${filterText} class="jeTreeWidget"><span class="jeTreeWidget ${isSelected} jeTreeExpander ${isCollapsed ? '' : 'jeTreeExpander-down'}">`;
     else
       result += `<li ${filterText} class="jeTreeWidget ${isSelected}">`;
 
     result += jeTreeGetWidgetHTML(widget);
 
     if(children)
-      result += `</span><ul class="jeNestedTree nested ${widget.get('type')=='pile' ? '' : 'active'}">${children}</ul>`;
+      result += `</span><ul class="jeNestedTree nested ${isCollapsed ? '' : 'active'}">${children}</ul>`;
     result += '</li>';
 
     delete allWidgets[allWidgets.indexOf(widget)];
