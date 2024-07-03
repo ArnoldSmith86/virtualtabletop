@@ -35,6 +35,7 @@ export class Widget extends StateManaged {
       StateManaged.inheritFromMapping[id] = [];
 
     this.addDefaults({
+      display: true,
       x: 0,
       y: 0,
       z: 0,
@@ -418,6 +419,9 @@ export class Widget extends StateManaged {
     if(this.get('enlarge'))
       className += ' enlarge';
 
+    if(!this.get('display'))
+      className += ' hidden';
+
     if(this.isHighlighted)
       className += ' selectedInEdit';
 
@@ -428,7 +432,7 @@ export class Widget extends StateManaged {
   }
 
   classesProperties() {
-    return [ 'classes', 'dragging', 'dropShadowOwner', 'hoverTarget', 'linkedToSeat', 'onlyVisibleForSeat', 'owner', 'typeClasses', 'movable', 'enlarge', 'clickable' ];
+    return [ 'classes', 'display', 'dragging', 'dropShadowOwner', 'hoverTarget', 'linkedToSeat', 'onlyVisibleForSeat', 'owner', 'typeClasses', 'movable', 'enlarge', 'clickable' ];
   }
 
   async click(mode='respect') {
