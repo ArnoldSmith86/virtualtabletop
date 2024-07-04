@@ -35,6 +35,7 @@ export class Widget extends StateManaged {
       StateManaged.inheritFromMapping[id] = [];
 
     this.addDefaults({
+      display: true,
       x: 0,
       y: 0,
       z: 0,
@@ -418,6 +419,9 @@ export class Widget extends StateManaged {
     if(this.get('enlarge'))
       className += ' enlarge';
 
+    if(!this.get('display'))
+      className += ' hidden';
+
     if(this.isHighlighted)
       className += ' selectedInEdit';
 
@@ -428,7 +432,7 @@ export class Widget extends StateManaged {
   }
 
   classesProperties() {
-    return [ 'classes', 'dragging', 'dropShadowOwner', 'hoverTarget', 'linkedToSeat', 'onlyVisibleForSeat', 'owner', 'typeClasses', 'movable', 'enlarge', 'clickable' ];
+    return [ 'classes', 'display', 'dragging', 'dropShadowOwner', 'hoverTarget', 'linkedToSeat', 'onlyVisibleForSeat', 'owner', 'typeClasses', 'movable', 'enlarge', 'clickable' ];
   }
 
   async click(mode='respect') {
@@ -1938,32 +1942,36 @@ export class Widget extends StateManaged {
           let unskipped = c.filter(w=>!w.get('skipTurn'));
           let target = unskipped[0];
 
-          // identify the correct target seat
-          if (a.turnCycle == 'position') {
-            if (a.turn == 'last') {
-              target = unskipped[unskipped.length - 1];
-            } else if (Number.isFinite(a.turn)) {
-              target = unskipped[(a.turn - 1) % unskipped.length];
-            }
-          } else if (a.turnCycle == 'seat') {
-            // Selecting a specific seat so in this case skipTurn will be ignored
-            target = c.find(w => w.get('id') == a.turn);
-            if (!target) {
-              problems.push(`Seat ${a.turn} is not a valid seat id in collection ${a.source}.`);
-              target = c[0];
-            }
+          if (unskipped.length === 0) {
+            problems.push(`All seats in collection '${a.source}' have 'skipTurn' set to true. No turn change.`);
           } else {
-            const turn = Number.isFinite(a.turn) ? a.turn : 1;
-            const offset = (c[0] == unskipped[0] ? 0 : 1);
-            target = unskipped[(turn - offset) % unskipped.length];
-          }
+            // identify the correct target seat
+            if (a.turnCycle == 'position') {
+              if (a.turn == 'last') {
+                target = unskipped[unskipped.length - 1];
+              } else if (Number.isFinite(a.turn)) {
+                target = unskipped[(a.turn - 1) % unskipped.length];
+              }
+            } else if (a.turnCycle == 'seat') {
+              // Selecting a specific seat so in this case skipTurn will be ignored
+              target = c.find(w => w.get('id') == a.turn);
+              if (!target) {
+                problems.push(`Seat ${a.turn} is not a valid seat id in collection ${a.source}.`);
+                target = c[0];
+              }
+            } else {
+              const turn = Number.isFinite(a.turn) ? a.turn : 1;
+              const offset = (c[0] == unskipped[0] ? 0 : 1);
+              target = unskipped[(turn - offset) % unskipped.length];
+            }
 
-          // execute the change in turn properties and collect turn seats into output collection
-          collections[a.collection] = [];
-          for (const w of allSeats) {
-            await w.set('turn', w.get('index') == target.get('index'));
-            if (w.get('turn') && w.get('player'))
-              collections[a.collection].push(w);
+            // execute the change in turn properties and collect turn seats into output collection
+            collections[a.collection] = [];
+            for (const w of allSeats) {
+              await w.set('turn', w.get('index') == target.get('index'));
+              if (w.get('turn') && w.get('player'))
+                collections[a.collection].push(w);
+            }
           }
 
           if(jeRoutineLogging) {
