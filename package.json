@@ -58,7 +58,7 @@
     "express": "^4.19.2",
     "jszip": "^3.10.1",
     "node-fetch": "^2.7.0",
-    "ws": "^8.17.0"
+    "ws": "^8.18.0"
   },
   "devDependencies": {
     "jest": "^29.7.0",
