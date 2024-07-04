@@ -614,10 +614,11 @@ class PropertiesModule extends SidebarModule {
       const id = generateUniqueWidgetID();
       const cardTypes = {};
       const counts = {};
+      const hasTiledImage = [...$a('.rows input, .cols input')].filter(d=>d.value>1).length > 0;
       for(const previewDiv of $a('.cardFrontPreview', preview)) {
         const rows = $('.rows input', previewDiv).value;
         const cols = $('.cols input', previewDiv).value;
-        if(rows || cols) {
+        if(hasTiledImage) {
           for(let i=0; i<rows; ++i) {
             for(let j=0; j<cols; ++j) {
               const cardType = `${previewDiv.dataset.fileName} ${i},${j}`;
@@ -638,8 +639,6 @@ class PropertiesModule extends SidebarModule {
           counts[previewDiv.dataset.fileName] = $('.card input', previewDiv).value;
         }
       }
-
-      const hasTiledImage = true;
 
       const deck = {
         id,
