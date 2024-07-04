@@ -590,7 +590,7 @@ class PropertiesModule extends SidebarModule {
 
     $('#frontsButton').onclick = _=>uploadAsset(async function(imagePath, fileName) {
       const dom = div(preview, 'cardFrontPreview', `
-        <img src="${imagePath}">
+        <img src="${mapAssetURLs(imagePath)}">
         <div class=flexCenter>
           <div>
             <div class=rows>Rows (if multiple cards):<br><input type=range value=1 max=10> <input type=number value=1 min=0></div>
