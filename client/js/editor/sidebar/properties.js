@@ -319,7 +319,7 @@ class PropertiesModule extends SidebarModule {
       },
       images: {
         header: 'Upload one image per card or tiled images with multiple cards',
-        description: 'Generate a deck by uploading images that cover the whole card. You may need to adjust the outside margins for tiled images in an image editor.'
+        description: 'Generate a deck by uploading images that cover the whole card. You may need to remove the outside margins for tiled images in an image editor.'
       }
     }, v=>{
       options.innerHTML = '';
