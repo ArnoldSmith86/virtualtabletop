@@ -318,8 +318,8 @@ class PropertiesModule extends SidebarModule {
         description: 'Generate a deck by defining suits (symbols and colors) and ranks for each suit'
       },
       images: {
-        header: 'Upload one image per card',
-        description: 'Generate a deck by uploading an image per card that covers the whole card'
+        header: 'Upload one image per card or tiled images with multiple cards',
+        description: 'Generate a deck by uploading images that cover the whole card. You may need to remove gaps or margins for tiled images in an image editor.'
       }
     }, v=>{
       options.innerHTML = '';
@@ -590,18 +590,22 @@ class PropertiesModule extends SidebarModule {
 
     $('#frontsButton').onclick = _=>uploadAsset(async function(imagePath, fileName) {
       const dom = div(preview, 'cardFrontPreview', `
-        <img src="${imagePath}">
+        <img src="${mapAssetURLs(imagePath)}">
         <div class=flexCenter>
           <div>
-            <input type=range value=1 max=10> <input type=number value=1 min=0>
+            <div class=rows>Rows (if multiple cards):<br><input type=range value=1 max=10> <input type=number value=1 min=0></div>
+            <div class=cols>Cols (if multiple cards):<br><input type=range value=1 max=10> <input type=number value=1 min=0></div>
+            <div class=card>Cards to add:<br><input type=range value=1 max=10> <input type=number value=1 min=0></div>
             <button icon=delete>Delete</button>
           </div>
         </div>
       `);
       dom.dataset.imagePath = imagePath;
       dom.dataset.fileName = fileName;
-      $('[type=range]', dom).oninput = e=>$('[type=number]', dom).value=e.target.value;
-      $('[type=number]', dom).oninput = e=>$('[type=range]', dom).value=e.target.value;
+      for(const name of [ 'rows', 'cols', 'card' ]) {
+        $(`.${name} [type=range]`, dom).oninput = e=>$(`.${name} [type=number]`, dom).value=e.target.value;
+        $(`.${name} [type=number]`, dom).oninput = e=>$(`.${name} [type=range]`, dom).value=e.target.value;
+      }
       $('[icon=delete]', dom).onclick = e=>dom.remove();
       $('.goButton [icon=add]', target).disabled = false;
     });
@@ -610,11 +614,30 @@ class PropertiesModule extends SidebarModule {
       const id = generateUniqueWidgetID();
       const cardTypes = {};
       const counts = {};
+      const hasTiledImage = [...$a('.rows input, .cols input')].filter(d=>d.value>1).length > 0;
       for(const previewDiv of $a('.cardFrontPreview', preview)) {
-        cardTypes[previewDiv.dataset.fileName] = {
-          image: previewDiv.dataset.imagePath
-        };
-        counts[previewDiv.dataset.fileName] = $('input', previewDiv).value;
+        const rows = $('.rows input', previewDiv).value;
+        const cols = $('.cols input', previewDiv).value;
+        if(hasTiledImage) {
+          for(let i=0; i<rows; ++i) {
+            for(let j=0; j<cols; ++j) {
+              const cardType = `${previewDiv.dataset.fileName} ${i},${j}`;
+              cardTypes[cardType] = {
+                image: previewDiv.dataset.imagePath,
+                offsetX: j,
+                offsetY: i,
+                deckWidth: cols,
+                deckHeight: rows
+              };
+              counts[cardType] = $('.card input', previewDiv).value;
+            }
+          }
+        } else {
+          cardTypes[previewDiv.dataset.fileName] = {
+            image: previewDiv.dataset.imagePath
+          };
+          counts[previewDiv.dataset.fileName] = $('.card input', previewDiv).value;
+        }
       }
 
       const deck = {
@@ -627,9 +650,11 @@ class PropertiesModule extends SidebarModule {
               {
                 "type": "image",
                 "color": "transparent",
-                "width": 103,
-                "height": 160,
-                "value": backImageURL
+                "value": backImageURL,
+                "dynamicProperties": {
+                  "height": "height",
+                  "width": "width"
+                }
               }
             ]
           },
@@ -638,10 +663,10 @@ class PropertiesModule extends SidebarModule {
               {
                 "type": "image",
                 "color": "transparent",
-                "width": 103,
-                "height": 160,
                 "dynamicProperties": {
-                  "value": "image"
+                  "value": "image",
+                  "height": "height",
+                  "width": "width"
                 }
               }
             ]
@@ -649,12 +674,27 @@ class PropertiesModule extends SidebarModule {
         ]
       };
 
-      const cardWidth = Math.round($('.cardFrontPreview img', preview).width / $('.cardFrontPreview img', preview).height * 160);
-      if(cardWidth != 103) {
+      let cardWidth = Math.round($('.cardFrontPreview img', preview).width / $('.cardFrontPreview img', preview).height * 160);
+      if(hasTiledImage)
+        cardWidth *= $('.rows input', preview).value / $('.cols input', preview).value;
+      if(cardWidth != 103)
         deck.cardDefaults = { width: cardWidth };
-        deck.faceTemplates[0].objects[0].width = cardWidth;
-        deck.faceTemplates[1].objects[0].width = cardWidth;
+
+      if(hasTiledImage) {
+        deck.faceTemplates[1].objects[0].css = {
+          "background-size": "calc(var(--width) * var(--deckWidth) * 1px) calc(var(--height) * var(--deckHeight) * 1px)",
+          "background-position": "calc(var(--width) * var(--offsetX) * -1px) calc(var(--height) * var(--offsetY) * -1px)"
+        };
+        deck.cardDefaults.css = {
+          '--offsetX':    '${PROPERTY offsetX}',
+          '--offsetY':    '${PROPERTY offsetY}',
+          '--deckWidth':  '${PROPERTY deckWidth}',
+          '--deckHeight': '${PROPERTY deckHeight}',
+          '--width':      '${PROPERTY width}',
+          '--height':     '${PROPERTY height}'
+        }
       }
+
       await this.addDeckWithCards(deck, 'image', counts);
     };
   }
