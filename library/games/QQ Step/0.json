@@ -269,62 +269,62 @@
     "type": "deck",
     "cardTypes": {
       "type-3afc8781-3064-45be-ad03-702b18206f5b": {
-        "image": "/assets/99514597_6322",
+        "image": "/assets/1552080610_2894",
         "label": "friend_Alex.png",
         "sortingOrder": 1
       },
       "type-41235abe-6ef3-4d2f-82a3-71ba0fb13c5a": {
-        "image": "/assets/1401637877_5782",
+        "image": "/assets/1166643162_2824",
         "label": "friend_Amanny.png",
         "sortingOrder": 2
       },
       "type-cd3d3ea7-6e9e-4565-a7eb-75adc1446996": {
-        "image": "/assets/2869666_7558",
+        "image": "/assets/-1129507460_3104",
         "label": "friend_Amary.png",
         "sortingOrder": 3
       },
       "type-b367fcf4-2e4d-4edb-8a9b-83bef9b5f2cb": {
-        "image": "/assets/-1294925201_7518",
+        "image": "/assets/1526157632_3156",
         "label": "friend_Bgemby.png",
         "sortingOrder": 4
       },
       "type-ab3db52e-d7ee-47c9-a17e-14a89aac0ac4": {
-        "image": "/assets/1111921705_6994",
+        "image": "/assets/1644286651_3092",
         "label": "friend_Bgeorge.png",
         "sortingOrder": 5
       },
       "type-bcd9172e-7e30-46b3-9372-76ff81e6b244": {
-        "image": "/assets/1340542387_8018",
+        "image": "/assets/1919005443_2984",
         "label": "friend_Bzibby.png",
         "sortingOrder": 6
       },
       "type-7b53d858-3a01-4935-a183-ada78ac5bca3": {
-        "image": "/assets/-1295283055_6684",
+        "image": "/assets/-1054417815_2362",
         "label": "friend_Caurora.png",
         "sortingOrder": 7
       },
       "type-e2dc303f-49a1-4e31-a0bd-cfa243126a4f": {
-        "image": "/assets/-713016310_7512",
+        "image": "/assets/169033970_2920",
         "label": "friend_Cglitter.png",
         "sortingOrder": 8
       },
       "type-92fab1b5-829d-4cb5-9f1a-ac8e071ff80a": {
-        "image": "/assets/1237508915_7396",
+        "image": "/assets/1228651472_2750",
         "label": "friend_Ctoogra.png",
         "sortingOrder": 9
       },
       "type-81e7aaa9-54df-48fa-8f67-8a6c4a11b2e3": {
-        "image": "/assets/-1659912102_5571",
+        "image": "/assets/-1284258969_2622",
         "label": "friend_Davery.png",
         "sortingOrder": 10
       },
       "type-9d1cdae0-b17e-4dee-b685-ecb5afa44738": {
-        "image": "/assets/-1235391989_4880",
+        "image": "/assets/1046513835_2518",
         "label": "friend_Dmervin.png",
         "sortingOrder": 11
       },
       "type-d9468dbf-c685-4b5d-bf65-9de49322e0ec": {
-        "image": "/assets/1235241649_7833",
+        "image": "/assets/1334289991_2736",
         "label": "friend_Dseraphina.png",
         "sortingOrder": 12
       }
@@ -770,21 +770,21 @@
     "type": "deck",
     "cardTypes": {
       "type-8f9114ad-2123-4438-b56c-18d6cd159673": {
-        "image": "/assets/226248797_3483",
+        "image": "/assets/-283690609_1358",
         "label": "spill1_floor.png",
-        "image2": "/assets/-295309564_5527",
+        "image2": "/assets/1932550253_1692",
         "sortingOrder": 1
       },
       "type-e9151e6a-209b-4789-a298-e83269031621": {
-        "image": "/assets/1930302664_3850",
+        "image": "/assets/-2083856334_1462",
         "label": "spill2_floor.png",
-        "image2": "/assets/-2059686472_4704",
+        "image2": "/assets/-11069505_1698",
         "sortingOrder": 2
       },
       "type-61f9cc86-4e80-46bb-ae34-7af6cbfc28ac": {
-        "image": "/assets/1316434624_4750",
+        "image": "/assets/46877748_1970",
         "label": "spill3_floor.png",
-        "image2": "/assets/-2064772526_4622",
+        "image2": "/assets/-1755859816_1748",
         "sortingOrder": 3
       }
     },
@@ -936,22 +936,22 @@
     "type": "deck",
     "cardTypes": {
       "type-02d2e077-2c25-4a13-afd7-5d5d9d91bd60": {
-        "image": "/assets/-1604690639_11118",
+        "image": "/assets/-1549519789_3356",
         "label": "char_Aprimeval.png",
         "sortingOrder": 1
       },
       "type-512ba5d2-266d-4a21-8a1e-3bbada9c531d": {
-        "image": "/assets/229767072_10038",
+        "image": "/assets/-221750889_3440",
         "label": "char_Bchamp.png",
         "sortingOrder": 2
       },
       "type-986c8800-a355-4135-954d-c6f8f8586c0f": {
-        "image": "/assets/381250671_10438",
+        "image": "/assets/1743320171_3472",
         "label": "char_Csolveig.png",
         "sortingOrder": 3
       },
       "type-78737b97-6332-4bb5-bd9b-7eda3860968c": {
-        "image": "/assets/1517184563_11585",
+        "image": "/assets/114166243_3256",
         "label": "char_Ddj.png",
         "sortingOrder": 4
       }
@@ -1082,102 +1082,102 @@
     "parent": "1c31f636-5d8a-4200-943f-825e343efa29",
     "cardTypes": {
       "type-ec33bfcf-2f2b-43af-ac70-d2e4d364c3f7": {
-        "image": "/assets/-1670841053_159392",
+        "image": "/assets/-33648209_17980",
         "label": "danceA.png",
         "sortingOrder": 1
       },
       "type-a9b73744-9a62-4040-aee1-697069fb6711": {
-        "image": "/assets/-478562337_162753",
+        "image": "/assets/-32295749_18710",
         "label": "danceB.png",
         "sortingOrder": 2
       },
       "type-60f321c2-ecb6-4460-8b3a-8928aa5bbef0": {
-        "image": "/assets/-1857683804_156716",
+        "image": "/assets/-23623910_18340",
         "label": "danceC.png",
         "sortingOrder": 3
       },
       "type-312bac67-a22e-4ebf-a84c-5102e7732aec": {
-        "image": "/assets/-616680725_156699",
+        "image": "/assets/-1855478931_17892",
         "label": "danceD.png",
         "sortingOrder": 4
       },
       "type-60584b99-fa91-4ed3-b62a-f61add990ab1": {
-        "image": "/assets/1905618904_159431",
+        "image": "/assets/-845078385_18086",
         "label": "danceE.png",
         "sortingOrder": 5
       },
       "type-645fae17-0d9c-4349-bdd6-587f68ca2f8b": {
-        "image": "/assets/850596040_156376",
+        "image": "/assets/569903061_17704",
         "label": "danceF.png",
         "sortingOrder": 6
       },
       "type-702f173e-fdff-4ef2-9f8e-6b21f07f904f": {
-        "image": "/assets/777669570_158352",
+        "image": "/assets/-1147873284_17998",
         "label": "danceG.png",
         "sortingOrder": 7
       },
       "type-45afc71f-e6fc-4e75-92b9-7927ba410dba": {
-        "image": "/assets/-790212296_165527",
+        "image": "/assets/-1338124066_19250",
         "label": "danceH.png",
         "sortingOrder": 8
       },
       "type-6c459d47-6c84-4a85-b570-b8b5bcc105f6": {
-        "image": "/assets/-20432281_153232",
+        "image": "/assets/-745090568_17912",
         "label": "danceI.png",
         "sortingOrder": 9
       },
       "type-a75e535e-ba28-43f6-9442-3ea56871828e": {
-        "image": "/assets/1853421876_164904",
+        "image": "/assets/-1310879097_18960",
         "label": "danceJ.png",
         "sortingOrder": 10
       },
       "type-f468139e-706d-43f5-8c20-fa0f61dbfe46": {
-        "image": "/assets/1749266759_160357",
+        "image": "/assets/548566877_18390",
         "label": "danceK.png",
         "sortingOrder": 11
       },
       "type-2a590018-8f1c-4c2d-b8b0-189e4133b3ff": {
-        "image": "/assets/1414220177_174386",
+        "image": "/assets/-1962240944_20170",
         "label": "danceL.png",
         "sortingOrder": 12
       },
       "type-1c6cc5a2-72a2-4ef8-9f19-093717e585a0": {
-        "image": "/assets/552397204_187902",
+        "image": "/assets/-851439587_21704",
         "label": "danceM.png",
         "sortingOrder": 13
       },
       "type-8cb259e0-9c37-4558-996b-c20a6dec7daa": {
-        "image": "/assets/-960757840_178658",
+        "image": "/assets/1667840676_20454",
         "label": "danceN.png",
         "sortingOrder": 14
       },
       "type-ad378ebd-e0c4-4017-bf9a-a7f1f0834c64": {
-        "image": "/assets/1964969542_172766",
+        "image": "/assets/-1915290893_19886",
         "label": "danceO.png",
         "sortingOrder": 15
       },
       "type-7f451166-a914-4f29-b841-00ee63c2457c": {
-        "image": "/assets/156101119_167365",
+        "image": "/assets/-1102899496_23074",
         "label": "danceP.png",
         "sortingOrder": 16
       },
       "type-3d4760e2-3c4d-4a85-8880-6944eaf8ded7": {
-        "image": "/assets/2758061_163272",
+        "image": "/assets/-776511525_22560",
         "label": "danceQ.png",
         "sortingOrder": 17
       },
       "type-9f01ad36-51b2-4d36-a78c-a4c090632b33": {
-        "image": "/assets/2089147256_176453",
+        "image": "/assets/-1189163684_23940",
         "label": "danceR.png",
         "sortingOrder": 18
       },
       "type-a70c9ea4-c098-4122-abc4-7469ff4a3e6c": {
-        "image": "/assets/1711357812_154051",
+        "image": "/assets/1627114982_21458",
         "label": "danceS.png",
         "sortingOrder": 19
       },
       "type-c5da1a59-79ca-4f88-916b-d79483736035": {
-        "image": "/assets/-1103103958_174446",
+        "image": "/assets/824838715_23802",
         "label": "danceT.png",
         "sortingOrder": 20
       }
@@ -1196,7 +1196,7 @@
             "type": "image",
             "x": 0,
             "y": 0,
-            "value": "/assets/917373408_236923",
+            "value": "/assets/-1614309073_26120",
             "color": "rgb(242,240,128)",
             "width": 90,
             "height": 126
@@ -1261,42 +1261,42 @@
     "parent": "84397eb4-ef8e-4ba7-b475-403dd6137c02",
     "cardTypes": {
       "type-0c97f4ce-f5c5-4b49-a004-3655cb6ff909": {
-        "image1": "/assets/-1245777296_224284",
+        "image1": "/assets/1263174536_25608",
         "label": "beatdropA.png",
         "sortingOrder": 1
       },
       "type-8a9ef100-ae9d-4881-99c3-f54eb05cc950": {
-        "image1": "/assets/-1737767987_139716",
+        "image1": "/assets/-393098881_16844",
         "label": "beatdropB.png",
         "sortingOrder": 2
       },
       "type-e85ba55e-9d04-49c5-9f42-43df92076db1": {
-        "image1": "/assets/-2021645137_194998",
+        "image1": "/assets/-2114834566_21242",
         "label": "beatdropC.png",
         "sortingOrder": 3
       },
       "type-7caa33b2-dc68-4c01-93dc-3e02d5104568": {
-        "image1": "/assets/1023280448_187803",
+        "image1": "/assets/-1974437938_19846",
         "label": "beatdropD.png",
         "sortingOrder": 4
       },
       "type-341f5443-0eea-4994-a658-dafef1454689": {
-        "image1": "/assets/95634989_152136",
+        "image1": "/assets/-260989690_18580",
         "label": "beatdropE.png",
         "sortingOrder": 5
       },
       "type-3552b3c8-9273-41ac-a800-5f398bc0c1d0": {
-        "image1": "/assets/2000174902_142926",
+        "image1": "/assets/1738120874_16350",
         "label": "beatdropF.png",
         "sortingOrder": 6
       },
       "type-c80b6bad-1dc5-4895-b738-8e350c82dce0": {
-        "image1": "/assets/-332530264_166855",
+        "image1": "/assets/1689488781_19262",
         "label": "beatdropG.png",
         "sortingOrder": 7
       },
       "type-52504e9e-d5ff-47ad-bf25-291079044152": {
-        "image1": "/assets/133224652_123622",
+        "image1": "/assets/1536849980_13986",
         "label": "beatdropH.png",
         "sortingOrder": 8
       }
@@ -1315,7 +1315,7 @@
             "type": "image",
             "x": 0,
             "y": 0,
-            "value": "/assets/1568423802_568222",
+            "value": "/assets/1777062531_19666",
             "color": "rgb(202,130,244)",
             "width": 90,
             "height": 126
@@ -1465,7 +1465,7 @@
   "a849b208-bc8a-48b0-95d7-5eb84649f172": {
     "id": "a849b208-bc8a-48b0-95d7-5eb84649f172",
     "z": 7480,
-    "image": "/assets/-38810670_58792",
+    "image": "/assets/791630903_18246",
     "movable": false,
     "layer": -4,
     "width": 1600,
@@ -1807,22 +1807,22 @@
     "parent": "cadc9d53-e113-439c-a251-fa16a7933c90",
     "cardTypes": {
       "type-1bf3ff5f-99cc-4671-85d0-4dda3bb55dfb": {
-        "image1": "/assets/37034274_226833",
+        "image1": "/assets/666902307_61734",
         "label": "APrimeval.png",
         "sortingOrder": 1
       },
       "type-c08fe320-f675-45c4-908c-1b264964df60": {
-        "image1": "/assets/743550510_231083",
+        "image1": "/assets/633372867_64042",
         "label": "BChamp.png",
         "sortingOrder": 2
       },
       "type-17c58719-9f2a-43b9-a258-7c41047992b7": {
-        "image1": "/assets/291370966_229304",
+        "image1": "/assets/-109183054_64076",
         "label": "CSolveig.png",
         "sortingOrder": 3
       },
       "type-2749c3f1-b855-4e06-9b2f-fa3ab6296c5a": {
-        "image1": "/assets/-1711830497_235500",
+        "image1": "/assets/-1662486991_64846",
         "label": "CDJ.png",
         "sortingOrder": 4
       }
@@ -1932,7 +1932,7 @@
     "version": 15,
     "info": {
       "importerTime": 1720273377802,
-      "lastUpdate": 1720452857376,
+      "lastUpdate": 1720453130073,
       "importer": "PCIO",
       "image": "/assets/-972047508_283757",
       "name": "QQ Step",
