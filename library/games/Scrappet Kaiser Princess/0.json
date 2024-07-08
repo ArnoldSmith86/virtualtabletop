@@ -23,17 +23,17 @@
     "type": "deck",
     "cardTypes": {
       "type-275c7b75-9623-45bf-9e45-97fc2ffa2c4e": {
-        "image": "/assets/1984500956_18698",
+        "image": "/assets/-774557435_2694",
         "label": "Penny_tokenA.png",
         "sortingOrder": 1
       },
       "type-3598c380-672a-4903-912a-44dabf45a47d": {
-        "image": "/assets/276196710_19535",
+        "image": "/assets/-1004340216_2590",
         "label": "Link_tokenA.png",
         "sortingOrder": 2
       },
       "type-c36191be-029e-417a-be1e-730b528f142a": {
-        "image": "/assets/-142539889_15486",
+        "image": "/assets/1726883508_2014",
         "label": "Spiff_tokenA.png",
         "sortingOrder": 3
       }
@@ -82,7 +82,7 @@
         "image": "/i/cards-default/2J.svg",
         "text2": "1 Strength.",
         "text1": "Dog Bower",
-        "image1": "/assets/1039071904_197560",
+        "image1": "/assets/1228428990_20342",
         "sortingOrder": 1
       },
       "joker-red": {
@@ -90,7 +90,7 @@
         "image": "/i/cards-default/1J.svg",
         "text2": "3 Strength. This card can only leave your binder for duels in the Alley.",
         "text1": "Cowboy Spitball",
-        "image1": "/assets/-1735036999_228180",
+        "image1": "/assets/1292823087_22440",
         "sortingOrder": 2
       },
       "joker-blue": {
@@ -98,7 +98,7 @@
         "image": "/i/cards-default/1J.svg",
         "text2": "1 Strength. Lose 5 Ego at the end of the round.",
         "text1": "Lemon Slime",
-        "image1": "/assets/-1668475151_228789",
+        "image1": "/assets/-1327568524_23176",
         "sortingOrder": 3
       },
       "diamonds-a": {
@@ -106,7 +106,7 @@
         "image": "/i/cards-default/AD.svg",
         "text2": "-1 Strength. Only Penny may trade this card. Gain 1 less Ego at the end of the round.",
         "text1": "Rotten Puddle",
-        "image1": "/assets/2020810011_267324",
+        "image1": "/assets/115937044_26132",
         "sortingOrder": 4
       },
       "diamonds-2": {
@@ -114,11 +114,11 @@
         "image": "/i/cards-default/2D.svg",
         "text2": "0 Strength. If you have 50 Ego, +9 Strength to this card",
         "text1": "Eggbert the Resilient",
-        "image1": "/assets/-1422566788_271718",
+        "image1": "/assets/555804716_25568",
         "sortingOrder": 5
       },
       "type-e5fa07a6-5114-4416-84ba-b8dac5599eb1": {
-        "image1": "/assets/179852369_288436",
+        "image1": "/assets/-908426513_35184",
         "label": "XE-Ninjin Sugar BB 1973",
         "sortingOrder": 6
       }
@@ -137,7 +137,7 @@
             "type": "image",
             "x": 0,
             "y": 0,
-            "value": "/assets/381001813_443154",
+            "value": "/assets/-428494136_37936",
             "color": "rgb(237,54,54)",
             "width": 120,
             "height": 168
@@ -276,27 +276,27 @@
     "type": "deck",
     "cardTypes": {
       "type-00dd86ea-745e-4568-b200-979ed6f1376e": {
-        "image": "/assets/418617267_20446",
+        "image": "/assets/761014162_2468",
         "label": "Mindy_tokenA.png",
         "sortingOrder": 1
       },
       "type-47039533-6720-4446-b7b8-49d625e62e14": {
-        "image": "/assets/1986504211_17288",
+        "image": "/assets/1564744017_2786",
         "label": "Jessa_tokenA.png",
         "sortingOrder": 2
       },
       "type-9d13ce1a-87d7-44da-94c4-a4597fd3cb3b": {
-        "image": "/assets/1984500956_18698",
+        "image": "/assets/-774557435_2694",
         "label": "Penny_tokenA.png",
         "sortingOrder": 3
       },
       "type-9bb0e0b1-9411-4f59-9d3b-c486d6cae554": {
-        "image": "/assets/276196710_19535",
+        "image": "/assets/-1004340216_2590",
         "label": "Link_tokenA.png",
         "sortingOrder": 4
       },
       "type-10b4f284-f17a-41a9-9921-7899cfe31009": {
-        "image": "/assets/-142539889_15486",
+        "image": "/assets/1726883508_2014",
         "label": "Spiff_tokenA.png",
         "sortingOrder": 5
       }
@@ -345,7 +345,7 @@
         "image": "/i/cards-default/2J.svg",
         "text1": "Both of Griswald's Knees",
         "text2": "Strength 12. Lose the Ego you bet, then reduce the amount of bet Ego by half (round down) for the Strength check.",
-        "image1": "/assets/592545700_304336",
+        "image1": "/assets/1828088763_26084",
         "sortingOrder": 1
       },
       "joker-red": {
@@ -353,7 +353,7 @@
         "image": "/i/cards-default/1J.svg",
         "text1": "Lumby But Giga",
         "text2": "Strength 15. Lose 1 Buck for each Ego you bet. If you cannot pay the full amount, you cannot gain this card.",
-        "image1": "/assets/-1929849110_363750",
+        "image1": "/assets/1901590374_37310",
         "sortingOrder": 2
       },
       "joker-blue": {
@@ -361,7 +361,7 @@
         "image": "/i/cards-default/1J.svg",
         "text1": "Baby Filkiss",
         "text2": "Strength 5. Immediately gain the amount of Ego you bet.",
-        "image1": "/assets/1968616371_324478",
+        "image1": "/assets/1575995145_36162",
         "sortingOrder": 3
       },
       "diamonds-a": {
@@ -369,7 +369,7 @@
         "image": "/i/cards-default/AD.svg",
         "text2": "Strength 10. Reduce the amount of Ego bet by 10. If you tie or lose this duel, lose the card you dueled with",
         "text1": "Dog Bower's Dad",
-        "image1": "/assets/816020250_304250",
+        "image1": "/assets/1230241083_27240",
         "sortingOrder": 4
       },
       "diamonds-2": {
@@ -377,7 +377,7 @@
         "image": "/i/cards-default/2D.svg",
         "text2": "Strength 8. If you win this duel without betting Ego, gain 10 Ego. Otherwise, lose the Ego you bet.",
         "text1": "Dirk Canyon, Esquire",
-        "image1": "/assets/693000801_1043199",
+        "image1": "/assets/243321407_33952",
         "sortingOrder": 5
       },
       "diamonds-3": {
@@ -385,7 +385,7 @@
         "image": "/i/cards-default/3D.svg",
         "text2": "Strength 11. After this duel, lose 15 Ego.",
         "text1": "Carl",
-        "image1": "/assets/-1855562153_287065",
+        "image1": "/assets/-1056702982_29708",
         "sortingOrder": 6
       }
     },
@@ -403,7 +403,7 @@
             "type": "image",
             "x": 0,
             "y": 0,
-            "value": "/assets/706679578_2251069",
+            "value": "/assets/1095791639_54698",
             "color": "rgb(255,242,53)",
             "width": 120,
             "height": 168
@@ -678,7 +678,7 @@
         "image": "/i/cards-default/2J.svg",
         "text1": "Rainy Day",
         "text2": "All kids at the Playground and the Lemonade Stand return home. If Mindy is at the Alley, instead of dueling, she may buy Dues' revealed card with Bucks",
-        "image1": "/assets/63097719_368088",
+        "image1": "/assets/-596272729_31338",
         "sortingOrder": 1
       },
       "joker-red": {
@@ -686,7 +686,7 @@
         "image": "/i/cards-default/1J.svg",
         "text1": "Sunny Day",
         "text2": "All kids at the Lemonade Stand earn double Money",
-        "image1": "/assets/545015308_300146",
+        "image1": "/assets/-1894025348_33178",
         "sortingOrder": 2
       },
       "joker-blue": {
@@ -694,7 +694,7 @@
         "image": "/i/cards-default/1J.svg",
         "text1": "Intense Dodgeball",
         "text2": "If Spiff is at the Playground, Spiff loses all his held cards and bucks, and does not trade this round. Remove 1 extra card from the Playground during cleanup",
-        "image1": "/assets/-1579794660_279116",
+        "image1": "/assets/-160514210_28868",
         "sortingOrder": 3
       },
       "diamonds-a": {
@@ -702,7 +702,7 @@
         "image": "/i/cards-default/AD.svg",
         "text1": "Toy Sale",
         "text2": "If Link is at the Store, he loses 4 Bucks before purchasing any Booster cards",
-        "image1": "/assets/-709089540_254688",
+        "image1": "/assets/-1412383216_45780",
         "sortingOrder": 4
       },
       "diamonds-2": {
@@ -710,7 +710,7 @@
         "image": "/i/cards-default/2D.svg",
         "text1": "Big Sister",
         "text2": "If Penny is at the Lemonade Stand, she does not gain any Bucks, losing 5 instead if possible.",
-        "image1": "/assets/1364032105_340011",
+        "image1": "/assets/-213177217_35052",
         "sortingOrder": 5
       },
       "diamonds-3": {
@@ -718,7 +718,7 @@
         "image": "/i/cards-default/3D.svg",
         "text1": "BOGO",
         "text2": "All kids at the store get one free Booster card.",
-        "image1": "/assets/226052123_285089",
+        "image1": "/assets/2041758326_30536",
         "sortingOrder": 6
       },
       "diamonds-4": {
@@ -726,7 +726,7 @@
         "image": "/i/cards-default/4D.svg",
         "text1": "Teenager Takeover",
         "text2": "Replace each card in the Playground with a card from the top of the Store deck. Replaced cards go to the bottom of the deck.",
-        "image1": "/assets/-1332807119_195457",
+        "image1": "/assets/768990210_19444",
         "sortingOrder": 7
       },
       "diamonds-5": {
@@ -734,7 +734,7 @@
         "image": "/i/cards-default/5D.svg",
         "text2": "All kids at the alley gain 10 Bucks",
         "text1": "Dropped Wallet",
-        "image1": "/assets/-649512873_244254",
+        "image1": "/assets/2140427132_23850",
         "sortingOrder": 8
       },
       "diamonds-6": {
@@ -742,7 +742,7 @@
         "image": "/i/cards-default/6D.svg",
         "text1": "First Subs!",
         "text2": "Gain 10 Ego. If this would force you to unfriend a kid, unfriend them now.",
-        "image1": "/assets/-230812617_363152",
+        "image1": "/assets/815840216_39916",
         "sortingOrder": 9
       },
       "diamonds-7": {
@@ -750,7 +750,7 @@
         "image": "/i/cards-default/7D.svg",
         "text2": "If multiple kids are at the Lemonade Stand, no Bucks are gained",
         "text1": "Surprise Pizza Party",
-        "image1": "/assets/1799792165_373347",
+        "image1": "/assets/585136665_38620",
         "sortingOrder": 10
       },
       "diamonds-8": {
@@ -758,7 +758,7 @@
         "image": "/i/cards-default/8D.svg",
         "text2": "If multiple kids are at the Store, they lose all their Bucks and gain only 1 card",
         "text1": "New Video Game!",
-        "image1": "/assets/-713373608_298716",
+        "image1": "/assets/1155075875_37826",
         "sortingOrder": 11
       },
       "diamonds-9": {
@@ -766,7 +766,7 @@
         "image": "/i/cards-default/9D.svg",
         "text1": "Bossy Bestie",
         "text2": "Jessa can move to another location after activating her current location's effects, collecting any needed bucks or cards on the way. She performs her action as if Mindy were with her.",
-        "image1": "/assets/155283465_370341",
+        "image1": "/assets/1194673221_38874",
         "sortingOrder": 12
       },
       "diamonds-10": {
@@ -774,26 +774,26 @@
         "image": "/i/cards-default/TD.svg",
         "text1": "Stray Cat Distraction",
         "text2": "Kids at the Lemonade Stand only gain half the Bucks they would normally have, rounded down.",
-        "image1": "/assets/-951759779_203371",
+        "image1": "/assets/934479043_38572",
         "sortingOrder": 13
       },
       "type-cf426dd1-a33c-41a1-9428-a574c09de83d": {
-        "image1": "/assets/-317993208_369588",
+        "image1": "/assets/1743587439_40064",
         "label": "The Heemer Twins",
         "sortingOrder": 14
       },
       "type-9d86e1fd-4591-4cba-8a79-6229a769fd78": {
-        "image1": "/assets/1977168021_363893",
+        "image1": "/assets/-885681702_41150",
         "label": "The Boss Is Gone",
         "sortingOrder": 15
       },
       "type-5149f018-9995-449f-a271-25cce8887bbc": {
-        "image1": "/assets/-57465516_316074",
+        "image1": "/assets/528083782_31294",
         "label": "Tournament Jitters",
         "sortingOrder": 16
       },
       "type-deb1dfd5-97a4-40f9-b952-82e6b0c0a10d": {
-        "image1": "/assets/-1069518563_393791",
+        "image1": "/assets/-126441839_39680",
         "label": "Card Casualty",
         "sortingOrder": 17
       }
@@ -812,7 +812,7 @@
             "type": "image",
             "x": 0,
             "y": 0,
-            "value": "/assets/-1511818286_228715",
+            "value": "/assets/-1961029273_20046",
             "color": "rgb(36,71,219)",
             "width": 120,
             "height": 168
@@ -1145,7 +1145,7 @@
         "image": "/i/cards-default/2J.svg",
         "text1": "Are We Still Friends?",
         "text2": "If you no longer own your Starter Card, immediately send Jessa home and Unfriend her",
-        "image1": "/assets/1550388906_268828",
+        "image1": "/assets/1187002335_26430",
         "sortingOrder": 1
       },
       "joker-red": {
@@ -1443,7 +1443,7 @@
             "type": "image",
             "x": 0,
             "y": 0,
-            "value": "/assets/-1419982488_367895",
+            "value": "/assets/1407858940_34644",
             "width": 120,
             "height": 168
           }
@@ -1691,32 +1691,32 @@
     "cardTypes": {
       "joker-black": {
         "label": "Mindy",
-        "image": "/assets/1523846210_475466",
-        "image1": "/assets/772025793_257979",
+        "image": "/assets/-1297966950_53824",
+        "image1": "/assets/171260033_31264",
         "sortingOrder": 1
       },
       "joker-red": {
         "label": "Jessa",
-        "image": "/assets/-1939669696_386594",
-        "image1": "/assets/-1988055186_271833",
+        "image": "/assets/-28417854_47184",
+        "image1": "/assets/744663403_27306",
         "sortingOrder": 2
       },
       "joker-blue": {
         "label": "Penny",
-        "image": "/assets/-1997383400_176102",
-        "image1": "/assets/-285732234_320545",
+        "image": "/assets/-637716219_22614",
+        "image1": "/assets/1337927750_37278",
         "sortingOrder": 3
       },
       "diamonds-a": {
         "label": "Link",
-        "image": "/assets/486124169_174667",
-        "image1": "/assets/-895999166_300037",
+        "image": "/assets/129234050_21316",
+        "image1": "/assets/-340051315_30856",
         "sortingOrder": 4
       },
       "diamonds-2": {
         "label": "Spiff",
-        "image": "/assets/1552082114_150044",
-        "image1": "/assets/-156211666_277957",
+        "image": "/assets/134280419_19294",
+        "image1": "/assets/1236214469_28628",
         "sortingOrder": 5
       },
       "diamonds-3": {
@@ -2194,27 +2194,27 @@
     "type": "deck",
     "cardTypes": {
       "type-00dd86ea-745e-4568-b200-979ed6f1376e": {
-        "image": "/assets/-966254482_21322",
+        "image": "/assets/-1766515149_2574",
         "label": "Ultra Mint",
         "sortingOrder": 1
       },
       "type-47039533-6720-4446-b7b8-49d625e62e14": {
-        "image": "/assets/-1733149292_18290",
+        "image": "/assets/1805381041_2580",
         "label": "Sad Jessa",
         "sortingOrder": 2
       },
       "type-9d13ce1a-87d7-44da-94c4-a4597fd3cb3b": {
-        "image": "/assets/1816127989_18432",
+        "image": "/assets/-1291707619_2710",
         "label": "Sad Penny",
         "sortingOrder": 3
       },
       "type-9bb0e0b1-9411-4f59-9d3b-c486d6cae554": {
-        "image": "/assets/193074908_20937",
+        "image": "/assets/-1402443652_2512",
         "label": "Sad Link",
         "sortingOrder": 4
       },
       "type-10b4f284-f17a-41a9-9921-7899cfe31009": {
-        "image": "/assets/1276486332_14178",
+        "image": "/assets/593214034_2000",
         "label": "Sad Spiff",
         "sortingOrder": 5
       }
@@ -2465,7 +2465,7 @@
   "e953ab3a-40ad-443a-85b1-b70409a421b3": {
     "id": "e953ab3a-40ad-443a-85b1-b70409a421b3",
     "z": -19931,
-    "image": "/assets/2133144713_423608",
+    "image": "/assets/1767169046_80970",
     "movable": false,
     "layer": -4,
     "width": 1600,
@@ -2661,56 +2661,56 @@
         "label": "Griswald's Crusty Beard",
         "image": "/i/cards-default/2J.svg",
         "text2": "Strength 2",
-        "image1": "/assets/-595700657_346000",
+        "image1": "/assets/1790498859_10356",
         "sortingOrder": 1
       },
       "joker-red": {
         "label": "Just a Little Guy",
         "image": "/i/cards-default/1J.svg",
         "text2": "Strength 3",
-        "image1": "/assets/-1729223579_82788",
+        "image1": "/assets/-919983677_3920",
         "sortingOrder": 2
       },
       "joker-blue": {
         "label": "Robo Squeep",
         "image": "/i/cards-default/1J.svg",
         "text2": "Strength 4",
-        "image1": "/assets/1028301211_191648",
+        "image1": "/assets/581900342_6864",
         "sortingOrder": 3
       },
       "diamonds-a": {
         "label": "Gootus the Courageous",
         "image": "/i/cards-default/AD.svg",
         "text2": "Strength 5",
-        "image1": "/assets/544888322_275743",
+        "image1": "/assets/-647321985_7958",
         "sortingOrder": 4
       },
       "diamonds-2": {
         "label": "Idiot Boksen",
         "image": "/i/cards-default/2D.svg",
         "text2": "Strength 6",
-        "image1": "/assets/-1310908510_263216",
+        "image1": "/assets/487613365_7652",
         "sortingOrder": 5
       },
       "diamonds-3": {
         "label": "Cough Noir",
         "image": "/i/cards-default/3D.svg",
         "text2": "Strength 7",
-        "image1": "/assets/113700149_252662",
+        "image1": "/assets/-1529575824_6936",
         "sortingOrder": 6
       },
       "diamonds-4": {
         "label": "Funkeemon Keycard",
         "image": "/i/cards-default/4D.svg",
         "text2": "Strength 8",
-        "image1": "/assets/-1021969519_309580",
+        "image1": "/assets/89986406_11010",
         "sortingOrder": 7
       },
       "diamonds-5": {
         "label": "Not That Darby",
         "image": "/i/cards-default/5D.svg",
         "text2": "Strength 9",
-        "image1": "/assets/1338434384_165713",
+        "image1": "/assets/-209707949_6130",
         "sortingOrder": 8
       },
       "diamonds-6": {
@@ -2718,7 +2718,7 @@
         "image": "/i/cards-default/6D.svg",
         "text1": "Griswald's Crusty Beard",
         "text2": "Strength 2",
-        "image1": "/assets/1266549581_204193",
+        "image1": "/assets/340248639_7168",
         "sortingOrder": 9
       },
       "diamonds-7": {
@@ -2726,7 +2726,7 @@
         "image": "/i/cards-default/7D.svg",
         "text1": "Just a Little Guy",
         "text2": "Strength 2",
-        "image1": "/assets/977011633_207882",
+        "image1": "/assets/-851576603_5836",
         "sortingOrder": 10
       },
       "diamonds-8": {
@@ -2734,7 +2734,7 @@
         "image": "/i/cards-default/8D.svg",
         "text1": "Funkeemon Keycard",
         "text2": "Strength 3",
-        "image1": "/assets/-1583655918_175137",
+        "image1": "/assets/1479133230_6886",
         "sortingOrder": 11
       },
       "diamonds-9": {
@@ -2742,7 +2742,7 @@
         "image": "/i/cards-default/9D.svg",
         "text1": "Mr. Beetle",
         "text2": "Strength 3",
-        "image1": "/assets/1108734691_207480",
+        "image1": "/assets/1738553122_8240",
         "sortingOrder": 12
       },
       "diamonds-10": {
@@ -2750,7 +2750,7 @@
         "image": "/i/cards-default/TD.svg",
         "text1": "Griswald's Combover",
         "text2": "Strength 4",
-        "image1": "/assets/-675736385_243943",
+        "image1": "/assets/809179852_9160",
         "sortingOrder": 13
       },
       "diamonds-j": {
@@ -2758,7 +2758,7 @@
         "image": "/i/cards-default/JD.svg",
         "text1": "Rhinosuave",
         "text2": "Strength 4",
-        "image1": "/assets/-1841947889_296167",
+        "image1": "/assets/-1229267864_7322",
         "sortingOrder": 14
       },
       "diamonds-q": {
@@ -2766,7 +2766,7 @@
         "image": "/i/cards-default/QD.svg",
         "text1": "Oyon",
         "text2": "Strength 4",
-        "image1": "/assets/1004483955_265953",
+        "image1": "/assets/-201234074_6852",
         "sortingOrder": 15
       },
       "diamonds-k": {
@@ -2774,7 +2774,7 @@
         "image": "/i/cards-default/KD.svg",
         "text1": "Beelzebud",
         "text2": "Strength 5",
-        "image1": "/assets/292785756_243945",
+        "image1": "/assets/-486481848_6556",
         "sortingOrder": 16
       },
       "hearts-a": {
@@ -2782,7 +2782,7 @@
         "image": "/i/cards-default/AH.svg",
         "text1": "Aiyai Captain",
         "text2": "Strength 5",
-        "image1": "/assets/-1374009992_253895",
+        "image1": "/assets/-4862420_6344",
         "sortingOrder": 17
       },
       "hearts-2": {
@@ -2790,7 +2790,7 @@
         "image": "/i/cards-default/2H.svg",
         "text1": "Griswald's Roller Blades",
         "text2": "Strength 6",
-        "image1": "/assets/493660724_231373",
+        "image1": "/assets/1459913370_8504",
         "sortingOrder": 18
       },
       "hearts-3": {
@@ -2798,7 +2798,7 @@
         "image": "/i/cards-default/3H.svg",
         "text1": "Dark Justice",
         "text2": "Strength 9",
-        "image1": "/assets/-353615740_145074",
+        "image1": "/assets/1546276147_5866",
         "sortingOrder": 19
       },
       "hearts-4": {
@@ -2806,67 +2806,67 @@
         "image": "/i/cards-default/4H.svg",
         "text1": "Pete Zah",
         "text2": "Strength 3",
-        "image1": "/assets/-196611918_340970",
+        "image1": "/assets/2060642751_8224",
         "sortingOrder": 20
       },
       "hearts-5": {
         "label": "Darrip",
         "image": "/i/cards-default/5H.svg",
-        "image1": "/assets/1293755393_302675",
+        "image1": "/assets/-1510543371_7684",
         "sortingOrder": 21
       },
       "hearts-6": {
         "label": "Kabuto Gold",
         "image": "/i/cards-default/6H.svg",
-        "image1": "/assets/-1206879973_212949",
+        "image1": "/assets/-651836789_7916",
         "sortingOrder": 22
       },
       "hearts-7": {
         "label": "Griswald's Roller Blades",
         "image": "/i/cards-default/7H.svg",
-        "image1": "/assets/1406731326_248876",
+        "image1": "/assets/-1806854673_9466",
         "sortingOrder": 23
       },
       "hearts-8": {
         "label": "He Who Flattened",
         "image": "/i/cards-default/8H.svg",
-        "image1": "/assets/12074069_244532",
+        "image1": "/assets/-942247602_8974",
         "sortingOrder": 24
       },
       "hearts-9": {
         "label": "El Bañana",
         "image": "/i/cards-default/9H.svg",
-        "image1": "/assets/-120849922_281094",
+        "image1": "/assets/-1887633376_9078",
         "sortingOrder": 25
       },
       "hearts-10": {
         "label": "Fuzzy Tuber",
         "image": "/i/cards-default/TH.svg",
-        "image1": "/assets/-1014546470_225017",
+        "image1": "/assets/1850939698_6878",
         "sortingOrder": 26
       },
       "hearts-j": {
         "label": "Froark",
         "image": "/i/cards-default/JH.svg",
-        "image1": "/assets/1796475015_261155",
+        "image1": "/assets/-1759671801_6778",
         "sortingOrder": 27
       },
       "hearts-q": {
         "label": "Zengou the Honorable",
         "image": "/i/cards-default/QH.svg",
-        "image1": "/assets/-224876490_232417",
+        "image1": "/assets/89502550_7628",
         "sortingOrder": 28
       },
       "hearts-k": {
         "label": "Slendelien",
         "image": "/i/cards-default/KH.svg",
-        "image1": "/assets/-256783175_280843",
+        "image1": "/assets/1011007424_9818",
         "sortingOrder": 29
       },
       "spades-a": {
         "label": "Dark Justice",
         "image": "/i/cards-default/AS.svg",
-        "image1": "/assets/-788835870_173741",
+        "image1": "/assets/-14388485_6200",
         "sortingOrder": 30
       }
     },
@@ -2884,7 +2884,7 @@
             "type": "image",
             "x": 0,
             "y": 0,
-            "value": "/assets/-489619505_291484",
+            "value": "/assets/-1247921814_6190",
             "color": "rgb(91,242,43)",
             "width": 120,
             "height": 168
@@ -3180,7 +3180,7 @@
     },
     "cardTypes": {
       "type-19e06da5-bc5a-4df7-85bb-cb3dbbcacb48": {
-        "image": "/assets/1552564581_7082",
+        "image": "/assets/274723020_2786",
         "label": "Buck.png",
         "sortingOrder": 1
       }
@@ -3658,16 +3658,16 @@
       "similarDesigner": "Zoql",
       "description": "Place workers on game board and assign them tasks of earning money, buying cards, trading for cards, or dueling for cards. Play 7 rounds and earn as many points as possible. Compare against game ending point chart to see how well you did.\n\n\nv1.2.3",
       "showName": true,
-      "lastUpdate": 1720359421053,
+      "lastUpdate": 1720453324611,
       "skill": "",
-      "variantImage": "",
-      "variant": "",
-      "language": "en-US",
-      "players": "1",
       "similarImage": "",
       "similarAwards": "",
       "ruleText": "",
-      "helpText": ""
+      "helpText": "",
+      "variantImage": "",
+      "variant": "",
+      "language": "en-US",
+      "players": "1"
     }
   }
 }
