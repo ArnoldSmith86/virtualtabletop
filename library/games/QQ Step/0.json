@@ -1,35 +1,6 @@
 {
-  "_meta": {
-    "version": 4,
-    "info": {
-      "importerTime": 1720273377802,
-      "lastUpdate": 1720360174276,
-      "importer": "PCIO",
-      "image": "/assets/-972047508_283757",
-      "name": "QQ Step",
-      "showName": true,
-      "time": "15",
-      "mode": "vs",
-      "skill": "",
-      "description": "Use cards to move your dancers across the board or spend Kudos to activate your character's special ability. Win either by removing your opponent's Leader from the board, by removing all your opponent's Friends from the board, or by achieving your Leader's special win condition.",
-      "similarImage": "",
-      "similarName": "QQ Step",
-      "year": "2023",
-      "similarDesigner": "Zoql",
-      "similarAwards": "",
-      "bgg": "https://zoql.itch.io/qq-step",
-      "rules": "https://zoql.itch.io/qq-step",
-      "ruleText": "",
-      "helpText": "",
-      "attribution": "An original game by Zoql available under CC BY-SA-NC 4.0. Thanks to meBID (programming), chvage (music), Ly (art), rust dogg and Zalf (playtesting).<div><br></div><div>Special thanks to Shimpei Sato and his game, Onitama. QQ Step was heavily inspired by it.</div><div>\nFor more information and additional versions of the game, see https://zoql.itch.io/stardustbutterfly.</div>",
-      "players": "2",
-      "language": "en-US",
-      "variant": "",
-      "variantImage": ""
-    }
-  },
-  "qqft": {
-    "id": "qqft",
+  "1yef": {
+    "id": "1yef",
     "type": "pile",
     "x": 1528.25,
     "y": 243.63,
@@ -37,8 +8,8 @@
     "height": 50,
     "parent": null
   },
-  "wo9i": {
-    "id": "wo9i",
+  "xt60": {
+    "id": "xt60",
     "type": "pile",
     "x": 6,
     "y": 6,
@@ -46,8 +17,8 @@
     "height": 126,
     "parent": "1c31f636-5d8a-4200-943f-825e343efa29"
   },
-  "xvvs": {
-    "id": "xvvs",
+  "clhk": {
+    "id": "clhk",
     "type": "pile",
     "x": 6,
     "y": 6,
@@ -55,8 +26,8 @@
     "height": 126,
     "parent": "84397eb4-ef8e-4ba7-b475-403dd6137c02"
   },
-  "hkf3": {
-    "id": "hkf3",
+  "um2o": {
+    "id": "um2o",
     "type": "pile",
     "x": 1511.91,
     "y": 124.39,
@@ -64,8 +35,8 @@
     "height": 70,
     "parent": null
   },
-  "3duk": {
-    "id": "3duk",
+  "957l": {
+    "id": "957l",
     "type": "pile",
     "x": 6,
     "y": 6,
@@ -73,8 +44,8 @@
     "height": 160,
     "parent": "cadc9d53-e113-439c-a251-fa16a7933c90"
   },
-  "k3w7": {
-    "id": "k3w7",
+  "jyi1": {
+    "id": "jyi1",
     "type": "pile",
     "x": 1501.14,
     "y": 26.42,
@@ -82,17 +53,17 @@
     "height": 70,
     "parent": null
   },
-  "5dqy": {
-    "id": "5dqy",
+  "n01l": {
+    "id": "n01l",
     "type": "pile",
     "x": 1514.07,
-    "y": 678.78,
+    "y": 712.64,
     "width": 70,
     "height": 70,
     "parent": null
   },
-  "4w9w": {
-    "id": "4w9w",
+  "663w": {
+    "id": "663w",
     "type": "pile",
     "x": 1435.39,
     "y": 226.35,
@@ -106,21 +77,62 @@
     "type": "card",
     "deck": "bb7069ad-fb4a-419b-a940-fae6e8d66939",
     "cardType": "type-8f9114ad-2123-4438-b56c-18d6cd159673",
-    "parent": "qqft"
+    "parent": "1yef"
   },
   "08e882b1-687b-4f16-91ca-ba261aff6d1c": {
     "id": "08e882b1-687b-4f16-91ca-ba261aff6d1c",
     "z": 2149,
     "type": "card",
     "deck": "b57131aa-9b97-48ba-95a8-df560f27b297",
-    "cardType": "type-f468139e-706d-43f5-8c20-fa0f61dbfe46",
-    "parent": "wo9i"
+    "cardType": "type-ec33bfcf-2f2b-43af-ac70-d2e4d364c3f7",
+    "parent": "xt60"
+  },
+  "84397eb4-ef8e-4ba7-b475-403dd6137c02_shuffleButton": {
+    "id": "84397eb4-ef8e-4ba7-b475-403dd6137c02_shuffleButton",
+    "parent": "84397eb4-ef8e-4ba7-b475-403dd6137c02",
+    "y": 140.76,
+    "width": 102,
+    "height": 32,
+    "type": "button",
+    "text": "Recall & Shuffle",
+    "movableInEdit": false,
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "header": "Recalling cards...",
+        "fields": [
+          {
+            "type": "text",
+            "text": "You're about to recall all cards belonging into this holder. Are you sure?"
+          },
+          {
+            "type": "checkbox",
+            "label": "Recall player-owned cards",
+            "variable": "owned"
+          }
+        ]
+      },
+      {
+        "func": "RECALL",
+        "holder": "84397eb4-ef8e-4ba7-b475-403dd6137c02",
+        "owned": "${owned}"
+      },
+      {
+        "func": "FLIP",
+        "holder": "84397eb4-ef8e-4ba7-b475-403dd6137c02",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "84397eb4-ef8e-4ba7-b475-403dd6137c02"
+      }
+    ]
   },
   "84397eb4-ef8e-4ba7-b475-403dd6137c02": {
     "id": "84397eb4-ef8e-4ba7-b475-403dd6137c02",
     "x": 1472.78,
     "y": 522.1,
-    "z": 2308,
+    "z": 2521,
     "type": "holder",
     "width": 102,
     "height": 138,
@@ -155,24 +167,24 @@
     "z": 2142,
     "type": "card",
     "deck": "b57131aa-9b97-48ba-95a8-df560f27b297",
-    "cardType": "type-60f321c2-ecb6-4460-8b3a-8928aa5bbef0",
-    "parent": "wo9i"
+    "cardType": "type-9f01ad36-51b2-4d36-a78c-a4c090632b33",
+    "parent": "xt60"
   },
   "6a418cb7-9f7d-41c7-a818-39d7784a91e0": {
     "id": "6a418cb7-9f7d-41c7-a818-39d7784a91e0",
     "z": 2509,
     "type": "card",
     "deck": "8898d4b3-5225-4cbd-8c7b-2216c71fb9c9",
-    "cardType": "type-e85ba55e-9d04-49c5-9f42-43df92076db1",
-    "parent": "xvvs"
+    "cardType": "type-0c97f4ce-f5c5-4b49-a004-3655cb6ff909",
+    "parent": "clhk"
   },
   "575234ec-d2ea-441f-a9d1-c41d9251d3c9": {
     "id": "575234ec-d2ea-441f-a9d1-c41d9251d3c9",
     "z": 2141,
     "type": "card",
     "deck": "b57131aa-9b97-48ba-95a8-df560f27b297",
-    "cardType": "type-a9b73744-9a62-4040-aee1-697069fb6711",
-    "parent": "wo9i"
+    "cardType": "type-312bac67-a22e-4ebf-a84c-5102e7732aec",
+    "parent": "xt60"
   },
   "be5199e1-00cb-4cb0-8107-d24a909369e0": {
     "id": "be5199e1-00cb-4cb0-8107-d24a909369e0",
@@ -188,8 +200,8 @@
     "z": 2511,
     "type": "card",
     "deck": "8898d4b3-5225-4cbd-8c7b-2216c71fb9c9",
-    "cardType": "type-8a9ef100-ae9d-4881-99c3-f54eb05cc950",
-    "parent": "xvvs"
+    "cardType": "type-e85ba55e-9d04-49c5-9f42-43df92076db1",
+    "parent": "clhk"
   },
   "67326693-f2cd-407e-b128-672141ba9323": {
     "id": "67326693-f2cd-407e-b128-672141ba9323",
@@ -213,16 +225,16 @@
     "z": 2143,
     "type": "card",
     "deck": "b57131aa-9b97-48ba-95a8-df560f27b297",
-    "cardType": "type-c5da1a59-79ca-4f88-916b-d79483736035",
-    "parent": "wo9i"
+    "cardType": "type-2a590018-8f1c-4c2d-b8b0-189e4133b3ff",
+    "parent": "xt60"
   },
   "d86af0bf-903b-4fb8-b507-68819624b25f": {
     "id": "d86af0bf-903b-4fb8-b507-68819624b25f",
     "z": 2150,
     "type": "card",
     "deck": "b57131aa-9b97-48ba-95a8-df560f27b297",
-    "cardType": "type-1c6cc5a2-72a2-4ef8-9f19-093717e585a0",
-    "parent": "wo9i"
+    "cardType": "type-60f321c2-ecb6-4460-8b3a-8928aa5bbef0",
+    "parent": "xt60"
   },
   "c5efe93b-0ae7-461a-92a0-14e8358c63ea": {
     "id": "c5efe93b-0ae7-461a-92a0-14e8358c63ea",
@@ -246,8 +258,8 @@
     "z": 2148,
     "type": "card",
     "deck": "b57131aa-9b97-48ba-95a8-df560f27b297",
-    "cardType": "type-60584b99-fa91-4ed3-b62a-f61add990ab1",
-    "parent": "wo9i"
+    "cardType": "type-702f173e-fdff-4ef2-9f8e-6b21f07f904f",
+    "parent": "xt60"
   },
   "6c900bbe-7207-4931-a744-c2ad6c2db9d4": {
     "id": "6c900bbe-7207-4931-a744-c2ad6c2db9d4",
@@ -325,7 +337,6 @@
             "height": 70,
             "type": "image",
             "color": "transparent",
-            "valueType": "static",
             "value": ""
           },
           {
@@ -333,10 +344,11 @@
             "x": 0,
             "y": 0,
             "color": "transparent",
-            "valueType": "dynamic",
-            "value": "image",
             "width": 70,
-            "height": 70
+            "height": 70,
+            "dynamicProperties": {
+              "value": "image"
+            }
           }
         ],
         "border": false,
@@ -372,7 +384,7 @@
     "type": "card",
     "deck": "6c900bbe-7207-4931-a744-c2ad6c2db9d4",
     "cardType": "type-bcd9172e-7e30-46b3-9372-76ff81e6b244",
-    "parent": "hkf3"
+    "parent": "um2o"
   },
   "3a3c3b49-a5e9-47e2-ab12-d0ecc37adcef": {
     "id": "3a3c3b49-a5e9-47e2-ab12-d0ecc37adcef",
@@ -380,7 +392,7 @@
     "type": "card",
     "deck": "44fbfba5-6722-4b9d-aa6a-0d8686877d6a",
     "cardType": "type-c08fe320-f675-45c4-908c-1b264964df60",
-    "parent": "3duk"
+    "parent": "957l"
   },
   "532be79d-4946-4878-8480-6534679c220f": {
     "id": "532be79d-4946-4878-8480-6534679c220f",
@@ -388,7 +400,7 @@
     "type": "card",
     "deck": "bb7069ad-fb4a-419b-a940-fae6e8d66939",
     "cardType": "type-8f9114ad-2123-4438-b56c-18d6cd159673",
-    "parent": "qqft"
+    "parent": "1yef"
   },
   "9b166e0b-8c0e-4c00-a2e0-ce4835d21a49": {
     "id": "9b166e0b-8c0e-4c00-a2e0-ce4835d21a49",
@@ -396,15 +408,15 @@
     "type": "card",
     "deck": "6c900bbe-7207-4931-a744-c2ad6c2db9d4",
     "cardType": "type-cd3d3ea7-6e9e-4565-a7eb-75adc1446996",
-    "parent": "k3w7"
+    "parent": "jyi1"
   },
   "99901a1e-098a-4e8c-a3d0-30ab2f7bfe56": {
     "id": "99901a1e-098a-4e8c-a3d0-30ab2f7bfe56",
-    "z": 2427,
+    "z": 2524,
     "type": "card",
     "deck": "6c900bbe-7207-4931-a744-c2ad6c2db9d4",
     "cardType": "type-d9468dbf-c685-4b5d-bf65-9de49322e0ec",
-    "parent": "5dqy"
+    "parent": "n01l"
   },
   "11623183-bf7e-4481-96b9-4ed1467a68d1": {
     "id": "11623183-bf7e-4481-96b9-4ed1467a68d1",
@@ -412,7 +424,7 @@
     "type": "card",
     "deck": "6c900bbe-7207-4931-a744-c2ad6c2db9d4",
     "cardType": "type-3afc8781-3064-45be-ad03-702b18206f5b",
-    "parent": "k3w7"
+    "parent": "jyi1"
   },
   "161fc118-02c4-4a1d-a413-d89ca6d51470label": {
     "id": "161fc118-02c4-4a1d-a413-d89ca6d51470label",
@@ -631,8 +643,8 @@
     "z": 2144,
     "type": "card",
     "deck": "b57131aa-9b97-48ba-95a8-df560f27b297",
-    "cardType": "type-a70c9ea4-c098-4122-abc4-7469ff4a3e6c",
-    "parent": "wo9i"
+    "cardType": "type-645fae17-0d9c-4349-bdd6-587f68ca2f8b",
+    "parent": "xt60"
   },
   "3e249a58-2b0f-4a29-873d-cebb5605a5bc": {
     "id": "3e249a58-2b0f-4a29-873d-cebb5605a5bc",
@@ -656,14 +668,55 @@
     "z": 2472,
     "type": "card",
     "deck": "b57131aa-9b97-48ba-95a8-df560f27b297",
-    "cardType": "type-702f173e-fdff-4ef2-9f8e-6b21f07f904f",
-    "parent": "wo9i"
+    "cardType": "type-c5da1a59-79ca-4f88-916b-d79483736035",
+    "parent": "xt60"
+  },
+  "1c31f636-5d8a-4200-943f-825e343efa29_shuffleButton": {
+    "id": "1c31f636-5d8a-4200-943f-825e343efa29_shuffleButton",
+    "parent": "1c31f636-5d8a-4200-943f-825e343efa29",
+    "y": 140.76,
+    "width": 102,
+    "height": 32,
+    "type": "button",
+    "text": "Recall & Shuffle",
+    "movableInEdit": false,
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "header": "Recalling cards...",
+        "fields": [
+          {
+            "type": "text",
+            "text": "You're about to recall all cards belonging into this holder. Are you sure?"
+          },
+          {
+            "type": "checkbox",
+            "label": "Recall player-owned cards",
+            "variable": "owned"
+          }
+        ]
+      },
+      {
+        "func": "RECALL",
+        "holder": "1c31f636-5d8a-4200-943f-825e343efa29",
+        "owned": "${owned}"
+      },
+      {
+        "func": "FLIP",
+        "holder": "1c31f636-5d8a-4200-943f-825e343efa29",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "1c31f636-5d8a-4200-943f-825e343efa29"
+      }
+    ]
   },
   "1c31f636-5d8a-4200-943f-825e343efa29": {
     "id": "1c31f636-5d8a-4200-943f-825e343efa29",
     "x": 1355.8,
     "y": 521.25,
-    "z": 2310,
+    "z": 2519,
     "type": "holder",
     "width": 102,
     "height": 138,
@@ -681,16 +734,16 @@
     "z": 2147,
     "type": "card",
     "deck": "b57131aa-9b97-48ba-95a8-df560f27b297",
-    "cardType": "type-8cb259e0-9c37-4558-996b-c20a6dec7daa",
-    "parent": "wo9i"
+    "cardType": "type-7f451166-a914-4f29-b841-00ee63c2457c",
+    "parent": "xt60"
   },
   "2556d68a-f328-4c21-8a19-10cb86ef5f88": {
     "id": "2556d68a-f328-4c21-8a19-10cb86ef5f88",
     "z": 2507,
     "type": "card",
     "deck": "8898d4b3-5225-4cbd-8c7b-2216c71fb9c9",
-    "cardType": "type-0c97f4ce-f5c5-4b49-a004-3655cb6ff909",
-    "parent": "xvvs"
+    "cardType": "type-c80b6bad-1dc5-4895-b738-8e350c82dce0",
+    "parent": "clhk"
   },
   "2086d9b1-27d1-4cd7-93d9-3eae0f0b174c": {
     "id": "2086d9b1-27d1-4cd7-93d9-3eae0f0b174c",
@@ -743,7 +796,6 @@
             "height": 50,
             "type": "image",
             "color": "transparent",
-            "valueType": "static",
             "value": ""
           },
           {
@@ -751,10 +803,11 @@
             "x": 0,
             "y": 0,
             "color": "transparent",
-            "valueType": "dynamic",
-            "value": "image2",
             "width": 50,
-            "height": 50
+            "height": 50,
+            "dynamicProperties": {
+              "value": "image2"
+            }
           }
         ],
         "border": false,
@@ -767,7 +820,6 @@
             "height": 50,
             "type": "image",
             "color": "transparent",
-            "valueType": "static",
             "value": ""
           },
           {
@@ -775,10 +827,11 @@
             "x": 0,
             "y": 0,
             "color": "transparent",
-            "valueType": "dynamic",
-            "value": "image",
             "width": 50,
-            "height": 50
+            "height": 50,
+            "dynamicProperties": {
+              "value": "image"
+            }
           }
         ],
         "border": false,
@@ -813,8 +866,8 @@
     "z": 2156,
     "type": "card",
     "deck": "b57131aa-9b97-48ba-95a8-df560f27b297",
-    "cardType": "type-9f01ad36-51b2-4d36-a78c-a4c090632b33",
-    "parent": "wo9i"
+    "cardType": "type-1c6cc5a2-72a2-4ef8-9f19-093717e585a0",
+    "parent": "xt60"
   },
   "58d7ddff-29d8-4cd7-a766-173ea9556d84_decrementButton": {
     "id": "58d7ddff-29d8-4cd7-a766-173ea9556d84_decrementButton",
@@ -911,7 +964,6 @@
             "height": 92,
             "type": "image",
             "color": "transparent",
-            "valueType": "static",
             "value": ""
           },
           {
@@ -919,20 +971,22 @@
             "x": 0,
             "y": 0,
             "color": "transparent",
-            "valueType": "dynamic",
-            "value": "image",
             "width": 96,
-            "height": 92
+            "height": 92,
+            "dynamicProperties": {
+              "value": "image"
+            }
           },
           {
             "type": "image",
             "x": 0,
             "y": 0,
-            "valueType": "dynamic",
-            "value": "image1",
             "color": "rgba(255, 255, 255, 0)",
             "width": 96,
-            "height": 92
+            "height": 92,
+            "dynamicProperties": {
+              "value": "image1"
+            }
           }
         ],
         "border": false,
@@ -949,8 +1003,8 @@
     "z": 2512,
     "type": "card",
     "deck": "8898d4b3-5225-4cbd-8c7b-2216c71fb9c9",
-    "cardType": "type-c80b6bad-1dc5-4895-b738-8e350c82dce0",
-    "parent": "xvvs"
+    "cardType": "type-3552b3c8-9273-41ac-a800-5f398bc0c1d0",
+    "parent": "clhk"
   },
   "32fb976a-3371-476e-8d1f-a703938b6cc9": {
     "id": "32fb976a-3371-476e-8d1f-a703938b6cc9",
@@ -984,8 +1038,8 @@
     "z": 2151,
     "type": "card",
     "deck": "b57131aa-9b97-48ba-95a8-df560f27b297",
-    "cardType": "type-ec33bfcf-2f2b-43af-ac70-d2e4d364c3f7",
-    "parent": "wo9i"
+    "cardType": "type-f468139e-706d-43f5-8c20-fa0f61dbfe46",
+    "parent": "xt60"
   },
   "028bff87-8313-42d2-86fa-ea8a7a23885a": {
     "id": "028bff87-8313-42d2-86fa-ea8a7a23885a",
@@ -993,7 +1047,7 @@
     "type": "card",
     "deck": "44fbfba5-6722-4b9d-aa6a-0d8686877d6a",
     "cardType": "type-1bf3ff5f-99cc-4671-85d0-4dda3bb55dfb",
-    "parent": "3duk"
+    "parent": "957l"
   },
   "31e6a5c9-7901-44c3-b638-5e957fe5a761": {
     "id": "31e6a5c9-7901-44c3-b638-5e957fe5a761",
@@ -1001,7 +1055,7 @@
     "type": "card",
     "deck": "bb7069ad-fb4a-419b-a940-fae6e8d66939",
     "cardType": "type-e9151e6a-209b-4789-a298-e83269031621",
-    "parent": "qqft"
+    "parent": "1yef"
   },
   "25b26385-2a77-4687-af5d-293037ea7dce": {
     "id": "25b26385-2a77-4687-af5d-293037ea7dce",
@@ -1009,7 +1063,7 @@
     "type": "card",
     "deck": "44fbfba5-6722-4b9d-aa6a-0d8686877d6a",
     "cardType": "type-2749c3f1-b855-4e06-9b2f-fa3ab6296c5a",
-    "parent": "3duk"
+    "parent": "957l"
   },
   "d2d3b7b9-8275-4523-b954-f1f80bf62928": {
     "id": "d2d3b7b9-8275-4523-b954-f1f80bf62928",
@@ -1017,7 +1071,7 @@
     "type": "card",
     "deck": "44fbfba5-6722-4b9d-aa6a-0d8686877d6a",
     "cardType": "type-17c58719-9f2a-43b9-a258-7c41047992b7",
-    "parent": "3duk"
+    "parent": "957l"
   },
   "b57131aa-9b97-48ba-95a8-df560f27b297": {
     "id": "b57131aa-9b97-48ba-95a8-df560f27b297",
@@ -1136,14 +1190,12 @@
             "height": 126,
             "type": "image",
             "color": "white",
-            "valueType": "static",
             "value": ""
           },
           {
             "type": "image",
             "x": 0,
             "y": 0,
-            "valueType": "static",
             "value": "/assets/917373408_236923",
             "color": "rgb(242,240,128)",
             "width": 90,
@@ -1160,7 +1212,6 @@
             "height": 126,
             "type": "image",
             "color": "white",
-            "valueType": "static",
             "value": ""
           },
           {
@@ -1168,10 +1219,11 @@
             "x": 0,
             "y": 0,
             "color": "white",
-            "valueType": "dynamic",
-            "value": "image",
             "width": 90,
-            "height": 126
+            "height": 126,
+            "dynamicProperties": {
+              "value": "image"
+            }
           }
         ],
         "border": 1,
@@ -1190,15 +1242,15 @@
     "type": "card",
     "deck": "b57131aa-9b97-48ba-95a8-df560f27b297",
     "cardType": "type-a75e535e-ba28-43f6-9442-3ea56871828e",
-    "parent": "wo9i"
+    "parent": "xt60"
   },
   "c5beaad6-4e84-40d7-b33a-79b7d6ea51dc": {
     "id": "c5beaad6-4e84-40d7-b33a-79b7d6ea51dc",
-    "z": 2426,
+    "z": 2523,
     "type": "card",
     "deck": "6c900bbe-7207-4931-a744-c2ad6c2db9d4",
     "cardType": "type-9d1cdae0-b17e-4dee-b685-ecb5afa44738",
-    "parent": "5dqy"
+    "parent": "n01l"
   },
   "8898d4b3-5225-4cbd-8c7b-2216c71fb9c9": {
     "id": "8898d4b3-5225-4cbd-8c7b-2216c71fb9c9",
@@ -1257,14 +1309,12 @@
             "height": 126,
             "type": "image",
             "color": "white",
-            "valueType": "static",
             "value": ""
           },
           {
             "type": "image",
             "x": 0,
             "y": 0,
-            "valueType": "static",
             "value": "/assets/1568423802_568222",
             "color": "rgb(202,130,244)",
             "width": 90,
@@ -1281,18 +1331,18 @@
             "height": 126,
             "type": "image",
             "color": "white",
-            "valueType": "static",
             "value": ""
           },
           {
             "type": "image",
             "x": 0,
             "y": 0,
-            "valueType": "dynamic",
-            "value": "image1",
             "color": "rgba(255, 255, 255, 0)",
             "width": 90,
-            "height": 126
+            "height": 126,
+            "dynamicProperties": {
+              "value": "image1"
+            }
           }
         ],
         "border": 1,
@@ -1310,8 +1360,8 @@
     "z": 2177,
     "type": "card",
     "deck": "b57131aa-9b97-48ba-95a8-df560f27b297",
-    "cardType": "type-7f451166-a914-4f29-b841-00ee63c2457c",
-    "parent": "wo9i"
+    "cardType": "type-45afc71f-e6fc-4e75-92b9-7927ba410dba",
+    "parent": "xt60"
   },
   "57e9ad0f-1253-4951-b932-254beb2a7bcc_decrementButton": {
     "id": "57e9ad0f-1253-4951-b932-254beb2a7bcc_decrementButton",
@@ -1377,16 +1427,16 @@
     "z": 2508,
     "type": "card",
     "deck": "8898d4b3-5225-4cbd-8c7b-2216c71fb9c9",
-    "cardType": "type-7caa33b2-dc68-4c01-93dc-3e02d5104568",
-    "parent": "xvvs"
+    "cardType": "type-341f5443-0eea-4994-a658-dafef1454689",
+    "parent": "clhk"
   },
   "5e21641e-b190-4f84-bb91-d0d1af436477": {
     "id": "5e21641e-b190-4f84-bb91-d0d1af436477",
     "z": 2146,
     "type": "card",
     "deck": "b57131aa-9b97-48ba-95a8-df560f27b297",
-    "cardType": "type-45afc71f-e6fc-4e75-92b9-7927ba410dba",
-    "parent": "wo9i"
+    "cardType": "type-3d4760e2-3c4d-4a85-8880-6944eaf8ded7",
+    "parent": "xt60"
   },
   "46f289d8-2c08-4520-9740-6f5ec840234f": {
     "id": "46f289d8-2c08-4520-9740-6f5ec840234f",
@@ -1394,15 +1444,15 @@
     "type": "card",
     "deck": "6c900bbe-7207-4931-a744-c2ad6c2db9d4",
     "cardType": "type-ab3db52e-d7ee-47c9-a17e-14a89aac0ac4",
-    "parent": "hkf3"
+    "parent": "um2o"
   },
   "e3f910ac-635c-4417-8e70-694290e9bbb4": {
     "id": "e3f910ac-635c-4417-8e70-694290e9bbb4",
     "z": 2506,
     "type": "card",
     "deck": "8898d4b3-5225-4cbd-8c7b-2216c71fb9c9",
-    "cardType": "type-3552b3c8-9273-41ac-a800-5f398bc0c1d0",
-    "parent": "xvvs"
+    "cardType": "type-7caa33b2-dc68-4c01-93dc-3e02d5104568",
+    "parent": "clhk"
   },
   "fc7a652d-1f89-4ce1-92e9-bad4cc055a2c": {
     "id": "fc7a652d-1f89-4ce1-92e9-bad4cc055a2c",
@@ -1410,11 +1460,11 @@
     "type": "card",
     "deck": "6c900bbe-7207-4931-a744-c2ad6c2db9d4",
     "cardType": "type-41235abe-6ef3-4d2f-82a3-71ba0fb13c5a",
-    "parent": "k3w7"
+    "parent": "jyi1"
   },
   "a849b208-bc8a-48b0-95d7-5eb84649f172": {
     "id": "a849b208-bc8a-48b0-95d7-5eb84649f172",
-    "z": 7541,
+    "z": 7480,
     "image": "/assets/-38810670_58792",
     "movable": false,
     "layer": -4,
@@ -1423,19 +1473,19 @@
   },
   "3976d0e0-5972-472b-8e2c-ce6452f5b0d2": {
     "id": "3976d0e0-5972-472b-8e2c-ce6452f5b0d2",
-    "z": 2425,
+    "z": 2522,
     "type": "card",
     "deck": "6c900bbe-7207-4931-a744-c2ad6c2db9d4",
     "cardType": "type-81e7aaa9-54df-48fa-8f67-8a6c4a11b2e3",
-    "parent": "5dqy"
+    "parent": "n01l"
   },
   "ce8770ea-0c12-450e-a2f7-206129377178": {
     "id": "ce8770ea-0c12-450e-a2f7-206129377178",
     "z": 2510,
     "type": "card",
     "deck": "8898d4b3-5225-4cbd-8c7b-2216c71fb9c9",
-    "cardType": "type-341f5443-0eea-4994-a658-dafef1454689",
-    "parent": "xvvs"
+    "cardType": "type-8a9ef100-ae9d-4881-99c3-f54eb05cc950",
+    "parent": "clhk"
   },
   "679c2690-cfec-4760-b413-25a78221c1a9": {
     "id": "679c2690-cfec-4760-b413-25a78221c1a9",
@@ -1443,7 +1493,7 @@
     "type": "card",
     "deck": "bb7069ad-fb4a-419b-a940-fae6e8d66939",
     "cardType": "type-e9151e6a-209b-4789-a298-e83269031621",
-    "parent": "qqft"
+    "parent": "1yef"
   },
   "f89d700c-e5d3-48eb-947f-986ae7178513": {
     "id": "f89d700c-e5d3-48eb-947f-986ae7178513",
@@ -1451,37 +1501,37 @@
     "type": "card",
     "deck": "bb7069ad-fb4a-419b-a940-fae6e8d66939",
     "cardType": "type-61f9cc86-4e80-46bb-ae34-7af6cbfc28ac",
-    "parent": "qqft"
+    "parent": "1yef"
   },
   "8696cb67-b168-4ae6-9948-32d8097ddc55": {
     "id": "8696cb67-b168-4ae6-9948-32d8097ddc55",
     "z": 2157,
     "type": "card",
     "deck": "b57131aa-9b97-48ba-95a8-df560f27b297",
-    "cardType": "type-3d4760e2-3c4d-4a85-8880-6944eaf8ded7",
-    "parent": "wo9i"
+    "cardType": "type-6c459d47-6c84-4a85-b570-b8b5bcc105f6",
+    "parent": "xt60"
   },
   "d0007b79-73db-4c98-9e37-04e16029371d": {
     "id": "d0007b79-73db-4c98-9e37-04e16029371d",
     "z": 2179,
     "type": "card",
     "deck": "b57131aa-9b97-48ba-95a8-df560f27b297",
-    "cardType": "type-645fae17-0d9c-4349-bdd6-587f68ca2f8b",
-    "parent": "wo9i"
+    "cardType": "type-8cb259e0-9c37-4558-996b-c20a6dec7daa",
+    "parent": "xt60"
   },
   "ba8d0133-0e57-488a-a676-3c10d019e88d": {
     "id": "ba8d0133-0e57-488a-a676-3c10d019e88d",
     "z": 2145,
     "type": "card",
     "deck": "b57131aa-9b97-48ba-95a8-df560f27b297",
-    "cardType": "type-312bac67-a22e-4ebf-a84c-5102e7732aec",
-    "parent": "wo9i"
+    "cardType": "type-ad378ebd-e0c4-4017-bf9a-a7f1f0834c64",
+    "parent": "xt60"
   },
   "c990a76d-53a0-4254-9674-59cbb099229d": {
     "id": "c990a76d-53a0-4254-9674-59cbb099229d",
-    "x": 1319.18,
-    "y": 209.45,
-    "z": 2444,
+    "x": 1326.23,
+    "y": 210.86,
+    "z": 2526,
     "type": "card",
     "deck": "9acf3018-9fad-49fa-9367-e6d4515d5186",
     "cardType": "type-986c8800-a355-4135-954d-c6f8f8586c0f"
@@ -1491,14 +1541,14 @@
     "z": 2152,
     "type": "card",
     "deck": "b57131aa-9b97-48ba-95a8-df560f27b297",
-    "cardType": "type-ad378ebd-e0c4-4017-bf9a-a7f1f0834c64",
-    "parent": "wo9i"
+    "cardType": "type-a70c9ea4-c098-4122-abc4-7469ff4a3e6c",
+    "parent": "xt60"
   },
   "2b844380-3679-40fb-b447-a2cea6dc93a0": {
     "id": "2b844380-3679-40fb-b447-a2cea6dc93a0",
-    "x": 1414.51,
-    "y": 672.53,
-    "z": 2424,
+    "x": 1404.64,
+    "y": 705.01,
+    "z": 2525,
     "type": "card",
     "deck": "9acf3018-9fad-49fa-9367-e6d4515d5186",
     "cardType": "type-78737b97-6332-4bb5-bd9b-7eda3860968c"
@@ -1525,8 +1575,8 @@
     "z": 2154,
     "type": "card",
     "deck": "b57131aa-9b97-48ba-95a8-df560f27b297",
-    "cardType": "type-2a590018-8f1c-4c2d-b8b0-189e4133b3ff",
-    "parent": "wo9i"
+    "cardType": "type-a9b73744-9a62-4040-aee1-697069fb6711",
+    "parent": "xt60"
   },
   "9dd5a4c1-c6c0-43c7-8d57-ca559cb50933label": {
     "id": "9dd5a4c1-c6c0-43c7-8d57-ca559cb50933label",
@@ -1745,8 +1795,8 @@
     "z": 2153,
     "type": "card",
     "deck": "b57131aa-9b97-48ba-95a8-df560f27b297",
-    "cardType": "type-6c459d47-6c84-4a85-b570-b8b5bcc105f6",
-    "parent": "wo9i"
+    "cardType": "type-60584b99-fa91-4ed3-b62a-f61add990ab1",
+    "parent": "xt60"
   },
   "44fbfba5-6722-4b9d-aa6a-0d8686877d6a": {
     "id": "44fbfba5-6722-4b9d-aa6a-0d8686877d6a",
@@ -1785,18 +1835,18 @@
             "height": 160,
             "type": "image",
             "color": "white",
-            "valueType": "static",
             "value": ""
           },
           {
             "type": "image",
             "x": 0,
             "y": 0,
-            "valueType": "dynamic",
-            "value": "image1",
             "color": "rgba(255, 255, 255, 0)",
             "width": 200,
-            "height": 160
+            "height": 160,
+            "dynamicProperties": {
+              "value": "image1"
+            }
           }
         ],
         "border": 1,
@@ -1814,7 +1864,7 @@
     "type": "card",
     "deck": "bb7069ad-fb4a-419b-a940-fae6e8d66939",
     "cardType": "type-e9151e6a-209b-4789-a298-e83269031621",
-    "parent": "qqft"
+    "parent": "1yef"
   },
   "7a353490-561d-4fb7-a5a4-aebdc665e5c4": {
     "id": "7a353490-561d-4fb7-a5a4-aebdc665e5c4",
@@ -1822,7 +1872,7 @@
     "type": "card",
     "deck": "6c900bbe-7207-4931-a744-c2ad6c2db9d4",
     "cardType": "type-7b53d858-3a01-4935-a183-ada78ac5bca3",
-    "parent": "4w9w"
+    "parent": "663w"
   },
   "645d6b79-df43-4192-ad3e-3fbc68ac0447": {
     "id": "645d6b79-df43-4192-ad3e-3fbc68ac0447",
@@ -1830,7 +1880,7 @@
     "type": "card",
     "deck": "6c900bbe-7207-4931-a744-c2ad6c2db9d4",
     "cardType": "type-92fab1b5-829d-4cb5-9f1a-ac8e071ff80a",
-    "parent": "4w9w"
+    "parent": "663w"
   },
   "hand": {
     "id": "hand",
@@ -1850,7 +1900,9 @@
     "inheritChildZ": true,
     "childrenPerOwner": true,
     "width": 217.17,
-    "height": 180
+    "height": 180,
+    "dropShadow": true,
+    "hidePlayerCursors": true
   },
   "ea8cd5ce-ba2e-4b05-8689-67f203054788": {
     "id": "ea8cd5ce-ba2e-4b05-8689-67f203054788",
@@ -1858,7 +1910,7 @@
     "type": "card",
     "deck": "8898d4b3-5225-4cbd-8c7b-2216c71fb9c9",
     "cardType": "type-52504e9e-d5ff-47ad-bf25-291079044152",
-    "parent": "xvvs"
+    "parent": "clhk"
   },
   "ff55e49b-7899-4d64-9a2b-489333d5f74a": {
     "id": "ff55e49b-7899-4d64-9a2b-489333d5f74a",
@@ -1866,7 +1918,7 @@
     "type": "card",
     "deck": "6c900bbe-7207-4931-a744-c2ad6c2db9d4",
     "cardType": "type-b367fcf4-2e4d-4edb-8a9b-83bef9b5f2cb",
-    "parent": "hkf3"
+    "parent": "um2o"
   },
   "fd859133-058b-4eb5-b533-a9da687a2a48": {
     "id": "fd859133-058b-4eb5-b533-a9da687a2a48",
@@ -1874,6 +1926,35 @@
     "type": "card",
     "deck": "6c900bbe-7207-4931-a744-c2ad6c2db9d4",
     "cardType": "type-e2dc303f-49a1-4e31-a0bd-cfa243126a4f",
-    "parent": "4w9w"
+    "parent": "663w"
+  },
+  "_meta": {
+    "version": 15,
+    "info": {
+      "importerTime": 1720273377802,
+      "lastUpdate": 1720452857376,
+      "importer": "PCIO",
+      "image": "/assets/-972047508_283757",
+      "name": "QQ Step",
+      "showName": true,
+      "time": "15",
+      "mode": "vs",
+      "skill": "",
+      "description": "Use cards to move your dancers across the board or spend Kudos to activate your character's special ability. Win either by removing your opponent's Leader from the board, by removing all your opponent's Friends from the board, or by achieving your Leader's special win condition.",
+      "similarImage": "",
+      "similarName": "QQ Step",
+      "year": "2023",
+      "similarDesigner": "Zoql",
+      "similarAwards": "",
+      "bgg": "https://zoql.itch.io/qq-step",
+      "rules": "https://zoql.itch.io/qq-step",
+      "ruleText": "",
+      "helpText": "",
+      "attribution": "An original game by Zoql available under CC BY-SA-NC 4.0. Thanks to meBID (programming), chvage (music), Ly (art), rust dogg and Zalf (playtesting).<div><br></div><div>Special thanks to Shimpei Sato and his game, Onitama. QQ Step was heavily inspired by it.</div><div>\nFor more information and additional versions of the game, see https://zoql.itch.io/stardustbutterfly.</div>",
+      "variantImage": "",
+      "variant": "",
+      "language": "en-US",
+      "players": "2"
+    }
   }
 }
