@@ -9,11 +9,11 @@ class ResizeDragButton extends DragButton {
   }
 
   async dragStart() {
-    this.dragStartCoords = selectedWidgets.map(w=>[ w, w.get('width'), w.get('height') ]);
+    this.dragStartCoords = selectedWidgets.map(w=>[ w, w.get('x'), w.get('y'), w.get('width'), w.get('height') ]);
   }
 
   async dragMove(dx, dy, dxViewport, dyViewport) {
-    for(const [ widget, startWidth, startHeight ] of this.dragStartCoords) {
+    for(const [ widget, startX, startY, startWidth, startHeight ] of this.dragStartCoords) {
       if(this.keepAspectRatio) {
         if(dx>dy) {
           dy = dx * startHeight / startWidth;
@@ -21,8 +21,20 @@ class ResizeDragButton extends DragButton {
           dx = dy * startWidth / startHeight;
         }
       }
-      await widget.set('width',  Math.floor(startWidth + dx));
-      await widget.set('height', Math.floor(startHeight + dy));
+      if(Math.floor(startWidth + dx) < 0) {
+        await widget.set('x',      startX+Math.floor(startWidth  + dx));
+        await widget.set('width',        -Math.floor(startWidth  + dx));
+      } else {
+        await widget.set('x',      startX                             );
+        await widget.set('width',         Math.floor(startWidth  + dx));
+      }
+      if(Math.floor(startHeight + dy) < 0) {
+        await widget.set('y',      startY+Math.floor(startHeight + dy));
+        await widget.set('height',       -Math.floor(startHeight + dy));
+      } else {
+        await widget.set('y',      startY                             );
+        await widget.set('height',        Math.floor(startHeight + dy));
+      }
     }
 
     const minWidth  = Math.min(...selectedWidgets.map(w=>w.get('width')));
