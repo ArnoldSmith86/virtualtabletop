@@ -1,8 +1,8 @@
-import { asArray, onLoad } from '../domhelpers.js';
+import { asArray, onLoad, rand } from '../domhelpers.js';
 
 let playerCursors = {};
 let playerCursorsTimeout = {};
-let playerName = localStorage.getItem('playerName') || 'Guest' + Math.floor(Math.random()*1000);
+let playerName = localStorage.getItem('playerName') || 'Guest' + Math.floor(rand()*1000);
 let playerColor = 'red';
 let activePlayers = [];
 let activeColors = [];
@@ -17,10 +17,20 @@ export {
   mouseCoords
 }
 
+function getPlayerDetails() {
+  return {
+    playerName,
+    playerColor,
+    activePlayers,
+    activeColors,
+    mouseCoords
+  };
+}
+
 function addPlayerCursor(playerName, playerColor) {
   playerCursors[playerName] = document.createElement('div');
   playerCursors[playerName].className = 'cursor';
-  playerCursors[playerName].style = `--playerName:''${playerName}'';--playerColor:${playerColor};`;
+  playerCursors[playerName].style = `--playerName:"${playerName}";--playerColor:${playerColor};`;
   playerCursors[playerName].style.transform = `translate(-50px, -50px)`;
   playerCursors[playerName].setAttribute("data-player",playerName);
   $('#playerCursors').appendChild(playerCursors[playerName]);
@@ -66,6 +76,7 @@ onLoad(function() {
   onMessage('mouse', function(args) {
     if(args.player != playerName) {
       clearTimeout(playerCursorsTimeout[args.player]);
+      playerCursors[args.player].classList.toggle('hidden', !!args.mouseState.hidden);
       if(args.mouseState.inactive) {
         playerCursors[args.player].classList.remove('pressed','active','foreign');
       } else {
@@ -99,4 +110,7 @@ onLoad(function() {
     for(const [ id, widget ] of widgets)
       widget.updateOwner();
   });
+
+  // share URL when clicking button
+  shareButton($('#playersShareButton'), _=>location.href);
 });

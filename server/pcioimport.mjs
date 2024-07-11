@@ -62,6 +62,34 @@ export default async function convertPCIO(content) {
       w.height = widget.height;
   }
 
+  function importWidgetQuery(routine, args, legacySource, holdersParam, collectionParam, target) {
+    if(args.objects) {
+      if(args.objects.type == 'reference') {
+        target[collectionParam] = args.objects.questionId;
+      } else if(args.objects.collections && args.objects.collections.length) {
+        routine.push({
+          func: 'SELECT',
+          property: 'parent',
+          relation: 'in',
+          value: args.objects.holders,
+          type: 'card'
+        });
+        routine.push({
+          func: 'SELECT',
+          source: 'DEFAULT',
+          property: 'deck',
+          relation: 'in',
+          value: args.objects.collections
+        });
+      } else {
+        target[holdersParam] = args.objects.holders;
+      }
+    } else {
+      target[holdersParam] = args[legacySource].value;
+    }
+    return target;
+  }
+
   const pileHasDeck = {};
   const pileOverlaps = {};
   const pileTransparent = {};
@@ -102,7 +130,7 @@ export default async function convertPCIO(content) {
 
   const cardsPerCoordinates = {};
   for(const widget of widgets) {
-    if(widget.type == 'card') {
+    if(widget.type == 'card' || widget.type == 'piece') {
       const index = widget.x + ',' + widget.y + ',' + (widget.parent || "") + ',' + (widget.owner || "");
       if(!widget.parent || !byID[widget.parent] || !byID[widget.parent].hideStackTab)
         cardsPerCoordinates[index] = (cardsPerCoordinates[index] || 0) + 1;
@@ -111,9 +139,11 @@ export default async function convertPCIO(content) {
 
   const output = {
     _meta: {
-      version: 4,
-      players: {},
-      states: {}
+      info: {
+        importerTemp: 'PCIO',
+        importerTime: +new Date()
+      },
+      version: 4
     }
   };
 
@@ -190,8 +220,8 @@ export default async function convertPCIO(content) {
       if(pileTransparent[w.id])
         w.classes = 'transparent';
       if(widget.id == 'hand') {
-        w.dropOffsetX = 10;
-        w.dropOffsetY = 14;
+        w.dropOffsetX = 6;
+        w.dropOffsetY = 6;
         w.stackOffsetX = 40;
       } else {
         w.alignChildren = false;
@@ -202,34 +232,34 @@ export default async function convertPCIO(content) {
       w.height = widget.height || 180;
     } else if(widget.type == 'cardPile') {
       w.type = 'holder';
-      w.inheritChildZ = true;
       if(pileTransparent[w.id])
         w.classes = 'transparent';
       addDimensions(w, widget, 111, 168);
+
+      let dropOffsetX = 100;
+      let dropOffsetY = 100;
 
       if(widget.allowedDecks) {
         w.dropTarget = widget.allowedDecks.map(d=>({deck:d}));
         if(pileHasDeck[widget.id] && widget.allowedDecks.indexOf(pileHasDeck[widget.id].id) == -1)
           w.dropTarget.push({ deck: pileHasDeck[widget.id].id });
+
+        for(const allowed of w.dropTarget) {
+          if(byID[allowed.deck]) {
+            dropOffsetX = Math.round(Math.min(dropOffsetX, (widget.width  - (byID[allowed.deck].cardWidth  || 103))/2));
+            dropOffsetY = Math.round(Math.min(dropOffsetY, (widget.height - (byID[allowed.deck].cardHeight || 160))/2));
+          }
+        }
       }
       if(widget.hideStackTab)
         w.preventPiles = true;
       if(widget.layoutType == 'freeform')
         w.alignChildren = false;
 
-      if(pileOverlaps[w.id]) {
-        w.x += 4;
-        w.y += 4;
-        w.width = (w.width || 111) - 8;
-        w.height = (w.height || 168) - 8;
-        w.dropOffsetX = 0;
-        w.dropOffsetY = 0;
-      }
-
       if(widget.layoutType == 'spread') {
         if(widget.spreadDirection == 'down') {
           w.stackOffsetY = 168;
-        } else if(widget.spreadDirection == 'down') {
+        } else if(widget.spreadDirection == 'up') {
           w.dropOffsetY = (w.height || 168) - 168;
           w.stackOffsetY = -168;
         } else if(widget.spreadDirection == 'left') {
@@ -238,7 +268,24 @@ export default async function convertPCIO(content) {
         } else {
           w.stackOffsetX = 111;
         }
+      } else {
+        if(dropOffsetX != 100)
+          w.dropOffsetX = dropOffsetX;
+        if(dropOffsetY != 100)
+          w.dropOffsetY = dropOffsetY;
+
+        if(pileOverlaps[w.id]) {
+          w.x += 4;
+          w.y += 4;
+          w.width = (w.width || 111) - 8;
+          w.height = (w.height || 168) - 8;
+          w.dropOffsetX = 0;
+          w.dropOffsetY = 0;
+        }
       }
+
+      if(widget.layoutType != 'spread' && widget.layoutType != 'freeform')
+        w.inheritChildZ = true;
 
       if(widget.label) {
         output[widget.id + '_label'] = {
@@ -341,19 +388,102 @@ export default async function convertPCIO(content) {
           value:     ''
         });
       }
+
+      if(widget.collectionType == 'pieces') {
+        for(const cardType of Object.values(w.cardTypes)) {
+          for(const [ key, value ] of Object.entries(cardType)) {
+            const pieceMatch = String(value).match(/^\/img\/pieces\/(pegs|pins|marbles|checkers|pucks|chips)\/(white|red|blue|green|black|purple|yellow|orange|peach|teal|pink|brown)(-kinged)?\.svg$/);
+            if(pieceMatch) {
+              const urls = {
+                pegs:              '/i/game-pieces/3D/Pawn-3D.svg',
+                pins:              '/i/game-pieces/3D/Pin-3D.svg',
+                marbles:           '/i/game-pieces/3D/Marble-3D.svg',
+                checkers:          '/i/game-pieces/2D/Checkers-2D.svg',
+                'checkers-kinged': '/i/game-pieces/2D/Crowned-Checkers-2D.svg',
+                pucks:             '/i/game-pieces/2D/Poker-2D.svg',
+                chips:             '/i/game-pieces/2D/Poker-2D.svg'
+              };
+              const colors = {
+                white:  '#dae0df',
+                red:    '#ed1b43',
+                blue:   '#5894f4',
+                green:  '#69d83a',
+                black:  '#666565',
+                purple: '#9458f4',
+                yellow: '#ffce00',
+                orange: '#ff7b23',
+                peach:  '#f2948c',
+                teal:   '#2fd1cd',
+                pink:   '#ff69b3',
+                brown:  '#a8570e'
+              };
+
+              cardType[key] = urls[pieceMatch[1] + (pieceMatch[3] || '')];
+              if(pieceMatch[1] == 'chips')
+                cardType[`${key}LabelColor`] = '#fff8';
+              if(pieceMatch[1] == 'pucks')
+                cardType[`${key}LabelColor`] = colors[pieceMatch[2]];
+              cardType[`${key}Color`] = colors[pieceMatch[2]];
+
+              for(const faceTemplate of w.faceTemplates)
+                for(const object of faceTemplate.objects)
+                  if(object.valueType == 'dynamic' && object.value == key)
+                    object.svgReplaces = { '#primaryColor': `${key}Color`, '#labelColor': `${key}LabelColor` };
+            }
+          }
+        }
+      }
+
+      if(widget.collectionType == 'choosers') {
+        const options = Object.values(w.cardTypes);
+        const firstTemplate = JSON.parse(JSON.stringify(w.faceTemplates[0]));
+        for(let i=0; i<options.length; ++i) {
+          if(i)
+            w.faceTemplates.push(JSON.parse(JSON.stringify(firstTemplate)));
+          for(const object of w.faceTemplates[i].objects) {
+            if(object.valueType == 'dynamic') {
+              object.valueType = 'static';
+              object.value = options[i][object.value] ? mapName(options[i][object.value]) : '';
+            }
+          }
+        }
+        w.cardTypes = { chooser: {} };
+        w.cardDefaults.movable = false;
+        w.cardDefaults.borderRadius = 12;
+        w.cardDefaults.css = 'border: 4px solid #dedede';
+        w.cardDefaults.clickRoutine = [
+          {
+            "func": "INPUT",
+            "fields": [
+              {
+                "type": "choose",
+                "source": [ "${PROPERTY id}" ],
+                "mode": "faces",
+                "variable": "face"
+              }
+            ]
+          },
+          {
+            "func": "SET",
+            "property": "activeFace",
+            "value": "${face}"
+          }
+        ];
+      }
+
       let sortingOrder = 0;
       for(const type in w.cardTypes) {
         for(const key in w.cardTypes[type])
           w.cardTypes[type][key] = mapName(w.cardTypes[type][key]);
         w.cardTypes[type].sortingOrder = ++sortingOrder;
       }
-    } else if(widget.type == 'card' || widget.type == 'piece') {
+    } else if(widget.type == 'card' || widget.type == 'piece' || widget.type == 'chooser') {
       if(!byID[widget.deck]) // orphan card without deck
         continue;
 
       w.type = 'card';
       w.deck = widget.deck;
-      w.cardType = widget.cardType;
+      w.cardType = widget.type == 'chooser' ? 'chooser' : widget.cardType;
 
       if(pileOverlaps[widget.parent]) {
         w.x = (w.x || 0) - 4;
@@ -386,6 +516,8 @@ export default async function convertPCIO(content) {
 
       if(widget.faceup)
         w.activeFace = 1;
+      if(widget.type == 'chooser' && widget.chooserChoice)
+        w.activeFace = Object.keys(byID[widget.deck].cardTypes).indexOf(widget.chooserChoice);
       if(widget.owner)
         w.owner = widget.owner;
     } else if(widget.type == 'counter') {
@@ -434,7 +566,17 @@ export default async function convertPCIO(content) {
       const weight = widget.bold ? 'bold' : 'normal';
       w.type = 'label';
       w.text = widget.labelContent;
-      w.css = `font-size: ${widget.textSize}px; font-weight: ${weight}; text-align: ${widget.textAlign};`;
+      w.css = {
+        default: {
+          'line-height': `${widget.textSize}px`,
+          'font-size':   `${widget.textSize}px`,
+          'font-weight': weight,
+          'text-align':  widget.textAlign
+        },
+        ' textarea': {
+          'letter-spacing': '-1px'
+        }
+      };
       addDimensions(w, widget, 100, 20);
       w.height = widget.textSize * 3.5;
     } else if(widget.type == 'separator') {
@@ -712,17 +854,37 @@ export default async function convertPCIO(content) {
 
       w.clickRoutine = [];
 
-      if(widget.clickRoutine && widget.clickRoutine.popupMessage) {
-        w.clickRoutine.push({
+      if(widget.clickRoutine && (widget.clickRoutine.popupMessage || widget.clickRoutine.questions)) {
+        const popup = {
           func: 'INPUT',
-          fields: [
-            {
-              type: 'text',
-              text: widget.clickRoutine.popupMessage
-            }
-          ],
-          confirmButtonText: widget.label
-        });
+          header: widget.clickRoutine.popupMessage,
+          confirmButtonText: widget.label,
+          fields: []
+        };
+        for(const question of widget.clickRoutine.questions || []) {
+          if(question.type == 'number') {
+            popup.fields.push({
+              type: 'number',
+              label: question.label,
+              value: question.defaultValue,
+              variable: question.id
+            });
+          }
+          if(question.type == 'widgets') {
+            popup.fields.push({
+              type: 'choose',
+              label: question.label,
+              holder: question.holders.length == 1 ? question.holders[0] : question.holders,
+              variable: question.id,
+              max: question.widgetSelectionLimit || 99999,
+              collection: question.id,
+              propertyOverride: {
+                activeFace: question.showWidgetSide == 'back' ? 0 : 1
+              }
+            });
+          }
+        }
+        w.clickRoutine.push(popup);
       }
 
       if(widget.type == 'turnButton') {
@@ -733,18 +895,31 @@ export default async function convertPCIO(content) {
 
       for(let c of widget.clickRoutine ? (widget.clickRoutine.steps || widget.clickRoutine) : []) {
         if(c.func == 'MOVE_CARDS_BETWEEN_HOLDERS') {
-          if(!c.args.from || !c.args.to)
+          if((!c.args.from && !c.args.objects) || !c.args.to)
             continue;
           const moveFlip = c.args.moveFlip && c.args.moveFlip.value;
-          c = {
+
+          let quantity = 1;
+          if(c.args.quantity) {
+            if(c.args.quantity.type == 'reference')
+              quantity = '${' + c.args.quantity.questionId + '}';
+            else
+              quantity = c.args.quantity.value;
+          }
+
+          c = importWidgetQuery(w.clickRoutine, c.args, 'from', 'from', 'collection', {
             func:  'MOVE',
-            from:  c.args.from.value,
-            count: (c.args.quantity || { value: 1 }).value,
-            to:    c.args.to.value
-          };
-          if(c.from.length == 1)
+            count: quantity,
+            to:    c.args.to.value,
+            fillTo: c.args.fillAdd && c.args.fillAdd.value == 'fill' ? quantity : null
+          });
+          if(c.from && c.from.length == 1)
             c.from = c.from[0];
           if(c.count == 1)
+            delete c.count;
+          if(c.fillTo === null)
+            delete c.fillTo;
+          else
             delete c.count;
           if(c.to.length == 1)
             c.to = c.to[0];
@@ -758,17 +933,48 @@ export default async function convertPCIO(content) {
         if(c.func == 'RECALL_CARDS') {
           if(!c.args.decks)
             continue;
-          const holders = c.args.decks.value.map(d=>byID[d].parent);
+
+          for(const deckID of c.args.decks.value) {
+            if(!byID[deckID].parent) {
+              output.tempHolderForDeckRecall = {
+                id: 'tempHolderForDeckRecall',
+                type: 'holder',
+                x: -200
+              };
+              w.clickRoutine.push({
+                func: 'SELECT',
+                property: 'deck',
+                value: deckID
+              });
+              w.clickRoutine.push({
+                func: 'SET',
+                property: 'parent',
+                value: 'tempHolderForDeckRecall'
+              });
+              w.clickRoutine.push({
+                func: 'MOVEXY',
+                from: 'tempHolderForDeckRecall',
+                x: byID[deckID].x + (86-(byID[deckID].cardWidth ||103))/2,
+                y: byID[deckID].y + (86-(byID[deckID].cardHeight||160))/2,
+                count: 0
+              });
+            }
+          }
+
+          const holders = c.args.decks.value.map(d=>byID[d].parent).filter(d=>d);
           const flip = c.args.flip;
           c = {
-            func:   'RECALL',
-            holder: holders,
-            owned:  c.args.includeHands && c.args.includeHands.value == 'hands' || false
+            func:     'RECALL',
+            holder:   holders,
+            owned:      c.args.includeHands   && c.args.includeHands.value   == 'hands'  || false,
+            inHolder: !(c.args.includeHolders && c.args.includeHolders.value == 'normal' || false)
           };
           if(c.holder.length == 1)
             c.holder = c.holder[0];
           if(c.owned)
             delete c.owned;
+          if(c.inHolder)
+            delete c.inHolder;
           if(!flip || flip.value != 'none') {
             w.clickRoutine.push(c);
             c = {
@@ -781,9 +987,10 @@ export default async function convertPCIO(content) {
         if(c.func == 'SHUFFLE_CARDS') {
           if(!c.args.holders)
             continue;
+          const holders = c.args.holders.value.map(id=>byID[id].type == 'seat' ? 'hand' : id);
           c = {
             func:   'SHUFFLE',
-            holder: c.args.holders.value
+            holder: holders
           };
           if(c.holder.length == 1)
             c.holder = c.holder[0];
@@ -791,9 +998,10 @@ export default async function convertPCIO(content) {
         if(c.func == 'SORT_CARDS') {
           if(!c.args.sources)
             continue;
+          const holders = c.args.sources.value.map(id=>byID[id].type == 'seat' ? 'hand' : id);
           c = {
             func:   'SORT',
-            holder: c.args.sources.value,
+            holder: holders,
             key:    'sortingOrder',
             reverse: !c.args.direction || c.args.direction.value != 'za'
           };
@@ -803,15 +1011,16 @@ export default async function convertPCIO(content) {
             delete c.reverse;
         }
         if(c.func == "FLIP_CARDS") {
-          if(!c.args.holders)
+          if(!c.args.holders && !c.args.objects)
             continue;
           const flipFace = c.args.flipFace;
-          c = {
+
+
+          c = importWidgetQuery(w.clickRoutine, c.args, 'holders', 'holder', 'collection', {
             func:   'FLIP',
-            holder: c.args.holders.value,
             count:  !c.args.flipMode || c.args.flipMode.value == 'pile' ? 0 : 1
-          };
-          if(c.holder.length == 1)
+          });
+          if(c.holder && c.holder.length == 1)
             c.holder = c.holder[0];
           if(!c.count)
             delete c.count;
@@ -877,6 +1086,20 @@ export default async function convertPCIO(content) {
             delete c.mode;
           if(c.value === 0)
             delete c.value;
+        }
+        if(c.func == 'CHANGE_CHOOSER') {
+          if(!c.args.choosers)
+            continue;
+          c = {
+            func: 'FLIP',
+            collection: c.args.choosers.value,
+            face: c.args.choice ? Object.keys(byID[byID[c.args.choosers.value[0]].deck].cardTypes).indexOf(c.args.choice.value) : null,
+            faceCycle: c.args.changeType == 'prev' ? 'backward' : null
+          };
+          if(c.face === null)
+            delete c.face;
+          if(c.faceCycle === null)
+            delete c.faceCycle;
         }
         if(c.func == 'ROLL_DICE') {
           if(!c.args.dice)

@@ -1,6 +1,9 @@
-#jsonEditor {
+:root {
   --commandPaneWidth: 180px;
   --editorPaneWidth: 320px;
+}
+
+#jsonEditor {
   white-space: pre-line;
   font-family: monospace;
   display: none;
@@ -19,11 +22,11 @@
   display: none;
 }
 
-#jsonEditor > *, .jsonEdit, #jeWidgetLayers > div, #jeLog {
-  background: #08090a;
+#jsonEditor > *, #jeWidgetLayers > div {
+  background: var(--backgroundColor);
 }
 #jsonEditor > * {
-  color: #f8f8f2;
+  color: var(--textColor);
   padding: 5px;
   margin: 0;
   position: fixed;
@@ -54,54 +57,37 @@
 }
 
 #jeMouseCoords {
-  grid-column: 2 / span 1;
-  grid-row: 1 /span 1;
-  display: block;
-  text-align: right;
-  right: calc(var(--commandPaneWidth) + 20px);
-  border-bottom: 1px solid white;
+  margin: 5px;
 }
 
 #jeTree {
   grid-column: 1 / span 2;
   grid-row: 3 / span 1;
   overflow-wrap: break-word;
-  overflow-y: auto;
-  white-space: pre-wrap;
-  border-top: 1px dashed gray;
-}
-
-#jeWidgetSearch {
-  grid-column: 1 / span 2;
-  grid-row: 2;
-}
-
-#jeWidgetSearchResults {
-  grid-column: 1 / span 2;
-  grid-row: 3;
-  overflow: hidden auto;
-  display: none;
+  display: flex;
+  flex-direction: column;
   height: 100%;
-  background-color: #484848;
-}
-
-#jeResize {
-  content: '';
-  grid-column: 1 / span 2;
-  grid-row: 4 / span 1;
-  cursor: ns-resize;
-  background-color: #b8c6db;
-  background-image: linear-gradient(#b8c6db 0%, #f5f7fa 20%, #b8c6db 80%);
+  white-space: pre-wrap;
+  font-family: monospace;
+  user-select: none;
 }
 
 #jeText, #jeTextHighlight {
-  grid-column: 1 / span 2;
-  grid-row: 5 / span 1;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: calc(var(--commandPaneWidth) + 1px);
+  font-family: monospace;
   white-space: pre-wrap;
   overflow-y: auto;
   overflow-wrap: break-word;
 }
 /**** End of grid layout ****/
+
+#jeTree > ul {
+  overflow-y: auto;
+}
 
 #jeTree ul, .jeTreeDisplay, .jeNestedTree {
   margin: 0;
@@ -118,6 +104,13 @@
   cursor: pointer;
 }
 
+#jeTree li.filterNotIncluded:not(.filterChildIncluded) {
+  display: none;
+}
+#jeTree li.filterNotIncluded.filterChildIncluded > span {
+  opacity: 0.2;
+}
+
 /* Style the caret/arrow */
 .jeTreeExpander, .jeTreeExpander-down {
   user-select: none; /* Prevent text selection */
@@ -126,9 +119,12 @@
 /* Create the caret/arrow with a unicode, and style it */
 .jeTreeExpander::before, .jeTreeExpander-down::before {
   content: "\25B6";
-  color: white;
   display: inline-block;
   margin-right: 6px;
+}
+
+body.lightsOff .jeTreeExpander::before, body.lightsOff .jeTreeExpander-down::before {
+  color: var(--textColor);
 }
 
 /* Rotate the caret/arrow icon when clicked on (using JavaScript) */
@@ -142,7 +138,7 @@
 }
 
 /* Show the nested list when the user clicks on the caret/arrow (with JavaScript) */
-.jeNestedTree.active, .jeLogNested.active {
+.jeNestedTree.active, .jeNestedTree.filterChildIncluded, .jeLogNested.active {
   display: block;
 }
 
@@ -154,14 +150,17 @@
 }
 
 #jeText::selection {
-  background-color: #808080;
-  -webkit-text-fill-color: white;
+  background-color: var(--backgroundHighlightColor1);
+  -webkit-text-fill-color: var(--textColor);
 }
 
 /*** CSS to handle search box for tree widget ***/
+#jeTree > div {
+  display: flex;
+  margin-bottom: 10px;
+}
 #jeWidgetSearchBox {
-  margin-top: 1px;
-  width: 50%;
+  min-width: 50px;
 }
 
 #jeSearchTable {
@@ -169,40 +168,27 @@
 }
 
 .jeHighlightRow {
-  background-color: gray;
+  background-color: var(--backgroundHighlightColor1);
 }
 
 /**** End tree search CSS ****/
 
 /**** Color formatting for widgets ****/
 
-#jsonEditor i {
+#jeTextHighlight i, #jeTree i {
   font-style: normal;
 }
 
-i.key     { color: yellow;  }
-i.custom  { color: orange;  }
-i.extern  { color: red;     }
-.extern   { color: red;     }
-i.string  { color: #7ed07e; }
-i.number  { color: #dda0dd; }
-i.null    { color: blue;    }
-i.default { color: #606060; }
-i.variable{ color: #40e0d0; }
-i.error   { color: red; font-weight: bold; }
-
-body.jsonEdit .selectedInEdit:not(.pile) {
-  box-shadow: 0px 0px 0px 5px yellow;
-}
-
-body.jsonEdit .selectedInEdit.pile .handle {
-  box-shadow: 0px 0px 0px 5px yellow;
-}
-
-body.jsonEdit:not(.edit) .selectedInEdit.deck {
-  visibility: visible;
-  font-size: 0;
-}
+i.key     { color: var(--textHighlightColor1); }
+i.custom  { color: var(--textHighlightColor2); }
+i.extern  { color: var(--textHighlightColor3); }
+.extern   { color: var(--textHighlightColor3); }
+i.string  { color: var(--textHighlightColor4); }
+i.number  { color: var(--textHighlightColor5); }
+i.null    { color: var(--textHighlightColor6); }
+i.default { color: var(--textDimColor1);       }
+i.variable{ color: var(--textHighlightColor7); }
+i.error   { color: var(--textHighlightColor3); font-weight: bold; }
 
 /**** End color formatting ****/
 
@@ -222,34 +208,113 @@ body.jsonEdit:not(.edit) .selectedInEdit.deck {
 /*** End compute operations CSS ***/
 
 #jeCommands {
-  white-space: pre-wrap;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
   height: 100%;
   width: var(--commandPaneWidth);
-  right: 0;
-  overflow: auto;
   display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-start;
-  align-items: flex-start;
-  align-content: flex-start;
+  flex-direction: column;
 }
 
 #jeWidgetLayers {
-  width: 9001px;
-  font-size: 0;
-  padding: 0;
-  background: transparent;
+  background: var(--backgroundColor);
+  position: absolute;
+  top: 10px;
+  bottom: 10px;
+  right: 10px;
+  width: calc(var(--commandPaneWidth) - 34px);
+  border: 2px solid var(--VTTblue);
+  border-radius: 10px;
+  overflow: hidden;
+  padding: 5px;
+  white-space: normal;
+}
+
+#editor:hover #jeWidgetLayers, .editorModule:hover #jeWidgetLayers {
+  display: none;
+}
+
+#jeWidgetLayers > p {
+  font-size: 12px;
+  margin: 0;
 }
 
 #jeWidgetLayers > div {
-  display: inline-block;
+  display: flex;
+  align-items: center;
   padding: 2px;
-  vertical-align: top;
   font-size: 12px;
-  margin-right: 4px;
 }
 
-#jeWidgetLayers > div:empty {
+#jeWidgetLayers > div.hidden {
+  display: none;
+}
+
+#jeWidgetLayers .key {
+  font-size: inherit;
+  line-height: inherit;
+  margin-bottom: 0.4375rem;
+  margin-left: 0.25rem;
+  margin-right: 0.25rem;
+  margin-top: 0.25rem;
+  padding: 0.1rem 0.2rem;
+  box-shadow: 0 0 #d9d9d9, 0 0px #d9d9d9, 0 1px #d9d9d9, 0 2px #d9d9d9, 0 3px #d9d9d9, 0 4px #d9d9d9, 0 5px #d9d9d9, 2px 2.5px 4px #adb5bd, 0 -1px 2.5px #adb5bd;
+  background-color: #fff;
+  border-color: #e6e6e6;
+  color: #343a40;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  border: 1px solid #e6e6e6;
+  border-radius: 0.25rem;
+  display: inline-block;
+  font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-weight: 400;
+  text-align: left;
+  transform: translate3d(0, 0, 5px);
+  transform-style: preserve-3d;
+  transition: all 0.25s cubic-bezier(0.2, 1, 0.2, 1);
+}
+
+#jeWidgetLayers .key::after {
+  border-style: solid;
+  box-sizing: content-box;
+  content: '';
+  display: block;
+  position: absolute;
+  transform-style: preserve-3d;
+  transition: all 0.25s cubic-bezier(0.2, 1, 0.2, 1);
+  border-color: #cccccc;
+  border-radius: 0.5rem;
+  border-width: 0.125rem;
+  bottom: -9px;
+  left: -0.3125rem;
+  right: -0.3125rem;
+  top: -3px;
+  transform: translate3d(0, 0, -3px);
+}
+
+#jeWidgetLayers .keyDetails {
+  margin-left: 4px;
+}
+
+#jeWidgetLayers .id {
+  color: var(--textHighlightColor1);
+  display: inline-block;
+}
+
+#jeWidgetLayers .type {
+  color: var(--textHighlightColor4);
+}
+
+#jeWidgetLayers .details {
+  color: var(--textHighlightColor3);
+  white-space: pre;
+  display: block;
+}
+
+#jeWidgetLayers .details:empty {
   display: none;
 }
 
@@ -257,31 +322,21 @@ body.jsonEdit #jsonEditor {
   display: block;
 }
 
-body.jsonEdit #jeCommands > button {
-  width: 100%;
+body.jsonEdit #jeTopButtons {
+  margin-bottom: 10px;
+}
+
+body.jsonEdit #jeContextButtons {
+  overflow: hidden auto;
+}
+
+body.jsonEdit #jeContextButtons > button {
+  width: calc(100% - 3px);
   text-align: left;
 }
 
 body.jsonEdit #toolbar {
   display: none;
-}
-
-body.jsonEdit {
-  --roomTop: calc((100vh - var(--roomHeight) * var(--scale)) / 2);
-  --roomLeft: 0px;
-}
-
-body.jsonEdit.jeZoomOut {
-  --roomTop: calc((100vh - var(--roomHeight) * var(--scale)) / 2);
-  --roomLeft: 12.5%;
-}
-
-body.jsonEdit.jeZoomOut #roomArea {
-  overflow: visible;
-}
-
-body.jsonEdit.jeZoomOut #topSurface {
-  overflow: visible;
 }
 
 #jeLogWrapper {
@@ -291,15 +346,7 @@ body.jsonEdit.jeZoomOut #topSurface {
 }
 
 #jeLog {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  display: none;
-  height: 90vh;
-  right: calc(var(--commandPaneWidth) + var(--editorPaneWidth));
-  overflow: auto;
-  box-sizing: border-box;
-  border: 3px solid white;
+  margin-left: -40px;
 }
 
 @media (max-width: 1000px) {
@@ -324,32 +371,29 @@ body.jsonEdit.jeZoomOut #topSurface {
 
 .jeLog {
   white-space: normal;
+  font-family: monospace;
   font-size: 12px;
-  background: #ffffff10;
   margin-left: 20px;
-  color:lightgray;
+  color: var(--textColor);
 }
 
-.jeLogSkipped {
-  color: grey;
+#jeLog > .jeLog > .jeExpander {
+  color: var(--textColor);
+  font-weight: bold;
+}
+#jeLog > .jeLog + .jeLog {
+  margin-top: 20px;
 }
 
-.jeLogSummary {
-  color: lightgreen;
-}
-
-.jeLogResult {
-  color: orange;
-}
-
-.jeLogTime {
-  color: yellow;
-}
+.jeLogSkipped { color: var(--textDimColor1); }
+.jeLogSummary { color: var(--textHighlightColor4); }
+.jeLogResult  { color: var(--textHighlightColor2); }
+.jeLogTime    { color: var(--textDimColor1); }
 
 /* Create the caret/arrow with a unicode, and style it */
 .jeExpander::before {
   content: "\25B6";
-  color: white;
+  color: var(--textColor);
   display: inline-block;
   margin-right: 6px;
 }
@@ -374,11 +418,11 @@ body.jsonEdit.jeZoomOut #topSurface {
 
 /* .jeLogHasProblems and .jeLogHasNoProblems control the text color of the first item displayed. */
 .jeLogHasProblems, .jeLogProblems {
-  color: red;
+  color: var(--textHighlightColor3);
 }
 
 .jeLogHasNoProblems {
-  color: lightgray;
+  color: var(--textColor);
 }
 
 /* .jeLogProblems controls the color and display of the problem text */
@@ -393,7 +437,7 @@ body.jsonEdit.jeZoomOut #topSurface {
 .jeLogDetails {
   word-break: break-all;
   margin-left: 20px;
-  color: lightgray;
+  color: var(--textColor);
 }
 
 /* Show the details when the user clicks on the caret/arrow */
@@ -452,11 +496,11 @@ body.jsonEdit.jeZoomOut #topSurface {
 
 #jeCommands .context{
   font-weight: bold;
+  margin: 1px;
   margin-top: 8px;
-  width: 100%;
 }
 
-#jeCommands > button > b{
+#jeContextButtons > button > b{
   text-decoration: underline;
   color: yellow;
 }
@@ -490,7 +534,7 @@ body.jsonEdit.jeZoomOut #topSurface {
 #je_toggleDebug{
 }
 
-#jeCommands > button::before{
+#jeContextButtons > button::before{
   margin-right: 4px;
   font-family: 'VTT-Symbols';
 }

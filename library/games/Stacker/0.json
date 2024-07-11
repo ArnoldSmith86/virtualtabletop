@@ -22,6 +22,7 @@
       "variant": "",
       "attribution": "Board layout and library image by ArnoldSmith86. Released to public domain under CC0.",
       "similarName": "Skip-Bo",
+      "similarDesigner": "Hazel 'Skip' Bowman",
       "description": "Build shared stacks of cards, deciding whether to play from hand, discard pile, or stockpile. Player that empties personal stockpile first wins.",
       "showName": true,
       "lastUpdate": 1634502388000
