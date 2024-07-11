@@ -1320,6 +1320,10 @@ async function updateWidget(currentState, oldState, applyChangesFromUI) {
   } else if (widget.type !== previousState.type) {
     await removeWidgetLocal(previousState.id, true);
     const id = await addWidgetLocal(widget);
+
+    // Handle special case where type is removed
+    if(widget.type === undefined)
+      sendPropertyUpdate(id, 'type', null);
   } else {
     for(const key in previousState)
       if(widget[key] === undefined)
@@ -1346,10 +1350,6 @@ async function updateWidgetId(widget, previousState) {
   await removeWidgetLocal(previousState.id, true);
   
   const id = await addWidgetLocal(widget);
-
-  // Handle special case where type is removed
-  if(widget.type === undefined && widget.type !== previousState.type)
-    sendPropertyUpdate(id, 'type', null);
 
   // Restore children
   for(const child of children)
