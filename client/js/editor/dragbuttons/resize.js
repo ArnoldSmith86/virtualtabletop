@@ -1,6 +1,11 @@
 class ResizeDragButton extends DragButton {
-  constructor() {
-    super('aspect_ratio', 'Resize', 'Drag to resize the selected widgets.');
+  constructor(keepAspectRatio = false) {
+    if(keepAspectRatio) {
+      super('aspect_ratio', 'Resize (Keep Aspect Ratio)', 'Drag to resize the selected widgets. Aspect ratio is kept.');
+    } else {
+      super('fit_screen', 'Resize', 'Drag to resize the selected widgets.');
+    }
+    this.keepAspectRatio = keepAspectRatio;
   }
 
   async dragStart() {
@@ -9,6 +14,13 @@ class ResizeDragButton extends DragButton {
 
   async dragMove(dx, dy, dxViewport, dyViewport) {
     for(const [ widget, startWidth, startHeight ] of this.dragStartCoords) {
+      if(this.keepAspectRatio) {
+        if(dx>dy) {
+          dy = dx * startHeight / startWidth;
+        } else {
+          dx = dy * startWidth / startHeight;
+        }
+      }
       await widget.set('width',  Math.floor(startWidth + dx));
       await widget.set('height', Math.floor(startHeight + dy));
     }

@@ -58,7 +58,8 @@ function initializeEditor(currentMetaData) {
     new CloneDragButton(),
     new SpacingDragButton(),
     new RotateDragButton(),
-    new ResizeDragButton(),
+    new ResizeDragButton(false),
+    new ResizeDragButton(true),
     new MoveDragButton()
   ]);
 
