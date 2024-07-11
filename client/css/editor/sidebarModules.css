@@ -96,6 +96,11 @@
 
 .tune.editorModule .cardFrontPreview > div {
   flex-grow: 1;
+  text-align: left;
+}
+
+.tune.editorModule .cardFrontPreview img {
+  max-width: 50%;
 }
 
 .tune.editorModule .cardFrontPreview [type=number] {

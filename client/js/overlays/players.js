@@ -30,7 +30,7 @@ function getPlayerDetails() {
 function addPlayerCursor(playerName, playerColor) {
   playerCursors[playerName] = document.createElement('div');
   playerCursors[playerName].className = 'cursor';
-  playerCursors[playerName].style = `--playerName:''${playerName}'';--playerColor:${playerColor};`;
+  playerCursors[playerName].style = `--playerName:"${playerName}";--playerColor:${playerColor};`;
   playerCursors[playerName].style.transform = `translate(-50px, -50px)`;
   playerCursors[playerName].setAttribute("data-player",playerName);
   $('#playerCursors').appendChild(playerCursors[playerName]);
