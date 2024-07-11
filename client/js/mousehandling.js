@@ -128,7 +128,7 @@ async function inputHandler(name, e) {
   clientPointer.style.top = `${coords.clientY}px`;
   clientPointer.style.left = `${coords.clientX}px`;
 
-  let hoveredWidgetsWithHiddenCursor = document.elementsFromPoint(e.clientX, e.clientY).map(el => widgets.get(unescapeID(el.id.slice(2)))).filter(w => w != null && w.get('hidePlayerCursors'));
+  let hoveredWidgetsWithHiddenCursor = document.elementsFromPoint(e.clientX, e.clientY).map(el => widgets.get(unescapeID(el.id.slice(2)))).filter(w => w != null && w.requiresHiddenCursor());
 
   if(hoveredWidgetsWithHiddenCursor.length) {
     toServer('mouse', { hidden: true });

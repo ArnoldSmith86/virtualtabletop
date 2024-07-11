@@ -2396,6 +2396,16 @@ export class Widget extends StateManaged {
     return new this.constructor(generateUniqueWidgetID()).renderReadonlyCopyRaw(Object.assign({}, this.state, propertyOverride), target);
   }
 
+  requiresHiddenCursor() {
+    if(this.get('hidePlayerCursors'))
+      return true;
+    if(this.get('parent') && widgets.has(this.get('parent')))
+      return widgets.get(this.get('parent')).requiresHiddenCursor();
+    if(this.get('hoverParent') && widgets.has(this.get('hoverParent')))
+      return widgets.get(this.get('hoverParent')).requiresHiddenCursor();
+    return false;
+  }
+
   async rotate(degrees, mode) {
     if(!mode || mode == 'add')
       await this.set('rotation', (this.get('rotation') + degrees) % 360);
