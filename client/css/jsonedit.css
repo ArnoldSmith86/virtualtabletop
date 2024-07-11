@@ -155,8 +155,12 @@ body.lightsOff .jeTreeExpander::before, body.lightsOff .jeTreeExpander-down::bef
 }
 
 /*** CSS to handle search box for tree widget ***/
-#jeWidgetSearchBox {
+#jeTree > div {
+  display: flex;
   margin-bottom: 10px;
+}
+#jeWidgetSearchBox {
+  min-width: 50px;
 }
 
 #jeSearchTable {

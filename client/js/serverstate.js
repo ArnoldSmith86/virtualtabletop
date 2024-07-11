@@ -284,6 +284,10 @@ function setUndoProtocol(up) {
   undoProtocol = up;
 }
 
+function getDelta() {
+  return delta;
+}
+
 function sendRawDelta(delta) {
   receiveDelta(delta);
   delta.id = deltaID;

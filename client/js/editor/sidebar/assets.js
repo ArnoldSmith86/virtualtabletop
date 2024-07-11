@@ -388,9 +388,10 @@ class AssetsModule extends SidebarModule {
     this.addSubHeader('Included Assets');
     div(target, 'buttonBar', `
       <p>Here you can download all the assets used in this game as a zip file so you can process them on your computer (replace/resize/...).</p>
+      <p>When you upload assets, you can use the same filenames as the original assets to replace them. Be sure <b>not</b> to zip them again but select all the assets themselves in the file selection dialog.</p>
       <button icon=cloud_download id=downloadAllAssetsButton>Download all assets</button>
       <button icon=cloud_download id=downloadAllAssetsByPropertyButton>Download all assets by property</button>
-      <button icon=cloud_upload id=uploadAllAssetsButton>Upload assets in same format</button>
+      <button icon=cloud_upload id=uploadAllAssetsButton>Upload assets</button>
       <button icon=compress id=compressAssetsButton>Compress assets</button>
     `);
     $('#downloadAllAssetsButton').onclick = e=>this.button_assetDownload(false);
