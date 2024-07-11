@@ -263,31 +263,37 @@ class AssetsModule extends SidebarModule {
           const sizeLabel = document.createElement('label');
           checkbox.id = sizeLabel.htmlFor = generateUniqueWidgetID();
 
-          const img = await loadImage(new Image(), URL.createObjectURL(imageBlob));
-          const [targetWidth, targetHeight] = getAssetTargetSize(asset, img.naturalWidth, img.naturalHeight);
-          const canvas = document.createElement('canvas');
-          canvas.width = targetWidth;
-          canvas.height = targetHeight;
-          const ctx = canvas.getContext('2d');
-          ctx.drawImage(img, 0, 0, targetWidth, targetHeight);
+          try {
+            const img = await loadImage(new Image(), URL.createObjectURL(imageBlob));
+            const [targetWidth, targetHeight] = getAssetTargetSize(asset, img.naturalWidth, img.naturalHeight);
+            const canvas = document.createElement('canvas');
+            canvas.width = targetWidth;
+            canvas.height = targetHeight;
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(img, 0, 0, targetWidth, targetHeight);
 
-          const compressedDataUrl = canvas.toDataURL(`image/${format}`, 0.7);
-          const res = await fetch(compressedDataUrl);
-          const compressedBlob = await res.blob();
-          const sizeInKB = (compressedBlob.size / 1024).toFixed(2);
+            const compressedDataUrl = canvas.toDataURL(`image/${format}`, 0.7);
+            const res = await fetch(compressedDataUrl);
+            const compressedBlob = await res.blob();
+            const sizeInKB = (compressedBlob.size / 1024).toFixed(2);
 
-          const formatString = format === 'original' ? 'Original' : format.toUpperCase();
-          sizeLabel.textContent = `${formatString}\n${targetWidth}x${targetHeight}\n${sizeInKB} KB`;
+            const formatString = format === 'original' ? 'Original' : format.toUpperCase();
+            sizeLabel.textContent = `${formatString}\n${targetWidth}x${targetHeight}\n${sizeInKB} KB`;
 
-          img.src = compressedDataUrl;
-          img.dataset.sourceAsset = asset.asset;
+            img.src = compressedDataUrl;
+            img.dataset.sourceAsset = asset.asset;
 
-          cell.appendChild(img);
-          cell.appendChild(checkbox);
-          cell.appendChild(sizeLabel);
+            cell.appendChild(img);
+            cell.appendChild(checkbox);
+            cell.appendChild(sizeLabel);
 
-          processImage(checkbox);
-          addPreviewEvents(row, cell, targetWidth);
+            processImage(checkbox);
+            addPreviewEvents(row, cell, targetWidth);
+          } catch(e) {
+            sizeLabel.textContent = 'Error';
+            cell.appendChild(sizeLabel);
+            console.log(e);
+          }
         }
       }
       while(row.childElementCount < 3)
@@ -382,9 +388,10 @@ class AssetsModule extends SidebarModule {
     this.addSubHeader('Included Assets');
     div(target, 'buttonBar', `
       <p>Here you can download all the assets used in this game as a zip file so you can process them on your computer (replace/resize/...).</p>
+      <p>When you upload assets, you can use the same filenames as the original assets to replace them. Be sure <b>not</b> to zip them again but select all the assets themselves in the file selection dialog.</p>
       <button icon=cloud_download id=downloadAllAssetsButton>Download all assets</button>
       <button icon=cloud_download id=downloadAllAssetsByPropertyButton>Download all assets by property</button>
-      <button icon=cloud_upload id=uploadAllAssetsButton>Upload assets in same format</button>
+      <button icon=cloud_upload id=uploadAllAssetsButton>Upload assets</button>
       <button icon=compress id=compressAssetsButton>Compress assets</button>
     `);
     $('#downloadAllAssetsButton').onclick = e=>this.button_assetDownload(false);

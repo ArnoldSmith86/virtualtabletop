@@ -8,6 +8,8 @@ let detailsOverlay = 'stateDetailsOverlay';
 
 const stateFilterSpans = $a('#stateFilters > span');
 
+const loadedLibraryImages = {};
+
 function loadJSZip() {
   const node = document.createElement('script');
   node.src = 'scripts/jszip';
@@ -453,15 +455,20 @@ function fillStatesList(states, starred, activeState, returnServer, activePlayer
     if(activeState && (activeState.stateID == state.id || activeState.saveStateID == state.id || activeState.linkStateID == state.id)) {
       entry.className += ' activeGame';
       saveButton.style.display = 'inline-flex';
-      if(activeState.saveStateID)
+      if(activeState.saveStateID && states[activeState.saveStateID] && states[activeState.saveStateID].savePlayers)
         updateSaveButton.style.display = 'inline-flex';
     }
 
     fillStateTileTitles(entry, state.name, state.similarName, state.savePlayers, state.saveDate);
 
     if(state.image) {
-      $('img:not(.emoji)', entry).dataset.src = mapAssetURLs(state.image);
-      lazyImageObserver.observe($('img:not(.emoji)', entry));
+      const mappedURL = mapAssetURLs(state.image);
+      if(loadedLibraryImages[mappedURL]) {
+        $('img:not(.emoji)', entry).src = mappedURL;
+      } else {
+        $('img:not(.emoji)', entry).dataset.src = mappedURL;
+        lazyImageObserver.observe($('img:not(.emoji)', entry));
+      }
     }
 
     const validPlayers = [];
@@ -647,6 +654,7 @@ function fillStateDetails(states, state, dom) {
   toggleClass($('#stateDetailsOverlay .buttons [icon=edit_off]'), 'hidden', editable || deletable);
   toggleClass($('#stateDetailsOverlay .buttons [icon=link]'), 'hidden', !!state.savePlayers);
   toggleClass($('#stateDetailsOverlay .buttons [icon=link_off]'), 'hidden', !state.link);
+  toggleClass($('#stateDetailsOverlay .buttons [icon=settings]'), 'hidden', !state.savePlayers);
 
   function updateStateDetailsDomains(state) {
     $('#similarDetailsDomain').innerText = String(state.bgg).replace(/^ *https?:\/\/(www\.)?/, '').replace(/\/.*/, '');
@@ -849,7 +857,7 @@ function fillStateDetails(states, state, dom) {
     shareLink(state);
   };
   $('#stateDetailsOverlay .buttons [icon=link_off]').onclick = function() {
-    $('#stateDetailsOverlay .mainStateImage > i').classList.add('hidden');
+    $('#mainImage > i').classList.add('hidden');
     toServer('unlinkState', state.id);
   };
   $('#shareLinkOverlay button[icon=close]').onclick = _=>showStatesOverlay(detailsOverlay);
@@ -868,6 +876,20 @@ function fillStateDetails(states, state, dom) {
     } else {
       showStatesOverlay(detailsOverlay);
     }
+  };
+  $('#stateDetailsOverlay .buttons [icon=settings]').onclick = function() {
+    toServer('editState', {
+      id: state.id,
+      meta: {
+        saveState:     null,
+        saveVariant:   null,
+        saveLinkState: null,
+        savePlayers:   null,
+        saveDate:      null
+      },
+      variantInput: {},
+      variantOperationQueue: []
+    });
   };
   $('#stateDetailsOverlay .buttons [icon=upload]').onclick = function() {
     toServer('addStateToPublicLibrary', state.id);
@@ -1119,6 +1141,7 @@ const lazyImageObserver = new IntersectionObserver(entries => {
     if(entry.isIntersecting) {
       entry.target.src = entry.target.dataset.src;
       lazyImageObserver.unobserve(entry.target);
+      loadedLibraryImages[entry.target.dataset.src] = true;
     }
   }
 });

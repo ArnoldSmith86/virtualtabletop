@@ -20,8 +20,56 @@ class ToolboxModule extends SidebarModule {
     const widgetBuffer = JSON.parse(localStorage.getItem('widgetBuffer') || '[]');
     batchStart();
     setDeltaCause(`${getPlayerDetails().playerName} loaded widgets from the widget buffer in editor`);
-    for(const state of widgetBuffer)
-      await addWidgetLocal(state);
+    for(const state of widgetBuffer) {
+      if(!widgetBuffer.filter(w=>w.id==state.parent).length && !widgets.has(state.parent)) {
+        delete state.parent;
+        delete state.x;
+        delete state.y;
+      }
+      if(state.type == 'card' && !widgetBuffer.filter(w=>w.id==state.deck).length && !widgets.has(state.deck))
+        alert(`Widget ${state.id} references a deck that is not in the buffer and is not already in the room. It will not be loaded.`);
+      else
+        await addWidgetLocal(state);
+    }
+    batchEnd();
+  }
+
+  async button_searchAndReplace() {
+    const globalSearchText = $('#globalSearchText').value;
+    const globalReplaceText = $('#globalReplaceText').value;
+    const globalReplaceRegex = $('#globalReplaceRegex').checked;
+    const globalReplaceCase = $('#globalReplaceCase').checked;
+    const globalReplaceWhole = $('#globalReplaceWhole').checked;
+
+    let regex = globalSearchText;
+    if(!globalReplaceRegex) {
+      regex = regexEscape(regex);
+      if(globalReplaceWhole)
+        regex = `\\b${regex}\\b`;
+    }
+    const flags = globalReplaceCase ? 'g' : 'gi';
+
+    try {
+      regex = new RegExp(regex, flags);
+    } catch(e) {
+      alert('Invalid regular expression');
+      return;
+    }
+
+    batchStart();
+    setDeltaCause(`${getPlayerDetails().playerName} searched and replaced text in widgets in editor`);
+    for(const widget of [...widgets.values()]) {
+      const oldState = JSON.stringify(widget.state);
+      let newState = oldState.replace(regex, globalReplaceText);
+      try {
+        newState = JSON.stringify(JSON.parse(newState));
+      } catch(e) {
+        alert('Replacement resulted in invalid JSON. This feauture is working on the JSON level, so make sure the replacement is valid JSON.');
+        batchEnd();
+        return;
+      }
+      await updateWidget(newState, oldState)
+    }
     batchEnd();
   }
 
@@ -54,5 +102,21 @@ class ToolboxModule extends SidebarModule {
       list += `<li>${html(state.id)}</li>`;
     this.currentContents = div(target);
     this.renderWidgetBuffer();
+
+    this.addSubHeader('Search and Replace');
+    div(target, '', `
+      <p>Here you can search for text in all widgets of the current room state and replace it by something else.</p>
+      <input id=globalSearchText placeholder="Search text"><br>
+      <input id=globalReplaceText placeholder="Replace text"><br><br>
+      <div>
+        <input type=checkbox id=globalReplaceCase checked><label for=globalReplaceCase> Match case</label><br>
+        <input type=checkbox id=globalReplaceWhole checked><label for=globalReplaceWhole> Match whole word</label><br>
+        <input type=checkbox id=globalReplaceRegex><label for=globalReplaceRegex> Regular expression (<code>$1</code> references first capture group)</label><br><br>
+      </div>
+      <div class=buttonBar>
+        <button icon=search id=searchAndReplace>Search and replace</button>
+      </div>
+    `);
+    $('#searchAndReplace').onclick = e=>this.button_searchAndReplace();
   }
 }

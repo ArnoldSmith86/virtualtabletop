@@ -20,6 +20,7 @@ function initializeEditor(currentMetaData) {
     new UndoButton(),
     new SelectModeButton(),
     new ZoomOutButton(),
+    new ToggleDisplayButton(),
 
     new ToolbarDivider(),
 
@@ -40,7 +41,13 @@ function initializeEditor(currentMetaData) {
 
     new ToolbarDivider(),
 
-    new GroupButton()
+    new GroupButton(),
+
+    new ToolbarDivider(),
+
+    new TutorialsButton(),
+    new WikiButton()
+    
   ]);
 
   renderDragToolbar(dragToolbarButtons = [

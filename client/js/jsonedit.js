@@ -259,6 +259,20 @@ const jeCommands = [
     id: 'je_uploadAsset',
     name: 'upload a different asset',
     context: '.*"(/assets/[0-9_-]+|/i/[^"]+)"|^.* ↦ image$|^deck ↦ faceTemplates ↦ [0-9]+ ↦ objects ↦ [0-9]+ ↦ value$',
+    show: _=>!jeGetValue()||!String(jeGetValue()[jeGetLastKey()]).match(/^\/assets\/[0-9_-]+$/),
+    call: async function() {
+      const a = await uploadAsset();
+      if(a) {
+        jeInsert(null, jeGetLastKey(), a);
+        await jeApplyChanges();
+      }
+    }
+  },
+  {
+    id: 'je_uploadAssetGeneric',
+    name: 'upload a different asset',
+    context: '.*',
+    show: _=>jeGetValue()&&String(jeGetValue()[jeGetLastKey()]).match(/^\/assets\/[0-9_-]+$/),
     call: async function() {
       const a = await uploadAsset();
       if(a) {
@@ -538,6 +552,44 @@ const jeCommands = [
     }
   },
   {
+    id: 'je_hexGrid',
+    name: 'calculated hex grid',
+    context: '^[^ ]* ↦ grid',
+    call: async function() {
+      const w = widgets.get(jeStateNow.id);
+      let hexType = w.get('hexType');
+      let isFlat = hexType === 'flat';
+      let hexSide = isFlat ? w.get('height') : w.get('width');
+
+      let long = hexSide;
+      let short = parseFloat((long * Math.sqrt(3) / 2).toFixed(2));
+      let long15 = long * 1.5;
+      let long75 = long * 0.75;
+      let shortHalf = short / 2;
+
+      let xHex = isFlat ? long15 : short;
+      let yHex = isFlat ? short : long15;
+      let offsetXHex = isFlat ? long75 : shortHalf;
+      let offsetYHex = isFlat ? shortHalf : long75;
+
+      jeStateNow.grid.push(
+        {
+          "x": '###SELECT ME###',
+          "y": yHex,
+          "offsetX": offsetXHex,
+          "offsetY": offsetYHex
+        },
+        {
+          "x": xHex,
+          "y": yHex,
+          "offsetX": 0,
+          "offsetY": 0
+        }       
+      );
+      jeSetAndSelect(xHex);
+    }
+  },
+  {
     id: 'je_imageTemplate',
     name: 'image template',
     context: '^deck ↦ faceTemplates ↦ [0-9]+ ↦ objects',
@@ -675,6 +727,16 @@ const jeCommands = [
     call: async function() {
       jeStateNow.faceTemplates[+jeContext[2]].objects[+jeContext[4]].rotation = '###SELECT ME###';
       jeSetAndSelect(0);
+    }
+  },
+  {
+    id: 'je_display',
+    name: 'display',
+    context: '^deck ↦ faceTemplates ↦ [0-9]+ ↦ objects ↦ [0-9]+',
+    show: _=>!jeStateNow.faceTemplates[+jeContext[2]].objects[+jeContext[4]].display,
+    call: async function() {
+      jeStateNow.faceTemplates[+jeContext[2]].objects[+jeContext[4]].display = '###SELECT ME###';
+      jeSetAndSelect(true);
     }
   },
   {
@@ -964,6 +1026,7 @@ function jeAddCommands() {
   jeAddRoutineOperationCommands('SET', { collection: 'DEFAULT', property: 'parent', relation: '=', value: null });
   jeAddRoutineOperationCommands('SHUFFLE', { holder: null, collection: 'DEFAULT' });
   jeAddRoutineOperationCommands('SORT', { key: 'value', reverse: false, rearrange: false, locales: null, options: null, holder: null, collection: 'DEFAULT' });
+  jeAddRoutineOperationCommands('SWAPHANDS', { interval: 1, direction: 'forward', source: 'all' });
   jeAddRoutineOperationCommands('TIMER', { value: 0, seconds: 0, mode: 'toggle', timer: null, collection: 'DEFAULT' });
   jeAddRoutineOperationCommands('TURN', { turn: 1, turnCycle: 'forward', source: 'all', collection: 'TURN' });
 
@@ -1040,6 +1103,7 @@ function jeAddCommands() {
   jeAddEnumCommands('^.*\\(SELECT\\) ↦ relation', [ '<', '<=', '==', '!=', '>', '>=', 'in' ]);
   jeAddEnumCommands('^.*\\(SELECT\\) ↦ type', widgetTypes);
   jeAddEnumCommands('^.*\\(SET\\) ↦ relation', [ '+', '-', '=', "*", "/",'!' ]);
+  jeAddEnumCommands('^.*\\(SWAPHANDS\\) ↦ direction', [ 'forward', 'backward', 'random']);
   jeAddEnumCommands('^.*\\(TIMER\\) ↦ mode', [ 'pause', 'start', 'toggle', 'set', 'dec', 'inc', 'reset']);
   jeAddEnumCommands('^.*\\(TIMER\\) ↦ value', [ 0, 'start', 'end', 'milliseconds']);
   jeAddEnumCommands('^.*\\(TURN\\) ↦ turnCycle', [ 'forward', 'backward', 'random', 'position', 'seat']);
@@ -1291,6 +1355,20 @@ function jeAddGridCommand(key, value) {
   });
 }
 
+function jeAddHexGridCommand(key, value) {
+  jeCommands.push({
+    id: 'hexGrid_' + key,
+    name: key,
+    context: '^[^ ]* ↦ grid ↦ [0-9]+',
+    show: _=>!(key in jeStateNow.hexGrid[+jeContext[2]]),
+    call: async function() {
+      jeStateNow.hexGrid[+jeContext[2]][key] = '###SELECT ME###';
+      jeSetAndSelect(value);
+    }
+  });
+}
+    
+
 function jeAddLimitCommand(key, value) {
   jeCommands.push({
     id: 'limit_' + key,
@@ -1336,7 +1414,7 @@ function jeAddWidgetPropertyCommands(object, widgetBase) {
     context: 'No widget selected.',
     onEmpty: true,
     call: async function() {
-      setSelection([ widgets.get(await addWidgetLocal({type})) ]);
+      setSelection([ widgets.get(await addWidgetLocal(type == 'basic' ? {} : {type})) ]);
     }
   });
   return type == 'basic' ? null : type;
@@ -1444,6 +1522,12 @@ async function jeApplyChangesMulti() {
 
 function jeApplyDelta(delta) {
   if(jeMode == 'widget') {
+    if(delta.s[jeStateNow.id] && delta.s[jeStateNow.id].type !== undefined) {
+      const w = widgets.get(jeStateNow.id);
+      jePlainWidget = new w.constructor();
+      jeColorize();
+    }
+
     for(const field of [ 'id', 'deck' ]) {
       if(!jeDeltaIsOurs && jeStateNow && jeStateNow[field] && delta.s[jeStateNow[field]] !== undefined) {
         if(delta.s[jeStateNow[field]] === null) {
@@ -1692,7 +1776,7 @@ function jeUpdateMulti() {
 }
 
 function html(string) {
-  return string.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  return string.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 }
 
 function jeColorize() {
@@ -1748,10 +1832,11 @@ function jeColorize() {
 
 /* Displaying and controlling tree subpane of edit area */
 
+const isNodeCollapsed = {};
 function jeDisplayTree() {
   const allWidgets = Array.from(widgets.values());
   const oldFilterValue = $('#jeWidgetSearchBox') && $('#jeWidgetSearchBox').value;
-  $('#jeTree').innerHTML = '<input id="jeWidgetSearchBox" placeholder="🔍 Filter"><ul class=jeTreeDisplay>' + jeDisplayTreeAddWidgets(allWidgets, null, jeSelectedIDs()) + '</ul>';
+  $('#jeTree').innerHTML = '<div><input id="jeWidgetSearchBox" placeholder="🔍 Filter"><button>Collapse</button></div><ul class=jeTreeDisplay>' + jeDisplayTreeAddWidgets(allWidgets, null, jeSelectedIDs()) + '</ul>';
 
   treeNodes = {};
   for(const dom of $a('#jeTree .key'))
@@ -1762,12 +1847,14 @@ function jeDisplayTree() {
     if(e.target.classList.contains('jeTreeExpander')) {
       $('.nested', e.target.parentElement).classList.toggle('active');
       e.target.classList.toggle('jeTreeExpander-down');
+      isNodeCollapsed[e.target.parentNode.dataset.filter] = !e.target.classList.contains('jeTreeExpander-down');
       e.stopImmediatePropagation();
     }
   });
 
   // Add handler to search box to display widget list
   on('#jeWidgetSearchBox', 'input', jeDisplayFilteredWidgets);
+  on('#jeWidgetSearchBox + button', 'click', e=>$a('.jeTreeExpander-down').forEach(e=>e.click()));
 
   on('.jeTreeWidget', 'click', function(e) {
     const widget = widgets.get($('.key', e.currentTarget).innerText);
@@ -1798,17 +1885,19 @@ function jeDisplayTreeAddWidgets(allWidgets, parent, selectedIDs) {
   for(const widget of (allWidgets.filter(w=>w.get('parent')==parent)).sort((w1,w2)=>w1.get('id').localeCompare(w2.get('id'), 'en', {numeric: true, ignorePunctuation: true}))) {
     const children = jeDisplayTreeAddWidgets(allWidgets, widget.get('id'), selectedIDs);
     const isSelected = selectedIDs.indexOf(widget.get('id')) != -1 ? 'jeHighlightRow' : '';
-    const filterText = `data-filter="${html(widget.get('id')+(widget.get('type')||'basic')+(widget.get('cardType')||'')).toLowerCase()}"`;
+    const filter = html(widget.get('id')+(widget.get('type')||'basic')+(widget.get('cardType')||'')).toLowerCase();
+    const filterText = `data-filter="${filter}"`;
+    const isCollapsed = isNodeCollapsed[filter] || widget.get('type')=='pile';
 
     if(children)
-      result += `<li ${filterText} class="jeTreeWidget"><span class="jeTreeWidget ${isSelected} jeTreeExpander ${(widget.get('type')=='pile') ? '' : 'jeTreeExpander-down'}">`;
+      result += `<li ${filterText} class="jeTreeWidget"><span class="jeTreeWidget ${isSelected} jeTreeExpander ${isCollapsed ? '' : 'jeTreeExpander-down'}">`;
     else
       result += `<li ${filterText} class="jeTreeWidget ${isSelected}">`;
 
     result += jeTreeGetWidgetHTML(widget);
 
     if(children)
-      result += `</span><ul class="jeNestedTree nested ${widget.get('type')=='pile' ? '' : 'active'}">${children}</ul>`;
+      result += `</span><ul class="jeNestedTree nested ${isCollapsed ? '' : 'active'}">${children}</ul>`;
     result += '</li>';
 
     delete allWidgets[allWidgets.indexOf(widget)];
@@ -2126,11 +2215,12 @@ export function jeLoggingRoutineOperationEnd(problems, variables, collections, s
         ${jeLoggingHTML}
         <div class="jeLogDetails">
           <div class="jeExpander">
-            <span class="jeLogName">Variables and collections afterwards</span>
+            <span class="jeLogName">Variables, collections and delta afterwards</span>
           </div>
           <div class="jeLogNested">
-            <div class="jeLogVariables"  ><h3>Variables   afterwards</h3>${jeLoggingJSON(variables  )}</div>
-            <div class="jeLogCollections"><h3>Collections afterwards</h3>${jeLoggingJSON(collDisplay)}</div>
+            <div class="jeLogVariables"    ><h3>Variables afterwards</h3>${jeLoggingJSON(variables   )}</div>
+            <div class="jeLogCollections"><h3>Collections afterwards</h3>${jeLoggingJSON(collDisplay )}</div>
+            <div class="jeLogVariables"        ><h3>Delta afterwards</h3>${jeLoggingJSON(getDelta().s)}</div>
             <h3></h3>
           </div>
         </div>
