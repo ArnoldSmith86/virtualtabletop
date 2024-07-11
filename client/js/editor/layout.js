@@ -51,8 +51,8 @@ function initializeEditor(currentMetaData) {
     new CloneDragButton(),
     new SpacingDragButton(),
     new RotateDragButton(),
-    new MoveDragButton(),
-    new ResizeDragButton()
+    new ResizeDragButton(),
+    new MoveDragButton()
   ]);
 
   renderSidebar(sidebarModules = [
