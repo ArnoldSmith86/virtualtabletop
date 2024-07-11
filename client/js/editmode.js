@@ -1316,7 +1316,7 @@ async function updateWidget(currentState, oldState, applyChangesFromUI) {
     await applyEditOptions(widget);
 
   if(widget.id !== previousState.id) {
-    await updateWidgetId(widget, previousState);
+    await updateWidgetId(widget, previousState.id);
   } else if (widget.type !== previousState.type) {
     await removeWidgetLocal(previousState.id, true);
     const id = await addWidgetLocal(widget);
@@ -1337,58 +1337,6 @@ async function updateWidget(currentState, oldState, applyChangesFromUI) {
   }
 
   batchEnd();
-}
-
-async function updateWidgetId(widget, previousState) {
-  const children = Widget.prototype.children.call(widgets.get(previousState.id)); // use Widget.children even for holders so it doesn't filter
-  const cards = widgetFilter(w=>w.get('deck')==previousState.id);
-
-  for(const child of children)
-    sendPropertyUpdate(child.get('id'), 'parent', null);
-  for(const card of cards)
-    sendPropertyUpdate(card.get('id'), 'deck', null);
-  await removeWidgetLocal(previousState.id, true);
-  
-  const id = await addWidgetLocal(widget);
-
-  // Restore children
-  for(const child of children)
-    sendPropertyUpdate(child.get('id'), 'parent', id);
-  for(const card of cards)
-    sendPropertyUpdate(card.get('id'), 'deck', id);
-
-  // Change inheritFrom on widgets inheriting from altered widget
-  for (const inheritor of StateManaged.inheritFromMapping[previousState.id]) {
-    const oldInherits = inheritor.get('inheritFrom');
-    let newInherits;
-    if(typeof oldInherits == "string") {
-      newInherits = id;
-    } else {
-      newInherits = {...oldInherits};
-      newInherits[id] = newInherits[previousState.id];
-      delete newInherits[previousState.id]
-    }
-    await inheritor.set('inheritFrom', newInherits)
-  };
-
-  // If widget is a seat, change widgets with onlyVisibleForSeat and linkedToSeat naming that seat.
-  if(widget.type == 'seat') {
-    for(const prop of ['onlyVisibleForSeat', 'linkedToSeat']) {
-      for(const w of widgetFilter(w => w.get(prop) && asArray(w.get(prop)).includes(previousState.id))) {
-        if(typeof w.get(prop) === 'string') {
-          await w.set(prop, id)
-        } else {
-          const vis = [...w.get(prop)];
-          vis[vis.indexOf(previousState.id)] = id;
-          await w.set(prop, vis)
-        }
-      }
-    }
-  }
-
-  // Finally, change any seats that use the old id as a hand.
-  for(const w of widgetFilter(w => w.get('type') == 'seat' && w.get('hand') == previousState.id))
-    await w.set('hand', id);
 }
 
 async function onClickUpdateWidget(applyChangesFromUI) {
