@@ -2401,6 +2401,8 @@ export class Widget extends StateManaged {
       return true;
     if(this.get('parent') && widgets.has(this.get('parent')))
       return widgets.get(this.get('parent')).requiresHiddenCursor();
+    if(this.get('hoverParent') && widgets.has(this.get('hoverParent')))
+      return widgets.get(this.get('hoverParent')).requiresHiddenCursor();
     return false;
   }
 
