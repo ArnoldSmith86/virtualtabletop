@@ -125,9 +125,9 @@ class Canvas extends Widget {
     if(this.lastPixelX !== undefined && state != 'down') {
       const steps = Math.max(Math.abs(pixelX-this.lastPixelX), Math.abs(pixelY-this.lastPixelY));
       for(let i=0; i<steps; ++i)
-        this.setPixel(this.lastPixelX + (pixelX-this.lastPixelX)/steps*i, this.lastPixelY + (pixelY-this.lastPixelY)/steps*i);
+        await this.setPixel(this.lastPixelX + (pixelX-this.lastPixelX)/steps*i, this.lastPixelY + (pixelY-this.lastPixelY)/steps*i);
     } else {
-      this.setPixel(pixelX, pixelY);
+      await this.setPixel(pixelX, pixelY);
     }
 
     this.lastPixelX = pixelX;
