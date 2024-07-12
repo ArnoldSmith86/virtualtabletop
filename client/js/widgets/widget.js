@@ -263,6 +263,15 @@ export class Widget extends StateManaged {
       inheriting.applyInheritedDeltaToDOM(inheritedDelta);
     }
 
+    // inherit properties again when overriding ones are removed
+    if(this.state.inheritFrom !== undefined) {
+      for(const key in delta)
+        if(this.state[key] === undefined && (!this.inheritedProperties || this.inheritedProperties[key] === undefined))
+          for(const [ id, properties ] of Object.entries(this.inheritFrom()))
+            if(this.inheritFromIsValid(properties, key) && widgets.has(id) && widgets.get(id).get(key) !== undefined)
+              this.applyInheritedDeltaToDOM({[key]: widgets.get(id).get(key)});
+    }
+
     if($('#enlarged').dataset.id == this.id && !$('#enlarged').className.match(/hidden/)) {
       this.showEnlarged(null, delta);
     }
