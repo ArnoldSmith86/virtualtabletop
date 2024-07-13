@@ -1704,15 +1704,12 @@ export class Widget extends StateManaged {
         } else if (collection = getCollection(a.collection)) {
           if (a.property == 'id') {
             for(const oldWidget of collections[collection]) {
-              const oldState = JSON.stringify(oldWidget.state);
               const oldID = oldWidget.get('id');
-              var newState = JSON.parse(oldState);
-
+              let newState = JSON.parse(JSON.stringify(oldWidget.state));
               newState.id = await compute(a.relation, null, oldWidget.get(a.property), a.value);
+
               if(!widgets.has(newState.id)) {
-                $('#editWidgetJSON').dataset.previousState = oldState;
-                $('#editWidgetJSON').value = JSON.stringify(newState);
-                await onClickUpdateWidget(false);
+                await updateWidgetId(newState, oldID);
                 for(const c in collections)
                   collections[c] = collections[c].map(w=>w.id==oldID ? widgets.get(newState.id) : w);
               } else {
