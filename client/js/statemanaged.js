@@ -6,6 +6,7 @@ export class StateManaged {
     this.defaults = {};
     this.state = {};
     this.unalteredState = {};
+    this.getCache = {};
   }
 
   addDefaults(defaults) {
@@ -22,6 +23,7 @@ export class StateManaged {
       } else {
         deltaForDOM[i] = this.unalteredState[i] = this.state[i] = delta[i];
       }
+      delete this.getCache[i];
     }
     this.applyDeltaToDOM(deltaForDOM);
 
@@ -114,6 +116,7 @@ export class StateManaged {
       delete this.state[property];
     else
       this.state[property] = JSON.parse(JSONvalue);
+    delete this.getCache[property];
     sendPropertyUpdate(this.get('id'), property, value);
     await this.onPropertyChange(property, oldValue, value);
 

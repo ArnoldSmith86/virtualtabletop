@@ -278,17 +278,20 @@ class Dice extends Widget {
   }
 
   get(property, options) {
+    if(this.getCache[property] !== undefined)
+      return this.getCache[property];
+
     if(property !='faces' && property !='activeFace' && (typeof options != 'object' || options == null || !options.ignoreFaceProperties) ) {
       if(property == 'value') {
         const o = this.getValueMap();
         if(Array.isArray(o) && o.length > this.activeFace())
-          return o[this.activeFace()];
+          return this.getCache[property] = o[this.activeFace()];
       }
       const faceProps = this.faces()[this.activeFace()];
       if(typeof faceProps == 'object' && Object.hasOwnProperty(faceProps, property))
-        return faceProps[property];
+        return this.getCache[property] = faceProps[property];
     }
-    return super.get(property);
+    return this.getCache[property] = super.get(property);
   }
 
   getFaceCount() {
