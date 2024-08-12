@@ -36,16 +36,6 @@ class ToolboxModule extends SidebarModule {
       index++;
     }
     batchEnd();
-
-    // Output the updated JSON structure
-    const output_json_corrected = {
-      widgets: selectedWidgets.map(widget => widget.get()),
-    };
-
-    const output_json_corrected_str = JSON.stringify(output_json_corrected, null, 2);
-
-    // Write the formatted JSON to a file
-    console.log(output_json_corrected_str);
   }
 
   button_saveWidgetsToBuffer() {
