@@ -20,6 +20,7 @@ function initializeEditor(currentMetaData) {
     new UndoButton(),
     new SelectModeButton(),
     new ZoomOutButton(),
+    new ToggleDisplayButton(),
 
     new ToolbarDivider(),
 
@@ -57,6 +58,8 @@ function initializeEditor(currentMetaData) {
     new CloneDragButton(),
     new SpacingDragButton(),
     new RotateDragButton(),
+    new ResizeDragButton(false),
+    new ResizeDragButton(true),
     new MoveDragButton()
   ]);
 

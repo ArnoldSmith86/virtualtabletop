@@ -43,7 +43,6 @@ async function inputHandler(name, e) {
       return;
     target = target.parentNode;
   }
-  const targetForHiddenCursorCheck = target && target.id && target.id.slice(0,2) == 'w_' && widgets.has(unescapeID(target.id.slice(2))) ? target : null;
 
   e.preventDefault();
 
@@ -129,7 +128,9 @@ async function inputHandler(name, e) {
   clientPointer.style.top = `${coords.clientY}px`;
   clientPointer.style.left = `${coords.clientX}px`;
 
-  if(targetForHiddenCursorCheck && widgets.has(unescapeID(targetForHiddenCursorCheck.id.slice(2))) && widgets.get(unescapeID(targetForHiddenCursorCheck.id.slice(2))).requiresHiddenCursor()) {
+  let hoveredWidgetsWithHiddenCursor = document.elementsFromPoint(e.clientX, e.clientY).map(el => widgets.get(unescapeID(el.id.slice(2)))).filter(w => w != null && w.requiresHiddenCursor());
+
+  if(hoveredWidgetsWithHiddenCursor.length) {
     toServer('mouse', { hidden: true });
   } else {
     toServer('mouse',
