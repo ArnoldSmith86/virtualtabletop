@@ -904,7 +904,10 @@ export default async function convertPCIO(content) {
             if(c.args.quantity.type == 'reference')
               quantity = '${' + c.args.quantity.questionId + '}';
             else
-              quantity = c.args.quantity.value;
+              if(c.args.quantity.value == 'all')
+                quantity = 0;
+              else
+                quantity = c.args.quantity.value;
           }
 
           c = importWidgetQuery(w.clickRoutine, c.args, 'from', 'from', 'collection', {
