@@ -16,7 +16,7 @@
       "similarName": "No Cheese No Coin",
       "similarDesigner": "Stephen Rafferty",
       "description": "Collect coin and cheese cards. Play cheese card to use its special powers. Play until deck is depleted or 10 minute timer expires. Player with most coin cards at end wins.",
-      "showName": true,
+      "showName": false,
       "lastUpdate": 1656358260000
     }
   },

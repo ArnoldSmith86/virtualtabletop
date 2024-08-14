@@ -6705,7 +6705,7 @@
       "time": "30-90",
       "attribution": "Created and copyrighted by Jake Seegers.<div>\nVTT implementation by Jake Seegers and Michael Taylor.</div><div>\nLibrary image generated using the DALL.E&nbsp; artificial intelligence image generator for the background, Ideogram.ai artificial intelligence image generator for the \"Godaigo\" text, and the remaining text and elements by Jake Seegers.</div><div>\nRulebook Art uses original art by Jake Seegers for game elements such as Scroll Cards, Symbols, and Tiles, and Midjourney artificial intelligence image generator for art and background images.</div>",
       "lastUpdate": 1718226142309,
-      "showName": true,
+      "showName": false,
       "skill": "Medium",
       "description": "Godaigo: Secret of the Five Elements is a strategic board game where players find and cast Elemental Scrolls to win. Players arrange Elemental Stones on the board, using their unique abilities to influence gameplay. The game offers a unique, booster-pack-free, spellcasting experience in every playthrough.",
       "similarImage": "",
