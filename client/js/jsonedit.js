@@ -1716,6 +1716,16 @@ function jeSelectWidgetMulti(widget) {
   jeUpdateMulti();
 }
 
+function jeSelectSetMulti(widgets) {
+  const wIDs = widgets.map(w=>w.get('id'));
+
+  jeStateNow = { widgets: wIDs };
+
+  jeWidget = null;
+  jeMode = 'multi';
+  jeUpdateMulti();
+}
+
 function jeMultiSelectedWidgets() {
   let selected = [];
   for(const search of jeStateNow.widgets) {
@@ -1760,6 +1770,7 @@ function jeHighlightWidgets() {
 }
 
 function jeUpdateMulti() {
+  const selectedWidgets = jeMultiSelectedWidgets();
   jeCenterSelection();
   const keys = [ 'x', 'y', 'width', 'height', 'parent', 'z', 'layer' ];
   for(const usedKey in jeStateNow || [])
@@ -1767,7 +1778,7 @@ function jeUpdateMulti() {
       keys.push(usedKey);
   for(const key of keys) {
     jeStateNow[key] = {};
-    for(const selectedWidget of jeMultiSelectedWidgets())
+    for(const selectedWidget of selectedWidgets)
       jeStateNow[key][selectedWidget.get('id')] = selectedWidget.get(key);
     if(Object.values(jeStateNow[key]).every( (val, i, arr) => val === arr[0] ))
       jeStateNow[key] = Object.values(jeStateNow[key])[0];
