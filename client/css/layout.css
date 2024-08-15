@@ -33,11 +33,11 @@ body {
   font-family: 'Roboto', sans-serif;
 }
 
-body.darkMode input {
+body.edit.darkMode input {
   --overlayFontColor: #ffffff;
 }
 
-body.darkMode input::placeholder {
+body.edit.darkMode input::placeholder {
   color: #ffffff;
 }
 
