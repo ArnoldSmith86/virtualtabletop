@@ -1936,7 +1936,7 @@
       "importer": "PCIO",
       "image": "/assets/-972047508_283757",
       "name": "QQ Step",
-      "showName": true,
+      "showName": false,
       "time": "15",
       "mode": "vs",
       "skill": "",

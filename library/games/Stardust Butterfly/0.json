@@ -3553,7 +3553,7 @@
       "attribution": "An original game by Zoql available under CC BY-SA-NC 4.0. Thanks to meBID (programming), BIG_FROG (ending art), Ly (art), and rust dogg (playtesting). Adapted for use on virtualtabletop.io by LawDawg96. Some icons were based off of icons by Lorc and Delapouite available under CC By 3.0 on https://game-icons.net.\n\nFor more information and additional versions of the game, see https://zoql.itch.io/stardustbutterfly.",
       "similarName": "Stardust Butterfly",
       "description": "Take turns drafting from 9 action cards. During play, use special power of action card and roll dice to purchase weapons cards, move location of ship, increase skills, and hunt wanted criminals. Play 6 rounds. Player with most points at end wins.\n\n\nv1.2",
-      "showName": true,
+      "showName": false,
       "lastUpdate": 1720453204053,
       "skill": "",
       "similarImage": "",

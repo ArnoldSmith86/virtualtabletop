@@ -464,7 +464,7 @@ function fillStatesList(states, starred, activeState, returnServer, activePlayer
     if(state.image) {
       const mappedURL = mapAssetURLs(state.image);
       if(loadedLibraryImages[mappedURL]) {
-        $('img:not(.emoji)', entry).src = mappedURL;
+        $('img:not(.emoji)', entry).dataset.src = $('img:not(.emoji)', entry).src = mappedURL;
       } else {
         $('img:not(.emoji)', entry).dataset.src = mappedURL;
         lazyImageObserver.observe($('img:not(.emoji)', entry));
