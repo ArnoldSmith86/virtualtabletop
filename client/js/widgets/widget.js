@@ -777,7 +777,7 @@ export class Widget extends StateManaged {
         let widget = this;
         if(match[8]) {
           const id = evaluateIdentifier(match[7], match[8]);
-          if(!this.isValidID(id, problems))
+          if(Array.isArray(id) || !this.isValidID(id, problems))
             return null;
           widget = widgets.get(id);
         }
