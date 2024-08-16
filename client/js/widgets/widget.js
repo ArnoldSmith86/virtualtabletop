@@ -463,7 +463,7 @@ export class Widget extends StateManaged {
     if(widgets.has(clone.id)) {
       delete clone.id;
       if(problems && overrideProperties.id !== undefined)
-        problems.push(`There is already a widget with id:${a.properties.id}, generating new ID.`);
+        problems.push(`There is already a widget with id:${overrideProperties.id}, generating new ID.`);
     }
     delete clone.parent;
     const newID = await addWidgetLocal(clone);
