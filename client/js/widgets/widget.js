@@ -2374,12 +2374,14 @@ export class Widget extends StateManaged {
     return readOnlyProperties;
   }
 
-  renderReadonlyCopyRaw(state, target) {
+  renderReadonlyCopyRaw(state, target, isChild=false) {
     delete state.id;
-    state.x = 0;
-    state.y = 0;
-    state.rotation = 0;
-    state.scale = 1;
+    if(!isChild) {
+      state.x = 0;
+      state.y = 0;
+      state.rotation = 0;
+      state.scale = 1;
+    }
     state.parent = null;
     state.owner = null;
     state.linkedToSeat = null;
@@ -2392,8 +2394,14 @@ export class Widget extends StateManaged {
     return this;
   }
 
-  renderReadonlyCopy(propertyOverride, target) {
-    return new this.constructor(generateUniqueWidgetID()).renderReadonlyCopyRaw(Object.assign({}, this.state, propertyOverride), target);
+  renderReadonlyCopy(propertyOverride, target, isChild=false) {
+    const newID = generateUniqueWidgetID();
+    const newWidget = new this.constructor(newID);
+    newWidget.renderReadonlyCopyRaw(Object.assign({}, this.state, propertyOverride), target, isChild);
+    for(const child of widgetFilter(w=>w.get('parent') == this.id))
+      if(this.get('type') != 'holder' || !compareDropTarget(child, this))
+        child.renderReadonlyCopy({}, newWidget.domElement, true);
+    return newWidget;
   }
 
   requiresHiddenCursor() {

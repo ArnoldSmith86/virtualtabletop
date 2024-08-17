@@ -1755,7 +1755,7 @@ input:invalid+span::after, .inputError::before {
   z-index: 2;
 }
 
-.inputchoose .widget {
+.inputchoose .inputchooseWidgetWrapper > .widget {
   position: relative !important;
   transform-origin: top left !important;
   z-index: 1 !important;
