@@ -153,7 +153,6 @@ test('Dynamic expressions', async t => {
     .click(Selector('button').withAttribute('icon', 'data_object'))
     .typeText('#jeText', button, { replace: true, paste: true })
     .rightClick('#w_jyo6')
-    .rightClick('#w_jyo6')
     .click(Selector('button').withAttribute('icon', 'pest_control'))
   const log = await Selector('#jeLog').textContent
   for (let i=0; i<ops.length; i++) {
