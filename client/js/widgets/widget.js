@@ -2394,13 +2394,14 @@ export class Widget extends StateManaged {
     return this;
   }
 
-  renderReadonlyCopy(propertyOverride, target, isChild=false) {
+  renderReadonlyCopy(propertyOverride, target, includeChildren=false, isChild=false) {
     const newID = generateUniqueWidgetID();
     const newWidget = new this.constructor(newID);
     newWidget.renderReadonlyCopyRaw(Object.assign({}, this.state, propertyOverride), target, isChild);
-    for(const child of widgetFilter(w=>w.get('parent') == this.id))
-      if(this.get('type') != 'holder' || !compareDropTarget(child, this))
-        child.renderReadonlyCopy({}, newWidget.domElement, true);
+    if(includeChildren)
+      for(const child of widgetFilter(w=>w.get('parent') == this.id))
+        if(this.get('type') != 'holder' || !compareDropTarget(child, this) || includeChildren == 'all')
+          child.renderReadonlyCopy({}, newWidget.domElement, includeChildren, true);
     return newWidget;
   }
 
