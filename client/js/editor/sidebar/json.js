@@ -35,7 +35,8 @@ class JsonModule extends SidebarModule {
     } else {
       jeEmpty();
     }
-    $('#jeText').blur();
+    if(!jeDeltaIsOurs)
+      $('#jeText').blur();
   }
 
   renderModule(target) {
@@ -70,7 +71,8 @@ class TreeModule extends SidebarModule {
       jeEmpty();
       jeCenterSelection();
     }
-    $('#jeText').blur();
+    if(!jeDeltaIsOurs)
+      $('#jeText').blur();
   }
 
   onStateReceivedWhileActive() {

@@ -1483,12 +1483,15 @@ async function jeApplyChanges() {
 
   const currentState = JSON.stringify(jePostProcessObject(completeState));
   if(currentStateRaw != jeStateBeforeRaw || jeKeyIsDownDeltas.length) {
+    const idChanged = JSON.parse(currentState).id != JSON.parse(jeStateBefore).id;
     jeDeltaIsOurs = true;
     await jeApplyExternalChanges(completeState);
     jeStateBeforeRaw = currentStateRaw;
     const oldState = jeStateBefore;
     jeStateBefore = currentState;
     await updateWidget(currentState, oldState); // in editmode.js
+    if(idChanged)
+      setSelection([ widgets.get(JSON.parse(currentState).id) ]);
     jeDeltaIsOurs = false;
   }
 }
