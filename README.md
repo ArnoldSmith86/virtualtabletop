@@ -8,13 +8,6 @@ VTT is an open-source, free to use platform for creating and playing games. This
 
 We have hundreds of games in our public library that are ready to play right now.  That includes classic games like Chinese checkers, backgammon, mancala, Nine Men’s Morris, Reversi, tangrams, and hangman.  It includes modern games that are similar to many popular card and board games available around the world today.  Most of the games are in English, but quite a few are “universal” and require no ability to read or understand English.  And a handful are offered in German and Portuguese and a few more in Spanish and French. See [Games](https://github.com/ArnoldSmith86/virtualtabletop/wiki/Games) for more detail.
 
-## Playing offline on Android
-
-You can use an Android phone as the server and play with any devices offline by using its wifi hotspot:
-
-- Install and open https://termux.dev/ on your Android device.
-- Run `curl -L is.gd/vttandroid | sh`.
-
 ## Creating games
 
 New games may be created in VTT using a combination of drag-and-drop and writing JSON text. Capabilities added in JSON include iterating, conditional evaluations, calculations, and other things you might expect to find in a programming system. (See [Functions](https://github.com/ArnoldSmith86/virtualtabletop/wiki/Functions) for more detail.) The game designer can include player seats, action buttons, sound, scoreboards, and drawing canvases, in addition to many other tools. (See [Widgets](https://github.com/ArnoldSmith86/virtualtabletop/wiki/Widgets) for more detail.)
@@ -30,6 +23,13 @@ If you want to contribute to VTT development, please read [Helping Out](https://
 Finally, we appreciate donations that go towards paying for the domain name, the servers, and additional software supporting game development.  You can donate at https://www.patreon.com/virtualtabletop/about.
 
 Enjoy! And don't be shy about asking questions in [Discord](https://discord.gg/CEZz7wny9T); you will find a helpful and responsive audience.
+
+## Playing offline on Android
+
+You can use an Android phone as the server and play with any devices offline by using its wifi hotspot:
+
+- Install and open https://termux.dev/ on your Android device.
+- Run `curl -L is.gd/vttandroid | sh`.
 
 ## Hosting own server
 
