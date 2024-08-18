@@ -1081,6 +1081,7 @@ function jeAddCommands() {
   jeAddFieldCommand('faces', 'choose', null);
   jeAddFieldCommand('scale', 'choose', 1);
   jeAddFieldCommand('propertyOverride', 'choose', {});
+  jeAddFieldCommand('visibleChildWidgets', 'choose', false);
 
   jeAddEnumCommands('^[a-z]+ ↦ type', widgetTypes.slice(1));
   jeAddEnumCommands('^.*\\([A-Z]+\\) ↦ value', [ '${}' ]);
