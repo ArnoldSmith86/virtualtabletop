@@ -4390,8 +4390,13 @@
             "range": 5,
             "loopRoutine": [
               {
-                "func": "COUNT",
-                "holder": "holder-tiles-ankh-p${value}"
+                "func": "SELECT",
+                "type": "card",
+                "property": "parent",
+                "value": "holder-tiles-ankh-p${value}"
+              },
+              {
+                "func": "COUNT"
               },
               {
                 "func": "LABEL",
