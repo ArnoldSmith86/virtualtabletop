@@ -570,24 +570,3 @@ body.jsonEdit #toolbar {
 #jeCommands #jeCommandOptions input[type="number"]{
   width: 6ch;
 }
-
-
-
-
-/* FIXME: put this where it makes sense */
-
-.jeLineNumber {
-  display: inline-block;
-  width: 40px;
-  text-align: right;
-  padding-right: 10px;
-  color: #444;
-}
-
-.jeLineContent {
-  display: inline-block;
-}
-
-#jeText {
-  padding-left: 50px;
-}
