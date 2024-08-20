@@ -583,6 +583,7 @@
       "backcolor": "#666666",
       "crosscolor": "transparent",
       "scarabcolor": "#e30022",
+      "classes": "transition",
       "width": 70,
       "height": 70,
       "onPileCreation": {
@@ -4623,5 +4624,22 @@
     "parent": "seat-p5",
     "currentBidHolder": "holder-suns-bid-p5",
     "inheritFrom": "button-win-p1"
+  },
+  "transition-animator": {
+    "id": "transition-animator",
+    "width": 10,
+    "height": 10,
+    "css": {
+      "default": {
+        "background-color": "red"
+      },
+      "_, .transition": {
+        "transition": "transform 600ms"
+      },
+      "_, .transition.dragging": {
+        "transition": "none"
+      }
+    },
+    "display": false
   }
 }
