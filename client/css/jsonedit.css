@@ -581,7 +581,7 @@ body.jsonEdit #toolbar {
   width: 38px;
   text-align: right;
   padding-right: 2px;
-  color: #444;
+  color: var(--textDimColor1);
   margin-left: -10px;
   vertical-align: top;
 }
