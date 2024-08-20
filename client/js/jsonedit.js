@@ -1807,13 +1807,18 @@ function jeColorize() {
     [ /^( +")(.*)(",?)$/, null, 'string', null ]
   ];
   let out = [];
+  let nr = 0;
+  function push(line) {
+    out.push(`<div class=jeTextLine><span class=jeLineNumber>${nr}</span><span class=jeLineContent>${line}</span></div>`);
+  }
   for(let line of jeGetEditorContent().split('\n')) {
+    ++nr;
     let foundMatch = false;
     for(const l of langObj) {
       const match = line.match(l[0]);
       if(match) {
         if(jeMode == 'widget' && match[1] == '  "' && l[2] == 'key' && (l[4] == "null" && match[4] == "null" || String(jeWidget.defaults[match[2]]) == match[4])) {
-          out.push(`<i class=default>${html(line)}</i>`);
+          push(`<i class=default>${html(line)}</i>`);
           foundMatch = true;
           break;
         }
@@ -1831,18 +1836,16 @@ function jeColorize() {
             match[i] = html(match[i]);
         }
 
-        let newLine = match.slice(1).join('');
-
-        out.push(newLine);
+        push(match.slice(1).join(''));
         foundMatch = true;
 
         break;
       }
     }
     if(!foundMatch)
-      out.push(html(line));
+      push(html(line));
   }
-  $('#jeTextHighlight').innerHTML = out.join('\n');
+  $('#jeTextHighlight').innerHTML = out.join('');
 }
 
 /* Displaying and controlling tree subpane of edit area */
