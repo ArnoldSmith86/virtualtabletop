@@ -148,7 +148,7 @@ async function keyHandler(e) {
     return;
 
   batchStart();
-  for(const widget of widgetFilter(w=>w.get('hotkey')===e.key))
+  for(const widget of widgetFilter(w=>w.get('hotkey')===e.key).sort((a,b)=>String(a.get('id')).localeCompare(b.get('id'))))
     await widget.click();
   batchEnd();
 }
