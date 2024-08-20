@@ -443,6 +443,11 @@ onLoad(function() {
     }
   });
 
+  on('.toolbarButton', 'touchstart', function(e) {
+    usedTouch = true;
+    $('body').classList.add('usedTouch');
+  });
+
   on('.toolbarTab', 'click', function(e) {
     if(e.currentTarget.classList.contains('active')) {
       if($('#stateDetailsOverlay.notEditing') && $('#stateDetailsOverlay.notEditing').style.display != 'none')
