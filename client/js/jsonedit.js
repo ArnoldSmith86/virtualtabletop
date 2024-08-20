@@ -1846,6 +1846,7 @@ function jeColorize() {
       push(html(line));
   }
   $('#jeTextHighlight').innerHTML = out.join('');
+  $('#editor').style.setProperty('--linenumbers-digits', Math.floor(Math.log10(nr)+1));
 }
 
 /* Displaying and controlling tree subpane of edit area */

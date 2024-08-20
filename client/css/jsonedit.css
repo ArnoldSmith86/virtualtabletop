@@ -578,19 +578,18 @@ body.jsonEdit #toolbar {
 
 .jeLineNumber {
   display: inline-block;
-  width: 38px;
+  width: calc(var(--linenumbers-digits) * 8px);
   text-align: right;
   padding-right: 2px;
   color: var(--textDimColor1);
-  margin-left: -10px;
   vertical-align: top;
 }
 
 .jeLineContent {
   display: inline-block;
-  width: calc(100% - 30px);
+  width: calc(100% - var(--linenumbers-digits) * 8px - 2px);
 }
 
 #jeText {
-  padding-left: 30px;
+  padding-left: calc(var(--linenumbers-digits) * 8px + 2px);
 }
