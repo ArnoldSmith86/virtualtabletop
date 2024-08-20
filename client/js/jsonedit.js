@@ -1461,14 +1461,6 @@ function jeAddWidgetPropertyCommand(object, widgetBase, property) {
   });
 }
 
-// Called from overlayDone in editmode.js to finish up add widget processing in the JSON editor.
-function jeAddWidgetDone(id) {
-  setSelection([ widgets.get(id) ]);
-  jeStateNow.id = '###SELECT ME###';
-  jeSetAndSelect(id);
-  jeGetContext();
-}
-
 async function jeApplyChanges() {
   if(jeMode == 'multi')
     return await jeApplyChangesMulti();
@@ -1483,15 +1475,20 @@ async function jeApplyChanges() {
 
   const currentState = JSON.stringify(jePostProcessObject(completeState));
   if(currentStateRaw != jeStateBeforeRaw || jeKeyIsDownDeltas.length) {
-    const idChanged = JSON.parse(currentState).id != JSON.parse(jeStateBefore).id;
+    const old = JSON.parse(jeStateBefore);
+    const cur = JSON.parse(currentState);
+    const idChanged = cur.id != old.id || cur.type != old.type;
     jeDeltaIsOurs = true;
     await jeApplyExternalChanges(completeState);
     jeStateBeforeRaw = currentStateRaw;
     const oldState = jeStateBefore;
     jeStateBefore = currentState;
     await updateWidget(currentState, oldState); // in editmode.js
-    if(idChanged)
-      setSelection([ widgets.get(JSON.parse(currentState).id) ]);
+    if(idChanged) {
+      setSelection([ widgets.get(cur.id) ]);
+      if(widgets.has(cur.id))
+        widgets.get(cur.id).setHighlighted(true);
+    }
     jeDeltaIsOurs = false;
   }
 }
@@ -1505,9 +1502,12 @@ async function jeApplyChangesMulti() {
   const currentState = JSON.parse(jeGetEditorContent());
 
   if(jeGetContext()[1] == 'widgets') {
+    jeDeltaIsOurs = true;
     var cursorState = jeCursorStateGet();
     jeUpdateMulti();
     jeCursorStateSet(cursorState);
+    setSelection(jeMultiSelectedWidgets());
+    jeDeltaIsOurs = false;
   } else {
     jeDeltaIsOurs = true;
     for(const key in currentState) {
