@@ -1129,7 +1129,7 @@
       ],
       "label-example-pharaoh-quantity": "*"
     },
-    "text": "Most 5VP\nLeast -2VP"
+    "text": "Most 5VP\nLess -2VP"
   },
   "label-example-nile-scoring": {
     "type": "label",
