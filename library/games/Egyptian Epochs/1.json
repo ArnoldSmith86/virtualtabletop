@@ -608,7 +608,7 @@
       "tile-disaster-unrest": {
         "color": "#bfc1c2",
         "image": "/i/game-icons.net/delapouite/zigzag-hieroglyph.svg",
-        "crosscolor": "#ff0000",
+        "crosscolor": "#e30022",
         "scarabcolor": "transparent"
       },
       "tile-monument-pyramids": {
@@ -646,7 +646,7 @@
       "tile-disaster-earthquake": {
         "color": "#9678b6",
         "image": "/i/game-icons.net/delapouite/egyptian-temple.svg",
-        "crosscolor": "#ff0000",
+        "crosscolor": "#e30022",
         "scarabcolor": "transparent"
       }
     }
@@ -1154,7 +1154,7 @@
     "x": 1430,
     "y": 50,
     "color": "#9678b6",
-    "crosscolor": "#ff0000",
+    "crosscolor": "#e30022",
     "image": "/i/game-icons.net/delapouite/egyptian-temple.svg",
     "scarabcolor": "transparent",
     "css": {
@@ -1177,7 +1177,7 @@
     "x": 1360,
     "y": 50,
     "color": "#bfc1c2",
-    "crosscolor": "#ff0000",
+    "crosscolor": "#e30022",
     "image": "/i/game-icons.net/delapouite/zigzag-hieroglyph.svg",
     "scarabcolor": "transparent",
     "css": {
