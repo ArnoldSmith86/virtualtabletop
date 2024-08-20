@@ -3247,7 +3247,7 @@
     "type": "button",
     "id": "button-new-game",
     "inheritFrom": "button-draw",
-    "x": 1102,
+    "x": 1100,
     "text": "New Game",
     "clickRoutine": [
       {
