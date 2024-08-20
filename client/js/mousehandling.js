@@ -143,8 +143,19 @@ async function inputHandler(name, e) {
   }
 }
 
+async function keyHandler(e) {
+  if(isLoading || overlayActive || $('body').classList.contains('edit') || e.target.tagName == 'INPUT' || e.target.tagName == 'TEXTAREA')
+    return;
+
+  batchStart();
+  for(const widget of widgetFilter(w=>w.get('hotkey')===e.key))
+    await widget.click();
+  batchEnd();
+}
+
 onLoad(function() {
   [ 'touchstart', 'touchend', 'touchmove', 'touchcancel', 'mousedown', 'mousemove', 'mouseup', 'contextmenu' ].forEach(function(event) {
     window.addEventListener(event, e => inputHandler(event, e));
   });
+  window.addEventListener('keydown', e => keyHandler(e));
 });

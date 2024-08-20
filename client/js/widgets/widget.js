@@ -84,6 +84,7 @@ export class Widget extends StateManaged {
       leaveRoutine: null,
       globalUpdateRoutine: null,
       gameStartRoutine: null,
+      hotkey: null,
 
       animatePropertyChange: []
     });
