@@ -122,6 +122,10 @@ class Dice extends Widget {
           for(const property of Object.values(f.svgReplaces))
             if(delta[property] !== undefined)
               needsUpdate = true;
+      if(typeof this.get('svgReplaces') == 'object' && this.get('svgReplaces') !== null)
+        for(const property of Object.values(this.get('svgReplaces')))
+          if(delta[property] !== undefined)
+            needsUpdate = true;
       if(needsUpdate) {
         this.createChildNodes();
         childNodesWereRecreated = true;
