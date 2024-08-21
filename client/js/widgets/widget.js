@@ -2140,6 +2140,34 @@ export class Widget extends StateManaged {
     return false;
   }
 
+  isVisible() {
+    // Ensure the element exists
+    if (!this.domElement) return false;
+
+    // Traverse the element and all parent elements to check visibility (display, visibility, opacity)
+    let parent = this.domElement;
+    while (parent) {
+      const style = window.getComputedStyle(parent);
+      if (style.display === 'none' || style.visibility === 'hidden' || parseFloat(style.opacity) <= 0)
+        return false;
+      parent = parent.parentElement;
+    }
+
+    // Get the bounding rect of the element relative to the viewport
+    const rect = this.domElement.getBoundingClientRect();
+
+    // Get the bounding rect of the #room element
+    const roomRect = $('#roomArea').getBoundingClientRect();
+
+    // Check if the element is within the viewport of the room
+    return (
+      rect.top < roomRect.bottom &&
+      rect.left < roomRect.right &&
+      rect.bottom > roomRect.top &&
+      rect.right > roomRect.left
+    );
+  }
+
   async moveToHolder(holder) {
     if(this.inRemovalQueue)
       return;
