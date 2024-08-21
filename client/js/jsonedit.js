@@ -1415,7 +1415,9 @@ function jeAddWidgetPropertyCommands(object, widgetBase) {
     context: 'No widget selected.',
     onEmpty: true,
     call: async function() {
-      setSelection([ widgets.get(await addWidgetLocal(type == 'basic' ? {} : {type})) ]);
+      const newWidget = widgets.get(await addWidgetLocal(type == 'basic' ? {} : {type}));
+      setSelection([ newWidget ]);
+      jeSelectWidget(newWidget);
     }
   });
   return type == 'basic' ? null : type;
@@ -1735,11 +1737,17 @@ function jeSelectSetMulti(widgets) {
 function jeMultiSelectedWidgets() {
   let selected = [];
   for(const search of jeStateNow.widgets) {
+    const isRegex = search.match(/^\/(.*)\/([a-z]+)?$/);
+    const isProperty = search.match(/^([a-zA-Z0-9_-]+):(.*)$/);
     selected = selected.concat(widgetFilter(function(w) {
-      const isRegex = search.match(/^\/(.*)\/([a-z]+)?$/);
       try {
         if(isRegex && w.get('id').match(new RegExp(isRegex[1], isRegex[2])))
           return true;
+        if(isProperty) {
+          const value = String(w.get(isProperty[1])).toLowerCase();
+          if(!isProperty[2] && value != 'null' && value != '' || isProperty[2] && value.includes(isProperty[2]))
+            return true;
+        }
       } catch(e) {}
       if(!isRegex && w.get('id') == search)
         return true;
@@ -1809,13 +1817,18 @@ function jeColorize() {
     [ /^( +")(.*)(",?)$/, null, 'string', null ]
   ];
   let out = [];
+  let nr = 0;
+  function push(line) {
+    out.push(`<div class=jeTextLine><span class=jeLineNumber>${nr}</span><span class=jeLineContent>${line}</span></div>`);
+  }
   for(let line of jeGetEditorContent().split('\n')) {
+    ++nr;
     let foundMatch = false;
     for(const l of langObj) {
       const match = line.match(l[0]);
       if(match) {
         if(jeMode == 'widget' && match[1] == '  "' && l[2] == 'key' && (l[4] == "null" && match[4] == "null" || String(jeWidget.defaults[match[2]]) == match[4])) {
-          out.push(`<i class=default>${html(line)}</i>`);
+          push(`<i class=default>${html(line)}</i>`);
           foundMatch = true;
           break;
         }
@@ -1833,18 +1846,17 @@ function jeColorize() {
             match[i] = html(match[i]);
         }
 
-        let newLine = match.slice(1).join('');
-
-        out.push(newLine);
+        push(match.slice(1).join(''));
         foundMatch = true;
 
         break;
       }
     }
     if(!foundMatch)
-      out.push(html(line));
+      push(html(line));
   }
-  $('#jeTextHighlight').innerHTML = out.join('\n');
+  $('#jeTextHighlight').innerHTML = out.join('');
+  $('#editor').style.setProperty('--linenumbers-digits', Math.floor(Math.log10(nr)+1));
 }
 
 /* Displaying and controlling tree subpane of edit area */
@@ -1904,12 +1916,13 @@ function jeDisplayTreeAddWidgets(allWidgets, parent, selectedIDs) {
     const isSelected = selectedIDs.indexOf(widget.get('id')) != -1 ? 'jeHighlightRow' : '';
     const filter = html(widget.get('id')+(widget.get('type')||'basic')+(widget.get('cardType')||'')).toLowerCase();
     const filterText = `data-filter="${filter}"`;
+    const idText = `data-id="${widget.get('id')}"`;
     const isCollapsed = isNodeCollapsed[filter] || widget.get('type')=='pile';
 
     if(children)
-      result += `<li ${filterText} class="jeTreeWidget"><span class="jeTreeWidget ${isSelected} jeTreeExpander ${isCollapsed ? '' : 'jeTreeExpander-down'}">`;
+      result += `<li ${filterText} ${idText} class="jeTreeWidget"><span class="jeTreeWidget ${isSelected} jeTreeExpander ${isCollapsed ? '' : 'jeTreeExpander-down'}">`;
     else
-      result += `<li ${filterText} class="jeTreeWidget ${isSelected}">`;
+      result += `<li ${filterText} ${idText} class="jeTreeWidget ${isSelected}">`;
 
     result += jeTreeGetWidgetHTML(widget);
 
@@ -1958,13 +1971,20 @@ function jeUpdateTree(delta) {
 
 function jeDisplayFilteredWidgets(e) {
   const subtext = $('#jeWidgetSearchBox').value.toLowerCase();
+  const propertyFilter = $('#jeWidgetSearchBox').value.match(/^([a-zA-Z0-9_-]+):([a-zA-Z0-9_-]*)$/);
   for(const previousParent of $a('#jeTree .filterChildIncluded'))
     previousParent.classList.remove('filterChildIncluded');
-  for(const node of $a('#jeTree .jeTreeWidget')) {
-    node.classList.toggle('filterIncluded', subtext && node.dataset.filter && node.dataset.filter.includes(subtext))
-    node.classList.toggle('filterNotIncluded', subtext && node.dataset.filter && !node.dataset.filter.includes(subtext))
-    for(let parent=node.parentElement; parent.classList.contains('jeTreeWidget') || parent.classList.contains('jeNestedTree'); parent=parent.parentElement)
-      if(node.dataset.filter && subtext && node.dataset.filter.includes(subtext))
+  for(const node of $a('#jeTree li.jeTreeWidget')) {
+    let nodeMatchesFilter = !subtext || node.dataset.filter && node.dataset.filter.includes(subtext);
+    if(propertyFilter) {
+      const value = String(widgets.get(node.dataset.id).get(propertyFilter[1])).toLowerCase();
+      if(!propertyFilter[2] && value != 'null' && value != '' || propertyFilter[2] && value.includes(propertyFilter[2]))
+        nodeMatchesFilter = true;
+    }
+    node.classList.toggle('filterIncluded', nodeMatchesFilter);
+    node.classList.toggle('filterNotIncluded', !nodeMatchesFilter);
+    if(nodeMatchesFilter)
+      for(let parent=node.parentElement; parent.classList.contains('jeTreeWidget') || parent.classList.contains('jeNestedTree'); parent=parent.parentElement)
         parent.classList.add('filterChildIncluded');
   }
 }
