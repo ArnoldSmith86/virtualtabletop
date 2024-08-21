@@ -10,7 +10,7 @@ class SpacingDragButton extends DragButton {
     const maxX = Math.max(...selectedWidgets.map(w=>w.domElement.getBoundingClientRect().left));
     const maxY = Math.max(...selectedWidgets.map(w=>w.domElement.getBoundingClientRect().top ));
     let i = 0;
-    if(minX == maxX && minY == minY)
+    if(minX == maxX && minY == maxY)
       this.dragStartOffsets = selectedWidgets.map(w=>[ w, w.get('x'), w.get('y'), i/(selectedWidgets.length-1), i++/(selectedWidgets.length-1) ]);
     else if(minX == maxX)
       this.dragStartOffsets = selectedWidgets.sort((a,b)=>a.domElement.getBoundingClientRect().top-b.domElement.getBoundingClientRect().top).map(w=>[ w, w.get('x'), w.get('y'), i++/(selectedWidgets.length-1), (w.domElement.getBoundingClientRect().top - minY)/(maxY - minY) ]);
