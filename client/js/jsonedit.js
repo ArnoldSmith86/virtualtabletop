@@ -1902,12 +1902,13 @@ function jeDisplayTreeAddWidgets(allWidgets, parent, selectedIDs) {
     const isSelected = selectedIDs.indexOf(widget.get('id')) != -1 ? 'jeHighlightRow' : '';
     const filter = html(widget.get('id')+(widget.get('type')||'basic')+(widget.get('cardType')||'')).toLowerCase();
     const filterText = `data-filter="${filter}"`;
+    const idText = `data-id="${widget.get('id')}"`;
     const isCollapsed = isNodeCollapsed[filter] || widget.get('type')=='pile';
 
     if(children)
-      result += `<li ${filterText} class="jeTreeWidget"><span class="jeTreeWidget ${isSelected} jeTreeExpander ${isCollapsed ? '' : 'jeTreeExpander-down'}">`;
+      result += `<li ${filterText} ${idText} class="jeTreeWidget"><span class="jeTreeWidget ${isSelected} jeTreeExpander ${isCollapsed ? '' : 'jeTreeExpander-down'}">`;
     else
-      result += `<li ${filterText} class="jeTreeWidget ${isSelected}">`;
+      result += `<li ${filterText} ${idText} class="jeTreeWidget ${isSelected}">`;
 
     result += jeTreeGetWidgetHTML(widget);
 
@@ -1956,13 +1957,20 @@ function jeUpdateTree(delta) {
 
 function jeDisplayFilteredWidgets(e) {
   const subtext = $('#jeWidgetSearchBox').value.toLowerCase();
+  const propertyFilter = $('#jeWidgetSearchBox').value.match(/^([a-zA-Z0-9_-]+):([a-zA-Z0-9_-]*)$/);
   for(const previousParent of $a('#jeTree .filterChildIncluded'))
     previousParent.classList.remove('filterChildIncluded');
-  for(const node of $a('#jeTree .jeTreeWidget')) {
-    node.classList.toggle('filterIncluded', subtext && node.dataset.filter && node.dataset.filter.includes(subtext))
-    node.classList.toggle('filterNotIncluded', subtext && node.dataset.filter && !node.dataset.filter.includes(subtext))
-    for(let parent=node.parentElement; parent.classList.contains('jeTreeWidget') || parent.classList.contains('jeNestedTree'); parent=parent.parentElement)
-      if(node.dataset.filter && subtext && node.dataset.filter.includes(subtext))
+  for(const node of $a('#jeTree li.jeTreeWidget')) {
+    let nodeMatchesFilter = !subtext || node.dataset.filter && node.dataset.filter.includes(subtext);
+    if(propertyFilter) {
+      const value = String(widgets.get(node.dataset.id).get(propertyFilter[1])).toLowerCase();
+      if(!propertyFilter[2] && value != 'null' && value != '' || propertyFilter[2] && value.includes(propertyFilter[2]))
+        nodeMatchesFilter = true;
+    }
+    node.classList.toggle('filterIncluded', nodeMatchesFilter);
+    node.classList.toggle('filterNotIncluded', !nodeMatchesFilter);
+    if(nodeMatchesFilter)
+      for(let parent=node.parentElement; parent.classList.contains('jeTreeWidget') || parent.classList.contains('jeNestedTree'); parent=parent.parentElement)
         parent.classList.add('filterChildIncluded');
   }
 }
