@@ -3395,6 +3395,17 @@
     "clickRoutine": [
       {
         "func": "TURN"
+      },
+      {
+        "func": "FLIP",
+        "collection": [
+          "pass-marker-p1",
+          "pass-marker-p2",
+          "pass-marker-p3",
+          "pass-marker-p4",
+          "pass-marker-p5"
+        ],
+        "face": 0
       }
     ]
   },
