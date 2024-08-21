@@ -285,7 +285,8 @@
     "background": "linear-gradient(90deg, #add8e680 0%, #add8e680 40%, #ffa50080 60%, #ffa50080 100%)",
     "image": "/i/game-icons.net/delapouite/coffee-cup.svg",
     "parent": "vsk3",
-    "z": 0
+    "z": 0,
+    "dropLimit": 1
   },
   "Coffee Dice Holder 2": {
     "type": "holder",
@@ -305,7 +306,8 @@
     "background": "linear-gradient(90deg, #add8e680 0%, #add8e680 40%, #ffa50080 60%, #ffa50080 100%)",
     "image": "/i/game-icons.net/delapouite/coffee-cup.svg",
     "parent": "vsk3",
-    "z": 0
+    "z": 0,
+    "dropLimit": 1
   },
   "Coffee Dice Holder 3": {
     "type": "holder",
@@ -325,7 +327,8 @@
     "background": "linear-gradient(90deg, #add8e680 0%, #add8e680 40%, #ffa50080 60%, #ffa50080 100%)",
     "image": "/i/game-icons.net/delapouite/coffee-cup.svg",
     "parent": "vsk3",
-    "z": 0
+    "z": 0,
+    "dropLimit": 1
   },
   "ovo7": {
     "deck": "Switch Deck",
@@ -457,7 +460,8 @@
     "background": "#add8e680",
     "color": "#0004",
     "parent": "Brakes Wrapper",
-    "y": 61
+    "y": 61,
+    "dropLimit": 1
   },
   "Brakes Dice Holder 2": {
     "type": "holder",
@@ -476,7 +480,8 @@
         "dropTarget"
       ]
     },
-    "parent": "Brakes Wrapper"
+    "parent": "Brakes Wrapper",
+    "dropLimit": 1
   },
   "Brakes Dice Holder 3": {
     "type": "holder",
@@ -495,7 +500,8 @@
         "dropTarget"
       ]
     },
-    "parent": "Brakes Wrapper"
+    "parent": "Brakes Wrapper",
+    "dropLimit": 1
   },
   "Gears Dice Holder 1": {
     "type": "holder",
@@ -514,7 +520,8 @@
     "background": "#add8e680",
     "color": "#0004",
     "text": "1/2",
-    "parent": "Landing Gear Wrapper"
+    "parent": "Landing Gear Wrapper",
+    "dropLimit": 1
   },
   "Gears Dice Holder 2": {
     "type": "holder",
@@ -533,7 +540,8 @@
     "background": "#add8e680",
     "color": "#0004",
     "text": "3/4",
-    "parent": "Landing Gear Wrapper"
+    "parent": "Landing Gear Wrapper",
+    "dropLimit": 1
   },
   "Gears Dice Holder 3": {
     "type": "holder",
@@ -552,7 +560,8 @@
     "background": "#add8e680",
     "color": "#0004",
     "text": "5/6",
-    "parent": "Landing Gear Wrapper"
+    "parent": "Landing Gear Wrapper",
+    "dropLimit": 1
   },
   "Flaps Dice Holder 1": {
     "type": "holder",
@@ -571,7 +580,8 @@
     "background": "#ffa50080",
     "color": "#0004",
     "text": "1/2",
-    "parent": "Flaps Wrapper"
+    "parent": "Flaps Wrapper",
+    "dropLimit": 1
   },
   "Flaps Dice Holder 2": {
     "type": "holder",
@@ -590,7 +600,8 @@
     "background": "#ffa50080",
     "color": "#0004",
     "text": "2/3",
-    "parent": "Flaps Wrapper"
+    "parent": "Flaps Wrapper",
+    "dropLimit": 1
   },
   "Flaps Dice Holder 3": {
     "type": "holder",
@@ -609,7 +620,8 @@
     "background": "#ffa50080",
     "color": "#0004",
     "text": "4/5",
-    "parent": "Flaps Wrapper"
+    "parent": "Flaps Wrapper",
+    "dropLimit": 1
   },
   "Flaps Dice Holder 4": {
     "type": "holder",
@@ -628,7 +640,8 @@
     "background": "#ffa50080",
     "color": "#0004",
     "text": "5/6",
-    "parent": "Flaps Wrapper"
+    "parent": "Flaps Wrapper",
+    "dropLimit": 1
   },
   "Pilot - Title1": {
     "id": "Pilot - Title1",
@@ -825,7 +838,8 @@
       "type": "dice"
     },
     "background": "#add8e680",
-    "image": "/i/game-icons.net/delapouite/turbine.svg"
+    "image": "/i/game-icons.net/delapouite/turbine.svg",
+    "dropLimit": 1
   },
   "Axis to +3": {
     "id": "Axis to +3",
@@ -864,7 +878,8 @@
         "css",
         "dropTarget"
       ]
-    }
+    },
+    "dropLimit": 1
   },
   "Radio Dice Holder 2": {
     "type": "holder",
@@ -881,7 +896,8 @@
       ]
     },
     "background": "#ffa50080",
-    "image": "/i/game-icons.net/delapouite/pocket-radio.svg"
+    "image": "/i/game-icons.net/delapouite/pocket-radio.svg",
+    "dropLimit": 1
   },
   "Radio Dice Holder 3": {
     "type": "holder",
@@ -898,7 +914,8 @@
       ]
     },
     "background": "#ffa50080",
-    "image": "/i/game-icons.net/delapouite/pocket-radio.svg"
+    "image": "/i/game-icons.net/delapouite/pocket-radio.svg",
+    "dropLimit": 1
   },
   "Radio Dice Holder 1": {
     "type": "holder",
@@ -915,7 +932,8 @@
       ]
     },
     "background": "#add8e680",
-    "image": "/i/game-icons.net/delapouite/pocket-radio.svg"
+    "image": "/i/game-icons.net/delapouite/pocket-radio.svg",
+    "dropLimit": 1
   },
   "Roll Dice Holder 2": {
     "type": "holder",
@@ -933,7 +951,8 @@
     },
     "background": "#ffa50080",
     "image": "/i/game-icons.net/quoting/biplane.svg",
-    "imageRotation": 45
+    "imageRotation": 45,
+    "dropLimit": 1
   },
   "Roll Dice Holder 1": {
     "type": "holder",
@@ -951,7 +970,8 @@
     },
     "background": "#add8e680",
     "image": "/i/game-icons.net/quoting/biplane.svg",
-    "imageRotation": -45
+    "imageRotation": -45,
+    "dropLimit": 1
   },
   "Brakes Indicator": {
     "type": "button",
@@ -2149,7 +2169,8 @@
     "image": "/i/game-icons.net/delapouite/fuel-tank.svg",
     "parent": "Kerosene Wrapper",
     "x": 12,
-    "y": 12
+    "y": 12,
+    "dropLimit": 1
   },
   "Kerosene Indicator Label 0": {
     "id": "Kerosene Indicator Label 0",
@@ -2348,7 +2369,8 @@
       ]
     },
     "background": "#add8e680",
-    "image": "/i/game-icons.net/delapouite/id-card.svg"
+    "image": "/i/game-icons.net/delapouite/id-card.svg",
+    "dropLimit": 1
   },
   "Intern Wrapper": {
     "id": "Intern Wrapper",
@@ -2386,7 +2408,8 @@
     "dropTarget": {
       "type": "dice",
       "color": "#a5ff00"
-    }
+    },
+    "dropLimit": 1
   },
   "Intern Pilot Order Indicator 1": {
     "id": "Intern Pilot Order Indicator 1",
@@ -2471,7 +2494,8 @@
       ]
     },
     "background": "#ffa50080",
-    "image": "/i/game-icons.net/delapouite/id-card.svg"
+    "image": "/i/game-icons.net/delapouite/id-card.svg",
+    "dropLimit": 1
   },
   "Intern Co-Pilot Order Indicator 2": {
     "id": "Intern Co-Pilot Order Indicator 2",
@@ -3147,7 +3171,8 @@
     "height": 108,
     "dropTarget": {
       "deck": "Abilities Deck"
-    }
+    },
+    "dropLimit": 1
   },
   "Abilities Holder 2": {
     "type": "holder",
@@ -3159,31 +3184,34 @@
     "height": 108,
     "dropTarget": {
       "deck": "Abilities Deck"
-    }
+    },
+    "dropLimit": 1
   },
   "Abilities Holder 3": {
     "type": "holder",
     "id": "Abilities Holder 3",
     "parent": "Abilities Wrapper",
     "x": 10,
-    "y": 194,
+    "y": 189,
     "width": 208,
     "height": 108,
     "dropTarget": {
       "deck": "Abilities Deck"
-    }
+    },
+    "dropLimit": 1
   },
   "Abilities Holder 4": {
     "type": "holder",
     "id": "Abilities Holder 4",
     "parent": "Abilities Wrapper",
     "x": 229,
-    "y": 194,
+    "y": 189,
     "width": 208,
     "height": 108,
     "dropTarget": {
       "deck": "Abilities Deck"
-    }
+    },
+    "dropLimit": 1
   },
   "Abilities Holder 5": {
     "type": "holder",
@@ -3195,7 +3223,8 @@
     "height": 108,
     "dropTarget": {
       "deck": "Abilities Deck"
-    }
+    },
+    "dropLimit": 1
   },
   "Abilities Holder 6": {
     "type": "holder",
@@ -3207,7 +3236,8 @@
     "height": 108,
     "dropTarget": {
       "deck": "Abilities Deck"
-    }
+    },
+    "dropLimit": 1
   },
   "Pilot - Title2": {
     "id": "Pilot - Title2",
@@ -3550,7 +3580,8 @@
     "background": "#add8e680",
     "color": "#0004",
     "parent": "Ice Brakes Wrapper",
-    "y": 72
+    "y": 72,
+    "dropLimit": 1
   },
   "Brakes Dice Holder 5": {
     "type": "holder",
@@ -3569,7 +3600,8 @@
         "dropTarget"
       ]
     },
-    "parent": "Ice Brakes Wrapper"
+    "parent": "Ice Brakes Wrapper",
+    "dropLimit": 1
   },
   "Brakes Dice Holder 6": {
     "type": "holder",
@@ -3588,7 +3620,8 @@
         "dropTarget"
       ]
     },
-    "parent": "Ice Brakes Wrapper"
+    "parent": "Ice Brakes Wrapper",
+    "dropLimit": 1
   },
   "Brakes Indicator Wrapper1": {
     "id": "Brakes Indicator Wrapper1",
@@ -3783,7 +3816,8 @@
         "dropTarget"
       ]
     },
-    "parent": "Ice Brakes Wrapper"
+    "parent": "Ice Brakes Wrapper",
+    "dropLimit": 1
   },
   "Brakes Order Indicator 5": {
     "id": "Brakes Order Indicator 5",
@@ -3827,7 +3861,8 @@
     "background": "linear-gradient(90deg, #add8e680 0%, #add8e680 40%, #ffa50080 60%, #ffa50080 100%)",
     "color": "#0004",
     "parent": "Ice Brakes Wrapper",
-    "y": 197
+    "y": 197,
+    "dropLimit": 1
   },
   "Brakes Dice Holder 9": {
     "type": "holder",
@@ -6185,7 +6220,7 @@
       "mode": "coop",
       "time": "15",
       "attribution": "<div>The layout was done by ArnoldSmith86 and is released to the public domain by CC0.</div><div><br></div><div>These images were used from game-icons.net and are licensed as CC BY 3.0:<br></div><div><br></div><div>By delapouite:<br></div><div>https://game-icons.net/1x1/delapouite/barrel-leak.html</div>https://game-icons.net/1x1/delapouite/car-wheel.html<br>https://game-icons.net/1x1/delapouite/check-mark.html<br>https://game-icons.net/1x1/delapouite/coffee-cup.html<br>https://game-icons.net/1x1/delapouite/commercial-airplane.html<br>https://game-icons.net/1x1/delapouite/control-tower.html<br>https://game-icons.net/1x1/delapouite/dice-six-faces-one.html<br>https://game-icons.net/1x1/delapouite/dice-six-faces-six.html<br>https://game-icons.net/1x1/delapouite/dice-target.html<br>https://game-icons.net/1x1/delapouite/fuel-tank.html<br>https://game-icons.net/1x1/delapouite/id-card.html<br>https://game-icons.net/1x1/delapouite/perspective-dice-six-faces-random.html<br>https://game-icons.net/1x1/delapouite/plain-arrow.html<br>https://game-icons.net/1x1/delapouite/plane-wing.html<br>https://game-icons.net/1x1/delapouite/pocket-radio.html<br>https://game-icons.net/1x1/delapouite/rolling-dices.html<br>https://game-icons.net/1x1/delapouite/seven-pointed-star.html<br>https://game-icons.net/1x1/delapouite/speedometer.html<br>https://game-icons.net/1x1/delapouite/sun-cloud.html<br>https://game-icons.net/1x1/delapouite/turbine.html<br><div>https://game-icons.net/1x1/delapouite/windsock.html</div><div><br></div><div>By lorc:<br></div>https://game-icons.net/1x1/lorc/body-swapping.html<br>https://game-icons.net/1x1/lorc/sands-of-time.html<br><div>https://game-icons.net/1x1/lorc/snowflake-2.html</div><div><br></div><div>By quoting:<br></div>https://game-icons.net/1x1/quoting/biplane.html<br><br>",
-      "lastUpdate": 1724270710786,
+      "lastUpdate": 1724275013540,
       "showName": true,
       "skill": "",
       "description": "Roll and place dice to control an aircraft and eventually land it safely on an airport.",
