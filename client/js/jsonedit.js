@@ -1510,10 +1510,12 @@ async function jeApplyChangesMulti() {
     jeDeltaIsOurs = false;
   } else {
     jeDeltaIsOurs = true;
+    const widgets = jeMultiSelectedWidgets();
+    const widgetIDs = widgets.map(w=>w.get('id'));
     for(const key in currentState) {
       if(key != 'widgets') {
-        for(const w of jeMultiSelectedWidgets()) {
-          if(typeof currentState[key] != 'object' || currentState[key] === null)
+        for(const w of widgets) {
+          if(typeof currentState[key] != 'object' || currentState[key] === null || Object.keys(currentState[key]).filter(k=>!widgetIDs.includes(k)).length)
             await setValueIfNeeded(w, key, currentState[key]);
           else if(currentState[key][w.get('id')] !== undefined)
             await setValueIfNeeded(w, key, currentState[key][w.get('id')]);
