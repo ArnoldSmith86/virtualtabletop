@@ -89,11 +89,9 @@ export default class Room {
       for(const v in states[state]) {
         const newVariantID = String(addAsVariant ? this.state._meta.states[stateID].variants.length : 0);
         let name = type == 'file' && srcName || 'Unnamed';
-        if(state.match(/\.pcio$/))
-          name = state;
 
         const variant = states[state][v];
-        const meta = (variant._meta || {}).info || {
+        const meta = Object.assign({
           name: name.replace(/\.pcio/, ''),
           image: '',
           rules: '',
@@ -106,7 +104,7 @@ export default class Room {
           variant: '',
           link: '',
           attribution: ''
-        };
+        }, (variant._meta || {}).info || {});
 
         if(stateID.match(/^PL:/)) {
           this.writePublicLibraryToFilesystem(stateID, newVariantID, variant);
