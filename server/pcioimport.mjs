@@ -1020,7 +1020,7 @@ export default async function convertPCIO(content) {
 
           c = importWidgetQuery(w.clickRoutine, c.args, 'holders', 'holder', 'collection', {
             func:   'FLIP',
-            count:  !c.args.flipMode || c.args.flipMode.value == 'pile' ? 0 : 1
+            count:  !c.args.flipMode || c.args.flipMode.value != 'pile' ? 1 : 0
           });
           if(c.holder && c.holder.length == 1)
             c.holder = c.holder[0];
