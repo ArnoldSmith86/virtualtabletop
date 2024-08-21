@@ -1733,11 +1733,17 @@ function jeSelectSetMulti(widgets) {
 function jeMultiSelectedWidgets() {
   let selected = [];
   for(const search of jeStateNow.widgets) {
+    const isRegex = search.match(/^\/(.*)\/([a-z]+)?$/);
+    const isProperty = search.match(/^([a-zA-Z0-9_-]+):(.*)$/);
     selected = selected.concat(widgetFilter(function(w) {
-      const isRegex = search.match(/^\/(.*)\/([a-z]+)?$/);
       try {
         if(isRegex && w.get('id').match(new RegExp(isRegex[1], isRegex[2])))
           return true;
+        if(isProperty) {
+          const value = String(w.get(isProperty[1])).toLowerCase();
+          if(!isProperty[2] && value != 'null' && value != '' || isProperty[2] && value.includes(isProperty[2]))
+            return true;
+        }
       } catch(e) {}
       if(!isRegex && w.get('id') == search)
         return true;
