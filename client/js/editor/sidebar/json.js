@@ -28,6 +28,9 @@ class JsonModule extends SidebarModule {
   }
 
   onSelectionChangedWhileActive(newSelection) {
+    if(jeDeltaIsOurs)
+      return;
+
     if(newSelection.length == 1) {
       jeSelectWidget(newSelection[0]);
     } else if(newSelection.length) {
@@ -35,8 +38,7 @@ class JsonModule extends SidebarModule {
     } else {
       jeEmpty();
     }
-    if(!jeDeltaIsOurs)
-      $('#jeText').blur();
+    $('#jeText').blur();
   }
 
   renderModule(target) {
@@ -63,6 +65,11 @@ class TreeModule extends SidebarModule {
   }
 
   onSelectionChangedWhileActive(newSelection) {
+    if(jeDeltaIsOurs) {
+      jeCenterSelection();
+      return;
+    }
+
     if(newSelection.length == 1) {
       jeSelectWidget(newSelection[0]);
     } else if(newSelection.length) {
@@ -71,8 +78,7 @@ class TreeModule extends SidebarModule {
       jeEmpty();
       jeCenterSelection();
     }
-    if(!jeDeltaIsOurs)
-      $('#jeText').blur();
+    $('#jeText').blur();
   }
 
   onStateReceivedWhileActive() {
