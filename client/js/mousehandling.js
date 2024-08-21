@@ -1,3 +1,4 @@
+let usedTouch = false;
 let mouseTarget = null;
 const mouseStatus = {};
 
@@ -42,6 +43,11 @@ async function inputHandler(name, e) {
     if(target.id == 'editor')
       return;
     target = target.parentNode;
+  }
+
+  if(!usedTouch && name == 'touchstart') {
+    usedTouch = true;
+    $('body').classList.add('usedTouch');
   }
 
   e.preventDefault();
