@@ -1388,7 +1388,6 @@
     "height": 60,
     "z": 2923,
     "image": "/i/game-icons.net/delapouite/rolling-dices.svg",
-    "token": "aircraft",
     "resetProperties": {
       "parent": "Altitude Track",
       "x": 137,
@@ -1705,7 +1704,6 @@
     "height": 60,
     "z": 2924,
     "image": "/i/game-icons.net/delapouite/rolling-dices.svg",
-    "token": "aircraft",
     "resetProperties": {
       "parent": "Altitude Track",
       "x": 139,
@@ -6167,7 +6165,7 @@
       "mode": "coop",
       "time": "15",
       "attribution": "<div>The layout was done by ArnoldSmith86 and is released to the public domain by CC0.</div><div><br></div><div>These images were used from game-icons.net and are licensed as CC BY 3.0:<br></div><div><br></div><div>By delapouite:<br></div><div>https://game-icons.net/1x1/delapouite/barrel-leak.html</div>https://game-icons.net/1x1/delapouite/car-wheel.html<br>https://game-icons.net/1x1/delapouite/check-mark.html<br>https://game-icons.net/1x1/delapouite/coffee-cup.html<br>https://game-icons.net/1x1/delapouite/commercial-airplane.html<br>https://game-icons.net/1x1/delapouite/control-tower.html<br>https://game-icons.net/1x1/delapouite/dice-six-faces-one.html<br>https://game-icons.net/1x1/delapouite/dice-six-faces-six.html<br>https://game-icons.net/1x1/delapouite/dice-target.html<br>https://game-icons.net/1x1/delapouite/fuel-tank.html<br>https://game-icons.net/1x1/delapouite/id-card.html<br>https://game-icons.net/1x1/delapouite/perspective-dice-six-faces-random.html<br>https://game-icons.net/1x1/delapouite/plain-arrow.html<br>https://game-icons.net/1x1/delapouite/plane-wing.html<br>https://game-icons.net/1x1/delapouite/pocket-radio.html<br>https://game-icons.net/1x1/delapouite/rolling-dices.html<br>https://game-icons.net/1x1/delapouite/seven-pointed-star.html<br>https://game-icons.net/1x1/delapouite/speedometer.html<br>https://game-icons.net/1x1/delapouite/sun-cloud.html<br>https://game-icons.net/1x1/delapouite/turbine.html<br><div>https://game-icons.net/1x1/delapouite/windsock.html</div><div><br></div><div>By lorc:<br></div>https://game-icons.net/1x1/lorc/body-swapping.html<br>https://game-icons.net/1x1/lorc/sands-of-time.html<br><div>https://game-icons.net/1x1/lorc/snowflake-2.html</div><div><br></div><div>By quoting:<br></div>https://game-icons.net/1x1/quoting/biplane.html<br><br>",
-      "lastUpdate": 1724263669028,
+      "lastUpdate": 1724270045828,
       "showName": true,
       "skill": "",
       "description": "Roll and place dice to control an aircraft and eventually land it safely on an airport.",
