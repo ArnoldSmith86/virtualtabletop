@@ -570,8 +570,8 @@ export default async function convertPCIO(content) {
       w.text = widget.labelContent;
       w.css = {
         default: {
-          'line-height': `${widget.textSize}px`,
-          'font-size':   `${widget.textSize}px`,
+          'line-height': `${widget.textSize-2}px`,
+          'font-size':   `${widget.textSize-2}px`,
           'font-weight': weight,
           'text-align':  widget.textAlign
         },
