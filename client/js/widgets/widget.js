@@ -2429,7 +2429,7 @@ export class Widget extends StateManaged {
     newWidget.renderReadonlyCopyRaw(Object.assign({}, this.state, propertyOverride), target, isChild);
     if(includeChildren)
       for(const child of widgetFilter(w=>w.get('parent') == this.id))
-        if(this.get('type') != 'holder' || !compareDropTarget(child, this) || includeChildren == 'all')
+        if(this.get('type') != 'holder' || !compareDropTarget(child, this.get('dropTarget')) || includeChildren == 'all')
           child.renderReadonlyCopy({}, newWidget.domElement, includeChildren, true);
     return newWidget;
   }

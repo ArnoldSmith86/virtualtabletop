@@ -23,7 +23,7 @@ export const dropTargets = new Map();
 export const clientPointer = $('#clientPointer');
 
 function compareDropTarget(widget, t, exclude){
-  for(const dropTargetObject of asArray(t.get('dropTarget'))) {
+  for(const dropTargetObject of asArray(t)) {
     let isValidObject = true;
     for(const key in dropTargetObject) {
       if(dropTargetObject[key] != widget.get(key) && (exclude == true || (key != 'type' || widget.get(key) != 'deck' || dropTargetObject[key] != 'card'))) {
@@ -47,7 +47,7 @@ function getValidDropTargets(widget) {
       if(t.children().indexOf(widget) == -1)
         continue;
 
-    let isValid = compareDropTarget(widget, t);
+    let isValid = compareDropTarget(widget, t.get('dropTarget'));
 
     let tt = t;
     while(isValid) {
@@ -68,6 +68,10 @@ function getValidDropTargets(widget) {
     if(isValid)
       targets.push(t);
   }
+  const sT = widget.get('sticksTo');
+  if(sT)
+    for(const w of widgetFilter(w=>compareDropTarget(w, sT)))
+      targets.push(w);
   return targets;
 }
 
