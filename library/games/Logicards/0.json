@@ -50,6 +50,7 @@
     "deck": "4b70a3fc-284b-4ae1-a4be-65a9d71753c6",
     "cardType": "teal",
     "resetProperties": {
+      "parent": null,
       "x": 106,
       "y": 422
     }
@@ -1641,6 +1642,7 @@
     "deck": "62af10cc-a542-4002-b249-dae0eeaeaa0e",
     "cardType": "red",
     "resetProperties": {
+      "parent": null,
       "x": 106,
       "y": 299
     }
@@ -1798,6 +1800,7 @@
     "deck": "fb5e56ff-bfc9-499e-bb29-21d5bdf466e6",
     "cardType": "green",
     "resetProperties": {
+      "parent": null,
       "x": 106,
       "y": 168
     }
