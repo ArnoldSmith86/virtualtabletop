@@ -3,17 +3,13 @@
     "version": 15,
     "info": {
       "name": "Logicards",
-      "lastUpdate": 1724339600789,
+      "lastUpdate": 1724339942385,
       "image": "/assets/563010823_28494",
       "showName": false,
       "time": "5",
       "mode": "solo",
       "skill": "",
       "description": "Flip a grid of 3x3 cards by performing their actions.",
-      "variantImage": "/assets/563010823_28494",
-      "variant": "",
-      "language": "en-US",
-      "players": "1",
       "similarImage": "",
       "similarName": "",
       "year": "",
@@ -23,7 +19,11 @@
       "rules": "",
       "ruleText": "",
       "helpText": "",
-      "attribution": "<div>Room layout and original cards by D. Teuber with tweaks by ArnoldSmith86. Available as&nbsp;<span>CC BY</span><span>-NC</span><span>-ND</span> 4.0.</div><div><br></div><div><span>Icons are used under the Noun Project subscription account program license</span><span></span>.</div>"
+      "attribution": "<div>Room layout and original cards by D. Teuber with tweaks by ArnoldSmith86. Available as&nbsp;<span>CC BY</span><span>-NC</span><span>-ND</span> 4.0.</div><div><br></div><div><span>Icons are used under the Noun Project subscription account program license</span><span></span>.</div>",
+      "variantImage": "",
+      "variant": "",
+      "language": "en-US",
+      "players": "1"
     }
   },
   "54084aab-132f-4ea1-b3b2-e42b7b2624d6": {
@@ -56,7 +56,7 @@
   },
   "1a5007e4-c20f-40eb-88c2-226b062b06be": {
     "id": "1a5007e4-c20f-40eb-88c2-226b062b06be",
-    "z": 26188,
+    "z": 26400,
     "type": "card",
     "deck": "f2bcdd00-2fc2-4f3a-b3be-e797b76704db",
     "cardType": "type-1871ecb0-bcf4-4f93-9150-b75d41d28ecc",
@@ -284,11 +284,14 @@
   },
   "b0028429-0e48-49d6-b513-bbf809c88c36": {
     "id": "b0028429-0e48-49d6-b513-bbf809c88c36",
-    "z": 26197,
+    "z": 26457,
     "type": "card",
     "deck": "1933fabc-c12d-4214-a792-292401291d27",
     "cardType": "type-121703a0-7826-474f-9810-a12581a52f48",
-    "parent": "3z51"
+    "parent": "54084aab-132f-4ea1-b3b2-e42b7b2624d6",
+    "x": 4,
+    "y": 4,
+    "activeFace": 1
   },
   "62af10cc-a542-4002-b249-dae0eeaeaa0e": {
     "id": "62af10cc-a542-4002-b249-dae0eeaeaa0e",
@@ -551,13 +554,11 @@
   },
   "4e7884fe-ae3c-474f-96c3-0b47f4e19287": {
     "id": "4e7884fe-ae3c-474f-96c3-0b47f4e19287",
-    "z": 26243,
+    "z": 26392,
     "type": "card",
     "deck": "9bf0de13-e0d5-4f72-9032-4a5a5734e1c7",
     "cardType": "type-0545fd01-3a49-4252-839f-0f68f8ca2bd9",
-    "parent": "83176346-78d7-4160-98d4-51a4d896a175",
-    "x": 4,
-    "y": 4
+    "parent": "kw36"
   },
   "4b70a3fc-284b-4ae1-a4be-65a9d71753c6": {
     "id": "4b70a3fc-284b-4ae1-a4be-65a9d71753c6",
@@ -704,7 +705,7 @@
   },
   "bac9232a-5fd2-4bd7-a0b5-ac0e489d0e31": {
     "id": "bac9232a-5fd2-4bd7-a0b5-ac0e489d0e31",
-    "z": 26189,
+    "z": 26401,
     "type": "card",
     "deck": "f2bcdd00-2fc2-4f3a-b3be-e797b76704db",
     "cardType": "type-8ef24f54-6a3f-4bda-96f1-13c21d694998",
@@ -843,25 +844,25 @@
   },
   "35fd3cab-3b00-4c25-9849-6508fee1aa1c": {
     "id": "35fd3cab-3b00-4c25-9849-6508fee1aa1c",
-    "z": 26277,
+    "z": 26391,
     "type": "card",
     "deck": "9bf0de13-e0d5-4f72-9032-4a5a5734e1c7",
     "cardType": "type-f9a73779-d3a2-40f6-8aae-e9f3685fd99a",
-    "x": 4,
-    "y": 4,
-    "parent": "54084aab-132f-4ea1-b3b2-e42b7b2624d6"
+    "parent": "kw36"
   },
   "09b69230-521c-47a7-a44a-0378adf8da11": {
     "id": "09b69230-521c-47a7-a44a-0378adf8da11",
-    "z": 26198,
+    "z": 26461,
     "type": "card",
     "deck": "1933fabc-c12d-4214-a792-292401291d27",
     "cardType": "type-1af0fce6-5f73-45e3-a945-d2d59f8105b1",
-    "parent": "3z51"
+    "parent": "456428e4-51c1-4563-be7b-d71e2a3fb85b",
+    "x": 4,
+    "y": 4
   },
   "fcbeaff0-7d16-454f-993c-55689b925543": {
     "id": "fcbeaff0-7d16-454f-993c-55689b925543",
-    "z": 26162,
+    "z": 26378,
     "type": "card",
     "deck": "c81873d1-a878-4c86-b5f8-e5c30539224d",
     "cardType": "type-6aa76d70-4925-49ce-a875-9c1b721b562e",
@@ -869,7 +870,7 @@
   },
   "3247b0c8-c52b-4986-9ff8-c1b666816b20": {
     "id": "3247b0c8-c52b-4986-9ff8-c1b666816b20",
-    "z": 26163,
+    "z": 26379,
     "type": "card",
     "deck": "c81873d1-a878-4c86-b5f8-e5c30539224d",
     "cardType": "type-f9a73779-d3a2-40f6-8aae-e9f3685fd99a",
@@ -886,7 +887,7 @@
   },
   "dafa88fd-f391-4f7a-8ad7-cb342865abf2": {
     "id": "dafa88fd-f391-4f7a-8ad7-cb342865abf2",
-    "z": 26190,
+    "z": 26402,
     "type": "card",
     "deck": "f2bcdd00-2fc2-4f3a-b3be-e797b76704db",
     "cardType": "type-6aa76d70-4925-49ce-a875-9c1b721b562e",
@@ -894,7 +895,7 @@
   },
   "84719430-851b-4b45-bd3a-2bfd0d48a8ec": {
     "id": "84719430-851b-4b45-bd3a-2bfd0d48a8ec",
-    "z": 26191,
+    "z": 26404,
     "type": "card",
     "deck": "f2bcdd00-2fc2-4f3a-b3be-e797b76704db",
     "cardType": "type-f9a73779-d3a2-40f6-8aae-e9f3685fd99a",
@@ -923,7 +924,7 @@
   },
   "5adbb5b0-e21e-4642-ba96-5b1fc6318629": {
     "id": "5adbb5b0-e21e-4642-ba96-5b1fc6318629",
-    "z": 26192,
+    "z": 26405,
     "type": "card",
     "deck": "f2bcdd00-2fc2-4f3a-b3be-e797b76704db",
     "cardType": "type-0fda5b80-ef47-4d11-88d4-ecf097a57022",
@@ -961,15 +962,17 @@
   },
   "6185868c-7bc1-44de-b167-cb1df643a779": {
     "id": "6185868c-7bc1-44de-b167-cb1df643a779",
-    "z": 26199,
+    "z": 26462,
     "type": "card",
     "deck": "1933fabc-c12d-4214-a792-292401291d27",
     "cardType": "type-f9a73779-d3a2-40f6-8aae-e9f3685fd99a",
-    "parent": "3z51"
+    "parent": "9fe135e0-6a5e-4cca-8291-9e83e07625d9",
+    "x": 6,
+    "y": 6
   },
   "83d27406-83ce-424a-9b31-b23c75d115f5": {
     "id": "83d27406-83ce-424a-9b31-b23c75d115f5",
-    "z": 26164,
+    "z": 26381,
     "type": "card",
     "deck": "c81873d1-a878-4c86-b5f8-e5c30539224d",
     "cardType": "type-1871ecb0-bcf4-4f93-9150-b75d41d28ecc",
@@ -1009,19 +1012,23 @@
   },
   "e0478990-1556-4b63-887d-b1b363ad7ec3": {
     "id": "e0478990-1556-4b63-887d-b1b363ad7ec3",
-    "z": 26200,
+    "z": 26463,
     "type": "card",
     "deck": "1933fabc-c12d-4214-a792-292401291d27",
     "cardType": "type-8ef24f54-6a3f-4bda-96f1-13c21d694998",
-    "parent": "3z51"
+    "parent": "a03ac30f-f074-4529-804b-4c9021211c68",
+    "x": 4,
+    "y": 4
   },
   "f2d78dcc-4841-4f3e-986b-b22f6bebfc18": {
     "id": "f2d78dcc-4841-4f3e-986b-b22f6bebfc18",
-    "z": 26201,
+    "z": 26460,
     "type": "card",
     "deck": "1933fabc-c12d-4214-a792-292401291d27",
     "cardType": "type-1871ecb0-bcf4-4f93-9150-b75d41d28ecc",
-    "parent": "3z51"
+    "parent": "6abafe60-792d-40e7-9a15-56ad98e4a5a7",
+    "x": 4,
+    "y": 4
   },
   "cbf0fe47-30a7-4f32-9aef-2b723395ac07": {
     "id": "cbf0fe47-30a7-4f32-9aef-2b723395ac07",
@@ -1204,25 +1211,25 @@
   },
   "8aca61d9-85cd-456b-8c14-e08d0d1c8f32": {
     "id": "8aca61d9-85cd-456b-8c14-e08d0d1c8f32",
-    "z": 26262,
+    "z": 26394,
     "type": "card",
     "deck": "9bf0de13-e0d5-4f72-9032-4a5a5734e1c7",
     "cardType": "type-6aa76d70-4925-49ce-a875-9c1b721b562e",
-    "x": 4,
-    "y": 4,
-    "parent": "a03ac30f-f074-4529-804b-4c9021211c68"
+    "parent": "kw36"
   },
   "8431c5ea-f9c5-409a-8297-0aa80f40ed3e": {
     "id": "8431c5ea-f9c5-409a-8297-0aa80f40ed3e",
-    "z": 26202,
+    "z": 26465,
     "type": "card",
     "deck": "1933fabc-c12d-4214-a792-292401291d27",
     "cardType": "type-6aa76d70-4925-49ce-a875-9c1b721b562e",
-    "parent": "3z51"
+    "parent": "c928b918-e2dd-4c3a-89dc-6a692953049b",
+    "x": 4,
+    "y": 4
   },
   "e9242097-8c9e-466f-b7d1-6002081d82fb": {
     "id": "e9242097-8c9e-466f-b7d1-6002081d82fb",
-    "z": 26193,
+    "z": 26407,
     "type": "card",
     "deck": "f2bcdd00-2fc2-4f3a-b3be-e797b76704db",
     "cardType": "type-121703a0-7826-474f-9810-a12581a52f48",
@@ -1230,7 +1237,7 @@
   },
   "55cea4f1-52f5-4e31-856f-ae63f54e9d26": {
     "id": "55cea4f1-52f5-4e31-856f-ae63f54e9d26",
-    "z": 26165,
+    "z": 26382,
     "type": "card",
     "deck": "c81873d1-a878-4c86-b5f8-e5c30539224d",
     "cardType": "type-cb961120-e98f-433c-bdca-ff300a4e8e42",
@@ -1248,7 +1255,7 @@
   },
   "514ee438-b56d-49db-84ed-18902ccd1d20": {
     "id": "514ee438-b56d-49db-84ed-18902ccd1d20",
-    "z": 26166,
+    "z": 26383,
     "type": "card",
     "deck": "c81873d1-a878-4c86-b5f8-e5c30539224d",
     "cardType": "type-1af0fce6-5f73-45e3-a945-d2d59f8105b1",
@@ -1271,14 +1278,11 @@
   },
   "e6639efc-4174-4435-8957-442f2a781cba": {
     "id": "e6639efc-4174-4435-8957-442f2a781cba",
-    "z": 26286,
+    "z": 26399,
     "type": "card",
     "deck": "9bf0de13-e0d5-4f72-9032-4a5a5734e1c7",
     "cardType": "type-121703a0-7826-474f-9810-a12581a52f48",
-    "x": 4,
-    "y": 4,
-    "activeFace": 1,
-    "parent": "c928b918-e2dd-4c3a-89dc-6a692953049b"
+    "parent": "kw36"
   },
   "9fe135e0-6a5e-4cca-8291-9e83e07625d9": {
     "id": "9fe135e0-6a5e-4cca-8291-9e83e07625d9",
@@ -1415,7 +1419,7 @@
   },
   "72eb2da0-dc35-4869-b842-65eb48446869": {
     "id": "72eb2da0-dc35-4869-b842-65eb48446869",
-    "z": 26167,
+    "z": 26385,
     "type": "card",
     "deck": "c81873d1-a878-4c86-b5f8-e5c30539224d",
     "cardType": "type-0545fd01-3a49-4252-839f-0f68f8ca2bd9",
@@ -1444,17 +1448,15 @@
   },
   "27569c25-808f-42f2-9391-6ad2695326cf": {
     "id": "27569c25-808f-42f2-9391-6ad2695326cf",
-    "z": 26242,
+    "z": 26393,
     "type": "card",
     "deck": "9bf0de13-e0d5-4f72-9032-4a5a5734e1c7",
     "cardType": "type-1871ecb0-bcf4-4f93-9150-b75d41d28ecc",
-    "parent": "dc111510-169a-461e-9ff0-102f1bd21333",
-    "x": 4,
-    "y": 4
+    "parent": "kw36"
   },
   "c208db65-b065-4db6-8912-dd2e2edbe962": {
     "id": "c208db65-b065-4db6-8912-dd2e2edbe962",
-    "z": 26168,
+    "z": 26386,
     "type": "card",
     "deck": "c81873d1-a878-4c86-b5f8-e5c30539224d",
     "cardType": "type-121703a0-7826-474f-9810-a12581a52f48",
@@ -1519,21 +1521,21 @@
   },
   "aaf17f0b-b960-47ed-9050-9ea0a6ebdc76": {
     "id": "aaf17f0b-b960-47ed-9050-9ea0a6ebdc76",
-    "z": 26287,
+    "z": 26395,
     "type": "card",
     "deck": "9bf0de13-e0d5-4f72-9032-4a5a5734e1c7",
     "cardType": "type-cb961120-e98f-433c-bdca-ff300a4e8e42",
-    "x": 4,
-    "y": 4,
-    "parent": "456428e4-51c1-4563-be7b-d71e2a3fb85b"
+    "parent": "kw36"
   },
   "2227a293-7b35-46ca-869e-aac4ac138384": {
     "id": "2227a293-7b35-46ca-869e-aac4ac138384",
-    "z": 26203,
+    "z": 26464,
     "type": "card",
     "deck": "1933fabc-c12d-4214-a792-292401291d27",
     "cardType": "type-0fda5b80-ef47-4d11-88d4-ecf097a57022",
-    "parent": "3z51"
+    "parent": "7777a503-ca20-4e61-bdca-d864f60ff924",
+    "x": 4,
+    "y": 4
   },
   "e072ed2a-07e5-408e-b5f4-c4bb5d13fbdf": {
     "id": "e072ed2a-07e5-408e-b5f4-c4bb5d13fbdf",
@@ -1541,7 +1543,7 @@
     "y": 664,
     "z": 15097,
     "type": "label",
-    "text": "Shuffle\n- Summer #1\n- Autumn #2\n\nFirst move cards\nto Holder",
+    "text": "Shuffle\n- Summer #1\n- Autumn #2\n\nFirst move cards\nto Holder.",
     "css": {
       "default": {
         "line-height": "16px",
@@ -1637,7 +1639,7 @@
   },
   "268aa581-84e7-4842-89ae-47639058929d": {
     "id": "268aa581-84e7-4842-89ae-47639058929d",
-    "z": 26169,
+    "z": 26388,
     "type": "card",
     "deck": "c81873d1-a878-4c86-b5f8-e5c30539224d",
     "cardType": "type-8ef24f54-6a3f-4bda-96f1-13c21d694998",
@@ -1660,13 +1662,11 @@
   },
   "e6237032-e70e-4893-b347-2aa1ec95f04d": {
     "id": "e6237032-e70e-4893-b347-2aa1ec95f04d",
-    "z": 26244,
+    "z": 26396,
     "type": "card",
     "deck": "9bf0de13-e0d5-4f72-9032-4a5a5734e1c7",
     "cardType": "type-8ef24f54-6a3f-4bda-96f1-13c21d694998",
-    "x": 4,
-    "y": 4,
-    "parent": "6abafe60-792d-40e7-9a15-56ad98e4a5a7"
+    "parent": "kw36"
   },
   "88425354-3c52-4448-9e05-40ecd957ddd3": {
     "id": "88425354-3c52-4448-9e05-40ecd957ddd3",
@@ -1691,7 +1691,7 @@
   },
   "c3dbf505-b677-46d6-845d-908d4d57bed2": {
     "id": "c3dbf505-b677-46d6-845d-908d4d57bed2",
-    "z": 26170,
+    "z": 26390,
     "type": "card",
     "deck": "c81873d1-a878-4c86-b5f8-e5c30539224d",
     "cardType": "type-0fda5b80-ef47-4d11-88d4-ecf097a57022",
@@ -1699,7 +1699,7 @@
   },
   "b21e2b79-3b64-40bb-bcda-f654af7ea0e0": {
     "id": "b21e2b79-3b64-40bb-bcda-f654af7ea0e0",
-    "z": 26194,
+    "z": 26409,
     "type": "card",
     "deck": "f2bcdd00-2fc2-4f3a-b3be-e797b76704db",
     "cardType": "type-1af0fce6-5f73-45e3-a945-d2d59f8105b1",
@@ -1707,7 +1707,7 @@
   },
   "596cd8a0-837b-4bb5-970f-6730f5fb88ce": {
     "id": "596cd8a0-837b-4bb5-970f-6730f5fb88ce",
-    "z": 26195,
+    "z": 26410,
     "type": "card",
     "deck": "f2bcdd00-2fc2-4f3a-b3be-e797b76704db",
     "cardType": "type-0545fd01-3a49-4252-839f-0f68f8ca2bd9",
@@ -1715,23 +1715,19 @@
   },
   "0ab87873-160d-48d8-93c1-7201755b2176": {
     "id": "0ab87873-160d-48d8-93c1-7201755b2176",
-    "z": 26288,
+    "z": 26397,
     "type": "card",
     "deck": "9bf0de13-e0d5-4f72-9032-4a5a5734e1c7",
     "cardType": "type-1af0fce6-5f73-45e3-a945-d2d59f8105b1",
-    "x": 4,
-    "y": 4,
-    "parent": "7777a503-ca20-4e61-bdca-d864f60ff924"
+    "parent": "kw36"
   },
   "059cbd3b-aeb2-4d9a-a57d-bd44b291f37b": {
     "id": "059cbd3b-aeb2-4d9a-a57d-bd44b291f37b",
-    "z": 26255,
+    "z": 26398,
     "type": "card",
     "deck": "9bf0de13-e0d5-4f72-9032-4a5a5734e1c7",
     "cardType": "type-0fda5b80-ef47-4d11-88d4-ecf097a57022",
-    "x": 6,
-    "y": 6,
-    "parent": "9fe135e0-6a5e-4cca-8291-9e83e07625d9"
+    "parent": "kw36"
   },
   "386ce468-3c22-42a9-a68e-9fd11e12b271": {
     "id": "386ce468-3c22-42a9-a68e-9fd11e12b271",
@@ -1752,11 +1748,13 @@
   },
   "ad99817a-f358-4ab6-8229-a8b125f16d97": {
     "id": "ad99817a-f358-4ab6-8229-a8b125f16d97",
-    "z": 26204,
+    "z": 26459,
     "type": "card",
     "deck": "1933fabc-c12d-4214-a792-292401291d27",
     "cardType": "type-0545fd01-3a49-4252-839f-0f68f8ca2bd9",
-    "parent": "3z51"
+    "parent": "83176346-78d7-4160-98d4-51a4d896a175",
+    "x": 4,
+    "y": 4
   },
   "d50337a6-2662-4f13-9034-ba6173591c6b": {
     "id": "d50337a6-2662-4f13-9034-ba6173591c6b",
@@ -1773,7 +1771,7 @@
   },
   "5a31e10d-6686-49bd-8964-809ac15fabb0": {
     "id": "5a31e10d-6686-49bd-8964-809ac15fabb0",
-    "z": 26196,
+    "z": 26412,
     "type": "card",
     "deck": "f2bcdd00-2fc2-4f3a-b3be-e797b76704db",
     "cardType": "type-cb961120-e98f-433c-bdca-ff300a4e8e42",
@@ -1813,11 +1811,13 @@
   },
   "568d5fc3-75fc-41db-bbc4-b8d93f0ff5ce": {
     "id": "568d5fc3-75fc-41db-bbc4-b8d93f0ff5ce",
-    "z": 26205,
+    "z": 26458,
     "type": "card",
     "deck": "1933fabc-c12d-4214-a792-292401291d27",
     "cardType": "type-cb961120-e98f-433c-bdca-ff300a4e8e42",
-    "parent": "3z51"
+    "parent": "dc111510-169a-461e-9ff0-102f1bd21333",
+    "x": 4,
+    "y": 4
   },
   "6c92c512-0736-4eb9-a325-e04f8d94ceff": {
     "id": "6c92c512-0736-4eb9-a325-e04f8d94ceff",
@@ -1829,8 +1829,8 @@
     "clickRoutine": [
       {
         "func": "INPUT",
-        "header": "Are you sure?",
-        "confirmButtonText": "GOGOGO",
+        "header": "Start a new game?",
+        "confirmButtonText": "New Game",
         "fields": [
           {
             "type": "choose",
@@ -1846,9 +1846,10 @@
             "variable": "seasons",
             "min": 1,
             "max": 4,
-            "label": "Seasons"
+            "label": "Seasons (select multiple seasons for a mixed deck)"
           }
-        ]
+        ],
+        "cancelButtonText": "Resume Game"
       },
       {
         "func": "CALL",
@@ -1971,15 +1972,6 @@
       }
     ]
   },
-  "3z51": {
-    "type": "pile",
-    "parent": "54227317-badc-41a0-8066-43f3520d9749",
-    "x": 6,
-    "y": 6,
-    "width": 186,
-    "height": 288,
-    "id": "3z51"
-  },
   "nkzm": {
     "type": "pile",
     "parent": "386ce468-3c22-42a9-a68e-9fd11e12b271",
@@ -1997,5 +1989,14 @@
     "width": 186,
     "height": 288,
     "id": "nm2l"
+  },
+  "kw36": {
+    "type": "pile",
+    "parent": "dfef03aa-1393-4b9a-8123-9f75ac03b935",
+    "x": 6,
+    "y": 6,
+    "width": 186,
+    "height": 288,
+    "id": "kw36"
   }
 }
