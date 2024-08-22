@@ -193,7 +193,9 @@ const jeCommands = [
     forceKey: 'ArrowUp',
     show: _=>jeStateNow && widgets.has(jeStateNow.parent),
     call: async function() {
-      setSelection([ widgets.get(jeStateNow.parent) ]);
+      const p = widgets.get(jeStateNow.parent);
+      setSelection([ p ]);
+      jeSelectWidget(p);
     }
   },
   {
@@ -248,7 +250,9 @@ const jeCommands = [
     context: '.*"([^"]+)"',
     call: async function() {
       const m = jeContext.join('').match(/"([^"]+)"/);
-      setSelection([ widgets.get(m[1]) ]);
+      const w = widgets.get(m[1]);
+      setSelection([ w ]);
+      jeSelectWidget(w);
     },
     show: function() {
       const m = jeContext.join('').match(/"([^"]+)"/);
@@ -799,7 +803,9 @@ const jeCommands = [
     context: '^card',
     show: _=>widgets.has(jeStateNow.deck),
     call: async function() {
-      setSelection([ widgets.get(jeStateNow.deck) ]);
+      const d = widgets.get(jeStateNow.deck);
+      setSelection([ d ]);
+      jeSelectWidget(d);
     }
   },
   {
