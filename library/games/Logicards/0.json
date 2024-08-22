@@ -287,7 +287,7 @@
         "width": 70,
         "height": 70
       },
-      "dropLimit": 1
+      "dropLimit": -1
     }
   },
   "b0028429-0e48-49d6-b513-bbf809c88c36": {
@@ -562,7 +562,7 @@
         "width": 70,
         "height": 70
       },
-      "dropLimit": 1
+      "dropLimit": -1
     }
   },
   "4e7884fe-ae3c-474f-96c3-0b47f4e19287": {
@@ -862,7 +862,7 @@
         "width": 70,
         "height": 70
       },
-      "dropLimit": 1
+      "dropLimit": -1
     }
   },
   "35fd3cab-3b00-4c25-9849-6508fee1aa1c": {
@@ -1442,7 +1442,7 @@
         "width": 70,
         "height": 70
       },
-      "dropLimit": 1
+      "dropLimit": -1
     }
   },
   "72eb2da0-dc35-4869-b842-65eb48446869": {
