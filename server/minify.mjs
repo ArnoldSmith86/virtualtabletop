@@ -146,10 +146,13 @@ export default async function minifyHTML() {
 }
 
 async function compressCSS(cssFiles) {
+  const combinedCSSContent = cssFiles
+    .map(filePath => fs.readFileSync(filePath, 'utf8'))  // Read each file
+    .join('\n');  // Combine them into a single string
+
   return await minify({
     compressor: cleanCSS,
-    input: cssFiles,
-    output: os.tmpdir() + '/out.css'
+    content: combinedCSSContent
   });
 }
 
@@ -164,17 +167,11 @@ async function compressJS(jsFiles) {
     .map(filePath => fs.readFileSync(filePath, 'utf8'))  // Read each file
     .map(jsContent => removeImportStatements(jsContent))  // Remove import statements
     .join('\n');  // Combine them into a single string
-  
-  const tempOutputFile = path.join(os.tmpdir(), 'out.js');
-
-  // Write the processed content to a temporary file
-  fs.writeFileSync(tempOutputFile, combinedJSContent, 'utf8');
 
   // Perform compression
   return await minify({
     compressor: Config.get('minifyJavascript') ? uglifyES : noCompress,
-    input: tempOutputFile,
-    output: tempOutputFile
+    content: combinedJSContent
   });
 }
 
