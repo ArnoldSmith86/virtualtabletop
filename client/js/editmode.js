@@ -51,6 +51,11 @@ function generateCardDeckWidgets(id, x, y, addCards) {
     parent: id,
     x: 12,
     y: 41,
+    cardDefaults: {
+    dropTarget: {
+      cardToken: true
+      }
+    },
     cardTypes: types,
     faceTemplates: [ {
       border: false, radius: false, objects: [ back  ]
@@ -507,7 +512,8 @@ function populateAddWidgetOverlay() {
     },
 
     borderColor: "black",
-    borderWidth: "1"
+    borderWidth: "1",
+    cardToken: true
   });
 
   addPieceToAddWidgetOverlay(new BasicWidget('Marble3DSVG'), {
@@ -528,7 +534,8 @@ function populateAddWidgetOverlay() {
 
     borderColor: "#ffffff",
     borderWidth: 1,
-    secondaryColor: "#000000"
+    secondaryColor: "#000000",
+    cardToken: true
   });
 
   addPieceToAddWidgetOverlay(new BasicWidget('Cube3DSVG'), {
@@ -549,7 +556,8 @@ function populateAddWidgetOverlay() {
 
     borderColor: "white",
     borderWidth: 1,
-    secondaryColor: "black"
+    secondaryColor: "black",
+    cardToken: true
   });
 
   // Second row
