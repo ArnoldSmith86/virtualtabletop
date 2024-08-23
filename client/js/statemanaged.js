@@ -1,3 +1,4 @@
+import { dropTargets } from './main.js';
 import { sendPropertyUpdate } from './serverstate.js';
 import { tracingEnabled } from './tracing.js';
 
