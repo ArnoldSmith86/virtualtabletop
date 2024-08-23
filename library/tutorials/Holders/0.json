@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "version": 1,
+    "version": 9,
     "info": {
       "name": "Holders",
       "image": "/assets/419389733_5272",
@@ -9,12 +9,21 @@
       "year": "2020",
       "mode": "Tutorial",
       "time": "0",
-      "players": "1",
-      "language": "en-US",
-      "variant": "Appearance",
-      "attribution": "",
+      "attribution": "The coin in the Stackable Tokens variant is a modification of an icon by Delapoitue, available under CC BY 3.0 from&nbsp;https://game-icons.net/1x1/delapouite/token.html.",
       "showName": false,
-      "lastUpdate": 1638938699000
+      "lastUpdate": 1705717755786,
+      "skill": "",
+      "description": "",
+      "similarImage": "",
+      "similarName": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": "",
+      "similarDesigner": "",
+      "variantImage": "",
+      "variant": "Appearance",
+      "language": "en-US",
+      "players": "1"
     }
   },
   "gaup": {
@@ -261,7 +270,6 @@
             "y": 0,
             "width": 103,
             "height": 160,
-            "valueType": "static",
             "value": "/i/cards-default/2B.svg"
           }
         ]
@@ -276,8 +284,9 @@
             "y": 0,
             "width": 103,
             "height": 160,
-            "valueType": "dynamic",
-            "value": "image"
+            "dynamicProperties": {
+              "value": "image"
+            }
           }
         ]
       }
@@ -289,8 +298,7 @@
     "deck": "x80kD",
     "type": "card",
     "cardType": "AC",
-    "z": 2,
-    "activeFace": 1
+    "z": 166
   },
   "x80k2C": {
     "id": "x80k2C",
@@ -298,8 +306,7 @@
     "deck": "x80kD",
     "type": "card",
     "cardType": "2C",
-    "z": 3,
-    "activeFace": 1
+    "z": 163
   },
   "x80k3C": {
     "id": "x80k3C",
@@ -307,8 +314,7 @@
     "deck": "x80kD",
     "type": "card",
     "cardType": "3C",
-    "z": 4,
-    "activeFace": 1
+    "z": 179
   },
   "x80k4C": {
     "id": "x80k4C",
@@ -316,8 +322,7 @@
     "deck": "x80kD",
     "type": "card",
     "cardType": "4C",
-    "z": 5,
-    "activeFace": 1
+    "z": 162
   },
   "x80k5C": {
     "id": "x80k5C",
@@ -325,8 +330,7 @@
     "deck": "x80kD",
     "type": "card",
     "cardType": "5C",
-    "z": 6,
-    "activeFace": 1
+    "z": 190
   },
   "x80k6C": {
     "id": "x80k6C",
@@ -334,8 +338,7 @@
     "deck": "x80kD",
     "type": "card",
     "cardType": "6C",
-    "z": 7,
-    "activeFace": 1
+    "z": 161
   },
   "x80k7C": {
     "id": "x80k7C",
@@ -343,8 +346,7 @@
     "deck": "x80kD",
     "type": "card",
     "cardType": "7C",
-    "z": 8,
-    "activeFace": 1
+    "z": 188
   },
   "x80k8C": {
     "id": "x80k8C",
@@ -352,8 +354,7 @@
     "deck": "x80kD",
     "type": "card",
     "cardType": "8C",
-    "z": 9,
-    "activeFace": 1
+    "z": 203
   },
   "x80k9C": {
     "id": "x80k9C",
@@ -361,8 +362,7 @@
     "deck": "x80kD",
     "type": "card",
     "cardType": "9C",
-    "z": 10,
-    "activeFace": 1
+    "z": 197
   },
   "x80kTC": {
     "id": "x80kTC",
@@ -370,16 +370,17 @@
     "deck": "x80kD",
     "type": "card",
     "cardType": "TC",
-    "z": 11,
-    "activeFace": 1
+    "z": 191
   },
   "x80kJC": {
     "id": "x80kJC",
-    "parent": "x80kP",
     "deck": "x80kD",
     "type": "card",
     "cardType": "JC",
-    "z": 12,
+    "z": 2,
+    "x": 49,
+    "y": 4,
+    "parent": "k9yg",
     "activeFace": 1
   },
   "x80kQC": {
@@ -388,8 +389,7 @@
     "deck": "x80kD",
     "type": "card",
     "cardType": "QC",
-    "z": 13,
-    "activeFace": 1
+    "z": 199
   },
   "x80kKC": {
     "id": "x80kKC",
@@ -397,8 +397,7 @@
     "deck": "x80kD",
     "type": "card",
     "cardType": "KC",
-    "z": 14,
-    "activeFace": 1
+    "z": 204
   },
   "x80kAD": {
     "id": "x80kAD",
@@ -406,8 +405,7 @@
     "deck": "x80kD",
     "type": "card",
     "cardType": "AD",
-    "z": 15,
-    "activeFace": 1
+    "z": 172
   },
   "x80k2D": {
     "id": "x80k2D",
@@ -415,8 +413,7 @@
     "deck": "x80kD",
     "type": "card",
     "cardType": "2D",
-    "z": 16,
-    "activeFace": 1
+    "z": 169
   },
   "x80k3D": {
     "id": "x80k3D",
@@ -424,8 +421,7 @@
     "deck": "x80kD",
     "type": "card",
     "cardType": "3D",
-    "z": 17,
-    "activeFace": 1
+    "z": 201
   },
   "x80k4D": {
     "id": "x80k4D",
@@ -433,8 +429,7 @@
     "deck": "x80kD",
     "type": "card",
     "cardType": "4D",
-    "z": 18,
-    "activeFace": 1
+    "z": 164
   },
   "x80k5D": {
     "id": "x80k5D",
@@ -442,8 +437,7 @@
     "deck": "x80kD",
     "type": "card",
     "cardType": "5D",
-    "z": 19,
-    "activeFace": 1
+    "z": 171
   },
   "x80k6D": {
     "id": "x80k6D",
@@ -451,8 +445,7 @@
     "deck": "x80kD",
     "type": "card",
     "cardType": "6D",
-    "z": 20,
-    "activeFace": 1
+    "z": 184
   },
   "x80k7D": {
     "id": "x80k7D",
@@ -460,8 +453,7 @@
     "deck": "x80kD",
     "type": "card",
     "cardType": "7D",
-    "z": 21,
-    "activeFace": 1
+    "z": 185
   },
   "x80k8D": {
     "id": "x80k8D",
@@ -469,16 +461,17 @@
     "deck": "x80kD",
     "type": "card",
     "cardType": "8D",
-    "z": 22,
-    "activeFace": 1
+    "z": 180
   },
   "x80k9D": {
     "id": "x80k9D",
-    "parent": "x80kP",
     "deck": "x80kD",
     "type": "card",
     "cardType": "9D",
-    "z": 23,
+    "z": 1,
+    "x": 4,
+    "y": 4,
+    "parent": "k9yg",
     "activeFace": 1
   },
   "x80kTD": {
@@ -487,8 +480,7 @@
     "deck": "x80kD",
     "type": "card",
     "cardType": "TD",
-    "z": 24,
-    "activeFace": 1
+    "z": 192
   },
   "x80kJD": {
     "id": "x80kJD",
@@ -496,8 +488,7 @@
     "deck": "x80kD",
     "type": "card",
     "cardType": "JD",
-    "z": 25,
-    "activeFace": 1
+    "z": 157
   },
   "x80kQD": {
     "id": "x80kQD",
@@ -505,8 +496,7 @@
     "deck": "x80kD",
     "type": "card",
     "cardType": "QD",
-    "z": 26,
-    "activeFace": 1
+    "z": 193
   },
   "x80kKD": {
     "id": "x80kKD",
@@ -514,8 +504,7 @@
     "deck": "x80kD",
     "type": "card",
     "cardType": "KD",
-    "z": 27,
-    "activeFace": 1
+    "z": 176
   },
   "x80kAH": {
     "id": "x80kAH",
@@ -523,8 +512,7 @@
     "deck": "x80kD",
     "type": "card",
     "cardType": "AH",
-    "z": 28,
-    "activeFace": 1
+    "z": 165
   },
   "x80k2H": {
     "id": "x80k2H",
@@ -532,8 +520,7 @@
     "deck": "x80kD",
     "type": "card",
     "cardType": "2H",
-    "z": 29,
-    "activeFace": 1
+    "z": 194
   },
   "x80k3H": {
     "id": "x80k3H",
@@ -541,8 +528,7 @@
     "deck": "x80kD",
     "type": "card",
     "cardType": "3H",
-    "z": 30,
-    "activeFace": 1
+    "z": 182
   },
   "x80k4H": {
     "id": "x80k4H",
@@ -550,8 +536,7 @@
     "deck": "x80kD",
     "type": "card",
     "cardType": "4H",
-    "z": 31,
-    "activeFace": 1
+    "z": 181
   },
   "x80k5H": {
     "id": "x80k5H",
@@ -559,8 +544,7 @@
     "deck": "x80kD",
     "type": "card",
     "cardType": "5H",
-    "z": 32,
-    "activeFace": 1
+    "z": 189
   },
   "x80k6H": {
     "id": "x80k6H",
@@ -568,8 +552,7 @@
     "deck": "x80kD",
     "type": "card",
     "cardType": "6H",
-    "z": 33,
-    "activeFace": 1
+    "z": 174
   },
   "x80k7H": {
     "id": "x80k7H",
@@ -577,8 +560,7 @@
     "deck": "x80kD",
     "type": "card",
     "cardType": "7H",
-    "z": 34,
-    "activeFace": 1
+    "z": 195
   },
   "x80k8H": {
     "id": "x80k8H",
@@ -586,8 +568,7 @@
     "deck": "x80kD",
     "type": "card",
     "cardType": "8H",
-    "z": 35,
-    "activeFace": 1
+    "z": 177
   },
   "x80k9H": {
     "id": "x80k9H",
@@ -595,8 +576,7 @@
     "deck": "x80kD",
     "type": "card",
     "cardType": "9H",
-    "z": 36,
-    "activeFace": 1
+    "z": 196
   },
   "x80kTH": {
     "id": "x80kTH",
@@ -604,8 +584,7 @@
     "deck": "x80kD",
     "type": "card",
     "cardType": "TH",
-    "z": 37,
-    "activeFace": 1
+    "z": 186
   },
   "x80kJH": {
     "id": "x80kJH",
@@ -613,16 +592,17 @@
     "deck": "x80kD",
     "type": "card",
     "cardType": "JH",
-    "z": 38,
-    "activeFace": 1
+    "z": 173
   },
   "x80kQH": {
     "id": "x80kQH",
-    "parent": "x80kP",
     "deck": "x80kD",
     "type": "card",
     "cardType": "QH",
-    "z": 39,
+    "z": 3,
+    "x": 94,
+    "y": 4,
+    "parent": "k9yg",
     "activeFace": 1
   },
   "x80kKH": {
@@ -631,8 +611,7 @@
     "deck": "x80kD",
     "type": "card",
     "cardType": "KH",
-    "z": 40,
-    "activeFace": 1
+    "z": 175
   },
   "x80kAS": {
     "id": "x80kAS",
@@ -640,8 +619,7 @@
     "deck": "x80kD",
     "type": "card",
     "cardType": "AS",
-    "z": 41,
-    "activeFace": 1
+    "z": 178
   },
   "x80k2S": {
     "id": "x80k2S",
@@ -649,8 +627,7 @@
     "deck": "x80kD",
     "type": "card",
     "cardType": "2S",
-    "z": 42,
-    "activeFace": 1
+    "z": 187
   },
   "x80k3S": {
     "id": "x80k3S",
@@ -658,8 +635,7 @@
     "deck": "x80kD",
     "type": "card",
     "cardType": "3S",
-    "z": 43,
-    "activeFace": 1
+    "z": 158
   },
   "x80k4S": {
     "id": "x80k4S",
@@ -667,8 +643,7 @@
     "deck": "x80kD",
     "type": "card",
     "cardType": "4S",
-    "z": 44,
-    "activeFace": 1
+    "z": 198
   },
   "x80k5S": {
     "id": "x80k5S",
@@ -676,8 +651,7 @@
     "deck": "x80kD",
     "type": "card",
     "cardType": "5S",
-    "z": 45,
-    "activeFace": 1
+    "z": 159
   },
   "x80k6S": {
     "id": "x80k6S",
@@ -685,8 +659,7 @@
     "deck": "x80kD",
     "type": "card",
     "cardType": "6S",
-    "z": 46,
-    "activeFace": 1
+    "z": 168
   },
   "x80k7S": {
     "id": "x80k7S",
@@ -694,8 +667,7 @@
     "deck": "x80kD",
     "type": "card",
     "cardType": "7S",
-    "z": 47,
-    "activeFace": 1
+    "z": 183
   },
   "x80k8S": {
     "id": "x80k8S",
@@ -703,8 +675,7 @@
     "deck": "x80kD",
     "type": "card",
     "cardType": "8S",
-    "z": 48,
-    "activeFace": 1
+    "z": 170
   },
   "x80k9S": {
     "id": "x80k9S",
@@ -712,8 +683,7 @@
     "deck": "x80kD",
     "type": "card",
     "cardType": "9S",
-    "z": 49,
-    "activeFace": 1
+    "z": 200
   },
   "x80kTS": {
     "id": "x80kTS",
@@ -721,8 +691,7 @@
     "deck": "x80kD",
     "type": "card",
     "cardType": "TS",
-    "z": 50,
-    "activeFace": 1
+    "z": 160
   },
   "x80kJS": {
     "id": "x80kJS",
@@ -730,8 +699,7 @@
     "deck": "x80kD",
     "type": "card",
     "cardType": "JS",
-    "z": 51,
-    "activeFace": 1
+    "z": 202
   },
   "x80kQS": {
     "id": "x80kQS",
@@ -739,17 +707,18 @@
     "deck": "x80kD",
     "type": "card",
     "cardType": "QS",
-    "z": 52,
-    "activeFace": 1
+    "z": 167
   },
   "x80kKS": {
     "id": "x80kKS",
     "deck": "x80kD",
     "type": "card",
     "cardType": "KS",
-    "z": 1,
-    "parent": "x80kP",
-    "activeFace": 1
+    "z": 4,
+    "x": 139,
+    "y": 4,
+    "activeFace": 1,
+    "parent": "k9yg"
   },
   "z5lb": {
     "type": "label",
@@ -789,5 +758,30 @@
     "y": -6,
     "z": 75,
     "id": "8fr3"
+  },
+  "k9yg": {
+    "type": "holder",
+    "id": "k9yg",
+    "x": 109,
+    "y": 726,
+    "width": 511,
+    "height": 168,
+    "z": 15,
+    "movable": false,
+    "dropShadow": true,
+    "onEnter": {
+      "activeFace": 1
+    },
+    "stackOffsetX": 45
+  },
+  "1kvg": {
+    "id": "1kvg",
+    "x": 177,
+    "y": 669,
+    "width": 400,
+    "height": 50,
+    "z": 4,
+    "movable": false,
+    "text": "This holder has dropShadow: true. You can modify the shadow using css with '.dragging-shadow'."
   }
 }

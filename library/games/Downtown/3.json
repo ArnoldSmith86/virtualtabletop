@@ -13270,7 +13270,8 @@
       "similarName": "Chinatown",
       "description": "Get ownership of sections of city block through luck and negotiation and build matching business through six rounds.  Most money wins. ",
       "showName": true,
-      "lastUpdate": 1611620951000
+      "lastUpdate": 1611620951000,
+      "similarDesigner": "Karsten Hartwig"
     }
   }
 }

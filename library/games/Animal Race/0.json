@@ -24,7 +24,7 @@
       "hare": {
         "image": "/assets/1451258073_2960"
       },
-      "hegdehog": {
+      "hedgehog": {
         "image": "/assets/425961551_3877"
       }
     },
@@ -95,7 +95,7 @@
   "fyb5": {
     "deck": "f9ym",
     "type": "card",
-    "cardType": "hegdehog",
+    "cardType": "hedgehog",
     "id": "fyb5",
     "z": 142,
     "y": 860,
@@ -370,7 +370,6 @@
     "z": 201,
     "x": 860,
     "y": 180,
-    "movable": true,
     "parent": "Board"
   },
   "4uhc": {
@@ -426,7 +425,7 @@
   "luxe": {
     "deck": "f9ym",
     "type": "card",
-    "cardType": "hegdehog",
+    "cardType": "hedgehog",
     "id": "luxe",
     "z": 145,
     "x": 220,
@@ -436,7 +435,7 @@
   "uj6a": {
     "deck": "f9ym",
     "type": "card",
-    "cardType": "hegdehog",
+    "cardType": "hedgehog",
     "id": "uj6a",
     "z": 191,
     "x": 1020,
@@ -446,7 +445,7 @@
   "dt9c": {
     "deck": "f9ym",
     "type": "card",
-    "cardType": "hegdehog",
+    "cardType": "hedgehog",
     "id": "dt9c",
     "z": 185,
     "x": 1300,
@@ -456,7 +455,7 @@
   "o4f4": {
     "deck": "f9ym",
     "type": "card",
-    "cardType": "hegdehog",
+    "cardType": "hedgehog",
     "id": "o4f4",
     "z": 178,
     "x": 1300,
@@ -466,7 +465,7 @@
   "kc1p": {
     "deck": "f9ym",
     "type": "card",
-    "cardType": "hegdehog",
+    "cardType": "hedgehog",
     "id": "kc1p",
     "z": 172,
     "x": 1060,
@@ -476,7 +475,7 @@
   "vq4x": {
     "deck": "f9ym",
     "type": "card",
-    "cardType": "hegdehog",
+    "cardType": "hedgehog",
     "id": "vq4x",
     "z": 165,
     "y": 100,
@@ -486,7 +485,7 @@
   "n72d": {
     "deck": "f9ym",
     "type": "card",
-    "cardType": "hegdehog",
+    "cardType": "hedgehog",
     "id": "n72d",
     "z": 158,
     "y": 60,
@@ -496,7 +495,7 @@
   "erpj": {
     "deck": "f9ym",
     "type": "card",
-    "cardType": "hegdehog",
+    "cardType": "hedgehog",
     "id": "erpj",
     "z": 153,
     "x": 260,
@@ -506,7 +505,7 @@
   "4nl8": {
     "deck": "f9ym",
     "type": "card",
-    "cardType": "hegdehog",
+    "cardType": "hedgehog",
     "id": "4nl8",
     "z": 149,
     "x": 260,
@@ -1902,35 +1901,6 @@
       "deck": "Cabbage Deck"
     }
   },
-  "Cabbage Deck1": {
-    "type": "deck",
-    "id": "Cabbage Deck1",
-    "cardDefaults": {
-      "height": 160,
-      "width": 80
-    },
-    "cardTypes": {
-      "cabbage": {}
-    },
-    "faceTemplates": [
-      {
-        "objects": [
-          {
-            "type": "image",
-            "x": 0,
-            "y": 0,
-            "color": "green",
-            "valueType": "static",
-            "value": "https://cdn.pixabay.com/photo/2019/09/29/15/45/cabbage-4513641_960_720.jpg",
-            "width": 80,
-            "height": 160
-          }
-        ],
-        "radius": 5
-      }
-    ],
-    "parent": "Hare Cards Draw"
-  },
   "Hare Cards Draw": {
     "type": "holder",
     "id": "Hare Cards Draw",
@@ -1943,35 +1913,6 @@
     "dropTarget": {
       "deck": "Hare Deck"
     }
-  },
-  "Cabbage Deck2": {
-    "type": "deck",
-    "id": "Cabbage Deck2",
-    "cardDefaults": {
-      "height": 160,
-      "width": 80
-    },
-    "cardTypes": {
-      "cabbage": {}
-    },
-    "faceTemplates": [
-      {
-        "objects": [
-          {
-            "type": "image",
-            "x": 0,
-            "y": 0,
-            "color": "green",
-            "valueType": "static",
-            "value": "https://cdn.pixabay.com/photo/2019/09/29/15/45/cabbage-4513641_960_720.jpg",
-            "width": 80,
-            "height": 160
-          }
-        ],
-        "radius": 5
-      }
-    ],
-    "parent": "Hare Cards Discard"
   },
   "Hare Cards Discard": {
     "type": "holder",
@@ -3577,20 +3518,27 @@
     "version": 4,
     "info": {
       "name": "Animal Race",
-      "image": "/assets/882185853_14331",
+      "image": "/assets/532296362_34744",
       "rules": "",
       "bgg": "https://boardgamegeek.com/boardgame/361/hare-tortoise",
       "year": "1973",
       "mode": "vs",
       "time": "45",
-      "players": "2-6",
-      "language": "en-US",
-      "variant": "",
-      "attribution": "Board layout by ArnoldSmith86. Released to public domain under CC0.\n\nImages released under Pixabay License:\nhttps://pixabay.com/photos/fields-path-farm-house-wooden-house-5680966/\nhttps://pixabay.com/photos/cabbage-kale-vegetables-healthy-4513641/\nhttps://pixabay.com/photos/carrots-carrot-tops-vegetable-1112020/\nhttps://pixabay.com/photos/young-hare-leveret-hare-baby-hare-5374701/\nhttps://pixabay.com/photos/hedgehog-garden-nature-autumn-cute-5476447/",
+      "attribution": "Board layout by ArnoldSmith86. Released to public domain under CC0.\n\nImages released under Pixabay License:\nhttps://pixabay.com/photos/fields-path-farm-house-wooden-house-5680966/\nhttps://pixabay.com/photos/cabbage-kale-vegetables-healthy-4513641/\nhttps://pixabay.com/photos/carrots-carrot-tops-vegetable-1112020/\nhttps://pixabay.com/photos/young-hare-leveret-hare-baby-hare-5374701/\nhttps://pixabay.com/photos/hedgehog-garden-nature-autumn-cute-5476447/<div><br></div><div>Library image generated using the Midjourney artificial intelligence image generator, https://www.midjourney.com/home/, using the following prompt: \"rabbit race for carrots by E.H. Shepard --ar 1:1 --v 5.1\"<br></div>",
       "similarName": "Hare & Tortoise",
-      "description": "Move around board by collecting and spending carrots and lettuce.  First around the board having depleted all lettuce and all but 10 carrots wins.",
+      "similarAwards": "1979 Spiel des Jahres Winner",
+      "description": "Move around board by collecting and spending carrots and lettuce. First around the board having depleted all lettuce and all but 10 carrots wins.",
       "showName": true,
-      "lastUpdate": 1634502388000
+      "lastUpdate": 1679045125000,
+      "skill": "",
+      "similarImage": "",
+      "ruleText": "",
+      "helpText": "",
+      "variantImage": "",
+      "variant": "",
+      "language": "en-US",
+      "players": "2-6",
+      "similarDesigner": "David Parlett"
     }
   }
 }

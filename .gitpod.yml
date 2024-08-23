@@ -7,13 +7,13 @@ ports:
     name: virtualtabletop
     visibility: public
     onOpen: ignore
+  - port: 6080
+    name: noVNC
+    visibility: private
   - port: 9229
     name: Node.JS Debugger
     visibility: private
     onOpen: ignore
-  - port: 6080
-    name: noVNC
-    visibility: private
   - port: 5900
     name: vnc
     visibility: private

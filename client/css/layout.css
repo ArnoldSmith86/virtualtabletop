@@ -6,7 +6,6 @@
   --roomLeft: 0px;
   --toolbarSize: 44px;
   --roomColor: #f0f0f0;
-  --editColor: #7ba5f5;
   --overlayFontColor: #222326;
   --VTTblue: #1f5ca6;
   --VTTblueDark: #0d2f5e;
@@ -32,6 +31,18 @@ body {
   margin: 0;
   overflow: hidden;
   font-family: 'Roboto', sans-serif;
+}
+
+body.edit.darkMode input {
+  --overlayFontColor: #ffffff;
+}
+
+body.edit.darkMode input::placeholder {
+  color: #ffffff;
+}
+
+body.loadingEditMode * {
+  cursor: wait;
 }
 
 #roomArea {
@@ -137,14 +148,58 @@ body.aspectTooGood.hiddenToolbar {
       display: none;
     }
 
-    @media (min-height: 440px) {
+    body.loading #toolbar, body.loading #toolbar * {
+      cursor: not-allowed;
+    }
+
+    @media (min-height: 350px) {
       body.wideToolbar #toolbar > img {
         display: block;
         margin: 10px 20px 3px 20px;
+        height: 52px;
       }
       body.wideToolbar #toolbar .divider:nth-child(2) {
         display: block;
         margin: 20px 10%;
+      }
+    }
+
+    @media (max-height: 450px) {
+      body.wideToolbar #toolbar .divider:nth-child(2) {
+        margin: 10px 10%;
+      }
+    }
+
+    @media (max-height: 430px) {
+      body.wideToolbar #toolbar {
+        padding: 0;
+      }
+      body.wideToolbar #toolbar > img {
+        margin: 10px 20px;
+      }
+    }
+
+    @media (max-height: 415px) {
+      body.wideToolbar #toolbar .divider:nth-child(2) {
+        display: none;
+      }
+    }
+
+    @media (max-height: 420px) {
+      body:not(.wideToolbar,.horizontalToolbar,.aspectTooGood) #toolbar {
+        padding: 0;
+      }
+    }
+
+    @media (max-width: 760px) {
+      body.aspectTooGood #toolbar {
+        padding: 0;
+      }
+    }
+
+    @media (max-width: 530px) {
+      body.horizontalToolbar #toolbar {
+        padding: 0 5px;
       }
     }
 
@@ -167,6 +222,24 @@ body.aspectTooGood.hiddenToolbar {
       border-left: 1px solid #fff8;
       height: 80%;
       margin: auto 10px;
+    }
+
+    @media (max-height: 415px) {
+      body.wideToolbar #toolbar .divider {
+        display: none;
+      }
+    }
+
+    @media (max-height: 420px) {
+      body:not(.wideToolbar,.horizontalToolbar,.aspectTooGood) #toolbar .divider {
+        display: none;
+      }
+    }
+
+    @media (max-width: 760px) {
+      body.aspectTooGood #toolbar .divider {
+        display: none;
+      }
     }
 
   /* buttons */
@@ -201,6 +274,10 @@ body.aspectTooGood.hiddenToolbar {
       background-color: rgba(0, 0, 0, 0.1);
     }
 
+    body.loading .toolbarButton:hover {
+      background-color: transparent;
+    }
+
     .toolbarButton:focus {
       outline-style: none;
       box-shadow: none;
@@ -214,6 +291,31 @@ body.aspectTooGood.hiddenToolbar {
 
     body.horizontalToolbar .toolbarButton:not(.toolbarTab) {
       justify-content: flex-end;
+    }
+
+    @media (max-height: 520px) {
+      body.wideToolbar .toolbarButton:not(.toolbarTab) {
+        padding: 0 10%;
+      }
+    }
+
+    @media (max-height: 420px) {
+      body:not(.wideToolbar,.horizontalToolbar,.aspectTooGood) .toolbarButton:not(.toolbarTab) {
+        padding: 2px;
+      }
+    }
+
+    @media (max-width: 760px) {
+      body.aspectTooGood #toolbar .toolbarButton:not(.toolbarTab) {
+        padding: 2px;
+      }
+    }
+
+    @media (max-width: 530px) {
+      body.horizontalToolbar .toolbarButton:not(.toolbarTab) {
+        padding: 2px;
+        margin: 0;
+      }
     }
 
   /* tabs */
@@ -245,9 +347,33 @@ body.aspectTooGood.hiddenToolbar {
       width: unset;
     }
 
-    @media (min-width: 760px) {
+    @media (max-height: 400px) {
+      body.wideToolbar .toolbarTab {
+        height: 30px;
+      }
+    }
+
+    @media (max-height: 420px) {
+      body:not(.wideToolbar,.horizontalToolbar,.aspectTooGood) .toolbarTab {
+        height: 30px;
+      }
+    }
+
+    @media (max-width: 760px) {
+      body.aspectTooGood #toolbar .toolbarTab {
+        height: 30px;
+      }
+    }
+
+    @media (min-width: 950px) {
       body.horizontalToolbar .toolbarTab::before {
         font-size: 24px;
+      }
+    }
+
+    @media (max-width: 530px) {
+      body.horizontalToolbar .toolbarTab {
+        padding: 0 8px;
       }
     }
 
@@ -267,7 +393,7 @@ body.aspectTooGood.hiddenToolbar {
       pointer-events: none;
     }
 
-    .toolbarButton:hover .tooltip, body.wideToolbar .toolbarButton .tooltip {
+    body:not(.loading) .toolbarButton:hover .tooltip, body.wideToolbar .toolbarButton .tooltip {
       display: block;
     }
 
@@ -294,7 +420,7 @@ body.aspectTooGood.hiddenToolbar {
       bottom: 46px;
     }
 
-    @media (min-width: 760px) {
+    @media (min-width: 950px) {
       body.horizontalToolbar .toolbarTab .tooltip {
         box-shadow: unset;
         background: none;
@@ -394,97 +520,103 @@ body.aspectTooGood.hiddenToolbar {
       display: none;
     }
 
-    @media (max-height: 520px) {
+    @media (max-height: 120px) {
       body.wideToolbar #editButton, body.wideToolbar #addButton {
         display: none;
       }
     }
 
-    @media (max-width: 760px) {
-      body.aspectTooGood #editButton, body.aspectTooGood #addButton {
+    @media (max-height: 290px) {
+      body:not(.horizontalToolbar,.aspectTooGood) #toolbar .divider, body:not(.horizontalToolbar,.aspectTooGood) #optionsButton, body:not(.horizontalToolbar,.aspectTooGood) #lightsButton {
         display: none;
       }
     }
 
-    @media (max-height: 420px) {
-      body:not(.wideToolbar,.horizontalToolbar,.aspectTooGood) #editButton, body:not(.wideToolbar,.horizontalToolbar,.aspectTooGood) #addButton {
+    @media (max-width: 550px) {
+      body.aspectTooGood #toolbar .divider, body.aspectTooGood #optionsButton, body.aspectTooGood #lightsButton {
         display: none;
       }
     }
 
-    @media (max-height: 340px) {
-      body:not(.horizontalToolbar,.aspectTooGood) .divider, body:not(.horizontalToolbar,.aspectTooGood) #optionsButton, body:not(.horizontalToolbar,.aspectTooGood) #lightsButton {
+    @media (max-width: 460px) {
+      body.aspectTooGood #addButton {
         display: none;
       }
     }
 
-    @media (max-width: 630px) {
-      body.aspectTooGood .divider, body.aspectTooGood #optionsButton, body.aspectTooGood #lightsButton {
-        display: none;
-      }
-    }
-
-    @media (max-height: 240px) {
-      body:not(.horizontalToolbar) #aboutButton {
-        display: none;
-      }
-    }
-
-    @media (max-width: 490px) {
-      body.aspectTooGood #aboutButton {
+    @media (max-height: 230px) {
+      body:not(.horizontalToolbar) #addButton {
         display: none;
       }
     }
 
     @media (max-height: 200px) {
+      body:not(.horizontalToolbar) #aboutButton {
+        display: none;
+      }
+    }
+
+    @media (max-width: 410px) {
+      body.aspectTooGood #aboutButton {
+        display: none;
+      }
+    }
+
+    @media (max-width: 360px) {
+      body.aspectTooGood #editButton {
+        display: none;
+      }
+    }
+
+    @media (max-height: 170px) {
+      body:not(.horizontalToolbar) #editButton {
+        display: none;
+      }
+    }
+
+    @media (max-height: 140px) {
       body:not(.horizontalToolbar) #playersButton {
         display: none;
       }
     }
 
-    @media (max-width: 420px) {
+    @media (max-width: 300px) {
       body.aspectTooGood #playersButton {
         display: none;
       }
     }
 
-    @media (max-width: 350px) {
+    @media (max-width: 250px) {
       body.aspectTooGood #hideToolbarButton {
         display: none;
       }
     }
 
-    @media (max-width: 960px) {
-      body.horizontalToolbar #editButton, body.horizontalToolbar #addButton {
+    @media (max-width: 390px) {
+      body.horizontalToolbar #toolbar .divider, body.horizontalToolbar #optionsButton, body.horizontalToolbar #lightsButton {
         display: none;
       }
     }
 
-    @media (max-width: 759px) {
-      body.horizontalToolbar #editButton, body.horizontalToolbar #addButton {
-        display: flex;
-      }
-    }
-
-    @media (max-width: 530px) {
-      body.horizontalToolbar #editButton, body.horizontalToolbar #addButton {
+    @media (max-width: 320px) {
+      body.horizontalToolbar #addButton {
         display: none;
       }
     }
 
-    @media (max-width: 430px) {
-      body.horizontalToolbar .divider, body.horizontalToolbar #optionsButton, body.horizontalToolbar #lightsButton {
-        display: none;
-      }
-    }
-
-    @media (max-width: 340px) {
+    @media (max-width: 300px) {
       body.horizontalToolbar #aboutButton {
         display: none;
       }
     }
 
-    @media (max-width: 270px) {
+    @media (max-width: 245px) {
+      body.horizontalToolbar #editButton {
+        display: none;
+      }
+    }
+
+    @media (max-width: 190px) {
       body.horizontalToolbar #playersButton {
         display: none;
       }
@@ -658,7 +790,21 @@ div[icon] .buttons {
 }
 
 .widget.foreign {
+  --foreign:true;
+}
+
+body:not(.jsonEdit) .widget.foreign, body:not(.jsonEdit) .widget.hidden {
   display: none !important;
+}
+
+body.jsonEdit:not(.hitTest) .widget.foreign, body.jsonEdit:not(.hitTest):not(.showHiddenWidgets) .widget.hidden {
+  /* Edit mode uses elementsFromPoint to determine widgets under the cursor, so
+     we hide and pass pointer events through the element but don't use display: none here
+     to prevent invalidating all layout every time the mouse moves. When hit testing
+     the foreign layers are temporarily visible (but the class is removed before a frame
+     is presented to the user). */
+  visibility: hidden;
+  pointer-events: none;
 }
 
 #clientPointer {
@@ -730,6 +876,8 @@ button[icon]::before {
   font-size: 24px;
   font-weight: normal;
   line-height: 1;
+  width: 24px;
+  overflow: clip;
 }
 button[icon]:empty {
   padding: 5px;
@@ -748,6 +896,9 @@ button[icon].green {
 }
 button[icon].green:hover {
   background-color: #004f00;
+}
+button[icon].green:disabled:hover {
+  background-color: darkgreen;
 }
 
 .prettyButton {
@@ -776,6 +927,15 @@ button[icon].green:hover {
   line-height: 18px;
 }
 
+button.visualProgress {
+  --stripesColor1: #006400;
+  --stripesColor2: #006400;
+  position: relative;
+  background-image: linear-gradient(135deg, #006400 0%, #006400 100%);
+  background-size: calc(var(--progress) * 100%) 100%;
+  background-repeat: no-repeat;
+}
+
 .richtext-controls {
   position: sticky;
   top: 10px;
@@ -784,6 +944,7 @@ button[icon].green:hover {
   border-radius: 4px;
   padding: 2px;
   font-size: 0;
+  z-index: 1;
 }
 
 .richtext-controls button {
@@ -814,17 +975,23 @@ button[icon].green:hover {
   margin: 0 20px 20px 0;
 }
 
-.richtextSymbol.richtextSymbol {
-  font-size: 18px;
+.richtextSymbol.richtextSymbol:not(.emoji), img.emoji {
+  display: inline-block;
+  font-size: 1.15em;
   position: relative;
-  line-height: 10px;
+  line-height: 1em;
   font-style: normal;
+  height: 1em;
+  width: 1em;
 }
 .richtextSymbol.symbols {
-  top: 2px;
+  top: 0.1em;
 }
 .richtextSymbol.material-icons {
-  top: 4px;
+  top: 0.2em;
+}
+.richtextSymbol.gameicons, img.emoji {
+  vertical-align: bottom;
 }
 
 .symbols {
@@ -921,7 +1088,7 @@ button.add::before {
 
 button:disabled,
 button:disabled:hover {
-  background: #808080;
+  background-color: #808080;
   color: #d3d3d3;
   cursor: not-allowed;
 }
@@ -957,7 +1124,36 @@ button:disabled:hover {
 .ui-button.blue {
   background-color: var(--neutralInput);
 }
-
+#gridOverlay{
+  color: black;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  background: #0008;
+}
+.gridFields {
+  color: #fff;
+  background-color: var(--VTTblue);
+  width: 60px;
+}
+.gridFields::placeholder{
+  color: #a9a;
+}
+#gridOverlay .modal{
+  width: 200px;
+}
+#gridOverlay > .modal button.ui-button{
+  width: 100%;
+  box-sizing: border-box;
+  justify-content: center;
+}
+#pileOverlay{
+  color: black;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  background: #0008;
+}
 #buttonInputOverlay{
   justify-content: center;
   align-items: center;
@@ -979,9 +1175,10 @@ button:disabled:hover {
   border-radius: 8px;
   border-top: 3px solid var(--VTTblue);
   border-bottom: 3px solid var(--VTTblue);
+  position: relative;
 }
 
-.modal h1{
+.modal h1 {
   margin: 0;
   padding: 4px 8px;
   text-align: left;
@@ -999,22 +1196,21 @@ button:disabled:hover {
 }
 
 .modal h1:after {
-    content: '';
-    position: absolute;
-    background-color: var(--modalBorderColor);
-    display: block;
-    z-index: 15;
-    top: auto;
-    right: auto;
-    bottom: 0;
-    left: 0;
-    height: 1px;
-    width: 100%;
+  content: '';
+  position: absolute;
+  background-color: var(--modalBorderColor);
+  display: block;
+  z-index: 15;
+  top: auto;
+  right: auto;
+  bottom: 0;
+  left: 0;
+  height: 1px;
+  width: 100%;
 }
 
-.modal .footer{
- margin-top: 16px;
-  padding: 4px;
+.modal .footer {
+  padding: 16px 4px 4px 4px;
   position: relative;
   box-sizing: border-box;
   display: flex;
@@ -1039,7 +1235,7 @@ button:disabled:hover {
 }
 
 
-.modal .footer > button{
+.modal .footer > button {
   font-family: 'Roboto';
   display: flex;
   height: 32px;
@@ -1056,12 +1252,11 @@ button:disabled:hover {
   font-weight: 500;
   cursor: pointer;
   box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px 0px, rgba(0, 0, 0, 0.24) 0px 1px 2px 0px;
-
 }
-.modal .footer > button label{
+.modal .footer > button label {
   font-size: 1rem;
 }
-.modal .footer > button *{
+.modal .footer > button * {
   cursor: pointer;
 }
 
@@ -1126,6 +1321,9 @@ button:disabled:hover {
 #buttonInputFields input{
   position: relative;
 }
+#buttonInputFields label:not(.switchbox):empty {
+  display: none;
+}
 .modal *:focus {
   outline: none;
   box-shadow: 0 0 0 3px #159ce4;
@@ -1136,23 +1334,9 @@ button:disabled:hover {
   display: flex;
   position: relative;
   padding: 3px;
+  border-bottom: 1px solid var(--modalBorderColor);
 }
-#buttonInputFields > div::after {
-    content: '';
-    position: absolute;
-    background-color: var(--modalBorderColor);
-    display: block;
-    z-index: 15;
-    top: auto;
-    right: auto;
-    bottom: 0;
-    left: 0;
-    height: 1px;
-    width: 100%;
-}
-#buttonInputFields > div:last-of-type::after {
-    background-color: transparent;
-}
+
 .inputtitle{
   background: var(--VTTblue);
   color: white;
@@ -1186,9 +1370,18 @@ button:disabled:hover {
   font-style: italic;
   margin: 0;
 }
+
+.inputunderline{
+  background-color: #aaaaaa;
+  margin: -5px 5px 5px 5px;
+  height: 1px;
+}
+
 .inputnumber,
 .inputstring,
-.inputselect{
+.inputselect,
+.inputpalette,
+.inputchoose{
   flex-direction: column;
 }
 .inputcheckbox{
@@ -1197,7 +1390,9 @@ button:disabled:hover {
 
 .inputnumber label,
 .inputstring label,
-.inputselect label{
+.inputselect label,
+.inputpalette label,
+.inputchoose label{
   padding: 4px 5px 0 5px;
     width: 100%;
     vertical-align: top;
@@ -1218,19 +1413,43 @@ button:disabled:hover {
   flex-shrink: 0;
   order: 1;
 }
+
 .inputnumber input,
 .inputstring input,
 .inputselect select
 {
   appearance: none;
-  padding: 20.6px 5px 0px 5px;
-  margin: -20.6px 0 0 0;
+  padding: 0 5px 0px 5px;
+  margin: 0 0 0 0;
   font-size: 16px;
   color: var(--modalTextColor);
   background-color: transparent;
   border: 0px none transparent;
   line-height: 36px;
   border-radius: 4px;
+}
+
+.inputselect select{
+  padding-right: 25px;
+}
+
+.inputexpandselect {
+  text-align: right;
+  font-family: "Material Icons";
+  font-size: 20px;
+  line-height: 20px;
+  position: absolute;
+  right: 5px;
+  bottom: 12px;
+  z-index: -1;
+}
+
+.inputnumber label:empty ~ input,
+.inputstring label:empty ~ input,
+.inputselect label:empty ~ select
+{
+  padding: 0 5px 0px 5px;
+  margin: 0;
 }
 .inputselect select option{
   background-color: var(--modalBackgroundColor);
@@ -1337,10 +1556,118 @@ input.switchbox[type="checkbox"]:checked + .switchbox::before {
 input.switchbox[type="checkbox"]:checked + .switchbox{
   background-color: var(--VTTblue);
 }
+.modal input[type=range] {
+  -webkit-appearance: none;
+  margin: 0;
+  width: 100%;
+  background: none;
+  height: 42px;
+}
+.modal input[type=range]:focus {
+  border-radius: 100px;
+}
+.modal input[type=range]::-webkit-slider-runnable-track {
+  width: 100%;
+  height: 42px;
+  cursor: pointer;
+  background: #3071a9;
+  border-radius: 42px;
+  margin: 0;
+  overflow: hidden;
+  padding: 2px;
+}
+.modal input[type=range]::-webkit-slider-thumb {
+  box-shadow: 0 0px 3px #000000, 0px 0px 1px #0d0d0d;
+  border: 1px solid #000000;
+  height: 38px;
+  width: 38px;
+  border-radius: 42px;
+  background: #ffffff;
+  cursor: pointer;
+  -webkit-appearance: none;
+}
+.modal input[type=range]:focus::-webkit-slider-runnable-track {
+  background: #367ebd;
+}
+.modal input[type=range]::-moz-range-track {
+  width: 100%;
+  height: 38px;
+  cursor: pointer;
+  background: #3071a9;
+  border-radius: 42px;
+  margin: 0;
+  overflow: hidden;
+  padding: 2px;
+}
+.modal input[type=range]::-moz-range-thumb {
+  box-shadow: 0 0px 3px #000000, 0px 0px 1px #0d0d0d;
+  border: 1px solid #000000;
+  height: 36px;
+  width: 36px;
+  border-radius: 36px;
+  background: #ffffff;
+  cursor: pointer;
+  -webkit-appearance: none;
+}
+.countInput{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  line-height: 42px;
+  padding: 8px 8px 0;
+
+}
+.countInput input[type=number]{
+  font-size: 1.5rem;
+  text-align: center;
+  width: 3ch;
+  padding: 0 5px;
+  border: 0px none transparent;
+  background: transparent;
+  -moz-appearance: textfield;
+  appearance: textfield;
+  margin: 0;
+}
+.countInput input[type=number]::-webkit-inner-spin-button,
+.countInput input[type=number]::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+}
+#pileOverlay .modal{
+  width: 200px;
+}
+#pileOverlay > .modal button.ui-button{
+  width: 100%;
+  box-sizing: border-box;
+  justify-content: center;
+}
+/* .inputtext.optiontext label{
+  text-align: center;
+} */
+#pileOverlay > .modal .inputtext.optiontext{
+  display: none;
+}
+.modal .button-bar{
+  box-sizing: border-box;
+  padding: 8px 32px;
+}
+.modal .button-bar button {
+  margin-left: 0;
+  margin-right: 0;
+}
+.pilecancelbutton{
+  position: absolute;
+  height: 38px;
+  width: auto!important;
+  top: -5px;
+  right: 5px;
+  background-color: black;
+}
 input:invalid{
   color: red;
 }
-input:invalid+span:after {
+input:invalid+span::after, .inputError::before {
   font-family: 'Material Icons';
   content: 'error';
   position: absolute;
@@ -1350,4 +1677,86 @@ input:invalid+span:after {
   color: red;
   letter-spacing: -1px;
 }
+.inputError {
+  color: red;
+  align-items: center;
+}
+.inputError::before {
+  position: unset;
+  margin-right: 5px;
+}
+.inputpalette > div, .inputchoose > div, .inputError {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0 3px;
+}
+.inputpalette > div input{
+  display: none;
+}
+.inputpalette > div label{
+  height: 35px;
+  width: 35px;
+  display: inline-block;
+  border-radius: 8px;
+  position: relative;
+  border: 3px solid transparent;
+  padding: 0;
+  margin: -1.5px;
+}
+.inputpalette > div input[type="radio"]:checked+label, .inputchoose .selected.inputchooseWidgetWrapper {
+  border: 3px solid var(--VTTblue);
+}
+.inputpalette > div input[type="radio"]:checked+label::after, .inputchoose .selected.inputchooseWidgetWrapper::after {
+  font-family: 'Material Icons';
+  line-height: 1.25em;
+  text-align: center;
+  height: 1.25em;
+  width: 1.25em;
+  background: var(--VTTblue);
+  color: white;
+  border-top-right-radius: 40%;
+  border-top-left-radius: 50%;
+  border-bottom-right-radius: 50%;
+  border-bottom-left-radius: 50%;
+  content: 'check';
+  position: absolute;
+  top: -3px;
+  right: -3px;
+  border: 2px solid white;
+  z-index: -1;
+}
+.inputpalette > div label > div{
+  display: block;
+  content: '';
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+  position: absolute;
+  border: 2px solid white;
+  overflow: hidden;
+  background-color: inherit;
+  border-radius: 5px;
+  z-index: -2;
+}
 
+.inputchoose .inputchooseWidgetWrapper {
+  position: relative;
+  border: 3px solid transparent;
+  border-radius: 8px;
+}
+
+.inputchoose .selected.inputchooseWidgetWrapper {
+  overflow: hidden;
+}
+.inputchoose .selected.inputchooseWidgetWrapper::after {
+  border: unset;
+  z-index: 2;
+}
+
+.inputchoose .inputchooseWidgetWrapper > .widget {
+  position: relative !important;
+  transform-origin: top left !important;
+  z-index: 1 !important;
+}

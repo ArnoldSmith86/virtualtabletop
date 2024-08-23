@@ -1,0 +1,2102 @@
+{
+  "_meta": {
+    "version": 15,
+    "info": {
+      "name": "Logicards",
+      "lastUpdate": 1724361627512,
+      "image": "/assets/563010823_28494",
+      "showName": false,
+      "time": "5",
+      "mode": "solo",
+      "skill": "",
+      "description": "Flip a grid of 3x3 cards by performing their actions.",
+      "similarImage": "",
+      "similarName": "",
+      "year": "",
+      "similarDesigner": "D. Teuber",
+      "similarAwards": "",
+      "bgg": "https://boardgamegeek.com/thread/3224205/wip-logicards-1-player-puzzle-5-minutes-2024-9-car",
+      "rules": "",
+      "ruleText": "",
+      "helpText": "",
+      "attribution": "<div>Room layout and original cards by D. Teuber with tweaks by ArnoldSmith86. Available as&nbsp;<span>CC BY</span><span>-NC</span><span>-ND</span> 4.0.</div><div><br></div><div><span>Icons are used under the Noun Project subscription account program license</span><span></span>.</div>",
+      "players": "1",
+      "language": "en-US",
+      "variant": "",
+      "variantImage": ""
+    }
+  },
+  "54084aab-132f-4ea1-b3b2-e42b7b2624d6": {
+    "id": "54084aab-132f-4ea1-b3b2-e42b7b2624d6",
+    "x": 478,
+    "y": 663,
+    "z": 14069,
+    "type": "holder",
+    "width": 198,
+    "height": 300,
+    "dropTarget": {
+      "width": 186
+    },
+    "inheritFrom": {
+      "a03ac30f-f074-4529-804b-4c9021211c68": "enterRoutine"
+    }
+  },
+  "37b987eb-c179-4cd9-869a-a8d35252c2a7": {
+    "id": "37b987eb-c179-4cd9-869a-a8d35252c2a7",
+    "x": 106,
+    "y": 422,
+    "z": 25877,
+    "type": "card",
+    "deck": "4b70a3fc-284b-4ae1-a4be-65a9d71753c6",
+    "cardType": "teal",
+    "resetProperties": {
+      "parent": null,
+      "x": 106,
+      "y": 422
+    }
+  },
+  "1a5007e4-c20f-40eb-88c2-226b062b06be": {
+    "id": "1a5007e4-c20f-40eb-88c2-226b062b06be",
+    "z": 26756,
+    "type": "card",
+    "deck": "f2bcdd00-2fc2-4f3a-b3be-e797b76704db",
+    "cardType": "type-1871ecb0-bcf4-4f93-9150-b75d41d28ecc",
+    "parent": "nm2l"
+  },
+  "dfef03aa-1393-4b9a-8123-9f75ac03b935": {
+    "id": "dfef03aa-1393-4b9a-8123-9f75ac03b935",
+    "x": 1672,
+    "y": -91,
+    "z": 22063,
+    "type": "holder",
+    "width": 198,
+    "height": 300,
+    "dropTarget": [
+      {
+        "deck": "9bf0de13-e0d5-4f72-9032-4a5a5734e1c7"
+      }
+    ],
+    "dropOffsetX": 6,
+    "dropOffsetY": 6,
+    "inheritChildZ": true
+  },
+  "24c26259-49e9-4bf6-85f1-dea9da2f845a": {
+    "id": "24c26259-49e9-4bf6-85f1-dea9da2f845a",
+    "x": 973.6,
+    "y": 136.4,
+    "z": 22055,
+    "type": "deck",
+    "cardTypes": {
+      "chooser": {
+        "sortingOrder": 1
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "width": 644,
+            "height": 911,
+            "type": "image",
+            "color": "white",
+            "value": ""
+          },
+          {
+            "type": "text",
+            "x": 0,
+            "y": 14.41,
+            "fontSize": "22",
+            "value": "Option 1",
+            "textAlign": "center",
+            "textFont": null,
+            "color": "rgb(0,0,0)",
+            "width": 644
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "value": "/assets/-435536486_84730",
+            "color": "rgba(255, 255, 255, 0)",
+            "width": 644,
+            "height": 911
+          }
+        ],
+        "border": false,
+        "radius": false
+      },
+      {
+        "objects": [
+          {
+            "width": 644,
+            "height": 911,
+            "type": "image",
+            "color": "white",
+            "value": ""
+          },
+          {
+            "type": "text",
+            "x": 0,
+            "y": 14.41,
+            "fontSize": "22",
+            "value": "Option 2",
+            "textAlign": "center",
+            "textFont": null,
+            "color": "rgb(0,0,0)",
+            "width": 644
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "value": "/assets/-53512752_104728",
+            "color": "rgba(255, 255, 255, 0)",
+            "width": 644,
+            "height": 911
+          }
+        ],
+        "border": false,
+        "radius": false
+      }
+    ],
+    "cardDefaults": {
+      "width": 644,
+      "height": 911,
+      "movable": false,
+      "borderRadius": 12,
+      "css": "border: 4px solid #dedede"
+    }
+  },
+  "1933fabc-c12d-4214-a792-292401291d27": {
+    "id": "1933fabc-c12d-4214-a792-292401291d27",
+    "x": 56,
+    "y": 107,
+    "z": 14121,
+    "type": "deck",
+    "parent": "54227317-badc-41a0-8066-43f3520d9749",
+    "cardTypes": {
+      "type-8ef24f54-6a3f-4bda-96f1-13c21d694998": {
+        "image": "/assets/-1661065634_16028",
+        "image1": "/assets/88726787_18932",
+        "label": "Slide10.JPG",
+        "sortingOrder": 1
+      },
+      "type-1871ecb0-bcf4-4f93-9150-b75d41d28ecc": {
+        "image": "/assets/422744326_15984",
+        "image1": "/assets/1091078523_16248",
+        "label": "Slide11.JPG",
+        "sortingOrder": 2
+      },
+      "type-f9a73779-d3a2-40f6-8aae-e9f3685fd99a": {
+        "image": "/assets/-1610775087_16094",
+        "image1": "/assets/-1582815433_18922",
+        "label": "Slide3.JPG",
+        "sortingOrder": 3
+      },
+      "type-0545fd01-3a49-4252-839f-0f68f8ca2bd9": {
+        "image": "/assets/1710002407_13276",
+        "image1": "/assets/421599499_15714",
+        "label": "Slide4.JPG",
+        "sortingOrder": 4
+      },
+      "type-121703a0-7826-474f-9810-a12581a52f48": {
+        "image": "/assets/-829026639_13144",
+        "image1": "/assets/703306067_16578",
+        "label": "Slide5.JPG",
+        "sortingOrder": 5
+      },
+      "type-6aa76d70-4925-49ce-a875-9c1b721b562e": {
+        "image": "/assets/-1522502723_12996",
+        "image1": "/assets/418278444_16004",
+        "label": "Slide15.JPG",
+        "sortingOrder": 6
+      },
+      "type-cb961120-e98f-433c-bdca-ff300a4e8e42": {
+        "image": "/assets/2135965720_15566",
+        "image1": "/assets/1895291012_16546",
+        "label": "Slide16.JPG",
+        "sortingOrder": 7,
+        "isSwap": true
+      },
+      "type-0fda5b80-ef47-4d11-88d4-ecf097a57022": {
+        "image": "/assets/1033744328_13504",
+        "image1": "/assets/1592826099_16064",
+        "label": "Slide17.JPG",
+        "sortingOrder": 8
+      },
+      "type-1af0fce6-5f73-45e3-a945-d2d59f8105b1": {
+        "image": "/assets/-1821820750_12526",
+        "image1": "/assets/-1035371453_16160",
+        "label": "Slide9.JPG",
+        "sortingOrder": 9
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "width": 186,
+            "height": 288,
+            "type": "image",
+            "color": "white",
+            "value": ""
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "rgba(255, 255, 255, 0)",
+            "width": 186,
+            "height": 288,
+            "dynamicProperties": {
+              "value": "image1"
+            }
+          }
+        ],
+        "radius": 8
+      },
+      {
+        "objects": [
+          {
+            "width": 186,
+            "height": 288,
+            "type": "image",
+            "color": "white",
+            "value": ""
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "white",
+            "width": 186,
+            "height": 288,
+            "dynamicProperties": {
+              "value": "image"
+            }
+          }
+        ],
+        "radius": 8
+      }
+    ],
+    "cardDefaults": {
+      "width": 186,
+      "height": 288,
+      "dropTarget": {
+        "type": "card",
+        "width": 70,
+        "height": 70
+      },
+      "dropLimit": -1
+    }
+  },
+  "b0028429-0e48-49d6-b513-bbf809c88c36": {
+    "id": "b0028429-0e48-49d6-b513-bbf809c88c36",
+    "z": 26765,
+    "type": "card",
+    "deck": "1933fabc-c12d-4214-a792-292401291d27",
+    "cardType": "type-121703a0-7826-474f-9810-a12581a52f48",
+    "parent": "b7gm"
+  },
+  "62af10cc-a542-4002-b249-dae0eeaeaa0e": {
+    "id": "62af10cc-a542-4002-b249-dae0eeaeaa0e",
+    "x": 98,
+    "y": 291,
+    "z": 14284,
+    "type": "deck",
+    "cardTypes": {
+      "white": {
+        "label": "White",
+        "image": "/i/game-pieces/2D/Poker-2D.svg",
+        "value": "",
+        "imageLabelColor": "#fff8",
+        "imageColor": "#dae0df",
+        "sortingOrder": 1
+      },
+      "red": {
+        "label": "Red",
+        "image": "/i/game-pieces/2D/Poker-2D.svg",
+        "value": "5",
+        "imageLabelColor": "#fff8",
+        "imageColor": "#ed1b43",
+        "sortingOrder": 2
+      },
+      "blue": {
+        "label": "Blue",
+        "image": "/i/game-pieces/2D/Poker-2D.svg",
+        "value": "10",
+        "imageLabelColor": "#fff8",
+        "imageColor": "#5894f4",
+        "sortingOrder": 3
+      },
+      "green": {
+        "label": "Green",
+        "image": "/i/game-pieces/2D/Poker-2D.svg",
+        "value": "25",
+        "imageLabelColor": "#fff8",
+        "imageColor": "#69d83a",
+        "sortingOrder": 4
+      },
+      "black": {
+        "label": "Black",
+        "image": "/i/game-pieces/2D/Poker-2D.svg",
+        "value": "100",
+        "imageLabelColor": "#fff8",
+        "imageColor": "#666565",
+        "sortingOrder": 5
+      },
+      "purple": {
+        "label": "Purple",
+        "image": "/i/game-pieces/2D/Poker-2D.svg",
+        "value": "500",
+        "imageLabelColor": "#fff8",
+        "imageColor": "#9458f4",
+        "sortingOrder": 6
+      },
+      "yellow": {
+        "label": "Yellow",
+        "image": "/i/game-pieces/2D/Poker-2D.svg",
+        "value": "1000",
+        "imageLabelColor": "#fff8",
+        "imageColor": "#ffce00",
+        "sortingOrder": 7
+      },
+      "orange": {
+        "label": "Orange",
+        "image": "/i/game-pieces/2D/Poker-2D.svg",
+        "imageLabelColor": "#fff8",
+        "imageColor": "#ff7b23",
+        "sortingOrder": 8
+      },
+      "peach": {
+        "label": "Peach",
+        "image": "/i/game-pieces/2D/Poker-2D.svg",
+        "imageLabelColor": "#fff8",
+        "imageColor": "#f2948c",
+        "sortingOrder": 9
+      },
+      "teal": {
+        "label": "Teal",
+        "image": "/i/game-pieces/2D/Poker-2D.svg",
+        "imageLabelColor": "#fff8",
+        "imageColor": "#2fd1cd",
+        "sortingOrder": 10
+      },
+      "pink": {
+        "label": "Pink",
+        "image": "/i/game-pieces/2D/Poker-2D.svg",
+        "imageLabelColor": "#fff8",
+        "imageColor": "#ff69b3",
+        "sortingOrder": 11
+      },
+      "brown": {
+        "label": "Brown",
+        "image": "/i/game-pieces/2D/Poker-2D.svg",
+        "imageLabelColor": "#fff8",
+        "imageColor": "#a8570e",
+        "sortingOrder": 12
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "width": 70,
+            "height": 70,
+            "type": "image",
+            "color": "transparent",
+            "value": ""
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "transparent",
+            "width": 70,
+            "height": 70,
+            "svgReplaces": {
+              "#primaryColor": "imageColor",
+              "#labelColor": "imageLabelColor"
+            },
+            "dynamicProperties": {
+              "value": "image"
+            }
+          },
+          {
+            "type": "image",
+            "x": 10.764818355640534,
+            "y": 12.06500956022944,
+            "value": "/assets/-1595951280_610",
+            "color": "rgba(255, 255, 255, 0)",
+            "width": 48.18355640535382,
+            "height": 45.04780114722766
+          }
+        ],
+        "border": false,
+        "radius": false
+      }
+    ],
+    "cardDefaults": {
+      "width": 70,
+      "height": 70
+    }
+  },
+  "f2bcdd00-2fc2-4f3a-b3be-e797b76704db": {
+    "id": "f2bcdd00-2fc2-4f3a-b3be-e797b76704db",
+    "x": 56,
+    "y": 107,
+    "z": 14137,
+    "type": "deck",
+    "parent": "786236ba-a611-4ec9-931e-d0b6a2b83f5b",
+    "cardTypes": {
+      "type-8ef24f54-6a3f-4bda-96f1-13c21d694998": {
+        "image": "/assets/501375593_13046",
+        "image1": "/assets/-834092639_10458",
+        "label": "Slide10.JPG",
+        "sortingOrder": 1
+      },
+      "type-1871ecb0-bcf4-4f93-9150-b75d41d28ecc": {
+        "image": "/assets/7495157_17440",
+        "image1": "/assets/-346578793_10876",
+        "label": "Slide11.JPG",
+        "sortingOrder": 2,
+        "isShuffle": true
+      },
+      "type-f9a73779-d3a2-40f6-8aae-e9f3685fd99a": {
+        "image": "/assets/136286774_17080",
+        "label": "Slide3.JPG",
+        "image1": "/assets/-1936574616_11102",
+        "sortingOrder": 3
+      },
+      "type-0545fd01-3a49-4252-839f-0f68f8ca2bd9": {
+        "image": "/assets/346636454_15648",
+        "label": "Slide4.JPG",
+        "image1": "/assets/-1630381315_11014",
+        "sortingOrder": 4,
+        "isSwap": true
+      },
+      "type-121703a0-7826-474f-9810-a12581a52f48": {
+        "image": "/assets/-1484968740_10178",
+        "label": "Slide5.JPG",
+        "image1": "/assets/-1301909217_10246",
+        "sortingOrder": 5
+      },
+      "type-6aa76d70-4925-49ce-a875-9c1b721b562e": {
+        "image": "/assets/-703934282_12958",
+        "image1": "/assets/-703707250_10856",
+        "label": "Slide15.JPG",
+        "sortingOrder": 6
+      },
+      "type-cb961120-e98f-433c-bdca-ff300a4e8e42": {
+        "image": "/assets/1141293042_11516",
+        "image1": "/assets/-1959898685_11304",
+        "label": "Slide16.JPG",
+        "sortingOrder": 7
+      },
+      "type-0fda5b80-ef47-4d11-88d4-ecf097a57022": {
+        "image": "/assets/-1710208771_11574",
+        "image1": "/assets/388950597_11794",
+        "label": "Slide17.JPG",
+        "sortingOrder": 8
+      },
+      "type-1af0fce6-5f73-45e3-a945-d2d59f8105b1": {
+        "image": "/assets/-103753685_9502",
+        "label": "Slide9.JPG",
+        "image1": "/assets/567693472_10728",
+        "sortingOrder": 9
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "width": 186,
+            "height": 288,
+            "type": "image",
+            "color": "white",
+            "value": ""
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "rgba(255, 255, 255, 0)",
+            "width": 186,
+            "height": 288,
+            "dynamicProperties": {
+              "value": "image1"
+            }
+          }
+        ],
+        "radius": 8
+      },
+      {
+        "objects": [
+          {
+            "width": 186,
+            "height": 288,
+            "type": "image",
+            "color": "white",
+            "value": ""
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "white",
+            "width": 186,
+            "height": 288,
+            "dynamicProperties": {
+              "value": "image"
+            }
+          }
+        ],
+        "radius": 8
+      }
+    ],
+    "cardDefaults": {
+      "width": 186,
+      "height": 288,
+      "dropTarget": {
+        "type": "card",
+        "width": 70,
+        "height": 70
+      },
+      "dropLimit": -1
+    }
+  },
+  "4e7884fe-ae3c-474f-96c3-0b47f4e19287": {
+    "id": "4e7884fe-ae3c-474f-96c3-0b47f4e19287",
+    "z": 26812,
+    "type": "card",
+    "deck": "9bf0de13-e0d5-4f72-9032-4a5a5734e1c7",
+    "cardType": "type-0545fd01-3a49-4252-839f-0f68f8ca2bd9",
+    "parent": "6abafe60-792d-40e7-9a15-56ad98e4a5a7",
+    "x": 4,
+    "y": 4
+  },
+  "4b70a3fc-284b-4ae1-a4be-65a9d71753c6": {
+    "id": "4b70a3fc-284b-4ae1-a4be-65a9d71753c6",
+    "x": 98,
+    "y": 414,
+    "z": 14289,
+    "type": "deck",
+    "cardTypes": {
+      "white": {
+        "label": "White",
+        "image": "/i/game-pieces/2D/Poker-2D.svg",
+        "value": "",
+        "imageLabelColor": "#fff8",
+        "imageColor": "#dae0df",
+        "sortingOrder": 1
+      },
+      "red": {
+        "label": "Red",
+        "image": "/i/game-pieces/2D/Poker-2D.svg",
+        "value": "5",
+        "imageLabelColor": "#fff8",
+        "imageColor": "#ed1b43",
+        "sortingOrder": 2
+      },
+      "blue": {
+        "label": "Blue",
+        "image": "/i/game-pieces/2D/Poker-2D.svg",
+        "value": "10",
+        "imageLabelColor": "#fff8",
+        "imageColor": "#5894f4",
+        "sortingOrder": 3
+      },
+      "green": {
+        "label": "Green",
+        "image": "/i/game-pieces/2D/Poker-2D.svg",
+        "value": "25",
+        "imageLabelColor": "#fff8",
+        "imageColor": "#69d83a",
+        "sortingOrder": 4
+      },
+      "black": {
+        "label": "Black",
+        "image": "/i/game-pieces/2D/Poker-2D.svg",
+        "value": "100",
+        "imageLabelColor": "#fff8",
+        "imageColor": "#666565",
+        "sortingOrder": 5
+      },
+      "purple": {
+        "label": "Purple",
+        "image": "/i/game-pieces/2D/Poker-2D.svg",
+        "value": "500",
+        "imageLabelColor": "#fff8",
+        "imageColor": "#9458f4",
+        "sortingOrder": 6
+      },
+      "yellow": {
+        "label": "Yellow",
+        "image": "/i/game-pieces/2D/Poker-2D.svg",
+        "value": "1000",
+        "imageLabelColor": "#fff8",
+        "imageColor": "#ffce00",
+        "sortingOrder": 7
+      },
+      "orange": {
+        "label": "Orange",
+        "image": "/i/game-pieces/2D/Poker-2D.svg",
+        "imageLabelColor": "#fff8",
+        "imageColor": "#ff7b23",
+        "sortingOrder": 8
+      },
+      "peach": {
+        "label": "Peach",
+        "image": "/i/game-pieces/2D/Poker-2D.svg",
+        "imageLabelColor": "#fff8",
+        "imageColor": "#f2948c",
+        "sortingOrder": 9
+      },
+      "teal": {
+        "label": "Teal",
+        "image": "/i/game-pieces/2D/Poker-2D.svg",
+        "imageLabelColor": "#fff8",
+        "imageColor": "#2fd1cd",
+        "sortingOrder": 10
+      },
+      "pink": {
+        "label": "Pink",
+        "image": "/i/game-pieces/2D/Poker-2D.svg",
+        "imageLabelColor": "#fff8",
+        "imageColor": "#ff69b3",
+        "sortingOrder": 11
+      },
+      "brown": {
+        "label": "Brown",
+        "image": "/i/game-pieces/2D/Poker-2D.svg",
+        "imageLabelColor": "#fff8",
+        "imageColor": "#a8570e",
+        "sortingOrder": 12
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "width": 70,
+            "height": 70,
+            "type": "image",
+            "color": "transparent",
+            "value": ""
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "transparent",
+            "width": 70,
+            "height": 70,
+            "svgReplaces": {
+              "#primaryColor": "imageColor",
+              "#labelColor": "imageLabelColor"
+            },
+            "dynamicProperties": {
+              "value": "image"
+            }
+          },
+          {
+            "type": "image",
+            "x": 12.581261950286835,
+            "y": 10.6118546845124,
+            "value": "/assets/37712133_712",
+            "color": "rgba(255, 255, 255, 0)",
+            "width": 45.37284894837478,
+            "height": 48.891013384321205
+          }
+        ],
+        "border": false,
+        "radius": false
+      }
+    ],
+    "cardDefaults": {
+      "width": 70,
+      "height": 70
+    }
+  },
+  "bac9232a-5fd2-4bd7-a0b5-ac0e489d0e31": {
+    "id": "bac9232a-5fd2-4bd7-a0b5-ac0e489d0e31",
+    "z": 26757,
+    "type": "card",
+    "deck": "f2bcdd00-2fc2-4f3a-b3be-e797b76704db",
+    "cardType": "type-8ef24f54-6a3f-4bda-96f1-13c21d694998",
+    "parent": "nm2l"
+  },
+  "dc111510-169a-461e-9ff0-102f1bd21333": {
+    "id": "dc111510-169a-461e-9ff0-102f1bd21333",
+    "x": 688,
+    "y": 663,
+    "z": 14070,
+    "type": "holder",
+    "width": 198,
+    "height": 300,
+    "dropTarget": {
+      "width": 186
+    },
+    "inheritFrom": {
+      "a03ac30f-f074-4529-804b-4c9021211c68": "enterRoutine"
+    }
+  },
+  "c81873d1-a878-4c86-b5f8-e5c30539224d": {
+    "id": "c81873d1-a878-4c86-b5f8-e5c30539224d",
+    "x": 56,
+    "y": 107.00000000000003,
+    "z": 14076,
+    "type": "deck",
+    "parent": "386ce468-3c22-42a9-a68e-9fd11e12b271",
+    "cardTypes": {
+      "type-8ef24f54-6a3f-4bda-96f1-13c21d694998": {
+        "image": "/assets/-1190722859_17024",
+        "image1": "/assets/2095224779_17952",
+        "label": "Slide10.JPG",
+        "sortingOrder": 1,
+        "isShuffle": true
+      },
+      "type-1871ecb0-bcf4-4f93-9150-b75d41d28ecc": {
+        "image": "/assets/1974493471_15056",
+        "image1": "/assets/-737477532_18656",
+        "label": "Slide11.JPG",
+        "sortingOrder": 2
+      },
+      "type-f9a73779-d3a2-40f6-8aae-e9f3685fd99a": {
+        "image": "/assets/601258697_13574",
+        "label": "Slide3.JPG",
+        "image1": "/assets/-1011038330_16926",
+        "sortingOrder": 3
+      },
+      "type-0545fd01-3a49-4252-839f-0f68f8ca2bd9": {
+        "image": "/assets/-1330162516_11538",
+        "label": "Slide4.JPG",
+        "image1": "/assets/1011113855_15612",
+        "sortingOrder": 4
+      },
+      "type-121703a0-7826-474f-9810-a12581a52f48": {
+        "image": "/assets/-308405528_16372",
+        "label": "Slide5.JPG",
+        "image1": "/assets/854392933_18652",
+        "sortingOrder": 5,
+        "isSwap": true
+      },
+      "type-6aa76d70-4925-49ce-a875-9c1b721b562e": {
+        "image": "/assets/1948535407_13404",
+        "image1": "/assets/1173579931_16116",
+        "label": "Slide15.JPG",
+        "sortingOrder": 6
+      },
+      "type-cb961120-e98f-433c-bdca-ff300a4e8e42": {
+        "image": "/assets/88558060_19796",
+        "image1": "/assets/1687822878_21104",
+        "label": "Slide16.JPG",
+        "sortingOrder": 7
+      },
+      "type-0fda5b80-ef47-4d11-88d4-ecf097a57022": {
+        "image": "/assets/-1148842775_20242",
+        "image1": "/assets/-1238626389_22136",
+        "label": "Slide17.JPG",
+        "sortingOrder": 8
+      },
+      "type-1af0fce6-5f73-45e3-a945-d2d59f8105b1": {
+        "image": "/assets/-1342640714_18966",
+        "label": "Slide9.JPG",
+        "image1": "/assets/1681634888_22620",
+        "sortingOrder": 9
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "width": 186,
+            "height": 288,
+            "type": "image",
+            "color": "white",
+            "value": ""
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "rgba(255, 255, 255, 0)",
+            "width": 186,
+            "height": 288,
+            "dynamicProperties": {
+              "value": "image1"
+            }
+          }
+        ],
+        "radius": 8
+      },
+      {
+        "objects": [
+          {
+            "width": 186,
+            "height": 288,
+            "type": "image",
+            "color": "white",
+            "value": ""
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "white",
+            "width": 186,
+            "height": 288,
+            "dynamicProperties": {
+              "value": "image"
+            }
+          }
+        ],
+        "radius": 8
+      }
+    ],
+    "cardDefaults": {
+      "width": 186,
+      "height": 288,
+      "dropTarget": {
+        "type": "card",
+        "width": 70,
+        "height": 70
+      },
+      "dropLimit": -1
+    }
+  },
+  "35fd3cab-3b00-4c25-9849-6508fee1aa1c": {
+    "id": "35fd3cab-3b00-4c25-9849-6508fee1aa1c",
+    "z": 26817,
+    "type": "card",
+    "deck": "9bf0de13-e0d5-4f72-9032-4a5a5734e1c7",
+    "cardType": "type-f9a73779-d3a2-40f6-8aae-e9f3685fd99a",
+    "parent": "c928b918-e2dd-4c3a-89dc-6a692953049b",
+    "x": 4,
+    "y": 4
+  },
+  "09b69230-521c-47a7-a44a-0378adf8da11": {
+    "id": "09b69230-521c-47a7-a44a-0378adf8da11",
+    "z": 26766,
+    "type": "card",
+    "deck": "1933fabc-c12d-4214-a792-292401291d27",
+    "cardType": "type-1af0fce6-5f73-45e3-a945-d2d59f8105b1",
+    "parent": "b7gm"
+  },
+  "fcbeaff0-7d16-454f-993c-55689b925543": {
+    "id": "fcbeaff0-7d16-454f-993c-55689b925543",
+    "z": 26730,
+    "type": "card",
+    "deck": "c81873d1-a878-4c86-b5f8-e5c30539224d",
+    "cardType": "type-6aa76d70-4925-49ce-a875-9c1b721b562e",
+    "parent": "nkzm"
+  },
+  "3247b0c8-c52b-4986-9ff8-c1b666816b20": {
+    "id": "3247b0c8-c52b-4986-9ff8-c1b666816b20",
+    "z": 26731,
+    "type": "card",
+    "deck": "c81873d1-a878-4c86-b5f8-e5c30539224d",
+    "cardType": "type-f9a73779-d3a2-40f6-8aae-e9f3685fd99a",
+    "parent": "nkzm"
+  },
+  "4b6eb0d5-93bf-4671-abb7-ffd941ddc209": {
+    "id": "4b6eb0d5-93bf-4671-abb7-ffd941ddc209",
+    "x": 912,
+    "y": 44,
+    "z": 22059,
+    "type": "card",
+    "deck": "24c26259-49e9-4bf6-85f1-dea9da2f845a",
+    "cardType": "chooser"
+  },
+  "dafa88fd-f391-4f7a-8ad7-cb342865abf2": {
+    "id": "dafa88fd-f391-4f7a-8ad7-cb342865abf2",
+    "z": 26758,
+    "type": "card",
+    "deck": "f2bcdd00-2fc2-4f3a-b3be-e797b76704db",
+    "cardType": "type-6aa76d70-4925-49ce-a875-9c1b721b562e",
+    "parent": "nm2l"
+  },
+  "84719430-851b-4b45-bd3a-2bfd0d48a8ec": {
+    "id": "84719430-851b-4b45-bd3a-2bfd0d48a8ec",
+    "z": 26759,
+    "type": "card",
+    "deck": "f2bcdd00-2fc2-4f3a-b3be-e797b76704db",
+    "cardType": "type-f9a73779-d3a2-40f6-8aae-e9f3685fd99a",
+    "parent": "nm2l"
+  },
+  "906dfdd4-b588-4f34-afd3-6f7160622292": {
+    "id": "906dfdd4-b588-4f34-afd3-6f7160622292",
+    "x": 136,
+    "y": 573,
+    "z": 15098,
+    "type": "label",
+    "text": "Shuffle\n- Spring #3",
+    "css": {
+      "default": {
+        "line-height": "16px",
+        "font-size": "16px",
+        "font-weight": "normal",
+        "text-align": "left"
+      },
+      " textarea": {
+        "letter-spacing": "-1px"
+      }
+    },
+    "height": 63,
+    "width": 120
+  },
+  "5adbb5b0-e21e-4642-ba96-5b1fc6318629": {
+    "id": "5adbb5b0-e21e-4642-ba96-5b1fc6318629",
+    "z": 26760,
+    "type": "card",
+    "deck": "f2bcdd00-2fc2-4f3a-b3be-e797b76704db",
+    "cardType": "type-0fda5b80-ef47-4d11-88d4-ecf097a57022",
+    "parent": "nm2l"
+  },
+  "667da7ef-19f3-4285-99ff-6a192c164863": {
+    "id": "667da7ef-19f3-4285-99ff-6a192c164863",
+    "x": 44,
+    "y": 664,
+    "z": 15095,
+    "type": "button",
+    "text": "Redeal\nfrom\nHolder",
+    "clickRoutine": [
+      {
+        "func": "SHUFFLE",
+        "holder": "46c2cd09-6e2b-4772-afdf-4a970805db6e"
+      },
+      {
+        "func": "MOVE",
+        "to": [
+          "a03ac30f-f074-4529-804b-4c9021211c68",
+          "9fe135e0-6a5e-4cca-8291-9e83e07625d9",
+          "7777a503-ca20-4e61-bdca-d864f60ff924",
+          "456428e4-51c1-4563-be7b-d71e2a3fb85b",
+          "c928b918-e2dd-4c3a-89dc-6a692953049b",
+          "6abafe60-792d-40e7-9a15-56ad98e4a5a7",
+          "54084aab-132f-4ea1-b3b2-e42b7b2624d6",
+          "dc111510-169a-461e-9ff0-102f1bd21333",
+          "83176346-78d7-4160-98d4-51a4d896a175"
+        ],
+        "fillTo": 1,
+        "from": "46c2cd09-6e2b-4772-afdf-4a970805db6e"
+      }
+    ]
+  },
+  "6185868c-7bc1-44de-b167-cb1df643a779": {
+    "id": "6185868c-7bc1-44de-b167-cb1df643a779",
+    "z": 26767,
+    "type": "card",
+    "deck": "1933fabc-c12d-4214-a792-292401291d27",
+    "cardType": "type-f9a73779-d3a2-40f6-8aae-e9f3685fd99a",
+    "parent": "b7gm"
+  },
+  "83d27406-83ce-424a-9b31-b23c75d115f5": {
+    "id": "83d27406-83ce-424a-9b31-b23c75d115f5",
+    "z": 26732,
+    "type": "card",
+    "deck": "c81873d1-a878-4c86-b5f8-e5c30539224d",
+    "cardType": "type-1871ecb0-bcf4-4f93-9150-b75d41d28ecc",
+    "parent": "nkzm"
+  },
+  "83176346-78d7-4160-98d4-51a4d896a175": {
+    "id": "83176346-78d7-4160-98d4-51a4d896a175",
+    "z": 14239,
+    "type": "holder",
+    "width": 198,
+    "height": 300,
+    "x": 268,
+    "y": 44,
+    "dropTarget": {
+      "width": 186
+    },
+    "inheritFrom": {
+      "a03ac30f-f074-4529-804b-4c9021211c68": "enterRoutine"
+    }
+  },
+  "54227317-badc-41a0-8066-43f3520d9749": {
+    "id": "54227317-badc-41a0-8066-43f3520d9749",
+    "x": 1665,
+    "y": 829,
+    "z": 14903,
+    "type": "holder",
+    "width": 198,
+    "height": 300,
+    "dropTarget": [
+      {
+        "deck": "1933fabc-c12d-4214-a792-292401291d27"
+      }
+    ],
+    "dropOffsetX": 6,
+    "dropOffsetY": 6,
+    "inheritChildZ": true
+  },
+  "e0478990-1556-4b63-887d-b1b363ad7ec3": {
+    "id": "e0478990-1556-4b63-887d-b1b363ad7ec3",
+    "z": 26768,
+    "type": "card",
+    "deck": "1933fabc-c12d-4214-a792-292401291d27",
+    "cardType": "type-8ef24f54-6a3f-4bda-96f1-13c21d694998",
+    "parent": "b7gm"
+  },
+  "f2d78dcc-4841-4f3e-986b-b22f6bebfc18": {
+    "id": "f2d78dcc-4841-4f3e-986b-b22f6bebfc18",
+    "z": 26769,
+    "type": "card",
+    "deck": "1933fabc-c12d-4214-a792-292401291d27",
+    "cardType": "type-1871ecb0-bcf4-4f93-9150-b75d41d28ecc",
+    "parent": "b7gm"
+  },
+  "cbf0fe47-30a7-4f32-9aef-2b723395ac07": {
+    "id": "cbf0fe47-30a7-4f32-9aef-2b723395ac07",
+    "x": 40,
+    "y": 385,
+    "z": 14288,
+    "type": "label",
+    "text": "Forecast Token",
+    "css": {
+      "default": {
+        "line-height": "16px",
+        "font-size": "16px",
+        "font-weight": "normal",
+        "text-align": "center"
+      },
+      " textarea": {
+        "letter-spacing": "-1px"
+      }
+    },
+    "width": 200,
+    "height": 63
+  },
+  "6abafe60-792d-40e7-9a15-56ad98e4a5a7": {
+    "id": "6abafe60-792d-40e7-9a15-56ad98e4a5a7",
+    "y": 663,
+    "z": 14068,
+    "type": "holder",
+    "width": 198,
+    "height": 300,
+    "x": 268,
+    "dropTarget": {
+      "width": 186
+    },
+    "inheritFrom": {
+      "a03ac30f-f074-4529-804b-4c9021211c68": "enterRoutine"
+    }
+  },
+  "fb5e56ff-bfc9-499e-bb29-21d5bdf466e6": {
+    "id": "fb5e56ff-bfc9-499e-bb29-21d5bdf466e6",
+    "x": 98,
+    "y": 160,
+    "z": 14275,
+    "type": "deck",
+    "cardTypes": {
+      "white": {
+        "label": "White",
+        "image": "/i/game-pieces/2D/Poker-2D.svg",
+        "value": "",
+        "imageLabelColor": "#fff8",
+        "imageColor": "#dae0df",
+        "sortingOrder": 1
+      },
+      "red": {
+        "label": "Red",
+        "image": "/i/game-pieces/2D/Poker-2D.svg",
+        "value": "5",
+        "imageLabelColor": "#fff8",
+        "imageColor": "#ed1b43",
+        "sortingOrder": 2
+      },
+      "blue": {
+        "label": "Blue",
+        "image": "/i/game-pieces/2D/Poker-2D.svg",
+        "value": "10",
+        "imageLabelColor": "#fff8",
+        "imageColor": "#5894f4",
+        "sortingOrder": 3
+      },
+      "green": {
+        "label": "Green",
+        "image": "/i/game-pieces/2D/Poker-2D.svg",
+        "value": "25",
+        "imageLabelColor": "#fff8",
+        "imageColor": "#69d83a",
+        "sortingOrder": 4
+      },
+      "black": {
+        "label": "Black",
+        "image": "/i/game-pieces/2D/Poker-2D.svg",
+        "value": "100",
+        "imageLabelColor": "#fff8",
+        "imageColor": "#666565",
+        "sortingOrder": 5
+      },
+      "purple": {
+        "label": "Purple",
+        "image": "/i/game-pieces/2D/Poker-2D.svg",
+        "value": "500",
+        "imageLabelColor": "#fff8",
+        "imageColor": "#9458f4",
+        "sortingOrder": 6
+      },
+      "yellow": {
+        "label": "Yellow",
+        "image": "/i/game-pieces/2D/Poker-2D.svg",
+        "value": "1000",
+        "imageLabelColor": "#fff8",
+        "imageColor": "#ffce00",
+        "sortingOrder": 7
+      },
+      "orange": {
+        "label": "Orange",
+        "image": "/i/game-pieces/2D/Poker-2D.svg",
+        "imageLabelColor": "#fff8",
+        "imageColor": "#ff7b23",
+        "sortingOrder": 8
+      },
+      "peach": {
+        "label": "Peach",
+        "image": "/i/game-pieces/2D/Poker-2D.svg",
+        "imageLabelColor": "#fff8",
+        "imageColor": "#f2948c",
+        "sortingOrder": 9
+      },
+      "teal": {
+        "label": "Teal",
+        "image": "/i/game-pieces/2D/Poker-2D.svg",
+        "imageLabelColor": "#fff8",
+        "imageColor": "#2fd1cd",
+        "sortingOrder": 10
+      },
+      "pink": {
+        "label": "Pink",
+        "image": "/i/game-pieces/2D/Poker-2D.svg",
+        "imageLabelColor": "#fff8",
+        "imageColor": "#ff69b3",
+        "sortingOrder": 11
+      },
+      "brown": {
+        "label": "Brown",
+        "image": "/i/game-pieces/2D/Poker-2D.svg",
+        "imageLabelColor": "#fff8",
+        "imageColor": "#a8570e",
+        "sortingOrder": 12
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "width": 70,
+            "height": 70,
+            "type": "image",
+            "color": "transparent",
+            "value": ""
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "transparent",
+            "width": 70,
+            "height": 70,
+            "svgReplaces": {
+              "#primaryColor": "imageColor",
+              "#labelColor": "imageLabelColor"
+            },
+            "dynamicProperties": {
+              "value": "image"
+            }
+          },
+          {
+            "type": "image",
+            "x": 12.581261950286835,
+            "y": 10.6118546845124,
+            "value": "/assets/-1257697523_544",
+            "color": "rgba(255, 255, 255, 0)",
+            "width": 45.37284894837478,
+            "height": 48.891013384321205
+          }
+        ],
+        "border": false,
+        "radius": false
+      }
+    ],
+    "cardDefaults": {
+      "width": 70,
+      "height": 70
+    }
+  },
+  "8aca61d9-85cd-456b-8c14-e08d0d1c8f32": {
+    "id": "8aca61d9-85cd-456b-8c14-e08d0d1c8f32",
+    "z": 26809,
+    "type": "card",
+    "deck": "9bf0de13-e0d5-4f72-9032-4a5a5734e1c7",
+    "cardType": "type-6aa76d70-4925-49ce-a875-9c1b721b562e",
+    "parent": "54084aab-132f-4ea1-b3b2-e42b7b2624d6",
+    "x": 4,
+    "y": 4,
+    "activeFace": 1
+  },
+  "8431c5ea-f9c5-409a-8297-0aa80f40ed3e": {
+    "id": "8431c5ea-f9c5-409a-8297-0aa80f40ed3e",
+    "z": 26770,
+    "type": "card",
+    "deck": "1933fabc-c12d-4214-a792-292401291d27",
+    "cardType": "type-6aa76d70-4925-49ce-a875-9c1b721b562e",
+    "parent": "b7gm"
+  },
+  "e9242097-8c9e-466f-b7d1-6002081d82fb": {
+    "id": "e9242097-8c9e-466f-b7d1-6002081d82fb",
+    "z": 26761,
+    "type": "card",
+    "deck": "f2bcdd00-2fc2-4f3a-b3be-e797b76704db",
+    "cardType": "type-121703a0-7826-474f-9810-a12581a52f48",
+    "parent": "nm2l"
+  },
+  "55cea4f1-52f5-4e31-856f-ae63f54e9d26": {
+    "id": "55cea4f1-52f5-4e31-856f-ae63f54e9d26",
+    "z": 26733,
+    "type": "card",
+    "deck": "c81873d1-a878-4c86-b5f8-e5c30539224d",
+    "cardType": "type-cb961120-e98f-433c-bdca-ff300a4e8e42",
+    "parent": "nkzm"
+  },
+  "46c2cd09-6e2b-4772-afdf-4a970805db6e": {
+    "id": "46c2cd09-6e2b-4772-afdf-4a970805db6e",
+    "x": 44,
+    "y": 770,
+    "z": 17789,
+    "type": "holder",
+    "width": 198,
+    "height": 300,
+    "inheritChildZ": true
+  },
+  "514ee438-b56d-49db-84ed-18902ccd1d20": {
+    "id": "514ee438-b56d-49db-84ed-18902ccd1d20",
+    "z": 26734,
+    "type": "card",
+    "deck": "c81873d1-a878-4c86-b5f8-e5c30539224d",
+    "cardType": "type-1af0fce6-5f73-45e3-a945-d2d59f8105b1",
+    "parent": "nkzm"
+  },
+  "456428e4-51c1-4563-be7b-d71e2a3fb85b": {
+    "id": "456428e4-51c1-4563-be7b-d71e2a3fb85b",
+    "x": 478,
+    "y": 354,
+    "z": 14066,
+    "type": "holder",
+    "width": 198,
+    "height": 300,
+    "dropTarget": {
+      "width": 186
+    },
+    "inheritFrom": {
+      "a03ac30f-f074-4529-804b-4c9021211c68": "enterRoutine"
+    }
+  },
+  "e6639efc-4174-4435-8957-442f2a781cba": {
+    "id": "e6639efc-4174-4435-8957-442f2a781cba",
+    "z": 26813,
+    "type": "card",
+    "deck": "9bf0de13-e0d5-4f72-9032-4a5a5734e1c7",
+    "cardType": "type-121703a0-7826-474f-9810-a12581a52f48",
+    "parent": "456428e4-51c1-4563-be7b-d71e2a3fb85b",
+    "x": 4,
+    "y": 4
+  },
+  "9fe135e0-6a5e-4cca-8291-9e83e07625d9": {
+    "id": "9fe135e0-6a5e-4cca-8291-9e83e07625d9",
+    "x": 688,
+    "z": 14064,
+    "type": "holder",
+    "width": 198,
+    "height": 300,
+    "dropOffsetX": 6,
+    "dropOffsetY": 6,
+    "y": 44,
+    "dropTarget": {
+      "width": 186
+    },
+    "inheritFrom": {
+      "a03ac30f-f074-4529-804b-4c9021211c68": "enterRoutine"
+    }
+  },
+  "9bf0de13-e0d5-4f72-9032-4a5a5734e1c7": {
+    "id": "9bf0de13-e0d5-4f72-9032-4a5a5734e1c7",
+    "x": 56,
+    "y": 107,
+    "z": 22057,
+    "type": "deck",
+    "parent": "dfef03aa-1393-4b9a-8123-9f75ac03b935",
+    "cardTypes": {
+      "type-8ef24f54-6a3f-4bda-96f1-13c21d694998": {
+        "image": "/assets/-1950621504_14212",
+        "image1": "/assets/886277144_15318",
+        "label": "Slide10.JPG",
+        "sortingOrder": 1
+      },
+      "type-1871ecb0-bcf4-4f93-9150-b75d41d28ecc": {
+        "image": "/assets/-419875271_15658",
+        "image1": "/assets/-1119020539_16394",
+        "label": "Slide11.JPG",
+        "sortingOrder": 2
+      },
+      "type-f9a73779-d3a2-40f6-8aae-e9f3685fd99a": {
+        "image": "/assets/1282564354_12432",
+        "image1": "/assets/578613255_12222",
+        "label": "Slide3.JPG",
+        "sortingOrder": 3,
+        "isShuffle": true
+      },
+      "type-0545fd01-3a49-4252-839f-0f68f8ca2bd9": {
+        "image": "/assets/1956354088_9476",
+        "image1": "/assets/1146283300_11342",
+        "label": "Slide4.JPG",
+        "sortingOrder": 4
+      },
+      "type-121703a0-7826-474f-9810-a12581a52f48": {
+        "image": "/assets/1791589736_10228",
+        "image1": "/assets/32503048_11486",
+        "label": "Slide5.JPG",
+        "sortingOrder": 5
+      },
+      "type-6aa76d70-4925-49ce-a875-9c1b721b562e": {
+        "image": "/assets/1633079122_13112",
+        "image1": "/assets/1069785481_12538",
+        "label": "Slide15.JPG",
+        "sortingOrder": 6,
+        "isSwap": true
+      },
+      "type-cb961120-e98f-433c-bdca-ff300a4e8e42": {
+        "image": "/assets/-1151068621_15360",
+        "image1": "/assets/-233855369_16196",
+        "label": "Slide16.JPG",
+        "sortingOrder": 7
+      },
+      "type-0fda5b80-ef47-4d11-88d4-ecf097a57022": {
+        "image": "/assets/-601225665_14782",
+        "image1": "/assets/1426621092_15970",
+        "label": "Slide17.JPG",
+        "sortingOrder": 8
+      },
+      "type-1af0fce6-5f73-45e3-a945-d2d59f8105b1": {
+        "image": "/assets/-1725811191_9064",
+        "image1": "/assets/-1608705990_11674",
+        "label": "Slide9.JPG",
+        "sortingOrder": 9
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "width": 186,
+            "height": 288,
+            "type": "image",
+            "color": "white",
+            "value": ""
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "rgba(255, 255, 255, 0)",
+            "width": 186,
+            "height": 288,
+            "dynamicProperties": {
+              "value": "image1"
+            }
+          }
+        ],
+        "radius": 8
+      },
+      {
+        "objects": [
+          {
+            "width": 186,
+            "height": 288,
+            "type": "image",
+            "color": "white",
+            "value": ""
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "white",
+            "width": 186,
+            "height": 288,
+            "dynamicProperties": {
+              "value": "image"
+            }
+          }
+        ],
+        "radius": 8
+      }
+    ],
+    "cardDefaults": {
+      "width": 186,
+      "height": 288,
+      "dropTarget": {
+        "type": "card",
+        "width": 70,
+        "height": 70
+      },
+      "dropLimit": -1
+    }
+  },
+  "72eb2da0-dc35-4869-b842-65eb48446869": {
+    "id": "72eb2da0-dc35-4869-b842-65eb48446869",
+    "z": 26735,
+    "type": "card",
+    "deck": "c81873d1-a878-4c86-b5f8-e5c30539224d",
+    "cardType": "type-0545fd01-3a49-4252-839f-0f68f8ca2bd9",
+    "parent": "nkzm"
+  },
+  "61b7b4b3-f272-4367-a054-7de85a83d8e9": {
+    "id": "61b7b4b3-f272-4367-a054-7de85a83d8e9",
+    "x": 1230,
+    "y": 965,
+    "z": 8826,
+    "type": "label",
+    "text": "Click rules to see more",
+    "css": {
+      "default": {
+        "line-height": "24px",
+        "font-size": "24px",
+        "font-weight": "bold",
+        "text-align": "center"
+      },
+      " textarea": {
+        "letter-spacing": "-1px"
+      }
+    },
+    "width": 443.8053097345133,
+    "height": 91
+  },
+  "27569c25-808f-42f2-9391-6ad2695326cf": {
+    "id": "27569c25-808f-42f2-9391-6ad2695326cf",
+    "z": 26810,
+    "type": "card",
+    "deck": "9bf0de13-e0d5-4f72-9032-4a5a5734e1c7",
+    "cardType": "type-1871ecb0-bcf4-4f93-9150-b75d41d28ecc",
+    "parent": "dc111510-169a-461e-9ff0-102f1bd21333",
+    "x": 4,
+    "y": 4
+  },
+  "c208db65-b065-4db6-8912-dd2e2edbe962": {
+    "id": "c208db65-b065-4db6-8912-dd2e2edbe962",
+    "z": 26736,
+    "type": "card",
+    "deck": "c81873d1-a878-4c86-b5f8-e5c30539224d",
+    "cardType": "type-121703a0-7826-474f-9810-a12581a52f48",
+    "parent": "nkzm"
+  },
+  "a03ac30f-f074-4529-804b-4c9021211c68": {
+    "id": "a03ac30f-f074-4529-804b-4c9021211c68",
+    "x": 478,
+    "z": 14063,
+    "type": "holder",
+    "width": 198,
+    "height": 300,
+    "y": 44,
+    "dropTarget": {
+      "width": 186
+    },
+    "enterRoutine": [
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "${thisID}"
+      },
+      {
+        "func": "COUNT"
+      },
+      {
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "operand2": 2,
+        "thenRoutine": [
+          {
+            "func": "MOVE",
+            "from": "${thisID}",
+            "to": "46c2cd09-6e2b-4772-afdf-4a970805db6e",
+            "count": 2
+          },
+          {
+            "func": "MOVE",
+            "from": "46c2cd09-6e2b-4772-afdf-4a970805db6e",
+            "to": "${thisID}",
+            "count": 1
+          },
+          {
+            "func": "MOVE",
+            "from": "46c2cd09-6e2b-4772-afdf-4a970805db6e",
+            "to": [
+              "83176346-78d7-4160-98d4-51a4d896a175",
+              "a03ac30f-f074-4529-804b-4c9021211c68",
+              "9fe135e0-6a5e-4cca-8291-9e83e07625d9",
+              "7777a503-ca20-4e61-bdca-d864f60ff924",
+              "456428e4-51c1-4563-be7b-d71e2a3fb85b",
+              "c928b918-e2dd-4c3a-89dc-6a692953049b",
+              "6abafe60-792d-40e7-9a15-56ad98e4a5a7",
+              "54084aab-132f-4ea1-b3b2-e42b7b2624d6",
+              "dc111510-169a-461e-9ff0-102f1bd21333"
+            ],
+            "fillTo": 1
+          }
+        ]
+      }
+    ]
+  },
+  "aaf17f0b-b960-47ed-9050-9ea0a6ebdc76": {
+    "id": "aaf17f0b-b960-47ed-9050-9ea0a6ebdc76",
+    "z": 26815,
+    "type": "card",
+    "deck": "9bf0de13-e0d5-4f72-9032-4a5a5734e1c7",
+    "cardType": "type-cb961120-e98f-433c-bdca-ff300a4e8e42",
+    "parent": "a03ac30f-f074-4529-804b-4c9021211c68",
+    "x": 4,
+    "y": 4
+  },
+  "2227a293-7b35-46ca-869e-aac4ac138384": {
+    "id": "2227a293-7b35-46ca-869e-aac4ac138384",
+    "z": 26771,
+    "type": "card",
+    "deck": "1933fabc-c12d-4214-a792-292401291d27",
+    "cardType": "type-0fda5b80-ef47-4d11-88d4-ecf097a57022",
+    "parent": "b7gm"
+  },
+  "e072ed2a-07e5-408e-b5f4-c4bb5d13fbdf": {
+    "id": "e072ed2a-07e5-408e-b5f4-c4bb5d13fbdf",
+    "x": 136,
+    "y": 664,
+    "z": 15097,
+    "type": "label",
+    "text": "Shuffle\n- Summer #1\n- Autumn #2\n\nFirst move cards\nto Holder.",
+    "css": {
+      "default": {
+        "line-height": "16px",
+        "font-size": "16px",
+        "font-weight": "normal",
+        "text-align": "left"
+      },
+      " textarea": {
+        "letter-spacing": "-1px"
+      }
+    },
+    "width": 200,
+    "height": 100
+  },
+  "582d8ac7-1482-4a13-ad44-2f384ba957ba": {
+    "id": "582d8ac7-1482-4a13-ad44-2f384ba957ba",
+    "x": 44,
+    "y": 560,
+    "z": 15096,
+    "type": "button",
+    "text": "Redeal\nALL",
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "count": 9,
+        "to": "46c2cd09-6e2b-4772-afdf-4a970805db6e",
+        "from": [
+          "83176346-78d7-4160-98d4-51a4d896a175",
+          "a03ac30f-f074-4529-804b-4c9021211c68",
+          "9fe135e0-6a5e-4cca-8291-9e83e07625d9",
+          "7777a503-ca20-4e61-bdca-d864f60ff924",
+          "456428e4-51c1-4563-be7b-d71e2a3fb85b",
+          "c928b918-e2dd-4c3a-89dc-6a692953049b",
+          "6abafe60-792d-40e7-9a15-56ad98e4a5a7",
+          "54084aab-132f-4ea1-b3b2-e42b7b2624d6",
+          "dc111510-169a-461e-9ff0-102f1bd21333"
+        ]
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "46c2cd09-6e2b-4772-afdf-4a970805db6e"
+      },
+      {
+        "func": "MOVE",
+        "to": [
+          "83176346-78d7-4160-98d4-51a4d896a175",
+          "7777a503-ca20-4e61-bdca-d864f60ff924",
+          "6abafe60-792d-40e7-9a15-56ad98e4a5a7",
+          "54084aab-132f-4ea1-b3b2-e42b7b2624d6",
+          "456428e4-51c1-4563-be7b-d71e2a3fb85b",
+          "a03ac30f-f074-4529-804b-4c9021211c68",
+          "9fe135e0-6a5e-4cca-8291-9e83e07625d9",
+          "c928b918-e2dd-4c3a-89dc-6a692953049b",
+          "dc111510-169a-461e-9ff0-102f1bd21333"
+        ],
+        "from": "46c2cd09-6e2b-4772-afdf-4a970805db6e"
+      }
+    ]
+  },
+  "46ac373f-6b26-4c2b-accd-a2489397c4a4": {
+    "id": "46ac373f-6b26-4c2b-accd-a2489397c4a4",
+    "x": 106,
+    "y": 299,
+    "z": 25876,
+    "type": "card",
+    "deck": "62af10cc-a542-4002-b249-dae0eeaeaa0e",
+    "cardType": "red",
+    "resetProperties": {
+      "parent": null,
+      "x": 106,
+      "y": 299
+    }
+  },
+  "1dab2373-efa4-44a8-893f-d452a27d73f5": {
+    "id": "1dab2373-efa4-44a8-893f-d452a27d73f5",
+    "x": 40,
+    "y": 136,
+    "z": 14708,
+    "type": "label",
+    "text": "Operator Token",
+    "css": {
+      "default": {
+        "line-height": "16px",
+        "font-size": "16px",
+        "font-weight": "normal",
+        "text-align": "center"
+      },
+      " textarea": {
+        "letter-spacing": "-1px"
+      }
+    },
+    "width": 200,
+    "height": 63
+  },
+  "268aa581-84e7-4842-89ae-47639058929d": {
+    "id": "268aa581-84e7-4842-89ae-47639058929d",
+    "z": 26737,
+    "type": "card",
+    "deck": "c81873d1-a878-4c86-b5f8-e5c30539224d",
+    "cardType": "type-8ef24f54-6a3f-4bda-96f1-13c21d694998",
+    "parent": "nkzm"
+  },
+  "7777a503-ca20-4e61-bdca-d864f60ff924": {
+    "id": "7777a503-ca20-4e61-bdca-d864f60ff924",
+    "y": 354,
+    "z": 14065,
+    "type": "holder",
+    "width": 198,
+    "height": 300,
+    "x": 268,
+    "dropTarget": {
+      "width": 186
+    },
+    "inheritFrom": {
+      "a03ac30f-f074-4529-804b-4c9021211c68": "enterRoutine"
+    }
+  },
+  "e6237032-e70e-4893-b347-2aa1ec95f04d": {
+    "id": "e6237032-e70e-4893-b347-2aa1ec95f04d",
+    "z": 26816,
+    "type": "card",
+    "deck": "9bf0de13-e0d5-4f72-9032-4a5a5734e1c7",
+    "cardType": "type-8ef24f54-6a3f-4bda-96f1-13c21d694998",
+    "parent": "7777a503-ca20-4e61-bdca-d864f60ff924",
+    "x": 4,
+    "y": 4
+  },
+  "88425354-3c52-4448-9e05-40ecd957ddd3": {
+    "id": "88425354-3c52-4448-9e05-40ecd957ddd3",
+    "x": 40,
+    "y": 258,
+    "z": 14283,
+    "type": "label",
+    "text": "Bomb Token",
+    "css": {
+      "default": {
+        "line-height": "16px",
+        "font-size": "16px",
+        "font-weight": "normal",
+        "text-align": "center"
+      },
+      " textarea": {
+        "letter-spacing": "-1px"
+      }
+    },
+    "width": 200,
+    "height": 63
+  },
+  "c3dbf505-b677-46d6-845d-908d4d57bed2": {
+    "id": "c3dbf505-b677-46d6-845d-908d4d57bed2",
+    "z": 26738,
+    "type": "card",
+    "deck": "c81873d1-a878-4c86-b5f8-e5c30539224d",
+    "cardType": "type-0fda5b80-ef47-4d11-88d4-ecf097a57022",
+    "parent": "nkzm"
+  },
+  "b21e2b79-3b64-40bb-bcda-f654af7ea0e0": {
+    "id": "b21e2b79-3b64-40bb-bcda-f654af7ea0e0",
+    "z": 26762,
+    "type": "card",
+    "deck": "f2bcdd00-2fc2-4f3a-b3be-e797b76704db",
+    "cardType": "type-1af0fce6-5f73-45e3-a945-d2d59f8105b1",
+    "parent": "nm2l"
+  },
+  "596cd8a0-837b-4bb5-970f-6730f5fb88ce": {
+    "id": "596cd8a0-837b-4bb5-970f-6730f5fb88ce",
+    "z": 26763,
+    "type": "card",
+    "deck": "f2bcdd00-2fc2-4f3a-b3be-e797b76704db",
+    "cardType": "type-0545fd01-3a49-4252-839f-0f68f8ca2bd9",
+    "parent": "nm2l"
+  },
+  "0ab87873-160d-48d8-93c1-7201755b2176": {
+    "id": "0ab87873-160d-48d8-93c1-7201755b2176",
+    "z": 26811,
+    "type": "card",
+    "deck": "9bf0de13-e0d5-4f72-9032-4a5a5734e1c7",
+    "cardType": "type-1af0fce6-5f73-45e3-a945-d2d59f8105b1",
+    "parent": "83176346-78d7-4160-98d4-51a4d896a175",
+    "x": 4,
+    "y": 4
+  },
+  "059cbd3b-aeb2-4d9a-a57d-bd44b291f37b": {
+    "id": "059cbd3b-aeb2-4d9a-a57d-bd44b291f37b",
+    "z": 26814,
+    "type": "card",
+    "deck": "9bf0de13-e0d5-4f72-9032-4a5a5734e1c7",
+    "cardType": "type-0fda5b80-ef47-4d11-88d4-ecf097a57022",
+    "parent": "9fe135e0-6a5e-4cca-8291-9e83e07625d9",
+    "x": 6,
+    "y": 6
+  },
+  "386ce468-3c22-42a9-a68e-9fd11e12b271": {
+    "id": "386ce468-3c22-42a9-a68e-9fd11e12b271",
+    "x": 1671,
+    "y": 216,
+    "z": 14905,
+    "type": "holder",
+    "width": 198,
+    "height": 300,
+    "dropTarget": [
+      {
+        "deck": "c81873d1-a878-4c86-b5f8-e5c30539224d"
+      }
+    ],
+    "dropOffsetX": 6,
+    "dropOffsetY": 6,
+    "inheritChildZ": true
+  },
+  "ad99817a-f358-4ab6-8229-a8b125f16d97": {
+    "id": "ad99817a-f358-4ab6-8229-a8b125f16d97",
+    "z": 26772,
+    "type": "card",
+    "deck": "1933fabc-c12d-4214-a792-292401291d27",
+    "cardType": "type-0545fd01-3a49-4252-839f-0f68f8ca2bd9",
+    "parent": "b7gm"
+  },
+  "d50337a6-2662-4f13-9034-ba6173591c6b": {
+    "id": "d50337a6-2662-4f13-9034-ba6173591c6b",
+    "x": 106,
+    "y": 168,
+    "z": 25875,
+    "type": "card",
+    "deck": "fb5e56ff-bfc9-499e-bb29-21d5bdf466e6",
+    "cardType": "green",
+    "resetProperties": {
+      "parent": null,
+      "x": 106,
+      "y": 168
+    }
+  },
+  "5a31e10d-6686-49bd-8964-809ac15fabb0": {
+    "id": "5a31e10d-6686-49bd-8964-809ac15fabb0",
+    "z": 26764,
+    "type": "card",
+    "deck": "f2bcdd00-2fc2-4f3a-b3be-e797b76704db",
+    "cardType": "type-cb961120-e98f-433c-bdca-ff300a4e8e42",
+    "parent": "nm2l"
+  },
+  "c928b918-e2dd-4c3a-89dc-6a692953049b": {
+    "id": "c928b918-e2dd-4c3a-89dc-6a692953049b",
+    "x": 688,
+    "y": 354,
+    "z": 14067,
+    "type": "holder",
+    "width": 198,
+    "height": 300,
+    "dropTarget": {
+      "width": 186
+    },
+    "inheritFrom": {
+      "a03ac30f-f074-4529-804b-4c9021211c68": "enterRoutine"
+    }
+  },
+  "786236ba-a611-4ec9-931e-d0b6a2b83f5b": {
+    "id": "786236ba-a611-4ec9-931e-d0b6a2b83f5b",
+    "x": 1669,
+    "y": 520,
+    "z": 14904,
+    "type": "holder",
+    "width": 198,
+    "height": 300,
+    "dropTarget": [
+      {
+        "deck": "f2bcdd00-2fc2-4f3a-b3be-e797b76704db"
+      }
+    ],
+    "dropOffsetX": 6,
+    "dropOffsetY": 6,
+    "inheritChildZ": true
+  },
+  "568d5fc3-75fc-41db-bbc4-b8d93f0ff5ce": {
+    "id": "568d5fc3-75fc-41db-bbc4-b8d93f0ff5ce",
+    "z": 26773,
+    "type": "card",
+    "deck": "1933fabc-c12d-4214-a792-292401291d27",
+    "cardType": "type-cb961120-e98f-433c-bdca-ff300a4e8e42",
+    "parent": "b7gm"
+  },
+  "6c92c512-0736-4eb9-a325-e04f8d94ceff": {
+    "id": "6c92c512-0736-4eb9-a325-e04f8d94ceff",
+    "x": 101,
+    "y": 32,
+    "z": 15092,
+    "type": "button",
+    "text": "New\nGame",
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "header": "Start a new game?",
+        "confirmButtonText": "New Game",
+        "fields": [
+          {
+            "type": "choose",
+            "source": [
+              "e6237032-e70e-4893-b347-2aa1ec95f04d",
+              "268aa581-84e7-4842-89ae-47639058929d",
+              "bac9232a-5fd2-4bd7-a0b5-ac0e489d0e31",
+              "e0478990-1556-4b63-887d-b1b363ad7ec3"
+            ],
+            "propertyOverride": {
+              "activeFace": 0
+            },
+            "variable": "seasons",
+            "min": 1,
+            "max": 4,
+            "label": "Seasons (select multiple seasons for a mixed deck)"
+          },
+          {
+            "type": "switch",
+            "label": "Ensure exactly 1 swap card",
+            "variable": "enforeceSwap",
+            "value": "on"
+          },
+          {
+            "type": "switch",
+            "label": "Ensure 0-1 shuffle card",
+            "variable": "enforeceShuffle",
+            "value": "on"
+          }
+        ],
+        "cancelButtonText": "Resume Game"
+      },
+      "var ignoreSwap = ${enforeceSwap} == 'off'",
+      "var ignoreShuffle = ${enforeceShuffle} == 'off'",
+      {
+        "func": "CALL",
+        "routine": "resetRoutine",
+        "arguments": {
+          "seasons": "${seasons}",
+          "ignoreSwap": "${ignoreSwap}",
+          "ignoreShuffle": "${ignoreShuffle}"
+        }
+      }
+    ],
+    "gameStartRoutine": [
+      {
+        "func": "CALL",
+        "routine": "resetRoutine",
+        "arguments": {
+          "seasons": [
+            "e6237032-e70e-4893-b347-2aa1ec95f04d"
+          ],
+          "ignoreSwap": false,
+          "ignoreShuffle": false
+        }
+      }
+    ],
+    "resetRoutine": [
+      {
+        "func": "SELECT",
+        "property": "resetProperties",
+        "relation": "!=",
+        "value": null
+      },
+      {
+        "func": "FOREACH",
+        "loopRoutine": [
+          {
+            "func": "FOREACH",
+            "in": "${PROPERTY resetProperties OF $widgetID}",
+            "loopRoutine": [
+              {
+                "func": "SET",
+                "property": "${key}",
+                "value": "${value}"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "RECALL",
+        "holder": [
+          "386ce468-3c22-42a9-a68e-9fd11e12b271",
+          "dfef03aa-1393-4b9a-8123-9f75ac03b935",
+          "786236ba-a611-4ec9-931e-d0b6a2b83f5b",
+          "54227317-badc-41a0-8066-43f3520d9749"
+        ]
+      },
+      {
+        "func": "FLIP",
+        "holder": [
+          "386ce468-3c22-42a9-a68e-9fd11e12b271",
+          "dfef03aa-1393-4b9a-8123-9f75ac03b935",
+          "786236ba-a611-4ec9-931e-d0b6a2b83f5b",
+          "54227317-badc-41a0-8066-43f3520d9749"
+        ],
+        "face": 0
+      },
+      {
+        "func": "GET",
+        "collection": "${seasons}",
+        "property": "deck",
+        "aggregation": "array"
+      },
+      {
+        "func": "FOREACH",
+        "range": [
+          9
+        ],
+        "loopRoutine": [
+          "var inline = shuffle ${deck}",
+          {
+            "func": "SELECT",
+            "property": "deck",
+            "value": "${inline.0}"
+          },
+          {
+            "func": "SELECT",
+            "source": "DEFAULT",
+            "property": "sortingOrder",
+            "value": "${value}"
+          },
+          {
+            "func": "MOVE",
+            "to": "46c2cd09-6e2b-4772-afdf-4a970805db6e"
+          }
+        ]
+      },
+      {
+        "func": "SELECT",
+        "value": "46c2cd09-6e2b-4772-afdf-4a970805db6e"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "isSwap",
+        "value": true,
+        "collection": "swaps"
+      },
+      {
+        "func": "COUNT",
+        "collection": "swaps",
+        "variable": "swaps"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "isShuffle",
+        "value": true,
+        "collection": "shuffles"
+      },
+      {
+        "func": "COUNT",
+        "collection": "shuffles",
+        "variable": "shuffles"
+      },
+      "var hasOneSwap = ${swaps} == 1",
+      "var hasCorrectSwap = ${hasOneSwap} || ${ignoreSwap}",
+      "var hasOneOrNoShuffle = ${shuffles} <= 1",
+      "var hasCorrectShuffle = ${hasOneOrNoShuffle} || ${ignoreShuffle}",
+      "var isValid = ${hasCorrectSwap} && ${hasCorrectShuffle}",
+      {
+        "func": "IF",
+        "condition": "${isValid}",
+        "thenRoutine": [
+          {
+            "func": "SHUFFLE",
+            "holder": "46c2cd09-6e2b-4772-afdf-4a970805db6e"
+          },
+          {
+            "func": "FLIP",
+            "holder": "46c2cd09-6e2b-4772-afdf-4a970805db6e",
+            "count": 1
+          },
+          {
+            "func": "SHUFFLE",
+            "holder": "46c2cd09-6e2b-4772-afdf-4a970805db6e"
+          },
+          {
+            "func": "MOVE",
+            "from": "46c2cd09-6e2b-4772-afdf-4a970805db6e",
+            "to": [
+              "83176346-78d7-4160-98d4-51a4d896a175",
+              "a03ac30f-f074-4529-804b-4c9021211c68",
+              "9fe135e0-6a5e-4cca-8291-9e83e07625d9",
+              "7777a503-ca20-4e61-bdca-d864f60ff924",
+              "456428e4-51c1-4563-be7b-d71e2a3fb85b",
+              "c928b918-e2dd-4c3a-89dc-6a692953049b",
+              "6abafe60-792d-40e7-9a15-56ad98e4a5a7",
+              "54084aab-132f-4ea1-b3b2-e42b7b2624d6",
+              "dc111510-169a-461e-9ff0-102f1bd21333"
+            ]
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "CALL",
+            "routine": "resetRoutine",
+            "arguments": {
+              "seasons": "${seasons}"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "nkzm": {
+    "type": "pile",
+    "parent": "386ce468-3c22-42a9-a68e-9fd11e12b271",
+    "x": 6,
+    "y": 6,
+    "width": 186,
+    "height": 288,
+    "id": "nkzm"
+  },
+  "nm2l": {
+    "type": "pile",
+    "parent": "786236ba-a611-4ec9-931e-d0b6a2b83f5b",
+    "x": 6,
+    "y": 6,
+    "width": 186,
+    "height": 288,
+    "id": "nm2l"
+  },
+  "b7gm": {
+    "type": "pile",
+    "parent": "54227317-badc-41a0-8066-43f3520d9749",
+    "x": 6,
+    "y": 6,
+    "width": 186,
+    "height": 288,
+    "id": "b7gm"
+  }
+}

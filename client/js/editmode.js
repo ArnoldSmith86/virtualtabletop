@@ -1,452 +1,3 @@
-let edit = false;
-
-function generateUniqueWidgetID() {
-  let id;
-  do {
-    id = Math.random().toString(36).substring(3, 7);
-  } while (widgets.has(id));
-  return id;
-}
-
-async function addWidgetLocal(widget) {
-  if (!widget.id)
-    widget.id = generateUniqueWidgetID();
-
-  if(widget.parent && !widgets.has(widget.parent)) {
-    console.error(`Refusing to add widget ${widget.id} with invalid parent ${widget.parent}.`);
-    return null;
-  }
-
-  const isNewWidget = !widgets.has(widget.id);
-  if(isNewWidget)
-    addWidget(widget);
-  sendPropertyUpdate(widget.id, widget);
-  sendDelta();
-  batchStart();
-  if(isNewWidget)
-    for(const [ w, routine ] of StateManaged.globalUpdateListeners['id'] || [])
-      await w.evaluateRoutine(routine, { widgetID: widget.id, oldValue: null, value: widget.id }, { widget: [ widgets.get(widget.id) ] });
-  batchEnd();
-  return widget.id;
-}
-//This section holds the edit overlays for each widget
-//basic widget functions
-function populateEditOptionsBasic(widget) {
-  $('#basicImage').value = widget.image || "~ no image found ~";
-
-  if (widget.layer < 1){
-    $('#basicTypeBoard').checked = true
-  } else {
-    $('#basicTypeToken').checked = true
-  }
-
-  $('#basicWidth').value = widget.width||100;
-  $('#basicHeight').value = widget.height||100;
-  $('#basicWidthNumber').value = widget.width||100;
-  $('#basicHeightNumber').value = widget.height||100;
-
-  $('#basicFullscreen').checked = false;
-  $('#basicEnlarge').checked = widget.enlarge;
-}
-
-function applyWidthHeight(widget, value, dimension) {
-  return value.replaceAll(/\d/g, '').replace(/\./g, '')  === '' ? widget[dimension] = parseFloat(value): widget[dimension] = widget[dimension];
-}
-
-function applyEditOptionsBasic(widget) {
-  if ($('#basicTypeBoard').checked == true){
-    widget.layer = -4;
-    widget.movable = false;
-  } else {
-    widget.layer = 1;
-    widget.movable = true;
-  }
-
-  if ($('#basicImage').value=="~ no image found ~")
-    delete widget.image;
-  else
-    widget.image = $('#basicImage').value;
-
-  applyWidthHeight(widget, $('#basicWidthNumber').value, 'width');
-  applyWidthHeight(widget, $('#basicHeightNumber').value, 'height');
-
-  if ($('#basicFullscreen').checked){
-    widget.width = 1600;
-    widget.height = 1000;
-    delete widget.x;
-    delete widget.y;
-  }
-
-  if (!widget.enlarge || !$('#basicEnlarge').checked)
-    widget.enlarge = $('#basicEnlarge').checked;
-}
-
-//button functions
-function populateEditOptionsButton(widget) {
-  $('#buttonText').value = widget.text || "~ no text found ~";
-  $('#buttonImage').value = widget.image || "~ no image found ~";
-  $('#buttonColorMain').value = toHex(widget.backgroundColor || "#1f5ca6");
-  $('#buttonColorBorder').value = toHex(widget.borderColor || "#0d2f5e");
-  $('#buttonColorText').value = toHex(widget.textColor || "#ffffff");
-
-
-  $('#buttonText').style = "display: inline";
-  $('[for=buttonText]').style = "display: inline";
-  $('#buttonImage').style = "display: inline";
-  $('[for=buttonImage]').style = "display: inline";
-  $('#uploadButtonImage').style = "display: inline";
-
-  if (!widget.text && widget.image){
-    $('#buttonText').style = "display: none !important";
-    $('[for=buttonText]').style = "display: none !important";
-  }
-  if (!widget.image && widget.text){
-    $('#buttonImage').style = "display: none !important";
-    $('[for=buttonImage]').style = "display: none !important";
-    $('#uploadButtonImage').style = "display: none !important";
-  }
-}
-
-function applyEditOptionsButton(widget) {
-  if ($('#buttonText').value=="~ no text found ~")
-    delete widget.text;
-  else
-    widget.text = $('#buttonText').value;
-
-  if ($('#buttonImage').value=="~ no image found ~")
-    delete widget.image;
-  else
-    widget.image = $('#buttonImage').value;
-
-  if ($('#buttonColorMain').value=="#1f5ca6")
-    delete widget.backgroundColor;
-  else
-    widget.backgroundColor = $('#buttonColorMain').value;
-
-  if ($('#buttonColorBorder').value=="#0d2f5e")
-    delete widget.borderColor;
-  else
-    widget.borderColor = $('#buttonColorBorder').value;
-
-  if ($('#buttonColorText').value=="#ffffff")
-    delete widget.textColor;
-  else
-    widget.textColor = $('#buttonColorText').value;
-}
-
-//canvas functions
-function populateEditOptionsCanvas(widget) {
-  const cm = widget.colorMap || Canvas.defaultColors
-
-  for(let i=0; i<10; ++i) {
-    $a('.colorComponent > [type=radio]')[i].checked = widget.activeColor == i;
-    $a('.colorComponent > [type=color]')[i].value = toHex(cm[i] || Canvas.defaultColors[i]);
-  }
-
-  $('#canvasColorReset').checked = false;
-}
-
-function applyEditOptionsCanvas(widget) {
-  if(!Array.isArray(widget.colorMap))
-    widget.colorMap = [];
-  for(let i=0; i<10; ++i) {
-    if($a('.colorComponent > [type=radio]')[i].checked)
-      widget.activeColor = i;
-    widget.colorMap[i] = $a('.colorComponent > [type=color]')[i].value;
-  }
-
-  if($('#canvasColorReset').checked){
-    for(const choice of $a('#canvasPresets > [name=canvasPresets]')) {
-      if(choice.selected) {
-        switch(choice.value) {
-          case "original":
-          widget.colorMap = ["#F0F0F0","#1F5CA6","#000000","#FF0000","#008000","#FFFF00","#FFA500","#FFC0CB","#800080","#A52A2A"];
-          break;
-          case "pieces":
-          widget.colorMap = ["#F0F0F0","#1F5CA6","#4A4A4A","#000000","#E84242","#E2A633","#E0CB0B","#23CA5B","#4C5FEA","#BC5BEE"];
-          break;
-          case "basic":
-          widget.colorMap = ["#FFFFFF","#000000","#FF0000","#FF8000","#FFFF00","#00FF00","#00FFFF","#0000FF","#8000FF","#FF00FF"];
-          break;
-          case "pencil":
-          widget.colorMap = ["#FFFFFF","#000000","#8B3003","#E52C2C","#F08A38","#FAE844","#71C82A","#1F5CA6","#775094","#CD36BC"];
-          break;
-          case "pastel":
-          widget.colorMap = ["#FFFFFF","#7A7A7A","#FFADAD","#FFD6A5","#FDFFB6","#CAFFBF","#9BF6FF","#A0C4FF","#BDB2FF","#FFC6FF"];
-          break;
-          case "grey":
-          widget.colorMap = ["#FFFFFF","#E0E0E0","#C4C4C4","#A8A8A8","#8C8C8C","#707070","#545454","#383838","#1C1C1C","#000000"];
-          break;
-        }
-      }
-    }
-  }
-}
-
-//deck functions
-async function applyEditOptionsDeck(widget) {
-  for(const type of $a('#cardTypesList tr.cardType')) {
-    const id = $('.id', type).value;
-    const oldID = $('.id', type).dataset.oldID;
-
-    for(let i=0; i<$('.count', type).value-$('.count', type).dataset.oldValue; ++i) {
-      const card = { deck:widget.id, type:'card', cardType:oldID };
-      const cardId = await addWidgetLocal(card);
-      if(widget.parent)
-        await widgets.get(cardId).moveToHolder(widgets.get(widget.parent));
-    }
-    for(let i=0; i<$('.count', type).dataset.oldValue-$('.count', type).value; ++i) {
-      const card = widgetFilter(w=>w.get('deck')==widget.id&&w.get('cardType')==oldID)[0];
-      await removeWidgetLocal(card.get('id'));
-    }
-
-    if(id != oldID) {
-      widget.cardTypes[id] = widget.cardTypes[oldID];
-      delete widget.cardTypes[oldID];
-      for(const w of widgetFilter(w=>w.get('deck')==widget.id&&w.get('cardType')==oldID))
-        await w.set('cardType', id);
-    }
-
-    for(const object of $a('.properties > div', type)) {
-      if (($('input', object).value) == '')
-        delete widget.cardTypes[id][$('label', object).textContent];
-      else if (!(/\D/).test($('input', object).value))
-        widget.cardTypes[id][$('label', object).textContent] = parseFloat($('input', object).value);
-      else if ($('input', object).value === 'true' || $('input', object).value ==='false')
-        widget.cardTypes[id][$('label', object).textContent] = ($('input', object).value === 'true');
-      else if ($('input', object).value !== '')
-        widget.cardTypes[id][$('label', object).textContent] = $('input', object).value.replaceAll('\\n','\n').replaceAll('\"', '').replaceAll('\'', '');
-      else
-        widget.cardTypes[id][$('label', object).textContent] = '';
-    }
-  }
-}
-
-//holder functions
-function populateEditOptionsHolder(widget) {
-  $('#resizeHolderToChildren').checked = false;
-  $('#transparentHolder').checked = widget.classes && !!widget.classes.match(/transparent/);
-}
-
-function applyEditOptionsHolder(widget) {
-  if($('#transparentHolder').checked && !widget.classes)
-    widget.classes = 'transparent';
-  else if($('#transparentHolder').checked && !widget.classes.match(/(^| )transparent($| )/))
-    widget.classes += ' transparent';
-  else if(!$('#transparentHolder').checked && widget.classes && widget.classes.match(/(^| )transparent($| )/))
-    widget.classes = widget.classes.replace(/(^| )transparent($| )/, '');
-  if(widget.classes === '')
-    delete widget.classes;
-
-  if($('#resizeHolderToChildren').checked) {
-    const w = widgets.get(widget.id);
-    const children = w.children();
-    if(children.length) {
-      widget.width  = children[0].get('width')  + 2*w.get('dropOffsetX');
-      widget.height = children[0].get('height') + 2*w.get('dropOffsetY');
-    }
-  }
-}
-
-//label functions
-function populateEditOptionsLabel(widget) {
-  $('#labelText').value = widget.text;
-  $('#labelWidth').value = widget.width||100;
-  $('#labelHeight').value = widget.height||20;
-  $('#labelWidthNumber').value = widget.width||100;
-  $('#labelHeightNumber').value = widget.height||20;
-  $('#labelEditable').checked = widget.editable;
-}
-
-function applyEditOptionsLabel(widget) {
-  widget.text = $('#labelText').value;
-
-  applyWidthHeight(widget, $('#labelWidthNumber').value, 'width');
-  applyWidthHeight(widget, $('#labelHeightNumber').value, 'height');
-
-  widget.editable = $('#labelEditable').checked;
-}
-
-//piece widget functions
-function populateEditOptionsPiece(widget) {
-  $('#pieceColor').value = toHex(widget.color || "black");
-  if (widget.classes == "classicPiece") {
-    $('#pieceTypeClassic').checked = true
-  } else if (widget.classes == "checkersPiece" || widget.classes == "checkersPiece crowned") {
-    $('#pieceTypeChecker').checked = true
-  } else if (widget.classes == "pinPiece") {
-    $('#pieceTypePin').checked = true
-  }
-}
-
-function applyEditOptionsPiece(widget) {
-  if ($('#pieceTypeClassic').checked == true){
-    delete widget.activeFace;
-    delete widget.faces;
-    widget.classes = "classicPiece";
-    widget.height = 90;
-    widget.width = 90;
-  } else if ($('#pieceTypeChecker').checked == true){
-    widget.classes = "checkersPiece";
-    widget.activeFace = 0;
-    widget.faces = [{"classes": "checkersPiece"},{"classes": "checkersPiece crowned"}];
-    widget.height = 73.5;
-    widget.width = 73.5;
-    widget.activeFace = (widget.activeFace ? 1 : 0);
-  } else if ($('#pieceTypePin').checked == true){
-    delete widget.activeFace;
-    delete widget.faces;
-    widget.classes = "pinPiece";
-    widget.height = 43.83;
-    widget.width = 35.85;
-  }
-
-  widget.color = $('#pieceColor').value;
-}
-
-//seat functions
-function populateEditOptionsSeat(widget) {
-  $('#seatPlayerColor').value = toHex(widget.color || "black");
-  $('#seatPlayerName').value = widget.player || "~ empty seat ~";
-  $('#seatEmpty').checked = false;
-}
-
-function applyEditOptionsSeat(widget) {
-  if($('#seatEmpty').checked || $('#seatPlayerName').value == "~ empty seat ~") {
-    delete widget.player;
-    delete widget.color;
-  } else {
-    if(widget.player) {
-      toServer('playerColor', { player: widget.player, color: toHex($('#seatPlayerColor').value) });
-      toServer('rename', { oldName: widget.player, newName: $('#seatPlayerName').value });
-    }
-    widget.player = $('#seatPlayerName').value;
-    widget.color = $('#seatPlayerColor').value;
-  }
-}
-
-//spinner functions
-function populateEditOptionsSpinner(widget) {
-}
-
-function applyEditOptionsSpinner(widget) {
-  for(let i=0; i<9; ++i) {
-    if($a('#spinnerOptions > [name=spinnerOptions]')[i].selected){
-      widget.options = JSON.parse($a('#spinnerOptions > [name=spinnerOptions]')[i].value);
-      delete widget.angle;
-      widget.value=widget.options[widget.options.length-1];
-    }
-  }
-}
-
-//timer functions
-function populateEditOptionsTimer(widget) {
-  $('#timerCountdown').checked = widget.countdown;
-  if (widget.end || widget.end==0){
-    var duration = Math.abs(widget.start-widget.end)
-    console.log(duration,Math.floor(duration / 60000),Math.floor((duration % 60000)/1000))
-    $('#timerMinutes').value = Math.floor(duration / 60000) || 0;
-    $('#timerSeconds').value = Math.floor((duration % 60000)/1000);
-  } else {
-    $('#timerMinutes').value = "--";
-    $('#timerSeconds').value = "--";
-  }
-  $('#timerReset').checked = false;
-}
-
-function applyEditOptionsTimer(widget) {
-  widget.countdown = $('#timerCountdown').checked;
-  if ($('#timerMinutes').value == "--" && $('#timerSeconds').value == "--"){
-    delete widget.start
-    delete widget.end
-  } else if ($('#timerCountdown').checked) {
-    var minutes = $('#timerMinutes').value == "--" ? 0 : $('#timerMinutes').value*60000
-    var seconds = $('#timerSeconds').value == "--" ? 0 : $('#timerSeconds').value*1000
-    widget.end = 0;
-    widget.start = minutes + seconds
-  } else {
-    var minutes = $('#timerMinutes').value == "--" ? 0 : $('#timerMinutes').value*60000
-    var seconds = $('#timerSeconds').value == "--" ? 0 : $('#timerSeconds').value*1000
-    widget.end = minutes + seconds;
-    widget.start = 0
-  }
-
-
-  if($('#timerReset').checked) {
-    widget.paused = true;
-    widget.milliseconds = widget.start;
-  }
-}
-
-//This section calls the relative widgets' overlays and functions
-async function applyEditOptions(widget) {
-  var type = widget.type||'piece';
-  if (type=='piece' && widget.image)
-    type = 'basic';
-
-  if(type == 'basic')
-    applyEditOptionsBasic(widget);
-  if(type == 'button')
-    applyEditOptionsButton(widget);
-  if(type == 'canvas')
-    applyEditOptionsCanvas(widget);
-  if(type == 'deck')
-    await applyEditOptionsDeck(widget);
-  if(type == 'holder')
-    applyEditOptionsHolder(widget);
-  if(type == 'label')
-    applyEditOptionsLabel(widget);
-  if(type == 'piece')
-    applyEditOptionsPiece(widget);
-  if(type == 'seat')
-    applyEditOptionsSeat(widget);
-  if(type == 'spinner')
-    applyEditOptionsSpinner(widget);
-  if(type == 'timer')
-    applyEditOptionsTimer(widget);
-}
-
-function editClick(widget) {
-  $('#editWidgetJSON').value = JSON.stringify(widget.state, null, '  ');
-  $('#editWidgetJSON').dataset.previousState = $('#editWidgetJSON').value;
-
-  $a('#editOverlay > div').forEach(d=>d.style.display = 'none');
-
-  var type = widget.state.type||'piece';
-  if (type=='piece' && widget.state.image)
-    type = 'basic';
-
-  const typeSpecific = $(`#editOverlay > .${type}Edit`);
-
-  if(!typeSpecific)
-    return showOverlay('editJSONoverlay');
-
-  typeSpecific.style.display = 'block';
-
-  vmEditOverlay.selectedWidget = widget
-
-  if(type == 'basic')
-    populateEditOptionsBasic(widget.state);
-  if(type == 'button')
-    populateEditOptionsButton(widget.state);
-  if(type == 'canvas')
-    populateEditOptionsCanvas(widget.state);
-  if(type == 'holder')
-    populateEditOptionsHolder(widget.state);
-  if(type == 'label')
-    populateEditOptionsLabel(widget.state);
-  if(type == 'piece')
-    populateEditOptionsPiece(widget.state);
-  if(type == 'seat')
-    populateEditOptionsSeat(widget.state);
-  if(type == 'spinner')
-    populateEditOptionsSpinner(widget.state);
-  if(type == 'timer')
-    populateEditOptionsTimer(widget.state);
-
-  showOverlay('editOverlay');
-}
-
 //This section holds the functions that generate the JSON of the widgets in the add widget overlay
 function generateCardDeckWidgets(id, x, y, addCards) {
   const widgets = [
@@ -542,7 +93,7 @@ function generateChipPileWidgets(id, x, y, type) {
       parent: id,
       width:73,
       height:73,
-      y: type==2 ? 4 : -6, 
+      y: type==2 ? 4 : -6,
       text: 1641,
       enterRoutine: [
         {
@@ -774,6 +325,7 @@ function addCompositeWidgetToAddWidgetOverlay(widgetsToAdd, onClick) {
     if(!wi.parent) {
       w.domElement.addEventListener('click', async _=>{
         batchStart();
+        setDeltaCause(`${getPlayerDetails().playerName} added new ${wi.type || 'basic widget'} in editor: ${w.id}`);
         overlayDone(await onClick());
         batchEnd();
       });
@@ -786,7 +338,7 @@ function addCompositeWidgetToAddWidgetOverlay(widgetsToAdd, onClick) {
 }
 
 const VTTblue = '#1f5ca6';
-  
+
 function addPieceToAddWidgetOverlay(w, wi) {
   w.applyInitialDelta(wi);
   w.domElement.addEventListener('click', async _=>{
@@ -803,11 +355,13 @@ function addPieceToAddWidgetOverlay(w, wi) {
       });
       const toAdd = {...wi};
       toAdd.z = getMaxZ(w.get('layer')) + 1;
-      toAdd.color = result.color;
+      toAdd.color = result.variables.color;
 
       const id = await addWidgetLocal(toAdd);
       overlayDone(id);
-    } catch(e) {}
+    } catch(e) {
+      console.log(e);
+    }
   });
   w.domElement.id = w.id;
   $('#addOverlay').appendChild(w.domElement);
@@ -828,8 +382,8 @@ function addWidgetToAddWidgetOverlay(w, wi) {
 // Called by most routines that add widgets. If the widget add came from the JSON editor,
 // call a routine in the JSON editor to clean up. Then hide the add widget overlay.
 function overlayDone(id) {
-  if(jeEnabled)
-    jeAddWidgetDone(id);
+  if(getEdit())
+    setSelection([ widgets.get(id) ]);
   showOverlay();
 }
 
@@ -885,7 +439,7 @@ function populateAddWidgetOverlay() {
     y: 80 + Math.round((43.83 - 84)/2)
   });
 */
-  
+
 /* Don't add the unicode symbols
   // Next the unicode symbols
   const centerStyle = 'color:black;display:flex;justify-content:center;align-items:center;text-align:center;';
@@ -914,7 +468,7 @@ function populateAddWidgetOverlay() {
     y: 150
   });
 */
-  
+
   //Add svg game pieces
   // First row
   addPieceToAddWidgetOverlay(new BasicWidget('Pawn3DSVG'), {
@@ -936,7 +490,7 @@ function populateAddWidgetOverlay() {
     borderWidth: 1
   });
 
-  
+
   addPieceToAddWidgetOverlay(new BasicWidget('Pin3DSVG'), {
     x: 390+75,
     y: 111,
@@ -1239,11 +793,121 @@ function populateAddWidgetOverlay() {
     borderWidth: 1
   });
 
+   //Sixth row (hexagons)
+
+   addPieceToAddWidgetOverlay(new BasicWidget('HexFlat'), {
+    x: 390,
+    y: 600,
+    width: 50,
+    height: 50,
+    color: VTTblue,
+    image: "i/game-pieces/2D/Hex-Flat.svg",
+    svgReplaces: {
+      "#primaryColor": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    borderColor: "#000000",
+    borderWidth: 2,
+    hexType: "flat"
+  });
+
+  addPieceToAddWidgetOverlay(new BasicWidget('HexPoint'), {
+    x: 465,
+    y: 600,
+    width: 50,
+    height: 50,
+    color: VTTblue,
+    image: "i/game-pieces/2D/Hex-Point.svg",
+    svgReplaces: {
+      "#primaryColor": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    borderColor: "#000000",
+    borderWidth: 2,
+    hexType: "point"
+  });
+
+  //This is added only to provide a visual background for the actual piece "HexFlatImage" since the css there does not show on the overlay
+
+  addPieceToAddWidgetOverlay(new BasicWidget('HexFlatImageBack'), {
+    x: 530,
+    y: 590,
+    width: 70,
+    height: 70,
+    color: VTTblue,
+    image: "i/icons/hexagon_horizontal.svg",
+    svgReplaces: {
+      "currentColor": "color"
+    }
+  });
+
+  addPieceToAddWidgetOverlay(new BasicWidget('HexFlatImage'), {
+    x: 540,
+    y: 600,
+    width: 50,
+    height: 50,
+    imageColor: '#ffffff',
+    image: "i/icons/zoom_in.svg",
+    svgReplaces: {
+      "currentColor": "imageColor"
+    },
+    css: {
+      "default": {
+        "background-color": "${PROPERTY color}",
+        "background-image": "url('${PROPERTY image}')",
+        "background-size": "75% 75%",
+        "background-repeat": "no repeat",
+        "background-position": "center center",
+        "clip-path": "polygon(25% 6.67%, 75% 6.67%, 100% 50%, 75% 93.33%, 25% 93.33%, 0% 50%)"
+      }
+    },
+    hexType: "flat"
+  });
+
+  //This is added only to provide a visual background for the actual piece "HexPointImage" since the css there does not show on the overlay
+
+  addPieceToAddWidgetOverlay(new BasicWidget('HexFlatImageBack'), {
+    x: 605,
+    y: 590,
+    width: 70,
+    height: 70,
+    color: VTTblue,
+    image: "i/icons/hexagon_vertical.svg",
+    svgReplaces: {
+      "currentColor": "color"
+    }
+  });
+
+  addPieceToAddWidgetOverlay(new BasicWidget('HexPointImage'), {
+    x: 615,
+    y: 600,
+    width: 50,
+    height: 50,
+    imageColor: '#ffffff',
+    image: "i/icons/zoom_out.svg",
+    svgReplaces: {
+      "currentColor": "imageColor"
+    },
+    css: {
+      "default": {
+        "background-color": "${PROPERTY color}",
+        "background-image": "url('${PROPERTY image}')",
+        "background-size": "75% 75%",
+        "background-repeat": "no repeat",
+        "background-position": "center center",
+        "clip-path": "polygon(93.3% 25%, 93.3% 75%, 50% 100%, 6.7% 75%, 6.7% 25%, 50% 0%)"
+      }
+    },
+    hexType: "point"
+  });
+
   //Poker chips
 
   addWidgetToAddWidgetOverlay(new BasicWidget('EmptyPoker2DSVG'), {
     x: 920,
-    y: 164,
+    y: 114,
     width: 73,
     height: 73,
 
@@ -1266,7 +930,7 @@ function populateAddWidgetOverlay() {
 
   addWidgetToAddWidgetOverlay(new BasicWidget('DealerPoker2DSVG'), {
     x: 920,
-    y: 257,
+    y: 207,
     width: 73,
     height: 73,
 
@@ -1291,16 +955,16 @@ function populateAddWidgetOverlay() {
 
   });
 
-  addCompositeWidgetToAddWidgetOverlay(generateChipPileWidgets('add-2D-chips', 916, 350, 2), async function() {
+  addCompositeWidgetToAddWidgetOverlay(generateChipPileWidgets('add-2D-chips', 916, 300, 2), async function() {
     const id = generateUniqueWidgetID();
-    for(const w of generateChipPileWidgets(id, 916, 350, 2))
+    for(const w of generateChipPileWidgets(id, 916, 300, 2))
       await addWidgetLocal(w);
     return id
   });
 
   addWidgetToAddWidgetOverlay(new BasicWidget('EmptyPoker3DSVG'), {
     x: 1010,
-    y: 173,
+    y: 123,
     width: 75,
     height: 54.75,
 
@@ -1324,7 +988,7 @@ function populateAddWidgetOverlay() {
 
   addWidgetToAddWidgetOverlay(new BasicWidget('DealerPoker3DSVG'), {
     x: 1010,
-    y: 266,
+    y: 216,
     width: 75,
     height: 54.75,
 
@@ -1349,12 +1013,157 @@ function populateAddWidgetOverlay() {
     primaryColor: "#55bb66"
   });
 
-  addCompositeWidgetToAddWidgetOverlay(generateChipPileWidgets('add-3D-chips', 1010, 359, 3), async function() {
+  addCompositeWidgetToAddWidgetOverlay(generateChipPileWidgets('add-3D-chips', 1010, 309, 3), async function() {
     const id = generateUniqueWidgetID();
-    for(const w of generateChipPileWidgets(id, 1010, 359, 3))
+    for(const w of generateChipPileWidgets(id, 1010, 309, 3))
       await addWidgetLocal(w);
     return id
   });
+
+  // Populate the dice. The real dice choosing happens in a popup.
+  const dice2D = new Dice('add-dice2D0');
+  const dice2DAttrs = {
+    type: 'dice',
+    x: 930,
+    y: 455
+  };
+  dice2D.applyInitialDelta(dice2DAttrs);
+  dice2D.domElement.addEventListener('click', async _=>{
+    try {
+      const result = await dice2D.showInputOverlay({
+        header: 'Choose number of sides',
+        fields: [
+          {
+            type: 'number',
+            label: 'Sides',
+            value: 6,
+            variable: 'sides',
+            min: 2
+          }
+        ]
+      });
+      const sides = result.variables.sides;
+      const toAdd = {...dice2DAttrs};
+      toAdd.z = getMaxZ(dice2D.get('layer')) + 1;
+      toAdd.faces = Array.from({length: sides}, (_, i) => i + 1);
+      if(sides != 6)
+        toAdd.pipSymbols = false;
+
+      const id = await addWidgetLocal(toAdd);
+      overlayDone(id);
+    } catch(e) {}
+  });
+  dice2D.domElement.id = dice2D.id;
+  $('#addOverlay').appendChild(dice2D.domElement);
+
+  const dice2DCube = new Dice('add-dice2DCube0');
+  const dice2DCubeAttrs = {
+    type: 'dice',
+    x: 930,
+    y: 525,
+    faces: [
+      {value:1,image:"/i/dice/cube-1-1.svg"},
+      {value:1,image:"/i/dice/cube-1-2.svg"},
+      {value:1,image:"/i/dice/cube-1-3.svg"},
+      {value:1,image:"/i/dice/cube-1-4.svg"},
+      {value:2,image:"/i/dice/cube-2-1.svg"},
+      {value:2,image:"/i/dice/cube-2-2.svg"},
+      {value:2,image:"/i/dice/cube-2-3.svg"},
+      {value:2,image:"/i/dice/cube-2-4.svg"},
+      {value:3,image:"/i/dice/cube-3-1.svg"},
+      {value:3,image:"/i/dice/cube-3-2.svg"},
+      {value:3,image:"/i/dice/cube-3-3.svg"},
+      {value:3,image:"/i/dice/cube-3-4.svg"},
+      {value:4,image:"/i/dice/cube-4-1.svg"},
+      {value:4,image:"/i/dice/cube-4-2.svg"},
+      {value:4,image:"/i/dice/cube-4-3.svg"},
+      {value:4,image:"/i/dice/cube-4-4.svg"},
+      {value:5,image:"/i/dice/cube-5-1.svg"},
+      {value:5,image:"/i/dice/cube-5-2.svg"},
+      {value:5,image:"/i/dice/cube-5-3.svg"},
+      {value:5,image:"/i/dice/cube-5-4.svg"},
+      {value:6,image:"/i/dice/cube-6-1.svg"},
+      {value:6,image:"/i/dice/cube-6-2.svg"},
+      {value:6,image:"/i/dice/cube-6-3.svg"},
+      {value:6,image:"/i/dice/cube-6-4.svg"}
+    ],
+    imageScale: 1,
+    color: 'transparent',
+    borderColor: 'transparent',
+    svgReplaces: {
+      'topColor': 'cT',
+      'leftColor': 'cL',
+      'rightColor': 'cR',
+      'pipColor': 'cP'
+    },
+    cT: '#ffffff',
+    cL: '#e8e8e8',
+    cR: '#dbdbdb',
+    cP: '#000000'
+  };
+  dice2DCube.applyInitialDelta(dice2DCubeAttrs);
+  dice2DCube.domElement.addEventListener('click', async _=>{
+    try {
+      const result = await dice2DCube.showInputOverlay({
+        header: 'Choose die color',
+        fields: [
+          {
+            type: 'color',
+            value: '#ffffff',
+            variable: 'color'
+          }
+        ]
+      });
+      const toAdd = {...dice2DCubeAttrs};
+      toAdd.z = getMaxZ(dice2DCube.get('layer')) + 1;
+      toAdd.cT = result.variables.color;
+      toAdd.cL = contrastAnyColor(result.variables.color, 0.2);
+      toAdd.cR = contrastAnyColor(result.variables.color, 0.4);
+      toAdd.cP = contrastAnyColor(result.variables.color, 1);
+
+      const id = await addWidgetLocal(toAdd);
+      overlayDone(id);
+    } catch(e) {}
+  });
+  dice2DCube.domElement.id = dice2DCube.id;
+  $('#addOverlay').appendChild(dice2DCube.domElement);
+
+  const dice3D = new Dice('add-dice3D0');
+  const dice3DAttrs = {
+    type: 'dice',
+    x: 1020,
+    y: 455,
+    shape3d: true,
+    faces: ['1','2','3','4','5','6','7','8']
+  };
+  dice3D.applyInitialDelta(dice3DAttrs);
+  dice3D.domElement.addEventListener('click', async _=>{
+    try {
+      const result = await dice3D.showInputOverlay({
+        header: 'Choose number of sides',
+        fields: [
+          {
+            type: 'number',
+            select: 'Sides',
+            value: 8,
+            variable: 'sides',
+            min: 2
+          }
+        ]
+      });
+      const sides = result.variables.sides;
+      const toAdd = {...dice3DAttrs};
+      toAdd.z = getMaxZ(dice3D.get('layer')) + 1;
+      toAdd.faces = Array.from({length: sides}, (_, i) => i + 1);
+      if(sides != 6)
+        toAdd.pipSymbols = false;
+      toAdd.shape3d = sides == 2 ? 'd2-flip' : true;
+      const id = await addWidgetLocal(toAdd);
+      overlayDone(id);
+    } catch(e) {}
+  });
+  dice3D.domElement.id = dice3D.id;
+  $('#addOverlay').appendChild(dice3D.domElement);
 
   // Populate the Interactive panel in the add widget overlay.
   // Note that the Add Canvas, Add Seat, and Add Scoreboard buttons are in room.html.
@@ -1383,7 +1192,7 @@ function populateAddWidgetOverlay() {
           }
         ]
       });
-      const values = result.values;
+      const values = result.variables.values;
       const toAdd = {...spinAttrs};
       toAdd.z = getMaxZ(spinner.get('layer')) + 1;
       toAdd.value = values;
@@ -1459,30 +1268,6 @@ function populateAddWidgetOverlay() {
 }
 // end of JSON generators
 
-async function removeWidgetLocal(widgetID, keepChildren) {
-  function getWidgetsToRemove(widgetID) {
-    const children = [];
-    if(!keepChildren)
-      for(const [ childWidgetID, childWidget ] of widgets)
-        if(!childWidget.inRemovalQueue && (childWidget.get('parent') == widgetID || childWidget.get('deck') == widgetID))
-          children.push(...getWidgetsToRemove(childWidgetID));
-    widgets.get(widgetID).inRemovalQueue = true;
-    children.push(widgets.get(widgetID));
-    return children;
-  }
-
-  if(widgets.get(widgetID).inRemovalQueue)
-    return;
-
-  for(const w of getWidgetsToRemove(widgetID)) {
-    w.isBeingRemoved = true;
-    // don't actually set deck and parent to null (only pretend to) because when "receiving" the delta, the applyRemove has to find the parent
-    await w.onPropertyChange('deck', w.get('deck'), null);
-    await w.onPropertyChange('parent', w.get('parent'), null);
-    sendPropertyUpdate(w.id, null);
-  }
-}
-
 function uploadWidget(preset) {
   uploadAsset().then(async function(asset) {
     let id;
@@ -1510,6 +1295,7 @@ async function updateWidget(currentState, oldState, applyChangesFromUI) {
   const previousState = JSON.parse(oldState);
   try {
     var widget = JSON.parse(currentState);
+    setDeltaCause(`${getPlayerDetails().playerName} updated ${widget.id} in editor`);
   } catch(e) {
     alert(e.toString());
     batchEnd();
@@ -1546,6 +1332,8 @@ async function updateWidget(currentState, oldState, applyChangesFromUI) {
 
   if(widget.id !== previousState.id || widget.type !== previousState.type) {
     const id = await addWidgetLocal(widget);
+    if(widget.type === undefined && widget.type !== previousState.type)
+      sendPropertyUpdate(id, 'type', null);
 
     for(const child of children)
       sendPropertyUpdate(child.get('id'), 'parent', id);
@@ -1554,6 +1342,7 @@ async function updateWidget(currentState, oldState, applyChangesFromUI) {
   } else {
     for(const key in widget) {
       if(widget[key] !== previousState[key] && JSON.stringify(widget[key]) !== JSON.stringify(previousState[key])) {
+        widgets.get(widget.id).state[key] = widget[key];
         sendPropertyUpdate(widget.id, key, widget[key]);
       }
     }
@@ -1641,17 +1430,18 @@ async function duplicateWidget(widget, recursive, inheritFrom, inheritProperties
     } else {
       const currentId = await addWidgetLocal(currentWidget);
 
+      const clonedWidgets = [ widgets.get(currentId) ];
       if(recursive)
         for(const child of widgetFilter(w=>w.get('parent')==widget.id))
-          await clone(child, true, currentId, 0, 0);
+          clonedWidgets.push(...await clone(child, true, currentId, 0, 0));
 
-      if(currentId)
-        return currentWidget;
+      return clonedWidgets;
     }
   };
 
   const gridX = xCopies + 1;
   const gridY = yCopies + 1;
+  const clonedWidgets = [];
   for(let i=1; i<gridX*gridY; ++i) {
     let x = xOffset*(i%gridX);
     let y = yOffset*Math.floor(i/gridX);
@@ -1659,59 +1449,27 @@ async function duplicateWidget(widget, recursive, inheritFrom, inheritProperties
       x = xOffset;
       y = yOffset;
     }
-    var clonedWidget = await clone(widget, recursive, false, x, y);
+    clonedWidgets.push(...await clone(widget, recursive, false, x, y));
   }
-  return clonedWidget;
+  return clonedWidgets;
 }
 
-async function onClickDuplicateWidget() {
-  const widget = widgets.get(JSON.parse($('#editWidgetJSON').dataset.previousState).id);
-  const xOffset = widget.absoluteCoord('x') > 1500 ? -20 : 20;
-  const yOffset = widget.absoluteCoord('y') >  900 ? -20 : 20;
-  await duplicateWidget(widget, true, false, [], 'Numbers', [], xOffset, yOffset, 1, 0);
-  showOverlay();
-}
+export function initializeEditMode(currentMetaData) {
+  const div = document.createElement('div');
+  div.innerHTML = ' //*** HTML ***// ';
+  $('body').append(div);
 
-async function onClickRemoveWidget() {
-  if(confirm('Really remove?')) {
-    await removeWidgetLocal(JSON.parse($('#editWidgetJSON').dataset.previousState).id);
-    showOverlay();
-  }
-}
+  const style = document.createElement('style');
+  style.appendChild(document.createTextNode(' //*** CSS ***// '));
+  $('head').appendChild(style);
 
-function onClickManualEditWidget() {
-  showOverlay('editJSONoverlay')
-}
+  for(const overlay of $a('#editorOverlays > *'))
+    $('#roomArea').append(overlay);
 
-function onClickIncrementAllCardTypes() {
-  $a('#cardTypesList .count').forEach(i=>++i.value);
-}
+  jeInitEventListeners();
+  initializeTraceViewer();
+  initializeEditor(currentMetaData);
 
-function onClickDecrementAllCardTypes() {
-  $a('#cardTypesList .count').forEach(i=>i.value=Math.max(0, i.value-1));
-}
-
-function addCardType(cardType, value) {
-    try {
-      var widget = JSON.parse($('#editWidgetJSON').value);
-    } catch(e) {
-      alert(e.toString());
-      return;
-    }
-    widget.cardTypes[cardType] = value;
-    $('#editWidgetJSON').value = JSON.stringify(widget)
-}
-
-function toggleEditMode() {
-  if(edit)
-    $('body').classList.remove('edit');
-  else
-    $('body').classList.add('edit');
-  edit = !edit;
-  showOverlay();
-}
-
-onLoad(function() {
   // This now adds an empty basic widget
   on('#addBasicWidget', 'click', async function() {
     const id = await addWidgetLocal({
@@ -1729,6 +1487,8 @@ onLoad(function() {
       dropOffsetY: 14,
       stackOffsetX: 40,
       childrenPerOwner: true,
+      dropShadow: true,
+      hidePlayerCursors: true,
       x: 50,
       y: 820,
       width: 1500,
@@ -1891,8 +1651,12 @@ onLoad(function() {
         'var parent = ${PROPERTY parent}',
         "var COUNT = 0",
         {
+          "func": "SELECT",
+          "property": "_ancestor",
+          "value": "${PROPERTY hand OF $parent}"
+        },
+        {
           "func": "COUNT",
-          "holder": "${PROPERTY hand OF $parent}",
           "owner": "${PROPERTY player OF $parent}"
         },
         {
@@ -1921,7 +1685,7 @@ onLoad(function() {
     });
     showOverlay();
   });
-  
+
   on('#uploadBoard', 'click', _=>uploadWidget('board'));
   on('#uploadToken', 'click', _=>uploadWidget('token'));
 
@@ -1941,28 +1705,5 @@ onLoad(function() {
     overlayDone(id);
   });
 
-  const editOverlayApp = Vue.createApp({
-    data() { return {
-      selectedWidget: {},
-    }}
-  });
-  loadComponents(editOverlayApp);
-  vmEditOverlay = editOverlayApp.mount("#editOverlayVue");
-
-  on('#labelWidthNumber', 'input', e=>$('#labelWidth').value=e.target.value)
-  on('#labelWidth', 'input', e=>$('#labelWidthNumber').value=e.target.value)
-  on('#labelHeightNumber', 'input', e=>$('#labelHeight').value=e.target.value)
-  on('#labelHeight', 'input', e=>$('#labelHeightNumber').value=e.target.value)
-
-  on('#basicWidthNumber', 'input', e=>$('#basicWidth').value=e.target.value)
-  on('#basicWidth', 'input', e=>$('#basicWidthNumber').value=e.target.value)
-  on('#basicHeightNumber', 'input', e=>$('#basicHeight').value=e.target.value)
-  on('#basicHeight', 'input', e=>$('#basicHeightNumber').value=e.target.value)
-
-  on('#uploadButtonImage', 'click', _=>uploadAsset().then(function(asset) {
-    if(asset)
-      $('#buttonImage').value = asset;
-  }));
-
   populateAddWidgetOverlay();
-});
+};

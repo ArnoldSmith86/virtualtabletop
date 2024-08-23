@@ -41,7 +41,7 @@
     "y": 4
   },
   "_meta": {
-    "version": 4,
+    "version": 15,
     "info": {
       "name": "Seats",
       "image": "/assets/-65508335_6985",
@@ -52,7 +52,7 @@
       "time": "",
       "attribution": "",
       "showName": false,
-      "lastUpdate": 1674019701889,
+      "lastUpdate": 1705274283924,
       "skill": "",
       "description": "",
       "similarImage": "",
@@ -60,6 +60,7 @@
       "similarAwards": "",
       "ruleText": "",
       "helpText": "",
+      "similarDesigner": "",
       "variantImage": "",
       "variant": "Turns",
       "language": "en-US",
@@ -73,7 +74,7 @@
     "y": 257,
     "css": "font-size: 25px; ",
     "height": 600,
-    "text": "For this tutorial, you can use a single browser window and should 'sit' in every seat at the same time. (But also try with one seat empty to see how that changes things). The 'hideWhenUnused' property is left in its default false state so you can do this. The default `TURN` behavior is to move forward one seat each turn. Turn is indicated by a glow around the seat.\n\nThe key parameter is `turnCycle`.  While sitting in all 4 seats simultaneously, click each of the buttons and examine the JSON to see details of this paramater.\n\n\n\n\n\n\nYou can also set the parameter programmatically as in the example button below which sets up a 'snake' turn pattern: 1,2,3,4 then 4,3,2,1. This button also takes into account situations when a seat (including the first or last seat) is empty.",
+    "text": "For this tutorial, you can use a single browser window and should 'sit' in every seat at the same time. (But also try with one seat empty to see how that changes things). The 'hideWhenUnused' property is left in its default false state so you can do this. The default `TURN` behavior is to move forward one seat each turn. Turn is indicated by a glow around the seat.\n\nThe key parameter is `turnCycle`.  While sitting in all 4 seats simultaneously, click each of the buttons and examine the JSON to see details of this paramater.\n\n\n\n\n\n\n\n\n\nYou can also set the parameter programmatically as in the example button below which sets up a 'snake' turn pattern: 1,2,3,4 then 4,3,2,1. This button also takes into account situations when a seat (including the first or last seat) is empty.",
     "movable": false,
     "width": 1200,
     "layer": -1
@@ -282,11 +283,101 @@
       }
     ],
     "x": 357,
-    "y": 753,
+    "y": 861,
     "z": 117,
     "id": "7gbf",
     "layer": 1,
     "text": "Snake",
     "direction": "backward"
+  },
+  "8gbf": {
+    "type": "button",
+    "clickRoutine": [
+      {
+        "func": "TURN",
+        "turnCycle": "seat",
+        "turn": "${seatID}"
+      }
+    ],
+    "x": 1036,
+    "y": 491,
+    "z": 109,
+    "id": "8gbf",
+    "layer": 1,
+    "text": "Seat"
+  },
+  "qaui1": {
+    "id": "qaui1",
+    "z": 114,
+    "x": 1132,
+    "y": 475,
+    "css": "font-size: 20px; ",
+    "height": 200,
+    "text": "In this final button, you can set the 'turn' parameter to the 'id' of a seat. Pressing this button uses the predefined variable 'seatID', which is the id of the first seat the player is sitting in. So if you are in all the seats in the room, this will set the turn to the first seat. Try sitting in a seat using a different browser to see how that would work in a room with multiple players.",
+    "movable": false,
+    "width": 400,
+    "layer": -1
+  },
+  "uslq": {
+    "text": "Seats also use a property 'skipTurn'. Any seat(s) with that set to true will not be included in the turn calculations. This button turns 'skipTurn' off and on for the first seat above so you can see how that works.",
+    "id": "uslq",
+    "css": {
+      "background": "white",
+      "border": "1px solid black",
+      "padding": "4px"
+    },
+    "borderRadius": 8,
+    "y": 504,
+    "x": 7,
+    "width": 315,
+    "height": 200,
+    "movable": false
+  },
+  "9gbf": {
+    "type": "button",
+    "clickRoutine": [
+      {
+        "func": "IF",
+        "condition": "${PROPERTY skipTurn OF seat1}",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "seat1"
+            ],
+            "property": "skipTurn",
+            "value": false
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "text",
+            "value": "skipTurn false"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "seat1"
+            ],
+            "property": "skipTurn",
+            "value": true
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "text",
+            "value": "skipTurn true"
+          }
+        ]
+      }
+    ],
+    "x": 123,
+    "y": 614,
+    "z": 109,
+    "id": "9gbf",
+    "layer": 1,
+    "text": "skipTurn false"
   }
 }

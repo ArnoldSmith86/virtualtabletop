@@ -1,0 +1,2479 @@
+{
+  "7393": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "148",
+    "id": "7393",
+    "z": 12005,
+    "parent": "6qnb"
+  },
+  "_meta": {
+    "version": 14,
+    "info": {
+      "name": "WORD STAX",
+      "image": "/assets/77365645_57244",
+      "rules": "",
+      "bgg": "https://boardgamegeek.com/boardgame/350335/word-stax",
+      "year": "2021",
+      "mode": "vs, solo",
+      "time": "30-45",
+      "attribution": "Room layout and design by LawDawg and released to the public domain by CC0.<div><br></div><div>Original cards, artwork, and instructions by D. Teuber. Available as CC BY-NC-SA 4.0.</div>",
+      "lastUpdate": 1699759651370,
+      "showName": false,
+      "skill": "",
+      "description": "Build stacks of cards, trying to find words that fit an increasing number of conditions. Use special cards to manipulate the stacks. Claim a stack and all its points ... for now.",
+      "similarImage": "",
+      "similarName": "",
+      "similarDesigner": "D. Teuber",
+      "similarAwards": "",
+      "ruleText": "<b>OVERVIEW</b><div><br></div><div>What’s a word that starts with two consonants ... and ends in ON ... and is found in nature ... AND one middle letter is C? Stumped yet?<br><div><div><br></div><div>In WORD STAX (just a fun way to write \"stacks), players build stacks of cards, trying to find words that fit an increasing number of conditions. Each card in hand gives players 2 choices of conditions to add to the conditions on the WORD STAX in play. The more conditions, the more the STAX are worth. If they can think of a WORD or PHRASE that fits all the conditions, they can claim the STACK and all its points…for now! Players are aided by special cards which allow them to manipulate the STAX and claim them for their own!<br></div><div><br></div><div><b>OBJECTIVE</b></div><div><b><br></b></div><div>Players compete to claim WORD STAX by adding new conditions to existing STAX and finding words that meet all the conditions of a STACK. Points are awarded for each WORD STACK claimed at the end of the game, based on the length of each STACK.<b><br></b></div><div><br></div><div><b>CARD ANATOMY</b></div><div><b><br></b></div><div>The deck consists of 42 Regular Cards and 12 Special Cards.</div><div><img src=\"/assets/192442629_93115\" class=\"richtextAsset\"></div><div><b>SET UP</b></div><div><b><br></b></div><div>Players sit facing the table in the same direction and have 5 cubes in their own color. Shuffle the cards and deal 3 cards to each player. Players should keep the cards in their hands and not show them to their opponent. Deal 5 cards from the deck face-up on the table next to each other. <b>For 3 or 4 players, deal 7.</b> These are the initial WORD STAX. Rotate any Special Cards so that the condition side is on the bottom. Place the remaining deck within reach of the players. The player whose life involves the most stacking goes first. (Note, set up is handled automatically in the room).<b><br></b></div><div><br></div><div><b>GAMEPLAY</b></div><div><b><br></b></div><div>On each turn:<span style=\"color: var(--overlayFontColor);\">&nbsp;</span></div><div><ul><li>(1A) Play a card into any stack.</li></ul><span style=\"color: var(--overlayFontColor);\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;OR</span><br></div><div><ul><li>(1B) Play a special card to manipulate the stax. Perform the action as written on the card. Special cards are discarded after use. Depending on the card, steps 2 and 3 may not apply as written.</li></ul><ul><li>(2) Claim the stack for yourself by saying a word that satisfies all the conditions in the stack, removing any cubes from the stack, and placing a cube of your color on the top card of the stack.</li></ul><ul><li>(3) Draw a new card from the deck.</li></ul><div>For Casual Play, allow words to be reused. For Advanced Play, do not allow words to be reused. If playing a word that can only be used once per game, you may wish to keep a record of words used.</div></div><div><br></div><div>(1A) <u>Playing a card onto a stack</u></div><div><br></div><div>&nbsp; &nbsp; &nbsp;A player can play on any stack, claimed or unclaimed. To play, a player must first choose a condition from a card in their hand. Cards in hands may be rotated and conditions on either side of a card may be used. Cards should be placed onto an existing stack such that the chosen condition covers the top half of the top card of the stack. You can only play a card if you can also claim the stack (see next).</div><div><br></div><div><div>(2) <u>Claiming a stack</u></div><div><br></div><div>&nbsp; &nbsp; &nbsp;To claim a stack, state a word that fits all of the conditions on the stack, including the condition of the card being added to the stack. If the stack was previously claimed by your opponent, remove their cube from the stack and return it to them. Then place your cube on the stack. If your own cube was already on the stack, simply move it to the top card of the stack. A stack remains claimed until another player claims it or all the cards in the stack are removed.</div><div><br></div><div><div>(3) <u>Ending a turn</u></div><div><br></div><div>&nbsp; &nbsp; &nbsp;At the end of a turn, take a card from the deck to add to your hand. Begin each turn with three cards in your hand.\n</div></div><div><br></div><div><div>(1B) <u>Playing a special card</u>&nbsp;&nbsp;</div><div><br></div><div>&nbsp; &nbsp; &nbsp;There are 6 special card types, each appearing twice.</div></div><div><ul><li><i>LOOK</i>.&nbsp;Look at the top 4 cards from the deck and choose one for your hand, returning the rest in any order to the top of the deck. Do NOT claim a stack this turn.</li><li><i>MOVE</i>.&nbsp;Take an uncovered card from any stack and place it on any other stack. Unless it is a special card, you may also rotate the card before placing it. You claim only the stack to which you moved the card. If moving the last card of a stack, start a new stack with the next card from the deck (but do not claim it).</li><li><i>REMOVE</i>.&nbsp;Take any card from any stack and shuffle it into the deck. Do NOT claim a stack or remove any cubes. Draw a card from the deck and take another turn. If removing the last card of a stack, start a new stack with the next card from the deck (but do not claim it).</li><li><i>ROTATE</i>.&nbsp;Rotate any uncovered regular card and claim the stack.</li><li><i>SWAP</i>.&nbsp;Swap any two uncovered cards and claim both stax. You cannot rotate the cards.</li><li><i>SWITCH</i>.&nbsp;Take any card from any stack and put it in your hand. Then place another card from your hand onto that same stack and claim it.</li></ul><div><b>RESTRICTIONS ON PLAY</b></div></div><div><br></div></div><div>Some conditions are marked with a label. A particular label can only appear once in a stack.</div><div><br></div><div><ul><li><i>W</i>. A stack may only have one condition regarding the number of words.</li><li><i>L</i>. A stack may only have one condition regarding the number of letters.</li><li><i>S</i>. A stack may only have one condition regarding the number of syllables.</li></ul></div><div><b>WINNING THE GAME</b></div><div><b><br></b></div><div><u>When You Cannot Play A Card</u><i>. </i>Whenever a player cannot play&nbsp;on a stack, they discard one card from their hand AND also remove one cube from their hand. Do not remove cubes from stax. Removed cubes cannot be used again for the remainder of the game. After discarding, a player draws a new card, and their turn ends.</div><div><br></div><div><u>Game End</u><i>.&nbsp;</i><span style=\"color: var(--overlayFontColor);\">The game ends when the deck has been depleted and&nbsp;</span><span style=\"color: var(--overlayFontColor);\">all players have spent their hands, or when no players&nbsp;</span><span style=\"color: var(--overlayFontColor);\">have cubes in their hands.</span></div></div></div><div><span style=\"color: var(--overlayFontColor);\"><br></span></div><div><span style=\"color: var(--overlayFontColor);\"><u>Scoring</u>.&nbsp;</span><span style=\"color: var(--overlayFontColor);\">Players score points for each claimed stack they have&nbsp;</span><span style=\"color: var(--overlayFontColor);\">at the end of the game. The amount of points each&nbsp;</span><span style=\"color: var(--overlayFontColor);\">stack is worth depends on the number of cards in the&nbsp;</span><span style=\"color: var(--overlayFontColor);\">stack, according to the table below.</span></div><div><span style=\"color: var(--overlayFontColor);\"><br></span></div><div>The player with the HIGHEST score wins. In the case of a tie, the player with the FEWEST number of stax wins. If the players are still tied, they share the victory.<span style=\"color: var(--overlayFontColor);\"><br></span></div><div><br></div><div><img src=\"/assets/-1206456240_39019\" class=\"richtextAsset\"></div><div><b>THE CONDITIONS</b></div><div><b><br></b></div><div>In general, the conditions are deliberately open to interpretation, and several of the conditions have multiple meanings (vehicle, instrument, hard, etc.). Players should try to use this to their advantage whenever possible. This section serves to clarify some conditions.<b><br></b></div><div><br></div><div><img src=\"/assets/-830930845_218295\" class=\"richtextAsset\"></div><div><b>SOLO PLAY</b></div><div><b><br></b></div><div><u>Objective</u>. To score as many points as you can.</div><div><br></div><div><u>Set Up</u>.&nbsp;Deal yourself 3 cards, and then place 5 cards on the table. Cubes are not used. </div><div><br></div><div><u>Gameplay</u>.&nbsp;Starting with the leftmost stack, play as many cards as you can on each stack, drawing a new card after playing each card. When you can no longer play on a stack, discard one card from your hand, draw a new card, and move to the next stack on the right. After exhausting all your plays on the rightmost stack, return to the leftmost stack again for a second attempt through the stax to add more cards.\n</div><div><br></div><div><u>Special Rule for Special Cards</u>.&nbsp;ALL Special Cards may be used on ANY CARDS (covered or uncovered) in ANY STACK in play.</div><div><br></div><div><u>Game End</u>. After the second time through the stax, tally up your points for each stack, using the scoring table above.&nbsp; How did you stack up?</div><div><br></div><div>&lt;35&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; At a Loss for Words</div><div>35-49&nbsp; &nbsp; &nbsp; For Want of a Better Word</div><div>50-64&nbsp; &nbsp; &nbsp; Have a Way with Words</div><div>65-79&nbsp; &nbsp; &nbsp; Word of Honor</div><div>80+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; The Last Word</div>",
+      "helpText": "Sit in seats. Press restart button in upper right-hand corner to begin and select a random player to start. Cards will automatically be dealt to player hands and to either 5 (1-2 player) or 7 (3-4 players) starting stacks.<div><br></div><div>Points for each stack are automatically counted and displayed above each stack. To claim the stack, drag a cube to the holder at the top of the stack. If a cube is already there, it will automatically be moved to the discard pile.</div><div><br></div><div>Drag and drop cards into holders. Click a card to rotate it. Click the End Turn button to move the turn indicator to the next player.</div>",
+      "variantImage": "",
+      "variant": "",
+      "language": "en-US",
+      "players": "1-4"
+    }
+  },
+  "stack1": {
+    "type": "holder",
+    "id": "stack1",
+    "x": 506,
+    "y": -95,
+    "width": 120,
+    "height": 1250,
+    "scale": 0.75,
+    "z": 1,
+    "dropOffsetX": 0,
+    "dropOffsetY": 1085,
+    "stackOffsetY": -80,
+    "scoreArray": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      7,
+      9,
+      11,
+      13,
+      15,
+      18,
+      21,
+      24,
+      27,
+      30
+    ],
+    "enterRoutine": [
+      {
+        "func": "CALL",
+        "routine": "scoreRoutine"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "CALL",
+        "routine": "scoreRoutine"
+      }
+    ],
+    "scoreRoutine": [
+      {
+        "func": "COUNT",
+        "holder": "${PROPERTY id}"
+      },
+      "var stackScore = ${PROPERTY scoreArray} getIndex ${COUNT}",
+      {
+        "func": "SET",
+        "collection": [
+          "score${PROPERTY thisStack}"
+        ],
+        "property": "text",
+        "value": "${stackScore}"
+      }
+    ],
+    "thisStack": 1,
+    "onEnter": {
+      "activeFace": 1
+    },
+    "css": {
+      "background": "#ffffff80"
+    },
+    "dropTarget": {
+      "type": "card"
+    }
+  },
+  "seat1": {
+    "type": "seat",
+    "id": "seat1",
+    "x": 2,
+    "y": 5,
+    "parent": "seatArea1",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "cubeOwner",
+        "value": "${PROPERTY index}"
+      },
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY player}",
+        "operand2": "",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "property": "color",
+            "value": "${playerColor}"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "seatArea${PROPERTY index}"
+            ],
+            "property": "bColor",
+            "value": "${playerColor}"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "cubes${PROPERTY index}",
+              "hand${PROPERTY index}"
+            ],
+            "property": "scale",
+            "value": 1
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "property": "color",
+            "value": "#999999"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "seatArea${PROPERTY index}"
+            ],
+            "property": "bColor",
+            "value": "transparent"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "cubes${PROPERTY index}",
+              "hand${PROPERTY index}"
+            ],
+            "property": "scale",
+            "value": 0
+          }
+        ]
+      },
+      {
+        "func": "CLICK",
+        "collection": "thisButton",
+        "mode": "ignoreClickRoutine"
+      }
+    ],
+    "hand": "hand1",
+    "hideWhenUnused": true
+  },
+  "seatArea1": {
+    "id": "seatArea1",
+    "x": 5,
+    "y": 7,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "border": "1px dashed ${PROPERTY bColor}"
+    },
+    "width": 363,
+    "height": 236,
+    "borderRadius": 9,
+    "layer": -1,
+    "bColor": "transparent"
+  },
+  "deckHolder": {
+    "type": "holder",
+    "id": "deckHolder",
+    "x": 384,
+    "y": 291,
+    "width": 120,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "type": "card"
+    },
+    "css": {
+      "background": "#ffffff80"
+    },
+    "onEnter": {
+      "rotation": 0
+    }
+  },
+  "hand1": {
+    "type": "holder",
+    "id": "hand1",
+    "parent": "seatArea1",
+    "x": 2,
+    "y": 65,
+    "width": 360,
+    "z": 2,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "stackOffsetX": 120,
+    "dropLimit": 3,
+    "css": {
+      "background": "#ffffff80"
+    },
+    "childrenPerOwner": true,
+    "onEnter": {
+      "activeFace": 1
+    },
+    "scale": 0
+  },
+  "cubes1": {
+    "type": "holder",
+    "id": "cubes1",
+    "parent": "seatArea1",
+    "x": 181,
+    "y": 6,
+    "width": 175,
+    "height": 50,
+    "z": 3,
+    "dropTarget": {
+      "cubeOwner": 1
+    },
+    "stackOffsetX": 33,
+    "classes": "transparent",
+    "scale": 0
+  },
+  "cubeP1-1": {
+    "id": "cubeP1-1",
+    "x": 4,
+    "width": 36,
+    "height": 40,
+    "z": 1,
+    "css": "border-radius: 50%/35%;",
+    "image": "/i/game-pieces/3D/Cube-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "white",
+    "borderWidth": 1,
+    "cubeOwner": 1,
+    "secondaryColor": "black",
+    "color": "#999999",
+    "parent": "cubes1",
+    "y": 4
+  },
+  "cubeP1-2": {
+    "id": "cubeP1-2",
+    "x": 37,
+    "width": 36,
+    "height": 40,
+    "z": 2,
+    "css": "border-radius: 50%/35%;",
+    "image": "/i/game-pieces/3D/Cube-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "white",
+    "borderWidth": 1,
+    "cubeOwner": 1,
+    "secondaryColor": "black",
+    "color": "#999999",
+    "parent": "cubes1",
+    "y": 4
+  },
+  "cubeP1-3": {
+    "id": "cubeP1-3",
+    "x": 70,
+    "width": 36,
+    "height": 40,
+    "z": 3,
+    "css": "border-radius: 50%/35%;",
+    "image": "/i/game-pieces/3D/Cube-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "white",
+    "borderWidth": 1,
+    "cubeOwner": 1,
+    "secondaryColor": "black",
+    "color": "#999999",
+    "y": 4,
+    "parent": "cubes1"
+  },
+  "cubeP1-4": {
+    "id": "cubeP1-4",
+    "x": 103,
+    "width": 36,
+    "height": 40,
+    "z": 4,
+    "css": "border-radius: 50%/35%;",
+    "image": "/i/game-pieces/3D/Cube-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "white",
+    "borderWidth": 1,
+    "cubeOwner": 1,
+    "secondaryColor": "black",
+    "color": "#999999",
+    "y": 4,
+    "parent": "cubes1"
+  },
+  "cubeP1-5": {
+    "id": "cubeP1-5",
+    "x": 136,
+    "width": 36,
+    "height": 40,
+    "z": 5,
+    "css": "border-radius: 50%/35%;",
+    "image": "/i/game-pieces/3D/Cube-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "white",
+    "borderWidth": 1,
+    "cubeOwner": 1,
+    "secondaryColor": "black",
+    "color": "#999999",
+    "y": 4,
+    "parent": "cubes1"
+  },
+  "seatArea2": {
+    "inheritFrom": {
+      "seatArea1": "*"
+    },
+    "id": "seatArea2",
+    "x": 5,
+    "y": 257,
+    "bColor": "transparent"
+  },
+  "seat2": {
+    "inheritFrom": {
+      "seat1": [
+        "!player",
+        "!color"
+      ]
+    },
+    "type": "seat",
+    "id": "seat2",
+    "index": 2,
+    "parent": "seatArea2",
+    "color": "#999999",
+    "hand": "hand2"
+  },
+  "hand2": {
+    "inheritFrom": {
+      "hand1": "*"
+    },
+    "type": "holder",
+    "id": "hand2",
+    "parent": "seatArea2",
+    "scale": 0
+  },
+  "cubes2": {
+    "inheritFrom": {
+      "cubes1": "*"
+    },
+    "type": "holder",
+    "id": "cubes2",
+    "parent": "seatArea2",
+    "dropTarget": {
+      "cubeOwner": 2
+    },
+    "scale": 0
+  },
+  "seatArea3": {
+    "inheritFrom": {
+      "seatArea1": "*"
+    },
+    "id": "seatArea3",
+    "x": 5,
+    "y": 507,
+    "bColor": "transparent"
+  },
+  "seat3": {
+    "inheritFrom": {
+      "seat1": [
+        "!player",
+        "!color"
+      ]
+    },
+    "type": "seat",
+    "id": "seat3",
+    "index": 3,
+    "parent": "seatArea3",
+    "color": "#999999",
+    "hand": "hand3"
+  },
+  "hand3": {
+    "inheritFrom": {
+      "hand1": "*"
+    },
+    "type": "holder",
+    "id": "hand3",
+    "parent": "seatArea3",
+    "scale": 0
+  },
+  "cubes3": {
+    "inheritFrom": {
+      "cubes1": "*"
+    },
+    "type": "holder",
+    "id": "cubes3",
+    "parent": "seatArea3",
+    "dropTarget": {
+      "cubeOwner": 3
+    },
+    "scale": 0
+  },
+  "seatArea4": {
+    "inheritFrom": {
+      "seatArea1": "*"
+    },
+    "id": "seatArea4",
+    "x": 5,
+    "y": 757,
+    "bColor": "transparent"
+  },
+  "seat4": {
+    "inheritFrom": {
+      "seat1": [
+        "!player",
+        "!color"
+      ]
+    },
+    "type": "seat",
+    "id": "seat4",
+    "index": 4,
+    "parent": "seatArea4",
+    "color": "#999999",
+    "hand": "hand4"
+  },
+  "hand4": {
+    "inheritFrom": {
+      "hand1": "*"
+    },
+    "type": "holder",
+    "id": "hand4",
+    "parent": "seatArea4",
+    "scale": 0
+  },
+  "cubes4": {
+    "inheritFrom": {
+      "cubes1": "*"
+    },
+    "type": "holder",
+    "id": "cubes4",
+    "parent": "seatArea4",
+    "dropTarget": {
+      "cubeOwner": 4
+    },
+    "scale": 0
+  },
+  "cubeP2-1": {
+    "id": "cubeP2-1",
+    "parent": "cubes2",
+    "x": 4,
+    "y": 4,
+    "width": 36,
+    "height": 40,
+    "z": 1,
+    "color": "#999999",
+    "css": "border-radius: 50%/35%;",
+    "image": "/i/game-pieces/3D/Cube-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "white",
+    "borderWidth": 1,
+    "cubeOwner": 2,
+    "secondaryColor": "black"
+  },
+  "cubeP2-2": {
+    "id": "cubeP2-2",
+    "parent": "cubes2",
+    "x": 37,
+    "y": 4,
+    "width": 36,
+    "height": 40,
+    "z": 2,
+    "color": "#999999",
+    "css": "border-radius: 50%/35%;",
+    "image": "/i/game-pieces/3D/Cube-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "white",
+    "borderWidth": 1,
+    "cubeOwner": 2,
+    "secondaryColor": "black"
+  },
+  "cubeP2-3": {
+    "id": "cubeP2-3",
+    "x": 70,
+    "width": 36,
+    "height": 40,
+    "z": 3,
+    "color": "#999999",
+    "css": "border-radius: 50%/35%;",
+    "image": "/i/game-pieces/3D/Cube-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "white",
+    "borderWidth": 1,
+    "cubeOwner": 2,
+    "secondaryColor": "black",
+    "y": 4,
+    "parent": "cubes2"
+  },
+  "cubeP2-4": {
+    "id": "cubeP2-4",
+    "x": 103,
+    "width": 36,
+    "height": 40,
+    "z": 4,
+    "color": "#999999",
+    "css": "border-radius: 50%/35%;",
+    "image": "/i/game-pieces/3D/Cube-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "white",
+    "borderWidth": 1,
+    "cubeOwner": 2,
+    "secondaryColor": "black",
+    "y": 4,
+    "parent": "cubes2"
+  },
+  "cubeP2-5": {
+    "id": "cubeP2-5",
+    "width": 36,
+    "height": 40,
+    "z": 5,
+    "color": "#999999",
+    "css": "border-radius: 50%/35%;",
+    "image": "/i/game-pieces/3D/Cube-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "white",
+    "borderWidth": 1,
+    "cubeOwner": 2,
+    "secondaryColor": "black",
+    "x": 136,
+    "y": 4,
+    "parent": "cubes2"
+  },
+  "cubeP3-1": {
+    "id": "cubeP3-1",
+    "x": 4,
+    "y": 4,
+    "width": 36,
+    "height": 40,
+    "z": 1,
+    "cubeOwner": 3,
+    "color": "#999999",
+    "css": "border-radius: 50%/35%;",
+    "image": "/i/game-pieces/3D/Cube-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "white",
+    "borderWidth": 1,
+    "secondaryColor": "black",
+    "parent": "cubes3"
+  },
+  "cubeP3-2": {
+    "id": "cubeP3-2",
+    "x": 37,
+    "y": 4,
+    "width": 36,
+    "height": 40,
+    "z": 2,
+    "cubeOwner": 3,
+    "color": "#999999",
+    "css": "border-radius: 50%/35%;",
+    "image": "/i/game-pieces/3D/Cube-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "white",
+    "borderWidth": 1,
+    "secondaryColor": "black",
+    "parent": "cubes3"
+  },
+  "cubeP3-3": {
+    "id": "cubeP3-3",
+    "x": 70,
+    "y": 4,
+    "width": 36,
+    "height": 40,
+    "z": 3,
+    "cubeOwner": 3,
+    "color": "#999999",
+    "css": "border-radius: 50%/35%;",
+    "image": "/i/game-pieces/3D/Cube-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "white",
+    "borderWidth": 1,
+    "secondaryColor": "black",
+    "parent": "cubes3"
+  },
+  "cubeP3-4": {
+    "id": "cubeP3-4",
+    "x": 103,
+    "y": 4,
+    "width": 36,
+    "height": 40,
+    "z": 4,
+    "cubeOwner": 3,
+    "color": "#999999",
+    "css": "border-radius: 50%/35%;",
+    "image": "/i/game-pieces/3D/Cube-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "white",
+    "borderWidth": 1,
+    "secondaryColor": "black",
+    "parent": "cubes3"
+  },
+  "cubeP3-5": {
+    "id": "cubeP3-5",
+    "x": 136,
+    "width": 36,
+    "height": 40,
+    "z": 5,
+    "cubeOwner": 3,
+    "color": "#999999",
+    "css": "border-radius: 50%/35%;",
+    "image": "/i/game-pieces/3D/Cube-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "white",
+    "borderWidth": 1,
+    "secondaryColor": "black",
+    "y": 4,
+    "parent": "cubes3"
+  },
+  "cubeP4-1": {
+    "id": "cubeP4-1",
+    "x": 4,
+    "y": 4,
+    "width": 36,
+    "height": 40,
+    "z": 1,
+    "cubeOwner": 4,
+    "color": "#999999",
+    "css": "border-radius: 50%/35%;",
+    "image": "/i/game-pieces/3D/Cube-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "white",
+    "borderWidth": 1,
+    "secondaryColor": "black",
+    "hoverParent": "cubes4",
+    "parent": "cubes4"
+  },
+  "cubeP4-2": {
+    "id": "cubeP4-2",
+    "x": 37,
+    "y": 4,
+    "width": 36,
+    "height": 40,
+    "z": 2,
+    "cubeOwner": 4,
+    "color": "#999999",
+    "css": "border-radius: 50%/35%;",
+    "image": "/i/game-pieces/3D/Cube-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "white",
+    "borderWidth": 1,
+    "secondaryColor": "black",
+    "hoverParent": "cubes4",
+    "parent": "cubes4"
+  },
+  "cubeP4-3": {
+    "id": "cubeP4-3",
+    "x": 70,
+    "y": 4,
+    "width": 36,
+    "height": 40,
+    "z": 3,
+    "cubeOwner": 4,
+    "color": "#999999",
+    "css": "border-radius: 50%/35%;",
+    "image": "/i/game-pieces/3D/Cube-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "white",
+    "borderWidth": 1,
+    "secondaryColor": "black",
+    "hoverParent": "cubes4",
+    "parent": "cubes4"
+  },
+  "cubeP4-4": {
+    "id": "cubeP4-4",
+    "x": 103,
+    "y": 4,
+    "width": 36,
+    "height": 40,
+    "z": 4,
+    "cubeOwner": 4,
+    "color": "#999999",
+    "css": "border-radius: 50%/35%;",
+    "image": "/i/game-pieces/3D/Cube-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "white",
+    "borderWidth": 1,
+    "secondaryColor": "black",
+    "parent": "cubes4"
+  },
+  "cubeP4-5": {
+    "id": "cubeP4-5",
+    "x": 136,
+    "width": 36,
+    "height": 40,
+    "z": 5,
+    "cubeOwner": 4,
+    "color": "#999999",
+    "css": "border-radius: 50%/35%;",
+    "image": "/i/game-pieces/3D/Cube-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "white",
+    "borderWidth": 1,
+    "secondaryColor": "black",
+    "y": 4,
+    "parent": "cubes4"
+  },
+  "cubeStack1": {
+    "type": "holder",
+    "id": "cubeStack1",
+    "x": 567,
+    "width": 40,
+    "height": 40,
+    "z": 4,
+    "dropTarget": [
+      {
+        "cubeOwner": 1
+      },
+      {
+        "cubeOwner": 2
+      },
+      {
+        "cubeOwner": 3
+      },
+      {
+        "cubeOwner": 4
+      }
+    ],
+    "dropOffsetX": 2,
+    "dropOffsetY": 0,
+    "enterRoutine": [
+      {
+        "func": "GET",
+        "collection": "child",
+        "property": "id"
+      },
+      {
+        "func": "SELECT",
+        "property": "_ancestor",
+        "value": "${PROPERTY id}"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "id",
+        "relation": "!=",
+        "value": "${id}"
+      },
+      {
+        "func": "MOVE",
+        "to": "cubeDiscard"
+      }
+    ],
+    "css": {
+      "background": "#ffffff80"
+    }
+  },
+  "score1": {
+    "id": "score1",
+    "x": 526,
+    "width": 27,
+    "height": 25,
+    "movable": false,
+    "css": {
+      "font-size": "24px",
+      "background": "${PROPERTY bColor}",
+      "color": "white",
+      "text-align": "center",
+      "line-height": "1em"
+    },
+    "y": 3,
+    "text": 0,
+    "borderRadius": 4,
+    "bColor": "#e43d2e",
+    "rotation": 10
+  },
+  "restart": {
+    "type": "button",
+    "id": "restart",
+    "x": 1545,
+    "y": 5,
+    "width": 50,
+    "height": 50,
+    "movableInEdit": false,
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "fields": [
+          {
+            "type": "title",
+            "text": "Restarting game ..."
+          },
+          {
+            "type": "subtitle",
+            "text": "This will reset the board and start a new game. Are you sure?"
+          }
+        ]
+      },
+      {
+        "func": "RECALL",
+        "holder": "deckHolder"
+      },
+      {
+        "func": "FLIP",
+        "holder": "deckHolder",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "deckHolder"
+      },
+      {
+        "func": "SELECT",
+        "property": "cubeOwner",
+        "relation": "!=",
+        "value": null
+      },
+      {
+        "func": "FOREACH",
+        "collection": "DEFAULT",
+        "loopRoutine": [
+          {
+            "func": "GET",
+            "collection": [
+              "${widgetID}"
+            ],
+            "property": "cubeOwner"
+          },
+          {
+            "func": "MOVE",
+            "to": "cubes${cubeOwner}"
+          }
+        ]
+      },
+      {
+        "func": "MOVE",
+        "from": "deckHolder",
+        "to": [
+          "seat1",
+          "seat2",
+          "seat3",
+          "seat4"
+        ],
+        "count": 3
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "score1",
+          "score2",
+          "score3",
+          "score4",
+          "score5"
+        ],
+        "property": "text",
+        "value": 0
+      },
+      {
+        "func": "SELECT",
+        "type": "seat",
+        "property": "player",
+        "relation": "!=",
+        "value": ""
+      },
+      {
+        "func": "COUNT"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "relation": "in",
+        "value": [
+          "stack6",
+          "score6",
+          "cubeStack6",
+          "stack7",
+          "score7",
+          "cubeStack7"
+        ],
+        "collection": "extraStacks"
+      },
+      {
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "relation": "<",
+        "operand2": 3,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "extraStacks",
+            "property": "scale",
+            "value": 0
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "stack6",
+              "stack7"
+            ],
+            "property": "dropTarget",
+            "value": {
+              "none": "none"
+            }
+          },
+          {
+            "func": "MOVE",
+            "from": "deckHolder",
+            "to": [
+              "stack1",
+              "stack2",
+              "stack3",
+              "stack4",
+              "stack5"
+            ]
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": "extraStacks",
+            "property": "scale",
+            "value": null
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "stack6",
+              "stack7"
+            ],
+            "property": "scale",
+            "value": 0.75
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "stack6",
+              "stack7"
+            ],
+            "property": "dropTarget",
+            "value": {
+              "type": "card"
+            }
+          },
+          {
+            "func": "MOVE",
+            "from": "deckHolder",
+            "to": [
+              "stack1",
+              "stack2",
+              "stack3",
+              "stack4",
+              "stack5",
+              "stack6",
+              "stack7"
+            ]
+          }
+        ]
+      },
+      {
+        "func": "FOREACH",
+        "in": [
+          "stack1",
+          "stack2",
+          "stack3",
+          "stack4",
+          "stack5",
+          "stack6",
+          "stack7"
+        ],
+        "loopRoutine": [
+          {
+            "func": "SELECT",
+            "type": "card",
+            "property": "parent",
+            "value": "${value}"
+          },
+          {
+            "func": "GET",
+            "property": "special"
+          },
+          {
+            "func": "IF",
+            "condition": "${special}",
+            "thenRoutine": [
+              {
+                "func": "CLICK"
+              }
+            ],
+            "elseRoutine": [
+              "var random = randInt 0 1",
+              {
+                "func": "CLICK",
+                "count": "${random}"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "TURN",
+        "turnCycle": "random"
+      }
+    ],
+    "classes": "symbols",
+    "text": "restart",
+    "css": {
+      "font-size": "41px"
+    },
+    "gameStartRoutine": [
+      {
+        "func": "SHUFFLE",
+        "holder": "deckHolder"
+      }
+    ]
+  },
+  "discardHolder": {
+    "type": "holder",
+    "id": "discardHolder",
+    "x": 384,
+    "y": 539,
+    "width": 120,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "type": "card"
+    },
+    "onEnter": {
+      "activeFace": 0
+    },
+    "css": {
+      "background": "#ffffff80"
+    }
+  },
+  "cubeDiscard": {
+    "type": "holder",
+    "id": "cubeDiscard",
+    "x": 422,
+    "y": 715,
+    "width": 40,
+    "height": 40,
+    "z": 4,
+    "dropOffsetX": 2,
+    "dropOffsetY": 0,
+    "dropTarget": [
+      {
+        "cubeOwner": 1
+      },
+      {
+        "cubeOwner": 2
+      },
+      {
+        "cubeOwner": 3
+      },
+      {
+        "cubeOwner": 4
+      }
+    ],
+    "css": {
+      "background": "#ffffff80"
+    }
+  },
+  "stack2": {
+    "inheritFrom": {
+      "stack1": "*"
+    },
+    "type": "holder",
+    "id": "stack2",
+    "x": 622,
+    "y": -95,
+    "thisStack": 2
+  },
+  "stack3": {
+    "inheritFrom": {
+      "stack1": "*"
+    },
+    "type": "holder",
+    "id": "stack3",
+    "x": 739,
+    "y": -95,
+    "thisStack": 3
+  },
+  "stack4": {
+    "inheritFrom": {
+      "stack1": "*"
+    },
+    "type": "holder",
+    "id": "stack4",
+    "x": 856,
+    "y": -95,
+    "thisStack": 4
+  },
+  "stack5": {
+    "inheritFrom": {
+      "stack1": "*"
+    },
+    "type": "holder",
+    "id": "stack5",
+    "x": 973,
+    "y": -95,
+    "thisStack": 5
+  },
+  "cubeStack2": {
+    "inheritFrom": {
+      "cubeStack1": "*"
+    },
+    "type": "holder",
+    "id": "cubeStack2",
+    "x": 684,
+    "y": 0
+  },
+  "cubeStack3": {
+    "inheritFrom": {
+      "cubeStack1": "*"
+    },
+    "type": "holder",
+    "id": "cubeStack3",
+    "x": 801,
+    "y": 0
+  },
+  "cubeStack4": {
+    "inheritFrom": {
+      "cubeStack1": "*"
+    },
+    "type": "holder",
+    "id": "cubeStack4",
+    "x": 918,
+    "y": 0
+  },
+  "cubeStack5": {
+    "inheritFrom": {
+      "cubeStack1": "*"
+    },
+    "type": "holder",
+    "id": "cubeStack5",
+    "x": 1035,
+    "y": 0
+  },
+  "score2": {
+    "inheritFrom": {
+      "score1": "*"
+    },
+    "id": "score2",
+    "x": 643,
+    "y": 3,
+    "text": 0,
+    "bColor": "#ea762c",
+    "rotation": -10
+  },
+  "score3": {
+    "inheritFrom": {
+      "score1": "*"
+    },
+    "id": "score3",
+    "x": 760,
+    "y": 3,
+    "text": 0,
+    "bColor": "#82c039"
+  },
+  "score4": {
+    "inheritFrom": {
+      "score1": "*"
+    },
+    "id": "score4",
+    "x": 877,
+    "y": 3,
+    "text": 0,
+    "bColor": "#3293d1",
+    "rotation": -10
+  },
+  "score5": {
+    "inheritFrom": {
+      "score1": "*"
+    },
+    "id": "score5",
+    "x": 994,
+    "y": 3,
+    "text": 0,
+    "bColor": "#82c039"
+  },
+  "discardLabel": {
+    "id": "discardLabel",
+    "x": 393,
+    "y": 500,
+    "height": 30,
+    "layer": -1,
+    "movable": false,
+    "css": {
+      "font-size": "30px",
+      "color": "#e43d2e"
+    },
+    "text": "Discard"
+  },
+  "drawLabel": {
+    "id": "drawLabel",
+    "x": 409,
+    "y": 249,
+    "height": 30,
+    "layer": -1,
+    "movable": false,
+    "css": {
+      "font-size": "30px",
+      "color": "#e43d2e"
+    },
+    "text": "Draw"
+  },
+  "lookButton": {
+    "type": "button",
+    "id": "lookButton",
+    "x": 1420,
+    "y": 102,
+    "width": 30,
+    "height": 30,
+    "z": 1,
+    "classes": "symbols",
+    "css": {
+      "font-size": "27px"
+    },
+    "text": "visibility",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "_ancestor",
+        "value": "deckHolder",
+        "sortBy": {
+          "key": "z",
+          "reverse": true
+        },
+        "collection": "top4"
+      },
+      {
+        "func": "SELECT",
+        "source": "top4",
+        "property": "id",
+        "relation": "!=",
+        "value": null,
+        "max": 4,
+        "collection": "top4"
+      },
+      {
+        "func": "INPUT",
+        "fields": [
+          {
+            "type": "title",
+            "text": "Looking at top 4 cards"
+          },
+          {
+            "type": "subtitle",
+            "text": "Cards shown in order with top card first."
+          },
+          {
+            "type": "choose",
+            "source": "top4",
+            "propertyOverride": {
+              "activeFace": 1
+            },
+            "max": 1,
+            "label": "Choose one"
+          }
+        ],
+        "cancelButtonText": "Cancel",
+        "confirmButtonText": "Take card"
+      },
+      {
+        "func": "MOVE",
+        "collection": "DEFAULT",
+        "to": "hand${seatIndex}"
+      }
+    ],
+    "layer": 3
+  },
+  "score6": {
+    "id": "score6",
+    "x": 1111,
+    "y": 3,
+    "inheritFrom": {
+      "score1": "*"
+    },
+    "text": 0,
+    "bColor": "#ea762c",
+    "rotation": -10
+  },
+  "score7": {
+    "id": "score7",
+    "x": 1228,
+    "y": 3,
+    "inheritFrom": {
+      "score1": "*"
+    },
+    "text": 0,
+    "bColor": "#e43d2e"
+  },
+  "background": {
+    "id": "background",
+    "width": 1600,
+    "height": 1000,
+    "layer": -6,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "background": "${PROPERTY bgColor}"
+    },
+    "bgColor": "#deeaf0"
+  },
+  "cubeStack6": {
+    "type": "holder",
+    "id": "cubeStack6",
+    "x": 1152,
+    "y": 0,
+    "inheritFrom": {
+      "cubeStack1": "*"
+    }
+  },
+  "cubeStack7": {
+    "type": "holder",
+    "id": "cubeStack7",
+    "x": 1269,
+    "y": 0,
+    "inheritFrom": {
+      "cubeStack1": "*"
+    }
+  },
+  "stack6": {
+    "type": "holder",
+    "id": "stack6",
+    "x": 1090,
+    "y": -95,
+    "inheritFrom": {
+      "stack1": "*"
+    },
+    "thisStack": 4,
+    "dropTarget": {
+      "none": "none"
+    },
+    "scale": 0.75
+  },
+  "stack7": {
+    "type": "holder",
+    "id": "stack7",
+    "x": 1207,
+    "y": -95,
+    "inheritFrom": {
+      "stack1": "*"
+    },
+    "thisStack": 7,
+    "scale": 0.75,
+    "dropTarget": {
+      "none": "none"
+    }
+  },
+  "specialCards": {
+    "id": "specialCards",
+    "x": 1320,
+    "y": 65,
+    "width": 260,
+    "height": 925,
+    "borderRadius": 8,
+    "z": 6,
+    "movable": false,
+    "css": {
+      "default": {
+        "font-size": "20px",
+        "border": "1px solid #e43d2e",
+        "padding": "0px 5px 5px 5px"
+      },
+      " h2": {
+        "font-weight": "Bold",
+        "text-align": "center",
+        "font-size": "25px",
+        "line-height": "1.1em",
+        "color": "#e43d2e",
+        "border-bottom": "1px solid #e43d2e",
+        "padding": "0 0 0 0",
+        "margin": "5px 0 5px 0"
+      },
+      " h4": {
+        "margin": "0px 0 0px 0"
+      },
+      " h5": {
+        "font-size": "16px",
+        "font-weight": "normal",
+        "margin": "5px 0 10px 0"
+      }
+    },
+    "html": "<h2>Special Cards</h2><h4><img src='/assets/-1864905600_4272' height='25'/></h4><h5>Press button to look at the top 4 cards from the deck and choose one for your hand. The rest are returned to the top of the deck. You may manually rearrange the order of those 3 cards. Do NOT claim a stack this turn.</h5><h4><img src='/assets/566423870_4404' height='25'/></h4><h5>Take an uncovered card from any stack and place it on any other stack. Unless it is a special card, you may also rotate the card before placing it. You claim only the stack to which you moved the card. If moving the last card of a stack, start a new stack with the next card from the deck (but do not claim it).</h5><h4><img src='/assets/681836369_6690' height='25'/></h4><h5>Take any card from any stack and shuffle it into the deck. Do NOT claim a stack or remove any cubes. Draw a card from the deck and take another turn. If removing the last card of a stack, start a new stack with the next card from the deck (but do not claim it).</h5><h4><img src='/assets/-679620860_5644' height='25'/></h4><h5>Rotate any uncovered regular card and claim the stack.</h5><h4><img src='/assets/-1973513754_4324' height='25'/></h4><h5>Swap any two uncovered cards and claim both stax. You cannot rotate the cards.</h5><h4><img src='/assets/1906193786_5530' height='25'/></h4><h5>Take any card from any stack and put it in your hand. Then place another card from your hand onto that same stack and claim it.</h5>"
+  },
+  "flwv": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "100",
+    "id": "flwv",
+    "z": 12000,
+    "parent": "6qnb"
+  },
+  "8r2x": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "101",
+    "id": "8r2x",
+    "z": 11987,
+    "parent": "6qnb"
+  },
+  "6aua": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "102",
+    "id": "6aua",
+    "z": 12006,
+    "parent": "6qnb"
+  },
+  "fwvc": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "103",
+    "id": "fwvc",
+    "z": 12016,
+    "parent": "6qnb"
+  },
+  "nc8w": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "104",
+    "id": "nc8w",
+    "z": 12022,
+    "parent": "6qnb"
+  },
+  "63v0": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "105",
+    "id": "63v0",
+    "z": 12025,
+    "parent": "6qnb"
+  },
+  "uu83": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "106",
+    "id": "uu83",
+    "z": 12021,
+    "parent": "6qnb"
+  },
+  "k56b": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "107",
+    "id": "k56b",
+    "z": 12030,
+    "parent": "6qnb"
+  },
+  "2i60": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "108",
+    "id": "2i60",
+    "z": 11986,
+    "parent": "6qnb"
+  },
+  "i3il": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "109",
+    "id": "i3il",
+    "z": 12062,
+    "parent": "6qnb"
+  },
+  "1yrv": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "110",
+    "id": "1yrv",
+    "z": 12013,
+    "parent": "6qnb"
+  },
+  "en8y": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "111",
+    "id": "en8y",
+    "z": 12028,
+    "parent": "6qnb"
+  },
+  "6vfk": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "112",
+    "id": "6vfk",
+    "z": 11993,
+    "parent": "6qnb"
+  },
+  "jx0a": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "113",
+    "id": "jx0a",
+    "z": 12008,
+    "parent": "6qnb"
+  },
+  "6jjk": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "114",
+    "id": "6jjk",
+    "z": 11988,
+    "parent": "6qnb"
+  },
+  "gsz2": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "115",
+    "id": "gsz2",
+    "z": 11984,
+    "parent": "6qnb"
+  },
+  "cgfg": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "116",
+    "id": "cgfg",
+    "z": 12031,
+    "parent": "6qnb"
+  },
+  "0krd": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "117",
+    "id": "0krd",
+    "z": 11997,
+    "parent": "6qnb"
+  },
+  "7pq0": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "118",
+    "id": "7pq0",
+    "z": 11999,
+    "parent": "6qnb"
+  },
+  "ci2t": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "119",
+    "id": "ci2t",
+    "z": 12001,
+    "parent": "6qnb"
+  },
+  "is79": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "120",
+    "id": "is79",
+    "z": 11990,
+    "parent": "6qnb"
+  },
+  "whcn": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "121",
+    "id": "whcn",
+    "z": 12063,
+    "parent": "6qnb"
+  },
+  "e90k": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "122",
+    "id": "e90k",
+    "z": 12020,
+    "parent": "6qnb"
+  },
+  "dd4l": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "123",
+    "id": "dd4l",
+    "z": 12004,
+    "parent": "6qnb"
+  },
+  "0uni": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "124",
+    "id": "0uni",
+    "z": 11991,
+    "parent": "6qnb"
+  },
+  "zhx6": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "125",
+    "id": "zhx6",
+    "z": 12003,
+    "parent": "6qnb"
+  },
+  "svqr": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "126",
+    "id": "svqr",
+    "z": 11989,
+    "parent": "6qnb"
+  },
+  "86bc": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "127",
+    "id": "86bc",
+    "z": 11992,
+    "parent": "6qnb"
+  },
+  "fh76": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "128",
+    "id": "fh76",
+    "z": 12007,
+    "parent": "6qnb"
+  },
+  "dpqh": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "129",
+    "id": "dpqh",
+    "z": 12015,
+    "parent": "6qnb"
+  },
+  "7zzy": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "130",
+    "id": "7zzy",
+    "z": 11996,
+    "parent": "6qnb"
+  },
+  "4u95": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "131",
+    "id": "4u95",
+    "z": 12002,
+    "parent": "6qnb"
+  },
+  "m08c": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "132",
+    "id": "m08c",
+    "z": 12010,
+    "parent": "6qnb"
+  },
+  "ltzv": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "133",
+    "id": "ltzv",
+    "z": 12029,
+    "parent": "6qnb"
+  },
+  "usx9": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "134",
+    "id": "usx9",
+    "z": 12018,
+    "parent": "6qnb"
+  },
+  "fi0r": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "135",
+    "id": "fi0r",
+    "z": 12060,
+    "parent": "6qnb"
+  },
+  "s2ud": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "136",
+    "id": "s2ud",
+    "z": 11994,
+    "parent": "6qnb"
+  },
+  "gk1b": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "137",
+    "id": "gk1b",
+    "z": 12011,
+    "parent": "6qnb"
+  },
+  "evog": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "138",
+    "id": "evog",
+    "z": 12017,
+    "parent": "6qnb"
+  },
+  "aawu": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "139",
+    "id": "aawu",
+    "z": 12014,
+    "parent": "6qnb"
+  },
+  "iyaj": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "140",
+    "id": "iyaj",
+    "z": 12026,
+    "parent": "6qnb"
+  },
+  "fhew": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "141",
+    "id": "fhew",
+    "z": 11985,
+    "parent": "6qnb"
+  },
+  "492j": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "142",
+    "id": "492j",
+    "z": 12024,
+    "parent": "6qnb"
+  },
+  "k7au": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "143",
+    "id": "k7au",
+    "z": 12009,
+    "parent": "6qnb"
+  },
+  "stw0": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "144",
+    "id": "stw0",
+    "z": 12019,
+    "parent": "6qnb"
+  },
+  "us1n": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "145",
+    "id": "us1n",
+    "z": 11995,
+    "parent": "6qnb"
+  },
+  "yxql": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "146",
+    "id": "yxql",
+    "z": 11998,
+    "parent": "6qnb"
+  },
+  "ahwu": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "147",
+    "id": "ahwu",
+    "z": 12012,
+    "parent": "6qnb"
+  },
+  "r947": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "149",
+    "id": "r947",
+    "z": 12023,
+    "parent": "6qnb"
+  },
+  "0jz3": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "150",
+    "id": "0jz3",
+    "z": 12027,
+    "parent": "6qnb"
+  },
+  "cguh": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "151",
+    "id": "cguh",
+    "z": 12058,
+    "parent": "6qnb"
+  },
+  "jnc0": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "152",
+    "id": "jnc0",
+    "z": 12059,
+    "parent": "6qnb"
+  },
+  "mfoa": {
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "153",
+    "id": "mfoa",
+    "z": 11983,
+    "parent": "6qnb"
+  },
+  "6qnb": {
+    "type": "pile",
+    "x": 0,
+    "y": 0,
+    "width": 120,
+    "height": 168,
+    "id": "6qnb",
+    "z": 10865,
+    "parent": "deckHolder"
+  },
+  "mainDeck": {
+    "type": "deck",
+    "id": "mainDeck",
+    "parent": "deckHolder",
+    "x": 16,
+    "y": 14,
+    "z": 5866,
+    "cardDefaults": {
+      "width": 120,
+      "height": 168,
+      "css": {
+        "--offsetX": "${PROPERTY offsetX}",
+        "--offsetY": "${PROPERTY offsetY}",
+        "--deckWidth": "${PROPERTY deckWidth}",
+        "--deckHeight": "${PROPERTY deckHeight}",
+        "--width": "${PROPERTY width}",
+        "--height": "${PROPERTY height}"
+      },
+      "clickRoutine": [
+        {
+          "func": "SET",
+          "collection": "thisButton",
+          "property": "rotation",
+          "relation": "+",
+          "value": 180
+        }
+      ]
+    },
+    "cardTypes": {
+      "100": {
+        "face": "/assets/-1662147107_913402",
+        "offsetX": 0,
+        "offsetY": 0,
+        "deckWidth": 9,
+        "deckHeight": 6,
+        "simpleBack": "/assets/751495587_14296",
+        "flip": 180,
+        "special": true
+      },
+      "101": {
+        "face": "/assets/-1662147107_913402",
+        "offsetX": 1,
+        "offsetY": 0,
+        "deckWidth": 9,
+        "deckHeight": 6,
+        "simpleBack": "/assets/751495587_14296",
+        "special": true
+      },
+      "102": {
+        "face": "/assets/-1662147107_913402",
+        "offsetX": 2,
+        "offsetY": 0,
+        "deckWidth": 9,
+        "deckHeight": 6,
+        "simpleBack": "/assets/751495587_14296",
+        "special": true
+      },
+      "103": {
+        "face": "/assets/-1662147107_913402",
+        "offsetX": 3,
+        "offsetY": 0,
+        "deckWidth": 9,
+        "deckHeight": 6,
+        "simpleBack": "/assets/751495587_14296",
+        "special": true
+      },
+      "104": {
+        "face": "/assets/-1662147107_913402",
+        "offsetX": 4,
+        "offsetY": 0,
+        "deckWidth": 9,
+        "deckHeight": 6,
+        "simpleBack": "/assets/751495587_14296",
+        "special": true
+      },
+      "105": {
+        "face": "/assets/-1662147107_913402",
+        "offsetX": 5,
+        "offsetY": 0,
+        "deckWidth": 9,
+        "deckHeight": 6,
+        "simpleBack": "/assets/751495587_14296",
+        "special": true
+      },
+      "106": {
+        "face": "/assets/-1662147107_913402",
+        "offsetX": 6,
+        "offsetY": 0,
+        "deckWidth": 9,
+        "deckHeight": 6,
+        "simpleBack": "/assets/751495587_14296",
+        "special": true
+      },
+      "107": {
+        "face": "/assets/-1662147107_913402",
+        "offsetX": 7,
+        "offsetY": 0,
+        "deckWidth": 9,
+        "deckHeight": 6,
+        "simpleBack": "/assets/751495587_14296",
+        "special": true
+      },
+      "108": {
+        "face": "/assets/-1662147107_913402",
+        "offsetX": 8,
+        "offsetY": 0,
+        "deckWidth": 9,
+        "deckHeight": 6,
+        "simpleBack": "/assets/751495587_14296",
+        "special": true
+      },
+      "109": {
+        "face": "/assets/-1662147107_913402",
+        "offsetX": 0,
+        "offsetY": 1,
+        "deckWidth": 9,
+        "deckHeight": 6,
+        "simpleBack": "/assets/751495587_14296",
+        "special": true
+      },
+      "110": {
+        "face": "/assets/-1662147107_913402",
+        "offsetX": 1,
+        "offsetY": 1,
+        "deckWidth": 9,
+        "deckHeight": 6,
+        "simpleBack": "/assets/751495587_14296"
+      },
+      "111": {
+        "face": "/assets/-1662147107_913402",
+        "offsetX": 2,
+        "offsetY": 1,
+        "deckWidth": 9,
+        "deckHeight": 6,
+        "simpleBack": "/assets/751495587_14296"
+      },
+      "112": {
+        "face": "/assets/-1662147107_913402",
+        "offsetX": 3,
+        "offsetY": 1,
+        "deckWidth": 9,
+        "deckHeight": 6,
+        "simpleBack": "/assets/751495587_14296"
+      },
+      "113": {
+        "face": "/assets/-1662147107_913402",
+        "offsetX": 4,
+        "offsetY": 1,
+        "deckWidth": 9,
+        "deckHeight": 6,
+        "simpleBack": "/assets/751495587_14296"
+      },
+      "114": {
+        "face": "/assets/-1662147107_913402",
+        "offsetX": 5,
+        "offsetY": 1,
+        "deckWidth": 9,
+        "deckHeight": 6,
+        "simpleBack": "/assets/751495587_14296"
+      },
+      "115": {
+        "face": "/assets/-1662147107_913402",
+        "offsetX": 6,
+        "offsetY": 1,
+        "deckWidth": 9,
+        "deckHeight": 6,
+        "simpleBack": "/assets/751495587_14296"
+      },
+      "116": {
+        "face": "/assets/-1662147107_913402",
+        "offsetX": 7,
+        "offsetY": 1,
+        "deckWidth": 9,
+        "deckHeight": 6,
+        "simpleBack": "/assets/751495587_14296"
+      },
+      "117": {
+        "face": "/assets/-1662147107_913402",
+        "offsetX": 8,
+        "offsetY": 1,
+        "deckWidth": 9,
+        "deckHeight": 6,
+        "simpleBack": "/assets/751495587_14296"
+      },
+      "118": {
+        "face": "/assets/-1662147107_913402",
+        "offsetX": 0,
+        "offsetY": 2,
+        "deckWidth": 9,
+        "deckHeight": 6,
+        "simpleBack": "/assets/751495587_14296"
+      },
+      "119": {
+        "face": "/assets/-1662147107_913402",
+        "offsetX": 1,
+        "offsetY": 2,
+        "deckWidth": 9,
+        "deckHeight": 6,
+        "simpleBack": "/assets/751495587_14296"
+      },
+      "120": {
+        "face": "/assets/-1662147107_913402",
+        "offsetX": 2,
+        "offsetY": 2,
+        "deckWidth": 9,
+        "deckHeight": 6,
+        "simpleBack": "/assets/751495587_14296"
+      },
+      "121": {
+        "face": "/assets/-1662147107_913402",
+        "offsetX": 3,
+        "offsetY": 2,
+        "deckWidth": 9,
+        "deckHeight": 6,
+        "simpleBack": "/assets/751495587_14296"
+      },
+      "122": {
+        "face": "/assets/-1662147107_913402",
+        "offsetX": 4,
+        "offsetY": 2,
+        "deckWidth": 9,
+        "deckHeight": 6,
+        "simpleBack": "/assets/751495587_14296"
+      },
+      "123": {
+        "face": "/assets/-1662147107_913402",
+        "offsetX": 5,
+        "offsetY": 2,
+        "deckWidth": 9,
+        "deckHeight": 6,
+        "simpleBack": "/assets/751495587_14296"
+      },
+      "124": {
+        "face": "/assets/-1662147107_913402",
+        "offsetX": 6,
+        "offsetY": 2,
+        "deckWidth": 9,
+        "deckHeight": 6,
+        "simpleBack": "/assets/751495587_14296"
+      },
+      "125": {
+        "face": "/assets/-1662147107_913402",
+        "offsetX": 7,
+        "offsetY": 2,
+        "deckWidth": 9,
+        "deckHeight": 6,
+        "simpleBack": "/assets/751495587_14296"
+      },
+      "126": {
+        "face": "/assets/-1662147107_913402",
+        "offsetX": 8,
+        "offsetY": 2,
+        "deckWidth": 9,
+        "deckHeight": 6,
+        "simpleBack": "/assets/751495587_14296"
+      },
+      "127": {
+        "face": "/assets/-1662147107_913402",
+        "offsetX": 0,
+        "offsetY": 3,
+        "deckWidth": 9,
+        "deckHeight": 6,
+        "simpleBack": "/assets/751495587_14296",
+        "flip": 180,
+        "special": true
+      },
+      "128": {
+        "face": "/assets/-1662147107_913402",
+        "offsetX": 1,
+        "offsetY": 3,
+        "deckWidth": 9,
+        "deckHeight": 6,
+        "simpleBack": "/assets/751495587_14296"
+      },
+      "129": {
+        "face": "/assets/-1662147107_913402",
+        "offsetX": 2,
+        "offsetY": 3,
+        "deckWidth": 9,
+        "deckHeight": 6,
+        "simpleBack": "/assets/751495587_14296"
+      },
+      "130": {
+        "face": "/assets/-1662147107_913402",
+        "offsetX": 3,
+        "offsetY": 3,
+        "deckWidth": 9,
+        "deckHeight": 6,
+        "simpleBack": "/assets/751495587_14296"
+      },
+      "131": {
+        "face": "/assets/-1662147107_913402",
+        "offsetX": 4,
+        "offsetY": 3,
+        "deckWidth": 9,
+        "deckHeight": 6,
+        "simpleBack": "/assets/751495587_14296"
+      },
+      "132": {
+        "face": "/assets/-1662147107_913402",
+        "offsetX": 5,
+        "offsetY": 3,
+        "deckWidth": 9,
+        "deckHeight": 6,
+        "simpleBack": "/assets/751495587_14296"
+      },
+      "133": {
+        "face": "/assets/-1662147107_913402",
+        "offsetX": 6,
+        "offsetY": 3,
+        "deckWidth": 9,
+        "deckHeight": 6,
+        "simpleBack": "/assets/751495587_14296"
+      },
+      "134": {
+        "face": "/assets/-1662147107_913402",
+        "offsetX": 7,
+        "offsetY": 3,
+        "deckWidth": 9,
+        "deckHeight": 6,
+        "simpleBack": "/assets/751495587_14296"
+      },
+      "135": {
+        "face": "/assets/-1662147107_913402",
+        "offsetX": 8,
+        "offsetY": 3,
+        "deckWidth": 9,
+        "deckHeight": 6,
+        "simpleBack": "/assets/751495587_14296"
+      },
+      "136": {
+        "face": "/assets/-1662147107_913402",
+        "offsetX": 0,
+        "offsetY": 4,
+        "deckWidth": 9,
+        "deckHeight": 6,
+        "simpleBack": "/assets/751495587_14296"
+      },
+      "137": {
+        "face": "/assets/-1662147107_913402",
+        "offsetX": 1,
+        "offsetY": 4,
+        "deckWidth": 9,
+        "deckHeight": 6,
+        "simpleBack": "/assets/751495587_14296"
+      },
+      "138": {
+        "face": "/assets/-1662147107_913402",
+        "offsetX": 2,
+        "offsetY": 4,
+        "deckWidth": 9,
+        "deckHeight": 6,
+        "simpleBack": "/assets/751495587_14296"
+      },
+      "139": {
+        "face": "/assets/-1662147107_913402",
+        "offsetX": 3,
+        "offsetY": 4,
+        "deckWidth": 9,
+        "deckHeight": 6,
+        "simpleBack": "/assets/751495587_14296"
+      },
+      "140": {
+        "face": "/assets/-1662147107_913402",
+        "offsetX": 4,
+        "offsetY": 4,
+        "deckWidth": 9,
+        "deckHeight": 6,
+        "simpleBack": "/assets/751495587_14296"
+      },
+      "141": {
+        "face": "/assets/-1662147107_913402",
+        "offsetX": 5,
+        "offsetY": 4,
+        "deckWidth": 9,
+        "deckHeight": 6,
+        "simpleBack": "/assets/751495587_14296"
+      },
+      "142": {
+        "face": "/assets/-1662147107_913402",
+        "offsetX": 6,
+        "offsetY": 4,
+        "deckWidth": 9,
+        "deckHeight": 6,
+        "simpleBack": "/assets/751495587_14296"
+      },
+      "143": {
+        "face": "/assets/-1662147107_913402",
+        "offsetX": 7,
+        "offsetY": 4,
+        "deckWidth": 9,
+        "deckHeight": 6,
+        "simpleBack": "/assets/751495587_14296"
+      },
+      "144": {
+        "face": "/assets/-1662147107_913402",
+        "offsetX": 8,
+        "offsetY": 4,
+        "deckWidth": 9,
+        "deckHeight": 6,
+        "simpleBack": "/assets/751495587_14296",
+        "special": true
+      },
+      "145": {
+        "face": "/assets/-1662147107_913402",
+        "offsetX": 0,
+        "offsetY": 5,
+        "deckWidth": 9,
+        "deckHeight": 6,
+        "simpleBack": "/assets/751495587_14296"
+      },
+      "146": {
+        "face": "/assets/-1662147107_913402",
+        "offsetX": 1,
+        "offsetY": 5,
+        "deckWidth": 9,
+        "deckHeight": 6,
+        "simpleBack": "/assets/751495587_14296"
+      },
+      "147": {
+        "face": "/assets/-1662147107_913402",
+        "offsetX": 2,
+        "offsetY": 5,
+        "deckWidth": 9,
+        "deckHeight": 6,
+        "simpleBack": "/assets/751495587_14296"
+      },
+      "148": {
+        "face": "/assets/-1662147107_913402",
+        "offsetX": 3,
+        "offsetY": 5,
+        "deckWidth": 9,
+        "deckHeight": 6,
+        "simpleBack": "/assets/751495587_14296"
+      },
+      "149": {
+        "face": "/assets/-1662147107_913402",
+        "offsetX": 4,
+        "offsetY": 5,
+        "deckWidth": 9,
+        "deckHeight": 6,
+        "simpleBack": "/assets/751495587_14296"
+      },
+      "150": {
+        "face": "/assets/-1662147107_913402",
+        "offsetX": 5,
+        "offsetY": 5,
+        "deckWidth": 9,
+        "deckHeight": 6,
+        "simpleBack": "/assets/751495587_14296"
+      },
+      "151": {
+        "face": "/assets/-1662147107_913402",
+        "offsetX": 6,
+        "offsetY": 5,
+        "deckWidth": 9,
+        "deckHeight": 6,
+        "simpleBack": "/assets/751495587_14296"
+      },
+      "152": {
+        "face": "/assets/-1662147107_913402",
+        "offsetX": 7,
+        "offsetY": 5,
+        "deckWidth": 9,
+        "deckHeight": 6,
+        "simpleBack": "/assets/751495587_14296"
+      },
+      "153": {
+        "face": "/assets/-1662147107_913402",
+        "offsetX": 8,
+        "offsetY": 5,
+        "deckWidth": 9,
+        "deckHeight": 6,
+        "simpleBack": "/assets/751495587_14296"
+      }
+    },
+    "faceTemplates": [
+      {
+        "border": 1,
+        "radius": 8,
+        "objects": [
+          {
+            "type": "image",
+            "css": {
+              "background-size": "calc(var(--width) * var(--deckWidth) * 1px) calc(var(--height) * var(--deckHeight) * 1px)",
+              "background-position": "calc(var(--width) * var(--offsetX) * -1px) calc(var(--height) * var(--offsetY) * -1px)"
+            },
+            "dynamicProperties": {
+              "value": "back",
+              "width": "width",
+              "height": "height"
+            }
+          },
+          {
+            "type": "image",
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "simpleBack",
+              "width": "width",
+              "height": "height"
+            }
+          }
+        ]
+      },
+      {
+        "border": 1,
+        "radius": 8,
+        "properties": {
+          "enlarge": 3
+        },
+        "objects": [
+          {
+            "type": "image",
+            "css": {
+              "background-size": "calc(var(--width) * var(--deckWidth) * 1px) calc(var(--height) * var(--deckHeight) * 1px)",
+              "background-position": "calc(var(--width) * var(--offsetX) * -1px) calc(var(--height) * var(--offsetY) * -1px)"
+            },
+            "dynamicProperties": {
+              "value": "face",
+              "width": "width",
+              "height": "height",
+              "rotation": "flip"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "turn": {
+    "type": "button",
+    "id": "turn",
+    "x": 407,
+    "y": 193,
+    "height": 40,
+    "z": 1,
+    "text": "End Turn",
+    "clickRoutine": [
+      {
+        "func": "TURN"
+      }
+    ]
+  }
+}

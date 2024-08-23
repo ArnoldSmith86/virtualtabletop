@@ -7721,7 +7721,8 @@
       "similarName": "Splendor",
       "description": "Buy cards and gems to collect points.  First player to 15 points wins.",
       "showName": true,
-      "lastUpdate": 1612157729000
+      "lastUpdate": 1612157729000,
+      "similarDesigner": "Marc André"
     }
   }
 }
