@@ -23,10 +23,20 @@ export class StateManaged {
         deltaForDOM[i] = this.unalteredState[i] = this.state[i] = delta[i];
       }
     }
+
     this.applyDeltaToDOM(deltaForDOM);
 
     if(delta.z)
       updateMaxZ(this.get('layer'), delta.z);
+  }
+
+  applyDeltaToDOM(delta) {
+    if(delta.dropTarget !== undefined) {
+      if(this.get('dropTarget'))
+        dropTargets.set(this.id, this);
+      else
+        dropTargets.delete(this.id);
+    }
   }
 
   applyInitialDelta(delta) {

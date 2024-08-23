@@ -170,6 +170,8 @@ export class Widget extends StateManaged {
   }
 
   applyDeltaToDOM(delta) {
+    super.applyDeltaToDOM(delta);
+
     let fromTransform = null;
     let newParent = undefined;
     if(delta.parent !== undefined) {
