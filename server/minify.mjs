@@ -171,16 +171,11 @@ async function compressJS(jsFiles) {
   fs.writeFileSync(tempOutputFile, combinedJSContent, 'utf8');
 
   // Perform compression
-  try {
-    return await minify({
-      compressor: Config.get('minifyJavascript') ? uglifyES : noCompress,
-      input: tempOutputFile,
-      output: tempOutputFile
-    });
-  } catch (e) {
-    console.error('Error compressing JS:', e);
-    return combinedJSContent;
-  }
+  return await minify({
+    compressor: Config.get('minifyJavascript') ? uglifyES : noCompress,
+    input: tempOutputFile,
+    output: tempOutputFile
+  });
 }
 
 async function compress(htmlFile, cssFiles, jsFiles) {
