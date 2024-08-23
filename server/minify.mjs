@@ -153,12 +153,34 @@ async function compressCSS(cssFiles) {
   });
 }
 
+// Helper function to remove import statements
+function removeImportStatements(jsContent) {
+  return jsContent.replace(/^import\s+[^;]+;\n/gm, '');
+}
+
 async function compressJS(jsFiles) {
-  return await minify({
-    compressor: Config.get('minifyJavascript') ? uglifyES : noCompress,
-    input: jsFiles,
-    output: os.tmpdir() + '/out.js'
-  });
+  // Combine all JavaScript files and remove import statements
+  const combinedJSContent = jsFiles
+    .map(filePath => fs.readFileSync(filePath, 'utf8'))  // Read each file
+    .map(jsContent => removeImportStatements(jsContent))  // Remove import statements
+    .join('\n');  // Combine them into a single string
+  
+  const tempOutputFile = path.join(os.tmpdir(), 'out.js');
+
+  // Write the processed content to a temporary file
+  fs.writeFileSync(tempOutputFile, combinedJSContent, 'utf8');
+
+  // Perform compression
+  try {
+    return await minify({
+      compressor: Config.get('minifyJavascript') ? uglifyES : noCompress,
+      input: tempOutputFile,
+      output: tempOutputFile
+    });
+  } catch (e) {
+    console.error('Error compressing JS:', e);
+    return combinedJSContent;
+  }
 }
 
 async function compress(htmlFile, cssFiles, jsFiles) {
@@ -170,7 +192,7 @@ async function compress(htmlFile, cssFiles, jsFiles) {
   htmlString = htmlString.replace(/\ \/\*\*\*\ CSS\ \*\*\*\/\ /, _=>css).replace(/\ \/\/\*\*\*\ CONFIG\ \*\*\*\/\/\ /, _=>`const config = ${JSON.stringify(Config.config)};`);
 
   const js = await compressJS(jsFiles);
-  htmlString = htmlString.replace(/\ \/\/\*\*\*\ JS\ \*\*\*\/\/\ /, _=>js.replace(/\bimport[^(][^;]*\.\/[^;]*;/g, ""));
+  htmlString = htmlString.replace(/\ \/\/\*\*\*\ JS\ \*\*\*\/\/\ /, _=>js);
 
   const html = await minify({
     compressor: htmlMinifier,
