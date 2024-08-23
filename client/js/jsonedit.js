@@ -2734,7 +2734,10 @@ function jeInitEventListeners() {
           id = `"${id}"`;
         jePasteText(id, true);
       } else if(e.shiftKey) {
-        setSelection([ jeWidgetLayers[+functionKey[1]] ].concat(selectedWidgets));
+        if(selectedWidgets.includes(jeWidgetLayers[+functionKey[1]]))
+          setSelection(selectedWidgets.filter(w=>w!=jeWidgetLayers[+functionKey[1]]));
+        else
+          setSelection([ jeWidgetLayers[+functionKey[1]] ].concat(selectedWidgets));
       } else {
         setSelection([ jeWidgetLayers[+functionKey[1]] ]);
       }
