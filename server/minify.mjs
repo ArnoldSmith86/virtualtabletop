@@ -158,7 +158,7 @@ async function compressCSS(cssFiles) {
 
 // Helper function to remove import statements
 function removeImportStatements(jsContent) {
-  return jsContent.replace(/^import\s+[^;]+;\n/gm, '');
+  return jsContent.replace(/^import\s+[^;]+;\r?\n/gm, '');
 }
 
 async function compressJS(jsFiles) {
