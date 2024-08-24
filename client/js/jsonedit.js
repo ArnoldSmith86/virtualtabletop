@@ -833,6 +833,32 @@ const jeCommands = [
       }
       jeUpdateMulti();
     }
+  },
+  {
+    id: 'je_multiParent',
+    name: 'make child',
+    context: '^Multi-Selection',
+    call: async function() {
+      let biggestArea = 0;
+      let biggestWidget = null;
+      for(const widget of jeMultiSelectedWidgets()) {
+        const area = widget.get('width') * widget.get('height');
+        if(area > biggestArea) {
+          biggestArea = area;
+          biggestWidget = widget;
+        }
+      }
+      for(const widget of jeMultiSelectedWidgets()) {
+        if(widget !== biggestWidget) {
+          const oldX = widget.get('x');
+          const oldY = widget.get('y');
+          await widget.set('parent', biggestWidget.get('id'));
+          await widget.set('x', oldX - biggestWidget.get('x'));
+          await widget.set('y', oldY - biggestWidget.get('y'));
+        }
+      }
+      jeUpdateMulti();
+    }
   }
 ];
 
