@@ -31,7 +31,7 @@ function inheritDef(widget) {
   if(widget.get('movable'))
     exceptions.push("!parent", "!x", "!y");
   if(widget.get('type') == 'seat')
-    exceptions.push("!player", "!color");
+    exceptions.push("!player", "!color", "!turn");
   if(exceptions.length)
     return { [widget.id]: exceptions };
   else
