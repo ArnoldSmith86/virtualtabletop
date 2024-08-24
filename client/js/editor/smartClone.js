@@ -22,7 +22,12 @@ async function smartCloneAddChildren(clone, source, options) {
     await smartCloneUpdateClone(clonedChild, child, options);
     for(const c of clonedChildren)
       await removeWidgetLocal(c.id);
-    await smartCloneAddChildren(clonedChild, child, options);
+    const secondLevelOptions = JSON.parse(JSON.stringify(options));
+    if(secondLevelOptions.flipX !== 'all')
+      delete secondLevelOptions.flipX;
+    if(secondLevelOptions.flipY !== 'all')
+      delete secondLevelOptions.flipY;
+    await smartCloneAddChildren(clonedChild, child, secondLevelOptions);
   }
 }
 
@@ -31,7 +36,7 @@ function inheritDef(widget) {
   if(widget.get('movable'))
     exceptions.push("!parent", "!x", "!y");
   if(widget.get('type') == 'seat')
-    exceptions.push("!player", "!color", "!turn");
+    exceptions.push("!player", "!color", "!turn", "!index");
   if(exceptions.length)
     return { [widget.id]: exceptions };
   else
@@ -59,7 +64,8 @@ async function smartCloneUpdateClone(clone, source, options) {
     const value = JSON.stringify(source.get(property));
     let replacedValue = applyReplaces(value, options.replaces);
     if(JSON.stringify(clone.get(property)) != replacedValue && [ 'id', 'parent', 'type', 'inheritFrom' ].indexOf(property) == -1)
-      await clone.set(property, JSON.parse(replacedValue));
+      if(clone.get('type') != 'seat' || [ 'player', 'color', 'turn', 'index' ].indexOf(property) == -1)
+        await clone.set(property, JSON.parse(replacedValue));
   }
   if(options.flipX) {
     const sourceParentWidth = widgets.get(source.get('parent')).get('width');
@@ -71,6 +77,8 @@ async function smartCloneUpdateClone(clone, source, options) {
     const newY = sourceParentHeight - (source.get('y') + source.get('height'));
     await clone.set('y', newY);
   }
+  if(clone.get('type') == 'seat' && clone.get('index') == source.get('index'))
+    await clone.set('index', widgetFilter(w=>w.get('type')=='seat').map(w=>w.get('index')).reduce((a,b)=>Math.max(a,b), 0)+1);
 }
 
 function smartCloneGetSource(clone, sourceParent) {
