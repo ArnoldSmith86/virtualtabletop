@@ -176,6 +176,7 @@ export async function editClick(widget) {
 export function editorReceiveDelta(delta) {
   for(const module of sidebarModules)
     module.onDeltaReceived(delta);
+  smartCloneDeltaReceived(delta);
 }
 
 function receiveStateFromServer(state) {

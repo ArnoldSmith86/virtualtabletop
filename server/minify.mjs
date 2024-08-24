@@ -90,6 +90,7 @@ export default async function minifyHTML() {
   let editorJS = await compressJS([
     'client/js/editor/layout.js',
     'client/js/editor/selection.js',
+    'client/js/editor/smartClone.js',
     'client/js/editor/toolbarButton.js',
     'client/js/editor/toolbar/new.js',
     'client/js/editor/toolbar/save.js',
