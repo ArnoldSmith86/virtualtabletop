@@ -33,6 +33,14 @@ body {
   font-family: 'Roboto', sans-serif;
 }
 
+body.edit.darkMode input {
+  --overlayFontColor: #ffffff;
+}
+
+body.edit.darkMode input::placeholder {
+  color: #ffffff;
+}
+
 body.loadingEditMode * {
   cursor: wait;
 }
@@ -785,11 +793,11 @@ div[icon] .buttons {
   --foreign:true;
 }
 
-body:not(.jsonEdit) .widget.foreign {
+body:not(.jsonEdit) .widget.foreign, body:not(.jsonEdit) .widget.hidden {
   display: none !important;
 }
 
-body.jsonEdit:not(.hitTest) .widget.foreign {
+body.jsonEdit:not(.hitTest) .widget.foreign, body.jsonEdit:not(.hitTest):not(.showHiddenWidgets) .widget.hidden {
   /* Edit mode uses elementsFromPoint to determine widgets under the cursor, so
      we hide and pass pointer events through the element but don't use display: none here
      to prevent invalidating all layout every time the mouse moves. When hit testing
@@ -1747,7 +1755,7 @@ input:invalid+span::after, .inputError::before {
   z-index: 2;
 }
 
-.inputchoose .widget {
+.inputchoose .inputchooseWidgetWrapper > .widget {
   position: relative !important;
   transform-origin: top left !important;
   z-index: 1 !important;

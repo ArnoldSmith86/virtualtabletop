@@ -35,6 +35,7 @@ export class Widget extends StateManaged {
       StateManaged.inheritFromMapping[id] = [];
 
     this.addDefaults({
+      display: true,
       x: 0,
       y: 0,
       z: 0,
@@ -83,6 +84,7 @@ export class Widget extends StateManaged {
       leaveRoutine: null,
       globalUpdateRoutine: null,
       gameStartRoutine: null,
+      hotkey: null,
 
       animatePropertyChange: []
     });
@@ -418,6 +420,9 @@ export class Widget extends StateManaged {
     if(this.get('enlarge'))
       className += ' enlarge';
 
+    if(!this.get('display'))
+      className += ' hidden';
+
     if(this.isHighlighted)
       className += ' selectedInEdit';
 
@@ -428,7 +433,7 @@ export class Widget extends StateManaged {
   }
 
   classesProperties() {
-    return [ 'classes', 'dragging', 'dropShadowOwner', 'hoverTarget', 'linkedToSeat', 'onlyVisibleForSeat', 'owner', 'typeClasses', 'movable', 'enlarge', 'clickable' ];
+    return [ 'classes', 'display', 'dragging', 'dropShadowOwner', 'hoverTarget', 'linkedToSeat', 'onlyVisibleForSeat', 'owner', 'typeClasses', 'movable', 'enlarge', 'clickable' ];
   }
 
   async click(mode='respect') {
@@ -459,7 +464,7 @@ export class Widget extends StateManaged {
     if(widgets.has(clone.id)) {
       delete clone.id;
       if(problems && overrideProperties.id !== undefined)
-        problems.push(`There is already a widget with id:${a.properties.id}, generating new ID.`);
+        problems.push(`There is already a widget with id:${overrideProperties.id}, generating new ID.`);
     }
     delete clone.parent;
     const newID = await addWidgetLocal(clone);
@@ -773,7 +778,7 @@ export class Widget extends StateManaged {
         let widget = this;
         if(match[8]) {
           const id = evaluateIdentifier(match[7], match[8]);
-          if(!this.isValidID(id, problems))
+          if(Array.isArray(id) || !this.isValidID(id, problems))
             return null;
           widget = widgets.get(id);
         }
@@ -1444,13 +1449,18 @@ export class Widget extends StateManaged {
                 if(widgets.has(target.get('hand'))) {
                   const targetHand = widgets.get(target.get('hand'));
                   await applyFlip();
-                  c.targetPlayer = target.get('player');
-                  await c.moveToHolder(targetHand);
-                  delete c.targetPlayer;
+                  if (targetHand == source) {
+                    // cards are already in hand: only an owner update is needed
+                    await c.set('owner', target.get('player'));
+                  } else {
+                    c.targetPlayer = target.get('player');
+                    await c.moveToHolder(targetHand);
+                    delete c.targetPlayer;
+                  }
                   await c.bringToFront();
-                  ++moved;
                   if(targetHand.get('type') == 'holder')
-                    await targetHand.updateAfterShuffle(); // this arranges the cards in the new owner's hand
+                      await targetHand.updateAfterShuffle(); // this arranges the cards in the new owner's hand
+                  ++moved;
                 } else {
                   problems.push(`Seat ${target.id} declares 'hand: ${target.get('hand')}' which does not exist.`);
                 }
@@ -1788,6 +1798,58 @@ export class Widget extends StateManaged {
         }
       }
 
+      if(a.func == 'SWAPHANDS') {
+        setDefaults(a, { interval: 1, direction: 'forward', source: 'all' });
+        if(['forward', 'backward', 'random'].indexOf(a.direction) == -1) {
+          problems.push(`Warning: direction ${a.direction} interpreted as forward.`);
+          a.direction = 'forward'
+        }
+        let allSeats = Array.from(widgets.values()).filter(w=>w.get('type')=='seat');
+        let c = (a.source=='all' ? allSeats : collections[getCollection(a.source)].filter(w=>w.get('type')=='seat')).filter(w=>w.get('player'));
+        if (c.length > 1) {
+          if(a.direction == 'forward') {
+            c.sort((a, b)=>a.get('index')-b.get('index'));
+          } else if(a.direction == 'backward') {
+            c.sort((a, b)=>b.get('index')-a.get('index'));
+          } else if (a.direction == 'random') {
+            for (let i = c.length - 1; i > 0; i--) {
+              const rand = Math.floor(Math.random() * (i + 1));
+              [c[i], c[rand]] = [c[rand], c[i]];
+            }
+          }
+          let moves = [];
+          for (let i = 0; i < c.length; i++) {
+            let source = c[i];
+            let target = c[(i + a.interval) % c.length];
+            let hand = source.get('hand');
+            if (this.isValidID(hand, problems)) {
+              let perOwner = widgets.get(hand).get('childrenPerOwner');
+              let contents = widgets.get(hand).children().reduce(
+                function (collect, w) {
+                  if (!perOwner || w.get('owner') == source.get('player')) {
+                    collect.unshift(w.get('id'));
+                  }
+                  return collect
+                },
+                []
+              );
+              moves.push({
+                func: "MOVE",
+                collection: contents,
+                to: target.get('id'),
+              });
+            }
+          }
+          if(jeRoutineLogging) {
+            jeLoggingRoutineOperationStart("Moves", "Moves");
+          }
+          await this.evaluateRoutine(moves, variables, collections, (depth || 0) + 1, true);
+          if(jeRoutineLogging) {
+          jeLoggingRoutineOperationEnd([], variables, collections, false);
+          }
+        }
+      }
+
       if(a.func == 'TIMER') {
         setDefaults(a, { value: 0, seconds: 0, mode: 'toggle', collection: 'DEFAULT' });
         const collection = a.timer === undefined && getCollection(a.collection);
@@ -1850,65 +1912,74 @@ export class Widget extends StateManaged {
           a.turnCycle = 'forward'
         }
         
-        let allSeats = Array.from(widgets.values()).filter(w=>w.get('type')=='seat')
-        let c = a.source=='all' ? allSeats: collections[getCollection(a.source)].filter(w=>w.get('type')=='seat')
+        let allSeats = Array.from(widgets.values()).filter(w=>w.get('type')=='seat');
+        let c = (a.source=='all' ? allSeats : collections[getCollection(a.source)].filter(w=>w.get('type')=='seat')).filter(w=>w.get('player'));
 
-        //this get the list of valid index
-        const indexList = [];
-        let previousTurn = 1;
-        for(const w of c) {
-          if(indexList.indexOf(w.get('index')) == -1 && w.get('player'))
-            indexList.push(w.get('index'));
-          if(w.get('turn'))
-            previousTurn = w.get('index');
-        }
-
-        if(indexList.length) {
-          indexList.sort((a,b)=>a-b);
-          let nextTurnIndex = 0;
-
-          if(a.turnCycle == 'position') {
-            if(a.turn == 'first') {
-              nextTurnIndex = 0;
-            } else if(a.turn == 'last') {
-              nextTurnIndex = indexList.length - 1;
-            } else if(a.turn > 0) {
-              nextTurnIndex = a.turn - 1;
-            } else {
-              nextTurnIndex = a.turn;
-            }
-          } else if(a.turnCycle == 'random') {
-            nextTurnIndex = Math.floor(rand() * indexList.length);
-          } else if(a.turnCycle == 'seat') {
-            let setSeat = c.find(w => w.get('id') === a.turn);
-            if(setSeat){
-              nextTurnIndex = indexList.indexOf(setSeat.get('index'));
-            } else {
-              problems.push(`Seat ${a.turn} is not a valid seat id in collection ${a.source}.`);
-            }
-          } else {
-            const turnIndexOffset = a.turnCycle == 'forward' ? a.turn : -a.turn;
-            nextTurnIndex = indexList.indexOf(previousTurn) + turnIndexOffset;
-          }
-
-          //makes sure nextTurnIndex is a valid index of indexList
-          nextTurnIndex = Math.floor(nextTurnIndex);
-          if(typeof nextTurnIndex != 'number' || !isFinite(nextTurnIndex))
-            nextTurnIndex = 0;
-          const turn = indexList[mod(nextTurnIndex, indexList.length)];
-
-          collections[a.collection] = [];
-          //saves turn into all seats and creates output collection with turn seats
-          for(const w of allSeats) {
-            await w.set('turn', w.get('index') == turn);
-            if(w.get('turn') && w.get('player'))
-              collections[a.collection].push(w);
-          }
-
+        if (c.length == 0) {
           if(jeRoutineLogging)
-            jeLoggingRoutineOperationSummary(`changed turn of seats from ${previousTurn} to ${turn} - active seats: ${JSON.stringify(indexList)}`);
-        } else if(jeRoutineLogging) {
-          jeLoggingRoutineOperationSummary(`no active seats found in collection ${a.source}`);
+            jeLoggingRoutineOperationSummary(`no active seats found in collection ${a.source}`);
+        } else {
+          if (c.length > 1) {
+            if (a.turnCycle == 'forward' || a.turnCycle == 'position') {
+              c.sort((x, y) => x.get('index')-y.get('index'));
+            } else if (a.turnCycle == 'backward') {
+              c.sort((x, y) => y.get('index')-x.get('index'));
+            } else if (a.turnCycle == 'random') {
+              for (let i = c.length - 1; i > 0; i--) {
+                const rand = Math.floor(Math.random() * (i + 1));
+                [c[i], c[rand]] = [c[rand], c[i]];
+              }
+            }
+          }
+
+          if (a.turnCycle != 'position' && a.turnCycle != 'seat') {
+            // rotate the set of seats so the current turn is first
+            for (let i = 0; i < c.length && !c[0].get('turn'); i++) {
+              c.unshift(c.pop());
+            }
+          }
+
+          // filter out seats with skipTurn set to true
+          let unskipped = c.filter(w=>!w.get('skipTurn'));
+          let target = unskipped[0];
+
+          if (unskipped.length === 0) {
+            problems.push(`All seats in collection '${a.source}' have 'skipTurn' set to true. No turn change.`);
+          } else {
+            // identify the correct target seat
+            if (a.turnCycle == 'position') {
+              if (a.turn == 'last') {
+                target = unskipped[unskipped.length - 1];
+              } else if (Number.isFinite(a.turn)) {
+                target = unskipped[(a.turn - 1) % unskipped.length];
+              }
+            } else if (a.turnCycle == 'seat') {
+              // Selecting a specific seat so in this case skipTurn will be ignored
+              target = c.find(w => w.get('id') == a.turn);
+              if (!target) {
+                problems.push(`Seat ${a.turn} is not a valid seat id in collection ${a.source}.`);
+                target = c[0];
+              }
+            } else {
+              const turn = Number.isFinite(a.turn) ? a.turn : 1;
+              const offset = (c[0] == unskipped[0] ? 0 : 1);
+              target = unskipped[(turn - offset) % unskipped.length];
+            }
+
+            // execute the change in turn properties and collect turn seats into output collection
+            collections[a.collection] = [];
+            for (const w of allSeats) {
+              await w.set('turn', w.get('index') == target.get('index'));
+              if (w.get('turn') && w.get('player'))
+                collections[a.collection].push(w);
+            }
+          }
+
+          if(jeRoutineLogging) {
+            const indexList = c.map(w=>w.get('index'));
+            const turn = target.get('index');
+            jeLoggingRoutineOperationSummary(`changed turn of seats to ${turn} - active seats: ${JSON.stringify(indexList)}`);
+          }
         }
       }
 
@@ -2067,6 +2138,34 @@ export class Widget extends StateManaged {
       return true;
     problems.push(`Widget ID ${id} does not exist.`);
     return false;
+  }
+
+  isVisible() {
+    // Ensure the element exists
+    if (!this.domElement) return false;
+
+    // Traverse the element and all parent elements to check visibility (display, visibility, opacity)
+    let parent = this.domElement;
+    while (parent) {
+      const style = window.getComputedStyle(parent);
+      if (style.display === 'none' || style.visibility === 'hidden' || parseFloat(style.opacity) <= 0)
+        return false;
+      parent = parent.parentElement;
+    }
+
+    // Get the bounding rect of the element relative to the viewport
+    const rect = this.domElement.getBoundingClientRect();
+
+    // Get the bounding rect of the #room element
+    const roomRect = $('#roomArea').getBoundingClientRect();
+
+    // Check if the element is within the viewport of the room
+    return (
+      rect.top < roomRect.bottom &&
+      rect.left < roomRect.right &&
+      rect.bottom > roomRect.top &&
+      rect.right > roomRect.left
+    );
   }
 
   async moveToHolder(holder) {
@@ -2304,12 +2403,14 @@ export class Widget extends StateManaged {
     return readOnlyProperties;
   }
 
-  renderReadonlyCopyRaw(state, target) {
+  renderReadonlyCopyRaw(state, target, isChild=false) {
     delete state.id;
-    state.x = 0;
-    state.y = 0;
-    state.rotation = 0;
-    state.scale = 1;
+    if(!isChild) {
+      state.x = 0;
+      state.y = 0;
+      state.rotation = 0;
+      state.scale = 1;
+    }
     state.parent = null;
     state.owner = null;
     state.linkedToSeat = null;
@@ -2322,8 +2423,15 @@ export class Widget extends StateManaged {
     return this;
   }
 
-  renderReadonlyCopy(propertyOverride, target) {
-    return new this.constructor(generateUniqueWidgetID()).renderReadonlyCopyRaw(Object.assign({}, this.state, propertyOverride), target);
+  renderReadonlyCopy(propertyOverride, target, includeChildren=false, isChild=false) {
+    const newID = generateUniqueWidgetID();
+    const newWidget = new this.constructor(newID);
+    newWidget.renderReadonlyCopyRaw(Object.assign({}, this.state, propertyOverride), target, isChild);
+    if(includeChildren)
+      for(const child of widgetFilter(w=>w.get('parent') == this.id))
+        if(this.get('type') != 'holder' || !compareDropTarget(child, this) || includeChildren == 'all')
+          child.renderReadonlyCopy({}, newWidget.domElement, includeChildren, true);
+    return newWidget;
   }
 
   requiresHiddenCursor() {
@@ -2331,6 +2439,8 @@ export class Widget extends StateManaged {
       return true;
     if(this.get('parent') && widgets.has(this.get('parent')))
       return widgets.get(this.get('parent')).requiresHiddenCursor();
+    if(this.get('hoverParent') && widgets.has(this.get('hoverParent')))
+      return widgets.get(this.get('hoverParent')).requiresHiddenCursor();
     return false;
   }
 

@@ -309,7 +309,7 @@ export function formField(field, dom, id) {
           propertyOverride.activeFace = face;
 
         const widgetContainer = div(input, 'inputchooseWidgetWrapper');
-        const widgetClone = widget.renderReadonlyCopy(propertyOverride, $('body'));
+        const widgetClone = widget.renderReadonlyCopy(propertyOverride, $('body'), field.visibleChildWidgets);
         const widgetDOM = widgetClone.domElement;
         widgetClone.state.scale = scale * (field.scale || 1);
         widgetClone.domElement.style.cssText = mapAssetURLs(widgetClone.css());

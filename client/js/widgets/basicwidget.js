@@ -37,10 +37,16 @@ class BasicWidget extends ImageWidget {
       }
     }
     if(delta.html !== undefined || delta.text !== undefined || delta.icon !== undefined || this.getWithPropertyReplacements_checkDelta('html', delta)) {
-      if(this.get('html') === null)
+      const childNodes = [...this.domElement.childNodes];
+      this.domElement.innerHTML = '';
+      if(this.get('html') === null) {
         setText(this.domElement, this.get('icon') ? '' : this.get('text'));
-      else
+      } else {
         this.domElement.innerHTML = DOMPurify.sanitize(mapAssetURLs(this.getWithPropertyReplacements('html')), { USE_PROFILES: { html: true } });
+      }
+      for(const child of childNodes)
+        if(String(child.className).match(/widget/))
+          this.domElement.appendChild(child);
     }
   }
 
