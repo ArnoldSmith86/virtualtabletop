@@ -1,4 +1,4 @@
-import { asArray } from "./domhelpers";
+import { $, asArray } from "./domhelpers";
 
 function emojiToFilename(emoji) {
   return [...emoji].map(char => char.codePointAt(0).toString(16).padStart(4, '0')).join('_').replace(/_fe0f/g, '');
@@ -241,24 +241,65 @@ function optimalSquareSize(count, width, height) {
   return cell_size;
 }
 
+function setTextAndAdjustFontSize(element, text, maxWidth, maxHeight) {
+  element.textContent = text; // Set the text
+
+  // Start with a large font size and decrease until it fits
+  let fontSize = 100; // Start with a large multiple of 10px
+
+  // Set the font size and measure the height and width of the element
+  while (fontSize >= 10) {
+    element.style.fontSize = `${fontSize}px`;
+
+    const elementHeight = element.scrollHeight;
+    const elementWidth = element.scrollWidth;
+
+    // Check if the element fits within the available height and width
+    if (elementHeight <= maxHeight && elementWidth <= maxWidth) {
+      break; // The element fits, exit the loop
+    }
+
+    fontSize -= 10; // Reduce the font size by 10px
+  }
+
+  element.style.setProperty('--maxWidth', `${maxWidth}px`);
+  element.style.setProperty('--maxHeight', `${maxHeight}px`);
+}
+
 function generateSymbolsDiv(target, width, height, symbols, text, defaultScale, defaultColor) {
-  const wrapper = div(target, 'symbolWrapper', `
+  const outerWrapper = div(target, 'symbolOuterWrapper', `
+    <div class="symbolWrapper"></div>
     <div class="symbolText"></div>
   `);
-  $('.symbolText', wrapper).innerText = text;
+  const wrapper = $('.symbolWrapper', outerWrapper);
 
-  wrapper.style.setProperty('--width', `${width}px`);
-  wrapper.style.setProperty('--height', `${height}px`);
+  outerWrapper.style.scale = defaultScale;
+  outerWrapper.style.setProperty('--width', `${width}px`);
+  outerWrapper.style.setProperty('--height', `${height}px`);
 
-  const maxSize = optimalSquareSize(asArray(symbols).length, width, height);
+  let iconsWidth = width;
+  let iconsHeight = height;
+  if(text) {
+    outerWrapper.classList.add('withText');
+    if(width/height > 2) {
+      outerWrapper.classList.add('textRight');
+      iconsWidth = iconsHeight;
+      wrapper.style.setProperty('--width', `${iconsWidth}px`);
+      wrapper.style.setProperty('--height', `${iconsHeight}px`);
+      setTextAndAdjustFontSize($('.symbolText', outerWrapper), text, width-height, height);
+    } else {
+      outerWrapper.classList.add('textBottom');
+      iconsHeight = iconsHeight / 2;
+      wrapper.style.setProperty('--width', `${iconsWidth}px`);
+      wrapper.style.setProperty('--height', `${iconsHeight}px`);
+      setTextAndAdjustFontSize($('.symbolText', outerWrapper), text, width, height/2);
+    }
+  }
+  const maxSize = optimalSquareSize(asArray(symbols).length, iconsWidth, iconsHeight);
 
-  wrapper.style.setProperty('--count', 1);
-
-  if(text)
-    wrapper.classList.add('withText');
+  outerWrapper.style.setProperty('--count', 1);
 
   for(let symbol of asArray(symbols)) {
-    // button 80px -> 60px font-size, 75% background-size
     if(!symbol)
       continue;
 
@@ -273,7 +314,7 @@ function generateSymbolsDiv(target, width, height, symbols, text, defaultScale, 
         image = getSVG(details.image.substring(1), { [details.colorReplace]: symbol.color||defaultColor }, i=>icon.style.backgroundImage = `url("${i}")`);
       icon.style.backgroundImage = `url("${image}")`;
     }
-    icon.style.setProperty('--scale', symbol.scale || defaultScale);
+    icon.style.setProperty('--scale', symbol.scale || 1);
     icon.style.setProperty('--width', `${maxSize}px`);
     icon.style.setProperty('--height', `${maxSize}px`);
     icon.style.setProperty('--offsetX', `${symbol.offsetX||0}px`);
@@ -281,5 +322,5 @@ function generateSymbolsDiv(target, width, height, symbols, text, defaultScale, 
     icon.style.setProperty('--color', `${symbol.color||defaultColor}`);
   }
 
-  return wrapper;
+  return outerWrapper;
 }

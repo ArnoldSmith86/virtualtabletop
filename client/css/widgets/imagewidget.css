@@ -1,4 +1,4 @@
-.symbolWrapper {
+.symbolOuterWrapper, .symbolWrapper {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -10,7 +10,11 @@
   font-size: 0;
 }
 
-.symbolWrapper > div:not(.symbolText) {
+.symbolOuterWrapper.withText.textRight {
+  flex-direction: row;
+}
+
+.symbolWrapper > div {
   --targetSize: calc(var(--scale) * min(calc(var(--width) / var(--count)), calc(var(--height) / var(--count))));
   min-width: var(--targetSize);
   max-width: var(--targetSize);
@@ -19,12 +23,18 @@
   transform: translate(var(--offsetX), var(--offsetY));
 }
 
-.symbolWrapper > .symbolText {
-  font-size: 30px;
+.symbolOuterWrapper > .symbolText {
+  flex-grow: 1;
+  font-size: 20px;
   color: var(--wcFont);
 }
 
-.widget:hover .symbolWrapper > .symbolText {
+.symbolOuterWrapper.withText.textRight > .symbolText {
+  text-align: left;
+  padding-left: 10px;
+}
+
+.widget:hover .symbolOuterWrapper > .symbolText {
   color: var(--wcFontOH);
 }
 
