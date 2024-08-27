@@ -270,6 +270,7 @@ class PropertiesModule extends SidebarModule {
         case 'card':   this.renderForCard(widget);   break;
         case 'deck':   this.renderForDeck(widget);   break;
         case 'holder': this.renderForHolder(widget); break;
+        case 'spinner': this.renderForSpinner(widget); break;
 
         default:
           this.addHeader(widget.id);
@@ -1458,6 +1459,414 @@ class PropertiesModule extends SidebarModule {
 
     this.addSubHeader(`Holder properties`);
     this.renderGenericProperties(widget, [ 'dropTarget' ]);
+  }
+
+  renderForSpinner(widget) {
+    this.addHeader(`Spinner ${widget.id}`);
+    
+    this.addSubHeader('Spinner Options');
+    const spinner2 = this.renderWidgetButton(new Spinner(), {
+      type: 'spinner',
+      options: [
+        "H",
+        "T"
+      ]
+    }, this.moduleDOM);
+    const spinner3 = this.renderWidgetButton(new Spinner(), {
+      type: 'spinner',
+      options: [
+        1,
+        2,
+        3
+      ]
+    }, this.moduleDOM);
+    const spinner4 = this.renderWidgetButton(new Spinner(), {
+      type: 'spinner',
+      options: [
+        1,
+        2,
+        3,
+        4
+      ]
+    }, this.moduleDOM);
+    const spinner6 = this.renderWidgetButton(new Spinner(), {
+      type: 'spinner',
+      options: [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
+    }, this.moduleDOM);
+    const spinner8 = this.renderWidgetButton(new Spinner(), {
+      type: 'spinner',
+      options: [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ]
+    }, this.moduleDOM);
+    const spinner09 = this.renderWidgetButton(new Spinner(), {
+      type: 'spinner',
+      options: [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ]
+    }, this.moduleDOM);
+    const spinner110 = this.renderWidgetButton(new Spinner(), {
+      type: 'spinner',
+      options: [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ]
+    }, this.moduleDOM);
+    const spinner12 = this.renderWidgetButton(new Spinner(), {
+      type: 'spinner',
+      options: [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ]
+    }, this.moduleDOM);
+    const spinner20 = this.renderWidgetButton(new Spinner(), {
+      type: 'spinner',
+      options: [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ]
+    }, this.moduleDOM);
+    
+
+    this.addPropertyListener(widget, 'options', widget=>{
+      if(JSON.stringify(widget.get('options'))==JSON.stringify([
+        "H",
+        "T"
+      ]))
+        spinner2.classList.add('selected');
+      else
+      spinner2.classList.remove('selected');
+    });
+    spinner2.onclick = async e=>{
+      if(!spinner2.classList.contains('selected')) {
+        widget.set('options', [
+          "H",
+          "T"
+        ]);
+      }
+    };
+
+    this.addPropertyListener(widget, 'options', widget=>{
+      if(JSON.stringify(widget.get('options'))==JSON.stringify([
+        1,
+        2,
+        3
+      ]))
+      spinner3.classList.add('selected');
+      else
+      spinner3.classList.remove('selected');
+    });
+    spinner3.onclick = async e=>{
+      if(!spinner3.classList.contains('selected')) {
+        widget.set('options', [
+          1,
+          2,
+          3
+        ]);
+      }
+    };
+
+    this.addPropertyListener(widget, 'options', widget=>{
+      if(JSON.stringify(widget.get('options'))==JSON.stringify([
+        1,
+        2,
+        3,
+        4
+      ]))
+      spinner4.classList.add('selected');
+      else
+      spinner4.classList.remove('selected');
+    });
+    spinner4.onclick = async e=>{
+      if(!spinner4.classList.contains('selected')) {
+        widget.set('options', [
+          1,
+          2,
+          3,
+          4
+        ]);
+      }
+    };
+
+    this.addPropertyListener(widget, 'options', widget=>{
+      if(JSON.stringify(widget.get('options'))==JSON.stringify([
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ]))
+        spinner6.classList.add('selected');
+      else
+      spinner6.classList.remove('selected');
+    });
+    spinner6.onclick = async e=>{
+      if(!spinner6.classList.contains('selected')) {
+        widget.set('options', [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ]);
+      }
+    };
+
+    this.addPropertyListener(widget, 'options', widget=>{
+      if(JSON.stringify(widget.get('options'))==JSON.stringify([
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ]))
+        spinner8.classList.add('selected');
+      else
+      spinner8.classList.remove('selected');
+    });
+    spinner8.onclick = async e=>{
+      if(!spinner8.classList.contains('selected')) {
+        widget.set('options', [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8
+        ]);
+      }
+    };
+
+    this.addPropertyListener(widget, 'options', widget=>{
+      if(JSON.stringify(widget.get('options'))==JSON.stringify([
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ]))
+      spinner09.classList.add('selected');
+      else
+      spinner09.classList.remove('selected');
+    });
+    spinner09.onclick = async e=>{
+      if(!spinner09.classList.contains('selected')) {
+        widget.set('options', [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9
+        ]);
+      }
+    };
+
+    this.addPropertyListener(widget, 'options', widget=>{
+      if(JSON.stringify(widget.get('options'))==JSON.stringify([
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ]))
+      spinner110.classList.add('selected');
+      else
+      spinner110.classList.remove('selected');
+    });
+    spinner110.onclick = async e=>{
+      if(!spinner110.classList.contains('selected')) {
+        widget.set('options', [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10
+        ]);
+      }
+    };
+
+    this.addPropertyListener(widget, 'options', widget=>{
+      if(JSON.stringify(widget.get('options'))==JSON.stringify([
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ]))
+        spinner12.classList.add('selected');
+      else
+      spinner12.classList.remove('selected');
+    });
+    spinner12.onclick = async e=>{
+      if(!spinner12.classList.contains('selected')) {
+        widget.set('options', [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ]);
+      }
+    };
+
+    this.addPropertyListener(widget, 'options', widget=>{
+      if(JSON.stringify(widget.get('options'))==JSON.stringify([
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ]))
+        spinner20.classList.add('selected');
+      else
+      spinner20.classList.remove('selected');
+    });
+    spinner20.onclick = async e=>{
+      if(!spinner20.classList.contains('selected')) {
+        widget.set('options', [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20
+        ]);
+      }
+    };
+
+    
+
+    this.addSubHeader(`Spinner properties`);
+    this.renderGenericProperties(widget, [ 'options' ]);
   }
 
   renderGenericProperties(widget, exclude) {
