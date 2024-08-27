@@ -365,12 +365,12 @@ function getSVG(url, replaces, callback) {
     fetch(mapAssetURLs(url)).then(r=>r.text()).then(t=>{
       const callbacks = svgCache[url];
       svgCache[url] = t;
-      for(const c of callbacks)
-        c(getSVG(url, replaces, _=>{}));
+      for(const [ c, r ] of callbacks)
+        c(getSVG(url, r, _=>{}));
     });
   }
 
-  svgCache[url].push(callback);
+  svgCache[url].push([ callback, replaces ]);
   return '';
 }
 

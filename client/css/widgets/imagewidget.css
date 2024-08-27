@@ -21,12 +21,20 @@
   font-size: var(--targetSize);
   color: var(--color);
   transform: translate(var(--offsetX), var(--offsetY));
+  background-image: var(--image);
+}
+.widget:hover > .symbolOuterWrapper > .symbolWrapper > div {
+  background-image: var(--hoverImage);
+  color: var(--hoverColor);
 }
 
 .symbolOuterWrapper > .symbolText {
   flex-grow: 1;
   font-size: 20px;
-  color: var(--wcFont);
+  color: var(--color);
+}
+.widget:hover > .symbolOuterWrapper > .symbolText {
+  color: var(--hoverColor);
 }
 
 .symbolOuterWrapper.withText.textRight > .symbolText {
@@ -34,8 +42,8 @@
   padding-left: 10px;
 }
 
-.widget:hover .symbolOuterWrapper > .symbolText {
-  color: var(--wcFontOH);
+.widget:hover > .symbolOuterWrapper > .symbolText {
+  color: var(--hoverColor);
 }
 
 .autoIconAlignImage {

@@ -266,7 +266,7 @@ function setTextAndAdjustFontSize(element, text, maxWidth, maxHeight) {
   element.style.setProperty('--maxHeight', `${maxHeight}px`);
 }
 
-function generateSymbolsDiv(target, width, height, symbols, text, defaultScale, defaultColor) {
+function generateSymbolsDiv(target, width, height, symbols, text, defaultScale, defaultColor, defaultHoverColor) {
   const outerWrapper = div(target, 'symbolOuterWrapper', `
     <div class="symbolWrapper"></div>
     <div class="symbolText"></div>
@@ -279,21 +279,24 @@ function generateSymbolsDiv(target, width, height, symbols, text, defaultScale, 
 
   let iconsWidth = width;
   let iconsHeight = height;
+  let textWidth = width;
+  let textHeight = height;
   if(text) {
     outerWrapper.classList.add('withText');
     if(width/height > 2) {
       outerWrapper.classList.add('textRight');
       iconsWidth = iconsHeight;
-      wrapper.style.setProperty('--width', `${iconsWidth}px`);
-      wrapper.style.setProperty('--height', `${iconsHeight}px`);
-      setTextAndAdjustFontSize($('.symbolText', outerWrapper), text, width-height, height);
+      textWidth = width - iconsWidth
     } else {
       outerWrapper.classList.add('textBottom');
       iconsHeight = iconsHeight / 2;
-      wrapper.style.setProperty('--width', `${iconsWidth}px`);
-      wrapper.style.setProperty('--height', `${iconsHeight}px`);
-      setTextAndAdjustFontSize($('.symbolText', outerWrapper), text, width, height/2);
+      textHeight = height - iconsHeight
     }
+    wrapper.style.setProperty('--width', `${iconsWidth}px`);
+    wrapper.style.setProperty('--height', `${iconsHeight}px`);
+    $('.symbolText', outerWrapper).style.setProperty('--color', `${defaultColor}`);
+    $('.symbolText', outerWrapper).style.setProperty('--hoverColor', `${defaultHoverColor}`);
+    setTextAndAdjustFontSize($('.symbolText', outerWrapper), text, textWidth, textHeight);
   }
   const maxSize = optimalSquareSize(asArray(symbols).length, iconsWidth, iconsHeight);
 
@@ -310,9 +313,13 @@ function generateSymbolsDiv(target, width, height, symbols, text, defaultScale, 
     const icon = div(wrapper, details.class, details.text);
     if(details.image) {
       let image = details.image.substring(1);
-      if(details.colorReplace)
-        image = getSVG(details.image.substring(1), { [details.colorReplace]: symbol.color||defaultColor }, i=>icon.style.backgroundImage = `url("${i}")`);
-      icon.style.backgroundImage = `url("${image}")`;
+      let hoverImage = details.image.substring(1);
+      if(details.colorReplace) {
+        image = getSVG(details.image.substring(1), { [details.colorReplace]: symbol.color||defaultColor }, i=>icon.style.setProperty('--image', `url("${i}")`));
+        hoverImage = getSVG(details.image.substring(1), { [details.colorReplace]: symbol.hoverColor||defaultHoverColor }, i=>icon.style.setProperty('--hoverImage', `url("${i}")`));
+      }
+      icon.style.setProperty('--image', `url("${image}")`);
+      icon.style.setProperty('--hoverImage', `url("${hoverImage}")`);
     }
     icon.style.setProperty('--scale', symbol.scale || 1);
     icon.style.setProperty('--width', `${maxSize}px`);
@@ -320,6 +327,7 @@ function generateSymbolsDiv(target, width, height, symbols, text, defaultScale, 
     icon.style.setProperty('--offsetX', `${symbol.offsetX||0}px`);
     icon.style.setProperty('--offsetY', `${symbol.offsetY||0}px`);
     icon.style.setProperty('--color', `${symbol.color||defaultColor}`);
+    icon.style.setProperty('--hoverColor', `${symbol.hoverColor||defaultHoverColor}`);
   }
 
   return outerWrapper;

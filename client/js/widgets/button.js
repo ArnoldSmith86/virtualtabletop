@@ -23,6 +23,13 @@ export class Button extends ImageWidget {
     });
   }
 
+  applyDeltaToDOM(delta) {
+    super.applyDeltaToDOM(delta);
+
+    if(delta.textColor !== undefined || delta.textColorOH !== undefined)
+      this.updateIcon();
+  }
+
   css() {
     let css = super.css();
 
@@ -52,6 +59,10 @@ export class Button extends ImageWidget {
 
   getDefaultIconColor() {
     return this.get('textColor');
+  }
+
+  getDefaultIconHoverColor() {
+    return this.get('textColorOH') || this.get('textColor');
   }
 
   getDefaultIconScale() {
