@@ -41,6 +41,9 @@
   text-align: left;
   padding-left: 10px;
 }
+.symbolOuterWrapper.withText.textBottom > .symbolText {
+  text-align: center;
+}
 
 .widget:hover > .symbolOuterWrapper > .symbolText {
   color: var(--hoverColor);
@@ -55,7 +58,6 @@
 
 .autoIconAlignFont {
   font-family: "Material Icons";
-  text-transform: lowercase;
   font-weight: normal;
   line-height: 1;
   min-height: var(--targetSize);
