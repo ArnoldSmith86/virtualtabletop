@@ -45,9 +45,11 @@ class BasicWidget extends ImageWidget {
         this.domElement.innerHTML = DOMPurify.sanitize(mapAssetURLs(this.getWithPropertyReplacements('html')), { USE_PROFILES: { html: true } });
       }
       for(const child of childNodes)
-        if(String(child.className).match(/widget/))
+        if(String(child.className).match(/widget|symbolOuterWrapper/))
           this.domElement.appendChild(child);
     }
+    if(delta.color !== undefined)
+      this.updateIcon();
   }
 
   async click(mode='respect') {
@@ -94,6 +96,10 @@ class BasicWidget extends ImageWidget {
     if(d !== undefined)
       return d;
     return super.get(property);
+  }
+
+  getDefaultIconColor() {
+    return this.get('color');
   }
 
   getFaceCount() {
