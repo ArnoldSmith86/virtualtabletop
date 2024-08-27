@@ -273,7 +273,7 @@ function generateSymbolsDiv(target, width, height, symbols, text, defaultScale, 
   `);
   const wrapper = $('.symbolWrapper', outerWrapper);
 
-  outerWrapper.style.scale = defaultScale;
+  outerWrapper.style.transform = `scale(${defaultScale})`;
   outerWrapper.style.setProperty('--width', `${width}px`);
   outerWrapper.style.setProperty('--height', `${height}px`);
 
