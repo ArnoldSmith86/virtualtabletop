@@ -1394,6 +1394,11 @@ class PropertiesModule extends SidebarModule {
           dice.classList.remove('selected');
         }
       });
+      dice.onclick = async e => {
+        if (!dice.classList.contains('selected')) {
+          widget.set('faces', f);
+        }
+      };
     }
 
     this.addSubHeader('Dice shape');
