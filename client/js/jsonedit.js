@@ -305,8 +305,8 @@ const jeCommands = [
       const a = await pickSymbol('fonts');
       if(a) {
         jeStateNow.classes = a.type;
-        jeStateNow.text = a.symbol;
-        jeSetAndSelect();
+        jeStateNow.text = '###SELECT ME###';
+        jeSetAndSelect(a.symbol);
         await jeApplyChanges();
       }
     },
@@ -317,34 +317,77 @@ const jeCommands = [
   {
     id: 'je_symbolPickerIcon',
     name: 'pick an asset from the symbol picker',
-    context: '^(basic|button) ↦ icon',
+    context: '^.* ↦ icon( ↦ [0-9]+)?',
     call: async function() {
       const a = await pickSymbol();
       if(a) {
-        jeStateNow.icon = a.symbol;
-        jeSetAndSelect();
-        await jeApplyChanges();
+        const current = jeGetValueAt('icon');
+        if(Array.isArray(current)) {
+          const index = jeGetKeyAfter('icon') || 0;
+          if(typeof current[index] == 'object' && current[index] !== null)
+            current[index].name = '###SELECT ME###';
+          else
+            current[index] = '###SELECT ME###';
+          jeSetAndSelect(a.symbol);
+          await jeApplyChanges();
+        } else if(typeof current == 'object' && current !== null) {
+          current.name = '###SELECT ME###';
+          await jeSetValueAt('icon', current, a.symbol);
+        } else {
+          await jeSetValueAt('icon', a.symbol);
+        }
       }
-    },
-    show: function() {
-      return typeof jeStateNow.icon == 'string' || jeStateNow.icon === null;
     }
   },
   {
-    id: 'je_symbolPickerSubIcon',
-    name: 'pick an asset from the symbol picker',
-    context: '^(basic|button) ↦ icon ↦ [0-9]+',
+    id: 'je_iconToArray',
+    name: 'add another icon',
+    context: '^.* ↦ icon',
     call: async function() {
       const a = await pickSymbol();
       if(a) {
-        if(typeof jeStateNow.icon[jeContext[2]] == 'object' && jeStateNow.icon[jeContext[2]] != null)
-          jeStateNow.icon[jeContext[2]].name = a.symbol;
-        else
-          jeStateNow.icon[jeContext[2]] = a.symbol;
-        jeSetAndSelect();
-        await jeApplyChanges();
+        const current = jeGetValueAt('icon');
+        if(Array.isArray(current)) {
+          current.push('###SELECT ME###');
+          await jeSetValueAt('icon', current, a.symbol);
+        } else {
+          await jeSetValueAt('icon', [ current, '###SELECT ME###' ], a.symbol);
+        }
       }
-    }
+    },
+    show: _=>jeGetValueAt('icon') !== null
+  },
+  {
+    id: 'je_iconToObject',
+    name: 'show advanced options',
+    context: '^.* ↦ icon( ↦ [0-9]+)?',
+    call: async function() {
+      if(Array.isArray(jeGetValueAt('icon'))) {
+        const current = jeGetValueAt('icon');
+        const name = current[jeGetKeyAfter('icon')];
+        current[jeGetKeyAfter('icon')] = { name: '###SELECT ME###', scale: 1, offsetX: 0, offsetY: 0, rotation: 0, color: '', hoverColor: '' };
+        await jeSetValueAt('icon', current, name);
+      } else {
+        await jeSetValueAt('icon', { name: '###SELECT ME###', scale: 1, offsetX: 0, offsetY: 0, rotation: 0, color: '', hoverColor: '' }, jeGetValueAt('icon'));
+      }
+    },
+    show: _=>typeof jeGetValueAt('icon') == 'string' || Array.isArray(jeGetValueAt('icon')) && typeof jeGetValueAt('icon')[jeGetKeyAfter('icon')] == 'string'
+  },
+  {
+    id: 'je_iconToString',
+    name: 'use default options',
+    context: '^.* ↦ icon( ↦ [0-9]+)?',
+    call: async function() {
+      const current = jeGetValueAt('icon');
+      if(Array.isArray(current)) {
+        const name = current[jeGetKeyAfter('icon')].name;
+        current[jeGetKeyAfter('icon')] = '###SELECT ME###';
+        await jeSetValueAt('icon', current, name);
+      } else {
+        await jeSetValueAt('icon', current.name);
+      }
+    },
+    show: _=>!Array.isArray(jeGetValueAt('icon')) && typeof jeGetValueAt('icon') == 'object' && jeGetValueAt('icon') !== null || Array.isArray(jeGetValueAt('icon')) && typeof jeGetValueAt('icon')[jeGetKeyAfter('icon')] == 'object'
   },
   {
     id: 'je_uploadAudio',
@@ -2164,6 +2207,42 @@ function jeInsert(context, key, value) {
   }
 }
 
+function jeGetValueAt(key) {
+  let pointer = jeStateNow;
+  for(const k of jeContext.slice(1)) {
+    pointer = pointer[k];
+    if(key == k)
+      return pointer;
+  }
+}
+
+async function jeSetValueAt(key, value, selectValue) {
+  let pointer = jeStateNow;
+  for(const k of jeContext.slice(1)) {
+    if(key == k)
+      break;
+    pointer = pointer[k];
+  }
+  if(selectValue !== undefined) {
+    pointer[key] = value;
+    jeSetAndSelect(selectValue);
+  } else {
+    pointer[key] = '###SELECT ME###';
+    jeSetAndSelect(value);
+  }
+  await jeApplyChanges();
+}
+
+function jeGetKeyAfter(key) {
+  let found = false;
+  for(const k of jeContext) {
+    if(found)
+      return k;
+    if(key == k)
+      found = true;
+  }
+}
+
 // START routine logging
 
 let jeRoutineResetOnNextLog = true;
@@ -2450,10 +2529,11 @@ function jeSetAndSelect(replaceBy, insideString) {
 
   // Replace the entire quoted string if the ###SELECT ME### is not inside a string, otherwise
   // just replace ###SELECT ME###
+  const replaceByJSON = JSON.stringify(replaceBy, null, '    ');
   if(insideString || dollar)
-    jsonString = jsonString.replace(/###SELECT ME###/, JSON.stringify(replaceBy).substr(1, JSON.stringify(replaceBy).length-2));
+    jsonString = jsonString.replace(/###SELECT ME###/, replaceByJSON.substr(1, replaceByJSON.length-2));
   else
-    jsonString = jsonString.replace(/"###SELECT ME###"/, JSON.stringify(replaceBy));
+    jsonString = jsonString.replace(/"###SELECT ME###"/, replaceByJSON);
 
   let insertedLength = jsonString.length - length; // Length of inserted string.
 

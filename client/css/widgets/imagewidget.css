@@ -20,7 +20,7 @@
   max-width: var(--targetSize);
   font-size: var(--targetSize);
   color: var(--color);
-  transform: translate(var(--offsetX), var(--offsetY));
+  transform: translate(var(--offsetX), var(--offsetY)) rotate(var(--rotation));
   background-image: var(--image);
 }
 .widget:hover > .symbolOuterWrapper > .symbolWrapper > div {

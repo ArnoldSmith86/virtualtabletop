@@ -6,6 +6,7 @@ class Dice extends Widget {
 
     this.facesElement = document.createElement('div');
     this.facesElement.className = 'diceFaces';
+    this.symbolWrappers = [];
 
     this.domElement.appendChild(this.facesElement);
 
@@ -32,6 +33,7 @@ class Dice extends Widget {
 
       image: null,
       imageScale: 0.8,
+      icon: null,
       text: null,
       pips: null,
       svgReplaces: null,
@@ -112,7 +114,7 @@ class Dice extends Widget {
     super.applyDeltaToDOM(diceDelta);
 
     let childNodesWereRecreated = false;
-    if([ 'faces', 'shape3d', 'pipSymbols', 'faceCSS', 'image', 'text', 'pips', 'svgReplaces' ].reduce((result,p)=>(result||delta[p]!==undefined),false)) {
+    if([ 'faces', 'shape3d', 'pipSymbols', 'faceCSS', 'icon', 'image', 'text', 'pips', 'svgReplaces', 'width', 'height' ].reduce((result,p)=>(result||delta[p]!==undefined),false)) {
       this.createChildNodes();
       childNodesWereRecreated = true;
     } else {
@@ -215,11 +217,15 @@ class Dice extends Widget {
 
       let pips = this.getFaceProperty(content, 'pips');
       const text = this.getFaceProperty(content, 'text');
+      const icon = this.getFaceProperty(content, 'icon');
       if(pips == undefined && text == undefined && content.image == undefined && this.pipSymbols())
         pips = content.value;
       if(Number.isInteger(pips) && pips >= 1 && pips <= 9) {
         face.textContent = `die_face_${pips}`;
         face.className = 'dicePip';
+      } else if(icon != undefined) {
+        this.facesElement.appendChild(face);
+        generateSymbolsDiv(face, this.get('width'), this.get('height'), icon, text, 0.9, this.getFaceProperty(content, 'pipColor'), this.getFaceProperty(content, 'pipColor'));
       } else if(text != undefined) {
         face.textContent = text;
       } else if(content.value != undefined && content.image == undefined) {
