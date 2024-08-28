@@ -192,6 +192,8 @@ export function removeRichtextControls(dom) {
 function getIconDetails(icon) {
   if(!icon)
     return { image: null, text: null };
+  if(icon.match(/^\/assets\/[0-9_-]+$|^https?:\/\//))
+    return { image: mapAssetURLs(icon), text: null, class: 'autoIconAlignImage autoIconAlignCustomAsset' };
   if(icon.match(/\//))
     return { image: `/i/game-icons.net/${icon}.svg`, text: ' ', class: 'autoIconAlignImage autoIconAlignGameIcons', colorReplace: '#000' };
   if(icon.match(/^\[/))
@@ -312,11 +314,11 @@ function generateSymbolsDiv(target, width, height, symbols, text, defaultScale, 
     const details = getIconDetails(symbol.name);
     const icon = div(wrapper, details.class, details.text);
     if(details.image) {
-      let image = details.image.substring(1);
-      let hoverImage = details.image.substring(1);
+      let image = mapAssetURLs(details.image);
+      let hoverImage = mapAssetURLs(details.image);
       if(details.colorReplace) {
-        image = getSVG(details.image.substring(1), { [details.colorReplace]: symbol.color||defaultColor }, i=>icon.style.setProperty('--image', `url("${i}")`));
-        hoverImage = getSVG(details.image.substring(1), { [details.colorReplace]: symbol.hoverColor||defaultHoverColor }, i=>icon.style.setProperty('--hoverImage', `url("${i}")`));
+        image = getSVG(image, { [details.colorReplace]: symbol.color||defaultColor }, i=>icon.style.setProperty('--image', `url("${i}")`));
+        hoverImage = getSVG(hoverImage, { [details.colorReplace]: symbol.hoverColor||defaultHoverColor }, i=>icon.style.setProperty('--hoverImage', `url("${i}")`));
       }
       icon.style.setProperty('--image', `url("${image}")`);
       icon.style.setProperty('--hoverImage', `url("${hoverImage}")`);

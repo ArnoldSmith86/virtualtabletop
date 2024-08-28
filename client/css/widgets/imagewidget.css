@@ -67,3 +67,7 @@
 .autoIconAlignSymbols {
   font-family: "VTT-Symbols";
 }
+
+.autoIconAlignCustomAsset {
+  background-size: contain;
+}

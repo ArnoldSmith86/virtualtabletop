@@ -340,6 +340,31 @@ const jeCommands = [
     }
   },
   {
+    id: 'je_symbolPickerCustom',
+    name: 'upload a custom icon asset',
+    context: '^.* ↦ icon( ↦ [0-9]+)?',
+    call: async function() {
+      const a = await uploadAsset();
+      if(a) {
+        const current = jeGetValueAt('icon');
+        if(Array.isArray(current)) {
+          const index = jeGetKeyAfter('icon') || 0;
+          if(typeof current[index] == 'object' && current[index] !== null)
+            current[index].name = '###SELECT ME###';
+          else
+            current[index] = '###SELECT ME###';
+          jeSetAndSelect(a);
+          await jeApplyChanges();
+        } else if(typeof current == 'object' && current !== null) {
+          current.name = '###SELECT ME###';
+          await jeSetValueAt('icon', current, a);
+        } else {
+          await jeSetValueAt('icon', a);
+        }
+      }
+    }
+  },
+  {
     id: 'je_iconToArray',
     name: 'add another icon',
     context: '^.* ↦ icon',
