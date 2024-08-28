@@ -23,7 +23,7 @@
   transform: translate(var(--offsetX), var(--offsetY)) rotate(var(--rotation));
   background-image: var(--image);
 }
-.widget:hover > .symbolOuterWrapper > .symbolWrapper > div {
+.widget:hover > .symbolOuterWrapper > .symbolWrapper > div, .dice:hover > .diceFaces > .diceFace > .symbolOuterWrapper > .symbolWrapper > div {
   background-image: var(--hoverImage);
   color: var(--hoverColor);
 }
@@ -32,9 +32,6 @@
   flex-grow: 1;
   font-size: 20px;
   color: var(--color);
-}
-.widget:hover > .symbolOuterWrapper > .symbolText {
-  color: var(--hoverColor);
 }
 
 .symbolOuterWrapper.withText.textRight > .symbolText {
@@ -45,7 +42,7 @@
   text-align: center;
 }
 
-.widget:hover > .symbolOuterWrapper > .symbolText {
+.widget:hover > .symbolOuterWrapper > .symbolText, .dice:hover > .diceFaces > .diceFace > .symbolOuterWrapper > .symbolText {
   color: var(--hoverColor);
 }
 
