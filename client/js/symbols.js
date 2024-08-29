@@ -318,7 +318,7 @@ function generateSymbolsDiv(target, width, height, symbols, text, defaultScale, 
       let hoverImage = mapAssetURLs(details.image);
       if(details.colorReplace) {
         image = getSVG(image, { [details.colorReplace]: symbol.color||defaultColor }, i=>icon.style.setProperty('--image', `url("${i}")`));
-        hoverImage = getSVG(hoverImage, { [details.colorReplace]: symbol.hoverColor||defaultHoverColor }, i=>icon.style.setProperty('--hoverImage', `url("${i}")`));
+        hoverImage = getSVG(hoverImage, { [details.colorReplace]: symbol.hoverColor||symbol.color||defaultHoverColor||defaultColor }, i=>icon.style.setProperty('--hoverImage', `url("${i}")`));
       }
       icon.style.setProperty('--image', `url("${image}")`);
       icon.style.setProperty('--hoverImage', `url("${hoverImage}")`);
