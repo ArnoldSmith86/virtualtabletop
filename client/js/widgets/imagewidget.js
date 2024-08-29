@@ -19,8 +19,9 @@ class ImageWidget extends Widget {
       this.updateIcon();
 
     for(const [ key, property ] of this.getSvgReplaces())
-      if(delta[property] !== undefined)
-        this.domElement.style.cssText = mapAssetURLs(this.css());
+      for(const p of asArray(property))
+        if(delta[p] !== undefined)
+          this.domElement.style.cssText = mapAssetURLs(this.css());
   }
 
   classes(includeTemporary=true) {
@@ -49,7 +50,7 @@ class ImageWidget extends Widget {
 
   cssProperties() {
     const p = super.cssProperties();
-    p.push('image');
+    p.push('image', 'svgReplaces');
     return p;
   }
 
@@ -79,8 +80,12 @@ class ImageWidget extends Widget {
       return this.get('image');
 
     const replaces = {};
-    for(const [ key, property ] of svgReplaces)
-      replaces[key] = this.get(property);
+    for(const [ key, property ] of svgReplaces) {
+      if(Array.isArray(property))
+        replaces[key] = property.map(p=>this.get(p));
+      else
+        replaces[key] = this.get(property);
+    }
     return getSVG(this.get('image'), replaces, _=>this.domElement.style.cssText = this.css());
   }
 
