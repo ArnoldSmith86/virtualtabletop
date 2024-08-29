@@ -15,7 +15,7 @@ class ImageWidget extends Widget {
     if(delta.text !== undefined || delta.icon !== undefined)
       setText(this.domElement, this.get('icon') ? '' : this.get('text'));
 
-    if(delta.icon !== undefined || delta.text !== undefined || delta.width !== undefined || delta.height !== undefined || delta.textColor !== undefined)
+    if(delta.icon !== undefined || delta.text !== undefined || delta.width !== undefined || delta.height !== undefined || delta.textColor !== undefined || this.getWithPropertyReplacements_checkDelta('icon', delta))
       this.updateIcon();
 
     for(const [ key, property ] of this.getSvgReplaces())
@@ -93,6 +93,6 @@ class ImageWidget extends Widget {
     if(this.symbolWrapper)
       this.symbolWrapper.remove();
     if(this.get('icon'))
-      this.symbolWrapper = generateSymbolsDiv(this.domElement, this.get('width')-10, this.get('height')-10, this.get('icon'), this.get('text'), this.getDefaultIconScale(), this.getDefaultIconColor(), this.getDefaultIconHoverColor());
+      this.symbolWrapper = generateSymbolsDiv(this.domElement, this.get('width')-10, this.get('height')-10, this.getWithPropertyReplacements('icon'), this.get('text'), this.getDefaultIconScale(), this.getDefaultIconColor(), this.getDefaultIconHoverColor());
   }
 }
