@@ -326,8 +326,8 @@ function generateSymbolsDiv(target, width, height, symbols, text, defaultScale, 
     icon.style.setProperty('--scale', symbol.scale || 1);
     icon.style.setProperty('--width', `${maxSize}px`);
     icon.style.setProperty('--height', `${maxSize}px`);
-    icon.style.setProperty('--offsetX', `${symbol.offsetX||0}px`);
-    icon.style.setProperty('--offsetY', `${symbol.offsetY||0}px`);
+    icon.style.setProperty('--offsetX', `${(symbol.offsetX||0)*maxSize}px`);
+    icon.style.setProperty('--offsetY', `${(symbol.offsetY||0)*maxSize}px`);
     icon.style.setProperty('--rotation', `${symbol.rotation||0}deg`);
     icon.style.setProperty('--color', `${symbol.color||defaultColor}`);
     icon.style.setProperty('--hoverColor', `${symbol.hoverColor||symbol.color||defaultHoverColor||defaultColor}`);
