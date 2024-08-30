@@ -317,8 +317,14 @@ function generateSymbolsDiv(target, width, height, symbols, text, defaultScale, 
       let image = mapAssetURLs(details.image);
       let hoverImage = mapAssetURLs(details.image);
       if(details.colorReplace) {
-        image = getSVG(image, { [details.colorReplace]: symbol.color||defaultColor }, i=>icon.style.setProperty('--image', `url("${i}")`));
-        hoverImage = getSVG(hoverImage, { [details.colorReplace]: symbol.hoverColor||symbol.color||defaultHoverColor||defaultColor }, i=>icon.style.setProperty('--hoverImage', `url("${i}")`));
+        let colorTarget = symbol.color||defaultColor;
+        let hoverColorTarget = symbol.hoverColor||symbol.color||defaultHoverColor||defaultColor;
+        if(symbol.strokeColor) {
+          colorTarget = `${colorTarget}\" stroke=\"${symbol.strokeColor}\" stroke-width=\"${symbol.strokeWidth||5}`;
+          hoverColorTarget = `${hoverColorTarget}\" stroke=\"${symbol.hoverStrokeColor||symbol.strokeColor}\" stroke-width=\"${symbol.hoverStrokeWidth||symbol.strokeWidth||5}`;
+        }
+        image = getSVG(image, { [details.colorReplace]: colorTarget }, i=>icon.style.setProperty('--image', `url("${i}")`));
+        hoverImage = getSVG(hoverImage, { [details.colorReplace]: hoverColorTarget }, i=>icon.style.setProperty('--hoverImage', `url("${i}")`));
       }
       icon.style.setProperty('--image', `url("${image}")`);
       icon.style.setProperty('--hoverImage', `url("${hoverImage}")`);
@@ -331,6 +337,10 @@ function generateSymbolsDiv(target, width, height, symbols, text, defaultScale, 
     icon.style.setProperty('--rotation', `${symbol.rotation||0}deg`);
     icon.style.setProperty('--color', `${symbol.color||defaultColor}`);
     icon.style.setProperty('--hoverColor', `${symbol.hoverColor||symbol.color||defaultHoverColor||defaultColor}`);
+    icon.style.setProperty('--strokeColor', `${symbol.strokeColor||"transparent"}`);
+    icon.style.setProperty('--hoverStrokeColor', `${symbol.hoverStrokeColor||symbol.strokeColor||"transparent"}`);
+    icon.style.setProperty('--strokeWidth', `${symbol.strokeWidth||0}px`);
+    icon.style.setProperty('--hoverStrokeWidth', `${symbol.hoverStrokeWidth||symbol.strokeWidth||0}px`);
   }
 
   return outerWrapper;

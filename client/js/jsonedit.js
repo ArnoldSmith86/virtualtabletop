@@ -387,13 +387,14 @@ const jeCommands = [
     name: 'show advanced options',
     context: '^.* ↦ icon( ↦ [0-9]+)?',
     call: async function() {
+      const newValue = { name: '###SELECT ME###', scale: 1, offsetX: 0, offsetY: 0, rotation: 0, color: '', hoverColor: '', strokeColor: '', strokeWidth: 0, hoverStrokeColor: '', hoverStrokeWidth: 0 };
       if(Array.isArray(jeGetValueAt('icon'))) {
         const current = jeGetValueAt('icon');
         const name = current[jeGetKeyAfter('icon')];
-        current[jeGetKeyAfter('icon')] = { name: '###SELECT ME###', scale: 1, offsetX: 0, offsetY: 0, rotation: 0, color: '', hoverColor: '' };
+        current[jeGetKeyAfter('icon')] = newValue;
         await jeSetValueAt('icon', current, name);
       } else {
-        await jeSetValueAt('icon', { name: '###SELECT ME###', scale: 1, offsetX: 0, offsetY: 0, rotation: 0, color: '', hoverColor: '' }, jeGetValueAt('icon'));
+        await jeSetValueAt('icon', newValue, jeGetValueAt('icon'));
       }
     },
     show: _=>typeof jeGetValueAt('icon') == 'string' || Array.isArray(jeGetValueAt('icon')) && typeof jeGetValueAt('icon')[jeGetKeyAfter('icon')] == 'string'

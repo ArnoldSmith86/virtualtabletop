@@ -22,10 +22,12 @@
   color: var(--color);
   transform: translate(var(--offsetX), var(--offsetY)) rotate(var(--rotation));
   background-image: var(--image);
+  -webkit-text-stroke: var(--strokeWidth) var(--strokeColor);
 }
 .widget:hover > .symbolOuterWrapper > .symbolWrapper > div, .dice:hover > .diceFaces > .diceFace > .symbolOuterWrapper > .symbolWrapper > div {
   background-image: var(--hoverImage);
   color: var(--hoverColor);
+  -webkit-text-stroke: var(--hoverStrokeWidth) var(--hoverStrokeColor);
 }
 
 .symbolOuterWrapper > .symbolText {
