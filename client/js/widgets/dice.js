@@ -131,6 +131,9 @@ class Dice extends Widget {
           if(delta[property] !== undefined)
             needsUpdate = true;
 
+      for(const key in this.propertiesUsedInProperty)
+        needsUpdate = needsUpdate || this.getWithPropertyReplacements_checkDelta(key, delta);
+
       if(needsUpdate) {
         this.createChildNodes();
         childNodesWereRecreated = true;
@@ -309,9 +312,29 @@ class Dice extends Widget {
   }
 
   getFaceProperty(face, property) {
-    if(typeof face == 'object' && face !== null && typeof face[property] != 'undefined')
-      return face[property];
-    return this.get(property, {ignoreFaceProperties:true});
+    // Store the original `this.get` function in a temp variable
+    const originalGet = this.get;
+
+    // Temporarily replace the `this.get` function so it doesn't recurse infinitely when replacing PROPERTY tokens
+    this.get = (key) => {
+        if (typeof face === 'object' && face !== null && typeof face[key] !== 'undefined') {
+            return face[key]; // Return the property from the `face` object if it exists
+        } else {
+            return super.get(key); // Otherwise, call the original method (super.get)
+        }
+    };
+
+    let result;
+    if (typeof face === 'object' && face !== null && typeof face[property] !== 'undefined') {
+        result = this.getWithPropertyReplacements(property, face[property]);
+    } else {
+        result = this.getWithPropertyReplacements(property);
+    }
+
+    // Restore the original `this.get` function
+    this.get = originalGet;
+
+    return result;
   }
 
   getValueMap() {

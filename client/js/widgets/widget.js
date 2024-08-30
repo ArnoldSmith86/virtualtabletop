@@ -2040,7 +2040,7 @@ export class Widget extends StateManaged {
     }
   }
 
-  getWithPropertyReplacements(property) {
+  getWithPropertyReplacements(property, valueOverride) {
     const properties = new Set();
 
     const processProperty = (prop) => {
@@ -2061,7 +2061,7 @@ export class Widget extends StateManaged {
       return prop;
     };
 
-    const result = processProperty(this.get(property));
+    const result = processProperty(valueOverride !== undefined ? valueOverride : this.get(property));
     this.propertiesUsedInProperty[property] = Array.from(properties);
     return result;
   }
