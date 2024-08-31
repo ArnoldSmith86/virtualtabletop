@@ -24,7 +24,7 @@
   background-image: var(--image);
   -webkit-text-stroke: var(--strokeWidth) var(--strokeColor);
 }
-.widget:hover > .symbolOuterWrapper > .symbolWrapper > div, .dice:hover > .diceFaces > .diceFace > .symbolOuterWrapper > .symbolWrapper > div {
+.widget:hover > .symbolOuterWrapper > .symbolWrapper > div, .dice:hover > .diceFaces > .diceFace > .symbolOuterWrapper > .symbolWrapper > div, .card:hover > .cardFace > .cardFaceObject > .symbolOuterWrapper > .symbolWrapper > div {
   background-image: var(--hoverImage);
   color: var(--hoverColor);
   -webkit-text-stroke: var(--hoverStrokeWidth) var(--hoverStrokeColor);
@@ -44,7 +44,7 @@
   text-align: center;
 }
 
-.widget:hover > .symbolOuterWrapper > .symbolText, .dice:hover > .diceFaces > .diceFace > .symbolOuterWrapper > .symbolText {
+.widget:hover > .symbolOuterWrapper > .symbolText, .dice:hover > .diceFaces > .diceFace > .symbolOuterWrapper > .symbolText, .card:hover > .cardFace > .cardFaceObject > .symbolOuterWrapper > .symbolText {
   color: var(--hoverColor);
 }
 
