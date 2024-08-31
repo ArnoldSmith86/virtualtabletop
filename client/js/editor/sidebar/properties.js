@@ -724,7 +724,6 @@ class PropertiesModule extends SidebarModule {
 
   deckTemplate_colors(deck) {
     deck.cardDefaults = {
-      outline: '<path stroke="#1f1f1f" stroke-width="8" '
     };
     deck.faceTemplates = [
       {
@@ -781,6 +780,9 @@ class PropertiesModule extends SidebarModule {
             "x": 21.5,
             "y": 50,
             "size": 60,
+            "scale": 0.8,
+            "strokeColor": "#1f1f1f",
+            "strokeWidth": 8,
             "dynamicProperties": {
               "value": "suit",
               "color": "suitColor"
@@ -824,7 +826,6 @@ class PropertiesModule extends SidebarModule {
 
   deckTemplate_simple(deck) {
     deck.cardDefaults = {
-      white: "#fff4\" stroke=\"#fff4\" stroke-width=\"20"
     };
     deck.faceTemplates = [
       {
@@ -854,7 +855,9 @@ class PropertiesModule extends SidebarModule {
             "x": 10,
             "y": 70,
             "size": 83,
-            "color": "white",
+            "color": "#fff4",
+            "strokeColor": "#fff4",
+            "strokeWidth": 20,
             "dynamicProperties": {
               "value": "suit",
             }
