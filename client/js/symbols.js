@@ -339,8 +339,8 @@ function generateSymbolsDiv(target, width, height, symbols, text, defaultScale, 
     icon.style.setProperty('--hoverColor', `${symbol.hoverColor||symbol.color||defaultHoverColor||defaultColor}`);
     icon.style.setProperty('--strokeColor', `${symbol.strokeColor||"transparent"}`);
     icon.style.setProperty('--hoverStrokeColor', `${symbol.hoverStrokeColor||symbol.strokeColor||"transparent"}`);
-    icon.style.setProperty('--strokeWidth', `${symbol.strokeWidth||0}px`);
-    icon.style.setProperty('--hoverStrokeWidth', `${symbol.hoverStrokeWidth||symbol.strokeWidth||0}px`);
+    icon.style.setProperty('--strokeWidth', `${(symbol.strokeWidth||0)/512*maxSize}px`);
+    icon.style.setProperty('--hoverStrokeWidth', `${(symbol.hoverStrokeWidth||symbol.strokeWidth||0)/512*maxSize}px`);
   }
 
   return outerWrapper;
