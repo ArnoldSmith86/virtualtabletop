@@ -150,7 +150,7 @@ class Card extends Widget {
             if(object.value) {
               if($('.symbolOuterWrapper', objectDiv))
                 $('.symbolOuterWrapper', objectDiv).remove();
-              generateSymbolsDiv(objectDiv, object.size || object.width, object.size || object.height, Object.assign({ name:object.value }, object, { rotation: 0 }), null, 1, object.color);
+              generateSymbolsDiv(objectDiv, object.size || object.width, object.size || object.height, typeof object.value == 'object' ? object.value : Object.assign({ name:object.value }, object, { rotation: 0 }), object.text || '', 1, object.color);
             }
           } else if (object.type == 'html') {
             // Prevent input from going to frame.
