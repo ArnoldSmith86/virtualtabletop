@@ -299,7 +299,7 @@ const jeCommands = [
   },
   {
     id: 'je_symbolPickerText',
-    name: 'pick an asset from the symbol picker',
+    name: 'pick a symbol from the symbol picker',
     context: '^button ↦ text$',
     call: async function() {
       const a = await pickSymbol('fonts');
@@ -316,7 +316,7 @@ const jeCommands = [
   },
   {
     id: 'je_symbolPickerIcon',
-    name: 'pick an asset from the symbol picker',
+    name: 'pick an icon from the symbol picker',
     context: '^.* ↦ icon( ↦ [0-9]+)?',
     call: async function() {
       const a = await pickSymbol();
@@ -338,6 +338,20 @@ const jeCommands = [
         }
       }
     }
+  },
+  {
+    id: 'je_symbolPickerIconDeck',
+    name: 'pick an icon from the symbol picker',
+    context: '^deck ↦ faceTemplates ↦ [0-9]+ ↦ objects ↦ [0-9]+',
+    call: async function() {
+      const a = await pickSymbol();
+      if(a) {
+        jeGetValueAt('objects')[jeGetKeyAfter('objects')].value = '###SELECT ME###';
+        jeSetAndSelect(a.symbol);
+        await jeApplyChanges();
+      }
+    },
+    show: _=>jeGetValueAt('objects')[jeGetKeyAfter('objects')].type == 'icon'
   },
   {
     id: 'je_symbolPickerCustom',
@@ -711,6 +725,25 @@ const jeCommands = [
         }
       });
       jeSetAndSelect('image');
+    }
+  },
+  {
+    id: 'je_iconTemplate',
+    name: 'icon template',
+    context: '^deck ↦ faceTemplates ↦ [0-9]+ ↦ objects',
+    call: async function() {
+      jeStateNow.faceTemplates[+jeContext[2]].objects.push({
+        type: 'icon',
+        value: '###SELECT ME###',
+        x: 0,
+        y: 0,
+        size: 50,
+        rotation: 0,
+        color: '',
+        strokeColor: '',
+        strokeWidth: 0
+      });
+      jeSetAndSelect('favorite');
     }
   },
   {
