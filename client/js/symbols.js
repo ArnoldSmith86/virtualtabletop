@@ -310,6 +310,19 @@ function generateSymbolsDiv(target, width, height, symbols, text, defaultScale, 
 
     if(typeof symbol != 'object')
       symbol = { name: symbol };
+    symbol = {
+      name: symbol.name,
+      scale: symbol.scale || 1,
+      offsetX: symbol.offsetX || 0,
+      offsetY: symbol.offsetY || 0,
+      rotation: symbol.rotation || 0,
+      color: symbol.color || defaultColor,
+      strokeColor: asArray(symbol.strokeColor || "transparent"),
+      strokeWidth: asArray(symbol.strokeWidth || 0),
+      hoverColor: symbol.hoverColor || symbol.color || defaultHoverColor || defaultColor,
+      hoverStrokeColor: asArray(symbol.hoverStrokeColor || symbol.strokeColor || "transparent"),
+      hoverStrokeWidth: asArray(symbol.hoverStrokeWidth !== null ? symbol.hoverStrokeWidth : symbol.strokeWidth || 0)
+    };
 
     const details = getIconDetails(symbol.name);
     const icon = div(wrapper, details.class, details.text);
@@ -317,11 +330,19 @@ function generateSymbolsDiv(target, width, height, symbols, text, defaultScale, 
       let image = mapAssetURLs(details.image);
       let hoverImage = mapAssetURLs(details.image);
       if(details.colorReplace) {
-        let colorTarget = symbol.color||defaultColor;
-        let hoverColorTarget = symbol.hoverColor||symbol.color||defaultHoverColor||defaultColor;
+        let colorTarget = symbol.color;
+        let hoverColorTarget = symbol.hoverColor;
         if(symbol.strokeColor) {
-          colorTarget = `${colorTarget}\" stroke=\"${symbol.strokeColor}\" stroke-width=\"${symbol.strokeWidth||5}`;
-          hoverColorTarget = `${hoverColorTarget}\" stroke=\"${symbol.hoverStrokeColor||symbol.strokeColor}\" stroke-width=\"${symbol.hoverStrokeWidth||symbol.strokeWidth||5}`;
+          if(Array.isArray(colorTarget)) {
+            colorTarget = colorTarget.map((v,i)=>`${v}\" stroke=\"${symbol.strokeColor[i%symbol.strokeColor.length]}\" stroke-width=\"${symbol.strokeWidth[i%symbol.strokeWidth.length]}`);
+          } else {
+            colorTarget = `${colorTarget}\" stroke=\"${symbol.strokeColor[0]}\" stroke-width=\"${symbol.strokeWidth[0]}`;
+          }
+          if(Array.isArray(hoverColorTarget)) {
+            hoverColorTarget = hoverColorTarget.map((v,i)=>`${v}\" stroke=\"${symbol.hoverStrokeColor[i%symbol.hoverStrokeColor.length]}\" stroke-width=\"${symbol.hoverStrokeWidth[i%symbol.hoverStrokeWidth.length]}`);
+          } else {
+            hoverColorTarget = `${hoverColorTarget}\" stroke=\"${symbol.hoverStrokeColor[0]}\" stroke-width=\"${symbol.hoverStrokeWidth[0]}`;
+          }
         }
         image = getSVG(image, { [details.colorReplace]: colorTarget }, i=>icon.style.setProperty('--image', `url("${i}")`));
         hoverImage = getSVG(hoverImage, { [details.colorReplace]: hoverColorTarget }, i=>icon.style.setProperty('--hoverImage', `url("${i}")`));
@@ -329,18 +350,18 @@ function generateSymbolsDiv(target, width, height, symbols, text, defaultScale, 
       icon.style.setProperty('--image', `url("${image}")`);
       icon.style.setProperty('--hoverImage', `url("${hoverImage}")`);
     }
-    icon.style.setProperty('--scale', symbol.scale || 1);
+    icon.style.setProperty('--scale', symbol.scale);
     icon.style.setProperty('--width', `${maxSize}px`);
     icon.style.setProperty('--height', `${maxSize}px`);
-    icon.style.setProperty('--offsetX', `${(symbol.offsetX||0)*maxSize}px`);
-    icon.style.setProperty('--offsetY', `${(symbol.offsetY||0)*maxSize}px`);
-    icon.style.setProperty('--rotation', `${symbol.rotation||0}deg`);
-    icon.style.setProperty('--color', `${symbol.color||defaultColor}`);
-    icon.style.setProperty('--hoverColor', `${symbol.hoverColor||symbol.color||defaultHoverColor||defaultColor}`);
-    icon.style.setProperty('--strokeColor', `${symbol.strokeColor||"transparent"}`);
-    icon.style.setProperty('--hoverStrokeColor', `${symbol.hoverStrokeColor||symbol.strokeColor||"transparent"}`);
-    icon.style.setProperty('--strokeWidth', `${(symbol.strokeWidth||0)/512*maxSize}px`);
-    icon.style.setProperty('--hoverStrokeWidth', `${(symbol.hoverStrokeWidth||symbol.strokeWidth||0)/512*maxSize}px`);
+    icon.style.setProperty('--offsetX', `${(symbol.offsetX)*maxSize}px`);
+    icon.style.setProperty('--offsetY', `${(symbol.offsetY)*maxSize}px`);
+    icon.style.setProperty('--rotation', `${symbol.rotation}deg`);
+    icon.style.setProperty('--color', `${symbol.color}`);
+    icon.style.setProperty('--hoverColor', `${symbol.hoverColor}`);
+    icon.style.setProperty('--strokeColor', `${symbol.strokeColor[0]}`);
+    icon.style.setProperty('--hoverStrokeColor', `${symbol.hoverStrokeColor[0]}`);
+    icon.style.setProperty('--strokeWidth', `${(symbol.strokeWidth[0])/512*maxSize}px`);
+    icon.style.setProperty('--hoverStrokeWidth', `${(symbol.hoverStrokeWidth[0])/512*maxSize}px`);
   }
 
   return outerWrapper;

@@ -387,7 +387,7 @@ const jeCommands = [
     name: 'show advanced options',
     context: '^.* ↦ icon( ↦ [0-9]+)?',
     call: async function() {
-      const newValue = { name: '###SELECT ME###', scale: 1, offsetX: 0, offsetY: 0, rotation: 0, color: '', hoverColor: '', strokeColor: '', strokeWidth: 0, hoverStrokeColor: '', hoverStrokeWidth: 0 };
+      const newValue = { name: '###SELECT ME###', scale: 1, offsetX: 0, offsetY: 0, rotation: 0, color: '', strokeColor: '', strokeWidth: 0, hoverColor: '', hoverStrokeColor: '', hoverStrokeWidth: null };
       if(Array.isArray(jeGetValueAt('icon'))) {
         const current = jeGetValueAt('icon');
         const name = current[jeGetKeyAfter('icon')];
