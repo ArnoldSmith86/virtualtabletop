@@ -66,7 +66,7 @@ export class Button extends ImageWidget {
   }
 
   getDefaultIconScale() {
-    return 0.75;
+    return 0.66;
   }
 }
 

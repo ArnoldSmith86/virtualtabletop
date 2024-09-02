@@ -285,7 +285,7 @@ function generateSymbolsDiv(target, width, height, symbols, text, defaultScale, 
   let textHeight = height;
   if(text) {
     outerWrapper.classList.add('withText');
-    if(width/height > 2) {
+    if(width/height >= 2) {
       outerWrapper.classList.add('textRight');
       iconsWidth = iconsHeight;
       textWidth = width - iconsWidth

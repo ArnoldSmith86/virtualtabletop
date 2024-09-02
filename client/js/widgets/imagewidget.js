@@ -93,6 +93,6 @@ class ImageWidget extends Widget {
     if(this.symbolWrapper)
       this.symbolWrapper.remove();
     if(this.get('icon'))
-      this.symbolWrapper = generateSymbolsDiv(this.domElement, this.get('width')-10, this.get('height')-10, this.getWithPropertyReplacements('icon'), this.get('text'), this.getDefaultIconScale(), this.getDefaultIconColor(), this.getDefaultIconHoverColor());
+      this.symbolWrapper = generateSymbolsDiv(this.domElement, this.get('width'), this.get('height'), this.getWithPropertyReplacements('icon'), this.get('text'), this.getDefaultIconScale(), this.getDefaultIconColor(), this.getDefaultIconHoverColor());
   }
 }
