@@ -714,6 +714,22 @@ const jeCommands = [
     }
   },
   {
+    id: 'je_htmlTemplate',
+    name: 'html template',
+    context: '^deck ↦ faceTemplates ↦ [0-9]+ ↦ objects',
+    call: async function() {
+      jeStateNow.faceTemplates[+jeContext[2]].objects.push({
+        type: 'html',
+        x: 0,
+        y: 0,
+        value: '###SELECT ME###',
+        width: jeStateNow.cardDefaults && jeStateNow.cardDefaults.width  || 103,
+        height: jeStateNow.cardDefaults && jeStateNow.cardDefaults.height || 160
+      });
+      jeSetAndSelect('<h1>hello</h1>world');
+    }
+  },
+  {
     id: 'je_inheritFromString',
     name: 'convert to object',
     context: '^.* ↦ inheritFrom',
