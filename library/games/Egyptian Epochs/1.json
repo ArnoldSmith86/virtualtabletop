@@ -4625,14 +4625,13 @@
     "parent": "seat-p5",
     "inheritFrom": "holder-tiles-ankh-p1"
   },
-  "label-example-nile-quantity2": {
+  "label-example-ankh-quantity": {
     "type": "label",
-    "id": "label-example-nile-quantity2",
+    "id": "label-example-ankh-quantity",
     "x": 561,
     "inheritFrom": "label-example-gold-quantity",
-    "text": "25",
-    "y": 159,
-    "z": 4
+    "text": "20",
+    "y": 159
   },
   "_meta": {
     "version": 15,
@@ -4884,6 +4883,14 @@
     "cardType": "tile-ankh",
     "z": 24971
   },
+  "tile-ankh-11": {
+    "type": "card",
+    "id": "tile-ankh-11",
+    "parent": "pile-tiles-draw",
+    "deck": "deck-tiles",
+    "cardType": "tile-ankh",
+    "z": 25076
+  },
   "tile-ankh-12": {
     "type": "card",
     "id": "tile-ankh-12",
@@ -4955,54 +4962,6 @@
     "deck": "deck-tiles",
     "cardType": "tile-ankh",
     "z": 25074
-  },
-  "tile-ankh-21": {
-    "type": "card",
-    "id": "tile-ankh-21",
-    "parent": "pile-tiles-draw",
-    "deck": "deck-tiles",
-    "cardType": "tile-ankh",
-    "z": 25004
-  },
-  "tile-ankh-22": {
-    "type": "card",
-    "id": "tile-ankh-22",
-    "parent": "pile-tiles-draw",
-    "deck": "deck-tiles",
-    "cardType": "tile-ankh",
-    "z": 24948
-  },
-  "tile-ankh-11": {
-    "type": "card",
-    "id": "tile-ankh-11",
-    "parent": "pile-tiles-draw",
-    "deck": "deck-tiles",
-    "cardType": "tile-ankh",
-    "z": 25076
-  },
-  "tile-ankh-23": {
-    "type": "card",
-    "id": "tile-ankh-23",
-    "parent": "pile-tiles-draw",
-    "deck": "deck-tiles",
-    "cardType": "tile-ankh",
-    "z": 25079
-  },
-  "tile-ankh-24": {
-    "type": "card",
-    "id": "tile-ankh-24",
-    "parent": "pile-tiles-draw",
-    "deck": "deck-tiles",
-    "cardType": "tile-ankh",
-    "z": 25031
-  },
-  "tile-ankh-25": {
-    "type": "card",
-    "id": "tile-ankh-25",
-    "parent": "pile-tiles-draw",
-    "deck": "deck-tiles",
-    "cardType": "tile-ankh",
-    "z": 24936
   },
   "tile-disaster-funeral-1": {
     "type": "card",
