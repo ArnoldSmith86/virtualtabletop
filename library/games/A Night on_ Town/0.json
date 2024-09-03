@@ -1,31 +1,4 @@
 {
-  "_meta": {
-    "version": 15,
-    "info": {
-      "name": "A Night on' Town",
-      "image": "/assets/1189078585_140034",
-      "rules": "https://boardgamegeek.com/filepage/123738/orongo-english-rules-pdf",
-      "bgg": "https://boardgamegeek.com/boardgame/165556/orongo",
-      "year": "",
-      "mode": "vs",
-      "time": "40",
-      "attribution": "<div>The blind bidding mechanism was originally created by Andy Pymont in the Delicious Deliveries module. The mechanism has been appropriately adapted to work with this game.<br></div><div><br></div><div><span class=\"x4k7w5x x1h91t0o x1h9r5lt x1jfb8zj xv2umb2 x1beo9mf xaigb6o x12ejxvf x3igimt xarpa2k xedcshv x1lytzrv x1t2pt76 x7ja8zs x1qrby5j\"><span dir=\"auto\" class=\"xevjqck x14xiqua x10nbalq x1fum7jp xeuugli x1fj9vlw x13faqbe x1vvkbs xy43q4e x16heey3 x1s8qawx xerbpqq x1lliihq x1s928wv xhkezso x1gmr53x x1cpjm7i x1fgarty x1943h6x xp54x8z x1txs4ay\">Implementation, layout, and library image by Mitchell Stolycia and released to the Public Domain under CC0.</span></span></div><div><br></div><div>Icons were gathered from flaticon.com or iconarchive.com as listed below. Flaticon images are available for use under the Flaticon license.<br></div><div><br></div><div>Stadium: https://www.flaticon.com/free-icon/football-field_177406 Stadium icons created by Vignesh Oviyan - Flaticon<br></div><div><br></div><div>Football: https://www.iconarchive.com/show/ios7-icons-by-icons8/Sports-Football-icon.html. Licensed by icons8.com.</div><div><br></div><div>Movie: https://www.flaticon.com/free-icon/movies_411406 Clapperboard icons created by Freepik - Flaticon<br></div><div><br></div><div>Popcorn: https://www.flaticon.com/free-icon/popcorn_738096 Popcorn icons created by Freepik - Flaticon</div><div><br></div><div>Beer: https://www.flaticon.com/free-icon/beer_761856 Beer icons created by Good Ware - Flaticon</div><div><br></div><div>Shop: https://www.flaticon.com/free-icon/shopping-bag_711895 Bag icons created by Kiranshastry - Flaticon</div><div><br></div><div>Happy: https://www.flaticon.com/free-icon/happiness_158420 Emoji icons created by Freepik - Flaticon</div><div><br></div><div>All other icons were custom made by Mitchell Stolycia and are released to the Public Domain under CC0.<br></div>",
-      "lastUpdate": 1725079554158,
-      "showName": true,
-      "skill": "",
-      "description": "Who can become the happiest chap? Venture to your local town in order to engage in enthralling activities and show up your mates. During the game, players bid pound coins for a chance to go out for a couple drinks, go on a shopping spree, see a movie with some popcorn, or even have a game of kickabout at the local football grounds.",
-      "similarImage": "",
-      "similarName": "Orongo",
-      "similarDesigner": "Reiner Knizia",
-      "similarAwards": "",
-      "ruleText": "",
-      "helpText": "<div>At the start of the game, the player who most recently ate popcorn takes\n the pig next to their player seat. During the game, it is placed next \nto the player most recently won an auction.</div><div><br></div><div><b>The pink rings</b> next to the draw button are used to mark the locations you have visited. Click on them to change them to your seat colour.</div><div><br></div><div>Use the hand at the centre bottom of the screen to store your pound coins.</div><div><br></div><div><b>Auctions</b>:<br>Press the Start Auction button to hide all players' bidding coins from each other. You can click on your bidding coin above your&nbsp; seat to change your bid - when you submit a bid your ready marker next&nbsp; to your seat will be updated to show you are ready. You can toggle it back by clicking on it if you need to rethink your bid.<br><br>Once all players have bid, the current player can press End Auction to reveal totals. The auction winner should then pay their bid to the holder above the Start Auction button.</div><br><div><b>Set-up and references</b> are available in-game. In order to place a happy face, the following combinations of locations need to have been visited:<br></div><div>Stadium + football + costal hex<br></div><div>Movie + popcorn + costal hex<br></div><div>Beer + beer + costal hex<br></div><div>Shop + costal hex</div>",
-      "variantImage": "",
-      "variant": "A Night on' Town",
-      "language": "en-GB",
-      "players": "2-4"
-    }
-  },
   "mapDeck": {
     "type": "deck",
     "id": "mapDeck",
@@ -1202,7 +1175,8 @@
     "id": "tiles",
     "cardDefaults": {
       "width": 40,
-      "height": 40
+      "height": 40,
+      "clickable": false
     },
     "cardTypes": {
       "411406.png": {
@@ -1229,18 +1203,6 @@
       }
     },
     "faceTemplates": [
-      {
-        "objects": [
-          {
-            "type": "image",
-            "color": "blue",
-            "dynamicProperties": {
-              "height": "height",
-              "width": "width"
-            }
-          }
-        ]
-      },
       {
         "objects": [
           {
@@ -1400,9 +1362,9 @@
     "x": 276,
     "y": 133,
     "z": 859,
-    "activeFace": 1,
     "movable": false,
-    "parent": "s5vh"
+    "parent": "s5vh",
+    "activeFace": 1
   },
   "19dkm pint.png": {
     "type": "card",
@@ -1495,10 +1457,10 @@
     "cardType": "footy.png",
     "x": 274,
     "y": 194,
-    "activeFace": 1,
     "z": 857,
     "movable": false,
-    "parent": "s5vh"
+    "parent": "s5vh",
+    "activeFace": 1
   },
   "11dkm footy.png": {
     "type": "card",
@@ -1543,10 +1505,10 @@
     "cardType": "411406.png",
     "x": 219,
     "y": 164,
-    "activeFace": 1,
     "z": 223,
     "movable": false,
-    "parent": "s5vh"
+    "parent": "s5vh",
+    "activeFace": 1
   },
   "10dkm football.png": {
     "type": "card",
@@ -1556,21 +1518,21 @@
     "x": 273,
     "y": 15,
     "z": 253,
-    "activeFace": 1,
     "movable": false,
-    "parent": "s5vh"
+    "parent": "s5vh",
+    "activeFace": 1
   },
   "10dkm popcorn.png": {
     "type": "card",
     "id": "10dkm popcorn.png",
     "deck": "tiles",
     "cardType": "popcorn.png",
-    "activeFace": 1,
     "z": 222,
     "x": 273,
     "y": 74,
     "movable": false,
-    "parent": "s5vh"
+    "parent": "s5vh",
+    "activeFace": 1
   },
   "7dkm 411409.png": {
     "type": "card",
@@ -1722,8 +1684,8 @@
     "deck": "tiles",
     "cardType": "football.png",
     "x": 584,
-    "y": 138,
-    "z": 253,
+    "y": 137,
+    "z": 19352,
     "activeFace": 1,
     "movable": false,
     "parent": "s5vh"
@@ -1865,7 +1827,7 @@
     "id": "d2e1 411406.png",
     "deck": "drawDeck",
     "cardType": "411406.png",
-    "z": 19282,
+    "z": 19378,
     "homeX": 356,
     "homeY": 702,
     "movable": false,
@@ -1877,7 +1839,7 @@
     "id": "d2e1 football.png",
     "deck": "drawDeck",
     "cardType": "football.png",
-    "z": 19277,
+    "z": 19388,
     "homeX": 410,
     "homeY": 314,
     "movable": false,
@@ -1889,7 +1851,7 @@
     "id": "d2e1 footy.png",
     "deck": "drawDeck",
     "cardType": "footy.png",
-    "z": 19261,
+    "z": 19370,
     "hoverParent": "drawDeckHolder",
     "homeX": 305,
     "homeY": 734,
@@ -1902,7 +1864,7 @@
     "id": "d2e1 pint.png",
     "deck": "drawDeck",
     "cardType": "pint.png",
-    "z": 19237,
+    "z": 19382,
     "homeX": 410,
     "homeY": 554,
     "movable": false,
@@ -1914,7 +1876,7 @@
     "id": "d2e1 popcorn.png",
     "deck": "drawDeck",
     "cardType": "popcorn.png",
-    "z": 19270,
+    "z": 19365,
     "homeX": 358,
     "homeY": 584,
     "movable": false,
@@ -1926,7 +1888,7 @@
     "id": "d2e1 shop.png",
     "deck": "drawDeck",
     "cardType": "shop.png",
-    "z": 19247,
+    "z": 19418,
     "homeX": 462,
     "homeY": 523,
     "movable": false,
@@ -2174,7 +2136,7 @@
     "id": "d2e2 pint.png",
     "deck": "drawDeck",
     "cardType": "pint.png",
-    "z": 19251,
+    "z": 19381,
     "hoverParent": "drawDeckHolder",
     "homeX": 358,
     "homeY": 642,
@@ -2187,7 +2149,7 @@
     "id": "d2e1 411407.png",
     "deck": "drawDeck",
     "cardType": "411406.png",
-    "z": 19279,
+    "z": 19373,
     "homeX": 514,
     "homeY": 253,
     "movable": false,
@@ -2199,7 +2161,7 @@
     "id": "d2e1 411408.png",
     "deck": "drawDeck",
     "cardType": "411406.png",
-    "z": 19291,
+    "z": 19363,
     "homeX": 410,
     "homeY": 494,
     "hoverParent": "drawDeckHolder",
@@ -2212,7 +2174,7 @@
     "id": "d2e3 pint.png",
     "deck": "drawDeck",
     "cardType": "pint.png",
-    "z": 19241,
+    "z": 19372,
     "homeX": 462,
     "homeY": 402,
     "movable": false,
@@ -2224,7 +2186,7 @@
     "id": "d2e4 pint.png",
     "deck": "drawDeck",
     "cardType": "pint.png",
-    "z": 19287,
+    "z": 19369,
     "homeX": 514,
     "homeY": 554,
     "movable": false,
@@ -2236,7 +2198,7 @@
     "id": "d2e5 pint.png",
     "deck": "drawDeck",
     "cardType": "pint.png",
-    "z": 19281,
+    "z": 19383,
     "homeX": 514,
     "homeY": 314,
     "movable": false,
@@ -2248,7 +2210,7 @@
     "id": "d2e6 pint.png",
     "deck": "drawDeck",
     "cardType": "pint.png",
-    "z": 19245,
+    "z": 19362,
     "homeX": 566,
     "homeY": 221,
     "movable": false,
@@ -2260,7 +2222,7 @@
     "id": "d2e7 pint.png",
     "deck": "drawDeck",
     "cardType": "pint.png",
-    "z": 19258,
+    "z": 19389,
     "homeX": 566,
     "homeY": 402,
     "movable": false,
@@ -2274,7 +2236,7 @@
     "id": "d2e2 football.png",
     "deck": "drawDeck",
     "cardType": "football.png",
-    "z": 19288,
+    "z": 19377,
     "homeX": 306,
     "homeY": 554,
     "movable": false,
@@ -2286,7 +2248,7 @@
     "id": "d2e3 football.png",
     "deck": "drawDeck",
     "cardType": "football.png",
-    "z": 19239,
+    "z": 19406,
     "homeX": 410,
     "homeY": 734,
     "movable": false,
@@ -2298,7 +2260,7 @@
     "id": "d2e4 football.png",
     "deck": "drawDeck",
     "cardType": "football.png",
-    "z": 19263,
+    "z": 19386,
     "homeX": 566,
     "homeY": 103,
     "movable": false,
@@ -2310,7 +2272,7 @@
     "id": "d2e5 football.png",
     "deck": "drawDeck",
     "cardType": "football.png",
-    "z": 19264,
+    "z": 19392,
     "homeX": 618,
     "homeY": 614,
     "movable": false,
@@ -2323,7 +2285,7 @@
     "id": "d2e6 football.png",
     "deck": "drawDeck",
     "cardType": "football.png",
-    "z": 19290,
+    "z": 19411,
     "homeX": 878,
     "homeY": 224,
     "movable": false,
@@ -2335,7 +2297,7 @@
     "id": "d2e7 football.png",
     "deck": "drawDeck",
     "cardType": "football.png",
-    "z": 19236,
+    "z": 19394,
     "homeX": 930,
     "homeY": 493,
     "movable": false,
@@ -2347,7 +2309,7 @@
     "id": "d2e8 football.png",
     "deck": "drawDeck",
     "cardType": "football.png",
-    "z": 19253,
+    "z": 19419,
     "homeX": 1086,
     "homeY": 284,
     "movable": false,
@@ -2359,7 +2321,7 @@
     "id": "d2e9 football.png",
     "deck": "drawDeck",
     "cardType": "football.png",
-    "z": 19271,
+    "z": 19399,
     "homeX": 1242,
     "homeY": 314,
     "movable": false,
@@ -2371,7 +2333,7 @@
     "id": "d2e2 footy.png",
     "deck": "drawDeck",
     "cardType": "footy.png",
-    "z": 19249,
+    "z": 19380,
     "hoverParent": "drawDeckHolder",
     "homeX": 410,
     "homeY": 614,
@@ -2384,7 +2346,7 @@
     "id": "d2e3 footy.png",
     "deck": "drawDeck",
     "cardType": "footy.png",
-    "z": 19240,
+    "z": 19368,
     "hoverParent": "drawDeckHolder",
     "homeX": 462,
     "homeY": 464,
@@ -2397,7 +2359,7 @@
     "id": "d2e4 footy.png",
     "deck": "drawDeck",
     "cardType": "footy.png",
-    "z": 19268,
+    "z": 19366,
     "hoverParent": "drawDeckHolder",
     "homeX": 566,
     "homeY": 284,
@@ -2410,7 +2372,7 @@
     "id": "d2e5 footy.png",
     "deck": "drawDeck",
     "cardType": "footy.png",
-    "z": 19283,
+    "z": 19390,
     "hoverParent": "drawDeckHolder",
     "homeX": 722,
     "homeY": 494,
@@ -2423,7 +2385,7 @@
     "id": "d2e6 footy.png",
     "deck": "drawDeck",
     "cardType": "footy.png",
-    "z": 19276,
+    "z": 19376,
     "hoverParent": "drawDeckHolder",
     "homeX": 722,
     "homeY": 194,
@@ -2436,7 +2398,7 @@
     "id": "d2e7 footy.png",
     "deck": "drawDeck",
     "cardType": "footy.png",
-    "z": 19235,
+    "z": 19379,
     "hoverParent": "drawDeckHolder",
     "homeX": 826,
     "homeY": 374,
@@ -2449,7 +2411,7 @@
     "id": "d2e8 footy.png",
     "deck": "drawDeck",
     "cardType": "footy.png",
-    "z": 19244,
+    "z": 19384,
     "hoverParent": "drawDeckHolder",
     "homeX": 982,
     "homeY": 344,
@@ -2462,7 +2424,7 @@
     "id": "d2e1 411409.png",
     "deck": "drawDeck",
     "cardType": "411406.png",
-    "z": 19232,
+    "z": 19360,
     "homeX": 566,
     "homeY": 523,
     "movable": false,
@@ -2474,7 +2436,7 @@
     "id": "d2e1 411410.png",
     "deck": "drawDeck",
     "cardType": "411406.png",
-    "z": 19284,
+    "z": 19398,
     "homeX": 670,
     "homeY": 163,
     "movable": false,
@@ -2486,7 +2448,7 @@
     "id": "d2e1 411411.png",
     "deck": "drawDeck",
     "cardType": "411406.png",
-    "z": 19280,
+    "z": 19416,
     "homeX": 774,
     "homeY": 464,
     "movable": false,
@@ -2498,7 +2460,7 @@
     "id": "d2e1 411412.png",
     "deck": "drawDeck",
     "cardType": "411406.png",
-    "z": 19252,
+    "z": 19409,
     "homeX": 826,
     "homeY": 253,
     "movable": false,
@@ -2510,7 +2472,7 @@
     "id": "d2e1 411413.png",
     "deck": "drawDeck",
     "cardType": "411406.png",
-    "z": 19234,
+    "z": 19385,
     "homeX": 982,
     "homeY": 404,
     "movable": false,
@@ -2522,7 +2484,7 @@
     "id": "d2e1 411414.png",
     "deck": "drawDeck",
     "cardType": "411406.png",
-    "z": 19248,
+    "z": 19367,
     "homeX": 1190,
     "homeY": 343,
     "movable": false,
@@ -2534,7 +2496,7 @@
     "id": "d2e2 popcorn.png",
     "deck": "drawDeck",
     "cardType": "popcorn.png",
-    "z": 19238,
+    "z": 19412,
     "homeX": 462,
     "homeY": 584,
     "movable": false,
@@ -2546,7 +2508,7 @@
     "id": "d2e3 popcorn.png",
     "deck": "drawDeck",
     "cardType": "popcorn.png",
-    "z": 19242,
+    "z": 19410,
     "homeX": 462,
     "homeY": 344,
     "movable": false,
@@ -2558,7 +2520,7 @@
     "id": "d2e4 popcorn.png",
     "deck": "drawDeck",
     "cardType": "popcorn.png",
-    "z": 19262,
+    "z": 19364,
     "homeX": 566,
     "homeY": 163,
     "movable": false,
@@ -2570,7 +2532,7 @@
     "id": "d2e5 popcorn.png",
     "deck": "drawDeck",
     "cardType": "popcorn.png",
-    "z": 19255,
+    "z": 19361,
     "homeX": 670,
     "homeY": 464,
     "movable": false,
@@ -2582,7 +2544,7 @@
     "id": "d2e6 popcorn.png",
     "deck": "drawDeck",
     "cardType": "popcorn.png",
-    "z": 19246,
+    "z": 19408,
     "homeX": 722,
     "homeY": 254,
     "movable": false,
@@ -2594,7 +2556,7 @@
     "id": "d2e7 popcorn.png",
     "deck": "drawDeck",
     "cardType": "popcorn.png",
-    "z": 19272,
+    "z": 19407,
     "homeX": 878,
     "homeY": 404,
     "movable": false,
@@ -2606,7 +2568,7 @@
     "id": "d2e8 popcorn.png",
     "deck": "drawDeck",
     "cardType": "popcorn.png",
-    "z": 19254,
+    "z": 19395,
     "homeX": 930,
     "homeY": 314,
     "movable": false,
@@ -2618,7 +2580,7 @@
     "id": "d2e9 popcorn.png",
     "deck": "drawDeck",
     "cardType": "popcorn.png",
-    "z": 19243,
+    "z": 19397,
     "homeX": 1086,
     "homeY": 344,
     "movable": false,
@@ -2630,7 +2592,7 @@
     "id": "d2e9 shop.png",
     "deck": "drawDeck",
     "cardType": "shop.png",
-    "z": 19266,
+    "z": 19387,
     "homeX": 514,
     "homeY": 370,
     "movable": false,
@@ -2642,7 +2604,7 @@
     "id": "d2e10 shop.png",
     "deck": "drawDeck",
     "cardType": "shop.png",
-    "z": 19233,
+    "z": 19393,
     "homeX": 618,
     "homeY": 253,
     "movable": false,
@@ -2654,7 +2616,7 @@
     "id": "d2e11 shop.png",
     "deck": "drawDeck",
     "cardType": "shop.png",
-    "z": 19260,
+    "z": 19371,
     "homeX": 618,
     "homeY": 492,
     "movable": false,
@@ -2666,7 +2628,7 @@
     "id": "d2e12 shop.png",
     "deck": "drawDeck",
     "cardType": "shop.png",
-    "z": 19274,
+    "z": 19415,
     "homeX": 774,
     "homeY": 283,
     "movable": false,
@@ -2678,7 +2640,7 @@
     "id": "d2e13 shop.png",
     "deck": "drawDeck",
     "cardType": "shop.png",
-    "z": 19267,
+    "z": 19391,
     "homeX": 930,
     "homeY": 374,
     "movable": false,
@@ -2690,7 +2652,7 @@
     "id": "d2e8 pint.png",
     "deck": "drawDeck",
     "cardType": "pint.png",
-    "z": 19259,
+    "z": 19405,
     "homeX": 618,
     "homeY": 314,
     "movable": false,
@@ -2702,7 +2664,7 @@
     "id": "d2e9 pint.png",
     "deck": "drawDeck",
     "cardType": "pint.png",
-    "z": 19250,
+    "z": 19374,
     "homeX": 618,
     "homeY": 554,
     "movable": false,
@@ -2714,7 +2676,7 @@
     "id": "d2e10 pint.png",
     "deck": "drawDeck",
     "cardType": "pint.png",
-    "z": 19273,
+    "z": 19417,
     "homeX": 672,
     "homeY": 222,
     "movable": false,
@@ -2727,7 +2689,7 @@
     "id": "d2e11 pint.png",
     "deck": "drawDeck",
     "cardType": "pint.png",
-    "z": 19289,
+    "z": 19403,
     "homeX": 670,
     "homeY": 402,
     "movable": false,
@@ -2739,7 +2701,7 @@
     "id": "d2e12 pint.png",
     "deck": "drawDeck",
     "cardType": "pint.png",
-    "z": 19265,
+    "z": 19413,
     "homeX": 722,
     "homeY": 314,
     "movable": false,
@@ -2751,7 +2713,7 @@
     "id": "d2e13 pint.png",
     "deck": "drawDeck",
     "cardType": "pint.png",
-    "z": 19275,
+    "z": 19400,
     "homeX": 774,
     "homeY": 223,
     "movable": false,
@@ -2763,7 +2725,7 @@
     "id": "d2e14 pint.png",
     "deck": "drawDeck",
     "cardType": "pint.png",
-    "z": 19278,
+    "z": 19396,
     "homeX": 774,
     "homeY": 403,
     "movable": false,
@@ -2775,7 +2737,7 @@
     "id": "d2e15 pint.png",
     "deck": "drawDeck",
     "cardType": "pint.png",
-    "z": 19285,
+    "z": 19375,
     "homeX": 878,
     "homeY": 284,
     "movable": false,
@@ -2787,7 +2749,7 @@
     "id": "d2e16 pint.png",
     "deck": "drawDeck",
     "cardType": "pint.png",
-    "z": 19286,
+    "z": 19414,
     "homeX": 930,
     "homeY": 434,
     "movable": false,
@@ -2799,7 +2761,7 @@
     "id": "d2e17 pint.png",
     "deck": "drawDeck",
     "cardType": "pint.png",
-    "z": 19256,
+    "z": 19401,
     "homeX": 1034,
     "homeY": 374,
     "movable": false,
@@ -2811,7 +2773,7 @@
     "id": "d2e18 pint.png",
     "deck": "drawDeck",
     "cardType": "pint.png",
-    "z": 19269,
+    "z": 19404,
     "homeX": 1138,
     "homeY": 312,
     "movable": false,
@@ -2823,7 +2785,7 @@
     "id": "d2e9 footy.png",
     "deck": "drawDeck",
     "cardType": "footy.png",
-    "z": 19257,
+    "z": 19402,
     "hoverParent": "drawDeckHolder",
     "homeX": 1190,
     "homeY": 404,
@@ -2903,19 +2865,6 @@
       }
     },
     "faceTemplates": [
-      {
-        "objects": [
-          {
-            "type": "image",
-            "color": "white",
-            "value": "/assets/210826549_17128",
-            "dynamicProperties": {
-              "height": "height",
-              "width": "width"
-            }
-          }
-        ]
-      },
       {
         "objects": [
           {
@@ -3319,8 +3268,9 @@
     "id": "8jc50 pound.png",
     "deck": "money",
     "cardType": "pound.png",
-    "z": 19231,
-    "parent": "ynnt"
+    "z": 19354,
+    "x": 1349,
+    "y": 77
   },
   "seat3": {
     "type": "seat",
@@ -15575,19 +15525,6 @@
           {
             "type": "image",
             "color": "gold",
-            "value": "/assets/1075909367_10026",
-            "dynamicProperties": {
-              "height": "height",
-              "width": "width"
-            }
-          }
-        ]
-      },
-      {
-        "objects": [
-          {
-            "type": "image",
-            "color": "gold",
             "dynamicProperties": {
               "value": "image",
               "height": "height",
@@ -16158,19 +16095,6 @@
           {
             "type": "image",
             "color": "#c4fecc",
-            "value": "/assets/-1863666130_159924",
-            "dynamicProperties": {
-              "height": "height",
-              "width": "width"
-            }
-          }
-        ]
-      },
-      {
-        "objects": [
-          {
-            "type": "image",
-            "color": "#c4fecc",
             "dynamicProperties": {
               "value": "image",
               "height": "height",
@@ -16211,19 +16135,6 @@
           {
             "type": "image",
             "color": "transparent",
-            "value": "/assets/-1637913600_15676",
-            "dynamicProperties": {
-              "height": "height",
-              "width": "width"
-            }
-          }
-        ]
-      },
-      {
-        "objects": [
-          {
-            "type": "image",
-            "color": "transparent",
             "dynamicProperties": {
               "value": "image",
               "height": "height",
@@ -16242,12 +16153,12 @@
     "id": "p76b setup.png",
     "deck": "p76b",
     "cardType": "setup.png",
-    "z": 9388,
+    "z": 19353,
     "movable": false,
-    "y": -82,
+    "y": -81,
     "activeFace": 1,
     "clickable": false,
-    "x": 2
+    "x": 4
   },
   "happyHolder4a": {
     "type": "holder",
@@ -16378,7 +16289,7 @@
     "id": "4400 happy.png",
     "deck": "happy",
     "cardType": "happy.png",
-    "z": 19203,
+    "z": 19359,
     "parent": "kuqi"
   },
   "4401 happy.png": {
@@ -16711,5 +16622,32 @@
     "id": "kuqi",
     "z": 19179,
     "parent": "happyHolder4a"
+  },
+  "_meta": {
+    "version": 15,
+    "info": {
+      "name": "A Night on' Town",
+      "image": "/assets/1189078585_140034",
+      "rules": "https://boardgamegeek.com/filepage/123738/orongo-english-rules-pdf",
+      "bgg": "https://boardgamegeek.com/boardgame/165556/orongo",
+      "year": "",
+      "mode": "vs",
+      "time": "40",
+      "attribution": "<div>The blind bidding mechanism was originally created by Andy Pymont in the Delicious Deliveries module. The mechanism has been appropriately adapted to work with this game.<br></div><div><br></div><div><span class=\"x4k7w5x x1h91t0o x1h9r5lt x1jfb8zj xv2umb2 x1beo9mf xaigb6o x12ejxvf x3igimt xarpa2k xedcshv x1lytzrv x1t2pt76 x7ja8zs x1qrby5j\"><span dir=\"auto\" class=\"xevjqck x14xiqua x10nbalq x1fum7jp xeuugli x1fj9vlw x13faqbe x1vvkbs xy43q4e x16heey3 x1s8qawx xerbpqq x1lliihq x1s928wv xhkezso x1gmr53x x1cpjm7i x1fgarty x1943h6x xp54x8z x1txs4ay\">Implementation, layout, and library image by Mitchell Stolycia and released to the Public Domain under CC0.</span></span></div><div><br></div><div>Icons were gathered from flaticon.com or iconarchive.com as listed below. Flaticon images are available for use under the Flaticon license.<br></div><div><br></div><div>Stadium: https://www.flaticon.com/free-icon/football-field_177406 Stadium icons created by Vignesh Oviyan - Flaticon<br></div><div><br></div><div>Football: https://www.iconarchive.com/show/ios7-icons-by-icons8/Sports-Football-icon.html. Licensed by icons8.com.</div><div><br></div><div>Movie: https://www.flaticon.com/free-icon/movies_411406 Clapperboard icons created by Freepik - Flaticon<br></div><div><br></div><div>Popcorn: https://www.flaticon.com/free-icon/popcorn_738096 Popcorn icons created by Freepik - Flaticon</div><div><br></div><div>Beer: https://www.flaticon.com/free-icon/beer_761856 Beer icons created by Good Ware - Flaticon</div><div><br></div><div>Shop: https://www.flaticon.com/free-icon/shopping-bag_711895 Bag icons created by Kiranshastry - Flaticon</div><div><br></div><div>Happy: https://www.flaticon.com/free-icon/happiness_158420 Emoji icons created by Freepik - Flaticon</div><div><br></div><div>All other icons were custom made by Mitchell Stolycia and are released to the Public Domain under CC0.<br></div>",
+      "lastUpdate": 1725399435332,
+      "showName": true,
+      "skill": "",
+      "description": "Who can become the happiest chap? Venture to your local town in order to engage in enthralling activities and show up your mates. During the game, players bid pound coins for a chance to go out for a couple drinks, go on a shopping spree, see a movie with some popcorn, or even have a game of kickabout at the local football grounds.",
+      "similarImage": "",
+      "similarName": "Orongo",
+      "similarDesigner": "Reiner Knizia",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": "<div>At the start of the game, the player who most recently ate popcorn takes\n the pig next to their player seat. During the game, it is placed next \nto the player most recently won an auction.</div><div><br></div><div><b>The pink rings</b> next to the draw button are used to mark the locations you have visited. Click on them to change them to your seat colour.</div><div><br></div><div>Use the hand at the centre bottom of the screen to store your pound coins.</div><div><br></div><div><b>Auctions</b>:<br>Press the Start Auction button to hide all players' bidding coins from each other. You can click on your bidding coin above your&nbsp; seat to change your bid - when you submit a bid your ready marker next&nbsp; to your seat will be updated to show you are ready. You can toggle it back by clicking on it if you need to rethink your bid.<br><br>Once all players have bid, the current player can press End Auction to reveal totals. The auction winner should then pay their bid to the holder above the Start Auction button.</div><br><div><b>Set-up and references</b> are available in-game. In order to place a happy face, the following combinations of locations need to have been visited:<br></div><div>Stadium + football + costal hex<br></div><div>Movie + popcorn + costal hex<br></div><div>Beer + beer + costal hex<br></div><div>Shop + costal hex</div>",
+      "variantImage": "",
+      "variant": "A Night on' Town",
+      "language": "en-GB",
+      "players": "2-4"
+    }
   }
 }
