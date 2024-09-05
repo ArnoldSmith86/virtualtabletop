@@ -1517,6 +1517,8 @@ async function jeApplyChangesMulti() {
     setSelection(jeMultiSelectedWidgets());
     jeDeltaIsOurs = false;
   } else {
+    batchStart();
+    setDeltaCause(`${getPlayerDetails().playerName} edited properties on multiple widgets in editor`);
     jeDeltaIsOurs = true;
     const widgets = jeMultiSelectedWidgets();
     const widgetIDs = widgets.map(w=>w.get('id'));
@@ -1531,6 +1533,7 @@ async function jeApplyChangesMulti() {
       }
     }
     jeDeltaIsOurs = false;
+    batchEnd();
   }
 }
 
