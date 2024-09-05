@@ -1,0 +1,15 @@
+{
+  "name": "VirtualTabletop.io",
+  "forwardPorts": [8272],
+  "portsAttributes": {
+    "8272": {
+      "label": "VirtualTabletop.io",
+      "onAutoForward": "notify"
+    }
+  },
+  "postCreateCommand": "bash .devcontainer/setup.sh",
+  "postStartCommand": "npm run debug",
+  "settings": {},
+  "extensions": []
+}
+
