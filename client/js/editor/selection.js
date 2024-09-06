@@ -146,7 +146,7 @@ function applySelectionRectangle(addToSelection) {
 
 function setSelection(newSelectedWidgets) {
   const previousSelectedWidgets = [...selectedWidgets];
-  selectedWidgets = newSelectedWidgets;
+  selectedWidgets = smartCloneProcessSelection(newSelectedWidgets);
 
   for(const widget of previousSelectedWidgets)
     widget.setHighlighted(false);

@@ -102,6 +102,27 @@ function smartCloneGetClones(source, cloneParent) {
   });
 }
 
+function smartCloneProcessSelection(selection) {
+  const selectionWithOnlyTopMostClones = [];
+  for(const widget of selection) {
+    let parent = widget;
+    let isClone = false;
+    while(parent) {
+      if(parent.get('editorSmartClone')) {
+        if(!selectionWithOnlyTopMostClones.includes(parent))
+          selectionWithOnlyTopMostClones.push(parent);
+        isClone = true;
+        break;
+      }
+      parent = widgets.get(parent.get('parent'));
+    }
+
+    if(!isClone)
+      selectionWithOnlyTopMostClones.push(widget);
+  }
+  return selectionWithOnlyTopMostClones;
+}
+
 let noRecurse = false;
 async function smartCloneDeltaReceived(delta) {
   if(noRecurse)
