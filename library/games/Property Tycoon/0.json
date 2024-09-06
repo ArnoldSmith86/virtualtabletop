@@ -2145,7 +2145,7 @@
       "dec1": "*"
     },
     "onlyVisibleForSeat": "seat6",
-    "scale": 0
+    "scale": 1
   },
   "inc6": {
     "type": "button",
@@ -2156,7 +2156,7 @@
       "inc1": "*"
     },
     "onlyVisibleForSeat": "seat6",
-    "scale": 0
+    "scale": 1
   },
   "coins1": {
     "type": "label",

@@ -286,7 +286,15 @@
     "image": "/i/game-icons.net/delapouite/coffee-cup.svg",
     "parent": "vsk3",
     "z": 0,
-    "dropLimit": 1
+    "dropLimit": 1,
+    "enterRoutine": [
+      {
+        "func": "CLICK",
+        "collection": [
+          "ovo8"
+        ]
+      }
+    ]
   },
   "Coffee Dice Holder 2": {
     "type": "holder",
@@ -307,7 +315,15 @@
     "image": "/i/game-icons.net/delapouite/coffee-cup.svg",
     "parent": "vsk3",
     "z": 0,
-    "dropLimit": 1
+    "dropLimit": 1,
+    "enterRoutine": [
+      {
+        "func": "CLICK",
+        "collection": [
+          "ovo9"
+        ]
+      }
+    ]
   },
   "Coffee Dice Holder 3": {
     "type": "holder",
@@ -328,7 +344,15 @@
     "image": "/i/game-icons.net/delapouite/coffee-cup.svg",
     "parent": "vsk3",
     "z": 0,
-    "dropLimit": 1
+    "dropLimit": 1,
+    "enterRoutine": [
+      {
+        "func": "CLICK",
+        "collection": [
+          "ovo10"
+        ]
+      }
+    ]
   },
   "ovo7": {
     "deck": "Switch Deck",
@@ -461,7 +485,15 @@
     "color": "#0004",
     "parent": "Brakes Wrapper",
     "y": 61,
-    "dropLimit": 1
+    "dropLimit": 1,
+    "enterRoutine": [
+      {
+        "func": "CLICK",
+        "collection": [
+          "ovo7"
+        ]
+      }
+    ]
   },
   "Brakes Dice Holder 2": {
     "type": "holder",
@@ -481,7 +513,15 @@
       ]
     },
     "parent": "Brakes Wrapper",
-    "dropLimit": 1
+    "dropLimit": 1,
+    "enterRoutine": [
+      {
+        "func": "CLICK",
+        "collection": [
+          "2s6g"
+        ]
+      }
+    ]
   },
   "Brakes Dice Holder 3": {
     "type": "holder",
@@ -501,7 +541,15 @@
       ]
     },
     "parent": "Brakes Wrapper",
-    "dropLimit": 1
+    "dropLimit": 1,
+    "enterRoutine": [
+      {
+        "func": "CLICK",
+        "collection": [
+          "mx1c"
+        ]
+      }
+    ]
   },
   "Gears Dice Holder 1": {
     "type": "holder",
@@ -521,7 +569,15 @@
     "color": "#0004",
     "text": "1/2",
     "parent": "Landing Gear Wrapper",
-    "dropLimit": 1
+    "dropLimit": 1,
+    "enterRoutine": [
+      {
+        "func": "CLICK",
+        "collection": [
+          "q6be"
+        ]
+      }
+    ]
   },
   "Gears Dice Holder 2": {
     "type": "holder",
@@ -541,7 +597,15 @@
     "color": "#0004",
     "text": "3/4",
     "parent": "Landing Gear Wrapper",
-    "dropLimit": 1
+    "dropLimit": 1,
+    "enterRoutine": [
+      {
+        "func": "CLICK",
+        "collection": [
+          "mk4f"
+        ]
+      }
+    ]
   },
   "Gears Dice Holder 3": {
     "type": "holder",
@@ -561,7 +625,15 @@
     "color": "#0004",
     "text": "5/6",
     "parent": "Landing Gear Wrapper",
-    "dropLimit": 1
+    "dropLimit": 1,
+    "enterRoutine": [
+      {
+        "func": "CLICK",
+        "collection": [
+          "r71l"
+        ]
+      }
+    ]
   },
   "Flaps Dice Holder 1": {
     "type": "holder",
@@ -581,7 +653,15 @@
     "color": "#0004",
     "text": "1/2",
     "parent": "Flaps Wrapper",
-    "dropLimit": 1
+    "dropLimit": 1,
+    "enterRoutine": [
+      {
+        "func": "CLICK",
+        "collection": [
+          "0kal"
+        ]
+      }
+    ]
   },
   "Flaps Dice Holder 2": {
     "type": "holder",
@@ -601,7 +681,15 @@
     "color": "#0004",
     "text": "2/3",
     "parent": "Flaps Wrapper",
-    "dropLimit": 1
+    "dropLimit": 1,
+    "enterRoutine": [
+      {
+        "func": "CLICK",
+        "collection": [
+          "ibxg"
+        ]
+      }
+    ]
   },
   "Flaps Dice Holder 3": {
     "type": "holder",
@@ -621,7 +709,15 @@
     "color": "#0004",
     "text": "4/5",
     "parent": "Flaps Wrapper",
-    "dropLimit": 1
+    "dropLimit": 1,
+    "enterRoutine": [
+      {
+        "func": "CLICK",
+        "collection": [
+          "rmll"
+        ]
+      }
+    ]
   },
   "Flaps Dice Holder 4": {
     "type": "holder",
@@ -641,7 +737,15 @@
     "color": "#0004",
     "text": "5/6",
     "parent": "Flaps Wrapper",
-    "dropLimit": 1
+    "dropLimit": 1,
+    "enterRoutine": [
+      {
+        "func": "CLICK",
+        "collection": [
+          "fbs3"
+        ]
+      }
+    ]
   },
   "Pilot - Title1": {
     "id": "Pilot - Title1",
@@ -978,7 +1082,7 @@
     "id": "Brakes Indicator",
     "x": -2,
     "y": -1,
-    "z": 952,
+    "z": 974,
     "movable": true,
     "classes": "symbols",
     "css": {
@@ -1114,7 +1218,7 @@
     "y": -1,
     "width": 60,
     "height": 60,
-    "z": 956,
+    "z": 992,
     "movable": true,
     "classes": "symbols",
     "css": {
@@ -1295,7 +1399,7 @@
     "y": -1,
     "width": 60,
     "height": 60,
-    "z": 957,
+    "z": 986,
     "movable": true,
     "classes": "symbols",
     "css": {
@@ -2190,7 +2294,12 @@
     "width": 30,
     "z": 43,
     "inheritFrom": "Brakes Indicator Label 2",
-    "text": "X"
+    "text": "X",
+    "css": {
+      "font-size": "24px",
+      "font-weight": "bold",
+      "color": "red"
+    }
   },
   "Flaps Order Indicator 1": {
     "id": "Flaps Order Indicator 1",
@@ -2872,7 +2981,77 @@
       "movable": false,
       "resetProperties": {
         "activeFace": 0
-      }
+      },
+      "indicatorTargets": {
+        "Landing Gear Wrapper": {
+          "Widget": "Aerodynamics Indicator 1",
+          "Targets": [
+            "Aerodynamics Indicator Holder 1",
+            "Aerodynamics Indicator Holder 2",
+            "Aerodynamics Indicator Holder 3",
+            "Aerodynamics Indicator Holder 4"
+          ]
+        },
+        "Flaps Wrapper": {
+          "Widget": "Aerodynamics Indicator 2",
+          "Targets": [
+            "Aerodynamics Indicator Holder 5",
+            "Aerodynamics Indicator Holder 6",
+            "Aerodynamics Indicator Holder 7",
+            "Aerodynamics Indicator Holder 8",
+            "Aerodynamics Indicator Holder 9"
+          ]
+        },
+        "Brakes Wrapper": {
+          "Widget": "Brakes Indicator",
+          "Targets": [
+            "Brakes Indicator Holder 1",
+            "Brakes Indicator Holder 2",
+            "Brakes Indicator Holder 3",
+            "Brakes Indicator Holder 4"
+          ]
+        }
+      },
+      "clickRoutine": [
+        {
+          "func": "CLICK",
+          "collection": "thisButton",
+          "mode": "ignoreClickRoutine"
+        },
+        "var parent = ${PROPERTY parent}",
+        {
+          "func": "SELECT",
+          "property": "parent",
+          "value": "${parent}"
+        },
+        {
+          "func": "SELECT",
+          "source": "DEFAULT",
+          "property": "cardType",
+          "value": "switch"
+        },
+        {
+          "func": "SELECT",
+          "source": "DEFAULT",
+          "property": "activeFace",
+          "value": 1
+        },
+        {
+          "func": "COUNT"
+        },
+        "var target = ${PROPERTY indicatorTargets}",
+        "var target = ${target.$parent}",
+        "var widget = ${target.Widget}",
+        "var target = ${target.Targets}",
+        "var target = ${target.$COUNT}",
+        {
+          "func": "MOVE",
+          "collection": [
+            "${widget}"
+          ],
+          "to": "${target}"
+        }
+      ]
     },
     "cardTypes": {
       "switch": {
@@ -6220,7 +6399,7 @@
       "mode": "coop",
       "time": "15",
       "attribution": "<div>The layout was done by ArnoldSmith86 and is released to the public domain by CC0.</div><div><br></div><div>These images were used from game-icons.net and are licensed as CC BY 3.0:<br></div><div><br></div><div>By delapouite:<br></div><div>https://game-icons.net/1x1/delapouite/barrel-leak.html</div>https://game-icons.net/1x1/delapouite/car-wheel.html<br>https://game-icons.net/1x1/delapouite/check-mark.html<br>https://game-icons.net/1x1/delapouite/coffee-cup.html<br>https://game-icons.net/1x1/delapouite/commercial-airplane.html<br>https://game-icons.net/1x1/delapouite/control-tower.html<br>https://game-icons.net/1x1/delapouite/dice-six-faces-one.html<br>https://game-icons.net/1x1/delapouite/dice-six-faces-six.html<br>https://game-icons.net/1x1/delapouite/dice-target.html<br>https://game-icons.net/1x1/delapouite/fuel-tank.html<br>https://game-icons.net/1x1/delapouite/id-card.html<br>https://game-icons.net/1x1/delapouite/perspective-dice-six-faces-random.html<br>https://game-icons.net/1x1/delapouite/plain-arrow.html<br>https://game-icons.net/1x1/delapouite/plane-wing.html<br>https://game-icons.net/1x1/delapouite/pocket-radio.html<br>https://game-icons.net/1x1/delapouite/rolling-dices.html<br>https://game-icons.net/1x1/delapouite/seven-pointed-star.html<br>https://game-icons.net/1x1/delapouite/speedometer.html<br>https://game-icons.net/1x1/delapouite/sun-cloud.html<br>https://game-icons.net/1x1/delapouite/turbine.html<br><div>https://game-icons.net/1x1/delapouite/windsock.html</div><div><br></div><div>By lorc:<br></div>https://game-icons.net/1x1/lorc/body-swapping.html<br>https://game-icons.net/1x1/lorc/sands-of-time.html<br><div>https://game-icons.net/1x1/lorc/snowflake-2.html</div><div><br></div><div>By quoting:<br></div>https://game-icons.net/1x1/quoting/biplane.html<br><br>",
-      "lastUpdate": 1724275013540,
+      "lastUpdate": 1725609895443,
       "showName": true,
       "skill": "",
       "description": "Roll and place dice to control an aircraft and eventually land it safely on an airport.",
