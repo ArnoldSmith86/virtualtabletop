@@ -378,9 +378,9 @@ async function loadEditMode() {
   if(edit === null) {
     edit = false;
     Object.assign(window, {
-      $, $a, div, progressButton, loadImage, on, onMessage, showOverlay, sleep, rand,
+      $, $a, div, progressButton, loadImage, on, onMessage, showOverlay, sleep, rand, shuffleArray,
       setJEenabled, setJEroutineLogging, setZoomAndOffset, toggleEditMode, getEdit,
-      toServer, batchStart, batchEnd, setDeltaCause, sendPropertyUpdate, getUndoProtocol, setUndoProtocol, sendRawDelta,
+      toServer, batchStart, batchEnd, setDeltaCause, sendPropertyUpdate, getUndoProtocol, setUndoProtocol, sendRawDelta, getDelta,
       addWidgetLocal, removeWidgetLocal,
       loadJSZip, waitForJSZip,
       generateUniqueWidgetID, unescapeID, regexEscape, setScale, getScale, getRoomRectangle, getMaxZ,
@@ -441,6 +441,11 @@ onLoad(function() {
       e.stopImmediatePropagation();
       return;
     }
+  });
+
+  on('.toolbarButton', 'touchstart', function(e) {
+    usedTouch = true;
+    $('body').classList.add('usedTouch');
   });
 
   on('.toolbarTab', 'click', function(e) {

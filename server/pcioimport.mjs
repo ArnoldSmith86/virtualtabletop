@@ -451,24 +451,26 @@ export default async function convertPCIO(content) {
         w.cardDefaults.movable = false;
         w.cardDefaults.borderRadius = 12;
         w.cardDefaults.css = 'border: 4px solid #dedede';
-        w.cardDefaults.clickRoutine = [
-          {
-            "func": "INPUT",
-            "fields": [
-              {
-                "type": "choose",
-                "source": [ "${PROPERTY id}" ],
-                "mode": "faces",
-                "variable": "face"
-              }
-            ]
-          },
-          {
-            "func": "SET",
-            "property": "activeFace",
-            "value": "${face}"
-          }
-        ];
+        if(options.length > 2) {
+          w.cardDefaults.clickRoutine = [
+            {
+              "func": "INPUT",
+              "fields": [
+                {
+                  "type": "choose",
+                  "source": [ "${PROPERTY id}" ],
+                  "mode": "faces",
+                  "variable": "face"
+                }
+              ]
+            },
+            {
+              "func": "SET",
+              "property": "activeFace",
+              "value": "${face}"
+            }
+          ];
+        }
       }
 
       let sortingOrder = 0;
@@ -568,8 +570,8 @@ export default async function convertPCIO(content) {
       w.text = widget.labelContent;
       w.css = {
         default: {
-          'line-height': `${widget.textSize}px`,
-          'font-size':   `${widget.textSize}px`,
+          'line-height': `${widget.textSize-2}px`,
+          'font-size':   `${widget.textSize-2}px`,
           'font-weight': weight,
           'text-align':  widget.textAlign
         },
@@ -903,6 +905,8 @@ export default async function convertPCIO(content) {
           if(c.args.quantity) {
             if(c.args.quantity.type == 'reference')
               quantity = '${' + c.args.quantity.questionId + '}';
+            else if(c.args.quantity.value == 'all')
+              quantity = 0;
             else
               quantity = c.args.quantity.value;
           }
@@ -1018,7 +1022,7 @@ export default async function convertPCIO(content) {
 
           c = importWidgetQuery(w.clickRoutine, c.args, 'holders', 'holder', 'collection', {
             func:   'FLIP',
-            count:  !c.args.flipMode || c.args.flipMode.value == 'pile' ? 0 : 1
+            count:  !c.args.flipMode || c.args.flipMode.value != 'pile' ? 1 : 0
           });
           if(c.holder && c.holder.length == 1)
             c.holder = c.holder[0];

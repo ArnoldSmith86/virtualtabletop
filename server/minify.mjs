@@ -113,6 +113,7 @@ export default async function minifyHTML() {
     'client/js/editor/dragbuttons/spacing.js',
     'client/js/editor/dragbuttons/rotate.js',
     'client/js/editor/dragbuttons/move.js',
+    'client/js/editor/dragbuttons/resize.js',
     'client/js/editor/sidebarModule.js',
     'client/js/editor/sidebar/properties.js',
     'client/js/editor/sidebar/undo.js',

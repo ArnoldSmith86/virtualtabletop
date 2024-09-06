@@ -18,14 +18,6 @@ function positionElementsInArc(elements, radius, arcAngle, container) {
   }
 }
 
-function shuffleArray(array) {
-  for (let i = array.length - 1; i > 0; i--) {
-    const j = Math.floor(rand() * (i + 1));
-    [array[i], array[j]] = [array[j], array[i]];
-  }
-  return array;
-}
-
 function getBoundingClientRectWithAbsoluteChildren(element) {
   const rect = element.children.length ? { left: 9999, top: 9999, right: 0, bottom: 0 } : element.getBoundingClientRect();
   let left = rect.left;

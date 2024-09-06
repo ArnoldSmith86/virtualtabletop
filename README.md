@@ -24,6 +24,13 @@ Finally, we appreciate donations that go towards paying for the domain name, the
 
 Enjoy! And don't be shy about asking questions in [Discord](https://discord.gg/CEZz7wny9T); you will find a helpful and responsive audience.
 
+## Playing offline on Android
+
+You can use an Android phone as the server and play with any devices offline by using its wifi hotspot:
+
+- Install and open https://termux.dev/ on your Android device.
+- Run `curl -L is.gd/vttandroid | sh`.
+
 ## Hosting own server
 
 You can host your own instance or go to [VirtualTabletop.io](https://virtualtabletop.io).
