@@ -845,7 +845,6 @@
       "mode": "vs",
       "time": "30",
       "attribution": "<div>Room layout and design by LawDawg. Released to the public domain under CC0.</div><div><br></div>The coin icon is available under the Pixabay license at https://pixabay.com/vectors/coin-money-penny-1873955/.<div><br></div><div>Other icons are from https://game-icons.net/ and available under CC BY 3.0:\n&nbsp; &nbsp; Delapouite: piggy bank,&nbsp;https://game-icons.net/1x1/delapouite/piggy-bank.html</div><div>&nbsp; &nbsp; lorc: gavel,&nbsp;https://game-icons.net/1x1/lorc/gavel.html<br><div><br></div><div><div><span style=\"color: var(--overlayFontColor);\">The properties were generated using the Midjourney artificial intelligence image generator, https://www.midjourney.com/home/, using a prompt that generally described what the property was plus: \"anime drawing --ar 5:8\".</span><br></div><div><span style=\"color: var(--overlayFontColor);\"><br></span></div><div><span style=\"color: var(--overlayFontColor);\">The room background was generated using MidJourney with the prompt \"anime drawing of suburban neighborhood --ar 16:10\".</span></div><div><br></div><div>The house icon was generated using Midjourney with the prompt \"house [or gold coin] icon anime sprite sheet\".</div><div><br></div></div></div>",
-      "lastUpdate": 1724362756097,
       "showName": true,
       "skill": "",
       "description": "Bid for properties at auction and then sell them for the most profit.",
@@ -2144,8 +2143,7 @@
     "inheritFrom": {
       "dec1": "*"
     },
-    "onlyVisibleForSeat": "seat6",
-    "scale": 0
+    "onlyVisibleForSeat": "seat6"
   },
   "inc6": {
     "type": "button",
@@ -2155,8 +2153,7 @@
     "inheritFrom": {
       "inc1": "*"
     },
-    "onlyVisibleForSeat": "seat6",
-    "scale": 0
+    "onlyVisibleForSeat": "seat6"
   },
   "coins1": {
     "type": "label",
