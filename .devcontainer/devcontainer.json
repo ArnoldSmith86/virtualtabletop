@@ -4,7 +4,8 @@
   "portsAttributes": {
     "8272": {
       "label": "VirtualTabletop.io",
-      "onAutoForward": "notify"
+      "onAutoForward": "notify",
+      "visibility": "public"
     }
   },
   "postCreateCommand": "bash .devcontainer/setup.sh",
