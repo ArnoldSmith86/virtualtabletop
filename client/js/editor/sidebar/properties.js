@@ -258,15 +258,19 @@ class PropertiesModule extends SidebarModule {
     for(const widget of newSelection) {
       this.inputUpdaters[widget.id] = {};
 
-      switch(widget.get('type')) {
-        case 'card':   this.renderForCard(widget);   break;
-        case 'deck':   this.renderForDeck(widget);   break;
-        case 'holder': this.renderForHolder(widget); break;
+      if(widget.get('editorSmartClone')) {
+        this.renderForSmartClone(widget);
+      } else {
+        switch(widget.get('type')) {
+          case 'card':   this.renderForCard(widget);   break;
+          case 'deck':   this.renderForDeck(widget);   break;
+          case 'holder': this.renderForHolder(widget); break;
 
-        default:
-          this.addHeader(widget.id);
-          this.renderGenericProperties(widget);
-          break;
+          default:
+            this.addHeader(widget.id);
+            this.renderGenericProperties(widget);
+            break;
+        }
       }
     }
 
@@ -1450,6 +1454,22 @@ class PropertiesModule extends SidebarModule {
 
     this.addSubHeader(`Holder properties`);
     this.renderGenericProperties(widget, [ 'dropTarget' ]);
+  }
+
+  renderForSmartClone(widget) {
+    this.addHeader(`Smart Clone ${widget.id}`);
+    div(this.moduleDOM, '', `
+      <p>This widget was created using the smart clone tool. This means that the editor will keep it and its children updated when you change the source.</p>
+      <p>Click the button below to unlink this widget from its source if you want to make changes to its children.</p>
+      <label><input type=checkbox class=flipX> Flip X</label><br>
+      <label><input type=checkbox class=flipY> Flip Y</label><br>
+      <button icon=link_off>Unlink</button>
+    `);
+    $('.flipX', this.moduleDOM).onchange = e=>widget.set('editorSmartClone', Object.assign({}, widget.get('editorSmartClone'), { flipX: e.target.checked }));
+    $('.flipY', this.moduleDOM).onchange = e=>widget.set('editorSmartClone', Object.assign({}, widget.get('editorSmartClone'), { flipY: e.target.checked }));
+    $('.flipX', this.moduleDOM).checked = (widget.get('editorSmartClone') || {}).flipX;
+    $('.flipY', this.moduleDOM).checked = (widget.get('editorSmartClone') || {}).flipY;
+    $('[icon=link_off]', this.moduleDOM).onclick = e=>widget.set('editorSmartClone', null);
   }
 
   renderGenericProperties(widget, exclude) {
