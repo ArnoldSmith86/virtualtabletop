@@ -60,13 +60,17 @@ function applyReplaces(value, replaces) {
 }
 
 async function smartCloneUpdateClone(clone, source, options) {
-  for(const property of validPropertiesOfWidget(source)) {
+  const validProperties = validPropertiesOfWidget(source);
+  for(const property of validProperties) {
     const value = JSON.stringify(source.get(property));
     let replacedValue = applyReplaces(value, options.replaces);
     if(JSON.stringify(clone.get(property)) != replacedValue && [ 'id', 'parent', 'type', 'inheritFrom' ].indexOf(property) == -1)
       if(clone.get('type') != 'seat' || [ 'player', 'color', 'turn', 'index' ].indexOf(property) == -1)
         await clone.set(property, JSON.parse(replacedValue));
   }
+  for(const invalidProperty of Object.keys(clone.state).filter(property=>validProperties.indexOf(property) == -1))
+    if(clone.inheritFromIsValid(clone.inheritFrom()[source.id], invalidProperty) && invalidProperty != 'inheritFrom')
+      await clone.set(invalidProperty, null);
   if(options.flipX) {
     const sourceParentWidth = widgets.get(source.get('parent')).get('width');
     const newX = sourceParentWidth - (source.get('x') + source.get('width'));
