@@ -4,19 +4,11 @@
     {
       "type": "node",
       "request": "attach",
-      "name": "Attach to Nodemon",
+      "name": "VirtualTabletop.io",
       "address": "localhost",
       "port": 9229,
       "restart": true,
-      "localRoot": "${workspaceFolder}",
-      "remoteRoot": "/workspaces/${localWorkspaceFolderBasename}",
       "skipFiles": ["<node_internals>/**"]
-    }
-  ],
-  "compounds": [
-    {
-      "name": "Auto Attach",
-      "configurations": ["Attach to Nodemon"]
     }
   ]
 }

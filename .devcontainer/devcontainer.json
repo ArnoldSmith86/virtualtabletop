@@ -1,6 +1,9 @@
 {
   "name": "VirtualTabletop.io",
-  "forwardPorts": [9229, 8272],
+  "forwardPorts": [
+    9229,
+    8272
+  ],
   "portsAttributes": {
     "9229": {
       "label": "Node.js Debugger",
@@ -14,9 +17,12 @@
   },
   "postCreateCommand": "bash .devcontainer/setup.sh",
   "postStartCommand": "npm run debug",
-  "settings": {
-    "debug.node.autoAttach": "on"
-  },
-  "extensions": []
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "debug.node.autoAttach": "on"
+      },
+      "extensions": []
+    }
+  }
 }
-
