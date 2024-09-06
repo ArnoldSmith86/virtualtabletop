@@ -22,7 +22,8 @@
       "rules": "",
       "ruleText": "Sunshine and Rainbows is a climbing card game in the style of Haggis, Scout, etc.\n\nFollow the player aid on the table for specific details.",
       "helpText": "Have all players take a seat and press the New Game button.\n\nTo Overwrite the current meld, use the button provided to discard the cards currently there, then add your replacement cards from your hand. To instead Add to the current meld, simply drag your cards into it.\n\nAt the conclusion of each round of play, press the End Round button. This will score the cards remaining in players' hands automatically, and will deal a new hand to all seated players.",
-      "attribution": "Game layout and scripting by Andy Pymont, released to the public domain by CC0.\n\nThe card back and library image are different crops of the same image generated using the Midjourney artificial intelligence image generator, https://www.midjourney.com/home/, using the following prompt: \"land of sunshine and rainbows\"."
+      "attribution": "Game layout and scripting by Andy Pymont, released to the public domain by CC0.\n\nThe card back and library image are different crops of the same image generated using the Midjourney artificial intelligence image generator, https://www.midjourney.com/home/, using the following prompt: \"land of sunshine and rainbows\".",
+      "lastUpdate": 1705839780000
     }
   },
   "seat-p1": {
