@@ -52,7 +52,7 @@ function validPropertiesOfWidget(widget, filter='*') {
 
 function applyReplaces(value, replaces) {
   let replacedValue = JSON.parse(JSON.stringify(value));
-  for(const [ from, to ] of Object.entries(replaces)) {
+  for(const [ from, to ] of Object.entries(replaces || {})) {
     const regex = new RegExp(from, 'g');
     replacedValue = replacedValue.replace(regex, to);
   }
