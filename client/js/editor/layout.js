@@ -91,6 +91,7 @@ function metaReceived(data) {
 }
 
 export function openEditor() {
+  smartCloneInit();
   setJEroutineLogging(jeRoutineLogging = true);
   for(const module of sidebarModules)
     module.onEditorOpen();
