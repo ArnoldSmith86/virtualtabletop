@@ -736,7 +736,8 @@
         "to": "fuug"
       },
       {
-        "func": "TURN"
+        "func": "TURN",
+        "turnCycle": "backward"
       }
     ],
     "image": "/i/noto-emoji/emoji_u27a1.svg",
