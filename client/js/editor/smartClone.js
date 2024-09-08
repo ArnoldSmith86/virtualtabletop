@@ -48,9 +48,25 @@ async function smartCloneUpdateChildren(topCloneID, clone, source, options) {
 function inheritDef(widget) {
   const exceptions = [];
   if(widget.get('movable'))
-    exceptions.push("!parent", "!x", "!y");
+    exceptions.push("!parent", "!x", "!y", "!dragging", "!hoverParent", "!owner", "!hoverTarget");
+  if(widget instanceof BasicWidget)
+    exceptions.push("!activeFace");
+  if(widget.get('type') == 'canvas')
+    for(let x=0; x<10; ++x)
+      for(let y=0; y<10; ++y)
+        exceptions.push("!`c${x}${y}`");
+  if(widget.get('type') == 'card')
+    exceptions.push("!activeFace");
+  if(widget.get('type') == 'dice')
+    exceptions.push("!activeFace", "!rollCount");
+  if(widget.get('type') == 'label' && widget.get('editable'))
+    exceptions.push("!text");
   if(widget.get('type') == 'seat')
-    exceptions.push("!player", "!color", "!turn", "!index");
+    exceptions.push("!player", "!color", "!turn", "!index", "!score"); // FIXME: score should actually be dynamic from scoreboards
+  if(widget.get('type') == 'spinner')
+    exceptions.push("!angle", "!value");
+  if(widget.get('type') == 'timer')
+    exceptions.push("!alert", "!milliseconds", "!paused");
   if(exceptions.length)
     return { [widget.id]: exceptions };
   else
