@@ -1,6 +1,6 @@
 image: gitpod/workspace-full-vnc
 tasks:
-  - init: nvm install 16; nvm use 16; npm install
+  - init: bash .gitpod-init.sh
     command: (sleep 2; gp preview $(gp url 8272)/test) & npm run debug
 ports:
   - port: 8272
