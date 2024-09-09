@@ -82,9 +82,17 @@ function validPropertiesOfWidget(widget, filter='*') {
 }
 
 function applyReplaces(value, replaces, topCloneID) {
+  const modifiedReplaces = JSON.parse(JSON.stringify(replaces||{}));
   let replacedValue = JSON.parse(JSON.stringify(value));
-  const idMap = Object.entries(smartCloneSourceMap[topCloneID]).map(e=>e[0]!=topCloneID ? [ `"${e[1].id}"`, `"${e[0]}"` ] : [ e[1].id, e[0] ]);
-  for(const [ from, to ] of Object.entries(replaces || {}).concat(idMap)) {
+  for(const [ cloneID, source ] of Object.entries(smartCloneSourceMap[topCloneID])) {
+    if(cloneID == topCloneID) {
+      modifiedReplaces[source.id] = cloneID;
+    } else {
+      modifiedReplaces[`"${source.id}"`] = `"${cloneID}"`;
+      modifiedReplaces[`OF ${source.id}\}`] = `OF ${cloneID}\}`;
+    }
+  }
+  for(const [ from, to ] of Object.entries(modifiedReplaces)) {
     const regex = new RegExp(from, 'g');
     replacedValue = replacedValue.replace(regex, to);
   }
@@ -97,14 +105,14 @@ async function smartCloneUpdateClone(topCloneID, clone, source, options) {
     const value = JSON.stringify(source.get(property));
     let replacedValue = applyReplaces(value, options.replaces, topCloneID);
     if([ 'id', 'parent', 'type', 'inheritFrom' ].indexOf(property) == -1) {
-      if(JSON.stringify(source.get(property)) != replacedValue || !clone.inheritFromIsValid(clone.inheritFrom()[source.id], property)) {
+      if(value != replacedValue || !clone.inheritFromIsValid(clone.inheritFrom()[source.id], property)) {
         if(clone.get('type') != 'seat' || [ 'player', 'color', 'turn', 'index', 'score' ].indexOf(property) == -1) {
           if(JSON.stringify(clone.get(property)) != replacedValue) {
             console.log('Smart Clone - Setting Property', clone.id, property, value, replacedValue);
             await clone.set(property, JSON.parse(replacedValue));
           }
         }
-      } else if(clone.state[property] !== undefined && JSON.stringify(clone.get(property)) == JSON.stringify(source.get(property))) {
+      } else if(clone.state[property] !== undefined && JSON.stringify(clone.get(property)) == value) {
         console.log('Smart Clone - Removing Property', clone.id, property);
         await clone.set(property, null);
       }
