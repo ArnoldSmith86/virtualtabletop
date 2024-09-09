@@ -47,25 +47,26 @@ async function smartCloneUpdateChildren(topCloneID, clone, source, options) {
 
 function inheritDef(widget) {
   const exceptions = [];
+  const type = widget.get('type');
   if(widget.get('movable'))
     exceptions.push("!parent", "!x", "!y", "!dragging", "!hoverParent", "!owner", "!hoverTarget");
-  if(widget instanceof BasicWidget)
+  if(widget instanceof BasicWidget && widget.faces().length > 1)
     exceptions.push("!activeFace");
-  if(widget.get('type') == 'canvas')
+  if(type == 'canvas')
     for(let x=0; x<10; ++x)
       for(let y=0; y<10; ++y)
         exceptions.push("!`c${x}${y}`");
-  if(widget.get('type') == 'card')
+  if(type == 'card')
     exceptions.push("!activeFace");
-  if(widget.get('type') == 'dice')
+  if(type == 'dice')
     exceptions.push("!activeFace", "!rollCount");
-  if(widget.get('type') == 'label' && widget.get('editable'))
+  if(type == 'label' && widget.get('editable'))
     exceptions.push("!text");
-  if(widget.get('type') == 'seat')
+  if(type == 'seat')
     exceptions.push("!player", "!color", "!turn", "!index", "!score"); // FIXME: score should actually be dynamic from scoreboards
-  if(widget.get('type') == 'spinner')
+  if(type == 'spinner')
     exceptions.push("!angle", "!value");
-  if(widget.get('type') == 'timer')
+  if(type == 'timer')
     exceptions.push("!alert", "!milliseconds", "!paused");
   if(exceptions.length)
     return { [widget.id]: exceptions };
@@ -96,7 +97,7 @@ async function smartCloneUpdateClone(topCloneID, clone, source, options) {
     const value = JSON.stringify(source.get(property));
     let replacedValue = applyReplaces(value, options.replaces, topCloneID);
     if(JSON.stringify(clone.get(property)) != replacedValue && [ 'id', 'parent', 'type', 'inheritFrom' ].indexOf(property) == -1) {
-      if(clone.get('type') != 'seat' || [ 'player', 'color', 'turn', 'index' ].indexOf(property) == -1) {
+      if(clone.get('type') != 'seat' || [ 'player', 'color', 'turn', 'index', 'score' ].indexOf(property) == -1) {
         console.log('Smart Clone - Setting Property', clone.id, property, value, replacedValue);
         await clone.set(property, JSON.parse(replacedValue));
       }
@@ -107,6 +108,10 @@ async function smartCloneUpdateClone(topCloneID, clone, source, options) {
       console.log('Smart Clone - Removing Property', clone.id, invalidProperty);
       await clone.set(invalidProperty, null);
     }
+  }
+  if(JSON.stringify(clone.get('inheritFrom')) != JSON.stringify(inheritDef(source))) {
+    console.log('Smart Clone - Setting Inherit', clone.id, inheritDef(source));
+    await clone.set('inheritFrom', inheritDef(source));
   }
   if(options.flipX) {
     const sourceParentWidth = widgets.get(source.get('parent')).get('width');
