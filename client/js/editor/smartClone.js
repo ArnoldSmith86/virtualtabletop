@@ -63,7 +63,7 @@ function inheritDef(widget) {
   if(type == 'label' && widget.get('editable'))
     exceptions.push("!text");
   if(type == 'seat')
-    exceptions.push("!player", "!color", "!turn", "!index", "!score"); // FIXME: score should actually be dynamic from scoreboards
+    exceptions.push("!player", "!color", "!turn", "!index", "!score");
   if(type == 'spinner')
     exceptions.push("!angle", "!value");
   if(type == 'timer')
@@ -96,16 +96,23 @@ async function smartCloneUpdateClone(topCloneID, clone, source, options) {
   for(const property of validProperties) {
     const value = JSON.stringify(source.get(property));
     let replacedValue = applyReplaces(value, options.replaces, topCloneID);
-    if(JSON.stringify(clone.get(property)) != replacedValue && [ 'id', 'parent', 'type', 'inheritFrom' ].indexOf(property) == -1) {
-      if(clone.get('type') != 'seat' || [ 'player', 'color', 'turn', 'index', 'score' ].indexOf(property) == -1) {
-        console.log('Smart Clone - Setting Property', clone.id, property, value, replacedValue);
-        await clone.set(property, JSON.parse(replacedValue));
+    if([ 'id', 'parent', 'type', 'inheritFrom' ].indexOf(property) == -1) {
+      if(JSON.stringify(source.get(property)) != replacedValue || !clone.inheritFromIsValid(clone.inheritFrom()[source.id], property)) {
+        if(clone.get('type') != 'seat' || [ 'player', 'color', 'turn', 'index', 'score' ].indexOf(property) == -1) {
+          if(JSON.stringify(clone.get(property)) != replacedValue) {
+            console.log('Smart Clone - Setting Property', clone.id, property, value, replacedValue);
+            await clone.set(property, JSON.parse(replacedValue));
+          }
+        }
+      } else if(clone.state[property] !== undefined && JSON.stringify(clone.get(property)) == JSON.stringify(source.get(property))) {
+        console.log('Smart Clone - Removing Property', clone.id, property);
+        await clone.set(property, null);
       }
     }
   }
   for(const invalidProperty of Object.keys(clone.state).filter(property=>validProperties.indexOf(property) == -1)) {
     if(clone.inheritFromIsValid(clone.inheritFrom()[source.id], invalidProperty) && invalidProperty != 'inheritFrom') {
-      console.log('Smart Clone - Removing Property', clone.id, invalidProperty);
+      console.log('Smart Clone - Removing Invalid Property', clone.id, invalidProperty);
       await clone.set(invalidProperty, null);
     }
   }
