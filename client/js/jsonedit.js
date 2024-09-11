@@ -796,6 +796,26 @@ const jeCommands = [
     }
   },
   {
+    id: 'je_smartCloneFlipX',
+    name: 'flip horizontally',
+    context: '^([^ ]+) ↦ editorSmartClone',
+    call: async function() {
+      const current = jeStateNow.editorSmartClone.flipX;
+      jeStateNow.editorSmartClone.flipX = '###SELECT ME###';
+      jeSetAndSelect(!current);
+    }
+  },
+  {
+    id: 'je_smartCloneFlipY',
+    name: 'flip vertically',
+    context: '^([^ ]+) ↦ editorSmartClone',
+    call: async function() {
+      const current = jeStateNow.editorSmartClone.flipY;
+      jeStateNow.editorSmartClone.flipY = '###SELECT ME###';
+      jeSetAndSelect(!current);
+    }
+  },
+  {
     id: 'je_openDeck',
     name: 'Open deck',
     icon: '[deck]',
