@@ -457,6 +457,7 @@ export class Widget extends StateManaged {
   async clone(overrideProperties, recursive = false, problems = null, xOffset = 0, yOffset = 0) {
     const clone = Object.assign(JSON.parse(JSON.stringify(this.state)), overrideProperties);
     const parent = clone.parent;
+    const inheritFrom = clone.inheritFrom;
     if(parent !== undefined && parent !== null && !widgets.has(parent))
       return null;
 
@@ -467,6 +468,7 @@ export class Widget extends StateManaged {
         problems.push(`There is already a widget with id:${overrideProperties.id}, generating new ID.`);
     }
     delete clone.parent;
+    delete clone.inheritFrom;
     const newID = await addWidgetLocal(clone);
     if(widgets.has(newID)) { // cloning can fail for example with invalid cardType
       const cWidget = widgets.get(newID);
@@ -475,6 +477,8 @@ export class Widget extends StateManaged {
       cWidget.movedByButton = problems != null;
       if(parent)
         await cWidget.moveToHolder(widgets.get(parent));
+      if(inheritFrom)
+        await cWidget.set('inheritFrom', inheritFrom);
 
       // moveToHolder causes the position to be wrong if the target holder does not have alignChildren
       if(!parent || !widgets.get(parent).get('alignChildren')) {
