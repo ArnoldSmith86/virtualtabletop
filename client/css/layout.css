@@ -33,11 +33,11 @@ body {
   font-family: 'Roboto', sans-serif;
 }
 
-body.darkMode input {
+body.edit.darkMode input {
   --overlayFontColor: #ffffff;
 }
 
-body.darkMode input::placeholder {
+body.edit.darkMode input::placeholder {
   color: #ffffff;
 }
 
@@ -1755,7 +1755,7 @@ input:invalid+span::after, .inputError::before {
   z-index: 2;
 }
 
-.inputchoose .widget {
+.inputchoose .inputchooseWidgetWrapper > .widget {
   position: relative !important;
   transform-origin: top left !important;
   z-index: 1 !important;

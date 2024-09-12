@@ -1,3 +1,4 @@
+let usedTouch = false;
 let mouseTarget = null;
 const mouseStatus = {};
 
@@ -42,6 +43,11 @@ async function inputHandler(name, e) {
     if(target.id == 'editor')
       return;
     target = target.parentNode;
+  }
+
+  if(!usedTouch && name == 'touchstart') {
+    usedTouch = true;
+    $('body').classList.add('usedTouch');
   }
 
   e.preventDefault();
@@ -143,8 +149,19 @@ async function inputHandler(name, e) {
   }
 }
 
+async function keyHandler(e) {
+  if(isLoading || overlayActive || $('body').classList.contains('edit') || e.target.tagName == 'INPUT' || e.target.tagName == 'TEXTAREA')
+    return;
+
+  batchStart();
+  for(const widget of widgetFilter(w=>w.get('hotkey')===e.key&&w.isVisible()).sort((a,b)=>String(a.get('id')).localeCompare(b.get('id'))))
+    await widget.click();
+  batchEnd();
+}
+
 onLoad(function() {
   [ 'touchstart', 'touchend', 'touchmove', 'touchcancel', 'mousedown', 'mousemove', 'mouseup', 'contextmenu' ].forEach(function(event) {
     window.addEventListener(event, e => inputHandler(event, e));
   });
+  window.addEventListener('keydown', e => keyHandler(e));
 });

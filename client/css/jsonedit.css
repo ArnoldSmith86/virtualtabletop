@@ -85,6 +85,29 @@
 }
 /**** End of grid layout ****/
 
+/**** line number styles ****/
+
+.jeLineNumber {
+  display: inline-block;
+  /* --linenumbers-digits gets set in jsonedit.js (jeColorize function) depending on the lines of the widget */
+  width: calc(var(--linenumbers-digits) * 8px);
+  text-align: right;
+  padding-right: 2px;
+  color: var(--textDimColor1);
+  vertical-align: top;
+}
+
+.jeLineContent {
+  display: inline-block;
+  width: calc(100% - var(--linenumbers-digits) * 8px - 2px);
+}
+
+#jeText {
+  padding-left: calc(var(--linenumbers-digits) * 8px + 2px);
+}
+
+/**** End of line number styles ****/
+
 #jeTree > ul {
   overflow-y: auto;
 }
@@ -232,7 +255,7 @@ i.error   { color: var(--textHighlightColor3); font-weight: bold; }
   white-space: normal;
 }
 
-#editor:hover #jeWidgetLayers, .editorModule:hover #jeWidgetLayers {
+#editor:hover #jeWidgetLayers, .editorModule:hover #jeWidgetLayers, body.usedTouch #jeWidgetLayers {
   display: none;
 }
 

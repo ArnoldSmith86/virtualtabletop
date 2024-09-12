@@ -84,6 +84,7 @@ export class Widget extends StateManaged {
       leaveRoutine: null,
       globalUpdateRoutine: null,
       gameStartRoutine: null,
+      hotkey: null,
 
       animatePropertyChange: []
     });
@@ -464,7 +465,7 @@ export class Widget extends StateManaged {
     if(widgets.has(clone.id)) {
       delete clone.id;
       if(problems && overrideProperties.id !== undefined)
-        problems.push(`There is already a widget with id:${a.properties.id}, generating new ID.`);
+        problems.push(`There is already a widget with id:${overrideProperties.id}, generating new ID.`);
     }
     delete clone.parent;
     delete clone.inheritFrom;
@@ -781,7 +782,7 @@ export class Widget extends StateManaged {
         let widget = this;
         if(match[8]) {
           const id = evaluateIdentifier(match[7], match[8]);
-          if(!this.isValidID(id, problems))
+          if(Array.isArray(id) || !this.isValidID(id, problems))
             return null;
           widget = widgets.get(id);
         }
@@ -1986,6 +1987,16 @@ export class Widget extends StateManaged {
         }
       }
 
+      if(a.func == 'VAR') {
+        setDefaults(a, { variables: {} });
+        for(const [ key, value ] of Object.entries(a.variables||{}))
+          variables[key] = value;
+
+        if(jeRoutineLogging) {
+          jeLoggingRoutineOperationSummary(`${Object.entries(a.variables||{}).map(e=>`${e[0]}=${JSON.stringify(e[1])}`).join(', ')}`);
+        }
+      }
+
       if(jeRoutineLogging) jeLoggingRoutineOperationEnd(problems, variables, collections, false);
 
       if(!jeRoutineLogging && problems.length)
@@ -2141,6 +2152,34 @@ export class Widget extends StateManaged {
       return true;
     problems.push(`Widget ID ${id} does not exist.`);
     return false;
+  }
+
+  isVisible() {
+    // Ensure the element exists
+    if (!this.domElement) return false;
+
+    // Traverse the element and all parent elements to check visibility (display, visibility, opacity)
+    let parent = this.domElement;
+    while (parent) {
+      const style = window.getComputedStyle(parent);
+      if (style.display === 'none' || style.visibility === 'hidden' || parseFloat(style.opacity) <= 0)
+        return false;
+      parent = parent.parentElement;
+    }
+
+    // Get the bounding rect of the element relative to the viewport
+    const rect = this.domElement.getBoundingClientRect();
+
+    // Get the bounding rect of the #room element
+    const roomRect = $('#roomArea').getBoundingClientRect();
+
+    // Check if the element is within the viewport of the room
+    return (
+      rect.top < roomRect.bottom &&
+      rect.left < roomRect.right &&
+      rect.bottom > roomRect.top &&
+      rect.right > roomRect.left
+    );
   }
 
   async moveToHolder(holder) {
@@ -2378,12 +2417,14 @@ export class Widget extends StateManaged {
     return readOnlyProperties;
   }
 
-  renderReadonlyCopyRaw(state, target) {
+  renderReadonlyCopyRaw(state, target, isChild=false) {
     delete state.id;
-    state.x = 0;
-    state.y = 0;
-    state.rotation = 0;
-    state.scale = 1;
+    if(!isChild) {
+      state.x = 0;
+      state.y = 0;
+      state.rotation = 0;
+      state.scale = 1;
+    }
     state.parent = null;
     state.owner = null;
     state.linkedToSeat = null;
@@ -2396,8 +2437,15 @@ export class Widget extends StateManaged {
     return this;
   }
 
-  renderReadonlyCopy(propertyOverride, target) {
-    return new this.constructor(generateUniqueWidgetID()).renderReadonlyCopyRaw(Object.assign({}, this.state, propertyOverride), target);
+  renderReadonlyCopy(propertyOverride, target, includeChildren=false, isChild=false) {
+    const newID = generateUniqueWidgetID();
+    const newWidget = new this.constructor(newID);
+    newWidget.renderReadonlyCopyRaw(Object.assign({}, this.state, propertyOverride), target, isChild);
+    if(includeChildren)
+      for(const child of widgetFilter(w=>w.get('parent') == this.id))
+        if(this.get('type') != 'holder' || !compareDropTarget(child, this) || includeChildren == 'all')
+          child.renderReadonlyCopy({}, newWidget.domElement, includeChildren, true);
+    return newWidget;
   }
 
   requiresHiddenCursor() {
