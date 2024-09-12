@@ -268,7 +268,7 @@ export class Widget extends StateManaged {
       for(const key in delta)
         if(this.state[key] === undefined && (!this.inheritedProperties || this.inheritedProperties[key] === undefined))
           for(const [ id, properties ] of Object.entries(this.inheritFrom()))
-            if(this.inheritFromIsValid(properties, key) && widgets.has(id) && widgets.get(id).get(key) !== undefined)
+            if(this.inheritFromIsValid(properties, key) && widgets.has(id) && widgets.get(id).get(key) !== undefined && widgets.get(id).get(key) !== delta[key])
               this.applyInheritedDeltaToDOM({[key]: widgets.get(id).get(key)});
     }
 
