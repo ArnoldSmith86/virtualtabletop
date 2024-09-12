@@ -115,6 +115,9 @@ async function smartCloneUpdateClone(topCloneID, clone, source, options) {
       } else if(clone.state[property] !== undefined && JSON.stringify(clone.get(property)) == value) {
         console.log('Smart Clone - Removing Property', clone.id, property);
         await clone.set(property, null);
+      } else if(clone.state[property] !== undefined && JSON.stringify(clone.get(property)) != value) {
+        console.log('Smart Clone - Setting Property', clone.id, property, value, replacedValue);
+        await clone.set(property, JSON.parse(replacedValue));
       }
     }
   }
@@ -131,11 +134,13 @@ async function smartCloneUpdateClone(topCloneID, clone, source, options) {
   if(options.flipX) {
     const sourceParentWidth = widgets.get(source.get('parent')).get('width');
     const newX = sourceParentWidth - (source.get('x') + source.get('width'));
+    console.log('Smart Clone - Flipping Property', clone.id, 'x', newX);
     await clone.set('x', newX);
   }
   if(options.flipY) {
     const sourceParentHeight = widgets.get(source.get('parent')).get('height');
     const newY = sourceParentHeight - (source.get('y') + source.get('height'));
+    console.log('Smart Clone - Flipping Property', clone.id, 'y', newY);
     await clone.set('y', newY);
   }
   if(clone.get('type') == 'seat' && clone.get('index') == source.get('index'))
