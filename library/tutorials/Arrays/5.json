@@ -555,7 +555,7 @@
       "time": "",
       "attribution": "",
       "showName": false,
-      "lastUpdate": 1686752644518,
+      "lastUpdate": 1725248837879,
       "skill": "",
       "description": "",
       "similarImage": "",
@@ -566,7 +566,8 @@
       "variantImage": "",
       "variant": "Example: Moving Widget",
       "language": "en-US",
-      "players": "1"
+      "players": "1",
+      "similarDesigner": ""
     }
   },
   "arrayText": {

@@ -866,7 +866,7 @@ function populateAddWidgetOverlay() {
         "background-color": "${PROPERTY color}",
         "background-image": "url('${PROPERTY image}')",
         "background-size": "75% 75%",
-        "background-repeat": "no repeat",
+        "background-repeat": "no-repeat",
         "background-position": "center center",
         "clip-path": "polygon(25% 6.67%, 75% 6.67%, 100% 50%, 75% 93.33%, 25% 93.33%, 0% 50%)"
       }
@@ -903,7 +903,7 @@ function populateAddWidgetOverlay() {
         "background-color": "${PROPERTY color}",
         "background-image": "url('${PROPERTY image}')",
         "background-size": "75% 75%",
-        "background-repeat": "no repeat",
+        "background-repeat": "no-repeat",
         "background-position": "center center",
         "clip-path": "polygon(93.3% 25%, 93.3% 75%, 50% 100%, 6.7% 75%, 6.7% 25%, 50% 0%)"
       }

@@ -38,6 +38,9 @@ body.edit.darkMode {
 
   color-scheme: dark;
 }
+#room {
+  color-scheme: light;
+}
 
 body:not(.edit) #editor,
 body.edit #toolbar {

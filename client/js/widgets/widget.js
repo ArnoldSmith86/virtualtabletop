@@ -1987,6 +1987,16 @@ export class Widget extends StateManaged {
         }
       }
 
+      if(a.func == 'VAR') {
+        setDefaults(a, { variables: {} });
+        for(const [ key, value ] of Object.entries(a.variables||{}))
+          variables[key] = value;
+
+        if(jeRoutineLogging) {
+          jeLoggingRoutineOperationSummary(`${Object.entries(a.variables||{}).map(e=>`${e[0]}=${JSON.stringify(e[1])}`).join(', ')}`);
+        }
+      }
+
       if(jeRoutineLogging) jeLoggingRoutineOperationEnd(problems, variables, collections, false);
 
       if(!jeRoutineLogging && problems.length)

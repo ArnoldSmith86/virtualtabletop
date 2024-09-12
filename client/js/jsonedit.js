@@ -1035,6 +1035,7 @@ function jeAddCommands() {
   jeAddRoutineOperationCommands('SWAPHANDS', { interval: 1, direction: 'forward', source: 'all' });
   jeAddRoutineOperationCommands('TIMER', { value: 0, seconds: 0, mode: 'toggle', timer: null, collection: 'DEFAULT' });
   jeAddRoutineOperationCommands('TURN', { turn: 1, turnCycle: 'forward', source: 'all', collection: 'TURN' });
+  jeAddRoutineOperationCommands('VAR', { variables: {} });
 
   jeAddRoutineExpressionCommands('random', 'randInt 1 10');
   jeAddRoutineExpressionCommands('increment', '${variableName} + 1');
@@ -1517,6 +1518,8 @@ async function jeApplyChangesMulti() {
     setSelection(jeMultiSelectedWidgets());
     jeDeltaIsOurs = false;
   } else {
+    batchStart();
+    setDeltaCause(`${getPlayerDetails().playerName} edited properties on multiple widgets in editor`);
     jeDeltaIsOurs = true;
     const widgets = jeMultiSelectedWidgets();
     const widgetIDs = widgets.map(w=>w.get('id'));
@@ -1531,6 +1534,7 @@ async function jeApplyChangesMulti() {
       }
     }
     jeDeltaIsOurs = false;
+    batchEnd();
   }
 }
 

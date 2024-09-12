@@ -530,7 +530,7 @@
     "text": "1,3,5,Egg,Duck,7,11,Carrot,13,17,19,Banana,23,29,31,Apple,37,41"
   },
   "_meta": {
-    "version": 3,
+    "version": 15,
     "info": {
       "name": "Arrays",
       "image": "/assets/-2001287493_6748",
@@ -541,7 +541,7 @@
       "time": "",
       "attribution": "",
       "showName": false,
-      "lastUpdate": 1686752644514,
+      "lastUpdate": 1725248837877,
       "skill": "",
       "description": "",
       "similarImage": "",
@@ -552,7 +552,8 @@
       "variantImage": "",
       "variant": "Evaluating",
       "language": "en-US",
-      "players": "1"
+      "players": "1",
+      "similarDesigner": ""
     }
   },
   "pc6t": {
@@ -658,5 +659,51 @@
     "id": "kibv",
     "x": 9,
     "text": "Reset"
+  },
+  "uc4i": {
+    "type": "button",
+    "clickRoutine": [
+      "var wordArray = ${PROPERTY wordArray OF theArray}",
+      "var numArray = ${PROPERTY numArray OF theArray}",
+      "var mixedArray = ${PROPERTY mixedArray OF theArray}",
+      "var wordArray = ${wordArray} sum //Adds the elements in an array",
+      "var numArray = ${numArray} sum",
+      "var mixedArray = ${mixedArray} sum",
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "output1"
+      },
+      {
+        "func": "SET",
+        "property": "text",
+        "value": "${wordArray}"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "output2"
+      },
+      {
+        "func": "SET",
+        "property": "text",
+        "value": "${numArray}"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "output3"
+      },
+      {
+        "func": "SET",
+        "property": "text",
+        "value": "${mixedArray}"
+      }
+    ],
+    "x": 374,
+    "y": 487,
+    "z": 274,
+    "id": "uc4i",
+    "text": "sum"
   }
 }
