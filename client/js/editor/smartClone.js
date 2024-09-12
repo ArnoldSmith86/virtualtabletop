@@ -89,7 +89,7 @@ function applyReplaces(value, replaces, topCloneID) {
       modifiedReplaces[source.id] = cloneID;
     } else {
       modifiedReplaces[`"${source.id}"`] = `"${cloneID}"`;
-      modifiedReplaces[`OF ${source.id}\}`] = `OF ${cloneID}\}`;
+      modifiedReplaces[` OF ${source.id}\}`] = ` OF ${cloneID}\}`;
     }
   }
   for(const [ from, to ] of Object.entries(modifiedReplaces)) {
@@ -102,35 +102,44 @@ function applyReplaces(value, replaces, topCloneID) {
 async function smartCloneUpdateClone(topCloneID, clone, source, options) {
   const validProperties = validPropertiesOfWidget(source);
   for(const property of validProperties) {
-    const value = JSON.stringify(source.get(property));
-    let replacedValue = applyReplaces(value, options.replaces, topCloneID);
     if([ 'id', 'parent', 'type', 'inheritFrom' ].indexOf(property) == -1) {
-      if(value != replacedValue || !clone.inheritFromIsValid(clone.inheritFrom()[source.id], property)) {
-        if(clone.get('type') != 'seat' || [ 'player', 'color', 'turn', 'index', 'score' ].indexOf(property) == -1) {
-          if(JSON.stringify(clone.get(property)) != replacedValue) {
-            console.log('Smart Clone - Setting Property', clone.id, property, value, replacedValue);
-            await clone.set(property, JSON.parse(replacedValue));
+      if(clone.get('type') != 'seat' || [ 'player', 'color', 'turn', 'index', 'score' ].indexOf(property) == -1) {
+        const sourceValue = JSON.stringify(source.get(property));
+        const currentCloneValue = JSON.stringify(clone.get(property));
+        const newCloneValue = applyReplaces(sourceValue, options.replaces, topCloneID);
+        const canBeInherited = clone.inheritFromIsValid(clone.inheritFrom()[source.id], property);
+
+        if(newCloneValue === sourceValue && canBeInherited) {
+
+          if(clone.state[property] !== undefined) {
+            console.log('Smart Clone - Removing Property', clone.id, property);
+            await clone.set(property, null);
           }
+
+        } else {
+
+          if(currentCloneValue !== newCloneValue) {
+            console.log('Smart Clone - Setting Property', clone.id, property, currentCloneValue, newCloneValue);
+            await clone.set(property, JSON.parse(newCloneValue));
+          }
+
         }
-      } else if(clone.state[property] !== undefined && JSON.stringify(clone.get(property)) == value) {
-        console.log('Smart Clone - Removing Property', clone.id, property);
-        await clone.set(property, null);
-      } else if(clone.state[property] !== undefined && JSON.stringify(clone.get(property)) != value) {
-        console.log('Smart Clone - Setting Property', clone.id, property, value, replacedValue);
-        await clone.set(property, JSON.parse(replacedValue));
       }
     }
   }
+
   for(const invalidProperty of Object.keys(clone.state).filter(property=>validProperties.indexOf(property) == -1)) {
     if(clone.inheritFromIsValid(clone.inheritFrom()[source.id], invalidProperty) && invalidProperty != 'inheritFrom') {
       console.log('Smart Clone - Removing Invalid Property', clone.id, invalidProperty);
       await clone.set(invalidProperty, null);
     }
   }
+
   if(JSON.stringify(clone.get('inheritFrom')) != JSON.stringify(inheritDef(source))) {
     console.log('Smart Clone - Setting Inherit', clone.id, inheritDef(source));
     await clone.set('inheritFrom', inheritDef(source));
   }
+
   if(options.flipX) {
     const sourceParentWidth = widgets.get(source.get('parent')).get('width');
     const newX = sourceParentWidth - (source.get('x') + source.get('width'));
@@ -143,6 +152,7 @@ async function smartCloneUpdateClone(topCloneID, clone, source, options) {
     console.log('Smart Clone - Flipping Property', clone.id, 'y', newY);
     await clone.set('y', newY);
   }
+
   if(clone.get('type') == 'seat' && clone.get('index') == source.get('index'))
     await clone.set('index', widgetFilter(w=>w.get('type')=='seat').map(w=>w.get('index')).reduce((a,b)=>Math.max(a,b), 0)+1);
 }
