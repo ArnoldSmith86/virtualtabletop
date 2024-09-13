@@ -69,6 +69,8 @@ export class Widget extends StateManaged {
       dropOffsetY: 0,
       dropShadowOwner: null,
       dropShadowWidget: null,
+      dropTarget: null,
+      dropLimit: -1,
       inheritChildZ: false,
       hoverTarget: null,
       hoverParent: null,
@@ -168,6 +170,8 @@ export class Widget extends StateManaged {
   }
 
   applyDeltaToDOM(delta) {
+    super.applyDeltaToDOM(delta);
+
     let fromTransform = null;
     let newParent = undefined;
     if(delta.parent !== undefined) {
@@ -261,6 +265,15 @@ export class Widget extends StateManaged {
       const inheritedDelta = {};
       this.applyInheritedValuesToObject(inheriting.inheritFrom()[this.id] || [], delta, inheritedDelta, inheriting);
       inheriting.applyInheritedDeltaToDOM(inheritedDelta);
+    }
+
+    // inherit properties again when overriding ones are removed
+    if(this.state.inheritFrom !== undefined) {
+      for(const key in delta)
+        if(this.state[key] === undefined && (!this.inheritedProperties || this.inheritedProperties[key] === undefined))
+          for(const [ id, properties ] of Object.entries(this.inheritFrom()))
+            if(this.inheritFromIsValid(properties, key) && widgets.has(id) && widgets.get(id).get(key) !== undefined && widgets.get(id).get(key) !== delta[key])
+              this.applyInheritedDeltaToDOM({[key]: widgets.get(id).get(key)});
     }
 
     if($('#enlarged').dataset.id == this.id && !$('#enlarged').className.match(/hidden/)) {
@@ -457,6 +470,7 @@ export class Widget extends StateManaged {
   async clone(overrideProperties, recursive = false, problems = null, xOffset = 0, yOffset = 0) {
     const clone = Object.assign(JSON.parse(JSON.stringify(this.state)), overrideProperties);
     const parent = clone.parent;
+    const inheritFrom = clone.inheritFrom;
     if(parent !== undefined && parent !== null && !widgets.has(parent))
       return null;
 
@@ -467,6 +481,7 @@ export class Widget extends StateManaged {
         problems.push(`There is already a widget with id:${overrideProperties.id}, generating new ID.`);
     }
     delete clone.parent;
+    delete clone.inheritFrom;
     const newID = await addWidgetLocal(clone);
     if(widgets.has(newID)) { // cloning can fail for example with invalid cardType
       const cWidget = widgets.get(newID);
@@ -475,6 +490,8 @@ export class Widget extends StateManaged {
       cWidget.movedByButton = problems != null;
       if(parent)
         await cWidget.moveToHolder(widgets.get(parent));
+      if(inheritFrom)
+        await cWidget.set('inheritFrom', inheritFrom);
 
       // moveToHolder causes the position to be wrong if the target holder does not have alignChildren
       if(!parent || !widgets.get(parent).get('alignChildren')) {
@@ -1184,12 +1201,15 @@ export class Widget extends StateManaged {
       }
 
       if(a.func == 'FLIP') {
-        setDefaults(a, { count: 0, face: null, faceCycle: null, collection: 'DEFAULT' });
+        setDefaults(a, { count: 'all', face: null, faceCyle: null, collection: 'DEFAULT' });
+        if(a.count === 'all')
+          a.count = 999999;
+
         let collection;
         if(a.holder !== undefined) {
           if(this.isValidID(a.holder,problems)) {
             await w(a.holder, async holder=>{
-              for(const c of holder.children().slice(0, a.count || 999999))
+              for(const c of holder.children().slice(0, a.count))
                 c.flip && await c.flip(a.face,a.faceCycle);
             });
           }
@@ -1197,7 +1217,7 @@ export class Widget extends StateManaged {
             jeLoggingRoutineOperationSummary(`holder '${a.holder}'`);
         } else if(collection = getCollection(a.collection)) {
           if(collections[collection].length) {
-            for(const c of collections[collection].slice(0, a.count || 999999))
+            for(const c of collections[collection].slice(0, a.count))
               c.flip && await c.flip(a.face,a.faceCycle);
           } else {
             problems.push(`Collection ${a.collection} is empty.`);
@@ -1430,7 +1450,9 @@ export class Widget extends StateManaged {
 
       if(a.func == 'MOVE') {
         setDefaults(a, { count: a.from ? 1 : 0, face: null, fillTo: null, collection: 'DEFAULT' });
-        const count = a.fillTo || a.count || 999999;
+        let count = a.fillTo || a.count;
+        if(count === 'all')
+          count = 999999;
 
         async function applyMove(source, target, c) {
           let moved = 0;
@@ -1498,7 +1520,7 @@ export class Widget extends StateManaged {
             });
           }
           if(jeRoutineLogging) {
-            const logCount = count==1 ? '1 widget' : `${count} widgets`;
+            const logCount = count==1 ? '1 widget' : `${count == 999999 ? 'all' : count} widgets`;
             jeLoggingRoutineOperationSummary(`${logCount} from '${a.from || a.collection}' to '${a.to}'`)
           }
         }
@@ -1506,9 +1528,12 @@ export class Widget extends StateManaged {
 
       if(a.func == 'MOVEXY') {
         setDefaults(a, { count: 1, face: null, x: 0, y: 0, snapToGrid: true, resetOwner: true });
+        if(a.count === 'all')
+          a.count = 999999;
+
         if(this.isValidID(a.from, problems)) {
           await w(a.from, async source=>{
-            for(const c of source.children().slice(0, a.count || 999999).reverse()) {
+            for(const c of source.children().slice(0, a.count).reverse()) {
               if(a.face !== null && c.flip)
                 c.flip(a.face);
               await c.bringToFront();
@@ -1570,24 +1595,27 @@ export class Widget extends StateManaged {
 
       if(a.func == 'ROTATE') {
         setDefaults(a, { count: 1, angle: 90, mode: 'add', collection: 'DEFAULT' });
+        if(a.count === 'all')
+          a.count = 999999;
+
         let collection;
         const mode = a.mode == 'set' ? 'to' : 'by';
         if(a.holder !== undefined) {
           if(this.isValidID(a.holder, problems)) {
             await w(a.holder, async holder=>{
-              for(const c of holder.children().slice(0, a.count || 999999))
+              for(const c of holder.children().slice(0, a.count))
                 await c.rotate(a.angle, a.mode);
             });
             if(jeRoutineLogging) {
-              jeLoggingRoutineOperationSummary(`${a.count == 0 ? '' : a.count} ${a.count==1 ? 'widget' : 'widgets'} in '${a.holder}' ${mode} ${a.angle}`);
+              jeLoggingRoutineOperationSummary(`${a.count == 999999 ? '' : a.count} ${a.count==1 ? 'widget' : 'widgets'} in '${a.holder}' ${mode} ${a.angle}`);
             }
           }
         } else if(collection = getCollection(a.collection)) {
           if(collections[collection].length) {
-            for(const c of collections[collection].slice(0, a.count || 999999))
+            for(const c of collections[collection].slice(0, a.count))
               await c.rotate(a.angle, a.mode);
             if(jeRoutineLogging)
-              jeLoggingRoutineOperationSummary(`${a.count == 0 ? '' : a.count} ${a.count==1 ? 'widget' : 'widgets'} in '${a.collection}' ${mode} ${a.angle}`);
+              jeLoggingRoutineOperationSummary(`${a.count == 999999 ? '' : a.count} ${a.count==1 ? 'widget' : 'widgets'} in '${a.collection}' ${mode} ${a.angle}`);
           } else {
             problems.push(`Collection ${a.collection} is empty.`);
           }
@@ -1980,6 +2008,16 @@ export class Widget extends StateManaged {
             const turn = target.get('index');
             jeLoggingRoutineOperationSummary(`changed turn of seats to ${turn} - active seats: ${JSON.stringify(indexList)}`);
           }
+        }
+      }
+
+      if(a.func == 'VAR') {
+        setDefaults(a, { variables: {} });
+        for(const [ key, value ] of Object.entries(a.variables||{}))
+          variables[key] = value;
+
+        if(jeRoutineLogging) {
+          jeLoggingRoutineOperationSummary(`${Object.entries(a.variables||{}).map(e=>`${e[0]}=${JSON.stringify(e[1])}`).join(', ')}`);
         }
       }
 
