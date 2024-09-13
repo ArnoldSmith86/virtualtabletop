@@ -1,0 +1,309 @@
+{
+  "_meta": {
+    "version": 15,
+    "info": {
+      "name": "Functions - VAR",
+      "image": "/assets/-1984071267_3512",
+      "rules": "",
+      "bgg": "",
+      "year": "2021",
+      "mode": "Tutorial",
+      "time": "0",
+      "attribution": "",
+      "showName": false,
+      "lastUpdate": 1725929515718,
+      "skill": "",
+      "description": "",
+      "variantImage": "",
+      "variant": "",
+      "language": "en-US",
+      "players": "1",
+      "similarImage": "",
+      "similarName": "",
+      "similarDesigner": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": ""
+    }
+  },
+  "8fr3": {
+    "id": "8fr3",
+    "y": -2,
+    "width": 800,
+    "height": 60,
+    "z": 74,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "font-size: 60px;text-align:center",
+    "text": "Functions: VAR",
+    "x": 400
+  },
+  "406b": {
+    "id": "406b",
+    "x": 108,
+    "y": 114,
+    "width": 1400,
+    "height": 150,
+    "layer": -3,
+    "z": 129,
+    "css": "font-size: 25px; ",
+    "text": "VAR can be used as a function or 'var' can be used as a direct way to set a dynamic variable. Both methods are demonstrated in the buttons below. View the button JSON (press CTRL-J and then make sure the {} JSON button on the far right is selected). Click the button and see the results in the debugger (make sure the Debug button on the far right is selected).",
+    "movable": false
+  },
+  "bm4j": {
+    "text": "Use 'var' directly in a routine to set or calculate the value of a dynamic variable. Limitations: many special characters are not available and you cannot directly set arrays or objects except to set them as empty (but you can use ${PROPERTY p OF widgetID} and set the object or array to be equal to a widget property).",
+    "id": "bm4j",
+    "z": 185,
+    "width": 300,
+    "movable": false,
+    "y": 700,
+    "x": 410
+  },
+  "fzoqB": {
+    "id": "fzoqB",
+    "fixedParent": true,
+    "y": 171.36,
+    "width": 111,
+    "height": 40,
+    "type": "button",
+    "text": "Recall & Shuffle",
+    "movableInEdit": false,
+    "clickRoutine": [
+      {
+        "func": "RECALL",
+        "holder": "${PROPERTY parent}"
+      },
+      {
+        "func": "FLIP",
+        "holder": "${PROPERTY parent}",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "${PROPERTY parent}"
+      }
+    ],
+    "parent": "cardHolder"
+  },
+  "fzoqD": {
+    "type": "deck",
+    "id": "fzoqD",
+    "x": 12,
+    "y": 41,
+    "cardTypes": {
+      "S 10": {
+        "image": "/i/cards-default/TS.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "10",
+        "rankA": "10",
+        "rankFixed": "10 S"
+      },
+      "S 2J": {
+        "image": "/i/cards-default/JS.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "2J",
+        "rankA": "2J",
+        "rankFixed": "2J S"
+      },
+      "S 3Q": {
+        "image": "/i/cards-default/QS.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "3Q",
+        "rankA": "3Q",
+        "rankFixed": "3Q S"
+      },
+      "S 4K": {
+        "image": "/i/cards-default/KS.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "4K",
+        "rankA": "4K",
+        "rankFixed": "4K S"
+      }
+    },
+    "faceTemplates": [
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 103,
+            "height": 160,
+            "color": "transparent",
+            "value": "/i/cards-default/2B.svg"
+          }
+        ]
+      },
+      {
+        "objects": [
+          {
+            "type": "text",
+            "x": 0,
+            "y": 0,
+            "width": 103,
+            "height": 160,
+            "color": "black",
+            "value": "1",
+            "css": "font-size:80px; border: 1px solid black; text-align:center;line-height:140px"
+          }
+        ]
+      },
+      {
+        "objects": [
+          {
+            "type": "text",
+            "x": 0,
+            "y": 0,
+            "width": 103,
+            "height": 160,
+            "color": "black",
+            "value": "2",
+            "css": "font-size:80px; border: 1px solid black; text-align:center;line-height:140px"
+          }
+        ]
+      },
+      {
+        "objects": [
+          {
+            "type": "text",
+            "x": 0,
+            "y": 0,
+            "width": 103,
+            "height": 160,
+            "color": "black",
+            "value": "3",
+            "css": "font-size:80px; border: 1px solid black; text-align:center;line-height:140px"
+          }
+        ]
+      },
+      {
+        "objects": [
+          {
+            "type": "text",
+            "x": 0,
+            "y": 0,
+            "width": 103,
+            "height": 160,
+            "color": "black",
+            "value": "4",
+            "css": "font-size:80px; border: 1px solid black; text-align:center;line-height:140px"
+          }
+        ]
+      },
+      {
+        "objects": [
+          {
+            "type": "text",
+            "x": 0,
+            "y": 0,
+            "width": 103,
+            "height": 160,
+            "color": "black",
+            "value": "5",
+            "css": "font-size:80px; border: 1px solid black; text-align:center;line-height:140px"
+          }
+        ]
+      },
+      {
+        "objects": [
+          {
+            "type": "text",
+            "x": 0,
+            "y": 0,
+            "width": 103,
+            "height": 160,
+            "color": "black",
+            "value": "6",
+            "css": "font-size:80px; border: 1px solid black; text-align:center;line-height:140px"
+          }
+        ]
+      }
+    ],
+    "parent": "cardHolder"
+  },
+  "bm6j": {
+    "id": "bm6j",
+    "x": 808,
+    "y": 700,
+    "z": 9732,
+    "width": 300,
+    "text": "'VAR' as a function can be used to do many of the things that 'var' cannot such as setting special characters, objects, and arrays. However, it also has limitations as demonstrated in the button above.",
+    "movable": false
+  },
+  "jkmt": {
+    "type": "button",
+    "clickRoutine": [
+      "var currentX = ${PROPERTY x}",
+      "var blackJack = 21",
+      "var someNumber = ${blackJack} + ${currentX}",
+      "var mystring = 'Hello'",
+      "var myObject = ${PROPERTY myObject}",
+      "// Note that you cannot set objects or arrays directly (except for empty arrays and objects. For example, the following will not work and creates an error.",
+      "var myArray = [1,2,3,4]",
+      "// Note that many special characters cannot be set using this method. For example, the following Unicode symbol does not work.",
+      "var myUnicode = '⏳'"
+    ],
+    "x": 501,
+    "y": 550,
+    "z": 10,
+    "id": "jkmt",
+    "text": "var",
+    "myObject": {
+      "someKey": "someValue",
+      "anotherKey": "anotherValue"
+    }
+  },
+  "cardHolder": {
+    "type": "holder",
+    "id": "cardHolder",
+    "x": 104.5,
+    "y": 1087,
+    "z": 127,
+    "dropTarget": {
+      "type": "card"
+    }
+  },
+  "jkmt2": {
+    "type": "button",
+    "clickRoutine": [
+      {
+        "func": "VAR",
+        "variables": {
+          "currentX": "${PROPERTY x}",
+          "blackJack": 21,
+          "someNumber": "${blackJack} + ${currentX}",
+          "mystring": "Hello",
+          "myUnicode": "⏳",
+          "myObject": {
+            "someKey": "someValue",
+            "anotherKey": "anotherValue"
+          }
+        }
+      },
+      "// Note that VAR in a function cannot be used to calculate values. For example, someNumber above does not work in the function format the way it does in the direct dynamic variable format. And it does not display the value of blackJack or currentX because those are not set until the function finishes executing.",
+      "// But on the other hand, myObject is being set directly in the variable without needing an object property to be the reference and the Unicode symbol works.",
+      {
+        "func": "VAR",
+        "variables": {
+          "anotherNumber": "${blackJack} + ${currentX}"
+        }
+      },
+      "// Here the values of blackJack and currentX are now available from the output of the previous function, but the plus is just used as a text object and not a mathematical operand."
+    ],
+    "x": 900,
+    "y": 550,
+    "z": 11,
+    "id": "jkmt2",
+    "text": "VAR"
+  }
+}

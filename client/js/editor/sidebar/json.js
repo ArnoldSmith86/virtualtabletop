@@ -28,10 +28,13 @@ class JsonModule extends SidebarModule {
   }
 
   onSelectionChangedWhileActive(newSelection) {
-    if(newSelection.length) {
+    if(jeDeltaIsOurs)
+      return;
+
+    if(newSelection.length == 1) {
       jeSelectWidget(newSelection[0]);
-      for(let i=1; i<newSelection.length; ++i)
-        jeSelectWidget(newSelection[i], true);
+    } else if(newSelection.length) {
+      jeSelectSetMulti(newSelection);
     } else {
       jeEmpty();
     }
@@ -62,10 +65,15 @@ class TreeModule extends SidebarModule {
   }
 
   onSelectionChangedWhileActive(newSelection) {
-    if(newSelection.length) {
+    if(jeDeltaIsOurs) {
+      jeCenterSelection();
+      return;
+    }
+
+    if(newSelection.length == 1) {
       jeSelectWidget(newSelection[0]);
-      for(let i=1; i<newSelection.length; ++i)
-        jeSelectWidget(newSelection[i], true);
+    } else if(newSelection.length) {
+      jeSelectSetMulti(newSelection);
     } else {
       jeEmpty();
       jeCenterSelection();

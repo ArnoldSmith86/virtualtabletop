@@ -17,8 +17,9 @@
       "bgg": "https://boardgamegeek.com/boardgame/12",
       "rules": "",
       "ruleText": "<div><b>Objective</b><br></div><div>Over the course of three epochs (rounds), acquire tiles at auction through clever use of your coins. A scoring phase takes place at the end of each epoch. After the conclusion and scoring phase of the third epoch, the game ends and the high-scoring player wins.</div><div><br></div><div><b>Scoring</b><br></div><div>Your collection of tiles scores at the end of each epoch as follows:</div><div><br></div><div><i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/lorc/metal-bar.svg\"></i>: 3 points each</div><div><i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/anubis.svg\"></i>: 2 points each</div><div><i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/nefertiti.svg\"></i>: 5 points if you have the most, -2 points if you have the fewest of all players</div><div><i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/palm-tree.svg\"></i><i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/oasis.svg\"></i>: If at least one of your blue tiles is an <i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/oasis.svg\"></i>, all your blue tiles score 1 points each. If not, they don't score.</div><div><i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/painted-pottery.svg\"></i><i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/lorc/wheat.svg\"></i><i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/bastet.svg\"></i><i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/lorc/night-sky.svg\"></i><i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/zigzag-hieroglyph.svg\"></i>: Score based on how many different types you have: -5 if you have no types, 0 if you have 1 or 2 types, and 5/10/15 points if you have 3/4/5 types.</div><div><br></div><div>In the third epoch only, you also score:</div><div><i class=\"richtextSymbol material-icons\">fiber_manual_record</i> Coins: 5 points if you have the highest total, -5 points if you have the lowest total of all players</div><div><i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/egyptian-pyramids.svg\"></i><i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/egyptian-sphinx.svg\"></i><i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/egyptian-temple.svg\"></i><i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/great-pyramid.svg\"></i><i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/djed-pillar.svg\"></i><i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/obelisk.svg\"></i><i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/egyptian-urns.svg\"></i><i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/star-gate.svg\"></i>: Score both based on how many types you have -&nbsp;1/2/3/4/5/6/10/15 points for 1/2/3/4/5/6/7/8 types - and for sets of the same type - 5/10/15 points for each set of 3/4/5 identical tiles.<br></div><br><div>Tiles marked with the red&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/lorc/gold-scarab.svg\"></i> are kept after each scoring, as are all of a players' coins - both used and unused during the epoch that just finished. Tiles without the&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/lorc/gold-scarab.svg\"></i> are discarded after each end-of-epoch scoring.</div><div><br></div><div>If players are tied for&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/nefertiti.svg\"></i> scoring or for the coin scoring at game end, the tied players all receive the reward.<br></div><div><br></div><div><b>Sequence of Play</b><br></div><div>Each epoch continues until either all players have used all of their coins or the&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/eye-of-horus.svg\"></i> track is full, whichever happens first. At the end of the epoch, each player scores their collection of tiles as described above.</div><div><br></div><div>The epoch consists of players taking turns in sequence, beginning with the player that owns the highest valued coin. Once a player has used all of their tiles, they stop taking turns and are skipped over in this sequence.</div><div><br></div><div><b>Player Turns</b><br></div><div>On your turn, you must take one of three actions:</div><div>• Draw a tile from the tile stack;</div><div>• Call an auction of the current contents of the&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/banging-gavel.svg\"></i> row;</div><div>• Use the special power of 1 or more previously-collected&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/anubis.svg\"></i> tiles.</div><div><br></div><div>You may not select the draw action if the&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/banging-gavel.svg\"></i> row is already full.</div><div><br></div><div><b>Draw a Tile</b></div><div>Draw the next tile from the tile stack.</div><div><br></div><div>If the tile is a&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/eye-of-horus.svg\"></i> then place it on the corresponding track. If this fills the track, then the epoch ends immediately. If it does not, then an auction is called instead.</div><div><br></div><div>If the tile was not a <i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/eye-of-horus.svg\"></i>, then place it on the&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/banging-gavel.svg\"></i> track.</div><div><br></div><div><b>Auction</b></div><div>When an auction is called (either by the current player selecting it as their action or by the drawing of a&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/eye-of-horus.svg\"></i> tile), the lot up for auction consists of all of the tiles currently in the&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/banging-gavel.svg\"></i> track, plus the coin located next to it.</div><div><br></div><div>A once-around-the-table auction is conducted, beginning with the next player after the active player. Each player either passes or bids a single coin which is of higher value than all coins already bid during the auction.</div><div><br></div><div>If the auction was called by the active player calling for it as their action, and the&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/banging-gavel.svg\"></i> track is not full, then there must be a bid during the auction: the final bidder, the active player, must bid if all other players pass.</div><div><br></div><div>If the&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/banging-gavel.svg\"></i> track is full and all players pass, then discard all of the tiles on the&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/banging-gavel.svg\"></i> track.<br></div><div><br></div><div>The high bidder wins the auction. The auction winner receives the lot of all the tiles on the&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/banging-gavel.svg\"></i> track and the coin located next to it. They pay the coin that they bid (and all other bids are returned to their owners), which is placed on the space next to the&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/banging-gavel.svg\"></i> track (and will therefore become part of the lot next time an auction is called).</div><div><br></div><div>Coins acquired in an auction are not available for use this epoch, but a player collects them for use in future epochs (or, in the final epoch, for end-game scoring purposes).<br></div><div><br></div><div>If one or more&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/sbed/cancel.svg\"></i> tiles were in the lot that was won, then these are resolved after acquiring the other tiles. Each is discarded along with two of the players' tiles of the same color.&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/oasis.svg\"></i> tiles must be discarded first when resolving the blue <i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/sbed/cancel.svg\"></i>, but in all other cases the player chooses which tiles to discard.</div><div><br></div><div><b>Using&nbsp;</b><i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/anubis.svg\"></i><b> Tiles</b></div><div>Instead of drawing a tile or calling an auction, a player may instead discard one ore more previously-collected&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/anubis.svg\"></i> tiles from their collection. For each&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/anubis.svg\"></i> discarded, the player takes one tile from the&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/banging-gavel.svg\"></i> track and adds it directly to their collection (without need for an auction).</div>",
-      "helpText": "<div><b>Getting Started</b><br></div><div>Have all players take a seat and press the New Game button to distribute starting suns, set up the&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/eye-of-horus.svg\"></i> track for the player count, and to shuffle the deck.</div><div><br></div><div><b>Drawing Tiles<br></b></div><div>You can draw a tile from the stack and place it in the&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/eye-of-horus.svg\"></i> or&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/banging-gavel.svg\"></i> row as per the game rules. Alternatively, the Draw Tile button can be used, which will do this for you and will end your turn if you didn't draw a&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/eye-of-horus.svg\"></i> tile.</div><div><br></div><div><b>Managing your Coins<br></b></div><div>Each player has three holders for coins: the top row is used for your currently-available coins for this epoch. The bottom row is used for coins collected during auctions but not available for use this epoch. The slot to the right of them is used for your current bid.</div><div><br></div><div><b>Auctions</b></div><div>To bid, drag a coin to the slot to the right of your coin rows in your player area.</div><div><br></div><div>At the end of the auction, the winner can click the Win button to pay their coin, return other players' coins to their available row, and collect the auction lot. This will also end the active player's turn.<br></div><div><br></div><div>The Win buttons will not collect&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/sbed/cancel.svg\"></i> tiles. The auction winner should drag their intended discards into the&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/banging-gavel.svg\"></i> row to join the&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/sbed/cancel.svg\"></i> tile, and once happy they've resolved this correctly, click the Discard All button next to the&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/banging-gavel.svg\"></i> row to discard them all.</div><div><br></div><div>When an auction with a full&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/banging-gavel.svg\"></i> row is concluded with all players having passed, the Discard All button can be used to empty it.<br></div><div><br></div><div><b>End of Epoch</b></div><div>When an epoch ends, players should manually score up their collections of tiles using the text on the table as a player aid and the + and - buttons next to their seat to adjust their score. After scoring, the New Epoch button can be pressed by one player, which will move all coins to the available rows, discard all tiles from players' collection which don't have the&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/lorc/gold-scarab.svg\"></i> icon, empty the&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/eye-of-horus.svg\"></i> and&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/banging-gavel.svg\"></i> tracks, and set the player with the highest single coin as the active player ready to begin the next epoch.<b><br></b></div><div><b><br></b></div><div><b>Pharaoh's Fury Variant</b></div><div>The Pharaoh's Fury variant uses a smaller set of tiles including none of the&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/sbed/cancel.svg\"></i> tiles, but also a shorter&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/eye-of-horus.svg\"></i> row even in high-player-count games. This gives a slightly different play experience inspired by the card game <i>Razzia.</i><br></div>",
-      "attribution": "Game layout and scripting by Andy Pymont, released to the public domain by CC0.\n\nTile graphics are from https://game-icons.net/ and are used under the CC BY 3.0 license:\n\nDelapouite\n• Anubis https://game-icons.net/1x1/delapouite/anubis.html\n• Banging Gavel https://game-icons.net/1x1/delapouite/banging-gavel.html\n• Bastet https://game-icons.net/1x1/delapouite/bastet.html\n• Canopic Jars https://game-icons.net/1x1/delapouite/egyptian-urns.html\n• Djed Pillar https://game-icons.net/1x1/delapouite/djed-pillar.html\n• Eye of Horus https://game-icons.net/1x1/delapouite/eye-of-horus.html\n• Great Pyramid https://game-icons.net/1x1/delapouite/great-pyramid.html\n• Oasis https://game-icons.net/1x1/delapouite/oasis.html\n• Obelisk https://game-icons.net/1x1/delapouite/obelisk.html\n• Palm tree https://game-icons.net/1x1/delapouite/palm-tree.html\n• Pharaoh Nefertiti https://game-icons.net/1x1/delapouite/nefertiti.html\n• Pottery https://game-icons.net/1x1/delapouite/painted-pottery.html\n• Pyramids https://game-icons.net/1x1/delapouite/egyptian-pyramids.html\n• Sphinx https://game-icons.net/1x1/delapouite/egyptian-sphinx.html\n• Star Gate https://game-icons.net/1x1/delapouite/star-gate.html\n• Temple https://game-icons.net/1x1/delapouite/egyptian-temple.html\n• Zigzag heiroglyph https://game-icons.net/1x1/delapouite/zigzag-hieroglyph.html\n\nLorc\n• Gold bar https://game-icons.net/1x1/lorc/metal-bar.html\n• Night sky https://game-icons.net/1x1/lorc/night-sky.html\n• Scarab https://game-icons.net/1x1/lorc/gold-scarab.html\n• Wheat https://game-icons.net/1x1/lorc/wheat.html\n\nSbed\n• Cancel https://game-icons.net/1x1/sbed/cancel.html\n<div><br></div><div>The library image was generated using the Midjourney artificial \n</div>intelligence image generator, https://www.midjourney.com/home/, using \nthe following prompt: \"Freddie Mercury dressed as an Egyptian pharaoh and standing in front of the pyramids, cartoon\".",
+      "helpText": "<div><b>Getting Started</b><br></div><div>Have all players take a seat and press the New Game button to distribute starting suns, set up the&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/eye-of-horus.svg\"></i> track for the player count, and to shuffle the deck.</div><div><br></div><div><b>Drawing Tiles<br></b></div><div>You can draw a tile from the stack and place it in the&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/eye-of-horus.svg\"></i> or&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/banging-gavel.svg\"></i> row as per the game rules. Alternatively, the Draw Tile button can be used, which will do this for you and will end your turn if you didn't draw a&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/eye-of-horus.svg\"></i> tile.</div><div><br></div><div><b>Managing your Coins<br></b></div><div>Each player has three holders for coins: the top row is used for your currently-available coins for this epoch. The bottom row is used for coins collected during auctions but not available for use this epoch. The slot to the right of them is used for your current bid.</div><div><br></div><div><b>Auctions</b></div><div>To bid, drag a coin to the slot to the right of your coin rows in your player area. To pass, instead click that same small slot to fill it with an X, indicating that you don't want to bid.</div><div><br></div><div>At the end of the auction, the winner can click the Win button to pay their coin, return other players' coins to their available row, and collect the auction lot. This will also end the active player's turn.<br></div><div><br></div><div>The Win buttons will not collect&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/sbed/cancel.svg\"></i> tiles. The auction winner should drag their intended discards into the&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/banging-gavel.svg\"></i> row to join the&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/sbed/cancel.svg\"></i> tile, and once happy they've resolved this correctly, click the Discard All button next to the&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/banging-gavel.svg\"></i> row to discard them all.</div><div><br></div><div>When an auction with a full&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/banging-gavel.svg\"></i> row is concluded with all players having passed, the Discard All button can be used to empty it.<br></div><div><br></div><div><b>End of Epoch</b></div><div>When an epoch ends, players should manually score up their collections of tiles using the text on the table as a player aid and the + and - buttons next to their seat to adjust their score. After scoring, the New Epoch button can be pressed by one player, which will move all coins to the available rows, discard all tiles from players' collection which don't have the&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/lorc/gold-scarab.svg\"></i> icon, empty the&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/eye-of-horus.svg\"></i> and&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/banging-gavel.svg\"></i> tracks, and set the player with the highest single coin as the active player ready to begin the next epoch.<b><br></b></div><div><b><br></b></div><div><b>Pharaoh's Fury Variant</b></div><div>The Pharaoh's Fury variant uses a smaller set of tiles including none of the&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/sbed/cancel.svg\"></i> tiles, but also a shorter&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/eye-of-horus.svg\"></i> row even in high-player-count games. This gives a slightly different play experience inspired by the card game <i>Razzia.</i><br></div><div><b><br></b></div><div><b>Ankh Angst Variant</b></div><div>The Ankh Angst variant adds a new tile type, <i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/lorc/ankh.svg\"></i> tiles. These tiles are worth 1VP each at the end of the epoch, which players should score as usual in the same manner as <i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/lorc/metal-bar.svg\"></i> and <i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/anubis.svg\"></i>.</div><div><br></div><div>In addition, whenever a player collects one of these tiles, all <i>other</i> players immediately score 1VP for each such tile that they already have. The implementation here will score these bonus points instantly when the tiles are dragged into a player's holder or won at auction with the Win button.</div>",
+      "attribution": "Game layout and scripting by Andy Pymont and Thomas Williams, released to the public domain by CC0.\n\nTile graphics are from https://game-icons.net/ and are used under the CC BY 3.0 license:\n\nDelapouite\n• Anubis https://game-icons.net/1x1/delapouite/anubis.html\n• Banging Gavel https://game-icons.net/1x1/delapouite/banging-gavel.html\n• Bastet https://game-icons.net/1x1/delapouite/bastet.html\n• Canopic Jars https://game-icons.net/1x1/delapouite/egyptian-urns.html\n• Djed Pillar https://game-icons.net/1x1/delapouite/djed-pillar.html\n• Eye of Horus https://game-icons.net/1x1/delapouite/eye-of-horus.html\n• Great Pyramid https://game-icons.net/1x1/delapouite/great-pyramid.html\n• Oasis https://game-icons.net/1x1/delapouite/oasis.html\n• Obelisk https://game-icons.net/1x1/delapouite/obelisk.html\n• Palm tree https://game-icons.net/1x1/delapouite/palm-tree.html\n• Pharaoh Nefertiti https://game-icons.net/1x1/delapouite/nefertiti.html\n• Pottery https://game-icons.net/1x1/delapouite/painted-pottery.html\n• Pyramids https://game-icons.net/1x1/delapouite/egyptian-pyramids.html\n• Sphinx https://game-icons.net/1x1/delapouite/egyptian-sphinx.html\n• Star Gate https://game-icons.net/1x1/delapouite/star-gate.html\n• Temple https://game-icons.net/1x1/delapouite/egyptian-temple.html\n• Zigzag heiroglyph https://game-icons.net/1x1/delapouite/zigzag-hieroglyph.html\n\nLorc\n• Ankh https://game-icons.net/1x1/lorc/ankh.html\n• Gold bar https://game-icons.net/1x1/lorc/metal-bar.html\n• Night sky https://game-icons.net/1x1/lorc/night-sky.html\n• Scarab https://game-icons.net/1x1/lorc/gold-scarab.html\n• Wheat https://game-icons.net/1x1/lorc/wheat.html\n\nSbed\n• Cancel https://game-icons.net/1x1/sbed/cancel.html\n• Cross https://game-icons.net/1x1/sbed/health-normal.html\n<div><br></div><div>The library image was generated using the Midjourney artificial \n</div>intelligence image generator, https://www.midjourney.com/home/, using \nthe following prompt: \"Freddie Mercury dressed as an Egyptian pharaoh and standing in front of the pyramids, cartoon\".",
+      "lastUpdate": 1725381780000,
       "variantImage": "",
       "variant": "Egyptian Epochs",
       "language": "en-US",
@@ -427,17 +428,127 @@
       }
     ]
   },
+  "deck-pass-markers": {
+    "type": "deck",
+    "id": "deck-pass-markers",
+    "y": -150,
+    "width": 40,
+    "height": 40,
+    "cardDefaults": {
+      "width": 40,
+      "height": 40,
+      "movable": false,
+      "layer": -5,
+      "passcolor": "#333333"
+    },
+    "cardTypes": {
+      "pass": {}
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 40,
+            "height": 40,
+            "css": {
+              "border-color": "#888888",
+              "border-radius": "8px",
+              "border-style": "solid",
+              "border-width": "1px",
+              "color": "#ffffff"
+            }
+          }
+        ]
+      },
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 40,
+            "height": 40,
+            "css": {
+              "border-color": "#888888",
+              "border-radius": "8px",
+              "border-style": "solid",
+              "border-width": "1px",
+              "color": "#ffffff"
+            }
+          },
+          {
+            "type": "image",
+            "x": 3,
+            "y": 3,
+            "color": "transparent",
+            "width": 34,
+            "height": 34,
+            "rotation": 45,
+            "svgReplaces": {
+              "#000": "passcolor"
+            },
+            "value": "/i/game-icons.net/sbed/health-normal.svg"
+          }
+        ]
+      }
+    ]
+  },
+  "pass-marker-p1": {
+    "type": "card",
+    "id": "pass-marker-p1",
+    "deck": "deck-pass-markers",
+    "cardType": "pass",
+    "parent": "seat-p1",
+    "x": 140,
+    "y": 75
+  },
   "holder-suns-bid-p1": {
     "type": "holder",
     "id": "holder-suns-bid-p1",
-    "y": 75,
     "inheritFrom": "holder-suns-future-p1",
-    "x": 140,
+    "parent": "pass-marker-p1",
+    "y": 0,
+    "x": 0,
     "width": 40,
+    "css": {
+      "border-color": "transparent",
+      "background-color": "transparent"
+    },
     "dropOffsetX": 5,
     "dropOffsetY": 5,
     "stackOffsetX": 0,
-    "dropLimit": 1
+    "dropLimit": 1,
+    "clickRoutine": [
+      {
+        "func": "COUNT",
+        "holder": "${PROPERTY id}"
+      },
+      {
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "func": "FLIP",
+            "collection": [
+              "${PROPERTY parent}"
+            ]
+          }
+        ]
+      }
+    ],
+    "enterRoutine": [
+      {
+        "func": "FLIP",
+        "collection": [
+          "${PROPERTY parent}"
+        ],
+        "face": 0
+      }
+    ]
   },
   "holder-tiles-draw": {
     "type": "holder",
@@ -473,6 +584,7 @@
       "backcolor": "#666666",
       "crosscolor": "transparent",
       "scarabcolor": "#e30022",
+      "classes": "transition",
       "width": 70,
       "height": 70,
       "onPileCreation": {
@@ -621,7 +733,7 @@
       "tile-disaster-unrest": {
         "color": "#bfc1c2",
         "image": "/i/game-icons.net/delapouite/zigzag-hieroglyph.svg",
-        "crosscolor": "#ff0000",
+        "crosscolor": "#e30022",
         "scarabcolor": "transparent"
       },
       "tile-monument-pyramids": {
@@ -659,7 +771,7 @@
       "tile-disaster-earthquake": {
         "color": "#9678b6",
         "image": "/i/game-icons.net/delapouite/egyptian-temple.svg",
-        "crosscolor": "#ff0000",
+        "crosscolor": "#e30022",
         "scarabcolor": "transparent"
       }
     }
@@ -1029,7 +1141,7 @@
       ],
       "label-example-pharaoh-quantity": "*"
     },
-    "text": "Most 5VP\nLeast -2VP"
+    "text": "Most 5VP\nLess -2VP"
   },
   "label-example-nile-scoring": {
     "type": "label",
@@ -1160,7 +1272,7 @@
     "x": 1430,
     "y": 50,
     "color": "#9678b6",
-    "crosscolor": "#ff0000",
+    "crosscolor": "#e30022",
     "image": "/i/game-icons.net/delapouite/egyptian-temple.svg",
     "scarabcolor": "transparent",
     "css": {
@@ -1183,7 +1295,7 @@
     "x": 1360,
     "y": 50,
     "color": "#bfc1c2",
-    "crosscolor": "#ff0000",
+    "crosscolor": "#e30022",
     "image": "/i/game-icons.net/delapouite/zigzag-hieroglyph.svg",
     "scarabcolor": "transparent",
     "css": {
@@ -1474,10 +1586,21 @@
     "parent": "seat-p5",
     "inheritFrom": "holder-suns-future-p1"
   },
+  "pass-marker-p2": {
+    "type": "card",
+    "id": "pass-marker-p2",
+    "deck": "deck-pass-markers",
+    "cardType": "pass",
+    "parent": "seat-p2",
+    "x": 140,
+    "y": 75
+  },
   "holder-suns-bid-p2": {
     "type": "holder",
     "id": "holder-suns-bid-p2",
-    "parent": "seat-p2",
+    "parent": "pass-marker-p2",
+    "x": 0,
+    "y": 0,
     "inheritFrom": "holder-suns-bid-p1"
   },
   "holder-tiles-gold-p2": {
@@ -1930,22 +2053,55 @@
     "image": "/i/game-icons.net/delapouite/banging-gavel.svg",
     "scarabcolor": "transparent"
   },
+  "pass-marker-p3": {
+    "type": "card",
+    "id": "pass-marker-p3",
+    "deck": "deck-pass-markers",
+    "cardType": "pass",
+    "parent": "seat-p3",
+    "x": 140,
+    "y": 75
+  },
   "holder-suns-bid-p3": {
     "type": "holder",
     "id": "holder-suns-bid-p3",
-    "parent": "seat-p3",
+    "parent": "pass-marker-p3",
+    "x": 0,
+    "y": 0,
     "inheritFrom": "holder-suns-bid-p1"
+  },
+  "pass-marker-p4": {
+    "type": "card",
+    "id": "pass-marker-p4",
+    "deck": "deck-pass-markers",
+    "cardType": "pass",
+    "parent": "seat-p4",
+    "x": 140,
+    "y": 75
   },
   "holder-suns-bid-p4": {
     "type": "holder",
     "id": "holder-suns-bid-p4",
-    "parent": "seat-p4",
-    "inheritFrom": "holder-suns-bid-p1"
+    "parent": "pass-marker-p4",
+    "x": 0,
+    "y": 0,
+   "inheritFrom": "holder-suns-bid-p1"
+  },
+  "pass-marker-p5": {
+    "type": "card",
+    "id": "pass-marker-p5",
+    "deck": "deck-pass-markers",
+    "cardType": "pass",
+    "parent": "seat-p5",
+    "x": 140,
+    "y": 75
   },
   "holder-suns-bid-p5": {
     "type": "holder",
     "id": "holder-suns-bid-p5",
-    "parent": "seat-p5",
+    "parent": "pass-marker-p5",
+    "x": 0,
+    "y": 0,
     "inheritFrom": "holder-suns-bid-p1"
   },
   "score-p2": {
@@ -3900,6 +4056,17 @@
     "clickRoutine": [
       {
         "func": "TURN"
+      },
+      {
+        "func": "FLIP",
+        "collection": [
+          "pass-marker-p1",
+          "pass-marker-p2",
+          "pass-marker-p3",
+          "pass-marker-p4",
+          "pass-marker-p5"
+        ],
+        "face": 0
       }
     ]
   },
@@ -3907,7 +4074,7 @@
     "type": "button",
     "id": "button-new-game",
     "inheritFrom": "button-draw",
-    "x": 1102,
+    "x": 1100,
     "text": "New Game",
     "clickRoutine": [
       {
@@ -4317,17 +4484,18 @@
   "button-win-p1": {
     "type": "button",
     "id": "button-win-p1",
-    "parent": "holder-suns-bid-p1",
-    "y": 42,
+    "parent": "seat-p1",
+    "currentBidHolder": "holder-suns-bid-p1",
+    "x": 140,
+    "y": 118,
     "width": 40,
     "height": 30,
     "text": "Win",
     "inheritFrom": "button-draw",
-    "x": 0,
     "movable": false,
     "movableInEdit": true,
     "clickRoutine": [
-      "var currentBidHolder = ${PROPERTY parent}",
+      "var currentBidHolder = ${PROPERTY currentBidHolder}",
       {
         "func": "SELECT",
         "type": "card",
@@ -4343,7 +4511,7 @@
         "relation": ">",
         "operand2": 0,
         "thenRoutine": [
-          "var seat = ${PROPERTY parent OF $currentBidHolder}",
+          "var seat = ${PROPERTY parent}",
           "var index = ${PROPERTY index OF $seat}",
           {
             "func": "GET",
@@ -4421,6 +4589,17 @@
             ]
           },
           {
+            "func": "FLIP",
+            "collection": [
+              "pass-marker-p1",
+              "pass-marker-p2",
+              "pass-marker-p3",
+              "pass-marker-p4",
+              "pass-marker-p5"
+            ],
+            "face": 0
+          },
+          {
             "func": "CLICK",
             "collection": [
               "button-end-turn"
@@ -4433,25 +4612,46 @@
   "button-win-p2": {
     "type": "button",
     "id": "button-win-p2",
-    "parent": "holder-suns-bid-p2",
+    "parent": "seat-p2",
+    "currentBidHolder": "holder-suns-bid-p2",
     "inheritFrom": "button-win-p1"
   },
   "button-win-p3": {
     "type": "button",
     "id": "button-win-p3",
-    "parent": "holder-suns-bid-p3",
+    "parent": "seat-p3",
+    "currentBidHolder": "holder-suns-bid-p3",
     "inheritFrom": "button-win-p1"
   },
   "button-win-p4": {
     "type": "button",
     "id": "button-win-p4",
-    "parent": "holder-suns-bid-p4",
+    "parent": "seat-p4",
+    "currentBidHolder": "holder-suns-bid-p4",
     "inheritFrom": "button-win-p1"
   },
   "button-win-p5": {
     "type": "button",
     "id": "button-win-p5",
-    "parent": "holder-suns-bid-p5",
+    "parent": "seat-p5",
+    "currentBidHolder": "holder-suns-bid-p5",
     "inheritFrom": "button-win-p1"
+  },
+  "transition-animator": {
+    "id": "transition-animator",
+    "width": 10,
+    "height": 10,
+    "css": {
+      "default": {
+        "background-color": "red"
+      },
+      "_, .transition": {
+        "transition": "transform 600ms"
+      },
+      "_, .transition.dragging": {
+        "transition": "none"
+      }
+    },
+    "display": false
   }
 }

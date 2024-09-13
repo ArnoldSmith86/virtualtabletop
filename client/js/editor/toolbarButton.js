@@ -45,8 +45,8 @@ class ToolbarButton {
 
   setMinimumSelection(count) {
     this.minimumSelection = count;
-    if(this.domElement)
-      this.domElement.disabled = selectedWidgets.length < count;
+    if(this.domElement && $('button', this.domElement))
+      $('button', this.domElement).disabled = selectedWidgets.length < count;
   }
 }
 

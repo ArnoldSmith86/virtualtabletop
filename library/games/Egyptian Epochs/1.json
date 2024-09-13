@@ -1,30 +1,4 @@
 {
-  "_meta": {
-    "version": 15,
-    "info": {
-      "name": "Egyptian Epochs",
-      "image": "/assets/1301779629_162792",
-      "showName": true,
-      "time": "45",
-      "mode": "vs",
-      "skill": "",
-      "description": "Can your Egyptian dynasty stand the test of time?",
-      "similarImage": "",
-      "similarName": "Ra",
-      "year": "1999",
-      "similarDesigner": "Reiner Knizia",
-      "similarAwards": "2016 Juego del Año Recommended\n2000 International Gamers Awards - General Strategy; Multi-player Nominee\n1999 Meeples' Choice Award",
-      "bgg": "https://boardgamegeek.com/boardgame/12",
-      "rules": "",
-      "ruleText": "<div><b>Objective</b><br></div><div>Over the course of three epochs (rounds), acquire tiles at auction through clever use of your coins. A scoring phase takes place at the end of each epoch. After the conclusion and scoring phase of the third epoch, the game ends and the high-scoring player wins.</div><div><br></div><div><b>Scoring</b><br></div><div>Your collection of tiles scores at the end of each epoch as follows:</div><div><br></div><div><i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/lorc/metal-bar.svg\"></i>: 3 points each</div><div><i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/anubis.svg\"></i>: 2 points each</div><div><i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/nefertiti.svg\"></i>: 5 points if you have the most, -2 points if you have the fewest of all players</div><div><i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/palm-tree.svg\"></i><i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/oasis.svg\"></i>: If at least one of your blue tiles is an <i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/oasis.svg\"></i>, all your blue tiles score 1 points each. If not, they don't score.</div><div><i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/painted-pottery.svg\"></i><i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/lorc/wheat.svg\"></i><i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/bastet.svg\"></i><i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/lorc/night-sky.svg\"></i><i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/zigzag-hieroglyph.svg\"></i>: Score based on how many different types you have: -5 if you have no types, 0 if you have 1 or 2 types, and 5/10/15 points if you have 3/4/5 types.</div><div><br></div><div>In the third epoch only, you also score:</div><div><i class=\"richtextSymbol material-icons\">fiber_manual_record</i> Coins: 5 points if you have the highest total, -5 points if you have the lowest total of all players</div><div><i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/egyptian-pyramids.svg\"></i><i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/egyptian-sphinx.svg\"></i><i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/egyptian-temple.svg\"></i><i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/great-pyramid.svg\"></i><i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/djed-pillar.svg\"></i><i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/obelisk.svg\"></i><i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/egyptian-urns.svg\"></i><i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/star-gate.svg\"></i>: Score both based on how many types you have -&nbsp;1/2/3/4/5/6/10/15 points for 1/2/3/4/5/6/7/8 types - and for sets of the same type - 5/10/15 points for each set of 3/4/5 identical tiles.<br></div><br><div>Tiles marked with the red&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/lorc/gold-scarab.svg\"></i> are kept after each scoring, as are all of a players' coins - both used and unused during the epoch that just finished. Tiles without the&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/lorc/gold-scarab.svg\"></i> are discarded after each end-of-epoch scoring.</div><div><br></div><div>If players are tied for&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/nefertiti.svg\"></i> scoring or for the coin scoring at game end, the tied players all receive the reward.<br></div><div><br></div><div><b>Sequence of Play</b><br></div><div>Each epoch continues until either all players have used all of their coins or the&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/eye-of-horus.svg\"></i> track is full, whichever happens first. At the end of the epoch, each player scores their collection of tiles as described above.</div><div><br></div><div>The epoch consists of players taking turns in sequence, beginning with the player that owns the highest valued coin. Once a player has used all of their tiles, they stop taking turns and are skipped over in this sequence.</div><div><br></div><div><b>Player Turns</b><br></div><div>On your turn, you must take one of three actions:</div><div>• Draw a tile from the tile stack;</div><div>• Call an auction of the current contents of the&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/banging-gavel.svg\"></i> row;</div><div>• Use the special power of 1 or more previously-collected&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/anubis.svg\"></i> tiles.</div><div><br></div><div>You may not select the draw action if the&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/banging-gavel.svg\"></i> row is already full.</div><div><br></div><div><b>Draw a Tile</b></div><div>Draw the next tile from the tile stack.</div><div><br></div><div>If the tile is a&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/eye-of-horus.svg\"></i> then place it on the corresponding track. If this fills the track, then the epoch ends immediately. If it does not, then an auction is called instead.</div><div><br></div><div>If the tile was not a <i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/eye-of-horus.svg\"></i>, then place it on the&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/banging-gavel.svg\"></i> track.</div><div><br></div><div><b>Auction</b></div><div>When an auction is called (either by the current player selecting it as their action or by the drawing of a&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/eye-of-horus.svg\"></i> tile), the lot up for auction consists of all of the tiles currently in the&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/banging-gavel.svg\"></i> track, plus the coin located next to it.</div><div><br></div><div>A once-around-the-table auction is conducted, beginning with the next player after the active player. Each player either passes or bids a single coin which is of higher value than all coins already bid during the auction.</div><div><br></div><div>If the auction was called by the active player calling for it as their action, and the&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/banging-gavel.svg\"></i> track is not full, then there must be a bid during the auction: the final bidder, the active player, must bid if all other players pass.</div><div><br></div><div>If the&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/banging-gavel.svg\"></i> track is full and all players pass, then discard all of the tiles on the&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/banging-gavel.svg\"></i> track.<br></div><div><br></div><div>The high bidder wins the auction. The auction winner receives the lot of all the tiles on the&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/banging-gavel.svg\"></i> track and the coin located next to it. They pay the coin that they bid (and all other bids are returned to their owners), which is placed on the space next to the&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/banging-gavel.svg\"></i> track (and will therefore become part of the lot next time an auction is called).</div><div><br></div><div>Coins acquired in an auction are not available for use this epoch, but a player collects them for use in future epochs (or, in the final epoch, for end-game scoring purposes).<br></div><div><br></div><div>If one or more&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/sbed/cancel.svg\"></i> tiles were in the lot that was won, then these are resolved after acquiring the other tiles. Each is discarded along with two of the players' tiles of the same color.&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/oasis.svg\"></i> tiles must be discarded first when resolving the blue <i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/sbed/cancel.svg\"></i>, but in all other cases the player chooses which tiles to discard.</div><div><br></div><div><b>Using&nbsp;</b><i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/anubis.svg\"></i><b> Tiles</b></div><div>Instead of drawing a tile or calling an auction, a player may instead discard one ore more previously-collected&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/anubis.svg\"></i> tiles from their collection. For each&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/anubis.svg\"></i> discarded, the player takes one tile from the&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/banging-gavel.svg\"></i> track and adds it directly to their collection (without need for an auction).</div>",
-      "helpText": "<div><b>Getting Started</b><br></div><div>Have all players take a seat and press the New Game button to distribute starting suns, set up the&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/eye-of-horus.svg\"></i> track for the player count, and to shuffle the deck.</div><div><br></div><div><b>Drawing Tiles<br></b></div><div>You can draw a tile from the stack and place it in the&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/eye-of-horus.svg\"></i> or&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/banging-gavel.svg\"></i> row as per the game rules. Alternatively, the Draw Tile button can be used, which will do this for you and will end your turn if you didn't draw a&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/eye-of-horus.svg\"></i> tile.</div><div><br></div><div><b>Managing your Coins<br></b></div><div>Each player has three holders for coins: the top row is used for your currently-available coins for this epoch. The bottom row is used for coins collected during auctions but not available for use this epoch. The slot to the right of them is used for your current bid.</div><div><br></div><div><b>Auctions</b></div><div>To bid, drag a coin to the slot to the right of your coin rows in your player area.</div><div><br></div><div>At the end of the auction, the winner can click the Win button to pay their coin, return other players' coins to their available row, and collect the auction lot. This will also end the active player's turn.<br></div><div><br></div><div>The Win buttons will not collect&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/sbed/cancel.svg\"></i> tiles. The auction winner should drag their intended discards into the&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/banging-gavel.svg\"></i> row to join the&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/sbed/cancel.svg\"></i> tile, and once happy they've resolved this correctly, click the Discard All button next to the&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/banging-gavel.svg\"></i> row to discard them all.</div><div><br></div><div>When an auction with a full&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/banging-gavel.svg\"></i> row is concluded with all players having passed, the Discard All button can be used to empty it.<br></div><div><br></div><div><b>End of Epoch</b></div><div>When an epoch ends, players should manually score up their collections of tiles using the text on the table as a player aid and the + and - buttons next to their seat to adjust their score. After scoring, the New Epoch button can be pressed by one player, which will move all coins to the available rows, discard all tiles from players' collection which don't have the&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/lorc/gold-scarab.svg\"></i> icon, empty the&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/eye-of-horus.svg\"></i> and&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/banging-gavel.svg\"></i> tracks, and set the player with the highest single coin as the active player ready to begin the next epoch.<b><br></b></div><div><b><br></b></div><div><b>Pharaoh's Fury Variant</b></div><div>The Pharaoh's Fury variant uses a smaller set of tiles including none of the&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/sbed/cancel.svg\"></i> tiles, but also a shorter&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/eye-of-horus.svg\"></i> row even in high-player-count games. This gives a slightly different play experience inspired by the card game <i>Razzia.</i><br></div>",
-      "attribution": "Game layout and scripting by Andy Pymont, released to the public domain by CC0.\n\nTile graphics are from https://game-icons.net/ and are used under the CC BY 3.0 license:\n\nDelapouite\n• Anubis https://game-icons.net/1x1/delapouite/anubis.html\n• Banging Gavel https://game-icons.net/1x1/delapouite/banging-gavel.html\n• Bastet https://game-icons.net/1x1/delapouite/bastet.html\n• Canopic Jars https://game-icons.net/1x1/delapouite/egyptian-urns.html\n• Djed Pillar https://game-icons.net/1x1/delapouite/djed-pillar.html\n• Eye of Horus https://game-icons.net/1x1/delapouite/eye-of-horus.html\n• Great Pyramid https://game-icons.net/1x1/delapouite/great-pyramid.html\n• Oasis https://game-icons.net/1x1/delapouite/oasis.html\n• Obelisk https://game-icons.net/1x1/delapouite/obelisk.html\n• Palm tree https://game-icons.net/1x1/delapouite/palm-tree.html\n• Pharaoh Nefertiti https://game-icons.net/1x1/delapouite/nefertiti.html\n• Pottery https://game-icons.net/1x1/delapouite/painted-pottery.html\n• Pyramids https://game-icons.net/1x1/delapouite/egyptian-pyramids.html\n• Sphinx https://game-icons.net/1x1/delapouite/egyptian-sphinx.html\n• Star Gate https://game-icons.net/1x1/delapouite/star-gate.html\n• Temple https://game-icons.net/1x1/delapouite/egyptian-temple.html\n• Zigzag heiroglyph https://game-icons.net/1x1/delapouite/zigzag-hieroglyph.html\n\nLorc\n• Gold bar https://game-icons.net/1x1/lorc/metal-bar.html\n• Night sky https://game-icons.net/1x1/lorc/night-sky.html\n• Scarab https://game-icons.net/1x1/lorc/gold-scarab.html\n• Wheat https://game-icons.net/1x1/lorc/wheat.html\n\nSbed\n• Cancel https://game-icons.net/1x1/sbed/cancel.html\n<div><br></div><div>The library image was generated using the Midjourney artificial \n</div>intelligence image generator, https://www.midjourney.com/home/, using \nthe following prompt: \"Freddie Mercury dressed as an Egyptian pharaoh and standing in front of the pyramids, cartoon\".",
-      "variantImage": "",
-      "variant": "Pharaoh's Fury",
-      "language": "en-US",
-      "players": "2-5"
-    }
-  },
   "seat-p1": {
     "type": "seat",
     "id": "seat-p1",
@@ -64,13 +38,15 @@
       }
     ],
     "hideWhenUnused": true,
-    "width": 165
+    "width": 165,
+    "x": -1,
+    "turn": true,
+    "skipTurn": true
   },
   "score-p1": {
     "type": "label",
     "id": "score-p1",
     "parent": "seat-p1",
-    "text": 10,
     "css": {
       "color": "#000000",
       "font-size": "24px",
@@ -78,7 +54,8 @@
     },
     "width": 160,
     "y": 40,
-    "height": 30
+    "height": 30,
+    "text": 10
   },
   "score-p1-dec": {
     "type": "button",
@@ -111,7 +88,6 @@
         ]
       }
     ],
-    "z": 1,
     "y": -1
   },
   "score-p1-inc": {
@@ -213,7 +189,7 @@
     "id": "sun-1",
     "deck": "deck-suns",
     "cardType": "sun",
-    "z": 7849,
+    "z": 25142,
     "parent": "holder-sun-auction"
   },
   "sun-2": {
@@ -221,7 +197,7 @@
     "id": "sun-2",
     "deck": "deck-suns",
     "cardType": "sun",
-    "z": 7818,
+    "z": 25118,
     "value": 2,
     "parent": "pile-suns"
   },
@@ -230,7 +206,7 @@
     "id": "sun-3",
     "deck": "deck-suns",
     "cardType": "sun",
-    "z": 7820,
+    "z": 25133,
     "value": 3,
     "parent": "pile-suns"
   },
@@ -239,8 +215,9 @@
     "id": "sun-4",
     "deck": "deck-suns",
     "cardType": "sun",
-    "z": 7822,
+    "z": 25135,
     "value": 4,
+    "text": 0,
     "parent": "pile-suns"
   },
   "sun-5": {
@@ -248,7 +225,7 @@
     "id": "sun-5",
     "deck": "deck-suns",
     "cardType": "sun",
-    "z": 7824,
+    "z": 25120,
     "value": 5,
     "parent": "pile-suns"
   },
@@ -257,8 +234,9 @@
     "id": "sun-6",
     "deck": "deck-suns",
     "cardType": "sun",
-    "z": 7826,
+    "z": 25122,
     "value": 6,
+    "text": 0,
     "parent": "pile-suns"
   },
   "sun-7": {
@@ -266,7 +244,7 @@
     "id": "sun-7",
     "deck": "deck-suns",
     "cardType": "sun",
-    "z": 7828,
+    "z": 25137,
     "value": 7,
     "parent": "pile-suns"
   },
@@ -275,8 +253,9 @@
     "id": "sun-8",
     "deck": "deck-suns",
     "cardType": "sun",
-    "z": 7830,
+    "z": 25139,
     "value": 8,
+    "text": 0,
     "parent": "pile-suns"
   },
   "sun-9": {
@@ -284,8 +263,9 @@
     "id": "sun-9",
     "deck": "deck-suns",
     "cardType": "sun",
-    "z": 7832,
+    "z": 25124,
     "value": 9,
+    "text": 0,
     "parent": "pile-suns"
   },
   "sun-10": {
@@ -293,7 +273,7 @@
     "id": "sun-10",
     "deck": "deck-suns",
     "cardType": "sun",
-    "z": 7834,
+    "z": 25125,
     "value": 10,
     "parent": "pile-suns"
   },
@@ -302,7 +282,7 @@
     "id": "sun-11",
     "deck": "deck-suns",
     "cardType": "sun",
-    "z": 7836,
+    "z": 25126,
     "value": 11,
     "parent": "pile-suns"
   },
@@ -311,7 +291,7 @@
     "id": "sun-12",
     "deck": "deck-suns",
     "cardType": "sun",
-    "z": 7838,
+    "z": 25127,
     "value": 12,
     "parent": "pile-suns"
   },
@@ -320,7 +300,7 @@
     "id": "sun-13",
     "deck": "deck-suns",
     "cardType": "sun",
-    "z": 7840,
+    "z": 25128,
     "value": 13,
     "parent": "pile-suns"
   },
@@ -329,7 +309,7 @@
     "id": "sun-14",
     "deck": "deck-suns",
     "cardType": "sun",
-    "z": 7842,
+    "z": 25129,
     "value": 14,
     "parent": "pile-suns"
   },
@@ -338,7 +318,7 @@
     "id": "sun-15",
     "deck": "deck-suns",
     "cardType": "sun",
-    "z": 7844,
+    "z": 25130,
     "value": 15,
     "parent": "pile-suns"
   },
@@ -347,7 +327,7 @@
     "id": "sun-16",
     "deck": "deck-suns",
     "cardType": "sun",
-    "z": 7846,
+    "z": 25131,
     "value": 16,
     "parent": "pile-suns"
   },
@@ -425,19 +405,131 @@
           }
         ]
       }
+    ],
+    "dropLimit": 4,
+    "dropOffsetX": 3.5
+  },
+  "deck-pass-markers": {
+    "type": "deck",
+    "id": "deck-pass-markers",
+    "y": -150,
+    "width": 40,
+    "height": 40,
+    "cardDefaults": {
+      "width": 40,
+      "height": 40,
+      "movable": false,
+      "layer": -5,
+      "passcolor": "#333333"
+    },
+    "cardTypes": {
+      "pass": {}
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 40,
+            "height": 40,
+            "css": {
+              "border-color": "#888888",
+              "border-radius": "8px",
+              "border-style": "solid",
+              "border-width": "1px",
+              "color": "#ffffff"
+            }
+          }
+        ]
+      },
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 40,
+            "height": 40,
+            "css": {
+              "border-color": "#888888",
+              "border-radius": "8px",
+              "border-style": "solid",
+              "border-width": "1px",
+              "color": "#ffffff"
+            }
+          },
+          {
+            "type": "image",
+            "x": 3,
+            "y": 3,
+            "color": "transparent",
+            "width": 34,
+            "height": 34,
+            "rotation": 45,
+            "svgReplaces": {
+              "#000": "passcolor"
+            },
+            "value": "/i/game-icons.net/sbed/health-normal.svg"
+          }
+        ]
+      }
     ]
   },
-   "holder-suns-bid-p1": {
+  "pass-marker-p1": {
+    "type": "card",
+    "id": "pass-marker-p1",
+    "deck": "deck-pass-markers",
+    "cardType": "pass",
+    "parent": "seat-p1",
+    "x": 140,
+    "y": 75
+  },
+  "holder-suns-bid-p1": {
     "type": "holder",
     "id": "holder-suns-bid-p1",
-    "y": 75,
     "inheritFrom": "holder-suns-future-p1",
-    "x": 140,
+    "parent": "pass-marker-p1",
+    "x": 0,
+    "y": 0,
     "width": 40,
+    "css": {
+      "border-color": "transparent",
+      "background-color": "transparent"
+    },
     "dropOffsetX": 5,
     "dropOffsetY": 5,
     "stackOffsetX": 0,
-    "dropLimit": 1
+    "dropLimit": 1,
+    "clickRoutine": [
+      {
+        "func": "COUNT",
+        "holder": "${PROPERTY id}"
+      },
+      {
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "func": "FLIP",
+            "collection": [
+              "${PROPERTY parent}"
+            ]
+          }
+        ]
+      }
+    ],
+    "enterRoutine": [
+      {
+        "func": "FLIP",
+        "collection": [
+          "${PROPERTY parent}"
+        ],
+        "face": 0
+      }
+    ]
   },
   "holder-tiles-draw": {
     "type": "holder",
@@ -473,6 +565,7 @@
       "backcolor": "#666666",
       "crosscolor": "transparent",
       "scarabcolor": "#e30022",
+      "classes": "transition",
       "width": 70,
       "height": 70,
       "onPileCreation": {
@@ -553,6 +646,11 @@
       }
     ],
     "cardTypes": {
+      "tile-ankh": {
+        "color": "#faf0e6",
+        "image": "/i/game-icons.net/lorc/ankh.svg",
+        "scarabcolor": "transparent"
+      },
       "tile-horus": {
         "color": "#e30022",
         "image": "/i/game-icons.net/delapouite/eye-of-horus.svg",
@@ -621,7 +719,7 @@
       "tile-disaster-unrest": {
         "color": "#bfc1c2",
         "image": "/i/game-icons.net/delapouite/zigzag-hieroglyph.svg",
-        "crosscolor": "#ff0000",
+        "crosscolor": "#e30022",
         "scarabcolor": "transparent"
       },
       "tile-monument-pyramids": {
@@ -659,7 +757,7 @@
       "tile-disaster-earthquake": {
         "color": "#9678b6",
         "image": "/i/game-icons.net/delapouite/egyptian-temple.svg",
-        "crosscolor": "#ff0000",
+        "crosscolor": "#e30022",
         "scarabcolor": "transparent"
       }
     }
@@ -668,7 +766,7 @@
     "type": "holder",
     "id": "holder-tiles-gold-p1",
     "parent": "seat-p1",
-    "x": 200,
+    "x": 191,
     "width": 70,
     "height": 70,
     "movableInEdit": false,
@@ -683,7 +781,7 @@
         "background": "#000000aa"
       }
     },
-    "y": 70,
+    "y": 72,
     "dropTarget": {
       "deck": "deck-tiles",
       "cardType": "tile-gold"
@@ -767,8 +865,8 @@
     "id": "tile-example-gold",
     "deck": "deck-tile-examples",
     "cardType": "tile-example",
-    "x": 205,
-    "y": 180,
+    "x": 196,
+    "y": 182,
     "image": "/i/game-icons.net/lorc/metal-bar.svg",
     "color": "#fcc200",
     "scarabcolor": "transparent"
@@ -778,7 +876,7 @@
     "id": "tile-example-god",
     "deck": "deck-tile-examples",
     "cardType": "tile-example",
-    "x": 295,
+    "x": 271,
     "y": 180,
     "color": "#ffef00",
     "image": "/i/game-icons.net/delapouite/anubis.svg",
@@ -789,7 +887,7 @@
     "id": "tile-example-pharaoh",
     "deck": "deck-tile-examples",
     "cardType": "tile-example",
-    "x": 385,
+    "x": 344,
     "y": 180,
     "color": "#4cbb17",
     "image": "/i/game-icons.net/delapouite/nefertiti.svg"
@@ -799,7 +897,7 @@
     "id": "tile-example-nile",
     "deck": "deck-tile-examples",
     "cardType": "tile-example",
-    "x": 475,
+    "x": 416,
     "y": 180,
     "color": "#6495ed",
     "image": "/i/game-icons.net/delapouite/palm-tree.svg"
@@ -809,7 +907,7 @@
     "id": "tile-example-flood",
     "deck": "deck-tile-examples",
     "cardType": "tile-example",
-    "x": 547,
+    "x": 488,
     "y": 180,
     "color": "#6495ed",
     "image": "/i/game-icons.net/delapouite/oasis.svg",
@@ -820,8 +918,8 @@
     "id": "tile-example-civ-pottery",
     "deck": "deck-tile-examples",
     "cardType": "tile-example",
-    "x": 637,
-    "y": 180,
+    "x": 646,
+    "y": 177,
     "color": "#bfc1c2",
     "image": "/i/game-icons.net/delapouite/painted-pottery.svg",
     "scarabcolor": "transparent"
@@ -831,8 +929,8 @@
     "id": "tile-example-civ-agriculture",
     "deck": "deck-tile-examples",
     "cardType": "tile-example",
-    "x": 709,
-    "y": 180,
+    "x": 718,
+    "y": 177,
     "color": "#bfc1c2",
     "image": "/i/game-icons.net/lorc/wheat.svg",
     "scarabcolor": "transparent"
@@ -842,8 +940,8 @@
     "id": "tile-example-civ-religion",
     "deck": "deck-tile-examples",
     "cardType": "tile-example",
-    "x": 781,
-    "y": 180,
+    "x": 790,
+    "y": 177,
     "color": "#bfc1c2",
     "image": "/i/game-icons.net/delapouite/bastet.svg",
     "scarabcolor": "transparent"
@@ -853,8 +951,8 @@
     "id": "tile-example-civ-astronomy",
     "deck": "deck-tile-examples",
     "cardType": "tile-example",
-    "x": 853,
-    "y": 180,
+    "x": 862,
+    "y": 177,
     "color": "#bfc1c2",
     "image": "/i/game-icons.net/lorc/night-sky.svg",
     "scarabcolor": "transparent"
@@ -864,8 +962,8 @@
     "id": "tile-example-civ-writing",
     "deck": "deck-tile-examples",
     "cardType": "tile-example",
-    "x": 925,
-    "y": 180,
+    "x": 934,
+    "y": 177,
     "color": "#bfc1c2",
     "image": "/i/game-icons.net/delapouite/zigzag-hieroglyph.svg",
     "scarabcolor": "transparent"
@@ -940,6 +1038,16 @@
     "color": "#9678b6",
     "image": "/i/game-icons.net/delapouite/egyptian-urns.svg"
   },
+  "tile-example-monument-stargate": {
+    "type": "card",
+    "id": "tile-example-monument-stargate",
+    "deck": "deck-tile-examples",
+    "cardType": "tile-example",
+    "x": 1519,
+    "y": 180,
+    "color": "#9678b6",
+    "image": "/i/game-icons.net/delapouite/star-gate.svg"
+  },
   "label-example-gold-quantity": {
     "type": "label",
     "id": "label-example-gold-quantity",
@@ -948,44 +1056,44 @@
       "line-height": "20px",
       "font-size": "18px"
     },
-    "x": 205,
-    "y": 160,
-    "width": 70,
-    "text": "3"
+    "text": "5",
+    "x": 196,
+    "y": 159,
+    "width": 70
   },
   "label-example-god-quantity": {
     "type": "label",
     "id": "label-example-god-quantity",
     "inheritFrom": "label-example-gold-quantity",
-    "text": "6",
-    "x": 295
+    "text": "8",
+    "x": 271
   },
   "label-example-pharaoh-quantity": {
     "type": "label",
     "id": "label-example-pharaoh-quantity",
-    "x": 385,
+    "x": 344,
     "inheritFrom": "label-example-gold-quantity",
-    "text": "16"
+    "text": "25"
   },
   "label-example-nile-quantity": {
     "type": "label",
     "id": "label-example-nile-quantity",
-    "x": 475,
+    "x": 421,
     "inheritFrom": "label-example-gold-quantity",
-    "text": "16"
+    "text": "25"
   },
   "label-example-flood-quantity": {
     "type": "label",
     "id": "label-example-flood-quantity",
-    "x": 547,
+    "x": 485,
     "inheritFrom": "label-example-gold-quantity",
-    "text": "10"
+    "text": "12"
   },
   "label-example-gold-scoring": {
     "type": "label",
     "id": "label-example-gold-scoring",
     "inheritFrom": "label-example-gold-quantity",
-    "y": 190,
+    "y": 192,
     "text": "3VP\neach",
     "css": {
       "color": "#000000",
@@ -1006,7 +1114,8 @@
       ],
       "label-example-god-quantity": "*"
     },
-    "text": "2VP\neach"
+    "text": "2VP\neach",
+    "x": 271
   },
   "label-example-pharaoh-scoring": {
     "type": "label",
@@ -1019,7 +1128,8 @@
       ],
       "label-example-pharaoh-quantity": "*"
     },
-    "text": "Most 5VP\nLeast -2VP"
+    "text": "Most 5VP\nLess -2VP",
+    "x": 344
   },
   "label-example-nile-scoring": {
     "type": "label",
@@ -1033,7 +1143,8 @@
       "label-example-nile-quantity": "*"
     },
     "text": "1VP each as long as\nat least one is a flood",
-    "width": 140
+    "width": 140,
+    "x": 416
   },
   "label-example-civ-scoring": {
     "type": "label",
@@ -1047,15 +1158,17 @@
       "label-example-civ-quantity": "*"
     },
     "text": "None -5VP\n3/4/5 different types 5/10/15VP",
-    "height": 40
+    "height": 40,
+    "x": 651
   },
   "label-example-civ-quantity": {
     "type": "label",
     "id": "label-example-civ-quantity",
-    "x": 637,
+    "x": 650,
     "width": 350,
     "inheritFrom": "label-example-gold-quantity",
-    "text": "4 of each"
+    "text": "5 of each",
+    "y": 159
   },
   "label-example-monument-quantity": {
     "type": "label",
@@ -1063,12 +1176,12 @@
     "x": 1015,
     "width": 560,
     "inheritFrom": "label-example-gold-quantity",
-    "text": "4 of each"
+    "text": "5 of each"
   },
   "label-example-monument-scoring": {
     "type": "label",
     "id": "label-example-monument-scoring",
-    "width": 300,
+    "width": 390,
     "inheritFrom": {
       "label-example-gold-scoring": [
         "css"
@@ -1079,8 +1192,8 @@
       ],
       "label-example-monument-quantity": "*"
     },
-    "text": "🟆 FINAL EPOCH ONLY 🟆\n1/2/3/4/5/6/7 different types 1/2/3/4/5/6/10VP\nEach 3/4 of a kind 5/10VP",
-    "x": 1210
+    "text": "🟆 FINAL EPOCH ONLY 🟆\n1/2/3/4/5/6/7/8 different types 1/2/3/4/5/6/10/15VP\nEach 3/4/5 of a kind 5/10/15VP",
+    "x": 1195
   },
   "pile-suns": {
     "type": "pile",
@@ -1102,30 +1215,32 @@
     "type": "holder",
     "id": "holder-tiles-god-p1",
     "parent": "seat-p1",
-    "x": 290,
+    "x": 266,
     "dropTarget": {
       "deck": "deck-tiles",
       "cardType": "tile-god"
     },
-    "inheritFrom": "holder-tiles-gold-p1"
+    "inheritFrom": "holder-tiles-gold-p1",
+    "y": 72
   },
   "holder-tiles-pharaoh-p1": {
     "type": "holder",
     "id": "holder-tiles-pharaoh-p1",
     "parent": "seat-p1",
-    "x": 380,
+    "x": 339,
     "dropTarget": {
       "deck": "deck-tiles",
       "cardType": "tile-pharaoh"
     },
-    "inheritFrom": "holder-tiles-gold-p1"
+    "inheritFrom": "holder-tiles-gold-p1",
+    "y": 72
   },
   "tile-example-horus": {
     "type": "card",
     "id": "tile-example-horus",
     "deck": "deck-tile-examples",
     "cardType": "tile-example",
-    "x": 1447,
+    "x": 1520,
     "y": 50,
     "color": "#e30022",
     "image": "/i/game-icons.net/delapouite/eye-of-horus.svg",
@@ -1137,76 +1252,174 @@
   "label-example-horus-quantity": {
     "type": "label",
     "id": "label-example-horus-quantity",
-    "x": 1447,
+    "x": 1520,
     "y": 29,
     "inheritFrom": "label-example-gold-quantity",
-    "text": "21"
+    "text": "30"
+  },
+  "tile-example-disaster-earthquake": {
+    "type": "card",
+    "id": "tile-example-disaster-earthquake",
+    "deck": "deck-tile-examples",
+    "cardType": "tile-example",
+    "x": 1430,
+    "y": 50,
+    "color": "#9678b6",
+    "crosscolor": "#e30022",
+    "image": "/i/game-icons.net/delapouite/egyptian-temple.svg",
+    "scarabcolor": "transparent",
+    "css": {
+      "opacity": 0.25
+    }
+  },
+  "label-example-disaster-earthquake-quantity": {
+    "type": "label",
+    "id": "label-example-disaster-earthquake-quantity",
+    "x": 1430,
+    "y": 29,
+    "inheritFrom": "label-example-gold-quantity",
+    "text": "2"
+  },
+  "tile-example-disaster-unrest": {
+    "type": "card",
+    "id": "tile-example-disaster-unrest",
+    "deck": "deck-tile-examples",
+    "cardType": "tile-example",
+    "x": 1360,
+    "y": 50,
+    "color": "#bfc1c2",
+    "crosscolor": "#e30022",
+    "image": "/i/game-icons.net/delapouite/zigzag-hieroglyph.svg",
+    "scarabcolor": "transparent",
+    "css": {
+      "opacity": 0.25
+    }
+  },
+  "tile-example-disaster-drought": {
+    "type": "card",
+    "id": "tile-example-disaster-drought",
+    "deck": "deck-tile-examples",
+    "cardType": "tile-example",
+    "x": 1290,
+    "y": 50,
+    "color": "#6495ed",
+    "crosscolor": "#e30022",
+    "image": "/i/game-icons.net/delapouite/oasis.svg",
+    "scarabcolor": "transparent",
+    "css": {
+      "opacity": 0.25
+    }
+  },
+  "tile-example-disaster-funeral": {
+    "type": "card",
+    "id": "tile-example-disaster-funeral",
+    "deck": "deck-tile-examples",
+    "cardType": "tile-example",
+    "x": 1220,
+    "y": 50,
+    "color": "#4cbb17",
+    "crosscolor": "#e30022",
+    "image": "/i/game-icons.net/delapouite/nefertiti.svg",
+    "scarabcolor": "transparent",
+    "css": {
+      "opacity": 0.25
+    }
+  },
+  "label-example-disaster-funeral-quantity": {
+    "type": "label",
+    "id": "label-example-disaster-funeral-quantity",
+    "x": 1220,
+    "y": 29,
+    "inheritFrom": "label-example-gold-quantity",
+    "text": "2"
+  },
+  "label-example-disaster-drought-quantity": {
+    "type": "label",
+    "id": "label-example-disaster-drought-quantity",
+    "x": 1290,
+    "y": 29,
+    "inheritFrom": "label-example-gold-quantity",
+    "text": "2"
+  },
+  "label-example-disaster-unrest-quantity": {
+    "type": "label",
+    "id": "label-example-disaster-unrest-quantity",
+    "x": 1360,
+    "y": 29,
+    "inheritFrom": "label-example-gold-quantity",
+    "text": "4"
   },
   "holder-tiles-nile-p1": {
     "type": "holder",
     "id": "holder-tiles-nile-p1",
     "parent": "seat-p1",
-    "x": 470,
+    "x": 411,
     "dropTarget": {
       "deck": "deck-tiles",
       "cardType": "tile-nile"
     },
-    "inheritFrom": "holder-tiles-gold-p1"
+    "inheritFrom": "holder-tiles-gold-p1",
+    "y": 72
   },
   "holder-tiles-flood-p1": {
     "type": "holder",
     "id": "holder-tiles-flood-p1",
     "parent": "seat-p1",
-    "x": 542,
+    "x": 483,
     "dropTarget": {
       "deck": "deck-tiles",
       "cardType": "tile-flood"
     },
-    "inheritFrom": "holder-tiles-gold-p1"
+    "inheritFrom": "holder-tiles-gold-p1",
+    "y": 72
   },
   "holder-tiles-civ-pottery-p1": {
     "type": "holder",
     "id": "holder-tiles-civ-pottery-p1",
     "parent": "seat-p1",
-    "x": 632,
+    "x": 641,
     "dropTarget": {
       "deck": "deck-tiles",
       "cardType": "tile-civ-pottery"
     },
-    "inheritFrom": "holder-tiles-gold-p1"
+    "inheritFrom": "holder-tiles-gold-p1",
+    "y": 72
   },
   "holder-tiles-civ-agriculture-p1": {
     "type": "holder",
     "id": "holder-tiles-civ-agriculture-p1",
     "parent": "seat-p1",
-    "x": 704,
+    "x": 713,
     "dropTarget": {
       "deck": "deck-tiles",
       "cardType": "tile-civ-agriculture"
     },
-    "inheritFrom": "holder-tiles-gold-p1"
+    "inheritFrom": "holder-tiles-gold-p1",
+    "y": 72
   },
   "holder-tiles-civ-religion-p1": {
     "type": "holder",
     "id": "holder-tiles-civ-religion-p1",
     "parent": "seat-p1",
-    "x": 776,
+    "x": 785,
     "dropTarget": {
       "deck": "deck-tiles",
       "cardType": "tile-civ-religion"
     },
-    "inheritFrom": "holder-tiles-gold-p1"
+    "inheritFrom": "holder-tiles-gold-p1",
+    "y": 72
   },
   "holder-tiles-civ-writing-p1": {
     "type": "holder",
     "id": "holder-tiles-civ-writing-p1",
     "parent": "seat-p1",
-    "x": 920,
+    "x": 929,
     "dropTarget": {
       "deck": "deck-tiles",
       "cardType": "tile-civ-writing"
     },
-    "inheritFrom": "holder-tiles-gold-p1"
+    "inheritFrom": "holder-tiles-gold-p1",
+    "y": 72
   },
   "holder-tiles-monument-pyramids-p1": {
     "type": "holder",
@@ -1268,7 +1481,9 @@
     },
     "y": 355,
     "color": "#999999",
-    "turn": false
+    "turn": false,
+    "skipTurn": true,
+    "z": 7
   },
   "seat-p3": {
     "type": "seat",
@@ -1284,9 +1499,11 @@
         "css"
       ]
     },
-    "y": 515,
+    "y": 517,
     "color": "#999999",
-    "turn": false
+    "turn": false,
+    "skipTurn": true,
+    "z": 6
   },
   "seat-p4": {
     "type": "seat",
@@ -1304,7 +1521,8 @@
     },
     "y": 675,
     "color": "#999999",
-    "turn": false
+    "turn": false,
+    "skipTurn": true
   },
   "seat-p5": {
     "type": "seat",
@@ -1320,69 +1538,100 @@
         "css"
       ]
     },
-    "y": 835,
+    "y": 833,
     "color": "#999999",
-    "turn": false
+    "turn": false,
+    "skipTurn": true,
+    "z": 4
   },
   "holder-suns-active-p2": {
     "type": "holder",
     "id": "holder-suns-active-p2",
     "parent": "seat-p2",
-    "inheritFrom": "holder-suns-active-p1"
+    "inheritFrom": "holder-suns-active-p1",
+    "dropLimit": 4,
+    "dropOffsetX": 3.5
   },
   "holder-suns-active-p3": {
     "type": "holder",
     "id": "holder-suns-active-p3",
     "parent": "seat-p3",
-    "inheritFrom": "holder-suns-active-p1"
+    "inheritFrom": "holder-suns-active-p1",
+    "dropLimit": 4,
+    "dropOffsetX": 3.5
   },
   "holder-suns-active-p4": {
     "type": "holder",
     "id": "holder-suns-active-p4",
     "parent": "seat-p4",
-    "inheritFrom": "holder-suns-active-p1"
+    "inheritFrom": "holder-suns-active-p1",
+    "dropLimit": 4,
+    "dropOffsetX": 3.5
   },
   "holder-suns-active-p5": {
     "type": "holder",
     "id": "holder-suns-active-p5",
     "parent": "seat-p5",
-    "inheritFrom": "holder-suns-active-p1"
+    "inheritFrom": "holder-suns-active-p1",
+    "dropLimit": 4,
+    "dropOffsetX": 3.5
   },
   "holder-suns-future-p2": {
     "type": "holder",
     "id": "holder-suns-future-p2",
     "parent": "seat-p2",
-    "inheritFrom": "holder-suns-future-p1"
+    "inheritFrom": "holder-suns-future-p1",
+    "dropLimit": 4,
+    "dropOffsetX": 3.5
   },
   "holder-suns-future-p3": {
     "type": "holder",
     "id": "holder-suns-future-p3",
     "parent": "seat-p3",
-    "inheritFrom": "holder-suns-future-p1"
+    "inheritFrom": "holder-suns-future-p1",
+    "dropLimit": 4,
+    "dropOffsetX": 3.5
   },
   "holder-suns-future-p4": {
     "type": "holder",
     "id": "holder-suns-future-p4",
     "parent": "seat-p4",
-    "inheritFrom": "holder-suns-future-p1"
+    "inheritFrom": "holder-suns-future-p1",
+    "dropLimit": 4,
+    "dropOffsetX": 3.5
   },
   "holder-suns-future-p5": {
     "type": "holder",
     "id": "holder-suns-future-p5",
     "parent": "seat-p5",
-    "inheritFrom": "holder-suns-future-p1"
+    "inheritFrom": "holder-suns-future-p1",
+    "dropLimit": 4,
+    "dropOffsetX": 3.5
+  },
+  "pass-marker-p2": {
+    "type": "card",
+    "id": "pass-marker-p2",
+    "deck": "deck-pass-markers",
+    "cardType": "pass",
+    "parent": "seat-p2",
+    "x": 140,
+    "y": 75
   },
   "holder-suns-bid-p2": {
     "type": "holder",
     "id": "holder-suns-bid-p2",
-    "parent": "seat-p2",
+    "parent": "pass-marker-p2",
+    "x": 0,
+    "y": 0,
     "inheritFrom": "holder-suns-bid-p1"
   },
   "holder-tiles-gold-p2": {
     "type": "holder",
     "id": "holder-tiles-gold-p2",
     "parent": "seat-p2",
-    "inheritFrom": "holder-tiles-gold-p1"
+    "inheritFrom": "holder-tiles-gold-p1",
+    "x": 191,
+    "y": 72
   },
   "holder-tiles-gold-p3": {
     "type": "holder",
@@ -1406,7 +1655,9 @@
     "type": "holder",
     "id": "holder-tiles-god-p2",
     "parent": "seat-p2",
-    "inheritFrom": "holder-tiles-god-p1"
+    "inheritFrom": "holder-tiles-god-p1",
+    "x": 266,
+    "y": 72
   },
   "holder-tiles-god-p3": {
     "type": "holder",
@@ -1430,7 +1681,9 @@
     "type": "holder",
     "id": "holder-tiles-pharaoh-p2",
     "parent": "seat-p2",
-    "inheritFrom": "holder-tiles-pharaoh-p1"
+    "inheritFrom": "holder-tiles-pharaoh-p1",
+    "x": 339,
+    "y": 72
   },
   "holder-tiles-pharaoh-p3": {
     "type": "holder",
@@ -1454,7 +1707,9 @@
     "type": "holder",
     "id": "holder-tiles-nile-p2",
     "parent": "seat-p2",
-    "inheritFrom": "holder-tiles-nile-p1"
+    "inheritFrom": "holder-tiles-nile-p1",
+    "x": 411,
+    "y": 72
   },
   "holder-tiles-nile-p3": {
     "type": "holder",
@@ -1478,7 +1733,9 @@
     "type": "holder",
     "id": "holder-tiles-flood-p2",
     "parent": "seat-p2",
-    "inheritFrom": "holder-tiles-flood-p1"
+    "inheritFrom": "holder-tiles-flood-p1",
+    "x": 483,
+    "y": 72
   },
   "holder-tiles-flood-p3": {
     "type": "holder",
@@ -1502,31 +1759,38 @@
     "type": "holder",
     "id": "holder-tiles-civ-pottery-p2",
     "parent": "seat-p2",
-    "inheritFrom": "holder-tiles-civ-pottery-p1"
+    "inheritFrom": "holder-tiles-civ-pottery-p1",
+    "x": 641,
+    "y": 72
   },
   "holder-tiles-civ-pottery-p3": {
     "type": "holder",
     "id": "holder-tiles-civ-pottery-p3",
     "parent": "seat-p3",
-    "inheritFrom": "holder-tiles-civ-pottery-p1"
+    "inheritFrom": "holder-tiles-civ-pottery-p1",
+    "x": 641
   },
   "holder-tiles-civ-pottery-p4": {
     "type": "holder",
     "id": "holder-tiles-civ-pottery-p4",
     "parent": "seat-p4",
-    "inheritFrom": "holder-tiles-civ-pottery-p1"
+    "inheritFrom": "holder-tiles-civ-pottery-p1",
+    "x": 641
   },
   "holder-tiles-civ-pottery-p5": {
     "type": "holder",
     "id": "holder-tiles-civ-pottery-p5",
     "parent": "seat-p5",
-    "inheritFrom": "holder-tiles-civ-pottery-p1"
+    "inheritFrom": "holder-tiles-civ-pottery-p1",
+    "x": 641
   },
   "holder-tiles-civ-agriculture-p2": {
     "type": "holder",
     "id": "holder-tiles-civ-agriculture-p2",
     "parent": "seat-p2",
-    "inheritFrom": "holder-tiles-civ-agriculture-p1"
+    "inheritFrom": "holder-tiles-civ-agriculture-p1",
+    "x": 713,
+    "y": 72
   },
   "holder-tiles-civ-agriculture-p3": {
     "type": "holder",
@@ -1550,7 +1814,9 @@
     "type": "holder",
     "id": "holder-tiles-civ-religion-p2",
     "parent": "seat-p2",
-    "inheritFrom": "holder-tiles-civ-religion-p1"
+    "inheritFrom": "holder-tiles-civ-religion-p1",
+    "x": 785,
+    "y": 72
   },
   "holder-tiles-civ-religion-p3": {
     "type": "holder",
@@ -1574,7 +1840,9 @@
     "type": "holder",
     "id": "holder-tiles-civ-writing-p2",
     "parent": "seat-p2",
-    "inheritFrom": "holder-tiles-civ-writing-p1"
+    "inheritFrom": "holder-tiles-civ-writing-p1",
+    "x": 929,
+    "y": 72
   },
   "holder-tiles-civ-writing-p3": {
     "type": "holder",
@@ -1624,6 +1892,17 @@
     "dropTarget": {
       "deck": "deck-tiles",
       "cardType": "tile-monument-canopicjars"
+    },
+    "inheritFrom": "holder-tiles-gold-p1"
+  },
+  "holder-tiles-monument-stargate-p1": {
+    "type": "holder",
+    "id": "holder-tiles-monument-stargate-p1",
+    "parent": "seat-p1",
+    "x": 1514,
+    "dropTarget": {
+      "deck": "deck-tiles",
+      "cardType": "tile-monument-stargate"
     },
     "inheritFrom": "holder-tiles-gold-p1"
   },
@@ -1699,10 +1978,43 @@
     "deck": "deck-tile-examples",
     "cardType": "tile-example",
     "x": 637,
-    "y": 1,
+    "y": -100,
     "scarabcolor": "transparent",
     "image": "/i/game-icons.net/delapouite/eye-of-horus.svg",
     "value": 7
+  },
+  "horus-track-image-8": {
+    "type": "card",
+    "id": "horus-track-image-8",
+    "deck": "deck-tile-examples",
+    "cardType": "tile-example",
+    "x": 709,
+    "y": -100,
+    "scarabcolor": "transparent",
+    "image": "/i/game-icons.net/delapouite/eye-of-horus.svg",
+    "value": 8
+  },
+  "horus-track-image-9": {
+    "type": "card",
+    "id": "horus-track-image-9",
+    "deck": "deck-tile-examples",
+    "cardType": "tile-example",
+    "x": 781,
+    "y": -100,
+    "scarabcolor": "transparent",
+    "image": "/i/game-icons.net/delapouite/eye-of-horus.svg",
+    "value": 9
+  },
+  "horus-track-image-10": {
+    "type": "card",
+    "id": "horus-track-image-10",
+    "deck": "deck-tile-examples",
+    "cardType": "tile-example",
+    "x": 853,
+    "y": -100,
+    "scarabcolor": "transparent",
+    "image": "/i/game-icons.net/delapouite/eye-of-horus.svg",
+    "value": 10
   },
   "auction-track-image-1": {
     "type": "card",
@@ -1774,22 +2086,65 @@
     "image": "/i/game-icons.net/delapouite/banging-gavel.svg",
     "scarabcolor": "transparent"
   },
+  "auction-track-image-8": {
+    "type": "card",
+    "id": "auction-track-image-8",
+    "deck": "deck-tile-examples",
+    "cardType": "tile-example",
+    "x": 709,
+    "y": 73,
+    "image": "/i/game-icons.net/delapouite/banging-gavel.svg",
+    "scarabcolor": "transparent"
+  },
+  "pass-marker-p3": {
+    "type": "card",
+    "id": "pass-marker-p3",
+    "deck": "deck-pass-markers",
+    "cardType": "pass",
+    "parent": "seat-p3",
+    "x": 140,
+    "y": 75
+  },
   "holder-suns-bid-p3": {
     "type": "holder",
     "id": "holder-suns-bid-p3",
-    "parent": "seat-p3",
+    "parent": "pass-marker-p3",
+    "x": 0,
+    "y": 0,
     "inheritFrom": "holder-suns-bid-p1"
+  },
+  "pass-marker-p4": {
+    "type": "card",
+    "id": "pass-marker-p4",
+    "deck": "deck-pass-markers",
+    "cardType": "pass",
+    "parent": "seat-p4",
+    "x": 140,
+    "y": 75
   },
   "holder-suns-bid-p4": {
     "type": "holder",
     "id": "holder-suns-bid-p4",
-    "parent": "seat-p4",
+    "parent": "pass-marker-p4",
+    "x": 0,
+    "y": 0,
     "inheritFrom": "holder-suns-bid-p1"
+  },
+  "pass-marker-p5": {
+    "type": "card",
+    "id": "pass-marker-p5",
+    "deck": "deck-pass-markers",
+    "cardType": "pass",
+    "parent": "seat-p5",
+    "x": 140,
+    "y": 75
   },
   "holder-suns-bid-p5": {
     "type": "holder",
     "id": "holder-suns-bid-p5",
-    "parent": "seat-p5",
+    "parent": "pass-marker-p5",
+    "x": 0,
+    "y": 0,
     "inheritFrom": "holder-suns-bid-p1"
   },
   "score-p2": {
@@ -1893,7 +2248,7 @@
     "type": "holder",
     "id": "holder-tiles-discard",
     "inheritFrom": "holder-tiles-draw",
-    "x": 871,
+    "x": 943,
     "y": 37
   },
   "label-tiles-discard": {
@@ -1917,20 +2272,12 @@
     },
     "text": "🟆 FINAL EPOCH ONLY 🟆\nHighest suns total +5VP\nLowest suns total -5VP"
   },
-  "tile-horus-1": {
-    "type": "card",
-    "id": "tile-horus-1",
-    "deck": "deck-tiles",
-    "cardType": "tile-horus",
-    "z": 7639,
-    "parent": "pile-tiles-draw"
-  },
   "tile-horus-2": {
     "type": "card",
     "id": "tile-horus-2",
     "deck": "deck-tiles",
     "cardType": "tile-horus",
-    "z": 7652,
+    "z": 25087,
     "parent": "pile-tiles-draw"
   },
   "tile-horus-3": {
@@ -1938,7 +2285,7 @@
     "id": "tile-horus-3",
     "deck": "deck-tiles",
     "cardType": "tile-horus",
-    "z": 7761,
+    "z": 24956,
     "parent": "pile-tiles-draw"
   },
   "tile-horus-4": {
@@ -1946,7 +2293,7 @@
     "id": "tile-horus-4",
     "deck": "deck-tiles",
     "cardType": "tile-horus",
-    "z": 7669,
+    "z": 25017,
     "parent": "pile-tiles-draw"
   },
   "tile-horus-5": {
@@ -1954,7 +2301,7 @@
     "id": "tile-horus-5",
     "deck": "deck-tiles",
     "cardType": "tile-horus",
-    "z": 7656,
+    "z": 24969,
     "parent": "pile-tiles-draw"
   },
   "tile-horus-6": {
@@ -1962,7 +2309,7 @@
     "id": "tile-horus-6",
     "deck": "deck-tiles",
     "cardType": "tile-horus",
-    "z": 7689,
+    "z": 25072,
     "parent": "pile-tiles-draw"
   },
   "tile-horus-7": {
@@ -1970,7 +2317,7 @@
     "id": "tile-horus-7",
     "deck": "deck-tiles",
     "cardType": "tile-horus",
-    "z": 7716,
+    "z": 25115,
     "parent": "pile-tiles-draw"
   },
   "tile-horus-8": {
@@ -1978,7 +2325,7 @@
     "id": "tile-horus-8",
     "deck": "deck-tiles",
     "cardType": "tile-horus",
-    "z": 7778,
+    "z": 24923,
     "parent": "pile-tiles-draw"
   },
   "tile-horus-9": {
@@ -1986,7 +2333,7 @@
     "id": "tile-horus-9",
     "deck": "deck-tiles",
     "cardType": "tile-horus",
-    "z": 7798,
+    "z": 24941,
     "parent": "pile-tiles-draw"
   },
   "tile-horus-10": {
@@ -1994,7 +2341,7 @@
     "id": "tile-horus-10",
     "deck": "deck-tiles",
     "cardType": "tile-horus",
-    "z": 7767,
+    "z": 24992,
     "parent": "pile-tiles-draw"
   },
   "tile-horus-11": {
@@ -2002,7 +2349,7 @@
     "id": "tile-horus-11",
     "deck": "deck-tiles",
     "cardType": "tile-horus",
-    "z": 7801,
+    "z": 25011,
     "parent": "pile-tiles-draw"
   },
   "tile-horus-12": {
@@ -2010,7 +2357,7 @@
     "id": "tile-horus-12",
     "deck": "deck-tiles",
     "cardType": "tile-horus",
-    "z": 7738,
+    "z": 25065,
     "parent": "pile-tiles-draw"
   },
   "tile-horus-13": {
@@ -2018,7 +2365,7 @@
     "id": "tile-horus-13",
     "deck": "deck-tiles",
     "cardType": "tile-horus",
-    "z": 7777,
+    "z": 24959,
     "parent": "pile-tiles-draw"
   },
   "tile-horus-14": {
@@ -2026,7 +2373,7 @@
     "id": "tile-horus-14",
     "deck": "deck-tiles",
     "cardType": "tile-horus",
-    "z": 7651,
+    "z": 24949,
     "parent": "pile-tiles-draw"
   },
   "tile-horus-15": {
@@ -2034,7 +2381,7 @@
     "id": "tile-horus-15",
     "deck": "deck-tiles",
     "cardType": "tile-horus",
-    "z": 7776,
+    "z": 25009,
     "parent": "pile-tiles-draw"
   },
   "tile-horus-16": {
@@ -2042,7 +2389,7 @@
     "id": "tile-horus-16",
     "deck": "deck-tiles",
     "cardType": "tile-horus",
-    "z": 7644,
+    "z": 24976,
     "parent": "pile-tiles-draw"
   },
   "tile-horus-17": {
@@ -2050,7 +2397,7 @@
     "id": "tile-horus-17",
     "deck": "deck-tiles",
     "cardType": "tile-horus",
-    "z": 7787,
+    "z": 25104,
     "parent": "pile-tiles-draw"
   },
   "tile-horus-18": {
@@ -2058,7 +2405,7 @@
     "id": "tile-horus-18",
     "deck": "deck-tiles",
     "cardType": "tile-horus",
-    "z": 7714,
+    "z": 24965,
     "parent": "pile-tiles-draw"
   },
   "tile-horus-19": {
@@ -2066,7 +2413,7 @@
     "id": "tile-horus-19",
     "deck": "deck-tiles",
     "cardType": "tile-horus",
-    "z": 7814,
+    "z": 25015,
     "parent": "pile-tiles-draw"
   },
   "tile-horus-20": {
@@ -2074,7 +2421,7 @@
     "id": "tile-horus-20",
     "deck": "deck-tiles",
     "cardType": "tile-horus",
-    "z": 7723,
+    "z": 25107,
     "parent": "pile-tiles-draw"
   },
   "tile-horus-21": {
@@ -2082,15 +2429,79 @@
     "id": "tile-horus-21",
     "deck": "deck-tiles",
     "cardType": "tile-horus",
-    "z": 7770,
+    "z": 25044,
     "parent": "pile-tiles-draw"
   },
-  "tile-gold-1": {
+  "tile-horus-22": {
     "type": "card",
-    "id": "tile-gold-1",
+    "id": "tile-horus-22",
     "deck": "deck-tiles",
-    "cardType": "tile-gold",
-    "z": 7691,
+    "cardType": "tile-horus",
+    "z": 24974,
+    "parent": "pile-tiles-draw"
+  },
+  "tile-horus-23": {
+    "type": "card",
+    "id": "tile-horus-23",
+    "deck": "deck-tiles",
+    "cardType": "tile-horus",
+    "z": 25071,
+    "parent": "pile-tiles-draw"
+  },
+  "tile-horus-24": {
+    "type": "card",
+    "id": "tile-horus-24",
+    "deck": "deck-tiles",
+    "cardType": "tile-horus",
+    "z": 25041,
+    "parent": "pile-tiles-draw"
+  },
+  "tile-horus-25": {
+    "type": "card",
+    "id": "tile-horus-25",
+    "deck": "deck-tiles",
+    "cardType": "tile-horus",
+    "z": 25068,
+    "parent": "pile-tiles-draw"
+  },
+  "tile-horus-26": {
+    "type": "card",
+    "id": "tile-horus-26",
+    "deck": "deck-tiles",
+    "cardType": "tile-horus",
+    "z": 25086,
+    "parent": "pile-tiles-draw"
+  },
+  "tile-horus-27": {
+    "type": "card",
+    "id": "tile-horus-27",
+    "deck": "deck-tiles",
+    "cardType": "tile-horus",
+    "z": 25084,
+    "parent": "pile-tiles-draw"
+  },
+  "tile-horus-28": {
+    "type": "card",
+    "id": "tile-horus-28",
+    "deck": "deck-tiles",
+    "cardType": "tile-horus",
+    "z": 24950,
+    "parent": "pile-tiles-draw"
+  },
+  "tile-horus-29": {
+    "type": "card",
+    "id": "tile-horus-29",
+    "deck": "deck-tiles",
+    "cardType": "tile-horus",
+    "z": 25040,
+    "parent": "pile-tiles-draw"
+  },
+  "tile-horus-30": {
+    "type": "card",
+    "id": "tile-horus-30",
+    "deck": "deck-tiles",
+    "cardType": "tile-horus",
+    "z": 25020,
     "parent": "pile-tiles-draw"
   },
   "tile-gold-2": {
@@ -2098,7 +2509,7 @@
     "id": "tile-gold-2",
     "deck": "deck-tiles",
     "cardType": "tile-gold",
-    "z": 7702,
+    "z": 25050,
     "parent": "pile-tiles-draw"
   },
   "tile-gold-3": {
@@ -2106,15 +2517,23 @@
     "id": "tile-gold-3",
     "deck": "deck-tiles",
     "cardType": "tile-gold",
-    "z": 7646,
+    "z": 25067,
     "parent": "pile-tiles-draw"
   },
-  "tile-god-1": {
+  "tile-gold-4": {
     "type": "card",
-    "id": "tile-god-1",
+    "id": "tile-gold-4",
     "deck": "deck-tiles",
-    "cardType": "tile-god",
-    "z": 7783,
+    "cardType": "tile-gold",
+    "z": 25016,
+    "parent": "pile-tiles-draw"
+  },
+  "tile-gold-5": {
+    "type": "card",
+    "id": "tile-gold-5",
+    "deck": "deck-tiles",
+    "cardType": "tile-gold",
+    "z": 25039,
     "parent": "pile-tiles-draw"
   },
   "tile-god-2": {
@@ -2122,7 +2541,7 @@
     "id": "tile-god-2",
     "deck": "deck-tiles",
     "cardType": "tile-god",
-    "z": 7725,
+    "z": 25092,
     "parent": "pile-tiles-draw"
   },
   "tile-god-3": {
@@ -2130,7 +2549,7 @@
     "id": "tile-god-3",
     "deck": "deck-tiles",
     "cardType": "tile-god",
-    "z": 7804,
+    "z": 25002,
     "parent": "pile-tiles-draw"
   },
   "tile-god-4": {
@@ -2138,7 +2557,7 @@
     "id": "tile-god-4",
     "deck": "deck-tiles",
     "cardType": "tile-god",
-    "z": 7756,
+    "z": 25057,
     "parent": "pile-tiles-draw"
   },
   "tile-god-5": {
@@ -2146,7 +2565,7 @@
     "id": "tile-god-5",
     "deck": "deck-tiles",
     "cardType": "tile-god",
-    "z": 7793,
+    "z": 24973,
     "parent": "pile-tiles-draw"
   },
   "tile-god-6": {
@@ -2154,15 +2573,23 @@
     "id": "tile-god-6",
     "deck": "deck-tiles",
     "cardType": "tile-god",
-    "z": 7743,
+    "z": 25095,
     "parent": "pile-tiles-draw"
   },
-  "tile-pharaoh-1": {
+  "tile-god-7": {
     "type": "card",
-    "id": "tile-pharaoh-1",
+    "id": "tile-god-7",
     "deck": "deck-tiles",
-    "cardType": "tile-pharaoh",
-    "z": 7730,
+    "cardType": "tile-god",
+    "z": 25028,
+    "parent": "pile-tiles-draw"
+  },
+  "tile-god-8": {
+    "type": "card",
+    "id": "tile-god-8",
+    "deck": "deck-tiles",
+    "cardType": "tile-god",
+    "z": 24940,
     "parent": "pile-tiles-draw"
   },
   "tile-pharaoh-2": {
@@ -2170,7 +2597,7 @@
     "id": "tile-pharaoh-2",
     "deck": "deck-tiles",
     "cardType": "tile-pharaoh",
-    "z": 7780,
+    "z": 25010,
     "parent": "pile-tiles-draw"
   },
   "tile-pharaoh-3": {
@@ -2178,7 +2605,7 @@
     "id": "tile-pharaoh-3",
     "deck": "deck-tiles",
     "cardType": "tile-pharaoh",
-    "z": 7668,
+    "z": 24942,
     "parent": "pile-tiles-draw"
   },
   "tile-pharaoh-4": {
@@ -2186,7 +2613,7 @@
     "id": "tile-pharaoh-4",
     "deck": "deck-tiles",
     "cardType": "tile-pharaoh",
-    "z": 7807,
+    "z": 25109,
     "parent": "pile-tiles-draw"
   },
   "tile-pharaoh-5": {
@@ -2194,7 +2621,7 @@
     "id": "tile-pharaoh-5",
     "deck": "deck-tiles",
     "cardType": "tile-pharaoh",
-    "z": 7741,
+    "z": 25060,
     "parent": "pile-tiles-draw"
   },
   "tile-pharaoh-6": {
@@ -2202,7 +2629,7 @@
     "id": "tile-pharaoh-6",
     "deck": "deck-tiles",
     "cardType": "tile-pharaoh",
-    "z": 7712,
+    "z": 24918,
     "parent": "pile-tiles-draw"
   },
   "tile-pharaoh-7": {
@@ -2210,7 +2637,7 @@
     "id": "tile-pharaoh-7",
     "deck": "deck-tiles",
     "cardType": "tile-pharaoh",
-    "z": 7745,
+    "z": 24967,
     "parent": "pile-tiles-draw"
   },
   "tile-pharaoh-8": {
@@ -2218,7 +2645,7 @@
     "id": "tile-pharaoh-8",
     "deck": "deck-tiles",
     "cardType": "tile-pharaoh",
-    "z": 7681,
+    "z": 24933,
     "parent": "pile-tiles-draw"
   },
   "tile-pharaoh-9": {
@@ -2226,7 +2653,7 @@
     "id": "tile-pharaoh-9",
     "deck": "deck-tiles",
     "cardType": "tile-pharaoh",
-    "z": 7671,
+    "z": 24921,
     "parent": "pile-tiles-draw"
   },
   "tile-pharaoh-10": {
@@ -2234,7 +2661,7 @@
     "id": "tile-pharaoh-10",
     "deck": "deck-tiles",
     "cardType": "tile-pharaoh",
-    "z": 7647,
+    "z": 25111,
     "parent": "pile-tiles-draw"
   },
   "tile-pharaoh-11": {
@@ -2242,7 +2669,7 @@
     "id": "tile-pharaoh-11",
     "deck": "deck-tiles",
     "cardType": "tile-pharaoh",
-    "z": 7813,
+    "z": 25021,
     "parent": "pile-tiles-draw"
   },
   "tile-pharaoh-12": {
@@ -2250,7 +2677,7 @@
     "id": "tile-pharaoh-12",
     "deck": "deck-tiles",
     "cardType": "tile-pharaoh",
-    "z": 7642,
+    "z": 25024,
     "parent": "pile-tiles-draw"
   },
   "tile-pharaoh-13": {
@@ -2258,7 +2685,7 @@
     "id": "tile-pharaoh-13",
     "deck": "deck-tiles",
     "cardType": "tile-pharaoh",
-    "z": 7758,
+    "z": 24945,
     "parent": "pile-tiles-draw"
   },
   "tile-pharaoh-14": {
@@ -2266,7 +2693,7 @@
     "id": "tile-pharaoh-14",
     "deck": "deck-tiles",
     "cardType": "tile-pharaoh",
-    "z": 7728,
+    "z": 24930,
     "parent": "pile-tiles-draw"
   },
   "tile-pharaoh-15": {
@@ -2274,7 +2701,7 @@
     "id": "tile-pharaoh-15",
     "deck": "deck-tiles",
     "cardType": "tile-pharaoh",
-    "z": 7706,
+    "z": 24912,
     "parent": "pile-tiles-draw"
   },
   "tile-pharaoh-16": {
@@ -2282,15 +2709,87 @@
     "id": "tile-pharaoh-16",
     "deck": "deck-tiles",
     "cardType": "tile-pharaoh",
-    "z": 7763,
+    "z": 24957,
     "parent": "pile-tiles-draw"
   },
-  "tile-nile-1": {
+  "tile-pharaoh-17": {
     "type": "card",
-    "id": "tile-nile-1",
+    "id": "tile-pharaoh-17",
     "deck": "deck-tiles",
-    "cardType": "tile-nile",
-    "z": 7788,
+    "cardType": "tile-pharaoh",
+    "z": 25003,
+    "parent": "pile-tiles-draw"
+  },
+  "tile-pharaoh-18": {
+    "type": "card",
+    "id": "tile-pharaoh-18",
+    "deck": "deck-tiles",
+    "cardType": "tile-pharaoh",
+    "z": 24928,
+    "parent": "pile-tiles-draw"
+  },
+  "tile-pharaoh-19": {
+    "type": "card",
+    "id": "tile-pharaoh-19",
+    "deck": "deck-tiles",
+    "cardType": "tile-pharaoh",
+    "z": 24961,
+    "parent": "pile-tiles-draw"
+  },
+  "tile-pharaoh-20": {
+    "type": "card",
+    "id": "tile-pharaoh-20",
+    "deck": "deck-tiles",
+    "cardType": "tile-pharaoh",
+    "z": 24953,
+    "parent": "pile-tiles-draw"
+  },
+  "tile-pharaoh-21": {
+    "type": "card",
+    "id": "tile-pharaoh-21",
+    "deck": "deck-tiles",
+    "cardType": "tile-pharaoh",
+    "z": 25066,
+    "parent": "pile-tiles-draw"
+  },
+  "tile-pharaoh-22": {
+    "type": "card",
+    "id": "tile-pharaoh-22",
+    "deck": "deck-tiles",
+    "cardType": "tile-pharaoh",
+    "z": 25045,
+    "parent": "pile-tiles-draw"
+  },
+  "tile-pharaoh-23": {
+    "type": "card",
+    "id": "tile-pharaoh-23",
+    "deck": "deck-tiles",
+    "cardType": "tile-pharaoh",
+    "z": 25097,
+    "parent": "pile-tiles-draw"
+  },
+  "tile-pharaoh-24": {
+    "type": "card",
+    "id": "tile-pharaoh-24",
+    "deck": "deck-tiles",
+    "cardType": "tile-pharaoh",
+    "z": 25008,
+    "parent": "pile-tiles-draw"
+  },
+  "tile-pharaoh-25": {
+    "type": "card",
+    "id": "tile-pharaoh-25",
+    "deck": "deck-tiles",
+    "cardType": "tile-pharaoh",
+    "z": 24989,
+    "parent": "pile-tiles-draw"
+  },
+  "tile-disaster-funeral-2": {
+    "type": "card",
+    "id": "tile-disaster-funeral-2",
+    "deck": "deck-tiles",
+    "cardType": "tile-disaster-funeral",
+    "z": 25022,
     "parent": "pile-tiles-draw"
   },
   "tile-nile-2": {
@@ -2298,7 +2797,7 @@
     "id": "tile-nile-2",
     "deck": "deck-tiles",
     "cardType": "tile-nile",
-    "z": 7700,
+    "z": 25033,
     "parent": "pile-tiles-draw"
   },
   "tile-nile-3": {
@@ -2306,7 +2805,7 @@
     "id": "tile-nile-3",
     "deck": "deck-tiles",
     "cardType": "tile-nile",
-    "z": 7795,
+    "z": 24972,
     "parent": "pile-tiles-draw"
   },
   "tile-nile-4": {
@@ -2314,7 +2813,7 @@
     "id": "tile-nile-4",
     "deck": "deck-tiles",
     "cardType": "tile-nile",
-    "z": 7812,
+    "z": 25027,
     "parent": "pile-tiles-draw"
   },
   "tile-nile-5": {
@@ -2322,7 +2821,7 @@
     "id": "tile-nile-5",
     "deck": "deck-tiles",
     "cardType": "tile-nile",
-    "z": 7786,
+    "z": 25030,
     "parent": "pile-tiles-draw"
   },
   "tile-nile-6": {
@@ -2330,7 +2829,7 @@
     "id": "tile-nile-6",
     "deck": "deck-tiles",
     "cardType": "tile-nile",
-    "z": 7816,
+    "z": 24929,
     "parent": "pile-tiles-draw"
   },
   "tile-nile-7": {
@@ -2338,7 +2837,7 @@
     "id": "tile-nile-7",
     "deck": "deck-tiles",
     "cardType": "tile-nile",
-    "z": 7752,
+    "z": 25112,
     "parent": "pile-tiles-draw"
   },
   "tile-nile-8": {
@@ -2346,7 +2845,7 @@
     "id": "tile-nile-8",
     "deck": "deck-tiles",
     "cardType": "tile-nile",
-    "z": 7773,
+    "z": 24988,
     "parent": "pile-tiles-draw"
   },
   "tile-nile-9": {
@@ -2354,7 +2853,7 @@
     "id": "tile-nile-9",
     "deck": "deck-tiles",
     "cardType": "tile-nile",
-    "z": 7675,
+    "z": 25089,
     "parent": "pile-tiles-draw"
   },
   "tile-nile-10": {
@@ -2362,7 +2861,7 @@
     "id": "tile-nile-10",
     "deck": "deck-tiles",
     "cardType": "tile-nile",
-    "z": 7797,
+    "z": 24966,
     "parent": "pile-tiles-draw"
   },
   "tile-nile-11": {
@@ -2370,7 +2869,7 @@
     "id": "tile-nile-11",
     "deck": "deck-tiles",
     "cardType": "tile-nile",
-    "z": 7679,
+    "z": 24916,
     "parent": "pile-tiles-draw"
   },
   "tile-nile-12": {
@@ -2378,7 +2877,7 @@
     "id": "tile-nile-12",
     "deck": "deck-tiles",
     "cardType": "tile-nile",
-    "z": 7690,
+    "z": 25059,
     "parent": "pile-tiles-draw"
   },
   "tile-nile-13": {
@@ -2386,7 +2885,7 @@
     "id": "tile-nile-13",
     "deck": "deck-tiles",
     "cardType": "tile-nile",
-    "z": 7670,
+    "z": 24990,
     "parent": "pile-tiles-draw"
   },
   "tile-nile-14": {
@@ -2394,7 +2893,7 @@
     "id": "tile-nile-14",
     "deck": "deck-tiles",
     "cardType": "tile-nile",
-    "z": 7637,
+    "z": 25100,
     "parent": "pile-tiles-draw"
   },
   "tile-nile-15": {
@@ -2402,7 +2901,7 @@
     "id": "tile-nile-15",
     "deck": "deck-tiles",
     "cardType": "tile-nile",
-    "z": 7809,
+    "z": 24946,
     "parent": "pile-tiles-draw"
   },
   "tile-nile-16": {
@@ -2410,15 +2909,79 @@
     "id": "tile-nile-16",
     "deck": "deck-tiles",
     "cardType": "tile-nile",
-    "z": 7805,
+    "z": 25085,
     "parent": "pile-tiles-draw"
   },
-  "tile-flood-1": {
+  "tile-nile-17": {
     "type": "card",
-    "id": "tile-flood-1",
+    "id": "tile-nile-17",
     "deck": "deck-tiles",
-    "cardType": "tile-flood",
-    "z": 7749,
+    "cardType": "tile-nile",
+    "z": 24932,
+    "parent": "pile-tiles-draw"
+  },
+  "tile-nile-18": {
+    "type": "card",
+    "id": "tile-nile-18",
+    "deck": "deck-tiles",
+    "cardType": "tile-nile",
+    "z": 24924,
+    "parent": "pile-tiles-draw"
+  },
+  "tile-nile-19": {
+    "type": "card",
+    "id": "tile-nile-19",
+    "deck": "deck-tiles",
+    "cardType": "tile-nile",
+    "z": 24935,
+    "parent": "pile-tiles-draw"
+  },
+  "tile-nile-20": {
+    "type": "card",
+    "id": "tile-nile-20",
+    "deck": "deck-tiles",
+    "cardType": "tile-nile",
+    "z": 25062,
+    "parent": "pile-tiles-draw"
+  },
+  "tile-nile-21": {
+    "type": "card",
+    "id": "tile-nile-21",
+    "deck": "deck-tiles",
+    "cardType": "tile-nile",
+    "z": 25037,
+    "parent": "pile-tiles-draw"
+  },
+  "tile-nile-22": {
+    "type": "card",
+    "id": "tile-nile-22",
+    "deck": "deck-tiles",
+    "cardType": "tile-nile",
+    "z": 25049,
+    "parent": "pile-tiles-draw"
+  },
+  "tile-nile-23": {
+    "type": "card",
+    "id": "tile-nile-23",
+    "deck": "deck-tiles",
+    "cardType": "tile-nile",
+    "z": 25064,
+    "parent": "pile-tiles-draw"
+  },
+  "tile-nile-24": {
+    "type": "card",
+    "id": "tile-nile-24",
+    "deck": "deck-tiles",
+    "cardType": "tile-nile",
+    "z": 25105,
+    "parent": "pile-tiles-draw"
+  },
+  "tile-nile-25": {
+    "type": "card",
+    "id": "tile-nile-25",
+    "deck": "deck-tiles",
+    "cardType": "tile-nile",
+    "z": 24922,
     "parent": "pile-tiles-draw"
   },
   "tile-flood-2": {
@@ -2426,7 +2989,7 @@
     "id": "tile-flood-2",
     "deck": "deck-tiles",
     "cardType": "tile-flood",
-    "z": 7698,
+    "z": 25043,
     "parent": "pile-tiles-draw"
   },
   "tile-flood-3": {
@@ -2434,7 +2997,7 @@
     "id": "tile-flood-3",
     "deck": "deck-tiles",
     "cardType": "tile-flood",
-    "z": 7727,
+    "z": 24931,
     "parent": "pile-tiles-draw"
   },
   "tile-flood-4": {
@@ -2442,7 +3005,7 @@
     "id": "tile-flood-4",
     "deck": "deck-tiles",
     "cardType": "tile-flood",
-    "z": 7740,
+    "z": 24919,
     "parent": "pile-tiles-draw"
   },
   "tile-flood-5": {
@@ -2450,7 +3013,7 @@
     "id": "tile-flood-5",
     "deck": "deck-tiles",
     "cardType": "tile-flood",
-    "z": 7648,
+    "z": 25000,
     "parent": "pile-tiles-draw"
   },
   "tile-flood-6": {
@@ -2458,7 +3021,7 @@
     "id": "tile-flood-6",
     "deck": "deck-tiles",
     "cardType": "tile-flood",
-    "z": 7769,
+    "z": 25103,
     "parent": "pile-tiles-draw"
   },
   "tile-flood-7": {
@@ -2466,7 +3029,7 @@
     "id": "tile-flood-7",
     "deck": "deck-tiles",
     "cardType": "tile-flood",
-    "z": 7693,
+    "z": 24925,
     "parent": "pile-tiles-draw"
   },
   "tile-flood-8": {
@@ -2474,7 +3037,7 @@
     "id": "tile-flood-8",
     "deck": "deck-tiles",
     "cardType": "tile-flood",
-    "z": 7726,
+    "z": 25110,
     "parent": "pile-tiles-draw"
   },
   "tile-flood-9": {
@@ -2482,7 +3045,7 @@
     "id": "tile-flood-9",
     "deck": "deck-tiles",
     "cardType": "tile-flood",
-    "z": 7657,
+    "z": 25013,
     "parent": "pile-tiles-draw"
   },
   "tile-flood-10": {
@@ -2490,23 +3053,39 @@
     "id": "tile-flood-10",
     "deck": "deck-tiles",
     "cardType": "tile-flood",
-    "z": 7764,
+    "z": 25035,
     "parent": "pile-tiles-draw"
   },
-  "tile-civ-pottery-1": {
+  "tile-flood-11": {
     "type": "card",
-    "id": "tile-civ-pottery-1",
+    "id": "tile-flood-11",
     "deck": "deck-tiles",
-    "cardType": "tile-civ-pottery",
-    "z": 7665,
+    "cardType": "tile-flood",
+    "z": 25116,
     "parent": "pile-tiles-draw"
+  },
+  "tile-flood-12": {
+    "type": "card",
+    "id": "tile-flood-12",
+    "deck": "deck-tiles",
+    "cardType": "tile-flood",
+    "z": 25007,
+    "parent": "pile-tiles-draw"
+  },
+  "tile-disaster-drought-2": {
+    "type": "card",
+    "id": "tile-disaster-drought-2",
+    "parent": "pile-tiles-draw",
+    "deck": "deck-tiles",
+    "cardType": "tile-disaster-drought",
+    "z": 24994
   },
   "tile-civ-pottery-2": {
     "type": "card",
     "id": "tile-civ-pottery-2",
     "deck": "deck-tiles",
     "cardType": "tile-civ-pottery",
-    "z": 7660,
+    "z": 24993,
     "parent": "pile-tiles-draw"
   },
   "tile-civ-pottery-3": {
@@ -2514,7 +3093,7 @@
     "id": "tile-civ-pottery-3",
     "deck": "deck-tiles",
     "cardType": "tile-civ-pottery",
-    "z": 7748,
+    "z": 25099,
     "parent": "pile-tiles-draw"
   },
   "tile-civ-pottery-4": {
@@ -2522,15 +3101,15 @@
     "id": "tile-civ-pottery-4",
     "deck": "deck-tiles",
     "cardType": "tile-civ-pottery",
-    "z": 7649,
+    "z": 24997,
     "parent": "pile-tiles-draw"
   },
-  "tile-civ-agriculture-1": {
+  "tile-civ-pottery-5": {
     "type": "card",
-    "id": "tile-civ-agriculture-1",
+    "id": "tile-civ-pottery-5",
     "deck": "deck-tiles",
-    "cardType": "tile-civ-agriculture",
-    "z": 7791,
+    "cardType": "tile-civ-pottery",
+    "z": 25025,
     "parent": "pile-tiles-draw"
   },
   "tile-civ-agriculture-2": {
@@ -2538,7 +3117,7 @@
     "id": "tile-civ-agriculture-2",
     "deck": "deck-tiles",
     "cardType": "tile-civ-agriculture",
-    "z": 7696,
+    "z": 24958,
     "parent": "pile-tiles-draw"
   },
   "tile-civ-agriculture-3": {
@@ -2546,7 +3125,7 @@
     "id": "tile-civ-agriculture-3",
     "deck": "deck-tiles",
     "cardType": "tile-civ-agriculture",
-    "z": 7742,
+    "z": 25063,
     "parent": "pile-tiles-draw"
   },
   "tile-civ-agriculture-4": {
@@ -2554,15 +3133,15 @@
     "id": "tile-civ-agriculture-4",
     "deck": "deck-tiles",
     "cardType": "tile-civ-agriculture",
-    "z": 7662,
+    "z": 24914,
     "parent": "pile-tiles-draw"
   },
-  "tile-civ-religion-1": {
+  "tile-civ-agriculture-5": {
     "type": "card",
-    "id": "tile-civ-religion-1",
+    "id": "tile-civ-agriculture-5",
     "deck": "deck-tiles",
-    "cardType": "tile-civ-religion",
-    "z": 7772,
+    "cardType": "tile-civ-agriculture",
+    "z": 25096,
     "parent": "pile-tiles-draw"
   },
   "tile-civ-religion-2": {
@@ -2570,7 +3149,7 @@
     "id": "tile-civ-religion-2",
     "deck": "deck-tiles",
     "cardType": "tile-civ-religion",
-    "z": 7802,
+    "z": 24951,
     "parent": "pile-tiles-draw"
   },
   "tile-civ-religion-3": {
@@ -2578,7 +3157,7 @@
     "id": "tile-civ-religion-3",
     "deck": "deck-tiles",
     "cardType": "tile-civ-religion",
-    "z": 7800,
+    "z": 24934,
     "parent": "pile-tiles-draw"
   },
   "tile-civ-religion-4": {
@@ -2586,15 +3165,15 @@
     "id": "tile-civ-religion-4",
     "deck": "deck-tiles",
     "cardType": "tile-civ-religion",
-    "z": 7654,
+    "z": 24980,
     "parent": "pile-tiles-draw"
   },
-  "tile-civ-astronomy-1": {
+  "tile-civ-religion-5": {
     "type": "card",
-    "id": "tile-civ-astronomy-1",
+    "id": "tile-civ-religion-5",
     "deck": "deck-tiles",
-    "cardType": "tile-civ-astronomy",
-    "z": 7638,
+    "cardType": "tile-civ-religion",
+    "z": 25047,
     "parent": "pile-tiles-draw"
   },
   "tile-civ-astronomy-2": {
@@ -2602,7 +3181,7 @@
     "id": "tile-civ-astronomy-2",
     "deck": "deck-tiles",
     "cardType": "tile-civ-astronomy",
-    "z": 7655,
+    "z": 24960,
     "parent": "pile-tiles-draw"
   },
   "tile-civ-astronomy-3": {
@@ -2610,7 +3189,7 @@
     "id": "tile-civ-astronomy-3",
     "deck": "deck-tiles",
     "cardType": "tile-civ-astronomy",
-    "z": 7747,
+    "z": 25069,
     "parent": "pile-tiles-draw"
   },
   "tile-civ-astronomy-4": {
@@ -2618,25 +3197,36 @@
     "id": "tile-civ-astronomy-4",
     "deck": "deck-tiles",
     "cardType": "tile-civ-astronomy",
-    "z": 7684,
+    "z": 25098,
+    "parent": "pile-tiles-draw"
+  },
+  "tile-civ-astronomy-5": {
+    "type": "card",
+    "id": "tile-civ-astronomy-5",
+    "deck": "deck-tiles",
+    "cardType": "tile-civ-astronomy",
+    "z": 24915,
     "parent": "pile-tiles-draw"
   },
   "holder-tiles-civ-astronomy-p1": {
     "type": "holder",
     "id": "holder-tiles-civ-astronomy-p1",
     "parent": "seat-p1",
-    "x": 848,
+    "x": 857,
     "dropTarget": {
       "deck": "deck-tiles",
       "cardType": "tile-civ-astronomy"
     },
-    "inheritFrom": "holder-tiles-gold-p1"
+    "inheritFrom": "holder-tiles-gold-p1",
+    "y": 72
   },
   "holder-tiles-civ-astronomy-p2": {
     "type": "holder",
     "id": "holder-tiles-civ-astronomy-p2",
     "parent": "seat-p2",
-    "inheritFrom": "holder-tiles-civ-astronomy-p1"
+    "inheritFrom": "holder-tiles-civ-astronomy-p1",
+    "x": 857,
+    "y": 72
   },
   "holder-tiles-civ-astronomy-p3": {
     "type": "holder",
@@ -2656,20 +3246,12 @@
     "parent": "seat-p5",
     "inheritFrom": "holder-tiles-civ-astronomy-p1"
   },
-  "tile-civ-writing-1": {
-    "type": "card",
-    "id": "tile-civ-writing-1",
-    "deck": "deck-tiles",
-    "cardType": "tile-civ-writing",
-    "z": 7753,
-    "parent": "pile-tiles-draw"
-  },
   "tile-civ-writing-2": {
     "type": "card",
     "id": "tile-civ-writing-2",
     "deck": "deck-tiles",
     "cardType": "tile-civ-writing",
-    "z": 7735,
+    "z": 24913,
     "parent": "pile-tiles-draw"
   },
   "tile-civ-writing-3": {
@@ -2677,7 +3259,7 @@
     "id": "tile-civ-writing-3",
     "deck": "deck-tiles",
     "cardType": "tile-civ-writing",
-    "z": 7640,
+    "z": 24962,
     "parent": "pile-tiles-draw"
   },
   "tile-civ-writing-4": {
@@ -2685,15 +3267,39 @@
     "id": "tile-civ-writing-4",
     "deck": "deck-tiles",
     "cardType": "tile-civ-writing",
-    "z": 7641,
+    "z": 25088,
     "parent": "pile-tiles-draw"
   },
-  "tile-monument-pyramid-1": {
+  "tile-civ-writing-5": {
     "type": "card",
-    "id": "tile-monument-pyramid-1",
+    "id": "tile-civ-writing-5",
     "deck": "deck-tiles",
-    "cardType": "tile-monument-pyramid",
-    "z": 7806,
+    "cardType": "tile-civ-writing",
+    "z": 25023,
+    "parent": "pile-tiles-draw"
+  },
+  "tile-disaster-unrest-2": {
+    "type": "card",
+    "id": "tile-disaster-unrest-2",
+    "deck": "deck-tiles",
+    "cardType": "tile-disaster-unrest",
+    "z": 25006,
+    "parent": "pile-tiles-draw"
+  },
+  "tile-disaster-unrest-3": {
+    "type": "card",
+    "id": "tile-disaster-unrest-3",
+    "deck": "deck-tiles",
+    "cardType": "tile-disaster-unrest",
+    "z": 25042,
+    "parent": "pile-tiles-draw"
+  },
+  "tile-disaster-unrest-4": {
+    "type": "card",
+    "id": "tile-disaster-unrest-4",
+    "deck": "deck-tiles",
+    "cardType": "tile-disaster-unrest",
+    "z": 25083,
     "parent": "pile-tiles-draw"
   },
   "tile-monument-pyramid-2": {
@@ -2701,7 +3307,7 @@
     "id": "tile-monument-pyramid-2",
     "deck": "deck-tiles",
     "cardType": "tile-monument-pyramid",
-    "z": 7766,
+    "z": 24955,
     "parent": "pile-tiles-draw"
   },
   "tile-monument-pyramid-3": {
@@ -2709,7 +3315,7 @@
     "id": "tile-monument-pyramid-3",
     "deck": "deck-tiles",
     "cardType": "tile-monument-pyramid",
-    "z": 7666,
+    "z": 24991,
     "parent": "pile-tiles-draw"
   },
   "tile-monument-pyramid-4": {
@@ -2717,15 +3323,15 @@
     "id": "tile-monument-pyramid-4",
     "deck": "deck-tiles",
     "cardType": "tile-monument-pyramid",
-    "z": 7785,
+    "z": 25019,
     "parent": "pile-tiles-draw"
   },
-  "tile-monument-pyramids-1": {
+  "tile-monument-pyramid-5": {
     "type": "card",
-    "id": "tile-monument-pyramids-1",
+    "id": "tile-monument-pyramid-5",
     "deck": "deck-tiles",
-    "cardType": "tile-monument-pyramids",
-    "z": 7686,
+    "cardType": "tile-monument-pyramid",
+    "z": 25075,
     "parent": "pile-tiles-draw"
   },
   "tile-monument-pyramids-2": {
@@ -2733,7 +3339,7 @@
     "id": "tile-monument-pyramids-2",
     "deck": "deck-tiles",
     "cardType": "tile-monument-pyramids",
-    "z": 7732,
+    "z": 24995,
     "parent": "pile-tiles-draw"
   },
   "tile-monument-pyramids-3": {
@@ -2741,7 +3347,7 @@
     "id": "tile-monument-pyramids-3",
     "deck": "deck-tiles",
     "cardType": "tile-monument-pyramids",
-    "z": 7771,
+    "z": 25048,
     "parent": "pile-tiles-draw"
   },
   "tile-monument-pyramids-4": {
@@ -2749,15 +3355,15 @@
     "id": "tile-monument-pyramids-4",
     "deck": "deck-tiles",
     "cardType": "tile-monument-pyramids",
-    "z": 7682,
+    "z": 24986,
     "parent": "pile-tiles-draw"
   },
-  "tile-monument-sphinx-1": {
+  "tile-monument-pyramids-5": {
     "type": "card",
-    "id": "tile-monument-sphinx-1",
+    "id": "tile-monument-pyramids-5",
     "deck": "deck-tiles",
-    "cardType": "tile-monument-sphinx",
-    "z": 7775,
+    "cardType": "tile-monument-pyramids",
+    "z": 24998,
     "parent": "pile-tiles-draw"
   },
   "tile-monument-sphinx-2": {
@@ -2765,7 +3371,7 @@
     "id": "tile-monument-sphinx-2",
     "deck": "deck-tiles",
     "cardType": "tile-monument-sphinx",
-    "z": 7754,
+    "z": 24952,
     "parent": "pile-tiles-draw"
   },
   "tile-monument-sphinx-3": {
@@ -2773,7 +3379,7 @@
     "id": "tile-monument-sphinx-3",
     "deck": "deck-tiles",
     "cardType": "tile-monument-sphinx",
-    "z": 7664,
+    "z": 25090,
     "parent": "pile-tiles-draw"
   },
   "tile-monument-sphinx-4": {
@@ -2781,15 +3387,15 @@
     "id": "tile-monument-sphinx-4",
     "deck": "deck-tiles",
     "cardType": "tile-monument-sphinx",
-    "z": 7692,
+    "z": 24939,
     "parent": "pile-tiles-draw"
   },
-  "tile-monument-temple-1": {
+  "tile-monument-sphinx-5": {
     "type": "card",
-    "id": "tile-monument-temple-1",
+    "id": "tile-monument-sphinx-5",
     "deck": "deck-tiles",
-    "cardType": "tile-monument-temple",
-    "z": 7722,
+    "cardType": "tile-monument-sphinx",
+    "z": 25052,
     "parent": "pile-tiles-draw"
   },
   "tile-monument-temple-2": {
@@ -2797,7 +3403,7 @@
     "id": "tile-monument-temple-2",
     "deck": "deck-tiles",
     "cardType": "tile-monument-temple",
-    "z": 7811,
+    "z": 24968,
     "parent": "pile-tiles-draw"
   },
   "tile-monument-temple-3": {
@@ -2805,7 +3411,7 @@
     "id": "tile-monument-temple-3",
     "deck": "deck-tiles",
     "cardType": "tile-monument-temple",
-    "z": 7755,
+    "z": 24963,
     "parent": "pile-tiles-draw"
   },
   "tile-monument-temple-4": {
@@ -2813,15 +3419,15 @@
     "id": "tile-monument-temple-4",
     "deck": "deck-tiles",
     "cardType": "tile-monument-temple",
-    "z": 7711,
+    "z": 25058,
     "parent": "pile-tiles-draw"
   },
-  "tile-momument-djedpillar-1": {
+  "tile-monument-temple-5": {
     "type": "card",
-    "id": "tile-momument-djedpillar-1",
+    "id": "tile-monument-temple-5",
     "deck": "deck-tiles",
-    "cardType": "tile-monument-djedpillar",
-    "z": 7774,
+    "cardType": "tile-monument-temple",
+    "z": 25108,
     "parent": "pile-tiles-draw"
   },
   "tile-momument-djedpillar-2": {
@@ -2829,7 +3435,7 @@
     "id": "tile-momument-djedpillar-2",
     "deck": "deck-tiles",
     "cardType": "tile-monument-djedpillar",
-    "z": 7751,
+    "z": 25012,
     "parent": "pile-tiles-draw"
   },
   "tile-momument-djedpillar-3": {
@@ -2837,7 +3443,7 @@
     "id": "tile-momument-djedpillar-3",
     "deck": "deck-tiles",
     "cardType": "tile-monument-djedpillar",
-    "z": 7782,
+    "z": 25073,
     "parent": "pile-tiles-draw"
   },
   "tile-momument-djedpillar-4": {
@@ -2845,15 +3451,15 @@
     "id": "tile-momument-djedpillar-4",
     "deck": "deck-tiles",
     "cardType": "tile-monument-djedpillar",
-    "z": 7661,
+    "z": 24920,
     "parent": "pile-tiles-draw"
   },
-  "tile-monument-obelisk-1": {
+  "tile-momument-djedpillar-5": {
     "type": "card",
-    "id": "tile-monument-obelisk-1",
+    "id": "tile-momument-djedpillar-5",
     "deck": "deck-tiles",
-    "cardType": "tile-monument-obelisk",
-    "z": 7645,
+    "cardType": "tile-monument-djedpillar",
+    "z": 25082,
     "parent": "pile-tiles-draw"
   },
   "holder-tiles-monument-pyramids-p2": {
@@ -2898,6 +3504,12 @@
     "parent": "seat-p2",
     "inheritFrom": "holder-tiles-monument-canopicjars-p1"
   },
+  "holder-tiles-monument-stargate-p2": {
+    "type": "holder",
+    "id": "holder-tiles-monument-stargate-p2",
+    "parent": "seat-p2",
+    "inheritFrom": "holder-tiles-monument-stargate-p1"
+  },
   "holder-tiles-monument-pyramids-p3": {
     "type": "holder",
     "id": "holder-tiles-monument-pyramids-p3",
@@ -2939,6 +3551,12 @@
     "id": "holder-tiles-monument-canopicjars-p3",
     "parent": "seat-p3",
     "inheritFrom": "holder-tiles-monument-canopicjars-p1"
+  },
+  "holder-tiles-monument-stargate-p3": {
+    "type": "holder",
+    "id": "holder-tiles-monument-stargate-p3",
+    "parent": "seat-p3",
+    "inheritFrom": "holder-tiles-monument-stargate-p1"
   },
   "holder-tiles-monument-pyramids-p4": {
     "type": "holder",
@@ -2982,6 +3600,12 @@
     "parent": "seat-p4",
     "inheritFrom": "holder-tiles-monument-canopicjars-p1"
   },
+  "holder-tiles-monument-stargate-p4": {
+    "type": "holder",
+    "id": "holder-tiles-monument-stargate-p4",
+    "parent": "seat-p4",
+    "inheritFrom": "holder-tiles-monument-stargate-p1"
+  },
   "holder-tiles-monument-pyramids-p5": {
     "type": "holder",
     "id": "holder-tiles-monument-pyramids-p5",
@@ -3024,12 +3648,18 @@
     "parent": "seat-p5",
     "inheritFrom": "holder-tiles-monument-canopicjars-p1"
   },
+  "holder-tiles-monument-stargate-p5": {
+    "type": "holder",
+    "id": "holder-tiles-monument-stargate-p5",
+    "parent": "seat-p5",
+    "inheritFrom": "holder-tiles-monument-stargate-p1"
+  },
   "tile-monument-obelisk-2": {
     "type": "card",
     "id": "tile-monument-obelisk-2",
     "deck": "deck-tiles",
     "cardType": "tile-monument-obelisk",
-    "z": 7737,
+    "z": 25081,
     "parent": "pile-tiles-draw"
   },
   "tile-monument-obelisk-3": {
@@ -3037,7 +3667,7 @@
     "id": "tile-monument-obelisk-3",
     "deck": "deck-tiles",
     "cardType": "tile-monument-obelisk",
-    "z": 7789,
+    "z": 25055,
     "parent": "pile-tiles-draw"
   },
   "tile-monument-obelisk-4": {
@@ -3045,15 +3675,15 @@
     "id": "tile-monument-obelisk-4",
     "deck": "deck-tiles",
     "cardType": "tile-monument-obelisk",
-    "z": 7719,
+    "z": 25018,
     "parent": "pile-tiles-draw"
   },
-  "tile-monument-canopicjars-1": {
+  "tile-monument-obelisk-5": {
     "type": "card",
-    "id": "tile-monument-canopicjars-1",
+    "id": "tile-monument-obelisk-5",
     "deck": "deck-tiles",
-    "cardType": "tile-monument-canopicjars",
-    "z": 7729,
+    "cardType": "tile-monument-obelisk",
+    "z": 24926,
     "parent": "pile-tiles-draw"
   },
   "tile-monument-canopicjars-2": {
@@ -3061,7 +3691,7 @@
     "id": "tile-monument-canopicjars-2",
     "deck": "deck-tiles",
     "cardType": "tile-monument-canopicjars",
-    "z": 7707,
+    "z": 24987,
     "parent": "pile-tiles-draw"
   },
   "tile-monument-canopicjars-3": {
@@ -3069,7 +3699,7 @@
     "id": "tile-monument-canopicjars-3",
     "deck": "deck-tiles",
     "cardType": "tile-monument-canopicjars",
-    "z": 7678,
+    "z": 25001,
     "parent": "pile-tiles-draw"
   },
   "tile-monument-canopicjars-4": {
@@ -3077,7 +3707,55 @@
     "id": "tile-monument-canopicjars-4",
     "deck": "deck-tiles",
     "cardType": "tile-monument-canopicjars",
-    "z": 7760,
+    "z": 25114,
+    "parent": "pile-tiles-draw"
+  },
+  "tile-monument-canopicjars-5": {
+    "type": "card",
+    "id": "tile-monument-canopicjars-5",
+    "deck": "deck-tiles",
+    "cardType": "tile-monument-canopicjars",
+    "z": 24984,
+    "parent": "pile-tiles-draw"
+  },
+  "tile-monument-stargate-2": {
+    "type": "card",
+    "id": "tile-monument-stargate-2",
+    "deck": "deck-tiles",
+    "cardType": "tile-monument-stargate",
+    "z": 25091,
+    "parent": "pile-tiles-draw"
+  },
+  "tile-monument-stargate-3": {
+    "type": "card",
+    "id": "tile-monument-stargate-3",
+    "deck": "deck-tiles",
+    "cardType": "tile-monument-stargate",
+    "z": 25078,
+    "parent": "pile-tiles-draw"
+  },
+  "tile-monument-stargate-4": {
+    "type": "card",
+    "id": "tile-monument-stargate-4",
+    "deck": "deck-tiles",
+    "cardType": "tile-monument-stargate",
+    "z": 25101,
+    "parent": "pile-tiles-draw"
+  },
+  "tile-monument-stargate-5": {
+    "type": "card",
+    "id": "tile-monument-stargate-5",
+    "deck": "deck-tiles",
+    "cardType": "tile-monument-stargate",
+    "z": 25094,
+    "parent": "pile-tiles-draw"
+  },
+  "tile-disaster-earthquake-2": {
+    "type": "card",
+    "id": "tile-disaster-earthquake-2",
+    "deck": "deck-tiles",
+    "cardType": "tile-disaster-earthquake",
+    "z": 25014,
     "parent": "pile-tiles-draw"
   },
   "pile-tiles-draw": {
@@ -3100,13 +3778,13 @@
     "id": "horus-track",
     "x": 205,
     "y": 1,
-    "width": 502,
+    "width": 718,
     "css": {
       "background": "transparent",
       "border-color": "transparent"
     },
     "height": 70,
-    "dropLimit": 7,
+    "dropLimit": 6,
     "dropOffsetX": 0,
     "dropOffsetY": 0,
     "stackOffsetX": 72,
@@ -3120,11 +3798,11 @@
     "id": "auction-track",
     "inheritFrom": "horus-track",
     "y": 73,
-    "dropLimit": 7,
+    "dropLimit": 8,
     "dropTarget": {
       "deck": "deck-tiles"
     },
-    "width": 502
+    "width": 574
   },
   "button-draw": {
     "type": "button",
@@ -3204,7 +3882,7 @@
         "func": "IF",
         "operand1": "${COUNT}",
         "relation": ">=",
-        "operand2": 7,
+        "operand2": 8,
         "thenRoutine": [
           "var result = true"
         ],
@@ -3240,6 +3918,17 @@
     "clickRoutine": [
       {
         "func": "TURN"
+      },
+      {
+        "func": "FLIP",
+        "collection": [
+          "pass-marker-p1",
+          "pass-marker-p2",
+          "pass-marker-p3",
+          "pass-marker-p4",
+          "pass-marker-p5"
+        ],
+        "face": 0
       }
     ]
   },
@@ -3247,7 +3936,7 @@
     "type": "button",
     "id": "button-new-game",
     "inheritFrom": "button-draw",
-    "x": 1102,
+    "x": 1100,
     "text": "New Game",
     "clickRoutine": [
       {
@@ -3277,6 +3966,50 @@
           "score-p5"
         ],
         "value": 10
+      },
+      "var horusTrackLength = ${playerCount} + 5",
+      {
+        "func": "IF",
+        "operand1": "${playerCount}",
+        "operand2": 2,
+        "thenRoutine": [
+          "var horusTrackLength = 6"
+        ]
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "horus-track"
+        ],
+        "property": "dropLimit",
+        "value": "${horusTrackLength}"
+      },
+      {
+        "func": "FOREACH",
+        "range": [
+          7,
+          10
+        ],
+        "loopRoutine": [
+          "var y = 1",
+          {
+            "func": "IF",
+            "operand1": "${value}",
+            "relation": ">",
+            "operand2": "${horusTrackLength}",
+            "thenRoutine": [
+              "var y = -100"
+            ]
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "horus-track-image-${value}"
+            ],
+            "property": "y",
+            "value": "${y}"
+          }
+        ]
       },
       {
         "func": "RECALL",
@@ -3540,6 +4273,11 @@
           "holder-tiles-flood-p3",
           "holder-tiles-flood-p4",
           "holder-tiles-flood-p5",
+          "holder-tiles-ankh-p1",
+          "holder-tiles-ankh-p2",
+          "holder-tiles-ankh-p3",
+          "holder-tiles-ankh-p4",
+          "holder-tiles-ankh-p5",
           "holder-tiles-civ-pottery-p1",
           "holder-tiles-civ-pottery-p2",
           "holder-tiles-civ-pottery-p3",
@@ -3598,8 +4336,8 @@
     "type": "button",
     "id": "button-empty-auction",
     "inheritFrom": "button-draw",
-    "y": 90,
-    "x": 720,
+    "y": 91,
+    "x": 792,
     "text": "Discard All",
     "clickRoutine": [
       {
@@ -3608,22 +4346,24 @@
         "to": "holder-tiles-discard",
         "count": 0
       }
-    ]
+    ],
+    "z": 9
   },
   "button-win-p1": {
     "type": "button",
     "id": "button-win-p1",
-    "parent": "holder-suns-bid-p1",
-    "y": 42,
+    "parent": "seat-p1",
+    "currentBidHolder": "holder-suns-bid-p1",
+    "x": 140,
+    "y": 118,
     "width": 40,
     "height": 30,
     "text": "Win",
     "inheritFrom": "button-draw",
-    "x": 0,
     "movable": false,
     "movableInEdit": true,
     "clickRoutine": [
-      "var currentBidHolder = ${PROPERTY parent}",
+      "var currentBidHolder = ${PROPERTY currentBidHolder}",
       {
         "func": "SELECT",
         "type": "card",
@@ -3639,7 +4379,7 @@
         "relation": ">",
         "operand2": 0,
         "thenRoutine": [
-          "var seat = ${PROPERTY parent OF $currentBidHolder}",
+          "var seat = ${PROPERTY parent}",
           "var index = ${PROPERTY index OF $seat}",
           {
             "func": "GET",
@@ -3675,6 +4415,7 @@
               "pharaoh",
               "nile",
               "flood",
+              "ankh",
               "civ-pottery",
               "civ-agriculture",
               "civ-religion",
@@ -3686,7 +4427,8 @@
               "monument-pyramid",
               "monument-djedpillar",
               "monument-obelisk",
-              "monument-canopicjars"
+              "monument-canopicjars",
+              "monument-stargate"
             ],
             "loopRoutine": [
               {
@@ -3716,6 +4458,17 @@
             ]
           },
           {
+            "func": "FLIP",
+            "collection": [
+              "pass-marker-p1",
+              "pass-marker-p2",
+              "pass-marker-p3",
+              "pass-marker-p4",
+              "pass-marker-p5"
+            ],
+            "face": 0
+          },
+          {
             "func": "CLICK",
             "collection": [
               "button-end-turn"
@@ -3728,25 +4481,544 @@
   "button-win-p2": {
     "type": "button",
     "id": "button-win-p2",
-    "parent": "holder-suns-bid-p2",
+    "parent": "seat-p2",
+    "currentBidHolder": "holder-suns-bid-p2",
     "inheritFrom": "button-win-p1"
   },
   "button-win-p3": {
     "type": "button",
     "id": "button-win-p3",
-    "parent": "holder-suns-bid-p3",
+    "parent": "seat-p3",
+    "currentBidHolder": "holder-suns-bid-p3",
     "inheritFrom": "button-win-p1"
   },
   "button-win-p4": {
     "type": "button",
     "id": "button-win-p4",
-    "parent": "holder-suns-bid-p4",
+    "parent": "seat-p4",
+    "currentBidHolder": "holder-suns-bid-p4",
     "inheritFrom": "button-win-p1"
   },
   "button-win-p5": {
     "type": "button",
     "id": "button-win-p5",
-    "parent": "holder-suns-bid-p5",
+    "parent": "seat-p5",
+    "currentBidHolder": "holder-suns-bid-p5",
     "inheritFrom": "button-win-p1"
+  },
+  "tile-example-flood1": {
+    "type": "card",
+    "id": "tile-example-flood1",
+    "deck": "deck-tile-examples",
+    "cardType": "tile-example",
+    "x": 561,
+    "y": 180,
+    "color": "#faf0e6",
+    "image": "/i/game-icons.net/lorc/ankh.svg",
+    "scarabcolor": "transparent"
+  },
+  "label-example-ankh-scoring": {
+    "type": "label",
+    "id": "label-example-ankh-scoring",
+    "inheritFrom": "label-example-gold-scoring",
+    "y": 186,
+    "text": "1 VP each.\nOpponent takes an ankh: 1VP",
+    "css": {
+      "color": "#000000",
+      "line-height": "14px",
+      "font-size": "12px",
+      "font-weight": "bold"
+    },
+    "height": 59,
+    "x": 560
+  },
+  "holder-tiles-ankh-p1": {
+    "type": "holder",
+    "id": "holder-tiles-ankh-p1",
+    "parent": "seat-p1",
+    "x": 556,
+    "y": 72,
+    "inheritFrom": "holder-tiles-gold-p1",
+    "dropTarget": {
+      "deck": "deck-tiles",
+      "cardType": "tile-ankh"
+    },
+    "enterRoutine": [
+      "var seat = ${PROPERTY parent}",
+      "var seatIndex = ${PROPERTY index OF $seat}",
+      "var newlyEntered = true",
+      {
+        "func": "IF",
+        "operand1": "${oldParentID}",
+        "relation": "!=",
+        "operand2": null,
+        "thenRoutine": [
+          {
+            "func": "IF",
+            "operand1": "${PROPERTY type OF $oldParentID}",
+            "operand2": "pile",
+            "thenRoutine": [
+              "var newlyEntered = false"
+            ]
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${newlyEntered}",
+        "operand2": true,
+        "thenRoutine": [
+          {
+            "func": "FOREACH",
+            "range": 5,
+            "loopRoutine": [
+              {
+                "func": "IF",
+                "operand1": "${value}",
+                "relation": "!=",
+                "operand2": "${seatIndex}",
+                "thenRoutine": [
+                  {
+                    "func": "SELECT",
+                    "type": "card",
+                    "property": "parent",
+                    "value": "holder-tiles-ankh-p${value}"
+                  },
+                  {
+                    "func": "COUNT"
+                  },
+                  {
+                    "func": "LABEL",
+                    "label": "score-p${value}",
+                    "mode": "inc",
+                    "value": "${COUNT}"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "holder-tiles-ankh-p2": {
+    "type": "holder",
+    "id": "holder-tiles-ankh-p2",
+    "parent": "seat-p2",
+    "inheritFrom": "holder-tiles-ankh-p1"
+  },
+  "holder-tiles-ankh-p3": {
+    "type": "holder",
+    "id": "holder-tiles-ankh-p3",
+    "parent": "seat-p3",
+    "inheritFrom": "holder-tiles-ankh-p1"
+  },
+  "holder-tiles-ankh-p4": {
+    "type": "holder",
+    "id": "holder-tiles-ankh-p4",
+    "parent": "seat-p4",
+    "inheritFrom": "holder-tiles-ankh-p1"
+  },
+  "holder-tiles-ankh-p5": {
+    "type": "holder",
+    "id": "holder-tiles-ankh-p5",
+    "parent": "seat-p5",
+    "inheritFrom": "holder-tiles-ankh-p1"
+  },
+  "label-example-ankh-quantity": {
+    "type": "label",
+    "id": "label-example-ankh-quantity",
+    "x": 561,
+    "inheritFrom": "label-example-gold-quantity",
+    "text": "20",
+    "y": 159
+  },
+  "_meta": {
+    "version": 15,
+    "info": {
+      "name": "Egyptian Epochs",
+      "image": "/assets/1301779629_162792",
+      "showName": true,
+      "time": "45",
+      "mode": "vs",
+      "skill": "",
+      "description": "Can your Egyptian dynasty stand the test of time?",
+      "similarImage": "",
+      "similarName": "Ra",
+      "year": "1999",
+      "similarDesigner": "Reiner Knizia",
+      "similarAwards": "2016 Juego del Año Recommended\n2000 International Gamers Awards - General Strategy; Multi-player Nominee\n1999 Meeples' Choice Award",
+      "bgg": "https://boardgamegeek.com/boardgame/12",
+      "rules": "",
+      "ruleText": "<div><b>Objective</b><br></div><div>Over the course of three epochs (rounds), acquire tiles at auction through clever use of your coins. A scoring phase takes place at the end of each epoch. After the conclusion and scoring phase of the third epoch, the game ends and the high-scoring player wins.</div><div><br></div><div><b>Scoring</b><br></div><div>Your collection of tiles scores at the end of each epoch as follows:</div><div><br></div><div><i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/lorc/metal-bar.svg\"></i>: 3 points each</div><div><i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/anubis.svg\"></i>: 2 points each</div><div><i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/nefertiti.svg\"></i>: 5 points if you have the most, -2 points if you have the fewest of all players</div><div><i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/palm-tree.svg\"></i><i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/oasis.svg\"></i>: If at least one of your blue tiles is an <i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/oasis.svg\"></i>, all your blue tiles score 1 points each. If not, they don't score.</div><div><i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/painted-pottery.svg\"></i><i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/lorc/wheat.svg\"></i><i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/bastet.svg\"></i><i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/lorc/night-sky.svg\"></i><i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/zigzag-hieroglyph.svg\"></i>: Score based on how many different types you have: -5 if you have no types, 0 if you have 1 or 2 types, and 5/10/15 points if you have 3/4/5 types.</div><div><br></div><div>In the third epoch only, you also score:</div><div><i class=\"richtextSymbol material-icons\">fiber_manual_record</i> Coins: 5 points if you have the highest total, -5 points if you have the lowest total of all players</div><div><i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/egyptian-pyramids.svg\"></i><i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/egyptian-sphinx.svg\"></i><i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/egyptian-temple.svg\"></i><i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/great-pyramid.svg\"></i><i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/djed-pillar.svg\"></i><i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/obelisk.svg\"></i><i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/egyptian-urns.svg\"></i><i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/star-gate.svg\"></i>: Score both based on how many types you have -&nbsp;1/2/3/4/5/6/10/15 points for 1/2/3/4/5/6/7/8 types - and for sets of the same type - 5/10/15 points for each set of 3/4/5 identical tiles.<br></div><br><div>Tiles marked with the red&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/lorc/gold-scarab.svg\"></i> are kept after each scoring, as are all of a players' coins - both used and unused during the epoch that just finished. Tiles without the&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/lorc/gold-scarab.svg\"></i> are discarded after each end-of-epoch scoring.</div><div><br></div><div>If players are tied for&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/nefertiti.svg\"></i> scoring or for the coin scoring at game end, the tied players all receive the reward.<br></div><div><br></div><div><b>Sequence of Play</b><br></div><div>Each epoch continues until either all players have used all of their coins or the&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/eye-of-horus.svg\"></i> track is full, whichever happens first. At the end of the epoch, each player scores their collection of tiles as described above.</div><div><br></div><div>The epoch consists of players taking turns in sequence, beginning with the player that owns the highest valued coin. Once a player has used all of their tiles, they stop taking turns and are skipped over in this sequence.</div><div><br></div><div><b>Player Turns</b><br></div><div>On your turn, you must take one of three actions:</div><div>• Draw a tile from the tile stack;</div><div>• Call an auction of the current contents of the&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/banging-gavel.svg\"></i> row;</div><div>• Use the special power of 1 or more previously-collected&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/anubis.svg\"></i> tiles.</div><div><br></div><div>You may not select the draw action if the&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/banging-gavel.svg\"></i> row is already full.</div><div><br></div><div><b>Draw a Tile</b></div><div>Draw the next tile from the tile stack.</div><div><br></div><div>If the tile is a&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/eye-of-horus.svg\"></i> then place it on the corresponding track. If this fills the track, then the epoch ends immediately. If it does not, then an auction is called instead.</div><div><br></div><div>If the tile was not a <i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/eye-of-horus.svg\"></i>, then place it on the&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/banging-gavel.svg\"></i> track.</div><div><br></div><div><b>Auction</b></div><div>When an auction is called (either by the current player selecting it as their action or by the drawing of a&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/eye-of-horus.svg\"></i> tile), the lot up for auction consists of all of the tiles currently in the&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/banging-gavel.svg\"></i> track, plus the coin located next to it.</div><div><br></div><div>A once-around-the-table auction is conducted, beginning with the next player after the active player. Each player either passes or bids a single coin which is of higher value than all coins already bid during the auction.</div><div><br></div><div>If the auction was called by the active player calling for it as their action, and the&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/banging-gavel.svg\"></i> track is not full, then there must be a bid during the auction: the final bidder, the active player, must bid if all other players pass.</div><div><br></div><div>If the&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/banging-gavel.svg\"></i> track is full and all players pass, then discard all of the tiles on the&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/banging-gavel.svg\"></i> track.<br></div><div><br></div><div>The high bidder wins the auction. The auction winner receives the lot of all the tiles on the&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/banging-gavel.svg\"></i> track and the coin located next to it. They pay the coin that they bid (and all other bids are returned to their owners), which is placed on the space next to the&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/banging-gavel.svg\"></i> track (and will therefore become part of the lot next time an auction is called).</div><div><br></div><div>Coins acquired in an auction are not available for use this epoch, but a player collects them for use in future epochs (or, in the final epoch, for end-game scoring purposes).<br></div><div><br></div><div>If one or more&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/sbed/cancel.svg\"></i> tiles were in the lot that was won, then these are resolved after acquiring the other tiles. Each is discarded along with two of the players' tiles of the same color.&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/oasis.svg\"></i> tiles must be discarded first when resolving the blue <i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/sbed/cancel.svg\"></i>, but in all other cases the player chooses which tiles to discard.</div><div><br></div><div><b>Using&nbsp;</b><i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/anubis.svg\"></i><b> Tiles</b></div><div>Instead of drawing a tile or calling an auction, a player may instead discard one ore more previously-collected&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/anubis.svg\"></i> tiles from their collection. For each&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/anubis.svg\"></i> discarded, the player takes one tile from the&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/banging-gavel.svg\"></i> track and adds it directly to their collection (without need for an auction).</div>",
+      "helpText": "<div><b>Getting Started</b><br></div><div>Have all players take a seat and press the New Game button to distribute starting suns, set up the&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/eye-of-horus.svg\"></i> track for the player count, and to shuffle the deck.</div><div><br></div><div><b>Drawing Tiles<br></b></div><div>You can draw a tile from the stack and place it in the&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/eye-of-horus.svg\"></i> or&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/banging-gavel.svg\"></i> row as per the game rules. Alternatively, the Draw Tile button can be used, which will do this for you and will end your turn if you didn't draw a&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/eye-of-horus.svg\"></i> tile.</div><div><br></div><div><b>Managing your Coins<br></b></div><div>Each player has three holders for coins: the top row is used for your currently-available coins for this epoch. The bottom row is used for coins collected during auctions but not available for use this epoch. The slot to the right of them is used for your current bid.</div><div><br></div><div><b>Auctions</b></div><div>To bid, drag a coin to the slot to the right of your coin rows in your player area. To pass, instead click that same small slot to fill it with an X, indicating that you don't want to bid.</div><div><br></div><div>At the end of the auction, the winner can click the Win button to pay their coin, return other players' coins to their available row, and collect the auction lot. This will also end the active player's turn.<br></div><div><br></div><div>The Win buttons will not collect&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/sbed/cancel.svg\"></i> tiles. The auction winner should drag their intended discards into the&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/banging-gavel.svg\"></i> row to join the&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/sbed/cancel.svg\"></i> tile, and once happy they've resolved this correctly, click the Discard All button next to the&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/banging-gavel.svg\"></i> row to discard them all.</div><div><br></div><div>When an auction with a full&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/banging-gavel.svg\"></i> row is concluded with all players having passed, the Discard All button can be used to empty it.<br></div><div><br></div><div><b>End of Epoch</b></div><div>When an epoch ends, players should manually score up their collections of tiles using the text on the table as a player aid and the + and - buttons next to their seat to adjust their score. After scoring, the New Epoch button can be pressed by one player, which will move all coins to the available rows, discard all tiles from players' collection which don't have the&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/lorc/gold-scarab.svg\"></i> icon, empty the&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/eye-of-horus.svg\"></i> and&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/banging-gavel.svg\"></i> tracks, and set the player with the highest single coin as the active player ready to begin the next epoch.<b><br></b></div><div><b><br></b></div><div><b>Pharaoh's Fury Variant</b></div><div>The Pharaoh's Fury variant uses a smaller set of tiles including none of the&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/sbed/cancel.svg\"></i> tiles, but also a shorter&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/eye-of-horus.svg\"></i> row even in high-player-count games. This gives a slightly different play experience inspired by the card game <i>Razzia.</i><br></div><div><b><br></b></div><div><b>Ankh Angst Variant</b></div><div>The Ankh Angst variant adds a new tile type, <i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/lorc/ankh.svg\"></i> tiles. These tiles are worth 1VP each at the end of the epoch, which players should score as usual in the same manner as <i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/lorc/metal-bar.svg\"></i> and <i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/anubis.svg\"></i>.</div><div><br></div><div>In addition, whenever a player collects one of these tiles, all <i>other</i> players immediately score 1VP for each such tile that they already have. The implementation here will score these bonus points instantly when the tiles are dragged into a player's holder or won at auction with the Win button.</div>",
+      "attribution": "Game layout and scripting by Andy Pymont and Thomas Williams, released to the public domain by CC0.\n\nTile graphics are from https://game-icons.net/ and are used under the CC BY 3.0 license:\n\nDelapouite\n• Anubis https://game-icons.net/1x1/delapouite/anubis.html\n• Banging Gavel https://game-icons.net/1x1/delapouite/banging-gavel.html\n• Bastet https://game-icons.net/1x1/delapouite/bastet.html\n• Canopic Jars https://game-icons.net/1x1/delapouite/egyptian-urns.html\n• Djed Pillar https://game-icons.net/1x1/delapouite/djed-pillar.html\n• Eye of Horus https://game-icons.net/1x1/delapouite/eye-of-horus.html\n• Great Pyramid https://game-icons.net/1x1/delapouite/great-pyramid.html\n• Oasis https://game-icons.net/1x1/delapouite/oasis.html\n• Obelisk https://game-icons.net/1x1/delapouite/obelisk.html\n• Palm tree https://game-icons.net/1x1/delapouite/palm-tree.html\n• Pharaoh Nefertiti https://game-icons.net/1x1/delapouite/nefertiti.html\n• Pottery https://game-icons.net/1x1/delapouite/painted-pottery.html\n• Pyramids https://game-icons.net/1x1/delapouite/egyptian-pyramids.html\n• Sphinx https://game-icons.net/1x1/delapouite/egyptian-sphinx.html\n• Star Gate https://game-icons.net/1x1/delapouite/star-gate.html\n• Temple https://game-icons.net/1x1/delapouite/egyptian-temple.html\n• Zigzag heiroglyph https://game-icons.net/1x1/delapouite/zigzag-hieroglyph.html\n\nLorc\n• Ankh https://game-icons.net/1x1/lorc/ankh.html\n• Gold bar https://game-icons.net/1x1/lorc/metal-bar.html\n• Night sky https://game-icons.net/1x1/lorc/night-sky.html\n• Scarab https://game-icons.net/1x1/lorc/gold-scarab.html\n• Wheat https://game-icons.net/1x1/lorc/wheat.html\n\nSbed\n• Cancel https://game-icons.net/1x1/sbed/cancel.html\n<div><br></div><div>The library image was generated using the Midjourney artificial \n</div>intelligence image generator, https://www.midjourney.com/home/, using \nthe following prompt: \"Freddie Mercury dressed as an Egyptian pharaoh and standing in front of the pyramids, cartoon\".",
+      "lastUpdate": 1725381780000,
+      "variantImage": "",
+      "variant": "Ankh Angst",
+      "language": "en-US",
+      "players": "2-5"
+    }
+  },
+  "tile-gold-1": {
+    "type": "card",
+    "id": "tile-gold-1",
+    "parent": "pile-tiles-draw",
+    "deck": "deck-tiles",
+    "cardType": "tile-gold",
+    "z": 24944
+  },
+  "tile-god-1": {
+    "type": "card",
+    "id": "tile-god-1",
+    "parent": "pile-tiles-draw",
+    "deck": "deck-tiles",
+    "cardType": "tile-god",
+    "z": 24981
+  },
+  "tile-pharaoh-1": {
+    "type": "card",
+    "id": "tile-pharaoh-1",
+    "parent": "pile-tiles-draw",
+    "deck": "deck-tiles",
+    "cardType": "tile-pharaoh",
+    "z": 25080
+  },
+  "tile-nile-1": {
+    "type": "card",
+    "id": "tile-nile-1",
+    "parent": "pile-tiles-draw",
+    "deck": "deck-tiles",
+    "cardType": "tile-nile",
+    "z": 24927
+  },
+  "tile-flood-1": {
+    "type": "card",
+    "id": "tile-flood-1",
+    "parent": "pile-tiles-draw",
+    "deck": "deck-tiles",
+    "cardType": "tile-flood",
+    "z": 24979
+  },
+  "tile-civ-pottery-1": {
+    "type": "card",
+    "id": "tile-civ-pottery-1",
+    "parent": "pile-tiles-draw",
+    "deck": "deck-tiles",
+    "cardType": "tile-civ-pottery",
+    "z": 25005
+  },
+  "tile-civ-agriculture-1": {
+    "type": "card",
+    "id": "tile-civ-agriculture-1",
+    "parent": "pile-tiles-draw",
+    "deck": "deck-tiles",
+    "cardType": "tile-civ-agriculture",
+    "z": 24978
+  },
+  "tile-civ-religion-1": {
+    "type": "card",
+    "id": "tile-civ-religion-1",
+    "parent": "pile-tiles-draw",
+    "deck": "deck-tiles",
+    "cardType": "tile-civ-religion",
+    "z": 24999
+  },
+  "tile-civ-astronomy-1": {
+    "type": "card",
+    "id": "tile-civ-astronomy-1",
+    "parent": "pile-tiles-draw",
+    "deck": "deck-tiles",
+    "cardType": "tile-civ-astronomy",
+    "z": 25046
+  },
+  "tile-civ-writing-1": {
+    "type": "card",
+    "id": "tile-civ-writing-1",
+    "parent": "pile-tiles-draw",
+    "deck": "deck-tiles",
+    "cardType": "tile-civ-writing",
+    "z": 24954
+  },
+  "tile-monument-pyramid-1": {
+    "type": "card",
+    "id": "tile-monument-pyramid-1",
+    "parent": "pile-tiles-draw",
+    "deck": "deck-tiles",
+    "cardType": "tile-monument-pyramid",
+    "z": 25093
+  },
+  "tile-monument-pyramids-1": {
+    "type": "card",
+    "id": "tile-monument-pyramids-1",
+    "parent": "pile-tiles-draw",
+    "deck": "deck-tiles",
+    "cardType": "tile-monument-pyramids",
+    "z": 25034
+  },
+  "tile-monument-sphinx-1": {
+    "type": "card",
+    "id": "tile-monument-sphinx-1",
+    "parent": "pile-tiles-draw",
+    "deck": "deck-tiles",
+    "cardType": "tile-monument-sphinx",
+    "z": 25106
+  },
+  "tile-monument-temple-1": {
+    "type": "card",
+    "id": "tile-monument-temple-1",
+    "parent": "pile-tiles-draw",
+    "deck": "deck-tiles",
+    "cardType": "tile-monument-temple",
+    "z": 25102
+  },
+  "tile-monument-djedpillar-1": {
+    "type": "card",
+    "id": "tile-monument-djedpillar-1",
+    "parent": "pile-tiles-draw",
+    "deck": "deck-tiles",
+    "cardType": "tile-monument-djedpillar",
+    "z": 25061
+  },
+  "tile-monument-obelisk-1": {
+    "type": "card",
+    "id": "tile-monument-obelisk-1",
+    "parent": "pile-tiles-draw",
+    "deck": "deck-tiles",
+    "cardType": "tile-monument-obelisk",
+    "z": 25051
+  },
+  "tile-monument-canopicjars-1": {
+    "type": "card",
+    "id": "tile-monument-canopicjars-1",
+    "parent": "pile-tiles-draw",
+    "deck": "deck-tiles",
+    "cardType": "tile-monument-canopicjars",
+    "z": 24977
+  },
+  "tile-monument-stargate-1": {
+    "type": "card",
+    "id": "tile-monument-stargate-1",
+    "parent": "pile-tiles-draw",
+    "deck": "deck-tiles",
+    "cardType": "tile-monument-stargate",
+    "z": 25113
+  },
+  "tile-ankh-1": {
+    "type": "card",
+    "id": "tile-ankh-1",
+    "parent": "pile-tiles-draw",
+    "deck": "deck-tiles",
+    "cardType": "tile-ankh",
+    "z": 24938
+  },
+  "tile-ankh-2": {
+    "type": "card",
+    "id": "tile-ankh-2",
+    "parent": "pile-tiles-draw",
+    "deck": "deck-tiles",
+    "cardType": "tile-ankh",
+    "z": 25056
+  },
+  "tile-ankh-3": {
+    "type": "card",
+    "id": "tile-ankh-3",
+    "parent": "pile-tiles-draw",
+    "deck": "deck-tiles",
+    "cardType": "tile-ankh",
+    "z": 25053
+  },
+  "tile-ankh-4": {
+    "type": "card",
+    "id": "tile-ankh-4",
+    "parent": "pile-tiles-draw",
+    "deck": "deck-tiles",
+    "cardType": "tile-ankh",
+    "z": 24983
+  },
+  "tile-ankh-5": {
+    "type": "card",
+    "id": "tile-ankh-5",
+    "parent": "pile-tiles-draw",
+    "deck": "deck-tiles",
+    "cardType": "tile-ankh",
+    "z": 25038
+  },
+  "tile-ankh-6": {
+    "type": "card",
+    "id": "tile-ankh-6",
+    "parent": "pile-tiles-draw",
+    "deck": "deck-tiles",
+    "cardType": "tile-ankh",
+    "z": 24917
+  },
+  "tile-ankh-7": {
+    "type": "card",
+    "id": "tile-ankh-7",
+    "parent": "pile-tiles-draw",
+    "deck": "deck-tiles",
+    "cardType": "tile-ankh",
+    "z": 24985
+  },
+  "tile-ankh-8": {
+    "type": "card",
+    "id": "tile-ankh-8",
+    "parent": "pile-tiles-draw",
+    "deck": "deck-tiles",
+    "cardType": "tile-ankh",
+    "z": 24964
+  },
+  "tile-ankh-9": {
+    "type": "card",
+    "id": "tile-ankh-9",
+    "parent": "pile-tiles-draw",
+    "deck": "deck-tiles",
+    "cardType": "tile-ankh",
+    "z": 24975
+  },
+  "tile-ankh-10": {
+    "type": "card",
+    "id": "tile-ankh-10",
+    "parent": "pile-tiles-draw",
+    "deck": "deck-tiles",
+    "cardType": "tile-ankh",
+    "z": 24971
+  },
+  "tile-ankh-11": {
+    "type": "card",
+    "id": "tile-ankh-11",
+    "parent": "pile-tiles-draw",
+    "deck": "deck-tiles",
+    "cardType": "tile-ankh",
+    "z": 25076
+  },
+  "tile-ankh-12": {
+    "type": "card",
+    "id": "tile-ankh-12",
+    "parent": "pile-tiles-draw",
+    "deck": "deck-tiles",
+    "cardType": "tile-ankh",
+    "z": 24996
+  },
+  "tile-ankh-13": {
+    "type": "card",
+    "id": "tile-ankh-13",
+    "parent": "pile-tiles-draw",
+    "deck": "deck-tiles",
+    "cardType": "tile-ankh",
+    "z": 25054
+  },
+  "tile-ankh-14": {
+    "type": "card",
+    "id": "tile-ankh-14",
+    "parent": "pile-tiles-draw",
+    "deck": "deck-tiles",
+    "cardType": "tile-ankh",
+    "z": 25026
+  },
+  "tile-ankh-15": {
+    "type": "card",
+    "id": "tile-ankh-15",
+    "parent": "pile-tiles-draw",
+    "deck": "deck-tiles",
+    "cardType": "tile-ankh",
+    "z": 24937
+  },
+  "tile-ankh-16": {
+    "type": "card",
+    "id": "tile-ankh-16",
+    "parent": "pile-tiles-draw",
+    "deck": "deck-tiles",
+    "cardType": "tile-ankh",
+    "z": 24970
+  },
+  "tile-ankh-17": {
+    "type": "card",
+    "id": "tile-ankh-17",
+    "parent": "pile-tiles-draw",
+    "deck": "deck-tiles",
+    "cardType": "tile-ankh",
+    "z": 25029
+  },
+  "tile-ankh-18": {
+    "type": "card",
+    "id": "tile-ankh-18",
+    "parent": "pile-tiles-draw",
+    "deck": "deck-tiles",
+    "cardType": "tile-ankh",
+    "z": 24982
+  },
+  "tile-ankh-19": {
+    "type": "card",
+    "id": "tile-ankh-19",
+    "parent": "pile-tiles-draw",
+    "deck": "deck-tiles",
+    "cardType": "tile-ankh",
+    "z": 24947
+  },
+  "tile-ankh-20": {
+    "type": "card",
+    "id": "tile-ankh-20",
+    "parent": "pile-tiles-draw",
+    "deck": "deck-tiles",
+    "cardType": "tile-ankh",
+    "z": 25074
+  },
+  "tile-disaster-funeral-1": {
+    "type": "card",
+    "id": "tile-disaster-funeral-1",
+    "parent": "pile-tiles-draw",
+    "deck": "deck-tiles",
+    "cardType": "tile-disaster-funeral",
+    "z": 25036
+  },
+  "tile-disaster-earthquake-1": {
+    "type": "card",
+    "id": "tile-disaster-earthquake-1",
+    "parent": "pile-tiles-draw",
+    "deck": "deck-tiles",
+    "cardType": "tile-disaster-earthquake",
+    "z": 25032
+  },
+  "tile-disaster-unrest-1": {
+    "type": "card",
+    "id": "tile-disaster-unrest-1",
+    "parent": "pile-tiles-draw",
+    "deck": "deck-tiles",
+    "cardType": "tile-disaster-unrest",
+    "z": 25077
+  },
+  "tile-disaster-drought-1": {
+    "type": "card",
+    "id": "tile-disaster-drought-1",
+    "parent": "pile-tiles-draw",
+    "deck": "deck-tiles",
+    "cardType": "tile-disaster-drought",
+    "z": 25070
+  },
+  "tile-horus-1": {
+    "type": "card",
+    "id": "tile-horus-1",
+    "parent": "pile-tiles-draw",
+    "deck": "deck-tiles",
+    "cardType": "tile-horus",
+    "z": 24943
+  },
+  "transition-animator": {
+    "id": "transition-animator",
+    "width": 10,
+    "height": 10,
+    "css": {
+      "default": {
+        "background-color": "red"
+      },
+      "_, .transition": {
+        "transition": "transform 600ms"
+      },
+      "_, .transition.dragging": {
+        "transition": "none"
+      }
+    },
+    "display": false
   }
 }

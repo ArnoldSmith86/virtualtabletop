@@ -37,7 +37,7 @@
   background: var(--backgroundColor);
   color: var(--VTTblue);
 }
-body.darkMode #editorSidebar button.active {
+body.edit.darkMode #editorSidebar button.active {
   color: var(--textColor);
 }
 
