@@ -1527,7 +1527,7 @@ export class Widget extends StateManaged {
       }
 
       if(a.func == 'MOVEXY') {
-        setDefaults(a, { count: 1, face: null, x: 0, y: 0, snapToGrid: true });
+        setDefaults(a, { count: 1, face: null, x: 0, y: 0, snapToGrid: true, resetOwner: true });
         if(a.count === 'all')
           a.count = 999999;
 
