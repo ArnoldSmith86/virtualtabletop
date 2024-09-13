@@ -437,7 +437,6 @@ function v11OwnerMOVEXY(routine) {
 function v12HandDropShadow(properties) {
   if (properties.type == 'holder' && properties.childrenPerOwner && !properties.enterRoutine && !properties.leaveRoutine && !properties.changeRoutine) {
     properties.dropShadow = true;
-
   }
 }
 
