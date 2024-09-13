@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "version": 10,
+    "version": 5,
     "info": {
       "name": "Functions - FLIP",
       "image": "/assets/1974620792_4954",
@@ -8,21 +8,13 @@
       "bgg": "",
       "year": "2021",
       "mode": "Tutorial",
-      "time": "",
+      "time": "0",
+      "players": "1",
+      "language": "en-US",
+      "variant": "",
       "attribution": "",
       "showName": false,
-      "lastUpdate": 1673631378177,
-      "skill": "",
-      "description": "",
-      "similarImage": "",
-      "similarName": "",
-      "similarAwards": "",
-      "ruleText": "",
-      "helpText": "",
-      "variantImage": "",
-      "variant": "",
-      "language": "en-US",
-      "players": "1"
+      "lastUpdate": 1673631378177
     }
   },
   "8fr3": {

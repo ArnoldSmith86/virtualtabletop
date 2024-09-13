@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "version": 10,
+    "version": 6,
     "info": {
       "name": "Functions - MOVEXY",
       "image": "/assets/-727329285_8844",
@@ -8,21 +8,13 @@
       "bgg": "",
       "year": "2021",
       "mode": "Tutorial",
-      "time": "",
+      "time": "0",
+      "players": "1",
+      "language": "en-US",
+      "variant": "",
       "attribution": "",
       "showName": false,
-      "lastUpdate": 1673631707474,
-      "skill": "",
-      "description": "",
-      "variantImage": "",
-      "variant": "",
-      "language": "en-US",
-      "players": "1",
-      "similarImage": "",
-      "similarName": "",
-      "similarAwards": "",
-      "ruleText": "",
-      "helpText": ""
+      "lastUpdate": 1673631707474
     }
   },
   "8fr3": {

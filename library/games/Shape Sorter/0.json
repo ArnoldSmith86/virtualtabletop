@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "version": 10,
+    "version": 8,
     "info": {
       "name": "Shape Sorter",
       "image": "/assets/2053592104_47917",
@@ -14,7 +14,7 @@
       "similarAwards": "",
       "description": "Place blocks in patterns on board while matching 6 shapes and 6 colors. Player with most points wins.",
       "showName": true,
-      "lastUpdate": 1673662124126,
+      "lastUpdate": 1672671600000,
       "skill": "",
       "similarImage": "",
       "ruleText": "",
@@ -1284,7 +1284,7 @@
         "func": "MOVE",
         "from": "Discard",
         "to": "Draw",
-        "count": "all",
+        "count": 0,
         "face": 0
       },
       {
