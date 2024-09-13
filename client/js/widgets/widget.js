@@ -263,6 +263,15 @@ export class Widget extends StateManaged {
       inheriting.applyInheritedDeltaToDOM(inheritedDelta);
     }
 
+    // inherit properties again when overriding ones are removed
+    if(this.state.inheritFrom !== undefined) {
+      for(const key in delta)
+        if(this.state[key] === undefined && (!this.inheritedProperties || this.inheritedProperties[key] === undefined))
+          for(const [ id, properties ] of Object.entries(this.inheritFrom()))
+            if(this.inheritFromIsValid(properties, key) && widgets.has(id) && widgets.get(id).get(key) !== undefined && widgets.get(id).get(key) !== delta[key])
+              this.applyInheritedDeltaToDOM({[key]: widgets.get(id).get(key)});
+    }
+
     if($('#enlarged').dataset.id == this.id && !$('#enlarged').className.match(/hidden/)) {
       this.showEnlarged(null, delta);
     }
@@ -457,6 +466,7 @@ export class Widget extends StateManaged {
   async clone(overrideProperties, recursive = false, problems = null, xOffset = 0, yOffset = 0) {
     const clone = Object.assign(JSON.parse(JSON.stringify(this.state)), overrideProperties);
     const parent = clone.parent;
+    const inheritFrom = clone.inheritFrom;
     if(parent !== undefined && parent !== null && !widgets.has(parent))
       return null;
 
@@ -467,6 +477,7 @@ export class Widget extends StateManaged {
         problems.push(`There is already a widget with id:${overrideProperties.id}, generating new ID.`);
     }
     delete clone.parent;
+    delete clone.inheritFrom;
     const newID = await addWidgetLocal(clone);
     if(widgets.has(newID)) { // cloning can fail for example with invalid cardType
       const cWidget = widgets.get(newID);
@@ -475,6 +486,8 @@ export class Widget extends StateManaged {
       cWidget.movedByButton = problems != null;
       if(parent)
         await cWidget.moveToHolder(widgets.get(parent));
+      if(inheritFrom)
+        await cWidget.set('inheritFrom', inheritFrom);
 
       // moveToHolder causes the position to be wrong if the target holder does not have alignChildren
       if(!parent || !widgets.get(parent).get('alignChildren')) {

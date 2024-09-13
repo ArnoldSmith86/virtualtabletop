@@ -153,7 +153,7 @@ class Card extends Widget {
             objectDiv.setAttribute('width', object.width);
             objectDiv.setAttribute('height', object.height);
             objectDiv.setAttribute('allow', 'autoplay');
-            const content = object.value.replaceAll(/\$\{PROPERTY ([A-Za-z0-9_-]+)\}/g, (m, n) => {
+            const content = String(object.value).replaceAll(/\$\{PROPERTY ([A-Za-z0-9_-]+)\}/g, (m, n) => {
               usedProperties.add(n);
               return this.get(n) || '';
             });
