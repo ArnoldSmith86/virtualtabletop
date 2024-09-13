@@ -69,6 +69,8 @@ export class Widget extends StateManaged {
       dropOffsetY: 0,
       dropShadowOwner: null,
       dropShadowWidget: null,
+      dropTarget: null,
+      dropLimit: -1,
       inheritChildZ: false,
       hoverTarget: null,
       hoverParent: null,
@@ -168,6 +170,8 @@ export class Widget extends StateManaged {
   }
 
   applyDeltaToDOM(delta) {
+    super.applyDeltaToDOM(delta);
+
     let fromTransform = null;
     let newParent = undefined;
     if(delta.parent !== undefined) {
