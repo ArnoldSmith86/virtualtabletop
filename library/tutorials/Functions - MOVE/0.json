@@ -11,7 +11,7 @@
       "time": "0",
       "attribution": "",
       "showName": false,
-      "lastUpdate": 1726239135258,
+      "lastUpdate": 1726239435757,
       "skill": "",
       "description": "",
       "similarImage": "",
@@ -75,7 +75,7 @@
     "x": 808,
     "z": 75,
     "width": 300,
-    "text": "This button moves the specified number of cards from the left to the right holder. Negative numbers move all but that number of cards out of the from holder. These buttons also sets the the cards to be face up using the 'face' parameter. However, if the receiving holder has an onEnter property to set the activeFace to something else (like a hand), the onEnter will override the MOVE's face parameter. Note that the pile is not flipped as you would with a physical deck. The order of the cards is unchanged. They are each turned face up and remain in the same order.",
+    "text": "This button moves the specified number of cards from the left to the right holder. Negative numbers move all but that number of cards out of the from holder. These buttons also set the cards to be face up using the 'face' parameter. However, if the receiving holder has an onEnter property to set the activeFace to something else (like a hand), the onEnter will override the MOVE's face parameter. Note that the pile is not flipped as you would with a physical deck. The order of the cards is unchanged. They are each turned face up and remain in the same order.",
     "movable": false,
     "y": 530,
     "layer": -1
