@@ -47,11 +47,11 @@
     "layer": -3,
     "z": 129,
     "css": "font-size: 25px; ",
-    "text": "VAR can be used as a function or 'var' can be used as a direct way to set a dynamic variable. Both methods are demonstrated in the buttons below. View the button JSON (click ctrl-J and then make sure the {} JSON button on the far right is selected). Click the button and see the results in the debugger (make sure the Debug button on the far right is selected).",
+    "text": "VAR can be used as a function or 'var' can be used as a direct way to set a dynamic variable. Both methods are demonstrated in the buttons below. View the button JSON (press CTRL-J and then make sure the {} JSON button on the far right is selected). Click the button and see the results in the debugger (make sure the Debug button on the far right is selected).",
     "movable": false
   },
   "bm4j": {
-    "text": "Use 'var' directly in a routine to set or calculate the value of a dynamic variable. Limitations: many special characters are not available and you cannot directly set arrays or objects except to set them as empty (but you can use ${PROPERTY OF} and set the object or array to be equal to a widget property.",
+    "text": "Use 'var' directly in a routine to set or calculate the value of a dynamic variable. Limitations: many special characters are not available and you cannot directly set arrays or objects except to set them as empty (but you can use ${PROPERTY p OF widgetID} and set the object or array to be equal to a widget property).",
     "id": "bm4j",
     "z": 185,
     "width": 300,
@@ -237,7 +237,7 @@
     "y": 700,
     "z": 9732,
     "width": 300,
-    "text": "'VAR' as a function can be used do to many of the things that 'var' cannot such as setting special characters, objects, and arrays. However, it also has limitations as demonstrated in the button above.",
+    "text": "'VAR' as a function can be used to do many of the things that 'var' cannot such as setting special characters, objects, and arrays. However, it also has limitations as demonstrated in the button above.",
     "movable": false
   },
   "jkmt": {
@@ -298,7 +298,7 @@
           "anotherNumber": "${blackJack} + ${currentX}"
         }
       },
-      "// Here the values of blackJack and currentX are now available from the output of the previous function, but they plus is just used as a text object and not a mathematical operand."
+      "// Here the values of blackJack and currentX are now available from the output of the previous function, but the plus is just used as a text object and not a mathematical operand."
     ],
     "x": 900,
     "y": 550,
