@@ -70,7 +70,7 @@ publicLibraryButtons('Reward',             0, '5290d9113f42a3c0e458a788b5a1ea99'
 ]);
 publicLibraryButtons('Rummy Tiles',        0, '2625ca4661785ca9a75cdf93d6379427', [ 'startMix', 'draw14' ]);
 publicLibraryButtons('Undercover',         1, 'dccab2340f9bff4b4126141abc742aca', [ 'Reset', 'Spy Master Button' ]);
-publicLibraryButtons('Functions - CALL',   0, 'dc872fd616321be8cab07cd36e7aeac6', [
+publicLibraryButtons('Functions - CALL',   0, '4c3fd4ade5c1ee5cee34b7ff46cb2cb1', [
   'n4cw_8_C', '5a52', '5a52', '66kr', 'qeg1', 'n4cwB', '8r6p', 'qeg1', 'qeg1', 'n5eu'
 ]);
 publicLibraryButtons('Functions - CLICK',  0, 'd44e77e0782cadbc9594494e5a83dde0', [ '7u2q' ]);
@@ -88,4 +88,4 @@ publicLibraryButtons('Functions - SCORE', 0, '88c8ef94e7d34f69bf8d0844acce2dfc',
 publicLibraryButtons('Scoreboard', 2, '458a8e4b7232bc38e151be7e4c7705bf', [ 'button1', 'button2', 'button3', 'button4']);
 
 publicLibraryButtons('Dice', 0, '930cccc3d082ef55679b8108b1d5047e', [ 'dice3', 'dice4', 'dice5',]);
-publicLibraryButtons('Dice', 3, '6c8b3c92de5d5aaf2affd905ae948c29', [ 'dice2', 'dice1', 'button2', 'dice4']);
+publicLibraryButtons('Dice', 3, '9765144109f8962db823161e4bf1d2d8', [ 'dice2', 'dice1', 'button2', 'dice4']);
