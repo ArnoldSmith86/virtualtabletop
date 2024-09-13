@@ -8,6 +8,9 @@ class Config {
 
     this.config = JSON.parse(fs.readFileSync(path.resolve() + '/config.template.json'));
     this.config = Object.assign(this.config, JSON.parse(fs.readFileSync(path.resolve() + '/config.json')));
+
+    if(!fs.existsSync(path.resolve() + '/client/css/custom.css'))
+      fs.copyFileSync(path.resolve() + '/client/css/custom_template.css', path.resolve() + '/client/css/custom.css');
   }
 
   directory(index) {

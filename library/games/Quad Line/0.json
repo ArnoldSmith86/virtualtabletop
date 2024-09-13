@@ -558,7 +558,8 @@
       "similarName": "Connect Four",
       "description": "Stack checkers in columns to link 4 horizontally, vertically, or diagonally.  First to connect four in a row wins.",
       "showName": true,
-      "lastUpdate": 1618589525000
+      "lastUpdate": 1618589525000,
+      "similarDesigner": "Ned Strongin, Howard Wexler"
     }
   },
   "b03": {

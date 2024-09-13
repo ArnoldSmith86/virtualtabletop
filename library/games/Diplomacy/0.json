@@ -1339,20 +1339,27 @@
     "version": 1,
     "info": {
       "name": "Diplomacy",
-      "image": "/assets/77593883_2671",
+      "image": "/assets/1172241493_26546",
       "rules": "",
-      "bgg": " https://boardgamegeek.com/boardgame/131357/coup/images",
+      "bgg": "https://boardgamegeek.com/boardgame/131357/coup/images",
       "year": "2012",
       "mode": "vs",
       "time": "15",
-      "players": "2-6",
-      "language": "en-US",
-      "variant": "",
-      "attribution": "The files used for this game were taken from https://game-icons.net/ to be used under CC BY 3.0\n\nBackground image from https://unsplash.com/photos/odRbgZJ8aAU under license https://unsplash.com/license\n\nLayout by https://www.reddit.com/user/RaphaelAlvez/ to be used under CC BY 3.0",
+      "attribution": "The files used for this game were taken from https://game-icons.net/ to be used under CC BY 3.0\n\nBackground image from https://unsplash.com/photos/odRbgZJ8aAU under license https://unsplash.com/license\n\nLayout by https://www.reddit.com/user/RaphaelAlvez/ to be used under CC BY 3.0<div><br></div><div>Library image generated using the Midjourney artificial intelligence image generator, https://www.midjourney.com/home/, using the following prompt: \"renaissance diplomat shakes hands with army general oil on canvas --ar 1:1 --v 5.1\"<br></div>",
       "similarName": "Coup",
-      "description": "Use card powers to influence other players.  Tell the truth, lie, or steal to gain advantage.  Last player with an influence card remaining wins.",
+      "description": "Use card powers to influence other players. Tell the truth, lie, or steal to gain advantage. Last player with an influence card remaining wins.",
       "showName": true,
-      "lastUpdate": 1610546197000
+      "lastUpdate": 1610546197000,
+      "skill": "",
+      "similarImage": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": "",
+      "variantImage": "",
+      "variant": "",
+      "language": "en-US",
+      "players": "2-6",
+      "similarDesigner": "Rikki Tahta"
     }
   }
 }

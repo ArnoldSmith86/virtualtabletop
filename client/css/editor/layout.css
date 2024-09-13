@@ -1,0 +1,162 @@
+body {
+  --backgroundColor: white;
+  --textColor: black;
+
+  --backgroundHighlightColor1: #ccc;
+
+  --textHighlightColor1: #880;
+  --textHighlightColor2: orange;
+  --textHighlightColor3: red;
+  --textHighlightColor4: green;
+  --textHighlightColor5: purple;
+  --textHighlightColor6: blue;
+  --textHighlightColor7: darkcyan;
+
+  --textDimColor1: #ccc;
+
+  color-scheme: light;
+  --gridSize: 25px;
+  --gridColor: #c0c0c0;
+  --gridMajor: 25;
+}
+
+body.edit.darkMode {
+  --backgroundColor: #08090a;
+  --textColor: #f8f8f2;
+
+  --backgroundHighlightColor1: #444;
+
+  --textHighlightColor1: yellow;
+  --textHighlightColor2: orange;
+  --textHighlightColor3: red;
+  --textHighlightColor4: #7ed07e;
+  --textHighlightColor5: #dda0dd;
+  --textHighlightColor6: blue;
+  --textHighlightColor7: #40e0d0;
+
+  --textDimColor1: #606060;
+
+  color-scheme: dark;
+}
+#room {
+  color-scheme: light;
+}
+
+body:not(.edit) #editor,
+body.edit #toolbar {
+  display: none;
+}
+
+body.edit {
+  background-image: none;
+}
+body.edit::after {
+  display: none;
+}
+
+body.edit {
+  --roomTop: var(--editModeRoomTop);
+  --roomLeft: var(--editModeRoomLeft);
+}
+
+body.edit.zoomedOut #roomArea, body.edit.zoomedOut #topSurface {
+  overflow: visible;
+}
+
+body.gridLines #topSurface {
+  background-image:
+    linear-gradient(to right, transparent 0, transparent calc(var(--gridSize) - 1px), var(--gridColor) var(--gridSize), var(--gridColor) var(--gridSize)),
+    linear-gradient(to bottom, transparent 0, transparent calc(var(--gridSize) - 1px), var(--gridColor) var(--gridSize), var(--gridColor) var(--gridSize));
+  background-size: var(--gridSize) var(--gridSize)    
+}
+
+body.gridLines20 #topSurface {
+  background-image:
+    linear-gradient(to right, transparent 0, transparent calc(var(--gridSize) - 1px), var(--gridColor) var(--gridSize), var(--gridColor) var(--gridSize)),
+    linear-gradient(to bottom, transparent 0, transparent calc(var(--gridSize) - 1px), var(--gridColor) var(--gridSize), var(--gridColor) var(--gridSize)), 
+    linear-gradient(to right, transparent 0% 19.85%, var(--gridColor) 19.85% 20.15%, transparent 20.15% 39.85%, var(--gridColor) 39.85% 40.15%, transparent 40.15% 59.85%, var(--gridColor) 59.85% 60.15%, transparent 60.15% 79.85%, var(--gridColor) 79.85% 80.15%, transparent 80.15% 100% ),
+    linear-gradient(to bottom, transparent 0% 19.80%, var(--gridColor) 19.80% 20.2%, transparent 20.2% 39.8%, var(--gridColor) 39.8% 40.2%, transparent 40.2% 59.8%, var(--gridColor) 59.8% 60.2%, transparent 60.2% 79.8%, var(--gridColor) 79.8% 80.2%, transparent 80.2% 100% );
+  background-size: var(--gridSize) var(--gridSize), var(--gridSize) var(--gridSize), 1600px 1000px, 1600px 1000px;
+}
+
+body.gridLines25 #topSurface {
+  background-image:
+    linear-gradient(to right, transparent 0, transparent calc(var(--gridSize) - 1px), var(--gridColor) var(--gridSize), var(--gridColor) var(--gridSize)),
+    linear-gradient(to bottom, transparent 0, transparent calc(var(--gridSize) - 1px), var(--gridColor) var(--gridSize), var(--gridColor) var(--gridSize)), 
+    linear-gradient(to right, transparent 0% 24.85%, var(--gridColor) 24.85% 25.15%, transparent 25.15% 49.85%, var(--gridColor) 49.85% 50.15%, transparent 50.15% 74.85%, var(--gridColor) 74.85% 75.15%, transparent 75.15% 100%),
+    linear-gradient(to bottom, transparent 0% 24.8%, var(--gridColor) 24.8% 25.2%, transparent 25.2% 49.8%, var(--gridColor) 49.8% 50.2%, transparent 50.2% 74.8%, var(--gridColor) 74.8% 75.2%, transparent 75.2% 100%);
+  background-size: var(--gridSize) var(--gridSize), var(--gridSize) var(--gridSize), 1600px 1000px, 1600px 1000px;
+}
+
+body.gridLines33 #topSurface {
+  background-image:
+    linear-gradient(to right, transparent 0, transparent calc(var(--gridSize) - 1px), var(--gridColor) var(--gridSize), var(--gridColor) var(--gridSize)),   
+    linear-gradient(to bottom, transparent 0, transparent calc(var(--gridSize) - 1px), var(--gridColor) var(--gridSize), var(--gridColor) var(--gridSize)),
+    linear-gradient(to right, transparent 0% 33.183%, var(--gridColor) 33.183% 33.483%, transparent 33.483% 66.516%, var(--gridColor) 66.516% 66.816%, transparent 66.816% 100%),
+    linear-gradient(to bottom, transparent 0% 33.133%, var(--gridColor) 33.133% 33.533%, transparent 33.533% 66.466%, var(--gridColor) 66.466% 66.866%, transparent 66.866% 100%);
+  background-size: var(--gridSize) var(--gridSize), var(--gridSize) var(--gridSize), 1600px 1000px, 1600px 1000px;
+}
+
+#editorSelection {
+  display: none;
+  box-shadow: 0px 0px 0px 5px green;
+  position: absolute;
+  z-index: 2;
+}
+#editorSelection.active {
+  display: block;
+}
+
+body.edit:not(.dragToolbarDragging) .widget.selectedInEdit:not(.pile) {
+  box-shadow: 0px 0px 0px 5px yellow;
+}
+
+body.edit:not(.dragToolbarDragging) .widget.selectedInEdit.pile .handle {
+  box-shadow: 0px 0px 0px 5px yellow;
+}
+
+body.edit:not(.dragToolbarDragging) .widget.selectedInEditPreview:not(.pile) {
+  box-shadow: 0px 0px 0px 5px red;
+}
+
+body.edit:not(.dragToolbarDragging) .widget.selectedInEditPreview.pile .handle {
+  box-shadow: 0px 0px 0px 5px red;
+}
+
+.hintUI {
+  position: relative;
+}
+
+.hintUI > button {
+  position: absolute;
+  top: -34px;
+  right: 0;
+  margin: 0;
+}
+
+.hintUI > span {
+  display: none;
+  background: var(--VTTblue);
+  color: white;
+  margin: 10px 0;
+  padding: 10px;
+  border-radius: 5px;
+  border-top-right-radius: 0;
+}
+
+.active.hintUI > button {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.active.hintUI > span {
+  display: block;
+}
+
+
+.flexCenter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}

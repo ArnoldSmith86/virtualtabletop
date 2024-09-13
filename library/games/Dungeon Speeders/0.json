@@ -27,7 +27,8 @@
       "similarName": "Mutant Meeples",
       "description": "Players compete to be the first to have one of their 8 tokens reach the target using the fewest possible moves and the special powers of each token. Once one player’s token reaches the target, that token is collected and no longer available for that player to use. First player to collect 6 tokens wins.",
       "showName": true,
-      "lastUpdate": 1669254070000
+      "lastUpdate": 1669254070000,
+      "similarDesigner": "Ted Alspach"
     }
   },
   "table": {

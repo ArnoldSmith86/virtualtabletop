@@ -1,0 +1,304 @@
+:root {
+  --editSidebarWidth: 128px;
+}
+
+#editorSidebar {
+  background: var(--VTTblue);
+  position: absolute;
+  width: var(--editSidebarWidth);
+  right: 0;
+  top: calc(var(--editToolbarHeight) - 1px);
+  bottom: 0;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+}
+
+#editorSidebar button span {
+  display: none;
+  position: absolute;
+  right: calc(var(--editSidebarWidth) + 1px);
+  background: var(--VTTblueDark);
+  margin: 0;
+  padding: 9px;
+  border-radius: 5px;
+  text-transform: none;
+  width: 200px;
+}
+
+#editorSidebar button:hover span {
+  display: block;
+}
+
+#editorSidebar button.active {
+  position: relative;
+  left: -2px;
+  border-radius: 0 5px 5px 0;
+  background: var(--backgroundColor);
+  color: var(--VTTblue);
+}
+body.edit.darkMode #editorSidebar button.active {
+  color: var(--textColor);
+}
+
+#editorSidebar button.active::before {
+  position: relative;
+  left: 2px;
+}
+
+#editorSidebar button.active span {
+  color: white;
+  right: calc(var(--editSidebarWidth) - 2px);
+}
+
+#editorModules {
+  display: none;
+  position: absolute;
+  right: var(--editSidebarWidth);
+  top: var(--editToolbarHeight);
+  bottom: 0;
+  min-width: 250px;
+  max-width: 90vw;
+  width: calc(var(--modulesWidth) - var(--editSidebarWidth));
+  z-index: 1;
+  box-sizing: border-box;
+  padding: 10px;
+  background: var(--backgroundColor);
+  grid-template-columns: 2fr 1fr;
+  grid-template-rows: 2fr 1fr;
+  grid-gap: 10px;
+}
+
+#editorModules ::-webkit-scrollbar-track {
+  background: var(--backgroundColor);
+}
+
+#editorModulesResizer {
+  position: absolute;
+  height: 100%;
+  width: 5px;
+  cursor: ew-resize;
+}
+body.editorModulesResizing {
+  cursor: ew-resize !important;
+  height: 100vh;
+}
+
+#editorModules.active {
+  display: grid;
+}
+
+#editor.hasTopLeft #editorModules.active {
+  grid-template-areas:
+    "topleft topleft"
+    "topleft topleft";
+}
+
+#editor.hasTopRight #editorModules.active {
+  grid-template-areas:
+    "topright topright"
+    "topright topright";
+}
+
+#editor.hasBottomLeft #editorModules.active {
+  grid-template-areas:
+    "bottomleft bottomleft"
+    "bottomleft bottomleft";
+}
+
+#editor.hasBottomRight #editorModules.active {
+  grid-template-areas:
+    "bottomright bottomright"
+    "bottomright bottomright";
+}
+
+#editor.hasTopLeft.hasBottomLeft #editorModules.active {
+  grid-template-areas:
+    "topleft topleft"
+    "bottomleft bottomleft";
+}
+
+#editor.hasTopRight.hasBottomRight #editorModules.active {
+  grid-template-areas:
+    "topright topright"
+    "bottomright bottomright";
+}
+
+#editor.hasTopRight.hasTopLeft #editorModules.active {
+  grid-template-areas:
+    "topleft topright"
+    "topleft topright";
+}
+
+#editor.hasBottomRight.hasBottomLeft #editorModules.active {
+  grid-template-areas:
+    "bottomleft bottomright"
+    "bottomleft bottomright";
+}
+
+#editor.hasTopRight.hasBottomLeft #editorModules.active {
+  grid-template-areas:
+    "topright topright"
+    "bottomleft bottomleft";
+}
+
+#editor.hasTopLeft.hasBottomRight #editorModules.active {
+  grid-template-areas:
+    "topleft topleft"
+    "bottomright bottomright";
+}
+
+#editor.hasTopRight.hasBottomLeft.hasBottomRight #editorModules.active {
+  grid-template-areas:
+    "topright topright"
+    "bottomleft bottomright";
+}
+
+#editor.hasTopLeft.hasBottomLeft.hasBottomRight #editorModules.active {
+  grid-template-areas:
+    "topleft topleft"
+    "bottomleft bottomright";
+}
+
+#editor.hasTopLeft.hasTopRight.hasBottomRight #editorModules.active {
+  grid-template-areas:
+    "topleft topright"
+    "bottomright bottomright";
+}
+
+#editor.hasTopLeft.hasTopRight.hasBottomLeft #editorModules.active {
+  grid-template-areas:
+    "topleft topright"
+    "bottomleft bottomleft";
+}
+
+#editor.hasTopLeft.hasTopRight.hasBottomLeft.hasBottomRight #editorModules.active {
+  grid-template-areas:
+    "topleft topright"
+    "bottomleft bottomright";
+}
+
+.editorModule {
+  display: none;
+  position: relative;
+  overflow: auto;
+  color: var(--textColor);
+  background-color: var(--backgroundColor);
+}
+
+#editorModuleOverlay {
+  background-color: var(--backgroundColor);
+}
+
+#editorModuleInOverlay {
+  position: absolute;
+  left: 10px;
+  right: 10px;
+  top: 10px;
+  bottom: 10px;
+}
+
+.editorModule .widget {
+  position: unset;
+}
+
+body.draggingEditorSidebarModule #editorModules {
+  display: grid;
+  grid-template-areas:
+    "topleft topright"
+    "bottomleft bottomright" !important;
+}
+
+body.draggingEditorSidebarModule #editorModuleOverlay {
+  display: flex !important;
+}
+
+body.draggingEditorSidebarModule .editorModule {
+  display: block;
+  border: 2px red dashed;
+}
+
+body.draggingEditorSidebarModule .editorModule.dragHighlight {
+  border: 2px red solid;
+}
+
+
+#editorModuleTopLeft {
+  grid-area: topleft;
+}
+#editorModuleTopRight {
+  grid-area: topright;
+}
+#editorModuleBottomLeft {
+  grid-area: bottomleft;
+}
+#editorModuleBottomRight {
+  grid-area: bottomright;
+}
+
+.active.editorModule {
+  display: block;
+}
+
+body.lightsOff #editorModules {
+  background: #08090a;
+  color: #f8f8f2;
+}
+
+/* iconify sidebar icons */
+@media (max-width: 1600px) {
+  :root {
+    --editSidebarWidth: 36px;
+  }
+  #editorSidebar button {
+    font-size: 0;
+    padding: 5px;
+  }
+  #editorSidebar button::before {
+    margin: 0;
+  }
+  #editorSidebar button span {
+    font-size: 13px;
+  }
+}
+
+/* module above the room */
+@media (orientation: portrait) and (min-width: 1000px), (max-aspect-ratio: 16/20) {
+  body.edit {
+    --editSidebarWidth: 36px;
+    --roomTop: calc(100 * var(--vh) - 1000px * var(--scale) / var(--roomZoom) + (1 - var(--roomZoom)) / 2 * 1000px * var(--scale) / var(--roomZoom));
+  }
+  #editorModules {
+    left: 0;
+    top: var(--editToolbarHeight);
+    right: var(--editSidebarWidth);
+    bottom: calc(1000px * var(--scale) / var(--roomZoom));
+    width: unset !important;
+    min-width: unset !important;
+    max-width: unset !important;
+    height: unset;
+  }
+  #editorModulesResizer {
+    display: none;
+  }
+}
+
+/* module as fullscreen overlay */
+@media (max-width: 1000px) and (min-aspect-ratio: 16/20) {
+  body.edit {
+    --editSidebarWidth: 36px;
+  }
+  #editorModules {
+    left: 0;
+    top: var(--editToolbarHeight);
+    right: var(--editSidebarWidth);
+    bottom: 0;
+    width: unset !important;
+    min-width: unset !important;
+    max-width: unset !important;
+    height: unset;
+  }
+  #editorModulesResizer {
+    display: none;
+  }
+}
