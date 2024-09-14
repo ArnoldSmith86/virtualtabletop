@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "version": 6,
+    "version": 16,
     "info": {
       "name": "Functions - MOVEXY",
       "image": "/assets/-727329285_8844",
@@ -9,12 +9,21 @@
       "year": "2021",
       "mode": "Tutorial",
       "time": "0",
-      "players": "1",
-      "language": "en-US",
-      "variant": "",
       "attribution": "",
       "showName": false,
-      "lastUpdate": 1640810266000
+      "lastUpdate": 1726239386215,
+      "skill": "",
+      "description": "",
+      "similarImage": "",
+      "similarName": "",
+      "similarDesigner": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": "",
+      "variantImage": "",
+      "variant": "",
+      "language": "en-US",
+      "players": "1"
     }
   },
   "8fr3": {
@@ -37,7 +46,7 @@
     "layer": -3,
     "z": 15,
     "css": "font-size: 25px; ",
-    "text": "MOVEXY operates very similarly to MOVE except that the destination is an x,y coordinate rather than a holder. You should also review the MOVE tutorial. As of when this tutorial was prepared, collections are not supported (but plans are in the works).",
+    "text": "MOVEXY operates very similarly to MOVE except that the destination is an x,y coordinate rather than a holder. You should also review the MOVE tutorial. It does not work on collections. The 'count' parameter limits how many widgets will be moved. It defaults to 1.",
     "movable": false,
     "movableInEdit": false
   },
@@ -66,7 +75,7 @@
     "x": 808,
     "z": 75,
     "width": 300,
-    "text": "This button moves all the cards to x,y coordinates to the right of the holder. There is no setting for 'all' cards, so use 0 (or a high count value, such as 999) to ensure they are all moved. This also sets the the cards to be face up using the 'face' parameter. Note that the pile is not flipped as you would with a physical deck. The order of the cards is unchanged. They are each turned face up and remain in the same order.",
+    "text": "These buttons move the designated 'count' of cards to x,y coordinates to the right of the holder. Negative numbers move all but that number of cards out of the from holder. These buttons also set the cards to be face up using the 'face' parameter. Note that the pile is not flipped as you would with a physical deck. The order of the cards is unchanged. They are each turned face up and remain in the same order.",
     "movable": false,
     "y": 530,
     "movableInEdit": false
@@ -78,14 +87,15 @@
         "func": "MOVEXY",
         "from": "jyz9",
         "x": 145,
-        "y": 815
+        "y": 815,
+        "resetOwner": false
       }
     ],
     "x": 151,
     "y": 450,
     "z": 14,
     "id": "jkmt",
-    "text": "MoveXY"
+    "text": "MOVEXY"
   },
   "jkmt2": {
     "type": "button",
@@ -96,21 +106,23 @@
         "x": 975,
         "y": 225,
         "face": 1,
-        "count": 0
+        "count": 0,
+        "resetOwner": false
       }
     ],
-    "x": 900,
+    "x": 765,
     "y": 450,
     "z": 11,
     "id": "jkmt2",
-    "text": "MoveXY"
+    "text": "MOVEXY 0"
   },
   "jkmt3": {
     "type": "button",
     "clickRoutine": [
       {
         "func": "MOVEXY",
-        "from": "g63n"
+        "from": "g63n",
+        "resetOwner": false
       }
     ],
     "x": 1286,
@@ -1517,14 +1529,15 @@
         "from": "rzcf",
         "x": 485,
         "y": 815,
-        "count": 7
+        "count": 7,
+        "resetOwner": false
       }
     ],
     "x": 500,
     "y": 450,
     "z": 13,
     "id": "jkmt4",
-    "text": "MoveXY"
+    "text": "MOVEXY"
   },
   "2om8": {
     "type": "holder",
@@ -2104,416 +2117,416 @@
     "deck": "2om8D",
     "type": "card",
     "cardType": "C 01",
-    "z": 1182,
-    "parent": "pecw"
+    "z": 12939,
+    "parent": "j0mt"
   },
   "2om8_2_C": {
     "id": "2om8_2_C",
     "deck": "2om8D",
     "type": "card",
     "cardType": "C 02",
-    "z": 7064,
-    "parent": "pecw"
+    "z": 12942,
+    "parent": "j0mt"
   },
   "2om8_3_C": {
     "id": "2om8_3_C",
     "deck": "2om8D",
     "type": "card",
     "cardType": "C 03",
-    "z": 960,
-    "parent": "pecw"
+    "z": 12964,
+    "parent": "j0mt"
   },
   "2om8_4_C": {
     "id": "2om8_4_C",
     "deck": "2om8D",
     "type": "card",
     "cardType": "C 04",
-    "z": 9545,
-    "parent": "pecw"
+    "z": 12973,
+    "parent": "j0mt"
   },
   "2om8_5_C": {
     "id": "2om8_5_C",
-    "parent": "pecw",
+    "parent": "j0mt",
     "deck": "2om8D",
     "type": "card",
     "cardType": "C 05",
-    "z": 1601
+    "z": 12981
   },
   "2om8_6_C": {
     "id": "2om8_6_C",
-    "parent": "pecw",
+    "parent": "j0mt",
     "deck": "2om8D",
     "type": "card",
     "cardType": "C 06",
-    "z": 3423
+    "z": 12945
   },
   "2om8_7_C": {
     "id": "2om8_7_C",
-    "parent": "pecw",
+    "parent": "j0mt",
     "deck": "2om8D",
     "type": "card",
     "cardType": "C 07",
-    "z": 85
+    "z": 12938
   },
   "2om8_8_C": {
     "id": "2om8_8_C",
     "deck": "2om8D",
     "type": "card",
     "cardType": "C 08",
-    "z": 8221,
-    "parent": "pecw"
+    "z": 12941,
+    "parent": "j0mt"
   },
   "2om8_9_C": {
     "id": "2om8_9_C",
-    "parent": "pecw",
+    "parent": "j0mt",
     "deck": "2om8D",
     "type": "card",
     "cardType": "C 09",
-    "z": 4405
+    "z": 12959
   },
   "2om8_T_C": {
     "id": "2om8_T_C",
-    "parent": "pecw",
+    "parent": "j0mt",
     "deck": "2om8D",
     "type": "card",
     "cardType": "C 10",
-    "z": 9165
+    "z": 12958
   },
   "2om8_J_C": {
     "id": "2om8_J_C",
     "deck": "2om8D",
     "type": "card",
     "cardType": "C 2J",
-    "z": 7565,
-    "parent": "pecw"
+    "z": 12949,
+    "parent": "j0mt"
   },
   "2om8_Q_C": {
     "id": "2om8_Q_C",
     "deck": "2om8D",
     "type": "card",
     "cardType": "C 3Q",
-    "z": 4914,
-    "parent": "pecw"
+    "z": 12977,
+    "parent": "j0mt"
   },
   "2om8_K_C": {
     "id": "2om8_K_C",
-    "parent": "pecw",
+    "parent": "j0mt",
     "deck": "2om8D",
     "type": "card",
     "cardType": "C 4K",
-    "z": 1127
+    "z": 12980
   },
   "2om8_A_D": {
     "id": "2om8_A_D",
     "deck": "2om8D",
     "type": "card",
     "cardType": "D 01",
-    "z": 4015,
-    "parent": "pecw"
+    "z": 12930,
+    "parent": "j0mt"
   },
   "2om8_2_D": {
     "id": "2om8_2_D",
-    "parent": "pecw",
+    "parent": "j0mt",
     "deck": "2om8D",
     "type": "card",
     "cardType": "D 02",
-    "z": 1762
+    "z": 12956
   },
   "2om8_3_D": {
     "id": "2om8_3_D",
     "deck": "2om8D",
     "type": "card",
     "cardType": "D 03",
-    "z": 4374,
-    "parent": "pecw"
+    "z": 12931,
+    "parent": "j0mt"
   },
   "2om8_4_D": {
     "id": "2om8_4_D",
     "deck": "2om8D",
     "type": "card",
     "cardType": "D 04",
-    "z": 5485,
-    "parent": "pecw"
+    "z": 12960,
+    "parent": "j0mt"
   },
   "2om8_5_D": {
     "id": "2om8_5_D",
-    "parent": "pecw",
+    "parent": "j0mt",
     "deck": "2om8D",
     "type": "card",
     "cardType": "D 05",
-    "z": 7927
+    "z": 12957
   },
   "2om8_6_D": {
     "id": "2om8_6_D",
     "deck": "2om8D",
     "type": "card",
     "cardType": "D 06",
-    "z": 4632,
-    "parent": "pecw"
+    "z": 12947,
+    "parent": "j0mt"
   },
   "2om8_7_D": {
     "id": "2om8_7_D",
     "deck": "2om8D",
     "type": "card",
     "cardType": "D 07",
-    "z": 6444,
-    "parent": "pecw"
+    "z": 12979,
+    "parent": "j0mt"
   },
   "2om8_8_D": {
     "id": "2om8_8_D",
     "deck": "2om8D",
     "type": "card",
     "cardType": "D 08",
-    "z": 1857,
-    "parent": "pecw"
+    "z": 12950,
+    "parent": "j0mt"
   },
   "2om8_9_D": {
     "id": "2om8_9_D",
     "deck": "2om8D",
     "type": "card",
     "cardType": "D 09",
-    "z": 9810,
-    "parent": "pecw"
+    "z": 12975,
+    "parent": "j0mt"
   },
   "2om8_T_D": {
     "id": "2om8_T_D",
-    "parent": "pecw",
+    "parent": "j0mt",
     "deck": "2om8D",
     "type": "card",
     "cardType": "D 10",
-    "z": 7500
+    "z": 12946
   },
   "2om8_J_D": {
     "id": "2om8_J_D",
     "deck": "2om8D",
     "type": "card",
     "cardType": "D 2J",
-    "z": 7897,
-    "parent": "pecw"
+    "z": 12971,
+    "parent": "j0mt"
   },
   "2om8_Q_D": {
     "id": "2om8_Q_D",
     "deck": "2om8D",
     "type": "card",
     "cardType": "D 3Q",
-    "z": 850,
-    "parent": "pecw"
+    "z": 12933,
+    "parent": "j0mt"
   },
   "2om8_K_D": {
     "id": "2om8_K_D",
-    "parent": "pecw",
+    "parent": "j0mt",
     "deck": "2om8D",
     "type": "card",
     "cardType": "D 4K",
-    "z": 8236
+    "z": 12932
   },
   "2om8_A_H": {
     "id": "2om8_A_H",
     "deck": "2om8D",
     "type": "card",
     "cardType": "H 01",
-    "z": 5676,
-    "parent": "pecw"
+    "z": 12936,
+    "parent": "j0mt"
   },
   "2om8_2_H": {
     "id": "2om8_2_H",
-    "parent": "pecw",
+    "parent": "j0mt",
     "deck": "2om8D",
     "type": "card",
     "cardType": "H 02",
-    "z": 8565
+    "z": 12978
   },
   "2om8_3_H": {
     "id": "2om8_3_H",
-    "parent": "pecw",
+    "parent": "j0mt",
     "deck": "2om8D",
     "type": "card",
     "cardType": "H 03",
-    "z": 7715
+    "z": 12954
   },
   "2om8_4_H": {
     "id": "2om8_4_H",
     "deck": "2om8D",
     "type": "card",
     "cardType": "H 04",
-    "z": 2175,
-    "parent": "pecw"
+    "z": 12943,
+    "parent": "j0mt"
   },
   "2om8_5_H": {
     "id": "2om8_5_H",
     "deck": "2om8D",
     "type": "card",
     "cardType": "H 05",
-    "z": 2663,
-    "parent": "pecw"
+    "z": 12974,
+    "parent": "j0mt"
   },
   "2om8_6_H": {
     "id": "2om8_6_H",
-    "parent": "pecw",
+    "parent": "j0mt",
     "deck": "2om8D",
     "type": "card",
     "cardType": "H 06",
-    "z": 7884
+    "z": 12952
   },
   "2om8_7_H": {
     "id": "2om8_7_H",
     "deck": "2om8D",
     "type": "card",
     "cardType": "H 07",
-    "z": 7780,
-    "parent": "pecw"
+    "z": 12953,
+    "parent": "j0mt"
   },
   "2om8_8_H": {
     "id": "2om8_8_H",
-    "parent": "pecw",
+    "parent": "j0mt",
     "deck": "2om8D",
     "type": "card",
     "cardType": "H 08",
-    "z": 5546
+    "z": 12935
   },
   "2om8_9_H": {
     "id": "2om8_9_H",
-    "parent": "pecw",
+    "parent": "j0mt",
     "deck": "2om8D",
     "type": "card",
     "cardType": "H 09",
-    "z": 4521
+    "z": 12976
   },
   "2om8_T_H": {
     "id": "2om8_T_H",
     "deck": "2om8D",
     "type": "card",
     "cardType": "H 10",
-    "z": 4315,
-    "parent": "pecw"
+    "z": 12944,
+    "parent": "j0mt"
   },
   "2om8_J_H": {
     "id": "2om8_J_H",
     "deck": "2om8D",
     "type": "card",
     "cardType": "H 2J",
-    "z": 9641,
-    "parent": "pecw"
+    "z": 12955,
+    "parent": "j0mt"
   },
   "2om8_Q_H": {
     "id": "2om8_Q_H",
     "deck": "2om8D",
     "type": "card",
     "cardType": "H 3Q",
-    "z": 9396,
-    "parent": "pecw"
+    "z": 12961,
+    "parent": "j0mt"
   },
   "2om8_K_H": {
     "id": "2om8_K_H",
     "deck": "2om8D",
     "type": "card",
     "cardType": "H 4K",
-    "z": 9148,
-    "parent": "pecw"
+    "z": 12948,
+    "parent": "j0mt"
   },
   "2om8_A_S": {
     "id": "2om8_A_S",
     "deck": "2om8D",
     "type": "card",
     "cardType": "S 01",
-    "z": 1618,
-    "parent": "pecw"
+    "z": 12968,
+    "parent": "j0mt"
   },
   "2om8_2_S": {
     "id": "2om8_2_S",
     "deck": "2om8D",
     "type": "card",
     "cardType": "S 02",
-    "z": 9613,
-    "parent": "pecw"
+    "z": 12965,
+    "parent": "j0mt"
   },
   "2om8_3_S": {
     "id": "2om8_3_S",
-    "parent": "pecw",
+    "parent": "j0mt",
     "deck": "2om8D",
     "type": "card",
     "cardType": "S 03",
-    "z": 700
+    "z": 12967
   },
   "2om8_4_S": {
     "id": "2om8_4_S",
     "deck": "2om8D",
     "type": "card",
     "cardType": "S 04",
-    "z": 4275,
-    "parent": "pecw"
+    "z": 12962,
+    "parent": "j0mt"
   },
   "2om8_5_S": {
     "id": "2om8_5_S",
     "deck": "2om8D",
     "type": "card",
     "cardType": "S 05",
-    "z": 8069,
-    "parent": "pecw"
+    "z": 12970,
+    "parent": "j0mt"
   },
   "2om8_6_S": {
     "id": "2om8_6_S",
     "deck": "2om8D",
     "type": "card",
     "cardType": "S 06",
-    "z": 4328,
-    "parent": "pecw"
+    "z": 12934,
+    "parent": "j0mt"
   },
   "2om8_7_S": {
     "id": "2om8_7_S",
     "deck": "2om8D",
     "type": "card",
     "cardType": "S 07",
-    "z": 508,
-    "parent": "pecw"
+    "z": 12937,
+    "parent": "j0mt"
   },
   "2om8_8_S": {
     "id": "2om8_8_S",
     "deck": "2om8D",
     "type": "card",
     "cardType": "S 08",
-    "z": 3277,
-    "parent": "pecw"
+    "z": 12963,
+    "parent": "j0mt"
   },
   "2om8_9_S": {
     "id": "2om8_9_S",
     "deck": "2om8D",
     "type": "card",
     "cardType": "S 09",
-    "z": 2178,
-    "parent": "pecw"
+    "z": 12940,
+    "parent": "j0mt"
   },
   "2om8_T_S": {
     "id": "2om8_T_S",
     "deck": "2om8D",
     "type": "card",
     "cardType": "S 10",
-    "z": 3549,
-    "parent": "pecw"
+    "z": 12966,
+    "parent": "j0mt"
   },
   "2om8_J_S": {
     "id": "2om8_J_S",
     "deck": "2om8D",
     "type": "card",
     "cardType": "S 2J",
-    "z": 4994,
-    "parent": "pecw"
+    "z": 12972,
+    "parent": "j0mt"
   },
   "2om8_Q_S": {
     "id": "2om8_Q_S",
     "deck": "2om8D",
     "type": "card",
     "cardType": "S 3Q",
-    "z": 3774,
-    "parent": "pecw"
+    "z": 12951,
+    "parent": "j0mt"
   },
   "2om8_K_S": {
     "id": "2om8_K_S",
     "deck": "2om8D",
     "type": "card",
     "cardType": "S 4K",
-    "z": 1831,
-    "parent": "pecw"
+    "z": 12969,
+    "parent": "j0mt"
   },
   "g63n": {
     "type": "holder",
@@ -2582,7 +2595,8 @@
         "from": "2om8",
         "x": "${PROPERTY xPos}",
         "y": 815,
-        "face": 1
+        "face": 1,
+        "resetOwner": false
       },
       "var xPos = ${PROPERTY xPos} + 30",
       {
@@ -2609,13 +2623,70 @@
     "y": 776,
     "movableInEdit": false
   },
-  "pecw": {
+  "jkmt6": {
+    "type": "button",
+    "clickRoutine": [
+      {
+        "func": "MOVEXY",
+        "from": "2om8",
+        "x": 975,
+        "y": 225,
+        "face": 1,
+        "count": 10,
+        "resetOwner": false
+      }
+    ],
+    "x": 870,
+    "y": 450,
+    "z": 12,
+    "id": "jkmt6",
+    "text": "MOVEXY 10"
+  },
+  "jkmt7": {
+    "type": "button",
+    "clickRoutine": [
+      {
+        "func": "MOVEXY",
+        "from": "2om8",
+        "x": 975,
+        "y": 225,
+        "face": 1,
+        "count": -15,
+        "resetOwner": false
+      }
+    ],
+    "x": 975,
+    "y": 450,
+    "z": 13,
+    "id": "jkmt7",
+    "text": "MOVEXY -15"
+  },
+  "jkmt8": {
+    "type": "button",
+    "clickRoutine": [
+      {
+        "func": "MOVEXY",
+        "from": "2om8",
+        "x": 975,
+        "y": 225,
+        "face": 1,
+        "count": "all",
+        "resetOwner": false
+      }
+    ],
+    "x": 1080,
+    "y": 450,
+    "z": 13,
+    "id": "jkmt8",
+    "text": "MOVEXY all"
+  },
+  "j0mt": {
     "type": "pile",
     "parent": "2om8",
     "x": 4,
     "y": 4,
     "width": 103,
     "height": 160,
-    "id": "pecw"
+    "id": "j0mt"
   }
 }

@@ -1043,7 +1043,7 @@ function jeAddCommands() {
   jeAddRoutineOperationCommands('CLONE', { source: 'DEFAULT', collection: 'DEFAULT', xOffset: 0, yOffset: 0, count: 1, recursive: false, properties: null });
   jeAddRoutineOperationCommands('COUNT', { collection: 'DEFAULT', holder: null, variable: 'COUNT', owner: null });
   jeAddRoutineOperationCommands('DELETE', { collection: 'DEFAULT'});
-  jeAddRoutineOperationCommands('FLIP', { count: 0, face: null, faceCycle: 'forward', holder: null, collection: 'DEFAULT' });
+  jeAddRoutineOperationCommands('FLIP', { count: 'all', face: null, faceCycle: 'forward', holder: null, collection: 'DEFAULT' });
   jeAddRoutineOperationCommands('FOREACH', { loopRoutine: [], in: [], range: [], collection: 'DEFAULT' });
   jeAddRoutineOperationCommands('GET', { variable: 'id', collection: 'DEFAULT', property: 'id', aggregation: 'first', skipMissing: false });
   jeAddRoutineOperationCommands('IF', { condition: null, operand1: null, relation: '==', operand2: null, thenRoutine: [], elseRoutine: [] });
@@ -1061,6 +1061,7 @@ function jeAddCommands() {
   jeAddRoutineOperationCommands('SWAPHANDS', { interval: 1, direction: 'forward', source: 'all' });
   jeAddRoutineOperationCommands('TIMER', { value: 0, seconds: 0, mode: 'toggle', timer: null, collection: 'DEFAULT' });
   jeAddRoutineOperationCommands('TURN', { turn: 1, turnCycle: 'forward', source: 'all', collection: 'TURN' });
+  jeAddRoutineOperationCommands('VAR', { variables: {} });
 
   jeAddRoutineExpressionCommands('random', 'randInt 1 10');
   jeAddRoutineExpressionCommands('increment', '${variableName} + 1');
@@ -1543,6 +1544,8 @@ async function jeApplyChangesMulti() {
     setSelection(jeMultiSelectedWidgets());
     jeDeltaIsOurs = false;
   } else {
+    batchStart();
+    setDeltaCause(`${getPlayerDetails().playerName} edited properties on multiple widgets in editor`);
     jeDeltaIsOurs = true;
     const widgets = jeMultiSelectedWidgets();
     const widgetIDs = widgets.map(w=>w.get('id'));
@@ -1557,6 +1560,7 @@ async function jeApplyChangesMulti() {
       }
     }
     jeDeltaIsOurs = false;
+    batchEnd();
   }
 }
 
