@@ -141,14 +141,29 @@ async function smartCloneUpdateClone(topCloneID, clone, source, options) {
   }
 
   if(options.flipX) {
-    const sourceParentWidth = widgets.get(source.get('parent')).get('width');
-    const newX = sourceParentWidth - (source.get('x') + source.get('width'));
+    const sourceParentDom = widgets.get(source.get('parent')).domElement;
+    const sourceDom = source.domElement;
+
+    // Get bounding rectangles
+    const sourceParentRect = sourceParentDom.getBoundingClientRect();
+    const sourceRect = sourceDom.getBoundingClientRect();
+
+    // Calculate new X using the bounding rectangles
+    const newX = sourceParentRect.width/getScale() - (source.get('x') + sourceRect.width/getScale());
     console.log('Smart Clone - Flipping Property', clone.id, 'x', newX);
     await clone.set('x', newX);
   }
+
   if(options.flipY) {
-    const sourceParentHeight = widgets.get(source.get('parent')).get('height');
-    const newY = sourceParentHeight - (source.get('y') + source.get('height'));
+    const sourceParentDom = widgets.get(source.get('parent')).domElement;
+    const sourceDom = source.domElement;
+
+    // Get bounding rectangles
+    const sourceParentRect = sourceParentDom.getBoundingClientRect();
+    const sourceRect = sourceDom.getBoundingClientRect();
+
+    // Calculate new Y using the bounding rectangles
+    const newY = sourceParentRect.height/getScale() - (source.get('y') + sourceRect.height/getScale());
     console.log('Smart Clone - Flipping Property', clone.id, 'y', newY);
     await clone.set('y', newY);
   }
