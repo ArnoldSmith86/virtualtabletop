@@ -2688,15 +2688,15 @@ export class Widget extends StateManaged {
   }
 
   async snapToGrid() {
-    const grid = this.get('grid');
-    if(Array.isArray(grid) && grid.length) {
+    const gridArray = this.get('grid');
+    if(Array.isArray(gridArray) && gridArray.length) {
       const x = this.get('x');
       const y = this.get('y');
 
       let closest = null;
       let closestDistance = 999999;
 
-      for(const grid of grid) {
+      for(const grid of gridArray) {
         if(!grid)
           continue;
 
