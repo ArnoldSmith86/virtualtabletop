@@ -2080,6 +2080,8 @@ function jeGetContext() {
 
     if(!jeStateNow.id)
       jeJSONerror = 'No ID given.';
+    else if(typeof jeStateNow.id != 'string')
+      jeJSONerror = 'ID has to be a string.';
     else if(JSON.parse(jeStateBefore).id != jeStateNow.id && widgets.has(jeStateNow.id))
       jeJSONerror = `ID ${jeStateNow.id} is already in use.`;
     else if(jeStateNow.parent !== undefined && jeStateNow.parent !== null && !widgets.has(jeStateNow.parent))
