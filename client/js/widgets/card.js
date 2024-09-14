@@ -28,7 +28,8 @@ class Card extends Widget {
       if(delta.deck) {
         this.deck = widgets.get(delta.deck);
         this.deck.addCard(this);
-        this.createFaces(this.deck.get('faceTemplates'));
+        const faceTemplates = this.deck.get('faceTemplates');
+        this.createFaces(Array.isArray(faceTemplates) ? faceTemplates : []);
       } else {
         this.deck = null;
       }
@@ -227,6 +228,10 @@ class Card extends Widget {
   }
 
   getFaceCount() {
-    return this.deck.get('faceTemplates').length;
+    const faceTemplates = this.deck.get('faceTemplates');
+    if(Array.isArray(faceTemplates))
+      return faceTemplates.length;
+    else
+      return 0;
   }
 }

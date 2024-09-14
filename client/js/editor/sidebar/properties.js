@@ -1225,7 +1225,7 @@ class PropertiesModule extends SidebarModule {
 
       const cardClone = new Card();
       const newState = {...card.state};
-      newState.activeFace = deck.get('faceTemplates').length>1?1:0;
+      newState.activeFace = card.getFaceCount()>1?1:0;
       newState.cardType = cardType;
       cardClone.renderReadonlyCopyRaw(newState, $('.renderedWidget', cardTypeDiv));
 
@@ -1357,6 +1357,8 @@ class PropertiesModule extends SidebarModule {
 
   renderForDice(widget) {
     this.addHeader(`Dice ${widget.id}`);
+    const widgetFaces = widget.get('faces');
+    const faceCount = Array.isArray(widgetFaces) ? widgetFaces.length : 0;
 
     this.addSubHeader('Dice types');
     const faces = [
@@ -1380,7 +1382,7 @@ class PropertiesModule extends SidebarModule {
       }, this.moduleDOM);
 
       this.addPropertyListener(widget, 'faces', widget => {
-        if (JSON.stringify(widget.get('faces')) === JSON.stringify(f)) {
+        if (JSON.stringify(widgetFaces) === JSON.stringify(f)) {
           dice.classList.add('selected');
         } else {
           dice.classList.remove('selected');
@@ -1399,8 +1401,8 @@ class PropertiesModule extends SidebarModule {
     for (const s of shape) {
       const diceShape = this.renderWidgetButton(new Dice(), {
         type: 'dice',
-        faces: widget.get('faces'),
-        activeFace: widget.get('faces').length - 1,
+        faces: widgetFaces,
+        activeFace: faceCount - 1,
         shape3d: s,
         pipSymbols: widget.get('pipSymbols')
       }, this.moduleDOM);
@@ -1426,8 +1428,8 @@ class PropertiesModule extends SidebarModule {
     for (const p of pipType) {
       const dicePip = this.renderWidgetButton(new Dice(), {
         type: 'dice',
-        faces: widget.get('faces'),
-        activeFace: widget.get('faces').length - 1,
+        faces: widgetFaces,
+        activeFace: faceCount - 1,
         shape3d: widget.get('shape3d'),
         pipSymbols: p
       }, this.moduleDOM);
@@ -1615,12 +1617,13 @@ class PropertiesModule extends SidebarModule {
 
     if(widget.get('type') == 'deck') {
       const parent = new BasicWidget().renderReadonlyCopyRaw({}, button).domElement;
+      const faceTemplates = widget.get('faceTemplates');
       widgets.set(widget.id, widget);
       for(const cardType of shuffleArray(Object.keys(widget.get('cardTypes'))).slice(0, 5)) {
         new Card().renderReadonlyCopyRaw(Object.assign({
           deck: widget.id,
           cardType,
-          activeFace: widget.get('faceTemplates').length > 1 ? 1 : 0
+          activeFace: Array.isArray(faceTemplates) && faceTemplates.length > 1 ? 1 : 0
         }, state), parent);
       }
       widgets.delete(widget.id, widget);
