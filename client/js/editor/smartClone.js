@@ -2,7 +2,7 @@ const smartCloneSourceMap = {};
 
 async function smartCloneRemoveChildren(topCloneID, clone, source, options) {
   for(const child of widgetFilter(w=>w.get('parent') == clone.id)) {
-    const childSource = smartCloneGetSource(child, source);
+    const childSource = widgets.get(smartCloneSourceMap[topCloneID][child.id]);
     const id = childSource && applyReplaces(childSource.id, options.replaces, topCloneID);
 
     smartCloneRemoveChildren(topCloneID, child, childSource, options);
