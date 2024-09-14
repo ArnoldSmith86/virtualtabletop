@@ -169,6 +169,65 @@ async function updateWidgetId(widget, oldID) {
     await inheritor.set('inheritFrom', newInherits)
   };
 
+  // Update references in routines
+  const updateParam = function(a, func, param) {
+    if(a.func == func && Array.isArray(a[param])) {
+      const index = a[param].indexOf(oldID);
+      if(index != -1)
+        a[param][index] = id;
+    } else if(a.func == func && a[param] == oldID) {
+      a[param] = id;
+    }
+  };
+  for(const [ _, w ] of widgets) {
+    for(const [ key, value ] of Object.entries(w.state)) {
+      if(key.endsWith('Routine') && Array.isArray(value)) {
+        const json = JSON.stringify(value);
+        const copy = JSON.parse(json);
+
+        for(const a of copy) {
+          updateParam(a, 'CALL', 'widget');
+          updateParam(a, 'CANVAS', 'canvas');
+          updateParam(a, 'COUNT', 'holder');
+          updateParam(a, 'FLIP', 'holder');
+          updateParam(a, 'LABEL', 'label');
+          updateParam(a, 'MOVE', 'from');
+          updateParam(a, 'MOVE', 'to');
+          updateParam(a, 'MOVEXY', 'from');
+          updateParam(a, 'RECALL', 'holder');
+          updateParam(a, 'ROTATE', 'holder');
+          updateParam(a, 'SHUFFLE', 'holder');
+          updateParam(a, 'SORT', 'holder');
+          updateParam(a, 'TIMER', 'timer');
+
+          if(a.func == 'SELECT' && !a.property || [ 'parent', 'id', 'deck' ].includes(a.property)) {
+            if(a.value == oldID)
+              a.value = id;
+            else if(Array.isArray(a.value) && a.value.indexOf(oldID) != -1)
+              a.value[a.value.indexOf(oldID)] = id;
+          }
+
+          for(const property of [ 'collection', 'source' ]) {
+            if(Array.isArray(a[property])) {
+              const index = a[property].indexOf(oldID);
+              if(index != -1)
+                a[property][index] = id;
+            }
+          }
+        }
+
+        let newJSON = JSON.stringify(copy).replace(/\$\{PROPERTY [^}]+ OF ([^}]+)\}/g, (match, p1) => {
+          if(p1 == oldID)
+            return match.replace(regexEscape(p1), id);
+          return match;
+        });
+
+        if(newJSON != json)
+          await w.set(key, JSON.parse(newJSON));
+      }
+    }
+  }
+
   // If widget is a seat, change widgets with onlyVisibleForSeat and linkedToSeat naming that seat.
   if(widget.type == 'seat') {
     for(const prop of ['onlyVisibleForSeat', 'linkedToSeat']) {
