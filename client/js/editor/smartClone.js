@@ -271,9 +271,12 @@ async function smartCloneDeltaReceived(delta) {
         needRemove[topCloneID] = true;
       }
 
-      for(const [ cloneID, source ] of Object.entries(sourceMap))
+      for(const [ cloneID, source ] of Object.entries(sourceMap)) {
         if(id === source.id || id === cloneID || d && d.parent === source.id)
           needUpdate[topCloneID] = true;
+        if(id === cloneID && d.parent !== undefined && Object.keys(sourceMap).indexOf(d.parent) == -1)
+          delete smartCloneSourceMap[topCloneID][cloneID];
+      }
     }
   }
 
