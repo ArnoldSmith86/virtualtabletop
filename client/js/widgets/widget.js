@@ -69,6 +69,8 @@ export class Widget extends StateManaged {
       dropOffsetY: 0,
       dropShadowOwner: null,
       dropShadowWidget: null,
+      dropTarget: null,
+      dropLimit: -1,
       inheritChildZ: false,
       hoverTarget: null,
       hoverParent: null,
@@ -168,6 +170,8 @@ export class Widget extends StateManaged {
   }
 
   applyDeltaToDOM(delta) {
+    super.applyDeltaToDOM(delta);
+
     let fromTransform = null;
     let newParent = undefined;
     if(delta.parent !== undefined) {
@@ -1197,12 +1201,15 @@ export class Widget extends StateManaged {
       }
 
       if(a.func == 'FLIP') {
-        setDefaults(a, { count: 0, face: null, faceCycle: null, collection: 'DEFAULT' });
+        setDefaults(a, { count: 'all', face: null, faceCyle: null, collection: 'DEFAULT' });
+        if(a.count === 'all')
+          a.count = 999999;
+
         let collection;
         if(a.holder !== undefined) {
           if(this.isValidID(a.holder,problems)) {
             await w(a.holder, async holder=>{
-              for(const c of holder.children().slice(0, a.count || 999999))
+              for(const c of holder.children().slice(0, a.count))
                 c.flip && await c.flip(a.face,a.faceCycle);
             });
           }
@@ -1210,7 +1217,7 @@ export class Widget extends StateManaged {
             jeLoggingRoutineOperationSummary(`holder '${a.holder}'`);
         } else if(collection = getCollection(a.collection)) {
           if(collections[collection].length) {
-            for(const c of collections[collection].slice(0, a.count || 999999))
+            for(const c of collections[collection].slice(0, a.count))
               c.flip && await c.flip(a.face,a.faceCycle);
           } else {
             problems.push(`Collection ${a.collection} is empty.`);
@@ -1443,7 +1450,9 @@ export class Widget extends StateManaged {
 
       if(a.func == 'MOVE') {
         setDefaults(a, { count: a.from ? 1 : 0, face: null, fillTo: null, collection: 'DEFAULT' });
-        const count = a.fillTo || a.count || 999999;
+        let count = a.fillTo || a.count;
+        if(count === 'all')
+          count = 999999;
 
         async function applyMove(source, target, c) {
           let moved = 0;
@@ -1511,7 +1520,7 @@ export class Widget extends StateManaged {
             });
           }
           if(jeRoutineLogging) {
-            const logCount = count==1 ? '1 widget' : `${count} widgets`;
+            const logCount = count==1 ? '1 widget' : `${count == 999999 ? 'all' : count} widgets`;
             jeLoggingRoutineOperationSummary(`${logCount} from '${a.from || a.collection}' to '${a.to}'`)
           }
         }
@@ -1519,9 +1528,12 @@ export class Widget extends StateManaged {
 
       if(a.func == 'MOVEXY') {
         setDefaults(a, { count: 1, face: null, x: 0, y: 0, snapToGrid: true, resetOwner: true });
+        if(a.count === 'all')
+          a.count = 999999;
+
         if(this.isValidID(a.from, problems)) {
           await w(a.from, async source=>{
-            for(const c of source.children().slice(0, a.count || 999999).reverse()) {
+            for(const c of source.children().slice(0, a.count).reverse()) {
               if(a.face !== null && c.flip)
                 c.flip(a.face);
               await c.bringToFront();
@@ -1583,24 +1595,27 @@ export class Widget extends StateManaged {
 
       if(a.func == 'ROTATE') {
         setDefaults(a, { count: 1, angle: 90, mode: 'add', collection: 'DEFAULT' });
+        if(a.count === 'all')
+          a.count = 999999;
+
         let collection;
         const mode = a.mode == 'set' ? 'to' : 'by';
         if(a.holder !== undefined) {
           if(this.isValidID(a.holder, problems)) {
             await w(a.holder, async holder=>{
-              for(const c of holder.children().slice(0, a.count || 999999))
+              for(const c of holder.children().slice(0, a.count))
                 await c.rotate(a.angle, a.mode);
             });
             if(jeRoutineLogging) {
-              jeLoggingRoutineOperationSummary(`${a.count == 0 ? '' : a.count} ${a.count==1 ? 'widget' : 'widgets'} in '${a.holder}' ${mode} ${a.angle}`);
+              jeLoggingRoutineOperationSummary(`${a.count == 999999 ? '' : a.count} ${a.count==1 ? 'widget' : 'widgets'} in '${a.holder}' ${mode} ${a.angle}`);
             }
           }
         } else if(collection = getCollection(a.collection)) {
           if(collections[collection].length) {
-            for(const c of collections[collection].slice(0, a.count || 999999))
+            for(const c of collections[collection].slice(0, a.count))
               await c.rotate(a.angle, a.mode);
             if(jeRoutineLogging)
-              jeLoggingRoutineOperationSummary(`${a.count == 0 ? '' : a.count} ${a.count==1 ? 'widget' : 'widgets'} in '${a.collection}' ${mode} ${a.angle}`);
+              jeLoggingRoutineOperationSummary(`${a.count == 999999 ? '' : a.count} ${a.count==1 ? 'widget' : 'widgets'} in '${a.collection}' ${mode} ${a.angle}`);
           } else {
             problems.push(`Collection ${a.collection} is empty.`);
           }
