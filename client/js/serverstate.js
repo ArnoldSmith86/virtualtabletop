@@ -196,6 +196,7 @@ async function updateWidgetId(widget, oldID) {
           updateParam(a, 'MOVEXY', 'from');
           updateParam(a, 'RECALL', 'holder');
           updateParam(a, 'ROTATE', 'holder');
+          updateParam(a, 'SCORE', 'seats');
           updateParam(a, 'SHUFFLE', 'holder');
           updateParam(a, 'SORT', 'holder');
           updateParam(a, 'TIMER', 'timer');
