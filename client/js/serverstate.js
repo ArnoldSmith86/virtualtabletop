@@ -139,6 +139,118 @@ async function addWidgetLocal(widget) {
   return widget.id;
 }
 
+async function updateWidgetId(widget, oldID) {
+  const children = Widget.prototype.children.call(widgets.get(oldID)); // use Widget.children even for holders so it doesn't filter
+  const cards = widgetFilter(w=>w.get('deck')==oldID);
+
+  for(const child of children)
+    sendPropertyUpdate(child.get('id'), 'parent', null);
+  for(const card of cards)
+    sendPropertyUpdate(card.get('id'), 'deck', null);
+  await removeWidgetLocal(oldID, true);
+  
+  const id = await addWidgetLocal(widget);
+
+  // Restore children
+  for(const child of children)
+    sendPropertyUpdate(child.get('id'), 'parent', id);
+  for(const card of cards)
+    sendPropertyUpdate(card.get('id'), 'deck', id);
+
+  // Change inheritFrom on widgets inheriting from altered widget
+  for (const inheritor of StateManaged.inheritFromMapping[oldID]) {
+    const oldInherits = inheritor.get('inheritFrom');
+    let newInherits;
+    if(typeof oldInherits == "string") {
+      newInherits = id;
+    } else {
+      newInherits = {...oldInherits};
+      newInherits[id] = newInherits[oldID];
+      delete newInherits[oldID]
+    }
+    await inheritor.set('inheritFrom', newInherits)
+  };
+
+  // Update references in routines
+  const updateParam = function(a, func, param) {
+    if(a.func == func && Array.isArray(a[param])) {
+      const index = a[param].indexOf(oldID);
+      if(index != -1)
+        a[param][index] = id;
+    } else if(a.func == func && a[param] == oldID) {
+      a[param] = id;
+    }
+  };
+  for(const [ _, w ] of widgets) {
+    for(const [ key, value ] of Object.entries(w.state)) {
+      if(key.endsWith('Routine') && Array.isArray(value)) {
+        const json = JSON.stringify(value);
+        const copy = JSON.parse(json);
+
+        for(const a of copy) {
+          updateParam(a, 'CALL', 'widget');
+          updateParam(a, 'CANVAS', 'canvas');
+          updateParam(a, 'COUNT', 'holder');
+          updateParam(a, 'FLIP', 'holder');
+          updateParam(a, 'LABEL', 'label');
+          updateParam(a, 'MOVE', 'from');
+          updateParam(a, 'MOVE', 'to');
+          updateParam(a, 'MOVEXY', 'from');
+          updateParam(a, 'RECALL', 'holder');
+          updateParam(a, 'ROTATE', 'holder');
+          updateParam(a, 'SCORE', 'seats');
+          updateParam(a, 'SHUFFLE', 'holder');
+          updateParam(a, 'SORT', 'holder');
+          updateParam(a, 'TIMER', 'timer');
+
+          if(a.func == 'SELECT' && !a.property || [ 'parent', 'id', 'deck' ].includes(a.property)) {
+            if(a.value == oldID)
+              a.value = id;
+            else if(Array.isArray(a.value) && a.value.indexOf(oldID) != -1)
+              a.value[a.value.indexOf(oldID)] = id;
+          }
+
+          for(const property of [ 'collection', 'source' ]) {
+            if(Array.isArray(a[property])) {
+              const index = a[property].indexOf(oldID);
+              if(index != -1)
+                a[property][index] = id;
+            }
+          }
+        }
+
+        let newJSON = JSON.stringify(copy).replace(/\$\{PROPERTY [^}]+ OF ([^}]+)\}/g, (match, p1) => {
+          if(p1 == oldID)
+            return match.replace(regexEscape(p1), id);
+          return match;
+        });
+
+        if(newJSON != json)
+          await w.set(key, JSON.parse(newJSON));
+      }
+    }
+  }
+
+  // If widget is a seat, change widgets with onlyVisibleForSeat and linkedToSeat naming that seat.
+  if(widget.type == 'seat') {
+    for(const prop of ['onlyVisibleForSeat', 'linkedToSeat']) {
+      for(const w of widgetFilter(w => w.get(prop) && asArray(w.get(prop)).includes(oldID))) {
+        if(typeof w.get(prop) === 'string') {
+          await w.set(prop, id)
+        } else {
+          const vis = [...w.get(prop)];
+          vis[vis.indexOf(oldID)] = id;
+          await w.set(prop, vis)
+        }
+      }
+    }
+  }
+
+  // Finally, change any seats that use the old id as a hand.
+  for(const w of widgetFilter(w => w.get('type') == 'seat' && w.get('hand') == oldID))
+    await w.set('hand', id);
+}
+
 export function batchStart() {
   ++batchDepth;
 }
