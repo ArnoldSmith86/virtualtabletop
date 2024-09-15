@@ -1315,31 +1315,19 @@ async function updateWidget(currentState, oldState, applyChangesFromUI) {
   if(applyChangesFromUI)
     await applyEditOptions(widget);
 
-  const children = Widget.prototype.children.call(widgets.get(previousState.id)); // use Widget.children even for holders so it doesn't filter
-  const cards = widgetFilter(w=>w.get('deck')==previousState.id);
-
-  if(widget.id !== previousState.id || widget.type !== previousState.type) {
-    for(const child of children)
-      sendPropertyUpdate(child.get('id'), 'parent', null);
-    for(const card of cards)
-      sendPropertyUpdate(card.get('id'), 'deck', null);
+  if(widget.id !== previousState.id) {
+    await updateWidgetId(widget, previousState.id);
+  } else if (widget.type !== previousState.type) {
     await removeWidgetLocal(previousState.id, true);
+    const id = await addWidgetLocal(widget);
+
+    // Handle special case where type is removed
+    if(widget.type === undefined)
+      sendPropertyUpdate(id, 'type', null);
   } else {
     for(const key in previousState)
       if(widget[key] === undefined)
         widget[key] = null;
-  }
-
-  if(widget.id !== previousState.id || widget.type !== previousState.type) {
-    const id = await addWidgetLocal(widget);
-    if(widget.type === undefined && widget.type !== previousState.type)
-      sendPropertyUpdate(id, 'type', null);
-
-    for(const child of children)
-      sendPropertyUpdate(child.get('id'), 'parent', id);
-    for(const card of cards)
-      sendPropertyUpdate(card.get('id'), 'deck', id);
-  } else {
     for(const key in widget) {
       if(widget[key] !== previousState[key] && JSON.stringify(widget[key]) !== JSON.stringify(previousState[key])) {
         widgets.get(widget.id).state[key] = widget[key];
