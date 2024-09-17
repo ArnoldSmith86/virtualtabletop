@@ -5,7 +5,8 @@ async function smartCloneRemoveChildren(topCloneID, clone, source, options) {
     const childSource = smartCloneSourceMap[topCloneID][child.id];
     const id = childSource && applyReplaces(childSource.id, options.replaces, topCloneID);
 
-    await smartCloneRemoveChildren(topCloneID, child, childSource, options);
+    if(!child.get('editorSmartClone'))
+      await smartCloneRemoveChildren(topCloneID, child, childSource, options);
 
     if(!childSource || id != childSource.id && !widgets.has(id) || child.get('type') != childSource.get('type')) {
       if(childSource)
@@ -14,6 +15,7 @@ async function smartCloneRemoveChildren(topCloneID, clone, source, options) {
         console.log('Smart Clone - Removing', [child.id, id], "No Source");
       await removeWidgetLocal(child.id);
       delete smartCloneSourceMap[topCloneID][child.id];
+      delete smartCloneSourceMap[child.id];
     }
   }
 }
@@ -27,9 +29,14 @@ async function smartCloneAddChildren(topCloneID, clone, source, options) {
     if(!clonedChildren.length) {
       console.log('Smart Clone - Adding', id);
       clonedChildren = [ widgets.get(await addWidgetLocal({ id, type: child.get('type'), parent: clone.id, inheritFrom: inheritDef(child) })) ];
+      if(child.get('editorSmartClone')) {
+        await clonedChildren[0].set('editorSmartClone', JSON.parse(JSON.stringify(child.get('editorSmartClone'))));
+        await smartCloneUpdate(id);
+      }
       smartCloneSourceMap[topCloneID][id] = child;
     }
-    await smartCloneAddChildren(topCloneID, clonedChildren.pop(), child, options);
+    if(!child.get('editorSmartClone'))
+      await smartCloneAddChildren(topCloneID, clonedChildren.pop(), child, options);
   }
 }
 
@@ -113,7 +120,7 @@ async function smartCloneUpdateClone(topCloneID, clone, source, options) {
 
         if(newCloneValue === sourceValue && canBeInherited) {
 
-          if(clone.state[property] !== undefined) {
+          if(clone.state[property] !== undefined && property != 'editorSmartClone') {
             console.log('Smart Clone - Removing Property', clone.id, property);
             await clone.set(property, null);
           }
@@ -274,13 +281,13 @@ async function smartCloneDeltaReceived(delta) {
       }
 
       // update inheritance when a scoreboard changes its scoreProperty
-      if(d.scoreProperty !== undefined)
+      if(d && d.scoreProperty !== undefined)
         needUpdate[topCloneID] = true;
 
       for(const [ cloneID, source ] of Object.entries(sourceMap)) {
         if(id === source.id || id === cloneID || d && d.parent === source.id)
           needUpdate[topCloneID] = true;
-        if(id === cloneID && d.parent !== undefined && Object.keys(sourceMap).indexOf(d.parent) == -1)
+        if(id === cloneID && d && d.parent !== undefined && Object.keys(sourceMap).indexOf(d.parent) == -1)
           delete smartCloneSourceMap[topCloneID][cloneID];
       }
     }
