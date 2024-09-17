@@ -62,8 +62,10 @@ function inheritDef(widget) {
     exceptions.push("!activeFace", "!rollCount");
   if(type == 'label' && widget.get('editable'))
     exceptions.push("!text");
-  if(type == 'seat')
-    exceptions.push("!player", "!color", "!turn", "!index", "!score");
+  if(type == 'seat') {
+    widgetFilter(w=>w.get('type')=='scoreboard').map(w=>w.get('scoreProperty')).forEach(property=>exceptions.push(`!${property}`));
+    exceptions.push("!player", "!color", "!turn", "!index");
+  }
   if(type == 'spinner')
     exceptions.push("!angle", "!value");
   if(type == 'timer')
@@ -270,6 +272,10 @@ async function smartCloneDeltaReceived(delta) {
         needUpdate[topCloneID] = true;
         needRemove[topCloneID] = true;
       }
+
+      // update inheritance when a scoreboard changes its scoreProperty
+      if(d.scoreProperty !== undefined)
+        needUpdate[topCloneID] = true;
 
       for(const [ cloneID, source ] of Object.entries(sourceMap)) {
         if(id === source.id || id === cloneID || d && d.parent === source.id)
