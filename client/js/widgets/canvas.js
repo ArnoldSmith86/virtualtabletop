@@ -35,7 +35,7 @@ class Canvas extends Widget {
         this.canvas.height = this.getResolution();
       }
 
-      const colors = this.get('colorMap');
+      const colors = this.getColorMap();
       const regionRes = Math.floor(this.getResolution()/10);
 
       for(let x=0; x<10; ++x) {
@@ -99,6 +99,13 @@ class Canvas extends Widget {
       n = Math.floor((n - c) / base);
     }
     return code;
+  }
+
+  getColorMap() {
+    if(Array.isArray(this.get('colorMap')))
+      return this.get('colorMap');
+    else
+      return Canvas.defaultColors;
   }
 
   getResolution() {
