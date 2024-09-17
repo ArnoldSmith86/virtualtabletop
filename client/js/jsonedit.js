@@ -853,6 +853,53 @@ const jeCommands = [
       }
       jeUpdateMulti();
     }
+  },
+  {
+    id: 'je_multiParent',
+    name: 'set biggest as parent',
+    context: '^Multi-Selection',
+    call: async function() {
+      let biggestArea = 0;
+      let biggestWidget = null;
+      for(const widget of jeMultiSelectedWidgets()) {
+        const area = widget.get('width') * widget.get('height');
+        if(area > biggestArea) {
+          biggestArea = area;
+          biggestWidget = widget;
+        }
+      }
+      for(const widget of jeMultiSelectedWidgets()) {
+        if(widget !== biggestWidget) {
+          const oldX = widget.get('x');
+          const oldY = widget.get('y');
+          await widget.set('parent', biggestWidget.get('id'));
+          await widget.set('x', oldX - biggestWidget.get('x'));
+          await widget.set('y', oldY - biggestWidget.get('y'));
+        }
+      }
+      jeUpdateMulti();
+    }
+  },
+  {
+    id: 'je_multiEnterParent',
+    name: 'enter new parent ID',
+    context: '^Multi-Selection',
+    options: [ { type: 'string', label: 'Parent ID', value: '' } ],
+    call: async function(options) {
+      if(widgets.has(options['Parent ID'])) {
+        const newParent = widgets.get(options['Parent ID']);
+        for(const widget of jeMultiSelectedWidgets()) {
+          if(widget !== newParent) {
+            const oldX = widget.get('x');
+            const oldY = widget.get('y');
+            await widget.set('parent', newParent.get('id'));
+            await widget.set('x', oldX - newParent.get('x'));
+            await widget.set('y', oldY - newParent.get('y'));
+          }
+        }
+        jeUpdateMulti();
+      }
+    }
   }
 ];
 
@@ -1771,7 +1818,7 @@ function jeMultiSelectedWidgets() {
     const isProperty = search.match(/^([a-zA-Z0-9_-]+):(.*)$/);
     selected = selected.concat(widgetFilter(function(w) {
       try {
-        if(isRegex && w.get('id').match(new RegExp(isRegex[1], isRegex[2])))
+        if(isRegex && String(w.get('id')).match(new RegExp(isRegex[1], isRegex[2])))
           return true;
         if(isProperty) {
           const value = String(w.get(isProperty[1])).toLowerCase();
@@ -1831,7 +1878,7 @@ function jeUpdateMulti() {
 }
 
 function html(string) {
-  return string.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  return String(string).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 }
 
 function jeColorize() {
@@ -1941,7 +1988,7 @@ function jeDisplayTreeAddWidgets(allWidgets, parent, selectedIDs) {
   }
   let result = '';
 
-  for(const widget of (allWidgets.filter(w=>w.get('parent')==parent)).sort((w1,w2)=>w1.get('id').localeCompare(w2.get('id'), 'en', {numeric: true, ignorePunctuation: true}))) {
+  for(const widget of (allWidgets.filter(w=>w.get('parent')==parent)).sort((w1,w2)=>String(w1.get('id')).localeCompare(w2.get('id'), 'en', {numeric: true, ignorePunctuation: true}))) {
     const children = jeDisplayTreeAddWidgets(allWidgets, widget.get('id'), selectedIDs);
     const isSelected = selectedIDs.indexOf(widget.get('id')) != -1 ? 'jeHighlightRow' : '';
     const filter = html(widget.get('id')+(widget.get('type')||'basic')+(widget.get('cardType')||'')).toLowerCase();
@@ -1972,11 +2019,11 @@ function jeTreeGetWidgetHTML(widget) {
   const type = widget.get('type');
 
   let result = `${colored(widget.get('id'), 'key')} (${colored(type || 'basic','string')} - `;
-  if(widget.get('id').match(/^[0-9a-z]{4}$/) && $('#jsonEditor').classList.contains('wide')) {
-    if(type == 'card' && !widget.get('cardType').match(/^type-[0-9a-f-]{36}$/))
+  if(String(widget.get('id')).match(/^[0-9a-z]{4}$/) && $('#jsonEditor').classList.contains('wide')) {
+    if(type == 'card' && !String(widget.get('cardType')).match(/^type-[0-9a-f-]{36}$/))
       result += `${colored(widget.get('cardType'),'extern')} - `;
     if(type == 'button' && widget.get('text'))
-      result += `${colored(widget.get('text').replaceAll('\n', '\\n'),'extern')} - `;
+      result += `${colored(String(widget.get('text')).replaceAll('\n', '\\n'),'extern')} - `;
     if(type == null && widget.get('classes'))
       result += `${colored(widget.get('classes'),'extern')} - `;
   }
@@ -2053,6 +2100,8 @@ function jeGetContext() {
 
     if(!jeStateNow.id)
       jeJSONerror = 'No ID given.';
+    else if(typeof jeStateNow.id != 'string')
+      jeJSONerror = 'ID has to be a string.';
     else if(JSON.parse(jeStateBefore).id != jeStateNow.id && widgets.has(jeStateNow.id))
       jeJSONerror = `ID ${jeStateNow.id} is already in use.`;
     else if(jeStateNow.parent !== undefined && jeStateNow.parent !== null && !widgets.has(jeStateNow.parent))

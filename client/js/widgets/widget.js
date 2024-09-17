@@ -387,9 +387,10 @@ export class Widget extends StateManaged {
   classes(includeTemporary = true) {
     let className = this.get('typeClasses') + ' ' + this.get('classes');
 
-    if(Array.isArray(this.get('owner')) && this.get('owner').indexOf(playerName) == -1)
+    const owner = this.get('owner');
+    if(Array.isArray(owner) && owner.indexOf(playerName) == -1)
       className += ' foreign';
-    if(typeof this.get('owner') == 'string' && this.get('owner') != playerName)
+    if(typeof owner == 'string' && owner != playerName)
       className += ' foreign';
 
     let onlyVisibleForSeat = this.get('onlyVisibleForSeat');
@@ -1044,6 +1045,7 @@ export class Widget extends StateManaged {
         }
 
         const execute = async function(widget) {
+          const cm = widget.getColorMap();
           if(widget.get('type') == 'canvas') {
             if(a.mode == 'setPixel') {
               const res = widget.getResolution();
@@ -1053,19 +1055,18 @@ export class Widget extends StateManaged {
                 problems.push(`Pixel coordinate: (${a.x}, ${a.y}) out of range for resolution: ${res}.`);
               }
             } else if(a.mode == 'set')
-              await widget.set('activeColor', a.value % widget.get('colorMap').length);
+              await widget.set('activeColor', a.value % cm.length);
             else if(a.mode == 'reset')
               await widget.reset();
             else if(a.mode == 'dec')
-              await widget.set('activeColor', (widget.get('activeColor')+widget.get('colorMap').length - (a.value % widget.get('colorMap').length)) % widget.get('colorMap').length);
+              await widget.set('activeColor', (widget.get('activeColor')+cm.length - (a.value % cm.length)) % cm.length);
             else if(a.mode == 'change') {
-              var CM = widget.get('colorMap');
-              var index = ((a.value || 1) % CM.length) || 0;
-              CM[index] = a.color || '#1f5ca6' ;
-              await widget.set('colorMap', CM);
+              const index = ((a.value || 1) % cm.length) || 0;
+              cm[index] = a.color || '#1f5ca6' ;
+              await widget.set('colorMap', cm);
             }
             else
-              await widget.set('activeColor', (widget.get('activeColor')+ a.value) % widget.get('colorMap').length);
+              await widget.set('activeColor', (widget.get('activeColor')+ a.value) % cm.length);
           } else
             problems.push(`Widget ${widget.get('id')} is not a canvas.`);
         };
@@ -1733,19 +1734,18 @@ export class Widget extends StateManaged {
         } else if (collection = getCollection(a.collection)) {
           if (a.property == 'id') {
             for(const oldWidget of collections[collection]) {
-              const oldState = JSON.stringify(oldWidget.state);
               const oldID = oldWidget.get('id');
-              var newState = JSON.parse(oldState);
-
+              let newState = JSON.parse(JSON.stringify(oldWidget.state));
               newState.id = await compute(a.relation, null, oldWidget.get(a.property), a.value);
-              if(!widgets.has(newState.id)) {
-                $('#editWidgetJSON').dataset.previousState = oldState;
-                $('#editWidgetJSON').value = JSON.stringify(newState);
-                await onClickUpdateWidget(false);
+
+              if(widgets.has(newState.id)) {
+                problems.push(`id ${newState.id} already in use, ignored.`);
+              } else if(typeof newState.id != 'string' || newState.id.length == 0) {
+                problems.push(`id ${newState.id} is not a string or empty, ignored.`);
+              } else {
+                await updateWidgetId(newState, oldID);
                 for(const c in collections)
                   collections[c] = collections[c].map(w=>w.id==oldID ? widgets.get(newState.id) : w);
-              } else {
-                problems.push(`id ${newState.id} already in use, ignored.`);
               }
             }
           } else {
@@ -2503,7 +2503,7 @@ export class Widget extends StateManaged {
     if (this.get('text') !== undefined) {
       if(mode == 'inc' || mode == 'dec') {
         let newText = (parseFloat(this.get('text')) || 0) + (mode == 'dec' ? -1 : 1) * text;
-        const decimalPlacesOld = this.get('text').toString().match(/\..*$/);
+        const decimalPlacesOld = String(this.get('text')).match(/\..*$/);
         const decimalPlacesChange = (+text).toString().match(/\..*$/);
         const decimalPlaces = Math.max(decimalPlacesOld ? decimalPlacesOld[0].length-1 : 0, decimalPlacesChange ? decimalPlacesChange[0].length-1 : 0);
         const factor = 10**decimalPlaces;
@@ -2687,14 +2687,18 @@ export class Widget extends StateManaged {
   }
 
   async snapToGrid() {
-    if(this.get('grid').length) {
+    const gridArray = this.get('grid');
+    if(Array.isArray(gridArray) && gridArray.length) {
       const x = this.get('x');
       const y = this.get('y');
 
       let closest = null;
       let closestDistance = 999999;
 
-      for(const grid of this.get('grid')) {
+      for(const grid of gridArray) {
+        if(!grid)
+          continue;
+
         const alignX = (grid.alignX || 0) * this.get('width');
         const alignY = (grid.alignY || 0) * this.get('height');
 
