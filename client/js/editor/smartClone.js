@@ -5,7 +5,7 @@ async function smartCloneRemoveChildren(topCloneID, clone, source, options) {
     const childSource = smartCloneSourceMap[topCloneID][child.id];
     const id = childSource && applyReplaces(childSource.id, options.replaces, topCloneID);
 
-    smartCloneRemoveChildren(topCloneID, child, childSource, options);
+    await smartCloneRemoveChildren(topCloneID, child, childSource, options);
 
     if(!childSource || id != childSource.id && !widgets.has(id) || child.get('type') != childSource.get('type')) {
       if(childSource)
