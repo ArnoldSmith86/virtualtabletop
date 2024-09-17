@@ -1738,12 +1738,14 @@ export class Widget extends StateManaged {
               let newState = JSON.parse(JSON.stringify(oldWidget.state));
               newState.id = await compute(a.relation, null, oldWidget.get(a.property), a.value);
 
-              if(!widgets.has(newState.id)) {
+              if(widgets.has(newState.id)) {
+                problems.push(`id ${newState.id} already in use, ignored.`);
+              } else if(typeof newState.id != 'string' || newState.id.length == 0) {
+                problems.push(`id ${newState.id} is not a string or empty, ignored.`);
+              } else {
                 await updateWidgetId(newState, oldID);
                 for(const c in collections)
                   collections[c] = collections[c].map(w=>w.id==oldID ? widgets.get(newState.id) : w);
-              } else {
-                problems.push(`id ${newState.id} already in use, ignored.`);
               }
             }
           } else {
