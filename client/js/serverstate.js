@@ -171,6 +171,20 @@ async function updateWidgetId(widget, oldID) {
     await inheritor.set('inheritFrom', newInherits)
   };
 
+  // Change dropTargets that specifially target the old ID
+  for(const [ _, t ] of dropTargets) {
+    const originalDropTarget = JSON.stringify(t.get('dropTarget'));
+    const dropTarget = JSON.parse(originalDropTarget);
+    if(dropTarget && dropTarget.id == oldID)
+      dropTarget.id = id;
+    if(Array.isArray(dropTarget))
+      for(const d of dropTarget)
+        if(d && d.id == oldID)
+          d.id = id;
+    if(originalDropTarget != JSON.stringify(dropTarget))
+      await t.set('dropTarget', dropTarget);
+  }
+
   // Update references in routines
   const updateParam = function(a, func, param) {
     if(a.func == func && Array.isArray(a[param])) {
