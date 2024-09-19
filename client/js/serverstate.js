@@ -173,11 +173,11 @@ async function updateWidgetId(widget, oldID) {
   for(const [ _, t ] of dropTargets) {
     const originalDropTarget = JSON.stringify(t.get('dropTarget'));
     const dropTarget = JSON.parse(originalDropTarget);
-    if(dropTarget.id == oldID)
+    if(dropTarget && dropTarget.id == oldID)
       dropTarget.id = id;
     if(Array.isArray(dropTarget))
       for(const d of dropTarget)
-        if(d.id == oldID)
+        if(d && d.id == oldID)
           d.id = id;
     if(originalDropTarget != JSON.stringify(dropTarget))
       await t.set('dropTarget', dropTarget);
