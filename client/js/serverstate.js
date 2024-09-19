@@ -108,6 +108,8 @@ export function addWidget(widget, instance) {
 async function addWidgetLocal(widget) {
   if (!widget.id)
     widget.id = generateUniqueWidgetID();
+  else
+    widget.id = String(widget.id);
 
   if(widget.parent && !widgets.has(widget.parent)) {
     console.error(`Refusing to add widget ${widget.id} with invalid parent ${widget.parent}.`);
