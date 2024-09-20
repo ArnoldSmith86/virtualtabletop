@@ -2,6 +2,7 @@
 
 import json
 import os
+from collections import OrderedDict
 
 def read_list_file(file_path):
     with open(file_path, 'r') as file:
@@ -32,10 +33,17 @@ def generate_symbols_json(list_file, categories_file, output_file):
         
         symbols_dict[full_category][symbol] = [index]
     
+    # Sort the categories
+    sorted_symbols_dict = OrderedDict(sorted(symbols_dict.items()))
+    
+    # Sort the symbols within each category
+    for category in sorted_symbols_dict:
+        sorted_symbols_dict[category] = OrderedDict(sorted(sorted_symbols_dict[category].items()))
+    
     os.makedirs(os.path.dirname(output_file), exist_ok=True)
     
     with open(output_file, 'w') as file:
-        json.dump(symbols_dict, file, indent=2)
+        json.dump(sorted_symbols_dict, file, indent=2)
 
 if __name__ == "__main__":
     list_file = os.path.expanduser("list.txt")
