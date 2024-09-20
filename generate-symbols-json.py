@@ -18,6 +18,10 @@ def read_categories_file(file_path):
                 categories[symbol] = category
     return categories
 
+def sort_key(item):
+    # Split the string and return the part after the '/'
+    return item[0].split('/')[-1]
+
 def generate_symbols_json(list_file, categories_file, output_file):
     symbols_list = read_list_file(list_file)
     categories = read_categories_file(categories_file)
@@ -38,7 +42,9 @@ def generate_symbols_json(list_file, categories_file, output_file):
     
     # Sort the symbols within each category
     for category in sorted_symbols_dict:
-        sorted_symbols_dict[category] = OrderedDict(sorted(sorted_symbols_dict[category].items()))
+        sorted_symbols_dict[category] = OrderedDict(
+            sorted(sorted_symbols_dict[category].items(), key=sort_key)
+        )
     
     os.makedirs(os.path.dirname(output_file), exist_ok=True)
     

@@ -364,26 +364,34 @@
       4119
     ]
   },
+  "Game-icons.net - Accessory": {
+    "delapouite/feather-necklace": [
+      835
+    ],
+    "delapouite/fez": [
+      843
+    ],
+    "delapouite/flower-hat": [
+      897
+    ]
+  },
   "Game-icons.net - Achievement": {
+    "skoll/achievement": [
+      3822
+    ],
     "delapouite/medallist": [
       1305
     ],
-    "skoll/achievement": [
-      3822
+    "delapouite/trophies-shelf": [
+      2074
+    ],
+    "delapouite/trophy-cup": [
+      2075
     ]
   },
   "Game-icons.net - Action": {
-    "darkzaitzev/on-sight": [
-      205
-    ],
-    "darkzaitzev/revolt": [
-      208
-    ],
-    "darkzaitzev/robber-hand": [
-      209
-    ],
-    "darkzaitzev/severed-hand": [
-      211
+    "lorc/all-for-one": [
+      2268
     ],
     "delapouite/armor-punch": [
       284
@@ -394,6 +402,9 @@
     "delapouite/avoidance": [
       302
     ],
+    "lorc/backup": [
+      2317
+    ],
     "delapouite/banana-peel": [
       322
     ],
@@ -402,6 +413,18 @@
     ],
     "delapouite/barricade": [
       340
+    ],
+    "lorc/bombing-run": [
+      2383
+    ],
+    "lorc/boot-kick": [
+      2392
+    ],
+    "lorc/boot-stomp": [
+      2394
+    ],
+    "felbrigg/dodge": [
+      2237
     ],
     "delapouite/eating": [
       769
@@ -412,8 +435,14 @@
     "delapouite/evasion": [
       804
     ],
+    "lorc/high-five": [
+      2892
+    ],
     "delapouite/join": [
       1158
+    ],
+    "lorc/juggler": [
+      2954
     ],
     "delapouite/jump-across": [
       1163
@@ -427,6 +456,9 @@
     "delapouite/leak": [
       1214
     ],
+    "lorc/lift": [
+      2990
+    ],
     "delapouite/look-at": [
       1261
     ],
@@ -439,50 +471,29 @@
     "delapouite/next-button": [
       1398
     ],
-    "delapouite/path-distance": [
-      1475
-    ],
-    "felbrigg/dodge": [
-      2237
+    "darkzaitzev/on-sight": [
+      205
     ],
     "felbrigg/overhead": [
       2238
     ],
-    "felbrigg/sideswipe": [
-      2239
+    "delapouite/path-distance": [
+      1475
     ],
-    "felbrigg/thrust": [
-      2240
+    "darkzaitzev/revolt": [
+      208
     ],
-    "felbrigg/underhand": [
-      2241
-    ],
-    "lorc/all-for-one": [
-      2268
-    ],
-    "lorc/backup": [
-      2317
-    ],
-    "lorc/bombing-run": [
-      2383
-    ],
-    "lorc/boot-kick": [
-      2392
-    ],
-    "lorc/boot-stomp": [
-      2394
-    ],
-    "lorc/high-five": [
-      2892
-    ],
-    "lorc/juggler": [
-      2954
-    ],
-    "lorc/lift": [
-      2990
+    "darkzaitzev/robber-hand": [
+      209
     ],
     "lorc/run": [
       3255
+    ],
+    "darkzaitzev/severed-hand": [
+      211
+    ],
+    "felbrigg/sideswipe": [
+      2239
     ],
     "lorc/sing": [
       3326
@@ -513,6 +524,12 @@
     ],
     "lorc/teleport": [
       3517
+    ],
+    "felbrigg/thrust": [
+      2240
+    ],
+    "felbrigg/underhand": [
+      2241
     ]
   },
   "Game-icons.net - Activity": {
@@ -588,17 +605,32 @@
     ]
   },
   "Game-icons.net - Animal": {
-    "carl-olsen/mite-alt": [
-      57
+    "lorc/alien-skull": [
+      2266
     ],
-    "carl-olsen/spider-alt": [
-      58
+    "lorc/angler-fish": [
+      2278
     ],
-    "carl-olsen/spider-face": [
-      59
+    "lorc/angular-spider": [
+      2279
+    ],
+    "delapouite/ant": [
+      261
     ],
     "caro-asercion/anteater": [
       61
+    ],
+    "delapouite/ants": [
+      265
+    ],
+    "lorc/apple-maggot": [
+      2285
+    ],
+    "delapouite/armadillo": [
+      282
+    ],
+    "lorc/armadillo-tail": [
+      2290
     ],
     "caro-asercion/axolotl": [
       65
@@ -609,86 +641,65 @@
     "caro-asercion/barn-owl": [
       67
     ],
-    "caro-asercion/boar": [
-      71
-    ],
-    "caro-asercion/canadian-goose": [
-      78
-    ],
-    "caro-asercion/capybara": [
-      79
-    ],
-    "caro-asercion/deer": [
-      88
-    ],
-    "caro-asercion/deer-head": [
-      87
-    ],
-    "caro-asercion/fox": [
-      94
-    ],
-    "caro-asercion/hedgehog": [
-      102
-    ],
-    "caro-asercion/heron": [
-      104
-    ],
-    "caro-asercion/hyena-head": [
-      105
-    ],
-    "caro-asercion/mole": [
-      107
-    ],
-    "caro-asercion/pangolin": [
-      111
-    ],
-    "caro-asercion/porcupine": [
-      120
-    ],
-    "caro-asercion/sloth": [
-      134
-    ],
-    "cathelineau/earth-worm": [
-      168
-    ],
-    "cathelineau/flying-trout": [
-      169
-    ],
-    "cathelineau/polar-bear": [
-      179
-    ],
-    "darkzaitzev/ram": [
-      207
-    ],
-    "darkzaitzev/skull-sabertooth": [
-      214
-    ],
-    "delapouite/ant": [
-      261
-    ],
-    "delapouite/ants": [
-      265
-    ],
-    "delapouite/armadillo": [
-      282
-    ],
     "delapouite/basset-hound-head": [
       349
     ],
     "delapouite/bat": [
       353
     ],
+    "skoll/bat": [
+      3835
+    ],
+    "lorc/bat-wing": [
+      2333
+    ],
+    "sparker/bear-face": [
+      3994
+    ],
     "delapouite/bear-head": [
       360
+    ],
+    "lorc/beast-eye": [
+      2344
     ],
     "delapouite/beaver": [
       361
     ],
+    "lorc/bee": [
+      2345
+    ],
+    "lorc/beetle-shell": [
+      2348
+    ],
+    "lorc/bird-claw": [
+      2356
+    ],
+    "lorc/bird-limb": [
+      2357
+    ],
     "delapouite/bison": [
       380
     ],
+    "caro-asercion/boar": [
+      71
+    ],
+    "lorc/bone-gnawer": [
+      2384
+    ],
     "delapouite/buffalo-head": [
       447
+    ],
+    "lorc/bull": [
+      2437
+    ],
+    "lorc/bull-horns": [
+      2436
+    ],
+    "lorc/butterfly": [
+      2450
+    ],
+    "lorc/butterfly-warning": [
+      2449
     ],
     "delapouite/cactus-tap": [
       469
@@ -699,11 +710,26 @@
     "delapouite/camel-head": [
       482
     ],
+    "caro-asercion/canadian-goose": [
+      78
+    ],
+    "caro-asercion/capybara": [
+      79
+    ],
+    "lorc/carnivore-mouth": [
+      2467
+    ],
     "delapouite/cassowary-head": [
       517
     ],
+    "lorc/cat": [
+      2472
+    ],
     "delapouite/caterpillar": [
       520
+    ],
+    "lorc/centipede": [
+      2475
     ],
     "delapouite/charging-bull": [
       539
@@ -723,11 +749,38 @@
     "delapouite/cobra": [
       591
     ],
+    "skoll/cobra": [
+      3860
+    ],
+    "lorc/condor-emblem": [
+      2523
+    ],
+    "lorc/condylura-skull": [
+      2524
+    ],
     "delapouite/cow": [
       638
     ],
+    "lorc/crab": [
+      2532
+    ],
     "delapouite/cricket": [
       648
+    ],
+    "lorc/croc-jaws": [
+      2545
+    ],
+    "lorc/crow-dive": [
+      2560
+    ],
+    "lorc/curly-wing": [
+      2584
+    ],
+    "caro-asercion/deer": [
+      88
+    ],
+    "caro-asercion/deer-head": [
+      87
     ],
     "delapouite/dimetrodon": [
       711
@@ -735,20 +788,38 @@
     "delapouite/diplodocus": [
       712
     ],
+    "lorc/direwolf": [
+      2617
+    ],
     "delapouite/dog-bowl": [
       726
     ],
     "delapouite/dolphin": [
       729
     ],
+    "skoll/donkey": [
+      3873
+    ],
     "delapouite/double-fish": [
       737
+    ],
+    "lorc/dove": [
+      2638
+    ],
+    "faithtoken/dragon-head": [
+      2231
     ],
     "delapouite/duck": [
       752
     ],
     "delapouite/eagle-head": [
       762
+    ],
+    "cathelineau/earth-worm": [
+      168
+    ],
+    "lorc/earwig": [
+      2667
     ],
     "delapouite/eating-pelican": [
       768
@@ -768,8 +839,14 @@
     "delapouite/ermine": [
       800
     ],
+    "lorc/evil-bat": [
+      2697
+    ],
     "delapouite/falcon-moon": [
       823
+    ],
+    "skoll/fangs": [
+      3879
     ],
     "delapouite/feline": [
       836
@@ -801,6 +878,9 @@
     "delapouite/flamingo": [
       878
     ],
+    "delapouite/flatfish": [
+      883
+    ],
     "delapouite/fly": [
       900
     ],
@@ -810,17 +890,53 @@
     "delapouite/flying-fox": [
       902
     ],
+    "cathelineau/flying-trout": [
+      169
+    ],
+    "caro-asercion/fox": [
+      94
+    ],
+    "lorc/fox-head": [
+      2792
+    ],
     "delapouite/fox-tail": [
       916
     ],
+    "lorc/freedom-dove": [
+      2798
+    ],
+    "lorc/frog": [
+      2799
+    ],
+    "lorc/gecko": [
+      2815
+    ],
     "delapouite/giant-squid": [
       957
+    ],
+    "skoll/goat": [
+      3892
     ],
     "delapouite/goose": [
       977
     ],
     "delapouite/gorilla": [
       978
+    ],
+    "caro-asercion/hedgehog": [
+      102
+    ],
+    "caro-asercion/heron": [
+      104
+    ],
+    "lorc/horse-head": [
+      2904
+    ],
+    "lorc/hound": [
+      2907
+    ],
+    "caro-asercion/hyena-head": [
+      105
     ],
     "delapouite/jumping-dog": [
       1164
@@ -843,8 +959,26 @@
     "delapouite/ladybug": [
       1205
     ],
+    "lorc/lion": [
+      3013
+    ],
+    "lorc/lizard-tongue": [
+      3016
+    ],
+    "lorc/lizardman": [
+      3017
+    ],
+    "lorc/long-antennae-bug": [
+      3021
+    ],
+    "skoll/long-legged-spider": [
+      3915
+    ],
     "delapouite/lynx-head": [
       1273
+    ],
+    "lorc/maggot": [
+      3031
     ],
     "delapouite/mammoth": [
       1284
@@ -855,26 +989,95 @@
     "delapouite/manta-ray": [
       1286
     ],
+    "lorc/masked-spider": [
+      3048
+    ],
+    "lorc/midnight-claw": [
+      3073
+    ],
+    "lorc/minotaur": [
+      3080
+    ],
+    "lorc/mite": [
+      3086
+    ],
+    "carl-olsen/mite-alt": [
+      57
+    ],
+    "caro-asercion/mole": [
+      107
+    ],
+    "lorc/monkey": [
+      3092
+    ],
+    "lorc/moon-claws": [
+      3094
+    ],
     "delapouite/mouse": [
       1368
+    ],
+    "lorc/mouse": [
+      3099
+    ],
+    "faithtoken/nautilus-shell": [
+      2234
+    ],
+    "lorc/octoman": [
+      3123
+    ],
+    "lorc/octopus": [
+      3124
     ],
     "delapouite/ostrich": [
       1441
     ],
+    "lorc/owl": [
+      3140
+    ],
     "delapouite/panda": [
       1460
+    ],
+    "caro-asercion/pangolin": [
+      111
     ],
     "delapouite/parasaurolophus": [
       1469
     ],
+    "lorc/parrot-head": [
+      3150
+    ],
+    "lorc/paw": [
+      3154
+    ],
+    "lorc/paw-front": [
+      3151
+    ],
+    "lorc/paw-print": [
+      3153
+    ],
+    "skoll/pegasus": [
+      3936
+    ],
     "delapouite/penguin": [
       1490
+    ],
+    "skoll/pig": [
+      3940
+    ],
+    "lorc/pig-face": [
+      3166
     ],
     "delapouite/piranha": [
       1527
     ],
     "delapouite/plesiosaurus": [
       1556
+    ],
+    "cathelineau/polar-bear": [
+      179
+    ],
+    "caro-asercion/porcupine": [
+      120
     ],
     "delapouite/porcupinefish": [
       1578
@@ -894,6 +1097,9 @@
     "delapouite/raccoon-head": [
       1621
     ],
+    "darkzaitzev/ram": [
+      207
+    ],
     "delapouite/ram-profile": [
       1630
     ],
@@ -902,6 +1108,9 @@
     ],
     "delapouite/rattlesnake": [
       1634
+    ],
+    "lorc/raven": [
+      3221
     ],
     "delapouite/reptile-tail": [
       1644
@@ -912,248 +1121,11 @@
     "delapouite/rooster": [
       1676
     ],
-    "delapouite/sombrero": [
-      1838
-    ],
-    "delapouite/spearfishing": [
-      1857
-    ],
-    "delapouite/sperm-whale": [
-      1861
-    ],
-    "delapouite/spider-eye": [
-      1863
-    ],
-    "delapouite/spider-mask": [
-      1864
-    ],
-    "delapouite/squirrel": [
-      1881
-    ],
-    "delapouite/swallow": [
-      1950
-    ],
-    "delapouite/swamp-bat": [
-      1952
-    ],
-    "delapouite/tadpole": [
-      1970
-    ],
-    "delapouite/tapir": [
-      1979
-    ],
-    "delapouite/tiger": [
-      2018
-    ],
-    "delapouite/tiger-head": [
-      2017
-    ],
-    "delapouite/tortoise": [
-      2036
-    ],
-    "delapouite/toucan": [
-      2038
-    ],
-    "delapouite/triceratops-head": [
-      2065
-    ],
-    "delapouite/tropical-fish": [
-      2076
-    ],
-    "delapouite/unicorn": [
-      2102
-    ],
-    "delapouite/ursa-major": [
-      2108
-    ],
-    "delapouite/velociraptor": [
-      2121
-    ],
-    "delapouite/walrus-head": [
-      2151
-    ],
-    "delapouite/whale-tail": [
-      2184
-    ],
-    "delapouite/worms": [
-      2218
-    ],
-    "faithtoken/dragon-head": [
-      2231
-    ],
-    "faithtoken/nautilus-shell": [
-      2234
-    ],
-    "lorc/alien-skull": [
-      2266
-    ],
-    "lorc/angler-fish": [
-      2278
-    ],
-    "lorc/angular-spider": [
-      2279
-    ],
-    "lorc/apple-maggot": [
-      2285
-    ],
-    "lorc/armadillo-tail": [
-      2290
-    ],
-    "lorc/bat-wing": [
-      2333
-    ],
-    "lorc/beast-eye": [
-      2344
-    ],
-    "lorc/bee": [
-      2345
-    ],
-    "lorc/beetle-shell": [
-      2348
-    ],
-    "lorc/bird-claw": [
-      2356
-    ],
-    "lorc/bird-limb": [
-      2357
-    ],
-    "lorc/bone-gnawer": [
-      2384
-    ],
-    "lorc/bull": [
-      2437
-    ],
-    "lorc/bull-horns": [
-      2436
-    ],
-    "lorc/butterfly": [
-      2450
-    ],
-    "lorc/butterfly-warning": [
-      2449
-    ],
-    "lorc/carnivore-mouth": [
-      2467
-    ],
-    "lorc/cat": [
-      2472
-    ],
-    "lorc/centipede": [
-      2475
-    ],
-    "lorc/condor-emblem": [
-      2523
-    ],
-    "lorc/condylura-skull": [
-      2524
-    ],
-    "lorc/crab": [
-      2532
-    ],
-    "lorc/croc-jaws": [
-      2545
-    ],
-    "lorc/crow-dive": [
-      2560
-    ],
-    "lorc/curly-wing": [
-      2584
-    ],
-    "lorc/direwolf": [
-      2617
-    ],
-    "lorc/dove": [
-      2638
-    ],
-    "lorc/earwig": [
-      2667
-    ],
-    "lorc/evil-bat": [
-      2697
-    ],
-    "lorc/fox-head": [
-      2792
-    ],
-    "lorc/freedom-dove": [
-      2798
-    ],
-    "lorc/frog": [
-      2799
-    ],
-    "lorc/gecko": [
-      2815
-    ],
-    "lorc/horse-head": [
-      2904
-    ],
-    "lorc/hound": [
-      2907
-    ],
-    "lorc/lion": [
-      3013
-    ],
-    "lorc/lizard-tongue": [
-      3016
-    ],
-    "lorc/lizardman": [
-      3017
-    ],
-    "lorc/long-antennae-bug": [
-      3021
-    ],
-    "lorc/maggot": [
-      3031
-    ],
-    "lorc/masked-spider": [
-      3048
-    ],
-    "lorc/midnight-claw": [
-      3073
-    ],
-    "lorc/minotaur": [
-      3080
-    ],
-    "lorc/mite": [
-      3086
-    ],
-    "lorc/monkey": [
-      3092
-    ],
-    "lorc/moon-claws": [
-      3094
-    ],
-    "lorc/mouse": [
-      3099
-    ],
-    "lorc/octoman": [
-      3123
-    ],
-    "lorc/octopus": [
-      3124
-    ],
-    "lorc/owl": [
-      3140
-    ],
-    "lorc/parrot-head": [
-      3150
-    ],
-    "lorc/paw": [
-      3154
-    ],
-    "lorc/paw-front": [
-      3151
-    ],
-    "lorc/paw-print": [
-      3153
-    ],
-    "lorc/pig-face": [
-      3166
-    ],
-    "lorc/raven": [
-      3221
-    ],
     "lorc/sad-crab": [
       3262
+    ],
+    "various-artists/salmon": [
+      3998
     ],
     "lorc/scallop": [
       3271
@@ -1173,6 +1145,12 @@
     "lorc/shark-jaws": [
       3299
     ],
+    "darkzaitzev/skull-sabertooth": [
+      214
+    ],
+    "caro-asercion/sloth": [
+      134
+    ],
     "lorc/snail": [
       3354
     ],
@@ -1182,8 +1160,29 @@
     "lorc/snake-bite": [
       3355
     ],
+    "delapouite/sombrero": [
+      1838
+    ],
     "lorc/sparrow": [
       3377
+    ],
+    "delapouite/spearfishing": [
+      1857
+    ],
+    "delapouite/sperm-whale": [
+      1861
+    ],
+    "carl-olsen/spider-alt": [
+      58
+    ],
+    "delapouite/spider-eye": [
+      1863
+    ],
+    "carl-olsen/spider-face": [
+      59
+    ],
+    "delapouite/spider-mask": [
+      1864
     ],
     "lorc/spiked-snail": [
       3392
@@ -1194,14 +1193,23 @@
     "lorc/squid-head": [
       3428
     ],
+    "delapouite/squirrel": [
+      1881
+    ],
     "lorc/stag-head": [
       3430
     ],
     "lorc/staryu": [
       3439
     ],
+    "delapouite/swallow": [
+      1950
+    ],
     "lorc/swallow": [
       3487
+    ],
+    "delapouite/swamp-bat": [
+      1952
     ],
     "lorc/swan": [
       3489
@@ -1209,23 +1217,62 @@
     "lorc/swan-breeze": [
       3488
     ],
+    "delapouite/tadpole": [
+      1970
+    ],
+    "delapouite/tapir": [
+      1979
+    ],
     "lorc/tentacurl": [
       3525
+    ],
+    "delapouite/tiger": [
+      2018
+    ],
+    "delapouite/tiger-head": [
+      2017
     ],
     "lorc/toad-teeth": [
       3553
     ],
+    "delapouite/tortoise": [
+      2036
+    ],
+    "delapouite/toucan": [
+      2038
+    ],
+    "delapouite/triceratops-head": [
+      2065
+    ],
     "lorc/triple-beak": [
       3577
+    ],
+    "delapouite/tropical-fish": [
+      2076
     ],
     "lorc/turtle": [
       3596
     ],
+    "delapouite/unicorn": [
+      2102
+    ],
+    "delapouite/ursa-major": [
+      2108
+    ],
+    "delapouite/velociraptor": [
+      2121
+    ],
     "lorc/vulture": [
       3629
     ],
+    "delapouite/walrus-head": [
+      2151
+    ],
     "lorc/web-spit": [
       3640
+    ],
+    "delapouite/whale-tail": [
+      2184
     ],
     "lorc/wolf-head": [
       3664
@@ -1233,35 +1280,13 @@
     "lorc/wolf-howl": [
       3665
     ],
-    "skoll/bat": [
-      3835
-    ],
-    "skoll/cobra": [
-      3860
-    ],
-    "skoll/donkey": [
-      3873
-    ],
-    "skoll/fangs": [
-      3879
-    ],
-    "skoll/goat": [
-      3892
-    ],
-    "skoll/long-legged-spider": [
-      3915
-    ],
-    "skoll/pegasus": [
-      3936
-    ],
-    "skoll/pig": [
-      3940
-    ],
-    "sparker/bear-face": [
-      3994
-    ],
-    "various-artists/salmon": [
-      3998
+    "delapouite/worms": [
+      2218
+    ]
+  },
+  "Game-icons.net - Appliance": {
+    "delapouite/gas-stove": [
+      950
     ]
   },
   "Game-icons.net - Architecture": {
@@ -1285,6 +1310,42 @@
     ],
     "delapouite/pagoda": [
       1451
+    ],
+    "delapouite/viking-church": [
+      2131
+    ],
+    "delapouite/viking-longhouse": [
+      2134
+    ],
+    "delapouite/village": [
+      2136
+    ],
+    "delapouite/watchtower": [
+      2162
+    ],
+    "delapouite/water-fountain": [
+      2166
+    ],
+    "delapouite/water-tower": [
+      2172
+    ],
+    "delapouite/well": [
+      2182
+    ],
+    "delapouite/window": [
+      2192
+    ],
+    "delapouite/window-bars": [
+      2191
+    ],
+    "delapouite/wood-beam": [
+      2205
+    ],
+    "delapouite/wood-cabin": [
+      2206
+    ],
+    "delapouite/wood-frame": [
+      2209
     ]
   },
   "Game-icons.net - Arena": {
@@ -1293,32 +1354,11 @@
     ]
   },
   "Game-icons.net - Armor": {
-    "delapouite/spartan-helmet": [
-      1853
-    ],
-    "delapouite/spiked-shield": [
-      1866
-    ],
-    "delapouite/spiked-shoulder-armor": [
-      1867
-    ],
-    "delapouite/templar-shield": [
-      1991
-    ],
-    "delapouite/temporary-shield": [
-      1994
+    "lorc/armor-vest": [
+      2291
     ],
     "irongamer/armored-pants": [
       2249
-    ],
-    "kier-heyl/dwarf-helmet": [
-      2254
-    ],
-    "kier-heyl/elf-helmet": [
-      2256
-    ],
-    "lorc/armor-vest": [
-      2291
     ],
     "lorc/armoured-shell": [
       2292
@@ -1332,11 +1372,20 @@
     "lorc/boots": [
       2395
     ],
+    "skoll/bracers": [
+      3842
+    ],
     "lorc/breastplate": [
       2414
     ],
+    "skoll/brodie-helmet": [
+      3844
+    ],
     "lorc/broken-shield": [
       2425
+    ],
+    "willdabeast/chain-mail": [
+      4122
     ],
     "lorc/checked-shield": [
       2482
@@ -1353,8 +1402,20 @@
     "lorc/crested-helmet": [
       2544
     ],
+    "kier-heyl/dwarf-helmet": [
+      2254
+    ],
+    "kier-heyl/elf-helmet": [
+      2256
+    ],
+    "delapouite/galea": [
+      942
+    ],
     "lorc/heavy-helm": [
       2885
+    ],
+    "sbed/helmet": [
+      3763
     ],
     "lorc/horned-helm": [
       2902
@@ -1365,6 +1426,12 @@
     "lorc/iron-mask": [
       2945
     ],
+    "sbed/kevlar": [
+      3768
+    ],
+    "skoll/kevlar-vest": [
+      3910
+    ],
     "lorc/lamellar": [
       2964
     ],
@@ -1374,14 +1441,29 @@
     "lorc/leather-vest": [
       2983
     ],
+    "skoll/pauldrons": [
+      3934
+    ],
+    "skoll/pickelhaube": [
+      3939
+    ],
     "lorc/plastron": [
       3176
+    ],
+    "skoll/pteruges": [
+      3943
+    ],
+    "willdabeast/round-shield": [
+      4125
     ],
     "lorc/scale-mail": [
       3269
     ],
     "lorc/shoulder-scales": [
       3320
+    ],
+    "delapouite/spartan-helmet": [
+      1853
     ],
     "lorc/spiked-armor": [
       3386
@@ -1392,8 +1474,26 @@
     "lorc/spiked-shell": [
       3391
     ],
+    "delapouite/spiked-shield": [
+      1866
+    ],
+    "delapouite/spiked-shoulder-armor": [
+      1867
+    ],
+    "skoll/stahlhelm": [
+      3968
+    ],
     "lorc/steeltoe-boots": [
       3444
+    ],
+    "delapouite/templar-shield": [
+      1991
+    ],
+    "delapouite/temporary-shield": [
+      1994
+    ],
+    "skoll/trench-body-armor": [
+      3986
     ],
     "lorc/visored-helm": [
       3624
@@ -1401,47 +1501,11 @@
     "lorc/winged-shield": [
       3659
     ],
-    "lorc/zebra-shield": [
-      3680
-    ],
-    "sbed/helmet": [
-      3763
-    ],
-    "sbed/kevlar": [
-      3768
-    ],
-    "skoll/bracers": [
-      3842
-    ],
-    "skoll/brodie-helmet": [
-      3844
-    ],
-    "skoll/kevlar-vest": [
-      3910
-    ],
-    "skoll/pauldrons": [
-      3934
-    ],
-    "skoll/pickelhaube": [
-      3939
-    ],
-    "skoll/pteruges": [
-      3943
-    ],
-    "skoll/stahlhelm": [
-      3968
-    ],
-    "skoll/trench-body-armor": [
-      3986
-    ],
     "skoll/wooden-helmet": [
       3992
     ],
-    "willdabeast/chain-mail": [
-      4122
-    ],
-    "willdabeast/round-shield": [
-      4125
+    "lorc/zebra-shield": [
+      3680
     ]
   },
   "Game-icons.net - Arrows": {
@@ -1452,6 +1516,9 @@
   "Game-icons.net - Art": {
     "delapouite/discobolus": [
       719
+    ],
+    "various-artists/infinity": [
+      3997
     ],
     "delapouite/mona-lisa": [
       1351
@@ -1479,12 +1546,17 @@
     ],
     "delapouite/pendulum-swing": [
       1489
-    ],
-    "various-artists/infinity": [
-      3997
+    ]
+  },
+  "Game-icons.net - Artifact": {
+    "delapouite/glowing-artifact": [
+      966
     ]
   },
   "Game-icons.net - Astrology": {
+    "delapouite/globe-ring": [
+      964
+    ],
     "delapouite/leo": [
       1222
     ],
@@ -1496,6 +1568,9 @@
     ],
     "delapouite/pisces": [
       1535
+    ],
+    "delapouite/virgo": [
+      2138
     ]
   },
   "Game-icons.net - Astronomy": {
@@ -1533,6 +1608,9 @@
   "Game-icons.net - Balance": {
     "lorc/life-in-the-balance": [
       2987
+    ],
+    "delapouite/unbalanced": [
+      2098
     ]
   },
   "Game-icons.net - Barrier": {
@@ -1561,6 +1639,12 @@
     "delapouite/bowels": [
       420
     ],
+    "delapouite/fingernail": [
+      851
+    ],
+    "delapouite/forearm": [
+      909
+    ],
     "delapouite/hair-strands": [
       1009
     ],
@@ -1579,11 +1663,20 @@
     "delapouite/leg": [
       1220
     ],
+    "lorc/lips": [
+      3014
+    ],
     "delapouite/liver": [
       1243
     ],
     "delapouite/lungs": [
       1272
+    ],
+    "lorc/muscle-fat": [
+      3103
+    ],
+    "lorc/muscle-up": [
+      3104
     ],
     "delapouite/muscular-torso": [
       1375
@@ -1597,26 +1690,20 @@
     "delapouite/nose-side": [
       1406
     ],
-    "delapouite/pelvis-bone": [
-      1484
-    ],
-    "lorc/lips": [
-      3014
-    ],
-    "lorc/muscle-fat": [
-      3103
-    ],
-    "lorc/muscle-up": [
-      3104
-    ],
     "lorc/open-wound": [
       3130
     ],
     "lorc/palm": [
       3142
     ],
+    "delapouite/pelvis-bone": [
+      1484
+    ],
     "lorc/pierced-body": [
       3163
+    ],
+    "delapouite/tongue": [
+      2032
     ]
   },
   "Game-icons.net - Book": {
@@ -1628,6 +1715,9 @@
     ]
   },
   "Game-icons.net - Building": {
+    "delapouite/gate": [
+      951
+    ],
     "delapouite/ladders-platform": [
       1203
     ],
@@ -1728,7 +1818,15 @@
       3962
     ]
   },
+  "Game-icons.net - Cards": {
+    "delapouite/up-card": [
+      2105
+    ]
+  },
   "Game-icons.net - Celebration": {
+    "delapouite/glass-celebration": [
+      963
+    ],
     "delapouite/party-flags": [
       1471
     ],
@@ -1749,54 +1847,6 @@
     ]
   },
   "Game-icons.net - Character": {
-    "caro-asercion/cloaked-figure-on-horseback": [
-      82
-    ],
-    "caro-asercion/goblin": [
-      99
-    ],
-    "caro-asercion/pianist": [
-      118
-    ],
-    "cathelineau/bad-gnome": [
-      159
-    ],
-    "cathelineau/fomorian": [
-      170
-    ],
-    "cathelineau/nun-face": [
-      175
-    ],
-    "cathelineau/old-king": [
-      177
-    ],
-    "cathelineau/swordman": [
-      180
-    ],
-    "cathelineau/swordwoman": [
-      181
-    ],
-    "cathelineau/transparent-slime": [
-      183
-    ],
-    "cathelineau/witch-face": [
-      186
-    ],
-    "darkzaitzev/hooded-assassin": [
-      199
-    ],
-    "darkzaitzev/hooded-figure": [
-      200
-    ],
-    "darkzaitzev/ninja-head": [
-      202
-    ],
-    "darkzaitzev/ninja-heroic-stance": [
-      203
-    ],
-    "darkzaitzev/running-ninja": [
-      210
-    ],
     "delapouite/air-man": [
       233
     ],
@@ -1805,6 +1855,9 @@
     ],
     "delapouite/archer": [
       275
+    ],
+    "cathelineau/bad-gnome": [
+      159
     ],
     "delapouite/bandit": [
       326
@@ -1818,14 +1871,59 @@
     "delapouite/bully-minion": [
       453
     ],
+    "caro-asercion/cloaked-figure-on-horseback": [
+      82
+    ],
     "kier-heyl/dwarf-king": [
       2255
+    ],
+    "cathelineau/fomorian": [
+      170
+    ],
+    "caro-asercion/goblin": [
+      99
+    ],
+    "darkzaitzev/hooded-assassin": [
+      199
+    ],
+    "darkzaitzev/hooded-figure": [
+      200
+    ],
+    "darkzaitzev/ninja-head": [
+      202
+    ],
+    "darkzaitzev/ninja-heroic-stance": [
+      203
+    ],
+    "cathelineau/nun-face": [
+      175
+    ],
+    "cathelineau/old-king": [
+      177
+    ],
+    "caro-asercion/pianist": [
+      118
     ],
     "lorc/pyromaniac": [
       3204
     ],
     "lorc/rogue": [
       3244
+    ],
+    "darkzaitzev/running-ninja": [
+      210
+    ],
+    "cathelineau/swordman": [
+      180
+    ],
+    "cathelineau/swordwoman": [
+      181
+    ],
+    "cathelineau/transparent-slime": [
+      183
+    ],
+    "cathelineau/witch-face": [
+      186
     ]
   },
   "Game-icons.net - Charts": {
@@ -1834,9 +1932,6 @@
     ]
   },
   "Game-icons.net - Clothing": {
-    "darkzaitzev/tabi-boot": [
-      217
-    ],
     "delapouite/ample-dress": [
       252
     ],
@@ -1845,6 +1940,9 @@
     ],
     "delapouite/bandana": [
       325
+    ],
+    "lucasms/belt": [
+      3696
     ],
     "delapouite/billed-cap": [
       375
@@ -1870,6 +1968,9 @@
     "delapouite/chelsea-boot": [
       547
     ],
+    "lucasms/cloak": [
+      3697
+    ],
     "delapouite/converse-shoe": [
       616
     ],
@@ -1884,6 +1985,24 @@
     ],
     "delapouite/cowboy-boot": [
       639
+    ],
+    "skoll/dress": [
+      3874
+    ],
+    "delapouite/flip-flops": [
+      888
+    ],
+    "delapouite/fur-boot": [
+      937
+    ],
+    "delapouite/fur-shirt": [
+      938
+    ],
+    "delapouite/gloves": [
+      965
+    ],
+    "lorc/hood": [
+      2899
     ],
     "delapouite/jester-hat": [
       1155
@@ -1909,6 +2028,9 @@
     "delapouite/leather-armor": [
       1216
     ],
+    "lorc/leather-boot": [
+      2982
+    ],
     "delapouite/leg-armor": [
       1219
     ],
@@ -1921,6 +2043,9 @@
     "delapouite/magic-hat": [
       1277
     ],
+    "lucasms/necklace": [
+      3698
+    ],
     "delapouite/pilgrim-hat": [
       1518
     ],
@@ -1929,6 +2054,9 @@
     ],
     "delapouite/pirate-hat": [
       1532
+    ],
+    "lorc/pointy-hat": [
+      3180
     ],
     "delapouite/polo-shirt": [
       1570
@@ -1941,6 +2069,9 @@
     ],
     "delapouite/propeller-beanie": [
       1602
+    ],
+    "lorc/robe": [
+      3239
     ],
     "delapouite/robin-hood-hat": [
       1661
@@ -1962,6 +2093,9 @@
     ],
     "delapouite/santa-hat": [
       1715
+    ],
+    "lucasms/shirt": [
+      3699
     ],
     "delapouite/shirt-button": [
       1774
@@ -1993,29 +2127,50 @@
     "delapouite/t-shirt": [
       1966
     ],
+    "darkzaitzev/tabi-boot": [
+      217
+    ],
     "delapouite/tank-top": [
       1976
     ],
     "delapouite/tie": [
       2016
     ],
-    "lorc/hood": [
-      2899
+    "delapouite/towel": [
+      2040
     ],
-    "lorc/leather-boot": [
-      2982
-    ],
-    "lorc/pointy-hat": [
-      3180
-    ],
-    "lorc/robe": [
-      3239
+    "delapouite/travel-dress": [
+      2053
     ],
     "lorc/trousers": [
       3591
     ],
+    "lucasms/trousers": [
+      3700
+    ],
+    "delapouite/turban": [
+      2085
+    ],
+    "delapouite/underwear": [
+      2101
+    ],
+    "delapouite/underwear-shorts": [
+      2100
+    ],
+    "delapouite/ushanka": [
+      2112
+    ],
+    "delapouite/vampire-cape": [
+      2116
+    ],
+    "delapouite/viking-helmet": [
+      2133
+    ],
     "lorc/walking-boot": [
       3630
+    ],
+    "delapouite/western-hat": [
+      2183
     ],
     "lorc/wing-cloak": [
       3655
@@ -2023,34 +2178,28 @@
     "lorc/winged-leg": [
       3658
     ],
-    "lucasms/belt": [
-      3696
+    "delapouite/winter-gloves": [
+      2197
     ],
-    "lucasms/cloak": [
-      3697
+    "delapouite/winter-hat": [
+      2198
     ],
-    "lucasms/necklace": [
-      3698
+    "delapouite/wooden-clogs": [
+      2213
     ],
-    "lucasms/shirt": [
-      3699
-    ],
-    "lucasms/trousers": [
-      3700
-    ],
-    "skoll/dress": [
-      3874
+    "delapouite/wooden-pegleg": [
+      2215
     ]
   },
   "Game-icons.net - Combat": {
+    "sbed/duel": [
+      3746
+    ],
     "delapouite/high-kick": [
       1065
     ],
     "delapouite/high-punch": [
       1066
-    ],
-    "sbed/duel": [
-      3746
     ]
   },
   "Game-icons.net - Commerce": {
@@ -2150,9 +2299,30 @@
     ],
     "delapouite/texas": [
       1999
+    ],
+    "delapouite/uruguay": [
+      2109
     ]
   },
   "Game-icons.net - Crafting": {
+    "delapouite/foundry-bucket": [
+      915
+    ],
+    "delapouite/full-metal-bucket": [
+      931
+    ],
+    "delapouite/full-metal-bucket-handle": [
+      930
+    ],
+    "delapouite/full-wood-bucket": [
+      935
+    ],
+    "delapouite/full-wood-bucket-handle": [
+      934
+    ],
+    "delapouite/furnace": [
+      939
+    ],
     "lorc/stone-crafting": [
       3455
     ],
@@ -2161,6 +2331,39 @@
     ]
   },
   "Game-icons.net - Creature": {
+    "sbed/evil-wings": [
+      3749
+    ],
+    "lorc/frankenstein-creature": [
+      2796
+    ],
+    "lorc/ghost": [
+      2821
+    ],
+    "lorc/ghost-ally": [
+      2820
+    ],
+    "delapouite/giant": [
+      958
+    ],
+    "lorc/gluttonous-smile": [
+      2830
+    ],
+    "lorc/gluttony": [
+      2831
+    ],
+    "lorc/gold-scarab": [
+      2832
+    ],
+    "lorc/gold-shell": [
+      2833
+    ],
+    "lorc/gooey-daemon": [
+      2837
+    ],
+    "lorc/grasping-claws": [
+      2846
+    ],
     "delapouite/grasping-slug": [
       984
     ],
@@ -2170,17 +2373,38 @@
     "delapouite/griffin-symbol": [
       997
     ],
+    "lorc/grim-reaper": [
+      2849
+    ],
     "delapouite/half-body-crawling": [
       1010
     ],
     "delapouite/half-dead": [
       1011
     ],
+    "lorc/hanging-spider": [
+      2865
+    ],
+    "lorc/happy-skull": [
+      2866
+    ],
+    "lorc/harpy": [
+      2869
+    ],
     "delapouite/helicoprion": [
       1053
     ],
+    "lorc/hollow-cat": [
+      2894
+    ],
+    "lorc/hoof": [
+      2900
+    ],
     "delapouite/horned-reptile": [
       1089
+    ],
+    "lorc/horned-skull": [
+      2903
     ],
     "delapouite/horse-head": [
       1090
@@ -2188,11 +2412,35 @@
     "delapouite/hummingbird": [
       1102
     ],
+    "lorc/hydra": [
+      2911
+    ],
+    "lorc/hydra-shot": [
+      2910
+    ],
     "delapouite/ibis": [
       1110
     ],
     "delapouite/ice-golem": [
       1115
+    ],
+    "lorc/ifrit": [
+      2923
+    ],
+    "lorc/imp": [
+      2926
+    ],
+    "lorc/imp-laugh": [
+      2925
+    ],
+    "lorc/infested-mass": [
+      2933
+    ],
+    "lorc/insect-jaws": [
+      2936
+    ],
+    "lorc/interlaced-tentacles": [
+      2938
     ],
     "delapouite/invisible": [
       1137
@@ -2206,11 +2454,29 @@
     "delapouite/jawless-cyclop": [
       1149
     ],
+    "lorc/jellyfish": [
+      2948
+    ],
+    "lorc/lamprey-mouth": [
+      2965
+    ],
+    "lorc/leeching-worm": [
+      2984
+    ],
+    "lorc/pretty-fangs": [
+      3194
+    ],
     "delapouite/rock-golem": [
       1666
     ],
+    "lorc/saber-tooth": [
+      3259
+    ],
     "delapouite/saber-toothed-cat-head": [
       1696
+    ],
+    "lorc/salamander": [
+      3263
     ],
     "delapouite/sand-snake": [
       1711
@@ -2221,8 +2487,17 @@
     "delapouite/sauropod-head": [
       1719
     ],
+    "lorc/scarab-beetle": [
+      3275
+    ],
     "delapouite/school-of-fish": [
       1728
+    ],
+    "lorc/sea-dragon": [
+      3286
+    ],
+    "lorc/sea-serpent": [
+      3287
     ],
     "delapouite/sea-star": [
       1737
@@ -2272,110 +2547,11 @@
     "delapouite/snake-tongue": [
       1825
     ],
-    "delapouite/sniffing-dog": [
-      1826
-    ],
-    "lorc/frankenstein-creature": [
-      2796
-    ],
-    "lorc/ghost": [
-      2821
-    ],
-    "lorc/ghost-ally": [
-      2820
-    ],
-    "lorc/gluttonous-smile": [
-      2830
-    ],
-    "lorc/gluttony": [
-      2831
-    ],
-    "lorc/gold-scarab": [
-      2832
-    ],
-    "lorc/gold-shell": [
-      2833
-    ],
-    "lorc/gooey-daemon": [
-      2837
-    ],
-    "lorc/grasping-claws": [
-      2846
-    ],
-    "lorc/grim-reaper": [
-      2849
-    ],
-    "lorc/hanging-spider": [
-      2865
-    ],
-    "lorc/happy-skull": [
-      2866
-    ],
-    "lorc/harpy": [
-      2869
-    ],
-    "lorc/hollow-cat": [
-      2894
-    ],
-    "lorc/hoof": [
-      2900
-    ],
-    "lorc/horned-skull": [
-      2903
-    ],
-    "lorc/hydra": [
-      2911
-    ],
-    "lorc/hydra-shot": [
-      2910
-    ],
-    "lorc/ifrit": [
-      2923
-    ],
-    "lorc/imp": [
-      2926
-    ],
-    "lorc/imp-laugh": [
-      2925
-    ],
-    "lorc/infested-mass": [
-      2933
-    ],
-    "lorc/insect-jaws": [
-      2936
-    ],
-    "lorc/interlaced-tentacles": [
-      2938
-    ],
-    "lorc/jellyfish": [
-      2948
-    ],
-    "lorc/lamprey-mouth": [
-      2965
-    ],
-    "lorc/leeching-worm": [
-      2984
-    ],
-    "lorc/pretty-fangs": [
-      3194
-    ],
-    "lorc/saber-tooth": [
-      3259
-    ],
-    "lorc/salamander": [
-      3263
-    ],
-    "lorc/scarab-beetle": [
-      3275
-    ],
-    "lorc/sea-dragon": [
-      3286
-    ],
-    "lorc/sea-serpent": [
-      3287
-    ],
     "lorc/snake-totem": [
       3356
+    ],
+    "delapouite/sniffing-dog": [
+      1826
     ],
     "lorc/split-body": [
       3412
@@ -2391,9 +2567,6 @@
     ],
     "lorc/wyvern": [
       3679
-    ],
-    "sbed/evil-wings": [
-      3749
     ]
   },
   "Game-icons.net - Crime": {
@@ -2417,11 +2590,19 @@
     ],
     "delapouite/robber-mask": [
       1659
+    ],
+    "delapouite/wanted-reward": [
+      2152
     ]
   },
   "Game-icons.net - Crown": {
     "delapouite/tiara": [
       2013
+    ]
+  },
+  "Game-icons.net - Crystal": {
+    "delapouite/glass-ball": [
+      962
     ]
   },
   "Game-icons.net - Culture": {
@@ -2459,6 +2640,9 @@
   "Game-icons.net - Currency": {
     "delapouite/rupee": [
       1692
+    ],
+    "delapouite/two-coins": [
+      2092
     ]
   },
   "Game-icons.net - Danger": {
@@ -2517,6 +2701,12 @@
     ],
     "lorc/surrounded-shield": [
       3485
+    ],
+    "delapouite/vibrating-shield": [
+      2127
+    ],
+    "delapouite/viking-shield": [
+      2135
     ]
   },
   "Game-icons.net - Delivery": {
@@ -2555,6 +2745,11 @@
       1965
     ]
   },
+  "Game-icons.net - Disaster": {
+    "delapouite/flood": [
+      892
+    ]
+  },
   "Game-icons.net - Document": {
     "delapouite/diploma": [
       713
@@ -2585,9 +2780,6 @@
     ]
   },
   "Game-icons.net - Emotion": {
-    "delapouite/star-struck": [
-      1899
-    ],
     "lorc/broken-heart": [
       2423
     ],
@@ -2671,6 +2863,9 @@
     ],
     "lorc/smitten": [
       3351
+    ],
+    "delapouite/star-struck": [
+      1899
     ],
     "lorc/surprised": [
       3483
@@ -2802,6 +2997,27 @@
     "delapouite/elf-ear": [
       788
     ],
+    "delapouite/female-vampire": [
+      838
+    ],
+    "delapouite/fire-flower": [
+      854
+    ],
+    "delapouite/floating-ghost": [
+      889
+    ],
+    "delapouite/floating-tentacles": [
+      891
+    ],
+    "delapouite/gargoyle": [
+      947
+    ],
+    "delapouite/goblin-camp": [
+      968
+    ],
+    "delapouite/goblin-head": [
+      969
+    ],
     "delapouite/mermaid": [
       1322
     ],
@@ -2919,11 +3135,11 @@
     "delapouite/price-tag": [
       1594
     ],
-    "delapouite/receive-money": [
-      1637
-    ],
     "lorc/profit": [
       3196
+    ],
+    "delapouite/receive-money": [
+      1637
     ]
   },
   "Game-icons.net - Fire": {
@@ -2944,33 +3160,18 @@
   "Game-icons.net - Flags": {
     "delapouite/pirate-flag": [
       1531
+    ],
+    "delapouite/trumpet-flag": [
+      2080
+    ],
+    "delapouite/tusks-flag": [
+      2088
+    ],
+    "delapouite/vertical-banner": [
+      2125
     ]
   },
   "Game-icons.net - Food": {
-    "caro-asercion/boba": [
-      73
-    ],
-    "caro-asercion/bok-choy": [
-      74
-    ],
-    "caro-asercion/bowl-of-rice": [
-      75
-    ],
-    "caro-asercion/charcuterie": [
-      80
-    ],
-    "caro-asercion/dumpling": [
-      91
-    ],
-    "caro-asercion/dumpling-bao": [
-      90
-    ],
-    "darkzaitzev/fish-cooked": [
-      196
-    ],
-    "darkzaitzev/fried-fish": [
-      198
-    ],
     "delapouite/bacon": [
       313
     ],
@@ -2992,6 +3193,15 @@
     "delapouite/berries-bowl": [
       372
     ],
+    "caro-asercion/boba": [
+      73
+    ],
+    "caro-asercion/bok-choy": [
+      74
+    ],
+    "caro-asercion/bowl-of-rice": [
+      75
+    ],
     "delapouite/bread": [
       437
     ],
@@ -3009,6 +3219,9 @@
     ],
     "delapouite/cabbage": [
       466
+    ],
+    "lorc/cake-slice": [
+      2452
     ],
     "delapouite/candy-canes": [
       489
@@ -3028,14 +3241,26 @@
     "delapouite/chanterelles": [
       537
     ],
+    "caro-asercion/charcuterie": [
+      80
+    ],
+    "lorc/cheese-wedge": [
+      2485
+    ],
     "delapouite/cherry": [
       549
+    ],
+    "lorc/chicken-leg": [
+      2492
     ],
     "delapouite/chicken-oven": [
       553
     ],
     "delapouite/chili-pepper": [
       555
+    ],
+    "rihlsul/chocolate-bar": [
+      3724
     ],
     "delapouite/coconuts": [
       592
@@ -3067,6 +3292,48 @@
     "delapouite/donut": [
       732
     ],
+    "caro-asercion/dumpling": [
+      91
+    ],
+    "caro-asercion/dumpling-bao": [
+      90
+    ],
+    "delapouite/fast-noodles": [
+      834
+    ],
+    "darkzaitzev/fish-cooked": [
+      196
+    ],
+    "delapouite/flour": [
+      895
+    ],
+    "delapouite/french-fries": [
+      919
+    ],
+    "delapouite/fried-eggs": [
+      920
+    ],
+    "darkzaitzev/fried-fish": [
+      198
+    ],
+    "skoll/fruit-bowl": [
+      3887
+    ],
+    "delapouite/full-pizza": [
+      933
+    ],
+    "delapouite/garlic": [
+      948
+    ],
+    "delapouite/gingerbread-man": [
+      959
+    ],
+    "lorc/grapes": [
+      2844
+    ],
+    "skoll/ham-shank": [
+      3894
+    ],
     "delapouite/hamburger": [
       1014
     ],
@@ -3076,11 +3343,17 @@
     "delapouite/honey-jar": [
       1083
     ],
+    "lorc/honeypot": [
+      2898
+    ],
     "delapouite/hot-dog": [
       1094
     ],
     "delapouite/hot-meal": [
       1095
+    ],
+    "lorc/hot-spices": [
+      2906
     ],
     "delapouite/ice-cream-cone": [
       1112
@@ -3118,6 +3391,15 @@
     "delapouite/meal": [
       1300
     ],
+    "lorc/meat": [
+      3058
+    ],
+    "rihlsul/milk-carton": [
+      3725
+    ],
+    "lorc/mouth-watering": [
+      3100
+    ],
     "delapouite/mussel": [
       1382
     ],
@@ -3148,6 +3430,9 @@
     "delapouite/peach": [
       1479
     ],
+    "rihlsul/peanut": [
+      3726
+    ],
     "delapouite/pear": [
       1480
     ],
@@ -3156,6 +3441,9 @@
     ],
     "delapouite/pickle": [
       1514
+    ],
+    "lorc/pie-slice": [
+      3161
     ],
     "delapouite/pimiento": [
       1520
@@ -3187,6 +3475,12 @@
     "delapouite/raw-egg": [
       1635
     ],
+    "lorc/roast-chicken": [
+      3238
+    ],
+    "lorc/salt-shaker": [
+      3264
+    ],
     "delapouite/sandwich": [
       1714
     ],
@@ -3198,6 +3492,12 @@
     ],
     "delapouite/sesame": [
       1748
+    ],
+    "lorc/shiny-apple": [
+      3315
+    ],
+    "lorc/sliced-bread": [
+      3346
     ],
     "delapouite/sliced-mushroom": [
       1809
@@ -3229,79 +3529,28 @@
     "delapouite/tangerine": [
       1975
     ],
-    "lorc/cake-slice": [
-      2452
-    ],
-    "lorc/cheese-wedge": [
-      2485
-    ],
-    "lorc/chicken-leg": [
-      2492
-    ],
-    "lorc/grapes": [
-      2844
-    ],
-    "lorc/honeypot": [
-      2898
-    ],
-    "lorc/hot-spices": [
-      2906
-    ],
-    "lorc/meat": [
-      3058
-    ],
-    "lorc/mouth-watering": [
-      3100
-    ],
-    "lorc/pie-slice": [
-      3161
-    ],
-    "lorc/roast-chicken": [
-      3238
-    ],
-    "lorc/salt-shaker": [
-      3264
-    ],
-    "lorc/shiny-apple": [
-      3315
-    ],
-    "lorc/sliced-bread": [
-      3346
+    "delapouite/tomato": [
+      2031
     ],
     "lorc/wine-glass": [
       3654
     ],
     "lorc/wrapped-sweet": [
       3676
-    ],
-    "rihlsul/chocolate-bar": [
-      3724
-    ],
-    "rihlsul/milk-carton": [
-      3725
-    ],
-    "rihlsul/peanut": [
-      3726
-    ],
-    "skoll/fruit-bowl": [
-      3887
-    ],
-    "skoll/ham-shank": [
-      3894
     ]
   },
   "Game-icons.net - Fossil": {
-    "caro-asercion/archaeopteryx-fossil": [
-      62
-    ],
-    "caro-asercion/sauropod-skeleton": [
-      129
-    ],
     "lorc/ammonite": [
       2271
     ],
     "lorc/ammonite-fossil": [
       2270
+    ],
+    "caro-asercion/archaeopteryx-fossil": [
+      62
+    ],
+    "caro-asercion/sauropod-skeleton": [
+      129
     ]
   },
   "Game-icons.net - Friends": {
@@ -3354,9 +3603,27 @@
     ],
     "delapouite/table": [
       1967
+    ],
+    "delapouite/wooden-chair": [
+      2212
     ]
   },
   "Game-icons.net - Game": {
+    "delapouite/3d-meeple": [
+      222
+    ],
+    "delapouite/abbot-meeple": [
+      225
+    ],
+    "delapouite/babyfoot-players": [
+      309
+    ],
+    "delapouite/backgammon": [
+      310
+    ],
+    "delapouite/ball-pyramid": [
+      316
+    ],
     "aussiesim/card-10-clubs": [
       2
     ],
@@ -3501,6 +3768,12 @@
     "aussiesim/card-king-spades": [
       49
     ],
+    "quoting/card-pickup": [
+      3716
+    ],
+    "quoting/card-play": [
+      3717
+    ],
     "aussiesim/card-queen-clubs": [
       50
     ],
@@ -3513,20 +3786,32 @@
     "aussiesim/card-queen-spades": [
       53
     ],
-    "delapouite/3d-meeple": [
-      222
+    "skoll/chess-bishop": [
+      3852
     ],
-    "delapouite/abbot-meeple": [
-      225
+    "skoll/chess-king": [
+      3853
     ],
-    "delapouite/babyfoot-players": [
-      309
+    "skoll/chess-knight": [
+      3854
     ],
-    "delapouite/backgammon": [
-      310
+    "skoll/chess-pawn": [
+      3855
     ],
-    "delapouite/ball-pyramid": [
-      316
+    "skoll/chess-queen": [
+      3856
+    ],
+    "skoll/chess-rook": [
+      3857
+    ],
+    "skoll/d10": [
+      3867
+    ],
+    "skoll/d12": [
+      3868
+    ],
+    "skoll/d4": [
+      3869
     ],
     "delapouite/dice-eight-faces-eight": [
       698
@@ -3575,6 +3860,24 @@
     ],
     "delapouite/i-brick": [
       1109
+    ],
+    "skoll/inverted-dice-1": [
+      3901
+    ],
+    "skoll/inverted-dice-2": [
+      3902
+    ],
+    "skoll/inverted-dice-3": [
+      3903
+    ],
+    "skoll/inverted-dice-4": [
+      3904
+    ],
+    "skoll/inverted-dice-5": [
+      3905
+    ],
+    "skoll/inverted-dice-6": [
+      3906
     ],
     "delapouite/j-brick": [
       1143
@@ -3666,6 +3969,9 @@
     "delapouite/pinball-flipper": [
       1523
     ],
+    "lorc/poker-hand": [
+      3185
+    ],
     "delapouite/pool-table-corner": [
       1573
     ],
@@ -3698,60 +4004,6 @@
     ],
     "delapouite/tic-tac-toe": [
       2014
-    ],
-    "lorc/poker-hand": [
-      3185
-    ],
-    "quoting/card-pickup": [
-      3716
-    ],
-    "quoting/card-play": [
-      3717
-    ],
-    "skoll/chess-bishop": [
-      3852
-    ],
-    "skoll/chess-king": [
-      3853
-    ],
-    "skoll/chess-knight": [
-      3854
-    ],
-    "skoll/chess-pawn": [
-      3855
-    ],
-    "skoll/chess-queen": [
-      3856
-    ],
-    "skoll/chess-rook": [
-      3857
-    ],
-    "skoll/d10": [
-      3867
-    ],
-    "skoll/d12": [
-      3868
-    ],
-    "skoll/d4": [
-      3869
-    ],
-    "skoll/inverted-dice-1": [
-      3901
-    ],
-    "skoll/inverted-dice-2": [
-      3902
-    ],
-    "skoll/inverted-dice-3": [
-      3903
-    ],
-    "skoll/inverted-dice-4": [
-      3904
-    ],
-    "skoll/inverted-dice-5": [
-      3905
-    ],
-    "skoll/inverted-dice-6": [
-      3906
     ]
   },
   "Game-icons.net - Gear": {
@@ -3790,11 +4042,14 @@
     ]
   },
   "Game-icons.net - Gem": {
-    "lorc/saphir": [
-      3266
-    ],
     "skoll/amethyst": [
       3828
+    ],
+    "delapouite/fire-gem": [
+      855
+    ],
+    "lorc/saphir": [
+      3266
     ]
   },
   "Game-icons.net - Gemstone": {
@@ -3855,9 +4110,20 @@
       1937
     ]
   },
+  "Game-icons.net - Geometric": {
+    "delapouite/cube": [
+      664
+    ]
+  },
   "Game-icons.net - Gesture": {
     "delapouite/hand-ok": [
       1021
+    ],
+    "lorc/pointing": [
+      3179
+    ],
+    "lorc/prayer": [
+      3193
     ],
     "delapouite/shaking-hands": [
       1753
@@ -3879,12 +4145,6 @@
     ],
     "delapouite/thumb-up": [
       2011
-    ],
-    "lorc/pointing": [
-      3179
-    ],
-    "lorc/prayer": [
-      3193
     ]
   },
   "Game-icons.net - Goal": {
@@ -3903,6 +4163,9 @@
     ]
   },
   "Game-icons.net - Hazard": {
+    "delapouite/falling-rocks": [
+      825
+    ],
     "lorc/radioactive": [
       3214
     ]
@@ -3933,29 +4196,8 @@
     ]
   },
   "Game-icons.net - Health": {
-    "delapouite/body-balance": [
-      394
-    ],
-    "delapouite/body-height": [
-      395
-    ],
-    "delapouite/brain-dump": [
-      429
-    ],
-    "delapouite/brain-leak": [
-      430
-    ],
-    "delapouite/life-bar": [
-      1229
-    ],
-    "delapouite/stethoscope": [
-      1910
-    ],
-    "delapouite/stomach": [
-      1914
-    ],
-    "delapouite/tired-eye": [
-      2026
+    "skoll/amputation": [
+      3829
     ],
     "lorc/back-pain": [
       2314
@@ -3975,8 +4217,23 @@
     "lorc/bleeding-wound": [
       2371
     ],
+    "skoll/blood": [
+      3839
+    ],
+    "delapouite/body-balance": [
+      394
+    ],
+    "delapouite/body-height": [
+      395
+    ],
+    "delapouite/brain-dump": [
+      429
+    ],
     "lorc/brain-freeze": [
       2407
+    ],
+    "delapouite/brain-leak": [
+      430
     ],
     "lorc/brain-stem": [
       2408
@@ -4023,26 +4280,14 @@
     "lorc/death-zone": [
       2599
     ],
-    "lorc/transfuse": [
-      3564
+    "skoll/fat": [
+      3880
     ],
-    "lorc/tumor": [
-      3592
+    "skoll/fetus": [
+      3881
     ],
-    "lorc/vile-fluid": [
-      3617
-    ],
-    "lorc/virus": [
-      3623
-    ],
-    "lorc/vomiting": [
-      3626
-    ],
-    "quoting/lost-limb": [
-      3720
-    ],
-    "quoting/military-ambulance": [
-      3721
+    "delapouite/foot-plaster": [
+      907
     ],
     "sbed/health-decrease": [
       3760
@@ -4053,38 +4298,59 @@
     "sbed/health-normal": [
       3762
     ],
+    "skoll/hearing-disabled": [
+      3898
+    ],
+    "skoll/joint": [
+      3909
+    ],
+    "delapouite/life-bar": [
+      1229
+    ],
+    "quoting/lost-limb": [
+      3720
+    ],
     "sbed/medical-pack": [
       3781
     ],
     "sbed/medical-pack-alt": [
       3780
     ],
+    "quoting/military-ambulance": [
+      3721
+    ],
     "sbed/regeneration": [
       3791
+    ],
+    "delapouite/stethoscope": [
+      1910
+    ],
+    "delapouite/stomach": [
+      1914
     ],
     "sbed/syringe": [
       3807
     ],
+    "delapouite/tired-eye": [
+      2026
+    ],
+    "lorc/transfuse": [
+      3564
+    ],
+    "lorc/tumor": [
+      3592
+    ],
     "sbed/vial": [
       3818
     ],
-    "skoll/amputation": [
-      3829
+    "lorc/vile-fluid": [
+      3617
     ],
-    "skoll/blood": [
-      3839
+    "lorc/virus": [
+      3623
     ],
-    "skoll/fat": [
-      3880
-    ],
-    "skoll/fetus": [
-      3881
-    ],
-    "skoll/hearing-disabled": [
-      3898
-    ],
-    "skoll/joint": [
-      3909
+    "lorc/vomiting": [
+      3626
     ]
   },
   "Game-icons.net - Historical": {
@@ -4111,9 +4377,6 @@
     "cathelineau/annexation": [
       158
     ],
-    "cathelineau/occupy": [
-      176
-    ],
     "delapouite/deshret-red-crown": [
       689
     ],
@@ -4128,6 +4391,9 @@
     ],
     "delapouite/nefertiti": [
       1390
+    ],
+    "cathelineau/occupy": [
+      176
     ],
     "delapouite/painted-pottery": [
       1455
@@ -4152,6 +4418,15 @@
     ],
     "delapouite/pschent-double-crown": [
       1604
+    ],
+    "delapouite/venus-of-willendorf": [
+      2124
+    ],
+    "delapouite/vitruvian-man": [
+      2140
+    ],
+    "delapouite/wax-tablet": [
+      2177
     ]
   },
   "Game-icons.net - Hobby": {
@@ -4176,6 +4451,12 @@
     ]
   },
   "Game-icons.net - Household": {
+    "delapouite/basket": [
+      345
+    ],
+    "delapouite/family-house": [
+      828
+    ],
     "delapouite/moka-pot": [
       1349
     ],
@@ -4269,6 +4550,9 @@
     "caro-asercion/bassoon": [
       68
     ],
+    "cathelineau/carnyx": [
+      162
+    ],
     "caro-asercion/clarinet": [
       81
     ],
@@ -4281,18 +4565,6 @@
     "caro-asercion/grand-piano": [
       100
     ],
-    "caro-asercion/pipe-organ": [
-      119
-    ],
-    "caro-asercion/trombone": [
-      149
-    ],
-    "caro-asercion/tuba": [
-      150
-    ],
-    "cathelineau/carnyx": [
-      162
-    ],
     "delapouite/guitar-bass-head": [
       1001
     ],
@@ -4302,8 +4574,17 @@
     "delapouite/harp": [
       1031
     ],
+    "caro-asercion/pipe-organ": [
+      119
+    ],
     "delapouite/saxophone": [
       1725
+    ],
+    "caro-asercion/trombone": [
+      149
+    ],
+    "caro-asercion/tuba": [
+      150
     ],
     "delapouite/xylophone": [
       2219
@@ -4315,90 +4596,12 @@
   "Game-icons.net - Interaction": {
     "lorc/conversation": [
       2525
+    ],
+    "delapouite/face-to-face": [
+      818
     ]
   },
   "Game-icons.net - Item": {
-    "delapouite/rolled-cloth": [
-      1670
-    ],
-    "delapouite/rope-coil": [
-      1678
-    ],
-    "delapouite/round-knob": [
-      1681
-    ],
-    "delapouite/rule-book": [
-      1690
-    ],
-    "delapouite/saddle": [
-      1697
-    ],
-    "delapouite/safety-pin": [
-      1698
-    ],
-    "delapouite/scabbard": [
-      1726
-    ],
-    "delapouite/school-bag": [
-      1727
-    ],
-    "delapouite/screw": [
-      1732
-    ],
-    "delapouite/scroll-quill": [
-      1733
-    ],
-    "delapouite/scuba-mask": [
-      1734
-    ],
-    "delapouite/scuba-tanks": [
-      1735
-    ],
-    "delapouite/secret-book": [
-      1741
-    ],
-    "delapouite/sell-card": [
-      1745
-    ],
-    "delapouite/sewing-string": [
-      1751
-    ],
-    "delapouite/shopping-bag": [
-      1777
-    ],
-    "delapouite/shopping-cart": [
-      1778
-    ],
-    "delapouite/shoulder-bag": [
-      1782
-    ],
-    "delapouite/shower": [
-      1783
-    ],
-    "delapouite/skipping-rope": [
-      1801
-    ],
-    "delapouite/skis": [
-      1803
-    ],
-    "delapouite/sleeping-bag": [
-      1806
-    ],
-    "delapouite/slipknot": [
-      1814
-    ],
-    "delapouite/smoking-pipe": [
-      1819
-    ],
-    "delapouite/snake-egg": [
-      1822
-    ],
-    "delapouite/snake-jar": [
-      1823
-    ],
-    "delapouite/soap": [
-      1829
-    ],
     "lorc/brandy-bottle": [
       2412
     ],
@@ -4495,8 +4698,53 @@
     "lorc/rock": [
       3241
     ],
+    "delapouite/rolled-cloth": [
+      1670
+    ],
+    "delapouite/rope-coil": [
+      1678
+    ],
+    "delapouite/round-knob": [
+      1681
+    ],
+    "delapouite/rule-book": [
+      1690
+    ],
+    "delapouite/saddle": [
+      1697
+    ],
+    "delapouite/safety-pin": [
+      1698
+    ],
+    "delapouite/scabbard": [
+      1726
+    ],
     "lorc/scales": [
       3270
+    ],
+    "delapouite/school-bag": [
+      1727
+    ],
+    "delapouite/screw": [
+      1732
+    ],
+    "delapouite/scroll-quill": [
+      1733
+    ],
+    "delapouite/scuba-mask": [
+      1734
+    ],
+    "delapouite/scuba-tanks": [
+      1735
+    ],
+    "delapouite/secret-book": [
+      1741
+    ],
+    "delapouite/sell-card": [
+      1745
+    ],
+    "delapouite/sewing-string": [
+      1751
     ],
     "lorc/sharped-teeth-skull": [
       3303
@@ -4519,14 +4767,50 @@
     "lorc/shiny-purse": [
       3319
     ],
+    "delapouite/shopping-bag": [
+      1777
+    ],
+    "delapouite/shopping-cart": [
+      1778
+    ],
+    "delapouite/shoulder-bag": [
+      1782
+    ],
+    "delapouite/shower": [
+      1783
+    ],
+    "delapouite/skipping-rope": [
+      1801
+    ],
+    "delapouite/skis": [
+      1803
+    ],
     "lorc/skull-in-jar": [
       3336
     ],
     "lorc/skull-mask": [
       3337
     ],
+    "delapouite/sleeping-bag": [
+      1806
+    ],
+    "delapouite/slipknot": [
+      1814
+    ],
     "lorc/smoking-finger": [
       3352
+    ],
+    "delapouite/smoking-pipe": [
+      1819
+    ],
+    "delapouite/snake-egg": [
+      1822
+    ],
+    "delapouite/snake-jar": [
+      1823
+    ],
+    "delapouite/soap": [
+      1829
     ],
     "lorc/spiral-bottle": [
       3406
@@ -4569,6 +4853,9 @@
     ]
   },
   "Game-icons.net - Jewelry": {
+    "skoll/big-diamond-ring": [
+      3838
+    ],
     "delapouite/double-necklace": [
       738
     ],
@@ -4580,21 +4867,6 @@
     ],
     "delapouite/emerald-necklace": [
       790
-    ],
-    "delapouite/heart-earrings": [
-      1043
-    ],
-    "delapouite/heart-necklace": [
-      1045
-    ],
-    "delapouite/intricate-necklace": [
-      1135
-    ],
-    "delapouite/pearl-earring": [
-      1481
-    ],
-    "delapouite/pearl-necklace": [
-      1482
     ],
     "lorc/gem-chain": [
       2816
@@ -4608,20 +4880,32 @@
     "lorc/gems": [
       2819
     ],
+    "delapouite/heart-earrings": [
+      1043
+    ],
+    "delapouite/heart-necklace": [
+      1045
+    ],
+    "delapouite/intricate-necklace": [
+      1135
+    ],
     "lorc/jeweled-chalice": [
       2950
     ],
     "lorc/kaleidoscope-pearls": [
       2956
     ],
+    "delapouite/pearl-earring": [
+      1481
+    ],
+    "delapouite/pearl-necklace": [
+      1482
+    ],
     "lorc/skull-ring": [
       3338
     ],
     "lorc/skull-signet": [
       3340
-    ],
-    "skoll/big-diamond-ring": [
-      3838
     ]
   },
   "Game-icons.net - Job": {
@@ -4630,6 +4914,11 @@
     ],
     "delapouite/mining-helmet": [
       1344
+    ]
+  },
+  "Game-icons.net - Justice": {
+    "delapouite/tribunal-jury": [
+      2064
     ]
   },
   "Game-icons.net - Knowledge": {
@@ -4719,53 +5008,8 @@
     "delapouite/brain-tentacle": [
       431
     ],
-    "delapouite/daemon-pull": [
-      673
-    ],
-    "delapouite/djinn": [
-      725
-    ],
-    "delapouite/dragon-orb": [
-      741
-    ],
-    "delapouite/ice-spell-cast": [
-      1119
-    ],
-    "delapouite/power-ring": [
-      1588
-    ],
-    "delapouite/soul-vessel": [
-      1840
-    ],
-    "delapouite/sparkles": [
-      1852
-    ],
-    "delapouite/spell-book": [
-      1860
-    ],
-    "delapouite/star-altar": [
-      1893
-    ],
-    "delapouite/star-formation": [
-      1895
-    ],
-    "delapouite/star-gate": [
-      1896
-    ],
-    "delapouite/star-key": [
-      1897
-    ],
-    "delapouite/sun-priest": [
-      1939
-    ],
-    "delapouite/sword-altar": [
-      1959
-    ],
-    "delapouite/swords-power": [
-      1962
-    ],
-    "delapouite/tentacles-barrier": [
-      1998
+    "willdabeast/chain-lightning": [
+      4121
     ],
     "lorc/concentration-orb": [
       2521
@@ -4782,8 +5026,20 @@
     "lorc/cursed-star": [
       2585
     ],
+    "delapouite/daemon-pull": [
+      673
+    ],
+    "delapouite/djinn": [
+      725
+    ],
+    "delapouite/dragon-orb": [
+      741
+    ],
     "lorc/fairy-wand": [
       2716
+    ],
+    "delapouite/fire-spell-cast": [
+      858
     ],
     "lorc/frostfire": [
       2802
@@ -4859,6 +5115,9 @@
     ],
     "lorc/ice-cube": [
       2917
+    ],
+    "delapouite/ice-spell-cast": [
+      1119
     ],
     "lorc/icicles-aura": [
       2921
@@ -4983,6 +5242,9 @@
     "lorc/oppression": [
       3132
     ],
+    "willdabeast/orb-wand": [
+      4124
+    ],
     "lorc/overdose": [
       3138
     ],
@@ -5007,11 +5269,17 @@
     "lorc/power-lightning": [
       3192
     ],
+    "delapouite/power-ring": [
+      1588
+    ],
     "lorc/psychic-waves": [
       3197
     ],
     "lorc/rainbow-star": [
       3216
+    ],
+    "skoll/read": [
+      3950
     ],
     "lorc/rear-aura": [
       3225
@@ -5070,6 +5338,39 @@
     "lorc/sonic-lightning": [
       3367
     ],
+    "delapouite/soul-vessel": [
+      1840
+    ],
+    "delapouite/sparkles": [
+      1852
+    ],
+    "delapouite/spell-book": [
+      1860
+    ],
+    "delapouite/star-altar": [
+      1893
+    ],
+    "delapouite/star-formation": [
+      1895
+    ],
+    "delapouite/star-gate": [
+      1896
+    ],
+    "delapouite/star-key": [
+      1897
+    ],
+    "delapouite/sun-priest": [
+      1939
+    ],
+    "delapouite/sword-altar": [
+      1959
+    ],
+    "delapouite/swords-power": [
+      1962
+    ],
+    "delapouite/tentacles-barrier": [
+      1998
+    ],
     "lorc/voodoo-doll": [
       3627
     ],
@@ -5081,23 +5382,20 @@
     ],
     "lorc/wizard-staff": [
       3663
-    ],
-    "skoll/read": [
-      3950
-    ],
-    "willdabeast/chain-lightning": [
-      4121
-    ],
-    "willdabeast/orb-wand": [
-      4124
     ]
   },
   "Game-icons.net - Martial Arts": {
     "delapouite/black-belt": [
       381
+    ],
+    "delapouite/van-damme-split": [
+      2118
     ]
   },
   "Game-icons.net - Mask": {
+    "lorc/bird-mask": [
+      2358
+    ],
     "delapouite/devil-mask": [
       693
     ],
@@ -5106,9 +5404,6 @@
     ],
     "delapouite/jason-mask": [
       1148
-    ],
-    "lorc/bird-mask": [
-      2358
     ],
     "lorc/totem-mask": [
       3561
@@ -5121,6 +5416,18 @@
     ]
   },
   "Game-icons.net - Material": {
+    "lorc/diamond-hard": [
+      2611
+    ],
+    "lorc/emerald": [
+      2682
+    ],
+    "faithtoken/minerals": [
+      2233
+    ],
+    "faithtoken/ore": [
+      2236
+    ],
     "delapouite/wool": [
       2217
     ],
@@ -5129,23 +5436,19 @@
     ],
     "delapouite/z-brick": [
       2223
-    ],
-    "faithtoken/minerals": [
-      2233
-    ],
-    "faithtoken/ore": [
-      2236
-    ],
-    "lorc/diamond-hard": [
-      2611
-    ],
-    "lorc/emerald": [
-      2682
     ]
   },
   "Game-icons.net - Medal": {
     "delapouite/star-medal": [
       1898
+    ]
+  },
+  "Game-icons.net - Media": {
+    "delapouite/fast-backward-button": [
+      832
+    ],
+    "delapouite/fast-forward-button": [
+      833
     ]
   },
   "Game-icons.net - Medical": {
@@ -5208,57 +5511,6 @@
     ]
   },
   "Game-icons.net - Military": {
-    "andymeneely/riposte": [
-      1
-    ],
-    "carl-olsen/brutal-helm": [
-      54
-    ],
-    "carl-olsen/crossbow": [
-      55
-    ],
-    "caro-asercion/frog-mouth-helm": [
-      98
-    ],
-    "caro-asercion/ricochet": [
-      124
-    ],
-    "caro-asercion/warlord-helmet": [
-      153
-    ],
-    "catsu/broken-arrow": [
-      187
-    ],
-    "darkzaitzev/death-juice": [
-      194
-    ],
-    "darkzaitzev/flying-shuriken": [
-      197
-    ],
-    "darkzaitzev/kusarigama": [
-      201
-    ],
-    "darkzaitzev/north-star-shuriken": [
-      204
-    ],
-    "darkzaitzev/sharp-shuriken": [
-      212
-    ],
-    "darkzaitzev/shuriken": [
-      213
-    ],
-    "darkzaitzev/smoke-bomb": [
-      215
-    ],
-    "darkzaitzev/star-shuriken": [
-      216
-    ],
-    "darkzaitzev/three-pointed-shuriken": [
-      218
-    ],
-    "darkzaitzev/whirlpool-shuriken": [
-      219
-    ],
     "delapouite/abdominal-armor": [
       226
     ],
@@ -5322,8 +5574,14 @@
     "delapouite/brass-knuckles": [
       433
     ],
+    "catsu/broken-arrow": [
+      187
+    ],
     "delapouite/broken-axe": [
       442
+    ],
+    "carl-olsen/brutal-helm": [
+      54
     ],
     "delapouite/bullet-bill": [
       451
@@ -5370,8 +5628,14 @@
     "delapouite/crescent-staff": [
       646
     ],
+    "carl-olsen/crossbow": [
+      55
+    ],
     "delapouite/dagger-rose": [
       674
+    ],
+    "darkzaitzev/death-juice": [
+      194
     ],
     "delapouite/detonator": [
       691
@@ -5402,6 +5666,12 @@
     ],
     "delapouite/flanged-mace": [
       879
+    ],
+    "darkzaitzev/flying-shuriken": [
+      197
+    ],
+    "caro-asercion/frog-mouth-helm": [
+      98
     ],
     "delapouite/gauls-helm": [
       952
@@ -5457,6 +5727,9 @@
     "delapouite/knight-banner": [
       1193
     ],
+    "darkzaitzev/kusarigama": [
+      201
+    ],
     "delapouite/laser-turret": [
       1209
     ],
@@ -5490,6 +5763,9 @@
     "delapouite/mp5": [
       1370
     ],
+    "darkzaitzev/north-star-shuriken": [
+      204
+    ],
     "delapouite/nunchaku": [
       1410
     ],
@@ -5513,6 +5789,12 @@
     ],
     "delapouite/revolver": [
       1647
+    ],
+    "caro-asercion/ricochet": [
+      124
+    ],
+    "andymeneely/riposte": [
+      1
     ],
     "delapouite/roman-shield": [
       1674
@@ -5544,6 +5826,9 @@
     "delapouite/sharp-halberd": [
       1761
     ],
+    "darkzaitzev/sharp-shuriken": [
+      212
+    ],
     "delapouite/shield-bash": [
       1766
     ],
@@ -5559,6 +5844,9 @@
     "delapouite/shoulder-armor": [
       1781
     ],
+    "darkzaitzev/shuriken": [
+      213
+    ],
     "delapouite/sickle": [
       1787
     ],
@@ -5573,6 +5861,21 @@
     ],
     "delapouite/slingshot": [
       1813
+    ],
+    "darkzaitzev/smoke-bomb": [
+      215
+    ],
+    "darkzaitzev/star-shuriken": [
+      216
+    ],
+    "darkzaitzev/three-pointed-shuriken": [
+      218
+    ],
+    "caro-asercion/warlord-helmet": [
+      153
+    ],
+    "darkzaitzev/whirlpool-shuriken": [
+      219
     ]
   },
   "Game-icons.net - Mind": {
@@ -5584,6 +5887,17 @@
     ],
     "delapouite/inspiration": [
       1133
+    ]
+  },
+  "Game-icons.net - Mining": {
+    "delapouite/gold-mine": [
+      970
+    ],
+    "delapouite/gold-nuggets": [
+      971
+    ],
+    "delapouite/gold-stack": [
+      972
     ]
   },
   "Game-icons.net - Monster": {
@@ -5605,20 +5919,23 @@
     ]
   },
   "Game-icons.net - Movement": {
+    "sbed/fall-down": [
+      3751
+    ],
+    "sbed/falling": [
+      3752
+    ],
     "lorc/tread": [
       3568
     ],
     "lorc/tyre": [
       3603
     ],
+    "delapouite/walk": [
+      2145
+    ],
     "lorc/wingfoot": [
       3661
-    ],
-    "sbed/fall-down": [
-      3751
-    ],
-    "sbed/falling": [
-      3752
     ]
   },
   "Game-icons.net - Music": {
@@ -5633,6 +5950,21 @@
     ],
     "delapouite/drum": [
       750
+    ],
+    "delapouite/f-clef": [
+      817
+    ],
+    "delapouite/flute": [
+      899
+    ],
+    "delapouite/g-clef": [
+      940
+    ],
+    "delapouite/gong": [
+      976
+    ],
+    "lorc/guitar": [
+      2855
     ],
     "delapouite/maracas": [
       1289
@@ -5679,11 +6011,17 @@
     "delapouite/tambourine": [
       1974
     ],
-    "lorc/guitar": [
-      2855
+    "delapouite/trumpet": [
+      2081
     ],
     "zajkonur/violin": [
       4128
+    ],
+    "delapouite/vuvuzelas": [
+      2144
+    ],
+    "delapouite/whistle": [
+      2187
     ]
   },
   "Game-icons.net - Mystery": {
@@ -5800,6 +6138,9 @@
     "delapouite/kraken-tentacle": [
       1198
     ],
+    "skoll/siren": [
+      3957
+    ],
     "delapouite/spiked-dragon-head": [
       1865
     ],
@@ -5811,9 +6152,6 @@
     ],
     "delapouite/thwomp": [
       2012
-    ],
-    "skoll/siren": [
-      3957
     ],
     "skoll/troll": [
       3989
@@ -5864,41 +6202,25 @@
     ],
     "delapouite/icarus": [
       1111
+    ],
+    "delapouite/vampire-dracula": [
+      2117
+    ],
+    "delapouite/viking-head": [
+      2132
+    ],
+    "delapouite/winged-scepter": [
+      2196
+    ]
+  },
+  "Game-icons.net - Nation": {
+    "delapouite/france": [
+      917
     ]
   },
   "Game-icons.net - Nature": {
-    "carl-olsen/flame": [
-      56
-    ],
-    "caro-asercion/artichoke": [
-      63
-    ],
-    "caro-asercion/birch-trees": [
-      69
-    ],
-    "caro-asercion/mountain-climbing": [
-      108
-    ],
-    "caro-asercion/treehouse": [
-      148
-    ],
-    "caro-asercion/venus-flytrap": [
-      151
-    ],
-    "caro-asercion/water-mill": [
-      154
-    ],
-    "caro-asercion/willow-tree": [
-      155
-    ],
-    "cathelineau/holy-oak": [
-      172
-    ],
-    "cathelineau/tree-face": [
-      184
-    ],
-    "darkzaitzev/plants-and-animals": [
-      206
+    "lorc/acorn": [
+      2259
     ],
     "delapouite/agave": [
       230
@@ -5924,8 +6246,14 @@
     "delapouite/apple-core": [
       268
     ],
+    "lorc/apple-seeds": [
+      2286
+    ],
     "delapouite/aquarium": [
       269
+    ],
+    "caro-asercion/artichoke": [
+      63
     ],
     "delapouite/asian-lantern": [
       291
@@ -5933,11 +6261,20 @@
     "delapouite/asparagus": [
       292
     ],
+    "lorc/at-sea": [
+      2303
+    ],
+    "lorc/aubergine": [
+      2305
+    ],
     "delapouite/avocado": [
       301
     ],
     "delapouite/azul-flake": [
       306
+    ],
+    "lorc/backbone-shell": [
+      2315
     ],
     "delapouite/bamboo": [
       320
@@ -5948,347 +6285,32 @@
     "delapouite/baobab": [
       331
     ],
-    "delapouite/beehive": [
-      364
-    ],
-    "delapouite/berry-bush": [
-      373
-    ],
-    "delapouite/bonsai-tree": [
-      403
-    ],
-    "delapouite/burning-forest": [
-      456
-    ],
-    "delapouite/butterfly-flower": [
-      461
-    ],
-    "delapouite/cactus": [
-      470
-    ],
-    "delapouite/cactus-pot": [
-      468
-    ],
-    "delapouite/cantua": [
-      492
-    ],
-    "delapouite/carnivorous-plant": [
-      514
-    ],
-    "delapouite/ceiling-barnacle": [
-      525
-    ],
-    "delapouite/chestnut-leaf": [
-      552
-    ],
-    "delapouite/circle-forest": [
-      565
-    ],
-    "delapouite/coral": [
-      625
-    ],
-    "delapouite/cotton-flower": [
-      636
-    ],
-    "delapouite/dandelion-flower": [
-      676
-    ],
-    "delapouite/deer-track": [
-      682
-    ],
-    "delapouite/deku-tree": [
-      684
-    ],
-    "delapouite/desert": [
-      688
-    ],
-    "delapouite/duck-palm": [
-      751
-    ],
-    "delapouite/ecology": [
-      770
-    ],
-    "delapouite/fairy": [
-      822
-    ],
-    "delapouite/fairy-wings": [
-      821
-    ],
-    "delapouite/falling-star": [
-      826
-    ],
-    "delapouite/family-tree": [
-      829
-    ],
-    "delapouite/fern": [
-      841
-    ],
-    "delapouite/flower-emblem": [
-      896
-    ],
-    "delapouite/flower-star": [
-      898
-    ],
-    "delapouite/fog": [
-      905
-    ],
-    "delapouite/forest": [
-      912
-    ],
-    "delapouite/forest-camp": [
-      910
-    ],
-    "delapouite/forest-entrance": [
-      911
-    ],
-    "delapouite/frog-foot": [
-      922
-    ],
-    "delapouite/frog-prince": [
-      923
-    ],
-    "delapouite/frozen-body": [
-      924
-    ],
-    "delapouite/frozen-ring": [
-      925
-    ],
-    "delapouite/fruit-tree": [
-      926
-    ],
-    "delapouite/fuji": [
-      928
-    ],
-    "delapouite/ginkgo-leaf": [
-      960
-    ],
-    "delapouite/graduate-cap": [
-      980
-    ],
-    "delapouite/grain": [
-      982
-    ],
-    "delapouite/grain-bundle": [
-      981
-    ],
-    "delapouite/granary": [
-      983
-    ],
-    "delapouite/grass": [
-      986
-    ],
-    "delapouite/grass-mushroom": [
-      985
-    ],
-    "delapouite/grave-flowers": [
-      987
-    ],
-    "delapouite/growth": [
-      998
-    ],
-    "delapouite/h2o": [
-      1006
-    ],
-    "delapouite/half-log": [
-      1012
-    ],
-    "delapouite/hemp": [
-      1057
-    ],
-    "delapouite/herbs-bundle": [
-      1059
-    ],
-    "delapouite/high-grass": [
-      1063
-    ],
-    "delapouite/high-tide": [
-      1067
-    ],
-    "delapouite/hops": [
-      1086
-    ],
-    "delapouite/ice-cubes": [
-      1114
-    ],
-    "delapouite/ice-iris": [
-      1116
-    ],
-    "delapouite/iceberg": [
-      1120
-    ],
-    "delapouite/jasmine": [
-      1147
-    ],
-    "delapouite/jungle": [
-      1166
-    ],
-    "delapouite/lily-pads": [
-      1240
-    ],
-    "delapouite/log": [
-      1252
-    ],
-    "delapouite/low-tide": [
-      1267
-    ],
-    "delapouite/melting-ice-cube": [
-      1319
-    ],
-    "delapouite/menhir": [
-      1321
-    ],
-    "delapouite/mineral-pearls": [
-      1342
-    ],
-    "delapouite/monstera-leaf": [
-      1358
-    ],
-    "delapouite/mushrooms": [
-      1378
-    ],
-    "delapouite/mushrooms-cluster": [
-      1377
-    ],
-    "delapouite/nectar": [
-      1389
-    ],
-    "delapouite/nest-birds": [
-      1391
-    ],
-    "delapouite/nest-eggs": [
-      1392
-    ],
-    "delapouite/oak-leaf": [
-      1414
-    ],
-    "delapouite/oyster-pearl": [
-      1445
-    ],
-    "delapouite/palm-tree": [
-      1458
-    ],
-    "delapouite/plant-roots": [
-      1548
-    ],
-    "delapouite/plant-seed": [
-      1549
-    ],
-    "delapouite/plant-watering": [
-      1550
-    ],
-    "delapouite/reed": [
-      1639
-    ],
-    "delapouite/round-straw-bale": [
-      1684
-    ],
-    "delapouite/sandstorm": [
-      1713
-    ],
-    "delapouite/sea-cliff": [
-      1736
-    ],
-    "delapouite/seedling": [
-      1744
-    ],
-    "delapouite/smoking-volcano": [
-      1820
-    ],
-    "delapouite/solar-system": [
-      1835
-    ],
-    "delapouite/solar-time": [
-      1836
-    ],
-    "delapouite/solid-leaf": [
-      1837
-    ],
-    "delapouite/spear-feather": [
-      1856
-    ],
-    "delapouite/spiked-trunk": [
-      1868
-    ],
-    "delapouite/spiked-wall": [
-      1869
-    ],
-    "delapouite/spring": [
-      1878
-    ],
-    "delapouite/stalactites": [
-      1891
-    ],
-    "delapouite/striped-sun": [
-      1927
-    ],
-    "delapouite/stump-regrowth": [
-      1930
-    ],
-    "delapouite/sunflower": [
-      1941
-    ],
-    "delapouite/sunrise": [
-      1943
-    ],
-    "delapouite/sunset": [
-      1944
-    ],
-    "delapouite/swamp": [
-      1953
-    ],
-    "delapouite/tree-beehive": [
-      2055
-    ],
-    "delapouite/tree-growth": [
-      2057
-    ],
-    "delapouite/tree-roots": [
-      2058
-    ],
-    "delapouite/tree-swing": [
-      2059
-    ],
-    "delapouite/tumbleweed": [
-      2083
-    ],
-    "delapouite/vines": [
-      2137
-    ],
-    "delapouite/waterfall": [
-      2173
-    ],
-    "delapouite/watermelon": [
-      2175
-    ],
-    "delapouite/wood-pile": [
-      2210
-    ],
-    "lorc/acorn": [
-      2259
-    ],
-    "lorc/apple-seeds": [
-      2286
-    ],
-    "lorc/at-sea": [
-      2303
-    ],
-    "lorc/aubergine": [
-      2305
-    ],
-    "lorc/backbone-shell": [
-      2315
-    ],
     "lorc/beanstalk": [
       2342
     ],
     "lorc/beech": [
       2346
     ],
+    "delapouite/beehive": [
+      364
+    ],
+    "delapouite/berry-bush": [
+      373
+    ],
+    "sbed/big-egg": [
+      3733
+    ],
     "lorc/big-wave": [
       2354
     ],
+    "caro-asercion/birch-trees": [
+      69
+    ],
     "lorc/blackcurrant": [
       2365
+    ],
+    "delapouite/bonsai-tree": [
+      403
     ],
     "lorc/bubble-field": [
       2428
@@ -6299,8 +6321,20 @@
     "lorc/bud": [
       2433
     ],
+    "delapouite/burning-forest": [
+      456
+    ],
     "lorc/burning-tree": [
       2447
+    ],
+    "delapouite/butterfly-flower": [
+      461
+    ],
+    "delapouite/cactus": [
+      470
+    ],
+    "delapouite/cactus-pot": [
+      468
     ],
     "lorc/caldera": [
       2453
@@ -6308,11 +6342,26 @@
     "lorc/campfire": [
       2454
     ],
+    "delapouite/cantua": [
+      492
+    ],
+    "delapouite/carnivorous-plant": [
+      514
+    ],
     "lorc/carrion": [
       2468
     ],
+    "delapouite/ceiling-barnacle": [
+      525
+    ],
     "lorc/checkbox-tree": [
       2481
+    ],
+    "delapouite/chestnut-leaf": [
+      552
+    ],
+    "delapouite/circle-forest": [
+      565
     ],
     "lorc/cloud-ring": [
       2504
@@ -6323,11 +6372,20 @@
     "lorc/clover": [
       2507
     ],
+    "sbed/clover": [
+      3742
+    ],
     "lorc/cobweb": [
       2509
     ],
     "lorc/coiling-curl": [
       2515
+    ],
+    "delapouite/coral": [
+      625
+    ],
+    "delapouite/cotton-flower": [
+      636
     ],
     "lorc/crossed-air-flows": [
       2550
@@ -6350,8 +6408,20 @@
     "lorc/daisy": [
       2593
     ],
+    "delapouite/dandelion-flower": [
+      676
+    ],
     "lorc/dead-wood": [
       2596
+    ],
+    "delapouite/deer-track": [
+      682
+    ],
+    "delapouite/deku-tree": [
+      684
+    ],
+    "delapouite/desert": [
+      688
     ],
     "lorc/desert-skull": [
       2606
@@ -6401,6 +6471,9 @@
     "lorc/droplets": [
       2659
     ],
+    "delapouite/duck-palm": [
+      751
+    ],
     "lorc/dust-cloud": [
       2663
     ],
@@ -6416,8 +6489,14 @@
     "lorc/eclipse-flare": [
       2669
     ],
+    "delapouite/ecology": [
+      770
+    ],
     "lorc/egg-clutch": [
       2674
+    ],
+    "sbed/egg-pod": [
+      3747
     ],
     "lorc/elderberry": [
       2676
@@ -6452,8 +6531,14 @@
     "lorc/eyestalk": [
       2715
     ],
+    "delapouite/fairy": [
+      822
+    ],
     "lorc/fairy": [
       2717
+    ],
+    "delapouite/fairy-wings": [
+      821
     ],
     "lorc/falling-boulder": [
       2719
@@ -6467,6 +6552,12 @@
     "lorc/falling-ovoid": [
       2722
     ],
+    "delapouite/falling-star": [
+      826
+    ],
+    "delapouite/family-tree": [
+      829
+    ],
     "lorc/fanged-skull": [
       2723
     ],
@@ -6476,6 +6567,9 @@
     "lorc/feathered-wing": [
       2728
     ],
+    "delapouite/fern": [
+      841
+    ],
     "lorc/field": [
       2730
     ],
@@ -6484,6 +6578,9 @@
     ],
     "lorc/fishbone": [
       2749
+    ],
+    "carl-olsen/flame": [
+      56
     ],
     "lorc/flamed-leaf": [
       2759
@@ -6496,6 +6593,12 @@
     ],
     "lorc/fleshy-mass": [
       2768
+    ],
+    "delapouite/flower-emblem": [
+      896
+    ],
+    "delapouite/flower-star": [
+      898
     ],
     "lorc/flower-twirl": [
       2772
@@ -6518,11 +6621,23 @@
     "lorc/foam": [
       2781
     ],
+    "delapouite/fog": [
+      905
+    ],
     "lorc/food-chain": [
       2785
     ],
     "lorc/footprint": [
       2787
+    ],
+    "delapouite/forest": [
+      912
+    ],
+    "delapouite/forest-camp": [
+      910
+    ],
+    "delapouite/forest-entrance": [
+      911
     ],
     "lorc/fossil": [
       2789
@@ -6530,8 +6645,50 @@
     "lorc/fragrance": [
       2795
     ],
+    "delapouite/frog-foot": [
+      922
+    ],
+    "delapouite/frog-prince": [
+      923
+    ],
+    "delapouite/frozen-body": [
+      924
+    ],
+    "delapouite/frozen-ring": [
+      925
+    ],
+    "delapouite/fruit-tree": [
+      926
+    ],
     "lorc/fruiting": [
       2806
+    ],
+    "delapouite/fuji": [
+      928
+    ],
+    "delapouite/ginkgo-leaf": [
+      960
+    ],
+    "delapouite/graduate-cap": [
+      980
+    ],
+    "delapouite/grain": [
+      982
+    ],
+    "delapouite/grain-bundle": [
+      981
+    ],
+    "delapouite/granary": [
+      983
+    ],
+    "delapouite/grass": [
+      986
+    ],
+    "delapouite/grass-mushroom": [
+      985
+    ],
+    "delapouite/grave-flowers": [
+      987
     ],
     "lorc/ground-sprout": [
       2850
@@ -6539,14 +6696,56 @@
     "lorc/grouped-drops": [
       2852
     ],
+    "delapouite/growth": [
+      998
+    ],
+    "delapouite/h2o": [
+      1006
+    ],
+    "delapouite/half-log": [
+      1012
+    ],
     "lorc/heavy-rain": [
       2887
+    ],
+    "delapouite/hemp": [
+      1057
+    ],
+    "delapouite/herbs-bundle": [
+      1059
+    ],
+    "delapouite/high-grass": [
+      1063
+    ],
+    "delapouite/high-tide": [
+      1067
+    ],
+    "cathelineau/holy-oak": [
+      172
     ],
     "lorc/honeycomb": [
       2897
     ],
+    "delapouite/hops": [
+      1086
+    ],
+    "delapouite/ice-cubes": [
+      1114
+    ],
+    "delapouite/ice-iris": [
+      1116
+    ],
+    "delapouite/iceberg": [
+      1120
+    ],
     "lorc/icebergs": [
       2920
+    ],
+    "delapouite/jasmine": [
+      1147
+    ],
+    "delapouite/jungle": [
+      1166
     ],
     "lorc/kindle": [
       2958
@@ -6557,8 +6756,14 @@
     "lorc/lightning-tree": [
       3009
     ],
+    "delapouite/lily-pads": [
+      1240
+    ],
     "lorc/linden-leaf": [
       3011
+    ],
+    "delapouite/log": [
+      1252
     ],
     "lorc/lotus": [
       3023
@@ -6566,8 +6771,26 @@
     "lorc/lotus-flower": [
       3022
     ],
+    "delapouite/low-tide": [
+      1267
+    ],
     "lorc/maple-leaf": [
       3045
+    ],
+    "delapouite/melting-ice-cube": [
+      1319
+    ],
+    "delapouite/menhir": [
+      1321
+    ],
+    "delapouite/mineral-pearls": [
+      1342
+    ],
+    "delapouite/monstera-leaf": [
+      1358
+    ],
+    "caro-asercion/mountain-climbing": [
+      108
     ],
     "lorc/mountains": [
       3097
@@ -6581,6 +6804,21 @@
     "lorc/mushroom-gills": [
       3106
     ],
+    "delapouite/mushrooms": [
+      1378
+    ],
+    "delapouite/mushrooms-cluster": [
+      1377
+    ],
+    "delapouite/nectar": [
+      1389
+    ],
+    "delapouite/nest-birds": [
+      1391
+    ],
+    "delapouite/nest-eggs": [
+      1392
+    ],
     "lorc/new-shoot": [
       3115
     ],
@@ -6590,8 +6828,17 @@
     "lorc/oak": [
       3120
     ],
+    "delapouite/oak-leaf": [
+      1414
+    ],
     "lorc/oat": [
       3121
+    ],
+    "delapouite/oyster-pearl": [
+      1445
+    ],
+    "delapouite/palm-tree": [
+      1458
     ],
     "lorc/peaks": [
       3156
@@ -6599,23 +6846,74 @@
     "lorc/pine-tree": [
       3170
     ],
+    "delapouite/plant-roots": [
+      1548
+    ],
+    "delapouite/plant-seed": [
+      1549
+    ],
+    "delapouite/plant-watering": [
+      1550
+    ],
+    "darkzaitzev/plants-and-animals": [
+      206
+    ],
     "lorc/pollen-dust": [
       3186
     ],
     "lorc/quicksand": [
       3208
     ],
+    "delapouite/reed": [
+      1639
+    ],
     "lorc/root-tip": [
       3247
+    ],
+    "delapouite/round-straw-bale": [
+      1684
+    ],
+    "delapouite/sandstorm": [
+      1713
+    ],
+    "delapouite/sea-cliff": [
+      1736
+    ],
+    "delapouite/seedling": [
+      1744
     ],
     "lorc/shut-rose": [
       3324
     ],
+    "delapouite/smoking-volcano": [
+      1820
+    ],
+    "skoll/solar-power": [
+      3960
+    ],
+    "delapouite/solar-system": [
+      1835
+    ],
+    "delapouite/solar-time": [
+      1836
+    ],
+    "delapouite/solid-leaf": [
+      1837
+    ],
     "lorc/spatter": [
       3379
     ],
+    "delapouite/spear-feather": [
+      1856
+    ],
     "lorc/spider-web": [
       3385
+    ],
+    "delapouite/spiked-trunk": [
+      1868
+    ],
+    "delapouite/spiked-wall": [
+      1869
     ],
     "lorc/spill": [
       3398
@@ -6641,17 +6939,44 @@
     "lorc/spray": [
       3421
     ],
+    "delapouite/spring": [
+      1878
+    ],
     "lorc/sprout": [
       3424
+    ],
+    "delapouite/stalactites": [
+      1891
     ],
     "lorc/stalagtite": [
       3431
     ],
+    "delapouite/striped-sun": [
+      1927
+    ],
+    "delapouite/stump-regrowth": [
+      1930
+    ],
     "lorc/sun": [
       3474
     ],
+    "delapouite/sunflower": [
+      1941
+    ],
+    "delapouite/sunrise": [
+      1943
+    ],
     "lorc/sunrise": [
       3478
+    ],
+    "delapouite/sunset": [
+      1944
+    ],
+    "delapouite/swamp": [
+      1953
+    ],
+    "skoll/swirled-shell": [
+      3975
     ],
     "lorc/thorny-vine": [
       3536
@@ -6668,8 +6993,29 @@
     "lorc/tornado": [
       3559
     ],
+    "delapouite/tree-beehive": [
+      2055
+    ],
     "lorc/tree-branch": [
       3570
+    ],
+    "delapouite/tree-door": [
+      2056
+    ],
+    "cathelineau/tree-face": [
+      184
+    ],
+    "delapouite/tree-growth": [
+      2057
+    ],
+    "delapouite/tree-roots": [
+      2058
+    ],
+    "delapouite/tree-swing": [
+      2059
+    ],
+    "caro-asercion/treehouse": [
+      148
     ],
     "lorc/trefoil-lily": [
       3571
@@ -6683,6 +7029,12 @@
     "lorc/triple-shells": [
       3584
     ],
+    "delapouite/trunk-mushroom": [
+      2082
+    ],
+    "delapouite/tumbleweed": [
+      2083
+    ],
     "lorc/turtle-shell": [
       3595
     ],
@@ -6695,11 +7047,20 @@
     "lorc/two-feathers": [
       3601
     ],
+    "delapouite/udder": [
+      2094
+    ],
     "lorc/valley": [
       3614
     ],
     "lorc/vanilla-flower": [
       3615
+    ],
+    "delapouite/velociraptor-tracks": [
+      2120
+    ],
+    "caro-asercion/venus-flytrap": [
+      151
     ],
     "lorc/vine-flower": [
       3618
@@ -6707,14 +7068,29 @@
     "lorc/vine-leaf": [
       3619
     ],
+    "delapouite/vines": [
+      2137
+    ],
     "lorc/viola": [
       3622
     ],
     "lorc/volcano": [
       3625
     ],
+    "delapouite/water-diviner-stick": [
+      2164
+    ],
+    "caro-asercion/water-mill": [
+      154
+    ],
     "lorc/water-splash": [
       3633
+    ],
+    "delapouite/waterfall": [
+      2173
+    ],
+    "delapouite/watermelon": [
+      2175
     ],
     "lorc/wave-crest": [
       3634
@@ -6728,28 +7104,70 @@
     "lorc/wildfires": [
       3648
     ],
+    "caro-asercion/willow-tree": [
+      155
+    ],
+    "delapouite/wood-canoe": [
+      2207
+    ],
+    "delapouite/wood-pile": [
+      2210
+    ],
+    "delapouite/wood-stick": [
+      2211
+    ],
     "lorc/zigzag-leaf": [
       3684
-    ],
-    "sbed/big-egg": [
-      3733
-    ],
-    "sbed/clover": [
-      3742
-    ],
-    "sbed/egg-pod": [
-      3747
-    ],
-    "skoll/solar-power": [
-      3960
-    ],
-    "skoll/swirled-shell": [
-      3975
     ]
   },
   "Game-icons.net - Object": {
+    "lorc/acid-blob": [
+      2258
+    ],
+    "lorc/alligator-clip": [
+      2269
+    ],
+    "lorc/anatomy": [
+      2272
+    ],
+    "lorc/anchor": [
+      2273
+    ],
+    "lorc/andromeda-chain": [
+      2275
+    ],
+    "lorc/architect-mask": [
+      2288
+    ],
+    "lorc/assassin-pocket": [
+      2302
+    ],
+    "lorc/balloons": [
+      2320
+    ],
+    "lorc/barefoot": [
+      2331
+    ],
+    "lorc/beer-stein": [
+      2347
+    ],
+    "lorc/belt-buckles": [
+      2351
+    ],
     "caro-asercion/boarding-pass": [
       72
+    ],
+    "lorc/book-cover": [
+      2387
+    ],
+    "lorc/bookmark": [
+      2389
+    ],
+    "lorc/broken-ribbon": [
+      2424
+    ],
+    "lorc/broken-tablet": [
+      2427
     ],
     "caro-asercion/bunny-slippers": [
       76
@@ -6757,65 +7175,11 @@
     "caro-asercion/bus-stop": [
       77
     ],
-    "caro-asercion/clock-tower": [
-      83
-    ],
-    "caro-asercion/clothesline": [
-      84
-    ],
-    "caro-asercion/coinflip": [
-      85
-    ],
-    "caro-asercion/cootie-catcher": [
-      86
-    ],
-    "caro-asercion/mason-jar": [
-      106
-    ],
-    "caro-asercion/paper-bag-crumpled": [
-      112
-    ],
-    "caro-asercion/paper-bag-folded": [
-      113
-    ],
-    "caro-asercion/paper-bag-open": [
-      114
-    ],
-    "caro-asercion/paper-crane": [
-      115
-    ],
-    "caro-asercion/paper-frog": [
-      116
-    ],
-    "caro-asercion/philosopher-bust": [
-      117
-    ],
-    "caro-asercion/prank-glasses": [
-      121
-    ],
-    "caro-asercion/rolling-suitcase": [
-      125
-    ],
-    "caro-asercion/round-potion": [
-      127
-    ],
-    "caro-asercion/slot-machine": [
-      133
-    ],
-    "caro-asercion/subway-pass": [
-      142
-    ],
-    "caro-asercion/toothbrush": [
-      147
-    ],
-    "caro-asercion/windchimes": [
-      156
-    ],
-    "cathelineau/torc": [
-      182
-    ],
     "delapouite/cage": [
       474
+    ],
+    "lorc/caged-ball": [
+      2451
     ],
     "delapouite/camp-cooking-pot": [
       484
@@ -6883,11 +7247,17 @@
     "delapouite/cigarette": [
       564
     ],
+    "lorc/circle-cage": [
+      2494
+    ],
     "delapouite/clapperboard": [
       570
     ],
     "delapouite/clay-brick": [
       573
+    ],
+    "caro-asercion/clock-tower": [
+      83
     ],
     "delapouite/clockwise-rotation": [
       578
@@ -6901,6 +7271,9 @@
     "delapouite/clothes": [
       582
     ],
+    "caro-asercion/clothesline": [
+      84
+    ],
     "delapouite/clothespin": [
       583
     ],
@@ -6912,6 +7285,9 @@
     ],
     "delapouite/coffee-pot": [
       595
+    ],
+    "caro-asercion/coinflip": [
+      85
     ],
     "delapouite/column-vase": [
       602
@@ -6934,89 +7310,23 @@
     "delapouite/cooler": [
       624
     ],
+    "caro-asercion/cootie-catcher": [
+      86
+    ],
     "delapouite/covered-jar": [
       637
     ],
     "delapouite/cowboy-holster": [
       640
     ],
+    "lorc/cracked-glass": [
+      2536
+    ],
     "delapouite/crafting": [
       642
     ],
     "delapouite/crystal-earrings": [
       661
-    ],
-    "delapouite/zipper": [
-      2226
-    ],
-    "generalace135/shepherds-crook": [
-      2243
-    ],
-    "guard13007/soda-can": [
-      2246
-    ],
-    "john-redman/paper": [
-      2251
-    ],
-    "john-redman/rock": [
-      2252
-    ],
-    "john-redman/scissors": [
-      2253
-    ],
-    "lorc/acid-blob": [
-      2258
-    ],
-    "lorc/alligator-clip": [
-      2269
-    ],
-    "lorc/anatomy": [
-      2272
-    ],
-    "lorc/anchor": [
-      2273
-    ],
-    "lorc/andromeda-chain": [
-      2275
-    ],
-    "lorc/architect-mask": [
-      2288
-    ],
-    "lorc/assassin-pocket": [
-      2302
-    ],
-    "lorc/balloons": [
-      2320
-    ],
-    "lorc/barefoot": [
-      2331
-    ],
-    "lorc/beer-stein": [
-      2347
-    ],
-    "lorc/belt-buckles": [
-      2351
-    ],
-    "lorc/book-cover": [
-      2387
-    ],
-    "lorc/bookmark": [
-      2389
-    ],
-    "lorc/broken-ribbon": [
-      2424
-    ],
-    "lorc/broken-tablet": [
-      2427
-    ],
-    "lorc/caged-ball": [
-      2451
-    ],
-    "lorc/circle-cage": [
-      2494
-    ],
-    "lorc/cracked-glass": [
-      2536
     ],
     "lorc/curly-mask": [
       2583
@@ -7042,6 +7352,9 @@
     "lorc/martini": [
       3047
     ],
+    "caro-asercion/mason-jar": [
+      106
+    ],
     "lorc/match-head": [
       3050
     ],
@@ -7063,8 +7376,26 @@
     "lorc/opening-shell": [
       3131
     ],
+    "john-redman/paper": [
+      2251
+    ],
     "lorc/paper-arrow": [
       3143
+    ],
+    "caro-asercion/paper-bag-crumpled": [
+      112
+    ],
+    "caro-asercion/paper-bag-folded": [
+      113
+    ],
+    "caro-asercion/paper-bag-open": [
+      114
+    ],
+    "caro-asercion/paper-crane": [
+      115
+    ],
+    "caro-asercion/paper-frog": [
+      116
     ],
     "lorc/paper-lantern": [
       3145
@@ -7075,8 +7406,55 @@
     "lorc/perfume-bottle": [
       3159
     ],
+    "caro-asercion/philosopher-bust": [
+      117
+    ],
     "lorc/pizza-cutter": [
       3173
+    ],
+    "caro-asercion/prank-glasses": [
+      121
+    ],
+    "john-redman/rock": [
+      2252
+    ],
+    "caro-asercion/rolling-suitcase": [
+      125
+    ],
+    "caro-asercion/round-potion": [
+      127
+    ],
+    "john-redman/scissors": [
+      2253
+    ],
+    "generalace135/shepherds-crook": [
+      2243
+    ],
+    "caro-asercion/slot-machine": [
+      133
+    ],
+    "guard13007/soda-can": [
+      2246
+    ],
+    "caro-asercion/subway-pass": [
+      142
+    ],
+    "caro-asercion/toothbrush": [
+      147
+    ],
+    "cathelineau/torc": [
+      182
+    ],
+    "caro-asercion/windchimes": [
+      156
+    ],
+    "delapouite/zipper": [
+      2226
+    ]
+  },
+  "Game-icons.net - Objective": {
+    "delapouite/flag-objective": [
+      874
     ]
   },
   "Game-icons.net - Objects": {
@@ -7129,6 +7507,9 @@
   "Game-icons.net - Occupation": {
     "delapouite/blacksmith": [
       385
+    ],
+    "delapouite/farmer": [
+      831
     ]
   },
   "Game-icons.net - Office": {
@@ -7164,6 +7545,9 @@
   "Game-icons.net - Peace": {
     "delapouite/peace-dove": [
       1478
+    ],
+    "delapouite/truce": [
+      2078
     ]
   },
   "Game-icons.net - People": {
@@ -7196,6 +7580,14 @@
     ],
     "delapouite/ringmaster": [
       1656
+    ]
+  },
+  "Game-icons.net - Person": {
+    "delapouite/female": [
+      839
+    ],
+    "delapouite/female-legs": [
+      837
     ]
   },
   "Game-icons.net - Personality": {
@@ -7331,8 +7723,19 @@
     ]
   },
   "Game-icons.net - Plant": {
+    "delapouite/fire-iris": [
+      856
+    ],
+    "delapouite/flax": [
+      884
+    ],
     "lorc/rose": [
       3249
+    ]
+  },
+  "Game-icons.net - Platform": {
+    "delapouite/flat-platform": [
+      881
     ]
   },
   "Game-icons.net - Playground": {
@@ -7340,12 +7743,17 @@
       1179
     ]
   },
+  "Game-icons.net - Politics": {
+    "delapouite/vote": [
+      2142
+    ]
+  },
   "Game-icons.net - Potion": {
-    "delapouite/magic-potion": [
-      1278
-    ],
     "lorc/drink-me": [
       2648
+    ],
+    "delapouite/magic-potion": [
+      1278
     ],
     "lorc/poison-bottle": [
       3182
@@ -7356,6 +7764,9 @@
     "lorc/potion-ball": [
       3189
     ],
+    "starseeker/potion-of-madness": [
+      3996
+    ],
     "lorc/round-bottom-flask": [
       3251
     ],
@@ -7364,9 +7775,6 @@
     ],
     "lorc/soap-experiment": [
       3365
-    ],
-    "starseeker/potion-of-madness": [
-      3996
     ]
   },
   "Game-icons.net - Power": {
@@ -7470,6 +7878,11 @@
       1918
     ]
   },
+  "Game-icons.net - Revolution": {
+    "delapouite/uprising": [
+      2107
+    ]
+  },
   "Game-icons.net - Road": {
     "delapouite/detour": [
       692
@@ -7492,6 +7905,12 @@
     ]
   },
   "Game-icons.net - Safety": {
+    "delapouite/fallout-shelter": [
+      827
+    ],
+    "delapouite/full-motorcycle-helmet": [
+      932
+    ],
     "delapouite/hazmat-suit": [
       1033
     ],
@@ -7500,6 +7919,9 @@
     ],
     "delapouite/life-jacket": [
       1231
+    ],
+    "delapouite/traffic-cone": [
+      2045
     ]
   },
   "Game-icons.net - Sci-Fi": {
@@ -7508,23 +7930,35 @@
     ],
     "delapouite/planet-core": [
       1546
+    ],
+    "delapouite/ufo": [
+      2095
     ]
   },
   "Game-icons.net - Science": {
-    "caro-asercion/test-tube-held": [
-      145
-    ],
-    "caro-asercion/test-tube-rack": [
-      146
-    ],
     "delapouite/atom-core": [
       297
     ],
     "delapouite/gravitation": [
       989
     ],
+    "lorc/materials-science": [
+      3052
+    ],
     "delapouite/matter-states": [
       1298
+    ],
+    "lorc/microscope-lens": [
+      3071
+    ],
+    "lorc/molecule": [
+      3090
+    ],
+    "caro-asercion/test-tube-held": [
+      145
+    ],
+    "caro-asercion/test-tube-rack": [
+      146
     ],
     "delapouite/tracked-robot": [
       2044
@@ -7546,15 +7980,6 @@
     ],
     "delapouite/virtual-marker": [
       2139
-    ],
-    "lorc/materials-science": [
-      3052
-    ],
-    "lorc/microscope-lens": [
-      3071
-    ],
-    "lorc/molecule": [
-      3090
     ]
   },
   "Game-icons.net - Sculpture": {
@@ -7601,12 +8026,6 @@
     ]
   },
   "Game-icons.net - Shape": {
-    "delapouite/square": [
-      1880
-    ],
-    "delapouite/stars-stack": [
-      1901
-    ],
     "lorc/checkered-diamond": [
       2483
     ],
@@ -7621,6 +8040,12 @@
     ],
     "lorc/cubes": [
       2577
+    ],
+    "delapouite/square": [
+      1880
+    ],
+    "delapouite/stars-stack": [
+      1901
     ]
   },
   "Game-icons.net - Shapes": {
@@ -7646,6 +8071,16 @@
     ],
     "lorc/bordered-shield": [
       2396
+    ]
+  },
+  "Game-icons.net - Ship": {
+    "delapouite/figurehead": [
+      844
+    ]
+  },
+  "Game-icons.net - Shrine": {
+    "delapouite/fire-shrine": [
+      857
     ]
   },
   "Game-icons.net - Sign": {
@@ -7700,20 +8135,20 @@
     ]
   },
   "Game-icons.net - Sound": {
+    "lorc/echo-ripples": [
+      2668
+    ],
     "delapouite/mute": [
       1384
     ],
-    "lorc/echo-ripples": [
-      2668
+    "skoll/sound-waves": [
+      3961
     ],
     "lorc/tune-pitch": [
       3593
     ],
     "lorc/zigzag-tune": [
       3685
-    ],
-    "skoll/sound-waves": [
-      3961
     ]
   },
   "Game-icons.net - Space": {
@@ -7761,12 +8196,6 @@
     ]
   },
   "Game-icons.net - Sport": {
-    "caro-asercion/skateboarding-01": [
-      131
-    ],
-    "caro-asercion/skateboarding-02": [
-      132
-    ],
     "delapouite/cricket-bat": [
       647
     ],
@@ -7799,6 +8228,12 @@
     ],
     "delapouite/shuttlecock": [
       1786
+    ],
+    "caro-asercion/skateboarding-01": [
+      131
+    ],
+    "caro-asercion/skateboarding-02": [
+      132
     ],
     "delapouite/skier": [
       1798
@@ -7856,6 +8291,24 @@
     "delapouite/boxing-ring": [
       427
     ],
+    "delapouite/finish-line": [
+      852
+    ],
+    "delapouite/footy-field": [
+      908
+    ],
+    "delapouite/frisbee": [
+      921
+    ],
+    "delapouite/goal-keeper": [
+      967
+    ],
+    "delapouite/golf-flag": [
+      974
+    ],
+    "delapouite/golf-tee": [
+      975
+    ],
     "delapouite/paddles": [
       1449
     ],
@@ -7889,6 +8342,9 @@
     "delapouite/volleyball-ball": [
       2141
     ],
+    "delapouite/water-polo": [
+      2169
+    ],
     "delapouite/wave-surfer": [
       2176
     ],
@@ -7902,6 +8358,11 @@
   "Game-icons.net - Spy": {
     "delapouite/spy": [
       1879
+    ]
+  },
+  "Game-icons.net - Storage": {
+    "delapouite/full-folder": [
+      929
     ]
   },
   "Game-icons.net - Strategy": {
@@ -7918,12 +8379,6 @@
     ]
   },
   "Game-icons.net - Structure": {
-    "cathelineau/oppidum": [
-      178
-    ],
-    "cathelineau/tumulus": [
-      185
-    ],
     "delapouite/ancient-columns": [
       254
     ],
@@ -7951,8 +8406,26 @@
     "delapouite/barracks": [
       337
     ],
+    "lorc/bridge": [
+      2415
+    ],
+    "quoting/bunker": [
+      3715
+    ],
+    "quoting/bunker-assault": [
+      3714
+    ],
+    "lorc/capitol": [
+      2464
+    ],
+    "lorc/cargo-crane": [
+      2465
+    ],
     "delapouite/castle": [
       519
+    ],
+    "lorc/castle": [
+      2471
     ],
     "delapouite/castle-ruins": [
       518
@@ -7978,6 +8451,9 @@
     "delapouite/control-tower": [
       614
     ],
+    "lorc/crags": [
+      2541
+    ],
     "delapouite/crossroad": [
       655
     ],
@@ -7992,6 +8468,12 @@
     ],
     "delapouite/dam": [
       675
+    ],
+    "quoting/damaged-house": [
+      3718
+    ],
+    "heavenly-dog/defensive-wall": [
+      2248
     ],
     "delapouite/desert-camp": [
       687
@@ -8032,6 +8514,9 @@
     "delapouite/egyptian-temple": [
       778
     ],
+    "pepijn-poolman/elven-castle": [
+      3701
+    ],
     "delapouite/entry-door": [
       799
     ],
@@ -8040,6 +8525,18 @@
     ],
     "delapouite/exit-door": [
       808
+    ],
+    "lorc/guarded-tower": [
+      2853
+    ],
+    "lorc/heart-tower": [
+      2880
+    ],
+    "cathelineau/oppidum": [
+      178
+    ],
+    "lorc/portculis": [
+      3188
     ],
     "delapouite/rope-bridge": [
       1677
@@ -8086,33 +8583,6 @@
     "delapouite/slumbering-sanctuary": [
       1816
     ],
-    "heavenly-dog/defensive-wall": [
-      2248
-    ],
-    "lorc/bridge": [
-      2415
-    ],
-    "lorc/capitol": [
-      2464
-    ],
-    "lorc/cargo-crane": [
-      2465
-    ],
-    "lorc/castle": [
-      2471
-    ],
-    "lorc/crags": [
-      2541
-    ],
-    "lorc/guarded-tower": [
-      2853
-    ],
-    "lorc/heart-tower": [
-      2880
-    ],
-    "lorc/portculis": [
-      3188
-    ],
     "lorc/stone-block": [
       3454
     ],
@@ -8128,6 +8598,9 @@
     "lorc/tower-fall": [
       3562
     ],
+    "cathelineau/tumulus": [
+      185
+    ],
     "lorc/white-tower": [
       3646
     ],
@@ -8136,38 +8609,20 @@
     ],
     "lorc/wooden-fence": [
       3670
-    ],
-    "pepijn-poolman/elven-castle": [
-      3701
-    ],
-    "quoting/bunker": [
-      3715
-    ],
-    "quoting/bunker-assault": [
-      3714
-    ],
-    "quoting/damaged-house": [
-      3718
     ]
   },
   "Game-icons.net - Symbol": {
-    "caro-asercion/heraldic-sun": [
-      103
+    "lorc/air-zigzag": [
+      2264
     ],
-    "caro-asercion/ophanim": [
-      109
-    ],
-    "cathelineau/boar-ensign": [
-      161
-    ],
-    "cathelineau/medusa-head": [
-      174
-    ],
-    "darkzaitzev/chameleon-glyph": [
-      193
+    "lorc/alien-stare": [
+      2267
     ],
     "delapouite/all-seeing-eye": [
       243
+    ],
+    "skoll/allied-star": [
+      3827
     ],
     "delapouite/american-shield": [
       250
@@ -8175,14 +8630,101 @@
     "delapouite/anarchy": [
       253
     ],
+    "lorc/animal-skull": [
+      2280
+    ],
+    "lorc/ankh": [
+      2281
+    ],
+    "lorc/anthem": [
+      2282
+    ],
     "delapouite/anticlockwise-rotation": [
       264
     ],
     "delapouite/arrow-wings": [
       289
     ],
+    "lorc/aura": [
+      2306
+    ],
+    "lorc/awareness": [
+      2310
+    ],
+    "lorc/back-forth": [
+      2313
+    ],
+    "skoll/balkenkreuz": [
+      3833
+    ],
+    "lorc/ball-glow": [
+      2318
+    ],
+    "lorc/ball-heart": [
+      2319
+    ],
+    "lorc/batwing-emblem": [
+      2339
+    ],
+    "lorc/beam-wake": [
+      2340
+    ],
+    "lorc/beams-aura": [
+      2341
+    ],
+    "lorc/beard": [
+      2343
+    ],
+    "lorc/behold": [
+      2349
+    ],
+    "lorc/beveled-star": [
+      2353
+    ],
+    "lorc/biohazard": [
+      2355
+    ],
+    "lorc/bird-twitter": [
+      2359
+    ],
+    "lorc/black-bar": [
+      2360
+    ],
+    "lorc/black-flag": [
+      2361
+    ],
+    "cathelineau/boar-ensign": [
+      161
+    ],
+    "lorc/body-swapping": [
+      2376
+    ],
+    "lorc/boiling-bubbles": [
+      2377
+    ],
+    "lorc/book-aura": [
+      2386
+    ],
+    "lorc/book-storm": [
+      2388
+    ],
+    "lorc/boot-prints": [
+      2393
+    ],
+    "lorc/bottom-right-3d-arrow": [
+      2399
+    ],
     "delapouite/bowen-knot": [
       421
+    ],
+    "lorc/bowl-spiral": [
+      2402
+    ],
+    "skoll/breaking-chain": [
+      3843
+    ],
+    "skoll/burning-skull": [
+      3847
     ],
     "delapouite/caduceus": [
       472
@@ -8190,11 +8732,17 @@
     "delapouite/camargue-cross": [
       480
     ],
+    "sbed/cancel": [
+      3737
+    ],
     "delapouite/cancer": [
       486
     ],
     "delapouite/capricorn": [
       495
+    ],
+    "darkzaitzev/chameleon-glyph": [
+      193
     ],
     "delapouite/champions": [
       536
@@ -8216,6 +8764,12 @@
     ],
     "delapouite/classical-knowledge": [
       571
+    ],
+    "sbed/clover-spiked": [
+      3741
+    ],
+    "skoll/clubs": [
+      3859
     ],
     "delapouite/confirmed": [
       608
@@ -8247,8 +8801,23 @@
     "delapouite/crucifix": [
       658
     ],
+    "skoll/cultist": [
+      3865
+    ],
+    "sbed/death-skull": [
+      3744
+    ],
+    "skoll/diamonds": [
+      3871
+    ],
+    "skoll/divided-square": [
+      3872
+    ],
     "delapouite/dwennimmen": [
       760
+    ],
+    "lorc/eagle-emblem": [
+      2664
     ],
     "delapouite/egyptian-walk": [
       780
@@ -8256,20 +8825,65 @@
     "delapouite/encirclement": [
       796
     ],
+    "lorc/engagement-ring": [
+      2689
+    ],
     "delapouite/eternal-love": [
       802
     ],
     "delapouite/european-flag": [
       803
     ],
+    "skoll/evil-eyes": [
+      3876
+    ],
     "delapouite/evil-love": [
       805
+    ],
+    "generalace135/fingers-crossed": [
+      2242
+    ],
+    "lorc/flat-star": [
+      2767
+    ],
+    "delapouite/fleur-de-lys": [
+      885
+    ],
+    "faithtoken/forward-sun": [
+      2232
+    ],
+    "delapouite/freemasonry": [
+      918
+    ],
+    "lorc/gothic-cross": [
+      2842
     ],
     "delapouite/hammer-sickle": [
       1016
     ],
+    "skoll/hasty-grave": [
+      3896
+    ],
+    "lorc/hawk-emblem": [
+      2873
+    ],
+    "lorc/hazard-sign": [
+      2874
+    ],
     "delapouite/heart-key": [
       1044
+    ],
+    "zeromancer/heart-minus": [
+      4129
+    ],
+    "zeromancer/heart-plus": [
+      4130
+    ],
+    "skoll/hearts": [
+      3899
+    ],
+    "lorc/heavy-thorny-triskelion": [
+      2888
     ],
     "delapouite/hedjet-white-crown": [
       1052
@@ -8277,11 +8891,23 @@
     "delapouite/heptagram": [
       1058
     ],
+    "caro-asercion/heraldic-sun": [
+      103
+    ],
+    "skoll/hexes": [
+      3900
+    ],
     "delapouite/hieroglyph-legs": [
       1061
     ],
     "delapouite/hieroglyph-y": [
       1062
+    ],
+    "lorc/holy-symbol": [
+      2896
+    ],
+    "lorc/hospital-cross": [
+      2905
     ],
     "delapouite/imperial-crown": [
       1125
@@ -8292,14 +8918,101 @@
     "delapouite/injustice": [
       1132
     ],
+    "lorc/interdiction": [
+      2937
+    ],
     "delapouite/ionic-column": [
       1138
+    ],
+    "skoll/iron-cross": [
+      3907
+    ],
+    "lorc/james-bond-aperture": [
+      2946
+    ],
+    "lorc/justice-star": [
+      2955
+    ],
+    "lorc/laser-warning": [
+      2973
+    ],
+    "lorc/laurel-crown": [
+      2975
+    ],
+    "lorc/laurels": [
+      2976
+    ],
+    "lorc/law-star": [
+      2977
+    ],
+    "lorc/linked-rings": [
+      3012
     ],
     "delapouite/locked-heart": [
       1249
     ],
     "delapouite/male": [
       1283
+    ],
+    "lorc/medal": [
+      3061
+    ],
+    "lorc/medal-skull": [
+      3060
+    ],
+    "cathelineau/medusa-head": [
+      174
+    ],
+    "lorc/metal-scales": [
+      3068
+    ],
+    "lorc/moebius-star": [
+      3087
+    ],
+    "lorc/moebius-trefoil": [
+      3088
+    ],
+    "lorc/moebius-triangle": [
+      3089
+    ],
+    "lorc/moon": [
+      3095
+    ],
+    "lorc/nested-eclipses": [
+      3114
+    ],
+    "lorc/nothing-to-say": [
+      3119
+    ],
+    "lorc/omega": [
+      3126
+    ],
+    "caro-asercion/ophanim": [
+      109
+    ],
+    "lorc/ouroboros": [
+      3136
+    ],
+    "lorc/over-infinity": [
+      3137
+    ],
+    "lorc/pawn": [
+      3155
+    ],
+    "skoll/pentacle": [
+      3937
+    ],
+    "lorc/piece-skull": [
+      3162
+    ],
+    "lorc/pierced-heart": [
+      3164
+    ],
+    "lorc/pirate-skull": [
+      3172
+    ],
+    "quoting/poppy": [
+      3722
     ],
     "delapouite/rod-of-asclepius": [
       1669
@@ -8345,198 +9058,6 @@
     ],
     "delapouite/snake-spiral": [
       1824
-    ],
-    "delapouite/yin-yang": [
-      2221
-    ],
-    "delapouite/zigzag-hieroglyph": [
-      2225
-    ],
-    "faithtoken/forward-sun": [
-      2232
-    ],
-    "generalace135/fingers-crossed": [
-      2242
-    ],
-    "lorc/air-zigzag": [
-      2264
-    ],
-    "lorc/alien-stare": [
-      2267
-    ],
-    "lorc/animal-skull": [
-      2280
-    ],
-    "lorc/ankh": [
-      2281
-    ],
-    "lorc/anthem": [
-      2282
-    ],
-    "lorc/aura": [
-      2306
-    ],
-    "lorc/awareness": [
-      2310
-    ],
-    "lorc/back-forth": [
-      2313
-    ],
-    "lorc/ball-glow": [
-      2318
-    ],
-    "lorc/ball-heart": [
-      2319
-    ],
-    "lorc/batwing-emblem": [
-      2339
-    ],
-    "lorc/beam-wake": [
-      2340
-    ],
-    "lorc/beams-aura": [
-      2341
-    ],
-    "lorc/beard": [
-      2343
-    ],
-    "lorc/behold": [
-      2349
-    ],
-    "lorc/beveled-star": [
-      2353
-    ],
-    "lorc/biohazard": [
-      2355
-    ],
-    "lorc/bird-twitter": [
-      2359
-    ],
-    "lorc/black-bar": [
-      2360
-    ],
-    "lorc/black-flag": [
-      2361
-    ],
-    "lorc/body-swapping": [
-      2376
-    ],
-    "lorc/boiling-bubbles": [
-      2377
-    ],
-    "lorc/book-aura": [
-      2386
-    ],
-    "lorc/book-storm": [
-      2388
-    ],
-    "lorc/boot-prints": [
-      2393
-    ],
-    "lorc/bottom-right-3d-arrow": [
-      2399
-    ],
-    "lorc/bowl-spiral": [
-      2402
-    ],
-    "lorc/eagle-emblem": [
-      2664
-    ],
-    "lorc/engagement-ring": [
-      2689
-    ],
-    "lorc/flat-star": [
-      2767
-    ],
-    "lorc/gothic-cross": [
-      2842
-    ],
-    "lorc/hawk-emblem": [
-      2873
-    ],
-    "lorc/hazard-sign": [
-      2874
-    ],
-    "lorc/heavy-thorny-triskelion": [
-      2888
-    ],
-    "lorc/holy-symbol": [
-      2896
-    ],
-    "lorc/hospital-cross": [
-      2905
-    ],
-    "lorc/interdiction": [
-      2937
-    ],
-    "lorc/james-bond-aperture": [
-      2946
-    ],
-    "lorc/justice-star": [
-      2955
-    ],
-    "lorc/laser-warning": [
-      2973
-    ],
-    "lorc/laurel-crown": [
-      2975
-    ],
-    "lorc/laurels": [
-      2976
-    ],
-    "lorc/law-star": [
-      2977
-    ],
-    "lorc/linked-rings": [
-      3012
-    ],
-    "lorc/medal": [
-      3061
-    ],
-    "lorc/medal-skull": [
-      3060
-    ],
-    "lorc/metal-scales": [
-      3068
-    ],
-    "lorc/moebius-star": [
-      3087
-    ],
-    "lorc/moebius-trefoil": [
-      3088
-    ],
-    "lorc/moebius-triangle": [
-      3089
-    ],
-    "lorc/moon": [
-      3095
-    ],
-    "lorc/nested-eclipses": [
-      3114
-    ],
-    "lorc/nothing-to-say": [
-      3119
-    ],
-    "lorc/omega": [
-      3126
-    ],
-    "lorc/ouroboros": [
-      3136
-    ],
-    "lorc/over-infinity": [
-      3137
-    ],
-    "lorc/pawn": [
-      3155
-    ],
-    "lorc/piece-skull": [
-      3162
-    ],
-    "lorc/pierced-heart": [
-      3164
-    ],
-    "lorc/pirate-skull": [
-      3172
     ],
     "lorc/split-cross": [
       3413
@@ -8592,65 +9113,11 @@
     "lorc/wrapped-heart": [
       3675
     ],
-    "quoting/poppy": [
-      3722
+    "delapouite/yin-yang": [
+      2221
     ],
-    "sbed/cancel": [
-      3737
-    ],
-    "sbed/clover-spiked": [
-      3741
-    ],
-    "sbed/death-skull": [
-      3744
-    ],
-    "skoll/allied-star": [
-      3827
-    ],
-    "skoll/balkenkreuz": [
-      3833
-    ],
-    "skoll/breaking-chain": [
-      3843
-    ],
-    "skoll/burning-skull": [
-      3847
-    ],
-    "skoll/clubs": [
-      3859
-    ],
-    "skoll/cultist": [
-      3865
-    ],
-    "skoll/diamonds": [
-      3871
-    ],
-    "skoll/divided-square": [
-      3872
-    ],
-    "skoll/evil-eyes": [
-      3876
-    ],
-    "skoll/hasty-grave": [
-      3896
-    ],
-    "skoll/hearts": [
-      3899
-    ],
-    "skoll/hexes": [
-      3900
-    ],
-    "skoll/iron-cross": [
-      3907
-    ],
-    "skoll/pentacle": [
-      3937
-    ],
-    "zeromancer/heart-minus": [
-      4129
-    ],
-    "zeromancer/heart-plus": [
-      4130
+    "delapouite/zigzag-hieroglyph": [
+      2225
     ]
   },
   "Game-icons.net - Symbols": {
@@ -8665,6 +9132,9 @@
     ]
   },
   "Game-icons.net - Target": {
+    "delapouite/flying-target": [
+      903
+    ],
     "delapouite/human-target": [
       1101
     ],
@@ -8673,6 +9143,9 @@
     ],
     "delapouite/target-poster": [
       1980
+    ],
+    "delapouite/triangle-target": [
+      2060
     ]
   },
   "Game-icons.net - Tea": {
@@ -8692,48 +9165,6 @@
     ]
   },
   "Game-icons.net - Tech": {
-    "caro-asercion/blender": [
-      70
-    ],
-    "caro-asercion/earbuds": [
-      92
-    ],
-    "caro-asercion/fridge": [
-      96
-    ],
-    "caro-asercion/pressure-cooker": [
-      122
-    ],
-    "caro-asercion/rice-cooker": [
-      123
-    ],
-    "caro-asercion/rotary-phone": [
-      126
-    ],
-    "caro-asercion/saucepan": [
-      128
-    ],
-    "caro-asercion/sewing-machine": [
-      130
-    ],
-    "caro-asercion/soda-bottle": [
-      135
-    ],
-    "caro-asercion/spinning-wheel": [
-      137
-    ],
-    "caro-asercion/tesla-coil": [
-      144
-    ],
-    "caro-asercion/vhs": [
-      152
-    ],
-    "caro-asercion/wok": [
-      157
-    ],
-    "darkzaitzev/apothecary": [
-      189
-    ],
     "delapouite/3d-glasses": [
       220
     ],
@@ -8749,8 +9180,20 @@
     "delapouite/acoustic-megaphone": [
       228
     ],
+    "lorc/aerial-signal": [
+      2260
+    ],
+    "lorc/aerosol": [
+      2262
+    ],
     "delapouite/air-balloon": [
       232
+    ],
+    "skoll/air-force": [
+      3823
+    ],
+    "skoll/airplane": [
+      3824
     ],
     "delapouite/airplane-arrival": [
       234
@@ -8767,11 +9210,23 @@
     "delapouite/amphora": [
       251
     ],
+    "lord-berandas/amplitude": [
+      3686
+    ],
     "delapouite/ancient-screw": [
       256
     ],
+    "lorc/android-mask": [
+      2274
+    ],
+    "skoll/apc": [
+      3830
+    ],
     "delapouite/apollo-capsule": [
       267
+    ],
+    "darkzaitzev/apothecary": [
+      189
     ],
     "delapouite/archive-register": [
       276
@@ -8788,6 +9243,12 @@
     "delapouite/arrow-cursor": [
       288
     ],
+    "lorc/artificial-hive": [
+      2301
+    ],
+    "lord-berandas/artificial-intelligence": [
+      3687
+    ],
     "delapouite/ascending-block": [
       290
     ],
@@ -8796,6 +9257,12 @@
     ],
     "delapouite/audio-cassette": [
       299
+    ],
+    "lorc/auto-repair": [
+      2307
+    ],
+    "lorc/automatic-sas": [
+      2309
     ],
     "delapouite/axe-in-log": [
       303
@@ -8808,6 +9275,9 @@
     ],
     "delapouite/bad-breath": [
       314
+    ],
+    "skoll/balaclava": [
+      3832
     ],
     "delapouite/banging-gavel": [
       327
@@ -8830,6 +9300,36 @@
     "delapouite/base-dome": [
       342
     ],
+    "lorc/batteries": [
+      2335
+    ],
+    "priorblue/battery-0": [
+      3705
+    ],
+    "priorblue/battery-100": [
+      3706
+    ],
+    "priorblue/battery-25": [
+      3707
+    ],
+    "priorblue/battery-50": [
+      3708
+    ],
+    "priorblue/battery-75": [
+      3709
+    ],
+    "priorblue/battery-minus": [
+      3710
+    ],
+    "sbed/battery-pack": [
+      3732
+    ],
+    "sbed/battery-pack-alt": [
+      3731
+    ],
+    "priorblue/battery-plus": [
+      3711
+    ],
     "delapouite/battle-mech": [
       355
     ],
@@ -8842,6 +9342,9 @@
     "delapouite/binoculars": [
       377
     ],
+    "caro-asercion/blender": [
+      70
+    ],
     "delapouite/boat-engine": [
       390
     ],
@@ -8850,6 +9353,9 @@
     ],
     "delapouite/bolt-cutter": [
       398
+    ],
+    "lorc/bookmarklet": [
+      2390
     ],
     "delapouite/boombox": [
       407
@@ -8860,8 +9366,17 @@
     "delapouite/bottle-cap": [
       412
     ],
+    "lorc/bottle-vapors": [
+      2397
+    ],
     "delapouite/bouncing-spring": [
       415
+    ],
+    "lorc/brainstorm": [
+      2410
+    ],
+    "lorc/brass-eye": [
+      2413
     ],
     "delapouite/brick-pile": [
       438
@@ -8869,11 +9384,20 @@
     "delapouite/briefcase": [
       440
     ],
+    "lorc/bulb": [
+      2435
+    ],
     "delapouite/bulldozer": [
       450
     ],
+    "skoll/bullseye": [
+      3845
+    ],
     "delapouite/buoy": [
       455
+    ],
+    "lorc/burning-dot": [
+      2441
     ],
     "delapouite/bus": [
       458
@@ -8889,6 +9413,9 @@
     ],
     "delapouite/candlestick-phone": [
       488
+    ],
+    "lorc/cannister": [
+      2460
     ],
     "delapouite/car-battery": [
       497
@@ -8908,11 +9435,32 @@
     "delapouite/carabiner": [
       502
     ],
+    "lorc/carillon": [
+      2466
+    ],
+    "skoll/carpet-bombing": [
+      3850
+    ],
+    "lorc/cartwheel": [
+      2469
+    ],
     "delapouite/cctv-camera": [
       524
     ],
     "delapouite/chart": [
       541
+    ],
+    "lorc/chemical-tank": [
+      2489
+    ],
+    "lorc/circuitry": [
+      2497
+    ],
+    "skoll/click": [
+      3858
+    ],
+    "lorc/clockwork": [
+      2503
     ],
     "delapouite/cloud-download": [
       584
@@ -8920,11 +9468,29 @@
     "delapouite/cloud-upload": [
       585
     ],
+    "lorc/cog": [
+      2513
+    ],
+    "lorc/cog-lock": [
+      2512
+    ],
+    "skoll/combination-lock": [
+      3862
+    ],
     "delapouite/compact-disc": [
       604
     ],
+    "lorc/compass": [
+      2520
+    ],
     "delapouite/computer-fan": [
       606
+    ],
+    "lord-berandas/computing": [
+      3689
+    ],
+    "skoll/console-controller": [
+      3863
     ],
     "delapouite/conway-life-glider": [
       619
@@ -8941,6 +9507,9 @@
     "delapouite/cyborg-face": [
       671
     ],
+    "lorc/cycle": [
+      2589
+    ],
     "delapouite/database": [
       679
     ],
@@ -8950,578 +9519,26 @@
     "delapouite/defense-satellite": [
       683
     ],
-    "delapouite/delivery-drone": [
-      686
-    ],
-    "delapouite/dial-padlock": [
-      694
-    ],
-    "delapouite/door-watcher": [
-      735
-    ],
-    "delapouite/duration": [
-      757
-    ],
-    "delapouite/electrical-resistance": [
-      783
-    ],
-    "delapouite/electrical-socket": [
-      784
-    ],
-    "delapouite/elevator": [
-      787
-    ],
-    "delapouite/energy-tank": [
-      797
-    ],
-    "delapouite/escalator": [
-      801
-    ],
-    "delapouite/expand": [
-      809
-    ],
-    "delapouite/expense": [
-      810
-    ],
-    "delapouite/eye-of-horus": [
-      813
-    ],
-    "delapouite/eye-target": [
-      814
-    ],
-    "delapouite/eyelashes": [
-      815
-    ],
-    "delapouite/eyepatch": [
-      816
-    ],
-    "delapouite/factory": [
-      820
-    ],
-    "delapouite/factory-arm": [
-      819
-    ],
-    "delapouite/film-projector": [
-      846
-    ],
-    "delapouite/film-spool": [
-      847
-    ],
-    "delapouite/film-strip": [
-      848
-    ],
-    "delapouite/fire-extinguisher": [
-      853
-    ],
-    "delapouite/fireplace": [
-      859
-    ],
-    "delapouite/firewall": [
-      860
-    ],
-    "delapouite/fish-bucket": [
-      862
-    ],
-    "delapouite/fish-eggs": [
-      863
-    ],
-    "delapouite/fish-escape": [
-      864
-    ],
-    "delapouite/floating-platforms": [
-      890
-    ],
-    "delapouite/fog-light": [
-      904
-    ],
-    "delapouite/food-truck": [
-      906
-    ],
-    "delapouite/forklift": [
-      914
-    ],
-    "delapouite/jack-plug": [
-      1144
-    ],
-    "delapouite/joystick": [
-      1159
-    ],
-    "delapouite/key-card": [
-      1174
-    ],
-    "delapouite/key-lock": [
-      1175
-    ],
-    "delapouite/keyboard": [
-      1176
-    ],
-    "delapouite/keyring": [
-      1177
-    ],
-    "delapouite/laptop": [
-      1206
-    ],
-    "delapouite/led": [
-      1217
-    ],
-    "delapouite/level-crossing": [
-      1223
-    ],
-    "delapouite/liberty-wing": [
-      1226
-    ],
-    "delapouite/light-projector": [
-      1234
-    ],
-    "delapouite/load": [
-      1244
-    ],
-    "delapouite/logic-gate-and": [
-      1253
-    ],
-    "delapouite/logic-gate-nand": [
-      1254
-    ],
-    "delapouite/logic-gate-nor": [
-      1255
-    ],
-    "delapouite/logic-gate-not": [
-      1256
-    ],
-    "delapouite/logic-gate-nxor": [
-      1257
-    ],
-    "delapouite/logic-gate-or": [
-      1258
-    ],
-    "delapouite/logic-gate-xor": [
-      1259
-    ],
-    "delapouite/magnet-man": [
-      1281
-    ],
-    "delapouite/measure-tape": [
-      1301
-    ],
-    "delapouite/mecha-head": [
-      1302
-    ],
-    "delapouite/mecha-mask": [
-      1303
-    ],
-    "delapouite/mechanic-garage": [
-      1304
-    ],
-    "delapouite/melting-metal": [
-      1320
-    ],
-    "delapouite/mesh-network": [
-      1323
-    ],
-    "delapouite/metal-boot": [
-      1324
-    ],
-    "delapouite/metal-detector": [
-      1325
-    ],
-    "delapouite/metal-plate": [
-      1327
-    ],
-    "delapouite/metal-skirt": [
-      1328
-    ],
-    "delapouite/metronome": [
-      1330
-    ],
-    "delapouite/mine-truck": [
-      1339
-    ],
-    "delapouite/mine-wagon": [
-      1340
-    ],
-    "delapouite/mini-submarine": [
-      1343
-    ],
-    "delapouite/mono-wheel-robot": [
-      1357
-    ],
-    "delapouite/mooring-bollard": [
-      1362
-    ],
-    "delapouite/nano-bot": [
-      1386
-    ],
-    "delapouite/network-bars": [
-      1395
-    ],
-    "delapouite/night-vision": [
-      1401
-    ],
-    "delapouite/nuclear-plant": [
-      1408
-    ],
-    "delapouite/nuclear-waste": [
-      1409
-    ],
-    "delapouite/observatory": [
-      1417
-    ],
-    "delapouite/offshore-platform": [
-      1421
-    ],
-    "delapouite/oil-can": [
-      1423
-    ],
-    "delapouite/oil-pump": [
-      1424
-    ],
-    "delapouite/oil-rig": [
-      1425
-    ],
-    "delapouite/old-wagon": [
-      1428
-    ],
-    "delapouite/organigram": [
-      1440
-    ],
-    "delapouite/pendant-key": [
-      1488
-    ],
-    "delapouite/periscope": [
-      1491
-    ],
-    "delapouite/phone": [
-      1509
-    ],
-    "delapouite/photo-camera": [
-      1510
-    ],
-    "delapouite/plane-wing": [
-      1544
-    ],
-    "delapouite/plug": [
-      1558
-    ],
-    "delapouite/pocket-radio": [
-      1560
-    ],
-    "delapouite/police-car": [
-      1567
-    ],
-    "delapouite/power-generator": [
-      1587
-    ],
-    "delapouite/previous-button": [
-      1593
-    ],
-    "delapouite/pylon": [
-      1614
-    ],
-    "delapouite/radar-cross-section": [
-      1622
-    ],
-    "delapouite/radio-tower": [
-      1625
-    ],
-    "delapouite/raft": [
-      1626
-    ],
-    "delapouite/rail-road": [
-      1627
-    ],
-    "delapouite/railway": [
-      1628
-    ],
-    "delapouite/refinery": [
-      1640
-    ],
-    "delapouite/resize": [
-      1645
-    ],
-    "delapouite/ringing-alarm": [
-      1655
-    ],
-    "delapouite/road": [
-      1658
-    ],
-    "delapouite/robot-antennas": [
-      1662
-    ],
-    "delapouite/robot-grab": [
-      1663
-    ],
-    "delapouite/robot-helmet": [
-      1664
-    ],
-    "delapouite/robot-leg": [
-      1665
-    ],
-    "delapouite/rocket-thruster": [
-      1667
-    ],
-    "delapouite/rss": [
-      1686
-    ],
-    "delapouite/satellite-communication": [
-      1718
-    ],
-    "delapouite/server-rack": [
-      1747
-    ],
-    "delapouite/settings-knobs": [
-      1749
-    ],
-    "delapouite/share": [
-      1757
-    ],
-    "delapouite/smart": [
-      1817
-    ],
-    "delapouite/smartphone": [
-      1818
-    ],
-    "delapouite/sonic-shoes": [
-      1839
-    ],
-    "delapouite/sound-off": [
-      1841
-    ],
-    "delapouite/sound-on": [
-      1842
-    ],
-    "delapouite/space-shuttle": [
-      1848
-    ],
-    "delapouite/spaceship": [
-      1849
-    ],
-    "delapouite/spark-plug": [
-      1851
-    ],
-    "delapouite/speaker": [
-      1855
-    ],
-    "delapouite/speaker-off": [
-      1854
-    ],
-    "delapouite/speed-boat": [
-      1858
-    ],
-    "delapouite/speedometer": [
-      1859
-    ],
-    "delapouite/spider-bot": [
-      1862
-    ],
-    "delapouite/stack": [
-      1885
-    ],
-    "delapouite/stamper": [
-      1892
-    ],
-    "delapouite/starfighter": [
-      1900
-    ],
-    "delapouite/stealth-bomber": [
-      1903
-    ],
-    "delapouite/steam": [
-      1906
-    ],
-    "delapouite/steam-blast": [
-      1904
-    ],
-    "delapouite/steam-locomotive": [
-      1905
-    ],
-    "delapouite/steering-wheel": [
-      1908
-    ],
-    "delapouite/sticky-boot": [
-      1912
-    ],
-    "delapouite/stone-wheel": [
-      1921
-    ],
-    "delapouite/straight-pipe": [
-      1924
-    ],
-    "delapouite/street-light": [
-      1926
-    ],
-    "delapouite/submarine": [
-      1933
-    ],
-    "delapouite/submarine-missile": [
-      1932
-    ],
-    "delapouite/subway": [
-      1934
-    ],
-    "delapouite/sunglasses": [
-      1942
-    ],
-    "delapouite/swimfins": [
-      1954
-    ],
-    "delapouite/swipe-card": [
-      1955
-    ],
-    "delapouite/tap": [
-      1978
-    ],
-    "delapouite/tee-pipe": [
-      1989
-    ],
-    "delapouite/telescope": [
-      1990
-    ],
-    "delapouite/thermometer-cold": [
-      2002
-    ],
-    "delapouite/thermometer-hot": [
-      2003
-    ],
-    "delapouite/thrust-bend": [
-      2009
-    ],
-    "delapouite/time-synchronization": [
-      2021
-    ],
-    "delapouite/tire-tracks": [
-      2025
-    ],
-    "delapouite/toaster": [
-      2027
-    ],
-    "delapouite/toggles": [
-      2028
-    ],
-    "delapouite/toolbox": [
-      2033
-    ],
-    "delapouite/torch": [
-      2034
-    ],
-    "delapouite/tow-truck": [
-      2039
-    ],
-    "delapouite/tv": [
-      2091
-    ],
-    "delapouite/tv-remote": [
-      2089
-    ],
-    "delapouite/tv-tower": [
-      2090
-    ],
-    "delapouite/usb-key": [
-      2111
-    ],
-    "delapouite/vending-machine": [
-      2122
-    ],
-    "delapouite/video-camera": [
-      2129
-    ],
-    "delapouite/video-conference": [
-      2130
-    ],
-    "delapouite/vr-headset": [
-      2143
-    ],
-    "delapouite/washing-machine": [
-      2160
-    ],
-    "delapouite/wifi-router": [
-      2188
-    ],
-    "delapouite/wind-turbine": [
-      2189
-    ],
-    "delapouite/windmill": [
-      2190
-    ],
-    "delapouite/wire-coil": [
-      2199
-    ],
-    "lorc/aerial-signal": [
-      2260
-    ],
-    "lorc/aerosol": [
-      2262
-    ],
-    "lorc/android-mask": [
-      2274
-    ],
-    "lorc/artificial-hive": [
-      2301
-    ],
-    "lorc/auto-repair": [
-      2307
-    ],
-    "lorc/automatic-sas": [
-      2309
-    ],
-    "lorc/batteries": [
-      2335
-    ],
-    "lorc/bookmarklet": [
-      2390
-    ],
-    "lorc/bottle-vapors": [
-      2397
-    ],
-    "lorc/brainstorm": [
-      2410
-    ],
-    "lorc/brass-eye": [
-      2413
-    ],
-    "lorc/bulb": [
-      2435
-    ],
-    "lorc/burning-dot": [
-      2441
-    ],
-    "lorc/cannister": [
-      2460
-    ],
-    "lorc/carillon": [
-      2466
-    ],
-    "lorc/cartwheel": [
-      2469
-    ],
-    "lorc/chemical-tank": [
-      2489
-    ],
-    "lorc/circuitry": [
-      2497
-    ],
-    "lorc/clockwork": [
-      2503
-    ],
-    "lorc/cog": [
-      2513
-    ],
-    "lorc/cog-lock": [
-      2512
-    ],
-    "lorc/compass": [
-      2520
-    ],
-    "lorc/cycle": [
-      2589
-    ],
     "lorc/defibrilate": [
       2602
+    ],
+    "delapouite/delivery-drone": [
+      686
     ],
     "lorc/desk-lamp": [
       2607
     ],
+    "lord-berandas/diagram": [
+      3690
+    ],
+    "delapouite/dial-padlock": [
+      694
+    ],
     "lorc/dig-dug": [
       2613
+    ],
+    "spencerdub/digital-trace": [
+      3995
     ],
     "lorc/disc": [
       2618
@@ -9546,6 +9563,9 @@
     ],
     "lorc/domino-mask": [
       2629
+    ],
+    "delapouite/door-watcher": [
+      735
     ],
     "lorc/doorway": [
       2630
@@ -9574,6 +9594,15 @@
     "lorc/dripping-tube": [
       2656
     ],
+    "skoll/drop-weapon": [
+      3875
+    ],
+    "delapouite/duration": [
+      757
+    ],
+    "caro-asercion/earbuds": [
+      92
+    ],
     "lorc/edge-crack": [
       2672
     ],
@@ -9582,6 +9611,18 @@
     ],
     "lorc/egg-defense": [
       2675
+    ],
+    "sbed/electric": [
+      3748
+    ],
+    "delapouite/electrical-resistance": [
+      783
+    ],
+    "delapouite/electrical-socket": [
+      784
+    ],
+    "delapouite/elevator": [
+      787
     ],
     "lorc/embrassed-energy": [
       2680
@@ -9595,32 +9636,86 @@
     "lorc/energy-shield": [
       2687
     ],
+    "delapouite/energy-tank": [
+      797
+    ],
     "lorc/envelope": [
       2693
     ],
     "lorc/erlenmeyer": [
       2694
     ],
+    "delapouite/escalator": [
+      801
+    ],
+    "delapouite/expand": [
+      809
+    ],
     "lorc/expanded-rays": [
       2706
+    ],
+    "sbed/expander": [
+      3750
+    ],
+    "delapouite/expense": [
+      810
     ],
     "lorc/extraction-orb": [
       2711
     ],
+    "delapouite/eye-of-horus": [
+      813
+    ],
     "lorc/eye-shield": [
       2712
+    ],
+    "delapouite/eye-target": [
+      814
     ],
     "lorc/eyedropper": [
       2714
     ],
+    "delapouite/eyelashes": [
+      815
+    ],
+    "delapouite/eyepatch": [
+      816
+    ],
+    "skoll/f1-car": [
+      3877
+    ],
+    "delapouite/factory": [
+      820
+    ],
+    "delapouite/factory-arm": [
+      819
+    ],
     "lorc/falling-blob": [
       2718
+    ],
+    "delapouite/files": [
+      845
+    ],
+    "delapouite/film-projector": [
+      846
+    ],
+    "delapouite/film-spool": [
+      847
+    ],
+    "delapouite/film-strip": [
+      848
+    ],
+    "delapouite/finger-print": [
+      850
     ],
     "lorc/fire-bowl": [
       2735
     ],
     "lorc/fire-dash": [
       2737
+    ],
+    "delapouite/fire-extinguisher": [
+      853
     ],
     "lorc/fire-shield": [
       2741
@@ -9631,8 +9726,23 @@
     "lorc/fire-zone": [
       2745
     ],
+    "delapouite/fireplace": [
+      859
+    ],
+    "delapouite/firewall": [
+      860
+    ],
     "lorc/firework-rocket": [
       2747
+    ],
+    "delapouite/fish-bucket": [
+      862
+    ],
+    "delapouite/fish-eggs": [
+      863
+    ],
+    "delapouite/fish-escape": [
+      864
     ],
     "lorc/fishing-hook": [
       2751
@@ -9643,17 +9753,29 @@
     "lorc/fission": [
       2753
     ],
+    "skoll/fist": [
+      3882
+    ],
     "lorc/fizzing-flask": [
       2755
     ],
     "lorc/flash-grenade": [
       2764
     ],
+    "skoll/flatbed": [
+      3884
+    ],
+    "skoll/flatbed-covered": [
+      3883
+    ],
     "lorc/flexible-star": [
       2769
     ],
     "lorc/floating-crystal": [
       2770
+    ],
+    "delapouite/floating-platforms": [
+      890
     ],
     "lorc/flower-pot": [
       2771
@@ -9667,11 +9789,23 @@
     "lorc/focused-lightning": [
       2783
     ],
+    "delapouite/fog-light": [
+      904
+    ],
     "lorc/folded-paper": [
       2784
     ],
+    "delapouite/food-truck": [
+      906
+    ],
     "lorc/foot-trip": [
       2786
+    ],
+    "skoll/footsteps": [
+      3886
+    ],
+    "delapouite/forklift": [
+      914
     ],
     "lorc/fountain": [
       2791
@@ -9679,32 +9813,119 @@
     "lorc/fountain-pen": [
       2790
     ],
+    "caro-asercion/fridge": [
+      96
+    ],
+    "delapouite/game-console": [
+      944
+    ],
+    "delapouite/gamepad": [
+      945
+    ],
     "lorc/gamepad-cross": [
       2809
     ],
     "lorc/gas-mask": [
       2810
     ],
+    "skoll/gas-mask": [
+      3888
+    ],
+    "delapouite/gas-pump": [
+      949
+    ],
     "lorc/gear-hammer": [
       2813
+    ],
+    "delapouite/gear-stick-pattern": [
+      954
     ],
     "lorc/gears": [
       2814
     ],
+    "skoll/glider": [
+      3890
+    ],
     "lorc/globe": [
       2827
+    ],
+    "delapouite/gps": [
+      979
+    ],
+    "skoll/halt": [
+      3893
+    ],
+    "sbed/hand": [
+      3758
+    ],
+    "skoll/hang-glider": [
+      3895
+    ],
+    "sbed/help": [
+      3764
+    ],
+    "sbed/hive": [
+      3765
+    ],
+    "lord-berandas/holosphere": [
+      3692
+    ],
+    "delapouite/jack-plug": [
+      1144
+    ],
+    "skoll/jeep": [
+      3908
+    ],
+    "sbed/jet-pack": [
+      3767
     ],
     "lorc/jetpack": [
       2949
     ],
+    "delapouite/joystick": [
+      1159
+    ],
+    "sbed/key": [
+      3769
+    ],
+    "delapouite/key-card": [
+      1174
+    ],
+    "delapouite/key-lock": [
+      1175
+    ],
+    "delapouite/keyboard": [
+      1176
+    ],
+    "delapouite/keyring": [
+      1177
+    ],
+    "skoll/knockout": [
+      3911
+    ],
+    "delapouite/laptop": [
+      1206
+    ],
+    "delapouite/led": [
+      1217
+    ],
+    "delapouite/level-crossing": [
+      1223
+    ],
     "lorc/lever": [
       2986
+    ],
+    "delapouite/liberty-wing": [
+      1226
     ],
     "lorc/life-support": [
       2988
     ],
     "lorc/light-bulb": [
       2991
+    ],
+    "delapouite/light-projector": [
+      1234
     ],
     "lorc/lightning-dissipation": [
       2996
@@ -9718,6 +9939,33 @@
     "lorc/lightning-spanner": [
       3006
     ],
+    "delapouite/load": [
+      1244
+    ],
+    "skoll/logging": [
+      3914
+    ],
+    "delapouite/logic-gate-and": [
+      1253
+    ],
+    "delapouite/logic-gate-nand": [
+      1254
+    ],
+    "delapouite/logic-gate-nor": [
+      1255
+    ],
+    "delapouite/logic-gate-not": [
+      1256
+    ],
+    "delapouite/logic-gate-nxor": [
+      1257
+    ],
+    "delapouite/logic-gate-or": [
+      1258
+    ],
+    "delapouite/logic-gate-xor": [
+      1259
+    ],
     "lorc/mad-scientist": [
       3030
     ],
@@ -9727,11 +9975,26 @@
     "lorc/magnet-blast": [
       3038
     ],
+    "delapouite/magnet-man": [
+      1281
+    ],
     "lorc/manacles": [
       3043
     ],
     "lorc/maze-cornea": [
       3053
+    ],
+    "delapouite/measure-tape": [
+      1301
+    ],
+    "delapouite/mecha-head": [
+      1302
+    ],
+    "delapouite/mecha-mask": [
+      1303
+    ],
+    "delapouite/mechanic-garage": [
+      1304
     ],
     "lorc/mechanical-arm": [
       3059
@@ -9739,8 +10002,20 @@
     "lorc/megabot": [
       3063
     ],
+    "delapouite/melting-metal": [
+      1320
+    ],
+    "delapouite/mesh-network": [
+      1323
+    ],
     "lorc/metal-bar": [
       3065
+    ],
+    "delapouite/metal-boot": [
+      1324
+    ],
+    "delapouite/metal-detector": [
+      1325
     ],
     "lorc/metal-disc": [
       3066
@@ -9748,11 +10023,35 @@
     "lorc/metal-hand": [
       3067
     ],
+    "delapouite/metal-plate": [
+      1327
+    ],
+    "delapouite/metal-skirt": [
+      1328
+    ],
+    "delapouite/metronome": [
+      1330
+    ],
     "lorc/microchip": [
       3070
     ],
+    "lord-berandas/microscope": [
+      3694
+    ],
     "lorc/mine-explosion": [
       3075
+    ],
+    "delapouite/mine-truck": [
+      1339
+    ],
+    "delapouite/mine-wagon": [
+      1340
+    ],
+    "skoll/minefield": [
+      3920
+    ],
+    "delapouite/mini-submarine": [
+      1343
     ],
     "lorc/mining": [
       3078
@@ -9760,359 +10059,65 @@
     "lorc/missile-mech": [
       3083
     ],
-    "lorc/movement-sensor": [
-      3101
-    ],
-    "lorc/ninja-mask": [
-      3117
-    ],
-    "lorc/octogonal-eye": [
-      3122
-    ],
-    "lorc/orb-direction": [
-      3133
-    ],
-    "lorc/orbital": [
-      3135
-    ],
-    "lorc/orbital-rays": [
-      3134
-    ],
-    "lorc/overdrive": [
-      3139
-    ],
-    "lorc/padlock": [
-      3141
-    ],
-    "lorc/parachute": [
-      3147
-    ],
-    "lorc/parmecia": [
-      3149
-    ],
-    "lorc/perpendicular-rings": [
-      3160
-    ],
-    "lorc/pincers": [
-      3169
-    ],
-    "lorc/pokecog": [
-      3184
-    ],
-    "lorc/processor": [
-      3195
-    ],
-    "lorc/radar-dish": [
-      3211
-    ],
-    "lorc/radar-sweep": [
-      3212
-    ],
-    "lorc/rapidshare-arrow": [
-      3220
-    ],
-    "lorc/recycle": [
-      3226
-    ],
-    "lorc/reticule": [
-      3230
-    ],
-    "lorc/return-arrow": [
-      3231
-    ],
-    "lorc/robot-golem": [
-      3240
-    ],
-    "lorc/rocket": [
-      3243
-    ],
-    "lorc/rocket-flight": [
-      3242
-    ],
-    "lorc/rss": [
-      3254
-    ],
-    "lorc/sattelite": [
-      3267
-    ],
-    "lorc/sentry-gun": [
-      3292
-    ],
-    "lorc/space-suit": [
-      3370
-    ],
-    "lorc/spectacle-lenses": [
-      3382
-    ],
-    "lorc/spectacles": [
-      3383
-    ],
-    "lorc/spoutnik": [
-      3420
-    ],
-    "lorc/spyglass": [
-      3425
-    ],
-    "lorc/squib": [
-      3427
-    ],
-    "lorc/static-guard": [
-      3440
-    ],
-    "lorc/stopwatch": [
-      3462
-    ],
-    "lorc/techno-heart": [
-      3515
-    ],
-    "lorc/tesla-coil": [
-      3527
-    ],
-    "lorc/tesla-turret": [
-      3528
-    ],
-    "lorc/test-tubes": [
-      3529
-    ],
-    "lorc/thermometer-scale": [
-      3530
-    ],
-    "lorc/time-trap": [
-      3551
-    ],
-    "lorc/tinker": [
-      3552
-    ],
-    "lorc/transparent-tubes": [
-      3565
-    ],
-    "lorc/transportation-rings": [
-      3566
-    ],
-    "lorc/triorb": [
-      3576
-    ],
-    "lorc/tron-arrow": [
-      3589
-    ],
-    "lorc/ultrasound": [
-      3605
-    ],
-    "lorc/unlit-candelabra": [
-      3610
-    ],
-    "lorc/unlocking": [
-      3611
-    ],
-    "lorc/unstable-orb": [
-      3612
-    ],
-    "lorc/vibrating-ball": [
-      3616
-    ],
-    "lorc/vintage-robot": [
-      3621
-    ],
-    "lord-berandas/amplitude": [
-      3686
-    ],
-    "lord-berandas/artificial-intelligence": [
-      3687
-    ],
-    "lord-berandas/computing": [
-      3689
-    ],
-    "lord-berandas/diagram": [
-      3690
-    ],
-    "lord-berandas/holosphere": [
-      3692
-    ],
-    "lord-berandas/microscope": [
-      3694
-    ],
-    "lord-berandas/power-button": [
-      3695
-    ],
-    "priorblue/battery-0": [
-      3705
-    ],
-    "priorblue/battery-100": [
-      3706
-    ],
-    "priorblue/battery-25": [
-      3707
-    ],
-    "priorblue/battery-50": [
-      3708
-    ],
-    "priorblue/battery-75": [
-      3709
-    ],
-    "priorblue/battery-minus": [
-      3710
-    ],
-    "priorblue/battery-plus": [
-      3711
-    ],
-    "sbed/battery-pack": [
-      3732
-    ],
-    "sbed/battery-pack-alt": [
-      3731
-    ],
-    "sbed/electric": [
-      3748
-    ],
-    "sbed/expander": [
-      3750
-    ],
-    "sbed/hand": [
-      3758
-    ],
-    "sbed/help": [
-      3764
-    ],
-    "sbed/hive": [
-      3765
-    ],
-    "sbed/jet-pack": [
-      3767
-    ],
-    "sbed/key": [
-      3769
-    ],
-    "sbed/nodular": [
-      3782
-    ],
-    "sbed/overkill": [
-      3784
-    ],
-    "sbed/overmind": [
-      3785
-    ],
-    "sbed/pulse": [
-      3789
-    ],
-    "sbed/reactor": [
-      3790
-    ],
-    "sbed/revolt": [
-      3792
-    ],
-    "sbed/select": [
-      3794
-    ],
-    "sbed/shield": [
-      3795
-    ],
-    "sbed/snorkel": [
-      3798
-    ],
-    "sbed/spawn-node": [
-      3799
-    ],
-    "sbed/suicide": [
-      3806
-    ],
-    "sbed/telefrag": [
-      3810
-    ],
-    "sbed/tombstone": [
-      3812
-    ],
-    "sbed/trigger-hurt": [
-      3814
-    ],
-    "sbed/turret": [
-      3815
-    ],
-    "sbed/unplugged": [
-      3816
-    ],
-    "sbed/usable": [
-      3817
-    ],
-    "sbed/weight-crush": [
-      3820
-    ],
-    "skoll/air-force": [
-      3823
-    ],
-    "skoll/airplane": [
-      3824
-    ],
-    "skoll/apc": [
-      3830
-    ],
-    "skoll/balaclava": [
-      3832
-    ],
-    "skoll/bullseye": [
-      3845
-    ],
-    "skoll/carpet-bombing": [
-      3850
-    ],
-    "skoll/click": [
-      3858
-    ],
-    "skoll/combination-lock": [
-      3862
-    ],
-    "skoll/console-controller": [
-      3863
-    ],
-    "skoll/drop-weapon": [
-      3875
-    ],
-    "skoll/f1-car": [
-      3877
-    ],
-    "skoll/fist": [
-      3882
-    ],
-    "skoll/flatbed": [
-      3884
-    ],
-    "skoll/flatbed-covered": [
-      3883
-    ],
-    "skoll/footsteps": [
-      3886
-    ],
-    "skoll/gas-mask": [
-      3888
-    ],
-    "skoll/glider": [
-      3890
-    ],
-    "skoll/halt": [
-      3893
-    ],
-    "skoll/hang-glider": [
-      3895
-    ],
-    "skoll/jeep": [
-      3908
-    ],
-    "skoll/knockout": [
-      3911
-    ],
-    "skoll/logging": [
-      3914
-    ],
-    "skoll/minefield": [
-      3920
-    ],
     "skoll/molecule": [
       3921
+    ],
+    "delapouite/mono-wheel-robot": [
+      1357
+    ],
+    "delapouite/mooring-bollard": [
+      1362
     ],
     "skoll/mounted-knight": [
       3922
     ],
+    "lorc/movement-sensor": [
+      3101
+    ],
+    "delapouite/nano-bot": [
+      1386
+    ],
+    "delapouite/network-bars": [
+      1395
+    ],
+    "delapouite/night-vision": [
+      1401
+    ],
+    "lorc/ninja-mask": [
+      3117
+    ],
+    "sbed/nodular": [
+      3782
+    ],
+    "delapouite/nuclear-plant": [
+      1408
+    ],
+    "delapouite/nuclear-waste": [
+      1409
+    ],
+    "delapouite/observatory": [
+      1417
+    ],
+    "lorc/octogonal-eye": [
+      3122
+    ],
+    "delapouite/offshore-platform": [
+      1421
+    ],
+    "delapouite/oil-can": [
+      1423
+    ],
     "skoll/oil-drum": [
       3928
+    ],
+    "delapouite/oil-pump": [
+      1424
+    ],
+    "delapouite/oil-rig": [
+      1425
+    ],
+    "delapouite/old-wagon": [
+      1428
     ],
     "skoll/open-chest": [
       3929
@@ -10123,26 +10128,227 @@
     "skoll/open-treasure-chest": [
       3931
     ],
+    "lorc/orb-direction": [
+      3133
+    ],
     "skoll/orbit": [
       3932
+    ],
+    "lorc/orbital": [
+      3135
+    ],
+    "lorc/orbital-rays": [
+      3134
+    ],
+    "delapouite/organigram": [
+      1440
+    ],
+    "lorc/overdrive": [
+      3139
+    ],
+    "sbed/overkill": [
+      3784
+    ],
+    "sbed/overmind": [
+      3785
+    ],
+    "lorc/padlock": [
+      3141
+    ],
+    "lorc/parachute": [
+      3147
+    ],
+    "lorc/parmecia": [
+      3149
     ],
     "skoll/pc": [
       3935
     ],
+    "delapouite/pendant-key": [
+      1488
+    ],
+    "delapouite/periscope": [
+      1491
+    ],
+    "lorc/perpendicular-rings": [
+      3160
+    ],
     "skoll/pestle-mortar": [
       3938
+    ],
+    "delapouite/phone": [
+      1509
+    ],
+    "delapouite/photo-camera": [
+      1510
+    ],
+    "lorc/pincers": [
+      3169
+    ],
+    "delapouite/plane-wing": [
+      1544
     ],
     "skoll/platform": [
       3941
     ],
+    "delapouite/plug": [
+      1558
+    ],
+    "delapouite/pocket-radio": [
+      1560
+    ],
     "skoll/pocket-watch": [
       3942
+    ],
+    "lorc/pokecog": [
+      3184
+    ],
+    "delapouite/police-car": [
+      1567
+    ],
+    "lord-berandas/power-button": [
+      3695
+    ],
+    "delapouite/power-generator": [
+      1587
+    ],
+    "caro-asercion/pressure-cooker": [
+      122
+    ],
+    "delapouite/previous-button": [
+      1593
+    ],
+    "lorc/processor": [
+      3195
+    ],
+    "sbed/pulse": [
+      3789
+    ],
+    "delapouite/pylon": [
+      1614
     ],
     "skoll/race-car": [
       3944
     ],
+    "delapouite/radar-cross-section": [
+      1622
+    ],
+    "lorc/radar-dish": [
+      3211
+    ],
+    "lorc/radar-sweep": [
+      3212
+    ],
+    "delapouite/radio-tower": [
+      1625
+    ],
+    "delapouite/raft": [
+      1626
+    ],
+    "delapouite/rail-road": [
+      1627
+    ],
+    "delapouite/railway": [
+      1628
+    ],
+    "lorc/rapidshare-arrow": [
+      3220
+    ],
+    "sbed/reactor": [
+      3790
+    ],
+    "lorc/recycle": [
+      3226
+    ],
+    "delapouite/refinery": [
+      1640
+    ],
+    "delapouite/resize": [
+      1645
+    ],
+    "lorc/reticule": [
+      3230
+    ],
     "skoll/retro-controller": [
       3951
+    ],
+    "lorc/return-arrow": [
+      3231
+    ],
+    "sbed/revolt": [
+      3792
+    ],
+    "caro-asercion/rice-cooker": [
+      123
+    ],
+    "delapouite/ringing-alarm": [
+      1655
+    ],
+    "delapouite/road": [
+      1658
+    ],
+    "delapouite/robot-antennas": [
+      1662
+    ],
+    "lorc/robot-golem": [
+      3240
+    ],
+    "delapouite/robot-grab": [
+      1663
+    ],
+    "delapouite/robot-helmet": [
+      1664
+    ],
+    "delapouite/robot-leg": [
+      1665
+    ],
+    "lorc/rocket": [
+      3243
+    ],
+    "lorc/rocket-flight": [
+      3242
+    ],
+    "delapouite/rocket-thruster": [
+      1667
+    ],
+    "caro-asercion/rotary-phone": [
+      126
+    ],
+    "delapouite/rss": [
+      1686
+    ],
+    "lorc/rss": [
+      3254
+    ],
+    "delapouite/satellite-communication": [
+      1718
+    ],
+    "lorc/sattelite": [
+      3267
+    ],
+    "caro-asercion/saucepan": [
+      128
+    ],
+    "sbed/select": [
+      3794
+    ],
+    "lorc/sentry-gun": [
+      3292
+    ],
+    "delapouite/server-rack": [
+      1747
+    ],
+    "delapouite/settings-knobs": [
+      1749
+    ],
+    "caro-asercion/sewing-machine": [
+      130
+    ],
+    "delapouite/share": [
+      1757
+    ],
+    "sbed/shield": [
+      3795
     ],
     "skoll/shield-disabled": [
       3954
@@ -10150,14 +10356,146 @@
     "skoll/sight-disabled": [
       3956
     ],
+    "delapouite/smart": [
+      1817
+    ],
+    "delapouite/smartphone": [
+      1818
+    ],
     "skoll/smartphone": [
       3959
+    ],
+    "sbed/snorkel": [
+      3798
+    ],
+    "caro-asercion/soda-bottle": [
+      135
+    ],
+    "delapouite/sonic-shoes": [
+      1839
+    ],
+    "delapouite/sound-off": [
+      1841
+    ],
+    "delapouite/sound-on": [
+      1842
+    ],
+    "delapouite/space-shuttle": [
+      1848
+    ],
+    "lorc/space-suit": [
+      3370
+    ],
+    "delapouite/spaceship": [
+      1849
+    ],
+    "delapouite/spark-plug": [
+      1851
+    ],
+    "sbed/spawn-node": [
+      3799
+    ],
+    "delapouite/speaker": [
+      1855
+    ],
+    "delapouite/speaker-off": [
+      1854
+    ],
+    "lorc/spectacle-lenses": [
+      3382
+    ],
+    "lorc/spectacles": [
+      3383
+    ],
+    "delapouite/speed-boat": [
+      1858
+    ],
+    "delapouite/speedometer": [
+      1859
+    ],
+    "delapouite/spider-bot": [
+      1862
+    ],
+    "caro-asercion/spinning-wheel": [
+      137
+    ],
+    "lorc/spoutnik": [
+      3420
+    ],
+    "lorc/spyglass": [
+      3425
+    ],
+    "lorc/squib": [
+      3427
+    ],
+    "delapouite/stack": [
+      1885
+    ],
+    "delapouite/stamper": [
+      1892
+    ],
+    "delapouite/starfighter": [
+      1900
+    ],
+    "lorc/static-guard": [
+      3440
+    ],
+    "delapouite/stealth-bomber": [
+      1903
+    ],
+    "delapouite/steam": [
+      1906
+    ],
+    "delapouite/steam-blast": [
+      1904
+    ],
+    "delapouite/steam-locomotive": [
+      1905
     ],
     "skoll/steel-door": [
       3970
     ],
+    "delapouite/steering-wheel": [
+      1908
+    ],
+    "delapouite/sticky-boot": [
+      1912
+    ],
+    "delapouite/stone-wheel": [
+      1921
+    ],
+    "lorc/stopwatch": [
+      3462
+    ],
     "skoll/stopwatch": [
       3974
+    ],
+    "delapouite/straight-pipe": [
+      1924
+    ],
+    "delapouite/street-light": [
+      1926
+    ],
+    "delapouite/submarine": [
+      1933
+    ],
+    "delapouite/submarine-missile": [
+      1932
+    ],
+    "delapouite/subway": [
+      1934
+    ],
+    "sbed/suicide": [
+      3806
+    ],
+    "delapouite/sunglasses": [
+      1942
+    ],
+    "delapouite/swimfins": [
+      1954
+    ],
+    "delapouite/swipe-card": [
+      1955
     ],
     "skoll/tablet": [
       3977
@@ -10165,8 +10503,221 @@
     "skoll/talk": [
       3978
     ],
-    "spencerdub/digital-trace": [
-      3995
+    "delapouite/tap": [
+      1978
+    ],
+    "lorc/techno-heart": [
+      3515
+    ],
+    "delapouite/tee-pipe": [
+      1989
+    ],
+    "sbed/telefrag": [
+      3810
+    ],
+    "delapouite/telescope": [
+      1990
+    ],
+    "caro-asercion/tesla-coil": [
+      144
+    ],
+    "lorc/tesla-coil": [
+      3527
+    ],
+    "lorc/tesla-turret": [
+      3528
+    ],
+    "lorc/test-tubes": [
+      3529
+    ],
+    "delapouite/thermometer-cold": [
+      2002
+    ],
+    "delapouite/thermometer-hot": [
+      2003
+    ],
+    "lorc/thermometer-scale": [
+      3530
+    ],
+    "delapouite/thrust-bend": [
+      2009
+    ],
+    "delapouite/time-synchronization": [
+      2021
+    ],
+    "lorc/time-trap": [
+      3551
+    ],
+    "lorc/tinker": [
+      3552
+    ],
+    "delapouite/tire-tracks": [
+      2025
+    ],
+    "delapouite/toaster": [
+      2027
+    ],
+    "delapouite/toggles": [
+      2028
+    ],
+    "sbed/tombstone": [
+      3812
+    ],
+    "delapouite/toolbox": [
+      2033
+    ],
+    "delapouite/torch": [
+      2034
+    ],
+    "delapouite/tow-truck": [
+      2039
+    ],
+    "delapouite/transform": [
+      2051
+    ],
+    "lorc/transparent-tubes": [
+      3565
+    ],
+    "lorc/transportation-rings": [
+      3566
+    ],
+    "sbed/trigger-hurt": [
+      3814
+    ],
+    "lorc/triorb": [
+      3576
+    ],
+    "lorc/tron-arrow": [
+      3589
+    ],
+    "delapouite/turbine": [
+      2086
+    ],
+    "delapouite/turnstile": [
+      2087
+    ],
+    "sbed/turret": [
+      3815
+    ],
+    "delapouite/tv": [
+      2091
+    ],
+    "delapouite/tv-remote": [
+      2089
+    ],
+    "delapouite/tv-tower": [
+      2090
+    ],
+    "lorc/ultrasound": [
+      3605
+    ],
+    "lorc/unlit-candelabra": [
+      3610
+    ],
+    "lorc/unlocking": [
+      3611
+    ],
+    "sbed/unplugged": [
+      3816
+    ],
+    "lorc/unstable-orb": [
+      3612
+    ],
+    "delapouite/upgrade": [
+      2106
+    ],
+    "sbed/usable": [
+      3817
+    ],
+    "delapouite/usb-key": [
+      2111
+    ],
+    "delapouite/vacuum-cleaner": [
+      2114
+    ],
+    "delapouite/vending-machine": [
+      2122
+    ],
+    "delapouite/vertical-flip": [
+      2126
+    ],
+    "caro-asercion/vhs": [
+      152
+    ],
+    "lorc/vibrating-ball": [
+      3616
+    ],
+    "delapouite/video-camera": [
+      2129
+    ],
+    "delapouite/video-conference": [
+      2130
+    ],
+    "lorc/vintage-robot": [
+      3621
+    ],
+    "delapouite/vr-headset": [
+      2143
+    ],
+    "delapouite/walkie-talkie": [
+      2146
+    ],
+    "delapouite/walking-scout": [
+      2147
+    ],
+    "delapouite/walking-turret": [
+      2148
+    ],
+    "delapouite/wall-light": [
+      2149
+    ],
+    "delapouite/warp-pipe": [
+      2159
+    ],
+    "delapouite/washing-machine": [
+      2160
+    ],
+    "delapouite/water-bottle": [
+      2163
+    ],
+    "delapouite/water-flask": [
+      2165
+    ],
+    "delapouite/water-gallon": [
+      2167
+    ],
+    "delapouite/water-recycling": [
+      2170
+    ],
+    "delapouite/water-tank": [
+      2171
+    ],
+    "sbed/weight-crush": [
+      3820
+    ],
+    "delapouite/weight-scale": [
+      2180
+    ],
+    "delapouite/wifi-router": [
+      2188
+    ],
+    "delapouite/wind-turbine": [
+      2189
+    ],
+    "delapouite/windmill": [
+      2190
+    ],
+    "delapouite/wine-bottle": [
+      2195
+    ],
+    "delapouite/wire-coil": [
+      2199
+    ],
+    "delapouite/wireframe-globe": [
+      2200
+    ],
+    "caro-asercion/wok": [
+      157
     ]
   },
   "Game-icons.net - Terrain": {
@@ -10202,6 +10753,14 @@
     ],
     "lorc/hourglass": [
       2908
+    ],
+    "delapouite/watch": [
+      2161
+    ]
+  },
+  "Game-icons.net - Timepiece": {
+    "delapouite/cuckoo-clock": [
+      665
     ]
   },
   "Game-icons.net - Token": {
@@ -10210,41 +10769,11 @@
     ]
   },
   "Game-icons.net - Tool": {
-    "andymeneely/police-badge": [
-      0
-    ],
     "caro-asercion/astrolabe": [
       64
     ],
-    "caro-asercion/easel": [
-      93
-    ],
-    "caro-asercion/froe-and-mallet": [
-      97
-    ],
-    "caro-asercion/gyroscope": [
-      101
-    ],
-    "caro-asercion/orrery": [
-      110
-    ],
-    "caro-asercion/soldering-iron": [
-      136
-    ],
-    "caro-asercion/stapler": [
-      140
-    ],
-    "caro-asercion/stapler-heavy-duty": [
-      138
-    ],
-    "caro-asercion/stapler-pneumatic": [
-      139
-    ],
     "darkzaitzev/big-gear": [
       190
-    ],
-    "darkzaitzev/cauldron": [
-      192
     ],
     "delapouite/box-cutter": [
       425
@@ -10260,6 +10789,9 @@
     ],
     "delapouite/bug-net": [
       448
+    ],
+    "darkzaitzev/cauldron": [
+      192
     ],
     "delapouite/chainsaw": [
       532
@@ -10294,6 +10826,9 @@
     "delapouite/drill": [
       747
     ],
+    "caro-asercion/easel": [
+      93
+    ],
     "delapouite/empty-metal-bucket": [
       793
     ],
@@ -10306,14 +10841,50 @@
     "delapouite/empty-wood-bucket-handle": [
       794
     ],
+    "caro-asercion/froe-and-mallet": [
+      97
+    ],
+    "delapouite/funnel": [
+      936
+    ],
+    "delapouite/gardening-shears": [
+      946
+    ],
+    "lorc/gavel": [
+      2811
+    ],
+    "lorc/gibbet": [
+      2822
+    ],
+    "lorc/grab": [
+      2843
+    ],
+    "lorc/grapple": [
+      2845
+    ],
+    "caro-asercion/gyroscope": [
+      101
+    ],
+    "lorc/hammer-nails": [
+      2862
+    ],
     "delapouite/hand-saw": [
       1022
     ],
     "delapouite/hand-truck": [
       1023
     ],
+    "lorc/handcuffs": [
+      2864
+    ],
     "delapouite/hatchet": [
       1032
+    ],
+    "lorc/heavy-fall": [
+      2884
+    ],
+    "lorc/heavy-timer": [
+      2889
     ],
     "delapouite/hexagonal-nut": [
       1060
@@ -10336,20 +10907,44 @@
     "delapouite/house-keys": [
       1096
     ],
+    "lorc/hunting-horn": [
+      2909
+    ],
+    "lorc/hypodermic-test": [
+      2914
+    ],
     "delapouite/i-beam": [
       1108
+    ],
+    "lorc/imprisoned": [
+      2929
     ],
     "delapouite/jerrycan": [
       1153
     ],
+    "lorc/jigsaw-box": [
+      2951
+    ],
+    "lorc/jigsaw-piece": [
+      2952
+    ],
     "delapouite/jug": [
       1160
+    ],
+    "lorc/key": [
+      2957
     ],
     "delapouite/kitchen-scale": [
       1183
     ],
     "delapouite/kitchen-tap": [
       1184
+    ],
+    "lorc/knapsack": [
+      2961
+    ],
+    "lorc/knife-fork": [
+      2962
     ],
     "delapouite/knot": [
       1195
@@ -10360,8 +10955,17 @@
     "delapouite/ladle": [
       1204
     ],
+    "lorc/lantern": [
+      2968
+    ],
+    "lorc/lantern-flame": [
+      2967
+    ],
     "delapouite/large-paint-brush": [
       1208
+    ],
+    "lorc/laser-precision": [
+      2971
     ],
     "delapouite/lighter": [
       1236
@@ -10390,92 +10994,20 @@
     "delapouite/matchbox": [
       1296
     ],
-    "delapouite/monkey-wrench": [
-      1356
-    ],
-    "delapouite/sextant": [
-      1752
-    ],
-    "delapouite/shears": [
-      1763
-    ],
-    "delapouite/silex": [
-      1790
-    ],
-    "delapouite/stake-hammer": [
-      1889
-    ],
-    "delapouite/swiss-army-knife": [
-      1956
-    ],
-    "delapouite/tire-iron": [
-      2024
-    ],
-    "delapouite/tire-iron-cross": [
-      2023
-    ],
-    "lorc/gavel": [
-      2811
-    ],
-    "lorc/gibbet": [
-      2822
-    ],
-    "lorc/grab": [
-      2843
-    ],
-    "lorc/grapple": [
-      2845
-    ],
-    "lorc/hammer-nails": [
-      2862
-    ],
-    "lorc/handcuffs": [
-      2864
-    ],
-    "lorc/heavy-fall": [
-      2884
-    ],
-    "lorc/heavy-timer": [
-      2889
-    ],
-    "lorc/hunting-horn": [
-      2909
-    ],
-    "lorc/hypodermic-test": [
-      2914
-    ],
-    "lorc/imprisoned": [
-      2929
-    ],
-    "lorc/jigsaw-box": [
-      2951
-    ],
-    "lorc/jigsaw-piece": [
-      2952
-    ],
-    "lorc/key": [
-      2957
-    ],
-    "lorc/knapsack": [
-      2961
-    ],
-    "lorc/knife-fork": [
-      2962
-    ],
-    "lorc/lantern": [
-      2968
-    ],
-    "lorc/lantern-flame": [
-      2967
-    ],
-    "lorc/laser-precision": [
-      2971
-    ],
     "lorc/mighty-spanner": [
       3074
     ],
+    "delapouite/monkey-wrench": [
+      1356
+    ],
     "lorc/nails": [
       3111
+    ],
+    "caro-asercion/orrery": [
+      110
+    ],
+    "andymeneely/police-badge": [
+      0
     ],
     "lorc/scissors": [
       3277
@@ -10489,11 +11021,47 @@
     "lorc/sewing-needle": [
       3295
     ],
+    "delapouite/sextant": [
+      1752
+    ],
+    "delapouite/shears": [
+      1763
+    ],
+    "delapouite/silex": [
+      1790
+    ],
     "lorc/skeleton-key": [
       3331
     ],
+    "caro-asercion/soldering-iron": [
+      136
+    ],
     "lorc/spanner": [
       3373
+    ],
+    "delapouite/stake-hammer": [
+      1889
+    ],
+    "caro-asercion/stapler": [
+      140
+    ],
+    "caro-asercion/stapler-heavy-duty": [
+      138
+    ],
+    "caro-asercion/stapler-pneumatic": [
+      139
+    ],
+    "delapouite/swiss-army-knife": [
+      1956
+    ],
+    "delapouite/tire-iron": [
+      2024
+    ],
+    "delapouite/tire-iron-cross": [
+      2023
+    ],
+    "skoll/trench-spade": [
+      3988
     ],
     "lorc/triple-plier": [
       3582
@@ -10503,9 +11071,6 @@
     ],
     "sbed/wrench": [
       3821
-    ],
-    "skoll/trench-spade": [
-      3988
     ]
   },
   "Game-icons.net - Tools": {
@@ -10604,6 +11169,11 @@
       1551
     ]
   },
+  "Game-icons.net - Trail": {
+    "delapouite/trail": [
+      2050
+    ]
+  },
   "Game-icons.net - Trait": {
     "lorc/strong": [
       3470
@@ -10665,8 +11235,11 @@
     ]
   },
   "Game-icons.net - Trap": {
-    "delapouite/spiky-pit": [
-      1870
+    "skoll/box-trap": [
+      3841
+    ],
+    "skoll/cement-shoes": [
+      3851
     ],
     "lorc/gift-trap": [
       2824
@@ -10686,11 +11259,8 @@
     "lorc/sinking-trap": [
       3327
     ],
-    "skoll/box-trap": [
-      3841
-    ],
-    "skoll/cement-shoes": [
-      3851
+    "delapouite/spiky-pit": [
+      1870
     ]
   },
   "Game-icons.net - Travel": {
@@ -10738,11 +11308,11 @@
     ]
   },
   "Game-icons.net - Treasure": {
-    "lorc/treasure-map": [
-      3569
-    ],
     "willdabeast/gold-bar": [
       4123
+    ],
+    "lorc/treasure-map": [
+      3569
     ]
   },
   "Game-icons.net - Trophy": {
@@ -10765,585 +11335,6 @@
     ]
   },
   "Game-icons.net - Unlisted": {
-    "delapouite/basket": [
-      345
-    ],
-    "delapouite/cube": [
-      664
-    ],
-    "delapouite/cuckoo-clock": [
-      665
-    ],
-    "delapouite/f-clef": [
-      817
-    ],
-    "delapouite/face-to-face": [
-      818
-    ],
-    "delapouite/falling-bomb": [
-      824
-    ],
-    "delapouite/falling-rocks": [
-      825
-    ],
-    "delapouite/fallout-shelter": [
-      827
-    ],
-    "delapouite/family-house": [
-      828
-    ],
-    "delapouite/farm-tractor": [
-      830
-    ],
-    "delapouite/farmer": [
-      831
-    ],
-    "delapouite/fast-backward-button": [
-      832
-    ],
-    "delapouite/fast-forward-button": [
-      833
-    ],
-    "delapouite/fast-noodles": [
-      834
-    ],
-    "delapouite/feather-necklace": [
-      835
-    ],
-    "delapouite/female": [
-      839
-    ],
-    "delapouite/female-legs": [
-      837
-    ],
-    "delapouite/female-vampire": [
-      838
-    ],
-    "delapouite/fez": [
-      843
-    ],
-    "delapouite/figurehead": [
-      844
-    ],
-    "delapouite/files": [
-      845
-    ],
-    "delapouite/finger-print": [
-      850
-    ],
-    "delapouite/fingernail": [
-      851
-    ],
-    "delapouite/finish-line": [
-      852
-    ],
-    "delapouite/fire-flower": [
-      854
-    ],
-    "delapouite/fire-gem": [
-      855
-    ],
-    "delapouite/fire-iris": [
-      856
-    ],
-    "delapouite/fire-shrine": [
-      857
-    ],
-    "delapouite/fire-spell-cast": [
-      858
-    ],
-    "delapouite/flag-objective": [
-      874
-    ],
-    "delapouite/flat-platform": [
-      881
-    ],
-    "delapouite/flat-tire": [
-      882
-    ],
-    "delapouite/flatfish": [
-      883
-    ],
-    "delapouite/flax": [
-      884
-    ],
-    "delapouite/fleur-de-lys": [
-      885
-    ],
-    "delapouite/flip-flops": [
-      888
-    ],
-    "delapouite/floating-ghost": [
-      889
-    ],
-    "delapouite/floating-tentacles": [
-      891
-    ],
-    "delapouite/flood": [
-      892
-    ],
-    "delapouite/flour": [
-      895
-    ],
-    "delapouite/flower-hat": [
-      897
-    ],
-    "delapouite/flute": [
-      899
-    ],
-    "delapouite/flying-target": [
-      903
-    ],
-    "delapouite/foot-plaster": [
-      907
-    ],
-    "delapouite/footy-field": [
-      908
-    ],
-    "delapouite/forearm": [
-      909
-    ],
-    "delapouite/foundry-bucket": [
-      915
-    ],
-    "delapouite/france": [
-      917
-    ],
-    "delapouite/freemasonry": [
-      918
-    ],
-    "delapouite/french-fries": [
-      919
-    ],
-    "delapouite/fried-eggs": [
-      920
-    ],
-    "delapouite/frisbee": [
-      921
-    ],
-    "delapouite/fuel-tank": [
-      927
-    ],
-    "delapouite/full-folder": [
-      929
-    ],
-    "delapouite/full-metal-bucket": [
-      931
-    ],
-    "delapouite/full-metal-bucket-handle": [
-      930
-    ],
-    "delapouite/full-motorcycle-helmet": [
-      932
-    ],
-    "delapouite/full-pizza": [
-      933
-    ],
-    "delapouite/full-wood-bucket": [
-      935
-    ],
-    "delapouite/full-wood-bucket-handle": [
-      934
-    ],
-    "delapouite/funnel": [
-      936
-    ],
-    "delapouite/fur-boot": [
-      937
-    ],
-    "delapouite/fur-shirt": [
-      938
-    ],
-    "delapouite/furnace": [
-      939
-    ],
-    "delapouite/g-clef": [
-      940
-    ],
-    "delapouite/galea": [
-      942
-    ],
-    "delapouite/galley": [
-      943
-    ],
-    "delapouite/game-console": [
-      944
-    ],
-    "delapouite/gamepad": [
-      945
-    ],
-    "delapouite/gardening-shears": [
-      946
-    ],
-    "delapouite/gargoyle": [
-      947
-    ],
-    "delapouite/garlic": [
-      948
-    ],
-    "delapouite/gas-pump": [
-      949
-    ],
-    "delapouite/gas-stove": [
-      950
-    ],
-    "delapouite/gate": [
-      951
-    ],
-    "delapouite/gear-stick": [
-      955
-    ],
-    "delapouite/gear-stick-pattern": [
-      954
-    ],
-    "delapouite/gemini": [
-      956
-    ],
-    "delapouite/giant": [
-      958
-    ],
-    "delapouite/gingerbread-man": [
-      959
-    ],
-    "delapouite/glass-ball": [
-      962
-    ],
-    "delapouite/glass-celebration": [
-      963
-    ],
-    "delapouite/globe-ring": [
-      964
-    ],
-    "delapouite/gloves": [
-      965
-    ],
-    "delapouite/glowing-artifact": [
-      966
-    ],
-    "delapouite/goal-keeper": [
-      967
-    ],
-    "delapouite/goblin-camp": [
-      968
-    ],
-    "delapouite/goblin-head": [
-      969
-    ],
-    "delapouite/gold-mine": [
-      970
-    ],
-    "delapouite/gold-nuggets": [
-      971
-    ],
-    "delapouite/gold-stack": [
-      972
-    ],
-    "delapouite/golf-flag": [
-      974
-    ],
-    "delapouite/golf-tee": [
-      975
-    ],
-    "delapouite/gong": [
-      976
-    ],
-    "delapouite/gps": [
-      979
-    ],
-    "delapouite/tomato": [
-      2031
-    ],
-    "delapouite/tongue": [
-      2032
-    ],
-    "delapouite/torpedo": [
-      2035
-    ],
-    "delapouite/towel": [
-      2040
-    ],
-    "delapouite/traffic-cone": [
-      2045
-    ],
-    "delapouite/trail": [
-      2050
-    ],
-    "delapouite/transform": [
-      2051
-    ],
-    "delapouite/trash-can": [
-      2052
-    ],
-    "delapouite/travel-dress": [
-      2053
-    ],
-    "delapouite/tree-door": [
-      2056
-    ],
-    "delapouite/triangle-target": [
-      2060
-    ],
-    "delapouite/tribunal-jury": [
-      2064
-    ],
-    "delapouite/trophies-shelf": [
-      2074
-    ],
-    "delapouite/trophy-cup": [
-      2075
-    ],
-    "delapouite/truce": [
-      2078
-    ],
-    "delapouite/truck": [
-      2079
-    ],
-    "delapouite/trumpet": [
-      2081
-    ],
-    "delapouite/trumpet-flag": [
-      2080
-    ],
-    "delapouite/trunk-mushroom": [
-      2082
-    ],
-    "delapouite/turban": [
-      2085
-    ],
-    "delapouite/turbine": [
-      2086
-    ],
-    "delapouite/turnstile": [
-      2087
-    ],
-    "delapouite/tusks-flag": [
-      2088
-    ],
-    "delapouite/two-coins": [
-      2092
-    ],
-    "delapouite/udder": [
-      2094
-    ],
-    "delapouite/ufo": [
-      2095
-    ],
-    "delapouite/umbrella-bayonet": [
-      2097
-    ],
-    "delapouite/unbalanced": [
-      2098
-    ],
-    "delapouite/underwear": [
-      2101
-    ],
-    "delapouite/underwear-shorts": [
-      2100
-    ],
-    "delapouite/unicycle": [
-      2103
-    ],
-    "delapouite/up-card": [
-      2105
-    ],
-    "delapouite/upgrade": [
-      2106
-    ],
-    "delapouite/uprising": [
-      2107
-    ],
-    "delapouite/uruguay": [
-      2109
-    ],
-    "delapouite/ushanka": [
-      2112
-    ],
-    "delapouite/vacuum-cleaner": [
-      2114
-    ],
-    "delapouite/vampire-cape": [
-      2116
-    ],
-    "delapouite/vampire-dracula": [
-      2117
-    ],
-    "delapouite/van-damme-split": [
-      2118
-    ],
-    "delapouite/velocipede": [
-      2119
-    ],
-    "delapouite/velociraptor-tracks": [
-      2120
-    ],
-    "delapouite/venus-of-willendorf": [
-      2124
-    ],
-    "delapouite/vertical-banner": [
-      2125
-    ],
-    "delapouite/vertical-flip": [
-      2126
-    ],
-    "delapouite/vibrating-shield": [
-      2127
-    ],
-    "delapouite/viking-church": [
-      2131
-    ],
-    "delapouite/viking-head": [
-      2132
-    ],
-    "delapouite/viking-helmet": [
-      2133
-    ],
-    "delapouite/viking-longhouse": [
-      2134
-    ],
-    "delapouite/viking-shield": [
-      2135
-    ],
-    "delapouite/village": [
-      2136
-    ],
-    "delapouite/virgo": [
-      2138
-    ],
-    "delapouite/vitruvian-man": [
-      2140
-    ],
-    "delapouite/vote": [
-      2142
-    ],
-    "delapouite/vuvuzelas": [
-      2144
-    ],
-    "delapouite/walk": [
-      2145
-    ],
-    "delapouite/walkie-talkie": [
-      2146
-    ],
-    "delapouite/walking-scout": [
-      2147
-    ],
-    "delapouite/walking-turret": [
-      2148
-    ],
-    "delapouite/wall-light": [
-      2149
-    ],
-    "delapouite/wanted-reward": [
-      2152
-    ],
-    "delapouite/warp-pipe": [
-      2159
-    ],
-    "delapouite/watch": [
-      2161
-    ],
-    "delapouite/watchtower": [
-      2162
-    ],
-    "delapouite/water-bottle": [
-      2163
-    ],
-    "delapouite/water-diviner-stick": [
-      2164
-    ],
-    "delapouite/water-flask": [
-      2165
-    ],
-    "delapouite/water-fountain": [
-      2166
-    ],
-    "delapouite/water-gallon": [
-      2167
-    ],
-    "delapouite/water-gun": [
-      2168
-    ],
-    "delapouite/water-polo": [
-      2169
-    ],
-    "delapouite/water-recycling": [
-      2170
-    ],
-    "delapouite/water-tank": [
-      2171
-    ],
-    "delapouite/water-tower": [
-      2172
-    ],
-    "delapouite/wax-tablet": [
-      2177
-    ],
-    "delapouite/weight": [
-      2181
-    ],
-    "delapouite/weight-scale": [
-      2180
-    ],
-    "delapouite/well": [
-      2182
-    ],
-    "delapouite/western-hat": [
-      2183
-    ],
-    "delapouite/whistle": [
-      2187
-    ],
-    "delapouite/window": [
-      2192
-    ],
-    "delapouite/window-bars": [
-      2191
-    ],
-    "delapouite/windsock": [
-      2194
-    ],
-    "delapouite/wine-bottle": [
-      2195
-    ],
-    "delapouite/winged-scepter": [
-      2196
-    ],
-    "delapouite/winter-gloves": [
-      2197
-    ],
-    "delapouite/winter-hat": [
-      2198
-    ],
-    "delapouite/wireframe-globe": [
-      2200
-    ],
-    "delapouite/wisdom": [
-      2201
-    ],
-    "delapouite/wood-beam": [
-      2205
-    ],
-    "delapouite/wood-cabin": [
-      2206
-    ],
-    "delapouite/wood-canoe": [
-      2207
-    ],
-    "delapouite/wood-frame": [
-      2209
-    ],
-    "delapouite/wood-stick": [
-      2211
-    ],
-    "delapouite/wooden-chair": [
-      2212
-    ],
-    "delapouite/wooden-clogs": [
-      2213
-    ],
-    "delapouite/wooden-pegleg": [
-      2215
-    ],
     "faithtoken/card-discard": [
       2227
     ],
@@ -11358,35 +11349,14 @@
     ]
   },
   "Game-icons.net - Vehicle": {
-    "caro-asercion/steamroller": [
-      141
-    ],
-    "caro-asercion/subway-train": [
-      143
+    "lorc/battle-tank": [
+      2338
     ],
     "cathelineau/battleship": [
       160
     ],
-    "cathelineau/carrier": [
-      163
-    ],
-    "cathelineau/chariot": [
-      164
-    ],
-    "cathelineau/cruiser": [
-      165
-    ],
-    "cathelineau/dread": [
-      166
-    ],
-    "cathelineau/dreadnought": [
-      167
-    ],
-    "cathelineau/great-war-tank": [
-      171
-    ],
-    "cathelineau/iron-hulled-warship": [
-      173
+    "quoting/biplane": [
+      3713
     ],
     "delapouite/canoe": [
       491
@@ -11400,6 +11370,12 @@
     "delapouite/cargo-ship": [
       512
     ],
+    "cathelineau/carrier": [
+      163
+    ],
+    "cathelineau/chariot": [
+      164
+    ],
     "delapouite/city-car": [
       568
     ],
@@ -11412,8 +11388,44 @@
     "delapouite/crane": [
       643
     ],
+    "cathelineau/cruiser": [
+      165
+    ],
+    "lorc/deathcab": [
+      2600
+    ],
+    "cathelineau/dread": [
+      166
+    ],
+    "cathelineau/dreadnought": [
+      167
+    ],
     "delapouite/dutch-bike": [
       758
+    ],
+    "delapouite/farm-tractor": [
+      830
+    ],
+    "delapouite/flat-tire": [
+      882
+    ],
+    "delapouite/fuel-tank": [
+      927
+    ],
+    "lorc/galleon": [
+      2808
+    ],
+    "delapouite/galley": [
+      943
+    ],
+    "delapouite/gear-stick": [
+      955
+    ],
+    "cathelineau/great-war-tank": [
+      171
+    ],
+    "cathelineau/iron-hulled-warship": [
+      173
     ],
     "delapouite/jet-fighter": [
       1156
@@ -11421,32 +11433,35 @@
     "delapouite/kick-scooter": [
       1178
     ],
-    "delapouite/surfer-van": [
-      1946
-    ],
-    "lorc/battle-tank": [
-      2338
-    ],
-    "lorc/deathcab": [
-      2600
-    ],
-    "lorc/galleon": [
-      2808
-    ],
-    "lorc/tank": [
-      3506
-    ],
     "pierre-leducq/shooner-sailboat": [
       3703
     ],
     "pierre-leducq/small-fishing-sailboat": [
       3704
     ],
-    "quoting/biplane": [
-      3713
+    "caro-asercion/steamroller": [
+      141
+    ],
+    "caro-asercion/subway-train": [
+      143
+    ],
+    "delapouite/surfer-van": [
+      1946
+    ],
+    "lorc/tank": [
+      3506
     ],
     "skoll/tank-tread": [
       3979
+    ],
+    "delapouite/truck": [
+      2079
+    ],
+    "delapouite/unicycle": [
+      2103
+    ],
+    "delapouite/velocipede": [
+      2119
     ],
     "skoll/zeppelin": [
       3993
@@ -11462,81 +11477,17 @@
       3378
     ]
   },
+  "Game-icons.net - Waste": {
+    "delapouite/trash-can": [
+      2052
+    ]
+  },
   "Game-icons.net - Weapon": {
-    "delapouite/spiral-hilt": [
-      1872
+    "sbed/acid": [
+      3728
     ],
-    "delapouite/split-arrows": [
-      1874
-    ],
-    "delapouite/stun-grenade": [
-      1931
-    ],
-    "delapouite/sun-spear": [
-      1940
-    ],
-    "delapouite/switch-weapon": [
-      1957
-    ],
-    "delapouite/sword-brandish": [
-      1960
-    ],
-    "delapouite/sword-mold": [
-      1961
-    ],
-    "delapouite/thor-hammer": [
-      2005
-    ],
-    "delapouite/time-dynamite": [
-      2020
-    ],
-    "delapouite/tomahawk": [
-      2030
-    ],
-    "delapouite/toy-mallet": [
-      2043
-    ],
-    "delapouite/trebuchet": [
-      2054
-    ],
-    "delapouite/trident-shield": [
-      2066
-    ],
-    "delapouite/two-handed-sword": [
-      2093
-    ],
-    "delapouite/uzi": [
-      2113
-    ],
-    "delapouite/war-axe": [
-      2153
-    ],
-    "delapouite/war-bonnet": [
-      2154
-    ],
-    "delapouite/war-pick": [
-      2155
-    ],
-    "delapouite/warhammer": [
-      2156
-    ],
-    "delapouite/wolverine-claws": [
-      2203
-    ],
-    "delapouite/wood-club": [
-      2208
-    ],
-    "delapouite/zat-gun": [
-      2224
-    ],
-    "faithtoken/ninja-star": [
-      2235
-    ],
-    "heavenly-dog/catapult": [
-      2247
-    ],
-    "john-colburn/pistol-gun": [
-      2250
+    "sbed/acid-tube": [
+      3727
     ],
     "lorc/aerodynamic-harpoon": [
       2261
@@ -11544,8 +11495,20 @@
     "lorc/afterburn": [
       2263
     ],
+    "skoll/ak47": [
+      3825
+    ],
+    "skoll/ak47u": [
+      3826
+    ],
     "lorc/alien-fire": [
       2265
+    ],
+    "sbed/ammo-box": [
+      3729
+    ],
+    "pierre-leducq/anti-aircraft-gun": [
+      3702
     ],
     "lorc/anvil": [
       2284
@@ -11580,6 +11543,12 @@
     "lorc/arson": [
       2300
     ],
+    "quoting/artillery-shell": [
+      3712
+    ],
+    "skoll/atom": [
+      3831
+    ],
     "lorc/atomic-slashes": [
       2304
     ],
@@ -11594,6 +11563,9 @@
     ],
     "lorc/backstab": [
       2316
+    ],
+    "skoll/ballista": [
+      3834
     ],
     "lorc/barbed-arrow": [
       2323
@@ -11619,14 +11591,23 @@
     "lorc/bat-blade": [
       2332
     ],
+    "skoll/baton": [
+      3836
+    ],
     "lorc/battered-axe": [
       2334
     ],
     "lorc/battle-axe": [
       2336
     ],
+    "skoll/bayonet": [
+      3837
+    ],
     "lorc/bestial-fangs": [
       2352
+    ],
+    "willdabeast/black-book": [
+      4120
     ],
     "lorc/black-hole-bolas": [
       2363
@@ -11642,6 +11623,12 @@
     ],
     "lorc/blade-fall": [
       2368
+    ],
+    "sbed/blast": [
+      3734
+    ],
+    "sbed/blaster": [
+      3735
     ],
     "lorc/bloody-stash": [
       2372
@@ -11667,6 +11654,9 @@
     "lorc/bolter-gun": [
       2382
     ],
+    "lord-berandas/bomber": [
+      3688
+    ],
     "lorc/bone-knife": [
       2385
     ],
@@ -11681,6 +11671,9 @@
     ],
     "lorc/bowie-knife": [
       2401
+    ],
+    "skoll/bowie-knife": [
+      3840
     ],
     "lorc/bowling-propulsion": [
       2403
@@ -11715,6 +11708,12 @@
     "lorc/bullets": [
       2438
     ],
+    "skoll/bundle-grenade": [
+      3846
+    ],
+    "sbed/burn": [
+      3736
+    ],
     "lorc/burning-eye": [
       2443
     ],
@@ -11723,6 +11722,12 @@
     ],
     "lorc/burning-round-shot": [
       2446
+    ],
+    "skoll/butterfly-knife": [
+      3848
+    ],
+    "skoll/c96": [
+      3849
     ],
     "lorc/cannon": [
       2463
@@ -11733,8 +11738,14 @@
     "lorc/cannon-shot": [
       2462
     ],
+    "heavenly-dog/catapult": [
+      2247
+    ],
     "lorc/chained-arrow-heads": [
       2476
+    ],
+    "sbed/chaingun": [
+      3738
     ],
     "lorc/charged-arrow": [
       2479
@@ -11748,8 +11759,14 @@
     "lorc/circle-claws": [
       2495
     ],
+    "sbed/circular-saw": [
+      3739
+    ],
     "lorc/circular-sawblade": [
       2498
+    ],
+    "sbed/claw": [
+      3740
     ],
     "lorc/claw-hammer": [
       2499
@@ -11769,6 +11786,9 @@
     "lorc/cluster-bomb": [
       2508
     ],
+    "skoll/colt-m1911": [
+      3861
+    ],
     "lorc/cpu-shot": [
       2530
     ],
@@ -11780,6 +11800,9 @@
     ],
     "lorc/crescent-blade": [
       2543
+    ],
+    "skoll/crescent-blade": [
+      3864
     ],
     "lorc/croc-sword": [
       2546
@@ -11808,6 +11831,9 @@
     "lorc/crosshair-arrow": [
       2559
     ],
+    "sbed/crush": [
+      3743
+    ],
     "lorc/crystal-eye": [
       2571
     ],
@@ -11819,6 +11845,9 @@
     ],
     "lorc/curvy-knife": [
       2586
+    ],
+    "skoll/cz-skorpion": [
+      3866
     ],
     "lorc/daggers": [
       2592
@@ -11838,6 +11867,9 @@
     "lorc/dervish-swords": [
       2605
     ],
+    "skoll/desert-eagle": [
+      3870
+    ],
     "lorc/disintegrate": [
       2619
     ],
@@ -11849,6 +11881,9 @@
     ],
     "lorc/double-shot": [
       2637
+    ],
+    "sbed/doubled": [
+      3745
     ],
     "lorc/dragon-balls": [
       2640
@@ -11898,6 +11933,12 @@
     "lorc/explosive-meeting": [
       2709
     ],
+    "delapouite/falling-bomb": [
+      824
+    ],
+    "skoll/famas": [
+      3878
+    ],
     "lorc/fangs-circle": [
       2724
     ],
@@ -11906,6 +11947,12 @@
     ],
     "lorc/feather-wound": [
       2726
+    ],
+    "quoting/field-gun": [
+      3719
+    ],
+    "sbed/fire": [
+      3753
     ],
     "lorc/fire-ace": [
       2731
@@ -11940,11 +11987,17 @@
     "lorc/fireball": [
       2746
     ],
+    "sbed/fireflake": [
+      3754
+    ],
     "lorc/fishhook-fork": [
       2750
     ],
     "lorc/fist": [
       2754
+    ],
+    "sbed/flake": [
+      3755
     ],
     "lorc/flame-claws": [
       2756
@@ -11954,6 +12007,9 @@
     ],
     "lorc/flame-tunnel": [
       2758
+    ],
+    "sbed/flamer": [
+      3756
     ],
     "lorc/flaming-arrow": [
       2760
@@ -11969,6 +12025,9 @@
     ],
     "lorc/flying-dagger": [
       2779
+    ],
+    "skoll/fn-fal": [
+      3885
     ],
     "lorc/forward-field": [
       2788
@@ -11988,14 +12047,23 @@
     "lorc/fulguro-punch": [
       2807
     ],
+    "skoll/gladius": [
+      3889
+    ],
     "lorc/glass-shot": [
       2826
+    ],
+    "skoll/glock": [
+      3891
     ],
     "lorc/gooey-sword": [
       2841
     ],
     "lorc/grenade": [
       2848
+    ],
+    "sbed/grenade": [
+      3757
     ],
     "lorc/groundbreaker": [
       2851
@@ -12024,11 +12092,20 @@
     "lorc/hatchets": [
       2871
     ],
+    "sbed/head-shot": [
+      3759
+    ],
     "lorc/headshot": [
       2875
     ],
+    "skoll/headshot": [
+      3897
+    ],
     "lorc/heavy-arrow": [
       2883
+    ],
+    "lord-berandas/heavy-fighter": [
+      3691
     ],
     "lorc/helmet-head-shot": [
       2890
@@ -12084,14 +12161,26 @@
     "lorc/laser-blast": [
       2970
     ],
+    "skoll/laser-burst": [
+      3912
+    ],
+    "sbed/laser-gun": [
+      3770
+    ],
     "lorc/laser-sparks": [
       2972
     ],
     "lorc/laserburn": [
       2974
     ],
+    "skoll/lee-enfield": [
+      3913
+    ],
     "lorc/letter-bomb": [
       2985
+    ],
+    "lord-berandas/light-fighter": [
+      3693
     ],
     "lorc/lightning-bow": [
       2994
@@ -12105,14 +12194,32 @@
     "lorc/lob-arrow": [
       3018
     ],
+    "sbed/lucifer-cannon": [
+      3778
+    ],
+    "skoll/luger": [
+      3916
+    ],
+    "skoll/m3-grease-gun": [
+      3917
+    ],
+    "skoll/mac-10": [
+      3918
+    ],
     "lorc/mace-head": [
       3028
     ],
     "lorc/machete": [
       3029
     ],
+    "skoll/machine-gun": [
+      3919
+    ],
     "lorc/mailed-fist": [
       3042
+    ],
+    "sbed/mass-driver": [
+      3779
     ],
     "lorc/master-of-arms": [
       3049
@@ -12141,8 +12248,20 @@
     "lorc/molotov": [
       3091
     ],
+    "skoll/mp-40": [
+      3923
+    ],
+    "skoll/mp5": [
+      3924
+    ],
+    "skoll/mp5k": [
+      3925
+    ],
     "lorc/mushroom-cloud": [
       3105
+    ],
+    "skoll/musket": [
+      3926
     ],
     "lorc/needle-drill": [
       3112
@@ -12150,14 +12269,29 @@
     "lorc/needle-jaws": [
       3113
     ],
+    "faithtoken/ninja-star": [
+      2235
+    ],
+    "sbed/nuclear": [
+      3783
+    ],
+    "skoll/nuclear-bomb": [
+      3927
+    ],
     "lorc/on-target": [
       3127
+    ],
+    "skoll/p90": [
+      3933
     ],
     "lorc/paper-bomb": [
       3144
     ],
     "lorc/piercing-sword": [
       3165
+    ],
+    "john-colburn/pistol-gun": [
+      2250
     ],
     "lorc/plain-dagger": [
       3174
@@ -12173,6 +12307,15 @@
     ],
     "lorc/pointy-sword": [
       3181
+    ],
+    "sbed/poison": [
+      3787
+    ],
+    "sbed/poison-cloud": [
+      3786
+    ],
+    "sbed/pounce": [
+      3788
     ],
     "lorc/pummeled": [
       3198
@@ -12203,6 +12346,12 @@
     ],
     "lorc/relic-blade": [
       3228
+    ],
+    "skoll/revolver": [
+      3952
+    ],
+    "sbed/rifle": [
+      3793
     ],
     "lorc/rolling-bomb": [
       3245
@@ -12246,11 +12395,17 @@
     "lorc/shining-sword": [
       3314
     ],
+    "sbed/shotgun": [
+      3796
+    ],
     "lorc/shuriken": [
       3323
     ],
     "lorc/shuriken-aperture": [
       3322
+    ],
+    "skoll/siege-ram": [
+      3955
     ],
     "lorc/skull-bolt": [
       3333
@@ -12266,6 +12421,9 @@
     ],
     "lorc/slicing-arrow": [
       3347
+    ],
+    "sbed/slow-blob": [
+      3797
     ],
     "lorc/smash-arrows": [
       3350
@@ -12297,6 +12455,18 @@
     "lorc/spears": [
       3381
     ],
+    "skoll/spectre-m4": [
+      3963
+    ],
+    "sbed/spikeball": [
+      3800
+    ],
+    "skoll/spiked-ball": [
+      3964
+    ],
+    "skoll/spiked-bat": [
+      3965
+    ],
     "lorc/spiked-mace": [
       3390
     ],
@@ -12305,6 +12475,18 @@
     ],
     "lorc/spiked-tentacle": [
       3394
+    ],
+    "sbed/spikes": [
+      3804
+    ],
+    "sbed/spikes-full": [
+      3801
+    ],
+    "sbed/spikes-half": [
+      3802
+    ],
+    "sbed/spikes-init": [
+      3803
     ],
     "lorc/spine-arrow": [
       3400
@@ -12318,11 +12500,17 @@
     "lorc/spiral-arrow": [
       3404
     ],
+    "delapouite/spiral-hilt": [
+      1872
+    ],
     "lorc/spiral-tentacle": [
       3408
     ],
     "lorc/spiral-thrust": [
       3409
+    ],
+    "delapouite/split-arrows": [
+      1874
     ],
     "lorc/spotted-arrowhead": [
       3417
@@ -12330,11 +12518,23 @@
     "lorc/steel-claws": [
       3443
     ],
+    "skoll/steel-claws": [
+      3969
+    ],
+    "skoll/steyr-aug": [
+      3971
+    ],
+    "skoll/stick-grenade": [
+      3972
+    ],
     "lorc/stick-splitting": [
       3446
     ],
     "lorc/stiletto": [
       3449
+    ],
+    "skoll/stiletto": [
+      3973
     ],
     "lorc/stone-axe": [
       3453
@@ -12360,8 +12560,14 @@
     "lorc/striped-sword": [
       3469
     ],
+    "delapouite/stun-grenade": [
+      1931
+    ],
     "lorc/suckered-tentacle": [
       3471
+    ],
+    "delapouite/sun-spear": [
+      1940
     ],
     "lorc/supersonic-arrow": [
       3480
@@ -12369,8 +12575,17 @@
     "lorc/supersonic-bullet": [
       3481
     ],
+    "delapouite/switch-weapon": [
+      1957
+    ],
+    "skoll/switchblade": [
+      3976
+    ],
     "lorc/sword-array": [
       3493
+    ],
+    "delapouite/sword-brandish": [
+      1960
     ],
     "lorc/sword-break": [
       3494
@@ -12380,6 +12595,9 @@
     ],
     "lorc/sword-hilt": [
       3496
+    ],
+    "delapouite/sword-mold": [
+      1961
     ],
     "lorc/sword-slice": [
       3498
@@ -12396,14 +12614,41 @@
     "lorc/target-arrows": [
       3507
     ],
+    "sbed/target-laser": [
+      3808
+    ],
     "lorc/target-shot": [
       3509
+    ],
+    "sbed/targeted": [
+      3809
+    ],
+    "skoll/tec-9": [
+      3980
+    ],
+    "skoll/telescopic-baton": [
+      3981
+    ],
+    "skoll/teller-mine": [
+      3982
     ],
     "lorc/tentacle-strike": [
       3523
     ],
+    "sbed/tesla": [
+      3811
+    ],
+    "skoll/thompson-m1": [
+      3983
+    ],
+    "skoll/thompson-m1928": [
+      3984
+    ],
     "lorc/thor-fist": [
       3532
+    ],
+    "delapouite/thor-hammer": [
+      2005
     ],
     "lorc/thorned-arrow": [
       3534
@@ -12432,14 +12677,41 @@
     "lorc/time-bomb": [
       3550
     ],
+    "delapouite/time-dynamite": [
+      2020
+    ],
+    "delapouite/tomahawk": [
+      2030
+    ],
     "lorc/tornado-discs": [
       3558
+    ],
+    "delapouite/torpedo": [
+      2035
+    ],
+    "delapouite/toy-mallet": [
+      2043
+    ],
+    "sbed/trample": [
+      3813
+    ],
+    "delapouite/trebuchet": [
+      2054
     ],
     "lorc/trefoil-shuriken": [
       3572
     ],
+    "quoting/trench-assault": [
+      3723
+    ],
+    "skoll/trench-knife": [
+      3987
+    ],
     "lorc/trident": [
       3574
+    ],
+    "delapouite/trident-shield": [
+      2066
     ],
     "lorc/triple-claws": [
       3578
@@ -12450,6 +12722,12 @@
     "lorc/triple-scratches": [
       3583
     ],
+    "delapouite/two-handed-sword": [
+      2093
+    ],
+    "delapouite/umbrella-bayonet": [
+      2097
+    ],
     "lorc/unfriendly-fire": [
       3608
     ],
@@ -12459,11 +12737,32 @@
     "lorc/unstable-projectile": [
       3613
     ],
+    "delapouite/uzi": [
+      2113
+    ],
     "lorc/vine-whip": [
       3620
     ],
+    "skoll/walther-ppk": [
+      3990
+    ],
+    "delapouite/war-axe": [
+      2153
+    ],
+    "delapouite/war-bonnet": [
+      2154
+    ],
+    "delapouite/war-pick": [
+      2155
+    ],
+    "delapouite/warhammer": [
+      2156
+    ],
     "lorc/wasp-sting": [
       3631
+    ],
+    "delapouite/water-gun": [
+      2168
     ],
     "lorc/wave-strike": [
       3635
@@ -12474,6 +12773,9 @@
     "lorc/whiplash": [
       3644
     ],
+    "willdabeast/white-book": [
+      4126
+    ],
     "lorc/wide-arrow-dunk": [
       3647
     ],
@@ -12482,6 +12784,9 @@
     ],
     "lorc/william-tell-skull": [
       3649
+    ],
+    "skoll/winchester-rifle": [
+      3991
     ],
     "lorc/wind-slap": [
       3652
@@ -12495,305 +12800,29 @@
     "lorc/wolf-trap": [
       3666
     ],
+    "delapouite/wolverine-claws": [
+      2203
+    ],
     "lorc/wolverine-claws": [
       3667
     ],
+    "delapouite/wood-club": [
+      2208
+    ],
     "lorc/wrecking-ball": [
       3678
+    ],
+    "delapouite/zat-gun": [
+      2224
     ],
     "lorc/zeus-sword": [
       3681
     ],
     "lorc/zig-arrow": [
       3682
-    ],
-    "lord-berandas/bomber": [
-      3688
-    ],
-    "lord-berandas/heavy-fighter": [
-      3691
-    ],
-    "lord-berandas/light-fighter": [
-      3693
-    ],
-    "pierre-leducq/anti-aircraft-gun": [
-      3702
-    ],
-    "quoting/artillery-shell": [
-      3712
-    ],
-    "quoting/field-gun": [
-      3719
-    ],
-    "quoting/trench-assault": [
-      3723
-    ],
-    "sbed/acid": [
-      3728
-    ],
-    "sbed/acid-tube": [
-      3727
-    ],
-    "sbed/ammo-box": [
-      3729
-    ],
-    "sbed/blast": [
-      3734
-    ],
-    "sbed/blaster": [
-      3735
-    ],
-    "sbed/burn": [
-      3736
-    ],
-    "sbed/chaingun": [
-      3738
-    ],
-    "sbed/circular-saw": [
-      3739
-    ],
-    "sbed/claw": [
-      3740
-    ],
-    "sbed/crush": [
-      3743
-    ],
-    "sbed/doubled": [
-      3745
-    ],
-    "sbed/fire": [
-      3753
-    ],
-    "sbed/fireflake": [
-      3754
-    ],
-    "sbed/flake": [
-      3755
-    ],
-    "sbed/flamer": [
-      3756
-    ],
-    "sbed/grenade": [
-      3757
-    ],
-    "sbed/head-shot": [
-      3759
-    ],
-    "sbed/laser-gun": [
-      3770
-    ],
-    "sbed/lucifer-cannon": [
-      3778
-    ],
-    "sbed/mass-driver": [
-      3779
-    ],
-    "sbed/nuclear": [
-      3783
-    ],
-    "sbed/poison": [
-      3787
-    ],
-    "sbed/poison-cloud": [
-      3786
-    ],
-    "sbed/pounce": [
-      3788
-    ],
-    "sbed/rifle": [
-      3793
-    ],
-    "sbed/shotgun": [
-      3796
-    ],
-    "sbed/slow-blob": [
-      3797
-    ],
-    "sbed/spikeball": [
-      3800
-    ],
-    "sbed/spikes": [
-      3804
-    ],
-    "sbed/spikes-full": [
-      3801
-    ],
-    "sbed/spikes-half": [
-      3802
-    ],
-    "sbed/spikes-init": [
-      3803
-    ],
-    "sbed/target-laser": [
-      3808
-    ],
-    "sbed/targeted": [
-      3809
-    ],
-    "sbed/tesla": [
-      3811
-    ],
-    "sbed/trample": [
-      3813
-    ],
-    "skoll/ak47": [
-      3825
-    ],
-    "skoll/ak47u": [
-      3826
-    ],
-    "skoll/atom": [
-      3831
-    ],
-    "skoll/ballista": [
-      3834
-    ],
-    "skoll/baton": [
-      3836
-    ],
-    "skoll/bayonet": [
-      3837
-    ],
-    "skoll/bowie-knife": [
-      3840
-    ],
-    "skoll/bundle-grenade": [
-      3846
-    ],
-    "skoll/butterfly-knife": [
-      3848
-    ],
-    "skoll/c96": [
-      3849
-    ],
-    "skoll/colt-m1911": [
-      3861
-    ],
-    "skoll/crescent-blade": [
-      3864
-    ],
-    "skoll/cz-skorpion": [
-      3866
-    ],
-    "skoll/desert-eagle": [
-      3870
-    ],
-    "skoll/famas": [
-      3878
-    ],
-    "skoll/fn-fal": [
-      3885
-    ],
-    "skoll/gladius": [
-      3889
-    ],
-    "skoll/glock": [
-      3891
-    ],
-    "skoll/headshot": [
-      3897
-    ],
-    "skoll/laser-burst": [
-      3912
-    ],
-    "skoll/lee-enfield": [
-      3913
-    ],
-    "skoll/luger": [
-      3916
-    ],
-    "skoll/m3-grease-gun": [
-      3917
-    ],
-    "skoll/mac-10": [
-      3918
-    ],
-    "skoll/machine-gun": [
-      3919
-    ],
-    "skoll/mp-40": [
-      3923
-    ],
-    "skoll/mp5": [
-      3924
-    ],
-    "skoll/mp5k": [
-      3925
-    ],
-    "skoll/musket": [
-      3926
-    ],
-    "skoll/nuclear-bomb": [
-      3927
-    ],
-    "skoll/p90": [
-      3933
-    ],
-    "skoll/revolver": [
-      3952
-    ],
-    "skoll/siege-ram": [
-      3955
-    ],
-    "skoll/spectre-m4": [
-      3963
-    ],
-    "skoll/spiked-ball": [
-      3964
-    ],
-    "skoll/spiked-bat": [
-      3965
-    ],
-    "skoll/steel-claws": [
-      3969
-    ],
-    "skoll/steyr-aug": [
-      3971
-    ],
-    "skoll/stick-grenade": [
-      3972
-    ],
-    "skoll/stiletto": [
-      3973
-    ],
-    "skoll/switchblade": [
-      3976
-    ],
-    "skoll/tec-9": [
-      3980
-    ],
-    "skoll/telescopic-baton": [
-      3981
-    ],
-    "skoll/teller-mine": [
-      3982
-    ],
-    "skoll/thompson-m1": [
-      3983
-    ],
-    "skoll/thompson-m1928": [
-      3984
-    ],
-    "skoll/trench-knife": [
-      3987
-    ],
-    "skoll/walther-ppk": [
-      3990
-    ],
-    "skoll/winchester-rifle": [
-      3991
-    ],
-    "willdabeast/black-book": [
-      4120
-    ],
-    "willdabeast/white-book": [
-      4126
     ]
   },
   "Game-icons.net - Weather": {
-    "delapouite/sun-cloud": [
-      1938
-    ],
     "lorc/entangled-typhoon": [
       2692
     ],
@@ -12812,6 +12841,9 @@
     "lorc/snowing": [
       3363
     ],
+    "delapouite/sun-cloud": [
+      1938
+    ],
     "lorc/twister": [
       3600
     ],
@@ -12826,6 +12858,19 @@
     ],
     "lorc/wind-hole": [
       3651
+    ],
+    "delapouite/windsock": [
+      2194
+    ]
+  },
+  "Game-icons.net - Weight": {
+    "delapouite/weight": [
+      2181
+    ]
+  },
+  "Game-icons.net - Wisdom": {
+    "delapouite/wisdom": [
+      2201
     ]
   },
   "Game-icons.net - World": {
@@ -12845,6 +12890,9 @@
     ],
     "delapouite/aries": [
       278
+    ],
+    "delapouite/gemini": [
+      956
     ],
     "delapouite/taurus": [
       1982
