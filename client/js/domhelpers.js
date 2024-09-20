@@ -470,6 +470,7 @@ export async function loadSymbolPicker() {
       list += `<h2 class="${category.match(/Material|VTT/)?'fontCategory':'imageCategory'}">${category}</h2>`;
       for(const [ symbol, keywords ] of Object.entries(symbols)) {
         if(symbol.includes('/')) {
+          gameIconsIndex = keywords.pop();
           // increase resource limits in /etc/ImageMagick-6/policy.xml to 8GiB and then: montage -background none assets/game-icons.net/*/*.svg -geometry 48x48+0+0 -tile 60x assets/game-icons.net/overview.png
           list += `<i class="gameicons" title="game-icons.net: ${symbol}" data-type="game-icons" data-symbol="${symbol}" data-keywords="${symbol},${keywords.join().toLowerCase()}" style="--x:${gameIconsIndex%60};--y:${Math.floor(gameIconsIndex/60)};--url:url('i/game-icons.net/${symbol}.svg')"></i>`;
           ++gameIconsIndex;
@@ -493,7 +494,8 @@ export async function loadSymbolPicker() {
         toggleClass(icon, 'hidden', !icon.dataset.keywords.match(text));
       for(const title of $a('#symbolList h2'))
         toggleClass(title, 'hidden', text);
-      toggleClass($('#symbolPickerOverlay'), 'fewResults', $a('#symbolList i:not(.hidden)').length < 100);
+      toggleClass($('#symbolPickerOverlay'), 'fewResults', true);
+      toggleClass($('#symbolPickerOverlay'), 'bigPreviews', true);
     };
   }
 }
@@ -505,7 +507,7 @@ export async function pickSymbol(type='all', bigPreviews=true, closeOverlay=true
   await loadSymbolPicker();
   return new Promise((resolve, reject) => {
     showOverlay('symbolPickerOverlay');
-    $('#symbolPickerOverlay').classList.toggle('bigPreviews', bigPreviews);
+    $('#symbolPickerOverlay').classList.toggle('bigPreviews', true);
     $('#symbolPickerOverlay').classList.toggle('hideFonts',   type=='images');
     $('#symbolPickerOverlay').classList.toggle('hideImages',  type=='fonts');
     $('#symbolPickerOverlay').scrollTop = 0;
@@ -597,8 +599,8 @@ export function addRichtextControls(dom) {
 
     showStatesOverlay('symbolPickerOverlay');
     $('#symbolPickerOverlay').scrollTop = 0;
-    for(const c of [ 'bigPreviews', 'hideFonts', 'hideImages' ])
-      $('#symbolPickerOverlay').classList.remove(c);
+    //for(const c of [ 'bigPreviews', 'hideFonts', 'hideImages' ])
+    //  $('#symbolPickerOverlay').classList.remove(c);
     $('#symbolPickerOverlay input').value = '';
     $('#symbolPickerOverlay input').focus();
     $('#symbolPickerOverlay input').onkeyup();
