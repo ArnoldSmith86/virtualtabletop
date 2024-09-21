@@ -362,34 +362,69 @@
     ],
     "viscious-speed/abstract-121": [
       4119
-    ]
-  },
-  "Game-icons.net - Accessory": {
-    "delapouite/feather-necklace": [
-      835
     ],
-    "delapouite/fez": [
-      843
+    "delapouite/ages": [
+      231
     ],
-    "delapouite/flower-hat": [
-      897
-    ]
-  },
-  "Game-icons.net - Achievement": {
-    "skoll/achievement": [
-      3822
+    "delapouite/backward-time": [
+      312
     ],
-    "delapouite/medallist": [
-      1305
+    "delapouite/cube": [
+      664
     ],
-    "delapouite/trophies-shelf": [
-      2074
+    "delapouite/fast-backward-button": [
+      832
     ],
-    "delapouite/trophy-cup": [
-      2075
+    "delapouite/fast-forward-button": [
+      833
+    ],
+    "delapouite/histogram": [
+      1073
+    ],
+    "delapouite/hive-mind": [
+      1074
+    ],
+    "delapouite/idea": [
+      1123
+    ],
+    "delapouite/inspiration": [
+      1133
+    ],
+    "delapouite/knocked-out-stars": [
+      1194
+    ],
+    "delapouite/love-mystery": [
+      1265
+    ],
+    "delapouite/opposite-hearts": [
+      1436
+    ],
+    "lorc/twirl-center": [
+      3598
+    ],
+    "lorc/uncertainty": [
+      3607
+    ],
+    "lorc/wavy-chains": [
+      3637
+    ],
+    "lorc/windy-stripes": [
+      3653
+    ],
+    "lorc/wrapping-star": [
+      3677
+    ],
+    "lorc/zigzag-cage": [
+      3683
+    ],
+    "lorc/zigzag-tune": [
+      3685
     ]
   },
   "Game-icons.net - Action": {
+    "darkzaitzev/acrobatic": [
+      188
+    ],
     "lorc/all-for-one": [
       2268
     ],
@@ -423,8 +458,23 @@
     "lorc/boot-stomp": [
       2394
     ],
+    "delapouite/boulder-dash": [
+      414
+    ],
+    "darkzaitzev/catch": [
+      191
+    ],
+    "darkzaitzev/distraction": [
+      195
+    ],
+    "delapouite/distress-signal": [
+      721
+    ],
     "felbrigg/dodge": [
       2237
+    ],
+    "sbed/duel": [
+      3746
     ],
     "delapouite/eating": [
       769
@@ -435,8 +485,35 @@
     "delapouite/evasion": [
       804
     ],
+    "sbed/fall-down": [
+      3751
+    ],
+    "sbed/falling": [
+      3752
+    ],
+    "delapouite/falling-rocks": [
+      825
+    ],
+    "delapouite/flying-target": [
+      903
+    ],
     "lorc/high-five": [
       2892
+    ],
+    "delapouite/high-kick": [
+      1065
+    ],
+    "delapouite/high-punch": [
+      1066
+    ],
+    "delapouite/human-cannonball": [
+      1098
+    ],
+    "delapouite/human-pyramid": [
+      1100
+    ],
+    "delapouite/human-target": [
+      1101
     ],
     "delapouite/join": [
       1158
@@ -444,8 +521,14 @@
     "lorc/juggler": [
       2954
     ],
+    "delapouite/juggling-seal": [
+      1162
+    ],
     "delapouite/jump-across": [
       1163
+    ],
+    "delapouite/jumping-rope": [
+      1165
     ],
     "delapouite/kneeling": [
       1192
@@ -459,14 +542,32 @@
     "lorc/lift": [
       2990
     ],
+    "delapouite/lock-picking": [
+      1245
+    ],
     "delapouite/look-at": [
       1261
+    ],
+    "delapouite/lovers": [
+      1266
+    ],
+    "delapouite/lucky-fisherman": [
+      1269
+    ],
+    "delapouite/magick-trick": [
+      1280
+    ],
+    "delapouite/misdirection": [
+      1345
     ],
     "delapouite/move": [
       1369
     ],
     "delapouite/multi-directions": [
       1372
+    ],
+    "delapouite/multiple-targets": [
+      1373
     ],
     "delapouite/next-button": [
       1398
@@ -532,28 +633,6 @@
       2241
     ]
   },
-  "Game-icons.net - Activity": {
-    "delapouite/hiking": [
-      1069
-    ],
-    "delapouite/human-cannonball": [
-      1098
-    ],
-    "delapouite/human-pyramid": [
-      1100
-    ]
-  },
-  "Game-icons.net - Adventure": {
-    "delapouite/bindle": [
-      376
-    ],
-    "delapouite/boulder-dash": [
-      414
-    ],
-    "delapouite/box-unpacking": [
-      426
-    ]
-  },
   "Game-icons.net - Anatomy": {
     "lorc/front-teeth": [
       2800
@@ -608,6 +687,12 @@
     "lorc/alien-skull": [
       2266
     ],
+    "lorc/ammonite": [
+      2271
+    ],
+    "lorc/ammonite-fossil": [
+      2270
+    ],
     "lorc/angler-fish": [
       2278
     ],
@@ -625,6 +710,9 @@
     ],
     "lorc/apple-maggot": [
       2285
+    ],
+    "caro-asercion/archaeopteryx-fossil": [
+      62
     ],
     "delapouite/armadillo": [
       282
@@ -1055,6 +1143,9 @@
     "lorc/paw-print": [
       3153
     ],
+    "delapouite/peace-dove": [
+      1478
+    ],
     "skoll/pegasus": [
       3936
     ],
@@ -1126,6 +1217,9 @@
     ],
     "various-artists/salmon": [
       3998
+    ],
+    "caro-asercion/sauropod-skeleton": [
+      129
     ],
     "lorc/scallop": [
       3271
@@ -1284,11 +1378,6 @@
       2218
     ]
   },
-  "Game-icons.net - Appliance": {
-    "delapouite/gas-stove": [
-      950
-    ]
-  },
   "Game-icons.net - Architecture": {
     "delapouite/black-bridge": [
       382
@@ -1310,6 +1399,15 @@
     ],
     "delapouite/pagoda": [
       1451
+    ],
+    "delapouite/space-needle": [
+      1847
+    ],
+    "delapouite/sverd-i-fjell": [
+      1949
+    ],
+    "delapouite/sydney-opera-house": [
+      1963
     ],
     "delapouite/viking-church": [
       2131
@@ -1346,11 +1444,6 @@
     ],
     "delapouite/wood-frame": [
       2209
-    ]
-  },
-  "Game-icons.net - Arena": {
-    "sbed/arena": [
-      3730
     ]
   },
   "Game-icons.net - Armor": {
@@ -1508,11 +1601,6 @@
       3680
     ]
   },
-  "Game-icons.net - Arrows": {
-    "delapouite/plain-arrow": [
-      1539
-    ]
-  },
   "Game-icons.net - Art": {
     "delapouite/discobolus": [
       719
@@ -1546,87 +1634,6 @@
     ],
     "delapouite/pendulum-swing": [
       1489
-    ]
-  },
-  "Game-icons.net - Artifact": {
-    "delapouite/glowing-artifact": [
-      966
-    ]
-  },
-  "Game-icons.net - Astrology": {
-    "delapouite/globe-ring": [
-      964
-    ],
-    "delapouite/leo": [
-      1222
-    ],
-    "delapouite/libra": [
-      1227
-    ],
-    "delapouite/ophiuchus": [
-      1435
-    ],
-    "delapouite/pisces": [
-      1535
-    ],
-    "delapouite/virgo": [
-      2138
-    ]
-  },
-  "Game-icons.net - Astronomy": {
-    "delapouite/polar-star": [
-      1566
-    ]
-  },
-  "Game-icons.net - Award": {
-    "delapouite/laurels-trophy": [
-      1212
-    ]
-  },
-  "Game-icons.net - Awards": {
-    "delapouite/podium": [
-      1564
-    ],
-    "delapouite/podium-second": [
-      1561
-    ],
-    "delapouite/podium-third": [
-      1562
-    ],
-    "delapouite/podium-winner": [
-      1563
-    ],
-    "delapouite/ribbon-medal": [
-      1650
-    ]
-  },
-  "Game-icons.net - Bag": {
-    "delapouite/duffel-bag": [
-      753
-    ]
-  },
-  "Game-icons.net - Balance": {
-    "lorc/life-in-the-balance": [
-      2987
-    ],
-    "delapouite/unbalanced": [
-      2098
-    ]
-  },
-  "Game-icons.net - Barrier": {
-    "lorc/spiked-fence": [
-      3388
-    ]
-  },
-  "Game-icons.net - Beach": {
-    "delapouite/beach-bag": [
-      356
-    ],
-    "delapouite/beach-ball": [
-      357
-    ],
-    "delapouite/beach-bucket": [
-      358
     ]
   },
   "Game-icons.net - Body": {
@@ -1706,14 +1713,6 @@
       2032
     ]
   },
-  "Game-icons.net - Book": {
-    "delapouite/book-cover": [
-      404
-    ],
-    "delapouite/book-pile": [
-      405
-    ]
-  },
   "Game-icons.net - Building": {
     "delapouite/gate": [
       951
@@ -1741,6 +1740,15 @@
     ],
     "delapouite/mayan-pyramid": [
       1299
+    ],
+    "delapouite/medieval-barracks": [
+      1310
+    ],
+    "delapouite/medieval-gate": [
+      1311
+    ],
+    "delapouite/medieval-pavilion": [
+      1312
     ],
     "delapouite/open-gate": [
       1433
@@ -1800,52 +1808,6 @@
       2022
     ]
   },
-  "Game-icons.net - Button": {
-    "guard13007/pause-button": [
-      2244
-    ],
-    "guard13007/play-button": [
-      2245
-    ]
-  },
-  "Game-icons.net - Card": {
-    "lorc/ace": [
-      2257
-    ]
-  },
-  "Game-icons.net - Card Suit": {
-    "skoll/spades": [
-      3962
-    ]
-  },
-  "Game-icons.net - Cards": {
-    "delapouite/up-card": [
-      2105
-    ]
-  },
-  "Game-icons.net - Celebration": {
-    "delapouite/glass-celebration": [
-      963
-    ],
-    "delapouite/party-flags": [
-      1471
-    ],
-    "delapouite/party-hat": [
-      1472
-    ],
-    "delapouite/party-popper": [
-      1473
-    ],
-    "delapouite/pinata": [
-      1522
-    ],
-    "delapouite/present": [
-      1591
-    ],
-    "delapouite/ring-box": [
-      1652
-    ]
-  },
   "Game-icons.net - Character": {
     "delapouite/air-man": [
       233
@@ -1853,8 +1815,14 @@
     "delapouite/alien-bug": [
       241
     ],
+    "delapouite/angry-eyes": [
+      259
+    ],
     "delapouite/archer": [
       275
+    ],
+    "delapouite/baby-face": [
+      308
     ],
     "cathelineau/bad-gnome": [
       159
@@ -1874,8 +1842,23 @@
     "caro-asercion/cloaked-figure-on-horseback": [
       82
     ],
+    "delapouite/conqueror": [
+      611
+    ],
+    "lorc/conversation": [
+      2525
+    ],
+    "delapouite/convict": [
+      617
+    ],
     "kier-heyl/dwarf-king": [
       2255
+    ],
+    "delapouite/farmer": [
+      831
+    ],
+    "delapouite/female": [
+      839
     ],
     "cathelineau/fomorian": [
       170
@@ -1888,6 +1871,27 @@
     ],
     "darkzaitzev/hooded-figure": [
       200
+    ],
+    "lorc/king": [
+      2959
+    ],
+    "delapouite/liar": [
+      1225
+    ],
+    "delapouite/luchador": [
+      1268
+    ],
+    "delapouite/medallist": [
+      1305
+    ],
+    "delapouite/miner": [
+      1341
+    ],
+    "delapouite/monk-face": [
+      1355
+    ],
+    "delapouite/new-born": [
+      1396
     ],
     "darkzaitzev/ninja-head": [
       202
@@ -1907,11 +1911,23 @@
     "lorc/pyromaniac": [
       3204
     ],
+    "lorc/relationship-bounds": [
+      3227
+    ],
     "lorc/rogue": [
       3244
     ],
     "darkzaitzev/running-ninja": [
       210
+    ],
+    "lorc/strong": [
+      3470
+    ],
+    "delapouite/strong-man": [
+      1928
+    ],
+    "lorc/sunken-eye": [
+      3477
     ],
     "cathelineau/swordman": [
       180
@@ -1922,13 +1938,11 @@
     "cathelineau/transparent-slime": [
       183
     ],
+    "delapouite/van-damme-split": [
+      2118
+    ],
     "cathelineau/witch-face": [
       186
-    ]
-  },
-  "Game-icons.net - Charts": {
-    "delapouite/pie-chart": [
-      1515
     ]
   },
   "Game-icons.net - Clothing": {
@@ -1941,11 +1955,17 @@
     "delapouite/bandana": [
       325
     ],
+    "delapouite/bat-mask": [
+      352
+    ],
     "lucasms/belt": [
       3696
     ],
     "delapouite/billed-cap": [
       375
+    ],
+    "delapouite/black-belt": [
+      381
     ],
     "delapouite/blindfold": [
       387
@@ -1986,8 +2006,23 @@
     "delapouite/cowboy-boot": [
       639
     ],
+    "delapouite/custodian-helmet": [
+      668
+    ],
     "skoll/dress": [
       3874
+    ],
+    "delapouite/dunce-cap": [
+      754
+    ],
+    "delapouite/elbow-pad": [
+      782
+    ],
+    "lorc/fedora": [
+      2729
+    ],
+    "delapouite/fez": [
+      843
     ],
     "delapouite/flip-flops": [
       888
@@ -2043,8 +2078,20 @@
     "delapouite/magic-hat": [
       1277
     ],
+    "delapouite/moncler-jacket": [
+      1352
+    ],
     "lucasms/necklace": [
       3698
+    ],
+    "delapouite/necklace-display": [
+      1388
+    ],
+    "delapouite/outback-hat": [
+      1443
+    ],
+    "delapouite/party-hat": [
+      1472
     ],
     "delapouite/pilgrim-hat": [
       1518
@@ -2069,6 +2116,12 @@
     ],
     "delapouite/propeller-beanie": [
       1602
+    ],
+    "lorc/queen-crown": [
+      3206
+    ],
+    "delapouite/robber-mask": [
+      1659
     ],
     "lorc/robe": [
       3239
@@ -2133,6 +2186,9 @@
     "delapouite/tank-top": [
       1976
     ],
+    "delapouite/tiara": [
+      2013
+    ],
     "delapouite/tie": [
       2016
     ],
@@ -2191,63 +2247,6 @@
       2215
     ]
   },
-  "Game-icons.net - Combat": {
-    "sbed/duel": [
-      3746
-    ],
-    "delapouite/high-kick": [
-      1065
-    ],
-    "delapouite/high-punch": [
-      1066
-    ]
-  },
-  "Game-icons.net - Commerce": {
-    "delapouite/buy-card": [
-      464
-    ]
-  },
-  "Game-icons.net - Communication": {
-    "delapouite/megaphone": [
-      1318
-    ],
-    "delapouite/microphone": [
-      1332
-    ],
-    "delapouite/newspaper": [
-      1397
-    ]
-  },
-  "Game-icons.net - Concept": {
-    "lorc/uncertainty": [
-      3607
-    ]
-  },
-  "Game-icons.net - Container": {
-    "delapouite/strongbox": [
-      1929
-    ]
-  },
-  "Game-icons.net - Conversation": {
-    "delapouite/discussion": [
-      720
-    ]
-  },
-  "Game-icons.net - Cosmetic": {
-    "delapouite/lipstick": [
-      1241
-    ]
-  },
-  "Game-icons.net - Costume": {
-    "delapouite/bat-mask": [
-      352
-    ]
-  },
-  "Game-icons.net - Count": {
-    "delapouite/tally-mark-5": [
-      1973
-    ]
-  },
   "Game-icons.net - Country": {
     "delapouite/belgium": [
       368
@@ -2263,6 +2262,9 @@
     ],
     "delapouite/bulgaria": [
       449
+    ],
+    "delapouite/france": [
+      917
     ],
     "delapouite/kenya": [
       1172
@@ -2302,32 +2304,6 @@
     ],
     "delapouite/uruguay": [
       2109
-    ]
-  },
-  "Game-icons.net - Crafting": {
-    "delapouite/foundry-bucket": [
-      915
-    ],
-    "delapouite/full-metal-bucket": [
-      931
-    ],
-    "delapouite/full-metal-bucket-handle": [
-      930
-    ],
-    "delapouite/full-wood-bucket": [
-      935
-    ],
-    "delapouite/full-wood-bucket-handle": [
-      934
-    ],
-    "delapouite/furnace": [
-      939
-    ],
-    "lorc/stone-crafting": [
-      3455
-    ],
-    "lorc/sword-smithing": [
-      3499
     ]
   },
   "Game-icons.net - Creature": {
@@ -2493,6 +2469,9 @@
     "delapouite/school-of-fish": [
       1728
     ],
+    "skoll/sea-creature": [
+      3953
+    ],
     "lorc/sea-dragon": [
       3286
     ],
@@ -2538,6 +2517,9 @@
     "delapouite/skeletal-hand": [
       1796
     ],
+    "skoll/skeleton": [
+      3958
+    ],
     "delapouite/slime": [
       1811
     ],
@@ -2556,6 +2538,15 @@
     "lorc/split-body": [
       3412
     ],
+    "skoll/spotted-bug": [
+      3967
+    ],
+    "delapouite/stegosaurus-scales": [
+      1909
+    ],
+    "delapouite/t-rex-skull": [
+      1965
+    ],
     "lorc/triton-head": [
       3588
     ],
@@ -2567,42 +2558,6 @@
     ],
     "lorc/wyvern": [
       3679
-    ]
-  },
-  "Game-icons.net - Crime": {
-    "delapouite/chalk-outline-murder": [
-      534
-    ],
-    "delapouite/convict": [
-      617
-    ],
-    "delapouite/crime-scene-tape": [
-      649
-    ],
-    "delapouite/handcuffed": [
-      1025
-    ],
-    "delapouite/mug-shot": [
-      1371
-    ],
-    "delapouite/robber": [
-      1660
-    ],
-    "delapouite/robber-mask": [
-      1659
-    ],
-    "delapouite/wanted-reward": [
-      2152
-    ]
-  },
-  "Game-icons.net - Crown": {
-    "delapouite/tiara": [
-      2013
-    ]
-  },
-  "Game-icons.net - Crystal": {
-    "delapouite/glass-ball": [
-      962
     ]
   },
   "Game-icons.net - Culture": {
@@ -2635,37 +2590,6 @@
     ],
     "delapouite/matryoshka-dolls": [
       1297
-    ]
-  },
-  "Game-icons.net - Currency": {
-    "delapouite/rupee": [
-      1692
-    ],
-    "delapouite/two-coins": [
-      2092
-    ]
-  },
-  "Game-icons.net - Danger": {
-    "delapouite/radiations": [
-      1624
-    ]
-  },
-  "Game-icons.net - Data": {
-    "delapouite/histogram": [
-      1073
-    ]
-  },
-  "Game-icons.net - Death": {
-    "zajkonur/skull-with-syringe": [
-      4127
-    ]
-  },
-  "Game-icons.net - Decoration": {
-    "lorc/ribbon": [
-      3232
-    ],
-    "lorc/sharp-crown": [
-      3300
     ]
   },
   "Game-icons.net - Defense": {
@@ -2707,76 +2631,6 @@
     ],
     "delapouite/viking-shield": [
       2135
-    ]
-  },
-  "Game-icons.net - Delivery": {
-    "delapouite/stork-delivery": [
-      1923
-    ]
-  },
-  "Game-icons.net - Design": {
-    "lorc/radial-balance": [
-      3213
-    ],
-    "lorc/twirl-center": [
-      3598
-    ],
-    "lorc/wavy-chains": [
-      3637
-    ],
-    "lorc/wavy-itinerary": [
-      3638
-    ],
-    "lorc/windy-stripes": [
-      3653
-    ],
-    "lorc/wrapping-star": [
-      3677
-    ],
-    "lorc/zigzag-cage": [
-      3683
-    ]
-  },
-  "Game-icons.net - Dinosaur": {
-    "delapouite/stegosaurus-scales": [
-      1909
-    ],
-    "delapouite/t-rex-skull": [
-      1965
-    ]
-  },
-  "Game-icons.net - Disaster": {
-    "delapouite/flood": [
-      892
-    ]
-  },
-  "Game-icons.net - Document": {
-    "delapouite/diploma": [
-      713
-    ]
-  },
-  "Game-icons.net - Drink": {
-    "delapouite/beer-bottle": [
-      365
-    ],
-    "delapouite/beer-horn": [
-      366
-    ],
-    "delapouite/booze": [
-      410
-    ],
-    "delapouite/drinking": [
-      748
-    ]
-  },
-  "Game-icons.net - Economy": {
-    "lorc/trade": [
-      3563
-    ]
-  },
-  "Game-icons.net - Effect": {
-    "delapouite/knocked-out-stars": [
-      1194
     ]
   },
   "Game-icons.net - Emotion": {
@@ -2881,58 +2735,9 @@
     ],
     "lorc/terror": [
       3526
-    ]
-  },
-  "Game-icons.net - Energy": {
-    "delapouite/green-power": [
-      994
     ],
-    "delapouite/heart-battery": [
-      1041
-    ]
-  },
-  "Game-icons.net - Entertainment": {
-    "delapouite/juggling-clubs": [
-      1161
-    ],
-    "delapouite/juggling-seal": [
-      1162
-    ],
-    "delapouite/luchador": [
-      1268
-    ],
-    "delapouite/magick-trick": [
-      1280
-    ],
-    "delapouite/theater-curtains": [
-      2000
-    ]
-  },
-  "Game-icons.net - Environment": {
-    "sbed/hot-surface": [
-      3766
-    ],
-    "sbed/lava": [
-      3771
-    ],
-    "sbed/splash": [
-      3805
-    ],
-    "sbed/water-drop": [
-      3819
-    ]
-  },
-  "Game-icons.net - Event": {
-    "delapouite/inauguration": [
-      1126
-    ],
-    "lorc/rally-the-troops": [
-      3218
-    ]
-  },
-  "Game-icons.net - Events": {
-    "delapouite/red-carpet": [
-      1638
+    "lorc/worried-eyes": [
+      3674
     ]
   },
   "Game-icons.net - Explosion": {
@@ -2965,29 +2770,6 @@
     ],
     "lorc/spiky-explosion": [
       3396
-    ]
-  },
-  "Game-icons.net - Expression": {
-    "lorc/worried-eyes": [
-      3674
-    ]
-  },
-  "Game-icons.net - Eye": {
-    "delapouite/egg-eye": [
-      772
-    ]
-  },
-  "Game-icons.net - Face": {
-    "delapouite/angry-eyes": [
-      259
-    ],
-    "delapouite/baby-face": [
-      308
-    ]
-  },
-  "Game-icons.net - Family": {
-    "delapouite/new-born": [
-      1396
     ]
   },
   "Game-icons.net - Fantasy": {
@@ -3042,8 +2824,14 @@
     "delapouite/moon-bats": [
       1360
     ],
+    "delapouite/mummy-head": [
+      1374
+    ],
     "delapouite/mushroom-house": [
       1376
+    ],
+    "delapouite/neck-bite": [
+      1387
     ],
     "delapouite/ninja-armor": [
       1402
@@ -3062,6 +2850,9 @@
     ],
     "delapouite/overlord-helm": [
       1444
+    ],
+    "delapouite/spooky-house": [
+      1876
     ],
     "delapouite/totem": [
       2037
@@ -3095,80 +2886,6 @@
     ],
     "delapouite/woman-elf-face": [
       2204
-    ]
-  },
-  "Game-icons.net - Fashion": {
-    "delapouite/moncler-jacket": [
-      1352
-    ],
-    "delapouite/necklace-display": [
-      1388
-    ],
-    "delapouite/outback-hat": [
-      1443
-    ]
-  },
-  "Game-icons.net - Fictional": {
-    "delapouite/klingon": [
-      1188
-    ],
-    "delapouite/koholint-egg": [
-      1197
-    ],
-    "delapouite/light-sabers": [
-      1235
-    ],
-    "delapouite/lunar-wand": [
-      1271
-    ]
-  },
-  "Game-icons.net - Finance": {
-    "delapouite/money-stack": [
-      1353
-    ],
-    "delapouite/pay-money": [
-      1477
-    ],
-    "delapouite/piggy-bank": [
-      1516
-    ],
-    "delapouite/price-tag": [
-      1594
-    ],
-    "lorc/profit": [
-      3196
-    ],
-    "delapouite/receive-money": [
-      1637
-    ]
-  },
-  "Game-icons.net - Fire": {
-    "lorc/small-fire": [
-      3349
-    ]
-  },
-  "Game-icons.net - Fitness": {
-    "delapouite/jumping-rope": [
-      1165
-    ]
-  },
-  "Game-icons.net - Flag": {
-    "delapouite/star-flag": [
-      1894
-    ]
-  },
-  "Game-icons.net - Flags": {
-    "delapouite/pirate-flag": [
-      1531
-    ],
-    "delapouite/trumpet-flag": [
-      2080
-    ],
-    "delapouite/tusks-flag": [
-      2088
-    ],
-    "delapouite/vertical-banner": [
-      2125
     ]
   },
   "Game-icons.net - Food": {
@@ -3529,6 +3246,9 @@
     "delapouite/tangerine": [
       1975
     ],
+    "delapouite/teapot-leaves": [
+      1988
+    ],
     "delapouite/tomato": [
       2031
     ],
@@ -3537,25 +3257,6 @@
     ],
     "lorc/wrapped-sweet": [
       3676
-    ]
-  },
-  "Game-icons.net - Fossil": {
-    "lorc/ammonite": [
-      2271
-    ],
-    "lorc/ammonite-fossil": [
-      2270
-    ],
-    "caro-asercion/archaeopteryx-fossil": [
-      62
-    ],
-    "caro-asercion/sauropod-skeleton": [
-      129
-    ]
-  },
-  "Game-icons.net - Friends": {
-    "delapouite/three-friends": [
-      2006
     ]
   },
   "Game-icons.net - Furniture": {
@@ -3591,6 +3292,12 @@
     ],
     "delapouite/director-chair": [
       716
+    ],
+    "delapouite/office-chair": [
+      1420
+    ],
+    "delapouite/park-bench": [
+      1470
     ],
     "delapouite/rocking-chair": [
       1668
@@ -3744,6 +3451,12 @@
     "aussiesim/card-ace-spades": [
       41
     ],
+    "faithtoken/card-discard": [
+      2227
+    ],
+    "faithtoken/card-draw": [
+      2228
+    ],
     "aussiesim/card-jack-clubs": [
       42
     ],
@@ -3768,6 +3481,9 @@
     "aussiesim/card-king-spades": [
       49
     ],
+    "faithtoken/card-pick": [
+      2229
+    ],
     "quoting/card-pickup": [
       3716
     ],
@@ -3785,6 +3501,9 @@
     ],
     "aussiesim/card-queen-spades": [
       53
+    ],
+    "faithtoken/card-random": [
+      2230
     ],
     "skoll/chess-bishop": [
       3852
@@ -3890,6 +3609,24 @@
     ],
     "delapouite/level-end-flag": [
       1224
+    ],
+    "sbed/level-four": [
+      3773
+    ],
+    "sbed/level-four-advanced": [
+      3772
+    ],
+    "sbed/level-three": [
+      3775
+    ],
+    "sbed/level-three-advanced": [
+      3774
+    ],
+    "sbed/level-two": [
+      3777
+    ],
+    "sbed/level-two-advanced": [
+      3776
     ],
     "delapouite/marbles": [
       1291
@@ -4002,8 +3739,23 @@
     "delapouite/tabletop-players": [
       1968
     ],
+    "delapouite/team-downgrade": [
+      1985
+    ],
+    "delapouite/team-idea": [
+      1986
+    ],
+    "delapouite/team-upgrade": [
+      1987
+    ],
     "delapouite/tic-tac-toe": [
       2014
+    ],
+    "delapouite/tightrope": [
+      2019
+    ],
+    "delapouite/up-card": [
+      2105
     ]
   },
   "Game-icons.net - Gear": {
@@ -4041,22 +3793,6 @@
       1907
     ]
   },
-  "Game-icons.net - Gem": {
-    "skoll/amethyst": [
-      3828
-    ],
-    "delapouite/fire-gem": [
-      855
-    ],
-    "lorc/saphir": [
-      3266
-    ]
-  },
-  "Game-icons.net - Gemstone": {
-    "skoll/topaz": [
-      3985
-    ]
-  },
   "Game-icons.net - Geography": {
     "delapouite/africa": [
       229
@@ -4075,6 +3811,15 @@
     ],
     "delapouite/black-sea": [
       384
+    ],
+    "delapouite/earth-africa-europe": [
+      764
+    ],
+    "delapouite/earth-america": [
+      765
+    ],
+    "delapouite/earth-asia-oceania": [
+      766
     ],
     "delapouite/mexico": [
       1331
@@ -4110,12 +3855,13 @@
       1937
     ]
   },
-  "Game-icons.net - Geometric": {
-    "delapouite/cube": [
-      664
-    ]
-  },
   "Game-icons.net - Gesture": {
+    "delapouite/discussion": [
+      720
+    ],
+    "delapouite/face-to-face": [
+      818
+    ],
     "delapouite/hand-ok": [
       1021
     ],
@@ -4145,54 +3891,6 @@
     ],
     "delapouite/thumb-up": [
       2011
-    ]
-  },
-  "Game-icons.net - Goal": {
-    "delapouite/stairs-goal": [
-      1887
-    ]
-  },
-  "Game-icons.net - Group": {
-    "lorc/dark-squad": [
-      2594
-    ]
-  },
-  "Game-icons.net - Hat": {
-    "delapouite/dunce-cap": [
-      754
-    ]
-  },
-  "Game-icons.net - Hazard": {
-    "delapouite/falling-rocks": [
-      825
-    ],
-    "lorc/radioactive": [
-      3214
-    ]
-  },
-  "Game-icons.net - Headgear": {
-    "delapouite/custodian-helmet": [
-      668
-    ],
-    "delapouite/diving-helmet": [
-      722
-    ]
-  },
-  "Game-icons.net - Healing": {
-    "delapouite/healing": [
-      1037
-    ],
-    "delapouite/health-capsule": [
-      1038
-    ],
-    "delapouite/health-potion": [
-      1039
-    ],
-    "delapouite/heart-beats": [
-      1042
-    ],
-    "delapouite/remedy": [
-      1642
     ]
   },
   "Game-icons.net - Health": {
@@ -4280,6 +3978,9 @@
     "lorc/death-zone": [
       2599
     ],
+    "lorc/doctor-face": [
+      2627
+    ],
     "skoll/fat": [
       3880
     ],
@@ -4288,6 +3989,15 @@
     ],
     "delapouite/foot-plaster": [
       907
+    ],
+    "delapouite/hazmat-suit": [
+      1033
+    ],
+    "delapouite/healing": [
+      1037
+    ],
+    "delapouite/health-capsule": [
+      1038
     ],
     "sbed/health-decrease": [
       3760
@@ -4298,14 +4008,26 @@
     "sbed/health-normal": [
       3762
     ],
+    "delapouite/health-potion": [
+      1039
+    ],
     "skoll/hearing-disabled": [
       3898
+    ],
+    "delapouite/heart-beats": [
+      1042
+    ],
+    "sbed/hot-surface": [
+      3766
     ],
     "skoll/joint": [
       3909
     ],
     "delapouite/life-bar": [
       1229
+    ],
+    "delapouite/liquid-soap": [
+      1242
     ],
     "quoting/lost-limb": [
       3720
@@ -4319,14 +4041,53 @@
     "quoting/military-ambulance": [
       3721
     ],
+    "delapouite/night-sleep": [
+      1400
+    ],
+    "lorc/pill": [
+      3168
+    ],
+    "lorc/pill-drop": [
+      3167
+    ],
+    "lorc/poison-bottle": [
+      3182
+    ],
+    "lorc/poison-gas": [
+      3183
+    ],
+    "lorc/ragged-wound": [
+      3215
+    ],
     "sbed/regeneration": [
       3791
+    ],
+    "delapouite/remedy": [
+      1642
+    ],
+    "lorc/rough-wound": [
+      3250
+    ],
+    "lorc/scar-wound": [
+      3274
+    ],
+    "zajkonur/skull-with-syringe": [
+      4127
+    ],
+    "lorc/spotted-wound": [
+      3419
     ],
     "delapouite/stethoscope": [
       1910
     ],
+    "lorc/stitched-wound": [
+      3450
+    ],
     "delapouite/stomach": [
       1914
+    ],
+    "lorc/sword-wound": [
+      3503
     ],
     "sbed/syringe": [
       3807
@@ -4351,26 +4112,6 @@
     ],
     "lorc/vomiting": [
       3626
-    ]
-  },
-  "Game-icons.net - Historical": {
-    "delapouite/caesar": [
-      473
-    ],
-    "delapouite/caveman": [
-      523
-    ],
-    "delapouite/cleopatra": [
-      576
-    ],
-    "delapouite/conqueror": [
-      611
-    ],
-    "delapouite/coronation": [
-      631
-    ],
-    "delapouite/crook-flail": [
-      651
     ]
   },
   "Game-icons.net - History": {
@@ -4429,120 +4170,6 @@
       2177
     ]
   },
-  "Game-icons.net - Hobby": {
-    "delapouite/lucky-fisherman": [
-      1269
-    ]
-  },
-  "Game-icons.net - Holiday": {
-    "delapouite/easter-egg": [
-      767
-    ]
-  },
-  "Game-icons.net - Horror": {
-    "delapouite/mummy-head": [
-      1374
-    ],
-    "delapouite/neck-bite": [
-      1387
-    ],
-    "delapouite/spooky-house": [
-      1876
-    ]
-  },
-  "Game-icons.net - Household": {
-    "delapouite/basket": [
-      345
-    ],
-    "delapouite/family-house": [
-      828
-    ],
-    "delapouite/moka-pot": [
-      1349
-    ],
-    "delapouite/old-lantern": [
-      1426
-    ],
-    "delapouite/opened-food-can": [
-      1434
-    ]
-  },
-  "Game-icons.net - Human": {
-    "lorc/doctor-face": [
-      2627
-    ],
-    "lorc/eskimo": [
-      2696
-    ],
-    "lorc/evil-minion": [
-      2703
-    ],
-    "lorc/fedora": [
-      2729
-    ]
-  },
-  "Game-icons.net - Humor": {
-    "lorc/turd": [
-      3594
-    ]
-  },
-  "Game-icons.net - Hygiene": {
-    "delapouite/liquid-soap": [
-      1242
-    ]
-  },
-  "Game-icons.net - Icon": {
-    "delapouite/sherlock-holmes": [
-      1765
-    ]
-  },
-  "Game-icons.net - Identity": {
-    "delapouite/id-card": [
-      1122
-    ]
-  },
-  "Game-icons.net - Impact": {
-    "lorc/screen-impact": [
-      3281
-    ],
-    "lorc/skid-mark": [
-      3332
-    ]
-  },
-  "Game-icons.net - Injury": {
-    "lorc/ragged-wound": [
-      3215
-    ],
-    "lorc/rough-wound": [
-      3250
-    ],
-    "lorc/scar-wound": [
-      3274
-    ],
-    "lorc/spotted-wound": [
-      3419
-    ],
-    "lorc/stitched-wound": [
-      3450
-    ],
-    "lorc/sunken-eye": [
-      3477
-    ],
-    "lorc/sword-wound": [
-      3503
-    ],
-    "lorc/thunder-struck": [
-      3546
-    ],
-    "lorc/tooth": [
-      3555
-    ]
-  },
-  "Game-icons.net - Insect": {
-    "skoll/spotted-bug": [
-      3967
-    ]
-  },
   "Game-icons.net - Instrument": {
     "caro-asercion/accordion": [
       60
@@ -4591,14 +4218,6 @@
     ],
     "delapouite/yunluo": [
       2222
-    ]
-  },
-  "Game-icons.net - Interaction": {
-    "lorc/conversation": [
-      2525
-    ],
-    "delapouite/face-to-face": [
-      818
     ]
   },
   "Game-icons.net - Item": {
@@ -4853,8 +4472,14 @@
     ]
   },
   "Game-icons.net - Jewelry": {
+    "skoll/amethyst": [
+      3828
+    ],
     "skoll/big-diamond-ring": [
       3838
+    ],
+    "delapouite/diamond-ring": [
+      696
     ],
     "delapouite/double-necklace": [
       738
@@ -4906,96 +4531,9 @@
     ],
     "lorc/skull-signet": [
       3340
-    ]
-  },
-  "Game-icons.net - Job": {
-    "delapouite/miner": [
-      1341
     ],
-    "delapouite/mining-helmet": [
-      1344
-    ]
-  },
-  "Game-icons.net - Justice": {
-    "delapouite/tribunal-jury": [
-      2064
-    ]
-  },
-  "Game-icons.net - Knowledge": {
-    "lorc/gift-of-knowledge": [
-      2823
-    ]
-  },
-  "Game-icons.net - Landmark": {
-    "delapouite/space-needle": [
-      1847
-    ],
-    "delapouite/sverd-i-fjell": [
-      1949
-    ],
-    "delapouite/sydney-opera-house": [
-      1963
-    ]
-  },
-  "Game-icons.net - Level": {
-    "sbed/level-four": [
-      3773
-    ],
-    "sbed/level-four-advanced": [
-      3772
-    ],
-    "sbed/level-three": [
-      3775
-    ],
-    "sbed/level-three-advanced": [
-      3774
-    ],
-    "sbed/level-two": [
-      3777
-    ],
-    "sbed/level-two-advanced": [
-      3776
-    ]
-  },
-  "Game-icons.net - Light": {
-    "lorc/candle-flame": [
-      2455
-    ],
-    "lorc/candle-light": [
-      2457
-    ],
-    "lorc/candlebright": [
-      2459
-    ],
-    "lorc/celebration-fire": [
-      2474
-    ],
-    "lorc/crystal-shine": [
-      2573
-    ]
-  },
-  "Game-icons.net - Location": {
-    "delapouite/position-marker": [
-      1581
-    ]
-  },
-  "Game-icons.net - Love": {
-    "delapouite/love-letter": [
-      1264
-    ],
-    "delapouite/lovers": [
-      1266
-    ],
-    "lorc/royal-love": [
-      3253
-    ]
-  },
-  "Game-icons.net - Luxury": {
-    "delapouite/delicate-perfume": [
-      685
-    ],
-    "delapouite/diamond-ring": [
-      696
+    "skoll/topaz": [
+      3985
     ]
   },
   "Game-icons.net - Magic": {
@@ -5266,6 +4804,9 @@
     "lorc/portal": [
       3187
     ],
+    "starseeker/potion-of-madness": [
+      3996
+    ],
     "lorc/power-lightning": [
       3192
     ],
@@ -5277,6 +4818,12 @@
     ],
     "lorc/rainbow-star": [
       3216
+    ],
+    "skoll/raise-skeleton": [
+      3945
+    ],
+    "skoll/raise-zombie": [
+      3946
     ],
     "skoll/read": [
       3950
@@ -5384,73 +4931,6 @@
       3663
     ]
   },
-  "Game-icons.net - Martial Arts": {
-    "delapouite/black-belt": [
-      381
-    ],
-    "delapouite/van-damme-split": [
-      2118
-    ]
-  },
-  "Game-icons.net - Mask": {
-    "lorc/bird-mask": [
-      2358
-    ],
-    "delapouite/devil-mask": [
-      693
-    ],
-    "delapouite/executioner-hood": [
-      807
-    ],
-    "delapouite/jason-mask": [
-      1148
-    ],
-    "lorc/totem-mask": [
-      3561
-    ],
-    "lorc/trap-mask": [
-      3567
-    ],
-    "lorc/tribal-mask": [
-      3573
-    ]
-  },
-  "Game-icons.net - Material": {
-    "lorc/diamond-hard": [
-      2611
-    ],
-    "lorc/emerald": [
-      2682
-    ],
-    "faithtoken/minerals": [
-      2233
-    ],
-    "faithtoken/ore": [
-      2236
-    ],
-    "delapouite/wool": [
-      2217
-    ],
-    "delapouite/yarn": [
-      2220
-    ],
-    "delapouite/z-brick": [
-      2223
-    ]
-  },
-  "Game-icons.net - Medal": {
-    "delapouite/star-medal": [
-      1898
-    ]
-  },
-  "Game-icons.net - Media": {
-    "delapouite/fast-backward-button": [
-      832
-    ],
-    "delapouite/fast-forward-button": [
-      833
-    ]
-  },
   "Game-icons.net - Medical": {
     "delapouite/knee-bandage": [
       1189
@@ -5484,30 +4964,6 @@
     ],
     "lorc/syringe": [
       3505
-    ]
-  },
-  "Game-icons.net - Medicine": {
-    "lorc/pill": [
-      3168
-    ],
-    "lorc/pill-drop": [
-      3167
-    ]
-  },
-  "Game-icons.net - Medieval": {
-    "delapouite/medieval-barracks": [
-      1310
-    ],
-    "delapouite/medieval-gate": [
-      1311
-    ],
-    "delapouite/medieval-pavilion": [
-      1312
-    ]
-  },
-  "Game-icons.net - Memorial": {
-    "delapouite/martyr-memorial": [
-      1295
     ]
   },
   "Game-icons.net - Military": {
@@ -5878,66 +5334,6 @@
       219
     ]
   },
-  "Game-icons.net - Mind": {
-    "delapouite/hive-mind": [
-      1074
-    ],
-    "delapouite/idea": [
-      1123
-    ],
-    "delapouite/inspiration": [
-      1133
-    ]
-  },
-  "Game-icons.net - Mining": {
-    "delapouite/gold-mine": [
-      970
-    ],
-    "delapouite/gold-nuggets": [
-      971
-    ],
-    "delapouite/gold-stack": [
-      972
-    ]
-  },
-  "Game-icons.net - Monster": {
-    "lorc/cyclops": [
-      2590
-    ],
-    "lorc/daemon-skull": [
-      2591
-    ]
-  },
-  "Game-icons.net - Monsters": {
-    "delapouite/resting-vampire": [
-      1646
-    ]
-  },
-  "Game-icons.net - Monument": {
-    "delapouite/obelisk": [
-      1416
-    ]
-  },
-  "Game-icons.net - Movement": {
-    "sbed/fall-down": [
-      3751
-    ],
-    "sbed/falling": [
-      3752
-    ],
-    "lorc/tread": [
-      3568
-    ],
-    "lorc/tyre": [
-      3603
-    ],
-    "delapouite/walk": [
-      2145
-    ],
-    "lorc/wingfoot": [
-      3661
-    ]
-  },
   "Game-icons.net - Music": {
     "delapouite/bagpipes": [
       315
@@ -6024,20 +5420,13 @@
       2187
     ]
   },
-  "Game-icons.net - Mystery": {
-    "delapouite/love-mystery": [
-      1265
-    ]
-  },
-  "Game-icons.net - Mystic": {
+  "Game-icons.net - Mystical": {
     "delapouite/dream-catcher": [
       746
     ],
     "delapouite/elysium-shade": [
       789
-    ]
-  },
-  "Game-icons.net - Mystical": {
+    ],
     "lorc/spark-spirit": [
       3374
     ],
@@ -6105,27 +5494,16 @@
       3545
     ]
   },
-  "Game-icons.net - Myth": {
-    "delapouite/drakkar": [
-      744
-    ],
-    "delapouite/drakkar-dragon": [
-      743
-    ],
-    "delapouite/trinacria": [
-      2068
-    ],
-    "delapouite/triple-gate": [
-      2069
-    ],
-    "delapouite/trireme": [
-      2071
-    ],
-    "delapouite/trojan-horse": [
-      2073
-    ]
-  },
   "Game-icons.net - Mythical": {
+    "lorc/angel-outfit": [
+      2276
+    ],
+    "lorc/angel-wings": [
+      2277
+    ],
+    "lorc/bird-mask": [
+      2358
+    ],
     "delapouite/centaur": [
       529
     ],
@@ -6135,26 +5513,128 @@
     "delapouite/cosmic-egg": [
       635
     ],
+    "lorc/cultist": [
+      2578
+    ],
+    "lorc/cyclops": [
+      2590
+    ],
+    "lorc/daemon-skull": [
+      2591
+    ],
+    "lorc/dark-squad": [
+      2594
+    ],
+    "lorc/eskimo": [
+      2696
+    ],
+    "lorc/evil-minion": [
+      2703
+    ],
+    "delapouite/fire-gem": [
+      855
+    ],
+    "delapouite/fire-iris": [
+      856
+    ],
+    "delapouite/fire-shrine": [
+      857
+    ],
+    "delapouite/globe-ring": [
+      964
+    ],
+    "delapouite/glowing-artifact": [
+      966
+    ],
     "delapouite/kraken-tentacle": [
       1198
+    ],
+    "delapouite/lunar-wand": [
+      1271
+    ],
+    "lorc/mantrap": [
+      3044
+    ],
+    "lorc/nailed-foot": [
+      3109
+    ],
+    "lorc/nailed-head": [
+      3110
+    ],
+    "lorc/pumpkin-lantern": [
+      3199
+    ],
+    "lorc/pumpkin-mask": [
+      3200
+    ],
+    "lorc/rally-the-troops": [
+      3218
+    ],
+    "delapouite/resting-vampire": [
+      1646
+    ],
+    "delapouite/robber": [
+      1660
+    ],
+    "lorc/scarecrow": [
+      3276
+    ],
+    "lorc/sinking-trap": [
+      3327
     ],
     "skoll/siren": [
       3957
     ],
+    "lorc/snow-bottle": [
+      3360
+    ],
+    "lorc/snowman": [
+      3364
+    ],
+    "lorc/spartan": [
+      3378
+    ],
     "delapouite/spiked-dragon-head": [
       1865
+    ],
+    "lorc/spiky-field": [
+      3397
     ],
     "delapouite/spiky-wing": [
       1871
     ],
+    "delapouite/spy": [
+      1879
+    ],
+    "delapouite/stork-delivery": [
+      1923
+    ],
     "delapouite/swallower": [
       1951
+    ],
+    "lorc/target-dummy": [
+      3508
+    ],
+    "delapouite/throne-king": [
+      2007
     ],
     "delapouite/thwomp": [
       2012
     ],
+    "lorc/totem-mask": [
+      3561
+    ],
+    "lorc/trap-mask": [
+      3567
+    ],
+    "lorc/tribal-mask": [
+      3573
+    ],
     "skoll/troll": [
       3989
+    ],
+    "delapouite/ufo": [
+      2095
     ]
   },
   "Game-icons.net - Mythology": {
@@ -6167,14 +5647,53 @@
     "delapouite/anubis": [
       266
     ],
+    "delapouite/aquarius": [
+      270
+    ],
+    "delapouite/aries": [
+      278
+    ],
     "delapouite/atlas": [
       296
     ],
     "delapouite/bastet": [
       350
     ],
+    "delapouite/caesar": [
+      473
+    ],
+    "delapouite/caveman": [
+      523
+    ],
+    "delapouite/cleopatra": [
+      576
+    ],
+    "delapouite/coronation": [
+      631
+    ],
+    "delapouite/devil-mask": [
+      693
+    ],
+    "delapouite/drakkar": [
+      744
+    ],
+    "delapouite/drakkar-dragon": [
+      743
+    ],
+    "delapouite/egyptian-profile": [
+      775
+    ],
+    "delapouite/executioner-hood": [
+      807
+    ],
+    "delapouite/figurehead": [
+      844
+    ],
     "delapouite/galaxy": [
       941
+    ],
+    "delapouite/gemini": [
+      956
     ],
     "delapouite/hades-symbol": [
       1008
@@ -6203,6 +5722,42 @@
     "delapouite/icarus": [
       1111
     ],
+    "delapouite/inauguration": [
+      1126
+    ],
+    "delapouite/jason-mask": [
+      1148
+    ],
+    "delapouite/klingon": [
+      1188
+    ],
+    "delapouite/leo": [
+      1222
+    ],
+    "delapouite/libra": [
+      1227
+    ],
+    "delapouite/martyr-memorial": [
+      1295
+    ],
+    "delapouite/obelisk": [
+      1416
+    ],
+    "delapouite/ophiuchus": [
+      1435
+    ],
+    "delapouite/trinacria": [
+      2068
+    ],
+    "delapouite/triple-gate": [
+      2069
+    ],
+    "delapouite/trireme": [
+      2071
+    ],
+    "delapouite/trojan-horse": [
+      2073
+    ],
     "delapouite/vampire-dracula": [
       2117
     ],
@@ -6211,11 +5766,6 @@
     ],
     "delapouite/winged-scepter": [
       2196
-    ]
-  },
-  "Game-icons.net - Nation": {
-    "delapouite/france": [
-      917
     ]
   },
   "Game-icons.net - Nature": {
@@ -6284,6 +5834,15 @@
     ],
     "delapouite/baobab": [
       331
+    ],
+    "delapouite/beach-bag": [
+      356
+    ],
+    "delapouite/beach-ball": [
+      357
+    ],
+    "delapouite/beach-bucket": [
+      358
     ],
     "lorc/beanstalk": [
       2342
@@ -6591,6 +6150,9 @@
     "lorc/flat-paw-print": [
       2766
     ],
+    "delapouite/flax": [
+      884
+    ],
     "lorc/fleshy-mass": [
       2768
     ],
@@ -6690,6 +6252,9 @@
     "delapouite/grave-flowers": [
       987
     ],
+    "delapouite/green-power": [
+      994
+    ],
     "lorc/ground-sprout": [
       2850
     ],
@@ -6749,6 +6314,9 @@
     ],
     "lorc/kindle": [
       2958
+    ],
+    "sbed/lava": [
+      3771
     ],
     "lorc/leaf-skeleton": [
       2979
@@ -7124,6 +6692,9 @@
     "lorc/acid-blob": [
       2258
     ],
+    "delapouite/alarm-clock": [
+      238
+    ],
     "lorc/alligator-clip": [
       2269
     ],
@@ -7139,8 +6710,14 @@
     "lorc/architect-mask": [
       2288
     ],
+    "delapouite/aspergillum": [
+      293
+    ],
     "lorc/assassin-pocket": [
       2302
+    ],
+    "delapouite/balloon-dog": [
+      318
     ],
     "lorc/balloons": [
       2320
@@ -7148,20 +6725,50 @@
     "lorc/barefoot": [
       2331
     ],
+    "delapouite/basket": [
+      345
+    ],
+    "delapouite/beer-bottle": [
+      365
+    ],
+    "delapouite/beer-horn": [
+      366
+    ],
     "lorc/beer-stein": [
       2347
+    ],
+    "lorc/bell-shield": [
+      2350
     ],
     "lorc/belt-buckles": [
       2351
     ],
+    "delapouite/bindle": [
+      376
+    ],
+    "delapouite/blacksmith": [
+      385
+    ],
     "caro-asercion/boarding-pass": [
       72
+    ],
+    "delapouite/book-cover": [
+      404
     ],
     "lorc/book-cover": [
       2387
     ],
+    "delapouite/book-pile": [
+      405
+    ],
     "lorc/bookmark": [
       2389
+    ],
+    "delapouite/booze": [
+      410
+    ],
+    "delapouite/box-unpacking": [
+      426
     ],
     "lorc/broken-ribbon": [
       2424
@@ -7181,11 +6788,26 @@
     "lorc/caged-ball": [
       2451
     ],
+    "delapouite/calendar": [
+      478
+    ],
+    "delapouite/calendar-half-year": [
+      477
+    ],
     "delapouite/camp-cooking-pot": [
       484
     ],
     "delapouite/camping-tent": [
       485
+    ],
+    "lorc/candle-flame": [
+      2455
+    ],
+    "lorc/candle-light": [
+      2457
+    ],
+    "lorc/candlebright": [
+      2459
     ],
     "delapouite/candles": [
       487
@@ -7280,6 +6902,9 @@
     "delapouite/clown": [
       586
     ],
+    "delapouite/coal-pile": [
+      589
+    ],
     "delapouite/coffee-cup": [
       594
     ],
@@ -7289,11 +6914,20 @@
     "caro-asercion/coinflip": [
       85
     ],
+    "delapouite/coins": [
+      598
+    ],
+    "delapouite/coins-pile": [
+      597
+    ],
     "delapouite/column-vase": [
       602
     ],
     "delapouite/companion-cube": [
       605
+    ],
+    "delapouite/concrete-bag": [
+      607
     ],
     "delapouite/confrontation": [
       609
@@ -7325,14 +6959,176 @@
     "delapouite/crafting": [
       642
     ],
+    "delapouite/credits-currency": [
+      644
+    ],
+    "delapouite/crook-flail": [
+      651
+    ],
     "delapouite/crystal-earrings": [
       661
+    ],
+    "lorc/crystal-shine": [
+      2573
+    ],
+    "lorc/cubes": [
+      2577
+    ],
+    "delapouite/cuckoo-clock": [
+      665
     ],
     "lorc/curly-mask": [
       2583
     ],
+    "delapouite/delicate-perfume": [
+      685
+    ],
+    "delapouite/detour": [
+      692
+    ],
+    "lorc/diamond-hard": [
+      2611
+    ],
+    "delapouite/diamond-trophy": [
+      697
+    ],
+    "delapouite/diploma": [
+      713
+    ],
+    "delapouite/direction-sign": [
+      714
+    ],
+    "delapouite/direction-signs": [
+      715
+    ],
+    "delapouite/diving-helmet": [
+      722
+    ],
+    "lorc/dozen": [
+      2639
+    ],
+    "lorc/drink-me": [
+      2648
+    ],
+    "delapouite/drinking": [
+      748
+    ],
+    "delapouite/duffel-bag": [
+      753
+    ],
+    "delapouite/easter-egg": [
+      767
+    ],
+    "lorc/echo-ripples": [
+      2668
+    ],
+    "delapouite/egyptian-urns": [
+      779
+    ],
+    "lorc/emerald": [
+      2682
+    ],
     "lorc/evil-book": [
       2698
+    ],
+    "delapouite/fallout-shelter": [
+      827
+    ],
+    "delapouite/family-house": [
+      828
+    ],
+    "delapouite/feather-necklace": [
+      835
+    ],
+    "delapouite/female-legs": [
+      837
+    ],
+    "delapouite/flat-platform": [
+      881
+    ],
+    "delapouite/flower-hat": [
+      897
+    ],
+    "delapouite/foundry-bucket": [
+      915
+    ],
+    "delapouite/full-folder": [
+      929
+    ],
+    "delapouite/full-metal-bucket": [
+      931
+    ],
+    "delapouite/full-metal-bucket-handle": [
+      930
+    ],
+    "delapouite/full-motorcycle-helmet": [
+      932
+    ],
+    "delapouite/full-wood-bucket": [
+      935
+    ],
+    "delapouite/full-wood-bucket-handle": [
+      934
+    ],
+    "delapouite/furnace": [
+      939
+    ],
+    "delapouite/gas-stove": [
+      950
+    ],
+    "lorc/gift-trap": [
+      2824
+    ],
+    "delapouite/glass-ball": [
+      962
+    ],
+    "delapouite/glass-celebration": [
+      963
+    ],
+    "willdabeast/gold-bar": [
+      4123
+    ],
+    "delapouite/gold-mine": [
+      970
+    ],
+    "delapouite/gold-nuggets": [
+      971
+    ],
+    "delapouite/gold-stack": [
+      972
+    ],
+    "lorc/grease-trap": [
+      2847
+    ],
+    "delapouite/hanging-sign": [
+      1029
+    ],
+    "delapouite/id-card": [
+      1122
+    ],
+    "delapouite/juggling-clubs": [
+      1161
+    ],
+    "delapouite/kid-slide": [
+      1179
+    ],
+    "delapouite/kite": [
+      1185
+    ],
+    "delapouite/laurels-trophy": [
+      1212
+    ],
+    "delapouite/life-buoy": [
+      1230
+    ],
+    "delapouite/life-jacket": [
+      1231
+    ],
+    "delapouite/light-sabers": [
+      1235
+    ],
+    "delapouite/lipstick": [
+      1241
     ],
     "lorc/lit-candelabra": [
       3015
@@ -7345,6 +7141,9 @@
     ],
     "lorc/magic-lamp": [
       3033
+    ],
+    "delapouite/magic-potion": [
+      1278
     ],
     "lorc/magnifying-glass": [
       3040
@@ -7364,17 +7163,56 @@
     "lorc/maze": [
       3055
     ],
+    "delapouite/megaphone": [
+      1318
+    ],
     "lorc/mesh-ball": [
       3064
+    ],
+    "delapouite/microphone": [
+      1332
+    ],
+    "faithtoken/minerals": [
+      2233
+    ],
+    "delapouite/mining-helmet": [
+      1344
+    ],
+    "delapouite/moka-pot": [
+      1349
+    ],
+    "delapouite/money-stack": [
+      1353
+    ],
+    "delapouite/newspaper": [
+      1397
     ],
     "lorc/noodle-ball": [
       3118
     ],
+    "delapouite/notebook": [
+      1407
+    ],
+    "delapouite/old-lantern": [
+      1426
+    ],
     "lorc/open-book": [
       3129
     ],
+    "delapouite/open-folder": [
+      1432
+    ],
+    "delapouite/opened-food-can": [
+      1434
+    ],
     "lorc/opening-shell": [
       3131
+    ],
+    "faithtoken/ore": [
+      2236
+    ],
+    "delapouite/padlock-open": [
+      1450
     ],
     "john-redman/paper": [
       2251
@@ -7391,6 +7229,9 @@
     "caro-asercion/paper-bag-open": [
       114
     ],
+    "delapouite/paper-clip": [
+      1463
+    ],
     "caro-asercion/paper-crane": [
       115
     ],
@@ -7400,8 +7241,20 @@
     "lorc/paper-lantern": [
       3145
     ],
+    "delapouite/paper-tray": [
+      1465
+    ],
     "lorc/papers": [
       3146
+    ],
+    "delapouite/party-flags": [
+      1471
+    ],
+    "delapouite/party-popper": [
+      1473
+    ],
+    "delapouite/pay-money": [
+      1477
     ],
     "lorc/perfume-bottle": [
       3159
@@ -7409,11 +7262,65 @@
     "caro-asercion/philosopher-bust": [
       117
     ],
+    "delapouite/piggy-bank": [
+      1516
+    ],
+    "delapouite/pinata": [
+      1522
+    ],
     "lorc/pizza-cutter": [
       3173
     ],
+    "delapouite/plain-padlock": [
+      1541
+    ],
+    "delapouite/plastic-duck": [
+      1551
+    ],
+    "delapouite/podium": [
+      1564
+    ],
+    "delapouite/podium-second": [
+      1561
+    ],
+    "delapouite/podium-third": [
+      1562
+    ],
+    "delapouite/podium-winner": [
+      1563
+    ],
+    "lorc/potion-ball": [
+      3189
+    ],
     "caro-asercion/prank-glasses": [
       121
+    ],
+    "delapouite/prayer-beads": [
+      1589
+    ],
+    "delapouite/present": [
+      1591
+    ],
+    "delapouite/price-tag": [
+      1594
+    ],
+    "delapouite/pyre": [
+      1615
+    ],
+    "delapouite/receive-money": [
+      1637
+    ],
+    "delapouite/red-carpet": [
+      1638
+    ],
+    "lorc/ribbon": [
+      3232
+    ],
+    "delapouite/ribbon-medal": [
+      1650
+    ],
+    "delapouite/ring-box": [
+      1652
     ],
     "john-redman/rock": [
       2252
@@ -7421,14 +7328,32 @@
     "caro-asercion/rolling-suitcase": [
       125
     ],
+    "lorc/rose": [
+      3249
+    ],
     "caro-asercion/round-potion": [
       127
+    ],
+    "delapouite/rupee": [
+      1692
+    ],
+    "lorc/saphir": [
+      3266
     ],
     "john-redman/scissors": [
       2253
     ],
+    "lorc/screen-impact": [
+      3281
+    ],
+    "lorc/sharp-crown": [
+      3300
+    ],
     "generalace135/shepherds-crook": [
       2243
+    ],
+    "lorc/skid-mark": [
+      3332
     ],
     "caro-asercion/slot-machine": [
       133
@@ -7436,8 +7361,62 @@
     "guard13007/soda-can": [
       2246
     ],
+    "lorc/spiked-fence": [
+      3388
+    ],
+    "delapouite/spiky-pit": [
+      1870
+    ],
+    "skoll/spinning-top": [
+      3966
+    ],
+    "sbed/splash": [
+      3805
+    ],
+    "delapouite/square": [
+      1880
+    ],
+    "delapouite/star-medal": [
+      1898
+    ],
+    "delapouite/stars-stack": [
+      1901
+    ],
+    "delapouite/stockpiles": [
+      1913
+    ],
+    "delapouite/stone-bust": [
+      1916
+    ],
+    "delapouite/stone-pile": [
+      1918
+    ],
+    "delapouite/stop-sign": [
+      1922
+    ],
+    "delapouite/strongbox": [
+      1929
+    ],
     "caro-asercion/subway-pass": [
       142
+    ],
+    "delapouite/target-poster": [
+      1980
+    ],
+    "delapouite/target-prize": [
+      1981
+    ],
+    "delapouite/tavern-sign": [
+      1983
+    ],
+    "delapouite/theater-curtains": [
+      2000
+    ],
+    "delapouite/ticket": [
+      2015
+    ],
+    "lorc/tooth": [
+      3555
     ],
     "caro-asercion/toothbrush": [
       147
@@ -7445,16 +7424,77 @@
     "cathelineau/torc": [
       182
     ],
+    "lorc/trade": [
+      3563
+    ],
+    "delapouite/trail": [
+      2050
+    ],
+    "delapouite/trash-can": [
+      2052
+    ],
+    "lorc/treasure-map": [
+      3569
+    ],
+    "delapouite/tribunal-jury": [
+      2064
+    ],
+    "lorc/triple-lock": [
+      3580
+    ],
+    "lorc/tripwire": [
+      3587
+    ],
+    "delapouite/trophies-shelf": [
+      2074
+    ],
+    "lorc/trophy": [
+      3590
+    ],
+    "delapouite/trophy-cup": [
+      2075
+    ],
+    "lorc/tune-pitch": [
+      3593
+    ],
+    "lorc/turd": [
+      3594
+    ],
+    "delapouite/two-coins": [
+      2092
+    ],
+    "delapouite/vertical-banner": [
+      2125
+    ],
+    "delapouite/vote": [
+      2142
+    ],
+    "sbed/water-drop": [
+      3819
+    ],
+    "lorc/wax-seal": [
+      3639
+    ],
     "caro-asercion/windchimes": [
       156
     ],
+    "lorc/wingfoot": [
+      3661
+    ],
+    "lorc/wooden-sign": [
+      3671
+    ],
+    "delapouite/wool": [
+      2217
+    ],
+    "delapouite/yarn": [
+      2220
+    ],
+    "delapouite/z-brick": [
+      2223
+    ],
     "delapouite/zipper": [
       2226
-    ]
-  },
-  "Game-icons.net - Objective": {
-    "delapouite/flag-objective": [
-      874
     ]
   },
   "Game-icons.net - Objects": {
@@ -7504,52 +7544,6 @@
       1654
     ]
   },
-  "Game-icons.net - Occupation": {
-    "delapouite/blacksmith": [
-      385
-    ],
-    "delapouite/farmer": [
-      831
-    ]
-  },
-  "Game-icons.net - Office": {
-    "delapouite/notebook": [
-      1407
-    ],
-    "delapouite/office-chair": [
-      1420
-    ],
-    "delapouite/open-folder": [
-      1432
-    ],
-    "delapouite/paper-clip": [
-      1463
-    ],
-    "delapouite/paper-tray": [
-      1465
-    ]
-  },
-  "Game-icons.net - Outfit": {
-    "lorc/angel-outfit": [
-      2276
-    ],
-    "lorc/angel-wings": [
-      2277
-    ]
-  },
-  "Game-icons.net - Park": {
-    "delapouite/park-bench": [
-      1470
-    ]
-  },
-  "Game-icons.net - Peace": {
-    "delapouite/peace-dove": [
-      1478
-    ],
-    "delapouite/truce": [
-      2078
-    ]
-  },
   "Game-icons.net - People": {
     "delapouite/guards": [
       999
@@ -7580,22 +7574,24 @@
     ],
     "delapouite/ringmaster": [
       1656
-    ]
-  },
-  "Game-icons.net - Person": {
-    "delapouite/female": [
-      839
     ],
-    "delapouite/female-legs": [
-      837
-    ]
-  },
-  "Game-icons.net - Personality": {
-    "delapouite/liar": [
-      1225
+    "delapouite/sherlock-holmes": [
+      1765
+    ],
+    "delapouite/teacher": [
+      1984
+    ],
+    "delapouite/three-friends": [
+      2006
+    ],
+    "delapouite/walk": [
+      2145
     ]
   },
   "Game-icons.net - Place": {
+    "sbed/arena": [
+      3730
+    ],
     "delapouite/graveyard": [
       988
     ],
@@ -7722,219 +7718,6 @@
       1657
     ]
   },
-  "Game-icons.net - Plant": {
-    "delapouite/fire-iris": [
-      856
-    ],
-    "delapouite/flax": [
-      884
-    ],
-    "lorc/rose": [
-      3249
-    ]
-  },
-  "Game-icons.net - Platform": {
-    "delapouite/flat-platform": [
-      881
-    ]
-  },
-  "Game-icons.net - Playground": {
-    "delapouite/kid-slide": [
-      1179
-    ]
-  },
-  "Game-icons.net - Politics": {
-    "delapouite/vote": [
-      2142
-    ]
-  },
-  "Game-icons.net - Potion": {
-    "lorc/drink-me": [
-      2648
-    ],
-    "delapouite/magic-potion": [
-      1278
-    ],
-    "lorc/poison-bottle": [
-      3182
-    ],
-    "lorc/poison-gas": [
-      3183
-    ],
-    "lorc/potion-ball": [
-      3189
-    ],
-    "starseeker/potion-of-madness": [
-      3996
-    ],
-    "lorc/round-bottom-flask": [
-      3251
-    ],
-    "lorc/snow-bottle": [
-      3360
-    ],
-    "lorc/soap-experiment": [
-      3365
-    ]
-  },
-  "Game-icons.net - Power": {
-    "lorc/telepathy": [
-      3516
-    ]
-  },
-  "Game-icons.net - Practice": {
-    "lorc/target-dummy": [
-      3508
-    ]
-  },
-  "Game-icons.net - Prize": {
-    "delapouite/target-prize": [
-      1981
-    ]
-  },
-  "Game-icons.net - Profession": {
-    "delapouite/teacher": [
-      1984
-    ]
-  },
-  "Game-icons.net - Profile": {
-    "delapouite/egyptian-profile": [
-      775
-    ]
-  },
-  "Game-icons.net - Progression": {
-    "delapouite/progression": [
-      1601
-    ]
-  },
-  "Game-icons.net - Protection": {
-    "delapouite/elbow-pad": [
-      782
-    ]
-  },
-  "Game-icons.net - Quantity": {
-    "lorc/dozen": [
-      2639
-    ]
-  },
-  "Game-icons.net - Ranking": {
-    "skoll/rank-1": [
-      3947
-    ],
-    "skoll/rank-2": [
-      3948
-    ],
-    "skoll/rank-3": [
-      3949
-    ]
-  },
-  "Game-icons.net - Recreation": {
-    "delapouite/kite": [
-      1185
-    ]
-  },
-  "Game-icons.net - Religion": {
-    "delapouite/aspergillum": [
-      293
-    ],
-    "lorc/crown-of-thorns": [
-      2562
-    ],
-    "lorc/cultist": [
-      2578
-    ]
-  },
-  "Game-icons.net - Religious": {
-    "delapouite/monk-face": [
-      1355
-    ],
-    "delapouite/prayer-beads": [
-      1589
-    ],
-    "delapouite/pyre": [
-      1615
-    ]
-  },
-  "Game-icons.net - Resource": {
-    "delapouite/coal-pile": [
-      589
-    ],
-    "delapouite/coins": [
-      598
-    ],
-    "delapouite/coins-pile": [
-      597
-    ],
-    "delapouite/concrete-bag": [
-      607
-    ],
-    "delapouite/credits-currency": [
-      644
-    ],
-    "delapouite/stockpiles": [
-      1913
-    ],
-    "delapouite/stone-pile": [
-      1918
-    ]
-  },
-  "Game-icons.net - Revolution": {
-    "delapouite/uprising": [
-      2107
-    ]
-  },
-  "Game-icons.net - Road": {
-    "delapouite/detour": [
-      692
-    ],
-    "delapouite/direction-sign": [
-      714
-    ],
-    "delapouite/direction-signs": [
-      715
-    ]
-  },
-  "Game-icons.net - Role": {
-    "lorc/king": [
-      2959
-    ]
-  },
-  "Game-icons.net - Royalty": {
-    "lorc/queen-crown": [
-      3206
-    ]
-  },
-  "Game-icons.net - Safety": {
-    "delapouite/fallout-shelter": [
-      827
-    ],
-    "delapouite/full-motorcycle-helmet": [
-      932
-    ],
-    "delapouite/hazmat-suit": [
-      1033
-    ],
-    "delapouite/life-buoy": [
-      1230
-    ],
-    "delapouite/life-jacket": [
-      1231
-    ],
-    "delapouite/traffic-cone": [
-      2045
-    ]
-  },
-  "Game-icons.net - Sci-Fi": {
-    "delapouite/planet-conquest": [
-      1545
-    ],
-    "delapouite/planet-core": [
-      1546
-    ],
-    "delapouite/ufo": [
-      2095
-    ]
-  },
   "Game-icons.net - Science": {
     "delapouite/atom-core": [
       297
@@ -7953,6 +7736,12 @@
     ],
     "lorc/molecule": [
       3090
+    ],
+    "lorc/round-bottom-flask": [
+      3251
+    ],
+    "lorc/soap-experiment": [
+      3365
     ],
     "caro-asercion/test-tube-held": [
       145
@@ -7982,175 +7771,6 @@
       2139
     ]
   },
-  "Game-icons.net - Sculpture": {
-    "delapouite/stone-bust": [
-      1916
-    ]
-  },
-  "Game-icons.net - Sea Creature": {
-    "skoll/sea-creature": [
-      3953
-    ]
-  },
-  "Game-icons.net - Seal": {
-    "lorc/wax-seal": [
-      3639
-    ]
-  },
-  "Game-icons.net - Seasonal": {
-    "lorc/pumpkin-lantern": [
-      3199
-    ],
-    "lorc/pumpkin-mask": [
-      3200
-    ],
-    "lorc/scarecrow": [
-      3276
-    ],
-    "lorc/snowman": [
-      3364
-    ]
-  },
-  "Game-icons.net - Security": {
-    "delapouite/padlock-open": [
-      1450
-    ],
-    "delapouite/plain-padlock": [
-      1541
-    ],
-    "lorc/triple-lock": [
-      3580
-    ],
-    "lorc/tripwire": [
-      3587
-    ]
-  },
-  "Game-icons.net - Shape": {
-    "lorc/checkered-diamond": [
-      2483
-    ],
-    "lorc/concentric-crescents": [
-      2522
-    ],
-    "lorc/cross-flare": [
-      2548
-    ],
-    "lorc/cross-mark": [
-      2549
-    ],
-    "lorc/cubes": [
-      2577
-    ],
-    "delapouite/square": [
-      1880
-    ],
-    "delapouite/stars-stack": [
-      1901
-    ]
-  },
-  "Game-icons.net - Shapes": {
-    "delapouite/plain-circle": [
-      1540
-    ],
-    "delapouite/plain-square": [
-      1542
-    ]
-  },
-  "Game-icons.net - Shield": {
-    "lorc/arrows-shield": [
-      2299
-    ],
-    "lorc/bell-shield": [
-      2350
-    ],
-    "lorc/black-hand-shield": [
-      2362
-    ],
-    "lorc/bolt-shield": [
-      2381
-    ],
-    "lorc/bordered-shield": [
-      2396
-    ]
-  },
-  "Game-icons.net - Ship": {
-    "delapouite/figurehead": [
-      844
-    ]
-  },
-  "Game-icons.net - Shrine": {
-    "delapouite/fire-shrine": [
-      857
-    ]
-  },
-  "Game-icons.net - Sign": {
-    "delapouite/hanging-sign": [
-      1029
-    ],
-    "delapouite/stop-sign": [
-      1922
-    ],
-    "delapouite/tavern-sign": [
-      1983
-    ],
-    "lorc/wooden-sign": [
-      3671
-    ]
-  },
-  "Game-icons.net - Signal": {
-    "delapouite/distress-signal": [
-      721
-    ]
-  },
-  "Game-icons.net - Skill": {
-    "darkzaitzev/acrobatic": [
-      188
-    ],
-    "darkzaitzev/catch": [
-      191
-    ],
-    "darkzaitzev/distraction": [
-      195
-    ],
-    "delapouite/lock-picking": [
-      1245
-    ],
-    "delapouite/tightrope": [
-      2019
-    ]
-  },
-  "Game-icons.net - Skull": {
-    "delapouite/dead-head": [
-      680
-    ]
-  },
-  "Game-icons.net - Sleep": {
-    "delapouite/night-sleep": [
-      1400
-    ]
-  },
-  "Game-icons.net - Social": {
-    "lorc/relationship-bounds": [
-      3227
-    ]
-  },
-  "Game-icons.net - Sound": {
-    "lorc/echo-ripples": [
-      2668
-    ],
-    "delapouite/mute": [
-      1384
-    ],
-    "skoll/sound-waves": [
-      3961
-    ],
-    "lorc/tune-pitch": [
-      3593
-    ],
-    "lorc/zigzag-tune": [
-      3685
-    ]
-  },
   "Game-icons.net - Space": {
     "delapouite/asteroid": [
       294
@@ -8169,6 +7789,12 @@
     ],
     "delapouite/moon-orbit": [
       1361
+    ],
+    "delapouite/planet-conquest": [
+      1545
+    ],
+    "delapouite/planet-core": [
+      1546
     ],
     "lorc/ringed-planet": [
       3235
@@ -8353,29 +7979,6 @@
     ],
     "delapouite/weight-lifting-up": [
       2179
-    ]
-  },
-  "Game-icons.net - Spy": {
-    "delapouite/spy": [
-      1879
-    ]
-  },
-  "Game-icons.net - Storage": {
-    "delapouite/full-folder": [
-      929
-    ]
-  },
-  "Game-icons.net - Strategy": {
-    "delapouite/misdirection": [
-      1345
-    ],
-    "delapouite/multiple-targets": [
-      1373
-    ]
-  },
-  "Game-icons.net - Strength": {
-    "delapouite/strong-man": [
-      1928
     ]
   },
   "Game-icons.net - Structure": {
@@ -8612,6 +8215,12 @@
     ]
   },
   "Game-icons.net - Symbol": {
+    "lorc/ace": [
+      2257
+    ],
+    "skoll/achievement": [
+      3822
+    ],
     "lorc/air-zigzag": [
       2264
     ],
@@ -8644,6 +8253,9 @@
     ],
     "delapouite/arrow-wings": [
       289
+    ],
+    "lorc/arrows-shield": [
+      2299
     ],
     "lorc/aura": [
       2306
@@ -8693,6 +8305,9 @@
     "lorc/black-flag": [
       2361
     ],
+    "lorc/black-hand-shield": [
+      2362
+    ],
     "cathelineau/boar-ensign": [
       161
     ],
@@ -8701,6 +8316,9 @@
     ],
     "lorc/boiling-bubbles": [
       2377
+    ],
+    "lorc/bolt-shield": [
+      2381
     ],
     "lorc/book-aura": [
       2386
@@ -8711,6 +8329,9 @@
     "lorc/boot-prints": [
       2393
     ],
+    "lorc/bordered-shield": [
+      2396
+    ],
     "lorc/bottom-right-3d-arrow": [
       2399
     ],
@@ -8720,11 +8341,17 @@
     "lorc/bowl-spiral": [
       2402
     ],
+    "skoll/box-trap": [
+      3841
+    ],
     "skoll/breaking-chain": [
       3843
     ],
     "skoll/burning-skull": [
       3847
+    ],
+    "delapouite/buy-card": [
+      464
     ],
     "delapouite/caduceus": [
       472
@@ -8741,6 +8368,12 @@
     "delapouite/capricorn": [
       495
     ],
+    "lorc/celebration-fire": [
+      2474
+    ],
+    "delapouite/chalk-outline-murder": [
+      534
+    ],
     "darkzaitzev/chameleon-glyph": [
       193
     ],
@@ -8752,6 +8385,9 @@
     ],
     "delapouite/check-mark": [
       543
+    ],
+    "lorc/checkered-diamond": [
+      2483
     ],
     "delapouite/checkered-flag": [
       544
@@ -8770,6 +8406,9 @@
     ],
     "skoll/clubs": [
       3859
+    ],
+    "lorc/concentric-crescents": [
+      2522
     ],
     "delapouite/confirmed": [
       608
@@ -8792,17 +8431,32 @@
     "delapouite/crenel-crown": [
       645
     ],
+    "delapouite/crime-scene-tape": [
+      649
+    ],
+    "lorc/cross-flare": [
+      2548
+    ],
+    "lorc/cross-mark": [
+      2549
+    ],
     "delapouite/cross-shield": [
       652
     ],
     "delapouite/crosshair": [
       654
     ],
+    "lorc/crown-of-thorns": [
+      2562
+    ],
     "delapouite/crucifix": [
       658
     ],
     "skoll/cultist": [
       3865
+    ],
+    "delapouite/dead-head": [
+      680
     ],
     "sbed/death-skull": [
       3744
@@ -8818,6 +8472,9 @@
     ],
     "lorc/eagle-emblem": [
       2664
+    ],
+    "delapouite/egg-eye": [
+      772
     ],
     "delapouite/egyptian-walk": [
       780
@@ -8843,6 +8500,9 @@
     "generalace135/fingers-crossed": [
       2242
     ],
+    "delapouite/flag-objective": [
+      874
+    ],
     "lorc/flat-star": [
       2767
     ],
@@ -8855,11 +8515,17 @@
     "delapouite/freemasonry": [
       918
     ],
+    "lorc/gift-of-knowledge": [
+      2823
+    ],
     "lorc/gothic-cross": [
       2842
     ],
     "delapouite/hammer-sickle": [
       1016
+    ],
+    "delapouite/handcuffed": [
+      1025
     ],
     "skoll/hasty-grave": [
       3896
@@ -8869,6 +8535,9 @@
     ],
     "lorc/hazard-sign": [
       2874
+    ],
+    "delapouite/heart-battery": [
+      1041
     ],
     "delapouite/heart-key": [
       1044
@@ -8933,6 +8602,9 @@
     "lorc/justice-star": [
       2955
     ],
+    "delapouite/koholint-egg": [
+      1197
+    ],
     "lorc/laser-warning": [
       2973
     ],
@@ -8945,11 +8617,17 @@
     "lorc/law-star": [
       2977
     ],
+    "lorc/life-in-the-balance": [
+      2987
+    ],
     "lorc/linked-rings": [
       3012
     ],
     "delapouite/locked-heart": [
       1249
+    ],
+    "delapouite/love-letter": [
+      1264
     ],
     "delapouite/male": [
       1283
@@ -8978,8 +8656,20 @@
     "lorc/moon": [
       3095
     ],
+    "delapouite/mug-shot": [
+      1371
+    ],
+    "delapouite/mute": [
+      1384
+    ],
     "lorc/nested-eclipses": [
       3114
+    ],
+    "delapouite/nested-hearts": [
+      1393
+    ],
+    "delapouite/nested-hexagons": [
+      1394
     ],
     "lorc/nothing-to-say": [
       3119
@@ -9002,23 +8692,68 @@
     "skoll/pentacle": [
       3937
     ],
+    "delapouite/pie-chart": [
+      1515
+    ],
     "lorc/piece-skull": [
       3162
     ],
     "lorc/pierced-heart": [
       3164
     ],
+    "delapouite/pirate-flag": [
+      1531
+    ],
     "lorc/pirate-skull": [
       3172
     ],
+    "delapouite/pisces": [
+      1535
+    ],
+    "delapouite/plain-arrow": [
+      1539
+    ],
+    "delapouite/plain-circle": [
+      1540
+    ],
+    "delapouite/plain-square": [
+      1542
+    ],
+    "delapouite/polar-star": [
+      1566
+    ],
     "quoting/poppy": [
       3722
+    ],
+    "delapouite/position-marker": [
+      1581
+    ],
+    "lorc/profit": [
+      3196
+    ],
+    "delapouite/progression": [
+      1601
+    ],
+    "lorc/radial-balance": [
+      3213
+    ],
+    "skoll/rank-1": [
+      3947
+    ],
+    "skoll/rank-2": [
+      3948
+    ],
+    "skoll/rank-3": [
+      3949
     ],
     "delapouite/rod-of-asclepius": [
       1669
     ],
     "delapouite/round-star": [
       1683
+    ],
+    "lorc/royal-love": [
+      3253
     ],
     "delapouite/rub-el-hizb": [
       1687
@@ -9056,11 +8791,26 @@
     "delapouite/skills": [
       1799
     ],
+    "lorc/small-fire": [
+      3349
+    ],
     "delapouite/snake-spiral": [
       1824
     ],
+    "skoll/sound-waves": [
+      3961
+    ],
+    "skoll/spades": [
+      3962
+    ],
     "lorc/split-cross": [
       3413
+    ],
+    "delapouite/stairs-goal": [
+      1887
+    ],
+    "delapouite/star-flag": [
+      1894
     ],
     "lorc/steelwing-emblem": [
       3445
@@ -9077,8 +8827,17 @@
     "lorc/swords-emblem": [
       3504
     ],
+    "delapouite/tally-mark-5": [
+      1973
+    ],
     "lorc/tattered-banner": [
       3511
+    ],
+    "delapouite/taurus": [
+      1982
+    ],
+    "lorc/telepathy": [
+      3516
     ],
     "lorc/templar-eye": [
       3518
@@ -9086,11 +8845,20 @@
     "lorc/templar-heart": [
       3519
     ],
+    "lorc/thunder-struck": [
+      3546
+    ],
+    "delapouite/token": [
+      2029
+    ],
     "lorc/top-paw": [
       3557
     ],
     "lorc/totem-head": [
       3560
+    ],
+    "delapouite/triangle-target": [
+      2060
     ],
     "lorc/triple-skulls": [
       3585
@@ -9098,14 +8866,38 @@
     "lorc/triple-yin": [
       3586
     ],
+    "delapouite/truce": [
+      2078
+    ],
+    "delapouite/trumpet-flag": [
+      2080
+    ],
+    "delapouite/tusks-flag": [
+      2088
+    ],
     "lorc/two-shadows": [
       3602
     ],
     "lorc/ubisoft-sun": [
       3604
     ],
+    "delapouite/unbalanced": [
+      2098
+    ],
+    "delapouite/uprising": [
+      2107
+    ],
+    "delapouite/virgo": [
+      2138
+    ],
+    "delapouite/wanted-reward": [
+      2152
+    ],
     "lorc/winged-emblem": [
       3657
+    ],
+    "delapouite/wisdom": [
+      2201
     ],
     "lorc/world": [
       3672
@@ -9118,50 +8910,6 @@
     ],
     "delapouite/zigzag-hieroglyph": [
       2225
-    ]
-  },
-  "Game-icons.net - Symbols": {
-    "delapouite/nested-hearts": [
-      1393
-    ],
-    "delapouite/nested-hexagons": [
-      1394
-    ],
-    "delapouite/opposite-hearts": [
-      1436
-    ]
-  },
-  "Game-icons.net - Target": {
-    "delapouite/flying-target": [
-      903
-    ],
-    "delapouite/human-target": [
-      1101
-    ],
-    "delapouite/police-target": [
-      1569
-    ],
-    "delapouite/target-poster": [
-      1980
-    ],
-    "delapouite/triangle-target": [
-      2060
-    ]
-  },
-  "Game-icons.net - Tea": {
-    "delapouite/teapot-leaves": [
-      1988
-    ]
-  },
-  "Game-icons.net - Team": {
-    "delapouite/team-downgrade": [
-      1985
-    ],
-    "delapouite/team-idea": [
-      1986
-    ],
-    "delapouite/team-upgrade": [
-      1987
     ]
   },
   "Game-icons.net - Tech": {
@@ -9870,6 +9618,9 @@
     "lord-berandas/holosphere": [
       3692
     ],
+    "lorc/hourglass": [
+      2908
+    ],
     "delapouite/jack-plug": [
       1144
     ],
@@ -10161,6 +9912,9 @@
     "lorc/parmecia": [
       3149
     ],
+    "guard13007/pause-button": [
+      2244
+    ],
     "skoll/pc": [
       3935
     ],
@@ -10191,6 +9945,9 @@
     "skoll/platform": [
       3941
     ],
+    "guard13007/play-button": [
+      2245
+    ],
     "delapouite/plug": [
       1558
     ],
@@ -10205,6 +9962,9 @@
     ],
     "delapouite/police-car": [
       1567
+    ],
+    "delapouite/police-target": [
+      1569
     ],
     "lord-berandas/power-button": [
       3695
@@ -10239,8 +9999,14 @@
     "lorc/radar-sweep": [
       3212
     ],
+    "delapouite/radiations": [
+      1624
+    ],
     "delapouite/radio-tower": [
       1625
+    ],
+    "lorc/radioactive": [
+      3214
     ],
     "delapouite/raft": [
       1626
@@ -10461,6 +10227,9 @@
     "delapouite/sticky-boot": [
       1912
     ],
+    "lorc/stone-crafting": [
+      3455
+    ],
     "delapouite/stone-wheel": [
       1921
     ],
@@ -10496,6 +10265,9 @@
     ],
     "delapouite/swipe-card": [
       1955
+    ],
+    "lorc/sword-smithing": [
+      3499
     ],
     "skoll/tablet": [
       3977
@@ -10572,6 +10344,9 @@
     "delapouite/tow-truck": [
       2039
     ],
+    "delapouite/traffic-cone": [
+      2045
+    ],
     "delapouite/transform": [
       2051
     ],
@@ -10580,6 +10355,9 @@
     ],
     "lorc/transportation-rings": [
       3566
+    ],
+    "lorc/tread": [
+      3568
     ],
     "sbed/trigger-hurt": [
       3814
@@ -10677,6 +10455,9 @@
     "delapouite/washing-machine": [
       2160
     ],
+    "delapouite/watch": [
+      2161
+    ],
     "delapouite/water-bottle": [
       2163
     ],
@@ -10691,6 +10472,9 @@
     ],
     "delapouite/water-tank": [
       2171
+    ],
+    "delapouite/weight": [
+      2181
     ],
     "sbed/weight-crush": [
       3820
@@ -10718,54 +10502,6 @@
     ],
     "caro-asercion/wok": [
       157
-    ]
-  },
-  "Game-icons.net - Terrain": {
-    "lorc/spiky-field": [
-      3397
-    ]
-  },
-  "Game-icons.net - Throne": {
-    "delapouite/throne-king": [
-      2007
-    ]
-  },
-  "Game-icons.net - Ticket": {
-    "delapouite/ticket": [
-      2015
-    ]
-  },
-  "Game-icons.net - Time": {
-    "delapouite/ages": [
-      231
-    ],
-    "delapouite/alarm-clock": [
-      238
-    ],
-    "delapouite/backward-time": [
-      312
-    ],
-    "delapouite/calendar": [
-      478
-    ],
-    "delapouite/calendar-half-year": [
-      477
-    ],
-    "lorc/hourglass": [
-      2908
-    ],
-    "delapouite/watch": [
-      2161
-    ]
-  },
-  "Game-icons.net - Timepiece": {
-    "delapouite/cuckoo-clock": [
-      665
-    ]
-  },
-  "Game-icons.net - Token": {
-    "delapouite/token": [
-      2029
     ]
   },
   "Game-icons.net - Tool": {
@@ -10840,6 +10576,36 @@
     ],
     "delapouite/empty-wood-bucket-handle": [
       794
+    ],
+    "delapouite/fertilizer-bag": [
+      842
+    ],
+    "delapouite/first-aid-kit": [
+      861
+    ],
+    "delapouite/fishing-lure": [
+      870
+    ],
+    "delapouite/fishing-pole": [
+      871
+    ],
+    "delapouite/flashlight": [
+      880
+    ],
+    "delapouite/flexible-lamp": [
+      886
+    ],
+    "delapouite/flint-spark": [
+      887
+    ],
+    "delapouite/floor-hatch": [
+      893
+    ],
+    "delapouite/floor-polisher": [
+      894
+    ],
+    "delapouite/fork-knife-spoon": [
+      913
     ],
     "caro-asercion/froe-and-mallet": [
       97
@@ -11006,8 +10772,35 @@
     "caro-asercion/orrery": [
       110
     ],
+    "delapouite/pitchfork": [
+      1536
+    ],
+    "delapouite/plow": [
+      1557
+    ],
+    "delapouite/plunger": [
+      1559
+    ],
     "andymeneely/police-badge": [
       0
+    ],
+    "delapouite/pouring-pot": [
+      1585
+    ],
+    "delapouite/protection-glasses": [
+      1603
+    ],
+    "delapouite/pulley-hook": [
+      1608
+    ],
+    "delapouite/rake": [
+      1629
+    ],
+    "delapouite/razor": [
+      1636
+    ],
+    "delapouite/ring-mould": [
+      1653
     ],
     "lorc/scissors": [
       3277
@@ -11066,71 +10859,6 @@
     "lorc/triple-plier": [
       3582
     ],
-    "lorc/wood-axe": [
-      3668
-    ],
-    "sbed/wrench": [
-      3821
-    ]
-  },
-  "Game-icons.net - Tools": {
-    "delapouite/fertilizer-bag": [
-      842
-    ],
-    "delapouite/first-aid-kit": [
-      861
-    ],
-    "delapouite/fishing-lure": [
-      870
-    ],
-    "delapouite/fishing-pole": [
-      871
-    ],
-    "delapouite/flashlight": [
-      880
-    ],
-    "delapouite/flexible-lamp": [
-      886
-    ],
-    "delapouite/flint-spark": [
-      887
-    ],
-    "delapouite/floor-hatch": [
-      893
-    ],
-    "delapouite/floor-polisher": [
-      894
-    ],
-    "delapouite/fork-knife-spoon": [
-      913
-    ],
-    "delapouite/pitchfork": [
-      1536
-    ],
-    "delapouite/plow": [
-      1557
-    ],
-    "delapouite/plunger": [
-      1559
-    ],
-    "delapouite/pouring-pot": [
-      1585
-    ],
-    "delapouite/protection-glasses": [
-      1603
-    ],
-    "delapouite/pulley-hook": [
-      1608
-    ],
-    "delapouite/rake": [
-      1629
-    ],
-    "delapouite/razor": [
-      1636
-    ],
-    "delapouite/ring-mould": [
-      1653
-    ],
     "delapouite/trowel": [
       2077
     ],
@@ -11149,34 +10877,17 @@
     "delapouite/whisk": [
       2186
     ],
+    "lorc/wood-axe": [
+      3668
+    ],
     "delapouite/wooden-crate": [
       2214
     ],
     "delapouite/wooden-pier": [
       2216
-    ]
-  },
-  "Game-icons.net - Toy": {
-    "delapouite/balloon-dog": [
-      318
     ],
-    "skoll/spinning-top": [
-      3966
-    ]
-  },
-  "Game-icons.net - Toys": {
-    "delapouite/plastic-duck": [
-      1551
-    ]
-  },
-  "Game-icons.net - Trail": {
-    "delapouite/trail": [
-      2050
-    ]
-  },
-  "Game-icons.net - Trait": {
-    "lorc/strong": [
-      3470
+    "sbed/wrench": [
+      3821
     ]
   },
   "Game-icons.net - Transport": {
@@ -11194,6 +10905,9 @@
     ],
     "delapouite/jeep": [
       1150
+    ],
+    "delapouite/paddle-steamer": [
+      1448
     ],
     "delapouite/roller-skate": [
       1671
@@ -11227,40 +10941,9 @@
     ],
     "delapouite/skateboard": [
       1795
-    ]
-  },
-  "Game-icons.net - Transportation": {
-    "delapouite/paddle-steamer": [
-      1448
-    ]
-  },
-  "Game-icons.net - Trap": {
-    "skoll/box-trap": [
-      3841
     ],
-    "skoll/cement-shoes": [
-      3851
-    ],
-    "lorc/gift-trap": [
-      2824
-    ],
-    "lorc/grease-trap": [
-      2847
-    ],
-    "lorc/mantrap": [
-      3044
-    ],
-    "lorc/nailed-foot": [
-      3109
-    ],
-    "lorc/nailed-head": [
-      3110
-    ],
-    "lorc/sinking-trap": [
-      3327
-    ],
-    "delapouite/spiky-pit": [
-      1870
+    "lorc/tyre": [
+      3603
     ]
   },
   "Game-icons.net - Travel": {
@@ -11269,6 +10952,9 @@
     ],
     "delapouite/boat-horizon": [
       392
+    ],
+    "delapouite/hiking": [
+      1069
     ],
     "delapouite/light-backpack": [
       1232
@@ -11303,49 +10989,11 @@
     "delapouite/venezuela": [
       2123
     ],
+    "lorc/wavy-itinerary": [
+      3638
+    ],
     "delapouite/windpump": [
       2193
-    ]
-  },
-  "Game-icons.net - Treasure": {
-    "willdabeast/gold-bar": [
-      4123
-    ],
-    "lorc/treasure-map": [
-      3569
-    ]
-  },
-  "Game-icons.net - Trophy": {
-    "delapouite/diamond-trophy": [
-      697
-    ],
-    "lorc/trophy": [
-      3590
-    ]
-  },
-  "Game-icons.net - Undead": {
-    "skoll/raise-skeleton": [
-      3945
-    ],
-    "skoll/raise-zombie": [
-      3946
-    ],
-    "skoll/skeleton": [
-      3958
-    ]
-  },
-  "Game-icons.net - Unlisted": {
-    "faithtoken/card-discard": [
-      2227
-    ],
-    "faithtoken/card-draw": [
-      2228
-    ],
-    "faithtoken/card-pick": [
-      2229
-    ],
-    "faithtoken/card-random": [
-      2230
     ]
   },
   "Game-icons.net - Vehicle": {
@@ -11465,21 +11113,6 @@
     ],
     "skoll/zeppelin": [
       3993
-    ]
-  },
-  "Game-icons.net - Vessel": {
-    "delapouite/egyptian-urns": [
-      779
-    ]
-  },
-  "Game-icons.net - Warrior": {
-    "lorc/spartan": [
-      3378
-    ]
-  },
-  "Game-icons.net - Waste": {
-    "delapouite/trash-can": [
-      2052
     ]
   },
   "Game-icons.net - Weapon": {
@@ -11740,6 +11373,9 @@
     ],
     "heavenly-dog/catapult": [
       2247
+    ],
+    "skoll/cement-shoes": [
+      3851
     ],
     "lorc/chained-arrow-heads": [
       2476
@@ -12826,6 +12462,9 @@
     "lorc/entangled-typhoon": [
       2692
     ],
+    "delapouite/flood": [
+      892
+    ],
     "lorc/fluffy-cloud": [
       2774
     ],
@@ -12861,41 +12500,6 @@
     ],
     "delapouite/windsock": [
       2194
-    ]
-  },
-  "Game-icons.net - Weight": {
-    "delapouite/weight": [
-      2181
-    ]
-  },
-  "Game-icons.net - Wisdom": {
-    "delapouite/wisdom": [
-      2201
-    ]
-  },
-  "Game-icons.net - World": {
-    "delapouite/earth-africa-europe": [
-      764
-    ],
-    "delapouite/earth-america": [
-      765
-    ],
-    "delapouite/earth-asia-oceania": [
-      766
-    ]
-  },
-  "Game-icons.net - Zodiac": {
-    "delapouite/aquarius": [
-      270
-    ],
-    "delapouite/aries": [
-      278
-    ],
-    "delapouite/gemini": [
-      956
-    ],
-    "delapouite/taurus": [
-      1982
     ]
   }
 }
