@@ -122,6 +122,13 @@ class Dice extends Widget {
           for(const property of Object.values(f.svgReplaces))
             if(delta[property] !== undefined)
               needsUpdate = true;
+
+      const sR = this.get('svgReplaces');
+      if(typeof sR == 'object' && sR !== null)
+        for(const property of Object.values(sR))
+          if(delta[property] !== undefined)
+            needsUpdate = true;
+
       if(needsUpdate) {
         this.createChildNodes();
         childNodesWereRecreated = true;
@@ -164,7 +171,7 @@ class Dice extends Widget {
 
   async click(mode='respect') {
     if(!await super.click(mode)) {
-      await this.set('activeFace', Math.floor(Math.random()*this.faces().length));
+      await this.set('activeFace', Math.floor(rand()*this.faces().length));
       await this.set('rollCount', this.get('rollCount',{ignoreFaceProperties:true})+1);
     }
   }
@@ -284,11 +291,15 @@ class Dice extends Widget {
         if(Array.isArray(o) && o.length > this.activeFace())
           return o[this.activeFace()];
       }
-      const faceProps = this.get('faces')[this.activeFace()];
+      const faceProps = this.faces()[this.activeFace()];
       if(typeof faceProps == 'object' && Object.hasOwnProperty(faceProps, property))
         return faceProps[property];
     }
     return super.get(property);
+  }
+
+  getFaceCount() {
+    return this.faces().length || 1;
   }
 
   getFaceProperty(face, property) {

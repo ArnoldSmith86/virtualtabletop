@@ -1,3 +1,5 @@
+let currentMetaData = null;
+
 let waitingForStateCreation = null;
 let variantIDjustUpdated = null;
 
@@ -5,6 +7,8 @@ let detailsInSidebar = false;
 let detailsOverlay = 'stateDetailsOverlay';
 
 const stateFilterSpans = $a('#stateFilters > span');
+
+const loadedLibraryImages = {};
 
 function loadJSZip() {
   const node = document.createElement('script');
@@ -35,7 +39,7 @@ function addStateFile(f) {
   const stateDOM = domByTemplate('template-stateslist-entry');
   let id;
   do {
-    id = Math.random().toString(36).substring(3, 7);
+    id = rand().toString(36).substring(3, 7);
   } while($(`.roomState[data-id="${id}"]`));
   stateDOM.dataset.id = id;
   stateDOM.className = 'uploading visible roomState noImage';
@@ -187,7 +191,7 @@ async function addState(e, type, src, id, addAsVariant) {
   if(type == 'link' && (!src || !src.match(/^http/)))
     return;
   if(!id)
-    id = Math.random().toString(36).substring(3, 7);
+    id = rand().toString(36).substring(3, 7);
 
   const blob = new Blob([ src ], { type: 'text/plain' });
 
@@ -300,7 +304,7 @@ function updateLibraryFilter() {
 
 function parsePlayers(players) {
   const validPlayers = [];
-  for(const token of players.split(',')) {
+  for(const token of String(players||'').split(',')) {
     const match = token.match(/^([0-9]+)(-([0-9]+)|\+)?$/);
     if(match)
       for(let i=+match[1]; i<=(match[2] ? +match[3]||20 : +match[1]); ++i)
@@ -314,7 +318,7 @@ function loadGameFromURLproperties(states) {
   if(widgets.size || !urlProperties.load)
     return;
 
-  const match = String(urlProperties.load).match(`^${regexEscape(config.externalURL)}/library/(.*?)(#VTT/([0-9]+)(\\.json)?)?`+String.fromCharCode(36));
+  const match = String(urlProperties.load).match(`^${regexEscape(config.externalURL)}/library/(.*?)(#VTT/([0-9]+)(\\.json)?)?$`);
   if(match) {
     let targetStateID = 'PL:games:' + match[1].substr(0, match[1].length-4);
     if(match[1].match(/^Tutorial%20-%20/))
@@ -330,7 +334,7 @@ function loadGameFromURLproperties(states) {
     addState(null, 'link', urlProperties.load);
     loadedFromURLproperties = true;
   } else if(urlProperties.load) {
-    const urlMatch = String(urlProperties.load).match(`^(.*?)(#VTT/([0-9]+)(\\.json)?)?`+String.fromCharCode(36))
+    const urlMatch = String(urlProperties.load).match(`^(.*?)(#VTT/([0-9]+)(\\.json)?)?$`)
     const foundStates = (Object.values(states).filter(s=>s.link && s.link.match(`^${regexEscape(urlMatch[1])}`)));
     if(foundStates.length) {
       toServer('loadState', { stateID: foundStates[0].id, variantID: urlMatch[3] || 0 });
@@ -350,6 +354,7 @@ function fillStateTileTitles(dom, name, similarName, savePlayers, saveDate) {
   } else {
     $('h4', dom).textContent = similarName && name != similarName ? `Similar to ${similarName}` : '';
   }
+  emojis2images(dom);
 }
 
 let sortBy = $('#librarySort').value;
@@ -450,16 +455,21 @@ function fillStatesList(states, starred, activeState, returnServer, activePlayer
     if(activeState && (activeState.stateID == state.id || activeState.saveStateID == state.id || activeState.linkStateID == state.id)) {
       entry.className += ' activeGame';
       saveButton.style.display = 'inline-flex';
-      if(activeState.saveStateID)
+      if(activeState.saveStateID && states[activeState.saveStateID] && states[activeState.saveStateID].savePlayers)
         updateSaveButton.style.display = 'inline-flex';
     }
 
-    if(state.image) {
-      $('img', entry).dataset.src = mapAssetURLs(state.image);
-      lazyImageObserver.observe($('img', entry));
-    }
-
     fillStateTileTitles(entry, state.name, state.similarName, state.savePlayers, state.saveDate);
+
+    if(state.image) {
+      const mappedURL = mapAssetURLs(state.image);
+      if(loadedLibraryImages[mappedURL]) {
+        $('img:not(.emoji)', entry).dataset.src = $('img:not(.emoji)', entry).src = mappedURL;
+      } else {
+        $('img:not(.emoji)', entry).dataset.src = mappedURL;
+        lazyImageObserver.observe($('img:not(.emoji)', entry));
+      }
+    }
 
     const validPlayers = [];
     const validLanguages = [];
@@ -474,7 +484,7 @@ function fillStatesList(states, starred, activeState, returnServer, activePlayer
 
       validPlayers.push(...parsePlayers(variant.players));
       validLanguages.push(variant.language);
-      for(const lang of variant.language.split(/[,;] */)) {
+      for(const lang of String(variant.language||'').split(/[,;] */)) {
         languageOptions[lang] = true;
         if(lang && !lang.match(/^en/))
           languageOptions[`${lang} + None`] = true;
@@ -514,7 +524,7 @@ function fillStatesList(states, starred, activeState, returnServer, activePlayer
     entry.dataset.year = state.year;
     entry.dataset.stars = state.stars;
     entry.dataset.timePlayed = state.timePlayed;
-    entry.dataset.text = `${state.name} ${state.similarName} ${state.description} ${state.similarAwards} ${state.savePlayers}`.toLowerCase();
+    entry.dataset.text = `${state.name} ${state.similarName} ${state.description} ${state.similarDesigner} ${state.similarAwards} ${state.savePlayers}`.toLowerCase();
     entry.dataset.players = validPlayers.join();
     entry.dataset.lastUpdate = state.saveDate || state.lastUpdate || 0;
     entry.dataset.duration = String(state.time).replace(/.*[^0-9]/, '');
@@ -622,7 +632,7 @@ function fillStateDetails(states, state, dom) {
     arrowDom.style.display = targetDom ? 'block' : 'none';
     if(targetDom) {
       arrowDom.dataset.id = targetDom.dataset.id;
-      $('img', arrowDom).src = $('img', targetDom).src;
+      $('img', arrowDom).src = $('img', targetDom).dataset.src;
       toggleClass($('img', arrowDom), 'hidden', $('img', arrowDom).src == location.href);
       $('h3', arrowDom).innerText = $('h3', targetDom).innerText;
       $('h4', arrowDom).innerText = $('h4', targetDom).innerText;
@@ -642,13 +652,15 @@ function fillStateDetails(states, state, dom) {
   toggleClass($('#stateDetailsOverlay .buttons [icon=edit]'), 'hidden', !editable);
   toggleClass($('#stateDetailsOverlay .buttons [icon=delete]'), 'hidden', !deletable);
   toggleClass($('#stateDetailsOverlay .buttons [icon=edit_off]'), 'hidden', editable || deletable);
-  toggleClass($('#stateDetailsOverlay .buttons [icon=link]'), 'hidden', !!state.savePlayers || !!state.publicLibrary);
+  toggleClass($('#stateDetailsOverlay .buttons [icon=link]'), 'hidden', !!state.savePlayers);
   toggleClass($('#stateDetailsOverlay .buttons [icon=link_off]'), 'hidden', !state.link);
+  toggleClass($('#stateDetailsOverlay .buttons [icon=settings]'), 'hidden', !state.savePlayers);
 
   function updateStateDetailsDomains(state) {
     $('#similarDetailsDomain').innerText = String(state.bgg).replace(/^ *https?:\/\/(www\.)?/, '').replace(/\/.*/, '');
     $('#similarRulesDomain').innerText = String(state.rules).replace(/^ *https?:\/\/(www\.)?/, '').replace(/\/.*/, '');
     $('.hideForEdit [data-field=similarAwards]').innerText = String(state.similarAwards);
+    emojis2images($('.hideForEdit [data-field=similarAwards]'));
   }
   updateStateDetailsDomains(state);
 
@@ -785,7 +797,7 @@ function fillStateDetails(states, state, dom) {
       $('#stateDetailsOverlay').classList.add('uploading');
 
       const variantDOM = [];
-      const filenameSuffix = Math.random().toString(36).substring(3, 11);
+      const filenameSuffix = rand().toString(36).substring(3, 11);
 
       function metaCallback(name, similarName, image, variants) {
         variantOperationQueue.push({
@@ -839,7 +851,7 @@ function fillStateDetails(states, state, dom) {
     document.addEventListener('click', e=>$('#stateDetailsOverlay .buttons > div').classList.add('hidden'));
   };
   $('#stateDetailsOverlay .buttons [icon=download]').onclick = function() {
-    window.open(`dl/${roomID}/${state.id}`);
+    window.open(`dl/${roomID}/${encodeURIComponent(state.id)}`);
   };
   $('#stateDetailsOverlay .buttons [icon=link]').onclick = function() {
     shareLink(state);
@@ -849,14 +861,7 @@ function fillStateDetails(states, state, dom) {
     toServer('unlinkState', state.id);
   };
   $('#shareLinkOverlay button[icon=close]').onclick = _=>showStatesOverlay(detailsOverlay);
-  $('#shareLinkOverlay button[icon=link]').onclick = async function() {
-    try {
-      await navigator.clipboard.writeText($('#shareLinkOverlay input').value.replace(/( \(copied\))+$/, ''));
-      $('#shareLinkOverlay input').value += ' (copied)';
-    } catch(e) {
-      $('#shareLinkOverlay input').value += ' (NOT copied)';
-    }
-  }
+  shareButton($('#shareLinkOverlay button[icon=share]'), _=>$('#shareLinkOverlay input').value);
   $('#stateDetailsOverlay .buttons [icon=delete]').onclick = async function() {
     $('#statesButton').dataset.overlay = 'confirmOverlay';
     const type     = state.savePlayers ? 'saved game'        : 'game';
@@ -871,6 +876,20 @@ function fillStateDetails(states, state, dom) {
     } else {
       showStatesOverlay(detailsOverlay);
     }
+  };
+  $('#stateDetailsOverlay .buttons [icon=settings]').onclick = function() {
+    toServer('editState', {
+      id: state.id,
+      meta: {
+        saveState:     null,
+        saveVariant:   null,
+        saveLinkState: null,
+        savePlayers:   null,
+        saveDate:      null
+      },
+      variantInput: {},
+      variantOperationQueue: []
+    });
   };
   $('#stateDetailsOverlay .buttons [icon=upload]').onclick = function() {
     toServer('addStateToPublicLibrary', state.id);
@@ -1040,19 +1059,36 @@ async function confirmOverlay(title, text, confirmButton, cancelButton, confirmI
 
 async function shareLink(state) {
   showStatesOverlay('shareLinkOverlay');
-  let url = state.link;
-  if(!url) {
-    const name = state.name.replace(/[^A-Za-z0-9.-]/g, '_');
-    url = await fetch(`share/${roomID}/${state.id}`);
-    url = `${location.origin}${await url.text()}/${name}.vtt`;
+
+  const name = state.name.replace(/[^A-Za-z]+/g, '-').toLowerCase().replace(/^-+/, '').replace(/-+$/, '');
+  let url = null;
+
+  $('#shareLinkOverlay').classList.toggle('plGame', !!state.publicLibrary);
+  $('#shareLinkOverlay').classList.toggle('customGame', !state.publicLibrary);
+
+  if(state.publicLibrary) {
+    const type = state.publicLibrary.match(/tutorials/) ? 'tutorial' : 'game';
+    url = `${config.externalURL}/${type}/${name}`;
+  } else {
+    url = state.link;
+    if(!url) {
+      url = await fetch(`share/${roomID}/${state.id}`);
+      url = `${location.origin}${await url.text()}/${name}`;
+    } else if(url.startsWith(`${config.externalURL}/s/`)) {
+      url = `${config.externalURL}/game/${url.substr(config.externalURL.length + 3, 8)}/${name}`;
+    }
   }
+
   $('#sharedLink').value = url;
 }
 
 onLoad(function() {
   setSidebar();
 
-  onMessage('meta', args=>fillStatesList(args.meta.states, args.meta.starred, args.meta.activeState, args.meta.returnServer, args.activePlayers));
+  onMessage('meta', args=>{
+    currentMetaData = args;
+    fillStatesList(args.meta.states, args.meta.starred, args.meta.activeState, args.meta.returnServer, args.activePlayers);
+  });
 
   on('#filterOverflow > div', 'click', e=>e.stopPropagation());
   on('#filterOverflow > button', 'click', function(e) {
@@ -1084,7 +1120,7 @@ onLoad(function() {
     updateFilterOverflow();
   });
   document.addEventListener('dragover', function(e) {
-    if(e.dataTransfer.types.includes('Files')) {
+    if($('#statesOverlay').style.display == 'flex' && e.dataTransfer.types.includes('Files')) {
       e.preventDefault();
       e.dataTransfer.dropEffect = 'copy';
       $('#statesButton').click();
@@ -1105,6 +1141,7 @@ const lazyImageObserver = new IntersectionObserver(entries => {
     if(entry.isIntersecting) {
       entry.target.src = entry.target.dataset.src;
       lazyImageObserver.unobserve(entry.target);
+      loadedLibraryImages[entry.target.dataset.src] = true;
     }
   }
 });

@@ -16,7 +16,8 @@
       "similarName": "Ninety-Nine",
       "description": "Trick taking card game using part of your hand to declare bid.  Most points wins.",
       "showName": true,
-      "lastUpdate": 1634502388000
+      "lastUpdate": 1634502388000,
+      "similarDesigner": "David Parlett"
     }
   },
   "164c801c-0b48-44cb-b751-c1a12cdd5194_shuffleButton": {

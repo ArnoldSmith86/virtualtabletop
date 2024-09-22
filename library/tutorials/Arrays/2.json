@@ -505,18 +505,19 @@
       "time": "",
       "attribution": "",
       "showName": false,
-      "lastUpdate": 1625237253000,
+      "lastUpdate": 1725248837878,
       "skill": "",
       "description": "",
-      "variantImage": "",
-      "variant": "Modifying - Basic",
-      "language": "en-US",
-      "players": "1",
       "similarImage": "",
       "similarName": "",
       "similarAwards": "",
       "ruleText": "",
-      "helpText": ""
+      "helpText": "",
+      "variantImage": "",
+      "variant": "Modifying - Basic",
+      "language": "en-US",
+      "players": "1",
+      "similarDesigner": ""
     }
   }
 }

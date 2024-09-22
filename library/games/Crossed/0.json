@@ -214,14 +214,41 @@
         "gggrbbboggOyyBb",
         "grrrooorroooRrr"
       ],
-      "test": [
-        "Oo",
-        "bo",
-        "bo",
-        "bo",
-        "bo",
-        "bo",
-        "bo"
+      "grey": [
+        "rrOyyRrggyYOoob",
+        "byyyoorrbByyroo",
+        "bybbbooObggyrro",
+        "oBbGbyybooggGrr",
+        "oorrgbbbyooryyY",
+        "ggroggGyyrrrbBg",
+        "YggoRggyRrbbbgg"
+      ],
+      "yellow": [
+        "rggYyyyorrgggbY",
+        "rgrrryyorrggbbb",
+        "bRrbbGggggRbOBr",
+        "oooobbbBgYybrrr",
+        "ybboorrrbbbRroo",
+        "yyBggoOyyobyyyo",
+        "GyygGooyOoooygg"
+      ],
+      "blue": [
+        "rrggyyYggrrrroo",
+        "OrrBbGyggRgYroo",
+        "bOobgggroggggGy",
+        "bbooogrrooooBby",
+        "gbbrrrbBbbObyyG",
+        "ggYyrbbyyybboyb",
+        "yyyyRoooRyyborr"
+      ],
+      "green": [
+        "OgbbrrrgggYyyrr",
+        "ggggrygRggryyry",
+        "bboGyyGbrrrrooy",
+        "booooggbbbboRoo",
+        "bROrboooBYoorYO",
+        "rrrrbbbyyyoBggg",
+        "yyyyGByyooggbbb"
       ]
     },
     "z": 35,
@@ -239,20 +266,40 @@
             "type": "select",
             "options": [
               {
-                "value": "purple",
-                "text": "Variant A"
+                "value": "random",
+                "text": "Random"
               },
               {
                 "value": "black",
-                "text": "Variant B"
+                "text": "Base"
               },
               {
                 "value": "red",
-                "text": "Variant C"
+                "text": "Extra I"
+              },
+              {
+                "value": "blue",
+                "text": "Extra II"
+              },
+              {
+                "value": "green",
+                "text": "Extra III"
               },
               {
                 "value": "orange",
-                "text": "Variant D"
+                "text": "Extra IV"
+              },
+              {
+                "value": "purple",
+                "text": "Extra V"
+              },
+              {
+                "value": "yellow",
+                "text": "Extra VI"
+              },
+              {
+                "value": "grey",
+                "text": "Base 2"
               }
             ],
             "label": "Board",
@@ -285,6 +332,23 @@
       {
         "func": "SET",
         "property": "clickable"
+      },
+      {
+        "func": "IF",
+        "operand1": "${variant}",
+        "operand2": "random",
+        "thenRoutine": [
+          "var keys = []",
+          {
+            "func": "FOREACH",
+            "in": "${PROPERTY cardDefinitions}",
+            "loopRoutine": [
+              "var keys = push ${key}"
+            ]
+          },
+          "var keys = shuffle ${keys}",
+          "var variant = ${keys.0}"
+        ]
       },
       "var def = ${PROPERTY cardDefinitions} getIndex ${variant}",
       {
@@ -3259,7 +3323,7 @@
       "similarName": "Encore!",
       "description": "Take turns rolling dice to figure out which sections on scoresheet to mark off. Player rolling dice can remove two dice and other players choose from remaining dice. Highest score wins.",
       "showName": true,
-      "lastUpdate": 1677689043054,
+      "lastUpdate": 1710498583000,
       "skill": "",
       "similarImage": "",
       "similarAwards": "",
@@ -3268,7 +3332,8 @@
       "variantImage": "",
       "variant": "",
       "language": "en-US",
-      "players": "2-4"
+      "players": "2-4",
+      "similarDesigner": "Inka Brand, Markus Brand"
     }
   },
   "Player 2 - Joker 1": {

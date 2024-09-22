@@ -4,6 +4,7 @@ import JSZip from 'jszip';
 
 import { VERSION } from './fileupdater.mjs';
 import PCIO from './pcioimport.mjs';
+import TTS from './ttsimport.mjs';
 import Logging from './logging.mjs';
 import Config from './config.mjs';
 
@@ -24,14 +25,28 @@ async function downloadLink(link) {
     filename: Math.random().toString(36).substring(3, 9)
   };
 
-  const response = await fetch(link, requestEtag ? { headers: { 'If-None-Match': requestEtag } } : {});
+  const headers = requestEtag ? { headers: { 'If-None-Match': requestEtag } } : {};
+  let response = null;
+  try {
+    if(link.match(/\/game\//))
+      response = await fetch(await TTS.resolveLink(link.replace(/\/game\//, '/s/')), headers);
+    else
+      throw new Error('only needs original fetch');
+  } catch(e) {
+    response = await fetch(await TTS.resolveLink(link), headers);
+  }
 
   currentLinkStatus.time = +new Date();
   currentLinkStatus.status = response.status;
 
   if(response.status != 304) {
     currentLinkStatus.etag = response.headers.get('etag');
-    const states = await readStatesFromBuffer(await response.buffer(), true);
+    let states = null;
+    if(TTS.isTTSlink(link)) {
+      states = await TTS.fromBSON(await response.buffer());
+    } else {
+      states = await readStatesFromBuffer(await response.buffer(), true);
+    }
     fs.writeFileSync(`${dirname}/${currentLinkStatus.filename}`, JSON.stringify(states));
   }
 
@@ -42,6 +57,8 @@ async function downloadLink(link) {
 async function readStatesFromBuffer(buffer, includeVariantNameList) {
   const zip = await JSZip.loadAsync(buffer);
 
+  if(zip.files['WorkshopUpload'])
+    return { 'TTS': await readVariantsFromBuffer(buffer) };
   if(zip.files['widgets.json'])
     return { 'PCIO': await readVariantsFromBuffer(buffer) };
 
@@ -73,11 +90,11 @@ function checkForLinkToOwnServer(link) {
     return null;
 
   const localPrefix = Config.get('externalURL').replace(/[.*+?^${}()|[\]\\]/g, m=>'\\'+m[0]);
-  const match = link.match(`^${localPrefix}(/s/[0-9a-z]{8})/`);
+  const match = link.match(`^${localPrefix}/(s|game)/([0-9a-z]{8})/`);
 
   if(match) {
     const sharedLinks = JSON.parse(fs.readFileSync(Config.directory('save') + '/shares.json'));
-    const m = sharedLinks[match[1]].split('/');
+    const m = sharedLinks['/s/'+match[2]].split('/');
 
     const states = {};
     states['VTT'] = [];
@@ -142,7 +159,9 @@ async function readStatesFromLink(linkAndPath, includeVariantNameList) {
 
 async function readVariantsFromBuffer(buffer) {
   const zip = await JSZip.loadAsync(buffer);
-  if(zip.files['widgets.json']) {
+  if(Object.keys(zip.files).filter(f=>f.match(/WorkshopUpload/)).length) {
+    return [ await TTS.fromZip(buffer) ];
+  } else if(zip.files['widgets.json']) {
     return [ await PCIO(buffer) ];
   } else {
     const variants = [];

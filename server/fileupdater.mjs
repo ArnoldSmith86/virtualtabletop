@@ -1,4 +1,4 @@
-export const VERSION = 12;
+export const VERSION = 16;
 
 export default function FileUpdater(state) {
   const v = state._meta.version;
@@ -95,6 +95,9 @@ function updateProperties(properties, v, globalProperties) {
   v<8 && v8HoverInheritVisibleForSeat(properties);
   v<10 && v10GridOffset(properties);
   v<12 && globalProperties.v12DropShadowAllowed && v12HandDropShadow(properties);
+  v<13 && v13EnlargeTinyLabels(properties);
+  v<14 && v14HidePlayerCursors(properties);
+  v<15 && v15SkipTurnProperty(properties);
 }
 
 function updateRoutine(routine, v, globalProperties) {
@@ -118,6 +121,8 @@ function updateRoutine(routine, v, globalProperties) {
   v<3 && v3RemoveComputeAndRandomAndApplyVariables(routine);
   v<9 && v9NumericStringSort(routine);
   v<11 && v11OwnerMOVEXY(routine);
+  v<15 && v15SkipTurnRoutine(routine);
+  v<16 && v16UpdateCountParameter(routine);
 }
 
 function v2UpdateSelectDefault(routine) {
@@ -432,5 +437,55 @@ function v11OwnerMOVEXY(routine) {
 function v12HandDropShadow(properties) {
   if (properties.type == 'holder' && properties.childrenPerOwner && !properties.enterRoutine && !properties.leaveRoutine && !properties.changeRoutine) {
     properties.dropShadow = true;
+  }
+}
+
+function v13EnlargeTinyLabels(properties) {
+  if(properties.type == 'label') {
+    const match = JSON.stringify(properties.css || '').match(/font-size"?:"? *([0-9]+) *px/);
+    const fontSize = match ? +match[1] : 16;
+    if((properties.height || 20) < fontSize + 2)
+      properties.height = fontSize + 2;
+  }
+}
+
+function v14HidePlayerCursors(properties) {
+  if(properties.type == 'holder' && properties.childrenPerOwner)
+    properties.hidePlayerCursors = true;
+}
+
+// There are 2 functions for v15 for skipTurn
+function v15SkipTurnProperty(properties) {
+  if(properties.skipTurn !== undefined) {
+    properties.skipTurnFileUpdater = properties.skipTurn;
+    delete properties.skipTurn;
+  }
+}
+function v15SkipTurnRoutine(routine) {
+  for(const key in routine)
+    routine[key] = JSON.parse(JSON.stringify(routine[key]).replace(/\bskipTurn\b/g, 'skipTurnFileUpdater'));
+}
+
+function v16UpdateCountParameter(routine) {
+  for(const key in routine) {
+    if(routine[key] && [ 'FLIP', 'MOVE', 'MOVEXY', 'ROTATE' ].indexOf(routine[key].func) != -1) {
+      if(typeof routine[key].count != 'undefined' && (key != 'MOVE' || !routine[key].fillTo || String(routine[key].fillTo).includes('$'))) {
+        if(!routine[key].count) {
+          routine[key].count = 'all';
+        } else if(typeof routine[key].count == 'string' && routine[key].count.includes('$')) {
+          routine[key] = {
+            note: `This was added by the automatic file migration because the behavior of ${routine[key].func} with count=0 changed.`,
+            func: 'IF',
+            condition: routine[key].count,
+            thenRoutine: [
+              {...routine[key]}
+            ],
+            elseRoutine: [
+              Object.assign({}, routine[key], { count: 'all' })
+            ]
+          };
+        }
+      }
+    }
   }
 }

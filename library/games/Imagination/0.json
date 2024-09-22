@@ -8,23 +8,30 @@
     "parent": "36xe"
   },
   "_meta": {
-    "version": 4,
+    "version": 13,
     "info": {
       "name": "Imagination",
-      "image": "/assets/1138911588_1851085",
+      "image": "/assets/294730837_39781",
       "rules": "",
       "bgg": "https://www.boardgamegeek.com/boardgame/284108/pictures",
       "year": "2020",
       "mode": "vs",
       "time": "30",
-      "players": "3-5",
-      "language": "en-US",
-      "variant": "",
-      "attribution": "The room layout and game design is by LawDawg96 and released to the Public Domain by CC0.\n\nPhotos by LawDawg96 and released to the public domain under CC0:  Cadiz Dome, Chihuly Sculpture, Fountain, Jekyll, Valencia, Waterfall\n\nAll other photos are available under the Pixabay License and are cropped from the following sources:\n\nhttps://pixabay.com/illustrations/billiards-game-3d-balls-play-1167221/\nhttps://pixabay.com/illustrations/traffic-lights-red-yellow-green-3731800/\nhttps://pixabay.com/photos/ad-announce-announcement-arrow-1238450/\nhttps://pixabay.com/photos/airbus-airplane-jet-flight-airport-4454338/\nhttps://pixabay.com/photos/animal-camel-mammal-nature-6657488/\nhttps://pixabay.com/photos/animal-flowers-dog-outdoors-canine-6637774/\nhttps://pixabay.com/photos/azalea-waterfall-garden-pond-water-5120368/\nhttps://pixabay.com/photos/balloons-hot-air-balloon-rides-2331488/\nhttps://pixabay.com/photos/beach-bed-blue-chair-holiday-2342/\nhttps://pixabay.com/photos/bicycle-bike-green-sports-wall-407215/\nhttps://pixabay.com/photos/big-ben-westminster-london-england-1143631/\nhttps://pixabay.com/photos/building-architecture-landmark-102840/\nhttps://pixabay.com/photos/butterfly-flower-pollinate-6396254/\nhttps://pixabay.com/photos/cabaneros-national-park-pasture-6724690/\nhttps://pixabay.com/photos/cadiz-spain-cathedral-architecture-5246022/\nhttps://pixabay.com/photos/cat-kitten-pet-lick-tongue-6723256/\nhttps://pixabay.com/photos/chain-security-metal-iron-3481377/\nhttps://pixabay.com/photos/construction-machine-scoops-shovel-3412240/\nhttps://pixabay.com/photos/dragonfly-insect-plant-animal-6398686/\nhttps://pixabay.com/photos/driftwood-beach-water-natural-2523358/\nhttps://pixabay.com/photos/ecotourism-dogsled-dog-sled-snow-2120288/\nhttps://pixabay.com/photos/egypt-desert-animals-camels-sand-2569182/\nhttps://pixabay.com/photos/eiffel-tower-paris-france-3349075/\nhttps://pixabay.com/photos/extreme-stones-stones-mountains-507958/\nhttps://pixabay.com/photos/fairytale-neuschwanstein-castle-532850/\nhttps://pixabay.com/photos/fiat-fiat-500-automobile-4322521/\nhttps://pixabay.com/photos/fire-fighters-fire-truck-firefighter-4954058/\nhttps://pixabay.com/photos/flower-poppy-field-red-flower-100263/\nhttps://pixabay.com/photos/football-ball-sport-grass-field-1419954/\nhttps://pixabay.com/photos/golden-gate-bridge-suspension-bridge-731207/\nhttps://pixabay.com/photos/horse-carousel-carousel-horse-fair-1489825/\nhttps://pixabay.com/photos/horses-horse-heads-heads-stallions-1414889/\nhttps://pixabay.com/photos/kangaroos-animals-wildlife-5741721/\nhttps://pixabay.com/photos/ladybug-insect-ladybird-beetle-3475779/\nhttps://pixabay.com/photos/lighthouse-ocean-sea-coast-travel-1872998/\nhttps://pixabay.com/photos/lighthouse-westerhever-coast-1392124/\nhttps://pixabay.com/photos/locomotive-steam-locomotive-train-221159/\nhttps://pixabay.com/photos/looping-roller-coaster-heide-park-2686892/\nhttps://pixabay.com/photos/mountains-alps-meadow-tree-flowers-757731/\nhttps://pixabay.com/photos/mountain-volcano-peak-summit-477832/\nhttps://pixabay.com/photos/nursery-crib-chair-bedroom-room-1078923/\nhttps://pixabay.com/photos/owl-snow-snow-owl-bird-eyes-3184032/\nhttps://pixabay.com/photos/parachute-running-starts-startol-542831/\nhttps://pixabay.com/photos/path-landmark-mountain-pathway-5578851/\nhttps://pixabay.com/photos/piano-instrument-music-piano-keys-1731467/\nhttps://pixabay.com/photos/piggy-bank-savings-money-bank-coin-621068/\nhttps://pixabay.com/photos/pinecone-lake-tahoe-tahoe-pine-1168741/\nhttps://pixabay.com/photos/place-setting-dinner-cutlery-dining-1056286/\nhttps://pixabay.com/photos/reptile-water-wildlife-crocodile-3555792/\nhttps://pixabay.com/photos/ronda-bull-spain-bullring-europe-1128812/\nhttps://pixabay.com/photos/sea-cliff-travel-destination-192989/\nhttps://pixabay.com/photos/sea-turtle-diving-animal-2361247/\nhttps://pixabay.com/photos/shell-beach-sea-sand-summer-1585704/\nhttps://pixabay.com/photos/ship-container-technology-transport-1083562/\nhttps://pixabay.com/photos/ski-equipment-backcountry-skiing-932188/\nhttps://pixabay.com/photos/skyscrapers-building-architectural-3850732/\nhttps://pixabay.com/photos/skyscrapers-singapore-city-sky-3184798/\nhttps://pixabay.com/photos/stadium-rows-of-seats-grandstand-2921657/\nhttps://pixabay.com/photos/stonehenge-stones-rocks-101801/\nhttps://pixabay.com/photos/swimming-pool-luxury-pool-swimming-389267/\nhttps://pixabay.com/photos/table-tennis-sports-game-ball-play-4040584/\nhttps://pixabay.com/photos/temple-of-heaven-beijing-stairs-3675835/\nhttps://pixabay.com/photos/temple-pagoda-japanese-japan-1841296/\nhttps://pixabay.com/photos/trabant-east-germany-gdr-classic-4827326/\nhttps://pixabay.com/photos/valley-field-mountains-hills-5763670/\nhttps://pixabay.com/photos/vaulted-cellar-tunnel-arches-keller-247391/\nhttps://pixabay.com/photos/violin-viola-cello-6708567/\nhttps://pixabay.com/photos/wallpaper-ladder-climb-tree-3898967/\nhttps://pixabay.com/photos/windmill-amrum-north-sea-island-2168381/\nhttps://pixabay.com/photos/windmill-sky-nature-clouds-3109663/\n\n",
+      "attribution": "The room layout and game design is by LawDawg96 and released to the Public Domain by CC0.\n\nPhotos by LawDawg96 and released to the public domain under CC0:  Cadiz Dome, Chihuly Sculpture, Fountain, Jekyll, Valencia, Waterfall\n\nAll other photos are available under the Pixabay License and are cropped from the following sources:\n\nhttps://pixabay.com/illustrations/billiards-game-3d-balls-play-1167221/\nhttps://pixabay.com/illustrations/traffic-lights-red-yellow-green-3731800/\nhttps://pixabay.com/photos/ad-announce-announcement-arrow-1238450/\nhttps://pixabay.com/photos/airbus-airplane-jet-flight-airport-4454338/\nhttps://pixabay.com/photos/animal-camel-mammal-nature-6657488/\nhttps://pixabay.com/photos/animal-flowers-dog-outdoors-canine-6637774/\nhttps://pixabay.com/photos/azalea-waterfall-garden-pond-water-5120368/\nhttps://pixabay.com/photos/balloons-hot-air-balloon-rides-2331488/\nhttps://pixabay.com/photos/beach-bed-blue-chair-holiday-2342/\nhttps://pixabay.com/photos/bicycle-bike-green-sports-wall-407215/\nhttps://pixabay.com/photos/big-ben-westminster-london-england-1143631/\nhttps://pixabay.com/photos/building-architecture-landmark-102840/\nhttps://pixabay.com/photos/butterfly-flower-pollinate-6396254/\nhttps://pixabay.com/photos/cabaneros-national-park-pasture-6724690/\nhttps://pixabay.com/photos/cadiz-spain-cathedral-architecture-5246022/\nhttps://pixabay.com/photos/cat-kitten-pet-lick-tongue-6723256/\nhttps://pixabay.com/photos/chain-security-metal-iron-3481377/\nhttps://pixabay.com/photos/construction-machine-scoops-shovel-3412240/\nhttps://pixabay.com/photos/dragonfly-insect-plant-animal-6398686/\nhttps://pixabay.com/photos/driftwood-beach-water-natural-2523358/\nhttps://pixabay.com/photos/ecotourism-dogsled-dog-sled-snow-2120288/\nhttps://pixabay.com/photos/egypt-desert-animals-camels-sand-2569182/\nhttps://pixabay.com/photos/eiffel-tower-paris-france-3349075/\nhttps://pixabay.com/photos/extreme-stones-stones-mountains-507958/\nhttps://pixabay.com/photos/fairytale-neuschwanstein-castle-532850/\nhttps://pixabay.com/photos/fiat-fiat-500-automobile-4322521/\nhttps://pixabay.com/photos/fire-fighters-fire-truck-firefighter-4954058/\nhttps://pixabay.com/photos/flower-poppy-field-red-flower-100263/\nhttps://pixabay.com/photos/football-ball-sport-grass-field-1419954/\nhttps://pixabay.com/photos/golden-gate-bridge-suspension-bridge-731207/\nhttps://pixabay.com/photos/horse-carousel-carousel-horse-fair-1489825/\nhttps://pixabay.com/photos/horses-horse-heads-heads-stallions-1414889/\nhttps://pixabay.com/photos/kangaroos-animals-wildlife-5741721/\nhttps://pixabay.com/photos/ladybug-insect-ladybird-beetle-3475779/\nhttps://pixabay.com/photos/lighthouse-ocean-sea-coast-travel-1872998/\nhttps://pixabay.com/photos/lighthouse-westerhever-coast-1392124/\nhttps://pixabay.com/photos/locomotive-steam-locomotive-train-221159/\nhttps://pixabay.com/photos/looping-roller-coaster-heide-park-2686892/\nhttps://pixabay.com/photos/mountains-alps-meadow-tree-flowers-757731/\nhttps://pixabay.com/photos/mountain-volcano-peak-summit-477832/\nhttps://pixabay.com/photos/nursery-crib-chair-bedroom-room-1078923/\nhttps://pixabay.com/photos/owl-snow-snow-owl-bird-eyes-3184032/\nhttps://pixabay.com/photos/parachute-running-starts-startol-542831/\nhttps://pixabay.com/photos/path-landmark-mountain-pathway-5578851/\nhttps://pixabay.com/photos/piano-instrument-music-piano-keys-1731467/\nhttps://pixabay.com/photos/piggy-bank-savings-money-bank-coin-621068/\nhttps://pixabay.com/photos/pinecone-lake-tahoe-tahoe-pine-1168741/\nhttps://pixabay.com/photos/place-setting-dinner-cutlery-dining-1056286/\nhttps://pixabay.com/photos/reptile-water-wildlife-crocodile-3555792/\nhttps://pixabay.com/photos/ronda-bull-spain-bullring-europe-1128812/\nhttps://pixabay.com/photos/sea-cliff-travel-destination-192989/\nhttps://pixabay.com/photos/sea-turtle-diving-animal-2361247/\nhttps://pixabay.com/photos/shell-beach-sea-sand-summer-1585704/\nhttps://pixabay.com/photos/ship-container-technology-transport-1083562/\nhttps://pixabay.com/photos/ski-equipment-backcountry-skiing-932188/\nhttps://pixabay.com/photos/skyscrapers-building-architectural-3850732/\nhttps://pixabay.com/photos/skyscrapers-singapore-city-sky-3184798/\nhttps://pixabay.com/photos/stadium-rows-of-seats-grandstand-2921657/\nhttps://pixabay.com/photos/stonehenge-stones-rocks-101801/\nhttps://pixabay.com/photos/swimming-pool-luxury-pool-swimming-389267/\nhttps://pixabay.com/photos/table-tennis-sports-game-ball-play-4040584/\nhttps://pixabay.com/photos/temple-of-heaven-beijing-stairs-3675835/\nhttps://pixabay.com/photos/temple-pagoda-japanese-japan-1841296/\nhttps://pixabay.com/photos/trabant-east-germany-gdr-classic-4827326/\nhttps://pixabay.com/photos/valley-field-mountains-hills-5763670/\nhttps://pixabay.com/photos/vaulted-cellar-tunnel-arches-keller-247391/\nhttps://pixabay.com/photos/violin-viola-cello-6708567/\nhttps://pixabay.com/photos/wallpaper-ladder-climb-tree-3898967/\nhttps://pixabay.com/photos/windmill-amrum-north-sea-island-2168381/\nhttps://pixabay.com/photos/windmill-sky-nature-clouds-3109663/<div><br></div><div>Library image generated using the Midjourney artificial intelligence image generator, https://www.midjourney.com/home/, using the following prompt: \"photograph scrapbook --ar 1:1 --v 5.1\"\n\n</div>",
       "similarName": "Pictures",
+      "similarAwards": "2022 Gra Roku Best Party Game Winner\n2021 MinD-Spielepreis Short Game Winner\n2021 Hungarian Board Game Award Nominee\n2020 Spiel des Jahres Winner\n2020 MinD-Spielepreis Short Game Nominee\n2020 Japan Boardgame Prize Voters' Selection Nominee",
       "description": "Players are assigned a random card to recreate each using different components. Players vote on which picture was recreated and points awarded for correct guesses. Most points after 5 rounds wins.",
       "showName": true,
-      "lastUpdate": 1638419682000
+      "lastUpdate": 1690573833582,
+      "skill": "",
+      "similarImage": "",
+      "ruleText": "",
+      "helpText": "Instructions for use are in the game itself.",
+      "variantImage": "",
+      "variant": "",
+      "language": "en-US",
+      "players": "3-5",
+      "similarDesigner": "Christian Stöhr, Daniela Stöhr"
     }
   },
   "seat1": {
@@ -614,9 +621,10 @@
             "y": 0,
             "width": 320,
             "height": 159,
-            "valueType": "dynamic",
-            "value": "image",
-            "color": "transparent"
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image"
+            }
           }
         ]
       }
@@ -1300,9 +1308,10 @@
           {
             "type": "text",
             "fontSize": "35",
-            "valueType": "dynamic",
-            "value": "text1",
-            "color": "red"
+            "color": "red",
+            "dynamicProperties": {
+              "value": "text1"
+            }
           }
         ]
       }
@@ -1390,7 +1399,8 @@
         "value": "${cardText}"
       }
     ],
-    "cardSeat": 1
+    "cardSeat": 1,
+    "hoverInheritVisibleForSeat": false
   },
   "imageLabel": {
     "id": "imageLabel",
@@ -1409,28 +1419,32 @@
     "id": "gridCardHolder2",
     "onlyVisibleForSeat": "seat2",
     "inheritFrom": "gridCardHolder1",
-    "cardSeat": 2
+    "cardSeat": 2,
+    "hoverInheritVisibleForSeat": false
   },
   "gridCardHolder3": {
     "type": "holder",
     "id": "gridCardHolder3",
     "onlyVisibleForSeat": "seat3",
     "inheritFrom": "gridCardHolder1",
-    "cardSeat": 3
+    "cardSeat": 3,
+    "hoverInheritVisibleForSeat": false
   },
   "gridCardHolder4": {
     "type": "holder",
     "id": "gridCardHolder4",
     "onlyVisibleForSeat": "seat4",
     "inheritFrom": "gridCardHolder1",
-    "cardSeat": 4
+    "cardSeat": 4,
+    "hoverInheritVisibleForSeat": false
   },
   "gridCardHolder5": {
     "type": "holder",
     "id": "gridCardHolder5",
     "onlyVisibleForSeat": "seat5",
     "inheritFrom": "gridCardHolder1",
-    "cardSeat": 5
+    "cardSeat": 5,
+    "hoverInheritVisibleForSeat": false
   },
   "toolCanvas": {
     "type": "canvas",
@@ -1450,7 +1464,8 @@
     "activeGuess": false,
     "onlyVisibleForSeat": "seat1",
     "y": 5,
-    "x": 1700
+    "x": 1700,
+    "hoverInheritVisibleForSeat": false
   },
   "toolCanvasLabel": {
     "id": "toolCanvasLabel",
@@ -1505,7 +1520,8 @@
     "layer": 1,
     "onlyVisibleForSeat": "seat2",
     "movableInEdit": false,
-    "x": 1700
+    "x": 1700,
+    "hoverInheritVisibleForSeat": false
   },
   "marble1": {
     "id": "marble1",
@@ -1842,7 +1858,8 @@
     "activeGuess": false,
     "layer": 1,
     "onlyVisibleForSeat": "seat3",
-    "x": 1700
+    "x": 1700,
+    "hoverInheritVisibleForSeat": false
   },
   "toolCubesReset": {
     "type": "button",
@@ -2288,7 +2305,8 @@
     "activeGuess": false,
     "layer": 1,
     "onlyVisibleForSeat": "seat4",
-    "x": 1700
+    "x": 1700,
+    "hoverInheritVisibleForSeat": false
   },
   "toolShadesReset": {
     "type": "button",
@@ -2597,7 +2615,8 @@
     "activeGuess": false,
     "layer": 1,
     "onlyVisibleForSeat": "seat5",
-    "x": 1700
+    "x": 1700,
+    "hoverInheritVisibleForSeat": false
   },
   "toolShapesLabel": {
     "id": "toolShapesLabel",
@@ -4195,7 +4214,8 @@
         ]
       }
     ],
-    "css": "background: #f0f0f0; "
+    "css": "background: #f0f0f0; ",
+    "hoverInheritVisibleForSeat": false
   },
   "guessingLabel2": {
     "inheritFrom": "guessingLabel1",
@@ -4206,7 +4226,8 @@
     "z": 1284,
     "activeFace": 0,
     "thisSeat": 2,
-    "parent": "scoringLabel"
+    "parent": "scoringLabel",
+    "hoverInheritVisibleForSeat": false
   },
   "guessingLabel3": {
     "inheritFrom": "guessingLabel1",
@@ -4216,7 +4237,8 @@
     "onlyVisibleForSeat": "seat3",
     "thisSeat": 3,
     "parent": "scoringLabel",
-    "activeFace": 0
+    "activeFace": 0,
+    "hoverInheritVisibleForSeat": false
   },
   "guessingLabel4": {
     "inheritFrom": "guessingLabel1",
@@ -4226,7 +4248,8 @@
     "onlyVisibleForSeat": "seat4",
     "thisSeat": 4,
     "parent": "scoringLabel",
-    "activeFace": 0
+    "activeFace": 0,
+    "hoverInheritVisibleForSeat": false
   },
   "guessingLabel5": {
     "inheritFrom": "guessingLabel1",
@@ -4235,7 +4258,8 @@
     "y": 100,
     "onlyVisibleForSeat": "seat5",
     "thisSeat": 5,
-    "parent": "scoringLabel"
+    "parent": "scoringLabel",
+    "hoverInheritVisibleForSeat": false
   },
   "nextToolButton": {
     "type": "button",
@@ -4595,7 +4619,8 @@
       "none"
     ],
     "fixedParent": true,
-    "parent": "pBackground"
+    "parent": "pBackground",
+    "hoverInheritVisibleForSeat": false
   },
   "pOutline2": {
     "inheritFrom": "pOutline1",
@@ -4607,7 +4632,8 @@
     "onlyVisibleForSeat": [
       "none"
     ],
-    "parent": "pBackground"
+    "parent": "pBackground",
+    "hoverInheritVisibleForSeat": false
   },
   "pOutline3": {
     "inheritFrom": "pOutline1",
@@ -4619,7 +4645,8 @@
     "onlyVisibleForSeat": [
       "none"
     ],
-    "parent": "pBackground"
+    "parent": "pBackground",
+    "hoverInheritVisibleForSeat": false
   },
   "pOutline4": {
     "inheritFrom": "pOutline1",
@@ -4631,7 +4658,8 @@
     "onlyVisibleForSeat": [
       "none"
     ],
-    "parent": "pBackground"
+    "parent": "pBackground",
+    "hoverInheritVisibleForSeat": false
   },
   "pOutline5": {
     "inheritFrom": "pOutline1",
@@ -4643,7 +4671,8 @@
     "onlyVisibleForSeat": [
       "none"
     ],
-    "parent": "pBackground"
+    "parent": "pBackground",
+    "hoverInheritVisibleForSeat": false
   },
   "pOutline6": {
     "inheritFrom": "pOutline1",
@@ -4655,7 +4684,8 @@
     "onlyVisibleForSeat": [
       "none"
     ],
-    "parent": "pBackground"
+    "parent": "pBackground",
+    "hoverInheritVisibleForSeat": false
   },
   "pOutline7": {
     "inheritFrom": "pOutline1",
@@ -4667,7 +4697,8 @@
     "onlyVisibleForSeat": [
       "none"
     ],
-    "parent": "pBackground"
+    "parent": "pBackground",
+    "hoverInheritVisibleForSeat": false
   },
   "pOutline8": {
     "inheritFrom": "pOutline1",
@@ -4679,7 +4710,8 @@
     "onlyVisibleForSeat": [
       "none"
     ],
-    "parent": "pBackground"
+    "parent": "pBackground",
+    "hoverInheritVisibleForSeat": false
   },
   "pOutline9": {
     "inheritFrom": "pOutline1",
@@ -4691,7 +4723,8 @@
     "onlyVisibleForSeat": [
       "none"
     ],
-    "parent": "pBackground"
+    "parent": "pBackground",
+    "hoverInheritVisibleForSeat": false
   },
   "pOutline10": {
     "inheritFrom": "pOutline1",
@@ -4703,7 +4736,8 @@
     "onlyVisibleForSeat": [
       "none"
     ],
-    "parent": "pBackground"
+    "parent": "pBackground",
+    "hoverInheritVisibleForSeat": false
   },
   "pOutline11": {
     "inheritFrom": "pOutline1",
@@ -4715,7 +4749,8 @@
     "onlyVisibleForSeat": [
       "none"
     ],
-    "parent": "pBackground"
+    "parent": "pBackground",
+    "hoverInheritVisibleForSeat": false
   },
   "pOutline12": {
     "inheritFrom": "pOutline1",
@@ -4727,7 +4762,8 @@
     "onlyVisibleForSeat": [
       "none"
     ],
-    "parent": "pBackground"
+    "parent": "pBackground",
+    "hoverInheritVisibleForSeat": false
   },
   "pOutline13": {
     "inheritFrom": "pOutline1",
@@ -4739,7 +4775,8 @@
     "onlyVisibleForSeat": [
       "none"
     ],
-    "parent": "pBackground"
+    "parent": "pBackground",
+    "hoverInheritVisibleForSeat": false
   },
   "pOutline14": {
     "inheritFrom": "pOutline1",
@@ -4751,7 +4788,8 @@
     "onlyVisibleForSeat": [
       "none"
     ],
-    "parent": "pBackground"
+    "parent": "pBackground",
+    "hoverInheritVisibleForSeat": false
   },
   "pOutline15": {
     "inheritFrom": "pOutline1",
@@ -4763,7 +4801,8 @@
     "onlyVisibleForSeat": [
       "none"
     ],
-    "parent": "pBackground"
+    "parent": "pBackground",
+    "hoverInheritVisibleForSeat": false
   },
   "outlineButton": {
     "type": "button",
@@ -5688,7 +5727,8 @@
     "text": "Advance to next drawing",
     "width": 200,
     "layer": 3,
-    "css": "font-size: 28px; "
+    "css": "font-size: 28px; ",
+    "hoverInheritVisibleForSeat": false
   },
   "arzv": {
     "deck": "gnr5D",
@@ -6300,5 +6340,46 @@
     ],
     "css": "font-size: 28px; ",
     "text": "Start Next Round"
+  },
+  "divider1": {
+    "id": "divider1",
+    "parent": "creatorLabel1",
+    "fixedParent": true,
+    "x": 10,
+    "y": 101,
+    "width": 575,
+    "height": 0,
+    "borderRadius": "3px",
+    "z": 9762,
+    "css": {
+      "border": "3px solid #fff"
+    }
+  },
+  "divider2": {
+    "id": "divider2",
+    "parent": "creatorLabel2",
+    "x": 10,
+    "y": 101,
+    "inheritFrom": {
+      "divider1": "*"
+    }
+  },
+  "divider3": {
+    "id": "divider3",
+    "parent": "creatorLabel3",
+    "x": 10,
+    "y": 101,
+    "inheritFrom": {
+      "divider1": "*"
+    }
+  },
+  "divider4": {
+    "id": "divider4",
+    "parent": "creatorLabel4",
+    "x": 10,
+    "y": 101,
+    "inheritFrom": {
+      "divider1": "*"
+    }
   }
 }

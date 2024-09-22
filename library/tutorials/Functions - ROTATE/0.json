@@ -177,7 +177,6 @@
             "y": 0,
             "width": 103,
             "height": 160,
-            "valueType": "static",
             "value": "/i/cards-default/2B.svg"
           }
         ]
@@ -192,8 +191,9 @@
             "y": 0,
             "width": 103,
             "height": 160,
-            "valueType": "dynamic",
-            "value": "image"
+            "dynamicProperties": {
+              "value": "image"
+            }
           }
         ]
       }
@@ -746,7 +746,10 @@
     "z": 81,
     "id": "79wj",
     "height": 100,
-    "width": 260
+    "width": 260,
+    "css": {
+      "color": "black"
+    }
   },
   "9kdj": {
     "text": "🔥",
@@ -781,7 +784,10 @@
     "z": 79,
     "height": 90,
     "width": 300,
-    "id": "498v"
+    "id": "498v",
+    "css": {
+      "color": "black"
+    }
   },
   "4delQS": {
     "id": "4delQS",
@@ -799,7 +805,10 @@
     "z": 78,
     "height": 90,
     "width": 300,
-    "id": "9xw2"
+    "id": "9xw2",
+    "css": {
+      "color": "black"
+    }
   },
   "6ck6": {
     "type": "holder",
@@ -819,7 +828,9 @@
     "height": 180,
     "id": "6ck6",
     "rotation": -90,
-    "z": 11952
+    "z": 11952,
+    "dropShadow": true,
+    "hidePlayerCursors": true
   },
   "pnm9": {
     "type": "label",
@@ -829,18 +840,10 @@
     "z": 84,
     "height": 90,
     "width": 320,
-    "id": "pnm9"
-  },
-  "8fr3": {
-    "type": "label",
-    "text": "Functions: ROTATE",
-    "css": "font-size: 60px",
-    "height": 160,
-    "width": 1000,
-    "x": 287,
-    "y": -6,
-    "z": 75,
-    "id": "8fr3"
+    "id": "pnm9",
+    "css": {
+      "color": "black"
+    }
   },
   "pr56": {
     "id": "pr56",
@@ -863,7 +866,7 @@
       {
         "func": "ROTATE",
         "holder": "pr56",
-        "count": 1
+        "count": "all"
       }
     ],
     "image": "/assets/45318419_712",
@@ -922,20 +925,13 @@
     "z": 92,
     "height": 90,
     "width": 300,
-    "id": "eryl"
-  },
-  "y9k6": {
-    "type": "label",
-    "text": "ROTATE is a function that can be activated through a button.  'Rotation' is a property that can be set directly in the JSON.",
-    "x": 622,
-    "y": 139,
-    "z": 85,
-    "height": 90,
-    "width": 300,
-    "id": "y9k6"
+    "id": "eryl",
+    "css": {
+      "color": "black"
+    }
   },
   "_meta": {
-    "version": 2,
+    "version": 16,
     "info": {
       "name": "Functions - ROTATE",
       "image": "/assets/1893907066_6976",
@@ -944,12 +940,21 @@
       "year": "2020",
       "mode": "Tutorial",
       "time": "0",
-      "players": "1",
-      "language": "en-US",
-      "variant": "",
       "attribution": "",
       "showName": false,
-      "lastUpdate": 1620185370000
+      "lastUpdate": 1726238027115,
+      "skill": "",
+      "description": "",
+      "similarImage": "",
+      "similarName": "",
+      "similarDesigner": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": "",
+      "variantImage": "",
+      "variant": "",
+      "language": "en-US",
+      "players": "1"
     }
   },
   "0a5z": {
@@ -1500,7 +1505,6 @@
             "y": 0,
             "width": 103,
             "height": 160,
-            "valueType": "static",
             "value": "/i/cards-default/2B.svg",
             "color": "transparent"
           }
@@ -1516,9 +1520,10 @@
             "y": 0,
             "width": 103,
             "height": 160,
-            "valueType": "dynamic",
-            "value": "image",
-            "color": "transparent"
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image"
+            }
           }
         ]
       }
@@ -1939,5 +1944,28 @@
     "cardType": "S 4K",
     "z": 805,
     "parent": "0a5zP"
+  },
+  "headerLabel": {
+    "id": "headerLabel",
+    "x": 400,
+    "y": -2,
+    "width": 800,
+    "height": 60,
+    "z": 74,
+    "movableInEdit": false,
+    "css": "font-size: 60px;text-align:center",
+    "text": "Functions: ROTATE"
+  },
+  "mainTextLabel": {
+    "id": "mainTextLabel",
+    "x": 108,
+    "y": 114,
+    "width": 1400,
+    "height": 150,
+    "layer": -3,
+    "z": 129,
+    "movable": false,
+    "css": "font-size: 25px; ",
+    "text": "ROTATE works on any widget type. It also works on collections. There are a variety of parameters, some of which are demonstrated below. The 'count' parameter limits how many widgets will be rotated. It defaults to 1."
   }
 }
