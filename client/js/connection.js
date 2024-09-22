@@ -24,7 +24,6 @@ export function startWebSocket() {
       toServer('room', { playerName, roomID });
       if(urlProperties.trace)
         toServer('enableTrace');
-      $('#legacy-link').href += `#${roomID}`;
     }
   };
 
@@ -48,7 +47,7 @@ export function startWebSocket() {
     if(func == 'serverStart') {
       if(serverStart != null && serverStart != args) {
         console.log('Server restart detected. Reloading...')
-        setTimeout(location.reload, Math.random()*10000);
+        setTimeout(location.reload, rand()*10000);
         showOverlay('connectionLostOverlay', true);
         preventReconnect();
         connection.close();

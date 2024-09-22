@@ -1,3 +1,4 @@
+import { dropTargets } from './main.js';
 import { sendPropertyUpdate } from './serverstate.js';
 import { tracingEnabled } from './tracing.js';
 
@@ -5,6 +6,7 @@ export class StateManaged {
   constructor() {
     this.defaults = {};
     this.state = {};
+    this.unalteredState = {};
   }
 
   addDefaults(defaults) {
@@ -15,16 +17,27 @@ export class StateManaged {
     const deltaForDOM = {};
     for(const i in delta) {
       if(delta[i] === null) {
+        delete this.unalteredState[i];
         delete this.state[i];
         deltaForDOM[i] = this.get(i);
       } else {
-        deltaForDOM[i] = this.state[i] = delta[i];
+        deltaForDOM[i] = this.unalteredState[i] = this.state[i] = delta[i];
       }
     }
+
     this.applyDeltaToDOM(deltaForDOM);
 
     if(delta.z)
       updateMaxZ(this.get('layer'), delta.z);
+  }
+
+  applyDeltaToDOM(delta) {
+    if(delta.dropTarget !== undefined) {
+      if(this.get('dropTarget'))
+        dropTargets.set(this.id, this);
+      else
+        dropTargets.delete(this.id);
+    }
   }
 
   applyInitialDelta(delta) {
@@ -33,9 +46,10 @@ export class StateManaged {
   }
 
   getDefaultValue(key) {
-    for(const [ id, properties ] of Object.entries(this.inheritFrom()))
-      if(this.inheritFromIsValid(properties, key) && widgets.has(id) && widgets.get(id).get(key) !== undefined)
-        return widgets.get(id).get(key);
+    if(this.inheritedProperties)
+      for(const [ id, properties ] of Object.entries(this.inheritFrom()))
+        if(this.inheritedProperties[key] && this.inheritFromIsValid(properties, key) && widgets.has(id) && widgets.get(id).get(key) !== undefined)
+          return widgets.get(id).get(key);
     return this.defaults[key];
   }
 
@@ -77,7 +91,9 @@ export class StateManaged {
     if(properties == '*')
       return true;
 
-    if(Array.isArray(properties) && properties.length && properties[0].length && properties[0][0] == '!')
+    properties = asArray(properties);
+
+    if(properties.length && properties[0].length && properties[0][0] == '!')
       return properties.indexOf('!'+key) == -1;
     else
       return properties.indexOf(key) != -1;

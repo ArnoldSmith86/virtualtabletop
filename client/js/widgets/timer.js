@@ -55,8 +55,8 @@ export class Timer extends Widget {
     }
   }
 
-  classes() {
-    let className = super.classes();
+  classes(includeTemporary=true) {
+    let className = super.classes(includeTemporary);
 
     if(this.get('alert'))
       className += ' alert';

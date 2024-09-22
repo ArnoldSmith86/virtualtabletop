@@ -208,18 +208,19 @@
       "time": "",
       "attribution": "",
       "showName": false,
-      "lastUpdate": 1673017752215,
+      "lastUpdate": 1705274283924,
       "skill": "",
       "description": "",
-      "variantImage": "",
-      "variant": "Advanced",
-      "language": "en-US",
-      "players": "1",
       "similarImage": "",
       "similarName": "",
       "similarAwards": "",
       "ruleText": "",
-      "helpText": ""
+      "helpText": "",
+      "similarDesigner": "",
+      "variantImage": "",
+      "variant": "Advanced",
+      "language": "en-US",
+      "players": "1"
     }
   },
   "qaui": {

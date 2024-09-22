@@ -1,114 +1,31 @@
 {
-  "ch6o": {
-    "type": "label",
-    "text": "dropOffsetX:",
-    "height": 42,
-    "width": 200,
-    "x": 354,
-    "y": 213,
-    "z": 19,
-    "id": "ch6o",
-    "css": "font-size: 30px"
+  "9wou": {
+    "type": "holder",
+    "x": 106,
+    "y": 262,
+    "z": 1,
+    "id": "9wou"
   },
-  "8pd4": {
-    "type": "label",
-    "text": "dropOffsetY:",
-    "css": "font-size: 30px",
-    "height": 42,
-    "width": 200,
-    "x": 354,
-    "y": 272.25,
-    "z": 21,
-    "id": "8pd4"
+  "68jo": {
+    "type": "holder",
+    "id": "68jo",
+    "x": 1193.5,
+    "y": 741,
+    "dropTarget": {
+      "deck": "68joD"
+    },
+    "z": 13
   },
-  "cekh": {
-    "type": "button",
-    "text": "Set values",
-    "clickRoutine": [
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "Card Area",
-        "collection": "layout"
-      },
-      {
-        "func": "SET",
-        "collection": "layout",
-        "property": "dropOffsetX",
-        "value": "${PROPERTY text OF doX}"
-      },
-      {
-        "func": "SET",
-        "collection": "layout",
-        "property": "dropOffsetY",
-        "value": "${PROPERTY text OF doY}"
-      },
-      {
-        "func": "SET",
-        "collection": "layout",
-        "property": "stackOffsetX",
-        "value": "${PROPERTY text OF soX}"
-      },
-      {
-        "func": "SET",
-        "collection": "layout",
-        "property": "stackOffsetY",
-        "value": "${PROPERTY text OF soY}"
-      },
-      {
-        "func": "SELECT",
-        "property": "deck",
-        "value": "Deck",
-        "mode": "add"
-      },
-      {
-        "func": "SET",
-        "property": "overlap",
-        "value": "${PROPERTY text OF ovlp}"
-      }
-    ],
-    "x": 697,
-    "y": 330,
-    "z": 4946,
-    "id": "cekh",
-    "height": 40,
-    "width": 100
+  "68joP": {
+    "type": "pile",
+    "id": "68joP",
+    "parent": "68jo",
+    "width": 103,
+    "height": 160
   },
-  "7bvt": {
-    "type": "label",
-    "text": "stackOffsetX:",
-    "css": "font-size: 30px",
-    "height": 42,
-    "width": 200,
-    "x": 354,
-    "y": 331.5,
-    "z": 23,
-    "id": "7bvt"
-  },
-  "9trg": {
-    "type": "label",
-    "text": "stackOffsetY:",
-    "css": "font-size: 30px",
-    "height": 42,
-    "width": 200,
-    "x": 354,
-    "y": 390.75,
-    "z": 25,
-    "id": "9trg"
-  },
-  "doX": {
-    "type": "label",
-    "text": 100,
-    "x": 562,
-    "y": 225,
-    "z": 39,
-    "id": "doX",
-    "editable": 1,
-    "css": "background-color: #CCCCCC; color:black",
-    "overlap": 0
-  },
-  "ig98B": {
-    "id": "ig98B",
+  "68joB": {
+    "id": "68joB",
+    "parent": "68jo",
     "y": 171.36,
     "width": 111,
     "height": 40,
@@ -118,1091 +35,191 @@
     "clickRoutine": [
       {
         "func": "RECALL",
-        "holder": "Deck Holder"
+        "holder": "68jo"
       },
       {
         "func": "FLIP",
-        "holder": "Deck Holder",
+        "holder": "68jo",
         "face": 0
       },
       {
         "func": "SHUFFLE",
-        "holder": "Deck Holder"
+        "holder": "68jo"
       }
-    ],
-    "parent": "Deck Holder"
+    ]
   },
-  "ig98_A_C": {
-    "id": "ig98_A_C",
-    "parent": "8wsk",
-    "type": "card",
-    "cardType": "C 01",
-    "z": 4528,
-    "deck": "Deck",
-    "overlap": 1
-  },
-  "ig98_2_C": {
-    "id": "ig98_2_C",
-    "type": "card",
-    "cardType": "C 02",
-    "z": 3954,
-    "parent": "8wsk",
-    "deck": "Deck",
-    "overlap": 1
-  },
-  "ig98_3_C": {
-    "id": "ig98_3_C",
-    "type": "card",
-    "cardType": "C 03",
-    "z": 4251,
-    "parent": "8wsk",
-    "deck": "Deck",
-    "overlap": 1
-  },
-  "ig98_4_C": {
-    "id": "ig98_4_C",
-    "parent": "8wsk",
-    "type": "card",
-    "cardType": "C 04",
-    "z": 9321,
-    "deck": "Deck",
-    "overlap": 1
-  },
-  "ig98_5_C": {
-    "id": "ig98_5_C",
-    "type": "card",
-    "cardType": "C 05",
-    "z": 1184,
-    "parent": "8wsk",
-    "deck": "Deck",
-    "overlap": 1
-  },
-  "ig98_6_C": {
-    "id": "ig98_6_C",
-    "parent": "8wsk",
-    "type": "card",
-    "cardType": "C 06",
-    "z": 6020,
-    "deck": "Deck",
-    "overlap": 1
-  },
-  "ig98_7_C": {
-    "id": "ig98_7_C",
-    "parent": "8wsk",
-    "type": "card",
-    "cardType": "C 07",
-    "z": 1798,
-    "deck": "Deck",
-    "overlap": 1
-  },
-  "ig98_8_C": {
-    "id": "ig98_8_C",
-    "type": "card",
-    "cardType": "C 08",
-    "z": 3051,
-    "parent": "8wsk",
-    "deck": "Deck",
-    "overlap": 1
-  },
-  "ig98_9_C": {
-    "id": "ig98_9_C",
-    "type": "card",
-    "cardType": "C 09",
-    "z": 6534,
-    "parent": "8wsk",
-    "deck": "Deck",
-    "overlap": 1
-  },
-  "ig98_T_C": {
-    "id": "ig98_T_C",
-    "parent": "8wsk",
-    "type": "card",
-    "cardType": "C 10",
-    "z": 6358,
-    "deck": "Deck",
-    "overlap": 1
-  },
-  "ig98_J_C": {
-    "id": "ig98_J_C",
-    "parent": "8wsk",
-    "type": "card",
-    "cardType": "C 2J",
-    "z": 8728,
-    "deck": "Deck",
-    "overlap": 1
-  },
-  "ig98_Q_C": {
-    "id": "ig98_Q_C",
-    "type": "card",
-    "cardType": "C 3Q",
-    "z": 8262,
-    "parent": "8wsk",
-    "deck": "Deck",
-    "overlap": 1
-  },
-  "ig98_K_C": {
-    "id": "ig98_K_C",
-    "type": "card",
-    "cardType": "C 4K",
-    "z": 8751,
-    "deck": "Deck",
-    "overlap": 1,
-    "parent": "8wsk"
-  },
-  "ig98_A_D": {
-    "id": "ig98_A_D",
-    "parent": "8wsk",
-    "type": "card",
-    "cardType": "D 01",
-    "z": 1928,
-    "deck": "Deck",
-    "overlap": 1
-  },
-  "ig98_2_D": {
-    "id": "ig98_2_D",
-    "parent": "8wsk",
-    "type": "card",
-    "cardType": "D 02",
-    "z": 155,
-    "deck": "Deck",
-    "overlap": 1
-  },
-  "ig98_3_D": {
-    "id": "ig98_3_D",
-    "type": "card",
-    "cardType": "D 03",
-    "z": 6168,
-    "parent": "8wsk",
-    "deck": "Deck",
-    "overlap": 1
-  },
-  "ig98_4_D": {
-    "id": "ig98_4_D",
-    "parent": "8wsk",
-    "type": "card",
-    "cardType": "D 04",
-    "z": 8342,
-    "deck": "Deck",
-    "overlap": 1
-  },
-  "ig98_5_D": {
-    "id": "ig98_5_D",
-    "parent": "8wsk",
-    "type": "card",
-    "cardType": "D 05",
-    "z": 5260,
-    "deck": "Deck",
-    "overlap": 1
-  },
-  "ig98_6_D": {
-    "id": "ig98_6_D",
-    "parent": "8wsk",
-    "type": "card",
-    "cardType": "D 06",
-    "z": 532,
-    "deck": "Deck",
-    "overlap": 1
-  },
-  "ig98_7_D": {
-    "id": "ig98_7_D",
-    "parent": "8wsk",
-    "type": "card",
-    "cardType": "D 07",
-    "z": 9555,
-    "deck": "Deck",
-    "overlap": 1
-  },
-  "ig98_8_D": {
-    "id": "ig98_8_D",
-    "type": "card",
-    "cardType": "D 08",
-    "z": 6965,
-    "deck": "Deck",
-    "overlap": 1,
-    "parent": "8wsk"
-  },
-  "ig98_9_D": {
-    "id": "ig98_9_D",
-    "type": "card",
-    "cardType": "D 09",
-    "z": 2875,
-    "parent": "8wsk",
-    "deck": "Deck",
-    "overlap": 1
-  },
-  "ig98_T_D": {
-    "id": "ig98_T_D",
-    "type": "card",
-    "cardType": "D 10",
-    "z": 8133,
-    "deck": "Deck",
-    "overlap": 1,
-    "parent": "8wsk"
-  },
-  "ig98_J_D": {
-    "id": "ig98_J_D",
-    "type": "card",
-    "cardType": "D 2J",
-    "z": 6180,
-    "deck": "Deck",
-    "overlap": 1,
-    "parent": "8wsk"
-  },
-  "ig98_Q_D": {
-    "id": "ig98_Q_D",
-    "parent": "8wsk",
-    "type": "card",
-    "cardType": "D 3Q",
-    "z": 8371,
-    "deck": "Deck",
-    "overlap": 1
-  },
-  "ig98_K_D": {
-    "id": "ig98_K_D",
-    "parent": "8wsk",
-    "type": "card",
-    "cardType": "D 4K",
-    "z": 5527,
-    "deck": "Deck",
-    "overlap": 1
-  },
-  "ig98_A_H": {
-    "id": "ig98_A_H",
-    "type": "card",
-    "cardType": "H 01",
-    "z": 701,
-    "parent": "8wsk",
-    "deck": "Deck",
-    "overlap": 1
-  },
-  "ig98_2_H": {
-    "id": "ig98_2_H",
-    "type": "card",
-    "cardType": "H 02",
-    "z": 5360,
-    "parent": "8wsk",
-    "deck": "Deck",
-    "overlap": 1
-  },
-  "ig98_3_H": {
-    "id": "ig98_3_H",
-    "parent": "8wsk",
-    "type": "card",
-    "cardType": "H 03",
-    "z": 5681,
-    "deck": "Deck",
-    "overlap": 1
-  },
-  "ig98_4_H": {
-    "id": "ig98_4_H",
-    "parent": "8wsk",
-    "type": "card",
-    "cardType": "H 04",
-    "z": 3412,
-    "deck": "Deck",
-    "overlap": 1
-  },
-  "ig98_5_H": {
-    "id": "ig98_5_H",
-    "parent": "8wsk",
-    "type": "card",
-    "cardType": "H 05",
-    "z": 9832,
-    "deck": "Deck",
-    "overlap": 1
-  },
-  "ig98_6_H": {
-    "id": "ig98_6_H",
-    "type": "card",
-    "cardType": "H 06",
-    "z": 5027,
-    "parent": "8wsk",
-    "deck": "Deck",
-    "overlap": 1
-  },
-  "ig98_7_H": {
-    "id": "ig98_7_H",
-    "parent": "8wsk",
-    "type": "card",
-    "cardType": "H 07",
-    "z": 6035,
-    "deck": "Deck",
-    "overlap": 1
-  },
-  "ig98_8_H": {
-    "id": "ig98_8_H",
-    "parent": "8wsk",
-    "type": "card",
-    "cardType": "H 08",
-    "z": 9467,
-    "deck": "Deck",
-    "overlap": 1
-  },
-  "ig98_9_H": {
-    "id": "ig98_9_H",
-    "parent": "8wsk",
-    "type": "card",
-    "cardType": "H 09",
-    "z": 9002,
-    "deck": "Deck",
-    "overlap": 1
-  },
-  "ig98_T_H": {
-    "id": "ig98_T_H",
-    "type": "card",
-    "cardType": "H 10",
-    "z": 8912,
-    "parent": "8wsk",
-    "deck": "Deck",
-    "overlap": 1
-  },
-  "ig98_J_H": {
-    "id": "ig98_J_H",
-    "type": "card",
-    "cardType": "H 2J",
-    "z": 6320,
-    "parent": "8wsk",
-    "deck": "Deck",
-    "overlap": 1
-  },
-  "ig98_Q_H": {
-    "id": "ig98_Q_H",
-    "type": "card",
-    "cardType": "H 3Q",
-    "z": 230,
-    "parent": "8wsk",
-    "deck": "Deck",
-    "overlap": 1
-  },
-  "ig98_K_H": {
-    "id": "ig98_K_H",
-    "type": "card",
-    "cardType": "H 4K",
-    "z": 8218,
-    "parent": "8wsk",
-    "deck": "Deck",
-    "overlap": 1
-  },
-  "ig98_A_S": {
-    "id": "ig98_A_S",
-    "type": "card",
-    "cardType": "S 01",
-    "z": 9927,
-    "deck": "Deck",
-    "overlap": 1,
-    "parent": "8wsk"
-  },
-  "ig98_2_S": {
-    "id": "ig98_2_S",
-    "parent": "8wsk",
-    "type": "card",
-    "cardType": "S 02",
-    "z": 4997,
-    "deck": "Deck",
-    "overlap": 1
-  },
-  "ig98_3_S": {
-    "id": "ig98_3_S",
-    "parent": "8wsk",
-    "type": "card",
-    "cardType": "S 03",
-    "z": 24,
-    "deck": "Deck",
-    "overlap": 1
-  },
-  "ig98_4_S": {
-    "id": "ig98_4_S",
-    "parent": "8wsk",
-    "type": "card",
-    "cardType": "S 04",
-    "z": 7042,
-    "deck": "Deck",
-    "overlap": 1
-  },
-  "ig98_5_S": {
-    "id": "ig98_5_S",
-    "parent": "8wsk",
-    "type": "card",
-    "cardType": "S 05",
-    "z": 4149,
-    "deck": "Deck",
-    "overlap": 1
-  },
-  "ig98_6_S": {
-    "id": "ig98_6_S",
-    "parent": "8wsk",
-    "type": "card",
-    "cardType": "S 06",
-    "z": 5064,
-    "deck": "Deck",
-    "overlap": 1
-  },
-  "ig98_7_S": {
-    "id": "ig98_7_S",
-    "type": "card",
-    "cardType": "S 07",
-    "z": 820,
-    "parent": "8wsk",
-    "deck": "Deck",
-    "overlap": 1
-  },
-  "ig98_8_S": {
-    "id": "ig98_8_S",
-    "parent": "8wsk",
-    "type": "card",
-    "cardType": "S 08",
-    "z": 2846,
-    "deck": "Deck",
-    "overlap": 1
-  },
-  "ig98_9_S": {
-    "id": "ig98_9_S",
-    "parent": "8wsk",
-    "type": "card",
-    "cardType": "S 09",
-    "z": 7505,
-    "deck": "Deck",
-    "overlap": 1
-  },
-  "ig98_T_S": {
-    "id": "ig98_T_S",
-    "parent": "8wsk",
-    "type": "card",
-    "cardType": "S 10",
-    "z": 3572,
-    "deck": "Deck",
-    "overlap": 1
-  },
-  "ig98_J_S": {
-    "id": "ig98_J_S",
-    "parent": "8wsk",
-    "type": "card",
-    "cardType": "S 2J",
-    "z": 7090,
-    "deck": "Deck",
-    "overlap": 1
-  },
-  "ig98_Q_S": {
-    "id": "ig98_Q_S",
-    "type": "card",
-    "cardType": "S 3Q",
-    "z": 3621,
-    "parent": "8wsk",
-    "deck": "Deck",
-    "overlap": 1
-  },
-  "ig98_K_S": {
-    "id": "ig98_K_S",
-    "type": "card",
-    "cardType": "S 4K",
-    "z": 3155,
-    "parent": "8wsk",
-    "deck": "Deck",
-    "overlap": 1
-  },
-  "Deck Holder": {
-    "type": "holder",
-    "id": "Deck Holder",
-    "x": 445.5,
-    "y": 557,
-    "dropTarget": {
-      "type": "card"
-    },
-    "z": 17
-  },
-  "Card Area": {
-    "type": "holder",
-    "x": 844,
-    "y": 214,
-    "z": 16,
-    "id": "Card Area",
-    "width": 600,
-    "height": 500,
-    "dropOffsetX": 100,
-    "dropOffsetY": 100,
-    "overlap": 1,
-    "stackOffsetY": 20,
-    "stackOffsetX": 20
-  },
-  "8wsk": {
-    "type": "pile",
-    "parent": "Deck Holder",
-    "x": 4,
-    "y": 4,
-    "width": 103,
-    "height": 160,
-    "id": "8wsk"
-  },
-  "doY": {
-    "type": "label",
-    "x": 562,
-    "y": 286,
-    "z": 22,
-    "id": "doY",
-    "editable": 1,
-    "css": "background-color: #CCCCCC; color:black",
-    "overlap": 0,
-    "text": 100
-  },
-  "soX": {
-    "type": "label",
-    "x": 562,
-    "y": 344,
-    "z": 35,
-    "id": "soX",
-    "editable": 1,
-    "css": "background-color: #CCCCCC; color:black",
-    "overlap": 0,
-    "text": 20
-  },
-  "soY": {
-    "type": "label",
-    "x": 562,
-    "y": 405,
-    "z": 26,
-    "id": "soY",
-    "editable": 1,
-    "css": "background-color: #CCCCCC; color:black",
-    "overlap": 0,
-    "text": 20
-  },
-  "x946": {
-    "type": "button",
-    "text": "Deal a card",
-    "clickRoutine": [
-      {
-        "func": "MOVE",
-        "from": "Deck Holder",
-        "to": "Card Area",
-        "face": 1
-      }
-    ],
-    "x": 697,
-    "y": 621,
-    "z": 4947,
-    "id": "x946",
-    "height": 40,
-    "width": 100
-  },
-  "yqen": {
-    "type": "label",
-    "text": "overlap:",
-    "css": "font-size: 30px",
-    "height": 42,
-    "width": 200,
-    "x": 354,
-    "y": 450,
-    "z": 30,
-    "id": "yqen"
-  },
-  "ovlp": {
-    "type": "label",
-    "x": 563,
-    "y": 465,
-    "z": 46,
-    "editable": 1,
-    "css": "background-color: #CCCCCC; color:black",
-    "id": "ovlp",
-    "overlap": 0,
-    "text": 1
-  },
-  "Deck": {
+  "68joD": {
     "type": "deck",
-    "id": "Deck",
-    "x": 12,
-    "y": 41,
+    "id": "68joD",
+    "parent": "68jo",
     "cardTypes": {
-      "T 1J": {
-        "image": "/i/cards-default/1J.svg",
-        "suit": "T",
-        "suitColor": "🃏",
-        "suitAlt": "5J",
-        "rank": "J1",
-        "rankA": "J1",
-        "rankFixed": "J1 T"
+      "1J": {
+        "image": "/i/cards-default/1J.svg"
       },
-      "T 2J": {
-        "image": "/i/cards-default/2J.svg",
-        "suit": "T",
-        "suitColor": "🃏",
-        "suitAlt": "5J",
-        "rank": "J2",
-        "rankA": "J2",
-        "rankFixed": "J2 T"
+      "2J": {
+        "image": "/i/cards-default/2J.svg"
       },
-      "C 01": {
-        "image": "/i/cards-default/AC.svg",
-        "suit": "C",
-        "suitColor": "♣",
-        "suitAlt": "1♣",
-        "rank": "01",
-        "rankA": "5A",
-        "rankFixed": "01 C"
+      "AC": {
+        "image": "/i/cards-default/AC.svg"
       },
-      "C 02": {
-        "image": "/i/cards-default/2C.svg",
-        "suit": "C",
-        "suitColor": "♣",
-        "suitAlt": "1♣",
-        "rank": "02",
-        "rankA": "02",
-        "rankFixed": "02 C"
+      "2C": {
+        "image": "/i/cards-default/2C.svg"
       },
-      "C 03": {
-        "image": "/i/cards-default/3C.svg",
-        "suit": "C",
-        "suitColor": "♣",
-        "suitAlt": "1♣",
-        "rank": "03",
-        "rankA": "03",
-        "rankFixed": "03 C"
+      "3C": {
+        "image": "/i/cards-default/3C.svg"
       },
-      "C 04": {
-        "image": "/i/cards-default/4C.svg",
-        "suit": "C",
-        "suitColor": "♣",
-        "suitAlt": "1♣",
-        "rank": "04",
-        "rankA": "04",
-        "rankFixed": "04 C"
+      "4C": {
+        "image": "/i/cards-default/4C.svg"
       },
-      "C 05": {
-        "image": "/i/cards-default/5C.svg",
-        "suit": "C",
-        "suitColor": "♣",
-        "suitAlt": "1♣",
-        "rank": "05",
-        "rankA": "05",
-        "rankFixed": "05 C"
+      "5C": {
+        "image": "/i/cards-default/5C.svg"
       },
-      "C 06": {
-        "image": "/i/cards-default/6C.svg",
-        "suit": "C",
-        "suitColor": "♣",
-        "suitAlt": "1♣",
-        "rank": "06",
-        "rankA": "06",
-        "rankFixed": "06 C"
+      "6C": {
+        "image": "/i/cards-default/6C.svg"
       },
-      "C 07": {
-        "image": "/i/cards-default/7C.svg",
-        "suit": "C",
-        "suitColor": "♣",
-        "suitAlt": "1♣",
-        "rank": "07",
-        "rankA": "07",
-        "rankFixed": "07 C"
+      "7C": {
+        "image": "/i/cards-default/7C.svg"
       },
-      "C 08": {
-        "image": "/i/cards-default/8C.svg",
-        "suit": "C",
-        "suitColor": "♣",
-        "suitAlt": "1♣",
-        "rank": "08",
-        "rankA": "08",
-        "rankFixed": "08 C"
+      "8C": {
+        "image": "/i/cards-default/8C.svg"
       },
-      "C 09": {
-        "image": "/i/cards-default/9C.svg",
-        "suit": "C",
-        "suitColor": "♣",
-        "suitAlt": "1♣",
-        "rank": "09",
-        "rankA": "09",
-        "rankFixed": "09 C"
+      "9C": {
+        "image": "/i/cards-default/9C.svg"
       },
-      "C 10": {
-        "image": "/i/cards-default/TC.svg",
-        "suit": "C",
-        "suitColor": "♣",
-        "suitAlt": "1♣",
-        "rank": "10",
-        "rankA": "10",
-        "rankFixed": "10 C"
+      "TC": {
+        "image": "/i/cards-default/TC.svg"
       },
-      "C 2J": {
-        "image": "/i/cards-default/JC.svg",
-        "suit": "C",
-        "suitColor": "♣",
-        "suitAlt": "1♣",
-        "rank": "2J",
-        "rankA": "2J",
-        "rankFixed": "2J C"
+      "JC": {
+        "image": "/i/cards-default/JC.svg"
       },
-      "C 3Q": {
-        "image": "/i/cards-default/QC.svg",
-        "suit": "C",
-        "suitColor": "♣",
-        "suitAlt": "1♣",
-        "rank": "3Q",
-        "rankA": "3Q",
-        "rankFixed": "3Q C"
+      "QC": {
+        "image": "/i/cards-default/QC.svg"
       },
-      "C 4K": {
-        "image": "/i/cards-default/KC.svg",
-        "suit": "C",
-        "suitColor": "♣",
-        "suitAlt": "1♣",
-        "rank": "4K",
-        "rankA": "4K",
-        "rankFixed": "4K C"
+      "KC": {
+        "image": "/i/cards-default/KC.svg"
       },
-      "D 01": {
-        "image": "/i/cards-default/AD.svg",
-        "suit": "D",
-        "suitColor": "♦",
-        "suitAlt": "4♦",
-        "rank": "01",
-        "rankA": "5A",
-        "rankFixed": "01 D"
+      "AD": {
+        "image": "/i/cards-default/AD.svg"
       },
-      "D 02": {
-        "image": "/i/cards-default/2D.svg",
-        "suit": "D",
-        "suitColor": "♦",
-        "suitAlt": "4♦",
-        "rank": "02",
-        "rankA": "02",
-        "rankFixed": "02 D"
+      "2D": {
+        "image": "/i/cards-default/2D.svg"
       },
-      "D 03": {
-        "image": "/i/cards-default/3D.svg",
-        "suit": "D",
-        "suitColor": "♦",
-        "suitAlt": "4♦",
-        "rank": "03",
-        "rankA": "03",
-        "rankFixed": "03 D"
+      "3D": {
+        "image": "/i/cards-default/3D.svg"
       },
-      "D 04": {
-        "image": "/i/cards-default/4D.svg",
-        "suit": "D",
-        "suitColor": "♦",
-        "suitAlt": "4♦",
-        "rank": "04",
-        "rankA": "04",
-        "rankFixed": "04 D"
+      "4D": {
+        "image": "/i/cards-default/4D.svg"
       },
-      "D 05": {
-        "image": "/i/cards-default/5D.svg",
-        "suit": "D",
-        "suitColor": "♦",
-        "suitAlt": "4♦",
-        "rank": "05",
-        "rankA": "05",
-        "rankFixed": "05 D"
+      "5D": {
+        "image": "/i/cards-default/5D.svg"
       },
-      "D 06": {
-        "image": "/i/cards-default/6D.svg",
-        "suit": "D",
-        "suitColor": "♦",
-        "suitAlt": "4♦",
-        "rank": "06",
-        "rankA": "06",
-        "rankFixed": "06 D"
+      "6D": {
+        "image": "/i/cards-default/6D.svg"
       },
-      "D 07": {
-        "image": "/i/cards-default/7D.svg",
-        "suit": "D",
-        "suitColor": "♦",
-        "suitAlt": "4♦",
-        "rank": "07",
-        "rankA": "07",
-        "rankFixed": "07 D"
+      "7D": {
+        "image": "/i/cards-default/7D.svg"
       },
-      "D 08": {
-        "image": "/i/cards-default/8D.svg",
-        "suit": "D",
-        "suitColor": "♦",
-        "suitAlt": "4♦",
-        "rank": "08",
-        "rankA": "08",
-        "rankFixed": "08 D"
+      "8D": {
+        "image": "/i/cards-default/8D.svg"
       },
-      "D 09": {
-        "image": "/i/cards-default/9D.svg",
-        "suit": "D",
-        "suitColor": "♦",
-        "suitAlt": "4♦",
-        "rank": "09",
-        "rankA": "09",
-        "rankFixed": "09 D"
+      "9D": {
+        "image": "/i/cards-default/9D.svg"
       },
-      "D 10": {
-        "image": "/i/cards-default/TD.svg",
-        "suit": "D",
-        "suitColor": "♦",
-        "suitAlt": "4♦",
-        "rank": "10",
-        "rankA": "10",
-        "rankFixed": "10 D"
+      "TD": {
+        "image": "/i/cards-default/TD.svg"
       },
-      "D 2J": {
-        "image": "/i/cards-default/JD.svg",
-        "suit": "D",
-        "suitColor": "♦",
-        "suitAlt": "4♦",
-        "rank": "2J",
-        "rankA": "2J",
-        "rankFixed": "2J D"
+      "JD": {
+        "image": "/i/cards-default/JD.svg"
       },
-      "D 3Q": {
-        "image": "/i/cards-default/QD.svg",
-        "suit": "D",
-        "suitColor": "♦",
-        "suitAlt": "4♦",
-        "rank": "3Q",
-        "rankA": "3Q",
-        "rankFixed": "3Q D"
+      "QD": {
+        "image": "/i/cards-default/QD.svg"
       },
-      "D 4K": {
-        "image": "/i/cards-default/KD.svg",
-        "suit": "D",
-        "suitColor": "♦",
-        "suitAlt": "4♦",
-        "rank": "4K",
-        "rankA": "4K",
-        "rankFixed": "4K D"
+      "KD": {
+        "image": "/i/cards-default/KD.svg"
       },
-      "H 01": {
-        "image": "/i/cards-default/AH.svg",
-        "suit": "H",
-        "suitColor": "♥",
-        "suitAlt": "2♥",
-        "rank": "01",
-        "rankA": "5A",
-        "rankFixed": "01 H"
+      "AH": {
+        "image": "/i/cards-default/AH.svg"
       },
-      "H 02": {
-        "image": "/i/cards-default/2H.svg",
-        "suit": "H",
-        "suitColor": "♥",
-        "suitAlt": "2♥",
-        "rank": "02",
-        "rankA": "02",
-        "rankFixed": "02 H"
+      "2H": {
+        "image": "/i/cards-default/2H.svg"
       },
-      "H 03": {
-        "image": "/i/cards-default/3H.svg",
-        "suit": "H",
-        "suitColor": "♥",
-        "suitAlt": "2♥",
-        "rank": "03",
-        "rankA": "03",
-        "rankFixed": "03 H"
+      "3H": {
+        "image": "/i/cards-default/3H.svg"
       },
-      "H 04": {
-        "image": "/i/cards-default/4H.svg",
-        "suit": "H",
-        "suitColor": "♥",
-        "suitAlt": "2♥",
-        "rank": "04",
-        "rankA": "04",
-        "rankFixed": "04 H"
+      "4H": {
+        "image": "/i/cards-default/4H.svg"
       },
-      "H 05": {
-        "image": "/i/cards-default/5H.svg",
-        "suit": "H",
-        "suitColor": "♥",
-        "suitAlt": "2♥",
-        "rank": "05",
-        "rankA": "05",
-        "rankFixed": "05 H"
+      "5H": {
+        "image": "/i/cards-default/5H.svg"
       },
-      "H 06": {
-        "image": "/i/cards-default/6H.svg",
-        "suit": "H",
-        "suitColor": "♥",
-        "suitAlt": "2♥",
-        "rank": "06",
-        "rankA": "06",
-        "rankFixed": "06 H"
+      "6H": {
+        "image": "/i/cards-default/6H.svg"
       },
-      "H 07": {
-        "image": "/i/cards-default/7H.svg",
-        "suit": "H",
-        "suitColor": "♥",
-        "suitAlt": "2♥",
-        "rank": "07",
-        "rankA": "07",
-        "rankFixed": "07 H"
+      "7H": {
+        "image": "/i/cards-default/7H.svg"
       },
-      "H 08": {
-        "image": "/i/cards-default/8H.svg",
-        "suit": "H",
-        "suitColor": "♥",
-        "suitAlt": "2♥",
-        "rank": "08",
-        "rankA": "08",
-        "rankFixed": "08 H"
+      "8H": {
+        "image": "/i/cards-default/8H.svg"
       },
-      "H 09": {
-        "image": "/i/cards-default/9H.svg",
-        "suit": "H",
-        "suitColor": "♥",
-        "suitAlt": "2♥",
-        "rank": "09",
-        "rankA": "09",
-        "rankFixed": "09 H"
+      "9H": {
+        "image": "/i/cards-default/9H.svg"
       },
-      "H 10": {
-        "image": "/i/cards-default/TH.svg",
-        "suit": "H",
-        "suitColor": "♥",
-        "suitAlt": "2♥",
-        "rank": "10",
-        "rankA": "10",
-        "rankFixed": "10 H"
+      "TH": {
+        "image": "/i/cards-default/TH.svg"
       },
-      "H 2J": {
-        "image": "/i/cards-default/JH.svg",
-        "suit": "H",
-        "suitColor": "♥",
-        "suitAlt": "2♥",
-        "rank": "2J",
-        "rankA": "2J",
-        "rankFixed": "2J H"
+      "JH": {
+        "image": "/i/cards-default/JH.svg"
       },
-      "H 3Q": {
-        "image": "/i/cards-default/QH.svg",
-        "suit": "H",
-        "suitColor": "♥",
-        "suitAlt": "2♥",
-        "rank": "3Q",
-        "rankA": "3Q",
-        "rankFixed": "3Q H"
+      "QH": {
+        "image": "/i/cards-default/QH.svg"
       },
-      "H 4K": {
-        "image": "/i/cards-default/KH.svg",
-        "suit": "H",
-        "suitColor": "♥",
-        "suitAlt": "2♥",
-        "rank": "4K",
-        "rankA": "4K",
-        "rankFixed": "4K H"
+      "KH": {
+        "image": "/i/cards-default/KH.svg"
       },
-      "S 01": {
-        "image": "/i/cards-default/AS.svg",
-        "suit": "S",
-        "suitColor": "♠",
-        "suitAlt": "3♠",
-        "rank": "01",
-        "rankA": "5A",
-        "rankFixed": "01 S"
+      "AS": {
+        "image": "/i/cards-default/AS.svg"
       },
-      "S 02": {
-        "image": "/i/cards-default/2S.svg",
-        "suit": "S",
-        "suitColor": "♠",
-        "suitAlt": "3♠",
-        "rank": "02",
-        "rankA": "02",
-        "rankFixed": "02 S"
+      "2S": {
+        "image": "/i/cards-default/2S.svg"
       },
-      "S 03": {
-        "image": "/i/cards-default/3S.svg",
-        "suit": "S",
-        "suitColor": "♠",
-        "suitAlt": "3♠",
-        "rank": "03",
-        "rankA": "03",
-        "rankFixed": "03 S"
+      "3S": {
+        "image": "/i/cards-default/3S.svg"
       },
-      "S 04": {
-        "image": "/i/cards-default/4S.svg",
-        "suit": "S",
-        "suitColor": "♠",
-        "suitAlt": "3♠",
-        "rank": "04",
-        "rankA": "04",
-        "rankFixed": "04 S"
+      "4S": {
+        "image": "/i/cards-default/4S.svg"
       },
-      "S 05": {
-        "image": "/i/cards-default/5S.svg",
-        "suit": "S",
-        "suitColor": "♠",
-        "suitAlt": "3♠",
-        "rank": "05",
-        "rankA": "05",
-        "rankFixed": "05 S"
+      "5S": {
+        "image": "/i/cards-default/5S.svg"
       },
-      "S 06": {
-        "image": "/i/cards-default/6S.svg",
-        "suit": "S",
-        "suitColor": "♠",
-        "suitAlt": "3♠",
-        "rank": "06",
-        "rankA": "06",
-        "rankFixed": "06 S"
+      "6S": {
+        "image": "/i/cards-default/6S.svg"
       },
-      "S 07": {
-        "image": "/i/cards-default/7S.svg",
-        "suit": "S",
-        "suitColor": "♠",
-        "suitAlt": "3♠",
-        "rank": "07",
-        "rankA": "07",
-        "rankFixed": "07 S"
+      "7S": {
+        "image": "/i/cards-default/7S.svg"
       },
-      "S 08": {
-        "image": "/i/cards-default/8S.svg",
-        "suit": "S",
-        "suitColor": "♠",
-        "suitAlt": "3♠",
-        "rank": "08",
-        "rankA": "08",
-        "rankFixed": "08 S"
+      "8S": {
+        "image": "/i/cards-default/8S.svg"
       },
-      "S 09": {
-        "image": "/i/cards-default/9S.svg",
-        "suit": "S",
-        "suitColor": "♠",
-        "suitAlt": "3♠",
-        "rank": "09",
-        "rankA": "09",
-        "rankFixed": "09 S"
+      "9S": {
+        "image": "/i/cards-default/9S.svg"
       },
-      "S 10": {
-        "image": "/i/cards-default/TS.svg",
-        "suit": "S",
-        "suitColor": "♠",
-        "suitAlt": "3♠",
-        "rank": "10",
-        "rankA": "10",
-        "rankFixed": "10 S"
+      "TS": {
+        "image": "/i/cards-default/TS.svg"
       },
-      "S 2J": {
-        "image": "/i/cards-default/JS.svg",
-        "suit": "S",
-        "suitColor": "♠",
-        "suitAlt": "3♠",
-        "rank": "2J",
-        "rankA": "2J",
-        "rankFixed": "2J S"
+      "JS": {
+        "image": "/i/cards-default/JS.svg"
       },
-      "S 3Q": {
-        "image": "/i/cards-default/QS.svg",
-        "suit": "S",
-        "suitColor": "♠",
-        "suitAlt": "3♠",
-        "rank": "3Q",
-        "rankA": "3Q",
-        "rankFixed": "3Q S"
+      "QS": {
+        "image": "/i/cards-default/QS.svg"
       },
-      "S 4K": {
-        "image": "/i/cards-default/KS.svg",
-        "suit": "S",
-        "suitColor": "♠",
-        "suitAlt": "3♠",
-        "rank": "4K",
-        "rankA": "4K",
-        "rankFixed": "4K S"
+      "KS": {
+        "image": "/i/cards-default/KS.svg"
       }
     },
     "faceTemplates": [
       {
         "border": false,
-        "radius": false,
+        "radius": 8,
         "objects": [
           {
             "type": "image",
@@ -1211,14 +228,13 @@
             "width": 103,
             "height": 160,
             "valueType": "static",
-            "value": "/i/cards-default/2B.svg",
-            "color": "transparent"
+            "value": "/i/cards-default/2B.svg"
           }
         ]
       },
       {
         "border": false,
-        "radius": false,
+        "radius": 8,
         "objects": [
           {
             "type": "image",
@@ -1227,48 +243,615 @@
             "width": 103,
             "height": 160,
             "valueType": "dynamic",
-            "value": "image",
-            "color": "transparent"
+            "value": "image"
           }
         ]
       }
-    ],
-    "parent": "Deck Holder"
+    ]
   },
-  "66fe": {
-    "type": "label",
-    "text": "dropOffsetX and dropOffsetY are holder properties that specify the placement of the first card in a holder.\n\nstackOffsetX and stackOffsetY are holder properties that specify the relative placement subsequent cards in the holder.\n\noverlap is a boolean property of individual cards that specifies whether they should be overlapped with previous cards in a holder. See below for more details; the interactions are complex.",
-    "x": 40,
-    "y": 212,
-    "z": 80,
-    "id": "66fe",
-    "width": 250,
-    "height": 350,
-    "css": "text-align:left"
+  "68joAC": {
+    "id": "68joAC",
+    "parent": "68joP",
+    "deck": "68joD",
+    "type": "card",
+    "cardType": "AC",
+    "z": 2,
+    "activeFace": 1
   },
-  "955e": {
-    "type": "label",
-    "text": "1. If overlap is True for that card (that is, if its value is nonzero), then the values of stackOffsetX and stackOffsetY will govern placement of the card.\n\n2. If overlap is False (or if the property has no value), then the card will be stacked directly on top of the previous card in the X (or Y) direction if stackOffsetX (or stackOffsetY) is zero. So to get complete stacking, set stackOffsetX=stackOffsetY=0 and remove the overlap property from all cards. This is the default behavior.\n\n3. Finally, if overlap is False but stackOffsetX is nonzero, the cards will be separated by four pixels in the X direction, and similarly for Y.",
-    "x": 570,
-    "y": 813,
+  "68jo2C": {
+    "id": "68jo2C",
+    "parent": "68joP",
+    "deck": "68joD",
+    "type": "card",
+    "cardType": "2C",
+    "z": 3,
+    "activeFace": 1
+  },
+  "68jo3C": {
+    "id": "68jo3C",
+    "parent": "68joP",
+    "deck": "68joD",
+    "type": "card",
+    "cardType": "3C",
+    "z": 4,
+    "activeFace": 1
+  },
+  "68jo4C": {
+    "id": "68jo4C",
+    "parent": "68joP",
+    "deck": "68joD",
+    "type": "card",
+    "cardType": "4C",
+    "z": 5,
+    "activeFace": 1
+  },
+  "68jo5C": {
+    "id": "68jo5C",
+    "parent": "68joP",
+    "deck": "68joD",
+    "type": "card",
+    "cardType": "5C",
+    "z": 6,
+    "activeFace": 1
+  },
+  "68jo6C": {
+    "id": "68jo6C",
+    "parent": "68joP",
+    "deck": "68joD",
+    "type": "card",
+    "cardType": "6C",
+    "z": 7,
+    "activeFace": 1
+  },
+  "68jo7C": {
+    "id": "68jo7C",
+    "parent": "68joP",
+    "deck": "68joD",
+    "type": "card",
+    "cardType": "7C",
+    "z": 8,
+    "activeFace": 1
+  },
+  "68jo8C": {
+    "id": "68jo8C",
+    "parent": "68joP",
+    "deck": "68joD",
+    "type": "card",
+    "cardType": "8C",
+    "z": 9,
+    "activeFace": 1
+  },
+  "68jo9C": {
+    "id": "68jo9C",
+    "parent": "68joP",
+    "deck": "68joD",
+    "type": "card",
+    "cardType": "9C",
+    "z": 10,
+    "activeFace": 1
+  },
+  "68joTC": {
+    "id": "68joTC",
+    "parent": "68joP",
+    "deck": "68joD",
+    "type": "card",
+    "cardType": "TC",
+    "z": 11,
+    "activeFace": 1
+  },
+  "68joJC": {
+    "id": "68joJC",
+    "parent": "68joP",
+    "deck": "68joD",
+    "type": "card",
+    "cardType": "JC",
+    "z": 12,
+    "activeFace": 1
+  },
+  "68joQC": {
+    "id": "68joQC",
+    "parent": "68joP",
+    "deck": "68joD",
+    "type": "card",
+    "cardType": "QC",
+    "z": 13,
+    "activeFace": 1
+  },
+  "68joKC": {
+    "id": "68joKC",
+    "parent": "68joP",
+    "deck": "68joD",
+    "type": "card",
+    "cardType": "KC",
+    "z": 14,
+    "activeFace": 1
+  },
+  "68joAD": {
+    "id": "68joAD",
+    "parent": "68joP",
+    "deck": "68joD",
+    "type": "card",
+    "cardType": "AD",
+    "z": 15,
+    "activeFace": 1
+  },
+  "68jo2D": {
+    "id": "68jo2D",
+    "parent": "68joP",
+    "deck": "68joD",
+    "type": "card",
+    "cardType": "2D",
+    "z": 16,
+    "activeFace": 1
+  },
+  "68jo3D": {
+    "id": "68jo3D",
+    "parent": "68joP",
+    "deck": "68joD",
+    "type": "card",
+    "cardType": "3D",
+    "z": 17,
+    "activeFace": 1
+  },
+  "68jo4D": {
+    "id": "68jo4D",
+    "parent": "68joP",
+    "deck": "68joD",
+    "type": "card",
+    "cardType": "4D",
+    "z": 18,
+    "activeFace": 1
+  },
+  "68jo5D": {
+    "id": "68jo5D",
+    "parent": "68joP",
+    "deck": "68joD",
+    "type": "card",
+    "cardType": "5D",
+    "z": 19,
+    "activeFace": 1
+  },
+  "68jo6D": {
+    "id": "68jo6D",
+    "parent": "68joP",
+    "deck": "68joD",
+    "type": "card",
+    "cardType": "6D",
+    "z": 20,
+    "activeFace": 1
+  },
+  "68jo7D": {
+    "id": "68jo7D",
+    "parent": "68joP",
+    "deck": "68joD",
+    "type": "card",
+    "cardType": "7D",
+    "z": 21,
+    "activeFace": 1
+  },
+  "68jo8D": {
+    "id": "68jo8D",
+    "parent": "68joP",
+    "deck": "68joD",
+    "type": "card",
+    "cardType": "8D",
+    "z": 22,
+    "activeFace": 1
+  },
+  "68jo9D": {
+    "id": "68jo9D",
+    "parent": "68joP",
+    "deck": "68joD",
+    "type": "card",
+    "cardType": "9D",
+    "z": 23,
+    "activeFace": 1
+  },
+  "68joTD": {
+    "id": "68joTD",
+    "deck": "68joD",
+    "type": "card",
+    "cardType": "TD",
+    "z": 4,
+    "activeFace": 1,
+    "x": 4,
+    "y": 80,
+    "parent": "5gtd"
+  },
+  "68joJD": {
+    "id": "68joJD",
+    "deck": "68joD",
+    "type": "card",
+    "cardType": "JD",
+    "z": 3,
+    "activeFace": 1,
+    "x": 4,
+    "y": 100,
+    "parent": "5gtd"
+  },
+  "68joQD": {
+    "id": "68joQD",
+    "deck": "68joD",
+    "type": "card",
+    "cardType": "QD",
+    "z": 2,
+    "activeFace": 1,
+    "x": 4,
+    "y": 120,
+    "parent": "5gtd"
+  },
+  "68joKD": {
+    "id": "68joKD",
+    "deck": "68joD",
+    "type": "card",
+    "cardType": "KD",
+    "z": 1,
+    "activeFace": 1,
+    "x": 4,
+    "y": 140,
+    "parent": "5gtd"
+  },
+  "68joAH": {
+    "id": "68joAH",
+    "deck": "68joD",
+    "type": "card",
+    "cardType": "AH",
+    "z": 7,
+    "activeFace": 1,
+    "x": 30,
+    "y": 4,
+    "parent": "m09i"
+  },
+  "68jo2H": {
+    "id": "68jo2H",
+    "deck": "68joD",
+    "type": "card",
+    "cardType": "2H",
+    "z": 6,
+    "activeFace": 1,
+    "x": 90,
+    "y": 4,
+    "parent": "m09i"
+  },
+  "68jo3H": {
+    "id": "68jo3H",
+    "deck": "68joD",
+    "type": "card",
+    "cardType": "3H",
+    "z": 5,
+    "activeFace": 1,
+    "x": 150,
+    "y": 4,
+    "parent": "m09i"
+  },
+  "68jo4H": {
+    "id": "68jo4H",
+    "deck": "68joD",
+    "type": "card",
+    "cardType": "4H",
+    "z": 4,
+    "activeFace": 1,
+    "x": 210,
+    "y": 4,
+    "parent": "m09i"
+  },
+  "68jo5H": {
+    "id": "68jo5H",
+    "deck": "68joD",
+    "type": "card",
+    "cardType": "5H",
+    "z": 3,
+    "activeFace": 1,
+    "x": 270,
+    "y": 4,
+    "parent": "m09i"
+  },
+  "68jo6H": {
+    "id": "68jo6H",
+    "deck": "68joD",
+    "type": "card",
+    "cardType": "6H",
+    "z": 2,
+    "activeFace": 1,
+    "x": 330,
+    "y": 4,
+    "parent": "m09i"
+  },
+  "68jo7H": {
+    "id": "68jo7H",
+    "deck": "68joD",
+    "type": "card",
+    "cardType": "7H",
+    "z": 1,
+    "activeFace": 1,
+    "x": 390,
+    "y": 4,
+    "parent": "m09i"
+  },
+  "68jo8H": {
+    "id": "68jo8H",
+    "deck": "68joD",
+    "type": "card",
+    "cardType": "8H",
+    "z": 6,
+    "activeFace": 1,
+    "x": 104,
+    "y": 79,
+    "parent": "5wg2"
+  },
+  "68jo9H": {
+    "id": "68jo9H",
+    "deck": "68joD",
+    "type": "card",
+    "cardType": "9H",
+    "z": 5,
+    "activeFace": 1,
+    "x": 84,
+    "y": 64,
+    "parent": "5wg2"
+  },
+  "68joTH": {
+    "id": "68joTH",
+    "deck": "68joD",
+    "type": "card",
+    "cardType": "TH",
+    "z": 4,
+    "activeFace": 1,
+    "x": 64,
+    "y": 49,
+    "parent": "5wg2"
+  },
+  "68joJH": {
+    "id": "68joJH",
+    "deck": "68joD",
+    "type": "card",
+    "cardType": "JH",
+    "z": 3,
+    "activeFace": 1,
+    "x": 44,
+    "y": 34,
+    "parent": "5wg2"
+  },
+  "68joQH": {
+    "id": "68joQH",
+    "deck": "68joD",
+    "type": "card",
+    "cardType": "QH",
+    "z": 2,
+    "activeFace": 1,
+    "x": 24,
+    "y": 19,
+    "parent": "5wg2"
+  },
+  "68joKH": {
+    "id": "68joKH",
+    "deck": "68joD",
+    "type": "card",
+    "cardType": "KH",
+    "z": 1,
+    "activeFace": 1,
+    "x": 4,
+    "y": 4,
+    "parent": "5wg2"
+  },
+  "68joAS": {
+    "id": "68joAS",
+    "deck": "68joD",
+    "type": "card",
+    "cardType": "AS",
+    "z": 4,
+    "activeFace": 1,
+    "x": 334,
+    "y": 4,
+    "parent": "p2ov"
+  },
+  "68jo2S": {
+    "id": "68jo2S",
+    "deck": "68joD",
+    "type": "card",
+    "cardType": "2S",
+    "z": 3,
+    "activeFace": 1,
+    "x": 224,
+    "y": 4,
+    "parent": "p2ov"
+  },
+  "68jo3S": {
+    "id": "68jo3S",
+    "deck": "68joD",
+    "type": "card",
+    "cardType": "3S",
+    "z": 2,
+    "activeFace": 1,
+    "x": 114,
+    "y": 4,
+    "parent": "p2ov"
+  },
+  "68jo4S": {
+    "id": "68jo4S",
+    "deck": "68joD",
+    "type": "card",
+    "cardType": "4S",
+    "z": 1,
+    "activeFace": 1,
+    "x": 4,
+    "y": 4,
+    "parent": "p2ov"
+  },
+  "68jo5S": {
+    "id": "68jo5S",
+    "deck": "68joD",
+    "type": "card",
+    "cardType": "5S",
+    "z": 91,
+    "activeFace": 1,
+    "parent": "qoe5"
+  },
+  "68jo6S": {
+    "id": "68jo6S",
+    "deck": "68joD",
+    "type": "card",
+    "cardType": "6S",
     "z": 88,
-    "id": "955e",
-    "width": 1000,
-    "css": "text-align:left",
-    "height": 180
+    "activeFace": 1,
+    "parent": "qoe5"
   },
-  "b89s": {
+  "68jo7S": {
+    "id": "68jo7S",
+    "deck": "68joD",
+    "type": "card",
+    "cardType": "7S",
+    "z": 4,
+    "activeFace": 1,
+    "x": 4,
+    "y": 64,
+    "parent": "jtr7"
+  },
+  "68jo8S": {
+    "id": "68jo8S",
+    "deck": "68joD",
+    "type": "card",
+    "cardType": "8S",
+    "z": 3,
+    "activeFace": 1,
+    "x": 4,
+    "y": 44,
+    "parent": "jtr7"
+  },
+  "68jo9S": {
+    "id": "68jo9S",
+    "deck": "68joD",
+    "type": "card",
+    "cardType": "9S",
+    "z": 2,
+    "activeFace": 1,
+    "x": 4,
+    "y": 24,
+    "parent": "jtr7"
+  },
+  "68joTS": {
+    "id": "68joTS",
+    "deck": "68joD",
+    "type": "card",
+    "cardType": "TS",
+    "z": 58,
+    "activeFace": 1,
+    "parent": "qoe5"
+  },
+  "68joJS": {
+    "id": "68joJS",
+    "deck": "68joD",
+    "type": "card",
+    "cardType": "JS",
+    "z": 1,
+    "activeFace": 1,
+    "x": 4,
+    "y": 4,
+    "parent": "jtr7"
+  },
+  "68joQS": {
+    "id": "68joQS",
+    "deck": "68joD",
+    "type": "card",
+    "cardType": "QS",
+    "z": 5,
+    "activeFace": 1,
+    "x": 4,
+    "y": 84,
+    "parent": "jtr7"
+  },
+  "68joKS": {
+    "id": "68joKS",
+    "deck": "68joD",
+    "type": "card",
+    "cardType": "KS",
+    "z": 1,
+    "parent": "68joP",
+    "activeFace": 1
+  },
+  "jtr7": {
+    "type": "holder",
+    "x": 310,
+    "y": 263,
+    "z": 4,
+    "id": "jtr7",
+    "stackOffsetY": 20,
+    "height": 300
+  },
+  "qoe5": {
+    "type": "pile",
+    "parent": "9wou",
+    "x": 4,
+    "y": 4,
+    "width": 103,
+    "height": 160,
+    "id": "qoe5"
+  },
+  "p2ov": {
+    "type": "holder",
+    "x": 498,
+    "y": 264,
+    "z": 6,
+    "id": "p2ov",
+    "stackOffsetX": 110,
+    "width": 500
+  },
+  "5wg2": {
+    "type": "holder",
+    "x": 1084,
+    "y": 265,
+    "z": 9,
+    "id": "5wg2",
+    "height": 300,
+    "width": 300,
+    "stackOffsetX": 20,
+    "stackOffsetY": 15
+  },
+  "s2qs": {
     "type": "label",
-    "text": "When placing a card:",
-    "x": 566,
-    "y": 782,
-    "z": 89,
-    "id": "b89s",
-    "width": 800,
-    "css": "text-align:left; font-weight:bold"
+    "text": "Normal",
+    "x": 112,
+    "y": 165,
+    "z": 13,
+    "id": "s2qs"
+  },
+  "955c": {
+    "type": "label",
+    "text": "stackOffsetY",
+    "x": 317,
+    "y": 166,
+    "z": 14,
+    "id": "955c"
+  },
+  "glft": {
+    "type": "label",
+    "text": "stackOffsetX",
+    "x": 679,
+    "y": 162,
+    "z": 15,
+    "id": "glft"
+  },
+  "5ree": {
+    "type": "label",
+    "text": "Both",
+    "x": 1183,
+    "y": 161,
+    "z": 16,
+    "id": "5ree"
+  },
+  "8fr3": {
+    "type": "label",
+    "text": "Holders: Offset",
+    "css": "font-size: 60px",
+    "height": 160,
+    "width": 1000,
+    "x": 287,
+    "y": -6,
+    "z": 75,
+    "id": "8fr3"
   },
   "_meta": {
-    "version": 3,
+    "version": 1,
     "info": {
       "name": "Holders",
       "image": "/assets/419389733_5272",
@@ -1277,23 +860,69 @@
       "year": "2020",
       "mode": "Tutorial",
       "time": "0",
-      "players": "1",
-      "language": "en-US",
-      "variant": "Offset: Advanced",
-      "attribution": "",
+      "attribution": "The coin in the Stackable Tokens variant is a modification of an icon by Delapoitue, available under CC BY 3.0 from&nbsp;https://game-icons.net/1x1/delapouite/token.html.",
       "showName": false,
-      "lastUpdate": 1638938699000
+      "lastUpdate": 1705717755787,
+      "skill": "",
+      "description": "",
+      "similarImage": "",
+      "similarName": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": "",
+      "similarDesigner": "",
+      "variantImage": "",
+      "variant": "Offset: Basic",
+      "language": "en-US",
+      "players": "1"
     }
   },
-  "8fr3": {
+  "5gtd": {
+    "type": "holder",
+    "x": 311.5,
+    "y": 652,
+    "z": 11,
+    "stackOffsetY": -20,
+    "height": 300,
+    "id": "5gtd",
+    "dropOffsetY": 140
+  },
+  "1tvp": {
     "type": "label",
-    "text": "Holders: Offset\nAdvanced",
-    "css": "font-size: 60px",
-    "height": 160,
-    "width": 1000,
-    "x": 287,
-    "y": -6,
-    "z": 75,
-    "id": "8fr3"
+    "text": "stackOffsetY\nNegative",
+    "x": 315,
+    "y": 603,
+    "z": 77,
+    "id": "1tvp",
+    "height": 75
+  },
+  "m09i": {
+    "type": "holder",
+    "x": 487,
+    "y": 654,
+    "z": 12,
+    "stackOffsetX": -60,
+    "width": 500,
+    "id": "m09i",
+    "dropOffsetX": 390
+  },
+  "2cvj": {
+    "type": "label",
+    "text": "stackOffsetX\nNegative",
+    "x": 693,
+    "y": 598.5,
+    "z": 78,
+    "height": 75,
+    "id": "2cvj"
+  },
+  "bdm0": {
+    "type": "label",
+    "text": "Both of these use dropOffset to make the starting location on the opposite side of the holder.",
+    "x": 447,
+    "y": 849.5,
+    "z": 80,
+    "height": 75,
+    "id": "bdm0",
+    "width": 300
   }
 }

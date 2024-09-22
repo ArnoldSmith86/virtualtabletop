@@ -1,45 +1,553 @@
 {
-  "_meta": {
-    "version": 4,
-    "info": {
-      "name": "Seats",
-      "image": "/assets/-65508335_6985",
-      "rules": "",
-      "bgg": "",
-      "year": "2021",
-      "mode": "Tutorial",
-      "time": "",
-      "attribution": "",
-      "showName": false,
-      "lastUpdate": 1673017752219,
-      "skill": "",
-      "description": "",
-      "variantImage": "",
-      "variant": "Board Demo",
-      "language": "en-US",
-      "players": "1",
-      "similarImage": "",
-      "similarName": "",
-      "similarAwards": "",
-      "ruleText": "",
-      "helpText": ""
-    }
+  "8fr3": {
+    "id": "8fr3",
+    "z": 73,
+    "css": {
+      "font-size": "60px",
+      "text-align": "center"
+    },
+    "text": "Seats: Turn and Deal",
+    "width": 1600,
+    "x": 11,
+    "movable": false,
+    "height": 80,
+    "layer": -2
   },
-  "bsbm": {
+  "b3gj": {
+    "type": "seat",
+    "x": 180,
+    "y": 91,
+    "id": "b3gj",
+    "hand": "nejn",
+    "area": "top",
+    "player": "player 1",
+    "color": "hsl(0, 100%, 50%)",
+    "turn": true
+  },
+  "b3gjC": {
+    "id": "b3gjC",
+    "parent": "b3gj",
+    "fixedParent": true,
+    "x": -20,
+    "y": -20,
+    "width": 30,
+    "height": 30,
+    "borderRadius": 100,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "css": {
+      "font-size": "18px",
+      "display": "flex",
+      "align-items": "center",
+      "justify-content": "center",
+      "color": "#6d6d6d",
+      "background": "#e4e4e4",
+      "border": "2px solid #999999"
+    },
+    "text": 0,
+    "ownerGlobalUpdateRoutine": [
+      "var parent = ${PROPERTY parent}",
+      "var COUNT = 0",
+      {
+        "func": "SELECT",
+        "property": "_ancestor",
+        "value": "${PROPERTY hand OF $parent}"
+      },
+      {
+        "func": "COUNT",
+        "owner": "${PROPERTY player OF $parent}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "text",
+        "value": "${COUNT}"
+      }
+    ],
+    "playerGlobalUpdateRoutine": [
+      {
+        "func": "CALL",
+        "routine": "ownerGlobalUpdateRoutine",
+        "widget": "${PROPERTY id}"
+      }
+    ]
+  },
+  "b4gj": {
+    "type": "seat",
+    "x": 543,
+    "y": 91,
+    "id": "b4gj",
+    "hand": "nejn1",
+    "area": "top",
+    "index": 2,
+    "player": "player 2",
+    "color": "hsl(165, 100%, 50%)"
+  },
+  "b4gjC": {
+    "id": "b4gjC",
+    "parent": "b4gj",
+    "fixedParent": true,
+    "x": -20,
+    "y": -20,
+    "width": 30,
+    "height": 30,
+    "borderRadius": 100,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "css": {
+      "font-size": "18px",
+      "display": "flex",
+      "align-items": "center",
+      "justify-content": "center",
+      "color": "#6d6d6d",
+      "background": "#e4e4e4",
+      "border": "2px solid #999999"
+    },
+    "text": 0,
+    "ownerGlobalUpdateRoutine": [
+      "var parent = ${PROPERTY parent}",
+      "var COUNT = 0",
+      {
+        "func": "SELECT",
+        "property": "_ancestor",
+        "value": "${PROPERTY hand OF $parent}"
+      },
+      {
+        "func": "COUNT",
+        "owner": "${PROPERTY player OF $parent}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "text",
+        "value": "${COUNT}"
+      }
+    ],
+    "playerGlobalUpdateRoutine": [
+      {
+        "func": "CALL",
+        "routine": "ownerGlobalUpdateRoutine",
+        "widget": "${PROPERTY id}"
+      }
+    ]
+  },
+  "b5gj": {
+    "type": "seat",
+    "x": 906,
+    "y": 91,
+    "id": "b5gj",
+    "hand": "nejn2",
+    "area": "top",
+    "index": 3
+  },
+  "b5gjC": {
+    "id": "b5gjC",
+    "parent": "b5gj",
+    "fixedParent": true,
+    "x": -20,
+    "y": -20,
+    "width": 30,
+    "height": 30,
+    "borderRadius": 100,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "css": {
+      "font-size": "18px",
+      "display": "flex",
+      "align-items": "center",
+      "justify-content": "center",
+      "color": "#6d6d6d",
+      "background": "#e4e4e4",
+      "border": "2px solid #999999"
+    },
+    "text": 0,
+    "ownerGlobalUpdateRoutine": [
+      "var parent = ${PROPERTY parent}",
+      "var COUNT = 0",
+      {
+        "func": "SELECT",
+        "property": "_ancestor",
+        "value": "${PROPERTY hand OF $parent}"
+      },
+      {
+        "func": "COUNT",
+        "owner": "${PROPERTY player OF $parent}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "text",
+        "value": "${COUNT}"
+      }
+    ],
+    "playerGlobalUpdateRoutine": [
+      {
+        "func": "CALL",
+        "routine": "ownerGlobalUpdateRoutine",
+        "widget": "${PROPERTY id}"
+      }
+    ]
+  },
+  "b6gj": {
+    "type": "seat",
+    "x": 1269,
+    "y": 91,
+    "id": "b6gj",
+    "hand": "nejn3",
+    "area": "top",
+    "index": 4,
+    "player": "player 4",
+    "color": "hsl(134, 100%, 50%)"
+  },
+  "b6gjC": {
+    "id": "b6gjC",
+    "parent": "b6gj",
+    "fixedParent": true,
+    "x": -20,
+    "y": -20,
+    "width": 30,
+    "height": 30,
+    "borderRadius": 100,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "css": {
+      "font-size": "18px",
+      "display": "flex",
+      "align-items": "center",
+      "justify-content": "center",
+      "color": "#6d6d6d",
+      "background": "#e4e4e4",
+      "border": "2px solid #999999"
+    },
+    "text": 0,
+    "ownerGlobalUpdateRoutine": [
+      "var parent = ${PROPERTY parent}",
+      "var COUNT = 0",
+      {
+        "func": "SELECT",
+        "property": "_ancestor",
+        "value": "${PROPERTY hand OF $parent}"
+      },
+      {
+        "func": "COUNT",
+        "owner": "${PROPERTY player OF $parent}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "text",
+        "value": "${COUNT}"
+      }
+    ],
+    "playerGlobalUpdateRoutine": [
+      {
+        "func": "CALL",
+        "routine": "ownerGlobalUpdateRoutine",
+        "widget": "${PROPERTY id}"
+      }
+    ]
+  },
+  "b7gj": {
+    "type": "seat",
+    "index": 5,
+    "x": 180,
+    "y": 495,
+    "id": "b7gj",
+    "area": "bottom"
+  },
+  "b7gjC": {
+    "id": "b7gjC",
+    "parent": "b7gj",
+    "fixedParent": true,
+    "x": -20,
+    "y": -20,
+    "width": 30,
+    "height": 30,
+    "borderRadius": 100,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "css": {
+      "font-size": "18px",
+      "display": "flex",
+      "align-items": "center",
+      "justify-content": "center",
+      "color": "#6d6d6d",
+      "background": "#e4e4e4",
+      "border": "2px solid #999999"
+    },
+    "text": 0,
+    "ownerGlobalUpdateRoutine": [
+      "var parent = ${PROPERTY parent}",
+      "var COUNT = 0",
+      {
+        "func": "SELECT",
+        "property": "_ancestor",
+        "value": "${PROPERTY hand OF $parent}"
+      },
+      {
+        "func": "COUNT",
+        "owner": "${PROPERTY player OF $parent}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "text",
+        "value": "${COUNT}"
+      }
+    ],
+    "playerGlobalUpdateRoutine": [
+      {
+        "func": "CALL",
+        "routine": "ownerGlobalUpdateRoutine",
+        "widget": "${PROPERTY id}"
+      }
+    ]
+  },
+  "b8gj": {
+    "type": "seat",
+    "index": 6,
+    "x": 543,
+    "y": 495,
+    "id": "b8gj",
+    "area": "bottom",
+    "player": "player 6",
+    "color": "hsl(249, 100%, 50%)"
+  },
+  "b8gjC": {
+    "id": "b8gjC",
+    "parent": "b8gj",
+    "fixedParent": true,
+    "x": -20,
+    "y": -20,
+    "width": 30,
+    "height": 30,
+    "borderRadius": 100,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "css": {
+      "font-size": "18px",
+      "display": "flex",
+      "align-items": "center",
+      "justify-content": "center",
+      "color": "#6d6d6d",
+      "background": "#e4e4e4",
+      "border": "2px solid #999999"
+    },
+    "text": 0,
+    "ownerGlobalUpdateRoutine": [
+      "var parent = ${PROPERTY parent}",
+      "var COUNT = 0",
+      {
+        "func": "SELECT",
+        "property": "_ancestor",
+        "value": "${PROPERTY hand OF $parent}"
+      },
+      {
+        "func": "COUNT",
+        "owner": "${PROPERTY player OF $parent}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "text",
+        "value": "${COUNT}"
+      }
+    ],
+    "playerGlobalUpdateRoutine": [
+      {
+        "func": "CALL",
+        "routine": "ownerGlobalUpdateRoutine",
+        "widget": "${PROPERTY id}"
+      }
+    ]
+  },
+  "b9gj": {
+    "type": "seat",
+    "index": 7,
+    "x": 906,
+    "y": 495,
+    "id": "b9gj",
+    "area": "bottom",
+    "player": "player 7",
+    "color": "hsl(317, 100%, 50%)"
+  },
+  "b9gjC": {
+    "id": "b9gjC",
+    "parent": "b9gj",
+    "fixedParent": true,
+    "x": -20,
+    "y": -20,
+    "width": 30,
+    "height": 30,
+    "borderRadius": 100,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "css": {
+      "font-size": "18px",
+      "display": "flex",
+      "align-items": "center",
+      "justify-content": "center",
+      "color": "#6d6d6d",
+      "background": "#e4e4e4",
+      "border": "2px solid #999999"
+    },
+    "text": 0,
+    "ownerGlobalUpdateRoutine": [
+      "var parent = ${PROPERTY parent}",
+      "var COUNT = 0",
+      {
+        "func": "SELECT",
+        "property": "_ancestor",
+        "value": "${PROPERTY hand OF $parent}"
+      },
+      {
+        "func": "COUNT",
+        "owner": "${PROPERTY player OF $parent}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "text",
+        "value": "${COUNT}"
+      }
+    ],
+    "playerGlobalUpdateRoutine": [
+      {
+        "func": "CALL",
+        "routine": "ownerGlobalUpdateRoutine",
+        "widget": "${PROPERTY id}"
+      }
+    ]
+  },
+  "b10gj": {
+    "type": "seat",
+    "index": 8,
+    "x": 1269,
+    "y": 495,
+    "id": "b10gj",
+    "area": "bottom",
+    "player": "player 8",
+    "color": "hsl(215, 100%, 50%)"
+  },
+  "b10gjC": {
+    "id": "b10gjC",
+    "parent": "b10gj",
+    "fixedParent": true,
+    "x": -20,
+    "y": -20,
+    "width": 30,
+    "height": 30,
+    "borderRadius": 100,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "css": {
+      "font-size": "18px",
+      "display": "flex",
+      "align-items": "center",
+      "justify-content": "center",
+      "color": "#6d6d6d",
+      "background": "#e4e4e4",
+      "border": "2px solid #999999"
+    },
+    "text": 0,
+    "ownerGlobalUpdateRoutine": [
+      "var parent = ${PROPERTY parent}",
+      "var COUNT = 0",
+      {
+        "func": "SELECT",
+        "property": "_ancestor",
+        "value": "${PROPERTY hand OF $parent}"
+      },
+      {
+        "func": "COUNT",
+        "owner": "${PROPERTY player OF $parent}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "text",
+        "value": "${COUNT}"
+      }
+    ],
+    "playerGlobalUpdateRoutine": [
+      {
+        "func": "CALL",
+        "routine": "ownerGlobalUpdateRoutine",
+        "widget": "${PROPERTY id}"
+      }
+    ]
+  },
+  "nejn": {
     "type": "holder",
-    "id": "bsbm",
-    "x": 1464.5,
-    "y": 18,
+    "x": 205,
+    "y": 156,
+    "z": 1,
+    "id": "nejn"
+  },
+  "nejn1": {
+    "type": "holder",
+    "x": 568,
+    "y": 157,
+    "z": 1,
+    "id": "nejn1"
+  },
+  "nejn2": {
+    "type": "holder",
+    "x": 931,
+    "y": 159,
+    "z": 1,
+    "id": "nejn2"
+  },
+  "nejn3": {
+    "type": "holder",
+    "x": 1294,
+    "y": 160,
+    "z": 1,
+    "id": "nejn3"
+  },
+  "hand": {
+    "type": "holder",
+    "onEnter": {
+      "activeFace": 1
+    },
+    "onLeave": {
+      "activeFace": 0
+    },
+    "dropOffsetX": 10,
+    "dropOffsetY": 14,
+    "stackOffsetX": 40,
+    "childrenPerOwner": true,
+    "dropShadow": true,
+    "hidePlayerCursors": true,
+    "x": 50,
+    "y": 820,
+    "width": 1500,
+    "height": 180,
+    "id": "hand"
+  },
+  "3q2k": {
+    "type": "holder",
+    "id": "3q2k",
+    "y": 20,
     "dropTarget": {
       "type": "card"
     },
-    "z": 35295
+    "x": 32,
+    "z": 4
   },
-  "bsbmB": {
-    "id": "bsbmB",
-    "parent": "bsbm",
+  "3q2kB": {
+    "id": "3q2kB",
+    "parent": "3q2k",
     "fixedParent": true,
-    "y": 171.36,
+    "y": 171,
     "width": 111,
     "height": 40,
     "type": "button",
@@ -61,17 +569,10 @@
       }
     ]
   },
-  "bsbmP": {
-    "type": "pile",
-    "id": "bsbmP",
-    "parent": "bsbm",
-    "width": 103,
-    "height": 160
-  },
-  "bsbmD": {
+  "3q2kD": {
     "type": "deck",
-    "id": "bsbmD",
-    "parent": "bsbm",
+    "id": "3q2kD",
+    "parent": "3q2k",
     "x": 12,
     "y": 41,
     "cardTypes": {
@@ -92,6 +593,24 @@
         "rank": "J2",
         "rankA": "J2",
         "rankFixed": "J2 T"
+      },
+      "T 3J": {
+        "image": "/i/cards-default/3J.svg",
+        "suit": "T",
+        "suitColor": "🃏",
+        "suitAlt": "5J",
+        "rank": "J3",
+        "rankA": "J3",
+        "rankFixed": "J3 T"
+      },
+      "T 4J": {
+        "image": "/i/cards-default/4J.svg",
+        "suit": "T",
+        "suitColor": "🃏",
+        "suitAlt": "5J",
+        "rank": "J4",
+        "rankA": "J4",
+        "rankFixed": "J4 T"
       },
       "C 01": {
         "image": "/i/cards-default/AC.svg",
@@ -573,9 +1092,8 @@
             "y": 0,
             "width": 103,
             "height": 160,
-            "valueType": "static",
-            "value": "/i/cards-default/2B.svg",
-            "color": "transparent"
+            "color": "transparent",
+            "value": "/i/cards-default/2B.svg"
           }
         ]
       },
@@ -589,1083 +1107,639 @@
             "y": 0,
             "width": 103,
             "height": 160,
-            "valueType": "dynamic",
-            "value": "image",
-            "color": "transparent"
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image"
+            }
           }
         ]
       }
     ]
   },
-  "bsbm_A_C": {
-    "id": "bsbm_A_C",
-    "deck": "bsbmD",
+  "3q2k_A_C": {
+    "id": "3q2k_A_C",
+    "parent": "ft8f",
+    "deck": "3q2kD",
     "type": "card",
     "cardType": "C 01",
-    "z": 4181,
-    "parent": "bsbmP"
+    "z": 3075
   },
-  "bsbm_2_C": {
-    "id": "bsbm_2_C",
-    "parent": "bsbmP",
-    "deck": "bsbmD",
+  "3q2k_2_C": {
+    "id": "3q2k_2_C",
+    "parent": "ft8f",
+    "deck": "3q2kD",
     "type": "card",
     "cardType": "C 02",
-    "z": 6146
+    "z": 3096
   },
-  "bsbm_3_C": {
-    "id": "bsbm_3_C",
-    "parent": "bsbmP",
-    "deck": "bsbmD",
+  "3q2k_3_C": {
+    "id": "3q2k_3_C",
+    "parent": "ft8f",
+    "deck": "3q2kD",
     "type": "card",
     "cardType": "C 03",
-    "z": 1836
+    "z": 3108
   },
-  "bsbm_4_C": {
-    "id": "bsbm_4_C",
-    "deck": "bsbmD",
+  "3q2k_4_C": {
+    "id": "3q2k_4_C",
+    "parent": "ft8f",
+    "deck": "3q2kD",
     "type": "card",
     "cardType": "C 04",
-    "z": 9842,
-    "x": 45.5,
-    "y": 197,
-    "parent": "boardHolder1",
-    "activeFace": 1
+    "z": 3122
   },
-  "bsbm_5_C": {
-    "id": "bsbm_5_C",
-    "parent": "bsbmP",
-    "deck": "bsbmD",
+  "3q2k_5_C": {
+    "id": "3q2k_5_C",
+    "parent": "ft8f",
+    "deck": "3q2kD",
     "type": "card",
     "cardType": "C 05",
-    "z": 220
+    "z": 3093
   },
-  "bsbm_6_C": {
-    "id": "bsbm_6_C",
-    "parent": "bsbmP",
-    "deck": "bsbmD",
+  "3q2k_6_C": {
+    "id": "3q2k_6_C",
+    "parent": "ft8f",
+    "deck": "3q2kD",
     "type": "card",
     "cardType": "C 06",
-    "z": 1797
+    "z": 3073
   },
-  "bsbm_7_C": {
-    "id": "bsbm_7_C",
-    "deck": "bsbmD",
+  "3q2k_7_C": {
+    "id": "3q2k_7_C",
+    "parent": "ft8f",
+    "deck": "3q2kD",
     "type": "card",
     "cardType": "C 07",
-    "z": 3593,
-    "parent": "bsbmP"
+    "z": 3112
   },
-  "bsbm_8_C": {
-    "id": "bsbm_8_C",
-    "deck": "bsbmD",
+  "3q2k_8_C": {
+    "id": "3q2k_8_C",
+    "deck": "3q2kD",
     "type": "card",
     "cardType": "C 08",
-    "z": 9275,
-    "parent": "bsbmP"
+    "z": 3104,
+    "parent": "ft8f"
   },
-  "bsbm_9_C": {
-    "id": "bsbm_9_C",
-    "deck": "bsbmD",
+  "3q2k_9_C": {
+    "id": "3q2k_9_C",
+    "parent": "ft8f",
+    "deck": "3q2kD",
     "type": "card",
     "cardType": "C 09",
-    "z": 6089,
-    "parent": "bsbmP"
+    "z": 3091
   },
-  "bsbm_T_C": {
-    "id": "bsbm_T_C",
-    "parent": "bsbmP",
-    "deck": "bsbmD",
+  "3q2k_T_C": {
+    "id": "3q2k_T_C",
+    "parent": "ft8f",
+    "deck": "3q2kD",
     "type": "card",
     "cardType": "C 10",
-    "z": 3982
+    "z": 3111
   },
-  "bsbm_J_C": {
-    "id": "bsbm_J_C",
-    "deck": "bsbmD",
+  "3q2k_J_C": {
+    "id": "3q2k_J_C",
+    "parent": "ft8f",
+    "deck": "3q2kD",
     "type": "card",
     "cardType": "C 2J",
-    "z": 2031,
-    "parent": "bsbmP"
+    "z": 3099
   },
-  "bsbm_Q_C": {
-    "id": "bsbm_Q_C",
-    "parent": "bsbmP",
-    "deck": "bsbmD",
+  "3q2k_Q_C": {
+    "id": "3q2k_Q_C",
+    "parent": "ft8f",
+    "deck": "3q2kD",
     "type": "card",
     "cardType": "C 3Q",
-    "z": 1380
+    "z": 3092
   },
-  "bsbm_K_C": {
-    "id": "bsbm_K_C",
-    "deck": "bsbmD",
+  "3q2k_K_C": {
+    "id": "3q2k_K_C",
+    "parent": "ft8f",
+    "deck": "3q2kD",
     "type": "card",
     "cardType": "C 4K",
-    "z": 8218,
-    "parent": "bsbmP"
+    "z": 3115
   },
-  "bsbm_A_D": {
-    "id": "bsbm_A_D",
-    "deck": "bsbmD",
+  "3q2k_A_D": {
+    "id": "3q2k_A_D",
+    "parent": "ft8f",
+    "deck": "3q2kD",
     "type": "card",
     "cardType": "D 01",
-    "z": 9844,
-    "x": 19.5,
-    "y": 17,
-    "parent": "boardHolder2",
-    "activeFace": 1
+    "z": 3107
   },
-  "bsbm_2_D": {
-    "id": "bsbm_2_D",
-    "parent": "bsbmP",
-    "deck": "bsbmD",
+  "3q2k_2_D": {
+    "id": "3q2k_2_D",
+    "parent": "ft8f",
+    "deck": "3q2kD",
     "type": "card",
     "cardType": "D 02",
-    "z": 2169
+    "z": 3072
   },
-  "bsbm_3_D": {
-    "id": "bsbm_3_D",
-    "parent": "bsbmP",
-    "deck": "bsbmD",
+  "3q2k_3_D": {
+    "id": "3q2k_3_D",
+    "parent": "ft8f",
+    "deck": "3q2kD",
     "type": "card",
     "cardType": "D 03",
-    "z": 685
+    "z": 3085
   },
-  "bsbm_4_D": {
-    "id": "bsbm_4_D",
-    "parent": "bsbmP",
-    "deck": "bsbmD",
+  "3q2k_4_D": {
+    "id": "3q2k_4_D",
+    "parent": "ft8f",
+    "deck": "3q2kD",
     "type": "card",
     "cardType": "D 04",
-    "z": 7750
+    "z": 3097
   },
-  "bsbm_5_D": {
-    "id": "bsbm_5_D",
-    "parent": "bsbmP",
-    "deck": "bsbmD",
+  "3q2k_5_D": {
+    "id": "3q2k_5_D",
+    "parent": "ft8f",
+    "deck": "3q2kD",
     "type": "card",
     "cardType": "D 05",
-    "z": 2421
+    "z": 3087
   },
-  "bsbm_6_D": {
-    "id": "bsbm_6_D",
-    "parent": "bsbmP",
-    "deck": "bsbmD",
+  "3q2k_6_D": {
+    "id": "3q2k_6_D",
+    "parent": "ft8f",
+    "deck": "3q2kD",
     "type": "card",
     "cardType": "D 06",
-    "z": 6248
+    "z": 3078
   },
-  "bsbm_7_D": {
-    "id": "bsbm_7_D",
-    "parent": "bsbmP",
-    "deck": "bsbmD",
+  "3q2k_7_D": {
+    "id": "3q2k_7_D",
+    "parent": "ft8f",
+    "deck": "3q2kD",
     "type": "card",
     "cardType": "D 07",
-    "z": 5259
+    "z": 3083
   },
-  "bsbm_8_D": {
-    "id": "bsbm_8_D",
-    "deck": "bsbmD",
+  "3q2k_8_D": {
+    "id": "3q2k_8_D",
+    "parent": "ft8f",
+    "deck": "3q2kD",
     "type": "card",
     "cardType": "D 08",
-    "z": 2690,
-    "parent": "bsbmP"
+    "z": 3119
   },
-  "bsbm_9_D": {
-    "id": "bsbm_9_D",
-    "parent": "bsbmP",
-    "deck": "bsbmD",
+  "3q2k_9_D": {
+    "id": "3q2k_9_D",
+    "parent": "ft8f",
+    "deck": "3q2kD",
     "type": "card",
     "cardType": "D 09",
-    "z": 3945
+    "z": 3102
   },
-  "bsbm_T_D": {
-    "id": "bsbm_T_D",
-    "parent": "bsbmP",
-    "deck": "bsbmD",
+  "3q2k_T_D": {
+    "id": "3q2k_T_D",
+    "parent": "ft8f",
+    "deck": "3q2kD",
     "type": "card",
     "cardType": "D 10",
-    "z": 6993
+    "z": 3118
   },
-  "bsbm_J_D": {
-    "id": "bsbm_J_D",
-    "deck": "bsbmD",
+  "3q2k_J_D": {
+    "id": "3q2k_J_D",
+    "parent": "ft8f",
+    "deck": "3q2kD",
     "type": "card",
     "cardType": "D 2J",
-    "z": 9846,
-    "x": 30.5,
-    "y": 207,
-    "parent": "boardHolder2",
-    "activeFace": 1
+    "z": 3084
   },
-  "bsbm_Q_D": {
-    "id": "bsbm_Q_D",
-    "parent": "bsbmP",
-    "deck": "bsbmD",
+  "3q2k_Q_D": {
+    "id": "3q2k_Q_D",
+    "parent": "ft8f",
+    "deck": "3q2kD",
     "type": "card",
     "cardType": "D 3Q",
-    "z": 8261
+    "z": 3082
   },
-  "bsbm_K_D": {
-    "id": "bsbm_K_D",
-    "parent": "bsbmP",
-    "deck": "bsbmD",
+  "3q2k_K_D": {
+    "id": "3q2k_K_D",
+    "parent": "ft8f",
+    "deck": "3q2kD",
     "type": "card",
     "cardType": "D 4K",
-    "z": 3105
+    "z": 3121
   },
-  "bsbm_A_H": {
-    "id": "bsbm_A_H",
-    "parent": "bsbmP",
-    "deck": "bsbmD",
+  "3q2k_A_H": {
+    "id": "3q2k_A_H",
+    "parent": "ft8f",
+    "deck": "3q2kD",
     "type": "card",
     "cardType": "H 01",
-    "z": 7009
+    "z": 3081
   },
-  "bsbm_2_H": {
-    "id": "bsbm_2_H",
-    "parent": "bsbmP",
-    "deck": "bsbmD",
+  "3q2k_2_H": {
+    "id": "3q2k_2_H",
+    "parent": "ft8f",
+    "deck": "3q2kD",
     "type": "card",
     "cardType": "H 02",
-    "z": 91
+    "z": 3110
   },
-  "bsbm_3_H": {
-    "id": "bsbm_3_H",
-    "parent": "bsbmP",
-    "deck": "bsbmD",
+  "3q2k_3_H": {
+    "id": "3q2k_3_H",
+    "parent": "ft8f",
+    "deck": "3q2kD",
     "type": "card",
     "cardType": "H 03",
-    "z": 8893
+    "z": 3088
   },
-  "bsbm_4_H": {
-    "id": "bsbm_4_H",
-    "parent": "bsbmP",
-    "deck": "bsbmD",
+  "3q2k_4_H": {
+    "id": "3q2k_4_H",
+    "parent": "ft8f",
+    "deck": "3q2kD",
     "type": "card",
     "cardType": "H 04",
-    "z": 8409
+    "z": 3076
   },
-  "bsbm_5_H": {
-    "id": "bsbm_5_H",
-    "deck": "bsbmD",
+  "3q2k_5_H": {
+    "id": "3q2k_5_H",
+    "parent": "ft8f",
+    "deck": "3q2kD",
     "type": "card",
     "cardType": "H 05",
-    "z": 626,
-    "parent": "bsbmP"
+    "z": 3103
   },
-  "bsbm_6_H": {
-    "id": "bsbm_6_H",
-    "parent": "bsbmP",
-    "deck": "bsbmD",
+  "3q2k_6_H": {
+    "id": "3q2k_6_H",
+    "deck": "3q2kD",
     "type": "card",
     "cardType": "H 06",
-    "z": 9105
+    "z": 3079,
+    "parent": "ft8f"
   },
-  "bsbm_7_H": {
-    "id": "bsbm_7_H",
-    "deck": "bsbmD",
+  "3q2k_7_H": {
+    "id": "3q2k_7_H",
+    "parent": "ft8f",
+    "deck": "3q2kD",
     "type": "card",
     "cardType": "H 07",
-    "z": 9854,
-    "x": 52.5,
-    "y": 110,
-    "activeFace": 1,
-    "parent": "boardHolder4"
+    "z": 3116
   },
-  "bsbm_8_H": {
-    "id": "bsbm_8_H",
-    "parent": "bsbmP",
-    "deck": "bsbmD",
+  "3q2k_8_H": {
+    "id": "3q2k_8_H",
+    "parent": "ft8f",
+    "deck": "3q2kD",
     "type": "card",
     "cardType": "H 08",
-    "z": 2819
+    "z": 3120
   },
-  "bsbm_9_H": {
-    "id": "bsbm_9_H",
-    "parent": "bsbmP",
-    "deck": "bsbmD",
+  "3q2k_9_H": {
+    "id": "3q2k_9_H",
+    "parent": "ft8f",
+    "deck": "3q2kD",
     "type": "card",
     "cardType": "H 09",
-    "z": 1336
+    "z": 3080
   },
-  "bsbm_T_H": {
-    "id": "bsbm_T_H",
-    "deck": "bsbmD",
+  "3q2k_T_H": {
+    "id": "3q2k_T_H",
+    "parent": "ft8f",
+    "deck": "3q2kD",
     "type": "card",
     "cardType": "H 10",
-    "z": 9838,
-    "x": 25.5,
-    "y": 18,
-    "parent": "boardHolder1",
-    "activeFace": 1
+    "z": 3086
   },
-  "bsbm_J_H": {
-    "id": "bsbm_J_H",
-    "parent": "bsbmP",
-    "deck": "bsbmD",
+  "3q2k_J_H": {
+    "id": "3q2k_J_H",
+    "parent": "ft8f",
+    "deck": "3q2kD",
     "type": "card",
     "cardType": "H 2J",
-    "z": 2618
+    "z": 3094
   },
-  "bsbm_Q_H": {
-    "id": "bsbm_Q_H",
-    "parent": "bsbmP",
-    "deck": "bsbmD",
+  "3q2k_Q_H": {
+    "id": "3q2k_Q_H",
+    "parent": "ft8f",
+    "deck": "3q2kD",
     "type": "card",
     "cardType": "H 3Q",
-    "z": 3634
+    "z": 3095
   },
-  "bsbm_K_H": {
-    "id": "bsbm_K_H",
-    "parent": "bsbmP",
-    "deck": "bsbmD",
+  "3q2k_K_H": {
+    "id": "3q2k_K_H",
+    "parent": "ft8f",
+    "deck": "3q2kD",
     "type": "card",
     "cardType": "H 4K",
-    "z": 5261
+    "z": 3113
   },
-  "bsbm_A_S": {
-    "id": "bsbm_A_S",
-    "parent": "bsbmP",
-    "deck": "bsbmD",
+  "3q2k_A_S": {
+    "id": "3q2k_A_S",
+    "parent": "ft8f",
+    "deck": "3q2kD",
     "type": "card",
     "cardType": "S 01",
-    "z": 5033
+    "z": 3114
   },
-  "bsbm_2_S": {
-    "id": "bsbm_2_S",
-    "parent": "bsbmP",
-    "deck": "bsbmD",
+  "3q2k_2_S": {
+    "id": "3q2k_2_S",
+    "parent": "ft8f",
+    "deck": "3q2kD",
     "type": "card",
     "cardType": "S 02",
-    "z": 2339
+    "z": 3089
   },
-  "bsbm_3_S": {
-    "id": "bsbm_3_S",
-    "parent": "bsbmP",
-    "deck": "bsbmD",
+  "3q2k_3_S": {
+    "id": "3q2k_3_S",
+    "parent": "ft8f",
+    "deck": "3q2kD",
     "type": "card",
     "cardType": "S 03",
-    "z": 7624
+    "z": 3101
   },
-  "bsbm_4_S": {
-    "id": "bsbm_4_S",
-    "parent": "bsbmP",
-    "deck": "bsbmD",
+  "3q2k_4_S": {
+    "id": "3q2k_4_S",
+    "parent": "ft8f",
+    "deck": "3q2kD",
     "type": "card",
     "cardType": "S 04",
-    "z": 8214
+    "z": 3090
   },
-  "bsbm_5_S": {
-    "id": "bsbm_5_S",
-    "parent": "bsbmP",
-    "deck": "bsbmD",
+  "3q2k_5_S": {
+    "id": "3q2k_5_S",
+    "parent": "ft8f",
+    "deck": "3q2kD",
     "type": "card",
     "cardType": "S 05",
-    "z": 165
+    "z": 3077
   },
-  "bsbm_6_S": {
-    "id": "bsbm_6_S",
-    "deck": "bsbmD",
+  "3q2k_6_S": {
+    "id": "3q2k_6_S",
+    "parent": "ft8f",
+    "deck": "3q2kD",
     "type": "card",
     "cardType": "S 06",
-    "z": 1847,
-    "parent": "bsbmP"
+    "z": 3117
   },
-  "bsbm_7_S": {
-    "id": "bsbm_7_S",
-    "deck": "bsbmD",
+  "3q2k_7_S": {
+    "id": "3q2k_7_S",
+    "parent": "ft8f",
+    "deck": "3q2kD",
     "type": "card",
     "cardType": "S 07",
-    "z": 4688,
-    "parent": "bsbmP"
+    "z": 3100
   },
-  "bsbm_8_S": {
-    "id": "bsbm_8_S",
-    "deck": "bsbmD",
+  "3q2k_8_S": {
+    "id": "3q2k_8_S",
+    "parent": "ft8f",
+    "deck": "3q2kD",
     "type": "card",
     "cardType": "S 08",
-    "z": 1873,
-    "parent": "bsbmP"
+    "z": 3123
   },
-  "bsbm_9_S": {
-    "id": "bsbm_9_S",
-    "deck": "bsbmD",
+  "3q2k_9_S": {
+    "id": "3q2k_9_S",
+    "parent": "ft8f",
+    "deck": "3q2kD",
     "type": "card",
     "cardType": "S 09",
-    "z": 9850,
-    "x": 39.5,
-    "y": 224,
-    "parent": "boardHolder3",
-    "activeFace": 1
+    "z": 3109
   },
-  "bsbm_T_S": {
-    "id": "bsbm_T_S",
-    "deck": "bsbmD",
+  "3q2k_T_S": {
+    "id": "3q2k_T_S",
+    "parent": "ft8f",
+    "deck": "3q2kD",
     "type": "card",
     "cardType": "S 10",
-    "z": 6598,
-    "parent": "bsbmP"
+    "z": 3106
   },
-  "bsbm_J_S": {
-    "id": "bsbm_J_S",
-    "deck": "bsbmD",
+  "3q2k_J_S": {
+    "id": "3q2k_J_S",
+    "deck": "3q2kD",
     "type": "card",
     "cardType": "S 2J",
-    "z": 1470,
-    "parent": "bsbmP"
+    "z": 3098,
+    "parent": "ft8f"
   },
-  "bsbm_Q_S2": {
-    "id": "bsbm_Q_S2",
-    "deck": "bsbmD",
+  "3q2k_Q_S": {
+    "id": "3q2k_Q_S",
+    "deck": "3q2kD",
     "type": "card",
     "cardType": "S 3Q",
-    "z": 276,
-    "parent": "bsbmP"
+    "z": 3074,
+    "parent": "ft8f"
   },
-  "bsbm_K_S3": {
-    "id": "bsbm_K_S3",
-    "deck": "bsbmD",
+  "3q2k_K_S": {
+    "id": "3q2k_K_S",
+    "parent": "ft8f",
+    "deck": "3q2kD",
     "type": "card",
     "cardType": "S 4K",
-    "z": 6182,
-    "parent": "bsbmP"
+    "z": 3105
   },
-  "viewBlueBoard": {
+  "gl3l": {
     "type": "button",
-    "id": "viewBlueBoard",
+    "text": "TURN and deal (top)",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "area",
+        "value": "top"
+      },
+      {
+        "func": "TURN",
+        "source": "DEFAULT"
+      },
+      "//the TURN function returns a collection with the seats it selected",
+      {
+        "func": "GET",
+        "collection": "TURN",
+        "property": "id",
+        "aggregation": "array",
+        "variable": "turnSeats"
+      },
+      "//the GET function get the id of the seats into an array that can be used in MOVE",
+      {
+        "func": "MOVE",
+        "from": "3q2k",
+        "to": "${turnSeats}"
+      }
+    ],
+    "x": 38,
+    "y": 277,
+    "z": 5,
+    "id": "gl3l",
+    "width": 100,
+    "height": 100
+  },
+  "gl4l": {
+    "type": "button",
+    "text": "TURN and deal (bottom)",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "area",
+        "value": "bottom"
+      },
+      {
+        "func": "TURN",
+        "source": "DEFAULT"
+      },
+      "//the TURN function returns a collection with the seats it selected",
+      {
+        "func": "GET",
+        "collection": "TURN",
+        "property": "id",
+        "aggregation": "array",
+        "variable": "turnSeats"
+      },
+      "//the GET function get the id of the seats into an array that can be used in MOVE",
+      {
+        "func": "MOVE",
+        "from": "3q2k",
+        "to": "${turnSeats}"
+      }
+    ],
+    "x": 38,
+    "y": 422,
+    "z": 5,
+    "id": "gl4l",
+    "width": 100,
+    "height": 100
+  },
+  "gl5l": {
+    "type": "button",
+    "text": "TURN and deal (all)",
+    "clickRoutine": [
+      {
+        "func": "TURN",
+        "turnCycle": "forward",
+        "turn": 1
+      },
+      "//the TURN function returns a collection with the seats it selected",
+      {
+        "func": "GET",
+        "collection": "TURN",
+        "property": "id",
+        "aggregation": "array",
+        "variable": "turnSeats"
+      },
+      "//the GET function get the id of the seats into an array that can be used in MOVE",
+      {
+        "func": "MOVE",
+        "from": "3q2k",
+        "to": "${turnSeats}"
+      }
+    ],
+    "x": 38,
+    "y": 567,
+    "z": 6,
+    "id": "gl5l",
+    "width": 100,
+    "height": 100
+  },
+  "gl6l": {
+    "type": "button",
+    "text": "Don't TURN and deal (all)",
+    "clickRoutine": [
+      {
+        "func": "TURN",
+        "turnCycle": "forward",
+        "turn": 0
+      },
+      "//the TURN function returns a collection with the seats it selected",
+      {
+        "func": "GET",
+        "collection": "TURN",
+        "property": "id",
+        "aggregation": "array",
+        "variable": "turnSeats"
+      },
+      "//the GET function gets the id of the seats into an array that can be used in MOVE",
+      {
+        "func": "MOVE",
+        "from": "3q2k",
+        "to": "${turnSeats}"
+      }
+    ],
+    "x": 38,
+    "y": 712,
+    "z": 6,
+    "id": "gl6l",
+    "width": 100,
+    "height": 100
+  },
+  "14oa": {
+    "type": "basic",
+    "text": "All of the seats on the botom are linked to the same holder. This holder has 'childrenPerOwner':true",
+    "x": 615,
+    "y": 584,
+    "z": 7,
+    "id": "14oa",
+    "height": 50,
+    "width": 1200,
+    "movable": false
+  },
+  "wxqz": {
+    "type": "basic",
+    "text": "This button uses turn with a value 0 so it keeps the turn in the same seat. But you can still get the resulting collection that contains the current seat with the turn. This button does that then MOVEs a card to the seat whose turn it is.",
     "x": 144,
-    "y": 85,
-    "z": 76432,
-    "clickRoutine": [
-      {
-        "note": "Determine which seat the player pressing the button is assigned to and get that seat's id.",
-        "func": "SELECT",
-        "property": "player",
-        "value": "${playerName}"
-      },
-      {
-        "note": "The id needs to be collected in an array format and in a string format for two different operations, so there are two GETs",
-        "func": "GET",
-        "property": "id",
-        "variable": "thisSeatID",
-        "aggregation": "array"
-      },
-      {
-        "func": "GET",
-        "property": "id",
-        "variable": "seatVisCheck",
-        "aggregation": "first"
-      },
-      "var thisSeatArray = ${PROPERTY onlyVisibleForSeat OF boardHolder1} //Put the current seats that can view the board into an array",
-      "var checkArray = ${seatVisCheck} in ${thisSeatArray} //Check to see if the player pressing the button is already in the visibility array.",
-      {
-        "func": "IF",
-        "operand1": "${checkArray}",
-        "operand2": true,
-        "thenRoutine": [
-          {
-            "note": "If the player can currently see the board, do nothing.  Otherwise, run the elseRoutine."
-          }
-        ],
-        "elseRoutine": [
-          {
-            "note": "Create a new array so 'thisSeatArray' is not changed by subsequent operations. Add the seat of the player pressing the button to the new array."
-          },
-          "var myArray = ${PROPERTY onlyVisibleForSeat OF boardHolder1}",
-          "var myArray = ${myArray} concatArray ${thisSeatID}",
-          {
-            "note": "Put the new myArray with the seat of this player into the onlyVisibileForSeat property of the board.",
-            "func": "SELECT",
-            "property": "id",
-            "value": "boardHolder1"
-          },
-          {
-            "func": "SET",
-            "property": "onlyVisibleForSeat",
-            "value": "${myArray}"
-          },
-          {
-            "note": "Put the visibility settings for the other 3 seats into individual arrays."
-          },
-          "var pArray2 = ${PROPERTY onlyVisibleForSeat OF boardHolder2}",
-          "var pArray3 = ${PROPERTY onlyVisibleForSeat OF boardHolder3}",
-          "var pArray4 = ${PROPERTY onlyVisibleForSeat OF boardHolder4}",
-          {
-            "note": "The blank arrays are needed in the FOREACH functions in the CALL.  Arrays need to be initially created outside a FOREACH, even if it is just a blank array."
-          },
-          "var newArray2 = []",
-          "var newArray3 = []",
-          "var newArray4 = []",
-          {
-            "note": "Call routines to remove the player pressing the button from the other 3 boards so the player can only see one board at a time."
-          },
-          {
-            "func": "CALL",
-            "widget": "calls",
-            "routine": "checkSeat2Routine"
-          },
-          {
-            "func": "CALL",
-            "widget": "calls",
-            "routine": "checkSeat3Routine"
-          },
-          {
-            "func": "CALL",
-            "widget": "calls",
-            "routine": "checkSeat4Routine"
-          }
-        ]
-      }
-    ],
-    "text": "View\nRed"
+    "y": 729,
+    "z": 5,
+    "id": "wxqz",
+    "width": 500,
+    "height": 80,
+    "movable": false
   },
-  "seat1": {
-    "type": "seat",
-    "id": "seat1",
-    "x": 111,
-    "y": 175,
-    "z": 76423,
-    "color": "#e84242",
-    "colorEmpty": "#e84242",
-    "hideWhenUnused": true,
-    "hand": "boardHolder1",
-    "css": "border-color: #e84242",
-    "movableInEdit": false
-  },
-  "seat2": {
-    "type": "seat",
-    "id": "seat2",
-    "index": 2,
-    "x": 525,
-    "y": 175,
-    "z": 76422,
-    "colorEmpty": "#e0cb0b",
-    "css": "border-color: #e0cb0b",
-    "hand": "boardHolder2",
-    "hideWhenUnused": true,
-    "movableInEdit": false,
-    "color": "#e0cb0b"
-  },
-  "seat3": {
-    "type": "seat",
-    "id": "seat3",
-    "index": 2,
-    "x": 881,
-    "y": 175,
-    "z": 76402,
-    "colorEmpty": "#4c5fea",
-    "css": "border-color: #4c5fea",
-    "hideWhenUnused": true,
-    "hand": "boardHolder3",
-    "movableInEdit": false,
-    "color": "#4c5fea"
-  },
-  "seat4": {
-    "type": "seat",
-    "id": "seat4",
-    "index": 2,
-    "x": 1225,
-    "y": 175,
-    "z": 76403,
-    "colorEmpty": "#23ca5b",
-    "css": "border-color: #23ca5b",
-    "hand": "boardHolder4",
-    "hideWhenUnused": true,
-    "movableInEdit": false,
-    "color": "#23ca5b"
-  },
-  "boardHolder1": {
-    "type": "holder",
-    "id": "boardHolder1",
-    "x": 87,
-    "y": 235,
+  "wxqz1": {
+    "type": "basic",
+    "text": "This button does not select a group of seats. It applies turn to all of them as a whole.",
+    "x": 142,
+    "y": 591,
+    "z": 5,
+    "id": "wxqz1",
     "width": 200,
-    "height": 400,
-    "z": 35296,
-    "inheritChildZ": true,
-    "alignChildren": false,
-    "dropOffsetX": 10,
-    "dropOffsetY": 14,
-    "onlyVisibleForSeat": [
-      "seat1"
-    ],
-    "stackOffsetX": 40,
-    "css": "background-color: #e8424240"
+    "height": 80,
+    "movable": false
   },
-  "boardHolder2": {
-    "type": "holder",
-    "id": "boardHolder2",
-    "x": 504,
-    "y": 235,
-    "width": 200,
-    "height": 400,
-    "z": 35301,
-    "inheritChildZ": true,
-    "alignChildren": false,
-    "dropOffsetX": 10,
-    "dropOffsetY": 14,
-    "onlyVisibleForSeat": [
-      "seat2"
-    ],
-    "stackOffsetX": 40,
-    "css": "background-color: #e0cb0b40"
+  "ft8f": {
+    "type": "pile",
+    "parent": "3q2k",
+    "x": 4,
+    "y": 4,
+    "width": 103,
+    "height": 160,
+    "id": "ft8f"
   },
-  "boardHolder3": {
-    "type": "holder",
-    "id": "boardHolder3",
-    "x": 866,
-    "y": 235,
-    "width": 200,
-    "height": 400,
-    "z": 35302,
-    "inheritChildZ": true,
-    "alignChildren": false,
-    "dropOffsetX": 10,
-    "dropOffsetY": 14,
-    "stackOffsetX": 40,
-    "onlyVisibleForSeat": [
-      "seat3"
-    ],
-    "css": "background-color: #4c5fea40"
+  "h7mh": {
+    "id": "h7mh",
+    "x": 204,
+    "y": 333,
+    "text": "This room demonstrates how to use the TURN function and then deal cards to players after the change in turn. Sit in the empty seat in the top and bottom rows and click the buttons to the left\n\nEach top seat has its own 'hand' (the holder underneath). The seat counter does not update as it only checks for changes to the owner property and the owner property is only needed for a shared/common hand like at the bottom of the screen. The count would also be redundant as you can see the count in the pile drag handle.",
+    "layer": -2,
+    "width": 1250,
+    "movable": false
   },
-  "boardHolder4": {
-    "type": "holder",
-    "id": "boardHolder4",
-    "x": 1209,
-    "y": 235,
-    "width": 200,
-    "height": 400,
-    "z": 35300,
-    "inheritChildZ": true,
-    "alignChildren": false,
-    "dropOffsetX": 10,
-    "dropOffsetY": 14,
-    "stackOffsetX": 40,
-    "onlyVisibleForSeat": [
-      "seat4"
-    ],
-    "css": "background-color: #23ca5b40"
-  },
-  "viewGreenBoard": {
-    "type": "button",
-    "id": "viewGreenBoard",
-    "x": 570,
-    "y": 87,
-    "z": 76424,
-    "clickRoutine": [
-      {
-        "func": "SELECT",
-        "property": "player",
-        "value": "${playerName}"
-      },
-      {
-        "func": "GET",
-        "property": "id",
-        "variable": "thisSeatID",
-        "aggregation": "array"
-      },
-      {
-        "func": "GET",
-        "property": "id",
-        "variable": "seatVisCheck",
-        "aggregation": "first"
-      },
-      "var thisSeatArray = ${PROPERTY onlyVisibleForSeat OF boardHolder2}",
-      "var checkArray = ${seatVisCheck} in ${thisSeatArray}",
-      {
-        "func": "IF",
-        "operand1": "${checkArray}",
-        "operand2": true,
-        "thenRoutine": [],
-        "elseRoutine": [
-          "var myArray = ${PROPERTY onlyVisibleForSeat OF boardHolder2}",
-          "var myArray = ${myArray} concatArray ${thisSeatID}",
-          {
-            "func": "SELECT",
-            "property": "id",
-            "value": "boardHolder2"
-          },
-          {
-            "func": "SET",
-            "property": "onlyVisibleForSeat",
-            "value": "${myArray}"
-          },
-          "var pArray1 = ${PROPERTY onlyVisibleForSeat OF boardHolder1}",
-          "var pArray3 = ${PROPERTY onlyVisibleForSeat OF boardHolder3}",
-          "var pArray4 = ${PROPERTY onlyVisibleForSeat OF boardHolder4}",
-          "var newArray1 = []",
-          "var newArray3 = []",
-          "var newArray4 = []",
-          {
-            "func": "CALL",
-            "widget": "calls",
-            "routine": "checkSeat1Routine"
-          },
-          {
-            "func": "CALL",
-            "widget": "calls",
-            "routine": "checkSeat3Routine"
-          },
-          {
-            "func": "CALL",
-            "widget": "calls",
-            "routine": "checkSeat4Routine"
-          }
-        ]
-      }
-    ],
-    "text": "View Yellow"
-  },
-  "viewYellowBoard": {
-    "type": "button",
-    "id": "viewYellowBoard",
-    "x": 923,
-    "y": 83,
-    "z": 76428,
-    "clickRoutine": [
-      {
-        "func": "SELECT",
-        "property": "player",
-        "value": "${playerName}"
-      },
-      {
-        "func": "GET",
-        "property": "id",
-        "variable": "thisSeatID",
-        "aggregation": "array"
-      },
-      {
-        "func": "GET",
-        "property": "id",
-        "variable": "seatVisCheck",
-        "aggregation": "first"
-      },
-      "var thisSeatArray = ${PROPERTY onlyVisibleForSeat OF boardHolder3}",
-      "var checkArray = ${seatVisCheck} in ${thisSeatArray}",
-      {
-        "func": "IF",
-        "operand1": "${checkArray}",
-        "operand2": true,
-        "thenRoutine": [],
-        "elseRoutine": [
-          "var myArray = ${PROPERTY onlyVisibleForSeat OF boardHolder3}",
-          "var myArray = ${myArray} concatArray ${thisSeatID}",
-          {
-            "func": "SELECT",
-            "property": "id",
-            "value": "boardHolder3"
-          },
-          {
-            "func": "SET",
-            "property": "onlyVisibleForSeat",
-            "value": "${myArray}"
-          },
-          "var pArray1 = ${PROPERTY onlyVisibleForSeat OF boardHolder1}",
-          "var pArray2 = ${PROPERTY onlyVisibleForSeat OF boardHolder2}",
-          "var pArray4 = ${PROPERTY onlyVisibleForSeat OF boardHolder4}",
-          "var newArray1 = []",
-          "var newArray2 = []",
-          "var newArray4 = []",
-          {
-            "func": "CALL",
-            "widget": "calls",
-            "routine": "checkSeat1Routine"
-          },
-          {
-            "func": "CALL",
-            "widget": "calls",
-            "routine": "checkSeat2Routine"
-          },
-          {
-            "func": "CALL",
-            "widget": "calls",
-            "routine": "checkSeat4Routine"
-          }
-        ]
-      }
-    ],
-    "text": "View\nBlue"
-  },
-  "viewPurpleBoard": {
-    "type": "button",
-    "id": "viewPurpleBoard",
-    "x": 1267,
-    "y": 84,
-    "z": 76430,
-    "clickRoutine": [
-      {
-        "func": "SELECT",
-        "property": "player",
-        "value": "${playerName}"
-      },
-      {
-        "func": "GET",
-        "property": "id",
-        "variable": "thisSeatID",
-        "aggregation": "array"
-      },
-      {
-        "func": "GET",
-        "property": "id",
-        "variable": "seatVisCheck",
-        "aggregation": "first"
-      },
-      "var thisSeatArray = ${PROPERTY onlyVisibleForSeat OF boardHolder4}",
-      "var checkArray = ${seatVisCheck} in ${thisSeatArray}",
-      {
-        "func": "IF",
-        "operand1": "${checkArray}",
-        "operand2": true,
-        "thenRoutine": [],
-        "elseRoutine": [
-          "var myArray = ${PROPERTY onlyVisibleForSeat OF boardHolder4}",
-          "var myArray = ${myArray} concatArray ${thisSeatID}",
-          {
-            "func": "SELECT",
-            "property": "id",
-            "value": "boardHolder4"
-          },
-          {
-            "func": "SET",
-            "property": "onlyVisibleForSeat",
-            "value": "${myArray}"
-          },
-          "var pArray1 = ${PROPERTY onlyVisibleForSeat OF boardHolder1}",
-          "var pArray2 = ${PROPERTY onlyVisibleForSeat OF boardHolder2}",
-          "var pArray3 = ${PROPERTY onlyVisibleForSeat OF boardHolder3}",
-          "var newArray1 = []",
-          "var newArray2 = []",
-          "var newArray3 = []",
-          {
-            "func": "CALL",
-            "widget": "calls",
-            "routine": "checkSeat1Routine"
-          },
-          {
-            "func": "CALL",
-            "widget": "calls",
-            "routine": "checkSeat2Routine"
-          },
-          {
-            "func": "CALL",
-            "widget": "calls",
-            "routine": "checkSeat3Routine"
-          }
-        ]
-      }
-    ],
-    "text": "View Green"
-  },
-  "calls": {
-    "type": "button",
-    "id": "calls",
-    "x": 1487,
-    "y": 551,
-    "z": 76431,
-    "checkSeat1Routine": [
-      {
-        "note": "There is a separate routine for each board. The button for board 1 calls 2, 3, and 4.  The button for board 2 calls 1, 3, and 4.  Etc."
-      },
-      {
-        "note": "Create a loop that runs through each of the 4 seats.",
-        "func": "FOREACH",
-        "in": [
-          "seat1",
-          "seat2",
-          "seat3",
-          "seat4"
-        ],
-        "loopRoutine": [
-          {
-            "note": "Get the value of each item in the array for this board's visibility property."
-          },
-          "var tempSeatID1 = ${pArray1.$key}",
-          {
-            "func": "IF",
-            "operand1": "${tempSeatID1}",
-            "operand2": null,
-            "thenRoutine": [
-              {
-                "note": "If that position in the array is empty/null, then do nothing, otherwise run the elseRoutine"
-              }
-            ],
-            "elseRoutine": [
-              {
-                "func": "IF",
-                "operand1": "${tempSeatID1}",
-                "operand2": "${thisSeatID}",
-                "thenRoutine": [
-                  {
-                    "note": "If the player pressing the button appears in the visibility array, then do nothing. What this really means is that the player's name will not be added to the new array being built in the elseRoutine"
-                  }
-                ],
-                "elseRoutine": [
-                  {
-                    "note": "If the player pressing the button is not in the visibility array, then we want to keep that other player in the visibility array, so assign that player a position in the array."
-                  },
-                  "var newArray1.$key = ${tempSeatID1}"
-                ]
-              },
-              {
-                "note": "Set the array of players -- minus the player pressing the button -- back into the visibility property for this board.",
-                "func": "SELECT",
-                "property": "id",
-                "value": "boardHolder1"
-              },
-              {
-                "func": "SET",
-                "property": "onlyVisibleForSeat",
-                "value": "${newArray1}"
-              }
-            ]
-          }
-        ]
-      }
-    ],
-    "checkSeat2Routine": [
-      {
-        "func": "FOREACH",
-        "in": [
-          "seat1",
-          "seat2",
-          "seat3",
-          "seat4"
-        ],
-        "loopRoutine": [
-          "var tempSeatID2 = ${pArray2.$key}",
-          {
-            "func": "IF",
-            "operand1": "${tempSeatID2}",
-            "operand2": null,
-            "thenRoutine": [],
-            "elseRoutine": [
-              {
-                "func": "IF",
-                "operand1": "${tempSeatID2}",
-                "operand2": "${thisSeatID}",
-                "thenRoutine": [],
-                "elseRoutine": [
-                  "var newArray2.$key = ${tempSeatID2}"
-                ]
-              },
-              {
-                "func": "SELECT",
-                "property": "id",
-                "value": "boardHolder2"
-              },
-              {
-                "func": "SET",
-                "property": "onlyVisibleForSeat",
-                "value": "${newArray2}"
-              }
-            ]
-          }
-        ]
-      }
-    ],
-    "checkSeat3Routine": [
-      {
-        "func": "FOREACH",
-        "in": [
-          "seat1",
-          "seat2",
-          "seat3",
-          "seat4"
-        ],
-        "loopRoutine": [
-          "var tempSeatID3 = ${pArray3.$key}",
-          {
-            "func": "IF",
-            "operand1": "${tempSeatID3}",
-            "operand2": null,
-            "thenRoutine": [],
-            "elseRoutine": [
-              {
-                "func": "IF",
-                "operand1": "${tempSeatID3}",
-                "operand2": "${thisSeatID}",
-                "thenRoutine": [],
-                "elseRoutine": [
-                  "var newArray3.$key = ${tempSeatID3}"
-                ]
-              },
-              {
-                "func": "SELECT",
-                "property": "id",
-                "value": "boardHolder3"
-              },
-              {
-                "func": "SET",
-                "property": "onlyVisibleForSeat",
-                "value": "${newArray3}"
-              }
-            ]
-          }
-        ]
-      }
-    ],
-    "checkSeat4Routine": [
-      {
-        "func": "FOREACH",
-        "in": [
-          "seat1",
-          "seat2",
-          "seat3",
-          "seat4"
-        ],
-        "loopRoutine": [
-          "var tempSeatID4 = ${pArray4.$key}",
-          {
-            "func": "IF",
-            "operand1": "${tempSeatID4}",
-            "operand2": null,
-            "thenRoutine": [],
-            "elseRoutine": [
-              {
-                "func": "IF",
-                "operand1": "${tempSeatID4}",
-                "operand2": "${thisSeatID}",
-                "thenRoutine": [],
-                "elseRoutine": [
-                  "var newArray4.$key = ${tempSeatID4}"
-                ]
-              },
-              {
-                "func": "SELECT",
-                "property": "id",
-                "value": "boardHolder4"
-              },
-              {
-                "func": "SET",
-                "property": "onlyVisibleForSeat",
-                "value": "${newArray4}"
-              }
-            ]
-          }
-        ]
-      }
-    ],
-    "text": "CALLs"
-  },
-  "5fac": {
-    "id": "5fac",
-    "x": 75,
-    "y": 637,
-    "width": 1400,
-    "height": 600,
-    "z": 90,
-    "movable": false,
-    "css": "font-size: 25px; ",
-    "text": "Open this room in separate browser windows (one using incognito/private mode) or on separate devices to see how sitting in a seat changes the apperance. Each colored seat has a colored holder associated with it. You automatically see the holder when you sit in the seat.\n\nWhen you click on one of the view buttoms above the seats, the view switches so you see the holder below the button.  The purpose of this demo is to simulate how a room could be built where each player has a full size game board and by clicking a button, players can peek at another player's board to see what that player has done.  There are some comments in 'View Red' button and in the first of the call routines to describe what is happening in the JSON. You could optionally also make an invisible cover appear over the holder to prevent peeking players from making changes to another player's board."
-  },
-  "v8t0": {
-    "id": "v8t0",
-    "x": 518,
-    "y": 2,
-    "width": 600,
-    "z": 95,
-    "css": "font-size: 60px",
-    "text": "Seats: Board Demo"
+  "_meta": {
+    "version": 15,
+    "info": {
+      "name": "Seats",
+      "image": "/assets/-65508335_6985",
+      "rules": "",
+      "bgg": "",
+      "year": "2021",
+      "mode": "Tutorial",
+      "time": "",
+      "attribution": "",
+      "showName": false,
+      "lastUpdate": 1705274283925,
+      "skill": "",
+      "description": "",
+      "similarImage": "",
+      "similarName": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": "",
+      "similarDesigner": "",
+      "variantImage": "",
+      "variant": "Turn and Deal",
+      "language": "en-US",
+      "players": "1"
+    }
   }
 }

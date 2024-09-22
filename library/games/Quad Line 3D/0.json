@@ -552,6 +552,7 @@
       "variant": "",
       "attribution": "Room layout and library image by ArnoldSmith86 and put into public domain (CC0)",
       "similarName": "Connect Four 3D",
+      "similarDesigner": "H. Heller, A. P. Nienstaedt",
       "description": "Stack checkers in 3-dimensional columns to link 4 horizontally, vertically, or diagonally.  First to connect four in a row wins.",
       "showName": true,
       "lastUpdate": 1618589525000

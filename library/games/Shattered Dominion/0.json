@@ -10,7 +10,6 @@
             "x": 0,
             "y": 0,
             "color": "black",
-            "valueType": "static",
             "value": "",
             "width": 160,
             "height": 80
@@ -20,11 +19,12 @@
             "x": 0,
             "y": 0,
             "fontSize": 70,
-            "valueType": "dynamic",
-            "value": "value",
             "textAlign": "center",
             "width": 160,
-            "css": "color:darkgrey"
+            "css": "color:darkgrey",
+            "dynamicProperties": {
+              "value": "value"
+            }
           }
         ]
       },
@@ -35,7 +35,6 @@
             "x": 0,
             "y": 0,
             "color": "black",
-            "valueType": "static",
             "value": "",
             "width": 160,
             "height": 80
@@ -45,27 +44,28 @@
             "x": 0,
             "y": 0,
             "color": "transparent",
-            "valueType": "dynamic",
-            "value": "left",
             "width": 80,
-            "height": 80
+            "height": 80,
+            "dynamicProperties": {
+              "value": "left"
+            }
           },
           {
             "type": "image",
             "x": 80,
             "y": 0,
             "color": "transparent",
-            "valueType": "dynamic",
-            "value": "right",
             "width": 80,
-            "height": 80
+            "height": 80,
+            "dynamicProperties": {
+              "value": "right"
+            }
           },
           {
             "type": "image",
             "x": 5,
             "y": 5,
             "color": "transparent",
-            "valueType": "static",
             "value": "/assets/-2128822533_14367",
             "width": 80,
             "height": 20.29,
@@ -81,8 +81,8 @@
         {
           "x": 40,
           "y": 40,
-          "offsetX": -40,
-          "offsetY": -40
+          "offsetX": -60,
+          "offsetY": -60
         }
       ],
       "clickRoutine": [
@@ -1382,8 +1382,7 @@
     "movableInEdit": true,
     "inheritFrom": {
       "Player 1 - Seat": "clickRoutine"
-    },
-    "color": "#999999"
+    }
   },
   "Player 2 - King A": {
     "id": "Player 2 - King A",
@@ -1564,8 +1563,7 @@
     "movableInEdit": true,
     "inheritFrom": {
       "Player 1 - Seat": "clickRoutine"
-    },
-    "color": "#999999"
+    }
   },
   "Player 4 - King A": {
     "id": "Player 4 - King A",
@@ -1643,7 +1641,6 @@
             "x": 0,
             "y": 0,
             "color": "transparent",
-            "valueType": "static",
             "value": "/assets/564115451_42678",
             "width": 80,
             "height": 80
@@ -1653,7 +1650,6 @@
             "x": 10,
             "y": 10,
             "color": "transparent",
-            "valueType": "static",
             "value": "/assets/2057872747_6943",
             "width": 60,
             "height": 60
@@ -1671,8 +1667,8 @@
         {
           "x": 80,
           "y": 80,
-          "offsetX": -20,
-          "offsetY": -60
+          "offsetX": -60,
+          "offsetY": -100
         }
       ]
     }
@@ -2077,23 +2073,30 @@
     "text": "Score: 0"
   },
   "_meta": {
-    "version": 4,
+    "version": 14,
     "info": {
       "name": "Shattered Dominion",
-      "image": "/assets/1597719616_28558",
+      "image": "/assets/-2101023079_38697",
       "rules": "",
       "bgg": "https://boardgamegeek.com/boardgame/204583/kingdomino",
       "year": "2016",
       "mode": "vs",
       "time": "15",
-      "players": "2-4",
-      "language": "en-US",
-      "variant": "",
-      "attribution": "Board layout and \"king\" game piece by ArnoldSmith86. Released to public domain under CC0.\n\nPixabay license:\nhttps://pixabay.com/vectors/crown-golden-yellow-emperor-576226/\nhttps://pixabay.com/vectors/building-castle-fort-fortification-2024446/\n\nhttps://pixabay.com/photos/sheep-meadow-aerial-view-drone-939566/\nhttps://pixabay.com/photos/wheat-wheat-field-crop-spikelets-5581130/\nhttps://pixabay.com/photos/central-tien-shan-china-landscape-92365/\nhttps://pixabay.com/de/photos/erde-trocken-lehm-lehmhaltig-d%C3%BCrre-3483470/\nhttps://pixabay.com/photos/sand-texture-dune-beach-desert-5085975/\n\nPublic domain:\nhttps://www.piqsels.com/en/public-domain-photo-fmixo\nhttps://www.piqsels.com/en/public-domain-photo-sqflp\n",
+      "attribution": "Board layout and \"king\" game piece by ArnoldSmith86. Released to public domain under CC0.\n\nPixabay license:\nhttps://pixabay.com/vectors/crown-golden-yellow-emperor-576226/\nhttps://pixabay.com/vectors/building-castle-fort-fortification-2024446/\n\nhttps://pixabay.com/photos/sheep-meadow-aerial-view-drone-939566/\nhttps://pixabay.com/photos/wheat-wheat-field-crop-spikelets-5581130/\nhttps://pixabay.com/photos/central-tien-shan-china-landscape-92365/\nhttps://pixabay.com/de/photos/erde-trocken-lehm-lehmhaltig-d%C3%BCrre-3483470/\nhttps://pixabay.com/photos/sand-texture-dune-beach-desert-5085975/\n\nPublic domain:\nhttps://www.piqsels.com/en/public-domain-photo-fmixo\nhttps://www.piqsels.com/en/public-domain-photo-sqflp\n<div><br></div><div>Library image generated using the Midjourney artificial intelligence image generator, https://www.midjourney.com/home/, using the following prompt: \"square topography tiles watercolor --ar 1:1 --v 5.1\"<br></div>",
       "similarName": "Kingdomino",
+      "similarAwards": "2018 Hungarian Board Game Award Nominee\n2018 Boardgames Australia Awards Best International Game Nominee\n2017 Spiel des Jahres Winner\n2017 Nederlandse Spellenprijs Best Family Game Nominee\n2017 Lys Grand Public Finalist\n2017 Japan Boardgame Prize Voters' Selection Winner\n2017 Japan Boardgame Prize U-more Award Winner\n2017 Hra roku Finalist\n2017 Guldbrikken Best Family Game Winner\n2017 Gra Roku Family Game of the Year Nominee\n2017 Gouden Ludo Best Family Game Winner\n2017 Gioco dell’Anno Winner\n2017 Board Game Quest Awards Best Family Game Nominee\n2017 As d'Or - Jeu de l'Année Nominee\n2017 Årets Spill Best Family Game Winner\n2016 Tric Trac Nominee\n2016 Meeples' Choice Nominee\n2016 Golden Geek Best Family Board Game Nominee",
       "description": "Place tiles consisting of images of various types of terrain to connect to a matching type of terrain already on the 5x5 board. Earn points for connecting tiles and playing bonus symbol. Most points wins.",
       "showName": true,
-      "lastUpdate": 1636735750000
+      "lastUpdate": 1698471698481,
+      "skill": "",
+      "similarImage": "",
+      "similarDesigner": "Bruno Cathala",
+      "ruleText": "",
+      "helpText": "",
+      "variantImage": "",
+      "variant": "",
+      "language": "en-US",
+      "players": "2-4"
     }
   },
   "mtnb": {
