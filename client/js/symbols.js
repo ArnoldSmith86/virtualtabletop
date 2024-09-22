@@ -291,7 +291,7 @@ function generateSymbolsDiv(target, width, height, symbols, text, defaultScale, 
       textWidth = width - iconsWidth
     } else {
       outerWrapper.classList.add('textBottom');
-      iconsHeight = iconsHeight / 2;
+      iconsHeight = iconsHeight / (text.indexOf('\n') != -1 ? 3 : 2);
       textHeight = height - iconsHeight
     }
     wrapper.style.setProperty('--width', `${iconsWidth}px`);
