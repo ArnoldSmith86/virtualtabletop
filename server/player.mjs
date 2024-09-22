@@ -23,14 +23,16 @@ export default class Player {
       this.trace('messageReceived', { func, args });
 
     try {
+      if(func == 'addStateToPublicLibrary')
+        this.room.addStateToPublicLibrary(this, args);
       if(func == 'confirm')
         this.waitingForStateConfirmation = false;
       if(func == 'delta')
         this.receiveDelta(args);
       if(func == 'editState')
-        await this.room.editState(this, args.id, args.meta);
+        await this.room.editState(this, args.id, args.meta, args.variantInput, args.variantOperationQueue);
       if(func == 'loadState')
-        await this.room.loadState(this, args.stateID, args.variantID);
+        await this.room.loadState(this, args.stateID, args.variantID, args.linkSourceStateID, args.delayForGameStartRoutine);
       if(func == 'mouse')
         this.room.mouseMove(this, args);
       if(func == 'playerColor')
@@ -39,14 +41,24 @@ export default class Player {
         this.room.removeState(this, args);
       if(func == 'rename')
         this.room.renamePlayer(this, args.oldName, args.newName);
+      if(func == 'saveState')
+        this.room.saveState(this, args.players, args.updateCurrentSave);
       if(func == 'setRedirect')
         this.room.setRedirect(this, args);
+      if(func == 'toggleStateStar')
+        this.room.toggleStateStar(this, args);
       if(func == 'trace')
         this.trace('client', args);
+      if(func == 'unlinkState')
+        await this.room.unlinkState(this, args);
     } catch(e) {
-      Logging.handleWebSocketException(func, args, e);
-      this.send('internal_error', func);
-      this.connection.close();
+      if(e instanceof Logging.UserError) {
+        this.send('error', `${e.code} - ${e.message}`);
+      } else {
+        Logging.handleWebSocketException(func, args, e);
+        this.send('internal_error', func);
+        this.connection.close();
+      }
     }
   }
 
@@ -85,6 +97,15 @@ export default class Player {
       }
     }
 
+    for(const widgetID in delta.s) {
+      if (!this.room.state[widgetID] && delta.s[widgetID] && !delta.s[widgetID].id) {
+        // tried to modify properties of a missing widget -> client is in bad state
+        this.waitingForStateConfirmation = true;
+        this.room.receiveInvalidDelta(this, delta, widgetID, '<modification>');
+        return;
+      }
+    }
+
     this.possiblyConflictingDeltas = [];
     this.room.receiveDelta(this, delta);
   }
@@ -103,7 +124,7 @@ export default class Player {
   }
 
   trace(source, payload) {
-    if(this.room.enableTracing || source == 'client' && payload.type == 'enable') {
+    if(this.room.traceIsEnabled() || source == 'client' && payload.type == 'enable') {
       payload.player = this.name;
       this.room.trace(source, payload);
     }

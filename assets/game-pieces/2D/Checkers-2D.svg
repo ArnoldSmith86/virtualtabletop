@@ -1,0 +1,4 @@
+<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 91 91">
+    <circle cx="45.5" cy="45.5" r="44" style="fill:#primaryColor;stroke:#borderColor;stroke-linecap:round;stroke-width:#borderWidth;"/>
+    <path opacity="0.5" style="fill:#secondaryColor;" d="M45.5,79.71A34.21,34.21,0,1,1,79.71,45.5,34.25,34.25,0,0,1,45.5,79.71Zm0-61.27A27.06,27.06,0,1,0,72.56,45.5,27.09,27.09,0,0,0,45.5,18.44Z"/>
+</svg>

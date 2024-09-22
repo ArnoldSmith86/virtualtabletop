@@ -1,0 +1,7009 @@
+{
+  "Pilot - Title": {
+    "id": "Pilot - Title",
+    "x": 15,
+    "width": 190,
+    "z": 122,
+    "css": {
+      "font-size": "48px",
+      "text-align": "center"
+    },
+    "text": "Pilot",
+    "movable": false,
+    "height": 51,
+    "parent": "y717"
+  },
+  "Pilot - Seat": {
+    "type": "seat",
+    "id": "Pilot - Seat",
+    "x": 28,
+    "y": 56,
+    "z": 1,
+    "parent": "y717"
+  },
+  "Pilot - Dice Holder": {
+    "type": "holder",
+    "id": "Pilot - Dice Holder",
+    "y": 115,
+    "width": 220,
+    "height": 58,
+    "onlyVisibleForSeat": "Pilot - Seat",
+    "dropTarget": {
+      "type": "dice",
+      "color": "lightblue"
+    },
+    "stackOffsetX": 54,
+    "parent": "y717"
+  },
+  "Pilot - Die 1": {
+    "type": "dice",
+    "id": "Pilot - Die 1",
+    "x": 4,
+    "y": 4,
+    "borderColor": "lightblue",
+    "color": "lightblue",
+    "pipColor": "white",
+    "rollCount": 80,
+    "z": 1,
+    "movable": true,
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "fields": [
+          {
+            "type": "choose",
+            "source": "thisButton",
+            "mode": "faces",
+            "variable": "selected"
+          },
+          {
+            "type": "switch",
+            "label": "Reroll",
+            "variable": "reroll"
+          }
+        ],
+        "header": "Modify die"
+      },
+      {
+        "func": "IF",
+        "operand1": "${reroll}",
+        "operand2": "on",
+        "thenRoutine": [
+          {
+            "func": "CLICK",
+            "collection": "thisButton",
+            "mode": "ignoreClickRoutine"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "property": "activeFace",
+            "value": "${selected.face}"
+          }
+        ]
+      }
+    ],
+    "parent": "Pilot - Dice Holder",
+    "activeFace": 3
+  },
+  "Pilot - Die 2": {
+    "type": "dice",
+    "id": "Pilot - Die 2",
+    "x": 58,
+    "y": 4,
+    "width": 50,
+    "height": 50,
+    "activeFace": 2,
+    "inheritFrom": {
+      "Pilot - Die 1": [
+        "borderColor",
+        "color",
+        "pipColor",
+        "movable",
+        "clickRoutine"
+      ]
+    },
+    "z": 2,
+    "rollCount": 70,
+    "parent": "Pilot - Dice Holder"
+  },
+  "Pilot - Roll Button": {
+    "type": "button",
+    "id": "Pilot - Roll Button",
+    "x": 70,
+    "y": 178,
+    "classes": "symbols",
+    "text": "[recall_dice]",
+    "css": {
+      "font-size": "50px"
+    },
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "color",
+        "value": "lightblue",
+        "type": "dice"
+      },
+      {
+        "func": "MOVE",
+        "to": "Pilot - Dice Holder"
+      },
+      {
+        "func": "CLICK",
+        "mode": "ignoreClickRoutine"
+      },
+      {
+        "func": "TIMER",
+        "timer": "Timer",
+        "mode": "reset"
+      }
+    ],
+    "onlyVisibleForSeat": "Pilot - Seat",
+    "parent": "y717"
+  },
+  "Pilot - Die 3": {
+    "type": "dice",
+    "id": "Pilot - Die 3",
+    "x": 112,
+    "y": 4,
+    "width": 50,
+    "height": 50,
+    "activeFace": 2,
+    "inheritFrom": {
+      "Pilot - Die 1": [
+        "borderColor",
+        "color",
+        "pipColor",
+        "movable",
+        "clickRoutine"
+      ]
+    },
+    "z": 3,
+    "rollCount": 70,
+    "parent": "Pilot - Dice Holder"
+  },
+  "Pilot - Die 4": {
+    "type": "dice",
+    "id": "Pilot - Die 4",
+    "x": 166,
+    "y": 4,
+    "width": 50,
+    "height": 50,
+    "activeFace": 4,
+    "inheritFrom": {
+      "Pilot - Die 1": [
+        "borderColor",
+        "color",
+        "pipColor",
+        "movable",
+        "clickRoutine"
+      ]
+    },
+    "z": 4,
+    "rollCount": 70,
+    "parent": "Pilot - Dice Holder"
+  },
+  "Co-Pilot - Die 1": {
+    "type": "dice",
+    "id": "Co-Pilot - Die 1",
+    "x": 4,
+    "y": 4,
+    "z": 1,
+    "movable": true,
+    "borderColor": "orange",
+    "color": "orange",
+    "pipColor": "white",
+    "rollCount": 68,
+    "parent": "Pilot - Dice Holder1",
+    "inheritFrom": {
+      "Pilot - Die 1": [
+        "clickRoutine"
+      ]
+    },
+    "activeFace": 4
+  },
+  "Co-Pilot - Die 2": {
+    "type": "dice",
+    "id": "Co-Pilot - Die 2",
+    "x": 58,
+    "y": 4,
+    "width": 50,
+    "height": 50,
+    "z": 2,
+    "activeFace": 2,
+    "inheritFrom": {
+      "Co-Pilot - Die 1": [
+        "borderColor",
+        "color",
+        "pipColor",
+        "movable",
+        "clickRoutine"
+      ]
+    },
+    "rollCount": 60,
+    "parent": "Pilot - Dice Holder1"
+  },
+  "Co-Pilot - Die 3": {
+    "type": "dice",
+    "id": "Co-Pilot - Die 3",
+    "x": 112,
+    "y": 4,
+    "width": 50,
+    "height": 50,
+    "z": 3,
+    "activeFace": 2,
+    "inheritFrom": {
+      "Co-Pilot - Die 1": [
+        "borderColor",
+        "color",
+        "pipColor",
+        "movable",
+        "clickRoutine"
+      ]
+    },
+    "rollCount": 60,
+    "hoverParent": "Pilot - Dice Holder1",
+    "parent": "Pilot - Dice Holder1"
+  },
+  "Co-Pilot - Die 4": {
+    "type": "dice",
+    "id": "Co-Pilot - Die 4",
+    "x": 166,
+    "y": 4,
+    "width": 50,
+    "height": 50,
+    "z": 4,
+    "activeFace": 5,
+    "inheritFrom": {
+      "Co-Pilot - Die 1": [
+        "borderColor",
+        "color",
+        "pipColor",
+        "movable",
+        "clickRoutine"
+      ]
+    },
+    "rollCount": 60,
+    "parent": "Pilot - Dice Holder1"
+  },
+  "Coffee Dice Holder 1": {
+    "type": "holder",
+    "id": "Coffee Dice Holder 1",
+    "x": 21,
+    "y": 36,
+    "width": 58,
+    "height": 58,
+    "dropTarget": {
+      "type": "dice"
+    },
+    "inheritFrom": {
+      "Engine Dice Holder 1": [
+        "css"
+      ]
+    },
+    "background": "linear-gradient(90deg, #add8e680 0%, #add8e680 40%, #ffa50080 60%, #ffa50080 100%)",
+    "image": "/i/game-icons.net/delapouite/coffee-cup.svg",
+    "parent": "vsk3",
+    "z": 0,
+    "dropLimit": 1,
+    "enterRoutine": [
+      {
+        "func": "CLICK",
+        "collection": [
+          "ovo8"
+        ]
+      }
+    ]
+  },
+  "Coffee Dice Holder 2": {
+    "type": "holder",
+    "id": "Coffee Dice Holder 2",
+    "x": 138,
+    "y": 36,
+    "width": 58,
+    "height": 58,
+    "dropTarget": {
+      "type": "dice"
+    },
+    "inheritFrom": {
+      "Engine Dice Holder 1": [
+        "css"
+      ]
+    },
+    "background": "linear-gradient(90deg, #add8e680 0%, #add8e680 40%, #ffa50080 60%, #ffa50080 100%)",
+    "image": "/i/game-icons.net/delapouite/coffee-cup.svg",
+    "parent": "vsk3",
+    "z": 0,
+    "dropLimit": 1,
+    "enterRoutine": [
+      {
+        "func": "CLICK",
+        "collection": [
+          "ovo9"
+        ]
+      }
+    ]
+  },
+  "Coffee Dice Holder 3": {
+    "type": "holder",
+    "id": "Coffee Dice Holder 3",
+    "x": 254,
+    "y": 36,
+    "width": 58,
+    "height": 58,
+    "dropTarget": {
+      "type": "dice"
+    },
+    "inheritFrom": {
+      "Engine Dice Holder 1": [
+        "css"
+      ]
+    },
+    "background": "linear-gradient(90deg, #add8e680 0%, #add8e680 40%, #ffa50080 60%, #ffa50080 100%)",
+    "image": "/i/game-icons.net/delapouite/coffee-cup.svg",
+    "parent": "vsk3",
+    "z": 0,
+    "dropLimit": 1,
+    "enterRoutine": [
+      {
+        "func": "CLICK",
+        "collection": [
+          "ovo10"
+        ]
+      }
+    ]
+  },
+  "ovo7": {
+    "deck": "Switch Deck",
+    "type": "card",
+    "cardType": "switch",
+    "id": "ovo7",
+    "z": 25,
+    "y": 125,
+    "parent": "Brakes Wrapper",
+    "x": 10
+  },
+  "fbs3": {
+    "deck": "Switch Deck",
+    "type": "card",
+    "cardType": "switch",
+    "id": "fbs3",
+    "z": 38,
+    "y": 458,
+    "parent": "Flaps Wrapper",
+    "x": 10
+  },
+  "rmll": {
+    "deck": "Switch Deck",
+    "type": "card",
+    "cardType": "switch",
+    "id": "rmll",
+    "z": 37,
+    "y": 330,
+    "parent": "Flaps Wrapper",
+    "x": 10
+  },
+  "ibxg": {
+    "deck": "Switch Deck",
+    "type": "card",
+    "cardType": "switch",
+    "id": "ibxg",
+    "z": 36,
+    "y": 202,
+    "parent": "Flaps Wrapper",
+    "x": 10
+  },
+  "mk4f": {
+    "deck": "Switch Deck",
+    "type": "card",
+    "cardType": "switch",
+    "id": "mk4f",
+    "z": 33,
+    "x": 91,
+    "y": 202,
+    "parent": "Landing Gear Wrapper"
+  },
+  "q6be": {
+    "deck": "Switch Deck",
+    "type": "card",
+    "cardType": "switch",
+    "id": "q6be",
+    "z": 32,
+    "x": 91,
+    "y": 73,
+    "parent": "Landing Gear Wrapper"
+  },
+  "0kal": {
+    "deck": "Switch Deck",
+    "type": "card",
+    "cardType": "switch",
+    "id": "0kal",
+    "z": 41,
+    "y": 73,
+    "parent": "Flaps Wrapper",
+    "x": 10
+  },
+  "2s6g": {
+    "deck": "Switch Deck",
+    "type": "card",
+    "cardType": "switch",
+    "id": "2s6g",
+    "z": 26,
+    "x": 127,
+    "y": 125,
+    "parent": "Brakes Wrapper"
+  },
+  "r71l": {
+    "deck": "Switch Deck",
+    "type": "card",
+    "cardType": "switch",
+    "id": "r71l",
+    "z": 34,
+    "x": 91,
+    "y": 330,
+    "parent": "Landing Gear Wrapper"
+  },
+  "mx1c": {
+    "deck": "Switch Deck",
+    "type": "card",
+    "cardType": "switch",
+    "id": "mx1c",
+    "z": 27,
+    "x": 242,
+    "y": 125,
+    "parent": "Brakes Wrapper"
+  },
+  "Brakes Dice Holder 1": {
+    "type": "holder",
+    "id": "Brakes Dice Holder 1",
+    "x": 21,
+    "width": 58,
+    "height": 58,
+    "z": 1,
+    "css": {
+      "::after": {
+        "content": "\"${PROPERTY text}\"",
+        "display": "flex",
+        "height": "100%",
+        "width": "100%",
+        "font-size": "30px",
+        "justify-content": "center",
+        "align-items": "center",
+        "color": "${PROPERTY color}",
+        "font-weight": "bold"
+      },
+      "default": {
+        "background": "${PROPERTY background}"
+      }
+    },
+    "dropTarget": {
+      "type": "dice"
+    },
+    "text": "2",
+    "background": "#add8e680",
+    "color": "#0004",
+    "parent": "Brakes Wrapper",
+    "y": 61,
+    "dropLimit": 1,
+    "enterRoutine": [
+      {
+        "func": "CLICK",
+        "collection": [
+          "ovo7"
+        ]
+      }
+    ]
+  },
+  "Brakes Dice Holder 2": {
+    "type": "holder",
+    "id": "Brakes Dice Holder 2",
+    "x": 138,
+    "y": 61,
+    "width": 58,
+    "height": 58,
+    "z": 1,
+    "text": "4",
+    "background": "#add8e680",
+    "color": "#0004",
+    "inheritFrom": {
+      "Brakes Dice Holder 1": [
+        "css",
+        "dropTarget"
+      ]
+    },
+    "parent": "Brakes Wrapper",
+    "dropLimit": 1,
+    "enterRoutine": [
+      {
+        "func": "CLICK",
+        "collection": [
+          "2s6g"
+        ]
+      }
+    ]
+  },
+  "Brakes Dice Holder 3": {
+    "type": "holder",
+    "id": "Brakes Dice Holder 3",
+    "x": 254,
+    "y": 61,
+    "width": 58,
+    "height": 58,
+    "z": 1,
+    "text": "6",
+    "background": "#add8e680",
+    "color": "#0004",
+    "inheritFrom": {
+      "Brakes Dice Holder 1": [
+        "css",
+        "dropTarget"
+      ]
+    },
+    "parent": "Brakes Wrapper",
+    "dropLimit": 1,
+    "enterRoutine": [
+      {
+        "func": "CLICK",
+        "collection": [
+          "mx1c"
+        ]
+      }
+    ]
+  },
+  "Gears Dice Holder 1": {
+    "type": "holder",
+    "id": "Gears Dice Holder 1",
+    "x": 91,
+    "y": 10,
+    "width": 58,
+    "height": 58,
+    "z": 1,
+    "inheritFrom": {
+      "Brakes Dice Holder 1": [
+        "css",
+        "dropTarget"
+      ]
+    },
+    "background": "#add8e680",
+    "color": "#0004",
+    "text": "1/2",
+    "parent": "Landing Gear Wrapper",
+    "dropLimit": 1,
+    "enterRoutine": [
+      {
+        "func": "CLICK",
+        "collection": [
+          "q6be"
+        ]
+      }
+    ]
+  },
+  "Gears Dice Holder 2": {
+    "type": "holder",
+    "id": "Gears Dice Holder 2",
+    "x": 91,
+    "y": 139,
+    "width": 58,
+    "height": 58,
+    "z": 3,
+    "inheritFrom": {
+      "Brakes Dice Holder 1": [
+        "css",
+        "dropTarget"
+      ]
+    },
+    "background": "#add8e680",
+    "color": "#0004",
+    "text": "3/4",
+    "parent": "Landing Gear Wrapper",
+    "dropLimit": 1,
+    "enterRoutine": [
+      {
+        "func": "CLICK",
+        "collection": [
+          "mk4f"
+        ]
+      }
+    ]
+  },
+  "Gears Dice Holder 3": {
+    "type": "holder",
+    "id": "Gears Dice Holder 3",
+    "x": 91,
+    "y": 267,
+    "width": 58,
+    "height": 58,
+    "z": 4,
+    "inheritFrom": {
+      "Brakes Dice Holder 1": [
+        "css",
+        "dropTarget"
+      ]
+    },
+    "background": "#add8e680",
+    "color": "#0004",
+    "text": "5/6",
+    "parent": "Landing Gear Wrapper",
+    "dropLimit": 1,
+    "enterRoutine": [
+      {
+        "func": "CLICK",
+        "collection": [
+          "r71l"
+        ]
+      }
+    ]
+  },
+  "Flaps Dice Holder 1": {
+    "type": "holder",
+    "id": "Flaps Dice Holder 1",
+    "x": 32,
+    "y": 10,
+    "width": 58,
+    "height": 58,
+    "z": 1,
+    "inheritFrom": {
+      "Brakes Dice Holder 1": [
+        "css",
+        "dropTarget"
+      ]
+    },
+    "background": "#ffa50080",
+    "color": "#0004",
+    "text": "1/2",
+    "parent": "Flaps Wrapper",
+    "dropLimit": 1,
+    "enterRoutine": [
+      {
+        "func": "CLICK",
+        "collection": [
+          "0kal"
+        ]
+      }
+    ]
+  },
+  "Flaps Dice Holder 2": {
+    "type": "holder",
+    "id": "Flaps Dice Holder 2",
+    "x": 32,
+    "y": 138,
+    "width": 58,
+    "height": 58,
+    "z": 1,
+    "inheritFrom": {
+      "Brakes Dice Holder 1": [
+        "css",
+        "dropTarget"
+      ]
+    },
+    "background": "#ffa50080",
+    "color": "#0004",
+    "text": "2/3",
+    "parent": "Flaps Wrapper",
+    "dropLimit": 1,
+    "enterRoutine": [
+      {
+        "func": "CLICK",
+        "collection": [
+          "ibxg"
+        ]
+      }
+    ]
+  },
+  "Flaps Dice Holder 3": {
+    "type": "holder",
+    "id": "Flaps Dice Holder 3",
+    "x": 32,
+    "y": 267,
+    "width": 58,
+    "height": 58,
+    "z": 1,
+    "inheritFrom": {
+      "Brakes Dice Holder 1": [
+        "css",
+        "dropTarget"
+      ]
+    },
+    "background": "#ffa50080",
+    "color": "#0004",
+    "text": "4/5",
+    "parent": "Flaps Wrapper",
+    "dropLimit": 1,
+    "enterRoutine": [
+      {
+        "func": "CLICK",
+        "collection": [
+          "rmll"
+        ]
+      }
+    ]
+  },
+  "Flaps Dice Holder 4": {
+    "type": "holder",
+    "id": "Flaps Dice Holder 4",
+    "x": 32,
+    "y": 396,
+    "width": 58,
+    "height": 58,
+    "z": 1,
+    "inheritFrom": {
+      "Brakes Dice Holder 1": [
+        "css",
+        "dropTarget"
+      ]
+    },
+    "background": "#ffa50080",
+    "color": "#0004",
+    "text": "5/6",
+    "parent": "Flaps Wrapper",
+    "dropLimit": 1,
+    "enterRoutine": [
+      {
+        "func": "CLICK",
+        "collection": [
+          "fbs3"
+        ]
+      }
+    ]
+  },
+  "Pilot - Title1": {
+    "id": "Pilot - Title1",
+    "x": 15,
+    "width": 190,
+    "z": 1,
+    "css": {
+      "font-size": "48px",
+      "text-align": "center"
+    },
+    "text": "Co-Pilot",
+    "movable": false,
+    "height": 51,
+    "parent": "sr7q"
+  },
+  "Pilot - Seat1": {
+    "type": "seat",
+    "id": "Pilot - Seat1",
+    "x": 28,
+    "y": 56,
+    "z": 1,
+    "index": 1,
+    "parent": "sr7q"
+  },
+  "Pilot - Dice Holder1": {
+    "type": "holder",
+    "id": "Pilot - Dice Holder1",
+    "y": 115,
+    "width": 220,
+    "height": 58,
+    "onlyVisibleForSeat": "Pilot - Seat1",
+    "dropTarget": {
+      "type": "dice",
+      "color": "orange"
+    },
+    "stackOffsetX": 54,
+    "parent": "sr7q"
+  },
+  "Pilot - Roll Button4": {
+    "type": "button",
+    "id": "Pilot - Roll Button4",
+    "x": 70,
+    "y": 178,
+    "classes": "symbols",
+    "text": "[recall_dice]",
+    "css": {
+      "font-size": "50px"
+    },
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "color",
+        "value": "orange",
+        "type": "dice"
+      },
+      {
+        "func": "MOVE",
+        "to": "Pilot - Dice Holder1"
+      },
+      {
+        "func": "CLICK",
+        "mode": "ignoreClickRoutine"
+      },
+      {
+        "func": "TIMER",
+        "timer": "Timer",
+        "mode": "reset"
+      }
+    ],
+    "onlyVisibleForSeat": "Pilot - Seat1",
+    "parent": "sr7q"
+  },
+  "Axis to 0": {
+    "id": "Axis to 0",
+    "x": 81,
+    "width": 30,
+    "height": 30,
+    "image": "/i/game-icons.net/delapouite/plain-arrow.svg",
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": [
+          "Axis Indicator"
+        ],
+        "property": "rotation",
+        "value": "${PROPERTY rotation}"
+      }
+    ],
+    "z": 48,
+    "y": -10,
+    "movable": false,
+    "parent": "Axis Indicator Wrapper"
+  },
+  "Axis to +1": {
+    "id": "Axis to +1",
+    "x": 119,
+    "y": -2,
+    "rotation": 25,
+    "inheritFrom": "Axis to 0",
+    "parent": "Axis Indicator Wrapper",
+    "z": 0
+  },
+  "Axis Indicator": {
+    "id": "Axis Indicator",
+    "x": 21,
+    "y": 21,
+    "borderRadius": 100,
+    "css": {
+      "::after": {
+        "content": "\"\"",
+        "display": "block",
+        "height": "20%",
+        "width": "100%",
+        "background": "url(\"/i/game-icons.net/delapouite/plain-arrow.svg\") no-repeat center",
+        "transform": "rotate(180deg)"
+      },
+      "default": {
+        "background-size": "80%",
+        "border": "1px solid grey",
+        "box-sizing": "border-box"
+      }
+    },
+    "image": "/i/game-icons.net/quoting/biplane.svg",
+    "parent": "Axis Indicator Wrapper",
+    "movable": false,
+    "width": 150,
+    "height": 150,
+    "resetProperties": {
+      "rotation": 0
+    }
+  },
+  "Axis to +2": {
+    "id": "Axis to +2",
+    "x": 150,
+    "y": 22,
+    "rotation": 50,
+    "inheritFrom": "Axis to 0",
+    "parent": "Axis Indicator Wrapper",
+    "z": 0
+  },
+  "Axis to -1": {
+    "id": "Axis to -1",
+    "x": 43,
+    "y": -2,
+    "rotation": -25,
+    "inheritFrom": "Axis to 0",
+    "parent": "Axis Indicator Wrapper",
+    "z": 0
+  },
+  "Axis to -2": {
+    "id": "Axis to -2",
+    "x": 12,
+    "y": 22,
+    "rotation": -50,
+    "inheritFrom": "Axis to 0",
+    "parent": "Axis Indicator Wrapper",
+    "z": 0
+  },
+  "Axis Indicator Wrapper": {
+    "id": "Axis Indicator Wrapper",
+    "x": 595,
+    "y": 114,
+    "width": 202,
+    "height": 174,
+    "layer": -3,
+    "movable": false,
+    "editorGroup": true
+  },
+  "Engine Dice Holder 1": {
+    "type": "holder",
+    "id": "Engine Dice Holder 1",
+    "x": 581,
+    "y": 356,
+    "width": 58,
+    "height": 58,
+    "z": 7,
+    "css": {
+      "::after": {
+        "content": "\"\"",
+        "display": "block",
+        "height": "100%",
+        "width": "100%",
+        "color": "${PROPERTY color}",
+        "background": "url(\"${PROPERTY image}\") no-repeat center",
+        "background-size": "80%",
+        "opacity": 0.25,
+        "transform": "rotate(${PROPERTY imageRotation}deg)"
+      },
+      "default": {
+        "background": "${PROPERTY background}"
+      }
+    },
+    "dropTarget": {
+      "type": "dice"
+    },
+    "background": "#add8e680",
+    "image": "/i/game-icons.net/delapouite/turbine.svg",
+    "dropLimit": 1
+  },
+  "Axis to +3": {
+    "id": "Axis to +3",
+    "parent": "Axis Indicator Wrapper",
+    "x": 174,
+    "y": 62,
+    "width": 20,
+    "height": 20,
+    "rotation": 75,
+    "movable": false,
+    "image": "/i/noto-emoji/emoji_u274c.svg"
+  },
+  "Axis to -3": {
+    "id": "Axis to -3",
+    "parent": "Axis Indicator Wrapper",
+    "y": 61,
+    "width": 20,
+    "height": 20,
+    "rotation": -75,
+    "movable": false,
+    "image": "/i/noto-emoji/emoji_u274c.svg",
+    "x": -3
+  },
+  "Engine Dice Holder 2": {
+    "type": "holder",
+    "id": "Engine Dice Holder 2",
+    "x": 744,
+    "y": 356,
+    "width": 58,
+    "height": 58,
+    "z": 6,
+    "background": "#ffa50080",
+    "image": "/i/game-icons.net/delapouite/turbine.svg",
+    "inheritFrom": {
+      "Engine Dice Holder 1": [
+        "css",
+        "dropTarget"
+      ]
+    },
+    "dropLimit": 1
+  },
+  "Radio Dice Holder 2": {
+    "type": "holder",
+    "id": "Radio Dice Holder 2",
+    "x": 907,
+    "y": 152,
+    "width": 58,
+    "height": 58,
+    "z": 6,
+    "inheritFrom": {
+      "Engine Dice Holder 1": [
+        "css",
+        "dropTarget"
+      ]
+    },
+    "background": "#ffa50080",
+    "image": "/i/game-icons.net/delapouite/pocket-radio.svg",
+    "dropLimit": 1
+  },
+  "Radio Dice Holder 3": {
+    "type": "holder",
+    "id": "Radio Dice Holder 3",
+    "x": 907,
+    "y": 225,
+    "width": 58,
+    "height": 58,
+    "z": 6,
+    "inheritFrom": {
+      "Engine Dice Holder 1": [
+        "css",
+        "dropTarget"
+      ]
+    },
+    "background": "#ffa50080",
+    "image": "/i/game-icons.net/delapouite/pocket-radio.svg",
+    "dropLimit": 1
+  },
+  "Radio Dice Holder 1": {
+    "type": "holder",
+    "id": "Radio Dice Holder 1",
+    "x": 418,
+    "y": 225,
+    "width": 58,
+    "height": 58,
+    "z": 6,
+    "inheritFrom": {
+      "Engine Dice Holder 1": [
+        "css",
+        "dropTarget"
+      ]
+    },
+    "background": "#add8e680",
+    "image": "/i/game-icons.net/delapouite/pocket-radio.svg",
+    "dropLimit": 1
+  },
+  "Roll Dice Holder 2": {
+    "type": "holder",
+    "id": "Roll Dice Holder 2",
+    "x": 774,
+    "y": 225,
+    "width": 58,
+    "height": 58,
+    "z": 29,
+    "inheritFrom": {
+      "Engine Dice Holder 1": [
+        "css",
+        "dropTarget"
+      ]
+    },
+    "background": "#ffa50080",
+    "image": "/i/game-icons.net/quoting/biplane.svg",
+    "imageRotation": 45,
+    "dropLimit": 1
+  },
+  "Roll Dice Holder 1": {
+    "type": "holder",
+    "id": "Roll Dice Holder 1",
+    "x": 548,
+    "y": 225,
+    "width": 58,
+    "height": 58,
+    "z": 30,
+    "inheritFrom": {
+      "Engine Dice Holder 1": [
+        "css",
+        "dropTarget"
+      ]
+    },
+    "background": "#add8e680",
+    "image": "/i/game-icons.net/quoting/biplane.svg",
+    "imageRotation": -45,
+    "dropLimit": 1
+  },
+  "Brakes Indicator": {
+    "type": "button",
+    "id": "Brakes Indicator",
+    "x": -2,
+    "y": -1,
+    "z": 974,
+    "movable": true,
+    "classes": "symbols",
+    "css": {
+      "font-size": "40px",
+      "background": "none",
+      "color": "#f00",
+      "border": "none"
+    },
+    "text": "[subproperty]",
+    "width": 60,
+    "height": 60,
+    "resetProperties": {
+      "parent": "Brakes Indicator Holder 1"
+    },
+    "parent": "Brakes Indicator Holder 1"
+  },
+  "Brakes Indicator Holder 1": {
+    "type": "holder",
+    "id": "Brakes Indicator Holder 1",
+    "x": -7,
+    "y": -14,
+    "width": 58,
+    "height": 58,
+    "z": 1,
+    "classes": "symbols transparent",
+    "dropOffsetX": -2,
+    "dropOffsetY": -1,
+    "dropTarget": {
+      "id": "Brakes Indicator"
+    },
+    "inheritFrom": {
+      "Brakes Dice Holder 1": [
+        "css"
+      ]
+    },
+    "background": "transparent",
+    "color": "#f008",
+    "text": "[subproperty]",
+    "parent": "Brakes Indicator Wrapper"
+  },
+  "Brakes Indicator Holder 2": {
+    "type": "holder",
+    "id": "Brakes Indicator Holder 2",
+    "x": 40,
+    "inheritFrom": "Brakes Indicator Holder 1",
+    "color": "grey",
+    "y": -14
+  },
+  "Brakes Indicator Label 2": {
+    "id": "Brakes Indicator Label 2",
+    "parent": "Brakes Indicator Wrapper",
+    "x": 39,
+    "width": 20,
+    "height": 30,
+    "css": {
+      "font-size": "24px",
+      "font-weight": "bold",
+      "color": "white"
+    },
+    "text": "2",
+    "movable": false,
+    "y": 1
+  },
+  "Brakes Indicator Label 3": {
+    "id": "Brakes Indicator Label 3",
+    "x": 85,
+    "text": "3",
+    "inheritFrom": "Brakes Indicator Label 2",
+    "y": 1
+  },
+  "Brakes Indicator Label 4": {
+    "id": "Brakes Indicator Label 4",
+    "x": 131,
+    "text": "4",
+    "inheritFrom": "Brakes Indicator Label 2",
+    "y": 1
+  },
+  "Brakes Indicator Label 5": {
+    "id": "Brakes Indicator Label 5",
+    "x": 177,
+    "text": "5",
+    "inheritFrom": "Brakes Indicator Label 2",
+    "y": 1
+  },
+  "Brakes Indicator Label 6": {
+    "id": "Brakes Indicator Label 6",
+    "x": 223,
+    "text": "6",
+    "inheritFrom": "Brakes Indicator Label 2",
+    "y": 1
+  },
+  "Brakes Indicator Holder 3": {
+    "type": "holder",
+    "id": "Brakes Indicator Holder 3",
+    "x": 132,
+    "inheritFrom": "Brakes Indicator Holder 1",
+    "color": "grey",
+    "y": -14
+  },
+  "Brakes Indicator Wrapper": {
+    "id": "Brakes Indicator Wrapper",
+    "x": 30,
+    "y": 10,
+    "width": 272,
+    "height": 33,
+    "borderRadius": 5,
+    "layer": -3,
+    "movable": false,
+    "css": {
+      "background": "black"
+    },
+    "editorGroup": true,
+    "parent": "Brakes Wrapper"
+  },
+  "Aerodynamics Indicator Wrapper": {
+    "id": "Aerodynamics Indicator Wrapper",
+    "x": 418,
+    "y": 298,
+    "width": 547,
+    "height": 33,
+    "borderRadius": 5,
+    "layer": -3,
+    "movable": false,
+    "css": {
+      "background": "black"
+    },
+    "editorGroup": true
+  },
+  "Aerodynamics Indicator 1": {
+    "type": "button",
+    "id": "Aerodynamics Indicator 1",
+    "x": -2,
+    "y": -1,
+    "width": 60,
+    "height": 60,
+    "z": 992,
+    "movable": true,
+    "classes": "symbols",
+    "css": {
+      "font-size": "40px",
+      "background": "none",
+      "color": "lightblue",
+      "border": "none"
+    },
+    "text": "[subproperty]",
+    "resetProperties": {
+      "parent": "Aerodynamics Indicator Holder 1"
+    },
+    "parent": "Aerodynamics Indicator Holder 1"
+  },
+  "Aerodynamics Indicator Holder 1": {
+    "type": "holder",
+    "id": "Aerodynamics Indicator Holder 1",
+    "parent": "Aerodynamics Indicator Wrapper",
+    "x": 123,
+    "inheritFrom": "Brakes Indicator Holder 1",
+    "color": "#add8e680",
+    "dropTarget": [
+      {
+        "id": "Aerodynamics Indicator 1"
+      },
+      {
+        "id": "Aerodynamics Indicator 2"
+      }
+    ],
+    "y": -14
+  },
+  "Aerodynamics Indicator Label 2": {
+    "id": "Aerodynamics Indicator Label 2",
+    "parent": "Aerodynamics Indicator Wrapper",
+    "x": 41,
+    "inheritFrom": "Brakes Indicator Label 2",
+    "text": "2",
+    "y": 1
+  },
+  "Aerodynamics Indicator Label 3": {
+    "id": "Aerodynamics Indicator Label 3",
+    "x": 82,
+    "inheritFrom": "Aerodynamics Indicator Label 2",
+    "text": "3",
+    "y": 1
+  },
+  "Aerodynamics Indicator Label 4": {
+    "id": "Aerodynamics Indicator Label 4",
+    "x": 124,
+    "inheritFrom": "Aerodynamics Indicator Label 2",
+    "text": "4",
+    "y": 1
+  },
+  "Aerodynamics Indicator Label 5": {
+    "id": "Aerodynamics Indicator Label 5",
+    "x": 165,
+    "inheritFrom": "Aerodynamics Indicator Label 2",
+    "text": "5",
+    "y": 1
+  },
+  "Aerodynamics Indicator Label 6": {
+    "id": "Aerodynamics Indicator Label 6",
+    "x": 207,
+    "inheritFrom": "Aerodynamics Indicator Label 2",
+    "text": "6",
+    "y": 1
+  },
+  "Aerodynamics Indicator Label 7": {
+    "id": "Aerodynamics Indicator Label 7",
+    "x": 248,
+    "inheritFrom": "Aerodynamics Indicator Label 2",
+    "text": "7",
+    "y": 1
+  },
+  "Aerodynamics Indicator Label 8": {
+    "id": "Aerodynamics Indicator Label 8",
+    "x": 290,
+    "inheritFrom": "Aerodynamics Indicator Label 2",
+    "text": "8",
+    "y": 1
+  },
+  "Aerodynamics Indicator Label 9": {
+    "id": "Aerodynamics Indicator Label 9",
+    "x": 333,
+    "inheritFrom": "Aerodynamics Indicator Label 2",
+    "text": "9",
+    "y": 1
+  },
+  "Aerodynamics Indicator Label 10": {
+    "id": "Aerodynamics Indicator Label 10",
+    "x": 374,
+    "inheritFrom": "Aerodynamics Indicator Label 2",
+    "text": "10",
+    "y": 1
+  },
+  "Aerodynamics Indicator Label 11": {
+    "id": "Aerodynamics Indicator Label 11",
+    "x": 427,
+    "inheritFrom": "Aerodynamics Indicator Label 2",
+    "text": "11",
+    "y": 1
+  },
+  "Aerodynamics Indicator Label 12": {
+    "id": "Aerodynamics Indicator Label 12",
+    "x": 479,
+    "inheritFrom": "Aerodynamics Indicator Label 2",
+    "text": "12",
+    "y": 1
+  },
+  "Aerodynamics Indicator Holder 2": {
+    "type": "holder",
+    "id": "Aerodynamics Indicator Holder 2",
+    "x": 163,
+    "inheritFrom": "Aerodynamics Indicator Holder 1",
+    "color": "grey",
+    "y": -14
+  },
+  "Aerodynamics Indicator Holder 3": {
+    "type": "holder",
+    "id": "Aerodynamics Indicator Holder 3",
+    "x": 205,
+    "inheritFrom": "Aerodynamics Indicator Holder 1",
+    "color": "grey",
+    "y": -14
+  },
+  "Aerodynamics Indicator Holder 4": {
+    "type": "holder",
+    "id": "Aerodynamics Indicator Holder 4",
+    "x": 248,
+    "inheritFrom": "Aerodynamics Indicator Holder 1",
+    "color": "grey",
+    "y": -14
+  },
+  "Aerodynamics Indicator Holder 5": {
+    "type": "holder",
+    "id": "Aerodynamics Indicator Holder 5",
+    "x": 291,
+    "inheritFrom": "Aerodynamics Indicator Holder 1",
+    "color": "#ffa50080",
+    "y": -14
+  },
+  "Aerodynamics Indicator Holder 6": {
+    "type": "holder",
+    "id": "Aerodynamics Indicator Holder 6",
+    "x": 333,
+    "inheritFrom": "Aerodynamics Indicator Holder 1",
+    "color": "grey",
+    "y": -14
+  },
+  "Aerodynamics Indicator Holder 7": {
+    "type": "holder",
+    "id": "Aerodynamics Indicator Holder 7",
+    "x": 384,
+    "inheritFrom": "Aerodynamics Indicator Holder 1",
+    "color": "grey",
+    "y": -14
+  },
+  "Aerodynamics Indicator Holder 8": {
+    "type": "holder",
+    "id": "Aerodynamics Indicator Holder 8",
+    "x": 436,
+    "inheritFrom": "Aerodynamics Indicator Holder 1",
+    "color": "grey",
+    "y": -14
+  },
+  "Aerodynamics Indicator Holder 9": {
+    "type": "holder",
+    "id": "Aerodynamics Indicator Holder 9",
+    "x": 494,
+    "inheritFrom": "Aerodynamics Indicator Holder 1",
+    "color": "grey",
+    "y": -14
+  },
+  "Aerodynamics Indicator 2": {
+    "type": "button",
+    "id": "Aerodynamics Indicator 2",
+    "x": -2,
+    "y": -1,
+    "width": 60,
+    "height": 60,
+    "z": 986,
+    "movable": true,
+    "classes": "symbols",
+    "css": {
+      "font-size": "40px",
+      "background": "none",
+      "color": "orange",
+      "border": "none"
+    },
+    "text": "[subproperty]",
+    "resetProperties": {
+      "parent": "Aerodynamics Indicator Holder 5"
+    },
+    "parent": "Aerodynamics Indicator Holder 5"
+  },
+  "Approach Track - Planes Deck": {
+    "type": "deck",
+    "id": "Approach Track - Planes Deck",
+    "x": 1715,
+    "y": 3,
+    "cardTypes": {
+      "0": {},
+      "20": {},
+      "40": {},
+      "60": {}
+    },
+    "cardDefaults": {
+      "width": 200,
+      "height": 100,
+      "movable": false,
+      "approachTrack": true
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "color": "lightblue",
+            "x": 4,
+            "y": 4,
+            "width": 192,
+            "height": 92,
+            "css": {
+              "border-radius": "10px"
+            }
+          },
+          {
+            "type": "image",
+            "color": "transparent",
+            "x": 10,
+            "y": 10,
+            "width": 20,
+            "value": "/i/game-icons.net/delapouite/commercial-airplane.svg",
+            "css": {
+              "background-repeat": "repeat",
+              "background-position": "top"
+            },
+            "dynamicProperties": {
+              "height": "cardType"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "Approach Track - Background Deck": {
+    "type": "deck",
+    "id": "Approach Track - Background Deck",
+    "x": 1715,
+    "y": 89,
+    "cardDefaults": {
+      "width": 200,
+      "height": 100,
+      "approachTrack": true,
+      "movable": false,
+      "color": "#0006"
+    },
+    "cardTypes": {
+      "airport": {
+        "image": "/i/game-icons.net/delapouite/control-tower.svg"
+      },
+      "clouds": {
+        "image": "/i/game-icons.net/delapouite/sun-cloud.svg"
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "color": "transparent",
+            "y": 10,
+            "width": 200,
+            "height": 80,
+            "dynamicProperties": {
+              "value": "image"
+            },
+            "svgReplaces": {
+              "#000": "color"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "Reroll Token 1": {
+    "id": "Reroll Token 1",
+    "x": 137,
+    "y": 206,
+    "width": 60,
+    "height": 60,
+    "z": 2923,
+    "image": "/i/game-icons.net/delapouite/rolling-dices.svg",
+    "resetProperties": {
+      "parent": "Altitude Track",
+      "x": 137,
+      "y": 206
+    },
+    "parent": "Altitude Track"
+  },
+  "z49u": {
+    "type": "holder",
+    "id": "z49u",
+    "classes": "transparent",
+    "height": 100,
+    "width": 200,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "altitudeTrack": true
+    },
+    "preventPiles": true,
+    "z": 17,
+    "parent": "Altitude Track"
+  },
+  "Altitude Track - Altitude Deck": {
+    "type": "deck",
+    "id": "Altitude Track - Altitude Deck",
+    "x": 1620,
+    "y": 2,
+    "cardDefaults": {
+      "width": 200,
+      "height": 100,
+      "altitudeTrack": true,
+      "movable": false,
+      "color": "#0006"
+    },
+    "cardTypes": {
+      "0": {
+        "text": "0",
+        "left": "/i/game-icons.net/delapouite/plain-arrow.svg",
+        "color": "lightblue"
+      },
+      "1000": {
+        "text": 1000,
+        "right": "/i/game-icons.net/delapouite/plain-arrow.svg",
+        "color": "orange"
+      },
+      "2000": {
+        "text": 2000,
+        "left": "/i/game-icons.net/delapouite/plain-arrow.svg",
+        "color": "lightblue"
+      },
+      "3000": {
+        "text": 3000,
+        "right": "/i/game-icons.net/delapouite/plain-arrow.svg",
+        "color": "orange"
+      },
+      "4000": {
+        "text": 4000,
+        "left": "/i/game-icons.net/delapouite/plain-arrow.svg",
+        "color": "lightblue"
+      },
+      "5000": {
+        "text": 5000,
+        "right": "/i/game-icons.net/delapouite/plain-arrow.svg",
+        "color": "orange"
+      },
+      "6000": {
+        "text": 6000,
+        "left": "/i/game-icons.net/delapouite/plain-arrow.svg",
+        "color": "lightblue"
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "color": "white",
+            "x": 4,
+            "y": 4,
+            "width": 192,
+            "height": 92,
+            "css": {
+              "border-radius": "10px"
+            }
+          },
+          {
+            "type": "image",
+            "color": "transparent",
+            "x": 10,
+            "y": 10,
+            "width": 20,
+            "height": 20,
+            "dynamicProperties": {
+              "value": "left"
+            },
+            "svgReplaces": {
+              "#000": "color"
+            },
+            "rotation": 90
+          },
+          {
+            "type": "image",
+            "color": "transparent",
+            "x": 170,
+            "y": 10,
+            "width": 20,
+            "height": 20,
+            "dynamicProperties": {
+              "value": "right"
+            },
+            "svgReplaces": {
+              "#000": "color"
+            },
+            "rotation": 270
+          },
+          {
+            "type": "text",
+            "x": 0,
+            "y": 30,
+            "fontSize": 40,
+            "textAlign": "center",
+            "width": 200,
+            "dynamicProperties": {
+              "value": "text"
+            }
+          }
+        ]
+      }
+    ],
+    "z": 125
+  },
+  "z50u": {
+    "type": "holder",
+    "id": "z50u",
+    "classes": "transparent",
+    "height": 100,
+    "width": 200,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "altitudeTrack": true
+    },
+    "preventPiles": true,
+    "z": 17,
+    "y": 100,
+    "parent": "Altitude Track"
+  },
+  "z51u": {
+    "type": "holder",
+    "id": "z51u",
+    "classes": "transparent",
+    "height": 100,
+    "width": 200,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "altitudeTrack": true
+    },
+    "preventPiles": true,
+    "z": 17,
+    "y": 200,
+    "parent": "Altitude Track"
+  },
+  "z53u": {
+    "type": "holder",
+    "id": "z53u",
+    "classes": "transparent",
+    "height": 100,
+    "width": 200,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "altitudeTrack": true
+    },
+    "preventPiles": true,
+    "z": 17,
+    "y": 400,
+    "parent": "Altitude Track"
+  },
+  "z54u": {
+    "type": "holder",
+    "id": "z54u",
+    "classes": "transparent",
+    "height": 100,
+    "width": 200,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "altitudeTrack": true
+    },
+    "preventPiles": true,
+    "z": 17,
+    "y": 500,
+    "parent": "Altitude Track"
+  },
+  "z55u": {
+    "type": "holder",
+    "id": "z55u",
+    "classes": "transparent",
+    "height": 100,
+    "width": 200,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "altitudeTrack": true
+    },
+    "preventPiles": true,
+    "z": 17,
+    "y": 600,
+    "parent": "Altitude Track"
+  },
+  "Altitude Track": {
+    "id": "Altitude Track",
+    "x": 1390,
+    "y": 300,
+    "width": 202,
+    "height": 700,
+    "layer": -3,
+    "editorGroup": true,
+    "z": 2186,
+    "css": {
+      "background": "grey"
+    },
+    "grid": [
+      {
+        "x": 202,
+        "y": 25,
+        "offsetX": 1390,
+        "offsetY": 300
+      }
+    ],
+    "resetProperties": {
+      "x": 1390,
+      "y": 300
+    }
+  },
+  "mbct": {
+    "deck": "Altitude Track - Altitude Deck",
+    "type": "card",
+    "cardType": "0",
+    "id": "mbct",
+    "z": 117,
+    "parent": "z49u"
+  },
+  "o6tq": {
+    "deck": "Altitude Track - Altitude Deck",
+    "type": "card",
+    "cardType": "1000",
+    "id": "o6tq",
+    "z": 114,
+    "parent": "z50u"
+  },
+  "nfam": {
+    "deck": "Altitude Track - Altitude Deck",
+    "type": "card",
+    "cardType": "2000",
+    "id": "nfam",
+    "z": 112,
+    "parent": "z51u"
+  },
+  "rnpp": {
+    "deck": "Altitude Track - Altitude Deck",
+    "type": "card",
+    "cardType": "3000",
+    "id": "rnpp",
+    "z": 110,
+    "parent": "z52u"
+  },
+  "yd2n": {
+    "deck": "Altitude Track - Altitude Deck",
+    "type": "card",
+    "cardType": "4000",
+    "id": "yd2n",
+    "z": 108,
+    "parent": "z53u"
+  },
+  "2gjn": {
+    "deck": "Altitude Track - Altitude Deck",
+    "type": "card",
+    "cardType": "5000",
+    "id": "2gjn",
+    "z": 102,
+    "parent": "z54u"
+  },
+  "cqv0": {
+    "deck": "Altitude Track - Altitude Deck",
+    "type": "card",
+    "cardType": "6000",
+    "id": "cqv0",
+    "z": 99,
+    "parent": "z55u"
+  },
+  "z52u": {
+    "type": "holder",
+    "id": "z52u",
+    "classes": "transparent",
+    "height": 100,
+    "width": 200,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "altitudeTrack": true
+    },
+    "preventPiles": true,
+    "z": 17,
+    "y": 300,
+    "parent": "Altitude Track"
+  },
+  "Reroll Token 2": {
+    "id": "Reroll Token 2",
+    "x": 139,
+    "y": 604,
+    "width": 60,
+    "height": 60,
+    "z": 2924,
+    "image": "/i/game-icons.net/delapouite/rolling-dices.svg",
+    "resetProperties": {
+      "parent": "Altitude Track",
+      "x": 139,
+      "y": 604
+    },
+    "parent": "Altitude Track"
+  },
+  "Landing Gear Label": {
+    "id": "Landing Gear Label",
+    "parent": "Landing Gear Wrapper",
+    "x": 10,
+    "y": 10,
+    "width": 60,
+    "height": 60,
+    "z": 104,
+    "image": "/i/game-icons.net/delapouite/car-wheel.svg",
+    "movable": false
+  },
+  "Flaps Label": {
+    "id": "Flaps Label",
+    "parent": "Flaps Wrapper",
+    "x": 111,
+    "y": 10,
+    "width": 60,
+    "height": 60,
+    "z": 123,
+    "image": "/i/game-icons.net/delapouite/plane-wing.svg",
+    "movable": false
+  },
+  "Flaps Wrapper": {
+    "id": "Flaps Wrapper",
+    "x": 875,
+    "y": 346,
+    "width": 181,
+    "height": 518,
+    "layer": -3,
+    "movable": false,
+    "css": {
+      "background": "#ddd"
+    },
+    "editorGroup": true,
+    "borderRadius": 10
+  },
+  "Landing Gear Wrapper": {
+    "id": "Landing Gear Wrapper",
+    "x": 327,
+    "y": 346,
+    "width": 181,
+    "height": 390,
+    "layer": -3,
+    "movable": false,
+    "css": {
+      "background": "#ddd"
+    },
+    "editorGroup": true,
+    "borderRadius": 10
+  },
+  "Brakes Label": {
+    "id": "Brakes Label",
+    "parent": "Brakes Wrapper",
+    "x": 136,
+    "y": 195,
+    "width": 60,
+    "height": 60,
+    "z": 124,
+    "image": "/i/game-icons.net/delapouite/speedometer.svg",
+    "movable": false
+  },
+  "Brakes Wrapper": {
+    "id": "Brakes Wrapper",
+    "x": 525,
+    "y": 423,
+    "width": 332,
+    "height": 265,
+    "layer": -3,
+    "movable": false,
+    "css": {
+      "background": "#ddd"
+    },
+    "editorGroup": true,
+    "borderRadius": 10
+  },
+  "Brakes Indicator Holder 4": {
+    "type": "holder",
+    "id": "Brakes Indicator Holder 4",
+    "x": 223,
+    "inheritFrom": "Brakes Indicator Holder 1",
+    "color": "grey",
+    "y": -14
+  },
+  "Approach Track - Dice Deck": {
+    "type": "deck",
+    "id": "Approach Track - Dice Deck",
+    "x": 1711,
+    "y": 186,
+    "cardDefaults": {
+      "width": 200,
+      "height": 100,
+      "movable": false,
+      "approachTrack": true
+    },
+    "cardTypes": {
+      "20": {},
+      "40": {},
+      "60": {},
+      "80": {}
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "color": "transparent",
+            "x": 170,
+            "y": 10,
+            "width": 20,
+            "value": "/i/game-icons.net/delapouite/perspective-dice-six-faces-random.svg",
+            "css": {
+              "background-repeat": "repeat",
+              "background-position": "top"
+            },
+            "dynamicProperties": {
+              "height": "cardType"
+            }
+          }
+        ]
+      }
+    ],
+    "z": 126
+  },
+  "Traffic Die": {
+    "type": "dice",
+    "id": "Traffic Die",
+    "x": 1515,
+    "y": 119,
+    "z": 2921,
+    "movable": true,
+    "borderColor": "black",
+    "color": "black",
+    "pipColor": "white",
+    "rollCount": 62,
+    "activeFace": 5,
+    "enabled": false,
+    "resetProperties": {
+      "x": 1515,
+      "y": 119
+    },
+    "display": false
+  },
+  "Approach Track - Axis Deck": {
+    "type": "deck",
+    "id": "Approach Track - Axis Deck",
+    "x": 1711,
+    "y": 272,
+    "z": 126,
+    "cardDefaults": {
+      "width": 200,
+      "height": 100,
+      "movable": false,
+      "approachTrack": true
+    },
+    "cardTypes": {
+      "10000": {
+        "image1": "/i/game-icons.net/delapouite/plain-arrow.svg",
+        "image2": "/i/noto-emoji/emoji_u274c.svg",
+        "image3": "/i/noto-emoji/emoji_u274c.svg",
+        "image4": "/i/noto-emoji/emoji_u274c.svg",
+        "image5": "/i/noto-emoji/emoji_u274c.svg"
+      },
+      "11000": {
+        "image1": "/i/game-icons.net/delapouite/plain-arrow.svg",
+        "image2": "/i/game-icons.net/delapouite/plain-arrow.svg",
+        "image3": "/i/noto-emoji/emoji_u274c.svg",
+        "image4": "/i/noto-emoji/emoji_u274c.svg",
+        "image5": "/i/noto-emoji/emoji_u274c.svg"
+      },
+      "11100": {
+        "image1": "/i/game-icons.net/delapouite/plain-arrow.svg",
+        "image2": "/i/game-icons.net/delapouite/plain-arrow.svg",
+        "image3": "/i/game-icons.net/delapouite/plain-arrow.svg",
+        "image4": "/i/noto-emoji/emoji_u274c.svg",
+        "image5": "/i/noto-emoji/emoji_u274c.svg"
+      },
+      "01100": {
+        "image1": "/i/noto-emoji/emoji_u274c.svg",
+        "image2": "/i/game-icons.net/delapouite/plain-arrow.svg",
+        "image3": "/i/game-icons.net/delapouite/plain-arrow.svg",
+        "image4": "/i/noto-emoji/emoji_u274c.svg",
+        "image5": "/i/noto-emoji/emoji_u274c.svg"
+      },
+      "01110": {
+        "image1": "/i/noto-emoji/emoji_u274c.svg",
+        "image2": "/i/game-icons.net/delapouite/plain-arrow.svg",
+        "image3": "/i/game-icons.net/delapouite/plain-arrow.svg",
+        "image4": "/i/game-icons.net/delapouite/plain-arrow.svg",
+        "image5": "/i/noto-emoji/emoji_u274c.svg"
+      },
+      "00011": {
+        "image1": "/i/noto-emoji/emoji_u274c.svg",
+        "image2": "/i/noto-emoji/emoji_u274c.svg",
+        "image3": "/i/noto-emoji/emoji_u274c.svg",
+        "image4": "/i/game-icons.net/delapouite/plain-arrow.svg",
+        "image5": "/i/game-icons.net/delapouite/plain-arrow.svg"
+      },
+      "00110": {
+        "image1": "/i/noto-emoji/emoji_u274c.svg",
+        "image2": "/i/noto-emoji/emoji_u274c.svg",
+        "image3": "/i/game-icons.net/delapouite/plain-arrow.svg",
+        "image4": "/i/game-icons.net/delapouite/plain-arrow.svg",
+        "image5": "/i/noto-emoji/emoji_u274c.svg"
+      },
+      "00111": {
+        "image1": "/i/noto-emoji/emoji_u274c.svg",
+        "image2": "/i/noto-emoji/emoji_u274c.svg",
+        "image3": "/i/game-icons.net/delapouite/plain-arrow.svg",
+        "image4": "/i/game-icons.net/delapouite/plain-arrow.svg",
+        "image5": "/i/game-icons.net/delapouite/plain-arrow.svg"
+      },
+      "00001": {
+        "image1": "/i/noto-emoji/emoji_u274c.svg",
+        "image2": "/i/noto-emoji/emoji_u274c.svg",
+        "image3": "/i/noto-emoji/emoji_u274c.svg",
+        "image4": "/i/noto-emoji/emoji_u274c.svg",
+        "image5": "/i/game-icons.net/delapouite/plain-arrow.svg"
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "color": "white",
+            "x": 50,
+            "y": 4,
+            "width": 100,
+            "height": 44
+          },
+          {
+            "type": "image",
+            "x": 55,
+            "y": 29,
+            "color": "transparent",
+            "width": 15,
+            "height": 15,
+            "dynamicProperties": {
+              "value": "image1"
+            },
+            "rotation": -50
+          },
+          {
+            "type": "image",
+            "x": 71,
+            "y": 16,
+            "color": "transparent",
+            "width": 15,
+            "height": 15,
+            "dynamicProperties": {
+              "value": "image2"
+            },
+            "rotation": -25
+          },
+          {
+            "type": "image",
+            "x": 92.5,
+            "y": 9,
+            "color": "transparent",
+            "width": 15,
+            "height": 15,
+            "dynamicProperties": {
+              "value": "image3"
+            },
+            "rotation": 0
+          },
+          {
+            "type": "image",
+            "x": 114,
+            "y": 16,
+            "color": "transparent",
+            "width": 15,
+            "height": 15,
+            "dynamicProperties": {
+              "value": "image4"
+            },
+            "rotation": 25
+          },
+          {
+            "type": "image",
+            "x": 130,
+            "y": 29,
+            "color": "transparent",
+            "width": 15,
+            "height": 15,
+            "dynamicProperties": {
+              "value": "image5"
+            },
+            "rotation": 50
+          }
+        ]
+      }
+    ]
+  },
+  "Kerosene Wrapper": {
+    "id": "Kerosene Wrapper",
+    "x": 1079,
+    "y": 346,
+    "width": 82,
+    "height": 594,
+    "borderRadius": 10,
+    "layer": -3,
+    "movable": false,
+    "css": {
+      "background": "#ddd"
+    },
+    "editorGroup": true,
+    "z": 60,
+    "display": 0
+  },
+  "Kerosene Indicator Label 1": {
+    "id": "Kerosene Indicator Label 1",
+    "parent": "Kerosene Wrapper",
+    "inheritFrom": "Brakes Indicator Label 2",
+    "text": "1",
+    "width": 30,
+    "x": 40,
+    "y": 512,
+    "z": 39
+  },
+  "Kerosene Indicator Label 2": {
+    "id": "Kerosene Indicator Label 2",
+    "parent": "Kerosene Wrapper",
+    "inheritFrom": "Brakes Indicator Label 2",
+    "text": "2",
+    "y": 489,
+    "width": 30,
+    "x": 40,
+    "z": 37
+  },
+  "Kerosene Indicator Label 3": {
+    "id": "Kerosene Indicator Label 3",
+    "parent": "Kerosene Wrapper",
+    "inheritFrom": "Brakes Indicator Label 2",
+    "text": "3",
+    "y": 466,
+    "width": 30,
+    "x": 40,
+    "z": 35
+  },
+  "Kerosene Indicator Label 4": {
+    "id": "Kerosene Indicator Label 4",
+    "parent": "Kerosene Wrapper",
+    "inheritFrom": "Brakes Indicator Label 2",
+    "text": "4",
+    "y": 443,
+    "width": 30,
+    "x": 40,
+    "z": 33
+  },
+  "Kerosene Indicator Label 5": {
+    "id": "Kerosene Indicator Label 5",
+    "parent": "Kerosene Wrapper",
+    "inheritFrom": "Brakes Indicator Label 2",
+    "text": "5",
+    "y": 420,
+    "width": 30,
+    "x": 40,
+    "z": 31
+  },
+  "Kerosene Indicator Label 6": {
+    "id": "Kerosene Indicator Label 6",
+    "parent": "Kerosene Wrapper",
+    "inheritFrom": "Brakes Indicator Label 2",
+    "text": "6",
+    "y": 397,
+    "width": 30,
+    "x": 40,
+    "z": 29
+  },
+  "Kerosene Indicator Label 7": {
+    "id": "Kerosene Indicator Label 7",
+    "parent": "Kerosene Wrapper",
+    "inheritFrom": "Brakes Indicator Label 2",
+    "text": "7",
+    "y": 374,
+    "width": 30,
+    "x": 40,
+    "z": 27
+  },
+  "Kerosene Indicator Label 8": {
+    "id": "Kerosene Indicator Label 8",
+    "parent": "Kerosene Wrapper",
+    "inheritFrom": "Brakes Indicator Label 2",
+    "text": "8",
+    "y": 351,
+    "width": 30,
+    "x": 40,
+    "z": 25,
+    "activeFace": 0
+  },
+  "Kerosene Indicator Label 9": {
+    "id": "Kerosene Indicator Label 9",
+    "parent": "Kerosene Wrapper",
+    "inheritFrom": "Brakes Indicator Label 2",
+    "text": "9",
+    "y": 328,
+    "width": 30,
+    "x": 40,
+    "z": 23
+  },
+  "Kerosene Indicator Label 10": {
+    "id": "Kerosene Indicator Label 10",
+    "parent": "Kerosene Wrapper",
+    "inheritFrom": "Brakes Indicator Label 2",
+    "text": "10",
+    "y": 305,
+    "width": 30,
+    "x": 40,
+    "z": 21
+  },
+  "Kerosene Indicator Label 11": {
+    "id": "Kerosene Indicator Label 11",
+    "parent": "Kerosene Wrapper",
+    "inheritFrom": "Brakes Indicator Label 2",
+    "text": "11",
+    "y": 282,
+    "width": 30,
+    "x": 40,
+    "z": 19
+  },
+  "Coffee Dice Holder 4": {
+    "type": "holder",
+    "id": "Coffee Dice Holder 4",
+    "width": 58,
+    "height": 58,
+    "dropTarget": {
+      "type": "dice"
+    },
+    "inheritFrom": {
+      "Engine Dice Holder 1": [
+        "css"
+      ]
+    },
+    "background": "linear-gradient(90deg, #add8e680 0%, #add8e680 40%, #ffa50080 60%, #ffa50080 100%)",
+    "image": "/i/game-icons.net/delapouite/fuel-tank.svg",
+    "parent": "Kerosene Wrapper",
+    "x": 12,
+    "y": 12,
+    "dropLimit": 1
+  },
+  "Kerosene Indicator Label 0": {
+    "id": "Kerosene Indicator Label 0",
+    "parent": "Kerosene Wrapper",
+    "x": 40,
+    "y": 535,
+    "width": 30,
+    "z": 41,
+    "inheritFrom": "Brakes Indicator Label 2",
+    "text": "0"
+  },
+  "Kerosene Indicator Label X": {
+    "id": "Kerosene Indicator Label X",
+    "parent": "Kerosene Wrapper",
+    "x": 40,
+    "y": 558,
+    "width": 30,
+    "z": 43,
+    "inheritFrom": "Brakes Indicator Label 2",
+    "text": "X",
+    "css": {
+      "font-size": "24px",
+      "font-weight": "bold",
+      "color": "red"
+    }
+  },
+  "Flaps Order Indicator 1": {
+    "id": "Flaps Order Indicator 1",
+    "parent": "Flaps Wrapper",
+    "x": 51,
+    "y": 115,
+    "width": 20,
+    "height": 20,
+    "z": 48,
+    "movable": false,
+    "image": "/i/game-icons.net/delapouite/plain-arrow.svg"
+  },
+  "Flaps Order Indicator 2": {
+    "id": "Flaps Order Indicator 2",
+    "parent": "Flaps Wrapper",
+    "x": 51,
+    "y": 245,
+    "width": 20,
+    "height": 20,
+    "z": 170,
+    "movable": false,
+    "image": "/i/game-icons.net/delapouite/plain-arrow.svg"
+  },
+  "Flaps Order Indicator 3": {
+    "id": "Flaps Order Indicator 3",
+    "parent": "Flaps Wrapper",
+    "x": 51,
+    "y": 373,
+    "width": 20,
+    "height": 20,
+    "z": 171,
+    "movable": false,
+    "image": "/i/game-icons.net/delapouite/plain-arrow.svg"
+  },
+  "Brakes Order Indicator 1": {
+    "id": "Brakes Order Indicator 1",
+    "parent": "Brakes Wrapper",
+    "x": 98,
+    "y": 80,
+    "width": 20,
+    "height": 20,
+    "rotation": -90,
+    "z": 48,
+    "movable": false,
+    "image": "/i/game-icons.net/delapouite/plain-arrow.svg"
+  },
+  "Brakes Order Indicator 2": {
+    "id": "Brakes Order Indicator 2",
+    "parent": "Brakes Wrapper",
+    "x": 215,
+    "y": 80,
+    "width": 20,
+    "height": 20,
+    "rotation": -90,
+    "z": 48,
+    "movable": false,
+    "image": "/i/game-icons.net/delapouite/plain-arrow.svg"
+  },
+  "Kerosene Toggle": {
+    "id": "Kerosene Toggle",
+    "x": 451,
+    "width": 60,
+    "height": 60,
+    "z": 123,
+    "movable": false,
+    "css": {
+      "opacity": "calc(0.25 + 0.75 * ${PROPERTY enabled})"
+    },
+    "image": "/i/game-icons.net/delapouite/fuel-tank.svg",
+    "enabled": 0,
+    "clickRoutine": [
+      "var enabled = 1 - ${PROPERTY enabled}",
+      {
+        "func": "SET",
+        "property": "enabled",
+        "value": "${enabled}",
+        "collection": "thisButton"
+      },
+      {
+        "func": "SET",
+        "property": "enabled",
+        "value": 0,
+        "collection": [
+          "Kerosene Leak Toggle"
+        ]
+      },
+      {
+        "func": "SET",
+        "property": "display",
+        "value": "${enabled}",
+        "collection": [
+          "Kerosene Wrapper"
+        ]
+      },
+      {
+        "func": "SET",
+        "property": "display",
+        "value": false,
+        "collection": [
+          "Kerosene Leak Cover"
+        ]
+      }
+    ],
+    "display": false
+  },
+  "Intern Toggle": {
+    "id": "Intern Toggle",
+    "x": 521,
+    "width": 60,
+    "height": 60,
+    "z": 123,
+    "movable": false,
+    "css": {
+      "opacity": "calc(0.25 + 0.75 * ${PROPERTY enabled})"
+    },
+    "image": "/i/game-icons.net/delapouite/id-card.svg",
+    "enabled": 0,
+    "clickRoutine": [
+      "var enabled = 1 - ${PROPERTY enabled}",
+      {
+        "func": "SET",
+        "property": "enabled",
+        "value": "${enabled}",
+        "collection": "thisButton"
+      },
+      {
+        "func": "SET",
+        "property": "display",
+        "value": "${enabled}",
+        "collection": [
+          "Intern Wrapper"
+        ]
+      },
+      {
+        "func": "SELECT",
+        "property": "color",
+        "value": "#a5ff00",
+        "type": "dice"
+      },
+      {
+        "func": "MOVE",
+        "to": "Intern Pilot Dice Holder"
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "Intern Pilot Dice Holder"
+      },
+      {
+        "func": "MOVE",
+        "from": "Intern Pilot Dice Holder",
+        "to": [
+          "Intern Dice Holder 1",
+          "Intern Dice Holder 2",
+          "Intern Dice Holder 3",
+          "Intern Dice Holder 4",
+          "Intern Dice Holder 5",
+          "Intern Dice Holder 6"
+        ]
+      }
+    ],
+    "display": false
+  },
+  "Intern Pilot Dice Holder": {
+    "type": "holder",
+    "id": "Intern Pilot Dice Holder",
+    "parent": "Intern Wrapper",
+    "x": 10,
+    "y": 10,
+    "width": 58,
+    "height": 58,
+    "z": 1,
+    "inheritFrom": {
+      "Engine Dice Holder 1": [
+        "css",
+        "dropTarget"
+      ]
+    },
+    "background": "#add8e680",
+    "image": "/i/game-icons.net/delapouite/id-card.svg",
+    "dropLimit": 1
+  },
+  "Intern Wrapper": {
+    "id": "Intern Wrapper",
+    "x": 358,
+    "y": 880,
+    "width": 667,
+    "height": 77,
+    "borderRadius": 10,
+    "layer": -3,
+    "movable": false,
+    "css": {
+      "background": "#ddd"
+    },
+    "editorGroup": true,
+    "display": 0,
+    "z": 71
+  },
+  "Intern Dice Holder 1": {
+    "type": "holder",
+    "id": "Intern Dice Holder 1",
+    "parent": "Intern Wrapper",
+    "x": 94,
+    "y": 10,
+    "width": 58,
+    "height": 58,
+    "z": 1,
+    "inheritFrom": {
+      "Engine Dice Holder 1": [
+        "css",
+        "dropTarget"
+      ]
+    },
+    "background": "#a5ff0080",
+    "image": "/i/game-icons.net/delapouite/check-mark.svg",
+    "dropTarget": {
+      "type": "dice",
+      "color": "#a5ff00"
+    },
+    "dropLimit": 1
+  },
+  "Intern Pilot Order Indicator 1": {
+    "id": "Intern Pilot Order Indicator 1",
+    "parent": "Intern Wrapper",
+    "x": 71,
+    "y": 15,
+    "width": 20,
+    "height": 20,
+    "z": 48,
+    "movable": false,
+    "image": "/i/game-icons.net/delapouite/plain-arrow.svg",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "color": "lightblue",
+    "rotation": -90
+  },
+  "Intern Dice Holder 2": {
+    "type": "holder",
+    "id": "Intern Dice Holder 2",
+    "x": 179,
+    "inheritFrom": "Intern Dice Holder 1",
+    "y": 10
+  },
+  "Intern Dice Holder 3": {
+    "type": "holder",
+    "id": "Intern Dice Holder 3",
+    "x": 263,
+    "inheritFrom": "Intern Dice Holder 1",
+    "y": 10
+  },
+  "Intern Dice Holder 4": {
+    "type": "holder",
+    "id": "Intern Dice Holder 4",
+    "x": 347,
+    "inheritFrom": "Intern Dice Holder 1",
+    "y": 10
+  },
+  "Intern Dice Holder 5": {
+    "type": "holder",
+    "id": "Intern Dice Holder 5",
+    "x": 432,
+    "inheritFrom": "Intern Dice Holder 1",
+    "y": 10
+  },
+  "Intern Dice Holder 6": {
+    "type": "holder",
+    "id": "Intern Dice Holder 6",
+    "x": 516,
+    "inheritFrom": "Intern Dice Holder 1",
+    "y": 10
+  },
+  "Intern Co-Pilot Order Indicator 1": {
+    "id": "Intern Co-Pilot Order Indicator 1",
+    "parent": "Intern Wrapper",
+    "x": 155,
+    "y": 44,
+    "width": 20,
+    "height": 20,
+    "rotation": 90,
+    "z": 48,
+    "movable": false,
+    "color": "orange",
+    "image": "/i/game-icons.net/delapouite/plain-arrow.svg",
+    "svgReplaces": {
+      "#000": "color"
+    }
+  },
+  "Intern Co-Pilot Dice Holder": {
+    "type": "holder",
+    "id": "Intern Co-Pilot Dice Holder",
+    "parent": "Intern Wrapper",
+    "x": 600,
+    "y": 9,
+    "width": 58,
+    "height": 58,
+    "z": 1,
+    "inheritFrom": {
+      "Engine Dice Holder 2": [
+        "css",
+        "dropTarget"
+      ]
+    },
+    "background": "#ffa50080",
+    "image": "/i/game-icons.net/delapouite/id-card.svg",
+    "dropLimit": 1
+  },
+  "Intern Co-Pilot Order Indicator 2": {
+    "id": "Intern Co-Pilot Order Indicator 2",
+    "parent": "Intern Wrapper",
+    "x": 239,
+    "y": 44,
+    "width": 20,
+    "height": 20,
+    "rotation": 90,
+    "z": 48,
+    "movable": false,
+    "color": "orange",
+    "image": "/i/game-icons.net/delapouite/plain-arrow.svg",
+    "svgReplaces": {
+      "#000": "color"
+    }
+  },
+  "Intern Co-Pilot Order Indicator 3": {
+    "id": "Intern Co-Pilot Order Indicator 3",
+    "parent": "Intern Wrapper",
+    "x": 324,
+    "y": 44,
+    "width": 20,
+    "height": 20,
+    "rotation": 90,
+    "z": 48,
+    "movable": false,
+    "color": "orange",
+    "image": "/i/game-icons.net/delapouite/plain-arrow.svg",
+    "svgReplaces": {
+      "#000": "color"
+    }
+  },
+  "Intern Co-Pilot Order Indicator 4": {
+    "id": "Intern Co-Pilot Order Indicator 4",
+    "parent": "Intern Wrapper",
+    "x": 408,
+    "y": 44,
+    "width": 20,
+    "height": 20,
+    "rotation": 90,
+    "z": 48,
+    "movable": false,
+    "color": "orange",
+    "image": "/i/game-icons.net/delapouite/plain-arrow.svg",
+    "svgReplaces": {
+      "#000": "color"
+    }
+  },
+  "Intern Co-Pilot Order Indicator 5": {
+    "id": "Intern Co-Pilot Order Indicator 5",
+    "parent": "Intern Wrapper",
+    "x": 492,
+    "y": 44,
+    "width": 20,
+    "height": 20,
+    "rotation": 90,
+    "z": 48,
+    "movable": false,
+    "color": "orange",
+    "image": "/i/game-icons.net/delapouite/plain-arrow.svg",
+    "svgReplaces": {
+      "#000": "color"
+    }
+  },
+  "Intern Co-Pilot Order Indicator 6": {
+    "id": "Intern Co-Pilot Order Indicator 6",
+    "parent": "Intern Wrapper",
+    "x": 577,
+    "y": 44,
+    "width": 20,
+    "height": 20,
+    "rotation": 90,
+    "z": 48,
+    "movable": false,
+    "color": "orange",
+    "image": "/i/game-icons.net/delapouite/plain-arrow.svg",
+    "svgReplaces": {
+      "#000": "color"
+    }
+  },
+  "Intern Pilot Order Indicator 2": {
+    "id": "Intern Pilot Order Indicator 2",
+    "parent": "Intern Wrapper",
+    "x": 155,
+    "y": 15,
+    "width": 20,
+    "height": 20,
+    "z": 48,
+    "movable": false,
+    "image": "/i/game-icons.net/delapouite/plain-arrow.svg",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "color": "lightblue",
+    "rotation": -90
+  },
+  "Intern Pilot Order Indicator 3": {
+    "id": "Intern Pilot Order Indicator 3",
+    "parent": "Intern Wrapper",
+    "x": 240,
+    "y": 15,
+    "width": 20,
+    "height": 20,
+    "z": 48,
+    "movable": false,
+    "image": "/i/game-icons.net/delapouite/plain-arrow.svg",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "color": "lightblue",
+    "rotation": -90
+  },
+  "Intern Pilot Order Indicator 4": {
+    "id": "Intern Pilot Order Indicator 4",
+    "parent": "Intern Wrapper",
+    "x": 324,
+    "y": 15,
+    "width": 20,
+    "height": 20,
+    "z": 48,
+    "movable": false,
+    "image": "/i/game-icons.net/delapouite/plain-arrow.svg",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "color": "lightblue",
+    "rotation": -90
+  },
+  "Intern Pilot Order Indicator 5": {
+    "id": "Intern Pilot Order Indicator 5",
+    "parent": "Intern Wrapper",
+    "x": 408,
+    "y": 15,
+    "width": 20,
+    "height": 20,
+    "z": 48,
+    "movable": false,
+    "image": "/i/game-icons.net/delapouite/plain-arrow.svg",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "color": "lightblue",
+    "rotation": -90
+  },
+  "Intern Pilot Order Indicator 6": {
+    "id": "Intern Pilot Order Indicator 6",
+    "parent": "Intern Wrapper",
+    "x": 493,
+    "y": 15,
+    "width": 20,
+    "height": 20,
+    "z": 48,
+    "movable": false,
+    "image": "/i/game-icons.net/delapouite/plain-arrow.svg",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "color": "lightblue",
+    "rotation": -90
+  },
+  "Kerosene Indicator Label 12": {
+    "id": "Kerosene Indicator Label 12",
+    "parent": "Kerosene Wrapper",
+    "inheritFrom": "Brakes Indicator Label 2",
+    "text": "12",
+    "y": 259,
+    "width": 30,
+    "x": 40,
+    "z": 17
+  },
+  "Kerosene Indicator Label 13": {
+    "id": "Kerosene Indicator Label 13",
+    "parent": "Kerosene Wrapper",
+    "inheritFrom": "Brakes Indicator Label 2",
+    "text": "13",
+    "y": 236,
+    "width": 30,
+    "x": 40,
+    "z": 15
+  },
+  "Kerosene Indicator Label 14": {
+    "id": "Kerosene Indicator Label 14",
+    "parent": "Kerosene Wrapper",
+    "inheritFrom": "Brakes Indicator Label 2",
+    "text": "14",
+    "y": 213,
+    "width": 30,
+    "x": 40,
+    "z": 13
+  },
+  "Kerosene Indicator Label 15": {
+    "id": "Kerosene Indicator Label 15",
+    "parent": "Kerosene Wrapper",
+    "inheritFrom": "Brakes Indicator Label 2",
+    "text": "15",
+    "y": 190,
+    "width": 30,
+    "x": 40,
+    "z": 11
+  },
+  "Kerosene Indicator Label 16": {
+    "id": "Kerosene Indicator Label 16",
+    "parent": "Kerosene Wrapper",
+    "inheritFrom": "Brakes Indicator Label 2",
+    "text": "16",
+    "y": 167,
+    "width": 30,
+    "x": 40,
+    "z": 9,
+    "activeFace": 0
+  },
+  "Kerosene Indicator Label 17": {
+    "id": "Kerosene Indicator Label 17",
+    "parent": "Kerosene Wrapper",
+    "inheritFrom": "Brakes Indicator Label 2",
+    "text": "17",
+    "y": 144,
+    "width": 30,
+    "x": 40,
+    "z": 7,
+    "activeFace": 0
+  },
+  "Kerosene Indicator Label 18": {
+    "id": "Kerosene Indicator Label 18",
+    "parent": "Kerosene Wrapper",
+    "inheritFrom": "Brakes Indicator Label 2",
+    "text": "18",
+    "y": 121,
+    "width": 30,
+    "x": 40,
+    "z": 5
+  },
+  "Kerosene Indicator Label 19": {
+    "id": "Kerosene Indicator Label 19",
+    "parent": "Kerosene Wrapper",
+    "inheritFrom": "Brakes Indicator Label 2",
+    "text": "19",
+    "y": 98,
+    "width": 30,
+    "x": 40,
+    "z": 3
+  },
+  "Kerosene Indicator Label 20": {
+    "id": "Kerosene Indicator Label 20",
+    "parent": "Kerosene Wrapper",
+    "inheritFrom": "Brakes Indicator Label 2",
+    "text": "20",
+    "y": 75,
+    "width": 30,
+    "x": 40,
+    "z": 1,
+    "activeFace": 0
+  },
+  "Kerosene Indicator": {
+    "type": "button",
+    "id": "Kerosene Indicator",
+    "width": 60,
+    "height": 60,
+    "z": 961,
+    "movable": true,
+    "classes": "symbols",
+    "css": {
+      "font-size": "40px",
+      "background": "none",
+      "color": "yellow",
+      "border": "none"
+    },
+    "text": "[subproperty]",
+    "parent": "Kerosene Wrapper",
+    "fixedParent": true,
+    "grid": [
+      {
+        "x": 5000,
+        "y": 23,
+        "offsetX": -6,
+        "offsetY": -8
+      }
+    ],
+    "x": -6,
+    "y": 61,
+    "resetProperties": {
+      "x": -6,
+      "y": 61
+    }
+  },
+  "Intern Die 1": {
+    "type": "dice",
+    "id": "Intern Die 1",
+    "x": 4,
+    "y": 4,
+    "z": 3592,
+    "movable": true,
+    "borderColor": "#a5ff00",
+    "color": "#a5ff00",
+    "rollCount": 30,
+    "clickable": false,
+    "parent": "Intern Dice Holder 2"
+  },
+  "Intern Die 2": {
+    "type": "dice",
+    "id": "Intern Die 2",
+    "x": 4,
+    "y": 4,
+    "z": 3596,
+    "movable": true,
+    "activeFace": 1,
+    "borderColor": "#a5ff00",
+    "color": "#a5ff00",
+    "rollCount": 30,
+    "parent": "Intern Dice Holder 6"
+  },
+  "Intern Die 3": {
+    "type": "dice",
+    "id": "Intern Die 3",
+    "x": 4,
+    "y": 4,
+    "z": 3595,
+    "movable": true,
+    "activeFace": 2,
+    "borderColor": "#a5ff00",
+    "color": "#a5ff00",
+    "rollCount": 30,
+    "parent": "Intern Dice Holder 5"
+  },
+  "Intern Die 4": {
+    "type": "dice",
+    "id": "Intern Die 4",
+    "x": 4,
+    "y": 4,
+    "z": 3594,
+    "movable": true,
+    "activeFace": 3,
+    "borderColor": "#a5ff00",
+    "color": "#a5ff00",
+    "rollCount": 30,
+    "parent": "Intern Dice Holder 4"
+  },
+  "Intern Die 5": {
+    "type": "dice",
+    "id": "Intern Die 5",
+    "x": 4,
+    "y": 4,
+    "z": 3593,
+    "movable": true,
+    "activeFace": 4,
+    "borderColor": "#a5ff00",
+    "color": "#a5ff00",
+    "rollCount": 30,
+    "parent": "Intern Dice Holder 3"
+  },
+  "Intern Die 6": {
+    "type": "dice",
+    "id": "Intern Die 6",
+    "x": 4,
+    "y": 4,
+    "z": 3591,
+    "movable": true,
+    "activeFace": 5,
+    "borderColor": "#a5ff00",
+    "color": "#a5ff00",
+    "rollCount": 30,
+    "parent": "Intern Dice Holder 1"
+  },
+  "Switch Deck": {
+    "type": "deck",
+    "id": "Switch Deck",
+    "x": 13,
+    "y": 1031,
+    "z": 40,
+    "cardDefaults": {
+      "width": 80,
+      "height": 40,
+      "movable": false,
+      "resetProperties": {
+        "activeFace": 0
+      },
+      "indicatorTargets": {
+        "Landing Gear Wrapper": {
+          "Widget": "Aerodynamics Indicator 1",
+          "Targets": [
+            "Aerodynamics Indicator Holder 1",
+            "Aerodynamics Indicator Holder 2",
+            "Aerodynamics Indicator Holder 3",
+            "Aerodynamics Indicator Holder 4"
+          ]
+        },
+        "Flaps Wrapper": {
+          "Widget": "Aerodynamics Indicator 2",
+          "Targets": [
+            "Aerodynamics Indicator Holder 5",
+            "Aerodynamics Indicator Holder 6",
+            "Aerodynamics Indicator Holder 7",
+            "Aerodynamics Indicator Holder 8",
+            "Aerodynamics Indicator Holder 9"
+          ]
+        },
+        "Brakes Wrapper": {
+          "Widget": "Brakes Indicator",
+          "Targets": [
+            "Brakes Indicator Holder 1",
+            "Brakes Indicator Holder 2",
+            "Brakes Indicator Holder 3",
+            "Brakes Indicator Holder 4"
+          ]
+        }
+      },
+      "clickRoutine": [
+        {
+          "func": "CLICK",
+          "collection": "thisButton",
+          "mode": "ignoreClickRoutine"
+        },
+        "var parent = ${PROPERTY parent}",
+        {
+          "func": "SELECT",
+          "property": "parent",
+          "value": "${parent}"
+        },
+        {
+          "func": "SELECT",
+          "source": "DEFAULT",
+          "property": "cardType",
+          "value": "switch"
+        },
+        {
+          "func": "SELECT",
+          "source": "DEFAULT",
+          "property": "activeFace",
+          "value": 1
+        },
+        {
+          "func": "COUNT"
+        },
+        "var target = ${PROPERTY indicatorTargets}",
+        "var target = ${target.$parent}",
+        "var widget = ${target.Widget}",
+        "var target = ${target.Targets}",
+        "var target = ${target.$COUNT}",
+        {
+          "func": "MOVE",
+          "collection": [
+            "${widget}"
+          ],
+          "to": "${target}"
+        }
+      ]
+    },
+    "cardTypes": {
+      "switch": {
+        "back": "/i/noto-emoji/emoji_u274c.svg",
+        "front": "/i/noto-emoji/emoji_u2705.svg"
+      }
+    },
+    "faceTemplates": [
+      {
+        "border": false,
+        "radius": 8,
+        "objects": [
+          {
+            "type": "image",
+            "width": 80,
+            "height": 40,
+            "color": "#f0f0f0",
+            "dynamicProperties": {
+              "value": "image"
+            }
+          },
+          {
+            "type": "image",
+            "x": 45,
+            "y": 5,
+            "width": 30,
+            "height": 30,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "back"
+            }
+          }
+        ]
+      },
+      {
+        "border": false,
+        "radius": 8,
+        "objects": [
+          {
+            "type": "image",
+            "width": 80,
+            "height": 40,
+            "color": "#f0f0f0",
+            "dynamicProperties": {
+              "value": "image"
+            }
+          },
+          {
+            "type": "image",
+            "x": 5,
+            "y": 5,
+            "width": 30,
+            "height": 30,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "front"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "Abilities Deck": {
+    "type": "deck",
+    "id": "Abilities Deck",
+    "cardTypes": {
+      "Adaptation": {
+        "Condition Image": "/i/game-icons.net/delapouite/dice-six-faces-one.svg",
+        "Reward Image": "/i/game-icons.net/delapouite/dice-six-faces-six.svg",
+        "Condition": "Only once per game. Each player.",
+        "Reward": "Flip one die to its opposing face."
+      },
+      "Anticipation": {
+        "Condition Image": "/i/game-icons.net/delapouite/dice-six-faces-one.svg",
+        "Reward Image": "/i/game-icons.net/delapouite/rolling-dices.svg",
+        "Condition": "Each round. The starting player. Before using a die.",
+        "Reward": "Reroll one die."
+      },
+      "Control": {
+        "Condition Image": "/i/game-icons.net/quoting/biplane.svg",
+        "Reward Image": "/i/game-icons.net/delapouite/coffee-cup.svg",
+        "Condition": "Same value on both Axis dice.",
+        "Reward": "Gain a Coffee token."
+      },
+      "Mastery": {
+        "Condition Image": "/i/game-icons.net/delapouite/turbine.svg",
+        "Reward Image": "/i/game-icons.net/delapouite/rolling-dices.svg",
+        "Condition": "Same value on both Engines dice.",
+        "Reward": "Gain a Reroll token."
+      },
+      "Synchronisation": {
+        "Condition Image": "/i/game-icons.net/delapouite/car-wheel.svg",
+        "Reward Image": "/i/game-icons.net/delapouite/plane-wing.svg",
+        "Condition": "One die on Landing Gear, one die on Flaps.",
+        "Reward": "Roll and use the black traffic die as any color."
+      },
+      "Team Work": {
+        "Condition Image": "/i/game-icons.net/delapouite/dice-target.svg",
+        "Reward Image": "/i/game-icons.net/lorc/body-swapping.svg",
+        "Condition": "Each round, players may put a die here.",
+        "Reward": "Swap dice values and put them back into the hand."
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "color": "white",
+            "dynamicProperties": {
+              "width": "width",
+              "height": "height"
+            }
+          },
+          {
+            "type": "text",
+            "x": 0,
+            "y": 1,
+            "fontSize": 20,
+            "textAlign": "center",
+            "dynamicProperties": {
+              "value": "cardType",
+              "width": "width"
+            }
+          },
+          {
+            "type": "image",
+            "x": 10,
+            "y": 30,
+            "color": "transparent",
+            "width": 30,
+            "height": 30,
+            "dynamicProperties": {
+              "value": "Condition Image"
+            }
+          },
+          {
+            "type": "text",
+            "x": 50,
+            "y": 28,
+            "fontSize": 12,
+            "textAlign": "left",
+            "width": 140,
+            "dynamicProperties": {
+              "value": "Condition"
+            }
+          },
+          {
+            "type": "image",
+            "x": 10,
+            "y": 65,
+            "color": "transparent",
+            "width": 30,
+            "height": 30,
+            "dynamicProperties": {
+              "value": "Reward Image"
+            }
+          },
+          {
+            "type": "text",
+            "x": 50,
+            "y": 64,
+            "fontSize": 12,
+            "textAlign": "left",
+            "width": 140,
+            "dynamicProperties": {
+              "value": "Reward"
+            }
+          }
+        ],
+        "radius": 10
+      }
+    ],
+    "cardDefaults": {
+      "width": 200,
+      "height": 100
+    },
+    "parent": "Abilities Wrapper",
+    "y": 136,
+    "x": 180
+  },
+  "7s0f": {
+    "deck": "Abilities Deck",
+    "type": "card",
+    "cardType": "Control",
+    "id": "7s0f",
+    "z": 1888,
+    "x": 4,
+    "y": 4,
+    "parent": "Abilities Holder 3",
+    "resetProperties": {
+      "parent": "Abilities Holder 3"
+    }
+  },
+  "6b37": {
+    "deck": "Abilities Deck",
+    "type": "card",
+    "cardType": "Anticipation",
+    "id": "6b37",
+    "z": 1890,
+    "y": 4,
+    "x": 4,
+    "parent": "Abilities Holder 2",
+    "resetProperties": {
+      "parent": "Abilities Holder 2"
+    }
+  },
+  "2rz1": {
+    "deck": "Abilities Deck",
+    "type": "card",
+    "cardType": "Mastery",
+    "id": "2rz1",
+    "z": 2677,
+    "x": 4,
+    "y": 4,
+    "resetProperties": {
+      "parent": "Abilities Holder 4"
+    },
+    "parent": "Abilities Holder 4"
+  },
+  "uam4": {
+    "deck": "Abilities Deck",
+    "type": "card",
+    "cardType": "Adaptation",
+    "id": "uam4",
+    "z": 148,
+    "y": 4,
+    "x": 4,
+    "parent": "Abilities Holder 1",
+    "resetProperties": {
+      "parent": "Abilities Holder 1"
+    }
+  },
+  "23s4": {
+    "deck": "Abilities Deck",
+    "type": "card",
+    "cardType": "Synchronisation",
+    "id": "23s4",
+    "z": 156,
+    "x": 4,
+    "y": 4,
+    "parent": "Abilities Holder 5",
+    "resetProperties": {
+      "parent": "Abilities Holder 5"
+    }
+  },
+  "6ebv": {
+    "deck": "Abilities Deck",
+    "type": "card",
+    "cardType": "Team Work",
+    "id": "6ebv",
+    "z": 164,
+    "x": 4,
+    "y": 4,
+    "parent": "Abilities Holder 6",
+    "resetProperties": {
+      "parent": "Abilities Holder 6"
+    }
+  },
+  "Abilities Wrapper": {
+    "id": "Abilities Wrapper",
+    "x": 462,
+    "y": 78,
+    "width": 457,
+    "height": 441,
+    "borderRadius": 10,
+    "layer": -3,
+    "movable": false,
+    "css": {
+      "background": "#ddd",
+      "border": "5px solid black",
+      "box-sizing": "border-box"
+    },
+    "editorGroup": true,
+    "z": 1070,
+    "display": 0
+  },
+  "Abilities Label": {
+    "id": "Abilities Label",
+    "parent": "Abilities Wrapper",
+    "x": 9,
+    "width": 60,
+    "height": 60,
+    "z": 123,
+    "movable": false,
+    "image": "/i/game-icons.net/delapouite/seven-pointed-star.svg",
+    "y": 2
+  },
+  "Abilities Holder 1": {
+    "type": "holder",
+    "id": "Abilities Holder 1",
+    "parent": "Abilities Wrapper",
+    "x": 10,
+    "y": 66,
+    "width": 208,
+    "height": 108,
+    "dropTarget": {
+      "deck": "Abilities Deck"
+    },
+    "dropLimit": 1
+  },
+  "Abilities Holder 2": {
+    "type": "holder",
+    "id": "Abilities Holder 2",
+    "parent": "Abilities Wrapper",
+    "x": 229,
+    "y": 66,
+    "width": 208,
+    "height": 108,
+    "dropTarget": {
+      "deck": "Abilities Deck"
+    },
+    "dropLimit": 1
+  },
+  "Abilities Holder 3": {
+    "type": "holder",
+    "id": "Abilities Holder 3",
+    "parent": "Abilities Wrapper",
+    "x": 10,
+    "y": 189,
+    "width": 208,
+    "height": 108,
+    "dropTarget": {
+      "deck": "Abilities Deck"
+    },
+    "dropLimit": 1
+  },
+  "Abilities Holder 4": {
+    "type": "holder",
+    "id": "Abilities Holder 4",
+    "parent": "Abilities Wrapper",
+    "x": 229,
+    "y": 189,
+    "width": 208,
+    "height": 108,
+    "dropTarget": {
+      "deck": "Abilities Deck"
+    },
+    "dropLimit": 1
+  },
+  "Abilities Holder 5": {
+    "type": "holder",
+    "id": "Abilities Holder 5",
+    "parent": "Abilities Wrapper",
+    "x": 10,
+    "y": 312,
+    "width": 208,
+    "height": 108,
+    "dropTarget": {
+      "deck": "Abilities Deck"
+    },
+    "dropLimit": 1
+  },
+  "Abilities Holder 6": {
+    "type": "holder",
+    "id": "Abilities Holder 6",
+    "parent": "Abilities Wrapper",
+    "x": 229,
+    "y": 312,
+    "width": 208,
+    "height": 108,
+    "dropTarget": {
+      "deck": "Abilities Deck"
+    },
+    "dropLimit": 1
+  },
+  "Pilot - Title2": {
+    "id": "Pilot - Title2",
+    "x": 82,
+    "width": 347,
+    "z": 692,
+    "css": {
+      "font-size": "24px"
+    },
+    "text": "Pick 1 or 2 depending on the scenario",
+    "movable": false,
+    "height": 50,
+    "parent": "Abilities Wrapper",
+    "y": 4
+  },
+  "Abilities Toggle": {
+    "id": "Abilities Toggle",
+    "x": 591,
+    "width": 60,
+    "height": 60,
+    "z": 123,
+    "movable": false,
+    "css": {
+      "opacity": "calc(0.25 + 0.75 * ${PROPERTY enabled})"
+    },
+    "image": "/i/game-icons.net/delapouite/seven-pointed-star.svg",
+    "enabled": 0,
+    "clickRoutine": [
+      "var enabled = 1 - ${PROPERTY enabled}",
+      {
+        "func": "SET",
+        "property": "enabled",
+        "value": "${enabled}",
+        "collection": "thisButton"
+      },
+      {
+        "func": "SET",
+        "property": "display",
+        "value": "${enabled}",
+        "collection": [
+          "Abilities Wrapper"
+        ]
+      }
+    ],
+    "display": false
+  },
+  "Wind Wrapper": {
+    "id": "Wind Wrapper",
+    "width": 298,
+    "height": 297,
+    "borderRadius": 10,
+    "layer": -3,
+    "movable": false,
+    "css": {
+      "background": "#ddd"
+    },
+    "editorGroup": true,
+    "z": 107,
+    "y": 346,
+    "display": 0,
+    "x": 13
+  },
+  "Wind Label": {
+    "id": "Wind Label",
+    "parent": "Wind Wrapper",
+    "x": 10,
+    "y": 10,
+    "width": 60,
+    "height": 60,
+    "z": 837,
+    "movable": false,
+    "image": "/i/game-icons.net/delapouite/windsock.svg"
+  },
+  "Wind Direction Label 1": {
+    "id": "Wind Direction Label 1",
+    "parent": "Wind Wrapper",
+    "x": 252,
+    "y": 136,
+    "width": 30,
+    "height": 30,
+    "borderRadius": "0 0 12px 12px",
+    "z": 48,
+    "movable": false,
+    "css": {
+      "display": "flex",
+      "height": "100%",
+      "width": "100%",
+      "font-size": "20px",
+      "justify-content": "center",
+      "align-items": "center",
+      "color": "${PROPERTY color}",
+      "font-weight": "bold",
+      "background": "linear-gradient(transparent 0%, transparent 70%, grey 100%)"
+    },
+    "imageX": "/i/game-icons.net/delapouite/plain-arrow.svg",
+    "clickRoutine": [
+      "var rotation = ${PROPERTY rotation} - 45",
+      {
+        "func": "SET",
+        "collection": [
+          "Wind Indicator"
+        ],
+        "property": "rotation",
+        "value": "${rotation}"
+      }
+    ],
+    "rotation": 90,
+    "text": "0"
+  },
+  "Wind Direction Label 2": {
+    "id": "Wind Direction Label 2",
+    "x": 246,
+    "y": 173,
+    "text": "-1",
+    "inheritFrom": "Wind Direction Label 1",
+    "rotation": 108.00000000000003
+  },
+  "Wind Indicator": {
+    "id": "Wind Indicator",
+    "parent": "Wind Wrapper",
+    "x": 47,
+    "y": 50,
+    "width": 200,
+    "height": 200,
+    "borderRadius": 100,
+    "movable": false,
+    "css": {
+      "background-size": "70%",
+      "border": "1px solid grey",
+      "box-sizing": "border-box"
+    },
+    "image": "/i/game-icons.net/delapouite/commercial-airplane.svg",
+    "rotation": 315,
+    "resetProperties": {
+      "rotation": 315
+    }
+  },
+  "Wind Direction Label 3": {
+    "id": "Wind Direction Label 3",
+    "x": 229,
+    "y": 206,
+    "text": "-2",
+    "inheritFrom": "Wind Direction Label 1",
+    "rotation": 126
+  },
+  "Wind Direction Label 4": {
+    "id": "Wind Direction Label 4",
+    "x": 202,
+    "y": 233,
+    "text": "-2",
+    "inheritFrom": "Wind Direction Label 1",
+    "rotation": 144
+  },
+  "Wind Direction Label 5": {
+    "id": "Wind Direction Label 5",
+    "x": 169,
+    "y": 250,
+    "text": "-3",
+    "inheritFrom": "Wind Direction Label 1",
+    "rotation": 162
+  },
+  "Wind Direction Label 6": {
+    "id": "Wind Direction Label 6",
+    "x": 61,
+    "y": 233,
+    "text": "-2",
+    "inheritFrom": "Wind Direction Label 1",
+    "rotation": 216
+  },
+  "Wind Direction Label 7": {
+    "id": "Wind Direction Label 7",
+    "x": 34,
+    "y": 206,
+    "text": "-2",
+    "inheritFrom": "Wind Direction Label 1",
+    "rotation": 234
+  },
+  "Wind Direction Label 8": {
+    "id": "Wind Direction Label 8",
+    "x": 17,
+    "y": 173,
+    "text": "-1",
+    "inheritFrom": "Wind Direction Label 1",
+    "rotation": 252
+  },
+  "Wind Direction Label 9": {
+    "id": "Wind Direction Label 9",
+    "x": 12,
+    "y": 136,
+    "text": "0",
+    "inheritFrom": "Wind Direction Label 1",
+    "rotation": 270
+  },
+  "Wind Direction Label 10": {
+    "id": "Wind Direction Label 10",
+    "x": 17,
+    "y": 98,
+    "text": "+1",
+    "inheritFrom": "Wind Direction Label 1",
+    "rotation": 288
+  },
+  "Wind Direction Label 11": {
+    "id": "Wind Direction Label 11",
+    "x": 94,
+    "y": 21,
+    "text": "+3",
+    "inheritFrom": "Wind Direction Label 1",
+    "rotation": 342
+  },
+  "Wind Direction Label 12": {
+    "id": "Wind Direction Label 12",
+    "x": 132,
+    "y": 16,
+    "text": "+3",
+    "inheritFrom": "Wind Direction Label 1",
+    "rotation": 360
+  },
+  "Wind Direction Label 13": {
+    "id": "Wind Direction Label 13",
+    "x": 169,
+    "y": 21,
+    "text": "+3",
+    "inheritFrom": "Wind Direction Label 1",
+    "rotation": 378
+  },
+  "Wind Direction Label 14": {
+    "id": "Wind Direction Label 14",
+    "x": 34,
+    "y": 65,
+    "text": "+2",
+    "inheritFrom": "Wind Direction Label 1",
+    "rotation": 306.00000000000006
+  },
+  "Wind Direction Label 15": {
+    "id": "Wind Direction Label 15",
+    "x": 61,
+    "y": 38,
+    "text": "+2",
+    "inheritFrom": "Wind Direction Label 1",
+    "rotation": 323.99999999999994
+  },
+  "Wind Direction Label 16": {
+    "id": "Wind Direction Label 16",
+    "x": 202,
+    "y": 38,
+    "text": "+2",
+    "inheritFrom": "Wind Direction Label 1",
+    "rotation": 396
+  },
+  "Wind Direction Label 17": {
+    "id": "Wind Direction Label 17",
+    "x": 229,
+    "y": 65,
+    "text": "+2",
+    "inheritFrom": "Wind Direction Label 1",
+    "rotation": 414
+  },
+  "Wind Direction Label 18": {
+    "id": "Wind Direction Label 18",
+    "x": 246,
+    "y": 98,
+    "text": "+1",
+    "inheritFrom": "Wind Direction Label 1",
+    "rotation": 432
+  },
+  "Wind Direction Label 19": {
+    "id": "Wind Direction Label 19",
+    "x": 132,
+    "y": 256,
+    "text": "-3",
+    "inheritFrom": "Wind Direction Label 1",
+    "rotation": 180
+  },
+  "Wind Direction Label 20": {
+    "id": "Wind Direction Label 20",
+    "x": 94,
+    "y": 250,
+    "text": "-3",
+    "inheritFrom": "Wind Direction Label 1",
+    "rotation": 198
+  },
+  "Wind Toggle": {
+    "id": "Wind Toggle",
+    "x": 661,
+    "width": 60,
+    "height": 60,
+    "z": 123,
+    "movable": false,
+    "css": {
+      "opacity": "calc(0.25 + 0.75 * ${PROPERTY enabled})"
+    },
+    "image": "/i/game-icons.net/delapouite/windsock.svg",
+    "enabled": 0,
+    "clickRoutine": [
+      "var enabled = 1 - ${PROPERTY enabled}",
+      {
+        "func": "SET",
+        "property": "enabled",
+        "value": "${enabled}",
+        "collection": "thisButton"
+      },
+      {
+        "func": "SET",
+        "property": "display",
+        "value": "${enabled}",
+        "collection": [
+          "Wind Wrapper"
+        ]
+      }
+    ],
+    "display": false
+  },
+  "Brakes Dice Holder 4": {
+    "type": "holder",
+    "id": "Brakes Dice Holder 4",
+    "x": 10,
+    "width": 58,
+    "height": 58,
+    "z": 1,
+    "css": {
+      "::after": {
+        "content": "\"${PROPERTY text}\"",
+        "display": "flex",
+        "height": "100%",
+        "width": "100%",
+        "font-size": "30px",
+        "justify-content": "center",
+        "align-items": "center",
+        "color": "${PROPERTY color}",
+        "font-weight": "bold"
+      },
+      "default": {
+        "background": "${PROPERTY background}"
+      }
+    },
+    "dropTarget": {
+      "type": "dice"
+    },
+    "text": "2",
+    "background": "#add8e680",
+    "color": "#0004",
+    "parent": "Ice Brakes Wrapper",
+    "y": 72,
+    "dropLimit": 1
+  },
+  "Brakes Dice Holder 5": {
+    "type": "holder",
+    "id": "Brakes Dice Holder 5",
+    "x": 95,
+    "y": 72,
+    "width": 58,
+    "height": 58,
+    "z": 1,
+    "text": "3",
+    "background": "#add8e680",
+    "color": "#0004",
+    "inheritFrom": {
+      "Brakes Dice Holder 1": [
+        "css",
+        "dropTarget"
+      ]
+    },
+    "parent": "Ice Brakes Wrapper",
+    "dropLimit": 1
+  },
+  "Brakes Dice Holder 6": {
+    "type": "holder",
+    "id": "Brakes Dice Holder 6",
+    "x": 179,
+    "y": 72,
+    "width": 58,
+    "height": 58,
+    "z": 1,
+    "text": "4",
+    "background": "#add8e680",
+    "color": "#0004",
+    "inheritFrom": {
+      "Brakes Dice Holder 1": [
+        "css",
+        "dropTarget"
+      ]
+    },
+    "parent": "Ice Brakes Wrapper",
+    "dropLimit": 1
+  },
+  "Brakes Indicator Wrapper1": {
+    "id": "Brakes Indicator Wrapper1",
+    "x": 30,
+    "y": 147,
+    "width": 272,
+    "height": 33,
+    "borderRadius": 5,
+    "layer": -3,
+    "movable": false,
+    "css": {
+      "background": "black"
+    },
+    "editorGroup": true,
+    "parent": "Ice Brakes Wrapper"
+  },
+  "Brakes Indicator Holder 5": {
+    "type": "holder",
+    "id": "Brakes Indicator Holder 5",
+    "x": 48,
+    "inheritFrom": "Brakes Indicator Holder 7",
+    "color": "grey",
+    "y": -14,
+    "parent": "Brakes Indicator Wrapper1"
+  },
+  "Brakes Indicator Label 7": {
+    "id": "Brakes Indicator Label 7",
+    "x": 100,
+    "text": "3",
+    "inheritFrom": "Brakes Indicator Label 2",
+    "y": 1,
+    "parent": "Brakes Indicator Wrapper1"
+  },
+  "Brakes Indicator Label 9": {
+    "id": "Brakes Indicator Label 9",
+    "x": 162,
+    "text": "4",
+    "inheritFrom": "Brakes Indicator Label 2",
+    "y": 1,
+    "parent": "Brakes Indicator Wrapper1"
+  },
+  "Brakes Indicator Label 10": {
+    "id": "Brakes Indicator Label 10",
+    "x": 223,
+    "text": "5",
+    "inheritFrom": "Brakes Indicator Label 2",
+    "y": 1,
+    "parent": "Brakes Indicator Wrapper1"
+  },
+  "Brakes Indicator Holder 6": {
+    "type": "holder",
+    "id": "Brakes Indicator Holder 6",
+    "x": 109,
+    "inheritFrom": "Brakes Indicator Holder 7",
+    "color": "grey",
+    "y": -14,
+    "parent": "Brakes Indicator Wrapper1"
+  },
+  "Brakes Indicator Holder 7": {
+    "type": "holder",
+    "id": "Brakes Indicator Holder 7",
+    "x": -7,
+    "y": -14,
+    "width": 58,
+    "height": 58,
+    "z": 1,
+    "classes": "symbols transparent",
+    "dropOffsetX": -2,
+    "dropOffsetY": -1,
+    "dropTarget": {
+      "id": "Ice Brakes Indicator"
+    },
+    "inheritFrom": {
+      "Brakes Dice Holder 7": [
+        "css"
+      ]
+    },
+    "background": "transparent",
+    "color": "#f008",
+    "text": "[subproperty]",
+    "parent": "Brakes Indicator Wrapper1"
+  },
+  "Brakes Indicator Label 11": {
+    "id": "Brakes Indicator Label 11",
+    "parent": "Brakes Indicator Wrapper1",
+    "x": 39,
+    "width": 20,
+    "height": 30,
+    "css": {
+      "font-size": "24px",
+      "font-weight": "bold",
+      "color": "white"
+    },
+    "text": "2",
+    "movable": false,
+    "y": 1
+  },
+  "Brakes Indicator Holder 8": {
+    "type": "holder",
+    "id": "Brakes Indicator Holder 8",
+    "x": 223,
+    "inheritFrom": "Brakes Indicator Holder 7",
+    "color": "grey",
+    "y": -14,
+    "parent": "Brakes Indicator Wrapper1"
+  },
+  "Brakes Order Indicator 3": {
+    "id": "Brakes Order Indicator 3",
+    "parent": "Ice Brakes Wrapper",
+    "x": 71,
+    "y": 92,
+    "width": 20,
+    "height": 20,
+    "rotation": -90,
+    "z": 48,
+    "movable": false,
+    "image": "/i/game-icons.net/delapouite/plain-arrow.svg"
+  },
+  "Brakes Order Indicator 4": {
+    "id": "Brakes Order Indicator 4",
+    "parent": "Ice Brakes Wrapper",
+    "x": 156,
+    "y": 92,
+    "width": 20,
+    "height": 20,
+    "rotation": -90,
+    "z": 48,
+    "movable": false,
+    "image": "/i/game-icons.net/delapouite/plain-arrow.svg"
+  },
+  "Ice Brakes Wrapper": {
+    "id": "Ice Brakes Wrapper",
+    "x": 525,
+    "width": 332,
+    "height": 265,
+    "borderRadius": 10,
+    "layer": -3,
+    "movable": false,
+    "css": {
+      "background": "#ddd"
+    },
+    "editorGroup": true,
+    "display": 0,
+    "z": 116,
+    "y": 423
+  },
+  "Ice Brakes Toggle": {
+    "id": "Ice Brakes Toggle",
+    "x": 731,
+    "width": 60,
+    "height": 60,
+    "z": 123,
+    "movable": false,
+    "css": {
+      "opacity": "calc(0.25 + 0.75 * ${PROPERTY enabled})"
+    },
+    "image": "/i/game-icons.net/lorc/snowflake-2.svg",
+    "enabled": 0,
+    "clickRoutine": [
+      "var enabled = 1 - ${PROPERTY enabled}",
+      {
+        "func": "SET",
+        "property": "enabled",
+        "value": "${enabled}",
+        "collection": "thisButton"
+      },
+      {
+        "func": "SET",
+        "property": "display",
+        "value": "${enabled}",
+        "collection": [
+          "Ice Brakes Wrapper"
+        ]
+      }
+    ],
+    "display": false
+  },
+  "Brakes Dice Holder 7": {
+    "type": "holder",
+    "id": "Brakes Dice Holder 7",
+    "x": 264,
+    "y": 72,
+    "width": 58,
+    "height": 58,
+    "z": 115,
+    "text": "5",
+    "background": "#add8e680",
+    "color": "#0004",
+    "inheritFrom": {
+      "Brakes Dice Holder 1": [
+        "css",
+        "dropTarget"
+      ]
+    },
+    "parent": "Ice Brakes Wrapper",
+    "dropLimit": 1
+  },
+  "Brakes Order Indicator 5": {
+    "id": "Brakes Order Indicator 5",
+    "parent": "Ice Brakes Wrapper",
+    "x": 241,
+    "y": 92,
+    "width": 20,
+    "height": 20,
+    "rotation": -90,
+    "z": 48,
+    "movable": false,
+    "image": "/i/game-icons.net/delapouite/plain-arrow.svg"
+  },
+  "Brakes Dice Holder 8": {
+    "type": "holder",
+    "id": "Brakes Dice Holder 8",
+    "x": 10,
+    "width": 58,
+    "height": 58,
+    "z": 1,
+    "css": {
+      "::after": {
+        "content": "\"${PROPERTY text}\"",
+        "display": "flex",
+        "height": "100%",
+        "width": "100%",
+        "font-size": "30px",
+        "justify-content": "center",
+        "align-items": "center",
+        "color": "${PROPERTY color}",
+        "font-weight": "bold"
+      },
+      "default": {
+        "background": "${PROPERTY background}"
+      }
+    },
+    "dropTarget": {
+      "type": "dice"
+    },
+    "text": "2",
+    "background": "linear-gradient(90deg, #add8e680 0%, #add8e680 40%, #ffa50080 60%, #ffa50080 100%)",
+    "color": "#0004",
+    "parent": "Ice Brakes Wrapper",
+    "y": 197,
+    "dropLimit": 1
+  },
+  "Brakes Dice Holder 9": {
+    "type": "holder",
+    "id": "Brakes Dice Holder 9",
+    "x": 95,
+    "text": "3",
+    "inheritFrom": "Brakes Dice Holder 8",
+    "y": 197
+  },
+  "Brakes Dice Holder 10": {
+    "type": "holder",
+    "id": "Brakes Dice Holder 10",
+    "x": 179,
+    "text": "4",
+    "inheritFrom": "Brakes Dice Holder 8",
+    "y": 197
+  },
+  "Brakes Order Indicator 6": {
+    "id": "Brakes Order Indicator 6",
+    "parent": "Ice Brakes Wrapper",
+    "x": 71,
+    "y": 217,
+    "width": 20,
+    "height": 20,
+    "rotation": -90,
+    "z": 48,
+    "movable": false,
+    "image": "/i/game-icons.net/delapouite/plain-arrow.svg"
+  },
+  "Brakes Order Indicator 7": {
+    "id": "Brakes Order Indicator 7",
+    "parent": "Ice Brakes Wrapper",
+    "x": 156,
+    "y": 217,
+    "width": 20,
+    "height": 20,
+    "rotation": -90,
+    "z": 48,
+    "movable": false,
+    "image": "/i/game-icons.net/delapouite/plain-arrow.svg"
+  },
+  "Brakes Dice Holder 11": {
+    "type": "holder",
+    "id": "Brakes Dice Holder 11",
+    "x": 264,
+    "text": "5",
+    "inheritFrom": "Brakes Dice Holder 8",
+    "y": 197
+  },
+  "Brakes Order Indicator 8": {
+    "id": "Brakes Order Indicator 8",
+    "parent": "Ice Brakes Wrapper",
+    "x": 241,
+    "y": 217,
+    "width": 20,
+    "height": 20,
+    "rotation": -90,
+    "z": 48,
+    "movable": false,
+    "image": "/i/game-icons.net/delapouite/plain-arrow.svg"
+  },
+  "Brakes Indicator Holder 9": {
+    "type": "holder",
+    "id": "Brakes Indicator Holder 9",
+    "x": 170,
+    "inheritFrom": "Brakes Indicator Holder 7",
+    "color": "grey",
+    "y": -14,
+    "parent": "Brakes Indicator Wrapper1"
+  },
+  "Brakes Label1": {
+    "id": "Brakes Label1",
+    "parent": "Ice Brakes Wrapper",
+    "x": 94,
+    "y": 6,
+    "width": 60,
+    "height": 60,
+    "z": 124,
+    "image": "/i/game-icons.net/delapouite/speedometer.svg",
+    "movable": false
+  },
+  "Brakes Label2": {
+    "id": "Brakes Label2",
+    "parent": "Ice Brakes Wrapper",
+    "x": 178,
+    "y": 6,
+    "width": 60,
+    "height": 60,
+    "z": 124,
+    "image": "/i/game-icons.net/lorc/snowflake-2.svg",
+    "movable": false
+  },
+  "Ice Brakes Indicator": {
+    "type": "button",
+    "id": "Ice Brakes Indicator",
+    "x": -2,
+    "y": -1,
+    "width": 60,
+    "height": 60,
+    "z": 959,
+    "movable": true,
+    "classes": "symbols",
+    "css": {
+      "font-size": "40px",
+      "background": "none",
+      "color": "#f00",
+      "border": "none"
+    },
+    "text": "[subproperty]",
+    "resetProperties": {
+      "parent": "Brakes Indicator Holder 7"
+    },
+    "parent": "Brakes Indicator Holder 7"
+  },
+  "Kerosene Leak Toggle": {
+    "id": "Kerosene Leak Toggle",
+    "x": 801,
+    "width": 60,
+    "height": 60,
+    "z": 123,
+    "movable": false,
+    "css": {
+      "opacity": "calc(0.25 + 0.75 * ${PROPERTY enabled})"
+    },
+    "image": "/i/game-icons.net/delapouite/barrel-leak.svg",
+    "enabled": 0,
+    "clickRoutine": [
+      "var enabled = 1 - ${PROPERTY enabled}",
+      {
+        "func": "SET",
+        "property": "enabled",
+        "value": "${enabled}",
+        "collection": "thisButton"
+      },
+      {
+        "func": "SET",
+        "property": "enabled",
+        "value": 0,
+        "collection": [
+          "Kerosene Toggle"
+        ]
+      },
+      {
+        "func": "SET",
+        "property": "display",
+        "value": "${enabled}",
+        "collection": [
+          "Kerosene Wrapper",
+          "Kerosene Leak Cover"
+        ]
+      }
+    ],
+    "display": false
+  },
+  "Kerosene Leak Cover": {
+    "id": "Kerosene Leak Cover",
+    "parent": "Kerosene Wrapper",
+    "x": 11,
+    "y": 11,
+    "width": 60,
+    "height": 60,
+    "z": 123,
+    "movable": false,
+    "image": "/i/game-icons.net/delapouite/barrel-leak.svg",
+    "display": false
+  },
+  "Scenario Generation Button": {
+    "type": "button",
+    "id": "Scenario Generation Button",
+    "x": 1356,
+    "y": -122,
+    "colorMap": {
+      "Green": "#15960a",
+      "Yellow": "#f5c211",
+      "Red": "#c01c28",
+      "Black": "#888888"
+    },
+    "clickRoutine": [
+      "var scenarios = ${PROPERTY scenarios}",
+      {
+        "func": "FOREACH",
+        "in": "${scenarios}",
+        "loopRoutine": [
+          "var scenario = ${value}",
+          "var color = ${scenario.Difficulty}",
+          "var colorMap = ${PROPERTY colorMap}",
+          "var planes = 0",
+          "var dice = 0",
+          "var axis = 0",
+          "var modules = ${scenario.Modules}",
+          "var module1 = ''",
+          "var module2 = ''",
+          {
+            "func": "IF",
+            "condition": "${modules.0}",
+            "thenRoutine": [
+              "var toggle = ${modules.0} + ' Toggle'",
+              "var module1 = ${PROPERTY image OF $toggle}"
+            ]
+          },
+          {
+            "func": "IF",
+            "condition": "${modules.1}",
+            "thenRoutine": [
+              "var toggle = ${modules.1} + ' Toggle'",
+              "var module2 = ${module1}",
+              "var module1 = ${PROPERTY image OF $toggle}"
+            ]
+          },
+          {
+            "func": "FOREACH",
+            "in": "${scenario.Track}",
+            "loopRoutine": [
+              "var thisPlanes = 0",
+              {
+                "func": "IF",
+                "condition": "${value.Planes}",
+                "thenRoutine": [
+                  "var thisPlanes = ${value.Planes}"
+                ]
+              },
+              "var planes = ${planes} + ${thisPlanes}",
+              "var thisDice = 0",
+              {
+                "func": "IF",
+                "condition": "${value.Dice}",
+                "thenRoutine": [
+                  "var thisDice = ${value.Dice}"
+                ]
+              },
+              "var dice = ${dice} + ${thisDice}",
+              "var thisAxis = 0",
+              {
+                "func": "IF",
+                "condition": "${value.Axis}",
+                "thenRoutine": [
+                  "var thisAxis = 1"
+                ]
+              },
+              "var axis = ${axis} + ${thisAxis}"
+            ]
+          },
+          {
+            "func": "CLONE",
+            "source": [
+              "Scenario Card Template"
+            ],
+            "properties": {
+              "id": "Scenario Card - ${scenario.Difficulty} - ${scenario.Name}",
+              "name": "${scenario.Name}",
+              "color": "${colorMap.$color}",
+              "key": "${key}",
+              "planes": "${planes}",
+              "dice": "${dice}",
+              "axis": "${axis}",
+              "abilities": "${scenario.Abilities}",
+              "module1": "${module1}",
+              "module2": "${module2}"
+            }
+          }
+        ]
+      }
+    ],
+    "text": "Generate\nScenario",
+    "createScenarioRoutine": [
+      "var color = ${scenario.Difficulty}",
+      "var colorMap = ${PROPERTY colorMap}",
+      "var trackLength = ${scenario.Track} length",
+      "var lastTrack = ${trackLength} - 1",
+      "var height = ${trackLength} * 100 + 50",
+      "var y = 1000 - ${height}",
+      "var id = 'Approach Track - '",
+      "var id = ${id} concat ${scenario.Difficulty}",
+      "var id = ${id} concat ' - '",
+      "var id = ${id} concat ${scenario.Name}",
+      {
+        "func": "IF",
+        "operand1": "${id}",
+        "operand2": "${previousID}",
+        "thenRoutine": [
+          "var id = ${id} concat ' Copy'"
+        ]
+      },
+      {
+        "func": "CLONE",
+        "source": [
+          "Approach Track - Template"
+        ],
+        "properties": {
+          "id": "${id}",
+          "text": "${scenario.Name}",
+          "x": 1188,
+          "y": "${y}",
+          "height": "${height}",
+          "difficultyColor": "${colorMap.$color}",
+          "resetProperties": {
+            "x": 1188,
+            "y": "${y}"
+          }
+        }
+      },
+      "var moduleX = 160",
+      {
+        "func": "IF",
+        "condition": "${scenario.Abilities}",
+        "thenRoutine": [
+          {
+            "func": "CLONE",
+            "source": [
+              "Approach Track - Module Template"
+            ],
+            "properties": {
+              "id": "${id} - Abilities",
+              "parent": "${id}",
+              "text": "${scenario.Abilities}",
+              "color": "${colorMap.$color}"
+            }
+          },
+          "var moduleX = ${moduleX} - 35"
+        ]
+      },
+      "var reverseUpdatesInPlace = reverse ${scenario.Modules}",
+      {
+        "func": "FOREACH",
+        "in": "${scenario.Modules}",
+        "loopRoutine": [
+          "var toggle = ${value} + ' Toggle'",
+          "var image = ${PROPERTY image OF $toggle}",
+          {
+            "func": "CLONE",
+            "source": [
+              "Approach Track - Module Template"
+            ],
+            "properties": {
+              "id": "${id} - Module ${value}",
+              "parent": "${id}",
+              "x": "${moduleX}",
+              "image": "${image}",
+              "text": ""
+            }
+          },
+          "var moduleX = ${moduleX} - 35"
+        ]
+      },
+      "var stepY = 50",
+      {
+        "func": "FOREACH",
+        "in": "${scenario.Track}",
+        "loopRoutine": [
+          {
+            "func": "CLONE",
+            "source": [
+              "Approach Track - Track Holder Template"
+            ],
+            "properties": {
+              "id": "${id} - Track Holder ${stepY}",
+              "parent": "${id}",
+              "y": "${stepY}"
+            }
+          },
+          {
+            "func": "CLONE",
+            "source": [
+              "Approach Track - Aircraft Holder Template"
+            ],
+            "properties": {
+              "id": "${id} - Planes Holder ${stepY}",
+              "parent": "${id}",
+              "y": "${stepY}"
+            }
+          },
+          "var cardType = '0'",
+          "var planes = 0",
+          {
+            "func": "IF",
+            "condition": "${value.Planes}",
+            "thenRoutine": [
+              "var cardType = ${value.Planes} * 20",
+              "var planes = ${value.Planes}"
+            ]
+          },
+          {
+            "func": "CLONE",
+            "source": [
+              "Approach Track - Planes Template"
+            ],
+            "properties": {
+              "id": "${id} - Track Planes ${stepY}",
+              "parent": "${id} - Track Holder ${stepY}",
+              "cardType": "${cardType}"
+            }
+          },
+          {
+            "func": "IF",
+            "condition": "${planes}",
+            "thenRoutine": [
+              {
+                "func": "FOREACH",
+                "range": [
+                  "${planes}"
+                ],
+                "loopRoutine": [
+                  "var xOffset = randInt -20 20",
+                  "var yOffset = randInt -20 20",
+                  "var x = 160 / ${planes} * (${value}-0.5) + 40/2 - 30 + ${xOffset}",
+                  "var y = 50 - 30 + ${yOffset}",
+                  {
+                    "func": "CLONE",
+                    "source": [
+                      "Approach Track - Aircraft Token Template"
+                    ],
+                    "properties": {
+                      "id": "${id} - ${stepY} - Plane ${value}",
+                      "parent": "${id} - Planes Holder ${stepY}",
+                      "x": "${x}",
+                      "y": "${y}",
+                      "resetProperties": {
+                        "parent": "${id} - Planes Holder ${stepY}",
+                        "x": "${x}",
+                        "y": "${y}"
+                      }
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "func": "IF",
+            "operand1": "${key}",
+            "operand2": 0,
+            "thenRoutine": [
+              {
+                "func": "CLONE",
+                "source": [
+                  "Approach Track - Background Template"
+                ],
+                "properties": {
+                  "id": "${id} - Track Airport",
+                  "parent": "${id} - Track Holder ${stepY}",
+                  "cardType": "airport"
+                }
+              }
+            ]
+          },
+          {
+            "func": "IF",
+            "operand1": "${key}",
+            "operand2": "${lastTrack}",
+            "thenRoutine": [
+              {
+                "func": "CLONE",
+                "source": [
+                  "Approach Track - Background Template"
+                ],
+                "properties": {
+                  "id": "${id} - Track Clouds",
+                  "parent": "${id} - Track Holder ${stepY}",
+                  "cardType": "clouds"
+                }
+              }
+            ]
+          },
+          {
+            "func": "IF",
+            "condition": "${value.Dice}",
+            "thenRoutine": [
+              "var cardType = ${value.Dice} * 20",
+              {
+                "func": "CLONE",
+                "source": [
+                  "Approach Track - Dice Template"
+                ],
+                "properties": {
+                  "id": "${id} - Track Dice ${stepY}",
+                  "parent": "${id} - Track Holder ${stepY}",
+                  "cardType": "${cardType}"
+                }
+              }
+            ]
+          },
+          {
+            "func": "IF",
+            "condition": "${value.Axis}",
+            "thenRoutine": [
+              {
+                "func": "CLONE",
+                "source": [
+                  "Approach Track - Axis Template"
+                ],
+                "properties": {
+                  "id": "${id} - Track Axis ${stepY}",
+                  "parent": "${id} - Track Holder ${stepY}",
+                  "cardType": "${value.Axis}"
+                }
+              }
+            ]
+          },
+          "var stepY = ${stepY} + 100"
+        ]
+      }
+    ],
+    "scenarios": [
+      {
+        "Difficulty": "Green",
+        "Name": "YUL",
+        "Modules": [],
+        "Abilities": 0,
+        "Track": [
+          {
+            "Planes": 2
+          },
+          {
+            "Planes": 3
+          },
+          {
+            "Planes": 1
+          },
+          {
+            "Planes": 2
+          },
+          {
+            "Planes": 1
+          },
+          {},
+          {}
+        ]
+      },
+      {
+        "Difficulty": "Green",
+        "Name": "LHR",
+        "Modules": [],
+        "Abilities": 0,
+        "Track": [
+          {
+            "Planes": 2
+          },
+          {
+            "Planes": 2,
+            "Dice": 1
+          },
+          {
+            "Planes": 2
+          },
+          {
+            "Planes": 1,
+            "Dice": 1
+          },
+          {
+            "Planes": 1
+          },
+          {
+            "Dice": 1
+          }
+        ]
+      },
+      {
+        "Difficulty": "Green",
+        "Name": "HND",
+        "Modules": [],
+        "Abilities": 0,
+        "Track": [
+          {
+            "Planes": 1
+          },
+          {
+            "Planes": 2
+          },
+          {
+            "Axis": "11100"
+          },
+          {
+            "Planes": 1,
+            "Axis": "11000"
+          },
+          {
+            "Planes": 2
+          },
+          {
+            "Planes": 1,
+            "Axis": "01100"
+          },
+          {
+            "Planes": 1
+          },
+          {
+            "Dice": 2
+          }
+        ]
+      },
+      {
+        "Difficulty": "Green",
+        "Name": "OSL",
+        "Modules": [
+          "Kerosene"
+        ],
+        "Abilities": 0,
+        "Track": [
+          {},
+          {
+            "Planes": 1
+          },
+          {
+            "Planes": 1
+          },
+          {
+            "Planes": 1
+          },
+          {
+            "Dice": 1
+          },
+          {
+            "Planes": 1
+          },
+          {},
+          {
+            "Dice": 2
+          }
+        ]
+      },
+      {
+        "Difficulty": "Green",
+        "Name": "ATL",
+        "Modules": [
+          "Intern"
+        ],
+        "Abilities": 0,
+        "Track": [
+          {
+            "Planes": 2
+          },
+          {
+            "Planes": 1
+          },
+          {
+            "Planes": 2,
+            "Dice": 1
+          },
+          {
+            "Planes": 1,
+            "Dice": 1
+          },
+          {},
+          {
+            "Dice": 1
+          },
+          {},
+          {
+            "Dice": 4
+          }
+        ]
+      },
+      {
+        "Difficulty": "Green",
+        "Name": "PRG",
+        "Modules": [
+          "Kerosene"
+        ],
+        "Abilities": 2,
+        "Track": [
+          {
+            "Planes": 1
+          },
+          {
+            "Planes": 1
+          },
+          {
+            "Planes": 1,
+            "Dice": 1
+          },
+          {},
+          {
+            "Planes": 1,
+            "Axis": "00011"
+          },
+          {
+            "Planes": 1,
+            "Dice": 1
+          },
+          {
+            "Axis": "01100"
+          },
+          {
+            "Dice": 1
+          }
+        ]
+      },
+      {
+        "Difficulty": "Yellow",
+        "Name": "LHR",
+        "Modules": [
+          "Intern"
+        ],
+        "Abilities": 0,
+        "Track": [
+          {
+            "Planes": 2
+          },
+          {
+            "Planes": 1,
+            "Dice": 1
+          },
+          {
+            "Planes": 2,
+            "Dice": 1
+          },
+          {
+            "Planes": 1,
+            "Dice": 1
+          },
+          {
+            "Planes": 1
+          },
+          {
+            "Planes": 1,
+            "Dice": 2
+          }
+        ]
+      },
+      {
+        "Difficulty": "Yellow",
+        "Name": "TGU",
+        "Modules": [
+          "Kerosene"
+        ],
+        "Abilities": 2,
+        "Track": [
+          {
+            "Planes": 1
+          },
+          {
+            "Planes": 1,
+            "Axis": "11000"
+          },
+          {
+            "Planes": 1,
+            "Axis": "01100"
+          },
+          {
+            "Planes": 1,
+            "Axis": "11000"
+          },
+          {
+            "Dice": 3
+          }
+        ]
+      },
+      {
+        "Difficulty": "Yellow",
+        "Name": "GIG",
+        "Modules": [
+          "Wind"
+        ],
+        "Abilities": 1,
+        "Track": [
+          {
+            "Planes": 1
+          },
+          {
+            "Planes": 3
+          },
+          {
+            "Planes": 2,
+            "Dice": 1
+          },
+          {
+            "Planes": 1,
+            "Dice": 1
+          },
+          {
+            "Planes": 2
+          },
+          {},
+          {
+            "Dice": 2
+          }
+        ]
+      },
+      {
+        "Difficulty": "Yellow",
+        "Name": "KEF",
+        "Modules": [
+          "Ice Brakes"
+        ],
+        "Abilities": 1,
+        "Track": [
+          {},
+          {
+            "Planes": 1,
+            "Dice": 1
+          },
+          {
+            "Planes": 1
+          },
+          {
+            "Planes": 1,
+            "Dice": 1
+          },
+          {},
+          {
+            "Dice": 2
+          }
+        ]
+      },
+      {
+        "Difficulty": "Yellow",
+        "Name": "PRG",
+        "Modules": [
+          "Kerosene Leak"
+        ],
+        "Abilities": 2,
+        "Track": [
+          {
+            "Planes": 3
+          },
+          {
+            "Planes": 2
+          },
+          {
+            "Planes": 3,
+            "Dice": 1
+          },
+          {},
+          {
+            "Planes": 3,
+            "Dice": 1
+          },
+          {
+            "Planes": 1
+          },
+          {},
+          {}
+        ]
+      },
+      {
+        "Difficulty": "Yellow",
+        "Name": "KUL",
+        "Modules": [
+          "Kerosene"
+        ],
+        "Abilities": 1,
+        "Track": [
+          {
+            "Planes": 1
+          },
+          {
+            "Planes": 1,
+            "Axis": "00011"
+          },
+          {
+            "Planes": 1
+          },
+          {
+            "Axis": "00011"
+          },
+          {
+            "Planes": 1,
+            "Dice": 1,
+            "Axis": "00110"
+          },
+          {
+            "Planes": 1
+          },
+          {
+            "Axis": "00011"
+          },
+          {
+            "Dice": 2
+          }
+        ]
+      },
+      {
+        "Difficulty": "Yellow",
+        "Name": "ATL",
+        "Modules": [
+          "Kerosene Leak"
+        ],
+        "Abilities": 1,
+        "Track": [
+          {
+            "Planes": 1
+          },
+          {
+            "Planes": 3,
+            "Axis": "00011"
+          },
+          {
+            "Planes": 1
+          },
+          {
+            "Planes": 2,
+            "Dice": 1
+          },
+          {
+            "Planes": 2,
+            "Dice": 2
+          },
+          {
+            "Axis": "01110"
+          },
+          {
+            "Planes": 1,
+            "Dice": 1
+          },
+          {
+            "Dice": 1
+          }
+        ]
+      },
+      {
+        "Difficulty": "Red",
+        "Name": "PBH",
+        "Modules": [
+          "Kerosene",
+          "Timer"
+        ],
+        "Abilities": 2,
+        "Track": [
+          {
+            "Planes": 1
+          },
+          {
+            "Planes": 1,
+            "Axis": "00011"
+          },
+          {
+            "Planes": 1,
+            "Dice": 1,
+            "Axis": "11100"
+          },
+          {
+            "Planes": 1,
+            "Axis": "11000"
+          },
+          {
+            "Planes": 1
+          },
+          {
+            "Dice": 3
+          }
+        ]
+      },
+      {
+        "Difficulty": "Red",
+        "Name": "HND",
+        "Modules": [
+          "Intern"
+        ],
+        "Abilities": 1,
+        "Track": [
+          {
+            "Planes": 2
+          },
+          {
+            "Planes": 1,
+            "Axis": "11000"
+          },
+          {
+            "Planes": 2,
+            "Dice": 1
+          },
+          {
+            "Planes": 1,
+            "Dice": 1,
+            "Axis": "01100"
+          },
+          {
+            "Planes": 1,
+            "Dice": 1,
+            "Axis": "11000"
+          },
+          {
+            "Planes": 1
+          },
+          {
+            "Axis": "01100"
+          },
+          {
+            "Planes": 1,
+            "Dice": 3
+          }
+        ]
+      },
+      {
+        "Difficulty": "Red",
+        "Name": "GIG",
+        "Modules": [
+          "Wind",
+          "Kerosene Leak"
+        ],
+        "Abilities": 2,
+        "Track": [
+          {
+            "Planes": 2
+          },
+          {
+            "Planes": 1
+          },
+          {
+            "Planes": 1,
+            "Dice": 1
+          },
+          {
+            "Planes": 2
+          },
+          {
+            "Planes": 2,
+            "Dice": 1
+          },
+          {
+            "Planes": 1
+          },
+          {
+            "Dice": 3
+          }
+        ]
+      },
+      {
+        "Difficulty": "Red",
+        "Name": "OSL",
+        "Modules": [
+          "Kerosene Leak",
+          "Ice Brakes"
+        ],
+        "Abilities": 2,
+        "Track": [
+          {},
+          {
+            "Dice": 1
+          },
+          {
+            "Planes": 1
+          },
+          {
+            "Dice": 1
+          },
+          {},
+          {
+            "Planes": 1,
+            "Dice": 1
+          },
+          {},
+          {
+            "Dice": 3
+          }
+        ]
+      },
+      {
+        "Difficulty": "Red",
+        "Name": "TGU",
+        "Modules": [
+          "Kerosene",
+          "Wind"
+        ],
+        "Abilities": 2,
+        "Track": [
+          {
+            "Planes": 2
+          },
+          {
+            "Planes": 1,
+            "Axis": "11000"
+          },
+          {
+            "Planes": 1,
+            "Dice": 2,
+            "Axis": "01100"
+          },
+          {
+            "Planes": 1,
+            "Axis": "11000"
+          },
+          {
+            "Dice": 3
+          }
+        ]
+      },
+      {
+        "Difficulty": "Black",
+        "Name": "KEF",
+        "Modules": [
+          "Wind",
+          "Ice Brakes"
+        ],
+        "Abilities": 2,
+        "Track": [
+          {},
+          {
+            "Planes": 1,
+            "Axis": "01110"
+          },
+          {
+            "Planes": 1,
+            "Axis": "00111"
+          },
+          {
+            "Planes": 2,
+            "Dice": 1
+          },
+          {
+            "Axis": "11100"
+          },
+          {
+            "Dice": 2
+          }
+        ]
+      },
+      {
+        "Difficulty": "Black",
+        "Name": "KUL",
+        "Modules": [
+          "Kerosene",
+          "Timer"
+        ],
+        "Abilities": 2,
+        "Track": [
+          {
+            "Planes": 1
+          },
+          {
+            "Planes": 1,
+            "Axis": "00011"
+          },
+          {
+            "Planes": 1,
+            "Dice": 1,
+            "Axis": "00110"
+          },
+          {
+            "Planes": 1,
+            "Axis": "01100"
+          },
+          {
+            "Axis": "10000"
+          },
+          {
+            "Planes": 1,
+            "Dice": 1
+          },
+          {
+            "Axis": "00110"
+          },
+          {
+            "Dice": 3
+          }
+        ]
+      },
+      {
+        "Difficulty": "Black",
+        "Name": "PBH",
+        "Modules": [
+          "Kerosene",
+          "Timer"
+        ],
+        "Abilities": 2,
+        "Track": [
+          {
+            "Planes": 1
+          },
+          {
+            "Planes": 1,
+            "Dice": 1,
+            "Axis": "00001"
+          },
+          {
+            "Planes": 1,
+            "Dice": 1,
+            "Axis": "11000"
+          },
+          {
+            "Planes": 1,
+            "Dice": 1,
+            "Axis": "11000"
+          },
+          {},
+          {
+            "Planes": 1,
+            "Dice": 3
+          }
+        ]
+      }
+    ],
+    "z": 944
+  },
+  "Scenario Card Template": {
+    "type": "card",
+    "id": "Scenario Card Template",
+    "deck": "Scenario Card Deck",
+    "cardType": "Generic",
+    "z": 559,
+    "parent": "d5in"
+  },
+  "Scenario Card Deck": {
+    "type": "deck",
+    "id": "Scenario Card Deck",
+    "cardDefaults": {
+      "width": 200,
+      "height": 100
+    },
+    "cardTypes": {
+      "Generic": {
+        "name": "YUL",
+        "color": "green",
+        "module1": "",
+        "module2": "",
+        "abilities": 0,
+        "planes": 9,
+        "dice": 0,
+        "axis": 0
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 200,
+            "height": 100,
+            "dynamicProperties": {
+              "color": "color"
+            }
+          },
+          {
+            "type": "image",
+            "x": 160,
+            "y": 10,
+            "color": "transparent",
+            "width": 30,
+            "height": 30,
+            "dynamicProperties": {
+              "value": "module1"
+            }
+          },
+          {
+            "type": "image",
+            "x": 120,
+            "y": 10,
+            "color": "transparent",
+            "width": 30,
+            "height": 30,
+            "dynamicProperties": {
+              "value": "module2"
+            }
+          },
+          {
+            "type": "text",
+            "x": 10,
+            "y": 10,
+            "fontSize": 40,
+            "textAlign": "left",
+            "width": 200,
+            "dynamicProperties": {
+              "value": "name"
+            }
+          },
+          {
+            "type": "image",
+            "x": 10,
+            "y": 63,
+            "color": "transparent",
+            "width": 25,
+            "height": 25,
+            "value": "/i/game-icons.net/delapouite/commercial-airplane.svg"
+          },
+          {
+            "type": "text",
+            "x": 37,
+            "y": 64,
+            "fontSize": 20,
+            "textAlign": "left",
+            "width": 20,
+            "dynamicProperties": {
+              "value": "planes"
+            }
+          },
+          {
+            "type": "image",
+            "x": 57,
+            "y": 63,
+            "color": "transparent",
+            "width": 25,
+            "height": 25,
+            "value": "/i/game-icons.net/delapouite/perspective-dice-six-faces-random.svg"
+          },
+          {
+            "type": "text",
+            "x": 84,
+            "y": 64,
+            "fontSize": 20,
+            "textAlign": "left",
+            "width": 20,
+            "dynamicProperties": {
+              "value": "dice"
+            }
+          },
+          {
+            "type": "image",
+            "x": 104,
+            "y": 63,
+            "color": "transparent",
+            "width": 25,
+            "height": 25,
+            "value": "/i/game-icons.net/quoting/biplane.svg"
+          },
+          {
+            "type": "text",
+            "x": 131,
+            "y": 64,
+            "fontSize": 20,
+            "textAlign": "left",
+            "width": 20,
+            "dynamicProperties": {
+              "value": "axis"
+            }
+          },
+          {
+            "type": "image",
+            "x": 151,
+            "y": 63,
+            "color": "transparent",
+            "width": 25,
+            "height": 25,
+            "value": "/i/game-icons.net/delapouite/seven-pointed-star.svg"
+          },
+          {
+            "type": "text",
+            "x": 178,
+            "y": 64,
+            "fontSize": 20,
+            "textAlign": "left",
+            "width": 20,
+            "dynamicProperties": {
+              "value": "abilities"
+            }
+          }
+        ],
+        "radius": 20
+      }
+    ],
+    "z": 2021,
+    "x": 919,
+    "y": -126
+  },
+  "Change Scenario Button": {
+    "type": "button",
+    "id": "Change Scenario Button",
+    "x": 1500,
+    "y": 20,
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "clonedFrom",
+        "value": "Scenario Card Template"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "color",
+        "value": "#15960a",
+        "collection": "Green"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "color",
+        "value": "#f5c211",
+        "collection": "Yellow"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "color",
+        "value": "#c01c28",
+        "collection": "Red"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "color",
+        "value": "#888888",
+        "collection": "Black"
+      },
+      {
+        "func": "INPUT",
+        "fields": [
+          {
+            "type": "title",
+            "text": "Base Game"
+          },
+          {
+            "type": "text",
+            "text": "If you select multiple scenarios, one of them will be chosen at random."
+          },
+          {
+            "type": "choose",
+            "variable": "green",
+            "source": "Green",
+            "max": 100,
+            "scale": 0.8
+          },
+          {
+            "type": "choose",
+            "variable": "yellow",
+            "source": "Yellow",
+            "max": 100,
+            "scale": 0.8
+          },
+          {
+            "type": "choose",
+            "variable": "red",
+            "source": "Red",
+            "max": 100,
+            "scale": 0.8
+          },
+          {
+            "type": "choose",
+            "variable": "black",
+            "source": "Black",
+            "max": 100,
+            "scale": 0.8
+          }
+        ]
+      },
+      "var all = ${green} concat ${yellow}",
+      "var all = ${all} concat ${red}",
+      "var all = ${all} concat ${black}",
+      "var all = shuffle ${all}",
+      "var scenario = ${all.0}",
+      {
+        "func": "IF",
+        "condition": "${scenario}",
+        "thenRoutine": [
+          {
+            "func": "SELECT",
+            "property": "clonedFrom",
+            "value": "Approach Track - Template"
+          },
+          {
+            "func": "GET"
+          },
+          {
+            "func": "DELETE"
+          },
+          {
+            "func": "SELECT",
+            "property": "clonedFrom",
+            "value": "Approach Track - Aircraft Token Template"
+          },
+          {
+            "func": "DELETE"
+          },
+          "var key = ${PROPERTY key OF $scenario}",
+          "var scenarios = ${PROPERTY scenarios OF Scenario Generation Button}",
+          "var scenario = ${scenarios.$key}",
+          {
+            "func": "CALL",
+            "widget": "Scenario Generation Button",
+            "routine": "createScenarioRoutine",
+            "arguments": {
+              "scenario": "${scenario}",
+              "previousID": "${id}"
+            }
+          },
+          {
+            "func": "SELECT",
+            "property": "enabled",
+            "value": 1
+          },
+          {
+            "func": "CLICK"
+          },
+          {
+            "func": "IF",
+            "condition": "${scenario.Abilities}",
+            "thenRoutine": [
+              {
+                "func": "CLICK",
+                "collection": [
+                  "Abilities Toggle"
+                ]
+              }
+            ]
+          },
+          {
+            "func": "FOREACH",
+            "in": "${scenario.Modules}",
+            "loopRoutine": [
+              {
+                "func": "CLICK",
+                "collection": [
+                  "${value} Toggle"
+                ]
+              }
+            ]
+          },
+          "var isNotYUL = ${scenario.Name} != 'YUL'",
+          "var isNotGreen = ${scenario.Difficulty} != 'Green'",
+          "var showTrafficDie = ${isNotYUL} || ${isNotGreen}",
+          {
+            "func": "SET",
+            "collection": [
+              "Traffic Die"
+            ],
+            "property": "display",
+            "value": "${showTrafficDie}"
+          },
+          {
+            "func": "SELECT",
+            "property": "enabled",
+            "value": null,
+            "relation": "!="
+          },
+          {
+            "func": "SET",
+            "property": "display",
+            "value": "${showTrafficDie}"
+          },
+          {
+            "func": "IF",
+            "condition": "${showTrafficDie}",
+            "thenRoutine": [
+              {
+                "func": "SELECT",
+                "property": "clonedFrom",
+                "value": "Approach Track - Aircraft Token Template"
+              },
+              {
+                "func": "COUNT"
+              },
+              "var sparePlanes = 12 - ${COUNT}",
+              "var sparePlaneX = 1315",
+              {
+                "func": "IF",
+                "condition": "${sparePlanes}",
+                "thenRoutine": [
+                  {
+                    "func": "FOREACH",
+                    "range": [
+                      "${sparePlanes}"
+                    ],
+                    "loopRoutine": [
+                      "var rotation = randInt 0 359",
+                      {
+                        "func": "CLONE",
+                        "source": [
+                          "Approach Track - Aircraft Token Template"
+                        ],
+                        "properties": {
+                          "parent": null,
+                          "x": "${sparePlaneX}",
+                          "y": 30,
+                          "rotation": "${rotation}",
+                          "resetProperties": {
+                            "parent": null,
+                            "x": "${sparePlaneX}",
+                            "y": 30,
+                            "rotation": "${rotation}"
+                          }
+                        }
+                      },
+                      "var sparePlaneX = ${sparePlaneX} - 20"
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "CALL",
+        "widget": "Reset Button",
+        "routine": "resetRoutine"
+      }
+    ],
+    "z": 939,
+    "image": "/i/game-icons.net/delapouite/control-tower.svg",
+    "css": {
+      "background-size": "70%"
+    },
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "color": "white"
+  },
+  "Timer Label": {
+    "id": "Timer Label",
+    "parent": "Timer Wrapper",
+    "x": 10,
+    "y": 10,
+    "width": 60,
+    "height": 60,
+    "z": 1561,
+    "movable": false,
+    "image": "/i/game-icons.net/lorc/sands-of-time.svg"
+  },
+  "Timer Wrapper": {
+    "id": "Timer Wrapper",
+    "x": 942,
+    "y": 41,
+    "width": 219,
+    "height": 80,
+    "borderRadius": 10,
+    "layer": -3,
+    "z": 1946,
+    "movable": false,
+    "css": {
+      "background": "#ddd"
+    },
+    "editorGroup": true,
+    "display": 0
+  },
+  "Timer Toggle": {
+    "id": "Timer Toggle",
+    "x": 871,
+    "width": 60,
+    "height": 60,
+    "z": 123,
+    "movable": false,
+    "css": {
+      "opacity": "calc(0.25 + 0.75 * ${PROPERTY enabled})"
+    },
+    "image": "/i/game-icons.net/lorc/sands-of-time.svg",
+    "enabled": 0,
+    "clickRoutine": [
+      "var enabled = 1 - ${PROPERTY enabled}",
+      {
+        "func": "SET",
+        "property": "enabled",
+        "value": "${enabled}",
+        "collection": "thisButton"
+      },
+      {
+        "func": "SET",
+        "property": "display",
+        "value": "${enabled}",
+        "collection": [
+          "Timer Wrapper"
+        ]
+      },
+      {
+        "func": "TIMER",
+        "timer": "Timer",
+        "mode": "reset"
+      }
+    ],
+    "display": false
+  },
+  "Timer": {
+    "type": "timer",
+    "id": "Timer",
+    "parent": "Timer Wrapper",
+    "x": 60,
+    "y": 11,
+    "width": 149,
+    "height": 60,
+    "z": 940,
+    "countdown": true,
+    "css": {
+      "font-size": "48px"
+    },
+    "start": 60000,
+    "milliseconds": 60000,
+    "end": 0
+  },
+  "Clear Scenarios Button": {
+    "type": "button",
+    "id": "Clear Scenarios Button",
+    "x": 1260,
+    "y": -118,
+    "z": 943,
+    "text": "Clean",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "clonedFrom",
+        "relation": "!=",
+        "value": null
+      },
+      {
+        "func": "DELETE"
+      }
+    ]
+  },
+  "Approach Track - Template": {
+    "id": "Approach Track - Template",
+    "x": 1188,
+    "width": 202,
+    "height": 150,
+    "layer": -3,
+    "css": {
+      "background": "linear-gradient(${PROPERTY difficultyColor} 0%, ${PROPERTY difficultyColor} 45px, grey 120px, grey 100%)",
+      "padding": "10px",
+      "box-sizing": "border-box",
+      "font-size": "24px",
+      "font-weight": "bold"
+    },
+    "text": "XXX",
+    "grid": [
+      {
+        "x": 202,
+        "y": 25,
+        "offsetX": 1188,
+        "offsetY": 350
+      }
+    ],
+    "difficultyColor": "#15960a",
+    "z": 1237,
+    "y": -325
+  },
+  "Approach Track - Module Template": {
+    "id": "Approach Track - Module Template",
+    "parent": "Approach Track - Template",
+    "x": 160,
+    "y": 10,
+    "width": 30,
+    "height": 30,
+    "z": 123,
+    "movable": false,
+    "css": {
+      "color": "${PROPERTY color}",
+      "font-size": "16px",
+      "text-align": "center",
+      "padding-top": "6px",
+      "box-sizing": "border-box"
+    },
+    "image": "/i/game-icons.net/delapouite/seven-pointed-star.svg",
+    "text": "1",
+    "color": "#15960a"
+  },
+  "Approach Track - Aircraft Holder Template": {
+    "type": "holder",
+    "id": "Approach Track - Aircraft Holder Template",
+    "parent": "Approach Track - Template",
+    "y": 50,
+    "width": 200,
+    "height": 100,
+    "alignChildren": false,
+    "classes": "transparent",
+    "dropTarget": {
+      "token": "aircraft"
+    },
+    "preventPiles": true,
+    "enterRoutine": [
+      "var angle = randInt 1 360",
+      {
+        "func": "SET",
+        "collection": "child",
+        "property": "rotation",
+        "value": "${angle}"
+      }
+    ],
+    "z": 2
+  },
+  "Approach Track - Track Holder Template": {
+    "type": "holder",
+    "id": "Approach Track - Track Holder Template",
+    "parent": "Approach Track - Template",
+    "y": 50,
+    "width": 200,
+    "height": 100,
+    "classes": "transparent",
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "approachTrack": true
+    },
+    "preventPiles": true,
+    "z": 1
+  },
+  "Approach Track - Aircraft Token Template": {
+    "id": "Approach Track - Aircraft Token Template",
+    "parent": "Approach Track - Aircraft Holder Template",
+    "x": 69,
+    "y": 23,
+    "width": 60,
+    "height": 60,
+    "rotation": 250,
+    "z": 974,
+    "hoverParent": "z200u",
+    "image": "/i/game-icons.net/delapouite/commercial-airplane.svg",
+    "token": "aircraft"
+  },
+  "Approach Track - Axis Template": {
+    "type": "card",
+    "id": "Approach Track - Axis Template",
+    "parent": "Approach Track - Track Holder Template",
+    "deck": "Approach Track - Axis Deck",
+    "cardType": "00011",
+    "z": 132
+  },
+  "Approach Track - Dice Template": {
+    "type": "card",
+    "id": "Approach Track - Dice Template",
+    "parent": "Approach Track - Aircraft Holder Template",
+    "deck": "Approach Track - Dice Deck",
+    "cardType": "20",
+    "z": 128
+  },
+  "Approach Track - Background Template": {
+    "type": "card",
+    "id": "Approach Track - Background Template",
+    "parent": "Approach Track - Track Holder Template",
+    "deck": "Approach Track - Background Deck",
+    "cardType": "airport",
+    "z": 79
+  },
+  "Approach Track - Planes Template": {
+    "type": "card",
+    "id": "Approach Track - Planes Template",
+    "parent": "Approach Track - Track Holder Template",
+    "deck": "Approach Track - Planes Deck",
+    "cardType": "20",
+    "z": 69
+  },
+  "Scenario Card - Green - YUL": {
+    "type": "card",
+    "id": "Scenario Card - Green - YUL",
+    "deck": "Scenario Card Deck",
+    "cardType": "Generic",
+    "z": 2374,
+    "x": null,
+    "y": null,
+    "name": "YUL",
+    "color": "#15960a",
+    "key": "0",
+    "planes": 9,
+    "dice": 0,
+    "axis": 0,
+    "abilities": 0,
+    "module1": "",
+    "module2": "",
+    "clonedFrom": "Scenario Card Template",
+    "parent": "d5in"
+  },
+  "d5in": {
+    "type": "pile",
+    "parent": null,
+    "x": 1031,
+    "y": -144,
+    "width": 200,
+    "height": 100,
+    "id": "d5in"
+  },
+  "Scenario Card - Green - LHR": {
+    "type": "card",
+    "id": "Scenario Card - Green - LHR",
+    "deck": "Scenario Card Deck",
+    "cardType": "Generic",
+    "z": 2375,
+    "name": "LHR",
+    "color": "#15960a",
+    "key": "1",
+    "planes": 8,
+    "dice": 3,
+    "axis": 0,
+    "abilities": 0,
+    "module1": "",
+    "module2": "",
+    "clonedFrom": "Scenario Card Template",
+    "parent": "d5in"
+  },
+  "Scenario Card - Green - HND": {
+    "type": "card",
+    "id": "Scenario Card - Green - HND",
+    "deck": "Scenario Card Deck",
+    "cardType": "Generic",
+    "z": 2376,
+    "name": "HND",
+    "color": "#15960a",
+    "key": "2",
+    "planes": 8,
+    "dice": 2,
+    "axis": 3,
+    "abilities": 0,
+    "module1": "",
+    "module2": "",
+    "clonedFrom": "Scenario Card Template",
+    "parent": "d5in"
+  },
+  "Scenario Card - Green - OSL": {
+    "type": "card",
+    "id": "Scenario Card - Green - OSL",
+    "deck": "Scenario Card Deck",
+    "cardType": "Generic",
+    "z": 2377,
+    "name": "OSL",
+    "color": "#15960a",
+    "key": "3",
+    "planes": 4,
+    "dice": 3,
+    "axis": 0,
+    "abilities": 0,
+    "module1": "/i/game-icons.net/delapouite/fuel-tank.svg",
+    "module2": "",
+    "clonedFrom": "Scenario Card Template",
+    "parent": "d5in"
+  },
+  "Scenario Card - Green - ATL": {
+    "type": "card",
+    "id": "Scenario Card - Green - ATL",
+    "deck": "Scenario Card Deck",
+    "cardType": "Generic",
+    "z": 2378,
+    "name": "ATL",
+    "color": "#15960a",
+    "key": "4",
+    "planes": 6,
+    "dice": 7,
+    "axis": 0,
+    "abilities": 0,
+    "module1": "/i/game-icons.net/delapouite/id-card.svg",
+    "module2": "",
+    "clonedFrom": "Scenario Card Template",
+    "parent": "d5in"
+  },
+  "Scenario Card - Green - PRG": {
+    "type": "card",
+    "id": "Scenario Card - Green - PRG",
+    "deck": "Scenario Card Deck",
+    "cardType": "Generic",
+    "z": 2379,
+    "name": "PRG",
+    "color": "#15960a",
+    "key": "5",
+    "planes": 5,
+    "dice": 3,
+    "axis": 2,
+    "abilities": 2,
+    "module1": "/i/game-icons.net/delapouite/fuel-tank.svg",
+    "module2": "",
+    "clonedFrom": "Scenario Card Template",
+    "parent": "d5in"
+  },
+  "Scenario Card - Yellow - LHR": {
+    "type": "card",
+    "id": "Scenario Card - Yellow - LHR",
+    "deck": "Scenario Card Deck",
+    "cardType": "Generic",
+    "z": 2380,
+    "name": "LHR",
+    "color": "#f5c211",
+    "key": "6",
+    "planes": 8,
+    "dice": 5,
+    "axis": 0,
+    "abilities": 0,
+    "module1": "/i/game-icons.net/delapouite/id-card.svg",
+    "module2": "",
+    "clonedFrom": "Scenario Card Template",
+    "parent": "d5in"
+  },
+  "Scenario Card - Yellow - TGU": {
+    "type": "card",
+    "id": "Scenario Card - Yellow - TGU",
+    "deck": "Scenario Card Deck",
+    "cardType": "Generic",
+    "z": 2381,
+    "name": "TGU",
+    "color": "#f5c211",
+    "key": "7",
+    "planes": 4,
+    "dice": 3,
+    "axis": 3,
+    "abilities": 2,
+    "module1": "/i/game-icons.net/delapouite/fuel-tank.svg",
+    "module2": "",
+    "clonedFrom": "Scenario Card Template",
+    "parent": "d5in"
+  },
+  "Scenario Card - Yellow - GIG": {
+    "type": "card",
+    "id": "Scenario Card - Yellow - GIG",
+    "deck": "Scenario Card Deck",
+    "cardType": "Generic",
+    "z": 2382,
+    "name": "GIG",
+    "color": "#f5c211",
+    "key": "8",
+    "planes": 9,
+    "dice": 4,
+    "axis": 0,
+    "abilities": 1,
+    "module1": "/i/game-icons.net/delapouite/windsock.svg",
+    "module2": "",
+    "clonedFrom": "Scenario Card Template",
+    "parent": "d5in"
+  },
+  "Scenario Card - Yellow - KEF": {
+    "type": "card",
+    "id": "Scenario Card - Yellow - KEF",
+    "deck": "Scenario Card Deck",
+    "cardType": "Generic",
+    "z": 2383,
+    "name": "KEF",
+    "color": "#f5c211",
+    "key": "9",
+    "planes": 3,
+    "dice": 4,
+    "axis": 0,
+    "abilities": 1,
+    "module1": "/i/game-icons.net/lorc/snowflake-2.svg",
+    "module2": "",
+    "clonedFrom": "Scenario Card Template",
+    "parent": "d5in"
+  },
+  "Scenario Card - Yellow - PRG": {
+    "type": "card",
+    "id": "Scenario Card - Yellow - PRG",
+    "deck": "Scenario Card Deck",
+    "cardType": "Generic",
+    "z": 2384,
+    "name": "PRG",
+    "color": "#f5c211",
+    "key": "10",
+    "planes": 12,
+    "dice": 2,
+    "axis": 0,
+    "abilities": 2,
+    "module1": "/i/game-icons.net/delapouite/barrel-leak.svg",
+    "module2": "",
+    "clonedFrom": "Scenario Card Template",
+    "parent": "d5in"
+  },
+  "Scenario Card - Yellow - KUL": {
+    "type": "card",
+    "id": "Scenario Card - Yellow - KUL",
+    "deck": "Scenario Card Deck",
+    "cardType": "Generic",
+    "z": 2385,
+    "name": "KUL",
+    "color": "#f5c211",
+    "key": "11",
+    "planes": 5,
+    "dice": 3,
+    "axis": 4,
+    "abilities": 1,
+    "module1": "/i/game-icons.net/delapouite/fuel-tank.svg",
+    "module2": "",
+    "clonedFrom": "Scenario Card Template",
+    "parent": "d5in"
+  },
+  "Scenario Card - Yellow - ATL": {
+    "type": "card",
+    "id": "Scenario Card - Yellow - ATL",
+    "deck": "Scenario Card Deck",
+    "cardType": "Generic",
+    "z": 2386,
+    "name": "ATL",
+    "color": "#f5c211",
+    "key": "12",
+    "planes": 10,
+    "dice": 5,
+    "axis": 2,
+    "abilities": 1,
+    "module1": "/i/game-icons.net/delapouite/barrel-leak.svg",
+    "module2": "",
+    "clonedFrom": "Scenario Card Template",
+    "parent": "d5in"
+  },
+  "Scenario Card - Red - PBH": {
+    "type": "card",
+    "id": "Scenario Card - Red - PBH",
+    "deck": "Scenario Card Deck",
+    "cardType": "Generic",
+    "z": 2387,
+    "name": "PBH",
+    "color": "#c01c28",
+    "key": "13",
+    "planes": 5,
+    "dice": 4,
+    "axis": 3,
+    "abilities": 2,
+    "module1": "/i/game-icons.net/lorc/sands-of-time.svg",
+    "module2": "/i/game-icons.net/delapouite/fuel-tank.svg",
+    "clonedFrom": "Scenario Card Template",
+    "parent": "d5in"
+  },
+  "Scenario Card - Red - HND": {
+    "type": "card",
+    "id": "Scenario Card - Red - HND",
+    "deck": "Scenario Card Deck",
+    "cardType": "Generic",
+    "z": 2388,
+    "name": "HND",
+    "color": "#c01c28",
+    "key": "14",
+    "planes": 9,
+    "dice": 6,
+    "axis": 4,
+    "abilities": 1,
+    "module1": "/i/game-icons.net/delapouite/id-card.svg",
+    "module2": "",
+    "clonedFrom": "Scenario Card Template",
+    "parent": "d5in"
+  },
+  "Scenario Card - Red - GIG": {
+    "type": "card",
+    "id": "Scenario Card - Red - GIG",
+    "deck": "Scenario Card Deck",
+    "cardType": "Generic",
+    "z": 2389,
+    "name": "GIG",
+    "color": "#c01c28",
+    "key": "15",
+    "planes": 9,
+    "dice": 5,
+    "axis": 0,
+    "abilities": 2,
+    "module1": "/i/game-icons.net/delapouite/barrel-leak.svg",
+    "module2": "/i/game-icons.net/delapouite/windsock.svg",
+    "clonedFrom": "Scenario Card Template",
+    "parent": "d5in"
+  },
+  "Scenario Card - Red - OSL": {
+    "type": "card",
+    "id": "Scenario Card - Red - OSL",
+    "deck": "Scenario Card Deck",
+    "cardType": "Generic",
+    "z": 2390,
+    "name": "OSL",
+    "color": "#c01c28",
+    "key": "16",
+    "planes": 2,
+    "dice": 6,
+    "axis": 0,
+    "abilities": 2,
+    "module1": "/i/game-icons.net/lorc/snowflake-2.svg",
+    "module2": "/i/game-icons.net/delapouite/barrel-leak.svg",
+    "clonedFrom": "Scenario Card Template",
+    "parent": "d5in"
+  },
+  "Scenario Card - Red - TGU": {
+    "type": "card",
+    "id": "Scenario Card - Red - TGU",
+    "deck": "Scenario Card Deck",
+    "cardType": "Generic",
+    "z": 2391,
+    "name": "TGU",
+    "color": "#c01c28",
+    "key": "17",
+    "planes": 5,
+    "dice": 5,
+    "axis": 3,
+    "abilities": 2,
+    "module1": "/i/game-icons.net/delapouite/windsock.svg",
+    "module2": "/i/game-icons.net/delapouite/fuel-tank.svg",
+    "clonedFrom": "Scenario Card Template",
+    "parent": "d5in"
+  },
+  "Scenario Card - Black - KEF": {
+    "type": "card",
+    "id": "Scenario Card - Black - KEF",
+    "deck": "Scenario Card Deck",
+    "cardType": "Generic",
+    "z": 2392,
+    "name": "KEF",
+    "color": "#888888",
+    "key": "18",
+    "planes": 4,
+    "dice": 3,
+    "axis": 3,
+    "abilities": 2,
+    "module1": "/i/game-icons.net/lorc/snowflake-2.svg",
+    "module2": "/i/game-icons.net/delapouite/windsock.svg",
+    "clonedFrom": "Scenario Card Template",
+    "parent": "d5in"
+  },
+  "Scenario Card - Black - KUL": {
+    "type": "card",
+    "id": "Scenario Card - Black - KUL",
+    "deck": "Scenario Card Deck",
+    "cardType": "Generic",
+    "z": 2393,
+    "name": "KUL",
+    "color": "#888888",
+    "key": "19",
+    "planes": 5,
+    "dice": 5,
+    "axis": 5,
+    "abilities": 2,
+    "module1": "/i/game-icons.net/lorc/sands-of-time.svg",
+    "module2": "/i/game-icons.net/delapouite/fuel-tank.svg",
+    "clonedFrom": "Scenario Card Template",
+    "parent": "d5in"
+  },
+  "Scenario Card - Black - PBH": {
+    "type": "card",
+    "id": "Scenario Card - Black - PBH",
+    "deck": "Scenario Card Deck",
+    "cardType": "Generic",
+    "z": 2394,
+    "name": "PBH",
+    "color": "#888888",
+    "key": "20",
+    "planes": 5,
+    "dice": 6,
+    "axis": 3,
+    "abilities": 2,
+    "module1": "/i/game-icons.net/lorc/sands-of-time.svg",
+    "module2": "/i/game-icons.net/delapouite/fuel-tank.svg",
+    "clonedFrom": "Scenario Card Template",
+    "parent": "d5in"
+  },
+  "y717": {
+    "parent": null,
+    "x": 52,
+    "y": 23,
+    "width": 220,
+    "height": 258,
+    "layer": -3,
+    "editorGroup": true,
+    "movable": false,
+    "id": "y717"
+  },
+  "sr7q": {
+    "parent": null,
+    "x": 52,
+    "y": 709,
+    "width": 220,
+    "height": 258,
+    "layer": -3,
+    "editorGroup": true,
+    "movable": false,
+    "id": "sr7q"
+  },
+  "ovo8": {
+    "deck": "Switch Deck",
+    "type": "card",
+    "cardType": "switch",
+    "id": "ovo8",
+    "z": 2643,
+    "y": 98,
+    "front": "/i/game-icons.net/delapouite/coffee-cup.svg",
+    "parent": "vsk3",
+    "x": 10
+  },
+  "ovo9": {
+    "deck": "Switch Deck",
+    "type": "card",
+    "cardType": "switch",
+    "id": "ovo9",
+    "z": 2642,
+    "y": 98,
+    "x": 126,
+    "front": "/i/game-icons.net/delapouite/coffee-cup.svg",
+    "parent": "vsk3"
+  },
+  "ovo10": {
+    "deck": "Switch Deck",
+    "type": "card",
+    "cardType": "switch",
+    "id": "ovo10",
+    "z": 2642,
+    "y": 98,
+    "x": 242,
+    "front": "/i/game-icons.net/delapouite/coffee-cup.svg",
+    "parent": "vsk3"
+  },
+  "vsk3": {
+    "parent": null,
+    "x": 525,
+    "y": 706,
+    "width": 332,
+    "height": 158,
+    "layer": -3,
+    "editorGroup": true,
+    "movable": false,
+    "id": "vsk3",
+    "css": {
+      "background": "#ddd"
+    },
+    "borderRadius": 10
+  },
+  "Reset Button": {
+    "type": "button",
+    "id": "Reset Button",
+    "x": 1400,
+    "y": 20,
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "fields": [
+          {
+            "type": "title",
+            "text": "Restarting game ..."
+          },
+          {
+            "type": "subtitle",
+            "text": "This will restart the game. Are you sure?"
+          }
+        ],
+        "cancelButtonText": "Continue Game",
+        "confirmButtonText": "Restart Game"
+      },
+      {
+        "func": "CALL",
+        "routine": "resetRoutine"
+      }
+    ],
+    "css": {
+      "font-size": "68px"
+    },
+    "classes": "material-icons",
+    "text": "restart_alt",
+    "resetRoutine": [
+      {
+        "func": "SELECT",
+        "property": "resetProperties",
+        "relation": "!=",
+        "value": null
+      },
+      {
+        "func": "FOREACH",
+        "loopRoutine": [
+          {
+            "func": "FOREACH",
+            "in": "${PROPERTY resetProperties OF $widgetID}",
+            "loopRoutine": [
+              {
+                "func": "SET",
+                "property": "${key}",
+                "value": "${value}"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "CLICK",
+        "collection": [
+          "Pilot - Roll Button",
+          "Pilot - Roll Button4"
+        ]
+      },
+      {
+        "func": "CLICK",
+        "collection": [
+          "Intern Toggle"
+        ],
+        "count": 2
+      }
+    ]
+  },
+  "_meta": {
+    "version": 15,
+    "info": {
+      "name": "Runway Roll",
+      "image": "/i/noto-emoji/emoji_u1f6ec.svg",
+      "rules": "",
+      "bgg": "https://boardgamegeek.com/boardgame/373106/sky-team",
+      "year": "2023",
+      "mode": "coop",
+      "time": "15",
+      "attribution": "<div>The layout was done by ArnoldSmith86 and is released to the public domain by CC0.</div><div><br></div><div>These images were used from game-icons.net and are licensed as CC BY 3.0:<br></div><div><br></div><div>By delapouite:<br></div><div>https://game-icons.net/1x1/delapouite/barrel-leak.html</div>https://game-icons.net/1x1/delapouite/car-wheel.html<br>https://game-icons.net/1x1/delapouite/check-mark.html<br>https://game-icons.net/1x1/delapouite/coffee-cup.html<br>https://game-icons.net/1x1/delapouite/commercial-airplane.html<br>https://game-icons.net/1x1/delapouite/control-tower.html<br>https://game-icons.net/1x1/delapouite/dice-six-faces-one.html<br>https://game-icons.net/1x1/delapouite/dice-six-faces-six.html<br>https://game-icons.net/1x1/delapouite/dice-target.html<br>https://game-icons.net/1x1/delapouite/fuel-tank.html<br>https://game-icons.net/1x1/delapouite/id-card.html<br>https://game-icons.net/1x1/delapouite/perspective-dice-six-faces-random.html<br>https://game-icons.net/1x1/delapouite/plain-arrow.html<br>https://game-icons.net/1x1/delapouite/plane-wing.html<br>https://game-icons.net/1x1/delapouite/pocket-radio.html<br>https://game-icons.net/1x1/delapouite/rolling-dices.html<br>https://game-icons.net/1x1/delapouite/seven-pointed-star.html<br>https://game-icons.net/1x1/delapouite/speedometer.html<br>https://game-icons.net/1x1/delapouite/sun-cloud.html<br>https://game-icons.net/1x1/delapouite/turbine.html<br><div>https://game-icons.net/1x1/delapouite/windsock.html</div><div><br></div><div>By lorc:<br></div>https://game-icons.net/1x1/lorc/body-swapping.html<br>https://game-icons.net/1x1/lorc/sands-of-time.html<br><div>https://game-icons.net/1x1/lorc/snowflake-2.html</div><div><br></div><div>By quoting:<br></div>https://game-icons.net/1x1/quoting/biplane.html<br><br>",
+      "lastUpdate": 1725609895443,
+      "showName": true,
+      "skill": "",
+      "description": "Roll and place dice to control an aircraft and eventually land it safely on an airport.",
+      "similarImage": "",
+      "similarName": "Sky Team",
+      "similarDesigner": "Luc Rémond",
+      "similarAwards": "2024 Spiel des Jahres Winner\n2024 Spiel des Jahres Nominee\n2023 Meeples Choice Award Winner\n2023 Meeples Choice Award Nominee\n2023 Golden Geek Most Innovative Board Game Nominee\n2023 Golden Geek Medium Game of the Year Nominee\n2023 Golden Geek Best Thematic Board Game Nominee\n2023 Golden Geek Best Cooperative Game Winner\n2023 Golden Geek Best Cooperative Game Nominee\n2023 Golden Geek Best 2-Player Board Game Winner\n2023 Golden Geek Best 2-Player Board Game Nominee",
+      "ruleText": "<h4>Goal</h4><div>The altitude track on the right reduces once per round. When at 0, the plane must have reached the airport (second track), all other planes must be gone and several systems of the plane must have been configured for landing.</div><h4>Setup</h4><div>Two players <b>take a seat</b> as pilot and co-pilot on the left side of the board, revealing their private dice.<br></div><h4>Round Overview</h4><ol><li>The first phase is a <b>strategy discussion</b> among both players. You're not allowed to plan for exact dice values (for example \"if I roll a 6, I'll put it there immediately\").<br></li><li>Then, both players <b>roll their four dice</b> by clicking on the button below them. From now on, <b>no talking is allowed</b> until all dice are placed.<br></li><li>Now the starting player (indicated by the colored <i class=\"richtextSymbol material-icons\">forward</i>&nbsp;on the lowest section of the altitude track) places their first die on any empty spot with matching color and number (images have no number restriction).</li><li>Players now <b>alternate placing one die at a time</b> following the same rules.</li><li>After placing all eight dice, the altitude track is dragged one section towards the bottom.</li></ol><div>In every round, it is <b>required</b> to have two dice in the <i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/quoting/biplane.svg\"></i><b>&nbsp;Axis</b> system and two dice in the <i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/turbine.svg\"></i><b>&nbsp;Engine</b> system.</div><h4>Reroll Tokens</h4><div><ul><li>The altitude track on the far right contains two <i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/rolling-dices.svg\"></i>&nbsp;Reroll Tokens (at 6000 and 2000).</li><li>As soon as you <b>reach the indicated height</b>, drag the reroll token to your stash (for example top left).</li><li>You reach 6000 at the start of the game, so you immediately get one reroll token.</li><li>At any point during a round, <b>any player may decide to spend a reroll token</b> from the stash. At that point, <b>both players are allowed to reroll any of their remaining dice</b>.</li><li>For <b>red and black scenarios, remove the reroll token from the 2000</b> section and keep it as a spare in case you need it for one of the <i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/seven-pointed-star.svg\"></i>&nbsp;Abilities.<br></li></ul></div><h4>Dice Systems</h4><div>Depending on where the dice are placed, the systems on the plane activate and cause certain changes.</div><div><br></div><div><i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/pocket-radio.svg\"></i><b>&nbsp;Radio</b></div><div><ul><li>If you place a 2 on a radio spot, you <b>remove one plane</b> from the second section (and only the second section) of the approach track from the bottom. Other die values work accordingly.<br></li></ul></div><div><i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/quoting/biplane.svg\"></i><b>&nbsp;Axis</b></div><div><ul><li>As soon as two dice are placed on the axis spots, calculate the difference of the dice and <b>tilt the axis marker</b> that many ticks to the larger side by clicking on the appropriate arrow. When it reaches a ❌, you lose.</li><li>The aircraft <b>tilt is not reset</b> between rounds and needs to be centered for landing.<br></li></ul></div><div><i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/car-wheel.svg\"></i><b>&nbsp;Landing Gear</b></div><ul><li>The pilot is responsible for deploying <b>all three</b> landing gears before landing.</li><li><b>Flip the switch</b> below the die.<br></li><li>The <b>order does not matter</b>.</li><li>Each time one is deployed, the <b>blue </b><i class=\"richtextSymbol symbols\">[subproperty]</i><b>&nbsp;gets moved</b> one spot to the right, affecting the <i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/turbine.svg\"></i>&nbsp;Engines.</li></ul><div><i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/plane-wing.svg\"></i><b>&nbsp;Flaps</b></div><ul><li>The co-pilot is responsible for deploying <b>all four</b> flaps before landing.</li><li><b>Flip the switch</b> below the die.</li><li>They need to be deployed from <b>top to bottom</b>.</li><li>Each time one is deployed, the <b>orange </b><i class=\"richtextSymbol symbols\">[subproperty]</i><b>&nbsp;gets moved</b> one spot to the right, affecting the <i class=\"richtextSymbol gameicons\"><img src=\"https://virtualtabletop.io/i/game-icons.net/delapouite/turbine.svg\"></i>&nbsp;Engines.</li></ul><div><i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/turbine.svg\"></i>&nbsp;<b>Engines</b></div><div><ul><li>As soon as two dice are placed on the engine spots, calculate the sum of the dice and check it against the engine indicators:</li><ul><li>If it is <b>below the blue</b> <i class=\"richtextSymbol symbols\">[subproperty]</i>, the plane does not move.</li><li>If it is <b>between the blue and orange</b> <i class=\"richtextSymbol symbols\">[subproperty]</i>, the plane moves one spot. Drag the approach track one piece to the bottom.</li><li>If it is <b>above the orange</b> <i class=\"richtextSymbol symbols\">[subproperty]</i>, the plane moves two spots</li></ul><li>If <b>another plane</b> is dragged below the screen, you crash with it and <b>lose the game</b>.</li><li>If the <b>airport</b> is dragged below the screen, you passed it and <b>lose the game</b>.</li></ul></div><div><i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/speedometer.svg\"></i><b>&nbsp;Brakes</b></div><div><ul><li>The pilot is responsible for activating <b>at least one</b> brake before landing.</li><li><b>Flip the switch</b> below the die.</li><li>They need to be deployed from <b>left to right</b>.</li><li>Each time one is deployed, the <b>red </b><i class=\"richtextSymbol symbols\">[subproperty]</i><b>&nbsp;gets moved</b> one spot to the right, affecting the <i class=\"richtextSymbol gameicons\"><img src=\"https://virtualtabletop.io/i/game-icons.net/delapouite/turbine.svg\"></i>&nbsp;Engines <b>in the last round</b>.</li></ul></div><div><i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/coffee-cup.svg\"></i><b>&nbsp;Coffee</b></div><div><ul><li>When placed on one of the coffee spots, <b>activate one of the coffee markers</b>.</li><li>Whenever any player places a die, they can deactivate one or several coffee markers to <b>increase or decrease the value</b> of the die by one each.</li><li>You can't turn a 1 into a 6 or the other way around.</li><li>Click a die to alter its value or reroll it.</li></ul><h4>Last Round</h4><div>When the <b>altitude marker reaches 0</b>, you play one final round. Several conditions have to be met in order to win the game:<br></div><div><ol><li>At the start of the last round, the <b>airport</b> must be the <b>only thing still visible</b> on the approach track.</li><li>The sum of the <i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/turbine.svg\"></i>&nbsp;<b>Engine</b> dice is compared to the <i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/speedometer.svg\"></i>&nbsp;<b>Brakes</b> this round. It has to be <b>less than the red</b> <i class=\"richtextSymbol symbols\">[subproperty]</i>.</li><li>At the end of the round, the <i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/quoting/biplane.svg\"></i><b>&nbsp;Axis may not be tilted</b>.</li><li>At the end of the round, all&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/car-wheel.svg\"></i> <b>Landing Gears and&nbsp;</b><i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/plane-wing.svg\"></i><b> Flaps need to be deployed</b>.</li></ol><div>If you want to play the same scenario again, you can press the&nbsp;<i class=\"richtextSymbol material-icons\">restart_alt</i> button in the top right corner to reset the board.<br></div><h4>Scenarios</h4></div></div><div>After a successful landing in YUL, you can use the&nbsp;<i style=\"color: var(--overlayFontColor);\" class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/control-tower.svg\"></i><span style=\"color: var(--overlayFontColor);\">&nbsp;button in the top right corner to select several scenarios in four different difficulty levels. They include new challenges:</span></div><div><span style=\"color: var(--overlayFontColor);\"><br></span></div><div><i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/dice-six-faces-six.svg\"></i><span style=\"color: var(--overlayFontColor);\"><b>&nbsp;Traffic Die<br></b></span></div><div><ul><li>At the <b>beginning of each round</b>, look at the bottom most piece of the approach track.</li><li>For each black die, <b>roll the black traffic die</b> once and <b>place one spare plane</b> token onto the approach track at the section indicated by the rolled value. So if you rolled a 2, place a token on the second section from the bottom.</li><li>If you <b>skip a section</b> with dice by going forward two sections, <b>don't roll</b> the die for the skipped section.</li></ul><div><i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/quoting/biplane.svg\"></i>&nbsp;<b>Turns</b></div><div><ul><li>Some sections of the approach track might have a white area that shows <b>restrictions for the tilt</b> of the&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/quoting/biplane.svg\"></i> Axis.</li><li>Whenever you <b>drag a section of the approach track off screen</b>, the <i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/quoting/biplane.svg\"></i>&nbsp;Axis has to be tilted to an allowed angle. Otherwise, you lose the game.</li><li>The tilt restriction <b>also applies if the section is skipped</b> because the plane moves two sections at once.</li></ul><div><i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/fuel-tank.svg\"></i>&nbsp;<b>Kerosene</b></div><div><ul><li>Each round your plane uses kerosene.</li><li>Place a <b>die above the kerosene indicator</b> and move the yellow&nbsp;<i class=\"richtextSymbol symbols\">[subproperty]</i> marker down according to the die value.</li><li>If there is <b>no die</b> there at the end of each round, move the yellow&nbsp;<i class=\"richtextSymbol symbols\">[subproperty]</i> marker <b>down 6 places</b>.</li><li>If the yellow&nbsp;<i class=\"richtextSymbol symbols\">[subproperty]</i> marker ever reaches \"X\", you lose the game.</li></ul><div><i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/id-card.svg\"></i><b>&nbsp;Intern</b></div><div><ul><li>You have to <b>train your intern</b> before landing by using every green die.</li><li><b>Place one of your dice</b> onto the intern module and <b>use the green die</b> closest to your die as if it was your die.</li><li>You may <b>not use a die of the same value</b> as the one you'll be getting.</li></ul><div><i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/seven-pointed-star.svg\"></i>&nbsp;<b>Abilities</b></div><div><ul><li>Depending on the scenario, you may <b>pick one or two ability cards</b> that will provide benefits.</li><li>Each card has a <b>condition on the top</b> that tells you, when it applies, and a <b>reward on the bottom</b>.<br></li></ul><div><i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/windsock.svg\"></i><b>&nbsp;Wind</b></div></div></div></div></div></div><div><ul><li>Whenever the second&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/quoting/biplane.svg\"></i> Axis die is placed, the tilt indicator gets updated as usual and afterwards the <b>wind indicator gets turned as many ticks as the axis is currently tilted</b>. So if the the axis is tilted two arrows to the left, the wind indicator will be turned two ticks to the left <i>from its previous position</i>.</li><li>So even if the axis tilt stays at the same -2 for four rounds, the wind marker will be turned two ticks to the left in each of the four rounds.</li><li>Whenever the second&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/turbine.svg\"></i> Engine die is placed, the number pointed to by the <b>wind indicator will be added to the sum of the engine dice</b>.</li><li>The wind also counts in the last round when comparing the&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/turbine.svg\"></i> Engines to the&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/speedometer.svg\"></i> <b>Brakes</b>.</li></ul><div><i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/lorc/snowflake-2.svg\"></i><b>&nbsp;Ice Brakes</b></div></div><div><ul><li>The&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/lorc/snowflake-2.svg\"></i> Ice Brakes <b>replace the normal</b>&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/speedometer.svg\"></i> <b>Brakes</b> of the plane so it can land on icy runways.</li><li>The red&nbsp;<i class=\"richtextSymbol symbols\">[subproperty]</i> marker can only be advanced if <b>two dice with the same value</b> are placed above and below the brake indicator in the <b>same round</b>.</li><li>All the ice brakes <b>must be activated</b> in the last round.</li><li>It's allowed to do multiple steps in one round.<br></li></ul></div><div><i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/barrel-leak.svg\"></i><b>&nbsp;Kerosene Leak</b></div><div><ul><li>Rules of&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/fuel-tank.svg\"></i> Kerosene apply.</li><li>Except the amount of kerosene you lose per round is calculated by the <b>difference of the two</b>&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/turbine.svg\"></i> <b>Engine dice plus one</b>.</li></ul><div><i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/lorc/sands-of-time.svg\"></i><b>Timer</b></div><div><ul><li>Immediately <b>after rolling the dice, start a 60 second timer</b>.</li><li>Don't place any dice when the timer elapsed.</li><li>As usual, you lose the game, if one of the&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/turbine.svg\"></i> Engine dice or&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/quoting/biplane.svg\"></i> Axis dice is missing.<br></li></ul></div></div>",
+      "helpText": "",
+      "players": "2",
+      "language": "",
+      "variant": "",
+      "variantImage": ""
+    }
+  },
+  "Approach Track - Green - YUL": {
+    "id": "Approach Track - Green - YUL",
+    "x": 1188,
+    "width": 202,
+    "height": 750,
+    "layer": -3,
+    "css": {
+      "background": "linear-gradient(${PROPERTY difficultyColor} 0%, ${PROPERTY difficultyColor} 45px, grey 120px, grey 100%)",
+      "padding": "10px",
+      "box-sizing": "border-box",
+      "font-size": "24px",
+      "font-weight": "bold"
+    },
+    "text": "YUL",
+    "grid": [
+      {
+        "x": 202,
+        "y": 25,
+        "offsetX": 1188,
+        "offsetY": 350
+      }
+    ],
+    "difficultyColor": "#15960a",
+    "z": 1237,
+    "y": 250,
+    "resetProperties": {
+      "x": 1188,
+      "y": 250
+    },
+    "clonedFrom": "Approach Track - Template"
+  },
+  "Approach Track - Green - YUL - Track Holder 50": {
+    "type": "holder",
+    "id": "Approach Track - Green - YUL - Track Holder 50",
+    "y": 50,
+    "width": 200,
+    "height": 100,
+    "classes": "transparent",
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "approachTrack": true
+    },
+    "preventPiles": true,
+    "z": 2229,
+    "clonedFrom": "Approach Track - Track Holder Template",
+    "parent": "Approach Track - Green - YUL",
+    "x": null
+  },
+  "Approach Track - Green - YUL - Planes Holder 50": {
+    "type": "holder",
+    "id": "Approach Track - Green - YUL - Planes Holder 50",
+    "y": 50,
+    "width": 200,
+    "height": 100,
+    "alignChildren": false,
+    "classes": "transparent",
+    "dropTarget": {
+      "token": "aircraft"
+    },
+    "preventPiles": true,
+    "enterRoutine": [
+      "var angle = randInt 1 360",
+      {
+        "func": "SET",
+        "collection": "child",
+        "property": "rotation",
+        "value": "${angle}"
+      }
+    ],
+    "z": 2230,
+    "clonedFrom": "Approach Track - Aircraft Holder Template",
+    "parent": "Approach Track - Green - YUL",
+    "x": null
+  },
+  "Approach Track - Green - YUL - Track Planes 50": {
+    "type": "card",
+    "id": "Approach Track - Green - YUL - Track Planes 50",
+    "deck": "Approach Track - Planes Deck",
+    "cardType": 40,
+    "z": 2882,
+    "clonedFrom": "Approach Track - Planes Template",
+    "parent": "Approach Track - Green - YUL - Track Holder 50"
+  },
+  "Approach Track - Green - YUL - 50 - Plane 1": {
+    "id": "Approach Track - Green - YUL - 50 - Plane 1",
+    "x": 17,
+    "y": 2,
+    "width": 60,
+    "height": 60,
+    "rotation": 229,
+    "z": 3544,
+    "hoverParent": "z200u",
+    "image": "/i/game-icons.net/delapouite/commercial-airplane.svg",
+    "token": "aircraft",
+    "resetProperties": {
+      "parent": "Approach Track - Green - YUL - Planes Holder 50",
+      "x": 17,
+      "y": 2
+    },
+    "clonedFrom": "Approach Track - Aircraft Token Template",
+    "parent": "Approach Track - Green - YUL - Planes Holder 50"
+  },
+  "Approach Track - Green - YUL - 50 - Plane 2": {
+    "id": "Approach Track - Green - YUL - 50 - Plane 2",
+    "x": 111,
+    "y": 34,
+    "width": 60,
+    "height": 60,
+    "rotation": 36,
+    "z": 3545,
+    "hoverParent": "z200u",
+    "image": "/i/game-icons.net/delapouite/commercial-airplane.svg",
+    "token": "aircraft",
+    "resetProperties": {
+      "parent": "Approach Track - Green - YUL - Planes Holder 50",
+      "x": 111,
+      "y": 34
+    },
+    "clonedFrom": "Approach Track - Aircraft Token Template",
+    "parent": "Approach Track - Green - YUL - Planes Holder 50"
+  },
+  "Approach Track - Green - YUL - Track Airport": {
+    "type": "card",
+    "id": "Approach Track - Green - YUL - Track Airport",
+    "deck": "Approach Track - Background Deck",
+    "cardType": "airport",
+    "z": 2883,
+    "clonedFrom": "Approach Track - Background Template",
+    "parent": "Approach Track - Green - YUL - Track Holder 50"
+  },
+  "Approach Track - Green - YUL - Track Holder 150": {
+    "type": "holder",
+    "id": "Approach Track - Green - YUL - Track Holder 150",
+    "y": 150,
+    "width": 200,
+    "height": 100,
+    "classes": "transparent",
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "approachTrack": true
+    },
+    "preventPiles": true,
+    "z": 2231,
+    "clonedFrom": "Approach Track - Track Holder Template",
+    "parent": "Approach Track - Green - YUL",
+    "x": null
+  },
+  "Approach Track - Green - YUL - Planes Holder 150": {
+    "type": "holder",
+    "id": "Approach Track - Green - YUL - Planes Holder 150",
+    "y": 150,
+    "width": 200,
+    "height": 100,
+    "alignChildren": false,
+    "classes": "transparent",
+    "dropTarget": {
+      "token": "aircraft"
+    },
+    "preventPiles": true,
+    "enterRoutine": [
+      "var angle = randInt 1 360",
+      {
+        "func": "SET",
+        "collection": "child",
+        "property": "rotation",
+        "value": "${angle}"
+      }
+    ],
+    "z": 2232,
+    "clonedFrom": "Approach Track - Aircraft Holder Template",
+    "parent": "Approach Track - Green - YUL",
+    "x": null
+  },
+  "Approach Track - Green - YUL - Track Planes 150": {
+    "type": "card",
+    "id": "Approach Track - Green - YUL - Track Planes 150",
+    "deck": "Approach Track - Planes Deck",
+    "cardType": 60,
+    "z": 2884,
+    "clonedFrom": "Approach Track - Planes Template",
+    "parent": "Approach Track - Green - YUL - Track Holder 150"
+  },
+  "Approach Track - Green - YUL - 150 - Plane 1": {
+    "id": "Approach Track - Green - YUL - 150 - Plane 1",
+    "x": -0.3333333333333286,
+    "y": 2,
+    "width": 60,
+    "height": 60,
+    "rotation": 183,
+    "z": 3546,
+    "hoverParent": "z200u",
+    "image": "/i/game-icons.net/delapouite/commercial-airplane.svg",
+    "token": "aircraft",
+    "resetProperties": {
+      "parent": "Approach Track - Green - YUL - Planes Holder 150",
+      "x": -0.3333333333333286,
+      "y": 2
+    },
+    "clonedFrom": "Approach Track - Aircraft Token Template",
+    "parent": "Approach Track - Green - YUL - Planes Holder 150"
+  },
+  "Approach Track - Green - YUL - 150 - Plane 2": {
+    "id": "Approach Track - Green - YUL - 150 - Plane 2",
+    "x": 64,
+    "y": 5,
+    "width": 60,
+    "height": 60,
+    "rotation": 90,
+    "z": 3547,
+    "hoverParent": "z200u",
+    "image": "/i/game-icons.net/delapouite/commercial-airplane.svg",
+    "token": "aircraft",
+    "resetProperties": {
+      "parent": "Approach Track - Green - YUL - Planes Holder 150",
+      "x": 64,
+      "y": 5
+    },
+    "clonedFrom": "Approach Track - Aircraft Token Template",
+    "parent": "Approach Track - Green - YUL - Planes Holder 150"
+  },
+  "Approach Track - Green - YUL - 150 - Plane 3": {
+    "id": "Approach Track - Green - YUL - 150 - Plane 3",
+    "x": 137.33333333333334,
+    "y": 21,
+    "width": 60,
+    "height": 60,
+    "rotation": 63,
+    "z": 3548,
+    "hoverParent": "z200u",
+    "image": "/i/game-icons.net/delapouite/commercial-airplane.svg",
+    "token": "aircraft",
+    "resetProperties": {
+      "parent": "Approach Track - Green - YUL - Planes Holder 150",
+      "x": 137.33333333333334,
+      "y": 21
+    },
+    "clonedFrom": "Approach Track - Aircraft Token Template",
+    "parent": "Approach Track - Green - YUL - Planes Holder 150"
+  },
+  "Approach Track - Green - YUL - Track Holder 250": {
+    "type": "holder",
+    "id": "Approach Track - Green - YUL - Track Holder 250",
+    "y": 250,
+    "width": 200,
+    "height": 100,
+    "classes": "transparent",
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "approachTrack": true
+    },
+    "preventPiles": true,
+    "z": 2233,
+    "clonedFrom": "Approach Track - Track Holder Template",
+    "parent": "Approach Track - Green - YUL",
+    "x": null
+  },
+  "Approach Track - Green - YUL - Planes Holder 250": {
+    "type": "holder",
+    "id": "Approach Track - Green - YUL - Planes Holder 250",
+    "y": 250,
+    "width": 200,
+    "height": 100,
+    "alignChildren": false,
+    "classes": "transparent",
+    "dropTarget": {
+      "token": "aircraft"
+    },
+    "preventPiles": true,
+    "enterRoutine": [
+      "var angle = randInt 1 360",
+      {
+        "func": "SET",
+        "collection": "child",
+        "property": "rotation",
+        "value": "${angle}"
+      }
+    ],
+    "z": 2234,
+    "clonedFrom": "Approach Track - Aircraft Holder Template",
+    "parent": "Approach Track - Green - YUL",
+    "x": null
+  },
+  "Approach Track - Green - YUL - Track Planes 250": {
+    "type": "card",
+    "id": "Approach Track - Green - YUL - Track Planes 250",
+    "deck": "Approach Track - Planes Deck",
+    "cardType": 20,
+    "z": 2885,
+    "clonedFrom": "Approach Track - Planes Template",
+    "parent": "Approach Track - Green - YUL - Track Holder 250"
+  },
+  "Approach Track - Green - YUL - 250 - Plane 1": {
+    "id": "Approach Track - Green - YUL - 250 - Plane 1",
+    "x": 74,
+    "y": 39,
+    "width": 60,
+    "height": 60,
+    "rotation": 285,
+    "z": 3549,
+    "hoverParent": "z200u",
+    "image": "/i/game-icons.net/delapouite/commercial-airplane.svg",
+    "token": "aircraft",
+    "resetProperties": {
+      "parent": "Approach Track - Green - YUL - Planes Holder 250",
+      "x": 74,
+      "y": 39
+    },
+    "clonedFrom": "Approach Track - Aircraft Token Template",
+    "parent": "Approach Track - Green - YUL - Planes Holder 250"
+  },
+  "Approach Track - Green - YUL - Track Holder 350": {
+    "type": "holder",
+    "id": "Approach Track - Green - YUL - Track Holder 350",
+    "y": 350,
+    "width": 200,
+    "height": 100,
+    "classes": "transparent",
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "approachTrack": true
+    },
+    "preventPiles": true,
+    "z": 2235,
+    "clonedFrom": "Approach Track - Track Holder Template",
+    "parent": "Approach Track - Green - YUL",
+    "x": null
+  },
+  "Approach Track - Green - YUL - Planes Holder 350": {
+    "type": "holder",
+    "id": "Approach Track - Green - YUL - Planes Holder 350",
+    "y": 350,
+    "width": 200,
+    "height": 100,
+    "alignChildren": false,
+    "classes": "transparent",
+    "dropTarget": {
+      "token": "aircraft"
+    },
+    "preventPiles": true,
+    "enterRoutine": [
+      "var angle = randInt 1 360",
+      {
+        "func": "SET",
+        "collection": "child",
+        "property": "rotation",
+        "value": "${angle}"
+      }
+    ],
+    "z": 2236,
+    "clonedFrom": "Approach Track - Aircraft Holder Template",
+    "parent": "Approach Track - Green - YUL",
+    "x": null
+  },
+  "Approach Track - Green - YUL - Track Planes 350": {
+    "type": "card",
+    "id": "Approach Track - Green - YUL - Track Planes 350",
+    "deck": "Approach Track - Planes Deck",
+    "cardType": 40,
+    "z": 2886,
+    "clonedFrom": "Approach Track - Planes Template",
+    "parent": "Approach Track - Green - YUL - Track Holder 350"
+  },
+  "Approach Track - Green - YUL - 350 - Plane 1": {
+    "id": "Approach Track - Green - YUL - 350 - Plane 1",
+    "x": 39,
+    "y": 31,
+    "width": 60,
+    "height": 60,
+    "rotation": 201,
+    "z": 3550,
+    "hoverParent": "z200u",
+    "image": "/i/game-icons.net/delapouite/commercial-airplane.svg",
+    "token": "aircraft",
+    "resetProperties": {
+      "parent": "Approach Track - Green - YUL - Planes Holder 350",
+      "x": 39,
+      "y": 31
+    },
+    "clonedFrom": "Approach Track - Aircraft Token Template",
+    "parent": "Approach Track - Green - YUL - Planes Holder 350"
+  },
+  "Approach Track - Green - YUL - 350 - Plane 2": {
+    "id": "Approach Track - Green - YUL - 350 - Plane 2",
+    "x": 108,
+    "y": 37,
+    "width": 60,
+    "height": 60,
+    "rotation": 6,
+    "z": 3551,
+    "hoverParent": "z200u",
+    "image": "/i/game-icons.net/delapouite/commercial-airplane.svg",
+    "token": "aircraft",
+    "resetProperties": {
+      "parent": "Approach Track - Green - YUL - Planes Holder 350",
+      "x": 108,
+      "y": 37
+    },
+    "clonedFrom": "Approach Track - Aircraft Token Template",
+    "parent": "Approach Track - Green - YUL - Planes Holder 350"
+  },
+  "Approach Track - Green - YUL - Track Holder 450": {
+    "type": "holder",
+    "id": "Approach Track - Green - YUL - Track Holder 450",
+    "y": 450,
+    "width": 200,
+    "height": 100,
+    "classes": "transparent",
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "approachTrack": true
+    },
+    "preventPiles": true,
+    "z": 2237,
+    "clonedFrom": "Approach Track - Track Holder Template",
+    "parent": "Approach Track - Green - YUL",
+    "x": null
+  },
+  "Approach Track - Green - YUL - Planes Holder 450": {
+    "type": "holder",
+    "id": "Approach Track - Green - YUL - Planes Holder 450",
+    "y": 450,
+    "width": 200,
+    "height": 100,
+    "alignChildren": false,
+    "classes": "transparent",
+    "dropTarget": {
+      "token": "aircraft"
+    },
+    "preventPiles": true,
+    "enterRoutine": [
+      "var angle = randInt 1 360",
+      {
+        "func": "SET",
+        "collection": "child",
+        "property": "rotation",
+        "value": "${angle}"
+      }
+    ],
+    "z": 2238,
+    "clonedFrom": "Approach Track - Aircraft Holder Template",
+    "parent": "Approach Track - Green - YUL",
+    "x": null
+  },
+  "Approach Track - Green - YUL - Track Planes 450": {
+    "type": "card",
+    "id": "Approach Track - Green - YUL - Track Planes 450",
+    "deck": "Approach Track - Planes Deck",
+    "cardType": 20,
+    "z": 2887,
+    "clonedFrom": "Approach Track - Planes Template",
+    "parent": "Approach Track - Green - YUL - Track Holder 450"
+  },
+  "Approach Track - Green - YUL - 450 - Plane 1": {
+    "id": "Approach Track - Green - YUL - 450 - Plane 1",
+    "x": 86,
+    "y": 35,
+    "width": 60,
+    "height": 60,
+    "rotation": 335,
+    "z": 3552,
+    "hoverParent": "z200u",
+    "image": "/i/game-icons.net/delapouite/commercial-airplane.svg",
+    "token": "aircraft",
+    "resetProperties": {
+      "parent": "Approach Track - Green - YUL - Planes Holder 450",
+      "x": 86,
+      "y": 35
+    },
+    "clonedFrom": "Approach Track - Aircraft Token Template",
+    "parent": "Approach Track - Green - YUL - Planes Holder 450"
+  },
+  "Approach Track - Green - YUL - Track Holder 550": {
+    "type": "holder",
+    "id": "Approach Track - Green - YUL - Track Holder 550",
+    "y": 550,
+    "width": 200,
+    "height": 100,
+    "classes": "transparent",
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "approachTrack": true
+    },
+    "preventPiles": true,
+    "z": 2239,
+    "clonedFrom": "Approach Track - Track Holder Template",
+    "parent": "Approach Track - Green - YUL",
+    "x": null
+  },
+  "Approach Track - Green - YUL - Planes Holder 550": {
+    "type": "holder",
+    "id": "Approach Track - Green - YUL - Planes Holder 550",
+    "y": 550,
+    "width": 200,
+    "height": 100,
+    "alignChildren": false,
+    "classes": "transparent",
+    "dropTarget": {
+      "token": "aircraft"
+    },
+    "preventPiles": true,
+    "enterRoutine": [
+      "var angle = randInt 1 360",
+      {
+        "func": "SET",
+        "collection": "child",
+        "property": "rotation",
+        "value": "${angle}"
+      }
+    ],
+    "z": 2240,
+    "clonedFrom": "Approach Track - Aircraft Holder Template",
+    "parent": "Approach Track - Green - YUL",
+    "x": null
+  },
+  "Approach Track - Green - YUL - Track Planes 550": {
+    "type": "card",
+    "id": "Approach Track - Green - YUL - Track Planes 550",
+    "deck": "Approach Track - Planes Deck",
+    "cardType": "0",
+    "z": 2888,
+    "clonedFrom": "Approach Track - Planes Template",
+    "parent": "Approach Track - Green - YUL - Track Holder 550"
+  },
+  "Approach Track - Green - YUL - Track Holder 650": {
+    "type": "holder",
+    "id": "Approach Track - Green - YUL - Track Holder 650",
+    "y": 650,
+    "width": 200,
+    "height": 100,
+    "classes": "transparent",
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "approachTrack": true
+    },
+    "preventPiles": true,
+    "z": 2241,
+    "clonedFrom": "Approach Track - Track Holder Template",
+    "parent": "Approach Track - Green - YUL",
+    "x": null
+  },
+  "Approach Track - Green - YUL - Planes Holder 650": {
+    "type": "holder",
+    "id": "Approach Track - Green - YUL - Planes Holder 650",
+    "y": 650,
+    "width": 200,
+    "height": 100,
+    "alignChildren": false,
+    "classes": "transparent",
+    "dropTarget": {
+      "token": "aircraft"
+    },
+    "preventPiles": true,
+    "enterRoutine": [
+      "var angle = randInt 1 360",
+      {
+        "func": "SET",
+        "collection": "child",
+        "property": "rotation",
+        "value": "${angle}"
+      }
+    ],
+    "z": 2242,
+    "clonedFrom": "Approach Track - Aircraft Holder Template",
+    "parent": "Approach Track - Green - YUL",
+    "x": null
+  },
+  "Approach Track - Green - YUL - Track Planes 650": {
+    "type": "card",
+    "id": "Approach Track - Green - YUL - Track Planes 650",
+    "deck": "Approach Track - Planes Deck",
+    "cardType": "0",
+    "z": 2889,
+    "clonedFrom": "Approach Track - Planes Template",
+    "parent": "Approach Track - Green - YUL - Track Holder 650"
+  },
+  "Approach Track - Green - YUL - Track Clouds": {
+    "type": "card",
+    "id": "Approach Track - Green - YUL - Track Clouds",
+    "deck": "Approach Track - Background Deck",
+    "cardType": "clouds",
+    "z": 2890,
+    "clonedFrom": "Approach Track - Background Template",
+    "parent": "Approach Track - Green - YUL - Track Holder 650"
+  }
+}

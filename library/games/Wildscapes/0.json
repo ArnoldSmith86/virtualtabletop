@@ -1,0 +1,5628 @@
+{
+  "1637": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "FS2",
+    "id": "1637",
+    "z": 45248,
+    "parent": "tileBag",
+    "x": 4,
+    "y": 4
+  },
+  "4950": {
+    "deck": "goalDeck",
+    "type": "card",
+    "cardType": "elkC",
+    "id": "4950",
+    "z": 41696,
+    "parent": "ywi2"
+  },
+  "_meta": {
+    "version": 15,
+    "info": {
+      "name": "Wildscapes",
+      "image": "/assets/1672555818_163716",
+      "rules": "",
+      "bgg": "https://boardgamegeek.com/boardgame/295947/cascadia",
+      "year": "2021",
+      "mode": "vs, solo",
+      "time": "30-45",
+      "attribution": "The room layout and game design are by LawDawg96 and are released to the Public Domain under CC0.\n\nThe following items are available under the Pixabay license:<div><ul><li>Landscape background by 12019, https://pixabay.com/photos/river-mountains-sunset-dusk-1589616/</li><li>Raindrops background by Leohoho, https://pixabay.com/photos/rain-water-raindrops-droplets-5470471/</li></ul><div>The following items are available under the Flaticon license:<br></div></div><div><br></div><div><ul><li>Bear by Rikas Dzihab, https://www.flaticon.com/free-icon/bear_11957630</li><li>Elk by Bloodline Studios, https://www.flaticon.com/free-icon/animal_13272945</li><li>Fox by Smashicons, https://www.flaticon.com/free-icon/fox_3547065</li><li>Hawk by Meiliastudio, https://www.flaticon.com/free-icon/eagle_14099016</li><li>Fish by Cuputo, https://www.flaticon.com/free-icon/koi-fish_7309072</li><li>Pine cone colored by dreamicons, https://www.flaticon.com/free-icon/pine-cone_3373670</li><li>Pine cone outline by dreamicons, https://www.flaticon.com/free-icon/pine-cone_3373673</li></ul><div>The habitat tiles were created&nbsp;<span style=\"color: var(--overlayFontColor);\">using the Midjourney artificial intelligence image generator, https://www.midjourney.com/home/, using the following prompt: \"top down view of [type of habitat] style of Claude Monet\"</span></div><div><span style=\"color: var(--overlayFontColor);\"><br></span></div><div><span style=\"color: var(--overlayFontColor);\">The library image was generated using the following Midjourney prompt: \"</span>bear and hawk fighting over salmon, partly cloudy day, mountains in background, oil on canvas.\"</div></div>",
+      "lastUpdate": 1723466748764,
+      "showName": true,
+      "skill": "",
+      "description": "Draft tokens and lay tiles to create the highest scoring wildlife habitat.",
+      "similarImage": "",
+      "similarName": "Cascadia",
+      "similarDesigner": "Randy Flynn",
+      "similarAwards": "2024 GEEKS d'OURO Solo Board Game of the Year Nominee\n2023/2024 Årets Spill Best Family Game Winner\n2023 Guldbrikken Best Family Game Nominee\n2023 Årets Spel Best Adult Game Winner\n2022 Tric Trac Initiés Nominee\n2022 SXSW Tabletop Game of the Year Nominee\n2022 Swiss Gamers Award Nominee\n2022 Spiel des Jahres Winner\n2022 Nederlandse Spellenprijs Best Family Game Winner\n2022 JUGuinho Families Game of the Year Winner\n2022 Japan Boardgame Prize Voters' Selection Nominee\n2022 International Gamers Award Solo Winner\n2022 Hra roku Winner\n2022 Gra Roku Family Game of the Year Winner\n2022 Gra Roku Best Two Player Game Nominee\n2022 Gioco dell’Anno Nominee\n2022 Geek Media Awards Family Game of the Year Winner\n2022 Dragon Awards Best Science Fiction or Fantasy Board Game Nominee\n2022 Bulgarian Board Game Awards International Game of the Year Winner\n2022 American Tabletop Strategy Games Winner\n2021 Golden Geek Light Game of the Year Winner\n2021 Golden Geek Best Solo Board Game Nominee\n2021 Golden Geek Best Board Game Artwork & Presentation Nominee\n2021 Cardboard Republic Architect Laurel Nominee",
+      "ruleText": "",
+      "helpText": "Players take seats.&nbsp; Press the restart button in the upper right corner. Select scoring options.&nbsp; The board is set up automatically based on the number of seated players.<div><br></div><div>A random player is chosen to go first. Move the starting 3-piece tile to a place on the board. Move the colored marble to the area near the starting tile to help players distinguish between tile groups.</div><div><br></div><div>Hover over the scoring goal tiles partially displayed in the bottom-right to enlarge the view and see all of the text.</div><div><br></div><div>Manually drag pine cones to the holder near your seat when allowed by the rules. Drag them back to the main holder when spending them.</div><div><br></div><div>Manually move habitat tiles and animal tokens as needed. Click habitat tiles to rotate them. If swapping animal tokens when allowed by the rules, temporarily move them to the board. Press the \"fill\" button to reload the drafting area's token. Move the replaced tokens back to the small animal token bag.</div><div><br></div><div>At any time, press the \"fill\" button to reload missing pieces from the draft area. If playing in solo mode, tiles and tokens on the far right will be removed from the board, other tiles shifted to the right, and new tiles added to the left.</div><div><br></div><div>Pres the \"turn\" button at the end of your turn to change the turn indicator. This also activates the \"fill\" button so you do not need to use both.</div><div><br></div><div>The entire play area can be moved. When dragging the play area, it scales down so you can see more of the board. When you stop dragging, it returns to its original size. Click the \"center\" button to return the board to its starting position.</div><div><br></div><div>When the game is over, press the scoreboard icon to alternately display or hide the scoreboard. The scoreboard can be moved by dragging. Input scores by clicking on the scoreboard and entering points for each of the scorable areas. You can only do one entry at a time and must select the appropriate row from the drop-down menu each time.</div>",
+      "variantImage": "",
+      "variant": "",
+      "language": "",
+      "players": "1-4"
+    }
+  },
+  "tileDeck": {
+    "type": "deck",
+    "id": "tileDeck",
+    "z": 1,
+    "cardDefaults": {
+      "width": 100,
+      "height": 100,
+      "classes": "transition",
+      "shift": true,
+      "enlarge": 3,
+      "grid": [
+        {
+          "x": 88.6,
+          "y": 152,
+          "offsetX": -44.3,
+          "offsetY": -76
+        },
+        {
+          "x": 88.6,
+          "y": 152
+        }
+      ],
+      "clickRoutine": [
+        {
+          "func": "SET",
+          "collection": "thisButton",
+          "property": "rotation",
+          "value": 60,
+          "relation": "+"
+        }
+      ]
+    },
+    "cardTypes": {
+      "DF1": {
+        "image": "/assets/-1256644367_34558",
+        "icon2": "/assets/-1916005357_3000",
+        "icon3": "/assets/1002522787_3636"
+      },
+      "DF2": {
+        "image": "/assets/-1256644367_34558",
+        "icon2": "/assets/-1916005357_3000",
+        "icon3": "/assets/1199843103_3990"
+      },
+      "DF3": {
+        "image": "/assets/-1256644367_34558",
+        "icon2": "/assets/1002522787_3636",
+        "icon3": "/assets/1199843103_3990"
+      },
+      "DF4": {
+        "image": "/assets/-1256644367_34558",
+        "icon4": "/assets/1002522787_3636",
+        "icon5": "/assets/1199843103_3990",
+        "icon6": "/assets/1901394317_3048"
+      },
+      "DF5": {
+        "image": "/assets/-1256644367_34558",
+        "icon2": "/assets/1002522787_3636",
+        "icon3": "/assets/1901394317_3048"
+      },
+      "DF6": {
+        "image": "/assets/-1256644367_34558",
+        "icon2": "/assets/1199843103_3990",
+        "icon3": "/assets/1901394317_3048"
+      },
+      "DL1": {
+        "image": "/assets/1808951091_27774",
+        "icon2": "/assets/-1916005357_3000",
+        "icon3": "/assets/1199843103_3990"
+      },
+      "DL2": {
+        "image": "/assets/1808951091_27774",
+        "icon4": "/assets/-1916005357_3000",
+        "icon5": "/assets/1199843103_3990",
+        "icon6": "/assets/-660565368_3656"
+      },
+      "DL3": {
+        "image": "/assets/1808951091_27774",
+        "icon4": "/assets/-1916005357_3000",
+        "icon5": "/assets/1199843103_3990",
+        "icon6": "/assets/1901394317_3048"
+      },
+      "DL4": {
+        "image": "/assets/1808951091_27774",
+        "icon2": "/assets/1002522787_3636",
+        "icon3": "/assets/-660565368_3656"
+      },
+      "DL5": {
+        "image": "/assets/1808951091_27774",
+        "icon2": "/assets/1002522787_3636",
+        "icon3": "/assets/1901394317_3048"
+      },
+      "DL6": {
+        "image": "/assets/1808951091_27774",
+        "icon2": "/assets/1199843103_3990",
+        "icon3": "/assets/1901394317_3048"
+      },
+      "DM1": {
+        "image": "/assets/1603449069_30046",
+        "icon4": "/assets/-1916005357_3000",
+        "icon5": "/assets/1002522787_3636",
+        "icon6": "/assets/1199843103_3990"
+      },
+      "DM2": {
+        "image": "/assets/1603449069_30046",
+        "icon4": "/assets/-1916005357_3000",
+        "icon5": "/assets/1199843103_3990",
+        "icon6": "/assets/1901394317_3048"
+      },
+      "DM3": {
+        "image": "/assets/1603449069_30046",
+        "icon2": "/assets/-1916005357_3000",
+        "icon3": "/assets/1901394317_3048"
+      },
+      "DM4": {
+        "image": "/assets/1603449069_30046",
+        "icon2": "/assets/1002522787_3636",
+        "icon3": "/assets/-660565368_3656"
+      },
+      "DM5": {
+        "image": "/assets/1603449069_30046",
+        "icon2": "/assets/1002522787_3636",
+        "icon3": "/assets/1901394317_3048"
+      },
+      "DM6": {
+        "image": "/assets/1603449069_30046",
+        "icon2": "/assets/1199843103_3990",
+        "icon3": "/assets/-660565368_3656"
+      },
+      "DS1": {
+        "image": "/assets/1377629696_31734",
+        "icon2": "/assets/1002522787_3636",
+        "icon3": "/assets/1199843103_3990"
+      },
+      "DS2": {
+        "image": "/assets/1377629696_31734",
+        "icon4": "/assets/1002522787_3636",
+        "icon5": "/assets/1199843103_3990",
+        "icon6": "/assets/1901394317_3048"
+      },
+      "DS3": {
+        "image": "/assets/1377629696_31734",
+        "icon2": "/assets/1002522787_3636",
+        "icon3": "/assets/1901394317_3048"
+      },
+      "DS4": {
+        "image": "/assets/1377629696_31734",
+        "icon2": "/assets/1199843103_3990",
+        "icon3": "/assets/-660565368_3656"
+      },
+      "DS5": {
+        "image": "/assets/1377629696_31734",
+        "icon4": "/assets/1199843103_3990",
+        "icon5": "/assets/-660565368_3656",
+        "icon6": "/assets/1901394317_3048"
+      },
+      "DS6": {
+        "image": "/assets/1377629696_31734",
+        "icon2": "/assets/-660565368_3656",
+        "icon3": "/assets/1901394317_3048"
+      },
+      "D1": {
+        "image": "/assets/-865177906_29606",
+        "icon1": "/assets/1002522787_3636",
+        "pine": "/assets/-850834450_4372"
+      },
+      "D2": {
+        "image": "/assets/-865177906_29606",
+        "icon1": "/assets/1002522787_3636",
+        "pine": "/assets/-850834450_4372"
+      },
+      "D3": {
+        "image": "/assets/-865177906_29606",
+        "icon1": "/assets/1199843103_3990",
+        "pine": "/assets/-850834450_4372"
+      },
+      "D4": {
+        "image": "/assets/-865177906_29606",
+        "icon1": "/assets/1901394317_3048",
+        "pine": "/assets/-850834450_4372"
+      },
+      "D5": {
+        "image": "/assets/-865177906_29606",
+        "icon1": "/assets/1901394317_3048",
+        "pine": "/assets/-850834450_4372"
+      },
+      "FL1": {
+        "image": "/assets/-1770929883_26820",
+        "icon2": "/assets/-1916005357_3000",
+        "icon3": "/assets/1002522787_3636"
+      },
+      "FL2": {
+        "image": "/assets/-1770929883_26820",
+        "icon2": "/assets/-1916005357_3000",
+        "icon3": "/assets/1199843103_3990"
+      },
+      "FL3": {
+        "image": "/assets/-1770929883_26820",
+        "icon2": "/assets/-1916005357_3000",
+        "icon3": "/assets/1901394317_3048"
+      },
+      "FL4": {
+        "image": "/assets/-1770929883_26820",
+        "icon4": "/assets/1002522787_3636",
+        "icon5": "/assets/1199843103_3990",
+        "icon6": "/assets/-660565368_3656"
+      },
+      "FL5": {
+        "image": "/assets/-1770929883_26820",
+        "icon2": "/assets/1002522787_3636",
+        "icon3": "/assets/-660565368_3656"
+      },
+      "FL6": {
+        "image": "/assets/-1770929883_26820",
+        "icon2": "/assets/1199843103_3990",
+        "icon3": "/assets/1901394317_3048"
+      },
+      "FM1": {
+        "image": "/assets/856309567_31190",
+        "icon4": "/assets/-1916005357_3000",
+        "icon5": "/assets/1002522787_3636",
+        "icon6": "/assets/1199843103_3990"
+      },
+      "FM2": {
+        "image": "/assets/856309567_31190",
+        "icon4": "/assets/-1916005357_3000",
+        "icon5": "/assets/1002522787_3636",
+        "icon6": "/assets/-660565368_3656"
+      },
+      "FM3": {
+        "image": "/assets/856309567_31190",
+        "icon2": "/assets/-1916005357_3000",
+        "icon3": "/assets/1199843103_3990"
+      },
+      "FM4": {
+        "image": "/assets/856309567_31190",
+        "icon2": "/assets/-1916005357_3000",
+        "icon3": "/assets/-660565368_3656"
+      },
+      "FM5": {
+        "image": "/assets/856309567_31190",
+        "icon2": "/assets/1002522787_3636",
+        "icon3": "/assets/1199843103_3990"
+      },
+      "FM6": {
+        "image": "/assets/856309567_31190",
+        "icon2": "/assets/1002522787_3636",
+        "icon3": "/assets/-660565368_3656"
+      },
+      "FS1": {
+        "image": "/assets/-107605146_33250",
+        "icon2": "/assets/-1916005357_3000",
+        "icon3": "/assets/1199843103_3990"
+      },
+      "FS2": {
+        "image": "/assets/-107605146_33250",
+        "icon2": "/assets/-1916005357_3000",
+        "icon3": "/assets/1901394317_3048"
+      },
+      "FS3": {
+        "image": "/assets/-107605146_33250",
+        "icon2": "/assets/1002522787_3636",
+        "icon3": "/assets/-660565368_3656"
+      },
+      "FS4": {
+        "image": "/assets/-107605146_33250",
+        "icon4": "/assets/1002522787_3636",
+        "icon5": "/assets/-660565368_3656",
+        "icon6": "/assets/1901394317_3048"
+      },
+      "FS5": {
+        "image": "/assets/-107605146_33250",
+        "icon2": "/assets/1002522787_3636",
+        "icon3": "/assets/1901394317_3048"
+      },
+      "FS6": {
+        "image": "/assets/-107605146_33250",
+        "icon2": "/assets/1199843103_3990",
+        "icon3": "/assets/-660565368_3656"
+      },
+      "F1": {
+        "image": "/assets/-160052790_35412",
+        "icon1": "/assets/-1916005357_3000",
+        "pine": "/assets/-850834450_4372"
+      },
+      "F2": {
+        "image": "/assets/-160052790_35412",
+        "icon1": "/assets/-1916005357_3000",
+        "pine": "/assets/-850834450_4372"
+      },
+      "F3": {
+        "image": "/assets/-160052790_35412",
+        "icon1": "/assets/1002522787_3636",
+        "pine": "/assets/-850834450_4372"
+      },
+      "F4": {
+        "image": "/assets/-160052790_35412",
+        "icon1": "/assets/1199843103_3990",
+        "pine": "/assets/-850834450_4372"
+      },
+      "F5": {
+        "image": "/assets/-160052790_35412",
+        "icon1": "/assets/1199843103_3990",
+        "pine": "/assets/-850834450_4372"
+      },
+      "LM1": {
+        "image": "/assets/-1360661620_22904",
+        "icon2": "/assets/-1916005357_3000",
+        "icon3": "/assets/1002522787_3636"
+      },
+      "LM2": {
+        "image": "/assets/-1360661620_22904",
+        "icon2": "/assets/-1916005357_3000",
+        "icon3": "/assets/-660565368_3656"
+      },
+      "LM3": {
+        "image": "/assets/-1360661620_22904",
+        "icon4": "/assets/-1916005357_3000",
+        "icon5": "/assets/-660565368_3656",
+        "icon6": "/assets/1901394317_3048"
+      },
+      "LM4": {
+        "image": "/assets/-1360661620_22904",
+        "icon2": "/assets/-1916005357_3000",
+        "icon3": "/assets/1901394317_3048"
+      },
+      "LM5": {
+        "image": "/assets/-1360661620_22904",
+        "icon2": "/assets/1002522787_3636",
+        "icon3": "/assets/-660565368_3656"
+      },
+      "LM6": {
+        "image": "/assets/-1360661620_22904",
+        "icon2": "/assets/-660565368_3656",
+        "icon3": "/assets/1901394317_3048"
+      },
+      "LS1": {
+        "image": "/assets/200404449_25056",
+        "icon2": "/assets/-1916005357_3000",
+        "icon3": "/assets/-660565368_3656"
+      },
+      "LS2": {
+        "image": "/assets/200404449_25056",
+        "icon4": "/assets/-1916005357_3000",
+        "icon5": "/assets/-660565368_3656",
+        "icon6": "/assets/1901394317_3048"
+      },
+      "LS3": {
+        "image": "/assets/200404449_25056",
+        "icon2": "/assets/-1916005357_3000",
+        "icon3": "/assets/1901394317_3048"
+      },
+      "LS4": {
+        "image": "/assets/200404449_25056",
+        "icon2": "/assets/1199843103_3990",
+        "icon3": "/assets/-660565368_3656"
+      },
+      "LS5": {
+        "image": "/assets/200404449_25056",
+        "icon2": "/assets/1199843103_3990",
+        "icon3": "/assets/1901394317_3048"
+      },
+      "LS6": {
+        "image": "/assets/200404449_25056",
+        "icon2": "/assets/-660565368_3656",
+        "icon3": "/assets/1901394317_3048"
+      },
+      "L1": {
+        "image": "/assets/2028960468_23634",
+        "icon1": "/assets/-1916005357_3000",
+        "pine": "/assets/-850834450_4372"
+      },
+      "L2": {
+        "image": "/assets/2028960468_23634",
+        "icon1": "/assets/-1916005357_3000",
+        "pine": "/assets/-850834450_4372"
+      },
+      "L3": {
+        "image": "/assets/2028960468_23634",
+        "icon1": "/assets/-660565368_3656",
+        "pine": "/assets/-850834450_4372"
+      },
+      "L4": {
+        "image": "/assets/2028960468_23634",
+        "icon1": "/assets/-660565368_3656",
+        "pine": "/assets/-850834450_4372"
+      },
+      "L5": {
+        "image": "/assets/2028960468_23634",
+        "icon1": "/assets/1901394317_3048",
+        "pine": "/assets/-850834450_4372"
+      },
+      "MS1": {
+        "image": "/assets/1465348716_29196",
+        "icon4": "/assets/-1916005357_3000",
+        "icon5": "/assets/1002522787_3636",
+        "icon6": "/assets/1901394317_3048"
+      },
+      "MS2": {
+        "image": "/assets/1465348716_29196",
+        "icon4": "/assets/-1916005357_3000",
+        "icon5": "/assets/1199843103_3990",
+        "icon6": "/assets/-660565368_3656"
+      },
+      "MS3": {
+        "image": "/assets/1465348716_29196",
+        "icon2": "/assets/-1916005357_3000",
+        "icon3": "/assets/1901394317_3048"
+      },
+      "MS4": {
+        "image": "/assets/1465348716_29196",
+        "icon2": "/assets/1002522787_3636",
+        "icon3": "/assets/1199843103_3990"
+      },
+      "MS5": {
+        "image": "/assets/1465348716_29196",
+        "icon2": "/assets/1002522787_3636",
+        "icon3": "/assets/-660565368_3656"
+      },
+      "MS6": {
+        "image": "/assets/1465348716_29196",
+        "icon2": "/assets/-660565368_3656",
+        "icon3": "/assets/1901394317_3048"
+      },
+      "M1": {
+        "image": "/assets/1799564095_26776",
+        "icon1": "/assets/-1916005357_3000",
+        "pine": "/assets/-850834450_4372"
+      },
+      "M2": {
+        "image": "/assets/1799564095_26776",
+        "icon1": "/assets/1002522787_3636",
+        "pine": "/assets/-850834450_4372"
+      },
+      "M3": {
+        "image": "/assets/1799564095_26776",
+        "icon1": "/assets/1002522787_3636",
+        "pine": "/assets/-850834450_4372"
+      },
+      "M4": {
+        "image": "/assets/1799564095_26776",
+        "icon1": "/assets/-660565368_3656",
+        "pine": "/assets/-850834450_4372"
+      },
+      "M5": {
+        "image": "/assets/1799564095_26776",
+        "icon1": "/assets/-660565368_3656",
+        "pine": "/assets/-850834450_4372"
+      },
+      "S1": {
+        "image": "/assets/1073893257_31068",
+        "icon1": "/assets/1199843103_3990",
+        "pine": "/assets/-850834450_4372"
+      },
+      "S2": {
+        "image": "/assets/1073893257_31068",
+        "icon1": "/assets/1199843103_3990",
+        "pine": "/assets/-850834450_4372"
+      },
+      "S3": {
+        "image": "/assets/1073893257_31068",
+        "icon1": "/assets/-660565368_3656",
+        "pine": "/assets/-850834450_4372"
+      },
+      "S4": {
+        "image": "/assets/1073893257_31068",
+        "icon1": "/assets/1901394317_3048",
+        "pine": "/assets/-850834450_4372"
+      },
+      "S5": {
+        "image": "/assets/1073893257_31068",
+        "icon1": "/assets/1901394317_3048",
+        "pine": "/assets/-850834450_4372"
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "transparent",
+            "width": 100,
+            "height": 100,
+            "dynamicProperties": {
+              "value": "image"
+            }
+          },
+          {
+            "note": "single icon",
+            "type": "image",
+            "x": 35,
+            "y": 35,
+            "width": 30,
+            "height": 30,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "icon1"
+            }
+          },
+          {
+            "note": "pine cone",
+            "type": "image",
+            "x": 38,
+            "y": 5,
+            "width": 24,
+            "height": 24,
+            "color": "transparent",
+            "css": "opacity:0.7",
+            "dynamicProperties": {
+              "value": "pine"
+            }
+          },
+          {
+            "note": "double icon 1",
+            "type": "image",
+            "x": 20,
+            "y": 35,
+            "width": 30,
+            "height": 30,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "icon2"
+            }
+          },
+          {
+            "note": "double icon 2",
+            "type": "image",
+            "x": 50,
+            "y": 35,
+            "width": 30,
+            "height": 30,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "icon3"
+            }
+          },
+          {
+            "note": "triple icon 1",
+            "type": "image",
+            "x": 20,
+            "y": 25,
+            "width": 30,
+            "height": 30,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "icon4"
+            }
+          },
+          {
+            "note": "triple icon 2",
+            "type": "image",
+            "x": 50,
+            "y": 25,
+            "width": 30,
+            "height": 30,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "icon5"
+            }
+          },
+          {
+            "note": "triple icon 3",
+            "type": "image",
+            "x": 35,
+            "y": 51,
+            "width": 30,
+            "height": 30,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "icon6"
+            }
+          }
+        ],
+        "border": false,
+        "radius": false
+      }
+    ],
+    "parent": "tileBag"
+  },
+  "reset": {
+    "type": "button",
+    "id": "reset",
+    "x": 1549,
+    "y": 1,
+    "width": 50,
+    "height": 50,
+    "z": 2088,
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "header": "Resetting game...",
+        "fields": [
+          {
+            "type": "subtitle",
+            "text": "This will reset the game. Choose a scoring option then press Confirm to continue or Cancel to exit."
+          },
+          {
+            "type": "select",
+            "variable": "scoring",
+            "value": "${PROPERTY scoring}",
+            "options": [
+              {
+                "value": 1,
+                "text": "Regular"
+              },
+              {
+                "value": 2,
+                "text": "First game goals (only 'A' cards)"
+              },
+              {
+                "value": 3,
+                "text": "Family variant"
+              },
+              {
+                "value": 4,
+                "text": "Intermediate variant"
+              }
+            ]
+          }
+        ],
+        "cancelButtonText": "Cancel",
+        "confirmButtonText": "Confirm"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "scoring",
+        "value": "${scoring}"
+      },
+      {
+        "func": "SELECT",
+        "property": "resetProperties",
+        "relation": "!=",
+        "value": null
+      },
+      {
+        "func": "FOREACH",
+        "loopRoutine": [
+          {
+            "func": "FOREACH",
+            "in": "${PROPERTY resetProperties OF $widgetID}",
+            "loopRoutine": [
+              {
+                "func": "SET",
+                "property": "${key}",
+                "value": "${value}"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "CLICK",
+        "collection": [
+          "centerButton"
+        ]
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "relation": "in",
+        "value": [
+          "start1-1",
+          "start2-1",
+          "start3-1",
+          "start4-1",
+          "start5-1"
+        ]
+      },
+      {
+        "func": "MOVE",
+        "collection": "DEFAULT",
+        "to": "startTileHolder",
+        "count": 5
+      },
+      {
+        "func": "SET",
+        "property": "rotation",
+        "value": 0
+      },
+      {
+        "func": "SELECT",
+        "property": "token",
+        "value": true
+      },
+      {
+        "func": "MOVE",
+        "collection": "DEFAULT",
+        "to": "animalBag",
+        "count": 100
+      },
+      {
+        "func": "RECALL",
+        "holder": [
+          "pineDeckHolder",
+          "goalHolder",
+          "tileBag"
+        ]
+      },
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "deck",
+        "value": "goalDeck"
+      },
+      {
+        "func": "FOREACH",
+        "collection": "DEFAULT",
+        "loopRoutine": [
+          {
+            "func": "GET",
+            "property": "title"
+          },
+          {
+            "func": "MOVE",
+            "collection": "DEFAULT",
+            "to": "${title}Goal"
+          }
+        ]
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": [
+          "BearGoal",
+          "ElkGoal",
+          "FoxGoal",
+          "HawkGoal",
+          "SalmonGoal",
+          "tileBag",
+          "animalBag",
+          "startTileHolder"
+        ]
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "hand"
+        ],
+        "property": "scale",
+        "value": 1
+      },
+      {
+        "func": "MOVE",
+        "from": "startTileHolder",
+        "to": [
+          "seat1",
+          "seat2",
+          "seat3",
+          "seat4"
+        ],
+        "count": 1
+      },
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY scoring}",
+        "operand2": "2",
+        "thenRoutine": [
+          {
+            "func": "SELECT",
+            "type": "card",
+            "property": "deck",
+            "value": "goalDeck"
+          },
+          {
+            "func": "SELECT",
+            "source": "DEFAULT",
+            "property": "letter",
+            "value": "A"
+          },
+          {
+            "func": "FOREACH",
+            "collection": "DEFAULT",
+            "loopRoutine": [
+              {
+                "func": "GET",
+                "property": "title"
+              },
+              {
+                "func": "MOVE",
+                "collection": "DEFAULT",
+                "to": "${title}Goal"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY scoring}",
+        "operand2": 3,
+        "thenRoutine": [
+          {
+            "func": "RECALL",
+            "holder": "goalHolder"
+          },
+          {
+            "func": "SELECT",
+            "type": "card",
+            "property": "cardType",
+            "value": "variantFamily"
+          },
+          {
+            "func": "MOVE",
+            "collection": "DEFAULT",
+            "to": "FoxGoal"
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY scoring}",
+        "operand2": 4,
+        "thenRoutine": [
+          {
+            "func": "RECALL",
+            "holder": "goalHolder"
+          },
+          {
+            "func": "SELECT",
+            "type": "card",
+            "property": "cardType",
+            "value": "variantIntermediate"
+          },
+          {
+            "func": "MOVE",
+            "collection": "DEFAULT",
+            "to": "FoxGoal"
+          }
+        ]
+      },
+      {
+        "func": "MOVE",
+        "from": "tileBag",
+        "to": "tileOffHolder",
+        "count": 2
+      },
+      {
+        "func": "SELECT",
+        "type": "seat",
+        "property": "player",
+        "relation": "!=",
+        "value": ""
+      },
+      {
+        "func": "COUNT"
+      },
+      {
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "relation": "<",
+        "operand2": 4,
+        "thenRoutine": [
+          {
+            "func": "MOVE",
+            "from": "tileBag",
+            "to": "tileOffHolder",
+            "count": 20
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "relation": "<",
+        "operand2": 3,
+        "thenRoutine": [
+          {
+            "func": "MOVE",
+            "from": "tileBag",
+            "to": "tileOffHolder",
+            "count": 20
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "operand2": 1,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "soloMode",
+            "value": true
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "soloMode",
+            "value": false
+          }
+        ]
+      },
+      {
+        "func": "CLICK",
+        "collection": [
+          "fillButton",
+          "centerButton"
+        ]
+      },
+      {
+        "func": "TURN",
+        "turnCycle": "random"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "seat1",
+          "seat2",
+          "seat3",
+          "seat4"
+        ],
+        "property": "score",
+        "value": []
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "scoreboard"
+        ],
+        "property": "scale",
+        "value": 0
+      }
+    ],
+    "color": "white",
+    "css": {
+      "default": {
+        "font-size": "40px",
+        "--wcMain": "black",
+        "--wcBorder": "white",
+        "--wcMainOH": "grey",
+        "--wcBorderOH": "black"
+      },
+      "_, .transition": {
+        "transition": "transform 600ms"
+      },
+      "_, .transition.dragging": {
+        "transition": "none"
+      }
+    },
+    "text": "restart",
+    "classes": "symbols",
+    "soloMode": true,
+    "scoring": "1",
+    "gameStartRoutine": [
+      {
+        "func": "SHUFFLE",
+        "holder": [
+          "tileBag",
+          "animalBag",
+          "startTileHolder",
+          "goalHolder"
+        ]
+      }
+    ]
+  },
+  "floor": {
+    "type": "holder",
+    "z": 134,
+    "id": "floor",
+    "dropTarget": {
+      "shift": true
+    },
+    "alignChildren": false,
+    "classes": "transparent",
+    "movableInEdit": false,
+    "height": 2000,
+    "width": 2600,
+    "layer": -4,
+    "css": {
+      "border": "none"
+    },
+    "movable": true,
+    "grid": [
+      {
+        "x": 88.6,
+        "y": 152,
+        "offsetX": -44.3,
+        "offsetY": -76
+      },
+      {
+        "x": 88.6,
+        "y": 152
+      }
+    ],
+    "draggingChangeRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY dragging}",
+        "relation": "!=",
+        "operand2": null,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "scale",
+            "value": 0.5
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "scale",
+            "value": 1
+          }
+        ]
+      }
+    ],
+    "x": -531.6,
+    "y": -456
+  },
+  "0u2o": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "DF1",
+    "id": "0u2o",
+    "z": 45166,
+    "parent": "tileBag",
+    "x": 4,
+    "y": 4
+  },
+  "0c1p": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "DF2",
+    "id": "0c1p",
+    "z": 45165,
+    "parent": "tileBag",
+    "x": 4,
+    "y": 4
+  },
+  "u0nx": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "DF3",
+    "id": "u0nx",
+    "z": 45195,
+    "parent": "tileBag",
+    "x": 4,
+    "y": 4
+  },
+  "sh2n": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "DF4",
+    "id": "sh2n",
+    "z": 45224,
+    "parent": "tileBag",
+    "x": 4,
+    "y": 4
+  },
+  "7fuz": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "DF5",
+    "id": "7fuz",
+    "z": 45220,
+    "parent": "tileBag",
+    "x": 4,
+    "y": 4
+  },
+  "pb78": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "DF6",
+    "id": "pb78",
+    "z": 45191,
+    "parent": "tileBag",
+    "x": 4,
+    "y": 4
+  },
+  "r19j": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "DL1",
+    "id": "r19j",
+    "z": 45243,
+    "parent": "tileBag",
+    "x": 4,
+    "y": 4
+  },
+  "le9a": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "DL2",
+    "id": "le9a",
+    "z": 45212,
+    "parent": "tileBag",
+    "x": 4,
+    "y": 4
+  },
+  "0rih": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "DL3",
+    "id": "0rih",
+    "z": 45174,
+    "parent": "tileBag",
+    "x": 4,
+    "y": 4
+  },
+  "eqvq": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "DL4",
+    "id": "eqvq",
+    "z": 45192,
+    "parent": "tileBag",
+    "x": 4,
+    "y": 4
+  },
+  "2z5m": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "DL5",
+    "id": "2z5m",
+    "z": 45184,
+    "parent": "tileBag",
+    "x": 4,
+    "y": 4
+  },
+  "11oj": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "DL6",
+    "id": "11oj",
+    "z": 45186,
+    "parent": "tileBag",
+    "x": 4,
+    "y": 4
+  },
+  "n9v1": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "DM1",
+    "id": "n9v1",
+    "z": 45173,
+    "parent": "tileBag",
+    "x": 4,
+    "y": 4
+  },
+  "x15m": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "DM2",
+    "id": "x15m",
+    "z": 45218,
+    "parent": "tileBag",
+    "x": 4,
+    "y": 4
+  },
+  "aq1a": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "DM3",
+    "id": "aq1a",
+    "z": 45241,
+    "parent": "tileBag",
+    "x": 4,
+    "y": 4
+  },
+  "a9vm": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "DM4",
+    "id": "a9vm",
+    "z": 45236,
+    "parent": "tileBag",
+    "x": 4,
+    "y": 4
+  },
+  "zn0j": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "DM5",
+    "id": "zn0j",
+    "z": 45247,
+    "parent": "tileBag",
+    "x": 4,
+    "y": 4
+  },
+  "bw94": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "DM6",
+    "id": "bw94",
+    "z": 45242,
+    "parent": "tileBag",
+    "x": 4,
+    "y": 4
+  },
+  "klh9": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "DS1",
+    "id": "klh9",
+    "z": 45223,
+    "parent": "tileBag",
+    "x": 4,
+    "y": 4
+  },
+  "0er7": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "DS2",
+    "id": "0er7",
+    "z": 45189,
+    "parent": "tileBag",
+    "x": 4,
+    "y": 4
+  },
+  "y53x": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "DS3",
+    "id": "y53x",
+    "z": 45187,
+    "parent": "tileBag",
+    "x": 4,
+    "y": 4
+  },
+  "47g7": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "DS4",
+    "id": "47g7",
+    "z": 45168,
+    "parent": "tileBag",
+    "x": 4,
+    "y": 4
+  },
+  "3op7": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "DS5",
+    "id": "3op7",
+    "z": 45188,
+    "parent": "tileBag",
+    "x": 4,
+    "y": 4
+  },
+  "utaq": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "DS6",
+    "id": "utaq",
+    "z": 45169,
+    "parent": "tileBag",
+    "x": 4,
+    "y": 4
+  },
+  "ji4q": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "D1",
+    "id": "ji4q",
+    "z": 45172,
+    "parent": "tileBag",
+    "x": 4,
+    "y": 4
+  },
+  "pxma": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "D2",
+    "id": "pxma",
+    "z": 45185,
+    "parent": "tileBag",
+    "x": 4,
+    "y": 4
+  },
+  "bqxi": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "D3",
+    "id": "bqxi",
+    "z": 45233,
+    "parent": "tileBag",
+    "x": 4,
+    "y": 4
+  },
+  "ooij": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "D4",
+    "id": "ooij",
+    "z": 45198,
+    "parent": "tileBag",
+    "x": 4,
+    "y": 4
+  },
+  "7kjb": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "D5",
+    "id": "7kjb",
+    "z": 45227,
+    "parent": "tileBag",
+    "x": 4,
+    "y": 4
+  },
+  "nfwz": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "FL1",
+    "id": "nfwz",
+    "z": 45237,
+    "parent": "tileBag",
+    "x": 4,
+    "y": 4
+  },
+  "bs96": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "FL2",
+    "id": "bs96",
+    "z": 45201,
+    "parent": "tileBag",
+    "x": 4,
+    "y": 4
+  },
+  "9g7s": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "FL3",
+    "id": "9g7s",
+    "z": 45171,
+    "parent": "tileBag",
+    "x": 4,
+    "y": 4
+  },
+  "1uyw": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "FL4",
+    "id": "1uyw",
+    "z": 45193,
+    "parent": "tileBag",
+    "x": 4,
+    "y": 4
+  },
+  "pmm3": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "FL5",
+    "id": "pmm3",
+    "z": 45202,
+    "parent": "tileBag",
+    "x": 4,
+    "y": 4
+  },
+  "jo88": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "FL6",
+    "id": "jo88",
+    "z": 45196,
+    "parent": "tileBag",
+    "x": 4,
+    "y": 4
+  },
+  "eluf": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "FM1",
+    "id": "eluf",
+    "z": 45176,
+    "parent": "tileBag",
+    "x": 4,
+    "y": 4
+  },
+  "ovro": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "FM2",
+    "id": "ovro",
+    "z": 45234,
+    "parent": "tileBag",
+    "x": 4,
+    "y": 4
+  },
+  "abnz": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "FM3",
+    "id": "abnz",
+    "z": 45178,
+    "parent": "tileBag",
+    "x": 4,
+    "y": 4
+  },
+  "63zb": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "FM4",
+    "id": "63zb",
+    "z": 45217,
+    "parent": "tileBag",
+    "x": 4,
+    "y": 4
+  },
+  "9dah": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "FM5",
+    "id": "9dah",
+    "z": 45240,
+    "parent": "tileBag",
+    "x": 4,
+    "y": 4
+  },
+  "p1q9": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "FM6",
+    "id": "p1q9",
+    "z": 45229,
+    "parent": "tileBag",
+    "x": 4,
+    "y": 4
+  },
+  "sl2n": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "FS1",
+    "id": "sl2n",
+    "z": 45199,
+    "parent": "tileBag",
+    "x": 4,
+    "y": 4
+  },
+  "pvyd": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "FS3",
+    "id": "pvyd",
+    "z": 45228,
+    "x": 4,
+    "y": 4,
+    "parent": "tileBag"
+  },
+  "fshr": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "FS4",
+    "id": "fshr",
+    "z": 45244,
+    "parent": "tileBag",
+    "x": 4,
+    "y": 4
+  },
+  "is35": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "FS5",
+    "id": "is35",
+    "z": 45230,
+    "parent": "tileBag",
+    "x": 4,
+    "y": 4
+  },
+  "y1fy": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "FS6",
+    "id": "y1fy",
+    "z": 45209,
+    "parent": "tileBag",
+    "x": 4,
+    "y": 4
+  },
+  "g5c5": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "F1",
+    "id": "g5c5",
+    "z": 45231,
+    "parent": "tileBag",
+    "x": 4,
+    "y": 4
+  },
+  "ugwk": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "F2",
+    "id": "ugwk",
+    "z": 45249,
+    "parent": "tileBag",
+    "x": 4,
+    "y": 4
+  },
+  "eg13": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "F3",
+    "id": "eg13",
+    "z": 45211,
+    "parent": "tileBag",
+    "x": 4,
+    "y": 4
+  },
+  "k534": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "F4",
+    "id": "k534",
+    "z": 45177,
+    "parent": "tileBag",
+    "x": 4,
+    "y": 4
+  },
+  "kwot": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "F5",
+    "id": "kwot",
+    "z": 45226,
+    "parent": "tileBag",
+    "x": 4,
+    "y": 4
+  },
+  "yngw": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "LM1",
+    "id": "yngw",
+    "z": 45170,
+    "parent": "tileBag",
+    "x": 4,
+    "y": 4
+  },
+  "59vc": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "LM2",
+    "id": "59vc",
+    "z": 45239,
+    "parent": "tileBag",
+    "x": 4,
+    "y": 4
+  },
+  "x3yn": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "LM3",
+    "id": "x3yn",
+    "z": 45221,
+    "parent": "tileBag",
+    "x": 4,
+    "y": 4
+  },
+  "oqcu": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "LM4",
+    "id": "oqcu",
+    "z": 45238,
+    "parent": "tileBag",
+    "x": 4,
+    "y": 4
+  },
+  "tjca": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "LM5",
+    "id": "tjca",
+    "z": 45215,
+    "parent": "tileBag",
+    "x": 4,
+    "y": 4
+  },
+  "e0x1": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "LM6",
+    "id": "e0x1",
+    "z": 45213,
+    "parent": "tileBag",
+    "x": 4,
+    "y": 4
+  },
+  "eug6": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "LS1",
+    "id": "eug6",
+    "z": 45210,
+    "parent": "tileBag",
+    "x": 4,
+    "y": 4
+  },
+  "bcjj": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "LS2",
+    "id": "bcjj",
+    "z": 45235,
+    "parent": "tileBag",
+    "x": 4,
+    "y": 4
+  },
+  "o9zv": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "LS3",
+    "id": "o9zv",
+    "z": 45183,
+    "parent": "tileBag",
+    "x": 4,
+    "y": 4
+  },
+  "7wh7": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "LS4",
+    "id": "7wh7",
+    "z": 45180,
+    "parent": "tileBag",
+    "x": 4,
+    "y": 4
+  },
+  "tdwl": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "LS5",
+    "id": "tdwl",
+    "z": 45207,
+    "parent": "tileBag",
+    "x": 4,
+    "y": 4
+  },
+  "sage": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "LS6",
+    "id": "sage",
+    "z": 45205,
+    "parent": "tileBag",
+    "x": 4,
+    "y": 4
+  },
+  "1ot3": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "L1",
+    "id": "1ot3",
+    "z": 45204,
+    "parent": "tileBag",
+    "x": 4,
+    "y": 4
+  },
+  "ehmw": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "L2",
+    "id": "ehmw",
+    "z": 45179,
+    "parent": "tileBag",
+    "x": 4,
+    "y": 4
+  },
+  "5dcy": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "L3",
+    "id": "5dcy",
+    "z": 45181,
+    "parent": "tileBag",
+    "x": 4,
+    "y": 4
+  },
+  "n6kn": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "L4",
+    "id": "n6kn",
+    "z": 45225,
+    "parent": "tileBag",
+    "x": 4,
+    "y": 4
+  },
+  "tyk4": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "L5",
+    "id": "tyk4",
+    "z": 45219,
+    "parent": "tileBag",
+    "x": 4,
+    "y": 4
+  },
+  "hkfn": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "MS1",
+    "id": "hkfn",
+    "z": 45206,
+    "parent": "tileBag",
+    "x": 4,
+    "y": 4
+  },
+  "yr89": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "MS2",
+    "id": "yr89",
+    "z": 45216,
+    "parent": "tileBag",
+    "x": 4,
+    "y": 4
+  },
+  "jpfq": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "MS3",
+    "id": "jpfq",
+    "z": 45190,
+    "parent": "tileBag",
+    "x": 4,
+    "y": 4
+  },
+  "qihk": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "MS4",
+    "id": "qihk",
+    "z": 45167,
+    "parent": "tileBag",
+    "x": 4,
+    "y": 4
+  },
+  "bs85": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "MS5",
+    "id": "bs85",
+    "z": 45246,
+    "parent": "tileBag",
+    "x": 4,
+    "y": 4
+  },
+  "ma6v": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "MS6",
+    "id": "ma6v",
+    "z": 45232,
+    "parent": "tileBag",
+    "x": 4,
+    "y": 4
+  },
+  "e5fu": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "M1",
+    "id": "e5fu",
+    "z": 45222,
+    "parent": "tileBag",
+    "x": 4,
+    "y": 4
+  },
+  "5v0y": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "M2",
+    "id": "5v0y",
+    "z": 45203,
+    "parent": "tileBag",
+    "x": 4,
+    "y": 4
+  },
+  "usos": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "M3",
+    "id": "usos",
+    "z": 45245,
+    "parent": "tileBag",
+    "x": 4,
+    "y": 4
+  },
+  "drq8": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "M4",
+    "id": "drq8",
+    "z": 45182,
+    "parent": "tileBag",
+    "x": 4,
+    "y": 4
+  },
+  "zhe0": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "M5",
+    "id": "zhe0",
+    "z": 45197,
+    "parent": "tileBag",
+    "x": 4,
+    "y": 4
+  },
+  "x5cc": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "S1",
+    "id": "x5cc",
+    "z": 45208,
+    "parent": "tileBag",
+    "x": 4,
+    "y": 4
+  },
+  "ao8g": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "S2",
+    "id": "ao8g",
+    "z": 45214,
+    "parent": "tileBag",
+    "x": 4,
+    "y": 4
+  },
+  "my5x": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "S3",
+    "id": "my5x",
+    "z": 45175,
+    "parent": "tileBag",
+    "x": 4,
+    "y": 4
+  },
+  "qyg2": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "S4",
+    "id": "qyg2",
+    "z": 45200,
+    "parent": "tileBag",
+    "x": 4,
+    "y": 4
+  },
+  "b9ln": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "S5",
+    "id": "b9ln",
+    "z": 45194,
+    "parent": "tileBag",
+    "x": 4,
+    "y": 4
+  },
+  "startDeck": {
+    "type": "deck",
+    "id": "startDeck",
+    "z": 2,
+    "cardDefaults": {
+      "width": 100,
+      "height": 100,
+      "movable": false,
+      "classes": "transition",
+      "shift": true,
+      "enlarge": 3,
+      "css": "overflow:visible",
+      "grid": [
+        {
+          "x": 88.6,
+          "y": 152,
+          "offsetX": -44.3,
+          "offsetY": -76
+        },
+        {
+          "x": 88.6,
+          "y": 152
+        }
+      ],
+      "clickRoutine": [
+        {
+          "func": "SET",
+          "collection": "thisButton",
+          "property": "rotation",
+          "value": 60,
+          "relation": "+"
+        }
+      ]
+    },
+    "cardTypes": {
+      "start1-1": {
+        "image": "/assets/2028960468_23634",
+        "icon1": "/assets/1901394317_3048",
+        "pine": "/assets/-850834450_4372"
+      },
+      "start1-2": {
+        "image": "/assets/-1256644367_34558",
+        "icon4": "/assets/-1916005357_3000",
+        "icon5": "/assets/1002522787_3636",
+        "icon6": "/assets/1901394317_3048"
+      },
+      "start1-3": {
+        "image": "/assets/1465348716_29196",
+        "icon2": "/assets/1199843103_3990",
+        "icon3": "/assets/-660565368_3656"
+      },
+      "start2-1": {
+        "image": "/assets/1073893257_31068",
+        "icon1": "/assets/-660565368_3656",
+        "pine": "/assets/-850834450_4372"
+      },
+      "start2-2": {
+        "image": "/assets/-1770929883_26820",
+        "icon4": "/assets/1002522787_3636",
+        "icon5": "/assets/-660565368_3656",
+        "icon6": "/assets/1901394317_3048"
+      },
+      "start2-3": {
+        "image": "/assets/1603449069_30046",
+        "icon2": "/assets/-1916005357_3000",
+        "icon3": "/assets/1199843103_3990"
+      },
+      "start3-1": {
+        "image": "/assets/-865177906_29606",
+        "icon1": "/assets/1199843103_3990",
+        "pine": "/assets/-850834450_4372"
+      },
+      "start3-2": {
+        "image": "/assets/200404449_25056",
+        "icon4": "/assets/1199843103_3990",
+        "icon5": "/assets/-660565368_3656",
+        "icon6": "/assets/1901394317_3048"
+      },
+      "start3-3": {
+        "image": "/assets/856309567_31190",
+        "icon2": "/assets/-1916005357_3000",
+        "icon3": "/assets/1002522787_3636"
+      },
+      "start4-1": {
+        "image": "/assets/1799564095_26776",
+        "icon1": "/assets/-1916005357_3000",
+        "pine": "/assets/-850834450_4372"
+      },
+      "start4-2": {
+        "image": "/assets/-107605146_33250",
+        "icon4": "/assets/1002522787_3636",
+        "icon5": "/assets/1199843103_3990",
+        "icon6": "/assets/-660565368_3656"
+      },
+      "start4-3": {
+        "image": "/assets/1808951091_27774",
+        "icon2": "/assets/-1916005357_3000",
+        "icon3": "/assets/1901394317_3048"
+      },
+      "start5-1": {
+        "image": "/assets/-160052790_35412",
+        "icon1": "/assets/1002522787_3636",
+        "pine": "/assets/-850834450_4372"
+      },
+      "start5-2": {
+        "image": "/assets/-1360661620_22904",
+        "icon4": "/assets/-1916005357_3000",
+        "icon5": "/assets/1002522787_3636",
+        "icon6": "/assets/-660565368_3656"
+      },
+      "start5-3": {
+        "image": "/assets/1377629696_31734",
+        "icon2": "/assets/1199843103_3990",
+        "icon3": "/assets/1901394317_3048"
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "transparent",
+            "width": 100,
+            "height": 100,
+            "dynamicProperties": {
+              "value": "image"
+            }
+          },
+          {
+            "note": "single icon",
+            "type": "image",
+            "x": 35,
+            "y": 35,
+            "width": 30,
+            "height": 30,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "icon1"
+            }
+          },
+          {
+            "note": "pine cone",
+            "type": "image",
+            "x": 38,
+            "y": 5,
+            "width": 24,
+            "height": 24,
+            "color": "transparent",
+            "css": "opacity:0.7",
+            "dynamicProperties": {
+              "value": "pine"
+            }
+          },
+          {
+            "note": "double icon 1",
+            "type": "image",
+            "x": 20,
+            "y": 35,
+            "width": 30,
+            "height": 30,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "icon2"
+            }
+          },
+          {
+            "note": "double icon 2",
+            "type": "image",
+            "x": 50,
+            "y": 35,
+            "width": 30,
+            "height": 30,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "icon3"
+            }
+          },
+          {
+            "note": "triple icon 1",
+            "type": "image",
+            "x": 20,
+            "y": 25,
+            "width": 30,
+            "height": 30,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "icon4"
+            }
+          },
+          {
+            "note": "triple icon 2",
+            "type": "image",
+            "x": 50,
+            "y": 25,
+            "width": 30,
+            "height": 30,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "icon5"
+            }
+          },
+          {
+            "note": "triple icon 3",
+            "type": "image",
+            "x": 35,
+            "y": 51,
+            "width": 30,
+            "height": 30,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "icon6"
+            }
+          }
+        ],
+        "border": false,
+        "radius": false
+      }
+    ],
+    "parent": "startTileHolder"
+  },
+  "yf3": {
+    "type": "card",
+    "id": "yf3",
+    "parent": "3305",
+    "deck": "startDeck",
+    "cardType": "start1-1",
+    "z": 1309,
+    "hoverParent": "floor"
+  },
+  "start1-1": {
+    "type": "card",
+    "id": "start1-1",
+    "deck": "startDeck",
+    "cardType": "start1-1",
+    "z": 41486,
+    "movable": true,
+    "parent": "xg9q"
+  },
+  "start1-2": {
+    "type": "card",
+    "id": "start1-2",
+    "parent": "start1-1",
+    "deck": "startDeck",
+    "cardType": "start1-2",
+    "x": -44.3,
+    "y": 76,
+    "z": 3
+  },
+  "start1-3": {
+    "type": "card",
+    "id": "start1-3",
+    "parent": "start1-1",
+    "deck": "startDeck",
+    "cardType": "start1-3",
+    "x": 44.3,
+    "y": 76,
+    "z": 4
+  },
+  "jjt9": {
+    "deck": "startDeck",
+    "type": "card",
+    "cardType": "start2-2",
+    "id": "jjt9",
+    "parent": "start2-1",
+    "x": -44.3,
+    "y": 76
+  },
+  "start2-1": {
+    "type": "card",
+    "id": "start2-1",
+    "deck": "startDeck",
+    "cardType": "start2-1",
+    "z": 41711,
+    "movable": true,
+    "parent": "xg9q"
+  },
+  "xxw": {
+    "type": "card",
+    "id": "xxw",
+    "parent": "ueyr",
+    "deck": "startDeck",
+    "cardType": "start2-3",
+    "z": 1364
+  },
+  "6y0h": {
+    "deck": "startDeck",
+    "type": "card",
+    "cardType": "start2-3",
+    "id": "6y0h",
+    "z": 5,
+    "parent": "start2-1",
+    "x": 44.3,
+    "y": 76
+  },
+  "hun3": {
+    "deck": "startDeck",
+    "type": "card",
+    "cardType": "start3-2",
+    "id": "hun3",
+    "parent": "start3-1",
+    "x": -44.3,
+    "y": 76
+  },
+  "start3-1": {
+    "type": "card",
+    "id": "start3-1",
+    "deck": "startDeck",
+    "cardType": "start3-1",
+    "z": 41484,
+    "movable": true,
+    "parent": "xg9q"
+  },
+  "ifu": {
+    "type": "card",
+    "id": "ifu",
+    "parent": "dnrj",
+    "deck": "startDeck",
+    "cardType": "start3-3",
+    "z": 1379
+  },
+  "start3-3": {
+    "type": "card",
+    "id": "start3-3",
+    "parent": "start3-1",
+    "deck": "startDeck",
+    "cardType": "start3-3",
+    "z": 6,
+    "x": 44.3,
+    "y": 76
+  },
+  "start4-1": {
+    "type": "card",
+    "id": "start4-1",
+    "deck": "startDeck",
+    "cardType": "start4-1",
+    "movable": true,
+    "z": 41483,
+    "parent": "xg9q"
+  },
+  "start4-3": {
+    "type": "card",
+    "id": "start4-3",
+    "parent": "start4-1",
+    "deck": "startDeck",
+    "cardType": "start4-3",
+    "z": 7,
+    "x": 44.3,
+    "y": 76,
+    "rotation": 60
+  },
+  "start4-2": {
+    "type": "card",
+    "id": "start4-2",
+    "parent": "start4-1",
+    "deck": "startDeck",
+    "cardType": "start4-2",
+    "x": -44.3,
+    "y": 76
+  },
+  "start5-1": {
+    "type": "card",
+    "id": "start5-1",
+    "deck": "startDeck",
+    "cardType": "start5-1",
+    "z": 41485,
+    "movable": true,
+    "parent": "xg9q"
+  },
+  "start5-3": {
+    "type": "card",
+    "id": "start5-3",
+    "parent": "start5-1",
+    "deck": "startDeck",
+    "cardType": "start5-3",
+    "z": 8,
+    "x": 44.3,
+    "y": 76
+  },
+  "start5-2": {
+    "type": "card",
+    "id": "start5-2",
+    "parent": "start5-1",
+    "deck": "startDeck",
+    "cardType": "start5-2",
+    "x": -44.3,
+    "y": 76
+  },
+  "startTileHolder": {
+    "type": "holder",
+    "id": "startTileHolder",
+    "x": -199,
+    "y": 101,
+    "width": 180,
+    "height": 180,
+    "z": 1,
+    "dropOffsetX": 43,
+    "dropTarget": {
+      "deck": "startDeck"
+    }
+  },
+  "bear1": {
+    "id": "bear1",
+    "width": 60,
+    "height": 60,
+    "z": 19626,
+    "image": "/assets/-1916005357_3000",
+    "token": true,
+    "parent": "animalBag",
+    "shift": true,
+    "x": 4,
+    "y": 4,
+    "classes": "transition"
+  },
+  "elk1": {
+    "id": "elk1",
+    "z": 19632,
+    "image": "/assets/1002522787_3636",
+    "width": 60,
+    "height": 60,
+    "token": true,
+    "parent": "animalBag",
+    "shift": true,
+    "x": 4,
+    "y": 4,
+    "classes": "transition"
+  },
+  "fox1": {
+    "id": "fox1",
+    "z": 19640,
+    "image": "/assets/1199843103_3990",
+    "token": true,
+    "width": 60,
+    "height": 60,
+    "shift": true,
+    "parent": "animalBag",
+    "classes": "transition",
+    "x": 4,
+    "y": 4
+  },
+  "hawk1": {
+    "id": "hawk1",
+    "z": 19629,
+    "image": "/assets/-660565368_3656",
+    "token": true,
+    "width": 60,
+    "height": 60,
+    "parent": "animalBag",
+    "shift": true,
+    "classes": "transition",
+    "x": 4,
+    "y": 4
+  },
+  "salmon1": {
+    "id": "salmon1",
+    "z": 19621,
+    "image": "/assets/1901394317_3048",
+    "token": true,
+    "width": 60,
+    "height": 60,
+    "parent": "animalBag",
+    "shift": true,
+    "x": 4,
+    "y": 4,
+    "classes": "transition"
+  },
+  "bear2": {
+    "id": "bear2",
+    "width": 60,
+    "height": 60,
+    "z": 19622,
+    "image": "/assets/-1916005357_3000",
+    "token": true,
+    "parent": "animalBag",
+    "shift": true,
+    "classes": "transition",
+    "x": 4,
+    "y": 4
+  },
+  "bear3": {
+    "id": "bear3",
+    "width": 60,
+    "height": 60,
+    "z": 19638,
+    "image": "/assets/-1916005357_3000",
+    "token": true,
+    "parent": "animalBag",
+    "shift": true,
+    "classes": "transition",
+    "x": 4,
+    "y": 4
+  },
+  "bear4": {
+    "id": "bear4",
+    "width": 60,
+    "height": 60,
+    "z": 19627,
+    "image": "/assets/-1916005357_3000",
+    "token": true,
+    "shift": true,
+    "classes": "transition",
+    "parent": "animalBag",
+    "x": 4,
+    "y": 4
+  },
+  "bear5": {
+    "id": "bear5",
+    "width": 60,
+    "height": 60,
+    "z": 19696,
+    "image": "/assets/-1916005357_3000",
+    "token": true,
+    "parent": "animalBag",
+    "shift": true,
+    "x": 4,
+    "y": 4,
+    "classes": "transition"
+  },
+  "bear6": {
+    "id": "bear6",
+    "width": 60,
+    "height": 60,
+    "z": 19624,
+    "image": "/assets/-1916005357_3000",
+    "token": true,
+    "parent": "animalBag",
+    "shift": true,
+    "classes": "transition",
+    "x": 4,
+    "y": 4
+  },
+  "bear7": {
+    "id": "bear7",
+    "width": 60,
+    "height": 60,
+    "z": 19623,
+    "image": "/assets/-1916005357_3000",
+    "token": true,
+    "shift": true,
+    "parent": "animalBag",
+    "x": 4,
+    "y": 4,
+    "classes": "transition"
+  },
+  "bear8": {
+    "id": "bear8",
+    "width": 60,
+    "height": 60,
+    "z": 19694,
+    "image": "/assets/-1916005357_3000",
+    "token": true,
+    "parent": "animalBag",
+    "shift": true,
+    "classes": "transition",
+    "x": 4,
+    "y": 4
+  },
+  "bear9": {
+    "id": "bear9",
+    "width": 60,
+    "height": 60,
+    "z": 19697,
+    "image": "/assets/-1916005357_3000",
+    "token": true,
+    "shift": true,
+    "parent": "animalBag",
+    "classes": "transition",
+    "x": 4,
+    "y": 4
+  },
+  "bear10": {
+    "id": "bear10",
+    "width": 60,
+    "height": 60,
+    "z": 19663,
+    "image": "/assets/-1916005357_3000",
+    "token": true,
+    "shift": true,
+    "parent": "animalBag",
+    "classes": "transition",
+    "x": 4,
+    "y": 4
+  },
+  "bear11": {
+    "id": "bear11",
+    "width": 60,
+    "height": 60,
+    "z": 19619,
+    "image": "/assets/-1916005357_3000",
+    "token": true,
+    "parent": "animalBag",
+    "shift": true,
+    "classes": "transition",
+    "x": 4,
+    "y": 4
+  },
+  "bear12": {
+    "id": "bear12",
+    "width": 60,
+    "height": 60,
+    "z": 19652,
+    "image": "/assets/-1916005357_3000",
+    "token": true,
+    "shift": true,
+    "classes": "transition",
+    "x": 4,
+    "y": 4,
+    "parent": "animalBag"
+  },
+  "bear13": {
+    "id": "bear13",
+    "width": 60,
+    "height": 60,
+    "z": 19714,
+    "image": "/assets/-1916005357_3000",
+    "token": true,
+    "shift": true,
+    "classes": "transition",
+    "x": 4,
+    "y": 4,
+    "parent": "animalBag"
+  },
+  "bear14": {
+    "id": "bear14",
+    "width": 60,
+    "height": 60,
+    "z": 19666,
+    "image": "/assets/-1916005357_3000",
+    "token": true,
+    "parent": "animalBag",
+    "shift": true,
+    "x": 4,
+    "y": 4,
+    "classes": "transition"
+  },
+  "bear15": {
+    "id": "bear15",
+    "width": 60,
+    "height": 60,
+    "z": 19661,
+    "image": "/assets/-1916005357_3000",
+    "token": true,
+    "parent": "animalBag",
+    "shift": true,
+    "classes": "transition",
+    "x": 4,
+    "y": 4
+  },
+  "bear16": {
+    "id": "bear16",
+    "width": 60,
+    "height": 60,
+    "z": 19701,
+    "image": "/assets/-1916005357_3000",
+    "token": true,
+    "shift": true,
+    "parent": "animalBag",
+    "x": 4,
+    "y": 4,
+    "classes": "transition"
+  },
+  "bear17": {
+    "id": "bear17",
+    "width": 60,
+    "height": 60,
+    "z": 19717,
+    "image": "/assets/-1916005357_3000",
+    "token": true,
+    "parent": "animalBag",
+    "shift": true,
+    "x": 4,
+    "y": 4,
+    "classes": "transition"
+  },
+  "bear18": {
+    "id": "bear18",
+    "width": 60,
+    "height": 60,
+    "z": 19681,
+    "image": "/assets/-1916005357_3000",
+    "token": true,
+    "shift": true,
+    "parent": "animalBag",
+    "classes": "transition",
+    "x": 4,
+    "y": 4
+  },
+  "bear19": {
+    "id": "bear19",
+    "width": 60,
+    "height": 60,
+    "z": 19649,
+    "image": "/assets/-1916005357_3000",
+    "token": true,
+    "parent": "animalBag",
+    "shift": true,
+    "classes": "transition",
+    "x": 4,
+    "y": 4
+  },
+  "bear20": {
+    "id": "bear20",
+    "width": 60,
+    "height": 60,
+    "z": 19716,
+    "image": "/assets/-1916005357_3000",
+    "token": true,
+    "parent": "animalBag",
+    "shift": true,
+    "classes": "transition",
+    "x": 4,
+    "y": 4
+  },
+  "elk2": {
+    "id": "elk2",
+    "z": 19628,
+    "image": "/assets/1002522787_3636",
+    "width": 60,
+    "height": 60,
+    "token": true,
+    "shift": true,
+    "x": 4,
+    "y": 4,
+    "parent": "animalBag",
+    "classes": "transition"
+  },
+  "elk3": {
+    "id": "elk3",
+    "z": 19671,
+    "image": "/assets/1002522787_3636",
+    "width": 60,
+    "height": 60,
+    "token": true,
+    "parent": "animalBag",
+    "shift": true,
+    "x": 4,
+    "y": 4,
+    "classes": "transition"
+  },
+  "elk4": {
+    "id": "elk4",
+    "z": 19687,
+    "image": "/assets/1002522787_3636",
+    "width": 60,
+    "height": 60,
+    "token": true,
+    "parent": "animalBag",
+    "shift": true,
+    "classes": "transition",
+    "x": 4,
+    "y": 4
+  },
+  "elk5": {
+    "id": "elk5",
+    "z": 19664,
+    "image": "/assets/1002522787_3636",
+    "width": 60,
+    "height": 60,
+    "token": true,
+    "parent": "animalBag",
+    "shift": true,
+    "x": 4,
+    "y": 4,
+    "classes": "transition"
+  },
+  "elk6": {
+    "id": "elk6",
+    "z": 19691,
+    "image": "/assets/1002522787_3636",
+    "width": 60,
+    "height": 60,
+    "token": true,
+    "parent": "animalBag",
+    "shift": true,
+    "classes": "transition",
+    "x": 4,
+    "y": 4
+  },
+  "elk7": {
+    "id": "elk7",
+    "z": 19673,
+    "image": "/assets/1002522787_3636",
+    "width": 60,
+    "height": 60,
+    "token": true,
+    "parent": "animalBag",
+    "shift": true,
+    "x": 4,
+    "y": 4,
+    "classes": "transition"
+  },
+  "elk8": {
+    "id": "elk8",
+    "z": 19699,
+    "image": "/assets/1002522787_3636",
+    "width": 60,
+    "height": 60,
+    "token": true,
+    "parent": "animalBag",
+    "shift": true,
+    "x": 4,
+    "y": 4,
+    "classes": "transition"
+  },
+  "elk9": {
+    "id": "elk9",
+    "z": 19708,
+    "image": "/assets/1002522787_3636",
+    "width": 60,
+    "height": 60,
+    "token": true,
+    "shift": true,
+    "classes": "transition",
+    "parent": "animalBag",
+    "x": 4,
+    "y": 4
+  },
+  "elk10": {
+    "id": "elk10",
+    "z": 19620,
+    "image": "/assets/1002522787_3636",
+    "width": 60,
+    "height": 60,
+    "token": true,
+    "parent": "animalBag",
+    "shift": true,
+    "classes": "transition",
+    "x": 4,
+    "y": 4
+  },
+  "elk11": {
+    "id": "elk11",
+    "z": 19692,
+    "image": "/assets/1002522787_3636",
+    "width": 60,
+    "height": 60,
+    "token": true,
+    "shift": true,
+    "parent": "animalBag",
+    "classes": "transition",
+    "x": 4,
+    "y": 4
+  },
+  "elk12": {
+    "id": "elk12",
+    "z": 19678,
+    "image": "/assets/1002522787_3636",
+    "width": 60,
+    "height": 60,
+    "token": true,
+    "shift": true,
+    "parent": "animalBag",
+    "classes": "transition",
+    "x": 4,
+    "y": 4
+  },
+  "elk13": {
+    "id": "elk13",
+    "z": 19688,
+    "image": "/assets/1002522787_3636",
+    "width": 60,
+    "height": 60,
+    "token": true,
+    "shift": true,
+    "parent": "animalBag",
+    "classes": "transition",
+    "x": 4,
+    "y": 4
+  },
+  "elk14": {
+    "id": "elk14",
+    "z": 19713,
+    "image": "/assets/1002522787_3636",
+    "width": 60,
+    "height": 60,
+    "token": true,
+    "shift": true,
+    "x": 4,
+    "y": 4,
+    "parent": "animalBag",
+    "classes": "transition"
+  },
+  "elk15": {
+    "id": "elk15",
+    "z": 19650,
+    "image": "/assets/1002522787_3636",
+    "width": 60,
+    "height": 60,
+    "token": true,
+    "parent": "animalBag",
+    "x": 4,
+    "y": 4,
+    "shift": true,
+    "classes": "transition"
+  },
+  "elk16": {
+    "id": "elk16",
+    "z": 19669,
+    "image": "/assets/1002522787_3636",
+    "width": 60,
+    "height": 60,
+    "token": true,
+    "parent": "animalBag",
+    "shift": true,
+    "classes": "transition",
+    "x": 4,
+    "y": 4
+  },
+  "elk17": {
+    "id": "elk17",
+    "z": 19676,
+    "image": "/assets/1002522787_3636",
+    "width": 60,
+    "height": 60,
+    "token": true,
+    "shift": true,
+    "parent": "animalBag",
+    "classes": "transition",
+    "x": 4,
+    "y": 4
+  },
+  "elk18": {
+    "id": "elk18",
+    "z": 19658,
+    "image": "/assets/1002522787_3636",
+    "width": 60,
+    "height": 60,
+    "token": true,
+    "shift": true,
+    "classes": "transition",
+    "x": 4,
+    "y": 4,
+    "parent": "animalBag"
+  },
+  "elk19": {
+    "id": "elk19",
+    "z": 19660,
+    "image": "/assets/1002522787_3636",
+    "width": 60,
+    "height": 60,
+    "token": true,
+    "shift": true,
+    "classes": "transition",
+    "x": 4,
+    "y": 4,
+    "parent": "animalBag"
+  },
+  "elk20": {
+    "id": "elk20",
+    "z": 19706,
+    "image": "/assets/1002522787_3636",
+    "width": 60,
+    "height": 60,
+    "token": true,
+    "parent": "animalBag",
+    "shift": true,
+    "x": 4,
+    "y": 4,
+    "classes": "transition"
+  },
+  "fox2": {
+    "id": "fox2",
+    "z": 19683,
+    "image": "/assets/1199843103_3990",
+    "token": true,
+    "width": 60,
+    "height": 60,
+    "shift": true,
+    "classes": "transition",
+    "x": 4,
+    "y": 4,
+    "parent": "animalBag"
+  },
+  "fox3": {
+    "id": "fox3",
+    "z": 19700,
+    "image": "/assets/1199843103_3990",
+    "token": true,
+    "width": 60,
+    "height": 60,
+    "parent": "animalBag",
+    "shift": true,
+    "x": 4,
+    "y": 4,
+    "classes": "transition"
+  },
+  "fox4": {
+    "id": "fox4",
+    "z": 19685,
+    "image": "/assets/1199843103_3990",
+    "token": true,
+    "width": 60,
+    "height": 60,
+    "shift": true,
+    "parent": "animalBag",
+    "classes": "transition",
+    "x": 4,
+    "y": 4
+  },
+  "fox5": {
+    "id": "fox5",
+    "z": 19670,
+    "image": "/assets/1199843103_3990",
+    "token": true,
+    "width": 60,
+    "height": 60,
+    "shift": true,
+    "parent": "animalBag",
+    "classes": "transition",
+    "x": 4,
+    "y": 4
+  },
+  "fox6": {
+    "id": "fox6",
+    "z": 19711,
+    "image": "/assets/1199843103_3990",
+    "token": true,
+    "width": 60,
+    "height": 60,
+    "shift": true,
+    "parent": "animalBag",
+    "classes": "transition",
+    "x": 4,
+    "y": 4
+  },
+  "fox7": {
+    "id": "fox7",
+    "z": 19630,
+    "image": "/assets/1199843103_3990",
+    "token": true,
+    "width": 60,
+    "height": 60,
+    "parent": "animalBag",
+    "shift": true,
+    "classes": "transition",
+    "x": 4,
+    "y": 4
+  },
+  "fox8": {
+    "id": "fox8",
+    "z": 19674,
+    "image": "/assets/1199843103_3990",
+    "token": true,
+    "width": 60,
+    "height": 60,
+    "parent": "animalBag",
+    "shift": true,
+    "x": 4,
+    "y": 4,
+    "classes": "transition"
+  },
+  "fox9": {
+    "id": "fox9",
+    "z": 19644,
+    "image": "/assets/1199843103_3990",
+    "token": true,
+    "width": 60,
+    "height": 60,
+    "parent": "animalBag",
+    "shift": true,
+    "x": 4,
+    "y": 4,
+    "classes": "transition"
+  },
+  "fox10": {
+    "id": "fox10",
+    "z": 19641,
+    "image": "/assets/1199843103_3990",
+    "token": true,
+    "width": 60,
+    "height": 60,
+    "parent": "animalBag",
+    "shift": true,
+    "classes": "transition",
+    "x": 4,
+    "y": 4
+  },
+  "fox11": {
+    "id": "fox11",
+    "z": 19659,
+    "image": "/assets/1199843103_3990",
+    "token": true,
+    "width": 60,
+    "height": 60,
+    "parent": "animalBag",
+    "shift": true,
+    "classes": "transition",
+    "x": 4,
+    "y": 4
+  },
+  "fox12": {
+    "id": "fox12",
+    "z": 19668,
+    "image": "/assets/1199843103_3990",
+    "token": true,
+    "width": 60,
+    "height": 60,
+    "parent": "animalBag",
+    "shift": true,
+    "classes": "transition",
+    "x": 4,
+    "y": 4
+  },
+  "fox13": {
+    "id": "fox13",
+    "z": 19647,
+    "image": "/assets/1199843103_3990",
+    "token": true,
+    "width": 60,
+    "height": 60,
+    "parent": "animalBag",
+    "shift": true,
+    "classes": "transition",
+    "x": 4,
+    "y": 4
+  },
+  "fox14": {
+    "id": "fox14",
+    "z": 19665,
+    "image": "/assets/1199843103_3990",
+    "token": true,
+    "width": 60,
+    "height": 60,
+    "shift": true,
+    "parent": "animalBag",
+    "classes": "transition",
+    "x": 4,
+    "y": 4
+  },
+  "fox15": {
+    "id": "fox15",
+    "z": 19646,
+    "image": "/assets/1199843103_3990",
+    "token": true,
+    "width": 60,
+    "height": 60,
+    "parent": "animalBag",
+    "shift": true,
+    "classes": "transition",
+    "x": 4,
+    "y": 4
+  },
+  "fox16": {
+    "id": "fox16",
+    "z": 19634,
+    "image": "/assets/1199843103_3990",
+    "token": true,
+    "width": 60,
+    "height": 60,
+    "parent": "animalBag",
+    "shift": true,
+    "classes": "transition",
+    "x": 4,
+    "y": 4
+  },
+  "fox17": {
+    "id": "fox17",
+    "z": 19654,
+    "image": "/assets/1199843103_3990",
+    "token": true,
+    "width": 60,
+    "height": 60,
+    "parent": "animalBag",
+    "shift": true,
+    "x": 4,
+    "y": 4,
+    "classes": "transition"
+  },
+  "fox18": {
+    "id": "fox18",
+    "z": 19655,
+    "image": "/assets/1199843103_3990",
+    "token": true,
+    "width": 60,
+    "height": 60,
+    "shift": true,
+    "classes": "transition",
+    "x": 4,
+    "y": 4,
+    "parent": "animalBag"
+  },
+  "fox19": {
+    "id": "fox19",
+    "z": 19651,
+    "image": "/assets/1199843103_3990",
+    "token": true,
+    "width": 60,
+    "height": 60,
+    "shift": true,
+    "parent": "animalBag",
+    "classes": "transition",
+    "x": 4,
+    "y": 4
+  },
+  "fox20": {
+    "id": "fox20",
+    "z": 19684,
+    "image": "/assets/1199843103_3990",
+    "token": true,
+    "width": 60,
+    "height": 60,
+    "shift": true,
+    "parent": "animalBag",
+    "classes": "transition",
+    "x": 4,
+    "y": 4
+  },
+  "hawk2": {
+    "id": "hawk2",
+    "z": 19702,
+    "image": "/assets/-660565368_3656",
+    "token": true,
+    "width": 60,
+    "height": 60,
+    "shift": true,
+    "parent": "animalBag",
+    "classes": "transition",
+    "x": 4,
+    "y": 4
+  },
+  "hawk3": {
+    "id": "hawk3",
+    "z": 19715,
+    "image": "/assets/-660565368_3656",
+    "token": true,
+    "width": 60,
+    "height": 60,
+    "shift": true,
+    "classes": "transition",
+    "x": 4,
+    "y": 4,
+    "parent": "animalBag"
+  },
+  "hawk4": {
+    "id": "hawk4",
+    "z": 19677,
+    "image": "/assets/-660565368_3656",
+    "token": true,
+    "width": 60,
+    "height": 60,
+    "shift": true,
+    "classes": "transition",
+    "parent": "animalBag",
+    "x": 4,
+    "y": 4
+  },
+  "hawk5": {
+    "id": "hawk5",
+    "z": 19679,
+    "image": "/assets/-660565368_3656",
+    "token": true,
+    "width": 60,
+    "height": 60,
+    "shift": true,
+    "parent": "animalBag",
+    "classes": "transition",
+    "x": 4,
+    "y": 4
+  },
+  "hawk6": {
+    "id": "hawk6",
+    "z": 19710,
+    "image": "/assets/-660565368_3656",
+    "token": true,
+    "width": 60,
+    "height": 60,
+    "parent": "animalBag",
+    "shift": true,
+    "x": 4,
+    "y": 4,
+    "classes": "transition"
+  },
+  "hawk7": {
+    "id": "hawk7",
+    "z": 19703,
+    "image": "/assets/-660565368_3656",
+    "token": true,
+    "width": 60,
+    "height": 60,
+    "parent": "animalBag",
+    "shift": true,
+    "classes": "transition",
+    "x": 4,
+    "y": 4
+  },
+  "hawk8": {
+    "id": "hawk8",
+    "z": 19631,
+    "image": "/assets/-660565368_3656",
+    "token": true,
+    "width": 60,
+    "height": 60,
+    "parent": "animalBag",
+    "shift": true,
+    "classes": "transition",
+    "x": 4,
+    "y": 4
+  },
+  "hawk9": {
+    "id": "hawk9",
+    "z": 19642,
+    "image": "/assets/-660565368_3656",
+    "token": true,
+    "width": 60,
+    "height": 60,
+    "parent": "animalBag",
+    "shift": true,
+    "classes": "transition",
+    "x": 4,
+    "y": 4
+  },
+  "hawk10": {
+    "id": "hawk10",
+    "z": 19704,
+    "image": "/assets/-660565368_3656",
+    "token": true,
+    "width": 60,
+    "height": 60,
+    "parent": "animalBag",
+    "shift": true,
+    "x": 4,
+    "y": 4,
+    "classes": "transition"
+  },
+  "hawk11": {
+    "id": "hawk11",
+    "z": 19705,
+    "image": "/assets/-660565368_3656",
+    "token": true,
+    "width": 60,
+    "height": 60,
+    "shift": true,
+    "parent": "animalBag",
+    "x": 4,
+    "y": 4,
+    "classes": "transition"
+  },
+  "hawk12": {
+    "id": "hawk12",
+    "z": 19682,
+    "image": "/assets/-660565368_3656",
+    "token": true,
+    "width": 60,
+    "height": 60,
+    "shift": true,
+    "classes": "transition",
+    "x": 4,
+    "y": 4,
+    "parent": "animalBag"
+  },
+  "hawk13": {
+    "id": "hawk13",
+    "z": 19707,
+    "image": "/assets/-660565368_3656",
+    "token": true,
+    "width": 60,
+    "height": 60,
+    "parent": "animalBag",
+    "shift": true,
+    "x": 4,
+    "y": 4,
+    "classes": "transition"
+  },
+  "hawk14": {
+    "id": "hawk14",
+    "z": 19653,
+    "image": "/assets/-660565368_3656",
+    "token": true,
+    "width": 60,
+    "height": 60,
+    "shift": true,
+    "classes": "transition",
+    "x": 4,
+    "y": 4,
+    "parent": "animalBag"
+  },
+  "hawk15": {
+    "id": "hawk15",
+    "z": 19686,
+    "image": "/assets/-660565368_3656",
+    "token": true,
+    "width": 60,
+    "height": 60,
+    "parent": "animalBag",
+    "shift": true,
+    "classes": "transition",
+    "x": 4,
+    "y": 4
+  },
+  "hawk16": {
+    "id": "hawk16",
+    "z": 19667,
+    "image": "/assets/-660565368_3656",
+    "token": true,
+    "width": 60,
+    "height": 60,
+    "shift": true,
+    "parent": "animalBag",
+    "classes": "transition",
+    "x": 4,
+    "y": 4
+  },
+  "hawk17": {
+    "id": "hawk17",
+    "z": 19657,
+    "image": "/assets/-660565368_3656",
+    "token": true,
+    "width": 60,
+    "height": 60,
+    "shift": true,
+    "parent": "animalBag",
+    "classes": "transition",
+    "x": 4,
+    "y": 4
+  },
+  "hawk18": {
+    "id": "hawk18",
+    "z": 19635,
+    "image": "/assets/-660565368_3656",
+    "token": true,
+    "width": 60,
+    "height": 60,
+    "parent": "animalBag",
+    "shift": true,
+    "classes": "transition",
+    "x": 4,
+    "y": 4
+  },
+  "hawk19": {
+    "id": "hawk19",
+    "z": 19690,
+    "image": "/assets/-660565368_3656",
+    "token": true,
+    "width": 60,
+    "height": 60,
+    "parent": "animalBag",
+    "shift": true,
+    "classes": "transition",
+    "x": 4,
+    "y": 4
+  },
+  "hawk20": {
+    "id": "hawk20",
+    "z": 19618,
+    "image": "/assets/-660565368_3656",
+    "token": true,
+    "width": 60,
+    "height": 60,
+    "parent": "animalBag",
+    "shift": true,
+    "classes": "transition",
+    "x": 4,
+    "y": 4
+  },
+  "salmon2": {
+    "id": "salmon2",
+    "z": 19695,
+    "image": "/assets/1901394317_3048",
+    "token": true,
+    "width": 60,
+    "height": 60,
+    "parent": "animalBag",
+    "shift": true,
+    "classes": "transition",
+    "x": 4,
+    "y": 4
+  },
+  "salmon3": {
+    "id": "salmon3",
+    "z": 19643,
+    "image": "/assets/1901394317_3048",
+    "token": true,
+    "width": 60,
+    "height": 60,
+    "parent": "animalBag",
+    "shift": true,
+    "classes": "transition",
+    "x": 4,
+    "y": 4
+  },
+  "salmon4": {
+    "id": "salmon4",
+    "z": 19633,
+    "image": "/assets/1901394317_3048",
+    "token": true,
+    "width": 60,
+    "height": 60,
+    "parent": "animalBag",
+    "shift": true,
+    "x": 4,
+    "y": 4,
+    "classes": "transition"
+  },
+  "salmon5": {
+    "id": "salmon5",
+    "z": 19648,
+    "image": "/assets/1901394317_3048",
+    "token": true,
+    "width": 60,
+    "height": 60,
+    "parent": "animalBag",
+    "shift": true,
+    "classes": "transition",
+    "x": 4,
+    "y": 4
+  },
+  "salmon6": {
+    "id": "salmon6",
+    "z": 19689,
+    "image": "/assets/1901394317_3048",
+    "token": true,
+    "width": 60,
+    "height": 60,
+    "shift": true,
+    "parent": "animalBag",
+    "classes": "transition",
+    "x": 4,
+    "y": 4
+  },
+  "salmon7": {
+    "id": "salmon7",
+    "z": 19636,
+    "image": "/assets/1901394317_3048",
+    "token": true,
+    "width": 60,
+    "height": 60,
+    "shift": true,
+    "classes": "transition",
+    "parent": "animalBag",
+    "x": 4,
+    "y": 4
+  },
+  "salmon8": {
+    "id": "salmon8",
+    "z": 19675,
+    "image": "/assets/1901394317_3048",
+    "token": true,
+    "width": 60,
+    "height": 60,
+    "parent": "animalBag",
+    "shift": true,
+    "x": 4,
+    "y": 4,
+    "classes": "transition"
+  },
+  "salmon9": {
+    "id": "salmon9",
+    "z": 19625,
+    "image": "/assets/1901394317_3048",
+    "token": true,
+    "width": 60,
+    "height": 60,
+    "shift": true,
+    "parent": "animalBag",
+    "classes": "transition",
+    "x": 4,
+    "y": 4
+  },
+  "salmon10": {
+    "id": "salmon10",
+    "z": 19698,
+    "image": "/assets/1901394317_3048",
+    "token": true,
+    "width": 60,
+    "height": 60,
+    "shift": true,
+    "parent": "animalBag",
+    "classes": "transition",
+    "x": 4,
+    "y": 4
+  },
+  "salmon11": {
+    "id": "salmon11",
+    "z": 19709,
+    "image": "/assets/1901394317_3048",
+    "token": true,
+    "width": 60,
+    "height": 60,
+    "parent": "animalBag",
+    "shift": true,
+    "classes": "transition",
+    "x": 4,
+    "y": 4
+  },
+  "salmon12": {
+    "id": "salmon12",
+    "z": 19637,
+    "image": "/assets/1901394317_3048",
+    "token": true,
+    "width": 60,
+    "height": 60,
+    "shift": true,
+    "classes": "transition",
+    "x": 4,
+    "y": 4,
+    "parent": "animalBag"
+  },
+  "salmon13": {
+    "id": "salmon13",
+    "z": 19656,
+    "image": "/assets/1901394317_3048",
+    "token": true,
+    "width": 60,
+    "height": 60,
+    "parent": "animalBag",
+    "shift": true,
+    "classes": "transition",
+    "x": 4,
+    "y": 4
+  },
+  "salmon14": {
+    "id": "salmon14",
+    "z": 19672,
+    "image": "/assets/1901394317_3048",
+    "token": true,
+    "width": 60,
+    "height": 60,
+    "parent": "animalBag",
+    "shift": true,
+    "x": 4,
+    "y": 4,
+    "classes": "transition"
+  },
+  "salmon15": {
+    "id": "salmon15",
+    "z": 19639,
+    "image": "/assets/1901394317_3048",
+    "token": true,
+    "width": 60,
+    "height": 60,
+    "parent": "animalBag",
+    "shift": true,
+    "classes": "transition",
+    "x": 4,
+    "y": 4
+  },
+  "salmon16": {
+    "id": "salmon16",
+    "z": 19693,
+    "image": "/assets/1901394317_3048",
+    "token": true,
+    "width": 60,
+    "height": 60,
+    "shift": true,
+    "parent": "animalBag",
+    "classes": "transition",
+    "x": 4,
+    "y": 4
+  },
+  "salmon17": {
+    "id": "salmon17",
+    "z": 19662,
+    "image": "/assets/1901394317_3048",
+    "token": true,
+    "width": 60,
+    "height": 60,
+    "parent": "animalBag",
+    "shift": true,
+    "classes": "transition",
+    "x": 4,
+    "y": 4
+  },
+  "salmon18": {
+    "id": "salmon18",
+    "z": 19645,
+    "image": "/assets/1901394317_3048",
+    "token": true,
+    "width": 60,
+    "height": 60,
+    "parent": "animalBag",
+    "shift": true,
+    "classes": "transition",
+    "x": 4,
+    "y": 4
+  },
+  "salmon19": {
+    "id": "salmon19",
+    "z": 19712,
+    "image": "/assets/1901394317_3048",
+    "token": true,
+    "width": 60,
+    "height": 60,
+    "parent": "animalBag",
+    "shift": true,
+    "x": 4,
+    "y": 4,
+    "classes": "transition"
+  },
+  "salmon20": {
+    "id": "salmon20",
+    "z": 19680,
+    "image": "/assets/1901394317_3048",
+    "token": true,
+    "width": 60,
+    "height": 60,
+    "parent": "animalBag",
+    "shift": true,
+    "classes": "transition",
+    "x": 4,
+    "y": 4
+  },
+  "addk": {
+    "deck": "goalDeck",
+    "type": "card",
+    "cardType": "bearA",
+    "id": "addk",
+    "z": 41690,
+    "parent": "ywi2"
+  },
+  "2svx": {
+    "deck": "goalDeck",
+    "type": "card",
+    "cardType": "bearB",
+    "id": "2svx",
+    "z": 41687,
+    "parent": "ywi2"
+  },
+  "15k9": {
+    "deck": "goalDeck",
+    "type": "card",
+    "cardType": "bearC",
+    "id": "15k9",
+    "z": 41684,
+    "parent": "ywi2"
+  },
+  "gfgk": {
+    "deck": "goalDeck",
+    "type": "card",
+    "cardType": "bearD",
+    "id": "gfgk",
+    "z": 41693,
+    "parent": "ywi2"
+  },
+  "i4nr": {
+    "deck": "goalDeck",
+    "type": "card",
+    "cardType": "foxA",
+    "id": "i4nr",
+    "z": 41720,
+    "parent": "ywi2"
+  },
+  "4n8s": {
+    "deck": "goalDeck",
+    "type": "card",
+    "cardType": "foxB",
+    "id": "4n8s",
+    "z": 41714,
+    "parent": "ywi2"
+  },
+  "kol2": {
+    "deck": "goalDeck",
+    "type": "card",
+    "cardType": "foxC",
+    "id": "kol2",
+    "z": 41717,
+    "parent": "ywi2"
+  },
+  "4qae": {
+    "deck": "goalDeck",
+    "type": "card",
+    "cardType": "foxD",
+    "id": "4qae",
+    "z": 41708,
+    "parent": "ywi2"
+  },
+  "ibq5": {
+    "deck": "goalDeck",
+    "type": "card",
+    "cardType": "hawkA",
+    "id": "ibq5",
+    "z": 41732,
+    "parent": "ywi2"
+  },
+  "s4w2": {
+    "deck": "goalDeck",
+    "type": "card",
+    "cardType": "hawkB",
+    "id": "s4w2",
+    "z": 41726,
+    "parent": "ywi2"
+  },
+  "v4jh": {
+    "deck": "goalDeck",
+    "type": "card",
+    "cardType": "hawkC",
+    "id": "v4jh",
+    "z": 41729,
+    "parent": "ywi2"
+  },
+  "qvzg": {
+    "deck": "goalDeck",
+    "type": "card",
+    "cardType": "hawkD",
+    "id": "qvzg",
+    "z": 41723,
+    "parent": "ywi2"
+  },
+  "aejv": {
+    "deck": "goalDeck",
+    "type": "card",
+    "cardType": "salmonA",
+    "id": "aejv",
+    "z": 41744,
+    "parent": "ywi2"
+  },
+  "tccy": {
+    "deck": "goalDeck",
+    "type": "card",
+    "cardType": "salmonB",
+    "id": "tccy",
+    "z": 41741,
+    "parent": "ywi2"
+  },
+  "p79c": {
+    "deck": "goalDeck",
+    "type": "card",
+    "cardType": "salmonC",
+    "id": "p79c",
+    "z": 41738,
+    "parent": "ywi2"
+  },
+  "854x": {
+    "deck": "goalDeck",
+    "type": "card",
+    "cardType": "salmonD",
+    "id": "854x",
+    "z": 41735,
+    "parent": "ywi2"
+  },
+  "wezg": {
+    "deck": "goalDeck",
+    "type": "card",
+    "cardType": "elkA",
+    "id": "wezg",
+    "z": 41702,
+    "parent": "ywi2"
+  },
+  "toqw": {
+    "deck": "goalDeck",
+    "type": "card",
+    "cardType": "elkB",
+    "id": "toqw",
+    "z": 41705,
+    "parent": "ywi2"
+  },
+  "khtu": {
+    "deck": "goalDeck",
+    "type": "card",
+    "cardType": "elkD",
+    "id": "khtu",
+    "z": 41699,
+    "parent": "ywi2"
+  },
+  "background": {
+    "id": "background",
+    "width": 1600,
+    "height": 1000,
+    "scale": 1.1,
+    "layer": -7,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "opacity": 0.2
+    },
+    "image": "/assets/267174820_320378"
+  },
+  "85jb": {
+    "deck": "pineDeck",
+    "type": "card",
+    "cardType": "pineCone",
+    "id": "85jb",
+    "z": 41331,
+    "parent": "6zwi"
+  },
+  "sp68": {
+    "deck": "pineDeck",
+    "type": "card",
+    "cardType": "pineCone",
+    "id": "sp68",
+    "z": 41332,
+    "parent": "6zwi"
+  },
+  "qrwk": {
+    "deck": "pineDeck",
+    "type": "card",
+    "cardType": "pineCone",
+    "id": "qrwk",
+    "z": 41333,
+    "parent": "6zwi"
+  },
+  "kxwe": {
+    "deck": "pineDeck",
+    "type": "card",
+    "cardType": "pineCone",
+    "id": "kxwe",
+    "z": 41334,
+    "parent": "6zwi"
+  },
+  "8nt9": {
+    "deck": "pineDeck",
+    "type": "card",
+    "cardType": "pineCone",
+    "id": "8nt9",
+    "z": 41335,
+    "parent": "6zwi"
+  },
+  "j8fk": {
+    "deck": "pineDeck",
+    "type": "card",
+    "cardType": "pineCone",
+    "id": "j8fk",
+    "z": 41336,
+    "parent": "6zwi"
+  },
+  "hiqo": {
+    "deck": "pineDeck",
+    "type": "card",
+    "cardType": "pineCone",
+    "id": "hiqo",
+    "z": 41337,
+    "parent": "6zwi"
+  },
+  "k1g1": {
+    "deck": "pineDeck",
+    "type": "card",
+    "cardType": "pineCone",
+    "id": "k1g1",
+    "z": 41338,
+    "parent": "6zwi"
+  },
+  "gxdu": {
+    "deck": "pineDeck",
+    "type": "card",
+    "cardType": "pineCone",
+    "id": "gxdu",
+    "z": 41339,
+    "parent": "6zwi"
+  },
+  "nm14": {
+    "deck": "pineDeck",
+    "type": "card",
+    "cardType": "pineCone",
+    "id": "nm14",
+    "z": 41340,
+    "parent": "6zwi"
+  },
+  "fzh1": {
+    "deck": "pineDeck",
+    "type": "card",
+    "cardType": "pineCone",
+    "id": "fzh1",
+    "z": 41341,
+    "parent": "6zwi"
+  },
+  "tmbq": {
+    "deck": "pineDeck",
+    "type": "card",
+    "cardType": "pineCone",
+    "id": "tmbq",
+    "z": 41342,
+    "parent": "6zwi"
+  },
+  "7xq5": {
+    "deck": "pineDeck",
+    "type": "card",
+    "cardType": "pineCone",
+    "id": "7xq5",
+    "z": 41343,
+    "parent": "6zwi"
+  },
+  "iv5d": {
+    "deck": "pineDeck",
+    "type": "card",
+    "cardType": "pineCone",
+    "id": "iv5d",
+    "z": 41344,
+    "parent": "6zwi"
+  },
+  "c3l0": {
+    "deck": "pineDeck",
+    "type": "card",
+    "cardType": "pineCone",
+    "id": "c3l0",
+    "z": 41345,
+    "parent": "6zwi"
+  },
+  "vad9": {
+    "deck": "pineDeck",
+    "type": "card",
+    "cardType": "pineCone",
+    "id": "vad9",
+    "z": 41346,
+    "parent": "6zwi"
+  },
+  "kuq6": {
+    "deck": "pineDeck",
+    "type": "card",
+    "cardType": "pineCone",
+    "id": "kuq6",
+    "z": 41347,
+    "parent": "6zwi"
+  },
+  "kzuh": {
+    "deck": "pineDeck",
+    "type": "card",
+    "cardType": "pineCone",
+    "id": "kzuh",
+    "z": 41348,
+    "parent": "6zwi"
+  },
+  "e6je": {
+    "deck": "pineDeck",
+    "type": "card",
+    "cardType": "pineCone",
+    "id": "e6je",
+    "z": 41349,
+    "parent": "6zwi"
+  },
+  "rv8y": {
+    "deck": "pineDeck",
+    "type": "card",
+    "cardType": "pineCone",
+    "id": "rv8y",
+    "z": 41350,
+    "parent": "6zwi"
+  },
+  "pku3": {
+    "deck": "pineDeck",
+    "type": "card",
+    "cardType": "pineCone",
+    "id": "pku3",
+    "z": 41351,
+    "parent": "6zwi"
+  },
+  "ue8j": {
+    "deck": "pineDeck",
+    "type": "card",
+    "cardType": "pineCone",
+    "id": "ue8j",
+    "z": 41352,
+    "parent": "6zwi"
+  },
+  "ukf0": {
+    "deck": "pineDeck",
+    "type": "card",
+    "cardType": "pineCone",
+    "id": "ukf0",
+    "z": 41353,
+    "parent": "6zwi"
+  },
+  "zu3v": {
+    "deck": "pineDeck",
+    "type": "card",
+    "cardType": "pineCone",
+    "id": "zu3v",
+    "z": 41354,
+    "parent": "6zwi"
+  },
+  "oxn9": {
+    "deck": "pineDeck",
+    "type": "card",
+    "cardType": "pineCone",
+    "id": "oxn9",
+    "z": 41355,
+    "parent": "6zwi"
+  },
+  "pineDeck": {
+    "type": "deck",
+    "id": "pineDeck",
+    "parent": "pineDeckHolder",
+    "width": 46,
+    "height": 46,
+    "cardDefaults": {
+      "width": 60,
+      "height": 80,
+      "classes": "transition",
+      "onPileCreation": {
+        "handleCSS": "background:#4a7a4a;color:white; border-radius:9px",
+        "handleSize": "25",
+        "handlePosition": "bottom center",
+        "elnarge": 3
+      }
+    },
+    "cardTypes": {
+      "pineCone": {
+        "image": "/assets/-650024430_5360"
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "color": "transparent",
+            "width": 80,
+            "height": 80,
+            "x": -10,
+            "dynamicProperties": {
+              "value": "image"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "pineDeckHolder": {
+    "type": "holder",
+    "id": "pineDeckHolder",
+    "x": 1035,
+    "y": 826,
+    "width": 54,
+    "height": 84,
+    "z": 3,
+    "dropOffsetX": -3,
+    "dropOffsetY": 2,
+    "dropTarget": {
+      "deck": "pineDeck"
+    },
+    "css": {
+      "background-image": "linear-gradient(rgba(255,255,255,0.5), rgba(255,255,255,0.5)),url('/assets/-650024430_5360')",
+      "background-size": "140%",
+      "background-repeat": "no-repeat",
+      "background-position": "center"
+    },
+    "classes": "transparent"
+  },
+  "goalHolder": {
+    "type": "holder",
+    "id": "goalHolder",
+    "y": 486,
+    "dropTarget": {
+      "deck": "goalDeck"
+    },
+    "x": -135
+  },
+  "goalDeck": {
+    "type": "deck",
+    "id": "goalDeck",
+    "parent": "goalHolder",
+    "x": 12,
+    "y": 41,
+    "cardDefaults": {
+      "enlarge": 4,
+      "classes": "transition"
+    },
+    "cardTypes": {
+      "bearA": {
+        "title": "Bear",
+        "subTitle": "Mating Pairs",
+        "letter": "A",
+        "content": "<table style='border-spacing: 0px;line-height: 0.9em; width:100%'><tr><td>Pairs</td><td>Points</td></tr><tr><td>1</td><td style='color:red'>4</td></tr><tr><td>2</td><td style='color:red'>11</td></tr><tr><td>3</td><td style='color:red'>19</td></tr><tr><td>4</td><td style='color:red'>27</td></tr></table><p style='line-height: 0.9em'>Score for number of pairs of adjacent bears with no other adjacent bears.</p>",
+        "bgTitleColor": "#603f1f",
+        "textTitleColor": "#fff",
+        "contentFontSize": "11px"
+      },
+      "bearB": {
+        "title": "Bear",
+        "subTitle": "Mother & Cubs",
+        "letter": "B",
+        "content": "<div style='line-height: 0.9em'><span style='color:red'>10</span> points per group of 3 adjacent bears (any shape) with no other adjacent bears.</div>",
+        "bgTitleColor": "#603f1f",
+        "textTitleColor": "#fff",
+        "contentFontSize": "13px"
+      },
+      "bearC": {
+        "title": "Bear",
+        "subTitle": "Families",
+        "letter": "C",
+        "content": "<table style='border-spacing: 0px;line-height: 0.9em;width=100%'><tr><td>Group size</td><td>Points</td></tr><tr><td>1</td><td style='color:red'>2</td></tr><tr><td>2</td><td style='color:red'>5</td></tr><tr><td>3</td><td style='color:red'>8</td></tr></table><p style='line-height: 0.9em'>Score per group of adjacnet bears (any shape) with no other adjacent bears. <span style='color:red'>+3</span> points for having all group sizes.</p>",
+        "bgTitleColor": "#603f1f",
+        "textTitleColor": "#fff",
+        "contentFontSize": "10px"
+      },
+      "bearD": {
+        "title": "Bear",
+        "subTitle": "Big Groups",
+        "letter": "D",
+        "content": "<table style='border-spacing: 0px;line-height: 0.9em;width=100%'><tr><td>Group size</td><td>Points</td></tr><tr><td>2</td><td style='color:red'>5</td></tr><tr><td>3</td><td style='color:red'>8</td></tr><tr><td>4</td><td style='color:red'>13</td></tr></table><p style='line-height: 0.9em'>Score per group of adjacent bears (any shape) with no other adjacent bears.</p>",
+        "bgTitleColor": "#603f1f",
+        "textTitleColor": "#fff",
+        "contentFontSize": "12px"
+      },
+      "elkA": {
+        "title": "Elk",
+        "subTitle": "Lines",
+        "letter": "A",
+        "content": "<table style='border-spacing: 0px;line-height: 0.9em; width:100%'><tr><td>Elk</td><td>Points</td></tr><tr><td>1</td><td style='color:red'>2</td></tr><tr><td>2</td><td style='color:red'>5</td></tr><tr><td>3</td><td style='color:red'>9</td></tr><tr><td>4</td><td style='color:red'>13</td></tr></table><p style='line-height: 0.9em'>Score for number of elk in a straight line (flat side touching flat side) in any orientation. Count each elk only once. Groups may be adjacent.</p>",
+        "bgTitleColor": "#d6ad84",
+        "textTitleColor": "#fff",
+        "contentFontSize": "9px"
+      },
+      "elkB": {
+        "title": "Elk",
+        "subTitle": "Formation",
+        "letter": "B",
+        "content": "<table style='border-spacing: 0px;line-height: 0.9em; width:100%'><tr><td>Formation</td><td>Points</td></tr><tr><td><img src='/assets/1227168721_15496' height='12'/></td><td style='color:red'>2</td></tr><tr><td><img src='/assets/1280254170_12896' height='20'/></td><td style='color:red'>5</td></tr><tr><td><img src='/assets/701974715_20032' height='20'/></td><td style='color:red'>9</td></tr><tr><td><img src='/assets/-1780472910_21066' height='20'/></td><td style='color:red'>13</td></tr></table><div style='line-height: 0.9em'>Score for each exact shape (any orientation). Count each elk only once. Groups may be adjacent.</div>",
+        "bgTitleColor": "#d6ad84",
+        "textTitleColor": "#fff",
+        "contentFontSize": "7px"
+      },
+      "elkC": {
+        "title": "Elk",
+        "subTitle": "Herds",
+        "letter": "C",
+        "content": "<table style='border-spacing: 0px;line-height: 0.9em; width:100%; text-align:center'><tr><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td><td>7</td><td>8+</td></tr><tr style='color:red'><td>2</td><td>4</td><td>7</td><td>10</td><td>14</td><td>18</td><td>23</td><td>28</td></tr></table><p style='line-height: 0.9em'>Score for each group of contiguous elk in any shape, size, or orientation. Groups may be adjacent.</p>",
+        "bgTitleColor": "#d6ad84",
+        "textTitleColor": "#fff",
+        "contentFontSize": "10px"
+      },
+      "elkD": {
+        "title": "Elk",
+        "subTitle": "Rings",
+        "letter": "D",
+        "content": "<table style='border-spacing: 0px;line-height: 0.9em; width:100%; text-align:center'><tr><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td></tr><tr style='color:red'><td>2</td><td>5</td><td>8</td><td>12</td><td>16</td><td>21</td></tr></table><p style='line-height: 0.9em'>Score for each group of contiguous elk in a ring shape. Count each elk only once. Groups may be adjacent.</p>",
+        "bgTitleColor": "#d6ad84",
+        "textTitleColor": "#fff",
+        "contentFontSize": "10px"
+      },
+      "foxA": {
+        "title": "Fox",
+        "subTitle": "Nearby Animals",
+        "letter": "A",
+        "content": "<table style='border-spacing: 0px;line-height: 0.9em; width:100%'><tr><td>Animals</td><td>Points</td></tr><tr><td>1</td><td style='color:red'>1</td></tr><tr><td>2</td><td style='color:red'>2</td></tr><tr><td>3</td><td style='color:red'>3</td></tr><tr><td>4</td><td style='color:red'>4</td></tr><tr><td>5</td><td style='color:red'>5</td></tr></table><p style='line-height: 0.9em'>Score for each fox the number of unique adjancet animal types (including foxes).</p>",
+        "bgTitleColor": "#fe9700",
+        "textTitleColor": "#fff",
+        "contentFontSize": "9px"
+      },
+      "foxB": {
+        "title": "Fox",
+        "subTitle": "Nearby Pairs",
+        "letter": "B",
+        "content": "<table style='border-spacing: 0px;line-height: 0.9em; width:100%'><tr><td>Pairs</td><td>Points</td></tr><tr><td>1</td><td style='color:red'>3</td></tr><tr><td>2</td><td style='color:red'>5</td></tr><tr><td>3</td><td style='color:red'>7</td></tr></table><p style='line-height: 0.9em'>Score for each fox the number of unique pairs of adjacent animals (excluding foxes).</p>",
+        "bgTitleColor": "#fe9700",
+        "textTitleColor": "#fff",
+        "contentFontSize": "10px"
+      },
+      "foxC": {
+        "title": "Fox",
+        "subTitle": "Nearby Related",
+        "letter": "C",
+        "content": "<table style='border-spacing: 0px;line-height: 0.9em; width:100%'><tr><td>Animals</td><td>Points</td></tr><tr><td>1</td><td style='color:red'>1</td></tr><tr><td>2</td><td style='color:red'>2</td></tr><tr><td>3</td><td style='color:red'>3</td></tr><tr><td>4</td><td style='color:red'>4</td></tr><tr><td>5</td><td style='color:red'>5</td></tr><tr><td>6</td><td style='color:red'>6</td></tr></table><p style='line-height: 0.9em'>Score for each fox the number of the most abundant adjacent animal type (excluding foxes).</p>",
+        "bgTitleColor": "#fe9700",
+        "textTitleColor": "#fff",
+        "contentFontSize": "8.5px"
+      },
+      "foxD": {
+        "title": "Fox",
+        "subTitle": "Dynamic Duos",
+        "letter": "D",
+        "content": "<table style='border-spacing: 0px;line-height: 0.9em; width:100%'><tr><td>Pairs</td><td>Points</td></tr><tr><td>1</td><td style='color:red'>5</td></tr><tr><td>2</td><td style='color:red'>7</td></tr><tr><td>3</td><td style='color:red'>9</td></tr><tr><td>4</td><td style='color:red'>11</td></tr></table><p style='line-height: 0.9em'>Score for each fox pair the number of unique pairs of adjacent animals (excluding fox pairs).</p>",
+        "bgTitleColor": "#fe9700",
+        "textTitleColor": "#fff",
+        "contentFontSize": "10px"
+      },
+      "hawkA": {
+        "title": "Hawk",
+        "subTitle": "Solitary",
+        "letter": "A",
+        "content": "<table style='border-spacing: 0px;line-height: 0.9em; width:100%; text-align:center'><tr><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td><td>7</td><td>8+</td></tr><tr style='color:red'><td>2</td><td>5</td><td>8</td><td>11</td><td>14</td><td>18</td><td>22</td><td>26</td></tr></table><p style='line-height: 0.9em'>Score for each hawk not adjacent to another hawk.</p>",
+        "bgTitleColor": "#c0e6f5",
+        "textTitleColor": "#000",
+        "contentFontSize": "9px"
+      },
+      "hawkB": {
+        "title": "Hawk",
+        "subTitle": "Connected",
+        "letter": "B",
+        "content": "<table style='border-spacing: 0px;line-height: 0.9em; width:100%; text-align:center'><tr><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td><td>7</td><td>8</td></tr><tr style='color:red'><td>5</td><td>9</td><td>12</td><td>16</td><td>20</td><td>24</td><td>28</td></tr></table><p style='line-height: 0.9em'>Score for each hawk not adjacent to another hawk and that has a direct line of sight to another hawk.</p>",
+        "bgTitleColor": "#c0e6f5",
+        "textTitleColor": "#000",
+        "contentFontSize": "9px"
+      },
+      "hawkC": {
+        "title": "Hawk",
+        "subTitle": "Network",
+        "letter": "C",
+        "content": "<div style='line-height: 0.9em'><span style='color:red'>3</span> points for each line of sight between two non-adjacent hawks. Each hawk may have multiple lines of sight.</div>",
+        "bgTitleColor": "#c0e6f5",
+        "textTitleColor": "#000",
+        "contentFontSize": "13px"
+      },
+      "hawkD": {
+        "title": "Hawk",
+        "subTitle": "Territorial",
+        "letter": "D",
+        "content": "<table style='border-spacing: 0px;line-height: 0.9em;width=100%'><tr><td>Animals</td><td>Points</td></tr><tr><td>1</td><td style='color:red'>4</td></tr><tr><td>2</td><td style='color:red'>7</td></tr><tr><td>3+</td><td style='color:red'>9</td></tr></table><p style='line-height: 0.9em'>Score for each pair of non-adjacent hawks the number of unique animal types between them (excluding other hawks). Each hawk can only be part of one pair.</p>",
+        "bgTitleColor": "#c0e6f5",
+        "textTitleColor": "#000",
+        "contentFontSize": "9px"
+      },
+      "salmonA": {
+        "title": "Salmon",
+        "subTitle": "Long Run",
+        "letter": "A",
+        "content": "<table style='border-spacing: 0px;line-height: 0.9em; width:100%; text-align:center'><tr><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td><td>7+</td></tr><tr style='color:red'><td>2</td><td>5</td><td>8</td><td>12</td><td>16</td><td>20</td><td>25</td></tr></table><p style='line-height: 0.9em'>Score for each group of adjacent salmon in any shape (where each salmon is adjacent to no more than two other salmon). Runs may not be adjacent.</p>",
+        "bgTitleColor": "#ff7c80",
+        "textTitleColor": "#000",
+        "contentFontSize": "9px"
+      },
+      "salmonB": {
+        "title": "Salmon",
+        "subTitle": "Short Run",
+        "letter": "B",
+        "content": "<table style='border-spacing: 0px;line-height: 0.9em; width:100%; text-align:center'><tr><td>1</td><td>2</td><td>3</td><td>4</td><td>5+</td></tr><tr style='color:red'><td>2</td><td>4</td><td>9</td><td>11</td><td>17</td></tr></table><p style='line-height: 0.9em'>Score for each group of adjacent salmon in any shape (where each salmon is adjacent to no more than two other salmon). Runs may not be adjacent.</p>",
+        "bgTitleColor": "#ff7c80",
+        "textTitleColor": "#000",
+        "contentFontSize": "9px"
+      },
+      "salmonC": {
+        "title": "Salmon",
+        "subTitle": "Families",
+        "letter": "C",
+        "content": "<table style='border-spacing: 0px;line-height: 0.9em;width=100%'><tr><td>Run size</td><td>Points</td></tr><tr><td>3</td><td style='color:red'>10</td></tr><tr><td>4</td><td style='color:red'>12</td></tr><tr><td>5+</td><td style='color:red'>15</td></tr></table><p style='line-height: 0.9em'>Score for each group of adjacent salmon in any shape (where each salmon is adjacent to no more than two other salmon). Runs may not be adjacent.</p>",
+        "bgTitleColor": "#ff7c80",
+        "textTitleColor": "#000",
+        "contentFontSize": "9px"
+      },
+      "salmonD": {
+        "title": "Salmon",
+        "subTitle": "Surrounded",
+        "letter": "D",
+        "content": "<div style='line-height: 0.9em'>For each group of at least 3 adjacent salmon in any shape, score <span style='color:red'>1</span> point for each salmon plus <span style='color:red'>1</span> point for each animal adjacent to the run. Salmon runs may not be adjacent.</div>",
+        "bgTitleColor": "#ff7c80",
+        "textTitleColor": "#000",
+        "contentFontSize": "11px"
+      },
+      "variantFamily": {
+        "title": "Variant",
+        "subTitle": "Family",
+        "content": "<table style='border-spacing: 0px;line-height: 0.9em;width=100%'><tr><td>Group size</td><td>Points</td></tr><tr><td>1</td><td style='color:red'>2</td></tr><tr><td>2</td><td style='color:red'>5</td></tr><tr><td>3+</td><td style='color:red'>9</td></tr></table><p style='line-height: 0.9em'>Score all wildlife per group of that type (any shape). Groups of same type may not be adjacent.</p>",
+        "bgTitleColor": "purple",
+        "textTitleColor": "#fff",
+        "contentFontSize": "10px"
+      },
+      "variantIntermediate": {
+        "title": "Variant",
+        "subTitle": "Intermediate",
+        "content": "<table style='border-spacing: 0px;line-height: 0.9em;width=100%'><tr><td>Group size</td><td>Points</td></tr><tr><td>2</td><td style='color:red'>5</td></tr><tr><td>3</td><td style='color:red'>8</td></tr><tr><td>4+</td><td style='color:red'>12</td></tr></table><p style='line-height: 0.9em'>Score all wildlife per group of that type (any shape). Groups of same type may not be adjacent.</p>",
+        "bgTitleColor": "purple",
+        "textTitleColor": "#fff",
+        "contentFontSize": "10px"
+      }
+    },
+    "faceTemplates": [
+      {
+        "border": 1,
+        "radius": 8,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "#ffffff",
+            "width": 103,
+            "height": 160
+          },
+          {
+            "type": "html",
+            "css": {
+              "body": {
+                "background": "${PROPERTY bgTitleColor}50",
+                "display": "flex",
+                "flex-direction": "column",
+                "font-size": "${PROPERTY contentFontSize}"
+              },
+              ".title": {
+                "font-size": "22px",
+                "background": "${PROPERTY bgTitleColor}",
+                "text-align": "center",
+                "color": "${PROPERTY textTitleColor}"
+              },
+              ".subtitle": {
+                "font-size": "11px",
+                "background": "${PROPERTY bgTitleColor}",
+                "text-align": "center",
+                "color": "${PROPERTY textTitleColor}"
+              }
+            },
+            "x": 0,
+            "y": 0,
+            "width": 103,
+            "height": 160,
+            "classes": "html",
+            "color": "black",
+            "value": "<div class=\"title\"> ${PROPERTY title}</div><div class=\"subtitle\"> ${PROPERTY subTitle}</div><div class=\"flex\">${PROPERTY content}</div>"
+          },
+          {
+            "type": "text",
+            "x": 93,
+            "y": 1,
+            "fontSize": 12,
+            "width": 103,
+            "dynamicProperties": {
+              "value": "letter",
+              "color": "textTitleColor"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "BearGoal": {
+    "type": "holder",
+    "id": "BearGoal",
+    "x": 1031,
+    "y": 954,
+    "z": 4,
+    "css": {
+      "#enlarged": {
+        "left": "calc(var(--roomLeft) + (${PROPERTY x}px + ${PROPERTY width}px / 2 * (1 - ${PROPERTY enlarge})) * var(--scale) - 180px)",
+        "top": "calc(var(--roomTop) + (${PROPERTY y}px + ${PROPERTY height}px / 2 * (1 - ${PROPERTY enlarge})) * var(--scale) - 425px)",
+        "right": "unset",
+        "transform-origin": "top left"
+      }
+    },
+    "enlarge": 4,
+    "preventPiles": true,
+    "classes": "transparent"
+  },
+  "ElkGoal": {
+    "type": "holder",
+    "id": "ElkGoal",
+    "x": 1146,
+    "inheritFrom": {
+      "BearGoal": "*"
+    },
+    "y": 954
+  },
+  "FoxGoal": {
+    "type": "holder",
+    "id": "FoxGoal",
+    "x": 1261,
+    "y": 954,
+    "inheritFrom": {
+      "BearGoal": "*"
+    }
+  },
+  "HawkGoal": {
+    "type": "holder",
+    "id": "HawkGoal",
+    "x": 1376,
+    "y": 954,
+    "inheritFrom": {
+      "BearGoal": "*"
+    }
+  },
+  "SalmonGoal": {
+    "type": "holder",
+    "id": "SalmonGoal",
+    "x": 1491,
+    "y": 954,
+    "inheritFrom": {
+      "BearGoal": "*"
+    }
+  },
+  "tileBag": {
+    "type": "holder",
+    "id": "tileBag",
+    "x": 1493,
+    "y": 600,
+    "width": 120,
+    "height": 120,
+    "z": 26088,
+    "classes": "transparent",
+    "css": {
+      "": {
+        "overflow": "clip",
+        "background-color": "${PROPERTY color}",
+        "background": "url(/assets/-1372554968_23131)",
+        "background-size": "cover"
+      },
+      "::before": {
+        "content": "'${PROPERTY widget-count}'",
+        "text-align": "center",
+        "display": "block",
+        "line-height": "120px",
+        "padding-left": "5px",
+        "white-space": "pre",
+        "font-size": "50px",
+        "font-weight": "900",
+        "color": "lightgrey"
+      },
+      "::after": {
+        "position": "absolute",
+        "bottom": "5px",
+        "content": "'Habitat'",
+        "text-align": "center",
+        "display": "block",
+        "line-height": "30px",
+        "padding-left": "3px",
+        "white-space": "pre",
+        "font-size": "22px",
+        "font-weight": "400",
+        "color": "lightgrey",
+        "width": "100%"
+      },
+      " .widget": {
+        "opacity": 0,
+        "transform": "scale(10)!important"
+      }
+    },
+    "dropTarget": {
+      "deck": "tileDeck"
+    },
+    "preventPiles": true,
+    "image": "/assets/-1372554968_23131",
+    "widget-count": 85,
+    "enterRoutine": [
+      {
+        "func": "SHUFFLE",
+        "holder": "${PROPERTY id}"
+      },
+      {
+        "func": "COUNT",
+        "holder": "${PROPERTY id}",
+        "variable": "widgets"
+      },
+      {
+        "func": "SET",
+        "property": "widget-count",
+        "value": "${widgets}",
+        "collection": "thisButton"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "COUNT",
+        "holder": "${PROPERTY id}",
+        "variable": "widgets"
+      },
+      {
+        "func": "SET",
+        "property": "widget-count",
+        "value": "${widgets}",
+        "collection": "thisButton"
+      },
+      {
+        "func": "SET",
+        "collection": "child",
+        "property": "rotation",
+        "value": 0
+      }
+    ],
+    "scale": 0.8
+  },
+  "tileOffHolder": {
+    "type": "holder",
+    "id": "tileOffHolder",
+    "x": -127,
+    "y": 310,
+    "width": 100,
+    "height": 102,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "deck": "tileDeck"
+    }
+  },
+  "tileHolder1": {
+    "type": "holder",
+    "id": "tileHolder1",
+    "x": 1095,
+    "y": 778,
+    "width": 100,
+    "height": 102,
+    "z": 26089,
+    "css": {
+      "background": "#ffffff40"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "deck": "tileDeck"
+    }
+  },
+  "tokenHolder1": {
+    "type": "holder",
+    "id": "tokenHolder1",
+    "x": 1119,
+    "y": 886,
+    "width": 60,
+    "height": 60,
+    "borderRadius": 100,
+    "z": 2,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "token": true
+    },
+    "css": {
+      "background": "#ffffff40"
+    }
+  },
+  "tokenHolder2": {
+    "type": "holder",
+    "id": "tokenHolder2",
+    "x": 1232,
+    "y": 886,
+    "width": 60,
+    "height": 60,
+    "borderRadius": 100,
+    "z": 2,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "token": true
+    },
+    "css": {
+      "background": "#ffffff40"
+    }
+  },
+  "tokenHolder3": {
+    "type": "holder",
+    "id": "tokenHolder3",
+    "x": 1346,
+    "y": 886,
+    "width": 60,
+    "height": 60,
+    "borderRadius": 100,
+    "z": 2,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "token": true
+    },
+    "css": {
+      "background": "#ffffff40"
+    }
+  },
+  "tokenHolder4": {
+    "type": "holder",
+    "id": "tokenHolder4",
+    "x": 1458,
+    "y": 886,
+    "width": 60,
+    "height": 60,
+    "borderRadius": 100,
+    "z": 2,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "token": true
+    },
+    "css": {
+      "background": "#ffffff40"
+    }
+  },
+  "tileHolder2": {
+    "type": "holder",
+    "id": "tileHolder2",
+    "x": 1207,
+    "y": 778,
+    "width": 100,
+    "height": 102,
+    "z": 26089,
+    "css": {
+      "background": "#ffffff40"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "deck": "tileDeck"
+    }
+  },
+  "tileHolder3": {
+    "type": "holder",
+    "id": "tileHolder3",
+    "x": 1320,
+    "y": 778,
+    "width": 100,
+    "height": 102,
+    "z": 26089,
+    "css": {
+      "background": "#ffffff40"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "deck": "tileDeck"
+    }
+  },
+  "tileHolder4": {
+    "type": "holder",
+    "id": "tileHolder4",
+    "x": 1433,
+    "y": 778,
+    "width": 100,
+    "height": 102,
+    "z": 26089,
+    "css": {
+      "background": "#ffffff40"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "deck": "tileDeck"
+    }
+  },
+  "fillButton": {
+    "type": "button",
+    "id": "fillButton",
+    "x": 1542,
+    "y": 853,
+    "width": 50,
+    "height": 35,
+    "z": 2089,
+    "color": "white",
+    "css": "font-size: 15px; --wcMain: black; --wcBorder:white; --wcMainOH: grey; --wcBorderOH: black",
+    "text": "Fill",
+    "clickRoutine": [
+      {
+        "func": "IF",
+        "condition": "${PROPERTY soloMode OF reset}",
+        "thenRoutine": [
+          {
+            "func": "FOREACH",
+            "range": [
+              4
+            ],
+            "loopRoutine": [
+              {
+                "func": "MOVE",
+                "from": "tileHolder${value}",
+                "to": "tileTempHolder"
+              },
+              {
+                "func": "MOVE",
+                "from": "tokenHolder${value}",
+                "to": "tokenTempHolder"
+              }
+            ]
+          },
+          {
+            "func": "MOVE",
+            "from": "tileTempHolder",
+            "to": "tileOffHolder"
+          },
+          {
+            "func": "MOVE",
+            "from": "tokenTempHolder",
+            "to": "tokenOffHolder"
+          },
+          {
+            "func": "FOREACH",
+            "in": [
+              4,
+              3
+            ],
+            "loopRoutine": [
+              {
+                "func": "MOVE",
+                "from": "tileTempHolder",
+                "to": "tileHolder${value}"
+              },
+              {
+                "func": "MOVE",
+                "from": "tokenTempHolder",
+                "to": "tokenHolder${value}"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "FOREACH",
+        "range": [
+          4
+        ],
+        "loopRoutine": [
+          {
+            "func": "MOVE",
+            "from": "tileBag",
+            "to": "tileHolder${value}",
+            "fillTo": 1
+          },
+          {
+            "func": "MOVE",
+            "from": "animalBag",
+            "to": "tokenHolder${value}",
+            "fillTo": 1
+          }
+        ]
+      }
+    ]
+  },
+  "animalBag": {
+    "type": "holder",
+    "id": "animalBag",
+    "x": 1495,
+    "y": 680,
+    "width": 120,
+    "height": 120,
+    "scale": 0.5,
+    "z": 26088,
+    "classes": "transparent",
+    "css": {
+      "": {
+        "overflow": "clip",
+        "background-color": "${PROPERTY color}",
+        "background": "url(/assets/-1372554968_23131)",
+        "background-size": "cover"
+      },
+      "::before": {
+        "content": "'${PROPERTY widget-count}'",
+        "text-align": "center",
+        "display": "block",
+        "line-height": "120px",
+        "padding-left": "5px",
+        "white-space": "pre",
+        "font-size": "50px",
+        "font-weight": "900",
+        "color": "lightgrey"
+      },
+      "::after": {
+        "position": "absolute",
+        "bottom": "5px",
+        "content": "'Animal'",
+        "text-align": "center",
+        "display": "block",
+        "line-height": "30px",
+        "padding-left": "3px",
+        "white-space": "pre",
+        "font-size": "22px",
+        "font-weight": "400",
+        "color": "lightgrey",
+        "width": "100%"
+      },
+      " .widget": {
+        "opacity": 0,
+        "transform": "scale(10)!important"
+      }
+    },
+    "dropTarget": {
+      "token": true
+    },
+    "preventPiles": true,
+    "image": "/assets/-1372554968_23131",
+    "widget-count": 100,
+    "enterRoutine": [
+      {
+        "func": "SHUFFLE",
+        "holder": "${PROPERTY id}"
+      },
+      {
+        "func": "COUNT",
+        "holder": "${PROPERTY id}",
+        "variable": "widgets"
+      },
+      {
+        "func": "SET",
+        "property": "widget-count",
+        "value": "${widgets}",
+        "collection": "thisButton"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "COUNT",
+        "holder": "${PROPERTY id}",
+        "variable": "widgets"
+      },
+      {
+        "func": "SET",
+        "property": "widget-count",
+        "value": "${widgets}",
+        "collection": "thisButton"
+      },
+      {
+        "func": "SET",
+        "collection": "child",
+        "property": "rotation",
+        "value": 0
+      }
+    ]
+  },
+  "seat1": {
+    "type": "seat",
+    "id": "seat1",
+    "x": 2,
+    "y": 936,
+    "colorChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": [
+          "marker${PROPERTY index}"
+        ],
+        "property": "color",
+        "value": "${PROPERTY color}"
+      }
+    ],
+    "score": [],
+    "css": {
+      "default": {
+        "cursor": "pointer",
+        "gap": "5px",
+        "font-size": "21px",
+        "box-shadow": "0 2px 5px #00000066",
+        "text-shadow": "${PROPERTY textShadowDistance}px ${PROPERTY textShadowDistance}px ${PROPERTY textShadowBlur}px ${PROPERTY outlineColor}, -${PROPERTY textShadowDistance}px ${PROPERTY textShadowDistance}px ${PROPERTY textShadowBlur}px ${PROPERTY outlineColor}, ${PROPERTY textShadowDistance}px -${PROPERTY textShadowDistance}px ${PROPERTY textShadowBlur}px ${PROPERTY outlineColor}, -${PROPERTY textShadowDistance}px -${PROPERTY textShadowDistance}px ${PROPERTY textShadowBlur}px ${PROPERTY outlineColor}",
+        "background": "${PROPERTY mainColor}",
+        "color": "white",
+        "border": "${PROPERTY textShadowDistance}px solid ${PROPERTY outlineColor}",
+        "box-sizing": "border-box"
+      },
+      ".seated.turn": {
+        "box-shadow": "0px 0px 20px 5px ${PROPERTY glowColor}"
+      },
+      ".seated.turn::after": {
+        "xcontent": "'Active Player'",
+        "content": "'!'",
+        "font-size": "18px",
+        "line-height": "1em",
+        "white-space": "wrap",
+        "background-color": "${PROPERTY outlineColor}",
+        "border": "${PROPERTY textShadowDistance}px solid ${PROPERTY mainColor}",
+        "background-size": "200% auto",
+        "color": "${PROPERTY mainColor}",
+        "text-shadow": "0 1px 5px #000000cc",
+        "width": "1em",
+        "height": "1em",
+        "text-align": "center",
+        "text-transform": "uppercase",
+        "position": "absolute",
+        "right": "-12px",
+        "top": "-12px",
+        "padding": "2px",
+        "border-radius": "100px",
+        "box-shadow": "0 0 5px #000000bb",
+        "pointer-events": "none"
+      }
+    },
+    "hideWhenUnused": true,
+    "colorArray": [
+      "#000000",
+      "#dddddd",
+      "#f44336",
+      "#f06292",
+      "#9c27b0",
+      "#3f51b5",
+      "#1976d2",
+      "#00bcd4",
+      "#009688",
+      "#4caf50",
+      "#8bc34a",
+      "#cddc39",
+      "#ffeb3b",
+      "#ffc107",
+      "#ff9800",
+      "#bf360c",
+      "#795548",
+      "#607d8b"
+    ],
+    "colorContrast": "#000000",
+    "mainColor": "#dddddd",
+    "outlineColor": "#000000bb",
+    "textColor": "#000000",
+    "textShadowBlur": 2,
+    "textShadowDistance": 2,
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "routine": "useSeatRoutine"
+      },
+      "var playerColor = ${result.0}",
+      "var playerName = ${result.1}"
+    ],
+    "useSeatRoutine": [
+      "var leaveSeat = false",
+      "var name = ${PROPERTY player}",
+      "var color = ${PROPERTY color}",
+      "var result = []",
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY player}",
+        "relation": "==",
+        "operand2": "",
+        "thenRoutine": [
+          {
+            "func": "INPUT",
+            "header": "Enter your name and choice of player color.",
+            "fields": [
+              {
+                "type": "string",
+                "label": "Your Name:",
+                "variable": "name",
+                "value": "${playerName}"
+              },
+              {
+                "type": "palette",
+                "label": "Your Color:",
+                "colors": "${PROPERTY colorArray}",
+                "variable": "color",
+                "value": "${playerColor}"
+              }
+            ]
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "IF",
+            "operand1": "${PROPERTY player}",
+            "relation": "==",
+            "operand2": "${playerName}",
+            "thenRoutine": [
+              {
+                "func": "INPUT",
+                "header": "Enter your name and choice of player color.",
+                "fields": [
+                  {
+                    "type": "string",
+                    "label": "Your Name:",
+                    "variable": "name",
+                    "value": "${playerName}"
+                  },
+                  {
+                    "type": "palette",
+                    "label": "Your Color:",
+                    "colors": "${PROPERTY colorArray}",
+                    "variable": "color",
+                    "value": "${playerColor}"
+                  },
+                  {
+                    "type": "subtitle",
+                    "text": "All done?",
+                    "css": "background-color: var(--VTTblue);color:white;"
+                  },
+                  {
+                    "type": "checkbox",
+                    "label": "Stand up from seat",
+                    "variable": "leaveSeat",
+                    "value": false
+                  }
+                ]
+              }
+            ],
+            "elseRoutine": [
+              {
+                "func": "INPUT",
+                "header": "Are you sure you want to remove ${PROPERTY player} from this seat?",
+                "cancelButtonText": "Cancel",
+                "confirmButtonText": "Okay",
+                "fields": [
+                  {
+                    "type": "checkbox",
+                    "label": "Remove this player from their seat",
+                    "variable": "leaveSeat",
+                    "value": false
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "condition": "${leaveSeat}",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "color",
+            "value": null
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "player",
+            "value": ""
+          }
+        ],
+        "elseRoutine": [
+          "var updatePlayerandColor = false",
+          {
+            "func": "IF",
+            "operand1": "${PROPERTY player}",
+            "relation": "==",
+            "operand2": "${playerName}",
+            "thenRoutine": [
+              "var updatePlayerandColor = true"
+            ]
+          },
+          {
+            "func": "IF",
+            "operand1": "${PROPERTY player}",
+            "relation": "==",
+            "operand2": "",
+            "thenRoutine": [
+              "var updatePlayerandColor = true"
+            ]
+          },
+          {
+            "func": "IF",
+            "condition": "${name}",
+            "elseRoutine": [
+              "var updatePlayerandColor = false"
+            ]
+          },
+          {
+            "func": "IF",
+            "condition": "${updatePlayerandColor}",
+            "thenRoutine": [
+              {
+                "func": "SET",
+                "collection": "thisButton",
+                "property": "color",
+                "value": "${color}"
+              },
+              "var result = push ${color}",
+              {
+                "func": "SET",
+                "collection": "thisButton",
+                "property": "player",
+                "value": "${name}"
+              },
+              "var result = push ${name}",
+              {
+                "func": "SET",
+                "collection": "thisButton",
+                "property": "mainColor",
+                "value": "${result.0}"
+              },
+              "var newText = colorContrast ${PROPERTY mainColor}",
+              "var newGlow = colorContrast ${PROPERTY mainColor} 0.3",
+              {
+                "func": "SET",
+                "collection": "thisButton",
+                "property": "textColor",
+                "value": "${newText}"
+              },
+              {
+                "func": "SET",
+                "collection": "thisButton",
+                "property": "glowColor",
+                "value": "${newGlow}"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY player}",
+        "relation": "==",
+        "operand2": "",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "mainColor",
+            "value": "#dddddd"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "textColor",
+            "value": "#000000"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "glowColor",
+            "value": null
+          }
+        ],
+        "elseRoutine": []
+      }
+    ],
+    "width": 172,
+    "height": 48,
+    "borderRadius": 8
+  },
+  "seat2": {
+    "type": "seat",
+    "id": "seat2",
+    "x": 269,
+    "y": 936,
+    "index": 2,
+    "hideWhenUnused": true,
+    "score": [],
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": {
+      "seat1": [
+        "!index",
+        "!color",
+        "!player",
+        "!colorContrast",
+        "!score"
+      ]
+    },
+    "width": 172,
+    "height": 48,
+    "player": "",
+    "mainColor": "#dddddd",
+    "textColor": "#000000"
+  },
+  "seat3": {
+    "type": "seat",
+    "id": "seat3",
+    "x": 534,
+    "y": 936,
+    "index": 3,
+    "hideWhenUnused": true,
+    "score": [],
+    "width": 172,
+    "height": 48,
+    "inheritFrom": {
+      "seat1": [
+        "!index",
+        "!color",
+        "!player",
+        "!colorContrast",
+        "!score"
+      ]
+    },
+    "turn": false
+  },
+  "seat4": {
+    "type": "seat",
+    "id": "seat4",
+    "x": 800,
+    "y": 936,
+    "index": 4,
+    "hideWhenUnused": true,
+    "score": [],
+    "width": 172,
+    "height": 48,
+    "inheritFrom": {
+      "seat1": [
+        "!index",
+        "!color",
+        "!player",
+        "!colorContrast",
+        "!score"
+      ]
+    },
+    "turn": false
+  },
+  "pineHolder1": {
+    "type": "holder",
+    "id": "pineHolder1",
+    "x": 169,
+    "y": 921,
+    "width": 54,
+    "height": 84,
+    "z": 3,
+    "classes": "transparent",
+    "css": {
+      "background-image": "linear-gradient(rgba(255,255,255,0.5), rgba(255,255,255,0.5)),url('/assets/-650024430_5360')",
+      "background-size": "140%",
+      "background-repeat": "no-repeat",
+      "background-position": "center"
+    },
+    "dropOffsetX": -3,
+    "dropOffsetY": 2,
+    "dropTarget": {
+      "deck": "pineDeck"
+    },
+    "scale": 0.7,
+    "inheritFrom": {},
+    "linkedToSeat": "seat1"
+  },
+  "pineHolder3": {
+    "type": "holder",
+    "id": "pineHolder3",
+    "x": 699,
+    "y": 921,
+    "width": 54,
+    "height": 84,
+    "z": 5,
+    "inheritFrom": {
+      "pineHolder1": "*"
+    },
+    "linkedToSeat": "seat3"
+  },
+  "pineHolder4": {
+    "type": "holder",
+    "id": "pineHolder4",
+    "x": 964,
+    "y": 921,
+    "width": 54,
+    "height": 84,
+    "z": 6,
+    "inheritFrom": {
+      "pineHolder1": "*"
+    },
+    "linkedToSeat": "seat4"
+  },
+  "pineHolder2": {
+    "inheritFrom": {
+      "pineHolder1": "*"
+    },
+    "type": "holder",
+    "id": "pineHolder2",
+    "x": 435,
+    "y": 921,
+    "z": 4,
+    "linkedToSeat": "seat2"
+  },
+  "hand": {
+    "type": "holder",
+    "dropOffsetX": 43,
+    "childrenPerOwner": true,
+    "x": 414,
+    "y": 745,
+    "width": 180,
+    "height": 180,
+    "id": "hand",
+    "dropTarget": {
+      "deck": "startDeck"
+    },
+    "classes": "transparent",
+    "dropLimit": 0,
+    "css": {
+      "border": "none !important"
+    },
+    "leaveRoutine": [
+      {
+        "func": "COUNT",
+        "holder": "${PROPERTY id}"
+      },
+      {
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "scale",
+            "value": 0
+          }
+        ]
+      }
+    ],
+    "scale": 0
+  },
+  "cover": {
+    "id": "cover",
+    "x": 1030,
+    "y": 775,
+    "width": 570,
+    "layer": -3,
+    "movable": false,
+    "height": 220,
+    "borderRadius": 8,
+    "css": {
+      "background-image": "linear-gradient(rgba(255,255,255,0.7), rgba(255,255,255,0.7)),url('/assets/334712318_97304')",
+      "background-size": "140%",
+      "background-repeat": "no-repeat",
+      "background-position": "center"
+    }
+  },
+  "6zwi": {
+    "type": "pile",
+    "parent": "pineDeckHolder",
+    "x": -3,
+    "y": 2,
+    "width": 60,
+    "height": 80,
+    "handleCSS": "background:#4a7a4a;color:white; border-radius:9px",
+    "handleSize": "25",
+    "handlePosition": "bottom center",
+    "elnarge": 3,
+    "id": "6zwi"
+  },
+  "xg9q": {
+    "type": "pile",
+    "x": 43,
+    "width": 100,
+    "height": 100,
+    "id": "xg9q",
+    "z": 45250,
+    "parent": "startTileHolder"
+  },
+  "marker1": {
+    "id": "marker1",
+    "x": 178,
+    "y": 899,
+    "width": 35,
+    "height": 35,
+    "z": 4,
+    "color": "#999999",
+    "css": "border-radius: 50%;",
+    "image": "/i/game-pieces/3D/Marble-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#ffffff",
+    "borderWidth": 1,
+    "secondaryColor": "#000000",
+    "resetProperties": {
+      "x": 178,
+      "y": 899,
+      "parent": null
+    },
+    "shift": true,
+    "linkedToSeat": "seat1"
+  },
+  "marker2": {
+    "id": "marker2",
+    "x": 445,
+    "y": 899,
+    "width": 35,
+    "height": 35,
+    "z": 3,
+    "color": "#999999",
+    "css": "border-radius: 50%;",
+    "image": "/i/game-pieces/3D/Marble-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#ffffff",
+    "borderWidth": 1,
+    "secondaryColor": "#000000",
+    "resetProperties": {
+      "x": 445,
+      "y": 899,
+      "parent": null
+    },
+    "shift": true,
+    "linkedToSeat": "seat2"
+  },
+  "marker3": {
+    "id": "marker3",
+    "x": 710,
+    "y": 899,
+    "width": 35,
+    "height": 35,
+    "z": 1,
+    "color": "#999999",
+    "css": "border-radius: 50%;",
+    "image": "/i/game-pieces/3D/Marble-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#ffffff",
+    "borderWidth": 1,
+    "secondaryColor": "#000000",
+    "resetProperties": {
+      "x": 710,
+      "y": 899,
+      "parent": null
+    },
+    "shift": true,
+    "linkedToSeat": "seat3"
+  },
+  "marker4": {
+    "id": "marker4",
+    "x": 974,
+    "y": 899,
+    "width": 35,
+    "height": 35,
+    "z": 2,
+    "color": "#999999",
+    "css": "border-radius: 50%;",
+    "image": "/i/game-pieces/3D/Marble-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#ffffff",
+    "borderWidth": 1,
+    "secondaryColor": "#000000",
+    "resetProperties": {
+      "x": 974,
+      "y": 899,
+      "parent": null
+    },
+    "shift": true,
+    "linkedToSeat": "seat4"
+  },
+  "turnButton": {
+    "type": "button",
+    "id": "turnButton",
+    "x": 1542,
+    "y": 920,
+    "width": 50,
+    "height": 35,
+    "z": 2089,
+    "color": "white",
+    "css": "font-size: 15px; --wcMain: black; --wcBorder:white; --wcMainOH: grey; --wcBorderOH: black",
+    "text": "Turn",
+    "clickRoutine": [
+      {
+        "func": "TURN"
+      },
+      {
+        "func": "CLICK",
+        "collection": [
+          "fillButton"
+        ]
+      }
+    ]
+  },
+  "centerButton": {
+    "type": "button",
+    "id": "centerButton",
+    "x": 1537,
+    "y": 779,
+    "width": 60,
+    "height": 35,
+    "z": 2089,
+    "color": "white",
+    "css": "font-size: 15px; --wcMain: black; --wcBorder:white; --wcMainOH: grey; --wcBorderOH: black",
+    "text": "Center",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "floor"
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "value": -531.6
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "value": -456
+      }
+    ]
+  },
+  "tokenOffHolder": {
+    "type": "holder",
+    "id": "tokenOffHolder",
+    "x": -83,
+    "y": 4,
+    "z": 26091,
+    "width": 60,
+    "height": 60,
+    "dropTarget": {
+      "token": true
+    }
+  },
+  "tileTempHolder": {
+    "type": "holder",
+    "id": "tileTempHolder",
+    "x": -371,
+    "y": 117,
+    "z": 26092
+  },
+  "tokenTempHolder": {
+    "type": "holder",
+    "id": "tokenTempHolder",
+    "x": -371,
+    "y": -80,
+    "z": 26092,
+    "dropTarget": {
+      "token": true
+    }
+  },
+  "scoreboard": {
+    "type": "scoreboard",
+    "id": "scoreboard",
+    "x": 500,
+    "y": 170,
+    "width": 600,
+    "height": 515,
+    "z": 2107,
+    "rounds": [
+      "Bear",
+      "Elk",
+      "Fox",
+      "Hawk",
+      "Salmon",
+      "Mountain",
+      "Mountain +",
+      "Forest",
+      "Forest +",
+      "Prairie",
+      "Prairie +",
+      "Wetland",
+      "Wetland +",
+      "River",
+      "River +"
+    ],
+    "showAllRounds": true,
+    "css": {
+      ".scoreboard td": {
+        "color": "black"
+      },
+      ".scoreboard tr:nth-child(2)": {
+        "background": "#835727"
+      },
+      ".scoreboard tr:nth-child(3)": {
+        "background": "#d6ad84"
+      },
+      ".scoreboard tr:nth-child(4)": {
+        "background": "#fe9700"
+      },
+      ".scoreboard tr:nth-child(5)": {
+        "background": "#c0e6f5"
+      },
+      ".scoreboard tr:nth-child(6)": {
+        "background": "#ff7c80"
+      },
+      ".scoreboard tr:nth-child(7)": {
+        "background": "#b6b6b6"
+      },
+      ".scoreboard tr:nth-child(8)": {
+        "background": "#b6b6b6"
+      },
+      ".scoreboard tr:nth-child(9)": {
+        "background": "#389e00"
+      },
+      ".scoreboard tr:nth-child(10)": {
+        "background": "#389e00"
+      },
+      ".scoreboard tr:nth-child(11)": {
+        "background": "#fce900"
+      },
+      ".scoreboard tr:nth-child(12)": {
+        "background": "#fce900"
+      },
+      ".scoreboard tr:nth-child(13)": {
+        "background": "#80f7d3"
+      },
+      ".scoreboard tr:nth-child(14)": {
+        "background": "#80f7d3"
+      },
+      ".scoreboard tr:nth-child(15)": {
+        "background": "#3b2eff"
+      },
+      ".scoreboard tr:nth-child(16)": {
+        "background": "#3b2eff"
+      }
+    },
+    "resetProperties": {
+      "x": 500,
+      "y": 170
+    },
+    "roundLabel": "",
+    "scale": 0
+  },
+  "reset1": {
+    "type": "button",
+    "id": "reset1",
+    "x": 1549,
+    "y": 57,
+    "width": 50,
+    "height": 50,
+    "z": 2088,
+    "clickRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY scale OF scoreboard}",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "scoreboard"
+            ],
+            "property": "scale",
+            "value": 1
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "scoreboard"
+            ],
+            "property": "scale",
+            "value": 0
+          }
+        ]
+      }
+    ],
+    "color": "white",
+    "css": {
+      "default": {
+        "font-size": "40px",
+        "--wcMain": "black",
+        "--wcBorder": "white",
+        "--wcMainOH": "grey",
+        "--wcBorderOH": "black"
+      },
+      "_, .transition": {
+        "transition": "transform 600ms"
+      },
+      "_, .transition.dragging": {
+        "transition": "none"
+      }
+    },
+    "classes": "symbols",
+    "text": "scoreboard"
+  },
+  "3lrm": {
+    "deck": "goalDeck",
+    "type": "card",
+    "cardType": "variantFamily",
+    "id": "3lrm",
+    "z": 41376,
+    "parent": "ywi2"
+  },
+  "u2n1": {
+    "deck": "goalDeck",
+    "type": "card",
+    "cardType": "variantIntermediate",
+    "id": "u2n1",
+    "z": 41377,
+    "parent": "ywi2"
+  },
+  "ywi2": {
+    "type": "pile",
+    "width": 103,
+    "height": 160,
+    "id": "ywi2",
+    "z": 45252,
+    "parent": "goalHolder"
+  }
+}

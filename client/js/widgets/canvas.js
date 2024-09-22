@@ -2,13 +2,13 @@ class Canvas extends Widget {
   constructor(id) {
     super(id);
     this.canvas = document.createElement('canvas');
+    this.canvas.dataset.id = id;
     this.context = this.canvas.getContext('2d');
 
     const defaults = {
       width: 400,
       height: 400,
       typeClasses: 'widget canvas',
-      clickable: true,
       artist: null,
 
       resolution: 100,
@@ -35,7 +35,7 @@ class Canvas extends Widget {
         this.canvas.height = this.getResolution();
       }
 
-      const colors = this.get('colorMap');
+      const colors = this.getColorMap();
       const regionRes = Math.floor(this.getResolution()/10);
 
       for(let x=0; x<10; ++x) {
@@ -45,7 +45,10 @@ class Canvas extends Widget {
             for(let px=0; px<regionRes; ++px) {
               for(let py=0; py<regionRes; ++py) {
                 this.context.fillStyle = colors[region.charCodeAt(py*regionRes+px)-48] || 'white';
-                this.context.fillRect(x*regionRes+px, y*regionRes+py, 1, 1);
+                if(colors[region.charCodeAt(py*regionRes+px)-48] != 'transparent')
+                  this.context.fillRect(x*regionRes+px, y*regionRes+py, 1, 1);
+                else
+                  this.context.clearRect(x*regionRes+px, y*regionRes+py, 1, 1);
               }
             }
           }
@@ -98,6 +101,13 @@ class Canvas extends Widget {
     return code;
   }
 
+  getColorMap() {
+    if(Array.isArray(this.get('colorMap')))
+      return this.get('colorMap');
+    else
+      return Canvas.defaultColors;
+  }
+
   getResolution() {
     return Math.max(Math.min(Math.round(parseInt(this.get('resolution'))/10)*10, 500), 10);
   }
@@ -122,9 +132,9 @@ class Canvas extends Widget {
     if(this.lastPixelX !== undefined && state != 'down') {
       const steps = Math.max(Math.abs(pixelX-this.lastPixelX), Math.abs(pixelY-this.lastPixelY));
       for(let i=0; i<steps; ++i)
-        this.setPixel(this.lastPixelX + (pixelX-this.lastPixelX)/steps*i, this.lastPixelY + (pixelY-this.lastPixelY)/steps*i);
+        await this.setPixel(this.lastPixelX + (pixelX-this.lastPixelX)/steps*i, this.lastPixelY + (pixelY-this.lastPixelY)/steps*i);
     } else {
-      this.setPixel(pixelX, pixelY);
+      await this.setPixel(pixelX, pixelY);
     }
 
     this.lastPixelX = pixelX;

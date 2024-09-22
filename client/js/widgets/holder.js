@@ -12,10 +12,11 @@ class Holder extends Widget {
       dropTarget: { type: 'card' },
       dropOffsetX: 4,
       dropOffsetY: 4,
-      dropLimit: -1,
+      dropShadow: false,
       alignChildren: true,
       preventPiles: false,
       childrenPerOwner: false,
+      showInactiveFaceToSeat: null,
 
       onEnter: {},
       onLeave: {},
@@ -40,6 +41,22 @@ class Holder extends Widget {
 
       return compareDropTarget(w, this, true);
     });
+  }
+
+  classes() {
+    let className = super.classes();
+
+    if(this.get('showInactiveFaceToSeat'))
+      if(widgetFilter(w=>asArray(this.get('showInactiveFaceToSeat')).indexOf(w.get('id'))!=-1&&w.get('player')==playerName).length)
+        className += ' showCardBack';
+
+    return className;
+  }
+
+  classesProperties() {
+    const p = super.classesProperties();
+    p.push('showInactiveFaceToSeat');
+    return p;
   }
 
   async dispenseCard(card) {
@@ -67,7 +84,7 @@ class Holder extends Widget {
       return;
 
     if(this.get('childrenPerOwner'))
-      await child.set('owner', playerName);
+      await child.set('owner', child.targetPlayer||playerName);
 
     if(this != child.currentParent) { // FIXME: this isn't exactly pretty
       let toProcess = [ child ];
@@ -115,6 +132,13 @@ class Holder extends Widget {
       await this.receiveCard(child, [ this.get('stackOffsetX')*999999, this.get('stackOffsetY')*999999 ]);
     else
       await this.receiveCard(child, [ child.get('x') - this.absoluteCoord('x'), child.get('y') - this.absoluteCoord('y') ]);
+  }
+
+  async onPropertyChange(property, oldValue, newValue) {
+    await super.onPropertyChange(property, oldValue, newValue);
+    if(property == 'dropOffsetX' || property == 'dropOffsetY' || property == 'stackOffsetX' || property == 'stackOffsetY') {
+      await this.updateAfterShuffle();
+    }
   }
 
   async receiveCard(card, pos) {

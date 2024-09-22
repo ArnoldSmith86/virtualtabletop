@@ -1,0 +1,436 @@
+{
+  "_meta": {
+    "version": 5,
+    "info": {
+      "name": "Functions - SET",
+      "image": "/assets/-1134730283_5209",
+      "rules": "",
+      "bgg": "",
+      "year": "2021",
+      "mode": "Tutorial",
+      "time": "0",
+      "players": "1",
+      "language": "en-US",
+      "variant": "",
+      "attribution": "",
+      "showName": false,
+      "lastUpdate": 1638938699000
+    }
+  },
+  "8fr3": {
+    "id": "8fr3",
+    "y": -2,
+    "width": 800,
+    "height": 60,
+    "z": 74,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "font-size: 60px;text-align:center",
+    "text": "Functions: SET",
+    "x": 400
+  },
+  "406b": {
+    "id": "406b",
+    "x": 100,
+    "y": 100,
+    "width": 1400,
+    "height": 120,
+    "layer": -3,
+    "z": 129,
+    "css": "font-size: 25px; ",
+    "text": "SET is used to change a property in a widget. SET can be used on the same widget or any other widget in the room. It works with simple values like x,y coordinates. But it also can be used to set arrays or even complex clickRoutines.",
+    "movable": false
+  },
+  "bm4j": {
+    "text": "The button above SETS three properties on the purple checker. x is set to 50, y is set to 200, and a custom property 'moved' to true. The widget is chosen by a SELECT and put into the collection 'DEFAULT.' You can specify the name of the widget in an anonymous collection, but if setting multiple properties, it is more efficient to use a SELECT function first to create a collection.",
+    "id": "bm4j",
+    "x": 60,
+    "y": 700,
+    "z": 185,
+    "width": 300,
+    "movable": false
+  },
+  "fzoqB": {
+    "id": "fzoqB",
+    "fixedParent": true,
+    "y": 171.36,
+    "width": 111,
+    "height": 40,
+    "type": "button",
+    "text": "Recall & Shuffle",
+    "movableInEdit": false,
+    "clickRoutine": [
+      {
+        "func": "RECALL",
+        "holder": "${PROPERTY parent}"
+      },
+      {
+        "func": "FLIP",
+        "holder": "${PROPERTY parent}",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "${PROPERTY parent}"
+      }
+    ],
+    "parent": "cardHolder"
+  },
+  "fzoqD": {
+    "type": "deck",
+    "id": "fzoqD",
+    "x": 12,
+    "y": 41,
+    "cardTypes": {
+      "S 10": {
+        "image": "/i/cards-default/TS.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "10",
+        "rankA": "10",
+        "rankFixed": "10 S"
+      },
+      "S 2J": {
+        "image": "/i/cards-default/JS.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "2J",
+        "rankA": "2J",
+        "rankFixed": "2J S"
+      },
+      "S 3Q": {
+        "image": "/i/cards-default/QS.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "3Q",
+        "rankA": "3Q",
+        "rankFixed": "3Q S"
+      },
+      "S 4K": {
+        "image": "/i/cards-default/KS.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "4K",
+        "rankA": "4K",
+        "rankFixed": "4K S"
+      }
+    },
+    "faceTemplates": [
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 103,
+            "height": 160,
+            "color": "transparent",
+            "value": "/i/cards-default/2B.svg"
+          }
+        ]
+      },
+      {
+        "objects": [
+          {
+            "type": "text",
+            "x": 0,
+            "y": 0,
+            "width": 103,
+            "height": 160,
+            "color": "black",
+            "value": "1",
+            "css": "font-size:80px; border: 1px solid black; text-align:center;line-height:140px"
+          }
+        ]
+      },
+      {
+        "objects": [
+          {
+            "type": "text",
+            "x": 0,
+            "y": 0,
+            "width": 103,
+            "height": 160,
+            "color": "black",
+            "value": "2",
+            "css": "font-size:80px; border: 1px solid black; text-align:center;line-height:140px"
+          }
+        ]
+      },
+      {
+        "objects": [
+          {
+            "type": "text",
+            "x": 0,
+            "y": 0,
+            "width": 103,
+            "height": 160,
+            "color": "black",
+            "value": "3",
+            "css": "font-size:80px; border: 1px solid black; text-align:center;line-height:140px"
+          }
+        ]
+      },
+      {
+        "objects": [
+          {
+            "type": "text",
+            "x": 0,
+            "y": 0,
+            "width": 103,
+            "height": 160,
+            "color": "black",
+            "value": "4",
+            "css": "font-size:80px; border: 1px solid black; text-align:center;line-height:140px"
+          }
+        ]
+      },
+      {
+        "objects": [
+          {
+            "type": "text",
+            "x": 0,
+            "y": 0,
+            "width": 103,
+            "height": 160,
+            "color": "black",
+            "value": "5",
+            "css": "font-size:80px; border: 1px solid black; text-align:center;line-height:140px"
+          }
+        ]
+      },
+      {
+        "objects": [
+          {
+            "type": "text",
+            "x": 0,
+            "y": 0,
+            "width": 103,
+            "height": 160,
+            "color": "black",
+            "value": "6",
+            "css": "font-size:80px; border: 1px solid black; text-align:center;line-height:140px"
+          }
+        ]
+      }
+    ],
+    "parent": "cardHolder"
+  },
+  "bm5j": {
+    "text": "This button changes the text of itself to the text in the widget '8fr3' which is the header at the top of the page. It also changes the spinner from 6 number values to 12 letter values by setting a new array in the 'options' property.",
+    "id": "bm5j",
+    "x": 410,
+    "y": 700,
+    "z": 121,
+    "width": 300,
+    "movable": false
+  },
+  "bm6j": {
+    "id": "bm6j",
+    "x": 808,
+    "y": 700,
+    "z": 9732,
+    "width": 300,
+    "text": "The highest button above has blank text and an empty clickRoutine. The lower button above SETs the text and clickRoutine of the empty button. Once set, you can use the higher button to click the spinner.",
+    "movable": false
+  },
+  "jkmt": {
+    "type": "button",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "checker",
+        "relation": "=="
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "value": 50
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "value": 200
+      },
+      {
+        "func": "SET",
+        "property": "moved",
+        "value": true
+      }
+    ],
+    "x": 151,
+    "y": 550,
+    "z": 10,
+    "id": "jkmt",
+    "text": "Set"
+  },
+  "cardHolder": {
+    "type": "holder",
+    "id": "cardHolder",
+    "x": 104.5,
+    "y": 1087,
+    "z": 127,
+    "dropTarget": {
+      "type": "card"
+    }
+  },
+  "jkmt1": {
+    "type": "button",
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "text",
+        "value": "${PROPERTY text OF 8fr3}"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "spinner"
+        ],
+        "property": "options",
+        "value": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G",
+          "H",
+          "I",
+          "J",
+          "K",
+          "L"
+        ]
+      }
+    ],
+    "x": 501,
+    "y": 550,
+    "z": 13,
+    "id": "jkmt1",
+    "text": "Set"
+  },
+  "jkmt2": {
+    "type": "button",
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": [
+          "buttonTarget"
+        ],
+        "property": "clickRoutine",
+        "value": "${PROPERTY addThis}"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "buttonTarget"
+        ],
+        "property": "text",
+        "value": "Click Spinner"
+      }
+    ],
+    "x": 900,
+    "y": 550,
+    "z": 11,
+    "id": "jkmt2",
+    "addThis": [
+      {
+        "func": "CLICK",
+        "collection": [
+          "spinner"
+        ]
+      }
+    ],
+    "text": "Set"
+  },
+  "jkmt3": {
+    "type": "button",
+    "clickRoutine": [
+      "var currentState = ${PROPERTY text OF numberWidget} + 1",
+      "var newState = ${currentState} % 4",
+      {
+        "func": "SET",
+        "collection": [
+          "numberWidget"
+        ],
+        "property": "text",
+        "value": "${newState}"
+      }
+    ],
+    "x": 1280,
+    "y": 550,
+    "z": 11,
+    "id": "jkmt3",
+    "text": "Set"
+  },
+  "bm7j": {
+    "id": "bm7j",
+    "x": 1188,
+    "y": 700,
+    "z": 9732,
+    "width": 300,
+    "movable": false,
+    "text": "This button changes the text property of the widget above from 0 to 3 using a modulo operation. SET is used to put the new value of the text property into the widget. SET is used to set properties. 'var' is used to work with variables. Two variables in dynamic expressions in the form of 'var b = var a + 1' are used in the button. Variables are only available during the execution of a routine. If you want the variable to be available for use the next time the button is clicked, use SET to store the property in a widget."
+  },
+  "checker": {
+    "id": "checker",
+    "x": 149.5,
+    "y": 249.5,
+    "width": 75,
+    "height": 75,
+    "z": 9740,
+    "color": "#bc5bee",
+    "faces": [
+      {
+        "classes": "checkersPiece"
+      },
+      {
+        "classes": "checkersPiece crowned"
+      }
+    ]
+  },
+  "spinner": {
+    "type": "spinner",
+    "id": "spinner",
+    "x": 485,
+    "y": 234,
+    "z": 11071,
+    "options": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "value": 6,
+    "angle": 1748
+  },
+  "buttonTarget": {
+    "type": "button",
+    "id": "buttonTarget",
+    "x": 901,
+    "y": 245,
+    "z": 16,
+    "clickRoutine": []
+  },
+  "numberWidget": {
+    "id": "numberWidget",
+    "x": 1305,
+    "y": 239,
+    "width": 60,
+    "height": 60,
+    "z": 9743,
+    "css": "font-size: 60px;color: black;",
+    "text": 0
+  }
+}

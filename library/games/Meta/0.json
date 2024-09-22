@@ -1,0 +1,4261 @@
+{
+  "_meta": {
+    "version": 6,
+    "info": {
+      "name": "Meta",
+      "image": "/assets/-348827109_32544",
+      "rules": "",
+      "bgg": "https://boardgamegeek.com/boardgame/195314/herbaceous",
+      "year": "2017",
+      "mode": "solo; vs",
+      "time": "15-20",
+      "attribution": "The game layout and room design are by LawDawg and are released to the Public Domain under CC0.\n\nThe house, meeple, pin, and marble tokens are by mousewax and are released to the Public Domain under CC0.\n\nThe background image by Martin Stokow is in the Public Domain under CC0: https://publicdomainpictures.net/en/view-image.php?image=370218&amp;picture=grunge-background-texture-marble.\n\nThe cards and dice tokens are in the Public Domain under CC0: https://publicdomainvectors.org/en/free-clipart/Cards-vector-illustration/8578.html and https://publicdomainvectors.org/en/free-clipart/Pair-of-cubes/39211.html.\n\nThe chess tokens are in the Public Domain under CC0: https://freesvg.org/low-poly-chess-pieces.<div><br></div><div>Library image generated using the Midjourney artificial intelligence image generator, https://www.midjourney.com/home/, using the following prompt: \"pawns checkers dice watercolor painting sprite sheet --ar 1:1 --v 5.1\"<br></div>",
+      "similarName": "Herbaceous",
+      "description": "Collect pieces to score points. The more pieces that match the patterns (all the same, all different, multiple pairs, etc.), the more points the player earns. During turn, draw a piece and play it or put it in communal area. Most points wins.",
+      "showName": true,
+      "helpText": "Players take seats. Set options. Press play button. Random player is chosen to start. Drag game tokens from tan holder. Play either in common area (in designated space) or in player personal area (in designated space). Scoring is automatic and updated with every move. Scores displayed by player seats. Turn indicator advances automatically. If turn indicator is incorrect (this happens when drawing an action card from the expansion pack), use turn button in lower left to change indicator to correct player. For single player version, a discard area is added.",
+      "lastUpdate": 1650427506000,
+      "skill": "",
+      "variantImage": "",
+      "variant": "",
+      "language": "en-US",
+      "players": "1-4",
+      "similarImage": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "similarDesigner": "Eduardo Baraf, Steve Finn"
+    }
+  },
+  "theDeck": {
+    "type": "deck",
+    "id": "theDeck",
+    "cardTypes": {
+      "pawn": {
+        "image1a": "/assets/-1751528005_11985",
+        "text": 1
+      },
+      "knight": {
+        "image1": "/assets/-140134858_17811",
+        "text": 2
+      },
+      "rook": {
+        "image1": "/assets/-1033521675_28108",
+        "text": 3
+      },
+      "dice": {
+        "image2": "/assets/-879019242_29830"
+      },
+      "house": {
+        "image2": "/assets/-1078574312_1520"
+      },
+      "marble": {
+        "image3": "/assets/785108786_2053"
+      },
+      "cards": {
+        "image4": "/assets/-1959951362_12873"
+      },
+      "pin": {
+        "image5": "/assets/-1584922242_2860"
+      },
+      "coin": {
+        "image6": "/assets/108158668_43552"
+      },
+      "meeple": {
+        "image7": "/assets/-1828880609_13536"
+      }
+    },
+    "faceTemplates": [
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "x": 12,
+            "y": 17,
+            "width": 55,
+            "height": 90,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image1a"
+            }
+          },
+          {
+            "type": "image",
+            "x": 12,
+            "y": 20,
+            "width": 45,
+            "height": 80,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image1"
+            }
+          },
+          {
+            "type": "image",
+            "x": 5,
+            "y": 0,
+            "width": 73,
+            "height": 130,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image2"
+            }
+          },
+          {
+            "type": "image",
+            "x": 5,
+            "y": 1,
+            "width": 68,
+            "height": 115,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image3"
+            }
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": -10,
+            "width": 83,
+            "height": 140,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image4"
+            }
+          },
+          {
+            "type": "image",
+            "x": 15,
+            "y": 20,
+            "width": 50,
+            "height": 75,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image5"
+            }
+          },
+          {
+            "type": "image",
+            "x": 8,
+            "y": 0,
+            "width": 73,
+            "height": 120,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image6"
+            }
+          },
+          {
+            "type": "image",
+            "x": 9,
+            "y": 0,
+            "width": 63,
+            "height": 120,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image7"
+            }
+          },
+          {
+            "type": "text",
+            "x": 52,
+            "y": 35,
+            "width": 103,
+            "height": 160,
+            "css": "font-size:40px",
+            "color": "grey",
+            "dynamicProperties": {
+              "value": "text"
+            }
+          }
+        ]
+      }
+    ],
+    "cardDefaults": {
+      "width": 80,
+      "height": 120,
+      "onPileCreation": {
+        "handleSize": 30,
+        "handlePosition": "middle center",
+        "handleCSS": "background-color:black;color:white"
+      }
+    },
+    "z": 22022,
+    "parent": "bag",
+    "x": 4,
+    "y": 4,
+    "fixedParent": true
+  },
+  "diceH1": {
+    "type": "holder",
+    "id": "diceH1",
+    "x": 15,
+    "y": 282,
+    "width": 60,
+    "height": 60,
+    "z": 29,
+    "css": {
+      "default": {
+        "background-image": "url('/assets/-879019242_29830')",
+        "background-size": "contain",
+        "background-repeat": "no-repeat",
+        "background-position": "center",
+        "background-color": "transparent",
+        "border": "transparent !important",
+        "opacity": "${PROPERTY cssOpacity}"
+      }
+    },
+    "dropOffsetX": -10,
+    "dropOffsetY": -35,
+    "dropTarget": {
+      "cardType": "dice"
+    },
+    "cssOpacity": 0.2,
+    "enterRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "cssOpacity",
+        "value": 1
+      },
+      {
+        "func": "CALL",
+        "widget": "calls",
+        "routine": "privateScoreRoutine",
+        "arguments": {
+          "num": "${PROPERTY num}"
+        }
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "COUNT",
+        "holder": "${PROPERTY id}"
+      },
+      {
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "relation": "=",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "cssOpacity",
+            "value": 0.2
+          }
+        ]
+      },
+      {
+        "func": "CALL",
+        "widget": "calls",
+        "routine": "privateScoreRoutine",
+        "arguments": {
+          "num": "${PROPERTY num}"
+        }
+      }
+    ],
+    "parent": "private1",
+    "fixedParent": true,
+    "movableInEdit": false,
+    "num": 1
+  },
+  "meepleH1": {
+    "type": "holder",
+    "id": "meepleH1",
+    "x": 15,
+    "y": 468,
+    "width": 60,
+    "height": 60,
+    "z": 23,
+    "css": {
+      "default": {
+        "background-image": "url('/assets/-1828880609_13536')",
+        "background-size": "contain",
+        "background-repeat": "no-repeat",
+        "background-position": "center",
+        "background-color": "transparent",
+        "border": "transparent !important",
+        "opacity": "${PROPERTY cssOpacity}"
+      }
+    },
+    "dropOffsetX": -10,
+    "dropOffsetY": -30,
+    "dropTarget": {
+      "cardType": "meeple"
+    },
+    "cssOpacity": 0.2,
+    "enterRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "cssOpacity",
+        "value": 1
+      },
+      {
+        "func": "CALL",
+        "widget": "calls",
+        "routine": "privateScoreRoutine",
+        "arguments": {
+          "num": "${PROPERTY num}"
+        }
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "COUNT",
+        "holder": "${PROPERTY id}"
+      },
+      {
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "relation": "=",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "cssOpacity",
+            "value": 0.2
+          }
+        ]
+      },
+      {
+        "func": "CALL",
+        "widget": "calls",
+        "routine": "privateScoreRoutine",
+        "arguments": {
+          "num": "${PROPERTY num}"
+        }
+      }
+    ],
+    "parent": "private1",
+    "fixedParent": true,
+    "movableInEdit": false,
+    "num": 1
+  },
+  "houseH1": {
+    "type": "holder",
+    "id": "houseH1",
+    "x": 15,
+    "y": 375,
+    "width": 60,
+    "height": 60,
+    "z": 24,
+    "css": {
+      "default": {
+        "background-image": "url('/assets/-1078574312_1520')",
+        "background-size": "contain",
+        "background-repeat": "no-repeat",
+        "background-position": "center",
+        "background-color": "transparent",
+        "border": "transparent !important",
+        "opacity": "${PROPERTY cssOpacity}"
+      }
+    },
+    "dropOffsetX": -10,
+    "dropOffsetY": -35,
+    "dropTarget": {
+      "cardType": "house"
+    },
+    "cssOpacity": 0.2,
+    "enterRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "cssOpacity",
+        "value": 1
+      },
+      {
+        "func": "CALL",
+        "widget": "calls",
+        "routine": "privateScoreRoutine",
+        "arguments": {
+          "num": "${PROPERTY num}"
+        }
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "COUNT",
+        "holder": "${PROPERTY id}"
+      },
+      {
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "relation": "=",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "cssOpacity",
+            "value": 0.2
+          }
+        ]
+      },
+      {
+        "func": "CALL",
+        "widget": "calls",
+        "routine": "privateScoreRoutine",
+        "arguments": {
+          "num": "${PROPERTY num}"
+        }
+      }
+    ],
+    "parent": "private1",
+    "fixedParent": true,
+    "movableInEdit": false,
+    "num": 1
+  },
+  "pinH1": {
+    "type": "holder",
+    "id": "pinH1",
+    "x": 15,
+    "y": 561,
+    "width": 60,
+    "height": 60,
+    "z": 22,
+    "css": {
+      "default": {
+        "background-image": "url('/assets/-1584922242_2860')",
+        "background-size": "contain",
+        "background-repeat": "no-repeat",
+        "background-position": "center",
+        "background-color": "transparent",
+        "border": "transparent !important",
+        "opacity": "${PROPERTY cssOpacity}"
+      }
+    },
+    "dropOffsetX": -10,
+    "dropOffsetY": -27,
+    "dropTarget": {
+      "cardType": "pin"
+    },
+    "cssOpacity": 0.2,
+    "enterRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "cssOpacity",
+        "value": 1
+      },
+      {
+        "func": "CALL",
+        "widget": "calls",
+        "routine": "privateScoreRoutine",
+        "arguments": {
+          "num": "${PROPERTY num}"
+        }
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "COUNT",
+        "holder": "${PROPERTY id}"
+      },
+      {
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "relation": "=",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "cssOpacity",
+            "value": 0.2
+          }
+        ]
+      },
+      {
+        "func": "CALL",
+        "widget": "calls",
+        "routine": "privateScoreRoutine",
+        "arguments": {
+          "num": "${PROPERTY num}"
+        }
+      }
+    ],
+    "parent": "private1",
+    "fixedParent": true,
+    "movableInEdit": false,
+    "num": 1
+  },
+  "marbleH1": {
+    "type": "holder",
+    "id": "marbleH1",
+    "x": 15,
+    "y": 654,
+    "width": 60,
+    "height": 60,
+    "z": 16,
+    "css": {
+      "default": {
+        "background-image": "url('/assets/785108786_2053')",
+        "background-size": "contain",
+        "background-repeat": "no-repeat",
+        "background-position": "center",
+        "background-color": "transparent",
+        "border": "transparent !important",
+        "opacity": "${PROPERTY cssOpacity}"
+      }
+    },
+    "dropOffsetX": -10,
+    "dropOffsetY": -27,
+    "dropTarget": {
+      "cardType": "marble"
+    },
+    "cssOpacity": 0.2,
+    "enterRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "cssOpacity",
+        "value": 1
+      },
+      {
+        "func": "CALL",
+        "widget": "calls",
+        "routine": "privateScoreRoutine",
+        "arguments": {
+          "num": "${PROPERTY num}"
+        }
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "COUNT",
+        "holder": "${PROPERTY id}"
+      },
+      {
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "relation": "=",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "cssOpacity",
+            "value": 0.2
+          }
+        ]
+      },
+      {
+        "func": "CALL",
+        "widget": "calls",
+        "routine": "privateScoreRoutine",
+        "arguments": {
+          "num": "${PROPERTY num}"
+        }
+      }
+    ],
+    "parent": "private1",
+    "fixedParent": true,
+    "movableInEdit": false,
+    "num": 1
+  },
+  "cardsH1": {
+    "type": "holder",
+    "id": "cardsH1",
+    "x": 15,
+    "y": 747,
+    "width": 60,
+    "height": 60,
+    "z": 20,
+    "css": {
+      "default": {
+        "background-image": "url('/assets/-1959951362_12873')",
+        "background-size": "contain",
+        "background-repeat": "no-repeat",
+        "background-position": "center",
+        "background-color": "transparent",
+        "border": "transparent !important",
+        "opacity": "${PROPERTY cssOpacity}"
+      }
+    },
+    "dropOffsetX": -10,
+    "dropOffsetY": -27,
+    "dropTarget": {
+      "cardType": "cards"
+    },
+    "cssOpacity": 0.3,
+    "enterRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "cssOpacity",
+        "value": 1
+      },
+      {
+        "func": "CALL",
+        "widget": "calls",
+        "routine": "privateScoreRoutine",
+        "arguments": {
+          "num": "${PROPERTY num}"
+        }
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "COUNT",
+        "holder": "${PROPERTY id}"
+      },
+      {
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "relation": "=",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "cssOpacity",
+            "value": 0.3
+          }
+        ]
+      },
+      {
+        "func": "CALL",
+        "widget": "calls",
+        "routine": "privateScoreRoutine",
+        "arguments": {
+          "num": "${PROPERTY num}"
+        }
+      }
+    ],
+    "parent": "private1",
+    "fixedParent": true,
+    "movableInEdit": false,
+    "num": 1
+  },
+  "pawnH1": {
+    "type": "holder",
+    "id": "pawnH1",
+    "width": 60,
+    "height": 60,
+    "z": 25,
+    "css": {
+      "default": {
+        "background-image": "url('/assets/-1751528005_11985')",
+        "background-size": "contain",
+        "background-repeat": "no-repeat",
+        "background-position": "center",
+        "background-color": "transparent",
+        "border": "transparent !important",
+        "opacity": "${PROPERTY cssOpacity}"
+      }
+    },
+    "dropOffsetX": -10,
+    "dropOffsetY": -27,
+    "dropTarget": {
+      "cardType": "pawn"
+    },
+    "cssOpacity": 0.2,
+    "enterRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "cssOpacity",
+        "value": 1
+      },
+      {
+        "func": "CALL",
+        "widget": "calls",
+        "routine": "privateScoreRoutine",
+        "arguments": {
+          "num": "${PROPERTY num}"
+        }
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "COUNT",
+        "holder": "${PROPERTY id}"
+      },
+      {
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "relation": "=",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "cssOpacity",
+            "value": 0.2
+          }
+        ]
+      },
+      {
+        "func": "CALL",
+        "widget": "calls",
+        "routine": "privateScoreRoutine",
+        "arguments": {
+          "num": "${PROPERTY num}"
+        }
+      }
+    ],
+    "fixedParent": true,
+    "parent": "private1",
+    "x": 15,
+    "y": 3,
+    "movableInEdit": false,
+    "num": 1
+  },
+  "knightH1": {
+    "type": "holder",
+    "id": "knightH1",
+    "x": 15,
+    "y": 96,
+    "width": 60,
+    "height": 60,
+    "z": 26,
+    "css": {
+      "default": {
+        "background-image": "url('/assets/-140134858_17811')",
+        "background-size": "contain",
+        "background-repeat": "no-repeat",
+        "background-position": "center",
+        "background-color": "transparent",
+        "border": "transparent !important",
+        "opacity": "${PROPERTY cssOpacity}"
+      }
+    },
+    "dropOffsetX": -5,
+    "dropOffsetY": -22,
+    "dropTarget": {
+      "cardType": "knight"
+    },
+    "cssOpacity": 0.2,
+    "enterRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "cssOpacity",
+        "value": 1
+      },
+      {
+        "func": "CALL",
+        "widget": "calls",
+        "routine": "privateScoreRoutine",
+        "arguments": {
+          "num": "${PROPERTY num}"
+        }
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "COUNT",
+        "holder": "${PROPERTY id}"
+      },
+      {
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "relation": "=",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "cssOpacity",
+            "value": 0.2
+          }
+        ]
+      },
+      {
+        "func": "CALL",
+        "widget": "calls",
+        "routine": "privateScoreRoutine",
+        "arguments": {
+          "num": "${PROPERTY num}"
+        }
+      }
+    ],
+    "parent": "private1",
+    "fixedParent": true,
+    "movableInEdit": false,
+    "num": 1
+  },
+  "rookH1": {
+    "type": "holder",
+    "id": "rookH1",
+    "x": 15,
+    "y": 189,
+    "width": 60,
+    "height": 60,
+    "z": 27,
+    "css": {
+      "default": {
+        "background-image": "url('/assets/-1033521675_28108')",
+        "background-size": "contain",
+        "background-repeat": "no-repeat",
+        "background-position": "center",
+        "background-color": "transparent",
+        "border": "transparent !important",
+        "opacity": "${PROPERTY cssOpacity}"
+      }
+    },
+    "dropOffsetX": -5,
+    "dropOffsetY": -22,
+    "dropTarget": {
+      "cardType": "rook"
+    },
+    "cssOpacity": 0.2,
+    "enterRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "cssOpacity",
+        "value": 1
+      },
+      {
+        "func": "CALL",
+        "widget": "calls",
+        "routine": "privateScoreRoutine",
+        "arguments": {
+          "num": "${PROPERTY num}"
+        }
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "COUNT",
+        "holder": "${PROPERTY id}"
+      },
+      {
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "relation": "=",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "cssOpacity",
+            "value": 0.2
+          }
+        ]
+      },
+      {
+        "func": "CALL",
+        "widget": "calls",
+        "routine": "privateScoreRoutine",
+        "arguments": {
+          "num": "${PROPERTY num}"
+        }
+      }
+    ],
+    "parent": "private1",
+    "fixedParent": true,
+    "movableInEdit": false,
+    "num": 1
+  },
+  "private1": {
+    "id": "private1",
+    "x": 10,
+    "y": 50,
+    "height": 900,
+    "z": 2723,
+    "css": {
+      "default": {
+        "background-color": "${PROPERTY backColor}",
+        "border": "1px solid gray"
+      }
+    },
+    "width": 90,
+    "layer": -3,
+    "backColor": "azure",
+    "borderRadius": 8,
+    "movable": false,
+    "movableInEdit": false,
+    "onlyVisibleForSeat": "seat1"
+  },
+  "coinH1": {
+    "type": "holder",
+    "id": "coinH1",
+    "parent": "private1",
+    "fixedParent": true,
+    "x": 15,
+    "width": 60,
+    "height": 60,
+    "z": 30,
+    "css": {
+      "default": {
+        "background-image": "url('/assets/108158668_43552')",
+        "background-size": "contain",
+        "background-repeat": "no-repeat",
+        "background-position": "center",
+        "background-color": "transparent",
+        "border": "transparent !important",
+        "opacity": "${PROPERTY cssOpacity}"
+      }
+    },
+    "dropOffsetX": -10,
+    "dropOffsetY": -35,
+    "dropTarget": {
+      "cardType": "coin"
+    },
+    "cssOpacity": 0.4,
+    "enterRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "cssOpacity",
+        "value": 1
+      },
+      {
+        "func": "CALL",
+        "widget": "calls",
+        "routine": "privateScoreRoutine",
+        "arguments": {
+          "num": "${PROPERTY num}"
+        }
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "COUNT",
+        "holder": "${PROPERTY id}"
+      },
+      {
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "relation": "=",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "cssOpacity",
+            "value": 0.4
+          }
+        ]
+      },
+      {
+        "func": "CALL",
+        "widget": "calls",
+        "routine": "privateScoreRoutine",
+        "arguments": {
+          "num": "${PROPERTY num}"
+        }
+      }
+    ],
+    "y": 840,
+    "movableInEdit": false,
+    "num": 1
+  },
+  "private2": {
+    "inheritFrom": "private1",
+    "id": "private2",
+    "x": 351,
+    "y": 11,
+    "z": 60,
+    "height": 90,
+    "width": 900,
+    "backColor": "lightgoldenrodyellow",
+    "onlyVisibleForSeat": "seat2"
+  },
+  "diceH2": {
+    "inheritFrom": "diceH1",
+    "id": "diceH2",
+    "type": "holder",
+    "parent": "private2",
+    "x": 281,
+    "y": 15,
+    "cssOpacity": 0.2,
+    "num": 2
+  },
+  "meepleH2": {
+    "inheritFrom": "meepleH1",
+    "id": "meepleH2",
+    "type": "holder",
+    "parent": "private2",
+    "x": 374,
+    "y": 15,
+    "cssOpacity": 0.2,
+    "num": 2
+  },
+  "houseH2": {
+    "inheritFrom": "houseH1",
+    "id": "houseH2",
+    "type": "holder",
+    "parent": "private2",
+    "z": 36,
+    "x": 747,
+    "y": 15,
+    "cssOpacity": 0.2,
+    "num": 2
+  },
+  "pinH2": {
+    "inheritFrom": "pinH1",
+    "id": "pinH2",
+    "type": "holder",
+    "parent": "private2",
+    "x": 468,
+    "y": 15,
+    "cssOpacity": 0.2,
+    "num": 2
+  },
+  "marbleH2": {
+    "inheritFrom": "marbleH1",
+    "id": "marbleH2",
+    "type": "holder",
+    "parent": "private2",
+    "x": 561,
+    "y": 15,
+    "cssOpacity": 0.2,
+    "num": 2
+  },
+  "cardsH2": {
+    "inheritFrom": "cardsH1",
+    "id": "cardsH2",
+    "type": "holder",
+    "parent": "private2",
+    "x": 654,
+    "y": 15,
+    "cssOpacity": 0.3,
+    "num": 2
+  },
+  "pawnH2": {
+    "inheritFrom": "pawnH1",
+    "id": "pawnH2",
+    "type": "holder",
+    "parent": "private2",
+    "x": 2,
+    "y": 15,
+    "cssOpacity": 0.2,
+    "num": 2
+  },
+  "knightH2": {
+    "inheritFrom": "knightH1",
+    "id": "knightH2",
+    "type": "holder",
+    "parent": "private2",
+    "x": 95,
+    "y": 15,
+    "cssOpacity": 0.2,
+    "num": 2
+  },
+  "rookH2": {
+    "inheritFrom": "rookH1",
+    "id": "rookH2",
+    "type": "holder",
+    "parent": "private2",
+    "x": 188,
+    "y": 15,
+    "cssOpacity": 0.2,
+    "num": 2
+  },
+  "coinH2": {
+    "inheritFrom": "coinH1",
+    "id": "coinH2",
+    "type": "holder",
+    "parent": "private2",
+    "x": 840,
+    "y": 15,
+    "cssOpacity": 0.4,
+    "num": 2
+  },
+  "same1": {
+    "type": "holder",
+    "id": "same1",
+    "parent": "private1",
+    "fixedParent": true,
+    "y": 100,
+    "width": 225,
+    "height": 80,
+    "z": 2764,
+    "css": {
+      "default": {
+        "background-image": "${PROPERTY backImage}",
+        "background-size": "contain",
+        "background-repeat": "no-repeat",
+        "background-position": "center",
+        "background-color": "${PROPERTY backColor}",
+        "border": "${PROPERTY borderColor}"
+      }
+    },
+    "dropLimit": 7,
+    "dropOffsetX": 0,
+    "dropOffsetY": -20,
+    "dropTarget": [
+      {
+        "cardType": "dice"
+      },
+      {
+        "cardType": "meeple"
+      },
+      {
+        "cardType": "pin"
+      },
+      {
+        "cardType": "marble"
+      },
+      {
+        "cardType": "cards"
+      },
+      {
+        "cardType": "house"
+      },
+      {
+        "cardType": "coin"
+      }
+    ],
+    "stackOffsetX": 25,
+    "backImage": "url('/assets/1056793728_22490')",
+    "enterRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "backImage",
+        "value": ""
+      },
+      {
+        "func": "CALL",
+        "widget": "calls",
+        "routine": "sameScoreRoutine",
+        "arguments": {
+          "num": "${PROPERTY num}"
+        }
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "COUNT",
+        "holder": "${PROPERTY id}"
+      },
+      {
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "backImage",
+            "value": "url('/assets/1056793728_22490')"
+          }
+        ]
+      },
+      {
+        "func": "CALL",
+        "widget": "calls",
+        "routine": "sameScoreRoutine",
+        "arguments": {
+          "num": "${PROPERTY num}"
+        }
+      }
+    ],
+    "x": 92,
+    "backColor": "azure",
+    "borderColor": "1px solid gray",
+    "num": 1,
+    "thisScore": 0,
+    "movableInEdit": false
+  },
+  "different1": {
+    "type": "holder",
+    "id": "different1",
+    "parent": "private1",
+    "fixedParent": true,
+    "x": 92,
+    "y": 300,
+    "width": 225,
+    "height": 80,
+    "z": 2765,
+    "css": {
+      "default": {
+        "background-image": "${PROPERTY backImage}",
+        "background-size": "contain",
+        "background-repeat": "no-repeat",
+        "background-position": "center",
+        "background-color": "${PROPERTY backColor}",
+        "border": "${PROPERTY borderColor}"
+      }
+    },
+    "dropLimit": 7,
+    "dropOffsetX": 0,
+    "dropOffsetY": -20,
+    "dropTarget": [
+      {
+        "cardType": "dice"
+      },
+      {
+        "cardType": "meeple"
+      },
+      {
+        "cardType": "pin"
+      },
+      {
+        "cardType": "marble"
+      },
+      {
+        "cardType": "cards"
+      },
+      {
+        "cardType": "house"
+      },
+      {
+        "cardType": "coin"
+      }
+    ],
+    "stackOffsetX": 25,
+    "backImage": "url('/assets/372339245_64207')",
+    "enterRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "backImage",
+        "value": ""
+      },
+      {
+        "func": "CALL",
+        "widget": "calls",
+        "routine": "differentScoreRoutine",
+        "arguments": {
+          "num": "${PROPERTY num}"
+        }
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "COUNT",
+        "holder": "${PROPERTY id}"
+      },
+      {
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "backImage",
+            "value": "url('/assets/372339245_64207')"
+          }
+        ]
+      },
+      {
+        "func": "CALL",
+        "widget": "calls",
+        "routine": "differentScoreRoutine",
+        "arguments": {
+          "num": "${PROPERTY num}"
+        }
+      }
+    ],
+    "backColor": "azure",
+    "num": 1,
+    "borderColor": "1px solid gray",
+    "thisScore": 0,
+    "movableInEdit": false
+  },
+  "pairs1": {
+    "type": "holder",
+    "id": "pairs1",
+    "parent": "private1",
+    "fixedParent": true,
+    "x": 92,
+    "y": 500,
+    "width": 225,
+    "height": 80,
+    "z": 43,
+    "css": {
+      "default": {
+        "background-image": "${PROPERTY backImage}",
+        "background-size": "contain",
+        "background-repeat": "no-repeat",
+        "background-position": "center",
+        "background-color": "${PROPERTY backColor}",
+        "border": "${PROPERTY borderColor}"
+      }
+    },
+    "dropLimit": 12,
+    "dropOffsetX": 0,
+    "dropOffsetY": -20,
+    "dropTarget": [
+      {
+        "cardType": "dice"
+      },
+      {
+        "cardType": "meeple"
+      },
+      {
+        "cardType": "pin"
+      },
+      {
+        "cardType": "marble"
+      },
+      {
+        "cardType": "cards"
+      },
+      {
+        "cardType": "house"
+      },
+      {
+        "cardType": "coin"
+      }
+    ],
+    "stackOffsetX": 12,
+    "backImage": "url('/assets/809498064_68467')",
+    "enterRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "backImage",
+        "value": ""
+      },
+      {
+        "func": "CALL",
+        "widget": "calls",
+        "routine": "pairsScoreRoutine",
+        "arguments": {
+          "num": "${PROPERTY num}"
+        }
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "COUNT",
+        "holder": "${PROPERTY id}"
+      },
+      {
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "backImage",
+            "value": "url('/assets/809498064_68467')"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "borderColor",
+            "value": "1px solid gray"
+          }
+        ]
+      },
+      {
+        "func": "CALL",
+        "widget": "calls",
+        "routine": "pairsScoreRoutine",
+        "arguments": {
+          "num": "${PROPERTY num}"
+        }
+      }
+    ],
+    "backColor": "azure",
+    "num": 1,
+    "borderColor": "1px solid gray",
+    "movableInEdit": false,
+    "thisScore": 0
+  },
+  "special1": {
+    "type": "holder",
+    "id": "special1",
+    "parent": "private1",
+    "fixedParent": true,
+    "x": 92,
+    "y": 700,
+    "width": 225,
+    "height": 80,
+    "z": 43,
+    "css": {
+      "default": {
+        "background-image": "${PROPERTY backImage}",
+        "background-size": "contain",
+        "background-repeat": "no-repeat",
+        "background-position": "center",
+        "background-color": "${PROPERTY backColor}",
+        "border": "${PROPERTY borderColor}"
+      }
+    },
+    "dropLimit": 3,
+    "dropOffsetX": 0,
+    "dropOffsetY": -20,
+    "stackOffsetX": 60,
+    "backImage": "url('/assets/-987505779_2885')",
+    "enterRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "backImage",
+        "value": ""
+      },
+      {
+        "func": "CALL",
+        "widget": "calls",
+        "routine": "specialScoreRoutine",
+        "arguments": {
+          "num": "${PROPERTY num}"
+        }
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "COUNT",
+        "holder": "${PROPERTY id}"
+      },
+      {
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "backImage",
+            "value": "url('/assets/-987505779_2885')"
+          }
+        ]
+      },
+      {
+        "func": "CALL",
+        "widget": "calls",
+        "routine": "specialScoreRoutine",
+        "arguments": {
+          "num": "${PROPERTY num}"
+        }
+      }
+    ],
+    "backColor": "azure",
+    "num": 1,
+    "borderColor": "1px solid gray",
+    "thisScore": 0,
+    "movableInEdit": false
+  },
+  "same2": {
+    "inheritFrom": "same1",
+    "id": "same2",
+    "type": "holder",
+    "y": 91,
+    "x": -1,
+    "parent": "private2",
+    "backColor": "lightgoldenrodyellow",
+    "backImage": "url('/assets/1056793728_22490')",
+    "num": 2,
+    "borderColor": "1px solid gray",
+    "thisScore": 0
+  },
+  "different2": {
+    "inheritFrom": "different1",
+    "id": "different2",
+    "type": "holder",
+    "x": 225,
+    "y": 91,
+    "parent": "private2",
+    "backColor": "lightgoldenrodyellow",
+    "backImage": "url('/assets/372339245_64207')",
+    "num": 2,
+    "borderColor": "1px solid gray",
+    "thisScore": 0
+  },
+  "pairs2": {
+    "inheritFrom": "pairs1",
+    "id": "pairs2",
+    "type": "holder",
+    "x": 452,
+    "y": 92,
+    "parent": "private2",
+    "backColor": "lightgoldenrodyellow",
+    "backImage": "url('/assets/809498064_68467')",
+    "num": 2,
+    "z": 2763,
+    "thisScore": 0,
+    "borderColor": "1px solid gray"
+  },
+  "special2": {
+    "inheritFrom": "special1",
+    "id": "special2",
+    "type": "holder",
+    "x": 677,
+    "y": 91,
+    "parent": "private2",
+    "backColor": "lightgoldenrodyellow",
+    "backImage": "url('/assets/-987505779_2885')",
+    "num": 2,
+    "thisScore": 0,
+    "borderColor": "1px solid gray"
+  },
+  "private3": {
+    "inheritFrom": "private1",
+    "id": "private3",
+    "x": 1500,
+    "y": 50,
+    "z": 56,
+    "backColor": "thistle",
+    "onlyVisibleForSeat": "seat3"
+  },
+  "diceH3": {
+    "inheritFrom": "diceH1",
+    "id": "diceH3",
+    "type": "holder",
+    "parent": "private3",
+    "cssOpacity": 0.2,
+    "num": 3
+  },
+  "meepleH3": {
+    "inheritFrom": "meepleH1",
+    "id": "meepleH3",
+    "type": "holder",
+    "parent": "private3",
+    "cssOpacity": 0.2,
+    "num": 3
+  },
+  "houseH3": {
+    "inheritFrom": "houseH1",
+    "id": "houseH3",
+    "type": "holder",
+    "parent": "private3",
+    "cssOpacity": 0.2,
+    "num": 3
+  },
+  "pinH3": {
+    "inheritFrom": "pinH1",
+    "id": "pinH3",
+    "type": "holder",
+    "parent": "private3",
+    "cssOpacity": 0.2,
+    "num": 3
+  },
+  "marbleH3": {
+    "inheritFrom": "marbleH1",
+    "id": "marbleH3",
+    "type": "holder",
+    "parent": "private3",
+    "cssOpacity": 0.2,
+    "num": 3
+  },
+  "cardsH3": {
+    "inheritFrom": "cardsH1",
+    "id": "cardsH3",
+    "type": "holder",
+    "parent": "private3",
+    "cssOpacity": 0.3,
+    "num": 3
+  },
+  "pawnH3": {
+    "inheritFrom": "pawnH1",
+    "id": "pawnH3",
+    "type": "holder",
+    "parent": "private3",
+    "cssOpacity": 0.2,
+    "num": 3
+  },
+  "knightH3": {
+    "inheritFrom": "knightH1",
+    "id": "knightH3",
+    "type": "holder",
+    "parent": "private3",
+    "cssOpacity": 0.2,
+    "num": 3
+  },
+  "rookH3": {
+    "inheritFrom": "rookH1",
+    "id": "rookH3",
+    "type": "holder",
+    "parent": "private3",
+    "cssOpacity": 0.2,
+    "num": 3
+  },
+  "coinH3": {
+    "inheritFrom": "coinH1",
+    "id": "coinH3",
+    "type": "holder",
+    "parent": "private3",
+    "cssOpacity": 0.4,
+    "num": 3
+  },
+  "same3": {
+    "inheritFrom": "same1",
+    "id": "same3",
+    "type": "holder",
+    "parent": "private3",
+    "x": -228,
+    "backColor": "thistle",
+    "backImage": "url('/assets/1056793728_22490')",
+    "num": 3,
+    "thisScore": 0,
+    "borderColor": "1px solid gray",
+    "z": 2762
+  },
+  "different3": {
+    "inheritFrom": "different1",
+    "id": "different3",
+    "type": "holder",
+    "parent": "private3",
+    "x": -228,
+    "backColor": "thistle",
+    "backImage": "url('/assets/372339245_64207')",
+    "num": 3,
+    "borderColor": "1px solid gray",
+    "thisScore": 0
+  },
+  "pairs3": {
+    "inheritFrom": "pairs1",
+    "id": "pairs3",
+    "type": "holder",
+    "parent": "private3",
+    "x": -228,
+    "backColor": "thistle",
+    "backImage": "url('/assets/809498064_68467')",
+    "num": 3,
+    "thisScore": 0,
+    "borderColor": "1px solid gray"
+  },
+  "special3": {
+    "inheritFrom": "special1",
+    "id": "special3",
+    "type": "holder",
+    "parent": "private3",
+    "x": -228,
+    "z": 61,
+    "backColor": "thistle",
+    "backImage": "url('/assets/-987505779_2885')",
+    "num": 3,
+    "thisScore": 0,
+    "borderColor": "1px solid gray"
+  },
+  "private4": {
+    "inheritFrom": "private2",
+    "id": "private4",
+    "x": 350,
+    "y": 900,
+    "z": 55,
+    "backColor": "mistyrose",
+    "onlyVisibleForSeat": "seat4"
+  },
+  "diceH4": {
+    "inheritFrom": "diceH2",
+    "id": "diceH4",
+    "type": "holder",
+    "parent": "private4",
+    "cssOpacity": 0.2,
+    "num": 4
+  },
+  "meepleH4": {
+    "inheritFrom": "meepleH2",
+    "id": "meepleH4",
+    "type": "holder",
+    "parent": "private4",
+    "cssOpacity": 0.2,
+    "num": 4
+  },
+  "houseH4": {
+    "inheritFrom": "houseH2",
+    "id": "houseH4",
+    "type": "holder",
+    "parent": "private4",
+    "cssOpacity": 0.2,
+    "num": 4
+  },
+  "pinH4": {
+    "inheritFrom": "pinH2",
+    "id": "pinH4",
+    "type": "holder",
+    "parent": "private4",
+    "cssOpacity": 0.2,
+    "num": 4
+  },
+  "marbleH4": {
+    "inheritFrom": "marbleH2",
+    "id": "marbleH4",
+    "type": "holder",
+    "parent": "private4",
+    "num": 4,
+    "cssOpacity": 0.2
+  },
+  "cardsH4": {
+    "inheritFrom": "cardsH2",
+    "id": "cardsH4",
+    "type": "holder",
+    "parent": "private4",
+    "cssOpacity": 0.3,
+    "num": 4
+  },
+  "pawnH4": {
+    "inheritFrom": "pawnH2",
+    "id": "pawnH4",
+    "type": "holder",
+    "parent": "private4",
+    "cssOpacity": 0.2,
+    "num": 4
+  },
+  "knightH4": {
+    "inheritFrom": "knightH2",
+    "id": "knightH4",
+    "type": "holder",
+    "parent": "private4",
+    "cssOpacity": 0.2,
+    "num": 4
+  },
+  "rookH4": {
+    "inheritFrom": "rookH2",
+    "id": "rookH4",
+    "type": "holder",
+    "parent": "private4",
+    "cssOpacity": 0.2,
+    "num": 4
+  },
+  "coinH4": {
+    "inheritFrom": "coinH2",
+    "id": "coinH4",
+    "type": "holder",
+    "parent": "private4",
+    "cssOpacity": 0.4,
+    "num": 4
+  },
+  "same4": {
+    "inheritFrom": "same2",
+    "id": "same4",
+    "type": "holder",
+    "parent": "private4",
+    "y": -81,
+    "backColor": "mistyrose",
+    "backImage": "url('/assets/1056793728_22490')",
+    "num": 4,
+    "borderColor": "1px solid gray",
+    "thisScore": 0
+  },
+  "different4": {
+    "inheritFrom": "different2",
+    "id": "different4",
+    "type": "holder",
+    "parent": "private4",
+    "y": -81,
+    "backColor": "mistyrose",
+    "backImage": "url('/assets/372339245_64207')",
+    "num": 4,
+    "borderColor": "1px solid gray",
+    "thisScore": 0
+  },
+  "pairs4": {
+    "inheritFrom": "pairs2",
+    "id": "pairs4",
+    "type": "holder",
+    "parent": "private4",
+    "y": -81,
+    "backColor": "mistyrose",
+    "backImage": "url('/assets/809498064_68467')",
+    "num": 4,
+    "thisScore": 0,
+    "borderColor": "1px solid gray"
+  },
+  "special4": {
+    "inheritFrom": "special2",
+    "id": "special4",
+    "type": "holder",
+    "parent": "private4",
+    "y": -81,
+    "backColor": "mistyrose",
+    "backImage": "url('/assets/-987505779_2885')",
+    "num": 4,
+    "thisScore": 0,
+    "borderColor": "1px solid gray"
+  },
+  "bag": {
+    "type": "holder",
+    "id": "bag",
+    "x": 759,
+    "y": 658,
+    "width": 80,
+    "height": 80,
+    "z": 2718,
+    "css": {
+      "": {
+        "overflow": "hidden",
+        "background-color": "tan"
+      },
+      "::before": {
+        "content": "'${PROPERTY widget-count}'",
+        "text-align": "center",
+        "display": "block",
+        "font-size": "30px",
+        "line-height": "2.5"
+      },
+      " .widget": {
+        "opacity": 0,
+        "transform": "scale(100)!important"
+      }
+    },
+    "dropTarget": {},
+    "widget-count": 0,
+    "enterRoutine": [
+      {
+        "func": "COUNT",
+        "holder": "${PROPERTY id}",
+        "variable": "widgets"
+      },
+      "var widgets = ${widgets} - 1",
+      {
+        "func": "SET",
+        "property": "widget-count",
+        "value": "${widgets}",
+        "collection": "thisButton"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "COUNT",
+        "holder": "${PROPERTY id}",
+        "variable": "widgets"
+      },
+      "var widgets = ${widgets} - 1",
+      {
+        "func": "SET",
+        "property": "widget-count",
+        "value": "${widgets}",
+        "collection": "thisButton"
+      }
+    ],
+    "preventPiles": true,
+    "widget-countChangeRoutine": [
+      "var turnCheck = ${PROPERTY lastCount} - ${PROPERTY widget-count} ",
+      {
+        "func": "IF",
+        "condition": "${PROPERTY teams OF options}",
+        "thenRoutine": [
+          {
+            "func": "IF",
+            "operand1": "${turnCheck}",
+            "operand2": 3,
+            "thenRoutine": [
+              {
+                "func": "CALL",
+                "widget": "calls",
+                "routine": "turnRoutine",
+                "arguments": {
+                  "widgets": "${PROPERTY widget-count}"
+                }
+              }
+            ]
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "IF",
+            "operand1": "${turnCheck}",
+            "operand2": 2,
+            "thenRoutine": [
+              {
+                "func": "CALL",
+                "widget": "calls",
+                "routine": "turnRoutine",
+                "arguments": {
+                  "widgets": "${PROPERTY widget-count}"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "lastCount": 0
+  },
+  "wpzs": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "pawn",
+    "id": "wpzs",
+    "z": 43864,
+    "parent": "yqs0"
+  },
+  "1qjz": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "pawn",
+    "id": "1qjz",
+    "z": 43936,
+    "parent": "yqs0"
+  },
+  "wsl5": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "pawn",
+    "id": "wsl5",
+    "z": 43937,
+    "parent": "yqs0"
+  },
+  "qefh": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "knight",
+    "id": "qefh",
+    "z": 43938,
+    "parent": "yqs0"
+  },
+  "l5l7": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "knight",
+    "id": "l5l7",
+    "z": 43939,
+    "parent": "yqs0"
+  },
+  "gm9d": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "knight",
+    "id": "gm9d",
+    "z": 43940,
+    "parent": "yqs0"
+  },
+  "zj9a": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "rook",
+    "id": "zj9a",
+    "z": 43941,
+    "parent": "yqs0"
+  },
+  "dd1c": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "rook",
+    "id": "dd1c",
+    "z": 43942,
+    "parent": "yqs0"
+  },
+  "qdw4": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "rook",
+    "id": "qdw4",
+    "z": 43943,
+    "parent": "yqs0"
+  },
+  "lpdn": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "dice",
+    "id": "lpdn",
+    "z": 43944,
+    "parent": "yqs0"
+  },
+  "opok": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "dice",
+    "id": "opok",
+    "z": 43945,
+    "parent": "yqs0"
+  },
+  "q9ui": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "dice",
+    "id": "q9ui",
+    "z": 43946,
+    "parent": "yqs0"
+  },
+  "cus3": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "dice",
+    "id": "cus3",
+    "z": 43947,
+    "parent": "yqs0"
+  },
+  "1e95": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "dice",
+    "id": "1e95",
+    "z": 43948,
+    "parent": "yqs0"
+  },
+  "6ose": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "dice",
+    "id": "6ose",
+    "z": 43949,
+    "parent": "yqs0"
+  },
+  "ud91": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "dice",
+    "id": "ud91",
+    "z": 43950,
+    "parent": "yqs0"
+  },
+  "2i86": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "dice",
+    "id": "2i86",
+    "z": 43951,
+    "parent": "yqs0"
+  },
+  "vfhf": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "dice",
+    "id": "vfhf",
+    "z": 43952,
+    "parent": "yqs0"
+  },
+  "7ykd": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "house",
+    "id": "7ykd",
+    "z": 43953,
+    "parent": "yqs0"
+  },
+  "0dyj": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "house",
+    "id": "0dyj",
+    "z": 43954,
+    "parent": "yqs0"
+  },
+  "s9v5": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "house",
+    "id": "s9v5",
+    "z": 43955,
+    "parent": "yqs0"
+  },
+  "u76f": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "house",
+    "id": "u76f",
+    "z": 43956,
+    "parent": "yqs0"
+  },
+  "r8xj": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "house",
+    "id": "r8xj",
+    "z": 43957,
+    "parent": "yqs0"
+  },
+  "bpm8": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "house",
+    "id": "bpm8",
+    "z": 43958,
+    "parent": "yqs0"
+  },
+  "gwc5": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "house",
+    "id": "gwc5",
+    "z": 43959,
+    "parent": "yqs0"
+  },
+  "93es": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "house",
+    "id": "93es",
+    "z": 43960,
+    "parent": "yqs0"
+  },
+  "oydn": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "house",
+    "id": "oydn",
+    "z": 43961,
+    "parent": "yqs0"
+  },
+  "mn7h": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "marble",
+    "id": "mn7h",
+    "z": 43962,
+    "parent": "yqs0"
+  },
+  "zvn0": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "marble",
+    "id": "zvn0",
+    "z": 43963,
+    "parent": "yqs0"
+  },
+  "kl2c": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "marble",
+    "id": "kl2c",
+    "z": 43964,
+    "parent": "yqs0"
+  },
+  "z5rt": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "marble",
+    "id": "z5rt",
+    "z": 43965,
+    "parent": "yqs0"
+  },
+  "9hqb": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "marble",
+    "id": "9hqb",
+    "z": 43966,
+    "parent": "yqs0"
+  },
+  "j710": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "marble",
+    "id": "j710",
+    "z": 43967,
+    "parent": "yqs0"
+  },
+  "yl1k": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "marble",
+    "id": "yl1k",
+    "z": 43968,
+    "parent": "yqs0"
+  },
+  "rsy9": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "marble",
+    "id": "rsy9",
+    "z": 43969,
+    "parent": "yqs0"
+  },
+  "s0vm": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "marble",
+    "id": "s0vm",
+    "z": 43970,
+    "parent": "yqs0"
+  },
+  "g997": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "cards",
+    "id": "g997",
+    "z": 43971,
+    "parent": "yqs0"
+  },
+  "gyyn": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "cards",
+    "id": "gyyn",
+    "z": 43972,
+    "parent": "yqs0"
+  },
+  "u08i": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "cards",
+    "id": "u08i",
+    "z": 43973,
+    "parent": "yqs0"
+  },
+  "glsn": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "cards",
+    "id": "glsn",
+    "z": 43974,
+    "parent": "yqs0"
+  },
+  "e43e": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "cards",
+    "id": "e43e",
+    "z": 43975,
+    "parent": "yqs0"
+  },
+  "nemi": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "cards",
+    "id": "nemi",
+    "z": 43976,
+    "parent": "yqs0"
+  },
+  "5s8d": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "cards",
+    "id": "5s8d",
+    "z": 43977,
+    "parent": "yqs0"
+  },
+  "el4e": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "cards",
+    "id": "el4e",
+    "z": 43978,
+    "parent": "yqs0"
+  },
+  "0xsk": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "cards",
+    "id": "0xsk",
+    "z": 43979,
+    "parent": "yqs0"
+  },
+  "29s4": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "pin",
+    "id": "29s4",
+    "z": 43980,
+    "parent": "yqs0"
+  },
+  "mdpi": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "pin",
+    "id": "mdpi",
+    "z": 43981,
+    "parent": "yqs0"
+  },
+  "5ggg": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "pin",
+    "id": "5ggg",
+    "z": 43982,
+    "parent": "yqs0"
+  },
+  "y9rm": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "pin",
+    "id": "y9rm",
+    "z": 43983,
+    "parent": "yqs0"
+  },
+  "oczw": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "pin",
+    "id": "oczw",
+    "z": 43984,
+    "parent": "yqs0"
+  },
+  "8gap": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "pin",
+    "id": "8gap",
+    "z": 43985,
+    "parent": "yqs0"
+  },
+  "r6se": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "pin",
+    "id": "r6se",
+    "z": 43986,
+    "parent": "yqs0"
+  },
+  "jqh8": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "pin",
+    "id": "jqh8",
+    "z": 43987,
+    "parent": "yqs0"
+  },
+  "vznv": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "pin",
+    "id": "vznv",
+    "z": 43988,
+    "parent": "yqs0"
+  },
+  "yned": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "coin",
+    "id": "yned",
+    "z": 43989,
+    "parent": "yqs0"
+  },
+  "21p3": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "coin",
+    "id": "21p3",
+    "z": 43990,
+    "parent": "yqs0"
+  },
+  "qo1n": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "coin",
+    "id": "qo1n",
+    "z": 43991,
+    "parent": "yqs0"
+  },
+  "352k": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "coin",
+    "id": "352k",
+    "z": 43992,
+    "parent": "yqs0"
+  },
+  "2nid": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "coin",
+    "id": "2nid",
+    "z": 43993,
+    "parent": "yqs0"
+  },
+  "i0ux": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "coin",
+    "id": "i0ux",
+    "z": 43994,
+    "parent": "yqs0"
+  },
+  "rf2k": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "coin",
+    "id": "rf2k",
+    "z": 43995,
+    "parent": "yqs0"
+  },
+  "bswv": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "coin",
+    "id": "bswv",
+    "z": 43996,
+    "parent": "yqs0"
+  },
+  "6mfo": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "coin",
+    "id": "6mfo",
+    "z": 43997,
+    "parent": "yqs0"
+  },
+  "opre": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "meeple",
+    "id": "opre",
+    "z": 43998,
+    "parent": "yqs0"
+  },
+  "464d": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "meeple",
+    "id": "464d",
+    "z": 43999,
+    "parent": "yqs0"
+  },
+  "2v6o": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "meeple",
+    "id": "2v6o",
+    "z": 44000,
+    "parent": "yqs0"
+  },
+  "zqba": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "meeple",
+    "id": "zqba",
+    "z": 44001,
+    "parent": "yqs0"
+  },
+  "0pij": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "meeple",
+    "id": "0pij",
+    "z": 44002,
+    "parent": "yqs0"
+  },
+  "x7f8": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "meeple",
+    "id": "x7f8",
+    "z": 44003,
+    "parent": "yqs0"
+  },
+  "9p13": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "meeple",
+    "id": "9p13",
+    "z": 44004,
+    "parent": "yqs0"
+  },
+  "4rj8": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "meeple",
+    "id": "4rj8",
+    "z": 44005,
+    "parent": "yqs0"
+  },
+  "5qh0": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "meeple",
+    "id": "5qh0",
+    "z": 44006,
+    "parent": "yqs0"
+  },
+  "seat1": {
+    "type": "seat",
+    "id": "seat1",
+    "x": 103,
+    "y": 50,
+    "z": 6,
+    "movableInEdit": false,
+    "hideWhenUnused": true
+  },
+  "seat2": {
+    "type": "seat",
+    "id": "seat2",
+    "x": 1254,
+    "y": 15,
+    "z": 5,
+    "index": 2,
+    "movableInEdit": false,
+    "hideWhenUnused": true
+  },
+  "seat3": {
+    "type": "seat",
+    "id": "seat3",
+    "x": 1337,
+    "y": 900,
+    "z": 7,
+    "index": 3,
+    "movableInEdit": false,
+    "hideWhenUnused": true
+  },
+  "seat4": {
+    "type": "seat",
+    "id": "seat4",
+    "x": 188,
+    "y": 940,
+    "z": 8,
+    "index": 4,
+    "movableInEdit": false,
+    "hideWhenUnused": true
+  },
+  "restart": {
+    "type": "button",
+    "id": "restart",
+    "x": 1545,
+    "width": 50,
+    "height": 50,
+    "z": 9,
+    "text": "restart",
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "fields": [
+          {
+            "type": "title",
+            "text": "Restarting game ..."
+          },
+          {
+            "type": "subtitle",
+            "text": "You are about to restart the game are you sure?"
+          }
+        ]
+      },
+      {
+        "func": "CALL",
+        "widget": "calls",
+        "routine": "countPlayersRoutine"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "calls"
+        ],
+        "property": "firstBonus",
+        "value": false
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "score1",
+          "score2",
+          "score3",
+          "score4"
+        ],
+        "property": "text",
+        "value": 0
+      },
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "id",
+        "value": null,
+        "relation": "!="
+      },
+      {
+        "func": "SET",
+        "property": "movable",
+        "value": true
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "play"
+        ],
+        "property": "y",
+        "value": 660
+      }
+    ],
+    "classes": "symbols",
+    "movableInEdit": false,
+    "css": "font-size: 40px; "
+  },
+  "calls": {
+    "id": "calls",
+    "x": 1144,
+    "y": 1061,
+    "z": 2773,
+    "text": "Calls",
+    "css": "border: 1px solid black; background:white",
+    "countPlayersRoutine": [
+      {
+        "func": "IF",
+        "condition": "${PROPERTY mini OF options}",
+        "thenRoutine": [
+          {
+            "func": "RECALL",
+            "holder": "specialHolder"
+          },
+          {
+            "func": "MOVE",
+            "from": "specialHolder",
+            "to": "bag",
+            "count": 0
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "RECALL",
+            "holder": "specialHolder"
+          }
+        ]
+      },
+      {
+        "func": "SELECT",
+        "type": "seat",
+        "property": "player",
+        "relation": "!=",
+        "value": ""
+      },
+      {
+        "func": "COUNT"
+      },
+      {
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "func": "RECALL",
+            "holder": "bag"
+          },
+          {
+            "func": "SELECT",
+            "type": "card",
+            "property": "parent",
+            "value": "bag"
+          },
+          {
+            "func": "SET",
+            "property": "parent",
+            "value": "offBoard"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "discard"
+            ],
+            "property": "y",
+            "value": 1200
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "operand2": 1,
+        "thenRoutine": [
+          {
+            "func": "RECALL",
+            "holder": "bag"
+          },
+          {
+            "func": "SELECT",
+            "type": "card",
+            "property": "parent",
+            "value": "bag"
+          },
+          {
+            "func": "SET",
+            "property": "parent",
+            "value": "offBoard"
+          },
+          {
+            "func": "SHUFFLE",
+            "holder": "offBoard"
+          },
+          {
+            "func": "MOVE",
+            "from": "offBoard",
+            "to": "bag",
+            "count": 36
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "discard"
+            ],
+            "property": "y",
+            "value": 600
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "operand2": 2,
+        "thenRoutine": [
+          {
+            "func": "RECALL",
+            "holder": "bag"
+          },
+          {
+            "func": "SELECT",
+            "type": "card",
+            "property": "parent",
+            "value": "bag"
+          },
+          {
+            "func": "SET",
+            "property": "parent",
+            "value": "offBoard"
+          },
+          {
+            "func": "SHUFFLE",
+            "holder": "offBoard"
+          },
+          {
+            "func": "MOVE",
+            "from": "offBoard",
+            "to": "bag",
+            "count": 48
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "discard"
+            ],
+            "property": "y",
+            "value": 1200
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "operand2": 3,
+        "thenRoutine": [
+          {
+            "func": "RECALL",
+            "holder": "bag"
+          },
+          {
+            "func": "SELECT",
+            "type": "card",
+            "property": "parent",
+            "value": "bag"
+          },
+          {
+            "func": "SET",
+            "property": "parent",
+            "value": "offBoard"
+          },
+          {
+            "func": "SHUFFLE",
+            "holder": "offBoard"
+          },
+          {
+            "func": "MOVE",
+            "from": "offBoard",
+            "to": "bag",
+            "count": 60
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "discard"
+            ],
+            "property": "y",
+            "value": 1200
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "operand2": 4,
+        "thenRoutine": [
+          {
+            "func": "RECALL",
+            "holder": "bag"
+          },
+          {
+            "func": "SELECT",
+            "type": "card",
+            "property": "parent",
+            "value": "bag"
+          },
+          {
+            "func": "SET",
+            "property": "parent",
+            "value": "offBoard"
+          },
+          {
+            "func": "SHUFFLE",
+            "holder": "offBoard"
+          },
+          {
+            "func": "MOVE",
+            "from": "offBoard",
+            "to": "bag",
+            "count": 0
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "discard"
+            ],
+            "property": "y",
+            "value": 1200
+          }
+        ]
+      }
+    ],
+    "sameScoreRoutine": [
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "parent",
+        "value": "same${num}"
+      },
+      {
+        "func": "GET",
+        "property": "cardType",
+        "aggregation": "array",
+        "variable": "type"
+      },
+      "var noDuplicate = []",
+      {
+        "func": "FOREACH",
+        "in": "${type}",
+        "loopRoutine": [
+          "var firstIndex = ${type} indexOf ${value}",
+          {
+            "func": "IF",
+            "operand1": "${key}",
+            "relation": "==",
+            "operand2": "${firstIndex}",
+            "thenRoutine": [
+              "var noDuplicate = push ${value}"
+            ]
+          }
+        ]
+      },
+      "var typeArray = []",
+      {
+        "func": "FOREACH",
+        "in": "${noDuplicate}",
+        "loopRoutine": [
+          {
+            "func": "SELECT",
+            "source": "DEFAULT",
+            "property": "cardType",
+            "value": "${value}",
+            "collection": "temp"
+          },
+          {
+            "func": "COUNT",
+            "collection": "temp"
+          },
+          "var typeArray = push ${COUNT}"
+        ]
+      },
+      "var typeArray = numericSort ${typeArray}",
+      "var typeArray = reverse ${typeArray}",
+      "var pieces = ${typeArray} getIndex 0",
+      "var pieces = ${PROPERTY samePiecesArray} indexOf ${pieces}",
+      "var points = ${PROPERTY sameScoreArray} getIndex ${pieces}",
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "parent",
+        "value": "same${num}"
+      },
+      {
+        "func": "COUNT",
+        "variable": "zeroCheck"
+      },
+      {
+        "func": "IF",
+        "operand1": "${zeroCheck}",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "same${num}"
+            ],
+            "property": "thisScore",
+            "value": 0
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "same${num}"
+            ],
+            "property": "thisScore",
+            "value": "${points}"
+          }
+        ]
+      },
+      "var tooMany = ${typeArray} length",
+      {
+        "func": "IF",
+        "operand1": "${tooMany}",
+        "operand2": 1,
+        "relation": ">",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "same${num}"
+            ],
+            "property": "borderColor",
+            "value": "2px dashed red"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "same${num}"
+            ],
+            "property": "borderColor",
+            "value": "1px solid gray"
+          }
+        ]
+      },
+      {
+        "func": "CALL",
+        "routine": "totalScoreRoutine"
+      }
+    ],
+    "totalScoreRoutine": [
+      {
+        "func": "LABEL",
+        "label": "score${num}",
+        "value": 0
+      },
+      {
+        "func": "FOREACH",
+        "in": [
+          "same",
+          "different",
+          "pairs",
+          "special"
+        ],
+        "loopRoutine": [
+          "var ID = ${value} + ${num}",
+          {
+            "func": "LABEL",
+            "label": "score${num}",
+            "mode": "inc",
+            "value": "${PROPERTY thisScore OF $ID}"
+          }
+        ]
+      },
+      {
+        "func": "LABEL",
+        "label": "score${num}",
+        "mode": "inc",
+        "value": "${tally}"
+      }
+    ],
+    "samePiecesArray": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7
+    ],
+    "differentPiecesArray": [
+      0,
+      0,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7
+    ],
+    "differentScoreRoutine": [
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "parent",
+        "value": "different${num}"
+      },
+      {
+        "func": "COUNT"
+      },
+      {
+        "func": "GET",
+        "property": "cardType",
+        "aggregation": "array",
+        "variable": "type"
+      },
+      "var noDuplicate = []",
+      {
+        "func": "FOREACH",
+        "in": "${type}",
+        "loopRoutine": [
+          "var firstIndex = ${type} indexOf ${value}",
+          {
+            "func": "IF",
+            "operand1": "${key}",
+            "relation": "==",
+            "operand2": "${firstIndex}",
+            "thenRoutine": [
+              "var noDuplicate = push ${value}"
+            ]
+          }
+        ]
+      },
+      "var typeCount = ${noDuplicate} length",
+      "var pieces = ${PROPERTY differentPiecesArray} indexOf ${typeCount}",
+      "var points = ${PROPERTY differentScoreArray} getIndex ${pieces}",
+      {
+        "func": "SET",
+        "collection": [
+          "different${num}"
+        ],
+        "property": "thisScore",
+        "value": "${points}"
+      },
+      "var tooMany = ${noDuplicate} length",
+      {
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "operand2": "${tooMany}",
+        "relation": ">",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "different${num}"
+            ],
+            "property": "borderColor",
+            "value": "2px dashed red"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "different${num}"
+            ],
+            "property": "borderColor",
+            "value": "1px solid gray"
+          }
+        ]
+      },
+      {
+        "func": "CALL",
+        "routine": "totalScoreRoutine"
+      }
+    ],
+    "sameScoreArray": [
+      2,
+      6,
+      10,
+      14,
+      18,
+      20,
+      27
+    ],
+    "differentScoreArray": [
+      0,
+      0,
+      3,
+      4,
+      6,
+      8,
+      12,
+      14
+    ],
+    "specialScoreRoutine": [
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "parent",
+        "value": "special${num}"
+      },
+      {
+        "func": "COUNT"
+      },
+      "var points = ${COUNT} * 2",
+      {
+        "func": "GET",
+        "property": "cardType",
+        "aggregation": "array",
+        "variable": "type"
+      },
+      "var bonusCheck = 0",
+      {
+        "func": "FOREACH",
+        "in": "${type}",
+        "loopRoutine": [
+          {
+            "func": "IF",
+            "operand1": "${value}",
+            "operand2": "pawn",
+            "thenRoutine": [
+              "var points = ${points} + 1",
+              "var bonusCheck = ${bonusCheck} + 1"
+            ]
+          },
+          {
+            "func": "IF",
+            "operand1": "${value}",
+            "operand2": "knight",
+            "thenRoutine": [
+              "var points = ${points} + 2",
+              "var bonusCheck = ${bonusCheck} + 1"
+            ]
+          },
+          {
+            "func": "IF",
+            "operand1": "${value}",
+            "operand2": "rook",
+            "thenRoutine": [
+              "var points = ${points} + 3",
+              "var bonusCheck = ${bonusCheck} + 1"
+            ]
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY firstBonus}",
+        "operand2": false,
+        "thenRoutine": [
+          {
+            "func": "IF",
+            "operand1": "${bonusCheck}",
+            "operand2": 3,
+            "thenRoutine": [
+              "var points = ${points} + 5",
+              {
+                "func": "SET",
+                "collection": "thisButton",
+                "property": "firstBonus",
+                "value": true
+              },
+              {
+                "func": "SELECT",
+                "type": "card",
+                "property": "parent",
+                "value": "special${num}"
+              },
+              {
+                "func": "SET",
+                "property": "movable",
+                "value": false
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "special${num}"
+        ],
+        "property": "thisScore",
+        "value": "${points}"
+      },
+      {
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "operand2": 3,
+        "relation": ">",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "special${num}"
+            ],
+            "property": "borderColor",
+            "value": "2px dashed red"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "special${num}"
+            ],
+            "property": "borderColor",
+            "value": "1px solid gray"
+          }
+        ]
+      },
+      {
+        "func": "CALL",
+        "routine": "totalScoreRoutine"
+      }
+    ],
+    "firstBonus": false,
+    "privateScoreRoutine": [
+      "var tally = 0",
+      {
+        "func": "FOREACH",
+        "in": [
+          "pawnH",
+          "knightH",
+          "rookH",
+          "diceH",
+          "houseH",
+          "meepleH",
+          "pinH",
+          "marbleH",
+          "cardsH",
+          "coinH"
+        ],
+        "loopRoutine": [
+          "var ID = ${value} + ${num}",
+          {
+            "func": "SELECT",
+            "type": "card",
+            "property": "_ancestor",
+            "value": "${ID}"
+          },
+          {
+            "func": "COUNT"
+          },
+          "var tally = ${tally} + ${COUNT}"
+        ]
+      },
+      {
+        "func": "CALL",
+        "routine": "totalScoreRoutine"
+      }
+    ],
+    "pairsScoreRoutine": [
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "parent",
+        "value": "pairs${num}"
+      },
+      {
+        "func": "COUNT"
+      },
+      {
+        "func": "GET",
+        "property": "cardType",
+        "aggregation": "array",
+        "variable": "type"
+      },
+      "var pairCheck = 0",
+      {
+        "func": "FOREACH",
+        "in": "${type}",
+        "loopRoutine": [
+          {
+            "func": "SELECT",
+            "source": "DEFAULT",
+            "type": "card",
+            "property": "cardType",
+            "value": "${value}",
+            "collection": "temp"
+          },
+          {
+            "func": "COUNT",
+            "collection": "temp"
+          },
+          {
+            "func": "IF",
+            "operand1": "${COUNT}",
+            "operand2": 2,
+            "thenRoutine": [
+              "var pairCheck = ${pairCheck} + 1",
+              "var tooMany = false"
+            ],
+            "elseRoutine": [
+              "var tooMany = true"
+            ]
+          }
+        ]
+      },
+      "var pieces = ${PROPERTY pairsPiecesArray} indexOf ${pairCheck}",
+      "var points = ${PROPERTY pairsScoreArray} getIndex ${pieces}",
+      {
+        "func": "SET",
+        "collection": [
+          "pairs${num}"
+        ],
+        "property": "thisScore",
+        "value": "${points}"
+      },
+      {
+        "func": "IF",
+        "operand1": "${tooMany}",
+        "operand2": true,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "pairs${num}"
+            ],
+            "property": "borderColor",
+            "value": "2px dashed red"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "pairs${num}"
+            ],
+            "property": "borderColor",
+            "value": "1px solid gray"
+          }
+        ]
+      },
+      {
+        "func": "CALL",
+        "routine": "totalScoreRoutine"
+      }
+    ],
+    "pairsPiecesArray": [
+      0,
+      2,
+      4,
+      6,
+      8,
+      10,
+      12
+    ],
+    "pairsScoreArray": [
+      0,
+      4,
+      8,
+      12,
+      14,
+      16,
+      18
+    ],
+    "turnRoutine": [
+      {
+        "func": "TURN"
+      },
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "parent",
+        "relation": "in",
+        "value": [
+          "same1",
+          "different1",
+          "pairs1",
+          "special1",
+          "same2",
+          "different2",
+          "pairs2",
+          "special2",
+          "same3",
+          "different3",
+          "pairs3",
+          "special3",
+          "same4",
+          "different4",
+          "pairs4",
+          "special4"
+        ]
+      },
+      {
+        "func": "SET",
+        "property": "movable",
+        "value": false
+      },
+      "var lastCount = ${PROPERTY widget-count OF bag}",
+      {
+        "func": "SET",
+        "collection": [
+          "bag"
+        ],
+        "property": "lastCount",
+        "value": "${lastCount}"
+      }
+    ]
+  },
+  "offBoard": {
+    "type": "holder",
+    "id": "offBoard",
+    "x": 747,
+    "y": 1047,
+    "z": 2757
+  },
+  "pawnH5": {
+    "type": "holder",
+    "id": "pawnH5",
+    "x": 600,
+    "y": 280,
+    "width": 60,
+    "height": 60,
+    "z": 2761,
+    "css": {
+      "default": {
+        "background-image": "url('/assets/-1751528005_11985')",
+        "background-size": "contain",
+        "background-repeat": "no-repeat",
+        "background-position": "center",
+        "background-color": "transparent",
+        "border": "transparent !important",
+        "opacity": "${PROPERTY cssOpacity}"
+      }
+    },
+    "dropOffsetX": -10,
+    "dropOffsetY": -27,
+    "dropTarget": {
+      "cardType": "pawn"
+    },
+    "cssOpacity": 0.3,
+    "enterRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "cssOpacity",
+        "value": 1
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "COUNT",
+        "holder": "${PROPERTY id}"
+      },
+      {
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "relation": "=",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "cssOpacity",
+            "value": 0.3
+          }
+        ]
+      }
+    ],
+    "movableInEdit": false
+  },
+  "knightH5": {
+    "type": "holder",
+    "id": "knightH5",
+    "x": 765,
+    "y": 280,
+    "width": 60,
+    "height": 60,
+    "z": 26,
+    "css": {
+      "default": {
+        "background-image": "url('/assets/-140134858_17811')",
+        "background-size": "contain",
+        "background-repeat": "no-repeat",
+        "background-position": "center",
+        "background-color": "transparent",
+        "border": "transparent !important",
+        "opacity": "${PROPERTY cssOpacity}"
+      }
+    },
+    "dropOffsetX": -5,
+    "dropOffsetY": -22,
+    "dropTarget": {
+      "cardType": "knight"
+    },
+    "cssOpacity": 0.3,
+    "enterRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "cssOpacity",
+        "value": 1
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "COUNT",
+        "holder": "${PROPERTY id}"
+      },
+      {
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "relation": "=",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "cssOpacity",
+            "value": 0.3
+          }
+        ]
+      }
+    ],
+    "movableInEdit": false
+  },
+  "houseH5": {
+    "type": "holder",
+    "id": "houseH5",
+    "x": 675,
+    "y": 400,
+    "width": 60,
+    "height": 60,
+    "z": 24,
+    "css": {
+      "default": {
+        "background-image": "url('/assets/-1078574312_1520')",
+        "background-size": "contain",
+        "background-repeat": "no-repeat",
+        "background-position": "center",
+        "background-color": "transparent",
+        "border": "transparent !important",
+        "opacity": "${PROPERTY cssOpacity}"
+      }
+    },
+    "dropOffsetX": -10,
+    "dropOffsetY": -35,
+    "dropTarget": {
+      "cardType": "house"
+    },
+    "cssOpacity": 0.2,
+    "enterRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "cssOpacity",
+        "value": 1
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "COUNT",
+        "holder": "${PROPERTY id}"
+      },
+      {
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "relation": "=",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "cssOpacity",
+            "value": 0.2
+          }
+        ]
+      }
+    ],
+    "movableInEdit": false
+  },
+  "meepleH5": {
+    "type": "holder",
+    "id": "meepleH5",
+    "x": 840,
+    "y": 400,
+    "width": 60,
+    "height": 60,
+    "z": 23,
+    "css": {
+      "default": {
+        "background-image": "url('/assets/-1828880609_13536')",
+        "background-size": "contain",
+        "background-repeat": "no-repeat",
+        "background-position": "center",
+        "background-color": "transparent",
+        "border": "transparent !important",
+        "opacity": "${PROPERTY cssOpacity}"
+      }
+    },
+    "dropOffsetX": -10,
+    "dropOffsetY": -30,
+    "dropTarget": {
+      "cardType": "meeple"
+    },
+    "cssOpacity": 0.2,
+    "enterRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "cssOpacity",
+        "value": 1
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "COUNT",
+        "holder": "${PROPERTY id}"
+      },
+      {
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "relation": "=",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "cssOpacity",
+            "value": 0.2
+          }
+        ]
+      }
+    ],
+    "movableInEdit": false
+  },
+  "pinH5": {
+    "type": "holder",
+    "id": "pinH5",
+    "x": 1000,
+    "y": 400,
+    "width": 60,
+    "height": 60,
+    "z": 22,
+    "css": {
+      "default": {
+        "background-image": "url('/assets/-1584922242_2860')",
+        "background-size": "contain",
+        "background-repeat": "no-repeat",
+        "background-position": "center",
+        "background-color": "transparent",
+        "border": "transparent !important",
+        "opacity": "${PROPERTY cssOpacity}"
+      }
+    },
+    "dropOffsetX": -10,
+    "dropOffsetY": -27,
+    "dropTarget": {
+      "cardType": "pin"
+    },
+    "cssOpacity": 0.2,
+    "enterRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "cssOpacity",
+        "value": 1
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "COUNT",
+        "holder": "${PROPERTY id}"
+      },
+      {
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "relation": "=",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "cssOpacity",
+            "value": 0.2
+          }
+        ]
+      }
+    ],
+    "movableInEdit": false
+  },
+  "rookH5": {
+    "type": "holder",
+    "id": "rookH5",
+    "x": 920,
+    "y": 280,
+    "width": 60,
+    "height": 60,
+    "z": 27,
+    "movableInEdit": false,
+    "css": {
+      "default": {
+        "background-image": "url('/assets/-1033521675_28108')",
+        "background-size": "contain",
+        "background-repeat": "no-repeat",
+        "background-position": "center",
+        "background-color": "transparent",
+        "border": "transparent !important",
+        "opacity": "${PROPERTY cssOpacity}"
+      }
+    },
+    "dropOffsetX": -5,
+    "dropOffsetY": -22,
+    "dropTarget": {
+      "cardType": "rook"
+    },
+    "cssOpacity": 0.3,
+    "enterRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "cssOpacity",
+        "value": 1
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "COUNT",
+        "holder": "${PROPERTY id}"
+      },
+      {
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "relation": "=",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "cssOpacity",
+            "value": 0.3
+          }
+        ]
+      }
+    ]
+  },
+  "diceH5": {
+    "type": "holder",
+    "id": "diceH5",
+    "x": 520,
+    "y": 400,
+    "width": 60,
+    "height": 60,
+    "z": 29,
+    "movableInEdit": false,
+    "css": {
+      "default": {
+        "background-image": "url('/assets/-879019242_29830')",
+        "background-size": "contain",
+        "background-repeat": "no-repeat",
+        "background-position": "center",
+        "background-color": "transparent",
+        "border": "transparent !important",
+        "opacity": "${PROPERTY cssOpacity}"
+      }
+    },
+    "dropOffsetX": -10,
+    "dropOffsetY": -35,
+    "dropTarget": {
+      "cardType": "dice"
+    },
+    "cssOpacity": 0.2,
+    "enterRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "cssOpacity",
+        "value": 1
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "COUNT",
+        "holder": "${PROPERTY id}"
+      },
+      {
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "relation": "=",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "cssOpacity",
+            "value": 0.2
+          }
+        ]
+      }
+    ]
+  },
+  "marbleH5": {
+    "type": "holder",
+    "id": "marbleH5",
+    "x": 600,
+    "y": 525,
+    "width": 60,
+    "height": 60,
+    "z": 16,
+    "movableInEdit": false,
+    "css": {
+      "default": {
+        "background-image": "url('/assets/785108786_2053')",
+        "background-size": "contain",
+        "background-repeat": "no-repeat",
+        "background-position": "center",
+        "background-color": "transparent",
+        "border": "transparent !important",
+        "opacity": "${PROPERTY cssOpacity}"
+      }
+    },
+    "dropOffsetX": -10,
+    "dropOffsetY": -27,
+    "dropTarget": {
+      "cardType": "marble"
+    },
+    "cssOpacity": 0.2,
+    "enterRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "cssOpacity",
+        "value": 1
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "COUNT",
+        "holder": "${PROPERTY id}"
+      },
+      {
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "relation": "=",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "cssOpacity",
+            "value": 0.2
+          }
+        ]
+      }
+    ]
+  },
+  "cardsH5": {
+    "type": "holder",
+    "id": "cardsH5",
+    "x": 765,
+    "y": 525,
+    "width": 60,
+    "height": 60,
+    "z": 20,
+    "css": {
+      "default": {
+        "background-image": "url('/assets/-1959951362_12873')",
+        "background-size": "contain",
+        "background-repeat": "no-repeat",
+        "background-position": "center",
+        "background-color": "transparent",
+        "border": "transparent !important",
+        "opacity": "${PROPERTY cssOpacity}"
+      }
+    },
+    "dropOffsetX": -10,
+    "dropOffsetY": -27,
+    "dropTarget": {
+      "cardType": "cards"
+    },
+    "cssOpacity": 0.3,
+    "enterRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "cssOpacity",
+        "value": 1
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "COUNT",
+        "holder": "${PROPERTY id}"
+      },
+      {
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "relation": "=",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "cssOpacity",
+            "value": 0.3
+          }
+        ]
+      }
+    ],
+    "movableInEdit": false
+  },
+  "coinH5": {
+    "type": "holder",
+    "id": "coinH5",
+    "x": 920,
+    "width": 60,
+    "height": 60,
+    "z": 30,
+    "css": {
+      "default": {
+        "background-image": "url('/assets/108158668_43552')",
+        "background-size": "contain",
+        "background-repeat": "no-repeat",
+        "background-position": "center",
+        "background-color": "transparent",
+        "border": "transparent !important",
+        "opacity": "${PROPERTY cssOpacity}"
+      }
+    },
+    "dropOffsetX": -10,
+    "dropOffsetY": -35,
+    "dropTarget": {
+      "cardType": "coin"
+    },
+    "cssOpacity": 0.4,
+    "enterRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "cssOpacity",
+        "value": 1
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "COUNT",
+        "holder": "${PROPERTY id}"
+      },
+      {
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "relation": "=",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "cssOpacity",
+            "value": 0.4
+          }
+        ]
+      }
+    ],
+    "y": 525,
+    "movableInEdit": false
+  },
+  "discard": {
+    "type": "holder",
+    "id": "discard",
+    "x": 1100,
+    "width": 60,
+    "height": 60,
+    "z": 30,
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": {
+      "default": {
+        "background-color": "transparent",
+        "border": "transparent !important",
+        "opacity": "${PROPERTY cssOpacity}"
+      },
+      "::before": {
+        "content": "\"discard\"",
+        "font-size": "80px"
+      }
+    },
+    "dropOffsetX": -10,
+    "dropOffsetY": -27,
+    "dropTarget": {
+      "type": "card"
+    },
+    "cssOpacity": 0.2,
+    "enterRoutine": [
+      {
+        "func": "MOVE",
+        "from": "discard",
+        "to": "offBoard"
+      }
+    ],
+    "leaveRoutine": [],
+    "y": 1200
+  },
+  "background": {
+    "id": "background",
+    "width": 1600,
+    "height": 1000,
+    "layer": -4,
+    "movable": false,
+    "movableInEdit": false,
+    "image": "/assets/1882491168_194482"
+  },
+  "score1": {
+    "id": "score1",
+    "width": 38,
+    "height": 38,
+    "borderRadius": 8,
+    "z": 2761,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "font-size: 30px; border: 1px solid black; text-align:center;background-color:azure",
+    "text": 0,
+    "parent": "private1",
+    "y": -45,
+    "x": 160
+  },
+  "score2": {
+    "id": "score2",
+    "width": 38,
+    "height": 38,
+    "borderRadius": 8,
+    "z": 2761,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "font-size: 30px; border: 1px solid black; text-align:center;background-color:lightgoldenrodyellow",
+    "text": 0,
+    "parent": "private2",
+    "x": 970,
+    "y": 60
+  },
+  "score3": {
+    "id": "score3",
+    "width": 38,
+    "height": 38,
+    "borderRadius": 8,
+    "z": 2761,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "font-size: 30px; border: 1px solid black; text-align:center;background-color:thistle",
+    "text": 0,
+    "parent": "private3",
+    "y": 905,
+    "x": -105
+  },
+  "score4": {
+    "id": "score4",
+    "width": 38,
+    "height": 38,
+    "borderRadius": 8,
+    "z": 2761,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "font-size: 30px; border: 1px solid black; text-align:center;background-color:mistyrose",
+    "text": 0,
+    "parent": "private4",
+    "x": -95,
+    "y": -5
+  },
+  "play": {
+    "type": "button",
+    "id": "play",
+    "x": 760,
+    "y": 660,
+    "borderRadius": 8,
+    "z": 10,
+    "classes": "symbols",
+    "css": "font-size: 80px; ",
+    "text": "play_arrow",
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "widget": "calls",
+        "routine": "countPlayersRoutine"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "y",
+        "value": 1200
+      },
+      {
+        "func": "TURN",
+        "turnCycle": "random"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "bag"
+        ],
+        "property": "lastCount",
+        "value": "${PROPERTY widget-count OF bag}"
+      }
+    ]
+  },
+  "czqeD": {
+    "type": "deck",
+    "id": "czqeD",
+    "x": 12,
+    "y": 41,
+    "cardTypes": {},
+    "faceTemplates": [
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 103,
+            "height": 160,
+            "color": "transparent",
+            "value": "/i/cards-default/2B.svg"
+          }
+        ]
+      },
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 103,
+            "height": 160,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image"
+            }
+          }
+        ]
+      }
+    ],
+    "parent": "specialHolder"
+  },
+  "specialDeck": {
+    "type": "deck",
+    "id": "specialDeck",
+    "fixedParent": true,
+    "x": 4,
+    "y": 4,
+    "z": 22022,
+    "cardDefaults": {
+      "width": 103,
+      "height": 160,
+      "onPileCreation": {
+        "handleSize": 30,
+        "handlePosition": "middle center",
+        "handleCSS": "background-color:black;color:white"
+      }
+    },
+    "cardTypes": {
+      "play": {
+        "text": "All players move 1 token from pesonal area to scoring area."
+      },
+      "exchange": {
+        "text": "All players swap 1 token from personal area with common area"
+      },
+      "take": {
+        "text": "All players give one card to player on right (counter-clickwise)."
+      }
+    },
+    "faceTemplates": [
+      {
+        "border": 1,
+        "radius": 8,
+        "objects": [
+          {
+            "type": "text",
+            "x": 0,
+            "y": 0,
+            "width": 103,
+            "height": 160,
+            "css": "font-size:18px; background-color:silver;",
+            "color": "black",
+            "dynamicProperties": {
+              "value": "text"
+            }
+          }
+        ]
+      }
+    ],
+    "parent": "specialHolder"
+  },
+  "specialHolder": {
+    "type": "holder",
+    "id": "specialHolder",
+    "x": 944,
+    "y": 1052,
+    "z": 2768,
+    "dropTarget": {
+      "type": "card"
+    }
+  },
+  "lez1": {
+    "deck": "specialDeck",
+    "type": "card",
+    "cardType": "play",
+    "id": "lez1",
+    "z": 43859,
+    "parent": "iqjb"
+  },
+  "a6gh": {
+    "deck": "specialDeck",
+    "type": "card",
+    "cardType": "exchange",
+    "id": "a6gh",
+    "z": 43861,
+    "parent": "iqjb"
+  },
+  "0vta": {
+    "deck": "specialDeck",
+    "type": "card",
+    "cardType": "take",
+    "id": "0vta",
+    "z": 43863,
+    "parent": "iqjb"
+  },
+  "options": {
+    "type": "button",
+    "id": "options",
+    "x": 1545,
+    "width": 50,
+    "height": 50,
+    "z": 9,
+    "movableInEdit": false,
+    "css": "font-size: 40px; ",
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "header": "Game settings:",
+        "fields": [
+          {
+            "type": "checkbox",
+            "label": "Include 3 card mini-expansion?",
+            "variable": "mini",
+            "value": "${PROPERTY mini}"
+          },
+          {
+            "type": "checkbox",
+            "label": "Play as teams of two?",
+            "variable": "teams",
+            "value": "${PROPERTY teams}"
+          }
+        ],
+        "confirmButtonText": "Confirm",
+        "cancelButtonText": "Cancel"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "mini",
+        "value": "${mini}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "teams",
+        "value": "${teams}"
+      }
+    ],
+    "y": 950,
+    "text": "settings",
+    "classes": "material-icons",
+    "mini": false,
+    "teams": false
+  },
+  "turn": {
+    "type": "button",
+    "id": "turn",
+    "y": 950,
+    "width": 50,
+    "height": 50,
+    "z": 9,
+    "movableInEdit": false,
+    "css": "font-size: 18px; ",
+    "mini": true,
+    "teams": false,
+    "clickRoutine": [
+      {
+        "func": "TURN"
+      }
+    ],
+    "text": "Turn"
+  },
+  "iqjb": {
+    "type": "pile",
+    "parent": "specialHolder",
+    "x": 4,
+    "y": 4,
+    "width": 103,
+    "height": 160,
+    "handleSize": 30,
+    "handlePosition": "middle center",
+    "handleCSS": "background-color:black;color:white",
+    "id": "iqjb"
+  },
+  "yqs0": {
+    "type": "pile",
+    "parent": "offBoard",
+    "x": 4,
+    "y": 4,
+    "width": 80,
+    "height": 120,
+    "handleSize": 30,
+    "handlePosition": "middle center",
+    "handleCSS": "background-color:black;color:white",
+    "id": "yqs0"
+  }
+}

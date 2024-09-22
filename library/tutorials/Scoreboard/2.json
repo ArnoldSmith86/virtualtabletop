@@ -1,0 +1,519 @@
+{
+  "_meta": {
+    "version": 9,
+    "info": {
+      "name": "Scoreboard",
+      "image": "/assets/-751946941_5803",
+      "rules": "",
+      "bgg": "",
+      "year": "2022",
+      "mode": "Tutorial",
+      "time": "",
+      "attribution": "",
+      "showName": false,
+      "skill": "",
+      "description": "",
+      "similarImage": "",
+      "similarName": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": "",
+      "lastUpdate": 1715976506266,
+      "variantImage": "",
+      "variant": "Totals and Teams",
+      "language": "en-US",
+      "players": "1",
+      "similarDesigner": ""
+    }
+  },
+  "seat1": {
+    "type": "seat",
+    "id": "seat1",
+    "z": 1705,
+    "scale": 0.5,
+    "x": -37,
+    "y": 10,
+    "color": "red",
+    "movableInEdit": false,
+    "player": "Player 1",
+    "score": [
+      1,
+      2,
+      3,
+      4
+    ]
+  },
+  "seat3": {
+    "type": "seat",
+    "id": "seat3",
+    "z": 1709,
+    "scale": 0.5,
+    "x": -37,
+    "y": 103,
+    "index": 3,
+    "color": "yellow",
+    "player": "Player 3",
+    "score": [
+      1,
+      3,
+      5,
+      2
+    ],
+    "movableInEdit": false
+  },
+  "seat2": {
+    "type": "seat",
+    "id": "seat2",
+    "index": 2,
+    "x": -37,
+    "y": 53,
+    "scale": 0.5,
+    "z": 1707,
+    "color": "orange",
+    "player": "Player 2",
+    "score": [
+      0,
+      1,
+      "a",
+      1,
+      1
+    ],
+    "movableInEdit": false
+  },
+  "seat4": {
+    "type": "seat",
+    "id": "seat4",
+    "index": 4,
+    "x": -37,
+    "y": 153,
+    "scale": 0.5,
+    "z": 1706,
+    "color": "green",
+    "player": "Player 4",
+    "score": [
+      1,
+      2,
+      5,
+      5
+    ],
+    "movableInEdit": false
+  },
+  "comment1": {
+    "id": "comment1",
+    "x": 100,
+    "y": 485,
+    "width": 300,
+    "z": 10077,
+    "movable": false,
+    "layer": -2,
+    "text": "The '_totals' property is not visible directly on the widget. You also cannot set or change it. It is accessible by using routines. Click the button to the right to display the value of the '_totals' property."
+  },
+  "overview": {
+    "id": "overview",
+    "x": 108,
+    "y": 105,
+    "width": 1400,
+    "height": 150,
+    "layer": -3,
+    "z": 125,
+    "css": "font-size: 22px; ",
+    "text": "Scoreboards contain a read-only property, '_totals'. It is an array of values corresponding to the sum of all scores (total) for each player. The first (0-index) value in the array is always null. Non-numeric values are treated as 0. Other values are listed in order corresponding to the seat index number of each seat.\n\nTeam scoring is also available by using a complex object form of the 'seats' property. When teams are setup, the '_totals' property will show team totals.",
+    "movable": false,
+    "movableInEdit": false
+  },
+  "header": {
+    "id": "header",
+    "y": -2,
+    "width": 850,
+    "height": 60,
+    "z": 74,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "font-size: 60px;text-align:center",
+    "text": "Scoreboard: Totals and Teams",
+    "x": 370
+  },
+  "comment2": {
+    "id": "comment2",
+    "x": 425,
+    "y": 485,
+    "width": 300,
+    "z": 10076,
+    "movable": false,
+    "layer": -2,
+    "text": "This area will show the value of the '_totals' property after you press the button above. Note the comma preceeding the values shows that the 0th indexed entry is 'null'."
+  },
+  "scoreboard1": {
+    "type": "scoreboard",
+    "id": "scoreboard1",
+    "x": 100,
+    "y": 275,
+    "z": 4,
+    "movableInEdit": false,
+    "autosizeColumns": false,
+    "movable": false
+  },
+  "comment3": {
+    "id": "comment3",
+    "x": 750,
+    "y": 485,
+    "width": 350,
+    "z": 10076,
+    "movable": false,
+    "text": "This button uses the '_totals' property to determine the player (using seat index) with the lowest score. Then it sets 'turn' to true for that player. Look for the glow on Player 2. This simple routine does not resolve ties and just finds the first seat with the lowest score value.",
+    "layer": -2
+  },
+  "comment5": {
+    "id": "comment5",
+    "x": 100,
+    "y": 810,
+    "width": 300,
+    "z": 10075,
+    "movable": false,
+    "text": "This scoreboard sets up 2 teams with 4 players each. Each round displays the sum of the scores for the seats in that team and the total of all rounds is displayed at the bottom.",
+    "layer": -2
+  },
+  "comment6": {
+    "id": "comment6",
+    "x": 425,
+    "y": 810,
+    "width": 300,
+    "z": 10075,
+    "movable": false,
+    "text": "This button uses the `SCORE` function to increase the value of Player 8's round 4 score by 1. Press the button several times to watch the Right Team score increase.",
+    "layer": -2
+  },
+  "comment7": {
+    "id": "comment7",
+    "x": 750,
+    "y": 810,
+    "width": 300,
+    "z": 10075,
+    "movable": false,
+    "text": "This scoreboard shows random teams. The teams are created using the button to the right and the number of teams can be modified using the number below the button. Each press of the button generates a new group of random teams. You can see which players are on which team by looking in the JSON for the scoreboard.",
+    "layer": -2
+  },
+  "seat5": {
+    "type": "seat",
+    "id": "seat5",
+    "index": 5,
+    "x": 1475,
+    "y": 10,
+    "scale": 0.5,
+    "z": 1711,
+    "movableInEdit": false,
+    "color": "blue",
+    "player": "Player 5",
+    "score": [
+      3,
+      3,
+      0,
+      -1
+    ]
+  },
+  "seat6": {
+    "type": "seat",
+    "id": "seat6",
+    "index": 6,
+    "x": 1475,
+    "y": 53,
+    "scale": 0.5,
+    "z": 1710,
+    "movableInEdit": false,
+    "color": "indigo",
+    "player": "Player 6",
+    "score": [
+      2,
+      4,
+      4,
+      1
+    ]
+  },
+  "seat7": {
+    "type": "seat",
+    "id": "seat7",
+    "index": 7,
+    "x": 1475,
+    "y": 96,
+    "scale": 0.5,
+    "z": 1708,
+    "movableInEdit": false,
+    "color": "violet",
+    "player": "Player 7",
+    "score": [
+      4,
+      7,
+      0,
+      -1
+    ]
+  },
+  "seat8": {
+    "type": "seat",
+    "id": "seat8",
+    "index": 8,
+    "x": 1475,
+    "y": 139,
+    "scale": 0.5,
+    "z": 1704,
+    "movableInEdit": false,
+    "color": "brown",
+    "player": "Player 8",
+    "score": [
+      -1,
+      -1,
+      4,
+      7
+    ]
+  },
+  "button1": {
+    "type": "button",
+    "id": "button1",
+    "x": 525,
+    "y": 323,
+    "z": 261,
+    "text": "Get Totals",
+    "clickRoutine": [
+      {
+        "func": "GET",
+        "collection": [
+          "scoreboard1"
+        ],
+        "property": "_totals",
+        "variable": "total"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "comment2"
+        ],
+        "property": "text",
+        "value": "${total}"
+      }
+    ]
+  },
+  "button2": {
+    "type": "button",
+    "id": "button2",
+    "x": 850,
+    "y": 323,
+    "z": 263,
+    "text": "Set Turn",
+    "clickRoutine": [
+      {
+        "func": "GET",
+        "collection": [
+          "scoreboard1"
+        ],
+        "property": "_totals",
+        "variable": "total"
+      },
+      {
+        "func": "GET",
+        "collection": [
+          "scoreboard1"
+        ],
+        "property": "_totals",
+        "variable": "noNull"
+      },
+      "var noNull = remove 0 1",
+      "var sorted = numericStringSort ${noNull}",
+      "var lowest = ${sorted.0}",
+      "var seatIndex = ${total} indexOf ${lowest}",
+      {
+        "func": "SET",
+        "collection": [
+          "seat${seatIndex}"
+        ],
+        "property": "turn",
+        "value": true
+      }
+    ]
+  },
+  "button3": {
+    "type": "button",
+    "id": "button3",
+    "x": 525,
+    "y": 650,
+    "z": 269,
+    "text": "Change Score",
+    "cssOptions": {
+      ".scoreboard td:nth-child(3)": {
+        "background": "lightblue"
+      }
+    },
+    "clickRoutine": [
+      {
+        "func": "SCORE",
+        "mode": "inc",
+        "seats": "seat8",
+        "value": 1,
+        "round": 4
+      }
+    ]
+  },
+  "button4": {
+    "type": "button",
+    "id": "button4",
+    "x": 1160,
+    "y": 650,
+    "z": 1554,
+    "text": "Random Teams",
+    "maxTeams": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "type": "seat",
+        "property": "player",
+        "relation": "!=",
+        "value": ""
+      },
+      {
+        "func": "SHUFFLE"
+      },
+      {
+        "func": "SELECT",
+        "type": "seat",
+        "property": "player",
+        "relation": "!=",
+        "value": "",
+        "sortBy": {
+          "key": "z",
+          "reverse": false
+        },
+        "collection": "seats"
+      },
+      {
+        "func": "COUNT",
+        "collection": "seats",
+        "variable": "seatCount"
+      },
+      "var numTeams = ${PROPERTY text OF numTeams}",
+      "var perTeam = ${seatCount} / ${numTeams}",
+      "var perTeam = ${perTeam} ceil",
+      "var teams = {}",
+      {
+        "func": "FOREACH",
+        "in": "${PROPERTY maxTeams}",
+        "loopRoutine": [
+          {
+            "func": "IF",
+            "operand1": "${value}",
+            "relation": "<=",
+            "operand2": "${numTeams}",
+            "thenRoutine": [
+              "var thisTeam = 'Team ' + ${value}",
+              "var teams.$thisTeam = []"
+            ]
+          }
+        ]
+      },
+      "var i = 1",
+      {
+        "func": "FOREACH",
+        "collection": "seats",
+        "loopRoutine": [
+          "var teamNum = ${i} / ${perTeam}",
+          "var teamNum = ceil ${teamNum}",
+          "var thisTeam = 'Team ' + ${teamNum}",
+          "var teams.$thisTeam = push ${widgetID}",
+          "var i = ${i} + 1"
+        ]
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "scoreboard3"
+        ],
+        "property": "seats",
+        "value": "${teams}"
+      }
+    ]
+  },
+  "numTeams": {
+    "type": "label",
+    "id": "numTeams",
+    "x": 1169,
+    "y": 781,
+    "width": 65,
+    "height": 40,
+    "z": 10081,
+    "css": "font-size: 30px;",
+    "editable": true,
+    "text": 3
+  },
+  "comment9": {
+    "id": "comment9",
+    "x": 1136,
+    "y": 751,
+    "width": 170,
+    "height": 20,
+    "z": 82,
+    "movable": false,
+    "text": "How many teams (1-8)?",
+    "movableInEdit": false
+  },
+  "scoreboard2": {
+    "type": "scoreboard",
+    "id": "scoreboard2",
+    "x": 100,
+    "y": 600,
+    "movable": false,
+    "movableInEdit": false,
+    "seats": {
+      "Left Team": [
+        "seat1",
+        "seat2",
+        "seat3",
+        "seat4"
+      ],
+      "Right Team": [
+        "seat5",
+        "seat6",
+        "seat7",
+        "seat8"
+      ]
+    },
+    "css": {
+      ".scoreboard tr:nth-child(2)": {
+        "background": "${ROPERTY highlight0}"
+      },
+      ".scoreboard tr:nth-child(3)": {
+        "background": "${ROPERTY highlight1}"
+      }
+    },
+    "highlight0": "lightblue"
+  },
+  "scoreboard3": {
+    "type": "scoreboard",
+    "id": "scoreboard3",
+    "x": 750,
+    "y": 600,
+    "movable": false,
+    "movableInEdit": false,
+    "seats": {
+      "Team 1": [
+        "seat8",
+        "seat1",
+        "seat4"
+      ],
+      "Team 2": [
+        "seat2",
+        "seat7",
+        "seat3"
+      ],
+      "Team 3": [
+        "seat6",
+        "seat5"
+      ]
+    }
+  }
+}

@@ -1,0 +1,6236 @@
+{
+  "ag82": {
+    "id": "ag82",
+    "type": "pile",
+    "width": 52,
+    "height": 52,
+    "parent": "1715edb9-518e-46d9-b676-278d482e7f66"
+  },
+  "npk8": {
+    "id": "npk8",
+    "type": "pile",
+    "width": 52,
+    "height": 52,
+    "parent": "b1867144-8609-4e0a-a366-2ad43431165e"
+  },
+  "luky": {
+    "id": "luky",
+    "type": "pile",
+    "width": 52,
+    "height": 52,
+    "parent": "ede0f351-6db0-4bbd-9dbb-b1f3c5913cc8"
+  },
+  "p6dj": {
+    "id": "p6dj",
+    "type": "pile",
+    "width": 52,
+    "height": 52,
+    "parent": "592857bd-eb64-4a07-9454-dc5c7737390a"
+  },
+  "hand": {
+    "id": "hand",
+    "x": 1100,
+    "y": 903.5,
+    "z": 13916,
+    "type": "holder",
+    "onEnter": {
+      "activeFace": 1
+    },
+    "inheritChildZ": true,
+    "childrenPerOwner": true,
+    "width": 400,
+    "height": 65,
+    "dropOffsetY": 5,
+    "stackOffsetX": 56,
+    "dropShadow": true,
+    "hidePlayerCursors": true
+  },
+  "aba85908-e495-4496-9250-6501f9e802fe": {
+    "id": "aba85908-e495-4496-9250-6501f9e802fe",
+    "z": 14827,
+    "type": "card",
+    "deck": "3132749e-def0-4527-ac28-a32f86d1b446",
+    "cardType": "type-49616c25-4de7-41b1-a7c7-2c2b30e42ada",
+    "parent": "ag82"
+  },
+  "d2ae25b5-3702-4942-a3ef-1a5927cb74d2": {
+    "id": "d2ae25b5-3702-4942-a3ef-1a5927cb74d2",
+    "z": 14824,
+    "type": "card",
+    "deck": "3132749e-def0-4527-ac28-a32f86d1b446",
+    "cardType": "type-49616c25-4de7-41b1-a7c7-2c2b30e42ada",
+    "parent": "ag82"
+  },
+  "0ca718c5-e5b8-4e62-bacf-06a3e64c7509": {
+    "id": "0ca718c5-e5b8-4e62-bacf-06a3e64c7509",
+    "z": 14826,
+    "type": "card",
+    "deck": "3132749e-def0-4527-ac28-a32f86d1b446",
+    "cardType": "type-49616c25-4de7-41b1-a7c7-2c2b30e42ada",
+    "parent": "ag82"
+  },
+  "fd489b2a-af52-4930-8606-36fa5e04de16": {
+    "id": "fd489b2a-af52-4930-8606-36fa5e04de16",
+    "z": 14830,
+    "type": "card",
+    "deck": "3132749e-def0-4527-ac28-a32f86d1b446",
+    "cardType": "type-49616c25-4de7-41b1-a7c7-2c2b30e42ada",
+    "parent": "ag82"
+  },
+  "4b613d7c-f648-4cdd-bd5f-f63632af9210": {
+    "id": "4b613d7c-f648-4cdd-bd5f-f63632af9210",
+    "z": 14828,
+    "type": "card",
+    "deck": "3132749e-def0-4527-ac28-a32f86d1b446",
+    "cardType": "type-49616c25-4de7-41b1-a7c7-2c2b30e42ada",
+    "parent": "ag82"
+  },
+  "8d4c3fe6-b3a5-44bc-aef2-b455f435de0b": {
+    "id": "8d4c3fe6-b3a5-44bc-aef2-b455f435de0b",
+    "z": 14825,
+    "type": "card",
+    "deck": "3132749e-def0-4527-ac28-a32f86d1b446",
+    "cardType": "type-49616c25-4de7-41b1-a7c7-2c2b30e42ada",
+    "parent": "ag82"
+  },
+  "d840a052-3c02-402d-833b-22644ebc4031": {
+    "id": "d840a052-3c02-402d-833b-22644ebc4031",
+    "z": 14823,
+    "type": "card",
+    "deck": "3132749e-def0-4527-ac28-a32f86d1b446",
+    "cardType": "type-49616c25-4de7-41b1-a7c7-2c2b30e42ada",
+    "parent": "ag82"
+  },
+  "86f9afb3-9341-476e-872f-b4cefffb6512": {
+    "id": "86f9afb3-9341-476e-872f-b4cefffb6512",
+    "z": 14829,
+    "type": "card",
+    "deck": "3132749e-def0-4527-ac28-a32f86d1b446",
+    "cardType": "type-49616c25-4de7-41b1-a7c7-2c2b30e42ada",
+    "parent": "ag82"
+  },
+  "1bc7ec33-510d-4b1a-8077-76734ae561fc": {
+    "id": "1bc7ec33-510d-4b1a-8077-76734ae561fc",
+    "z": 14845,
+    "type": "card",
+    "deck": "3b685543-c3f0-4fb5-9ee1-bc5cc4d7710d",
+    "cardType": "type-49616c25-4de7-41b1-a7c7-2c2b30e42ada",
+    "parent": "npk8"
+  },
+  "f23cfa59-6bc2-46f0-a302-5ac3741713ee": {
+    "id": "f23cfa59-6bc2-46f0-a302-5ac3741713ee",
+    "z": 14844,
+    "type": "card",
+    "deck": "3b685543-c3f0-4fb5-9ee1-bc5cc4d7710d",
+    "cardType": "type-49616c25-4de7-41b1-a7c7-2c2b30e42ada",
+    "parent": "npk8"
+  },
+  "fda162da-f919-42b4-8fbc-92f4c40f49f8": {
+    "id": "fda162da-f919-42b4-8fbc-92f4c40f49f8",
+    "z": 14852,
+    "type": "card",
+    "deck": "3b685543-c3f0-4fb5-9ee1-bc5cc4d7710d",
+    "cardType": "type-49616c25-4de7-41b1-a7c7-2c2b30e42ada",
+    "parent": "npk8"
+  },
+  "a08700c4-dfa6-4859-8fcd-6eca1e64096e": {
+    "id": "a08700c4-dfa6-4859-8fcd-6eca1e64096e",
+    "z": 14848,
+    "type": "card",
+    "deck": "3b685543-c3f0-4fb5-9ee1-bc5cc4d7710d",
+    "cardType": "type-49616c25-4de7-41b1-a7c7-2c2b30e42ada",
+    "parent": "npk8"
+  },
+  "c233db2a-e597-42aa-b94d-3380c735772f": {
+    "id": "c233db2a-e597-42aa-b94d-3380c735772f",
+    "z": 14856,
+    "type": "card",
+    "deck": "3b685543-c3f0-4fb5-9ee1-bc5cc4d7710d",
+    "cardType": "type-49616c25-4de7-41b1-a7c7-2c2b30e42ada",
+    "parent": "npk8"
+  },
+  "0baaf3e3-c7be-4dac-b267-7b08a456142f": {
+    "id": "0baaf3e3-c7be-4dac-b267-7b08a456142f",
+    "z": 14853,
+    "type": "card",
+    "deck": "3b685543-c3f0-4fb5-9ee1-bc5cc4d7710d",
+    "cardType": "type-49616c25-4de7-41b1-a7c7-2c2b30e42ada",
+    "parent": "npk8"
+  },
+  "1c716f58-f6cd-4000-956b-2449cf1c55f2": {
+    "id": "1c716f58-f6cd-4000-956b-2449cf1c55f2",
+    "z": 14858,
+    "type": "card",
+    "deck": "3b685543-c3f0-4fb5-9ee1-bc5cc4d7710d",
+    "cardType": "type-49616c25-4de7-41b1-a7c7-2c2b30e42ada",
+    "parent": "npk8"
+  },
+  "b88ecbda-7b49-420e-a0a0-bf47eb950e1a": {
+    "id": "b88ecbda-7b49-420e-a0a0-bf47eb950e1a",
+    "z": 14849,
+    "type": "card",
+    "deck": "3b685543-c3f0-4fb5-9ee1-bc5cc4d7710d",
+    "cardType": "type-49616c25-4de7-41b1-a7c7-2c2b30e42ada",
+    "parent": "npk8"
+  },
+  "a4ddecf0-14f8-42ba-b154-befa8c40e900": {
+    "id": "a4ddecf0-14f8-42ba-b154-befa8c40e900",
+    "z": 14843,
+    "type": "card",
+    "deck": "3b685543-c3f0-4fb5-9ee1-bc5cc4d7710d",
+    "cardType": "type-49616c25-4de7-41b1-a7c7-2c2b30e42ada",
+    "parent": "npk8"
+  },
+  "2ecd7369-9ad0-48f1-8a33-b3129db834a6": {
+    "id": "2ecd7369-9ad0-48f1-8a33-b3129db834a6",
+    "z": 14854,
+    "type": "card",
+    "deck": "3b685543-c3f0-4fb5-9ee1-bc5cc4d7710d",
+    "cardType": "type-49616c25-4de7-41b1-a7c7-2c2b30e42ada",
+    "parent": "npk8"
+  },
+  "3c3caba7-0243-42cc-8d2d-6aeec9372a7a": {
+    "id": "3c3caba7-0243-42cc-8d2d-6aeec9372a7a",
+    "z": 14847,
+    "type": "card",
+    "deck": "3b685543-c3f0-4fb5-9ee1-bc5cc4d7710d",
+    "cardType": "type-49616c25-4de7-41b1-a7c7-2c2b30e42ada",
+    "parent": "npk8"
+  },
+  "46570fea-5c9f-4e85-8b1a-f142883bc1e0": {
+    "id": "46570fea-5c9f-4e85-8b1a-f142883bc1e0",
+    "z": 14851,
+    "type": "card",
+    "deck": "3b685543-c3f0-4fb5-9ee1-bc5cc4d7710d",
+    "cardType": "type-49616c25-4de7-41b1-a7c7-2c2b30e42ada",
+    "parent": "npk8"
+  },
+  "732c4d85-c17a-4936-8e4d-b81fb127b8b6": {
+    "id": "732c4d85-c17a-4936-8e4d-b81fb127b8b6",
+    "z": 14846,
+    "type": "card",
+    "deck": "3b685543-c3f0-4fb5-9ee1-bc5cc4d7710d",
+    "cardType": "type-49616c25-4de7-41b1-a7c7-2c2b30e42ada",
+    "parent": "npk8"
+  },
+  "811e5095-f91c-431b-b611-16fcc643d2a2": {
+    "id": "811e5095-f91c-431b-b611-16fcc643d2a2",
+    "z": 14855,
+    "type": "card",
+    "deck": "3b685543-c3f0-4fb5-9ee1-bc5cc4d7710d",
+    "cardType": "type-49616c25-4de7-41b1-a7c7-2c2b30e42ada",
+    "parent": "npk8"
+  },
+  "6bbb5c06-1cf9-41be-a7ed-4e18a4afcc08": {
+    "id": "6bbb5c06-1cf9-41be-a7ed-4e18a4afcc08",
+    "z": 14850,
+    "type": "card",
+    "deck": "3b685543-c3f0-4fb5-9ee1-bc5cc4d7710d",
+    "cardType": "type-49616c25-4de7-41b1-a7c7-2c2b30e42ada",
+    "parent": "npk8"
+  },
+  "b12462ef-50f8-40f0-bde8-e76ab084e173": {
+    "id": "b12462ef-50f8-40f0-bde8-e76ab084e173",
+    "z": 14857,
+    "type": "card",
+    "deck": "3b685543-c3f0-4fb5-9ee1-bc5cc4d7710d",
+    "cardType": "type-49616c25-4de7-41b1-a7c7-2c2b30e42ada",
+    "parent": "npk8"
+  },
+  "9d6ff5af-4460-43ea-aa09-09f87e985d87": {
+    "id": "9d6ff5af-4460-43ea-aa09-09f87e985d87",
+    "z": 14835,
+    "type": "card",
+    "deck": "e9a51bd6-ec51-4ac8-b5c0-0e1a4515a72d",
+    "cardType": "type-49616c25-4de7-41b1-a7c7-2c2b30e42ada",
+    "parent": "luky"
+  },
+  "80b560dd-e5c3-44a2-bb7f-03168e97072f": {
+    "id": "80b560dd-e5c3-44a2-bb7f-03168e97072f",
+    "z": 14836,
+    "type": "card",
+    "deck": "e9a51bd6-ec51-4ac8-b5c0-0e1a4515a72d",
+    "cardType": "type-49616c25-4de7-41b1-a7c7-2c2b30e42ada",
+    "parent": "luky"
+  },
+  "b07cab89-1eee-48ea-81c3-12adcfd4ea23": {
+    "id": "b07cab89-1eee-48ea-81c3-12adcfd4ea23",
+    "z": 14833,
+    "type": "card",
+    "deck": "e9a51bd6-ec51-4ac8-b5c0-0e1a4515a72d",
+    "cardType": "type-49616c25-4de7-41b1-a7c7-2c2b30e42ada",
+    "parent": "luky"
+  },
+  "29404670-a5b4-4507-b6ff-fbf5efc0bc3a": {
+    "id": "29404670-a5b4-4507-b6ff-fbf5efc0bc3a",
+    "z": 14838,
+    "type": "card",
+    "deck": "e9a51bd6-ec51-4ac8-b5c0-0e1a4515a72d",
+    "cardType": "type-49616c25-4de7-41b1-a7c7-2c2b30e42ada",
+    "parent": "luky"
+  },
+  "dba82fc5-0245-4fc7-b6b8-6482154facd0": {
+    "id": "dba82fc5-0245-4fc7-b6b8-6482154facd0",
+    "z": 14842,
+    "type": "card",
+    "deck": "e9a51bd6-ec51-4ac8-b5c0-0e1a4515a72d",
+    "cardType": "type-49616c25-4de7-41b1-a7c7-2c2b30e42ada",
+    "parent": "luky"
+  },
+  "ced219b7-55b1-4567-9f20-749c51ff61aa": {
+    "id": "ced219b7-55b1-4567-9f20-749c51ff61aa",
+    "z": 14841,
+    "type": "card",
+    "deck": "e9a51bd6-ec51-4ac8-b5c0-0e1a4515a72d",
+    "cardType": "type-49616c25-4de7-41b1-a7c7-2c2b30e42ada",
+    "parent": "luky"
+  },
+  "7ec3e4fb-63ed-4348-a73d-fa24569908a8": {
+    "id": "7ec3e4fb-63ed-4348-a73d-fa24569908a8",
+    "z": 14832,
+    "type": "card",
+    "deck": "e9a51bd6-ec51-4ac8-b5c0-0e1a4515a72d",
+    "cardType": "type-49616c25-4de7-41b1-a7c7-2c2b30e42ada",
+    "parent": "luky"
+  },
+  "21f6ff58-95f4-4c9f-9769-346d598e4bff": {
+    "id": "21f6ff58-95f4-4c9f-9769-346d598e4bff",
+    "z": 14834,
+    "type": "card",
+    "deck": "e9a51bd6-ec51-4ac8-b5c0-0e1a4515a72d",
+    "cardType": "type-49616c25-4de7-41b1-a7c7-2c2b30e42ada",
+    "parent": "luky"
+  },
+  "35d7c444-4a27-4c5e-8610-0e2fa77998bc": {
+    "id": "35d7c444-4a27-4c5e-8610-0e2fa77998bc",
+    "z": 14839,
+    "type": "card",
+    "deck": "e9a51bd6-ec51-4ac8-b5c0-0e1a4515a72d",
+    "cardType": "type-49616c25-4de7-41b1-a7c7-2c2b30e42ada",
+    "parent": "luky"
+  },
+  "6ebb78af-0c26-4d50-a1e3-d90059dff860": {
+    "id": "6ebb78af-0c26-4d50-a1e3-d90059dff860",
+    "z": 14837,
+    "type": "card",
+    "deck": "e9a51bd6-ec51-4ac8-b5c0-0e1a4515a72d",
+    "cardType": "type-49616c25-4de7-41b1-a7c7-2c2b30e42ada",
+    "parent": "luky"
+  },
+  "a5fb55f1-e215-435c-8640-1ee40b4fba44": {
+    "id": "a5fb55f1-e215-435c-8640-1ee40b4fba44",
+    "z": 14840,
+    "type": "card",
+    "deck": "e9a51bd6-ec51-4ac8-b5c0-0e1a4515a72d",
+    "cardType": "type-49616c25-4de7-41b1-a7c7-2c2b30e42ada",
+    "parent": "luky"
+  },
+  "be9f3ad0-23f0-406b-8dd1-9d447ed3b0ab": {
+    "id": "be9f3ad0-23f0-406b-8dd1-9d447ed3b0ab",
+    "z": 14831,
+    "type": "card",
+    "deck": "e9a51bd6-ec51-4ac8-b5c0-0e1a4515a72d",
+    "cardType": "type-49616c25-4de7-41b1-a7c7-2c2b30e42ada",
+    "parent": "luky"
+  },
+  "e1187aa2-b0d8-4325-9e7b-a89ecc679850": {
+    "id": "e1187aa2-b0d8-4325-9e7b-a89ecc679850",
+    "z": 14869,
+    "type": "card",
+    "deck": "eff1d74e-1540-4f02-99dc-6603de4577fc",
+    "cardType": "type-49616c25-4de7-41b1-a7c7-2c2b30e42ada",
+    "parent": "p6dj"
+  },
+  "4e7ca777-f3d9-4275-a92a-519961fa755d": {
+    "id": "4e7ca777-f3d9-4275-a92a-519961fa755d",
+    "z": 14864,
+    "type": "card",
+    "deck": "eff1d74e-1540-4f02-99dc-6603de4577fc",
+    "cardType": "type-49616c25-4de7-41b1-a7c7-2c2b30e42ada",
+    "parent": "p6dj"
+  },
+  "53074514-2b87-4835-bc22-fe39cf83b18f": {
+    "id": "53074514-2b87-4835-bc22-fe39cf83b18f",
+    "z": 14874,
+    "type": "card",
+    "deck": "eff1d74e-1540-4f02-99dc-6603de4577fc",
+    "cardType": "type-49616c25-4de7-41b1-a7c7-2c2b30e42ada",
+    "parent": "p6dj"
+  },
+  "17901bb6-3044-4f6b-9f9b-250e46b72901": {
+    "id": "17901bb6-3044-4f6b-9f9b-250e46b72901",
+    "z": 14861,
+    "type": "card",
+    "deck": "eff1d74e-1540-4f02-99dc-6603de4577fc",
+    "cardType": "type-49616c25-4de7-41b1-a7c7-2c2b30e42ada",
+    "parent": "p6dj"
+  },
+  "264dd496-f30a-49f5-9261-8a97c0084bc3": {
+    "id": "264dd496-f30a-49f5-9261-8a97c0084bc3",
+    "z": 14870,
+    "type": "card",
+    "deck": "eff1d74e-1540-4f02-99dc-6603de4577fc",
+    "cardType": "type-49616c25-4de7-41b1-a7c7-2c2b30e42ada",
+    "parent": "p6dj"
+  },
+  "a5f71ec5-9718-4174-a2ba-dc4754982620": {
+    "id": "a5f71ec5-9718-4174-a2ba-dc4754982620",
+    "z": 14871,
+    "type": "card",
+    "deck": "eff1d74e-1540-4f02-99dc-6603de4577fc",
+    "cardType": "type-49616c25-4de7-41b1-a7c7-2c2b30e42ada",
+    "parent": "p6dj"
+  },
+  "3f07f9c2-84b5-47ad-8685-f58def2c483c": {
+    "id": "3f07f9c2-84b5-47ad-8685-f58def2c483c",
+    "z": 14877,
+    "type": "card",
+    "deck": "eff1d74e-1540-4f02-99dc-6603de4577fc",
+    "cardType": "type-49616c25-4de7-41b1-a7c7-2c2b30e42ada",
+    "parent": "p6dj"
+  },
+  "0841f805-c64f-4b03-8f8a-a833b3f44fb2": {
+    "id": "0841f805-c64f-4b03-8f8a-a833b3f44fb2",
+    "z": 14873,
+    "type": "card",
+    "deck": "eff1d74e-1540-4f02-99dc-6603de4577fc",
+    "cardType": "type-49616c25-4de7-41b1-a7c7-2c2b30e42ada",
+    "parent": "p6dj"
+  },
+  "1ea850b7-baa4-4984-a8b8-701615aadfdd": {
+    "id": "1ea850b7-baa4-4984-a8b8-701615aadfdd",
+    "z": 14859,
+    "type": "card",
+    "deck": "eff1d74e-1540-4f02-99dc-6603de4577fc",
+    "cardType": "type-49616c25-4de7-41b1-a7c7-2c2b30e42ada",
+    "parent": "p6dj"
+  },
+  "5c1c18f4-6cd1-48d4-9f0b-8386762e461a": {
+    "id": "5c1c18f4-6cd1-48d4-9f0b-8386762e461a",
+    "z": 14865,
+    "type": "card",
+    "deck": "eff1d74e-1540-4f02-99dc-6603de4577fc",
+    "cardType": "type-49616c25-4de7-41b1-a7c7-2c2b30e42ada",
+    "parent": "p6dj"
+  },
+  "d033319c-7254-473b-b2d6-a1c80d536e75": {
+    "id": "d033319c-7254-473b-b2d6-a1c80d536e75",
+    "z": 14863,
+    "type": "card",
+    "deck": "eff1d74e-1540-4f02-99dc-6603de4577fc",
+    "cardType": "type-49616c25-4de7-41b1-a7c7-2c2b30e42ada",
+    "parent": "p6dj"
+  },
+  "cd303f4d-265b-48e6-be19-82f649e8588d": {
+    "id": "cd303f4d-265b-48e6-be19-82f649e8588d",
+    "z": 14872,
+    "type": "card",
+    "deck": "eff1d74e-1540-4f02-99dc-6603de4577fc",
+    "cardType": "type-49616c25-4de7-41b1-a7c7-2c2b30e42ada",
+    "parent": "p6dj"
+  },
+  "3badfd3e-f8f8-4b0a-8142-2d94d1b4e0ae": {
+    "id": "3badfd3e-f8f8-4b0a-8142-2d94d1b4e0ae",
+    "z": 14867,
+    "type": "card",
+    "deck": "eff1d74e-1540-4f02-99dc-6603de4577fc",
+    "cardType": "type-49616c25-4de7-41b1-a7c7-2c2b30e42ada",
+    "parent": "p6dj"
+  },
+  "9bcd9483-ac00-48c3-8558-51f9dda48481": {
+    "id": "9bcd9483-ac00-48c3-8558-51f9dda48481",
+    "z": 14875,
+    "type": "card",
+    "deck": "eff1d74e-1540-4f02-99dc-6603de4577fc",
+    "cardType": "type-49616c25-4de7-41b1-a7c7-2c2b30e42ada",
+    "parent": "p6dj"
+  },
+  "97d84833-87a4-4e94-a4bb-a6a269be8099": {
+    "id": "97d84833-87a4-4e94-a4bb-a6a269be8099",
+    "z": 14876,
+    "type": "card",
+    "deck": "eff1d74e-1540-4f02-99dc-6603de4577fc",
+    "cardType": "type-49616c25-4de7-41b1-a7c7-2c2b30e42ada",
+    "parent": "p6dj"
+  },
+  "72b2aa5c-5cf6-4c9b-b531-cc5752d9f17e": {
+    "id": "72b2aa5c-5cf6-4c9b-b531-cc5752d9f17e",
+    "z": 14878,
+    "type": "card",
+    "deck": "eff1d74e-1540-4f02-99dc-6603de4577fc",
+    "cardType": "type-49616c25-4de7-41b1-a7c7-2c2b30e42ada",
+    "parent": "p6dj"
+  },
+  "b164c1e9-3708-494c-87f7-008dfa6dec79": {
+    "id": "b164c1e9-3708-494c-87f7-008dfa6dec79",
+    "z": 14868,
+    "type": "card",
+    "deck": "eff1d74e-1540-4f02-99dc-6603de4577fc",
+    "cardType": "type-49616c25-4de7-41b1-a7c7-2c2b30e42ada",
+    "parent": "p6dj"
+  },
+  "178fddb8-73e8-4f65-9f76-43d23b9bdb8b": {
+    "id": "178fddb8-73e8-4f65-9f76-43d23b9bdb8b",
+    "z": 14879,
+    "type": "card",
+    "deck": "eff1d74e-1540-4f02-99dc-6603de4577fc",
+    "cardType": "type-49616c25-4de7-41b1-a7c7-2c2b30e42ada",
+    "parent": "p6dj"
+  },
+  "7317a178-5d44-44be-b72a-d1cc3f843dd7": {
+    "id": "7317a178-5d44-44be-b72a-d1cc3f843dd7",
+    "z": 14862,
+    "type": "card",
+    "deck": "eff1d74e-1540-4f02-99dc-6603de4577fc",
+    "cardType": "type-49616c25-4de7-41b1-a7c7-2c2b30e42ada",
+    "parent": "p6dj"
+  },
+  "be3c241c-de88-4af8-974e-1f410faa5059": {
+    "id": "be3c241c-de88-4af8-974e-1f410faa5059",
+    "z": 14880,
+    "type": "card",
+    "deck": "eff1d74e-1540-4f02-99dc-6603de4577fc",
+    "cardType": "type-49616c25-4de7-41b1-a7c7-2c2b30e42ada",
+    "parent": "p6dj"
+  },
+  "9b3144e8-bd02-40c4-b7ec-b03169b82f3d": {
+    "id": "9b3144e8-bd02-40c4-b7ec-b03169b82f3d",
+    "z": 14860,
+    "type": "card",
+    "deck": "eff1d74e-1540-4f02-99dc-6603de4577fc",
+    "cardType": "type-49616c25-4de7-41b1-a7c7-2c2b30e42ada",
+    "parent": "p6dj"
+  },
+  "ef0889a8-ae6d-4c13-b143-5bfe7dc3c921": {
+    "id": "ef0889a8-ae6d-4c13-b143-5bfe7dc3c921",
+    "z": 14882,
+    "type": "card",
+    "deck": "eff1d74e-1540-4f02-99dc-6603de4577fc",
+    "cardType": "type-49616c25-4de7-41b1-a7c7-2c2b30e42ada",
+    "parent": "p6dj"
+  },
+  "eb1fb03c-4f43-4069-8653-e318bd8c7012": {
+    "id": "eb1fb03c-4f43-4069-8653-e318bd8c7012",
+    "z": 14881,
+    "type": "card",
+    "deck": "eff1d74e-1540-4f02-99dc-6603de4577fc",
+    "cardType": "type-49616c25-4de7-41b1-a7c7-2c2b30e42ada",
+    "parent": "p6dj"
+  },
+  "dbeb6004-e78e-4b2c-8b8b-f5abffa3d4a0": {
+    "id": "dbeb6004-e78e-4b2c-8b8b-f5abffa3d4a0",
+    "z": 14866,
+    "type": "card",
+    "deck": "eff1d74e-1540-4f02-99dc-6603de4577fc",
+    "cardType": "type-49616c25-4de7-41b1-a7c7-2c2b30e42ada",
+    "parent": "p6dj"
+  },
+  "33e2bb42-ae40-4792-98ef-b4a0c2b688f8": {
+    "id": "33e2bb42-ae40-4792-98ef-b4a0c2b688f8",
+    "x": 4,
+    "y": 4,
+    "z": 14822,
+    "type": "card",
+    "deck": "deaf8030-7080-4412-8990-92fd08d6138a",
+    "cardType": "type-49616c25-4de7-41b1-a7c7-2c2b30e42ada",
+    "parent": "c44b9d9b-3678-42fd-a395-6f4b8b5543c6"
+  },
+  "_meta": {
+    "version": 15,
+    "info": {
+      "name": "Wordy",
+      "image": "/assets/-1955292820_80961",
+      "rules": "",
+      "bgg": "https://boardgamegeek.com/boardgame/320/scrabble",
+      "year": "1948",
+      "mode": "vs",
+      "time": "90",
+      "attribution": "The game layout, game pieces, images, and Wordy logo were done by LawDawg96 and are released to the Public Domain under CC0.\n<br><div>The library image contains a photograph from https://pixabay.com/photos/printing-plate-letters-font-type-1030849/ and is available under the Pixabay License.<div><br></div><div>Letter distribution and point values from:&nbsp;https://en.wikipedia.org/wiki/Scrabble_letter_distributions.</div></div>",
+      "similarName": "Scrabble",
+      "description": "Use letter tiles to build words with extra points for playing in certain locations. Play until tile bag runs out. Most points wins.",
+      "showName": true,
+      "helpText": "Players take seats.<div><br></div><div>Start game (and choose language) by selecting button with dashed outline of globe.</div><div><br></div><div>Play tiles on board. To exchange tiles, manually flip tiles upside down in hand then drag to swap holder. Press swap icon. New cards are added to hand; swapped cards are returned to pile and it is shuffled.</div><div><br></div><div>Click on scoreboard to enter score for that play.</div>",
+      "lastUpdate": 1701051185957,
+      "skill": "",
+      "similarImage": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "similarDesigner": "Alfred Mosher Butts",
+      "variantImage": "",
+      "variant": "",
+      "language": "cy-GB, de-DE, el-GR, en-US, es, fr-FR, he-IL, it-IT, pt-BR, uk-UA",
+      "players": "2-4"
+    }
+  },
+  "swap": {
+    "type": "button",
+    "id": "swap",
+    "x": 1260,
+    "rotation": 180,
+    "z": 292,
+    "backgroundColor": "transparent",
+    "backgroundColorOH": "transparent",
+    "classes": "material-icons",
+    "clickRoutine": [
+      {
+        "func": "CLICK",
+        "collection": [
+          "deal"
+        ]
+      },
+      {
+        "func": "MOVE",
+        "from": "swapHolder",
+        "to": "deckHolder",
+        "count": 0,
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "deckHolder"
+      }
+    ],
+    "css": "font-size: 55px; border:none",
+    "textColor": "#b97a56",
+    "textColorOH": "#67452f",
+    "text": "recycling",
+    "movableInEdit": false,
+    "y": 800
+  },
+  "swapHolder": {
+    "type": "holder",
+    "id": "swapHolder",
+    "x": 1184,
+    "y": 823,
+    "width": 60,
+    "height": 60,
+    "z": 13921,
+    "inheritChildZ": true,
+    "css": {
+      "background-color": "#ffffff80"
+    }
+  },
+  "deckHolder": {
+    "type": "holder",
+    "id": "deckHolder",
+    "x": 1355,
+    "y": 823,
+    "width": 60,
+    "height": 60,
+    "z": 13919,
+    "inheritChildZ": true
+  },
+  "deal": {
+    "type": "button",
+    "id": "deal",
+    "x": 1518,
+    "y": 910,
+    "width": 50,
+    "height": 50,
+    "layer": 2,
+    "z": 627,
+    "backgroundColor": "transparent",
+    "backgroundColorOH": "transparent",
+    "classes": "symbols",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "owner",
+        "value": "${playerName}"
+      },
+      {
+        "func": "COUNT"
+      },
+      "var count = 7 - ${COUNT}",
+      {
+        "func": "IF",
+        "operand1": "${count}",
+        "relation": ">",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "func": "MOVE",
+            "from": "deckHolder",
+            "to": "hand",
+            "count": "${count}"
+          }
+        ]
+      }
+    ],
+    "css": "font-size: 50px; border:none",
+    "textColorOH": "#67452f",
+    "textColor": "#b97a56",
+    "text": "holder_hand"
+  },
+  "language": {
+    "type": "button",
+    "id": "language",
+    "y": 5,
+    "width": 50,
+    "height": 50,
+    "layer": 2,
+    "z": 630,
+    "backgroundColor": "#b97a56",
+    "backgroundColorOH": "#67452f",
+    "borderColor": "white",
+    "borderColorOH": "#b97a56",
+    "classes": "material-icons",
+    "clickRoutine": [
+      "// Build the INPUT options from the language widgets.",
+      "var inputArray = []",
+      "var inputObject = {}",
+      "var key = 0",
+      {
+        "func": "SELECT",
+        "property": "languageSet",
+        "value": true,
+        "collection": "languageList",
+        "sortBy": {
+          "key": "id",
+          "reverse": false
+        }
+      },
+      {
+        "func": "FOREACH",
+        "collection": "languageList",
+        "loopRoutine": [
+          {
+            "func": "GET",
+            "collection": "DEFAULT",
+            "property": "id",
+            "variable": "id"
+          },
+          "var inputObject.text = ${id}",
+          "var inputObject.value = ${id}",
+          "var inputArray.$key = ${inputObject}",
+          "var inputObject = {}",
+          "var key = ${key} + 1"
+        ]
+      },
+      {
+        "func": "INPUT",
+        "fields": [
+          {
+            "type": "title",
+            "text": "Language"
+          },
+          {
+            "type": "select",
+            "variable": "language",
+            "value": "${PROPERTY language}",
+            "options": "${inputArray}"
+          }
+        ],
+        "confirmButtonIcon": "check",
+        "cancelButtonIcon": "close"
+      },
+      "// Set language properties in a couple of widgets.",
+      {
+        "func": "SET",
+        "collection": [
+          "languageLabel"
+        ],
+        "property": "text",
+        "value": "${language}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "language",
+        "value": "${language}"
+      },
+      "// Erase all previously cloned tiles and make sure the master tile is back home.",
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "clonedFrom",
+        "relation": "!=",
+        "value": null
+      },
+      {
+        "func": "DELETE"
+      },
+      {
+        "func": "RECALL",
+        "holder": "homeTemplate"
+      },
+      {
+        "func": "FLIP",
+        "holder": "homeTemplate",
+        "face": 0
+      },
+      "// Erase all values in the reference table",
+      {
+        "func": "FOREACH",
+        "range": [
+          0,
+          10
+        ],
+        "loopRoutine": [
+          "var col = ${value}",
+          {
+            "func": "FOREACH",
+            "range": [
+              15
+            ],
+            "loopRoutine": [
+              {
+                "func": "SET",
+                "collection": [
+                  "letterTable"
+                ],
+                "property": "cell${col}-${value}",
+                "value": ""
+              }
+            ]
+          }
+        ]
+      },
+      "// Create clones of all the necessary tiles using the letter, points, and count specified on the language widget.",
+      "var letters = ${PROPERTY letters OF $language}",
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "cardType",
+        "value": "master",
+        "collection": "masterCard"
+      },
+      {
+        "func": "FOREACH",
+        "in": "${letters}",
+        "loopRoutine": [
+          "var letter = ${value.letter}",
+          "var points = ${value.points}",
+          "var count = ${value.count}",
+          {
+            "func": "CLONE",
+            "source": "masterCard",
+            "count": "${count}",
+            "properties": {
+              "parent": "deckHolder",
+              "letter": "${letter}",
+              "points": "${points}"
+            }
+          },
+          "var cell = 'cell' + ${points}",
+          "var cell = ${cell} + '-'",
+          "var cell = ${cell} + ${count}",
+          "var cellValue = ${PROPERTY $cell OF letterTable}",
+          "var cellValue = ${cellValue} + ' '",
+          "var cellValue = ${cellValue} + ${letter}",
+          "var cellValue = ${cellValue} trimStart",
+          {
+            "func": "SET",
+            "collection": [
+              "letterTable"
+            ],
+            "property": "${cell}",
+            "value": "${cellValue}"
+          }
+        ]
+      },
+      "// Final setup things slike suffle, deal, turn.",
+      {
+        "func": "SHUFFLE",
+        "holder": "deckHolder"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "seat1",
+          "seat2",
+          "seat3",
+          "seat4"
+        ],
+        "property": "score",
+        "value": [
+          0
+        ]
+      },
+      {
+        "func": "TURN",
+        "turnCycle": "random"
+      },
+      {
+        "func": "MOVE",
+        "from": "deckHolder",
+        "to": [
+          "seat1",
+          "seat2",
+          "seat3",
+          "seat4"
+        ],
+        "count": 7
+      }
+    ],
+    "css": {
+      "": {
+        "font-size": "40px"
+      },
+      "_, .transition": {
+        "transition": "transform 600ms"
+      },
+      "_, .transition.dragging": {
+        "transition": "none"
+      }
+    },
+    "textColorOH": "#ffbd74",
+    "x": 1545,
+    "gameStartRoutine": [
+      {
+        "func": "SHUFFLE",
+        "holder": "deckHolder"
+      }
+    ],
+    "scoreGlobalUpdateRoutine": [
+      {
+        "func": "SELECT",
+        "type": "seat",
+        "property": "id",
+        "relation": "!=",
+        "value": null
+      },
+      {
+        "func": "SET",
+        "property": "turn",
+        "value": null
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "player",
+        "value": "${playerName}"
+      },
+      {
+        "func": "SET",
+        "property": "turn",
+        "value": true
+      },
+      {
+        "func": "TURN"
+      }
+    ],
+    "text": "language",
+    "language": "English"
+  },
+  "languageLabel": {
+    "type": "label",
+    "id": "languageLabel",
+    "x": 1000,
+    "width": 600,
+    "height": 30,
+    "z": 7463,
+    "css": "font-size: 25px",
+    "text": "English",
+    "y": 60,
+    "textChangeRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY text}",
+        "operand2": "SpanishI",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "text",
+            "value": "Spanish - International"
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY text}",
+        "operand2": "SpanishN",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "text",
+            "value": "Spanish - North America"
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY text}",
+        "operand2": "SpanishL",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "text",
+            "value": "Spanish - Latin America"
+          }
+        ]
+      }
+    ]
+  },
+  "seat1": {
+    "type": "seat",
+    "id": "seat1",
+    "x": 1000,
+    "y": 460,
+    "z": 282,
+    "hideWhenUnused": true,
+    "score": [
+      0
+    ],
+    "turn": true
+  },
+  "seat2": {
+    "type": "seat",
+    "id": "seat2",
+    "x": 1000,
+    "y": 557,
+    "z": 289,
+    "index": 2,
+    "hideWhenUnused": true,
+    "score": [
+      0
+    ]
+  },
+  "seat3": {
+    "type": "seat",
+    "id": "seat3",
+    "x": 1000,
+    "z": 290,
+    "index": 3,
+    "hideWhenUnused": true,
+    "y": 653,
+    "score": [
+      0
+    ]
+  },
+  "seat4": {
+    "type": "seat",
+    "id": "seat4",
+    "x": 1000,
+    "z": 291,
+    "index": 4,
+    "hideWhenUnused": true,
+    "y": 750,
+    "score": [
+      0
+    ]
+  },
+  "background": {
+    "id": "background",
+    "layer": -5,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "background:#eee8e0; ",
+    "width": 1600,
+    "height": 1000
+  },
+  "a1": {
+    "type": "holder",
+    "id": "a1",
+    "width": 65,
+    "height": 65,
+    "z": 13936,
+    "css": {
+      "default": {
+        "border": "3px solid ${PROPERTY boardOutline}",
+        "font-size": "30px",
+        "line-height": "1.8",
+        "text-align": "center",
+        "background": "${PROPERTY boardDarkRed}"
+      },
+      "::before": {
+        "content": "\"${PROPERTY text}\""
+      }
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 5,
+    "dropOffsetY": 5,
+    "x": 2,
+    "y": 2,
+    "boardDefault": "#fffbf1",
+    "boardDarkRed": "#bf696b",
+    "boardLightRed": "#e4bec0",
+    "boardDarkBlue": "#7283b2",
+    "boardLightBlue": "#b5c2e5",
+    "borderRadius": 0,
+    "text": "3x",
+    "multi": 3,
+    "boardOutline": "#d8d4cc"
+  },
+  "b1": {
+    "type": "holder",
+    "id": "b1",
+    "x": 67,
+    "y": 2,
+    "css": {
+      "default": {
+        "border": "2px solid ${PROPERTY boardOutline}",
+        "background": "${PROPERTY boardDefault}"
+      }
+    },
+    "inheritFrom": {
+      "a1": [
+        "!css",
+        "!text",
+        "!multi",
+        "!multitype"
+      ]
+    }
+  },
+  "c1": {
+    "type": "holder",
+    "id": "c1",
+    "x": 132,
+    "y": 2,
+    "css": {
+      "default": {
+        "border": "2px solid ${PROPERTY boardOutline}",
+        "background": "${PROPERTY boardDefault}"
+      }
+    },
+    "inheritFrom": "b1"
+  },
+  "d1": {
+    "type": "holder",
+    "id": "d1",
+    "x": 197,
+    "y": 2,
+    "inheritFrom": "a1",
+    "css": {
+      "default": {
+        "border": "2px solid ${PROPERTY boardOutline}",
+        "font-size": "30px",
+        "line-height": "1.8",
+        "text-align": "center",
+        "background": "${PROPERTY boardLightBlue}"
+      },
+      "::before": {
+        "content": "\"${PROPERTY text}\""
+      }
+    },
+    "text": "2x",
+    "multi": 2,
+    "multitype": "letter"
+  },
+  "e1": {
+    "type": "holder",
+    "id": "e1",
+    "x": 262,
+    "y": 2,
+    "css": {
+      "default": {
+        "border": "2px solid ${PROPERTY boardOutline}",
+        "background": "${PROPERTY boardDefault}"
+      }
+    },
+    "inheritFrom": "b1"
+  },
+  "f1": {
+    "type": "holder",
+    "id": "f1",
+    "x": 327,
+    "y": 2,
+    "css": {
+      "default": {
+        "border": "2px solid ${PROPERTY boardOutline}",
+        "background": "${PROPERTY boardDefault}"
+      }
+    },
+    "inheritFrom": "b1"
+  },
+  "g1": {
+    "type": "holder",
+    "id": "g1",
+    "x": 392,
+    "y": 2,
+    "css": {
+      "default": {
+        "border": "2px solid ${PROPERTY boardOutline}",
+        "background": "${PROPERTY boardDefault}"
+      }
+    },
+    "inheritFrom": "b1"
+  },
+  "h1": {
+    "type": "holder",
+    "id": "h1",
+    "x": 457,
+    "y": 2,
+    "inheritFrom": "a1"
+  },
+  "i1": {
+    "type": "holder",
+    "id": "i1",
+    "x": 522,
+    "y": 2,
+    "css": {
+      "default": {
+        "border": "2px solid ${PROPERTY boardOutline}",
+        "background": "${PROPERTY boardDefault}"
+      }
+    },
+    "inheritFrom": "b1"
+  },
+  "j1": {
+    "type": "holder",
+    "id": "j1",
+    "x": 587,
+    "y": 2,
+    "css": {
+      "default": {
+        "border": "2px solid ${PROPERTY boardOutline}",
+        "background": "${PROPERTY boardDefault}"
+      }
+    },
+    "inheritFrom": "b1"
+  },
+  "k1": {
+    "type": "holder",
+    "id": "k1",
+    "x": 652,
+    "y": 2,
+    "css": {
+      "default": {
+        "border": "2px solid ${PROPERTY boardOutline}",
+        "background": "${PROPERTY boardDefault}"
+      }
+    },
+    "inheritFrom": "b1"
+  },
+  "l1": {
+    "type": "holder",
+    "id": "l1",
+    "x": 717,
+    "y": 2,
+    "inheritFrom": "d1"
+  },
+  "m1": {
+    "type": "holder",
+    "id": "m1",
+    "x": 782,
+    "y": 2,
+    "css": {
+      "default": {
+        "border": "2px solid ${PROPERTY boardOutline}",
+        "background": "${PROPERTY boardDefault}"
+      }
+    },
+    "inheritFrom": "b1"
+  },
+  "n1": {
+    "type": "holder",
+    "id": "n1",
+    "x": 847,
+    "y": 2,
+    "css": {
+      "default": {
+        "border": "2px solid ${PROPERTY boardOutline}",
+        "background": "${PROPERTY boardDefault}"
+      }
+    },
+    "inheritFrom": "b1"
+  },
+  "o1": {
+    "type": "holder",
+    "id": "o1",
+    "x": 912,
+    "y": 2,
+    "inheritFrom": "a1"
+  },
+  "a2": {
+    "inheritFrom": "b1",
+    "id": "a2",
+    "type": "holder",
+    "x": 2,
+    "y": 67
+  },
+  "a3": {
+    "inheritFrom": "b1",
+    "id": "a3",
+    "type": "holder",
+    "x": 2,
+    "y": 132
+  },
+  "a4": {
+    "inheritFrom": "d1",
+    "id": "a4",
+    "type": "holder",
+    "x": 2,
+    "y": 197
+  },
+  "a5": {
+    "inheritFrom": "b1",
+    "id": "a5",
+    "type": "holder",
+    "x": 2,
+    "y": 262
+  },
+  "a6": {
+    "inheritFrom": "b1",
+    "id": "a6",
+    "type": "holder",
+    "x": 2,
+    "y": 327
+  },
+  "a7": {
+    "inheritFrom": "b1",
+    "id": "a7",
+    "type": "holder",
+    "x": 2,
+    "y": 392
+  },
+  "a8": {
+    "inheritFrom": "a1",
+    "id": "a8",
+    "type": "holder",
+    "x": 2,
+    "y": 457
+  },
+  "a9": {
+    "inheritFrom": "b1",
+    "id": "a9",
+    "type": "holder",
+    "x": 2,
+    "y": 522
+  },
+  "a10": {
+    "inheritFrom": "b1",
+    "id": "a10",
+    "type": "holder",
+    "x": 2,
+    "y": 587
+  },
+  "a11": {
+    "inheritFrom": "b1",
+    "id": "a11",
+    "type": "holder",
+    "x": 2,
+    "y": 652
+  },
+  "a12": {
+    "inheritFrom": "d1",
+    "id": "a12",
+    "type": "holder",
+    "x": 2,
+    "y": 717
+  },
+  "a13": {
+    "inheritFrom": "b1",
+    "id": "a13",
+    "type": "holder",
+    "x": 2,
+    "y": 782
+  },
+  "a14": {
+    "inheritFrom": "b1",
+    "id": "a14",
+    "type": "holder",
+    "x": 2,
+    "y": 847
+  },
+  "a15": {
+    "inheritFrom": "a1",
+    "id": "a15",
+    "type": "holder",
+    "x": 2,
+    "y": 912
+  },
+  "b2": {
+    "inheritFrom": "a1",
+    "id": "b2",
+    "type": "holder",
+    "x": 67,
+    "y": 67,
+    "css": {
+      "default": {
+        "border": "2px solid ${PROPERTY boardOutline}",
+        "font-size": "30px",
+        "line-height": "1.8",
+        "text-align": "center",
+        "background": "${PROPERTY boardLightRed}"
+      },
+      "::before": {
+        "content": "\"${PROPERTY text}\""
+      }
+    },
+    "multi": 2,
+    "multitype": "word",
+    "text": "2x"
+  },
+  "b3": {
+    "inheritFrom": "b1",
+    "id": "b3",
+    "type": "holder",
+    "x": 67,
+    "y": 132
+  },
+  "b4": {
+    "inheritFrom": "b1",
+    "id": "b4",
+    "type": "holder",
+    "x": 67,
+    "y": 197
+  },
+  "b5": {
+    "inheritFrom": "b1",
+    "id": "b5",
+    "type": "holder",
+    "x": 67,
+    "y": 262
+  },
+  "b6": {
+    "inheritFrom": "a1",
+    "id": "b6",
+    "type": "holder",
+    "x": 67,
+    "y": 327,
+    "css": {
+      "default": {
+        "border": "2px solid ${PROPERTY boardOutline}",
+        "font-size": "30px",
+        "line-height": "1.8",
+        "text-align": "center",
+        "background": "${PROPERTY boardDarkBlue}"
+      },
+      "::before": {
+        "content": "\"${PROPERTY text}\""
+      }
+    },
+    "multi": 3,
+    "multitype": "letter",
+    "text": "3x"
+  },
+  "b7": {
+    "inheritFrom": "b1",
+    "id": "b7",
+    "type": "holder",
+    "x": 67,
+    "y": 392
+  },
+  "b8": {
+    "inheritFrom": "b1",
+    "id": "b8",
+    "type": "holder",
+    "x": 67,
+    "y": 457
+  },
+  "b9": {
+    "inheritFrom": "b1",
+    "id": "b9",
+    "type": "holder",
+    "x": 67,
+    "y": 522
+  },
+  "b10": {
+    "inheritFrom": "b6",
+    "id": "b10",
+    "type": "holder",
+    "x": 67,
+    "y": 587
+  },
+  "b11": {
+    "inheritFrom": "b1",
+    "id": "b11",
+    "type": "holder",
+    "x": 67,
+    "y": 652
+  },
+  "b12": {
+    "inheritFrom": "b1",
+    "id": "b12",
+    "type": "holder",
+    "x": 67,
+    "y": 717
+  },
+  "b13": {
+    "inheritFrom": "b1",
+    "id": "b13",
+    "type": "holder",
+    "x": 67,
+    "y": 782
+  },
+  "b14": {
+    "inheritFrom": "b2",
+    "id": "b14",
+    "type": "holder",
+    "x": 67,
+    "y": 847
+  },
+  "b15": {
+    "inheritFrom": "b1",
+    "id": "b15",
+    "type": "holder",
+    "x": 67,
+    "y": 912
+  },
+  "c2": {
+    "inheritFrom": "c1",
+    "id": "c2",
+    "type": "holder",
+    "x": 132,
+    "y": 67
+  },
+  "c3": {
+    "inheritFrom": "b2",
+    "id": "c3",
+    "type": "holder",
+    "x": 132,
+    "y": 132
+  },
+  "c4": {
+    "inheritFrom": "c1",
+    "id": "c4",
+    "type": "holder",
+    "x": 132,
+    "y": 197
+  },
+  "c5": {
+    "inheritFrom": "c1",
+    "id": "c5",
+    "type": "holder",
+    "x": 132,
+    "y": 262
+  },
+  "c6": {
+    "inheritFrom": "c1",
+    "id": "c6",
+    "type": "holder",
+    "x": 132,
+    "y": 327
+  },
+  "c7": {
+    "inheritFrom": "d1",
+    "id": "c7",
+    "type": "holder",
+    "x": 132,
+    "y": 392
+  },
+  "c8": {
+    "inheritFrom": "c1",
+    "id": "c8",
+    "type": "holder",
+    "x": 132,
+    "y": 457
+  },
+  "c9": {
+    "inheritFrom": "d1",
+    "id": "c9",
+    "type": "holder",
+    "x": 132,
+    "y": 522
+  },
+  "c10": {
+    "inheritFrom": "c1",
+    "id": "c10",
+    "type": "holder",
+    "x": 132,
+    "y": 587
+  },
+  "c11": {
+    "inheritFrom": "c1",
+    "id": "c11",
+    "type": "holder",
+    "x": 132,
+    "y": 652
+  },
+  "c12": {
+    "inheritFrom": "c1",
+    "id": "c12",
+    "type": "holder",
+    "x": 132,
+    "y": 717
+  },
+  "c13": {
+    "inheritFrom": "b2",
+    "id": "c13",
+    "type": "holder",
+    "x": 132,
+    "y": 782
+  },
+  "c14": {
+    "inheritFrom": "c1",
+    "id": "c14",
+    "type": "holder",
+    "x": 132,
+    "y": 847
+  },
+  "c15": {
+    "inheritFrom": "c1",
+    "id": "c15",
+    "type": "holder",
+    "x": 132,
+    "y": 912
+  },
+  "d2": {
+    "inheritFrom": "b1",
+    "id": "d2",
+    "type": "holder",
+    "x": 197,
+    "y": 67
+  },
+  "d3": {
+    "inheritFrom": "b1",
+    "id": "d3",
+    "type": "holder",
+    "x": 197,
+    "y": 132
+  },
+  "d4": {
+    "inheritFrom": "b2",
+    "id": "d4",
+    "type": "holder",
+    "x": 197,
+    "y": 197
+  },
+  "d5": {
+    "inheritFrom": "b1",
+    "id": "d5",
+    "type": "holder",
+    "x": 197,
+    "y": 262
+  },
+  "d6": {
+    "inheritFrom": "b1",
+    "id": "d6",
+    "type": "holder",
+    "x": 197,
+    "y": 327
+  },
+  "d7": {
+    "inheritFrom": "b1",
+    "id": "d7",
+    "type": "holder",
+    "x": 197,
+    "y": 392
+  },
+  "d8": {
+    "inheritFrom": "d1",
+    "id": "d8",
+    "type": "holder",
+    "x": 197,
+    "y": 457
+  },
+  "d9": {
+    "inheritFrom": "b1",
+    "id": "d9",
+    "type": "holder",
+    "x": 197,
+    "y": 522
+  },
+  "d10": {
+    "inheritFrom": "b1",
+    "id": "d10",
+    "type": "holder",
+    "x": 197,
+    "y": 587
+  },
+  "d11": {
+    "inheritFrom": "b1",
+    "id": "d11",
+    "type": "holder",
+    "x": 197,
+    "y": 652
+  },
+  "d12": {
+    "inheritFrom": "b2",
+    "id": "d12",
+    "type": "holder",
+    "x": 197,
+    "y": 717
+  },
+  "d13": {
+    "inheritFrom": "b1",
+    "id": "d13",
+    "type": "holder",
+    "x": 197,
+    "y": 782
+  },
+  "d14": {
+    "inheritFrom": "b1",
+    "id": "d14",
+    "type": "holder",
+    "x": 197,
+    "y": 847
+  },
+  "d15": {
+    "inheritFrom": "d1",
+    "id": "d15",
+    "type": "holder",
+    "x": 197,
+    "y": 912
+  },
+  "e2": {
+    "inheritFrom": "e1",
+    "id": "e2",
+    "type": "holder",
+    "x": 262,
+    "y": 67
+  },
+  "e3": {
+    "inheritFrom": "e1",
+    "id": "e3",
+    "type": "holder",
+    "x": 262,
+    "y": 132
+  },
+  "e4": {
+    "inheritFrom": "e1",
+    "id": "e4",
+    "type": "holder",
+    "x": 262,
+    "y": 197
+  },
+  "e5": {
+    "inheritFrom": "b2",
+    "id": "e5",
+    "type": "holder",
+    "x": 262,
+    "y": 262
+  },
+  "e6": {
+    "inheritFrom": "e1",
+    "id": "e6",
+    "type": "holder",
+    "x": 262,
+    "y": 327
+  },
+  "e7": {
+    "inheritFrom": "e1",
+    "id": "e7",
+    "type": "holder",
+    "x": 262,
+    "y": 392
+  },
+  "e8": {
+    "inheritFrom": "e1",
+    "id": "e8",
+    "type": "holder",
+    "x": 262,
+    "y": 457
+  },
+  "e9": {
+    "inheritFrom": "e1",
+    "id": "e9",
+    "type": "holder",
+    "x": 262,
+    "y": 522
+  },
+  "e10": {
+    "inheritFrom": "e1",
+    "id": "e10",
+    "type": "holder",
+    "x": 262,
+    "y": 587
+  },
+  "e11": {
+    "inheritFrom": "b2",
+    "id": "e11",
+    "type": "holder",
+    "x": 262,
+    "y": 652
+  },
+  "e12": {
+    "inheritFrom": "e1",
+    "id": "e12",
+    "type": "holder",
+    "x": 262,
+    "y": 717
+  },
+  "e13": {
+    "inheritFrom": "e1",
+    "id": "e13",
+    "type": "holder",
+    "x": 262,
+    "y": 782
+  },
+  "e14": {
+    "inheritFrom": "e1",
+    "id": "e14",
+    "type": "holder",
+    "x": 262,
+    "y": 847
+  },
+  "e15": {
+    "inheritFrom": "e1",
+    "id": "e15",
+    "type": "holder",
+    "x": 262,
+    "y": 912
+  },
+  "f2": {
+    "inheritFrom": "b6",
+    "id": "f2",
+    "type": "holder",
+    "x": 327,
+    "y": 67
+  },
+  "f3": {
+    "inheritFrom": "f1",
+    "id": "f3",
+    "type": "holder",
+    "x": 327,
+    "y": 132
+  },
+  "f4": {
+    "inheritFrom": "f1",
+    "id": "f4",
+    "type": "holder",
+    "x": 327,
+    "y": 197
+  },
+  "f5": {
+    "inheritFrom": "f1",
+    "id": "f5",
+    "type": "holder",
+    "x": 327,
+    "y": 262
+  },
+  "f6": {
+    "inheritFrom": "b6",
+    "id": "f6",
+    "type": "holder",
+    "x": 327,
+    "y": 327
+  },
+  "f7": {
+    "inheritFrom": "f1",
+    "id": "f7",
+    "type": "holder",
+    "x": 327,
+    "y": 392
+  },
+  "f8": {
+    "inheritFrom": "f1",
+    "id": "f8",
+    "type": "holder",
+    "x": 327,
+    "y": 457
+  },
+  "f9": {
+    "inheritFrom": "f1",
+    "id": "f9",
+    "type": "holder",
+    "x": 327,
+    "y": 522
+  },
+  "f10": {
+    "inheritFrom": "b6",
+    "id": "f10",
+    "type": "holder",
+    "x": 327,
+    "y": 587
+  },
+  "f11": {
+    "inheritFrom": "f1",
+    "id": "f11",
+    "type": "holder",
+    "x": 327,
+    "y": 652
+  },
+  "f12": {
+    "inheritFrom": "f1",
+    "id": "f12",
+    "type": "holder",
+    "x": 327,
+    "y": 717
+  },
+  "f13": {
+    "inheritFrom": "f1",
+    "id": "f13",
+    "type": "holder",
+    "x": 327,
+    "y": 782
+  },
+  "f14": {
+    "inheritFrom": "b6",
+    "id": "f14",
+    "type": "holder",
+    "x": 327,
+    "y": 847
+  },
+  "f15": {
+    "inheritFrom": "f1",
+    "id": "f15",
+    "type": "holder",
+    "x": 327,
+    "y": 912
+  },
+  "g2": {
+    "inheritFrom": "g1",
+    "id": "g2",
+    "type": "holder",
+    "x": 392,
+    "y": 67
+  },
+  "g3": {
+    "inheritFrom": "d1",
+    "id": "g3",
+    "type": "holder",
+    "x": 392,
+    "y": 132
+  },
+  "g4": {
+    "inheritFrom": "g1",
+    "id": "g4",
+    "type": "holder",
+    "x": 392,
+    "y": 197
+  },
+  "g5": {
+    "inheritFrom": "g1",
+    "id": "g5",
+    "type": "holder",
+    "x": 392,
+    "y": 262
+  },
+  "g6": {
+    "inheritFrom": "g1",
+    "id": "g6",
+    "type": "holder",
+    "x": 392,
+    "y": 327
+  },
+  "g7": {
+    "inheritFrom": "d1",
+    "id": "g7",
+    "type": "holder",
+    "x": 392,
+    "y": 392
+  },
+  "g8": {
+    "inheritFrom": "g1",
+    "id": "g8",
+    "type": "holder",
+    "x": 392,
+    "y": 457
+  },
+  "g9": {
+    "inheritFrom": "d1",
+    "id": "g9",
+    "type": "holder",
+    "x": 392,
+    "y": 522
+  },
+  "g10": {
+    "inheritFrom": "g1",
+    "id": "g10",
+    "type": "holder",
+    "x": 392,
+    "y": 587
+  },
+  "g11": {
+    "inheritFrom": "g1",
+    "id": "g11",
+    "type": "holder",
+    "x": 392,
+    "y": 652
+  },
+  "g12": {
+    "inheritFrom": "g1",
+    "id": "g12",
+    "type": "holder",
+    "x": 392,
+    "y": 717
+  },
+  "g13": {
+    "inheritFrom": "d1",
+    "id": "g13",
+    "type": "holder",
+    "x": 392,
+    "y": 782
+  },
+  "g14": {
+    "inheritFrom": "g1",
+    "id": "g14",
+    "type": "holder",
+    "x": 392,
+    "y": 847
+  },
+  "g15": {
+    "inheritFrom": "g1",
+    "id": "g15",
+    "type": "holder",
+    "x": 392,
+    "y": 912
+  },
+  "h2": {
+    "inheritFrom": "b1",
+    "id": "h2",
+    "type": "holder",
+    "x": 457,
+    "y": 67
+  },
+  "h3": {
+    "inheritFrom": "b1",
+    "id": "h3",
+    "type": "holder",
+    "x": 457,
+    "y": 132
+  },
+  "h4": {
+    "inheritFrom": "d1",
+    "id": "h4",
+    "type": "holder",
+    "x": 457,
+    "y": 197
+  },
+  "h5": {
+    "inheritFrom": "b1",
+    "id": "h5",
+    "type": "holder",
+    "x": 457,
+    "y": 262
+  },
+  "h6": {
+    "inheritFrom": "b1",
+    "id": "h6",
+    "type": "holder",
+    "x": 457,
+    "y": 327
+  },
+  "h7": {
+    "inheritFrom": "n1",
+    "id": "h7",
+    "type": "holder",
+    "x": 457,
+    "y": 392
+  },
+  "h8": {
+    "inheritFrom": "a1",
+    "id": "h8",
+    "type": "holder",
+    "x": 457,
+    "y": 457,
+    "text": "star",
+    "css": {
+      "default": {
+        "border": "3px solid ${PROPERTY boardOutline}",
+        "font-size": "60px",
+        "line-height": "1",
+        "text-align": "center",
+        "background": "${PROPERTY boardLightRed}"
+      },
+      "::before": {
+        "content": "\"${PROPERTY text}\""
+      }
+    },
+    "multi": 2,
+    "multitype": "word",
+    "classes": "material-icons"
+  },
+  "h9": {
+    "inheritFrom": "b1",
+    "id": "h9",
+    "type": "holder",
+    "x": 457,
+    "y": 522
+  },
+  "h10": {
+    "inheritFrom": "b1",
+    "id": "h10",
+    "type": "holder",
+    "x": 457,
+    "y": 587
+  },
+  "h11": {
+    "inheritFrom": "b1",
+    "id": "h11",
+    "type": "holder",
+    "x": 457,
+    "y": 652
+  },
+  "h12": {
+    "inheritFrom": "d1",
+    "id": "h12",
+    "type": "holder",
+    "x": 457,
+    "y": 717
+  },
+  "h13": {
+    "inheritFrom": "b1",
+    "id": "h13",
+    "type": "holder",
+    "x": 457,
+    "y": 782
+  },
+  "h14": {
+    "inheritFrom": "b1",
+    "id": "h14",
+    "type": "holder",
+    "x": 457,
+    "y": 847
+  },
+  "h15": {
+    "inheritFrom": "h1",
+    "id": "h15",
+    "type": "holder",
+    "x": 457,
+    "y": 912
+  },
+  "i2": {
+    "inheritFrom": "i1",
+    "id": "i2",
+    "type": "holder",
+    "x": 522,
+    "y": 67
+  },
+  "i3": {
+    "inheritFrom": "d1",
+    "id": "i3",
+    "type": "holder",
+    "x": 522,
+    "y": 132
+  },
+  "i4": {
+    "inheritFrom": "i1",
+    "id": "i4",
+    "type": "holder",
+    "x": 522,
+    "y": 197
+  },
+  "i5": {
+    "inheritFrom": "i1",
+    "id": "i5",
+    "type": "holder",
+    "x": 522,
+    "y": 262
+  },
+  "i6": {
+    "inheritFrom": "i1",
+    "id": "i6",
+    "type": "holder",
+    "x": 522,
+    "y": 327
+  },
+  "i7": {
+    "inheritFrom": "d1",
+    "id": "i7",
+    "type": "holder",
+    "x": 522,
+    "y": 392
+  },
+  "i8": {
+    "inheritFrom": "i1",
+    "id": "i8",
+    "type": "holder",
+    "x": 522,
+    "y": 457
+  },
+  "i9": {
+    "inheritFrom": "d1",
+    "id": "i9",
+    "type": "holder",
+    "x": 522,
+    "y": 522
+  },
+  "i10": {
+    "inheritFrom": "i1",
+    "id": "i10",
+    "type": "holder",
+    "x": 522,
+    "y": 587
+  },
+  "i11": {
+    "inheritFrom": "i1",
+    "id": "i11",
+    "type": "holder",
+    "x": 522,
+    "y": 652
+  },
+  "i12": {
+    "inheritFrom": "i1",
+    "id": "i12",
+    "type": "holder",
+    "x": 522,
+    "y": 717
+  },
+  "i13": {
+    "inheritFrom": "d1",
+    "id": "i13",
+    "type": "holder",
+    "x": 522,
+    "y": 782
+  },
+  "i14": {
+    "inheritFrom": "i1",
+    "id": "i14",
+    "type": "holder",
+    "x": 522,
+    "y": 847
+  },
+  "i15": {
+    "inheritFrom": "i1",
+    "id": "i15",
+    "type": "holder",
+    "x": 522,
+    "y": 912
+  },
+  "j2": {
+    "inheritFrom": "b6",
+    "id": "j2",
+    "type": "holder",
+    "x": 587,
+    "y": 67
+  },
+  "j3": {
+    "inheritFrom": "j1",
+    "id": "j3",
+    "type": "holder",
+    "x": 587,
+    "y": 132
+  },
+  "j4": {
+    "inheritFrom": "j1",
+    "id": "j4",
+    "type": "holder",
+    "x": 587,
+    "y": 197
+  },
+  "j5": {
+    "inheritFrom": "j1",
+    "id": "j5",
+    "type": "holder",
+    "x": 587,
+    "y": 262
+  },
+  "j6": {
+    "inheritFrom": "b6",
+    "id": "j6",
+    "type": "holder",
+    "x": 587,
+    "y": 327
+  },
+  "j7": {
+    "inheritFrom": "j1",
+    "id": "j7",
+    "type": "holder",
+    "x": 587,
+    "y": 392
+  },
+  "j8": {
+    "inheritFrom": "j1",
+    "id": "j8",
+    "type": "holder",
+    "x": 587,
+    "y": 457
+  },
+  "j9": {
+    "inheritFrom": "j1",
+    "id": "j9",
+    "type": "holder",
+    "x": 587,
+    "y": 522
+  },
+  "j10": {
+    "inheritFrom": "b6",
+    "id": "j10",
+    "type": "holder",
+    "x": 587,
+    "y": 585,
+    "z": 13935
+  },
+  "j11": {
+    "inheritFrom": "j1",
+    "id": "j11",
+    "type": "holder",
+    "x": 587,
+    "y": 652
+  },
+  "j12": {
+    "inheritFrom": "j1",
+    "id": "j12",
+    "type": "holder",
+    "x": 587,
+    "y": 717
+  },
+  "j13": {
+    "inheritFrom": "j1",
+    "id": "j13",
+    "type": "holder",
+    "x": 587,
+    "y": 782
+  },
+  "j14": {
+    "inheritFrom": "b6",
+    "id": "j14",
+    "type": "holder",
+    "x": 587,
+    "y": 847
+  },
+  "j15": {
+    "inheritFrom": "j1",
+    "id": "j15",
+    "type": "holder",
+    "x": 587,
+    "y": 912
+  },
+  "k2": {
+    "inheritFrom": "k1",
+    "id": "k2",
+    "type": "holder",
+    "x": 652,
+    "y": 67
+  },
+  "k3": {
+    "inheritFrom": "k1",
+    "id": "k3",
+    "type": "holder",
+    "x": 652,
+    "y": 132
+  },
+  "k4": {
+    "inheritFrom": "k1",
+    "id": "k4",
+    "type": "holder",
+    "x": 652,
+    "y": 197
+  },
+  "k5": {
+    "inheritFrom": "b2",
+    "id": "k5",
+    "type": "holder",
+    "x": 652,
+    "y": 262
+  },
+  "k6": {
+    "inheritFrom": "k1",
+    "id": "k6",
+    "type": "holder",
+    "x": 652,
+    "y": 327
+  },
+  "k7": {
+    "inheritFrom": "k1",
+    "id": "k7",
+    "type": "holder",
+    "x": 652,
+    "y": 392
+  },
+  "k8": {
+    "inheritFrom": "k1",
+    "id": "k8",
+    "type": "holder",
+    "x": 652,
+    "y": 457
+  },
+  "k9": {
+    "inheritFrom": "k1",
+    "id": "k9",
+    "type": "holder",
+    "x": 652,
+    "y": 522
+  },
+  "k10": {
+    "inheritFrom": "k1",
+    "id": "k10",
+    "type": "holder",
+    "x": 652,
+    "y": 587
+  },
+  "k11": {
+    "inheritFrom": "b2",
+    "id": "k11",
+    "type": "holder",
+    "x": 652,
+    "y": 652
+  },
+  "k12": {
+    "inheritFrom": "k1",
+    "id": "k12",
+    "type": "holder",
+    "x": 652,
+    "y": 717
+  },
+  "k13": {
+    "inheritFrom": "k1",
+    "id": "k13",
+    "type": "holder",
+    "x": 652,
+    "y": 782
+  },
+  "k14": {
+    "inheritFrom": "k1",
+    "id": "k14",
+    "type": "holder",
+    "x": 652,
+    "y": 847
+  },
+  "k15": {
+    "inheritFrom": "k1",
+    "id": "k15",
+    "type": "holder",
+    "x": 652,
+    "y": 912
+  },
+  "l2": {
+    "inheritFrom": "b1",
+    "id": "l2",
+    "type": "holder",
+    "x": 717,
+    "y": 67
+  },
+  "l3": {
+    "inheritFrom": "b1",
+    "id": "l3",
+    "type": "holder",
+    "x": 717,
+    "y": 132
+  },
+  "l4": {
+    "inheritFrom": "b2",
+    "id": "l4",
+    "type": "holder",
+    "x": 717,
+    "y": 197
+  },
+  "l5": {
+    "inheritFrom": "b1",
+    "id": "l5",
+    "type": "holder",
+    "x": 717,
+    "y": 262
+  },
+  "l6": {
+    "inheritFrom": "b1",
+    "id": "l6",
+    "type": "holder",
+    "x": 717,
+    "y": 327
+  },
+  "l7": {
+    "inheritFrom": "b1",
+    "id": "l7",
+    "type": "holder",
+    "x": 717,
+    "y": 392
+  },
+  "l8": {
+    "inheritFrom": "d1",
+    "id": "l8",
+    "type": "holder",
+    "x": 717,
+    "y": 457
+  },
+  "l9": {
+    "inheritFrom": "b1",
+    "id": "l9",
+    "type": "holder",
+    "x": 717,
+    "y": 522
+  },
+  "l10": {
+    "inheritFrom": "b1",
+    "id": "l10",
+    "type": "holder",
+    "x": 717,
+    "y": 587
+  },
+  "l11": {
+    "inheritFrom": "b1",
+    "id": "l11",
+    "type": "holder",
+    "x": 717,
+    "y": 652
+  },
+  "l12": {
+    "inheritFrom": "b2",
+    "id": "l12",
+    "type": "holder",
+    "x": 717,
+    "y": 717
+  },
+  "l13": {
+    "inheritFrom": "b1",
+    "id": "l13",
+    "type": "holder",
+    "x": 717,
+    "y": 782
+  },
+  "l14": {
+    "inheritFrom": "b1",
+    "id": "l14",
+    "type": "holder",
+    "x": 717,
+    "y": 847
+  },
+  "l15": {
+    "inheritFrom": "l1",
+    "id": "l15",
+    "type": "holder",
+    "x": 717,
+    "y": 912
+  },
+  "m2": {
+    "inheritFrom": "m1",
+    "id": "m2",
+    "type": "holder",
+    "x": 782,
+    "y": 67
+  },
+  "m3": {
+    "inheritFrom": "b2",
+    "id": "m3",
+    "type": "holder",
+    "x": 782,
+    "y": 132
+  },
+  "m4": {
+    "inheritFrom": "m1",
+    "id": "m4",
+    "type": "holder",
+    "x": 782,
+    "y": 197
+  },
+  "m5": {
+    "inheritFrom": "m1",
+    "id": "m5",
+    "type": "holder",
+    "x": 782,
+    "y": 262
+  },
+  "m6": {
+    "inheritFrom": "m1",
+    "id": "m6",
+    "type": "holder",
+    "x": 782,
+    "y": 327
+  },
+  "m7": {
+    "inheritFrom": "d1",
+    "id": "m7",
+    "type": "holder",
+    "x": 782,
+    "y": 392
+  },
+  "m8": {
+    "inheritFrom": "m1",
+    "id": "m8",
+    "type": "holder",
+    "x": 782,
+    "y": 457
+  },
+  "m9": {
+    "inheritFrom": "d1",
+    "id": "m9",
+    "type": "holder",
+    "x": 782,
+    "y": 522
+  },
+  "m10": {
+    "inheritFrom": "m1",
+    "id": "m10",
+    "type": "holder",
+    "x": 782,
+    "y": 587
+  },
+  "m11": {
+    "inheritFrom": "m1",
+    "id": "m11",
+    "type": "holder",
+    "x": 782,
+    "y": 652
+  },
+  "m12": {
+    "inheritFrom": "m1",
+    "id": "m12",
+    "type": "holder",
+    "x": 782,
+    "y": 717
+  },
+  "m13": {
+    "inheritFrom": "b2",
+    "id": "m13",
+    "type": "holder",
+    "x": 782,
+    "y": 782
+  },
+  "m14": {
+    "inheritFrom": "m1",
+    "id": "m14",
+    "type": "holder",
+    "x": 782,
+    "y": 847
+  },
+  "m15": {
+    "inheritFrom": "m1",
+    "id": "m15",
+    "type": "holder",
+    "x": 782,
+    "y": 912
+  },
+  "n2": {
+    "inheritFrom": "b2",
+    "id": "n2",
+    "type": "holder",
+    "x": 847,
+    "y": 67
+  },
+  "n3": {
+    "inheritFrom": "n1",
+    "id": "n3",
+    "type": "holder",
+    "x": 847,
+    "y": 132
+  },
+  "n4": {
+    "inheritFrom": "n1",
+    "id": "n4",
+    "type": "holder",
+    "x": 847,
+    "y": 197
+  },
+  "n5": {
+    "inheritFrom": "n1",
+    "id": "n5",
+    "type": "holder",
+    "x": 847,
+    "y": 262
+  },
+  "n6": {
+    "inheritFrom": "b6",
+    "id": "n6",
+    "type": "holder",
+    "x": 847,
+    "y": 327
+  },
+  "n7": {
+    "inheritFrom": "n1",
+    "id": "n7",
+    "type": "holder",
+    "x": 847,
+    "y": 392
+  },
+  "n8": {
+    "inheritFrom": "n1",
+    "id": "n8",
+    "type": "holder",
+    "x": 847,
+    "y": 457
+  },
+  "n9": {
+    "inheritFrom": "n1",
+    "id": "n9",
+    "type": "holder",
+    "x": 847,
+    "y": 522
+  },
+  "n10": {
+    "inheritFrom": "b6",
+    "id": "n10",
+    "type": "holder",
+    "x": 847,
+    "y": 587
+  },
+  "n11": {
+    "inheritFrom": "n1",
+    "id": "n11",
+    "type": "holder",
+    "x": 847,
+    "y": 652
+  },
+  "n12": {
+    "inheritFrom": "n1",
+    "id": "n12",
+    "type": "holder",
+    "x": 847,
+    "y": 717
+  },
+  "n13": {
+    "inheritFrom": "n1",
+    "id": "n13",
+    "type": "holder",
+    "x": 847,
+    "y": 782
+  },
+  "n14": {
+    "inheritFrom": "b2",
+    "id": "n14",
+    "type": "holder",
+    "x": 847,
+    "y": 847
+  },
+  "n15": {
+    "inheritFrom": "n1",
+    "id": "n15",
+    "type": "holder",
+    "x": 847,
+    "y": 912
+  },
+  "o2": {
+    "inheritFrom": "b1",
+    "id": "o2",
+    "type": "holder",
+    "x": 912,
+    "y": 67
+  },
+  "o3": {
+    "inheritFrom": "b1",
+    "id": "o3",
+    "type": "holder",
+    "x": 912,
+    "y": 132
+  },
+  "o4": {
+    "inheritFrom": "d1",
+    "id": "o4",
+    "type": "holder",
+    "x": 912,
+    "y": 197
+  },
+  "o5": {
+    "inheritFrom": "b1",
+    "id": "o5",
+    "type": "holder",
+    "x": 912,
+    "y": 262
+  },
+  "o6": {
+    "inheritFrom": "b1",
+    "id": "o6",
+    "type": "holder",
+    "x": 912,
+    "y": 327
+  },
+  "o7": {
+    "inheritFrom": "b1",
+    "id": "o7",
+    "type": "holder",
+    "x": 912,
+    "y": 392
+  },
+  "o8": {
+    "inheritFrom": "o1",
+    "id": "o8",
+    "type": "holder",
+    "x": 912,
+    "y": 457
+  },
+  "o9": {
+    "inheritFrom": "b1",
+    "id": "o9",
+    "type": "holder",
+    "x": 912,
+    "y": 522
+  },
+  "o10": {
+    "inheritFrom": "b1",
+    "id": "o10",
+    "type": "holder",
+    "x": 912,
+    "y": 587
+  },
+  "o11": {
+    "inheritFrom": "b1",
+    "id": "o11",
+    "type": "holder",
+    "x": 912,
+    "y": 652
+  },
+  "o12": {
+    "inheritFrom": "d1",
+    "id": "o12",
+    "type": "holder",
+    "x": 912,
+    "y": 717
+  },
+  "o13": {
+    "inheritFrom": "b1",
+    "id": "o13",
+    "type": "holder",
+    "x": 912,
+    "y": 782
+  },
+  "o14": {
+    "inheritFrom": "b1",
+    "id": "o14",
+    "type": "holder",
+    "x": 912,
+    "y": 847
+  },
+  "o15": {
+    "inheritFrom": "o1",
+    "id": "o15",
+    "type": "holder",
+    "x": 912,
+    "y": 912
+  },
+  "logo": {
+    "id": "logo",
+    "x": 1200,
+    "y": 10,
+    "width": 200,
+    "height": 50,
+    "z": 16,
+    "movable": false,
+    "image": "/assets/234275287_8512"
+  },
+  "homeTemplate": {
+    "type": "holder",
+    "id": "homeTemplate",
+    "x": 1033,
+    "y": 1038,
+    "width": 60,
+    "height": 60,
+    "z": 13939,
+    "inheritChildZ": true
+  },
+  "deckTemplate": {
+    "type": "deck",
+    "id": "deckTemplate",
+    "parent": "homeTemplate",
+    "x": 33,
+    "y": 33,
+    "z": 1,
+    "cardDefaults": {
+      "onPileCreation": {
+        "handleCSS": "background:#b97a56;color:white",
+        "handleSize": 20,
+        "handleOffset": 1
+      },
+      "width": 52,
+      "height": 52,
+      "classes": "transition"
+    },
+    "cardTypes": {
+      "master": {}
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "value": "/assets/-2054978455_1964",
+            "width": 52,
+            "height": 52
+          }
+        ],
+        "border": 1,
+        "radius": 8
+      },
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 52,
+            "height": 52,
+            "value": "/assets/-2054978455_1964"
+          },
+          {
+            "type": "text",
+            "x": 0,
+            "y": 2,
+            "fontSize": "36",
+            "textAlign": "center",
+            "css": "line-height:1.3",
+            "width": 50,
+            "dynamicProperties": {
+              "value": "letter"
+            }
+          },
+          {
+            "type": "text",
+            "x": 20,
+            "y": 32,
+            "fontSize": "14",
+            "textAlign": "right",
+            "width": 27,
+            "dynamicProperties": {
+              "value": "points"
+            }
+          }
+        ],
+        "border": 1,
+        "radius": 8
+      }
+    ]
+  },
+  "exzi": {
+    "type": "scoreboard",
+    "x": 1175,
+    "y": 461,
+    "id": "exzi",
+    "z": 287,
+    "width": 400,
+    "height": 345,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      ".scoreboard td:first-child": {
+        "--firstColWidth": "10px"
+      }
+    }
+  },
+  "letterTable": {
+    "id": "letterTable",
+    "x": 982,
+    "width": 620,
+    "height": 305,
+    "z": 50,
+    "css": {
+      "default": {
+        "background": "transparentck",
+        "font-size": "15px"
+      },
+      " th": {
+        "background": "#b97a56",
+        "color": "#ffffff",
+        "text-align": "center",
+        "line-height": "14px",
+        "padding-left": "12px",
+        "padding-right": "12px"
+      },
+      " td": {
+        "background": "#b97a56",
+        "color": "white",
+        "text-align": "center",
+        "line-height": "14px",
+        "padding-left": "5px",
+        "padding-right": "5px"
+      },
+      " td:nth-child(odd)": {
+        "background": "#d2bf9e",
+        "color": "#000000"
+      },
+      " td:nth-child(even)": {
+        "background": "#ffffff",
+        "color": "#000000"
+      }
+    },
+    "html": "<table><thead><tr><th></th><th class='col0'>+0</th><th class='col1'>+1</th><th>+2</th><th>+3</th><th>+4</th><th>+5</th><th>+6</th><th>+7</th><th>+8</th><th>+9</th><th>+10</th></tr></thead><tbody><tr><th>x1</th><td>${PROPERTY cell0-1}</td><td>${PROPERTY cell1-1}</td><td>${PROPERTY cell2-1}</td><td>${PROPERTY cell3-1}</td><td>${PROPERTY cell4-1}</td><td>${PROPERTY cell5-1}</td><td>${PROPERTY cell6-1}</td><td>${PROPERTY cell7-1}</td><td>${PROPERTY cell8-1}</td><td>${PROPERTY cell9-1}</td><td>${PROPERTY cell10-1}</td></tr><tr><th>x2</th><td>${PROPERTY cell0-2}</td><td>${PROPERTY cell1-2}</td><td>${PROPERTY cell2-2}</td><td>${PROPERTY cell3-2}</td><td>${PROPERTY cell4-2}</td><td>${PROPERTY cell5-2}</td><td>${PROPERTY cell6-2}</td><td>${PROPERTY cell7-2}</td><td>${PROPERTY cell8-2}</td><td>${PROPERTY cell9-2}</td><td>${PROPERTY cell10-2}</td></tr><tr><th>x3</th><td>${PROPERTY cell0-3}</td><td>${PROPERTY cell1-3}</td><td>${PROPERTY cell2-3}</td><td>${PROPERTY cell3-3}</td><td>${PROPERTY cell4-3}</td><td>${PROPERTY cell5-3}</td><td>${PROPERTY cell6-3}</td><td>${PROPERTY cell7-3}</td><td>${PROPERTY cell8-3}</td><td>${PROPERTY cell9-3}</td><td>${PROPERTY cell10-3}</td></tr><tr><th>x4</th><td>${PROPERTY cell0-4}</td><td>${PROPERTY cell1-4}</td><td>${PROPERTY cell2-4}</td><td>${PROPERTY cell3-4}</td><td>${PROPERTY cell4-4}</td><td>${PROPERTY cell5-4}</td><td>${PROPERTY cell6-4}</td><td>${PROPERTY cell7-4}</td><td>${PROPERTY cell8-4}</td><td>${PROPERTY cell9-4}</td><td>${PROPERTY cell10-4}</td></tr><tr><th>x5</th><td>${PROPERTY cell0-5}</td><td>${PROPERTY cell1-5}</td><td>${PROPERTY cell2-5}</td><td>${PROPERTY cell3-5}</td><td>${PROPERTY cell4-5}</td><td>${PROPERTY cell5-5}</td><td>${PROPERTY cell6-5}</td><td>${PROPERTY cell7-5}</td><td>${PROPERTY cell8-5}</td><td>${PROPERTY cell9-5}</td><td>${PROPERTY cell10-5}</td></tr><tr><th>x6</th><td>${PROPERTY cell0-6}</td><td>${PROPERTY cell1-6}</td><td>${PROPERTY cell2-6}</td><td>${PROPERTY cell3-6}</td><td>${PROPERTY cell4-6}</td><td>${PROPERTY cell5-6}</td><td>${PROPERTY cell6-6}</td><td>${PROPERTY cell7-6}</td><td>${PROPERTY cell8-6}</td><td>${PROPERTY cell9-6}</td><td>${PROPERTY cell10-6}</td></tr><tr><th>x7</th><td>${PROPERTY cell0-7}</td><td>${PROPERTY cell1-7}</td><td>${PROPERTY cell2-7}</td><td>${PROPERTY cell3-7}</td><td>${PROPERTY cell4-7}</td><td>${PROPERTY cell5-7}</td><td>${PROPERTY cell6-7}</td><td>${PROPERTY cell7-7}</td><td>${PROPERTY cell8-7}</td><td>${PROPERTY cell9-7}</td><td>${PROPERTY cell10-7}</td></tr><tr><th>x8</th><td>${PROPERTY cell0-8}</td><td>${PROPERTY cell1-8}</td><td>${PROPERTY cell2-8}</td><td>${PROPERTY cell3-8}</td><td>${PROPERTY cell4-8}</td><td>${PROPERTY cell5-8}</td><td>${PROPERTY cell6-8}</td><td>${PROPERTY cell7-8}</td><td>${PROPERTY cell8-8}</td><td>${PROPERTY cell9-8}</td><td>${PROPERTY cell10-8}</td></tr><tr><th>x9</th><td>${PROPERTY cell0-9}</td><td>${PROPERTY cell1-9}</td><td>${PROPERTY cell2-9}</td><td>${PROPERTY cell3-9}</td><td>${PROPERTY cell4-9}</td><td>${PROPERTY cell5-9}</td><td>${PROPERTY cell6-9}</td><td>${PROPERTY cell7-9}</td><td>${PROPERTY cell8-9}</td><td>${PROPERTY cell9-9}</td><td>${PROPERTY cell10-9}</td></tr><tr><th>x10</th><td>${PROPERTY cell0-10}</td><td>${PROPERTY cell1-10}</td><td>${PROPERTY cell2-10}</td><td>${PROPERTY cell3-10}</td><td>${PROPERTY cell4-10}</td><td>${PROPERTY cell5-10}</td><td>${PROPERTY cell6-10}</td><td>${PROPERTY cell7-10}</td><td>${PROPERTY cell8-10}</td><td>${PROPERTY cell9-10}</td><td>${PROPERTY cell10-10}</td></tr><tr><th>x11</th><td>${PROPERTY cell0-11}</td><td>${PROPERTY cell1-11}</td><td>${PROPERTY cell2-11}</td><td>${PROPERTY cell3-11}</td><td>${PROPERTY cell4-11}</td><td>${PROPERTY cell5-11}</td><td>${PROPERTY cell6-11}</td><td>${PROPERTY cell7-11}</td><td>${PROPERTY cell8-11}</td><td>${PROPERTY cell9-11}</td><td>${PROPERTY cell10-11}</td></tr><tr><th>x12</th><td>${PROPERTY cell0-12}</td><td>${PROPERTY cell1-12}</td><td>${PROPERTY cell2-12}</td><td>${PROPERTY cell3-12}</td><td>${PROPERTY cell4-12}</td><td>${PROPERTY cell5-12}</td><td>${PROPERTY cell6-12}</td><td>${PROPERTY cell7-12}</td><td>${PROPERTY cell8-12}</td><td>${PROPERTY cell9-12}</td><td>${PROPERTY cell10-12}</td></tr><tr><th>x13</th><td>${PROPERTY cell0-13}</td><td>${PROPERTY cell1-13}</td><td>${PROPERTY cell2-13}</td><td>${PROPERTY cell3-13}</td><td>${PROPERTY cell4-13}</td><td>${PROPERTY cell5-13}</td><td>${PROPERTY cell6-13}</td><td>${PROPERTY cell7-13}</td><td>${PROPERTY cell8-13}</td><td>${PROPERTY cell9-13}</td><td>${PROPERTY cell10-13}</td></tr><tr><th>x14</th><td>${PROPERTY cell0-14}</td><td>${PROPERTY cell1-14}</td><td>${PROPERTY cell2-14}</td><td>${PROPERTY cell3-14}</td><td>${PROPERTY cell4-14}</td><td>${PROPERTY cell5-14}</td><td>${PROPERTY cell6-14}</td><td>${PROPERTY cell7-14}</td><td>${PROPERTY cell8-14}</td><td>${PROPERTY cell9-14}</td><td>${PROPERTY cell10-14}</td></tr><tr><th>x15</th><td>${PROPERTY cell0-15}</td><td>${PROPERTY cell1-15}</td><td>${PROPERTY cell2-15}</td><td>${PROPERTY cell3-15}</td><td>${PROPERTY cell4-15}</td><td>${PROPERTY cell5-15}</td><td>${PROPERTY cell6-15}</td><td>${PROPERTY cell7-15}</td><td>${PROPERTY cell8-15}</td><td>${PROPERTY cell9-15}</td><td>${PROPERTY cell10-15}</td></tr></tbody></table>",
+    "cell0-1": "",
+    "cell1-1": "",
+    "cell2-1": "",
+    "cell3-1": "",
+    "cell4-1": "",
+    "cell5-1": "K",
+    "cell6-1": "",
+    "cell7-1": "",
+    "cell8-1": "J X",
+    "cell9-1": "",
+    "cell10-1": "Q Z",
+    "cell0-2": "?",
+    "cell1-2": "",
+    "cell2-2": "",
+    "cell3-2": "B C M P",
+    "cell4-2": "F H V W Y",
+    "cell5-2": "",
+    "cell6-2": "",
+    "cell7-2": "",
+    "cell8-2": "",
+    "cell9-2": "",
+    "cell10-2": "",
+    "cell0-3": "",
+    "cell1-3": "",
+    "cell2-3": "G",
+    "cell3-3": "",
+    "cell4-3": "",
+    "cell5-3": "",
+    "cell6-3": "",
+    "cell7-3": "",
+    "cell8-3": "",
+    "cell9-3": "",
+    "cell10-3": "",
+    "cell0-4": "",
+    "cell1-4": "L S U",
+    "cell2-4": "D",
+    "cell3-4": "",
+    "cell4-4": "",
+    "cell5-4": "",
+    "cell6-4": "",
+    "cell7-4": "",
+    "cell8-4": "",
+    "cell9-4": "",
+    "cell10-4": "",
+    "cell0-5": "",
+    "cell1-5": "",
+    "cell2-5": "",
+    "cell3-5": "",
+    "cell4-5": "",
+    "cell5-5": "",
+    "cell6-5": "",
+    "cell7-5": "",
+    "cell8-5": "",
+    "cell9-5": "",
+    "cell10-5": "",
+    "cell0-6": "",
+    "cell1-6": "N R T",
+    "cell2-6": "",
+    "cell3-6": "",
+    "cell4-6": "",
+    "cell5-6": "",
+    "cell6-6": "",
+    "cell7-6": "",
+    "cell8-6": "",
+    "cell9-6": "",
+    "cell10-6": "",
+    "cell0-7": "",
+    "cell1-7": "",
+    "cell2-7": "",
+    "cell3-7": "",
+    "cell4-7": "",
+    "cell5-7": "",
+    "cell6-7": "",
+    "cell7-7": "",
+    "cell8-7": "",
+    "cell9-7": "",
+    "cell10-7": "",
+    "cell0-8": "",
+    "cell1-8": "O",
+    "cell2-8": "",
+    "cell3-8": "",
+    "cell4-8": "",
+    "cell5-8": "",
+    "cell6-8": "",
+    "cell7-8": "",
+    "cell8-8": "",
+    "cell9-8": "",
+    "cell10-8": "",
+    "cell0-9": "",
+    "cell1-9": "A I",
+    "cell2-9": "",
+    "cell3-9": "",
+    "cell4-9": "",
+    "cell5-9": "",
+    "cell6-9": "",
+    "cell7-9": "",
+    "cell8-9": "",
+    "cell9-9": "",
+    "cell10-9": "",
+    "cell0-10": "",
+    "cell1-10": "",
+    "cell2-10": "",
+    "cell3-10": "",
+    "cell4-10": "",
+    "cell5-10": "",
+    "cell6-10": "",
+    "cell7-10": "",
+    "cell8-10": "",
+    "cell9-10": "",
+    "cell10-10": "",
+    "cell0-11": "",
+    "cell1-11": "",
+    "cell2-11": "",
+    "cell3-11": "",
+    "cell4-11": "",
+    "cell5-11": "",
+    "cell6-11": "",
+    "cell7-11": "",
+    "cell8-11": "",
+    "cell9-11": "",
+    "cell10-11": "",
+    "cell0-12": "",
+    "cell1-12": "E",
+    "cell2-12": "",
+    "cell3-12": "",
+    "cell4-12": "",
+    "cell5-12": "",
+    "cell6-12": "",
+    "cell7-12": "",
+    "cell8-12": "",
+    "cell9-12": "",
+    "cell10-12": "",
+    "cell0-13": "",
+    "cell1-13": "",
+    "cell2-13": "",
+    "cell3-13": "",
+    "cell4-13": "",
+    "cell5-13": "",
+    "cell6-13": "",
+    "cell7-13": "",
+    "cell8-13": "",
+    "cell9-13": "",
+    "cell10-13": "",
+    "cell0-14": "",
+    "cell1-14": "",
+    "cell2-14": "",
+    "cell3-14": "",
+    "cell4-14": "",
+    "cell5-14": "",
+    "cell6-14": "",
+    "cell7-14": "",
+    "cell8-14": "",
+    "cell9-14": "",
+    "cell10-14": "",
+    "cell0-15": "",
+    "cell1-15": "",
+    "cell2-15": "",
+    "cell3-15": "",
+    "cell4-15": "",
+    "cell5-15": "",
+    "cell6-15": "",
+    "cell7-15": "",
+    "cell8-15": "",
+    "cell9-15": "",
+    "cell10-15": "",
+    "cellnull-2": "null    ",
+    "y": 90
+  },
+  "gk3f": {
+    "deck": "deckTemplate",
+    "type": "card",
+    "cardType": "B",
+    "id": "gk3f",
+    "z": 56214,
+    "parent": "t27f",
+    "x": null,
+    "y": null
+  },
+  "8dw1": {
+    "deck": "deckTemplate",
+    "type": "card",
+    "cardType": "E",
+    "id": "8dw1",
+    "z": 56239,
+    "parent": "30zw",
+    "x": null,
+    "y": null
+  },
+  "5v71": {
+    "text": "recycling",
+    "id": "5v71",
+    "x": 1184,
+    "y": 824,
+    "classes": "material-icons",
+    "css": "font-size: 55px; border:none",
+    "width": 55,
+    "height": 55,
+    "z": 51,
+    "movable": false,
+    "layer": -5
+  },
+  "English": {
+    "id": "English",
+    "x": -171,
+    "y": 15,
+    "css": {
+      "background": "white",
+      "font-size": "20px"
+    },
+    "text": "English",
+    "letters": {
+      "1": {
+        "letter": "A",
+        "points": 1,
+        "count": 9
+      },
+      "2": {
+        "letter": "B",
+        "points": 3,
+        "count": 2
+      },
+      "3": {
+        "letter": "C",
+        "points": 3,
+        "count": 2
+      },
+      "4": {
+        "letter": "D",
+        "points": 2,
+        "count": 4
+      },
+      "5": {
+        "letter": "E",
+        "points": 1,
+        "count": 12
+      },
+      "6": {
+        "letter": "F",
+        "points": 4,
+        "count": 2
+      },
+      "7": {
+        "letter": "G",
+        "points": 2,
+        "count": 3
+      },
+      "8": {
+        "letter": "H",
+        "points": 4,
+        "count": 2
+      },
+      "9": {
+        "letter": "I",
+        "points": 1,
+        "count": 9
+      },
+      "10": {
+        "letter": "J",
+        "points": 8,
+        "count": 1
+      },
+      "11": {
+        "letter": "K",
+        "points": 5,
+        "count": 1
+      },
+      "12": {
+        "letter": "L",
+        "points": 1,
+        "count": 4
+      },
+      "13": {
+        "letter": "M",
+        "points": 3,
+        "count": 2
+      },
+      "14": {
+        "letter": "N",
+        "points": 1,
+        "count": 6
+      },
+      "15": {
+        "letter": "O",
+        "points": 1,
+        "count": 8
+      },
+      "16": {
+        "letter": "P",
+        "points": 3,
+        "count": 2
+      },
+      "17": {
+        "letter": "Q",
+        "points": 10,
+        "count": 1
+      },
+      "18": {
+        "letter": "R",
+        "points": 1,
+        "count": 6
+      },
+      "19": {
+        "letter": "S",
+        "points": 1,
+        "count": 4
+      },
+      "20": {
+        "letter": "T",
+        "points": 1,
+        "count": 6
+      },
+      "21": {
+        "letter": "U",
+        "points": 1,
+        "count": 4
+      },
+      "22": {
+        "letter": "V",
+        "points": 4,
+        "count": 2
+      },
+      "23": {
+        "letter": "W",
+        "points": 4,
+        "count": 2
+      },
+      "24": {
+        "letter": "X",
+        "points": 8,
+        "count": 1
+      },
+      "25": {
+        "letter": "Y",
+        "points": 4,
+        "count": 2
+      },
+      "26": {
+        "letter": "Z",
+        "points": 10,
+        "count": 1
+      },
+      "27": {
+        "letter": "?",
+        "points": 0,
+        "count": 2
+      }
+    },
+    "languageSet": true
+  },
+  "fr7o": {
+    "deck": "deckTemplate",
+    "type": "card",
+    "cardType": "master",
+    "id": "fr7o",
+    "z": 12066,
+    "parent": "homeTemplate",
+    "x": 4,
+    "y": 4
+  },
+  "Ελληνικά": {
+    "id": "Ελληνικά",
+    "x": -171,
+    "y": 148,
+    "css": {
+      "background": "white",
+      "font-size": "20px"
+    },
+    "letters": {
+      "1": {
+        "letter": "Α",
+        "points": 1,
+        "count": 12
+      },
+      "2": {
+        "letter": "Β",
+        "points": 8,
+        "count": 1
+      },
+      "3": {
+        "letter": "Γ",
+        "points": 4,
+        "count": 2
+      },
+      "4": {
+        "letter": "Δ",
+        "points": 4,
+        "count": 2
+      },
+      "5": {
+        "letter": "Ε",
+        "points": 1,
+        "count": 8
+      },
+      "6": {
+        "letter": "Ζ",
+        "points": 10,
+        "count": 1
+      },
+      "7": {
+        "letter": "Η",
+        "points": 1,
+        "count": 7
+      },
+      "8": {
+        "letter": "Θ",
+        "points": 10,
+        "count": 1
+      },
+      "9": {
+        "letter": "Ι",
+        "points": 1,
+        "count": 8
+      },
+      "10": {
+        "letter": "Κ",
+        "points": 2,
+        "count": 4
+      },
+      "11": {
+        "letter": "Λ",
+        "points": 3,
+        "count": 3
+      },
+      "12": {
+        "letter": "Μ",
+        "points": 3,
+        "count": 3
+      },
+      "13": {
+        "letter": "Ν",
+        "points": 1,
+        "count": 6
+      },
+      "14": {
+        "letter": "Ξ",
+        "points": 10,
+        "count": 1
+      },
+      "15": {
+        "letter": "Ο",
+        "points": 1,
+        "count": 9
+      },
+      "16": {
+        "letter": "Π",
+        "points": 2,
+        "count": 4
+      },
+      "17": {
+        "letter": "Ρ",
+        "points": 2,
+        "count": 5
+      },
+      "18": {
+        "letter": "Σ",
+        "points": 1,
+        "count": 7
+      },
+      "19": {
+        "letter": "Τ",
+        "points": 1,
+        "count": 8
+      },
+      "20": {
+        "letter": "Υ",
+        "points": 2,
+        "count": 4
+      },
+      "21": {
+        "letter": "Φ",
+        "points": 8,
+        "count": 1
+      },
+      "22": {
+        "letter": "Χ",
+        "points": 8,
+        "count": 1
+      },
+      "23": {
+        "letter": "Ψ",
+        "points": 10,
+        "count": 1
+      },
+      "24": {
+        "letter": "Ω",
+        "points": 3,
+        "count": 3
+      },
+      "25": {
+        "letter": "?",
+        "points": 0,
+        "count": 2
+      }
+    },
+    "text": "Greek",
+    "languageSet": true
+  },
+  "Deutsch": {
+    "id": "Deutsch",
+    "x": -171,
+    "y": 248,
+    "css": {
+      "background": "white",
+      "font-size": "20px"
+    },
+    "languageSet": true,
+    "letters": {
+      "1": {
+        "letter": "A",
+        "points": 1,
+        "count": 5
+      },
+      "2": {
+        "letter": "Ä",
+        "points": 6,
+        "count": 1
+      },
+      "3": {
+        "letter": "B",
+        "points": 3,
+        "count": 2
+      },
+      "4": {
+        "letter": "C",
+        "points": 4,
+        "count": 2
+      },
+      "7": {
+        "letter": "D",
+        "points": 1,
+        "count": 4
+      },
+      "8": {
+        "letter": "E",
+        "points": 1,
+        "count": 15
+      },
+      "9": {
+        "letter": "F",
+        "points": 4,
+        "count": 2
+      },
+      "10": {
+        "letter": "G",
+        "points": 2,
+        "count": 3
+      },
+      "11": {
+        "letter": "H",
+        "points": 2,
+        "count": 4
+      },
+      "12": {
+        "letter": "I",
+        "points": 1,
+        "count": 6
+      },
+      "13": {
+        "letter": "J",
+        "points": 6,
+        "count": 1
+      },
+      "14": {
+        "letter": "K",
+        "points": 4,
+        "count": 2
+      },
+      "15": {
+        "letter": "L",
+        "points": 2,
+        "count": 3
+      },
+      "16": {
+        "letter": "M",
+        "points": 3,
+        "count": 4
+      },
+      "17": {
+        "letter": "N",
+        "points": 1,
+        "count": 9
+      },
+      "18": {
+        "letter": "O",
+        "points": 2,
+        "count": 3
+      },
+      "19": {
+        "letter": "Ö",
+        "points": 8,
+        "count": 1
+      },
+      "20": {
+        "letter": "P",
+        "points": 4,
+        "count": 1
+      },
+      "21": {
+        "letter": "Q",
+        "points": 10,
+        "count": 1
+      },
+      "22": {
+        "letter": "R",
+        "points": 1,
+        "count": 6
+      },
+      "23": {
+        "letter": "S",
+        "points": 1,
+        "count": 7
+      },
+      "24": {
+        "letter": "T",
+        "points": 1,
+        "count": 6
+      },
+      "25": {
+        "letter": "U",
+        "points": 1,
+        "count": 6
+      },
+      "26": {
+        "letter": "Ü",
+        "points": 6,
+        "count": 1
+      },
+      "27": {
+        "letter": "V",
+        "points": 6,
+        "count": 1
+      },
+      "28": {
+        "letter": "W",
+        "points": 3,
+        "count": 1
+      },
+      "29": {
+        "letter": "X",
+        "points": 8,
+        "count": 1
+      },
+      "30": {
+        "letter": "Y",
+        "points": 10,
+        "count": 1
+      },
+      "31": {
+        "letter": "Z",
+        "points": 3,
+        "count": 1
+      },
+      "32": {
+        "letter": "?",
+        "points": 0,
+        "count": 2
+      }
+    },
+    "text": "German"
+  },
+  "Français": {
+    "id": "Français",
+    "x": -171,
+    "y": 348,
+    "css": {
+      "background": "white",
+      "font-size": "20px"
+    },
+    "languageSet": true,
+    "letters": {
+      "1": {
+        "letter": "A",
+        "points": 1,
+        "count": 9
+      },
+      "2": {
+        "letter": "B",
+        "points": 3,
+        "count": 2
+      },
+      "3": {
+        "letter": "C",
+        "points": 3,
+        "count": 2
+      },
+      "4": {
+        "letter": "D",
+        "points": 2,
+        "count": 3
+      },
+      "5": {
+        "letter": "E",
+        "points": 1,
+        "count": 15
+      },
+      "6": {
+        "letter": "F",
+        "points": 4,
+        "count": 2
+      },
+      "7": {
+        "letter": "G",
+        "points": 2,
+        "count": 2
+      },
+      "8": {
+        "letter": "H",
+        "points": 4,
+        "count": 2
+      },
+      "9": {
+        "letter": "I",
+        "points": 1,
+        "count": 8
+      },
+      "10": {
+        "letter": "J",
+        "points": 8,
+        "count": 1
+      },
+      "11": {
+        "letter": "K",
+        "points": 10,
+        "count": 1
+      },
+      "12": {
+        "letter": "L",
+        "points": 1,
+        "count": 5
+      },
+      "13": {
+        "letter": "M",
+        "points": 2,
+        "count": 3
+      },
+      "14": {
+        "letter": "N",
+        "points": 1,
+        "count": 6
+      },
+      "15": {
+        "letter": "O",
+        "points": 1,
+        "count": 6
+      },
+      "16": {
+        "letter": "P",
+        "points": 3,
+        "count": 2
+      },
+      "17": {
+        "letter": "Q",
+        "points": 8,
+        "count": 1
+      },
+      "18": {
+        "letter": "R",
+        "points": 1,
+        "count": 6
+      },
+      "19": {
+        "letter": "S",
+        "points": 1,
+        "count": 6
+      },
+      "20": {
+        "letter": "T",
+        "points": 1,
+        "count": 6
+      },
+      "21": {
+        "letter": "U",
+        "points": 1,
+        "count": 6
+      },
+      "22": {
+        "letter": "V",
+        "points": 4,
+        "count": 2
+      },
+      "23": {
+        "letter": "W",
+        "points": 10,
+        "count": 1
+      },
+      "24": {
+        "letter": "X",
+        "points": 10,
+        "count": 1
+      },
+      "25": {
+        "letter": "Y",
+        "points": 10,
+        "count": 1
+      },
+      "26": {
+        "letter": "Z",
+        "points": 10,
+        "count": 1
+      },
+      "27": {
+        "letter": "?",
+        "points": 0,
+        "count": 2
+      }
+    },
+    "text": "French"
+  },
+  "Italiano": {
+    "id": "Italiano",
+    "x": -171,
+    "y": 448,
+    "css": {
+      "background": "white",
+      "font-size": "20px"
+    },
+    "languageSet": true,
+    "letters": {
+      "1": {
+        "letter": "A",
+        "points": 1,
+        "count": 14
+      },
+      "2": {
+        "letter": "B",
+        "points": 5,
+        "count": 3
+      },
+      "3": {
+        "letter": "C",
+        "points": 2,
+        "count": 6
+      },
+      "4": {
+        "letter": "D",
+        "points": 5,
+        "count": 3
+      },
+      "5": {
+        "letter": "E",
+        "points": 1,
+        "count": 11
+      },
+      "6": {
+        "letter": "F",
+        "points": 5,
+        "count": 3
+      },
+      "7": {
+        "letter": "G",
+        "points": 8,
+        "count": 2
+      },
+      "8": {
+        "letter": "H",
+        "points": 8,
+        "count": 2
+      },
+      "9": {
+        "letter": "I",
+        "points": 1,
+        "count": 12
+      },
+      "10": {
+        "letter": "L",
+        "points": 3,
+        "count": 5
+      },
+      "11": {
+        "letter": "M",
+        "points": 3,
+        "count": 5
+      },
+      "12": {
+        "letter": "N",
+        "points": 3,
+        "count": 5
+      },
+      "13": {
+        "letter": "O",
+        "points": 1,
+        "count": 15
+      },
+      "14": {
+        "letter": "P",
+        "points": 5,
+        "count": 3
+      },
+      "15": {
+        "letter": "Q",
+        "points": 10,
+        "count": 1
+      },
+      "16": {
+        "letter": "R",
+        "points": 2,
+        "count": 6
+      },
+      "17": {
+        "letter": "S",
+        "points": 2,
+        "count": 6
+      },
+      "18": {
+        "letter": "T",
+        "points": 2,
+        "count": 6
+      },
+      "19": {
+        "letter": "U",
+        "points": 3,
+        "count": 5
+      },
+      "20": {
+        "letter": "V",
+        "points": 5,
+        "count": 3
+      },
+      "21": {
+        "letter": "Z",
+        "points": 8,
+        "count": 2
+      },
+      "22": {
+        "letter": "?",
+        "points": 0,
+        "count": 2
+      }
+    },
+    "text": "Italian"
+  },
+  "Português": {
+    "id": "Português",
+    "x": -171,
+    "y": 548,
+    "css": {
+      "background": "white",
+      "font-size": "20px"
+    },
+    "languageSet": true,
+    "letters": {
+      "1": {
+        "letter": "A",
+        "points": 1,
+        "count": 14
+      },
+      "2": {
+        "letter": "B",
+        "points": 3,
+        "count": 3
+      },
+      "3": {
+        "letter": "C",
+        "points": 2,
+        "count": 4
+      },
+      "4": {
+        "letter": "Ç",
+        "points": 3,
+        "count": 2
+      },
+      "5": {
+        "letter": "D",
+        "points": 2,
+        "count": 5
+      },
+      "6": {
+        "letter": "E",
+        "points": 1,
+        "count": 11
+      },
+      "7": {
+        "letter": "F",
+        "points": 4,
+        "count": 2
+      },
+      "8": {
+        "letter": "G",
+        "points": 4,
+        "count": 2
+      },
+      "9": {
+        "letter": "H",
+        "points": 4,
+        "count": 2
+      },
+      "10": {
+        "letter": "I",
+        "points": 1,
+        "count": 10
+      },
+      "11": {
+        "letter": "J",
+        "points": 5,
+        "count": 2
+      },
+      "12": {
+        "letter": "L",
+        "points": 2,
+        "count": 5
+      },
+      "13": {
+        "letter": "M",
+        "points": 1,
+        "count": 6
+      },
+      "14": {
+        "letter": "N",
+        "points": 3,
+        "count": 4
+      },
+      "15": {
+        "letter": "O",
+        "points": 1,
+        "count": 10
+      },
+      "16": {
+        "letter": "P",
+        "points": 2,
+        "count": 4
+      },
+      "17": {
+        "letter": "Q",
+        "points": 6,
+        "count": 1
+      },
+      "18": {
+        "letter": "R",
+        "points": 1,
+        "count": 6
+      },
+      "19": {
+        "letter": "S",
+        "points": 1,
+        "count": 8
+      },
+      "20": {
+        "letter": "T",
+        "points": 1,
+        "count": 5
+      },
+      "21": {
+        "letter": "U",
+        "points": 1,
+        "count": 7
+      },
+      "22": {
+        "letter": "V",
+        "points": 4,
+        "count": 2
+      },
+      "23": {
+        "letter": "X",
+        "points": 8,
+        "count": 1
+      },
+      "24": {
+        "letter": "Z",
+        "points": 8,
+        "count": 1
+      },
+      "25": {
+        "letter": "?",
+        "points": 0,
+        "count": 3
+      }
+    },
+    "text": "Portuguese"
+  },
+  "Español - América del Norte": {
+    "id": "Español - América del Norte",
+    "x": -171,
+    "y": 748,
+    "css": {
+      "background": "white",
+      "font-size": "20px"
+    },
+    "languageSet": true,
+    "letters": {
+      "1": {
+        "letter": "A",
+        "points": 1,
+        "count": 11
+      },
+      "2": {
+        "letter": "B",
+        "points": 3,
+        "count": 3
+      },
+      "3": {
+        "letter": "C",
+        "points": 2,
+        "count": 4
+      },
+      "4": {
+        "letter": "D",
+        "points": 2,
+        "count": 4
+      },
+      "5": {
+        "letter": "E",
+        "points": 1,
+        "count": 11
+      },
+      "6": {
+        "letter": "F",
+        "points": 4,
+        "count": 2
+      },
+      "7": {
+        "letter": "G",
+        "points": 2,
+        "count": 2
+      },
+      "8": {
+        "letter": "H",
+        "points": 4,
+        "count": 2
+      },
+      "9": {
+        "letter": "I",
+        "points": 1,
+        "count": 6
+      },
+      "10": {
+        "letter": "J",
+        "points": 6,
+        "count": 2
+      },
+      "11": {
+        "letter": "K",
+        "points": 8,
+        "count": 1
+      },
+      "12": {
+        "letter": "L",
+        "points": 1,
+        "count": 4
+      },
+      "13": {
+        "letter": "LL",
+        "points": 8,
+        "count": 1
+      },
+      "14": {
+        "letter": "M",
+        "points": 3,
+        "count": 3
+      },
+      "15": {
+        "letter": "N",
+        "points": 1,
+        "count": 5
+      },
+      "16": {
+        "letter": "Ñ",
+        "points": 8,
+        "count": 1
+      },
+      "17": {
+        "letter": "O",
+        "points": 1,
+        "count": 8
+      },
+      "18": {
+        "letter": "P",
+        "points": 3,
+        "count": 2
+      },
+      "19": {
+        "letter": "Q",
+        "points": 8,
+        "count": 1
+      },
+      "20": {
+        "letter": "R",
+        "points": 1,
+        "count": 4
+      },
+      "21": {
+        "letter": "RR",
+        "points": 8,
+        "count": 1
+      },
+      "22": {
+        "letter": "S",
+        "points": 1,
+        "count": 7
+      },
+      "23": {
+        "letter": "T",
+        "points": 1,
+        "count": 4
+      },
+      "24": {
+        "letter": "U",
+        "points": 1,
+        "count": 6
+      },
+      "25": {
+        "letter": "V",
+        "points": 4,
+        "count": 2
+      },
+      "26": {
+        "letter": "W",
+        "points": 8,
+        "count": 1
+      },
+      "27": {
+        "letter": "X",
+        "points": 8,
+        "count": 1
+      },
+      "28": {
+        "letter": "Y",
+        "points": 4,
+        "count": 1
+      },
+      "29": {
+        "letter": "Z",
+        "points": 10,
+        "count": 1
+      },
+      "30": {
+        "letter": "?",
+        "points": 0,
+        "count": 2
+      }
+    },
+    "text": "Spanish - North America"
+  },
+  "Español - Internacional": {
+    "id": "Español - Internacional",
+    "x": -171,
+    "y": 648,
+    "css": {
+      "background": "white",
+      "font-size": "20px"
+    },
+    "text": "Spanish - International",
+    "languageSet": true,
+    "letters": {
+      "1": {
+        "letter": "A",
+        "points": 1,
+        "count": 12
+      },
+      "2": {
+        "letter": "B",
+        "points": 3,
+        "count": 2
+      },
+      "3": {
+        "letter": "C",
+        "points": 3,
+        "count": 4
+      },
+      "4": {
+        "letter": "CH",
+        "points": 5,
+        "count": 1
+      },
+      "5": {
+        "letter": "D",
+        "points": 2,
+        "count": 5
+      },
+      "6": {
+        "letter": "E",
+        "points": 1,
+        "count": 12
+      },
+      "7": {
+        "letter": "F",
+        "points": 4,
+        "count": 1
+      },
+      "8": {
+        "letter": "G",
+        "points": 2,
+        "count": 2
+      },
+      "9": {
+        "letter": "H",
+        "points": 4,
+        "count": 2
+      },
+      "10": {
+        "letter": "I",
+        "points": 1,
+        "count": 6
+      },
+      "11": {
+        "letter": "J",
+        "points": 8,
+        "count": 1
+      },
+      "12": {
+        "letter": "L",
+        "points": 1,
+        "count": 4
+      },
+      "13": {
+        "letter": "LL",
+        "points": 8,
+        "count": 1
+      },
+      "14": {
+        "letter": "M",
+        "points": 3,
+        "count": 2
+      },
+      "15": {
+        "letter": "N",
+        "points": 1,
+        "count": 5
+      },
+      "16": {
+        "letter": "Ñ",
+        "points": 8,
+        "count": 1
+      },
+      "17": {
+        "letter": "O",
+        "points": 1,
+        "count": 9
+      },
+      "18": {
+        "letter": "P",
+        "points": 3,
+        "count": 2
+      },
+      "19": {
+        "letter": "Q",
+        "points": 5,
+        "count": 1
+      },
+      "20": {
+        "letter": "R",
+        "points": 1,
+        "count": 5
+      },
+      "21": {
+        "letter": "RR",
+        "points": 8,
+        "count": 1
+      },
+      "22": {
+        "letter": "S",
+        "points": 1,
+        "count": 6
+      },
+      "23": {
+        "letter": "T",
+        "points": 1,
+        "count": 4
+      },
+      "24": {
+        "letter": "U",
+        "points": 1,
+        "count": 5
+      },
+      "25": {
+        "letter": "V",
+        "points": 4,
+        "count": 1
+      },
+      "26": {
+        "letter": "X",
+        "points": 8,
+        "count": 1
+      },
+      "27": {
+        "letter": "Y",
+        "points": 4,
+        "count": 1
+      },
+      "28": {
+        "letter": "Z",
+        "points": 10,
+        "count": 1
+      },
+      "29": {
+        "letter": "?",
+        "points": 0,
+        "count": 2
+      }
+    }
+  },
+  "Español - América Latina": {
+    "id": "Español - América Latina",
+    "x": -171,
+    "y": 848,
+    "css": {
+      "background": "white",
+      "font-size": "20px"
+    },
+    "languageSet": true,
+    "letters": {
+      "1": {
+        "letter": "A",
+        "points": 1,
+        "count": 9
+      },
+      "2": {
+        "letter": "B",
+        "points": 2,
+        "count": 2
+      },
+      "3": {
+        "letter": "C",
+        "points": 3,
+        "count": 2
+      },
+      "4": {
+        "letter": "CH",
+        "points": 4,
+        "count": 4
+      },
+      "5": {
+        "letter": "D",
+        "points": 2,
+        "count": 4
+      },
+      "6": {
+        "letter": "E",
+        "points": 1,
+        "count": 12
+      },
+      "7": {
+        "letter": "F",
+        "points": 4,
+        "count": 2
+      },
+      "8": {
+        "letter": "G",
+        "points": 2,
+        "count": 3
+      },
+      "9": {
+        "letter": "H",
+        "points": 4,
+        "count": 2
+      },
+      "10": {
+        "letter": "I",
+        "points": 1,
+        "count": 9
+      },
+      "11": {
+        "letter": "J",
+        "points": 8,
+        "count": 1
+      },
+      "12": {
+        "letter": "K",
+        "points": 5,
+        "count": 1
+      },
+      "13": {
+        "letter": "L",
+        "points": 1,
+        "count": 4
+      },
+      "14": {
+        "letter": "LL",
+        "points": 4,
+        "count": 3
+      },
+      "15": {
+        "letter": "M",
+        "points": 3,
+        "count": 2
+      },
+      "16": {
+        "letter": "N",
+        "points": 1,
+        "count": 6
+      },
+      "17": {
+        "letter": "Ñ",
+        "points": 1,
+        "count": 3
+      },
+      "18": {
+        "letter": "O",
+        "points": 1,
+        "count": 8
+      },
+      "19": {
+        "letter": "P",
+        "points": 3,
+        "count": 2
+      },
+      "20": {
+        "letter": "Q",
+        "points": 10,
+        "count": 1
+      },
+      "21": {
+        "letter": "R",
+        "points": 1,
+        "count": 6
+      },
+      "22": {
+        "letter": "S",
+        "points": 1,
+        "count": 4
+      },
+      "23": {
+        "letter": "T",
+        "points": 1,
+        "count": 6
+      },
+      "24": {
+        "letter": "U",
+        "points": 1,
+        "count": 4
+      },
+      "25": {
+        "letter": "V",
+        "points": 4,
+        "count": 2
+      },
+      "26": {
+        "letter": "X",
+        "points": 8,
+        "count": 1
+      },
+      "27": {
+        "letter": "Y",
+        "points": 4,
+        "count": 2
+      },
+      "28": {
+        "letter": "Z",
+        "points": 10,
+        "count": 1
+      },
+      "29": {
+        "letter": "?",
+        "points": 0,
+        "count": 2
+      }
+    },
+    "text": "Spanish - Latin America"
+  },
+  "Cymraeg": {
+    "id": "Cymraeg",
+    "x": -171,
+    "y": 948,
+    "css": {
+      "background": "white",
+      "font-size": "20px"
+    },
+    "languageSet": true,
+    "letters": {
+      "1": {
+        "letter": "A",
+        "points": 1,
+        "count": 10
+      },
+      "2": {
+        "letter": "B",
+        "points": 3,
+        "count": 2
+      },
+      "3": {
+        "letter": "C",
+        "points": 4,
+        "count": 2
+      },
+      "4": {
+        "letter": "CH",
+        "points": 5,
+        "count": 1
+      },
+      "5": {
+        "letter": "D",
+        "points": 1,
+        "count": 6
+      },
+      "6": {
+        "letter": "DD",
+        "points": 1,
+        "count": 4
+      },
+      "7": {
+        "letter": "E",
+        "points": 1,
+        "count": 8
+      },
+      "8": {
+        "letter": "F",
+        "points": 2,
+        "count": 3
+      },
+      "9": {
+        "letter": "FF",
+        "points": 4,
+        "count": 2
+      },
+      "10": {
+        "letter": "G",
+        "points": 2,
+        "count": 3
+      },
+      "11": {
+        "letter": "H",
+        "points": 4,
+        "count": 2
+      },
+      "12": {
+        "letter": "I",
+        "points": 1,
+        "count": 7
+      },
+      "13": {
+        "letter": "J",
+        "points": 8,
+        "count": 1
+      },
+      "14": {
+        "letter": "L",
+        "points": 2,
+        "count": 3
+      },
+      "15": {
+        "letter": "LL",
+        "points": 5,
+        "count": 1
+      },
+      "16": {
+        "letter": "M",
+        "points": 3,
+        "count": 2
+      },
+      "17": {
+        "letter": "N",
+        "points": 1,
+        "count": 8
+      },
+      "18": {
+        "letter": "NG",
+        "points": 10,
+        "count": 1
+      },
+      "19": {
+        "letter": "O",
+        "points": 1,
+        "count": 6
+      },
+      "20": {
+        "letter": "P",
+        "points": 5,
+        "count": 1
+      },
+      "21": {
+        "letter": "R",
+        "points": 1,
+        "count": 7
+      },
+      "22": {
+        "letter": "RH",
+        "points": 10,
+        "count": 1
+      },
+      "23": {
+        "letter": "S",
+        "points": 3,
+        "count": 3
+      },
+      "24": {
+        "letter": "T",
+        "points": 3,
+        "count": 2
+      },
+      "25": {
+        "letter": "TH",
+        "points": 4,
+        "count": 2
+      },
+      "26": {
+        "letter": "U",
+        "points": 2,
+        "count": 3
+      },
+      "27": {
+        "letter": "W",
+        "points": 1,
+        "count": 5
+      },
+      "28": {
+        "letter": "Y",
+        "points": 1,
+        "count": 7
+      },
+      "29": {
+        "letter": "?",
+        "points": 0,
+        "count": 2
+      }
+    },
+    "text": "Welsh"
+  },
+  "українська мова": {
+    "id": "українська мова",
+    "x": -171,
+    "y": 1048,
+    "css": {
+      "background": "white",
+      "font-size": "20px"
+    },
+    "languageSet": true,
+    "letters": {
+      "1": {
+        "letter": "А",
+        "points": 1,
+        "count": 8
+      },
+      "2": {
+        "letter": "Б",
+        "points": 4,
+        "count": 2
+      },
+      "3": {
+        "letter": "В",
+        "points": 1,
+        "count": 4
+      },
+      "4": {
+        "letter": "Г",
+        "points": 4,
+        "count": 2
+      },
+      "5": {
+        "letter": "Д",
+        "points": 2,
+        "count": 3
+      },
+      "6": {
+        "letter": "Е",
+        "points": 1,
+        "count": 5
+      },
+      "7": {
+        "letter": "Є",
+        "points": 8,
+        "count": 1
+      },
+      "8": {
+        "letter": "Ж",
+        "points": 6,
+        "count": 1
+      },
+      "9": {
+        "letter": "З",
+        "points": 4,
+        "count": 2
+      },
+      "10": {
+        "letter": "И",
+        "points": 1,
+        "count": 7
+      },
+      "11": {
+        "letter": "І",
+        "points": 1,
+        "count": 5
+      },
+      "12": {
+        "letter": "Ї",
+        "points": 6,
+        "count": 1
+      },
+      "13": {
+        "letter": "Й",
+        "points": 5,
+        "count": 1
+      },
+      "14": {
+        "letter": "К",
+        "points": 2,
+        "count": 4
+      },
+      "15": {
+        "letter": "Л",
+        "points": 2,
+        "count": 3
+      },
+      "16": {
+        "letter": "М",
+        "points": 2,
+        "count": 4
+      },
+      "17": {
+        "letter": "Н",
+        "points": 1,
+        "count": 7
+      },
+      "18": {
+        "letter": "О",
+        "points": 1,
+        "count": 10
+      },
+      "19": {
+        "letter": "П",
+        "points": 2,
+        "count": 3
+      },
+      "20": {
+        "letter": "Р",
+        "points": 1,
+        "count": 5
+      },
+      "21": {
+        "letter": "С",
+        "points": 2,
+        "count": 4
+      },
+      "22": {
+        "letter": "Т",
+        "points": 1,
+        "count": 5
+      },
+      "23": {
+        "letter": "У",
+        "points": 3,
+        "count": 3
+      },
+      "24": {
+        "letter": "Ф",
+        "points": 8,
+        "count": 1
+      },
+      "25": {
+        "letter": "Х",
+        "points": 5,
+        "count": 1
+      },
+      "26": {
+        "letter": "Ц",
+        "points": 6,
+        "count": 1
+      },
+      "27": {
+        "letter": "Ч",
+        "points": 5,
+        "count": 1
+      },
+      "28": {
+        "letter": "Ш",
+        "points": 6,
+        "count": 1
+      },
+      "29": {
+        "letter": "Щ",
+        "points": 8,
+        "count": 1
+      },
+      "30": {
+        "letter": "Ь",
+        "points": 5,
+        "count": 1
+      },
+      "31": {
+        "letter": "Ю",
+        "points": 7,
+        "count": 1
+      },
+      "32": {
+        "letter": "Я",
+        "points": 4,
+        "count": 2
+      },
+      "33": {
+        "letter": "Ґ",
+        "points": 10,
+        "count": 1
+      },
+      "34": {
+        "letter": "'",
+        "points": 10,
+        "count": 1
+      },
+      "35": {
+        "letter": "?",
+        "points": 0,
+        "count": 2
+      }
+    },
+    "text": "Ukrainian"
+  },
+  "עִבְרִית": {
+    "id": "עִבְרִית",
+    "x": -171,
+    "y": 1148,
+    "css": {
+      "background": "white",
+      "font-size": "20px"
+    },
+    "text": "Hebrew",
+    "languageSet": true,
+    "letters": {
+      "1": {
+        "letter": "א",
+        "points": 2,
+        "count": 6
+      },
+      "2": {
+        "letter": "ב",
+        "points": 3,
+        "count": 4
+      },
+      "3": {
+        "letter": "ג",
+        "points": 8,
+        "count": 1
+      },
+      "4": {
+        "letter": "ד",
+        "points": 3,
+        "count": 4
+      },
+      "5": {
+        "letter": "ה",
+        "points": 1,
+        "count": 8
+      },
+      "6": {
+        "letter": "ו",
+        "points": 1,
+        "count": 12
+      },
+      "7": {
+        "letter": "ז",
+        "points": 8,
+        "count": 1
+      },
+      "8": {
+        "letter": "ח",
+        "points": 5,
+        "count": 3
+      },
+      "9": {
+        "letter": "ט",
+        "points": 8,
+        "count": 1
+      },
+      "10": {
+        "letter": "י",
+        "points": 1,
+        "count": 10
+      },
+      "11": {
+        "letter": "כ",
+        "points": 5,
+        "count": 2
+      },
+      "12": {
+        "letter": "ל",
+        "points": 2,
+        "count": 6
+      },
+      "13": {
+        "letter": "מ",
+        "points": 2,
+        "count": 6
+      },
+      "14": {
+        "letter": "נ",
+        "points": 4,
+        "count": 3
+      },
+      "15": {
+        "letter": "ס",
+        "points": 8,
+        "count": 1
+      },
+      "16": {
+        "letter": "ע",
+        "points": 8,
+        "count": 2
+      },
+      "17": {
+        "letter": "פ",
+        "points": 4,
+        "count": 3
+      },
+      "18": {
+        "letter": "צ",
+        "points": 8,
+        "count": 1
+      },
+      "19": {
+        "letter": "ק",
+        "points": 5,
+        "count": 2
+      },
+      "20": {
+        "letter": "ר",
+        "points": 1,
+        "count": 8
+      },
+      "21": {
+        "letter": "ש",
+        "points": 2,
+        "count": 6
+      },
+      "22": {
+        "letter": "ת",
+        "points": 1,
+        "count": 8
+      },
+      "24": {
+        "letter": "?",
+        "points": 0,
+        "count": 2
+      }
+    }
+  },
+  "gu8d": {
+    "deck": "deckTemplate",
+    "type": "card",
+    "cardType": "master",
+    "z": 12268,
+    "x": null,
+    "y": null,
+    "letter": "A",
+    "points": 1,
+    "clonedFrom": "fr7o",
+    "id": "gu8d",
+    "parent": "dst0"
+  },
+  "m11q": {
+    "deck": "deckTemplate",
+    "type": "card",
+    "cardType": "master",
+    "z": 12295,
+    "x": null,
+    "y": null,
+    "letter": "A",
+    "points": 1,
+    "clonedFrom": "fr7o",
+    "id": "m11q",
+    "parent": "dst0"
+  },
+  "dst0": {
+    "type": "pile",
+    "parent": "deckHolder",
+    "x": 4,
+    "y": 4,
+    "width": 52,
+    "height": 52,
+    "handleCSS": "background:#b97a56;color:white",
+    "handleSize": 20,
+    "handleOffset": 1,
+    "id": "dst0"
+  },
+  "zv52": {
+    "deck": "deckTemplate",
+    "type": "card",
+    "cardType": "master",
+    "z": 12319,
+    "x": null,
+    "y": null,
+    "letter": "A",
+    "points": 1,
+    "clonedFrom": "fr7o",
+    "id": "zv52",
+    "parent": "dst0"
+  },
+  "wscj": {
+    "deck": "deckTemplate",
+    "type": "card",
+    "cardType": "master",
+    "z": 12270,
+    "x": null,
+    "y": null,
+    "letter": "A",
+    "points": 1,
+    "clonedFrom": "fr7o",
+    "id": "wscj",
+    "parent": "dst0"
+  },
+  "nhjt": {
+    "deck": "deckTemplate",
+    "type": "card",
+    "cardType": "master",
+    "z": 12280,
+    "x": null,
+    "y": null,
+    "letter": "A",
+    "points": 1,
+    "clonedFrom": "fr7o",
+    "id": "nhjt",
+    "parent": "dst0"
+  },
+  "wdrz": {
+    "deck": "deckTemplate",
+    "type": "card",
+    "cardType": "master",
+    "z": 12356,
+    "x": null,
+    "y": null,
+    "letter": "A",
+    "points": 1,
+    "clonedFrom": "fr7o",
+    "id": "wdrz",
+    "parent": "dst0"
+  },
+  "p1b7": {
+    "deck": "deckTemplate",
+    "type": "card",
+    "cardType": "master",
+    "z": 12352,
+    "x": null,
+    "y": null,
+    "letter": "A",
+    "points": 1,
+    "clonedFrom": "fr7o",
+    "id": "p1b7",
+    "parent": "dst0"
+  },
+  "shsq": {
+    "deck": "deckTemplate",
+    "type": "card",
+    "cardType": "master",
+    "z": 12358,
+    "x": null,
+    "y": null,
+    "letter": "A",
+    "points": 1,
+    "clonedFrom": "fr7o",
+    "id": "shsq",
+    "parent": "dst0"
+  },
+  "b48q": {
+    "deck": "deckTemplate",
+    "type": "card",
+    "cardType": "master",
+    "z": 12283,
+    "x": null,
+    "y": null,
+    "letter": "A",
+    "points": 1,
+    "clonedFrom": "fr7o",
+    "id": "b48q",
+    "parent": "dst0"
+  },
+  "8m5l": {
+    "deck": "deckTemplate",
+    "type": "card",
+    "cardType": "master",
+    "z": 12300,
+    "x": null,
+    "y": null,
+    "letter": "B",
+    "points": 3,
+    "clonedFrom": "fr7o",
+    "id": "8m5l",
+    "parent": "dst0"
+  },
+  "6lje": {
+    "deck": "deckTemplate",
+    "type": "card",
+    "cardType": "master",
+    "z": 12293,
+    "x": null,
+    "y": null,
+    "letter": "B",
+    "points": 3,
+    "clonedFrom": "fr7o",
+    "id": "6lje",
+    "parent": "dst0"
+  },
+  "s3iz": {
+    "deck": "deckTemplate",
+    "type": "card",
+    "cardType": "master",
+    "z": 12285,
+    "x": null,
+    "y": null,
+    "letter": "C",
+    "points": 3,
+    "clonedFrom": "fr7o",
+    "id": "s3iz",
+    "parent": "dst0"
+  },
+  "13ts": {
+    "deck": "deckTemplate",
+    "type": "card",
+    "cardType": "master",
+    "z": 12312,
+    "x": null,
+    "y": null,
+    "letter": "C",
+    "points": 3,
+    "clonedFrom": "fr7o",
+    "id": "13ts",
+    "parent": "dst0"
+  },
+  "exwe": {
+    "deck": "deckTemplate",
+    "type": "card",
+    "cardType": "master",
+    "z": 12317,
+    "x": null,
+    "y": null,
+    "letter": "D",
+    "points": 2,
+    "clonedFrom": "fr7o",
+    "id": "exwe",
+    "parent": "dst0"
+  },
+  "y49r": {
+    "deck": "deckTemplate",
+    "type": "card",
+    "cardType": "master",
+    "z": 12303,
+    "x": null,
+    "y": null,
+    "letter": "D",
+    "points": 2,
+    "clonedFrom": "fr7o",
+    "id": "y49r",
+    "parent": "dst0"
+  },
+  "y2dq": {
+    "deck": "deckTemplate",
+    "type": "card",
+    "cardType": "master",
+    "z": 12349,
+    "x": null,
+    "y": null,
+    "letter": "D",
+    "points": 2,
+    "clonedFrom": "fr7o",
+    "id": "y2dq",
+    "parent": "dst0"
+  },
+  "zxaq": {
+    "deck": "deckTemplate",
+    "type": "card",
+    "cardType": "master",
+    "z": 12364,
+    "x": null,
+    "y": null,
+    "letter": "D",
+    "points": 2,
+    "clonedFrom": "fr7o",
+    "id": "zxaq",
+    "parent": "dst0"
+  },
+  "8hnw": {
+    "deck": "deckTemplate",
+    "type": "card",
+    "cardType": "master",
+    "z": 12354,
+    "x": null,
+    "y": null,
+    "letter": "E",
+    "points": 1,
+    "clonedFrom": "fr7o",
+    "id": "8hnw",
+    "parent": "dst0"
+  },
+  "kn89": {
+    "deck": "deckTemplate",
+    "type": "card",
+    "cardType": "master",
+    "z": 12328,
+    "x": null,
+    "y": null,
+    "letter": "E",
+    "points": 1,
+    "clonedFrom": "fr7o",
+    "id": "kn89",
+    "parent": "dst0"
+  },
+  "lf30": {
+    "deck": "deckTemplate",
+    "type": "card",
+    "cardType": "master",
+    "z": 12310,
+    "x": null,
+    "y": null,
+    "letter": "E",
+    "points": 1,
+    "clonedFrom": "fr7o",
+    "id": "lf30",
+    "parent": "dst0"
+  },
+  "dymk": {
+    "deck": "deckTemplate",
+    "type": "card",
+    "cardType": "master",
+    "z": 12335,
+    "x": null,
+    "y": null,
+    "letter": "E",
+    "points": 1,
+    "clonedFrom": "fr7o",
+    "id": "dymk",
+    "parent": "dst0"
+  },
+  "wc4d": {
+    "deck": "deckTemplate",
+    "type": "card",
+    "cardType": "master",
+    "z": 12298,
+    "x": null,
+    "y": null,
+    "letter": "E",
+    "points": 1,
+    "clonedFrom": "fr7o",
+    "id": "wc4d",
+    "parent": "dst0"
+  },
+  "h3bz": {
+    "deck": "deckTemplate",
+    "type": "card",
+    "cardType": "master",
+    "z": 12321,
+    "x": null,
+    "y": null,
+    "letter": "E",
+    "points": 1,
+    "clonedFrom": "fr7o",
+    "id": "h3bz",
+    "parent": "dst0"
+  },
+  "gddc": {
+    "deck": "deckTemplate",
+    "type": "card",
+    "cardType": "master",
+    "z": 12296,
+    "x": null,
+    "y": null,
+    "letter": "E",
+    "points": 1,
+    "clonedFrom": "fr7o",
+    "id": "gddc",
+    "parent": "dst0"
+  },
+  "mxuj": {
+    "deck": "deckTemplate",
+    "type": "card",
+    "cardType": "master",
+    "z": 12311,
+    "x": null,
+    "y": null,
+    "letter": "E",
+    "points": 1,
+    "clonedFrom": "fr7o",
+    "id": "mxuj",
+    "parent": "dst0"
+  },
+  "yd49": {
+    "deck": "deckTemplate",
+    "type": "card",
+    "cardType": "master",
+    "z": 12345,
+    "x": null,
+    "y": null,
+    "letter": "E",
+    "points": 1,
+    "clonedFrom": "fr7o",
+    "id": "yd49",
+    "parent": "dst0"
+  },
+  "w91t": {
+    "deck": "deckTemplate",
+    "type": "card",
+    "cardType": "master",
+    "z": 12276,
+    "x": null,
+    "y": null,
+    "letter": "E",
+    "points": 1,
+    "clonedFrom": "fr7o",
+    "id": "w91t",
+    "parent": "dst0"
+  },
+  "og6b": {
+    "deck": "deckTemplate",
+    "type": "card",
+    "cardType": "master",
+    "z": 12291,
+    "x": null,
+    "y": null,
+    "letter": "E",
+    "points": 1,
+    "clonedFrom": "fr7o",
+    "id": "og6b",
+    "parent": "dst0"
+  },
+  "bofb": {
+    "deck": "deckTemplate",
+    "type": "card",
+    "cardType": "master",
+    "z": 12281,
+    "x": null,
+    "y": null,
+    "letter": "E",
+    "points": 1,
+    "clonedFrom": "fr7o",
+    "id": "bofb",
+    "parent": "dst0"
+  },
+  "ompb": {
+    "deck": "deckTemplate",
+    "type": "card",
+    "cardType": "master",
+    "z": 12327,
+    "x": null,
+    "y": null,
+    "letter": "F",
+    "points": 4,
+    "clonedFrom": "fr7o",
+    "id": "ompb",
+    "parent": "dst0"
+  },
+  "1q2t": {
+    "deck": "deckTemplate",
+    "type": "card",
+    "cardType": "master",
+    "z": 12308,
+    "x": null,
+    "y": null,
+    "letter": "F",
+    "points": 4,
+    "clonedFrom": "fr7o",
+    "id": "1q2t",
+    "parent": "dst0"
+  },
+  "8x0k": {
+    "deck": "deckTemplate",
+    "type": "card",
+    "cardType": "master",
+    "z": 12351,
+    "x": null,
+    "y": null,
+    "letter": "G",
+    "points": 2,
+    "clonedFrom": "fr7o",
+    "id": "8x0k",
+    "parent": "dst0"
+  },
+  "06km": {
+    "deck": "deckTemplate",
+    "type": "card",
+    "cardType": "master",
+    "z": 12266,
+    "x": null,
+    "y": null,
+    "letter": "G",
+    "points": 2,
+    "clonedFrom": "fr7o",
+    "id": "06km",
+    "parent": "dst0"
+  },
+  "89ue": {
+    "deck": "deckTemplate",
+    "type": "card",
+    "cardType": "master",
+    "z": 12365,
+    "x": null,
+    "y": null,
+    "letter": "G",
+    "points": 2,
+    "clonedFrom": "fr7o",
+    "id": "89ue",
+    "parent": "dst0"
+  },
+  "s6fd": {
+    "deck": "deckTemplate",
+    "type": "card",
+    "cardType": "master",
+    "z": 12272,
+    "x": null,
+    "y": null,
+    "letter": "H",
+    "points": 4,
+    "clonedFrom": "fr7o",
+    "id": "s6fd",
+    "parent": "dst0"
+  },
+  "nqgz": {
+    "deck": "deckTemplate",
+    "type": "card",
+    "cardType": "master",
+    "z": 12350,
+    "x": null,
+    "y": null,
+    "letter": "H",
+    "points": 4,
+    "clonedFrom": "fr7o",
+    "id": "nqgz",
+    "parent": "dst0"
+  },
+  "ynmo": {
+    "deck": "deckTemplate",
+    "type": "card",
+    "cardType": "master",
+    "z": 12286,
+    "x": null,
+    "y": null,
+    "letter": "I",
+    "points": 1,
+    "clonedFrom": "fr7o",
+    "id": "ynmo",
+    "parent": "dst0"
+  },
+  "sx4w": {
+    "deck": "deckTemplate",
+    "type": "card",
+    "cardType": "master",
+    "z": 12305,
+    "x": null,
+    "y": null,
+    "letter": "I",
+    "points": 1,
+    "clonedFrom": "fr7o",
+    "id": "sx4w",
+    "parent": "dst0"
+  },
+  "ubdp": {
+    "deck": "deckTemplate",
+    "type": "card",
+    "cardType": "master",
+    "z": 12357,
+    "x": null,
+    "y": null,
+    "letter": "I",
+    "points": 1,
+    "clonedFrom": "fr7o",
+    "id": "ubdp",
+    "parent": "dst0"
+  },
+  "kazz": {
+    "deck": "deckTemplate",
+    "type": "card",
+    "cardType": "master",
+    "z": 12278,
+    "x": null,
+    "y": null,
+    "letter": "I",
+    "points": 1,
+    "clonedFrom": "fr7o",
+    "id": "kazz",
+    "parent": "dst0"
+  },
+  "yqb3": {
+    "deck": "deckTemplate",
+    "type": "card",
+    "cardType": "master",
+    "z": 12324,
+    "x": null,
+    "y": null,
+    "letter": "I",
+    "points": 1,
+    "clonedFrom": "fr7o",
+    "id": "yqb3",
+    "parent": "dst0"
+  },
+  "ejed": {
+    "deck": "deckTemplate",
+    "type": "card",
+    "cardType": "master",
+    "z": 12282,
+    "x": null,
+    "y": null,
+    "letter": "I",
+    "points": 1,
+    "clonedFrom": "fr7o",
+    "id": "ejed",
+    "parent": "dst0"
+  },
+  "l2m0": {
+    "deck": "deckTemplate",
+    "type": "card",
+    "cardType": "master",
+    "z": 12340,
+    "x": null,
+    "y": null,
+    "letter": "I",
+    "points": 1,
+    "clonedFrom": "fr7o",
+    "id": "l2m0",
+    "parent": "dst0"
+  },
+  "vz5n": {
+    "deck": "deckTemplate",
+    "type": "card",
+    "cardType": "master",
+    "z": 12347,
+    "x": null,
+    "y": null,
+    "letter": "I",
+    "points": 1,
+    "clonedFrom": "fr7o",
+    "id": "vz5n",
+    "parent": "dst0"
+  },
+  "12l8": {
+    "deck": "deckTemplate",
+    "type": "card",
+    "cardType": "master",
+    "z": 12348,
+    "x": null,
+    "y": null,
+    "letter": "I",
+    "points": 1,
+    "clonedFrom": "fr7o",
+    "id": "12l8",
+    "parent": "dst0"
+  },
+  "ncfp": {
+    "deck": "deckTemplate",
+    "type": "card",
+    "cardType": "master",
+    "z": 12277,
+    "x": null,
+    "y": null,
+    "letter": "J",
+    "points": 8,
+    "clonedFrom": "fr7o",
+    "id": "ncfp",
+    "parent": "dst0"
+  },
+  "d2ev": {
+    "deck": "deckTemplate",
+    "type": "card",
+    "cardType": "master",
+    "z": 12309,
+    "x": null,
+    "y": null,
+    "letter": "K",
+    "points": 5,
+    "clonedFrom": "fr7o",
+    "id": "d2ev",
+    "parent": "dst0"
+  },
+  "vto8": {
+    "deck": "deckTemplate",
+    "type": "card",
+    "cardType": "master",
+    "z": 12294,
+    "x": null,
+    "y": null,
+    "letter": "L",
+    "points": 1,
+    "clonedFrom": "fr7o",
+    "id": "vto8",
+    "parent": "dst0"
+  },
+  "xjtg": {
+    "deck": "deckTemplate",
+    "type": "card",
+    "cardType": "master",
+    "z": 12342,
+    "x": null,
+    "y": null,
+    "letter": "L",
+    "points": 1,
+    "clonedFrom": "fr7o",
+    "id": "xjtg",
+    "parent": "dst0"
+  },
+  "q44k": {
+    "deck": "deckTemplate",
+    "type": "card",
+    "cardType": "master",
+    "z": 12361,
+    "x": null,
+    "y": null,
+    "letter": "L",
+    "points": 1,
+    "clonedFrom": "fr7o",
+    "id": "q44k",
+    "parent": "dst0"
+  },
+  "f600": {
+    "deck": "deckTemplate",
+    "type": "card",
+    "cardType": "master",
+    "z": 12267,
+    "x": null,
+    "y": null,
+    "letter": "L",
+    "points": 1,
+    "clonedFrom": "fr7o",
+    "id": "f600",
+    "parent": "dst0"
+  },
+  "qqgw": {
+    "deck": "deckTemplate",
+    "type": "card",
+    "cardType": "master",
+    "z": 12307,
+    "x": null,
+    "y": null,
+    "letter": "M",
+    "points": 3,
+    "clonedFrom": "fr7o",
+    "id": "qqgw",
+    "parent": "dst0"
+  },
+  "3clb": {
+    "deck": "deckTemplate",
+    "type": "card",
+    "cardType": "master",
+    "z": 12325,
+    "x": null,
+    "y": null,
+    "letter": "M",
+    "points": 3,
+    "clonedFrom": "fr7o",
+    "id": "3clb",
+    "parent": "dst0"
+  },
+  "qqd4": {
+    "deck": "deckTemplate",
+    "type": "card",
+    "cardType": "master",
+    "z": 12314,
+    "x": null,
+    "y": null,
+    "letter": "N",
+    "points": 1,
+    "clonedFrom": "fr7o",
+    "id": "qqd4",
+    "parent": "dst0"
+  },
+  "it94": {
+    "deck": "deckTemplate",
+    "type": "card",
+    "cardType": "master",
+    "z": 12299,
+    "x": null,
+    "y": null,
+    "letter": "N",
+    "points": 1,
+    "clonedFrom": "fr7o",
+    "id": "it94",
+    "parent": "dst0"
+  },
+  "n9xe": {
+    "deck": "deckTemplate",
+    "type": "card",
+    "cardType": "master",
+    "z": 12316,
+    "x": null,
+    "y": null,
+    "letter": "N",
+    "points": 1,
+    "clonedFrom": "fr7o",
+    "id": "n9xe",
+    "parent": "dst0"
+  },
+  "cl47": {
+    "deck": "deckTemplate",
+    "type": "card",
+    "cardType": "master",
+    "z": 12306,
+    "x": null,
+    "y": null,
+    "letter": "N",
+    "points": 1,
+    "clonedFrom": "fr7o",
+    "id": "cl47",
+    "parent": "dst0"
+  },
+  "zb57": {
+    "deck": "deckTemplate",
+    "type": "card",
+    "cardType": "master",
+    "z": 12359,
+    "x": null,
+    "y": null,
+    "letter": "N",
+    "points": 1,
+    "clonedFrom": "fr7o",
+    "id": "zb57",
+    "parent": "dst0"
+  },
+  "9coz": {
+    "deck": "deckTemplate",
+    "type": "card",
+    "cardType": "master",
+    "z": 12331,
+    "x": null,
+    "y": null,
+    "letter": "N",
+    "points": 1,
+    "clonedFrom": "fr7o",
+    "id": "9coz",
+    "parent": "dst0"
+  },
+  "y1q8": {
+    "deck": "deckTemplate",
+    "type": "card",
+    "cardType": "master",
+    "z": 12269,
+    "x": null,
+    "y": null,
+    "letter": "O",
+    "points": 1,
+    "clonedFrom": "fr7o",
+    "id": "y1q8",
+    "parent": "dst0"
+  },
+  "2mju": {
+    "deck": "deckTemplate",
+    "type": "card",
+    "cardType": "master",
+    "z": 12313,
+    "x": null,
+    "y": null,
+    "letter": "O",
+    "points": 1,
+    "clonedFrom": "fr7o",
+    "id": "2mju",
+    "parent": "dst0"
+  },
+  "q51p": {
+    "deck": "deckTemplate",
+    "type": "card",
+    "cardType": "master",
+    "z": 12323,
+    "x": null,
+    "y": null,
+    "letter": "O",
+    "points": 1,
+    "clonedFrom": "fr7o",
+    "id": "q51p",
+    "parent": "dst0"
+  },
+  "x4bg": {
+    "deck": "deckTemplate",
+    "type": "card",
+    "cardType": "master",
+    "z": 12290,
+    "x": null,
+    "y": null,
+    "letter": "O",
+    "points": 1,
+    "clonedFrom": "fr7o",
+    "id": "x4bg",
+    "parent": "dst0"
+  },
+  "zcoq": {
+    "deck": "deckTemplate",
+    "type": "card",
+    "cardType": "master",
+    "z": 12271,
+    "x": null,
+    "y": null,
+    "letter": "O",
+    "points": 1,
+    "clonedFrom": "fr7o",
+    "id": "zcoq",
+    "parent": "dst0"
+  },
+  "8npp": {
+    "deck": "deckTemplate",
+    "type": "card",
+    "cardType": "master",
+    "z": 12344,
+    "x": null,
+    "y": null,
+    "letter": "O",
+    "points": 1,
+    "clonedFrom": "fr7o",
+    "id": "8npp",
+    "parent": "dst0"
+  },
+  "8ylp": {
+    "deck": "deckTemplate",
+    "type": "card",
+    "cardType": "master",
+    "z": 12288,
+    "x": null,
+    "y": null,
+    "letter": "O",
+    "points": 1,
+    "clonedFrom": "fr7o",
+    "id": "8ylp",
+    "parent": "dst0"
+  },
+  "y003": {
+    "deck": "deckTemplate",
+    "type": "card",
+    "cardType": "master",
+    "z": 12329,
+    "x": null,
+    "y": null,
+    "letter": "O",
+    "points": 1,
+    "clonedFrom": "fr7o",
+    "id": "y003",
+    "parent": "dst0"
+  },
+  "cju1": {
+    "deck": "deckTemplate",
+    "type": "card",
+    "cardType": "master",
+    "z": 12320,
+    "x": null,
+    "y": null,
+    "letter": "P",
+    "points": 3,
+    "clonedFrom": "fr7o",
+    "id": "cju1",
+    "parent": "dst0"
+  },
+  "yt86": {
+    "deck": "deckTemplate",
+    "type": "card",
+    "cardType": "master",
+    "z": 12338,
+    "x": null,
+    "y": null,
+    "letter": "P",
+    "points": 3,
+    "clonedFrom": "fr7o",
+    "id": "yt86",
+    "parent": "dst0"
+  },
+  "d231": {
+    "deck": "deckTemplate",
+    "type": "card",
+    "cardType": "master",
+    "z": 12284,
+    "x": null,
+    "y": null,
+    "letter": "Q",
+    "points": 10,
+    "clonedFrom": "fr7o",
+    "id": "d231",
+    "parent": "dst0"
+  },
+  "6kez": {
+    "deck": "deckTemplate",
+    "type": "card",
+    "cardType": "master",
+    "z": 12273,
+    "x": null,
+    "y": null,
+    "letter": "R",
+    "points": 1,
+    "clonedFrom": "fr7o",
+    "id": "6kez",
+    "parent": "dst0"
+  },
+  "m95j": {
+    "deck": "deckTemplate",
+    "type": "card",
+    "cardType": "master",
+    "z": 12346,
+    "x": null,
+    "y": null,
+    "letter": "R",
+    "points": 1,
+    "clonedFrom": "fr7o",
+    "id": "m95j",
+    "parent": "dst0"
+  },
+  "jx30": {
+    "deck": "deckTemplate",
+    "type": "card",
+    "cardType": "master",
+    "z": 12292,
+    "x": null,
+    "y": null,
+    "letter": "R",
+    "points": 1,
+    "clonedFrom": "fr7o",
+    "id": "jx30",
+    "parent": "dst0"
+  },
+  "2vfj": {
+    "deck": "deckTemplate",
+    "type": "card",
+    "cardType": "master",
+    "z": 12287,
+    "x": null,
+    "y": null,
+    "letter": "R",
+    "points": 1,
+    "clonedFrom": "fr7o",
+    "id": "2vfj",
+    "parent": "dst0"
+  },
+  "9p4i": {
+    "deck": "deckTemplate",
+    "type": "card",
+    "cardType": "master",
+    "z": 12333,
+    "x": null,
+    "y": null,
+    "letter": "R",
+    "points": 1,
+    "clonedFrom": "fr7o",
+    "id": "9p4i",
+    "parent": "dst0"
+  },
+  "uz1i": {
+    "deck": "deckTemplate",
+    "type": "card",
+    "cardType": "master",
+    "z": 12301,
+    "x": null,
+    "y": null,
+    "letter": "R",
+    "points": 1,
+    "clonedFrom": "fr7o",
+    "id": "uz1i",
+    "parent": "dst0"
+  },
+  "mk6z": {
+    "deck": "deckTemplate",
+    "type": "card",
+    "cardType": "master",
+    "z": 12318,
+    "x": null,
+    "y": null,
+    "letter": "S",
+    "points": 1,
+    "clonedFrom": "fr7o",
+    "id": "mk6z",
+    "parent": "dst0"
+  },
+  "g0dg": {
+    "deck": "deckTemplate",
+    "type": "card",
+    "cardType": "master",
+    "z": 12332,
+    "x": null,
+    "y": null,
+    "letter": "S",
+    "points": 1,
+    "clonedFrom": "fr7o",
+    "id": "g0dg",
+    "parent": "dst0"
+  },
+  "cntt": {
+    "deck": "deckTemplate",
+    "type": "card",
+    "cardType": "master",
+    "z": 12315,
+    "x": null,
+    "y": null,
+    "letter": "S",
+    "points": 1,
+    "clonedFrom": "fr7o",
+    "id": "cntt",
+    "parent": "dst0"
+  },
+  "ly8i": {
+    "deck": "deckTemplate",
+    "type": "card",
+    "cardType": "master",
+    "z": 12330,
+    "x": null,
+    "y": null,
+    "letter": "S",
+    "points": 1,
+    "clonedFrom": "fr7o",
+    "id": "ly8i",
+    "parent": "dst0"
+  },
+  "blzn": {
+    "deck": "deckTemplate",
+    "type": "card",
+    "cardType": "master",
+    "z": 12353,
+    "x": null,
+    "y": null,
+    "letter": "T",
+    "points": 1,
+    "clonedFrom": "fr7o",
+    "id": "blzn",
+    "parent": "dst0"
+  },
+  "px17": {
+    "deck": "deckTemplate",
+    "type": "card",
+    "cardType": "master",
+    "z": 12341,
+    "x": null,
+    "y": null,
+    "letter": "T",
+    "points": 1,
+    "clonedFrom": "fr7o",
+    "id": "px17",
+    "parent": "dst0"
+  },
+  "16ze": {
+    "deck": "deckTemplate",
+    "type": "card",
+    "cardType": "master",
+    "z": 12362,
+    "x": null,
+    "y": null,
+    "letter": "T",
+    "points": 1,
+    "clonedFrom": "fr7o",
+    "id": "16ze",
+    "parent": "dst0"
+  },
+  "m4og": {
+    "deck": "deckTemplate",
+    "type": "card",
+    "cardType": "master",
+    "z": 12289,
+    "x": null,
+    "y": null,
+    "letter": "T",
+    "points": 1,
+    "clonedFrom": "fr7o",
+    "id": "m4og",
+    "parent": "dst0"
+  },
+  "de9d": {
+    "deck": "deckTemplate",
+    "type": "card",
+    "cardType": "master",
+    "z": 12363,
+    "x": null,
+    "y": null,
+    "letter": "T",
+    "points": 1,
+    "clonedFrom": "fr7o",
+    "id": "de9d",
+    "parent": "dst0"
+  },
+  "i3fe": {
+    "deck": "deckTemplate",
+    "type": "card",
+    "cardType": "master",
+    "z": 12274,
+    "x": null,
+    "y": null,
+    "letter": "T",
+    "points": 1,
+    "clonedFrom": "fr7o",
+    "id": "i3fe",
+    "parent": "dst0"
+  },
+  "tjjs": {
+    "deck": "deckTemplate",
+    "type": "card",
+    "cardType": "master",
+    "z": 12355,
+    "x": null,
+    "y": null,
+    "letter": "U",
+    "points": 1,
+    "clonedFrom": "fr7o",
+    "id": "tjjs",
+    "parent": "dst0"
+  },
+  "itt6": {
+    "deck": "deckTemplate",
+    "type": "card",
+    "cardType": "master",
+    "z": 12336,
+    "x": null,
+    "y": null,
+    "letter": "U",
+    "points": 1,
+    "clonedFrom": "fr7o",
+    "id": "itt6",
+    "parent": "dst0"
+  },
+  "oxit": {
+    "deck": "deckTemplate",
+    "type": "card",
+    "cardType": "master",
+    "z": 12302,
+    "x": null,
+    "y": null,
+    "letter": "U",
+    "points": 1,
+    "clonedFrom": "fr7o",
+    "id": "oxit",
+    "parent": "dst0"
+  },
+  "tizg": {
+    "deck": "deckTemplate",
+    "type": "card",
+    "cardType": "master",
+    "z": 12337,
+    "x": null,
+    "y": null,
+    "letter": "U",
+    "points": 1,
+    "clonedFrom": "fr7o",
+    "id": "tizg",
+    "parent": "dst0"
+  },
+  "gh6y": {
+    "deck": "deckTemplate",
+    "type": "card",
+    "cardType": "master",
+    "z": 12343,
+    "x": null,
+    "y": null,
+    "letter": "V",
+    "points": 4,
+    "clonedFrom": "fr7o",
+    "id": "gh6y",
+    "parent": "dst0"
+  },
+  "8s1x": {
+    "deck": "deckTemplate",
+    "type": "card",
+    "cardType": "master",
+    "z": 12360,
+    "x": null,
+    "y": null,
+    "letter": "V",
+    "points": 4,
+    "clonedFrom": "fr7o",
+    "id": "8s1x",
+    "parent": "dst0"
+  },
+  "1egg": {
+    "deck": "deckTemplate",
+    "type": "card",
+    "cardType": "master",
+    "z": 12322,
+    "x": null,
+    "y": null,
+    "letter": "W",
+    "points": 4,
+    "clonedFrom": "fr7o",
+    "id": "1egg",
+    "parent": "dst0"
+  },
+  "oir4": {
+    "deck": "deckTemplate",
+    "type": "card",
+    "cardType": "master",
+    "z": 12339,
+    "x": null,
+    "y": null,
+    "letter": "W",
+    "points": 4,
+    "clonedFrom": "fr7o",
+    "id": "oir4",
+    "parent": "dst0"
+  },
+  "n42n": {
+    "deck": "deckTemplate",
+    "type": "card",
+    "cardType": "master",
+    "z": 12297,
+    "x": null,
+    "y": null,
+    "letter": "X",
+    "points": 8,
+    "clonedFrom": "fr7o",
+    "id": "n42n",
+    "parent": "dst0"
+  },
+  "isn8": {
+    "deck": "deckTemplate",
+    "type": "card",
+    "cardType": "master",
+    "z": 12326,
+    "x": null,
+    "y": null,
+    "letter": "Y",
+    "points": 4,
+    "clonedFrom": "fr7o",
+    "id": "isn8",
+    "parent": "dst0"
+  },
+  "0w73": {
+    "deck": "deckTemplate",
+    "type": "card",
+    "cardType": "master",
+    "z": 12304,
+    "x": null,
+    "y": null,
+    "letter": "Y",
+    "points": 4,
+    "clonedFrom": "fr7o",
+    "id": "0w73",
+    "parent": "dst0"
+  },
+  "0qza": {
+    "deck": "deckTemplate",
+    "type": "card",
+    "cardType": "master",
+    "z": 12275,
+    "x": null,
+    "y": null,
+    "letter": "Z",
+    "points": 10,
+    "clonedFrom": "fr7o",
+    "id": "0qza",
+    "parent": "dst0"
+  },
+  "ql5i": {
+    "deck": "deckTemplate",
+    "type": "card",
+    "cardType": "master",
+    "z": 12334,
+    "x": null,
+    "y": null,
+    "letter": "?",
+    "points": 0,
+    "clonedFrom": "fr7o",
+    "id": "ql5i",
+    "parent": "dst0"
+  },
+  "5fx8": {
+    "deck": "deckTemplate",
+    "type": "card",
+    "cardType": "master",
+    "z": 12279,
+    "x": null,
+    "y": null,
+    "letter": "?",
+    "points": 0,
+    "clonedFrom": "fr7o",
+    "id": "5fx8",
+    "parent": "dst0"
+  }
+}

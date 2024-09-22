@@ -11,6 +11,7 @@ export default class Connection {
 
     connection.on('close', this.closeReceived);
     connection.on('message', this.messageReceived);
+    connection.on('error', this.errorReceived);
 
     this.toClient('serverStart', websocket.serverStart);
   }
@@ -54,6 +55,12 @@ export default class Connection {
       this.toClient('internal_error', 'unknown');
       this.close();
     }
+  }
+
+  errorReceived = error => {
+    Logging.handleGenericException('errorReceived', error);
+    this.toClient('internal_error', 'unknown');
+    this.close();
   }
 
   toClient(func, args) {

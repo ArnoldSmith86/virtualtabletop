@@ -1,4 +1,5 @@
 let lastTimeout = 1000;
+let lastOverlay = null;
 let connection;
 let serverStart = null;
 let userNavigatedAway = false;
@@ -12,19 +13,17 @@ export function mockConnection() {
 }
 
 export function startWebSocket() {
-  let url = `ws://${location.host}`;
-  if(location.protocol == 'https:')
-    url = `wss://${location.host}`;
+  let url = location.href.replace(/\/[^\/]*$/, '').replace(/^http/, 'ws');
   console.log(`connecting to ${url}`);
   connection = new WebSocket(url);
 
   connection.onopen = () => {
     showOverlay(null, true);
+    showOverlay(lastOverlay);
     if(!urlProperties.askID) {
       toServer('room', { playerName, roomID });
       if(urlProperties.trace)
         toServer('enableTrace');
-      $('#legacy-link').href += `#${roomID}`;
     }
   };
 
@@ -34,8 +33,10 @@ export function startWebSocket() {
 
   connection.onclose = () => {
     console.log(`WebSocket closed`);
-    if(!userNavigatedAway)
+    if(!userNavigatedAway) {
+      lastOverlay = [...$a('.overlay')].filter(d=>d.style.display!='none').map(d=>d.id)[0] || null;
       showOverlay('connectionLostOverlay', true);
+    }
     if(lastTimeout)
       setTimeout(startWebSocket, lastTimeout *= 2);
   };
@@ -46,7 +47,7 @@ export function startWebSocket() {
     if(func == 'serverStart') {
       if(serverStart != null && serverStart != args) {
         console.log('Server restart detected. Reloading...')
-        setTimeout(location.reload, Math.random()*10000);
+        setTimeout(location.reload, rand()*10000);
         showOverlay('connectionLostOverlay', true);
         preventReconnect();
         connection.close();
