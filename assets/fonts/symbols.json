@@ -726,77 +726,47 @@
       "abstract",
       "design"
     ],
-    "delapouite/ages": [
-      231,
-      "clock",
-      "time",
-      "ancient"
+    "lorc/static": [
+      3442,
+      "electricity",
+      "energy",
+      "charge"
     ],
-    "delapouite/backward-time": [
-      312,
-      "reverse",
-      "clock",
-      "past"
+    "lorc/static-waves": [
+      3441,
+      "waves",
+      "energy",
+      "motion"
     ],
-    "delapouite/cube": [
-      664,
-      "box shape",
-      "3D shape",
-      "square block"
+    "lorc/swirl-ring": [
+      3491,
+      "ring",
+      "swirl",
+      "circular"
     ],
-    "delapouite/fast-backward-button": [
-      832,
-      "rewind",
-      "media",
-      "play"
+    "lorc/swirl-string": [
+      3492,
+      "string",
+      "swirl",
+      "twist"
     ],
-    "delapouite/fast-forward-button": [
-      833,
-      "play",
-      "skip",
-      "next"
+    "lorc/tension-snowflake": [
+      3521,
+      "stress",
+      "pressure",
+      "ice"
     ],
-    "delapouite/histogram": [
-      1073,
-      "graph",
-      "data",
-      "statistics"
+    "delapouite/triforce": [
+      2067,
+      "symbol",
+      "gaming",
+      "legend"
     ],
-    "delapouite/hive-mind": [
-      1074,
-      "collective",
-      "collaboration",
-      "intelligence"
-    ],
-    "delapouite/idea": [
-      1123,
-      "concept",
-      "thought",
-      "notion"
-    ],
-    "delapouite/inspiration": [
-      1133,
-      "motivation",
-      "creativity",
-      "idea"
-    ],
-    "delapouite/knocked-out-stars": [
-      1194,
-      "cartoon",
-      "impact",
-      "comic"
-    ],
-    "delapouite/love-mystery": [
-      1265,
-      "romance",
-      "story",
-      "intrigue"
-    ],
-    "delapouite/opposite-hearts": [
-      1436,
-      "contrast",
-      "love",
-      "duality"
+    "delapouite/triquetra": [
+      2070,
+      "symbol",
+      "knot",
+      "design"
     ],
     "lorc/twirl-center": [
       3598,
@@ -804,23 +774,11 @@
       "spin",
       "rotate"
     ],
-    "lorc/uncertainty": [
-      3607,
-      "doubt",
-      "ambiguity",
-      "confusion"
-    ],
     "delapouite/virtual-marker": [
       2139,
       "technology",
       "pointer",
       "tool"
-    ],
-    "lorc/wavy-chains": [
-      3637,
-      "chain",
-      "linked",
-      "wave"
     ],
     "lorc/windy-stripes": [
       3653,
@@ -839,12 +797,6 @@
       "pattern",
       "cage",
       "zigzag"
-    ],
-    "lorc/zigzag-tune": [
-      3685,
-      "music",
-      "sound",
-      "pattern"
     ]
   },
   "Game-icons.net - Action": {
@@ -871,12 +823,6 @@
       "police",
       "handcuffs",
       "crime"
-    ],
-    "delapouite/avoidance": [
-      302,
-      "dodge",
-      "escape",
-      "evade"
     ],
     "lorc/backup": [
       2317,
@@ -944,12 +890,6 @@
       "emergency alert",
       "help signal"
     ],
-    "felbrigg/dodge": [
-      2237,
-      "maneuver",
-      "evade",
-      "avoid"
-    ],
     "delapouite/drinking": [
       748,
       "beverage",
@@ -979,12 +919,6 @@
       "escape",
       "dodge",
       "avoid"
-    ],
-    "sbed/fall-down": [
-      3751,
-      "drop",
-      "fall",
-      "down"
     ],
     "sbed/falling": [
       3752,
@@ -1045,12 +979,6 @@
       "captive",
       "trapped",
       "confinement"
-    ],
-    "delapouite/join": [
-      1158,
-      "connection",
-      "link",
-      "combine"
     ],
     "lorc/juggler": [
       2954,
@@ -1136,47 +1064,17 @@
       "performance",
       "magic"
     ],
-    "delapouite/misdirection": [
-      1345,
-      "trickery",
-      "deception",
-      "illusion"
-    ],
-    "delapouite/move": [
-      1369,
-      "action",
-      "relocation",
-      "shift"
-    ],
-    "delapouite/multi-directions": [
-      1372,
-      "navigation",
-      "wayfinding",
-      "guidance"
-    ],
     "delapouite/multiple-targets": [
       1373,
       "strategy",
       "gaming",
       "focus"
     ],
-    "delapouite/next-button": [
-      1398,
-      "forward",
-      "proceed",
-      "continue"
-    ],
     "darkzaitzev/on-sight": [
       205,
       "target",
       "aim",
       "focus"
-    ],
-    "felbrigg/overhead": [
-      2238,
-      "aerial",
-      "above",
-      "top"
     ],
     "delapouite/path-distance": [
       1475,
@@ -1225,12 +1123,6 @@
       "dismemberment",
       "hand",
       "injury"
-    ],
-    "felbrigg/sideswipe": [
-      2239,
-      "hit",
-      "collide",
-      "impact"
     ],
     "lorc/sing": [
       3326,
@@ -1291,18 +1183,6 @@
       "travel",
       "instant",
       "warp"
-    ],
-    "felbrigg/thrust": [
-      2240,
-      "push",
-      "jab",
-      "poke"
-    ],
-    "felbrigg/underhand": [
-      2241,
-      "throw",
-      "pitch",
-      "toss"
     ]
   },
   "Game-icons.net - Anatomy": {
@@ -1589,6 +1469,12 @@
       "wing",
       "feathered",
       "flight"
+    ],
+    "lorc/bird-twitter": [
+      2359,
+      "communication",
+      "sound",
+      "chirp"
     ],
     "delapouite/bison": [
       380,
@@ -1884,6 +1770,12 @@
       "waterfowl",
       "animal"
     ],
+    "lorc/eagle-emblem": [
+      2664,
+      "bird",
+      "freedom",
+      "symbol"
+    ],
     "delapouite/eagle-head": [
       762,
       "bird",
@@ -2118,6 +2010,12 @@
       "livestock",
       "farm"
     ],
+    "lorc/gold-scarab": [
+      2832,
+      "beetle",
+      "treasure",
+      "Egypt"
+    ],
     "delapouite/goose": [
       977,
       "bird",
@@ -2130,17 +2028,65 @@
       "ape",
       "primate"
     ],
+    "delapouite/grasping-slug": [
+      984,
+      "monster",
+      "creature",
+      "slime"
+    ],
+    "delapouite/greek-sphinx": [
+      992,
+      "statue",
+      "riddle",
+      "myth"
+    ],
+    "delapouite/griffin-symbol": [
+      997,
+      "myth",
+      "creature",
+      "heraldry"
+    ],
+    "lorc/hanging-spider": [
+      2865,
+      "arachnid",
+      "creepy",
+      "hanging"
+    ],
+    "lorc/hawk-emblem": [
+      2873,
+      "bird",
+      "symbol",
+      "predator"
+    ],
     "caro-asercion/hedgehog": [
       102,
       "animal",
       "spines",
       "wildlife"
     ],
+    "delapouite/helicoprion": [
+      1053,
+      "shark",
+      "prehistoric",
+      "teeth"
+    ],
     "caro-asercion/heron": [
       104,
       "bird",
       "wildlife",
       "waterbird"
+    ],
+    "lorc/hollow-cat": [
+      2894,
+      "feline",
+      "empty",
+      "silhouette"
+    ],
+    "delapouite/horse-head": [
+      1090,
+      "animal",
+      "equine",
+      "statue"
     ],
     "lorc/horse-head": [
       2904,
@@ -2154,11 +2100,41 @@
       "animal",
       "hunting"
     ],
+    "delapouite/hummingbird": [
+      1102,
+      "bird",
+      "wildlife",
+      "nature"
+    ],
+    "lorc/hydra": [
+      2911,
+      "monster",
+      "multi-headed",
+      "mythological"
+    ],
     "caro-asercion/hyena-head": [
       105,
       "animal",
       "scavenger",
       "mammal"
+    ],
+    "delapouite/ibis": [
+      1110,
+      "bird",
+      "wildlife",
+      "Egyptian"
+    ],
+    "lorc/insect-jaws": [
+      2936,
+      "mandibles",
+      "bite",
+      "critter"
+    ],
+    "lorc/jellyfish": [
+      2948,
+      "marine",
+      "ocean",
+      "creature"
     ],
     "delapouite/jumping-dog": [
       1164,
@@ -2201,6 +2177,12 @@
       "insect",
       "beetle",
       "garden"
+    ],
+    "lorc/leeching-worm": [
+      2984,
+      "parasite",
+      "creature",
+      "infestation"
     ],
     "lorc/lion": [
       3013,
@@ -2357,6 +2339,12 @@
       "animal",
       "scales",
       "wildlife"
+    ],
+    "caro-asercion/paper-crane": [
+      115,
+      "origami",
+      "bird",
+      "paper-art"
     ],
     "delapouite/parasaurolophus": [
       1469,
@@ -2544,17 +2532,53 @@
       "farm",
       "poultry"
     ],
+    "lorc/saber-tooth": [
+      3259,
+      "prehistoric cat",
+      "extinct animal",
+      "saber-toothed tiger"
+    ],
+    "delapouite/saber-toothed-cat-head": [
+      1696,
+      "prehistoric",
+      "animal",
+      "fossil"
+    ],
     "lorc/sad-crab": [
       3262,
       "unhappy crab",
       "marine animal",
       "emotion"
     ],
+    "lorc/salamander": [
+      3263,
+      "amphibian",
+      "newt",
+      "mythical creature"
+    ],
     "various-artists/salmon": [
       3998,
       "fish",
       "food",
       "aquatic"
+    ],
+    "delapouite/sand-snake": [
+      1711,
+      "reptile",
+      "desert",
+      "animal"
+    ],
+    "delapouite/sasquatch": [
+      1717,
+      "creature",
+      "legend",
+      "folklore"
+    ],
+    "delapouite/sauropod-head": [
+      1719,
+      "dinosaur",
+      "prehistoric",
+      "animal"
     ],
     "caro-asercion/sauropod-skeleton": [
       129,
@@ -2568,6 +2592,18 @@
       "marine creature",
       "seafood"
     ],
+    "lorc/scarab-beetle": [
+      3275,
+      "insect",
+      "ancient symbol",
+      "mythology"
+    ],
+    "delapouite/school-of-fish": [
+      1728,
+      "marine",
+      "underwater",
+      "group"
+    ],
     "lorc/scorpion": [
       3279,
       "arachnid",
@@ -2579,6 +2615,42 @@
       "stinger",
       "arachnid appendage",
       "venomous tail"
+    ],
+    "skoll/sea-creature": [
+      3953,
+      "ocean",
+      "marine",
+      "animal"
+    ],
+    "lorc/sea-dragon": [
+      3286,
+      "mythical creature",
+      "ocean",
+      "dragon"
+    ],
+    "lorc/sea-serpent": [
+      3287,
+      "sea monster",
+      "ocean creature",
+      "serpent"
+    ],
+    "delapouite/sea-turtle": [
+      1738,
+      "marine",
+      "animal",
+      "ocean"
+    ],
+    "delapouite/seagull": [
+      1739,
+      "bird",
+      "coastal",
+      "animal"
+    ],
+    "delapouite/seahorse": [
+      1740,
+      "marine",
+      "animal",
+      "ocean"
     ],
     "lorc/seated-mouse": [
       3288,
@@ -2592,11 +2664,41 @@
       "sewing",
       "decorative shell"
     ],
+    "delapouite/shark-fin": [
+      1759,
+      "ocean",
+      "predator",
+      "marine"
+    ],
     "lorc/shark-jaws": [
       3299,
       "predator",
       "teeth",
       "ocean predator"
+    ],
+    "delapouite/sheep": [
+      1764,
+      "animal",
+      "livestock",
+      "wool"
+    ],
+    "delapouite/shoebill-stork": [
+      1775,
+      "bird",
+      "wildlife",
+      "nature"
+    ],
+    "delapouite/shrimp": [
+      1784,
+      "seafood",
+      "crustacean",
+      "food"
+    ],
+    "delapouite/sitting-dog": [
+      1794,
+      "pet",
+      "animal",
+      "companion"
     ],
     "darkzaitzev/skull-sabertooth": [
       214,
@@ -2627,6 +2729,24 @@
       "danger",
       "poison",
       "reptile"
+    ],
+    "delapouite/snake-tongue": [
+      1825,
+      "reptile",
+      "biology",
+      "anatomy"
+    ],
+    "lorc/snake-totem": [
+      3356,
+      "symbolism",
+      "heritage",
+      "reptile"
+    ],
+    "delapouite/sniffing-dog": [
+      1826,
+      "animal",
+      "search",
+      "detection"
     ],
     "delapouite/sombrero": [
       1838,
@@ -2676,11 +2796,23 @@
       "costume",
       "Halloween"
     ],
+    "delapouite/spiked-dragon-head": [
+      1865,
+      "fantasy",
+      "mythical creature",
+      "fierce"
+    ],
     "lorc/spiked-snail": [
       3392,
       "creature",
       "shell",
       "unique"
+    ],
+    "skoll/spotted-bug": [
+      3967,
+      "insect",
+      "nature",
+      "bug"
     ],
     "lorc/squid": [
       3429,
@@ -2712,6 +2844,12 @@
       "aquatic",
       "marine"
     ],
+    "delapouite/stegosaurus-scales": [
+      1909,
+      "dinosaur",
+      "prehistoric",
+      "reptile"
+    ],
     "delapouite/swallow": [
       1950,
       "bird",
@@ -2741,6 +2879,12 @@
       "swan",
       "breeze",
       "elegant"
+    ],
+    "delapouite/t-rex-skull": [
+      1965,
+      "dinosaur",
+      "fossil",
+      "prehistoric"
     ],
     "delapouite/tadpole": [
       1970,
@@ -2862,6 +3006,12 @@
       "web",
       "sticky"
     ],
+    "lorc/werewolf": [
+      3641,
+      "monster",
+      "wolf",
+      "creature"
+    ],
     "delapouite/whale-tail": [
       2184,
       "marine",
@@ -2880,11 +3030,23 @@
       "wolf",
       "night"
     ],
+    "lorc/worm-mouth": [
+      3673,
+      "creature",
+      "worm",
+      "mouth"
+    ],
     "delapouite/worms": [
       2218,
       "invertebrates",
       "soil",
       "creatures"
+    ],
+    "lorc/wyvern": [
+      3679,
+      "dragon",
+      "creature",
+      "winged"
     ]
   },
   "Game-icons.net - Architecture": {
@@ -3027,336 +3189,264 @@
       "support"
     ]
   },
-  "Game-icons.net - Armor": {
-    "lorc/armor-vest": [
-      2291,
-      "protection",
-      "gear",
-      "military"
+  "Game-icons.net - Arrow": {
+    "delapouite/anticlockwise-rotation": [
+      264,
+      "reverse",
+      "spin",
+      "counterclockwise"
     ],
-    "irongamer/armored-pants": [
-      2249,
-      "clothing",
-      "armor",
-      "protection"
+    "delapouite/arrow-cursor": [
+      288,
+      "pointer",
+      "computer",
+      "click"
     ],
-    "lorc/armoured-shell": [
-      2292,
-      "protection",
-      "defense",
-      "creature"
+    "delapouite/avoidance": [
+      302,
+      "dodge",
+      "escape",
+      "evade"
     ],
-    "lorc/barbute": [
-      2330,
-      "helmet",
-      "armor",
-      "protection"
+    "lorc/back-forth": [
+      2313,
+      "movement",
+      "oscillate",
+      "swing"
     ],
-    "lorc/battle-gear": [
-      2337,
-      "equipment",
-      "armor",
-      "military"
+    "delapouite/backward-time": [
+      312,
+      "reverse",
+      "clock",
+      "past"
     ],
-    "lorc/boots": [
-      2395,
-      "footwear",
-      "style",
-      "protection"
+    "lorc/bottom-right-3d-arrow": [
+      2399,
+      "direction",
+      "navigation",
+      "pointer"
     ],
-    "skoll/bracers": [
-      3842,
-      "armor",
-      "protection",
-      "wrist"
+    "delapouite/box-unpacking": [
+      426,
+      "unbox",
+      "open box",
+      "package"
     ],
-    "lorc/breastplate": [
-      2414,
-      "armor",
-      "protection",
-      "defense"
+    "lorc/checkbox-tree": [
+      2481,
+      "selection",
+      "options",
+      "choices"
     ],
-    "skoll/brodie-helmet": [
-      3844,
-      "headgear",
-      "safety",
-      "military"
+    "delapouite/choice": [
+      559,
+      "decision",
+      "selection",
+      "options"
     ],
-    "lorc/broken-shield": [
-      2425,
-      "defense",
-      "damage",
-      "protection"
+    "delapouite/contract": [
+      613,
+      "agreement",
+      "legal document",
+      "deal"
     ],
-    "willdabeast/chain-mail": [
-      4122,
-      "armor",
-      "protection",
-      "medieval"
+    "delapouite/convergence-target": [
+      615,
+      "aim point",
+      "focus",
+      "convergence"
     ],
-    "lorc/checked-shield": [
-      2482,
-      "protection",
-      "defense",
-      "symbol"
+    "delapouite/detour": [
+      692,
+      "road diversion",
+      "alternate route",
+      "path change"
     ],
-    "lorc/cracked-helm": [
-      2537,
-      "armor",
-      "damage",
-      "protection"
+    "delapouite/direction-sign": [
+      714,
+      "road sign",
+      "directional post",
+      "wayfinding"
     ],
-    "lorc/cracked-shield": [
-      2540,
-      "defense",
-      "damage",
-      "protection"
+    "delapouite/direction-signs": [
+      715,
+      "multiple signs",
+      "guideposts",
+      "route markers"
     ],
-    "lorc/crenulated-shield": [
-      2542,
-      "protection",
-      "design",
-      "medieval"
+    "lorc/divert": [
+      2622,
+      "redirect",
+      "change",
+      "alter"
     ],
-    "lorc/crested-helmet": [
-      2544,
-      "armor",
-      "knight",
-      "protection"
+    "felbrigg/dodge": [
+      2237,
+      "maneuver",
+      "evade",
+      "avoid"
     ],
-    "kier-heyl/dwarf-helmet": [
-      2254,
-      "headgear",
-      "armor",
-      "protection"
+    "sbed/fall-down": [
+      3751,
+      "drop",
+      "fall",
+      "down"
     ],
-    "kier-heyl/elf-helmet": [
-      2256,
-      "headgear",
-      "fantasy",
-      "armor"
+    "delapouite/family-tree": [
+      829,
+      "genealogy",
+      "ancestry",
+      "roots"
     ],
-    "delapouite/galea": [
-      942,
-      "helmet",
-      "roman",
-      "armor"
+    "delapouite/fast-backward-button": [
+      832,
+      "rewind",
+      "media",
+      "play"
     ],
-    "lorc/heavy-helm": [
-      2885,
-      "armor",
-      "protection",
-      "helmet"
+    "delapouite/fast-forward-button": [
+      833,
+      "play",
+      "skip",
+      "next"
     ],
-    "sbed/helmet": [
-      3763,
-      "protection",
-      "headgear",
-      "armor"
+    "delapouite/growth": [
+      998,
+      "plant",
+      "nature",
+      "expansion"
     ],
-    "lorc/horned-helm": [
-      2902,
-      "armor",
-      "protection",
-      "fantasy"
+    "delapouite/join": [
+      1158,
+      "connection",
+      "link",
+      "combine"
     ],
-    "lorc/ice-shield": [
-      2918,
-      "protection",
-      "ice",
-      "barrier"
+    "lorc/lob-arrow": [
+      3018,
+      "throw",
+      "projectile",
+      "weapon"
     ],
-    "lorc/iron-mask": [
-      2945,
-      "armor",
-      "protection",
-      "disguise"
+    "delapouite/misdirection": [
+      1345,
+      "trickery",
+      "deception",
+      "illusion"
     ],
-    "sbed/kevlar": [
-      3768,
-      "armor",
-      "protection",
-      "fabric"
+    "delapouite/move": [
+      1369,
+      "action",
+      "relocation",
+      "shift"
     ],
-    "skoll/kevlar-vest": [
-      3910,
-      "armor",
-      "protection",
-      "safety"
+    "delapouite/multi-directions": [
+      1372,
+      "navigation",
+      "wayfinding",
+      "guidance"
     ],
-    "lorc/lamellar": [
-      2964,
-      "layers",
-      "plates",
-      "structure"
+    "delapouite/next-button": [
+      1398,
+      "forward",
+      "proceed",
+      "continue"
     ],
-    "lorc/layered-armor": [
-      2978,
-      "protection",
-      "defense",
-      "levels"
+    "lorc/orb-direction": [
+      3133,
+      "navigation",
+      "guidance",
+      "movement"
     ],
-    "delapouite/leather-armor": [
-      1216,
-      "protection",
-      "medieval",
-      "costume"
+    "felbrigg/overhead": [
+      2238,
+      "aerial",
+      "above",
+      "top"
     ],
-    "lorc/leather-vest": [
-      2983,
-      "clothing",
-      "style",
-      "protection"
+    "delapouite/plain-arrow": [
+      1539,
+      "direction",
+      "navigation",
+      "pointer"
     ],
-    "delapouite/leg-armor": [
-      1219,
-      "protection",
-      "medieval",
-      "costume"
+    "guard13007/play-button": [
+      2245,
+      "control",
+      "start",
+      "action"
     ],
-    "delapouite/light-helm": [
-      1233,
-      "protection",
-      "headgear",
-      "fantasy"
+    "delapouite/player-next": [
+      1553,
+      "navigation",
+      "media",
+      "forward"
     ],
-    "skoll/pauldrons": [
-      3934,
-      "armor",
-      "medieval",
-      "protection"
+    "delapouite/player-previous": [
+      1554,
+      "navigation",
+      "media",
+      "back"
     ],
-    "skoll/pickelhaube": [
-      3939,
-      "helmet",
-      "military",
-      "history"
+    "delapouite/previous-button": [
+      1593,
+      "navigation",
+      "media",
+      "back"
     ],
-    "lorc/plastron": [
-      3176,
-      "chest armor",
-      "breastplate",
-      "protective gear"
+    "lorc/rapidshare-arrow": [
+      3220,
+      "fast arrow",
+      "speedy delivery",
+      "swift sign"
     ],
-    "skoll/pteruges": [
-      3943,
-      "armor",
-      "medieval",
-      "protection"
+    "lorc/recycle": [
+      3226,
+      "sustainability",
+      "eco-friendly",
+      "reuse"
     ],
-    "willdabeast/round-shield": [
-      4125,
-      "defense",
-      "protection",
-      "armor"
+    "delapouite/resize": [
+      1645,
+      "adjust",
+      "scale",
+      "modify"
     ],
-    "lorc/scale-mail": [
-      3269,
-      "armor",
-      "protective gear",
-      "medieval defense"
+    "lorc/return-arrow": [
+      3231,
+      "back arrow",
+      "rewind",
+      "feedback"
     ],
-    "lorc/shoulder-scales": [
-      3320,
-      "armor",
-      "protection",
-      "scaled shoulder"
+    "delapouite/save-arrow": [
+      1722,
+      "action",
+      "storage",
+      "game"
     ],
-    "delapouite/spartan-helmet": [
-      1853,
-      "warrior",
-      "ancient Greece",
-      "armor"
+    "felbrigg/sideswipe": [
+      2239,
+      "hit",
+      "collide",
+      "impact"
     ],
-    "lorc/spiked-armor": [
-      3386,
-      "defense",
-      "protection",
-      "sharp"
+    "felbrigg/thrust": [
+      2240,
+      "push",
+      "jab",
+      "poke"
     ],
-    "lorc/spiked-collar": [
-      3387,
-      "accessory",
-      "pet",
-      "sharp"
+    "felbrigg/underhand": [
+      2241,
+      "throw",
+      "pitch",
+      "toss"
     ],
-    "lorc/spiked-shell": [
-      3391,
-      "armor",
-      "protection",
-      "shell"
-    ],
-    "delapouite/spiked-shield": [
-      1866,
-      "defense",
-      "armor",
-      "protection"
-    ],
-    "delapouite/spiked-shoulder-armor": [
-      1867,
-      "armor",
-      "medieval",
-      "battle gear"
-    ],
-    "skoll/stahlhelm": [
-      3968,
-      "helmet",
-      "military",
-      "history"
-    ],
-    "lorc/steeltoe-boots": [
-      3444,
-      "boots",
-      "footwear",
-      "safety"
-    ],
-    "delapouite/templar-shield": [
-      1991,
-      "medieval",
-      "knight",
-      "armor"
-    ],
-    "delapouite/temporary-shield": [
-      1994,
-      "protection",
-      "defense",
-      "makeshift"
-    ],
-    "skoll/trench-body-armor": [
-      3986,
-      "protection",
-      "military",
-      "armor"
-    ],
-    "delapouite/viking-helmet": [
-      2133,
-      "armor",
-      "history",
-      "warrior"
-    ],
-    "lorc/visored-helm": [
-      3624,
-      "armor",
-      "protection",
-      "knight"
-    ],
-    "lorc/winged-shield": [
-      3659,
-      "defense",
-      "protection",
-      "wings"
-    ],
-    "skoll/wooden-helmet": [
-      3992,
-      "armor",
-      "medieval",
-      "protection"
-    ],
-    "lorc/zebra-shield": [
-      3680,
-      "animal",
-      "stripes",
-      "shield"
+    "delapouite/vertical-flip": [
+      2126,
+      "animation",
+      "transition",
+      "effect"
     ]
   },
   "Game-icons.net - Art": {
@@ -3445,6 +3535,12 @@
       "organ",
       "body",
       "intestines"
+    ],
+    "delapouite/female-legs": [
+      837,
+      "woman",
+      "body",
+      "limbs"
     ],
     "delapouite/fingernail": [
       851,
@@ -3580,6 +3676,12 @@
     ]
   },
   "Game-icons.net - Building": {
+    "caro-asercion/clock-tower": [
+      83,
+      "time",
+      "building",
+      "structure"
+    ],
     "delapouite/family-house": [
       828,
       "home",
@@ -3777,6 +3879,12 @@
       "wheel",
       "river",
       "energy"
+    ],
+    "delapouite/windmill": [
+      2190,
+      "energy",
+      "farming",
+      "machinery"
     ]
   },
   "Game-icons.net - Character": {
@@ -4058,6 +4166,12 @@
       "clothing",
       "fashion"
     ],
+    "delapouite/astronaut-helmet": [
+      295,
+      "space",
+      "gear",
+      "astronaut"
+    ],
     "delapouite/ballerina-shoes": [
       317,
       "ballet",
@@ -4154,6 +4268,18 @@
       "cape",
       "cover"
     ],
+    "delapouite/clothes": [
+      582,
+      "outfit",
+      "garments",
+      "apparel"
+    ],
+    "caro-asercion/clothesline": [
+      84,
+      "laundry",
+      "drying",
+      "outdoors"
+    ],
     "delapouite/converse-shoe": [
       616,
       "sneakers",
@@ -4225,6 +4351,18 @@
       "sandals",
       "shoes",
       "beach"
+    ],
+    "delapouite/flower-hat": [
+      897,
+      "headwear",
+      "floral",
+      "decoration"
+    ],
+    "delapouite/full-motorcycle-helmet": [
+      932,
+      "safety",
+      "riding",
+      "gear"
     ],
     "delapouite/fur-boot": [
       937,
@@ -4328,6 +4466,12 @@
       "style",
       "protection"
     ],
+    "delapouite/life-jacket": [
+      1231,
+      "safety",
+      "buoyancy",
+      "water"
+    ],
     "delapouite/loincloth": [
       1260,
       "clothing",
@@ -4339,6 +4483,12 @@
       "fantasy",
       "costume",
       "accessory"
+    ],
+    "delapouite/mining-helmet": [
+      1344,
+      "safety gear",
+      "hard hat",
+      "protective equipment"
     ],
     "delapouite/moncler-jacket": [
       1352,
@@ -4592,6 +4742,12 @@
       "neckwear",
       "formal"
     ],
+    "lorc/top-hat": [
+      3556,
+      "formal",
+      "fashion",
+      "attire"
+    ],
     "delapouite/towel": [
       2040,
       "cloth",
@@ -4744,12 +4900,6 @@
       "indulgence",
       "appetite"
     ],
-    "lorc/gold-scarab": [
-      2832,
-      "beetle",
-      "treasure",
-      "Egypt"
-    ],
     "lorc/gold-shell": [
       2833,
       "shell",
@@ -4767,24 +4917,6 @@
       "claws",
       "grip",
       "danger"
-    ],
-    "delapouite/grasping-slug": [
-      984,
-      "monster",
-      "creature",
-      "slime"
-    ],
-    "delapouite/greek-sphinx": [
-      992,
-      "statue",
-      "riddle",
-      "myth"
-    ],
-    "delapouite/griffin-symbol": [
-      997,
-      "myth",
-      "creature",
-      "heraldry"
     ],
     "lorc/grim-reaper": [
       2849,
@@ -4804,12 +4936,6 @@
       "undead",
       "injured"
     ],
-    "lorc/hanging-spider": [
-      2865,
-      "arachnid",
-      "creepy",
-      "hanging"
-    ],
     "lorc/happy-skull": [
       2866,
       "cheerful",
@@ -4821,18 +4947,6 @@
       "creature",
       "mythological",
       "bird"
-    ],
-    "delapouite/helicoprion": [
-      1053,
-      "shark",
-      "prehistoric",
-      "teeth"
-    ],
-    "lorc/hollow-cat": [
-      2894,
-      "feline",
-      "empty",
-      "silhouette"
     ],
     "lorc/hoof": [
       2900,
@@ -4852,35 +4966,11 @@
       "creature",
       "dark"
     ],
-    "delapouite/horse-head": [
-      1090,
-      "animal",
-      "equine",
-      "statue"
-    ],
-    "delapouite/hummingbird": [
-      1102,
-      "bird",
-      "wildlife",
-      "nature"
-    ],
-    "lorc/hydra": [
-      2911,
-      "monster",
-      "multi-headed",
-      "mythological"
-    ],
     "lorc/hydra-shot": [
       2910,
       "creature",
       "attack",
       "mythical"
-    ],
-    "delapouite/ibis": [
-      1110,
-      "bird",
-      "wildlife",
-      "Egyptian"
     ],
     "delapouite/ice-golem": [
       1115,
@@ -4912,12 +5002,6 @@
       "horde",
       "plague"
     ],
-    "lorc/insect-jaws": [
-      2936,
-      "mandibles",
-      "bite",
-      "critter"
-    ],
     "lorc/interlaced-tentacles": [
       2938,
       "intertwine",
@@ -4948,23 +5032,11 @@
       "creature",
       "legend"
     ],
-    "lorc/jellyfish": [
-      2948,
-      "marine",
-      "ocean",
-      "creature"
-    ],
     "lorc/lamprey-mouth": [
       2965,
       "predator",
       "fish",
       "suction"
-    ],
-    "lorc/leeching-worm": [
-      2984,
-      "parasite",
-      "creature",
-      "infestation"
     ],
     "lorc/pretty-fangs": [
       3194,
@@ -4978,94 +5050,10 @@
       "creature",
       "stone"
     ],
-    "lorc/saber-tooth": [
-      3259,
-      "prehistoric cat",
-      "extinct animal",
-      "saber-toothed tiger"
-    ],
-    "delapouite/saber-toothed-cat-head": [
-      1696,
-      "prehistoric",
-      "animal",
-      "fossil"
-    ],
-    "lorc/salamander": [
-      3263,
-      "amphibian",
-      "newt",
-      "mythical creature"
-    ],
-    "delapouite/sand-snake": [
-      1711,
-      "reptile",
-      "desert",
-      "animal"
-    ],
-    "delapouite/sasquatch": [
-      1717,
-      "creature",
-      "legend",
-      "folklore"
-    ],
-    "delapouite/sauropod-head": [
-      1719,
-      "dinosaur",
-      "prehistoric",
-      "animal"
-    ],
-    "lorc/scarab-beetle": [
-      3275,
-      "insect",
-      "ancient symbol",
-      "mythology"
-    ],
-    "delapouite/school-of-fish": [
-      1728,
-      "marine",
-      "underwater",
-      "group"
-    ],
-    "skoll/sea-creature": [
-      3953,
-      "ocean",
-      "marine",
-      "animal"
-    ],
-    "lorc/sea-dragon": [
-      3286,
-      "mythical creature",
-      "ocean",
-      "dragon"
-    ],
-    "lorc/sea-serpent": [
-      3287,
-      "sea monster",
-      "ocean creature",
-      "serpent"
-    ],
     "delapouite/sea-star": [
       1737,
       "marine",
       "starfish",
-      "ocean"
-    ],
-    "delapouite/sea-turtle": [
-      1738,
-      "marine",
-      "animal",
-      "ocean"
-    ],
-    "delapouite/seagull": [
-      1739,
-      "bird",
-      "coastal",
-      "animal"
-    ],
-    "delapouite/seahorse": [
-      1740,
-      "marine",
-      "animal",
       "ocean"
     ],
     "delapouite/shambling-mound": [
@@ -5085,36 +5073,6 @@
       "danger",
       "ocean",
       "attack"
-    ],
-    "delapouite/shark-fin": [
-      1759,
-      "ocean",
-      "predator",
-      "marine"
-    ],
-    "delapouite/sheep": [
-      1764,
-      "animal",
-      "livestock",
-      "wool"
-    ],
-    "delapouite/shoebill-stork": [
-      1775,
-      "bird",
-      "wildlife",
-      "nature"
-    ],
-    "delapouite/shrimp": [
-      1784,
-      "seafood",
-      "crustacean",
-      "food"
-    ],
-    "delapouite/sitting-dog": [
-      1794,
-      "pet",
-      "animal",
-      "companion"
     ],
     "delapouite/skeletal-hand": [
       1796,
@@ -5140,71 +5098,17 @@
       "mollusk",
       "nature"
     ],
-    "delapouite/snake-tongue": [
-      1825,
-      "reptile",
-      "biology",
-      "anatomy"
-    ],
-    "lorc/snake-totem": [
-      3356,
-      "symbolism",
-      "heritage",
-      "reptile"
-    ],
-    "delapouite/sniffing-dog": [
-      1826,
-      "animal",
-      "search",
-      "detection"
-    ],
     "lorc/split-body": [
       3412,
       "split",
       "divide",
       "torso"
     ],
-    "skoll/spotted-bug": [
-      3967,
-      "insect",
-      "nature",
-      "bug"
-    ],
-    "delapouite/stegosaurus-scales": [
-      1909,
-      "dinosaur",
-      "prehistoric",
-      "reptile"
-    ],
-    "delapouite/t-rex-skull": [
-      1965,
-      "dinosaur",
-      "fossil",
-      "prehistoric"
-    ],
     "lorc/triton-head": [
       3588,
       "sea",
       "mythology",
       "god"
-    ],
-    "lorc/werewolf": [
-      3641,
-      "monster",
-      "wolf",
-      "creature"
-    ],
-    "lorc/worm-mouth": [
-      3673,
-      "creature",
-      "worm",
-      "mouth"
-    ],
-    "lorc/wyvern": [
-      3679,
-      "dragon",
-      "creature",
-      "winged"
     ]
   },
   "Game-icons.net - Culture": {
@@ -5220,12 +5124,6 @@
       "sugar skull",
       "Day of the Dead"
     ],
-    "delapouite/cambodia": [
-      481,
-      "country",
-      "flag",
-      "Southeast Asia"
-    ],
     "delapouite/ceremonial-mask": [
       531,
       "tribal mask",
@@ -5238,23 +5136,11 @@
       "tequila symbol",
       "Mexican crest"
     ],
-    "delapouite/colombia": [
-      600,
-      "South American country",
-      "Colombian flag",
-      "national symbol"
-    ],
     "delapouite/colombian-statue": [
       601,
       "cultural monument",
       "heritage statue",
       "Colombian art"
-    ],
-    "delapouite/corsica": [
-      634,
-      "French island",
-      "Mediterranean island",
-      "Napoleon birthplace"
     ],
     "delapouite/cuauhtli": [
       663,
@@ -5270,11 +5156,347 @@
     ]
   },
   "Game-icons.net - Defense": {
+    "delapouite/abdominal-armor": [
+      226,
+      "protective-gear",
+      "body-armor",
+      "torso"
+    ],
+    "delapouite/armor-downgrade": [
+      283,
+      "reduce",
+      "defense",
+      "shield"
+    ],
+    "delapouite/armor-upgrade": [
+      285,
+      "enhance",
+      "defense",
+      "protect"
+    ],
+    "lorc/armor-vest": [
+      2291,
+      "protection",
+      "gear",
+      "military"
+    ],
+    "irongamer/armored-pants": [
+      2249,
+      "clothing",
+      "armor",
+      "protection"
+    ],
+    "lorc/armoured-shell": [
+      2292,
+      "protection",
+      "defense",
+      "creature"
+    ],
+    "lorc/arrows-shield": [
+      2299,
+      "defense",
+      "protection",
+      "barrier"
+    ],
+    "delapouite/attached-shield": [
+      298,
+      "defense",
+      "protection",
+      "guard"
+    ],
+    "lorc/barbute": [
+      2330,
+      "helmet",
+      "armor",
+      "protection"
+    ],
+    "lorc/battle-gear": [
+      2337,
+      "equipment",
+      "armor",
+      "military"
+    ],
+    "delapouite/belt-armor": [
+      371,
+      "defense",
+      "protection",
+      "gear"
+    ],
+    "lorc/black-hand-shield": [
+      2362,
+      "protection",
+      "defense",
+      "symbol"
+    ],
+    "delapouite/black-knight-helm": [
+      383,
+      "armor",
+      "helmet",
+      "medieval"
+    ],
+    "lorc/bolt-shield": [
+      2381,
+      "defense",
+      "protection",
+      "electricity"
+    ],
+    "lorc/boots": [
+      2395,
+      "footwear",
+      "style",
+      "protection"
+    ],
+    "lorc/bordered-shield": [
+      2396,
+      "defense",
+      "protection",
+      "design"
+    ],
+    "skoll/bracers": [
+      3842,
+      "armor",
+      "protection",
+      "wrist"
+    ],
+    "lorc/breastplate": [
+      2414,
+      "armor",
+      "protection",
+      "defense"
+    ],
+    "skoll/brodie-helmet": [
+      3844,
+      "headgear",
+      "safety",
+      "military"
+    ],
+    "lorc/broken-shield": [
+      2425,
+      "defense",
+      "damage",
+      "protection"
+    ],
+    "carl-olsen/brutal-helm": [
+      54,
+      "helmet",
+      "armor",
+      "medieval"
+    ],
+    "delapouite/cadillac-helm": [
+      471,
+      "car logo",
+      "luxury",
+      "vehicle emblem"
+    ],
+    "delapouite/cape-armor": [
+      493,
+      "cloak",
+      "protection",
+      "garment"
+    ],
+    "delapouite/centurion-helmet": [
+      530,
+      "Roman helmet",
+      "warrior helmet",
+      "ancient soldier"
+    ],
+    "willdabeast/chain-mail": [
+      4122,
+      "armor",
+      "protection",
+      "medieval"
+    ],
+    "lorc/checked-shield": [
+      2482,
+      "protection",
+      "defense",
+      "symbol"
+    ],
+    "delapouite/chest-armor": [
+      550,
+      "body armor",
+      "protective gear",
+      "knight armor"
+    ],
+    "delapouite/closed-barbute": [
+      579,
+      "helmet",
+      "medieval armor",
+      "warrior headgear"
+    ],
+    "lorc/cracked-helm": [
+      2537,
+      "armor",
+      "damage",
+      "protection"
+    ],
+    "lorc/cracked-shield": [
+      2540,
+      "defense",
+      "damage",
+      "protection"
+    ],
+    "lorc/crenulated-shield": [
+      2542,
+      "protection",
+      "design",
+      "medieval"
+    ],
+    "lorc/crested-helmet": [
+      2544,
+      "armor",
+      "knight",
+      "protection"
+    ],
+    "delapouite/dragon-shield": [
+      742,
+      "protection",
+      "armor",
+      "medieval"
+    ],
+    "kier-heyl/dwarf-helmet": [
+      2254,
+      "headgear",
+      "armor",
+      "protection"
+    ],
+    "kier-heyl/elf-helmet": [
+      2256,
+      "headgear",
+      "fantasy",
+      "armor"
+    ],
+    "caro-asercion/frog-mouth-helm": [
+      98,
+      "armor",
+      "helmet",
+      "medieval"
+    ],
+    "delapouite/galea": [
+      942,
+      "helmet",
+      "roman",
+      "armor"
+    ],
+    "delapouite/gauls-helm": [
+      952,
+      "helmet",
+      "armor",
+      "warrior"
+    ],
+    "delapouite/gauntlet": [
+      953,
+      "glove",
+      "armor",
+      "hand-protection"
+    ],
+    "delapouite/greaves": [
+      991,
+      "armor",
+      "leg-protection",
+      "plate"
+    ],
+    "delapouite/griffin-shield": [
+      996,
+      "creature",
+      "symbol",
+      "heraldry"
+    ],
     "delapouite/healing-shield": [
       1036,
       "protection",
       "health",
       "defense"
+    ],
+    "delapouite/heart-armor": [
+      1040,
+      "protection",
+      "love",
+      "shield"
+    ],
+    "delapouite/heart-shield": [
+      1046,
+      "protection",
+      "love",
+      "defense"
+    ],
+    "lorc/heavy-helm": [
+      2885,
+      "armor",
+      "protection",
+      "helmet"
+    ],
+    "sbed/helmet": [
+      3763,
+      "protection",
+      "headgear",
+      "armor"
+    ],
+    "lorc/horned-helm": [
+      2902,
+      "armor",
+      "protection",
+      "fantasy"
+    ],
+    "lorc/ice-shield": [
+      2918,
+      "protection",
+      "ice",
+      "barrier"
+    ],
+    "lorc/iron-mask": [
+      2945,
+      "armor",
+      "protection",
+      "disguise"
+    ],
+    "sbed/kevlar": [
+      3768,
+      "armor",
+      "protection",
+      "fabric"
+    ],
+    "skoll/kevlar-vest": [
+      3910,
+      "armor",
+      "protection",
+      "safety"
+    ],
+    "lorc/lamellar": [
+      2964,
+      "layers",
+      "plates",
+      "structure"
+    ],
+    "lorc/layered-armor": [
+      2978,
+      "protection",
+      "defense",
+      "levels"
+    ],
+    "delapouite/leather-armor": [
+      1216,
+      "protection",
+      "medieval",
+      "costume"
+    ],
+    "lorc/leather-vest": [
+      2983,
+      "clothing",
+      "style",
+      "protection"
+    ],
+    "delapouite/leg-armor": [
+      1219,
+      "protection",
+      "medieval",
+      "costume"
+    ],
+    "delapouite/light-helm": [
+      1233,
+      "protection",
+      "headgear",
+      "fantasy"
     ],
     "lorc/lightning-shield": [
       3003,
@@ -5300,6 +5522,30 @@
       "protection",
       "medieval"
     ],
+    "skoll/pauldrons": [
+      3934,
+      "armor",
+      "medieval",
+      "protection"
+    ],
+    "skoll/pickelhaube": [
+      3939,
+      "helmet",
+      "military",
+      "history"
+    ],
+    "lorc/plastron": [
+      3176,
+      "chest armor",
+      "breastplate",
+      "protective gear"
+    ],
+    "skoll/pteruges": [
+      3943,
+      "armor",
+      "medieval",
+      "protection"
+    ],
     "delapouite/ribbon-shield": [
       1651,
       "emblem",
@@ -5312,11 +5558,41 @@
       "police shield",
       "defense tool"
     ],
+    "delapouite/roman-shield": [
+      1674,
+      "armor",
+      "historical",
+      "defense"
+    ],
     "lorc/rosa-shield": [
       3248,
       "flower shield",
       "decorative armor",
       "nature defense"
+    ],
+    "willdabeast/round-shield": [
+      4125,
+      "defense",
+      "protection",
+      "armor"
+    ],
+    "delapouite/samurai-helmet": [
+      1708,
+      "armor",
+      "historical",
+      "Japan"
+    ],
+    "delapouite/samus-helmet": [
+      1709,
+      "gaming",
+      "sci-fi",
+      "character"
+    ],
+    "lorc/scale-mail": [
+      3269,
+      "armor",
+      "protective gear",
+      "medieval defense"
     ],
     "sbed/shield": [
       3795,
@@ -5324,11 +5600,53 @@
       "protection",
       "barrier"
     ],
+    "delapouite/shield-bash": [
+      1766,
+      "attack",
+      "defense",
+      "weapon"
+    ],
+    "lorc/shield-bounces": [
+      3308,
+      "defense",
+      "reflect",
+      "bouncing shield"
+    ],
+    "lorc/shield-echoes": [
+      3309,
+      "sound",
+      "defense",
+      "resonant shield"
+    ],
+    "delapouite/shield-impact": [
+      1767,
+      "collision",
+      "defense",
+      "protection"
+    ],
+    "delapouite/shield-opposition": [
+      1768,
+      "resistance",
+      "defense",
+      "barrier"
+    ],
     "lorc/shield-reflect": [
       3310,
       "mirror",
       "defense",
       "reflective surface"
+    ],
+    "delapouite/shoulder-armor": [
+      1781,
+      "protection",
+      "gear",
+      "military"
+    ],
+    "lorc/shoulder-scales": [
+      3320,
+      "armor",
+      "protection",
+      "scaled shoulder"
     ],
     "lorc/skull-shield": [
       3339,
@@ -5342,11 +5660,77 @@
       "battle",
       "shield"
     ],
+    "delapouite/spartan-helmet": [
+      1853,
+      "warrior",
+      "ancient Greece",
+      "armor"
+    ],
+    "lorc/spiked-armor": [
+      3386,
+      "defense",
+      "protection",
+      "sharp"
+    ],
+    "lorc/spiked-collar": [
+      3387,
+      "accessory",
+      "pet",
+      "sharp"
+    ],
+    "lorc/spiked-shell": [
+      3391,
+      "armor",
+      "protection",
+      "shell"
+    ],
+    "delapouite/spiked-shield": [
+      1866,
+      "defense",
+      "armor",
+      "protection"
+    ],
+    "delapouite/spiked-shoulder-armor": [
+      1867,
+      "armor",
+      "medieval",
+      "battle gear"
+    ],
+    "skoll/stahlhelm": [
+      3968,
+      "helmet",
+      "military",
+      "history"
+    ],
+    "lorc/steeltoe-boots": [
+      3444,
+      "boots",
+      "footwear",
+      "safety"
+    ],
     "lorc/surrounded-shield": [
       3485,
       "shield",
       "surrounded",
       "protection"
+    ],
+    "delapouite/templar-shield": [
+      1991,
+      "medieval",
+      "knight",
+      "armor"
+    ],
+    "delapouite/temporary-shield": [
+      1994,
+      "protection",
+      "defense",
+      "makeshift"
+    ],
+    "skoll/trench-body-armor": [
+      3986,
+      "protection",
+      "military",
+      "armor"
     ],
     "delapouite/vibrating-shield": [
       2127,
@@ -5354,11 +5738,47 @@
       "defense",
       "technology"
     ],
+    "delapouite/viking-helmet": [
+      2133,
+      "armor",
+      "history",
+      "warrior"
+    ],
     "delapouite/viking-shield": [
       2135,
       "armor",
       "protection",
       "warrior"
+    ],
+    "lorc/visored-helm": [
+      3624,
+      "armor",
+      "protection",
+      "knight"
+    ],
+    "caro-asercion/warlord-helmet": [
+      153,
+      "warrior",
+      "armor",
+      "battle"
+    ],
+    "lorc/winged-shield": [
+      3659,
+      "defense",
+      "protection",
+      "wings"
+    ],
+    "skoll/wooden-helmet": [
+      3992,
+      "armor",
+      "medieval",
+      "protection"
+    ],
+    "lorc/zebra-shield": [
+      3680,
+      "animal",
+      "stripes",
+      "shield"
     ]
   },
   "Game-icons.net - Emotion": {
@@ -5482,12 +5902,6 @@
       "loud noise",
       "vocal expression"
     ],
-    "lorc/self-love": [
-      3289,
-      "self-care",
-      "heart",
-      "personal growth"
-    ],
     "lorc/sensuousness": [
       3291,
       "sensuality",
@@ -5499,12 +5913,6 @@
       "grin",
       "mischievous",
       "toothy smile"
-    ],
-    "lorc/shining-heart": [
-      3313,
-      "love",
-      "glowing",
-      "affection"
     ],
     "lorc/shouting": [
       3321,
@@ -5827,18 +6235,6 @@
       "protection",
       "culture",
       "artifact"
-    ],
-    "delapouite/triforce": [
-      2067,
-      "symbol",
-      "gaming",
-      "legend"
-    ],
-    "delapouite/triquetra": [
-      2070,
-      "symbol",
-      "knot",
-      "design"
     ],
     "delapouite/troglodyte": [
       2072,
@@ -6682,6 +7078,24 @@
       "vegetable",
       "red"
     ],
+    "delapouite/water-bottle": [
+      2163,
+      "hydration",
+      "container",
+      "portable"
+    ],
+    "delapouite/water-flask": [
+      2165,
+      "container",
+      "hydration",
+      "portable"
+    ],
+    "delapouite/water-gallon": [
+      2167,
+      "measurement",
+      "liquid",
+      "container"
+    ],
     "delapouite/watermelon": [
       2175,
       "fruit",
@@ -6829,6 +7243,12 @@
       "monk",
       "figure",
       "game-piece"
+    ],
+    "lorc/ace": [
+      2257,
+      "card",
+      "high-value",
+      "champion"
     ],
     "delapouite/babyfoot-players": [
       309,
@@ -7088,6 +7508,12 @@
       "ace of spades",
       "card game"
     ],
+    "delapouite/card-burn": [
+      506,
+      "discard card",
+      "destroy card",
+      "fire"
+    ],
     "faithtoken/card-discard": [
       2227,
       "action",
@@ -7099,6 +7525,12 @@
       "action",
       "pick",
       "select"
+    ],
+    "delapouite/card-exchange": [
+      507,
+      "trade card",
+      "swap",
+      "transfer"
     ],
     "aussiesim/card-jack-clubs": [
       42,
@@ -7123,6 +7555,12 @@
       "playing card",
       "jack of spades",
       "card game"
+    ],
+    "delapouite/card-joker": [
+      508,
+      "wild card",
+      "playing card",
+      "trickster"
     ],
     "aussiesim/card-king-clubs": [
       46,
@@ -7232,6 +7670,18 @@
       "strategy",
       "game"
     ],
+    "skoll/clubs": [
+      3859,
+      "suit",
+      "cards",
+      "poker"
+    ],
+    "caro-asercion/coinflip": [
+      85,
+      "chance",
+      "decision",
+      "random"
+    ],
     "skoll/console-controller": [
       3863,
       "gaming",
@@ -7255,6 +7705,12 @@
       "dice",
       "gaming",
       "roll"
+    ],
+    "skoll/diamonds": [
+      3871,
+      "gem",
+      "jewel",
+      "luxury"
     ],
     "delapouite/dice-eight-faces-eight": [
       698,
@@ -7346,11 +7802,29 @@
       "strategy",
       "grid"
     ],
+    "delapouite/game-console": [
+      944,
+      "controller",
+      "video-games",
+      "device"
+    ],
     "delapouite/gamepad": [
       945,
       "controller",
       "joystick",
       "buttons"
+    ],
+    "lorc/gamepad-cross": [
+      2809,
+      "controller",
+      "gaming",
+      "navigation"
+    ],
+    "skoll/hearts": [
+      3899,
+      "love",
+      "emotion",
+      "romance"
     ],
     "delapouite/i-brick": [
       1109,
@@ -7538,6 +8012,12 @@
       "decoration",
       "toy"
     ],
+    "lorc/pawn": [
+      3155,
+      "chess",
+      "strategy",
+      "game"
+    ],
     "delapouite/perspective-dice-five": [
       1494,
       "game",
@@ -7676,6 +8156,12 @@
       "gambling",
       "chance"
     ],
+    "delapouite/rule-book": [
+      1690,
+      "guide",
+      "instructions",
+      "manual"
+    ],
     "delapouite/s-brick": [
       1694,
       "construction",
@@ -7687,6 +8173,12 @@
       "sport",
       "game",
       "magic"
+    ],
+    "skoll/spades": [
+      3962,
+      "suit",
+      "cards",
+      "games"
     ],
     "delapouite/t-brick": [
       1964,
@@ -7841,6 +8333,24 @@
       "country",
       "flag",
       "Europe"
+    ],
+    "delapouite/cambodia": [
+      481,
+      "country",
+      "flag",
+      "Southeast Asia"
+    ],
+    "delapouite/colombia": [
+      600,
+      "South American country",
+      "Colombian flag",
+      "national symbol"
+    ],
+    "delapouite/corsica": [
+      634,
+      "French island",
+      "Mediterranean island",
+      "Napoleon birthplace"
     ],
     "delapouite/earth-africa-europe": [
       764,
@@ -8093,6 +8603,12 @@
       "design",
       "map",
       "technology"
+    ],
+    "lorc/world": [
+      3672,
+      "globe",
+      "planet",
+      "universe"
     ]
   },
   "Game-icons.net - Gesture": {
@@ -8107,6 +8623,18 @@
       "meeting",
       "confrontation",
       "talk"
+    ],
+    "skoll/halt": [
+      3893,
+      "stop",
+      "pause",
+      "wait"
+    ],
+    "sbed/hand": [
+      3758,
+      "palm",
+      "grip",
+      "fist"
     ],
     "delapouite/hand-ok": [
       1021,
@@ -8131,6 +8659,12 @@
       "invocation",
       "blessing",
       "supplication"
+    ],
+    "sbed/revolt": [
+      3792,
+      "rebellion",
+      "uprising",
+      "resistance"
     ],
     "john-redman/rock": [
       2252,
@@ -8211,6 +8745,12 @@
       "discomfort",
       "health",
       "injury"
+    ],
+    "lorc/ball-heart": [
+      2319,
+      "love",
+      "sphere",
+      "emotion"
     ],
     "lorc/bandage-roll": [
       2321,
@@ -8302,6 +8842,12 @@
       "decoration",
       "Halloween"
     ],
+    "lorc/charm": [
+      2480,
+      "magic",
+      "talisman",
+      "amulet"
+    ],
     "lorc/chewed-heart": [
       2490,
       "love",
@@ -8374,6 +8920,12 @@
       "health",
       "care"
     ],
+    "delapouite/eternal-love": [
+      802,
+      "heart",
+      "infinity",
+      "romance"
+    ],
     "skoll/fat": [
       3880,
       "overweight",
@@ -8385,6 +8937,12 @@
       "embryo",
       "development",
       "growth"
+    ],
+    "delapouite/first-aid-kit": [
+      861,
+      "medical",
+      "emergency",
+      "health"
     ],
     "delapouite/foot-plaster": [
       907,
@@ -8440,10 +8998,34 @@
       "accessibility",
       "hearing"
     ],
+    "delapouite/heart-battery": [
+      1041,
+      "energy",
+      "love",
+      "power"
+    ],
     "delapouite/heart-beats": [
       1042,
       "pulse",
       "health",
+      "love"
+    ],
+    "delapouite/heart-key": [
+      1044,
+      "love",
+      "access",
+      "lock"
+    ],
+    "zeromancer/heart-minus": [
+      4129,
+      "health",
+      "injury",
+      "loss"
+    ],
+    "zeromancer/heart-plus": [
+      4130,
+      "health",
+      "gain",
       "love"
     ],
     "sbed/hot-surface": [
@@ -8457,6 +9039,18 @@
       "marijuana",
       "cannabis",
       "smoke"
+    ],
+    "delapouite/knee-bandage": [
+      1189,
+      "medical",
+      "injury",
+      "support"
+    ],
+    "delapouite/knee-cap": [
+      1190,
+      "joint",
+      "anatomy",
+      "support"
     ],
     "delapouite/life-bar": [
       1229,
@@ -8476,6 +9070,18 @@
       "loss",
       "medical"
     ],
+    "delapouite/love-mystery": [
+      1265,
+      "romance",
+      "story",
+      "intrigue"
+    ],
+    "delapouite/medical-drip": [
+      1306,
+      "IV bag",
+      "infusion",
+      "healthcare"
+    ],
     "sbed/medical-pack": [
       3781,
       "healing",
@@ -8488,17 +9094,71 @@
       "supplies",
       "kit"
     ],
+    "delapouite/medical-thermometer": [
+      1307,
+      "temperature gauge",
+      "health tool",
+      "fever check"
+    ],
+    "delapouite/medicine-pills": [
+      1308,
+      "tablets",
+      "pharmaceuticals",
+      "health capsules"
+    ],
+    "delapouite/medicines": [
+      1309,
+      "drugs",
+      "treatments",
+      "remedies"
+    ],
     "quoting/military-ambulance": [
       3721,
       "vehicle",
       "medical",
       "military"
     ],
+    "delapouite/morgue-feet": [
+      1363,
+      "anatomy",
+      "medical imagery",
+      "corpse"
+    ],
+    "delapouite/nested-hearts": [
+      1393,
+      "love",
+      "affection",
+      "connection"
+    ],
     "delapouite/night-sleep": [
       1400,
       "rest",
       "slumber",
       "dreams"
+    ],
+    "delapouite/nurse-female": [
+      1411,
+      "healthcare",
+      "profession",
+      "caregiver"
+    ],
+    "delapouite/nurse-male": [
+      1412,
+      "healthcare",
+      "profession",
+      "caregiver"
+    ],
+    "delapouite/opposite-hearts": [
+      1436,
+      "contrast",
+      "love",
+      "duality"
+    ],
+    "lorc/pierced-heart": [
+      3164,
+      "love",
+      "injury",
+      "romance"
     ],
     "lorc/pill": [
       3168,
@@ -8542,17 +9202,41 @@
       "cure",
       "treatment"
     ],
+    "delapouite/rod-of-asclepius": [
+      1669,
+      "medicine",
+      "health",
+      "symbol"
+    ],
     "lorc/rough-wound": [
       3250,
       "injury",
       "cut",
       "abrasion"
     ],
+    "lorc/royal-love": [
+      3253,
+      "romance",
+      "monarchy",
+      "affection"
+    ],
     "lorc/scar-wound": [
       3274,
       "injury mark",
       "healed cut",
       "skin blemish"
+    ],
+    "lorc/self-love": [
+      3289,
+      "self-care",
+      "heart",
+      "personal growth"
+    ],
+    "lorc/shining-heart": [
+      3313,
+      "love",
+      "glowing",
+      "affection"
     ],
     "zajkonur/skull-with-syringe": [
       4127,
@@ -8572,6 +9256,18 @@
       "doctor",
       "examination"
     ],
+    "lorc/sticking-plaster": [
+      3447,
+      "bandage",
+      "plaster",
+      "adhesive"
+    ],
+    "lorc/stigmata": [
+      3448,
+      "wounds",
+      "marks",
+      "symbols"
+    ],
     "lorc/stitched-wound": [
       3450,
       "wound",
@@ -8589,6 +9285,18 @@
       "wound",
       "sword",
       "injury"
+    ],
+    "delapouite/swords-power": [
+      1962,
+      "strength",
+      "combat",
+      "weapons"
+    ],
+    "lorc/syringe": [
+      3505,
+      "injection",
+      "needle",
+      "medical"
     ],
     "sbed/syringe": [
       3807,
@@ -8774,12 +9482,6 @@
       "reaction",
       "lab"
     ],
-    "lorc/bugle-call": [
-      2434,
-      "signal",
-      "announcement",
-      "military"
-    ],
     "lorc/burning-book": [
       2440,
       "destruction",
@@ -8809,12 +9511,6 @@
       "drink",
       "liquid",
       "goblet"
-    ],
-    "lorc/charm": [
-      2480,
-      "magic",
-      "talisman",
-      "amulet"
     ],
     "lorc/chemical-drop": [
       2488,
@@ -8936,12 +9632,6 @@
       "bell sound",
       "notification"
     ],
-    "lorc/rock": [
-      3241,
-      "stone",
-      "boulder",
-      "mineral"
-    ],
     "delapouite/rolled-cloth": [
       1670,
       "fabric",
@@ -8959,12 +9649,6 @@
       "hardware",
       "furniture",
       "grip"
-    ],
-    "delapouite/rule-book": [
-      1690,
-      "guide",
-      "instructions",
-      "manual"
     ],
     "delapouite/saddle": [
       1697,
@@ -9241,12 +9925,6 @@
       "grave",
       "memorial",
       "death"
-    ],
-    "lorc/top-hat": [
-      3556,
-      "formal",
-      "fashion",
-      "attire"
     ]
   },
   "Game-icons.net - Jewelry": {
@@ -9262,11 +9940,29 @@
       "engagement",
       "bling"
     ],
+    "delapouite/crystal-earrings": [
+      661,
+      "gemstone earrings",
+      "jewelry",
+      "sparkly earrings"
+    ],
+    "lorc/diamond-hard": [
+      2611,
+      "strength",
+      "resilience",
+      "gem"
+    ],
     "delapouite/diamond-ring": [
       696,
       "engagement ring",
       "gemstone ring",
       "wedding ring"
+    ],
+    "delapouite/diamond-trophy": [
+      697,
+      "winner's award",
+      "crystal prize",
+      "championship trophy"
     ],
     "delapouite/double-necklace": [
       738,
@@ -9292,6 +9988,12 @@
       "gemstone",
       "accessory"
     ],
+    "lorc/engagement-ring": [
+      2689,
+      "love",
+      "commitment",
+      "marriage"
+    ],
     "lorc/gem-chain": [
       2816,
       "jewelry",
@@ -9315,6 +10017,12 @@
       "stones",
       "jewels",
       "treasure"
+    ],
+    "delapouite/globe-ring": [
+      964,
+      "earth",
+      "planet",
+      "orbit"
     ],
     "delapouite/heart-earrings": [
       1043,
@@ -9363,6 +10071,18 @@
       "jewelry",
       "circle",
       "accessory"
+    ],
+    "delapouite/ring-box": [
+      1652,
+      "jewelry",
+      "storage",
+      "container"
+    ],
+    "delapouite/rupee": [
+      1692,
+      "currency",
+      "money",
+      "India"
     ],
     "lorc/skull-ring": [
       3338,
@@ -9756,12 +10476,6 @@
       "emotion",
       "shot"
     ],
-    "lorc/love-song": [
-      3026,
-      "music",
-      "romance",
-      "ballad"
-    ],
     "lorc/magic-gate": [
       3032,
       "portal",
@@ -10038,18 +10752,6 @@
       "ancient",
       "eye design"
     ],
-    "lorc/shield-bounces": [
-      3308,
-      "defense",
-      "reflect",
-      "bouncing shield"
-    ],
-    "lorc/shield-echoes": [
-      3309,
-      "sound",
-      "defense",
-      "resonant shield"
-    ],
     "lorc/sinusoidal-beam": [
       3328,
       "wave",
@@ -10134,12 +10836,6 @@
       "fantasy",
       "weapon"
     ],
-    "delapouite/swords-power": [
-      1962,
-      "strength",
-      "combat",
-      "weapons"
-    ],
     "delapouite/tentacles-barrier": [
       1998,
       "sea",
@@ -10171,188 +10867,12 @@
       "staff"
     ]
   },
-  "Game-icons.net - Medical": {
-    "delapouite/knee-bandage": [
-      1189,
-      "medical",
-      "injury",
-      "support"
-    ],
-    "delapouite/knee-cap": [
-      1190,
-      "joint",
-      "anatomy",
-      "support"
-    ],
-    "delapouite/medical-drip": [
-      1306,
-      "IV bag",
-      "infusion",
-      "healthcare"
-    ],
-    "delapouite/medical-thermometer": [
-      1307,
-      "temperature gauge",
-      "health tool",
-      "fever check"
-    ],
-    "delapouite/medicine-pills": [
-      1308,
-      "tablets",
-      "pharmaceuticals",
-      "health capsules"
-    ],
-    "delapouite/medicines": [
-      1309,
-      "drugs",
-      "treatments",
-      "remedies"
-    ],
-    "delapouite/morgue-feet": [
-      1363,
-      "anatomy",
-      "medical imagery",
-      "corpse"
-    ],
-    "delapouite/nurse-female": [
-      1411,
-      "healthcare",
-      "profession",
-      "caregiver"
-    ],
-    "delapouite/nurse-male": [
-      1412,
-      "healthcare",
-      "profession",
-      "caregiver"
-    ],
-    "lorc/sticking-plaster": [
-      3447,
-      "bandage",
-      "plaster",
-      "adhesive"
-    ],
-    "lorc/syringe": [
-      3505,
-      "injection",
-      "needle",
-      "medical"
-    ]
-  },
   "Game-icons.net - Military": {
-    "delapouite/abdominal-armor": [
-      226,
-      "protective-gear",
-      "body-armor",
-      "torso"
-    ],
-    "delapouite/ancient-sword": [
-      257,
-      "weapon",
-      "blade",
-      "historical"
-    ],
-    "delapouite/armor-downgrade": [
-      283,
-      "reduce",
-      "defense",
-      "shield"
-    ],
-    "delapouite/armor-upgrade": [
-      285,
-      "enhance",
-      "defense",
-      "protect"
-    ],
-    "delapouite/armored-boomerang": [
-      286,
-      "weapon",
-      "throw",
-      "return"
-    ],
-    "delapouite/attached-shield": [
-      298,
-      "defense",
-      "protection",
-      "guard"
-    ],
-    "delapouite/axe-sword": [
-      304,
-      "weapon",
-      "battle",
-      "blade"
-    ],
-    "delapouite/bat-leth": [
-      351,
-      "weapon",
-      "blade",
-      "alien"
-    ],
-    "delapouite/belt-armor": [
-      371,
-      "defense",
-      "protection",
-      "gear"
-    ],
-    "delapouite/black-knight-helm": [
-      383,
-      "armor",
-      "helmet",
-      "medieval"
-    ],
-    "delapouite/bo": [
-      389,
-      "staff",
-      "weapon",
-      "martial-arts"
-    ],
-    "delapouite/bolt-bomb": [
-      397,
-      "explosive",
-      "detonation",
-      "grenade"
-    ],
     "delapouite/bolt-drop": [
       399,
       "falling-bolt",
       "screw",
       "fastener"
-    ],
-    "delapouite/bone-knife": [
-      401,
-      "dagger",
-      "sharp",
-      "weapon"
-    ],
-    "delapouite/bone-mace": [
-      402,
-      "club",
-      "blunt",
-      "weapon"
-    ],
-    "delapouite/boomerang": [
-      409,
-      "return",
-      "weapon",
-      "throw"
-    ],
-    "delapouite/boomerang-cross": [
-      408,
-      "weapon",
-      "return",
-      "thrown"
-    ],
-    "delapouite/bow-arrow": [
-      416,
-      "archery",
-      "weapon",
-      "projectile"
-    ],
-    "delapouite/bow-string": [
-      417,
-      "tension",
-      "archery",
-      "weapon"
     ],
     "delapouite/bracer": [
       428,
@@ -10360,125 +10880,17 @@
       "wrist guard",
       "forearm shield"
     ],
-    "delapouite/brass-knuckles": [
-      433,
-      "knuckle duster",
-      "fist weapon",
-      "punch weapon"
-    ],
-    "catsu/broken-arrow": [
-      187,
-      "symbol",
-      "broken-weapon",
-      "peace"
-    ],
-    "delapouite/broken-axe": [
-      442,
-      "damaged axe",
-      "broken tool",
-      "fractured weapon"
-    ],
-    "carl-olsen/brutal-helm": [
-      54,
-      "helmet",
-      "armor",
-      "medieval"
-    ],
-    "delapouite/bullet-bill": [
-      451,
-      "projectile",
-      "cannonball",
-      "missile"
-    ],
-    "delapouite/bullet-impacts": [
-      452,
-      "bullet holes",
-      "shot damage",
-      "gunfire marks"
-    ],
-    "delapouite/butterfly-knife": [
-      462,
-      "balisong",
-      "weapon",
-      "folding knife"
-    ],
-    "delapouite/cadillac-helm": [
-      471,
-      "car logo",
-      "luxury",
-      "vehicle emblem"
-    ],
-    "delapouite/caltrops": [
-      479,
-      "spike trap",
-      "roadblock",
-      "obstacle"
-    ],
-    "delapouite/cape-armor": [
-      493,
-      "cloak",
-      "protection",
-      "garment"
-    ],
     "delapouite/cavalry": [
       521,
       "horse soldiers",
       "mounted troops",
       "military"
     ],
-    "delapouite/centurion-helmet": [
-      530,
-      "Roman helmet",
-      "warrior helmet",
-      "ancient soldier"
-    ],
-    "delapouite/chakram": [
-      533,
-      "throwing weapon",
-      "circular blade",
-      "warrior ring"
-    ],
-    "delapouite/chest-armor": [
-      550,
-      "body armor",
-      "protective gear",
-      "knight armor"
-    ],
-    "delapouite/claws": [
-      572,
-      "sharp nails",
-      "talons",
-      "animal claws"
-    ],
-    "delapouite/claymore-explosive": [
-      574,
-      "land mine",
-      "military explosive",
-      "tripwire bomb"
-    ],
-    "delapouite/closed-barbute": [
-      579,
-      "helmet",
-      "medieval armor",
-      "warrior headgear"
-    ],
     "delapouite/corporal": [
       632,
       "military rank",
       "army officer",
       "soldier"
-    ],
-    "delapouite/crescent-staff": [
-      646,
-      "moon staff",
-      "magic staff",
-      "lunar staff"
-    ],
-    "carl-olsen/crossbow": [
-      55,
-      "weapon",
-      "archery",
-      "medieval"
     ],
     "delapouite/dagger-rose": [
       674,
@@ -10492,95 +10904,11 @@
       "liquid",
       "deadly"
     ],
-    "delapouite/detonator": [
-      691,
-      "bomb trigger",
-      "explosive device",
-      "remote detonator"
-    ],
-    "delapouite/diamond-hilt": [
-      695,
-      "jeweled sword handle",
-      "fancy sword",
-      "precious hilt"
-    ],
-    "delapouite/dragon-shield": [
-      742,
-      "protection",
-      "armor",
-      "medieval"
-    ],
-    "delapouite/dynamite": [
-      761,
-      "explosion",
-      "bomb",
-      "TNT"
-    ],
     "delapouite/exploding-planet": [
       811,
       "destruction",
       "space",
       "explosion"
-    ],
-    "delapouite/fencer": [
-      840,
-      "sword",
-      "duel",
-      "sport"
-    ],
-    "delapouite/flail": [
-      875,
-      "weapon",
-      "medieval",
-      "chain"
-    ],
-    "delapouite/flamethrower": [
-      877,
-      "fire",
-      "weapon",
-      "burn"
-    ],
-    "delapouite/flamethrower-soldier": [
-      876,
-      "fire",
-      "war",
-      "weapon"
-    ],
-    "delapouite/flanged-mace": [
-      879,
-      "weapon",
-      "medieval",
-      "spiked"
-    ],
-    "darkzaitzev/flying-shuriken": [
-      197,
-      "throwing-star",
-      "ninja-weapon",
-      "projectile"
-    ],
-    "caro-asercion/frog-mouth-helm": [
-      98,
-      "armor",
-      "helmet",
-      "medieval"
-    ],
-    "delapouite/gauls-helm": [
-      952,
-      "helmet",
-      "armor",
-      "warrior"
-    ],
-    "delapouite/gauntlet": [
-      953,
-      "glove",
-      "armor",
-      "hand-protection"
-    ],
-    "delapouite/glaive": [
-      961,
-      "weapon",
-      "spear",
-      "polearm"
     ],
     "delapouite/golem-head": [
       973,
@@ -10588,47 +10916,11 @@
       "statue",
       "stone"
     ],
-    "delapouite/greaves": [
-      991,
-      "armor",
-      "leg-protection",
-      "plate"
-    ],
-    "delapouite/griffin-shield": [
-      996,
-      "creature",
-      "symbol",
-      "heraldry"
-    ],
-    "delapouite/gun-rose": [
-      1003,
-      "weapon",
-      "flower",
-      "beauty"
-    ],
-    "delapouite/gun-stock": [
-      1004,
-      "rifle",
-      "firearm",
-      "handle"
-    ],
     "delapouite/hammer-break": [
       1015,
       "tool",
       "smash",
       "construction"
-    ],
-    "delapouite/heart-armor": [
-      1040,
-      "protection",
-      "love",
-      "shield"
-    ],
-    "delapouite/heart-shield": [
-      1046,
-      "protection",
-      "love",
-      "defense"
     ],
     "delapouite/heart-stake": [
       1047,
@@ -10636,53 +10928,17 @@
       "weapon",
       "love"
     ],
-    "delapouite/heavy-bullets": [
-      1050,
-      "ammunition",
-      "weapon",
-      "cartridge"
-    ],
-    "delapouite/hunting-bolas": [
-      1105,
-      "weapon",
-      "tool",
-      "trapping"
-    ],
-    "delapouite/inferno-bomb": [
-      1130,
-      "weapon",
-      "explosive",
-      "fire"
-    ],
     "delapouite/jerusalem-cross": [
       1154,
       "symbol",
       "religious",
       "emblem"
     ],
-    "delapouite/katana": [
-      1169,
-      "sword",
-      "weapon",
-      "Japanese"
-    ],
     "delapouite/knight-banner": [
       1193,
       "medieval",
       "heraldry",
       "flag"
-    ],
-    "darkzaitzev/kusarigama": [
-      201,
-      "chain-weapon",
-      "sickle",
-      "ninja"
-    ],
-    "delapouite/laser-turret": [
-      1209,
-      "defense",
-      "technology",
-      "weapon"
     ],
     "delapouite/lead-pipe": [
       1213,
@@ -10702,71 +10958,11 @@
       "energy",
       "effect"
     ],
-    "delapouite/machine-gun-magazine": [
-      1274,
-      "weapon",
-      "ammunition",
-      "military"
-    ],
-    "delapouite/magic-axe": [
-      1275,
-      "weapon",
-      "fantasy",
-      "enchantment"
-    ],
-    "delapouite/magic-trident": [
-      1279,
-      "weapon",
-      "fantasy",
-      "sea"
-    ],
     "delapouite/military-fort": [
       1336,
       "defense structure",
       "army base",
       "historical fortification"
-    ],
-    "delapouite/missile-launcher": [
-      1346,
-      "weapon system",
-      "military equipment",
-      "artillery"
-    ],
-    "delapouite/mortar": [
-      1365,
-      "construction tool",
-      "weapon",
-      "mixing bowl"
-    ],
-    "delapouite/mp5": [
-      1370,
-      "submachine gun",
-      "firearm",
-      "military weapon"
-    ],
-    "darkzaitzev/north-star-shuriken": [
-      204,
-      "throwing-star",
-      "weapon",
-      "ninja"
-    ],
-    "delapouite/nunchaku": [
-      1410,
-      "martial arts",
-      "weapon",
-      "training"
-    ],
-    "delapouite/panzerfaust": [
-      1461,
-      "weapon",
-      "military",
-      "rocket"
-    ],
-    "delapouite/pirate-cannon": [
-      1528,
-      "ship",
-      "weapon",
-      "treasure"
     ],
     "delapouite/private": [
       1600,
@@ -10780,24 +10976,6 @@
       "rank",
       "soldier"
     ],
-    "delapouite/quiver": [
-      1618,
-      "archery",
-      "arrows",
-      "storage"
-    ],
-    "delapouite/reload-gun-barrel": [
-      1641,
-      "firearm",
-      "weapon",
-      "ammunition"
-    ],
-    "delapouite/revolver": [
-      1647,
-      "firearm",
-      "gun",
-      "revolver"
-    ],
     "caro-asercion/ricochet": [
       124,
       "bounce",
@@ -10809,168 +10987,6 @@
       "counterattack",
       "sword",
       "duel"
-    ],
-    "delapouite/roman-shield": [
-      1674,
-      "armor",
-      "historical",
-      "defense"
-    ],
-    "delapouite/rope-dart": [
-      1679,
-      "weapon",
-      "projectile",
-      "tool"
-    ],
-    "delapouite/rusty-sword": [
-      1693,
-      "weapon",
-      "antique",
-      "history"
-    ],
-    "delapouite/saber-and-pistol": [
-      1695,
-      "weapon",
-      "duel",
-      "historical"
-    ],
-    "delapouite/sai": [
-      1700,
-      "weapon",
-      "martial arts",
-      "combat"
-    ],
-    "delapouite/samurai-helmet": [
-      1708,
-      "armor",
-      "historical",
-      "Japan"
-    ],
-    "delapouite/samus-helmet": [
-      1709,
-      "gaming",
-      "sci-fi",
-      "character"
-    ],
-    "delapouite/sawed-off-shotgun": [
-      1724,
-      "firearm",
-      "weapon",
-      "compact"
-    ],
-    "delapouite/sharp-axe": [
-      1760,
-      "tool",
-      "weapon",
-      "cutting"
-    ],
-    "delapouite/sharp-halberd": [
-      1761,
-      "weapon",
-      "polearm",
-      "medieval"
-    ],
-    "darkzaitzev/sharp-shuriken": [
-      212,
-      "throwing-star",
-      "weapon",
-      "ninja"
-    ],
-    "delapouite/shield-bash": [
-      1766,
-      "attack",
-      "defense",
-      "weapon"
-    ],
-    "delapouite/shield-impact": [
-      1767,
-      "collision",
-      "defense",
-      "protection"
-    ],
-    "delapouite/shield-opposition": [
-      1768,
-      "resistance",
-      "defense",
-      "barrier"
-    ],
-    "delapouite/shotgun-rounds": [
-      1780,
-      "ammunition",
-      "weapon",
-      "hunting"
-    ],
-    "delapouite/shoulder-armor": [
-      1781,
-      "protection",
-      "gear",
-      "military"
-    ],
-    "darkzaitzev/shuriken": [
-      213,
-      "throwing-star",
-      "weapon",
-      "ninja"
-    ],
-    "delapouite/sickle": [
-      1787,
-      "farming",
-      "tool",
-      "harvest"
-    ],
-    "delapouite/silver-bullet": [
-      1791,
-      "myth",
-      "weapon",
-      "folklore"
-    ],
-    "delapouite/skull-staff": [
-      1804,
-      "fantasy",
-      "weapon",
-      "decoration"
-    ],
-    "delapouite/sling": [
-      1812,
-      "weapon",
-      "tool",
-      "projectile"
-    ],
-    "delapouite/slingshot": [
-      1813,
-      "toy",
-      "weapon",
-      "recreation"
-    ],
-    "darkzaitzev/smoke-bomb": [
-      215,
-      "explosive",
-      "cover",
-      "ninja"
-    ],
-    "darkzaitzev/star-shuriken": [
-      216,
-      "throwing-star",
-      "weapon",
-      "ninja"
-    ],
-    "darkzaitzev/three-pointed-shuriken": [
-      218,
-      "throwing-star",
-      "weapon",
-      "ninja"
-    ],
-    "caro-asercion/warlord-helmet": [
-      153,
-      "warrior",
-      "armor",
-      "battle"
-    ],
-    "darkzaitzev/whirlpool-shuriken": [
-      219,
-      "throwing-star",
-      "ninja-weapon",
-      "spinning"
     ]
   },
   "Game-icons.net - Music": {
@@ -11004,6 +11020,18 @@
       "woodwind",
       "orchestra"
     ],
+    "delapouite/boombox": [
+      407,
+      "music",
+      "stereo",
+      "speaker"
+    ],
+    "lorc/bugle-call": [
+      2434,
+      "signal",
+      "announcement",
+      "military"
+    ],
     "cathelineau/carnyx": [
       162,
       "war-horn",
@@ -11021,6 +11049,12 @@
       "drum",
       "percussion",
       "music"
+    ],
+    "lorc/double-quaver": [
+      2635,
+      "music",
+      "rhythm",
+      "sound"
     ],
     "delapouite/drum": [
       750,
@@ -11094,6 +11128,12 @@
       "music",
       "strings"
     ],
+    "lorc/love-song": [
+      3026,
+      "music",
+      "romance",
+      "ballad"
+    ],
     "lorc/lyre": [
       3027,
       "instrument",
@@ -11105,6 +11145,18 @@
       "percussion instrument",
       "musical shaker",
       "rhythm maker"
+    ],
+    "delapouite/megaphone": [
+      1318,
+      "loudspeaker",
+      "announcement device",
+      "sound amplifier"
+    ],
+    "delapouite/microphone": [
+      1332,
+      "audio device",
+      "recording equipment",
+      "sound capture"
     ],
     "delapouite/musical-keyboard": [
       1379,
@@ -11190,6 +11242,12 @@
       "play",
       "sound"
     ],
+    "skoll/sound-waves": [
+      3961,
+      "audio",
+      "frequency",
+      "music"
+    ],
     "delapouite/speaker": [
       1855,
       "audio",
@@ -11201,12 +11259,6 @@
       "mute",
       "silence",
       "audio off"
-    ],
-    "delapouite/stabbed-note": [
-      1883,
-      "message",
-      "attack",
-      "communication"
     ],
     "delapouite/tambourine": [
       1974,
@@ -11231,6 +11283,12 @@
       "brass",
       "music",
       "orchestra"
+    ],
+    "lorc/tune-pitch": [
+      3593,
+      "music",
+      "sound",
+      "frequency"
     ],
     "zajkonur/violin": [
       4128,
@@ -11261,6 +11319,12 @@
       "instrument",
       "gong",
       "music"
+    ],
+    "lorc/zigzag-tune": [
+      3685,
+      "music",
+      "sound",
+      "pattern"
     ]
   },
   "Game-icons.net - Mystical": {
@@ -11330,18 +11394,6 @@
       "star",
       "symbol"
     ],
-    "lorc/static": [
-      3442,
-      "electricity",
-      "energy",
-      "charge"
-    ],
-    "lorc/static-waves": [
-      3441,
-      "waves",
-      "energy",
-      "motion"
-    ],
     "lorc/stoned-skull": [
       3461,
       "skull",
@@ -11359,24 +11411,6 @@
       "eye",
       "surrounded",
       "encircled"
-    ],
-    "lorc/swirl-ring": [
-      3491,
-      "ring",
-      "swirl",
-      "circular"
-    ],
-    "lorc/swirl-string": [
-      3492,
-      "string",
-      "swirl",
-      "twist"
-    ],
-    "lorc/tension-snowflake": [
-      3521,
-      "stress",
-      "pressure",
-      "ice"
     ],
     "lorc/tentacle-heart": [
       3522,
@@ -11500,12 +11534,6 @@
       "altar",
       "flame"
     ],
-    "delapouite/globe-ring": [
-      964,
-      "earth",
-      "planet",
-      "orbit"
-    ],
     "delapouite/glowing-artifact": [
       966,
       "relic",
@@ -11608,18 +11636,6 @@
       "ancient",
       "soldier"
     ],
-    "delapouite/spiked-dragon-head": [
-      1865,
-      "fantasy",
-      "mythical creature",
-      "fierce"
-    ],
-    "lorc/spiky-field": [
-      3397,
-      "landscape",
-      "sharp",
-      "terrain"
-    ],
     "delapouite/spiky-wing": [
       1871,
       "creature",
@@ -11685,12 +11701,6 @@
       "creature",
       "fantasy",
       "monster"
-    ],
-    "delapouite/ufo": [
-      2095,
-      "alien",
-      "spaceship",
-      "unidentified"
     ]
   },
   "Game-icons.net - Mythology": {
@@ -12788,12 +12798,6 @@
       "items",
       "drops"
     ],
-    "delapouite/growth": [
-      998,
-      "plant",
-      "nature",
-      "expansion"
-    ],
     "delapouite/h2o": [
       1006,
       "water",
@@ -13118,11 +13122,23 @@
       "grass",
       "wetland"
     ],
+    "lorc/rock": [
+      3241,
+      "stone",
+      "boulder",
+      "mineral"
+    ],
     "lorc/root-tip": [
       3247,
       "plant root",
       "growth point",
       "botanical feature"
+    ],
+    "lorc/rose": [
+      3249,
+      "flower",
+      "bloom",
+      "romance symbol"
     ],
     "delapouite/round-straw-bale": [
       1684,
@@ -13690,12 +13706,6 @@
       "drink",
       "bottle"
     ],
-    "delapouite/box-unpacking": [
-      426,
-      "unbox",
-      "open box",
-      "package"
-    ],
     "lorc/broken-ribbon": [
       2424,
       "decoration",
@@ -13774,24 +13784,6 @@
       "light",
       "wax"
     ],
-    "delapouite/card-burn": [
-      506,
-      "discard card",
-      "destroy card",
-      "fire"
-    ],
-    "delapouite/card-exchange": [
-      507,
-      "trade card",
-      "swap",
-      "transfer"
-    ],
-    "delapouite/card-joker": [
-      508,
-      "wild card",
-      "playing card",
-      "trickster"
-    ],
     "delapouite/cardboard-box": [
       510,
       "container",
@@ -13840,12 +13832,6 @@
       "message icon",
       "conversation"
     ],
-    "lorc/checkbox-tree": [
-      2481,
-      "selection",
-      "options",
-      "choices"
-    ],
     "delapouite/checklist": [
       545,
       "to-do list",
@@ -13863,12 +13849,6 @@
       "snack pack",
       "potato chips",
       "crisps bag"
-    ],
-    "delapouite/choice": [
-      559,
-      "decision",
-      "selection",
-      "options"
     ],
     "delapouite/chopsticks": [
       560,
@@ -13906,12 +13886,6 @@
       "building material",
       "masonry brick"
     ],
-    "caro-asercion/clock-tower": [
-      83,
-      "time",
-      "building",
-      "structure"
-    ],
     "delapouite/clockwise-rotation": [
       578,
       "circular movement",
@@ -13929,18 +13903,6 @@
       "fabric container",
       "textile jar",
       "cloth-covered pot"
-    ],
-    "delapouite/clothes": [
-      582,
-      "outfit",
-      "garments",
-      "apparel"
-    ],
-    "caro-asercion/clothesline": [
-      84,
-      "laundry",
-      "drying",
-      "outdoors"
     ],
     "delapouite/clothespin": [
       583,
@@ -13971,12 +13933,6 @@
       "coffee maker",
       "brew pot",
       "hot beverage container"
-    ],
-    "caro-asercion/coinflip": [
-      85,
-      "chance",
-      "decision",
-      "random"
     ],
     "delapouite/coins": [
       598,
@@ -14013,12 +13969,6 @@
       "battle",
       "face-off",
       "conflict"
-    ],
-    "delapouite/contract": [
-      613,
-      "agreement",
-      "legal document",
-      "deal"
     ],
     "delapouite/cook": [
       620,
@@ -14080,12 +14030,6 @@
       "shepherd's crook",
       "royal flail"
     ],
-    "delapouite/crystal-earrings": [
-      661,
-      "gemstone earrings",
-      "jewelry",
-      "sparkly earrings"
-    ],
     "lorc/crystal-shine": [
       2573,
       "sparkle",
@@ -14110,47 +14054,23 @@
       "mystery",
       "character"
     ],
+    "lorc/deathcab": [
+      2600,
+      "vehicle",
+      "transport",
+      "dark"
+    ],
     "delapouite/delicate-perfume": [
       685,
       "fragrance bottle",
       "scent",
       "perfume vial"
     ],
-    "delapouite/detour": [
-      692,
-      "road diversion",
-      "alternate route",
-      "path change"
-    ],
-    "lorc/diamond-hard": [
-      2611,
-      "strength",
-      "resilience",
-      "gem"
-    ],
-    "delapouite/diamond-trophy": [
-      697,
-      "winner's award",
-      "crystal prize",
-      "championship trophy"
-    ],
     "delapouite/diploma": [
       713,
       "graduation certificate",
       "degree",
       "academic award"
-    ],
-    "delapouite/direction-sign": [
-      714,
-      "road sign",
-      "directional post",
-      "wayfinding"
-    ],
-    "delapouite/direction-signs": [
-      715,
-      "multiple signs",
-      "guideposts",
-      "route markers"
     ],
     "delapouite/diving-helmet": [
       722,
@@ -14212,35 +14132,17 @@
       "bunker",
       "war"
     ],
-    "delapouite/family-tree": [
-      829,
-      "genealogy",
-      "ancestry",
-      "roots"
-    ],
     "delapouite/feather-necklace": [
       835,
       "jewelry",
       "tribal",
       "accessory"
     ],
-    "delapouite/female-legs": [
-      837,
-      "woman",
-      "body",
-      "limbs"
-    ],
     "delapouite/flat-platform": [
       881,
       "stage",
       "level",
       "surface"
-    ],
-    "delapouite/flower-hat": [
-      897,
-      "headwear",
-      "floral",
-      "decoration"
     ],
     "delapouite/foundry-bucket": [
       915,
@@ -14265,12 +14167,6 @@
       "container",
       "pail",
       "steel"
-    ],
-    "delapouite/full-motorcycle-helmet": [
-      932,
-      "safety",
-      "riding",
-      "gear"
     ],
     "delapouite/full-wood-bucket": [
       935,
@@ -14386,12 +14282,6 @@
       "rescue",
       "water"
     ],
-    "delapouite/life-jacket": [
-      1231,
-      "safety",
-      "buoyancy",
-      "water"
-    ],
     "delapouite/light-sabers": [
       1235,
       "sci-fi",
@@ -14464,35 +14354,17 @@
       "puzzle",
       "pathway"
     ],
-    "delapouite/megaphone": [
-      1318,
-      "loudspeaker",
-      "announcement device",
-      "sound amplifier"
-    ],
     "lorc/mesh-ball": [
       3064,
       "net",
       "ball",
       "sport"
     ],
-    "delapouite/microphone": [
-      1332,
-      "audio device",
-      "recording equipment",
-      "sound capture"
-    ],
     "faithtoken/minerals": [
       2233,
       "resources",
       "materials",
       "geology"
-    ],
-    "delapouite/mining-helmet": [
-      1344,
-      "safety gear",
-      "hard hat",
-      "protective equipment"
     ],
     "delapouite/moka-pot": [
       1349,
@@ -14595,12 +14467,6 @@
       "office",
       "stationery",
       "clip"
-    ],
-    "caro-asercion/paper-crane": [
-      115,
-      "origami",
-      "bird",
-      "paper-art"
     ],
     "caro-asercion/paper-frog": [
       116,
@@ -14806,35 +14672,17 @@
       "prize",
       "decoration"
     ],
-    "delapouite/ring-box": [
-      1652,
-      "jewelry",
-      "storage",
-      "container"
-    ],
     "caro-asercion/rolling-suitcase": [
       125,
       "luggage",
       "travel",
       "wheels"
     ],
-    "lorc/rose": [
-      3249,
-      "flower",
-      "bloom",
-      "romance symbol"
-    ],
     "caro-asercion/round-potion": [
       127,
       "elixir",
       "bottle",
       "magic"
-    ],
-    "delapouite/rupee": [
-      1692,
-      "currency",
-      "money",
-      "India"
     ],
     "lorc/saphir": [
       3266,
@@ -14907,6 +14755,12 @@
       "geometric shape",
       "four sides",
       "rectangle"
+    ],
+    "delapouite/stabbed-note": [
+      1883,
+      "message",
+      "attack",
+      "communication"
     ],
     "delapouite/star-medal": [
       1898,
@@ -15058,12 +14912,6 @@
       "victory",
       "achievement"
     ],
-    "lorc/tune-pitch": [
-      3593,
-      "music",
-      "sound",
-      "frequency"
-    ],
     "lorc/turd": [
       3594,
       "waste",
@@ -15093,6 +14941,12 @@
       "liquid",
       "drip",
       "fluid"
+    ],
+    "lorc/wavy-chains": [
+      3637,
+      "chain",
+      "linked",
+      "wave"
     ],
     "lorc/wax-seal": [
       3639,
@@ -15132,6 +14986,12 @@
     ]
   },
   "Game-icons.net - People": {
+    "delapouite/ages": [
+      231,
+      "clock",
+      "time",
+      "ancient"
+    ],
     "delapouite/guards": [
       999,
       "protection",
@@ -15167,18 +15027,6 @@
       "gaming",
       "user",
       "character"
-    ],
-    "delapouite/player-next": [
-      1553,
-      "navigation",
-      "media",
-      "forward"
-    ],
-    "delapouite/player-previous": [
-      1554,
-      "navigation",
-      "media",
-      "back"
     ],
     "delapouite/player-time": [
       1555,
@@ -15400,6 +15248,12 @@
     ]
   },
   "Game-icons.net - Science": {
+    "skoll/atom": [
+      3831,
+      "particle",
+      "energy",
+      "nucleus"
+    ],
     "delapouite/atom-core": [
       297,
       "nucleus",
@@ -15468,11 +15322,23 @@
       "rock",
       "meteor"
     ],
+    "delapouite/interceptor-ship": [
+      1134,
+      "military",
+      "vessel",
+      "navy"
+    ],
     "delapouite/jupiter": [
       1167,
       "planet",
       "gas giant",
       "solar system"
+    ],
+    "delapouite/knocked-out-stars": [
+      1194,
+      "cartoon",
+      "impact",
+      "comic"
     ],
     "delapouite/lunar-module": [
       1270,
@@ -16380,12 +16246,6 @@
     ]
   },
   "Game-icons.net - Symbol": {
-    "lorc/ace": [
-      2257,
-      "card",
-      "high-value",
-      "champion"
-    ],
     "skoll/achievement": [
       3822,
       "award",
@@ -16446,23 +16306,11 @@
       "rally",
       "theme"
     ],
-    "delapouite/anticlockwise-rotation": [
-      264,
-      "reverse",
-      "spin",
-      "counterclockwise"
-    ],
     "delapouite/arrow-wings": [
       289,
       "flight",
       "speed",
       "symbol"
-    ],
-    "lorc/arrows-shield": [
-      2299,
-      "defense",
-      "protection",
-      "barrier"
     ],
     "lorc/aura": [
       2306,
@@ -16476,12 +16324,6 @@
       "consciousness",
       "mindfulness"
     ],
-    "lorc/back-forth": [
-      2313,
-      "movement",
-      "oscillate",
-      "swing"
-    ],
     "skoll/balkenkreuz": [
       3833,
       "symbol",
@@ -16493,12 +16335,6 @@
       "light",
       "sphere",
       "illumination"
-    ],
-    "lorc/ball-heart": [
-      2319,
-      "love",
-      "sphere",
-      "emotion"
     ],
     "lorc/batwing-emblem": [
       2339,
@@ -16542,12 +16378,6 @@
       "caution",
       "toxic"
     ],
-    "lorc/bird-twitter": [
-      2359,
-      "communication",
-      "sound",
-      "chirp"
-    ],
     "lorc/black-bar": [
       2360,
       "line",
@@ -16559,12 +16389,6 @@
       "warning",
       "symbol",
       "banner"
-    ],
-    "lorc/black-hand-shield": [
-      2362,
-      "protection",
-      "defense",
-      "symbol"
     ],
     "cathelineau/boar-ensign": [
       161,
@@ -16584,12 +16408,6 @@
       "heat",
       "reaction"
     ],
-    "lorc/bolt-shield": [
-      2381,
-      "defense",
-      "protection",
-      "electricity"
-    ],
     "lorc/book-aura": [
       2386,
       "knowledge",
@@ -16607,18 +16425,6 @@
       "tracks",
       "footsteps",
       "journey"
-    ],
-    "lorc/bordered-shield": [
-      2396,
-      "defense",
-      "protection",
-      "design"
-    ],
-    "lorc/bottom-right-3d-arrow": [
-      2399,
-      "direction",
-      "navigation",
-      "pointer"
     ],
     "delapouite/bowen-knot": [
       421,
@@ -16758,12 +16564,6 @@
       "clover",
       "spike"
     ],
-    "skoll/clubs": [
-      3859,
-      "suit",
-      "cards",
-      "poker"
-    ],
     "lorc/concentric-crescents": [
       2522,
       "shape",
@@ -16781,12 +16581,6 @@
       "acrobat",
       "flexible performer",
       "circus artist"
-    ],
-    "delapouite/convergence-target": [
-      615,
-      "aim point",
-      "focus",
-      "convergence"
     ],
     "delapouite/convince": [
       618,
@@ -16854,6 +16648,12 @@
       "religious symbol",
       "Christian cross"
     ],
+    "delapouite/cube": [
+      664,
+      "box shape",
+      "3D shape",
+      "square block"
+    ],
     "skoll/cultist": [
       3865,
       "follower",
@@ -16872,12 +16672,6 @@
       "danger",
       "death"
     ],
-    "skoll/diamonds": [
-      3871,
-      "gem",
-      "jewel",
-      "luxury"
-    ],
     "skoll/divided-square": [
       3872,
       "geometry",
@@ -16889,12 +16683,6 @@
       "adinkra",
       "symbol",
       "african"
-    ],
-    "lorc/eagle-emblem": [
-      2664,
-      "bird",
-      "freedom",
-      "symbol"
     ],
     "delapouite/egg-eye": [
       772,
@@ -16913,18 +16701,6 @@
       "ring",
       "surround",
       "protection"
-    ],
-    "lorc/engagement-ring": [
-      2689,
-      "love",
-      "commitment",
-      "marriage"
-    ],
-    "delapouite/eternal-love": [
-      802,
-      "heart",
-      "infinity",
-      "romance"
     ],
     "delapouite/european-flag": [
       803,
@@ -17010,47 +16786,11 @@
       "death",
       "tombstone"
     ],
-    "lorc/hawk-emblem": [
-      2873,
-      "bird",
-      "symbol",
-      "predator"
-    ],
     "lorc/hazard-sign": [
       2874,
       "warning",
       "safety",
       "alert"
-    ],
-    "delapouite/heart-battery": [
-      1041,
-      "energy",
-      "love",
-      "power"
-    ],
-    "delapouite/heart-key": [
-      1044,
-      "love",
-      "access",
-      "lock"
-    ],
-    "zeromancer/heart-minus": [
-      4129,
-      "health",
-      "injury",
-      "loss"
-    ],
-    "zeromancer/heart-plus": [
-      4130,
-      "health",
-      "gain",
-      "love"
-    ],
-    "skoll/hearts": [
-      3899,
-      "love",
-      "emotion",
-      "romance"
     ],
     "lorc/heavy-thorny-triskelion": [
       2888,
@@ -17094,6 +16834,18 @@
       "characters",
       "symbols"
     ],
+    "delapouite/histogram": [
+      1073,
+      "graph",
+      "data",
+      "statistics"
+    ],
+    "delapouite/hive-mind": [
+      1074,
+      "collective",
+      "collaboration",
+      "intelligence"
+    ],
     "lorc/holy-symbol": [
       2896,
       "religious",
@@ -17105,6 +16857,12 @@
       "medical",
       "health",
       "emergency"
+    ],
+    "delapouite/idea": [
+      1123,
+      "concept",
+      "thought",
+      "notion"
     ],
     "delapouite/imperial-crown": [
       1125,
@@ -17123,6 +16881,12 @@
       "unfairness",
       "inequality",
       "wrong"
+    ],
+    "delapouite/inspiration": [
+      1133,
+      "motivation",
+      "creativity",
+      "idea"
     ],
     "lorc/interdiction": [
       2937,
@@ -17280,12 +17044,6 @@
       "cycles",
       "shadow"
     ],
-    "delapouite/nested-hearts": [
-      1393,
-      "love",
-      "affection",
-      "connection"
-    ],
     "delapouite/nested-hexagons": [
       1394,
       "geometry",
@@ -17322,12 +17080,6 @@
       "boundless",
       "infinite"
     ],
-    "lorc/pawn": [
-      3155,
-      "chess",
-      "strategy",
-      "game"
-    ],
     "skoll/pentacle": [
       3937,
       "symbol",
@@ -17346,12 +17098,6 @@
       "death",
       "structure"
     ],
-    "lorc/pierced-heart": [
-      3164,
-      "love",
-      "injury",
-      "romance"
-    ],
     "delapouite/pirate-flag": [
       1531,
       "Jolly Roger",
@@ -17369,12 +17115,6 @@
       "zodiac",
       "astrology",
       "fish"
-    ],
-    "delapouite/plain-arrow": [
-      1539,
-      "direction",
-      "navigation",
-      "pointer"
     ],
     "delapouite/plain-circle": [
       1540,
@@ -17442,23 +17182,11 @@
       "status",
       "progression"
     ],
-    "delapouite/rod-of-asclepius": [
-      1669,
-      "medicine",
-      "health",
-      "symbol"
-    ],
     "delapouite/round-star": [
       1683,
       "shape",
       "symbol",
       "design"
-    ],
-    "lorc/royal-love": [
-      3253,
-      "romance",
-      "monarchy",
-      "affection"
     ],
     "delapouite/rub-el-hizb": [
       1687,
@@ -17474,12 +17202,6 @@
     ],
     "delapouite/save": [
       1723,
-      "action",
-      "storage",
-      "game"
-    ],
-    "delapouite/save-arrow": [
-      1722,
       "action",
       "storage",
       "game"
@@ -17544,18 +17266,6 @@
       "design",
       "reptile"
     ],
-    "skoll/sound-waves": [
-      3961,
-      "audio",
-      "frequency",
-      "music"
-    ],
-    "skoll/spades": [
-      3962,
-      "suit",
-      "cards",
-      "games"
-    ],
     "lorc/split-cross": [
       3413,
       "cross",
@@ -17579,12 +17289,6 @@
       "emblem",
       "steel",
       "wing"
-    ],
-    "lorc/stigmata": [
-      3448,
-      "wounds",
-      "marks",
-      "symbols"
     ],
     "lorc/suits": [
       3472,
@@ -17718,6 +17422,12 @@
       "asymmetrical",
       "skewed"
     ],
+    "lorc/uncertainty": [
+      3607,
+      "doubt",
+      "ambiguity",
+      "confusion"
+    ],
     "delapouite/uprising": [
       2107,
       "revolt",
@@ -17747,12 +17457,6 @@
       "knowledge",
       "insight",
       "understanding"
-    ],
-    "lorc/world": [
-      3672,
-      "globe",
-      "planet",
-      "universe"
     ],
     "lorc/wrapped-heart": [
       3675,
@@ -17882,12 +17586,6 @@
       "investigation",
       "library"
     ],
-    "delapouite/arrow-cursor": [
-      288,
-      "pointer",
-      "computer",
-      "click"
-    ],
     "lorc/artificial-hive": [
       2301,
       "colony",
@@ -17905,12 +17603,6 @@
       "rise",
       "climb",
       "platform"
-    ],
-    "delapouite/astronaut-helmet": [
-      295,
-      "space",
-      "gear",
-      "astronaut"
     ],
     "lorc/auto-repair": [
       2307,
@@ -18109,12 +17801,6 @@
       "tool",
       "digital",
       "utility"
-    ],
-    "delapouite/boombox": [
-      407,
-      "music",
-      "stereo",
-      "speaker"
     ],
     "delapouite/boss-key": [
       411,
@@ -18446,12 +18132,6 @@
       "separation",
       "split"
     ],
-    "lorc/divert": [
-      2622,
-      "redirect",
-      "change",
-      "alter"
-    ],
     "lorc/divided-spiral": [
       2623,
       "twist",
@@ -18505,12 +18185,6 @@
       "duality",
       "disguise",
       "theater"
-    ],
-    "lorc/double-quaver": [
-      2635,
-      "music",
-      "rhythm",
-      "sound"
     ],
     "lorc/double-ringed-orb": [
       2636,
@@ -18956,18 +18630,6 @@
       "appliance",
       "cooler"
     ],
-    "delapouite/game-console": [
-      944,
-      "controller",
-      "video-games",
-      "device"
-    ],
-    "lorc/gamepad-cross": [
-      2809,
-      "controller",
-      "gaming",
-      "navigation"
-    ],
     "lorc/gas-mask": [
       2810,
       "mask",
@@ -18979,12 +18641,6 @@
       "protection",
       "safety",
       "mask"
-    ],
-    "delapouite/gas-pump": [
-      949,
-      "fuel",
-      "petrol",
-      "station"
     ],
     "lorc/gear-hammer": [
       2813,
@@ -19015,18 +18671,6 @@
       "navigation",
       "satellite",
       "tracking"
-    ],
-    "skoll/halt": [
-      3893,
-      "stop",
-      "pause",
-      "wait"
-    ],
-    "sbed/hand": [
-      3758,
-      "palm",
-      "grip",
-      "fist"
     ],
     "delapouite/headphones": [
       1035,
@@ -19544,12 +19188,6 @@
       "loot",
       "discovery"
     ],
-    "lorc/orb-direction": [
-      3133,
-      "navigation",
-      "guidance",
-      "movement"
-    ],
     "skoll/orbit": [
       3932,
       "space",
@@ -19676,12 +19314,6 @@
       "base",
       "surface"
     ],
-    "guard13007/play-button": [
-      2245,
-      "control",
-      "start",
-      "action"
-    ],
     "delapouite/plug": [
       1558,
       "electrical",
@@ -19723,12 +19355,6 @@
       "kitchen-appliance",
       "cooking",
       "steam"
-    ],
-    "delapouite/previous-button": [
-      1593,
-      "navigation",
-      "media",
-      "back"
     ],
     "lorc/processor": [
       3195,
@@ -19784,23 +19410,11 @@
       "hazardous",
       "nuclear"
     ],
-    "lorc/rapidshare-arrow": [
-      3220,
-      "fast arrow",
-      "speedy delivery",
-      "swift sign"
-    ],
     "sbed/reactor": [
       3790,
       "energy",
       "power",
       "core"
-    ],
-    "lorc/recycle": [
-      3226,
-      "sustainability",
-      "eco-friendly",
-      "reuse"
     ],
     "delapouite/refinery": [
       1640,
@@ -19808,29 +19422,11 @@
       "processing",
       "oil"
     ],
-    "delapouite/resize": [
-      1645,
-      "adjust",
-      "scale",
-      "modify"
-    ],
     "lorc/reticule": [
       3230,
       "targeting reticle",
       "aiming aid",
       "crosshair"
-    ],
-    "lorc/return-arrow": [
-      3231,
-      "back arrow",
-      "rewind",
-      "feedback"
-    ],
-    "sbed/revolt": [
-      3792,
-      "rebellion",
-      "uprising",
-      "resistance"
     ],
     "caro-asercion/rice-cooker": [
       123,
@@ -19843,12 +19439,6 @@
       "alert",
       "warning",
       "notification"
-    ],
-    "delapouite/road": [
-      1658,
-      "path",
-      "route",
-      "travel"
     ],
     "delapouite/robot-antennas": [
       1662,
@@ -20030,17 +19620,17 @@
       "vision",
       "eyewear"
     ],
-    "delapouite/speedometer": [
-      1859,
-      "gauge",
-      "measurement",
-      "velocity"
-    ],
     "delapouite/spider-bot": [
       1862,
       "robot",
       "automation",
       "tech"
+    ],
+    "lorc/spiky-field": [
+      3397,
+      "landscape",
+      "sharp",
+      "terrain"
     ],
     "caro-asercion/spinning-wheel": [
       137,
@@ -20168,12 +19758,6 @@
       "security",
       "identification"
     ],
-    "lorc/sword-smithing": [
-      3499,
-      "smithing",
-      "sword",
-      "craft"
-    ],
     "skoll/tablet": [
       3977,
       "mobile",
@@ -20221,12 +19805,6 @@
       "electricity",
       "energy",
       "science"
-    ],
-    "lorc/tesla-turret": [
-      3528,
-      "defense",
-      "electricity",
-      "weapon"
     ],
     "lorc/test-tubes": [
       3529,
@@ -20480,12 +20058,6 @@
       "snack",
       "purchase"
     ],
-    "delapouite/vertical-flip": [
-      2126,
-      "animation",
-      "transition",
-      "effect"
-    ],
     "caro-asercion/vhs": [
       152,
       "tape",
@@ -20570,24 +20142,6 @@
       "accessory",
       "clock"
     ],
-    "delapouite/water-bottle": [
-      2163,
-      "hydration",
-      "container",
-      "portable"
-    ],
-    "delapouite/water-flask": [
-      2165,
-      "container",
-      "hydration",
-      "portable"
-    ],
-    "delapouite/water-gallon": [
-      2167,
-      "measurement",
-      "liquid",
-      "container"
-    ],
     "delapouite/water-recycling": [
       2170,
       "sustainability",
@@ -20629,12 +20183,6 @@
       "energy",
       "power",
       "renewable"
-    ],
-    "delapouite/windmill": [
-      2190,
-      "energy",
-      "farming",
-      "machinery"
     ],
     "delapouite/wine-bottle": [
       2195,
@@ -20805,12 +20353,6 @@
       "soil",
       "garden",
       "farming"
-    ],
-    "delapouite/first-aid-kit": [
-      861,
-      "medical",
-      "emergency",
-      "health"
     ],
     "delapouite/fishing-lure": [
       870,
@@ -21390,53 +20932,17 @@
     ]
   },
   "Game-icons.net - Transport": {
-    "delapouite/hang-glider": [
-      1027,
-      "flight",
-      "sport",
-      "air"
-    ],
-    "skoll/hang-glider": [
-      3895,
-      "flying",
-      "sport",
-      "leisure"
-    ],
-    "delapouite/helicopter": [
-      1055,
-      "aviation",
-      "rotor",
-      "aircraft"
-    ],
-    "delapouite/helicopter-tail": [
-      1054,
-      "rotor",
-      "aviation",
-      "vehicle"
-    ],
-    "delapouite/interceptor-ship": [
-      1134,
-      "military",
-      "vessel",
-      "navy"
-    ],
-    "delapouite/jeep": [
-      1150,
-      "vehicle",
-      "off-road",
-      "car"
+    "delapouite/gas-pump": [
+      949,
+      "fuel",
+      "petrol",
+      "station"
     ],
     "delapouite/level-crossing": [
       1223,
       "railway",
       "transportation",
       "safety"
-    ],
-    "delapouite/paddle-steamer": [
-      1448,
-      "boat",
-      "transport",
-      "river"
     ],
     "delapouite/rail-road": [
       1627,
@@ -21450,17 +20956,11 @@
       "transport",
       "tracks"
     ],
-    "delapouite/roller-skate": [
-      1671,
-      "sport",
-      "recreation",
-      "skating"
-    ],
-    "delapouite/ropeway": [
-      1680,
-      "transport",
-      "cable",
-      "mountain"
+    "delapouite/road": [
+      1658,
+      "path",
+      "route",
+      "travel"
     ],
     "delapouite/sail": [
       1701,
@@ -21468,29 +20968,11 @@
       "wind",
       "navigation"
     ],
-    "delapouite/sailboat": [
-      1702,
-      "watercraft",
-      "sailing",
-      "leisure"
-    ],
-    "delapouite/scooter": [
-      1729,
-      "vehicle",
-      "transportation",
-      "mobility"
-    ],
     "delapouite/scout-ship": [
       1731,
       "exploration",
       "space",
       "travel"
-    ],
-    "delapouite/ship-bow": [
-      1771,
-      "front",
-      "vessel",
-      "marine"
     ],
     "delapouite/ship-wheel": [
       1772,
@@ -21498,23 +20980,17 @@
       "navigation",
       "maritime"
     ],
-    "delapouite/sinagot": [
-      1792,
-      "boat",
-      "fishing",
-      "vessel"
-    ],
     "delapouite/sinking-ship": [
       1793,
       "disaster",
       "maritime",
       "emergency"
     ],
-    "delapouite/skateboard": [
-      1795,
-      "sport",
-      "recreation",
-      "board"
+    "delapouite/speedometer": [
+      1859,
+      "gauge",
+      "measurement",
+      "velocity"
     ],
     "delapouite/tire-iron": [
       2024,
@@ -21784,12 +21260,6 @@
       "naval-vessel",
       "military"
     ],
-    "lorc/deathcab": [
-      2600,
-      "vehicle",
-      "transport",
-      "dark"
-    ],
     "delapouite/drakkar": [
       744,
       "boat",
@@ -21886,11 +21356,41 @@
       "armored-vehicle",
       "war"
     ],
+    "delapouite/hang-glider": [
+      1027,
+      "flight",
+      "sport",
+      "air"
+    ],
+    "skoll/hang-glider": [
+      3895,
+      "flying",
+      "sport",
+      "leisure"
+    ],
+    "delapouite/helicopter": [
+      1055,
+      "aviation",
+      "rotor",
+      "aircraft"
+    ],
+    "delapouite/helicopter-tail": [
+      1054,
+      "rotor",
+      "aviation",
+      "vehicle"
+    ],
     "cathelineau/iron-hulled-warship": [
       173,
       "naval-vessel",
       "battleship",
       "steel"
+    ],
+    "delapouite/jeep": [
+      1150,
+      "vehicle",
+      "off-road",
+      "car"
     ],
     "skoll/jeep": [
       3908,
@@ -21910,6 +21410,12 @@
       "vehicle",
       "kids"
     ],
+    "lord-berandas/light-fighter": [
+      3693,
+      "aircraft",
+      "military",
+      "fighter"
+    ],
     "delapouite/mechanic-garage": [
       1304,
       "auto repair",
@@ -21927,6 +21433,12 @@
       "mining cart",
       "transport vehicle",
       "ore carrier"
+    ],
+    "delapouite/paddle-steamer": [
+      1448,
+      "boat",
+      "transport",
+      "river"
     ],
     "delapouite/police-car": [
       1567,
@@ -21958,11 +21470,53 @@
       "propulsion",
       "technology"
     ],
+    "delapouite/roller-skate": [
+      1671,
+      "sport",
+      "recreation",
+      "skating"
+    ],
+    "delapouite/ropeway": [
+      1680,
+      "transport",
+      "cable",
+      "mountain"
+    ],
+    "delapouite/sailboat": [
+      1702,
+      "watercraft",
+      "sailing",
+      "leisure"
+    ],
+    "delapouite/scooter": [
+      1729,
+      "vehicle",
+      "transportation",
+      "mobility"
+    ],
+    "delapouite/ship-bow": [
+      1771,
+      "front",
+      "vessel",
+      "marine"
+    ],
     "pierre-leducq/shooner-sailboat": [
       3703,
       "boat",
       "sailing",
       "vessel"
+    ],
+    "delapouite/sinagot": [
+      1792,
+      "boat",
+      "fishing",
+      "vessel"
+    ],
+    "delapouite/skateboard": [
+      1795,
+      "sport",
+      "recreation",
+      "board"
     ],
     "pierre-leducq/small-fishing-sailboat": [
       3704,
@@ -22084,6 +21638,12 @@
       "power",
       "machinery"
     ],
+    "delapouite/ufo": [
+      2095,
+      "alien",
+      "spaceship",
+      "unidentified"
+    ],
     "delapouite/unicycle": [
       2103,
       "vehicle",
@@ -22158,6 +21718,12 @@
       "ammunition",
       "storage"
     ],
+    "delapouite/ancient-sword": [
+      257,
+      "weapon",
+      "blade",
+      "historical"
+    ],
     "pierre-leducq/anti-aircraft-gun": [
       3702,
       "military",
@@ -22187,6 +21753,12 @@
       "electricity",
       "spark",
       "charge"
+    ],
+    "delapouite/armored-boomerang": [
+      286,
+      "weapon",
+      "throw",
+      "return"
     ],
     "lorc/arrow-cluster": [
       2293,
@@ -22242,12 +21814,6 @@
       "hidden",
       "weapon"
     ],
-    "skoll/atom": [
-      3831,
-      "particle",
-      "energy",
-      "nucleus"
-    ],
     "lorc/atomic-slashes": [
       2304,
       "energy",
@@ -22271,6 +21837,12 @@
       "action",
       "tool",
       "chop"
+    ],
+    "delapouite/axe-sword": [
+      304,
+      "weapon",
+      "battle",
+      "blade"
     ],
     "lorc/backstab": [
       2316,
@@ -22331,6 +21903,12 @@
       "weapon",
       "sharp",
       "bat-themed"
+    ],
+    "delapouite/bat-leth": [
+      351,
+      "weapon",
+      "blade",
+      "alien"
     ],
     "skoll/baton": [
       3836,
@@ -22428,6 +22006,12 @@
       "weapon",
       "antique"
     ],
+    "delapouite/bo": [
+      389,
+      "staff",
+      "weapon",
+      "martial-arts"
+    ],
     "lorc/boar-tusks": [
       2375,
       "animal",
@@ -22439,6 +22023,12 @@
       "weapon",
       "throw",
       "trap"
+    ],
+    "delapouite/bolt-bomb": [
+      397,
+      "explosive",
+      "detonation",
+      "grenade"
     ],
     "lorc/bolt-eye": [
       2379,
@@ -22464,11 +22054,35 @@
       "military",
       "bomb"
     ],
+    "delapouite/bone-knife": [
+      401,
+      "dagger",
+      "sharp",
+      "weapon"
+    ],
     "lorc/bone-knife": [
       2385,
       "tool",
       "weapon",
       "primitive"
+    ],
+    "delapouite/bone-mace": [
+      402,
+      "club",
+      "blunt",
+      "weapon"
+    ],
+    "delapouite/boomerang": [
+      409,
+      "return",
+      "weapon",
+      "throw"
+    ],
+    "delapouite/boomerang-cross": [
+      408,
+      "weapon",
+      "return",
+      "thrown"
     ],
     "lorc/boomerang-sun": [
       2391,
@@ -22487,6 +22101,18 @@
       "weapon",
       "action",
       "dynamic"
+    ],
+    "delapouite/bow-arrow": [
+      416,
+      "archery",
+      "weapon",
+      "projectile"
+    ],
+    "delapouite/bow-string": [
+      417,
+      "tension",
+      "archery",
+      "weapon"
     ],
     "lorc/bowie-knife": [
       2401,
@@ -22536,6 +22162,12 @@
       "nature",
       "weapon"
     ],
+    "delapouite/brass-knuckles": [
+      433,
+      "knuckle duster",
+      "fist weapon",
+      "punch weapon"
+    ],
     "lorc/broad-dagger": [
       2417,
       "weapon",
@@ -22554,11 +22186,35 @@
       "sword",
       "combat"
     ],
+    "catsu/broken-arrow": [
+      187,
+      "symbol",
+      "broken-weapon",
+      "peace"
+    ],
+    "delapouite/broken-axe": [
+      442,
+      "damaged axe",
+      "broken tool",
+      "fractured weapon"
+    ],
     "lorc/bubbling-beam": [
       2430,
       "energy",
       "light",
       "reaction"
+    ],
+    "delapouite/bullet-bill": [
+      451,
+      "projectile",
+      "cannonball",
+      "missile"
+    ],
+    "delapouite/bullet-impacts": [
+      452,
+      "bullet holes",
+      "shot damage",
+      "gunfire marks"
     ],
     "lorc/bullets": [
       2438,
@@ -22596,6 +22252,12 @@
       "fireball",
       "ammunition"
     ],
+    "delapouite/butterfly-knife": [
+      462,
+      "balisong",
+      "weapon",
+      "folding knife"
+    ],
     "skoll/butterfly-knife": [
       3848,
       "folding",
@@ -22607,6 +22269,12 @@
       "firearm",
       "pistol",
       "weapon"
+    ],
+    "delapouite/caltrops": [
+      479,
+      "spike trap",
+      "roadblock",
+      "obstacle"
     ],
     "lorc/cannon": [
       2463,
@@ -22649,6 +22317,12 @@
       "weapon",
       "firearm",
       "machine"
+    ],
+    "delapouite/chakram": [
+      533,
+      "throwing weapon",
+      "circular blade",
+      "warrior ring"
     ],
     "lorc/charged-arrow": [
       2479,
@@ -22710,6 +22384,18 @@
       "grip",
       "claws"
     ],
+    "delapouite/claws": [
+      572,
+      "sharp nails",
+      "talons",
+      "animal claws"
+    ],
+    "delapouite/claymore-explosive": [
+      574,
+      "land mine",
+      "military explosive",
+      "tripwire bomb"
+    ],
     "lorc/cloak-dagger": [
       2502,
       "stealth",
@@ -22764,11 +22450,23 @@
       "sickle",
       "curve"
     ],
+    "delapouite/crescent-staff": [
+      646,
+      "moon staff",
+      "magic staff",
+      "lunar staff"
+    ],
     "lorc/croc-sword": [
       2546,
       "weapon",
       "reptile",
       "sharp"
+    ],
+    "carl-olsen/crossbow": [
+      55,
+      "weapon",
+      "archery",
+      "medieval"
     ],
     "lorc/crossed-axes": [
       2551,
@@ -22896,6 +22594,18 @@
       "pistol",
       "weapon"
     ],
+    "delapouite/detonator": [
+      691,
+      "bomb trigger",
+      "explosive device",
+      "remote detonator"
+    ],
+    "delapouite/diamond-hilt": [
+      695,
+      "jeweled sword handle",
+      "fancy sword",
+      "precious hilt"
+    ],
     "lorc/disintegrate": [
       2619,
       "break",
@@ -22955,6 +22665,12 @@
       "weapon",
       "blood",
       "danger"
+    ],
+    "delapouite/dynamite": [
+      761,
+      "explosion",
+      "bomb",
+      "TNT"
     ],
     "lorc/eclipse-saw": [
       2670,
@@ -23052,6 +22768,12 @@
       "light",
       "soft"
     ],
+    "delapouite/fencer": [
+      840,
+      "sword",
+      "duel",
+      "sport"
+    ],
     "quoting/field-gun": [
       3719,
       "military",
@@ -23148,6 +22870,12 @@
       "power",
       "punch"
     ],
+    "delapouite/flail": [
+      875,
+      "weapon",
+      "medieval",
+      "chain"
+    ],
     "sbed/flake": [
       3755,
       "piece",
@@ -23178,6 +22906,18 @@
       "torch",
       "burner"
     ],
+    "delapouite/flamethrower": [
+      877,
+      "fire",
+      "weapon",
+      "burn"
+    ],
+    "delapouite/flamethrower-soldier": [
+      876,
+      "fire",
+      "war",
+      "weapon"
+    ],
     "lorc/flaming-arrow": [
       2760,
       "projectile",
@@ -23196,6 +22936,12 @@
       "fire",
       "power"
     ],
+    "delapouite/flanged-mace": [
+      879,
+      "weapon",
+      "medieval",
+      "spiked"
+    ],
     "lorc/flat-hammer": [
       2765,
       "tool",
@@ -23207,6 +22953,12 @@
       "weapon",
       "motion",
       "attack"
+    ],
+    "darkzaitzev/flying-shuriken": [
+      197,
+      "throwing-star",
+      "ninja-weapon",
+      "projectile"
     ],
     "skoll/fn-fal": [
       3885,
@@ -23256,6 +23008,12 @@
       "weapon",
       "gladiator"
     ],
+    "delapouite/glaive": [
+      961,
+      "weapon",
+      "spear",
+      "polearm"
+    ],
     "lorc/glass-shot": [
       2826,
       "projectile",
@@ -23297,6 +23055,18 @@
       "execution",
       "historical",
       "sharp"
+    ],
+    "delapouite/gun-rose": [
+      1003,
+      "weapon",
+      "flower",
+      "beauty"
+    ],
+    "delapouite/gun-stock": [
+      1004,
+      "rifle",
+      "firearm",
+      "handle"
     ],
     "lorc/gunshot": [
       2856,
@@ -23364,6 +23134,12 @@
       "weight",
       "impact"
     ],
+    "delapouite/heavy-bullets": [
+      1050,
+      "ammunition",
+      "weapon",
+      "cartridge"
+    ],
     "lord-berandas/heavy-fighter": [
       3691,
       "aircraft",
@@ -23381,6 +23157,12 @@
       "angle",
       "perspective",
       "shooting"
+    ],
+    "delapouite/hunting-bolas": [
+      1105,
+      "weapon",
+      "tool",
+      "trapping"
     ],
     "lorc/hypersonic-bolt": [
       2912,
@@ -23436,6 +23218,12 @@
       "launch",
       "attack"
     ],
+    "delapouite/inferno-bomb": [
+      1130,
+      "weapon",
+      "explosive",
+      "fire"
+    ],
     "lorc/interleaved-arrows": [
       2939,
       "arrows",
@@ -23454,6 +23242,12 @@
       "weapon",
       "blast"
     ],
+    "delapouite/katana": [
+      1169,
+      "sword",
+      "weapon",
+      "Japanese"
+    ],
     "lorc/kitchen-knives": [
       2960,
       "cooking",
@@ -23465,6 +23259,12 @@
       "attack",
       "stab",
       "weapon"
+    ],
+    "darkzaitzev/kusarigama": [
+      201,
+      "chain-weapon",
+      "sickle",
+      "ninja"
     ],
     "lorc/land-mine": [
       2966,
@@ -23496,6 +23296,12 @@
       "effect",
       "flash"
     ],
+    "delapouite/laser-turret": [
+      1209,
+      "defense",
+      "technology",
+      "weapon"
+    ],
     "lorc/laserburn": [
       2974,
       "damage",
@@ -23514,12 +23320,6 @@
       "mail",
       "danger"
     ],
-    "lord-berandas/light-fighter": [
-      3693,
-      "aircraft",
-      "military",
-      "fighter"
-    ],
     "lorc/lightning-bow": [
       2994,
       "weapon",
@@ -23537,12 +23337,6 @@
       "cut",
       "energy",
       "attack"
-    ],
-    "lorc/lob-arrow": [
-      3018,
-      "throw",
-      "projectile",
-      "weapon"
     ],
     "sbed/lucifer-cannon": [
       3778,
@@ -23585,6 +23379,24 @@
       "firearm",
       "weapon",
       "military"
+    ],
+    "delapouite/machine-gun-magazine": [
+      1274,
+      "weapon",
+      "ammunition",
+      "military"
+    ],
+    "delapouite/magic-axe": [
+      1275,
+      "weapon",
+      "fantasy",
+      "enchantment"
+    ],
+    "delapouite/magic-trident": [
+      1279,
+      "weapon",
+      "fantasy",
+      "sea"
     ],
     "lorc/mailed-fist": [
       3042,
@@ -23634,6 +23446,12 @@
       "firearm",
       "military"
     ],
+    "delapouite/missile-launcher": [
+      1346,
+      "weapon system",
+      "military equipment",
+      "artillery"
+    ],
     "lorc/missile-pod": [
       3084,
       "launch",
@@ -23652,11 +23470,23 @@
       "fire",
       "incendiary"
     ],
+    "delapouite/mortar": [
+      1365,
+      "construction tool",
+      "weapon",
+      "mixing bowl"
+    ],
     "skoll/mp-40": [
       3923,
       "submachine",
       "firearm",
       "WWII"
+    ],
+    "delapouite/mp5": [
+      1370,
+      "submachine gun",
+      "firearm",
+      "military weapon"
     ],
     "skoll/mp5": [
       3924,
@@ -23700,6 +23530,12 @@
       "shuriken",
       "projectile"
     ],
+    "darkzaitzev/north-star-shuriken": [
+      204,
+      "throwing-star",
+      "weapon",
+      "ninja"
+    ],
     "sbed/nuclear": [
       3783,
       "atomic",
@@ -23711,6 +23547,12 @@
       "weapon",
       "destruction",
       "war"
+    ],
+    "delapouite/nunchaku": [
+      1410,
+      "martial arts",
+      "weapon",
+      "training"
     ],
     "lorc/on-target": [
       3127,
@@ -23724,6 +23566,12 @@
       "submachine",
       "tactical"
     ],
+    "delapouite/panzerfaust": [
+      1461,
+      "weapon",
+      "military",
+      "rocket"
+    ],
     "lorc/paper-bomb": [
       3144,
       "explosive",
@@ -23735,6 +23583,12 @@
       "weapon",
       "combat",
       "sharp"
+    ],
+    "delapouite/pirate-cannon": [
+      1528,
+      "ship",
+      "weapon",
+      "treasure"
     ],
     "john-colburn/pistol-gun": [
       2250,
@@ -23820,6 +23674,12 @@
       "swift strike",
       "fast slice"
     ],
+    "delapouite/quiver": [
+      1618,
+      "archery",
+      "arrows",
+      "storage"
+    ],
     "lorc/ram": [
       3219,
       "animal",
@@ -23850,6 +23710,18 @@
       "historical weapon",
       "artifact"
     ],
+    "delapouite/reload-gun-barrel": [
+      1641,
+      "firearm",
+      "weapon",
+      "ammunition"
+    ],
+    "delapouite/revolver": [
+      1647,
+      "firearm",
+      "gun",
+      "revolver"
+    ],
     "skoll/revolver": [
       3952,
       "firearm",
@@ -23868,11 +23740,29 @@
       "cannonball",
       "hazard"
     ],
+    "delapouite/rope-dart": [
+      1679,
+      "weapon",
+      "projectile",
+      "tool"
+    ],
     "lorc/rune-sword": [
       3257,
       "enchanted blade",
       "magical sword",
       "symbol weapon"
+    ],
+    "delapouite/rusty-sword": [
+      1693,
+      "weapon",
+      "antique",
+      "history"
+    ],
+    "delapouite/saber-and-pistol": [
+      1695,
+      "weapon",
+      "duel",
+      "historical"
     ],
     "lorc/saber-slash": [
       3258,
@@ -23892,11 +23782,23 @@
       "offering tool",
       "ceremonial knife"
     ],
+    "delapouite/sai": [
+      1700,
+      "weapon",
+      "martial arts",
+      "combat"
+    ],
     "lorc/saw-claw": [
       3268,
       "serrated edge",
       "cutting tool",
       "animal claw"
+    ],
+    "delapouite/sawed-off-shotgun": [
+      1724,
+      "firearm",
+      "weapon",
+      "compact"
     ],
     "lorc/scalpel": [
       3273,
@@ -23928,6 +23830,24 @@
       "jagged edge",
       "sword piece"
     ],
+    "delapouite/sharp-axe": [
+      1760,
+      "tool",
+      "weapon",
+      "cutting"
+    ],
+    "delapouite/sharp-halberd": [
+      1761,
+      "weapon",
+      "polearm",
+      "medieval"
+    ],
+    "darkzaitzev/sharp-shuriken": [
+      212,
+      "throwing-star",
+      "weapon",
+      "ninja"
+    ],
     "lorc/shattered-sword": [
       3306,
       "destroyed weapon",
@@ -23952,6 +23872,18 @@
       "close-range",
       "scatter"
     ],
+    "delapouite/shotgun-rounds": [
+      1780,
+      "ammunition",
+      "weapon",
+      "hunting"
+    ],
+    "darkzaitzev/shuriken": [
+      213,
+      "throwing-star",
+      "weapon",
+      "ninja"
+    ],
     "lorc/shuriken": [
       3323,
       "ninja star",
@@ -23964,11 +23896,23 @@
       "star",
       "throwing star"
     ],
+    "delapouite/sickle": [
+      1787,
+      "farming",
+      "tool",
+      "harvest"
+    ],
     "skoll/siege-ram": [
       3955,
       "warfare",
       "assault",
       "medieval"
+    ],
+    "delapouite/silver-bullet": [
+      1791,
+      "myth",
+      "weapon",
+      "folklore"
     ],
     "lorc/skull-bolt": [
       3333,
@@ -23988,6 +23932,12 @@
       "pieces",
       "skull design"
     ],
+    "delapouite/skull-staff": [
+      1804,
+      "fantasy",
+      "weapon",
+      "decoration"
+    ],
     "lorc/slavery-whip": [
       3344,
       "tool",
@@ -24000,6 +23950,18 @@
       "sharp",
       "cutting arrow"
     ],
+    "delapouite/sling": [
+      1812,
+      "weapon",
+      "tool",
+      "projectile"
+    ],
+    "delapouite/slingshot": [
+      1813,
+      "toy",
+      "weapon",
+      "recreation"
+    ],
     "sbed/slow-blob": [
       3797,
       "goo",
@@ -24011,6 +23973,12 @@
       "destruction",
       "impact",
       "arrows"
+    ],
+    "darkzaitzev/smoke-bomb": [
+      215,
+      "explosive",
+      "cover",
+      "ninja"
     ],
     "lorc/sonic-boom": [
       3366,
@@ -24186,6 +24154,12 @@
       "spotted",
       "projectile"
     ],
+    "darkzaitzev/star-shuriken": [
+      216,
+      "throwing-star",
+      "weapon",
+      "ninja"
+    ],
     "lorc/steel-claws": [
       3443,
       "claws",
@@ -24360,6 +24334,12 @@
       "sword",
       "cut"
     ],
+    "lorc/sword-smithing": [
+      3499,
+      "smithing",
+      "sword",
+      "craft"
+    ],
     "lorc/sword-spade": [
       3500,
       "spade",
@@ -24432,6 +24412,12 @@
       "shock",
       "coil"
     ],
+    "lorc/tesla-turret": [
+      3528,
+      "defense",
+      "electricity",
+      "weapon"
+    ],
     "skoll/thompson-m1": [
       3983,
       "firearm",
@@ -24473,6 +24459,12 @@
       "fire",
       "energy",
       "sphere"
+    ],
+    "darkzaitzev/three-pointed-shuriken": [
+      218,
+      "throwing-star",
+      "weapon",
+      "ninja"
     ],
     "lorc/thrown-daggers": [
       3541,
@@ -24701,6 +24693,12 @@
       "injury",
       "quick",
       "snap"
+    ],
+    "darkzaitzev/whirlpool-shuriken": [
+      219,
+      "throwing-star",
+      "ninja-weapon",
+      "spinning"
     ],
     "willdabeast/white-book": [
       4126,
