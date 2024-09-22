@@ -252,6 +252,9 @@
   font-size: .8rem;
   margin: 4px 8px 8px 8px;
 }
+.roomState h4 img.emoji {
+  transform: skewX(-10deg);
+}
 
 .roomState .star, .roomState > i {
   display: none;
@@ -264,6 +267,7 @@
 
 .roomState .star::before {
   font-size: 32px;
+  width: 32px;
 }
 
 .roomState > i {
@@ -289,7 +293,7 @@ div:nth-of-type(2) > .list > .roomState .star {
   margin: 8px;
 }
 
-.roomState.noImage img {
+.roomState.noImage > img {
   display: none;
 }
 
@@ -485,6 +489,7 @@ div:nth-of-type(2) > .list > .roomState .star {
 }
 #mainDetails .star::before {
   font-size: 50px;
+  width: 50px;
 }
 #mainDetails #mainImage > i {
   top: unset;
@@ -603,6 +608,7 @@ div:nth-of-type(2) > .list > .roomState .star {
   position: relative;
   flex-flow: row wrap;
   justify-content: space-between;
+  align-items: center;
   border-style: dotted;
   border-color: lightgray;
   border-width: 1px 0 1px 0;
@@ -652,11 +658,10 @@ div:nth-of-type(2) > .list > .roomState .star {
 }
 
 .variant .variant-name {
+  display: unset;
   flex-grow: 1;
-  flex-direction: column;
-  align-content: flex-start;
-  align-items: flex-start;
   width: 1px;
+  word-break: break-all;
 }
 
 .variant .variant-name>div {
@@ -672,7 +677,7 @@ div:nth-of-type(2) > .list > .roomState .star {
   margin: 1px 5px 1px 0;
   border-radius: 3px;
 }
-.variant img {
+.variant .variant-image img {
   height: 34px;
   width: 34px;
   border-radius: 3px;
@@ -862,7 +867,7 @@ div:nth-of-type(2) > .list > .roomState .star {
   #variantsList .variant {
     display: block;
   }
-  #variantsList img {
+  #variantsList .variant-image img {
     float: left;
   }
   .variant > div, #variantsList .play {
@@ -871,6 +876,7 @@ div:nth-of-type(2) > .list > .roomState .star {
   .variant > .variant-name {
     display: block;
     min-height: 40px;
+    width: unset;
   }
   .variant > .variantEdit {
     flex-direction: column;

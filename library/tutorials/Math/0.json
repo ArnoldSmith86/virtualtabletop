@@ -11,7 +11,7 @@
     "y": 1
   },
   "_meta": {
-    "version": 3,
+    "version": 13,
     "info": {
       "name": "Math",
       "image": "/assets/2017839809_4407",
@@ -20,23 +20,31 @@
       "year": "2021",
       "mode": "Tutorial",
       "time": "",
-      "players": "1",
-      "language": "en-US",
-      "variant": "Basic",
       "attribution": "",
       "showName": false,
-      "lastUpdate": 1625237253000
+      "lastUpdate": 1689025315871,
+      "skill": "",
+      "description": "",
+      "similarImage": "",
+      "similarName": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": "",
+      "variantImage": "",
+      "variant": "Basic",
+      "language": "en-US",
+      "players": "1"
     }
   },
   "i1bj": {
     "id": "i1bj",
-    "x": 294,
+    "x": 94,
     "y": 73,
     "z": 37,
     "height": 50,
     "css": "font-size: 20px; ",
-    "text": "The basic math functions are performed through dynamic expressions. For example, \"var answer = ${num1} + 7\" will add 7 to the value in the variable 'num1' and put the result in variable 'answer'. These operations work only with numbers, except for addition (which will concatenate strings). For any of the other functions, if the operands contain a string, the result is 0. To perform more complicated math using these operations, perform the calculation in steps.  For example, to calculate the expression 'x = (a + b + c)/2' you would first add 'a' and 'b' then take that result and add 'c' to it, then take that result and divide by 2. To see an example, look at the JSON in the button in the lower left.  The button does not do anything; it is just a model.\n\nThe basic math operations are demonstrated below.  Put the first operand in the first white text box and the second in the other.  Then press a math operation button to see the result.",
-    "width": 1000
+    "text": "The basic math functions are performed through dynamic expressions. For example, \"var answer = ${num1} + 7\" will add 7 to the value in the variable 'num1' and put the result in variable 'answer'. These operations work only with numbers, except for addition (which will concatenate strings). For any of the other functions, if the operands contain a string, the result is 0.\n\nTo perform more complicated math using these operations, each of these operands (except for %) can be combined in a nested expression. To see an example of this, look at the JSON in and click on the Nested button below. The value on the left below is 'a' and the one on the right is 'b'. The Nested button implements the following expression: output = ((a + b) / (a - b)) * 2.\n\nThe basic math operations are demonstrated below.  Put the first operand in the first white text box and the second in the other.  Then press a math operation button to see the result.",
+    "width": 1400
   },
   "lr6y": {
     "id": "lr6y",
@@ -228,18 +236,20 @@
   "pv6i": {
     "type": "button",
     "clickRoutine": [
+      "var a = ${PROPERTY text OF atString1a}",
+      "var b = ${PROPERTY text OF atString1b}",
+      "var output = ((${a} + ${b}) / (${a} - ${b})) * 2 // Nested expression",
       {
-        "Note": "This button does not do anything.  It is just an example of how you break a complicated math problem into steps in JSON."
-      },
-      "var x =  ${a} + ${b}",
-      "var x =  ${x} + ${c}",
-      "var x =  ${x} / 2"
+        "func": "LABEL",
+        "label": "outputstring",
+        "value": "${output}"
+      }
     ],
     "x": 120,
     "y": 787,
     "z": 295,
     "id": "pv6i",
     "css": "font-size: 20px; ",
-    "text": "Example"
+    "text": "Nested"
   }
 }

@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "version": 9,
+    "version": 14,
     "info": {
       "name": "Enlarge",
       "image": "/assets/-1439185659_4027",
@@ -9,8 +9,8 @@
       "year": "2022",
       "mode": "Tutorial",
       "time": "",
-      "attribution": "The pawn used in this variant is a VTT asset released to the public domain under CC0.",
-      "lastUpdate": 1672720696186,
+      "attribution": "",
+      "lastUpdate": 1697667666145,
       "showName": false,
       "skill": "",
       "description": "",
@@ -195,7 +195,8 @@
     "layer": -3,
     "z": 125,
     "css": "font-size: 25px; ",
-    "text": "With the additional elements of faces and cardTypes, enlarging cards can be a bit more complex than other widget types."
+    "text": "With the additional elements of faces and cardTypes, enlarging cards can be a bit more complex than other widget types.",
+    "movable": false
   },
   "bm7j": {
     "id": "bm7j",
@@ -525,7 +526,7 @@
       "card2": {
         "image1": "/i/icons/group.svg",
         "iconColor": "#ff0000",
-        "enlargedImage": "/assets/1354907148_10474",
+        "enlargedImage": "i/icons/meeple.svg",
         "enlargeWidth": 125,
         "enlargeHeight": 175
       }

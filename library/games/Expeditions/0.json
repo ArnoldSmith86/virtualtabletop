@@ -8802,7 +8802,7 @@
   },
   "rules": {
     "id": "rules",
-    "image": "/assets/-2041902066_108866",
+    "image": "/assets/-1134603049_95720",
     "width": 1112,
     "height": 900,
     "layer": 3,
@@ -9179,7 +9179,8 @@
       "similarName": "Lost Cities",
       "description": "Play cards into columns in ascending numerical order. Gamble with wager cards that will multiply your positive or negative score. Highest score wins.",
       "showName": true,
-      "lastUpdate": 1636735750000
+      "lastUpdate": 1636735750000,
+      "similarDesigner": "Reiner Knizia"
     }
   },
   "coma": {

@@ -56,7 +56,8 @@
       "similarName": "Hardback",
       "description": "Build a deck of letters with various powers. Form words from letters to score points and buy ink and remover. Play until first player reaches 60 points. Highest score wins.",
       "showName": true,
-      "lastUpdate": 1662819167000
+      "lastUpdate": 1662819167000,
+      "similarDesigner": "Jeff Beck (II), Tim Fowers"
     }
   },
   "hand": {

@@ -10,17 +10,13 @@ fs.mkdirSync(referenceDir, { recursive: true });
 let server = null;
 
 export function setupTestEnvironment() {
-  server = process.env.REFERENCE ? `http://212.47.248.129:${process.env.REFERENCE}` : 'http://localhost:8272';
+  server = process.env.REFERENCE ? `https://test.virtualtabletop.io/PR-${process.env.REFERENCE}` : 'http://localhost:8272';
   fixture('virtualtabletop.io').page(`${server}/testcafe-testing`).beforeEach(_=>setRoomState()).after(_=>setRoomState());
 }
 
 export function prepareClient() {
   // non random random
-  let seed = 1;
-  Math.random = function() {
-    const x = Math.sin(seed++) * 10000;
-    return Math.round((x - Math.floor(x))*1000000)/1000000;
-  };
+  window.customRandomSeed = 1;
 
   // remove base element because it causes popups on form submit
   document.querySelector('base').parentNode.removeChild(document.querySelector('base'));

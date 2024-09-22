@@ -1,23 +1,29 @@
 {
   "_meta": {
-    "version": 6,
+    "version": 12,
     "info": {
       "name": "Ultra",
-      "image": "/assets/-505857146_152515",
+      "image": "/assets/-879888425_42719",
       "rules": "",
       "bgg": "https://boardgamegeek.com/boardgame/225694/decrypto",
       "year": "2018",
       "mode": "teams",
       "time": "15-45",
-      "players": "3-10",
-      "language": "en-US",
-      "variant": "",
-      "attribution": "The game layout and all game elements are by LawDawg and are released to the Public Domain by CC0.\n\nWord list was compiled from:\n\nhttps://www.thegamegal.com/printables/#word-lists\nhttps://www.thegamegal.com/word-generator/\nhttps://github.com/Alamantus/fun-word-list\nhttps://www.randomlists.com/nouns\nhttps://randomwordgenerator.com/noun.php\nhttps://jimpix.co.uk/words/word-generator.asp\n\nand was edited by LawDawg.",
+      "attribution": "The game layout and all game elements are by LawDawg and are released to the Public Domain by CC0.\n\nWord list was compiled from:\n\nhttps://www.thegamegal.com/printables/#word-lists\nhttps://www.thegamegal.com/word-generator/\nhttps://github.com/Alamantus/fun-word-list\nhttps://www.randomlists.com/nouns\nhttps://randomwordgenerator.com/noun.php\nhttps://jimpix.co.uk/words/word-generator.asp\n\nand was edited by LawDawg.<div><br><div>Library image generated using the Midjourney artificial intelligence image generator, https://www.midjourney.com/home/, using the following prompt: \"decryption enigma machine black and white photograph --ar 1:1 --v 5.1\"<br></div></div>",
       "similarName": "Decrypto",
-      "description": "One player on each of two teams provides clues about code words. Players attempt to correctly match clue with the code word. Teams try to guess their own codes and the other team's codes.  Play up to 8 rounds, but winner declared after two failures or two intercepts.",
+      "description": "One player on each of two teams provides clues about code words. Players attempt to correctly match clue with the code word. Teams try to guess their own codes and the other team's codes. Play up to 8 rounds, but winner declared after two failures or two intercepts.",
       "showName": true,
       "helpText": "Players take seats and close seat menu. First code giver presses draw code button and begins giving clues. Clues and code number guesses for white team are entered on left side of screen. White team enters other clues and code number guesses on right side of the screen. Sides of the screen are reversed for black team. Code giver presses show code button to reveal actual code to his team. Adjust scores. Next code giver presses draw code button for next round.",
-      "lastUpdate": 1647839274000
+      "lastUpdate": 1680382915047,
+      "skill": "",
+      "similarImage": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "variantImage": "",
+      "variant": "",
+      "language": "en-US",
+      "players": "3-10",
+      "similarDesigner": "Thomas Dagenais-Lespérance"
     }
   },
   "backWhite": {
@@ -47,7 +53,8 @@
       "seat5",
       "seat7",
       "seat9"
-    ]
+    ],
+    "hoverInheritVisibleForSeat": false
   },
   "whiteNumbers1": {
     "inheritFrom": "whiteNumbers",
@@ -59,7 +66,8 @@
       "seat6",
       "seat8",
       "seat10"
-    ]
+    ],
+    "hoverInheritVisibleForSeat": false
   },
   "baseWhiteLeft": {
     "id": "baseWhiteLeft",
@@ -77,7 +85,8 @@
       "seat7",
       "seat9"
     ],
-    "borderRadius": 8
+    "borderRadius": 8,
+    "hoverInheritVisibleForSeat": false
   },
   "clue1": {
     "type": "label",
@@ -2682,7 +2691,8 @@
       "seat6",
       "seat8",
       "seat10"
-    ]
+    ],
+    "hoverInheritVisibleForSeat": false
   },
   "baseBlackLeftBottom": {
     "id": "baseBlackLeftBottom",
@@ -3523,7 +3533,8 @@
       "seat6",
       "seat8",
       "seat10"
-    ]
+    ],
+    "hoverInheritVisibleForSeat": false
   },
   "baseBlackRightBottom": {
     "id": "baseBlackRightBottom",
@@ -4923,16 +4934,7 @@
       "var wordsArray = []",
       {
         "func": "FOREACH",
-        "in": [
-          1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7,
-          8
-        ],
+        "in": "${codeGroup}",
         "loopRoutine": [
           "var wordsArray = ${PROPERTY words}",
           "var length = ${wordsArray} length",
@@ -4975,7 +4977,7 @@
     "movable": false,
     "movableInEdit": false,
     "parent": "baseWhiteRightTop",
-    "css": "background: white; font-size: 30px; text-align:center",
+    "css": "background: white; font-size: 30px; text-align:center;transition: linear 0.6s; opacity: 1",
     "width": 35,
     "height": 35,
     "borderRadius": 4,
@@ -5030,7 +5032,8 @@
       }
     ],
     "text": "",
-    "parent": "baseWhiteRightTop"
+    "parent": "baseWhiteRightTop",
+    "css": "background: white; font-size: 30px; text-align:center;transition: linear 0.6s; opacity: 1"
   },
   "codeCard3": {
     "inheritFrom": "codeCard1",
@@ -5077,7 +5080,8 @@
         ]
       }
     ],
-    "parent": "baseWhiteRightTop"
+    "parent": "baseWhiteRightTop",
+    "css": "background: white; font-size: 30px; text-align:center;transition: linear 0.6s; opacity: 1"
   },
   "draw1": {
     "type": "button",
@@ -5105,7 +5109,15 @@
           {
             "func": "CALL",
             "widget": "wordList",
-            "routine": "getWordsRoutine"
+            "routine": "getWordsRoutine",
+            "arguments": {
+              "codeGroup": [
+                1,
+                2,
+                3,
+                4
+              ]
+            }
           },
           {
             "func": "SET",
@@ -5158,6 +5170,12 @@
           },
           {
             "func": "SET",
+            "collection": "thisButton",
+            "property": "inProgress",
+            "value": false
+          },
+          {
+            "func": "SET",
             "collection": [
               "draw1",
               "codeCard1",
@@ -5176,7 +5194,8 @@
         ]
       }
     ],
-    "inProgress": false
+    "inProgress": false,
+    "css": "opacity: 1"
   },
   "2fqeD": {
     "id": "2fqeD",
@@ -5448,102 +5467,11 @@
     "css": "font-size: 30px;background: black; color:white ",
     "text": 0
   },
-  "timerBar": {
-    "id": "timerBar",
-    "x": 631,
-    "y": 59,
-    "width": 150,
-    "height": 25,
-    "z": 918,
-    "movable": false,
-    "css": "border-radius: 10px; border: 2px solid black; background-image: linear-gradient(to right, red, 100%, grey -100%)",
-    "fixedParent": true,
-    "parent": "baseWhiteRightTop"
-  },
-  "theTimer": {
-    "type": "timer",
-    "id": "theTimer",
-    "parent": "timerBar",
-    "y": -3,
-    "z": 876,
-    "movableInEdit": false,
-    "countdown": true,
-    "css": "color:white",
-    "precision": 100,
-    "start": 45000,
-    "millisecondsChangeRoutine": [
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "timerBar"
-      },
-      "var bar = ${PROPERTY milliseconds} / ${PROPERTY start}",
-      "var bar = ${bar} * 100",
-      "var bar = ${bar}/ ${PROPERTY width OF timerBar}",
-      {
-        "func": "SET",
-        "property": "css",
-        "value": "border-radius: 10px; border: 2px solid black; background-image: linear-gradient(to right, red, ${bar}%, grey -100%)"
-      },
-      {
-        "func": "IF",
-        "operand1": "${PROPERTY milliseconds}",
-        "relation": "<=",
-        "operand2": 0,
-        "thenRoutine": [
-          {
-            "func": "TIMER",
-            "timer": "theTimer"
-          }
-        ]
-      }
-    ],
-    "x": 30,
-    "milliseconds": 45000,
-    "clickable": false,
-    "classes": "tech_font"
-  },
-  "timerReset": {
-    "type": "button",
-    "id": "timerReset",
-    "parent": "timerBar",
-    "x": 114,
-    "y": -40,
-    "width": 36,
-    "height": 36,
-    "movableInEdit": false,
-    "css": "background-size: 80% 80%",
-    "image": "/i/button-icons/White-Reset.svg",
-    "clickRoutine": [
-      {
-        "func": "TIMER",
-        "timer": "theTimer",
-        "mode": "reset"
-      }
-    ]
-  },
-  "timerStart": {
-    "type": "button",
-    "id": "timerStart",
-    "parent": "timerBar",
-    "y": -40,
-    "width": 36,
-    "height": 36,
-    "movableInEdit": false,
-    "css": "background-size: 75% 75%",
-    "image": "/i/button-icons/White-Play_Pause.svg",
-    "clickRoutine": [
-      {
-        "func": "TIMER",
-        "timer": "theTimer"
-      }
-    ]
-  },
   "codeCard4": {
     "id": "codeCard4",
     "movable": false,
     "movableInEdit": false,
-    "css": "background: white; font-size: 30px; text-align:center;border: 1px solid lightgrey; ",
+    "css": "background: white; font-size: 30px; text-align:center;transition: linear 0.6s; opacity: 1",
     "width": 35,
     "height": 35,
     "borderRadius": 4,
@@ -5599,7 +5527,8 @@
       }
     ],
     "text": "",
-    "parent": "baseBlackLeftTop"
+    "parent": "baseBlackLeftTop",
+    "css": "background: white; font-size: 30px; text-align:center;transition: linear 0.6s; opacity: 1"
   },
   "codeCard6": {
     "inheritFrom": "codeCard4",
@@ -5646,7 +5575,8 @@
         ]
       }
     ],
-    "parent": "baseBlackLeftTop"
+    "parent": "baseBlackLeftTop",
+    "css": "background: white; font-size: 30px; text-align:center;transition: linear 0.6s; opacity: 1"
   },
   "draw2": {
     "type": "button",
@@ -5673,7 +5603,15 @@
           {
             "func": "CALL",
             "widget": "wordList",
-            "routine": "getWordsRoutine"
+            "routine": "getWordsRoutine",
+            "arguments": {
+              "codeGroup": [
+                5,
+                6,
+                7,
+                8
+              ]
+            }
           },
           {
             "func": "SET",
@@ -5727,6 +5665,12 @@
           },
           {
             "func": "SET",
+            "collection": "thisButton",
+            "property": "inProgress",
+            "value": false
+          },
+          {
+            "func": "SET",
             "collection": [
               "draw2",
               "codeCard4",
@@ -5746,7 +5690,8 @@
       }
     ],
     "parent": "baseBlackLeftTop",
-    "inProgress": false
+    "inProgress": false,
+    "css": "opacity: 1"
   },
   "6fqeD": {
     "id": "6fqeD",
@@ -5977,22 +5922,11 @@
     ],
     "parent": "blackMiscomm2"
   },
-  "timerBar1": {
-    "id": "timerBar1",
-    "parent": "baseBlackLeftTop",
-    "inheritFrom": "timerBar"
-  },
-  "theTimer1": {
-    "type": "timer",
-    "id": "theTimer1",
-    "parent": "timerBar1",
-    "inheritFrom": "theTimer"
-  },
   "timerReset1": {
     "type": "button",
     "id": "timerReset1",
-    "parent": "timerBar1",
-    "x": 114,
+    "parent": "theTimer1",
+    "x": 55,
     "y": -40,
     "width": 36,
     "height": 36,
@@ -6002,7 +5936,7 @@
     "clickRoutine": [
       {
         "func": "TIMER",
-        "timer": "theTimer",
+        "timer": "theTimer1",
         "mode": "reset"
       }
     ]
@@ -6010,7 +5944,7 @@
   "timerStart1": {
     "type": "button",
     "id": "timerStart1",
-    "parent": "timerBar1",
+    "parent": "theTimer1",
     "y": -40,
     "width": 36,
     "height": 36,
@@ -6020,9 +5954,10 @@
     "clickRoutine": [
       {
         "func": "TIMER",
-        "timer": "theTimer"
+        "timer": "theTimer1"
       }
-    ]
+    ],
+    "x": -15
   },
   "baseBlackLeftTop": {
     "id": "baseBlackLeftTop",
@@ -6074,7 +6009,8 @@
     "cssBackground": "salmon",
     "cssBorder": "1px solid lightgrey",
     "cssSize": "20px",
-    "resetLabel": true
+    "resetLabel": true,
+    "hoverInheritVisibleForSeat": false
   },
   "word2": {
     "id": "word2",
@@ -6109,7 +6045,8 @@
       "seat8",
       "seat10"
     ],
-    "text": ""
+    "text": "",
+    "hoverInheritVisibleForSeat": false
   },
   "word6": {
     "id": "word6",
@@ -7633,21 +7570,6 @@
         "label": "${PROPERTY parent}",
         "mode": "dec",
         "value": 1
-      },
-      "var seconds = ${PROPERTY text OF timerSettings} * 1000",
-      {
-        "func": "SET",
-        "collection": [
-          "theTimer"
-        ],
-        "property": "start",
-        "value": "${seconds}"
-      },
-      {
-        "func": "CLICK",
-        "collection": [
-          "timerReset"
-        ]
       }
     ],
     "parent": "timerSettings"
@@ -7668,21 +7590,6 @@
         "label": "${PROPERTY parent}",
         "mode": "inc",
         "value": 1
-      },
-      "var seconds = ${PROPERTY text OF timerSettings} * 1000",
-      {
-        "func": "SET",
-        "collection": [
-          "theTimer"
-        ],
-        "property": "start",
-        "value": "${seconds}"
-      },
-      {
-        "func": "CLICK",
-        "collection": [
-          "timerReset"
-        ]
       }
     ],
     "parent": "timerSettings"
@@ -7697,7 +7604,19 @@
     "css": "font-size: 30px;",
     "editable": true,
     "text": 45,
-    "y": 300
+    "y": 300,
+    "movableInEdit": false,
+    "textChangeRoutine": [
+      "var seconds = ${PROPERTY text} * 1000",
+      {
+        "func": "SET",
+        "collection": [
+          "theTimer1"
+        ],
+        "property": "milliseconds",
+        "value": "${seconds}"
+      }
+    ]
   },
   "vr9mP": {
     "fixedParent": true,
@@ -7984,5 +7903,80 @@
     "image": "/i/button-icons/White-Reset.svg",
     "css": "background-size: 80% 80%",
     "parent": "codeTimer2"
+  },
+  "timerReset2": {
+    "inheritFrom": {
+      "timerReset1": "*"
+    },
+    "type": "button",
+    "id": "timerReset2",
+    "parent": "theTimer2",
+    "clickRoutine": [
+      {
+        "func": "CLICK",
+        "collection": [
+          "timerReset1"
+        ]
+      }
+    ]
+  },
+  "timerStart2": {
+    "inheritFrom": {
+      "timerStart1": "*"
+    },
+    "type": "button",
+    "id": "timerStart2",
+    "parent": "theTimer2",
+    "clickRoutine": [
+      {
+        "func": "CLICK",
+        "collection": [
+          "timerStart1"
+        ]
+      }
+    ]
+  },
+  "theTimer2": {
+    "type": "timer",
+    "id": "theTimer2",
+    "parent": "baseWhiteRightTop",
+    "x": 660,
+    "y": 55,
+    "css": {
+      "color": "black",
+      "background": "white",
+      "text-align": "center"
+    },
+    "inheritFrom": {
+      "theTimer1": "*"
+    },
+    "clickRoutine": [
+      {
+        "func": "CLICK",
+        "collection": [
+          "theTimer1"
+        ]
+      }
+    ]
+  },
+  "theTimer1": {
+    "type": "timer",
+    "id": "theTimer1",
+    "parent": "baseBlackLeftTop",
+    "x": 660,
+    "y": 55,
+    "borderRadius": 8,
+    "z": 884,
+    "movableInEdit": false,
+    "classes": "tech_font",
+    "countdown": true,
+    "css": {
+      "color": "white",
+      "background": "grey",
+      "text-align": "center"
+    },
+    "end": 0,
+    "start": 45000,
+    "milliseconds": 45000
   }
 }

@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "version": 8,
+    "version": 15,
     "info": {
       "name": "Scoreboard",
       "image": "/assets/-751946941_5803",
@@ -18,11 +18,12 @@
       "similarAwards": "",
       "ruleText": "",
       "helpText": "",
-      "lastUpdate": 1673742960398,
+      "lastUpdate": 1715976506265,
       "variantImage": "",
       "variant": "Appearance",
       "language": "en-US",
-      "players": "1"
+      "players": "1",
+      "similarDesigner": ""
     }
   },
   "seat1": {
@@ -238,9 +239,6 @@
     "z": 4,
     "movableInEdit": false,
     "css": {
-      ".scoreboard td:first-child": {
-        "--firstColWidth": "10px"
-      },
       ".scoreboard .currentRound": {
         "background-color": "pink"
       }
@@ -248,7 +246,8 @@
     "movable": false,
     "currentRound": 4,
     "roundLabel": "",
-    "showTotals": false
+    "showTotals": false,
+    "firstColWidth": 10
   },
   "comment3": {
     "id": "comment3",
@@ -257,7 +256,7 @@
     "width": 300,
     "z": 10076,
     "movable": false,
-    "text": "This shows how to change the width of the first column while letting every other column autosize. It also shows how to change the color of the 'currentRound' highlight.",
+    "text": "This shows how to change the width of the first column using the 'firstColWidth' property while letting every other column autosize. It also shows how to change the color of the 'currentRound' highlight using css.",
     "layer": -2
   },
   "scoreboard4": {
