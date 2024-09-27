@@ -269,6 +269,14 @@
     font-display: block;
 }
 
+@font-face {
+    font-family: "Noto Emoji";
+    font-style: normal;
+    font-weight: 400;
+    src: url("i/fonts/NotoEmoji-VariableFont_wght.ttf") format("truetype");
+    font-display: block;
+}
+
 .material-icons, .material-icons-outlined, .material-icons-round, .material-icons-sharp, .material-icons-twotone, .font-material-icons {
     font-weight: normal;
     font-style: normal;
@@ -459,6 +467,7 @@
 
 #symbolPickerOverlay .emoji {
   word-break: break-all;
+  font-family: 'Noto Emoji';
 }
 
 #symbolPickerOverlay .emoji:hover, #symbolPickerOverlay .emojiFlag, #symbolPickerOverlay.fewResults .emoji {
