@@ -459,6 +459,12 @@ function emojiToFilename(emoji) {
   return [...emoji].map(char => char.codePointAt(0).toString(16).padStart(4, '0')).join('_').replace(/_fe0f/g, '');
 }
 
+function toNotoMonochrome(emoji) {
+  if(emoji == '👁️‍🗨️')
+    return emoji;
+  return emoji.replace(/\u200d[\u2640\u2642]\ufe0f$/, '').replace(/\ufe0f\u20e3/, '\u20e3').replace(/\ufe0f$/, '');
+}
+
 let symbolData = null;
 export async function loadSymbolPicker() {
   if(symbolData === null) {
@@ -481,7 +487,7 @@ export async function loadSymbolPicker() {
             className = 'material-icons';
           if(category == 'Emoji - Flags')
             className += ' emojiFlag';
-          list += `<i class="${className}" title="${className}: ${symbol}" data-type="${className}" data-symbol="${symbol}" data-keywords="${symbol},${keywords.join().toLowerCase()}" style="--url:url('i/noto-emoji/emoji_u${emojiToFilename(symbol)}.svg')">${symbol}</i>`;
+          list += `<i class="${className}" title="${className}: ${symbol}" data-type="${className}" data-symbol="${symbol}" data-keywords="${symbol},${keywords.join().toLowerCase()}" style="--url:url('i/noto-emoji/emoji_u${emojiToFilename(symbol)}.svg')">${toNotoMonochrome(symbol)}</i>`;
         }
       }
     }
