@@ -477,22 +477,34 @@ export async function loadSymbolPicker() {
     let list = '';
     let gameIconsIndex = 0;
     for(const [ category, symbols ] of Object.entries(symbolData)) {
-      list += `<h2 class="${category.match(/Material|VTT/)?'fontCategory':'imageCategory'}">${category}</h2>`;
+      if(category == 'Emoji - Flags')
+        continue;
+      list += `<h2 class="${category.match(/Material|VTT|Emoji/)?'fontCategory':'imageCategory'}">${category}</h2>`;
       for(const [ symbol, keywords ] of Object.entries(symbols)) {
         if(symbol.includes('/')) {
           // increase resource limits in /etc/ImageMagick-6/policy.xml to 8GiB and then: montage -background none assets/game-icons.net/*/*.svg -geometry 48x48+0+0 -tile 60x assets/game-icons.net/overview.png
           list += `<i class="gameicons" title="game-icons.net: ${symbol}" data-type="game-icons" data-symbol="${symbol}" data-keywords="${symbol},${keywords.join().toLowerCase()}" style="--x:${gameIconsIndex%60};--y:${Math.floor(gameIconsIndex/60)};--url:url('i/game-icons.net/${symbol}.svg')"></i>`;
           ++gameIconsIndex;
         } else {
-          let className = 'emoji';
+          let className = 'emoji emojiMonochrome';
           if(symbol[0] == '[')
             className = 'symbols';
           else if(symbol.match(/^[a-z0-9_]+$/))
             className = 'material-icons';
+          const symbolToReturn = className != 'emoji emojiMonochrome' ? symbol : '('+symbol+')';
+          if(className != 'emoji emojiMonochrome' || !skipForNotoMonochrome(symbol))
+            list += `<i class="${className}" title="${className}: ${symbol}" data-type="${className}" data-symbol="${symbolToReturn}" data-keywords="${symbol},${keywords.join().toLowerCase()}" style="--url:url('i/noto-emoji/emoji_u${emojiToFilename(symbol)}.svg')">${toNotoMonochrome(symbol)}</i>`;
+        }
+      }
+    }
+    for(const [ category, symbols ] of Object.entries(symbolData)) {
+      if(category.match(/Emoji/)) {
+        list += `<h2 class="imageCategory">${category}</h2>`;
+        for(const [ symbol, keywords ] of Object.entries(symbols)) {
+          let className = 'emoji emojiColor';
           if(category == 'Emoji - Flags')
             className += ' emojiFlag';
-          if(className != 'emoji' || !skipForNotoMonochrome(symbol))
-            list += `<i class="${className}" title="${className}: ${symbol}" data-type="${className}" data-symbol="${symbol}" data-keywords="${symbol},${keywords.join().toLowerCase()}" style="--url:url('i/noto-emoji/emoji_u${emojiToFilename(symbol)}.svg')">${toNotoMonochrome(symbol)}</i>`;
+          list += `<i class="${className}" title="${className}: ${symbol}" data-type="${className}" data-symbol="${symbol}" data-keywords="${symbol},${keywords.join().toLowerCase()}" style="--url:url('i/noto-emoji/emoji_u${emojiToFilename(symbol)}.svg')">${symbol}</i>`;
         }
       }
     }
