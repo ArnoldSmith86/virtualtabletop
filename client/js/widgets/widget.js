@@ -984,9 +984,21 @@ export class Widget extends StateManaged {
       }
 
       if(a.func == 'AUDIO') {
-        setDefaults(a, { source: '', type: 'audio/mpeg', maxVolume: 1.0, length: null, player: null });
-        if(a.source !== undefined) {
-          this.set('audio', 'source: ' + a.source + ', type: ' + a.type + ', maxVolume: ' + a.maxVolume + ', length: ' + a.length + ', player: ' + a.player);
+        setDefaults(a, { source: '', type: 'audio/mpeg', maxVolume: 1.0, length: null, player: null, count: 1, silenceAll: false });
+        if(a.count === 'repeat')
+          a.count = 999999;
+        if(a.silenceAll == true) {
+          document.addEventListener('play', function(e){
+            var audios = document.getElementsByTagName('audio');
+            for(var i = 0, len = audios.length; i < len;i++){
+                if(audios[i] != e.target){
+                    audios[i].pause();
+                }
+            }
+          }, true);
+        } else {}
+          if(a.source !== undefined) {
+            this.set('audio', 'source: ' + a.source + ', type: ' + a.type + ', maxVolume: ' + a.maxVolume + ', length: ' + a.length + ', player: ' + a.player + ', count: ' + a.count);
         }
       }
 
@@ -1907,7 +1919,10 @@ export class Widget extends StateManaged {
           if(a.timer !== undefined) {
             if (this.isValidID(a.timer, problems)) {
               await w(a.timer, async widget=>{
-                if(widget.setMilliseconds)
+                if(widget.setMilliseconds) {
+                  if(a.mode === 'reset') {
+                    widget.reset();
+                  }}
                   await widget.setMilliseconds(a.seconds*1000 || a.value, a.mode);
               });
             }
@@ -2113,6 +2128,8 @@ export class Widget extends StateManaged {
       const maxVolume = audioArray[5];
       const length = audioArray[7];
       const pName = audioArray[9];
+      const repeat = audioArray[11];
+      let repeatCount = Math.max(repeat, 0);
 
       if(pName == "null" || pName == playerName) {
         var audioElement = document.createElement('audio');
@@ -2122,7 +2139,9 @@ export class Widget extends StateManaged {
         audioElement.setAttribute('maxVolume', maxVolume);
         audioElement.volume = Math.min(maxVolume * (((10 ** (document.getElementById('volume').value / 96.025)) / 10) - 0.1), 1); // converts slider to log scale with zero = no volume
         document.body.appendChild(audioElement);
-        audioElement.play();
+        if(repeat > 0) {
+          audioElement.play();
+        }
 
         if(length != "null") {
           setInterval(function(){
@@ -2134,10 +2153,14 @@ export class Widget extends StateManaged {
             }}, length);
         } else {
           audioElement.onended = function() {
-            audioElement.pause();
-            clearInterval();
-            if(audioElement.parentNode)
-              audioElement.parentNode.removeChild(audioElement);
+            if (repeatCount-- > 1) {
+                audioElement.play();
+            } else {
+              audioElement.pause();
+              clearInterval();
+              if(audioElement.parentNode)
+                audioElement.parentNode.removeChild(audioElement);
+            }
           };
           audioElement.onerror = function() {
             if(audioElement.parentNode)
