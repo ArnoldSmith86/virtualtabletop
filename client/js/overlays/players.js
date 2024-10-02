@@ -49,8 +49,18 @@ function fillPlayerList(players, active) {
     $('.teamColor', entry).addEventListener('change', function(e) {
       toServer('playerColor', { player, color: toHex(e.target.value) });
     });
-    $('.playerName', entry).addEventListener('change', function(e) {
+    $('.playerName', entry).addEventListener('change', async function(e) {
       toServer('rename', { oldName: player, newName: e.target.value });
+      if(!widgetFilter(w=>asArray(w.get('owner')).indexOf(e.target.value)!=-1).length) {
+        batchStart();
+        for(const w of widgetFilter(w=>asArray(w.get('owner')).indexOf(player)!=-1)) {
+          if(Array.isArray(w.get('owner')))
+            await w.set('owner', w.get('owner').map(o=>o==player?e.target.value:o));
+          else
+            await w.set('owner', e.target.value);
+        }
+        batchEnd();
+      }
     });
     if(player == playerName) {
       entry.className = 'myPlayerEntry';
