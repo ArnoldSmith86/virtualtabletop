@@ -2,7 +2,7 @@ import { $, removeFromDOM, asArray, escapeID, mapAssetURLs } from '../domhelpers
 import { StateManaged } from '../statemanaged.js';
 import { playerName, playerColor, activePlayers, activeColors, mouseCoords } from '../overlays/players.js';
 import { batchStart, batchEnd, widgetFilter, widgets } from '../serverstate.js';
-import { showOverlay, shuffleWidgets, sortWidgets } from '../main.js';
+import { showOverlay, shuffleWidgets, sortWidgets, audioBufferObj, context, sources } from '../main.js';
 import { tracingEnabled } from '../tracing.js';
 import { toHex } from '../color.js';
 import { center, distance, overlap, getOffset, getElementTransform, getScreenTransform, getPointOnPlane, dehomogenize, getElementTransformRelativeTo, getTransformOrigin } from '../geometry.js';
@@ -2104,50 +2104,56 @@ export class Widget extends StateManaged {
     }
   }
 
-  async addAudio(widget){
-    if(widget.get('audio')) {
+    async addAudio(widget){
+    if(widget.get('audio') && context) {
+      let source = context.createBufferSource()
+
       const audioString = widget.get('audio');
       const audioArray = audioString.split(/:\s|,\s/);
-      const source = audioArray[1];
-      const type = audioArray[3];
-      const maxVolume = audioArray[5];
-      const length = audioArray[7];
-      const pName = audioArray[9];
+      const audioSource = audioArray[1];
+      const type = audioArray[3]; // not needed anymore
+      const maxVolume = audioArray[5]; 
+      const length = audioArray[7]; 
+      const pName = asArray(audioArray[9]);
 
-      if(pName == "null" || pName == playerName) {
-        var audioElement = document.createElement('audio');
-        audioElement.setAttribute('class', 'audio');
-        audioElement.setAttribute('src', mapAssetURLs(source));
-        audioElement.setAttribute('type', type);
-        audioElement.setAttribute('maxVolume', maxVolume);
-        audioElement.volume = Math.min(maxVolume * (((10 ** (document.getElementById('volume').value / 96.025)) / 10) - 0.1), 1); // converts slider to log scale with zero = no volume
-        document.body.appendChild(audioElement);
-        audioElement.play();
+      if (pName.includes('null') || pName.includes(playerName)) {
 
-        if(length != "null") {
-          setInterval(function(){
-            if(audioElement.currentTime>=0){
-              audioElement.pause();
-              clearInterval();
-              if(audioElement.parentNode)
-                audioElement.parentNode.removeChild(audioElement);
-            }}, length);
-        } else {
-          audioElement.onended = function() {
-            audioElement.pause();
-            clearInterval();
-            if(audioElement.parentNode)
-              audioElement.parentNode.removeChild(audioElement);
-          };
-          audioElement.onerror = function() {
-            if(audioElement.parentNode)
-              audioElement.parentNode.removeChild(audioElement);
+        let gainNode = context.createGain()
+
+        gainNode.gain.value = Math.min(maxVolume * (((10 ** (document.getElementById('volume').value / 96.025)) / 10) - 0.1), 1); // converts slider to log scale with zero = no volume
+        
+        source.connect(gainNode); // Connect the source to the gain node
+        gainNode.connect(context.destination); // Connect the gain node to the audio context's destination
+
+        source.buffer = audioBufferObj[audioSource];
+                
+        if(source) {
+          source.start();
+        }
+
+        // Check if the length is a valid number and greater than zero
+        
+        if (!isNaN(length) && length > 0) {
+          source.stop(context.currentTime + length/1000); // Stop the audio after `length` milliseconds
+        }
+        
+        // If there are no sources for this id, initialize an array
+        if (!sources[audioSource]) {
+          sources[audioSource] = []
+        }
+
+        // Add the new source to the array for this id
+        sources[audioSource].push(source)
+
+        // Remove the source from the array once it's done playing
+        source.onended = () => {
+          if (sources[audioSource]) {
+            sources[audioSource] = sources[audioSource].filter((src) => src !== source)
           }
         }
       }
-      setInterval(function(){
-        widget.set('audio', null);}, 100);
     }
+    setInterval(function(){widget.set('audio', null);}, 100);
   }
 
   inheritSeatVisibility(seatVisibility) {
