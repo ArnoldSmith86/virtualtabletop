@@ -3510,10 +3510,12 @@
             "width": 65,
             "height": 34,
             "color": " ",
-            "value": "/assets/-497697776_2474",
             "css": {
               "border": "3px solid white",
-              "border-radius": "8px"
+              "border-radius": "8px",
+              "background-image": "url(/assets/-1071381582_686)",
+              "background-repeat": "repeat",
+              "background-size": "18px"
             }
           }
         ]
@@ -6283,7 +6285,7 @@
       "mode": "teams",
       "time": "120",
       "attribution": "Room layout and design by jade_alarm, anewcar and Shobu released to the public domain by CC0.\n\nPoker hand icon by Lorc is available from https://game-icons.net/ and available under CC BY 3.0:\nhttps://game-icons.net/1x1/lorc/poker-hand.html\n<br>Turn timer icon is from&nbsp;https://pixabay.com/gifs/stopwatch-clock-time-time-tracks-7503/ and free to use under&nbsp;https://pixabay.com/service/license-summary/.<div><div><br></div><div>Card back created at https://pattern.monster/triangles-10 under MIT License available at https://github.com/catchspider2002/svelte-svg-patterns.<br></div><div>\nLibrary image generated using the Bing artificial intelligence image generator, https://www.bing.com/, using the following prompt: \"card game guan dan throwing eggs cartoon 27 traditional playing cards in hand\" </div></div>",
-      "lastUpdate": 1727858641932,
+      "lastUpdate": 1727860525477,
       "showName": true,
       "skill": "Hand management",
       "description": "Lead your team and help your partner in this exciting and popular card game from China. Find players on: Guan Dan (https://discord.gg/B2hRAt5DNv), Online Card Players (https://discord.gg/wXdPDFgQtS)",
@@ -6589,7 +6591,7 @@
     "type": "card",
     "cardType": "type-29399050-7af4-4b72-9a4d-01969e90f4ba",
     "id": "n8ie",
-    "z": 9769,
+    "z": 9774,
     "selectionOrder": 9,
     "cssPosition": "absolute",
     "selectedMargin": "0",
