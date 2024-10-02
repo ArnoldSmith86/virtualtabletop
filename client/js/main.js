@@ -431,8 +431,9 @@ async function toggleEditMode() {
 
 // Browser support for AudioContext
 window.AudioContext = window.AudioContext || window.webkitAudioContext;
-
-let context; // Declare context outside the function
+export let context; // Declare context outside the function
+export let audioBufferObj = {};
+export let sources = {}; // Object to track all sources
 
 // Function to initialize AudioContext
 function initializeAudioContext() {
@@ -451,9 +452,6 @@ events.forEach(event => {
   console.log(event);
   document.addEventListener(event, initializeAudioContext, { once: true });
 });
-
-let audioBufferObj = {};
-let sources = {} // Object to track all sources
 
 // Function to check for routines with AUDIO function and clickSound in both state and cardDefaults
 function findAudioSources(widget) {
