@@ -486,14 +486,13 @@ export async function loadSymbolPicker() {
           list += `<i class="gameicons" title="game-icons.net: ${symbol}" data-type="game-icons" data-symbol="${symbol}" data-keywords="${symbol},${keywords.join().toLowerCase()}" style="--x:${gameIconsIndex%60};--y:${Math.floor(gameIconsIndex/60)};--url:url('i/game-icons.net/${symbol}.svg')"></i>`;
           ++gameIconsIndex;
         } else {
-          let className = 'emoji emojiMonochrome';
+          let className = 'emoji-monochrome';
           if(symbol[0] == '[')
             className = 'symbols';
           else if(symbol.match(/^[a-z0-9_]+$/))
             className = 'material-icons';
-          const symbolToReturn = className != 'emoji emojiMonochrome' ? symbol : '('+symbol+')';
-          if(className != 'emoji emojiMonochrome' || !skipForNotoMonochrome(symbol))
-            list += `<i class="${className}" title="${className}: ${symbol}" data-type="${className}" data-symbol="${symbolToReturn}" data-keywords="${symbol},${keywords.join().toLowerCase()}" style="--url:url('i/noto-emoji/emoji_u${emojiToFilename(symbol)}.svg')">${toNotoMonochrome(symbol)}</i>`;
+          if(className != 'emoji-monochrome' || !skipForNotoMonochrome(symbol))
+            list += `<i class="${className}" title="${className}: ${symbol}" data-type="${className}" data-symbol="${symbol}" data-keywords="${symbol},${keywords.join().toLowerCase()}" style="--url:url('i/noto-emoji/emoji_u${emojiToFilename(symbol)}.svg')">${toNotoMonochrome(symbol)}</i>`;
         }
       }
     }
@@ -501,7 +500,7 @@ export async function loadSymbolPicker() {
       if(category.match(/Emoji/)) {
         list += `<h2 class="imageCategory">${category}</h2>`;
         for(const [ symbol, keywords ] of Object.entries(symbols)) {
-          let className = 'emoji emojiColor';
+          let className = 'emoji-color';
           if(category == 'Emoji - Flags')
             className += ' emojiFlag';
           list += `<i class="${className}" title="${className}: ${symbol}" data-type="${className}" data-symbol="${symbol}" data-keywords="${symbol},${keywords.join().toLowerCase()}" style="--url:url('i/noto-emoji/emoji_u${emojiToFilename(symbol)}.svg')">${symbol}</i>`;
@@ -546,9 +545,9 @@ export async function pickSymbol(type='all', bigPreviews=true, closeOverlay=true
       icon.onclick = function(e) {
         if(closeOverlay)
           showOverlay(null);
-        const isImage = ['emoji','game-icons'].indexOf(icon.dataset.type) != -1;
+        const isImage = ['emoji-color','game-icons'].indexOf(icon.dataset.type) != -1;
         let url = null;
-        if(icon.dataset.type == 'emoji')
+        if(icon.dataset.type == 'emoji-color')
           url = `/i/noto-emoji/emoji_u${emojiToFilename(icon.dataset.symbol)}.svg`;
         if(icon.dataset.type == 'game-icons')
           url = `/i/game-icons.net/${icon.dataset.symbol}.svg`;
@@ -636,12 +635,12 @@ export function addRichtextControls(dom) {
         if(icon.classList.contains('gameicons')) {
           document.execCommand('inserthtml', false, `<i class="richtextSymbol gameicons"><img src="i/game-icons.net/${icon.dataset.symbol}.svg"></i>`);
         } else {
-          let className = 'emoji';
+          let className = 'emoji-color';
           if(icon.innerText[0] == '[')
             className = 'symbols';
           else if(icon.innerText.match(/^[a-z0-9_]+$/))
             className = 'material-icons';
-          if(className == 'emoji')
+          if(className == 'emoji-color')
             document.execCommand('inserthtml', false, icon.innerText);
           else
             document.execCommand('inserthtml', false, `<i class="richtextSymbol ${className}">${icon.innerText}</i>`);
