@@ -2,7 +2,7 @@
   "_meta": {
     "version": 16,
     "info": {
-      "name": "Carnac Stones",
+      "name": "Celtic Knots",
       "image": "/assets/-914371772_133916",
       "rules": "https://boardgamegeek.com/filepage/40893/unofficial-english-rule",
       "bgg": "https://boardgamegeek.com/boardgame/41003/keltis-der-weg-der-steine-mitbringspiel",
@@ -10,7 +10,7 @@
       "mode": "vs",
       "time": "20",
       "attribution": "<div>The game layout, game pieces, and game design are by anewcar and are released to the Public Domain under CC0.<br></div><div><br></div>The background pattern and card back pattern were created at&nbsp;https://heropatterns.com/ (Aztec) under Creative Commons License.&nbsp;",
-      "lastUpdate": 1727875393960,
+      "lastUpdate": 1727890030147,
       "showName": true,
       "skill": "",
       "description": "Push your luck to collect cards in ascending or descending sequence. Be careful you don't leave something your opponents need on the table and don't forget to collect stars too!",
@@ -2630,7 +2630,7 @@
     "id": "jtti",
     "height": 50,
     "z": 4,
-    "text": "Carnac Stones",
+    "text": "Celtic Knots",
     "css": {
       ".transition": {
         "transition": "font-size 2s, margin-top 2s"
