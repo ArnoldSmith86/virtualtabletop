@@ -457,8 +457,14 @@ export class Widget extends StateManaged {
     if(!this.get('clickable') && !(mode == 'ignoreClickable' || mode =='ignoreAll'))
       return true;
 
-    if(this.get('clickSound'))
-      this.set('audio','source: ' + this.get('clickSound') + ', type: audio/mpeg , maxVolume: 1.0, length: null, player: null');
+    if(this.get('clickSound')) {
+      this.set('audio', JSON.stringify({
+        source: this.get('clickSound'),
+        maxVolume: 1.0,
+        length: null,
+        player: null
+      }));
+    }
 
     if(Array.isArray(this.get('clickRoutine')) && !(mode == 'ignoreClickRoutine' || mode =='ignoreAll')) {
       await this.evaluateRoutine('clickRoutine', {}, {});
@@ -984,9 +990,14 @@ export class Widget extends StateManaged {
       }
 
       if(a.func == 'AUDIO') {
-        setDefaults(a, { source: '', type: 'audio/mpeg', maxVolume: 1.0, length: null, player: null });
+        setDefaults(a, { source: '', maxVolume: 1.0, length: null, player: null });
         if(a.source !== undefined) {
-          this.set('audio', 'source: ' + a.source + ', type: ' + a.type + ', maxVolume: ' + a.maxVolume + ', length: ' + a.length + ', player: ' + a.player);
+          this.set('audio', JSON.stringify({
+            source: a.source,
+            maxVolume: a.maxVolume,
+            length: a.length,
+            player: a.player
+          }));
         }
       }
 
@@ -2109,14 +2120,13 @@ export class Widget extends StateManaged {
       let source = context.createBufferSource()
 
       const audioString = widget.get('audio');
-      const audioArray = audioString.split(/:\s|,\s/);
-      const audioSource = audioArray[1];
-      const type = audioArray[3]; // not needed anymore
-      const maxVolume = audioArray[5]; 
-      const length = audioArray[7]; 
-      const pName = asArray(audioArray[9]);
+      const audioObj = JSON.parse(audioString);
+      const audioSource = audioObj.source;
+      const maxVolume = audioObj.maxVolume; 
+      const length = audioObj.length; 
+      const pName = asArray(audioObj.player);
 
-      if (pName.includes('null') || pName.includes(playerName)) {
+      if (pName.includes(null) || pName.includes(playerName)) {
 
         let gainNode = context.createGain()
 
