@@ -429,6 +429,106 @@ async function toggleEditMode() {
   setScale();
 }
 
+// Browser support for AudioContext
+window.AudioContext = window.AudioContext || window.webkitAudioContext;
+
+let context; // Declare context outside the function
+
+// Function to initialize AudioContext
+function initializeAudioContext() {
+  if (!context) { // Ensure it's initialized only once
+    context = new AudioContext();
+    console.log('AudioContext initialized.');
+    audioContext(); // Call your audio context setup function here
+  }
+}
+
+// List of events to listen for user interaction
+const events = ['click', 'mousedown', 'mouseup', 'dblclick', 'keydown', 'keyup', 'touchstart', 'touchend', 'focus', 'pointerdown'];
+
+// Add event listeners to the document
+events.forEach(event => {
+  console.log(event);
+  document.addEventListener(event, initializeAudioContext, { once: true });
+});
+
+let audioBufferObj = {};
+let sources = {} // Object to track all sources
+
+// Function to check for routines with AUDIO function and clickSound in both state and cardDefaults
+function findAudioSources(widget) {
+  // Use a Set to ensure unique audio sources
+  let audioSources = new Set();
+
+  // Check for any routines with AUDIO function in widget.state
+  Object.keys(widget.state).forEach((key) => {
+    if (key.endsWith("Routine")) {
+      const routine = widget.state[key];
+
+      // Check if the routine is an array and has objects with "func": "AUDIO"
+      routine.forEach((action) => {
+        if (action.func === "AUDIO") {
+          // Add the source to the Set (duplicates will be ignored)
+          audioSources.add(action.source);
+        }
+      });
+    }
+  });
+
+  // Check for clickSound in widget.state and add it if valid
+  if (widget.state.clickSound !== null && widget.state.clickSound !== undefined) {
+    audioSources.add(widget.state.clickSound);
+  }
+
+  // Check for clickSound in cardDefaults (if it exists) and add it if valid
+  if (widget.state.cardDefaults && widget.state.cardDefaults.clickSound !== null && widget.state.cardDefaults.clickSound !== undefined) {
+    audioSources.add(widget.state.cardDefaults.clickSound);
+  }
+
+  return Array.from(audioSources); // Convert Set to an array before returning
+}
+
+function getAudioArray() {
+  // Use a Set to collect unique audio sources across all widgets
+  let audioSet = new Set();
+
+  widgets.forEach((widget) => {
+    // Add found audio sources from each widget to the Set
+    findAudioSources(widget).forEach((source) => audioSet.add(source));
+  });
+
+  return Array.from(audioSet); // Convert Set to an array before returning
+}
+
+// Function to load audio asynchronously
+async function loadAudio(url) {
+   try {
+    const response = await fetch(mapAssetURLs(url)); // trying mapAssetURLs
+    const arrayBuffer = await response.arrayBuffer();
+    const buffer = await context.decodeAudioData(arrayBuffer);
+    audioBufferObj[url] = buffer;
+  } catch (error) {
+    console.error(`Error loading audio from ${url}:`, error);
+  }
+}
+
+// Main function to process audio sources and load them
+function audioContext() {
+  const audioArray = getAudioArray();
+
+  if (audioArray.length > 0) {
+    // Iterate through each audio source URL and load them
+    audioArray.forEach((url) => {
+      if (url) {
+        loadAudio(url);
+      }
+    });
+  }
+  console.log(audioArray); // Debugging: check the audio sources found
+  console.log(audioBufferObj);
+  console.log(context);
+}
+
 onLoad(function() {
   on('#pileOverlay', 'click', e=>e.target.id=='pileOverlay'&&showOverlay());
 
