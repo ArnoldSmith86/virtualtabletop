@@ -108,6 +108,8 @@ export function regexEscape(string) {
 }
 
 export function setText(node, text) {
+  if(node.classList.contains('emoji-monochrome'))
+    text = toNotoMonochrome(text);
   for(const child of node.childNodes) {
     if(child.nodeType == Node.TEXT_NODE) {
       child.nodeValue = text;
