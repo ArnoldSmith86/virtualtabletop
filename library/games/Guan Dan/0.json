@@ -3510,10 +3510,10 @@
             "width": 65,
             "height": 34,
             "color": " ",
+            "value": "/assets/-497697776_2474",
             "css": {
               "border": "3px solid white",
-              "border-radius": "8px",
-              "background": "grey url(/assets/661873332_2654489) center / 1500%"
+              "border-radius": "8px"
             }
           }
         ]
@@ -6283,7 +6283,7 @@
       "mode": "teams",
       "time": "120",
       "attribution": "Room layout and design by jade_alarm, anewcar and Shobu released to the public domain by CC0.\n\nGame piece icons are available from https://game-icons.net/ and available under CC BY 3.0:\nhttps://game-icons.net/1x1/lorc/poker-hand.html\n<br>Turn timer icon is from&nbsp;https://pixabay.com/gifs/stopwatch-clock-time-time-tracks-7503/ and free to use under&nbsp;https://pixabay.com/service/license-summary/.<div><div><br></div><div>Card back created at https://pattern.monster/triangles-10 under MIT License available at https://github.com/catchspider2002/svelte-svg-patterns.<br></div><div>\nLibrary image generated using the Bing artificial intelligence image generator, https://www.bing.com/, using the following prompt: \"card game guan dan throwing eggs cartoon 27 traditional playing cards in hand\" </div></div>",
-      "lastUpdate": 1727831817969,
+      "lastUpdate": 1727855625772,
       "showName": true,
       "skill": "Hand management",
       "description": "Lead your team and help your partner in this exciting and popular card game from China. Find players on: Guan Dan (https://discord.gg/B2hRAt5DNv), Online Card Players (https://discord.gg/wXdPDFgQtS)",
@@ -6293,10 +6293,10 @@
       "similarAwards": "",
       "ruleText": "Refer to the player aid available in the room",
       "helpText": "<div>SETUP</div>Players take seats, then click on the New Round Button&nbsp; (1st round starter is randomized).<div><br></div><div>HOW TO PLAY CARDS</div><div>&nbsp;O<span style=\"color: var(--overlayFontColor);\">n your turn:</span></div><div><span style=\"color: var(--overlayFontColor);\">- Select cards from your hand and click PLAY to play cards from your hand to the table. Cards can be choosen by clicking on them or by using the blue circle selector</span><br></div><div>- Click PASS to pass turn to next player<br></div><div><br></div><div>FUNCTION BUTTONS</div><div>Click on those (personal) <span style=\"color: var(--overlayFontColor);\">buttons for:</span></div><div><div><span style=\"color: var(--overlayFontColor);\">- UNSELECT ALL: cancel cards selection</span></div></div><div><span style=\"color: var(--overlayFontColor);\">- AID: see a rules summary</span><br></div><div><span style=\"color: var(--overlayFontColor);\">- SORT: sort cards by rank</span></div><div><span style=\"color: var(--overlayFontColor);\">- TURN: move active player around the table (for changing round starter, or passing lead to a partner)</span></div><div><span style=\"color: var(--overlayFontColor);\">- CLEAN: delete your played cards when you've gone out</span></div><div><br></div><div><span style=\"color: var(--overlayFontColor);\">Those steps are not automated:</span></div><div>- Tribute / Card exchange</div><div><span style=\"color: var(--overlayFontColor);\">- Lead pass to partner (when a player went out)</span></div><div><span style=\"color: var(--overlayFontColor);\">- Scoring&nbsp;</span></div><div><br></div>",
-      "variantImage": "",
-      "variant": "Guan Dan (掼蛋)",
+      "players": "4",
       "language": "en-GB",
-      "players": "4"
+      "variant": "Guan Dan (掼蛋)",
+      "variantImage": ""
     }
   },
   "seat4": {
