@@ -864,10 +864,13 @@
         "!sortDirection"
       ]
     },
-    "turn": true,
+    "turn": false,
     "scale": 1,
     "permanentPlayerColor": "#f00000",
-    "color": "#f00000"
+    "color": "#f00000",
+    "mainColor": "linear-gradient(to right, #E0EAFC 0%, #CFDEF3  51%, #E0EAFC  100%);",
+    "textColor": "#000000",
+    "glowColor": "#000000"
   },
   "cardCount2": {
     "inheritFrom": "cardCount0",
@@ -1380,7 +1383,7 @@
       "var result = ${numCardsToDeal}"
     ],
     "triesToFindPlayerWhoIsStillInCount": 0,
-    "lastDealer": "seat2",
+    "lastDealer": "seat3",
     "playCardsRoutine": [
       {
         "func": "SELECT",
@@ -1991,7 +1994,7 @@
       }
     ],
     "css": "font-size:50px;color:black;display:flex;justify-content:center;align-items:center;text-align:center;",
-    "leadPlayer": "seat2"
+    "leadPlayer": "seat3"
   },
   "commonPlayArea": {
     "type": "holder",
@@ -3124,7 +3127,6 @@
         "suit": "/i/game-icons.net/skoll/clubs.svg",
         "suitColor": "#212121",
         "label": "2",
-        "image": "/assets/-2012380419_5070",
         "rank": "2",
         "sortingOrder": 1
       },
@@ -3132,7 +3134,6 @@
         "suit": "/i/game-icons.net/skoll/clubs.svg",
         "suitColor": "#212121",
         "label": "3",
-        "image": "/assets/-548551815_5189",
         "rank": "3",
         "sortingOrder": 2
       },
@@ -3140,7 +3141,6 @@
         "suit": "/i/game-icons.net/skoll/clubs.svg",
         "suitColor": "#212121",
         "label": "4",
-        "image": "/assets/-881163370_4562",
         "rank": "4",
         "sortingOrder": 3
       },
@@ -3148,7 +3148,6 @@
         "suit": "/i/game-icons.net/skoll/clubs.svg",
         "suitColor": "#212121",
         "label": "5",
-        "image": "/assets/-654747311_5197",
         "rank": "5",
         "sortingOrder": 4
       },
@@ -3156,7 +3155,6 @@
         "suit": "/i/game-icons.net/skoll/clubs.svg",
         "suitColor": "#212121",
         "label": "6",
-        "image": "/assets/-132001891_5877",
         "rank": "6",
         "sortingOrder": 5
       },
@@ -3164,7 +3162,6 @@
         "suit": "/i/game-icons.net/skoll/clubs.svg",
         "suitColor": "#212121",
         "label": "7",
-        "image": "/assets/1171543315_4627",
         "rank": "7",
         "sortingOrder": 6
       },
@@ -3172,7 +3169,6 @@
         "suit": "/i/game-icons.net/skoll/clubs.svg",
         "suitColor": "#212121",
         "label": "8",
-        "image": "/assets/-705169633_6191",
         "rank": "8",
         "sortingOrder": 7
       },
@@ -3180,7 +3176,6 @@
         "suit": "/i/game-icons.net/skoll/clubs.svg",
         "suitColor": "#212121",
         "label": "9",
-        "image": "/assets/419606554_5871",
         "rank": "9",
         "sortingOrder": 8
       },
@@ -3188,7 +3183,6 @@
         "suit": "/i/game-icons.net/skoll/clubs.svg",
         "suitColor": "#212121",
         "label": "10",
-        "image": "/assets/-1981121929_5883",
         "rank": "10",
         "sortingOrder": 9
       },
@@ -3196,7 +3190,6 @@
         "suit": "/i/game-icons.net/skoll/clubs.svg",
         "suitColor": "#212121",
         "label": "j",
-        "image": "/assets/804309481_4949",
         "rank": "11",
         "sortingOrder": 10
       },
@@ -3204,7 +3197,6 @@
         "suit": "/i/game-icons.net/skoll/clubs.svg",
         "suitColor": "#212121",
         "label": "q",
-        "image": "/assets/2106560071_5430",
         "rank": "12",
         "sortingOrder": 11
       },
@@ -3212,7 +3204,6 @@
         "suit": "/i/game-icons.net/skoll/clubs.svg",
         "suitColor": "#212121",
         "label": "k",
-        "image": "/assets/1929418487_4715",
         "rank": "13",
         "sortingOrder": 12
       },
@@ -3220,7 +3211,6 @@
         "suit": "/i/game-icons.net/skoll/clubs.svg",
         "suitColor": "#212121",
         "label": "a",
-        "image": "/assets/-59942387_4809",
         "rank": "14",
         "sortingOrder": 13
       },
@@ -3228,7 +3218,6 @@
         "suit": "/i/game-icons.net/skoll/diamonds.svg",
         "suitColor": "#F44336",
         "label": "2",
-        "image": "/assets/-231414321_4644",
         "rank": "2",
         "sortingOrder": 14
       },
@@ -3236,7 +3225,6 @@
         "suit": "/i/game-icons.net/skoll/diamonds.svg",
         "suitColor": "#F44336",
         "label": "3",
-        "image": "/assets/830507396_4761",
         "rank": "3",
         "sortingOrder": 15
       },
@@ -3244,7 +3232,6 @@
         "suit": "/i/game-icons.net/skoll/diamonds.svg",
         "suitColor": "#F44336",
         "label": "4",
-        "image": "/assets/1155636310_4112",
         "rank": "4",
         "sortingOrder": 16
       },
@@ -3252,7 +3239,6 @@
         "suit": "/i/game-icons.net/skoll/diamonds.svg",
         "suitColor": "#F44336",
         "label": "5",
-        "image": "/assets/-1890688403_4781",
         "rank": "5",
         "sortingOrder": 17
       },
@@ -3260,7 +3246,6 @@
         "suit": "/i/game-icons.net/skoll/diamonds.svg",
         "suitColor": "#F44336",
         "label": "6",
-        "image": "/assets/1783423642_5497",
         "rank": "6",
         "sortingOrder": 18
       },
@@ -3268,7 +3253,6 @@
         "suit": "/i/game-icons.net/skoll/diamonds.svg",
         "suitColor": "#F44336",
         "label": "7",
-        "image": "/assets/1734032625_4183",
         "rank": "7",
         "sortingOrder": 19
       },
@@ -3276,7 +3260,6 @@
         "suit": "/i/game-icons.net/skoll/diamonds.svg",
         "suitColor": "#F44336",
         "label": "8",
-        "image": "/assets/1945184486_5837",
         "rank": "8",
         "sortingOrder": 20
       },
@@ -3284,7 +3267,6 @@
         "suit": "/i/game-icons.net/skoll/diamonds.svg",
         "suitColor": "#F44336",
         "label": "9",
-        "image": "/assets/1190012281_5494",
         "rank": "9",
         "sortingOrder": 21
       },
@@ -3292,7 +3274,6 @@
         "suit": "/i/game-icons.net/skoll/diamonds.svg",
         "suitColor": "#F44336",
         "label": "10",
-        "image": "/assets/-1582936523_5492",
         "rank": "10",
         "sortingOrder": 22
       },
@@ -3300,7 +3281,6 @@
         "suit": "/i/game-icons.net/skoll/diamonds.svg",
         "suitColor": "#F44336",
         "label": "j",
-        "image": "/assets/687204081_4234",
         "rank": "11",
         "sortingOrder": 23
       },
@@ -3308,7 +3288,6 @@
         "suit": "/i/game-icons.net/skoll/diamonds.svg",
         "suitColor": "#F44336",
         "label": "q",
-        "image": "/assets/766153609_4693",
         "rank": "12",
         "sortingOrder": 24
       },
@@ -3316,7 +3295,6 @@
         "suit": "/i/game-icons.net/skoll/diamonds.svg",
         "suitColor": "#F44336",
         "label": "k",
-        "image": "/assets/629104712_3951",
         "rank": "13",
         "sortingOrder": 25
       },
@@ -3324,7 +3302,6 @@
         "suit": "/i/game-icons.net/skoll/diamonds.svg",
         "suitColor": "#F44336",
         "label": "a",
-        "image": "/assets/1246286907_4371",
         "rank": "14",
         "sortingOrder": 26
       },
@@ -3332,7 +3309,6 @@
         "suit": "/i/game-icons.net/skoll/hearts.svg",
         "suitColor": "#F44336",
         "label": "2",
-        "image": "/assets/-236114126_4752",
         "rank": "2",
         "sortingOrder": 27
       },
@@ -3340,7 +3316,6 @@
         "suit": "/i/game-icons.net/skoll/hearts.svg",
         "suitColor": "#F44336",
         "label": "3",
-        "image": "/assets/-1491115145_4877",
         "rank": "3",
         "sortingOrder": 28
       },
@@ -3348,7 +3323,6 @@
         "suit": "/i/game-icons.net/skoll/hearts.svg",
         "suitColor": "#F44336",
         "label": "4",
-        "image": "/assets/532666546_4251",
         "rank": "4",
         "sortingOrder": 29
       },
@@ -3356,7 +3330,6 @@
         "suit": "/i/game-icons.net/skoll/hearts.svg",
         "suitColor": "#F44336",
         "label": "5",
-        "image": "/assets/-809291071_4878",
         "rank": "5",
         "sortingOrder": 30
       },
@@ -3364,7 +3337,6 @@
         "suit": "/i/game-icons.net/skoll/hearts.svg",
         "suitColor": "#F44336",
         "label": "6",
-        "image": "/assets/860098223_5561",
         "rank": "6",
         "sortingOrder": 31
       },
@@ -3380,7 +3352,6 @@
         "suit": "/i/game-icons.net/skoll/hearts.svg",
         "suitColor": "#F44336",
         "label": "8",
-        "image": "/assets/-215869574_5885",
         "rank": "8",
         "sortingOrder": 33
       },
@@ -3388,7 +3359,6 @@
         "suit": "/i/game-icons.net/skoll/hearts.svg",
         "suitColor": "#F44336",
         "label": "9",
-        "image": "/assets/1792200306_5559",
         "rank": "9",
         "sortingOrder": 34
       },
@@ -3396,7 +3366,6 @@
         "suit": "/i/game-icons.net/skoll/hearts.svg",
         "suitColor": "#F44336",
         "label": "10",
-        "image": "/assets/-494945254_5592",
         "rank": "10",
         "sortingOrder": 35
       },
@@ -3404,7 +3373,6 @@
         "suit": "/i/game-icons.net/skoll/hearts.svg",
         "suitColor": "#F44336",
         "label": "j",
-        "image": "/assets/1629354103_4631",
         "rank": "11",
         "sortingOrder": 36
       },
@@ -3412,7 +3380,6 @@
         "suit": "/i/game-icons.net/skoll/hearts.svg",
         "suitColor": "#F44336",
         "label": "q",
-        "image": "/assets/255574396_5115",
         "rank": "12",
         "sortingOrder": 37
       },
@@ -3420,7 +3387,6 @@
         "suit": "/i/game-icons.net/skoll/hearts.svg",
         "suitColor": "#F44336",
         "label": "k",
-        "image": "/assets/-928334641_4406",
         "rank": "13",
         "sortingOrder": 38
       },
@@ -3428,7 +3394,6 @@
         "suit": "/i/game-icons.net/skoll/hearts.svg",
         "suitColor": "#F44336",
         "label": "a",
-        "image": "/assets/-850807230_4494",
         "rank": "14",
         "sortingOrder": 39
       },
@@ -3436,7 +3401,6 @@
         "suit": "/i/game-icons.net/skoll/spades.svg",
         "suitColor": "#212121",
         "label": "2",
-        "image": "/assets/1388723097_4834",
         "rank": "2",
         "sortingOrder": 40
       },
@@ -3444,7 +3408,6 @@
         "suit": "/i/game-icons.net/skoll/spades.svg",
         "suitColor": "#212121",
         "label": "3",
-        "image": "/assets/1863927892_4939",
         "rank": "3",
         "sortingOrder": 41
       },
@@ -3452,7 +3415,6 @@
         "suit": "/i/game-icons.net/skoll/spades.svg",
         "suitColor": "#212121",
         "label": "4",
-        "image": "/assets/-1705631436_4327",
         "rank": "4",
         "sortingOrder": 42
       },
@@ -3460,7 +3422,6 @@
         "suit": "/i/game-icons.net/skoll/spades.svg",
         "suitColor": "#212121",
         "label": "5",
-        "image": "/assets/1246901786_4960",
         "rank": "5",
         "sortingOrder": 43
       },
@@ -3468,7 +3429,6 @@
         "suit": "/i/game-icons.net/skoll/spades.svg",
         "suitColor": "#212121",
         "label": "6",
-        "image": "/assets/-118976403_5643",
         "rank": "6",
         "sortingOrder": 44
       },
@@ -3476,7 +3436,6 @@
         "suit": "/i/game-icons.net/skoll/spades.svg",
         "suitColor": "#212121",
         "label": "7",
-        "image": "/assets/241668980_4394",
         "rank": "7",
         "sortingOrder": 45
       },
@@ -3484,7 +3443,6 @@
         "suit": "/i/game-icons.net/skoll/spades.svg",
         "suitColor": "#212121",
         "label": "8",
-        "image": "/assets/-393057984_5963",
         "rank": "8",
         "sortingOrder": 46
       },
@@ -3492,7 +3450,6 @@
         "suit": "/i/game-icons.net/skoll/spades.svg",
         "suitColor": "#212121",
         "label": "9",
-        "image": "/assets/-578751968_5642",
         "rank": "9",
         "sortingOrder": 47
       },
@@ -3500,7 +3457,6 @@
         "suit": "/i/game-icons.net/skoll/spades.svg",
         "suitColor": "#212121",
         "label": "10",
-        "image": "/assets/619233662_5614",
         "rank": "10",
         "sortingOrder": 48
       },
@@ -3508,7 +3464,6 @@
         "suit": "/i/game-icons.net/skoll/spades.svg",
         "suitColor": "#212121",
         "label": "j",
-        "image": "/assets/1928713398_4718",
         "rank": "11",
         "sortingOrder": 49
       },
@@ -3516,7 +3471,6 @@
         "suit": "/i/game-icons.net/skoll/spades.svg",
         "suitColor": "#212121",
         "label": "q",
-        "image": "/assets/-1296182990_5142",
         "rank": "12",
         "sortingOrder": 50
       },
@@ -3524,7 +3478,6 @@
         "suit": "/i/game-icons.net/skoll/spades.svg",
         "suitColor": "#212121",
         "label": "k",
-        "image": "/assets/-43448799_4448",
         "rank": "13",
         "sortingOrder": 51
       },
@@ -3532,23 +3485,20 @@
         "suit": "/i/game-icons.net/skoll/spades.svg",
         "suitColor": "#212121",
         "label": "a",
-        "image": "/assets/-203772142_4530",
         "rank": "14",
         "sortingOrder": 52
       },
       "type-1787efe2-0b94-4405-9aeb-e88ab55764b0": {
-        "suit": "/assets/-1740511263_878",
+        "suit": "/i/game-icons.net/delapouite/round-star.svg",
         "suitColor": "#F44336",
         "ChineseLabel": "大",
-        "image": "/assets/1000398692_3054",
         "rank": "17",
         "sortingOrder": 53
       },
       "type-c5e8a186-7555-43b5-8713-ca9b48758895": {
         "ChineseLabel": "小",
-        "suit": "/assets/-1740511263_878",
+        "suit": "/i/game-icons.net/delapouite/round-star.svg",
         "suitColor": "#212121",
-        "image": "/assets/-627027473_3356",
         "rank": "16",
         "sortingOrder": 54,
         "font-size": "20px"
@@ -3566,7 +3516,7 @@
             "css": {
               "border": "3px solid white",
               "border-radius": "8px",
-              "background": "gray url(/assets/-1385755993_173134) center / 200%"
+              "background": "grey url(/assets/661873332_2654489) center / 1500%"
             }
           }
         ]
@@ -3853,11 +3803,8 @@
     "height": 757,
     "z": 35127,
     "movable": false,
-    "image": "/assets/-460163921_383663",
-    "onlyVisibleForSeat": [
-      1,
-      null
-    ],
+    "image": "/assets/-1661358580_122484",
+    "onlyVisibleForSeat": [],
     "hoverInheritVisibleForSeat": false,
     "layer": 2
   },
@@ -3904,9 +3851,9 @@
   "playArea5": {
     "type": "holder",
     "id": "playArea5",
-    "x": -402,
-    "y": 65,
-    "z": 31504,
+    "x": -357,
+    "y": 526,
+    "z": 81082,
     "movable": true,
     "stackOffsetX": 40,
     "enterRoutine": [
@@ -3930,9 +3877,9 @@
   "playArea6": {
     "type": "holder",
     "id": "playArea6",
-    "x": -471,
-    "y": 22,
-    "z": 31504,
+    "x": -492,
+    "y": 527,
+    "z": 81081,
     "movable": true,
     "stackOffsetX": 40,
     "enterRoutine": [
@@ -4021,11 +3968,7 @@
     "x": 453,
     "y": 249,
     "z": 81076,
-    "css": ";transition: ease 0.4s",
-    "image": "/assets/2084110158_2491",
-    "svgReplaces": {
-      "#ff0000": "color"
-    },
+    "css": "vertical-align: center; line-height: 150px; font-size: 60px; font-weight:bold;color:grey;transition: ease 0.4s;",
     "scale": 0,
     "width": 150,
     "height": 150,
@@ -4034,18 +3977,15 @@
     "inheritFrom": {
       "seat2": "color"
     },
-    "activeFace": 0
+    "activeFace": 0,
+    "text": "PASS"
   },
   "passIcon3": {
     "id": "passIcon3",
     "x": 724,
     "y": 342,
     "z": 81075,
-    "css": ";transition: ease 0.4s",
-    "image": "/assets/2084110158_2491",
-    "svgReplaces": {
-      "#ff0000": "color"
-    },
+    "css": "vertical-align: center; line-height: 150px; font-size: 60px; font-weight:bold;color:grey;transition: ease 0.4s;",
     "scale": 0,
     "width": 150,
     "height": 150,
@@ -4054,7 +3994,8 @@
     "inheritFrom": {
       "seat3": "color"
     },
-    "activeFace": 0
+    "activeFace": 0,
+    "text": "PASS"
   },
   "passTimer": {
     "type": "timer",
@@ -4062,7 +4003,7 @@
     "x": -163,
     "y": 722,
     "z": 33398,
-    "seatNum": "2",
+    "seatNum": "3",
     "countdown": true,
     "css": "color:black",
     "precision": 100,
@@ -4154,9 +4095,9 @@
   "offScreenH": {
     "type": "holder",
     "id": "offScreenH",
-    "y": 298,
-    "z": 79879,
-    "x": -509
+    "y": 532,
+    "z": 79973,
+    "x": -619
   },
   "movingMeldCardH": {
     "type": "holder",
@@ -4668,392 +4609,6 @@
       }
     ]
   },
-  "movingMeldD": {
-    "type": "deck",
-    "id": "movingMeldD",
-    "parent": "hiddenDeckH",
-    "x": 4,
-    "y": 4,
-    "z": 89,
-    "cardDefaults": {
-      "scale": 0.7,
-      "width": 60
-    },
-    "cardTypes": {
-      "type-86a16652-ad7b-4329-9ebd-1e908bc306ad": {
-        "label": "club-02",
-        "image": "/assets/-2012380419_5070",
-        "rank": "2",
-        "sortingOrder": 1
-      },
-      "type-ce574729-4a4d-47af-9aa1-534f4f8b067d": {
-        "label": "club-03",
-        "image": "/assets/-548551815_5189",
-        "rank": "3",
-        "sortingOrder": 2
-      },
-      "type-1e8cc3c9-2158-4100-bc43-e79d2782fa9c": {
-        "label": "club-04",
-        "image": "/assets/-881163370_4562",
-        "rank": "4",
-        "sortingOrder": 3
-      },
-      "type-0288d46f-6b57-44e0-8ad5-04924240d7c0": {
-        "label": "club-05",
-        "image": "/assets/-654747311_5197",
-        "rank": "5",
-        "sortingOrder": 4
-      },
-      "type-b06daf65-de4b-466a-af11-62d4005d0da6": {
-        "label": "club-06",
-        "image": "/assets/-132001891_5877",
-        "rank": "6",
-        "sortingOrder": 5
-      },
-      "type-a9c19e3f-0e2e-4595-b0f7-2efe3eb1b5ad": {
-        "label": "club-07",
-        "image": "/assets/1171543315_4627",
-        "rank": "7",
-        "sortingOrder": 6
-      },
-      "type-c1419741-1fa0-44e9-a3fb-c1231a76dc04": {
-        "label": "club-08",
-        "image": "/assets/-705169633_6191",
-        "rank": "8",
-        "sortingOrder": 7
-      },
-      "type-4453f8b6-d0d8-450d-bf27-e64d65901a28": {
-        "label": "club-09",
-        "image": "/assets/419606554_5871",
-        "rank": "9",
-        "sortingOrder": 8
-      },
-      "type-44c936ad-e563-4046-a2b6-b8bbdb47e0ff": {
-        "label": "club-10",
-        "image": "/assets/-1981121929_5883",
-        "rank": "10",
-        "sortingOrder": 9
-      },
-      "type-fc5504e7-bf4e-4735-9ca9-cc1471dd45ab": {
-        "label": "club-j",
-        "image": "/assets/804309481_4949",
-        "rank": "11",
-        "sortingOrder": 10
-      },
-      "type-25a17a4c-aca9-4dce-8b18-6dd6f54e6947": {
-        "label": "club-q",
-        "image": "/assets/2106560071_5430",
-        "rank": "12",
-        "sortingOrder": 11
-      },
-      "type-50f08327-e9f4-4c72-97c6-dbd2ea1fb0b8": {
-        "label": "club-k",
-        "image": "/assets/1929418487_4715",
-        "rank": "13",
-        "sortingOrder": 12
-      },
-      "type-a87aa3de-b789-4299-a513-1d43c2b7fd9e": {
-        "label": "club-a",
-        "image": "/assets/-59942387_4809",
-        "rank": "14",
-        "sortingOrder": 13
-      },
-      "type-b0c9bc06-fcc7-4bb4-bcd5-2fba7438eafa": {
-        "label": "diamond-02",
-        "image": "/assets/-231414321_4644",
-        "rank": "2",
-        "sortingOrder": 14
-      },
-      "type-f8defc55-18a9-4acf-8ff6-a5758affd4ed": {
-        "label": "diamond-03",
-        "image": "/assets/830507396_4761",
-        "rank": "3",
-        "sortingOrder": 15
-      },
-      "type-8caae31c-62ed-4cfe-9d22-7c1d5c8dc555": {
-        "label": "diamond-04",
-        "image": "/assets/1155636310_4112",
-        "rank": "4",
-        "sortingOrder": 16
-      },
-      "type-2d716a15-19f4-4773-ac37-4ab60aabbae3": {
-        "label": "diamond-05",
-        "image": "/assets/-1890688403_4781",
-        "rank": "5",
-        "sortingOrder": 17
-      },
-      "type-29399050-7af4-4b72-9a4d-01969e90f4ba": {
-        "label": "diamond-06",
-        "image": "/assets/1783423642_5497",
-        "rank": "6",
-        "sortingOrder": 18
-      },
-      "type-eba6c97b-857b-46c6-b37c-383dfa4dede4": {
-        "label": "diamond-07",
-        "image": "/assets/1734032625_4183",
-        "rank": "7",
-        "sortingOrder": 19
-      },
-      "type-c36019ae-54d0-43b8-b254-9c449c75cc85": {
-        "label": "diamond-08",
-        "image": "/assets/1945184486_5837",
-        "rank": "8",
-        "sortingOrder": 20
-      },
-      "type-52fd0ad5-7930-4cbc-b1e7-da163fbbf32c": {
-        "label": "diamond-09",
-        "image": "/assets/1190012281_5494",
-        "rank": "9",
-        "sortingOrder": 21
-      },
-      "type-b395c302-35f1-4d9e-a790-bb74ced58117": {
-        "label": "diamond-10",
-        "image": "/assets/-1582936523_5492",
-        "rank": "10",
-        "sortingOrder": 22
-      },
-      "type-ac7cddcb-1a7b-4413-8fca-492da66e4cb2": {
-        "label": "diamond-j",
-        "image": "/assets/687204081_4234",
-        "rank": "11",
-        "sortingOrder": 23
-      },
-      "type-2b6ca134-a4eb-488e-9515-bd5df8be5856": {
-        "label": "diamond-q",
-        "image": "/assets/766153609_4693",
-        "rank": "12",
-        "sortingOrder": 24
-      },
-      "type-68f2038b-e191-4518-a338-1d17c38ae13c": {
-        "label": "diamond-k",
-        "image": "/assets/629104712_3951",
-        "rank": "13",
-        "sortingOrder": 25
-      },
-      "type-761be0f4-6468-4ab6-9a69-554dec7fe552": {
-        "label": "diamond-a",
-        "image": "/assets/1246286907_4371",
-        "rank": "14",
-        "sortingOrder": 26
-      },
-      "type-9c717736-6433-4f32-9573-8cc3e9daa4cc": {
-        "label": "heart-02",
-        "image": "/assets/-236114126_4752",
-        "rank": "2",
-        "sortingOrder": 27
-      },
-      "type-0aaecfba-d327-4b6a-800e-e79df45879f8": {
-        "label": "heart-03",
-        "image": "/assets/-1491115145_4877",
-        "rank": "3",
-        "sortingOrder": 28
-      },
-      "type-fa2e5aa5-f0ba-4244-9f44-46cd7a81afb1": {
-        "label": "heart-04",
-        "image": "/assets/532666546_4251",
-        "rank": "4",
-        "sortingOrder": 29
-      },
-      "type-e709b1a1-6bbc-446c-9163-fca3fa6c3809": {
-        "label": "heart-05",
-        "image": "/assets/-809291071_4878",
-        "rank": "5",
-        "sortingOrder": 30
-      },
-      "type-d22288a9-3ab7-4f85-bae0-548a5755c444": {
-        "label": "heart-06",
-        "image": "/assets/860098223_5561",
-        "rank": "6",
-        "sortingOrder": 31
-      },
-      "type-d758ecce-7b1b-4771-b002-ceca01827b75": {
-        "label": "heart-07",
-        "image": "/assets/-1886166290_4315",
-        "rank": "7",
-        "sortingOrder": 32
-      },
-      "type-b6cdb90b-3d19-4c8b-b9a6-0a234fec851d": {
-        "label": "heart-08",
-        "image": "/assets/-215869574_5885",
-        "rank": "8",
-        "sortingOrder": 33
-      },
-      "type-140f4890-00b9-4668-9285-9366ed8a9085": {
-        "label": "heart-09",
-        "image": "/assets/1792200306_5559",
-        "rank": "9",
-        "sortingOrder": 34
-      },
-      "type-08d32a62-306d-44ff-a1ae-e3f7bc9ba424": {
-        "label": "heart-10",
-        "image": "/assets/-494945254_5592",
-        "rank": "10",
-        "sortingOrder": 35
-      },
-      "type-5d6e0a41-c57f-416c-b1de-b0d7c0ee2034": {
-        "label": "heart-j",
-        "image": "/assets/1629354103_4631",
-        "rank": "11",
-        "sortingOrder": 36
-      },
-      "type-5db36a7f-2082-4be8-a9ae-601cad6fb5d5": {
-        "label": "heart-q",
-        "image": "/assets/255574396_5115",
-        "rank": "12",
-        "sortingOrder": 37
-      },
-      "type-9f5b3fd0-9c92-44a3-ab56-562be3030dcb": {
-        "label": "heart-k",
-        "image": "/assets/-928334641_4406",
-        "rank": "13",
-        "sortingOrder": 38
-      },
-      "type-d8943c68-7151-4780-bcac-42702fc9c861": {
-        "label": "heart-a",
-        "image": "/assets/-850807230_4494",
-        "rank": "14",
-        "sortingOrder": 39
-      },
-      "type-3f51ea92-b6a6-42cc-a4a6-b641b60cc18a": {
-        "label": "spade-02",
-        "image": "/assets/1388723097_4834",
-        "rank": "2",
-        "sortingOrder": 40
-      },
-      "type-49e91ab6-c531-46be-b2d4-8bbfc93b50a9": {
-        "label": "spade-03",
-        "image": "/assets/1863927892_4939",
-        "rank": "3",
-        "sortingOrder": 41
-      },
-      "type-19f849a2-0861-4bf7-a558-96bcb4f62b84": {
-        "label": "spade-04",
-        "image": "/assets/-1705631436_4327",
-        "rank": "4",
-        "sortingOrder": 42
-      },
-      "type-f152f8dc-b9a9-4719-a744-21f6088757cd": {
-        "label": "spade-05",
-        "image": "/assets/1246901786_4960",
-        "rank": "5",
-        "sortingOrder": 43
-      },
-      "type-42eda34f-fb63-4abd-a08d-9d0178259ebc": {
-        "label": "spade-06",
-        "image": "/assets/-118976403_5643",
-        "rank": "6",
-        "sortingOrder": 44
-      },
-      "type-e4d685e7-0302-4d56-bac7-5a834011a33d": {
-        "label": "spade-07",
-        "image": "/assets/241668980_4394",
-        "rank": "7",
-        "sortingOrder": 45
-      },
-      "type-ab533439-5426-4d60-938d-7d1cc7608e41": {
-        "label": "spade-08",
-        "image": "/assets/-393057984_5963",
-        "rank": "8",
-        "sortingOrder": 46
-      },
-      "type-cb114114-97f9-451e-b276-40a59a8649dc": {
-        "label": "spade-09",
-        "image": "/assets/-578751968_5642",
-        "rank": "9",
-        "sortingOrder": 47
-      },
-      "type-45e2a0cf-043a-4d7b-9dff-d46406693372": {
-        "label": "spade-10",
-        "image": "/assets/619233662_5614",
-        "rank": "10",
-        "sortingOrder": 48
-      },
-      "type-1b4bb6ff-2384-4786-ad31-6ae4961107c3": {
-        "label": "spade-j",
-        "image": "/assets/1928713398_4718",
-        "rank": "11",
-        "sortingOrder": 49
-      },
-      "type-bba45090-c15c-47c9-9670-fcdb99bcb2e8": {
-        "label": "spade-q",
-        "image": "/assets/-1296182990_5142",
-        "rank": "12",
-        "sortingOrder": 50
-      },
-      "type-fcaf63a3-0fbe-446a-b2af-c239cb9b610d": {
-        "label": "spade-k",
-        "image": "/assets/-43448799_4448",
-        "rank": "13",
-        "sortingOrder": 51
-      },
-      "type-f1f3584f-62e1-4595-bca9-70d7de093e2c": {
-        "label": "spade-a",
-        "image": "/assets/-203772142_4530",
-        "rank": "14",
-        "sortingOrder": 52
-      },
-      "type-1787efe2-0b94-4405-9aeb-e88ab55764b0": {
-        "label": "joker-heart",
-        "image": "/assets/1000398692_3054",
-        "rank": "16",
-        "sortingOrder": 53
-      },
-      "type-c5e8a186-7555-43b5-8713-ca9b48758895": {
-        "label": "joker-spade",
-        "image": "/assets/-627027473_3356",
-        "rank": "15",
-        "sortingOrder": 54
-      }
-    },
-    "faceTemplates": [
-      {
-        "objects": [
-          {
-            "width": 60,
-            "height": 160,
-            "type": "image",
-            "color": "white",
-            "value": ""
-          },
-          {
-            "type": "image",
-            "x": 0,
-            "y": 0,
-            "color": "rgb(126,214,77)",
-            "value": "/assets/2077470425_22038",
-            "width": 60,
-            "height": 160
-          }
-        ],
-        "border": false,
-        "radius": 8
-      },
-      {
-        "objects": [
-          {
-            "width": 60,
-            "height": 160,
-            "type": "image",
-            "color": "white",
-            "value": ""
-          },
-          {
-            "type": "image",
-            "x": 0,
-            "y": 0,
-            "color": "white",
-            "width": 60,
-            "height": 160,
-            "dynamicProperties": {
-              "value": "image"
-            }
-          }
-        ],
-        "border": 1,
-        "radius": 8
-      }
-    ]
-  },
   "hand": {
     "type": "holder",
     "id": "hand",
@@ -5404,10 +4959,10 @@
   "Offstage": {
     "type": "holder",
     "id": "Offstage",
-    "y": 746,
+    "y": 784,
     "width": 200,
     "height": 300,
-    "z": 79966,
+    "z": 79972,
     "css": {
       "default": {
         "display": "flex",
@@ -5415,7 +4970,7 @@
         "gap": "10px",
         "padding": "10px",
         "overflow": "hidden",
-        "background-image": "url('/assets/1170548544_41996')"
+        "background-color": "white"
       },
       "_, .transition": {
         "transition": "transform 500ms, background-position 0.25s"
@@ -5424,7 +4979,7 @@
         "transition": "none"
       }
     },
-    "x": -398
+    "x": -504
   },
   "MasterButtonIconLeftTemplate": {
     "type": "button",
@@ -5783,7 +5338,6 @@
     "width": 100,
     "iconSize": "60",
     "text-shadow": "none",
-    "iconImage": "/assets/-1554719508_2078",
     "buttonIcon": "2",
     "box-shadow": "0 1px 5px #00000099",
     "movableInEdit": true,
@@ -5831,7 +5385,6 @@
     "width": 100,
     "iconSize": "60",
     "text-shadow": "none",
-    "iconImage": "/assets/1403077850_601",
     "buttonIcon": "2",
     "box-shadow": "0 1px 5px #00000099",
     "movableInEdit": true,
@@ -6449,8 +6002,6 @@
   "undoB-": {
     "type": "button",
     "id": "undoB-",
-    "x": 1661,
-    "y": 1046,
     "width": 60,
     "height": 60,
     "layer": -5,
@@ -6458,8 +6009,7 @@
     "backgroundColor": "lightblue",
     "backgroundColorOH": "white",
     "hoverInheritVisibleForSeat": false,
-    "image": "/assets/-1489332530_1155",
-    "onlyVisibleForSeat": "seat1",
+    "onlyVisibleForSeat": "seat3",
     "textColor": "vttblue",
     "clickRoutine": [
       "var paused = ${PROPERTY paused OF undoTimer}",
@@ -6481,7 +6031,9 @@
           }
         ]
       }
-    ]
+    ],
+    "x": 1661,
+    "y": 1046
   },
   "passTurnB": {
     "type": "button",
@@ -6552,8 +6104,8 @@
         ]
       }
     ],
-    "onlyVisibleForSeat": "seat2",
-    "layer": -5,
+    "onlyVisibleForSeat": "seat4",
+    "layer": 1,
     "z": 81080
   },
   "playB": {
@@ -6563,7 +6115,7 @@
     "y": 605,
     "width": 150,
     "height": 65,
-    "onlyVisibleForSeat": "seat2",
+    "onlyVisibleForSeat": "seat4",
     "clickRoutine": [
       {
         "func": "SELECT",
@@ -6622,7 +6174,7 @@
     "buttonText": "PLAY",
     "flex-order": 100,
     "font_size": "40",
-    "layer": -5,
+    "layer": 1,
     "z": 81079
   },
   "outForHandButton": {
@@ -6654,7 +6206,6 @@
     "buttonText": "Go Out",
     "buttonTextAlign": "center",
     "flex-order": 100,
-    "iconImage": "/assets/-1704353969_4351",
     "iconSize": "60",
     "separatorStyle": "dashed",
     "separatorWidth": "1",
@@ -6734,8 +6285,8 @@
       "year": "",
       "mode": "Team",
       "time": "120",
-      "attribution": "Room layout and design by jade_alarm, anewcar and Shobu released to the public domain by CC0.\n\nGame piece icons are available from https://game-icons.net/ and available under CC BY 3.0:\nhttps://game-icons.net/1x1/lorc/poker-hand.html\n\nLibrary image generated using the Bing artificial intelligence image generator, https://www.bing.com/, using the following prompt: \"card game guan dan throwing eggs cartoon 27 traditional playing cards in hand\" ",
-      "lastUpdate": 1727790567514,
+      "attribution": "Room layout and design by jade_alarm, anewcar and Shobu released to the public domain by CC0.\n\nGame piece icons are available from https://game-icons.net/ and available under CC BY 3.0:\nhttps://game-icons.net/1x1/lorc/poker-hand.html\n<br>Turn timer icon is from&nbsp;https://pixabay.com/gifs/stopwatch-clock-time-time-tracks-7503/ and free to use under&nbsp;https://pixabay.com/service/license-summary/.<div><div><br></div><div>Card back created at https://pattern.monster/triangles-10 under MIT License available at https://github.com/catchspider2002/svelte-svg-patterns.<br></div><div>\nLibrary image generated using the Bing artificial intelligence image generator, https://www.bing.com/, using the following prompt: \"card game guan dan throwing eggs cartoon 27 traditional playing cards in hand\" </div></div>",
+      "lastUpdate": 1727830673189,
       "showName": true,
       "skill": "Hand management",
       "description": "Lead your team and help your partner in this exciting and popular card game from China. Find players on : Guan Dan (https://discord.gg/B2hRAt5DNv), Online Card Players (https://discord.gg/wXdPDFgQtS)",
@@ -6745,10 +6296,10 @@
       "similarAwards": "",
       "ruleText": "Refer to the player aid available in the room",
       "helpText": "<div>SETUP</div>Players take seats, then click on the New Round Button&nbsp; (1st round starter is randomized).<div><br></div><div>HOW TO PLAY CARDS</div><div>&nbsp;O<span style=\"color: var(--overlayFontColor);\">n your turn:</span></div><div><span style=\"color: var(--overlayFontColor);\">- Select cards from your hand and click PLAY to play cards from your hand to the table. Cards can be choosen by clicking on them or by using the blue circle selector</span><br></div><div>- Click PASS to pass turn to next player<br></div><div><br></div><div>FUNCTION BUTTONS</div><div>Click on those (personal) <span style=\"color: var(--overlayFontColor);\">buttons for:</span></div><div><div><span style=\"color: var(--overlayFontColor);\">- UNSELECT ALL: cancel cards selection</span></div></div><div><span style=\"color: var(--overlayFontColor);\">- AID: see a rules summary</span><br></div><div><span style=\"color: var(--overlayFontColor);\">- SORT: sort cards by rank</span></div><div><span style=\"color: var(--overlayFontColor);\">- TURN: move active player around the table (for changing round starter, or passing lead to a partner)</span></div><div><span style=\"color: var(--overlayFontColor);\">- CLEAN: delete your played cards when you've gone out</span></div><div><br></div><div><span style=\"color: var(--overlayFontColor);\">Those steps are not automated :</span></div><div>- Tribute / Card exchange</div><div><span style=\"color: var(--overlayFontColor);\">- Lead pass to partner (when a player went out)</span></div><div><span style=\"color: var(--overlayFontColor);\">- Scoring&nbsp;</span></div><div><br></div>",
-      "players": "4",
-      "language": "EN",
+      "variantImage": "",
       "variant": "Guan Dan (掼蛋)",
-      "variantImage": ""
+      "language": "EN",
+      "players": "4"
     }
   },
   "seat4": {
@@ -6768,7 +6319,7 @@
         "!sortDirection"
       ]
     },
-    "turn": false,
+    "turn": true,
     "scale": 1,
     "permanentPlayerColor": "#f00000",
     "color": "#f00000",
@@ -6813,7 +6364,7 @@
     "dropOffsetX": 150,
     "linkedToSeat": "seat4",
     "cssPosition": "relative",
-    "scale": 1,
+    "scale": 0,
     "dropLimit": 0
   },
   "passIcon4": {
@@ -6821,11 +6372,7 @@
     "x": 993,
     "y": 249,
     "z": 81074,
-    "css": ";transition: ease 0.4s",
-    "image": "/assets/2084110158_2491",
-    "svgReplaces": {
-      "#ff0000": "color"
-    },
+    "css": "vertical-align: center; line-height: 150px; font-size: 60px; font-weight:bold;color:grey;transition: ease 0.4s;",
     "scale": 0,
     "width": 150,
     "height": 150,
@@ -6834,1230 +6381,1338 @@
     "inheritFrom": {
       "seat4": "color"
     },
-    "activeFace": 1
+    "activeFace": 1,
+    "text": "PASS"
   },
   "59p3": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-86a16652-ad7b-4329-9ebd-1e908bc306ad",
     "id": "59p3",
-    "z": 8439,
-    "selectionOrder": 2,
+    "z": 9363,
+    "selectionOrder": 6,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "vwyo"
+    "parent": "q7ln",
+    "activeFace": 1
   },
   "rfwo": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-ce574729-4a4d-47af-9aa1-534f4f8b067d",
     "id": "rfwo",
-    "z": 8440,
-    "selectionOrder": 4,
+    "z": 9371,
+    "selectionOrder": 16,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "vwyo"
+    "parent": "q7ln",
+    "activeFace": 1
   },
   "dysp": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-1e8cc3c9-2158-4100-bc43-e79d2782fa9c",
     "id": "dysp",
-    "z": 8483,
-    "selectionOrder": 5,
+    "z": 9376,
+    "selectionOrder": 24,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "vwyo"
+    "parent": "q7ln",
+    "activeFace": 1
   },
   "0and": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-0288d46f-6b57-44e0-8ad5-04924240d7c0",
     "id": "0and",
-    "z": 8443,
-    "selectionOrder": 11,
+    "z": 9305,
+    "selectionOrder": 30,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "vwyo"
+    "parent": "q7ln",
+    "activeFace": 1
   },
   "ppol": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-b06daf65-de4b-466a-af11-62d4005d0da6",
     "id": "ppol",
-    "z": 8497,
-    "selectionOrder": 11,
+    "z": 9351,
+    "selectionOrder": 38,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "vwyo"
+    "parent": "q7ln",
+    "activeFace": 1
   },
   "xf7t": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-a9c19e3f-0e2e-4595-b0f7-2efe3eb1b5ad",
     "id": "xf7t",
-    "z": 8420,
-    "selectionOrder": 9,
+    "z": 9294,
+    "selectionOrder": 42,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "vwyo"
+    "parent": "q7ln",
+    "activeFace": 1
   },
   "4jod": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-c1419741-1fa0-44e9-a3fb-c1231a76dc04",
     "id": "4jod",
-    "z": 8425,
-    "selectionOrder": 12,
+    "z": 9344,
+    "selectionOrder": 54,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "vwyo"
+    "parent": "q7ln",
+    "activeFace": 1
   },
   "p1ym": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-4453f8b6-d0d8-450d-bf27-e64d65901a28",
     "id": "p1ym",
-    "z": 8407,
-    "selectionOrder": 14,
+    "z": 9289,
+    "selectionOrder": 60,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "vwyo"
+    "parent": "q7ln",
+    "activeFace": 1
   },
   "i0zc": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-44c936ad-e563-4046-a2b6-b8bbdb47e0ff",
     "id": "i0zc",
-    "z": 8437,
-    "selectionOrder": 18,
+    "z": 9280,
+    "selectionOrder": 68,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "vwyo"
+    "parent": "q7ln",
+    "activeFace": 1
   },
   "6ph8": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-fc5504e7-bf4e-4735-9ca9-cc1471dd45ab",
     "id": "6ph8",
-    "z": 8419,
-    "selectionOrder": 20,
+    "z": 9374,
+    "selectionOrder": 73,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "vwyo"
+    "parent": "q7ln",
+    "activeFace": 1
   },
   "8tu2": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-25a17a4c-aca9-4dce-8b18-6dd6f54e6947",
     "id": "8tu2",
-    "z": 8510,
-    "selectionOrder": 21,
+    "z": 9355,
+    "selectionOrder": 87,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "vwyo"
+    "activeFace": 1,
+    "parent": "q7ln"
   },
   "7p67": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-50f08327-e9f4-4c72-97c6-dbd2ea1fb0b8",
     "id": "7p67",
-    "z": 8433,
-    "selectionOrder": 25,
+    "z": 9322,
+    "selectionOrder": 89,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "vwyo"
+    "parent": "q7ln",
+    "activeFace": 1
   },
   "5jx7": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-a87aa3de-b789-4299-a513-1d43c2b7fd9e",
     "id": "5jx7",
-    "z": 8417,
-    "selectionOrder": 26,
+    "z": 9373,
+    "selectionOrder": 104,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "vwyo"
+    "parent": "q7ln",
+    "activeFace": 1
   },
   "yfpj": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-b0c9bc06-fcc7-4bb4-bcd5-2fba7438eafa",
     "id": "yfpj",
-    "z": 8418,
-    "selectionOrder": 1,
+    "z": 9307,
+    "selectionOrder": 4,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "vwyo"
+    "parent": "q7ln",
+    "activeFace": 1
   },
   "jn62": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-f8defc55-18a9-4acf-8ff6-a5758affd4ed",
     "id": "jn62",
-    "z": 8455,
-    "selectionOrder": 2,
+    "z": 9361,
+    "selectionOrder": 11,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "vwyo"
+    "parent": "q7ln",
+    "activeFace": 1
   },
   "2dqy": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-8caae31c-62ed-4cfe-9d22-7c1d5c8dc555",
     "id": "2dqy",
-    "z": 8412,
-    "selectionOrder": 5,
+    "z": 9364,
+    "selectionOrder": 20,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "vwyo"
+    "parent": "q7ln",
+    "activeFace": 1
   },
   "qp74": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-2d716a15-19f4-4773-ac37-4ab60aabbae3",
     "id": "qp74",
-    "z": 8411,
-    "selectionOrder": 8,
+    "z": 9281,
+    "selectionOrder": 26,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "vwyo"
+    "parent": "q7ln",
+    "activeFace": 1
   },
   "n8ie": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-29399050-7af4-4b72-9a4d-01969e90f4ba",
     "id": "n8ie",
-    "z": 8489,
-    "selectionOrder": 11,
+    "z": 9324,
+    "selectionOrder": 37,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "vwyo"
+    "parent": "q7ln",
+    "activeFace": 1
   },
   "v76s": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-eba6c97b-857b-46c6-b37c-383dfa4dede4",
     "id": "v76s",
-    "z": 8458,
-    "selectionOrder": 15,
+    "z": 9338,
+    "selectionOrder": 47,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "vwyo"
+    "parent": "q7ln",
+    "activeFace": 1
   },
   "6wii": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-c36019ae-54d0-43b8-b254-9c449c75cc85",
     "id": "6wii",
-    "z": 8471,
-    "selectionOrder": 16,
+    "z": 9360,
+    "selectionOrder": 56,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "vwyo"
+    "parent": "q7ln",
+    "activeFace": 1
   },
   "9ndt": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-52fd0ad5-7930-4cbc-b1e7-da163fbbf32c",
     "id": "9ndt",
-    "z": 8454,
-    "selectionOrder": 16,
+    "z": 9346,
+    "selectionOrder": 58,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "vwyo"
+    "parent": "q7ln",
+    "activeFace": 1
   },
   "3fsw": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-b395c302-35f1-4d9e-a790-bb74ced58117",
     "id": "3fsw",
-    "z": 8422,
-    "selectionOrder": 17,
+    "z": 9296,
+    "selectionOrder": 72,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "vwyo"
+    "parent": "q7ln",
+    "activeFace": 1
   },
   "v2ap": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-ac7cddcb-1a7b-4413-8fca-492da66e4cb2",
     "id": "v2ap",
-    "z": 8507,
-    "selectionOrder": 18,
+    "z": 9366,
+    "selectionOrder": 76,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "vwyo"
+    "activeFace": 1,
+    "parent": "q7ln"
   },
   "jm65": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-2b6ca134-a4eb-488e-9515-bd5df8be5856",
     "id": "jm65",
-    "z": 8499,
-    "selectionOrder": 23,
+    "z": 9320,
+    "selectionOrder": 88,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "vwyo"
+    "parent": "q7ln",
+    "activeFace": 1
   },
   "sl0z": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-68f2038b-e191-4518-a338-1d17c38ae13c",
     "id": "sl0z",
-    "z": 8494,
-    "selectionOrder": 22,
+    "z": 9354,
+    "selectionOrder": 94,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "vwyo"
+    "parent": "q7ln",
+    "activeFace": 1
   },
   "8j8e": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-761be0f4-6468-4ab6-9a69-554dec7fe552",
     "id": "8j8e",
-    "z": 8463,
-    "selectionOrder": 26,
+    "z": 9297,
+    "selectionOrder": 99,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "vwyo"
+    "parent": "q7ln",
+    "activeFace": 1
   },
   "ovn4": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-9c717736-6433-4f32-9573-8cc3e9daa4cc",
     "id": "ovn4",
-    "z": 8481,
-    "selectionOrder": 2,
+    "z": 9352,
+    "selectionOrder": 8,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "vwyo"
+    "parent": "q7ln",
+    "activeFace": 1
   },
   "t72p": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-0aaecfba-d327-4b6a-800e-e79df45879f8",
     "id": "t72p",
-    "z": 8445,
-    "selectionOrder": 4,
+    "z": 9356,
+    "selectionOrder": 14,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "vwyo"
+    "parent": "q7ln",
+    "activeFace": 1
   },
   "sre1": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-fa2e5aa5-f0ba-4244-9f44-46cd7a81afb1",
     "id": "sre1",
-    "z": 8484,
-    "selectionOrder": 7,
+    "z": 9370,
+    "selectionOrder": 21,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "vwyo"
+    "parent": "q7ln",
+    "activeFace": 1
   },
   "4j7w": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-e709b1a1-6bbc-446c-9163-fca3fa6c3809",
     "id": "4j7w",
-    "z": 8424,
-    "selectionOrder": 10,
+    "z": 9399,
+    "selectionOrder": 25,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "vwyo"
+    "parent": "q7ln"
   },
   "uexn": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-d22288a9-3ab7-4f85-bae0-548a5755c444",
     "id": "uexn",
-    "z": 8470,
-    "selectionOrder": 8,
+    "z": 9336,
+    "selectionOrder": 33,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "vwyo"
+    "parent": "q7ln",
+    "activeFace": 1
   },
   "jaq7": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-d758ecce-7b1b-4771-b002-ceca01827b75",
     "id": "jaq7",
-    "z": 8452,
-    "selectionOrder": 11,
+    "z": 9323,
+    "selectionOrder": 44,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "vwyo"
+    "parent": "q7ln",
+    "activeFace": 1
   },
   "nw34": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-b6cdb90b-3d19-4c8b-b9a6-0a234fec851d",
     "id": "nw34",
-    "z": 8431,
-    "selectionOrder": 10,
+    "z": 9312,
+    "selectionOrder": 50,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "vwyo"
+    "parent": "q7ln",
+    "activeFace": 1
   },
   "lhqg": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-140f4890-00b9-4668-9285-9366ed8a9085",
     "id": "lhqg",
-    "z": 8453,
-    "selectionOrder": 15,
+    "z": 9308,
+    "selectionOrder": 61,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "vwyo"
+    "parent": "q7ln",
+    "activeFace": 1
   },
   "8tt8": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-08d32a62-306d-44ff-a1ae-e3f7bc9ba424",
     "id": "8tt8",
-    "z": 8486,
-    "selectionOrder": 17,
+    "z": 9382,
+    "selectionOrder": 69,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "vwyo"
+    "parent": "q7ln",
+    "activeFace": 1
   },
   "k01a": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-5d6e0a41-c57f-416c-b1de-b0d7c0ee2034",
     "id": "k01a",
-    "z": 8457,
-    "selectionOrder": 21,
+    "z": 9350,
+    "selectionOrder": 75,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "vwyo"
+    "parent": "q7ln",
+    "activeFace": 1
   },
   "8w3v": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-5db36a7f-2082-4be8-a9ae-601cad6fb5d5",
     "id": "8w3v",
-    "z": 8472,
-    "selectionOrder": 22,
+    "z": 9341,
+    "selectionOrder": 82,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "vwyo"
+    "parent": "q7ln",
+    "activeFace": 1
   },
   "z52u": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-9f5b3fd0-9c92-44a3-ab56-562be3030dcb",
     "id": "z52u",
-    "z": 8509,
-    "selectionOrder": 21,
+    "z": 9334,
+    "selectionOrder": 96,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "vwyo"
+    "activeFace": 1,
+    "parent": "q7ln"
   },
   "253c": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-d8943c68-7151-4780-bcac-42702fc9c861",
     "id": "253c",
-    "z": 8456,
-    "selectionOrder": 27,
+    "z": 9277,
+    "selectionOrder": 98,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "vwyo"
+    "parent": "q7ln",
+    "activeFace": 1
   },
   "bbtd": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-3f51ea92-b6a6-42cc-a4a6-b641b60cc18a",
     "id": "bbtd",
-    "z": 8462,
+    "z": 9316,
     "selectionOrder": 3,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "vwyo"
+    "parent": "q7ln",
+    "activeFace": 1
   },
   "pywo": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-49e91ab6-c531-46be-b2d4-8bbfc93b50a9",
     "id": "pywo",
-    "z": 8459,
-    "selectionOrder": 5,
+    "z": 9314,
+    "selectionOrder": 9,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "vwyo"
+    "parent": "q7ln",
+    "activeFace": 1
   },
   "tsv6": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-19f849a2-0861-4bf7-a558-96bcb4f62b84",
     "id": "tsv6",
-    "z": 8492,
-    "selectionOrder": 5,
+    "z": 9291,
+    "selectionOrder": 18,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "vwyo"
+    "parent": "q7ln",
+    "activeFace": 1
   },
   "snfh": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-f152f8dc-b9a9-4719-a744-21f6088757cd",
     "id": "snfh",
-    "z": 8430,
-    "selectionOrder": 8,
+    "z": 9276,
+    "selectionOrder": 29,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "vwyo"
+    "parent": "q7ln",
+    "activeFace": 1
   },
   "etcb": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-42eda34f-fb63-4abd-a08d-9d0178259ebc",
     "id": "etcb",
-    "z": 8468,
-    "selectionOrder": 9,
+    "z": 9372,
+    "selectionOrder": 34,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "vwyo"
+    "parent": "q7ln",
+    "activeFace": 1
   },
   "baac": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-e4d685e7-0302-4d56-bac7-5a834011a33d",
     "id": "baac",
-    "z": 8434,
-    "selectionOrder": 10,
+    "z": 9285,
+    "selectionOrder": 48,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "vwyo"
+    "parent": "q7ln",
+    "activeFace": 1
   },
   "otj6": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-ab533439-5426-4d60-938d-7d1cc7608e41",
     "id": "otj6",
-    "z": 8441,
-    "selectionOrder": 16,
+    "z": 9282,
+    "selectionOrder": 51,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "vwyo"
+    "parent": "q7ln",
+    "activeFace": 1
   },
   "2ghf": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-cb114114-97f9-451e-b276-40a59a8649dc",
     "id": "2ghf",
-    "z": 8496,
-    "selectionOrder": 18,
+    "z": 9328,
+    "selectionOrder": 63,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "vwyo"
+    "parent": "q7ln",
+    "activeFace": 1
   },
   "yoc0": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-45e2a0cf-043a-4d7b-9dff-d46406693372",
     "id": "yoc0",
-    "z": 8451,
-    "selectionOrder": 19,
+    "z": 9333,
+    "selectionOrder": 66,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "vwyo"
+    "parent": "q7ln",
+    "activeFace": 1
   },
   "kr4v": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-1b4bb6ff-2384-4786-ad31-6ae4961107c3",
     "id": "kr4v",
-    "z": 8461,
-    "selectionOrder": 19,
+    "z": 9279,
+    "selectionOrder": 80,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "vwyo"
+    "parent": "q7ln",
+    "activeFace": 1
   },
   "fpa9": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-bba45090-c15c-47c9-9670-fcdb99bcb2e8",
     "id": "fpa9",
-    "z": 8475,
-    "selectionOrder": 20,
+    "z": 9332,
+    "selectionOrder": 84,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "vwyo"
+    "parent": "q7ln",
+    "activeFace": 1
   },
   "ar81": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-fcaf63a3-0fbe-446a-b2af-c239cb9b610d",
     "id": "ar81",
-    "z": 8436,
-    "selectionOrder": 24,
+    "z": 9286,
+    "selectionOrder": 91,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "vwyo"
+    "parent": "q7ln",
+    "activeFace": 1
   },
   "3o1e": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-f1f3584f-62e1-4595-bca9-70d7de093e2c",
     "id": "3o1e",
-    "z": 8423,
-    "selectionOrder": 26,
+    "z": 9290,
+    "selectionOrder": 97,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "vwyo"
+    "parent": "q7ln",
+    "activeFace": 1
   },
   "06ff": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-1787efe2-0b94-4405-9aeb-e88ab55764b0",
     "id": "06ff",
-    "z": 8405,
-    "selectionOrder": 27,
+    "z": 9368,
+    "selectionOrder": 107,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "vwyo"
+    "parent": "q7ln",
+    "activeFace": 1
   },
   "fkvj": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-c5e8a186-7555-43b5-8713-ca9b48758895",
     "id": "fkvj",
-    "z": 8469,
-    "selectionOrder": 27,
+    "z": 9301,
+    "selectionOrder": 105,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "vwyo"
+    "parent": "q7ln",
+    "activeFace": 1
   },
   "84t7": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-86a16652-ad7b-4329-9ebd-1e908bc306ad",
     "id": "84t7",
-    "z": 8465,
-    "selectionOrder": 1,
+    "z": 9377,
+    "selectionOrder": 7,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "vwyo"
+    "parent": "q7ln",
+    "activeFace": 1
   },
   "zwk1": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-ce574729-4a4d-47af-9aa1-534f4f8b067d",
     "id": "zwk1",
-    "z": 8476,
-    "selectionOrder": 4,
+    "z": 9326,
+    "selectionOrder": 15,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "vwyo"
+    "parent": "q7ln",
+    "activeFace": 1
   },
   "g4wy": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-1e8cc3c9-2158-4100-bc43-e79d2782fa9c",
     "id": "g4wy",
-    "z": 8435,
-    "selectionOrder": 7,
+    "z": 9315,
+    "selectionOrder": 17,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "vwyo"
+    "parent": "q7ln",
+    "activeFace": 1
   },
   "o4e1": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-0288d46f-6b57-44e0-8ad5-04924240d7c0",
     "id": "o4e1",
-    "z": 8438,
-    "selectionOrder": 10,
+    "z": 9381,
+    "selectionOrder": 27,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "vwyo"
+    "parent": "q7ln",
+    "activeFace": 1
   },
   "vvub": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-b06daf65-de4b-466a-af11-62d4005d0da6",
     "id": "vvub",
-    "z": 8447,
-    "selectionOrder": 13,
+    "z": 9302,
+    "selectionOrder": 36,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "vwyo"
+    "parent": "q7ln",
+    "activeFace": 1
   },
   "ee6u": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-a9c19e3f-0e2e-4595-b0f7-2efe3eb1b5ad",
     "id": "ee6u",
-    "z": 8504,
-    "selectionOrder": 14,
+    "z": 9357,
+    "selectionOrder": 46,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "vwyo"
+    "parent": "q7ln",
+    "activeFace": 1
   },
   "f0qs": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-c1419741-1fa0-44e9-a3fb-c1231a76dc04",
     "id": "f0qs",
-    "z": 8479,
-    "selectionOrder": 14,
+    "z": 9319,
+    "selectionOrder": 52,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "vwyo"
+    "parent": "q7ln",
+    "activeFace": 1
   },
   "6o1k": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-4453f8b6-d0d8-450d-bf27-e64d65901a28",
     "id": "6o1k",
-    "z": 8466,
-    "selectionOrder": 13,
+    "z": 9347,
+    "selectionOrder": 57,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "vwyo"
+    "parent": "q7ln",
+    "activeFace": 1
   },
   "9n6c": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-44c936ad-e563-4046-a2b6-b8bbdb47e0ff",
     "id": "9n6c",
-    "z": 8428,
-    "selectionOrder": 21,
+    "z": 9367,
+    "selectionOrder": 65,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "vwyo"
+    "parent": "q7ln",
+    "activeFace": 1
   },
   "pdnv": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-fc5504e7-bf4e-4735-9ca9-cc1471dd45ab",
     "id": "pdnv",
-    "z": 8488,
-    "selectionOrder": 17,
+    "z": 9369,
+    "selectionOrder": 79,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "vwyo"
+    "parent": "q7ln",
+    "activeFace": 1
   },
   "u0nv": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-25a17a4c-aca9-4dce-8b18-6dd6f54e6947",
     "id": "u0nv",
-    "z": 8448,
-    "selectionOrder": 23,
+    "z": 9304,
+    "selectionOrder": 83,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "vwyo"
+    "parent": "q7ln",
+    "activeFace": 1
   },
   "78l3": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-50f08327-e9f4-4c72-97c6-dbd2ea1fb0b8",
     "id": "78l3",
-    "z": 8446,
-    "selectionOrder": 22,
+    "z": 9284,
+    "selectionOrder": 92,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "vwyo"
+    "parent": "q7ln",
+    "activeFace": 1
   },
   "gsug": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-a87aa3de-b789-4299-a513-1d43c2b7fd9e",
     "id": "gsug",
-    "z": 8421,
-    "selectionOrder": 25,
+    "z": 9330,
+    "selectionOrder": 100,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "vwyo"
+    "parent": "q7ln",
+    "activeFace": 1
   },
   "v0l6": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-b0c9bc06-fcc7-4bb4-bcd5-2fba7438eafa",
     "id": "v0l6",
-    "z": 8505,
-    "selectionOrder": 2,
+    "z": 9362,
+    "selectionOrder": 5,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "vwyo"
+    "parent": "q7ln",
+    "activeFace": 1
   },
   "biva": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-f8defc55-18a9-4acf-8ff6-a5758affd4ed",
     "id": "biva",
-    "z": 8490,
-    "selectionOrder": 3,
+    "z": 9310,
+    "selectionOrder": 12,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "vwyo"
+    "parent": "q7ln",
+    "activeFace": 1
   },
   "rba9": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-8caae31c-62ed-4cfe-9d22-7c1d5c8dc555",
     "id": "rba9",
-    "z": 8426,
-    "selectionOrder": 6,
+    "z": 9318,
+    "selectionOrder": 19,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "vwyo"
+    "parent": "q7ln",
+    "activeFace": 1
   },
   "8zxc": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-2d716a15-19f4-4773-ac37-4ab60aabbae3",
     "id": "8zxc",
-    "z": 8427,
-    "selectionOrder": 6,
+    "z": 9331,
+    "selectionOrder": 31,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "vwyo"
+    "parent": "q7ln",
+    "activeFace": 1
   },
   "1omw": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-29399050-7af4-4b72-9a4d-01969e90f4ba",
     "id": "1omw",
-    "z": 8414,
-    "selectionOrder": 8,
+    "z": 9345,
+    "selectionOrder": 35,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "vwyo"
+    "parent": "q7ln",
+    "activeFace": 1
   },
   "k3c3": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-eba6c97b-857b-46c6-b37c-383dfa4dede4",
     "id": "k3c3",
-    "z": 8508,
-    "selectionOrder": 12,
+    "z": 9309,
+    "selectionOrder": 45,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "vwyo"
+    "activeFace": 1,
+    "parent": "q7ln"
   },
   "koys": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-c36019ae-54d0-43b8-b254-9c449c75cc85",
     "id": "koys",
-    "z": 8487,
-    "selectionOrder": 11,
+    "z": 9340,
+    "selectionOrder": 49,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "vwyo"
+    "parent": "q7ln",
+    "activeFace": 1
   },
   "p94k": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-52fd0ad5-7930-4cbc-b1e7-da163fbbf32c",
     "id": "p94k",
-    "z": 8406,
-    "selectionOrder": 15,
+    "z": 9335,
+    "selectionOrder": 64,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "vwyo"
+    "parent": "q7ln",
+    "activeFace": 1
   },
   "tivj": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-b395c302-35f1-4d9e-a790-bb74ced58117",
     "id": "tivj",
-    "z": 8500,
-    "selectionOrder": 16,
+    "z": 9288,
+    "selectionOrder": 71,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "vwyo"
+    "parent": "q7ln",
+    "activeFace": 1
   },
   "blcg": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-ac7cddcb-1a7b-4413-8fca-492da66e4cb2",
     "id": "blcg",
-    "z": 8482,
-    "selectionOrder": 20,
+    "z": 9300,
+    "selectionOrder": 74,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "vwyo"
+    "parent": "q7ln",
+    "activeFace": 1
   },
   "7b08": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-2b6ca134-a4eb-488e-9515-bd5df8be5856",
     "id": "7b08",
-    "z": 8502,
-    "selectionOrder": 24,
+    "z": 9349,
+    "selectionOrder": 85,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "vwyo"
+    "parent": "q7ln",
+    "activeFace": 1
   },
   "07m5": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-68f2038b-e191-4518-a338-1d17c38ae13c",
     "id": "07m5",
-    "z": 8493,
-    "selectionOrder": 23,
+    "z": 9353,
+    "selectionOrder": 93,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "vwyo"
+    "parent": "q7ln",
+    "activeFace": 1
   },
   "ljdm": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-761be0f4-6468-4ab6-9a69-554dec7fe552",
     "id": "ljdm",
-    "z": 8473,
-    "selectionOrder": 25,
+    "z": 9339,
+    "selectionOrder": 102,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "vwyo"
+    "parent": "q7ln",
+    "activeFace": 1
   },
   "kts4": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-9c717736-6433-4f32-9573-8cc3e9daa4cc",
     "id": "kts4",
-    "z": 8498,
+    "z": 9342,
     "selectionOrder": 1,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "vwyo"
+    "parent": "q7ln",
+    "activeFace": 1
   },
   "4h49": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-0aaecfba-d327-4b6a-800e-e79df45879f8",
     "id": "4h49",
-    "z": 8410,
-    "selectionOrder": 2,
+    "z": 9348,
+    "selectionOrder": 13,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "vwyo"
+    "parent": "q7ln",
+    "activeFace": 1
   },
   "2qrr": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-fa2e5aa5-f0ba-4244-9f44-46cd7a81afb1",
     "id": "2qrr",
-    "z": 8449,
-    "selectionOrder": 6,
+    "z": 9380,
+    "selectionOrder": 23,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "vwyo"
+    "parent": "q7ln",
+    "activeFace": 1
   },
   "w37p": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-e709b1a1-6bbc-446c-9163-fca3fa6c3809",
     "id": "w37p",
-    "z": 8467,
-    "selectionOrder": 9,
+    "z": 9317,
+    "selectionOrder": 28,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "vwyo"
+    "parent": "q7ln",
+    "activeFace": 1
   },
   "4fly": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-d22288a9-3ab7-4f85-bae0-548a5755c444",
     "id": "4fly",
-    "z": 8404,
-    "selectionOrder": 10,
+    "z": 9292,
+    "selectionOrder": 39,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "vwyo"
+    "parent": "q7ln",
+    "activeFace": 1
   },
   "xh6j": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-d758ecce-7b1b-4771-b002-ceca01827b75",
     "id": "xh6j",
-    "z": 8491,
-    "selectionOrder": 16,
+    "z": 9359,
+    "selectionOrder": 43,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "vwyo"
+    "parent": "q7ln",
+    "activeFace": 1
   },
   "vq8d": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-b6cdb90b-3d19-4c8b-b9a6-0a234fec851d",
     "id": "vq8d",
-    "z": 8501,
-    "selectionOrder": 17,
+    "z": 9321,
+    "selectionOrder": 55,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "vwyo"
+    "parent": "q7ln",
+    "activeFace": 1
   },
   "cbdo": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-140f4890-00b9-4668-9285-9366ed8a9085",
     "id": "cbdo",
-    "z": 8413,
-    "selectionOrder": 13,
+    "z": 9329,
+    "selectionOrder": 62,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "vwyo"
+    "parent": "q7ln",
+    "activeFace": 1
   },
   "bysc": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-08d32a62-306d-44ff-a1ae-e3f7bc9ba424",
     "id": "bysc",
-    "z": 8450,
-    "selectionOrder": 18,
+    "z": 9325,
+    "selectionOrder": 67,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "vwyo"
+    "parent": "q7ln",
+    "activeFace": 1
   },
   "25ov": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-5d6e0a41-c57f-416c-b1de-b0d7c0ee2034",
     "id": "25ov",
-    "z": 8444,
-    "selectionOrder": 22,
+    "z": 9283,
+    "selectionOrder": 78,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "vwyo"
+    "parent": "q7ln",
+    "activeFace": 1
   },
   "qay2": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-5db36a7f-2082-4be8-a9ae-601cad6fb5d5",
     "id": "qay2",
-    "z": 8506,
-    "selectionOrder": 21,
+    "z": 9379,
+    "selectionOrder": 86,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "vwyo"
+    "parent": "q7ln",
+    "activeFace": 1
   },
   "p3nw": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-9f5b3fd0-9c92-44a3-ab56-562be3030dcb",
     "id": "p3nw",
-    "z": 8503,
-    "selectionOrder": 24,
+    "z": 9278,
+    "selectionOrder": 95,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "vwyo"
+    "parent": "q7ln",
+    "activeFace": 1
   },
   "2jke": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-d8943c68-7151-4780-bcac-42702fc9c861",
     "id": "2jke",
-    "z": 8485,
-    "selectionOrder": 26,
+    "z": 9295,
+    "selectionOrder": 101,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "vwyo"
+    "parent": "q7ln",
+    "activeFace": 1
   },
   "w7hh": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-3f51ea92-b6a6-42cc-a4a6-b641b60cc18a",
     "id": "w7hh",
-    "z": 8408,
-    "selectionOrder": 1,
+    "z": 9343,
+    "selectionOrder": 2,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "vwyo"
+    "parent": "q7ln",
+    "activeFace": 1
   },
   "pwx5": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-49e91ab6-c531-46be-b2d4-8bbfc93b50a9",
     "id": "pwx5",
-    "z": 8442,
-    "selectionOrder": 3,
+    "z": 9298,
+    "selectionOrder": 10,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "vwyo"
+    "parent": "q7ln",
+    "activeFace": 1
   },
   "3o8z": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-19f849a2-0861-4bf7-a558-96bcb4f62b84",
     "id": "3o8z",
-    "z": 8415,
-    "selectionOrder": 6,
+    "z": 9311,
+    "selectionOrder": 22,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "vwyo"
+    "parent": "q7ln",
+    "activeFace": 1
   },
   "lpac": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-f152f8dc-b9a9-4719-a744-21f6088757cd",
     "id": "lpac",
-    "z": 8480,
-    "selectionOrder": 7,
+    "z": 9365,
+    "selectionOrder": 32,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "vwyo"
+    "parent": "q7ln",
+    "activeFace": 1
   },
   "cao3": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-42eda34f-fb63-4abd-a08d-9d0178259ebc",
     "id": "cao3",
-    "z": 8409,
-    "selectionOrder": 12,
+    "z": 9327,
+    "selectionOrder": 40,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "vwyo"
+    "parent": "q7ln",
+    "activeFace": 1
   },
   "w3jn": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-e4d685e7-0302-4d56-bac7-5a834011a33d",
     "id": "w3jn",
-    "z": 8478,
-    "selectionOrder": 12,
+    "z": 9375,
+    "selectionOrder": 41,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "vwyo"
+    "parent": "q7ln",
+    "activeFace": 1
   },
   "jw4y": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-ab533439-5426-4d60-938d-7d1cc7608e41",
     "id": "jw4y",
-    "z": 8429,
-    "selectionOrder": 15,
+    "z": 9313,
+    "selectionOrder": 53,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "vwyo"
+    "parent": "q7ln",
+    "activeFace": 1
   },
   "wdht": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-cb114114-97f9-451e-b276-40a59a8649dc",
     "id": "wdht",
-    "z": 8403,
-    "selectionOrder": 16,
+    "z": 9337,
+    "selectionOrder": 59,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "vwyo"
+    "parent": "q7ln",
+    "activeFace": 1
   },
   "lwi8": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-45e2a0cf-043a-4d7b-9dff-d46406693372",
     "id": "lwi8",
-    "z": 8464,
-    "selectionOrder": 16,
+    "z": 9378,
+    "selectionOrder": 70,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "vwyo"
+    "parent": "q7ln",
+    "activeFace": 1
   },
   "u65e": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-1b4bb6ff-2384-4786-ad31-6ae4961107c3",
     "id": "u65e",
-    "z": 8432,
-    "selectionOrder": 19,
+    "z": 9358,
+    "selectionOrder": 77,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "vwyo"
+    "parent": "q7ln",
+    "activeFace": 1
   },
   "vdfa": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-bba45090-c15c-47c9-9670-fcdb99bcb2e8",
     "id": "vdfa",
-    "z": 8474,
-    "selectionOrder": 19,
+    "z": 9303,
+    "selectionOrder": 81,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "vwyo"
+    "parent": "q7ln",
+    "activeFace": 1
   },
   "dkky": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-fcaf63a3-0fbe-446a-b2af-c239cb9b610d",
     "id": "dkky",
-    "z": 8460,
-    "selectionOrder": 21,
+    "z": 9306,
+    "selectionOrder": 90,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "vwyo"
+    "parent": "q7ln",
+    "activeFace": 1
   },
   "29q4": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-f1f3584f-62e1-4595-bca9-70d7de093e2c",
     "id": "29q4",
-    "z": 8477,
-    "selectionOrder": 25,
+    "z": 9293,
+    "selectionOrder": 103,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "vwyo"
+    "parent": "q7ln",
+    "activeFace": 1
   },
   "uwi6": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-1787efe2-0b94-4405-9aeb-e88ab55764b0",
     "id": "uwi6",
-    "z": 8416,
-    "selectionOrder": 27,
+    "z": 9287,
+    "selectionOrder": 108,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "vwyo"
+    "parent": "q7ln",
+    "activeFace": 1
   },
   "ezeb": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-c5e8a186-7555-43b5-8713-ca9b48758895",
     "id": "ezeb",
-    "z": 8495,
-    "selectionOrder": 26,
+    "z": 9299,
+    "selectionOrder": 106,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "vwyo"
+    "parent": "q7ln",
+    "activeFace": 1
   },
   "y356": {
     "type": "pile",
-    "x": 190,
+    "x": -538,
     "width": 65,
     "height": 90,
     "handleCSS": "box-shadow:0 1px 5px #00000099;background: linear-gradient(135deg,  #45484d 0%,#0e0e0e 100%);border-radius:100%;font-weight:normal;font-size:1.5rem;line-height:1rem;text-align:center;color:white;",
     "handleOffset": 13,
     "id": "y356",
-    "z": 99,
+    "z": 8512,
     "hoverParent": "tempH",
-    "y": -155
+    "y": 264
   },
   "yq72": {
     "type": "pile",
-    "x": 236,
-    "y": -140,
+    "x": -595,
+    "y": 255,
     "width": 65,
     "height": 90,
     "handleCSS": "box-shadow:0 1px 5px #00000099;background: linear-gradient(135deg,  #45484d 0%,#0e0e0e 100%);border-radius:100%;font-weight:normal;font-size:1.5rem;line-height:1rem;text-align:center;color:white;",
     "handleOffset": 13,
     "id": "yq72",
-    "z": 98,
+    "z": 8511,
     "hoverParent": "tempH"
   },
   "yzm7": {
     "type": "pile",
-    "x": 207,
-    "y": -214,
+    "x": -463,
+    "y": 257,
     "width": 65,
     "height": 90,
     "handleCSS": "box-shadow:0 1px 5px #00000099;background: linear-gradient(135deg,  #45484d 0%,#0e0e0e 100%);border-radius:100%;font-weight:normal;font-size:1.5rem;line-height:1rem;text-align:center;color:white;",
     "handleOffset": 13,
     "id": "yzm7",
-    "z": 97,
+    "z": 8513,
     "hoverParent": "tempH"
   },
   "passIcon1": {
@@ -8065,11 +7720,7 @@
     "x": 724,
     "y": 157,
     "z": 81077,
-    "css": ";transition: ease 0.4s",
-    "image": "/assets/2084110158_2491",
-    "svgReplaces": {
-      "#ff0000": "color"
-    },
+    "css": "vertical-align: center; line-height: 150px; font-size: 60px; font-weight:bold;color:grey;transition: ease 0.4s;",
     "scale": 0,
     "width": 150,
     "height": 150,
@@ -8078,7 +7729,8 @@
     "inheritFrom": {
       "seat1": "color"
     },
-    "activeFace": 0
+    "activeFace": 0,
+    "text": "PASS"
   },
   "cardCount1": {
     "inheritFrom": "cardCount0",
@@ -8808,7 +8460,7 @@
       "seat4"
     ]
   },
-  "vwyo": {
+  "q7ln": {
     "type": "pile",
     "parent": "deckH",
     "x": 4,
@@ -8817,6 +8469,6 @@
     "height": 34,
     "handleCSS": "box-shadow:0 1px 5px #00000099;background: linear-gradient(135deg,  #45484d 0%,#0e0e0e 100%);border-radius:100%;font-weight:normal;font-size:1.5rem;line-height:1rem;text-align:center;color:white;",
     "handleOffset": 13,
-    "id": "vwyo"
+    "id": "q7ln"
   }
 }
