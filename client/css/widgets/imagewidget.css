@@ -67,6 +67,13 @@
   font-family: "VTT-Symbols";
 }
 
+.symbolWrapper > div.autoIconAlignNotoEmojiMonochrome {
+  font-family: "Noto Emoji";
+  font-size: calc(var(--targetSize) / 1.27);
+  position: relative;
+  top: 12%;
+}
+
 .autoIconAlignCustomAsset {
   background-size: contain;
 }

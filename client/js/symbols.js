@@ -243,6 +243,8 @@ function getIconDetails(icon) {
     return { image: ' ', text: icon, class: 'autoIconAlignFont autoIconAlignSymbols' };
   if(icon.match(/^[a-z0-9]/))
     return { image: ' ', text: icon, class: 'autoIconAlignFont autoIconAlignMaterialIcons' };
+  if(icon.match(/^\((.+)\)$/))
+    return { image: ' ', text: toNotoMonochrome(icon.substr(1, icon.length-2)), class: 'autoIconAlignFont autoIconAlignNotoEmojiMonochrome' };
   return { image: `/i/noto-emoji/emoji_u${emojiToFilename(icon)}.svg`, text: ' ', class: 'autoIconAlignImage autoIconAlignNotoEmoji' };
 }
 
