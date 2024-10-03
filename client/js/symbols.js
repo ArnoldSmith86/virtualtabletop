@@ -72,8 +72,10 @@ export async function loadSymbolPicker() {
             className = 'symbols';
           else if(symbol.match(/^[a-z0-9_]+$/))
             className = 'material-icons';
-          if(className != 'emoji-monochrome' || !skipForNotoMonochrome(symbol))
-            list += `<i class="${className}" title="${className}: ${symbol}" data-type="${className}" data-symbol="${symbol}" data-keywords="${symbol},${keywords.join().toLowerCase()}" style="--url:url('i/noto-emoji/emoji_u${emojiToFilename(symbol)}.svg')">${toNotoMonochrome(symbol)}</i>`;
+          if(className != 'emoji-monochrome' || !skipForNotoMonochrome(symbol)) {
+            const symbolToReturn = className == 'emoji-monochrome' ? `(${symbol})` : symbol;
+            list += `<i class="${className}" title="${className}: ${symbol}" data-type="${className}" data-symbol="${symbolToReturn}" data-keywords="${symbol},${keywords.join().toLowerCase()}" style="--url:url('i/noto-emoji/emoji_u${emojiToFilename(symbol)}.svg')">${toNotoMonochrome(symbol)}</i>`;
+          }
         }
       }
     }
