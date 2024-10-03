@@ -2114,48 +2114,38 @@ export class Widget extends StateManaged {
         removeFromDOM($('#enlargeStyle'));
     }
   }
-
-    async addAudio(widget){
+  async addAudio(widget){
     if(widget.get('audio') && context) {
       let source = context.createBufferSource()
-
-      const audioString = widget.get('audio');
-      const audioObj = JSON.parse(audioString);
-      const audioSource = audioObj.source;
-      const maxVolume = audioObj.maxVolume; 
-      const length = audioObj.length; 
-      const pName = asArray(audioObj.player);
-
+        
+      const { source: audioSource, maxVolume, length, player } = JSON.parse(widget.get('audio'));
+      const pName = asArray(player);
+      
       if (pName.includes(null) || pName.includes(playerName)) {
-
+        
         let gainNode = context.createGain()
-
+          
         gainNode.gain.value = Math.min(maxVolume * (((10 ** (document.getElementById('volume').value / 96.025)) / 10) - 0.1), 1); // converts slider to log scale with zero = no volume
         
         source.connect(gainNode); // Connect the source to the gain node
         gainNode.connect(context.destination); // Connect the gain node to the audio context's destination
-
+        
         source.buffer = audioBufferObj[audioSource];
-                
+        
         if(source) {
           source.start();
         }
-
-        // Check if the length is a valid number and greater than zero
         
         if (!isNaN(length) && length > 0) {
-          source.stop(context.currentTime + length/1000); // Stop the audio after `length` milliseconds
+          source.stop(context.currentTime + length/1000); // Stop the audio after length in milliseconds
         }
         
-        // If there are no sources for this id, initialize an array
         if (!sources[audioSource]) {
           sources[audioSource] = []
         }
 
-        // Add the new source to the array for this id
         sources[audioSource].push(source)
-
-        // Remove the source from the array once it's done playing
+          
         source.onended = () => {
           if (sources[audioSource]) {
             sources[audioSource] = sources[audioSource].filter((src) => src !== source)
