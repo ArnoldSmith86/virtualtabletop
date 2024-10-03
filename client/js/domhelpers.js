@@ -462,13 +462,18 @@ function emojiToFilename(emoji) {
 }
 
 function toNotoMonochrome(emoji) {
-  if(emoji == '👁️‍🗨️')
-    return emoji;
-  return emoji.replace(/\u200d[\u2640\u2642]\ufe0f$/, '').replace(/\ufe0f\u20e3/, '\u20e3').replace(/\ufe0f$/, '');
+  return emoji
+    .replace(/[\u{1f3fb}-\u{1f3ff}]/ug, '') // remove skin tone modifiers (they are not supported by Noto Emoji)
+    .replace(/\u200d[\u2640\u2642]/, '')    // remove gender modifiers    (they are not supported by Noto Emoji)
+    .replace(/\ufe0f/g, '')                 // remove variation selectors (they tell Firefox to use color emoji)
+    .replace(/\u{1faf1}\u200d\u{1faf2}/ug,              '🤝')  // join variants of emojis that have
+    .replace(/.*\u200d\u{1f91d}\u200d.*/ug,             '👭')  // two people interacting because
+    .replace(/.*\u200d\u2764\u200d\u{1f48b}\u200d.*/ug, '💏')  // they have a special notation for
+    .replace(/.*\u200d\u2764\u200d.*/ug,                '💑'); // skin and gender variants
 }
 
 function skipForNotoMonochrome(emoji) {
-  return [ '👁️‍🗨️', '❤️‍🔥', '❤️‍🩹', '⛓️‍💥' ].indexOf(emoji) != -1 || emoji.match(/^[\u{1f3c3}-\u{1f3cc}]\u{fe0f}?\u{200d}[\u{2640}\u{2642}]\u{fe0f}(\u{200d}\u{27a1}\u{fe0f})?|\u{1f468}|\u{1f468}\u{200d}[\u{1f33e}\u{1f373}\u{1f37c}\u{1f393}\u{1f3a4}\u{1f3a8}\u{1f3eb}\u{1f3ed}\u{1f4bb}\u{1f4bc}\u{1f527}\u{1f52c}\u{1f680}\u{1f692}\u{1f9af}\u{1f9b1}\u{1f9b2}\u{1f9bc}\u{1f9bd}]|\u{1f468}\u{200d}[\u{1f9af}\u{1f9bc}\u{1f9bd}]\u{200d}\u{27a1}\u{fe0f}|\u{1f468}\u{200d}[\u{2695}\u{2696}\u{2708}]\u{fe0f}|\u{1f468}\u{200d}\u{2764}\u{fe0f}\u{200d}(\u{1f468}|\u{1f48b}\u{200d}\u{1f468})|\u{1f469}\u{200d}[\u{1f33e}\u{1f373}\u{1f393}\u{1f3a4}\u{1f3a8}\u{1f3eb}\u{1f3ed}\u{1f4bb}\u{1f4bc}\u{1f527}\u{1f52c}\u{1f680}\u{1f692}\u{1f9af}-\u{1f9b3}\u{1f9bc}\u{1f9bd}]|\u{1f469}\u{200d}[\u{1f9af}\u{1f9bc}\u{1f9bd}]\u{200d}\u{27a1}\u{fe0f}|\u{1f469}\u{200d}[\u{2695}\u{2696}\u{2708}]\u{fe0f}|\u{1f469}\u{200d}\u{2764}\u{fe0f}\u{200d}(\u{1f48b}\u{200d})?[\u{1f468}\u{1f469}]|\u{1f46b}|\u{1f46c}|\u{200d}[\u{2640}\u{2642}]|\u{1f478}|\u{1f57a}|\u{1f934}|\u{1f936}|\u{1f9d1}\u{200d}(\u{1f37c}|\u{1f384}|\u{1f91d}\u{200d}\u{1f9d1})|\u{1fac3}|\u{1fac4}$/u);
+  return emoji.match(/^[\u{1f3c3}-\u{1f3cc}]\u{fe0f}?\u{200d}[\u{2640}\u{2642}]\u{fe0f}(\u{200d}\u{27a1}\u{fe0f})?|\u{1f468}|\u{1f468}\u{200d}[\u{1f33e}\u{1f373}\u{1f37c}\u{1f393}\u{1f3a4}\u{1f3a8}\u{1f3eb}\u{1f3ed}\u{1f4bb}\u{1f4bc}\u{1f527}\u{1f52c}\u{1f680}\u{1f692}\u{1f9af}\u{1f9b1}\u{1f9b2}\u{1f9bc}\u{1f9bd}]|\u{1f468}\u{200d}[\u{1f9af}\u{1f9bc}\u{1f9bd}]\u{200d}\u{27a1}\u{fe0f}|\u{1f468}\u{200d}[\u{2695}\u{2696}\u{2708}]\u{fe0f}|\u{1f468}\u{200d}\u{2764}\u{fe0f}\u{200d}(\u{1f468}|\u{1f48b}\u{200d}\u{1f468})|\u{1f469}\u{200d}[\u{1f33e}\u{1f373}\u{1f393}\u{1f3a4}\u{1f3a8}\u{1f3eb}\u{1f3ed}\u{1f4bb}\u{1f4bc}\u{1f527}\u{1f52c}\u{1f680}\u{1f692}\u{1f9af}-\u{1f9b3}\u{1f9bc}\u{1f9bd}]|\u{1f469}\u{200d}[\u{1f9af}\u{1f9bc}\u{1f9bd}]\u{200d}\u{27a1}\u{fe0f}|\u{1f469}\u{200d}[\u{2695}\u{2696}\u{2708}]\u{fe0f}|\u{1f469}\u{200d}\u{2764}\u{fe0f}\u{200d}(\u{1f48b}\u{200d})?[\u{1f468}\u{1f469}]|\u{1f46b}|\u{1f46c}|\u{200d}[\u{2640}\u{2642}]|\u{1f478}|\u{1f57a}|\u{1f934}|\u{1f936}|\u{1f9d1}\u{200d}(\u{1f37c}|\u{1f384}|\u{1f91d}\u{200d}\u{1f9d1})|\u{1fac3}|\u{1fac4}$/u);
 }
 
 let symbolData = null;
