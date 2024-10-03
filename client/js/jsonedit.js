@@ -300,7 +300,7 @@ const jeCommands = [
   {
     id: 'je_symbolPickerText',
     name: 'pick an asset from the symbol picker',
-    context: '^button ↦ text$',
+    context: '^(button|basic) ↦ text$',
     call: async function() {
       const a = await pickSymbol('fonts');
       if(a) {
@@ -311,7 +311,7 @@ const jeCommands = [
       }
     },
     show: function() {
-      return [ 'symbols', 'material-icons' ].indexOf(jeStateNow.classes) != -1;
+      return [ 'symbols', 'material-icons', 'emoji-monochrome' ].indexOf(jeStateNow.classes) != -1;
     }
   },
   {
