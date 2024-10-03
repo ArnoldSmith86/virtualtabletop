@@ -1179,6 +1179,7 @@ class PropertiesModule extends SidebarModule {
   renderCardTypes(deck, onlyCardType=null) {
     const card = new Card();
     card.state.deck = deck.id;
+    card.deck = deck;
     const cardTypes = this.cardTypes = JSON.parse(JSON.stringify(deck.get('cardTypes')));
 
     this.cardTypeCards = [];

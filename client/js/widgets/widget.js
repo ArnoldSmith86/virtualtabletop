@@ -1450,7 +1450,7 @@ export class Widget extends StateManaged {
       }
 
       if(a.func == 'MOVE') {
-        setDefaults(a, { count: a.from ? 1 : 0, face: null, fillTo: null, collection: 'DEFAULT' });
+        setDefaults(a, { count: a.from ? 1 : 'all', face: null, fillTo: null, collection: 'DEFAULT' });
         let count = a.fillTo || a.count;
         if(count === 'all')
           count = 999999;
