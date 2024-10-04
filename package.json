@@ -52,7 +52,7 @@
     "@node-minify/no-compress": "^8.0.6",
     "@node-minify/uglify-es": "^8.0.6",
     "bson": "^6.8.0",
-    "crawler-user-agents": "^1.0.142",
+    "crawler-user-agents": "^1.0.151",
     "crc-32": "^1.2.2",
     "dompurify": "^3.1.6",
     "express": "^4.19.2",
