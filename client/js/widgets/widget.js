@@ -2114,6 +2114,21 @@ export class Widget extends StateManaged {
         removeFromDOM($('#enlargeStyle'));
     }
   }
+  
+  async loadAudioBuffer(audioSource) {
+    if (!audioBufferObj[audioSource]) {
+      // Fetch the audio file if not in audioBufferObj
+      const response = await fetch(audioSource);
+      const arrayBuffer = await response.arrayBuffer();
+      
+      // Decode the audio data
+      const audioBuffer = await context.decodeAudioData(arrayBuffer);
+      
+      // Store the decoded audio in audioBufferObj
+      audioBufferObj[audioSource] = audioBuffer;
+    }
+  }
+  
   async addAudio(widget){
     if(widget.get('audio') && context) {
       let source = context.createBufferSource()
@@ -2122,6 +2137,11 @@ export class Widget extends StateManaged {
       const pName = asArray(player);
       
       if (pName.includes(null) || pName.includes(playerName)) {
+        
+        // Load audio if it's not already in the audioBufferObj (e.g stored in a key and set)
+        if (!audioBufferObj[audioSource]) {
+          await this.loadAudioBuffer(audioSource);
+        }
         
         let gainNode = context.createGain()
           
