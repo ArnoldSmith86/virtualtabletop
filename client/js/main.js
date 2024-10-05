@@ -443,7 +443,7 @@ events.forEach(event => {
 
 // Initialize AudioContext after user event
 function initializeAudioContext() {
-  if (!context) {
+  if (!context && event.target.id != 'activeGameButton') {
     context = new AudioContext();
     audioContext(); 
   }
@@ -458,18 +458,36 @@ function findAudioSources(widget) {
       const routine = widget.state[key];
       routine.forEach((action) => {
         if (action.func === "AUDIO") {
-          audioSources.add(action.source);
+          if(action.source) {
+            audioSources.add(action.source); 
+          }
         }
       });
     }
   });
   // Check for clickSound as property
-  if (widget.state.clickSound !== null && widget.state.clickSound !== undefined) {
+  if (widget.state.clickSound !== undefined) {
     audioSources.add(widget.state.clickSound);
   }
-  // Check for clickSound in cardDefaults
-  if (widget.state.cardDefaults && widget.state.cardDefaults.clickSound !== null && widget.state.cardDefaults.clickSound !== undefined) {
-    audioSources.add(widget.state.cardDefaults.clickSound);
+
+  if(widget.state.cardDefaults !== undefined) {
+  // Check for any routines with AUDIO function within cardDefaults
+    Object.keys(widget.state).forEach((key) => {
+      if (key.endsWith("Routine")) {
+        const routine = widget.state[key];
+        routine.forEach((action) => {
+          if (action.func === "AUDIO") {
+            if(action.source) {
+              audioSources.add(action.source);
+            }
+          }
+        });
+      }
+    });
+    // Check for clickSound in cardDefaults
+    if (widget.state.cardDefaults.clickSound !== undefined) {
+      audioSources.add(widget.state.cardDefaults.clickSound);
+    }
   }
   return Array.from(audioSources);
 }
