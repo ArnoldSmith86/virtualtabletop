@@ -472,9 +472,9 @@ function findAudioSources(widget) {
 
   if(widget.state.cardDefaults !== undefined) {
   // Check for any routines with AUDIO function within cardDefaults
-    Object.keys(widget.state).forEach((key) => {
+    Object.keys(widget.state.cardDefaults).forEach((key) => {
       if (key.endsWith("Routine")) {
-        const routine = widget.state[key];
+        const routine = widget.state.cardDefaults[key];
         routine.forEach((action) => {
           if (action.func === "AUDIO") {
             if(action.source) {
