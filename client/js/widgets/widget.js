@@ -2,10 +2,11 @@ import { $, removeFromDOM, asArray, escapeID, mapAssetURLs } from '../domhelpers
 import { StateManaged } from '../statemanaged.js';
 import { playerName, playerColor, activePlayers, activeColors, mouseCoords } from '../overlays/players.js';
 import { batchStart, batchEnd, widgetFilter, widgets } from '../serverstate.js';
-import { showOverlay, shuffleWidgets, sortWidgets, audioBufferObj, context, sources } from '../main.js';
+import { showOverlay, shuffleWidgets, sortWidgets } from '../main.js';
 import { tracingEnabled } from '../tracing.js';
 import { toHex } from '../color.js';
 import { center, distance, overlap, getOffset, getElementTransform, getScreenTransform, getPointOnPlane, dehomogenize, getElementTransformRelativeTo, getTransformOrigin } from '../geometry.js';
+import { loadAudioBuffer, addAudio } from './widget.js';
 
 const readOnlyProperties = new Set([
   '_absoluteRotation',
@@ -183,7 +184,7 @@ export class Widget extends StateManaged {
 
     this.applyCSS(delta);
     if(delta.audio !== null)
-      this.addAudio(this);
+      addAudio(this);
 
     if(delta.z !== undefined)
       this.applyZ(true);
@@ -458,7 +459,7 @@ export class Widget extends StateManaged {
       return true;
 
     if(this.get('clickSound')) {
-      this.set('audio', JSON.stringify({
+      await this.set('audio', JSON.stringify({
         source: this.get('clickSound'),
         maxVolume: 1.0,
         length: null,
@@ -2113,67 +2114,6 @@ export class Widget extends StateManaged {
       if($('#enlargeStyle'))
         removeFromDOM($('#enlargeStyle'));
     }
-  }
-  
-  async loadAudioBuffer(audioSource) {
-    if (!audioBufferObj[audioSource]) {
-      // Fetch the audio file if not in audioBufferObj
-      const response = await fetch(audioSource);
-      const arrayBuffer = await response.arrayBuffer();
-      
-      // Decode the audio data
-      const audioBuffer = await context.decodeAudioData(arrayBuffer);
-      
-      // Store the decoded audio in audioBufferObj
-      audioBufferObj[audioSource] = audioBuffer;
-    }
-  }
-  
-  async addAudio(widget){
-    if(widget.get('audio') && context) {
-      let source = context.createBufferSource()
-        
-      const { source: audioSource, maxVolume, length, player } = JSON.parse(widget.get('audio'));
-      const pName = asArray(player);
-      
-      if (pName.includes(null) || pName.includes(playerName)) {
-        
-        // Load audio if it's not already in the audioBufferObj (e.g stored in a key and set)
-        if (!audioBufferObj[audioSource]) {
-          await this.loadAudioBuffer(audioSource);
-        }
-        
-        let gainNode = context.createGain()
-          
-        gainNode.gain.value = Math.min(maxVolume * (((10 ** (document.getElementById('volume').value / 96.025)) / 10) - 0.1), 1); // converts slider to log scale with zero = no volume
-        
-        source.connect(gainNode); // Connect the source to the gain node
-        gainNode.connect(context.destination); // Connect the gain node to the audio context's destination
-        
-        source.buffer = audioBufferObj[audioSource];
-        
-        if(source) {
-          source.start();
-        }
-        
-        if (!isNaN(length) && length > 0) {
-          source.stop(context.currentTime + length/1000); // Stop the audio after length in milliseconds
-        }
-        
-        if (!sources[audioSource]) {
-          sources[audioSource] = []
-        }
-
-        sources[audioSource].push(source)
-          
-        source.onended = () => {
-          if (sources[audioSource]) {
-            sources[audioSource] = sources[audioSource].filter((src) => src !== source)
-          }
-        }
-      }
-    }
-    setInterval(function(){widget.set('audio', null);}, 100);
   }
 
   inheritSeatVisibility(seatVisibility) {
