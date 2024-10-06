@@ -39,8 +39,38 @@ onLoad(function() {
 
   onMessage('tracing', _=>tracingEnabled=true);
 
-  window.onerror = function(msg, url, line, col, err) {
-    sendTraceEvent('error', { msg, url, line, col, err });
-    location.reload();
+  const errorHandler = function(error) {
+    const details = {
+      stack: String(error.stack),
+      undoProtocol,
+      delta,
+      bodyClass: $('body').className,
+      activeOverlay: [...$a('.overlay')].filter(o=>o.style.display!='none').map(o=>o.id),
+      jsonEditor: $('#jeText') && $('#jeText').innerText,
+      activeButtons: [...$a('button.active')].map(b=>b.getAttribute('icon') || b.id),
+      widgetsState: [...widgets.keys()].map(id=>widgets.get(id).state),
+      url: location.href,
+      userAgent: navigator.userAgent,
+      playerName,
+      html: document.documentElement.outerHTML
+    };
+    preventReconnect();
+    connection.close();
+    showOverlay('clientErrorOverlay');
+    $('#clientErrorOverlay button').addEventListener('click', function() {
+      details.message = $('#clientErrorOverlay textarea').value;
+      fetch('clientError', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(details)
+      })
+      window.location.reload();
+    });
   }
+  window.onerror = function(msg, url, line, col, err) {
+    errorHandler(err);
+  };
+  window.addEventListener("unhandledrejection", function(promiseRejectionEvent) {
+    errorHandler(promiseRejectionEvent.reason);
+  });
 });
