@@ -22,6 +22,7 @@ export default async function minifyHTML() {
     'client/css/overlays/connectionlost.css',
     'client/css/overlays/about.css',
     'client/css/overlays/welcome.css',
+    'client/js/audio.js',
 
     'client/css/widgets/basicwidget.css',
     'client/css/widgets/button.css',
