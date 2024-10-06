@@ -1,4 +1,4 @@
-import { asArray } from '../domhelpers.js';
+import { asArray, mapAssetURLs } from './domhelpers.js';
 
 export let audioContext;
 const events = ['mousedown', 'keydown', 'touchstart'];
@@ -42,7 +42,7 @@ export async function addAudio(widget){
     
     if (pName.includes(null) || pName.includes(playerName)) {
       if (!audioBufferObj[audioSource]) {
-        await loadAudioBuffer(audioSource);
+        await loadAudioBuffer(mapAssetURLs(audioSource));
       }
       
       let gainNode = audioContext.createGain();
@@ -50,7 +50,7 @@ export async function addAudio(widget){
       gainNode.gain.value = Math.min(maxVolume * (((10 ** (document.getElementById('volume').value / 96.025)) / 10) - 0.1), 1); // converts slider to log scale with zero = no volume
       source.connect(gainNode); // Connect the source to the gain node
       gainNode.connect(audioContext.destination); // Connect the gain node to the audioContext's destination
-      source.buffer = audioBufferObj[audioSource];
+      source.buffer = audioBufferObj[mapAssetURLs(audioSource)];
       
       if(source) {
         source.start();
