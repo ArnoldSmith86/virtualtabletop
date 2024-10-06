@@ -6,7 +6,7 @@ import { showOverlay, shuffleWidgets, sortWidgets } from '../main.js';
 import { tracingEnabled } from '../tracing.js';
 import { toHex } from '../color.js';
 import { center, distance, overlap, getOffset, getElementTransform, getScreenTransform, getPointOnPlane, dehomogenize, getElementTransformRelativeTo, getTransformOrigin } from '../geometry.js';
-import { loadAudioBuffer, addAudio } from './widget.js';
+import { loadAudioBuffer, addAudio } from '../audio.js';
 
 const readOnlyProperties = new Set([
   '_absoluteRotation',
