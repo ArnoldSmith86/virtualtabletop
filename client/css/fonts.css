@@ -310,6 +310,19 @@
 }
 
 @font-face {
+  font-family: "Noto Emoji";
+  font-style: normal;
+  font-weight: 300 700;
+  src: url("i/fonts/NotoEmoji-VariableFont_wght.ttf") format("truetype");
+  font-display: block;
+}
+
+.emoji-monochrome {
+  font-family: "Noto Emoji";
+  font-weight: 400;
+}
+
+@font-face {
     font-family: "VTT-Symbols";
     src: url("i/fonts/VTT-Symbols.ttf?version=6") format("truetype");
     font-weight: normal;
@@ -461,9 +474,15 @@
   word-break: break-all;
 }
 
-#symbolPickerOverlay .emoji:hover, #symbolPickerOverlay .emojiFlag, #symbolPickerOverlay.fewResults .emoji {
+#symbolPickerOverlay .emoji-monochrome {
+  font-size: calc(0.85 * var(--symbolSize));
+  vertical-align: top;
+}
+
+#symbolPickerOverlay .emoji-color:hover, #symbolPickerOverlay .emojiFlag, #symbolPickerOverlay.fewResults .emoji-color {
   background: var(--url) center no-repeat;
   color: transparent;
+  top: -3px;
 }
 
 #symbolPickerOverlay .gameicons {
@@ -488,11 +507,12 @@
 
 #symbolPickerOverlay .hidden,
 #symbolPickerOverlay.hideImages h2.imageCategory,
-#symbolPickerOverlay.hideImages .emoji,
+#symbolPickerOverlay.hideImages .emoji-color,
 #symbolPickerOverlay.hideImages .gameicons,
 #symbolPickerOverlay.hideFonts h2.fontCategory,
 #symbolPickerOverlay.hideFonts .symbols,
-#symbolPickerOverlay.hideFonts .material-icons {
+#symbolPickerOverlay.hideFonts .material-icons,
+#symbolPickerOverlay.hideFonts .emoji-monochrome {
   display: none;
 }
 
