@@ -1,6 +1,6 @@
 :root {
   --scale: 1;
-  --roomWidth: 1600px;
+  --roomWidth: 1778px;
   --roomHeight: 1000px;
   --roomTop: calc((calc(var(--vh, 1vh) * 100) - var(--roomHeight) * var(--scale)) / 2 - var(--toolbarSize) / 2);
   --roomLeft: 0px;
@@ -55,7 +55,7 @@ body.loadingEditMode * {
   z-index: 1;
 }
 
-@media (min-aspect-ratio: 1600/1000) {
+@media (min-aspect-ratio: 1778/1000) {
   body {
     --roomTop: 0px;
     --roomLeft: calc((100vw - var(--roomWidth) * var(--scale)) / 2 + var(--toolbarSize) / 2);
