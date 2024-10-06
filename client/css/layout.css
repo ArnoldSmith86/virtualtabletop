@@ -985,13 +985,17 @@ button.visualProgress {
   width: 1em;
 }
 .richtextSymbol.symbols {
-  top: 0.1em;
+  top: 0.15em;
 }
 .richtextSymbol.material-icons {
   top: 0.2em;
 }
 .richtextSymbol.gameicons, img.emoji {
   vertical-align: bottom;
+}
+.richtextSymbol.emoji-monochrome {
+  font-size: 1em !important;
+  width: 1.2em !important;
 }
 
 .symbols {
