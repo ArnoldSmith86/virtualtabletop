@@ -443,6 +443,17 @@ MinifyHTML().then(function(result) {
     }).catch(next);
   });
 
+  router.put('/clientError', bodyParser.json({ limit: '50mb' }), function(req, res, next) {
+    if(typeof req.body == 'object') {
+      const errorID = Math.random().toString(36).substring(2, 10);
+      fs.writeFileSync(savedir + '/errors/' + errorID + '.json', JSON.stringify(req.body, null, '  '));
+      Logging.log(`ERROR: Client error ${errorID}: ${req.body.message}`);
+      res.send(errorID);
+    } else {
+      res.send('not a valid JSON object');
+    }
+  });
+
   router.use(Logging.userErrorHandler);
 
   router.use(Logging.errorHandler);
