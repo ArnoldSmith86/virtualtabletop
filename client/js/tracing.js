@@ -66,10 +66,13 @@ onLoad(function() {
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(details)
         });
-        $('#clientErrorOverlay textarea').value = await res.text();
-        window.location.reload();
+        const text = await res.text();
+        if(text.match(/^[a-z0-9]{8}$/))
+          window.location.reload();
+        else
+          $('#clientErrorOverlay textarea').value = "Submitting the error failed. Please report this on Discord or GitHub:\n\n" + details.message + "\n\n" + details.stack + "\n\n" + text;
       } catch(e) {
-        $('#clientErrorOverlay textarea').value = e.stack;
+        $('#clientErrorOverlay textarea').value = "Submitting the error failed. Please report this on Discord or GitHub:\n\n" + details.message + "\n\n" + details.stack + "\n\n" + e.stack;
       }
     });
   }
