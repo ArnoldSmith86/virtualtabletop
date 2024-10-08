@@ -57,14 +57,20 @@ onLoad(function() {
     preventReconnect();
     connection.close();
     showOverlay('clientErrorOverlay');
-    $('#clientErrorOverlay button').addEventListener('click', function() {
-      details.message = $('#clientErrorOverlay textarea').value;
-      fetch('clientError', {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(details)
-      })
-      window.location.reload();
+    $('#clientErrorOverlay textarea').value = details.stack;
+    $('#clientErrorOverlay button').addEventListener('click', async function() {
+      try {
+        details.message = $('#clientErrorOverlay textarea').value;
+        const res = await fetch('clientError', {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(details)
+        });
+        $('#clientErrorOverlay textarea').value = await res.text();
+        window.location.reload();
+      } catch(e) {
+        $('#clientErrorOverlay textarea').value = e.stack;
+      }
     });
   }
   window.onerror = function(msg, url, line, col, err) {
