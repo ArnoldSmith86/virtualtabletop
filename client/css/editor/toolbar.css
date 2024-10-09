@@ -5,7 +5,7 @@
 #editorToolbar, #editorDragToolbar {
   position: absolute;
   background: var(--VTTblue);
-  z-index: 3;
+  z-index: 2;
 }
 
 #editorToolbar {
