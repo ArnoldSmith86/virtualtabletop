@@ -41,9 +41,13 @@ onLoad(function() {
 
   const errorHandler = function(error) {
     const details = {
-      stack: String(error.stack),
+      error: String(error.message) + '\n' + String(error.stack),
       undoProtocol,
       delta,
+      mouseStatus,
+      mouseTarget,
+      jeLoggingData: typeof jeLoggingRoutineGetData == 'function' ? jeLoggingRoutineGetData() : null,
+      lastExecutedOperation,
       bodyClass: $('body').className,
       activeOverlay: [...$a('.overlay')].filter(o=>o.style.display!='none').map(o=>o.id),
       jsonEditor: $('#jeText') && $('#jeText').innerText,
@@ -56,15 +60,24 @@ onLoad(function() {
     };
     preventReconnect();
     connection.close();
+    $('#clientErrorOverlay textarea').value = '';
     showOverlay('clientErrorOverlay');
-    $('#clientErrorOverlay button').addEventListener('click', function() {
-      details.message = $('#clientErrorOverlay textarea').value;
-      fetch('clientError', {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(details)
-      })
-      window.location.reload();
+    $('#clientErrorOverlay button').addEventListener('click', async function() {
+      try {
+        details.message = $('#clientErrorOverlay textarea').value;
+        const res = await fetch('clientError', {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(details)
+        });
+        const text = await res.text();
+        if(text.match(/^[a-z0-9]{8}$/))
+          window.location.reload();
+        else
+          $('#clientErrorOverlay textarea').value = "Submitting the error failed. Please report this on Discord or GitHub:\n\n" + details.error + "\n\n" + text;
+      } catch(e) {
+        $('#clientErrorOverlay textarea').value = "Submitting the error failed. Please report this on Discord or GitHub:\n\n" + details.error + "\n\n" + e.message + "\n" + e.stack;
+      }
     });
   }
   window.onerror = function(msg, url, line, col, err) {
