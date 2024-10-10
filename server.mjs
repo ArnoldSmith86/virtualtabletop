@@ -444,7 +444,6 @@ MinifyHTML().then(function(result) {
   });
 
   router.put('/clientError', bodyParser.json({ limit: '50mb' }), function(req, res, next) {
-    Logging.log(`DEBUG: /clientError`);
     if(typeof req.body == 'object') {
       const errorID = Math.random().toString(36).substring(2, 10);
       fs.writeFileSync(savedir + '/errors/' + errorID + '.json', JSON.stringify(req.body, null, '  '));
