@@ -46,7 +46,7 @@ onLoad(function() {
       delta,
       mouseStatus,
       mouseTarget,
-      jeLoggingStack: typeof jeLoggingRoutineGetStack == 'function' ? jeLoggingRoutineGetStack() : null,
+      jeLoggingData: typeof jeLoggingRoutineGetData == 'function' ? jeLoggingRoutineGetData() : null,
       lastExecutedOperation,
       bodyClass: $('body').className,
       activeOverlay: [...$a('.overlay')].filter(o=>o.style.display!='none').map(o=>o.id),
@@ -60,6 +60,7 @@ onLoad(function() {
     };
     preventReconnect();
     connection.close();
+    $('#clientErrorOverlay textarea').value = '';
     showOverlay('clientErrorOverlay');
     $('#clientErrorOverlay button').addEventListener('click', async function() {
       try {

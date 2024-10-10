@@ -2332,8 +2332,8 @@ export function jeLoggingRoutineOperationSummary(definition, result) {
      ${result ? '=&gt;' : ''} <span class="jeLogResult">${html(result || '')}</span>`;
 }
 
-export function jeLoggingRoutineGetStack() {
-  return jeHTMLStack;
+export function jeLoggingRoutineGetData() {
+  return { jeHTMLStack, jeLoggingHTML, jeRoutineResult };
 }
 
 // END routine logging
