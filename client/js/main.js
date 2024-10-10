@@ -410,8 +410,8 @@ window.addEventListener('keydown', async function(e) {
     } else {
       await loadEditMode();
       $('#editButton').click();
-      if(!$('#editorSidebar button[icon=data_object].active'))
-        $('#editorSidebar button[icon=data_object]').click();
+      if(!$('#editorEditSidebar button[icon=data_object].active'))
+        $('#editorEditSidebar button[icon=data_object]').click();
     }
   }
 });
@@ -598,8 +598,8 @@ window.onresize = function(event) {
 
 window.onkeyup = function(event) {
   if(event.key == 'Escape') {
-    if($('body.edit #editorSidebar button.active'))
-      $('#editorSidebar button.active').click();
+    if($('body.edit #editorEditSidebar button.active'))
+      $('#editorEditSidebar button.active').click();
     else if(edit)
       $('#editorToolbar button[icon=close]').click();
     else if(overlayActive && $('#buttonInputOverlay').style.display == 'none')
