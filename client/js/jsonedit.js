@@ -2332,6 +2332,10 @@ export function jeLoggingRoutineOperationSummary(definition, result) {
      ${result ? '=&gt;' : ''} <span class="jeLogResult">${html(result || '')}</span>`;
 }
 
+export function jeLoggingRoutineGetStack() {
+  return jeHTMLStack;
+}
+
 // END routine logging
 
 function jeNewline() {
