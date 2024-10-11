@@ -49,6 +49,10 @@ export default class Room {
       player.send('tracing', 'enable');
     }
   }
+  
+  playAudio(args) {
+    this.broadcast('audio', args);
+  }
 
   async addShare(shareID) {
     if(shareID.match(/^PL:/)) {
@@ -216,6 +220,8 @@ export default class Room {
   broadcast(func, args, exceptPlayer) {
     if(func != 'mouse')
       this.trace('broadcast', { func, args, exceptPlayer: exceptPlayer?.name });
+    if(args.playerArray && args.playerArray !== [])
+      this.players = args.playerArray;
     for(const player of this.players)
       if(player != exceptPlayer)
         player.send(func, args);
