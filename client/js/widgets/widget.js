@@ -6,7 +6,6 @@ import { showOverlay, shuffleWidgets, sortWidgets } from '../main.js';
 import { tracingEnabled } from '../tracing.js';
 import { toHex } from '../color.js';
 import { center, distance, overlap, getOffset, getElementTransform, getScreenTransform, getPointOnPlane, dehomogenize, getElementTransformRelativeTo, getTransformOrigin } from '../geometry.js';
-import { loadAudioBuffer, addAudio } from '../audio.js';
 
 const readOnlyProperties = new Set([
   '_absoluteRotation',
@@ -185,9 +184,7 @@ export class Widget extends StateManaged {
     }
 
     this.applyCSS(delta);
-    if(delta.audio !== null)
-      addAudio(this);
-
+    
     if(delta.z !== undefined)
       this.applyZ(true);
 
@@ -459,13 +456,13 @@ export class Widget extends StateManaged {
 
     if(!this.get('clickable') && !(mode == 'ignoreClickable' || mode =='ignoreAll'))
       return true;
-
+    
     if(this.get('clickSound')) {
-      await this.set('audio', JSON.stringify({
-        source: this.get('clickSound'),
+      toServer('audio', JSON.stringify({
+        audioSource: this.get('clickSound'),
         maxVolume: 1.0,
         length: null,
-        player: null
+        players: []
       }));
     }
 
@@ -1001,14 +998,13 @@ export class Widget extends StateManaged {
 
       if(a.func == 'AUDIO') {
         setDefaults(a, { source: '', maxVolume: 1.0, length: null, player: null });
-        if(a.source !== undefined) {
-          this.set('audio', JSON.stringify({
-            source: a.source,
-            maxVolume: a.maxVolume,
-            length: a.length,
-            player: a.player
-          }));
-        }
+        const validPlayers = a.player ? asArray(a.player) : [];
+        toServer('audio', JSON.stringify({
+          audioSource: a.source,
+          maxVolume: a.maxVolume,
+          length: a.length,
+          players: validPlayers
+        }));
       }
 
       if(a.func == 'CALL') {
