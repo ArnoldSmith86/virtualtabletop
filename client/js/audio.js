@@ -15,7 +15,7 @@ function initializeAudioContext() {
   }
 }
 
-export async function loadAudioBuffer(audioSource) {
+async function loadAudioBuffer(audioSource) {
   if (!audioBufferObj[audioSource]) {
     try {
       const response = await fetch(audioSource);
@@ -34,32 +34,38 @@ export async function loadAudioBuffer(audioSource) {
   }
 }
 
-export async function addAudio(widget){
-  if(widget.get('audio') && audioContext) {
-    let source = audioContext.createBufferSource();
-    const { source: audioSource, maxVolume, length, player } = JSON.parse(widget.get('audio'));
-    const pName = asArray(player);
-    
-    if (pName.includes(null) || pName.includes(playerName)) {
-      if (!audioBufferObj[audioSource]) {
-        await loadAudioBuffer(mapAssetURLs(audioSource));
-      }
+async function addAudio(audioSource, maxVolume, length) {
+  console.log('audioSource', audioSource, 'maxVolume', maxVolume, 'length', length)//fix
+  if(audioContext) {
+    let thisSource = audioContext.createBufferSource();
+    if (!audioBufferObj[audioSource]) {
+      await loadAudioBuffer(mapAssetURLs(audioSource));
+    }
+
+    let gainNode = audioContext.createGain();
+    gainNode.gain.value = Math.min(maxVolume * (((10 ** (document.getElementById('volume').value / 96.025)) / 10) - 0.1), 1); // converts slider to log scale with zero = no volume
+    thisSource.connect(gainNode); // Connect the source to the gain node
+    gainNode.connect(audioContext.destination); // Connect the gain node to the audioContext's destination
+
+    thisSource.buffer = audioBufferObj[mapAssetURLs(audioSource)];
+
+    if(thisSource) {
+      thisSource.start();
+    }
       
-      let gainNode = audioContext.createGain();
-      
-      gainNode.gain.value = Math.min(maxVolume * (((10 ** (document.getElementById('volume').value / 96.025)) / 10) - 0.1), 1); // converts slider to log scale with zero = no volume
-      source.connect(gainNode); // Connect the source to the gain node
-      gainNode.connect(audioContext.destination); // Connect the gain node to the audioContext's destination
-      source.buffer = audioBufferObj[mapAssetURLs(audioSource)];
-      
-      if(source) {
-        source.start();
-      }
-      
-      if (!isNaN(length) && length > 0) {
-        source.stop(audioContext.currentTime + length/1000); // Stop the audio after length in milliseconds
-      }
+    if (!isNaN(length) && length > 0) {
+      thisSource.stop(audioContext.currentTime + length/1000); // Stop the audio after length in milliseconds
     }
   }
-  setInterval(function(){widget.set('audio', null);}, 100);
 }
+
+onMessage('audio', function(args) {
+  console.log('audioArgs', args); //fix
+  const { audioSource, maxVolume, length } = JSON.parse(args);
+  try {
+    addAudio(audioSource, maxVolume, length);
+  }
+  catch(err) {
+    console.log(err.message);
+  }
+});
