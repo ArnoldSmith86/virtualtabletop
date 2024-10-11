@@ -191,18 +191,18 @@ function setScale() {
   let vh = window.innerHeight * 0.01;
   document.documentElement.style.setProperty('--vh', `${vh}px`);
   if(edit || jeEnabled) {
-    const targetWidth = 1600 / zoom;
+    const targetWidth = 1778 / zoom;
     const targetHeight = 1000 / zoom;
     const availableRect = getAvailableRoomRectangle();
     const availableWidth = availableRect.right-availableRect.left;
     const availableHeight = availableRect.bottom-availableRect.top;
 
-    scale = availableWidth/availableHeight < 1600/1000 ? availableWidth/targetWidth : availableHeight/targetHeight;
+    scale = availableWidth/availableHeight < 1778/1000 ? availableWidth/targetWidth : availableHeight/targetHeight;
 
-    const offsetX = offset[0] + (1-zoom)/2*1600*scale/zoom;
+    const offsetX = offset[0] + (1-zoom)/2*1778*scale/zoom;
     const offsetY = offset[1] + (1-zoom)/2*1000*scale/zoom;
 
-    if(availableWidth/availableHeight < 1600/1000) {
+    if(availableWidth/availableHeight < 1778/1000) {
       document.documentElement.style.setProperty('--editModeRoomLeft', (offsetX + availableRect.left) + 'px');
       document.documentElement.style.setProperty('--editModeRoomTop', (offsetY + availableRect.top + (availableHeight-scale*targetHeight)/2) + 'px');
     } else {
@@ -211,19 +211,19 @@ function setScale() {
     }
     document.documentElement.style.setProperty('--roomZoom', zoom);
   } else {
-    scale = w/h < 1600/1000 ? w/1600 : h/1000;
+    scale = w/h < 1778/1000 ? w/1778 : h/1000;
   }
   $('body').classList.remove('wideToolbar');
   $('body').classList.remove('horizontalToolbar');
-  if(w-scale*1600 + h-scale*1000 < 44) {
+  if(w-scale*1778 + h-scale*1000 < 44) {
     $('body').classList.add('aspectTooGood');
     if(!$('body').className.match(/hiddenToolbar/))
-      scale = (w-44)/1600;
+      scale = (w-44)/1778;
   } else {
     $('body').classList.remove('aspectTooGood');
-    if(w - scale*1600 > 200)
+    if(w - scale*1778 > 200)
       $('body').classList.add('wideToolbar');
-    else if(w/h < 1600/1000)
+    else if(w/h < 1778/1000)
       $('body').classList.add('horizontalToolbar');
   }
   document.documentElement.style.setProperty('--scale', scale);
