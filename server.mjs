@@ -324,54 +324,58 @@ MinifyHTML().then(function(result) {
   router.get('/game/:shareID/:name', gameRoomHandler);
   router.get('/tutorial/:plName', gameRoomHandler);
   async function gameRoomHandler(req, res, next) {
-    if(!String(req.params.room).match(/^[A-Za-z0-9_-]+$/)) {
-      res.send('Invalid characters in room ID.');
-      return;
-    }
+    try {
+      if(!String(req.params.room).match(/^[A-Za-z0-9_-]+$/)) {
+        res.send('Invalid characters in room ID.');
+        return;
+      }
 
-    if(botPattern.test(req.headers['user-agent'])) {
-      let ogOutput = `<meta property="og:title" content="${Config.get('serverName')}" />`;
-      res.setHeader('Content-Type', 'text/html');
+      if(botPattern.test(req.headers['user-agent'])) {
+        let ogOutput = `<meta property="og:title" content="${Config.get('serverName')}" />`;
+        res.setHeader('Content-Type', 'text/html');
 
-      if(req.params.room) {
-        if(await ensureRoomIsLoaded(req.params.room)) {
-          const room = activeRooms.get(req.params.room);
-          let game = null;
-          if(room.state && room.state._meta && room.state._meta.activeState && room.state._meta.states && room.state._meta.states[room.state._meta.activeState.stateID])
-            game = room.state._meta.states[room.state._meta.activeState.stateID];
+        if(req.params.room) {
+          if(await ensureRoomIsLoaded(req.params.room)) {
+            const room = activeRooms.get(req.params.room);
+            let game = null;
+            if(room.state && room.state._meta && room.state._meta.activeState && room.state._meta.states && room.state._meta.states[room.state._meta.activeState.stateID])
+              game = room.state._meta.states[room.state._meta.activeState.stateID];
 
-          if(game) {
-            ogOutput += `<meta property="og:description" content="Come play the game ${game.name} with me!" />`;
-            ogOutput += `<meta property="og:image" content="${Config.get('externalURL')}/${game.image ? game.image.substr(1) : 'i/branding/android-512.png'}" />`;
+            if(game) {
+              ogOutput += `<meta property="og:description" content="Come play the game ${game.name} with me!" />`;
+              ogOutput += `<meta property="og:image" content="${Config.get('externalURL')}/${game.image ? game.image.substr(1) : 'i/branding/android-512.png'}" />`;
+            } else {
+              ogOutput += `<meta property="og:description" content="Come play with me!" />`;
+              ogOutput += `<meta property="og:image" content="${Config.get('externalURL')}/i/branding/android-512.png" />`;
+            }
+          }
+        } else {
+          const share = await shareDetails(req.params.shareID || `PL:${req.url.split('/')[1]}:${req.params.plName}`);
+          if(share && req.url.split('/')[1] == 'tutorial') {
+            ogOutput += `<meta property="og:description" content="Come look at the tutorial ${share.name}!" />`;
+            ogOutput += `<meta property="og:image" content="${Config.get('externalURL')}/${share.image ? share.image.substr(1) : 'i/branding/android-512.png'}" />`;
+          } else if(share) {
+            ogOutput += `<meta property="og:description" content="Come play the game ${share.name} with your friends!" />`;
+            ogOutput += `<meta property="og:image" content="${Config.get('externalURL')}/${share.image ? share.image.substr(1) : 'i/branding/android-512.png'}" />`;
           } else {
-            ogOutput += `<meta property="og:description" content="Come play with me!" />`;
+            ogOutput += `<meta property="og:description" content="Come play with your friends!" />`;
             ogOutput += `<meta property="og:image" content="${Config.get('externalURL')}/i/branding/android-512.png" />`;
           }
         }
+
+        ogOutput += `<p>Your browser identifies as a bot and therefor only receives metadata. Please use a different browser and/or <a href="https://github.com/ArnoldSmith86/virtualtabletop/issues/new">open an issue on GitHub</a>.</p>`;
+        res.send(ogOutput);
       } else {
-        const share = await shareDetails(req.params.shareID || `PL:${req.url.split('/')[1]}:${req.params.plName}`);
-        if(share && req.url.split('/')[1] == 'tutorial') {
-          ogOutput += `<meta property="og:description" content="Come look at the tutorial ${share.name}!" />`;
-          ogOutput += `<meta property="og:image" content="${Config.get('externalURL')}/${share.image ? share.image.substr(1) : 'i/branding/android-512.png'}" />`;
-        } else if(share) {
-          ogOutput += `<meta property="og:description" content="Come play the game ${share.name} with your friends!" />`;
-          ogOutput += `<meta property="og:image" content="${Config.get('externalURL')}/${share.image ? share.image.substr(1) : 'i/branding/android-512.png'}" />`;
+        res.setHeader('Content-Type', 'text/html');
+        if(req.headers['accept-encoding'] && req.headers['accept-encoding'].match(/\bgzip\b/)) {
+          res.setHeader('Content-Encoding', 'gzip');
+          res.send(result.gzipped);
         } else {
-          ogOutput += `<meta property="og:description" content="Come play with your friends!" />`;
-          ogOutput += `<meta property="og:image" content="${Config.get('externalURL')}/i/branding/android-512.png" />`;
+          res.send(result.min);
         }
       }
-
-      ogOutput += `<p>Your browser identifies as a bot and therefor only receives metadata. Please use a different browser and/or <a href="https://github.com/ArnoldSmith86/virtualtabletop/issues/new">open an issue on GitHub</a>.</p>`;
-      res.send(ogOutput);
-    } else {
-      res.setHeader('Content-Type', 'text/html');
-      if(req.headers['accept-encoding'] && req.headers['accept-encoding'].match(/\bgzip\b/)) {
-        res.setHeader('Content-Encoding', 'gzip');
-        res.send(result.gzipped);
-      } else {
-        res.send(result.min);
-      }
+    } catch(e) {
+      next(e);
     }
   }
 
@@ -437,6 +441,17 @@ MinifyHTML().then(function(result) {
         }).catch(next);
       }
     }).catch(next);
+  });
+
+  router.put('/clientError', bodyParser.json({ limit: '50mb' }), function(req, res, next) {
+    if(typeof req.body == 'object') {
+      const errorID = Math.random().toString(36).substring(2, 10);
+      fs.writeFileSync(savedir + '/errors/' + errorID + '.json', JSON.stringify(req.body, null, '  '));
+      Logging.log(`ERROR: Client error ${errorID}: ${req.body.message}`);
+      res.send(errorID);
+    } else {
+      res.send('not a valid JSON object');
+    }
   });
 
   router.use(Logging.userErrorHandler);
