@@ -5,8 +5,6 @@ import { startWebSocket, toServer } from './connection.js';
 export let scale = 1;
 let roomRectangle;
 let overlayActive = false;
-let muted = false;
-let unmuteVol = 30;
 let optionsHidden = true;
 
 let edit = null;
