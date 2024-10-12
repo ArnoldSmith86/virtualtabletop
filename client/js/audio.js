@@ -39,10 +39,11 @@ async function loadAudioBuffer(audioSource) {
 }
 
 async function addAudio(audioSource, maxVolume, length) {
+  audioSource = mapAssetURLs(audioSource);
   if(audioContext) {
     let thisSource = audioContext.createBufferSource();
     if (!audioBufferObj[audioSource]) {
-      await loadAudioBuffer(mapAssetURLs(audioSource));
+      await loadAudioBuffer(audioSource);
     }
 
     let gainNode = audioContext.createGain();
@@ -51,7 +52,7 @@ async function addAudio(audioSource, maxVolume, length) {
     gainNode.connect(audioContext.destination); // Connect the gain node to the audioContext's destination
     audioSettings[audioSource] = { gainNode, maxVolume };
 
-    thisSource.buffer = audioBufferObj[mapAssetURLs(audioSource)];
+    thisSource.buffer = audioBufferObj[audioSource];
 
     if(thisSource) {
       thisSource.start();
