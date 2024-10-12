@@ -220,11 +220,16 @@ export default class Room {
   broadcast(func, args, exceptPlayer) {
     if(func != 'mouse')
       this.trace('broadcast', { func, args, exceptPlayer: exceptPlayer?.name });
-    if(args.playerArray && args.playerArray !== [])
-      this.players = args.playerArray;
-    for(const player of this.players)
-      if(player != exceptPlayer)
+    const argsObj = func === 'audio' ? JSON.parse(args) : {};
+    for(const player of this.players) {
+      let includePlayer = true;
+      if(func === 'audio') {
+        if(argsObj.players && argsObj.players.length && !argsObj.players.includes(player.name))
+          includePlayer = false;
+      }
+      if(player != exceptPlayer && includePlayer)
         player.send(func, args);
+    }
   }
 
   async createTempState(tempID, fileContent) {
