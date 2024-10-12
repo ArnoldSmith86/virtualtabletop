@@ -480,24 +480,6 @@ onLoad(function() {
     }
   });
 
-  on('#muteButton', 'click', function() {
-    if(muted) {
-      $('#volume').value = unmuteVol;
-      $('#muteButton').classList.remove('muted');
-      $a('audio').forEach(function(audio){
-        audio.volume = Math.min(audio.getAttribute('maxVolume') * (((10 ** (unmuteVol / 96.025)) / 10) - 0.1), 1);
-      });
-    } else {
-      unmuteVol = document.getElementById('volume').value;
-      $('#volume').value = 0;
-      $a('audio').forEach(function(audio){
-        audio.volume = 0;
-      });
-      document.getElementById('muteButton').classList.add('muted');
-    }
-    muted = !muted
-  });
-
   on('#lightsButton', 'click', function(){
     if($('body').classList.contains('lightsOff'))
       $('body').classList.remove('lightsOff');
@@ -607,16 +589,4 @@ window.onkeyup = function(event) {
     else if($('#buttonInputCancel').style.visibility == 'visible')
       $('#buttonInputCancel').click();
   }
-}
-
-if($('#volume')) {
-  on('#volume', 'input', function(){ // allows volume to be adjusted in real time
-    if(muted) {
-      $('#muteButton').classList.remove('muted');
-      muted = !muted
-    }
-    $a('audio').forEach(function(audio){
-      audio.volume = Math.min(audio.getAttribute('maxVolume') * (((10 ** ($('#volume').value / 96.025)) / 10) - 0.1), 1);
-    });
-  });
 }
