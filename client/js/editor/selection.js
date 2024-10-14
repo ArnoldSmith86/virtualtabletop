@@ -20,7 +20,7 @@ export function editInputHandler(name, e) {
       }, 0);
     }
   }
-  if((selectionModeActive == isRightMouseButton || isOverlayActive()) && e.target.parentNode.id != 'editorDragToolbar' && !draggingDragButton)
+  if((selectionModeActive == isRightMouseButton || isOverlayActive()) && (!e.target.parentNode || e.target.parentNode.id != 'editorDragToolbar') && !draggingDragButton)
     return;
 
   const coords = eventCoords(name, e);
