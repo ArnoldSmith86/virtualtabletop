@@ -19,6 +19,8 @@ const readOnlyProperties = new Set([
   '_localOriginAbsoluteY'
 ]);
 
+let lastExecutedOperation = null;
+
 export class Widget extends StateManaged {
   constructor(id) {
     const div = document.createElement('div');
@@ -885,6 +887,13 @@ export class Widget extends StateManaged {
         a = evaluateVariablesRecursively(a)
       else
         a = original.trim();
+
+      lastExecutedOperation = {
+        original: original,
+        applied: a,
+        variables,
+        property: typeof property == 'string' ? property : 'literal'
+      };
 
       if(jeRoutineLogging) jeLoggingRoutineOperationStart(original, a)
 
