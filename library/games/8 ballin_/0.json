@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "version": 15,
+    "version": 16,
     "info": {
       "name": "8 ballin'",
       "image": "/assets/720509150_427229",
@@ -9,8 +9,8 @@
       "year": "",
       "mode": "vs",
       "time": "45",
-      "attribution": "<div>Implementation, layout, library image, and all assets were designed and created by Mitchell Stolycia and are released to the Public Domain under CC BY 4.0.<br></div><div><br></div><div>The offer mechanism was originally created by Andy Pymont for the\n Delicious Deliveries module. The mechanism has been appropriately \nadapted to work with this game.</div>",
-      "lastUpdate": 1725289661824,
+      "attribution": "<div><span>Implementation, layout, library image, and all assets were designed and created by Mitchell Stolycia and are released to the Public Domain under CC BY 4.0.</span><br></div><div><br></div><div><span>The offer mechanism was originally created by Andy Pymont for the\n Delicious Deliveries module. The mechanism has been appropriately \nadapted to work with this game.</span></div>",
+      "lastUpdate": 1729171307222,
       "showName": true,
       "skill": "",
       "description": "The pool table at your favourite club has lost all of the striped balls, but you'll still have a quick game anyway.\n\nPlayers compete in area majorities in order to pot balls, while sneakily stealing the money of other patrons waiting for the table.",
@@ -19,11 +19,11 @@
       "similarDesigner": "Reiner Knizia",
       "similarAwards": "2009 Nederlandse Spellenprijs Nominee\n2005 Japan Boardgame Prize Best Advanced Game Nominee",
       "ruleText": "",
-      "helpText": "<div>No&nbsp;action cards no two-coloured disc tokens are used in this game.<br></div><div><b><br></b></div><div><b>The board</b></div><div>The board is split into eight areas in which players will compete for area majority. These are separated by the torn cloth, the pool cue, the person's arm, and the break line. The areas are also numbered by the pool balls.<br></div><div><b><br></b></div><div><b>Offers</b>:</div><div>Click the <i>Prepare Offers</i> button to hide all players' bidding coins from each other. You can click on your bidding coin above your seat to change your bid. When you submit an offer your ready marker next to your seat will be updated to show you are ready. You can toggle it back by clicking on it if you need to rethink your offer.</div><div><br></div><div>Submit bids of a number value equal to the number of cards you would like to offer of the matching coin type. If you wish to play a trading card with your offer, include an asterisk (*) as well as your offer amount. <br></div><blockquote><div><i>For example, if the current coin token on offer is a small gold 5, and you wish to offer 3 gold coin cards and a trading card, you would submit <b>3*</b> as your offer.</i></div></blockquote><div>Due to this method of preparing and revealing offers, the trader cards themselves are not necessary for play, but are still dealt to each player as a visual reminder.</div><div><i><br></i></div><div>Once all players have their offers prepared, the active player can click <i>Reveal Offers</i> to reveal all offers. The active player can then choose which offers to accept. All accepted offers and additional card costs from the active should be paid in cards from players' <i>Card hand</i> to the <i>Discard</i>.</div><div><br></div><div>Any points scored throughout the game should be added to players' score trackers above their seats.<br></div><div><br></div><div><b>Passing:</b></div><div>If the active player chooses to pass on their turn, that player clicks <i>Pass</i>. This will automatically deal the active player two cards, everyone else one card, and end the active player's turn.</div><div><br></div><div><b>End turn:</b></div><div>To end your turn after offers have been made, click <i>End turn</i>. This will automatically deal everyone one card, and end the active player's turn.</div>",
-      "variantImage": "",
-      "variant": "8 ballin'",
+      "helpText": "<div><span>No&nbsp;action cards and no two-coloured disc tokens are used in this game.</span><br></div><div><b><br></b></div><div><b><span>The board</span></b></div><div><span>The board is split into eight areas in which players will compete for area majority. These are separated by the torn cloth, the pool cue, the person's arm, and the break line. The areas are also numbered by the pool balls.</span><br></div><div><b><br></b></div><div><b><span>Offers</span></b><span>:</span></div><div><span>Click the </span><i><span>Prepare Offers</span></i><span> button to hide all players' bidding coins from each other. You can click on your offers area (the circles) above your seat to change your offer. When you submit an offer your ready marker next to your seat will be updated to show you are ready. You can toggle it back by clicking on it if you need to rethink your offer.</span></div><div><br></div><div><span>Submit offers of a number value equal to the number of cards you would like to offer of the matching coin type. If you wish to play a trading card with your offer, include an asterisk (*) as well as your offer amount. </span><br></div><blockquote><div><i><span>For example, if the current coin token on offer is a small gold 5, and you wish to offer 3 gold coin cards and a trading card, you would submit </span><b><span>3*</span></b><span> as your offer.</span></i></div></blockquote><div><span>Due to this method of preparing and revealing offers, the trader cards themselves are not necessary for play, but are still dealt to each player as a visual reminder.</span></div><div><i><br></i></div><div><span>Once all players have their offers prepared, the active player can click </span><i><span>Reveal Offers</span></i><span> to reveal all offers. The active player can then choose which offers to accept. All accepted offers and additional card costs from the active should be paid in cards from players' </span><i><span>Card hand</span></i><span> to the </span><i><span>Discard</span></i><span>.</span></div><div><br></div><div><span>Any points scored throughout the game should be added to players' score trackers above their seats.</span><br></div><div><br></div><div><b><span>Passing:</span></b></div><div><span>If the active player chooses to pass on their turn, that player clicks </span><i><span>Pass</span></i><span>. This will automatically deal the active player two cards, everyone else one card, and end the active player's turn.</span></div><div><br></div><div><b><span>End turn:</span></b></div><div><span>To end your turn after offers have been made, click </span><i><span>End turn</span></i><span>. This will automatically deal everyone one card, and end the active player's turn.</span></div>",
+      "players": "3-5",
       "language": "en-GB",
-      "players": "2-5"
+      "variant": "8 ballin'",
+      "variantImage": ""
     }
   },
   "seat1": {
@@ -35,13 +35,14 @@
     "hideWhenUnused": true,
     "color": "#FFFF00",
     "colorEmpty": "#FFFF00",
-    "css": "border-color: FFFF00"
+    "css": "border-color: FFFF00",
+    "hand": "cardHand"
   },
   "rldvC": {
     "id": "rldvC",
     "parent": "seat1",
     "fixedParent": true,
-    "x": -20,
+    "x": 135,
     "y": -20,
     "width": 30,
     "height": 30,
@@ -102,7 +103,7 @@
     "id": "rldvC1",
     "parent": "seat2",
     "fixedParent": true,
-    "x": -20,
+    "x": 135,
     "y": -20,
     "width": 30,
     "height": 30,
@@ -165,7 +166,7 @@
     "id": "rldvC2",
     "parent": "seat3",
     "fixedParent": true,
-    "x": -20,
+    "x": 135,
     "y": -20,
     "width": 30,
     "height": 30,
@@ -227,7 +228,7 @@
     "id": "rldvC3",
     "parent": "seat4",
     "fixedParent": true,
-    "x": -20,
+    "x": 135,
     "y": -20,
     "width": 30,
     "height": 30,
@@ -289,7 +290,7 @@
     "id": "rldvC4",
     "parent": "seat5",
     "fixedParent": true,
-    "x": -20,
+    "x": 135,
     "y": -20,
     "width": 30,
     "height": 30,
@@ -729,216 +730,216 @@
     "id": "50p3",
     "deck": "coinDeck",
     "cardType": "50p3.png",
-    "z": 63703,
+    "z": 65126,
     "coinType": "50p",
-    "parent": "h0la"
+    "parent": "rj2q"
   },
   "1p3": {
     "type": "card",
     "id": "1p3",
     "deck": "coinDeck",
     "cardType": "1p3.png",
-    "z": 63684,
+    "z": 65106,
     "coinType": "1p",
-    "parent": "h0la"
+    "parent": "rj2q"
   },
   "50p5": {
     "type": "card",
     "id": "50p5",
     "deck": "coinDeck",
     "cardType": "50p5.png",
-    "z": 63706,
+    "z": 65110,
     "coinType": "50p",
-    "parent": "h0la"
+    "parent": "rj2q"
   },
   "50p5-2": {
     "type": "card",
     "id": "50p5-2",
     "deck": "coinDeck",
     "cardType": "50p5.png",
-    "z": 63696,
+    "z": 65122,
     "coinType": "50p",
-    "parent": "h0la"
+    "parent": "rj2q"
   },
   "50p4": {
     "type": "card",
     "id": "50p4",
     "deck": "coinDeck",
     "cardType": "50p4.png",
-    "z": 63686,
+    "z": 65109,
     "coinType": "50p",
-    "parent": "h0la"
+    "parent": "rj2q"
   },
   "50p4-2": {
     "type": "card",
     "id": "50p4-2",
     "deck": "coinDeck",
     "cardType": "50p4.png",
-    "z": 63698,
+    "z": 65125,
     "coinType": "50p",
-    "parent": "h0la"
+    "parent": "rj2q"
   },
   "1p5": {
     "type": "card",
     "id": "1p5",
     "deck": "coinDeck",
     "cardType": "1p5.png",
-    "z": 63688,
+    "z": 65124,
     "coinType": "1p",
-    "parent": "h0la"
+    "parent": "rj2q"
   },
   "1p5-2": {
     "type": "card",
     "id": "1p5-2",
     "deck": "coinDeck",
     "cardType": "1p5.png",
-    "z": 63685,
+    "z": 65115,
     "coinType": "1p",
-    "parent": "h0la"
+    "parent": "rj2q"
   },
   "5p3": {
     "type": "card",
     "id": "5p3",
     "deck": "coinDeck",
     "cardType": "5p3.png",
-    "z": 63695,
+    "z": 65117,
     "coinType": "5p",
-    "parent": "h0la"
+    "parent": "rj2q"
   },
   "50p6": {
     "type": "card",
     "id": "50p6",
     "deck": "coinDeck",
     "cardType": "50p6.png",
-    "z": 63692,
+    "z": 65116,
     "coinType": "50p",
-    "parent": "h0la"
+    "parent": "rj2q"
   },
   "5p5": {
     "type": "card",
     "id": "5p5",
     "deck": "coinDeck",
     "cardType": "5p5.png",
-    "z": 63699,
+    "z": 65119,
     "coinType": "5p",
-    "parent": "h0la"
+    "parent": "rj2q"
   },
   "5p5-2": {
     "type": "card",
     "id": "5p5-2",
     "deck": "coinDeck",
     "cardType": "5p5.png",
-    "z": 63697,
+    "z": 65104,
     "coinType": "5p",
-    "parent": "h0la"
+    "parent": "rj2q"
   },
   "1p4-2": {
     "type": "card",
     "id": "1p4-2",
     "deck": "coinDeck",
     "cardType": "1p4.png",
-    "z": 63700,
+    "z": 65118,
     "coinType": "1p",
-    "parent": "h0la"
+    "parent": "rj2q"
   },
   "1p4": {
     "type": "card",
     "id": "1p4",
     "deck": "coinDeck",
     "cardType": "1p4.png",
-    "z": 63693,
+    "z": 65105,
     "coinType": "1p",
-    "parent": "h0la"
+    "parent": "rj2q"
   },
   "1p6": {
     "type": "card",
     "id": "1p6",
     "deck": "coinDeck",
     "cardType": "1p6.png",
-    "z": 63691,
+    "z": 65120,
     "coinType": "1p",
-    "parent": "h0la"
+    "parent": "rj2q"
   },
   "2p3": {
     "type": "card",
     "id": "2p3",
     "deck": "coinDeck",
     "cardType": "2p3.png",
-    "z": 63690,
+    "z": 65103,
     "coinType": "2p",
-    "parent": "h0la"
+    "parent": "rj2q"
   },
   "2p4": {
     "type": "card",
     "id": "2p4",
     "deck": "coinDeck",
     "cardType": "2p4.png",
-    "z": 63683,
+    "z": 65112,
     "coinType": "2p",
-    "parent": "h0la"
+    "parent": "rj2q"
   },
   "2p4-2": {
     "type": "card",
     "id": "2p4-2",
     "deck": "coinDeck",
     "cardType": "2p4.png",
-    "z": 63701,
+    "z": 65121,
     "coinType": "2p",
-    "parent": "h0la"
+    "parent": "rj2q"
   },
   "2p5": {
     "type": "card",
     "id": "2p5",
     "deck": "coinDeck",
     "cardType": "2p5.png",
-    "z": 63705,
+    "z": 65123,
     "coinType": "2p",
-    "parent": "h0la"
+    "parent": "rj2q"
   },
   "2p5-2": {
     "type": "card",
     "id": "2p5-2",
     "deck": "coinDeck",
     "cardType": "2p5.png",
-    "z": 63702,
+    "z": 65114,
     "coinType": "2p",
-    "parent": "h0la"
+    "parent": "rj2q"
   },
   "2p6": {
     "type": "card",
     "id": "2p6",
     "deck": "coinDeck",
     "cardType": "2p6.png",
-    "z": 63694,
+    "z": 65113,
     "coinType": "2p",
-    "parent": "h0la"
+    "parent": "rj2q"
   },
   "5p4": {
     "type": "card",
     "id": "5p4",
     "deck": "coinDeck",
     "cardType": "5p4.png",
-    "z": 63689,
+    "z": 65108,
     "coinType": "5p",
-    "parent": "h0la"
+    "parent": "rj2q"
   },
   "5p4-2": {
     "type": "card",
     "id": "5p4-2",
     "deck": "coinDeck",
     "cardType": "5p4.png",
-    "z": 63687,
+    "z": 65111,
     "coinType": "5p",
-    "parent": "h0la"
+    "parent": "rj2q"
   },
   "5p6": {
     "type": "card",
     "id": "5p6",
     "deck": "coinDeck",
     "cardType": "5p6.png",
-    "z": 63704,
+    "z": 65107,
     "coinType": "5p",
-    "parent": "h0la"
+    "parent": "rj2q"
   },
   "coinDeckHolder": {
     "type": "holder",
@@ -955,7 +956,7 @@
     "id": "1j3a 50p0.png 1",
     "deck": "coin0Deck",
     "cardType": "50p0.png",
-    "z": 63205,
+    "z": 65450,
     "parent": "lfpy"
   },
   "1j3a 50p0.png 2": {
@@ -963,7 +964,7 @@
     "id": "1j3a 50p0.png 2",
     "deck": "coin0Deck",
     "cardType": "50p0.png",
-    "z": 63234,
+    "z": 65395,
     "parent": "lfpy"
   },
   "1j3a 50p0.png 3": {
@@ -971,7 +972,7 @@
     "id": "1j3a 50p0.png 3",
     "deck": "coin0Deck",
     "cardType": "50p0.png",
-    "z": 63237,
+    "z": 65397,
     "parent": "lfpy"
   },
   "1j3a 50p0.png 4": {
@@ -979,7 +980,7 @@
     "id": "1j3a 50p0.png 4",
     "deck": "coin0Deck",
     "cardType": "50p0.png",
-    "z": 63216,
+    "z": 65427,
     "parent": "lfpy"
   },
   "1j3a 50p0.png 5": {
@@ -987,7 +988,7 @@
     "id": "1j3a 50p0.png 5",
     "deck": "coin0Deck",
     "cardType": "50p0.png",
-    "z": 63295,
+    "z": 65390,
     "parent": "lfpy"
   },
   "1j3a 50p0.png 6": {
@@ -995,7 +996,7 @@
     "id": "1j3a 50p0.png 6",
     "deck": "coin0Deck",
     "cardType": "50p0.png",
-    "z": 63229,
+    "z": 65426,
     "parent": "lfpy"
   },
   "1j3a 50p0.png 7": {
@@ -1003,7 +1004,7 @@
     "id": "1j3a 50p0.png 7",
     "deck": "coin0Deck",
     "cardType": "50p0.png",
-    "z": 63257,
+    "z": 65424,
     "parent": "lfpy"
   },
   "1j3a 50p0.png 8": {
@@ -1011,7 +1012,7 @@
     "id": "1j3a 50p0.png 8",
     "deck": "coin0Deck",
     "cardType": "50p0.png",
-    "z": 63213,
+    "z": 65429,
     "parent": "lfpy"
   },
   "1j3a 50p0.png 9": {
@@ -1019,7 +1020,7 @@
     "id": "1j3a 50p0.png 9",
     "deck": "coin0Deck",
     "cardType": "50p0.png",
-    "z": 63291,
+    "z": 65392,
     "parent": "lfpy"
   },
   "1j3a 50p0.png 10": {
@@ -1027,7 +1028,7 @@
     "id": "1j3a 50p0.png 10",
     "deck": "coin0Deck",
     "cardType": "50p0.png",
-    "z": 63242,
+    "z": 65404,
     "parent": "lfpy"
   },
   "1j3a 1p0.png 1": {
@@ -1035,7 +1036,7 @@
     "id": "1j3a 1p0.png 1",
     "deck": "coin0Deck",
     "cardType": "1p0.png",
-    "z": 63290,
+    "z": 65428,
     "parent": "lfpy"
   },
   "1j3a 1p0.png 2": {
@@ -1043,7 +1044,7 @@
     "id": "1j3a 1p0.png 2",
     "deck": "coin0Deck",
     "cardType": "1p0.png",
-    "z": 63274,
+    "z": 65452,
     "parent": "lfpy"
   },
   "1j3a 1p0.png 3": {
@@ -1051,7 +1052,7 @@
     "id": "1j3a 1p0.png 3",
     "deck": "coin0Deck",
     "cardType": "1p0.png",
-    "z": 63268,
+    "z": 65459,
     "parent": "lfpy"
   },
   "1j3a 1p0.png 4": {
@@ -1059,7 +1060,7 @@
     "id": "1j3a 1p0.png 4",
     "deck": "coin0Deck",
     "cardType": "1p0.png",
-    "z": 63253,
+    "z": 65406,
     "parent": "lfpy"
   },
   "1j3a 1p0.png 5": {
@@ -1067,7 +1068,7 @@
     "id": "1j3a 1p0.png 5",
     "deck": "coin0Deck",
     "cardType": "1p0.png",
-    "z": 63226,
+    "z": 65484,
     "parent": "lfpy"
   },
   "1j3a 1p0.png 6": {
@@ -1075,7 +1076,7 @@
     "id": "1j3a 1p0.png 6",
     "deck": "coin0Deck",
     "cardType": "1p0.png",
-    "z": 63222,
+    "z": 65470,
     "parent": "lfpy"
   },
   "1j3a 1p0.png 7": {
@@ -1083,7 +1084,7 @@
     "id": "1j3a 1p0.png 7",
     "deck": "coin0Deck",
     "cardType": "1p0.png",
-    "z": 63235,
+    "z": 65410,
     "parent": "lfpy"
   },
   "1j3a 1p0.png 8": {
@@ -1091,7 +1092,7 @@
     "id": "1j3a 1p0.png 8",
     "deck": "coin0Deck",
     "cardType": "1p0.png",
-    "z": 63296,
+    "z": 65464,
     "parent": "lfpy"
   },
   "1j3a 1p0.png 9": {
@@ -1099,7 +1100,7 @@
     "id": "1j3a 1p0.png 9",
     "deck": "coin0Deck",
     "cardType": "1p0.png",
-    "z": 63263,
+    "z": 65472,
     "parent": "lfpy"
   },
   "1j3a 1p0.png 10": {
@@ -1107,7 +1108,7 @@
     "id": "1j3a 1p0.png 10",
     "deck": "coin0Deck",
     "cardType": "1p0.png",
-    "z": 63261,
+    "z": 65402,
     "parent": "lfpy"
   },
   "1j3a 2p0.png 1": {
@@ -1115,7 +1116,7 @@
     "id": "1j3a 2p0.png 1",
     "deck": "coin0Deck",
     "cardType": "2p0.png",
-    "z": 63284,
+    "z": 65434,
     "parent": "lfpy"
   },
   "1j3a 2p0.png 2": {
@@ -1123,7 +1124,7 @@
     "id": "1j3a 2p0.png 2",
     "deck": "coin0Deck",
     "cardType": "2p0.png",
-    "z": 63292,
+    "z": 65423,
     "parent": "lfpy"
   },
   "1j3a 2p0.png 3": {
@@ -1131,7 +1132,7 @@
     "id": "1j3a 2p0.png 3",
     "deck": "coin0Deck",
     "cardType": "2p0.png",
-    "z": 63224,
+    "z": 65466,
     "parent": "lfpy"
   },
   "1j3a 2p0.png 4": {
@@ -1139,7 +1140,7 @@
     "id": "1j3a 2p0.png 4",
     "deck": "coin0Deck",
     "cardType": "2p0.png",
-    "z": 63225,
+    "z": 65418,
     "parent": "lfpy"
   },
   "1j3a 2p0.png 5": {
@@ -1147,7 +1148,7 @@
     "id": "1j3a 2p0.png 5",
     "deck": "coin0Deck",
     "cardType": "2p0.png",
-    "z": 63238,
+    "z": 65485,
     "parent": "lfpy"
   },
   "1j3a 2p0.png 6": {
@@ -1155,7 +1156,7 @@
     "id": "1j3a 2p0.png 6",
     "deck": "coin0Deck",
     "cardType": "2p0.png",
-    "z": 63289,
+    "z": 65420,
     "parent": "lfpy"
   },
   "1j3a 2p0.png 7": {
@@ -1163,7 +1164,7 @@
     "id": "1j3a 2p0.png 7",
     "deck": "coin0Deck",
     "cardType": "2p0.png",
-    "z": 63245,
+    "z": 65425,
     "parent": "lfpy"
   },
   "1j3a 2p0.png 8": {
@@ -1171,7 +1172,7 @@
     "id": "1j3a 2p0.png 8",
     "deck": "coin0Deck",
     "cardType": "2p0.png",
-    "z": 63270,
+    "z": 65432,
     "parent": "lfpy"
   },
   "1j3a 2p0.png 9": {
@@ -1179,7 +1180,7 @@
     "id": "1j3a 2p0.png 9",
     "deck": "coin0Deck",
     "cardType": "2p0.png",
-    "z": 63206,
+    "z": 65476,
     "parent": "lfpy"
   },
   "1j3a 2p0.png 10": {
@@ -1187,7 +1188,7 @@
     "id": "1j3a 2p0.png 10",
     "deck": "coin0Deck",
     "cardType": "2p0.png",
-    "z": 63267,
+    "z": 65431,
     "parent": "lfpy"
   },
   "1j3a 5p0.png 1": {
@@ -1195,7 +1196,7 @@
     "id": "1j3a 5p0.png 1",
     "deck": "coin0Deck",
     "cardType": "5p0.png",
-    "z": 63217,
+    "z": 65391,
     "parent": "lfpy"
   },
   "1j3a 5p0.png 2": {
@@ -1203,7 +1204,7 @@
     "id": "1j3a 5p0.png 2",
     "deck": "coin0Deck",
     "cardType": "5p0.png",
-    "z": 63271,
+    "z": 65436,
     "parent": "lfpy"
   },
   "1j3a 5p0.png 3": {
@@ -1211,7 +1212,7 @@
     "id": "1j3a 5p0.png 3",
     "deck": "coin0Deck",
     "cardType": "5p0.png",
-    "z": 63220,
+    "z": 65433,
     "parent": "lfpy"
   },
   "1j3a 5p0.png 4": {
@@ -1219,7 +1220,7 @@
     "id": "1j3a 5p0.png 4",
     "deck": "coin0Deck",
     "cardType": "5p0.png",
-    "z": 63210,
+    "z": 65475,
     "parent": "lfpy"
   },
   "1j3a 5p0.png 5": {
@@ -1227,7 +1228,7 @@
     "id": "1j3a 5p0.png 5",
     "deck": "coin0Deck",
     "cardType": "5p0.png",
-    "z": 63272,
+    "z": 65413,
     "parent": "lfpy"
   },
   "1j3a 5p0.png 6": {
@@ -1235,7 +1236,7 @@
     "id": "1j3a 5p0.png 6",
     "deck": "coin0Deck",
     "cardType": "5p0.png",
-    "z": 63203,
+    "z": 65454,
     "parent": "lfpy"
   },
   "1j3a 5p0.png 7": {
@@ -1243,7 +1244,7 @@
     "id": "1j3a 5p0.png 7",
     "deck": "coin0Deck",
     "cardType": "5p0.png",
-    "z": 63215,
+    "z": 65480,
     "parent": "lfpy"
   },
   "1j3a 5p0.png 8": {
@@ -1251,7 +1252,7 @@
     "id": "1j3a 5p0.png 8",
     "deck": "coin0Deck",
     "cardType": "5p0.png",
-    "z": 63227,
+    "z": 65457,
     "parent": "lfpy"
   },
   "1j3a 5p0.png 9": {
@@ -1259,7 +1260,7 @@
     "id": "1j3a 5p0.png 9",
     "deck": "coin0Deck",
     "cardType": "5p0.png",
-    "z": 63211,
+    "z": 65469,
     "parent": "lfpy"
   },
   "1j3a 5p0.png 10": {
@@ -1267,7 +1268,7 @@
     "id": "1j3a 5p0.png 10",
     "deck": "coin0Deck",
     "cardType": "5p0.png",
-    "z": 63259,
+    "z": 65387,
     "parent": "lfpy"
   },
   "coin0Deck": {
@@ -1317,7 +1318,7 @@
     "id": "1j3a 50p0.png 11",
     "deck": "coin0Deck",
     "cardType": "50p0.png",
-    "z": 63281,
+    "z": 65405,
     "parent": "lfpy"
   },
   "1j3a 50p0.png 12": {
@@ -1325,7 +1326,7 @@
     "id": "1j3a 50p0.png 12",
     "deck": "coin0Deck",
     "cardType": "50p0.png",
-    "z": 63240,
+    "z": 65400,
     "parent": "lfpy"
   },
   "1j3a 50p0.png 13": {
@@ -1333,7 +1334,7 @@
     "id": "1j3a 50p0.png 13",
     "deck": "coin0Deck",
     "cardType": "50p0.png",
-    "z": 63246,
+    "z": 65407,
     "parent": "lfpy"
   },
   "1j3a 50p0.png 14": {
@@ -1341,7 +1342,7 @@
     "id": "1j3a 50p0.png 14",
     "deck": "coin0Deck",
     "cardType": "50p0.png",
-    "z": 63250,
+    "z": 65447,
     "parent": "lfpy"
   },
   "1j3a 50p0.png 15": {
@@ -1349,7 +1350,7 @@
     "id": "1j3a 50p0.png 15",
     "deck": "coin0Deck",
     "cardType": "50p0.png",
-    "z": 63243,
+    "z": 65409,
     "parent": "lfpy"
   },
   "1j3a 50p0.png 16": {
@@ -1357,7 +1358,7 @@
     "id": "1j3a 50p0.png 16",
     "deck": "coin0Deck",
     "cardType": "50p0.png",
-    "z": 63293,
+    "z": 65462,
     "parent": "lfpy"
   },
   "1j3a 50p0.png 17": {
@@ -1365,7 +1366,7 @@
     "id": "1j3a 50p0.png 17",
     "deck": "coin0Deck",
     "cardType": "50p0.png",
-    "z": 63269,
+    "z": 65478,
     "parent": "lfpy"
   },
   "1j3a 50p0.png 18": {
@@ -1373,7 +1374,7 @@
     "id": "1j3a 50p0.png 18",
     "deck": "coin0Deck",
     "cardType": "50p0.png",
-    "z": 63258,
+    "z": 65468,
     "parent": "lfpy"
   },
   "1j3a 50p0.png 19": {
@@ -1381,7 +1382,7 @@
     "id": "1j3a 50p0.png 19",
     "deck": "coin0Deck",
     "cardType": "50p0.png",
-    "z": 63214,
+    "z": 65479,
     "parent": "lfpy"
   },
   "1j3a 50p0.png 20": {
@@ -1389,7 +1390,7 @@
     "id": "1j3a 50p0.png 20",
     "deck": "coin0Deck",
     "cardType": "50p0.png",
-    "z": 63233,
+    "z": 65439,
     "parent": "lfpy"
   },
   "1j3a 50p0.png 21": {
@@ -1397,7 +1398,7 @@
     "id": "1j3a 50p0.png 21",
     "deck": "coin0Deck",
     "cardType": "50p0.png",
-    "z": 63298,
+    "z": 65460,
     "parent": "lfpy"
   },
   "1j3a 50p0.png 22": {
@@ -1405,7 +1406,7 @@
     "id": "1j3a 50p0.png 22",
     "deck": "coin0Deck",
     "cardType": "50p0.png",
-    "z": 63288,
+    "z": 65398,
     "parent": "lfpy"
   },
   "1j3a 50p0.png 23": {
@@ -1413,7 +1414,7 @@
     "id": "1j3a 50p0.png 23",
     "deck": "coin0Deck",
     "cardType": "50p0.png",
-    "z": 63294,
+    "z": 65399,
     "parent": "lfpy"
   },
   "1j3a 50p0.png 24": {
@@ -1421,7 +1422,7 @@
     "id": "1j3a 50p0.png 24",
     "deck": "coin0Deck",
     "cardType": "50p0.png",
-    "z": 63209,
+    "z": 65451,
     "parent": "lfpy"
   },
   "1j3a 50p0.png 25": {
@@ -1429,7 +1430,7 @@
     "id": "1j3a 50p0.png 25",
     "deck": "coin0Deck",
     "cardType": "50p0.png",
-    "z": 63231,
+    "z": 65393,
     "parent": "lfpy"
   },
   "1j3a 5p0.png 11": {
@@ -1437,7 +1438,7 @@
     "id": "1j3a 5p0.png 11",
     "deck": "coin0Deck",
     "cardType": "5p0.png",
-    "z": 63260,
+    "z": 65446,
     "parent": "lfpy"
   },
   "1j3a 5p0.png 12": {
@@ -1445,7 +1446,7 @@
     "id": "1j3a 5p0.png 12",
     "deck": "coin0Deck",
     "cardType": "5p0.png",
-    "z": 63218,
+    "z": 65412,
     "parent": "lfpy"
   },
   "1j3a 5p0.png 13": {
@@ -1453,7 +1454,7 @@
     "id": "1j3a 5p0.png 13",
     "deck": "coin0Deck",
     "cardType": "5p0.png",
-    "z": 63252,
+    "z": 65438,
     "parent": "lfpy"
   },
   "1j3a 5p0.png 14": {
@@ -1461,7 +1462,7 @@
     "id": "1j3a 5p0.png 14",
     "deck": "coin0Deck",
     "cardType": "5p0.png",
-    "z": 63248,
+    "z": 65445,
     "parent": "lfpy"
   },
   "1j3a 5p0.png 15": {
@@ -1469,7 +1470,7 @@
     "id": "1j3a 5p0.png 15",
     "deck": "coin0Deck",
     "cardType": "5p0.png",
-    "z": 63286,
+    "z": 65440,
     "parent": "lfpy"
   },
   "1j3a 5p0.png 16": {
@@ -1477,7 +1478,7 @@
     "id": "1j3a 5p0.png 16",
     "deck": "coin0Deck",
     "cardType": "5p0.png",
-    "z": 63219,
+    "z": 65388,
     "parent": "lfpy"
   },
   "1j3a 5p0.png 17": {
@@ -1485,7 +1486,7 @@
     "id": "1j3a 5p0.png 17",
     "deck": "coin0Deck",
     "cardType": "5p0.png",
-    "z": 63247,
+    "z": 65386,
     "parent": "lfpy"
   },
   "1j3a 5p0.png 18": {
@@ -1493,7 +1494,7 @@
     "id": "1j3a 5p0.png 18",
     "deck": "coin0Deck",
     "cardType": "5p0.png",
-    "z": 63207,
+    "z": 65415,
     "parent": "lfpy"
   },
   "1j3a 5p0.png 19": {
@@ -1501,7 +1502,7 @@
     "id": "1j3a 5p0.png 19",
     "deck": "coin0Deck",
     "cardType": "5p0.png",
-    "z": 63239,
+    "z": 65401,
     "parent": "lfpy"
   },
   "1j3a 5p0.png 20": {
@@ -1509,7 +1510,7 @@
     "id": "1j3a 5p0.png 20",
     "deck": "coin0Deck",
     "cardType": "5p0.png",
-    "z": 63251,
+    "z": 65455,
     "parent": "lfpy"
   },
   "1j3a 5p0.png 21": {
@@ -1517,7 +1518,7 @@
     "id": "1j3a 5p0.png 21",
     "deck": "coin0Deck",
     "cardType": "5p0.png",
-    "z": 63264,
+    "z": 65408,
     "parent": "lfpy"
   },
   "1j3a 5p0.png 22": {
@@ -1525,7 +1526,7 @@
     "id": "1j3a 5p0.png 22",
     "deck": "coin0Deck",
     "cardType": "5p0.png",
-    "z": 63202,
+    "z": 65453,
     "parent": "lfpy"
   },
   "1j3a 5p0.png 23": {
@@ -1533,7 +1534,7 @@
     "id": "1j3a 5p0.png 23",
     "deck": "coin0Deck",
     "cardType": "5p0.png",
-    "z": 63265,
+    "z": 65442,
     "parent": "lfpy"
   },
   "1j3a 5p0.png 24": {
@@ -1541,7 +1542,7 @@
     "id": "1j3a 5p0.png 24",
     "deck": "coin0Deck",
     "cardType": "5p0.png",
-    "z": 63273,
+    "z": 65435,
     "parent": "lfpy"
   },
   "1j3a 5p0.png 25": {
@@ -1549,7 +1550,7 @@
     "id": "1j3a 5p0.png 25",
     "deck": "coin0Deck",
     "cardType": "5p0.png",
-    "z": 63221,
+    "z": 65456,
     "parent": "lfpy"
   },
   "1j3a 2p0.png 11": {
@@ -1557,7 +1558,7 @@
     "id": "1j3a 2p0.png 11",
     "deck": "coin0Deck",
     "cardType": "2p0.png",
-    "z": 63285,
+    "z": 65444,
     "parent": "lfpy"
   },
   "1j3a 2p0.png 12": {
@@ -1565,7 +1566,7 @@
     "id": "1j3a 2p0.png 12",
     "deck": "coin0Deck",
     "cardType": "2p0.png",
-    "z": 63266,
+    "z": 65443,
     "parent": "lfpy"
   },
   "1j3a 2p0.png 13": {
@@ -1573,7 +1574,7 @@
     "id": "1j3a 2p0.png 13",
     "deck": "coin0Deck",
     "cardType": "2p0.png",
-    "z": 63228,
+    "z": 65411,
     "parent": "lfpy"
   },
   "1j3a 2p0.png 14": {
@@ -1581,7 +1582,7 @@
     "id": "1j3a 2p0.png 14",
     "deck": "coin0Deck",
     "cardType": "2p0.png",
-    "z": 63275,
+    "z": 65419,
     "parent": "lfpy"
   },
   "1j3a 2p0.png 15": {
@@ -1589,7 +1590,7 @@
     "id": "1j3a 2p0.png 15",
     "deck": "coin0Deck",
     "cardType": "2p0.png",
-    "z": 63297,
+    "z": 65461,
     "parent": "lfpy"
   },
   "1j3a 2p0.png 16": {
@@ -1597,7 +1598,7 @@
     "id": "1j3a 2p0.png 16",
     "deck": "coin0Deck",
     "cardType": "2p0.png",
-    "z": 63280,
+    "z": 65416,
     "parent": "lfpy"
   },
   "1j3a 2p0.png 17": {
@@ -1605,7 +1606,7 @@
     "id": "1j3a 2p0.png 17",
     "deck": "coin0Deck",
     "cardType": "2p0.png",
-    "z": 63230,
+    "z": 65474,
     "parent": "lfpy"
   },
   "1j3a 2p0.png 18": {
@@ -1613,7 +1614,7 @@
     "id": "1j3a 2p0.png 18",
     "deck": "coin0Deck",
     "cardType": "2p0.png",
-    "z": 63283,
+    "z": 65396,
     "parent": "lfpy"
   },
   "1j3a 2p0.png 19": {
@@ -1621,7 +1622,7 @@
     "id": "1j3a 2p0.png 19",
     "deck": "coin0Deck",
     "cardType": "2p0.png",
-    "z": 63201,
+    "z": 65414,
     "parent": "lfpy"
   },
   "1j3a 2p0.png 20": {
@@ -1629,7 +1630,7 @@
     "id": "1j3a 2p0.png 20",
     "deck": "coin0Deck",
     "cardType": "2p0.png",
-    "z": 63282,
+    "z": 65417,
     "parent": "lfpy"
   },
   "1j3a 2p0.png 21": {
@@ -1637,7 +1638,7 @@
     "id": "1j3a 2p0.png 21",
     "deck": "coin0Deck",
     "cardType": "2p0.png",
-    "z": 63277,
+    "z": 65403,
     "parent": "lfpy"
   },
   "1j3a 2p0.png 22": {
@@ -1645,7 +1646,7 @@
     "id": "1j3a 2p0.png 22",
     "deck": "coin0Deck",
     "cardType": "2p0.png",
-    "z": 63208,
+    "z": 65449,
     "parent": "lfpy"
   },
   "1j3a 2p0.png 23": {
@@ -1653,7 +1654,7 @@
     "id": "1j3a 2p0.png 23",
     "deck": "coin0Deck",
     "cardType": "2p0.png",
-    "z": 63287,
+    "z": 65441,
     "parent": "lfpy"
   },
   "1j3a 2p0.png 24": {
@@ -1661,7 +1662,7 @@
     "id": "1j3a 2p0.png 24",
     "deck": "coin0Deck",
     "cardType": "2p0.png",
-    "z": 63262,
+    "z": 65483,
     "parent": "lfpy"
   },
   "1j3a 2p0.png 25": {
@@ -1669,7 +1670,7 @@
     "id": "1j3a 2p0.png 25",
     "deck": "coin0Deck",
     "cardType": "2p0.png",
-    "z": 63249,
+    "z": 65471,
     "parent": "lfpy"
   },
   "1j3a 1p0.png 11": {
@@ -1677,7 +1678,7 @@
     "id": "1j3a 1p0.png 11",
     "deck": "coin0Deck",
     "cardType": "1p0.png",
-    "z": 63232,
+    "z": 65394,
     "parent": "lfpy"
   },
   "1j3a 1p0.png 12": {
@@ -1685,7 +1686,7 @@
     "id": "1j3a 1p0.png 12",
     "deck": "coin0Deck",
     "cardType": "1p0.png",
-    "z": 63255,
+    "z": 65481,
     "parent": "lfpy"
   },
   "1j3a 1p0.png 13": {
@@ -1693,7 +1694,7 @@
     "id": "1j3a 1p0.png 13",
     "deck": "coin0Deck",
     "cardType": "1p0.png",
-    "z": 63254,
+    "z": 65482,
     "parent": "lfpy"
   },
   "1j3a 1p0.png 14": {
@@ -1701,7 +1702,7 @@
     "id": "1j3a 1p0.png 14",
     "deck": "coin0Deck",
     "cardType": "1p0.png",
-    "z": 63278,
+    "z": 65467,
     "parent": "lfpy"
   },
   "1j3a 1p0.png 15": {
@@ -1709,7 +1710,7 @@
     "id": "1j3a 1p0.png 15",
     "deck": "coin0Deck",
     "cardType": "1p0.png",
-    "z": 63299,
+    "z": 65463,
     "parent": "lfpy"
   },
   "1j3a 1p0.png 16": {
@@ -1717,7 +1718,7 @@
     "id": "1j3a 1p0.png 16",
     "deck": "coin0Deck",
     "cardType": "1p0.png",
-    "z": 63236,
+    "z": 65477,
     "parent": "lfpy"
   },
   "1j3a 1p0.png 17": {
@@ -1725,7 +1726,7 @@
     "id": "1j3a 1p0.png 17",
     "deck": "coin0Deck",
     "cardType": "1p0.png",
-    "z": 63204,
+    "z": 65422,
     "parent": "lfpy"
   },
   "1j3a 1p0.png 18": {
@@ -1733,7 +1734,7 @@
     "id": "1j3a 1p0.png 18",
     "deck": "coin0Deck",
     "cardType": "1p0.png",
-    "z": 63279,
+    "z": 65430,
     "parent": "lfpy"
   },
   "1j3a 1p0.png 19": {
@@ -1741,7 +1742,7 @@
     "id": "1j3a 1p0.png 19",
     "deck": "coin0Deck",
     "cardType": "1p0.png",
-    "z": 63276,
+    "z": 65465,
     "parent": "lfpy"
   },
   "1j3a 1p0.png 20": {
@@ -1749,7 +1750,7 @@
     "id": "1j3a 1p0.png 20",
     "deck": "coin0Deck",
     "cardType": "1p0.png",
-    "z": 63816,
+    "z": 65421,
     "parent": "lfpy"
   },
   "1j3a 1p0.png 21": {
@@ -1757,7 +1758,7 @@
     "id": "1j3a 1p0.png 21",
     "deck": "coin0Deck",
     "cardType": "1p0.png",
-    "z": 63241,
+    "z": 65458,
     "parent": "lfpy"
   },
   "1j3a 1p0.png 22": {
@@ -1765,7 +1766,7 @@
     "id": "1j3a 1p0.png 22",
     "deck": "coin0Deck",
     "cardType": "1p0.png",
-    "z": 63223,
+    "z": 65448,
     "parent": "lfpy"
   },
   "1j3a 1p0.png 23": {
@@ -1773,7 +1774,7 @@
     "id": "1j3a 1p0.png 23",
     "deck": "coin0Deck",
     "cardType": "1p0.png",
-    "z": 63256,
+    "z": 65389,
     "parent": "lfpy"
   },
   "1j3a 1p0.png 24": {
@@ -1781,7 +1782,7 @@
     "id": "1j3a 1p0.png 24",
     "deck": "coin0Deck",
     "cardType": "1p0.png",
-    "z": 63212,
+    "z": 65473,
     "parent": "lfpy"
   },
   "1j3a 1p0.png 25": {
@@ -1789,7 +1790,7 @@
     "id": "1j3a 1p0.png 25",
     "deck": "coin0Deck",
     "cardType": "1p0.png",
-    "z": 63244,
+    "z": 65437,
     "parent": "lfpy"
   },
   "e3i6B": {
@@ -1833,7 +1834,7 @@
     "id": "l39q swap.png 1",
     "deck": "swapDeck",
     "cardType": "swap.png",
-    "z": 63306,
+    "z": 65255,
     "parent": "32h6"
   },
   "l39q swap.png 2": {
@@ -1841,7 +1842,7 @@
     "id": "l39q swap.png 2",
     "deck": "swapDeck",
     "cardType": "swap.png",
-    "z": 63309,
+    "z": 65256,
     "parent": "32h6"
   },
   "l39q swap.png 3": {
@@ -1849,7 +1850,7 @@
     "id": "l39q swap.png 3",
     "deck": "swapDeck",
     "cardType": "swap.png",
-    "z": 63308,
+    "z": 65258,
     "parent": "32h6"
   },
   "l39q swap.png 4": {
@@ -1857,7 +1858,7 @@
     "id": "l39q swap.png 4",
     "deck": "swapDeck",
     "cardType": "swap.png",
-    "z": 63827,
+    "z": 65254,
     "parent": "32h6"
   },
   "l39q swap.png 5": {
@@ -1865,7 +1866,7 @@
     "id": "l39q swap.png 5",
     "deck": "swapDeck",
     "cardType": "swap.png",
-    "z": 63307,
+    "z": 65257,
     "parent": "32h6"
   },
   "swapDeck": {
@@ -2432,7 +2433,7 @@
     "cardType": "3.png",
     "x": 4,
     "y": 4,
-    "z": 63807,
+    "z": 65013,
     "scoreCube": true,
     "parent": "scoreHolder8"
   },
@@ -3461,7 +3462,7 @@
     "id": "7k8w 1.png 1",
     "deck": "cubeDeck1",
     "cardType": "1.png",
-    "z": 63411,
+    "z": 65175,
     "parent": "2auc"
   },
   "7k8w 1.png 2": {
@@ -3469,7 +3470,7 @@
     "id": "7k8w 1.png 2",
     "deck": "cubeDeck1",
     "cardType": "1.png",
-    "z": 63844,
+    "z": 65160,
     "parent": "2auc"
   },
   "7k8w 1.png 3": {
@@ -3477,7 +3478,7 @@
     "id": "7k8w 1.png 3",
     "deck": "cubeDeck1",
     "cardType": "1.png",
-    "z": 63414,
+    "z": 65169,
     "parent": "2auc"
   },
   "7k8w 1.png 4": {
@@ -3485,7 +3486,7 @@
     "id": "7k8w 1.png 4",
     "deck": "cubeDeck1",
     "cardType": "1.png",
-    "z": 63428,
+    "z": 65178,
     "parent": "2auc"
   },
   "7k8w 1.png 5": {
@@ -3493,7 +3494,7 @@
     "id": "7k8w 1.png 5",
     "deck": "cubeDeck1",
     "cardType": "1.png",
-    "z": 63404,
+    "z": 65167,
     "parent": "2auc"
   },
   "7k8w 1.png 6": {
@@ -3501,7 +3502,7 @@
     "id": "7k8w 1.png 6",
     "deck": "cubeDeck1",
     "cardType": "1.png",
-    "z": 63425,
+    "z": 65159,
     "parent": "2auc"
   },
   "7k8w 1.png 7": {
@@ -3509,7 +3510,7 @@
     "id": "7k8w 1.png 7",
     "deck": "cubeDeck1",
     "cardType": "1.png",
-    "z": 63405,
+    "z": 65157,
     "parent": "2auc"
   },
   "7k8w 1.png 8": {
@@ -3517,7 +3518,7 @@
     "id": "7k8w 1.png 8",
     "deck": "cubeDeck1",
     "cardType": "1.png",
-    "z": 63422,
+    "z": 65186,
     "parent": "2auc"
   },
   "7k8w 1.png 9": {
@@ -3525,7 +3526,7 @@
     "id": "7k8w 1.png 9",
     "deck": "cubeDeck1",
     "cardType": "1.png",
-    "z": 63845,
+    "z": 65158,
     "parent": "2auc"
   },
   "7k8w 1.png 10": {
@@ -3533,7 +3534,7 @@
     "id": "7k8w 1.png 10",
     "deck": "cubeDeck1",
     "cardType": "1.png",
-    "z": 63410,
+    "z": 65162,
     "linkedToSeat": "seat1",
     "parent": "2auc"
   },
@@ -3542,7 +3543,7 @@
     "id": "7k8w 1.png 11",
     "deck": "cubeDeck1",
     "cardType": "1.png",
-    "z": 63407,
+    "z": 65166,
     "parent": "2auc"
   },
   "7k8w 1.png 12": {
@@ -3550,7 +3551,7 @@
     "id": "7k8w 1.png 12",
     "deck": "cubeDeck1",
     "cardType": "1.png",
-    "z": 63427,
+    "z": 65174,
     "parent": "2auc"
   },
   "7k8w 1.png 13": {
@@ -3558,7 +3559,7 @@
     "id": "7k8w 1.png 13",
     "deck": "cubeDeck1",
     "cardType": "1.png",
-    "z": 63406,
+    "z": 65170,
     "parent": "2auc"
   },
   "7k8w 1.png 14": {
@@ -3566,7 +3567,7 @@
     "id": "7k8w 1.png 14",
     "deck": "cubeDeck1",
     "cardType": "1.png",
-    "z": 63409,
+    "z": 65179,
     "parent": "2auc"
   },
   "7k8w 1.png 15": {
@@ -3574,7 +3575,7 @@
     "id": "7k8w 1.png 15",
     "deck": "cubeDeck1",
     "cardType": "1.png",
-    "z": 63402,
+    "z": 65161,
     "parent": "2auc"
   },
   "7k8w 1.png 16": {
@@ -3582,7 +3583,7 @@
     "id": "7k8w 1.png 16",
     "deck": "cubeDeck1",
     "cardType": "1.png",
-    "z": 63423,
+    "z": 65182,
     "parent": "2auc"
   },
   "7k8w 1.png 17": {
@@ -3590,7 +3591,7 @@
     "id": "7k8w 1.png 17",
     "deck": "cubeDeck1",
     "cardType": "1.png",
-    "z": 63426,
+    "z": 65172,
     "parent": "2auc"
   },
   "7k8w 1.png 18": {
@@ -3598,7 +3599,7 @@
     "id": "7k8w 1.png 18",
     "deck": "cubeDeck1",
     "cardType": "1.png",
-    "z": 63415,
+    "z": 65181,
     "parent": "2auc"
   },
   "7k8w 1.png 19": {
@@ -3606,7 +3607,7 @@
     "id": "7k8w 1.png 19",
     "deck": "cubeDeck1",
     "cardType": "1.png",
-    "z": 63421,
+    "z": 65176,
     "parent": "2auc"
   },
   "7k8w 1.png 20": {
@@ -3614,7 +3615,7 @@
     "id": "7k8w 1.png 20",
     "deck": "cubeDeck1",
     "cardType": "1.png",
-    "z": 63403,
+    "z": 65168,
     "parent": "2auc"
   },
   "7k8w 1.png 21": {
@@ -3622,7 +3623,7 @@
     "id": "7k8w 1.png 21",
     "deck": "cubeDeck1",
     "cardType": "1.png",
-    "z": 63408,
+    "z": 65185,
     "parent": "2auc"
   },
   "7k8w 1.png 22": {
@@ -3630,7 +3631,7 @@
     "id": "7k8w 1.png 22",
     "deck": "cubeDeck1",
     "cardType": "1.png",
-    "z": 63416,
+    "z": 65173,
     "parent": "2auc"
   },
   "7k8w 1.png 23": {
@@ -3638,7 +3639,7 @@
     "id": "7k8w 1.png 23",
     "deck": "cubeDeck1",
     "cardType": "1.png",
-    "z": 63412,
+    "z": 65183,
     "parent": "2auc"
   },
   "7k8w 1.png 24": {
@@ -3646,7 +3647,7 @@
     "id": "7k8w 1.png 24",
     "deck": "cubeDeck1",
     "cardType": "1.png",
-    "z": 63401,
+    "z": 65177,
     "parent": "2auc"
   },
   "7k8w 1.png 25": {
@@ -3654,7 +3655,7 @@
     "id": "7k8w 1.png 25",
     "deck": "cubeDeck1",
     "cardType": "1.png",
-    "z": 63424,
+    "z": 65184,
     "parent": "2auc"
   },
   "7k8w 1.png 26": {
@@ -3662,7 +3663,7 @@
     "id": "7k8w 1.png 26",
     "deck": "cubeDeck1",
     "cardType": "1.png",
-    "z": 63419,
+    "z": 65163,
     "parent": "2auc"
   },
   "7k8w 1.png 27": {
@@ -3670,7 +3671,7 @@
     "id": "7k8w 1.png 27",
     "deck": "cubeDeck1",
     "cardType": "1.png",
-    "z": 63417,
+    "z": 65171,
     "parent": "2auc"
   },
   "7k8w 1.png 28": {
@@ -3678,7 +3679,7 @@
     "id": "7k8w 1.png 28",
     "deck": "cubeDeck1",
     "cardType": "1.png",
-    "z": 63420,
+    "z": 65165,
     "parent": "2auc"
   },
   "7k8w 1.png 29": {
@@ -3686,7 +3687,7 @@
     "id": "7k8w 1.png 29",
     "deck": "cubeDeck1",
     "cardType": "1.png",
-    "z": 63418,
+    "z": 65180,
     "parent": "2auc"
   },
   "7k8w 1.png 30": {
@@ -3694,7 +3695,7 @@
     "id": "7k8w 1.png 30",
     "deck": "cubeDeck1",
     "cardType": "1.png",
-    "z": 63413,
+    "z": 65164,
     "parent": "2auc"
   },
   "cubeDeck1": {
@@ -4148,7 +4149,7 @@
     "id": "aiio pinkcube.png 3",
     "deck": "cubeDeck2",
     "cardType": "pinkcube.png",
-    "z": 63362,
+    "z": 64473,
     "parent": "xapa"
   },
   "x8l2 pinkcube.png 1": {
@@ -4156,7 +4157,7 @@
     "id": "x8l2 pinkcube.png 1",
     "deck": "cubeDeck2",
     "cardType": "pinkcube.png",
-    "z": 63348,
+    "z": 64474,
     "parent": "xapa"
   },
   "x8l2 pinkcube.png 2": {
@@ -4164,7 +4165,7 @@
     "id": "x8l2 pinkcube.png 2",
     "deck": "cubeDeck2",
     "cardType": "pinkcube.png",
-    "z": 63351,
+    "z": 64475,
     "linkedToSeat": "seat2",
     "parent": "xapa"
   },
@@ -4173,7 +4174,7 @@
     "id": "x8l2 pinkcube.png 3",
     "deck": "cubeDeck2",
     "cardType": "pinkcube.png",
-    "z": 63358,
+    "z": 64476,
     "parent": "xapa"
   },
   "x8l2 pinkcube.png 4": {
@@ -4181,7 +4182,7 @@
     "id": "x8l2 pinkcube.png 4",
     "deck": "cubeDeck2",
     "cardType": "pinkcube.png",
-    "z": 63367,
+    "z": 64477,
     "parent": "xapa"
   },
   "x8l2 pinkcube.png 5": {
@@ -4189,7 +4190,7 @@
     "id": "x8l2 pinkcube.png 5",
     "deck": "cubeDeck2",
     "cardType": "pinkcube.png",
-    "z": 63359,
+    "z": 64478,
     "parent": "xapa"
   },
   "x8l2 pinkcube.png 6": {
@@ -4197,7 +4198,7 @@
     "id": "x8l2 pinkcube.png 6",
     "deck": "cubeDeck2",
     "cardType": "pinkcube.png",
-    "z": 63341,
+    "z": 64479,
     "parent": "xapa"
   },
   "x8l2 pinkcube.png 7": {
@@ -4205,7 +4206,7 @@
     "id": "x8l2 pinkcube.png 7",
     "deck": "cubeDeck2",
     "cardType": "pinkcube.png",
-    "z": 63344,
+    "z": 64480,
     "parent": "xapa"
   },
   "x8l2 pinkcube.png 8": {
@@ -4213,7 +4214,7 @@
     "id": "x8l2 pinkcube.png 8",
     "deck": "cubeDeck2",
     "cardType": "pinkcube.png",
-    "z": 63354,
+    "z": 64481,
     "parent": "xapa"
   },
   "x8l2 pinkcube.png 9": {
@@ -4221,7 +4222,7 @@
     "id": "x8l2 pinkcube.png 9",
     "deck": "cubeDeck2",
     "cardType": "pinkcube.png",
-    "z": 63347,
+    "z": 64482,
     "parent": "xapa"
   },
   "x8l2 pinkcube.png 10": {
@@ -4229,7 +4230,7 @@
     "id": "x8l2 pinkcube.png 10",
     "deck": "cubeDeck2",
     "cardType": "pinkcube.png",
-    "z": 63363,
+    "z": 64483,
     "parent": "xapa"
   },
   "cubeDeck2": {
@@ -4274,7 +4275,7 @@
     "id": "aiio pinkcube.png 4",
     "deck": "cubeDeck2",
     "cardType": "pinkcube.png",
-    "z": 63366,
+    "z": 64484,
     "parent": "xapa"
   },
   "x8l2 pinkcube.png 11": {
@@ -4282,7 +4283,7 @@
     "id": "x8l2 pinkcube.png 11",
     "deck": "cubeDeck2",
     "cardType": "pinkcube.png",
-    "z": 63346,
+    "z": 64485,
     "parent": "xapa"
   },
   "x8l2 pinkcube.png 12": {
@@ -4290,7 +4291,7 @@
     "id": "x8l2 pinkcube.png 12",
     "deck": "cubeDeck2",
     "cardType": "pinkcube.png",
-    "z": 63365,
+    "z": 64486,
     "parent": "xapa"
   },
   "x8l2 pinkcube.png 13": {
@@ -4298,7 +4299,7 @@
     "id": "x8l2 pinkcube.png 13",
     "deck": "cubeDeck2",
     "cardType": "pinkcube.png",
-    "z": 63352,
+    "z": 64487,
     "parent": "xapa"
   },
   "x8l2 pinkcube.png 14": {
@@ -4306,7 +4307,7 @@
     "id": "x8l2 pinkcube.png 14",
     "deck": "cubeDeck2",
     "cardType": "pinkcube.png",
-    "z": 63353,
+    "z": 64488,
     "parent": "xapa"
   },
   "x8l2 pinkcube.png 15": {
@@ -4314,7 +4315,7 @@
     "id": "x8l2 pinkcube.png 15",
     "deck": "cubeDeck2",
     "cardType": "pinkcube.png",
-    "z": 63360,
+    "z": 64489,
     "parent": "xapa"
   },
   "x8l2 pinkcube.png 16": {
@@ -4322,7 +4323,7 @@
     "id": "x8l2 pinkcube.png 16",
     "deck": "cubeDeck2",
     "cardType": "pinkcube.png",
-    "z": 63350,
+    "z": 64490,
     "parent": "xapa"
   },
   "x8l2 pinkcube.png 17": {
@@ -4330,7 +4331,7 @@
     "id": "x8l2 pinkcube.png 17",
     "deck": "cubeDeck2",
     "cardType": "pinkcube.png",
-    "z": 63342,
+    "z": 64491,
     "parent": "xapa"
   },
   "x8l2 pinkcube.png 18": {
@@ -4338,7 +4339,7 @@
     "id": "x8l2 pinkcube.png 18",
     "deck": "cubeDeck2",
     "cardType": "pinkcube.png",
-    "z": 63361,
+    "z": 64492,
     "parent": "xapa"
   },
   "x8l2 pinkcube.png 19": {
@@ -4346,7 +4347,7 @@
     "id": "x8l2 pinkcube.png 19",
     "deck": "cubeDeck2",
     "cardType": "pinkcube.png",
-    "z": 63853,
+    "z": 64493,
     "hoverParent": "cubeHolder2",
     "parent": "xapa"
   },
@@ -4355,7 +4356,7 @@
     "id": "aiio pinkcube.png 5",
     "deck": "cubeDeck2",
     "cardType": "pinkcube.png",
-    "z": 63357,
+    "z": 64494,
     "parent": "xapa"
   },
   "x8l2 pinkcube.png 20": {
@@ -4363,7 +4364,7 @@
     "id": "x8l2 pinkcube.png 20",
     "deck": "cubeDeck2",
     "cardType": "pinkcube.png",
-    "z": 63343,
+    "z": 64495,
     "parent": "xapa"
   },
   "x8l2 pinkcube.png 21": {
@@ -4371,7 +4372,7 @@
     "id": "x8l2 pinkcube.png 21",
     "deck": "cubeDeck2",
     "cardType": "pinkcube.png",
-    "z": 63355,
+    "z": 64496,
     "parent": "xapa"
   },
   "x8l2 pinkcube.png 22": {
@@ -4379,7 +4380,7 @@
     "id": "x8l2 pinkcube.png 22",
     "deck": "cubeDeck2",
     "cardType": "pinkcube.png",
-    "z": 63356,
+    "z": 64497,
     "parent": "xapa"
   },
   "x8l2 pinkcube.png 23": {
@@ -4387,7 +4388,7 @@
     "id": "x8l2 pinkcube.png 23",
     "deck": "cubeDeck2",
     "cardType": "pinkcube.png",
-    "z": 63345,
+    "z": 64498,
     "parent": "xapa"
   },
   "x8l2 pinkcube.png 24": {
@@ -4395,7 +4396,7 @@
     "id": "x8l2 pinkcube.png 24",
     "deck": "cubeDeck2",
     "cardType": "pinkcube.png",
-    "z": 63349,
+    "z": 64499,
     "parent": "xapa"
   },
   "x8l2 pinkcube.png 26": {
@@ -4403,7 +4404,7 @@
     "id": "x8l2 pinkcube.png 26",
     "deck": "cubeDeck2",
     "cardType": "pinkcube.png",
-    "z": 63364,
+    "z": 64500,
     "parent": "xapa"
   },
   "x8l2 pinkcube.png 27": {
@@ -4411,7 +4412,7 @@
     "id": "x8l2 pinkcube.png 27",
     "deck": "cubeDeck2",
     "cardType": "pinkcube.png",
-    "z": 63369,
+    "z": 64501,
     "parent": "xapa"
   },
   "x8l2 pinkcube.png 28": {
@@ -4419,7 +4420,7 @@
     "id": "x8l2 pinkcube.png 28",
     "deck": "cubeDeck2",
     "cardType": "pinkcube.png",
-    "z": 63368,
+    "z": 64502,
     "parent": "xapa"
   },
   "s0ml bluecube.png 1": {
@@ -4427,7 +4428,7 @@
     "id": "s0ml bluecube.png 1",
     "deck": "cubeDeck3",
     "cardType": "bluecube.png",
-    "z": 63487,
+    "z": 65230,
     "linkedToSeat": "seat3",
     "parent": "8qeo"
   },
@@ -4436,7 +4437,7 @@
     "id": "s0ml bluecube.png 2",
     "deck": "cubeDeck3",
     "cardType": "bluecube.png",
-    "z": 63465,
+    "z": 65242,
     "parent": "8qeo"
   },
   "s0ml bluecube.png 3": {
@@ -4444,7 +4445,7 @@
     "id": "s0ml bluecube.png 3",
     "deck": "cubeDeck3",
     "cardType": "bluecube.png",
-    "z": 63478,
+    "z": 65240,
     "parent": "8qeo"
   },
   "s0ml bluecube.png 4": {
@@ -4452,7 +4453,7 @@
     "id": "s0ml bluecube.png 4",
     "deck": "cubeDeck3",
     "cardType": "bluecube.png",
-    "z": 63472,
+    "z": 65235,
     "parent": "8qeo"
   },
   "s0ml bluecube.png 5": {
@@ -4460,7 +4461,7 @@
     "id": "s0ml bluecube.png 5",
     "deck": "cubeDeck3",
     "cardType": "bluecube.png",
-    "z": 63471,
+    "z": 65220,
     "parent": "8qeo"
   },
   "s0ml bluecube.png 6": {
@@ -4468,7 +4469,7 @@
     "id": "s0ml bluecube.png 6",
     "deck": "cubeDeck3",
     "cardType": "bluecube.png",
-    "z": 63856,
+    "z": 65218,
     "parent": "8qeo"
   },
   "s0ml bluecube.png 7": {
@@ -4476,7 +4477,7 @@
     "id": "s0ml bluecube.png 7",
     "deck": "cubeDeck3",
     "cardType": "bluecube.png",
-    "z": 63473,
+    "z": 65241,
     "parent": "8qeo"
   },
   "s0ml bluecube.png 8": {
@@ -4484,7 +4485,7 @@
     "id": "s0ml bluecube.png 8",
     "deck": "cubeDeck3",
     "cardType": "bluecube.png",
-    "z": 63462,
+    "z": 65226,
     "parent": "8qeo"
   },
   "s0ml bluecube.png 9": {
@@ -4492,7 +4493,7 @@
     "id": "s0ml bluecube.png 9",
     "deck": "cubeDeck3",
     "cardType": "bluecube.png",
-    "z": 63484,
+    "z": 65244,
     "parent": "8qeo"
   },
   "s0ml bluecube.png 10": {
@@ -4500,7 +4501,7 @@
     "id": "s0ml bluecube.png 10",
     "deck": "cubeDeck3",
     "cardType": "bluecube.png",
-    "z": 63461,
+    "z": 65225,
     "parent": "8qeo"
   },
   "cubeDeck3": {
@@ -4546,7 +4547,7 @@
     "id": "s0ml bluecube.png 11",
     "deck": "cubeDeck3",
     "cardType": "bluecube.png",
-    "z": 63475,
+    "z": 65238,
     "parent": "8qeo"
   },
   "s0ml bluecube.png 12": {
@@ -4554,7 +4555,7 @@
     "id": "s0ml bluecube.png 12",
     "deck": "cubeDeck3",
     "cardType": "bluecube.png",
-    "z": 63469,
+    "z": 65224,
     "parent": "8qeo"
   },
   "s0ml bluecube.png 13": {
@@ -4562,7 +4563,7 @@
     "id": "s0ml bluecube.png 13",
     "deck": "cubeDeck3",
     "cardType": "bluecube.png",
-    "z": 63468,
+    "z": 65223,
     "parent": "8qeo"
   },
   "s0ml bluecube.png 14": {
@@ -4570,7 +4571,7 @@
     "id": "s0ml bluecube.png 14",
     "deck": "cubeDeck3",
     "cardType": "bluecube.png",
-    "z": 63470,
+    "z": 65239,
     "parent": "8qeo"
   },
   "s0ml bluecube.png 15": {
@@ -4578,7 +4579,7 @@
     "id": "s0ml bluecube.png 15",
     "deck": "cubeDeck3",
     "cardType": "bluecube.png",
-    "z": 63464,
+    "z": 65237,
     "parent": "8qeo"
   },
   "s0ml bluecube.png 16": {
@@ -4586,7 +4587,7 @@
     "id": "s0ml bluecube.png 16",
     "deck": "cubeDeck3",
     "cardType": "bluecube.png",
-    "z": 63486,
+    "z": 65246,
     "parent": "8qeo"
   },
   "s0ml bluecube.png 17": {
@@ -4594,7 +4595,7 @@
     "id": "s0ml bluecube.png 17",
     "deck": "cubeDeck3",
     "cardType": "bluecube.png",
-    "z": 63480,
+    "z": 65243,
     "parent": "8qeo"
   },
   "s0ml bluecube.png 18": {
@@ -4602,7 +4603,7 @@
     "id": "s0ml bluecube.png 18",
     "deck": "cubeDeck3",
     "cardType": "bluecube.png",
-    "z": 63488,
+    "z": 65229,
     "parent": "8qeo"
   },
   "s0ml bluecube.png 19": {
@@ -4610,7 +4611,7 @@
     "id": "s0ml bluecube.png 19",
     "deck": "cubeDeck3",
     "cardType": "bluecube.png",
-    "z": 63485,
+    "z": 65236,
     "parent": "8qeo"
   },
   "s0ml bluecube.png 20": {
@@ -4618,7 +4619,7 @@
     "id": "s0ml bluecube.png 20",
     "deck": "cubeDeck3",
     "cardType": "bluecube.png",
-    "z": 63483,
+    "z": 65219,
     "parent": "8qeo"
   },
   "s0ml bluecube.png 21": {
@@ -4626,7 +4627,7 @@
     "id": "s0ml bluecube.png 21",
     "deck": "cubeDeck3",
     "cardType": "bluecube.png",
-    "z": 63482,
+    "z": 65234,
     "parent": "8qeo"
   },
   "s0ml bluecube.png 22": {
@@ -4634,7 +4635,7 @@
     "id": "s0ml bluecube.png 22",
     "deck": "cubeDeck3",
     "cardType": "bluecube.png",
-    "z": 63479,
+    "z": 65221,
     "parent": "8qeo"
   },
   "s0ml bluecube.png 23": {
@@ -4642,7 +4643,7 @@
     "id": "s0ml bluecube.png 23",
     "deck": "cubeDeck3",
     "cardType": "bluecube.png",
-    "z": 63477,
+    "z": 65232,
     "parent": "8qeo"
   },
   "s0ml bluecube.png 24": {
@@ -4650,7 +4651,7 @@
     "id": "s0ml bluecube.png 24",
     "deck": "cubeDeck3",
     "cardType": "bluecube.png",
-    "z": 63466,
+    "z": 65222,
     "parent": "8qeo"
   },
   "s0ml bluecube.png 25": {
@@ -4658,7 +4659,7 @@
     "id": "s0ml bluecube.png 25",
     "deck": "cubeDeck3",
     "cardType": "bluecube.png",
-    "z": 63467,
+    "z": 65227,
     "parent": "8qeo"
   },
   "s0ml bluecube.png 26": {
@@ -4666,7 +4667,7 @@
     "id": "s0ml bluecube.png 26",
     "deck": "cubeDeck3",
     "cardType": "bluecube.png",
-    "z": 63474,
+    "z": 65228,
     "parent": "8qeo"
   },
   "s0ml bluecube.png 27": {
@@ -4674,7 +4675,7 @@
     "id": "s0ml bluecube.png 27",
     "deck": "cubeDeck3",
     "cardType": "bluecube.png",
-    "z": 63744,
+    "z": 65217,
     "parent": "8qeo"
   },
   "s0ml bluecube.png 28": {
@@ -4682,7 +4683,7 @@
     "id": "s0ml bluecube.png 28",
     "deck": "cubeDeck3",
     "cardType": "bluecube.png",
-    "z": 63481,
+    "z": 65245,
     "parent": "8qeo"
   },
   "s0ml bluecube.png 29": {
@@ -4690,7 +4691,7 @@
     "id": "s0ml bluecube.png 29",
     "deck": "cubeDeck3",
     "cardType": "bluecube.png",
-    "z": 63476,
+    "z": 65231,
     "parent": "8qeo"
   },
   "s0ml bluecube.png 30": {
@@ -4698,7 +4699,7 @@
     "id": "s0ml bluecube.png 30",
     "deck": "cubeDeck3",
     "cardType": "bluecube.png",
-    "z": 63463,
+    "z": 65233,
     "parent": "8qeo"
   },
   "0wfn white cube.png 1": {
@@ -4706,7 +4707,7 @@
     "id": "0wfn white cube.png 1",
     "deck": "cubeDeck4",
     "cardType": "white cube.png",
-    "z": 63535,
+    "z": 64533,
     "parent": "2jpm"
   },
   "0wfn white cube.png 2": {
@@ -4714,7 +4715,7 @@
     "id": "0wfn white cube.png 2",
     "deck": "cubeDeck4",
     "cardType": "white cube.png",
-    "z": 63547,
+    "z": 64534,
     "parent": "2jpm"
   },
   "0wfn white cube.png 3": {
@@ -4722,7 +4723,7 @@
     "id": "0wfn white cube.png 3",
     "deck": "cubeDeck4",
     "cardType": "white cube.png",
-    "z": 63536,
+    "z": 64535,
     "parent": "2jpm"
   },
   "0wfn white cube.png 4": {
@@ -4730,7 +4731,7 @@
     "id": "0wfn white cube.png 4",
     "deck": "cubeDeck4",
     "cardType": "white cube.png",
-    "z": 63538,
+    "z": 64536,
     "parent": "2jpm"
   },
   "0wfn white cube.png 5": {
@@ -4738,7 +4739,7 @@
     "id": "0wfn white cube.png 5",
     "deck": "cubeDeck4",
     "cardType": "white cube.png",
-    "z": 63539,
+    "z": 64537,
     "parent": "2jpm"
   },
   "0wfn white cube.png 6": {
@@ -4746,7 +4747,7 @@
     "id": "0wfn white cube.png 6",
     "deck": "cubeDeck4",
     "cardType": "white cube.png",
-    "z": 63527,
+    "z": 64538,
     "parent": "2jpm"
   },
   "0wfn white cube.png 7": {
@@ -4754,7 +4755,7 @@
     "id": "0wfn white cube.png 7",
     "deck": "cubeDeck4",
     "cardType": "white cube.png",
-    "z": 63533,
+    "z": 64539,
     "parent": "2jpm"
   },
   "0wfn white cube.png 8": {
@@ -4762,7 +4763,7 @@
     "id": "0wfn white cube.png 8",
     "deck": "cubeDeck4",
     "cardType": "white cube.png",
-    "z": 63532,
+    "z": 64540,
     "parent": "2jpm"
   },
   "0wfn white cube.png 9": {
@@ -4770,7 +4771,7 @@
     "id": "0wfn white cube.png 9",
     "deck": "cubeDeck4",
     "cardType": "white cube.png",
-    "z": 63548,
+    "z": 64541,
     "parent": "2jpm"
   },
   "0wfn white cube.png 10": {
@@ -4778,7 +4779,7 @@
     "id": "0wfn white cube.png 10",
     "deck": "cubeDeck4",
     "cardType": "white cube.png",
-    "z": 63526,
+    "z": 64542,
     "linkedToSeat": "seat4",
     "parent": "2jpm"
   },
@@ -4824,7 +4825,7 @@
     "id": "0wfn white cube.png 11",
     "deck": "cubeDeck4",
     "cardType": "white cube.png",
-    "z": 63534,
+    "z": 64543,
     "parent": "2jpm"
   },
   "0wfn white cube.png 12": {
@@ -4832,7 +4833,7 @@
     "id": "0wfn white cube.png 12",
     "deck": "cubeDeck4",
     "cardType": "white cube.png",
-    "z": 63525,
+    "z": 64544,
     "parent": "2jpm"
   },
   "0wfn white cube.png 13": {
@@ -4840,7 +4841,7 @@
     "id": "0wfn white cube.png 13",
     "deck": "cubeDeck4",
     "cardType": "white cube.png",
-    "z": 63544,
+    "z": 64545,
     "parent": "2jpm"
   },
   "0wfn white cube.png 14": {
@@ -4848,7 +4849,7 @@
     "id": "0wfn white cube.png 14",
     "deck": "cubeDeck4",
     "cardType": "white cube.png",
-    "z": 63524,
+    "z": 64546,
     "parent": "2jpm"
   },
   "0wfn white cube.png 15": {
@@ -4856,7 +4857,7 @@
     "id": "0wfn white cube.png 15",
     "deck": "cubeDeck4",
     "cardType": "white cube.png",
-    "z": 63540,
+    "z": 64547,
     "parent": "2jpm"
   },
   "0wfn white cube.png 16": {
@@ -4864,7 +4865,7 @@
     "id": "0wfn white cube.png 16",
     "deck": "cubeDeck4",
     "cardType": "white cube.png",
-    "z": 63521,
+    "z": 64548,
     "parent": "2jpm"
   },
   "0wfn white cube.png 17": {
@@ -4872,7 +4873,7 @@
     "id": "0wfn white cube.png 17",
     "deck": "cubeDeck4",
     "cardType": "white cube.png",
-    "z": 63541,
+    "z": 64549,
     "parent": "2jpm"
   },
   "0wfn white cube.png 18": {
@@ -4880,7 +4881,7 @@
     "id": "0wfn white cube.png 18",
     "deck": "cubeDeck4",
     "cardType": "white cube.png",
-    "z": 63522,
+    "z": 64550,
     "parent": "2jpm"
   },
   "0wfn white cube.png 19": {
@@ -4888,7 +4889,7 @@
     "id": "0wfn white cube.png 19",
     "deck": "cubeDeck4",
     "cardType": "white cube.png",
-    "z": 63549,
+    "z": 64551,
     "parent": "2jpm"
   },
   "0wfn white cube.png 20": {
@@ -4896,7 +4897,7 @@
     "id": "0wfn white cube.png 20",
     "deck": "cubeDeck4",
     "cardType": "white cube.png",
-    "z": 63546,
+    "z": 64552,
     "parent": "2jpm"
   },
   "0wfn white cube.png 21": {
@@ -4904,7 +4905,7 @@
     "id": "0wfn white cube.png 21",
     "deck": "cubeDeck4",
     "cardType": "white cube.png",
-    "z": 63537,
+    "z": 64553,
     "parent": "2jpm"
   },
   "0wfn white cube.png 22": {
@@ -4912,7 +4913,7 @@
     "id": "0wfn white cube.png 22",
     "deck": "cubeDeck4",
     "cardType": "white cube.png",
-    "z": 63542,
+    "z": 64554,
     "parent": "2jpm"
   },
   "0wfn white cube.png 23": {
@@ -4920,7 +4921,7 @@
     "id": "0wfn white cube.png 23",
     "deck": "cubeDeck4",
     "cardType": "white cube.png",
-    "z": 63550,
+    "z": 64555,
     "parent": "2jpm"
   },
   "0wfn white cube.png 24": {
@@ -4928,7 +4929,7 @@
     "id": "0wfn white cube.png 24",
     "deck": "cubeDeck4",
     "cardType": "white cube.png",
-    "z": 63543,
+    "z": 64556,
     "parent": "2jpm"
   },
   "0wfn white cube.png 25": {
@@ -4936,7 +4937,7 @@
     "id": "0wfn white cube.png 25",
     "deck": "cubeDeck4",
     "cardType": "white cube.png",
-    "z": 63523,
+    "z": 64557,
     "parent": "2jpm"
   },
   "0wfn white cube.png 26": {
@@ -4944,7 +4945,7 @@
     "id": "0wfn white cube.png 26",
     "deck": "cubeDeck4",
     "cardType": "white cube.png",
-    "z": 63529,
+    "z": 64558,
     "parent": "2jpm"
   },
   "0wfn white cube.png 27": {
@@ -4952,7 +4953,7 @@
     "id": "0wfn white cube.png 27",
     "deck": "cubeDeck4",
     "cardType": "white cube.png",
-    "z": 63528,
+    "z": 64559,
     "parent": "2jpm"
   },
   "0wfn white cube.png 28": {
@@ -4960,7 +4961,7 @@
     "id": "0wfn white cube.png 28",
     "deck": "cubeDeck4",
     "cardType": "white cube.png",
-    "z": 63531,
+    "z": 64560,
     "parent": "2jpm"
   },
   "0wfn white cube.png 29": {
@@ -4968,7 +4969,7 @@
     "id": "0wfn white cube.png 29",
     "deck": "cubeDeck4",
     "cardType": "white cube.png",
-    "z": 63545,
+    "z": 64561,
     "parent": "2jpm"
   },
   "0wfn white cube.png 30": {
@@ -4976,7 +4977,7 @@
     "id": "0wfn white cube.png 30",
     "deck": "cubeDeck4",
     "cardType": "white cube.png",
-    "z": 63530,
+    "z": 64562,
     "parent": "2jpm"
   },
   "2jpm": {
@@ -4992,7 +4993,7 @@
     "id": "uc8o black cube.png 1",
     "deck": "cubeDeck5",
     "cardType": "black cube.png",
-    "z": 63586,
+    "z": 64563,
     "dragging": "Mitch",
     "parent": "af18"
   },
@@ -5001,7 +5002,7 @@
     "id": "uc8o black cube.png 2",
     "deck": "cubeDeck5",
     "cardType": "black cube.png",
-    "z": 63584,
+    "z": 64564,
     "parent": "af18"
   },
   "uc8o black cube.png 3": {
@@ -5009,7 +5010,7 @@
     "id": "uc8o black cube.png 3",
     "deck": "cubeDeck5",
     "cardType": "black cube.png",
-    "z": 63593,
+    "z": 64565,
     "parent": "af18"
   },
   "uc8o black cube.png 4": {
@@ -5017,7 +5018,7 @@
     "id": "uc8o black cube.png 4",
     "deck": "cubeDeck5",
     "cardType": "black cube.png",
-    "z": 63602,
+    "z": 64566,
     "parent": "af18"
   },
   "uc8o black cube.png 5": {
@@ -5025,7 +5026,7 @@
     "id": "uc8o black cube.png 5",
     "deck": "cubeDeck5",
     "cardType": "black cube.png",
-    "z": 63609,
+    "z": 64567,
     "parent": "af18"
   },
   "uc8o black cube.png 6": {
@@ -5033,7 +5034,7 @@
     "id": "uc8o black cube.png 6",
     "deck": "cubeDeck5",
     "cardType": "black cube.png",
-    "z": 63591,
+    "z": 64568,
     "parent": "af18"
   },
   "uc8o black cube.png 7": {
@@ -5041,7 +5042,7 @@
     "id": "uc8o black cube.png 7",
     "deck": "cubeDeck5",
     "cardType": "black cube.png",
-    "z": 63592,
+    "z": 64569,
     "parent": "af18"
   },
   "uc8o black cube.png 8": {
@@ -5049,7 +5050,7 @@
     "id": "uc8o black cube.png 8",
     "deck": "cubeDeck5",
     "cardType": "black cube.png",
-    "z": 63583,
+    "z": 64570,
     "parent": "af18"
   },
   "uc8o black cube.png 9": {
@@ -5057,7 +5058,7 @@
     "id": "uc8o black cube.png 9",
     "deck": "cubeDeck5",
     "cardType": "black cube.png",
-    "z": 63587,
+    "z": 64571,
     "parent": "af18"
   },
   "uc8o black cube.png 10": {
@@ -5065,7 +5066,7 @@
     "id": "uc8o black cube.png 10",
     "deck": "cubeDeck5",
     "cardType": "black cube.png",
-    "z": 63601,
+    "z": 64572,
     "parent": "af18"
   },
   "cubeDeck5": {
@@ -5111,7 +5112,7 @@
     "id": "uc8o black cube.png 11",
     "deck": "cubeDeck5",
     "cardType": "black cube.png",
-    "z": 63594,
+    "z": 64573,
     "dragging": "Mitch",
     "parent": "af18"
   },
@@ -5120,7 +5121,7 @@
     "id": "uc8o black cube.png 12",
     "deck": "cubeDeck5",
     "cardType": "black cube.png",
-    "z": 63589,
+    "z": 64574,
     "dragging": "Mitch",
     "parent": "af18"
   },
@@ -5129,7 +5130,7 @@
     "id": "uc8o black cube.png 13",
     "deck": "cubeDeck5",
     "cardType": "black cube.png",
-    "z": 63603,
+    "z": 64575,
     "parent": "af18"
   },
   "uc8o black cube.png 14": {
@@ -5137,7 +5138,7 @@
     "id": "uc8o black cube.png 14",
     "deck": "cubeDeck5",
     "cardType": "black cube.png",
-    "z": 63597,
+    "z": 64576,
     "parent": "af18"
   },
   "uc8o black cube.png 15": {
@@ -5145,7 +5146,7 @@
     "id": "uc8o black cube.png 15",
     "deck": "cubeDeck5",
     "cardType": "black cube.png",
-    "z": 63588,
+    "z": 64577,
     "parent": "af18"
   },
   "uc8o black cube.png 16": {
@@ -5153,7 +5154,7 @@
     "id": "uc8o black cube.png 16",
     "deck": "cubeDeck5",
     "cardType": "black cube.png",
-    "z": 63604,
+    "z": 64578,
     "parent": "af18"
   },
   "uc8o black cube.png 17": {
@@ -5161,7 +5162,7 @@
     "id": "uc8o black cube.png 17",
     "deck": "cubeDeck5",
     "cardType": "black cube.png",
-    "z": 63590,
+    "z": 64579,
     "parent": "af18"
   },
   "uc8o black cube.png 18": {
@@ -5169,7 +5170,7 @@
     "id": "uc8o black cube.png 18",
     "deck": "cubeDeck5",
     "cardType": "black cube.png",
-    "z": 63585,
+    "z": 64580,
     "parent": "af18"
   },
   "uc8o black cube.png 19": {
@@ -5177,7 +5178,7 @@
     "id": "uc8o black cube.png 19",
     "deck": "cubeDeck5",
     "cardType": "black cube.png",
-    "z": 63610,
+    "z": 64581,
     "parent": "af18"
   },
   "uc8o black cube.png 20": {
@@ -5185,7 +5186,7 @@
     "id": "uc8o black cube.png 20",
     "deck": "cubeDeck5",
     "cardType": "black cube.png",
-    "z": 63596,
+    "z": 64582,
     "parent": "af18"
   },
   "uc8o black cube.png 21": {
@@ -5193,7 +5194,7 @@
     "id": "uc8o black cube.png 21",
     "deck": "cubeDeck5",
     "cardType": "black cube.png",
-    "z": 63608,
+    "z": 64583,
     "parent": "af18"
   },
   "uc8o black cube.png 22": {
@@ -5201,7 +5202,7 @@
     "id": "uc8o black cube.png 22",
     "deck": "cubeDeck5",
     "cardType": "black cube.png",
-    "z": 63595,
+    "z": 64584,
     "parent": "af18"
   },
   "uc8o black cube.png 23": {
@@ -5209,7 +5210,7 @@
     "id": "uc8o black cube.png 23",
     "deck": "cubeDeck5",
     "cardType": "black cube.png",
-    "z": 63581,
+    "z": 64585,
     "parent": "af18"
   },
   "uc8o black cube.png 24": {
@@ -5217,7 +5218,7 @@
     "id": "uc8o black cube.png 24",
     "deck": "cubeDeck5",
     "cardType": "black cube.png",
-    "z": 63605,
+    "z": 64586,
     "parent": "af18"
   },
   "uc8o black cube.png 25": {
@@ -5225,7 +5226,7 @@
     "id": "uc8o black cube.png 25",
     "deck": "cubeDeck5",
     "cardType": "black cube.png",
-    "z": 63598,
+    "z": 64587,
     "linkedToSeat": "seat5",
     "parent": "af18"
   },
@@ -5234,7 +5235,7 @@
     "id": "uc8o black cube.png 26",
     "deck": "cubeDeck5",
     "cardType": "black cube.png",
-    "z": 63607,
+    "z": 64588,
     "parent": "af18"
   },
   "uc8o black cube.png 27": {
@@ -5242,7 +5243,7 @@
     "id": "uc8o black cube.png 27",
     "deck": "cubeDeck5",
     "cardType": "black cube.png",
-    "z": 63582,
+    "z": 64589,
     "parent": "af18"
   },
   "uc8o black cube.png 28": {
@@ -5250,7 +5251,7 @@
     "id": "uc8o black cube.png 28",
     "deck": "cubeDeck5",
     "cardType": "black cube.png",
-    "z": 63606,
+    "z": 64590,
     "parent": "af18"
   },
   "uc8o black cube.png 29": {
@@ -5258,7 +5259,7 @@
     "id": "uc8o black cube.png 29",
     "deck": "cubeDeck5",
     "cardType": "black cube.png",
-    "z": 63599,
+    "z": 64591,
     "parent": "af18"
   },
   "uc8o black cube.png 30": {
@@ -5266,7 +5267,7 @@
     "id": "uc8o black cube.png 30",
     "deck": "cubeDeck5",
     "cardType": "black cube.png",
-    "z": 63600,
+    "z": 64592,
     "parent": "af18"
   },
   "af18": {
@@ -5303,7 +5304,7 @@
         "property": "activeFace",
         "value": 0
       },
-      "var header = 'Enter bid amount'",
+      "var header = 'Enter offer amount'",
       {
         "func": "INPUT",
         "header": "${header}",
@@ -5401,7 +5402,7 @@
         "property": "activeFace",
         "value": 0
       },
-      "var header = 'Enter bid amount'",
+      "var header = 'Enter offer amount'",
       {
         "func": "INPUT",
         "header": "${header}",
@@ -5499,7 +5500,7 @@
         "property": "activeFace",
         "value": 0
       },
-      "var header = 'Enter bid amount'",
+      "var header = 'Enter offer amount'",
       {
         "func": "INPUT",
         "header": "${header}",
@@ -5597,7 +5598,7 @@
         "property": "activeFace",
         "value": 0
       },
-      "var header = 'Enter bid amount'",
+      "var header = 'Enter offer amount'",
       {
         "func": "INPUT",
         "header": "${header}",
@@ -5736,7 +5737,7 @@
         "property": "activeFace",
         "value": 0
       },
-      "var header = 'Enter bid amount'",
+      "var header = 'Enter offer amount'",
       {
         "func": "INPUT",
         "header": "${header}",
@@ -6284,7 +6285,7 @@
             "func": "MOVE",
             "from": "discardHolder",
             "to": "coin0DeckHolder",
-            "count": 0
+            "count": "all"
           },
           {
             "func": "SHUFFLE",
@@ -6294,15 +6295,6 @@
       }
     ],
     "y": 570
-  },
-  "h0la": {
-    "type": "pile",
-    "parent": "coinDeckHolder",
-    "x": 4,
-    "y": 4,
-    "width": 40,
-    "height": 40,
-    "id": "h0la"
   },
   "32h6": {
     "type": "pile",
@@ -6321,5 +6313,239 @@
     "width": 40,
     "height": 50,
     "id": "lfpy"
+  },
+  "rldvC5": {
+    "id": "rldvC5",
+    "parent": "seat1",
+    "fixedParent": true,
+    "x": -20,
+    "y": -20,
+    "width": 30,
+    "height": 30,
+    "borderRadius": 100,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "css": {
+      "font-size": "18px",
+      "display": "flex",
+      "align-items": "center",
+      "justify-content": "center",
+      "color": "#6d6d6d",
+      "background": "#e4e4e4",
+      "border": "2px solid #999999"
+    },
+    "text": 0,
+    "ownerGlobalUpdateRoutine": [
+      "var parent = ${PROPERTY parent}",
+      "var COUNT = 0",
+      {
+        "func": "COUNT",
+        "holder": "coinHand",
+        "owner": "${PROPERTY player OF $parent}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "text",
+        "value": "${COUNT}"
+      }
+    ],
+    "playerGlobalUpdateRoutine": [
+      {
+        "func": "CALL",
+        "routine": "ownerGlobalUpdateRoutine",
+        "widget": "${PROPERTY id}"
+      }
+    ]
+  },
+  "rldvC6": {
+    "id": "rldvC6",
+    "parent": "seat2",
+    "fixedParent": true,
+    "x": -20,
+    "y": -20,
+    "width": 30,
+    "height": 30,
+    "borderRadius": 100,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "css": {
+      "font-size": "18px",
+      "display": "flex",
+      "align-items": "center",
+      "justify-content": "center",
+      "color": "#6d6d6d",
+      "background": "#e4e4e4",
+      "border": "2px solid #999999"
+    },
+    "text": 0,
+    "ownerGlobalUpdateRoutine": [
+      "var parent = ${PROPERTY parent}",
+      "var COUNT = 0",
+      {
+        "func": "COUNT",
+        "holder": "coinHand",
+        "owner": "${PROPERTY player OF $parent}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "text",
+        "value": "${COUNT}"
+      }
+    ],
+    "playerGlobalUpdateRoutine": [
+      {
+        "func": "CALL",
+        "routine": "ownerGlobalUpdateRoutine",
+        "widget": "${PROPERTY id}"
+      }
+    ]
+  },
+  "rldvC7": {
+    "id": "rldvC7",
+    "parent": "seat3",
+    "fixedParent": true,
+    "x": -20,
+    "y": -20,
+    "width": 30,
+    "height": 30,
+    "borderRadius": 100,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "css": {
+      "font-size": "18px",
+      "display": "flex",
+      "align-items": "center",
+      "justify-content": "center",
+      "color": "#6d6d6d",
+      "background": "#e4e4e4",
+      "border": "2px solid #999999"
+    },
+    "text": 0,
+    "ownerGlobalUpdateRoutine": [
+      "var parent = ${PROPERTY parent}",
+      "var COUNT = 0",
+      {
+        "func": "COUNT",
+        "holder": "coinHand",
+        "owner": "${PROPERTY player OF $parent}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "text",
+        "value": "${COUNT}"
+      }
+    ],
+    "playerGlobalUpdateRoutine": [
+      {
+        "func": "CALL",
+        "routine": "ownerGlobalUpdateRoutine",
+        "widget": "${PROPERTY id}"
+      }
+    ]
+  },
+  "rldvC8": {
+    "id": "rldvC8",
+    "parent": "seat4",
+    "fixedParent": true,
+    "x": -20,
+    "y": -20,
+    "width": 30,
+    "height": 30,
+    "borderRadius": 100,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "css": {
+      "font-size": "18px",
+      "display": "flex",
+      "align-items": "center",
+      "justify-content": "center",
+      "color": "#6d6d6d",
+      "background": "#e4e4e4",
+      "border": "2px solid #999999"
+    },
+    "text": 0,
+    "ownerGlobalUpdateRoutine": [
+      "var parent = ${PROPERTY parent}",
+      "var COUNT = 0",
+      {
+        "func": "COUNT",
+        "holder": "coinHand",
+        "owner": "${PROPERTY player OF $parent}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "text",
+        "value": "${COUNT}"
+      }
+    ],
+    "playerGlobalUpdateRoutine": [
+      {
+        "func": "CALL",
+        "routine": "ownerGlobalUpdateRoutine",
+        "widget": "${PROPERTY id}"
+      }
+    ]
+  },
+  "rldvC9": {
+    "id": "rldvC9",
+    "parent": "seat5",
+    "fixedParent": true,
+    "x": -20,
+    "y": -20,
+    "width": 30,
+    "height": 30,
+    "borderRadius": 100,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "css": {
+      "font-size": "18px",
+      "display": "flex",
+      "align-items": "center",
+      "justify-content": "center",
+      "color": "#6d6d6d",
+      "background": "#e4e4e4",
+      "border": "2px solid #999999"
+    },
+    "text": 0,
+    "ownerGlobalUpdateRoutine": [
+      "var parent = ${PROPERTY parent}",
+      "var COUNT = 0",
+      {
+        "func": "COUNT",
+        "holder": "coinHand",
+        "owner": "${PROPERTY player OF $parent}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "text",
+        "value": "${COUNT}"
+      }
+    ],
+    "playerGlobalUpdateRoutine": [
+      {
+        "func": "CALL",
+        "routine": "ownerGlobalUpdateRoutine",
+        "widget": "${PROPERTY id}"
+      }
+    ]
+  },
+  "rj2q": {
+    "type": "pile",
+    "parent": "coinDeckHolder",
+    "x": 4,
+    "y": 4,
+    "width": 40,
+    "height": 40,
+    "id": "rj2q"
   }
 }

@@ -300,7 +300,7 @@ const jeCommands = [
   {
     id: 'je_symbolPickerText',
     name: 'pick an asset from the symbol picker',
-    context: '^button ↦ text$',
+    context: '^(button|basic) ↦ text$',
     call: async function() {
       const a = await pickSymbol('fonts');
       if(a) {
@@ -311,7 +311,7 @@ const jeCommands = [
       }
     },
     show: function() {
-      return [ 'symbols', 'material-icons' ].indexOf(jeStateNow.classes) != -1;
+      return [ 'symbols', 'material-icons', 'emoji-monochrome' ].indexOf(jeStateNow.classes) != -1;
     }
   },
   {
@@ -1402,7 +1402,7 @@ function jeAddGridCommand(key, value) {
     id: 'grid_' + key,
     name: key,
     context: '^[^ ]* ↦ grid ↦ [0-9]+',
-    show: _=>!(key in jeStateNow.grid[+jeContext[2]]),
+    show: _=>typeof jeStateNow.grid[+jeContext[2]] == "object" && jeStateNow.grid[+jeContext[2]] !== null && !(key in jeStateNow.grid[+jeContext[2]]),
     call: async function() {
       jeStateNow.grid[+jeContext[2]][key] = '###SELECT ME###';
       jeSetAndSelect(value);
@@ -1410,26 +1410,13 @@ function jeAddGridCommand(key, value) {
   });
 }
 
-function jeAddHexGridCommand(key, value) {
-  jeCommands.push({
-    id: 'hexGrid_' + key,
-    name: key,
-    context: '^[^ ]* ↦ grid ↦ [0-9]+',
-    show: _=>!(key in jeStateNow.hexGrid[+jeContext[2]]),
-    call: async function() {
-      jeStateNow.hexGrid[+jeContext[2]][key] = '###SELECT ME###';
-      jeSetAndSelect(value);
-    }
-  });
-}
-    
 
 function jeAddLimitCommand(key, value) {
   jeCommands.push({
     id: 'limit_' + key,
     name: key,
     context: '^[^ ]* ↦ dragLimit',
-    show: _=>!(key in jeStateNow.dragLimit),
+    show: _=>typeof jeStateNow.dragLimit == "object" && jeStateNow.dragLimit !== null && !(key in jeStateNow.dragLimit),
     call: async function() {
       const w = widgets.get(jeStateNow.id);
       jeStateNow.dragLimit[key] = '###SELECT ME###';
@@ -2330,6 +2317,10 @@ export function jeLoggingRoutineOperationEnd(problems, variables, collections, s
 export function jeLoggingRoutineOperationSummary(definition, result) {
   jeRoutineResult = `<span class="jeLogSummary">${html(definition)}</span>
      ${result ? '=&gt;' : ''} <span class="jeLogResult">${html(result || '')}</span>`;
+}
+
+export function jeLoggingRoutineGetData() {
+  return { jeHTMLStack, jeLoggingHTML, jeRoutineResult };
 }
 
 // END routine logging

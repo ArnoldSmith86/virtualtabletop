@@ -19,6 +19,8 @@ const readOnlyProperties = new Set([
   '_localOriginAbsoluteY'
 ]);
 
+let lastExecutedOperation = null;
+
 export class Widget extends StateManaged {
   constructor(id) {
     const div = document.createElement('div');
@@ -886,6 +888,13 @@ export class Widget extends StateManaged {
       else
         a = original.trim();
 
+      lastExecutedOperation = {
+        original: original,
+        applied: a,
+        variables,
+        property: typeof property == 'string' ? property : 'literal'
+      };
+
       if(jeRoutineLogging) jeLoggingRoutineOperationStart(original, a)
 
       if(a.skip) {
@@ -1462,7 +1471,7 @@ export class Widget extends StateManaged {
       }
 
       if(a.func == 'MOVE') {
-        setDefaults(a, { count: a.from ? 1 : 0, face: null, fillTo: null, collection: 'DEFAULT' });
+        setDefaults(a, { count: a.from ? 1 : 'all', face: null, fillTo: null, collection: 'DEFAULT' });
         let count = a.fillTo || a.count;
         if(count === 'all')
           count = 999999;
