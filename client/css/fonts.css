@@ -1,0 +1,563 @@
+@font-face {
+    font-family: "Roboto";
+    src: url("i/fonts/Roboto-Regular.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Roboto";
+    src: url("i/fonts/Roboto-Bold.ttf") format("truetype");
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Roboto";
+    src: url("i/fonts/Roboto-Italic.ttf") format("truetype");
+    font-weight: normal;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Roboto";
+    src: url("i/fonts/Roboto-BoldItalic.ttf") format("truetype");
+    font-weight: bold;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Roboto";
+    src: url("i/fonts/Roboto-LightItalic.ttf") format("truetype");
+    font-weight: 300;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Roboto";
+    src: url("i/fonts/Roboto-Black.ttf") format("truetype");
+    font-weight: 900;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Roboto";
+    src: url("i/fonts/Roboto-Medium.ttf") format("truetype");
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Roboto";
+    src: url("i/fonts/Roboto-Light.ttf") format("truetype");
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Roboto";
+    src: url("i/fonts/Roboto-BlackItalic.ttf") format("truetype");
+    font-weight: 900;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Roboto";
+    src: url("i/fonts/Roboto-Thin.ttf") format("truetype");
+    font-weight: 100;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Roboto";
+    src: url("i/fonts/Roboto-MediumItalic.ttf") format("truetype");
+    font-weight: 500;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Roboto";
+    src: url("i/fonts/Roboto-ThinItalic.ttf") format("truetype");
+    font-weight: 100;
+    font-style: italic;
+    font-display: swap;
+}
+
+.standard_font, .font-standard, .font-roboto, .font-sans-serif {
+    font-family: "Roboto";
+}
+
+@font-face {
+    font-family: "Roboto Condensed";
+    src: url("i/fonts/RobotoCondensed-LightItalic.ttf") format("truetype");
+    font-weight: 300;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Roboto Condensed";
+    src: url("i/fonts/RobotoCondensed-Italic.ttf") format("truetype");
+    font-weight: normal;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Roboto Condensed";
+    src: url("i/fonts/RobotoCondensed-Bold.ttf") format("truetype");
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Roboto Condensed";
+    src: url("i/fonts/RobotoCondensed-Regular.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Roboto Condensed";
+    src: url("i/fonts/RobotoCondensed-BoldItalic.ttf") format("truetype");
+    font-weight: bold;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Roboto Condensed";
+    src: url("i/fonts/RobotoCondensed-Light.ttf") format("truetype");
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+}
+
+.condensed_font, .font-condensed, .font-roboto-condensed {
+    font-family: "Roboto Condensed";
+}
+
+@font-face {
+    font-family: "Neuton";
+    src: url("i/fonts/Neuton-Bold.ttf") format("truetype");
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Neuton";
+    src: url("i/fonts/Neuton-Regular.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Neuton";
+    src: url("i/fonts/Neuton-Italic.ttf") format("truetype");
+    font-weight: normal;
+    font-style: italic;
+    font-display: swap;
+}
+
+.serif_font, .font-serif {
+    font-family: "Neuton";
+}
+
+@font-face {
+    font-family: "Bokor";
+    src: url("i/fonts/Bokor-Regular.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+.fantasy_font, .font-fantasy {
+    font-family: "Bokor";
+}
+
+@font-face {
+    font-family: "Metamorphous";
+    src: url("i/fonts/Metamorphous-Regular.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+.gothic_font, .font-gothic {
+    font-family: "Metamorphous";
+}
+
+
+@font-face {
+    font-family: "Creepster";
+    src: url("i/fonts/Creepster-Regular.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+.horror_font, .font-horror {
+    font-family: "Creepster";
+}
+
+@font-face {
+    font-family: "Gugi";
+    src: url("i/fonts/Gugi-Regular.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+.tech_font, .font-tech {
+    font-family: "Gugi";
+}
+
+
+@font-face {
+    font-family: "Material Icons";
+    font-style: normal;
+    font-weight: 400;
+    font-display: block;
+    src: url("i/fonts/MaterialIcons-Regular.ttf") format("truetype");
+    font-display: block;
+}
+
+@font-face {
+    font-family: "Material Icons Outlined";
+    font-style: normal;
+    font-weight: 400;
+    src: url("i/fonts/MaterialIconsOutlined-Regular.otf") format("opentype");
+    font-display: block;
+}
+
+@font-face {
+    font-family: "Material Icons Round";
+    font-style: normal;
+    font-weight: 400;
+    src: url("i/fonts/MaterialIconsRound-Regular.otf") format("opentype");
+    font-display: block;
+}
+
+@font-face {
+    font-family: "Material Icons Sharp";
+    font-style: normal;
+    font-weight: 400;
+    src: url("i/fonts/MaterialIconsSharp-Regular.otf") format("opentype");
+    font-display: block;
+}
+
+@font-face {
+    font-family: "Material Icons Two Tone";
+    font-style: normal;
+    font-weight: 400;
+    src: url("i/fonts/MaterialIconsTwoTone-Regular.otf") format("opentype");
+    font-display: block;
+}
+
+.material-icons, .material-icons-outlined, .material-icons-round, .material-icons-sharp, .material-icons-twotone, .font-material-icons {
+    font-weight: normal;
+    font-style: normal;
+    font-size: 24px;
+    line-height: 1;
+    letter-spacing: normal;
+    text-transform: none;
+    display: inline-block;
+    white-space: nowrap;
+    word-wrap: normal;
+    direction: ltr;
+    -webkit-font-feature-settings: "liga";
+    -webkit-font-smoothing: antialiased;
+    font-feature-settings: "liga";
+}
+
+.material-icons.intext {
+    font-size: 20px;
+}
+
+.material-icons, .font-material-icons {
+    font-family: "Material Icons";
+}
+
+.material-icons-outlined {
+    font-family: "Material Icons Outlined";
+}
+
+.material-icons-round {
+    font-family: "Material Icons Round";
+}
+
+.material-icons-sharp {
+    font-family: "Material Icons Sharp";
+}
+
+.material-icons-twotone {
+    font-family: "Material Icons Two Tone";
+}
+
+@font-face {
+  font-family: "Noto Emoji";
+  font-style: normal;
+  font-weight: 300 700;
+  src: url("i/fonts/NotoEmoji-VariableFont_wght.ttf") format("truetype");
+  font-display: block;
+}
+
+.emoji-monochrome {
+  font-family: "Noto Emoji";
+  font-weight: 400;
+}
+
+@font-face {
+    font-family: "VTT-Symbols";
+    src: url("i/fonts/VTT-Symbols.ttf?version=6") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+    font-display: block;
+}
+
+.icon {
+    /* use !important to prevent issues with browser extensions that change fonts */
+    font-family: "VTT-Symbols", "Material Icons" !important;
+    speak: never;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+
+    /* Enable Ligatures ================ */
+    letter-spacing: 0;
+    -webkit-font-feature-settings: "liga";
+    -moz-font-feature-settings: "liga=1";
+    -moz-font-feature-settings: "liga";
+    -ms-font-feature-settings: "liga" 1;
+    font-feature-settings: "liga";
+    -webkit-font-variant-ligatures: discretionary-ligatures;
+    font-variant-ligatures: discretionary-ligatures;
+
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.symbols, .font-vtt-symbols, .font-symbols {
+    font-family: "VTT-Symbols";
+}
+
+@font-face {
+    font-family: "Handwriting Casual";
+    src:
+        url("i/fonts/BrandonCasualRegular.woff2") format("woff2"),
+        url("i/fonts/BrandonCasualRegular.woff") format("woff");
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Handwriting";
+    src:
+        url("i/fonts/BrandonHandRegular.woff2") format("woff2"),
+        url("i/fonts/BrandonHandRegular.woff") format("woff");
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Handwriting";
+    src:
+        url("i/fonts/BrandonHandBold.woff2") format("woff2"),
+        url("i/fonts/BrandonHandBold.woff") format("woff");
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Handwriting";
+    src:
+        url("i/fonts/BrandonHandItalic.woff2") format("woff2"),
+        url("i/fonts/BrandonHandItalic.woff") format("woff");
+    font-weight: normal;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Handwriting";
+    src:
+        url("i/fonts/BrandonHandBoldItalic.woff2") format("woff2"),
+        url("i/fonts/BrandonHandBoldItalic.woff") format("woff");
+    font-weight: bold;
+    font-style: italic;
+    font-display: swap;
+}
+
+.handwriting_font, .font-handwriting {
+    font-family: "Handwriting";
+}
+
+.handwriting_casual_font, .font-handwriting-casual {
+    font-family: "Handwriting Casual";
+}
+
+
+
+#symbolPickerOverlay > button {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+}
+
+#symbolPickerOverlay input {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+#symbolPickerOverlay:not(.bigPreviews) p span {
+  display: none;
+}
+
+#symbolPickerOverlay.fewResults p {
+  display: none;
+}
+
+#symbolPickerOverlay.fewResults input {
+  margin-bottom: 20px;
+}
+
+#symbolList {
+  --symbolSize: 24px;
+  color: black;
+  overflow-x: hidden;
+  overflow-y: auto;
+  word-wrap: anywhere;
+}
+#symbolPickerOverlay.bigPreviews.fewResults #symbolList {
+  --symbolSize: 64px;
+}
+
+#symbolPickerOverlay h1 {
+  margin-top: 0;
+}
+
+#symbolPickerOverlay h2 {
+  font-size: 16px;
+  border-bottom: 1px solid black;
+  padding-left: 4px;
+}
+
+#symbolPickerOverlay i {
+  font-style: normal;
+  font-size: var(--symbolSize);
+  margin-left: 4px;
+  cursor: pointer;
+}
+
+#symbolPickerOverlay .emoji {
+  word-break: break-all;
+}
+
+#symbolPickerOverlay .emoji-monochrome {
+  font-size: calc(0.85 * var(--symbolSize));
+  vertical-align: top;
+}
+
+#symbolPickerOverlay .emoji-color:hover, #symbolPickerOverlay .emojiFlag, #symbolPickerOverlay.fewResults .emoji-color {
+  background: var(--url) center no-repeat;
+  color: transparent;
+  top: -3px;
+}
+
+#symbolPickerOverlay .gameicons {
+  --spritesheetX: 60;
+  --spritesheetY: 69;
+
+  display: inline-block;
+  background: url(i/game-icons.net/overview24.png);
+  background-position: calc(-1 * var(--symbolSize) * var(--x)) calc(-1 * var(--symbolSize) * var(--y));
+  background-size: calc(var(--spritesheetX) * var(--symbolSize)) calc(var(--spritesheetY) * var(--symbolSize));
+  width: var(--symbolSize);
+  height: var(--symbolSize);
+}
+
+#symbolPickerOverlay.bigPreviews .gameicons {
+  background-image: url(i/game-icons.net/overview48.png);
+}
+
+#symbolPickerOverlay.bigPreviews .gameicons:hover, #symbolPickerOverlay.fewResults .gameicons {
+  background: var(--url);
+}
+
+#symbolPickerOverlay .hidden,
+#symbolPickerOverlay.hideImages h2.imageCategory,
+#symbolPickerOverlay.hideImages .emoji-color,
+#symbolPickerOverlay.hideImages .gameicons,
+#symbolPickerOverlay.hideFonts h2.fontCategory,
+#symbolPickerOverlay.hideFonts .symbols,
+#symbolPickerOverlay.hideFonts .material-icons,
+#symbolPickerOverlay.hideFonts .emoji-monochrome {
+  display: none;
+}
+
+@media (max-width: 600px), (max-height: 375px) {
+  #symbolPickerOverlay {
+    padding: 2%;
+  }
+}
+@media (max-width: 300px), (max-height: 187px) {
+  #symbolPickerOverlay {
+    padding: 0;
+  }
+  #symbolPickerOverlay h1 {
+    text-align: left;
+    margin: 10px 50px 10px 5px;
+  }
+  #symbolPickerOverlay .titleWithCloseButton button {
+    right: 10px;
+    top: 10px;
+  }
+  #symbolPickerOverlay div[icon] {
+    padding: 5px;
+    border-radius: 10px;
+  }
+}
+
+p[icon] {
+  color: black;
+  margin: 20px;
+  margin-left: 60px;
+}
+p[icon]::before {
+  content: attr(icon);
+  font-family: "Material Icons";
+  font-size: 200%;
+  position: absolute;
+  left: -40px;
+}
+@media (max-width: 600px), (max-height: 375px) {
+  p[icon] {
+    margin: 10px;
+    margin-left: 40px;
+  }
+  p[icon]::before {
+    font-size: 150%;
+    left: -30px;
+  }
+}

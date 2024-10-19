@@ -1,0 +1,2765 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+<svg
+    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns="http://www.w3.org/2000/svg"
+    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+    xmlns:cc="http://creativecommons.org/ns#"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    xmlns:dc="http://purl.org/dc/elements/1.1/"
+    xmlns:svg="http://www.w3.org/2000/svg"
+    xmlns:ns1="http://sozi.baierouge.fr"
+    id="svg2"
+    sodipodi:docname="mechanician.svg"
+    viewBox="0 0 600 700"
+    sodipodi:version="0.32"
+    version="1.0"
+    inkscape:output_extension="org.inkscape.output.svg.inkscape"
+    inkscape:version="0.46"
+  >
+  <defs
+      id="defs4"
+    >
+    <linearGradient
+        id="linearGradient3478"
+      >
+      <stop
+          id="stop3480"
+          style="stop-color:#000000;stop-opacity:0"
+          offset="0"
+      />
+      <stop
+          id="stop3486"
+          style="stop-color:#000000;stop-opacity:0"
+          offset=".66792"
+      />
+      <stop
+          id="stop3482"
+          style="stop-color:#000000;stop-opacity:.24561"
+          offset="1"
+      />
+    </linearGradient
+    >
+    <linearGradient
+        id="linearGradient3434"
+        inkscape:collect="always"
+      >
+      <stop
+          id="stop3436"
+          style="stop-color:#ffffff"
+          offset="0"
+      />
+      <stop
+          id="stop3438"
+          style="stop-color:#ffffff;stop-opacity:0"
+          offset="1"
+      />
+    </linearGradient
+    >
+    <linearGradient
+        id="linearGradient3311"
+        inkscape:collect="always"
+      >
+      <stop
+          id="stop3313"
+          style="stop-color:#000000"
+          offset="0"
+      />
+      <stop
+          id="stop3315"
+          style="stop-color:#000000;stop-opacity:0"
+          offset="1"
+      />
+    </linearGradient
+    >
+    <filter
+        id="filter3335"
+        inkscape:collect="always"
+      >
+      <feGaussianBlur
+          id="feGaussianBlur3337"
+          stdDeviation="0.39330355"
+          inkscape:collect="always"
+      />
+    </filter
+    >
+    <filter
+        id="filter3414"
+        inkscape:collect="always"
+      >
+      <feGaussianBlur
+          id="feGaussianBlur3416"
+          stdDeviation="0.64912521"
+          inkscape:collect="always"
+      />
+    </filter
+    >
+    <filter
+        id="filter3430"
+        inkscape:collect="always"
+      >
+      <feGaussianBlur
+          id="feGaussianBlur3432"
+          stdDeviation="0.57734375"
+          inkscape:collect="always"
+      />
+    </filter
+    >
+    <filter
+        id="filter3446"
+        height="1.39"
+        width="1.1733"
+        y="-.19502"
+        x="-.086663"
+        inkscape:collect="always"
+      >
+      <feGaussianBlur
+          id="feGaussianBlur3448"
+          stdDeviation="0.69429851"
+          inkscape:collect="always"
+      />
+    </filter
+    >
+    <filter
+        id="filter3492"
+        inkscape:collect="always"
+      >
+      <feGaussianBlur
+          id="feGaussianBlur3494"
+          stdDeviation="0.76397228"
+          inkscape:collect="always"
+      />
+    </filter
+    >
+    <filter
+        id="filter3504"
+        inkscape:collect="always"
+      >
+      <feGaussianBlur
+          id="feGaussianBlur3506"
+          stdDeviation="0.66078191"
+          inkscape:collect="always"
+      />
+    </filter
+    >
+    <filter
+        id="filter3512"
+        inkscape:collect="always"
+      >
+      <feGaussianBlur
+          id="feGaussianBlur3514"
+          stdDeviation="0.84666177"
+          inkscape:collect="always"
+      />
+    </filter
+    >
+    <filter
+        id="filter3524"
+        height="1.3675"
+        width="1.0638"
+        y="-.18375"
+        x="-.031918"
+        inkscape:collect="always"
+      >
+      <feGaussianBlur
+          id="feGaussianBlur3526"
+          stdDeviation="0.88106746"
+          inkscape:collect="always"
+      />
+    </filter
+    >
+    <filter
+        id="filter3528"
+        inkscape:collect="always"
+      >
+      <feGaussianBlur
+          id="feGaussianBlur3530"
+          stdDeviation="0.88106746"
+          inkscape:collect="always"
+      />
+    </filter
+    >
+    <filter
+        id="filter3955"
+        height="1.3705"
+        width="1.7271"
+        y="-.18525"
+        x="-.36355"
+        inkscape:collect="always"
+      >
+      <feGaussianBlur
+          id="feGaussianBlur3957"
+          stdDeviation="3.5830733"
+          inkscape:collect="always"
+      />
+    </filter
+    >
+    <filter
+        id="filter3959"
+        height="1.239"
+        width="1.7554"
+        y="-.11952"
+        x="-.37771"
+        inkscape:collect="always"
+      >
+      <feGaussianBlur
+          id="feGaussianBlur3961"
+          stdDeviation="3.5830733"
+          inkscape:collect="always"
+      />
+    </filter
+    >
+    <filter
+        id="filter3967"
+        height="1.1068"
+        width="1.2209"
+        y="-.053404"
+        x="-.11047"
+        inkscape:collect="always"
+      >
+      <feGaussianBlur
+          id="feGaussianBlur3969"
+          stdDeviation="1.2470694"
+          inkscape:collect="always"
+      />
+    </filter
+    >
+    <filter
+        id="filter4000"
+        height="1.205"
+        width="1.2076"
+        y="-.10252"
+        x="-.10380"
+        inkscape:collect="always"
+      >
+      <feGaussianBlur
+          id="feGaussianBlur4002"
+          stdDeviation="1.5191299"
+          inkscape:collect="always"
+      />
+    </filter
+    >
+    <filter
+        id="filter4008"
+        height="1.2053"
+        width="1.2888"
+        y="-.10266"
+        x="-.14439"
+        inkscape:collect="always"
+      >
+      <feGaussianBlur
+          id="feGaussianBlur4010"
+          stdDeviation="2.5287582"
+          inkscape:collect="always"
+      />
+    </filter
+    >
+    <filter
+        id="filter4026"
+        inkscape:collect="always"
+      >
+      <feGaussianBlur
+          id="feGaussianBlur4028"
+          stdDeviation="0.98015625"
+          inkscape:collect="always"
+      />
+    </filter
+    >
+    <filter
+        id="filter4030"
+        height="1.2737"
+        width="1.2137"
+        y="-.13685"
+        x="-.10685"
+        inkscape:collect="always"
+      >
+      <feGaussianBlur
+          id="feGaussianBlur4032"
+          stdDeviation="1.8712181"
+          inkscape:collect="always"
+      />
+    </filter
+    >
+    <filter
+        id="filter4059"
+        height="1.6032"
+        width="1.1498"
+        y="-.30162"
+        x="-0.0749"
+        inkscape:collect="always"
+      >
+      <feGaussianBlur
+          id="feGaussianBlur4061"
+          stdDeviation="3.1227666"
+          inkscape:collect="always"
+      />
+    </filter
+    >
+    <filter
+        id="filter4415"
+        height="1.3108"
+        width="1.1389"
+        y="-.15538"
+        x="-.069457"
+        inkscape:collect="always"
+      >
+      <feGaussianBlur
+          id="feGaussianBlur4417"
+          stdDeviation="1.2650547"
+          inkscape:collect="always"
+      />
+    </filter
+    >
+    <filter
+        id="filter4423"
+        inkscape:collect="always"
+      >
+      <feGaussianBlur
+          id="feGaussianBlur4425"
+          stdDeviation="0.526641"
+          inkscape:collect="always"
+      />
+    </filter
+    >
+    <filter
+        id="filter4427"
+        height="1.3872"
+        width="1.1051"
+        y="-.19361"
+        x="-.052558"
+        inkscape:collect="always"
+      >
+      <feGaussianBlur
+          id="feGaussianBlur4429"
+          stdDeviation="0.72610129"
+          inkscape:collect="always"
+      />
+    </filter
+    >
+    <filter
+        id="filter4431"
+        inkscape:collect="always"
+      >
+      <feGaussianBlur
+          id="feGaussianBlur4433"
+          stdDeviation="0.72610129"
+          inkscape:collect="always"
+      />
+    </filter
+    >
+    <filter
+        id="filter4452"
+        height="1.5015"
+        width="1.202"
+        y="-.25074"
+        x="-0.101"
+        inkscape:collect="always"
+      >
+      <feGaussianBlur
+          id="feGaussianBlur4454"
+          stdDeviation="0.98270022"
+          inkscape:collect="always"
+      />
+    </filter
+    >
+    <filter
+        id="filter4507"
+        height="1.2437"
+        width="1.2364"
+        y="-.12187"
+        x="-.11819"
+        inkscape:collect="always"
+      >
+      <feGaussianBlur
+          id="feGaussianBlur4509"
+          stdDeviation="0.63679176"
+          inkscape:collect="always"
+      />
+    </filter
+    >
+    <filter
+        id="filter4528"
+        inkscape:collect="always"
+      >
+      <feGaussianBlur
+          id="feGaussianBlur4530"
+          stdDeviation="1.4761757"
+          inkscape:collect="always"
+      />
+    </filter
+    >
+    <filter
+        id="filter4560"
+        height="1.5962"
+        width="1.0667"
+        y="-.29812"
+        x="-.033357"
+        inkscape:collect="always"
+      >
+      <feGaussianBlur
+          id="feGaussianBlur4562"
+          stdDeviation="0.74965667"
+          inkscape:collect="always"
+      />
+    </filter
+    >
+    <filter
+        id="filter4564"
+        height="2.4066"
+        width="1.1427"
+        y="-.70331"
+        x="-.071355"
+        inkscape:collect="always"
+      >
+      <feGaussianBlur
+          id="feGaussianBlur4566"
+          stdDeviation="0.52198875"
+          inkscape:collect="always"
+      />
+    </filter
+    >
+    <filter
+        id="filter4568"
+        height="1.443"
+        width="1.1049"
+        y="-.22148"
+        x="-.052438"
+        inkscape:collect="always"
+      >
+      <feGaussianBlur
+          id="feGaussianBlur4570"
+          stdDeviation="0.52198875"
+          inkscape:collect="always"
+      />
+    </filter
+    >
+    <filter
+        id="filter4929"
+        height="1.1661"
+        width="1.4323"
+        y="-.083054"
+        x="-.21616"
+        inkscape:collect="always"
+      >
+      <feGaussianBlur
+          id="feGaussianBlur4931"
+          stdDeviation="3.3662352"
+          inkscape:collect="always"
+      />
+    </filter
+    >
+    <filter
+        id="filter4949"
+        height="1.1372"
+        width="1.9582"
+        y="-.068590"
+        x="-.47908"
+        inkscape:collect="always"
+      >
+      <feGaussianBlur
+          id="feGaussianBlur4951"
+          stdDeviation="1.8799797"
+          inkscape:collect="always"
+      />
+    </filter
+    >
+    <filter
+        id="filter4958"
+        inkscape:collect="always"
+      >
+      <feGaussianBlur
+          id="feGaussianBlur4960"
+          stdDeviation="0.63050786"
+          inkscape:collect="always"
+      />
+    </filter
+    >
+    <filter
+        id="filter5266"
+        height="1.1591"
+        width="1.4887"
+        y="-.079530"
+        x="-.24433"
+        inkscape:collect="always"
+      >
+      <feGaussianBlur
+          id="feGaussianBlur5268"
+          stdDeviation="7.0748898"
+          inkscape:collect="always"
+      />
+    </filter
+    >
+    <filter
+        id="filter5285"
+        height="1.0604"
+        width="1.2341"
+        y="-.030192"
+        x="-.11703"
+        inkscape:collect="always"
+      >
+      <feGaussianBlur
+          id="feGaussianBlur5287"
+          stdDeviation="2.5289381"
+          inkscape:collect="always"
+      />
+    </filter
+    >
+    <filter
+        id="filter5354"
+        height="1.3678"
+        width="1.0895"
+        y="-.18390"
+        x="-.044763"
+        inkscape:collect="always"
+      >
+      <feGaussianBlur
+          id="feGaussianBlur5356"
+          stdDeviation="2.9859396"
+          inkscape:collect="always"
+      />
+    </filter
+    >
+    <filter
+        id="filter3432"
+        inkscape:collect="always"
+      >
+      <feGaussianBlur
+          id="feGaussianBlur3434"
+          stdDeviation="1.6178421"
+          inkscape:collect="always"
+      />
+    </filter
+    >
+    <filter
+        id="filter4448"
+        inkscape:collect="always"
+      >
+      <feGaussianBlur
+          id="feGaussianBlur4450"
+          stdDeviation="0.61691537"
+          inkscape:collect="always"
+      />
+    </filter
+    >
+    <linearGradient
+        id="linearGradient3043"
+        y2="640.93"
+        xlink:href="#linearGradient3434"
+        gradientUnits="userSpaceOnUse"
+        x2="-276.61"
+        y1="768.45"
+        x1="-346.81"
+        inkscape:collect="always"
+    />
+    <linearGradient
+        id="linearGradient3045"
+        y2="640.93"
+        xlink:href="#linearGradient3434"
+        gradientUnits="userSpaceOnUse"
+        x2="-276.61"
+        y1="707.37"
+        x1="-314.02"
+        inkscape:collect="always"
+    />
+    <linearGradient
+        id="linearGradient3055"
+        y2="640.93"
+        xlink:href="#linearGradient3434"
+        gradientUnits="userSpaceOnUse"
+        x2="-276.61"
+        y1="764.38"
+        x1="-344.57"
+        inkscape:collect="always"
+    />
+    <linearGradient
+        id="linearGradient3065"
+        y2="640.93"
+        xlink:href="#linearGradient3434"
+        gradientUnits="userSpaceOnUse"
+        x2="-276.61"
+        y1="759.99"
+        x1="-342.15"
+        inkscape:collect="always"
+    />
+    <linearGradient
+        id="linearGradient3067"
+        y2="640.93"
+        xlink:href="#linearGradient3434"
+        gradientUnits="userSpaceOnUse"
+        x2="-276.61"
+        y1="774.73"
+        x1="-350.26"
+        inkscape:collect="always"
+    />
+    <linearGradient
+        id="linearGradient3071"
+        y2="640.93"
+        xlink:href="#linearGradient3434"
+        gradientUnits="userSpaceOnUse"
+        x2="-276.61"
+        y1="774.28"
+        x1="-350.02"
+        inkscape:collect="always"
+    />
+    <linearGradient
+        id="linearGradient3085"
+        y2="640.93"
+        xlink:href="#linearGradient3434"
+        gradientUnits="userSpaceOnUse"
+        x2="-276.61"
+        y1="755.89"
+        x1="-339.9"
+        inkscape:collect="always"
+    />
+    <linearGradient
+        id="linearGradient3087"
+        y2="640.93"
+        xlink:href="#linearGradient3434"
+        gradientUnits="userSpaceOnUse"
+        x2="-276.61"
+        y1="757.76"
+        x1="-340.92"
+        inkscape:collect="always"
+    />
+    <linearGradient
+        id="linearGradient3089"
+        y2="640.93"
+        xlink:href="#linearGradient3434"
+        gradientUnits="userSpaceOnUse"
+        x2="-276.61"
+        y1="764.58"
+        x1="-344.68"
+        inkscape:collect="always"
+    />
+    <linearGradient
+        id="linearGradient3095"
+        y2="640.93"
+        xlink:href="#linearGradient3434"
+        gradientUnits="userSpaceOnUse"
+        x2="-276.61"
+        y1="758.66"
+        x1="-341.42"
+        inkscape:collect="always"
+    />
+    <linearGradient
+        id="linearGradient3097"
+        y2="633.12"
+        xlink:href="#linearGradient3434"
+        gradientUnits="userSpaceOnUse"
+        x2="1046.2"
+        gradientTransform="translate(-463.87)"
+        y1="624.8"
+        x1="1076.1"
+        inkscape:collect="always"
+    />
+    <linearGradient
+        id="linearGradient3099"
+        y2="643.05"
+        xlink:href="#linearGradient3434"
+        gradientUnits="userSpaceOnUse"
+        x2="-96.45"
+        gradientTransform="translate(35.43,-21.258)"
+        y1="602.89"
+        x1="-188.47"
+        inkscape:collect="always"
+    />
+    <linearGradient
+        id="linearGradient3101"
+        y2="148.16"
+        gradientUnits="userSpaceOnUse"
+        x2="83.929"
+        y1="87.362"
+        x1="83.929"
+        inkscape:collect="always"
+      >
+      <stop
+          id="stop3452"
+          style="stop-color:#b3b3b3"
+          offset="0"
+      />
+      <stop
+          id="stop3474"
+          style="stop-color:#b3b3b3"
+          offset=".59398"
+      />
+      <stop
+          id="stop3454"
+          style="stop-color:#666666"
+          offset="1"
+      />
+    </linearGradient
+    >
+    <linearGradient
+        id="linearGradient3103"
+        y2="127.99"
+        xlink:href="#linearGradient3311"
+        gradientUnits="userSpaceOnUse"
+        x2="140.41"
+        gradientTransform="translate(-6.0431)"
+        y1="57.077"
+        x1="140.41"
+        inkscape:collect="always"
+    />
+    <radialGradient
+        id="radialGradient3105"
+        xlink:href="#linearGradient3478"
+        gradientUnits="userSpaceOnUse"
+        cy="166.04"
+        cx="11.99"
+        gradientTransform="matrix(0 -1.3616 1.204 -.0000016907 -176.42 136.19)"
+        r="22.913"
+        inkscape:collect="always"
+    />
+    <linearGradient
+        id="linearGradient3107"
+        y2="129.99"
+        xlink:href="#linearGradient3434"
+        gradientUnits="userSpaceOnUse"
+        x2="22.593"
+        y1="62.362"
+        x1="40.714"
+        inkscape:collect="always"
+    />
+    <linearGradient
+        id="linearGradient3109"
+        y2="129.69"
+        xlink:href="#linearGradient3311"
+        gradientUnits="userSpaceOnUse"
+        x2="32.935"
+        y1="164.95"
+        x1="94.009"
+        inkscape:collect="always"
+    />
+    <linearGradient
+        id="linearGradient3117"
+        y2="158.18"
+        xlink:href="#linearGradient3434"
+        gradientUnits="userSpaceOnUse"
+        x2="480.5"
+        gradientTransform="translate(-13.155 8.3081)"
+        y1="116.08"
+        x1="452.6"
+        inkscape:collect="always"
+    />
+    <linearGradient
+        id="linearGradient3119"
+        y2="726.3"
+        gradientUnits="userSpaceOnUse"
+        x2="393.13"
+        y1="689.45"
+        x1="371.85"
+        inkscape:collect="always"
+      >
+      <stop
+          id="stop4544"
+          style="stop-color:#ffffff"
+          offset="0"
+      />
+      <stop
+          id="stop4546"
+          style="stop-color:#4d4d4d"
+          offset="1"
+      />
+    </linearGradient
+    >
+    <linearGradient
+        id="linearGradient3121"
+        y2="730.4"
+        xlink:href="#linearGradient3434"
+        gradientUnits="userSpaceOnUse"
+        x2="982.87"
+        y1="742.5"
+        x1="1023.3"
+        inkscape:collect="always"
+    />
+    <linearGradient
+        id="linearGradient3125"
+        y2="640.93"
+        xlink:href="#linearGradient3434"
+        gradientUnits="userSpaceOnUse"
+        x2="-276.61"
+        y1="763.48"
+        x1="-344.07"
+        inkscape:collect="always"
+    />
+    <linearGradient
+        id="linearGradient3127"
+        y2="563.67"
+        gradientUnits="userSpaceOnUse"
+        x2="1312.1"
+        y1="574.93"
+        x1="1237.2"
+        inkscape:collect="always"
+      >
+      <stop
+          id="stop4515"
+          style="stop-color:#7f0000"
+          offset="0"
+      />
+      <stop
+          id="stop4519"
+          style="stop-color:#ff0000"
+          offset=".37290"
+      />
+      <stop
+          id="stop4521"
+          style="stop-color:#ff0000"
+          offset=".61295"
+      />
+      <stop
+          id="stop4517"
+          style="stop-color:#800000"
+          offset="1"
+      />
+    </linearGradient
+    >
+    <linearGradient
+        id="linearGradient3129"
+        y2="583.82"
+        gradientUnits="userSpaceOnUse"
+        x2="1331"
+        y1="599.22"
+        x1="1343"
+        inkscape:collect="always"
+      >
+      <stop
+          id="stop4437"
+          style="stop-color:#ff0000"
+          offset="0"
+      />
+      <stop
+          id="stop4439"
+          style="stop-color:#800000"
+          offset="1"
+      />
+    </linearGradient
+    >
+    <linearGradient
+        id="linearGradient3131"
+        y2="711.27"
+        gradientUnits="userSpaceOnUse"
+        x2="433.42"
+        gradientTransform="matrix(1 0 -.20513 1 143.26 0)"
+        y1="724.98"
+        x1="389.97"
+        inkscape:collect="always"
+      >
+      <stop
+          id="stop4404"
+          style="stop-color:#000080"
+          offset="0"
+      />
+      <stop
+          id="stop4406"
+          style="stop-color:#000080;stop-opacity:0"
+          offset="1"
+      />
+    </linearGradient
+    >
+    <linearGradient
+        id="linearGradient3133"
+        y2="747.73"
+        gradientUnits="userSpaceOnUse"
+        x2="378.66"
+        y1="730.98"
+        x1="407.67"
+        inkscape:collect="always"
+      >
+      <stop
+          id="stop4396"
+          style="stop-color:#000080"
+          offset="0"
+      />
+      <stop
+          id="stop4398"
+          style="stop-color:#000080;stop-opacity:0"
+          offset="1"
+      />
+    </linearGradient
+    >
+    <linearGradient
+        id="linearGradient3135"
+        y2="766.88"
+        xlink:href="#linearGradient3434"
+        gradientUnits="userSpaceOnUse"
+        x2="564.16"
+        y1="726.03"
+        x1="523.31"
+        inkscape:collect="always"
+    />
+  </defs
+  >
+  <sodipodi:namedview
+      id="base"
+      bordercolor="#666666"
+      inkscape:pageshadow="2"
+      inkscape:guide-bbox="true"
+      pagecolor="#ffffff"
+      inkscape:window-height="973"
+      inkscape:zoom="0.73738872"
+      inkscape:window-x="0"
+      showgrid="false"
+      borderopacity="1.0"
+      inkscape:current-layer="layer1"
+      inkscape:cx="81.160964"
+      inkscape:cy="254.95372"
+      showguides="true"
+      inkscape:window-y="20"
+      inkscape:window-width="1280"
+      inkscape:pageopacity="0.0"
+      inkscape:document-units="px"
+  />
+  <g
+      id="layer1"
+      inkscape:label="Camada 1"
+      inkscape:groupmode="layer"
+    >
+    <g
+        id="g2813"
+        transform="translate(-102.54 -201.04)"
+      >
+      <g
+          id="g4271"
+          inkscape:export-ydpi="599.94"
+          inkscape:export-xdpi="599.94"
+          inkscape:export-filename="C:\Documents and Settings\Usuario\Desktop\mecanica.png"
+          transform="matrix(.30598 .52998 .52998 -.30598 21.381 750.16)"
+        >
+        <g
+            id="g4286"
+            transform="matrix(.96593 .25882 -.25882 .96593 167.28 105.28)"
+          >
+          <path
+              id="path4273"
+              style="fill:#000000"
+              d="m-294.44 603.94c-18.8 0-34.06 18.19-34.06 40.62s15.26 40.63 34.06 40.63c15.05 0 27.81-11.67 32.32-27.81-3.99 4.42-9.32 7.12-15.19 7.12-12.32 0-22.31-11.93-22.31-26.62 0-14.7 9.99-26.6 22.31-26.6 0.87 0 1.74 0.04 2.59 0.16-5.57-4.73-12.37-7.5-19.72-7.5z"
+          />
+          <path
+              id="path4276"
+              style="filter:url(#filter3432);fill:url(#linearGradient3043)"
+              sodipodi:type="inkscape:offset"
+              d="m-294.44 607.34c-16.6 0-30.65 16.34-30.65 37.22s14.05 37.22 30.65 37.22c10.06 0 19.13-5.96 24.75-15.34-2.42 0.88-4.95 1.47-7.62 1.47-14.52 0-25.72-13.79-25.72-30.03 0-13.32 7.57-24.83 18.28-28.6-3.05-1.24-6.3-1.94-9.69-1.94z"
+              inkscape:original="M -294.4375 603.9375 C -313.2394 603.9375 -328.50001 622.13278 -328.5 644.5625 C -328.5 666.99222 -313.2394 685.1875 -294.4375 685.1875 C -279.3929 685.1875 -266.63064 673.52434 -262.125 657.375 C -266.10935 661.79806 -271.44477 664.5 -277.3125 664.5 C -289.62871 664.50002 -299.625 652.56761 -299.625 637.875 C -299.62499 623.18238 -289.6287 611.28125 -277.3125 611.28125 C -276.43639 611.28125 -275.56861 611.32012 -274.71875 611.4375 C -280.28548 606.71057 -287.08899 603.9375 -294.4375 603.9375 z "
+              transform="matrix(1 0 0 .95350 0 28.591)"
+              inkscape:radius="-3.4151273"
+          />
+        </g
+        >
+      </g
+      >
+      <g
+          id="g3436"
+          inkscape:export-ydpi="599.94"
+          inkscape:export-xdpi="599.94"
+          inkscape:export-filename="C:\Documents and Settings\Usuario\Desktop\mecanica.png"
+          transform="matrix(-.72867 .42070 .42070 .72867 -308.94 164.99)"
+        >
+        <path
+            id="path2647"
+            style="fill:#000000"
+            d="m-294.44 603.94c-18.8 0-34.06 18.19-34.06 40.62s15.26 40.63 34.06 40.63c15.05 0 27.81-11.67 32.32-27.81-3.99 4.42-9.32 7.12-15.19 7.12-12.32 0-22.31-11.93-22.31-26.62 0-14.7 9.99-26.6 22.31-26.6 0.87 0 1.74 0.04 2.59 0.16-5.57-4.73-12.37-7.5-19.72-7.5z"
+        />
+        <path
+            id="path2654"
+            style="filter:url(#filter3432);fill:url(#linearGradient3045)"
+            sodipodi:type="inkscape:offset"
+            d="m-294.44 607.34c-16.6 0-30.65 16.34-30.65 37.22s14.05 37.22 30.65 37.22c10.06 0 19.13-5.96 24.75-15.34-2.42 0.88-4.95 1.47-7.62 1.47-14.52 0-25.72-13.79-25.72-30.03 0-13.32 7.57-24.83 18.28-28.6-3.05-1.24-6.3-1.94-9.69-1.94z"
+            inkscape:original="M -294.4375 603.9375 C -313.2394 603.9375 -328.50001 622.13278 -328.5 644.5625 C -328.5 666.99222 -313.2394 685.1875 -294.4375 685.1875 C -279.3929 685.1875 -266.63064 673.52434 -262.125 657.375 C -266.10935 661.79806 -271.44477 664.5 -277.3125 664.5 C -289.62871 664.50002 -299.625 652.56761 -299.625 637.875 C -299.62499 623.18238 -289.6287 611.28125 -277.3125 611.28125 C -276.43639 611.28125 -275.56861 611.32012 -274.71875 611.4375 C -280.28548 606.71057 -287.08899 603.9375 -294.4375 603.9375 z "
+            transform="matrix(1 0 0 .95350 0 28.591)"
+            inkscape:radius="-3.4151273"
+        />
+      </g
+      >
+      <g
+          id="g3442"
+          inkscape:export-ydpi="599.94"
+          inkscape:export-xdpi="599.94"
+          inkscape:export-filename="C:\Documents and Settings\Usuario\Desktop\mecanica.png"
+          transform="matrix(.72867 -.42070 .42070 .72867 160.46 -88.81)"
+        >
+        <path
+            id="path3444"
+            style="fill:#000000"
+            d="m-294.44 603.94c-18.8 0-34.06 18.19-34.06 40.62s15.26 40.63 34.06 40.63c15.05 0 27.81-11.67 32.32-27.81-3.99 4.42-9.32 7.12-15.19 7.12-12.32 0-22.31-11.93-22.31-26.62 0-14.7 9.99-26.6 22.31-26.6 0.87 0 1.74 0.04 2.59 0.16-5.57-4.73-12.37-7.5-19.72-7.5z"
+        />
+        <path
+            id="path3446"
+            style="filter:url(#filter3432);fill:url(#linearGradient3045)"
+            sodipodi:type="inkscape:offset"
+            d="m-294.44 607.34c-16.6 0-30.65 16.34-30.65 37.22s14.05 37.22 30.65 37.22c10.06 0 19.13-5.96 24.75-15.34-2.42 0.88-4.95 1.47-7.62 1.47-14.52 0-25.72-13.79-25.72-30.03 0-13.32 7.57-24.83 18.28-28.6-3.05-1.24-6.3-1.94-9.69-1.94z"
+            inkscape:original="M -294.4375 603.9375 C -313.2394 603.9375 -328.50001 622.13278 -328.5 644.5625 C -328.5 666.99222 -313.2394 685.1875 -294.4375 685.1875 C -279.3929 685.1875 -266.63064 673.52434 -262.125 657.375 C -266.10935 661.79806 -271.44477 664.5 -277.3125 664.5 C -289.62871 664.50002 -299.625 652.56761 -299.625 637.875 C -299.62499 623.18238 -289.6287 611.28125 -277.3125 611.28125 C -276.43639 611.28125 -275.56861 611.32012 -274.71875 611.4375 C -280.28548 606.71057 -287.08899 603.9375 -294.4375 603.9375 z "
+            transform="matrix(1 0 0 .95350 0 28.591)"
+            inkscape:radius="-3.4151273"
+        />
+      </g
+      >
+      <g
+          id="g3450"
+          inkscape:export-ydpi="599.94"
+          inkscape:export-xdpi="599.94"
+          inkscape:export-filename="C:\Documents and Settings\Usuario\Desktop\mecanica.png"
+          transform="matrix(-.52998 .30598 .30598 .52998 -112.44 297.74)"
+        >
+        <path
+            id="path3452"
+            style="fill:#000000"
+            d="m-294.44 603.94c-18.8 0-34.06 18.19-34.06 40.62s15.26 40.63 34.06 40.63c15.05 0 27.81-11.67 32.32-27.81-3.99 4.42-9.32 7.12-15.19 7.12-12.32 0-22.31-11.93-22.31-26.62 0-14.7 9.99-26.6 22.31-26.6 0.87 0 1.74 0.04 2.59 0.16-5.57-4.73-12.37-7.5-19.72-7.5z"
+        />
+        <path
+            id="path3454"
+            style="filter:url(#filter3432);fill:url(#linearGradient3045)"
+            sodipodi:type="inkscape:offset"
+            d="m-294.44 607.34c-16.6 0-30.65 16.34-30.65 37.22s14.05 37.22 30.65 37.22c10.06 0 19.13-5.96 24.75-15.34-2.42 0.88-4.95 1.47-7.62 1.47-14.52 0-25.72-13.79-25.72-30.03 0-13.32 7.57-24.83 18.28-28.6-3.05-1.24-6.3-1.94-9.69-1.94z"
+            inkscape:original="M -294.4375 603.9375 C -313.2394 603.9375 -328.50001 622.13278 -328.5 644.5625 C -328.5 666.99222 -313.2394 685.1875 -294.4375 685.1875 C -279.3929 685.1875 -266.63064 673.52434 -262.125 657.375 C -266.10935 661.79806 -271.44477 664.5 -277.3125 664.5 C -289.62871 664.50002 -299.625 652.56761 -299.625 637.875 C -299.62499 623.18238 -289.6287 611.28125 -277.3125 611.28125 C -276.43639 611.28125 -275.56861 611.32012 -274.71875 611.4375 C -280.28548 606.71057 -287.08899 603.9375 -294.4375 603.9375 z "
+            transform="matrix(1 0 0 .95350 0 28.591)"
+            inkscape:radius="-3.4151273"
+        />
+      </g
+      >
+      <g
+          id="g3458"
+          inkscape:export-ydpi="599.94"
+          inkscape:export-xdpi="599.94"
+          inkscape:export-filename="C:\Documents and Settings\Usuario\Desktop\mecanica.png"
+          transform="matrix(.52998 -.30598 .30598 .52998 174.77 77.387)"
+        >
+        <path
+            id="path3460"
+            style="fill:#000000"
+            d="m-294.44 603.94c-18.8 0-34.06 18.19-34.06 40.62s15.26 40.63 34.06 40.63c15.05 0 27.81-11.67 32.32-27.81-3.99 4.42-9.32 7.12-15.19 7.12-12.32 0-22.31-11.93-22.31-26.62 0-14.7 9.99-26.6 22.31-26.6 0.87 0 1.74 0.04 2.59 0.16-5.57-4.73-12.37-7.5-19.72-7.5z"
+        />
+        <path
+            id="path3462"
+            style="filter:url(#filter3432);fill:url(#linearGradient3045)"
+            sodipodi:type="inkscape:offset"
+            d="m-294.44 607.34c-16.6 0-30.65 16.34-30.65 37.22s14.05 37.22 30.65 37.22c10.06 0 19.13-5.96 24.75-15.34-2.42 0.88-4.95 1.47-7.62 1.47-14.52 0-25.72-13.79-25.72-30.03 0-13.32 7.57-24.83 18.28-28.6-3.05-1.24-6.3-1.94-9.69-1.94z"
+            inkscape:original="M -294.4375 603.9375 C -313.2394 603.9375 -328.50001 622.13278 -328.5 644.5625 C -328.5 666.99222 -313.2394 685.1875 -294.4375 685.1875 C -279.3929 685.1875 -266.63064 673.52434 -262.125 657.375 C -266.10935 661.79806 -271.44477 664.5 -277.3125 664.5 C -289.62871 664.50002 -299.625 652.56761 -299.625 637.875 C -299.62499 623.18238 -289.6287 611.28125 -277.3125 611.28125 C -276.43639 611.28125 -275.56861 611.32012 -274.71875 611.4375 C -280.28548 606.71057 -287.08899 603.9375 -294.4375 603.9375 z "
+            transform="matrix(1 0 0 .95350 0 28.591)"
+            inkscape:radius="-3.4151273"
+        />
+      </g
+      >
+      <g
+          id="g3467"
+          inkscape:export-ydpi="599.94"
+          inkscape:export-xdpi="599.94"
+          inkscape:export-filename="C:\Documents and Settings\Usuario\Desktop\mecanica.png"
+          transform="matrix(.52998 -.30598 .30598 .52998 130.42 77.577)"
+        >
+        <path
+            id="path3469"
+            style="fill:#000000"
+            d="m-294.44 603.94c-18.8 0-34.06 18.19-34.06 40.62s15.26 40.63 34.06 40.63c15.05 0 27.81-11.67 32.32-27.81-3.99 4.42-9.32 7.12-15.19 7.12-12.32 0-22.31-11.93-22.31-26.62 0-14.7 9.99-26.6 22.31-26.6 0.87 0 1.74 0.04 2.59 0.16-5.57-4.73-12.37-7.5-19.72-7.5z"
+        />
+        <path
+            id="path3471"
+            style="filter:url(#filter3432);fill:url(#linearGradient3045)"
+            sodipodi:type="inkscape:offset"
+            d="m-294.44 607.34c-16.6 0-30.65 16.34-30.65 37.22s14.05 37.22 30.65 37.22c10.06 0 19.13-5.96 24.75-15.34-2.42 0.88-4.95 1.47-7.62 1.47-14.52 0-25.72-13.79-25.72-30.03 0-13.32 7.57-24.83 18.28-28.6-3.05-1.24-6.3-1.94-9.69-1.94z"
+            inkscape:original="M -294.4375 603.9375 C -313.2394 603.9375 -328.50001 622.13278 -328.5 644.5625 C -328.5 666.99222 -313.2394 685.1875 -294.4375 685.1875 C -279.3929 685.1875 -266.63064 673.52434 -262.125 657.375 C -266.10935 661.79806 -271.44477 664.5 -277.3125 664.5 C -289.62871 664.50002 -299.625 652.56761 -299.625 637.875 C -299.62499 623.18238 -289.6287 611.28125 -277.3125 611.28125 C -276.43639 611.28125 -275.56861 611.32012 -274.71875 611.4375 C -280.28548 606.71057 -287.08899 603.9375 -294.4375 603.9375 z "
+            transform="matrix(1 0 0 .95350 0 28.591)"
+            inkscape:radius="-3.4151273"
+        />
+      </g
+      >
+      <g
+          id="g3473"
+          inkscape:export-ydpi="599.94"
+          inkscape:export-xdpi="599.94"
+          inkscape:export-filename="C:\Documents and Settings\Usuario\Desktop\mecanica.png"
+          transform="matrix(-.52998 .30598 .30598 .52998 -103.99 350.49)"
+        >
+        <path
+            id="path3475"
+            style="fill:#000000"
+            d="m-294.44 603.94c-18.8 0-34.06 18.19-34.06 40.62s15.26 40.63 34.06 40.63c15.05 0 27.81-11.67 32.32-27.81-3.99 4.42-9.32 7.12-15.19 7.12-12.32 0-22.31-11.93-22.31-26.62 0-14.7 9.99-26.6 22.31-26.6 0.87 0 1.74 0.04 2.59 0.16-5.57-4.73-12.37-7.5-19.72-7.5z"
+        />
+        <path
+            id="path3477"
+            style="filter:url(#filter3432);fill:url(#linearGradient3055)"
+            sodipodi:type="inkscape:offset"
+            d="m-294.44 607.34c-16.6 0-30.65 16.34-30.65 37.22s14.05 37.22 30.65 37.22c10.06 0 19.13-5.96 24.75-15.34-2.42 0.88-4.95 1.47-7.62 1.47-14.52 0-25.72-13.79-25.72-30.03 0-13.32 7.57-24.83 18.28-28.6-3.05-1.24-6.3-1.94-9.69-1.94z"
+            inkscape:original="M -294.4375 603.9375 C -313.2394 603.9375 -328.50001 622.13278 -328.5 644.5625 C -328.5 666.99222 -313.2394 685.1875 -294.4375 685.1875 C -279.3929 685.1875 -266.63064 673.52434 -262.125 657.375 C -266.10935 661.79806 -271.44477 664.5 -277.3125 664.5 C -289.62871 664.50002 -299.625 652.56761 -299.625 637.875 C -299.62499 623.18238 -289.6287 611.28125 -277.3125 611.28125 C -276.43639 611.28125 -275.56861 611.32012 -274.71875 611.4375 C -280.28548 606.71057 -287.08899 603.9375 -294.4375 603.9375 z "
+            transform="matrix(1 0 0 .95350 0 28.591)"
+            inkscape:radius="-3.4151273"
+        />
+      </g
+      >
+      <g
+          id="g3483"
+          inkscape:export-ydpi="599.94"
+          inkscape:export-xdpi="599.94"
+          inkscape:export-filename="C:\Documents and Settings\Usuario\Desktop\mecanica.png"
+          transform="matrix(.52998 -.30598 .30598 .52998 212.72 138.33)"
+        >
+        <path
+            id="path3485"
+            style="fill:#000000"
+            d="m-294.44 603.94c-18.8 0-34.06 18.19-34.06 40.62s15.26 40.63 34.06 40.63c15.05 0 27.81-11.67 32.32-27.81-3.99 4.42-9.32 7.12-15.19 7.12-12.32 0-22.31-11.93-22.31-26.62 0-14.7 9.99-26.6 22.31-26.6 0.87 0 1.74 0.04 2.59 0.16-5.57-4.73-12.37-7.5-19.72-7.5z"
+        />
+        <path
+            id="path3487"
+            style="filter:url(#filter3432);fill:url(#linearGradient3045)"
+            sodipodi:type="inkscape:offset"
+            d="m-294.44 607.34c-16.6 0-30.65 16.34-30.65 37.22s14.05 37.22 30.65 37.22c10.06 0 19.13-5.96 24.75-15.34-2.42 0.88-4.95 1.47-7.62 1.47-14.52 0-25.72-13.79-25.72-30.03 0-13.32 7.57-24.83 18.28-28.6-3.05-1.24-6.3-1.94-9.69-1.94z"
+            inkscape:original="M -294.4375 603.9375 C -313.2394 603.9375 -328.50001 622.13278 -328.5 644.5625 C -328.5 666.99222 -313.2394 685.1875 -294.4375 685.1875 C -279.3929 685.1875 -266.63064 673.52434 -262.125 657.375 C -266.10935 661.79806 -271.44477 664.5 -277.3125 664.5 C -289.62871 664.50002 -299.625 652.56761 -299.625 637.875 C -299.62499 623.18238 -289.6287 611.28125 -277.3125 611.28125 C -276.43639 611.28125 -275.56861 611.32012 -274.71875 611.4375 C -280.28548 606.71057 -287.08899 603.9375 -294.4375 603.9375 z "
+            transform="matrix(1 0 0 .95350 0 28.591)"
+            inkscape:radius="-3.4151273"
+        />
+      </g
+      >
+      <g
+          id="g3489"
+          inkscape:export-ydpi="599.94"
+          inkscape:export-xdpi="599.94"
+          inkscape:export-filename="C:\Documents and Settings\Usuario\Desktop\mecanica.png"
+          transform="matrix(-.52998 .30598 .30598 .52998 -152.75 295.11)"
+        >
+        <path
+            id="path3491"
+            style="fill:#000000"
+            d="m-294.44 603.94c-18.8 0-34.06 18.19-34.06 40.62s15.26 40.63 34.06 40.63c15.05 0 27.81-11.67 32.32-27.81-3.99 4.42-9.32 7.12-15.19 7.12-12.32 0-22.31-11.93-22.31-26.62 0-14.7 9.99-26.6 22.31-26.6 0.87 0 1.74 0.04 2.59 0.16-5.57-4.73-12.37-7.5-19.72-7.5z"
+        />
+        <path
+            id="path3493"
+            style="filter:url(#filter3432);fill:url(#linearGradient3045)"
+            sodipodi:type="inkscape:offset"
+            d="m-294.44 607.34c-16.6 0-30.65 16.34-30.65 37.22s14.05 37.22 30.65 37.22c10.06 0 19.13-5.96 24.75-15.34-2.42 0.88-4.95 1.47-7.62 1.47-14.52 0-25.72-13.79-25.72-30.03 0-13.32 7.57-24.83 18.28-28.6-3.05-1.24-6.3-1.94-9.69-1.94z"
+            inkscape:original="M -294.4375 603.9375 C -313.2394 603.9375 -328.50001 622.13278 -328.5 644.5625 C -328.5 666.99222 -313.2394 685.1875 -294.4375 685.1875 C -279.3929 685.1875 -266.63064 673.52434 -262.125 657.375 C -266.10935 661.79806 -271.44477 664.5 -277.3125 664.5 C -289.62871 664.50002 -299.625 652.56761 -299.625 637.875 C -299.62499 623.18238 -289.6287 611.28125 -277.3125 611.28125 C -276.43639 611.28125 -275.56861 611.32012 -274.71875 611.4375 C -280.28548 606.71057 -287.08899 603.9375 -294.4375 603.9375 z "
+            transform="matrix(1 0 0 .95350 0 28.591)"
+            inkscape:radius="-3.4151273"
+        />
+      </g
+      >
+      <g
+          id="g3499"
+          inkscape:export-ydpi="599.94"
+          inkscape:export-xdpi="599.94"
+          inkscape:export-filename="C:\Documents and Settings\Usuario\Desktop\mecanica.png"
+          transform="matrix(-.52998 .30598 .30598 .52998 -97.305 308.19)"
+        >
+        <path
+            id="path3501"
+            style="fill:#000000"
+            d="m-294.44 603.94c-18.8 0-34.06 18.19-34.06 40.62s15.26 40.63 34.06 40.63c15.05 0 27.81-11.67 32.32-27.81-3.99 4.42-9.32 7.12-15.19 7.12-12.32 0-22.31-11.93-22.31-26.62 0-14.7 9.99-26.6 22.31-26.6 0.87 0 1.74 0.04 2.59 0.16-5.57-4.73-12.37-7.5-19.72-7.5z"
+        />
+        <path
+            id="path3503"
+            style="filter:url(#filter3432);fill:url(#linearGradient3045)"
+            sodipodi:type="inkscape:offset"
+            d="m-294.44 607.34c-16.6 0-30.65 16.34-30.65 37.22s14.05 37.22 30.65 37.22c10.06 0 19.13-5.96 24.75-15.34-2.42 0.88-4.95 1.47-7.62 1.47-14.52 0-25.72-13.79-25.72-30.03 0-13.32 7.57-24.83 18.28-28.6-3.05-1.24-6.3-1.94-9.69-1.94z"
+            inkscape:original="M -294.4375 603.9375 C -313.2394 603.9375 -328.50001 622.13278 -328.5 644.5625 C -328.5 666.99222 -313.2394 685.1875 -294.4375 685.1875 C -279.3929 685.1875 -266.63064 673.52434 -262.125 657.375 C -266.10935 661.79806 -271.44477 664.5 -277.3125 664.5 C -289.62871 664.50002 -299.625 652.56761 -299.625 637.875 C -299.62499 623.18238 -289.6287 611.28125 -277.3125 611.28125 C -276.43639 611.28125 -275.56861 611.32012 -274.71875 611.4375 C -280.28548 606.71057 -287.08899 603.9375 -294.4375 603.9375 z "
+            transform="matrix(1 0 0 .95350 0 28.591)"
+            inkscape:radius="-3.4151273"
+        />
+      </g
+      >
+      <g
+          id="g3505"
+          inkscape:export-ydpi="599.94"
+          inkscape:export-xdpi="599.94"
+          inkscape:export-filename="C:\Documents and Settings\Usuario\Desktop\mecanica.png"
+          transform="matrix(-.52998 .30598 .30598 .52998 -110.57 341.59)"
+        >
+        <path
+            id="path3507"
+            style="fill:#000000"
+            d="m-294.44 603.94c-18.8 0-34.06 18.19-34.06 40.62s15.26 40.63 34.06 40.63c15.05 0 27.81-11.67 32.32-27.81-3.99 4.42-9.32 7.12-15.19 7.12-12.32 0-22.31-11.93-22.31-26.62 0-14.7 9.99-26.6 22.31-26.6 0.87 0 1.74 0.04 2.59 0.16-5.57-4.73-12.37-7.5-19.72-7.5z"
+        />
+        <path
+            id="path3509"
+            style="filter:url(#filter3432);fill:url(#linearGradient3045)"
+            sodipodi:type="inkscape:offset"
+            d="m-294.44 607.34c-16.6 0-30.65 16.34-30.65 37.22s14.05 37.22 30.65 37.22c10.06 0 19.13-5.96 24.75-15.34-2.42 0.88-4.95 1.47-7.62 1.47-14.52 0-25.72-13.79-25.72-30.03 0-13.32 7.57-24.83 18.28-28.6-3.05-1.24-6.3-1.94-9.69-1.94z"
+            inkscape:original="M -294.4375 603.9375 C -313.2394 603.9375 -328.50001 622.13278 -328.5 644.5625 C -328.5 666.99222 -313.2394 685.1875 -294.4375 685.1875 C -279.3929 685.1875 -266.63064 673.52434 -262.125 657.375 C -266.10935 661.79806 -271.44477 664.5 -277.3125 664.5 C -289.62871 664.50002 -299.625 652.56761 -299.625 637.875 C -299.62499 623.18238 -289.6287 611.28125 -277.3125 611.28125 C -276.43639 611.28125 -275.56861 611.32012 -274.71875 611.4375 C -280.28548 606.71057 -287.08899 603.9375 -294.4375 603.9375 z "
+            transform="matrix(1 0 0 .95350 0 28.591)"
+            inkscape:radius="-3.4151273"
+        />
+      </g
+      >
+      <g
+          id="g3515"
+          inkscape:export-ydpi="599.94"
+          inkscape:export-xdpi="599.94"
+          inkscape:export-filename="C:\Documents and Settings\Usuario\Desktop\mecanica.png"
+          transform="matrix(.52998 -.30598 .30598 .52998 203.66 163.04)"
+        >
+        <path
+            id="path3517"
+            style="fill:#000000"
+            d="m-294.44 603.94c-18.8 0-34.06 18.19-34.06 40.62s15.26 40.63 34.06 40.63c15.05 0 27.81-11.67 32.32-27.81-3.99 4.42-9.32 7.12-15.19 7.12-12.32 0-22.31-11.93-22.31-26.62 0-14.7 9.99-26.6 22.31-26.6 0.87 0 1.74 0.04 2.59 0.16-5.57-4.73-12.37-7.5-19.72-7.5z"
+        />
+        <path
+            id="path3519"
+            style="filter:url(#filter3432);fill:url(#linearGradient3065)"
+            sodipodi:type="inkscape:offset"
+            d="m-294.44 607.34c-16.6 0-30.65 16.34-30.65 37.22s14.05 37.22 30.65 37.22c10.06 0 19.13-5.96 24.75-15.34-2.42 0.88-4.95 1.47-7.62 1.47-14.52 0-25.72-13.79-25.72-30.03 0-13.32 7.57-24.83 18.28-28.6-3.05-1.24-6.3-1.94-9.69-1.94z"
+            inkscape:original="M -294.4375 603.9375 C -313.2394 603.9375 -328.50001 622.13278 -328.5 644.5625 C -328.5 666.99222 -313.2394 685.1875 -294.4375 685.1875 C -279.3929 685.1875 -266.63064 673.52434 -262.125 657.375 C -266.10935 661.79806 -271.44477 664.5 -277.3125 664.5 C -289.62871 664.50002 -299.625 652.56761 -299.625 637.875 C -299.62499 623.18238 -289.6287 611.28125 -277.3125 611.28125 C -276.43639 611.28125 -275.56861 611.32012 -274.71875 611.4375 C -280.28548 606.71057 -287.08899 603.9375 -294.4375 603.9375 z "
+            transform="matrix(1 0 0 .95350 4.4271e-8 28.591)"
+            inkscape:radius="-3.4151273"
+        />
+      </g
+      >
+      <g
+          id="g3521"
+          inkscape:export-ydpi="599.94"
+          inkscape:export-xdpi="599.94"
+          inkscape:export-filename="C:\Documents and Settings\Usuario\Desktop\mecanica.png"
+          transform="matrix(.52998 -.30598 .30598 .52998 175.32 117.96)"
+        >
+        <path
+            id="path3523"
+            style="fill:#000000"
+            d="m-294.44 603.94c-18.8 0-34.06 18.19-34.06 40.62s15.26 40.63 34.06 40.63c15.05 0 27.81-11.67 32.32-27.81-3.99 4.42-9.32 7.12-15.19 7.12-12.32 0-22.31-11.93-22.31-26.62 0-14.7 9.99-26.6 22.31-26.6 0.87 0 1.74 0.04 2.59 0.16-5.57-4.73-12.37-7.5-19.72-7.5z"
+        />
+        <path
+            id="path3525"
+            style="filter:url(#filter3432);fill:url(#linearGradient3067)"
+            sodipodi:type="inkscape:offset"
+            d="m-294.44 607.34c-16.6 0-30.65 16.34-30.65 37.22s14.05 37.22 30.65 37.22c10.06 0 19.13-5.96 24.75-15.34-2.42 0.88-4.95 1.47-7.62 1.47-14.52 0-25.72-13.79-25.72-30.03 0-13.32 7.57-24.83 18.28-28.6-3.05-1.24-6.3-1.94-9.69-1.94z"
+            inkscape:original="M -294.4375 603.9375 C -313.2394 603.9375 -328.50001 622.13278 -328.5 644.5625 C -328.5 666.99222 -313.2394 685.1875 -294.4375 685.1875 C -279.3929 685.1875 -266.63064 673.52434 -262.125 657.375 C -266.10935 661.79806 -271.44477 664.5 -277.3125 664.5 C -289.62871 664.50002 -299.625 652.56761 -299.625 637.875 C -299.62499 623.18238 -289.6287 611.28125 -277.3125 611.28125 C -276.43639 611.28125 -275.56861 611.32012 -274.71875 611.4375 C -280.28548 606.71057 -287.08899 603.9375 -294.4375 603.9375 z "
+            transform="matrix(1 0 0 .95350 0 28.591)"
+            inkscape:radius="-3.4151273"
+        />
+      </g
+      >
+      <g
+          id="g3531"
+          inkscape:export-ydpi="599.94"
+          inkscape:export-xdpi="599.94"
+          inkscape:export-filename="C:\Documents and Settings\Usuario\Desktop\mecanica.png"
+          transform="matrix(.52998 -.30598 .30598 .52998 140.26 51.942)"
+        >
+        <path
+            id="path3533"
+            style="fill:#000000"
+            d="m-294.44 603.94c-18.8 0-34.06 18.19-34.06 40.62s15.26 40.63 34.06 40.63c15.05 0 27.81-11.67 32.32-27.81-3.99 4.42-9.32 7.12-15.19 7.12-12.32 0-22.31-11.93-22.31-26.62 0-14.7 9.99-26.6 22.31-26.6 0.87 0 1.74 0.04 2.59 0.16-5.57-4.73-12.37-7.5-19.72-7.5z"
+        />
+        <path
+            id="path3535"
+            style="filter:url(#filter3432);fill:url(#linearGradient3045)"
+            sodipodi:type="inkscape:offset"
+            d="m-294.44 607.34c-16.6 0-30.65 16.34-30.65 37.22s14.05 37.22 30.65 37.22c10.06 0 19.13-5.96 24.75-15.34-2.42 0.88-4.95 1.47-7.62 1.47-14.52 0-25.72-13.79-25.72-30.03 0-13.32 7.57-24.83 18.28-28.6-3.05-1.24-6.3-1.94-9.69-1.94z"
+            inkscape:original="M -294.4375 603.9375 C -313.2394 603.9375 -328.50001 622.13278 -328.5 644.5625 C -328.5 666.99222 -313.2394 685.1875 -294.4375 685.1875 C -279.3929 685.1875 -266.63064 673.52434 -262.125 657.375 C -266.10935 661.79806 -271.44477 664.5 -277.3125 664.5 C -289.62871 664.50002 -299.625 652.56761 -299.625 637.875 C -299.62499 623.18238 -289.6287 611.28125 -277.3125 611.28125 C -276.43639 611.28125 -275.56861 611.32012 -274.71875 611.4375 C -280.28548 606.71057 -287.08899 603.9375 -294.4375 603.9375 z "
+            transform="matrix(1 0 0 .95350 0 28.591)"
+            inkscape:radius="-3.4151273"
+        />
+      </g
+      >
+      <g
+          id="g3537"
+          inkscape:export-ydpi="599.94"
+          inkscape:export-xdpi="599.94"
+          inkscape:export-filename="C:\Documents and Settings\Usuario\Desktop\mecanica.png"
+          transform="matrix(.52998 -.30598 .30598 .52998 191.81 139.62)"
+        >
+        <path
+            id="path3539"
+            style="fill:#000000"
+            d="m-294.44 603.94c-18.8 0-34.06 18.19-34.06 40.62s15.26 40.63 34.06 40.63c15.05 0 27.81-11.67 32.32-27.81-3.99 4.42-9.32 7.12-15.19 7.12-12.32 0-22.31-11.93-22.31-26.62 0-14.7 9.99-26.6 22.31-26.6 0.87 0 1.74 0.04 2.59 0.16-5.57-4.73-12.37-7.5-19.72-7.5z"
+        />
+        <path
+            id="path3541"
+            style="filter:url(#filter3432);fill:url(#linearGradient3071)"
+            sodipodi:type="inkscape:offset"
+            d="m-294.44 607.34c-16.6 0-30.65 16.34-30.65 37.22s14.05 37.22 30.65 37.22c10.06 0 19.13-5.96 24.75-15.34-2.42 0.88-4.95 1.47-7.62 1.47-14.52 0-25.72-13.79-25.72-30.03 0-13.32 7.57-24.83 18.28-28.6-3.05-1.24-6.3-1.94-9.69-1.94z"
+            inkscape:original="M -294.4375 603.9375 C -313.2394 603.9375 -328.50001 622.13278 -328.5 644.5625 C -328.5 666.99222 -313.2394 685.1875 -294.4375 685.1875 C -279.3929 685.1875 -266.63064 673.52434 -262.125 657.375 C -266.10935 661.79806 -271.44477 664.5 -277.3125 664.5 C -289.62871 664.50002 -299.625 652.56761 -299.625 637.875 C -299.62499 623.18238 -289.6287 611.28125 -277.3125 611.28125 C -276.43639 611.28125 -275.56861 611.32012 -274.71875 611.4375 C -280.28548 606.71057 -287.08899 603.9375 -294.4375 603.9375 z "
+            transform="matrix(1 0 0 .95350 0 28.591)"
+            inkscape:radius="-3.4151273"
+        />
+      </g
+      >
+      <g
+          id="g3547"
+          inkscape:export-ydpi="599.94"
+          inkscape:export-xdpi="599.94"
+          inkscape:export-filename="C:\Documents and Settings\Usuario\Desktop\mecanica.png"
+          transform="matrix(.52998 -.30598 .30598 .52998 172.25 45.891)"
+        >
+        <path
+            id="path3550"
+            style="fill:#000000"
+            d="m-294.44 603.94c-18.8 0-34.06 18.19-34.06 40.62s15.26 40.63 34.06 40.63c15.05 0 27.81-11.67 32.32-27.81-3.99 4.42-9.32 7.12-15.19 7.12-12.32 0-22.31-11.93-22.31-26.62 0-14.7 9.99-26.6 22.31-26.6 0.87 0 1.74 0.04 2.59 0.16-5.57-4.73-12.37-7.5-19.72-7.5z"
+        />
+        <path
+            id="path3552"
+            style="filter:url(#filter3432);fill:url(#linearGradient3045)"
+            sodipodi:type="inkscape:offset"
+            d="m-294.44 607.34c-16.6 0-30.65 16.34-30.65 37.22s14.05 37.22 30.65 37.22c10.06 0 19.13-5.96 24.75-15.34-2.42 0.88-4.95 1.47-7.62 1.47-14.52 0-25.72-13.79-25.72-30.03 0-13.32 7.57-24.83 18.28-28.6-3.05-1.24-6.3-1.94-9.69-1.94z"
+            inkscape:original="M -294.4375 603.9375 C -313.2394 603.9375 -328.50001 622.13278 -328.5 644.5625 C -328.5 666.99222 -313.2394 685.1875 -294.4375 685.1875 C -279.3929 685.1875 -266.63064 673.52434 -262.125 657.375 C -266.10935 661.79806 -271.44477 664.5 -277.3125 664.5 C -289.62871 664.50002 -299.625 652.56761 -299.625 637.875 C -299.62499 623.18238 -289.6287 611.28125 -277.3125 611.28125 C -276.43639 611.28125 -275.56861 611.32012 -274.71875 611.4375 C -280.28548 606.71057 -287.08899 603.9375 -294.4375 603.9375 z "
+            transform="matrix(1 0 0 .95350 0 28.591)"
+            inkscape:radius="-3.4151273"
+        />
+      </g
+      >
+      <g
+          id="g3554"
+          inkscape:export-ydpi="599.94"
+          inkscape:export-xdpi="599.94"
+          inkscape:export-filename="C:\Documents and Settings\Usuario\Desktop\mecanica.png"
+          transform="matrix(.52998 -.30598 .30598 .52998 145.92 75.376)"
+        >
+        <path
+            id="path3556"
+            style="fill:#000000"
+            d="m-294.44 603.94c-18.8 0-34.06 18.19-34.06 40.62s15.26 40.63 34.06 40.63c15.05 0 27.81-11.67 32.32-27.81-3.99 4.42-9.32 7.12-15.19 7.12-12.32 0-22.31-11.93-22.31-26.62 0-14.7 9.99-26.6 22.31-26.6 0.87 0 1.74 0.04 2.59 0.16-5.57-4.73-12.37-7.5-19.72-7.5z"
+        />
+        <path
+            id="path3558"
+            style="filter:url(#filter3432);fill:url(#linearGradient3045)"
+            sodipodi:type="inkscape:offset"
+            d="m-294.44 607.34c-16.6 0-30.65 16.34-30.65 37.22s14.05 37.22 30.65 37.22c10.06 0 19.13-5.96 24.75-15.34-2.42 0.88-4.95 1.47-7.62 1.47-14.52 0-25.72-13.79-25.72-30.03 0-13.32 7.57-24.83 18.28-28.6-3.05-1.24-6.3-1.94-9.69-1.94z"
+            inkscape:original="M -294.4375 603.9375 C -313.2394 603.9375 -328.50001 622.13278 -328.5 644.5625 C -328.5 666.99222 -313.2394 685.1875 -294.4375 685.1875 C -279.3929 685.1875 -266.63064 673.52434 -262.125 657.375 C -266.10935 661.79806 -271.44477 664.5 -277.3125 664.5 C -289.62871 664.50002 -299.625 652.56761 -299.625 637.875 C -299.62499 623.18238 -289.6287 611.28125 -277.3125 611.28125 C -276.43639 611.28125 -275.56861 611.32012 -274.71875 611.4375 C -280.28548 606.71057 -287.08899 603.9375 -294.4375 603.9375 z "
+            transform="matrix(1 0 0 .95350 0 28.591)"
+            inkscape:radius="-3.4151273"
+        />
+      </g
+      >
+      <g
+          id="g3564"
+          inkscape:export-ydpi="599.94"
+          inkscape:export-xdpi="599.94"
+          inkscape:export-filename="C:\Documents and Settings\Usuario\Desktop\mecanica.png"
+          transform="matrix(.52998 -.30598 .30598 .52998 155.97 102.23)"
+        >
+        <path
+            id="path3566"
+            style="fill:#000000"
+            d="m-294.44 603.94c-18.8 0-34.06 18.19-34.06 40.62s15.26 40.63 34.06 40.63c15.05 0 27.81-11.67 32.32-27.81-3.99 4.42-9.32 7.12-15.19 7.12-12.32 0-22.31-11.93-22.31-26.62 0-14.7 9.99-26.6 22.31-26.6 0.87 0 1.74 0.04 2.59 0.16-5.57-4.73-12.37-7.5-19.72-7.5z"
+        />
+        <path
+            id="path3568"
+            style="filter:url(#filter3432);fill:url(#linearGradient3045)"
+            sodipodi:type="inkscape:offset"
+            d="m-294.44 607.34c-16.6 0-30.65 16.34-30.65 37.22s14.05 37.22 30.65 37.22c10.06 0 19.13-5.96 24.75-15.34-2.42 0.88-4.95 1.47-7.62 1.47-14.52 0-25.72-13.79-25.72-30.03 0-13.32 7.57-24.83 18.28-28.6-3.05-1.24-6.3-1.94-9.69-1.94z"
+            inkscape:original="M -294.4375 603.9375 C -313.2394 603.9375 -328.50001 622.13278 -328.5 644.5625 C -328.5 666.99222 -313.2394 685.1875 -294.4375 685.1875 C -279.3929 685.1875 -266.63064 673.52434 -262.125 657.375 C -266.10935 661.79806 -271.44477 664.5 -277.3125 664.5 C -289.62871 664.50002 -299.625 652.56761 -299.625 637.875 C -299.62499 623.18238 -289.6287 611.28125 -277.3125 611.28125 C -276.43639 611.28125 -275.56861 611.32012 -274.71875 611.4375 C -280.28548 606.71057 -287.08899 603.9375 -294.4375 603.9375 z "
+            transform="matrix(1 0 0 .95350 0 28.591)"
+            inkscape:radius="-3.4151273"
+        />
+      </g
+      >
+      <g
+          id="g3570"
+          inkscape:export-ydpi="599.94"
+          inkscape:export-xdpi="599.94"
+          inkscape:export-filename="C:\Documents and Settings\Usuario\Desktop\mecanica.png"
+          transform="matrix(.52998 -.30598 .30598 .52998 204.15 117.21)"
+        >
+        <path
+            id="path3572"
+            style="fill:#000000"
+            d="m-294.44 603.94c-18.8 0-34.06 18.19-34.06 40.62s15.26 40.63 34.06 40.63c15.05 0 27.81-11.67 32.32-27.81-3.99 4.42-9.32 7.12-15.19 7.12-12.32 0-22.31-11.93-22.31-26.62 0-14.7 9.99-26.6 22.31-26.6 0.87 0 1.74 0.04 2.59 0.16-5.57-4.73-12.37-7.5-19.72-7.5z"
+        />
+        <path
+            id="path3574"
+            style="filter:url(#filter3432);fill:url(#linearGradient3045)"
+            sodipodi:type="inkscape:offset"
+            d="m-294.44 607.34c-16.6 0-30.65 16.34-30.65 37.22s14.05 37.22 30.65 37.22c10.06 0 19.13-5.96 24.75-15.34-2.42 0.88-4.95 1.47-7.62 1.47-14.52 0-25.72-13.79-25.72-30.03 0-13.32 7.57-24.83 18.28-28.6-3.05-1.24-6.3-1.94-9.69-1.94z"
+            inkscape:original="M -294.4375 603.9375 C -313.2394 603.9375 -328.50001 622.13278 -328.5 644.5625 C -328.5 666.99222 -313.2394 685.1875 -294.4375 685.1875 C -279.3929 685.1875 -266.63064 673.52434 -262.125 657.375 C -266.10935 661.79806 -271.44477 664.5 -277.3125 664.5 C -289.62871 664.50002 -299.625 652.56761 -299.625 637.875 C -299.62499 623.18238 -289.6287 611.28125 -277.3125 611.28125 C -276.43639 611.28125 -275.56861 611.32012 -274.71875 611.4375 C -280.28548 606.71057 -287.08899 603.9375 -294.4375 603.9375 z "
+            transform="matrix(1 0 0 .95350 0 28.591)"
+            inkscape:radius="-3.4151273"
+        />
+      </g
+      >
+      <g
+          id="g3580"
+          inkscape:export-ydpi="599.94"
+          inkscape:export-xdpi="599.94"
+          inkscape:export-filename="C:\Documents and Settings\Usuario\Desktop\mecanica.png"
+          transform="matrix(.52998 -.30598 .30598 .52998 132.9 85.782)"
+        >
+        <path
+            id="path3582"
+            style="fill:#000000"
+            d="m-294.44 603.94c-18.8 0-34.06 18.19-34.06 40.62s15.26 40.63 34.06 40.63c15.05 0 27.81-11.67 32.32-27.81-3.99 4.42-9.32 7.12-15.19 7.12-12.32 0-22.31-11.93-22.31-26.62 0-14.7 9.99-26.6 22.31-26.6 0.87 0 1.74 0.04 2.59 0.16-5.57-4.73-12.37-7.5-19.72-7.5z"
+        />
+        <path
+            id="path3584"
+            style="filter:url(#filter3432);fill:url(#linearGradient3045)"
+            sodipodi:type="inkscape:offset"
+            d="m-294.44 607.34c-16.6 0-30.65 16.34-30.65 37.22s14.05 37.22 30.65 37.22c10.06 0 19.13-5.96 24.75-15.34-2.42 0.88-4.95 1.47-7.62 1.47-14.52 0-25.72-13.79-25.72-30.03 0-13.32 7.57-24.83 18.28-28.6-3.05-1.24-6.3-1.94-9.69-1.94z"
+            inkscape:original="M -294.4375 603.9375 C -313.2394 603.9375 -328.50001 622.13278 -328.5 644.5625 C -328.5 666.99222 -313.2394 685.1875 -294.4375 685.1875 C -279.3929 685.1875 -266.63064 673.52434 -262.125 657.375 C -266.10935 661.79806 -271.44477 664.5 -277.3125 664.5 C -289.62871 664.50002 -299.625 652.56761 -299.625 637.875 C -299.62499 623.18238 -289.6287 611.28125 -277.3125 611.28125 C -276.43639 611.28125 -275.56861 611.32012 -274.71875 611.4375 C -280.28548 606.71057 -287.08899 603.9375 -294.4375 603.9375 z "
+            transform="matrix(1 0 0 .95350 0 28.591)"
+            inkscape:radius="-3.4151273"
+        />
+      </g
+      >
+      <g
+          id="g3586"
+          inkscape:export-ydpi="599.94"
+          inkscape:export-xdpi="599.94"
+          inkscape:export-filename="C:\Documents and Settings\Usuario\Desktop\mecanica.png"
+          transform="matrix(-.52998 .30598 .30598 .52998 -104.48 272.98)"
+        >
+        <path
+            id="path3588"
+            style="fill:#000000"
+            d="m-294.44 603.94c-18.8 0-34.06 18.19-34.06 40.62s15.26 40.63 34.06 40.63c15.05 0 27.81-11.67 32.32-27.81-3.99 4.42-9.32 7.12-15.19 7.12-12.32 0-22.31-11.93-22.31-26.62 0-14.7 9.99-26.6 22.31-26.6 0.87 0 1.74 0.04 2.59 0.16-5.57-4.73-12.37-7.5-19.72-7.5z"
+        />
+        <path
+            id="path3590"
+            style="filter:url(#filter3432);fill:url(#linearGradient3045)"
+            sodipodi:type="inkscape:offset"
+            d="m-294.44 607.34c-16.6 0-30.65 16.34-30.65 37.22s14.05 37.22 30.65 37.22c10.06 0 19.13-5.96 24.75-15.34-2.42 0.88-4.95 1.47-7.62 1.47-14.52 0-25.72-13.79-25.72-30.03 0-13.32 7.57-24.83 18.28-28.6-3.05-1.24-6.3-1.94-9.69-1.94z"
+            inkscape:original="M -294.4375 603.9375 C -313.2394 603.9375 -328.50001 622.13278 -328.5 644.5625 C -328.5 666.99222 -313.2394 685.1875 -294.4375 685.1875 C -279.3929 685.1875 -266.63064 673.52434 -262.125 657.375 C -266.10935 661.79806 -271.44477 664.5 -277.3125 664.5 C -289.62871 664.50002 -299.625 652.56761 -299.625 637.875 C -299.62499 623.18238 -289.6287 611.28125 -277.3125 611.28125 C -276.43639 611.28125 -275.56861 611.32012 -274.71875 611.4375 C -280.28548 606.71057 -287.08899 603.9375 -294.4375 603.9375 z "
+            transform="matrix(1 0 0 .95350 0 28.591)"
+            inkscape:radius="-3.4151273"
+        />
+      </g
+      >
+      <g
+          id="g3596"
+          inkscape:export-ydpi="599.94"
+          inkscape:export-xdpi="599.94"
+          inkscape:export-filename="C:\Documents and Settings\Usuario\Desktop\mecanica.png"
+          transform="matrix(-.52998 .30598 .30598 .52998 -121.62 318.28)"
+        >
+        <path
+            id="path3598"
+            style="fill:#000000"
+            d="m-294.44 603.94c-18.8 0-34.06 18.19-34.06 40.62s15.26 40.63 34.06 40.63c15.05 0 27.81-11.67 32.32-27.81-3.99 4.42-9.32 7.12-15.19 7.12-12.32 0-22.31-11.93-22.31-26.62 0-14.7 9.99-26.6 22.31-26.6 0.87 0 1.74 0.04 2.59 0.16-5.57-4.73-12.37-7.5-19.72-7.5z"
+        />
+        <path
+            id="path3600"
+            style="filter:url(#filter3432);fill:url(#linearGradient3085)"
+            sodipodi:type="inkscape:offset"
+            d="m-294.44 607.34c-16.6 0-30.65 16.34-30.65 37.22s14.05 37.22 30.65 37.22c10.06 0 19.13-5.96 24.75-15.34-2.42 0.88-4.95 1.47-7.62 1.47-14.52 0-25.72-13.79-25.72-30.03 0-13.32 7.57-24.83 18.28-28.6-3.05-1.24-6.3-1.94-9.69-1.94z"
+            inkscape:original="M -294.4375 603.9375 C -313.2394 603.9375 -328.50001 622.13278 -328.5 644.5625 C -328.5 666.99222 -313.2394 685.1875 -294.4375 685.1875 C -279.3929 685.1875 -266.63064 673.52434 -262.125 657.375 C -266.10935 661.79806 -271.44477 664.5 -277.3125 664.5 C -289.62871 664.50002 -299.625 652.56761 -299.625 637.875 C -299.62499 623.18238 -289.6287 611.28125 -277.3125 611.28125 C -276.43639 611.28125 -275.56861 611.32012 -274.71875 611.4375 C -280.28548 606.71057 -287.08899 603.9375 -294.4375 603.9375 z "
+            transform="matrix(1 0 0 .95350 0 28.591)"
+            inkscape:radius="-3.4151273"
+        />
+      </g
+      >
+      <g
+          id="g3602"
+          inkscape:export-ydpi="599.94"
+          inkscape:export-xdpi="599.94"
+          inkscape:export-filename="C:\Documents and Settings\Usuario\Desktop\mecanica.png"
+          transform="matrix(.52998 -.30598 .30598 .52998 194.8 126.07)"
+        >
+        <path
+            id="path3604"
+            style="fill:#000000"
+            d="m-294.44 603.94c-18.8 0-34.06 18.19-34.06 40.62s15.26 40.63 34.06 40.63c15.05 0 27.81-11.67 32.32-27.81-3.99 4.42-9.32 7.12-15.19 7.12-12.32 0-22.31-11.93-22.31-26.62 0-14.7 9.99-26.6 22.31-26.6 0.87 0 1.74 0.04 2.59 0.16-5.57-4.73-12.37-7.5-19.72-7.5z"
+        />
+        <path
+            id="path3606"
+            style="filter:url(#filter3432);fill:url(#linearGradient3087)"
+            sodipodi:type="inkscape:offset"
+            d="m-294.44 607.34c-16.6 0-30.65 16.34-30.65 37.22s14.05 37.22 30.65 37.22c10.06 0 19.13-5.96 24.75-15.34-2.42 0.88-4.95 1.47-7.62 1.47-14.52 0-25.72-13.79-25.72-30.03 0-13.32 7.57-24.83 18.28-28.6-3.05-1.24-6.3-1.94-9.69-1.94z"
+            inkscape:original="M -294.4375 603.9375 C -313.2394 603.9375 -328.50001 622.13278 -328.5 644.5625 C -328.5 666.99222 -313.2394 685.1875 -294.4375 685.1875 C -279.3929 685.1875 -266.63064 673.52434 -262.125 657.375 C -266.10935 661.79806 -271.44477 664.5 -277.3125 664.5 C -289.62871 664.50002 -299.625 652.56761 -299.625 637.875 C -299.62499 623.18238 -289.6287 611.28125 -277.3125 611.28125 C -276.43639 611.28125 -275.56861 611.32012 -274.71875 611.4375 C -280.28548 606.71057 -287.08899 603.9375 -294.4375 603.9375 z "
+            transform="matrix(1 0 0 .95350 0 28.591)"
+            inkscape:radius="-3.4151273"
+        />
+      </g
+      >
+      <g
+          id="g3612"
+          inkscape:export-ydpi="599.94"
+          inkscape:export-xdpi="599.94"
+          inkscape:export-filename="C:\Documents and Settings\Usuario\Desktop\mecanica.png"
+          transform="matrix(-.52998 .30598 .30598 .52998 -108.8 332.72)"
+        >
+        <path
+            id="path3614"
+            style="fill:#000000"
+            d="m-294.44 603.94c-18.8 0-34.06 18.19-34.06 40.62s15.26 40.63 34.06 40.63c15.05 0 27.81-11.67 32.32-27.81-3.99 4.42-9.32 7.12-15.19 7.12-12.32 0-22.31-11.93-22.31-26.62 0-14.7 9.99-26.6 22.31-26.6 0.87 0 1.74 0.04 2.59 0.16-5.57-4.73-12.37-7.5-19.72-7.5z"
+        />
+        <path
+            id="path3616"
+            style="filter:url(#filter3432);fill:url(#linearGradient3089)"
+            sodipodi:type="inkscape:offset"
+            d="m-294.44 607.34c-16.6 0-30.65 16.34-30.65 37.22s14.05 37.22 30.65 37.22c10.06 0 19.13-5.96 24.75-15.34-2.42 0.88-4.95 1.47-7.62 1.47-14.52 0-25.72-13.79-25.72-30.03 0-13.32 7.57-24.83 18.28-28.6-3.05-1.24-6.3-1.94-9.69-1.94z"
+            inkscape:original="M -294.4375 603.9375 C -313.2394 603.9375 -328.50001 622.13278 -328.5 644.5625 C -328.5 666.99222 -313.2394 685.1875 -294.4375 685.1875 C -279.3929 685.1875 -266.63064 673.52434 -262.125 657.375 C -266.10935 661.79806 -271.44477 664.5 -277.3125 664.5 C -289.62871 664.50002 -299.625 652.56761 -299.625 637.875 C -299.62499 623.18238 -289.6287 611.28125 -277.3125 611.28125 C -276.43639 611.28125 -275.56861 611.32012 -274.71875 611.4375 C -280.28548 606.71057 -287.08899 603.9375 -294.4375 603.9375 z "
+            transform="matrix(1 0 0 .95350 0 28.591)"
+            inkscape:radius="-3.4151273"
+        />
+      </g
+      >
+      <g
+          id="g3618"
+          inkscape:export-ydpi="599.94"
+          inkscape:export-xdpi="599.94"
+          inkscape:export-filename="C:\Documents and Settings\Usuario\Desktop\mecanica.png"
+          transform="matrix(.52998 -.30598 .30598 .52998 150.53 100.51)"
+        >
+        <path
+            id="path3620"
+            style="fill:#000000"
+            d="m-294.44 603.94c-18.8 0-34.06 18.19-34.06 40.62s15.26 40.63 34.06 40.63c15.05 0 27.81-11.67 32.32-27.81-3.99 4.42-9.32 7.12-15.19 7.12-12.32 0-22.31-11.93-22.31-26.62 0-14.7 9.99-26.6 22.31-26.6 0.87 0 1.74 0.04 2.59 0.16-5.57-4.73-12.37-7.5-19.72-7.5z"
+        />
+        <path
+            id="path3622"
+            style="filter:url(#filter3432);fill:url(#linearGradient3045)"
+            sodipodi:type="inkscape:offset"
+            d="m-294.44 607.34c-16.6 0-30.65 16.34-30.65 37.22s14.05 37.22 30.65 37.22c10.06 0 19.13-5.96 24.75-15.34-2.42 0.88-4.95 1.47-7.62 1.47-14.52 0-25.72-13.79-25.72-30.03 0-13.32 7.57-24.83 18.28-28.6-3.05-1.24-6.3-1.94-9.69-1.94z"
+            inkscape:original="M -294.4375 603.9375 C -313.2394 603.9375 -328.50001 622.13278 -328.5 644.5625 C -328.5 666.99222 -313.2394 685.1875 -294.4375 685.1875 C -279.3929 685.1875 -266.63064 673.52434 -262.125 657.375 C -266.10935 661.79806 -271.44477 664.5 -277.3125 664.5 C -289.62871 664.50002 -299.625 652.56761 -299.625 637.875 C -299.62499 623.18238 -289.6287 611.28125 -277.3125 611.28125 C -276.43639 611.28125 -275.56861 611.32012 -274.71875 611.4375 C -280.28548 606.71057 -287.08899 603.9375 -294.4375 603.9375 z "
+            transform="matrix(1 0 0 .95350 0 28.591)"
+            inkscape:radius="-3.4151273"
+        />
+      </g
+      >
+      <g
+          id="g3629"
+          inkscape:export-ydpi="599.94"
+          inkscape:export-xdpi="599.94"
+          inkscape:export-filename="C:\Documents and Settings\Usuario\Desktop\mecanica.png"
+          transform="matrix(-.52998 .30598 .30598 .52998 -160.61 266.62)"
+        >
+        <path
+            id="path3631"
+            style="fill:#000000"
+            d="m-294.44 603.94c-18.8 0-34.06 18.19-34.06 40.62s15.26 40.63 34.06 40.63c15.05 0 27.81-11.67 32.32-27.81-3.99 4.42-9.32 7.12-15.19 7.12-12.32 0-22.31-11.93-22.31-26.62 0-14.7 9.99-26.6 22.31-26.6 0.87 0 1.74 0.04 2.59 0.16-5.57-4.73-12.37-7.5-19.72-7.5z"
+        />
+        <path
+            id="path3633"
+            style="filter:url(#filter3432);fill:url(#linearGradient3045)"
+            sodipodi:type="inkscape:offset"
+            d="m-294.44 607.34c-16.6 0-30.65 16.34-30.65 37.22s14.05 37.22 30.65 37.22c10.06 0 19.13-5.96 24.75-15.34-2.42 0.88-4.95 1.47-7.62 1.47-14.52 0-25.72-13.79-25.72-30.03 0-13.32 7.57-24.83 18.28-28.6-3.05-1.24-6.3-1.94-9.69-1.94z"
+            inkscape:original="M -294.4375 603.9375 C -313.2394 603.9375 -328.50001 622.13278 -328.5 644.5625 C -328.5 666.99222 -313.2394 685.1875 -294.4375 685.1875 C -279.3929 685.1875 -266.63064 673.52434 -262.125 657.375 C -266.10935 661.79806 -271.44477 664.5 -277.3125 664.5 C -289.62871 664.50002 -299.625 652.56761 -299.625 637.875 C -299.62499 623.18238 -289.6287 611.28125 -277.3125 611.28125 C -276.43639 611.28125 -275.56861 611.32012 -274.71875 611.4375 C -280.28548 606.71057 -287.08899 603.9375 -294.4375 603.9375 z "
+            transform="matrix(1 0 0 .95350 0 28.591)"
+            inkscape:radius="-3.4151273"
+        />
+      </g
+      >
+      <g
+          id="g3635"
+          inkscape:export-ydpi="599.94"
+          inkscape:export-xdpi="599.94"
+          inkscape:export-filename="C:\Documents and Settings\Usuario\Desktop\mecanica.png"
+          transform="matrix(.52998 -.30598 .30598 .52998 148.76 101.65)"
+        >
+        <path
+            id="path3637"
+            style="fill:#000000"
+            d="m-294.44 603.94c-18.8 0-34.06 18.19-34.06 40.62s15.26 40.63 34.06 40.63c15.05 0 27.81-11.67 32.32-27.81-3.99 4.42-9.32 7.12-15.19 7.12-12.32 0-22.31-11.93-22.31-26.62 0-14.7 9.99-26.6 22.31-26.6 0.87 0 1.74 0.04 2.59 0.16-5.57-4.73-12.37-7.5-19.72-7.5z"
+        />
+        <path
+            id="path3639"
+            style="filter:url(#filter3432);fill:url(#linearGradient3095)"
+            sodipodi:type="inkscape:offset"
+            d="m-294.44 607.34c-16.6 0-30.65 16.34-30.65 37.22s14.05 37.22 30.65 37.22c10.06 0 19.13-5.96 24.75-15.34-2.42 0.88-4.95 1.47-7.62 1.47-14.52 0-25.72-13.79-25.72-30.03 0-13.32 7.57-24.83 18.28-28.6-3.05-1.24-6.3-1.94-9.69-1.94z"
+            inkscape:original="M -294.4375 603.9375 C -313.2394 603.9375 -328.50001 622.13278 -328.5 644.5625 C -328.5 666.99222 -313.2394 685.1875 -294.4375 685.1875 C -279.3929 685.1875 -266.63064 673.52434 -262.125 657.375 C -266.10935 661.79806 -271.44477 664.5 -277.3125 664.5 C -289.62871 664.50002 -299.625 652.56761 -299.625 637.875 C -299.62499 623.18238 -289.6287 611.28125 -277.3125 611.28125 C -276.43639 611.28125 -275.56861 611.32012 -274.71875 611.4375 C -280.28548 606.71057 -287.08899 603.9375 -294.4375 603.9375 z "
+            transform="matrix(1 0 0 .95350 0 28.591)"
+            inkscape:radius="-3.4151273"
+        />
+      </g
+      >
+      <path
+          id="path5317"
+          style="fill:#000000"
+          d="m301.19 749.19l-85.06 7.22c-7.12 11.71-21.61 34.19-27.44 86.31-0.25 2.27-0.12 4.58 1.03 7.59 2.17 5.66 5.16 11.02 8.63 16.22h80.06c-1.4-9.62-2.42-19.32-3.37-29.03-0.19-1.92-0.13-3.56 1.37-5.66 26.07-36.4 24.31-72.15 24.78-82.65z"
+          inkscape:export-ydpi="599.94"
+          inkscape:export-filename="C:\Documents and Settings\Usuario\Desktop\mecanica.png"
+          inkscape:export-xdpi="599.94"
+      />
+      <path
+          id="path5319"
+          style="fill:#decd87"
+          d="m292.57 750.28l-69.44 5.91c-12.27 18.57-28.03 52.3-26.12 86.18 0.12 2.16 0.3 4.11 1 6.16 1.83 5.41 5.56 11.43 10.18 18h63.5c-1.39-9.09-2.53-18.24-3.72-27.37-0.27-2.09-0.36-4.3 0.91-6.5 16.06-27.92 20.4-55.12 23.69-82.38z"
+          inkscape:export-ydpi="599.94"
+          inkscape:export-filename="C:\Documents and Settings\Usuario\Desktop\mecanica.png"
+          inkscape:export-xdpi="599.94"
+      />
+      <path
+          id="path5321"
+          style="filter:url(#filter5266);fill:#a0892c"
+          d="m238.63 754.59l-11.97 0.97c-11.3 18.4-25.61 51.91-23.12 85.69 0.16 2.14 0.39 4.08 1.09 6.12 1.96 5.72 5.96 12.13 10.84 19.16h6.47c-4.45-9.47-7.92-18.11-9.03-25.84-0.41-2.87-0.18-5.62 0.16-8.63 3.06-27.3 13.48-54.45 25.56-77.47z"
+          inkscape:export-ydpi="599.94"
+          inkscape:export-filename="C:\Documents and Settings\Usuario\Desktop\mecanica.png"
+          inkscape:export-xdpi="599.94"
+      />
+      <path
+          id="path4720"
+          style="fill:#000000"
+          d="m217.6 554.85l100.1-57.79c25.38 50.75 13.75 114.91 76.56 152.11l-100.1 57.79c-12.42-58.26-38.42-108.69-76.56-152.11z"
+          inkscape:export-ydpi="599.94"
+          sodipodi:nodetypes="ccccc"
+          inkscape:export-filename="C:\Documents and Settings\Usuario\Desktop\mecanica.png"
+          inkscape:export-xdpi="599.94"
+      />
+      <path
+          id="rect4717"
+          style="fill:#decd87"
+          d="m222.81 551.84l81.77-47.21c25.92 50.45 20.97 110.74 78.11 151.22 8.52 77.96-30.76 72.78-81.76 47.21-15.34-56.59-41.77-106.77-78.12-151.22z"
+          inkscape:export-ydpi="599.94"
+          sodipodi:nodetypes="ccccc"
+          inkscape:export-filename="C:\Documents and Settings\Usuario\Desktop\mecanica.png"
+          inkscape:export-xdpi="599.94"
+      />
+      <path
+          id="path4244"
+          style="fill-rule:evenodd;fill:#000000"
+          sodipodi:type="inkscape:offset"
+          d="m1042.2 568.41c-6.5 0.3-12.7 4.49-17.9 9.97-5.1 5.47-9.1 12.31-10.6 18.56-5 20.42-2.4 39.7-0.5 55.72 1.2 10.16 5.5 22.73 7.9 32.18 5 19.77 9.6 28.99 16.4 36.94 4.9 5.71 12.6 6.67 18.4 5.34 3.8-0.88 7.5-2.3 10.3-5.12 2.7-2.82 4.3-6.96 4.3-12.69-0.1-9.51 3.7-18.08 7.7-24.65 4.8-7.67 7.8-18.24 9-28.94 1.1-10.71 0.3-21.55-2.9-29.88-2.8-7.1-6.8-12.43-6.8-22.65 0-7.56-5.6-16.09-12.6-22.97s-15.5-12.16-22.7-11.81z"
+          inkscape:export-ydpi="599.94"
+          inkscape:export-filename="C:\Documents and Settings\Usuario\Desktop\mecanica.png"
+          transform="matrix(1.617 -.93356 .88575 1.5916 -1969 454.59)"
+          inkscape:original="M 1042.25 570.15625 C 1030.8173 570.70297 1018.2993 585.66281 1015.4375 597.34375 C 1010.5295 617.37617 1013.0451 636.40009 1014.9375 652.4375 C 1016.0977 662.27019 1020.3797 674.8354 1022.8125 684.40625 C 1027.8074 704.05702 1032.2045 712.88312 1038.875 720.625 C 1043.2593 725.71345 1050.1881 726.61807 1055.4688 725.40625 C 1062.8113 723.72123 1068.8038 720.11314 1068.7188 709.3125 C 1068.64 699.32206 1072.6093 690.45407 1076.75 683.71875 C 1085.7651 669.05519 1088.8364 642.33033 1082.625 626.5 C 1079.9426 619.66367 1075.75 613.87226 1075.75 603.1875 C 1075.75 589.94491 1054.7996 569.55616 1042.25 570.15625 z "
+          inkscape:export-xdpi="599.94"
+          inkscape:radius="1.7658368"
+      />
+      <path
+          id="path4240"
+          style="fill-rule:evenodd;fill:#decd87"
+          d="m284.7 587.67c26.33 26.32 41.77 36.02 60 41.86 11.98 3.83 24.36-1.43 32.07-8.44 10.72-9.75 17.43-21.2 7.4-38.24-9.27-15.75-10.75-33.67-9.99-48.33 1.64-31.93-17.7-77.24-42.56-96.34-10.74-8.24-23.03-13.39-32.81-30.32-12.11-20.98-65.77-33.07-86.19-20.02-18.59 11.9-37.26 54.3-31.35 75.57 10.13 36.48 31.74 64.22 49.57 87.81 10.94 14.46 41.04 23.63 53.86 36.45z"
+          inkscape:export-ydpi="599.94"
+          sodipodi:nodetypes="cssssssssss"
+          inkscape:export-filename="C:\Documents and Settings\Usuario\Desktop\mecanica.png"
+          inkscape:export-xdpi="599.94"
+      />
+      <path
+          id="path4924"
+          style="filter:url(#filter4929);fill-rule:evenodd;fill:#504416"
+          d="m614.29 623.06c4.37 15.81-0.08 41.34-9.22 55.5-4.31 6.68-8.59 15.48-9.1 25.38-0.54 10.7-6.39 14.23-13.43 15.9-0.56 0.14-1.14 0.27-1.72 0.35 2.34 0.29 4.66 0.14 6.75-0.31 7.39-1.63 13.43-5.09 13.34-15.5-0.08-9.64 3.92-18.2 8.09-24.69 9.08-14.14 12.17-39.95 5.91-55.22-0.19-0.48-0.41-0.94-0.62-1.41z"
+          inkscape:export-ydpi="599.94"
+          sodipodi:nodetypes="cssscssssc"
+          inkscape:export-filename="C:\Documents and Settings\Usuario\Desktop\mecanica.png"
+          transform="matrix(1.617 -.93356 .93356 1.617 -1250.4 3.2571)"
+          inkscape:export-xdpi="599.94"
+      />
+      <path
+          id="path4229"
+          style="fill-rule:evenodd;fill:#000000"
+          d="m306.39 562.89c2.02 0.35 4.07 0.65 6.12 0.91 18.42 2.35 35.7-6.88 40.34-22.42 3.2 12.12 4.31 29.59-5.56 35.29-10.45 6.02-27.56-4.01-40.9-13.78z"
+          inkscape:export-ydpi="599.94"
+          inkscape:export-filename="C:\Documents and Settings\Usuario\Desktop\mecanica.png"
+          inkscape:export-xdpi="599.94"
+      />
+      <path
+          id="path4187"
+          style="fill:#ff0000"
+          d="m313.99 568.13c11.75 7.63 24.75 13.47 33.3 8.54 4.43-2.56 6.62-7.5 7.44-13.26-5.5-3.23-13.75-3.88-22.94-1.92 1.72 1.72 4.28 3.39 8.37 5.75 3.74 2.16 4.85 9.62-2.87 3.2-4.53-3.77-10.15-5.66-14.77-6.22-2.82 1.07-5.69 2.4-8.53 3.91z"
+          inkscape:export-ydpi="599.94"
+          inkscape:export-filename="C:\Documents and Settings\Usuario\Desktop\mecanica.png"
+          inkscape:export-xdpi="599.94"
+      />
+      <path
+          id="path4183"
+          style="fill-rule:evenodd;fill:#000000"
+          d="m263.41 528.01c4.34 16.19 45.52 17.64 67.34 8.09 14.76-6.47 26.48-20.91 23.19-33.19-4.32-16.14 7.6-3.46 5.02 11.22-3.26 18.6-27 33.46-49.94 34.27-16.16 0.58-31.73-1.06-42.3-8.72-7.09-5.14-5.25-18.88-3.31-11.67z"
+          inkscape:export-ydpi="599.94"
+          sodipodi:nodetypes="cssssss"
+          inkscape:export-filename="C:\Documents and Settings\Usuario\Desktop\mecanica.png"
+          inkscape:export-xdpi="599.94"
+      />
+      <path
+          id="path4185"
+          style="fill-rule:evenodd;fill:#000000"
+          d="m262.88 542.93c0-8.22 8.64-0.05 10.3 0.4 6.08 1.63 28.83 23.25 45.18 32.69 10.24 5.91 33.45 15.99 39.97-8.34 3.51-13.1-6.02-34.05-2.24-48.15 3.89-14.51-8.62 4.46-4.08 18.78 3.8 12.02 6.01 32.16-4.72 38.36-16.71 9.65-50.42-21.88-58.63-27.54-11.01-7.58-19.28-14.26-25.88-15.09-2.65-0.34 0.1 11.56 0.1 8.89z"
+          inkscape:export-ydpi="599.94"
+          sodipodi:nodetypes="csssssssss"
+          inkscape:export-filename="C:\Documents and Settings\Usuario\Desktop\mecanica.png"
+          inkscape:export-xdpi="599.94"
+      />
+      <path
+          id="path4199"
+          style="fill-rule:evenodd;fill:#000000"
+          d="m299.89 557.94c2.02 1.58 4.18 3.22 6.47 4.9 0.01 0.01 0.01 0.04 0.03 0.05 2.02 0.35 4.07 0.65 6.12 0.91 18.43 2.36 35.77-6.88 40.39-22.45-0.27-1.06-0.58-2.09-0.88-3.06-0.4-1.24-0.62-2.5-0.78-3.79-3.25 17.28-21.56 27.71-41.1 25.21-3.44-0.44-6.86-1.04-10.25-1.77z"
+          inkscape:export-ydpi="599.94"
+          inkscape:export-filename="C:\Documents and Settings\Usuario\Desktop\mecanica.png"
+          inkscape:export-xdpi="599.94"
+      />
+      <path
+          id="path4215"
+          style="fill-rule:evenodd;fill:#ffffff"
+          d="m285.91 547.15c0.96 0.67 1.76 1.29 2.76 1.98 2.2 1.51 6.2 4.89 11.22 8.81 3.39 0.73 6.81 1.33 10.25 1.77 19.51 2.49 37.78-7.9 41.08-25.13-0.21-1.67-0.25-3.39-0.15-5.04-9.54 10.82-25.97 18.32-42.05 18.89-8.03 0.28-15.91-0.01-23.11-1.28z"
+          inkscape:export-ydpi="599.94"
+          inkscape:export-filename="C:\Documents and Settings\Usuario\Desktop\mecanica.png"
+          inkscape:export-xdpi="599.94"
+      />
+      <path
+          id="path4238"
+          style="fill-rule:evenodd;fill:#000000"
+          d="m366.74 573.91c-1.51-5.64-3.63-7.22-2.56-2.18 4.46 21.17-17.83 30.58-34.2 21.13-6.07-3.5-1.51 1.81 1.42 3.72 17.06 11.13 41.25-0.59 35.34-22.67z"
+          inkscape:export-ydpi="599.94"
+          sodipodi:nodetypes="cssss"
+          inkscape:export-filename="C:\Documents and Settings\Usuario\Desktop\mecanica.png"
+          inkscape:export-xdpi="599.94"
+      />
+      <path
+          id="path4162"
+          sodipodi:rx="3.9164865"
+          sodipodi:ry="3.9164865"
+          style="fill:#000000"
+          sodipodi:type="arc"
+          d="m930.04 619.47a3.9165 3.9165 0 1 1 -7.83 0 3.9165 3.9165 0 1 1 7.83 0z"
+          inkscape:export-ydpi="599.94"
+          inkscape:export-filename="C:\Documents and Settings\Usuario\Desktop\mecanica.png"
+          sodipodi:cy="619.46802"
+          transform="matrix(5.1028 -3.335 4.8868 5.2086 -7498.9 338.2)"
+          inkscape:export-xdpi="599.94"
+          sodipodi:cx="926.12665"
+      />
+      <path
+          id="path4160"
+          sodipodi:rx="3.9164865"
+          sodipodi:cy="619.46802"
+          style="fill:#ffffff"
+          sodipodi:type="arc"
+          d="m930.04 619.47a3.9165 3.9165 0 1 1 -7.83 0 3.9165 3.9165 0 1 1 7.83 0z"
+          sodipodi:ry="3.9164865"
+          inkscape:export-ydpi="599.94"
+          inkscape:export-filename="C:\Documents and Settings\Usuario\Desktop\mecanica.png"
+          transform="matrix(4.306 -2.8212 4.1867 4.5025 -6328.1 299.85)"
+          inkscape:export-xdpi="599.94"
+          sodipodi:cx="926.12665"
+      />
+      <path
+          id="path4158"
+          sodipodi:rx="3.9164865"
+          sodipodi:ry="3.9164865"
+          style="fill:#000000"
+          sodipodi:cy="619.46802"
+          sodipodi:type="arc"
+          d="m930.04 619.47a3.9165 3.9165 0 1 1 -7.83 0 3.9165 3.9165 0 1 1 7.83 0z"
+          inkscape:export-ydpi="599.94"
+          inkscape:export-filename="C:\Documents and Settings\Usuario\Desktop\mecanica.png"
+          transform="matrix(1.617 -.93356 .93356 1.617 -1828.6 337.08)"
+          inkscape:export-xdpi="599.94"
+          sodipodi:cx="926.12665"
+      />
+      <path
+          id="path4164"
+          sodipodi:rx="3.9164865"
+          sodipodi:cy="619.46802"
+          style="fill:#000000"
+          sodipodi:type="arc"
+          d="m930.04 619.47a3.9165 3.9165 0 1 1 -7.83 0 3.9165 3.9165 0 1 1 7.83 0z"
+          sodipodi:ry="3.9164865"
+          inkscape:export-ydpi="599.94"
+          inkscape:export-filename="C:\Documents and Settings\Usuario\Desktop\mecanica.png"
+          transform="matrix(4.3511 -2.8438 4.167 4.4413 -6314.4 325.8)"
+          inkscape:export-xdpi="599.94"
+          sodipodi:cx="926.12665"
+      />
+      <path
+          id="path4166"
+          sodipodi:rx="3.9164865"
+          sodipodi:ry="3.9164865"
+          style="fill:#ffffff"
+          sodipodi:type="arc"
+          d="m930.04 619.47a3.9165 3.9165 0 1 1 -7.83 0 3.9165 3.9165 0 1 1 7.83 0z"
+          inkscape:export-ydpi="599.94"
+          inkscape:export-filename="C:\Documents and Settings\Usuario\Desktop\mecanica.png"
+          sodipodi:cy="619.46802"
+          transform="matrix(3.6717 -2.4056 3.57 3.8392 -5316 293.1)"
+          inkscape:export-xdpi="599.94"
+          sodipodi:cx="926.12665"
+      />
+      <path
+          id="path4168"
+          sodipodi:rx="3.9164865"
+          sodipodi:cy="619.46802"
+          style="fill:#000000"
+          sodipodi:type="arc"
+          d="m930.04 619.47a3.9165 3.9165 0 1 1 -7.83 0 3.9165 3.9165 0 1 1 7.83 0z"
+          sodipodi:ry="3.9164865"
+          inkscape:export-ydpi="599.94"
+          inkscape:export-filename="C:\Documents and Settings\Usuario\Desktop\mecanica.png"
+          transform="matrix(1.3788 -.79604 .79604 1.3788 -1479.3 324.85)"
+          inkscape:export-xdpi="599.94"
+          sodipodi:cx="926.12665"
+      />
+      <path
+          id="path4174"
+          style="fill-rule:evenodd;fill:#000000"
+          d="m271.83 432.39c-1.33 0.41-2.23 1.52-2.76 2.61-0.54 1.08-0.82 2.3-0.96 3.65-0.27 2.69 0.07 5.94 1.11 9.46 2.08 7.04 7.08 15.07 16.25 20.13 6.36 3.52 10.85 9.78 12.98 15.42 1.06 2.82 1.48 5.5 1.4 7.41-0.09 1.9-0.63 2.72-1.11 2.99-2.14 1.24-3.32 3.52-3.66 5.76-0.34 2.23 0.09 4.54 1.22 6.57 1.12 2.04 3.06 3.78 5.64 4.35 2.59 0.58 5.65 0.05 8.94-1.85 4.18-2.42 5.14-5.88 5.88-7.17 0.36-0.65 0.51-0.91 1.42-1.29 0.91-0.39 2.67-0.78 5.67-0.79 4.3-0.01 7.68-1.64 9.43-4.5 1.76-2.85 1.81-6.42 0.81-9.83-1.98-6.81-8.21-13.74-17.31-16.08-19.4-4.99-29.21-13.69-34.32-21.01-5.12-7.32-5.5-13.07-5.5-13.07-0.04-0.63-0.33-1.22-0.8-1.62-1.16-0.94-2.69-1.65-4.33-1.14z"
+          inkscape:export-ydpi="599.94"
+          inkscape:export-filename="C:\Documents and Settings\Usuario\Desktop\mecanica.png"
+          inkscape:export-xdpi="599.94"
+      />
+      <path
+          id="path4170"
+          style="fill-rule:evenodd;fill:#decd87"
+          d="m274.69 435.34s1.01 26.11 39.7 36.47c16.18 4.34 21.63 26 6.79 26-12.42 0-7 5.36-14.17 9.51-11.76 6.79-20.76-8.35-11.18-13.88 5.73-3.31-1.78-15.54-14.08-24.95-32.22-24.65-7.06-65.5-7.06-33.15z"
+          inkscape:export-ydpi="599.94"
+          sodipodi:nodetypes="csssssc"
+          inkscape:export-filename="C:\Documents and Settings\Usuario\Desktop\mecanica.png"
+          inkscape:export-xdpi="599.94"
+      />
+      <path
+          id="path4177"
+          style="fill-rule:evenodd;fill:#000000"
+          d="m229 433.75c8.67-5.01 13.5 4.89 10.19 6.8-9.85 5.69-20.65 13.06-25.13 28.32-6.91 23.53-9.1-21.24 14.94-35.12z"
+          inkscape:export-ydpi="599.94"
+          sodipodi:nodetypes="csss"
+          inkscape:export-filename="C:\Documents and Settings\Usuario\Desktop\mecanica.png"
+          inkscape:export-xdpi="599.94"
+      />
+      <path
+          id="path4179"
+          style="fill-rule:evenodd;fill:#000000"
+          d="m274.15 410.21c-9.67 2.6-6.09 13.01-2.4 12.02 10.99-2.94 23.84-5.37 37.8 2.25 21.52 11.75-8.59-21.45-35.4-14.27z"
+          inkscape:export-ydpi="599.94"
+          sodipodi:nodetypes="csss"
+          inkscape:export-filename="C:\Documents and Settings\Usuario\Desktop\mecanica.png"
+          inkscape:export-xdpi="599.94"
+      />
+      <path
+          id="path4181"
+          style="fill-rule:evenodd;fill:#000000"
+          d="m262.64 548.11c3.47 4.69 6.16 5.23 3.79 0.64-5.6-10.84-3.5-22.34 4.8-28.69 2.84-2.18-0.07-2.51-3.32-1.19-10.33 4.21-12.02 20.12-5.27 29.24z"
+          inkscape:export-ydpi="599.94"
+          sodipodi:nodetypes="cssss"
+          inkscape:export-filename="C:\Documents and Settings\Usuario\Desktop\mecanica.png"
+          inkscape:export-xdpi="599.94"
+      />
+      <path
+          id="path4213"
+          style="opacity:.60408;fill-rule:evenodd;fill:#b3b36e"
+          d="m264.67 531.12c-0.03 0.03-0.03 0.11-0.05 0.16 0.56 1.15 1.22 2.29 2.01 3.36-0.16-0.37-0.3-0.73-0.43-1.1-0.75-2.11-1.28-2.77-1.53-2.42z"
+          inkscape:export-ydpi="599.94"
+          inkscape:export-filename="C:\Documents and Settings\Usuario\Desktop\mecanica.png"
+          inkscape:export-xdpi="599.94"
+      />
+      <path
+          id="path4227"
+          style="fill-rule:evenodd;fill:#000000"
+          d="m378.76 467.81c-0.03-0.1-0.37 0.69-0.83 1.82 0.35-0.64 0.67-1.28 0.83-1.82z"
+          inkscape:export-ydpi="599.94"
+          inkscape:export-filename="C:\Documents and Settings\Usuario\Desktop\mecanica.png"
+          inkscape:export-xdpi="599.94"
+      />
+      <path
+          id="path4933"
+          style="fill-opacity:.5;filter:url(#filter4949);fill:#786721"
+          d="m1005 674.25c1 21.92-1 43.86-6.22 65.78 0.23 12.76 1.21 20.32 6.22 0 4.3-21.92 4.2-43.86 0-65.78z"
+          inkscape:export-ydpi="599.94"
+          sodipodi:nodetypes="cccc"
+          inkscape:export-filename="C:\Documents and Settings\Usuario\Desktop\mecanica.png"
+          transform="matrix(3.7566 -2.1689 1.1718 1.4794 -4313.9 1771.9)"
+          inkscape:export-xdpi="599.94"
+      />
+      <path
+          id="path4953"
+          style="filter:url(#filter4958);fill-rule:evenodd;fill:url(#linearGradient3097)"
+          d="m589.2 616.24c-0.42 4.75 0.83 11.95 8.72 19.96 4.5 4.58 3.33 12-0.39 13.54 5.77 2.06 7.71-7.9 1.89-13.54-8.29-8.01-10.16-15.21-10.22-19.96zm0.69 31.78c-1.4 0.06-2.02 1.11-3.61 1.59 0.52 0.14 1.12 0.22 1.76 0.22 2.04 0 2.75-0.93 3.65-1.47-0.73-0.28-1.32-0.36-1.8-0.34z"
+          inkscape:export-ydpi="599.94"
+          sodipodi:nodetypes="cscscccscc"
+          inkscape:export-filename="C:\Documents and Settings\Usuario\Desktop\mecanica.png"
+          transform="matrix(1.617 -.93356 .93356 1.617 -1250.4 3.2571)"
+          inkscape:export-xdpi="599.94"
+      />
+      <path
+          id="path5329"
+          style="fill:#000080"
+          d="m473.57 575.31c-5.23 0.13-10.21 4.28-11.78 9.31-15.7 50.1-38.61 44.64-76.44 48.19-2.07 0.2-3.88 1.4-4.81 3.19-0.94 1.79-0.87 3.94 0.18 5.69 2.94 4.86 2.34 12.12-2.81 20.68-5.15 8.57-14.67 17.72-27.15 24.72-12.49 7.01-25.45 10.48-35.72 10.57-10.28 0.08-17.1-2.99-20.03-7.85-1.4-2.32-4.24-3.47-6.91-2.78-26.17 9.39-37.43 20.03-60.75 33.5-19.57 11.3-37.49 62.27-40.97 81.78-0.24 3.49 0.74 9.41 5.16 8.6 24.99-4.61 61.76 0.62 91.47 10.68 4.4 1.49 10.24 0.38 10.68-3.09 0.25-1.93 0.49-3.84 0.75-5.75 0.1 1.07 0.18 2.15 0.19 3.25 0.08 11.24 5.64 20.43 13.75 26.59s18.54 9.81 29.72 12.22c7.1 1.54 14.54 13.24 21.94 18.81h157.47c-15.27-31.74-3-135.9-3-158.4 0-55.99 37.25-61.64 23.65-89.94-6.8-14.15-32.53-26.23-40.4-35-3.94-4.39-7.86-7.95-11.75-10.56-3.9-2.61-7.86-4.52-12.44-4.41z"
+          inkscape:export-ydpi="599.94"
+          sodipodi:nodetypes="cscsssssscscssscsssccssssc"
+          inkscape:export-filename="C:\Documents and Settings\Usuario\Desktop\mecanica.png"
+          inkscape:export-xdpi="599.94"
+      />
+      <g
+          id="g5309"
+          inkscape:export-ydpi="599.94"
+          inkscape:export-xdpi="599.94"
+          inkscape:export-filename="C:\Documents and Settings\Usuario\Desktop\mecanica.png"
+          transform="translate(637.08 -98.599)"
+        >
+        <path
+            id="path5251"
+            sodipodi:nodetypes="cssccsscc"
+            style="fill:#000000"
+            d="m-192.32 745.89c4.59-15.33 16.97-68.36 56.49-115.18 2.28-2.69 3-5.09 3.57-7.96 11.09-55.49 21.28-110.95 11.47-165.3l71.14-3.88c-31.961 66.35 5.75 114.84 4.841 172.4-0.075 4.73-0.866 8.16-2.007 11.44-26.172 75.16-49.021 104.5-60.514 119.89l-84.99-11.41z"
+        />
+        <path
+            id="path5253"
+            sodipodi:nodetypes="cssccsscc"
+            style="fill:#decd87"
+            d="m-183.59 746.5c13.93-39.26 28.86-78.12 55.37-115.03 2.1-2.92 2.89-6.19 3.45-9.33 9.87-55.35 20.33-110.76 13-165.19l54.809-2.98c-26.905 66.07 5.106 133.72 3.467 172.47-0.135 3.19-0.74 6.12-1.469 9.32-11.519 50.34-40.033 95.91-59.207 120.05l-69.42-9.31z"
+        />
+        <path
+            id="path5261"
+            sodipodi:nodetypes="csccccsc"
+            style="filter:url(#filter5266);fill:#a0892c"
+            d="m-72.008 542.3c1.148 36.1 5.044 67.98 1 91.82-0.734 4.33-2.022 8.31-3.531 12.65-13.723 39.38-34.511 76.6-55.251 107.35l11.97 1.68c18.166-24.14 45.181-69.71 56.094-120.06 0.69-3.2 1.247-6.12 1.375-9.31 0.845-21.11-7.758-50.79-11.657-84.13z"
+        />
+        <path
+            id="path5277"
+            style="filter:url(#filter5285);fill:url(#linearGradient3099)"
+            d="m-105.85 481.12c3.29 47.86-6.5 96.48-15.85 145.03-0.57 2.98-1.34 6.07-3.34 8.84-11.14 15.4-20.19 31.17-28 47.16 9.64-15.58 21.06-30.93 35.47-45.94 2.63-2.74 3.44-5.83 3.97-8.78 8.83-49 18.341-98.04 7.75-146.31z"
+        />
+      </g
+      >
+      <g
+          id="g5020"
+          inkscape:export-ydpi="599.94"
+          inkscape:export-xdpi="599.94"
+          inkscape:export-filename="C:\Documents and Settings\Usuario\Desktop\mecanica.png"
+          transform="matrix(.61309 -.61309 .61309 .61309 128.18 479.52)"
+        >
+        <path
+            id="path3883"
+            sodipodi:nodetypes="cssscsssscccc"
+            style="fill:#decd87"
+            d="m536.98 222.03c-0.52 0.41-1.14 0.99-1.82 1.72-1.36 1.44-3.02 3.44-4.84 5.84-3.63 4.79-7.8 11.09-10.97 17.19l-0.03 0.03c-11.2 17.9-31.01 28.48-51.63 29.72-0.82 0.05-1.63 0.1-2.43 0.12-0.9 0.02-1.82 0.02-2.72 0h-0.25c-0.69-0.01-1.38-0.08-2.1-0.12-5.33-0.33-10.51-1.3-15.4-2.97-0.87-0.24-1.32-0.25-1.83 0.26-111.35-55.15 33.07-151.24 94.02-51.79z"
+        />
+        <g
+            id="g3804"
+            transform="matrix(.71033 1.1442 -1.1442 .71033 567.23 -21.421)"
+          >
+          <g
+              id="g3653"
+            >
+            <path
+                id="path3650"
+                style="fill:#000000"
+                transform="translate(.25254 1.9792)"
+                d="m189.88 82.156c-8.99 0.126-17.16 4.484-23.16 9.906h-0.03c-6.69 6.129-11.7 9.298-14.53 10.378 0.07-0.02-0.16 0.07-0.04 0.03l-0.15 0.06v-0.03c-0.84 0.25-1.52 0.34-1.94 0.34h-0.28l-85.812 0.19h-0.344-0.719c-5.868 0-11.406-3.124-16.25-7.968-0.01-0.02-0.021-0.041-0.031-0.062-6.592-6.355-15.805-7.751-24.032-6.375-0.041 0.01-0.083 0.02-0.124 0.031-12.092 2.417-20.999 12.404-23.282 24.504-0.2325 1.23 0.18546 2.49 1.1064 3.34 0.9209 0.86 2.2151 1.17 3.4251 0.84l1.125-0.31 1.8125-0.5h0.0625l16.124-3.28c0.054-0.01 0.078-0.09 0.657 0.37 0.578 0.47 1.424 1.48 2.156 2.85 1.459 2.73 2.536 6.76 2.625 9.75v0.03c-0.054 1.25-0.315 2.25-0.531 2.69-0.219 0.44-0.151 0.29-0.125 0.28l-6.813 1.78c-0.063 0.03-0.126 0.06-0.187 0.09h-0.032l-0.187 0.07-12.594 3.37c-1.1848 0.32-2.1301 1.21-2.5142 2.38-0.3842 1.16-0.1555 2.44 0.6082 3.4 0.2473 0.31 0.5048 0.6 0.75 0.88 3.636 4.18 8.285 7.37 13.5 9.06h0.031 0.032c0.019 0.01 0.011 0.02 0.031 0.03h0.031c4.554 1.44 9.383 1.64 13.969 0.81 0.01-0.01 0.021-0.02 0.031-0.03 4.908-0.92 9.609-2.96 13.281-6.5 5.65-5.01 11.303-10.34 17.281-10.78h48.098c0.17 0 0.35-0.01 0.53-0.03h1.18c0.16 0.02 0.32 0.03 0.47 0.03l35.97 0.19h0.03 0.79c2.02 0 3.97 0.35 5.9 1l0.06 0.03c4.23 1.73 8.48 5.19 12.28 9 0.04 0.04 0.07 0.08 0.1 0.12 7.41 6.78 17.15 8.44 26.25 6.88 0.03-0.01 0.06-0.02 0.09-0.03 13.21-2.64 22.94-13.54 25.44-26.78 0.23-1.23-0.19-2.5-1.11-3.35s-2.21-1.17-3.42-0.84l-1.25 0.34-2.34 0.6-17.6 3.59c-0.19 0.04-0.36 0.07-1.06-0.5s-1.64-1.73-2.47-3.28c-1.63-3.07-2.8-7.54-2.91-10.91 0.06-1.42 0.32-2.63 0.6-3.22s0.29-0.5 0.37-0.53l7.75-2.03v-0.03l14.19-3.81c1.19-0.319 2.13-1.212 2.51-2.377 0.39-1.165 0.16-2.445-0.6-3.405-0.3-0.371-0.58-0.667-0.82-0.938-3.98-4.593-9.08-8.055-14.78-9.906-0.02-0.011-0.04-0.021-0.06-0.032-0.02-0.006-0.01 0.007-0.03 0-0.03-0.01-0.06-0.021-0.09-0.031 1.45 0.386 1.44 0.364-0.07-0.031v0.031c-3.01-1.049-5.97-1.416-8.93-1.375z"
+            />
+            <path
+                id="rect2409"
+                sodipodi:nodetypes="csccssssscsccsssssc"
+                style="fill:url(#linearGradient3101)"
+                d="m184.33 86.25c-4.82 0.909-9.28 2.9-12.66 6.156-10.86 10.454-17.97 14.184-21.62 14.184l-87.175 0.07c-7.144 0-13.54-3.76-18.813-9.035-4.333-4.333-10.667-6.087-16.906-5.875-0.524 0.018-1.038 0.069-1.562 0.125 0.308-0.02 0.63-0.031 0.937-0.031 10.148-0.003 19.596 10.766 21.625 25.186 2.082 14.79-4.407 28.08-14.594 30.47 4.359-0.82 8.381-2.62 11.438-5.56 9.818-9.45 16.228-11.78 19.531-11.78l87.359-0.07c7.9 0 14.98 5.51 20.81 11.35 4.8 4.79 11.82 6.73 18.72 6.5 0.58-0.02 1.14-0.07 1.72-0.13-0.34 0.02-0.69 0.03-1.03 0.03-11.23 0.01-21.69-11.91-23.94-27.87-2.3-16.37 4.89-31.075 16.16-33.72z"
+            />
+            <path
+                id="path3245"
+                sodipodi:nodetypes="csssccscscscsccscccccssccsssc"
+                style="filter:url(#filter3512);fill:#000000"
+                d="m28.656 91.75c-0.246 0.009-0.506 0.042-0.75 0.062-0.102 0.011-0.211 0.016-0.312 0.032 0.148-0.005 0.292 0 0.437 0 1.145-0.001 2.29 0.162 3.407 0.437-0.179-0.06-0.35-0.129-0.532-0.187 1.329 0.245 2.242 0.64 3.032 1.031 0.101 0.05 0.214 0.107 0.312 0.156 7.329 3.371 13.378 12.419 14.938 23.749 0.067 0.5 0.106 0.98 0.156 1.47-0.023-3.58-0.69-6.97-1.344-9.38-2.093-7.7-5.562-10.046-4.031-9.339 0.496 0.399 1.018 0.819 1.219 0.999 5.158 4.62 11.416 8.38 18.406 7.94l88.856-0.69c0.19 0.01 0.36 0.02 0.57 0 3.08-0.27 8.61-3.31 16.81-13.905-9.83 9.845-16.34 12.345-19.78 12.345h-0.29l-86.166 0.19h-0.719c-7.144 0-13.54-3.76-18.813-9.035-3.791-3.792-9.111-5.622-14.562-5.875-0.28-0.013-0.563 0.005-0.844 0zm-1.062 0.094c-0.12 0.011-0.23 0.024-0.344 0.031 0.074 0.004 0.145-0.005 0.219 0h0.031c0.032-0.001 0.062-0.03 0.094-0.031z"
+            />
+            <path
+                id="path3262"
+                sodipodi:nodetypes="cccccc"
+                style="filter:url(#filter3524);fill:#000000"
+                d="m61.844 128.88c-2.786 0.22-7.78 2.72-15.188 11.5 8.886-8.16 14.762-10.22 17.875-10.22h48.379l-50.535-1.28c-0.166-0.01-0.346-0.02-0.531 0z"
+            />
+            <path
+                id="rect3265"
+                sodipodi:nodetypes="csccssccc"
+                style="filter:url(#filter3335);fill:url(#linearGradient3103)"
+                d="m69.582 113.62c-2.663 0.27-4.719 2.52-4.719 5.26 0 2.91 2.332 5.28 5.25 5.28h78.507c2.92 0 5.25-2.37 5.25-5.28 0-2.74-2.06-4.99-4.72-5.26-0.18-0.01-0.35 0-0.53 0h-78.507c-0.182 0-0.354-0.01-0.531 0z"
+            />
+            <path
+                id="path3356"
+                sodipodi:nodetypes="csssccscscscsccccssccsssc"
+                style="filter:url(#filter3528);fill:#000000"
+                d="m189.75 147.94c0.27-0.01 0.56-0.05 0.83-0.08 0.11-0.01 0.23-0.01 0.34-0.03h-0.48c-1.27 0-2.53-0.19-3.77-0.52 0.2 0.07 0.39 0.15 0.59 0.22-1.47-0.29-2.48-0.75-3.36-1.21-0.11-0.06-0.23-0.13-0.34-0.19-8.11-3.98-14.8-14.66-16.53-28.02-0.08-0.58-0.12-1.15-0.17-1.73 0.02 4.22 0.76 8.22 1.48 11.06 2.32 9.08 6.16 11.86 4.46 11.02-0.54-0.46-1.12-0.97-1.34-1.18-5.71-5.44-12.64-9.89-20.37-9.36l-35.96 2.24 35.96 0.19h0.8c7.9 0 14.98 4.44 20.81 10.66 4.2 4.47 10.08 6.63 16.11 6.93 0.31 0.01 0.63-0.01 0.94 0zm1.17-0.11c0.13-0.02 0.26-0.03 0.38-0.04-0.08 0-0.16 0.01-0.24 0h-0.03c-0.04 0-0.07 0.04-0.11 0.04z"
+            />
+            <g
+                id="g3532"
+              >
+              <path
+                  id="path3222"
+                  sodipodi:nodetypes="cccccc"
+                  style="filter:url(#filter3504);fill:#000000"
+                  d="m22.812 108.53c-0.237 0.02-0.477 0.06-0.718 0.13l-16.406 4.37 16.406-3.34c5.183-1.06 9.658 9.31 9.781 16.69 0.29-7.31-3.953-18.17-9.063-17.85z"
+              />
+              <path
+                  id="path3198"
+                  style="fill:#b3b3b3"
+                  d="m26.531 91.844c-0.307 0-0.629 0.011-0.937 0.031-0.031 0.003-0.064-0.003-0.094 0-0.34 0.024-0.66 0.076-1 0.125-0.447 0.064-0.906 0.131-1.344 0.219-10.532 2.105-18.406 10.861-20.437 21.621l19.375-5.18c7.709-2.07 13.85 22.07 6.437 24.06l-19.812 5.31c4.247 5.26 10.199 8.81 16.75 9.72 0.04 0.01 0.084-0.01 0.125 0 2.278 0.13 4.169 0.17 5.531 0.09 0.463-0.02 0.878-0.07 1.219-0.12 0.413-0.06 0.811-0.14 1.218-0.22 10.187-2.39 16.676-15.68 14.594-30.47-2.029-14.42-11.477-25.189-21.625-25.186z"
+              />
+              <path
+                  id="path3476"
+                  style="fill:url(#radialGradient3105)"
+                  d="m26.531 91.844c-0.307 0-0.629 0.011-0.937 0.031-0.031 0.003-0.064-0.003-0.094 0-0.34 0.024-0.66 0.076-1 0.125-0.447 0.064-0.906 0.131-1.344 0.219-10.532 2.105-18.406 10.861-20.437 21.621l19.375-5.18c7.709-2.07 13.85 22.07 6.437 24.06l-19.812 5.31c4.247 5.26 10.199 8.81 16.75 9.72 0.04 0.01 0.084-0.01 0.125 0 2.278 0.13 4.169 0.17 5.531 0.09 0.463-0.02 0.878-0.07 1.219-0.12 0.413-0.06 0.811-0.14 1.218-0.22 10.187-2.39 16.676-15.68 14.594-30.47-2.029-14.42-11.477-25.189-21.625-25.186z"
+              />
+              <path
+                  id="path3224"
+                  style="filter:url(#filter3492);fill:#000000"
+                  d="m26.531 91.844c-0.307 0-0.629 0.011-0.937 0.031-0.031 0.003-0.064-0.003-0.094 0-0.34 0.024-0.66 0.076-1 0.125-0.447 0.064-0.906 0.131-1.344 0.219-10.532 2.105-18.406 10.861-20.437 21.621l1.1248-0.31c2.3974-10.03 9.6352-18.363 19.125-20.968 0.417-0.114 0.855-0.22 1.281-0.312 0.324-0.07 0.614-0.142 0.938-0.188 0.029-0.005 0.064 0.006 0.093 0 0.294-0.039 0.613-0.074 0.907-0.093 1.209-0.081 2.386 0.009 3.562 0.25-1.059-0.237-2.136-0.375-3.219-0.375zm5.813 1.187c0.283 0.117 0.564 0.241 0.844 0.375-0.28-0.132-0.561-0.259-0.844-0.375zm2.5 1.281c5.933 3.716 10.608 11.518 11.937 21.248 1.984 14.53-4.196 28.11-13.906 31.13-0.389 0.1-0.762 0.19-1.156 0.28-0.325 0.07-0.715 0.16-1.157 0.22-1.298 0.15-3.109 0.24-5.281 0.25-0.039-0.01-0.086 0-0.125 0-1.333-0.11-2.635-0.32-3.906-0.66 1.369 0.45 2.781 0.77 4.219 0.97 0.04 0.01 0.084-0.01 0.125 0 2.278 0.13 4.169 0.17 5.531 0.09 0.463-0.02 0.878-0.07 1.219-0.12 0.413-0.06 0.811-0.14 1.218-0.22 10.187-2.39 16.676-15.68 14.594-30.47-1.453-10.33-6.718-18.75-13.312-22.718zm-13.125 40.218l-13 3.5c0.214 0.27 0.4333 0.53 0.656 0.78l12.344-4.28z"
+              />
+              <path
+                  id="path3230"
+                  sodipodi:nodetypes="csssscssssscc"
+                  style="filter:url(#filter3430);fill:url(#linearGradient3107)"
+                  d="m26.469 93.344c-0.282 0-0.592 0.012-0.875 0.031-0.028 0.003-0.066-0.003-0.094 0-0.312 0.023-0.594 0.079-0.906 0.125-0.41 0.061-0.817 0.136-1.219 0.219-3.352 0.691-6.42 2.134-9.063 4.156 1.965-0.8 4.073-1.409 6.282-1.781 0.469-0.079 0.958-0.13 1.437-0.188 0.365-0.044 0.699-0.103 1.063-0.125 0.032-0.003 0.061 0.003 0.094 0 0.33-0.018 0.67-0.031 1-0.031 8.156-0.002 15.912 5.49 20.187 13.72-3.47-9.59-10.461-16.128-17.906-16.126z"
+              />
+              <path
+                  id="path3237"
+                  style="filter:url(#filter3446);fill:#ffffff"
+                  d="m22.309 107c-0.245 0.03-0.518 0.08-0.786 0.16l-10.383 3.38 10.252-2.69c1.564-0.41 3.069 0.05 4.422 1.08 1.354 1.03 2.578 2.63 3.603 4.52 0.348 0.64 0.648 1.36 0.95 2.07-0.274-0.74-0.53-1.49-0.851-2.17-0.936-1.97-2.078-3.68-3.309-4.81-1.231-1.14-2.531-1.7-3.898-1.54z"
+              />
+              <path
+                  id="path3380"
+                  sodipodi:nodetypes="cscsssscsc"
+                  style="filter:url(#filter3414);fill:url(#linearGradient3109)"
+                  d="m42.398 107.41c0.738 3.54 0.875 7.33 0.3 11.21-1.947 13.17-11.464 23.64-23.098 26.88 1.201 0.37 2.415 0.64 3.669 0.81 0.04 0.01 0.081 0 0.121 0 2.193 0.13 4.012 0.16 5.323 0.1 0.446-0.03 0.845-0.05 1.173-0.1 0.398-0.05 0.78-0.14 1.173-0.22 9.804-2.28 16.049-14.99 14.046-29.12-0.489-3.45-1.428-6.66-2.707-9.56z"
+              />
+            </g
+            >
+            <g
+                id="g3541"
+                transform="matrix(-1.1064 0 0 -1.1064 221.45 249.45)"
+              >
+              <path
+                  id="path3543"
+                  sodipodi:nodetypes="cccccc"
+                  style="filter:url(#filter3504);fill:#000000"
+                  d="m22.812 108.53c-0.237 0.02-0.477 0.06-0.718 0.13l-16.406 4.37 16.406-3.34c5.183-1.06 9.658 9.31 9.781 16.69 0.29-7.31-3.953-18.17-9.063-17.85z"
+              />
+              <path
+                  id="path3545"
+                  style="fill:#b3b3b3"
+                  d="m26.531 91.844c-0.307 0-0.629 0.011-0.937 0.031-0.031 0.003-0.064-0.003-0.094 0-0.34 0.024-0.66 0.076-1 0.125-0.447 0.064-0.906 0.131-1.344 0.219-10.532 2.105-18.406 10.861-20.437 21.621l19.375-5.18c7.709-2.07 13.85 22.07 6.437 24.06l-19.812 5.31c4.247 5.26 10.199 8.81 16.75 9.72 0.04 0.01 0.084-0.01 0.125 0 2.278 0.13 4.169 0.17 5.531 0.09 0.463-0.02 0.878-0.07 1.219-0.12 0.413-0.06 0.811-0.14 1.218-0.22 10.187-2.39 16.676-15.68 14.594-30.47-2.029-14.42-11.477-25.189-21.625-25.186z"
+              />
+              <path
+                  id="path3547"
+                  style="fill:url(#radialGradient3105)"
+                  d="m26.531 91.844c-0.307 0-0.629 0.011-0.937 0.031-0.031 0.003-0.064-0.003-0.094 0-0.34 0.024-0.66 0.076-1 0.125-0.447 0.064-0.906 0.131-1.344 0.219-10.532 2.105-18.406 10.861-20.437 21.621l19.375-5.18c7.709-2.07 13.85 22.07 6.437 24.06l-19.812 5.31c4.247 5.26 10.199 8.81 16.75 9.72 0.04 0.01 0.084-0.01 0.125 0 2.278 0.13 4.169 0.17 5.531 0.09 0.463-0.02 0.878-0.07 1.219-0.12 0.413-0.06 0.811-0.14 1.218-0.22 10.187-2.39 16.676-15.68 14.594-30.47-2.029-14.42-11.477-25.189-21.625-25.186z"
+              />
+              <path
+                  id="path3549"
+                  style="filter:url(#filter3492);fill:#000000"
+                  d="m26.531 91.844c-0.307 0-0.629 0.011-0.937 0.031-0.031 0.003-0.064-0.003-0.094 0-0.34 0.024-0.66 0.076-1 0.125-0.447 0.064-0.906 0.131-1.344 0.219-10.532 2.105-18.406 10.861-20.437 21.621l1.1248-0.31c2.3974-10.03 9.6352-18.363 19.125-20.968 0.417-0.114 0.855-0.22 1.281-0.312 0.324-0.07 0.614-0.142 0.938-0.188 0.029-0.005 0.064 0.006 0.093 0 0.294-0.039 0.613-0.074 0.907-0.093 1.209-0.081 2.386 0.009 3.562 0.25-1.059-0.237-2.136-0.375-3.219-0.375zm5.813 1.187c0.283 0.117 0.564 0.241 0.844 0.375-0.28-0.132-0.561-0.259-0.844-0.375zm2.5 1.281c5.933 3.716 10.608 11.518 11.937 21.248 1.984 14.53-4.196 28.11-13.906 31.13-0.389 0.1-0.762 0.19-1.156 0.28-0.325 0.07-0.715 0.16-1.157 0.22-1.298 0.15-3.109 0.24-5.281 0.25-0.039-0.01-0.086 0-0.125 0-1.333-0.11-2.635-0.32-3.906-0.66 1.369 0.45 2.781 0.77 4.219 0.97 0.04 0.01 0.084-0.01 0.125 0 2.278 0.13 4.169 0.17 5.531 0.09 0.463-0.02 0.878-0.07 1.219-0.12 0.413-0.06 0.811-0.14 1.218-0.22 10.187-2.39 16.676-15.68 14.594-30.47-1.453-10.33-6.718-18.75-13.312-22.718zm-13.125 40.218l-13 3.5c0.214 0.27 0.4333 0.53 0.656 0.78l12.344-4.28z"
+              />
+              <path
+                  id="path3551"
+                  sodipodi:nodetypes="csssscssssscc"
+                  style="filter:url(#filter3430);fill:url(#linearGradient3107)"
+                  d="m26.469 93.344c-0.282 0-0.592 0.012-0.875 0.031-0.028 0.003-0.066-0.003-0.094 0-0.312 0.023-0.594 0.079-0.906 0.125-0.41 0.061-0.817 0.136-1.219 0.219-3.352 0.691-6.42 2.134-9.063 4.156 1.965-0.8 4.073-1.409 6.282-1.781 0.469-0.079 0.958-0.13 1.437-0.188 0.365-0.044 0.699-0.103 1.063-0.125 0.032-0.003 0.061 0.003 0.094 0 0.33-0.018 0.67-0.031 1-0.031 8.156-0.002 15.912 5.49 20.187 13.72-3.47-9.59-10.461-16.128-17.906-16.126z"
+              />
+              <path
+                  id="path3553"
+                  style="filter:url(#filter3446);fill:#ffffff"
+                  d="m22.309 107c-0.245 0.03-0.518 0.08-0.786 0.16l-10.383 3.38 10.252-2.69c1.564-0.41 3.069 0.05 4.422 1.08 1.354 1.03 2.578 2.63 3.603 4.52 0.348 0.64 0.648 1.36 0.95 2.07-0.274-0.74-0.53-1.49-0.851-2.17-0.936-1.97-2.078-3.68-3.309-4.81-1.231-1.14-2.531-1.7-3.898-1.54z"
+              />
+              <path
+                  id="path3555"
+                  sodipodi:nodetypes="cscsssscsc"
+                  style="filter:url(#filter3414);fill:url(#linearGradient3109)"
+                  d="m42.398 107.41c0.738 3.54 0.875 7.33 0.3 11.21-1.947 13.17-11.464 23.64-23.098 26.88 1.201 0.37 2.415 0.64 3.669 0.81 0.04 0.01 0.081 0 0.121 0 2.193 0.13 4.012 0.16 5.323 0.1 0.446-0.03 0.845-0.05 1.173-0.1 0.398-0.05 0.78-0.14 1.173-0.22 9.804-2.28 16.049-14.99 14.046-29.12-0.489-3.45-1.428-6.66-2.707-9.56z"
+              />
+            </g
+            >
+          </g
+          >
+        </g
+        >
+        <path
+            id="path3880"
+            sodipodi:nodetypes="csssscssssccscssssssssccsssssssscssssssscsssc"
+            style="fill:#000000"
+            d="m538.35 221.28c-0.5 0.03-0.86 0.33-1.37 0.75-0.52 0.41-1.14 0.99-1.82 1.72-1.36 1.44-3.02 3.44-4.84 5.84-3.63 4.79-7.8 11.09-10.97 17.19l-0.03 0.03c-11.2 17.9-31.01 28.48-51.63 29.72-0.82 0.05-1.63 0.1-2.43 0.12-0.9 0.02-1.82 0.02-2.72 0h-0.25c-0.69-0.01-1.38-0.08-2.1-0.12-5.33-0.33-10.51-1.3-15.4-2.97-0.87-0.24-1.32-0.25-1.83 0.26-0.16 0.17 0.02 0.54 0.27 0.64 5.37 2.62 10.97 4.35 16.65 5.25 0.18 0.03 0.2 0.03 0.06 0 0.93 0.15 1.85 0.31 2.79 0.41 0.13 0.02 0.15 0.01 0.06 0 0.91 0.1 1.85 0.19 2.78 0.25 0.95 0.06 1.92 0.08 2.87 0.09 1.9 0.03 3.78-0.03 5.69-0.18 1.9-0.16 3.79-0.45 5.66-0.78-0.11 0.01-0.04 0.04 0.19 0 18.45-3.17 37.36-14.21 51.56-31.91 7.71-9.05 12.73-15.31 15.72-19.38 1.49-2.03 2.46-3.52 3.03-4.56 0.28-0.51 0.47-0.9 0.56-1.25 0.04-0.17 0.06-0.34 0.03-0.53s-0.17-0.4-0.37-0.5c-0.41-0.2-0.71-0.03-1.03 0.13-0.33 0.15-0.72 0.39-1.16 0.71-0.88 0.65-2 1.63-3.31 2.85-1.53 1.42-3.32 3.24-5.22 5.25 1.2-1.86 2.15-3.46 2.81-4.66 0.6-1.09 1-1.91 1.22-2.53 0.11-0.31 0.17-0.57 0.19-0.81 0.01-0.25-0.02-0.54-0.25-0.75-0.24-0.22-0.56-0.22-0.78-0.16-0.23 0.06-0.42 0.17-0.66 0.31-0.48 0.3-1.08 0.76-1.75 1.38-0.78 0.71-1.9 2.01-2.91 3.09 0.41-0.87 1.06-2.08 1.25-2.65 0.2-0.6 0.31-1.02 0.28-1.41-0.01-0.2-0.05-0.42-0.21-0.59-0.17-0.18-0.43-0.27-0.63-0.25z"
+        />
+        <path
+            id="path3871"
+            style="fill-rule:evenodd;fill:#000000"
+            d="m554.63 193.68c-0.89 0.02-1.73 0.4-2.34 1.05-0.6 0.66-0.91 1.53-0.85 2.42 0.11 1.65-0.15 3.28-0.71 4.97-0.05 0.15-0.08 0.31-0.1 0.47l-0.06 0.41c-0.16 0.21-0.3 0.44-0.41 0.68-2.53 5.79-8.7 11.95-14 18.41-1.35 1.65-3.7 3.52-6.43 4.91-0.02 0.01-0.03 0.02-0.04 0.03-0.02 0.01 0 0.01-0.03 0.03 0.16-0.08 0.01-0.05-0.5 0.19l-0.03 0.03c-0.36 0.17-0.57 0.27-0.65 0.31-0.41 0.18-0.77 0.45-1.07 0.78-1.73 1.92-3.14 3.87-4.03 6.03-1.67 4.08-0.71 8.65 2.13 11.78 5.39 5.95 13.1 7.03 19.37 5.66 6.08-1.33 11.7-4.34 14.97-8.81 3.82-5.23 8.52-11.02 11.28-17.57s3.3-14.31-1.53-21.56c-1.56-2.34-3.66-3.67-5.34-4.9-0.62-0.46-1.27-0.89-1.91-1.32-0.91-0.61-1.85-1.23-2.87-1.84-1.17-0.69-2.28-1.26-3.29-1.78-0.48-0.26-1.01-0.38-1.56-0.38zm3.78 12.32c2.21 1.5 4.18 2.97 4.75 3.96 2.47 4.28 2.07 8.41-0.03 13.22-2.1 4.82-6.04 9.92-10.03 14.69-1.69 2.03-5.75 4.51-9.81 5.25-4.07 0.75-7.8 0.13-10.56-3.12-0.94-1.1-1-1.18-0.38-2.6s2.69-3.91 6.53-7.03c5.66-4.59 12.42-12.62 16.22-18.09 0.04-0.06 0.03-0.04 0.06-0.1 0.16-0.23 0.29-0.48 0.38-0.75 0.1-0.1 0.19-0.22 0.28-0.34 0.61-0.92 1.19-1.88 1.75-2.91 0.38-0.69 0.53-1.47 0.84-2.18z"
+        />
+        <path
+            id="path3873"
+            style="fill-rule:evenodd;fill:#000000"
+            sodipodi:type="inkscape:offset"
+            d="m463.78 116.75c-2.92-0.09-5.96 0.57-8.56 2.37-5.06 3.51-7.31 9.59-7.88 17.35-0.44 6.07-0.66 13.25-2.28 21.78-0.74 3.89-3.18 10.02-5.53 14.72-0.12 0.25-0.08 0.13-0.12 0.22-0.72 0.14-1.43 0.23-2.22 0.59-2.02 0.93-3.85 2.34-5.97 4.44-0.55 0.54-2.89 2.5-5.6 5.19-2.7 2.68-5.91 6.22-8.62 10.5-5.44 8.57-9.02 20.77-4.12 34.97 1.71 4.96 5.61 8.61 10.46 10.96 4.86 2.35 10.69 3.47 16.63 3.38 11.93-0.19 25.32-5.83 32.78-18.75 8.17-14.16 10.9-24.3 9.03-32.56-0.35-1.54-0.51-2.48-0.84-3.63-0.01-0.04-0.39-1.41-1.47-2.72 7.47-12.21 9.2-25.21 8.41-35.97-0.01-0.07 0-0.15 0-0.21h-0.04v-0.1c0.02 0.25-0.01-0.14 0-0.12h0.04c0-0.05-0.01-0.09 0-0.13 0-0.02-0.01-0.04 0-0.06 0.15-13.3-6.62-24.74-15.88-29.91-2.43-1.35-5.29-2.22-8.22-2.31z"
+            inkscape:original="M 463.71875 118.71875 C 461.14348 118.63534 458.54953 119.22322 456.34375 120.75 C 451.93219 123.80355 449.85559 129.15637 449.3125 136.625 C 448.87557 142.63391 448.64873 149.92764 447 158.625 C 446.18839 162.9065 443.68084 169.03667 441.28125 173.84375 C 440.80688 174.79405 440.85577 174.63384 440.71875 174.84375 C 439.8822 174.95259 438.90173 175.14949 438 175.5625 C 436.26451 176.35736 434.6247 177.61027 432.59375 179.625 C 431.0399 181.16645 423.86385 186.76855 418.65625 194.96875 C 413.44865 203.16897 410.02851 214.62812 414.71875 228.21875 C 417.74296 236.98182 428.60252 241.42973 439.9375 241.25 C 451.27248 241.07025 463.99183 235.74677 471.0625 223.5 C 479.12637 209.533 481.57808 199.85569 479.875 192.34375 C 479.51775 190.76797 479.35801 189.83278 479.0625 188.8125 C 478.91475 188.30237 478.96137 187.75383 477.84375 186.59375 C 477.64434 186.38675 477.29507 186.17732 476.96875 185.96875 C 484.99391 173.70042 486.74112 160.42309 485.90625 149.53125 C 485.90723 149.49662 485.8741 149.47212 485.875 149.4375 C 485.86714 149.33694 485.91453 149.22513 485.90625 149.125 C 486.1143 136.43145 479.60032 125.55733 471.03125 120.78125 C 468.86489 119.5738 466.29402 118.80216 463.71875 118.71875 z "
+            transform="translate(-12.462 8.3081)"
+            inkscape:radius="1.9641281"
+        />
+        <path
+            id="path3733"
+            sodipodi:nodetypes="ccsssssssss"
+            style="fill-rule:evenodd;fill:#decd87"
+            d="m454.45 202.98c12.23-13.73 15.18-30.43 14.7-43.98 1.62-25.06-23.53-45.35-26.68-15.41-0.68 6.44-1.25 14.68-3.33 24.47-1.15 5.4-4.03 12.16-6.71 17.51-3.76 7.46-2.16-0.48-9.65 7.02-4.6 4.59-26.16 20.14-18.7 47.96 3.72 13.88 34.4 20.04 47.8-3.18 8.34-14.44 10.61-24.02 9.52-30.68-1.19-7.27-0.02-4.35-6.11-0.83-5.95 3.43-3.94 0.6-0.84-2.88z"
+        />
+        <path
+            id="path3773"
+            style="fill-rule:evenodd;fill:#decd87"
+            d="m557.11 201.21c3.39 2.07 7.28 4.39 8.87 7.14 6.09 10.55-2.3 21.94-10.38 31.61-4.73 5.65-18.12 10.64-25.35 2.14-2.45-2.88-1.92-6.15 2.64-10.74 3.02-1.68 5.62-3.76 7.45-5.98 4.82-5.85 11.01-11.84 14.51-18.69 0.91-1.79 1.62-3.66 2.04-5.61 0.08 0.05 0.15 0.09 0.22 0.13z"
+        />
+        <path
+            id="path3869"
+            style="fill-rule:evenodd;fill:#000000"
+            d="m541.35 172.96c-1.32 0.09-2.39 1.12-2.53 2.44-0.09 0.82-0.29 1.69-0.56 2.63-0.35 1.18 0.14 2.44 1.18 3.09 0.87 0.54 1.75 1.13 2.63 1.75 2.4 1.69 4.58 3.59 5.87 5.19 5.48 6.73 4.92 11.57 2.07 17.12-2.86 5.55-8.57 11.28-13.47 17.25-2.26 2.75-7.07 5.87-11.94 6.97s-9.47 0.48-12.97-3.59c-1.27-1.48-1.47-2.23-0.62-4.28 0.84-2.05 3.3-5.15 7.72-9.03 2.01-1.77 4.11-3.98 6.25-6.38 0.91-1.06 0.88-2.65-0.09-3.67s-2.56-1.13-3.66-0.27c-2.86 2.29-6.68 4.25-10.44 4.97-0.51 0.1-0.97 0.34-1.35 0.69-3.92 3.64-6.67 6.87-8.12 10.47-1.79 4.44-0.75 9.37 2.37 12.75 6.12 6.61 14.8 7.67 21.91 6.03 7.01-1.62 13.09-5.41 16.84-9.97 4.67-5.67 11.05-11.75 14.85-19.19 1.91-3.75 3.12-8.01 2.69-12.62-0.44-4.62-2.52-9.31-6.38-13.72-1.69-1.93-3.72-3.58-5.87-5.13-0.71-0.5-1.44-1-2.19-1.5-0.5-0.32-1.06-0.7-1.69-1.09-0.41-0.25-0.72-0.42-0.91-0.53-0.48-0.29-1.03-0.42-1.59-0.38z"
+        />
+        <path
+            id="path3759"
+            sodipodi:nodetypes="csssscssc"
+            style="fill-rule:evenodd;fill:#decd87"
+            d="m542.92 180.17c2.81 1.91 5.43 4.04 7.13 6.14 12.03 14.79-1.86 26.23-11.38 37.85-5.52 6.72-20.64 13.24-29.08 3.42-3.54-4.13-1.81-9.08 7.31-17.11 0.12-0.1 0.26-0.22 0.37-0.32 4.79-2.17 8.84-5.38 11.31-8.71 4.55-6.13 10.46-12.51 13.62-19.52 0.25-0.58 0.5-1.17 0.72-1.75z"
+        />
+        <path
+            id="path3867"
+            style="fill-rule:evenodd;fill:#000000"
+            d="m523.88 147.68c-1.91 0-3.48 1.5-3.56 3.41-0.04 0.79-0.15 1.57-0.34 2.41-0.29 1.18 0.05 2.43 0.9 3.31-1.24 0.08-2.36 0.8-2.94 1.9-2.83 5.42-7.93 11.29-12.34 17.32-0.97 1.33-2.48 2.83-4.34 4.22-0.21 0.14-0.4 0.31-0.57 0.5-1.12 1.29-2.23 2.48-3.18 3.4-4.88 4.75-8.15 8.79-9.69 13.22-1.67 4.8-0.25 10.01 3.37 13.31 6.88 6.26 16.07 6.56 23.35 4.32 7.16-2.21 13.23-6.5 16.9-11.44 4.37-5.89 10.5-12.36 14-20.16 1.77-3.92 2.88-8.41 2.13-13.15-0.75-4.75-3.32-9.36-7.59-13.47-1.9-1.83-4.1-3.33-6.41-4.69-0.75-0.44-1.53-0.91-2.34-1.34-2-1.07-4.04-1.97-5.97-2.79-0.44-0.18-0.91-0.28-1.38-0.28zm0.35 11c1.12 0.55 2.26 1.07 3.34 1.69 2.5 1.44 4.76 3.06 6.06 4.41 2.86 2.96 4.02 5.51 4.35 7.93 0.32 2.43-0.2 4.91-1.44 7.66-2.49 5.5-7.94 11.57-12.6 17.88-1.99 2.7-6.61 6.16-11.34 7.59s-9.09 1.19-12.59-2.25c-1.19-1.17-1.3-1.33-0.66-3.16 0.65-1.82 2.87-5.01 7.09-9.15 6.14-6.02 13.3-16.24 17.22-23.03 1.77-3.06 1.93-6.64 0.69-9.35-0.04-0.07-0.08-0.15-0.12-0.22z"
+        />
+        <path
+            id="path3748"
+            sodipodi:nodetypes="cssssscscc"
+            style="fill-rule:evenodd;fill:#decd87"
+            d="m529.35 157.29c2.67 1.54 5.15 3.28 6.84 5.03 13.05 13.53-0.39 25.89-9.38 38.06-5.21 7.05-20.17 14.7-29.3 5.75-3.83-3.75-2.37-8.77 6.43-17.39 5.65-5.54 12.9-15.78 16.64-22.26 0.53-0.92 0.85-1.79 1-2.6 1.04-1.67 2.01-3.37 2.79-5.1 0.52-1.12 0.95-2.27 1.3-3.43 1.24 0.6 2.48 1.25 3.68 1.94z"
+        />
+        <path
+            id="path3865"
+            style="fill-rule:evenodd;fill:#000000"
+            d="m497.04 121.68c-0.96-0.14-2-0.16-3.16 0.03-0.39 0.07-1.75 0.28-2.9 1.19-1.6 1.26-2.19 2.64-2.07 4.66 0.15 2.4 2.02 4.16 2.28 4.4 2.9 2.69 5.17 4.92 5.72 5.82 0.44 0.7 0.41 0.82 0.41 0.75s0 0.23-0.56 1.22c-3.73 6.45-11.65 17.52-17 22.84-4.96 4.92-8.25 8.99-9.78 13.31-1.64 4.6-0.4 9.57 3 12.72 6.59 6.11 15.52 6.21 22.68 3.84 7.07-2.33 13.16-6.75 16.78-11.68 4.58-6.23 10.84-13.02 14.41-20.88 1.79-3.95 2.89-8.34 2.25-12.97s-3-9.2-7.16-13.28c-1.82-1.79-4-3.28-6.28-4.62-0.79-0.47-1.56-0.89-2.31-1.28-4.71-2.5-9.71-4.43-13.59-5.44-0.87-0.23-1.76-0.48-2.72-0.63z"
+        />
+        <path
+            id="path3735"
+            sodipodi:nodetypes="cssssss"
+            style="fill-rule:evenodd;fill:#decd87"
+            d="m485.6 166.5c-9.04 9.05-10.62 14.25-6.82 18.05 9.07 9.06 24.32 0.92 29.7-6.44 9.31-12.71 23.1-25.69 10.16-39.4-6.71-7.11-25.86-13.58-21.73-9.45 5.28 5.28 9.14 8.41 5.91 14-3.9 6.75-11.41 17.44-17.22 23.24z"
+        />
+        <path
+            id="path3885"
+            sodipodi:nodetypes="csscssscc"
+            style="filter:url(#filter3967);fill-rule:evenodd;fill:url(#linearGradient3117)"
+            d="m451.94 130.4c-4.03 0.27-7.48 4.54-8.5 14.69-0.64 6.34-1.18 14.47-3.13 24.12-1.07 5.31-3.73 11.96-6.25 17.22 0.11-0.17 0.2-0.3 0.32-0.5 2.88-4.85 6.03-11 7.47-15.9 2.6-8.89 3.68-16.35 4.75-22.19 2.41-13.2 8.89-15.62 14.56-12.03-2.89-3.54-6.21-5.61-9.22-5.41z"
+        />
+        <path
+            id="path3927"
+            style="filter:url(#filter3959);fill-rule:evenodd;fill:#786721"
+            d="m461.26 138.25c2.29 5.7 3.52 13.1 2.59 20.96-0.48 14.27-4.22 31.86-16 46.32-2.99 3.67-4.98 6.64 0.53 3.03 1.36-0.89 2.35-1.73 3.06-2.41 0.5-0.64 1.1-1.36 1.79-2.12 11.94-13.44 14.84-29.8 14.37-43.07 0.57-8.9-2.31-17.17-6.34-22.71z"
+        />
+        <path
+            id="path3925"
+            style="fill-rule:evenodd;fill:#2b0000"
+            d="m427.54 190.37c-0.39 0.04-0.88 0.2-1.47 0.5 0.54 0.07 0.91 0.16 1.5-0.5h-0.03z"
+        />
+        <path
+            id="path3918"
+            style="filter:url(#filter3955);fill-rule:evenodd;fill:#786721"
+            d="m459.04 204.11c-0.53-0.1-1.66 1.63-5 3.53-0.17 0.1-0.28 0.13-0.44 0.21v0.03c0.04 0.63 0.09 1.38 0.16 2.31 0.52 6.88-2.13 16.79-10.5 31.72-1.97 3.5-4.21 6.34-6.63 8.62 5.39-2.28 10.41-6.34 14.1-12.61 8.14-13.88 10.37-23.08 9.31-29.48-0.51-3.06-0.59-4.25-1-4.33z"
+        />
+        <path
+            id="path3971"
+            style="filter:url(#filter4008);fill-rule:evenodd;fill:#78671e"
+            d="m496.07 128c-0.6 0.09-0.62 0.49 0.12 1.25 5.09 5.15 8.8 8.19 5.69 13.65-1.44 2.52-3.42 5.59-5.59 8.75 2.98-3.37 5.74-6.7 7.75-9.37 3.92-5.24 0.69-8.16-3.63-13.1-0.12-0.13-0.24-0.26-0.31-0.37-1.85-0.6-3.33-0.92-4.03-0.81zm25.53 26.28c-3.46 7-11.01 13.83-17.16 20.59-5.13 5.65-16.77 11.8-24.87 9.13 8.81 7.52 22.73-0.15 27.75-7.1 5.36-7.41 12.25-14.93 14.28-22.62z"
+        />
+        <path
+            id="path3989"
+            style="filter:url(#filter4000);fill-rule:evenodd;fill:#ffffff"
+            d="m503.1 131c0.96 1.02 1.85 1.98 2.63 2.9 3.07 0.83 11.26 5.57 14.37 9.91 0.67 0.93 1.21 1.85 1.63 2.75-0.33-2.22-1.39-4.52-3.5-6.94-1.77-2.02-4.95-4.15-8.07-5.78-2.88-1.51-5.61-2.54-7.06-2.84zm3.22 6.65c0.01 1.39-0.39 2.86-1.28 4.41-3.95 6.83-11.44 17.47-17.38 23.4-0.37 0.38-0.71 0.74-1.06 1.1 0.08-0.06 0.14-0.13 0.22-0.19 6.27-4.99 14.72-14.45 19.25-20.5 2.3-3.08 1.93-5.53 0.25-8.22z"
+        />
+        <path
+            id="path4012"
+            sodipodi:nodetypes="cscsc"
+            style="filter:url(#filter4030);fill-rule:evenodd;fill:#78671e"
+            d="m540.61 176.49c-3.45 7-11.01 13.83-17.15 20.59-5.14 5.65-16.78 11.8-24.88 9.13 8.81 7.52 22.73-0.15 27.75-7.1 5.36-7.41 12.26-14.93 14.28-22.62z"
+        />
+        <path
+            id="path4044"
+            style="filter:url(#filter4026);fill-rule:evenodd;fill:#ffffff"
+            d="m527.79 157.56c-0.2 0.55-0.4 1.09-0.63 1.62 3.63 1.74 8.96 5.22 11.32 8.5 0.64 0.9 1.16 1.8 1.56 2.66-0.31-2.13-1.32-4.34-3.35-6.66-1.69-1.93-4.75-3.99-7.75-5.56-0.39-0.2-0.77-0.38-1.15-0.56z"
+        />
+        <path
+            id="path4034"
+            sodipodi:nodetypes="cscsc"
+            style="filter:url(#filter4030);fill-rule:evenodd;fill:#78671e"
+            d="m553.75 199.9c-3.46 7-11.01 13.84-17.16 20.6-5.14 5.65-16.77 11.8-24.87 9.12 8.81 7.52 22.73-0.15 27.75-7.09 5.36-7.42 12.25-14.93 14.28-22.63z"
+        />
+        <path
+            id="path4048"
+            style="filter:url(#filter4026);fill-rule:evenodd;fill:#ffffff"
+            d="m546.25 183.84c-0.26 0.53-0.52 1.05-0.81 1.56 2.66 1.99 6.41 5.86 7.75 9.29 0.36 0.93 0.63 1.86 0.8 2.74 0.13-2.13-0.3-4.38-1.54-6.83-1.04-2.05-3.18-4.33-5.35-6.11-0.29-0.23-0.57-0.44-0.85-0.65z"
+        />
+        <path
+            id="path4038"
+            sodipodi:nodetypes="cscsc"
+            style="filter:url(#filter4030);fill-rule:evenodd;fill:#78671e"
+            transform="matrix(.97135 0 0 .96459 3.0613 15.891)"
+            d="m583.92 205.77c-3.45 7-11.01 13.83-17.15 20.59-5.14 5.65-16.78 11.8-24.88 9.13 8.81 7.52 22.73-0.15 27.75-7.1 5.36-7.41 12.26-14.93 14.28-22.62z"
+        />
+        <path
+            id="path4052"
+            style="filter:url(#filter4026);fill-rule:evenodd;fill:#ffffff"
+            d="m560.38 203.72c-0.25 0.51-0.51 1.01-0.78 1.5 2.58 1.93 6.22 5.66 7.52 8.97 0.35 0.9 0.61 1.8 0.77 2.64 0.13-2.05-0.28-4.23-1.49-6.59-1.01-1.97-3.09-4.17-5.2-5.89-0.27-0.23-0.55-0.42-0.82-0.63z"
+        />
+        <path
+            id="path4054"
+            sodipodi:nodetypes="ccc"
+            style="filter:url(#filter4059);fill:#786721"
+            d="m414.04 248.83c30.87 32.46 68.97 33.61 100.06 0.56-32.95 26.76-67.36 23.75-100.06-0.56z"
+        />
+      </g
+      >
+      <path
+          id="rect5291"
+          style="fill:#000080"
+          d="m422.47 703.15c12.26-44.18 27.43-113.03 52.9-146.26 2.85-3.73 8.67-9.03 11.09-5.07 13.67 22.36 44.21 43 73.95 53.77 4.4 1.59 7.59 6.86 4.89 10.7-29.66 42.18-49.27 74.54-52.74 120.41-0.35 4.68-5.47 6.96-9.87 5.31l-75.33-28.15c-4.39-1.65-6.15-6.19-4.89-10.71z"
+          inkscape:export-ydpi="599.94"
+          sodipodi:nodetypes="cssssssss"
+          inkscape:export-filename="C:\Documents and Settings\Usuario\Desktop\mecanica.png"
+          inkscape:export-xdpi="599.94"
+      />
+      <path
+          id="path5294"
+          style="fill:#0066ff"
+          d="m433.47 691.65c9.91-38.46 22.16-98.37 42.74-127.3 2.31-3.24 7.01-7.85 8.96-4.41 11.05 19.46 35.72 37.43 59.75 46.8 3.56 1.39 6.14 5.97 3.96 9.31-23.97 36.72-31.07 42.13-46.36 104.77-0.97 3.96-3.47 6.14-7 4.66l-58.1-24.51c-3.52-1.49-4.96-5.38-3.95-9.32z"
+          inkscape:export-ydpi="599.94"
+          sodipodi:nodetypes="cssssssss"
+          inkscape:export-filename="C:\Documents and Settings\Usuario\Desktop\mecanica.png"
+          inkscape:export-xdpi="599.94"
+      />
+      <path
+          id="path5301"
+          style="fill:#0066ff"
+          d="m471.69 580.31c-2.75 0.07-5.18 1.65-6.15 5.28-11.26 42.01-25.39 52.38-79.78 52.38 8.26 14.68-6.24 38.72-32.38 53.69-26.14 14.96-54.07 15.21-62.34 0.53-26.2 9.2-36.66 17.62-58.53 30.25-18.23 10.52-35.57 55.12-40.63 76.37-0.35 2.94 0.24 7.88 3.97 7.1 21.1-4.47 51.62-0.9 76.06 6.87 23.51 10.65 37.99 42.06 66.1 60.84h167c-9.18-46.46-10.31-151.46 7.4-191.03 34.95-78.07-21.42-102.76-40.72-102.28z"
+          inkscape:export-ydpi="599.94"
+          sodipodi:nodetypes="cscscscscccsc"
+          inkscape:export-filename="C:\Documents and Settings\Usuario\Desktop\mecanica.png"
+          inkscape:export-xdpi="599.94"
+      />
+      <path
+          id="path4528"
+          style="fill:url(#linearGradient3119)"
+          d="m385.56 658.47c-0.04 0-0.08 0.02-0.12 0.03-0.15 0.04-0.33 0.14-0.53 0.31-5 11.31-14.11 20.26-24 27.41-9.56 6.65-20.26 11.74-31.53 14.69-0.72 0.34-0.75 0.74-0.5 1.09 10.22 2.24 22.31 2.78 37.21 0.81 0.66-0.08 1.34-0.03 1.97 0.13l3.06 0.34c5 1.4 12.84 9 21.07 22.25-2.74-5.78-5.6-11.38-8.63-16.91-0.86-1.43-1.65-2.71-2.37-3.78-1.11-0.54-2.03-1.44-2.6-2.56-0.54-1.08-0.71-2.29-0.53-3.47-0.08-0.14-0.16-0.29-0.25-0.43l0.31 0.12c0.05-0.23 0.12-0.43 0.19-0.66 6.05-17.67 8.07-27.82 7.69-35.37-0.07-1.38-0.21-2.7-0.44-4z"
+          inkscape:export-ydpi="599.94"
+          inkscape:export-filename="C:\Documents and Settings\Usuario\Desktop\mecanica.png"
+          inkscape:export-xdpi="599.94"
+      />
+      <path
+          id="path5362"
+          style="filter:url(#filter4949);fill:#000000"
+          d="m282.66 778.56c-2.29 28.39-10.85 55.13-26.15 80.03-0.37 2.89-0.62 5.59-0.75 7.94h11c0.91-1.32 1.85-2.75 2.9-4.41 13.36-25.42 17.42-53.38 13-83.56z"
+          inkscape:export-ydpi="599.94"
+          inkscape:export-filename="C:\Documents and Settings\Usuario\Desktop\mecanica.png"
+          inkscape:export-xdpi="599.94"
+      />
+      <path
+          id="path5340"
+          style="fill:#000000"
+          d="m243.57 800.06c-12.47-0.02-21.68 7.24-28.31 13.88-3.32 3.31-6.12 6.55-8.38 8.84s-4.16 3.32-3.97 3.28c-9.62 2.06-15.44 10.82-16.12 19.78-0.55 7.16 1.88 14.86 7.37 20.69 4.16 2.64 8.41 7.86 16.13 7.86h200.37c20.77 0 10.81-9.11 5.41-10.56-10.71-2.87-33.46-12.39-42.19-14.72-57.13-19.66-83.9-42.16-125.19-48.67-1.75-0.28-3.47-0.38-5.12-0.38z"
+          inkscape:export-ydpi="599.94"
+          sodipodi:nodetypes="csssscssscsc"
+          inkscape:export-filename="C:\Documents and Settings\Usuario\Desktop\mecanica.png"
+          inkscape:export-xdpi="599.94"
+      />
+      <path
+          id="path5305"
+          style="fill:#decd87"
+          d="m243.57 805.69c-20.64-0.07-31.16 23.49-39.47 25.22-14.08 2.91-16.19 23.9-2 33.21 3.58 3.29 8.07 5.95 12.93 5.95h187.38c16.12 0 17.74-2.36 13.35-3.54-88.88-25-119.12-52.92-167.94-60.5-1.47-0.23-2.88-0.34-4.25-0.34z"
+          inkscape:export-ydpi="599.94"
+          sodipodi:nodetypes="cscsscsc"
+          inkscape:export-filename="C:\Documents and Settings\Usuario\Desktop\mecanica.png"
+          inkscape:export-xdpi="599.94"
+      />
+      <path
+          id="path5352"
+          style="filter:url(#filter5354);fill:#ffffff"
+          d="m245.91 809.84c-20.46-0.06-30.88 22.83-39.12 24.5-6.04 1.23-9.84 5.76-11.1 11.22 2.26-2.31 5.45-3.99 9.5-4.62 10.22-1.6 23.33-26.14 50.41-22.47 34.59 4.68 61.12 16.39 100.19 30.34-45.02-17.53-70.51-33.3-105.66-38.65-1.46-0.23-2.85-0.31-4.22-0.32z"
+          inkscape:export-ydpi="599.94"
+          inkscape:export-filename="C:\Documents and Settings\Usuario\Desktop\mecanica.png"
+          inkscape:export-xdpi="599.94"
+      />
+      <path
+          id="path5358"
+          style="filter:url(#filter4949);fill:url(#linearGradient3121)"
+          d="m1005 674.25c1 21.92-1 43.86-6.22 65.78 0.23 12.76 1.21 20.32 6.22 0 4.3-21.92 4.2-43.86 0-65.78z"
+          inkscape:export-ydpi="599.94"
+          sodipodi:nodetypes="cccc"
+          inkscape:export-filename="C:\Documents and Settings\Usuario\Desktop\mecanica.png"
+          transform="matrix(-2.6748 -.71670 .25085 -1.6148 2970.8 2496.3)"
+          inkscape:export-xdpi="599.94"
+      />
+      <path
+          id="path5366"
+          style="filter:url(#filter4949);fill:url(#linearGradient3121)"
+          d="m1005 674.25c1 21.92-1 43.86-6.22 65.78 0.23 12.76 1.21 20.32 6.22 0 4.3-21.92 4.2-43.86 0-65.78z"
+          inkscape:export-ydpi="599.94"
+          sodipodi:nodetypes="cccc"
+          inkscape:export-filename="C:\Documents and Settings\Usuario\Desktop\mecanica.png"
+          transform="matrix(-2.3981 -1.3846 -.96443 1.3192 3323.4 1200.1)"
+          inkscape:export-xdpi="599.94"
+      />
+      <g
+          id="g3865"
+          inkscape:export-ydpi="599.94"
+          inkscape:export-xdpi="599.94"
+          inkscape:export-filename="C:\Documents and Settings\Usuario\Desktop\mecanica.png"
+          transform="matrix(-.15839 .59111 .59111 .15839 -228.79 567.55)"
+        >
+        <path
+            id="path3868"
+            style="fill:#000000"
+            d="m-294.44 603.94c-18.8 0-34.06 18.19-34.06 40.62s15.26 40.63 34.06 40.63c15.05 0 27.81-11.67 32.32-27.81-3.99 4.42-9.32 7.12-15.19 7.12-12.32 0-22.31-11.93-22.31-26.62 0-14.7 9.99-26.6 22.31-26.6 0.87 0 1.74 0.04 2.59 0.16-5.57-4.73-12.37-7.5-19.72-7.5z"
+        />
+        <path
+            id="path3870"
+            style="filter:url(#filter3432);fill:url(#linearGradient3125)"
+            sodipodi:type="inkscape:offset"
+            d="m-294.44 607.34c-16.6 0-30.65 16.34-30.65 37.22s14.05 37.22 30.65 37.22c10.06 0 19.13-5.96 24.75-15.34-2.42 0.88-4.95 1.47-7.62 1.47-14.52 0-25.72-13.79-25.72-30.03 0-13.32 7.57-24.83 18.28-28.6-3.05-1.24-6.3-1.94-9.69-1.94z"
+            inkscape:original="M -294.4375 603.9375 C -313.2394 603.9375 -328.50001 622.13278 -328.5 644.5625 C -328.5 666.99222 -313.2394 685.1875 -294.4375 685.1875 C -279.3929 685.1875 -266.63064 673.52434 -262.125 657.375 C -266.10935 661.79806 -271.44477 664.5 -277.3125 664.5 C -289.62871 664.50002 -299.625 652.56761 -299.625 637.875 C -299.62499 623.18238 -289.6287 611.28125 -277.3125 611.28125 C -276.43639 611.28125 -275.56861 611.32012 -274.71875 611.4375 C -280.28548 606.71057 -287.08899 603.9375 -294.4375 603.9375 z "
+            transform="matrix(1 0 0 .95350 0 28.591)"
+            inkscape:radius="-3.4151273"
+        />
+      </g
+      >
+      <g
+          id="g4689"
+          inkscape:export-ydpi="599.94"
+          inkscape:export-xdpi="599.94"
+          inkscape:export-filename="C:\Documents and Settings\Usuario\Desktop\mecanica.png"
+          transform="matrix(1.3962 -1.3135 1.028 1.4013 -2185.4 1276.8)"
+        >
+        <path
+            id="path4283"
+            style="fill-rule:evenodd;fill:url(#linearGradient3127)"
+            d="m1280.3 549.94c-10.8 0.09-21.6 1.77-31.7 6.37-5 2.29-4.2 3.27-2.7 3.69 4.2 1.11 13.4 2.04 18.6 2.19h0.2c0 0.26-0.2 0.47-0.5 0.47-5.5-0.07-14.7-0.77-19.3-1.78-0.2-0.06-0.5-0.13-0.8-0.22 0 0.05 0 0.09-0.1 0.15-0.2 0.45-0.4 0.94-0.7 1.47 0 0.18-0.1 0.37-0.2 0.56-0.1 0.32-0.3 0.63-0.4 0.97-0.3 0.77-0.6 1.59-0.9 2.44-0.6 1.4-1.1 2.9-1.6 4.44-0.6 1.54-1.1 3.12-1.6 4.69-0.1 0.34-0.2 0.68-0.4 1.03-0.3 1.2-0.7 2.39-1 3.53-0.5 1.47-0.9 2.89-1.3 4.15-0.7 2.52-1.3 4.55-1.6 5.57-0.1 0.3-0.1 0.59-0.2 0.87 0 0.23 0 0.45-0.1 0.66v0.34 0.41 0.12 0.6c0 0.24 0.1 0.47 0.1 0.68v0.07c0.1 0.13 0.1 0.25 0.1 0.37 0.1 0.15 0.2 0.28 0.2 0.41v0.03c0.1 0.13 0.2 0.26 0.3 0.37v0.03c0.1 0.12 0.2 0.21 0.3 0.32 0 0.03 0 0.06 0.1 0.09 0 0.07 0.1 0.16 0.2 0.22v0.06c0.1 0.03 0.1 0.07 0.2 0.1 0.1 0.1 0.3 0.19 0.4 0.28 0.2 0.09 0.4 0.18 0.5 0.25 0.1 0.01 0.1 0.02 0.1 0.03 0.3 0.1 0.5 0.16 0.7 0.22 4.2 1.11 19.9 7.81 25.1 8.56 0.5 0.07 1 0.15 1.6 0.22l0.3 0.03c0.6 0.06 1.1 0.14 1.7 0.19 0.3 0.03 0.7 0.04 1 0.06l0.6 0.03c0.2 0.01 0.4-0.01 0.6 0 0.1 0.01 0.3 0.03 0.5 0.03 0.5 0.01 1-0.01 1.5-0.03 0.5-0.01 0.9-0.03 1.4-0.06 0.6-0.05 1.2-0.1 1.7-0.19 0.1-0.01 0.1-0.02 0.2-0.03 0.3-0.06 0.7-0.11 1-0.19 0.6-0.13 1.2-0.32 1.8-0.53 0.3-0.1 0.6-0.22 0.9-0.34v0c0.5-0.19 0.9-0.39 1.3-0.63 0.1-0.04 0.1-0.08 0.2-0.12 0.2-0.08 0.3-0.17 0.4-0.25 0.2-0.13 0.4-0.26 0.6-0.41 2.1-1.62 4-3.09 5.8-4.44 0-0.02 0-0.03 0.1-0.06 1.7-1.33 3.4-2.53 4.9-3.62 0-0.04 0.1-0.06 0.1-0.1 1.5-1.06 2.9-2.01 4.1-2.87 1.3-0.9 2.5-1.7 3.6-2.41l0.3-0.15c1-0.66 1.9-1.2 2.8-1.72 0.7-0.42 1.4-0.76 2-1.1 0.3-0.16 0.6-0.35 0.9-0.5 0.7-0.37 1.3-0.7 2-1 0-0.04 0.1-0.08 0.2-0.12 0.6-0.29 1.2-0.52 1.8-0.75 0-0.05 0.1-0.08 0.2-0.13 0.8-0.39 1.5-0.77 2.3-1.15 0-0.01 0-0.02 0.1-0.03 0.8-0.42 1.6-0.83 2.4-1.22 0.1-0.02 0.1-0.05 0.2-0.07 0.8-0.38 1.6-0.73 2.4-1.09 0.1-0.01 0.1-0.02 0.1-0.03 0.9-0.37 1.7-0.72 2.6-1.06-0.2-0.38-0.4-0.89-0.9-1.63-0.2-0.38-0.5-1-0.8-1.75-0.3-0.6-0.7-1.38-1-2.15-0.1-0.18-0.2-0.44-0.3-0.63-0.9-2.11-2-4.68-3.2-7.28 0-0.09 0-0.17-0.1-0.25-0.6-1.43-1.2-2.85-1.9-4.22-0.1-0.28-0.2-0.54-0.3-0.81-0.1-0.23-0.2-0.43-0.3-0.66-0.4-0.75-0.8-1.48-1.1-2.15-0.1-0.1-0.1-0.19-0.1-0.29-0.4-0.78-0.8-1.45-1.2-2.09 0-0.16-0.1-0.29-0.2-0.44-0.7 0.46-1.6 0.81-2.6 1.16-6.5 2.33-14.1 4.31-21.9 5.62-0.2-0.01-0.4-0.16-0.4-0.37 7.6-1.36 14.9-3.48 21.3-6 2.7-1.1 4.5-2.52 1.8-2.94-8.1-1.27-16.5-2.16-25-2.09z"
+        />
+        <path
+            id="path4275"
+            style="fill-rule:evenodd;fill:url(#linearGradient3129)"
+            d="m1340.8 582.62c-2 0.07-4.2 0.61-6.6 1.76-5.6 2.63-12.1 8.26-19 15.93 13.2-4.08 23.8-2.71 36.6-4.97 4-0.71 3-3.32 2.3-4.62-0.3-0.59-0.6-1.16-0.9-1.69 0-0.03-0.1-0.06-0.1-0.09-1.4-1.82-3.7-4.55-8.9-5.94-1.1-0.29-2.2-0.41-3.4-0.38z"
+        />
+        <path
+            id="path4277"
+            sodipodi:nodetypes="cssssc"
+            style="fill-rule:evenodd;fill:#ff0000"
+            d="m1355.6 589.36c-0.5-13.16-13.9-14.08-21.3-12.85-26.4 4.39-53.1 26.46-64.1 37.45-1.2 1.13-3.3 3.04 2 3.18 9.2 0.24 25.5 0.54 33.3-9.18 20.6-25.45 38.6-37.79 50.1-18.6z"
+        />
+        <path
+            id="path4279"
+            style="fill-rule:evenodd;fill:#ff0000"
+            d="m1235.5 597.62c-0.1 2.56-0.1 5.56-0.6 7.41-0.5 1.69 0.6 1.41 1.1 1.72 8 4.58 20.9 8.97 30.5 10.06 0.1-0.98 0.6-1.52 1-1.97 0.4-0.51 0.7-0.89 1-1.15 2.3-2.35 5.2-5.2 8.7-8.25-0.6 0.28-1.3 0.52-2 0.72-0.5 0.16-1.1 0.29-1.6 0.4-0.2 0.02-0.3 0.05-0.4 0.06 0 0.01-0.1 0-0.1 0-0.7 0.11-1.3 0.2-2 0.26-0.7 0.05-1.4 0.08-2.2 0.09-0.7 0.01-1.4 0-2.1-0.03-0.6-0.03-1.3-0.07-2-0.13-0.1-0.01-0.3-0.04-0.4-0.06-1.2-0.11-2.2-0.24-3.2-0.37-0.3-0.05-0.7-0.13-1.1-0.22s-0.8-0.2-1.3-0.32c-0.6-0.17-1.3-0.39-2.1-0.62-0.4-0.15-0.9-0.28-1.4-0.44-1.2-0.4-2.5-0.84-3.8-1.31-3.5-1.25-7.3-2.66-10.4-3.85-1.2-0.42-2.2-0.81-3.2-1.15-0.9-0.34-1.7-0.63-2.4-0.85zm40.4 10.97c-2.2 1.96-4.2 3.8-5.7 5.38-0.6 0.57-1.4 1.35-1.4 2 0.2-0.54 0.8-1.08 1.2-1.53 1.6-1.72 3.7-3.72 5.9-5.85z"
+        />
+        <path
+            id="path4299"
+            style="fill-rule:evenodd;fill:#000000"
+            d="m1283.6 548.44c-1.1-0.01-2.2 0.01-3.3 0.03-1.2 0.02-2.5 0.06-3.7 0.12-10 0.48-19.9 2.25-29.3 6.07-1.3 0.54-2.3 0.97-3.1 1.43-0.7 0.46-1.3 0.93-1.6 1.66-0.1 0.21-0.2 0.46-0.2 0.72-3.8 6.6-10 27.59-11.2 31.91-0.9 3.64 0.2 5.33 1.5 6.18-0.1 2.8-0.1 5.88-0.5 7.47-0.2 0.57-0.2 1.05-0.1 1.59 0.1 0.55 0.4 1.16 0.8 1.44s0.7 0.32 0.9 0.38c0.2 0.05 0.3 0.12 0.2 0.06 5.4 3.41 12.9 6.77 20.2 9.25 5.2 1.71 10.2 3 14.5 3.53 1 0.35 2 0.49 3.4 0.5 4.5 0.05 11 0.08 17.4-1.19 6.5-1.26 13-3.86 17.3-9.4 2.2-2.77 4.4-5.35 6.5-7.78 14.7-4.17 24.8-2.76 38.7-5.19 1.2-0.21 2.1-0.54 2.9-1.03 0.8-0.5 1.4-1.16 1.8-1.78 0.7-1.25 0.6-2.41 0.6-3.16-0.1-1.2-0.3-2.28-0.5-3.25-0.5-4.86-2.8-8.4-5.9-10.56-3.3-2.35-7.3-3.21-11-3.35-0.6-0.02-1.2-0.01-1.8 0-1.8 0.04-3.5 0.23-4.9 0.5-4.2 0.77-8.3 1.97-12.4 3.47-0.2-0.23-0.3-0.48-0.5-0.78-1.7-3.02-7.9-18.74-11.5-24.59v-0.1c0.1-0.56-0.1-1.15-0.5-1.56-0.7-0.7-1.5-0.83-2.3-0.94-7.3-0.91-14.8-1.6-22.4-1.65zm-3.3 1.94c8.4-0.07 16.8 0.82 24.9 2.09 0.6 0.1 0.9 0.31 1 0.34-0.1 0.02-0.1 0.08-0.1 0.16-0.3 0.38-1.4 1.02-2.8 1.56-6.2 2.47-13.4 4.58-20.8 5.94-0.2 0.08-0.3 0.29-0.3 0.5s0.2 0.36 0.4 0.37c7.8-1.31 15.4-3.29 21.9-5.62 1-0.35 1.9-0.7 2.6-1.16 3.4 5.85 8.9 19.95 10.5 22.72 0.5 0.74 0.7 1.25 0.9 1.63-3.4 1.36-6.8 2.94-10.1 4.65-5 2.08-11.9 5.8-28.8 18.97-0.8 0.58-1.6 1.03-2.5 1.41v0c-0.3 0.12-0.6 0.24-0.9 0.34-0.6 0.21-1.2 0.4-1.8 0.53-0.3 0.08-0.7 0.13-1 0.19-0.1 0.01-0.1 0.02-0.2 0.03-1.1 0.19-2.3 0.26-3.4 0.28h-0.4c-0.2 0-0.5 0.01-0.8 0-0.2 0-0.4-0.02-0.5-0.03-0.2-0.01-0.4 0.01-0.6 0l-0.6-0.03c-0.3-0.02-0.7-0.03-1-0.06-0.6-0.05-1.1-0.13-1.7-0.19l-0.3-0.03c-0.6-0.07-1.1-0.15-1.6-0.22-5.2-0.75-20.9-7.45-25.1-8.56-0.2-0.07-0.5-0.14-0.8-0.25-0.1-0.07-0.3-0.16-0.5-0.25-0.1-0.09-0.3-0.18-0.4-0.28-0.1-0.03-0.1-0.07-0.2-0.1-0.1-0.08-0.1-0.19-0.2-0.28-0.1-0.03-0.1-0.06-0.1-0.09-0.1-0.11-0.2-0.22-0.3-0.35-0.1-0.11-0.2-0.24-0.3-0.37v-0.03c0-0.13-0.1-0.26-0.2-0.41 0-0.12 0-0.24-0.1-0.37-0.2-0.92-0.2-2.14 0.2-3.75 1-3.86 6.2-21.82 9.8-29v0c0.3 0.09 0.6 0.16 0.8 0.22 4.6 1.01 13.8 1.71 19.3 1.78 0.3 0 0.5-0.21 0.5-0.47s-0.2-0.47-0.5-0.47c-5.2-0.17-14.2-1.1-18.1-2.16-0.4-0.09-0.7-0.24-0.8-0.34-0.1-0.05-0.1-0.08-0.1-0.1v-0.09c0.1-0.14 0.4-0.48 0.9-0.87 0.6-0.4 1.5-0.88 2.7-1.44 10-4.57 20.8-6.26 31.5-6.34zm58.6 25.74c5.4-0.03 11.8 1.39 14.9 6.5v0.16c0.1 0.16 0.2 0.33 0.3 0.5 0 0.06 0.1 0.13 0.1 0.19 0.1 0.18 0.2 0.34 0.2 0.53 0.1 0.06 0.1 0.12 0.1 0.19 0.1 0.19 0.2 0.39 0.3 0.59v0.16c0.1 0.22 0.2 0.46 0.2 0.68 0 0.05 0.1 0.09 0.1 0.13 0 0.27 0.1 0.52 0.1 0.81 0.1 0.27 0.2 0.56 0.2 0.85v0.06c0.1 0.29 0.1 0.6 0.1 0.91 0.1 0.32 0.1 0.65 0.1 1-0.4-0.6-0.7-1.16-1.1-1.69v-0.03c-0.2-0.23-0.3-0.41-0.5-0.63-0.4-0.59-0.8-1.14-1.3-1.65-0.2-0.2-0.3-0.41-0.5-0.6-0.4-0.4-0.7-0.77-1.1-1.12-0.1-0.02-0.1-0.02-0.1-0.04-1.2-1.06-2.4-1.88-3.7-2.46 0-0.02-0.1-0.02-0.1-0.04-0.4-0.17-0.8-0.36-1.2-0.5 0 0.01-0.1 0-0.1 0-6.7-2.18-14.6 1.48-23.4 9.1-0.1 0.1-0.2 0.18-0.3 0.28-0.4 0.38-0.9 0.79-1.3 1.19-0.4 0.34-0.7 0.68-1.1 1.03-0.2 0.17-0.4 0.33-0.6 0.5-0.8 0.78-1.6 1.59-2.4 2.44-0.5 0.52-1 1.05-1.5 1.59-0.8 0.83-1.6 1.68-2.4 2.56-0.7 0.77-1.4 1.57-2.1 2.38-0.6 0.67-1.2 1.33-1.8 2.03-1.1 1.37-2.3 2.79-3.5 4.25-6.5 8.15-19 9.24-28.3 9.25-1.8 0-3.5-0.02-5-0.06-0.3-0.01-0.5-0.05-0.8-0.07 0 0.01-0.1 0-0.1 0-0.1 0.01-0.2 0-0.3 0-3.7-0.38-1.9-2.08-0.8-3.12 2.5-2.5 5.8-5.6 9.8-8.91 0.1-0.1 0.2-0.2 0.3-0.31 13.5-11.18 33.8-24.89 54-28.25 1.4-0.23 3-0.36 4.6-0.38zm1.9 6.5c0.3 0 0.6-0.01 0.9 0 0.3 0.02 0.5 0.04 0.8 0.07s0.6 0.07 0.9 0.12c0.3 0.06 0.5 0.12 0.8 0.19 1.2 0.32 2.3 0.72 3.2 1.16 0.1 0.03 0.2 0.06 0.2 0.09 0.3 0.13 0.5 0.27 0.8 0.41 0.2 0.11 0.4 0.22 0.6 0.34 0.1 0.1 0.3 0.21 0.4 0.31 0.3 0.16 0.5 0.34 0.7 0.5 0.1 0.07 0.2 0.13 0.2 0.19 0.3 0.2 0.5 0.42 0.8 0.62 0.2 0.26 0.5 0.5 0.7 0.76 0.1 0.01 0.1 0.04 0.1 0.06 0.2 0.21 0.4 0.42 0.5 0.62 0.1 0.05 0.1 0.11 0.2 0.16 0 0.09 0.1 0.16 0.2 0.25 0.1 0.16 0.2 0.32 0.3 0.47 0 0.03 0.1 0.06 0.1 0.09 0.3 0.53 0.6 1.1 0.9 1.69 0.7 1.3 1.7 3.91-2.3 4.62-12.8 2.26-23.4 0.89-36.6 4.97 2.6-2.87 5.1-5.46 7.6-7.72 1.6-1.5 3.2-2.84 4.7-4.03 0.7-0.54 1.4-1.05 2.1-1.53 0.1-0.04 0.1-0.08 0.2-0.12 0-0.02 0.1-0.02 0.1-0.03 0.7-0.46 1.3-0.9 2-1.29 0.1-0.09 0.3-0.19 0.4-0.28 0.2-0.09 0.4-0.19 0.5-0.28 0.5-0.24 0.9-0.45 1.4-0.65 0.5-0.28 1.1-0.51 1.7-0.72 0.1-0.03 0.1-0.07 0.2-0.1 0.4-0.16 0.9-0.28 1.3-0.4 0.2-0.04 0.3-0.09 0.5-0.13 0.3-0.07 0.6-0.13 0.9-0.19 0.2-0.04 0.5-0.09 0.7-0.12 0.5-0.05 0.9-0.08 1.3-0.1zm-105.3 15c0.7 0.22 1.5 0.51 2.4 0.85 1 0.34 2 0.73 3.2 1.15 3.1 1.19 6.9 2.6 10.4 3.85 1.3 0.47 2.6 0.91 3.8 1.31 0.5 0.16 1 0.29 1.4 0.44 0.8 0.23 1.5 0.45 2.1 0.62 0.5 0.12 0.9 0.23 1.3 0.32s0.8 0.17 1.1 0.22c1 0.13 2 0.26 3.2 0.37 0.1 0.02 0.3 0.05 0.4 0.06 0.7 0.06 1.4 0.1 2 0.13 0.7 0.03 1.4 0.04 2.1 0.03 0.8-0.01 1.5-0.04 2.2-0.09 0.7-0.06 1.3-0.15 2-0.26 0 0 0.1 0.01 0.1 0 0.1-0.01 0.2-0.04 0.4-0.06 0.5-0.11 1.1-0.24 1.6-0.4 0.7-0.2 1.4-0.44 2-0.72-3.5 3.05-6.4 5.9-8.7 8.25-0.3 0.26-0.6 0.64-1 1.15-0.4 0.45-0.9 0.99-1 1.97-9.6-1.09-22.5-5.48-30.5-10.06-0.5-0.31-1.6-0.03-1.1-1.72 0.5-1.85 0.5-4.85 0.6-7.41z"
+        />
+        <path
+            id="path4396"
+            style="filter:url(#filter4423);fill-rule:evenodd;fill:#800000"
+            d="m1322.8 580.69c-17.3 5.39-33.8 17.36-44 26.19 10.5-7.77 27.5-19.11 44-26.19z"
+        />
+        <path
+            id="path4389"
+            style="filter:url(#filter4415);fill-rule:evenodd;fill:#800000"
+            d="m1314.4 596.72c-3.3 2.68-6.7 5.6-10.2 8.75-10.1 8.98-22.8 8.69-30 8.47-1.4-0.04-2-0.29-2.2-0.63v0.07c-1.1 1-3 2.69 1.8 2.81 8.4 0.22 23.3 0.49 30.4-8.16 3.5-4.21 6.9-8.01 10.2-11.31z"
+        />
+        <path
+            id="path4409"
+            style="filter:url(#filter4427);fill-rule:evenodd;fill:#ffffff"
+            d="m1339 576.94c-1.7 0.01-3.2 0.15-4.6 0.37-4.4 0.75-8.9 2.05-13.3 3.69 3.8-1.31 7.6-2.36 11.4-3 1.8-0.3 4-0.46 6.2-0.34 3.4 0.17 6.9 1.01 9.5 2.9 0.1 0.11 0.3 0.26 0.4 0.38 2 1.12 3.9 2.77 5.6 5-0.7-2.76-2.2-4.69-4.1-6.06-2.6-1.9-6.1-2.74-9.5-2.91-0.5-0.03-1.1-0.04-1.6-0.03z"
+        />
+        <path
+            id="path4402"
+            style="filter:url(#filter4431);fill-rule:evenodd;fill:#ffffff"
+            d="m1334.6 580.78c-1 0.3-1.9 0.66-2.9 1.1-8.7 3.97-18.4 13.48-28.7 26.24-2.2 2.73-5.2 4.63-8.4 5.97 4-1.34 7.7-3.4 10.3-6.65 10.3-12.77 20-22.27 28.7-26.25 0.4-0.15 0.7-0.28 1-0.41z"
+        />
+        <path
+            id="path4443"
+            style="filter:url(#filter4452);fill-rule:evenodd;fill:#800000"
+            d="m1350.8 587.09c-0.4 1.66-1.4 3.5-3.9 4.5-6.1 2.41-11.3 3.53-16.7 4.91 6.8-0.72 13.3-0.72 20.6-2 3.7-0.65 2.8-3.06 2.2-4.25-0.3-0.54-0.6-1.05-0.9-1.53v-0.1c-0.4-0.46-0.8-0.97-1.3-1.53z"
+        />
+        <path
+            id="path4505"
+            style="filter:url(#filter4507);fill-rule:evenodd;fill:#800000"
+            d="m1236.1 598.58c0.8 2.57-2.2 6.68 1 8.13 3.7 1.68 7.5 3.21 11.4 4.41-3.4-1.77-6.8-3.8-9.8-6.2-3-1-0.3-4.87-2.3-6.33l-0.3-0.01z"
+        />
+        <path
+            id="path4534"
+            style="filter:url(#filter4528);fill-rule:evenodd;fill:#800000"
+            d="m1307.9 561.25c0.1 0.58 0.4 1.31 0.5 1.84 0.1 0.25 0.2 0.58 0.2 0.82 0.3 1 0.6 2 0.8 2.78 0.3 0.97 0.6 1.79 0.8 2.28 0.3 0.96 0.6 1.64 0.7 2.12-0.7 0.45-1.5 0.9-2.2 1.38v0.03c-0.7 0.46-1.4 0.94-2.1 1.44 0 0.02-0.1 0.07-0.1 0.09-0.7 0.51-1.4 1.03-2.1 1.56v0.07c-0.7 0.49-1.3 0.98-2 1.5 0 0.05-0.1 0.1-0.2 0.15-0.4 0.3-0.9 0.6-1.4 0.97-0.1 0.05-0.2 0.1-0.2 0.16-0.6 0.39-1.1 0.82-1.7 1.31-0.3 0.19-0.5 0.45-0.7 0.66-0.6 0.44-1.1 0.86-1.7 1.4-0.7 0.68-1.5 1.4-2.4 2.25 0 0.07-0.1 0.12-0.2 0.19-0.9 0.92-1.9 1.96-3 3.13-1.1 1.12-2.2 2.36-3.4 3.74-0.1 0.06-0.1 0.08-0.2 0.13-1.2 1.42-2.6 2.99-4.1 4.72v0.06c-0.8 0.9-1.7 1.96-2.5 2.94 1.2-0.97 2.5-1.93 3.6-2.78 0.1-0.03 0.1-0.04 0.1-0.07 1.7-1.25 3.2-2.4 4.7-3.43 0-0.04 0.1-0.03 0.1-0.07 1.4-1 2.7-1.9 3.9-2.71 1.2-0.85 2.3-1.62 3.4-2.29 0-0.04 0.1-0.07 0.2-0.12 1-0.62 1.8-1.14 2.7-1.62 0.6-0.4 1.2-0.71 1.8-1.04 0.3-0.15 0.6-0.33 0.9-0.46 0.6-0.36 1.2-0.66 1.8-0.94 0.1-0.04 0.2-0.09 0.3-0.13 0.5-0.27 1.1-0.5 1.6-0.72l0.3-0.12c0.7-0.37 1.4-0.7 2.1-1.06v-0.03c0.8-0.39 1.6-0.79 2.4-1.16 0.1-0.02 0.1-0.05 0.1-0.06 0.8-0.36 1.6-0.7 2.4-1.04v-0.03c0.8-0.34 1.6-0.68 2.4-1-0.1-0.35-0.3-0.83-0.7-1.53-0.3-0.35-0.6-0.95-0.9-1.65-0.3-0.57-0.6-1.3-0.9-2.03-0.1-0.17-0.2-0.39-0.2-0.57-0.9-1.98-2-4.43-3-6.87-0.1-0.08-0.1-0.14-0.1-0.22-0.6-1.34-1.2-2.69-1.8-3.97z"
+        />
+        <path
+            id="path4523"
+            style="filter:url(#filter4528);fill-rule:evenodd;fill:#ffffff"
+            d="m1244.9 562.09c0 0.12-0.1 0.22-0.1 0.35-0.1 0.17-0.2 0.35-0.3 0.53-0.1 0.3-0.2 0.59-0.4 0.91-0.3 0.72-0.5 1.5-0.9 2.31-0.4 1.32-1 2.7-1.4 4.15-0.5 1.45-1 2.97-1.5 4.44-0.1 0.33-0.2 0.65-0.3 0.97-0.4 1.13-0.7 2.24-1.1 3.31-0.4 1.39-0.8 2.75-1.1 3.94-0.7 2.37-1.3 4.26-1.6 5.22 0 0.29-0.1 0.58-0.1 0.84-0.1 0.21-0.1 0.4-0.1 0.6v0.34c0 0.13-0.1 0.25-0.1 0.38v0.12c0 0.19 0.1 0.39 0.1 0.56 0 0.23 0 0.43 0.1 0.63v0.06c0 0.12 0 0.26 0.1 0.37 0 0.15 0.1 0.26 0.2 0.38v0.03c0 0.13 0.1 0.24 0.2 0.35v0.03c0.1 0.11 0.2 0.18 0.3 0.28 0 0.03 0 0.06 0.1 0.09 0 0.07 0.1 0.16 0.2 0.22v0.06c0.1 0.03 0.1 0.07 0.1 0.1 0.2 0.1 0.3 0.17 0.5 0.25 0.1 0.09 0.3 0.18 0.4 0.25 0.1 0.01 0.1-0.01 0.1 0 0.2 0.09 0.5 0.16 0.7 0.22 2.4 0.64 8.9 3.27 14.8 5.37-4.6-2.61-9.2-5.42-11-6.19-0.2-0.07-0.4-0.15-0.6-0.28v-0.06c-0.2-0.09-0.3-0.19-0.5-0.31-0.1-0.11-0.2-0.24-0.4-0.38 0-0.04 0-0.08-0.1-0.12v-0.07c-0.1-0.08-0.1-0.19-0.2-0.28 0-0.04 0-0.08-0.1-0.12 0-0.14-0.1-0.25-0.2-0.41v-0.03c-0.1-0.15-0.2-0.33-0.2-0.5v-0.03c-0.1-0.17-0.1-0.34-0.2-0.53 0-0.16-0.1-0.33-0.1-0.5v-0.06c0-0.28-0.1-0.6-0.1-0.91v-0.78-0.16-0.53-0.44c0-0.27 0.1-0.55 0.1-0.84 0.1-0.36 0.1-0.76 0.2-1.16 0.2-1.32 0.7-3.94 1.3-7.22 0.3-1.64 0.7-3.49 1.1-5.4 0.2-1.48 0.6-3.04 0.9-4.6 0.1-0.44 0.2-0.89 0.3-1.34l0.9-4.41z"
+        />
+        <path
+            id="path4554"
+            style="filter:url(#filter4560);fill-rule:evenodd;fill:#ffffff"
+            d="m1280.3 551.16c-10.3 0.08-20.6 1.69-30.3 6.03 10.2-2.55 20.8-3.56 31.5-3.63 6.5-0.04 13 0.28 19.4 0.82 0.6-0.24 1.3-0.48 1.9-0.72 0.4-0.17 0.8-0.33 1.1-0.5-7.7-1.22-15.6-2.07-23.6-2z"
+        />
+        <path
+            id="path4545"
+            style="filter:url(#filter4568);fill-rule:evenodd;fill:#ffffff"
+            d="m1306.9 556.92c-7.1 2.21-15.2 4.05-23.5 5.28 0.1 0.21 0.3 0.37 0.6 0.38 8.2-1.15 16.2-2.8 23.3-4.75-0.1-0.31-0.3-0.62-0.4-0.91z"
+        />
+        <path
+            id="path4543"
+            style="filter:url(#filter4564);fill-rule:evenodd;fill:#ffffff"
+            d="m1245 562.14v0.09l-0.3 0.72c5.6 0.55 12.4 0.92 17 0.97 0.3 0 0.6-0.21 0.6-0.47h-0.2c-4.6-0.1-11.6-0.61-17.1-1.31z"
+        />
+      </g
+      >
+      <g
+          id="g4280"
+          inkscape:export-ydpi="599.94"
+          inkscape:export-xdpi="599.94"
+          inkscape:export-filename="C:\Documents and Settings\Usuario\Desktop\mecanica.png"
+        >
+        <path
+            id="path4246"
+            style="fill:#000000"
+            d="m187.16 488.81c-1.89 0-3.87 0.54-5.91 1.72-15.83 9.14-10.97 29.56-1.5 45.97 12.97 22.47 35.43 33.81 50.16 25.31 11.63-6.71 1.42-12.81-8.63-23.9-0.84 0.78-1.98 1.62-3.5 2.56-13.18 8.13-28.5 4.62-34.19-7.85-4.15-9.09-3.89-21.62 10.29-30.37 2.98-1.84 5.47-2.55 7.53-2.37-3.98-6.5-8.77-11.07-14.25-11.07z"
+        />
+        <path
+            id="path4711"
+            sodipodi:nodetypes="csssc"
+            style="fill:#decd87"
+            d="m182.07 492.77c11.49-6.64 20.36 10.17 25.39 25.73 7.06 21.86 32.98 29.6 18.11 38.18-12.94 7.47-32.87-2.81-44.5-22.94-8.48-14.7-12.91-32.94 1-40.97z"
+        />
+        <path
+            id="path4713"
+            style="fill:#000000"
+            d="m191.03 502.47c-1.23 0.08-2.52 0.51-3.91 1.31-8.88 5.13-8.86 14.31-5.46 22.72-1.46-7.9 0.92-16.95 11.53-23.81-0.69-0.18-1.41-0.27-2.16-0.22zm28.31 36.97c-0.47 0.33-0.98 0.67-1.56 1.03-7.19 4.44-15.04 5.41-21.59 3.34 6.55 3.71 13.84 4.34 19.69 0.97 3.28-1.89 4.08-3.59 3.46-5.34z"
+        />
+        <path
+            id="path4715"
+            sodipodi:nodetypes="csssc"
+            style="fill:#decd87"
+            d="m193.87 502.25c11.7-7.22 15.71 3.34 16.6 13.78 1.25 14.66 22.45 15.09 7.3 24.44-13.18 8.13-28.49 4.61-34.18-7.85-4.15-9.1-3.89-21.63 10.28-30.37z"
+        />
+      </g
+      >
+      <path
+          id="path4417"
+          style="fill-rule:evenodd;fill:#010180"
+          d="m382.58 631.08c-1.84 0.21-3.46 1.31-4.34 2.95-0.89 1.63-0.92 3.6-0.1 5.27 4.79 9.84 7.47 15.62 7.85 23.17 0.39 7.55-1.64 17.69-7.68 35.36-0.51 1.46-0.4 3.07 0.29 4.46 0.7 1.38 1.93 2.43 3.4 2.89l43.97 13.77c2.04 0.65 4.28 0.09 5.79-1.44 1.5-1.53 2.02-3.79 1.34-5.83-6.75-20.4-11.55-35.6-18.16-48.25-6.61-12.64-15.21-22.6-28.53-31.44-1.13-0.75-2.49-1.07-3.83-0.91z"
+          inkscape:export-ydpi="599.94"
+          inkscape:export-filename="C:\Documents and Settings\Usuario\Desktop\mecanica.png"
+          inkscape:export-xdpi="599.94"
+      />
+      <path
+          id="path4378"
+          style="fill-rule:evenodd;fill:#0000ff"
+          d="m380.9 633.3c10.08 20.58 13.32 28.24 0.47 65.61l46.03 14.33c-14.15-42.57-20.01-62.45-46.5-79.94z"
+          inkscape:export-ydpi="599.94"
+          sodipodi:nodetypes="cccc"
+          inkscape:export-filename="C:\Documents and Settings\Usuario\Desktop\mecanica.png"
+          inkscape:export-xdpi="599.94"
+      />
+      <path
+          id="path4412"
+          style="fill-rule:evenodd;fill:#010180"
+          d="m288.5 682.22c-1.82 0.08-3.49 1.06-4.47 2.63-0.99 1.56-1.17 3.52-0.5 5.25 12.32 31.5 39.12 51.9 82.62 77.61 1.78 1.05 3.98 1.03 5.74-0.06 1.76-1.1 2.79-3.09 2.7-5.19l-2.18-54.17c-0.07-1.61-0.79-3.12-1.99-4.15-1.2-1.04-2.77-1.52-4.33-1.32-37.13 4.91-56.69-5.78-73.91-19.41-1.05-0.83-2.35-1.25-3.68-1.19z"
+          inkscape:export-ydpi="599.94"
+          inkscape:export-filename="C:\Documents and Settings\Usuario\Desktop\mecanica.png"
+          inkscape:export-xdpi="599.94"
+      />
+      <path
+          id="path4380"
+          style="fill-rule:evenodd;fill:#0066ff"
+          d="m287.16 685.37c18.13 14.02 40.3 25.55 79.49 20.48l2.21 53.92c-44.05-25.43-69.9-44.93-81.7-74.4z"
+          inkscape:export-ydpi="599.94"
+          sodipodi:nodetypes="cccc"
+          inkscape:export-filename="C:\Documents and Settings\Usuario\Desktop\mecanica.png"
+          inkscape:export-xdpi="599.94"
+      />
+      <path
+          id="path4382"
+          style="fill-rule:evenodd;fill:url(#linearGradient3131)"
+          d="m419.08 873.65c0-93.35-17.37-133.88-41.27-175.27l41.61 17.02c44.99 52.89 122.05 158.25-0.34 158.25z"
+          inkscape:export-ydpi="599.94"
+          sodipodi:nodetypes="cccc"
+          inkscape:export-filename="C:\Documents and Settings\Usuario\Desktop\mecanica.png"
+          inkscape:export-xdpi="599.94"
+      />
+      <path
+          id="path4511"
+          style="fill-rule:evenodd;fill:#010180"
+          d="m371.12 703.28l-3.96-0.42 4.15 5.2c9.34 5.97 23.87 25.06 35.35 55.85 6.5 22.96 10.83 50.6 12.06 87.28 0.84 2.13 1.7 4.27 2.59 6.4-0.9-40.69-5.25-70.8-11.97-95.56-12.87-36.08-29.68-56.36-38.22-58.75zm4.47 52.81c-0.75 0.26-1.53 0.67-2.34 1.19l0.03 0.97c0.8-0.84 1.57-1.56 2.31-2.16z"
+          inkscape:export-ydpi="599.94"
+          sodipodi:nodetypes="cccccccccccc"
+          inkscape:export-filename="C:\Documents and Settings\Usuario\Desktop\mecanica.png"
+          inkscape:export-xdpi="599.94"
+      />
+      <path
+          id="path4384"
+          style="fill-rule:evenodd;fill:url(#linearGradient3133)"
+          d="m367.5 706.28l2.22 53.91c21.67-21.67 23.55 38.91 49.16 97.37-0.01-0.26 0-0.54 0-0.81-0.07-2.72-0.16-5.38-0.26-8-0.09-2.62-0.21-5.22-0.34-7.75s-0.27-5-0.44-7.44c-0.09-1.36-0.18-2.69-0.28-4.03-0.08-1.08-0.16-2.12-0.25-3.19-0.09-1.11-0.18-2.18-0.28-3.28-0.11-1.24-0.22-2.44-0.34-3.65-0.09-0.89-0.16-1.73-0.25-2.6-0.06-0.53-0.13-1.04-0.19-1.56-0.16-1.51-0.32-3.03-0.5-4.5-0.24-1.99-0.49-3.92-0.75-5.84-0.23-1.67-0.44-3.32-0.69-4.94-0.04-0.26-0.08-0.5-0.12-0.75-0.29-1.87-0.57-3.72-0.88-5.53-0.15-0.91-0.31-1.79-0.47-2.69-0.15-0.88-0.3-1.79-0.46-2.66-0.02-0.08-0.05-0.16-0.07-0.25-0.12-0.63-0.25-1.24-0.37-1.87-0.54-2.75-1.1-5.44-1.69-8.06-0.37-1.66-0.73-3.27-1.13-4.88-0.78-3.21-1.6-6.34-2.46-9.37-13.19-35.38-30.42-55.29-39.16-57.63z"
+          inkscape:export-ydpi="599.94"
+          inkscape:export-filename="C:\Documents and Settings\Usuario\Desktop\mecanica.png"
+          inkscape:export-xdpi="599.94"
+      />
+      <g
+          id="g4452"
+          inkscape:export-ydpi="599.94"
+          inkscape:export-xdpi="599.94"
+          inkscape:export-filename="C:\Documents and Settings\Usuario\Desktop\mecanica.png"
+          transform="matrix(.84752 -.43750 .28206 .75778 -261.83 446.06)"
+        >
+        <path
+            id="path4420"
+            sodipodi:rx="12.338307"
+            sodipodi:ry="12.338307"
+            style="fill:#010180"
+            sodipodi:type="arc"
+            d="m564.16 766.88a12.338 12.338 0 1 1 -24.68 0 12.338 12.338 0 1 1 24.68 0z"
+            sodipodi:cy="766.87927"
+            sodipodi:cx="551.82019"
+        />
+        <path
+            id="path4422"
+            sodipodi:rx="12.338307"
+            sodipodi:ry="12.338307"
+            style="fill:#0066ff"
+            sodipodi:type="arc"
+            d="m564.16 766.88a12.338 12.338 0 1 1 -24.68 0 12.338 12.338 0 1 1 24.68 0z"
+            transform="matrix(.79310 0 0 .79310 113.21 157.49)"
+            sodipodi:cy="766.87927"
+            sodipodi:cx="551.82019"
+        />
+        <g
+            id="g4438"
+            transform="translate(1.7715 1.7715)"
+          >
+          <path
+              id="path4424"
+              sodipodi:rx="12.338307"
+              sodipodi:ry="12.338307"
+              style="fill:#000000"
+              sodipodi:type="arc"
+              d="m564.16 766.88a12.338 12.338 0 1 1 -24.68 0 12.338 12.338 0 1 1 24.68 0z"
+              transform="matrix(.090517 0 0 .090517 497.37 692.75)"
+              sodipodi:cy="766.87927"
+              sodipodi:cx="551.82019"
+          />
+          <path
+              id="path4432"
+              sodipodi:rx="12.338307"
+              sodipodi:ry="12.338307"
+              style="fill:#000000"
+              sodipodi:type="arc"
+              d="m564.16 766.88a12.338 12.338 0 1 1 -24.68 0 12.338 12.338 0 1 1 24.68 0z"
+              transform="matrix(.090517 0 0 .090517 500.91 692.75)"
+              sodipodi:cy="766.87927"
+              sodipodi:cx="551.82019"
+          />
+          <path
+              id="path4434"
+              sodipodi:rx="12.338307"
+              sodipodi:ry="12.338307"
+              style="fill:#000000"
+              sodipodi:type="arc"
+              d="m564.16 766.88a12.338 12.338 0 1 1 -24.68 0 12.338 12.338 0 1 1 24.68 0z"
+              transform="matrix(.090517 0 0 .090517 497.37 696.29)"
+              sodipodi:cy="766.87927"
+              sodipodi:cx="551.82019"
+          />
+          <path
+              id="path4436"
+              sodipodi:rx="12.338307"
+              sodipodi:ry="12.338307"
+              style="fill:#000000"
+              sodipodi:type="arc"
+              d="m564.16 766.88a12.338 12.338 0 1 1 -24.68 0 12.338 12.338 0 1 1 24.68 0z"
+              transform="matrix(.090517 0 0 .090517 500.91 696.29)"
+              sodipodi:cy="766.87927"
+              sodipodi:cx="551.82019"
+          />
+        </g
+        >
+        <path
+            id="path4444"
+            sodipodi:rx="12.338307"
+            sodipodi:ry="12.338307"
+            style="filter:url(#filter4448);fill:url(#linearGradient3135)"
+            sodipodi:type="arc"
+            d="m564.16 766.88a12.338 12.338 0 1 1 -24.68 0 12.338 12.338 0 1 1 24.68 0z"
+            transform="matrix(.70776 0 0 .70776 160.31 222.94)"
+            sodipodi:cy="766.87927"
+            sodipodi:cx="551.82019"
+        />
+      </g
+      >
+      <g
+          id="g4486"
+          inkscape:export-ydpi="599.94"
+          inkscape:export-xdpi="599.94"
+          inkscape:export-filename="C:\Documents and Settings\Usuario\Desktop\mecanica.png"
+          transform="matrix(.84752 -.43750 .28206 .75778 -255.66 496.69)"
+        >
+        <path
+            id="path4488"
+            sodipodi:rx="12.338307"
+            sodipodi:ry="12.338307"
+            style="fill:#010180"
+            sodipodi:type="arc"
+            d="m564.16 766.88a12.338 12.338 0 1 1 -24.68 0 12.338 12.338 0 1 1 24.68 0z"
+            sodipodi:cy="766.87927"
+            sodipodi:cx="551.82019"
+        />
+        <path
+            id="path4490"
+            sodipodi:rx="12.338307"
+            sodipodi:ry="12.338307"
+            style="fill:#0066ff"
+            sodipodi:type="arc"
+            d="m564.16 766.88a12.338 12.338 0 1 1 -24.68 0 12.338 12.338 0 1 1 24.68 0z"
+            transform="matrix(.79310 0 0 .79310 113.21 157.49)"
+            sodipodi:cy="766.87927"
+            sodipodi:cx="551.82019"
+        />
+        <g
+            id="g4492"
+            transform="translate(1.7715 1.7715)"
+          >
+          <path
+              id="path4494"
+              sodipodi:rx="12.338307"
+              sodipodi:ry="12.338307"
+              style="fill:#000000"
+              sodipodi:type="arc"
+              d="m564.16 766.88a12.338 12.338 0 1 1 -24.68 0 12.338 12.338 0 1 1 24.68 0z"
+              transform="matrix(.090517 0 0 .090517 497.37 692.75)"
+              sodipodi:cy="766.87927"
+              sodipodi:cx="551.82019"
+          />
+          <path
+              id="path4496"
+              sodipodi:rx="12.338307"
+              sodipodi:ry="12.338307"
+              style="fill:#000000"
+              sodipodi:type="arc"
+              d="m564.16 766.88a12.338 12.338 0 1 1 -24.68 0 12.338 12.338 0 1 1 24.68 0z"
+              transform="matrix(.090517 0 0 .090517 500.91 692.75)"
+              sodipodi:cy="766.87927"
+              sodipodi:cx="551.82019"
+          />
+          <path
+              id="path4498"
+              sodipodi:rx="12.338307"
+              sodipodi:ry="12.338307"
+              style="fill:#000000"
+              sodipodi:type="arc"
+              d="m564.16 766.88a12.338 12.338 0 1 1 -24.68 0 12.338 12.338 0 1 1 24.68 0z"
+              transform="matrix(.090517 0 0 .090517 497.37 696.29)"
+              sodipodi:cy="766.87927"
+              sodipodi:cx="551.82019"
+          />
+          <path
+              id="path4500"
+              sodipodi:rx="12.338307"
+              sodipodi:ry="12.338307"
+              style="fill:#000000"
+              sodipodi:type="arc"
+              d="m564.16 766.88a12.338 12.338 0 1 1 -24.68 0 12.338 12.338 0 1 1 24.68 0z"
+              transform="matrix(.090517 0 0 .090517 500.91 696.29)"
+              sodipodi:cy="766.87927"
+              sodipodi:cx="551.82019"
+          />
+        </g
+        >
+        <path
+            id="path4502"
+            sodipodi:rx="12.338307"
+            sodipodi:ry="12.338307"
+            style="filter:url(#filter4448);fill:url(#linearGradient3135)"
+            sodipodi:type="arc"
+            d="m564.16 766.88a12.338 12.338 0 1 1 -24.68 0 12.338 12.338 0 1 1 24.68 0z"
+            transform="matrix(.70776 0 0 .70776 160.31 222.94)"
+            sodipodi:cy="766.87927"
+            sodipodi:cx="551.82019"
+        />
+      </g
+      >
+    </g
+    >
+  </g
+  >
+  <metadata
+    >
+    <rdf:RDF
+      >
+      <cc:Work
+        >
+        <dc:format
+          >image/svg+xml</dc:format
+        >
+        <dc:type
+            rdf:resource="http://purl.org/dc/dcmitype/StillImage"
+        />
+        <cc:license
+            rdf:resource="http://creativecommons.org/licenses/publicdomain/"
+        />
+        <dc:publisher
+          >
+          <cc:Agent
+              rdf:about="http://openclipart.org/"
+            >
+            <dc:title
+              >Openclipart</dc:title
+            >
+          </cc:Agent
+          >
+        </dc:publisher
+        >
+        <dc:title
+          >Mechanic</dc:title
+        >
+        <dc:date
+          >2008-06-23T18:59:16</dc:date
+        >
+        <dc:description
+        />
+        <dc:source
+          >https://openclipart.org/detail/17436/mechanic-by-jonata</dc:source
+        >
+        <dc:creator
+          >
+          <cc:Agent
+            >
+            <dc:title
+              >jonata</dc:title
+            >
+          </cc:Agent
+          >
+        </dc:creator
+        >
+        <dc:subject
+          >
+          <rdf:Bag
+            >
+            <rdf:li
+              >blue</rdf:li
+            >
+            <rdf:li
+              >contour</rdf:li
+            >
+            <rdf:li
+              >happy</rdf:li
+            >
+            <rdf:li
+              >job</rdf:li
+            >
+            <rdf:li
+              >man</rdf:li
+            >
+            <rdf:li
+              >mechanic</rdf:li
+            >
+            <rdf:li
+              >outline</rdf:li
+            >
+            <rdf:li
+              >people</rdf:li
+            >
+            <rdf:li
+              >red</rdf:li
+            >
+            <rdf:li
+              >smiling</rdf:li
+            >
+            <rdf:li
+              >work</rdf:li
+            >
+            <rdf:li
+              >worker</rdf:li
+            >
+            <rdf:li
+              >wrench</rdf:li
+            >
+          </rdf:Bag
+          >
+        </dc:subject
+        >
+      </cc:Work
+      >
+      <cc:License
+          rdf:about="http://creativecommons.org/licenses/publicdomain/"
+        >
+        <cc:permits
+            rdf:resource="http://creativecommons.org/ns#Reproduction"
+        />
+        <cc:permits
+            rdf:resource="http://creativecommons.org/ns#Distribution"
+        />
+        <cc:permits
+            rdf:resource="http://creativecommons.org/ns#DerivativeWorks"
+        />
+      </cc:License
+      >
+    </rdf:RDF
+    >
+  </metadata
+  >
+</svg
+>

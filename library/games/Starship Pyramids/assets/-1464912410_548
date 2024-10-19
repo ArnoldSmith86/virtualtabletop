@@ -1,0 +1,23 @@
+<svg 
+    version="1.2" 
+    xmlns="http://www.w3.org/2000/svg" 
+    viewBox="-44 -83 88 88"
+>
+<style>
+    polygon { 
+        fill: white;
+        stroke: black;
+        stroke-linejoin: round;
+        stroke-width: 4;
+    }
+    text {
+        font-family: sans-serif;
+        font-weight: bold;
+        font-size: 1.5em;
+    }
+</style>
+<polygon points="-39,-78 -39,0 39,0 39,-78" />
+<ellipse cx="0" cy="-15" rx="5" ry="8" />
+<ellipse cx="-15" cy="-15" rx="5" ry="8" />
+<text x="0" y="-30" text-anchor="middle">W</text>
+</svg>

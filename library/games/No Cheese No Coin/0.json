@@ -1,0 +1,3800 @@
+{
+  "_meta": {
+    "version": 6,
+    "info": {
+      "name": "No Cheese No Coin",
+      "image": "/assets/477090331_17717",
+      "rules": "https://www.srafferty.com/nocheesenocoin",
+      "bgg": "https://www.srafferty.com/nocheesenocoin",
+      "year": "2022",
+      "mode": "vs",
+      "time": "15",
+      "players": "3-6",
+      "language": "en-US",
+      "variant": "",
+      "attribution": "An original game by Stephen Rafferty available under CC BY-SA-NC 4.0. Adapted for use on virtualtabletop.io by LawDawg96.\n\nNoto Sans font by Google available under Open Font License, Version 1.1 from https://fonts.google.com/noto/specimen/Noto+Sans.\n\nTo support the creator by purchasing a physical copy of the game, go to https://www.thegamecrafter.com/games/no-cheese-no-coin",
+      "similarName": "No Cheese No Coin",
+      "similarDesigner": "Stephen Rafferty",
+      "description": "Collect coin and cheese cards. Play cheese card to use its special powers. Play until deck is depleted or 10 minute timer expires. Player with most coin cards at end wins.",
+      "showName": false,
+      "lastUpdate": 1656358260000
+    }
+  },
+  "deckHolder": {
+    "type": "holder",
+    "id": "deckHolder",
+    "x": 844,
+    "y": 440,
+    "z": 3519,
+    "inheritChildZ": true,
+    "leaveRoutine": [
+      {
+        "func": "IF",
+        "condition": "${PROPERTY paused OF theTimer}",
+        "thenRoutine": [
+          {
+            "func": "TIMER",
+            "timer": "theTimer",
+            "mode": "start"
+          }
+        ]
+      }
+    ],
+    "movableInEdit": false
+  },
+  "jzakP": {
+    "fixedParent": true,
+    "id": "jzakP",
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "clickRoutine": [
+      {
+        "func": "TIMER",
+        "timer": "${PROPERTY parent}"
+      }
+    ],
+    "image": "/i/button-icons/White-Play_Pause.svg",
+    "css": "background-size: 75% 75%",
+    "parent": "theTimer",
+    "x": 95,
+    "y": 4
+  },
+  "theDeck": {
+    "type": "deck",
+    "id": "theDeck",
+    "x": 4,
+    "y": 4,
+    "z": 4852,
+    "cardDefaults": {
+      "width": 110,
+      "enlarge": 4
+    },
+    "cardTypes": {
+      "coin": {
+        "image": "/assets/-1762089923_79838"
+      },
+      "muenster": {
+        "image": "/assets/-1530181986_86423"
+      },
+      "mildcheddar": {
+        "image": "/assets/-1033286396_86710"
+      },
+      "sharpcheddar": {
+        "image": "/assets/830285429_95260"
+      },
+      "american": {
+        "image": "/assets/-414009324_80060"
+      },
+      "swiss": {
+        "image": "/assets/-1751090185_99858"
+      },
+      "feta": {
+        "image": "/assets/1175781470_115902"
+      },
+      "ricotta": {
+        "image": "/assets/209638667_138667"
+      },
+      "pepperjack": {
+        "image": "/assets/-799070925_104703"
+      },
+      "asiago": {
+        "image": "/assets/1507889555_96804"
+      },
+      "gouda": {
+        "image": "/assets/1963272598_84420"
+      },
+      "nachocheese": {
+        "image": "/assets/2032905148_131750"
+      },
+      "mozzarella": {
+        "image": "/assets/2070071303_168187"
+      },
+      "stinky": {
+        "image": "/assets/1035580069_119564"
+      },
+      "gorgonzola": {
+        "image": "/assets/1232970526_143541"
+      },
+      "bluecheese": {
+        "image": "/assets/-830229313_152289"
+      },
+      "brie": {
+        "image": "/assets/918998921_123658"
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "value": "/assets/-1046414830_119959",
+            "color": "rgb(0,0,0)",
+            "width": 110,
+            "height": 160
+          }
+        ],
+        "border": false,
+        "radius": 8
+      },
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "white",
+            "width": 110,
+            "height": 160,
+            "dynamicProperties": {
+              "value": "image"
+            }
+          }
+        ],
+        "border": 1,
+        "radius": 8
+      }
+    ],
+    "parent": "deckHolder"
+  },
+  "holder1": {
+    "type": "holder",
+    "id": "holder1",
+    "y": 55,
+    "z": 3501,
+    "inheritChildZ": true,
+    "fixedParent": true,
+    "parent": "seat1",
+    "movableInEdit": false,
+    "x": -5,
+    "PID": 1,
+    "enterRoutine": [
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "_ancestor",
+        "value": "${PROPERTY id}"
+      },
+      {
+        "func": "COUNT"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "coins",
+        "value": "${COUNT}"
+      }
+    ],
+    "coins": 1
+  },
+  "seat1": {
+    "type": "seat",
+    "id": "seat1",
+    "x": 10,
+    "z": 3269,
+    "movableInEdit": false,
+    "hideWhenUnused": true,
+    "y": 10,
+    "css": "font-family:notosans",
+    "turn": true
+  },
+  "cards1": {
+    "id": "cards1",
+    "parent": "seat1",
+    "x": 155,
+    "y": -5,
+    "width": 35,
+    "height": 50,
+    "layer": 2,
+    "z": 102,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "box-shadow:0 1px 1px black;background-image:url(/assets/-1046414830_119959);font-weight:900;font-size:1.5rem;line-height:50px;color:white;;text-shadow: 0px 0px 3px black;box-shadow: inset 0 0 0 1000px rgba(85, 85, 85, 0.5);font-family:notosans",
+    "text": 0,
+    "borderRadius": 5,
+    "rotation": -3
+  },
+  "calls": {
+    "id": "calls",
+    "x": -275,
+    "y": 271,
+    "z": 105,
+    "text": "Calls",
+    "css": {
+      "default": {
+        "background": "white",
+        "font-size": "40px"
+      },
+      "@font-face": {
+        "font-family": "notosans",
+        "src": "url(/assets/-853299197_555264) format('woff2')"
+      }
+    },
+    "countCardsRoutine": [
+      {
+        "func": "SELECT",
+        "type": "seat",
+        "property": "player",
+        "relation": "!=",
+        "value": ""
+      },
+      {
+        "func": "GET",
+        "aggregation": "array",
+        "property": "player",
+        "variable": "playerList"
+      },
+      {
+        "func": "FOREACH",
+        "in": "${playerList}",
+        "loopRoutine": [
+          {
+            "func": "SELECT",
+            "type": "card",
+            "property": "_ancestor",
+            "value": "hand"
+          },
+          {
+            "func": "SELECT",
+            "source": "DEFAULT",
+            "property": "owner",
+            "value": "${value}"
+          },
+          {
+            "func": "COUNT"
+          },
+          {
+            "func": "SELECT",
+            "type": "seat",
+            "property": "player",
+            "value": "${value}"
+          },
+          {
+            "func": "GET",
+            "property": "index",
+            "variable": "seatIndex"
+          },
+          {
+            "func": "LABEL",
+            "label": "cards${seatIndex}",
+            "mode": "set",
+            "value": "${COUNT}"
+          }
+        ]
+      }
+    ],
+    "discardRandomRoutine": [
+      {
+        "func": "SELECT",
+        "type": "seat",
+        "property": "index",
+        "value": "${PID}"
+      },
+      {
+        "func": "GET",
+        "property": "player",
+        "variable": "pName"
+      },
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "owner",
+        "value": "${pName}"
+      },
+      {
+        "func": "COUNT"
+      },
+      "var COUNT = ${COUNT} - 1",
+      {
+        "func": "GET",
+        "aggregation": "array",
+        "property": "id",
+        "variable": "cardID"
+      },
+      "var random = randInt 0 ${COUNT}",
+      "var discard = ${cardID} getIndex ${random}",
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "${discard}"
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "offBoard"
+      },
+      {
+        "func": "SET",
+        "property": "owner",
+        "value": null
+      },
+      {
+        "func": "MOVE",
+        "from": "offBoard",
+        "to": "discard",
+        "count": 0
+      },
+      {
+        "func": "SORT",
+        "holder": "hand",
+        "key": "z"
+      }
+    ],
+    "swapHandsRoutine": [
+      "var length = ${activeIndex} length",
+      {
+        "func": "FOREACH",
+        "in": "${activeIndex}",
+        "loopRoutine": [
+          "var thisIndex = ${activeIndex.$key}",
+          "var thisOwner = ${activeOwner.$key}",
+          "var tempPlace = 'holder' + ${thisIndex}",
+          {
+            "func": "SELECT",
+            "property": "owner",
+            "value": "${thisOwner}"
+          },
+          {
+            "func": "SET",
+            "property": "parent",
+            "value": "${tempPlace}"
+          }
+        ]
+      },
+      {
+        "func": "FOREACH",
+        "in": "${activeIndex}",
+        "loopRoutine": [
+          "var thisIndex = ${activeIndex.$key}",
+          "var thisOwner = ${activeOwner.$key}",
+          "var tempPlace = 'holder' + ${thisIndex}",
+          "var newKey = ${key} + 1",
+          {
+            "func": "IF",
+            "operand1": "${newKey}",
+            "operand2": "${length}",
+            "relation": "==",
+            "thenRoutine": [
+              "var newKey = 0"
+            ]
+          },
+          "var newOwner = ${activeOwner.$newKey}",
+          {
+            "func": "SELECT",
+            "type": "card",
+            "property": "parent",
+            "value": "${tempPlace}"
+          },
+          {
+            "func": "SELECT",
+            "source": "DEFAULT",
+            "property": "owner",
+            "value": "${thisOwner}"
+          },
+          {
+            "func": "SET",
+            "property": "parent",
+            "value": "hand"
+          },
+          {
+            "func": "SET",
+            "property": "owner",
+            "value": "${newOwner}"
+          },
+          {
+            "func": "SORT",
+            "holder": "hand",
+            "key": "z"
+          }
+        ]
+      }
+    ]
+  },
+  "seat2": {
+    "id": "seat2",
+    "type": "seat",
+    "y": 10,
+    "movableInEdit": false,
+    "z": 3269,
+    "hideWhenUnused": true,
+    "index": 2,
+    "x": 286,
+    "css": "font-family:notosans"
+  },
+  "holder2": {
+    "inheritFrom": "holder1",
+    "id": "holder2",
+    "type": "holder",
+    "parent": "seat2",
+    "PID": 2,
+    "coins": 1
+  },
+  "cards2": {
+    "inheritFrom": "cards1",
+    "id": "cards2",
+    "parent": "seat2",
+    "text": 0
+  },
+  "action2": {
+    "inheritFrom": "action0",
+    "id": "action2",
+    "type": "button",
+    "parent": "seat2",
+    "PID": 2
+  },
+  "seat3": {
+    "id": "seat3",
+    "type": "seat",
+    "y": 10,
+    "z": 3269,
+    "movableInEdit": false,
+    "hideWhenUnused": true,
+    "x": 562,
+    "index": 3,
+    "css": "font-family:notosans"
+  },
+  "holder3": {
+    "inheritFrom": "holder1",
+    "id": "holder3",
+    "type": "holder",
+    "parent": "seat3",
+    "PID": 3,
+    "coins": 1
+  },
+  "cards3": {
+    "inheritFrom": "cards1",
+    "id": "cards3",
+    "parent": "seat3",
+    "text": 0
+  },
+  "action3": {
+    "inheritFrom": "action0",
+    "id": "action3",
+    "type": "button",
+    "parent": "seat3",
+    "PID": 3
+  },
+  "seat4": {
+    "id": "seat4",
+    "type": "seat",
+    "y": 10,
+    "z": 3269,
+    "movableInEdit": false,
+    "hideWhenUnused": true,
+    "x": 838,
+    "index": 4,
+    "css": "font-family:notosans"
+  },
+  "holder4": {
+    "inheritFrom": "holder1",
+    "id": "holder4",
+    "type": "holder",
+    "parent": "seat4",
+    "PID": 4,
+    "coins": 1
+  },
+  "cards4": {
+    "inheritFrom": "cards3",
+    "id": "cards4",
+    "parent": "seat4",
+    "text": 0
+  },
+  "action4": {
+    "inheritFrom": "action0",
+    "id": "action4",
+    "type": "button",
+    "parent": "seat4",
+    "PID": 4
+  },
+  "seat5": {
+    "id": "seat5",
+    "type": "seat",
+    "x": 1114,
+    "y": 10,
+    "z": 3269,
+    "movableInEdit": false,
+    "hideWhenUnused": true,
+    "index": 5,
+    "css": "font-family:notosans"
+  },
+  "holder5": {
+    "inheritFrom": "holder1",
+    "id": "holder5",
+    "type": "holder",
+    "parent": "seat5",
+    "PID": 5,
+    "coins": 1
+  },
+  "cards5": {
+    "inheritFrom": "cards4",
+    "id": "cards5",
+    "parent": "seat5",
+    "text": 0
+  },
+  "action5": {
+    "inheritFrom": "action0",
+    "id": "action5",
+    "type": "button",
+    "parent": "seat5",
+    "PID": 5
+  },
+  "seat6": {
+    "id": "seat6",
+    "type": "seat",
+    "x": 1390,
+    "y": 10,
+    "z": 3269,
+    "movableInEdit": false,
+    "hideWhenUnused": true,
+    "index": 6,
+    "css": "font-family:notosans"
+  },
+  "holder6": {
+    "inheritFrom": "holder1",
+    "id": "holder6",
+    "type": "holder",
+    "parent": "seat6",
+    "PID": 6,
+    "coins": 1
+  },
+  "cards6": {
+    "inheritFrom": "cards5",
+    "id": "cards6",
+    "parent": "seat6",
+    "text": 0
+  },
+  "action6": {
+    "inheritFrom": "action0",
+    "id": "action6",
+    "type": "button",
+    "parent": "seat6",
+    "PID": 6
+  },
+  "direction": {
+    "id": "direction",
+    "x": 1450,
+    "y": 880,
+    "width": 50,
+    "height": 50,
+    "z": 12,
+    "classes": "symbols",
+    "css": "font-size: 50px; ",
+    "text": "arrow_right",
+    "direction": 1,
+    "directionChangeRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY direction}",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "direction"
+            ],
+            "property": "text",
+            "value": "arrow_left"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "direction"
+            ],
+            "property": "text",
+            "value": "arrow_right"
+          }
+        ]
+      }
+    ],
+    "movable": false,
+    "movableInEdit": false
+  },
+  "theTimer": {
+    "type": "timer",
+    "id": "theTimer",
+    "x": 1460,
+    "y": 822,
+    "z": 3282,
+    "movableInEdit": false,
+    "countdown": true,
+    "end": 0,
+    "start": 600000,
+    "millisecondsChangeRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY milliseconds}",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "func": "CLICK",
+            "collection": [
+              "endGame"
+            ]
+          },
+          {
+            "func": "TIMER",
+            "timer": "${PROPERTY id}",
+            "mode": "pause"
+          }
+        ]
+      }
+    ],
+    "css": "font-size: 30px; font-family:notosans",
+    "milliseconds": 600000
+  },
+  "peekHolder": {
+    "type": "holder",
+    "id": "peekHolder",
+    "x": 150,
+    "y": 645,
+    "width": 1300,
+    "z": 3508,
+    "movableInEdit": false,
+    "onEnter": {
+      "activeFace": 1
+    },
+    "onLeave": {
+      "activeFace": 0
+    },
+    "stackOffsetX": 60,
+    "dropTarget": [],
+    "onlyVisibleForSeat": []
+  },
+  "muenster": {
+    "type": "button",
+    "id": "muenster",
+    "x": 920.7692307692306,
+    "y": 258,
+    "width": 100,
+    "height": 50,
+    "z": 3337,
+    "text": "Muenster",
+    "clickRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY direction OF direction}",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "direction"
+            ],
+            "property": "direction",
+            "value": 1
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "direction"
+            ],
+            "property": "direction",
+            "value": 0
+          }
+        ]
+      }
+    ],
+    "movableInEdit": false,
+    "css": "font-family:notosans"
+  },
+  "ricotta": {
+    "type": "button",
+    "id": "ricotta",
+    "x": 1148.4615384615383,
+    "y": 258,
+    "width": 100,
+    "height": 50,
+    "z": 3339,
+    "text": "Ricotta",
+    "clickRoutine": [
+      {
+        "func": "GET",
+        "collection": [
+          "theTimer"
+        ],
+        "property": "milliseconds",
+        "variable": "oldTime"
+      },
+      "var newTime = ${oldTime} + 180000",
+      {
+        "func": "SET",
+        "collection": [
+          "theTimer"
+        ],
+        "property": "milliseconds",
+        "value": "${newTime}"
+      }
+    ],
+    "movableInEdit": false,
+    "css": "font-family:notosans"
+  },
+  "feta": {
+    "type": "button",
+    "id": "feta",
+    "x": 351.53846153846155,
+    "y": 258,
+    "width": 100,
+    "height": 50,
+    "z": 3330,
+    "text": "Feta",
+    "clickRoutine": [
+      {
+        "func": "GET",
+        "collection": [
+          "theTimer"
+        ],
+        "property": "milliseconds",
+        "variable": "oldTime"
+      },
+      "var newTime = ${oldTime} - 180000",
+      {
+        "func": "SET",
+        "collection": [
+          "theTimer"
+        ],
+        "property": "milliseconds",
+        "value": "${newTime}"
+      }
+    ],
+    "movableInEdit": false,
+    "css": "font-family:notosans"
+  },
+  "swiss": {
+    "type": "button",
+    "id": "swiss",
+    "x": 1489.9999999999998,
+    "y": 258,
+    "width": 100,
+    "height": 50,
+    "z": 3342,
+    "text": "Swiss",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "type": "seat",
+        "property": "player",
+        "value": "${playerName}"
+      },
+      {
+        "func": "GET",
+        "property": "id",
+        "variable": "seatID"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "peekHolder"
+        ],
+        "property": "onlyVisibleForSeat",
+        "value": "${seatID}"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "doneSwiss"
+        ],
+        "property": "onlyVisibleForSeat",
+        "value": "${seatID}"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "peekHolder"
+        ],
+        "property": "dropTarget",
+        "value": {}
+      },
+      {
+        "func": "FOREACH",
+        "in": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "loopRoutine": [
+          {
+            "func": "MOVE",
+            "from": "deckHolder",
+            "to": "peekHolder"
+          }
+        ]
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "peekHolder"
+        ],
+        "property": "dropTarget",
+        "value": []
+      },
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "_ancestor",
+        "value": "peekHolder"
+      },
+      {
+        "func": "SET",
+        "property": "movable",
+        "value": false
+      }
+    ],
+    "movableInEdit": false,
+    "css": "font-family:notosans"
+  },
+  "gorgonzola": {
+    "type": "button",
+    "id": "gorgonzola",
+    "x": 465.38461538461536,
+    "y": 258,
+    "width": 100,
+    "height": 50,
+    "z": 3333,
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "type": "seat",
+        "property": "player",
+        "value": "${playerName}"
+      },
+      {
+        "func": "GET",
+        "property": "id",
+        "variable": "seatID"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "peekHolder"
+        ],
+        "property": "onlyVisibleForSeat",
+        "value": "${seatID}"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "doneGorgonzola"
+        ],
+        "property": "onlyVisibleForSeat",
+        "value": "${seatID}"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "peekHolder"
+        ],
+        "property": "dropTarget",
+        "value": {}
+      },
+      {
+        "func": "MOVE",
+        "from": "discard",
+        "to": "peekHolder",
+        "count": 0
+      }
+    ],
+    "text": "Gorgonzola",
+    "movableInEdit": false,
+    "css": "font-family:notosans"
+  },
+  "discard": {
+    "type": "holder",
+    "id": "discard",
+    "x": 566,
+    "y": 440,
+    "z": 3513,
+    "inheritChildZ": true,
+    "onEnter": {
+      "activeFace": 1
+    }
+  },
+  "discardLabel": {
+    "type": "label",
+    "id": "discardLabel",
+    "parent": "discard",
+    "width": 133,
+    "height": 40,
+    "movableInEdit": false,
+    "text": "Discard",
+    "x": -11,
+    "y": -20,
+    "css": "font-family:notosans"
+  },
+  "outOfPlay": {
+    "type": "holder",
+    "id": "outOfPlay",
+    "x": 18,
+    "y": 821,
+    "z": 3510,
+    "inheritChildZ": true,
+    "dropTarget": [
+      {
+        "cardType": "nachocheese"
+      },
+      {
+        "cardType": "mozzarella"
+      }
+    ]
+  },
+  "outOfPlayLabel": {
+    "type": "label",
+    "id": "outOfPlayLabel",
+    "parent": "outOfPlay",
+    "x": -11,
+    "y": -43,
+    "width": 135,
+    "height": 45,
+    "movableInEdit": false,
+    "twoRowBottomAlign": true,
+    "text": "Nacho Cheese & Mozzarella Card",
+    "css": "font-family:notosans"
+  },
+  "doneSwiss": {
+    "type": "button",
+    "id": "doneSwiss",
+    "y": 692,
+    "z": 3299,
+    "movableInEdit": false,
+    "activeFace": 0,
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": [
+          "peekHolder"
+        ],
+        "property": "dropTarget",
+        "value": {}
+      },
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "_ancestor",
+        "value": "peekHolder"
+      },
+      {
+        "func": "SET",
+        "property": "movable",
+        "value": true
+      },
+      {
+        "func": "FOREACH",
+        "in": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "loopRoutine": [
+          {
+            "func": "MOVE",
+            "from": "peekHolder",
+            "to": "deckHolder"
+          }
+        ]
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "peekHolder"
+        ],
+        "property": "onlyVisibleForSeat",
+        "value": []
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "onlyVisibleForSeat",
+        "value": []
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "peekHolder"
+        ],
+        "property": "dropTarget",
+        "value": []
+      }
+    ],
+    "x": 70,
+    "text": "Done",
+    "css": "font-family:notosans",
+    "onlyVisibleForSeat": []
+  },
+  "doneGorgonzola": {
+    "type": "button",
+    "id": "doneGorgonzola",
+    "x": 70,
+    "y": 692,
+    "z": 3299,
+    "movableInEdit": false,
+    "activeFace": 0,
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "peekHolder",
+        "to": "discard",
+        "count": 0
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "peekHolder"
+        ],
+        "property": "onlyVisibleForSeat",
+        "value": []
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "onlyVisibleForSeat",
+        "value": []
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "peekHolder"
+        ],
+        "property": "dropTarget",
+        "value": []
+      }
+    ],
+    "text": "Done",
+    "onlyVisibleForSeat": [],
+    "css": "font-family:notosans"
+  },
+  "hand": {
+    "type": "holder",
+    "onEnter": {
+      "activeFace": 1
+    },
+    "onLeave": {
+      "activeFace": 1
+    },
+    "dropOffsetX": 10,
+    "dropOffsetY": 14,
+    "childrenPerOwner": true,
+    "x": 150,
+    "y": 820,
+    "width": 1300,
+    "height": 180,
+    "id": "hand",
+    "stackOffsetX": 60,
+    "enterRoutine": [
+      {
+        "func": "CALL",
+        "widget": "calls",
+        "routine": "countCardsRoutine"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "CALL",
+        "widget": "calls",
+        "routine": "countCardsRoutine"
+      }
+    ]
+  },
+  "nacho": {
+    "type": "button",
+    "id": "nacho",
+    "x": 1034.6153846153845,
+    "y": 258,
+    "width": 100,
+    "height": 50,
+    "z": 3338,
+    "text": "Nacho",
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "fields": [
+          {
+            "type": "title",
+            "text": "Activating Nacho Cheese Destruction ..."
+          },
+          {
+            "type": "subtitle",
+            "text": "This will recall and reshuffle all cards.  Are you sure?"
+          }
+        ],
+        "cancelButtonText": "Cancel",
+        "confirmButtonText": "Do It!"
+      },
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "cardType",
+        "value": "nachocheese"
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "variable": "outOfPlay"
+      },
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "cardType",
+        "value": "mozzarella",
+        "collection": "mozzarella"
+      },
+      {
+        "func": "GET",
+        "collection": "mozzarella",
+        "property": "_ancestor",
+        "variable": "mozzarella"
+      },
+      {
+        "func": "RECALL",
+        "holder": "deckHolder"
+      },
+      {
+        "func": "FLIP",
+        "holder": "deckHolder",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "deckHolder"
+      },
+      {
+        "func": "IF",
+        "operand1": "${mozzarella}",
+        "operand2": "outOfPlay",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "mozzarella",
+            "property": "parent",
+            "value": "outOfPlay"
+          }
+        ]
+      },
+      {
+        "func": "FLIP",
+        "holder": "outOfPlay",
+        "face": 1
+      }
+    ],
+    "movableInEdit": false,
+    "css": "font-family:notosans"
+  },
+  "blue": {
+    "type": "button",
+    "id": "blue",
+    "x": 123.84615384615384,
+    "y": 258,
+    "width": 100,
+    "height": 50,
+    "z": 3328,
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "owner",
+        "value": "${playerName}"
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "discard"
+      }
+    ],
+    "text": "Blue",
+    "movableInEdit": false,
+    "css": "font-family:notosans"
+  },
+  "american": {
+    "type": "button",
+    "id": "american",
+    "x": 10,
+    "y": 258,
+    "width": 100,
+    "height": 50,
+    "z": 3327,
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": [
+          "americanLabel"
+        ],
+        "property": "scale",
+        "value": 1
+      }
+    ],
+    "text": "American",
+    "movableInEdit": false,
+    "css": "font-family:notosans"
+  },
+  "americanLabel": {
+    "id": "americanLabel",
+    "x": 990,
+    "y": 339,
+    "width": 145,
+    "z": 15,
+    "css": "font-size: 25px; ",
+    "text": "Click pile label for options then click button.",
+    "movable": false,
+    "movableInEdit": false,
+    "scale": 0
+  },
+  "doneAmerican": {
+    "type": "button",
+    "id": "doneAmerican",
+    "parent": "americanLabel",
+    "fixedParent": true,
+    "x": 19,
+    "y": 126,
+    "z": 3306,
+    "movableInEdit": false,
+    "text": "Done",
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": [
+          "americanLabel"
+        ],
+        "property": "scale",
+        "value": 0
+      }
+    ]
+  },
+  "brie": {
+    "type": "button",
+    "id": "brie",
+    "x": 237.69230769230768,
+    "y": 258,
+    "width": 100,
+    "height": 50,
+    "z": 3329,
+    "text": "Brie",
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": [
+          "action0"
+        ],
+        "property": "scale",
+        "value": 1
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "action0"
+        ],
+        "property": "text",
+        "value": "Reveal Hand"
+      },
+      {
+        "func": "SELECT",
+        "type": "seat",
+        "property": "player",
+        "value": "${playerName}"
+      },
+      {
+        "func": "GET",
+        "property": "index",
+        "variable": "PID"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "relation": "in",
+        "value": [
+          "action1",
+          "action2",
+          "action3",
+          "action4",
+          "action5",
+          "action6"
+        ]
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "PID",
+        "value": "${PID}"
+      },
+      {
+        "func": "SET",
+        "property": "scale",
+        "value": 0
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "oops"
+        ],
+        "property": "scale",
+        "value": 1
+      }
+    ],
+    "movableInEdit": false,
+    "css": "font-family:notosans"
+  },
+  "doneBrie": {
+    "type": "button",
+    "id": "doneBrie",
+    "x": 70,
+    "y": 692,
+    "z": 3299,
+    "movableInEdit": false,
+    "onlyVisibleForSeat": [],
+    "text": "Done",
+    "activeFace": 0,
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "_ancestor",
+        "value": "peekHolder"
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "hand"
+      },
+      {
+        "func": "SET",
+        "property": "owner",
+        "value": "${PROPERTY lastOwner}"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "peekHolder"
+        ],
+        "property": "onlyVisibleForSeat",
+        "value": []
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "onlyVisibleForSeat",
+        "value": []
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "peekHolder"
+        ],
+        "property": "dropTarget",
+        "value": []
+      },
+      {
+        "func": "SORT",
+        "holder": "hand",
+        "key": "z"
+      }
+    ],
+    "lastOwner": "Guest245",
+    "css": "font-family:notosans"
+  },
+  "stinky": {
+    "type": "button",
+    "id": "stinky",
+    "x": 1376.153846153846,
+    "y": 258,
+    "width": 100,
+    "height": 50,
+    "z": 3341,
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": [
+          "action0"
+        ],
+        "property": "scale",
+        "value": 1
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "action0"
+        ],
+        "property": "text",
+        "value": "Discard Random"
+      },
+      {
+        "func": "SELECT",
+        "type": "seat",
+        "property": "player",
+        "value": "${playerName}"
+      },
+      {
+        "func": "GET",
+        "property": "index",
+        "variable": "PID"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "relation": "in",
+        "value": [
+          "action1",
+          "action2",
+          "action3",
+          "action4",
+          "action5",
+          "action6"
+        ]
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "PID",
+        "value": "${PID}"
+      },
+      {
+        "func": "SET",
+        "property": "scale",
+        "value": 0
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "oops"
+        ],
+        "property": "scale",
+        "value": 1
+      }
+    ],
+    "text": "Stinky",
+    "movableInEdit": false,
+    "css": "font-family:notosans"
+  },
+  "offBoard": {
+    "type": "holder",
+    "id": "offBoard",
+    "x": -276,
+    "y": 14,
+    "z": 3521
+  },
+  "mildcheddar": {
+    "type": "button",
+    "id": "mildcheddar",
+    "x": 693.076923076923,
+    "y": 258,
+    "width": 100,
+    "height": 50,
+    "z": 3335,
+    "text": "Mild Cheddar",
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": [
+          "action0"
+        ],
+        "property": "steals",
+        "value": 1
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "action0"
+        ],
+        "property": "scale",
+        "value": 1
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "action0"
+        ],
+        "property": "text",
+        "value": "Steal 1"
+      },
+      {
+        "func": "SELECT",
+        "type": "seat",
+        "property": "player",
+        "value": "${playerName}"
+      },
+      {
+        "func": "GET",
+        "property": "index",
+        "variable": "PID"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "relation": "in",
+        "value": [
+          "action1",
+          "action2",
+          "action3",
+          "action4",
+          "action5",
+          "action6"
+        ]
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "PID",
+        "value": "${PID}"
+      },
+      {
+        "func": "SET",
+        "property": "scale",
+        "value": 0
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "oops"
+        ],
+        "property": "scale",
+        "value": 1
+      }
+    ],
+    "movableInEdit": false,
+    "css": "font-family:notosans"
+  },
+  "sharpcheddar": {
+    "type": "button",
+    "id": "sharpcheddar",
+    "x": 1262.3076923076922,
+    "y": 258,
+    "width": 100,
+    "height": 50,
+    "z": 3340,
+    "text": "Sharp Cheddar",
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": [
+          "action0"
+        ],
+        "property": "steals",
+        "value": 3
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "action0"
+        ],
+        "property": "scale",
+        "value": 1
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "action0"
+        ],
+        "property": "text",
+        "value": "Steal x3"
+      },
+      {
+        "func": "SELECT",
+        "type": "seat",
+        "property": "player",
+        "value": "${playerName}"
+      },
+      {
+        "func": "GET",
+        "property": "index",
+        "variable": "PID"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "relation": "in",
+        "value": [
+          "action1",
+          "action2",
+          "action3",
+          "action4",
+          "action5",
+          "action6"
+        ]
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "PID",
+        "value": "${PID}"
+      },
+      {
+        "func": "SET",
+        "property": "scale",
+        "value": 0
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "oops"
+        ],
+        "property": "scale",
+        "value": 1
+      }
+    ],
+    "movableInEdit": false,
+    "css": "font-family:notosans"
+  },
+  "gouda": {
+    "type": "button",
+    "id": "gouda",
+    "x": 579.2307692307692,
+    "y": 258,
+    "width": 100,
+    "height": 50,
+    "z": 3334,
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": [
+          "action0"
+        ],
+        "property": "scale",
+        "value": 1
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "action0"
+        ],
+        "property": "text",
+        "value": "Trade Hands"
+      },
+      {
+        "func": "SELECT",
+        "type": "seat",
+        "property": "player",
+        "value": "${playerName}"
+      },
+      {
+        "func": "GET",
+        "property": "index",
+        "variable": "PID"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "relation": "in",
+        "value": [
+          "action1",
+          "action2",
+          "action3",
+          "action4",
+          "action5",
+          "action6"
+        ]
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "PID",
+        "value": "${PID}"
+      },
+      {
+        "func": "SET",
+        "property": "scale",
+        "value": 0
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "oops"
+        ],
+        "property": "scale",
+        "value": 1
+      }
+    ],
+    "text": "Gouda",
+    "movableInEdit": false,
+    "css": "font-family:notosans"
+  },
+  "mozzarella": {
+    "type": "button",
+    "id": "mozzarella",
+    "x": 806.9230769230768,
+    "y": 258,
+    "width": 100,
+    "height": 50,
+    "z": 3336,
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "fields": [
+          {
+            "type": "title",
+            "text": "Activating Mozzarella Rotation ..."
+          },
+          {
+            "type": "subtitle",
+            "text": "This will swap all player hands with the player to your left. Are you sure?"
+          }
+        ],
+        "cancelButtonText": "Cancel",
+        "confirmButtonText": "Do It!"
+      },
+      {
+        "func": "SELECT",
+        "type": "seat",
+        "property": "player",
+        "relation": "!=",
+        "value": ""
+      },
+      {
+        "func": "GET",
+        "aggregation": "array",
+        "property": "index",
+        "variable": "activeIndex"
+      },
+      {
+        "func": "GET",
+        "aggregation": "array",
+        "property": "player",
+        "variable": "activeOwner"
+      },
+      {
+        "func": "CALL",
+        "widget": "calls",
+        "routine": "swapHandsRoutine"
+      }
+    ],
+    "text": "Mozzarella",
+    "movableInEdit": false,
+    "css": "font-family:notosans"
+  },
+  "cardback1": {
+    "id": "cardback1",
+    "parent": "seat1",
+    "fixedParent": true,
+    "x": 160,
+    "y": -5,
+    "width": 35,
+    "height": 50,
+    "borderRadius": 5,
+    "rotation": 5,
+    "z": 102,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "box-shadow:0 1px 1px black;background-image:url(/assets/-1046414830_119959);font-weight:900;font-size:1.5rem;line-height:50px;color:white;text-shadow: 0px 0px 3px black;box-shadow: inset 0 0 0 1000px rgba(85, 85, 85, 0.5);"
+  },
+  "cardback2": {
+    "inheritFrom": "cardback1",
+    "id": "cardback2",
+    "x": 160,
+    "y": -5,
+    "parent": "seat2"
+  },
+  "cardback3": {
+    "inheritFrom": "cardback1",
+    "id": "cardback3",
+    "x": 160,
+    "y": -5,
+    "parent": "seat3"
+  },
+  "cardback4": {
+    "inheritFrom": "cardback1",
+    "id": "cardback4",
+    "x": 160,
+    "y": -5,
+    "parent": "seat4"
+  },
+  "cardback5": {
+    "inheritFrom": "cardback1",
+    "id": "cardback5",
+    "x": 160,
+    "y": -5,
+    "parent": "seat5"
+  },
+  "cardback6": {
+    "inheritFrom": "cardback1",
+    "id": "cardback6",
+    "x": 160,
+    "y": -5,
+    "parent": "seat6"
+  },
+  "endGame": {
+    "type": "button",
+    "id": "endGame",
+    "parent": "deckHolder",
+    "fixedParent": true,
+    "x": 14,
+    "y": 42,
+    "z": 3322,
+    "movableInEdit": false,
+    "text": "End Game",
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "fields": [
+          {
+            "type": "title",
+            "text": "Ending Game ..."
+          },
+          {
+            "type": "subtitle",
+            "text": "This will move coin cards to the seat area so you can see who had the most. If there is a tie, press the Sudden Death button to set up the playoff round. Are you sure?"
+          }
+        ],
+        "cancelButtonText": "Cancel",
+        "confirmButtonText": "End Game"
+      },
+      {
+        "func": "SELECT",
+        "type": "seat",
+        "property": "player",
+        "relation": "!=",
+        "value": ""
+      },
+      {
+        "func": "GET",
+        "property": "id",
+        "aggregation": "array",
+        "variable": "seatsArray"
+      },
+      {
+        "func": "FOREACH",
+        "in": "${seatsArray}",
+        "loopRoutine": [
+          {
+            "func": "GET",
+            "collection": [
+              "${value}"
+            ],
+            "property": "index",
+            "variable": "seatIndex"
+          },
+          {
+            "func": "GET",
+            "collection": [
+              "${value}"
+            ],
+            "property": "player",
+            "variable": "pName"
+          },
+          {
+            "func": "SELECT",
+            "type": "card",
+            "property": "owner",
+            "value": "${pName}"
+          },
+          {
+            "func": "SELECT",
+            "source": "DEFAULT",
+            "property": "cardType",
+            "value": "coin"
+          },
+          {
+            "func": "SET",
+            "property": "parent",
+            "value": "holder${seatIndex}"
+          }
+        ]
+      },
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "_ancestor",
+        "relation": "in",
+        "value": [
+          "holder1",
+          "holder2",
+          "holder3",
+          "holder4",
+          "holder5",
+          "holder6"
+        ]
+      },
+      {
+        "func": "SET",
+        "property": "owner",
+        "value": null
+      },
+      {
+        "func": "SELECT",
+        "type": "pile",
+        "property": "id",
+        "relation": "!=",
+        "value": null
+      },
+      {
+        "func": "SET",
+        "property": "owner",
+        "value": null
+      },
+      {
+        "func": "SORT",
+        "holder": "hand",
+        "key": "z"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "relation": "in",
+        "value": [
+          "holder1",
+          "holder2",
+          "holder3",
+          "holder4",
+          "holder5",
+          "holder6"
+        ]
+      },
+      {
+        "func": "GET",
+        "aggregation": "max",
+        "property": "coins",
+        "variable": "maxCoins"
+      },
+      {
+        "func": "SELECT",
+        "type": "holder",
+        "property": "coins",
+        "value": "${maxCoins}",
+        "collection": "winners"
+      },
+      {
+        "func": "GET",
+        "collection": "winners",
+        "aggregation": "array",
+        "property": "PID",
+        "variable": "winPID"
+      },
+      {
+        "func": "COUNT",
+        "collection": "winners"
+      },
+      {
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "relation": ">",
+        "operand2": 1,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "suddenDeath"
+            ],
+            "property": "scale",
+            "value": 1
+          }
+        ]
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "scale",
+        "value": 0
+      }
+    ],
+    "css": "font-family:notosans"
+  },
+  "restart": {
+    "type": "button",
+    "id": "restart",
+    "x": 1495,
+    "y": 957,
+    "width": 70,
+    "height": 40,
+    "z": 3326,
+    "text": "Restart",
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "fields": [
+          {
+            "type": "title",
+            "text": "Restarting Game ..."
+          },
+          {
+            "type": "subtitle",
+            "text": "This will recall and shuffle all cards, reset the board, and choose a random starting player. Are you sure?"
+          }
+        ],
+        "cancelButtonText": "Cancel",
+        "confirmButtonText": "Restart"
+      },
+      {
+        "func": "RECALL",
+        "holder": [
+          "deckHolder"
+        ]
+      },
+      {
+        "func": "FLIP",
+        "holder": [
+          "deckHolder"
+        ],
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": [
+          "deckHolder"
+        ]
+      },
+      {
+        "func": "TIMER",
+        "timer": "theTimer",
+        "mode": "reset"
+      },
+      {
+        "func": "TURN",
+        "turnCycle": "random"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "endGame"
+        ],
+        "property": "scale",
+        "value": 1
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "relation": "in",
+        "value": [
+          "cards1",
+          "cards2",
+          "cards3",
+          "cards4",
+          "cards5",
+          "cards6"
+        ]
+      },
+      {
+        "func": "SET",
+        "property": "text",
+        "value": 0
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "relation": "in",
+        "value": [
+          "action1",
+          "action2",
+          "action3",
+          "action4",
+          "action5",
+          "action6"
+        ]
+      },
+      {
+        "func": "SET",
+        "property": "scale",
+        "value": null
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "action0",
+          "oops",
+          "suddenDeath"
+        ],
+        "property": "scale",
+        "value": 0
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "endGame"
+        ],
+        "property": "scale",
+        "value": 1
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "doneSwiss",
+          "doneGorgonzola",
+          "doneBrie",
+          "doneCoinToCheese"
+        ],
+        "property": "onlyVisibleForSeat",
+        "value": []
+      },
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "id",
+        "relation": "!=",
+        "value": null
+      },
+      {
+        "func": "SET",
+        "property": "movable",
+        "value": true
+      }
+    ],
+    "css": "font-family:notosans"
+  },
+  "turn": {
+    "type": "button",
+    "id": "turn",
+    "x": 1525,
+    "y": 887,
+    "width": 60,
+    "height": 40,
+    "z": 3343,
+    "movableInEdit": false,
+    "clickRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY direction OF direction}",
+        "operand2": 1,
+        "thenRoutine": [
+          {
+            "func": "TURN"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "TURN",
+            "turnCycle": "backward"
+          }
+        ]
+      }
+    ],
+    "text": "Turn",
+    "css": "font-family:notosans"
+  },
+  "2m2b": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "coin",
+    "id": "2m2b",
+    "z": 22383,
+    "parent": "bwk7"
+  },
+  "vson": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "coin",
+    "id": "vson",
+    "z": 22397,
+    "parent": "bwk7"
+  },
+  "9n49": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "coin",
+    "id": "9n49",
+    "z": 22377,
+    "parent": "bwk7"
+  },
+  "j8l9": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "coin",
+    "id": "j8l9",
+    "z": 22419,
+    "parent": "bwk7"
+  },
+  "77m6": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "coin",
+    "id": "77m6",
+    "z": 22369,
+    "parent": "bwk7"
+  },
+  "l8jh": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "coin",
+    "id": "l8jh",
+    "z": 22373,
+    "parent": "bwk7"
+  },
+  "si4d": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "coin",
+    "id": "si4d",
+    "z": 22420,
+    "parent": "bwk7"
+  },
+  "ehh9": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "coin",
+    "id": "ehh9",
+    "z": 22343,
+    "parent": "bwk7"
+  },
+  "h0vj": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "coin",
+    "id": "h0vj",
+    "z": 22389,
+    "parent": "bwk7"
+  },
+  "qtjj": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "coin",
+    "id": "qtjj",
+    "z": 22365,
+    "parent": "bwk7"
+  },
+  "ga1t": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "coin",
+    "id": "ga1t",
+    "z": 22359,
+    "parent": "bwk7"
+  },
+  "ft79": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "coin",
+    "id": "ft79",
+    "z": 22379,
+    "parent": "bwk7"
+  },
+  "e4ch": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "coin",
+    "id": "e4ch",
+    "z": 22366,
+    "parent": "bwk7"
+  },
+  "7pqb": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "coin",
+    "id": "7pqb",
+    "z": 22363,
+    "parent": "bwk7"
+  },
+  "f8cn": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "coin",
+    "id": "f8cn",
+    "z": 22425,
+    "parent": "bwk7"
+  },
+  "8r78": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "coin",
+    "id": "8r78",
+    "z": 22356,
+    "parent": "bwk7"
+  },
+  "2iaq": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "coin",
+    "id": "2iaq",
+    "z": 22353,
+    "parent": "bwk7"
+  },
+  "mf2h": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "coin",
+    "id": "mf2h",
+    "z": 22415,
+    "parent": "bwk7"
+  },
+  "4qyb": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "coin",
+    "id": "4qyb",
+    "z": 22384,
+    "parent": "bwk7"
+  },
+  "i4qa": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "coin",
+    "id": "i4qa",
+    "z": 22327,
+    "parent": "bwk7"
+  },
+  "xbw2": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "coin",
+    "id": "xbw2",
+    "z": 22388,
+    "parent": "bwk7"
+  },
+  "zpby": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "coin",
+    "id": "zpby",
+    "z": 22417,
+    "parent": "bwk7"
+  },
+  "4ker": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "coin",
+    "id": "4ker",
+    "z": 22340,
+    "parent": "bwk7"
+  },
+  "2jps": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "coin",
+    "id": "2jps",
+    "z": 22387,
+    "parent": "bwk7"
+  },
+  "5p22": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "coin",
+    "id": "5p22",
+    "z": 22324,
+    "parent": "bwk7"
+  },
+  "xa63": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "coin",
+    "id": "xa63",
+    "z": 22426,
+    "parent": "bwk7"
+  },
+  "n7qq": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "coin",
+    "id": "n7qq",
+    "z": 22342,
+    "parent": "bwk7"
+  },
+  "edk4": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "coin",
+    "id": "edk4",
+    "z": 22403,
+    "parent": "bwk7"
+  },
+  "bku8": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "coin",
+    "id": "bku8",
+    "z": 22333,
+    "parent": "bwk7"
+  },
+  "7agj": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "coin",
+    "id": "7agj",
+    "z": 22391,
+    "parent": "bwk7"
+  },
+  "jtey": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "coin",
+    "id": "jtey",
+    "z": 22395,
+    "parent": "bwk7"
+  },
+  "jl7y": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "coin",
+    "id": "jl7y",
+    "z": 22339,
+    "parent": "bwk7"
+  },
+  "idai": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "coin",
+    "id": "idai",
+    "z": 22337,
+    "parent": "bwk7"
+  },
+  "hj8c": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "coin",
+    "id": "hj8c",
+    "z": 22402,
+    "parent": "bwk7"
+  },
+  "ro2g": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "coin",
+    "id": "ro2g",
+    "z": 22427,
+    "parent": "bwk7"
+  },
+  "ll8j": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "coin",
+    "id": "ll8j",
+    "z": 22375,
+    "parent": "bwk7"
+  },
+  "cldu": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "coin",
+    "id": "cldu",
+    "z": 22378,
+    "parent": "bwk7"
+  },
+  "ni49": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "coin",
+    "id": "ni49",
+    "z": 22341,
+    "parent": "bwk7"
+  },
+  "etgs": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "coin",
+    "id": "etgs",
+    "z": 22322,
+    "parent": "bwk7"
+  },
+  "q1uc": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "coin",
+    "id": "q1uc",
+    "z": 22374,
+    "parent": "bwk7"
+  },
+  "5c4x": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "coin",
+    "id": "5c4x",
+    "z": 22411,
+    "parent": "bwk7"
+  },
+  "jmh5": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "coin",
+    "id": "jmh5",
+    "z": 22354,
+    "parent": "bwk7"
+  },
+  "3pg5": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "coin",
+    "id": "3pg5",
+    "z": 22362,
+    "parent": "bwk7"
+  },
+  "nzrd": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "coin",
+    "id": "nzrd",
+    "z": 22407,
+    "parent": "bwk7"
+  },
+  "fect": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "coin",
+    "id": "fect",
+    "z": 22424,
+    "parent": "bwk7"
+  },
+  "gz81": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "coin",
+    "id": "gz81",
+    "z": 22380,
+    "parent": "bwk7"
+  },
+  "jdc6": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "coin",
+    "id": "jdc6",
+    "z": 22392,
+    "parent": "bwk7"
+  },
+  "sn1d": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "coin",
+    "id": "sn1d",
+    "z": 22325,
+    "parent": "bwk7"
+  },
+  "y8ny": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "coin",
+    "id": "y8ny",
+    "z": 22370,
+    "parent": "bwk7"
+  },
+  "flxu": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "coin",
+    "id": "flxu",
+    "z": 22401,
+    "parent": "bwk7"
+  },
+  "vm6t": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "coin",
+    "id": "vm6t",
+    "z": 22352,
+    "parent": "bwk7"
+  },
+  "43t2": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "coin",
+    "id": "43t2",
+    "z": 22334,
+    "parent": "bwk7"
+  },
+  "vcjq": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "coin",
+    "id": "vcjq",
+    "z": 22372,
+    "parent": "bwk7"
+  },
+  "1trz": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "coin",
+    "id": "1trz",
+    "z": 22390,
+    "parent": "bwk7"
+  },
+  "3cci": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "coin",
+    "id": "3cci",
+    "z": 22381,
+    "parent": "bwk7"
+  },
+  "6bn2": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "coin",
+    "id": "6bn2",
+    "z": 22404,
+    "parent": "bwk7"
+  },
+  "eklp": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "coin",
+    "id": "eklp",
+    "z": 22421,
+    "parent": "bwk7"
+  },
+  "969b": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "coin",
+    "id": "969b",
+    "z": 22329,
+    "parent": "bwk7"
+  },
+  "ixb8": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "coin",
+    "id": "ixb8",
+    "z": 22361,
+    "parent": "bwk7"
+  },
+  "zca1": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "muenster",
+    "id": "zca1",
+    "z": 22405,
+    "parent": "bwk7"
+  },
+  "5wml": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "muenster",
+    "id": "5wml",
+    "z": 22371,
+    "parent": "bwk7"
+  },
+  "ugb8": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "muenster",
+    "id": "ugb8",
+    "z": 22382,
+    "parent": "bwk7"
+  },
+  "hw9l": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "muenster",
+    "id": "hw9l",
+    "z": 22399,
+    "parent": "bwk7"
+  },
+  "92j6": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "muenster",
+    "id": "92j6",
+    "z": 22422,
+    "parent": "bwk7"
+  },
+  "0jv2": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "muenster",
+    "id": "0jv2",
+    "z": 22409,
+    "parent": "bwk7"
+  },
+  "fym9": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "muenster",
+    "id": "fym9",
+    "z": 22326,
+    "parent": "bwk7"
+  },
+  "wrzy": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "mildcheddar",
+    "id": "wrzy",
+    "z": 22330,
+    "parent": "bwk7"
+  },
+  "pr9u": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "mildcheddar",
+    "id": "pr9u",
+    "z": 22344,
+    "parent": "bwk7"
+  },
+  "ogxe": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "mildcheddar",
+    "id": "ogxe",
+    "z": 22346,
+    "parent": "bwk7"
+  },
+  "089h": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "sharpcheddar",
+    "id": "089h",
+    "z": 22406,
+    "parent": "bwk7"
+  },
+  "hns9": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "sharpcheddar",
+    "id": "hns9",
+    "z": 22358,
+    "parent": "bwk7"
+  },
+  "114o": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "sharpcheddar",
+    "id": "114o",
+    "z": 22345,
+    "parent": "bwk7"
+  },
+  "qc4h": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "american",
+    "id": "qc4h",
+    "z": 22376,
+    "parent": "bwk7"
+  },
+  "97au": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "american",
+    "id": "97au",
+    "z": 22385,
+    "parent": "bwk7"
+  },
+  "tkxh": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "american",
+    "id": "tkxh",
+    "z": 22414,
+    "parent": "bwk7"
+  },
+  "oocp": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "american",
+    "id": "oocp",
+    "z": 22418,
+    "parent": "bwk7"
+  },
+  "5ox5": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "american",
+    "id": "5ox5",
+    "z": 22408,
+    "parent": "bwk7"
+  },
+  "qfin": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "swiss",
+    "id": "qfin",
+    "z": 22348,
+    "parent": "bwk7"
+  },
+  "w50r": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "swiss",
+    "id": "w50r",
+    "z": 22367,
+    "parent": "bwk7"
+  },
+  "18ae": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "swiss",
+    "id": "18ae",
+    "z": 22364,
+    "parent": "bwk7"
+  },
+  "5wj9": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "swiss",
+    "id": "5wj9",
+    "z": 22323,
+    "parent": "bwk7"
+  },
+  "ve8c": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "feta",
+    "id": "ve8c",
+    "z": 22386,
+    "parent": "bwk7"
+  },
+  "cg9g": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "feta",
+    "id": "cg9g",
+    "z": 22396,
+    "parent": "bwk7"
+  },
+  "pwir": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "ricotta",
+    "id": "pwir",
+    "z": 22393,
+    "parent": "bwk7"
+  },
+  "6c7b": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "ricotta",
+    "id": "6c7b",
+    "z": 22336,
+    "parent": "bwk7"
+  },
+  "8fff": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "pepperjack",
+    "id": "8fff",
+    "z": 22335,
+    "parent": "bwk7"
+  },
+  "2es3": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "pepperjack",
+    "id": "2es3",
+    "z": 22360,
+    "parent": "bwk7"
+  },
+  "pv1n": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "pepperjack",
+    "id": "pv1n",
+    "z": 22412,
+    "parent": "bwk7"
+  },
+  "7rs2": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "pepperjack",
+    "id": "7rs2",
+    "z": 22332,
+    "parent": "bwk7"
+  },
+  "t60l": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "pepperjack",
+    "id": "t60l",
+    "z": 22368,
+    "parent": "bwk7"
+  },
+  "g6ze": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "pepperjack",
+    "id": "g6ze",
+    "z": 22423,
+    "parent": "bwk7"
+  },
+  "ru01": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "pepperjack",
+    "id": "ru01",
+    "z": 22355,
+    "parent": "bwk7"
+  },
+  "p8ot": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "asiago",
+    "id": "p8ot",
+    "z": 22350,
+    "parent": "bwk7"
+  },
+  "xf6q": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "gouda",
+    "id": "xf6q",
+    "z": 22338,
+    "parent": "bwk7"
+  },
+  "qiy7": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "gouda",
+    "id": "qiy7",
+    "z": 22413,
+    "parent": "bwk7"
+  },
+  "vxd8": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "gouda",
+    "id": "vxd8",
+    "z": 22351,
+    "parent": "bwk7"
+  },
+  "g8mk": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "gouda",
+    "id": "g8mk",
+    "z": 22416,
+    "parent": "bwk7"
+  },
+  "x69k": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "nachocheese",
+    "id": "x69k",
+    "z": 22331,
+    "parent": "bwk7"
+  },
+  "bee5": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "mozzarella",
+    "id": "bee5",
+    "z": 22398,
+    "parent": "bwk7"
+  },
+  "1qcn": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "stinky",
+    "id": "1qcn",
+    "z": 22394,
+    "parent": "bwk7"
+  },
+  "skrw": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "stinky",
+    "id": "skrw",
+    "z": 22429,
+    "parent": "bwk7"
+  },
+  "9zp7": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "stinky",
+    "id": "9zp7",
+    "z": 22428,
+    "parent": "bwk7"
+  },
+  "1lr0": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "gorgonzola",
+    "id": "1lr0",
+    "z": 22357,
+    "parent": "bwk7"
+  },
+  "rtgn": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "gorgonzola",
+    "id": "rtgn",
+    "z": 22410,
+    "parent": "bwk7"
+  },
+  "ij15": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "gorgonzola",
+    "id": "ij15",
+    "z": 22347,
+    "parent": "bwk7"
+  },
+  "4aqj": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "bluecheese",
+    "id": "4aqj",
+    "z": 22328,
+    "parent": "bwk7"
+  },
+  "sv29": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "brie",
+    "id": "sv29",
+    "z": 22349,
+    "parent": "bwk7"
+  },
+  "ej3q": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "brie",
+    "id": "ej3q",
+    "z": 22400,
+    "parent": "bwk7"
+  },
+  "suddenDeath": {
+    "type": "button",
+    "id": "suddenDeath",
+    "parent": "deckHolder",
+    "fixedParent": true,
+    "x": 14,
+    "y": 42,
+    "z": 3322,
+    "movableInEdit": false,
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "relation": "in",
+        "value": [
+          "holder1",
+          "holder2",
+          "holder3",
+          "holder4",
+          "holder5",
+          "holder6"
+        ]
+      },
+      {
+        "func": "GET",
+        "aggregation": "max",
+        "property": "coins",
+        "variable": "maxCoins"
+      },
+      {
+        "func": "SELECT",
+        "type": "holder",
+        "property": "coins",
+        "value": "${maxCoins}",
+        "collection": "winners"
+      },
+      {
+        "func": "MOVE",
+        "from": [
+          "holder1",
+          "holder2",
+          "holder3",
+          "holder4",
+          "holder5",
+          "holder6"
+        ],
+        "to": "discard",
+        "count": 0
+      },
+      {
+        "func": "FOREACH",
+        "collection": "winners",
+        "loopRoutine": [
+          {
+            "func": "GET",
+            "collection": "DEFAULT",
+            "property": "PID",
+            "variable": "winPID"
+          },
+          {
+            "func": "SELECT",
+            "type": "seat",
+            "property": "index",
+            "value": "${winPID}"
+          },
+          {
+            "func": "GET",
+            "property": "player",
+            "variable": "pName"
+          },
+          {
+            "func": "SELECT",
+            "type": "card",
+            "property": "_ancestor",
+            "value": "hand"
+          },
+          {
+            "func": "SELECT",
+            "source": "DEFAULT",
+            "property": "owner",
+            "value": "${pName}"
+          },
+          {
+            "func": "SET",
+            "property": "parent",
+            "value": "holder${winPID}"
+          }
+        ]
+      },
+      {
+        "func": "MOVE",
+        "from": "hand",
+        "to": "discard",
+        "count": 0
+      },
+      {
+        "func": "FOREACH",
+        "in": [
+          "holder1",
+          "holder2",
+          "holder3",
+          "holder4",
+          "holder5",
+          "holder6"
+        ],
+        "loopRoutine": [
+          {
+            "func": "SELECT",
+            "type": "card",
+            "property": "_ancestor",
+            "value": "${value}"
+          },
+          {
+            "func": "GET",
+            "property": "owner",
+            "variable": "cardOwner"
+          },
+          {
+            "func": "SET",
+            "property": "parent",
+            "value": "hand"
+          },
+          {
+            "func": "SET",
+            "property": "owner",
+            "value": "${cardOwner}"
+          }
+        ]
+      },
+      {
+        "func": "SORT",
+        "holder": "hand",
+        "key": "z"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "scale",
+        "value": 0
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "direction"
+        ],
+        "property": "direction",
+        "value": 1
+      },
+      {
+        "func": "CLICK",
+        "collection": [
+          "turn"
+        ]
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "theTimer"
+        ],
+        "property": "milliseconds",
+        "value": 180000
+      }
+    ],
+    "text": "Sudden Death",
+    "scale": 0,
+    "css": "font-family:notosans"
+  },
+  "action0": {
+    "type": "button",
+    "id": "action0",
+    "parent": "offBoard",
+    "fixedParent": "true",
+    "x": 115,
+    "y": 100,
+    "height": 55,
+    "z": 3273,
+    "movableInEdit": false,
+    "css": "font-size: 18px; font-family:notosans",
+    "text": "Discard Random",
+    "PID": 0,
+    "steals": 0,
+    "brieRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "relation": "in",
+        "value": [
+          "action1",
+          "action2",
+          "action3",
+          "action4",
+          "action5",
+          "action6"
+        ]
+      },
+      {
+        "func": "SET",
+        "property": "scale",
+        "value": null
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "action0"
+        ],
+        "property": "scale",
+        "value": 0
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "peekHolder"
+        ],
+        "property": "dropTarget",
+        "value": {}
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "peekHolder"
+        ],
+        "property": "onlyVisibleForSeat",
+        "value": null
+      },
+      {
+        "func": "SELECT",
+        "type": "seat",
+        "property": "index",
+        "value": "${PROPERTY PID}"
+      },
+      {
+        "func": "GET",
+        "property": "player",
+        "variable": "pName"
+      },
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "owner",
+        "value": "${pName}"
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "peekHolder"
+      },
+      {
+        "func": "SET",
+        "property": "owner",
+        "value": null
+      },
+      {
+        "func": "SELECT",
+        "type": "seat",
+        "property": "player",
+        "value": "${playerName}"
+      },
+      {
+        "func": "GET",
+        "property": "id",
+        "variable": "seatID"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "doneBrie"
+        ],
+        "property": "onlyVisibleForSeat",
+        "value": "${seatID}"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "doneBrie"
+        ],
+        "property": "lastOwner",
+        "value": "${pName}"
+      }
+    ],
+    "clickRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY text}",
+        "operand2": "Reveal Hand",
+        "thenRoutine": [
+          {
+            "func": "CALL",
+            "routine": "brieRoutine"
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY text}",
+        "operand2": "Discard Random",
+        "thenRoutine": [
+          {
+            "func": "CALL",
+            "routine": "stinkyRoutine"
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY text}",
+        "operand2": "Steal 1",
+        "thenRoutine": [
+          {
+            "func": "CALL",
+            "routine": "mildcheddarRoutine"
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY text}",
+        "operand2": "Steal x3",
+        "thenRoutine": [
+          {
+            "func": "CALL",
+            "routine": "sharpcheddarRoutine"
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY text}",
+        "operand2": "Trade Hands",
+        "thenRoutine": [
+          {
+            "func": "CALL",
+            "routine": "goudaRoutine"
+          }
+        ]
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "oops"
+        ],
+        "property": "scale",
+        "value": 0
+      }
+    ],
+    "goudaRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "relation": "in",
+        "value": [
+          "action1",
+          "action2",
+          "action3",
+          "action4",
+          "action5",
+          "action6"
+        ]
+      },
+      {
+        "func": "SET",
+        "property": "scale",
+        "value": null
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "action0"
+        ],
+        "property": "scale",
+        "value": 0
+      },
+      {
+        "func": "SELECT",
+        "type": "seat",
+        "property": "id",
+        "value": "seat${PROPERTY PID}"
+      },
+      {
+        "func": "SELECT",
+        "mode": "add",
+        "type": "seat",
+        "property": "player",
+        "value": "${playerName}"
+      },
+      {
+        "func": "GET",
+        "aggregation": "array",
+        "property": "index",
+        "variable": "activeIndex"
+      },
+      {
+        "func": "GET",
+        "aggregation": "array",
+        "property": "player",
+        "variable": "activeOwner"
+      },
+      {
+        "func": "CALL",
+        "widget": "calls",
+        "routine": "swapHandsRoutine"
+      }
+    ],
+    "mildcheddarRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY steals OF action0}",
+        "operand2": 1,
+        "thenRoutine": [
+          {
+            "func": "SELECT",
+            "property": "id",
+            "relation": "in",
+            "value": [
+              "action1",
+              "action2",
+              "action3",
+              "action4",
+              "action5",
+              "action6"
+            ]
+          },
+          {
+            "func": "SET",
+            "property": "scale",
+            "value": null
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "action0"
+            ],
+            "property": "scale",
+            "value": 0
+          }
+        ]
+      },
+      {
+        "func": "CALL",
+        "widget": "calls",
+        "routine": "discardRandomRoutine",
+        "arguments": {
+          "PID": "${PROPERTY PID}"
+        }
+      },
+      {
+        "func": "MOVE",
+        "from": "discard",
+        "to": "hand"
+      },
+      "var steals = ${PROPERTY steals} - 1",
+      {
+        "func": "SET",
+        "collection": [
+          "action0"
+        ],
+        "property": "steals",
+        "value": "${steals}"
+      }
+    ],
+    "sharpcheddarRoutine": [
+      {
+        "func": "CALL",
+        "routine": "mildcheddarRoutine"
+      }
+    ],
+    "stinkyRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "relation": "in",
+        "value": [
+          "action1",
+          "action2",
+          "action3",
+          "action4",
+          "action5",
+          "action6"
+        ]
+      },
+      {
+        "func": "SET",
+        "property": "scale",
+        "value": null
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "action0"
+        ],
+        "property": "scale",
+        "value": 0
+      },
+      {
+        "func": "CALL",
+        "widget": "calls",
+        "routine": "discardRandomRoutine",
+        "arguments": {
+          "PID": "${PROPERTY PID}"
+        }
+      }
+    ],
+    "width": 90,
+    "scale": 0
+  },
+  "action1": {
+    "type": "button",
+    "id": "action1",
+    "parent": "seat1",
+    "inheritFrom": "action0",
+    "PID": 1
+  },
+  "oops": {
+    "type": "button",
+    "id": "oops",
+    "x": 691,
+    "y": 385,
+    "width": 150,
+    "z": 3347,
+    "movableInEdit": false,
+    "text": "Oops. I made a mistake. Close action buttons.",
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "scale",
+        "value": 0
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "brie",
+          "gouda",
+          "mildcheddar",
+          "sharpcheddar",
+          "stinky"
+        ],
+        "property": "scale",
+        "value": 1
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "relation": "in",
+        "value": [
+          "action1",
+          "action2",
+          "action3",
+          "action4",
+          "action5",
+          "action6"
+        ]
+      },
+      {
+        "func": "SET",
+        "property": "scale",
+        "value": null
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "action0"
+        ],
+        "property": "scale",
+        "value": 0
+      }
+    ],
+    "css": "font-family:notosans",
+    "scale": 0
+  },
+  "coinToCheese": {
+    "type": "button",
+    "id": "coinToCheese",
+    "x": 627,
+    "y": 328,
+    "width": 100,
+    "height": 50,
+    "z": 3333,
+    "movableInEdit": false,
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "type": "seat",
+        "property": "player",
+        "value": "${playerName}"
+      },
+      {
+        "func": "GET",
+        "property": "id",
+        "variable": "seatID"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "peekHolder"
+        ],
+        "property": "onlyVisibleForSeat",
+        "value": "${seatID}"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "doneCoinToCheese"
+        ],
+        "property": "onlyVisibleForSeat",
+        "value": "${seatID}"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "peekHolder"
+        ],
+        "property": "dropTarget",
+        "value": {}
+      },
+      {
+        "func": "MOVE",
+        "from": "deckHolder",
+        "to": "peekHolder",
+        "count": 0
+      }
+    ],
+    "text": "Coin --> Cheese",
+    "css": "font-family:notosans"
+  },
+  "exchangeLabel": {
+    "id": "exchangeLabel",
+    "x": 732,
+    "y": 341,
+    "z": 106,
+    "movable": false,
+    "movableInEdit": false,
+    "text": "Exchange",
+    "css": "font-family:notosans",
+    "height": 20,
+    "width": 80
+  },
+  "doneCoinToCheese": {
+    "type": "button",
+    "id": "doneCoinToCheese",
+    "x": 70,
+    "y": 692,
+    "z": 3299,
+    "movableInEdit": false,
+    "onlyVisibleForSeat": [],
+    "text": "Done",
+    "activeFace": 0,
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "peekHolder",
+        "to": "deckHolder",
+        "count": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "deckHolder"
+      },
+      {
+        "func": "FLIP",
+        "holder": "deckHolder",
+        "face": 0
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "peekHolder"
+        ],
+        "property": "onlyVisibleForSeat",
+        "value": []
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "onlyVisibleForSeat",
+        "value": []
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "peekHolder"
+        ],
+        "property": "dropTarget",
+        "value": []
+      }
+    ],
+    "css": "font-family:notosans"
+  },
+  "cheeseToCoin": {
+    "type": "button",
+    "id": "cheeseToCoin",
+    "x": 809,
+    "y": 328,
+    "width": 100,
+    "height": 50,
+    "z": 3333,
+    "movableInEdit": false,
+    "text": "Cheese --> Coin",
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "fields": [
+          {
+            "type": "title",
+            "text": "Activating Cheese to Coin Exchange ..."
+          },
+          {
+            "type": "subtitle",
+            "text": "After you have discarded 5 different kinds of cheese, this will take one coin card from every player that has a coin card. Are you sure?"
+          }
+        ],
+        "cancelButtonText": "Cancel",
+        "confirmButtonText": "Do It!"
+      },
+      {
+        "func": "FOREACH",
+        "in": [
+          "seat1",
+          "seat2",
+          "seat3",
+          "seat4",
+          "seat5",
+          "seat6"
+        ],
+        "loopRoutine": [
+          {
+            "func": "GET",
+            "collection": [
+              "${value}"
+            ],
+            "property": "player",
+            "variable": "pName"
+          },
+          {
+            "func": "SELECT",
+            "type": "card",
+            "property": "owner",
+            "value": "${pName}"
+          },
+          {
+            "func": "SELECT",
+            "source": "DEFAULT",
+            "property": "cardType",
+            "value": "coin",
+            "max": 1
+          },
+          {
+            "func": "SET",
+            "property": "owner",
+            "value": "${playerName}"
+          }
+        ]
+      },
+      {
+        "func": "SORT",
+        "holder": "hand",
+        "key": "z"
+      }
+    ],
+    "css": "font-family:notosans"
+  },
+  "bwk7": {
+    "type": "pile",
+    "parent": "deckHolder",
+    "x": 4,
+    "y": 4,
+    "width": 110,
+    "height": 160,
+    "id": "bwk7"
+  }
+}

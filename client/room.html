@@ -3,36 +3,52 @@
 
 <head>
   <meta charset="utf-8">
-  <title>VirtualTabletop.io</title>
+  <title> /*** TITLE ***/ </title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
-  <link rel="icon" type="image/svg+xml" href="/i/branding/favicon.svg"/>
-  <link rel="alternate icon" href="/i/branding/favicon.png"/>
-  <link rel="preconnect" href="https://fonts.gstatic.com">
-  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/combine/npm/vue@3.0.7/dist/vue.global.prod.js,npm/jszip@3.6.0/dist/jszip.min.js"></script>
+  <base target="_blank" href=" /*** EXTERNAL_URL ***/ /">
+  <link rel="icon" sizes="any" href="i/branding/favicon-32.png"/>
+  <link rel="icon" type="image/svg+xml" href="i/branding/favicon.svg"/>
+  <link rel="apple-touch-icon" sizes="180x180" href="i/branding/ios-icon.png">
+  <link rel="manifest" href="i/branding/manifest.json">
+  <link rel="mask-icon" href="i/branding/mask-icon.svg">
+  <meta property="og:title" content=" /*** TITLE ***/ " />
+  <meta property="og:description" content="Come play with me!" />
+  <meta property="og:image" content=" /*** EXTERNAL_URL ***/ /i/branding/android-512.png" />
   <base target="_blank">
-  <style> {{CSS}} </style>
+  <style> /*** CSS ***/ </style>
 </head>
 
 
-<body>
+<body class="loading">
 
   <div id="toolbar">
-    <button id="statesButton" data-overlay="statesOverlay" class="toolbarButton" ><span class="tooltip">Game list</span></button>
-    <button id="playersButton" data-overlay="playerOverlay" class="toolbarButton" ><span class="tooltip">Player list</span></button>
-    <button id="editButton" class="toolbarButton"><span class="tooltip">Edit mode</span></button>
-    <button id="addButton" data-overlay="addOverlay" class="toolbarButton"><span class="tooltip">Add widget</span></button>
+    <img src="i/branding/logo.svg">
+    <div class="divider"></div>
+    <button id="statesButton" data-overlay="statesOverlay" class="toolbarButton toolbarTab" ><span class="tooltip">Game Shelf</span></button>
+    <button id="activeGameButton" class="toolbarButton toolbarTab" ><span class="tooltip">Active Game</span></button>
+    <button id="playersButton" data-overlay="playerOverlay" class="toolbarButton toolbarTab" ><span class="tooltip">Players</span></button>
+    <button id="aboutButton" data-overlay="aboutOverlay" class="toolbarButton toolbarTab"><span class="tooltip">About</span></button>
+    <button id="editButton" class="toolbarButton toolbarTab"><span class="tooltip">Edit Mode</span></button>
+    <div class="spacer"></div>
+    <div class="divider"></div>
+    <div id="optionsAnchor"><div id="options" class="hidden"><button id="muteButton" class="toolbarButton"></button><input id="volume" type="range" min="0" max="100" value="30"></div></div>
+    <button id="optionsButton" class="toolbarButton"><span class="tooltip">Sound</span></button>
+    <button id="lightsButton" class="toolbarButton"><span class="tooltip">Lights</span></button>
     <button id="fullscreenButton" class="toolbarButton"><span class="tooltip">Fullscreen</span></button>
-    <button id="hideToolbarButton" class="toolbarButton"><span class="tooltip">Hide toolbar</span></button>
-    <button id="aboutButton" data-overlay="aboutOverlay" class="toolbarButton"><span class="tooltip">About</span></button>
+    <button id="hideToolbarButton" class="toolbarButton"><span class="tooltip">Hide Toolbar</span></button>
   </div>
 
   <div id="roomArea">
     <div id="room">
-      <div id="topSurface" class="surface"></div>
+      <div id="topSurface" class="surface"><h1 id="loadingRoomIndicator">Loading room...</h1></div>
+    </div>
+
+    <div id="gridOverlay" class="overlay">
+      <div class="modal"></div>
     </div>
 
     <div id="pileOverlay" class="overlay">
+      <div class="modal"></div>
     </div>
 
     <div id="askIDoverlay" class="overlay">
@@ -41,149 +57,15 @@
       <button>▶️ Play</button>
     </div>
 
-    <div id="editOverlayVue">
-      <div id="editOverlay" class="overlay">
-        <div class="basicEdit">
-          <h1>Edit widget</h1>
-          <h3>Select type:</h3>
-          <input type='radio' class='radio-button' id="basicTypeToken" name='basicType'><label for="basicTypeToken">Token   &#160; </label>
-          <input type='radio' class='radio-button' id="basicTypeBoard" name='basicType'><label for="basicTypeBoard">Board   &#160; </label><br/><br/>
-          <label for="basicImage"> Image url: </label><input type="text" id="basicImage"><label for="basicImage" style="display: none"> add upload button here </label><br/><br/>
-          <label for="basicWidth"> Width: &#160;</label><input type="range" min=0 max=1600 value=100  step=10 id="basicWidth"><input type="text" id="basicWidthNumber" value=100><br/>
-          <label for="basicHeight"> Height: </label><input type="range" min=0 max=1000 value=20  step=10 id="basicHeight"><input type="text" id="basicHeightNumber" value=20><br/><br/>
-          <input type="checkbox" id="basicFullscreen"><label for="basicFullscreen">Resize to full screen (once)</label><br/><br/>
-          <input type="checkbox" id="basicEnlarge"><label for="basicEnlarge">Enlarge on hover</label>
-        </div>
-        <div class="buttonEdit">
-          <h1>Edit button</h1>
-          <label for="buttonText"> Text: </label><input type="text" id="buttonText"><br/>
-          <label for="buttonImage"> Image url: </label><input type="text" id="buttonImage"> <button id="uploadButtonImage">⬆️ Upload</button> <br/><br/>
-          <input type="color" id="buttonColorMain" value="#1f5ca6"><label for="buttonColorMain"> - Main Color </label><br/>
-          <input type="color" id="buttonColorBorder" value="#0d2f5e"><label for="buttonColorBorder"> - Second Color </label><br/>
-          <input type="color" id="buttonColorText" value="#ffffff"><label for="buttonColorText"> - Text Color </label><br/><br/>
-          <input type="checkbox" id="buttonDebug"><label for="buttonDebug">Run debug mode</label>
-        </div>
-        <div class="canvasEdit">
-          <h1>Edit canvas</h1>
-          <span>Canvas colors: (click on check box to select active color)</span><br/>
-          <div class="flexContainer" id="colorContainer">
-            <div class="colorComponent"><input type="radio" name="canvasColorSelect"><input type="color"></div>
-            <div class="colorComponent"><input type="radio" name="canvasColorSelect"><input type="color"></div>
-            <div class="colorComponent"><input type="radio" name="canvasColorSelect"><input type="color"></div>
-            <div class="colorComponent"><input type="radio" name="canvasColorSelect"><input type="color"></div>
-            <div class="colorComponent"><input type="radio" name="canvasColorSelect"><input type="color"></div>
-            <div class="colorComponent"><input type="radio" name="canvasColorSelect"><input type="color"></div>
-            <div class="colorComponent"><input type="radio" name="canvasColorSelect"><input type="color"></div>
-            <div class="colorComponent"><input type="radio" name="canvasColorSelect"><input type="color"></div>
-            <div class="colorComponent"><input type="radio" name="canvasColorSelect"><input type="color"></div>
-            <div class="colorComponent"><input type="radio" name="canvasColorSelect"><input type="color"></div>
-          </div><br/>
-          <input type="checkbox" id="canvasColorReset"><label for="canvasColorRest">Reset colors to: </label>
-          <select id="canvasPresets">
-            <option name="canvasPresets" value="original" selected = "selected">original colors</option>
-            <option name="canvasPresets" value="pieces">game pieces colors</option>
-            <option name="canvasPresets" value="basic">basic colors</option>
-            <option name="canvasPresets" value="pencil">pencil colors</option>
-            <option name="canvasPresets" value="pastel">pastel colors</option>
-            <option name="canvasPresets" value="grey">grey scale</option>
-          </select>
-        </div>
-        <deck-editor :widget-state="selectedWidget.state"></deck-editor>
-        <div class="holderEdit">
-          <h1>Edit holder</h1>
-          <input type="checkbox" id="transparentHolder"><label for="transparentHolder"> Transparent</label><br/><br/>
-          <input type="checkbox" id="resizeHolderToChildren"><label for="resizeHolderToChildren"> Resize to fit contents (once)</label>
-        </div>
-        <div class="labelEdit">
-          <h1>Edit label</h1>
-          <label for="labelText"> Text: </label><input type="text" id="labelText"><br/><br/>
-          <label for="labelWidth"> Width: &#160;</label><input type="range" min=0 max=1600 value=100  step=10 id="labelWidth"><input type="text" id="labelWidthNumber" value=100><br/>
-          <label for="labelHeight"> Height: </label><input type="range" min=0 max=1000 value=20  step=10 id="labelHeight"><input type="text" id="labelHeightNumber" value=20><br/><br/>
-          <input type="checkbox" id="labelEditable"><label for="labelEditable">Editable in play mode</label>
-        </div>
-        <div class="pieceEdit">
-          <h1>Edit game piece</h1>
-          <h3>Select type:</h3>
-          <input type='radio' class='radio-button' id="pieceTypeChecker" name='pieceType'><label for="pieceTypeChecker">Checker   &#160; </label>
-          <input type='radio' class='radio-button' id="pieceTypeClassic" name='pieceType'><label for="pieceTypeClassic">Pawn   &#160; </label>
-          <input type='radio' class='radio-button' id="pieceTypePin" name='pieceType'><label for="pieceTypePin">Pin   &#160; </label><br/><br/>
-          <input type="color" id="pieceColor" value="black"><label for="pieceColor"> - Color </label><br/><br/>
-        </div>
-        <div class="seatEdit">
-          <h1>Edit Seat</h1>
-          <h3>Change player seated:</h3>
-          <!-- I want to add a dropdown with the player list here -->
-          <label for="seatEmpty"> Empty seat:</label><input type="checkbox" id="seatEmpty"><br/><br/>
-          <h3>Change seated player information:</h3>
-          <label for="seatPlayerName"> Player Name: </label><input type="text" id="seatPlayerName"><br/><br/><br/>
-          <label for="seatPlayerColor"> Player Color: </label><input type="color" id="seatPlayerColor" value="black"><label for="seatPlayerColor"></label><br/><br/>
-        </div>
-        <div class="spinnerEdit">
-          <h1>Edit spinner</h1>
-          <label for="spinnerOptions"> Choose options preset: </label>
-          <select id="spinnerOptions">
-            <option name="spinnerOptions" value="[1,2]">1-2</option>
-            <option name="spinnerOptions" value="[1,2,3]">1-3</option>
-            <option name="spinnerOptions" value="[1,2,3,4]">1-4</option>
-            <option name="spinnerOptions" value="[1,2,3,4,5,6]" selected = "selected">1-6</option>
-            <option name="spinnerOptions" value="[1,2,3,4,5,6,7,8]">1-8</option>
-            <option name="spinnerOptions" value="[1,2,3,4,5,6,7,8,9,10]">1-10</option>
-            <option name="spinnerOptions" value="[0,1,2,3,4,5,6,7,8,9]">0-9</option>
-            <option name="spinnerOptions" value="[1,2,3,4,5,6,7,8,9,10,11,12]">1-12</option>
-            <option name="spinnerOptions" value="[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]">1-20</option>
-          </select>
-        </div>
-        <div class="timerEdit">
-          <h1>Edit timer</h1>
-          <input type="checkbox" id="timerCountdown"><label for="timerCountdown"> Countdown</label><br/><br/>
-          <label for="timerMinutes"> Duration: </label><input type="text" id="timerMinutes">
-          <label for="timerSeconds">: </label><input type="text" id="timerSeconds"><label for="timerEnd">in mm:ss  (use --:-- for no end)</label><br/><br/>
-          <input type="checkbox" id="timerReset"><label for="timerReset"> Reset timer (once)</label>
-        </div>
-        <div class="editorSpace"></div>
-        <base-edit-overlay ></base-edit-overlay>
-      </div>
-
-      <div id="editJSONoverlay" class="overlay">
-        <h1>Edit widget JSON</h1>
-        <p>Please check <a href="https://github.com/ArnoldSmith86/virtualtabletop/wiki/Creating-Games">our GitHub wiki for documentation</a>.</p>
-        <p>You can open this room in <a href="https://virtualtabletop.io/legacy-editor.htm" id="legacy-link">the legacy editor</a>. Be sure to have <b>backups</b> on your harddrive first (of every game in your room)!</p>
-        <textarea id="editWidgetJSON"></textarea>
-        <base-edit-overlay :json-edit="true"></base-edit-overlay>
-      </div>
-    </div>
-
-    <div id="addOverlay" class="overlay">
-      <div class="category">
-        <h2>Cards</h2>
-        <button id="addHand">🖐️ Add hand</button>
-      </div>
-      <div class="category">
-        <h2>Game Pieces</h2>
-      </div>
-      <div class="category">
-        <h2>Interactive</h2>
-        <button id="addCanvas">🎨 Add Canvas</button>
-        <button id="addSeat">🪑 Add Seat</button>
-      </div>
-      <div class="category">
-        <h2>Decorative</h2>
-      </div>
-      <div class="category">
-        <h2>Custom</h2>
-        <button id="uploadBoard">⬆️ Upload board</button>
-        <button id="uploadToken">⬆️ Upload token</button>
-        <button id="addBasicWidget">Add basic widget</button>
-      </div>
-    </div>
-
     <div id="buttonInputOverlay" class="overlay">
-      <form onsubmit="return false">
+      <div class="modal">
         <h1>Button Input</h1>
         <div id="buttonInputFields"></div>
-        <button id="buttonInputGo">Go</button>
-        <button id="buttonInputCancel">Cancel</button>
-      </form>
+        <div class="footer">
+          <button id="buttonInputGo" class="positiveInput"><span class="UIicon"></span><label></label></button>
+          <button id="buttonInputCancel" class="neutralInput"><span class="UIicon"></span><label></label></button>
+        </div>
+      </div>
     </div>
 
     <div id="playerOverlay" class="overlay">
@@ -192,141 +74,425 @@
         <div class="instructionalText">From here you can edit the name and color of any player.</div>
       </div>
       <div id="playerList">
-        <script id="template-playerlist-entry" type="text/template">
-          <input type="color" class="teamColor"></span> <input class="playerName" />
-        </script>
+        <template id="template-playerlist-entry" type="text/template">
+          <input type="color" class="teamColor"> <input class="playerName" />
+        </template>
         <label class="me ui-line" data-label="Me »"> </label>
         <label class="otherPlayers ui-line" data-label="Other Players »"> </label>
         <label class="inactivePlayers ui-line"> </label>
       </div>
+      <div id="playerInvite">
+        <h1>Invite</h1>
+        <p>More players can join this game by visiting <span id="playerInviteURL"></span>.</p>
+        <button icon="share" id="playersShareButton">Share room URL</button>
+      </div>
     </div>
 
-    <div id="statesOverlay" class="overlay empty">
-      <h1>Games</h1>
-      <div id="emptyRoom">
-        <h1>VirtualTabletop.io</h1>
-        <p>There is no saved game in this room. You can save your progress or add games to it and play them with your friends and family by sharing the link.</p>
-        <p>Bring your own voice chat. We recommend <a href="https://meet.jit.si/">Jitsi Meet</a> because it's free software, runs in the browser and requires no accounts.</p>
-        <div>
-          <div><p>Save what you are currently working on?</p><button class="prettyButton create">Save room state</button></div>
-          <div><p>Do you have a *.vtt or *.pcio file?</p><button class="prettyButton upload">Upload files</button></div>
-          <div><p>Do you have a link to one?</p><button class="prettyButton link">Enter link</button></div>
-        </div>
-        <p>If you don't, you can create your own game or add one from the public library:</p>
+    <div id="returnOverlay" class="overlay">
+      <p>In order to switch games, please return to the main server:</p>
+      <button>Return</button>
+    </div>
+
+    <div id="statesOverlay" class="overlay">
+      <div id="stateFilters">
+        <span id="filterByTextWrapper" data-priority="1">
+          <i class="material-icons">search</i>
+          <input id="filterByText" name="filterByText" placeholder="Search" />
+          <i class="material-icons" id="clearSearch">close</i>
+        </span>
+        <span id="filterByTypeWrapper" data-priority="6">
+          <i class="material-icons">casino</i>
+          <select id="filterByType"><option>Any</option>
+            <option selected>Games</option><option>Tutorials</option><option>Assets</option>
+          </select>
+        </span>
+        <span id="filterByPlayersWrapper" data-priority="2">
+          <i class="material-icons">person</i>
+          <select id="filterByPlayers"><option>Any</option>
+            <option>1</option><option>2</option><option>3</option><option>4</option><option>5</option>
+            <option>6</option><option>7</option><option>8</option><option>9</option><option>10</option>
+            <option>11</option><option>12</option><option>13</option><option>14</option><option>15</option>
+            <option>16</option><option>17</option><option>18</option><option>19</option><option>20</option>
+          </select>
+        </span>
+        <span id="filterByDurationWrapper" data-priority="7">
+          <i class="material-icons">schedule</i>
+          <select id="filterByDuration"><option>Any</option>
+            <option value="0-30">&lt;= 30 min</option><option value="31-60">30-60 min</option><option value="61-999">&gt; 60 min</option>
+          </select>
+        </span>
+        <span id="filterByLanguageWrapper" data-priority="5">
+          <i class="material-icons">language</i>
+          <select id="filterByLanguage"></select>
+        </span>
+        <span id="filterByModeWrapper" data-priority="4">
+          <i class="material-icons">groups</i>
+          <select id="filterByMode"></select>
+        </span>
+        <span id="librarySortWrapper" data-priority="3">
+          <i class="material-icons">sort_by_alpha</i>
+          <select id="librarySort"><option value="name">by Name</option><option value="similarName">by Similar Name</option><option value="stars">by Stars</option><option value="timePlayed">by Popularity</option><option value="lastUpdate">by Last Updated</option><option value="year">by Year</option></select>
+        </span>
+        <div id="filterOverflow"><button icon="more_horiz"></button><div></div></div>
       </div>
       <div id="statesList">
-        <script id="template-stateslist-entry" type="text/template">
+        <template id="template-stateslist-category" type="text/template">
+          <h2 class="title">Title</h2>
+          <div class="buttons"></div>
+          <div class="list"></div>
+        </template>
+        <template id="template-stateslist-entry" type="text/template">
           <img>
+          <button icon="star_rate" class="star"></button>
+          <i class="material-icons linked">link</i>
           <div class="details">
-            <em><a class="bgg">Name (Year)</a></em>
-            <em>⌛ <span class="time">0</span> minutes - <a class="rules">Rules</a></em>
-            <div class="variantsList"></div>
-            <p><button class="saveProgress" disabled>💾 Save in-progress game</button><button class="prettyButton  edit">Edit</button></p>
+            <h3>Name</h3>
+            <h4>Similar Name</h4>
           </div>
-        </script>
-        <script id="template-variantslist-entry" type="text/template">
-          <button class="play">▶️ Play: <span class="language">🇺🇸</span> 👪 <span class="players">0</span><br><span class="variant"></span></button>
-        </script>
-        <div id="addState">
-          <div class="image">➕</div>
+        </template>
+        <button icon="fast_forward" id="updateSaveState">Update loaded game</button>
+        <button icon="save" id="saveState">Save active game</button>
+        <button icon="add" id="addState">Add game</button>
+        <p id="emptyLibrary">Your personal game library is currently empty.<br>Use the stars below to pin public library games, use the "Add game" button above or drag VTT files here.</p>
+        <p id="emptyLibraryByFilter">No games displayed.<br>Adjust the filters above to show them.</p>
+        <!--<button class="prettyButton gameMenu download">Download all</button>-->
+      </div>
+    </div>
+
+    <div id="stateAddOverlay" class="overlay">
+      <div class="titleWithCloseButton">
+        <h1>Add game</h1>
+        <button icon="close"></button>
+      </div>
+      <div>
+        <div icon="upload">
+          <p>Upload VTT or PCIO files you downloaded from the web.</p>
+          <p>You can find compatible game files on <a href="https://boardgamegeek.com/geeklist/272690/games-implemented-playingcardsio">a boardgamegeek.com geeklist</a>,
+          <a href="https://www.reddit.com/r/PlayingCardsIO/">the PlayingCardsIO subreddit</a>,
+          <a href="https://www.notion.so/4d27ed5a430d422b99b3fa21b66714e6">its notion.so database</a> or
+          <a href="https://github.com/search?utf8=%E2%9C%93&amp;q=playingcards.io">GitHub</a>.</p>
+          <p>Please note that PCIO files might not be 100% compatible. Please <a href="https://github.com/ArnoldSmith86/virtualtabletop/issues/new">open an issue on GitHub</a> if a file is unplayable.</p>
+          <button icon="upload">Upload files</button>
+        </div>
+        <div icon="link">
+          <p>If you have a direct link to a VTT or PCIO file (for example by sharing a link from virtualtabletop.io), you can add the game using the link and you will always play the latest version.<br><br>You can also enter a Tabletop Simulator workshop link in order to import the widgets from it, but the imported game will not have any automation.</p>
+          <input placeholder="URL">
+          <button icon="link">Add link</button>
+        </div>
+        <div icon="save">
+          <p>Use the current state of this room as a new game.</p>
+          <p>This is usually used when using Edit Mode to create a new game from scratch.</p>
+          <button icon="save">Save room state</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="stateSaveOverlay" class="overlay">
+      <div class="titleWithCloseButton">
+        <h1>Save game</h1>
+        <button icon="close"></button>
+      </div>
+      <div>
+        <div icon="save">
+          <p>This creates a save state of the currently active game so that you can start a different game and come back to this one later. For creating or editing, use the "+Add Game" button or sidebar hamburger icon "Edit" button.</p>
+          <p>Notes: <input></p>
           <div class="buttons">
-            <button class="prettyButton gameMenu create">Save room state</button>
-            <button class="prettyButton gameMenu library">Public library</button>
-            <button class="prettyButton gameMenu link">Enter link</button>
-            <button class="prettyButton gameMenu upload">Upload files</button>
-            <button class="prettyButton gameMenu download">Download all</button>
+            <button icon="undo">Cancel</button>
+            <button icon="save">Save game</button>
           </div>
         </div>
       </div>
     </div>
 
-    <div id="libraryOverlay" class="overlay">
-      <h1>Public library</h1>
-      <table id="libraryList">
-        <script id="template-librarylist-header" type="text/template">
-          <th></th><th>Game</th><th>Similar to</th><th>Players</th><th>Language</th><th>Notes</th>
-        </script>
-        <script id="template-librarylist-entry" type="text/template">
-          <td><button class="add">Add</button></td><td class="name">Chess</td><td><a>Chess</a></td><td class="players">2</td><td class="language">🇺🇳</td><td class="notes"></td>
-        </script>
-        <script id="template-librarylist-section-title" type="text/template">
-          <td class="section" colspan="6">
-            <div class="section-name">Section Name</div>
-            <div class="notes">Section notes</div>
-          </td>
-        </script>
-      </table>
-      <p>Loading...</p>
+    <div id="variantAddOverlay" class="overlay">
+      <div class="titleWithCloseButton">
+        <h1>Add variant</h1>
+        <button icon="close"></button>
+      </div>
+      <div>
+        <div icon="save">
+          <p>The most common use-case for adding new variants to a game is when you are actually editing it.</p>
+          <p>This button will take the current state of this room and it as a new variant.</p>
+          <button icon="save">Save room state</button>
+        </div>
+        <div icon="upload">
+          <p>If you have a VTT or PCIO file, you can add their variants as new variants here.</p>
+          <button icon="upload">Upload files</button>
+        </div>
+        <div icon="link">
+          <p>You can add a variant from the public library to your game in case you want to combine different games into one or if you want to change the game metadata.</p>
+          <select></select>
+          <button icon="link">Link to public library</button>
+        </div>
+      </div>
     </div>
 
-    <div id="stateEditOverlay" class="overlay">
-      <h1>Edit game</h1>
-      <div class="details">
-        <div class="input"><label for="stateName">Name:</label> <input id="stateName"/></div>
-        <div class="input"><label for="stateYear">Year:</label> <input id="stateYear"/></div>
-        <div class="input"><label for="stateRules">Rules link:</label> <input id="stateRules"/></div>
-        <div class="input"><label for="stateMode">Mode:</label> <input id="stateMode"/></div>
-        <div class="input"><label for="stateTime">Time:</label> <input id="stateTime"/></div>
-        <div class="input"><label for="stateBGG">BoardGameGeek link:</label> <input id="stateBGG"/></div>
-        <div class="input"><label for="stateImage">Image URL:</label> <input id="stateImage"/><button class="prettyButton uploadAsset">Upload</button></div>
-        <div class="input"><label for="stateLink">Update link:</label> <input id="stateLink"/></div>
+    <div id="stateDetailsOverlay" class="overlay notEditing">
+      <div class="buttons one">
+        <button icon="close" class="hideForEdit" id="closeDetails"></button>
+        <button icon="close" class="onlyForEdit red" id="discardDetails">Discard changes</button>
       </div>
-      <h2>Variants</h2>
-      <div id="variantsEditList">
-        <script id="template-variantseditlist-entry" type="text/template">
-          <div class="input"><label>Language (country code):</label> <input class="stateLanguage"/></div>
-          <div class="input"><label>Players:</label> <input class="statePlayers"/></div>
-          <div class="input"><label>Variant:</label> <input class="stateVariant"/></div>
-          <div class="input"><label>Attribution:</label> <textarea class="stateAttribution"></textarea></div>
-          <div class="input"><label>Update link:</label> <input class="stateLink"/></div>
-          <button class="update">Update variant using current room state</button><button class="prettyButton download">Download variant</button><button class="prettyButton remove">Remove variant</button>
-        </script>
+      <div class="buttons two">
+        <button icon="menu" class="hideForEdit"></button>
+        <div class="hidden hideForEdit">
+          <button icon="settings">Convert to game</button>
+          <button icon="download">Download</button>
+          <button icon="link">Share link</button>
+          <button icon="link_off">Unlink</button>
+          <button icon="edit_off" disabled>Read-only</button>
+          <button icon="edit">Edit</button>
+          <button icon="delete" class="red">Delete</button>
+          <button icon="upload" class="hidden">Add to public library</button>
+        </div>
+        <button icon="save" class="onlyForEdit green">Save</button>
+        <button icon="upload" class="onlyForEdit" disabled>Uploading</button>
       </div>
-      <div id="addVariant" class="buttons">
-        Add variant:
-        <button class="prettyButton create">Use current room state</button><button class="prettyButton library">Public library</button><button class="prettyButton link">Enter link</button><button class="prettyButton upload">Upload file</button>
+      <div id="mainDetails">
+        <div id="mainImage">
+          <img data-field="image" data-target="src" class="uneditable">
+          <button icon="star_rate" class="star"></button>
+          <span data-field="stars" class="uneditable">0</span>
+          <i class="material-icons">link</i>
+          <div class="onlyForEdit">
+            <button icon="image" data-field="image" data-target="value" data-forceshow="true">Change</button>
+          </div>
+        </div>
+        <div class="details">
+          <h1 data-field="name"></h1>
+          <div class="onlyForEdit"><input type="checkbox" id="showName" data-field="showName" data-target="checked"> <label for="showName">Overlay name</label></div>
+          <div data-showfor="time"><i class="material-icons">schedule</i> Time: <span data-field="time"></span> minutes</div>
+          <div data-showfor="mode"><i class="material-icons">groups</i> Mode: <span data-field="mode"></span></div>
+          <div data-showfor="skill"><i class="material-icons">psychology</i> Skill: <span data-field="skill"></span></div>
+          <p data-field="description" data-placeholder="&lt;empty game description&gt;"></p>
+        </div>
       </div>
-      <p><button class="prettyButton save">Save</button><button class="prettyButton share">Share link</button><button class="prettyButton download">Download</button><button class="prettyButton remove">Remove</button></p>
+      <template id="template-variantslist-entry" type="text/template">
+        <div class="variant-image">
+          <img data-target="src">
+          <div class="variantEdit">
+            <button icon="image" data-field="variantImage" data-target="value" data-forceshow="true" class="uneditable"></button>
+          </div>
+        </div>
+        <div class="variant-name" data-field="variant" data-forceshow="true"></div>
+        <div class="language-info" data-showfor="language"><i class="material-icons">language</i><span data-field="language"></span></div>
+        <div class="player-number-info" data-showfor="players"><i class="material-icons">person</i><span data-field="players"></span></div>
+        <button icon="play_arrow" class="hideForEdit">Play</button>
+        <button icon="edit" class="onlyForEdit">Edit</button>
+        <div class="variantEdit">
+          <button icon="save">Update from Active Game</button>
+          <button icon="north">Move up</button>
+          <button icon="south">Move down</button>
+          <button icon="delete" class="red">Delete</button>
+        </div>
+      </template>
+      <div id="variantsList">
+        <div class="variantsList"></div>
+        <button icon="add" class="onlyForEdit">Add variant</button>
+      </div>
+      <div id="similarDetails" data-showfor="similarImage|similarName|similarDesigner|similarAwards|bgg|rules">
+        <div id="similarImage">
+          <img data-field="similarImage" data-target="src" class="uneditable">
+          <div class="onlyForEdit">
+            <button icon="image" data-field="similarImage" data-target="value" data-forceshow="true">Change</button>
+          </div>
+        </div>
+        <div class="details">
+          <h1 data-showfor="similarName">Similar to: <span data-field="similarName"></span><span data-showfor="year"> (<span data-field="year"></span>)</span></h1>
+          <div data-showfor="similarDesigner"><i class="material-icons">person</i> Designer: <span data-field="similarDesigner"></span></div>
+          <div data-showfor="similarAwards" class="hideForEdit"><i class="material-icons">emoji_events</i> <span data-field="similarAwards"></span></div>
+          <div class="onlyForEdit"><i class="material-icons">emoji_events</i> Awards: <span data-field="similarAwards"></span></div>
+          <div data-showfor="bgg" class="hideForEdit"><i class="material-icons">info</i> <a data-field="bgg" data-target="href">Game details on <nobr><i class="material-icons intext">launch</i> <span id="similarDetailsDomain"></span></nobr></a></div>
+          <div class="onlyForEdit"><i class="material-icons">info</i> Game details link: <span data-field="bgg"></span></div>
+          <div data-showfor="rules" class="hideForEdit"><i class="material-icons">auto_stories</i> <a data-field="rules" data-target="href">Rules overview on <nobr><i class="material-icons intext">launch</i> <span id="similarRulesDomain"></span></nobr></a></div>
+          <div class="onlyForEdit"><i class="material-icons">auto_stories</i> Rules overview link: <span data-field="rules"></span></div>
+        </div>
+      </div>
+      <div id="prevState" class="roomState hideForEdit">
+        <img>
+        <div class="details">
+          <h3>Previous</h3>
+          <h4>Similar to Previous</h4>
+        </div>
+        <button class="prettyButton prev"><i class="material-icons">arrow_back</i></button>
+      </div>
+      <div id="nextState" class="roomState hideForEdit">
+        <img>
+        <div class="details">
+          <h3>Next</h3>
+          <h4>Similar to Next</h4>
+        </div>
+        <button class="prettyButton next"><i class="material-icons">arrow_forward</i></button>
+      </div>
+      <div id="helpTexts" data-showfor="ruleText|helpText|attribution">
+        <h3 data-showfor="ruleText">How to play the game</h3>
+        <div data-field="ruleText" data-html="true"></div>
+        <h3 data-showfor="helpText">How to use this implementation</h3>
+        <div data-field="helpText" data-html="true"></div>
+        <h3 data-showfor="attribution">Attribution</h3>
+        <div data-field="attribution" data-html="true"></div>
+      </div>
+    </div>
+
+    <div id="updateImageOverlay" class="overlay">
+      <h1>Update image</h1>
+      <div>
+        <div id="updatePreviousImage">
+          <h2>Previous image</h2>
+          <img class="previous">
+        </div>
+        <div id="updateCurrentImage">
+          <h2>New image<button icon="upload">Upload</button></h2>
+          <img class="current">
+          <label for="updateImageURL">Enter custom URL:</label> <input class="current" id="updateImageURL">
+        </div>
+      </div>
+      <div id="updateButtonBar">
+        <button icon="undo">Use previous image</button>
+        <button icon="image_not_supported">Use no image</button>
+        <button icon="check">Use new image</button>
+      </div>
+    </div>
+
+    <div id="confirmOverlay" class="overlay">
+      <div class="titleWithCloseButton">
+        <h1 data-field="title"></h1>
+        <button icon="close"></button>
+      </div>
+      <div>
+        <div icon="warning">
+          <p data-field="text"></p>
+          <div class="buttons">
+            <button icon="close" data-field="cancelButton"></button>
+            <button icon="check" data-field="confirmButton"></button>
+          </div>
+        </div>
+      </div>
     </div>
 
     <div id="shareLinkOverlay" class="overlay">
-      <h1>Share link</h1>
-      <p>You can share this link with others so they can add your game to their library.</p>
-      <p>The link does not expire.</p>
-      <p>Keep in mind that you change their game whenever you change this game in your library.</p>
-      <p>In-progress save games are not included and will stay private to your room.</p>
-      <p>There is no way for people with this link to find your room.</p>
-      <input id="sharedLink" value="Loading link..."/>
-      <button id="shareOK">OK</button>
+      <div class="titleWithCloseButton">
+        <h1>Share link</h1>
+        <button icon="close"></button>
+      </div>
+      <div>
+        <div icon="link">
+          <p class="customGameInfo">You can share this link with others so they can add your game to their library.</p>
+          <p class="customGameInfo">The link does not expire.</p>
+          <p class="customGameInfo">Keep in mind that you change their game whenever you change this game in your library.</p>
+          <p class="customGameInfo">Saved in-progress games are not included and will stay private to your room.</p>
+          <p class="customGameInfo">There is no way for people with this link to find your room.</p>
+          <p class="plGameInfo">Use this link to tell your friends about this specific game in the public library.</p>
+          <input id="sharedLink" value="Loading link..."/>
+          <button icon="share">Share</button>
+        </div>
+      </div>
     </div>
 
-    <div id="aboutOverlay" class="overlay">
-      <h1>About VirtualTabletop.io</h1>
-      <p>This project is licensed under GPLv3 and is <a href="https://github.com/ArnoldSmith86/virtualtabletop">available on GitHub</a>.</p>
-      <p>Come join our <a href="https://discord.gg/CEZz7wny9T">discord server</a>.</p>
-      <p>Check out our <a href="https://github.com/ArnoldSmith86/virtualtabletop/wiki">wiki page</a> for helpful information about how to make your own games.</p>
-      <h2>Copyright Attribution</h2>
-      <p>The default card deck was created by Adrian Kennard and released under CC0 Public Domain license: <a href="https://www.me.uk/cards/">https://www.me.uk/cards/</a>.</p>
-      <p>The copyright attribution information for all games and assets in the public library is available inside the "Variant" notes section of each game. All public library tutorials are released under the CC0 license. Detailed information about the various Creative Commons licenses referred to by abbreviations in variant notes can be found on the <a href="https://creativecommons.org/about/cclicenses/">Creative Commons webpage</a> or at the following links:</p>
-      <ul>
-      <li><a href="https://creativecommons.org/licenses/by/4.0/">CC BY</a></li>
-      <li><a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA</a></li>
-      <li><a href="https://creativecommons.org/licenses/by-nc/4.0/">CC BY-NC</a></li>
-      <li><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA</a></li>
-      <li><a href="https://creativecommons.org/licenses/by-nd/4.0/">CC BY-ND</a></li>
-      <li><a href="https://creativecommons.org/licenses/by-nc-nd/4.0/">CC BY-NC-ND</a></li>
-      <li><a href="https://creativecommons.org/publicdomain/zero/1.0/">CC0 (Public Domain)</a></li>
-      </ul>
-      <h2>Online Gameplay</h2>
-      <p>This is an open-source, free to use platform.</p>
-      <p>Anyone that knows the URL of the room that you are using may come in to the room at any time and take any action, including playing or changing games in the room or deleting games. Keep a personal backup of everything that you care about.</p>
-      <p>Know who you are playing with.  The platform is unmoderated and no one controls what may happen. Anything you do or share is your own responsibility.</p>
-      <p>Cheating is trivially easy, unpreventable, and undetectable.  Just play for fun.</p>
-      <p>If you are under the age of majority in the location you are from, be sure to comply with the rules for accessing online material that apply to you.</p>
-      <h2>Privacy Policy</h2>
-      <p>VirtualTabletop.io does not ask for or collect any personal identification information.</p>
-      <p>VirtualTabletop.io does not use cookies.</p>
-      <p>VirtualTabletop.io does, however, collect the "player name" and keeps that in local storage on the user's device.  The player name defaults to a number, but is customizable to any user entered data. VirtualTabletop.io does not analyze or use that information except to display it on the screen while accessing the website.</p>
+    <div id="linkDetailsOverlay" class="overlay" style="display:none;">
+      <div class="buttons one">
+        <button icon="close" id="closeLinkDetails"></button>
+      </div>
+      <div class="mainStateDetails">
+        <div class="mainStateImage">
+          <img data-field="image" data-target="src" class="uneditable">
+          <button icon="star_rate" class="star"></button>
+          <span data-field="stars" class="uneditable">0</span>
+          <i class="material-icons">link</i>
+        </div>
+        <div class="details">
+          <h1 data-field="name"></h1>
+          <h2 data-showfor="similarName">Similar to: <span data-field="similarName"></span><span data-showfor="year"> (<span data-field="year"></span>)</span></h2>
+          <div data-showfor="time"><i class="material-icons">schedule</i> Time: <span data-field="time"></span> minutes</div>
+          <div data-showfor="mode"><i class="material-icons">groups</i> Mode: <span data-field="mode"></span></div>
+          <div data-showfor="skill"><i class="material-icons">psychology</i> Skill: <span data-field="skill"></span></div>
+          <p data-field="description" data-placeholder="&lt;empty game description&gt;"></p>
+        </div>
+      </div>
+      <div class="addToRoomBox">
+        <p>Welcome to <b>VirtualTabletop.io</b>!</p>
+        <p>On this platform you can <b>play games</b> with family and friends directly in your browser. No accounts necessary.</p>
+        <p>You followed a direct link to the <span id="welcomeGameType">game</span> "<b id="welcomeGameName"></b>". In order to <span id="welcomeGameTypeHint">start playing it</span>:</p>
+        <div class="welcomeInput">
+          <ol>
+            <li>Create a custom room URL and player name or accept the defaults.</li>
+            <li>Click CREATE ROOM.</li>
+            <li>On the next page, click PLAY.</li>
+            <li>Invite your friends on the Players tab.</li>
+          </ol>
+          <b>Room URL:</b> <span> /*** EXTERNAL_URL ***/ /<input id="welcomeJoinRoom" tabindex="1"></span><br>
+          <b>Player name:</b> <input id="welcomePlayerName" tabindex="2">
+          <button id="welcomePlayButton" icon="play_arrow">Create room</button>
+        </div>
+        <p id="welcomeUserGenerated" icon="warning">This game is <b>user-generated content</b> for which VirtualTabletop.io holds no responsibility or liability.</p>
+      </div>
+    </div>
+
+    <div id="symbolPickerOverlay" class="overlay">
+      <div class="titleWithCloseButton">
+        <h1>Pick icon</h1>
+        <button icon="close"></button>
+      </div>
+      <div>
+        <div icon="add_reaction">
+          <input placeholder="Search" />
+          <p icon="blur_on">For performance reasons, <span>game-icons are displayed in low resolution and </span>emoji are displayed in your browser font. Filter to less than 100 images or hover over an icon to show the actual image that will be used.</p>
+          <div id="symbolList">
+            Loading...
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="aboutOverlay" class="overlay"  style="display:none;">
+      <div class="header">
+        <div class="about_title">
+          <h1>About VirtualTabletop.io</h1>
+          <p>This project is licensed under GPLv3 and is <a href="https://github.com/ArnoldSmith86/virtualtabletop">available on GitHub</a>.</p>
+        </div>
+        <div class="about_joinus">
+          <a href="https://discord.gg/CEZz7wny9T"><img src="i/branding/discord-logo.svg" /><br>Come join our discord server.</a>
+          <a href="https://github.com/ArnoldSmith86/virtualtabletop/wiki"><img src="i/branding/github-logo.svg" /><br>Check out our wiki page for helpful information about how to make your own games.</a>
+        </div>
+      </div>
+      <div class="content-body">
+        <h2>Copyright Attribution</h2>
+        <p>Great care has been made to attribute the sources where appropriate. If you feel your work has been taken or used without your consent, please contact us on Discord and immediate action will be taken to remove any infringing works.</p>
+        <p>All graphics used on this site were either created by members of the VTT community and are released into the public domain, sourced from works in the public domain, or made available for public use through Creative Commons or other similar licenses.</p>
+        <p>Games and Assets available in the public library contain copyright attribution information in the variant notes section of each game. The default card deck was created by Adrian Kennard and released under CC0 Public Domain license at <a href="https://www.me.uk/cards/" class="external">https://www.me.uk/cards/</a>. The game pieces and VTT Symbols were created by Brandon Lewis (@mousewax) for VTT and are released under the CC0 license. The solid color card suits (clubs, diamonds, hearts, spades) in the VTT Symbols and image assets were made by Skoll and are available under CC BY 3.0 from  <a href="https://game-icons.net/" class="external">https://game-icons.net/</a>. All public library tutorials are released into the public domain under CC0.</p>
+        <p>Detailed information about the various Creative Commons licenses referred to by abbreviations in variant notes can be found on the <a href="https://creativecommons.org/about/cclicenses/">Creative Commons webpage</a> or at the following links:</p>
+        <ul>
+          <li><a href="https://creativecommons.org/licenses/by/4.0/">CC BY</a></li>
+          <li><a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA</a></li>
+          <li><a href="https://creativecommons.org/licenses/by-nc/4.0/">CC BY-NC</a></li>
+          <li><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA</a></li>
+          <li><a href="https://creativecommons.org/licenses/by-nd/4.0/">CC BY-ND</a></li>
+          <li><a href="https://creativecommons.org/licenses/by-nc-nd/4.0/">CC BY-NC-ND</a></li>
+          <li><a href="https://creativecommons.org/publicdomain/zero/1.0/">CC0 (Public Domain)</a></li>
+        </ul>
+        <h2>Online Gameplay</h2>
+        <p>This is an open-source, free to use platform.</p>
+        <p>Anyone that knows the URL of the room that you are using may come in to the room at any time and take any action, including playing or changing games in the room or deleting games. Keep a personal backup of everything that you care about.</p>
+        <p>Know who you are playing with.  The platform is unmoderated and no one controls what may happen. Anything you do or share is your own responsibility.</p>
+        <p>Cheating is trivially easy, unpreventable, and undetectable.  Just play for fun.</p>
+        <p>If you are under the age of majority in the location you are from, be sure to comply with the rules for accessing online material that apply to you.</p>
+        <h2>Privacy Policy</h2>
+        <p>VirtualTabletop.io does not ask for or collect any personal identification information.</p>
+        <p>VirtualTabletop.io does not use cookies.</p>
+        <p>VirtualTabletop.io does, however, collect the "player name" and keeps that in local storage on the user's device.  The player name defaults to a number, but is customizable to any user entered data. VirtualTabletop.io does not analyze or use that information except to display it on the screen while accessing the website.</p>
+      </div>
+      <div id="betaText" class="content-body">
+        <h2>Beta</h2>
+        <p>Play this game on an experimental preview server to help us test new features. Anyone joining this room will be redirected there until you switch back.</p>
+        <table id="betaServerListTable">
+          <thead><th>Server</th><th>Returns the state to this server</th><th>Description</th></thead>
+          <tbody id="betaServerList"></tbody>
+        </table>
+        <template id="template-betaServerList-entry" type="text/template">
+          <td><button class="ui-button">Name</button></td>
+          <td class="return symbols">Return?</td>
+          <td class="description">Description</td>
+        </template>
+      </div>
     </div>
 
     <div id="internalErrorOverlay" class="overlay">
@@ -336,41 +502,52 @@
       <p>You can try to reload the page. It's very possible that you will run into the same problem again until it is fixed though.</p>
     </div>
 
-    <div id="connectionLostOverlay" class="overlay">
+    <div id="clientErrorOverlay" class="overlay">
+      <h1>Internal Error</h1>
+      <p>Your client just crashed. Sorry, this shouldn't happen.</p>
+      <p>How can we trigger the error ourselves so we can fix it?</p>
+      <p><textarea style="height: 150px; width: 100%"></textarea></p>
+      <p><button>Submit and Reload</button></p>
+    </div>
+
+    <div id="connectionLostOverlay" class="overlay" style="display:none;">
       <h1>Connection lost</h1>
+      <div class="disconnected">
+        <div class="cable">&nbsp;</div>
+        <div class="plug">&nbsp;</div>
+        <div class="cable">&nbsp;</div>
+      </div>
       <p>The connection to the server was lost. It should be reestablished in a few moments.</p>
       <p>In case that doesn't work, try reloading the page or use a different room.</p>
     </div>
+
+    <div id="playerCursors"></div>
   </div>
 
-  <div id="jsonEditor">
-    <div id="jeWidgetLayers">
-      <div id="jeWidgetLayer1"></div>
-      <div id="jeWidgetLayer2"></div>
-      <div id="jeWidgetLayer3"></div>
-      <div id="jeWidgetLayer5"></div>
-      <div id="jeWidgetLayer6"></div>
-      <div id="jeWidgetLayer7"></div>
-      <div id="jeWidgetLayer8"></div>
-      <div id="jeWidgetLayer9"></div>
-      <div id="jeWidgetLayer10"></div>
-      <div id="jeWidgetLayer11"></div>
-      <div id="jeWidgetLayer12"></div>
-    </div>
-    <div id="jeTextHighlight"></div>
-    <div id="jeText" contenteditable="true" spellcheck="false"></div>
-    <div id="jeMouseCoords"></div>
-    <div id="jeCommands"></div>
-    <div id="jeLogWrapper">
-      <div id="jeLog"><h1>No debug information yet.</h1></div>
-      <h1>Show Routine Debug Output</h1>
-    </div>
-    <div id="traceUI"><input type="range" id="traceInput"></div>
+  <div id="clientPointer">
+    <div id="enlarged" class="hidden"></div>
   </div>
 
-  <div id="enlarged" class="hidden"></div>
+  <template id="template-richtext-controls" type="text/template">
+    <button icon="format_bold"            data-command="bold"></button>
+    <button icon="format_italic"          data-command="italic"></button>
+    <button icon="format_strikethrough"   data-command="strikeThrough"></button>
+    <span class="divider"></span>
+    <button icon="format_size"></button>
+    <button icon="palette"></button>
+    <span class="divider"></span>
+    <button icon="format_list_numbered"   data-command="insertorderedlist"></button>
+    <button icon="format_list_bulleted"   data-command="insertunorderedlist"></button>
+    <button icon="format_indent_increase" data-command="indent"></button>
+    <button icon="format_indent_decrease" data-command="outdent"></button>
+    <span class="divider"></span>
+    <button icon="add_photo_alternate"></button>
+    <button icon="art_track"></button>
+    <button icon="movie"></button>
+    <button icon="add_reaction"></button>
+  </template>
 
-  <script type="module"> {{JS}} </script>
+  <script type="module"> //*** CONFIG ***//  //*** JS ***// </script>
 
 </body>
 
