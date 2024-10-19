@@ -52,6 +52,7 @@ export default async function minifyHTML() {
     'client/js/tracing.js',
     'client/js/statemanaged.js',
     'client/js/color.js',
+    'client/js/audio.js',
 
     'client/js/overlays/players.js',
     'client/js/overlays/states.js',
