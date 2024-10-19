@@ -224,7 +224,7 @@ export default class Room {
     for(const player of this.players) {
       let includePlayer = true;
       if(func === 'audio') {
-        if(Array.isArray(argsObj.players) && !argsObj.players.includes(player.name)) {
+        if(Array.isArray(argsObj.players) && !argsObj.players.includes(player.name))
           includePlayer = false;
       }
       if(player != exceptPlayer && includePlayer)
