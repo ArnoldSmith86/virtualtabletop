@@ -1,0 +1,204 @@
+{
+  "_meta": {
+    "version": 16,
+    "info": {
+      "name": "Icons and Emojis",
+      "image": "/assets/-1890494129_6762",
+      "rules": "",
+      "bgg": "",
+      "year": "",
+      "mode": "Tutorial",
+      "time": "",
+      "attribution": "",
+      "lastUpdate": 1729453177506,
+      "showName": false,
+      "skill": "",
+      "description": "",
+      "similarImage": "",
+      "similarName": "",
+      "similarDesigner": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": "",
+      "variantImage": "",
+      "variant": "Advanced",
+      "language": "en-US",
+      "players": "1"
+    }
+  },
+  "notes1": {
+    "id": "notes1",
+    "y": 424,
+    "width": 250,
+    "z": 441,
+    "movable": false,
+    "css": {
+      "font-size": "19px"
+    },
+    "text": "This is the same as the first example in the Icons: Colors tutorial except that the scale of the icon is set to 2",
+    "x": 30
+  },
+  "notes2": {
+    "id": "notes2",
+    "y": 425,
+    "width": 250,
+    "z": 444,
+    "movable": false,
+    "css": {
+      "font-size": "19px"
+    },
+    "text": "This is the same as the second example in the Icons: Colors tutorial except that the wrench is rotated 45 degrees.",
+    "x": 323
+  },
+  "notes3": {
+    "id": "notes3",
+    "x": 908,
+    "y": 425,
+    "width": 250,
+    "z": 446,
+    "movable": false,
+    "css": {
+      "font-size": "19px"
+    },
+    "text": "The widget above combines aspects of rotation, scale, and offset to create a custom look."
+  },
+  "notes9": {
+    "id": "notes9",
+    "y": 425,
+    "width": 250,
+    "z": 445,
+    "movable": false,
+    "css": {
+      "font-size": "19px"
+    },
+    "text": "Use offsetX and offsetY to adjust where on the widget the icons appear. Depending on how many you have and the scale, you will have to adjust the numbers to find what works.",
+    "x": 615
+  },
+  "example1": {
+    "id": "example1",
+    "x": 103,
+    "y": 318,
+    "z": 448,
+    "icon": {
+      "name": "[trash]",
+      "scale": 2
+    },
+    "movable": false,
+    "color": "red",
+    "text": "Trash"
+  },
+  "example2": {
+    "id": "example2",
+    "x": 386,
+    "y": 319,
+    "z": 311,
+    "movable": false,
+    "icon": {
+      "name": "build",
+      "rotation": 45,
+      "color": "purple"
+    },
+    "text": "Settings",
+    "color": "Red"
+  },
+  "header": {
+    "type": "label",
+    "id": "header",
+    "x": 290,
+    "y": 1,
+    "width": 1000,
+    "height": 80,
+    "z": 26392,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "60px",
+      "color": "black"
+    },
+    "text": "Icons: Advanced"
+  },
+  "overview": {
+    "id": "overview",
+    "x": 279,
+    "y": 84,
+    "width": 1000,
+    "z": 373,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "25px",
+      "color": "black"
+    },
+    "text": "In addition to color modifications, the advanced icon object properties allow for modifications to scale, offset location, and rotation. Those settings apply individually to each icon."
+  },
+  "example4": {
+    "id": "example4",
+    "x": 960,
+    "y": 310,
+    "z": 449,
+    "movable": false,
+    "borderRadius": 8,
+    "activeFace": 1,
+    "icon": [
+      {
+        "name": "[card_6]",
+        "scale": 1.5,
+        "offsetX": -0.6,
+        "offsetY": 1.5,
+        "rotation": -10,
+        "color": "blue"
+      },
+      {
+        "name": "[card_8]",
+        "scale": 1.5,
+        "offsetX": 0.6,
+        "offsetY": 0,
+        "rotation": 10,
+        "color": ""
+      },
+      {
+        "name": "[card_7]",
+        "scale": 1.5,
+        "offsetX": 0,
+        "offsetY": -1.6,
+        "color": "green",
+        "hoverColor": "black"
+      }
+    ],
+    "iconColor": "blue"
+  },
+  "example3": {
+    "id": "example3",
+    "x": 671,
+    "y": 307,
+    "borderRadius": 8,
+    "z": 449,
+    "movable": false,
+    "activeFace": 1,
+    "icon": [
+      {
+        "name": "delapouite/brick-wall",
+        "scale": 2,
+        "offsetX": 0,
+        "offsetY": 0.5,
+        "color": "red",
+        "strokeColor": "red",
+        "strokeWidth": 1,
+        "hoverColor": "brown"
+      },
+      {
+        "name": "[card_1]",
+        "offsetX": -0.1,
+        "offsetY": -1.5,
+        "strokeWidth": 0,
+        "hoverColor": "white"
+      },
+      {
+        "name": "[card_2]",
+        "offsetX": 0.1,
+        "offsetY": -1.5,
+        "strokeWidth": 0,
+        "hoverColor": "white"
+      }
+    ]
+  }
+}
