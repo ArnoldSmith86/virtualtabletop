@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "version": 3,
+    "version": 16,
     "info": {
       "name": "Button Appearance",
       "image": "/assets/-446929059_7871",
@@ -9,12 +9,21 @@
       "year": "2020",
       "mode": "Tutorial",
       "time": "0",
-      "players": "1",
-      "language": "en-US",
-      "variant": "Images",
-      "attribution": "The images used in this tutorial were created by LawDawg and are released to the Public Domain under CC0.",
+      "attribution": "<span><span><span><span><span><span>The images used in this tutorial were created by LawDawg and are released to the Public Domain under CC0.</span></span></span></span></span></span>",
       "showName": false,
-      "lastUpdate": 1644184116000
+      "lastUpdate": 1729455533413,
+      "skill": "",
+      "description": "",
+      "similarImage": "",
+      "similarName": "",
+      "similarDesigner": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": "",
+      "variantImage": "",
+      "variant": "Images",
+      "language": "en-US",
+      "players": "1"
     }
   },
   "xykoP": {
@@ -228,7 +237,6 @@
             "y": 0,
             "width": 103,
             "height": 160,
-            "valueType": "static",
             "value": "/i/cards-default/2B.svg"
           }
         ]
@@ -243,8 +251,9 @@
             "y": 0,
             "width": 103,
             "height": 160,
-            "valueType": "dynamic",
-            "value": "image"
+            "dynamicProperties": {
+              "value": "image"
+            }
           }
         ]
       }
@@ -1562,7 +1571,8 @@
         "func": "MOVEXY",
         "from": "v91x",
         "x": 1100,
-        "y": 700
+        "y": 700,
+        "resetOwner": false
       }
     ],
     "x": 259,
@@ -1878,7 +1888,6 @@
             "y": 0,
             "width": 103,
             "height": 160,
-            "valueType": "static",
             "value": "/i/cards-default/2B.svg"
           }
         ]
@@ -1893,8 +1902,9 @@
             "y": 0,
             "width": 103,
             "height": 160,
-            "valueType": "dynamic",
-            "value": "image"
+            "dynamicProperties": {
+              "value": "image"
+            }
           }
         ]
       }
@@ -2432,5 +2442,15 @@
     "width": 300,
     "height": 150,
     "id": "mkou"
+  },
+  "ma9w": {
+    "id": "ma9w",
+    "x": 427,
+    "y": 147,
+    "width": 700,
+    "height": 150,
+    "z": 63,
+    "css": "font-size:18px",
+    "text": "This tutorial was created before the 'icon' property was available. While the techniques show in this tutorial variant still work, you should consider using icons. See the Icons tutorial for additional information."
   }
 }

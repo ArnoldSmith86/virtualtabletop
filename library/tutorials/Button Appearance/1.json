@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "version": 3,
+    "version": 16,
     "info": {
       "name": "Button Appearance",
       "image": "/assets/-446929059_7871",
@@ -9,12 +9,21 @@
       "year": "2020",
       "mode": "Tutorial",
       "time": "0",
-      "players": "1",
-      "language": "en-US",
-      "variant": "Text Only",
-      "attribution": "The images used in this tutorial were created by LawDawg and are released to the Public Domain under CC0.",
+      "attribution": "<span><span><span><span><span><span>The images used in this tutorial were created by LawDawg and are released to the Public Domain under CC0.</span></span></span></span></span></span>",
       "showName": false,
-      "lastUpdate": 1644184116000
+      "lastUpdate": 1729455533412,
+      "skill": "",
+      "description": "",
+      "similarImage": "",
+      "similarName": "",
+      "similarDesigner": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": "",
+      "variantImage": "",
+      "variant": "Text Only",
+      "language": "en-US",
+      "players": "1"
     }
   },
   "xykoP": {
@@ -228,7 +237,6 @@
             "y": 0,
             "width": 103,
             "height": 160,
-            "valueType": "static",
             "value": "/i/cards-default/2B.svg"
           }
         ]
@@ -243,8 +251,9 @@
             "y": 0,
             "width": 103,
             "height": 160,
-            "valueType": "dynamic",
-            "value": "image"
+            "dynamicProperties": {
+              "value": "image"
+            }
           }
         ]
       }
@@ -1563,7 +1572,8 @@
         "func": "MOVEXY",
         "from": "v91x",
         "x": 1100,
-        "y": 700
+        "y": 700,
+        "resetOwner": false
       }
     ],
     "x": 259,
@@ -1602,7 +1612,6 @@
     "css": "background: repeating-linear-gradient(45deg, #077d43, #077d43 10px, #215a3d 10px, #215a3d 20px);--wcBorder: black;--wcBorderOH:#718e88;border-width:10px;border-style:double;--wcFont:white;--wcFontOH:#9daaa2"
   },
   "b0a6": {
-    "text": "☣",
     "type": "button",
     "clickRoutine": [
       {
@@ -1617,7 +1626,8 @@
     "id": "b0a6",
     "textColor": "orange",
     "textColorOH": "#e19e1e",
-    "css": "font-size:100px;--wcFont:orange; --wcFontOH: #e19e1e; border-style:none;background-color:transparent"
+    "css": "font-size:100px;--wcFont:orange; --wcFontOH: #e19e1e; border-style:none;background-color:transparent",
+    "icon": "coronavirus"
   },
   "rf6c": {
     "text": "▲",
@@ -1672,7 +1682,6 @@
     "layer": 2
   },
   "tpj8": {
-    "text": "↑",
     "type": "button",
     "clickRoutine": [
       {
@@ -1686,7 +1695,10 @@
     "y": 421,
     "z": 50,
     "id": "tpj8",
-    "rotation": 90
+    "icon": {
+      "name": "east",
+      "color": "red"
+    }
   },
   "ah3k": {
     "type": "label",
@@ -1973,7 +1985,6 @@
             "y": 0,
             "width": 103,
             "height": 160,
-            "valueType": "static",
             "value": "/i/cards-default/2B.svg"
           }
         ]
@@ -1988,8 +1999,9 @@
             "y": 0,
             "width": 103,
             "height": 160,
-            "valueType": "dynamic",
-            "value": "image"
+            "dynamicProperties": {
+              "value": "image"
+            }
           }
         ]
       }
@@ -2454,13 +2466,13 @@
   },
   "djsg": {
     "type": "label",
-    "text": "Unicode deal button (using CSS to remove border and background)",
+    "text": "CSS removes border and background and the icon is a widget property",
     "x": 704,
     "y": 385,
     "z": 73,
     "id": "djsg",
     "width": 250,
-    "height": 250
+    "height": 70
   },
   "mh1x": {
     "type": "label",
@@ -2484,13 +2496,13 @@
   },
   "snq7": {
     "type": "label",
-    "text": "Another Unicode button showing default button border",
+    "text": "Another icon button showing default button border",
     "x": 1293,
     "y": 369,
     "z": 81,
     "id": "snq7",
     "width": 250,
-    "height": 100
+    "height": 70
   },
   "lrms": {
     "type": "label",
@@ -2520,75 +2532,87 @@
         "from": "v91x",
         "x": 583,
         "y": 161,
-        "count": 2
+        "count": 2,
+        "resetOwner": false
       },
       {
         "func": "MOVEXY",
         "from": "v91x",
         "x": 700,
-        "y": 161
+        "y": 161,
+        "resetOwner": false
       },
       {
         "func": "MOVEXY",
         "from": "v91x",
         "x": 817,
-        "y": 161
+        "y": 161,
+        "resetOwner": false
       },
       {
         "func": "MOVEXY",
         "from": "v91x",
         "x": 934,
-        "y": 161
+        "y": 161,
+        "resetOwner": false
       },
       {
         "func": "MOVEXY",
         "from": "v91x",
         "x": 583,
         "y": 335,
-        "count": 2
+        "count": 2,
+        "resetOwner": false
       },
       {
         "func": "MOVEXY",
         "from": "v91x",
         "x": 700,
-        "y": 335
+        "y": 335,
+        "resetOwner": false
       },
       {
         "func": "MOVEXY",
         "from": "v91x",
         "x": 817,
-        "y": 335
+        "y": 335,
+        "resetOwner": false
       },
       {
         "func": "MOVEXY",
         "from": "v91x",
         "x": 934,
-        "y": 335
+        "y": 335,
+        "resetOwner": false
       },
       {
         "func": "MOVEXY",
         "from": "v91x",
         "x": 583,
         "y": 509,
-        "count": 2
+        "count": 2,
+        "resetOwner": false
       },
       {
         "func": "MOVEXY",
         "from": "v91x",
         "x": 700,
-        "y": 509
+        "y": 509,
+        "resetOwner": false
       },
       {
         "func": "MOVEXY",
         "from": "v91x",
         "x": 817,
-        "y": 509
+        "y": 509,
+        "resetOwner": false
       },
       {
         "func": "MOVEXY",
         "from": "v91x",
         "x": 934,
-        "y": 509
+        "y": 509,
+        "resetOwner": false
       }
     ],
     "x": 1067,
@@ -2609,16 +2633,15 @@
   },
   "4z8b": {
     "type": "label",
-    "text": "The same Unicode button changing height and width and CSS border radius so it will not overlap other widgets",
+    "text": "The same icon button changing height and width and CSS border radius",
     "x": 1244,
     "y": 536,
     "z": 64,
     "width": 340,
-    "height": 150,
+    "height": 75,
     "id": "4z8b"
   },
   "orrw": {
-    "text": "↑",
     "type": "button",
     "clickRoutine": [
       {
@@ -2631,10 +2654,13 @@
     "x": 1403,
     "y": 623,
     "z": 51,
-    "rotation": 90,
     "id": "orrw",
     "height": 40,
-    "width": 40
+    "width": 40,
+    "icon": {
+      "name": "east",
+      "color": "red"
+    }
   },
   "6n0r": {
     "type": "button",
@@ -2644,7 +2670,8 @@
         "func": "MOVEXY",
         "from": "v91x",
         "x": 1100,
-        "y": 700
+        "y": 700,
+        "resetOwner": false
       }
     ],
     "x": 257,
@@ -2695,7 +2722,8 @@
         "func": "MOVEXY",
         "from": "v91x",
         "x": 1100,
-        "y": 700
+        "y": 700,
+        "resetOwner": false
       }
     ],
     "x": 259,
@@ -2712,32 +2740,8 @@
     "x": 427,
     "y": 147,
     "width": 700,
-    "height": 200,
+    "height": 150,
     "css": "font-size:18px",
     "id": "ma9w"
-  },
-  "k8ox": {
-    "type": "button",
-    "id": "k8ox",
-    "x": 1406.5,
-    "y": 779.5,
-    "width": 25,
-    "height": 25,
-    "z": 155,
-    "clickRoutine": [],
-    "css": "--wcFontOH: red;--wcFont: #00308F; font-size: 120px; border-style: none; border-radius: 0px; background-color: transparent;",
-    "text": "⛀",
-    "textColor": "#00308F",
-    "textColorOH": "red"
-  },
-  "cwmt": {
-    "type": "label",
-    "text": "Another Unicode button removing all borders and background.",
-    "x": 1244,
-    "y": 706,
-    "z": 82,
-    "width": 340,
-    "height": 150,
-    "id": "cwmt"
   }
 }
