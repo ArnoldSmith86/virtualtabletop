@@ -31,4 +31,4 @@ jobs:
       uses: DevExpress/testcafe-action@latest
       with:
         version: "3.5.0"
-        args: "chrome:headless tests/testcafe"
+        args: "'chrome:headless --disable-search-engine-choice-screen' tests/testcafe"
