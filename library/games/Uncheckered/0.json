@@ -1,0 +1,5327 @@
+{
+  "restart": {
+    "type": "button",
+    "id": "restart",
+    "x": 1550,
+    "y": 1,
+    "z": 1,
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "fields": [
+          {
+            "type": "title",
+            "text": "Restarting ..."
+          },
+          {
+            "type": "subtitle",
+            "text": "Are you sure you want to restart the game?"
+          }
+        ]
+      },
+      {
+        "func": "CALL",
+        "routine": "restartRoutine"
+      }
+    ],
+    "text": "restart",
+    "width": 50,
+    "height": 50,
+    "classes": "symbols",
+    "color": "white",
+    "css": {
+      "default": {
+        "font-size": "40px",
+        "--wcMain": "black",
+        "--wcBorder": "white",
+        "--wcMainOH": "grey",
+        "--wcBorderOH": "black",
+        "line-height": "1.1em"
+      },
+      "::after": {
+        "content": "\"Reset\"",
+        "display": "none",
+        "position": "absolute",
+        "margin-top": "74px",
+        "color": "black",
+        "font-size": "14px",
+        "font-family": "Roboto"
+      },
+      ":hover::after": {
+        "display": "block"
+      }
+    },
+    "restartRoutine": [
+      {
+        "func": "SET",
+        "collection": [
+          "1,1"
+        ],
+        "property": "automation",
+        "value": "doesNotExist"
+      },
+      {
+        "func": "TURN",
+        "turnCycle": "random"
+      },
+      {
+        "func": "SELECT",
+        "property": "square",
+        "value": true
+      },
+      {
+        "func": "SET",
+        "property": "bgColor",
+        "value": "transparent"
+      },
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY noAutomation OF settings}",
+        "operand2": "on",
+        "thenRoutine": [
+          {
+            "func": "SELECT",
+            "type": "dice",
+            "property": "id",
+            "relation": "!=",
+            "value": null
+          },
+          {
+            "func": "SET",
+            "property": "movable",
+            "value": true
+          },
+          {
+            "func": "SET",
+            "property": "clickable",
+            "value": true
+          },
+          {
+            "func": "SELECT",
+            "property": "square",
+            "value": true
+          },
+          {
+            "func": "SET",
+            "property": "clickable",
+            "value": false
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SELECT",
+            "type": "dice",
+            "property": "id",
+            "relation": "!=",
+            "value": null
+          },
+          {
+            "func": "SET",
+            "property": "movable",
+            "value": false
+          },
+          {
+            "func": "SET",
+            "property": "clickable",
+            "value": true
+          },
+          {
+            "func": "SELECT",
+            "property": "square",
+            "value": true
+          },
+          {
+            "func": "SET",
+            "property": "clickable",
+            "value": false
+          }
+        ]
+      },
+      {
+        "func": "SET",
+        "property": "rollCount",
+        "value": 0
+      },
+      {
+        "func": "SET",
+        "property": "z",
+        "value": 1
+      },
+      {
+        "func": "SET",
+        "property": "activeFace",
+        "value": 0
+      },
+      {
+        "func": "SELECT",
+        "property": "resetProperties",
+        "relation": "!=",
+        "value": null
+      },
+      {
+        "func": "FOREACH",
+        "loopRoutine": [
+          {
+            "func": "FOREACH",
+            "in": "${PROPERTY resetProperties OF $widgetID}",
+            "loopRoutine": [
+              {
+                "func": "SET",
+                "property": "${key}",
+                "value": "${value}"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "SELECT",
+        "type": "dice",
+        "property": "id",
+        "relation": "!=",
+        "value": null,
+        "collection": "allTokens"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "1,1",
+        "collection": "masterHolder"
+      },
+      {
+        "func": "GET",
+        "collection": "masterHolder",
+        "property": "id"
+      },
+      {
+        "func": "SET",
+        "collection": "allTokens",
+        "property": "x",
+        "value": "${PROPERTY dropOffsetX OF $id}"
+      },
+      {
+        "func": "SET",
+        "collection": "allTokens",
+        "property": "y",
+        "value": "${PROPERTY dropOffsetY OF $id}"
+      },
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY randomized OF settings}",
+        "operand2": "on",
+        "thenRoutine": [
+          {
+            "func": "FOREACH",
+            "in": [
+              "p1-1",
+              "p1-2",
+              "p1-3",
+              "p1-4",
+              "p1-5",
+              "p2-1",
+              "p2-2",
+              "p2-3",
+              "p2-4",
+              "p2-5"
+            ],
+            "loopRoutine": [
+              "var random = randInt 0 5",
+              {
+                "func": "SET",
+                "collection": [
+                  "${value}"
+                ],
+                "property": "activeFace",
+                "value": "${random}"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "pulseCover"
+        ],
+        "property": "parent",
+        "value": "offScreen"
+      },
+      {
+        "func": "SELECT",
+        "property": "clonedFrom",
+        "value": "promoteCover"
+      },
+      {
+        "func": "DELETE"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "centerPromote"
+      },
+      {
+        "func": "SET",
+        "property": "1",
+        "value": true
+      },
+      {
+        "func": "SET",
+        "property": "2",
+        "value": true
+      },
+      {
+        "func": "SET",
+        "property": "scale",
+        "value": 0
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "jumpRoutine"
+        ],
+        "property": "mustJump",
+        "value": false
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "jumpRoutine"
+        ],
+        "property": "jumpTokens",
+        "value": []
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "jumpRoutine"
+        ],
+        "property": "lastJumped",
+        "value": 0
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "jumpRoutine"
+        ],
+        "property": "removeTokens",
+        "value": []
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "jumpRoutine"
+        ],
+        "property": "validJumps",
+        "value": false
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "jumpRoutine"
+        ],
+        "property": "lastJumpID",
+        "value": null
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "1,1"
+        ],
+        "property": "automation",
+        "value": "routines"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "winner1",
+          "winner2"
+        ],
+        "property": "display",
+        "value": false
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "undoRoutine"
+        ],
+        "property": "resetArray",
+        "value": []
+      },
+      {
+        "func": "CALL",
+        "widget": "undoRoutine",
+        "routine": "undoArrayRoutine"
+      },
+      {
+        "func": "CALL",
+        "routine": "variationChangeRoutine",
+        "widget": "settings"
+      }
+    ]
+  },
+  "boardBack": {
+    "id": "boardBack",
+    "width": 900,
+    "height": 900,
+    "layer": -3,
+    "movable": false,
+    "x": 350,
+    "css": {
+      "border": "5px solid black"
+    },
+    "y": 50,
+    "image": "/assets/-811726542_232834"
+  },
+  "background": {
+    "id": "background",
+    "width": 1600,
+    "height": 1000,
+    "layer": -4,
+    "movable": false,
+    "css": {
+      "background": "#BC8F8F"
+    },
+    "z": 1
+  },
+  "offHolder1": {
+    "type": "holder",
+    "id": "offHolder1",
+    "x": 125,
+    "y": 250,
+    "width": 90,
+    "height": 500,
+    "z": 1,
+    "css": {
+      "background": "${PROPERTY bgColor}",
+      "border": "5px solid black"
+    },
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "pID": 1
+    },
+    "stackOffsetY": 32,
+    "onEnter": {
+      "rotation": 0,
+      "clickable": false
+    },
+    "bgColor": "#f41000"
+  },
+  "offHolder2": {
+    "type": "holder",
+    "id": "offHolder2",
+    "x": 1395,
+    "y": 250,
+    "width": 90,
+    "height": 500,
+    "z": 1,
+    "css": {
+      "background": "${PROPERTY bgColor}",
+      "border": "5px solid black"
+    },
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "pID": 2
+    },
+    "stackOffsetY": 32,
+    "onEnter": {
+      "rotation": 0,
+      "clickable": false
+    },
+    "bgColor": "#255ade"
+  },
+  "settings": {
+    "type": "button",
+    "id": "settings",
+    "x": 1475,
+    "y": 1,
+    "width": 50,
+    "height": 50,
+    "z": 1,
+    "classes": "material-icons",
+    "color": "white",
+    "css": {
+      "default": {
+        "font-size": "40px",
+        "--wcMain": "black",
+        "--wcBorder": "white",
+        "--wcMainOH": "grey",
+        "--wcBorderOH": "black",
+        "line-height": "1.1em"
+      },
+      "::after": {
+        "content": "\"Settings\"",
+        "display": "none",
+        "position": "absolute",
+        "margin-top": "-8px",
+        "margin-left": "-4px",
+        "color": "black",
+        "font-size": "14px",
+        "font-family": "Roboto"
+      },
+      ":hover::after": {
+        "display": "block"
+      }
+    },
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "fields": [
+          {
+            "type": "title",
+            "text": "Select options ...",
+            "css": "background-color:black; color:white"
+          },
+          {
+            "type": "switch",
+            "label": "Play variation rules.",
+            "value": "${PROPERTY variation}",
+            "variable": "variation"
+          },
+          {
+            "type": "switch",
+            "label": "Rotate board 90 degrees.",
+            "value": "${PROPERTY orientation}",
+            "variable": "orientation"
+          },
+          {
+            "type": "switch",
+            "label": "Turn off all automation",
+            "value": "${PROPERTY noAutomation}",
+            "variable": "noAutomation"
+          }
+        ]
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "variation",
+        "value": "${variation}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "orientation",
+        "value": "${orientation}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "noAutomation",
+        "value": "${noAutomation}"
+      }
+    ],
+    "text": "settings",
+    "orientationChangeRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY orientation}",
+        "operand2": "on",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "boardBack"
+            ],
+            "property": "rotation",
+            "value": 90
+          },
+          {
+            "func": "SELECT",
+            "type": "dice",
+            "property": "id",
+            "relation": "!=",
+            "value": null
+          },
+          {
+            "func": "SET",
+            "property": "rotation",
+            "value": -90
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "centerPromoteClose"
+            ],
+            "property": "x",
+            "value": -35
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "boardBack"
+            ],
+            "property": "rotation",
+            "value": 0
+          },
+          {
+            "func": "SELECT",
+            "type": "dice",
+            "property": "id",
+            "relation": "!=",
+            "value": null
+          },
+          {
+            "func": "SET",
+            "property": "rotation",
+            "value": 0
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "centerPromoteClose"
+            ],
+            "property": "x",
+            "value": 90
+          }
+        ]
+      }
+    ],
+    "orientation": "off",
+    "noAutomationChangeRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY noAutomation}",
+        "operand2": "on",
+        "thenRoutine": [
+          {
+            "func": "SELECT",
+            "type": "dice",
+            "property": "id",
+            "relation": "!=",
+            "value": null
+          },
+          {
+            "func": "SET",
+            "property": "movable",
+            "value": true
+          },
+          {
+            "func": "SET",
+            "property": "clickable",
+            "value": true
+          },
+          {
+            "func": "SELECT",
+            "property": "square",
+            "value": true
+          },
+          {
+            "func": "SET",
+            "property": "clickable",
+            "value": false
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SELECT",
+            "type": "dice",
+            "property": "id",
+            "relation": "!=",
+            "value": null
+          },
+          {
+            "func": "SET",
+            "property": "movable",
+            "value": false
+          },
+          {
+            "func": "SET",
+            "property": "clickable",
+            "value": true
+          },
+          {
+            "func": "SELECT",
+            "property": "square",
+            "value": true
+          },
+          {
+            "func": "SET",
+            "property": "clickable",
+            "value": false
+          }
+        ]
+      }
+    ],
+    "noAutomation": "off",
+    "variationChangeRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY variation}",
+        "operand2": "on",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "p1-3",
+              "p2-3"
+            ],
+            "property": "activeFace",
+            "value": 5
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "p1-3",
+              "p2-3"
+            ],
+            "property": "activeFace",
+            "value": 3
+          }
+        ]
+      }
+    ],
+    "variation": "off"
+  },
+  "1,1": {
+    "type": "holder",
+    "id": "1,1",
+    "parent": "boardBack",
+    "width": 100,
+    "height": 100,
+    "dropOffsetX": 14,
+    "dropOffsetY": 13,
+    "dropTarget": {},
+    "classes": "transparent",
+    "css": {
+      "background": "${PROPERTY bgColor}"
+    },
+    "bgColor": "transparent",
+    "square": true,
+    "clickRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY parent OF pulseCover}",
+        "relation": "!=",
+        "operand2": "offScreen",
+        "thenRoutine": [
+          {
+            "func": "SELECT",
+            "property": "square",
+            "value": true,
+            "collection": "allSquares"
+          },
+          "// Attributes of the token that is moving",
+          {
+            "func": "SELECT",
+            "property": "id",
+            "value": "pulseCover",
+            "collection": "pulseCover"
+          },
+          {
+            "func": "GET",
+            "collection": "pulseCover",
+            "property": "parent",
+            "variable": "thisToken"
+          },
+          {
+            "func": "SELECT",
+            "type": "dice",
+            "property": "id",
+            "value": "${thisToken}",
+            "collection": "thisToken"
+          },
+          "// This next variable is used in jumpRoutine. From here it is a single token. From turnButton it is all the playable tokens for the active player.",
+          {
+            "func": "GET",
+            "collection": "thisToken",
+            "aggregation": "array",
+            "property": "id",
+            "variable": "checkTheseTokens"
+          },
+          {
+            "func": "GET",
+            "collection": "thisToken",
+            "property": "pID"
+          },
+          {
+            "func": "GET",
+            "collection": "thisToken",
+            "property": "value",
+            "variable": "pips"
+          },
+          {
+            "func": "GET",
+            "collection": "thisToken",
+            "property": "color",
+            "variable": "tokenColor"
+          },
+          "// Attributes of the old square",
+          "var oldSquare = ${PROPERTY lastHolder OF $thisToken}",
+          "// Attributes of the new square",
+          "var newSquare = ${PROPERTY id}",
+          {
+            "func": "SELECT",
+            "property": "id",
+            "value": "${newSquare}",
+            "collection": "newSquare"
+          },
+          "// If this is the center square, the token did not jump to get there, and the player has not used the center square power, then show the promote button.",
+          "var centerValue = ${PROPERTY activeFace OF $thisToken}",
+          "var canPromote = ${PROPERTY promoteFrom} indexOf ${PROPERTY lastHolder OF $thisToken} ",
+          "var centerCond1 = ${newSquare} == '5,5'",
+          "var centerCond2 = ${canPromote} >= 0",
+          "var centerCond3 = ${PROPERTY $pID OF centerPromote}",
+          "var allCenterCond = ${centerCond1} && ${centerCond2} & ${centerCond3}",
+          {
+            "func": "IF",
+            "condition": "${allCenterCond}",
+            "thenRoutine": [
+              "// If playing with variation rules, do not allow a 5 or the designated 6 to promote",
+              {
+                "func": "IF",
+                "operand1": "${PROPERTY variation OF settings}",
+                "operand2": "on",
+                "thenRoutine": [
+                  {
+                    "func": "IF",
+                    "operand1": "${centerValue}",
+                    "relation": "!=",
+                    "operand2": 5,
+                    "thenRoutine": [
+                      {
+                        "func": "IF",
+                        "operand1": "${centerValue}",
+                        "relation": "!=",
+                        "operand2": 4,
+                        "thenRoutine": [
+                          {
+                            "func": "SET",
+                            "collection": [
+                              "centerPromote"
+                            ],
+                            "property": "scale",
+                            "value": 1
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                "elseRoutine": [
+                  {
+                    "func": "SET",
+                    "collection": [
+                      "centerPromote"
+                    ],
+                    "property": "scale",
+                    "value": 1
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "func": "MOVE",
+            "collection": "thisToken",
+            "to": "${newSquare}",
+            "count": 1
+          },
+          {
+            "func": "CALL",
+            "widget": "routines",
+            "routine": "cleanupPart1Routine"
+          },
+          {
+            "func": "IF",
+            "condition": "${PROPERTY mustJump OF jumpRoutine}",
+            "thenRoutine": [
+              {
+                "func": "CALL",
+                "widget": "jumpRoutine",
+                "routine": "captureRoutine"
+              }
+            ],
+            "elseRoutine": [
+              {
+                "func": "CALL",
+                "widget": "routines",
+                "routine": "promoteRoutine"
+              }
+            ]
+          },
+          {
+            "func": "CALL",
+            "widget": "routines",
+            "routine": "cleanupPart2Routine"
+          },
+          "// Check if another jump is required",
+          {
+            "func": "IF",
+            "condition": "${result}",
+            "thenRoutine": [
+              {
+                "func": "CALL",
+                "widget": "jumpRoutine",
+                "routine": "jumpRoutine"
+              }
+            ]
+          },
+          {
+            "func": "IF",
+            "condition": "${PROPERTY mustJump OF jumpRoutine}",
+            "thenRoutine": [
+              "// Set the pulsecCover back on the token",
+              {
+                "func": "SET",
+                "collection": [
+                  "pulseCover"
+                ],
+                "property": "parent",
+                "value": "${thisToken}"
+              }
+            ],
+            "elseRoutine": [
+              "// Otherwise end the turn unless waiting on the player to decide whether to use the center square power",
+              {
+                "func": "SET",
+                "collection": [
+                  "jumpRoutine"
+                ],
+                "property": "mustJump",
+                "value": false
+              },
+              {
+                "func": "IF",
+                "operand1": "${PROPERTY scale OF centerPromote}",
+                "operand2": 0,
+                "thenRoutine": [
+                  {
+                    "func": "CLICK",
+                    "collection": [
+                      "turnButton"
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "func": "CALL",
+            "widget": "undoRoutine",
+            "routine": "undoArrayRoutine"
+          },
+          "// Check to see if a player has won by getting a 6 into the opponent's home row",
+          {
+            "func": "CALL",
+            "routine": "didWinRoutine",
+            "widget": "routines"
+          }
+        ]
+      }
+    ],
+    "clickable": false,
+    "rollCount": 0,
+    "z": 1,
+    "automation": "routines",
+    "promoteFrom": [
+      "4,4",
+      "6,4",
+      "4,6",
+      "6,6"
+    ],
+    "activeFace": 0,
+    "onEnter": {
+      "clickable": true
+    }
+  },
+  "routines": {
+    "id": "routines",
+    "text": "Routines",
+    "css": {
+      "background": "blue",
+      "color": "white"
+    },
+    "z": 3124,
+    "y": 165,
+    "promoteRoutine": [
+      {
+        "func": "COUNT",
+        "holder": "${newSquare}"
+      },
+      {
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "operand2": 2,
+        "thenRoutine": [
+          {
+            "func": "SELECT",
+            "type": "dice",
+            "property": "parent",
+            "value": "${newSquare}",
+            "collection": "promoteDice"
+          },
+          {
+            "func": "GET",
+            "collection": "promoteDice",
+            "aggregation": "sum",
+            "property": "value",
+            "variable": "sum"
+          },
+          "// Select the die to be removed and move it",
+          {
+            "func": "SELECT",
+            "property": "id",
+            "value": "${thisToken}",
+            "mode": "remove",
+            "collection": "promoteDice"
+          },
+          {
+            "func": "MOVE",
+            "collection": "promoteDice",
+            "to": "offHolder${pID}"
+          },
+          "// Promote the remaining die's activeFace which is 1 less than the sum",
+          "var sum = ${sum} - 1",
+          {
+            "func": "SET",
+            "collection": "thisToken",
+            "property": "activeFace",
+            "value": "${sum}"
+          },
+          "// Hide the center square promote button since it cannot be used",
+          {
+            "func": "SET",
+            "collection": [
+              "centerPromote"
+            ],
+            "property": "scale",
+            "value": 0
+          }
+        ]
+      }
+    ],
+    "cleanupPart1Routine": [
+      {
+        "func": "SET",
+        "collection": "allSquares",
+        "property": "bgColor",
+        "value": "transparent"
+      },
+      {
+        "func": "SET",
+        "collection": "allSquares",
+        "property": "clickable",
+        "value": false
+      },
+      {
+        "func": "SELECT",
+        "property": "clonedFrom",
+        "value": "promoteCover",
+        "collection": "clones"
+      },
+      {
+        "func": "DELETE",
+        "collection": "clones"
+      }
+    ],
+    "cleanupPart2Routine": [
+      {
+        "func": "SET",
+        "collection": "thisToken",
+        "property": "lastHolder",
+        "value": "${newSquare}"
+      },
+      "var counterRotation = ${PROPERTY rotation OF boardBack} * -1",
+      {
+        "func": "SET",
+        "collection": "thisToken",
+        "property": "rotation",
+        "value": "${counterRotation}"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "pulseCover"
+        ],
+        "property": "parent",
+        "value": "offScreen"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "jumpRoutine"
+        ],
+        "property": "mustJump",
+        "value": false
+      }
+    ],
+    "x": -198,
+    "undoArrayRoutine": [
+      "// Update undo array",
+      "var resetTempArray = []",
+      "var resetArray = []",
+      {
+        "func": "SELECT",
+        "type": "dice",
+        "property": "id",
+        "relation": "!=",
+        "value": null,
+        "sortBy": {
+          "key": "id",
+          "reverse": false
+        }
+      },
+      {
+        "func": "GET",
+        "aggregation": "array",
+        "property": "id"
+      },
+      {
+        "func": "GET",
+        "aggregation": "array",
+        "property": "parent"
+      },
+      {
+        "func": "GET",
+        "aggregation": "array",
+        "property": "x"
+      },
+      {
+        "func": "GET",
+        "aggregation": "array",
+        "property": "y"
+      },
+      {
+        "func": "GET",
+        "aggregation": "array",
+        "property": "lastHolder"
+      },
+      "var resetTempArray = push ${id}",
+      "var resetTempArray = push ${parent}",
+      "var resetTempArray = push ${x}",
+      "var resetTempArray = push ${y}",
+      "var resetTempArray = push ${lastHolder}",
+      "var arrayLen = length ${PROPERTY resetArray}",
+      "var arrayLen = ${arrayLen} + 1",
+      "var resetArray.$arrayLen = ${resetTempArray}",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "resetArray",
+        "value": "${resetArray}"
+      }
+    ],
+    "didWinRoutine": [
+      {
+        "func": "SELECT",
+        "type": "dice",
+        "property": "parent",
+        "relation": "in",
+        "value": [
+          "1,1",
+          "3,1",
+          "5,1",
+          "7,1",
+          "9,1"
+        ]
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "color",
+        "value": "#f41000"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "activeFace",
+        "relation": "in",
+        "value": [
+          5,
+          11,
+          17,
+          23
+        ]
+      },
+      {
+        "func": "COUNT"
+      },
+      {
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "operand2": 1,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "winner1"
+            ],
+            "property": "display",
+            "value": true
+          }
+        ]
+      },
+      {
+        "func": "SELECT",
+        "type": "dice",
+        "property": "parent",
+        "relation": "in",
+        "value": [
+          "1,9",
+          "3,9",
+          "5,9",
+          "7,9",
+          "9,9"
+        ]
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "color",
+        "value": "#255ade"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "activeFace",
+        "relation": "in",
+        "value": [
+          5,
+          11,
+          17,
+          23
+        ]
+      },
+      {
+        "func": "COUNT"
+      },
+      {
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "operand2": 1,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "winner2"
+            ],
+            "property": "display",
+            "value": true
+          }
+        ]
+      }
+    ]
+  },
+  "1,2": {
+    "type": "holder",
+    "id": "1,2",
+    "parent": "boardBack",
+    "x": 0,
+    "y": 100,
+    "width": 100,
+    "height": 100,
+    "z": 1,
+    "inheritFrom": {
+      "1,1": "*"
+    },
+    "cell": true,
+    "bgColor": "transparent",
+    "dropLimit": 0,
+    "clickable": false,
+    "rollCount": 0,
+    "activeFace": 0
+  },
+  "1,9": {
+    "type": "holder",
+    "id": "1,9",
+    "parent": "boardBack",
+    "x": 0,
+    "y": 800,
+    "width": 100,
+    "height": 100,
+    "z": 1,
+    "inheritFrom": {
+      "1,1": "*"
+    },
+    "cell": true,
+    "bgColor": "transparent",
+    "clickable": false,
+    "rollCount": 0,
+    "activeFace": 0
+  },
+  "1,8": {
+    "type": "holder",
+    "id": "1,8",
+    "parent": "boardBack",
+    "x": 0,
+    "y": 700,
+    "width": 100,
+    "height": 100,
+    "z": 1,
+    "inheritFrom": {
+      "1,1": "*"
+    },
+    "cell": true,
+    "bgColor": "transparent",
+    "dropLimit": 0,
+    "clickable": false,
+    "rollCount": 0,
+    "activeFace": 0
+  },
+  "1,7": {
+    "type": "holder",
+    "id": "1,7",
+    "parent": "boardBack",
+    "x": 0,
+    "y": 600,
+    "width": 100,
+    "height": 100,
+    "z": 1,
+    "inheritFrom": {
+      "1,1": "*"
+    },
+    "cell": true,
+    "bgColor": "transparent",
+    "clickable": false,
+    "rollCount": 0,
+    "activeFace": 0
+  },
+  "1,6": {
+    "type": "holder",
+    "id": "1,6",
+    "parent": "boardBack",
+    "x": 0,
+    "y": 500,
+    "width": 100,
+    "height": 100,
+    "z": 1,
+    "inheritFrom": {
+      "1,1": "*"
+    },
+    "cell": true,
+    "bgColor": "transparent",
+    "dropLimit": 0,
+    "clickable": false,
+    "rollCount": 0,
+    "activeFace": 0
+  },
+  "1,5": {
+    "type": "holder",
+    "id": "1,5",
+    "parent": "boardBack",
+    "x": 0,
+    "y": 400,
+    "width": 100,
+    "height": 100,
+    "z": 1,
+    "inheritFrom": {
+      "1,1": "*"
+    },
+    "cell": true,
+    "bgColor": "transparent",
+    "clickable": false,
+    "rollCount": 0,
+    "activeFace": 0
+  },
+  "1,4": {
+    "type": "holder",
+    "id": "1,4",
+    "parent": "boardBack",
+    "x": 0,
+    "y": 300,
+    "width": 100,
+    "height": 100,
+    "z": 1,
+    "inheritFrom": {
+      "1,1": "*"
+    },
+    "cell": true,
+    "bgColor": "transparent",
+    "dropLimit": 0,
+    "clickable": false,
+    "rollCount": 0,
+    "activeFace": 0
+  },
+  "1,3": {
+    "type": "holder",
+    "id": "1,3",
+    "parent": "boardBack",
+    "x": 0,
+    "y": 200,
+    "width": 100,
+    "height": 100,
+    "z": 1,
+    "inheritFrom": {
+      "1,1": "*"
+    },
+    "cell": true,
+    "bgColor": "transparent",
+    "clickable": false,
+    "rollCount": 0,
+    "activeFace": 0
+  },
+  "2,1": {
+    "type": "holder",
+    "id": "2,1",
+    "parent": "boardBack",
+    "x": 100,
+    "y": 0,
+    "z": 1,
+    "inheritFrom": {
+      "1,1": "*"
+    },
+    "bgColor": "transparent",
+    "dropLimit": 0,
+    "clickable": false,
+    "rollCount": 0,
+    "activeFace": 0
+  },
+  "2,2": {
+    "inheritFrom": {
+      "1,1": "*"
+    },
+    "type": "holder",
+    "id": "2,2",
+    "x": 100,
+    "y": 100,
+    "parent": "boardBack",
+    "z": 1,
+    "width": 100,
+    "height": 100,
+    "bgColor": "transparent",
+    "clickable": false,
+    "rollCount": 0,
+    "activeFace": 0
+  },
+  "2,3": {
+    "inheritFrom": {
+      "1,1": "*"
+    },
+    "type": "holder",
+    "id": "2,3",
+    "x": 100,
+    "y": 200,
+    "parent": "boardBack",
+    "z": 1,
+    "width": 100,
+    "height": 100,
+    "bgColor": "transparent",
+    "dropLimit": 0,
+    "clickable": false,
+    "rollCount": 0,
+    "activeFace": 0
+  },
+  "2,4": {
+    "inheritFrom": {
+      "1,1": "*"
+    },
+    "type": "holder",
+    "id": "2,4",
+    "x": 100,
+    "y": 300,
+    "parent": "boardBack",
+    "z": 1,
+    "width": 100,
+    "height": 100,
+    "bgColor": "transparent",
+    "clickable": false,
+    "rollCount": 0,
+    "activeFace": 0
+  },
+  "2,5": {
+    "inheritFrom": {
+      "1,1": "*"
+    },
+    "type": "holder",
+    "id": "2,5",
+    "x": 100,
+    "y": 400,
+    "parent": "boardBack",
+    "z": 1,
+    "width": 100,
+    "height": 100,
+    "bgColor": "transparent",
+    "dropLimit": 0,
+    "clickable": false,
+    "rollCount": 0,
+    "activeFace": 0
+  },
+  "2,6": {
+    "inheritFrom": {
+      "1,1": "*"
+    },
+    "type": "holder",
+    "id": "2,6",
+    "x": 100,
+    "y": 500,
+    "parent": "boardBack",
+    "z": 1,
+    "width": 100,
+    "height": 100,
+    "bgColor": "transparent",
+    "clickable": false,
+    "rollCount": 0,
+    "activeFace": 0
+  },
+  "2,7": {
+    "inheritFrom": {
+      "1,1": "*"
+    },
+    "type": "holder",
+    "id": "2,7",
+    "x": 100,
+    "y": 600,
+    "parent": "boardBack",
+    "z": 1,
+    "width": 100,
+    "height": 100,
+    "bgColor": "transparent",
+    "dropLimit": 0,
+    "clickable": false,
+    "rollCount": 0,
+    "activeFace": 0
+  },
+  "2,8": {
+    "inheritFrom": {
+      "1,1": "*"
+    },
+    "type": "holder",
+    "id": "2,8",
+    "x": 100,
+    "y": 700,
+    "parent": "boardBack",
+    "z": 1,
+    "width": 100,
+    "height": 100,
+    "bgColor": "transparent",
+    "clickable": false,
+    "rollCount": 0,
+    "activeFace": 0
+  },
+  "2,9": {
+    "inheritFrom": {
+      "1,1": "*"
+    },
+    "type": "holder",
+    "id": "2,9",
+    "x": 100,
+    "y": 800,
+    "parent": "boardBack",
+    "z": 1,
+    "width": 100,
+    "height": 100,
+    "bgColor": "transparent",
+    "dropLimit": 0,
+    "clickable": false,
+    "rollCount": 0,
+    "activeFace": 0
+  },
+  "3,1": {
+    "type": "holder",
+    "id": "3,1",
+    "parent": "boardBack",
+    "x": 200,
+    "y": 0,
+    "z": 1,
+    "inheritFrom": {
+      "1,1": "*"
+    },
+    "bgColor": "transparent",
+    "clickable": false,
+    "rollCount": 0,
+    "activeFace": 0
+  },
+  "4,1": {
+    "type": "holder",
+    "id": "4,1",
+    "parent": "boardBack",
+    "x": 300,
+    "y": 0,
+    "z": 1,
+    "inheritFrom": {
+      "1,1": "*"
+    },
+    "bgColor": "transparent",
+    "dropLimit": 0,
+    "clickable": false,
+    "rollCount": 0,
+    "activeFace": 0
+  },
+  "5,1": {
+    "type": "holder",
+    "id": "5,1",
+    "parent": "boardBack",
+    "x": 400,
+    "y": 0,
+    "z": 1,
+    "inheritFrom": {
+      "1,1": "*"
+    },
+    "bgColor": "transparent",
+    "clickable": false,
+    "rollCount": 0,
+    "activeFace": 0
+  },
+  "6,1": {
+    "type": "holder",
+    "id": "6,1",
+    "parent": "boardBack",
+    "x": 500,
+    "y": 0,
+    "z": 1,
+    "inheritFrom": {
+      "1,1": "*"
+    },
+    "bgColor": "transparent",
+    "dropLimit": 0,
+    "clickable": false,
+    "rollCount": 0,
+    "activeFace": 0
+  },
+  "7,1": {
+    "type": "holder",
+    "id": "7,1",
+    "parent": "boardBack",
+    "x": 600,
+    "y": 0,
+    "z": 1,
+    "inheritFrom": {
+      "1,1": "*"
+    },
+    "bgColor": "transparent",
+    "clickable": false,
+    "rollCount": 0,
+    "activeFace": 0
+  },
+  "8,1": {
+    "type": "holder",
+    "id": "8,1",
+    "parent": "boardBack",
+    "x": 700,
+    "y": 0,
+    "z": 1,
+    "inheritFrom": {
+      "1,1": "*"
+    },
+    "bgColor": "transparent",
+    "dropLimit": 0,
+    "clickable": false,
+    "rollCount": 0,
+    "activeFace": 0
+  },
+  "9,1": {
+    "type": "holder",
+    "id": "9,1",
+    "parent": "boardBack",
+    "x": 800,
+    "y": 0,
+    "z": 1,
+    "inheritFrom": {
+      "1,1": "*"
+    },
+    "bgColor": "transparent",
+    "clickable": false,
+    "rollCount": 0,
+    "activeFace": 0
+  },
+  "3,2": {
+    "inheritFrom": {
+      "1,1": "*"
+    },
+    "type": "holder",
+    "id": "3,2",
+    "x": 200,
+    "y": 100,
+    "parent": "boardBack",
+    "z": 1,
+    "width": 100,
+    "height": 100,
+    "bgColor": "transparent",
+    "dropLimit": 0,
+    "clickable": false,
+    "rollCount": 0,
+    "activeFace": 0
+  },
+  "3,3": {
+    "inheritFrom": {
+      "1,1": "*"
+    },
+    "type": "holder",
+    "id": "3,3",
+    "x": 200,
+    "y": 200,
+    "parent": "boardBack",
+    "z": 1,
+    "width": 100,
+    "height": 100,
+    "bgColor": "transparent",
+    "clickable": false,
+    "rollCount": 0,
+    "activeFace": 0
+  },
+  "3,4": {
+    "inheritFrom": {
+      "1,1": "*"
+    },
+    "type": "holder",
+    "id": "3,4",
+    "x": 200,
+    "y": 300,
+    "parent": "boardBack",
+    "z": 1,
+    "width": 100,
+    "height": 100,
+    "bgColor": "transparent",
+    "dropLimit": 0,
+    "clickable": false,
+    "rollCount": 0,
+    "activeFace": 0
+  },
+  "3,5": {
+    "inheritFrom": {
+      "1,1": "*"
+    },
+    "type": "holder",
+    "id": "3,5",
+    "x": 200,
+    "y": 400,
+    "parent": "boardBack",
+    "z": 1,
+    "width": 100,
+    "height": 100,
+    "bgColor": "transparent",
+    "clickable": false,
+    "rollCount": 0,
+    "activeFace": 0
+  },
+  "3,6": {
+    "inheritFrom": {
+      "1,1": "*"
+    },
+    "type": "holder",
+    "id": "3,6",
+    "x": 200,
+    "y": 500,
+    "parent": "boardBack",
+    "z": 1,
+    "width": 100,
+    "height": 100,
+    "bgColor": "transparent",
+    "dropLimit": 0,
+    "clickable": false,
+    "rollCount": 0,
+    "activeFace": 0
+  },
+  "3,7": {
+    "inheritFrom": {
+      "1,1": "*"
+    },
+    "type": "holder",
+    "id": "3,7",
+    "x": 200,
+    "y": 600,
+    "parent": "boardBack",
+    "z": 1,
+    "width": 100,
+    "height": 100,
+    "bgColor": "transparent",
+    "clickable": false,
+    "rollCount": 0,
+    "activeFace": 0
+  },
+  "3,8": {
+    "inheritFrom": {
+      "1,1": "*"
+    },
+    "type": "holder",
+    "id": "3,8",
+    "x": 200,
+    "y": 700,
+    "parent": "boardBack",
+    "z": 1,
+    "width": 100,
+    "height": 100,
+    "bgColor": "transparent",
+    "dropLimit": 0,
+    "clickable": false,
+    "rollCount": 0,
+    "activeFace": 0
+  },
+  "3,9": {
+    "inheritFrom": {
+      "1,1": "*"
+    },
+    "type": "holder",
+    "id": "3,9",
+    "x": 200,
+    "y": 800,
+    "parent": "boardBack",
+    "z": 1,
+    "width": 100,
+    "height": 100,
+    "bgColor": "transparent",
+    "clickable": false,
+    "rollCount": 0,
+    "activeFace": 0
+  },
+  "4,2": {
+    "inheritFrom": {
+      "1,1": "*"
+    },
+    "type": "holder",
+    "id": "4,2",
+    "x": 300,
+    "y": 100,
+    "parent": "boardBack",
+    "z": 1,
+    "width": 100,
+    "height": 100,
+    "bgColor": "transparent",
+    "clickable": false,
+    "rollCount": 0,
+    "activeFace": 0
+  },
+  "4,3": {
+    "inheritFrom": {
+      "1,1": "*"
+    },
+    "type": "holder",
+    "id": "4,3",
+    "x": 300,
+    "y": 200,
+    "parent": "boardBack",
+    "z": 1,
+    "width": 100,
+    "height": 100,
+    "bgColor": "transparent",
+    "dropLimit": 0,
+    "clickable": false,
+    "rollCount": 0,
+    "activeFace": 0
+  },
+  "4,4": {
+    "inheritFrom": {
+      "1,1": "*"
+    },
+    "type": "holder",
+    "id": "4,4",
+    "x": 300,
+    "y": 300,
+    "parent": "boardBack",
+    "z": 1,
+    "width": 100,
+    "height": 100,
+    "bgColor": "transparent",
+    "clickable": false,
+    "rollCount": 0,
+    "activeFace": 0
+  },
+  "4,5": {
+    "inheritFrom": {
+      "1,1": "*"
+    },
+    "type": "holder",
+    "id": "4,5",
+    "x": 300,
+    "y": 400,
+    "parent": "boardBack",
+    "z": 1,
+    "width": 100,
+    "height": 100,
+    "bgColor": "transparent",
+    "dropLimit": 0,
+    "clickable": false,
+    "rollCount": 0,
+    "activeFace": 0
+  },
+  "4,6": {
+    "inheritFrom": {
+      "1,1": "*"
+    },
+    "type": "holder",
+    "id": "4,6",
+    "x": 300,
+    "y": 500,
+    "parent": "boardBack",
+    "z": 1,
+    "width": 100,
+    "height": 100,
+    "bgColor": "transparent",
+    "clickable": false,
+    "rollCount": 0,
+    "activeFace": 0
+  },
+  "4,7": {
+    "inheritFrom": {
+      "1,1": "*"
+    },
+    "type": "holder",
+    "id": "4,7",
+    "x": 300,
+    "y": 600,
+    "parent": "boardBack",
+    "z": 1,
+    "width": 100,
+    "height": 100,
+    "bgColor": "transparent",
+    "dropLimit": 0,
+    "clickable": false,
+    "rollCount": 0,
+    "activeFace": 0
+  },
+  "4,8": {
+    "inheritFrom": {
+      "1,1": "*"
+    },
+    "type": "holder",
+    "id": "4,8",
+    "x": 300,
+    "y": 700,
+    "parent": "boardBack",
+    "z": 1,
+    "width": 100,
+    "height": 100,
+    "bgColor": "transparent",
+    "clickable": false,
+    "rollCount": 0,
+    "activeFace": 0
+  },
+  "4,9": {
+    "inheritFrom": {
+      "1,1": "*"
+    },
+    "type": "holder",
+    "id": "4,9",
+    "x": 300,
+    "y": 800,
+    "parent": "boardBack",
+    "z": 1,
+    "width": 100,
+    "height": 100,
+    "bgColor": "transparent",
+    "dropLimit": 0,
+    "clickable": false,
+    "rollCount": 0,
+    "activeFace": 0
+  },
+  "6,2": {
+    "inheritFrom": {
+      "1,1": "*"
+    },
+    "type": "holder",
+    "id": "6,2",
+    "x": 500,
+    "y": 100,
+    "parent": "boardBack",
+    "z": 1,
+    "width": 100,
+    "height": 100,
+    "bgColor": "transparent",
+    "clickable": false,
+    "rollCount": 0,
+    "activeFace": 0
+  },
+  "6,3": {
+    "inheritFrom": {
+      "1,1": "*"
+    },
+    "type": "holder",
+    "id": "6,3",
+    "x": 500,
+    "y": 200,
+    "parent": "boardBack",
+    "z": 1,
+    "width": 100,
+    "height": 100,
+    "bgColor": "transparent",
+    "dropLimit": 0,
+    "clickable": false,
+    "rollCount": 0,
+    "activeFace": 0
+  },
+  "6,4": {
+    "inheritFrom": {
+      "1,1": "*"
+    },
+    "type": "holder",
+    "id": "6,4",
+    "x": 500,
+    "y": 300,
+    "parent": "boardBack",
+    "z": 1,
+    "width": 100,
+    "height": 100,
+    "bgColor": "transparent",
+    "clickable": false,
+    "rollCount": 0,
+    "activeFace": 0
+  },
+  "6,5": {
+    "inheritFrom": {
+      "1,1": "*"
+    },
+    "type": "holder",
+    "id": "6,5",
+    "x": 500,
+    "y": 400,
+    "parent": "boardBack",
+    "z": 1,
+    "width": 100,
+    "height": 100,
+    "bgColor": "transparent",
+    "dropLimit": 0,
+    "clickable": false,
+    "rollCount": 0,
+    "activeFace": 0
+  },
+  "6,6": {
+    "inheritFrom": {
+      "1,1": "*"
+    },
+    "type": "holder",
+    "id": "6,6",
+    "x": 500,
+    "y": 500,
+    "parent": "boardBack",
+    "z": 1,
+    "width": 100,
+    "height": 100,
+    "bgColor": "transparent",
+    "clickable": false,
+    "rollCount": 0,
+    "activeFace": 0
+  },
+  "6,7": {
+    "inheritFrom": {
+      "1,1": "*"
+    },
+    "type": "holder",
+    "id": "6,7",
+    "x": 500,
+    "y": 600,
+    "parent": "boardBack",
+    "z": 1,
+    "width": 100,
+    "height": 100,
+    "bgColor": "transparent",
+    "dropLimit": 0,
+    "clickable": false,
+    "rollCount": 0,
+    "activeFace": 0
+  },
+  "6,8": {
+    "inheritFrom": {
+      "1,1": "*"
+    },
+    "type": "holder",
+    "id": "6,8",
+    "x": 500,
+    "y": 700,
+    "parent": "boardBack",
+    "z": 1,
+    "width": 100,
+    "height": 100,
+    "bgColor": "transparent",
+    "clickable": false,
+    "rollCount": 0,
+    "activeFace": 0
+  },
+  "6,9": {
+    "inheritFrom": {
+      "1,1": "*"
+    },
+    "type": "holder",
+    "id": "6,9",
+    "x": 500,
+    "y": 800,
+    "parent": "boardBack",
+    "z": 1,
+    "width": 100,
+    "height": 100,
+    "bgColor": "transparent",
+    "dropLimit": 0,
+    "clickable": false,
+    "rollCount": 0,
+    "activeFace": 0
+  },
+  "7,2": {
+    "inheritFrom": {
+      "1,1": "*"
+    },
+    "type": "holder",
+    "id": "7,2",
+    "x": 600,
+    "y": 100,
+    "parent": "boardBack",
+    "z": 1,
+    "width": 100,
+    "height": 100,
+    "bgColor": "transparent",
+    "dropLimit": 0,
+    "clickable": false,
+    "rollCount": 0,
+    "activeFace": 0
+  },
+  "7,3": {
+    "inheritFrom": {
+      "1,1": "*"
+    },
+    "type": "holder",
+    "id": "7,3",
+    "x": 600,
+    "y": 200,
+    "parent": "boardBack",
+    "z": 1,
+    "width": 100,
+    "height": 100,
+    "bgColor": "transparent",
+    "clickable": false,
+    "rollCount": 0,
+    "activeFace": 0
+  },
+  "7,4": {
+    "inheritFrom": {
+      "1,1": "*"
+    },
+    "type": "holder",
+    "id": "7,4",
+    "x": 600,
+    "y": 300,
+    "parent": "boardBack",
+    "z": 1,
+    "width": 100,
+    "height": 100,
+    "bgColor": "transparent",
+    "dropLimit": 0,
+    "clickable": false,
+    "rollCount": 0,
+    "activeFace": 0
+  },
+  "7,5": {
+    "inheritFrom": {
+      "1,1": "*"
+    },
+    "type": "holder",
+    "id": "7,5",
+    "x": 600,
+    "y": 400,
+    "parent": "boardBack",
+    "z": 1,
+    "width": 100,
+    "height": 100,
+    "bgColor": "transparent",
+    "clickable": false,
+    "rollCount": 0,
+    "activeFace": 0
+  },
+  "7,6": {
+    "inheritFrom": {
+      "1,1": "*"
+    },
+    "type": "holder",
+    "id": "7,6",
+    "x": 600,
+    "y": 500,
+    "parent": "boardBack",
+    "z": 1,
+    "width": 100,
+    "height": 100,
+    "bgColor": "transparent",
+    "dropLimit": 0,
+    "clickable": false,
+    "rollCount": 0,
+    "activeFace": 0
+  },
+  "7,7": {
+    "inheritFrom": {
+      "1,1": "*"
+    },
+    "type": "holder",
+    "id": "7,7",
+    "x": 600,
+    "y": 600,
+    "parent": "boardBack",
+    "z": 1,
+    "width": 100,
+    "height": 100,
+    "bgColor": "transparent",
+    "clickable": false,
+    "rollCount": 0,
+    "activeFace": 0
+  },
+  "7,8": {
+    "inheritFrom": {
+      "1,1": "*"
+    },
+    "type": "holder",
+    "id": "7,8",
+    "x": 600,
+    "y": 700,
+    "parent": "boardBack",
+    "z": 1,
+    "width": 100,
+    "height": 100,
+    "bgColor": "transparent",
+    "dropLimit": 0,
+    "clickable": false,
+    "rollCount": 0,
+    "activeFace": 0
+  },
+  "7,9": {
+    "inheritFrom": {
+      "1,1": "*"
+    },
+    "type": "holder",
+    "id": "7,9",
+    "x": 600,
+    "y": 800,
+    "parent": "boardBack",
+    "z": 1,
+    "width": 100,
+    "height": 100,
+    "bgColor": "transparent",
+    "clickable": false,
+    "rollCount": 0,
+    "activeFace": 0
+  },
+  "8,2": {
+    "inheritFrom": {
+      "1,1": "*"
+    },
+    "type": "holder",
+    "id": "8,2",
+    "x": 700,
+    "y": 100,
+    "parent": "boardBack",
+    "z": 1,
+    "width": 100,
+    "height": 100,
+    "bgColor": "transparent",
+    "clickable": false,
+    "rollCount": 0,
+    "activeFace": 0
+  },
+  "8,3": {
+    "inheritFrom": {
+      "1,1": "*"
+    },
+    "type": "holder",
+    "id": "8,3",
+    "x": 700,
+    "y": 200,
+    "parent": "boardBack",
+    "z": 1,
+    "width": 100,
+    "height": 100,
+    "bgColor": "transparent",
+    "dropLimit": 0,
+    "clickable": false,
+    "rollCount": 0,
+    "activeFace": 0
+  },
+  "8,4": {
+    "inheritFrom": {
+      "1,1": "*"
+    },
+    "type": "holder",
+    "id": "8,4",
+    "x": 700,
+    "y": 300,
+    "parent": "boardBack",
+    "z": 1,
+    "width": 100,
+    "height": 100,
+    "bgColor": "transparent",
+    "clickable": false,
+    "rollCount": 0,
+    "activeFace": 0
+  },
+  "8,5": {
+    "inheritFrom": {
+      "1,1": "*"
+    },
+    "type": "holder",
+    "id": "8,5",
+    "x": 700,
+    "y": 400,
+    "parent": "boardBack",
+    "z": 1,
+    "width": 100,
+    "height": 100,
+    "bgColor": "transparent",
+    "dropLimit": 0,
+    "clickable": false,
+    "rollCount": 0,
+    "activeFace": 0
+  },
+  "8,6": {
+    "inheritFrom": {
+      "1,1": "*"
+    },
+    "type": "holder",
+    "id": "8,6",
+    "x": 700,
+    "y": 500,
+    "parent": "boardBack",
+    "z": 1,
+    "width": 100,
+    "height": 100,
+    "bgColor": "transparent",
+    "clickable": false,
+    "rollCount": 0,
+    "activeFace": 0
+  },
+  "8,7": {
+    "inheritFrom": {
+      "1,1": "*"
+    },
+    "type": "holder",
+    "id": "8,7",
+    "x": 700,
+    "y": 600,
+    "parent": "boardBack",
+    "z": 1,
+    "width": 100,
+    "height": 100,
+    "bgColor": "transparent",
+    "dropLimit": 0,
+    "clickable": false,
+    "rollCount": 0,
+    "activeFace": 0
+  },
+  "8,8": {
+    "inheritFrom": {
+      "1,1": "*"
+    },
+    "type": "holder",
+    "id": "8,8",
+    "x": 700,
+    "y": 700,
+    "parent": "boardBack",
+    "z": 1,
+    "width": 100,
+    "height": 100,
+    "bgColor": "transparent",
+    "clickable": false,
+    "rollCount": 0,
+    "activeFace": 0
+  },
+  "8,9": {
+    "inheritFrom": {
+      "1,1": "*"
+    },
+    "type": "holder",
+    "id": "8,9",
+    "x": 700,
+    "y": 800,
+    "parent": "boardBack",
+    "z": 1,
+    "width": 100,
+    "height": 100,
+    "bgColor": "transparent",
+    "dropLimit": 0,
+    "clickable": false,
+    "rollCount": 0,
+    "activeFace": 0
+  },
+  "9,2": {
+    "inheritFrom": {
+      "1,1": "*"
+    },
+    "type": "holder",
+    "id": "9,2",
+    "x": 800,
+    "y": 100,
+    "parent": "boardBack",
+    "z": 1,
+    "width": 100,
+    "height": 100,
+    "bgColor": "transparent",
+    "dropLimit": 0,
+    "clickable": false,
+    "rollCount": 0,
+    "activeFace": 0
+  },
+  "9,3": {
+    "inheritFrom": {
+      "1,1": "*"
+    },
+    "type": "holder",
+    "id": "9,3",
+    "x": 800,
+    "y": 200,
+    "parent": "boardBack",
+    "z": 1,
+    "width": 100,
+    "height": 100,
+    "bgColor": "transparent",
+    "clickable": false,
+    "rollCount": 0,
+    "activeFace": 0
+  },
+  "9,4": {
+    "inheritFrom": {
+      "1,1": "*"
+    },
+    "type": "holder",
+    "id": "9,4",
+    "x": 800,
+    "y": 300,
+    "parent": "boardBack",
+    "z": 1,
+    "width": 100,
+    "height": 100,
+    "bgColor": "transparent",
+    "dropLimit": 0,
+    "clickable": false,
+    "rollCount": 0,
+    "activeFace": 0
+  },
+  "9,5": {
+    "inheritFrom": {
+      "1,1": "*"
+    },
+    "type": "holder",
+    "id": "9,5",
+    "x": 800,
+    "y": 400,
+    "parent": "boardBack",
+    "z": 1,
+    "width": 100,
+    "height": 100,
+    "bgColor": "transparent",
+    "clickable": false,
+    "rollCount": 0,
+    "activeFace": 0
+  },
+  "9,6": {
+    "inheritFrom": {
+      "1,1": "*"
+    },
+    "type": "holder",
+    "id": "9,6",
+    "x": 800,
+    "y": 500,
+    "parent": "boardBack",
+    "z": 1,
+    "width": 100,
+    "height": 100,
+    "bgColor": "transparent",
+    "dropLimit": 0,
+    "clickable": false,
+    "rollCount": 0,
+    "activeFace": 0
+  },
+  "9,7": {
+    "inheritFrom": {
+      "1,1": "*"
+    },
+    "type": "holder",
+    "id": "9,7",
+    "x": 800,
+    "y": 600,
+    "parent": "boardBack",
+    "z": 1,
+    "width": 100,
+    "height": 100,
+    "bgColor": "transparent",
+    "clickable": false,
+    "rollCount": 0,
+    "activeFace": 0
+  },
+  "9,8": {
+    "inheritFrom": {
+      "1,1": "*"
+    },
+    "type": "holder",
+    "id": "9,8",
+    "x": 800,
+    "y": 700,
+    "parent": "boardBack",
+    "z": 1,
+    "width": 100,
+    "height": 100,
+    "bgColor": "transparent",
+    "dropLimit": 0,
+    "clickable": false,
+    "rollCount": 0,
+    "activeFace": 0
+  },
+  "9,9": {
+    "inheritFrom": {
+      "1,1": "*"
+    },
+    "type": "holder",
+    "id": "9,9",
+    "x": 800,
+    "y": 800,
+    "parent": "boardBack",
+    "z": 1,
+    "width": 100,
+    "height": 100,
+    "bgColor": "transparent",
+    "clickable": false,
+    "rollCount": 0,
+    "activeFace": 0
+  },
+  "5,2": {
+    "inheritFrom": {
+      "1,1": "*"
+    },
+    "type": "holder",
+    "id": "5,2",
+    "x": 400,
+    "y": 100,
+    "bgColor": "transparent",
+    "dropLimit": 0,
+    "clickable": false,
+    "rollCount": 0,
+    "z": 1,
+    "activeFace": 0
+  },
+  "5,3": {
+    "inheritFrom": {
+      "1,1": "*"
+    },
+    "type": "holder",
+    "id": "5,3",
+    "x": 400,
+    "y": 200,
+    "bgColor": "transparent",
+    "clickable": false,
+    "rollCount": 0,
+    "z": 1,
+    "activeFace": 0
+  },
+  "5,4": {
+    "inheritFrom": {
+      "1,1": "*"
+    },
+    "type": "holder",
+    "id": "5,4",
+    "x": 400,
+    "y": 300,
+    "bgColor": "transparent",
+    "dropLimit": 0,
+    "clickable": false,
+    "rollCount": 0,
+    "z": 1,
+    "activeFace": 0
+  },
+  "5,5": {
+    "inheritFrom": {
+      "1,1": "*"
+    },
+    "type": "holder",
+    "id": "5,5",
+    "x": 400,
+    "y": 400,
+    "bgColor": "transparent",
+    "clickable": false,
+    "rollCount": 0,
+    "z": 1,
+    "activeFace": 0
+  },
+  "5,6": {
+    "inheritFrom": {
+      "1,1": "*"
+    },
+    "type": "holder",
+    "id": "5,6",
+    "x": 400,
+    "y": 500,
+    "bgColor": "transparent",
+    "dropLimit": 0,
+    "clickable": false,
+    "rollCount": 0,
+    "z": 1,
+    "activeFace": 0
+  },
+  "5,7": {
+    "inheritFrom": {
+      "1,1": "*"
+    },
+    "type": "holder",
+    "id": "5,7",
+    "x": 400,
+    "y": 600,
+    "bgColor": "transparent",
+    "clickable": false,
+    "rollCount": 0,
+    "z": 1,
+    "activeFace": 0
+  },
+  "5,8": {
+    "inheritFrom": {
+      "1,1": "*"
+    },
+    "type": "holder",
+    "id": "5,8",
+    "x": 400,
+    "y": 700,
+    "bgColor": "transparent",
+    "dropLimit": 0,
+    "clickable": false,
+    "rollCount": 0,
+    "z": 1,
+    "activeFace": 0
+  },
+  "5,9": {
+    "inheritFrom": {
+      "1,1": "*"
+    },
+    "type": "holder",
+    "id": "5,9",
+    "x": 400,
+    "y": 800,
+    "bgColor": "transparent",
+    "clickable": false,
+    "rollCount": 0,
+    "z": 1,
+    "activeFace": 0
+  },
+  "pulseCover": {
+    "id": "pulseCover",
+    "parent": "offScreen",
+    "width": 70,
+    "height": 70,
+    "borderRadius": 15,
+    "movable": false,
+    "css": {
+      "default": {
+        "opacity": 0.5
+      }
+    },
+    "image": "/assets/-2061270606_265",
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": [
+          "pulseCover"
+        ],
+        "property": "parent",
+        "value": "offScreen"
+      },
+      {
+        "func": "SELECT",
+        "property": "square",
+        "value": true
+      },
+      {
+        "func": "SET",
+        "property": "bgColor",
+        "value": "transparent"
+      },
+      {
+        "func": "SELECT",
+        "property": "clonedFrom",
+        "value": "promoteCover"
+      },
+      {
+        "func": "DELETE"
+      }
+    ]
+  },
+  "p1-1": {
+    "type": "dice",
+    "id": "p1-1",
+    "width": 70,
+    "height": 70,
+    "z": 4105,
+    "color": "#f41000",
+    "faces": [
+      {
+        "image": "i/icons/die_face_1.svg",
+        "imageScale": 0.9,
+        "svgReplaces": {
+          "currentColor": "pipColor"
+        }
+      },
+      {
+        "image": "i/icons/die_face_2.svg",
+        "imageScale": 0.9,
+        "svgReplaces": {
+          "currentColor": "pipColor"
+        }
+      },
+      {
+        "image": "i/icons/die_face_3.svg",
+        "imageScale": 0.9,
+        "svgReplaces": {
+          "currentColor": "pipColor"
+        }
+      },
+      {
+        "image": "i/icons/die_face_4.svg",
+        "imageScale": 0.9,
+        "svgReplaces": {
+          "currentColor": "pipColor"
+        }
+      },
+      {
+        "image": "i/icons/die_face_5.svg",
+        "imageScale": 0.9,
+        "svgReplaces": {
+          "currentColor": "pipColor"
+        }
+      },
+      {
+        "image": "i/icons/die_face_6.svg",
+        "imageScale": 0.9,
+        "svgReplaces": {
+          "currentColor": "pipColor"
+        }
+      }
+    ],
+    "pipColor": "white",
+    "pID": 1,
+    "resetProperties": {
+      "parent": "1,9",
+      "activeFace": 1,
+      "lastHolder": "1,9"
+    },
+    "clickRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY noAutomation OF settings}",
+        "operand2": "on",
+        "thenRoutine": [
+          "// If automation is disabled, then increase the activeFace by 1",
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "activeFace",
+            "relation": "+",
+            "value": 1
+          }
+        ],
+        "elseRoutine": [
+          "// Otherwise, start the automation process",
+          {
+            "func": "SELECT",
+            "type": "seat",
+            "property": "turn",
+            "value": true,
+            "collection": "turnSeat"
+          },
+          {
+            "func": "GET",
+            "collection": "turnSeat",
+            "property": "index"
+          },
+          {
+            "func": "IF",
+            "operand1": "${PROPERTY pID}",
+            "operand2": "${index}",
+            "thenRoutine": [
+              "// Only allow automation for this token if it is this player's turn",
+              {
+                "func": "CALL",
+                "routine": "tokenAutomationRoutine"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "borderRadius": 15,
+    "css": {
+      "default": {
+        "border": "1px solid white"
+      },
+      "_, .transition": {
+        "transition": "transform 600ms"
+      },
+      "_, .transition.dragging": {
+        "transition": "none"
+      }
+    },
+    "classes": "transition",
+    "tokenAutomationRoutine": [
+      {
+        "func": "SELECT",
+        "property": "square",
+        "value": true,
+        "collection": "allSquares"
+      },
+      "// Attributes of the the clicked token",
+      {
+        "func": "GET",
+        "collection": [
+          "${PROPERTY id}"
+        ],
+        "property": "id",
+        "variable": "thisToken"
+      },
+      {
+        "func": "SELECT",
+        "type": "dice",
+        "property": "id",
+        "value": "${thisToken}",
+        "collection": "thisToken"
+      },
+      "// This next variable is used in jumpRoutine. From here it is a single token. From turnButton it is all the playable tokens for the active player.",
+      {
+        "func": "GET",
+        "collection": "thisToken",
+        "aggregation": "array",
+        "property": "id",
+        "variable": "checkTheseTokens"
+      },
+      {
+        "func": "GET",
+        "collection": "thisToken",
+        "property": "pID"
+      },
+      {
+        "func": "GET",
+        "collection": "thisToken",
+        "property": "value",
+        "variable": "pips"
+      },
+      {
+        "func": "GET",
+        "collection": "thisToken",
+        "property": "color",
+        "variable": "tokenColor"
+      },
+      "// Attributes of the old square",
+      "var oldSquare = ${PROPERTY lastHolder OF $thisToken}",
+      "// Attributes of the new square",
+      "var newSquare = ${PROPERTY parent OF $thisToken}",
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "${newSquare}",
+        "collection": "newSquare"
+      },
+      "// Erase old move options",
+      {
+        "func": "SET",
+        "collection": "allSquares",
+        "property": "bgColor",
+        "value": "transparent"
+      },
+      {
+        "func": "SELECT",
+        "property": "clonedFrom",
+        "value": "promoteCover"
+      },
+      {
+        "func": "DELETE"
+      },
+      "// Handle the pulseCover",
+      "var validToken = ${PROPERTY jumpTokens OF jumpRoutine} includes ${thisToken}",
+      {
+        "func": "IF",
+        "condition": "${PROPERTY mustJump OF jumpRoutine}",
+        "thenRoutine": [
+          "// If this is a must jump, then only activate the pulseCover for tokens that can jump",
+          {
+            "func": "IF",
+            "condition": "${validToken}",
+            "thenRoutine": [
+              {
+                "func": "SET",
+                "collection": [
+                  "pulseCover"
+                ],
+                "property": "parent",
+                "value": "${PROPERTY id}"
+              },
+              {
+                "func": "CALL",
+                "widget": "jumpRoutine",
+                "routine": "jumpRoutine"
+              }
+            ]
+          }
+        ],
+        "elseRoutine": [
+          "// Othewise, put the pulseCover on this token",
+          {
+            "func": "SET",
+            "collection": [
+              "pulseCover"
+            ],
+            "property": "parent",
+            "value": "${thisToken}"
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY parent}",
+        "operand2": "5,5",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "centerPromote"
+            ],
+            "property": "scale",
+            "value": 0
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "condition": "${PROPERTY mustJump OF jumpRoutine}",
+        "elseRoutine": [
+          {
+            "func": "CALL",
+            "widget": "moveRoutine",
+            "routine": "moveRoutine"
+          }
+        ]
+      }
+    ],
+    "y": 13,
+    "activeFace": 1,
+    "undoProperties": [
+      "parent",
+      "x",
+      "y",
+      "lastHolder",
+      "activeFace"
+    ],
+    "x": 14,
+    "lastHolder": "1,9",
+    "parent": "1,9"
+  },
+  "p1-2": {
+    "type": "dice",
+    "id": "p1-2",
+    "z": 4108,
+    "resetProperties": {
+      "parent": "3,9",
+      "lastHolder": "3,9",
+      "activeFace": 2
+    },
+    "inheritFrom": {
+      "p1-1": [
+        "!parent"
+      ]
+    },
+    "rollCount": 0,
+    "clickable": true,
+    "movable": false,
+    "rotation": 0,
+    "x": 14,
+    "y": 13,
+    "activeFace": 2,
+    "lastHolder": "3,9",
+    "parent": "3,9"
+  },
+  "p1-3": {
+    "type": "dice",
+    "id": "p1-3",
+    "z": 4194,
+    "resetProperties": {
+      "parent": "5,9",
+      "lastHolder": "5,9",
+      "activeFace": 3
+    },
+    "inheritFrom": {
+      "p1-1": [
+        "!parent"
+      ]
+    },
+    "rollCount": 0,
+    "clickable": true,
+    "movable": false,
+    "rotation": 0,
+    "x": 14,
+    "y": 13,
+    "activeFace": 3,
+    "lastHolder": "5,9",
+    "parent": "5,9"
+  },
+  "p1-4": {
+    "inheritFrom": {
+      "p1-1": [
+        "!parent"
+      ]
+    },
+    "type": "dice",
+    "id": "p1-4",
+    "z": 4184,
+    "resetProperties": {
+      "parent": "7,9",
+      "lastHolder": "7,9",
+      "activeFace": 2
+    },
+    "rollCount": 0,
+    "clickable": true,
+    "movable": false,
+    "rotation": 0,
+    "x": 14,
+    "y": 13,
+    "lastHolder": "7,9",
+    "activeFace": 2,
+    "parent": "7,9"
+  },
+  "p1-5": {
+    "inheritFrom": {
+      "p1-1": [
+        "!parent"
+      ]
+    },
+    "type": "dice",
+    "id": "p1-5",
+    "z": 3960,
+    "resetProperties": {
+      "parent": "9,9",
+      "lastHolder": "9,9",
+      "activeFace": 1
+    },
+    "rollCount": 0,
+    "clickable": true,
+    "movable": false,
+    "rotation": 0,
+    "x": 14,
+    "y": 13,
+    "activeFace": 1,
+    "lastHolder": "9,9",
+    "parent": "9,9"
+  },
+  "p1-6": {
+    "inheritFrom": {
+      "p1-1": [
+        "!parent"
+      ]
+    },
+    "type": "dice",
+    "id": "p1-6",
+    "z": 4128,
+    "resetProperties": {
+      "parent": "2,8",
+      "lastHolder": "2,8",
+      "activeFace": 0
+    },
+    "rollCount": 0,
+    "clickable": true,
+    "movable": false,
+    "rotation": 0,
+    "x": 14,
+    "y": 13,
+    "activeFace": 0,
+    "lastHolder": "2,8",
+    "parent": "2,8"
+  },
+  "p1-7": {
+    "inheritFrom": {
+      "p1-1": [
+        "!parent"
+      ]
+    },
+    "type": "dice",
+    "id": "p1-7",
+    "z": 2,
+    "resetProperties": {
+      "parent": "4,8",
+      "lastHolder": "4,8",
+      "activeFace": 0
+    },
+    "rollCount": 0,
+    "clickable": true,
+    "movable": false,
+    "rotation": 0,
+    "x": 14,
+    "y": 13,
+    "activeFace": 0,
+    "lastHolder": "4,8",
+    "parent": "4,8"
+  },
+  "p1-8": {
+    "inheritFrom": {
+      "p1-1": [
+        "!parent"
+      ]
+    },
+    "type": "dice",
+    "id": "p1-8",
+    "z": 3,
+    "resetProperties": {
+      "parent": "6,8",
+      "lastHolder": "6,8",
+      "activeFace": 0
+    },
+    "rollCount": 0,
+    "clickable": true,
+    "movable": false,
+    "rotation": 0,
+    "x": 14,
+    "y": 13,
+    "activeFace": 0,
+    "lastHolder": "6,8",
+    "parent": "6,8"
+  },
+  "p1-9": {
+    "inheritFrom": {
+      "p1-1": [
+        "!parent"
+      ]
+    },
+    "type": "dice",
+    "id": "p1-9",
+    "z": 4,
+    "resetProperties": {
+      "parent": "8,8",
+      "lastHolder": "8,8",
+      "activeFace": 0
+    },
+    "rollCount": 0,
+    "clickable": true,
+    "movable": false,
+    "rotation": 0,
+    "x": 14,
+    "y": 13,
+    "lastHolder": "8,8",
+    "activeFace": 0,
+    "parent": "8,8",
+    "display": true
+  },
+  "p1-10": {
+    "inheritFrom": {
+      "p1-1": [
+        "!parent"
+      ]
+    },
+    "type": "dice",
+    "id": "p1-10",
+    "z": 4,
+    "resetProperties": {
+      "parent": "1,7",
+      "lastHolder": "1,7",
+      "activeFace": 0
+    },
+    "rollCount": 0,
+    "clickable": true,
+    "movable": false,
+    "rotation": 0,
+    "x": 14,
+    "y": 13,
+    "lastHolder": "1,7",
+    "activeFace": 0,
+    "parent": "1,7"
+  },
+  "p1-11": {
+    "inheritFrom": {
+      "p1-1": [
+        "!parent"
+      ]
+    },
+    "type": "dice",
+    "id": "p1-11",
+    "z": 2,
+    "resetProperties": {
+      "parent": "3,7",
+      "lastHolder": "3,7",
+      "activeFace": 0
+    },
+    "rollCount": 0,
+    "clickable": true,
+    "movable": false,
+    "rotation": 0,
+    "x": 14,
+    "y": 13,
+    "activeFace": 0,
+    "lastHolder": "3,7",
+    "parent": "3,7"
+  },
+  "p1-12": {
+    "inheritFrom": {
+      "p1-1": [
+        "!parent"
+      ]
+    },
+    "type": "dice",
+    "id": "p1-12",
+    "z": 1,
+    "resetProperties": {
+      "parent": "5,7",
+      "lastHolder": "5,7",
+      "activeFace": 0
+    },
+    "rollCount": 0,
+    "clickable": true,
+    "movable": false,
+    "rotation": 0,
+    "x": 14,
+    "y": 13,
+    "activeFace": 0,
+    "lastHolder": "5,7",
+    "parent": "5,7"
+  },
+  "p1-13": {
+    "inheritFrom": {
+      "p1-1": [
+        "!parent"
+      ]
+    },
+    "type": "dice",
+    "id": "p1-13",
+    "z": 4156,
+    "resetProperties": {
+      "parent": "7,7",
+      "lastHolder": "7,7",
+      "activeFace": 0
+    },
+    "rollCount": 0,
+    "clickable": true,
+    "movable": false,
+    "rotation": 0,
+    "x": 14,
+    "y": 13,
+    "activeFace": 0,
+    "lastHolder": "7,7",
+    "parent": "7,7"
+  },
+  "p1-14": {
+    "inheritFrom": {
+      "p1-1": [
+        "!parent"
+      ]
+    },
+    "type": "dice",
+    "id": "p1-14",
+    "z": 4154,
+    "resetProperties": {
+      "parent": "9,7",
+      "lastHolder": "9,7",
+      "activeFace": 0
+    },
+    "rollCount": 0,
+    "clickable": true,
+    "movable": false,
+    "rotation": 0,
+    "x": 14,
+    "y": 13,
+    "lastHolder": "9,7",
+    "activeFace": 0,
+    "parent": "9,7"
+  },
+  "p2-1": {
+    "type": "dice",
+    "id": "p2-1",
+    "z": 4188,
+    "color": "#255ade",
+    "inheritFrom": {
+      "p1-1": "*"
+    },
+    "pipColor": "white",
+    "resetProperties": {
+      "parent": "1,1",
+      "lastHolder": "1,1",
+      "activeFace": 1
+    },
+    "rollCount": 0,
+    "pID": 2,
+    "clickable": true,
+    "movable": false,
+    "rotation": 0,
+    "x": 14,
+    "y": 13,
+    "activeFace": 1,
+    "lastHolder": "1,1",
+    "parent": "1,1"
+  },
+  "p2-14": {
+    "type": "dice",
+    "id": "p2-14",
+    "z": 2,
+    "inheritFrom": {
+      "p2-1": [
+        "color",
+        "pipColor",
+        "pID"
+      ],
+      "p1-1": [
+        "!parent"
+      ]
+    },
+    "resetProperties": {
+      "parent": "9,3",
+      "lastHolder": "9,3",
+      "activeFace": 0
+    },
+    "rollCount": 0,
+    "clickable": true,
+    "movable": false,
+    "rotation": 0,
+    "x": 14,
+    "y": 13,
+    "activeFace": 0,
+    "lastHolder": "9,3",
+    "parent": "9,3"
+  },
+  "p2-13": {
+    "type": "dice",
+    "id": "p2-13",
+    "z": 4193,
+    "inheritFrom": {
+      "p2-1": [
+        "color",
+        "pipColor",
+        "pID"
+      ],
+      "p1-1": [
+        "!parent"
+      ]
+    },
+    "resetProperties": {
+      "parent": "7,3",
+      "lastHolder": "7,3",
+      "activeFace": 0
+    },
+    "rollCount": 0,
+    "clickable": true,
+    "movable": false,
+    "rotation": 0,
+    "x": 14,
+    "y": 13,
+    "activeFace": 0,
+    "lastHolder": "7,3",
+    "parent": "7,3"
+  },
+  "p2-12": {
+    "type": "dice",
+    "id": "p2-12",
+    "z": 2,
+    "inheritFrom": {
+      "p2-1": [
+        "color",
+        "pipColor",
+        "pID"
+      ],
+      "p1-1": [
+        "!parent"
+      ]
+    },
+    "resetProperties": {
+      "parent": "5,3",
+      "lastHolder": "5,3",
+      "activeFace": 0
+    },
+    "rollCount": 0,
+    "clickable": true,
+    "movable": false,
+    "rotation": 0,
+    "x": 14,
+    "y": 13,
+    "activeFace": 0,
+    "lastHolder": "5,3",
+    "parent": "5,3"
+  },
+  "p2-11": {
+    "type": "dice",
+    "id": "p2-11",
+    "z": 1,
+    "inheritFrom": {
+      "p2-1": [
+        "color",
+        "pipColor",
+        "pID"
+      ],
+      "p1-1": [
+        "!parent"
+      ]
+    },
+    "resetProperties": {
+      "parent": "3,3",
+      "lastHolder": "3,3",
+      "activeFace": 0
+    },
+    "rollCount": 0,
+    "clickable": true,
+    "movable": false,
+    "rotation": 0,
+    "x": 14,
+    "y": 13,
+    "activeFace": 0,
+    "lastHolder": "3,3",
+    "parent": "3,3"
+  },
+  "p2-10": {
+    "type": "dice",
+    "id": "p2-10",
+    "z": 1,
+    "inheritFrom": {
+      "p2-1": [
+        "color",
+        "pipColor",
+        "pID"
+      ],
+      "p1-1": [
+        "!parent"
+      ]
+    },
+    "resetProperties": {
+      "parent": "1,3",
+      "lastHolder": "1,3",
+      "activeFace": 0
+    },
+    "rollCount": 0,
+    "clickable": true,
+    "movable": false,
+    "rotation": 0,
+    "x": 14,
+    "y": 13,
+    "lastHolder": "1,3",
+    "activeFace": 0,
+    "parent": "1,3"
+  },
+  "p2-9": {
+    "type": "dice",
+    "id": "p2-9",
+    "z": 2,
+    "inheritFrom": {
+      "p2-1": [
+        "color",
+        "pipColor",
+        "pID"
+      ],
+      "p1-1": [
+        "!parent"
+      ]
+    },
+    "resetProperties": {
+      "parent": "8,2",
+      "lastHolder": "8,2",
+      "activeFace": 0
+    },
+    "rollCount": 0,
+    "clickable": true,
+    "movable": false,
+    "rotation": 0,
+    "parent": "8,2",
+    "x": 14,
+    "y": 13,
+    "lastHolder": "8,2",
+    "activeFace": 0
+  },
+  "p2-8": {
+    "type": "dice",
+    "id": "p2-8",
+    "z": 4191,
+    "inheritFrom": {
+      "p2-1": [
+        "color",
+        "pipColor",
+        "pID"
+      ],
+      "p1-1": [
+        "!parent"
+      ]
+    },
+    "resetProperties": {
+      "parent": "6,2",
+      "lastHolder": "6,2",
+      "activeFace": 0
+    },
+    "rollCount": 0,
+    "clickable": true,
+    "movable": false,
+    "rotation": 0,
+    "parent": "6,2",
+    "x": 14,
+    "y": 13,
+    "activeFace": 0,
+    "lastHolder": "6,2"
+  },
+  "p2-7": {
+    "type": "dice",
+    "id": "p2-7",
+    "z": 4171,
+    "inheritFrom": {
+      "p2-1": [
+        "color",
+        "pipColor",
+        "pID"
+      ],
+      "p1-1": [
+        "!parent"
+      ]
+    },
+    "resetProperties": {
+      "parent": "4,2",
+      "lastHolder": "4,2",
+      "activeFace": 0
+    },
+    "rollCount": 0,
+    "clickable": true,
+    "movable": false,
+    "rotation": 0,
+    "x": 14,
+    "y": 13,
+    "activeFace": 0,
+    "lastHolder": "4,2",
+    "display": true,
+    "parent": "4,2"
+  },
+  "p2-6": {
+    "type": "dice",
+    "id": "p2-6",
+    "z": 4,
+    "inheritFrom": {
+      "p2-1": [
+        "color",
+        "pipColor",
+        "pID"
+      ],
+      "p1-1": [
+        "!parent"
+      ]
+    },
+    "resetProperties": {
+      "parent": "2,2",
+      "lastHolder": "2,2",
+      "activeFace": 0
+    },
+    "rollCount": 0,
+    "clickable": true,
+    "movable": false,
+    "rotation": 0,
+    "x": 14,
+    "y": 13,
+    "activeFace": 0,
+    "lastHolder": "2,2",
+    "parent": "2,2"
+  },
+  "p2-5": {
+    "type": "dice",
+    "id": "p2-5",
+    "rotation": 0,
+    "z": 3,
+    "inheritFrom": {
+      "p2-1": [
+        "color",
+        "pipColor",
+        "pID"
+      ],
+      "p1-1": [
+        "!parent"
+      ]
+    },
+    "resetProperties": {
+      "parent": "9,1",
+      "lastHolder": "9,1",
+      "activeFace": 1
+    },
+    "rollCount": 0,
+    "clickable": true,
+    "movable": false,
+    "parent": "9,1",
+    "x": 14,
+    "y": 13,
+    "lastHolder": "9,1",
+    "activeFace": 1
+  },
+  "p2-4": {
+    "type": "dice",
+    "id": "p2-4",
+    "z": 4115,
+    "inheritFrom": {
+      "p2-1": [
+        "color",
+        "pipColor",
+        "pID"
+      ],
+      "p1-1": [
+        "!parent"
+      ]
+    },
+    "resetProperties": {
+      "parent": "7,1",
+      "lastHolder": "7,1",
+      "activeFace": 2
+    },
+    "rollCount": 0,
+    "clickable": true,
+    "movable": false,
+    "rotation": 0,
+    "parent": "7,1",
+    "x": 14,
+    "y": 13,
+    "lastHolder": "7,1",
+    "activeFace": 2
+  },
+  "p2-3": {
+    "type": "dice",
+    "id": "p2-3",
+    "z": 4169,
+    "inheritFrom": {
+      "p2-1": [
+        "color",
+        "pipColor",
+        "pID"
+      ],
+      "p1-1": [
+        "!parent"
+      ]
+    },
+    "resetProperties": {
+      "parent": "5,1",
+      "lastHolder": "5,1",
+      "activeFace": 3
+    },
+    "rollCount": 0,
+    "clickable": true,
+    "movable": false,
+    "rotation": 0,
+    "parent": "5,1",
+    "x": 14,
+    "y": 13,
+    "lastHolder": "5,1",
+    "activeFace": 3
+  },
+  "p2-2": {
+    "type": "dice",
+    "id": "p2-2",
+    "z": 3,
+    "inheritFrom": {
+      "p2-1": [
+        "color",
+        "pipColor",
+        "pID"
+      ],
+      "p1-1": [
+        "!parent"
+      ]
+    },
+    "resetProperties": {
+      "parent": "3,1",
+      "lastHolder": "3,1",
+      "activeFace": 2
+    },
+    "rollCount": 0,
+    "clickable": true,
+    "movable": false,
+    "rotation": 0,
+    "parent": "3,1",
+    "x": 14,
+    "y": 13,
+    "lastHolder": "3,1",
+    "activeFace": 2
+  },
+  "offScreen": {
+    "id": "offScreen",
+    "x": -203,
+    "y": 7,
+    "css": {
+      "background": "white"
+    },
+    "text": "offScreen"
+  },
+  "seat1": {
+    "type": "seat",
+    "id": "seat1",
+    "width": 172,
+    "height": 48,
+    "borderRadius": 8,
+    "css": {
+      "default": {
+        "cursor": "pointer",
+        "gap": "5px",
+        "font-size": "21px",
+        "box-shadow": "0 2px 5px #00000066",
+        "text-shadow": "${PROPERTY textShadowDistance}px ${PROPERTY textShadowDistance}px ${PROPERTY textShadowBlur}px ${PROPERTY outlineColor}, -${PROPERTY textShadowDistance}px ${PROPERTY textShadowDistance}px ${PROPERTY textShadowBlur}px ${PROPERTY outlineColor}, ${PROPERTY textShadowDistance}px -${PROPERTY textShadowDistance}px ${PROPERTY textShadowBlur}px ${PROPERTY outlineColor}, -${PROPERTY textShadowDistance}px -${PROPERTY textShadowDistance}px ${PROPERTY textShadowBlur}px ${PROPERTY outlineColor}",
+        "background": "${PROPERTY mainColor}",
+        "color": "white",
+        "border": "${PROPERTY textShadowDistance}px solid ${PROPERTY outlineColor}",
+        "box-sizing": "border-box"
+      },
+      ".seated.turn": {
+        "box-shadow": "0px 0px 20px 5px ${PROPERTY glowColor}"
+      },
+      ".seated.turn::after": {
+        "xcontent": "'Active Player'",
+        "content": "'!'",
+        "font-size": "18px",
+        "line-height": "1em",
+        "white-space": "wrap",
+        "background-color": "${PROPERTY outlineColor}",
+        "border": "${PROPERTY textShadowDistance}px solid ${PROPERTY mainColor}",
+        "background-size": "200% auto",
+        "color": "#ffffff",
+        "text-shadow": "0 1px 5px #000000cc",
+        "width": "1em",
+        "height": "1em",
+        "text-align": "center",
+        "text-transform": "uppercase",
+        "position": "absolute",
+        "right": "-12px",
+        "top": "-12px",
+        "padding": "2px",
+        "border-radius": "100px",
+        "box-shadow": "0 0 5px #000000bb",
+        "pointer-events": "none"
+      }
+    },
+    "colorContrast": "#000000",
+    "mainColor": "#f41000",
+    "outlineColor": "#000000bb",
+    "textColor": "#ffffff",
+    "textShadowBlur": 2,
+    "textShadowDistance": 2,
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "routine": "useSeatRoutine"
+      },
+      "var playerName = ${result.1}"
+    ],
+    "useSeatRoutine": [
+      "var leaveSeat = false",
+      "var name = ${PROPERTY player}",
+      "var color = 'red'",
+      "var result = []",
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY player}",
+        "relation": "==",
+        "operand2": "",
+        "thenRoutine": [
+          {
+            "func": "INPUT",
+            "header": "Enter your name.",
+            "fields": [
+              {
+                "type": "string",
+                "label": "Your Name:",
+                "variable": "name",
+                "value": "${playerName}"
+              }
+            ]
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "IF",
+            "operand1": "${PROPERTY player}",
+            "relation": "==",
+            "operand2": "${playerName}",
+            "thenRoutine": [
+              {
+                "func": "INPUT",
+                "header": "Enter your name.",
+                "fields": [
+                  {
+                    "type": "string",
+                    "label": "Your Name:",
+                    "variable": "name",
+                    "value": "${playerName}"
+                  },
+                  {
+                    "type": "subtitle",
+                    "text": "All done?",
+                    "css": "background-color: var(--VTTblue);color:white;"
+                  },
+                  {
+                    "type": "checkbox",
+                    "label": "Stand up from seat",
+                    "variable": "leaveSeat",
+                    "value": false
+                  }
+                ]
+              }
+            ],
+            "elseRoutine": [
+              {
+                "func": "INPUT",
+                "header": "Are you sure you want to remove ${PROPERTY player} from this seat?",
+                "cancelButtonText": "Cancel",
+                "confirmButtonText": "Okay",
+                "fields": [
+                  {
+                    "type": "checkbox",
+                    "label": "Remove this player from their seat",
+                    "variable": "leaveSeat",
+                    "value": false
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "condition": "${leaveSeat}",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "player",
+            "value": ""
+          }
+        ],
+        "elseRoutine": [
+          "var updatePlayerandColor = false",
+          {
+            "func": "IF",
+            "operand1": "${PROPERTY player}",
+            "relation": "==",
+            "operand2": "${playerName}",
+            "thenRoutine": [
+              "var updatePlayerandColor = true"
+            ]
+          },
+          {
+            "func": "IF",
+            "operand1": "${PROPERTY player}",
+            "relation": "==",
+            "operand2": "",
+            "thenRoutine": [
+              "var updatePlayerandColor = true"
+            ]
+          },
+          {
+            "func": "IF",
+            "condition": "${name}",
+            "elseRoutine": [
+              "var updatePlayerandColor = false"
+            ]
+          },
+          {
+            "func": "IF",
+            "condition": "${updatePlayerandColor}",
+            "thenRoutine": [
+              {
+                "func": "SET",
+                "collection": "thisButton",
+                "property": "player",
+                "value": "${name}"
+              },
+              "var result = push ${name}"
+            ]
+          }
+        ]
+      }
+    ],
+    "x": 85,
+    "glowColor": "#ffffff",
+    "y": 190,
+    "undoProperties": [
+      "turn"
+    ]
+  },
+  "seat2": {
+    "type": "seat",
+    "id": "seat2",
+    "width": 172,
+    "height": 48,
+    "borderRadius": 8,
+    "css": {
+      "default": {
+        "cursor": "pointer",
+        "gap": "5px",
+        "font-size": "21px",
+        "box-shadow": "0 2px 5px #00000066",
+        "text-shadow": "${PROPERTY textShadowDistance}px ${PROPERTY textShadowDistance}px ${PROPERTY textShadowBlur}px ${PROPERTY outlineColor}, -${PROPERTY textShadowDistance}px ${PROPERTY textShadowDistance}px ${PROPERTY textShadowBlur}px ${PROPERTY outlineColor}, ${PROPERTY textShadowDistance}px -${PROPERTY textShadowDistance}px ${PROPERTY textShadowBlur}px ${PROPERTY outlineColor}, -${PROPERTY textShadowDistance}px -${PROPERTY textShadowDistance}px ${PROPERTY textShadowBlur}px ${PROPERTY outlineColor}",
+        "background": "${PROPERTY mainColor}",
+        "color": "white",
+        "border": "${PROPERTY textShadowDistance}px solid ${PROPERTY outlineColor}",
+        "box-sizing": "border-box"
+      },
+      ".seated.turn": {
+        "box-shadow": "0px 0px 20px 5px ${PROPERTY glowColor}"
+      },
+      ".seated.turn::after": {
+        "xcontent": "'Active Player'",
+        "content": "'!'",
+        "font-size": "18px",
+        "line-height": "1em",
+        "white-space": "wrap",
+        "background-color": "${PROPERTY outlineColor}",
+        "border": "${PROPERTY textShadowDistance}px solid ${PROPERTY mainColor}",
+        "background-size": "200% auto",
+        "color": "#ffffff",
+        "text-shadow": "0 1px 5px #000000cc",
+        "width": "1em",
+        "height": "1em",
+        "text-align": "center",
+        "text-transform": "uppercase",
+        "position": "absolute",
+        "right": "-12px",
+        "top": "-12px",
+        "padding": "2px",
+        "border-radius": "100px",
+        "box-shadow": "0 0 5px #000000bb",
+        "pointer-events": "none"
+      }
+    },
+    "colorContrast": "#000000",
+    "mainColor": "#255ade",
+    "outlineColor": "#000000bb",
+    "textColor": "#ffffff",
+    "textShadowBlur": 2,
+    "textShadowDistance": 2,
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "routine": "useSeatRoutine"
+      },
+      "var playerName = ${result.1}"
+    ],
+    "useSeatRoutine": [
+      "var leaveSeat = false",
+      "var name = ${PROPERTY player}",
+      "var color = 'red'",
+      "var result = []",
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY player}",
+        "relation": "==",
+        "operand2": "",
+        "thenRoutine": [
+          {
+            "func": "INPUT",
+            "header": "Enter your name.",
+            "fields": [
+              {
+                "type": "string",
+                "label": "Your Name:",
+                "variable": "name",
+                "value": "${playerName}"
+              }
+            ]
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "IF",
+            "operand1": "${PROPERTY player}",
+            "relation": "==",
+            "operand2": "${playerName}",
+            "thenRoutine": [
+              {
+                "func": "INPUT",
+                "header": "Enter your name.",
+                "fields": [
+                  {
+                    "type": "string",
+                    "label": "Your Name:",
+                    "variable": "name",
+                    "value": "${playerName}"
+                  },
+                  {
+                    "type": "subtitle",
+                    "text": "All done?",
+                    "css": "background-color: var(--VTTblue);color:white;"
+                  },
+                  {
+                    "type": "checkbox",
+                    "label": "Stand up from seat",
+                    "variable": "leaveSeat",
+                    "value": false
+                  }
+                ]
+              }
+            ],
+            "elseRoutine": [
+              {
+                "func": "INPUT",
+                "header": "Are you sure you want to remove ${PROPERTY player} from this seat?",
+                "cancelButtonText": "Cancel",
+                "confirmButtonText": "Okay",
+                "fields": [
+                  {
+                    "type": "checkbox",
+                    "label": "Remove this player from their seat",
+                    "variable": "leaveSeat",
+                    "value": false
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "condition": "${leaveSeat}",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "player",
+            "value": ""
+          }
+        ],
+        "elseRoutine": [
+          "var updatePlayerandColor = false",
+          {
+            "func": "IF",
+            "operand1": "${PROPERTY player}",
+            "relation": "==",
+            "operand2": "${playerName}",
+            "thenRoutine": [
+              "var updatePlayerandColor = true"
+            ]
+          },
+          {
+            "func": "IF",
+            "operand1": "${PROPERTY player}",
+            "relation": "==",
+            "operand2": "",
+            "thenRoutine": [
+              "var updatePlayerandColor = true"
+            ]
+          },
+          {
+            "func": "IF",
+            "condition": "${name}",
+            "elseRoutine": [
+              "var updatePlayerandColor = false"
+            ]
+          },
+          {
+            "func": "IF",
+            "condition": "${updatePlayerandColor}",
+            "thenRoutine": [
+              {
+                "func": "SET",
+                "collection": "thisButton",
+                "property": "player",
+                "value": "${name}"
+              },
+              "var result = push ${name}"
+            ]
+          }
+        ]
+      }
+    ],
+    "x": 1355,
+    "glowColor": "#ffffff",
+    "y": 190,
+    "index": 2,
+    "undoProperties": [
+      "turn"
+    ],
+    "turn": true
+  },
+  "turnButton": {
+    "type": "button",
+    "id": "turnButton",
+    "x": 1550,
+    "y": 945,
+    "width": 50,
+    "height": 50,
+    "z": 2,
+    "classes": "symbols",
+    "color": "white",
+    "css": {
+      "default": {
+        "font-size": "40px",
+        "--wcMain": "black",
+        "--wcBorder": "white",
+        "--wcMainOH": "grey",
+        "--wcBorderOH": "black"
+      },
+      "::after": {
+        "content": "\"End turn\"",
+        "display": "none",
+        "position": "absolute",
+        "margin-top": "-90px",
+        "color": "black",
+        "font-size": "14px",
+        "font-family": "Roboto"
+      },
+      ":hover::after": {
+        "display": "block"
+      }
+    },
+    "text": "skip_next",
+    "clickRoutine": [
+      {
+        "func": "TURN"
+      },
+      {
+        "func": "CALL",
+        "routine": "afterTurnChecksRoutine"
+      }
+    ],
+    "afterTurnChecksRoutine": [
+      {
+        "func": "SELECT",
+        "property": "square",
+        "value": true,
+        "collection": "allSquares"
+      },
+      {
+        "func": "CALL",
+        "widget": "routines",
+        "routine": "cleanupPart1Routine"
+      },
+      "// Identify all playable dice for the player whose turn it is",
+      {
+        "func": "SELECT",
+        "type": "seat",
+        "property": "turn",
+        "value": true,
+        "collection": "turnS"
+      },
+      {
+        "func": "GET",
+        "collection": "turnS",
+        "property": "index"
+      },
+      {
+        "func": "SELECT",
+        "type": "dice",
+        "property": "pID",
+        "value": "${index}",
+        "collection": "pIDCollection"
+      },
+      {
+        "func": "GET",
+        "collection": "pIDCollection",
+        "property": "pID",
+        "variable": "pID"
+      },
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "offHolder${index}",
+        "mode": "remove",
+        "collection": "pIDCollection"
+      },
+      {
+        "func": "GET",
+        "collection": "pIDCollection",
+        "aggregation": "array",
+        "property": "id",
+        "variable": "checkTheseTokens"
+      },
+      {
+        "func": "CALL",
+        "widget": "jumpRoutine",
+        "routine": "jumpRoutine"
+      }
+    ]
+  },
+  "promoteCover": {
+    "id": "promoteCover",
+    "parent": "offScreen",
+    "width": 80,
+    "height": 80,
+    "borderRadius": 12,
+    "movable": false,
+    "css": {
+      "default": {
+        "opacity": 0.4,
+        "font-size": "89px"
+      }
+    },
+    "text": "+",
+    "x": 10,
+    "y": -18,
+    "clickRoutine": [
+      {
+        "func": "GET",
+        "collection": [
+          "${PROPERTY parent}"
+        ],
+        "property": "parent",
+        "variable": "newSquare"
+      },
+      {
+        "func": "CLICK",
+        "collection": [
+          "${newSquare}"
+        ]
+      }
+    ]
+  },
+  "centerPromote": {
+    "1": true,
+    "2": true,
+    "id": "centerPromote",
+    "y": 400,
+    "borderRadius": 8,
+    "css": {
+      "background": "black",
+      "color": "white",
+      "font-size": "150px",
+      "display": "flex",
+      "justify-content": "center",
+      "align-items": "center"
+    },
+    "text": "+",
+    "parent": "boardBack",
+    "fixedParent": true,
+    "movable": false,
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "5,5"
+      },
+      {
+        "func": "GET",
+        "property": "pID"
+      },
+      {
+        "func": "IF",
+        "condition": "${PROPERTY $pID}",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "property": "activeFace",
+            "relation": "+",
+            "value": 1
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "${pID}",
+            "value": false
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "scale",
+            "value": 0
+          },
+          {
+            "func": "CLICK",
+            "collection": [
+              "turnButton"
+            ]
+          },
+          {
+            "func": "CALL",
+            "widget": "undoRoutine",
+            "routine": "undoArrayRoutine"
+          }
+        ]
+      }
+    ],
+    "x": 300,
+    "undoProperties": [
+      "1",
+      "2",
+      "scale"
+    ],
+    "scale": 0
+  },
+  "jumpRoutine": {
+    "id": "jumpRoutine",
+    "x": -203,
+    "y": 320,
+    "z": 3123,
+    "css": {
+      "background": "blue",
+      "color": "white"
+    },
+    "jumpRoutine": [
+      "var removeTokensArray = []",
+      "var jumpTokensArray = []",
+      "var jumpFinalArray = []",
+      {
+        "func": "FOREACH",
+        "in": "${checkTheseTokens}",
+        "loopRoutine": [
+          "// This first part is needed to set up jumps",
+          "var jumpPosArray = []",
+          "var newID1 = null",
+          "var newID2 = null",
+          "var newID3 = null",
+          "var newID4 = null",
+          "var jumpID1 = null",
+          "var jumpID2 = null",
+          "var jumpID3 = null",
+          "var jumpID4 = null",
+          {
+            "func": "SELECT",
+            "property": "id",
+            "value": "${value}",
+            "collection": "thisToken"
+          },
+          {
+            "func": "GET",
+            "collection": "thisToken",
+            "property": "lastHolder",
+            "variable": "thisHolder"
+          },
+          {
+            "func": "GET",
+            "collection": "thisToken",
+            "property": "value",
+            "variable": "pips"
+          },
+          {
+            "func": "GET",
+            "collection": "thisToken",
+            "property": "color",
+            "variable": "tokenColor"
+          },
+          {
+            "func": "GET",
+            "collection": "thisToken",
+            "property": "id",
+            "variable": "tokenID"
+          },
+          "var posArrayInitial = ${thisHolder} split ','",
+          "var posArray = []",
+          {
+            "func": "FOREACH",
+            "in": "${posArrayInitial}",
+            "loopRoutine": [
+              "var integer = parseFloat ${value}",
+              "var posArray = push ${integer}"
+            ]
+          },
+          "// This declarations are used to evaluate whether the piece can move up or down and look out 1 space (for moves) or 2 spaces (for jumps)",
+          "var low = ${pips} < 5",
+          "var p1 = ${pID} == 1",
+          "var p2 = ${pID} == 2",
+          "var up = ${low} && ${p1}",
+          "var down = ${low} && ${p2}",
+          "var both = ${pips} > 4",
+          "var newIDCol1 = ${posArray.0} - 1",
+          "var newIDCol2 = ${posArray.0} + 1",
+          "var jumpIDCol1 = ${posArray.0} - 2",
+          "var jumpIDCol2 = ${posArray.0} + 2",
+          {
+            "func": "IF",
+            "condition": "${both}",
+            "thenRoutine": [
+              "// If the piece is a 5 or 6, look in all 4 directions",
+              "var newIDRow1 = ${posArray.1} - 1",
+              "var newIDRow2 = ${posArray.1} - 1",
+              "var newIDRow3 = ${posArray.1} + 1",
+              "var newIDRow4 = ${posArray.1} + 1",
+              "var newID1 = ${newIDCol1} + ','",
+              "var newID1 = ${newID1} + ${newIDRow1}",
+              "var newID2 = ${newIDCol2} + ','",
+              "var newID2 = ${newID2} + ${newIDRow2}",
+              "var newID3 = ${newIDCol1} + ','",
+              "var newID3 = ${newID3} + ${newIDRow3}",
+              "var newID4 = ${newIDCol2} + ','",
+              "var newID4 = ${newID4} + ${newIDRow4}"
+            ],
+            "elseRoutine": [
+              {
+                "func": "IF",
+                "condition": "${up}",
+                "thenRoutine": [
+                  "// For pieces moving up the screen get the row above",
+                  "var newIDRow1 = ${posArray.1} - 1",
+                  "var newIDRow2 = ${posArray.1} - 1"
+                ],
+                "elseRoutine": [
+                  {
+                    "func": "IF",
+                    "condition": "${down}",
+                    "thenRoutine": [
+                      "// For pieces moving down the screen get the row below",
+                      "var newIDRow1 = ${posArray.1} + 1",
+                      "var newIDRow2 = ${posArray.1} + 1"
+                    ]
+                  }
+                ]
+              },
+              "// Concat the name of the holders from the numbers",
+              "var newID1 = ${newIDCol1} + ','",
+              "var newID1 = ${newID1} + ${newIDRow1}",
+              "var newID2 = ${newIDCol2} + ','",
+              "var newID2 = ${newID2} + ${newIDRow2}"
+            ]
+          },
+          "// Create an array of all 4 possible holders. If not a 5 or a 6, then there will be null values which will not be processed later",
+          "var newPosArray = []",
+          "var newPosArray.0 = ${newID1}",
+          "var newPosArray.1 = ${newID2}",
+          "var newPosArray.2 = ${newID3}",
+          "var newPosArray.3 = ${newID4}",
+          "// Jump specific code starts here",
+          {
+            "func": "IF",
+            "condition": "${both}",
+            "thenRoutine": [
+              "// This works the same as above but looks 2 rows up or down",
+              "var jumpIDRow1 = ${posArray.1} - 2",
+              "var jumpIDRow2 = ${posArray.1} - 2",
+              "var jumpIDRow3 = ${posArray.1} + 2",
+              "var jumpIDRow4 = ${posArray.1} + 2",
+              "var jumpID1 = ${jumpIDCol1} + ','",
+              "var jumpID1 = ${jumpID1} + ${jumpIDRow1}",
+              "var jumpID2 = ${jumpIDCol2} + ','",
+              "var jumpID2 = ${jumpID2} + ${jumpIDRow2}",
+              "var jumpID3 = ${jumpIDCol1} + ','",
+              "var jumpID3 = ${jumpID3} + ${jumpIDRow3}",
+              "var jumpID4 = ${jumpIDCol2} + ','",
+              "var jumpID4 = ${jumpID4} + ${jumpIDRow4}"
+            ],
+            "elseRoutine": [
+              {
+                "func": "IF",
+                "condition": "${up}",
+                "thenRoutine": [
+                  "// For pieces moving up the screen look 2 rows above",
+                  "var jumpIDRow1 = ${posArray.1} - 2",
+                  "var jumpIDRow2 = ${posArray.1} - 2"
+                ],
+                "elseRoutine": [
+                  {
+                    "func": "IF",
+                    "condition": "${down}",
+                    "thenRoutine": [
+                      "// For pieces moving down the screen look 2 rows below",
+                      "var jumpIDRow1 = ${posArray.1} + 2",
+                      "var jumpIDRow2 = ${posArray.1} + 2"
+                    ]
+                  }
+                ]
+              },
+              "// Concat the name of the holders from the numbers",
+              "var jumpID1 = ${jumpIDCol1} + ','",
+              "var jumpID1 = ${jumpID1} + ${jumpIDRow1}",
+              "var jumpID2 = ${jumpIDCol2} + ','",
+              "var jumpID2 = ${jumpID2} + ${jumpIDRow2}"
+            ]
+          },
+          "// Create an array of all 4 possible holders. If not a 5 or a 6, then there will be null values which will not be processed later",
+          "var jumpPosArray = []",
+          "var jumpPosArray.0 = ${jumpID1}",
+          "var jumpPosArray.1 = ${jumpID2}",
+          "var jumpPosArray.2 = ${jumpID3}",
+          "var jumpPosArray.3 = ${jumpID4}",
+          "var jump = false",
+          {
+            "func": "FOREACH",
+            "range": [
+              0,
+              3
+            ],
+            "loopRoutine": [
+              "// Look at the holder between the start and the jump destination to check if it has an opponent's piece in it",
+              {
+                "func": "SELECT",
+                "property": "parent",
+                "value": "${newPosArray.$value}",
+                "collection": "otherToken"
+              },
+              {
+                "func": "COUNT",
+                "collection": "otherToken"
+              },
+              {
+                "func": "IF",
+                "operand1": "${COUNT}",
+                "operand2": 1,
+                "thenRoutine": [
+                  {
+                    "func": "GET",
+                    "collection": "otherToken",
+                    "property": "id",
+                    "variable": "otherTokenID"
+                  },
+                  "// 5 conditions must exist for a jump to be valid: there is an opponent's piece in the way, it is not a 6, a 5 is not jumping a 1, the jumping piece must be larger (unless 5s can jump 5s variant is active) or unless the jumped piece is a 6, and the destination space must be empty",
+                  "var cond1 = ${PROPERTY pID OF $otherTokenID} != ${pID}",
+                  "var cond2 = ${pips} != 6",
+                  "var diff = ${pips} - ${PROPERTY value OF $otherTokenID}",
+                  "var cond3 = ${diff} != 4",
+                  {
+                    "func": "IF",
+                    "operand1": "${PROPERTY value OF $otherTokenID}",
+                    "operand2": 6,
+                    "thenRoutine": [
+                      "var cond4 = true"
+                    ],
+                    "elseRoutine": [
+                      "var cond4 = ${diff} >= 1"
+                    ]
+                  },
+                  {
+                    "func": "IF",
+                    "operand1": "${PROPERTY fivesVariation OF settings}",
+                    "operand2": "on",
+                    "thenRoutine": [
+                      {
+                        "func": "IF",
+                        "operand1": "${pips}",
+                        "operand2": "${PROPERTY value OF $otherTokenID}"
+                      },
+                      "var cond4 = ${pips} == 5"
+                    ]
+                  },
+                  {
+                    "func": "COUNT",
+                    "holder": "${jumpPosArray.$value}",
+                    "variable": "countTokens"
+                  },
+                  {
+                    "func": "SELECT",
+                    "property": "id",
+                    "value": "${jumpPosArray.$value}",
+                    "collection": "jumpTargetHolder"
+                  },
+                  {
+                    "func": "COUNT",
+                    "collection": "jumpTargetHolder",
+                    "variable": "countHolder"
+                  },
+                  "var cond5-1 = ${countTokens} == 0",
+                  "var cond5-2 = ${countHolder} == 1",
+                  "var cond5 = ${cond5-1} && ${cond5-2}",
+                  "var allCond = ${cond1} && ${cond2} && ${cond3} && ${cond4} && ${cond5}",
+                  {
+                    "func": "IF",
+                    "condition": "${allCond}",
+                    "thenRoutine": [
+                      "// If the square is a valid jump then add it to the arrays",
+                      "var jump = true",
+                      "var jumpFinalArray = push ${jumpPosArray.$value}",
+                      "var removeTokensArray = push ${otherTokenID}",
+                      "var jumpTokensArray = push ${tokenID}"
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "func": "IF",
+            "condition": "${jump}",
+            "thenRoutine": [
+              "// If a jump is possible remove all non-jump options and highlight the valid jump destinations and make them clickable",
+              {
+                "func": "SELECT",
+                "property": "id",
+                "relation": "in",
+                "value": "${jumpFinalArray}"
+              },
+              {
+                "func": "SET",
+                "property": "bgColor",
+                "value": "${tokenColor}40"
+              },
+              {
+                "func": "SET",
+                "property": "clickable",
+                "value": true
+              },
+              "// Set properties to make it possible to figure out which piece to remove and take other actions",
+              {
+                "func": "SET",
+                "collection": "thisButton",
+                "property": "lastJumped",
+                "value": "${pID}"
+              },
+              {
+                "func": "SET",
+                "collection": "thisButton",
+                "property": "validJumps",
+                "value": "${jumpFinalArray}"
+              },
+              {
+                "func": "SET",
+                "collection": "thisButton",
+                "property": "removeTokens",
+                "value": "${removeTokensArray}"
+              },
+              {
+                "func": "SET",
+                "collection": "thisButton",
+                "property": "jumpTokens",
+                "value": "${jumpTokensArray}"
+              },
+              {
+                "func": "SET",
+                "collection": "thisButton",
+                "property": "mustJump",
+                "value": true
+              }
+            ],
+            "elseRoutine": []
+          }
+        ]
+      }
+    ],
+    "text": "Jump Routine",
+    "lastJumped": 0,
+    "validJumps": false,
+    "removeTokens": [],
+    "captureRoutine": [
+      "// If a capture is made, then remove the captured piece",
+      "var samePID = ${PROPERTY lastJumped} == ${pID}",
+      {
+        "func": "IF",
+        "condition": "${samePID}",
+        "thenRoutine": [
+          "var arrayIndex = ${PROPERTY validJumps} indexOf ${newSquare}",
+          "var removeID = ${PROPERTY removeTokens}",
+          "var removeID = ${removeID.$arrayIndex}",
+          {
+            "func": "GET",
+            "collection": [
+              "${removeID}"
+            ],
+            "property": "pID",
+            "variable": "otherPID"
+          },
+          {
+            "func": "MOVE",
+            "collection": [
+              "${removeID}"
+            ],
+            "to": "offHolder${otherPID}"
+          }
+        ]
+      },
+      "var result = true"
+    ],
+    "mustJump": false,
+    "jumpTokens": [],
+    "undoProperties": [
+      "jumpTokens",
+      "lastJumped",
+      "mustJump",
+      "removeTokens",
+      "validJumps"
+    ]
+  },
+  "moveRoutine": {
+    "id": "moveRoutine",
+    "x": -208,
+    "y": 477,
+    "z": 3122,
+    "css": {
+      "background": "blue",
+      "color": "white"
+    },
+    "text": "Move Routine",
+    "moveRoutine": [
+      "var posArrayInitial = ${oldSquare} split ','",
+      "var posArray = []",
+      {
+        "func": "FOREACH",
+        "in": "${posArrayInitial}",
+        "loopRoutine": [
+          "var integer = parseFloat ${value}",
+          "var posArray = push ${integer}"
+        ]
+      },
+      "// This declarations are used to evaluate whether the piece can move up or down and look out 1 space (for moves) or 2 spaces (for jumps)",
+      "var low = ${pips} < 5",
+      "var p1 = ${pID} == 1",
+      "var p2 = ${pID} == 2",
+      "var up = ${low} && ${p1}",
+      "var down = ${low} && ${p2}",
+      "var both = ${pips} > 4",
+      "var newIDCol1 = ${posArray.0} - 1",
+      "var newIDCol2 = ${posArray.0} + 1",
+      "var jumpIDCol1 = ${posArray.0} - 2",
+      "var jumpIDCol2 = ${posArray.0} + 2",
+      {
+        "func": "IF",
+        "condition": "${both}",
+        "thenRoutine": [
+          "// If the piece is a 5 or 6, look in all 4 directions",
+          "var newIDRow1 = ${posArray.1} - 1",
+          "var newIDRow2 = ${posArray.1} - 1",
+          "var newIDRow3 = ${posArray.1} + 1",
+          "var newIDRow4 = ${posArray.1} + 1",
+          "var newID1 = ${newIDCol1} + ','",
+          "var newID1 = ${newID1} + ${newIDRow1}",
+          "var newID2 = ${newIDCol2} + ','",
+          "var newID2 = ${newID2} + ${newIDRow2}",
+          "var newID3 = ${newIDCol1} + ','",
+          "var newID3 = ${newID3} + ${newIDRow3}",
+          "var newID4 = ${newIDCol2} + ','",
+          "var newID4 = ${newID4} + ${newIDRow4}"
+        ],
+        "elseRoutine": [
+          {
+            "func": "IF",
+            "condition": "${up}",
+            "thenRoutine": [
+              "// For pieces moving up the screen get the row above",
+              "var newIDRow1 = ${posArray.1} - 1",
+              "var newIDRow2 = ${posArray.1} - 1"
+            ],
+            "elseRoutine": [
+              {
+                "func": "IF",
+                "condition": "${down}",
+                "thenRoutine": [
+                  "// For pieces moving down the screen get the row below",
+                  "var newIDRow1 = ${posArray.1} + 1",
+                  "var newIDRow2 = ${posArray.1} + 1"
+                ]
+              }
+            ]
+          },
+          "// Concat the name of the holders from the numbers",
+          "var newID1 = ${newIDCol1} + ','",
+          "var newID1 = ${newID1} + ${newIDRow1}",
+          "var newID2 = ${newIDCol2} + ','",
+          "var newID2 = ${newID2} + ${newIDRow2}"
+        ]
+      },
+      "// Create an array of all 4 possible holders. If not a 5 or a 6, then there will be null values which will not be processed later",
+      "var newPosArray = []",
+      "var newPosArray.0 = ${newID1}",
+      "var newPosArray.1 = ${newID2}",
+      "var newPosArray.2 = ${newID3}",
+      "var newPosArray.3 = ${newID4}",
+      {
+        "func": "FOREACH",
+        "collection": "${newPosArray}",
+        "loopRoutine": [
+          {
+            "func": "COUNT",
+            "holder": "${widgetID}"
+          },
+          {
+            "func": "IF",
+            "operand1": "${COUNT}",
+            "operand2": 0,
+            "thenRoutine": [
+              "// If the square is not occupied then highlight it and make it clickable",
+              {
+                "func": "SET",
+                "collection": [
+                  "${widgetID}"
+                ],
+                "property": "bgColor",
+                "value": "${tokenColor}40"
+              },
+              {
+                "func": "SET",
+                "collection": [
+                  "${widgetID}"
+                ],
+                "property": "clickable",
+                "value": true
+              }
+            ],
+            "elseRoutine": [
+              "// If the square is occupied by the same player, then check and see if variation rules are being used. If not, then add a plus sign and make it clickable. If so, then only allow the promotion if the result will not be a 6 and if the only 6 on the board is not part of the promotion.",
+              "var variation = ${PROPERTY variation OF settings} == 'on'",
+              "var checkSum = 0",
+              "var invalidCheck = false",
+              {
+                "func": "SELECT",
+                "property": "parent",
+                "value": "${widgetID}"
+              },
+              {
+                "func": "GET",
+                "property": "id",
+                "variable": "tokenID"
+              },
+              {
+                "func": "IF",
+                "condition": "${variation}",
+                "thenRoutine": [
+                  "var checkSum1 = ${PROPERTY activeFace OF $tokenID}",
+                  "var checkSum2 = ${PROPERTY activeFace OF $thisToken}",
+                  "var checkSum = ${checkSum1} + ${checkSum2}",
+                  "var invalid1 = ${PROPERTY id OF $thisToken} == 'p1-3'",
+                  "var invalid2 = ${PROPERTY id OF $thisToken} == 'p2-3'",
+                  "var invalid3 = ${PROPERTY id OF $tokenID} == 'p1-3'",
+                  "var invalid4 = ${PROPERTY id OF $tokenID} == 'p2-3'",
+                  "var invalidCheck = ${invalid1} || ${invalid2}",
+                  "var invalidCheck = ${invalidCheck} || ${invalid3}",
+                  "var invalidCheck = ${invalidCheck} || ${invalid4}"
+                ]
+              },
+              {
+                "func": "IF",
+                "operand1": "${checkSum}",
+                "relation": "!=",
+                "operand2": 4,
+                "thenRoutine": [
+                  {
+                    "func": "IF",
+                    "condition": "${invalidCheck}",
+                    "elseRoutine": [
+                      {
+                        "func": "SET",
+                        "collection": [
+                          "${widgetID}"
+                        ],
+                        "property": "clickable",
+                        "value": true
+                      },
+                      {
+                        "func": "IF",
+                        "operand1": "${PROPERTY pID OF $tokenID}",
+                        "operand2": "${pID}",
+                        "thenRoutine": [
+                          {
+                            "func": "CLONE",
+                            "source": [
+                              "promoteCover"
+                            ],
+                            "properties": {
+                              "parent": "${tokenID}"
+                            }
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "centerPromoteClose": {
+    "type": "button",
+    "id": "centerPromoteClose",
+    "y": -30,
+    "z": 3,
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": [
+          "centerPromote"
+        ],
+        "property": "scale",
+        "value": 0
+      },
+      {
+        "func": "CLICK",
+        "collection": [
+          "turnButton"
+        ]
+      }
+    ],
+    "text": "X",
+    "css": {
+      "font-size": "30px"
+    },
+    "parent": "centerPromote",
+    "fixedParent": true,
+    "width": 50,
+    "height": 50,
+    "x": 90
+  },
+  "centerPromoteCover": {
+    "id": "centerPromoteCover",
+    "parent": "centerPromote",
+    "fixedParent": true,
+    "x": -300,
+    "borderRadius": 8,
+    "movable": false,
+    "css": {
+      "background": "transparent"
+    },
+    "layer": -1,
+    "width": 900,
+    "height": 900,
+    "y": -400
+  },
+  "undoButton": {
+    "type": "button",
+    "id": "undoButton",
+    "x": 5,
+    "y": 945,
+    "width": 50,
+    "height": 50,
+    "z": 2,
+    "classes": "symbols",
+    "color": "white",
+    "css": {
+      "default": {
+        "font-size": "40px",
+        "--wcMain": "black",
+        "--wcBorder": "white",
+        "--wcMainOH": "grey",
+        "--wcBorderOH": "black"
+      },
+      "::after": {
+        "content": "\"Undo\"",
+        "display": "none",
+        "position": "absolute",
+        "margin-top": "-75px",
+        "margin-left": "5px",
+        "color": "black",
+        "font-size": "14px",
+        "font-family": "Roboto"
+      },
+      ":hover::after": {
+        "display": "block"
+      }
+    },
+    "clickRoutine": [
+      "var resetArray = ${PROPERTY resetArray OF undoRoutine}",
+      "var arrayLen = length ${resetArray}",
+      "var lastIndex = ${arrayLen} - 1",
+      "var resetArray = remove ${lastIndex} 1",
+      "var newArray = []",
+      "var newLastIndex = ${lastIndex} - 1",
+      {
+        "func": "SET",
+        "collection": [
+          "undoRoutine"
+        ],
+        "property": "resetArray",
+        "value": "${resetArray}"
+      },
+      {
+        "func": "IF",
+        "operand1": "${newLastIndex}",
+        "relation": ">=",
+        "operand2": 0,
+        "thenRoutine": [
+          "var newProps = ${resetArray.$newLastIndex}",
+          {
+            "func": "SELECT",
+            "property": "undoProperties",
+            "relation": "!=",
+            "value": null,
+            "sortBy": {
+              "key": "id",
+              "reverse": false
+            }
+          },
+          {
+            "func": "GET",
+            "aggregation": "array",
+            "property": "id"
+          },
+          {
+            "func": "FOREACH",
+            "in": "${id}",
+            "loopRoutine": [
+              "var widgetID = ${value}",
+              "var props = ${newProps.$widgetID}",
+              {
+                "func": "GET",
+                "collection": [
+                  "${widgetID}"
+                ],
+                "property": "undoProperties"
+              },
+              {
+                "func": "FOREACH",
+                "in": "${undoProperties}",
+                "loopRoutine": [
+                  {
+                    "func": "SET",
+                    "collection": [
+                      "${widgetID}"
+                    ],
+                    "property": "${value}",
+                    "value": "${props.$key}"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "CALL",
+        "widget": [
+          "turnButton"
+        ],
+        "routine": "afterTurnChecksRoutine"
+      }
+    ],
+    "text": "undo"
+  },
+  "undoRoutine": {
+    "id": "undoRoutine",
+    "x": -209,
+    "y": 618,
+    "z": 3124,
+    "css": {
+      "background": "blue",
+      "color": "white"
+    },
+    "text": "undoRoutine",
+    "resetArray": [
+      {
+        "centerPromote": [
+          true,
+          true,
+          0
+        ],
+        "jumpRoutine": [
+          [],
+          0,
+          false,
+          [],
+          false
+        ],
+        "p1-1": [
+          "1,9",
+          14,
+          13,
+          "1,9",
+          1
+        ],
+        "p1-10": [
+          "1,7",
+          14,
+          13,
+          "1,7",
+          0
+        ],
+        "p1-11": [
+          "3,7",
+          14,
+          13,
+          "3,7",
+          0
+        ],
+        "p1-12": [
+          "5,7",
+          14,
+          13,
+          "5,7",
+          0
+        ],
+        "p1-13": [
+          "7,7",
+          14,
+          13,
+          "7,7",
+          0
+        ],
+        "p1-14": [
+          "9,7",
+          14,
+          13,
+          "9,7",
+          0
+        ],
+        "p1-2": [
+          "3,9",
+          14,
+          13,
+          "3,9",
+          2
+        ],
+        "p1-3": [
+          "5,9",
+          14,
+          13,
+          "5,9",
+          3
+        ],
+        "p1-4": [
+          "7,9",
+          14,
+          13,
+          "7,9",
+          2
+        ],
+        "p1-5": [
+          "9,9",
+          14,
+          13,
+          "9,9",
+          1
+        ],
+        "p1-6": [
+          "2,8",
+          14,
+          13,
+          "2,8",
+          0
+        ],
+        "p1-7": [
+          "4,8",
+          14,
+          13,
+          "4,8",
+          0
+        ],
+        "p1-8": [
+          "6,8",
+          14,
+          13,
+          "6,8",
+          0
+        ],
+        "p1-9": [
+          "8,8",
+          14,
+          13,
+          "8,8",
+          0
+        ],
+        "p2-1": [
+          "1,1",
+          14,
+          13,
+          "1,1",
+          1
+        ],
+        "p2-10": [
+          "1,3",
+          14,
+          13,
+          "1,3",
+          0
+        ],
+        "p2-11": [
+          "3,3",
+          14,
+          13,
+          "3,3",
+          0
+        ],
+        "p2-12": [
+          "5,3",
+          14,
+          13,
+          "5,3",
+          0
+        ],
+        "p2-13": [
+          "7,3",
+          14,
+          13,
+          "7,3",
+          0
+        ],
+        "p2-14": [
+          "9,3",
+          14,
+          13,
+          "9,3",
+          0
+        ],
+        "p2-2": [
+          "3,1",
+          14,
+          13,
+          "3,1",
+          2
+        ],
+        "p2-3": [
+          "5,1",
+          14,
+          13,
+          "5,1",
+          3
+        ],
+        "p2-4": [
+          "7,1",
+          14,
+          13,
+          "7,1",
+          2
+        ],
+        "p2-5": [
+          "9,1",
+          14,
+          13,
+          "9,1",
+          1
+        ],
+        "p2-6": [
+          "2,2",
+          14,
+          13,
+          "2,2",
+          0
+        ],
+        "p2-7": [
+          "4,2",
+          14,
+          13,
+          "4,2",
+          0
+        ],
+        "p2-8": [
+          "6,2",
+          14,
+          13,
+          "6,2",
+          0
+        ],
+        "p2-9": [
+          "8,2",
+          14,
+          13,
+          "8,2",
+          0
+        ],
+        "seat1": [
+          false
+        ],
+        "seat2": [
+          true
+        ]
+      }
+    ],
+    "undoArrayRoutine": [
+      "var resetTempArray = []",
+      "var resetTempObj = {}",
+      "var resetArray = ${PROPERTY resetArray}",
+      {
+        "func": "SELECT",
+        "property": "undoProperties",
+        "relation": "!=",
+        "value": null,
+        "sortBy": {
+          "key": "id",
+          "reverse": false
+        }
+      },
+      {
+        "func": "GET",
+        "aggregation": "array",
+        "property": "id"
+      },
+      {
+        "func": "FOREACH",
+        "in": "${id}",
+        "loopRoutine": [
+          "var widgetID = ${value}",
+          {
+            "func": "GET",
+            "collection": [
+              "${widgetID}"
+            ],
+            "property": "undoProperties"
+          },
+          {
+            "func": "FOREACH",
+            "in": "${undoProperties}",
+            "loopRoutine": [
+              {
+                "func": "GET",
+                "collection": [
+                  "${widgetID}"
+                ],
+                "property": "${value}",
+                "variable": "propValue"
+              },
+              "var resetTempArray = push ${propValue}",
+              "var resetTempObj.$widgetID = ${resetTempArray}"
+            ]
+          },
+          "var resetTempArray = []"
+        ]
+      },
+      "var arrayLen = length ${PROPERTY resetArray}",
+      "var resetArray.$arrayLen = ${resetTempObj}",
+      {
+        "func": "IF",
+        "operand1": "${arrayLen}",
+        "operand2": 100,
+        "thenRoutine": [
+          "var resetArray = remove 0 1"
+        ]
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "resetArray",
+        "value": "${resetArray}"
+      }
+    ]
+  },
+  "centerPromoteClick": {
+    "1": true,
+    "2": true,
+    "id": "centerPromoteClick",
+    "parent": "centerPromote",
+    "fixedParent": true,
+    "borderRadius": 8,
+    "movable": false,
+    "css": {
+      "background": "transparent"
+    },
+    "clickRoutine": [
+      {
+        "func": "CLICK",
+        "collection": [
+          "${PROPERTY parent}"
+        ]
+      }
+    ],
+    "layer": 5
+  },
+  "_meta": {
+    "version": 16,
+    "info": {
+      "name": "Uncheckered",
+      "image": "/assets/1919306_98722",
+      "rules": "https://cdn.shopify.com/s/files/1/0655/9304/9226/files/Uncheckered_Rules.pdf?v=1730341418",
+      "bgg": "https://boardgamegeek.com/boardgame/431634/uncheckered",
+      "year": "2024",
+      "mode": "vs",
+      "time": "20-30",
+      "attribution": "<div><span style=\"font-size: 18px; color: var(--overlayFontColor);\"><span><span>This is an original game by Michael Taylor and Anna Taylor, copyright 2024. Logo design by Steel Phoenix Design Studio and trademarked by Michael Taylor and Anna Taylor. This game is licensed for use on virtualtabletop.io.</span></span></span></div><div><span style=\"font-size: 18px; color: var(--overlayFontColor);\"><span><span><br></span></span></span></div><div><span style=\"font-size: 18px; color: var(--overlayFontColor);\"><span><span>To purchase a physical copy of the game, visit our store at https://www.uncheckered.com or buy on Amazon at&nbsp;</span></span></span><span style=\"font-size: 18px;\">https://www.amazon.com/dp/B0DKGDFDWV.</span><br></div>",
+      "lastUpdate": 1730342597109,
+      "showName": true,
+      "skill": "",
+      "description": "Uncheckered is an innovative strategy game that adds a new dimension to two-player classic board games. Maneuver your dice and capture your opponent’s to control the board and clear a path to victory. What’s the catch? Dice only jump lower valued dice, and you can merge two to increase one's value. It's simple to learn, but hard to master. Discover a new world of strategy with Uncheckered!",
+      "similarImage": "",
+      "similarName": "",
+      "similarDesigner": "Michael Taylor and Anna Taylor",
+      "similarAwards": "",
+      "ruleText": "<b style=\"color: red; font-family: Roboto; font-size: 13.5pt;\"><span><span>Game Setup:</span></span></b><br><ul type=\"disc\"><span style=\"font-weight: normal;\"><span><span> </span></span></span></ul><span style=\"font-weight: normal;\"><span><span>The board is already set up. Choose a color and press the restart button to select a random starting player.</span></span></span><h4><p style=\"background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\" class=\"MsoNormal\"><span style=\"color: red; font-family: Roboto; font-size: 13.5pt;\"><span><span>Objective:</span></span></span><br></p></h4><span><span>Be the first player with a&nbsp;</span></span><span style=\"color: var(--overlayFontColor); font-family: Roboto;\" class=\"richtextSymbol gameicons\"><img src=\"https://virtualtabletop.io/i/game-icons.net/delapouite/dice-six-faces-six.svg\"></span><span style=\"color: var(--overlayFontColor); font-family: Roboto; font-size: 18px;\"><span><span>&nbsp;</span></span></span><span><span>in the row farthest from the player (the opponent's home row).</span></span><br><span style=\"font-family: Roboto; font-size: 18px;\"></span><p style=\"background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\" class=\"MsoNormal\"><span style=\"font-size: 13.5pt; font-family: Roboto; color: red;\"><b><span><span>Gameplay:</span></span></b></span><span style=\"font-weight: normal; font-size: 13.5pt; font-family: Roboto;\"></span></p><span style=\"font-size: 13.5pt; font-family: Roboto; font-weight: normal;\"></span><ul></ul><ul></ul><ul></ul><span style=\"font-size: 13.5pt; font-family: Roboto; font-weight: normal;\"></span><ul></ul><ul></ul><ul></ul><p style=\"background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\" class=\"MsoNormal\"><span><span>Players take turns choosing a die to either:</span></span><span style=\"font-size: 13.5pt; font-family: Roboto; font-weight: normal;\"><br></span></p><p style=\"background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\" class=\"MsoNormal\"></p><ul><li><b><u><span><span>Capture</span></span></u></b><span><span>. A player must capture by jumping if possible to do so.</span></span></li><li><b><u><span><span>Move</span></span></u></b><span><span>. Move a die one square diagonally.</span></span></li><li><b><u><span><span>Promote</span></span></u></b><span><span>. Combine two of their own dice or use the center square.</span></span></li></ul><p></p><p></p><p style=\"background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\" class=\"MsoNormal\"><span style=\"color: var(--overlayFontColor);\"><span style=\"font-size: 13.5pt; font-family: Roboto;\"><b style=\"\"><u><span><span>Capture</span></span></u></b></span></span><br></p><ul type=\"disc\"><li style=\"background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\" class=\"MsoNormal\"><font face=\"Roboto\"><span style=\"font-weight: 400;\"><span><span>A player must capture when available and keep capturing until no longer possible. If there are multiple capture options, the player whose turn it can choose which capture to make.</span></span></span></font><br></li><li style=\"background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\" class=\"MsoNormal\"><font face=\"Roboto\"><span style=\"font-weight: 400;\"><span><span>Capture an adjacent opponent’s die by jumping over it in a straight diagonal line and landing in the empty square on the other side. Immediately remove captured dice from play.</span></span></span></font></li><li style=\"background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\" class=\"MsoNormal\"><font face=\"Roboto\"><span style=\"font-weight: 400;\"><span><span>The value of the dice determine whether a capture is possible:</span></span></span></font></li><ul type=\"circle\"><li style=\"background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\" class=\"MsoNormal\"><font face=\"Roboto\"><span style=\"font-weight: 400;\"><span><span>A die can only capture if its value is higher than the die being captured.</span></span></span></font></li><li style=\"background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\" class=\"MsoNormal\"><font face=\"Roboto\"><span style=\"font-weight: 400;\"><span><span>Exceptions:</span></span></span></font></li><ul><li style=\"background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\" class=\"MsoNormal\"><font face=\"Roboto\"><span style=\"font-weight: 400;\"><span><span>A&nbsp;</span></span><span class=\"richtextSymbol gameicons\"><img src=\"https://virtualtabletop.io/i/game-icons.net/delapouite/dice-six-faces-five.svg\"></span><span><span>&nbsp;cannot be captured and cannot capture a&nbsp;</span></span><span class=\"richtextSymbol gameicons\"><img src=\"https://virtualtabletop.io/i/game-icons.net/delapouite/dice-six-faces-one.svg\"></span><span><span>.</span></span></span></font></li><li style=\"background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\" class=\"MsoNormal\"><font face=\"Roboto\"><span style=\"font-weight: 400;\"><span><span>A&nbsp;</span></span><span class=\"richtextSymbol gameicons\"><img src=\"https://virtualtabletop.io/i/game-icons.net/delapouite/dice-six-faces-six.svg\"></span><span><span>&nbsp;can be captured by any other die and cannot make captures.</span></span></span></font></li></ul><li style=\"background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\" class=\"MsoNormal\"><font face=\"Roboto\"><span style=\"font-weight: 400;\"><span><span>For example:</span></span></span></font></li><li style=\"background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\" class=\"MsoNormal\"><font face=\"Roboto\"><span style=\"font-weight: 400;\"><i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/dice-six-faces-four.svg\"></i><span><span>'s can capture a&nbsp;</span></span><i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/dice-six-faces-one.svg\"></i><span><span>,&nbsp;</span></span><i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/dice-six-faces-two.svg\"></i><span><span>,&nbsp;</span></span><i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/dice-six-faces-three.svg\"></i><span><span>, or&nbsp;</span></span><i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/dice-six-faces-six.svg\"></i><span><span>.</span></span></span></font></li><li style=\"background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\" class=\"MsoNormal\"><font face=\"Roboto\"><span style=\"font-weight: 400;\"><span class=\"richtextSymbol gameicons\"><img src=\"https://virtualtabletop.io/i/game-icons.net/delapouite/dice-six-faces-two.svg\"></span><span><span>'s can capture a&nbsp;</span></span><span class=\"richtextSymbol gameicons\"><img src=\"https://virtualtabletop.io/i/game-icons.net/delapouite/dice-six-faces-one.svg\"></span><span><span>or&nbsp;</span></span><span class=\"richtextSymbol gameicons\"><img src=\"https://virtualtabletop.io/i/game-icons.net/delapouite/dice-six-faces-six.svg\"></span><span><span>.</span></span></span></font></li></ul><li><span style=\"font-family: Roboto; color: var(--overlayFontColor);\"><span><span>A player must capture when possible and must keep capturing until a capture is not possible. The player chooses which capture to make among multiple possible capture options.</span></span></span></li></ul><div><img src=\"/assets/-519651530_3304\" class=\"richtextAsset\"></div><div><span><span>Red must either use the</span></span><font face=\"Roboto\"><span><span>&nbsp;</span></span></font><span style=\"color: var(--overlayFontColor); font-family: Roboto;\" class=\"richtextSymbol gameicons\"><img src=\"https://virtualtabletop.io/i/game-icons.net/delapouite/dice-six-faces-three.svg\"></span><span style=\"color: var(--overlayFontColor); font-family: Roboto;\"><span><span>&nbsp;to jump the blue&nbsp;</span></span></span><span style=\"color: var(--overlayFontColor); font-family: Roboto;\" class=\"richtextSymbol gameicons\"><img src=\"https://virtualtabletop.io/i/game-icons.net/delapouite/dice-six-faces-two.svg\"></span><span style=\"color: var(--overlayFontColor); font-family: Roboto;\"><span><span>&nbsp;and then&nbsp;</span></span></span><span style=\"color: var(--overlayFontColor); font-family: Roboto;\" class=\"richtextSymbol gameicons\"><img src=\"https://virtualtabletop.io/i/game-icons.net/delapouite/dice-six-faces-one.svg\"></span><span style=\"color: var(--overlayFontColor); font-family: Roboto;\"><span><span>, or use the red</span></span></span><span style=\"font-family: Roboto;\"><span><span>&nbsp;</span></span></span><span style=\"font-family: Roboto;\" class=\"richtextSymbol gameicons\"><img src=\"https://virtualtabletop.io/i/game-icons.net/delapouite/dice-six-faces-one.svg\"></span><span style=\"font-family: Roboto;\"><span><span>&nbsp;to jump the blue&nbsp;</span></span></span><span style=\"font-family: Roboto;\" class=\"richtextSymbol gameicons\"><img src=\"https://virtualtabletop.io/i/game-icons.net/delapouite/dice-six-faces-six.svg\"></span><span style=\"color: var(--overlayFontColor);\"><span><span>&nbsp;in the image above.</span></span></span></div><div><img src=\"/assets/2102912176_3822\" class=\"richtextAsset\"></div><div><span><span>Blue (moving downward in the image above) cannot capture any of the red dice.</span></span></div><p style=\"background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\" class=\"MsoNormal\"><u><span style=\"font-size: 13.5pt; font-family: Roboto;\"><b><span><span>Move</span></span></b></span></u></p><ul type=\"disc\"><span style=\"font-weight: normal;\"></span><li style=\"background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\" class=\"MsoNormal\"><span style=\"font-family: Roboto; font-weight: 400;\"><span><span>Move a die diagonally to the next adjacent empty dark square</span></span></span><span><span>.</span></span></li><span style=\"font-weight: normal;\"></span><li style=\"background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\" class=\"MsoNormal\"><font face=\"Roboto\"><span style=\"font-weight: 400;\"><span class=\"richtextSymbol gameicons\"><img src=\"https://virtualtabletop.io/i/game-icons.net/delapouite/dice-six-faces-one.svg\"></span><span><span>,&nbsp;</span></span><span class=\"richtextSymbol gameicons\"><img src=\"https://virtualtabletop.io/i/game-icons.net/delapouite/dice-six-faces-two.svg\"></span><span><span>,&nbsp;</span></span><span class=\"richtextSymbol gameicons\"><img src=\"https://virtualtabletop.io/i/game-icons.net/delapouite/dice-six-faces-three.svg\"></span><span><span>, or&nbsp;</span></span><i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/dice-six-faces-four.svg\"></i><span><span>&nbsp;can only move forward (towards the opponent's home row).</span></span></span></font><br></li><li style=\"background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\" class=\"MsoNormal\"><font face=\"Roboto\"><span style=\"font-weight: 400;\"><i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/dice-six-faces-five.svg\"></i><span><span>&nbsp;and&nbsp;</span></span><i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/dice-six-faces-six.svg\"></i><span><span>&nbsp;can move either backward or forward.</span></span></span></font></li><li style=\"background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\" class=\"MsoNormal\"><font face=\"Roboto\"><span style=\"font-weight: 400;\"><span><span>Note: a player may make valid moves into and out of the opponent's home row.</span></span></span></font></li></ul><div><img src=\"/assets/483829599_2574\" class=\"richtextAsset\"></div><div><br></div><div><span style=\"font-weight: normal;\"><span><span>Blue can move the&nbsp;</span></span></span><span style=\"font-family: Roboto; color: var(--overlayFontColor);\" class=\"richtextSymbol gameicons\"><img src=\"https://virtualtabletop.io/i/game-icons.net/delapouite/dice-six-faces-two.svg\"></span><span style=\"font-family: Roboto; color: var(--overlayFontColor);\"><span><span>&nbsp;forward (down in the image above) or the&nbsp;</span></span></span><span style=\"font-family: Roboto; color: var(--overlayFontColor);\" class=\"richtextSymbol gameicons\"><img src=\"https://virtualtabletop.io/i/game-icons.net/delapouite/dice-six-faces-five.svg\"></span><span style=\"font-family: Roboto; color: var(--overlayFontColor);\"><span><span>&nbsp;in either direction.</span></span></span></div><div><img src=\"/assets/1936964364_2804\" class=\"richtextAsset\"></div><div><span><span>Red cannot move&nbsp;</span></span><span style=\"color: var(--overlayFontColor);\"><span><span>the</span></span></span><font style=\"color: var(--overlayFontColor);\" face=\"Roboto\"><span><span>&nbsp;</span></span></font><span style=\"color: var(--overlayFontColor); font-family: Roboto;\" class=\"richtextSymbol gameicons\"><img src=\"https://virtualtabletop.io/i/game-icons.net/delapouite/dice-six-faces-three.svg\"></span><span style=\"color: var(--overlayFontColor);\"><span><span>&nbsp;forward (up in the image above) into the occupied spaces and cannot move backward.</span></span></span></div><p style=\"background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\" class=\"MsoNormal\"><u style=\"\"><span style=\"font-size: 13.5pt; font-family: Roboto;\"><b><span><span>Promote</span></span></b></span></u><span style=\"font-weight: normal; font-size: 13.5pt; font-family: Roboto;\"></span></p><p style=\"background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\" class=\"MsoNormal\"><font face=\"Roboto\"><span style=\"font-weight: 400;\"><span><span>Promote a die to change its value by using the center square or by combining two dice.</span></span></span></font></p><ul type=\"disc\"></ul><ul type=\"disc\"><ul type=\"circle\"></ul></ul><ul type=\"disc\"><li><font face=\"Roboto\"><span style=\"font-weight: 400;\"><span><span>Center square:</span></span></span></font></li><ul><li style=\"background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\" class=\"MsoNormal\"><span><span>One time per game, each player may promote a die one value higher by moving it into the empty center square.</span></span></li><li style=\"background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\" class=\"MsoNormal\"><span><span>Promoting in the center square cannot occur simultaneously with capture.</span></span></li><li style=\"background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\" class=\"MsoNormal\"><span><span>The player must make the decision to use the center square for promotion when the die is moved.</span></span></li></ul></ul><ul type=\"disc\"><li><span><span>Combining:</span></span></li><ul><li style=\"background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\" class=\"MsoNormal\"><span style=\"font-weight: normal;\"><span><span>Players combine two of their own dice by making a </span></span></span><i style=\"font-family: Roboto; color: var(--overlayFontColor);\"><b><span><span>valid</span></span></b></i><span style=\"font-family: Roboto; color: var(--overlayFontColor); font-weight: 400;\"><span><span> move with one die into an adjacent diagonal square occupied by another of their own dice.</span></span></span></li><li style=\"background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\" class=\"MsoNormal\"><span><span>Remove the die that moved from the board. Change the value of the remaining die to the sum of combined dice.</span></span></li></ul></ul><ul type=\"disc\"><li><span style=\"font-weight: 400; font-family: Roboto; color: var(--overlayFontColor);\"><span><span>For both methods, if the value of the new die exceeds six, subtract six from the result. For example, if a&nbsp;</span></span></span><span style=\"font-weight: 400; font-family: Roboto; color: var(--overlayFontColor);\" class=\"richtextSymbol gameicons\"><img src=\"https://virtualtabletop.io/i/game-icons.net/delapouite/dice-six-faces-three.svg\"></span><span style=\"font-weight: 400; font-family: Roboto; color: var(--overlayFontColor);\"><span><span>&nbsp;and&nbsp;</span></span></span><span style=\"font-weight: 400; font-family: Roboto; color: var(--overlayFontColor);\" class=\"richtextSymbol gameicons\"><img src=\"https://virtualtabletop.io/i/game-icons.net/delapouite/dice-six-faces-four.svg\"></span><span style=\"font-weight: 400; font-family: Roboto; color: var(--overlayFontColor);\"><span><span>&nbsp;combine, the result is a&nbsp;</span></span></span><span style=\"font-weight: 400; font-family: Roboto; color: var(--overlayFontColor);\" class=\"richtextSymbol gameicons\"><img src=\"https://virtualtabletop.io/i/game-icons.net/delapouite/dice-six-faces-one.svg\"></span><span style=\"font-weight: 400; font-family: Roboto; color: var(--overlayFontColor);\"><span><span>&nbsp;(3 + 4 - 6).</span></span></span><br></li></ul><div><img src=\"/assets/55512371_2804\" class=\"richtextAsset\"></div><div><span><span>In the image above, red can combine the&nbsp;</span></span><span style=\"color: var(--overlayFontColor); font-family: Roboto;\" class=\"richtextSymbol gameicons\"><img src=\"https://virtualtabletop.io/i/game-icons.net/delapouite/dice-six-faces-two.svg\"></span><span style=\"color: var(--overlayFontColor); font-family: Roboto;\"><span><span>&nbsp;with the</span></span></span><span style=\"color: var(--overlayFontColor); font-family: Roboto;\"><span><span>&nbsp;</span></span></span><span style=\"color: var(--overlayFontColor); font-family: Roboto;\" class=\"richtextSymbol gameicons\"><img src=\"https://virtualtabletop.io/i/game-icons.net/delapouite/dice-six-faces-three.svg\"></span><span style=\"color: var(--overlayFontColor); font-family: Roboto;\"><span><span>&nbsp;by moving the&nbsp;</span></span></span><span style=\"color: var(--overlayFontColor); font-family: Roboto;\" class=\"richtextSymbol gameicons\"><img src=\"https://virtualtabletop.io/i/game-icons.net/delapouite/dice-six-faces-two.svg\"></span><span style=\"color: var(--overlayFontColor); font-family: Roboto;\"><span><span>&nbsp;forward. The&nbsp;</span></span></span><span style=\"color: var(--overlayFontColor); font-family: Roboto;\" class=\"richtextSymbol gameicons\"><img src=\"https://virtualtabletop.io/i/game-icons.net/delapouite/dice-six-faces-three.svg\"></span><span style=\"color: var(--overlayFontColor); font-family: Roboto;\"><span><span>&nbsp;becomes a&nbsp;</span></span></span><span style=\"color: var(--overlayFontColor); font-family: Roboto;\" class=\"richtextSymbol gameicons\"><img src=\"https://virtualtabletop.io/i/game-icons.net/delapouite/dice-six-faces-five.svg\"></span><span style=\"color: var(--overlayFontColor); font-family: Roboto;\"><span><span>&nbsp;</span></span></span><span style=\"color: var(--overlayFontColor); font-family: Roboto;\"><span><span>and the</span></span></span><span style=\"color: var(--overlayFontColor);\"><span><span>&nbsp;</span></span></span><span style=\"color: var(--overlayFontColor); font-family: Roboto;\" class=\"richtextSymbol gameicons\"><img src=\"https://virtualtabletop.io/i/game-icons.net/delapouite/dice-six-faces-two.svg\"></span><span style=\"color: var(--overlayFontColor); font-family: Roboto;\"><span><span>&nbsp;is removed. The&nbsp;</span></span></span><span style=\"color: var(--overlayFontColor); font-family: Roboto;\" class=\"richtextSymbol gameicons\"><img src=\"https://virtualtabletop.io/i/game-icons.net/delapouite/dice-six-faces-three.svg\"></span><span style=\"color: var(--overlayFontColor); font-family: Roboto;\"><span><span>&nbsp;cannot promote backward. Red can move the</span></span></span><span style=\"color: var(--overlayFontColor); font-family: Roboto;\"><span><span>&nbsp;</span></span></span><span style=\"color: var(--overlayFontColor); font-family: Roboto;\" class=\"richtextSymbol gameicons\"><img src=\"https://virtualtabletop.io/i/game-icons.net/delapouite/dice-six-faces-one.svg\"></span><span style=\"color: var(--overlayFontColor); font-family: Roboto;\"><span><span>&nbsp;forward or the&nbsp;</span></span></span><span style=\"color: var(--overlayFontColor); font-family: Roboto;\" class=\"richtextSymbol gameicons\"><img src=\"https://virtualtabletop.io/i/game-icons.net/delapouite/dice-six-faces-five.svg\"></span><span style=\"color: var(--overlayFontColor); font-family: Roboto;\"><span><span>&nbsp;</span></span></span><span style=\"color: var(--overlayFontColor); font-family: Roboto;\"><span><span>backwards to make&nbsp;</span></span></span><span style=\"color: var(--overlayFontColor); font-family: Roboto;\"><span><span>to a&nbsp;</span></span></span><span style=\"color: var(--overlayFontColor); font-family: Roboto;\" class=\"richtextSymbol gameicons\"><img src=\"https://virtualtabletop.io/i/game-icons.net/delapouite/dice-six-faces-six.svg\"></span><span style=\"color: var(--overlayFontColor); font-family: Roboto;\"><span><span>.</span></span></span></div><h4><span style=\"font-size: 13.5pt; font-family: Roboto; color: red;\"><span><span>Winning:</span></span></span></h4><ul type=\"disc\"><li style=\"background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\" class=\"MsoNormal\"><font face=\"Roboto\"><span style=\"font-weight: 400;\"><span><span>The first player to move or promote a die to a&nbsp;</span></span><span class=\"richtextSymbol gameicons\"><img src=\"https://virtualtabletop.io/i/game-icons.net/delapouite/dice-six-faces-six.svg\"></span><span><span>&nbsp;on any of the dark squares in the opponent's home row is the winner.</span></span></span></font></li><li style=\"background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\" class=\"MsoNormal\"><font face=\"Roboto\"><span style=\"font-weight: 400;\"><span><span>The game ends if and when both players cannot get a&nbsp;</span></span><i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/dice-six-faces-six.svg\"></i><span><span>&nbsp;in the opponent's home row:</span></span></span></font></li><ul type=\"circle\"><li style=\"background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\" class=\"MsoNormal\"><font face=\"Roboto\"><span style=\"font-weight: 400;\"><span><span>The player with the lowest sum of all the face up pips on their dice wins.</span></span></span></font><br></li><li style=\"background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\" class=\"MsoNormal\"><span style=\"font-weight: 400;\"><span><span>If the sums of the pips are the same, the player with the most remaining dice on the board wins.</span></span></span><span><span>\n</span></span></li><li><span style=\"font-weight: normal;\"><span><span>If still tied, the victory is shared.</span></span></span></li></ul></ul><div><a href=\"/assets/1157642696_9298\"><img src=\"/assets/1157642696_9298\" class=\"richtextAsset\"></a></div><div><b style=\"color: var(--overlayFontColor);\"><span style=\"font-size:13.5pt;\nfont-family:Roboto;mso-fareast-font-family:&quot;Times New Roman&quot;;mso-bidi-font-family:\n&quot;Times New Roman&quot;;color:red\"><span><span>Variant Play:</span></span></span></b><br></div><div><p style=\"background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\" class=\"MsoNormal\"><font face=\"Roboto\"><span style=\"font-weight: 400;\"><span><span>Start with a&nbsp;</span></span></span></font><i style=\"color: var(--overlayFontColor);\" class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/dice-six-faces-six.svg\"></i><span><span>&nbsp;</span></span><span style=\"font-weight: normal;\"><span><span>instead of a&nbsp;</span></span></span><i style=\"color: var(--overlayFontColor);\" class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/dice-six-faces-four.svg\"></i><span style=\"font-weight: normal;\"><span><span>. Players cannot make another&nbsp;</span></span></span><i style=\"color: var(--overlayFontColor);\" class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/dice-six-faces-six.svg\"></i><span style=\"font-weight: 400;\"><span><span>. To win, move the&nbsp;</span></span></span><i style=\"color: var(--overlayFontColor);\" class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/dice-six-faces-six.svg\"></i><span style=\"font-weight: 400;\"><span><span>&nbsp;to the opponent's home row, capture the opponent's&nbsp;</span></span></span><i style=\"color: var(--overlayFontColor);\" class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/dice-six-faces-six.svg\"></i><span style=\"font-weight: normal;\"><span><span>, or prevent the opponent from making a valid play.</span></span></span></p></div>",
+      "helpText": "<span style=\"font-size: 18px;\"><span><span>Players select and click on a seat.</span></span></span><div><span style=\"font-size: 18px;\"><br></span></div><div><span style=\"font-size: 18px;\"><span><span>Click the restart button (upper right) to begin and a player is chosen at random to start. Click the settings button (upper right) to play with the variation rules, change the orientation of the board, or allow for rules enforcement and automation to be turned off.</span></span></span></div><div><span style=\"font-size: 18px;\"><br></span></div><div><span style=\"font-size: 18px;\"><span><span>To play, click on a die. The valid moves will be displayed on the screen. If a jump is required, the valid squares will already be displayed after the other player's turn ends. Click on the square to move the die.</span></span></span></div><div><span style=\"font-size: 18px;\"><br></span></div><div><span style=\"font-size: 18px;\"><span><span>When moving into the center square, select the large black and white plus sign to promote the die or the X button to close the overlay and not promote.</span></span></span></div><div><span style=\"font-size: 18px;\"><br></span></div><div><span style=\"font-size: 18px;\"><span><span>If needed, press the turn button (lower right) to change the turn.</span></span></span></div><div><span style=\"font-size: 18px;\"><br></span></div><div><span style=\"font-size: 18px;\"><span><span>If needed, press the undo button (lower left) to go back one move per click.</span></span></span></div><div><span style=\"font-size: 18px;\"><br></span></div><div><span style=\"font-size: 18px;\"><span><span>Limitation of automation:</span></span></span></div><div><ul><li><span style=\"font-size: 18px;\"><span><span>The game does not recognize when the game ends due to a tie-breaker rule going into effect. As soon as neither player can make a 6, manually determine the winner by looking at the tie-breaker rules.</span></span></span></li></ul></div>",
+      "players": "2",
+      "language": "",
+      "variant": "",
+      "variantImage": ""
+    }
+  },
+  "playerAid45bAsset": {
+    "id": "playerAid45bAsset",
+    "width": 450,
+    "height": 125,
+    "z": 3734,
+    "movableInEdit": false,
+    "css": {
+      "default": {
+        "background": "white",
+        "border": "5px solid black",
+        "padding": "5px"
+      },
+      " table": {
+        "border-spacing": "0px",
+        "width": "100%"
+      },
+      " td": {
+        "border": "1px solid black",
+        "padding": "2px"
+      },
+      " th": {
+        "border": "1px solid black",
+        "padding": "2px"
+      }
+    },
+    "html": "<div><table><tr><th scope='col'>DIE</th><th scope='col'>DIRECTION</th><th scope='col'>CAPTURES</th><th scope='col'>CAPTURED BY</th></tr><tr><th scope='row'>1</th><td align='center'>Forward</td><td align='center'>6</td><td align='center'>2, 3, 4</td></tr><tr><th scope='row'>2, 3, 4</th><td align='center'>Forward</td><td align='center'>Lower dice</td><td align='center'>Higher dice, except 6</td></tr><tr><th scope='row'>5</th><td align='center'>Forward/backward</td><td align='center'>2, 3, 4, 6</td><td align='center'>None</td></tr><tr><th scope='row'>6</th><td align='center'>Forward/backward</td><td align='center'>None</td><td align='center'>1, 2, 3, 4, 5</td></tr></table></div>",
+    "scale": 0.73,
+    "x": -60,
+    "y": -16,
+    "movable": false,
+    "enlarge": 2
+  },
+  "winner1": {
+    "id": "winner1",
+    "x": 70,
+    "y": 763,
+    "text": "You Won!",
+    "css": {
+      "color": "black",
+      "font-size": "50px"
+    },
+    "width": 210,
+    "height": 70,
+    "movable": false,
+    "display": false
+  },
+  "winner2": {
+    "inheritFrom": {
+      "winner1": "*"
+    },
+    "id": "winner2",
+    "x": 1330,
+    "y": 763,
+    "display": false
+  }
+}
