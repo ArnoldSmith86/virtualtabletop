@@ -83,6 +83,15 @@ export default class Player {
               this.room.receiveInvalidDelta(this, delta, widgetID, '<deletion>');
               return;
             }
+            // a parent or deck of a widget was changed to a widget that was deleted in the other delta -> conflict
+            for(const key of [ 'parent', 'deck' ]) {
+              if(delta.s[widgetID][key] && conflictDelta.s[delta.s[widgetID][key]] === null) {
+                this.trace('receiveDelta', { status: 'conflict', delta, conflictDelta, widgetID, key: `<${key}Deletion>` });
+                this.waitingForStateConfirmation = true;
+                this.room.receiveInvalidDelta(this, delta, widgetID, `<${key}Deletion>`);
+                return;
+              }
+            }
             for(const key in delta.s[widgetID]) {
               // a property of the widget was changed in both deltas and not to the same value -> conflict
               if(conflictDelta.s[widgetID][key] !== undefined && delta.s[widgetID][key] !== conflictDelta.s[widgetID][key]) {
