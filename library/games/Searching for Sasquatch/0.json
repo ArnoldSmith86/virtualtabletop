@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "version": 15,
+    "version": 16,
     "info": {
       "name": "Searching for Sasquatch",
       "image": "/assets/-955195684_166358",
@@ -9,8 +9,8 @@
       "year": "2018",
       "mode": "vs",
       "time": "30-50",
-      "attribution": "<div><div>Room design and layout by LawDawg96. Released to the Public Domain under CC0.</div><div><br></div><div>Icon by Delapouite available from https://game-icons.net under CC BY 3.0:&nbsp; open padlock.</div><div><span style=\"color: var(--overlayFontColor);\"><br></span></div><div><span style=\"color: var(--overlayFontColor);\">Icons by lorc available from&nbsp;</span><span style=\"color: var(--overlayFontColor);\">https://game-icons.net under CC BY 3.0: closed padlock, magnifying glass.</span></div><div><span style=\"color: var(--overlayFontColor);\"><br></span></div><div>The background woods image was created using the Midjourney artificial intelligence image generator, https://www.midjourney.com/home/, using the following prompt: \"pacific northwest woods photograph --ar 8:5\".</div></div><div><br></div><div>The sasquatch footprint and silhouette is available for personal use from:&nbsp;<span style=\"color: var(--overlayFontColor);\">https://clipart-library.com/clip-art/sasquatch-silhouette-vector-5.htm.</span></div><div><span style=\"color: var(--overlayFontColor);\"><br></span></div><div><span style=\"color: var(--overlayFontColor);\">Data for the predefined maps, clues, and hints is from Tony Ye 's (sionar) implementation of a version of Cryptid for Tabletop Simulator, available from&nbsp;</span>https://github.com/sionar/Cryptid.</div>",
-      "lastUpdate": 1711721961940,
+      "attribution": "<div><div><span>Room design and layout by LawDawg96. Released to the Public Domain under CC0.</span></div><div><br></div><div><span>Icon by Delapouite available from https://game-icons.net under CC BY 3.0:&nbsp; open padlock.</span></div><div><span style=\"color: var(--overlayFontColor);\"><br></span></div><div><span style=\"color: var(--overlayFontColor);\"><span>Icons by lorc available from&nbsp;</span></span><span style=\"color: var(--overlayFontColor);\"><span>https://game-icons.net under CC BY 3.0: closed padlock, magnifying glass.</span></span></div><div><span style=\"color: var(--overlayFontColor);\"><br></span></div><div><span>The background woods image was created using the Midjourney artificial intelligence image generator, https://www.midjourney.com/home/, using the following prompt: \"pacific northwest woods photograph --ar 8:5\".</span></div></div><div><br></div><div><span>The sasquatch footprint and silhouette is available for personal use from:&nbsp;</span><span style=\"color: var(--overlayFontColor);\"><span>https://clipart-library.com/clip-art/sasquatch-silhouette-vector-5.htm.</span></span></div><div><span style=\"color: var(--overlayFontColor);\"><br></span></div><div><span style=\"color: var(--overlayFontColor);\"><span>Data for the predefined maps, clues, and hints is from Tony Ye 's (sionar) implementation of a version of Cryptid for Tabletop Simulator, available from&nbsp;</span></span><span>https://github.com/sionar/Cryptid.</span></div>",
+      "lastUpdate": 1731615145004,
       "showName": true,
       "skill": "",
       "description": "Give location clues using pieces on a board to confuse other players while correctly interpreting the clues they give you. Be the first to deduce the location of the elusive sasquatch and claim the win.",
@@ -19,7 +19,7 @@
       "similarDesigner": "Hal Duncan, Ruth Veevers",
       "similarAwards": "2022 Kennerspiel des Jahres Nominee\n2020 Tric Trac Nominee\n2020 Palme d'Or for Best Family Game\n2019 Origins Awards Best Board Game Nominee\n2019 Juego del Año Finalist\n2019 Dragon Awards Best Science Fiction or Fantasy Board Game Nominee\n2019 American Tabletop Strategy Games Recommended\n2018 Golden Geek Most Innovative Board Game Nominee",
       "ruleText": "",
-      "helpText": "Players take seats. Press reset button in upper right to begin.<div><br></div><div>You will be given a choice to use a predefined board from the rule book or set up the board manually.</div><div><br></div><div><b>Predefined boards:</b></div><div>&nbsp;</div><div>The clue will be displayed below your seat. A random player is automatically selected to start.</div><div><br></div><div>If players agree to show the hint, press the magnifying glass at the bottom of the screen. After the confirmation button is pressed, the hint will be displayed at the bottom of the screen for all players to see.</div><div><br></div><div><b>Manual boards</b>:</div><div><br></div><div>Board setups with clues and hints can be found in various sources online.&nbsp; To set up the board, press the numbered circles representing the tile (1-6) that should be placed in that position along with the orientation (rotated 180 degrees or not). If you make a mistake, you can drag a board to a new position and click on it to rotate it.&nbsp;<span style=\"color: var(--overlayFontColor);\">Once the tiles are in place, manually drag the octagon and triangle shapes to their positions on the board.</span></div><div><span style=\"color: var(--overlayFontColor);\"><br></span></div><div><span style=\"color: var(--overlayFontColor);\">The padlock in the lower left of the screen can lock or unlock the static tiles and pieces into place. The lock is triggered automatically after clicking to remove the setup instructions.</span></div><div><br></div><div>Each player can type their clue (from the online source) into the label provided below their name.&nbsp; Similarly, once players have agreed to view the hint, press the hint icon button and one player can type the hint into the label at the bottom of the screen.</div><div><br></div><div><b>Game play:</b></div><div><b><br></b></div><div>At every point in the game, players are prompted with instructions next to their seat. If the instructions get out of cycle with the actual game play, everything will be reset the next time a player initiates a search or asks a question.</div><div><b><br></b></div><div>Players take turns placing two cubes onto the board into places where the sasquatch cannot be based on their clue. Cubes always indicate a place the sasquatch cannot be and discs indicate places where the sasquatch could be. Always play cubes and discs based on your own clue and not what you may have deduced based on what other players have done.</div><div><br></div><div>After each player has placed two cubes, click on the box with instructions at the bottom of the screen to begin play. The player whose turn it is moves the pin to a place on the board. Then that player initiates either a question or a search.</div><div><br></div><div>To ask a question, press the question mark symbol next to the player you want to ask. That player is being asked whether, in the space with the pin, according to that player's clue, the sasquatch cannot be there or may be there. The player moves a cube or disc accordingly. Then the initiating player must play a cube somewhere else if the asked player plays a cube.</div><div><br></div><div>To initiate a search, press the binoculars icon next to your seat. You will be prompted to play a disc. Afterwards, in turn, each player that does not have a disc on that space will be asked to play. That continues on that space until a cube is played or it contains a disc from every player. If a cube is played, then the player initiating the search much also play a cube somewhere else. And the searching player wins if no cube is played.</div><div><br></div><div>If a player makes certain invalid moves such as trying to place anything on a space that already has a cube or placing a disc on a place where that player already has a disc, the instructions box will report the invalid play. The piece will also automatically be moved to the bottom center of the board.</div>",
+      "helpText": "<span>Players take seats. Press reset button in upper right to begin.</span><div><br></div><div><span>You will be given a choice to use a predefined board from the rule book or set up the board manually.</span></div><div><br></div><div><b><span>Predefined boards:</span></b></div><div><span>&nbsp;</span></div><div><span>The clue will be displayed below your seat. A random player is automatically selected to start.</span></div><div><br></div><div><span>If players agree to show the hint, press the magnifying glass at the bottom of the screen. After the confirmation button is pressed, the hint will be displayed at the bottom of the screen for all players to see.</span></div><div><br></div><div><b><span>Manual boards</span></b><span>:</span></div><div><br></div><div><span>Board setups with clues and hints can be found in various sources online.&nbsp; To set up the board, press the numbered circles representing the tile (1-6) that should be placed in that position along with the orientation (rotated 180 degrees or not). If you make a mistake, you can drag a board to a new position and click on it to rotate it.&nbsp;</span><span style=\"color: var(--overlayFontColor);\"><span>Once the tiles are in place, manually drag the octagon and triangle shapes to their positions on the board.</span></span></div><div><span style=\"color: var(--overlayFontColor);\"><br></span></div><div><span style=\"color: var(--overlayFontColor);\"><span>The padlock in the lower left of the screen can lock or unlock the static tiles and pieces into place. The lock is triggered automatically after clicking to remove the setup instructions.</span></span></div><div><br></div><div><span>Each player can type their clue (from the online source) into the label provided below their name.&nbsp; Similarly, once players have agreed to view the hint, press the hint icon button and one player can type the hint into the label at the bottom of the screen.</span></div><div><br></div><div><b><span>Game play:</span></b></div><div><b><br></b></div><div><span>At every point in the game, players are prompted with instructions next to their seat. If the instructions get out of cycle with the actual game play, everything will be reset the next time a player initiates a search or asks a question.</span></div><div><b><br></b></div><div><span>Players take turns placing two cubes onto the board into places where the sasquatch cannot be based on their clue. Cubes always indicate a place the sasquatch cannot be and discs indicate places where the sasquatch could be. Always play cubes and discs based on your own clue and not what you may have deduced based on what other players have done.</span></div><div><br></div><div><span>After each player has placed two cubes, click on the box with instructions at the bottom of the screen to begin play. The player whose turn it is moves the pin to a place on the board. Then that player initiates either a question or a search.</span></div><div><br></div><div><span>To ask a question, press the question mark symbol next to the player you want to ask. That player is being asked whether, in the space with the pin, according to that player's clue, the sasquatch cannot be there or may be there. The player moves a cube or disc accordingly. Then the initiating player must play a cube somewhere else if the asked player plays a cube.</span></div><div><br></div><div><span>To initiate a search, press the binoculars icon next to your seat. You will be prompted to play a disc. Afterwards, in turn, each player that does not have a disc on that space will be asked to play. That continues on that space until a cube is played or it contains a disc from every player. If a cube is played, then the player initiating the search much also play a cube somewhere else. And the searching player wins if no cube is played.</span></div><div><br></div><div><span>If a player makes certain invalid moves such as trying to place anything on a space that already has a cube or placing a disc on a place where that player already has a disc, the instructions box will report the invalid play. The piece will also automatically be moved to the bottom center of the board.</span></div>",
       "variantImage": "",
       "variant": "",
       "language": "en-US",
@@ -2560,7 +2560,7 @@
         "func": "CALL",
         "routine": "useSeatRoutine"
       },
-      "var playerName = ${result.1}"
+      "var playerName = ${result.0}"
     ],
     "useSeatRoutine": [
       "var leaveSeat = false",
@@ -2766,7 +2766,7 @@
         "func": "CALL",
         "routine": "useSeatRoutine"
       },
-      "var playerName = ${result.1}"
+      "var playerName = ${result.0}"
     ],
     "useSeatRoutine": [
       "var leaveSeat = false",
@@ -2972,7 +2972,7 @@
         "func": "CALL",
         "routine": "useSeatRoutine"
       },
-      "var playerName = ${result.1}"
+      "var playerName = ${result.0}"
     ],
     "useSeatRoutine": [
       "var leaveSeat = false",
@@ -3178,7 +3178,7 @@
         "func": "CALL",
         "routine": "useSeatRoutine"
       },
-      "var playerName = ${result.1}"
+      "var playerName = ${result.0}"
     ],
     "useSeatRoutine": [
       "var leaveSeat = false",
@@ -3384,7 +3384,7 @@
         "func": "CALL",
         "routine": "useSeatRoutine"
       },
-      "var playerName = ${result.1}"
+      "var playerName = ${result.0}"
     ],
     "useSeatRoutine": [
       "var leaveSeat = false",
