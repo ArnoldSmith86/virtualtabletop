@@ -177,7 +177,7 @@ export class Widget extends StateManaged {
     let fromTransform = null;
     let newParent = undefined;
     if(delta.parent !== undefined) {
-      newParent = delta.parent ? widgets.get(delta.parent).domElement : $('#topSurface');
+      newParent = delta.parent && widgets.has(delta.parent) ? widgets.get(delta.parent).domElement : $('#topSurface');
       // If the widget wasn't newly created, transition from its previous location.
       if (delta.id === undefined)
         fromTransform = getElementTransformRelativeTo(this.domElement, newParent);
@@ -208,7 +208,7 @@ export class Widget extends StateManaged {
         this.domElement.style.transform = this.targetTransform;
       }
 
-      if(delta.parent !== null) {
+      if(delta.parent !== null && widgets.has(delta.parent)) {
         this.parent = widgets.get(delta.parent);
         this.parent.applyChildAdd(this);
       } else {
