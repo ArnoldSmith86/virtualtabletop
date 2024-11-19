@@ -103,8 +103,8 @@ export default class Player {
                 return triggerConflict(conflictDelta, widgetID, `<${key}Deletion>`);
               }
               if(delta.s[widgetID] === null) {
-                for(const conflictDeltaWidgetDelta of conflictDelta.s) {
-                  if(conflictDeltaWidgetDelta[key] === widgetID) {
+                for(const conflictDeltaWidgetID in conflictDelta.s) {
+                  if(conflictDelta.s[conflictDeltaWidgetID] !== null && conflictDelta.s[conflictDeltaWidgetID][key] === widgetID) {
                     console.log('deleted widget is now parent or deck of another widget');
                     return triggerConflict(conflictDelta, widgetID, `<${key}Deletion>`);
                   }
