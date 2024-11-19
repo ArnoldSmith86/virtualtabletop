@@ -68,12 +68,6 @@ export default class Player {
       return;
     }
 
-    function triggerConflict(conflictDelta, widgetID, key) {
-      this.trace('receiveDelta', { status: 'conflict', delta, conflictDelta, widgetID, key });
-      this.waitingForStateConfirmation = true;
-      this.room.receiveInvalidDelta(this, delta, widgetID, key);
-    }
-
     if(delta.id < this.latestDeltaIDbyDifferentPlayer) {
       console.log('idTooLow', delta, this.latestDeltaIDbyDifferentPlayer, this.name);
       this.trace('receiveDelta', { status: 'idTooLow', delta, possiblyConflicting: this.possiblyConflictingDeltas });
@@ -89,24 +83,24 @@ export default class Player {
                 continue;
               // widget was deleted in ONE of the deltas -> conflict
               if(delta.s[widgetID] === null || conflictDelta.s[widgetID] === null)
-                return triggerConflict(conflictDelta, widgetID, '<deletion>');
+                return this.triggerDeltaConflict(delta, conflictDelta, widgetID, '<deletion>');
               for(const key in delta.s[widgetID]) {
                 // a property of the widget was changed in both deltas and not to the same value -> conflict
                 if(conflictDelta.s[widgetID][key] !== undefined && delta.s[widgetID][key] !== conflictDelta.s[widgetID][key])
-                  return triggerConflict(conflictDelta, widgetID, key);
+                  return this.triggerDeltaConflict(delta, conflictDelta, widgetID, key);
               }
             }
             // a parent or deck of a widget was changed to a widget that was deleted in the other delta -> conflict
             for(const key of [ 'parent', 'deck' ]) {
               if(delta.s[widgetID] !== null && delta.s[widgetID][key] && conflictDelta.s[delta.s[widgetID][key]] === null) {
                 console.log('parent or deck changed to deleted widget');
-                return triggerConflict(conflictDelta, widgetID, `<${key}Deletion>`);
+                return this.triggerDeltaConflict(delta, conflictDelta, widgetID, `<${key}Deletion>`);
               }
               if(delta.s[widgetID] === null) {
                 for(const conflictDeltaWidgetID in conflictDelta.s) {
                   if(conflictDelta.s[conflictDeltaWidgetID] !== null && conflictDelta.s[conflictDeltaWidgetID][key] === widgetID) {
                     console.log('deleted widget is now parent or deck of another widget');
-                    return triggerConflict(conflictDelta, widgetID, `<${key}Deletion>`);
+                    return this.triggerDeltaConflict(delta, conflictDelta, widgetID, `<${key}Deletion>`);
                   }
                 }
               }
@@ -147,5 +141,11 @@ export default class Player {
       payload.player = this.name;
       this.room.trace(source, payload);
     }
+  }
+
+  triggerDeltaConflict(delta, conflictDelta, widgetID, key) {
+    this.trace('receiveDelta', { status: 'conflict', delta, conflictDelta, widgetID, key });
+    this.waitingForStateConfirmation = true;
+    this.room.receiveInvalidDelta(this, delta, widgetID, key);
   }
 }
