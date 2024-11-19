@@ -68,44 +68,47 @@ export default class Player {
       return;
     }
 
+    function triggerConflict(conflictDelta, widgetID, key) {
+      this.trace('receiveDelta', { status: 'conflict', delta, conflictDelta, widgetID, key });
+      this.waitingForStateConfirmation = true;
+      this.room.receiveInvalidDelta(this, delta, widgetID, key);
+    }
+
     if(delta.id < this.latestDeltaIDbyDifferentPlayer) {
       console.log('idTooLow', delta, this.latestDeltaIDbyDifferentPlayer, this.name);
       this.trace('receiveDelta', { status: 'idTooLow', delta, possiblyConflicting: this.possiblyConflictingDeltas });
       for(const conflictDelta of this.possiblyConflictingDeltas) {
         console.log('conflictDelta', conflictDelta);
-        for(const widgetID in delta.s) {
-          console.log('widgetID', widgetID);
-          if(conflictDelta.id > delta.id) {
-            console.log('conflictDelta.id > delta.id');
+        if(conflictDelta.id > delta.id) {
+          console.log('conflictDelta.id > delta.id');
+          for(const widgetID in delta.s) {
+            console.log('widgetID', widgetID);
             if(conflictDelta.s[widgetID] !== undefined) {
               // widget was deleted in both deltas - no problem
               if(delta.s[widgetID] === null && conflictDelta.s[widgetID] === null)
                 continue;
               // widget was deleted in ONE of the deltas -> conflict
-              if(delta.s[widgetID] === null || conflictDelta.s[widgetID] === null) {
-                this.trace('receiveDelta', { status: 'conflict', delta, conflictDelta, widgetID, key: '<deletion>' });
-                this.waitingForStateConfirmation = true;
-                this.room.receiveInvalidDelta(this, delta, widgetID, '<deletion>');
-                return;
-              }
+              if(delta.s[widgetID] === null || conflictDelta.s[widgetID] === null)
+                return triggerConflict(conflictDelta, widgetID, '<deletion>');
               for(const key in delta.s[widgetID]) {
                 // a property of the widget was changed in both deltas and not to the same value -> conflict
-                if(conflictDelta.s[widgetID][key] !== undefined && delta.s[widgetID][key] !== conflictDelta.s[widgetID][key]) {
-                  this.trace('receiveDelta', { status: 'conflict', delta, conflictDelta, widgetID, key });
-                  this.waitingForStateConfirmation = true;
-                  this.room.receiveInvalidDelta(this, delta, widgetID, key);
-                  return;
-                }
+                if(conflictDelta.s[widgetID][key] !== undefined && delta.s[widgetID][key] !== conflictDelta.s[widgetID][key])
+                  return triggerConflict(conflictDelta, widgetID, key);
               }
             }
             // a parent or deck of a widget was changed to a widget that was deleted in the other delta -> conflict
             for(const key of [ 'parent', 'deck' ]) {
-              if(delta.s[widgetID][key] && conflictDelta.s[delta.s[widgetID][key]] === null) {
+              if(delta.s[widgetID] !== null && delta.s[widgetID][key] && conflictDelta.s[delta.s[widgetID][key]] === null) {
                 console.log('parent or deck changed to deleted widget');
-                this.trace('receiveDelta', { status: 'conflict', delta, conflictDelta, widgetID, key: `<${key}Deletion>` });
-                this.waitingForStateConfirmation = true;
-                this.room.receiveInvalidDelta(this, delta, widgetID, `<${key}Deletion>`);
-                return;
+                return triggerConflict(conflictDelta, widgetID, `<${key}Deletion>`);
+              }
+              if(delta.s[widgetID] === null) {
+                for(const conflictDeltaWidgetDelta of conflictDelta.s) {
+                  if(conflictDeltaWidgetDelta[key] === widgetID) {
+                    console.log('deleted widget is now parent or deck of another widget');
+                    return triggerConflict(conflictDelta, widgetID, `<${key}Deletion>`);
+                  }
+                }
               }
             }
           }
