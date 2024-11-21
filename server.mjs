@@ -122,6 +122,7 @@ MinifyHTML().then(function(result) {
   router.use('/fonts.css', express.static(path.resolve() + '/client/css/fonts.css'));
 
   router.use('/i', express.static(path.resolve() + '/assets'));
+  router.use('/service-worker.js', express.static(path.resolve() + '/assets/branding/service-worker.js'));
 
   router.get('/scripts/:name', function(req, res) {
     res.setHeader('Content-Type', 'application/javascript');
