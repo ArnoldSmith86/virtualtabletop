@@ -370,6 +370,17 @@ export class Widget extends StateManaged {
     return this.childArray.sort((a,b)=>b.get('z')-a.get('z'));
   }
 
+  childrenFiltered() {
+    let filteredList = [];
+    for(const c of this.children().filter(w=>w.get('type')!='deck' && w.get('fixedParent')!=true)) {
+      if(c.get('type') == 'pile')
+        filteredList.concat(c.childArray);
+      else
+        filteredList.push(c);
+    }
+    return filteredList;
+  }
+
   childrenOwned() {
     return this.children().filter(c=>!c.get('owner') || c.get('owner')==playerName);
   }
@@ -1175,7 +1186,7 @@ export class Widget extends StateManaged {
           variables[a.variable] = 0;
           for (const h of asArray(a.holder)) {
             if(this.isValidID(h,problems)) {
-              const children = widgets.get(h).children();
+              const children = widgets.get(h).childrenFiltered();
               if(a.owner === null) {
                 variables[a.variable] += children.length;
               } else {
@@ -1219,7 +1230,7 @@ export class Widget extends StateManaged {
         if(a.holder !== undefined) {
           if(this.isValidID(a.holder,problems)) {
             await w(a.holder, async holder=>{
-              for(const c of holder.children().slice(0, a.count))
+              for(const c of holder.childrenFiltered().slice(0, a.count))
                 c.flip && await c.flip(a.face,a.faceCycle);
             });
           }
@@ -1474,7 +1485,7 @@ export class Widget extends StateManaged {
             await applyFlip();
             await c.bringToFront();
             ++moved;
-          } else if(!a.fillTo || target.children().length < a.fillTo) {
+          } else if(!a.fillTo || target.childrenFiltered().length < a.fillTo) {
             c.movedByButton = true;
             if(target.get('type') == 'seat') {
               if(target.get('hand') && target.get('player')) {
@@ -1543,7 +1554,7 @@ export class Widget extends StateManaged {
 
         if(this.isValidID(a.from, problems)) {
           await w(a.from, async source=>{
-            for(const c of source.children().slice(0, a.count).reverse()) {
+            for(const c of source.childrenFiltered().slice(0, a.count).reverse()) {
               if(a.face !== null && c.flip)
                 c.flip(a.face);
               await c.bringToFront();
@@ -1613,7 +1624,7 @@ export class Widget extends StateManaged {
         if(a.holder !== undefined) {
           if(this.isValidID(a.holder, problems)) {
             await w(a.holder, async holder=>{
-              for(const c of holder.children().slice(0, a.count))
+              for(const c of holder.childrenFiltered().slice(0, a.count))
                 await c.rotate(a.angle, a.mode);
             });
             if(jeRoutineLogging) {
@@ -1783,7 +1794,7 @@ export class Widget extends StateManaged {
         if(a.holder !== undefined) {
           if(this.isValidID(a.holder, problems)) {
             await w(a.holder, async holder=>{
-              await shuffleWidgets(holder.children());
+              await shuffleWidgets(holder.childrenFiltered());
               if(typeof holder.updateAfterShuffle == 'function')
                 await holder.updateAfterShuffle();
             });
@@ -1813,7 +1824,7 @@ export class Widget extends StateManaged {
         if(a.holder !== undefined) {
           if(this.isValidID(a.holder, problems)) {
             await w(a.holder, async holder=>{
-              await sortWidgets(holder.children(), a.key, a.reverse, a.locales, a.options, true);
+              await sortWidgets(holder.childrenFiltered(), a.key, a.reverse, a.locales, a.options, true);
               if(typeof holder.updateAfterShuffle == 'function')
                 await holder.updateAfterShuffle();
             });
@@ -2406,6 +2417,7 @@ export class Widget extends StateManaged {
   async onChildAdd(child, oldParentID) {
     this.childArray = this.childArray.filter(c=>c!=child);
     this.childArray.push(child);
+    this.childArray = this.childArray.filter(w=>w.get('type')!='deck' && w.get('fixedParent')!=true);
     await this.onChildAddAlign(child, oldParentID);
   }
 
