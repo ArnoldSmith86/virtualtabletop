@@ -1844,10 +1844,6 @@ function jeUpdateMulti() {
   jeSet(jeStateBefore = JSON.stringify(jeStateNow, null, '  '));
 }
 
-function html(string) {
-  return String(string).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
-}
-
 function jeColorize() {
   const langObj = [
     [ /^( +")(.*)( \(in .*)(":.*)$/, null, 'extern', 'extern', null ], // e.g. "cardDefaults (in deck)": ...
