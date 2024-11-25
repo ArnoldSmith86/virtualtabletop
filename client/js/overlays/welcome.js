@@ -27,7 +27,8 @@ function checkForGameURL() {
 
       if(state.name) {
         $('#welcomePlayerName').value = playerName;
-        $('#welcomeGameName').innerText = state.name;
+        $('#welcomeGameName').innerHTML = state.name;
+        emojis2images($('#welcomeGameName'));
         $('#welcomeGameType').innerText = gameDetails.category || 'game';
         $('#welcomeGameTypeHint').innerText = gameDetails.category == 'tutorial' ? 'check it out' : 'start playing it';
         $('#welcomeUserGenerated').style.display = gameDetails.type == 'public' ? 'none' : 'block';
