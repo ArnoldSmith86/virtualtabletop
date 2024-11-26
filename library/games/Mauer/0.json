@@ -1,0 +1,794 @@
+{
+  "5936": {
+    "type": "seat",
+    "x": 566,
+    "y": 194,
+    "id": "5936",
+    "": 205,
+    "in": 205,
+    "ind": 205,
+    "inde": 205
+  },
+  "5937": {
+    "type": "seat",
+    "index": 2,
+    "x": 380,
+    "y": 194,
+    "id": "5937",
+    "": 205,
+    "in": 205,
+    "ind": 205,
+    "inde": 205
+  },
+  "5938": {
+    "type": "seat",
+    "index": 3,
+    "x": 194,
+    "y": 194,
+    "id": "5938",
+    "": 205,
+    "in": 205,
+    "ind": 205,
+    "inde": 205,
+    "turn": true
+  },
+  "5939": {
+    "type": "seat",
+    "index": 4,
+    "x": 942,
+    "y": 192,
+    "id": "5939",
+    "": 203,
+    "in": 203,
+    "ind": 203,
+    "inde": 203
+  },
+  "5940": {
+    "type": "seat",
+    "index": 5,
+    "x": 756,
+    "y": 192,
+    "id": "5940",
+    "": 203,
+    "in": 203,
+    "ind": 203,
+    "inde": 203
+  },
+  "npwm": {
+    "type": "dice",
+    "id": "npwm",
+    "faces": [
+      {
+        "image": "/i/noto-emoji/emoji_u1fab1.svg"
+      },
+      {
+        "image": "/i/noto-emoji/emoji_u1fab1.svg"
+      },
+      {
+        "image": "/i/game-icons.net/delapouite/ketchup.svg",
+        "svgReplaces": {
+          "#000": "faceColor"
+        },
+        "faceColor": "red"
+      },
+      {
+        "image": "/i/noto-emoji/emoji_u1f96f.svg"
+      },
+      {
+        "image": "/i/noto-emoji/emoji_u1faa4.svg"
+      },
+      {
+        "image": "/i/noto-emoji/emoji_u1f952.svg"
+      }
+    ],
+    "y": 4,
+    "width": 250,
+    "height": 250,
+    "rollCount": 122,
+    "movable": true,
+    "z": 5,
+    "resetProperties": {
+      "parent": "fuug",
+      "x": 282,
+      "y": 284,
+      "activeFace": 2
+    },
+    "x": 1044,
+    "parent": "fuug",
+    "activeFace": 2
+  },
+  "npwm1": {
+    "type": "dice",
+    "id": "npwm1",
+    "faces": [
+      {
+        "image": "/i/noto-emoji/emoji_u1fab1.svg"
+      },
+      {
+        "image": "/i/noto-emoji/emoji_u1fab1.svg"
+      },
+      {
+        "image": "/i/game-icons.net/delapouite/ketchup.svg",
+        "svgReplaces": {
+          "#000": "faceColor"
+        },
+        "faceColor": "red"
+      },
+      {
+        "image": "/i/noto-emoji/emoji_u1f96f.svg"
+      },
+      {
+        "image": "/i/noto-emoji/emoji_u1faa4.svg"
+      },
+      {
+        "image": "/i/noto-emoji/emoji_u1f952.svg"
+      }
+    ],
+    "y": 4,
+    "width": 250,
+    "height": 250,
+    "rollCount": 120,
+    "movable": true,
+    "z": 6,
+    "resetProperties": {
+      "parent": "fuug",
+      "x": 8,
+      "y": 15,
+      "activeFace": 2
+    },
+    "x": 1304,
+    "parent": "fuug",
+    "activeFace": 2
+  },
+  "npwm2": {
+    "type": "dice",
+    "id": "npwm2",
+    "faces": [
+      {
+        "image": "/i/noto-emoji/emoji_u1fab1.svg"
+      },
+      {
+        "image": "/i/noto-emoji/emoji_u1fab1.svg"
+      },
+      {
+        "image": "/i/game-icons.net/delapouite/ketchup.svg",
+        "svgReplaces": {
+          "#000": "faceColor"
+        },
+        "faceColor": "red"
+      },
+      {
+        "image": "/i/noto-emoji/emoji_u1f96f.svg"
+      },
+      {
+        "image": "/i/noto-emoji/emoji_u1faa4.svg"
+      },
+      {
+        "image": "/i/noto-emoji/emoji_u1f952.svg"
+      }
+    ],
+    "x": 264,
+    "width": 250,
+    "height": 250,
+    "rollCount": 132,
+    "movable": true,
+    "z": 2,
+    "y": 4,
+    "resetProperties": {
+      "parent": "fuug",
+      "x": 536,
+      "y": 26,
+      "activeFace": 2
+    },
+    "activeFace": 2,
+    "parent": "fuug"
+  },
+  "npwm3": {
+    "type": "dice",
+    "id": "npwm3",
+    "faces": [
+      {
+        "image": "/i/noto-emoji/emoji_u1fab1.svg"
+      },
+      {
+        "image": "/i/noto-emoji/emoji_u1fab1.svg"
+      },
+      {
+        "image": "/i/game-icons.net/delapouite/ketchup.svg",
+        "svgReplaces": {
+          "#000": "faceColor"
+        },
+        "faceColor": "red"
+      },
+      {
+        "image": "/i/noto-emoji/emoji_u1f96f.svg"
+      },
+      {
+        "image": "/i/noto-emoji/emoji_u1faa4.svg"
+      },
+      {
+        "image": "/i/noto-emoji/emoji_u1f952.svg"
+      }
+    ],
+    "x": 524,
+    "y": 4,
+    "width": 250,
+    "height": 250,
+    "rollCount": 132,
+    "movable": true,
+    "z": 3,
+    "resetProperties": {
+      "parent": "fuug",
+      "x": 273,
+      "y": 17,
+      "activeFace": 2
+    },
+    "parent": "fuug",
+    "activeFace": 2
+  },
+  "npwm4": {
+    "type": "dice",
+    "id": "npwm4",
+    "faces": [
+      {
+        "image": "/i/noto-emoji/emoji_u1fab1.svg"
+      },
+      {
+        "image": "/i/noto-emoji/emoji_u1fab1.svg"
+      },
+      {
+        "image": "/i/game-icons.net/delapouite/ketchup.svg",
+        "svgReplaces": {
+          "#000": "faceColor"
+        },
+        "faceColor": "red"
+      },
+      {
+        "image": "/i/noto-emoji/emoji_u1f96f.svg"
+      },
+      {
+        "image": "/i/noto-emoji/emoji_u1faa4.svg"
+      },
+      {
+        "image": "/i/noto-emoji/emoji_u1f952.svg"
+      }
+    ],
+    "width": 250,
+    "height": 250,
+    "rollCount": 130,
+    "movable": true,
+    "z": 1,
+    "x": 4,
+    "y": 4,
+    "resetProperties": {
+      "parent": "fuug",
+      "x": 540,
+      "y": 287,
+      "activeFace": 2
+    },
+    "activeFace": 2,
+    "parent": "fuug"
+  },
+  "npwm5": {
+    "type": "dice",
+    "id": "npwm5",
+    "faces": [
+      {
+        "image": "/i/noto-emoji/emoji_u1fab1.svg"
+      },
+      {
+        "image": "/i/noto-emoji/emoji_u1fab1.svg"
+      },
+      {
+        "image": "/i/game-icons.net/delapouite/ketchup.svg",
+        "svgReplaces": {
+          "#000": "faceColor"
+        },
+        "faceColor": "red"
+      },
+      {
+        "image": "/i/noto-emoji/emoji_u1f96f.svg"
+      },
+      {
+        "image": "/i/noto-emoji/emoji_u1faa4.svg"
+      },
+      {
+        "image": "/i/noto-emoji/emoji_u1f952.svg"
+      }
+    ],
+    "y": 4,
+    "width": 250,
+    "height": 250,
+    "rollCount": 142,
+    "movable": true,
+    "z": 4,
+    "resetProperties": {
+      "parent": "fuug",
+      "x": 12,
+      "y": 282,
+      "activeFace": 2
+    },
+    "x": 784,
+    "activeFace": 2,
+    "parent": "fuug"
+  },
+  "wj8s": {
+    "type": "button",
+    "id": "wj8s",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "type",
+        "value": "dice"
+      },
+      {
+        "func": "CLICK"
+      }
+    ],
+    "image": "/i/game-icons.net/delapouite/dice-eight-faces-eight.svg",
+    "width": 200,
+    "height": 200,
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "color": "red"
+  },
+  "_meta": {
+    "version": 15,
+    "info": {
+      "name": "Mauer",
+      "image": "/i/noto-emoji/emoji_u1faa4.svg",
+      "rules": "",
+      "bgg": "https://boardgamegeek.com/boardgame/66797/heckmeck-junior",
+      "year": "2010",
+      "mode": "vs",
+      "time": "20",
+      "attribution": "<div>The layout was created by ArnoldSmith86 and his son and is released to the public domain using CC0.</div><div><br></div><div>It only uses images included with VTT. Some Noto emojis and icons from game-icons.net that are licensed as CC BY 3.0:</div><div><div><br></div><div>By Delapouite:<div>https://game-icons.net/1x1/delapouite/dice-eight-faces-eight.html<div>https://game-icons.net/1x1/delapouite/dice-fire.html</div></div></div><div>https://game-icons.net/1x1/delapouite/ketchup.html</div><br><div>By Lord Berandas:<br></div>https://game-icons.net/1x1/lord-berandas/power-button.html<br></div>",
+      "lastUpdate": 1725532552035,
+      "showName": true,
+      "skill": "",
+      "description": "Roll ingredients for your delicious burgers and trade them for points.",
+      "similarImage": "",
+      "similarName": "Heckmeck Junior",
+      "similarDesigner": "Reiner Knizia",
+      "similarAwards": "2011 Golden GeekBest Children's Board Game Nominee",
+      "ruleText": "<div>Let me start by saying that I created this together with my 5yo son and so far I'm not allowed to improve a few things. 😁&nbsp;You never need the&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/dice-eight-faces-eight.svg\"></i> button. It will reroll <i>all</i> dice.<br></div><h4>Goal</h4><div>Each round, you keep rolling dice until no new faces appear and take one of the cards at the top. When no cards are left, the player with the most 🐛 wins.</div><h4>Setup</h4><div><ol><li>Every player <b>takes a seat</b> by clicking on \"click to sit\".</li><li><b>Press the</b>&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/lord-berandas/power-button.svg\"></i> <b>button</b> to choose a random start player (seat will get a highlight) and clean up the previous game.<br></li></ol></div><h4>Rolling Dice</h4><div><ol><li>Click the&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/dice-fire.svg\"></i> button to <b>roll the dice</b> in the top holder.</li><li>Pick one ingredient type (dice face) and <b>drag all dice showing that ingredient</b> to the bottom holder.</li><li><b>Repeat</b> steps 1 and 2. You can never pick an ingredient that's already in the bottom holder.</li><li>Roll <b>until no dice are left</b> or they only show ingredients you already picked.</li></ol><h4>Picking Cards</h4><div><ol><li>You may only pick cards if at least one of the dice in the bottom holder shows a 🪱.</li><li>Count the dice. Each 🥯 counts as 2.</li><li>Drag a <b>card&nbsp;that shows your dice score</b> from the top to the holder below your seat.</li><ul><li>If there is <b>no matching number, you can steal</b> from your opponents (see below).</li><li>If you can't or don't want to steal, pick the highest available <b>lower number</b>.</li></ul><li>If <b>you can't get a card</b> from the top or your opponents, <b>flip over the highest card</b> in the top holder by clicking on it.</li></ol><h4>Stealing</h4><div><ul><li>If - <i>and only if</i> - there's <b>no card available</b> at the top for your <i>exact</i> dice score, you may <b>steal the top-most card</b> of any opponent.</li><li>The stolen card must have the <b>exact number</b> of your score on it.</li><li>You can choose to <b>stop rolling dice at any point</b> in order to try to steal from an opponent. But if you roll your dice, you have to pick dice. And you always need to pick all matching dice when picking an ingredient.</li></ul><h4>End of Round</h4><div>After taking or flipping a card, <b>press the</b>&nbsp;➡️ <b>button</b> to reset the dice and highlight the seat of the next active player.</div><h4>End of Game</h4><div><ul><li>As soon as there are <b>no face-up cards left</b> in the top holder, the game ends.</li><li>Each player drags their won cards somewhere to <b>count all the</b>&nbsp;🐛 on them. The 8 has 3&nbsp;🐛 and the 9 has 4 🐛. The number at the top of the card does <i>not</i> matter.<br></li></ul></div></div></div></div>",
+      "helpText": "",
+      "players": "2-5",
+      "language": "",
+      "variant": "",
+      "variantImage": ""
+    }
+  },
+  "hmz5": {
+    "type": "deck",
+    "id": "hmz5",
+    "cardTypes": {
+      "4": {
+        "worm1": "/i/noto-emoji/emoji_u1f41b.svg"
+      },
+      "5": {
+        "worm1": "/i/noto-emoji/emoji_u1f41b.svg"
+      },
+      "6": {
+        "worm1": "/i/noto-emoji/emoji_u1f41b.svg",
+        "worm2": "/i/noto-emoji/emoji_u1f41b.svg"
+      },
+      "7": {
+        "worm1": "/i/noto-emoji/emoji_u1f41b.svg",
+        "worm2": "/i/noto-emoji/emoji_u1f41b.svg"
+      },
+      "8": {
+        "worm1": "/i/noto-emoji/emoji_u1f41b.svg",
+        "worm2": "/i/noto-emoji/emoji_u1f41b.svg",
+        "worm3": "/i/noto-emoji/emoji_u1f41b.svg"
+      },
+      "9": {
+        "worm1": "/i/noto-emoji/emoji_u1f41b.svg",
+        "worm2": "/i/noto-emoji/emoji_u1f41b.svg",
+        "worm3": "/i/noto-emoji/emoji_u1f41b.svg",
+        "worm4": "/i/noto-emoji/emoji_u1f41b.svg"
+      }
+    },
+    "x": 24,
+    "y": 20,
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "color": "red",
+            "dynamicProperties": {
+              "width": "width",
+              "height": "height",
+              "value": "image"
+            }
+          }
+        ]
+      },
+      {
+        "objects": [
+          {
+            "type": "image",
+            "color": "red",
+            "dynamicProperties": {
+              "width": "width",
+              "height": "height",
+              "value": "image"
+            }
+          },
+          {
+            "type": "text",
+            "x": 0,
+            "y": 0,
+            "fontSize": 20,
+            "textAlign": "center",
+            "width": 103,
+            "dynamicProperties": {
+              "value": "cardType"
+            },
+            "css": {
+              "color": "yellow"
+            }
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "transparent",
+            "width": 103,
+            "height": 160,
+            "dynamicProperties": {
+              "value": "worm1"
+            }
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 50,
+            "color": "transparent",
+            "width": 103,
+            "height": 160,
+            "dynamicProperties": {
+              "value": "worm2"
+            }
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 100,
+            "color": "transparent",
+            "width": 103,
+            "height": 160,
+            "dynamicProperties": {
+              "value": "worm3"
+            }
+          },
+          {
+            "type": "image",
+            "x": 50,
+            "y": 100,
+            "color": "transparent",
+            "width": 103,
+            "height": 160,
+            "dynamicProperties": {
+              "value": "worm4"
+            }
+          }
+        ]
+      }
+    ],
+    "z": 112,
+    "parent": "mk94"
+  },
+  "cx0x": {
+    "deck": "hmz5",
+    "type": "card",
+    "cardType": "4",
+    "id": "cx0x",
+    "z": 1,
+    "x": 4,
+    "y": 4,
+    "parent": "mk94",
+    "activeFace": 1
+  },
+  "ybv5": {
+    "deck": "hmz5",
+    "type": "card",
+    "cardType": "5",
+    "id": "ybv5",
+    "z": 3,
+    "x": 224,
+    "y": 4,
+    "parent": "mk94",
+    "activeFace": 1
+  },
+  "cvfp": {
+    "deck": "hmz5",
+    "type": "card",
+    "cardType": "6",
+    "id": "cvfp",
+    "z": 5,
+    "x": 444,
+    "y": 4,
+    "parent": "mk94",
+    "activeFace": 1
+  },
+  "o887": {
+    "deck": "hmz5",
+    "type": "card",
+    "cardType": "7",
+    "id": "o887",
+    "z": 7,
+    "x": 664,
+    "y": 4,
+    "parent": "mk94",
+    "activeFace": 1
+  },
+  "759l": {
+    "deck": "hmz5",
+    "type": "card",
+    "cardType": "8",
+    "id": "759l",
+    "z": 9,
+    "x": 884,
+    "y": 4,
+    "parent": "mk94",
+    "activeFace": 1
+  },
+  "z2wt": {
+    "deck": "hmz5",
+    "type": "card",
+    "cardType": "9",
+    "id": "z2wt",
+    "z": 11,
+    "x": 1104,
+    "y": 4,
+    "hoverParent": "mk94",
+    "parent": "mk94",
+    "activeFace": 1
+  },
+  "cx1x": {
+    "deck": "hmz5",
+    "type": "card",
+    "cardType": "4",
+    "id": "cx1x",
+    "z": 2,
+    "x": 114,
+    "y": 4,
+    "parent": "mk94",
+    "activeFace": 1
+  },
+  "ybv6": {
+    "deck": "hmz5",
+    "type": "card",
+    "cardType": "5",
+    "id": "ybv6",
+    "z": 4,
+    "x": 334,
+    "y": 4,
+    "parent": "mk94",
+    "activeFace": 1
+  },
+  "cvfp1": {
+    "deck": "hmz5",
+    "type": "card",
+    "cardType": "6",
+    "id": "cvfp1",
+    "z": 6,
+    "x": 554,
+    "y": 4,
+    "parent": "mk94",
+    "activeFace": 1
+  },
+  "o888": {
+    "deck": "hmz5",
+    "type": "card",
+    "cardType": "7",
+    "id": "o888",
+    "z": 8,
+    "x": 774,
+    "y": 4,
+    "parent": "mk94",
+    "activeFace": 1
+  },
+  "760l": {
+    "deck": "hmz5",
+    "type": "card",
+    "cardType": "8",
+    "id": "760l",
+    "z": 10,
+    "x": 994,
+    "y": 4,
+    "parent": "mk94",
+    "activeFace": 1
+  },
+  "z3wt": {
+    "deck": "hmz5",
+    "type": "card",
+    "cardType": "9",
+    "id": "z3wt",
+    "z": 12,
+    "x": 1214,
+    "y": 4,
+    "parent": "mk94",
+    "activeFace": 1
+  },
+  "1pje": {
+    "type": "holder",
+    "x": 593,
+    "y": 260,
+    "z": 10,
+    "id": "1pje"
+  },
+  "2pje": {
+    "type": "holder",
+    "x": 407,
+    "y": 260,
+    "z": 10,
+    "id": "2pje"
+  },
+  "3pje": {
+    "type": "holder",
+    "x": 221,
+    "y": 260,
+    "z": 10,
+    "id": "3pje"
+  },
+  "4pje": {
+    "type": "holder",
+    "x": 969,
+    "y": 258,
+    "z": 10,
+    "id": "4pje"
+  },
+  "5pje": {
+    "type": "holder",
+    "x": 783,
+    "y": 258,
+    "z": 10,
+    "id": "5pje"
+  },
+  "mk94": {
+    "type": "holder",
+    "x": 255,
+    "y": 21,
+    "z": 13,
+    "id": "mk94",
+    "width": 1321,
+    "stackOffsetX": 110
+  },
+  "fuug": {
+    "type": "holder",
+    "x": 14,
+    "y": 437,
+    "z": 16,
+    "id": "fuug",
+    "width": 1564,
+    "height": 261,
+    "dropTarget": {
+      "type": "dice"
+    },
+    "stackOffsetX": 260
+  },
+  "fuug1": {
+    "type": "holder",
+    "x": 16,
+    "y": 703,
+    "z": 18,
+    "id": "fuug1",
+    "width": 1564,
+    "height": 261,
+    "dropTarget": {
+      "type": "dice"
+    },
+    "stackOffsetX": 260
+  },
+  "wj9s": {
+    "type": "button",
+    "id": "wj9s",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "value": "fuug"
+      },
+      {
+        "func": "CLICK"
+      }
+    ],
+    "image": "/i/game-icons.net/delapouite/dice-fire.svg",
+    "width": 200,
+    "height": 200,
+    "y": 200,
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "color": "red"
+  },
+  "wj10s": {
+    "type": "button",
+    "id": "wj10s",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "resetProperties",
+        "relation": "!=",
+        "value": null
+      },
+      {
+        "func": "FOREACH",
+        "loopRoutine": [
+          {
+            "func": "FOREACH",
+            "in": "${PROPERTY resetProperties OF $widgetID}",
+            "loopRoutine": [
+              {
+                "func": "SET",
+                "property": "${key}",
+                "value": "${value}"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "MOVE",
+        "to": "fuug"
+      },
+      {
+        "func": "TURN",
+        "turnCycle": "backward"
+      }
+    ],
+    "image": "/i/noto-emoji/emoji_u27a1.svg",
+    "width": 200,
+    "height": 200,
+    "y": 216,
+    "x": 1153,
+    "z": 2,
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "color": "red"
+  },
+  "wj11s": {
+    "type": "button",
+    "id": "wj11s",
+    "clickRoutine": [
+      {
+        "func": "CLICK",
+        "collection": [
+          "wj10s"
+        ]
+      },
+      {
+        "func": "RECALL",
+        "holder": "mk94"
+      },
+      {
+        "func": "FLIP",
+        "holder": "mk94",
+        "face": 1
+      },
+      {
+        "func": "SORT",
+        "holder": "mk94",
+        "key": "cardType"
+      },
+      {
+        "func": "TURN",
+        "turnCycle": "random"
+      }
+    ],
+    "image": "/i/game-icons.net/lord-berandas/power-button.svg",
+    "width": 200,
+    "height": 200,
+    "y": 216,
+    "x": 1353,
+    "z": 2,
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "color": "red"
+  }
+}

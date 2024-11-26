@@ -1,0 +1,256 @@
+#loadingRoomIndicator {
+  text-align: center;
+  margin-top: 485px;
+  color: var(--VTTblue);
+}
+#loadingRoomIndicator + div button {
+  margin: auto;
+}
+
+
+
+#linkDetailsOverlay {
+  --mainDetailsHeight: 300px;
+  color: var(--overlayFontColor);
+  align-items: center;
+}
+
+#linkDetailsOverlay h1 {
+  margin-bottom: 0;
+}
+
+#linkDetailsOverlay h2 {
+  margin-top: 0;
+  font-size: 20px;
+}
+#linkDetailsOverlay > :not(.buttons) {
+  box-sizing: border-box;
+  background: var(--roomColor);
+  padding: 20px;
+  border-radius: 20px;
+  width: 80%;
+  min-width: 800px;
+  max-width: 1400px;
+}
+#linkDetailsOverlay .addToRoomBox {
+  margin-bottom: 20px;
+}
+#linkDetailsOverlay .addToRoomBox > p:first-child {
+  margin-top: 0;
+}
+#linkDetailsOverlay .addToRoomBox > p:last-child {
+  margin-bottom: 0;
+}
+#linkDetailsOverlay .welcomeInput {
+  margin: 10px 80px 0;
+}
+#linkDetailsOverlay .welcomeInput span {
+  display: inline-block;
+}
+#linkDetailsOverlay .welcomeInput p {
+  margin-bottom: 20px;
+}
+#linkDetailsOverlay .welcomeInput b {
+  display: inline-block;
+  width: 150px;
+}
+#linkDetailsOverlay .welcomeInput input {
+  width: 100px;
+}
+#welcomePlayButton {
+  margin: auto;
+  margin-top: 20px;
+}
+#welcomeUserGenerated {
+  position: relative;
+  max-width: 500px;
+}
+
+#linkDetailsOverlay > .buttons.one {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+}
+
+
+
+#linkDetailsOverlay img {
+  object-fit: cover;
+}
+#linkDetailsOverlay > .mainStateDetails {
+  padding: 0 20px 0 0;
+  min-height: var(--mainDetailsHeight);
+  max-height: var(--mainDetailsHeight);
+  margin-bottom: 10px;
+  overflow: auto;
+}
+.mainStateImage {
+  position: absolute;
+  height: var(--mainDetailsHeight);
+  width: var(--mainDetailsHeight);
+}
+.mainStateImage img {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  border-radius: 20px 0 0 20px;
+}
+.mainStateImage > div {
+  background: #fff8;
+}
+.mainStateImage > div button {
+  margin: calc(50% - 17px) auto;
+}
+.mainStateDetails .details {
+  margin-left: var(--mainDetailsHeight);
+  padding-left: 20px;
+  padding-top: 14px;
+  padding-bottom: 14px;
+}
+.mainStateDetails h1 {
+  color: var(--VTTblue);
+  text-align: left;
+  margin-top: 0;
+  margin-bottom: 8px;
+}
+.mainStateDetails .material-icons {
+  top: 5px;
+  position: relative;
+}
+.mainStateDetails .hidden {
+  display: none;
+}
+.mainStateDetails .star, .mainStateDetails .mainStateImage > i, .mainStateImage span {
+  position: absolute;
+  font-size: 50px;
+  background: none;
+  text-shadow: 2px 2px 4px #444;
+}
+.mainStateDetails .star::before {
+  font-size: 50px;
+  width: 50px;
+}
+.mainStateDetails .mainStateImage > i {
+  top: unset;
+  color: white;
+  padding: 9px;
+}
+.mainStateImage .active.star, .mainStateImage .active.star + span {
+  color: gold;
+}
+.mainStateImage span {
+  position: absolute;
+  font-size: 16px;
+  top: 51px;
+  width: 62px;
+  text-align: center;
+  color: white;
+  font-weight: bold;
+}
+.mainStateDetails p {
+  margin-top: 8px;
+  margin-bottom: 0;
+}
+
+
+@media (min-width: 1200px) and (min-height: 750px) {
+  #linkDetailsOverlay {
+    justify-content: center;
+  }
+}
+
+
+@media (max-width: 960px), (max-height: 600px) {
+  #linkDetailsOverlay {
+    --mainDetailsHeight: 200px;
+  }
+
+  #linkDetailsOverlay > :not(.buttons) {
+    width: 100%;
+    min-width: unset;
+  }
+
+  .mainStateDetails > .details > div:not(.hidden) {
+    display: inline-block;
+    font-size: 14px;
+    margin-right: 10px;
+  }
+  .mainStateDetails .material-icons {
+    font-size: 18px;
+    top: 3px;
+  }
+}
+
+
+@media (max-width: 660px), (max-height: 412px) {
+  #linkDetailsOverlay {
+    --mainDetailsHeight: 150px;
+    padding: 0;
+  }
+
+  #linkDetailsOverlay > .mainStateDetails {
+    margin-top: 60px;
+    padding: 20px;
+    min-height: unset;
+    max-height: unset;
+    width: 95%;
+    overflow: unset;
+  }
+  #linkDetailsOverlay > .mainStateDetails .details {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+  .mainStateImage {
+    position: relative;
+    float: left;
+    margin-right: 10px;
+  }
+  .mainStateImage img, .mainStateImage > div {
+    height: var(--mainDetailsHeight);
+    width: var(--mainDetailsHeight);
+    border-radius: 10px;
+  }
+
+  #linkDetailsOverlay .addToRoomBox {
+    width: 95%;
+  }
+}
+
+
+@media (max-width: 500px), (max-height: 312px) {
+  #linkDetailsOverlay {
+    --mainDetailsHeight: 50px;
+  }
+  #linkDetailsOverlay > .mainStateDetails {
+    padding: 10px;
+    margin: 60px auto 10px;
+  }
+  #linkDetailsOverlay > .mainStateDetails .details {
+    padding: unset;
+    margin: unset;
+  }
+  .mainStateImage .star, .mainStateImage .star + span {
+    display: none;
+  }
+  #linkDetailsOverlay > .mainStateDetails i {
+    font-size: 32px;
+  }
+  #linkDetailsOverlay .addToRoomBox {
+    padding: 10px;
+    margin-bottom: 10px;
+  }
+  #linkDetailsOverlay .welcomeInput {
+    margin: 20px 20px 0;
+  }
+  #linkDetailsOverlay .welcomeInput b {
+    display: block;
+    margin-top: 20px;
+  }
+}
+
+
+@media (max-width: 360px), (max-height: 225px) {
+  #linkDetailsOverlay .welcomeInput {
+    margin: 0;
+  }
+}

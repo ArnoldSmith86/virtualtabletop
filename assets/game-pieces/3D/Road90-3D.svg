@@ -1,0 +1,18 @@
+<svg version="1.2" baseProfile="tiny-ps" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 108" width="25" height="108">
+	<title>road-90 (1)-svg</title>
+	<style>
+		tspan { white-space:pre }
+		.shp0 { fill:#primaryColor; stroke:#borderColor; stroke-width:#borderWidth; } 
+		.shp1 { opacity: 0.2;mix-blend-mode: multiply;fill: #000000 } 
+		.shp2 { fill: none;stroke: #ffffff;stroke-linecap:round;stroke-linejoin:round;stroke-width: 0.25 } 
+	</style>
+	<g id="Layer">
+		<g id="Layer">
+			<g id="Layer">
+				<path id="Layer" class="shp0" d="M2.11 1.93L22.43 1.93L22.43 105.39L2.11 105.39L2.11 1.93Z" />
+			</g>
+			<path id="Layer" class="shp1" d="M9.15 1.93L22.43 1.93L22.43 105.39L9.15 105.39L9.15 1.93Z" />
+			<path id="Layer" class="shp2" d="M9.15 1.93L9.15 105.39" />
+		</g>
+	</g>
+</svg>

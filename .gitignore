@@ -1,5 +1,10 @@
+config.json
+assets/custom/*
+!assets/custom/.keep
+custom.*
 coverage
 node_modules
 save
 *.tgz
 *.heapsnapshot
+.DS_Store

@@ -1,0 +1,40 @@
+/* see common rules in toolbar.css */
+
+#editorDragToolbar {
+  display: none;
+  border-radius: 5px;
+  z-index: 1;
+}
+
+body:not(.overlayActive) #editorDragToolbar.active {
+  display: flex;
+}
+
+#editorDragToolbar button span {
+  width: 200px;
+}
+
+body.dragToolbarDragging #editorDragToolbar button:hover span {
+  display: none;
+}
+
+#editorDragToolbarFeedback {
+  display: none;
+  position: absolute;
+  top: calc(100% + 1px);
+  color: var(--textColor);
+  background: var(--backgroundHighlightColor1);
+  width: 100%;
+  border-radius: inherit;
+  padding: 10px;
+  box-sizing: border-box;
+  user-select: none;
+}
+
+#editorDragToolbarFeedback i {
+  color: var(--textHighlightColor5);
+}
+
+body.dragToolbarDragging #editorDragToolbarFeedback.active {
+  display: block;
+}

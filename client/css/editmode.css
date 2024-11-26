@@ -3,15 +3,19 @@
   height: var(--roomHeight);
   transform: scale(var(--scale));
   transform-origin: left top;
-  flex-direction: row;
-  padding: 0;
+  display: none;
+  grid-template-areas:         "cards pieces decorative"
+                               "cards pieces decorative"
+                               "cards interactive custom";
+  grid-template-columns: 1fr 3fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+  padding: 20px;
+  gap: 20px;
 }
 
 #addOverlay > .category {
   background: var(--roomColor);
-  width: 100%;
   border-radius: 32px;
-  margin: 20px;
   text-align: center;
 }
 
@@ -20,14 +24,72 @@
 }
 
 #addOverlay > .category > button {
-  display: block;
+  display: flex;
   margin-left: auto;
   margin-right: auto;
-  margin-bottom: 8px;
 }
 
+#addOverlay >.category.cards {
+  grid-area: cards;
+}
+
+#addOverlay >.category.pieces {
+  grid-area: pieces;
+}
+
+#addOverlay >.category.interactive {
+  grid-area: interactive;
+}
+
+#addOverlay >.category.decorative {
+  grid-area: decorative;
+}
+
+#addOverlay >.category.custom {
+  grid-area: custom;
+}
+
+#uploadBoard::before, #uploadToken::before{
+  content:'[upload]';
+}
+#addBasicWidget::before{
+  content:'[widget_add]';
+}
+#addCanvas::before{
+  content:'[color]';
+}
+#addSeat::before{
+  content:'[chair]';
+}
+#addSeatCounter::before{
+  content:'[chair]';
+}
+#addScoreboard::before{
+  content:'[scoreboard]';
+}
+#addHand::before{
+  content:'[holder_hand]';
+}
 #addOverlay .widget, #addOverlay textarea {
   cursor: pointer;
+}
+
+#editJSONoverlay {
+  padding: 10px;
+}
+
+#editJSONoverlay h1 {
+  margin: 0;
+}
+
+#editJSONoverlay textarea {
+  height: 100%;
+}
+
+@media only screen and (max-width: 500px) {
+  #editJSONoverlay textarea {
+    min-height: 100%;
+  }
 }
 
 #editOverlay {
@@ -40,6 +102,10 @@
   border-radius: 5vh;
   height: 90%;
   width: 90%;
+}
+
+.editOverlayButtonBar{
+  display: flex;
 }
 
 #editOverlay::-webkit-scrollbar-track {
@@ -79,26 +145,6 @@
 
 .editorButton:hover{
   background-color: var(--VTTblueDark);
-}
-
-body.edit .surface {
-  background-size: 30px 30px;
-
-  background-image:
-    repeating-linear-gradient(        #e0e0e0, #e0e0e0 1px, transparent 2px, transparent 30px),
-    repeating-linear-gradient(-90deg, #e0e0e0, #e0e0e0 1px, transparent 2px, transparent 30px);
-}
-
-body.edit .widget {
-  background-color: transparent !important;
-  border: 3px solid var(--editColor);
-  color: var(--editColor);
-  box-sizing: border-box;
-}
-
-body.edit .widget > .widget {
-  left: -3px;
-  top: -3px;
 }
 
 #cardTypesList td {

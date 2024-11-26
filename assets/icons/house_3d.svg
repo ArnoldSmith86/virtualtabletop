@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+  <g>
+    <polygon points="10.871 11.635 15.025 7.469 8.538 3.94 4.382 8.105 10.871 11.635" fill="currentColor"/>
+    <polygon points="10.46 12.55 4.013 9.043 4 16.281 10.446 19.788 10.46 12.55" fill="currentColor"/>
+    <path d="M15.881,8.006a.361.361,0,0,1-.044.066L11.46,12.46l-.014,7.529,8.539-1.2L20,10.982Z" fill="currentColor"/>
+  </g>
+  <rect width="24" height="24" fill="none"/>
+</svg>
