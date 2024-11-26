@@ -1,29 +1,6 @@
 {
-  "table": {
-    "type": "holder",
-    "id": "table",
-    "z": 101,
-    "css": "transform: translate3d(20px,50px,-80px) rotateX(25deg) !important; background: #a85;",
-    "width": 1580,
-    "height": 800,
-    "alignChildren": false,
-    "x": 20,
-    "y": 42,
-    "parent": "perspective",
-    "movableInEdit": false
-  },
-  "perspective": {
-    "id": "perspective",
-    "width": 1600,
-    "height": 1000,
-    "css": "perspective: 1000px; perspective-origin: center;",
-    "layer": -5,
-    "z": 8,
-    "movable": false,
-    "movableInEdit": false
-  },
-  "twidB": {
-    "id": "twidB",
+  "g9uwB": {
+    "id": "g9uwB",
     "parent": "deck",
     "fixedParent": true,
     "y": 171.36,
@@ -48,16 +25,16 @@
       }
     ]
   },
-  "twidP": {
+  "g9uwP": {
     "type": "pile",
-    "id": "twidP",
+    "id": "g9uwP",
     "parent": "deck",
     "width": 103,
     "height": 160
   },
-  "twidD": {
+  "g9uwD": {
     "type": "deck",
-    "id": "twidD",
+    "id": "g9uwD",
     "parent": "deck",
     "x": 12,
     "y": 41,
@@ -582,472 +559,561 @@
           }
         ]
       }
-    ]
+    ],
+    "cardDefaults": {
+      "classes": "transition"
+    }
   },
-  "twid_A_C": {
-    "id": "twid_A_C",
-    "parent": "twidP",
-    "deck": "twidD",
+  "g9uw_A_C": {
+    "id": "g9uw_A_C",
+    "parent": "g9uwP",
+    "deck": "g9uwD",
     "type": "card",
     "cardType": "C 01",
-    "z": 1142
+    "z": 5694
   },
-  "twid_2_C": {
-    "id": "twid_2_C",
-    "parent": "twidP",
-    "deck": "twidD",
+  "g9uw_2_C": {
+    "id": "g9uw_2_C",
+    "deck": "g9uwD",
     "type": "card",
     "cardType": "C 02",
-    "z": 1122
+    "z": 5675,
+    "parent": "g9uwP"
   },
-  "twid_3_C": {
-    "id": "twid_3_C",
-    "parent": "twidP",
-    "deck": "twidD",
+  "g9uw_3_C": {
+    "id": "g9uw_3_C",
+    "parent": "g9uwP",
+    "deck": "g9uwD",
     "type": "card",
     "cardType": "C 03",
-    "z": 1116
+    "z": 5696
   },
-  "twid_4_C": {
-    "id": "twid_4_C",
-    "parent": "twidP",
-    "deck": "twidD",
+  "g9uw_4_C": {
+    "id": "g9uw_4_C",
+    "deck": "g9uwD",
     "type": "card",
     "cardType": "C 04",
-    "z": 1139
+    "z": 5689,
+    "parent": "g9uwP"
   },
-  "twid_5_C": {
-    "id": "twid_5_C",
-    "parent": "twidP",
-    "deck": "twidD",
+  "g9uw_5_C": {
+    "id": "g9uw_5_C",
+    "parent": "g9uwP",
+    "deck": "g9uwD",
     "type": "card",
     "cardType": "C 05",
-    "z": 1130
+    "z": 5690
   },
-  "twid_6_C": {
-    "id": "twid_6_C",
-    "deck": "twidD",
+  "g9uw_6_C": {
+    "id": "g9uw_6_C",
+    "deck": "g9uwD",
     "type": "card",
     "cardType": "C 06",
-    "z": 1168,
-    "activeFace": 1,
-    "x": 614,
-    "y": 85,
-    "parent": "table"
+    "z": 5699,
+    "parent": "g9uwP"
   },
-  "twid_7_C": {
-    "id": "twid_7_C",
-    "parent": "twidP",
-    "deck": "twidD",
+  "g9uw_7_C": {
+    "id": "g9uw_7_C",
+    "deck": "g9uwD",
     "type": "card",
     "cardType": "C 07",
-    "z": 1129
+    "z": 5687,
+    "parent": "g9uwP"
   },
-  "twid_8_C": {
-    "id": "twid_8_C",
-    "parent": "twidP",
-    "deck": "twidD",
+  "g9uw_8_C": {
+    "id": "g9uw_8_C",
+    "parent": "g9uwP",
+    "deck": "g9uwD",
     "type": "card",
     "cardType": "C 08",
-    "z": 1125
+    "z": 5676
   },
-  "twid_9_C": {
-    "id": "twid_9_C",
-    "parent": "twidP",
-    "deck": "twidD",
+  "g9uw_9_C": {
+    "id": "g9uw_9_C",
+    "deck": "g9uwD",
     "type": "card",
     "cardType": "C 09",
-    "z": 1155
+    "z": 5677,
+    "parent": "g9uwP"
   },
-  "twid_T_C": {
-    "id": "twid_T_C",
-    "deck": "twidD",
+  "g9uw_T_C": {
+    "id": "g9uw_T_C",
+    "deck": "g9uwD",
     "type": "card",
     "cardType": "C 10",
-    "z": 1184,
-    "x": 260,
-    "y": 615,
-    "parent": "table"
+    "z": 5686,
+    "parent": "g9uwP"
   },
-  "twid_J_C": {
-    "id": "twid_J_C",
-    "deck": "twidD",
+  "g9uw_J_C": {
+    "id": "g9uw_J_C",
+    "deck": "g9uwD",
     "type": "card",
     "cardType": "C 2J",
-    "z": 1178,
-    "x": 759,
-    "y": 160,
-    "activeFace": 1,
-    "parent": "table"
+    "z": 5673,
+    "parent": "g9uwP"
   },
-  "twid_Q_C": {
-    "id": "twid_Q_C",
-    "deck": "twidD",
+  "g9uw_Q_C": {
+    "id": "g9uw_Q_C",
+    "deck": "g9uwD",
     "type": "card",
     "cardType": "C 3Q",
-    "z": 1119,
-    "parent": "twidP"
+    "z": 5741,
+    "parent": "g9uwP"
   },
-  "twid_K_C": {
-    "id": "twid_K_C",
-    "deck": "twidD",
+  "g9uw_K_C": {
+    "id": "g9uw_K_C",
+    "parent": "g9uwP",
+    "deck": "g9uwD",
     "type": "card",
     "cardType": "C 4K",
-    "z": 1134,
-    "parent": "twidP"
+    "z": 5682
   },
-  "twid_A_D": {
-    "id": "twid_A_D",
-    "deck": "twidD",
+  "g9uw_A_D": {
+    "id": "g9uw_A_D",
+    "deck": "g9uwD",
     "type": "card",
     "cardType": "D 01",
-    "z": 1196,
-    "activeFace": 1,
-    "parent": "zr9r"
+    "z": 5678,
+    "parent": "g9uwP"
   },
-  "twid_2_D": {
-    "id": "twid_2_D",
-    "parent": "twidP",
-    "deck": "twidD",
+  "g9uw_2_D": {
+    "id": "g9uw_2_D",
+    "deck": "g9uwD",
     "type": "card",
     "cardType": "D 02",
-    "z": 1123
+    "z": 5685,
+    "parent": "g9uwP"
   },
-  "twid_3_D": {
-    "id": "twid_3_D",
-    "deck": "twidD",
+  "g9uw_3_D": {
+    "id": "g9uw_3_D",
+    "deck": "g9uwD",
     "type": "card",
     "cardType": "D 03",
-    "z": 1172,
-    "activeFace": 1,
-    "x": 917,
-    "y": 81,
-    "parent": "table"
+    "z": 5695,
+    "parent": "g9uwP"
   },
-  "twid_4_D": {
-    "id": "twid_4_D",
-    "parent": "twidP",
-    "deck": "twidD",
+  "g9uw_4_D": {
+    "id": "g9uw_4_D",
+    "deck": "g9uwD",
     "type": "card",
     "cardType": "D 04",
-    "z": 1148
+    "z": 6,
+    "parent": "bottom",
+    "x": 560,
+    "y": 14,
+    "activeFace": 1
   },
-  "twid_5_D": {
-    "id": "twid_5_D",
-    "parent": "twidP",
-    "deck": "twidD",
+  "g9uw_5_D": {
+    "id": "g9uw_5_D",
+    "parent": "g9uwP",
+    "deck": "g9uwD",
     "type": "card",
     "cardType": "D 05",
-    "z": 1144
+    "z": 5697
   },
-  "twid_6_D": {
-    "id": "twid_6_D",
-    "parent": "twidP",
-    "deck": "twidD",
+  "g9uw_6_D": {
+    "id": "g9uw_6_D",
+    "deck": "g9uwD",
     "type": "card",
     "cardType": "D 06",
-    "z": 1128
+    "z": 5706,
+    "parent": "g9uwP"
   },
-  "twid_7_D": {
-    "id": "twid_7_D",
-    "parent": "twidP",
-    "deck": "twidD",
+  "g9uw_7_D": {
+    "id": "g9uw_7_D",
+    "deck": "g9uwD",
     "type": "card",
     "cardType": "D 07",
-    "z": 1117
+    "z": 5671,
+    "parent": "g9uwP"
   },
-  "twid_8_D": {
-    "id": "twid_8_D",
-    "parent": "twidP",
-    "deck": "twidD",
+  "g9uw_8_D": {
+    "id": "g9uw_8_D",
+    "deck": "g9uwD",
     "type": "card",
     "cardType": "D 08",
-    "z": 1151
+    "z": 5703,
+    "parent": "g9uwP"
   },
-  "twid_9_D": {
-    "id": "twid_9_D",
-    "parent": "twidP",
-    "deck": "twidD",
+  "g9uw_9_D": {
+    "id": "g9uw_9_D",
+    "parent": "g9uwP",
+    "deck": "g9uwD",
     "type": "card",
     "cardType": "D 09",
-    "z": 1124
+    "z": 5680
   },
-  "twid_T_D": {
-    "id": "twid_T_D",
-    "parent": "twidP",
-    "deck": "twidD",
+  "g9uw_T_D": {
+    "id": "g9uw_T_D",
+    "parent": "g9uwP",
+    "deck": "g9uwD",
     "type": "card",
     "cardType": "D 10",
-    "z": 1137
+    "z": 5705
   },
-  "twid_J_D": {
-    "id": "twid_J_D",
-    "parent": "twidP",
-    "deck": "twidD",
+  "g9uw_J_D": {
+    "id": "g9uw_J_D",
+    "parent": "bottom",
+    "deck": "g9uwD",
     "type": "card",
     "cardType": "D 2J",
-    "z": 1131
+    "z": 2,
+    "x": 120,
+    "y": 14,
+    "activeFace": 1
   },
-  "twid_Q_D": {
-    "id": "twid_Q_D",
-    "parent": "twidP",
-    "deck": "twidD",
+  "g9uw_Q_D": {
+    "id": "g9uw_Q_D",
+    "deck": "g9uwD",
     "type": "card",
     "cardType": "D 3Q",
-    "z": 1150
+    "z": 4,
+    "parent": "bottom",
+    "x": 340,
+    "y": 14,
+    "activeFace": 1
   },
-  "twid_K_D": {
-    "id": "twid_K_D",
-    "parent": "twidP",
-    "deck": "twidD",
+  "g9uw_K_D": {
+    "id": "g9uw_K_D",
+    "deck": "g9uwD",
     "type": "card",
     "cardType": "D 4K",
-    "z": 1146
+    "z": 5,
+    "parent": "top",
+    "x": 450,
+    "y": 14,
+    "activeFace": 1
   },
-  "twid_A_H": {
-    "id": "twid_A_H",
-    "deck": "twidD",
+  "g9uw_A_H": {
+    "id": "g9uw_A_H",
+    "deck": "g9uwD",
     "type": "card",
     "cardType": "H 01",
-    "z": 1186,
-    "x": 384,
-    "y": 615,
-    "parent": "table"
+    "z": 5763,
+    "parent": "g9uwP"
   },
-  "twid_2_H": {
-    "id": "twid_2_H",
-    "parent": "twidP",
-    "deck": "twidD",
+  "g9uw_2_H": {
+    "id": "g9uw_2_H",
+    "deck": "g9uwD",
     "type": "card",
     "cardType": "H 02",
-    "z": 1120
+    "z": 3,
+    "x": 230,
+    "y": 14,
+    "parent": "top",
+    "activeFace": 1
   },
-  "twid_3_H": {
-    "id": "twid_3_H",
-    "parent": "twidP",
-    "deck": "twidD",
+  "g9uw_3_H": {
+    "id": "g9uw_3_H",
+    "parent": "g9uwP",
+    "deck": "g9uwD",
     "type": "card",
     "cardType": "H 03",
-    "z": 1121
+    "z": 5692
   },
-  "twid_4_H": {
-    "id": "twid_4_H",
-    "parent": "twidP",
-    "deck": "twidD",
+  "g9uw_4_H": {
+    "id": "g9uw_4_H",
+    "parent": "g9uwP",
+    "deck": "g9uwD",
     "type": "card",
     "cardType": "H 04",
-    "z": 1153
+    "z": 5701
   },
-  "twid_5_H": {
-    "id": "twid_5_H",
-    "parent": "twidP",
-    "deck": "twidD",
+  "g9uw_5_H": {
+    "id": "g9uw_5_H",
+    "deck": "g9uwD",
     "type": "card",
     "cardType": "H 05",
-    "z": 1147
+    "z": 5684,
+    "parent": "g9uwP"
   },
-  "twid_6_H": {
-    "id": "twid_6_H",
-    "parent": "twidP",
-    "deck": "twidD",
+  "g9uw_6_H": {
+    "id": "g9uw_6_H",
+    "deck": "g9uwD",
     "type": "card",
     "cardType": "H 06",
-    "z": 1135
+    "z": 5691,
+    "parent": "g9uwP"
   },
-  "twid_7_H": {
-    "id": "twid_7_H",
-    "parent": "twidP",
-    "deck": "twidD",
+  "g9uw_7_H": {
+    "id": "g9uw_7_H",
+    "deck": "g9uwD",
     "type": "card",
     "cardType": "H 07",
-    "z": 1138
+    "z": 5747,
+    "parent": "g9uwP"
   },
-  "twid_8_H": {
-    "id": "twid_8_H",
-    "deck": "twidD",
+  "g9uw_8_H": {
+    "id": "g9uw_8_H",
+    "deck": "g9uwD",
     "type": "card",
     "cardType": "H 08",
-    "z": 1190,
-    "x": 619,
-    "y": 618,
-    "parent": "table"
+    "z": 5704,
+    "parent": "g9uwP"
   },
-  "twid_9_H": {
-    "id": "twid_9_H",
-    "deck": "twidD",
+  "g9uw_9_H": {
+    "id": "g9uw_9_H",
+    "parent": "g9uwP",
+    "deck": "g9uwD",
     "type": "card",
     "cardType": "H 09",
-    "z": 1182,
-    "activeFace": 1,
-    "x": 1087,
-    "y": 95,
-    "parent": "table"
+    "z": 5683
   },
-  "twid_T_H": {
-    "id": "twid_T_H",
-    "deck": "twidD",
+  "g9uw_T_H": {
+    "id": "g9uw_T_H",
+    "parent": "bottom",
+    "deck": "g9uwD",
     "type": "card",
     "cardType": "H 10",
-    "z": 1145,
-    "parent": "twidP"
+    "z": 5,
+    "x": 450,
+    "y": 14,
+    "activeFace": 1
   },
-  "twid_J_H": {
-    "id": "twid_J_H",
-    "deck": "twidD",
+  "g9uw_J_H": {
+    "id": "g9uw_J_H",
+    "parent": "g9uwP",
+    "deck": "g9uwD",
     "type": "card",
     "cardType": "H 2J",
-    "z": 1180,
-    "activeFace": 1,
-    "x": 761,
-    "y": 222,
-    "parent": "table"
+    "z": 5674
   },
-  "twid_Q_H": {
-    "id": "twid_Q_H",
-    "deck": "twidD",
+  "g9uw_Q_H": {
+    "id": "g9uw_Q_H",
+    "deck": "g9uwD",
     "type": "card",
     "cardType": "H 3Q",
-    "z": 1118,
-    "parent": "twidP"
+    "z": 2,
+    "parent": "top",
+    "x": 120,
+    "y": 14,
+    "activeFace": 1
   },
-  "twid_K_H": {
-    "id": "twid_K_H",
-    "deck": "twidD",
+  "g9uw_K_H": {
+    "id": "g9uw_K_H",
+    "deck": "g9uwD",
     "type": "card",
     "cardType": "H 4K",
-    "z": 1143,
-    "parent": "twidP"
+    "z": 5702,
+    "parent": "g9uwP"
   },
-  "twid_A_S": {
-    "id": "twid_A_S",
-    "deck": "twidD",
+  "g9uw_A_S": {
+    "id": "g9uw_A_S",
+    "deck": "g9uwD",
     "type": "card",
     "cardType": "S 01",
-    "z": 1154,
-    "parent": "twidP"
+    "z": 5744,
+    "parent": "g9uwP"
   },
-  "twid_2_S": {
-    "id": "twid_2_S",
-    "deck": "twidD",
+  "g9uw_2_S": {
+    "id": "g9uw_2_S",
+    "deck": "g9uwD",
     "type": "card",
     "cardType": "S 02",
-    "z": 1149,
-    "parent": "twidP"
+    "z": 3,
+    "parent": "bottom",
+    "x": 230,
+    "y": 14,
+    "activeFace": 1
   },
-  "twid_3_S": {
-    "id": "twid_3_S",
-    "deck": "twidD",
+  "g9uw_3_S": {
+    "id": "g9uw_3_S",
+    "deck": "g9uwD",
     "type": "card",
     "cardType": "S 03",
-    "z": 1136,
-    "parent": "twidP"
+    "z": 1,
+    "parent": "top",
+    "x": 10,
+    "y": 14,
+    "activeFace": 1
   },
-  "twid_4_S": {
-    "id": "twid_4_S",
-    "deck": "twidD",
+  "g9uw_4_S": {
+    "id": "g9uw_4_S",
+    "deck": "g9uwD",
     "type": "card",
     "cardType": "S 04",
-    "z": 1192,
-    "parent": "zr9r",
+    "z": 1,
+    "parent": "bottom",
+    "x": 10,
+    "y": 14,
     "activeFace": 1
   },
-  "twid_5_S": {
-    "id": "twid_5_S",
-    "deck": "twidD",
+  "g9uw_5_S": {
+    "id": "g9uw_5_S",
+    "deck": "g9uwD",
     "type": "card",
     "cardType": "S 05",
-    "z": 1127,
-    "parent": "twidP"
+    "z": 5698,
+    "parent": "g9uwP"
   },
-  "twid_6_S": {
-    "id": "twid_6_S",
-    "deck": "twidD",
+  "g9uw_6_S": {
+    "id": "g9uw_6_S",
+    "deck": "g9uwD",
     "type": "card",
     "cardType": "S 06",
-    "z": 1188,
-    "x": 500,
-    "y": 615,
-    "parent": "table",
-    "activeFace": 1
+    "z": 5693,
+    "parent": "g9uwP"
   },
-  "twid_7_S": {
-    "id": "twid_7_S",
-    "deck": "twidD",
+  "g9uw_7_S": {
+    "id": "g9uw_7_S",
+    "deck": "g9uwD",
     "type": "card",
     "cardType": "S 07",
-    "z": 1126,
-    "parent": "twidP"
+    "z": 6,
+    "parent": "top",
+    "x": 560,
+    "y": 14,
+    "activeFace": 1
   },
-  "twid_8_S": {
-    "id": "twid_8_S",
-    "deck": "twidD",
+  "g9uw_8_S": {
+    "id": "g9uw_8_S",
+    "deck": "g9uwD",
     "type": "card",
     "cardType": "S 08",
-    "z": 1132,
-    "parent": "twidP"
+    "z": 5672,
+    "parent": "g9uwP"
   },
-  "twid_9_S": {
-    "id": "twid_9_S",
-    "deck": "twidD",
+  "g9uw_9_S": {
+    "id": "g9uw_9_S",
+    "deck": "g9uwD",
     "type": "card",
     "cardType": "S 09",
-    "z": 1152,
-    "parent": "twidP"
+    "z": 5681,
+    "parent": "g9uwP"
   },
-  "twid_T_S": {
-    "id": "twid_T_S",
-    "deck": "twidD",
+  "g9uw_T_S": {
+    "id": "g9uw_T_S",
+    "deck": "g9uwD",
     "type": "card",
     "cardType": "S 10",
-    "z": 1141,
-    "parent": "twidP"
+    "z": 4,
+    "parent": "top",
+    "x": 340,
+    "y": 14,
+    "activeFace": 1
   },
-  "twid_J_S": {
-    "id": "twid_J_S",
-    "deck": "twidD",
+  "g9uw_J_S": {
+    "id": "g9uw_J_S",
+    "deck": "g9uwD",
     "type": "card",
     "cardType": "S 2J",
-    "z": 1170,
-    "activeFace": 1,
-    "x": 761,
-    "y": 90,
-    "parent": "table"
+    "z": 5679,
+    "parent": "g9uwP"
   },
-  "twid_Q_S": {
-    "id": "twid_Q_S",
-    "deck": "twidD",
+  "g9uw_Q_S": {
+    "id": "g9uw_Q_S",
+    "deck": "g9uwD",
     "type": "card",
     "cardType": "S 3Q",
-    "z": 1140,
-    "parent": "twidP"
+    "z": 5688,
+    "parent": "g9uwP"
   },
-  "twid_K_S": {
-    "id": "twid_K_S",
-    "deck": "twidD",
+  "g9uw_K_S": {
+    "id": "g9uw_K_S",
+    "deck": "g9uwD",
     "type": "card",
     "cardType": "S 4K",
-    "z": 1133,
-    "parent": "twidP"
+    "z": 5700,
+    "parent": "g9uwP"
   },
-  "drop": {
+  "tnj5": {
+    "type": "button",
+    "text": "Move 1 Up",
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "bottom",
+        "to": "top",
+        "count": 1
+      }
+    ],
+    "x": 330,
+    "y": 544,
+    "z": 14,
+    "id": "tnj5"
+  },
+  "top": {
     "type": "holder",
-    "id": "drop",
-    "x": 260,
-    "y": 150,
-    "z": 102,
-    "parent": "table",
-    "css": "background: #531"
+    "id": "top",
+    "x": 68,
+    "y": 304,
+    "width": 1500,
+    "height": 180,
+    "z": 1,
+    "dropOffsetX": 10,
+    "dropOffsetY": 14,
+    "onEnter": {
+      "activeFace": 1
+    },
+    "onLeave": {
+      "activeFace": 0
+    },
+    "stackOffsetX": 110
+  },
+  "bottom": {
+    "type": "holder",
+    "id": "bottom",
+    "x": 50,
+    "y": 820,
+    "width": 1500,
+    "height": 180,
+    "dropOffsetX": 10,
+    "dropOffsetY": 14,
+    "onEnter": {
+      "activeFace": 1
+    },
+    "onLeave": {
+      "activeFace": 0
+    },
+    "stackOffsetX": 110
+  },
+  "tnj6": {
+    "type": "button",
+    "text": "Move 1 Down",
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "top",
+        "to": "bottom",
+        "count": 1
+      }
+    ],
+    "x": 330,
+    "y": 647,
+    "z": 13,
+    "id": "tnj6"
+  },
+  "5pct": {
+    "type": "button",
+    "text": "DEAL",
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "deck",
+        "to": "top",
+        "count": 1
+      },
+      {
+        "func": "MOVE",
+        "from": "deck",
+        "to": "bottom",
+        "count": 1
+      }
+    ],
+    "x": 219,
+    "y": 597,
+    "z": 15,
+    "id": "5pct"
   },
   "deck": {
     "type": "holder",
     "id": "deck",
-    "parent": "table",
-    "x": 104.5,
-    "y": 150,
+    "x": 61,
+    "y": 535,
     "dropTarget": {
       "type": "card"
     },
-    "css": "background: #531"
+    "z": 4
   },
   "_meta": {
     "version": 9,
@@ -1061,7 +1127,7 @@
       "time": "",
       "attribution": "",
       "showName": false,
-      "lastUpdate": 1713226306790,
+      "lastUpdate": 1729455997202,
       "skill": "",
       "description": "",
       "similarImage": "",
@@ -1071,7 +1137,7 @@
       "helpText": "",
       "similarDesigner": "",
       "variantImage": "",
-      "variant": "Transform",
+      "variant": "Transition",
       "language": "en-US",
       "players": "1"
     }
@@ -1086,46 +1152,59 @@
     "movable": false,
     "movableInEdit": false,
     "css": "font-size: 60px;text-align:center",
-    "text": "CSS: Transform"
+    "text": "CSS: Transitions"
   },
-  "406b": {
-    "id": "406b",
-    "x": 108,
-    "y": 100,
-    "width": 1400,
-    "height": 90,
-    "layer": -3,
-    "z": 139,
-    "css": "font-size: 23px; ",
-    "text": "This tutorial shows an example of how to use CSS transform to create a play area with perspective. Look at the CSS in the widgets 'perspective' and 'table'.",
+  "lh9v": {
+    "text": "Drag cards between holders and click buttons to move cards etc. Notice how the cards transition nicely from their old location to new location but dragging is not impacted.\n\nThe CSS transitions, including timing, are defined on this widget but applied in the `cardDefaults` property of the deck.",
+    "id": "lh9v",
+    "z": 2,
+    "x": 566,
+    "y": 546,
+    "width": 400,
+    "css": {
+      "": {
+        "font-size": "20px"
+      },
+      "_, .transition": {
+        "transition": "transform 600ms"
+      },
+      "_, .transition.dragging": {
+        "transition": "none"
+      }
+    },
     "movable": false,
-    "movableInEdit": false
+    "layer": -4
   },
-  "hand": {
-    "type": "holder",
-    "onEnter": {
-      "activeFace": 1
-    },
-    "onLeave": {
-      "activeFace": 0
-    },
-    "stackOffsetX": 40,
-    "childrenPerOwner": true,
-    "x": 50,
-    "y": 840,
-    "width": 1500,
-    "height": 160,
-    "id": "hand",
-    "dropOffsetY": 0
+  "tnj7": {
+    "type": "button",
+    "text": "Move 2 Up",
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "bottom",
+        "to": "top",
+        "count": 2
+      }
+    ],
+    "x": 430,
+    "y": 544,
+    "z": 14,
+    "id": "tnj7"
   },
-  "zr9r": {
-    "type": "pile",
-    "x": 1097,
-    "y": 408,
-    "width": 103,
-    "height": 160,
-    "id": "zr9r",
-    "z": 1197,
-    "parent": "table"
+  "tnj8": {
+    "type": "button",
+    "text": "Move 2 Down",
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "top",
+        "to": "bottom",
+        "count": 2
+      }
+    ],
+    "x": 430,
+    "y": 647,
+    "z": 13,
+    "id": "tnj8"
   }
 }
