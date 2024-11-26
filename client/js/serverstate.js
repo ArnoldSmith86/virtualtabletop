@@ -430,7 +430,8 @@ function receiveStateFromServer(args) {
 
   mouseTarget = null;
   deltaID = args._meta.deltaID;
-  for(const widget of widgetFilter(w=>w.get('parent')===null))
+  const topSurface = $('#topSurface');
+  for(const widget of widgetFilter(w=>w.domElement.parentElement === topSurface))
     widget.applyRemoveRecursive();
   widgets.clear();
   dropTargets.clear();
