@@ -42,7 +42,7 @@ async function addAudio(audioSource, maxVolume, length) {
     }
 
     let gainNode = audioContext.createGain();
-    gainNode.gain.value = Math.min(maxVolume * (((10 ** (document.getElementById('volume').value / 96.025)) / 10) - 0.1), 1); // converts slider to log scale with zero = no volume
+    gainNode.gain.value = Math.min(maxVolume * (((10 ** ($('#volume').value / 96.025)) / 10) - 0.1), 1); // converts slider to log scale with zero = no volume
     thisSource.connect(gainNode);
     gainNode.connect(audioContext.destination);
     audioSettings[audioSource] = { gainNode, maxVolume };
@@ -59,10 +59,10 @@ async function addAudio(audioSource, maxVolume, length) {
   }
 }
 
-onMessage('audio', function(args) {
+onMessage('audio', async function(args) {
   const { audioSource, maxVolume, length } = JSON.parse(args);
   try {
-    addAudio(audioSource, maxVolume, length);
+    await addAudio(audioSource, maxVolume, length);
   }
   catch(err) {
     console.log(err.message);
@@ -83,14 +83,14 @@ on('#muteButton', 'click', function() {
       );
     });
   } else {
-    unmuteVol = document.getElementById('volume').value;
+    unmuteVol = $('#volume').value;
     $('#volume').value = 0;
 
     Object.keys(audioSettings).forEach(function(audioSource) {
       audioSettings[audioSource].gainNode.gain.value = 0;
     });
 
-    document.getElementById('muteButton').classList.add('muted');
+    $('#muteButton').classList.add('muted');
   }
   muted = !muted;
 });
