@@ -4,7 +4,6 @@ let unmuteVol = 30;
 export let audioContext;
 const events = ['mousedown', 'keydown', 'touchstart'];
 let audioBufferObj = {}
-let sources = {};
 let audioSettings = {};
 
 events.forEach(event => {
