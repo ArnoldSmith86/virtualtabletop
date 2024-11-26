@@ -49,10 +49,6 @@ export default class Room {
       player.send('tracing', 'enable');
     }
   }
-  
-  playAudio(args) {
-    this.broadcast('audio', args);
-  }
 
   async addShare(shareID) {
     if(shareID.match(/^PL:/)) {
@@ -696,6 +692,10 @@ export default class Room {
 
   newPlayerColor() {
     return randomHue(this.state._meta.players)
+  }
+
+  playAudio(args) {
+    this.broadcast('audio', args);
   }
 
   receiveDelta(player, delta) {
