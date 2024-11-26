@@ -69,14 +69,10 @@ export default class Player {
     }
 
     if(delta.id < this.latestDeltaIDbyDifferentPlayer) {
-      console.log('idTooLow', delta, this.latestDeltaIDbyDifferentPlayer, this.name);
       this.trace('receiveDelta', { status: 'idTooLow', delta, possiblyConflicting: this.possiblyConflictingDeltas });
       for(const conflictDelta of this.possiblyConflictingDeltas) {
-        console.log('conflictDelta', conflictDelta);
         if(conflictDelta.id > delta.id) {
-          console.log('conflictDelta.id > delta.id');
           for(const widgetID in delta.s) {
-            console.log('widgetID', widgetID);
             if(conflictDelta.s[widgetID] !== undefined) {
               // widget was deleted in both deltas - no problem
               if(delta.s[widgetID] === null && conflictDelta.s[widgetID] === null)
@@ -92,18 +88,12 @@ export default class Player {
             }
             // a parent or deck of a widget was changed to a widget that was deleted in the other delta -> conflict
             for(const key of [ 'parent', 'deck' ]) {
-              if(delta.s[widgetID] !== null && delta.s[widgetID][key] && conflictDelta.s[delta.s[widgetID][key]] === null) {
-                console.log('parent or deck changed to deleted widget');
+              if(delta.s[widgetID] !== null && delta.s[widgetID][key] && conflictDelta.s[delta.s[widgetID][key]] === null)
                 return this.triggerDeltaConflict(delta, conflictDelta, widgetID, `<${key}Deletion>`);
-              }
-              if(delta.s[widgetID] === null) {
-                for(const conflictDeltaWidgetID in conflictDelta.s) {
-                  if(conflictDelta.s[conflictDeltaWidgetID] !== null && conflictDelta.s[conflictDeltaWidgetID][key] === widgetID) {
-                    console.log('deleted widget is now parent or deck of another widget');
+              if(delta.s[widgetID] === null)
+                for(const conflictDeltaWidgetID in conflictDelta.s)
+                  if(conflictDelta.s[conflictDeltaWidgetID] !== null && conflictDelta.s[conflictDeltaWidgetID][key] === widgetID)
                     return this.triggerDeltaConflict(delta, conflictDelta, widgetID, `<${key}Deletion>`);
-                  }
-                }
-              }
             }
           }
         }
