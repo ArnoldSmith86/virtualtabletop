@@ -458,12 +458,12 @@ export class Widget extends StateManaged {
       return true;
     
     if(this.get('clickSound')) {
-      toServer('audio', JSON.stringify({
+      toServer('audio', {
         audioSource: this.get('clickSound'),
         maxVolume: 1.0,
         length: null,
         players: []
-      }));
+      });
     }
 
     if(Array.isArray(this.get('clickRoutine')) && !(mode == 'ignoreClickRoutine' || mode =='ignoreAll')) {
@@ -999,12 +999,12 @@ export class Widget extends StateManaged {
       if(a.func == 'AUDIO') {
         setDefaults(a, { source: '', maxVolume: 1.0, length: null, player: null });
         const validPlayers = a.player ? asArray(a.player) : [];
-        toServer('audio', JSON.stringify({
+        toServer('audio', {
           audioSource: a.source,
           maxVolume: a.maxVolume,
           length: a.length,
           players: validPlayers
-        }));
+        });
       }
 
       if(a.func == 'CALL') {
