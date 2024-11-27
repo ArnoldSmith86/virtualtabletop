@@ -1565,9 +1565,9 @@
     "clickRoutine": [
       {
         "func": "AUDIO",
-        "source": "https://upload.wikimedia.org/wikipedia/commons/4/41/Ludwig_van_Beethoven_-_Overt%C3%BCre_c-moll%2C_op._62.ogg",
-        "type": "audio/ogg",
-        "maxVolume": 0.5,
+        "source": "https://upload.wikimedia.org/wikipedia/commons/0/0a/Beethoven_Piano_Concerto_4_slow_movement%2C_bars_47-55.wav",
+        "type": "audio/wav",
+        "maxVolume": 0.8,
         "length": 10000,
         "player": [
           "${playerName}",
@@ -1722,7 +1722,7 @@
       "time": "0",
       "attribution": "The rolling dice and card moving sounds in this tutorial are by Interitus and are released to the Public Domain by CC0.",
       "showName": false,
-      "lastUpdate": 1732681567365,
+      "lastUpdate": 1732727472641,
       "skill": "",
       "description": "",
       "similarImage": "",
@@ -1730,11 +1730,11 @@
       "similarAwards": "",
       "ruleText": "",
       "helpText": "",
+      "similarDesigner": "",
       "variantImage": "",
       "variant": "AUDIO and clickSound",
       "language": "en-US",
-      "players": "1",
-      "similarDesigner": ""
+      "players": "1"
     }
   }
 }
