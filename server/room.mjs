@@ -689,7 +689,7 @@ export default class Room {
 
   playAudio(args) {
     for(const player of this.players)
-      if(!Array.isArray(args.players) || args.players.includes(player.name))
+      if(args.players.length === 0 || args.players.includes(player.name))
         player.send('audio', args);
   }
 
