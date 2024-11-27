@@ -60,7 +60,7 @@ async function addAudio(audioSource, maxVolume, length) {
 }
 
 onMessage('audio', async function(args) {
-  const { audioSource, maxVolume, length } = JSON.parse(args);
+  const { audioSource, maxVolume, length } = args;
   try {
     await addAudio(audioSource, maxVolume, length);
   }
