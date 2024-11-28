@@ -1004,7 +1004,7 @@ export class Widget extends StateManaged {
           maxVolume: a.maxVolume,
           length: a.length,
           players: validPlayers,
-          silenceAll: a.silenceAll,
+          silence: a.silence,
           count: a.count
         });
       }
