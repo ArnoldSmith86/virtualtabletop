@@ -79,14 +79,10 @@ function updatePlayerCountDisplay() {
   const tooltip = $('.tooltip', playersButton);
   if (tooltip) tooltip.textContent = `Players: ${playerCount}`;
 
-  [playersButton, tooltip].forEach(element => {
-      if (element) element.classList.add('playerChange');
-  });
-
+  [playersButton, tooltip].forEach(element => element.classList.add('playerChange'));
+  
   setTimeout(() => {
-      [playersButton, tooltip].forEach(element => {
-          if (element) element.classList.remove('playerChange');
-      });
+    [playersButton, tooltip].forEach(element => element.classList.remove('playerChange'));
   }, 1000);
 }
 
