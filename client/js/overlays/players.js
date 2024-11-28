@@ -69,6 +69,25 @@ function fillPlayerList(players, active) {
   if(activePlayers.length < 2){
     document.getElementById("template-playerlist-entry").insertAdjacentHTML("afterend", "<div class='nothingtoshow'>There are no other players at this table.</div>");
   }
+  updatePlayerCountDisplay();
+}
+
+function updatePlayerCountDisplay() {
+  const playersButton = document.getElementById('playersButton');
+  const playerCount = activePlayers.length;
+
+  const tooltip = playersButton.querySelector('.tooltip');
+  if (tooltip) tooltip.textContent = `Players: ${playerCount}`;
+
+  [playersButton, tooltip].forEach(element => {
+      if (element) element.classList.add('playerChange');
+  });
+
+  setTimeout(() => {
+      [playersButton, tooltip].forEach(element => {
+          if (element) element.classList.remove('playerChange');
+      });
+  }, 1000);
 }
 
 onLoad(function() {
