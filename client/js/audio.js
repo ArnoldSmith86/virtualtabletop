@@ -11,7 +11,7 @@ events.forEach(event => {
 });
 // Initialize AudioContext after user event
 function initializeAudioContext() {
-  if (!audioContext || audioContext.state === 'closed') {
+  if (!audioContext) {
     audioContext = new AudioContext();
   }
 }

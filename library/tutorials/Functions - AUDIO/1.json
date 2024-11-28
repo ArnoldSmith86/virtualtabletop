@@ -1075,7 +1075,7 @@
       "time": "0",
       "attribution": "The rolling dice and card moving sounds in this tutorial are by Interitus and are released to the Public Domain by CC0.",
       "showName": false,
-      "lastUpdate": 1732818603511,
+      "lastUpdate": 1732822714132,
       "skill": "",
       "description": "",
       "similarImage": "",
@@ -1098,8 +1098,8 @@
         "silence": true
       }
     ],
-    "x": 849,
-    "y": 884,
+    "x": 924,
+    "y": 898,
     "z": 17,
     "id": "40ug",
     "text": "Stop"
@@ -1131,7 +1131,7 @@
   "t37q": {
     "id": "t37q",
     "y": 405,
-    "x": 499,
+    "x": 521,
     "image": "/i/noto-emoji/emoji_u1f6ce.svg",
     "clickRoutine": [
       {
@@ -1139,11 +1139,12 @@
         "source": "https://upload.wikimedia.org/wikipedia/commons/9/9f/406243_stubb_typewriter-ding-near-mono.wav",
         "player": "${playerName}"
       }
-    ]
+    ],
+    "movable": false
   },
   "bm5j": {
     "id": "bm5j",
-    "x": 401,
+    "x": 428,
     "y": 614,
     "width": 300,
     "z": 10018,
@@ -1157,7 +1158,7 @@
   "t38q": {
     "id": "t38q",
     "y": 405,
-    "x": 845,
+    "x": 914,
     "image": "/i/noto-emoji/emoji_u1f6ce.svg",
     "clickRoutine": [
       {
@@ -1170,11 +1171,12 @@
         ],
         "count": 10
       }
-    ]
+    ],
+    "movable": false
   },
   "bm6j": {
     "id": "bm6j",
-    "x": 747,
+    "x": 820,
     "y": 614,
     "width": 300,
     "z": 10018,
