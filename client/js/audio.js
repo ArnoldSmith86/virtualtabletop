@@ -11,7 +11,7 @@ events.forEach(event => {
 });
 // Initialize AudioContext after user event
 function initializeAudioContext() {
-  if (!audioContext) {
+  if (!audioContext || audioContext.state === 'closed') {
     audioContext = new AudioContext();
   }
 }
@@ -63,11 +63,14 @@ onMessage('audio', async function(args) {
   const { audioSource, maxVolume, length, silenceAll } = args;
 
   if (silenceAll) {
-    Object.keys(audioSettings).forEach(function(source) {
-      const { gainNode } = audioSettings[source];
-      gainNode.gain.value = 0;
-      delete audioSettings[source];
-    });
+    try {
+      if (audioContext) {
+        audioContext.close();
+        audioContext = new AudioContext();
+      }
+    } catch (err) {
+      console.error(`Error resetting audio context: ${err.message}`);
+    }
     return;
   }
 
