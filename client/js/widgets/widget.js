@@ -997,7 +997,7 @@ export class Widget extends StateManaged {
       }
 
       if(a.func == 'AUDIO') {
-        setDefaults(a, { source: '', maxVolume: 1.0, length: null, player: null, silenceAll: false, count: 1 });
+        setDefaults(a, { source: '', maxVolume: 1.0, length: null, player: null, silence: false, count: 1 });
         const validPlayers = a.player ? asArray(a.player) : [];
         toServer('audio', {
           audioSource: a.source,

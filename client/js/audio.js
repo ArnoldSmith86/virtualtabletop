@@ -69,9 +69,9 @@ async function addAudio(audioSource, maxVolume, length, count = 1) {
 
 
 onMessage('audio', async function(args) {
-  const { audioSource, maxVolume, length, silenceAll, count } = args;
+  const { audioSource, maxVolume, length, silence, count } = args;
 
-  if (silenceAll) {
+  if (silence) {
     try {
       if (audioContext) {
         audioContext.close();
