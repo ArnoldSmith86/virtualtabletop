@@ -76,7 +76,7 @@ function updatePlayerCountDisplay() {
   const playersButton = $('#playersButton');
   const playerCount = activePlayers.length;
 
-  const tooltip = playersButton.querySelector('.tooltip');
+  const tooltip = $('.tooltip', playersButton);
   if (tooltip) tooltip.textContent = `Players: ${playerCount}`;
 
   [playersButton, tooltip].forEach(element => {
