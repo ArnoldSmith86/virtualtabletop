@@ -997,14 +997,15 @@ export class Widget extends StateManaged {
       }
 
       if(a.func == 'AUDIO') {
-        setDefaults(a, { source: '', maxVolume: 1.0, length: null, player: null, silenceAll: false });
+        setDefaults(a, { source: '', maxVolume: 1.0, length: null, player: null, silenceAll: false, count: 1 });
         const validPlayers = a.player ? asArray(a.player) : [];
         toServer('audio', {
           audioSource: a.source,
           maxVolume: a.maxVolume,
           length: a.length,
           players: validPlayers,
-          silenceAll: a.silenceAll
+          silenceAll: a.silenceAll,
+          count: a.count
         });
       }
 
