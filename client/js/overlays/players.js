@@ -73,7 +73,7 @@ function fillPlayerList(players, active) {
 }
 
 function updatePlayerCountDisplay() {
-  const playersButton = document.getElementById('playersButton');
+  const playersButton = $('#playersButton');
   const playerCount = activePlayers.length;
 
   const tooltip = playersButton.querySelector('.tooltip');
