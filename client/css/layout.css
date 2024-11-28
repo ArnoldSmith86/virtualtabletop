@@ -394,10 +394,6 @@ body.aspectTooGood.hiddenToolbar {
       transition: color 0.3s ease;   
     }
 
-    .tooltip.playerChange {
-      color: yellow;
-    }
-
     body:not(.loading) .toolbarButton:hover .tooltip, body.wideToolbar .toolbarButton .tooltip {
       display: block;
     }
@@ -862,7 +858,7 @@ button {
   transition: color 0.3s ease
 }
 
-button.playerChange {
+button.playerChange .tooltip.playerChange {
   color: yellow
 }
 
