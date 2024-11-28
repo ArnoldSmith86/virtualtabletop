@@ -33,7 +33,7 @@ async function loadAudioBuffer(audioSource) {
   }
 }
 
-async function addAudio(audioSource, maxVolume, length, count = 1) {
+async function addAudio(audioSource, maxVolume, length, count) {
   audioSource = mapAssetURLs(audioSource);
   if (audioContext) {
     if (!audioBufferObj[audioSource]) {

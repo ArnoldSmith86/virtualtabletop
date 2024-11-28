@@ -462,7 +462,8 @@ export class Widget extends StateManaged {
         audioSource: this.get('clickSound'),
         maxVolume: 1.0,
         length: null,
-        players: []
+        players: [],
+        count: 1
       });
     }
 
