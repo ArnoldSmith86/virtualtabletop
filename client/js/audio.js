@@ -60,7 +60,17 @@ async function addAudio(audioSource, maxVolume, length) {
 }
 
 onMessage('audio', async function(args) {
-  const { audioSource, maxVolume, length } = args;
+  const { audioSource, maxVolume, length, silenceAll } = args;
+
+  if (silenceAll) {
+    Object.keys(audioSettings).forEach(function(source) {
+      const { gainNode } = audioSettings[source];
+      gainNode.gain.value = 0;
+      delete audioSettings[source];
+    });
+    return;
+  }
+
   try {
     await addAudio(audioSource, maxVolume, length);
   }

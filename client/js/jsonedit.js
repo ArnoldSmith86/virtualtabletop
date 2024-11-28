@@ -1065,7 +1065,7 @@ function jeAddCommands() {
   widgetTypes.push(jeAddWidgetPropertyCommands(new Spinner(), widgetBase));
   widgetTypes.push(jeAddWidgetPropertyCommands(new Timer(), widgetBase));
 
-  jeAddRoutineOperationCommands('AUDIO', { source: '', maxVolume: 1.0, length: null, player: null });
+  jeAddRoutineOperationCommands('AUDIO', { source: '', maxVolume: 1.0, length: null, player: null, silenceAll: false });
   jeAddRoutineOperationCommands('CALL', { widget: 'id', routine: 'clickRoutine', return: true, arguments: {}, variable: 'result' });
   jeAddRoutineOperationCommands('CANVAS', { canvas: null, mode: 'reset', x: 0, y: 0, value: 1 ,color:'#1F5CA6' });
   jeAddRoutineOperationCommands('CLICK', { collection: 'DEFAULT', count: 1 , mode:'respect' });
