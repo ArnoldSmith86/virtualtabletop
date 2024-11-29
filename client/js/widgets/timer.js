@@ -90,7 +90,7 @@ export class Timer extends Widget {
     await super.onPropertyChange(property, oldValue, newValue);
 
     if (property == 'milliseconds') {
-        const isAlert = this.get('end') !== null && ((this.get('countdown') && newValue <= this.get('end')) || (!this.get('countdown') && newValue >= this.get('end')));
+      const isAlert = this.get('end') !== null && ((this.get('countdown') && newValue <= this.get('end')) || (!this.get('countdown') && newValue >= this.get('end')));
 
         if (isAlert && !this.get('alert') && this.get('alertSound')) {
             toServer('audio', {
