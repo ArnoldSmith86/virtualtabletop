@@ -1,30 +1,4 @@
 {
-  "_meta": {
-    "version": 11,
-    "info": {
-      "name": "Functions - AUDIO",
-      "image": "/assets/-914003581_7067",
-      "rules": "",
-      "bgg": "",
-      "year": "2021",
-      "mode": "Tutorial",
-      "time": "0",
-      "attribution": "The rolling dice and card moving sounds in this tutorial are by Interitus and are released to the Public Domain by CC0.",
-      "showName": false,
-      "lastUpdate": 1674784491763,
-      "skill": "",
-      "description": "",
-      "variantImage": "",
-      "variant": "AUDIO and clickSound",
-      "language": "en-US",
-      "players": "1",
-      "similarImage": "",
-      "similarName": "",
-      "similarAwards": "",
-      "ruleText": "",
-      "helpText": ""
-    }
-  },
   "zimjB": {
     "id": "zimjB",
     "fixedParent": true,
@@ -981,7 +955,7 @@
     "deck": "zimjD",
     "type": "card",
     "cardType": "S 10",
-    "z": 9926,
+    "z": 10454,
     "parent": "zimjP"
   },
   "zimj_J_S": {
@@ -1011,8 +985,8 @@
   "holder1": {
     "type": "holder",
     "id": "holder1",
-    "x": 810.5,
-    "y": 220,
+    "x": 810,
+    "y": 190,
     "z": 8,
     "dropTarget": {
       "type": "card"
@@ -1021,8 +995,8 @@
   "holder2": {
     "type": "holder",
     "id": "holder2",
-    "x": 1251.5,
-    "y": 227,
+    "x": 1251,
+    "y": 197,
     "z": 10,
     "dropTarget": {
       "type": "card"
@@ -1564,14 +1538,15 @@
     "type": "button",
     "id": "button1",
     "x": 1051,
-    "y": 280,
+    "y": 250,
     "z": 14,
     "clickRoutine": [
       {
         "func": "AUDIO",
         "source": "/assets/246026332_3761",
         "type": "audio/mpeg",
-        "maxVolume": 1
+        "maxVolume": 1,
+        "player": "${playerName}"
       },
       {
         "func": "MOVE",
@@ -1579,7 +1554,7 @@
         "to": "holder2"
       }
     ],
-    "text": "AUDIO"
+    "text": "DEAL"
   },
   "button2": {
     "type": "button",
@@ -1590,11 +1565,15 @@
     "clickRoutine": [
       {
         "func": "AUDIO",
-        "source": "https://upload.wikimedia.org/wikipedia/commons/4/41/Ludwig_van_Beethoven_-_Overt%C3%BCre_c-moll%2C_op._62.ogg",
-        "type": "audio/ogg",
-        "maxVolume": 0.5,
+        "source": "https://upload.wikimedia.org/wikipedia/commons/0/0a/Beethoven_Piano_Concerto_4_slow_movement%2C_bars_47-55.wav",
+        "type": "audio/wav",
+        "maxVolume": 0.8,
         "length": 10000,
-        "player": "${playerName}"
+        "player": [
+          "${playerName}",
+          "guest123",
+          "guest456"
+        ]
       }
     ],
     "text": "Play\nSong"
@@ -1607,27 +1586,30 @@
     "width": 1000,
     "z": 26392,
     "css": "font-size: 60px;color: black; ",
-    "text": "Functions: AUDIO"
+    "text": "Functions: AUDIO",
+    "height": 68
   },
   "clickSoundLabel": {
     "type": "label",
     "id": "clickSoundLabel",
     "x": 241,
     "y": 140,
-    "width": 200,
+    "width": 208,
     "z": 26443,
     "css": "font-size: 40px",
-    "text": "clickSound"
+    "text": "clickSound",
+    "height": 45
   },
   "clickSoundLabel1": {
     "type": "label",
     "id": "clickSoundLabel1",
-    "x": 964,
+    "x": 950,
     "y": 140,
-    "width": 280,
+    "width": 294,
     "z": 26444,
     "css": "font-size: 40px",
-    "text": "Audio Function"
+    "text": "AUDIO Function",
+    "height": 45
   },
   "exlr": {
     "deck": "zimjD1",
@@ -1646,7 +1628,8 @@
     "width": 400,
     "z": 26445,
     "css": "font-size: 40px",
-    "text": "clickSound in cardDefaults"
+    "text": "clickSound in cardDefaults",
+    "height": 93
   },
   "clickSoundLabel3": {
     "type": "label",
@@ -1656,7 +1639,8 @@
     "width": 400,
     "z": 26446,
     "css": "font-size: 40px",
-    "text": "Off-site audio source, length, & player"
+    "text": "Off-site audio source, length, & player",
+    "height": 100
   },
   "i1bj": {
     "id": "i1bj",
@@ -1671,12 +1655,11 @@
   "i2bj": {
     "id": "i2bj",
     "x": 868,
-    "y": 454,
+    "y": 424,
     "width": 500,
-    "height": 50,
     "z": 75281,
     "css": "font-size: 20px; ",
-    "text": "The deal button has an AUDIO function that plays a sound.  The AUDIO function will override a clickSound."
+    "text": "The deal button has an AUDIO function that plays a sound.  The AUDIO function will override a clickSound. It will also only play for the player that clicked it, because it has the \"player\" parameter set to \"${playerName}\" "
   },
   "i3bj": {
     "id": "i3bj",
@@ -1693,10 +1676,9 @@
     "x": 851,
     "y": 846,
     "width": 500,
-    "height": 50,
     "z": 75283,
     "css": "font-size: 20px; ",
-    "text": "This button uses an off-site (http://) source.  It sets a length for the audio to play in milliseconds.  It will also only play for the player that clicked it, because it has the \"player\" parameter set to \"${playerName}\" "
+    "text": "This button uses an off-site (http://) source.  It sets a length for the audio to play in milliseconds.  This button also uses a player array, so every player in the array will hear the sound."
   },
   "g5ks": {
     "deck": "zimjD1",
@@ -1710,7 +1692,7 @@
   "vzuv": {
     "type": "dice",
     "x": 291,
-    "y": 244,
+    "y": 245,
     "shape3d": true,
     "options": [
       1,
@@ -1720,11 +1702,39 @@
       5,
       6
     ],
-    "z": 75288,
+    "z": 75289,
     "id": "vzuv",
     "clickSound": "/assets/-253074911_10031",
     "width": 100,
     "height": 100,
-    "activeFace": 5
+    "rollCount": 11,
+    "activeFace": 3
+  },
+  "_meta": {
+    "version": 16,
+    "info": {
+      "name": "Functions - AUDIO",
+      "image": "/assets/-914003581_7067",
+      "rules": "",
+      "bgg": "",
+      "year": "2021",
+      "mode": "Tutorial",
+      "time": "0",
+      "attribution": "The rolling dice and card moving sounds in this tutorial are by Interitus and are released to the Public Domain by CC0.",
+      "showName": false,
+      "lastUpdate": 1732727472641,
+      "skill": "",
+      "description": "",
+      "similarImage": "",
+      "similarName": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": "",
+      "similarDesigner": "",
+      "variantImage": "",
+      "variant": "AUDIO and clickSound",
+      "language": "en-US",
+      "players": "1"
+    }
   }
 }
