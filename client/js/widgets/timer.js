@@ -14,6 +14,7 @@ export class Timer extends Widget {
       precision: 1000,
       paused: true,
       alert: false,
+      alertSound: null,
       countdown: false,
       start: 0,
       end: null
@@ -88,12 +89,24 @@ export class Timer extends Widget {
   async onPropertyChange(property, oldValue, newValue) {
     await super.onPropertyChange(property, oldValue, newValue);
 
-    if(property == 'milliseconds')
-      await this.set('alert', this.get('end') !== null && ((this.get('countdown') && newValue<=this.get('end')) || (!this.get('countdown') && newValue>=this.get('end'))));
+    if (property == 'milliseconds') {
+        const isAlert = this.get('end') !== null && ((this.get('countdown') && newValue <= this.get('end')) || (!this.get('countdown') && newValue >= this.get('end')));
 
-    if(property == 'paused' && newValue !== true) {
-      this.stopTimer();
-      this.startTimer();
+        if (isAlert && !this.get('alert') && this.get('alertSound')) {
+            toServer('audio', {
+                audioSource: this.get('alertSound'),
+                maxVolume: 1.0,
+                length: null,
+                players: []
+            });
+        }
+
+        await this.set('alert', isAlert);
+    }
+
+    if (property == 'paused' && newValue !== true) {
+        this.stopTimer();
+        this.startTimer();
     }
   }
 
