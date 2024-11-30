@@ -178,6 +178,7 @@ export class Widget extends StateManaged {
     let newParent = undefined;
     if(delta.parent !== undefined) {
       newParent = delta.parent && widgets.has(delta.parent) ? widgets.get(delta.parent).domElement : $('#topSurface');
+      this.setLimbo(delta.parent && !widgets.has(delta.parent));
       // If the widget wasn't newly created, transition from its previous location.
       if (delta.id === undefined)
         fromTransform = getElementTransformRelativeTo(this.domElement, newParent);
@@ -417,6 +418,8 @@ export class Widget extends StateManaged {
       if(!widgetFilter(w=>asArray(linkedToSeat).indexOf(w.get('id')) != -1 && w.get('player')).length)
         className += ' foreign';
 
+    if(this.isLimbo)
+      className += ' limbo';
     if(this.get('hoverParent') && widgets.has(this.get('hoverParent')) && widgets.get(this.get('hoverParent')).domElement.classList.contains('showCardBack'))
       className += ' showCardBack';
 
@@ -2505,6 +2508,18 @@ export class Widget extends StateManaged {
         this.domElement.classList.add('selectedInEdit');
       else
         this.domElement.classList.remove('selectedInEdit');
+    }
+  }
+
+  setLimbo(isLimbo) {
+    if(this.isLimbo == isLimbo)
+      return;
+    this.domElement.classList.toggle('limbo', isLimbo);
+    this.isLimbo = isLimbo;
+    if(isLimbo) {
+      const topTransform = getElementTransformRelativeTo(this.domElement, $('#topSurface')) || 'none';
+      $('#topSurface').appendChild(this.domElement);
+      this.domElement.style.transform = topTransform;
     }
   }
 

@@ -807,6 +807,20 @@ body.jsonEdit:not(.hitTest) .widget.foreign, body.jsonEdit:not(.hitTest):not(.sh
   pointer-events: none;
 }
 
+.widget.limbo {
+  opacity: 0.5;
+  border: 5px dashed darkred;
+}
+.widget.limbo::before {
+  content: 'Invalid Parent';
+  font-size: 16px;
+  color: darkred;
+}
+
+body:not(.edit) .widget.limbo {
+  display: none;
+}
+
 #clientPointer {
   visibility: hidden;
   position: fixed;
