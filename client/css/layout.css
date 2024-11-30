@@ -859,7 +859,11 @@ button {
 }
 
 button.playerChange .tooltip.playerChange {
-  color: yellow
+  color: yellow;
+}
+
+button#editButton.editorOpen, .tooltip.editorOpen {
+  color: red;
 }
 
 button:hover {

@@ -448,6 +448,10 @@ export default class Room {
     return meta;
   }
 
+  edit(args) {
+    this.broadcast('edit', args);
+  }
+
   async load(fileOrLink, player, delayForGameStartRoutine) {
     const emptyState = {
       _meta: {
