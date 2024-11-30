@@ -89,7 +89,7 @@ function updatePlayerCountDisplay() {
 onLoad(function() {
   onMessage('meta', args=>fillPlayerList(args.meta.players, args.activePlayers));
   onMessage('mouse', function(args) {
-    if(args.player != playerName) {
+    if(args.player != playerName && playerCursors[args.player]) {
       clearTimeout(playerCursorsTimeout[args.player]);
       playerCursors[args.player].classList.toggle('hidden', !!args.mouseState.hidden);
       if(args.mouseState.inactive) {
