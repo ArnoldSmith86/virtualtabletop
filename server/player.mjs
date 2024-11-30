@@ -1,3 +1,4 @@
+import Config from './config.mjs';
 import Logging from './logging.mjs';
 
 export default class Player {
@@ -123,7 +124,10 @@ export default class Player {
       this.possiblyConflictingDeltas.push(args);
       this.latestDeltaIDbyDifferentPlayer = args.id;
     }
-    this.connection.toClient(func, args);
+    if(Config.get('simulateServerLag'))
+      setTimeout(_=>this.connection.toClient(func, args), Config.get('simulateServerLag'));
+    else
+      this.connection.toClient(func, args);
   }
 
   trace(source, payload) {
