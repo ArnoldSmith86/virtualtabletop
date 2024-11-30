@@ -1065,7 +1065,7 @@ function jeAddCommands() {
   widgetTypes.push(jeAddWidgetPropertyCommands(new Spinner(), widgetBase));
   widgetTypes.push(jeAddWidgetPropertyCommands(new Timer(), widgetBase));
 
-  jeAddRoutineOperationCommands('AUDIO', { source: '', type: 'audio/mpeg', maxVolume: 1.0, length: null, player: null });
+  jeAddRoutineOperationCommands('AUDIO', { source: '', maxVolume: 1.0, length: null, player: null });
   jeAddRoutineOperationCommands('CALL', { widget: 'id', routine: 'clickRoutine', return: true, arguments: {}, variable: 'result' });
   jeAddRoutineOperationCommands('CANVAS', { canvas: null, mode: 'reset', x: 0, y: 0, value: 1 ,color:'#1F5CA6' });
   jeAddRoutineOperationCommands('CLICK', { collection: 'DEFAULT', count: 1 , mode:'respect' });
@@ -1148,7 +1148,6 @@ function jeAddCommands() {
   jeAddEnumCommands('^[a-z]+ ↦ type', widgetTypes.slice(1));
   jeAddEnumCommands('^.*\\([A-Z]+\\) ↦ value', [ '${}' ]);
   jeAddEnumCommands('^deck ↦ faceTemplates ↦ [0-9]+ ↦ objects ↦ [0-9]+ ↦ textAlign', [ 'left', 'center', 'right' ]);
-  jeAddEnumCommands('^.*\\(AUDIO\\) ↦ type', [ 'audio/midi', 'audio/mpeg', 'audio/ogg', 'audio/wav', 'audio/x-wav' ]);
   jeAddEnumCommands('^.*\\(AUDIO\\) ↦ player', [ '${}', '${getPlayerDetails().playerName}' ]);
   jeAddEnumCommands('^.*\\(CANVAS\\) ↦ mode', [ 'set', 'inc', 'dec', 'change', 'reset', 'setPixel' ]);
   jeAddEnumCommands('^.*\\(CLICK\\) ↦ mode', [ 'respect', 'ignoreClickable', 'ignoreClickRoutine', 'ignoreAll' ]);
