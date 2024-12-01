@@ -581,6 +581,12 @@ onMessage('edit', function(args) {
     [editButton, tooltip].forEach(element => element.classList.add('editorOpen'));
   } else {
     [editButton, tooltip].forEach(element => element.classList.remove('editorOpen'));
+    if(edit){
+      toServer('edit', {
+        playerName: getPlayerDetails().playerName,
+        edit: !!edit
+      });
+    }
   }
 })
 
