@@ -1581,8 +1581,8 @@ async function jeApplyChangesMulti() {
 
 function jeApplyDelta(delta) {
   if(jeMode == 'widget') {
-    if(delta.s[jeStateNow.id] && delta.s[jeStateNow.id].type !== undefined) {
-      const w = widgets.get(jeStateNow.id);
+    if(delta.s[jeWidget.id] && delta.s[jeWidget.id].type !== undefined) {
+      const w = widgets.get(jeWidget.id);
       jePlainWidget = new w.constructor();
       jeColorize();
     }
