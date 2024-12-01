@@ -391,6 +391,7 @@ body.aspectTooGood.hiddenToolbar {
       background: var(--toolbarColor);
       box-shadow: 0 0 5px #0005;
       pointer-events: none;
+      transition: color 0.3s ease;   
     }
 
     body:not(.loading) .toolbarButton:hover .tooltip, body.wideToolbar .toolbarButton .tooltip {
@@ -854,6 +855,11 @@ button {
   border-radius: 5px;
   background-repeat: no-repeat;
   margin: 1px;
+  transition: color 0.3s ease
+}
+
+button.playerChange .tooltip.playerChange {
+  color: yellow
 }
 
 button:hover {
