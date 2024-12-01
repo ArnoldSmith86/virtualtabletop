@@ -33,6 +33,11 @@ export class Timer extends Widget {
       if(!this.get('paused'))
         this.startTimer();
     }
+
+    if (delta.alert === true && this.get('alertSound')) {
+      addAudio(this.get('alertSound'), 1, 0, 1);
+  }
+  
   }
 
   applyInitialDelta(delta) {
@@ -89,25 +94,12 @@ export class Timer extends Widget {
   async onPropertyChange(property, oldValue, newValue) {
     await super.onPropertyChange(property, oldValue, newValue);
 
-    if (property == 'milliseconds') {
-      const isAlert = this.get('end') !== null && ((this.get('countdown') && newValue <= this.get('end')) || (!this.get('countdown') && newValue >= this.get('end')));
+    if(property == 'milliseconds')
+      await this.set('alert', this.get('end') !== null && ((this.get('countdown') && newValue<=this.get('end')) || (!this.get('countdown') && newValue>=this.get('end'))));
 
-        if (isAlert && !this.get('alert') && this.get('alertSound')) {
-            toServer('audio', {
-                audioSource: this.get('alertSound'),
-                maxVolume: 1.0,
-                length: null,
-                players: [],
-                count: 1
-            });
-        }
-
-        await this.set('alert', isAlert);
-    }
-
-    if (property == 'paused' && newValue !== true) {
-        this.stopTimer();
-        this.startTimer();
+    if(property == 'paused' && newValue !== true) {
+      this.stopTimer();
+      this.startTimer();
     }
   }
 
