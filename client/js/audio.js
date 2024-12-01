@@ -33,36 +33,58 @@ async function loadAudioBuffer(audioSource) {
   }
 }
 
-async function addAudio(audioSource, maxVolume, length) {
+async function addAudio(audioSource, maxVolume, length, count) {
   audioSource = mapAssetURLs(audioSource);
-  if(audioContext) {
-    let thisSource = audioContext.createBufferSource();
+  if (audioContext) {
     if (!audioBufferObj[audioSource]) {
       await loadAudioBuffer(audioSource);
     }
 
     let gainNode = audioContext.createGain();
     gainNode.gain.value = Math.min(maxVolume * (((10 ** ($('#volume').value / 96.025)) / 10) - 0.1), 1); // converts slider to log scale with zero = no volume
-    thisSource.connect(gainNode);
-    gainNode.connect(audioContext.destination);
-    audioSettings[audioSource] = { gainNode, maxVolume };
 
-    thisSource.buffer = audioBufferObj[audioSource];
-
-    if(thisSource) {
-      thisSource.start();
-    }
+    const playSource = (startTime) => {
+      let thisSource = audioContext.createBufferSource();
+      thisSource.connect(gainNode);
+      gainNode.connect(audioContext.destination);
+      audioSettings[audioSource] = { gainNode, maxVolume };
+      thisSource.buffer = audioBufferObj[audioSource];
+      thisSource.start(startTime);
+      return thisSource;
+    };
 
     if (!isNaN(length) && length > 0) {
-      thisSource.stop(audioContext.currentTime + length/1000);
+      let thisSource = playSource(audioContext.currentTime);
+      thisSource.stop(audioContext.currentTime + length / 1000);
+    } else if (count === "loop") {
+      let thisSource = playSource(audioContext.currentTime);
+      thisSource.loop = true;
+    } else if (Number.isInteger(count) && count > 0) {
+      for (let i = 0; i < count; i++) {
+        playSource(audioContext.currentTime + i * audioBufferObj[audioSource].duration);
+      }
     }
   }
 }
 
+
 onMessage('audio', async function(args) {
-  const { audioSource, maxVolume, length } = args;
+  const { audioSource, maxVolume, length, silence, count } = args;
+
+  if (silence) {
+    try {
+      if (audioContext) {
+        audioContext.close();
+        audioContext = new AudioContext();
+      }
+    } catch (err) {
+      console.error(`Error resetting audio context: ${err.message}`);
+    }
+    return;
+  }
+
   try {
-    await addAudio(audioSource, maxVolume, length);
+    await addAudio(audioSource, maxVolume, length, count);
   }
   catch(err) {
     console.log(err.message);

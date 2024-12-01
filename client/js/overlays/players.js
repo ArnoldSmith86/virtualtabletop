@@ -99,7 +99,7 @@ onLoad(function() {
   }
 });
   onMessage('mouse', function(args) {
-    if(args.player != playerName) {
+    if(args.player != playerName && playerCursors[args.player]) {
       clearTimeout(playerCursorsTimeout[args.player]);
       playerCursors[args.player].classList.toggle('hidden', !!args.mouseState.hidden);
       if(args.mouseState.inactive) {
