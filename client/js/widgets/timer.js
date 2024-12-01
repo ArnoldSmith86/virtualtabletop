@@ -97,7 +97,8 @@ export class Timer extends Widget {
                 audioSource: this.get('alertSound'),
                 maxVolume: 1.0,
                 length: null,
-                players: []
+                players: [],
+                count: 1
             });
         }
 
