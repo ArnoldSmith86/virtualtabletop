@@ -1608,10 +1608,10 @@ function jeApplyDelta(delta) {
       for(const [ key, value ] of Object.entries(delta.s[jeWidget.id])) {
         if(value === null) {
           if(!text.match(new RegExp(`^  "${key}": ${JSON.stringify(jeWidget.getDefaultValue(key))},?$`, 'm')))
-            text = text.replace(new RegExp(`,\n?\n  "${key}": ("[^"]*"|true|false|\\d+(\.\\d+)?)(?=,?$)`, 'gm'), '');
+            text = text.replace(new RegExp(`,\n?\n  "${key}": ("[^"]*"|true|false|\\d+(\\.\\d+)?)(?=,?$)`, 'gm'), '');
         } else if(!text.match(new RegExp(`^  "${key}"`, 'm')))
-          text = text.replace(new RegExp(`\n\}`, 'gm'), `,\n  "${key}": ${JSON.stringify(value)}\n}`);
-        else if(text.match(new RegExp(`^  "${key}": ("[^"]*"|true|false|\\d+(\.\\d+)?),?$`, 'm')))
+          text = text.replace(new RegExp(`\n\\}`, 'gm'), `,\n  "${key}": ${JSON.stringify(value)}\n}`);
+        else if(text.match(new RegExp(`^  "${key}": ("[^"]*"|true|false|\\d+(\\.\\d+)?),?$`, 'm')))
           text = text.replace(new RegExp(`^  "${key}":[^,\n]*`, 'gm'), `  "${key}": ${JSON.stringify(value)}`);
         else
           text = text + `\n\n--- GOT DELTA WHILE JSON WAS INVALID ---\n${delta.c}\n\nApply this to your JSON:\n\n  "${key}": ${JSON.stringify(value, null, '  ').replace(/\n/g, '\n  ')}`;
