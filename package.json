@@ -54,7 +54,7 @@
     "bson": "^6.10.0",
     "crawler-user-agents": "^1.0.154",
     "crc-32": "^1.2.2",
-    "dompurify": "^3.2.1",
+    "dompurify": "^3.2.2",
     "express": "^4.21.1",
     "jszip": "^3.10.1",
     "node-fetch": "^2.7.0",
