@@ -184,9 +184,7 @@ export class Widget extends StateManaged {
     }
 
     this.applyCSS(delta);
-    if(delta.audio !== null)
-      this.addAudio(this);
-
+    
     if(delta.z !== undefined)
       this.applyZ(true);
 
@@ -458,9 +456,16 @@ export class Widget extends StateManaged {
 
     if(!this.get('clickable') && !(mode == 'ignoreClickable' || mode =='ignoreAll'))
       return true;
-
-    if(this.get('clickSound'))
-      this.set('audio','source: ' + this.get('clickSound') + ', type: audio/mpeg , maxVolume: 1.0, length: null, player: null');
+    
+    if(this.get('clickSound')) {
+      toServer('audio', {
+        audioSource: this.get('clickSound'),
+        maxVolume: 1.0,
+        length: null,
+        players: [],
+        count: 1
+      });
+    }
 
     if(Array.isArray(this.get('clickRoutine')) && !(mode == 'ignoreClickRoutine' || mode =='ignoreAll')) {
       await this.evaluateRoutine('clickRoutine', {}, {});
@@ -993,10 +998,16 @@ export class Widget extends StateManaged {
       }
 
       if(a.func == 'AUDIO') {
-        setDefaults(a, { source: '', type: 'audio/mpeg', maxVolume: 1.0, length: null, player: null });
-        if(a.source !== undefined) {
-          this.set('audio', 'source: ' + a.source + ', type: ' + a.type + ', maxVolume: ' + a.maxVolume + ', length: ' + a.length + ', player: ' + a.player);
-        }
+        setDefaults(a, { source: '', maxVolume: 1.0, length: null, player: null, silence: false, count: 1 });
+        const validPlayers = a.player ? asArray(a.player) : [];
+        toServer('audio', {
+          audioSource: a.source,
+          maxVolume: a.maxVolume,
+          length: a.length,
+          players: validPlayers,
+          silence: a.silence,
+          count: a.count
+        });
       }
 
       if(a.func == 'CALL') {
@@ -2110,52 +2121,6 @@ export class Widget extends StateManaged {
       $('#enlarged').classList.add('hidden');
       if($('#enlargeStyle'))
         removeFromDOM($('#enlargeStyle'));
-    }
-  }
-
-  async addAudio(widget){
-    if(widget.get('audio')) {
-      const audioString = widget.get('audio');
-      const audioArray = audioString.split(/:\s|,\s/);
-      const source = audioArray[1];
-      const type = audioArray[3];
-      const maxVolume = audioArray[5];
-      const length = audioArray[7];
-      const pName = audioArray[9];
-
-      if(pName == "null" || pName == playerName) {
-        var audioElement = document.createElement('audio');
-        audioElement.setAttribute('class', 'audio');
-        audioElement.setAttribute('src', mapAssetURLs(source));
-        audioElement.setAttribute('type', type);
-        audioElement.setAttribute('maxVolume', maxVolume);
-        audioElement.volume = Math.min(maxVolume * (((10 ** (document.getElementById('volume').value / 96.025)) / 10) - 0.1), 1); // converts slider to log scale with zero = no volume
-        document.body.appendChild(audioElement);
-        audioElement.play();
-
-        if(length != "null") {
-          setInterval(function(){
-            if(audioElement.currentTime>=0){
-              audioElement.pause();
-              clearInterval();
-              if(audioElement.parentNode)
-                audioElement.parentNode.removeChild(audioElement);
-            }}, length);
-        } else {
-          audioElement.onended = function() {
-            audioElement.pause();
-            clearInterval();
-            if(audioElement.parentNode)
-              audioElement.parentNode.removeChild(audioElement);
-          };
-          audioElement.onerror = function() {
-            if(audioElement.parentNode)
-              audioElement.parentNode.removeChild(audioElement);
-          }
-        }
-      }
-      setInterval(function(){
-        widget.set('audio', null);}, 100);
     }
   }
 

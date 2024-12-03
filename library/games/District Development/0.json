@@ -1,0 +1,2682 @@
+{
+  "_meta": {
+    "version": 16,
+    "info": {
+      "name": "District Development",
+      "image": "/assets/1558268581_210080",
+      "rules": "",
+      "bgg": "https://boardgamegeek.com/boardgame/355/das-letzte-paradies",
+      "year": "1993",
+      "mode": "vs",
+      "time": "30",
+      "attribution": "<div><span style=\"color: var(--overlayFontColor);\">Room layout and scripting by Anthony Cholag (with assistance by Andy Pymont, IndigoPotter, and LawDawg) under a CC0 license.</span></div><div><br><div><span><span><span><span><span><span><span><span><span>Cover image created using DeepAi.org with prompt: \"P</span></span></span></span></span></span></span></span></span>rovide a colorful illustrated view of a subdivision with trees and houses from a low level vantage point. In a square format.\"</div></div>",
+      "lastUpdate": 1732975670625,
+      "showName": true,
+      "skill": "Medium",
+      "description": "Develop an area of land by winning auctions in various districts. Decide if you want to erect buildings to potentially earn cash or keep the nature pristine to raise the value of the buildings. Don't worry, you'll be rewarded for conserving nature at the end of the game, unless of course, nature isn't that valuable...",
+      "similarImage": "",
+      "similarName": "Das Letze Paradies",
+      "similarDesigner": "Reiner Knizia",
+      "similarAwards": "",
+      "ruleText": "<h4><span><span>High level summary:</span></span></h4><div><p data-sourcepos=\"3:1-3:18\"><strong><span><span>Game Objective</span></span></strong></p><p data-sourcepos=\"5:1-5:140\"><span><span>Your goal is to accumulate more points (money) than any other player. If you end the game with fewer points than you started with, you lose.</span></span></p><p data-sourcepos=\"7:1-7:18\"><strong><span><span>Auction Rounds</span></span></strong></p><ol data-sourcepos=\"9:1-22:0\"><li data-sourcepos=\"9:1-17:0\"><p data-sourcepos=\"9:4-9:15\"><strong><span><span>Bidding:</span></span></strong></p><ul data-sourcepos=\"10:4-17:0\"><li data-sourcepos=\"10:4-10:40\"><span><span>Sixteen auction rounds take place.</span></span></li><span><span>\n</span></span><li data-sourcepos=\"11:4-11:50\"><span><span>In each round, a parcel of land is auctioned.</span></span></li><span><span>\n</span></span><li data-sourcepos=\"12:4-12:87\"><span><span>Each player secretly bids any amount they choose, up to their current point total.</span></span></li><span><span>\n</span></span><li data-sourcepos=\"13:4-13:38\"><span><span>Bids are revealed simultaneously.</span></span></li><span><span>\n</span></span><li data-sourcepos=\"14:4-14:92\"><span><span>The highest bidder wins the auction but only pays the amount of the second-highest bid.</span></span></li><span><span>\n</span></span><li data-sourcepos=\"15:4-15:235\"><span><span>In case of a tie, multiple rounds of bidding occur until a winner is determined or no one increases their bid. In the latter case, the property is randomly assigned to one of the tied bidders, who pays the highest bid to the bank.</span></span></li><span><span>\n</span></span><li data-sourcepos=\"16:4-17:0\"><span><span>If no one bids on a property, a second round of bidding occurs. If there's still no bid, the property is randomly assigned to a player for free.</span></span></li></ul><span><span>\n</span></span></li><li data-sourcepos=\"18:1-22:0\"><p data-sourcepos=\"18:4-18:24\"><strong><span><span>Land Improvement:</span></span></strong></p><ul data-sourcepos=\"19:4-22:0\"><li data-sourcepos=\"19:4-19:78\"><span><span>The auction winner chooses to place either a house or a tree on the land.</span></span></li><span><span>\n</span></span><li data-sourcepos=\"20:4-20:66\"><span><span>Other players can bribe the winner to influence their choice.</span></span></li><span><span>\n</span></span><li data-sourcepos=\"21:4-22:0\"><span><span>Once placed, houses and trees cannot be moved.</span></span></li><span><span>\n</span></span></ul></li></ol><p data-sourcepos=\"23:1-23:11\"><strong><span><span>Scoring</span></span></strong></p><ol data-sourcepos=\"25:1-36:0\"><li data-sourcepos=\"25:1-36:0\"><strong><span><span>House and Tree Bonuses:</span></span></strong><span><span>\n</span></span><ul data-sourcepos=\"26:4-36:0\"><span><span>\n</span></span><li data-sourcepos=\"26:4-29:111\"><strong><span><span>House Bonuses:</span></span></strong><span><span>\n</span></span><ul data-sourcepos=\"27:6-29:111\"><span><span>\n</span></span><li data-sourcepos=\"27:6-27:66\"><span><span>A house earns 10 points for each tree in the same district when placed.</span></span></li><span><span>\n</span></span><li data-sourcepos=\"28:6-28:103\"><span><span>If a house is placed in all four corner districts, the player earns an immediate 20-point bonus.</span></span></li><span><span>\n</span></span><li data-sourcepos=\"29:6-29:111\"><span><span>If a player is the sole owner of all houses in a corner district, they earn an immediate 20-point bonus.</span></span></li><span><span>\n</span></span></ul></li><li data-sourcepos=\"30:4-31:76\"><strong><span><span>Tree Bonuses:</span></span></strong><span><span>\n</span></span><ul data-sourcepos=\"31:6-31:76\"><span><span>\n</span></span><li data-sourcepos=\"31:6-31:76\"><span><span>All houses in a district with a newly placed tree earn 10 points for their owners.</span></span></li></ul></li><span><span>\n</span></span><li data-sourcepos=\"32:4-36:0\"><span><span>At the end of the game, players receive bonuses based on the total number of trees played:\n</span></span><ul data-sourcepos=\"33:6-36:0\"><span><span>\n</span></span><li data-sourcepos=\"33:6-33:64\"><span><span>First place in tree placement receives the highest bonus.</span></span></li><span><span>\n</span></span><li data-sourcepos=\"34:6-34:45\"><span><span>Second place receives the lower bonus.</span></span></li><span><span>\n</span></span><li data-sourcepos=\"35:6-36:0\"><span><span>In case of ties, the bonus is divided equally among the tied players, rounding down.</span></span></li></ul></li></ul></li><span><span>\n</span></span></ol><p data-sourcepos=\"37:1-37:18\"><strong><span><span>District Rules</span></span></strong></p><ul data-sourcepos=\"39:1-41:0\"><li data-sourcepos=\"39:1-39:75\"><span><span>The board is divided into four corner districts (consisting of 4 spaces) and one central district (4 spaces in the middle that are also shared with each of the 4 corner districts).</span></span></li><span><span>\n</span></span><li data-sourcepos=\"40:1-41:0\"><span><span>Houses and trees in the central district affect both the central district and the adjacent corner districts.</span></span></li></ul><div><br></div></div><div><br></div><h4><b><span><span>More detailed rules summary:</span></span></b></h4><div><span id=\"docs-internal-guid-4509f948-7fff-0af1-c6f5-8123ba612cfe\"><p style=\"line-height:1.38;margin-top:0pt;margin-bottom:0pt;\" dir=\"ltr\"><span style=\"font-size: 11pt; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-variant-position: normal; font-variant-emoji: normal; vertical-align: baseline; white-space-collapse: preserve;\"><span><span>In this game, you are trying to earn more money (points) than any other player. If you don’t earn more money than you initially started with, you lose.</span></span></span></p><p style=\"line-height:1.38;margin-top:0pt;margin-bottom:0pt;\" dir=\"ltr\"><span style=\"font-size: 11pt; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-variant-position: normal; font-variant-emoji: normal; vertical-align: baseline; white-space-collapse: preserve;\"><span><span>The game consists of 16 auction rounds where a parcel of land is put up for bid. Everyone will secretly bid any amount they want (up to the amount they have in their hand), and then simultaneously reveal. The winner of the auction is whoever bid the most money but they will ONLY pay the amount bid by the second highest bidder. Example: If player A bids 10, player B bids 15, and player C bids 50, player C wins the auction, but only pays 15. All other players do not spend any money.&nbsp;</span></span></span></p><br><p style=\"line-height:1.38;margin-top:0pt;margin-bottom:0pt;\" dir=\"ltr\"><span style=\"font-size: 11pt; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-variant-position: normal; font-variant-emoji: normal; vertical-align: baseline; white-space-collapse: preserve;\"><span><span>NOTE: In the event of a tie in the auction, only the tied players will participate in a second auction round. The bids in the second round must be as high as the bids in the first round. If this still results in a tie then a third auction occurs, again the starting bid amount is determined by the highest bid in the second round and so on. If nobody increases their bid, it is randomly determined who amongst the tied bidders wins the property and they pay the bid to the bank.&nbsp;</span></span></span></p><p style=\"line-height:1.38;margin-top:0pt;margin-bottom:0pt;\" dir=\"ltr\"><span style=\"font-size: 11pt; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-variant-position: normal; font-variant-emoji: normal; vertical-align: baseline; white-space-collapse: preserve;\"><span><span>If nobody makes a bid for a property, then a second auction round occurs. If there is still no bid in the second round, then the property goes to someone randomly for free. If anyone bids any amount while every other player bids 0, then the winning player would win while paying 0.&nbsp;&nbsp;</span></span></span></p><br><p style=\"line-height:1.38;margin-top:0pt;margin-bottom:0pt;\" dir=\"ltr\"><span style=\"font-size: 11pt; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-variant-position: normal; font-variant-emoji: normal; vertical-align: baseline; white-space-collapse: preserve;\"><span><span>Once an auction is won, the winner has to decide if they will place a house or a tree in the designated spot. If they place a house, they can potentially earn more money while the game is being played. If they place a tree, they have the potential to earn a big bonus at the end of the game. The decision to place a house or tree is solely for the auction winner BUT the other players can bribe the winner to place something in the way they prefer. For example, Player A and Player B might offer 5 points each to Player C to place a tree in an area. Player C might counter with a request of 15 points total, and players A and B could accept or renegotiate. Once a house or tree has been placed, it cannot be changed.&nbsp;</span></span></span></p><p style=\"line-height:1.38;margin-top:0pt;margin-bottom:0pt;\" dir=\"ltr\"><span style=\"font-size: 11pt; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-variant-position: normal; font-variant-emoji: normal; vertical-align: baseline; white-space-collapse: preserve;\"><span><span>There are 4 corner districts around the edge of the board. Yellow district is A1, A2, B1, and B2, light green is A3, A4, B3, and B4, red-orange is C1, C2, D1, D2, and blue is C3, C4, D3, and D4. There is also a central district that is B2, B3, C2, and C3. Houses or trees placed in these central districts affect their assigned corner district as well as the central district.&nbsp;</span></span></span></p><p style=\"line-height:1.38;margin-top:0pt;margin-bottom:0pt;\" dir=\"ltr\"><span style=\"font-size: 11pt; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-variant-position: normal; font-variant-emoji: normal; vertical-align: baseline; white-space-collapse: preserve;\"><span><span>When a house is placed, check to see if there are any trees in the district it was just placed in. If there are, the player who placed the house earns 10 points per tree in that district. If a tree is placed, all houses in the district earn 10 points for their owners. Example, if player A places a tree in a district where they own 2 houses and player B owns 1 house, then player A scores 20 points, and player B scores 10 points. As a further example, if the board was set up as such: A1: player 1 house, A2: Player 1 house, B1, player 2 house and newly placed tree was in B2, then all the house in the upper left corner district would score for the tree AND all the houses in the central district of B2, B3, C2, and C4 would score for that tree.&nbsp;</span></span></span></p><p style=\"line-height:1.38;margin-top:0pt;margin-bottom:0pt;\" dir=\"ltr\"><span style=\"font-size: 11pt; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-variant-position: normal; font-variant-emoji: normal; vertical-align: baseline; white-space-collapse: preserve;\"><span><span>Houses can also earn you a bonus points throughout the game if you satisfy these conditions.</span></span></span></p><p style=\"line-height:1.38;margin-top:0pt;margin-bottom:0pt;\" dir=\"ltr\"><span style=\"font-size: 11pt; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-variant-position: normal; font-variant-emoji: normal; vertical-align: baseline; white-space-collapse: preserve;\"><span><span>Condition 1: you have placed a house in each of the 4 corner districts. You will earn 20 points immediately. This bonus can only be granted to each player once.</span></span></span></p><p style=\"line-height:1.38;margin-top:0pt;margin-bottom:0pt;\" dir=\"ltr\"><span style=\"font-size: 11pt; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-variant-position: normal; font-variant-emoji: normal; vertical-align: baseline; white-space-collapse: preserve;\"><span><span>Condition 2: A corner district is filled up and you are the ONLY player with a house or houses in that district. Keep in mind, it doesn’t matter if another player has trees in that district, it only matters if you’re the only one with a house in the district. This also earns you 20 points immediately. This bonus can be granted in each corner district to any player, including the same player who previously scored this bonus in another district.&nbsp;</span></span></span></p><p style=\"line-height:1.38;margin-top:0pt;margin-bottom:0pt;\" dir=\"ltr\"><span style=\"font-size: 11pt; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-variant-position: normal; font-variant-emoji: normal; vertical-align: baseline; white-space-collapse: preserve;\"><span><span>After the 16th auction round is complete, reveal your scores and determine if you get any bonuses for preserving nature. First, calculate how many trees have been played in the game. Review the table at the top of the screen to determine what this bonus will entail. Then, determine who has the most and second most trees. First place gets the top score, 2nd place gets the bottom score. If multiple players tie for first, add the first and second place scores together and divide equally amongst the players (rounding down). No points are awared for second place in this scenario. If multiple players tie for second place, divide the second place points equally, rounding down. For example: player A has placed 3 trees, Player B has placed 2 trees, and player C has placed none. Total trees on the board equal 5, which means that 1st place of 40 points goes to Player A, second place of 20 points goes to player B.&nbsp;</span></span></span></p><div><span style=\"font-size: 11pt; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-variant-position: normal; font-variant-emoji: normal; vertical-align: baseline; white-space-collapse: preserve;\"><br></span></div></span></div>",
+      "helpText": "<p style=\"line-height:1.656;background-color:#f0f0f0;margin-top:0pt;margin-bottom:0pt;\" dir=\"ltr\"><span style=\"font-size:11pt;font-family:Roboto,sans-serif;color:#222326;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;\">Click to sit at any player space. Click the “Hide Scores” button to keep your bank secret from the other players. Depending on the number of players, your starting bank will be adjusted to 80, 60, or 50 if you have 3, 4, or 5 players.</span></p><p style=\"line-height:1.656;background-color:#f0f0f0;margin-top:0pt;margin-bottom:0pt;\" dir=\"ltr\"><br></p><p style=\"line-height:1.656;background-color:#f0f0f0;margin-top:0pt;margin-bottom:0pt;\" dir=\"ltr\"><span style=\"font-size:11pt;font-family:Roboto,sans-serif;color:#222326;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;\">Once everyone is seated, click the \"Start Auction\" button. The first 4 rounds, the pieces of land will be shown in the upper 4 holders. Place the land on the corresponding space and auction them one at a time. The first 4 rounds will always be 4 spaces on the perimeter in each of the 4 districts.&nbsp;</span></p><p style=\"line-height:1.656;background-color:#f0f0f0;margin-top:0pt;margin-bottom:0pt;\" dir=\"ltr\"><br></p><p style=\"line-height:1.656;background-color:#f0f0f0;margin-top:0pt;margin-bottom:0pt;\" dir=\"ltr\"><span style=\"font-size:11pt;font-family:Roboto,sans-serif;color:#222326;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;\">When a card is up for auction, press the “Start Auction” button. This will hide the circle beneath your name which is where you will enter your secret bid. Once you have entered your bid, the red X will change to a green check mark. When everyone has a green check mark, you will hit the “End Auction” button to reveal everyone’s bids. After any negotiations, the winner of the auction will place either a house or a tree to the purchased space, and then reduce their bank by the amount of the bid of the second highest bidder. The house or tree will have the color of the player who touches the tile so ensure only the winner of the auction places the house or tree.&nbsp;</span></p><p style=\"line-height:1.656;background-color:#f0f0f0;margin-top:0pt;margin-bottom:0pt;\" dir=\"ltr\"><br></p><p style=\"line-height:1.656;background-color:#f0f0f0;margin-top:0pt;margin-bottom:0pt;\" dir=\"ltr\"><span style=\"font-size:11pt;font-family:Roboto,sans-serif;color:#222326;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;\">After the first 4 rounds are complete and the 4 holders are empty, hitting the “Start Auction” will reveal the next space up for auction from the pile of 12 tiles remaining. Place the tile on the corresponding space and begin the auction round anew.&nbsp;</span></p><p style=\"line-height:1.656;background-color:#f0f0f0;margin-top:0pt;margin-bottom:0pt;\" dir=\"ltr\"><br></p><p style=\"line-height: 1.38; margin-top: 0pt; margin-bottom: 0pt;\" dir=\"ltr\"><span id=\"docs-internal-guid-b9c77c9b-7fff-ca8d-eacf-51a5e8e0a1b5\"></span></p><p style=\"line-height:1.656;background-color:#f0f0f0;margin-top:0pt;margin-bottom:0pt;\" dir=\"ltr\"><span style=\"font-size:11pt;font-family:Roboto,sans-serif;color:#222326;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;\">When all 16 rounds have been completed, click the “Show scores” button to reveal everyone's bank. Remember to add in any end of game scoring bonuses from the trees.</span></p>",
+      "variantImage": "",
+      "variant": "",
+      "language": "en-GB",
+      "players": "3-5"
+    }
+  },
+  "578f6a03-96af-4227-a877-2e58951f13f6_label": {
+    "id": "578f6a03-96af-4227-a877-2e58951f13f6_label",
+    "parent": "auction4",
+    "x": -10.8,
+    "y": -52,
+    "width": 129.6,
+    "height": 40,
+    "type": "label",
+    "text": "Auction 4",
+    "twoRowBottomAlign": true,
+    "movableInEdit": false
+  },
+  "fd1c0317-15b5-42a1-8055-34096acfb3e8_label": {
+    "id": "fd1c0317-15b5-42a1-8055-34096acfb3e8_label",
+    "parent": "auction3",
+    "x": -10.8,
+    "y": -53,
+    "width": 129.6,
+    "height": 40,
+    "type": "label",
+    "text": "Auction 3",
+    "twoRowBottomAlign": true,
+    "movableInEdit": false
+  },
+  "2b1761ea-8cd5-4e2b-a36e-8b354df38cc4_label": {
+    "id": "2b1761ea-8cd5-4e2b-a36e-8b354df38cc4_label",
+    "parent": "auction5",
+    "x": -9,
+    "y": -34,
+    "width": 134,
+    "type": "label",
+    "text": "Auctions 5-16",
+    "twoRowBottomAlign": true,
+    "movableInEdit": false
+  },
+  "f6f2d10f-26b1-4e8d-a9e6-2a38f0f59e1e_label": {
+    "id": "f6f2d10f-26b1-4e8d-a9e6-2a38f0f59e1e_label",
+    "parent": "auction1",
+    "x": -11,
+    "y": -53,
+    "width": 129.6,
+    "height": 40,
+    "type": "label",
+    "text": "Auction 1",
+    "twoRowBottomAlign": true,
+    "movableInEdit": false
+  },
+  "e9885e5e-9c09-4715-a784-4d4db5b979f2_label": {
+    "id": "e9885e5e-9c09-4715-a784-4d4db5b979f2_label",
+    "parent": "auction2",
+    "x": -10.8,
+    "y": -53,
+    "width": 129.6,
+    "height": 40,
+    "type": "label",
+    "text": "Auction 2",
+    "twoRowBottomAlign": true,
+    "movableInEdit": false
+  },
+  "p1-bid": {
+    "type": "label",
+    "id": "p1-bid",
+    "x": 800,
+    "y": 248,
+    "width": 129.6,
+    "height": 40,
+    "movableInEdit": false,
+    "editable": true,
+    "text": "Player 1 Bid",
+    "twoRowBottomAlign": true,
+    "linkedToSeat": "seat1"
+  },
+  "p2-bid": {
+    "type": "label",
+    "id": "p2-bid",
+    "x": 961,
+    "y": 248,
+    "width": 129.6,
+    "height": 40,
+    "movableInEdit": false,
+    "editable": true,
+    "text": "Player 2 Bid",
+    "twoRowBottomAlign": true,
+    "linkedToSeat": "seat2"
+  },
+  "p3-bid": {
+    "type": "label",
+    "id": "p3-bid",
+    "x": 1126,
+    "y": 248,
+    "width": 129.6,
+    "height": 40,
+    "movableInEdit": false,
+    "editable": true,
+    "text": "Player 3 Bid",
+    "twoRowBottomAlign": true,
+    "linkedToSeat": "seat3"
+  },
+  "p4-bid": {
+    "type": "label",
+    "id": "p4-bid",
+    "x": 1292,
+    "y": 248,
+    "width": 129.6,
+    "height": 40,
+    "movableInEdit": false,
+    "editable": true,
+    "text": "Player 4 Bid",
+    "twoRowBottomAlign": true,
+    "linkedToSeat": "seat4"
+  },
+  "p5-bid": {
+    "type": "label",
+    "id": "p5-bid",
+    "x": 1453,
+    "y": 248,
+    "width": 129.6,
+    "height": 40,
+    "movableInEdit": false,
+    "editable": true,
+    "text": "Player 5 Bid",
+    "twoRowBottomAlign": true,
+    "linkedToSeat": "seat5"
+  },
+  "22y3": {
+    "id": "22y3",
+    "x": 798,
+    "y": 113,
+    "width": 144,
+    "height": 300,
+    "layer": -3,
+    "movable": false,
+    "editorGroup": true
+  },
+  "22y4": {
+    "id": "22y4",
+    "x": 951,
+    "y": 113,
+    "width": 144,
+    "height": 300,
+    "layer": -3,
+    "movable": false,
+    "editorGroup": true
+  },
+  "22y5": {
+    "id": "22y5",
+    "x": 1117,
+    "y": 117,
+    "width": 144,
+    "height": 300,
+    "layer": -3,
+    "movable": false,
+    "editorGroup": true
+  },
+  "22y6": {
+    "id": "22y6",
+    "x": 1289,
+    "y": 114,
+    "width": 144,
+    "height": 300,
+    "layer": -3,
+    "movable": false,
+    "editorGroup": true
+  },
+  "22y7": {
+    "id": "22y7",
+    "x": 1449,
+    "y": 116,
+    "width": 144,
+    "height": 300,
+    "layer": -3,
+    "movable": false,
+    "editorGroup": true
+  },
+  "button-auction": {
+    "type": "button",
+    "id": "button-auction",
+    "x": 650,
+    "y": 342,
+    "width": 100,
+    "height": 40,
+    "z": 84,
+    "css": {
+      "font-size": "14px"
+    },
+    "text": "Start Auction",
+    "clickRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY text}",
+        "operand2": "Start Auction",
+        "thenRoutine": [
+          {
+            "func": "CALL",
+            "routine": "startRoutine"
+          },
+          {
+            "func": "IF",
+            "operand1": "${PROPERTY auction}",
+            "operand2": 0,
+            "thenRoutine": [
+              {
+                "func": "SELECT",
+                "type": "card",
+                "property": "deck",
+                "value": "auctionDeck",
+                "collection": "auctionCards"
+              },
+              {
+                "func": "SELECT",
+                "source": "auctionCards",
+                "property": "rank",
+                "relation": "in",
+                "value": [
+                  "A1",
+                  "A2",
+                  "B1"
+                ]
+              },
+              {
+                "func": "MOVE",
+                "collection": "DEFAULT",
+                "to": "auction1",
+                "count": 3
+              },
+              {
+                "func": "SELECT",
+                "source": "auctionCards",
+                "property": "rank",
+                "relation": "in",
+                "value": [
+                  "A3",
+                  "A4",
+                  "B4"
+                ]
+              },
+              {
+                "func": "MOVE",
+                "collection": "DEFAULT",
+                "to": "auction2",
+                "count": 3
+              },
+              {
+                "func": "SELECT",
+                "source": "auctionCards",
+                "property": "rank",
+                "relation": "in",
+                "value": [
+                  "C1",
+                  "D1",
+                  "D2"
+                ]
+              },
+              {
+                "func": "MOVE",
+                "collection": "DEFAULT",
+                "to": "auction3",
+                "count": 3
+              },
+              {
+                "func": "SELECT",
+                "source": "auctionCards",
+                "property": "rank",
+                "relation": "in",
+                "value": [
+                  "C4",
+                  "D3",
+                  "D4"
+                ]
+              },
+              {
+                "func": "MOVE",
+                "collection": "DEFAULT",
+                "to": "auction4",
+                "count": 3
+              },
+              {
+                "func": "SHUFFLE",
+                "holder": [
+                  "auction1",
+                  "auction2",
+                  "auction3",
+                  "auction4"
+                ]
+              },
+              {
+                "func": "FOREACH",
+                "range": [
+                  4
+                ],
+                "loopRoutine": [
+                  {
+                    "func": "MOVE",
+                    "from": "auction${value}",
+                    "to": "auction5",
+                    "count": 2
+                  }
+                ]
+              },
+              {
+                "func": "SHUFFLE",
+                "holder": "auction5"
+              }
+            ],
+            "elseRoutine": [
+              {
+                "func": "IF",
+                "operand1": "${PROPERTY auction}",
+                "relation": "<=",
+                "operand2": 3,
+                "thenRoutine": [],
+                "elseRoutine": [
+                  {
+                    "func": "SELECT",
+                    "property": "parent",
+                    "value": "auction5"
+                  },
+                  {
+                    "func": "SELECT",
+                    "source": "DEFAULT",
+                    "type": "card",
+                    "property": "id",
+                    "relation": "!=",
+                    "value": null,
+                    "sortBy": {
+                      "key": "z",
+                      "reverse": true
+                    }
+                  },
+                  {
+                    "func": "SELECT",
+                    "source": "DEFAULT",
+                    "max": 1,
+                    "property": "id",
+                    "relation": "!=",
+                    "value": null
+                  },
+                  {
+                    "func": "SET",
+                    "collection": "DEFAULT",
+                    "property": "activeFace",
+                    "value": 1
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "CALL",
+            "routine": "endRoutine"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "auction",
+            "relation": "+",
+            "value": 1
+          }
+        ]
+      }
+    ],
+    "auction": 0,
+    "startRoutine": [
+      {
+        "func": "SET",
+        "collection": [
+          "button-auction"
+        ],
+        "property": "text",
+        "value": "End Auction"
+      },
+      {
+        "func": "FOREACH",
+        "range": 5,
+        "loopRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "bid-p${value}"
+            ],
+            "property": "onlyVisibleForSeat",
+            "value": "seat${value}"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "bid-p${value}"
+            ],
+            "property": "text",
+            "value": 0
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "ready-p${value}"
+            ],
+            "property": "activeFace",
+            "value": 0
+          }
+        ]
+      }
+    ],
+    "endRoutine": [
+      {
+        "func": "SET",
+        "collection": [
+          "button-auction"
+        ],
+        "property": "text",
+        "value": "Start Auction"
+      },
+      {
+        "func": "FOREACH",
+        "range": 5,
+        "loopRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "bid-p${value}"
+            ],
+            "property": "onlyVisibleForSeat",
+            "value": null
+          }
+        ]
+      }
+    ]
+  },
+  "bid-p1": {
+    "id": "bid-p1",
+    "parent": "22y3",
+    "z": 3383,
+    "movableInEdit": false,
+    "css": {
+      "color": "black",
+      "font-size": "46px",
+      "line-height": "100px",
+      "text-align": "center"
+    },
+    "image": "/assets/929442417_5904",
+    "linkedToSeat": "seat1",
+    "text": 0,
+    "readyMarker": "ready-p1",
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": [
+          "${PROPERTY readyMarker}"
+        ],
+        "property": "activeFace",
+        "value": 0
+      },
+      "var header = 'Enter bid amount'",
+      {
+        "func": "INPUT",
+        "header": "${header}",
+        "confirmButtonText": "OK",
+        "cancelButtonText": "Cancel",
+        "fields": [
+          {
+            "type": "number",
+            "value": "${PROPERTY text}",
+            "variable": "newValue"
+          }
+        ]
+      },
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY id}",
+        "value": "${newValue}"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "${PROPERTY readyMarker}"
+        ],
+        "property": "activeFace",
+        "value": 1
+      }
+    ],
+    "y": 186,
+    "x": 15
+  },
+  "seat1": {
+    "type": "seat",
+    "id": "seat1",
+    "parent": "22y3",
+    "x": -6,
+    "y": -1,
+    "z": 48,
+    "movableInEdit": false,
+    "hideWhenUnused": true,
+    "width": 131,
+    "height": 32,
+    "colorEmpty": "#F07F0E",
+    "color": "#F07F0E",
+    "clickRoutine": [
+      {
+        "func": "CLICK",
+        "collection": "thisButton",
+        "mode": "ignoreClickRoutine"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "color",
+        "value": "${PROPERTY colorEmpty}"
+      },
+      {
+        "func": "SELECT",
+        "type": "seat",
+        "property": "player",
+        "relation": "!=",
+        "value": ""
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "relation": "in",
+        "value": [
+          "score-p1",
+          "score-p2",
+          "score-p3",
+          "score-p4",
+          "score-p5"
+        ],
+        "collection": "scores"
+      },
+      {
+        "func": "COUNT"
+      },
+      {
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "operand2": 5,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "scores",
+            "property": "text",
+            "value": 50
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "IF",
+            "operand1": "${COUNT}",
+            "operand2": 4,
+            "thenRoutine": [
+              {
+                "func": "SET",
+                "collection": "scores",
+                "property": "text",
+                "value": 60
+              }
+            ],
+            "elseRoutine": [
+              {
+                "func": "SET",
+                "collection": "scores",
+                "property": "text",
+                "value": 80
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "ready-p1": {
+    "type": "basic",
+    "id": "ready-p1",
+    "parent": "22y3",
+    "y": 178,
+    "width": 30,
+    "height": 30,
+    "z": 2,
+    "movableInEdit": false,
+    "faces": [
+      {
+        "css": {
+          "background": "#ff0000",
+          "border-color": "black",
+          "border-radius": "8px",
+          "border-style": "solid",
+          "border-width": "2px",
+          "color": "white",
+          "font-size": "30px",
+          "line-height": "30px",
+          "text-align": "center"
+        },
+        "text": "✗"
+      },
+      {
+        "css": {
+          "background": "#00ff00",
+          "border-color": "black",
+          "border-radius": "8px",
+          "border-style": "solid",
+          "border-width": "2px",
+          "color": "black",
+          "font-size": "30px",
+          "line-height": "30px",
+          "text-align": "center"
+        },
+        "text": "✓"
+      }
+    ],
+    "linkedToSeat": "seat1",
+    "x": -15
+  },
+  "bid-p2": {
+    "id": "bid-p2",
+    "parent": "22y4",
+    "z": 3383,
+    "movableInEdit": false,
+    "css": {
+      "color": "black",
+      "font-size": "46px",
+      "line-height": "100px",
+      "text-align": "center"
+    },
+    "image": "/assets/929442417_5904",
+    "linkedToSeat": "seat2",
+    "text": 0,
+    "readyMarker": "ready-p2",
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": [
+          "${PROPERTY readyMarker}"
+        ],
+        "property": "activeFace",
+        "value": 0
+      },
+      "var header = 'Enter bid amount'",
+      {
+        "func": "INPUT",
+        "header": "${header}",
+        "confirmButtonText": "OK",
+        "cancelButtonText": "Cancel",
+        "fields": [
+          {
+            "type": "number",
+            "value": "${PROPERTY text}",
+            "variable": "newValue"
+          }
+        ]
+      },
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY id}",
+        "value": "${newValue}"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "${PROPERTY readyMarker}"
+        ],
+        "property": "activeFace",
+        "value": 1
+      }
+    ],
+    "y": 190,
+    "x": 26
+  },
+  "seat2": {
+    "type": "seat",
+    "id": "seat2",
+    "parent": "22y4",
+    "z": 48,
+    "movableInEdit": false,
+    "x": 5,
+    "y": -1,
+    "width": 131,
+    "height": 32,
+    "color": "#Cf2fe8",
+    "colorEmpty": "#Cf2fe8",
+    "index": 1,
+    "movable": false,
+    "inheritFrom": {
+      "seat1": "clickRoutine"
+    },
+    "hideWhenUnused": true
+  },
+  "ready-p2": {
+    "type": "basic",
+    "id": "ready-p2",
+    "parent": "22y4",
+    "y": 182,
+    "width": 30,
+    "height": 30,
+    "z": 2,
+    "movableInEdit": false,
+    "faces": [
+      {
+        "css": {
+          "background": "#ff0000",
+          "border-color": "black",
+          "border-radius": "8px",
+          "border-style": "solid",
+          "border-width": "2px",
+          "color": "white",
+          "font-size": "30px",
+          "line-height": "30px",
+          "text-align": "center"
+        },
+        "text": "✗"
+      },
+      {
+        "css": {
+          "background": "#00ff00",
+          "border-color": "black",
+          "border-radius": "8px",
+          "border-style": "solid",
+          "border-width": "2px",
+          "color": "black",
+          "font-size": "30px",
+          "line-height": "30px",
+          "text-align": "center"
+        },
+        "text": "✓"
+      }
+    ],
+    "linkedToSeat": "seat2",
+    "x": -4
+  },
+  "seat3": {
+    "type": "seat",
+    "id": "seat3",
+    "parent": "22y5",
+    "z": 48,
+    "movableInEdit": false,
+    "x": 1,
+    "y": -5,
+    "width": 131,
+    "height": 32,
+    "color": "#A1A4A0",
+    "colorEmpty": "#A1A4A0",
+    "inheritFrom": {
+      "seat1": "clickRoutine"
+    },
+    "hideWhenUnused": true
+  },
+  "bid-p3": {
+    "id": "bid-p3",
+    "parent": "22y5",
+    "z": 3383,
+    "movableInEdit": false,
+    "css": {
+      "color": "black",
+      "font-size": "46px",
+      "line-height": "100px",
+      "text-align": "center"
+    },
+    "image": "/assets/929442417_5904",
+    "linkedToSeat": "seat3",
+    "text": 0,
+    "readyMarker": "ready-p3",
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": [
+          "${PROPERTY readyMarker}"
+        ],
+        "property": "activeFace",
+        "value": 0
+      },
+      "var header = 'Enter bid amount'",
+      {
+        "func": "INPUT",
+        "header": "${header}",
+        "confirmButtonText": "OK",
+        "cancelButtonText": "Cancel",
+        "fields": [
+          {
+            "type": "number",
+            "value": "${PROPERTY text}",
+            "variable": "newValue"
+          }
+        ]
+      },
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY id}",
+        "value": "${newValue}"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "${PROPERTY readyMarker}"
+        ],
+        "property": "activeFace",
+        "value": 1
+      }
+    ],
+    "y": 186,
+    "x": 24
+  },
+  "ready-p3": {
+    "type": "basic",
+    "id": "ready-p3",
+    "parent": "22y5",
+    "y": 176,
+    "width": 30,
+    "height": 30,
+    "z": 2,
+    "movableInEdit": false,
+    "faces": [
+      {
+        "css": {
+          "background": "#ff0000",
+          "border-color": "black",
+          "border-radius": "8px",
+          "border-style": "solid",
+          "border-width": "2px",
+          "color": "white",
+          "font-size": "30px",
+          "line-height": "30px",
+          "text-align": "center"
+        },
+        "text": "✗"
+      },
+      {
+        "css": {
+          "background": "#00ff00",
+          "border-color": "black",
+          "border-radius": "8px",
+          "border-style": "solid",
+          "border-width": "2px",
+          "color": "black",
+          "font-size": "30px",
+          "line-height": "30px",
+          "text-align": "center"
+        },
+        "text": "✓"
+      }
+    ],
+    "linkedToSeat": "seat3",
+    "x": -6
+  },
+  "seat4": {
+    "type": "seat",
+    "id": "seat4",
+    "parent": "22y6",
+    "z": 48,
+    "movableInEdit": false,
+    "y": -2,
+    "width": 131,
+    "height": 32,
+    "x": -8,
+    "color": "#109E44",
+    "colorEmpty": "#109E44",
+    "inheritFrom": {
+      "seat1": "clickRoutine"
+    },
+    "hideWhenUnused": true
+  },
+  "seat5": {
+    "type": "seat",
+    "id": "seat5",
+    "parent": "22y7",
+    "z": 48,
+    "movableInEdit": false,
+    "y": -4,
+    "width": 131,
+    "height": 32,
+    "x": -5,
+    "color": "#EFFE14",
+    "colorEmpty": "#EFFE14",
+    "inheritFrom": {
+      "seat1": "clickRoutine"
+    },
+    "hideWhenUnused": true
+  },
+  "bid-p4": {
+    "id": "bid-p4",
+    "parent": "22y6",
+    "z": 3383,
+    "movableInEdit": false,
+    "css": {
+      "color": "black",
+      "font-size": "46px",
+      "line-height": "100px",
+      "text-align": "center"
+    },
+    "image": "/assets/929442417_5904",
+    "linkedToSeat": "seat4",
+    "text": 0,
+    "readyMarker": "ready-p4",
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": [
+          "${PROPERTY readyMarker}"
+        ],
+        "property": "activeFace",
+        "value": 0
+      },
+      "var header = 'Enter bid amount'",
+      {
+        "func": "INPUT",
+        "header": "${header}",
+        "confirmButtonText": "OK",
+        "cancelButtonText": "Cancel",
+        "fields": [
+          {
+            "type": "number",
+            "value": "${PROPERTY text}",
+            "variable": "newValue"
+          }
+        ]
+      },
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY id}",
+        "value": "${newValue}"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "${PROPERTY readyMarker}"
+        ],
+        "property": "activeFace",
+        "value": 1
+      }
+    ],
+    "y": 186,
+    "x": 15
+  },
+  "ready-p4": {
+    "type": "basic",
+    "id": "ready-p4",
+    "parent": "22y6",
+    "y": 177,
+    "width": 30,
+    "height": 30,
+    "z": 2,
+    "movableInEdit": false,
+    "faces": [
+      {
+        "css": {
+          "background": "#ff0000",
+          "border-color": "black",
+          "border-radius": "8px",
+          "border-style": "solid",
+          "border-width": "2px",
+          "color": "white",
+          "font-size": "30px",
+          "line-height": "30px",
+          "text-align": "center"
+        },
+        "text": "✗"
+      },
+      {
+        "css": {
+          "background": "#00ff00",
+          "border-color": "black",
+          "border-radius": "8px",
+          "border-style": "solid",
+          "border-width": "2px",
+          "color": "black",
+          "font-size": "30px",
+          "line-height": "30px",
+          "text-align": "center"
+        },
+        "text": "✓"
+      }
+    ],
+    "linkedToSeat": "seat4",
+    "x": -15
+  },
+  "bid-p5": {
+    "id": "bid-p5",
+    "parent": "22y7",
+    "z": 3383,
+    "movableInEdit": false,
+    "css": {
+      "color": "black",
+      "font-size": "46px",
+      "line-height": "100px",
+      "text-align": "center"
+    },
+    "image": "/assets/929442417_5904",
+    "linkedToSeat": "seat5",
+    "text": 0,
+    "readyMarker": "ready-p5",
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": [
+          "${PROPERTY readyMarker}"
+        ],
+        "property": "activeFace",
+        "value": 0
+      },
+      "var header = 'Enter bid amount'",
+      {
+        "func": "INPUT",
+        "header": "${header}",
+        "confirmButtonText": "OK",
+        "cancelButtonText": "Cancel",
+        "fields": [
+          {
+            "type": "number",
+            "value": "${PROPERTY text}",
+            "variable": "newValue"
+          }
+        ]
+      },
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY id}",
+        "value": "${newValue}"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "${PROPERTY readyMarker}"
+        ],
+        "property": "activeFace",
+        "value": 1
+      }
+    ],
+    "y": 182,
+    "x": 17
+  },
+  "ready-p5": {
+    "type": "basic",
+    "id": "ready-p5",
+    "parent": "22y7",
+    "y": 175,
+    "width": 30,
+    "height": 30,
+    "z": 2,
+    "movableInEdit": false,
+    "faces": [
+      {
+        "css": {
+          "background": "#ff0000",
+          "border-color": "black",
+          "border-radius": "8px",
+          "border-style": "solid",
+          "border-width": "2px",
+          "color": "white",
+          "font-size": "30px",
+          "line-height": "30px",
+          "text-align": "center"
+        },
+        "text": "✗"
+      },
+      {
+        "css": {
+          "background": "#00ff00",
+          "border-color": "black",
+          "border-radius": "8px",
+          "border-style": "solid",
+          "border-width": "2px",
+          "color": "black",
+          "font-size": "30px",
+          "line-height": "30px",
+          "text-align": "center"
+        },
+        "text": "✓"
+      }
+    ],
+    "linkedToSeat": "seat5",
+    "x": -11
+  },
+  "2b1761ea-8cd5-4e2b-a36e-8b354df38cc5_label": {
+    "id": "2b1761ea-8cd5-4e2b-a36e-8b354df38cc5_label",
+    "parent": "auction5",
+    "x": -611,
+    "y": -223,
+    "width": 300,
+    "height": 100,
+    "type": "label",
+    "twoRowBottomAlign": true,
+    "movableInEdit": false,
+    "text": "Starting cash for 3p = 80, 4p = 60, 5p = 50. If you end the game with less cash than you started with, you lose."
+  },
+  "5crl": {
+    "type": "label",
+    "id": "5crl",
+    "x": 624,
+    "y": 406,
+    "text": "Reminders:",
+    "width": 150
+  },
+  "6crl": {
+    "type": "label",
+    "id": "6crl",
+    "x": 604,
+    "y": 426,
+    "text": "When a tree is placed in a district (one of the 4 corners or central), all players in those district(s) receive bonus of 10 points for every house they own in the district(s).",
+    "width": 190,
+    "height": 150
+  },
+  "7crl": {
+    "type": "label",
+    "id": "7crl",
+    "x": 605,
+    "y": 580,
+    "width": 190,
+    "text": "When a house is placed in a district that has one or more trees, the owner of that house immediately receives 10 points for each tree",
+    "height": 125
+  },
+  "8crl": {
+    "type": "label",
+    "id": "8crl",
+    "x": 604,
+    "y": 710,
+    "width": 190,
+    "text": "If you have built a house in each of the 4 corner districts, you immediately earn 20 points",
+    "height": 95
+  },
+  "9crl": {
+    "type": "label",
+    "id": "9crl",
+    "x": 604,
+    "y": 809,
+    "width": 190,
+    "text": "If a corner district is filled and you are the only player with a house in that district, you earn 20 points",
+    "height": 90
+  },
+  "hide player scores": {
+    "type": "button",
+    "id": "hide player scores",
+    "x": 648,
+    "y": 41,
+    "width": 104,
+    "height": 41,
+    "z": 84,
+    "css": {
+      "font-size": "14px"
+    },
+    "text": "Hide scores",
+    "clickRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY text}",
+        "operand2": "Hide scores",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "hide player scores"
+            ],
+            "property": "text",
+            "value": "Show scores"
+          },
+          {
+            "func": "FOREACH",
+            "range": 5,
+            "loopRoutine": [
+              {
+                "func": "SET",
+                "collection": [
+                  "score-p${value}"
+                ],
+                "property": "onlyVisibleForSeat",
+                "value": "seat${value}"
+              }
+            ]
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "hide player scores"
+            ],
+            "property": "text",
+            "value": "Hide scores"
+          },
+          {
+            "func": "FOREACH",
+            "range": 5,
+            "loopRoutine": [
+              {
+                "func": "SET",
+                "collection": [
+                  "score-p${value}"
+                ],
+                "property": "onlyVisibleForSeat",
+                "value": null
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "score-p1": {
+    "type": "label",
+    "id": "score-p1",
+    "x": 794,
+    "y": 215,
+    "width": 140,
+    "height": 44,
+    "z": 1091,
+    "css": "font-size: 30px;",
+    "editable": true,
+    "linkedToSeat": "seat1",
+    "text": 80
+  },
+  "8aa36c03-7384-411e-a6db-c2d4cce485d4_decrementButton": {
+    "id": "8aa36c03-7384-411e-a6db-c2d4cce485d4_decrementButton",
+    "parent": "score-p1",
+    "x": 4,
+    "y": -2,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "-",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "score-p1",
+        "mode": "inc",
+        "value": -1
+      }
+    ]
+  },
+  "8aa36c03-7384-411e-a6db-c2d4cce485d4_incrementButton": {
+    "id": "8aa36c03-7384-411e-a6db-c2d4cce485d4_incrementButton",
+    "parent": "score-p1",
+    "x": 100,
+    "y": -2,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "+",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "score-p1",
+        "mode": "inc",
+        "value": 1
+      }
+    ]
+  },
+  "8aa36c03-7384-411e-a6db-c2d4cce485d4label": {
+    "id": "8aa36c03-7384-411e-a6db-c2d4cce485d4label",
+    "parent": "score-p1",
+    "movableInEdit": false,
+    "y": -28,
+    "width": 140,
+    "type": "label",
+    "text": "Player 1 Bank",
+    "linkedToSeat": "seat1"
+  },
+  "score-p2": {
+    "type": "label",
+    "id": "score-p2",
+    "x": 956,
+    "y": 215,
+    "width": 140,
+    "height": 44,
+    "z": 1002,
+    "css": "font-size: 30px;",
+    "editable": true,
+    "linkedToSeat": "seat2",
+    "text": 80
+  },
+  "aba2342e-f150-43f9-ac54-053b5a3f2c7f_decrementButton": {
+    "id": "aba2342e-f150-43f9-ac54-053b5a3f2c7f_decrementButton",
+    "parent": "score-p2",
+    "x": 4,
+    "y": -2,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "-",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "score-p2",
+        "mode": "inc",
+        "value": -1
+      }
+    ]
+  },
+  "aba2342e-f150-43f9-ac54-053b5a3f2c7f_incrementButton": {
+    "id": "aba2342e-f150-43f9-ac54-053b5a3f2c7f_incrementButton",
+    "parent": "score-p2",
+    "x": 100,
+    "y": -2,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "+",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "score-p2",
+        "mode": "inc",
+        "value": 1
+      }
+    ]
+  },
+  "aba2342e-f150-43f9-ac54-053b5a3f2c7flabel": {
+    "id": "aba2342e-f150-43f9-ac54-053b5a3f2c7flabel",
+    "parent": "score-p2",
+    "movableInEdit": false,
+    "y": -28,
+    "width": 140,
+    "type": "label",
+    "text": "Player 2 Bank",
+    "linkedToSeat": "seat2"
+  },
+  "score-p3": {
+    "type": "label",
+    "id": "score-p3",
+    "x": 1118,
+    "y": 215,
+    "width": 140,
+    "height": 44,
+    "z": 1009,
+    "css": "font-size: 30px;",
+    "editable": true,
+    "linkedToSeat": "seat3",
+    "text": 80
+  },
+  "bf144ceb-7eef-4ef8-b4aa-b307c54cf58a_decrementButton": {
+    "id": "bf144ceb-7eef-4ef8-b4aa-b307c54cf58a_decrementButton",
+    "parent": "score-p3",
+    "x": 4,
+    "y": -2,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "-",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "score-p3",
+        "mode": "inc",
+        "value": -1
+      }
+    ]
+  },
+  "bf144ceb-7eef-4ef8-b4aa-b307c54cf58a_incrementButton": {
+    "id": "bf144ceb-7eef-4ef8-b4aa-b307c54cf58a_incrementButton",
+    "parent": "score-p3",
+    "x": 100,
+    "y": -2,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "+",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "score-p3",
+        "mode": "inc",
+        "value": 1
+      }
+    ]
+  },
+  "bf144ceb-7eef-4ef8-b4aa-b307c54cf58alabel": {
+    "id": "bf144ceb-7eef-4ef8-b4aa-b307c54cf58alabel",
+    "parent": "score-p3",
+    "movableInEdit": false,
+    "y": -28,
+    "width": 140,
+    "type": "label",
+    "text": "Player 3 Bank",
+    "linkedToSeat": "seat3"
+  },
+  "score-p4": {
+    "type": "label",
+    "id": "score-p4",
+    "x": 1288,
+    "y": 214,
+    "width": 140,
+    "height": 44,
+    "z": 1015,
+    "css": "font-size: 30px;",
+    "editable": true,
+    "linkedToSeat": "seat4",
+    "text": 80
+  },
+  "56d2dcc5-77af-4b03-a60a-a8f1a8a1f1d0_decrementButton": {
+    "id": "56d2dcc5-77af-4b03-a60a-a8f1a8a1f1d0_decrementButton",
+    "parent": "score-p4",
+    "x": 4,
+    "y": -2,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "-",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "score-p4",
+        "mode": "inc",
+        "value": -1
+      }
+    ]
+  },
+  "56d2dcc5-77af-4b03-a60a-a8f1a8a1f1d0_incrementButton": {
+    "id": "56d2dcc5-77af-4b03-a60a-a8f1a8a1f1d0_incrementButton",
+    "parent": "score-p4",
+    "x": 100,
+    "y": -2,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "+",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "score-p4",
+        "mode": "inc",
+        "value": 1
+      }
+    ]
+  },
+  "56d2dcc5-77af-4b03-a60a-a8f1a8a1f1d0label": {
+    "id": "56d2dcc5-77af-4b03-a60a-a8f1a8a1f1d0label",
+    "parent": "score-p4",
+    "movableInEdit": false,
+    "y": -28,
+    "width": 140,
+    "type": "label",
+    "text": "Player 4 Bank",
+    "linkedToSeat": "seat4"
+  },
+  "score-p5": {
+    "type": "label",
+    "id": "score-p5",
+    "x": 1455,
+    "y": 214,
+    "width": 140,
+    "height": 44,
+    "z": 1018,
+    "css": "font-size: 30px;",
+    "editable": true,
+    "linkedToSeat": "seat5",
+    "text": 80
+  },
+  "d1c1eb3a-ec88-40c0-8636-39f7ea59aade_decrementButton": {
+    "id": "d1c1eb3a-ec88-40c0-8636-39f7ea59aade_decrementButton",
+    "parent": "score-p5",
+    "x": 4,
+    "y": -2,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "-",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "score-p5",
+        "mode": "inc",
+        "value": -1
+      }
+    ]
+  },
+  "d1c1eb3a-ec88-40c0-8636-39f7ea59aade_incrementButton": {
+    "id": "d1c1eb3a-ec88-40c0-8636-39f7ea59aade_incrementButton",
+    "parent": "score-p5",
+    "x": 100,
+    "y": -2,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "+",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "score-p5",
+        "mode": "inc",
+        "value": 1
+      }
+    ]
+  },
+  "d1c1eb3a-ec88-40c0-8636-39f7ea59aadelabel": {
+    "id": "d1c1eb3a-ec88-40c0-8636-39f7ea59aadelabel",
+    "parent": "score-p5",
+    "movableInEdit": false,
+    "y": -28,
+    "width": 140,
+    "type": "label",
+    "text": "Player 5 Bank",
+    "linkedToSeat": "seat5"
+  },
+  "wvbm": {
+    "type": "deck",
+    "id": "wvbm",
+    "cardTypes": {
+      "A1 of plain-circle": {
+        "suit": "/i/game-icons.net/delapouite/plain-circle.svg",
+        "suitColor": "#FFDE5E",
+        "rank": "A1",
+        "rankImage": "/i/game-icons.net/delapouite/plain-circle.svg"
+      },
+      " A2 of plain-circle": {
+        "suit": "/i/game-icons.net/delapouite/plain-circle.svg",
+        "suitColor": "#FFDE5E",
+        "rank": " A2",
+        "rankImage": "/i/game-icons.net/delapouite/plain-circle.svg"
+      },
+      " A3 of plain-circle": {
+        "suit": "/i/game-icons.net/delapouite/plain-circle.svg",
+        "suitColor": "#69fc0f",
+        "rank": " A3",
+        "rankImage": "/i/game-icons.net/delapouite/plain-circle.svg"
+      },
+      " A4 of plain-circle": {
+        "suit": "/i/game-icons.net/delapouite/plain-circle.svg",
+        "suitColor": "#69fc0f",
+        "rank": " A4",
+        "rankImage": "/i/game-icons.net/delapouite/plain-circle.svg"
+      },
+      " B1 of plain-circle": {
+        "suit": "/i/game-icons.net/delapouite/plain-circle.svg",
+        "suitColor": "#FFDE5E",
+        "rank": " B1",
+        "rankImage": "/i/game-icons.net/delapouite/plain-circle.svg"
+      },
+      " B2 of plain-circle": {
+        "suit": "/i/game-icons.net/delapouite/plain-circle.svg",
+        "suitColor": "#FFDE5E",
+        "rank": " B2",
+        "rankImage": "/i/game-icons.net/delapouite/plain-circle.svg"
+      },
+      " B3 of plain-circle": {
+        "suit": "/i/game-icons.net/delapouite/plain-circle.svg",
+        "suitColor": "#69fc0f",
+        "rank": " B3",
+        "rankImage": "/i/game-icons.net/delapouite/plain-circle.svg"
+      },
+      " B4 of plain-circle": {
+        "suit": "/i/game-icons.net/delapouite/plain-circle.svg",
+        "suitColor": "#69fc0f",
+        "rank": " B4",
+        "rankImage": "/i/game-icons.net/delapouite/plain-circle.svg"
+      },
+      " C1 of plain-circle": {
+        "suit": "/i/game-icons.net/delapouite/plain-circle.svg",
+        "suitColor": "#fc620f",
+        "rank": " C1",
+        "rankImage": "/i/game-icons.net/delapouite/plain-circle.svg"
+      },
+      " C2 of plain-circle": {
+        "suit": "/i/game-icons.net/delapouite/plain-circle.svg",
+        "suitColor": "#fc620f",
+        "rank": " C2",
+        "rankImage": "/i/game-icons.net/delapouite/plain-circle.svg"
+      },
+      " C3 of plain-circle": {
+        "suit": "/i/game-icons.net/delapouite/plain-circle.svg",
+        "suitColor": "#1390E2",
+        "rank": " C3",
+        "rankImage": "/i/game-icons.net/delapouite/plain-circle.svg"
+      },
+      " C4 of plain-circle": {
+        "suit": "/i/game-icons.net/delapouite/plain-circle.svg",
+        "suitColor": "#1390E2",
+        "rank": " C4",
+        "rankImage": "/i/game-icons.net/delapouite/plain-circle.svg"
+      },
+      " D1 of plain-circle": {
+        "suit": "/i/game-icons.net/delapouite/plain-circle.svg",
+        "suitColor": "#fc620f",
+        "rank": " D1",
+        "rankImage": "/i/game-icons.net/delapouite/plain-circle.svg"
+      },
+      " D2 of plain-circle": {
+        "suit": "/i/game-icons.net/delapouite/plain-circle.svg",
+        "suitColor": "#fc620f",
+        "rank": " D2",
+        "rankImage": "/i/game-icons.net/delapouite/plain-circle.svg"
+      },
+      " D3 of plain-circle": {
+        "suit": "/i/game-icons.net/delapouite/plain-circle.svg",
+        "suitColor": "#1390E2",
+        "rank": " D3",
+        "rankImage": "/i/game-icons.net/delapouite/plain-circle.svg"
+      },
+      " D4 of plain-circle": {
+        "suit": "/i/game-icons.net/delapouite/plain-circle.svg",
+        "suitColor": "#1390E2",
+        "rank": " D4",
+        "rankImage": "/i/game-icons.net/delapouite/plain-circle.svg"
+      }
+    },
+    "cardDefaults": {
+      "width": 100,
+      "height": 100,
+      "clickRoutine": []
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "width": 100,
+            "height": 100,
+            "color": "GRAY"
+          }
+        ],
+        "radius": 100
+      },
+      {
+        "radius": 16,
+        "objects": [
+          {
+            "type": "image",
+            "width": 100,
+            "height": 100,
+            "color": "gray",
+            "svgReplaces": {
+              "#000": "suitColor"
+            },
+            "dynamicProperties": {
+              "value": "suit"
+            }
+          },
+          {
+            "type": "text",
+            "y": 24,
+            "fontSize": 40,
+            "textAlign": "center",
+            "color": "white",
+            "width": 90,
+            "dynamicProperties": {
+              "value": "rank"
+            }
+          }
+        ]
+      }
+    ],
+    "x": 360,
+    "y": 10,
+    "movable": false
+  },
+  "wvbm  A2 of plain-circle": {
+    "type": "card",
+    "id": "wvbm  A2 of plain-circle",
+    "deck": "wvbm",
+    "cardType": " A2 of plain-circle",
+    "z": 2995,
+    "x": 4,
+    "y": 4,
+    "hoverParent": "thdl1",
+    "parent": "a2",
+    "activeFace": 1,
+    "movable": false
+  },
+  "wvbm  A3 of plain-circle": {
+    "type": "card",
+    "id": "wvbm  A3 of plain-circle",
+    "deck": "wvbm",
+    "cardType": " A3 of plain-circle",
+    "z": 2965,
+    "hoverParent": "thdl2",
+    "activeFace": 1,
+    "parent": "a3",
+    "x": 4,
+    "y": 4,
+    "movable": false
+  },
+  "wvbm  A4 of plain-circle": {
+    "type": "card",
+    "id": "wvbm  A4 of plain-circle",
+    "deck": "wvbm",
+    "cardType": " A4 of plain-circle",
+    "z": 2978,
+    "activeFace": 1,
+    "x": 4,
+    "y": 4,
+    "parent": "a4",
+    "movable": false
+  },
+  "wvbm  B1 of plain-circle": {
+    "type": "card",
+    "id": "wvbm  B1 of plain-circle",
+    "deck": "wvbm",
+    "cardType": " B1 of plain-circle",
+    "x": 4,
+    "y": 4,
+    "z": 2832,
+    "parent": "b1",
+    "activeFace": 1,
+    "movable": false
+  },
+  "wvbm  B4 of plain-circle": {
+    "type": "card",
+    "id": "wvbm  B4 of plain-circle",
+    "deck": "wvbm",
+    "cardType": " B4 of plain-circle",
+    "z": 2838,
+    "parent": "b4",
+    "x": 4,
+    "y": 4,
+    "movable": false,
+    "activeFace": 1
+  },
+  "wvbm  C1 of plain-circle": {
+    "type": "card",
+    "id": "wvbm  C1 of plain-circle",
+    "deck": "wvbm",
+    "cardType": " C1 of plain-circle",
+    "x": 4,
+    "y": 4,
+    "z": 2886,
+    "hoverParent": "thdl5",
+    "parent": "c1",
+    "activeFace": 1,
+    "movable": false
+  },
+  "wvbm  C4 of plain-circle": {
+    "type": "card",
+    "id": "wvbm  C4 of plain-circle",
+    "deck": "wvbm",
+    "cardType": " C4 of plain-circle",
+    "x": 4,
+    "y": 4,
+    "z": 2902,
+    "hoverParent": "thdl14",
+    "parent": "c4",
+    "activeFace": 1,
+    "movable": false
+  },
+  "wvbm  D1 of plain-circle": {
+    "type": "card",
+    "id": "wvbm  D1 of plain-circle",
+    "deck": "wvbm",
+    "cardType": " D1 of plain-circle",
+    "x": 4,
+    "y": 4,
+    "z": 2892,
+    "hoverParent": "thdl6",
+    "parent": "d1",
+    "activeFace": 1,
+    "movable": false
+  },
+  "wvbm  D2 of plain-circle": {
+    "type": "card",
+    "id": "wvbm  D2 of plain-circle",
+    "deck": "wvbm",
+    "cardType": " D2 of plain-circle",
+    "x": 4,
+    "y": 4,
+    "z": 2894,
+    "hoverParent": "thdl9",
+    "parent": "d2",
+    "activeFace": 1,
+    "movable": false
+  },
+  "wvbm  D3 of plain-circle": {
+    "type": "card",
+    "id": "wvbm  D3 of plain-circle",
+    "deck": "wvbm",
+    "cardType": " D3 of plain-circle",
+    "x": 4,
+    "y": 4,
+    "z": 2898,
+    "hoverParent": "thdl12",
+    "parent": "d3",
+    "activeFace": 1,
+    "movable": false
+  },
+  "wvbm  D4 of plain-circle": {
+    "type": "card",
+    "id": "wvbm  D4 of plain-circle",
+    "deck": "wvbm",
+    "cardType": " D4 of plain-circle",
+    "x": 4,
+    "y": 4,
+    "z": 2900,
+    "hoverParent": "thdl15",
+    "parent": "d4",
+    "activeFace": 1,
+    "movable": false
+  },
+  "wvbm A1 of plain-circle": {
+    "type": "card",
+    "id": "wvbm A1 of plain-circle",
+    "deck": "wvbm",
+    "cardType": "A1 of plain-circle",
+    "z": 2985,
+    "hoverParent": "thdl",
+    "parent": "a1",
+    "x": 4,
+    "y": 4,
+    "movable": false,
+    "activeFace": 1
+  },
+  "u3qh": {
+    "type": "deck",
+    "id": "u3qh",
+    "cardTypes": {
+      "B2 of flower-emblem": {
+        "suit": "/i/game-icons.net/skoll/diamonds.svg",
+        "suitColor": "#FFDE5E",
+        "rank": "B2",
+        "rankImage": "/i/game-icons.net/skoll/diamonds.svg"
+      },
+      " B3 of flower-emblem": {
+        "suit": "/i/game-icons.net/skoll/diamonds.svg",
+        "suitColor": "#69fc0f",
+        "rank": " B3",
+        "rankImage": "/i/game-icons.net/skoll/diamonds.svg"
+      },
+      " C2 of flower-emblem": {
+        "suit": "/i/game-icons.net/skoll/diamonds.svg",
+        "suitColor": "#fc620f",
+        "rank": " C2",
+        "rankImage": "/i/game-icons.net/skoll/diamonds.svg"
+      },
+      " C3 of flower-emblem": {
+        "suit": "/i/game-icons.net/skoll/diamonds.svg",
+        "suitColor": "#1390E2",
+        "rank": " C3",
+        "rankImage": "/i/game-icons.net/skoll/diamonds.svg"
+      }
+    },
+    "cardDefaults": {
+      "width": 100,
+      "height": 100,
+      "clickRoutine": []
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "width": 100,
+            "height": 100,
+            "color": "gray"
+          }
+        ],
+        "radius": 100
+      },
+      {
+        "radius": 16,
+        "objects": [
+          {
+            "type": "image",
+            "width": 100,
+            "height": 100,
+            "color": "gray",
+            "svgReplaces": {
+              "#000": "suitColor"
+            },
+            "dynamicProperties": {
+              "value": "suit"
+            }
+          },
+          {
+            "type": "text",
+            "y": 24,
+            "fontSize": 50,
+            "textAlign": "center",
+            "color": "black",
+            "width": 100,
+            "dynamicProperties": {
+              "value": "rank"
+            }
+          }
+        ]
+      }
+    ],
+    "x": 447,
+    "y": 10,
+    "movable": false
+  },
+  "u3qh B2 of flower-emblem": {
+    "type": "card",
+    "id": "u3qh B2 of flower-emblem",
+    "deck": "u3qh",
+    "cardType": "B2 of flower-emblem",
+    "z": 2967,
+    "x": 4,
+    "y": 4,
+    "hoverParent": "thdl7",
+    "activeFace": 1,
+    "parent": "b2",
+    "movable": false
+  },
+  "u3qh  B3 of flower-emblem": {
+    "type": "card",
+    "id": "u3qh  B3 of flower-emblem",
+    "deck": "u3qh",
+    "cardType": " B3 of flower-emblem",
+    "z": 2942,
+    "x": 4,
+    "y": 4,
+    "parent": "b3",
+    "movable": false,
+    "activeFace": 1
+  },
+  "u3qh  C2 of flower-emblem": {
+    "type": "card",
+    "id": "u3qh  C2 of flower-emblem",
+    "deck": "u3qh",
+    "cardType": " C2 of flower-emblem",
+    "activeFace": 1,
+    "z": 2953,
+    "x": 4,
+    "y": 4,
+    "parent": "c2",
+    "movable": false
+  },
+  "u3qh  C3 of flower-emblem": {
+    "type": "card",
+    "id": "u3qh  C3 of flower-emblem",
+    "deck": "u3qh",
+    "cardType": " C3 of flower-emblem",
+    "activeFace": 1,
+    "z": 2958,
+    "x": 4,
+    "y": 4,
+    "parent": "c3",
+    "movable": false
+  },
+  "jnpu A1 of diamonds": {
+    "type": "card",
+    "id": "jnpu A1 of diamonds",
+    "deck": "auctionDeck",
+    "cardType": "A1 of diamonds",
+    "z": 7043,
+    "parent": "gpjv"
+  },
+  "jnpu  A2 of diamonds": {
+    "type": "card",
+    "id": "jnpu  A2 of diamonds",
+    "deck": "auctionDeck",
+    "cardType": " A2 of diamonds",
+    "z": 7020,
+    "parent": "gpjv"
+  },
+  "jnpu  A3 of diamonds": {
+    "type": "card",
+    "id": "jnpu  A3 of diamonds",
+    "deck": "auctionDeck",
+    "cardType": " A3 of diamonds",
+    "z": 7046,
+    "parent": "gpjv",
+    "x": 4
+  },
+  "jnpu  A4 of diamonds": {
+    "type": "card",
+    "id": "jnpu  A4 of diamonds",
+    "deck": "auctionDeck",
+    "cardType": " A4 of diamonds",
+    "z": 7026,
+    "parent": "gpjv"
+  },
+  "jnpu  B1 of diamonds": {
+    "type": "card",
+    "id": "jnpu  B1 of diamonds",
+    "deck": "auctionDeck",
+    "cardType": " B1 of diamonds",
+    "z": 7021,
+    "parent": "gpjv"
+  },
+  "jnpu  B2 of diamonds": {
+    "type": "card",
+    "id": "jnpu  B2 of diamonds",
+    "deck": "auctionDeck",
+    "cardType": " B2 of diamonds",
+    "z": 7022,
+    "parent": "gpjv"
+  },
+  "jnpu  B3 of diamonds": {
+    "type": "card",
+    "id": "jnpu  B3 of diamonds",
+    "deck": "auctionDeck",
+    "cardType": " B3 of diamonds",
+    "z": 7030,
+    "parent": "gpjv"
+  },
+  "jnpu  B4 of diamonds": {
+    "type": "card",
+    "id": "jnpu  B4 of diamonds",
+    "deck": "auctionDeck",
+    "cardType": " B4 of diamonds",
+    "z": 7027,
+    "parent": "gpjv"
+  },
+  "jnpu  C1 of diamonds": {
+    "type": "card",
+    "id": "jnpu  C1 of diamonds",
+    "deck": "auctionDeck",
+    "cardType": " C1 of diamonds",
+    "z": 7019,
+    "parent": "gpjv"
+  },
+  "jnpu  C2 of diamonds": {
+    "type": "card",
+    "id": "jnpu  C2 of diamonds",
+    "deck": "auctionDeck",
+    "cardType": " C2 of diamonds",
+    "z": 7024,
+    "parent": "gpjv"
+  },
+  "jnpu  C3 of diamonds": {
+    "type": "card",
+    "id": "jnpu  C3 of diamonds",
+    "deck": "auctionDeck",
+    "cardType": " C3 of diamonds",
+    "z": 7025,
+    "parent": "gpjv"
+  },
+  "jnpu  C4 of diamonds": {
+    "type": "card",
+    "id": "jnpu  C4 of diamonds",
+    "deck": "auctionDeck",
+    "cardType": " C4 of diamonds",
+    "z": 7037,
+    "parent": "gpjv"
+  },
+  "jnpu  D1 of diamonds": {
+    "type": "card",
+    "id": "jnpu  D1 of diamonds",
+    "deck": "auctionDeck",
+    "cardType": " D1 of diamonds",
+    "z": 7028,
+    "parent": "gpjv"
+  },
+  "jnpu  D2 of diamonds": {
+    "type": "card",
+    "id": "jnpu  D2 of diamonds",
+    "deck": "auctionDeck",
+    "cardType": " D2 of diamonds",
+    "z": 7040,
+    "parent": "gpjv"
+  },
+  "jnpu  D3 of diamonds": {
+    "type": "card",
+    "id": "jnpu  D3 of diamonds",
+    "deck": "auctionDeck",
+    "cardType": " D3 of diamonds",
+    "z": 7029,
+    "parent": "gpjv"
+  },
+  "jnpu  D4 of diamonds": {
+    "type": "card",
+    "id": "jnpu  D4 of diamonds",
+    "deck": "auctionDeck",
+    "cardType": " D4 of diamonds",
+    "z": 7023,
+    "parent": "gpjv"
+  },
+  "Trees": {
+    "id": "Trees",
+    "x": 792,
+    "y": 4,
+    "width": 750,
+    "z": 440,
+    "css": {
+      "font-size": "20px",
+      "border": "1px solid black"
+    },
+    "html": "<table style='width: 100%; text-align:left'><tr><th>Trees</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9+</th></tr><tr><td>1st Place</td><td>200</td><td>90</td><td>80</td><td>60</td><td>40</td><td>30</td><td>20</td><td>10</td><td>0</td></tr><tr><td>2nd place</td><td></td><td>90</td><td>40</td><td>30</td><td>20</td><td>15</td><td>10</td><td>5</td><td>0</td></tr></tr><tr></table>"
+  },
+  "auction1": {
+    "type": "holder",
+    "id": "auction1",
+    "x": 30.94,
+    "y": 150.88,
+    "width": 108,
+    "height": 108,
+    "z": 1202,
+    "inheritChildZ": true,
+    "onEnter": {
+      "activeFace": 1
+    }
+  },
+  "auction2": {
+    "type": "holder",
+    "id": "auction2",
+    "x": 180.21,
+    "y": 150.88,
+    "width": 108,
+    "height": 108,
+    "z": 1203,
+    "inheritChildZ": true,
+    "onEnter": {
+      "activeFace": 1
+    }
+  },
+  "auction3": {
+    "type": "holder",
+    "id": "auction3",
+    "x": 329.67,
+    "y": 151.02,
+    "width": 108,
+    "height": 108,
+    "z": 1204,
+    "inheritChildZ": true,
+    "onEnter": {
+      "activeFace": 1
+    }
+  },
+  "auction4": {
+    "type": "holder",
+    "id": "auction4",
+    "x": 479.1,
+    "y": 149.51,
+    "width": 108,
+    "height": 108,
+    "z": 1205,
+    "inheritChildZ": true,
+    "onEnter": {
+      "activeFace": 1
+    }
+  },
+  "auction5": {
+    "type": "holder",
+    "id": "auction5",
+    "x": 641.35,
+    "y": 203.33,
+    "width": 108,
+    "height": 108,
+    "z": 1210,
+    "inheritChildZ": true,
+    "onEnter": {
+      "activeFace": 0
+    }
+  },
+  "a1": {
+    "type": "holder",
+    "id": "a1",
+    "x": 86,
+    "y": 342,
+    "width": 108,
+    "height": 108,
+    "preventPiles": true,
+    "moveable": false
+  },
+  "a2": {
+    "type": "holder",
+    "id": "a2",
+    "x": 194,
+    "y": 342,
+    "width": 108,
+    "height": 108,
+    "preventPiles": true,
+    "moveable": false
+  },
+  "a3": {
+    "type": "holder",
+    "id": "a3",
+    "x": 302,
+    "y": 342,
+    "width": 108,
+    "height": 108,
+    "preventPiles": true,
+    "moveable": false
+  },
+  "a4": {
+    "type": "holder",
+    "id": "a4",
+    "x": 410,
+    "y": 342,
+    "width": 108,
+    "height": 108,
+    "preventPiles": true,
+    "moveable": false
+  },
+  "b1": {
+    "type": "holder",
+    "id": "b1",
+    "x": 86,
+    "y": 450,
+    "width": 108,
+    "height": 108,
+    "preventPiles": true,
+    "moveable": false
+  },
+  "b2": {
+    "type": "holder",
+    "id": "b2",
+    "x": 194,
+    "y": 450,
+    "width": 108,
+    "height": 108,
+    "preventPiles": true,
+    "moveable": false
+  },
+  "b3": {
+    "type": "holder",
+    "id": "b3",
+    "x": 302,
+    "y": 450,
+    "width": 108,
+    "height": 108,
+    "preventPiles": true,
+    "moveable": false
+  },
+  "b4": {
+    "type": "holder",
+    "id": "b4",
+    "x": 410,
+    "y": 450,
+    "width": 108,
+    "height": 108,
+    "preventPiles": true,
+    "moveable": false
+  },
+  "c1": {
+    "type": "holder",
+    "id": "c1",
+    "x": 86,
+    "y": 558,
+    "width": 108,
+    "height": 108,
+    "preventPiles": true,
+    "moveable": false
+  },
+  "c2": {
+    "type": "holder",
+    "id": "c2",
+    "x": 194,
+    "y": 558,
+    "width": 108,
+    "height": 108,
+    "preventPiles": true,
+    "moveable": false
+  },
+  "c3": {
+    "type": "holder",
+    "id": "c3",
+    "x": 302,
+    "y": 558,
+    "width": 108,
+    "height": 108,
+    "preventPiles": true,
+    "moveable": false
+  },
+  "c4": {
+    "type": "holder",
+    "id": "c4",
+    "x": 410,
+    "y": 558,
+    "width": 108,
+    "height": 108,
+    "preventPiles": true,
+    "moveable": false
+  },
+  "d1": {
+    "type": "holder",
+    "id": "d1",
+    "x": 86,
+    "y": 666,
+    "width": 108,
+    "height": 108,
+    "preventPiles": true,
+    "moveable": false
+  },
+  "d2": {
+    "type": "holder",
+    "id": "d2",
+    "x": 194,
+    "y": 666,
+    "width": 108,
+    "height": 108,
+    "preventPiles": true,
+    "moveable": false
+  },
+  "d3": {
+    "type": "holder",
+    "id": "d3",
+    "x": 302,
+    "y": 666,
+    "width": 108,
+    "height": 108,
+    "preventPiles": true,
+    "moveable": false
+  },
+  "d4": {
+    "type": "holder",
+    "id": "d4",
+    "x": 410,
+    "y": 666,
+    "width": 108,
+    "height": 108,
+    "preventPiles": true,
+    "moveable": false
+  },
+  "houseHolder": {
+    "type": "holder",
+    "id": "houseHolder",
+    "x": 976,
+    "y": 453,
+    "height": 108,
+    "z": 993,
+    "enterRoutine": [
+      {
+        "func": "GET",
+        "property": "id",
+        "collection": "child"
+      },
+      {
+        "func": "SELECT",
+        "property": "type",
+        "relation": "!=",
+        "value": "deck"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "parent",
+        "value": "${thisID}"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "id",
+        "relation": "!=",
+        "value": "${id}"
+      },
+      {
+        "func": "DELETE"
+      },
+      {
+        "func": "SET",
+        "collection": "child",
+        "property": "pColor",
+        "value": "#ffffff"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "SELECT",
+        "property": "type",
+        "relation": "!=",
+        "value": "deck"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "parent",
+        "value": "${thisID}"
+      },
+      {
+        "func": "COUNT"
+      },
+      {
+        "func": "IF",
+        "operand1": 0,
+        "relation": "==",
+        "operand2": "${COUNT}",
+        "thenRoutine": [
+          {
+            "func": "CLONE",
+            "source": "child"
+          },
+          {
+            "func": "SET",
+            "property": "parent",
+            "value": "${thisID}"
+          },
+          {
+            "func": "MOVE",
+            "from": "${thisID}",
+            "to": "${thisID}"
+          },
+          {
+            "func": "GET",
+            "collection": [
+              "${seatID}"
+            ],
+            "property": "color"
+          },
+          {
+            "func": "SET",
+            "collection": "child",
+            "property": "pColor",
+            "value": "${color}"
+          }
+        ]
+      }
+    ],
+    "dropTarget": {
+      "deck": "houseDeck"
+    },
+    "width": 108
+  },
+  "houseDeck": {
+    "type": "deck",
+    "id": "houseDeck",
+    "parent": "houseHolder",
+    "z": 984,
+    "cardDefaults": {
+      "width": 100,
+      "height": 100
+    },
+    "cardTypes": {
+      "house": {
+        "image": "/i/game-icons.net/delapouite/house.svg"
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "black",
+            "width": 100,
+            "height": 100,
+            "dynamicProperties": {
+              "value": "image"
+            },
+            "svgReplaces": {
+              "#000": "pColor"
+            }
+          }
+        ],
+        "border": 1,
+        "radius": 8
+      }
+    ]
+  },
+  "9vk5": {
+    "deck": "houseDeck",
+    "type": "card",
+    "cardType": "house",
+    "z": 3257,
+    "x": 4,
+    "y": 4,
+    "clonedFrom": "a13m",
+    "id": "9vk5",
+    "pColor": "#ffffff",
+    "parent": "houseHolder"
+  },
+  "treeHolder": {
+    "type": "holder",
+    "id": "treeHolder",
+    "x": 1298,
+    "y": 453,
+    "width": 108,
+    "height": 108,
+    "z": 993,
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": {
+      "houseHolder": "*"
+    },
+    "dropTarget": {
+      "deck": "treeDeck"
+    }
+  },
+  "treeDeck": {
+    "type": "deck",
+    "id": "treeDeck",
+    "parent": "treeHolder",
+    "z": 984,
+    "cardDefaults": {
+      "width": 100,
+      "height": 100
+    },
+    "cardTypes": {
+      "tree": {
+        "image": "/i/game-icons.net/lorc/beech.svg"
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "black",
+            "width": 100,
+            "height": 100,
+            "dynamicProperties": {
+              "value": "image"
+            },
+            "svgReplaces": {
+              "#000": "pColor"
+            }
+          }
+        ],
+        "border": 1,
+        "radius": 8
+      }
+    ]
+  },
+  "c6bh": {
+    "deck": "treeDeck",
+    "type": "card",
+    "cardType": "tree",
+    "id": "c6bh",
+    "z": 3263,
+    "x": 4,
+    "y": 4,
+    "pColor": "#ffffff",
+    "parent": "treeHolder"
+  },
+  "auctionDeck": {
+    "type": "deck",
+    "id": "auctionDeck",
+    "x": 534,
+    "y": 10,
+    "cardDefaults": {
+      "width": 100,
+      "height": 100
+    },
+    "cardTypes": {
+      "A1 of diamonds": {
+        "suitColor": "#FFDE5E",
+        "rank": "A1"
+      },
+      " A2 of diamonds": {
+        "suitColor": "#FFDE5E",
+        "rank": "A2"
+      },
+      " A3 of diamonds": {
+        "suitColor": "#69fc0f",
+        "rank": "A3"
+      },
+      " A4 of diamonds": {
+        "suitColor": "#69fc0f",
+        "rank": "A4"
+      },
+      " B1 of diamonds": {
+        "suitColor": "#FFDE5E",
+        "rank": "B1"
+      },
+      " B2 of diamonds": {
+        "suit": "/i/game-icons.net/skoll/diamonds.svg",
+        "suitColor": "#FFDE5E",
+        "rank": "B2",
+        "rankImage": "/i/game-icons.net/skoll/diamonds.svg"
+      },
+      " B3 of diamonds": {
+        "suit": "/i/game-icons.net/skoll/diamonds.svg",
+        "suitColor": "#69fc0f",
+        "rank": "B3",
+        "rankImage": "/i/game-icons.net/skoll/diamonds.svg"
+      },
+      " B4 of diamonds": {
+        "suitColor": "#69fc0f",
+        "rank": "B4"
+      },
+      " C1 of diamonds": {
+        "suitColor": "#fc620f",
+        "rank": "C1"
+      },
+      " C2 of diamonds": {
+        "suit": "/i/game-icons.net/skoll/diamonds.svg",
+        "suitColor": "#fc620f",
+        "rank": "C2",
+        "rankImage": "/i/game-icons.net/skoll/diamonds.svg"
+      },
+      " C3 of diamonds": {
+        "suit": "/i/game-icons.net/skoll/diamonds.svg",
+        "suitColor": "#1390E2",
+        "rank": "C3",
+        "rankImage": "/i/game-icons.net/skoll/diamonds.svg"
+      },
+      " C4 of diamonds": {
+        "suitColor": "#1390E2",
+        "rank": "C4"
+      },
+      " D1 of diamonds": {
+        "suitColor": "#fc620f",
+        "rank": "D1"
+      },
+      " D2 of diamonds": {
+        "suitColor": "#fc620f",
+        "rank": "D2"
+      },
+      " D3 of diamonds": {
+        "suitColor": "#1390E2",
+        "rank": "D3"
+      },
+      " D4 of diamonds": {
+        "suitColor": "#1390E2",
+        "rank": "D4"
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "width": 100,
+            "height": 100,
+            "color": "GRAY"
+          }
+        ],
+        "radius": 16
+      },
+      {
+        "radius": 16,
+        "objects": [
+          {
+            "type": "image",
+            "width": 100,
+            "height": 100,
+            "dynamicProperties": {
+              "color": "suitColor"
+            }
+          },
+          {
+            "type": "image",
+            "x": 10,
+            "y": 10,
+            "width": 83,
+            "height": 83,
+            "color": "transparent",
+            "svgReplaces": {
+              "#000": "white"
+            },
+            "dynamicProperties": {
+              "value": "suit"
+            }
+          },
+          {
+            "type": "text",
+            "y": 10,
+            "fontSize": 60,
+            "textAlign": "center",
+            "color": "white",
+            "width": 90,
+            "dynamicProperties": {
+              "value": "rank"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "gpjv": {
+    "type": "pile",
+    "width": 100,
+    "height": 100,
+    "id": "gpjv",
+    "z": 7050,
+    "parent": "auction5"
+  }
+}
