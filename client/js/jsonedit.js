@@ -345,7 +345,7 @@ const jeCommands = [
         for(const object of face.objects) {
           for(const property in object.dynamicProperties || {})
             cardType[object.dynamicProperties[property]] = '';
-          ((object.css || '').match(/--[a-zA-Z]+/g) || []).forEach(m=>cssVariables[`${m}: black`]=true);
+          (JSON.stringify(object.css || '').match(/--[a-zA-Z]+/g) || []).forEach(m=>cssVariables[`${m}: black`]=true);
         }
       }
       const css = Object.keys(cssVariables).join('; ');
