@@ -465,7 +465,8 @@ export class Widget extends StateManaged {
         audioSource: this.get('clickSound'),
         maxVolume: 1.0,
         length: null,
-        players: []
+        players: [],
+        count: 1
       });
     }
 
@@ -1000,13 +1001,15 @@ export class Widget extends StateManaged {
       }
 
       if(a.func == 'AUDIO') {
-        setDefaults(a, { source: '', maxVolume: 1.0, length: null, player: null });
+        setDefaults(a, { source: '', maxVolume: 1.0, length: null, player: null, silence: false, count: 1 });
         const validPlayers = a.player ? asArray(a.player) : [];
         toServer('audio', {
           audioSource: a.source,
           maxVolume: a.maxVolume,
           length: a.length,
-          players: validPlayers
+          players: validPlayers,
+          silence: a.silence,
+          count: a.count
         });
       }
 

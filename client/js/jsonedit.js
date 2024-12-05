@@ -345,7 +345,7 @@ const jeCommands = [
         for(const object of face.objects) {
           for(const property in object.dynamicProperties || {})
             cardType[object.dynamicProperties[property]] = '';
-          ((object.css || '').match(/--[a-zA-Z]+/g) || []).forEach(m=>cssVariables[`${m}: black`]=true);
+          (JSON.stringify(object.css || '').match(/--[a-zA-Z]+/g) || []).forEach(m=>cssVariables[`${m}: black`]=true);
         }
       }
       const css = Object.keys(cssVariables).join('; ');
@@ -1065,7 +1065,7 @@ function jeAddCommands() {
   widgetTypes.push(jeAddWidgetPropertyCommands(new Spinner(), widgetBase));
   widgetTypes.push(jeAddWidgetPropertyCommands(new Timer(), widgetBase));
 
-  jeAddRoutineOperationCommands('AUDIO', { source: '', maxVolume: 1.0, length: null, player: null });
+  jeAddRoutineOperationCommands('AUDIO', { source: '', maxVolume: 1.0, length: null, player: null, silence: false, count: 1 });
   jeAddRoutineOperationCommands('CALL', { widget: 'id', routine: 'clickRoutine', return: true, arguments: {}, variable: 'result' });
   jeAddRoutineOperationCommands('CANVAS', { canvas: null, mode: 'reset', x: 0, y: 0, value: 1 ,color:'#1F5CA6' });
   jeAddRoutineOperationCommands('CLICK', { collection: 'DEFAULT', count: 1 , mode:'respect' });
@@ -1581,8 +1581,8 @@ async function jeApplyChangesMulti() {
 
 function jeApplyDelta(delta) {
   if(jeMode == 'widget') {
-    if(delta.s[jeStateNow.id] && delta.s[jeStateNow.id].type !== undefined) {
-      const w = widgets.get(jeStateNow.id);
+    if(delta.s[jeWidget.id] && delta.s[jeWidget.id].type !== undefined) {
+      const w = widgets.get(jeWidget.id);
       jePlainWidget = new w.constructor();
       jeColorize();
     }
@@ -1600,6 +1600,23 @@ function jeApplyDelta(delta) {
           jeSelectWidget(widgets.get(jeStateNow.id), false, true);
         }
       }
+    }
+
+    // if the JSON in the editor is invalid, and the delta contains the widget, try to update the invalid JSON as much as possible
+    if(!jeStateNow && jeJSONerror && delta.s[jeWidget.id]) {
+      let text = $('#jeText').textContent;
+      for(const [ key, value ] of Object.entries(delta.s[jeWidget.id])) {
+        if(value === null) {
+          if(!text.match(new RegExp(`^  "${key}": ${JSON.stringify(jeWidget.getDefaultValue(key))},?$`, 'm')))
+            text = text.replace(new RegExp(`,\n?\n  "${key}": ("[^"]*"|true|false|\\d+(\\.\\d+)?)(?=,?$)`, 'gm'), '');
+        } else if(!text.match(new RegExp(`^  "${key}"`, 'm')))
+          text = text.replace(new RegExp(`\n\\}`, 'gm'), `,\n  "${key}": ${JSON.stringify(value)}\n}`);
+        else if(text.match(new RegExp(`^  "${key}": ("[^"]*"|true|false|\\d+(\\.\\d+)?),?$`, 'm')))
+          text = text.replace(new RegExp(`^  "${key}":[^,\n]*`, 'gm'), `  "${key}": ${JSON.stringify(value)}`);
+        else
+          text = text + `\n\n--- GOT DELTA WHILE JSON WAS INVALID ---\n${delta.c}\n\nApply this to your JSON:\n\n  "${key}": ${JSON.stringify(value, null, '  ').replace(/\n/g, '\n  ')}`;
+      }
+      jeSet(text);
     }
   }
 

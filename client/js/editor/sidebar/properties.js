@@ -378,7 +378,7 @@ class PropertiesModule extends SidebarModule {
             if(button != templateButton)
               button.classList.remove('selected');
           templateButton.classList.toggle('selected');
-          createButton.disabled = false;
+          createButton.disabled = !$a('.selected.deckTemplateButton', target).length;
         };
         deck.id = generateUniqueWidgetID();
       }
