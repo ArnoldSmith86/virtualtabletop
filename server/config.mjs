@@ -21,7 +21,14 @@ class Config {
   }
 
   get(index) {
-    return this.config[index];
+    const envVar = process.env[index.toUpperCase()];
+    return envVar !== undefined ? envVar : this.config[index];
+  }
+
+  getClientConfig() {
+    return Object.fromEntries(
+      Object.keys(this.config).map(key => [key, this.get(key)])
+    );
   }
 
   resolveAsset(asset) {
