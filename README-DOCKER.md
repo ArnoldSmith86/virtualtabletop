@@ -2,7 +2,7 @@ This is the official Docker image for https://virtualtabletop.io/.
 
 Source code: https://github.com/ArnoldSmith86/virtualtabletop
 
-Like the production site, the docker image is automatically updated for every commit on the `main` branch. (At least it will soon.)
+Like the production site, the docker image is automatically updated for every commit on the `main` branch.
 
 
 
