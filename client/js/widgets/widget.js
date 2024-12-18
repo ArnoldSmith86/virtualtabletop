@@ -2479,13 +2479,13 @@ export class Widget extends StateManaged {
   setLimbo(isLimbo) {
     if(this.isLimbo == isLimbo)
       return;
-    this.domElement.classList.toggle('limbo', isLimbo);
-    this.isLimbo = isLimbo;
     if(isLimbo) {
       const topTransform = getElementTransformRelativeTo(this.domElement, $('#topSurface')) || 'none';
       $('#topSurface').appendChild(this.domElement);
       this.domElement.style.transform = topTransform;
     }
+    this.domElement.classList.toggle('limbo', isLimbo);
+    this.isLimbo = isLimbo;
   }
 
   async setText(text, mode, problems) {
