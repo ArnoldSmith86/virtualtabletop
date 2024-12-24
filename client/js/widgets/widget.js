@@ -2027,9 +2027,13 @@ export class Widget extends StateManaged {
           }
 
           if(jeRoutineLogging) {
-            const indexList = c.map(w=>w.get('index'));
-            const turn = target.get('index');
-            jeLoggingRoutineOperationSummary(`changed turn of seats to ${turn} - active seats: ${JSON.stringify(indexList)}`);
+            const indexList = c.map(w => w.get('index'));
+            if (target) {
+              const turn = target.get('index');
+              jeLoggingRoutineOperationSummary(`changed turn of seats to ${turn} - active seats: ${JSON.stringify(indexList)}`);
+            } else {
+              jeLoggingRoutineOperationSummary(`All seats in collection '${a.source}' have 'skipTurn' set to true. No turn change.`);
+            }
           }
         }
       }
