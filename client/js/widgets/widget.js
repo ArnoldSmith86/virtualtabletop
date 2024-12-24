@@ -1984,11 +1984,26 @@ export class Widget extends StateManaged {
           }
 
           if (a.turnCycle != 'position' && a.turnCycle != 'seat') {
-            // rotate the set of seats so the current turn is first
-            for (let i = 0; i < c.length && !c[0].get('turn'); i++) {
-              c.unshift(c.pop());
+          
+            // Get the highest index seat that has turn (in case there are multiple seats with the turn)
+            let lastTurnedPos = -1;
+            for (let i = 0; i < c.length; i++) {
+              if (c[i].get('turn')) {
+                lastTurnedPos = i;
+              }
+            }
+          
+            if (lastTurnedPos === -1) {
+              // If no seat has turn, do nothing to the array order (keeps the original behavior to avoid breaking change)
+              for (let i = 0; i < c.length && !c[0].get('turn'); i++) {
+                c.unshift(c.pop());
+              }
+            } else {
+              // Otherwise, rotate the set of seats so the current turn is first
+              c = c.slice(lastTurnedPos).concat(c.slice(0, lastTurnedPos));
             }
           }
+          
 
           // filter out seats with skipTurn set to true
           let unskipped = c.filter(w=>!w.get('skipTurn'));
