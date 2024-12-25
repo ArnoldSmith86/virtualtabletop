@@ -220,6 +220,8 @@ export class Widget extends StateManaged {
         if(prop != null) {
           const rule = (typeof prop == 'object')? prop : { property: prop };
           if(delta[rule.property] !== undefined) {
+            if(rule.property == 'display')
+            void this.domElement.offsetWidth; // Trigger reflow so that the effect is visible
             if(rule.className == null)
               rule.className = `animate_${escapeID(rule.property)}`;
             rule.className = asArray(rule.className).join(' ').split(' ').filter(c=>c!='');
