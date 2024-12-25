@@ -1,0 +1,2278 @@
+{
+  "_meta": {
+    "version": 16,
+    "info": {
+      "name": "Arlo and Isla",
+      "image": "/assets/-1845514469_376549",
+      "rules": "https://boardgamegeek.com/filepage/32221/illustrated-english-rule",
+      "bgg": "https://boardgamegeek.com/boardgame/20122/bunte-runde",
+      "year": "",
+      "mode": "vs",
+      "time": "15",
+      "attribution": "<div><div><span style=\"color: var(--overlayFontColor);\">Room layout and scripting by Anthony Cholag (with assistance by IndigoPotter) under a CC0 license.</span></div></div><div><span id=\"docs-internal-guid-f2a7a6b8-7fff-f399-d64b-90b93d4c1f5a\"><div><br></div></span></div>Image licensed for use on VTT by El Gran Bulto, 36-year reigning Campion de la Federacion Intergalactica de Lucha Libre en Viña del Mar, Chile!",
+      "lastUpdate": 1735048724386,
+      "showName": true,
+      "skill": "low",
+      "description": "You are Arlo and Isla, two sibling cats that love nothing more than knocking things off the shelf. Not to break them, but to store them! Walk Arlo and Isla around the board collecting treasures that will score you more points than your opponents.\nPS. There's only one cat icon because they're inseperable.",
+      "similarImage": "",
+      "similarName": "Bunte Runde",
+      "similarDesigner": "Reiner Knizia",
+      "similarAwards": "",
+      "ruleText": "<span id=\"docs-internal-guid-6f12290f-7fff-8795-e045-9dd33ccf92f7\"><p style=\"line-height:1.38;margin-top:0pt;margin-bottom:0pt;\" dir=\"ltr\"><span style=\"font-size: 11pt; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-variant-position: normal; font-variant-emoji: normal; vertical-align: baseline; white-space-collapse: preserve;\">Click to sit at one of the 6 player spaces. Click and drag the cat to a space underneath one of the first 3 cards starting with the upper left corner. Whichever card you stop at, you will collect and place below your name in one of your 6 holders. The next player then moves the cat anywhere from 1-3 spaces and collects whatever card they stop at, and so on. Once all 6 colors of a card, or 6 suits of a card are collected, then scoring takes place. Increase your score by the number of collected cards you have that have just scored. The bank will then reduce by the number you added.&nbsp;</span></p><p style=\"line-height:1.38;margin-top:0pt;margin-bottom:0pt;\" dir=\"ltr\"><span style=\"font-size: 11pt; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-variant-position: normal; font-variant-emoji: normal; vertical-align: baseline; white-space-collapse: preserve;\">Example: Someone has just collected the last spade card from the board. You have a yellow and a blue spade. You score 2 points. Later, someone collected the last yellow card from the board. You only have your yellow spade from earlier, you score 1 point for that card now since it is yellow.</span></p><p style=\"line-height:1.38;margin-top:0pt;margin-bottom:0pt;\" dir=\"ltr\"><span style=\"font-size: 11pt; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-variant-position: normal; font-variant-emoji: normal; vertical-align: baseline; white-space-collapse: preserve;\">As cards get collected, empty spaces will be on the board, do not count those empty spaces as your 1-3 movement. If you like, you can consolidate the cards on the board to make it easier to review what remains.&nbsp;</span></p><p style=\"line-height:1.38;margin-top:0pt;margin-bottom:0pt;\" dir=\"ltr\"><span style=\"font-size: 11pt; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-variant-position: normal; font-variant-emoji: normal; vertical-align: baseline; white-space-collapse: preserve;\">Generally, the game ends when a card is taken that causes scoring to empty the bank. In the event that the last card causes a scoring of 2 different attributes, such as suit and color, then all applicable points are distributed even though the bank is empty. High score wins. There are no official tie breakers.&nbsp;</span></p><br><p style=\"line-height:1.38;margin-top:0pt;margin-bottom:0pt;\" dir=\"ltr\"><span style=\"font-size: 11pt; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-variant-position: normal; font-variant-emoji: normal; vertical-align: baseline; white-space-collapse: preserve;\"><b>Variants:</b></span></p><p style=\"line-height:1.38;margin-top:0pt;margin-bottom:0pt;\" dir=\"ltr\"><span style=\"font-size: 11pt; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-variant-position: normal; font-variant-emoji: normal; vertical-align: baseline; white-space-collapse: preserve;\">Alex Randolph suggests a variant, Veleno, that your score is equal to your points plus the next player in turn order from you.&nbsp;You can try this scoring method with any of the variants available.\n\n</span></p><p style=\"line-height:1.38;margin-top:0pt;margin-bottom:0pt;\" dir=\"ltr\"><span style=\"font-size: 11pt; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-variant-position: normal; font-variant-emoji: normal; vertical-align: baseline; white-space-collapse: preserve;\"><b>Kid Variant:</b> \nFor a simpler version with children, you can remove one color and one shape so that there are only 25 tiles to collect. The bank is then also reduced to 25. </span></p><p style=\"line-height:1.38;margin-top:12pt;margin-bottom:12pt;\" dir=\"ltr\"><span style=\"font-size:11pt;font-family:Arial,sans-serif;color:#000000;background-color:transparent;font-weight:700;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;\">Advanced Variant</span><span style=\"font-size:11pt;font-family:Arial,sans-serif;color:#000000;background-color:transparent;font-weight:700;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;\"><br></span><span style=\"font-size:11pt;font-family:Arial,sans-serif;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;\">This version was first introduced in the 1994 book </span><span style=\"font-size:11pt;font-family:Arial,sans-serif;color:#000000;background-color:transparent;font-weight:400;font-style:italic;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;\">New Games in Old Rome</span><span style=\"font-size:11pt;font-family:Arial,sans-serif;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;\"> by Reiner Knizia and later became Bunte Runde. It adds more complexity with both positive and negative scoring.</span></p><p style=\"line-height:1.38;margin-top:12pt;margin-bottom:12pt;\" dir=\"ltr\"><span style=\"font-size:11pt;font-family:Arial,sans-serif;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;\">In this version, every card has shapes, colors, and numbers 1-5. The game is played the same way as the base game: move the cat 1-3 spaces and pick a card. However, when you collect all the cards of a certain suit (color/shape), you immediately score the total value of the cards in that suit you have collected.</span></p><p style=\"line-height:1.38;margin-top:12pt;margin-bottom:12pt;\" dir=\"ltr\"><span style=\"font-size:11pt;font-family:Arial,sans-serif;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;\">For example, if you collect the 5th red card and have the 1, 3, and 4 of red, you score 8 points. If another player has the red 2 and 5, they score 7 points.</span></p><p style=\"line-height:1.38;margin-top:12pt;margin-bottom:12pt;\" dir=\"ltr\"><span style=\"font-size:11pt;font-family:Arial,sans-serif;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;\">The game ends when the last card with a value is taken. If that card is also the last of a suit, scoring happens in two steps:</span></p><ol style=\"margin-top:0;margin-bottom:0;padding-inline-start:48px;\"><li aria-level=\"1\" style=\"list-style-type:decimal;font-size:11pt;font-family:Arial,sans-serif;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;\" dir=\"ltr\"><p role=\"presentation\" style=\"line-height:1.38;margin-top:12pt;margin-bottom:0pt;\" dir=\"ltr\"><span style=\"font-size:11pt;font-family:Arial,sans-serif;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;\">First, everyone scores </span><span style=\"font-size:11pt;font-family:Arial,sans-serif;color:#000000;background-color:transparent;font-weight:700;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;\">positive points</span><span style=\"font-size:11pt;font-family:Arial,sans-serif;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;\"> for the cards in that suit.</span></p></li><li aria-level=\"1\" style=\"list-style-type:decimal;font-size:11pt;font-family:Arial,sans-serif;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;\" dir=\"ltr\"><p role=\"presentation\" style=\"line-height:1.38;margin-top:0pt;margin-bottom:12pt;\" dir=\"ltr\"><span style=\"font-size:11pt;font-family:Arial,sans-serif;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;\">Then, </span><span style=\"font-size:11pt;font-family:Arial,sans-serif;color:#000000;background-color:transparent;font-weight:700;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;\">negative points</span><span style=\"font-size:11pt;font-family:Arial,sans-serif;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;\"> are scored for any cards of the value that was just taken.</span></p></li></ol><p style=\"line-height:1.38;margin-top:12pt;margin-bottom:12pt;\" dir=\"ltr\"><span style=\"font-size:11pt;font-family:Arial,sans-serif;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;\">For example, if the red 5 is the last card taken, the player with the red 5 scores positive points for the red suit, then everyone with 5’s scores negative points.</span></p><p style=\"line-height:1.38;margin-top:12pt;margin-bottom:12pt;\" dir=\"ltr\"><span style=\"font-size:11pt;font-family:Arial,sans-serif;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;\">A player can end the game with negative points in this variant.</span></p><p style=\"line-height:1.38;margin-top:12pt;margin-bottom:12pt;\" dir=\"ltr\"><span style=\"font-size:11pt;font-family:Arial,sans-serif;color:#000000;background-color:transparent;font-weight:700;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;\">Note</span><span style=\"font-size:11pt;font-family:Arial,sans-serif;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;\">: This variant is for 5 players only and does not use a \"bank\" of points. Since the game is short, you can decide to play multiple rounds or play until someone reaches a set number of points (e.g., 50 points).</span></p><p style=\"line-height:1.38;margin-top:0pt;margin-bottom:0pt;\" dir=\"ltr\"></p><hr><p></p><p style=\"line-height:1.38;margin-top:12pt;margin-bottom:12pt;\" dir=\"ltr\"><span style=\"font-size:11pt;font-family:Arial,sans-serif;color:#000000;background-color:transparent;font-weight:700;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;\">Advanced Variant 2</span><span style=\"font-size:11pt;font-family:Arial,sans-serif;color:#000000;background-color:transparent;font-weight:700;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;\"><br></span><span style=\"font-size:11pt;font-family:Arial,sans-serif;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;\">This variant uses the same rules as the \"Advanced Variant,\" but with an additional rule:</span></p><p style=\"line-height:1.38;margin-top:12pt;margin-bottom:12pt;\" dir=\"ltr\"><span style=\"font-size:11pt;font-family:Arial,sans-serif;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;\">Once during the game, each player can choose to turn a card they just picked face down instead of face up. This face-down card's suit will never score positively, and its value will never score negatively. Game end is triggered the same way, with all of one value being collected from the central area.&nbsp;</span></p><p style=\"line-height:1.38;margin-top:12pt;margin-bottom:12pt;\" dir=\"ltr\"><span style=\"font-size:11pt;font-family:Arial,sans-serif;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;\">This rule is not recommended in a 5-player game because it can lead to situations where no points are scored, especially if a card of each value and suit is turned face down. If only one card of each value is turned down (but not one card of each suit), positive points can still be scored. In this scenario, the game ends when the final card is collected from the available cards.</span></p><p style=\"line-height:1.38;margin-top:0pt;margin-bottom:0pt;\" dir=\"ltr\"></p><hr><p></p><p style=\"line-height:1.38;margin-top:12pt;margin-bottom:12pt;\" dir=\"ltr\"><span style=\"font-size:11pt;font-family:Arial,sans-serif;color:#000000;background-color:transparent;font-weight:700;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;\">Advanced Variant 3</span><span style=\"font-size:11pt;font-family:Arial,sans-serif;color:#000000;background-color:transparent;font-weight:700;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;\"><br></span><span style=\"font-size:11pt;font-family:Arial,sans-serif;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;\">This variant is similar to \"Advanced Variant\" with some changes to the scoring rules.</span></p><p style=\"line-height:1.38;margin-top:12pt;margin-bottom:12pt;\" dir=\"ltr\"><span style=\"font-size:11pt;font-family:Arial,sans-serif;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;\">In this version, when the last card of a value is taken, it is scored in </span><span style=\"font-size:11pt;font-family:Arial,sans-serif;color:#000000;background-color:transparent;font-weight:700;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;\">reverse rank</span><span style=\"font-size:11pt;font-family:Arial,sans-serif;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;\">. So, the 5’s score as 1 point, and the 1’s score as 5 points.</span></p><p style=\"line-height:1.38;margin-top:12pt;margin-bottom:12pt;\" dir=\"ltr\"><span style=\"font-size:11pt;font-family:Arial,sans-serif;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;\">When the last card of a suit is taken, it is scored in the usual way (a 5 counts as 5 points, a 1 counts as 1 point).</span></p><p style=\"line-height:1.38;margin-top:12pt;margin-bottom:12pt;\" dir=\"ltr\"><span style=\"font-size:11pt;font-family:Arial,sans-serif;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;\">The game ends when at least one value and one suit have been scored. For example, if the 3’s are scored first, then the 2’s, and then the reds, the game ends when the reds are scored because at least one value and one suit have been scored.</span></p><p style=\"line-height:1.38;margin-top:0pt;margin-bottom:0pt;\" dir=\"ltr\"><span id=\"docs-internal-guid-ce3bb8ff-7fff-1dd2-f7cb-e711ceb96615\"></span></p><p style=\"line-height:1.38;margin-top:12pt;margin-bottom:12pt;\" dir=\"ltr\"><span style=\"font-size:11pt;font-family:Arial,sans-serif;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;\">If a card triggers scoring for both a value and a suit, both are scored.</span></p><div><span style=\"font-size: 11pt; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-variant-position: normal; font-variant-emoji: normal; vertical-align: baseline; white-space-collapse: preserve;\"><br></span></div></span>",
+      "helpText": "Click to sit at one of the 6 player spaces. Click and drag the cat to a space underneath the one of the first 3 cards and drag the card to one of the 6 holders underneath your name. When you click the + or - button next to your score, it will also increment or decrement the bank of available points in the game.&nbsp;",
+      "variantImage": "",
+      "variant": "Standard game",
+      "language": "en-US",
+      "players": "2-6"
+    }
+  },
+  "843e2eab-f52c-4cef-ad91-c7fb3d07b5d8": {
+    "id": "843e2eab-f52c-4cef-ad91-c7fb3d07b5d8",
+    "x": 503.1,
+    "y": 22.58,
+    "z": 3985,
+    "type": "holder",
+    "width": 68,
+    "height": 68,
+    "inheritChildZ": true
+  },
+  "0d6b98a9-39a8-49de-8c34-c1bbcfefde03": {
+    "id": "0d6b98a9-39a8-49de-8c34-c1bbcfefde03",
+    "x": 1116.36,
+    "y": 22.58,
+    "z": 3992,
+    "type": "holder",
+    "width": 68,
+    "height": 68,
+    "inheritChildZ": true
+  },
+  "cf3ad628-f864-4e57-83c5-b5349e67acb1": {
+    "id": "cf3ad628-f864-4e57-83c5-b5349e67acb1",
+    "x": 1028.75,
+    "y": 22.58,
+    "z": 3991,
+    "type": "holder",
+    "width": 68,
+    "height": 68,
+    "inheritChildZ": true
+  },
+  "a6adb7d6-7133-4461-9ef1-2c9b0da7b915": {
+    "id": "a6adb7d6-7133-4461-9ef1-2c9b0da7b915",
+    "x": 1462.9,
+    "y": 91.81,
+    "z": 4058,
+    "type": "holder",
+    "width": 68,
+    "height": 68,
+    "inheritChildZ": true
+  },
+  "17041459-c6b8-456d-bd9f-c69f77bc7c41": {
+    "id": "17041459-c6b8-456d-bd9f-c69f77bc7c41",
+    "x": 678.18,
+    "y": 335.14,
+    "z": 4045,
+    "type": "holder",
+    "width": 68,
+    "height": 68,
+    "inheritChildZ": true
+  },
+  "7349048d-4a46-46a4-81df-6f5214955388": {
+    "id": "7349048d-4a46-46a4-81df-6f5214955388",
+    "x": 240.28,
+    "y": 22.58,
+    "z": 3982,
+    "type": "holder",
+    "width": 68,
+    "height": 68,
+    "inheritChildZ": true
+  },
+  "631d00c3-fdb3-4e3c-bbf4-b50421825d93": {
+    "id": "631d00c3-fdb3-4e3c-bbf4-b50421825d93",
+    "x": 1203.96,
+    "y": 22.58,
+    "z": 3993,
+    "type": "holder",
+    "width": 68,
+    "height": 68,
+    "inheritChildZ": true
+  },
+  "ce9a709b-8559-428e-a4f0-219de13c7c92": {
+    "id": "ce9a709b-8559-428e-a4f0-219de13c7c92",
+    "x": 1118.55,
+    "y": 335.14,
+    "z": 4050,
+    "type": "holder",
+    "width": 68,
+    "height": 68,
+    "inheritChildZ": true
+  },
+  "f4b29171-f571-4d94-8787-a5da6b683835": {
+    "id": "f4b29171-f571-4d94-8787-a5da6b683835",
+    "x": 766.26,
+    "y": 335.14,
+    "z": 4046,
+    "type": "holder",
+    "width": 68,
+    "height": 68,
+    "inheritChildZ": true
+  },
+  "11de0a7b-439f-4c99-a5d9-f2eb29e638de": {
+    "id": "11de0a7b-439f-4c99-a5d9-f2eb29e638de",
+    "x": 854.33,
+    "y": 335.14,
+    "z": 4047,
+    "type": "holder",
+    "width": 68,
+    "height": 68,
+    "inheritChildZ": true
+  },
+  "6b050d50-1f78-4791-9924-717655b7b5dd": {
+    "id": "6b050d50-1f78-4791-9924-717655b7b5dd",
+    "x": 237.81,
+    "y": 335.14,
+    "z": 4040,
+    "type": "holder",
+    "width": 68,
+    "height": 68,
+    "inheritChildZ": true
+  },
+  "e9885e5e-9c09-4715-a784-4d4db5b979f2": {
+    "id": "e9885e5e-9c09-4715-a784-4d4db5b979f2",
+    "x": 678.32,
+    "y": 22.58,
+    "z": 3986,
+    "type": "holder",
+    "width": 68,
+    "height": 68,
+    "inheritChildZ": true
+  },
+  "aa238996-b3bf-4168-a665-57a4f4bbcfc1": {
+    "id": "aa238996-b3bf-4168-a665-57a4f4bbcfc1",
+    "x": 325.89,
+    "y": 335.14,
+    "z": 4041,
+    "type": "holder",
+    "width": 68,
+    "height": 68,
+    "inheritChildZ": true
+  },
+  "c98e7f93-8261-4c86-ac57-0fee2fd8535d": {
+    "id": "c98e7f93-8261-4c86-ac57-0fee2fd8535d",
+    "x": 1379.18,
+    "y": 22.58,
+    "z": 4015,
+    "type": "holder",
+    "width": 68,
+    "height": 68,
+    "inheritChildZ": true
+  },
+  "a6325c5b-ebf0-447b-8773-7042ad801180": {
+    "id": "a6325c5b-ebf0-447b-8773-7042ad801180",
+    "x": 413.96,
+    "y": 335.14,
+    "z": 4042,
+    "type": "holder",
+    "width": 68,
+    "height": 68,
+    "inheritChildZ": true
+  },
+  "5233eb7c-cb17-4b30-8b60-f4c7cf3ccbcc": {
+    "id": "5233eb7c-cb17-4b30-8b60-f4c7cf3ccbcc",
+    "x": 149.74,
+    "y": 335.14,
+    "z": 4039,
+    "type": "holder",
+    "width": 68,
+    "height": 68,
+    "inheritChildZ": true
+  },
+  "b3e5a4cb-7cef-4e57-ac70-3d0163c2fcc6": {
+    "id": "b3e5a4cb-7cef-4e57-ac70-3d0163c2fcc6",
+    "x": 72.27,
+    "y": 261.29,
+    "z": 4056,
+    "type": "holder",
+    "width": 68,
+    "height": 68,
+    "inheritChildZ": true
+  },
+  "e7385f61-6655-4e3d-89c9-68455d476805label": {
+    "id": "e7385f61-6655-4e3d-89c9-68455d476805label",
+    "parent": "bank",
+    "movableInEdit": false,
+    "y": -28,
+    "width": 140,
+    "type": "label",
+    "text": "Bank (36)"
+  },
+  "93d7112b-2ef6-442f-a8b3-1a5ab9b969e0": {
+    "id": "93d7112b-2ef6-442f-a8b3-1a5ab9b969e0",
+    "x": 327.89,
+    "y": 22.58,
+    "z": 3983,
+    "type": "holder",
+    "width": 68,
+    "height": 68,
+    "inheritChildZ": true
+  },
+  "19ceebae-144b-45d4-a4b3-2b29bf3e615f": {
+    "id": "19ceebae-144b-45d4-a4b3-2b29bf3e615f",
+    "x": 1294.7,
+    "y": 335.14,
+    "z": 4048,
+    "type": "holder",
+    "width": 68,
+    "height": 68,
+    "inheritChildZ": true
+  },
+  "fd1c0317-15b5-42a1-8055-34096acfb3e8": {
+    "id": "fd1c0317-15b5-42a1-8055-34096acfb3e8",
+    "x": 590.71,
+    "y": 22.58,
+    "z": 3987,
+    "type": "holder",
+    "width": 68,
+    "height": 68,
+    "inheritChildZ": true
+  },
+  "9b475bb5-7fd8-476a-908a-0e796f6fdbb1": {
+    "id": "9b475bb5-7fd8-476a-908a-0e796f6fdbb1",
+    "x": 72.27,
+    "y": 96.29,
+    "z": 4054,
+    "type": "holder",
+    "width": 68,
+    "height": 68,
+    "inheritChildZ": true
+  },
+  "021b4989-6ffe-414d-88fb-bb4317bb6121": {
+    "id": "021b4989-6ffe-414d-88fb-bb4317bb6121",
+    "x": 1206.62,
+    "y": 335.14,
+    "z": 4051,
+    "type": "holder",
+    "width": 68,
+    "height": 68,
+    "inheritChildZ": true
+  },
+  "dc30bfdb-e560-4ae3-97df-fb15321a3097": {
+    "id": "dc30bfdb-e560-4ae3-97df-fb15321a3097",
+    "x": 1030.48,
+    "y": 335.14,
+    "z": 4052,
+    "type": "holder",
+    "width": 68,
+    "height": 68,
+    "inheritChildZ": true
+  },
+  "3def48dc-b5db-4ea4-b448-87306a72d494": {
+    "id": "3def48dc-b5db-4ea4-b448-87306a72d494",
+    "x": 765.93,
+    "y": 22.58,
+    "z": 3988,
+    "type": "holder",
+    "width": 68,
+    "height": 68,
+    "inheritChildZ": true
+  },
+  "ea8730a5-22db-4cab-bee5-361d608a71a4": {
+    "id": "ea8730a5-22db-4cab-bee5-361d608a71a4",
+    "x": 942.4,
+    "y": 335.14,
+    "z": 4053,
+    "type": "holder",
+    "width": 68,
+    "height": 68,
+    "inheritChildZ": true
+  },
+  "ab449ba5-56ab-4284-a279-da2916962bee": {
+    "id": "ab449ba5-56ab-4284-a279-da2916962bee",
+    "x": 152.67,
+    "y": 22.58,
+    "z": 3981,
+    "type": "holder",
+    "width": 68,
+    "height": 68,
+    "inheritChildZ": true
+  },
+  "35d5a03b-2f19-4281-ab60-9ad597963ebb": {
+    "id": "35d5a03b-2f19-4281-ab60-9ad597963ebb",
+    "x": 1462.9,
+    "y": 177.32,
+    "z": 4059,
+    "type": "holder",
+    "width": 68,
+    "height": 68,
+    "inheritChildZ": true
+  },
+  "bc880138-09fa-442f-83b9-0b34d72745a6": {
+    "id": "bc880138-09fa-442f-83b9-0b34d72745a6",
+    "x": 590.11,
+    "y": 335.14,
+    "z": 4043,
+    "type": "holder",
+    "width": 68,
+    "height": 68,
+    "inheritChildZ": true
+  },
+  "eff8ead1-4ad9-41c6-a8b8-70616bc99c6a": {
+    "id": "eff8ead1-4ad9-41c6-a8b8-70616bc99c6a",
+    "x": 415.49,
+    "y": 22.58,
+    "z": 3984,
+    "type": "holder",
+    "width": 68,
+    "height": 68,
+    "inheritChildZ": true
+  },
+  "98cfbf73-87df-4cca-a780-819acb949ed4": {
+    "id": "98cfbf73-87df-4cca-a780-819acb949ed4",
+    "x": 1462.9,
+    "y": 262.82,
+    "z": 4057,
+    "type": "holder",
+    "width": 68,
+    "height": 68,
+    "inheritChildZ": true
+  },
+  "2f98da1f-763d-404c-8bee-c4e28013a73c": {
+    "id": "2f98da1f-763d-404c-8bee-c4e28013a73c",
+    "x": 1382.77,
+    "y": 335.14,
+    "z": 4049,
+    "type": "holder",
+    "width": 68,
+    "height": 68,
+    "inheritChildZ": true
+  },
+  "11ba4d9e-aaba-4b87-abb3-69f3539bceaf": {
+    "id": "11ba4d9e-aaba-4b87-abb3-69f3539bceaf",
+    "x": 853.53,
+    "y": 22.58,
+    "z": 3989,
+    "type": "holder",
+    "width": 68,
+    "height": 68,
+    "inheritChildZ": true
+  },
+  "f4608f48-3976-41a3-8035-7605122a2707": {
+    "id": "f4608f48-3976-41a3-8035-7605122a2707",
+    "x": 1291.57,
+    "y": 22.58,
+    "z": 3994,
+    "type": "holder",
+    "width": 68,
+    "height": 68,
+    "inheritChildZ": true
+  },
+  "390b42c6-ee5a-433c-b082-46b272303ac2": {
+    "id": "390b42c6-ee5a-433c-b082-46b272303ac2",
+    "x": 72.27,
+    "y": 178.79,
+    "z": 4055,
+    "type": "holder",
+    "width": 68,
+    "height": 68,
+    "inheritChildZ": true
+  },
+  "65790b79-ec8c-4171-b96e-13510d67e361": {
+    "id": "65790b79-ec8c-4171-b96e-13510d67e361",
+    "x": 502.03,
+    "y": 335.14,
+    "z": 4044,
+    "type": "holder",
+    "width": 68,
+    "height": 68,
+    "inheritChildZ": true
+  },
+  "8affcea4-4754-4f24-93b0-512bb923ce52": {
+    "id": "8affcea4-4754-4f24-93b0-512bb923ce52",
+    "x": 941.14,
+    "y": 22.58,
+    "z": 3990,
+    "type": "holder",
+    "width": 68,
+    "height": 68,
+    "inheritChildZ": true
+  },
+  "e3b1c8b4-849d-4407-aaa0-436c5af1c7f5": {
+    "id": "e3b1c8b4-849d-4407-aaa0-436c5af1c7f5",
+    "z": 5939,
+    "image": "/assets/-1232227984_8972",
+    "movable": false,
+    "layer": -4,
+    "width": 1600,
+    "height": 819.2
+  },
+  "m09i": {
+    "type": "holder",
+    "id": "m09i",
+    "x": 49,
+    "y": 523,
+    "width": 240,
+    "z": 12,
+    "height": 60,
+    "stackOffsetX": 40
+  },
+  "m15i": {
+    "type": "holder",
+    "id": "m15i",
+    "x": 312,
+    "y": 523,
+    "width": 240,
+    "z": 12,
+    "height": 60,
+    "stackOffsetX": 40
+  },
+  "m21i": {
+    "type": "holder",
+    "id": "m21i",
+    "x": 567,
+    "y": 523,
+    "width": 240,
+    "z": 4062,
+    "height": 60,
+    "stackOffsetX": 40
+  },
+  "m27i": {
+    "type": "holder",
+    "id": "m27i",
+    "x": 819,
+    "y": 523,
+    "width": 240,
+    "z": 12,
+    "height": 60,
+    "stackOffsetX": 40
+  },
+  "m33i": {
+    "type": "holder",
+    "id": "m33i",
+    "x": 1069,
+    "y": 523,
+    "width": 240,
+    "z": 12,
+    "height": 60,
+    "stackOffsetX": 40
+  },
+  "m39i": {
+    "type": "holder",
+    "id": "m39i",
+    "x": 1317,
+    "y": 523,
+    "width": 240,
+    "z": 12,
+    "height": 60,
+    "stackOffsetX": 40
+  },
+  "m10i": {
+    "type": "holder",
+    "id": "m10i",
+    "x": 49,
+    "y": 586,
+    "width": 240,
+    "z": 12,
+    "height": 60,
+    "stackOffsetX": 40
+  },
+  "m11i": {
+    "type": "holder",
+    "id": "m11i",
+    "x": 49,
+    "y": 646,
+    "width": 240,
+    "z": 12,
+    "height": 60,
+    "stackOffsetX": 40
+  },
+  "m12i": {
+    "type": "holder",
+    "id": "m12i",
+    "x": 49,
+    "y": 706,
+    "width": 240,
+    "z": 12,
+    "height": 60,
+    "stackOffsetX": 40
+  },
+  "m13i": {
+    "type": "holder",
+    "id": "m13i",
+    "x": 49,
+    "y": 766,
+    "width": 240,
+    "z": 12,
+    "height": 60,
+    "stackOffsetX": 40
+  },
+  "m14i": {
+    "type": "holder",
+    "id": "m14i",
+    "x": 49,
+    "y": 826,
+    "width": 240,
+    "z": 12,
+    "height": 60,
+    "stackOffsetX": 40
+  },
+  "m16i": {
+    "type": "holder",
+    "id": "m16i",
+    "x": 312,
+    "y": 584,
+    "width": 240,
+    "z": 12,
+    "height": 60,
+    "stackOffsetX": 40
+  },
+  "m17i": {
+    "type": "holder",
+    "id": "m17i",
+    "x": 312,
+    "y": 644,
+    "width": 240,
+    "z": 12,
+    "height": 60,
+    "stackOffsetX": 40
+  },
+  "m18i": {
+    "type": "holder",
+    "id": "m18i",
+    "x": 312,
+    "y": 704,
+    "width": 240,
+    "z": 12,
+    "height": 60,
+    "stackOffsetX": 40
+  },
+  "m19i": {
+    "type": "holder",
+    "id": "m19i",
+    "x": 312,
+    "y": 764,
+    "width": 240,
+    "z": 12,
+    "height": 60,
+    "stackOffsetX": 40
+  },
+  "m20i": {
+    "type": "holder",
+    "id": "m20i",
+    "x": 312,
+    "y": 824,
+    "width": 240,
+    "z": 12,
+    "height": 60,
+    "stackOffsetX": 40
+  },
+  "m22i": {
+    "type": "holder",
+    "id": "m22i",
+    "x": 565,
+    "y": 584,
+    "width": 240,
+    "z": 12,
+    "height": 60,
+    "stackOffsetX": 40
+  },
+  "m23i": {
+    "type": "holder",
+    "id": "m23i",
+    "x": 565,
+    "y": 644,
+    "width": 240,
+    "z": 12,
+    "height": 60,
+    "stackOffsetX": 40
+  },
+  "m24i": {
+    "type": "holder",
+    "id": "m24i",
+    "x": 565,
+    "y": 704,
+    "width": 240,
+    "z": 12,
+    "height": 60,
+    "stackOffsetX": 40
+  },
+  "m25i": {
+    "type": "holder",
+    "id": "m25i",
+    "x": 565,
+    "y": 764,
+    "width": 240,
+    "z": 12,
+    "height": 60,
+    "stackOffsetX": 40
+  },
+  "m26i": {
+    "type": "holder",
+    "id": "m26i",
+    "x": 565,
+    "y": 824,
+    "width": 240,
+    "z": 12,
+    "height": 60,
+    "stackOffsetX": 40
+  },
+  "m28i": {
+    "type": "holder",
+    "id": "m28i",
+    "x": 819,
+    "y": 584,
+    "width": 240,
+    "z": 12,
+    "height": 60,
+    "stackOffsetX": 40
+  },
+  "m29i": {
+    "type": "holder",
+    "id": "m29i",
+    "x": 819,
+    "y": 644,
+    "width": 240,
+    "z": 12,
+    "height": 60,
+    "stackOffsetX": 40
+  },
+  "m30i": {
+    "type": "holder",
+    "id": "m30i",
+    "x": 819,
+    "y": 704,
+    "width": 240,
+    "z": 12,
+    "height": 60,
+    "stackOffsetX": 40
+  },
+  "m31i": {
+    "type": "holder",
+    "id": "m31i",
+    "x": 819,
+    "y": 764,
+    "width": 240,
+    "z": 12,
+    "height": 60,
+    "stackOffsetX": 40
+  },
+  "m32i": {
+    "type": "holder",
+    "id": "m32i",
+    "x": 819,
+    "y": 824,
+    "width": 240,
+    "z": 12,
+    "height": 60,
+    "stackOffsetX": 40
+  },
+  "m34i": {
+    "type": "holder",
+    "id": "m34i",
+    "x": 1069,
+    "y": 584,
+    "width": 240,
+    "z": 12,
+    "height": 60,
+    "stackOffsetX": 40
+  },
+  "m35i": {
+    "type": "holder",
+    "id": "m35i",
+    "x": 1069,
+    "y": 644,
+    "width": 240,
+    "z": 12,
+    "height": 60,
+    "stackOffsetX": 40
+  },
+  "m36i": {
+    "type": "holder",
+    "id": "m36i",
+    "x": 1069,
+    "y": 704,
+    "width": 240,
+    "z": 12,
+    "height": 60,
+    "stackOffsetX": 40
+  },
+  "m37i": {
+    "type": "holder",
+    "id": "m37i",
+    "x": 1069,
+    "y": 764,
+    "width": 240,
+    "z": 12,
+    "height": 60,
+    "stackOffsetX": 40
+  },
+  "m38i": {
+    "type": "holder",
+    "id": "m38i",
+    "x": 1069,
+    "y": 824,
+    "width": 240,
+    "z": 12,
+    "height": 60,
+    "stackOffsetX": 40
+  },
+  "m40i": {
+    "type": "holder",
+    "id": "m40i",
+    "x": 1317,
+    "y": 583,
+    "width": 240,
+    "z": 12,
+    "height": 60,
+    "stackOffsetX": 40
+  },
+  "m41i": {
+    "type": "holder",
+    "id": "m41i",
+    "x": 1317,
+    "y": 643,
+    "width": 240,
+    "z": 12,
+    "height": 60,
+    "stackOffsetX": 40
+  },
+  "m42i": {
+    "type": "holder",
+    "id": "m42i",
+    "x": 1317,
+    "y": 703,
+    "width": 240,
+    "z": 12,
+    "height": 60,
+    "stackOffsetX": 40
+  },
+  "m43i": {
+    "type": "holder",
+    "id": "m43i",
+    "x": 1317,
+    "y": 763,
+    "width": 240,
+    "z": 12,
+    "height": 60,
+    "stackOffsetX": 40
+  },
+  "m44i": {
+    "type": "holder",
+    "id": "m44i",
+    "x": 1317,
+    "y": 823,
+    "width": 240,
+    "z": 12,
+    "height": 60,
+    "stackOffsetX": 40
+  },
+  "615v": {
+    "type": "seat",
+    "x": 55,
+    "y": 411,
+    "id": "615v",
+    "height": 30
+  },
+  "616v": {
+    "type": "seat",
+    "y": 411,
+    "id": "616v",
+    "height": 30,
+    "index": 1,
+    "x": 330
+  },
+  "617v": {
+    "type": "seat",
+    "x": 575,
+    "y": 414,
+    "id": "617v",
+    "height": 30,
+    "index": 1
+  },
+  "618v": {
+    "type": "seat",
+    "x": 830,
+    "y": 412,
+    "id": "618v",
+    "height": 30,
+    "index": 1
+  },
+  "619v": {
+    "type": "seat",
+    "x": 1080,
+    "y": 411,
+    "id": "619v",
+    "height": 30,
+    "index": 1
+  },
+  "620v": {
+    "type": "seat",
+    "x": 1330,
+    "y": 418,
+    "id": "620v",
+    "height": 30,
+    "index": 1
+  },
+  "ab449ba5-56ab-4284-a279-da2916963bee": {
+    "id": "ab449ba5-56ab-4284-a279-da2916963bee",
+    "x": 170,
+    "y": 93,
+    "z": 3981,
+    "type": "holder",
+    "width": 28,
+    "height": 28,
+    "inheritChildZ": true
+  },
+  "c98e7f93-8261-4c86-ac57-0fee2fd8536d": {
+    "id": "c98e7f93-8261-4c86-ac57-0fee2fd8536d",
+    "x": 1397,
+    "y": 93,
+    "z": 4015,
+    "type": "holder",
+    "width": 28,
+    "height": 28,
+    "inheritChildZ": true
+  },
+  "7349048d-4a46-46a4-81df-6f5214955389": {
+    "id": "7349048d-4a46-46a4-81df-6f5214955389",
+    "x": 258,
+    "y": 93,
+    "z": 3982,
+    "type": "holder",
+    "width": 28,
+    "height": 28,
+    "inheritChildZ": true
+  },
+  "93d7112b-2ef6-442f-a8b3-1a5ab9b969e1": {
+    "id": "93d7112b-2ef6-442f-a8b3-1a5ab9b969e1",
+    "x": 346,
+    "y": 93,
+    "z": 3983,
+    "type": "holder",
+    "width": 28,
+    "height": 28,
+    "inheritChildZ": true
+  },
+  "eff8ead1-4ad9-41c6-a8b8-70616bc99c7a": {
+    "id": "eff8ead1-4ad9-41c6-a8b8-70616bc99c7a",
+    "x": 433,
+    "y": 93,
+    "z": 3984,
+    "type": "holder",
+    "width": 28,
+    "height": 28,
+    "inheritChildZ": true
+  },
+  "843e2eab-f52c-4cef-ad91-c7fb3d07b5d9": {
+    "id": "843e2eab-f52c-4cef-ad91-c7fb3d07b5d9",
+    "x": 521,
+    "y": 93,
+    "z": 3985,
+    "type": "holder",
+    "width": 28,
+    "height": 28,
+    "inheritChildZ": true
+  },
+  "fd1c0317-15b5-42a1-8055-34096acfb3e9": {
+    "id": "fd1c0317-15b5-42a1-8055-34096acfb3e9",
+    "x": 609,
+    "y": 93,
+    "z": 3987,
+    "type": "holder",
+    "width": 28,
+    "height": 28,
+    "inheritChildZ": true
+  },
+  "e9885e5e-9c09-4715-a784-4d4db5b979f3": {
+    "id": "e9885e5e-9c09-4715-a784-4d4db5b979f3",
+    "x": 696,
+    "y": 93,
+    "z": 3986,
+    "type": "holder",
+    "width": 28,
+    "height": 28,
+    "inheritChildZ": true
+  },
+  "3def48dc-b5db-4ea4-b448-87306a72d495": {
+    "id": "3def48dc-b5db-4ea4-b448-87306a72d495",
+    "x": 784,
+    "y": 93,
+    "z": 3988,
+    "type": "holder",
+    "width": 28,
+    "height": 28,
+    "inheritChildZ": true
+  },
+  "11ba4d9e-aaba-4b87-abb3-69f3540bceaf": {
+    "id": "11ba4d9e-aaba-4b87-abb3-69f3540bceaf",
+    "x": 871,
+    "y": 93,
+    "z": 3989,
+    "type": "holder",
+    "width": 28,
+    "height": 28,
+    "inheritChildZ": true
+  },
+  "8affcea4-4754-4f24-93b0-512bb923ce53": {
+    "id": "8affcea4-4754-4f24-93b0-512bb923ce53",
+    "x": 959,
+    "y": 93,
+    "z": 3990,
+    "type": "holder",
+    "width": 28,
+    "height": 28,
+    "inheritChildZ": true
+  },
+  "cf3ad628-f864-4e57-83c5-b5349e67acb2": {
+    "id": "cf3ad628-f864-4e57-83c5-b5349e67acb2",
+    "x": 1047,
+    "y": 93,
+    "z": 3991,
+    "type": "holder",
+    "width": 28,
+    "height": 28,
+    "inheritChildZ": true
+  },
+  "0d6b98a9-39a8-49de-8c34-c1bbcfefde4": {
+    "id": "0d6b98a9-39a8-49de-8c34-c1bbcfefde4",
+    "x": 1134,
+    "y": 93,
+    "z": 3992,
+    "type": "holder",
+    "width": 28,
+    "height": 28,
+    "inheritChildZ": true
+  },
+  "631d00c3-fdb3-4e3c-bbf4-b50421825d94": {
+    "id": "631d00c3-fdb3-4e3c-bbf4-b50421825d94",
+    "x": 1222,
+    "y": 93,
+    "z": 3993,
+    "type": "holder",
+    "width": 28,
+    "height": 28,
+    "inheritChildZ": true
+  },
+  "f4608f48-3976-41a3-8035-7605122a2708": {
+    "id": "f4608f48-3976-41a3-8035-7605122a2708",
+    "x": 1309,
+    "y": 93,
+    "z": 3994,
+    "type": "holder",
+    "width": 28,
+    "height": 28,
+    "inheritChildZ": true
+  },
+  "2qw0": {
+    "x": 77,
+    "y": 35,
+    "width": 68.56,
+    "height": 48,
+    "color": "#ff9500",
+    "css": "border-radius: 15% 20% 20% 25%/ 15% 20% 50% 75%;",
+    "image": "/i/game-icons.net/delapouite/feline.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 2,
+    "z": 71,
+    "id": "2qw0"
+  },
+  "ab449ba5-56ab-4284-a279-da2916964bee": {
+    "id": "ab449ba5-56ab-4284-a279-da2916964bee",
+    "x": 144,
+    "y": 128,
+    "z": 3981,
+    "type": "holder",
+    "width": 28,
+    "height": 28,
+    "inheritChildZ": true
+  },
+  "ab449ba5-56ab-4284-a279-da2916965bee": {
+    "id": "ab449ba5-56ab-4284-a279-da2916965bee",
+    "x": 142,
+    "y": 202,
+    "z": 3981,
+    "type": "holder",
+    "width": 28,
+    "height": 28,
+    "inheritChildZ": true
+  },
+  "ab449ba5-56ab-4284-a279-da2916966bee": {
+    "id": "ab449ba5-56ab-4284-a279-da2916966bee",
+    "x": 142,
+    "y": 281,
+    "z": 3981,
+    "type": "holder",
+    "width": 28,
+    "height": 28,
+    "inheritChildZ": true
+  },
+  "5233eb7c-cb17-4b30-8b60-f4c7cf4ccbcc": {
+    "id": "5233eb7c-cb17-4b30-8b60-f4c7cf4ccbcc",
+    "x": 169,
+    "y": 307,
+    "z": 4039,
+    "type": "holder",
+    "width": 28,
+    "height": 28,
+    "inheritChildZ": true
+  },
+  "6b050d50-1f78-4791-9924-717655b7b6dd": {
+    "id": "6b050d50-1f78-4791-9924-717655b7b6dd",
+    "x": 257,
+    "y": 307,
+    "z": 4040,
+    "type": "holder",
+    "width": 28,
+    "height": 28,
+    "inheritChildZ": true
+  },
+  "aa238996-b3bf-4168-a665-57a4f4bbcfc2": {
+    "id": "aa238996-b3bf-4168-a665-57a4f4bbcfc2",
+    "x": 346,
+    "y": 307,
+    "z": 4041,
+    "type": "holder",
+    "width": 28,
+    "height": 28,
+    "inheritChildZ": true
+  },
+  "a6325c5b-ebf0-447b-8773-7042ad801181": {
+    "id": "a6325c5b-ebf0-447b-8773-7042ad801181",
+    "x": 434,
+    "y": 307,
+    "z": 4042,
+    "type": "holder",
+    "width": 28,
+    "height": 28,
+    "inheritChildZ": true
+  },
+  "65790b79-ec8c-4171-b96e-13510d67e362": {
+    "id": "65790b79-ec8c-4171-b96e-13510d67e362",
+    "x": 522,
+    "y": 307,
+    "z": 4044,
+    "type": "holder",
+    "width": 28,
+    "height": 28,
+    "inheritChildZ": true
+  },
+  "bc880138-09fa-442f-83b9-0b34d72745a7": {
+    "id": "bc880138-09fa-442f-83b9-0b34d72745a7",
+    "x": 610,
+    "y": 307,
+    "z": 4043,
+    "type": "holder",
+    "width": 28,
+    "height": 28,
+    "inheritChildZ": true
+  },
+  "17041459-c6b8-456d-bd9f-c69f77bc7c42": {
+    "id": "17041459-c6b8-456d-bd9f-c69f77bc7c42",
+    "x": 698,
+    "y": 307,
+    "z": 4045,
+    "type": "holder",
+    "width": 28,
+    "height": 28,
+    "inheritChildZ": true
+  },
+  "f4b29171-f571-4d94-8787-a5da6b683836": {
+    "id": "f4b29171-f571-4d94-8787-a5da6b683836",
+    "x": 786,
+    "y": 307,
+    "z": 4046,
+    "type": "holder",
+    "width": 28,
+    "height": 28,
+    "inheritChildZ": true
+  },
+  "11de0a7b-439f-4c99-a5d9-f2eb29e639de": {
+    "id": "11de0a7b-439f-4c99-a5d9-f2eb29e639de",
+    "x": 874,
+    "y": 307,
+    "z": 4047,
+    "type": "holder",
+    "width": 28,
+    "height": 28,
+    "inheritChildZ": true
+  },
+  "ea8730a5-22db-4cab-bee5-361d608a71a5": {
+    "id": "ea8730a5-22db-4cab-bee5-361d608a71a5",
+    "x": 962,
+    "y": 307,
+    "z": 4053,
+    "type": "holder",
+    "width": 28,
+    "height": 28,
+    "inheritChildZ": true
+  },
+  "dc30bfdb-e560-4ae3-97df-fb15321a3098": {
+    "id": "dc30bfdb-e560-4ae3-97df-fb15321a3098",
+    "x": 1050,
+    "y": 307,
+    "z": 4052,
+    "type": "holder",
+    "width": 28,
+    "height": 28,
+    "inheritChildZ": true
+  },
+  "ce9a709b-8559-428e-a4f0-219de13c7c93": {
+    "id": "ce9a709b-8559-428e-a4f0-219de13c7c93",
+    "x": 1138,
+    "y": 307,
+    "z": 4050,
+    "type": "holder",
+    "width": 28,
+    "height": 28,
+    "inheritChildZ": true
+  },
+  "021b4989-6ffe-414d-88fb-bb4317bb6122": {
+    "id": "021b4989-6ffe-414d-88fb-bb4317bb6122",
+    "x": 1226,
+    "y": 307,
+    "z": 4051,
+    "type": "holder",
+    "width": 28,
+    "height": 28,
+    "inheritChildZ": true
+  },
+  "19ceebae-144b-45d4-a4b3-2b29bf3e616f": {
+    "id": "19ceebae-144b-45d4-a4b3-2b29bf3e616f",
+    "x": 1314,
+    "y": 307,
+    "z": 4048,
+    "type": "holder",
+    "width": 28,
+    "height": 28,
+    "inheritChildZ": true
+  },
+  "2f98da1f-763d-404c-8bee-c4e28013a74c": {
+    "id": "2f98da1f-763d-404c-8bee-c4e28013a74c",
+    "x": 1402,
+    "y": 307,
+    "z": 4049,
+    "type": "holder",
+    "width": 28,
+    "height": 28,
+    "inheritChildZ": true
+  },
+  "c98e7f93-8261-4c86-ac57-0fee2fd8537d": {
+    "id": "c98e7f93-8261-4c86-ac57-0fee2fd8537d",
+    "x": 1433,
+    "y": 117,
+    "z": 4015,
+    "type": "holder",
+    "width": 28,
+    "height": 28,
+    "inheritChildZ": true
+  },
+  "c98e7f93-8261-4c86-ac57-0fee2fd8538d": {
+    "id": "c98e7f93-8261-4c86-ac57-0fee2fd8538d",
+    "x": 1431,
+    "y": 194,
+    "z": 4015,
+    "type": "holder",
+    "width": 28,
+    "height": 28,
+    "inheritChildZ": true
+  },
+  "c98e7f93-8261-4c86-ac57-0fee2fd8539d": {
+    "id": "c98e7f93-8261-4c86-ac57-0fee2fd8539d",
+    "x": 1433,
+    "y": 279,
+    "z": 4015,
+    "type": "holder",
+    "width": 28,
+    "height": 28,
+    "inheritChildZ": true
+  },
+  "u76y": {
+    "type": "holder",
+    "id": "u76y",
+    "dropTarget": {
+      "type": "card"
+    },
+    "width": 68,
+    "height": 68,
+    "y": 133,
+    "x": 663
+  },
+  "u76yD": {
+    "type": "deck",
+    "id": "u76yD",
+    "parent": "u76y",
+    "x": 12,
+    "y": 14,
+    "cardTypes": {
+      "Diamond 1": {
+        "shade": "blue",
+        "shape": "/i/game-icons.net/skoll/diamonds.svg"
+      },
+      "Diamond 2": {
+        "shade": "red",
+        "shape": "/i/game-icons.net/skoll/diamonds.svg"
+      },
+      "Diamond 3": {
+        "shade": "green",
+        "shape": "/i/game-icons.net/skoll/diamonds.svg"
+      },
+      "Diamond 4": {
+        "shade": "orange",
+        "shape": "/i/game-icons.net/skoll/diamonds.svg"
+      },
+      "Diamond 5": {
+        "shade": "purple",
+        "shape": "/i/game-icons.net/skoll/diamonds.svg"
+      },
+      "Diamond 6": {
+        "shade": "yellow",
+        "shape": "/i/game-icons.net/skoll/diamonds.svg"
+      },
+      "Heart 1": {
+        "shade": "red",
+        "shape": "/i/game-icons.net/skoll/hearts.svg"
+      },
+      "Heart 2": {
+        "shade": "blue",
+        "shape": "/i/game-icons.net/skoll/hearts.svg"
+      },
+      "Heart 3": {
+        "shade": "green",
+        "shape": "/i/game-icons.net/skoll/hearts.svg"
+      },
+      "Heart 4": {
+        "shade": "orange",
+        "shape": "/i/game-icons.net/skoll/hearts.svg"
+      },
+      "Heart 5": {
+        "shade": "purple",
+        "shape": "/i/game-icons.net/skoll/hearts.svg"
+      },
+      "Heart 6": {
+        "shade": "yellow",
+        "shape": "/i/game-icons.net/skoll/hearts.svg"
+      },
+      "Spade 1": {
+        "shade": "orange",
+        "shape": "/i/game-icons.net/skoll/spades.svg"
+      },
+      "Spade 2": {
+        "shade": "red",
+        "shape": "/i/game-icons.net/skoll/spades.svg"
+      },
+      "Spade 3": {
+        "shade": "green",
+        "shape": "/i/game-icons.net/skoll/spades.svg"
+      },
+      "Spade 4": {
+        "shade": "blue",
+        "shape": "/i/game-icons.net/skoll/spades.svg"
+      },
+      "Spade 5": {
+        "shade": "purple",
+        "shape": "/i/game-icons.net/skoll/spades.svg"
+      },
+      "Spade 6": {
+        "shade": "yellow",
+        "shape": "/i/game-icons.net/skoll/spades.svg"
+      },
+      "Clubs 1": {
+        "shade": "red",
+        "shape": "/i/game-icons.net/skoll/clubs.svg"
+      },
+      "Clubs 2": {
+        "shade": "green",
+        "shape": "/i/game-icons.net/skoll/clubs.svg"
+      },
+      "Clubs 3": {
+        "shade": "orange",
+        "shape": "/i/game-icons.net/skoll/clubs.svg"
+      },
+      "Clubs 4": {
+        "shade": "purple",
+        "shape": "/i/game-icons.net/skoll/clubs.svg"
+      },
+      "Clubs 5": {
+        "shade": "yellow",
+        "shape": "/i/game-icons.net/skoll/clubs.svg"
+      },
+      "Clubs 6": {
+        "shade": "blue",
+        "shape": "/i/game-icons.net/skoll/clubs.svg"
+      },
+      "Moons 1": {
+        "shade": "red",
+        "shape": "/i/game-icons.net/lorc/moon.svg"
+      },
+      "Moons 2": {
+        "shade": "green",
+        "shape": "/i/game-icons.net/lorc/moon.svg"
+      },
+      "Moons 3": {
+        "shade": "orange",
+        "shape": "/i/game-icons.net/lorc/moon.svg"
+      },
+      "Moons 4": {
+        "shade": "purple",
+        "shape": "/i/game-icons.net/lorc/moon.svg"
+      },
+      "Moons 5": {
+        "shade": "yellow",
+        "shape": "/i/game-icons.net/lorc/moon.svg"
+      },
+      "Moons 6": {
+        "shade": "blue",
+        "shape": "/i/game-icons.net/lorc/moon.svg"
+      },
+      "Sword 1": {
+        "shade": "red",
+        "shape": "/i/game-icons.net/lorc/broadsword.svg"
+      },
+      "Sword 2": {
+        "shade": "green",
+        "shape": "/i/game-icons.net/lorc/broadsword.svg"
+      },
+      "Sword 3": {
+        "shade": "orange",
+        "shape": "/i/game-icons.net/lorc/broadsword.svg"
+      },
+      "Sword 4": {
+        "shade": "purple",
+        "shape": "/i/game-icons.net/lorc/broadsword.svg"
+      },
+      "Sword 5": {
+        "shade": "yellow",
+        "shape": "/i/game-icons.net/lorc/broadsword.svg"
+      },
+      "Sword 6": {
+        "shade": "blue",
+        "shape": "/i/game-icons.net/lorc/broadsword.svg"
+      }
+    },
+    "faceTemplates": [
+      {
+        "border": 1,
+        "radius": 8,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 60,
+            "height": 60,
+            "color": "white",
+            "value": "/i/icons/vtt_logo.svg",
+            "svgReplaces": {
+              "currentColor": "logoColor"
+            }
+          }
+        ]
+      },
+      {
+        "border": 1,
+        "radius": 8,
+        "objects": [
+          {
+            "type": "image",
+            "width": 60,
+            "height": 60,
+            "svgReplaces": {
+              "currentColor": "shapeColor"
+            },
+            "dynamicProperties": {
+              "color": "shade",
+              "value": "shape"
+            }
+          },
+          {
+            "type": "text",
+            "y": 18,
+            "color": "black",
+            "fontSize": 50,
+            "textAlign": "center",
+            "width": 60,
+            "dynamicProperties": {
+              "value": "text"
+            }
+          }
+        ]
+      }
+    ],
+    "cardDefaults": {
+      "width": 60,
+      "height": 60,
+      "logoColor": "#1f5ca6",
+      "shapeColor": "#ffffff80"
+    }
+  },
+  "007o": {
+    "deck": "u76yD",
+    "type": "card",
+    "cardType": "Diamond 1",
+    "id": "007o",
+    "z": 7699,
+    "parent": "2f98da1f-763d-404c-8bee-c4e28013a73c",
+    "activeFace": 1,
+    "x": 4,
+    "y": 4
+  },
+  "q6b9": {
+    "deck": "u76yD",
+    "type": "card",
+    "cardType": "Diamond 2",
+    "id": "q6b9",
+    "z": 7686,
+    "parent": "93d7112b-2ef6-442f-a8b3-1a5ab9b969e0",
+    "activeFace": 1,
+    "x": 4,
+    "y": 4
+  },
+  "3b6m": {
+    "deck": "u76yD",
+    "type": "card",
+    "cardType": "Diamond 3",
+    "id": "3b6m",
+    "z": 7685,
+    "parent": "b3e5a4cb-7cef-4e57-ac70-3d0163c2fcc6",
+    "activeFace": 1,
+    "x": 4,
+    "y": 4
+  },
+  "nhj6": {
+    "deck": "u76yD",
+    "type": "card",
+    "cardType": "Diamond 4",
+    "id": "nhj6",
+    "z": 7677,
+    "parent": "f4b29171-f571-4d94-8787-a5da6b683835",
+    "activeFace": 1,
+    "x": 4,
+    "y": 4
+  },
+  "qi0o": {
+    "deck": "u76yD",
+    "type": "card",
+    "cardType": "Diamond 5",
+    "id": "qi0o",
+    "z": 7689,
+    "parent": "9b475bb5-7fd8-476a-908a-0e796f6fdbb1",
+    "activeFace": 1,
+    "x": 4,
+    "y": 4
+  },
+  "nus1": {
+    "deck": "u76yD",
+    "type": "card",
+    "cardType": "Diamond 6",
+    "id": "nus1",
+    "z": 7672,
+    "parent": "a6adb7d6-7133-4461-9ef1-2c9b0da7b915",
+    "activeFace": 1,
+    "x": 4,
+    "y": 4
+  },
+  "j8bj": {
+    "deck": "u76yD",
+    "type": "card",
+    "cardType": "Heart 1",
+    "id": "j8bj",
+    "z": 7678,
+    "parent": "11de0a7b-439f-4c99-a5d9-f2eb29e638de",
+    "activeFace": 1,
+    "x": 4,
+    "y": 4
+  },
+  "xgo0": {
+    "deck": "u76yD",
+    "type": "card",
+    "cardType": "Heart 2",
+    "id": "xgo0",
+    "z": 7690,
+    "parent": "021b4989-6ffe-414d-88fb-bb4317bb6121",
+    "activeFace": 1,
+    "x": 4,
+    "y": 4
+  },
+  "dx6d": {
+    "deck": "u76yD",
+    "type": "card",
+    "cardType": "Heart 3",
+    "id": "dx6d",
+    "z": 7679,
+    "parent": "6b050d50-1f78-4791-9924-717655b7b5dd",
+    "activeFace": 1,
+    "x": 4,
+    "y": 4
+  },
+  "1cej": {
+    "deck": "u76yD",
+    "type": "card",
+    "cardType": "Heart 4",
+    "id": "1cej",
+    "z": 7675,
+    "parent": "631d00c3-fdb3-4e3c-bbf4-b50421825d93",
+    "activeFace": 1,
+    "x": 4,
+    "y": 4
+  },
+  "zwlx": {
+    "deck": "u76yD",
+    "type": "card",
+    "cardType": "Heart 5",
+    "id": "zwlx",
+    "z": 7684,
+    "parent": "5233eb7c-cb17-4b30-8b60-f4c7cf3ccbcc",
+    "activeFace": 1,
+    "x": 4,
+    "y": 4
+  },
+  "vudd": {
+    "deck": "u76yD",
+    "type": "card",
+    "cardType": "Heart 6",
+    "id": "vudd",
+    "z": 7681,
+    "parent": "aa238996-b3bf-4168-a665-57a4f4bbcfc1",
+    "activeFace": 1,
+    "x": 4,
+    "y": 4
+  },
+  "4sar": {
+    "deck": "u76yD",
+    "type": "card",
+    "cardType": "Spade 1",
+    "id": "4sar",
+    "z": 7670,
+    "parent": "0d6b98a9-39a8-49de-8c34-c1bbcfefde03",
+    "activeFace": 1,
+    "x": 4,
+    "y": 4
+  },
+  "vsk4": {
+    "deck": "u76yD",
+    "type": "card",
+    "cardType": "Spade 2",
+    "id": "vsk4",
+    "z": 7701,
+    "parent": "f4608f48-3976-41a3-8035-7605122a2707",
+    "activeFace": 1,
+    "x": 4,
+    "y": 4
+  },
+  "xagh": {
+    "deck": "u76yD",
+    "type": "card",
+    "cardType": "Spade 3",
+    "id": "xagh",
+    "z": 7680,
+    "parent": "e9885e5e-9c09-4715-a784-4d4db5b979f2",
+    "activeFace": 1,
+    "x": 4,
+    "y": 4
+  },
+  "0i3z": {
+    "deck": "u76yD",
+    "type": "card",
+    "cardType": "Spade 4",
+    "id": "0i3z",
+    "z": 7697,
+    "parent": "eff8ead1-4ad9-41c6-a8b8-70616bc99c6a",
+    "activeFace": 1,
+    "x": 4,
+    "y": 4
+  },
+  "4yc3": {
+    "deck": "u76yD",
+    "type": "card",
+    "cardType": "Spade 5",
+    "id": "4yc3",
+    "z": 7669,
+    "parent": "843e2eab-f52c-4cef-ad91-c7fb3d07b5d8",
+    "activeFace": 1,
+    "x": 4,
+    "y": 4
+  },
+  "13oa": {
+    "deck": "u76yD",
+    "type": "card",
+    "cardType": "Spade 6",
+    "id": "13oa",
+    "z": 7692,
+    "parent": "3def48dc-b5db-4ea4-b448-87306a72d494",
+    "activeFace": 1,
+    "x": 4,
+    "y": 4
+  },
+  "f1bv": {
+    "deck": "u76yD",
+    "type": "card",
+    "cardType": "Clubs 1",
+    "id": "f1bv",
+    "z": 7700,
+    "parent": "11ba4d9e-aaba-4b87-abb3-69f3539bceaf",
+    "activeFace": 1,
+    "x": 4,
+    "y": 4
+  },
+  "3jwf": {
+    "deck": "u76yD",
+    "type": "card",
+    "cardType": "Clubs 2",
+    "id": "3jwf",
+    "z": 7696,
+    "parent": "bc880138-09fa-442f-83b9-0b34d72745a6",
+    "activeFace": 1,
+    "x": 4,
+    "y": 4
+  },
+  "t7ss": {
+    "deck": "u76yD",
+    "type": "card",
+    "cardType": "Clubs 3",
+    "id": "t7ss",
+    "z": 7704,
+    "parent": "8affcea4-4754-4f24-93b0-512bb923ce52",
+    "x": 4,
+    "y": 4,
+    "activeFace": 1
+  },
+  "s29p": {
+    "deck": "u76yD",
+    "type": "card",
+    "cardType": "Clubs 4",
+    "id": "s29p",
+    "z": 7676,
+    "parent": "ce9a709b-8559-428e-a4f0-219de13c7c92",
+    "activeFace": 1,
+    "x": 4,
+    "y": 4
+  },
+  "q7oi": {
+    "deck": "u76yD",
+    "type": "card",
+    "cardType": "Clubs 5",
+    "id": "q7oi",
+    "z": 7691,
+    "parent": "dc30bfdb-e560-4ae3-97df-fb15321a3097",
+    "activeFace": 1,
+    "x": 4,
+    "y": 4
+  },
+  "uk23": {
+    "deck": "u76yD",
+    "type": "card",
+    "cardType": "Clubs 6",
+    "id": "uk23",
+    "z": 7673,
+    "parent": "17041459-c6b8-456d-bd9f-c69f77bc7c41",
+    "activeFace": 1,
+    "x": 4,
+    "y": 4
+  },
+  "u31s": {
+    "deck": "u76yD",
+    "type": "card",
+    "cardType": "Moons 1",
+    "id": "u31s",
+    "z": 7694,
+    "parent": "ab449ba5-56ab-4284-a279-da2916962bee",
+    "activeFace": 1,
+    "x": 4,
+    "y": 4
+  },
+  "86pf": {
+    "deck": "u76yD",
+    "type": "card",
+    "cardType": "Moons 2",
+    "id": "86pf",
+    "z": 7683,
+    "parent": "a6325c5b-ebf0-447b-8773-7042ad801180",
+    "activeFace": 1,
+    "x": 4,
+    "y": 4
+  },
+  "tdw7": {
+    "deck": "u76yD",
+    "type": "card",
+    "cardType": "Moons 3",
+    "id": "tdw7",
+    "z": 7703,
+    "parent": "65790b79-ec8c-4171-b96e-13510d67e361",
+    "activeFace": 1,
+    "x": 4,
+    "y": 4
+  },
+  "kmqa": {
+    "deck": "u76yD",
+    "type": "card",
+    "cardType": "Moons 4",
+    "id": "kmqa",
+    "z": 7702,
+    "parent": "390b42c6-ee5a-433c-b082-46b272303ac2",
+    "activeFace": 1,
+    "x": 4,
+    "y": 4
+  },
+  "wwhn": {
+    "deck": "u76yD",
+    "type": "card",
+    "cardType": "Moons 5",
+    "id": "wwhn",
+    "z": 7674,
+    "parent": "7349048d-4a46-46a4-81df-6f5214955388",
+    "activeFace": 1,
+    "x": 4,
+    "y": 4
+  },
+  "1rhr": {
+    "deck": "u76yD",
+    "type": "card",
+    "cardType": "Moons 6",
+    "id": "1rhr",
+    "z": 7671,
+    "parent": "cf3ad628-f864-4e57-83c5-b5349e67acb1",
+    "activeFace": 1,
+    "x": 4,
+    "y": 4
+  },
+  "hr1k": {
+    "deck": "u76yD",
+    "type": "card",
+    "cardType": "Sword 1",
+    "id": "hr1k",
+    "z": 7682,
+    "parent": "c98e7f93-8261-4c86-ac57-0fee2fd8535d",
+    "activeFace": 1,
+    "x": 4,
+    "y": 4
+  },
+  "syz1": {
+    "deck": "u76yD",
+    "type": "card",
+    "cardType": "Sword 2",
+    "id": "syz1",
+    "z": 7688,
+    "parent": "fd1c0317-15b5-42a1-8055-34096acfb3e8",
+    "activeFace": 1,
+    "x": 4,
+    "y": 4
+  },
+  "dtpz": {
+    "deck": "u76yD",
+    "type": "card",
+    "cardType": "Sword 3",
+    "id": "dtpz",
+    "z": 7693,
+    "parent": "ea8730a5-22db-4cab-bee5-361d608a71a4",
+    "activeFace": 1,
+    "x": 4,
+    "y": 4
+  },
+  "w19e": {
+    "deck": "u76yD",
+    "type": "card",
+    "cardType": "Sword 4",
+    "id": "w19e",
+    "z": 7687,
+    "parent": "19ceebae-144b-45d4-a4b3-2b29bf3e615f",
+    "activeFace": 1,
+    "x": 4,
+    "y": 4
+  },
+  "kxxm": {
+    "deck": "u76yD",
+    "type": "card",
+    "cardType": "Sword 5",
+    "id": "kxxm",
+    "z": 7698,
+    "parent": "98cfbf73-87df-4cca-a780-819acb949ed4",
+    "activeFace": 1,
+    "x": 4,
+    "y": 4
+  },
+  "2md0": {
+    "deck": "u76yD",
+    "type": "card",
+    "cardType": "Sword 6",
+    "id": "2md0",
+    "z": 7695,
+    "parent": "35d5a03b-2f19-4281-ab60-9ad597963ebb",
+    "activeFace": 1,
+    "x": 4,
+    "y": 4
+  },
+  "p1 score": {
+    "type": "label",
+    "id": "p1 score",
+    "x": 51,
+    "y": 465,
+    "width": 140,
+    "height": 44,
+    "z": 3943,
+    "css": "font-size: 30px;",
+    "text": 0
+  },
+  "p1_incrementButton": {
+    "type": "button",
+    "id": "p1_incrementButton",
+    "parent": "p1 score",
+    "x": 100,
+    "y": -2,
+    "width": 36,
+    "height": 36,
+    "movableInEdit": false,
+    "text": "+",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "p1 score",
+        "mode": "inc",
+        "value": 1
+      },
+      {
+        "func": "LABEL",
+        "label": "bank",
+        "mode": "inc",
+        "value": -1
+      }
+    ]
+  },
+  "p1_decrementButton": {
+    "type": "button",
+    "id": "p1_decrementButton",
+    "parent": "p1 score",
+    "x": 11,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "movableInEdit": false,
+    "text": "-",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "p1 score",
+        "mode": "inc",
+        "value": -1
+      },
+      {
+        "func": "LABEL",
+        "label": "bank",
+        "mode": "inc",
+        "value": 1
+      }
+    ]
+  },
+  "p2 score": {
+    "type": "label",
+    "id": "p2 score",
+    "x": 339,
+    "y": 466,
+    "width": 140,
+    "height": 44,
+    "z": 3945,
+    "css": "font-size: 30px;",
+    "text": 0
+  },
+  "p2_incrementButton": {
+    "type": "button",
+    "id": "p2_incrementButton",
+    "parent": "p2 score",
+    "x": 98,
+    "y": 2,
+    "width": 36,
+    "height": 36,
+    "movableInEdit": false,
+    "text": "+",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "p2 score",
+        "mode": "inc",
+        "value": 1
+      },
+      {
+        "func": "LABEL",
+        "label": "bank",
+        "mode": "inc",
+        "value": -1
+      }
+    ]
+  },
+  "p2_decrementButton": {
+    "type": "button",
+    "id": "p2_decrementButton",
+    "parent": "p2 score",
+    "x": 9,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "movableInEdit": false,
+    "text": "-",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "p2 score",
+        "mode": "inc",
+        "value": -1
+      },
+      {
+        "func": "LABEL",
+        "label": "bank",
+        "mode": "inc",
+        "value": 1
+      }
+    ]
+  },
+  "p3 score": {
+    "type": "label",
+    "id": "p3 score",
+    "x": 589,
+    "y": 468,
+    "width": 140,
+    "height": 44,
+    "z": 3945,
+    "css": "font-size: 30px;",
+    "text": 0
+  },
+  "p3_decrementButton": {
+    "type": "button",
+    "id": "p3_decrementButton",
+    "parent": "p3 score",
+    "x": 9,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "movableInEdit": false,
+    "text": "-",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "p3 score",
+        "mode": "inc",
+        "value": -1
+      },
+      {
+        "func": "LABEL",
+        "label": "bank",
+        "mode": "inc",
+        "value": 1
+      }
+    ]
+  },
+  "p3_incrementButton": {
+    "type": "button",
+    "id": "p3_incrementButton",
+    "parent": "p3 score",
+    "x": 98,
+    "y": 2,
+    "width": 36,
+    "height": 36,
+    "movableInEdit": false,
+    "text": "+",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "p3 score",
+        "mode": "inc",
+        "value": 1
+      },
+      {
+        "func": "LABEL",
+        "label": "bank",
+        "mode": "inc",
+        "value": -1
+      }
+    ]
+  },
+  "p4 score": {
+    "type": "label",
+    "id": "p4 score",
+    "x": 841,
+    "y": 469,
+    "width": 140,
+    "height": 44,
+    "z": 3944,
+    "css": "font-size: 30px;",
+    "text": 0
+  },
+  "p4_incrementButton": {
+    "type": "button",
+    "id": "p4_incrementButton",
+    "parent": "p4 score",
+    "x": 100,
+    "y": -2,
+    "width": 36,
+    "height": 36,
+    "movableInEdit": false,
+    "text": "+",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "p4 score",
+        "mode": "inc",
+        "value": 1
+      },
+      {
+        "func": "LABEL",
+        "label": "bank",
+        "mode": "inc",
+        "value": -1
+      }
+    ]
+  },
+  "p4_decrementButton": {
+    "type": "button",
+    "id": "p4_decrementButton",
+    "parent": "p4 score",
+    "x": 4,
+    "y": -2,
+    "width": 36,
+    "height": 36,
+    "movableInEdit": false,
+    "text": "-",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "p4 score",
+        "mode": "inc",
+        "value": -1
+      },
+      {
+        "func": "LABEL",
+        "label": "bank",
+        "mode": "inc",
+        "value": 1
+      }
+    ]
+  },
+  "p5 score": {
+    "type": "label",
+    "id": "p5 score",
+    "x": 1087,
+    "y": 474,
+    "width": 140,
+    "height": 44,
+    "z": 3944,
+    "css": "font-size: 30px;",
+    "text": 0
+  },
+  "p5_incrementButton": {
+    "type": "button",
+    "id": "p5_incrementButton",
+    "parent": "p5 score",
+    "x": 100,
+    "y": -2,
+    "width": 36,
+    "height": 36,
+    "movableInEdit": false,
+    "text": "+",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "p5 score",
+        "mode": "inc",
+        "value": 1
+      },
+      {
+        "func": "LABEL",
+        "label": "bank",
+        "mode": "inc",
+        "value": -1
+      }
+    ]
+  },
+  "p5_decrementButton": {
+    "type": "button",
+    "id": "p5_decrementButton",
+    "parent": "p5 score",
+    "x": 4,
+    "y": -2,
+    "width": 36,
+    "height": 36,
+    "movableInEdit": false,
+    "text": "-",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "p5 score",
+        "mode": "inc",
+        "value": -1
+      },
+      {
+        "func": "LABEL",
+        "label": "bank",
+        "mode": "inc",
+        "value": 1
+      }
+    ]
+  },
+  "p6 score": {
+    "type": "label",
+    "id": "p6 score",
+    "x": 1340,
+    "y": 468,
+    "width": 140,
+    "height": 44,
+    "z": 3944,
+    "css": "font-size: 30px;",
+    "text": 0
+  },
+  "p6_incrementButton": {
+    "type": "button",
+    "id": "p6_incrementButton",
+    "parent": "p6 score",
+    "x": 100,
+    "y": -2,
+    "width": 36,
+    "height": 36,
+    "movableInEdit": false,
+    "text": "+",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "p6 score",
+        "mode": "inc",
+        "value": 1
+      },
+      {
+        "func": "LABEL",
+        "label": "bank",
+        "mode": "inc",
+        "value": -1
+      }
+    ]
+  },
+  "p6_decrementButton": {
+    "type": "button",
+    "id": "p6_decrementButton",
+    "parent": "p6 score",
+    "x": 4,
+    "y": -2,
+    "width": 36,
+    "height": 36,
+    "movableInEdit": false,
+    "text": "-",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "p6 score",
+        "mode": "inc",
+        "value": -1
+      },
+      {
+        "func": "LABEL",
+        "label": "bank",
+        "mode": "inc",
+        "value": 1
+      }
+    ]
+  },
+  "bank": {
+    "type": "label",
+    "id": "bank",
+    "x": 805.61,
+    "y": 192.03,
+    "width": 140,
+    "height": 44,
+    "z": 4027,
+    "css": "font-size: 30px;",
+    "editable": true,
+    "text": 36
+  },
+  "dealButton": {
+    "type": "button",
+    "id": "dealButton",
+    "x": 560.25,
+    "y": 161.59,
+    "z": 4026,
+    "text": "DEAL",
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "u76y",
+        "to": [
+          "9b475bb5-7fd8-476a-908a-0e796f6fdbb1",
+          "390b42c6-ee5a-433c-b082-46b272303ac2",
+          "ab449ba5-56ab-4284-a279-da2916962bee",
+          "7349048d-4a46-46a4-81df-6f5214955388",
+          "93d7112b-2ef6-442f-a8b3-1a5ab9b969e0",
+          "eff8ead1-4ad9-41c6-a8b8-70616bc99c6a",
+          "843e2eab-f52c-4cef-ad91-c7fb3d07b5d8",
+          "fd1c0317-15b5-42a1-8055-34096acfb3e8",
+          "e9885e5e-9c09-4715-a784-4d4db5b979f2",
+          "3def48dc-b5db-4ea4-b448-87306a72d494",
+          "11ba4d9e-aaba-4b87-abb3-69f3539bceaf",
+          "8affcea4-4754-4f24-93b0-512bb923ce52",
+          "cf3ad628-f864-4e57-83c5-b5349e67acb1",
+          "0d6b98a9-39a8-49de-8c34-c1bbcfefde03",
+          "631d00c3-fdb3-4e3c-bbf4-b50421825d93",
+          "f4608f48-3976-41a3-8035-7605122a2707",
+          "c98e7f93-8261-4c86-ac57-0fee2fd8535d",
+          "a6adb7d6-7133-4461-9ef1-2c9b0da7b915",
+          "35d5a03b-2f19-4281-ab60-9ad597963ebb",
+          "98cfbf73-87df-4cca-a780-819acb949ed4",
+          "2f98da1f-763d-404c-8bee-c4e28013a73c",
+          "19ceebae-144b-45d4-a4b3-2b29bf3e615f",
+          "021b4989-6ffe-414d-88fb-bb4317bb6121",
+          "ce9a709b-8559-428e-a4f0-219de13c7c92",
+          "dc30bfdb-e560-4ae3-97df-fb15321a3097",
+          "ea8730a5-22db-4cab-bee5-361d608a71a4",
+          "11de0a7b-439f-4c99-a5d9-f2eb29e638de",
+          "f4b29171-f571-4d94-8787-a5da6b683835",
+          "17041459-c6b8-456d-bd9f-c69f77bc7c41",
+          "bc880138-09fa-442f-83b9-0b34d72745a6",
+          "65790b79-ec8c-4171-b96e-13510d67e361",
+          "a6325c5b-ebf0-447b-8773-7042ad801180",
+          "aa238996-b3bf-4168-a665-57a4f4bbcfc1",
+          "6b050d50-1f78-4791-9924-717655b7b5dd",
+          "5233eb7c-cb17-4b30-8b60-f4c7cf3ccbcc",
+          "b3e5a4cb-7cef-4e57-ac70-3d0163c2fcc6"
+        ],
+        "face": 1
+      }
+    ]
+  },
+  "recallButton": {
+    "type": "button",
+    "id": "recallButton",
+    "parent": "u76y",
+    "fixedParent": true,
+    "y": 110,
+    "width": 111,
+    "height": 40,
+    "movableInEdit": false,
+    "text": "Recall & Shuffle",
+    "clickRoutine": [
+      {
+        "func": "RECALL",
+        "holder": "${PROPERTY parent}"
+      },
+      {
+        "func": "FLIP",
+        "holder": "${PROPERTY parent}",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "${PROPERTY parent}"
+      }
+    ],
+    "gameStartRoutine": [
+      {
+        "func": "CLICK",
+        "collection": [
+          "recallButton"
+        ]
+      },
+      {
+        "func": "CLICK",
+        "collection": [
+          "dealButton"
+        ]
+      }
+    ]
+  }
+}
