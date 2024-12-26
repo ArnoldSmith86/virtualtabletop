@@ -1652,6 +1652,7 @@ input.switchbox[type="checkbox"]:checked + .switchbox{
   -moz-appearance: textfield;
   appearance: textfield;
   margin: 0;
+  color: black
 }
 .countInput input[type=number]::-webkit-inner-spin-button,
 .countInput input[type=number]::-webkit-outer-spin-button {
