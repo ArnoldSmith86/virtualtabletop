@@ -1676,20 +1676,11 @@ function jeCommandOptions() {
   $('#jeCommands').insertBefore(div, $('#jeTopButtons').nextSibling);
 
   for(const option of jeCommandWithOptions.options) {
-    const fieldId = `${jeCommandWithOptions.id}_${option.label}`;
     formField(option, $('#jeCommandOptions div'), `${jeCommandWithOptions.id}_${option.label}`);
     $('#jeCommandOptions div').append(document.createElement('br'));
-    if(option.label === 'Increment IDs') {
-      div.dataset.incrementIdsFieldId = fieldId;
-    }
-  }
-
-  const incrementIdsFieldId = div.dataset.incrementIdsFieldId;
-  if (incrementIdsFieldId) {
-    const $incrementIdsSelect = $(`[id="${incrementIdsFieldId}"]`);
-    if ($incrementIdsSelect.length) {
-      $incrementIdsSelect.focus();
-    }
+    const firstInput = $('input,select', div);
+    if(firstInput)
+    firstInput.focus();
   }
 
   $a('#jeCommandOptions button')[0].addEventListener('click', async function() {
