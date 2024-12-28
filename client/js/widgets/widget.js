@@ -874,7 +874,7 @@ export class Widget extends StateManaged {
         mouseCoords,
         seatIndex: playerSeats.length ? playerSeats[0].get('index') : null,
         seatID: playerSeats.length ? playerSeats[0].get('id') : null,
-        seatsActive: activeSeats.length ? activeSeats.map(seat=>seat.get('id')) : null
+        activeSeats: activeSeats.length ? activeSeats.map(seat=>seat.get('id')) : null
       }, initialVariables, {
         playerName,
         playerColor,

@@ -26,7 +26,7 @@
       "time": "",
       "attribution": "",
       "showName": false,
-      "lastUpdate": 1735410525080,
+      "lastUpdate": 1735413928236,
       "skill": "",
       "description": "",
       "similarImage": "",
@@ -296,7 +296,7 @@
     "y": 358,
     "layer": 1,
     "z": 128,
-    "text": "seatsActive",
+    "text": "activeSeats",
     "clickRoutine": [
       {
         "func": "SET",
@@ -304,7 +304,7 @@
           "varLabel3"
         ],
         "property": "text",
-        "value": "${seatsActive}"
+        "value": "${activeSeats}"
       }
     ]
   },
@@ -332,7 +332,8 @@
       "justify-content": "center",
       "align-items": "center",
       "border": "2px solid black"
-    }
+    },
+    "text": []
   },
   "collInfo2": {
     "id": "collInfo2",
@@ -342,6 +343,6 @@
     "height": 150,
     "z": 127,
     "movable": false,
-    "text": "This works the same as 'seatsActive' except that it is a collection instead of a variable."
+    "text": "This works the same as the 'activeSeats' variable except that it is a collection. To show the result, this button GETs the 'id' values of all the seats occupied by any player."
   }
 }
