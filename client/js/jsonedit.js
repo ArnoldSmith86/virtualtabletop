@@ -207,19 +207,6 @@ const jeCommands = [
     }
   },
   {
-    id: 'je_toggleWide',
-    name: 'Toggle wide editor',
-    icon: '[width]',
-    forceKey: 'ArrowRight',
-    classes: _=> $('#jsonEditor').classList.contains('wide') ? 'onState' : '',
-    call: async function() {
-      $('#jsonEditor').classList.toggle('wide');
-      setScale();
-      $('#jeTextHighlight').scrollTop = $('#jeText').scrollTop;
-      jeDisplayTree();
-    }
-  },
-  {
     id: 'je_toggleHighlight',
     name: 'Toggle widget highlighting',
     icon: 'flashlight_on',
@@ -2009,7 +1996,7 @@ function jeTreeGetWidgetHTML(widget) {
   const type = widget.get('type');
 
   let result = `${colored(widget.get('id'), 'key')} (${colored(type || 'basic','string')} - `;
-  if(String(widget.get('id')).match(/^[0-9a-z]{4}$/) && $('#jsonEditor').classList.contains('wide')) {
+  if(String(widget.get('id')).match(/^[0-9a-z]{4}$/)) {
     if(type == 'card' && !String(widget.get('cardType')).match(/^type-[0-9a-f-]{36}$/))
       result += `${colored(widget.get('cardType'),'extern')} - `;
     if(type == 'button' && widget.get('text'))
