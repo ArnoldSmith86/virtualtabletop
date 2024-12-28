@@ -1680,7 +1680,7 @@ function jeCommandOptions() {
     $('#jeCommandOptions div').append(document.createElement('br'));
     const firstInput = $('input,select', div);
     if(firstInput)
-    firstInput.focus();
+      firstInput.focus();
   }
 
   $a('#jeCommandOptions button')[0].addEventListener('click', async function() {
