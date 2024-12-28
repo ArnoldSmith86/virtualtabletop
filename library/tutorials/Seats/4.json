@@ -14,22 +14,6 @@
     "z": 24,
     "index": 2
   },
-  "seat3": {
-    "type": "seat",
-    "id": "seat3",
-    "x": 875,
-    "y": 159,
-    "z": 25,
-    "index": 3
-  },
-  "seat4": {
-    "type": "seat",
-    "id": "seat4",
-    "x": 1225,
-    "y": 159,
-    "z": 26,
-    "index": 4
-  },
   "_meta": {
     "version": 16,
     "info": {
@@ -42,7 +26,7 @@
       "time": "",
       "attribution": "",
       "showName": false,
-      "lastUpdate": 1735364787838,
+      "lastUpdate": 1735410525080,
       "skill": "",
       "description": "",
       "similarImage": "",
@@ -163,74 +147,6 @@
     },
     "movable": false
   },
-  "varButton3": {
-    "type": "button",
-    "id": "varButton3",
-    "x": 917,
-    "y": 358,
-    "layer": 1,
-    "z": 126,
-    "text": "seatsAll",
-    "clickRoutine": [
-      {
-        "func": "SET",
-        "collection": [
-          "varLabel3"
-        ],
-        "property": "text",
-        "value": "${seatsAll}"
-      }
-    ]
-  },
-  "varButton4": {
-    "type": "button",
-    "id": "varButton4",
-    "x": 1267,
-    "y": 358,
-    "layer": 1,
-    "z": 128,
-    "text": "seatsActive",
-    "clickRoutine": [
-      {
-        "func": "SET",
-        "collection": [
-          "varLabel4"
-        ],
-        "property": "text",
-        "value": "${seatsActive}"
-      }
-    ]
-  },
-  "varLabel3": {
-    "id": "varLabel3",
-    "x": 880,
-    "y": 287,
-    "width": 150,
-    "height": 50,
-    "css": {
-      "background": "white",
-      "display": "flex",
-      "justify-content": "center",
-      "align-items": "center",
-      "border": "2px solid black"
-    },
-    "movable": false
-  },
-  "varLabel4": {
-    "id": "varLabel4",
-    "x": 1230,
-    "y": 287,
-    "width": 150,
-    "height": 50,
-    "css": {
-      "background": "white",
-      "display": "flex",
-      "justify-content": "center",
-      "align-items": "center",
-      "border": "2px solid black"
-    },
-    "movable": false
-  },
   "varInfo1": {
     "id": "varInfo1",
     "x": 64,
@@ -249,26 +165,6 @@
     "height": 150,
     "movable": false,
     "text": "This works the same as 'seatID' except that it is the index value of the seat. While the index value can be something other than a number, several functions of VTT, including 'TURN' and 'SCORE' except the index to be a whole number.",
-    "z": 127
-  },
-  "varInfo3": {
-    "id": "varInfo3",
-    "x": 828,
-    "y": 453,
-    "width": 250,
-    "height": 150,
-    "movable": false,
-    "text": "This is an array of the 'id's of all seats in the room. The value is null if there are no seats.",
-    "z": 127
-  },
-  "varInfo4": {
-    "id": "varInfo4",
-    "x": 1185,
-    "y": 453,
-    "width": 250,
-    "height": 150,
-    "movable": false,
-    "text": "This is an array of the 'id's of all the seats in the room that have seated players. The value is null if there are no seats with players.",
     "z": 127
   },
   "subHeader2": {
@@ -336,26 +232,10 @@
     ],
     "width": 120
   },
-  "collLabel4": {
-    "id": "collLabel4",
-    "x": 1231,
-    "y": 661,
-    "width": 150,
-    "height": 50,
-    "z": 126,
-    "movable": false,
-    "css": {
-      "background": "white",
-      "display": "flex",
-      "justify-content": "center",
-      "align-items": "center",
-      "border": "2px solid black"
-    }
-  },
   "collButton4": {
     "type": "button",
     "id": "collButton4",
-    "x": 1248,
+    "x": 897,
     "y": 732,
     "width": 120,
     "layer": 1,
@@ -370,7 +250,7 @@
       {
         "func": "SET",
         "collection": [
-          "collLabel4"
+          "collLabel2"
         ],
         "property": "text",
         "value": "${id}"
@@ -378,20 +258,26 @@
     ],
     "text": "activeSeats"
   },
-  "collInfo4": {
-    "id": "collInfo4",
-    "x": 1179,
-    "y": 827,
-    "width": 250,
-    "height": 150,
-    "z": 127,
-    "movable": false,
-    "text": "This works the same as 'seatsActive' except that it is a collection instead of a variable."
+  "seat4": {
+    "type": "seat",
+    "id": "seat4",
+    "x": 1225,
+    "y": 159,
+    "z": 26,
+    "index": 4
   },
-  "collLabel3": {
-    "id": "collLabel3",
-    "x": 881,
-    "y": 661,
+  "seat3": {
+    "type": "seat",
+    "id": "seat3",
+    "x": 875,
+    "y": 159,
+    "z": 25,
+    "index": 3
+  },
+  "varLabel3": {
+    "id": "varLabel3",
+    "x": 879,
+    "y": 287,
     "width": 150,
     "height": 50,
     "movable": false,
@@ -403,40 +289,59 @@
       "border": "2px solid black"
     }
   },
-  "collButton3": {
+  "varButton3": {
     "type": "button",
-    "id": "collButton3",
-    "x": 898,
-    "y": 732,
-    "width": 120,
+    "id": "varButton3",
+    "x": 916,
+    "y": 358,
     "layer": 1,
     "z": 128,
-    "text": "allSeats",
+    "text": "seatsActive",
     "clickRoutine": [
-      {
-        "func": "GET",
-        "collection": "allSeats",
-        "property": "id",
-        "aggregation": "array"
-      },
       {
         "func": "SET",
         "collection": [
-          "collLabel3"
+          "varLabel3"
         ],
         "property": "text",
-        "value": "${id}"
+        "value": "${seatsActive}"
       }
     ]
   },
-  "collInfo3": {
-    "id": "collInfo3",
-    "x": 827,
+  "varInfo3": {
+    "id": "varInfo3",
+    "x": 834,
+    "y": 453,
+    "width": 250,
+    "height": 150,
+    "z": 127,
+    "movable": false,
+    "text": "This is an array of the 'id's of all the seats in the room that have seated players. The value is null if there are no seats with players."
+  },
+  "collLabel2": {
+    "id": "collLabel2",
+    "x": 880,
+    "y": 661,
+    "width": 150,
+    "height": 50,
+    "z": 126,
+    "movable": false,
+    "css": {
+      "background": "white",
+      "display": "flex",
+      "justify-content": "center",
+      "align-items": "center",
+      "border": "2px solid black"
+    }
+  },
+  "collInfo2": {
+    "id": "collInfo2",
+    "x": 828,
     "y": 827,
     "width": 250,
     "height": 150,
     "z": 127,
     "movable": false,
-    "text": "This works the same as 'seatsAll' except that it is a collection instead of a variable."
+    "text": "This works the same as 'seatsActive' except that it is a collection instead of a variable."
   }
 }
