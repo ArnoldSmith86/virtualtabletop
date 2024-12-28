@@ -61,6 +61,7 @@ onLoad(function() {
     preventReconnect();
     connection.close();
     $('#clientErrorOverlay textarea').value = '';
+    $('#clientErrorStack').textContent = details.error;
     showOverlay('clientErrorOverlay');
     $('#clientErrorOverlay button').addEventListener('click', async function() {
       try {

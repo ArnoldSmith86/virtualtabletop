@@ -53,6 +53,12 @@ class ToolboxModule extends SidebarModule {
 
   async button_loadWidgetsFromBuffer() {
     const widgetBuffer = JSON.parse(localStorage.getItem('widgetBuffer') || '[]');
+    const duplicates = widgetBuffer.filter(state=>widgets.has(state.id)).map(state=>state.id);
+    if (duplicates.length) {
+      const duplicatesList = duplicates.join(', ');
+      const overwriteAll = confirm(`The following widget IDs already exist: ${duplicatesList}\n\nPress OK to overwrite these widgets, or Cancel to abort loading.`);
+      if (!overwriteAll) return;
+    }
     batchStart();
     setDeltaCause(`${getPlayerDetails().playerName} loaded widgets from the widget buffer in editor`);
     for(const state of widgetBuffer) {

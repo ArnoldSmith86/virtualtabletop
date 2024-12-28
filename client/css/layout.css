@@ -391,6 +391,7 @@ body.aspectTooGood.hiddenToolbar {
       background: var(--toolbarColor);
       box-shadow: 0 0 5px #0005;
       pointer-events: none;
+      transition: color 0.3s ease;   
     }
 
     body:not(.loading) .toolbarButton:hover .tooltip, body.wideToolbar .toolbarButton .tooltip {
@@ -807,6 +808,20 @@ body.jsonEdit:not(.hitTest) .widget.foreign, body.jsonEdit:not(.hitTest):not(.sh
   pointer-events: none;
 }
 
+.widget.limbo {
+  opacity: 0.5;
+  border: 5px dashed darkred;
+}
+.widget.limbo::before {
+  content: 'Invalid Parent';
+  font-size: 16px;
+  color: darkred;
+}
+
+body:not(.edit) .widget.limbo {
+  display: none;
+}
+
 #clientPointer {
   visibility: hidden;
   position: fixed;
@@ -854,6 +869,11 @@ button {
   border-radius: 5px;
   background-repeat: no-repeat;
   margin: 1px;
+  transition: color 0.3s ease
+}
+
+button.playerChange .tooltip.playerChange {
+  color: yellow
 }
 
 button:hover {
@@ -1632,6 +1652,7 @@ input.switchbox[type="checkbox"]:checked + .switchbox{
   -moz-appearance: textfield;
   appearance: textfield;
   margin: 0;
+  color: black
 }
 .countInput input[type=number]::-webkit-inner-spin-button,
 .countInput input[type=number]::-webkit-outer-spin-button {

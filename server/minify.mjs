@@ -54,6 +54,7 @@ export default async function minifyHTML() {
     'client/js/statemanaged.js',
     'client/js/color.js',
     'client/js/symbols.js',
+    'client/js/audio.js',
 
     'client/js/overlays/players.js',
     'client/js/overlays/states.js',
@@ -184,7 +185,7 @@ async function compress(htmlFile, cssFiles, jsFiles) {
   htmlString = htmlString.replace(/\ \/\*\*\*\ EXTERNAL_URL\ \*\*\*\/\ /g, _=>Config.get('externalURL'));
 
   const css = await compressCSS(cssFiles);
-  htmlString = htmlString.replace(/\ \/\*\*\*\ CSS\ \*\*\*\/\ /, _=>css).replace(/\ \/\/\*\*\*\ CONFIG\ \*\*\*\/\/\ /, _=>`const config = ${JSON.stringify(Config.config)};`);
+  htmlString = htmlString.replace(/\ \/\*\*\*\ CSS\ \*\*\*\/\ /, _=>css).replace(/\ \/\/\*\*\*\ CONFIG\ \*\*\*\/\/\ /, _=>`const config = ${JSON.stringify(Config.getClientConfig())};`);
 
   const js = await compressJS(jsFiles);
   htmlString = htmlString.replace(/\ \/\/\*\*\*\ JS\ \*\*\*\/\/\ /, _=>js);

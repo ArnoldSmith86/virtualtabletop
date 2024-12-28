@@ -366,6 +366,10 @@ export function formField(field, dom, id) {
   }
 }
 
+function html(string) {
+  return String(string).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
+
 export function applyValuesToDOM(parent, obj) {
   for(const dom of $a('[data-field]', parent)) {
     if(obj[dom.dataset.field]) {

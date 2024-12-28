@@ -87,13 +87,21 @@ const jeCommands = [
     call: async function(options) {
       const sourceURL = options.URL.replace(/\/[^\/]+$/, a=>`/state${a}`);
       const targetURL = location.href.replace(/\/[^\/]+$/, a=>`/state${a}`);
-      fetch(sourceURL).then(r=>r.text()).then(t=>{
-        fetch(targetURL,{
+
+      try {
+        const sourceResp = await fetch(sourceURL);
+        if (!sourceResp.ok) throw new Error('Failed to fetch source');
+        const data = await sourceResp.text();
+
+        const targetResp = await fetch(targetURL, {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
-          body: t
-        })
-      });
+          body: data
+        });
+        if (!targetResp.ok) throw new Error('Failed to update target');
+      } catch (err) {
+        alert(err.message);
+      }
     }
   },
   {
@@ -196,19 +204,6 @@ const jeCommands = [
       const p = widgets.get(jeStateNow.parent);
       setSelection([ p ]);
       jeSelectWidget(p);
-    }
-  },
-  {
-    id: 'je_toggleWide',
-    name: 'Toggle wide editor',
-    icon: '[width]',
-    forceKey: 'ArrowRight',
-    classes: _=> $('#jsonEditor').classList.contains('wide') ? 'onState' : '',
-    call: async function() {
-      $('#jsonEditor').classList.toggle('wide');
-      setScale();
-      $('#jeTextHighlight').scrollTop = $('#jeText').scrollTop;
-      jeDisplayTree();
     }
   },
   {
@@ -452,7 +447,7 @@ const jeCommands = [
         for(const object of face.objects) {
           for(const property in object.dynamicProperties || {})
             cardType[object.dynamicProperties[property]] = '';
-          ((object.css || '').match(/--[a-zA-Z]+/g) || []).forEach(m=>cssVariables[`${m}: black`]=true);
+          (JSON.stringify(object.css || '').match(/--[a-zA-Z]+/g) || []).forEach(m=>cssVariables[`${m}: black`]=true);
         }
       }
       const css = Object.keys(cssVariables).join('; ');
@@ -1207,7 +1202,7 @@ function jeAddCommands() {
   widgetTypes.push(jeAddWidgetPropertyCommands(new Spinner(), widgetBase));
   widgetTypes.push(jeAddWidgetPropertyCommands(new Timer(), widgetBase));
 
-  jeAddRoutineOperationCommands('AUDIO', { source: '', type: 'audio/mpeg', maxVolume: 1.0, length: null, player: null });
+  jeAddRoutineOperationCommands('AUDIO', { source: '', maxVolume: 1.0, length: null, player: null, silence: false, count: 1 });
   jeAddRoutineOperationCommands('CALL', { widget: 'id', routine: 'clickRoutine', return: true, arguments: {}, variable: 'result' });
   jeAddRoutineOperationCommands('CANVAS', { canvas: null, mode: 'reset', x: 0, y: 0, value: 1 ,color:'#1F5CA6' });
   jeAddRoutineOperationCommands('CLICK', { collection: 'DEFAULT', count: 1 , mode:'respect' });
@@ -1290,7 +1285,6 @@ function jeAddCommands() {
   jeAddEnumCommands('^[a-z]+ ↦ type', widgetTypes.slice(1));
   jeAddEnumCommands('^.*\\([A-Z]+\\) ↦ value', [ '${}' ]);
   jeAddEnumCommands('^deck ↦ faceTemplates ↦ [0-9]+ ↦ objects ↦ [0-9]+ ↦ textAlign', [ 'left', 'center', 'right' ]);
-  jeAddEnumCommands('^.*\\(AUDIO\\) ↦ type', [ 'audio/midi', 'audio/mpeg', 'audio/ogg', 'audio/wav', 'audio/x-wav' ]);
   jeAddEnumCommands('^.*\\(AUDIO\\) ↦ player', [ '${}', '${getPlayerDetails().playerName}' ]);
   jeAddEnumCommands('^.*\\(CANVAS\\) ↦ mode', [ 'set', 'inc', 'dec', 'change', 'reset', 'setPixel' ]);
   jeAddEnumCommands('^.*\\(CLICK\\) ↦ mode', [ 'respect', 'ignoreClickable', 'ignoreClickRoutine', 'ignoreAll' ]);
@@ -1724,8 +1718,8 @@ async function jeApplyChangesMulti() {
 
 function jeApplyDelta(delta) {
   if(jeMode == 'widget') {
-    if(delta.s[jeStateNow.id] && delta.s[jeStateNow.id].type !== undefined) {
-      const w = widgets.get(jeStateNow.id);
+    if(delta.s[jeWidget.id] && delta.s[jeWidget.id].type !== undefined) {
+      const w = widgets.get(jeWidget.id);
       jePlainWidget = new w.constructor();
       jeColorize();
     }
@@ -1743,6 +1737,23 @@ function jeApplyDelta(delta) {
           jeSelectWidget(widgets.get(jeStateNow.id), false, true);
         }
       }
+    }
+
+    // if the JSON in the editor is invalid, and the delta contains the widget, try to update the invalid JSON as much as possible
+    if(!jeStateNow && jeJSONerror && delta.s[jeWidget.id]) {
+      let text = $('#jeText').textContent;
+      for(const [ key, value ] of Object.entries(delta.s[jeWidget.id])) {
+        if(value === null) {
+          if(!text.match(new RegExp(`^  "${key}": ${JSON.stringify(jeWidget.getDefaultValue(key))},?$`, 'm')))
+            text = text.replace(new RegExp(`,\n?\n  "${key}": ("[^"]*"|true|false|\\d+(\\.\\d+)?)(?=,?$)`, 'gm'), '');
+        } else if(!text.match(new RegExp(`^  "${key}"`, 'm')))
+          text = text.replace(new RegExp(`\n\\}`, 'gm'), `,\n  "${key}": ${JSON.stringify(value)}\n}`);
+        else if(text.match(new RegExp(`^  "${key}": ("[^"]*"|true|false|\\d+(\\.\\d+)?),?$`, 'm')))
+          text = text.replace(new RegExp(`^  "${key}":[^,\n]*`, 'gm'), `  "${key}": ${JSON.stringify(value)}`);
+        else
+          text = text + `\n\n--- GOT DELTA WHILE JSON WAS INVALID ---\n${delta.c}\n\nApply this to your JSON:\n\n  "${key}": ${JSON.stringify(value, null, '  ').replace(/\n/g, '\n  ')}`;
+      }
+      jeSet(text);
     }
   }
 
@@ -1804,6 +1815,9 @@ function jeCommandOptions() {
   for(const option of jeCommandWithOptions.options) {
     formField(option, $('#jeCommandOptions div'), `${jeCommandWithOptions.id}_${option.label}`);
     $('#jeCommandOptions div').append(document.createElement('br'));
+    const firstInput = $('input,select', div);
+    if(firstInput)
+      firstInput.focus();
   }
 
   $a('#jeCommandOptions button')[0].addEventListener('click', async function() {
@@ -1994,10 +2008,6 @@ function jeUpdateMulti() {
   jeSet(jeStateBefore = JSON.stringify(jeStateNow, null, '  '));
 }
 
-function html(string) {
-  return String(string).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
-}
-
 function jeColorize() {
   const langObj = [
     [ /^( +")(.*)( \(in .*)(":.*)$/, null, 'extern', 'extern', null ], // e.g. "cardDefaults (in deck)": ...
@@ -2136,7 +2146,7 @@ function jeTreeGetWidgetHTML(widget) {
   const type = widget.get('type');
 
   let result = `${colored(widget.get('id'), 'key')} (${colored(type || 'basic','string')} - `;
-  if(String(widget.get('id')).match(/^[0-9a-z]{4}$/) && $('#jsonEditor').classList.contains('wide')) {
+  if(String(widget.get('id')).match(/^[0-9a-z]{4}$/)) {
     if(type == 'card' && !String(widget.get('cardType')).match(/^type-[0-9a-f-]{36}$/))
       result += `${colored(widget.get('cardType'),'extern')} - `;
     if(type == 'button' && widget.get('text'))

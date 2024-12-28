@@ -16,12 +16,15 @@ function emojis2images(dom) {
     // Process text nodes only
     node.childNodes.forEach(child => {
       if (child.nodeType === Node.TEXT_NODE) {
-        const replacedContent = child.textContent.replace(regex, m =>
+        const originalContent = html(child.textContent);
+        const replacedContent = originalContent.replace(regex, m =>
           `<img class="emoji" src="i/noto-emoji/emoji_u${emojiToFilename(m)}.svg" alt="${m}">`
         );
-        const span = document.createElement('span');
-        span.innerHTML = replacedContent;
-        child.replaceWith(span);
+        if(replacedContent != originalContent) {
+          const span = document.createElement('span');
+          span.innerHTML = replacedContent;
+          child.replaceWith(span);
+        }
       } else if (child.nodeType === Node.ELEMENT_NODE) {
         replaceEmojisInNode(child);  // Recurse into child elements
       }
