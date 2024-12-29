@@ -1665,6 +1665,9 @@ function jeCommandOptions() {
   for(const option of jeCommandWithOptions.options) {
     formField(option, $('#jeCommandOptions div'), `${jeCommandWithOptions.id}_${option.label}`);
     $('#jeCommandOptions div').append(document.createElement('br'));
+    const firstInput = $('input,select', div);
+    if(firstInput)
+      firstInput.focus();
   }
 
   $a('#jeCommandOptions button')[0].addEventListener('click', async function() {
