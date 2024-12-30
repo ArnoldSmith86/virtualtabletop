@@ -44,6 +44,9 @@ async function inputHandler(name, e) {
       return;
     target = target.parentNode;
   }
+  if (target && target.classList.contains('underCursor')) {
+    underCursorID = unescapeID(target.id.slice(2));
+  }
 
   if(!usedTouch && name == 'touchstart') {
     usedTouch = true;

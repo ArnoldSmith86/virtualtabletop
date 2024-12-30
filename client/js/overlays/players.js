@@ -7,6 +7,7 @@ let playerColor = 'red';
 let activePlayers = [];
 let activeColors = [];
 let mouseCoords = [];
+let underCursorID = '';
 localStorage.setItem('playerName', playerName);
 
 export {
@@ -14,7 +15,8 @@ export {
   playerColor,
   activePlayers,
   activeColors,
-  mouseCoords
+  mouseCoords,
+  underCursorID,
 }
 
 function getPlayerDetails() {
