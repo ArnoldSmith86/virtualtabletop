@@ -1,6 +1,6 @@
 import { $, removeFromDOM, asArray, escapeID, mapAssetURLs } from '../domhelpers.js';
 import { StateManaged } from '../statemanaged.js';
-import { playerName, playerColor, activePlayers, activeColors, mouseCoords } from '../overlays/players.js';
+import { playerName, playerColor, activePlayers, activeColors, mouseCoords, underCursorID } from '../overlays/players.js';
 import { batchStart, batchEnd, widgetFilter, widgets } from '../serverstate.js';
 import { showOverlay, shuffleWidgets, sortWidgets } from '../main.js';
 import { tracingEnabled } from '../tracing.js';
@@ -89,6 +89,8 @@ export class Widget extends StateManaged {
       globalUpdateRoutine: null,
       gameStartRoutine: null,
       hotkey: null,
+      underCursor: null,
+      underCursorMode: null,
 
       animatePropertyChange: []
     });
@@ -121,6 +123,8 @@ export class Widget extends StateManaged {
 
     this.animateTimeouts = {};
     this.animateClasses = new Set;
+
+    this.updateUnderCursor();
   }
 
   absoluteCoord(coord) {
@@ -877,6 +881,7 @@ export class Widget extends StateManaged {
         playerName,
         playerColor,
         activePlayers,
+        underCursorID,
         thisID : this.get('id')
       });
       collections = Object.assign({
@@ -2801,6 +2806,20 @@ export class Widget extends StateManaged {
     }
   }
 
+  updateUnderCursor() {
+    this.domElement.addEventListener('mousemove', () => {
+      if (underCursorID) {
+        const mode = this.get('underCursorMode');
+        if (mode === 'select') {
+          this.set('underCursor', true);
+        } else if (mode === 'deselect') {
+          this.set('underCursor', false);
+        }
+        underCursorID = '';
+      }
+    });
+  }  
+  
   validDropTargets() {
     return getValidDropTargets(this);
   }
