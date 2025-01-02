@@ -67,6 +67,7 @@ export default async function minifyHTML() {
     'client/js/widgets/dice.js',
     'client/js/widgets/holder.js',
     'client/js/widgets/label.js',
+    'client/js/widgets/line.js',
     'client/js/widgets/pile.js',
     'client/js/widgets/scoreboard.js',
     'client/js/widgets/seat.js',

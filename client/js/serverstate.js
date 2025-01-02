@@ -72,6 +72,8 @@ export function addWidget(widget, instance) {
     w = new Holder(id);
   } else if(widget.type == 'label') {
     w = new Label(id);
+  } else if(widget.type == 'line') {
+    w = new Line(id);
   } else if(widget.type == 'pile') {
     w = new Pile(id);
   } else if(widget.type == 'scoreboard') {
