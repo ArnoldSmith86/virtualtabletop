@@ -245,6 +245,16 @@ async function updateWidgetId(widget, oldID) {
     }
   }
 
+  // If widget is a deck, update dropTarget properties on holder widgets.
+  if (widget.type === 'deck') {
+    for (const w of widgetFilter(w => w.get('dropTarget') && asArray(w.get('dropTarget')).some(d => d.deck === oldID))) {
+      const dropTarget = asArray(w.get('dropTarget')).map(d =>
+        d.deck === oldID ? { ...d, deck: id } : d
+      );
+      await w.set('dropTarget', dropTarget);
+    }
+  }
+
   // If widget is a seat, change widgets with onlyVisibleForSeat and linkedToSeat naming that seat.
   if(widget.type == 'seat') {
     for(const prop of ['onlyVisibleForSeat', 'linkedToSeat']) {
