@@ -15,6 +15,7 @@ class Line extends Widget {
       // ^ this works to skip no id or the overlay on add widget page
       // if (this.unalteredState['inheritFrom'] == undefined) {
         // but this doesn't work and resets my line is resetting on reload.  Why?
+        //LawDawg test; just to see if I have Git configured correctly
 
         this.state['inheritFrom'] = {}
         this.state['inheritFrom'][`${id}_start`] = ["x->startx","y->starty"]
