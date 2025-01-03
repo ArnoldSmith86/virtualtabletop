@@ -1,4 +1,4 @@
-class Line extends Widget {
+export class Line extends Widget {
 
   constructor(id) {
     super(id);
@@ -9,70 +9,7 @@ class Line extends Widget {
       stroke: 'blue',
       fill: 'none',
       strokeWidth: 2,
-      z: -1000000,
     });
-    if (id !== undefined && id !== "curvy_overlay") {
-      // ^ this works to skip no id or the overlay on add widget page
-      // if (this.unalteredState['inheritFrom'] == undefined) {
-        // but this doesn't work and resets my line is resetting on reload.  Why?
-
-        this.state['inheritFrom'] = {}
-        this.state['inheritFrom'][`${id}_start`] = ["x->startx","y->starty"]
-        this.state['inheritFrom'][`${id}_control1`] = ["x->cp1x","y->cp1y"]
-        this.state['inheritFrom'][`${id}_control2`] = ["x->cp2x","y->cp2y"]
-        this.state['inheritFrom'][`${id}_end`] = ["x->endx","y->endy"]
-        this.state['movable'] = false
-        this.state['movableInEdit'] = false
-        addWidgetLocal({
-          type: "button",
-          id: id+"_start",
-          x: 50,
-          y: 50,
-          width: 30,
-          height: 30,
-          movable: true,
-          movableInEdit: true,
-          borderRadius: '50%',
-          text: "Start",
-        });
-        addWidgetLocal({
-          type: "button",
-          id: id+"_end",
-          x: 100,
-          y: 100,
-          width: 30,
-          height: 30,
-          movable: true,
-          movableInEdit: true,
-          borderRadius: '50%',
-          text: "End",
-        });
-        addWidgetLocal({
-          type: "button",
-          id: id+"_control1",
-          x: 50,
-          y: 100,
-          width: 20,
-          height: 20,
-          movable: true,
-          movableInEdit: true,
-          borderRadius: '50%',
-          text: "Control1",
-        });
-        addWidgetLocal({
-          type: "button",
-          id: id+"_control2",
-          x: 100,
-          y: 50,
-          width: 20,
-          height: 20,
-          movable: true,
-          movableInEdit: true,
-          borderRadius: '50%',
-          text: "Control2",
-        });
-      //}
-    }
   }
   
   applyDeltaToDOM(delta) {
