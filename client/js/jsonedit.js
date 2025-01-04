@@ -306,7 +306,7 @@ const jeCommands = [
       }
     },
     show: function() {
-      return [ 'symbols', 'material-icons', 'emoji-monochrome' ].indexOf(jeStateNow.classes) != -1;
+      return [ 'symbols', 'material-symbols', 'emoji-monochrome' ].indexOf(jeStateNow.classes) != -1;
     }
   },
   {

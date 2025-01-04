@@ -717,13 +717,14 @@ div[icon] {
 
 div[icon]::before {
   content: attr(icon);
-  font-family: "Material Icons";
+  font-family: "Material Symbols";
   color: #f8f8f8;
   font-size: 250px;
   line-height: 250px;
   position: absolute;
   right: -40px;
   top: -10px;
+  font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
 }
 
 div[icon] * {
@@ -890,7 +891,7 @@ button[icon] {
 }
 button[icon]::before {
   content: attr(icon);
-  font-family: "Material Icons";
+  font-family: "Material Symbols";
   text-transform: lowercase;
   margin-right: .25rem;
   font-size: 24px;
@@ -898,6 +899,7 @@ button[icon]::before {
   line-height: 1;
   width: 24px;
   overflow: clip;
+  font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
 }
 button[icon]:empty {
   padding: 5px;
@@ -1007,7 +1009,7 @@ button.visualProgress {
 .richtextSymbol.symbols {
   top: 0.15em;
 }
-.richtextSymbol.material-icons {
+.richtextSymbol.material-symbols {
   top: 0.2em;
 }
 .richtextSymbol.gameicons, img.emoji {
@@ -1459,7 +1461,7 @@ button:disabled:hover {
 
 .inputexpandselect {
   text-align: right;
-  font-family: "Material Icons";
+  font-family: "Material Symbols";
   font-size: 20px;
   line-height: 20px;
   position: absolute;
@@ -1693,7 +1695,7 @@ input:invalid{
   color: red;
 }
 input:invalid+span::after, .inputError::before {
-  font-family: 'Material Icons';
+  font-family: 'Material Symbols';
   content: 'error';
   position: absolute;
   right: 5px;
@@ -1732,7 +1734,7 @@ input:invalid+span::after, .inputError::before {
   border: 3px solid var(--VTTblue);
 }
 .inputpalette > div input[type="radio"]:checked+label::after, .inputchoose .selected.inputchooseWidgetWrapper::after {
-  font-family: 'Material Icons';
+  font-family: 'Material Symbols';
   line-height: 1.25em;
   text-align: center;
   height: 1.25em;
