@@ -46,10 +46,24 @@ export class StateManaged {
   }
 
   getDefaultValue(key) {
-    if(this.inheritedProperties)
-      for(const [ id, properties ] of Object.entries(this.inheritFrom()))
-        if(this.inheritedProperties[key] && this.inheritFromIsValid(properties, key) && widgets.has(id) && widgets.get(id).get(key) !== undefined)
-          return widgets.get(id).get(key);
+    if(this.inheritedProperties) {
+        for(const [ id, properties ] of Object.entries(this.inheritFrom())) {
+            const props = asArray(properties);
+            for(const prop of props) {
+                if(prop.includes('->')) {
+                    const [sourceProp, targetProp] = prop.split('->');
+                    if(targetProp === key && widgets.has(id) && widgets.get(id).get(sourceProp) !== undefined) {
+                        return widgets.get(id).get(sourceProp);
+                    }
+                }
+            }
+            // Existing check for direct property matches
+            if(this.inheritedProperties[key] && this.inheritFromIsValid(properties, key) && 
+               widgets.has(id) && widgets.get(id).get(key) !== undefined) {
+                return widgets.get(id).get(key);
+            }
+        }
+    }
     return this.defaults[key];
   }
 
@@ -87,17 +101,26 @@ export class StateManaged {
 
   inheritFromIsValid(properties, key) {
     if([ 'id', 'type', 'deck', 'cardType' ].indexOf(key) != -1)
-      return false;
+        return false;
     if(properties == '*')
-      return true;
+        return true;
 
     properties = asArray(properties);
 
     if(properties.length && properties[0].length && properties[0][0] == '!')
-      return properties.indexOf('!'+key) == -1;
-    else
-      return properties.indexOf(key) != -1;
-  }
+        return properties.indexOf('!'+key) == -1;
+    else {
+        // Check both direct property matches and mapped target properties
+        return properties.some(prop => {
+            if(prop.includes('->')) {
+                const [_, targetProp] = prop.split('->');
+                return targetProp === key;
+            }
+            return prop === key;
+        });
+    }
+}
+
 
   inheritFromUnregister() {
     for(const wID in StateManaged.inheritFromMapping)

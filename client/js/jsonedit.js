@@ -1046,6 +1046,7 @@ function jeAddCommands() {
   widgetTypes.push(jeAddWidgetPropertyCommands(new Dice(), widgetBase));
   widgetTypes.push(jeAddWidgetPropertyCommands(new Holder(), widgetBase));
   widgetTypes.push(jeAddWidgetPropertyCommands(new Label(), widgetBase));
+  widgetTypes.push(jeAddWidgetPropertyCommands(new Line(), widgetBase));
   widgetTypes.push(jeAddWidgetPropertyCommands(new Pile(), widgetBase));
   widgetTypes.push(jeAddWidgetPropertyCommands(new Scoreboard(), widgetBase));
   widgetTypes.push(jeAddWidgetPropertyCommands(new Seat(), widgetBase));

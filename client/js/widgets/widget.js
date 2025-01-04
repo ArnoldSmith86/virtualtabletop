@@ -295,10 +295,26 @@ export class Widget extends StateManaged {
   }
 
   applyInheritedValuesToObject(inheritDefinition, sourceDelta, targetDelta, targetWidget) {
-    for(const key in sourceDelta)
-      if(this.inheritFromIsValid(inheritDefinition, key) && targetWidget.state[key] === undefined)
-        targetDelta[key] = JSON.stringify(sourceDelta[key]) === JSON.stringify(this.defaults[key]) ? null : sourceDelta[key];
-  }
+    for(const key in sourceDelta) {
+        if(typeof inheritDefinition === 'string' && inheritDefinition === '*') {
+            if(targetWidget.state[key] === undefined) {
+                targetDelta[key] = JSON.stringify(sourceDelta[key]) === JSON.stringify(this.defaults[key]) ? null : sourceDelta[key];
+            }
+        } else {
+            const properties = asArray(inheritDefinition);
+            for(const prop of properties) {
+                if(prop.includes('->')) {
+                    const [sourceProp, targetProp] = prop.split('->');
+                    if(sourceProp === key && targetWidget.state[targetProp] === undefined) {
+                        targetDelta[targetProp] = JSON.stringify(sourceDelta[sourceProp]) === JSON.stringify(this.defaults[sourceProp]) ? null : sourceDelta[sourceProp];
+                    }
+                } else if(prop === key && targetWidget.state[key] === undefined) {
+                    targetDelta[key] = JSON.stringify(sourceDelta[key]) === JSON.stringify(this.defaults[key]) ? null : sourceDelta[key];
+                }
+            }
+        }
+    }
+}
 
   applyInheritedValuesToDOM(inheritFrom, pushasArray) {
     const delta = {};

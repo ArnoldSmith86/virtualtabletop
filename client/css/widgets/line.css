@@ -1,0 +1,14 @@
+.controlPoint {
+  border: solid #666;
+  background-color: #666;
+  display: none;
+}
+
+.controlPoint:hover {
+  border: solid #666;
+  background-color: #666;
+}
+
+body.jsonEdit .controlPoint, body.edit .controlPoint {
+  display: flex;
+}
