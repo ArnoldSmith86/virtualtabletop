@@ -262,82 +262,45 @@ function generateCounterWidgets(id, x, y) {
 }
 
 function generateLineWidgets(id, x, y) {
+  const ctrlPoints = {
+    type: "button", // Should be basic widget, but that type does not work??
+    width: 30,
+    height: 30,
+    movable: true,
+    movableInEdit: true,
+  };
   return [
-    { type: "line",
+    { type: 'line',
       id: id,
-      x: 0, //this is a hack to make the line appear in the right place for now; should be x
+      x: 0, //this is a hack to make the line appear in the right place for now; should be x?
       y: 0, //hack for now
+      width: 100, //hack for now
+      height: 100, //hack for now
       movable:false, //hack for now
-      layer: -3, //hack for now
+      layer: -5, //hack for now, the large size of the widget blocks much of the overlay unless it is behind the other widgets
       inheritFrom: {
-        [id + "_start"]: [
+        [id + "_S"]: [
           "x->startx",
           "y->starty"
         ],
-        [id + "_control1"]: [
+        [id + "_C1"]: [
           "x->cp1x",
           "y->cp1y"
         ],
-        [id + "_control2"]: [
+        [id + "_C2"]: [
           "x->cp2x",
           "y->cp2y"
         ],
-        [id + "_end"]: [
+        [id + "_E"]: [
           "x->endx",
           "y->endy"
         ]
       }
     },
-    {
-      type: "button",
-      id: id+"_start",
-      x: x + 50,
-      y: y + 50,
-      width: 30,
-      height: 30,
-      movable: true,
-      movableInEdit: true,
-      borderRadius: '50%',
-      text: "Start"
-      
-    },
-    {
-      type: "button",
-      id: id+"_end",
-      x: x + 100,
-      y: y + 100,
-      width: 30,
-      height: 30,
-      movable: true,
-      movableInEdit: true,
-      borderRadius: '50%',
-      text: "End"
-     
-    },
-    {
-      type: "button",
-      id: id+"_control1",
-      x: x + 50,
-      y: y + 100,
-      width: 20,
-      height: 20,
-      movable: true,
-      movableInEdit: true,
-      borderRadius: '50%',
-      text: "Control1",     
-    },
-    {
-      type: "button",
-      id: id+"_control2",
-      x: x + 100,
-      y: y + 50,
-      width: 20,
-      height: 20,
-      movable: true,
-      movableInEdit: true,
-      borderRadius: '50%',
-      text: "Control2",
-    }
+    Object.assign({ ...ctrlPoints }, { id: id + "_S", x: x + 50, y: y + 50, text: "S" }),
+    Object.assign({ ...ctrlPoints }, { id: id + "_E", x: x + 100, y: y + 100, text: "E" }),
+    Object.assign({ ...ctrlPoints }, { id: id + "_C1", x: x + 50, y: y + 100, width: 20, height: 20, text: "1" }),
+    Object.assign({ ...ctrlPoints }, { id: id + "_C2", x: x + 100, y: y + 50, width: 20, height: 20, text: "2" }),    
   ];
 }
 
