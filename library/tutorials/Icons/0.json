@@ -1,0 +1,318 @@
+{
+  "_meta": {
+    "version": 16,
+    "info": {
+      "name": "Icons and Emojis",
+      "image": "/assets/-1890494129_6762",
+      "rules": "",
+      "bgg": "",
+      "year": "",
+      "mode": "Tutorial",
+      "time": "",
+      "attribution": "",
+      "lastUpdate": 1729453177504,
+      "showName": false,
+      "skill": "",
+      "description": "",
+      "similarImage": "",
+      "similarName": "",
+      "similarDesigner": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": "",
+      "variantImage": "",
+      "variant": "Basic",
+      "language": "en-US",
+      "players": "1"
+    }
+  },
+  "notes1": {
+    "id": "notes1",
+    "y": 424,
+    "width": 250,
+    "z": 441,
+    "movable": false,
+    "css": {
+      "font-size": "19px"
+    },
+    "text": "This is a standard VTT icon on a button.",
+    "x": 30
+  },
+  "notes2": {
+    "id": "notes2",
+    "y": 425,
+    "width": 250,
+    "z": 444,
+    "movable": false,
+    "css": {
+      "font-size": "19px"
+    },
+    "text": "This is a Material icon an a basic widget.",
+    "x": 323
+  },
+  "notes3": {
+    "id": "notes3",
+    "x": 908,
+    "y": 425,
+    "width": 250,
+    "z": 446,
+    "movable": false,
+    "css": {
+      "font-size": "19px"
+    },
+    "text": "The faceTemplate and cardType of these cards use a dynamic property value to create the images, which are icons from the game-icons.net collection."
+  },
+  "notes4": {
+    "id": "notes4",
+    "x": 1200,
+    "y": 425,
+    "width": 350,
+    "z": 447,
+    "movable": false,
+    "css": {
+      "font-size": "19px"
+    },
+    "text": "If you add both text and an icon, VTT will automatically adjust icon spacing and sizing to accomodate both. There are some limitations on modifying the layout using css if using both text and icons."
+  },
+  "notes9": {
+    "id": "notes9",
+    "y": 425,
+    "width": 250,
+    "z": 445,
+    "movable": false,
+    "css": {
+      "font-size": "19px"
+    },
+    "text": "This is a die with pips on the first four faces and emojis on the last two.",
+    "x": 615
+  },
+  "example1": {
+    "type": "button",
+    "id": "example1",
+    "x": 106,
+    "y": 331,
+    "z": 440,
+    "icon": "[trash]",
+    "clickRoutine": []
+  },
+  "example2": {
+    "id": "example2",
+    "x": 386,
+    "y": 319,
+    "z": 311,
+    "movable": false,
+    "icon": "build"
+  },
+  "example3": {
+    "type": "dice",
+    "id": "example3",
+    "x": 691,
+    "y": 310,
+    "width": 100,
+    "height": 100,
+    "z": 307,
+    "activeFace": 4,
+    "faces": [
+      1,
+      2,
+      3,
+      4,
+      {
+        "icon": "🏀"
+      },
+      {
+        "icon": "⚽"
+      }
+    ]
+  },
+  "example4": {
+    "type": "card",
+    "id": "example4",
+    "deck": "exampleDeck",
+    "cardType": "2 of houses",
+    "x": 909,
+    "y": 263,
+    "z": 14,
+    "activeFace": 1
+  },
+  "example5": {
+    "type": "card",
+    "id": "example5",
+    "deck": "exampleDeck",
+    "cardType": "3 of towers",
+    "x": 1028,
+    "y": 262,
+    "z": 13,
+    "activeFace": 1
+  },
+  "exampleDeck": {
+    "type": "deck",
+    "id": "exampleDeck",
+    "x": 985,
+    "y": 323,
+    "z": 312,
+    "cardTypes": {
+      "2 of houses": {
+        "suit": "delapouite/family-house",
+        "suitColor": "tan",
+        "iconColor": "green",
+        "rank": 2
+      },
+      "3 of towers": {
+        "suit": "caro-asercion/clock-tower",
+        "suitColor": "black",
+        "iconColor": "gold",
+        "rank": 3
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "width": 103,
+            "height": 160,
+            "color": "transparent",
+            "value": "/i/cards-default/2B.svg"
+          }
+        ]
+      },
+      {
+        "radius": 16,
+        "objects": [
+          {
+            "type": "image",
+            "width": 103,
+            "height": 160,
+            "dynamicProperties": {
+              "color": "suitColor"
+            }
+          },
+          {
+            "type": "icon",
+            "x": 10,
+            "y": 70,
+            "size": 83,
+            "dynamicProperties": {
+              "value": "suit",
+              "color": "iconColor"
+            }
+          },
+          {
+            "type": "text",
+            "y": 0,
+            "fontSize": 60,
+            "textAlign": "center",
+            "color": "white",
+            "width": 103,
+            "dynamicProperties": {
+              "value": "rank"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "example6": {
+    "type": "button",
+    "id": "example6",
+    "x": 1214,
+    "y": 301,
+    "width": 200,
+    "height": 55,
+    "z": 22,
+    "icon": "lorc/cog",
+    "text": "Settings"
+  },
+  "example7": {
+    "type": "button",
+    "id": "example7",
+    "x": 1440,
+    "y": 247,
+    "width": 75,
+    "height": 150,
+    "z": 2,
+    "icon": "[library]",
+    "text": "New\nFolder"
+  },
+  "notes5": {
+    "id": "notes5",
+    "y": 812,
+    "width": 250,
+    "z": 441,
+    "movable": false,
+    "css": {
+      "font-size": "19px"
+    },
+    "text": "Add multiple icons by making the icon property an array.",
+    "x": 30
+  },
+  "notes6": {
+    "id": "notes6",
+    "y": 813,
+    "width": 250,
+    "z": 444,
+    "movable": false,
+    "css": {
+      "font-size": "19px"
+    },
+    "text": "Text and multiple icons also works the same way.",
+    "x": 323
+  },
+  "example8": {
+    "type": "button",
+    "id": "example8",
+    "x": 98,
+    "y": 702,
+    "icon": [
+      "👑",
+      "[shuffle]"
+    ],
+    "z": 444,
+    "width": 100,
+    "height": 100
+  },
+  "example9": {
+    "type": "button",
+    "id": "example9",
+    "x": 389,
+    "y": 703,
+    "icon": [
+      "👑",
+      "[shuffle]"
+    ],
+    "z": 447,
+    "width": 100,
+    "height": 100,
+    "text": "Shuffle"
+  },
+  "header": {
+    "type": "label",
+    "id": "header",
+    "x": 290,
+    "y": 1,
+    "width": 1000,
+    "height": 80,
+    "z": 26392,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "60px",
+      "color": "black"
+    },
+    "text": "Icons: Basic"
+  },
+  "overview": {
+    "id": "overview",
+    "x": 279,
+    "y": 84,
+    "width": 1000,
+    "z": 373,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "25px",
+      "color": "black"
+    },
+    "text": "Several widget types have an 'icon' property: buttons, dice, and basic widgets. Card faceTemplate objects also accept a type 'icon'. Icons (other than for cards) can be selected by using the blue and white buttons in the JSON Editor to either choose from an included VTT icon or to upload a custom image. The VTT icon sets include icons custom made for VTT, icons from the game-icons.net website, Google Material icons, and emojis. "
+  }
+}

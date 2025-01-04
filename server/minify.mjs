@@ -24,6 +24,7 @@ export default async function minifyHTML() {
     'client/css/overlays/welcome.css',
 
     'client/css/widgets/basicwidget.css',
+    'client/css/widgets/imagewidget.css',
     'client/css/widgets/button.css',
     'client/css/widgets/canvas.css',
     'client/css/widgets/card.css',
@@ -52,6 +53,7 @@ export default async function minifyHTML() {
     'client/js/tracing.js',
     'client/js/statemanaged.js',
     'client/js/color.js',
+    'client/js/symbols.js',
     'client/js/audio.js',
 
     'client/js/overlays/players.js',
@@ -59,6 +61,7 @@ export default async function minifyHTML() {
     'client/js/overlays/welcome.js',
 
     'client/js/widgets/widget.js',
+    'client/js/widgets/imagewidget.js',
     'client/js/widgets/basicwidget.js',
     'client/js/widgets/button.js',
     'client/js/widgets/canvas.js',

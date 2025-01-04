@@ -1,0 +1,340 @@
+{
+  "_meta": {
+    "version": 16,
+    "info": {
+      "name": "Icons and Emojis",
+      "image": "/assets/-1890494129_6762",
+      "rules": "",
+      "bgg": "",
+      "year": "",
+      "mode": "Tutorial",
+      "time": "",
+      "attribution": "",
+      "lastUpdate": 1729453177506,
+      "showName": false,
+      "skill": "",
+      "description": "",
+      "similarImage": "",
+      "similarName": "",
+      "similarDesigner": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": "",
+      "variantImage": "",
+      "variant": "Color",
+      "language": "en-US",
+      "players": "1"
+    }
+  },
+  "notes1": {
+    "id": "notes1",
+    "y": 424,
+    "width": 250,
+    "z": 441,
+    "movable": false,
+    "css": {
+      "font-size": "19px"
+    },
+    "text": "The color property of the widget sets the color for both the text and the icons.",
+    "x": 30
+  },
+  "notes2": {
+    "id": "notes2",
+    "y": 425,
+    "width": 250,
+    "z": 444,
+    "movable": false,
+    "css": {
+      "font-size": "19px"
+    },
+    "text": "To change the color of the icon, use the 'show advanced options' button. This changes the icon property to an object and allows changes to the color and select other properties of the icon.",
+    "x": 323
+  },
+  "notes3": {
+    "id": "notes3",
+    "x": 908,
+    "y": 425,
+    "width": 250,
+    "z": 446,
+    "movable": false,
+    "css": {
+      "font-size": "19px"
+    },
+    "text": "The advanced settings for icons allow using of variable values. This icon is set using a custom '${PROPERTY iconColor}`. The hover color can also be changed. This example also adjusts the stroke and fill colors separately."
+  },
+  "notes4": {
+    "id": "notes4",
+    "x": 1200,
+    "y": 425,
+    "width": 350,
+    "z": 447,
+    "movable": false,
+    "css": {
+      "font-size": "19px"
+    },
+    "text": "When multiple icons are on the same widget/face, the color of each icon, including its hover color, can be individually controlled through the icon object values."
+  },
+  "notes9": {
+    "id": "notes9",
+    "y": 425,
+    "width": 250,
+    "z": 445,
+    "movable": false,
+    "css": {
+      "font-size": "19px"
+    },
+    "text": "This basic widget with two faces has different colored icons on each face.",
+    "x": 615
+  },
+  "example1": {
+    "id": "example1",
+    "x": 103,
+    "y": 318,
+    "z": 448,
+    "icon": "[trash]",
+    "movable": false,
+    "color": "red",
+    "text": "Trash"
+  },
+  "example2": {
+    "id": "example2",
+    "x": 386,
+    "y": 319,
+    "z": 311,
+    "movable": false,
+    "icon": {
+      "name": "build",
+      "color": "purple"
+    },
+    "text": "Settings",
+    "color": "Red"
+  },
+  "example3": {
+    "id": "example3",
+    "x": 687,
+    "y": 310,
+    "z": 449,
+    "faces": [
+      {
+        "icon": {
+          "name": "lorc/snowflake-1",
+          "color": "#fff"
+        }
+      },
+      {
+        "icon": {
+          "name": "lorc/snowing",
+          "color": "gray"
+        }
+      }
+    ],
+    "movable": false,
+    "css": {
+      "background": "black"
+    },
+    "borderRadius": 8,
+    "activeFace": 1
+  },
+  "notes5": {
+    "id": "notes5",
+    "y": 812,
+    "width": 250,
+    "z": 441,
+    "movable": false,
+    "css": {
+      "font-size": "19px"
+    },
+    "text": "You cannot change the colors in an emoji that already has color.",
+    "x": 30
+  },
+  "notes6": {
+    "id": "notes6",
+    "y": 813,
+    "width": 250,
+    "z": 444,
+    "movable": false,
+    "css": {
+      "font-size": "19px"
+    },
+    "text": "You can change the colors of an emoji that does not already contain color.",
+    "x": 323
+  },
+  "header": {
+    "type": "label",
+    "id": "header",
+    "x": 290,
+    "y": 1,
+    "width": 1000,
+    "height": 80,
+    "z": 26392,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "60px",
+      "color": "black"
+    },
+    "text": "Icons: Color"
+  },
+  "overview": {
+    "id": "overview",
+    "x": 279,
+    "y": 84,
+    "width": 1000,
+    "z": 373,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "25px",
+      "color": "black"
+    },
+    "text": "Color settings for icons work in a similar way to how css is used in VTT. The fill color and stroke color of each icon can be controlled individually and is separate from the methods used to control text and image color."
+  },
+  "example4": {
+    "id": "example4",
+    "x": 960,
+    "y": 310,
+    "z": 449,
+    "movable": false,
+    "borderRadius": 8,
+    "activeFace": 1,
+    "icon": {
+      "name": "cottage",
+      "color": "${PROPERTY iconColor}",
+      "strokeColor": "red",
+      "strokeWidth": 10,
+      "hoverColor": "red",
+      "hoverStrokeColor": "blue",
+      "hoverStrokeWidth": 10
+    },
+    "iconColor": "blue"
+  },
+  "example5": {
+    "id": "example5",
+    "x": 1317,
+    "y": 307,
+    "z": 449,
+    "movable": false,
+    "borderRadius": 8,
+    "activeFace": 1,
+    "icon": [
+      {
+        "name": "(🧱)",
+        "color": "red",
+        "strokeColor": "red",
+        "strokeWidth": 5,
+        "hoverColor": "brown"
+      },
+      {
+        "name": "[house_3d]",
+        "color": "teal"
+      }
+    ]
+  },
+  "example6": {
+    "type": "button",
+    "id": "example6",
+    "x": 98,
+    "y": 702,
+    "width": 100,
+    "height": 100,
+    "z": 444,
+    "icon": [
+      {
+        "name": "☢️",
+        "color": "pink"
+      }
+    ]
+  },
+  "example7": {
+    "type": "button",
+    "id": "example7",
+    "x": 389,
+    "y": 703,
+    "width": 100,
+    "height": 100,
+    "z": 447,
+    "icon": [
+      {
+        "name": "(🍊)",
+        "color": "orange"
+      }
+    ]
+  },
+  "notes10": {
+    "id": "notes10",
+    "y": 813,
+    "width": 250,
+    "z": 445,
+    "movable": false,
+    "css": {
+      "font-size": "19px"
+    },
+    "text": "The 'svgReplaces' property works on an image but not on an icon. In the widget above, the image is the large red heart and the color is changed with svgReplaces. The small black heart is an icon with default color.",
+    "x": 615
+  },
+  "example8": {
+    "id": "example8",
+    "x": 680,
+    "y": 699,
+    "z": 448,
+    "movable": false,
+    "svgReplaces": {
+      "#000": "newColor"
+    },
+    "newColor": "red",
+    "image": "/i/game-icons.net/lorc/broken-heart.svg",
+    "icon": {
+      "name": "lorc/broken-heart",
+      "scale": 0.5
+    }
+  },
+  "1vcr": {
+    "type": "button",
+    "id": "1vcr",
+    "x": 1170,
+    "y": 788,
+    "width": 200,
+    "height": 200,
+    "z": 451,
+    "icon": {
+      "name": "delapouite/double-fish",
+      "scale": 1,
+      "offsetX": 0,
+      "offsetY": 0,
+      "rotation": 0,
+      "color": [
+        "yellow",
+        "red",
+        "white",
+        "red"
+      ],
+      "hoverColor": "",
+      "strokeColor": "black",
+      "strokeWidth": [
+        0,
+        10,
+        0,
+        10
+      ],
+      "hoverStrokeColor": "purple",
+      "hoverStrokeWidth": [
+        20,
+        0,
+        20,
+        0
+      ]
+    },
+    "clickRoutine": []
+  },
+  "notes7": {
+    "id": "notes7",
+    "x": 908,
+    "y": 813,
+    "width": 250,
+    "z": 446,
+    "movable": false,
+    "css": {
+      "font-size": "19px"
+    },
+    "text": "For more complex icons with several different colors, like the button to the right, each color can be controlled separately."
+  }
+}
