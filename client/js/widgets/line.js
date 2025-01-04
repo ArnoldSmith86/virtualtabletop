@@ -5,10 +5,14 @@ export class Line extends Widget {
     let riders = this.get('riders') || 3
     this.addDefaults({
       typeClasses: 'widget line',
-      riders: riders,
-      stroke: 'blue',
+      strokeWidth: 5,
+      stroke: '#1f5ca6',
       fill: 'none',
-      strokeWidth: 2,
+      riders: 3,
+      spotRadius: 4,
+      spotStroke: '#1f5ca6',
+      spotFill: '#a9c6e8',
+      spotStrokeWidth: 2,
     });
   }
   
@@ -47,10 +51,14 @@ export class Line extends Widget {
     // so I was using t (time on curve) for figuring out the rider spots
     // but it turns out spot equidistant along the path is more game-design friendly
 
-    let riders = this.get("riders") || 3
-    let stroke = this.state.stroke || 'blue'
-    let fill = this.state.fill|| 'none'
-    let strokeWidth = this.state.strokeWidth || 2
+    let riders = this.get("riders");
+    let stroke = this.get("stroke");
+    let fill = this.get("fill");
+    let strokeWidth = this.get("strokeWidth");
+    let spotRadius = this.get("spotRadius");
+    let spotStroke = this.get('spotStroke');
+    let spotFill = this.get('spotFill');
+    let spotStrokeWidth = this.get('spotStrokeWidth');
 
     const ns = 'http://www.w3.org/2000/svg'
     let svg = document.createElementNS(ns, 'svg');
@@ -58,7 +66,7 @@ export class Line extends Widget {
 
     let spots = {}
     // Append the path to the SVG container
-    svg, spots = this.makeBezierCurveonPath(ns, svg, bezierCoordinates, riders, stroke, fill, strokeWidth, strokeWidth)
+    svg, spots = this.makeBezierCurveonPath(ns, svg, bezierCoordinates, riders, stroke, fill, strokeWidth, spotRadius, spotStroke, spotFill, spotStrokeWidth)
 
     for (let i = 1; i <= riders; i++) {
       let spot_id_x = `spot_${i}_x`
@@ -117,7 +125,7 @@ export class Line extends Widget {
     return { minX, minY, maxX, maxY, samplePoints};
   }
  
-  makeBezierCurveonPath(ns, svg, bezierCoordinates, riders, stroke='blue', fill='none', strokeWidth=2, radius=4) {
+  makeBezierCurveonPath(ns, svg, bezierCoordinates, riders, stroke, fill, strokeWidth, spotRadius, spotStroke, spotFill, spotStrokeWidth) {
     // Create a path element for the bezier curve
     const path = document.createElementNS(ns, "path");
     path.setAttribute("d", `M${bezierCoordinates.start.x},${bezierCoordinates.start.y} 
@@ -143,10 +151,10 @@ export class Line extends Widget {
       const circle = document.createElementNS(ns, 'circle');
       circle.setAttribute('cx', point.x);
       circle.setAttribute('cy', point.y);
-      circle.setAttribute('r', radius); // Radius of the circle
-      circle.setAttribute("stroke", stroke);
-      circle.setAttribute("fill", fill);
-      circle.setAttribute("stroke-width", strokeWidth);
+      circle.setAttribute('r', spotRadius); // Radius of the circle
+      circle.setAttribute("stroke", spotStroke);
+      circle.setAttribute("fill", spotFill);
+      circle.setAttribute("stroke-width", spotStrokeWidth);
       // Add the circle to the SVG
       svg.appendChild(circle)
     })

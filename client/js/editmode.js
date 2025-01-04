@@ -277,6 +277,7 @@ function generateLineWidgets(id, x, y) {
       width: 100, //hack for now
       height: 100, //hack for now
       movable:false, //hack for now
+      movableInEdit: false, //hack for now
       layer: -5, //hack for now, the large size of the widget blocks much of the overlay unless it is behind the other widgets
       inheritFrom: {
         [id + "_S"]: [
@@ -299,8 +300,9 @@ function generateLineWidgets(id, x, y) {
     },
     Object.assign({ ...ctrlPoints }, { id: id + "_S", x: x + 50, y: y + 50, text: "S" }),
     Object.assign({ ...ctrlPoints }, { id: id + "_E", x: x + 100, y: y + 100, text: "E" }),
-    Object.assign({ ...ctrlPoints }, { id: id + "_C1", x: x + 50, y: y + 100, width: 20, height: 20, text: "1" }),
-    Object.assign({ ...ctrlPoints }, { id: id + "_C2", x: x + 100, y: y + 50, width: 20, height: 20, text: "2" }),    
+    Object.assign({ ...ctrlPoints }, { id: id + "_C1", x: x + 50, y: y + 100, width: 20, height: 20, text: "1", classes: "controlPoint" }),
+    Object.assign({ ...ctrlPoints }, { id: id + "_C2", x: x + 100, y: y + 50, width: 20, height: 20, text: "2", classes: "controlPoint" }),
+    // added controlPoint class on the widget, but could be done behind the scenes (like active for timer), I just couldn't figure out how
   ];
 }
 

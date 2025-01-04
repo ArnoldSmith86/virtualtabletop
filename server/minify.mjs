@@ -32,6 +32,7 @@ export default async function minifyHTML() {
     'client/css/widgets/dice.css',
     'client/css/widgets/holder.css',
     'client/css/widgets/label.css',
+    'client/css/widgets/line.css',
     'client/css/widgets/pile.css',
     'client/css/widgets/scoreboard.css',
     'client/css/widgets/seat.css',
