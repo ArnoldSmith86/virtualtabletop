@@ -1254,7 +1254,7 @@ function displayComputeOps() {
 
 function jeAddCSScommands() {
   const string_presets = {
-    "border": "1px solid black", "background": "white", "font-size": "16px", "color": "black", "background-image": "url('')"
+    "border": "1px solid black", "background": "white", "font-size": "16px", "color": "black", "background-image": "url('')", "font-variation-settings":"'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24"
   };
   const nested_presets = {
     '[a-z]+': {
