@@ -25020,7 +25020,7 @@
     ]
   },
 
-  "Material Symbols - Audio&Video": {
+  "Material Symbols - Audio & Video": {
     "10k": [
       "10000",
       "10K",
@@ -25884,6 +25884,28 @@
       "tv",
       "type"
     ],
+    "closed_caption_off": [
+      "accessible",
+      "alphabet",
+      "caption",
+      "cc",
+      "character",
+      "closed",
+      "decoder",
+      "font",
+      "language",
+      "letters",
+      "media",
+      "movies",
+      "off",
+      "outline",
+      "subtitle",
+      "subtitles",
+      "symbol",
+      "text",
+      "tv",
+      "type"
+    ],
     "control_camera": [
       "adjust",
       "arrow",
@@ -26222,6 +26244,18 @@
       "type",
       "video"
     ],
+    "games": [
+      "adjust",
+      "arrow",
+      "arrows",
+      "control",
+      "controller",
+      "direction",
+      "gaming",
+      "left",
+      "move",
+      "right"
+    ],
     "genres": [
       "circle",
       "music",
@@ -26469,6 +26503,20 @@
       "song",
       "sounds"
     ],
+    "loop": [
+      "around",
+      "arrow",
+      "arrows",
+      "direction",
+      "inprogress",
+      "load",
+      "loading refresh",
+      "music",
+      "navigation",
+      "renew",
+      "rotate",
+      "turn"
+    ],
     "lyrics": [
       "audio",
       "bubble",
@@ -26537,6 +26585,20 @@
       "warning"
     ],
     "mic_double": [
+      "dictation",
+      "hear",
+      "hearing",
+      "keyboard",
+      "mic",
+      "microphone",
+      "noise",
+      "record",
+      "recorder",
+      "sound",
+      "speaker",
+      "voice"
+    ],
+    "mic_none": [
       "dictation",
       "hear",
       "hearing",
@@ -26700,6 +26762,21 @@
       "sound",
       "tv"
     ],
+    "not_interested": [
+      "cancel",
+      "clear",
+      "close",
+      "dislike",
+      "exit",
+      "interested",
+      "no",
+      "not",
+      "off",
+      "quit",
+      "remove",
+      "stop",
+      "x"
+    ],
     "not_started": [
       "circle",
       "media",
@@ -26708,6 +26785,24 @@
       "play",
       "started",
       "video"
+    ],
+    "note": [
+      "bookmark",
+      "data",
+      "doc",
+      "document",
+      "drive",
+      "file",
+      "folder",
+      "folders",
+      "message",
+      "page",
+      "paper",
+      "plus",
+      "sheet",
+      "slide",
+      "symbol",
+      "writing"
     ],
     "pause": [
       "control",
@@ -26722,6 +26817,26 @@
       "controls",
       "media",
       "music",
+      "pause",
+      "video"
+    ],
+    "pause_circle_filled": [
+      "circle",
+      "control",
+      "controls",
+      "filled",
+      "media",
+      "music",
+      "pause",
+      "video"
+    ],
+    "pause_circle_outline": [
+      "circle",
+      "control",
+      "controls",
+      "media",
+      "music",
+      "outline",
       "pause",
       "video"
     ],
@@ -26912,6 +27027,18 @@
       "video",
       "videography",
       "voice"
+    ],
+    "queue": [
+      "add",
+      "collection",
+      "layers",
+      "list",
+      "multiple",
+      "music",
+      "playlist",
+      "stack",
+      "stream",
+      "video"
     ],
     "queue_music": [
       "collection",
@@ -27151,6 +27278,20 @@
       "repeat",
       "replay",
       "symbol",
+      "video"
+    ],
+    "replay_circle_filled": [
+      "arrow",
+      "arrows",
+      "circle",
+      "control",
+      "controls",
+      "filled",
+      "music",
+      "refresh",
+      "renew",
+      "repeat",
+      "replay",
       "video"
     ],
     "resume": [
@@ -27993,7 +28134,7 @@
       "volume"
     ]
   },
-  "Material Symbols - Photo&Image": {
+  "Material Symbols - Photo & Image": {
     "10mp": [
       "10",
       "camera",
@@ -32050,7 +32191,7 @@
       "web"
     ]
   },
-  "Material Symbols - UI actions": {
+  "Material Symbols - UI Actions": {
     "123": [
       "1",
       "2",
@@ -46389,7 +46530,7 @@
       "zoom"
     ]
   },
-  "Material Symbols - Common actions": {
+  "Material Symbols - Common Actions": {
     "3d_rotation": [
       "3",
       "3d",
@@ -54010,7 +54151,7 @@
       "plants"
     ]
   },
-  "Material Symbols - device": {
+  "Material Symbols - Device": {
     "access_alarm": [],
     "access_alarms": [],
     "access_time": [],
@@ -54443,7 +54584,7 @@
       "wireless"
     ]
   },
-  "Material Symbols - Business&Payments": {
+  "Material Symbols - Business & Payments": {
     "account_balance": [
       "account",
       "balance",
@@ -58471,7 +58612,7 @@
       "zone"
     ]
   },
-  "Material Symbols - content": {
+  "Material Symbols - Content": {
     "add_circle_outline": [
       "+",
       "add",
@@ -68439,7 +68580,7 @@
       "wristwatch"
     ]
   },
-  "Material Symbols - communication": {
+  "Material Symbols - Communication": {
     "add_ic_call": [
       "+",
       "add",
@@ -68546,7 +68687,7 @@
       "speech"
     ]
   },
-  "Material Symbols - Privacy&Security": {
+  "Material Symbols - Privacy & Security": {
     "add_moderator": [
       "+",
       "add",
@@ -69209,7 +69350,7 @@
       "wireless"
     ]
   },
-  "Material Symbols - image": {
+  "Material Symbols - Image": {
     "add_to_photos": [
       "add",
       "collection",
@@ -69575,50 +69716,6 @@
       "picture",
       "wide"
     ],
-    "panorama_horizontal_select": [
-      "angle",
-      "horizontal",
-      "image",
-      "panorama",
-      "photo",
-      "photography",
-      "picture",
-      "select",
-      "wide"
-    ],
-    "panorama_photosphere_select": [
-      "angle",
-      "horizontal",
-      "image",
-      "panorama",
-      "photo",
-      "photography",
-      "photosphere",
-      "picture",
-      "select",
-      "wide"
-    ],
-    "panorama_vertical_select": [
-      "angle",
-      "image",
-      "panorama",
-      "photo",
-      "photography",
-      "picture",
-      "select",
-      "vertical",
-      "wide"
-    ],
-    "panorama_wide_angle_select": [
-      "angle",
-      "image",
-      "panorama",
-      "photo",
-      "photography",
-      "picture",
-      "select",
-      "wide"
-    ],
     "photo_filter": [
       "ai",
       "artificial",
@@ -69694,7 +69791,7 @@
       "wp"
     ]
   },
-  "Material Symbols - action": {
+  "Material Symbols - Action": {
     "addchart": [
       "+",
       "analytics",
@@ -74332,7 +74429,7 @@
       "your"
     ]
   },
-  "Material Symbols - navigation": {
+  "Material Symbols - Navigation": {
     "app_settings_alt": [
       "Android",
       "OS",
@@ -74382,7 +74479,7 @@
       "work"
     ]
   },
-  "Material Symbols - editor": {
+  "Material Symbols - Editor": {
     "auto_graph": [
       "analytics",
       "auto",
@@ -74592,7 +74689,7 @@
       "tracking"
     ]
   },
-  "Material Symbols - home": {
+  "Material Symbols - Home": {
     "auto_mode": [
       "ai",
       "around",
@@ -74622,7 +74719,7 @@
       "turn"
     ]
   },
-  "Material Symbols - notification": {
+  "Material Symbols - Notification": {
     "bluetooth_audio": [
       "audio",
       "bluetooth",
@@ -74846,7 +74943,7 @@
       "vehicle"
     ]
   },
-  "Material Symbols - hardware": {
+  "Material Symbols - Hardware": {
     "browser_not_supported": [
       "browser",
       "disabled",
@@ -74923,7 +75020,7 @@
       "windows"
     ]
   },
-  "Material Symbols - social": {
+  "Material Symbols - Social": {
     "emoji_emotions": [
       "+",
       "add",
@@ -75089,150 +75186,10 @@
       "yes"
     ]
   },
-  "Material Symbols - av": {
-    "closed_caption_off": [
-      "accessible",
-      "alphabet",
-      "caption",
-      "cc",
-      "character",
-      "closed",
-      "decoder",
-      "font",
-      "language",
-      "letters",
-      "media",
-      "movies",
-      "off",
-      "outline",
-      "subtitle",
-      "subtitles",
-      "symbol",
-      "text",
-      "tv",
-      "type"
-    ],
-    "games": [
-      "adjust",
-      "arrow",
-      "arrows",
-      "control",
-      "controller",
-      "direction",
-      "gaming",
-      "left",
-      "move",
-      "right"
-    ],
-    "loop": [
-      "around",
-      "arrow",
-      "arrows",
-      "direction",
-      "inprogress",
-      "load",
-      "loading refresh",
-      "music",
-      "navigation",
-      "renew",
-      "rotate",
-      "turn"
-    ],
-    "mic_none": [
-      "dictation",
-      "hear",
-      "hearing",
-      "keyboard",
-      "mic",
-      "microphone",
-      "noise",
-      "record",
-      "recorder",
-      "sound",
-      "speaker",
-      "voice"
-    ],
-    "not_interested": [
-      "cancel",
-      "clear",
-      "close",
-      "dislike",
-      "exit",
-      "interested",
-      "no",
-      "not",
-      "off",
-      "quit",
-      "remove",
-      "stop",
-      "x"
-    ],
-    "note": [
-      "bookmark",
-      "data",
-      "doc",
-      "document",
-      "drive",
-      "file",
-      "folder",
-      "folders",
-      "message",
-      "page",
-      "paper",
-      "plus",
-      "sheet",
-      "slide",
-      "symbol",
-      "writing"
-    ],
-    "pause_circle_filled": [
-      "circle",
-      "control",
-      "controls",
-      "filled",
-      "media",
-      "music",
-      "pause",
-      "video"
-    ],
-    "pause_circle_outline": [
-      "circle",
-      "control",
-      "controls",
-      "media",
-      "music",
-      "outline",
-      "pause",
-      "video"
-    ],
-    "queue": [
-      "add",
-      "collection",
-      "layers",
-      "list",
-      "multiple",
-      "music",
-      "playlist",
-      "stack",
-      "stream",
-      "video"
-    ],
-    "replay_circle_filled": [
-      "arrow",
-      "arrows",
-      "circle",
-      "control",
-      "controls",
-      "filled",
-      "music",
-      "refresh",
-      "renew",
-      "repeat",
-      "replay",
-      "video"
-    ]
+  "Material Symbols - AV": {
+   
   },
-  "Material Symbols - file": {
+  "Material Symbols - File": {
     "cloud_queue": [
       "climate",
       "cloud",
@@ -75342,7 +75299,7 @@
       "workspaces"
     ]
   },
-  "Material Symbols - maps": {
+  "Material Symbols - Maps": {
     "delivery_dining": [
       "delivery",
       "dining",
@@ -75564,7 +75521,7 @@
       "mountain"
     ]
   },
-  "Material Symbols - alert": {
+  "Material Symbols - Alert": {
     "error_outline": [
       "!",
       "alert",
@@ -75598,7 +75555,7 @@
       "warning"
     ]
   },
-  "Material Symbols - search": {
+  "Material Symbols - Search": {
     "feed": [
       "article",
       "headline",
@@ -75611,7 +75568,7 @@
       "timeline"
     ]
   },
-  "Material Symbols - places": {
+  "Material Symbols - Places": {
     "free_breakfast": [
       "beverage",
       "breakfast",
@@ -75627,7 +75584,7 @@
   "Material Symbols - Brand": {
     "nest_gale_wifi": []
   },
-  "Material Symbols - toggle": {
+  "Material Symbols - Toggle": {
     "star_border": [
       "best",
       "bookmark",
