@@ -1,4 +1,4 @@
-export const VERSION = 16;
+export const VERSION = 17;
 
 export default function FileUpdater(state) {
   const v = state._meta.version;
@@ -98,6 +98,7 @@ function updateProperties(properties, v, globalProperties) {
   v<13 && v13EnlargeTinyLabels(properties);
   v<14 && v14HidePlayerCursors(properties);
   v<15 && v15SkipTurnProperty(properties);
+  v<17 && v17MaterialSymbols(properties);
 }
 
 function updateRoutine(routine, v, globalProperties) {
@@ -486,6 +487,15 @@ function v16UpdateCountParameter(routine) {
           };
         }
       }
+    }
+  }
+}
+
+function v17MaterialSymbols(properties) {
+  if (properties.type === 'classes') {
+    const matchIcons = properties.text && properties.text.match(/\b(material-icons(?:-(outlined|round|sharp|twotone))?)\b/g);
+    if (matchIcons) {
+      properties.text = properties.text.replace(/\b(material-icons(?:-(outlined|round|sharp|twotone))?)\b/g, "material-symbols");
     }
   }
 }
