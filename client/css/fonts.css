@@ -300,7 +300,6 @@
     font-variant: normal;
     text-transform: none;
     line-height: 1;
-    font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
 
     /* Enable Ligatures ================ */
     letter-spacing: 0;
@@ -512,7 +511,6 @@ p[icon]::before {
   font-size: 200%;
   position: absolute;
   left: -40px;
-  font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
 }
 @media (max-width: 600px), (max-height: 375px) {
   p[icon] {
