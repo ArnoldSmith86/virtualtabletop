@@ -8,6 +8,9 @@ export default function FileUpdater(state) {
     throw Error(`File version ${v} is newer than the supported version ${VERSION}.`);
 
   const globalProperties = computeGlobalProperties(state, v);
+  
+  v<17 && v17MaterialSymbols(state); //called here to ensure that metadata can be updated
+    
   for(const id in state)
     updateProperties(state[id], v, globalProperties);
 
@@ -98,7 +101,6 @@ function updateProperties(properties, v, globalProperties) {
   v<13 && v13EnlargeTinyLabels(properties);
   v<14 && v14HidePlayerCursors(properties);
   v<15 && v15SkipTurnProperty(properties);
-  v<17 && v17MaterialSymbols(properties);
 }
 
 function updateRoutine(routine, v, globalProperties) {
