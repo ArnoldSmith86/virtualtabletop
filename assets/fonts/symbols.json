@@ -1,141 +1,669 @@
 {
-  "VTT Icons - cards": {
-    "[rotate_card_down_ccw]": [],
-    "[rotate_card_down_cw]": [],
-    "[rotate_card_left_ccw]": [],
-    "[rotate_card_left_cw]": [],
-    "[rotate_card_right_ccw]": [],
-    "[rotate_card_right_cw]": [],
-    "[rotate_card_up_ccw]": [],
-    "[rotate_card_up_cw]": [],
-    "[card_horizontal]": [],
-    "[deck]": [],
-    "[deck_add]": [],
-    "[deck_remove]": [],
-    "[card]": [],
-    "[cards]": [],
-    "[card_add]": [],
-    "[card_remove]": [],
-    "[card_equal]": [],
-    "[card_not_equal]": [],
-    "[card_!]": [],
-    "[card_hand]": [],
-    "[card_clubs]": [],
-    "[card_diamonds]": [],
-    "[card_hearts]": [],
-    "[card_spades]": [],
-    "[card_0]": [],
-    "[card_1]": [],
-    "[card_2]": [],
-    "[card_3]": [],
-    "[card_4]": [],
-    "[card_5]": [],
-    "[card_6]": [],
-    "[card_7]": [],
-    "[card_8]": [],
-    "[card_9]": [],
-    "[card_10]": [],
-    "[card_10plus]": [],
-    "[card_A]": [],
-    "[card_B]": [],
-    "[card_C]": [],
-    "[card_D]": [],
-    "[card_E]": [],
-    "[card_F]": [],
-    "[card_G]": [],
-    "[card_H]": [],
-    "[card_I]": [],
-    "[card_J]": [],
-    "[card_K]": [],
-    "[card_L]": [],
-    "[card_M]": [],
-    "[card_N]": [],
-    "[card_O]": [],
-    "[card_P]": [],
-    "[card_Q]": [],
-    "[card_R]": [],
-    "[card_S]": [],
-    "[card_T]": [],
-    "[card_U]": [],
-    "[card_V]": [],
-    "[card_W]": [],
-    "[card_X]": [],
-    "[card_Y]": [],
-    "[card_Z]": [],
-    "[deal_face_down]": [],
-    "[deal_face_up]": [],
-    "[recall]": [],
-    "[recall_right]": [],
-    "[flip_face_down]": [],
-    "[flip_face_up]": [],
-    "[discard]": []
+  "VTT Icons - Cards": {
+    "[rotate_card_down_ccw]": [
+    "card",
+    "counterclockwise",
+    "down",
+    "rotate"
+    ],
+    "[rotate_card_down_cw]": [
+      "card",
+      "clockwise",
+      "down",
+      "rotate"
+    ],
+    "[rotate_card_left_ccw]": [
+      "card",
+      "counterclockwise",
+      "left",
+      "rotate"
+    ],
+    "[rotate_card_left_cw]": [
+      "card",
+      "clockwise",
+      "left",
+      "rotate"
+    ],
+    "[rotate_card_right_ccw]": [
+      "card",
+      "counterclockwise",
+      "right",
+      "rotate"
+    ],
+    "[rotate_card_right_cw]": [
+      "card",
+      "clockwise",
+      "right",
+      "rotate"
+    ],
+    "[rotate_card_up_ccw]": [
+      "card",
+      "counterclockwise",
+      "rotate",
+      "up"
+    ],
+    "[rotate_card_up_cw]": [
+      "card",
+      "clockwise",
+      "rotate",
+      "up"
+    ],
+    "[card_horizontal]": [
+      "card",
+      "horizontal",
+      "layout",
+      "position"
+    ],
+    "[deck]": [
+      "cards",
+      "deck",
+      "group",
+      "pile"
+    ],
+    "[deck_add]": [
+      "add",
+      "cards",
+      "deck",
+      "group"
+    ],
+    "[deck_remove]": [
+      "cards",
+      "deck",
+      "group",
+      "remove"
+    ],
+      "[card]": [
+      "card",
+      "item",
+      "piece"
+    ],
+    "[cards]": [
+      "card",
+      "deck",
+      "group",
+      "set"
+    ],
+    "[card_add]": [
+      "add",
+      "card",
+      "deck"
+    ],
+    "[card_remove]": [
+      "card",
+      "deck",
+      "remove"
+    ],
+    "[card_equal]": [
+      "card",
+      "compare",
+      "equal"
+    ],
+    "[card_not_equal]": [
+      "card",
+      "compare",
+      "not equal"
+    ],
+    "[card_!]": [
+      "alert",
+      "card",
+      "warning"
+    ],
+    "[card_hand]": [
+      "card",
+      "hand",
+      "held"
+    ],
+    "[card_clubs]": [
+      "card",
+      "clubs",
+      "suit"
+    ] ,
+    "[card_diamonds]": [
+      "card",
+      "diamonds",
+      "suit"
+    ],
+    "[card_hearts]": [
+      "card",
+      "hearts",
+      "suit"
+    ],
+    "[card_spades]": [
+      "card",
+      "spades",
+      "suit"
+    ],
+      "[card_0]": [
+      "card",
+      "number",
+      "zero"
+    ],
+    "[card_1]": [
+      "card",
+      "number",
+      "one"
+    ],
+    "[card_2]": [
+      "card",
+      "number",
+      "two"
+    ],
+    "[card_3]": [
+      "card",
+      "number",
+      "three"
+    ],
+    "[card_4]": [
+      "card",
+      "number",
+      "four"
+    ],
+    "[card_5]": [
+      "card",
+      "number",
+      "five"
+    ],
+    "[card_6]": [
+      "card",
+      "number",
+      "six"
+    ],
+    "[card_7]": [
+      "card",
+      "number",
+      "seven"
+    ],
+    "[card_8]": [
+      "card",
+      "number",
+      "eight"
+    ],
+    "[card_9]": [
+      "card",
+      "number",
+      "nine"
+    ],
+    "[card_10]": [
+      "card",
+      "number",
+      "ten"
+    ],
+    "[card_10plus]": [
+      "card",
+      "more",
+      "number",
+      "ten"
+    ],
+    "[card_A]": [
+      "ace",
+      "card",
+      "letter"
+    ],
+    "[card_B]": [
+      "card",
+      "letter",
+      "B"
+    ],
+    "[card_C]": [
+      "card",
+      "letter",
+      "C"
+    ],
+    "[card_D]": [
+      "card",
+      "letter",
+      "D"
+    ],
+    "[card_E]": [
+      "card",
+      "letter",
+      "E"
+    ],
+    "[card_F]": [
+      "card",
+      "letter",
+      "F"
+    ],
+    "[card_G]": [
+      "card",
+      "letter",
+      "G"
+    ],
+    "[card_H]": [
+      "card",
+      "letter",
+      "H"
+    ],
+    "[card_I]": [
+      "card",
+      "letter",
+      "I"
+    ],
+    "[card_J]": [
+      "card",
+      "jack",
+      "letter"
+    ],
+    "[card_K]": [
+      "card",
+      "king",
+      "letter"
+    ],
+    "[card_L]": [
+      "card",
+      "letter",
+      "L"
+    ],
+    "[card_M]": [
+      "card",
+      "letter",
+      "M"
+    ],
+    "[card_N]": [
+      "card",
+      "letter",
+      "N"
+    ],
+    "[card_O]": [
+      "card",
+      "letter",
+      "O"
+    ],
+    "[card_P]": [
+      "card",
+      "letter",
+      "P"
+    ],
+    "[card_Q]": [
+      "card",
+      "queen",
+      "letter"
+    ],
+    "[card_R]": [
+      "card",
+      "letter",
+      "R"
+    ],
+    "[card_S]": [
+      "card",
+      "letter",
+      "S"
+    ],
+    "[card_T]": [
+      "card",
+      "letter",
+      "T"
+    ],
+    "[card_U]": [
+      "card",
+      "letter",
+      "U"
+    ],
+    "[card_V]": [
+      "card",
+      "letter",
+      "V"
+    ],
+    "[card_W]": [
+      "card",
+      "letter",
+      "W"
+    ],
+    "[card_X]": [
+      "card",
+      "letter",
+      "X"
+    ],
+    "[card_Y]": [
+      "card",
+      "letter",
+      "Y"
+    ],
+    "[card_Z]": [
+      "card",
+      "letter",
+      "Z"
+    ],
+    "[deal_face_down]": [
+      "deal",
+      "face down",
+      "shuffle"
+    ],
+    "[deal_face_up]": [
+      "deal",
+      "face up",
+      "shuffle"
+    ],
+    "[recall]": [
+      "deck",
+      "recall",
+      "retrieve"
+    ],
+    "[recall_right]": [
+      "deck",
+      "recall",
+      "right"
+    ],
+    "[flip_face_down]": [
+      "card",
+      "flip",
+      "face down"
+    ],
+    "[flip_face_up]": [
+      "card",
+      "flip",
+      "face up"
+    ],
+    "[discard]": [
+      "card",
+      "discard",
+      "remove"
+    ]
   },
-  "VTT Icons - dice": {
-    "[die_face_1]": [],
-    "[die_face_2]": [],
-    "[die_face_3]": [],
-    "[die_face_4]": [],
-    "[die_face_5]": [],
-    "[die_face_6]": [],
-    "[die_face_7]": [],
-    "[die_face_8]": [],
-    "[die_face_9]": [],
-    "[die]": [],
-    "[die_add]": [],
-    "[die_remove]": [],
-    "[recall_dice]": [],
-    "[recall_dice_right]": []
+  "VTT Icons - Dice": {
+    "[die_face_1]": [
+      "die",
+      "face",
+      "one"
+    ],
+    "[die_face_2]": [
+      "die",
+      "face",
+      "two"
+    ],
+    "[die_face_3]": [
+      "die",
+      "face",
+      "three"
+    ],
+    "[die_face_4]": [
+      "die",
+      "face",
+      "four"
+    ],
+    "[die_face_5]": [
+      "die",
+      "face",
+      "five"
+    ],
+    "[die_face_6]": [
+      "die",
+      "face",
+      "six"
+    ],
+    "[die_face_7]": [
+      "die",
+      "face",
+      "seven"
+    ],
+    "[die_face_8]": [
+      "die",
+      "face",
+      "eight"
+    ],
+    "[die_face_9]": [
+      "die",
+      "face",
+      "nine"
+    ],
+    "[die]": [
+      "dice",
+      "game",
+      "roll"
+    ],
+    "[die_add]": [
+      "add",
+      "dice",
+      "game"
+    ],
+    "[die_remove]": [
+      "dice",
+      "game",
+      "remove"
+    ],
+    "[recall_dice]": [
+      "dice",
+      "recall",
+      "retrieve"
+    ],
+    "[recall_dice_right]": [
+      "dice",
+      "recall",
+      "right"
+    ]
   },
-  "VTT Icons - game pieces": {
-    "[cube]": [],
-    "[cube_3d]": [],
-    "[village]": [],
-    "[village_3d]": [],
-    "[house]": [],
-    "[house_3d]": [],
-    "[meeple]": [],
-    "[meeple_3d]": [],
-    "[poker_chip]": [],
-    "[pawn]": []
+  "VTT Icons - Game Pieces": {
+    "[cube]": [
+      "block",
+      "cube",
+      "piece"
+    ],
+    "[cube_3d]": [
+      "3d",
+      "block",
+      "cube"
+    ],
+    "[village]": [
+      "building",
+      "piece",
+      "village"
+    ],
+    "[village_3d]": [
+      "3d",
+      "building",
+      "village"
+    ],
+    "[house]": [
+      "building",
+      "house",
+      "piece"
+    ],
+    "[house_3d]": [
+      "3d",
+      "building",
+      "house"
+    ],
+    "[meeple]": [
+      "game",
+      "meeple",
+      "piece"
+    ],
+    "[meeple_3d]": [
+      "3d",
+      "game",
+      "meeple"
+    ],
+    "[poker_chip]": [
+      "chip",
+      "poker",
+      "token"
+    ],
+    "[pawn]": [
+      "game",
+      "pawn",
+      "piece"
+    ]
   },
-  "VTT Icons - misc": {
-    "[height]": [],
-    "[hex_grid_horizontal]": [],
-    "[hex_grid_vertical]": [],
-    "[hexagon_horizontal]": [],
-    "[hexagon_vertical]": [],
-    "[property]": [],
-    "[property_add]": [],
-    "[property_off]": [],
-    "[property_remove]": [],
-    "[subproperty]": [],
-    "[subproperty_add]": [],
-    "[subproperty_remove]": [],
-    "[width]": [],
-    "[routine]": [],
-    "[routine_add]": [],
-    "[routine_remove]": [],
-    "[screen_change]": [],
-    "[edit]": [],
-    "[book_open]": [],
-    "[holder]": [],
-    "[holder_add]": [],
-    "[holder_hand]": [],
-    "[holder_remove]": [],
-    "[pile]": [],
-    "[pile_widgets]": [],
-    "[shuffle]": [],
-    "[sort_ascending]": [],
-    "[sort_descending]": [],
-    "[trash]": [],
-    "[widget]": [],
-    "[widget_add]": [],
-    "[widget_remove]": []
+  "VTT Icons - Misc": {
+    "[height]": [
+      "dimension",
+      "height",
+      "size"
+    ],
+    "[hex_grid_horizontal]": [
+      "grid",
+      "hexagonal",
+      "horizontal"
+    ],
+    "[hex_grid_vertical]": [
+      "grid",
+      "hexagonal",
+      "vertical"
+    ],
+    "[hexagon_horizontal]": [
+      "hexagon",
+      "horizontal",
+      "shape"
+    ],
+    "[hexagon_vertical]": [
+      "hexagon",
+      "shape",
+      "vertical"
+    ],
+    "[property]": [
+      "attribute",
+      "property",
+      "trait"
+    ],
+    "[property_add]": [
+      "add",
+      "attribute",
+      "property"
+    ],
+    "[property_off]": [
+      "disable",
+      "property",
+      "toggle"
+    ],
+    "[property_remove]": [
+      "attribute",
+      "property",
+      "remove"
+    ],
+    "[subproperty]": [
+      "attribute",
+      "property",
+      "subproperty"
+    ],
+    "[subproperty_add]": [
+      "add",
+      "property",
+      "subproperty"
+    ],
+    "[subproperty_remove]": [
+      "property",
+      "remove",
+      "subproperty"
+    ],
+    "[width]": [
+      "dimension",
+      "size",
+      "width"
+    ],
+    "[routine]": [
+      "process",
+      "routine",
+      "task"
+    ],
+    "[routine_add]": [
+      "add",
+      "process",
+      "routine"
+    ],
+    "[routine_remove]": [
+      "process",
+      "remove",
+      "routine"
+    ],
+    "[screen_change]": [
+      "change",
+      "screen",
+      "swap"
+    ],
+    "[edit]": [
+      "adjust",
+      "edit",
+      "modify"
+    ],
+    "[book_open]": [
+      "book",
+      "document",
+      "open"
+    ],
+    "[holder]": [
+      "container",
+      "holder",
+      "piece"
+    ],
+    "[holder_add]": [
+      "add",
+      "container",
+      "holder"
+    ],
+    "[holder_hand]": [
+      "container",
+      "hand",
+      "holder"
+    ],
+    "[holder_remove]": [
+      "container",
+      "holder",
+      "remove"
+    ],
+    "[pile]": [
+      "group",
+      "pile",
+      "stack"
+    ],
+    "[pile_widgets]": [
+      "group",
+      "pile",
+      "widgets"
+    ],
+    "[shuffle]": [
+      "mix",
+      "randomize",
+      "shuffle"
+    ],
+    "[sort_ascending]": [
+      "ascending",
+      "order",
+      "sort"
+    ],
+    "[sort_descending]": [
+      "descending",
+      "order",
+      "sort"
+    ],
+    "[trash]": [
+      "delete",
+      "remove",
+      "trash"
+    ],
+    "[widget]": [
+      "component",
+      "interface",
+      "widget"
+    ],
+    "[widget_add]": [
+      "add",
+      "component",
+      "widget"
+    ],
+    "[widget_remove]": [
+      "component",
+      "remove",
+      "widget"
+    ]
   },
-  "VTT Icons - internal UI": {
-    "[vtt_logo]": [],
-    "[library]": [],
-    "[hide_side_bar]": []
+  "VTT Icons - Internal UI": {
+    "[vtt_logo]": [
+      "branding",
+      "logo",
+      "symbol",
+      "VTT",
+      "virtualtabletop"
+    ],
+    "[library]": [
+      "collection",
+      "library",
+      "resources"
+    ],
+    "[hide_side_bar]": [
+      "collapse",
+      "hide",
+      "side bar"
+    ]
   },
   "Game-icons.net - Abstract": {
     "viscious-speed/abstract-001": [
