@@ -25240,7 +25240,23 @@
       "sweet",
       "symbol"
     ],
-    "cake_add": [],
+    "cake_add": [
+      "add",
+      "baked",
+      "birthday",
+      "candles",
+      "celebration",
+      "dessert",
+      "food",
+      "frosting",
+      "new",
+      "party",
+      "pastries",
+      "pastry",
+      "plus",
+      "social",
+      "sweet",
+      "symbol"],
     "campaign": [
       "alert",
       "announcement",
@@ -30257,8 +30273,26 @@
       "website",
       "window"
     ],
-    "broadcast_on_home": [],
-    "broadcast_on_personal": [],
+    "broadcast_on_home": [
+      "broadcast",
+      "home",
+      "audio",
+      "video",
+      "streaming",
+      "media",
+      "wifi",
+      "network"
+    ],
+    "broadcast_on_personal": [
+      "broadcast",
+      "personal",
+      "device",
+      "streaming",
+      "individual",
+      "media",
+      "wifi",
+      "network"
+    ],
     "call_to_action": [
       "action",
       "alert",
@@ -30375,7 +30409,16 @@
       "reposition",
       "right"
     ],
-    "digital_out_of_home": [],
+    "digital_out_of_home": [
+      "digital",
+      "advertising",
+      "out-of-home",
+      "signage",
+      "billboard",
+      "display",
+      "screen",
+      "media"
+    ],
     "discover_tune": [
       "adjust",
       "discover",
@@ -33808,7 +33851,19 @@
       "statistics",
       "tracking"
     ],
-    "finance_mode": [],
+    "finance_mode": [
+      "analytics",
+      "bar",
+      "bars",
+      "chart",
+      "data",
+      "diagram",
+      "graph",
+      "infographic",
+      "measure",
+      "metrics",
+      "statistics",
+      "tracking"],
     "flowchart": [
       "account",
       "analytics",
@@ -34231,7 +34286,17 @@
       "room",
       "slash"
     ],
-    "order_approve": [],
+    "order_approve": [
+      "order",
+      "approve",
+      "confirmation",
+      "shopping",
+      "transaction",
+      "business",
+      "approval",
+      "e-commerce",
+      "purchase"
+    ],
     "order_play": [
       "doc",
       "document",
@@ -34524,7 +34589,19 @@
       "quick",
       "reorder"
     ],
-    "receipt": [],
+    "receipt": [
+      "bill",
+      "check",
+      "document",
+      "list",
+      "long",
+      "paper",
+      "paperwork",
+      "receipt",
+      "record",
+      "store",
+      "transaction"
+    ],
     "receipt_long": [
       "bill",
       "check",
@@ -35167,7 +35244,17 @@
       "unified payments interface",
       "upi"
     ],
-    "wallet": [],
+    "wallet": [
+      "wallet",
+      "money",
+      "payment",
+      "finance",
+      "digital",
+      "transactions",
+      "currency",
+      "storage",
+      "cash"
+    ],
     "waterfall_chart": [
       "analytics",
       "bar",
@@ -36106,7 +36193,18 @@
       "perform",
       "pledge"
     ],
-    "component_exchange": [],
+    "component_exchange": [
+      "component",
+      "exchange",
+      "swap",
+      "replace",
+      "trade",
+      "transfer",
+      "gear",
+      "mechanical",
+      "parts",
+      "switch"
+    ],
     "contacts_product": [
       "contacts",
       "logo",
@@ -37085,7 +37183,18 @@
       "security",
       "unlocked"
     ],
-    "lock_person": [],
+    "lock_person": [
+      "lock",
+      "open",
+      "password",
+      "privacy",
+      "private",
+      "protection",
+      "safety",
+      "secure",
+      "security",
+      "unlocked"
+    ],
     "lock_reset": [
       "around",
       "inprogress",
@@ -39079,8 +39188,22 @@
       "message",
       "speech"
     ],
-    "chat_add_on": [],
-    "chat_apps_script": [],
+    "chat_add_on": [
+      "bubble",
+      "comment",
+      "communicate",
+      "feedback",
+      "message",
+      "speech"
+    ],
+    "chat_apps_script": [
+      "bubble",
+      "comment",
+      "communicate",
+      "feedback",
+      "message",
+      "speech"
+    ],
     "chat_bubble": [
       "bubble",
       "chat",
@@ -42303,7 +42426,17 @@
       "medical",
       "nurse"
     ],
-    "lift_to_talk": [],
+    "lift_to_talk": [
+      "lift",
+      "talk",
+      "mobile",
+      "phone",
+      "communication",
+      "handheld",
+      "voice",
+      "gesture",
+      "call"
+    ],
     "lightning_stand": [
       "bolt",
       "charge",
@@ -45514,7 +45647,16 @@
       "nest",
       "wind"
     ],
-    "airware": [],
+    "airware": [
+      "air",
+      "wind",
+      "blowing",
+      "wavy lines",
+      "breeze",
+      "circulation",
+      "ventilation",
+      "flow"
+    ],
     "apparel": [
       "blouse",
       "clothes",
@@ -45873,7 +46015,15 @@
       "umbrella",
       "yard"
     ],
-    "desk": [],
+    "desk": [
+      "desk",
+      "office",
+      "workspace",
+      "table",
+      "furniture",
+      "workstation",
+      "study"
+    ],
     "detector_smoke": [
       "alarm",
       "detector",
@@ -46140,8 +46290,24 @@
       "slash",
       "warning"
     ],
-    "energy_program_saving": [],
-    "energy_program_time_used": [],
+    "energy_program_saving": [
+      "eco",
+      "energy",
+      "leaf",
+      "leaves",
+      "nest",
+      "savings",
+      "usage"
+    ],
+    "energy_program_time_used": [
+      "eco",
+      "energy",
+      "leaf",
+      "leaves",
+      "nest",
+      "savings",
+      "usage"
+    ],
     "energy_savings_leaf": [
       "eco",
       "energy",
@@ -46759,7 +46925,16 @@
       "night",
       "sleep"
     ],
-    "mode_off_on": [],
+    "mode_off_on": [
+      "mode",
+      "off",
+      "on",
+      "power",
+      "switch",
+      "control",
+      "toggle",
+      "electronic"
+    ],
     "mop": [
       "clean",
       "nest",
@@ -47235,7 +47410,13 @@
       "thermometer",
       "thermostat"
     ],
-    "thermostat_carbon": [],
+    "thermostat_carbon": [
+      "thermostat",
+      "carbon",
+      "rectangle",
+      "temperature",
+      "control"
+    ],
     "tv_gen": [
       "device",
       "electronic",
@@ -47397,8 +47578,37 @@
       "virtual reality",
       "vr"
     ],
-    "add_home": [],
-    "add_home_work": [],
+    "add_home": [
+      "+",
+      "add",
+      "destination",
+      "direction",
+      "home",
+      "location",
+      "maps",
+      "new",
+      "pin",
+      "place",
+      "plus",
+      "stop",
+      "symbol"
+    ],
+    "add_home_work": [
+      "+",
+      "add",
+      "destination",
+      "direction",
+      "home",
+      "location",
+      "maps",
+      "new",
+      "pin",
+      "place",
+      "plus",
+      "stop",
+      "symbol",
+      "work"
+    ],
     "add_location": [
       "+",
       "add",
@@ -47864,7 +48074,17 @@
       "hydrant",
       "water"
     ],
-    "fire_truck": [],
+    "fire_truck": [
+      "911",
+      "emergency",
+      "fire",
+      "rescue",
+      "safety",
+      "firefighter",
+      "local",
+      "protection",
+      "truck"
+    ],
     "flag": [
       "country",
       "destination",
@@ -51249,7 +51469,21 @@
       "text",
       "type"
     ],
-    "gif_2": [],
+    "gif_2": [
+      "alphabet",
+      "animated",
+      "animation",
+      "bitmap",
+      "character",
+      "font",
+      "format",
+      "graphics",
+      "interchange",
+      "letters",
+      "symbol",
+      "text",
+      "type"
+    ],
     "gif_box": [
       "alphabet",
       "animated",
@@ -52269,7 +52503,17 @@
       "profile",
       "user"
     ],
-    "photo_frame": [],
+    "photo_frame": [
+      "frame",
+      "image",
+      "photo",
+      "photography",
+      "picture",
+      "border",
+      "display",
+      "portrait",
+      "landscape"
+    ],
     "photo_library": [
       "album",
       "image",
@@ -54032,7 +54276,21 @@
     ]
   },
   "Material Symbols - Social": {
-    "18_up_rating": [],
+    "18_up_rating": [
+      "18",
+      "adult",
+      "age",
+      "character",
+      "digit",
+      "display",
+      "font",
+      "letters",
+      "mature",
+      "numbers",
+      "rating",
+      "restriction",
+      "symbol"
+    ],
     "6_ft_apart": [
       "6",
       "apart",
@@ -55813,7 +56071,17 @@
       "samples",
       "test"
     ],
-    "lab_research": [],
+    "lab_research": [
+      "health",
+      "lab",
+      "labs",
+      "medical",
+      "research",
+      "science",
+      "test",
+      "experiment",
+      "study"
+    ],
     "labs": [
       "health",
       "lab",
@@ -56111,7 +56379,13 @@
       "medical",
       "organ"
     ],
-    "no_adult_content": [],
+    "no_adult_content": [
+      "adult",
+      "age",
+      "rating",
+      "restriction",
+      "mature"
+    ],
     "not_accessible": [
       "accessibility",
       "accessible",
@@ -58082,7 +58356,19 @@
       "style",
       "text"
     ],
-    "align_end": [],
+    "align_end": [
+      "align",
+      "alignment",
+      "end",
+      "format",
+      "horizontal",
+      "layout",
+      "lines",
+      "paragraph",
+      "rules",
+      "style",
+      "text"
+    ],
     "align_flex_center": [
       "alignment",
       "center",
@@ -58265,11 +58551,69 @@
       "style",
       "vertical"
     ],
-    "align_space_around": [],
-    "align_space_between": [],
-    "align_space_even": [],
-    "align_start": [],
-    "align_stretch": [],
+    "align_space_around": [
+      "align",
+      "alignment",
+      "around",
+      "distribute",
+      "format",
+      "layout",
+      "lines",
+      "space",
+      "spacing",
+      "style",
+      "text"
+    ],
+    "align_space_between": [
+      "align",
+      "alignment",
+      "between",
+      "distribute",
+      "format",
+      "layout",
+      "lines",
+      "space",
+      "spacing",
+      "style",
+      "text"
+    ],
+    "align_space_even": [
+      "align",
+      "alignment",
+      "distribute",
+      "even",
+      "format",
+      "layout",
+      "lines",
+      "space",
+      "spacing",
+      "style",
+      "text"
+    ],
+    "align_start": [
+      "align",
+      "alignment",
+      "begin",
+      "format",
+      "horizontal",
+      "layout",
+      "lines",
+      "paragraph",
+      "rules",
+      "style",
+      "text"
+    ],
+    "align_stretch": [
+      "align",
+      "alignment",
+      "distribute",
+      "format",
+      "layout",
+      "lines",
+      "stretch",
+      "style",
+      "text"
+    ],
     "align_vertical_bottom": [
       "align",
       "alignment",
@@ -59682,8 +60026,29 @@
       "slide",
       "writing"
     ],
-    "docs_add_on": [],
-    "docs_apps_script": [],
+    "docs_add_on": [
+      "document",
+      "docs",
+      "add",
+      "plus",
+      "extension",
+      "file",
+      "line",
+      "page",
+      "symbol",
+      "text"
+    ],
+    "docs_apps_script": [
+      "document",
+      "doc",
+      "app",
+      "script",
+      "arrow",
+      "file",
+      "line",
+      "code",
+      "automation"
+    ],
     "document_scanner": [
       "article",
       "data",
@@ -61410,8 +61775,28 @@
       "wavy",
       "writing"
     ],
-    "forms_add_on": [],
-    "forms_apps_script": [],
+    "forms_add_on": [
+      "form",
+      "checklist",
+      "add",
+      "plus",
+      "extension",
+      "file",
+      "symbol",
+      "document",
+      "text"
+    ],
+    "forms_apps_script": [
+      "form",
+      "checklist",
+      "app",
+      "script",
+      "arrow",
+      "automation",
+      "file",
+      "document",
+      "code"
+    ],
     "frame_inspect": [
       "border",
       "borders",
@@ -64158,7 +64543,18 @@
       "storefront",
       "writing"
     ],
-    "type_specimen": [],
+    "type_specimen": [
+      "type",
+      "specimen",
+      "font",
+      "letter",
+      "example",
+      "print",
+      "text",
+      "style",
+      "typography",
+      "design"
+    ],
     "ungroup": [
       "arrow",
       "export",
@@ -64891,7 +65287,23 @@
       "trolley",
       "vehicle"
     ],
-    "directions_railway_2": [],
+    "directions_railway_2": [
+      "automobile",
+      "car",
+      "cars",
+      "direction",
+      "maps",
+      "public",
+      "rail",
+      "railway",
+      "subway",
+      "train",
+      "tram",
+      "transit",
+      "transportation",
+      "trolley",
+      "vehicle"
+    ],
     "directions_run": [
       "body",
       "directions",
@@ -66902,7 +67314,7 @@
       "your"
     ]
   },
-  "Material Symbols - UI actions": {
+  "Material Symbols - UI Actions": {
     "123": [
       "1",
       "2",
@@ -67645,7 +68057,17 @@
       "power",
       "thunderbolt"
     ],
-    "borg": [],
+    "borg": [
+      "system",
+      "automation",
+      "orchestration",
+      "integration",
+      "network",
+      "management",
+      "cluster",
+      "control",
+      "technology"
+    ],
     "bottom_app_bar": [
       "app",
       "application",
@@ -68104,8 +68526,28 @@
       "lines",
       "list"
     ],
-    "clock_arrow_down": [],
-    "clock_arrow_up": [],
+    "clock_arrow_down": [
+      "download",
+      "inprogress",
+      "load",
+      "loading",
+      "percent",
+      "percentage",
+      "progress",
+      "rotate",
+      "upload"
+    ],
+    "clock_arrow_up": [
+      "download",
+      "inprogress",
+      "load",
+      "loading",
+      "percent",
+      "percentage",
+      "progress",
+      "rotate",
+      "upload"
+    ],
     "clock_loader_10": [
       "download",
       "inprogress",
@@ -68347,8 +68789,22 @@
       "thresholding",
       "thresold"
     ],
-    "dataset": [],
-    "dataset_linked": [],
+    "dataset": [
+      "database",
+      "collection",
+      "information",
+      "table",
+      "record",
+      "analytic"
+    ],
+    "dataset_linked": [
+      "database",
+      "collection",
+      "information",
+      "table",
+      "record",
+      "analytic"
+    ],
     "delete": [
       "bin",
       "can",
@@ -69295,7 +69751,17 @@
       "remember",
       "save"
     ],
-    "hide": [],
+    "hide": [
+      "arrows",
+      "collapse",
+      "minimize",
+      "visibility",
+      "reduce",
+      "hide",
+      "off",
+      "offline",
+      "on"
+    ],
     "hide_source": [
       "circle",
       "disabled",
@@ -69871,7 +70337,18 @@
       "simulation",
       "training"
     ],
-    "more_down": [],
+    "more_down": [
+      "app",
+      "application",
+      "components",
+      "interface",
+      "more",
+      "screen",
+      "site",
+      "ui",
+      "ux",
+      "down"
+    ],
     "more_horiz": [
       "3",
       "DISABLE_IOS",
@@ -69894,7 +70371,18 @@
       "web",
       "website"
     ],
-    "more_up": [],
+    "more_up": [
+      "app",
+      "application",
+      "components",
+      "interface",
+      "more",
+      "screen",
+      "site",
+      "ui",
+      "ux",
+      "up"
+    ],
     "more_vert": [
       "3",
       "DISABLE_IOS",
@@ -70111,7 +70599,17 @@
       "pan",
       "with"
     ],
-    "output": [],
+    "output": [
+      "arrow",
+      "arrows",
+      "direction",
+      "right",
+      "install",
+      "navigation",
+      "out",
+      "outside",
+      "east"
+    ],
     "output_circle": [
       "arrow",
       "arrows",
@@ -70362,7 +70860,17 @@
       "up",
       "upload"
     ],
-    "question_exchange": [],
+    "question_exchange": [
+      "question",
+      "exchange",
+      "arrow",
+      "rotate",
+      "help",
+      "support",
+      "swap",
+      "information",
+      "interaction"
+    ],
     "quick_reference": [
       "alert",
       "announcement",
@@ -72189,7 +72697,16 @@
       "website",
       "window"
     ],
-    "transcribe": [],
+    "transcribe": [
+      "transcribe",
+      "text",
+      "speech",
+      "audio",
+      "convert",
+      "typing",
+      "voice",
+      "record"
+    ],
     "undo": [
       "arrow",
       "backward",
@@ -72410,9 +72927,48 @@
       "website",
       "window"
     ],
-    "width_full": [],
-    "width_normal": [],
-    "width_wide": [],
+    "width_full": [
+      "full",
+      "width",
+      "layout",
+      "interface",
+      "ui",
+      "ux",
+      "screen",
+      "design",
+      "web",
+      "website",
+      "view",
+      "window"
+    ],
+    "width_normal": [
+      "normal",
+      "width",
+      "layout",
+      "interface",
+      "ui",
+      "ux",
+      "screen",
+      "design",
+      "web",
+      "website",
+      "view",
+      "window"
+    ],
+    "width_wide": [
+      "wide",
+      "width",
+      "layout",
+      "interface",
+      "ui",
+      "ux",
+      "screen",
+      "design",
+      "web",
+      "website",
+      "view",
+      "window"
+    ],
     "youtube_searched_for": [
       "arrow",
       "back",
