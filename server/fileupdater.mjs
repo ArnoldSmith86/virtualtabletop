@@ -492,10 +492,11 @@ function v16UpdateCountParameter(routine) {
 }
 
 function v17MaterialSymbols(properties) {
-  if (properties.type === 'classes') {
-    const matchIcons = properties.text && properties.text.match(/\b(material-icons(?:-(outlined|round|sharp|twotone))?)\b/g);
-    if (matchIcons) {
-      properties.text = properties.text.replace(/\b(material-icons(?:-(outlined|round|sharp|twotone))?)\b/g, "material-symbols");
+  for (const key in properties) {
+    if (typeof properties[key] === 'object' && properties[key] !== null) {
+      v17MaterialSymbols(properties[key]);
+    } else if (typeof properties[key] === 'string') {
+      properties[key] = properties[key].replace(/\b(material-icons(?:-(outlined|round|sharp|twotone))?)\b/g, "material-symbols");
     }
   }
 }
