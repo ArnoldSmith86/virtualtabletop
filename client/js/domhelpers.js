@@ -614,6 +614,9 @@ export function addRichtextControls(dom) {
   loadSymbolPicker();
 
   $('[icon=format_size]', controls).onclick = function() {
+    const selection = window.getSelection();
+    if (!selection.rangeCount)
+      return;
     const parent = window.getSelection().getRangeAt(0).startContainer.parentNode.closest('h4');
     if(parent)
       parent.replaceWith(...parent.children);
@@ -622,6 +625,9 @@ export function addRichtextControls(dom) {
     dom.focus();
   };
   $('[icon=palette]', controls).onclick = function() {
+    const selection = window.getSelection();
+    if (!selection.rangeCount)
+      return;
     const range = window.getSelection().getRangeAt(0);
     document.execCommand('forecolor', false, '#000000');
     const input = document.createElement('input');
@@ -658,6 +664,9 @@ export function addRichtextControls(dom) {
     }
   };
   $('[icon=add_reaction]', controls).onclick = async function() {
+    const selection = window.getSelection();
+    if (!selection.rangeCount)
+      return;
     const range = window.getSelection().getRangeAt(0);
 
     showStatesOverlay('symbolPickerOverlay');
