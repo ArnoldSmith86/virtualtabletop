@@ -270,6 +270,10 @@
   direction: ltr;
 }
 
+.material-symbols.intext {
+  font-size: 20px;
+}
+
 @font-face {
   font-family: "Noto Emoji";
   font-style: normal;
