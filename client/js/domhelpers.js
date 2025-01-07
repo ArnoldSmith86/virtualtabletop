@@ -405,12 +405,16 @@ function images2emojis(dom) {
   dom.innerHTML = dom.innerHTML.replace(regexpUnicodeModified, (m,g)=>g);
 }
 
+function replaceMaterialIcons(html) {
+  return html.replace(/\b(material-icons(?:-(outlined|round|sharp|twotone))?)\b/g, "material-symbols");
+}
+
 export function applyValuesToDOM(parent, obj) {
   for(const dom of $a('[data-field]', parent)) {
     if(obj[dom.dataset.field]) {
       dom.classList.remove('hidden');
       if(dom.dataset.html)
-        dom.innerHTML = DOMPurify.sanitize(mapAssetURLs(obj[dom.dataset.field]), { USE_PROFILES: { html: true } });
+        dom.innerHTML = DOMPurify.sanitize(replaceMaterialIcons(mapAssetURLs(obj[dom.dataset.field])), { USE_PROFILES: { html: true } });
       else
         dom[dom.dataset.target || 'innerText'] = obj[dom.dataset.field];
       if(dom.dataset.target == 'src')
