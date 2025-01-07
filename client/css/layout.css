@@ -724,7 +724,6 @@ div[icon]::before {
   position: absolute;
   right: -40px;
   top: -10px;
-  font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
 }
 
 div[icon] * {
@@ -899,7 +898,6 @@ button[icon]::before {
   line-height: 1;
   width: 24px;
   overflow: clip;
-  font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
 }
 button[icon]:empty {
   padding: 5px;
