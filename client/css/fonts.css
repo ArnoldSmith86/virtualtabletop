@@ -255,6 +255,7 @@
   word-wrap: normal;
   white-space: nowrap;
   direction: ltr;
+  word-spacing: -0.75em;
 }
 
 .material-symbols-nofill, .font-material-symbols-nofill {
@@ -268,6 +269,7 @@
   word-wrap: normal;
   white-space: nowrap;
   direction: ltr;
+  word-spacing: -0.75em;
 }
 
 .material-symbols.intext {
