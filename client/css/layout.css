@@ -1007,7 +1007,7 @@ button.visualProgress {
 .richtextSymbol.symbols {
   top: 0.15em;
 }
-.richtextSymbol.material-symbols {
+.richtextSymbol.material-symbols, .richtextSymbol.material-symbols-nofill {
   top: 0.2em;
 }
 .richtextSymbol.gameicons, img.emoji {
