@@ -261,6 +261,60 @@ function generateCounterWidgets(id, x, y) {
   ];
 }
 
+function generateLineWidgets(id, x, y) {
+  const ctrlPoints = {
+    type: "button", // Should be basic widget, but that type does not work??
+    width: 30,
+    height: 30,
+    movable: true,
+    movableInEdit: true,
+  };
+  return [
+    { type: 'line',
+      id: id,
+      x: x,
+      y: y,
+      width: 200,
+      height: 200,
+      movable: true,
+      movableInEdit: true,
+      layer: -5, //hack for now, the large size of the widget blocks much of the overlay unless it is behind the other widgets
+      inheritFromNotifyAll: true,
+      inheritFrom: {
+        [id + "_S"]: [
+          {"x": "startx"},
+          {"y": "starty"},
+          {"width": "startWidth"},
+          {"height": "startHeight"}
+        ],
+        [id + "_C1"]: [
+          {"x": "cp1x"},
+          {"y": "cp1y"},
+          {"width": "cp1Width"},
+          {"height": "cp1Height"}
+        ],
+        [id + "_C2"]: [
+          {"x": "cp2x"},
+          {"y": "cp2y"},
+          {"width": "cp2Width"},
+          {"height": "cp2Height"}
+        ],
+        [id + "_E"]: [
+          {"x": "endx"},
+          {"y": "endy"},
+          {"width": "endWidth"},
+          {"height": "endHeight"}
+        ]
+      }
+    },
+    Object.assign({ ...ctrlPoints }, { id: id + "_S", x: x, y: y, text: "S" }),
+    Object.assign({ ...ctrlPoints }, { id: id + "_E", x: x + 200, y: y + 200, text: "E" }),
+    Object.assign({ ...ctrlPoints }, { id: id + "_C1", x: x, y: y + 200, width: 20, height: 20, text: "1", classes: "controlPoint" }),
+    Object.assign({ ...ctrlPoints }, { id: id + "_C2", x: x + 200, y: y, width: 20, height: 20, text: "2", classes: "controlPoint" }),
+    // added controlPoint class on the widget, but could be done behind the scenes (like active for timer), I just couldn't figure out how
+  ];
+}
+
 function generateTimerWidgets(id, x, y) {
   return [
     { type:'timer', id: id, x: x, y: y },
@@ -317,6 +371,7 @@ function addCompositeWidgetToAddWidgetOverlay(widgetsToAdd, onClick) {
     if(wi.type == 'deck')   w = new Deck(wi.id);
     if(wi.type == 'holder') w = new Holder(wi.id);
     if(wi.type == 'label')  w = new Label(wi.id);
+    if(wi.type == 'line')   w = new Line(wi.id);
     if(wi.type == 'pile')   w = new Pile(wi.id);
     if(wi.type == 'timer')  w = new Timer(wi.id);
     widgets.set(wi.id, w);
@@ -1264,6 +1319,18 @@ function populateAddWidgetOverlay() {
     borderRadius: "3px",
 
     css: { "border": "3px solid #666" }
+  });
+
+  // Add the composite Line widget
+  addCompositeWidgetToAddWidgetOverlay(generateLineWidgets('add-curve', 1300, 430), async function() {
+  const id = generateUniqueWidgetID();
+  for (const w of generateLineWidgets(id, 1300, 430))
+    await addWidgetLocal(w);
+    // to get the spots correctly updated, make a quick change and back
+    let start = widgets.get(id+"_S");
+    await start.set('x', 1301)
+    await start.set('x', 1300)
+  return id
   });
 }
 // end of JSON generators
