@@ -491,7 +491,7 @@ body.jsonEdit #toolbar {
 }
 
 [id=jeTopButtons] button.material {
-  font-family: 'Material Icons';
+  font-family: 'Material Symbols';
 }
 
 #jeTopButtons button:disabled {
