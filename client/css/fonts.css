@@ -479,6 +479,7 @@
 #symbolPickerOverlay.hideFonts h2.fontCategory,
 #symbolPickerOverlay.hideFonts .symbols,
 #symbolPickerOverlay.hideFonts .material-symbols,
+#symbolPickerOverlay.hideFonts .material-symbols-nofill,
 #symbolPickerOverlay.hideFonts .emoji-monochrome {
   display: none;
 }
