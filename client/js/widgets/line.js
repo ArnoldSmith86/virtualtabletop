@@ -111,7 +111,7 @@ class Line extends Widget {
     
     let edgeadjustment = 0 //borderFudge + strokeWidth
 
-    svg.setAttribute("style", `position: absolute; top: -${edgeadjustment}px; left: -${edgeadjustment}px;`);
+    svg.setAttribute("style", `overflow: visible; position: absolute; top: -${edgeadjustment}px; left: -${edgeadjustment}px;`);
     svg.setAttribute("width", bezierCoordinates.bounds.width);
     svg.setAttribute("height", bezierCoordinates.bounds.height);
     svg.setAttribute("viewBox", `${bezierCoordinates.bounds.minX - edgeadjustment} ${bezierCoordinates.bounds.minY - edgeadjustment } ${bezierCoordinates.bounds.width + edgeadjustment*2 } ${bezierCoordinates.bounds.height + edgeadjustment*2}`);
