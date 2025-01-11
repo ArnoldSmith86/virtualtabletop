@@ -206,6 +206,9 @@ MinifyHTML().then(function(result) {
   router.get('/state/:room', function(req, res, next) {
     ensureRoomIsLoaded(req.params.room).then(function(isLoaded) {
       if(isLoaded) {
+        if(activeRooms.get(req.params.room).locked)
+          return res.status(403).send('Room is locked.');
+
         res.setHeader('Access-Control-Allow-Origin', '*');
         res.setHeader('Content-Type', 'application/json');
         const state = {...activeRooms.get(req.params.room).state};
@@ -222,6 +225,9 @@ MinifyHTML().then(function(result) {
     if(typeof req.body == 'object') {
       ensureRoomIsLoaded(req.params.room).then(function(isLoaded) {
         if(isLoaded) {
+          if(activeRooms.get(req.params.room).locked)
+            return res.status(403).send('Room is locked.');
+
           activeRooms.get(req.params.room).setState(req.body);
           res.send('OK');
         } else {
