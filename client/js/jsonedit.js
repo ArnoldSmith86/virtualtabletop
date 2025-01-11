@@ -207,19 +207,6 @@ const jeCommands = [
     }
   },
   {
-    id: 'je_toggleWide',
-    name: 'Toggle wide editor',
-    icon: '[width]',
-    forceKey: 'ArrowRight',
-    classes: _=> $('#jsonEditor').classList.contains('wide') ? 'onState' : '',
-    call: async function() {
-      $('#jsonEditor').classList.toggle('wide');
-      setScale();
-      $('#jeTextHighlight').scrollTop = $('#jeText').scrollTop;
-      jeDisplayTree();
-    }
-  },
-  {
     id: 'je_toggleHighlight',
     name: 'Toggle widget highlighting',
     icon: 'flashlight_on',
@@ -319,7 +306,7 @@ const jeCommands = [
       }
     },
     show: function() {
-      return [ 'symbols', 'material-icons', 'emoji-monochrome' ].indexOf(jeStateNow.classes) != -1;
+      return [ 'symbols', 'material-symbols', 'material-symbols-nofill', 'emoji-monochrome' ].indexOf(jeStateNow.classes) != -1;
     }
   },
   {
@@ -335,6 +322,45 @@ const jeCommands = [
     }
   },
   {
+    id: 'je_cardDefaultsHeightAndWidth',
+    name: 'height and width',
+    context: '^deck ↦ cardDefaults',
+    call: async function() {     
+      jeStateNow.cardDefaults = {
+        ...jeStateNow.cardDefaults,
+        height: '###SELECT ME###',
+        width: 103
+      };
+      jeSetAndSelect(160);
+      await jeApplyChanges();
+    },
+    show: function() {
+      return !(jeStateNow.cardDefaults && (jeStateNow.cardDefaults.height || jeStateNow.cardDefaults.width));
+    }
+  },
+  {
+    id: 'je_onPileCreation',
+    name: 'onPileCreation template',
+    context: '^deck ↦ cardDefaults',
+    call: async function() {
+      const onPileCreation = {
+        handleCSS: '###SELECT ME###',
+        handleSize: 'auto',
+        handleOffset: 15,
+        handlePosition: 'top right'
+      };  
+      jeStateNow.cardDefaults = {
+        ...jeStateNow.cardDefaults,
+        onPileCreation: onPileCreation
+      };
+      jeSetAndSelect('');
+      await jeApplyChanges();
+    },
+    show: function() {
+      return !(jeStateNow.cardDefaults && jeStateNow.cardDefaults.onPileCreation);
+    }
+  },
+  {
     id: 'je_cardTypeTemplate',
     name: 'card type template',
     context: '^deck ↦ cardTypes',
@@ -345,7 +371,7 @@ const jeCommands = [
         for(const object of face.objects) {
           for(const property in object.dynamicProperties || {})
             cardType[object.dynamicProperties[property]] = '';
-          ((object.css || '').match(/--[a-zA-Z]+/g) || []).forEach(m=>cssVariables[`${m}: black`]=true);
+          (JSON.stringify(object.css || '').match(/--[a-zA-Z]+/g) || []).forEach(m=>cssVariables[`${m}: black`]=true);
         }
       }
       const css = Object.keys(cssVariables).join('; ');
@@ -1048,7 +1074,7 @@ function jeAddRoutineOperationCommands(command, defaults) {
 
 function jeAddCommands() {
   const widgetTypes = [ 'all' ];
-  const collectionNames = [ 'all', 'DEFAULT', 'thisButton', 'child', 'widget', 'playerSeats' ];
+  const collectionNames = [ 'all', 'DEFAULT', 'thisButton', 'child', 'widget', 'playerSeats', 'activeSeats' ];
 
   const widgetBase = new Widget();
   widgetTypes.push(jeAddWidgetPropertyCommands(new BasicWidget(), widgetBase));
@@ -1148,6 +1174,7 @@ function jeAddCommands() {
   jeAddEnumCommands('^[a-z]+ ↦ type', widgetTypes.slice(1));
   jeAddEnumCommands('^.*\\([A-Z]+\\) ↦ value', [ '${}' ]);
   jeAddEnumCommands('^deck ↦ faceTemplates ↦ [0-9]+ ↦ objects ↦ [0-9]+ ↦ textAlign', [ 'left', 'center', 'right' ]);
+  jeAddEnumCommands('^[a-z]+ ↦ classes', ['transparent', 'transition', 'symbols', 'material-symbols', 'material-symbols-nofill', 'standard_font', 'handwriting_font', 'handwriting_casual_font', 'condensed_font', 'serif_font', 'fantasy_font', 'gothic_font', 'horror_font', 'tech_font']);
   jeAddEnumCommands('^.*\\(AUDIO\\) ↦ player', [ '${}', '${getPlayerDetails().playerName}' ]);
   jeAddEnumCommands('^.*\\(CANVAS\\) ↦ mode', [ 'set', 'inc', 'dec', 'change', 'reset', 'setPixel' ]);
   jeAddEnumCommands('^.*\\(CLICK\\) ↦ mode', [ 'respect', 'ignoreClickable', 'ignoreClickRoutine', 'ignoreAll' ]);
@@ -1581,8 +1608,8 @@ async function jeApplyChangesMulti() {
 
 function jeApplyDelta(delta) {
   if(jeMode == 'widget') {
-    if(delta.s[jeStateNow.id] && delta.s[jeStateNow.id].type !== undefined) {
-      const w = widgets.get(jeStateNow.id);
+    if(delta.s[jeWidget.id] && delta.s[jeWidget.id].type !== undefined) {
+      const w = widgets.get(jeWidget.id);
       jePlainWidget = new w.constructor();
       jeColorize();
     }
@@ -1600,6 +1627,23 @@ function jeApplyDelta(delta) {
           jeSelectWidget(widgets.get(jeStateNow.id), false, true);
         }
       }
+    }
+
+    // if the JSON in the editor is invalid, and the delta contains the widget, try to update the invalid JSON as much as possible
+    if(!jeStateNow && jeJSONerror && delta.s[jeWidget.id]) {
+      let text = $('#jeText').textContent;
+      for(const [ key, value ] of Object.entries(delta.s[jeWidget.id])) {
+        if(value === null) {
+          if(!text.match(new RegExp(`^  "${key}": ${JSON.stringify(jeWidget.getDefaultValue(key))},?$`, 'm')))
+            text = text.replace(new RegExp(`,\n?\n  "${key}": ("[^"]*"|true|false|\\d+(\\.\\d+)?)(?=,?$)`, 'gm'), '');
+        } else if(!text.match(new RegExp(`^  "${key}"`, 'm')))
+          text = text.replace(new RegExp(`\n\\}`, 'gm'), `,\n  "${key}": ${JSON.stringify(value)}\n}`);
+        else if(text.match(new RegExp(`^  "${key}": ("[^"]*"|true|false|\\d+(\\.\\d+)?),?$`, 'm')))
+          text = text.replace(new RegExp(`^  "${key}":[^,\n]*`, 'gm'), `  "${key}": ${JSON.stringify(value)}`);
+        else
+          text = text + `\n\n--- GOT DELTA WHILE JSON WAS INVALID ---\n${delta.c}\n\nApply this to your JSON:\n\n  "${key}": ${JSON.stringify(value, null, '  ').replace(/\n/g, '\n  ')}`;
+      }
+      jeSet(text);
     }
   }
 
@@ -1661,6 +1705,9 @@ function jeCommandOptions() {
   for(const option of jeCommandWithOptions.options) {
     formField(option, $('#jeCommandOptions div'), `${jeCommandWithOptions.id}_${option.label}`);
     $('#jeCommandOptions div').append(document.createElement('br'));
+    const firstInput = $('input,select', div);
+    if(firstInput)
+      firstInput.focus();
   }
 
   $a('#jeCommandOptions button')[0].addEventListener('click', async function() {
@@ -1989,7 +2036,7 @@ function jeTreeGetWidgetHTML(widget) {
   const type = widget.get('type');
 
   let result = `${colored(widget.get('id'), 'key')} (${colored(type || 'basic','string')} - `;
-  if(String(widget.get('id')).match(/^[0-9a-z]{4}$/) && $('#jsonEditor').classList.contains('wide')) {
+  if(String(widget.get('id')).match(/^[0-9a-z]{4}$/)) {
     if(type == 'card' && !String(widget.get('cardType')).match(/^type-[0-9a-f-]{36}$/))
       result += `${colored(widget.get('cardType'),'extern')} - `;
     if(type == 'button' && widget.get('text'))

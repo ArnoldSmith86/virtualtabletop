@@ -428,7 +428,7 @@
             "func": "SET",
             "property": "numPlayers",
             "relation": "-",
-            "value": 1,
+            "value": 0,
             "collection": "PVARIABLES"
           }
         ],
@@ -437,7 +437,7 @@
             "func": "SET",
             "property": "numPlayers",
             "relation": "+",
-            "value": 1,
+            "value": 0,
             "collection": "PVARIABLES"
           },
           {
@@ -824,7 +824,7 @@
     "x": 720,
     "y": 106,
     "index": 1,
-    "turn": false,
+    "turn": true,
     "stillInTrick": true,
     "stillInHand": true,
     "scale": 1,
@@ -835,13 +835,105 @@
     "selectedCardsArray": []
   },
   "outPositionL1": {
-    "inheritFrom": {
-      "outPositionL0": "*"
-    },
     "id": "outPositionL1",
     "type": "label",
     "parent": "seat1",
-    "text": "",
+    "x": 50,
+    "layer": 5,
+    "css": {
+      "default": {
+        "color": "black",
+        "font-size": "25px",
+        "font-weight": "bold",
+        "border": "2px solid black",
+        "border-radius": "100%",
+        "background-image": "linear-gradient(to right, #ffb347 0%, #ffcc33  51%, #ffb347  100%)",
+        "box-shadow": "0 1px 5px #00000099"
+      },
+      " > textarea": {
+        "line-height": "55px!important"
+      }
+    },
+    "textChangeRoutine": [
+      "var text = ${PROPERTY text}",
+      "var asNum = ${text} + 0",
+      {
+        "func": "IF",
+        "operand1": "${asNum}",
+        "relation": ">",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "func": "IF",
+            "operand1": "${asNum}",
+            "relation": "==",
+            "operand2": 1,
+            "thenRoutine": [
+              "var text = ${text} + 'st'"
+            ]
+          },
+          {
+            "func": "IF",
+            "operand1": "${asNum}",
+            "relation": "==",
+            "operand2": 2,
+            "thenRoutine": [
+              "var text = ${text} + 'nd'"
+            ]
+          },
+          {
+            "func": "IF",
+            "operand1": "${asNum}",
+            "relation": "==",
+            "operand2": 3,
+            "thenRoutine": [
+              "var text = ${text} + 'rd'"
+            ]
+          },
+          {
+            "func": "IF",
+            "operand1": "${asNum}",
+            "relation": ">=",
+            "operand2": 4,
+            "thenRoutine": [
+              "var text = ${text} + 'th'"
+            ]
+          },
+          {
+            "func": "SET",
+            "property": "text",
+            "collection": "thisButton",
+            "value": "${text}"
+          },
+          {
+            "func": "SET",
+            "property": "scale",
+            "collection": "thisButton",
+            "value": 1
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "IF",
+            "operand1": "${PROPERTY text}",
+            "operand2": "",
+            "thenRoutine": [
+              {
+                "func": "SET",
+                "property": "scale",
+                "collection": "thisButton",
+                "value": 0
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "width": 55,
+    "height": 55,
+    "z": 2,
+    "editable": true,
+    "y": 40,
     "scale": 0
   },
   "seat2": {
@@ -942,20 +1034,112 @@
     "activeFace": 0
   },
   "outPositionL3": {
-    "inheritFrom": {
-      "outPositionL0": "*"
-    },
     "id": "outPositionL3",
     "type": "label",
     "parent": "seat3",
-    "text": "",
+    "layer": 5,
+    "css": {
+      "default": {
+        "color": "black",
+        "font-size": "25px",
+        "font-weight": "bold",
+        "border": "2px solid black",
+        "border-radius": "100%",
+        "background-image": "linear-gradient(to right, #ffb347 0%, #ffcc33  51%, #ffb347  100%)",
+        "box-shadow": "0 1px 5px #00000099"
+      },
+      " > textarea": {
+        "line-height": "55px!important"
+      }
+    },
+    "textChangeRoutine": [
+      "var text = ${PROPERTY text}",
+      "var asNum = ${text} + 0",
+      {
+        "func": "IF",
+        "operand1": "${asNum}",
+        "relation": ">",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "func": "IF",
+            "operand1": "${asNum}",
+            "relation": "==",
+            "operand2": 1,
+            "thenRoutine": [
+              "var text = ${text} + 'st'"
+            ]
+          },
+          {
+            "func": "IF",
+            "operand1": "${asNum}",
+            "relation": "==",
+            "operand2": 2,
+            "thenRoutine": [
+              "var text = ${text} + 'nd'"
+            ]
+          },
+          {
+            "func": "IF",
+            "operand1": "${asNum}",
+            "relation": "==",
+            "operand2": 3,
+            "thenRoutine": [
+              "var text = ${text} + 'rd'"
+            ]
+          },
+          {
+            "func": "IF",
+            "operand1": "${asNum}",
+            "relation": ">=",
+            "operand2": 4,
+            "thenRoutine": [
+              "var text = ${text} + 'th'"
+            ]
+          },
+          {
+            "func": "SET",
+            "property": "text",
+            "collection": "thisButton",
+            "value": "${text}"
+          },
+          {
+            "func": "SET",
+            "property": "scale",
+            "collection": "thisButton",
+            "value": 1
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "IF",
+            "operand1": "${PROPERTY text}",
+            "operand2": "",
+            "thenRoutine": [
+              {
+                "func": "SET",
+                "property": "scale",
+                "collection": "thisButton",
+                "value": 0
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "width": 55,
+    "height": 55,
+    "editable": true,
+    "z": 2,
+    "y": -60,
+    "x": 50,
     "scale": 0
   },
   "deckH": {
     "type": "holder",
     "id": "deckH",
-    "x": 394,
-    "z": 79971,
+    "x": 393,
+    "z": 79975,
     "dropTarget": {
       "type": "card"
     },
@@ -992,7 +1176,7 @@
     ],
     "width": 68,
     "classes": "transparent",
-    "y": 1037,
+    "y": 1034,
     "onEnter": {
       "cssFilter": null,
       "selectedColor": null,
@@ -1060,7 +1244,7 @@
         "value": "0"
       }
     ],
-    "numPlayers": 0,
+    "numPlayers": 4,
     "cardClickRoutine": [
       {
         "func": "GET",
@@ -1383,7 +1567,7 @@
       "var result = ${numCardsToDeal}"
     ],
     "triesToFindPlayerWhoIsStillInCount": 0,
-    "lastDealer": "seat4",
+    "lastDealer": "seat1",
     "playCardsRoutine": [
       {
         "func": "SELECT",
@@ -1972,7 +2156,7 @@
     "y": -240,
     "clearedMeld": [],
     "clearedMeldFromLocation": "",
-    "meldDestination": "playArea3",
+    "meldDestination": "",
     "ownedCardCountRoutine": [
       {
         "func": "SELECT",
@@ -1994,7 +2178,7 @@
       }
     ],
     "css": "font-size:50px;color:black;display:flex;justify-content:center;align-items:center;text-align:center;",
-    "leadPlayer": "seat4"
+    "leadPlayer": "seat1"
   },
   "commonPlayArea": {
     "type": "holder",
@@ -2054,11 +2238,10 @@
     "z": 54,
     "css": "font-size: 30px; color: black; color: #a5e70a",
     "oldCss": "font-size: 30px; color: black",
-    "previousLastMeldName": "Guest281",
+    "previousLastMeldName": "",
     "lastMeld": [],
     "previousLastMeldCss": "font-size: 30px; color: black; color: #a5e70a",
-    "playerColor": "#1F5CA6",
-    "text": "Guest854"
+    "playerColor": "#1F5CA6"
   },
   "playArea0": {
     "type": "holder",
@@ -3819,7 +4002,7 @@
     "dropOffsetX": 50,
     "linkedToSeat": "seat1",
     "cssPosition": "relative",
-    "scale": 1,
+    "scale": 0,
     "dropLimit": 0
   },
   "playArea2": {
@@ -3845,7 +4028,7 @@
     "linkedToSeat": "seat3",
     "cssPosition": "relative",
     "scale": 1,
-    "dropLimit": -1
+    "dropLimit": 0
   },
   "playArea5": {
     "type": "holder",
@@ -5417,7 +5600,7 @@
     "y": 20,
     "width": 100,
     "borderRadius": 10,
-    "z": 80532,
+    "z": 80533,
     "movableInEdit": true,
     "color": "lightgray",
     "inheritFrom": {
@@ -6103,7 +6286,7 @@
         ]
       }
     ],
-    "onlyVisibleForSeat": "seat4",
+    "onlyVisibleForSeat": "seat1",
     "layer": -5,
     "z": 81080
   },
@@ -6114,7 +6297,7 @@
     "y": 605,
     "width": 150,
     "height": 65,
-    "onlyVisibleForSeat": "seat4",
+    "onlyVisibleForSeat": "seat1",
     "clickRoutine": [
       {
         "func": "SELECT",
@@ -6285,7 +6468,7 @@
       "mode": "teams",
       "time": "120",
       "attribution": "Room layout and design by jade_alarm, anewcar and Shobu released to the public domain by CC0.\n\nPoker hand icon by Lorc is available from https://game-icons.net/ and available under CC BY 3.0:\nhttps://game-icons.net/1x1/lorc/poker-hand.html\n<br>Turn timer icon is from&nbsp;https://pixabay.com/gifs/stopwatch-clock-time-time-tracks-7503/ and free to use under&nbsp;https://pixabay.com/service/license-summary/.<div><div><br></div><div>Card back created at https://pattern.monster/triangles-10 under MIT License available at https://github.com/catchspider2002/svelte-svg-patterns.<br></div><div>\nLibrary image generated using the Bing artificial intelligence image generator, https://www.bing.com/, using the following prompt: \"card game guan dan throwing eggs cartoon 27 traditional playing cards in hand\" </div></div>",
-      "lastUpdate": 1728317877003,
+      "lastUpdate": 1735600384551,
       "showName": true,
       "skill": "Hand management",
       "description": "Lead your team and help your partner in this exciting and popular card game from China. Find players on: Guan Dan (https://discord.gg/B2hRAt5DNv), Online Card Players (https://discord.gg/wXdPDFgQtS)",
@@ -6318,7 +6501,7 @@
         "!sortDirection"
       ]
     },
-    "turn": true,
+    "turn": false,
     "scale": 1,
     "permanentPlayerColor": "#f00000",
     "color": "#f00000",
@@ -6344,13 +6527,104 @@
     "activeFace": 0
   },
   "outPositionL4": {
-    "inheritFrom": {
-      "outPositionL0": "*"
-    },
     "id": "outPositionL4",
     "type": "label",
     "parent": "seat4",
-    "text": "",
+    "width": 55,
+    "height": 55,
+    "layer": 10,
+    "css": {
+      "default": {
+        "color": "black",
+        "font-size": "25px",
+        "font-weight": "bold",
+        "border": "2px solid black",
+        "border-radius": "100%",
+        "background-image": "linear-gradient(to right, #ffb347 0%, #ffcc33  51%, #ffb347  100%)",
+        "box-shadow": "0 1px 5px #00000099"
+      },
+      " > textarea": {
+        "line-height": "55px!important"
+      }
+    },
+    "editable": true,
+    "textChangeRoutine": [
+      "var text = ${PROPERTY text}",
+      "var asNum = ${text} + 0",
+      {
+        "func": "IF",
+        "operand1": "${asNum}",
+        "relation": ">",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "func": "IF",
+            "operand1": "${asNum}",
+            "relation": "==",
+            "operand2": 1,
+            "thenRoutine": [
+              "var text = ${text} + 'st'"
+            ]
+          },
+          {
+            "func": "IF",
+            "operand1": "${asNum}",
+            "relation": "==",
+            "operand2": 2,
+            "thenRoutine": [
+              "var text = ${text} + 'nd'"
+            ]
+          },
+          {
+            "func": "IF",
+            "operand1": "${asNum}",
+            "relation": "==",
+            "operand2": 3,
+            "thenRoutine": [
+              "var text = ${text} + 'rd'"
+            ]
+          },
+          {
+            "func": "IF",
+            "operand1": "${asNum}",
+            "relation": ">=",
+            "operand2": 4,
+            "thenRoutine": [
+              "var text = ${text} + 'th'"
+            ]
+          },
+          {
+            "func": "SET",
+            "property": "text",
+            "collection": "thisButton",
+            "value": "${text}"
+          },
+          {
+            "func": "SET",
+            "property": "scale",
+            "collection": "thisButton",
+            "value": 1
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "IF",
+            "operand1": "${PROPERTY text}",
+            "operand2": "",
+            "thenRoutine": [
+              {
+                "func": "SET",
+                "property": "scale",
+                "collection": "thisButton",
+                "value": 0
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "x": -63,
+    "y": -10,
     "scale": 0
   },
   "playArea4": {
@@ -6363,8 +6637,8 @@
     "dropOffsetX": 150,
     "linkedToSeat": "seat4",
     "cssPosition": "relative",
-    "scale": 0,
-    "dropLimit": -1
+    "scale": 1,
+    "dropLimit": 0
   },
   "passIcon4": {
     "id": "passIcon4",
@@ -6388,8 +6662,8 @@
     "type": "card",
     "cardType": "type-86a16652-ad7b-4329-9ebd-1e908bc306ad",
     "id": "59p3",
-    "z": 9729,
-    "selectionOrder": 4,
+    "z": 12664,
+    "selectionOrder": 1,
     "cssPosition": "absolute",
     "selectedMargin": "0",
     "parent": "q7ln"
@@ -6399,32 +6673,30 @@
     "type": "card",
     "cardType": "type-ce574729-4a4d-47af-9aa1-534f4f8b067d",
     "id": "rfwo",
-    "z": 9526,
-    "selectionOrder": 16,
+    "z": 12768,
+    "selectionOrder": 3,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "q7ln",
-    "activeFace": 1
+    "parent": "q7ln"
   },
   "dysp": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-1e8cc3c9-2158-4100-bc43-e79d2782fa9c",
     "id": "dysp",
-    "z": 9513,
-    "selectionOrder": 24,
+    "z": 12738,
+    "selectionOrder": 9,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "q7ln",
-    "activeFace": 1
+    "parent": "q7ln"
   },
   "0and": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-0288d46f-6b57-44e0-8ad5-04924240d7c0",
     "id": "0and",
-    "z": 9761,
-    "selectionOrder": 7,
+    "z": 12760,
+    "selectionOrder": 3,
     "cssPosition": "absolute",
     "selectedMargin": "0",
     "parent": "q7ln"
@@ -6434,7 +6706,7 @@
     "type": "card",
     "cardType": "type-b06daf65-de4b-466a-af11-62d4005d0da6",
     "id": "ppol",
-    "z": 9763,
+    "z": 12683,
     "selectionOrder": 8,
     "cssPosition": "absolute",
     "selectedMargin": "0",
@@ -6445,32 +6717,30 @@
     "type": "card",
     "cardType": "type-a9c19e3f-0e2e-4595-b0f7-2efe3eb1b5ad",
     "id": "xf7t",
-    "z": 9525,
-    "selectionOrder": 42,
+    "z": 12676,
+    "selectionOrder": 9,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "q7ln",
-    "activeFace": 1
+    "parent": "q7ln"
   },
   "4jod": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-c1419741-1fa0-44e9-a3fb-c1231a76dc04",
     "id": "4jod",
-    "z": 9529,
-    "selectionOrder": 54,
+    "z": 12696,
+    "selectionOrder": 20,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "q7ln",
-    "activeFace": 1
+    "parent": "q7ln"
   },
   "p1ym": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-4453f8b6-d0d8-450d-bf27-e64d65901a28",
     "id": "p1ym",
-    "z": 9747,
-    "selectionOrder": 3,
+    "z": 12728,
+    "selectionOrder": 17,
     "cssPosition": "absolute",
     "selectedMargin": "0",
     "parent": "q7ln"
@@ -6480,32 +6750,30 @@
     "type": "card",
     "cardType": "type-44c936ad-e563-4046-a2b6-b8bbdb47e0ff",
     "id": "i0zc",
-    "z": 9544,
-    "selectionOrder": 68,
+    "z": 12672,
+    "selectionOrder": 14,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "q7ln",
-    "activeFace": 1
+    "parent": "q7ln"
   },
   "6ph8": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-fc5504e7-bf4e-4735-9ca9-cc1471dd45ab",
     "id": "6ph8",
-    "z": 9510,
-    "selectionOrder": 73,
+    "z": 12673,
+    "selectionOrder": 20,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "q7ln",
-    "activeFace": 1
+    "parent": "q7ln"
   },
   "8tu2": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-25a17a4c-aca9-4dce-8b18-6dd6f54e6947",
     "id": "8tu2",
-    "z": 9741,
-    "selectionOrder": 6,
+    "z": 12670,
+    "selectionOrder": 22,
     "cssPosition": "absolute",
     "selectedMargin": "0",
     "parent": "q7ln"
@@ -6515,35 +6783,30 @@
     "type": "card",
     "cardType": "type-50f08327-e9f4-4c72-97c6-dbd2ea1fb0b8",
     "id": "7p67",
-    "z": 9532,
-    "selectionOrder": 89,
+    "z": 12753,
+    "selectionOrder": 25,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "q7ln",
-    "activeFace": 1
+    "parent": "q7ln"
   },
   "5jx7": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-a87aa3de-b789-4299-a513-1d43c2b7fd9e",
     "id": "5jx7",
-    "z": 27,
-    "selectionOrder": 26,
+    "z": 12762,
+    "selectionOrder": 10,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "hand",
-    "activeFace": 1,
-    "x": 980,
-    "y": 270,
-    "owner": "Guest281"
+    "parent": "q7ln"
   },
   "yfpj": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-b0c9bc06-fcc7-4bb4-bcd5-2fba7438eafa",
     "id": "yfpj",
-    "z": 9727,
-    "selectionOrder": 3,
+    "z": 12759,
+    "selectionOrder": 2,
     "cssPosition": "absolute",
     "selectedMargin": "0",
     "parent": "q7ln"
@@ -6553,23 +6816,19 @@
     "type": "card",
     "cardType": "type-f8defc55-18a9-4acf-8ff6-a5758affd4ed",
     "id": "jn62",
-    "z": 8,
-    "selectionOrder": 7,
+    "z": 12667,
+    "selectionOrder": 4,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "hand",
-    "activeFace": 1,
-    "x": 210,
-    "y": 270,
-    "owner": "Guest281"
+    "parent": "q7ln"
   },
   "2dqy": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-8caae31c-62ed-4cfe-9d22-7c1d5c8dc555",
     "id": "2dqy",
-    "z": 9753,
-    "selectionOrder": 3,
+    "z": 12733,
+    "selectionOrder": 8,
     "cssPosition": "absolute",
     "selectedMargin": "0",
     "parent": "q7ln"
@@ -6579,20 +6838,19 @@
     "type": "card",
     "cardType": "type-2d716a15-19f4-4773-ac37-4ab60aabbae3",
     "id": "qp74",
-    "z": 9516,
-    "selectionOrder": 26,
+    "z": 12721,
+    "selectionOrder": 11,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "q7ln",
-    "activeFace": 1
+    "parent": "q7ln"
   },
   "n8ie": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-29399050-7af4-4b72-9a4d-01969e90f4ba",
     "id": "n8ie",
-    "z": 9774,
-    "selectionOrder": 9,
+    "z": 12705,
+    "selectionOrder": 7,
     "cssPosition": "absolute",
     "selectedMargin": "0",
     "parent": "q7ln"
@@ -6602,59 +6860,54 @@
     "type": "card",
     "cardType": "type-eba6c97b-857b-46c6-b37c-383dfa4dede4",
     "id": "v76s",
-    "z": 9543,
-    "selectionOrder": 47,
+    "z": 12707,
+    "selectionOrder": 9,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "q7ln",
-    "activeFace": 1
+    "parent": "q7ln"
   },
   "6wii": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-c36019ae-54d0-43b8-b254-9c449c75cc85",
     "id": "6wii",
-    "z": 9514,
-    "selectionOrder": 56,
+    "z": 12711,
+    "selectionOrder": 17,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "q7ln",
-    "activeFace": 1
+    "parent": "q7ln"
   },
   "9ndt": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-52fd0ad5-7930-4cbc-b1e7-da163fbbf32c",
     "id": "9ndt",
-    "z": 9535,
-    "selectionOrder": 58,
+    "z": 12755,
+    "selectionOrder": 13,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "q7ln",
-    "activeFace": 1
+    "parent": "q7ln"
   },
   "3fsw": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-b395c302-35f1-4d9e-a790-bb74ced58117",
     "id": "3fsw",
-    "z": 9527,
-    "selectionOrder": 72,
+    "z": 12712,
+    "selectionOrder": 15,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "q7ln",
-    "activeFace": 1
+    "parent": "q7ln"
   },
   "v2ap": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-ac7cddcb-1a7b-4413-8fca-492da66e4cb2",
     "id": "v2ap",
-    "z": 9560,
-    "selectionOrder": 76,
+    "z": 12700,
+    "selectionOrder": 18,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "activeFace": 1,
     "parent": "q7ln"
   },
   "jm65": {
@@ -6662,8 +6915,8 @@
     "type": "card",
     "cardType": "type-2b6ca134-a4eb-488e-9515-bd5df8be5856",
     "id": "jm65",
-    "z": 9739,
-    "selectionOrder": 5,
+    "z": 12704,
+    "selectionOrder": 17,
     "cssPosition": "absolute",
     "selectedMargin": "0",
     "parent": "q7ln"
@@ -6673,32 +6926,30 @@
     "type": "card",
     "cardType": "type-68f2038b-e191-4518-a338-1d17c38ae13c",
     "id": "sl0z",
-    "z": 9511,
-    "selectionOrder": 94,
+    "z": 12736,
+    "selectionOrder": 22,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "q7ln",
-    "activeFace": 1
+    "parent": "q7ln"
   },
   "8j8e": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-761be0f4-6468-4ab6-9a69-554dec7fe552",
     "id": "8j8e",
-    "z": 9538,
-    "selectionOrder": 99,
+    "z": 12749,
+    "selectionOrder": 23,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "q7ln",
-    "activeFace": 1
+    "parent": "q7ln"
   },
   "ovn4": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-9c717736-6433-4f32-9573-8cc3e9daa4cc",
     "id": "ovn4",
-    "z": 9725,
-    "selectionOrder": 2,
+    "z": 12715,
+    "selectionOrder": 5,
     "cssPosition": "absolute",
     "selectedMargin": "0",
     "parent": "q7ln"
@@ -6708,38 +6959,30 @@
     "type": "card",
     "cardType": "type-0aaecfba-d327-4b6a-800e-e79df45879f8",
     "id": "t72p",
-    "z": 7,
+    "z": 12748,
     "selectionOrder": 6,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "hand",
-    "activeFace": 1,
-    "x": 210,
-    "y": 233,
-    "owner": "Guest281"
+    "parent": "q7ln"
   },
   "sre1": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-fa2e5aa5-f0ba-4244-9f44-46cd7a81afb1",
     "id": "sre1",
-    "z": 10,
+    "z": 12743,
     "selectionOrder": 9,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "hand",
-    "activeFace": 1,
-    "x": 280,
-    "y": 270,
-    "owner": "Guest281"
+    "parent": "q7ln"
   },
   "4j7w": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-e709b1a1-6bbc-446c-9163-fca3fa6c3809",
     "id": "4j7w",
-    "z": 9759,
-    "selectionOrder": 6,
+    "z": 12764,
+    "selectionOrder": 5,
     "cssPosition": "absolute",
     "selectedMargin": "0",
     "parent": "q7ln"
@@ -6749,86 +6992,74 @@
     "type": "card",
     "cardType": "type-d22288a9-3ab7-4f85-bae0-548a5755c444",
     "id": "uexn",
-    "z": 14,
-    "selectionOrder": 13,
+    "z": 12722,
+    "selectionOrder": 4,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "hand",
-    "activeFace": 1,
-    "x": 420,
-    "y": 270,
-    "owner": "Guest281"
+    "parent": "q7ln"
   },
   "jaq7": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-d758ecce-7b1b-4771-b002-ceca01827b75",
     "id": "jaq7",
-    "z": 16,
-    "selectionOrder": 15,
+    "z": 12699,
+    "selectionOrder": 11,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "hand",
-    "activeFace": 1,
-    "x": 490,
-    "y": 270,
-    "owner": "Guest281"
+    "parent": "q7ln"
   },
   "nw34": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-b6cdb90b-3d19-4c8b-b9a6-0a234fec851d",
     "id": "nw34",
-    "z": 9546,
-    "selectionOrder": 50,
+    "z": 12745,
+    "selectionOrder": 11,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "q7ln",
-    "activeFace": 1
+    "parent": "q7ln"
   },
   "lhqg": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-140f4890-00b9-4668-9285-9366ed8a9085",
     "id": "lhqg",
-    "z": 9537,
-    "selectionOrder": 61,
+    "z": 12726,
+    "selectionOrder": 13,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "q7ln",
-    "activeFace": 1
+    "parent": "q7ln"
   },
   "8tt8": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-08d32a62-306d-44ff-a1ae-e3f7bc9ba424",
     "id": "8tt8",
-    "z": 9551,
-    "selectionOrder": 69,
+    "z": 12686,
+    "selectionOrder": 16,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "q7ln",
-    "activeFace": 1
+    "parent": "q7ln"
   },
   "k01a": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-5d6e0a41-c57f-416c-b1de-b0d7c0ee2034",
     "id": "k01a",
-    "z": 9509,
-    "selectionOrder": 75,
+    "z": 12701,
+    "selectionOrder": 18,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "q7ln",
-    "activeFace": 1
+    "parent": "q7ln"
   },
   "8w3v": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-5db36a7f-2082-4be8-a9ae-601cad6fb5d5",
     "id": "8w3v",
-    "z": 9737,
-    "selectionOrder": 4,
+    "z": 12716,
+    "selectionOrder": 22,
     "cssPosition": "absolute",
     "selectedMargin": "0",
     "parent": "q7ln"
@@ -6838,11 +7069,10 @@
     "type": "card",
     "cardType": "type-9f5b3fd0-9c92-44a3-ab56-562be3030dcb",
     "id": "z52u",
-    "z": 9536,
-    "selectionOrder": 96,
+    "z": 12714,
+    "selectionOrder": 24,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "activeFace": 1,
     "parent": "q7ln"
   },
   "253c": {
@@ -6850,53 +7080,41 @@
     "type": "card",
     "cardType": "type-d8943c68-7151-4780-bcac-42702fc9c861",
     "id": "253c",
-    "z": 28,
-    "selectionOrder": 27,
+    "z": 12708,
+    "selectionOrder": 26,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "hand",
-    "activeFace": 1,
-    "x": 980,
-    "y": 270,
-    "owner": "Guest854"
+    "parent": "q7ln"
   },
   "bbtd": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-3f51ea92-b6a6-42cc-a4a6-b641b60cc18a",
     "id": "bbtd",
-    "z": 3,
+    "z": 12769,
     "selectionOrder": 2,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "hand",
-    "activeFace": 1,
-    "x": 1050,
-    "y": 270,
-    "owner": "Guest854"
+    "parent": "q7ln"
   },
   "pywo": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-49e91ab6-c531-46be-b2d4-8bbfc93b50a9",
     "id": "pywo",
-    "z": 6,
-    "selectionOrder": 5,
+    "z": 12692,
+    "selectionOrder": 2,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "hand",
-    "activeFace": 1,
-    "x": 210,
-    "y": 196,
-    "owner": "Guest281"
+    "parent": "q7ln"
   },
   "tsv6": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-19f849a2-0861-4bf7-a558-96bcb4f62b84",
     "id": "tsv6",
-    "z": 9755,
-    "selectionOrder": 4,
+    "z": 12737,
+    "selectionOrder": 8,
     "cssPosition": "absolute",
     "selectedMargin": "0",
     "parent": "q7ln"
@@ -6906,56 +7124,52 @@
     "type": "card",
     "cardType": "type-f152f8dc-b9a9-4719-a744-21f6088757cd",
     "id": "snfh",
-    "z": 9508,
-    "selectionOrder": 29,
+    "z": 12730,
+    "selectionOrder": 5,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "q7ln",
-    "activeFace": 1
+    "parent": "q7ln"
   },
   "etcb": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-42eda34f-fb63-4abd-a08d-9d0178259ebc",
     "id": "etcb",
-    "z": 9550,
-    "selectionOrder": 34,
+    "z": 12766,
+    "selectionOrder": 6,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "q7ln",
-    "activeFace": 1
+    "parent": "q7ln"
   },
   "baac": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-e4d685e7-0302-4d56-bac7-5a834011a33d",
     "id": "baac",
-    "z": 9520,
+    "z": 12723,
     "selectionOrder": 48,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "q7ln",
-    "activeFace": 1
+    "parent": "q7ln"
   },
   "otj6": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-ab533439-5426-4d60-938d-7d1cc7608e41",
     "id": "otj6",
-    "z": 9547,
-    "selectionOrder": 51,
+    "z": 12771,
+    "selectionOrder": 12,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "q7ln",
-    "activeFace": 1
+    "parent": "q7ln"
   },
   "2ghf": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-cb114114-97f9-451e-b276-40a59a8649dc",
     "id": "2ghf",
-    "z": 9745,
-    "selectionOrder": 2,
+    "z": 12718,
+    "selectionOrder": 15,
     "cssPosition": "absolute",
     "selectedMargin": "0",
     "parent": "q7ln"
@@ -6965,233 +7179,195 @@
     "type": "card",
     "cardType": "type-45e2a0cf-043a-4d7b-9dff-d46406693372",
     "id": "yoc0",
-    "z": 22,
-    "selectionOrder": 21,
+    "z": 12731,
+    "selectionOrder": 17,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "hand",
-    "activeFace": 1,
-    "x": 700,
-    "y": 270,
-    "owner": "Guest281"
+    "parent": "q7ln"
   },
   "kr4v": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-1b4bb6ff-2384-4786-ad31-6ae4961107c3",
     "id": "kr4v",
-    "z": 25,
-    "selectionOrder": 24,
+    "z": 12668,
+    "selectionOrder": 21,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "hand",
-    "activeFace": 1,
-    "x": 770,
-    "y": 270,
-    "owner": "Guest281"
+    "parent": "q7ln"
   },
   "fpa9": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-bba45090-c15c-47c9-9670-fcdb99bcb2e8",
     "id": "fpa9",
-    "z": 9542,
-    "selectionOrder": 84,
+    "z": 12709,
+    "selectionOrder": 22,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "q7ln",
-    "activeFace": 1
+    "parent": "q7ln"
   },
   "ar81": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-fcaf63a3-0fbe-446a-b2af-c239cb9b610d",
     "id": "ar81",
-    "z": 9545,
-    "selectionOrder": 91,
+    "z": 12746,
+    "selectionOrder": 6,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "q7ln",
-    "activeFace": 1
+    "parent": "q7ln"
   },
   "3o1e": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-f1f3584f-62e1-4595-bca9-70d7de093e2c",
     "id": "3o1e",
-    "z": 9554,
-    "selectionOrder": 97,
+    "z": 12719,
+    "selectionOrder": 22,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "q7ln",
-    "activeFace": 1
+    "parent": "q7ln"
   },
   "06ff": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-1787efe2-0b94-4405-9aeb-e88ab55764b0",
     "id": "06ff",
-    "z": 9531,
-    "selectionOrder": 107,
+    "z": 12666,
+    "selectionOrder": 27,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "q7ln",
-    "activeFace": 1
+    "parent": "q7ln"
   },
   "fkvj": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-c5e8a186-7555-43b5-8713-ca9b48758895",
     "id": "fkvj",
-    "z": 9522,
-    "selectionOrder": 105,
+    "z": 12758,
+    "selectionOrder": 26,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "q7ln",
-    "activeFace": 1
+    "parent": "q7ln"
   },
   "84t7": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-86a16652-ad7b-4329-9ebd-1e908bc306ad",
     "id": "84t7",
-    "z": 2,
-    "selectionOrder": 1,
+    "z": 12770,
+    "selectionOrder": 3,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "hand",
-    "activeFace": 1,
-    "x": 1050,
-    "y": 233,
-    "owner": "Guest854"
+    "parent": "q7ln"
   },
   "zwk1": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-ce574729-4a4d-47af-9aa1-534f4f8b067d",
     "id": "zwk1",
-    "z": 9534,
-    "selectionOrder": 15,
+    "z": 12727,
+    "selectionOrder": 2,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "q7ln",
-    "activeFace": 1
+    "parent": "q7ln"
   },
   "g4wy": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-1e8cc3c9-2158-4100-bc43-e79d2782fa9c",
     "id": "g4wy",
-    "z": 9,
-    "selectionOrder": 8,
+    "z": 12757,
+    "selectionOrder": 10,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "hand",
-    "activeFace": 1,
-    "x": 280,
-    "y": 233,
-    "owner": "Guest281"
+    "parent": "q7ln"
   },
   "o4e1": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-0288d46f-6b57-44e0-8ad5-04924240d7c0",
     "id": "o4e1",
-    "z": 9561,
-    "selectionOrder": 27,
+    "z": 12702,
+    "selectionOrder": 4,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "q7ln",
-    "activeFace": 1
+    "parent": "q7ln"
   },
   "vvub": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-b06daf65-de4b-466a-af11-62d4005d0da6",
     "id": "vvub",
-    "z": 15,
-    "selectionOrder": 14,
+    "z": 12739,
+    "selectionOrder": 8,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "hand",
-    "activeFace": 1,
-    "x": 420,
-    "y": 233,
-    "owner": "Guest281"
+    "parent": "q7ln"
   },
   "ee6u": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-a9c19e3f-0e2e-4595-b0f7-2efe3eb1b5ad",
     "id": "ee6u",
-    "z": 17,
-    "selectionOrder": 16,
+    "z": 12680,
+    "selectionOrder": 9,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "hand",
-    "activeFace": 1,
-    "x": 490,
-    "y": 233,
-    "owner": "Guest281"
+    "parent": "q7ln"
   },
   "f0qs": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-c1419741-1fa0-44e9-a3fb-c1231a76dc04",
     "id": "f0qs",
-    "z": 9548,
-    "selectionOrder": 52,
+    "z": 12693,
+    "selectionOrder": 14,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "q7ln",
-    "activeFace": 1
+    "parent": "q7ln"
   },
   "6o1k": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-4453f8b6-d0d8-450d-bf27-e64d65901a28",
     "id": "6o1k",
-    "z": 9528,
-    "selectionOrder": 57,
+    "z": 12752,
+    "selectionOrder": 16,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "q7ln",
-    "activeFace": 1
+    "parent": "q7ln"
   },
   "9n6c": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-44c936ad-e563-4046-a2b6-b8bbdb47e0ff",
     "id": "9n6c",
-    "z": 23,
-    "selectionOrder": 22,
+    "z": 12740,
+    "selectionOrder": 12,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "hand",
-    "activeFace": 1,
-    "x": 700,
-    "y": 233,
-    "owner": "Guest281"
+    "parent": "q7ln"
   },
   "pdnv": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-fc5504e7-bf4e-4735-9ca9-cc1471dd45ab",
     "id": "pdnv",
-    "z": 9523,
-    "selectionOrder": 79,
+    "z": 12703,
+    "selectionOrder": 19,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "q7ln",
-    "activeFace": 1
+    "parent": "q7ln"
   },
   "u0nv": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-25a17a4c-aca9-4dce-8b18-6dd6f54e6947",
     "id": "u0nv",
-    "z": 9735,
-    "selectionOrder": 3,
+    "z": 12756,
+    "selectionOrder": 20,
     "cssPosition": "absolute",
     "selectedMargin": "0",
     "parent": "q7ln"
@@ -7201,44 +7377,41 @@
     "type": "card",
     "cardType": "type-50f08327-e9f4-4c72-97c6-dbd2ea1fb0b8",
     "id": "78l3",
-    "z": 9558,
-    "selectionOrder": 92,
+    "z": 12677,
+    "selectionOrder": 22,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "q7ln",
-    "activeFace": 1
+    "parent": "q7ln"
   },
   "gsug": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-a87aa3de-b789-4299-a513-1d43c2b7fd9e",
     "id": "gsug",
-    "z": 9552,
-    "selectionOrder": 100,
+    "z": 12694,
+    "selectionOrder": 27,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "q7ln",
-    "activeFace": 1
+    "parent": "q7ln"
   },
   "v0l6": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-b0c9bc06-fcc7-4bb4-bcd5-2fba7438eafa",
     "id": "v0l6",
-    "z": 9541,
-    "selectionOrder": 5,
+    "z": 12690,
+    "selectionOrder": 25,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "q7ln",
-    "activeFace": 1
+    "parent": "q7ln"
   },
   "biva": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-f8defc55-18a9-4acf-8ff6-a5758affd4ed",
     "id": "biva",
-    "z": 9751,
-    "selectionOrder": 2,
+    "z": 12687,
+    "selectionOrder": 3,
     "cssPosition": "absolute",
     "selectedMargin": "0",
     "parent": "q7ln"
@@ -7248,50 +7421,43 @@
     "type": "card",
     "cardType": "type-8caae31c-62ed-4cfe-9d22-7c1d5c8dc555",
     "id": "rba9",
-    "z": 11,
-    "selectionOrder": 10,
+    "z": 12685,
+    "selectionOrder": 3,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "hand",
-    "activeFace": 1,
-    "x": 280,
-    "y": 196,
-    "owner": "Guest281"
+    "parent": "q7ln"
   },
   "8zxc": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-2d716a15-19f4-4773-ac37-4ab60aabbae3",
     "id": "8zxc",
-    "z": 9518,
-    "selectionOrder": 31,
+    "z": 12665,
+    "selectionOrder": 6,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "q7ln",
-    "activeFace": 1
+    "parent": "q7ln"
   },
   "1omw": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-29399050-7af4-4b72-9a4d-01969e90f4ba",
     "id": "1omw",
-    "z": 9556,
-    "selectionOrder": 35,
+    "z": 12735,
+    "selectionOrder": 12,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "q7ln",
-    "activeFace": 1
+    "parent": "q7ln"
   },
   "k3c3": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-eba6c97b-857b-46c6-b37c-383dfa4dede4",
     "id": "k3c3",
-    "z": 9521,
-    "selectionOrder": 45,
+    "z": 12688,
+    "selectionOrder": 13,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "activeFace": 1,
     "parent": "q7ln"
   },
   "koys": {
@@ -7299,23 +7465,19 @@
     "type": "card",
     "cardType": "type-c36019ae-54d0-43b8-b254-9c449c75cc85",
     "id": "koys",
-    "z": 18,
-    "selectionOrder": 17,
+    "z": 12717,
+    "selectionOrder": 15,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "hand",
-    "activeFace": 1,
-    "x": 560,
-    "y": 270,
-    "owner": "Guest281"
+    "parent": "q7ln"
   },
   "p94k": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-52fd0ad5-7930-4cbc-b1e7-da163fbbf32c",
     "id": "p94k",
-    "z": 9743,
-    "selectionOrder": 1,
+    "z": 12681,
+    "selectionOrder": 19,
     "cssPosition": "absolute",
     "selectedMargin": "0",
     "parent": "q7ln"
@@ -7325,35 +7487,30 @@
     "type": "card",
     "cardType": "type-b395c302-35f1-4d9e-a790-bb74ced58117",
     "id": "tivj",
-    "z": 24,
-    "selectionOrder": 23,
+    "z": 12747,
+    "selectionOrder": 14,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "hand",
-    "activeFace": 1,
-    "x": 700,
-    "y": 196,
-    "owner": "Guest281"
+    "parent": "q7ln"
   },
   "blcg": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-ac7cddcb-1a7b-4413-8fca-492da66e4cb2",
     "id": "blcg",
-    "z": 9517,
-    "selectionOrder": 74,
+    "z": 12695,
+    "selectionOrder": 20,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "q7ln",
-    "activeFace": 1
+    "parent": "q7ln"
   },
   "7b08": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-2b6ca134-a4eb-488e-9515-bd5df8be5856",
     "id": "7b08",
-    "z": 9733,
-    "selectionOrder": 2,
+    "z": 12710,
+    "selectionOrder": 21,
     "cssPosition": "absolute",
     "selectedMargin": "0",
     "parent": "q7ln"
@@ -7363,46 +7520,40 @@
     "type": "card",
     "cardType": "type-68f2038b-e191-4518-a338-1d17c38ae13c",
     "id": "07m5",
-    "z": 9540,
-    "selectionOrder": 93,
+    "z": 12724,
+    "selectionOrder": 21,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "q7ln",
-    "activeFace": 1
+    "parent": "q7ln"
   },
   "ljdm": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-761be0f4-6468-4ab6-9a69-554dec7fe552",
     "id": "ljdm",
-    "z": 26,
-    "selectionOrder": 25,
+    "z": 12741,
+    "selectionOrder": 27,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "hand",
-    "activeFace": 1,
-    "x": 980,
-    "y": 233,
-    "owner": "Guest281"
+    "parent": "q7ln"
   },
   "kts4": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-9c717736-6433-4f32-9573-8cc3e9daa4cc",
     "id": "kts4",
-    "z": 9555,
-    "selectionOrder": 1,
+    "z": 12697,
+    "selectionOrder": 4,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "q7ln",
-    "activeFace": 1
+    "parent": "q7ln"
   },
   "4h49": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-0aaecfba-d327-4b6a-800e-e79df45879f8",
     "id": "4h49",
-    "z": 9749,
+    "z": 12689,
     "selectionOrder": 1,
     "cssPosition": "absolute",
     "selectedMargin": "0",
@@ -7413,119 +7564,96 @@
     "type": "card",
     "cardType": "type-fa2e5aa5-f0ba-4244-9f44-46cd7a81afb1",
     "id": "2qrr",
-    "z": 9512,
-    "selectionOrder": 23,
+    "z": 12720,
+    "selectionOrder": 7,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "q7ln",
-    "activeFace": 1
+    "parent": "q7ln"
   },
   "w37p": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-e709b1a1-6bbc-446c-9163-fca3fa6c3809",
     "id": "w37p",
-    "z": 9519,
-    "selectionOrder": 28,
+    "z": 12682,
+    "selectionOrder": 6,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "q7ln",
-    "activeFace": 1
+    "parent": "q7ln"
   },
   "4fly": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-d22288a9-3ab7-4f85-bae0-548a5755c444",
     "id": "4fly",
-    "z": 13,
-    "selectionOrder": 12,
+    "z": 12751,
+    "selectionOrder": 8,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "hand",
-    "activeFace": 1,
-    "x": 420,
-    "y": 196,
-    "owner": "Guest281"
+    "parent": "q7ln"
   },
   "xh6j": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-d758ecce-7b1b-4771-b002-ceca01827b75",
     "id": "xh6j",
-    "z": 13,
-    "selectionOrder": 12,
+    "z": 12767,
+    "selectionOrder": 9,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "hand",
-    "activeFace": 1,
-    "x": 490,
-    "y": 270,
-    "owner": "Guest854"
+    "parent": "q7ln"
   },
   "vq8d": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-b6cdb90b-3d19-4c8b-b9a6-0a234fec851d",
     "id": "vq8d",
-    "z": 15,
-    "selectionOrder": 14,
+    "z": 12761,
+    "selectionOrder": 18,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "hand",
-    "activeFace": 1,
-    "x": 560,
-    "y": 270,
-    "owner": "Guest854"
+    "parent": "q7ln"
   },
   "cbdo": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-140f4890-00b9-4668-9285-9366ed8a9085",
     "id": "cbdo",
-    "z": 17,
-    "selectionOrder": 16,
+    "z": 12729,
+    "selectionOrder": 18,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "hand",
-    "activeFace": 1,
-    "x": 630,
-    "y": 270,
-    "owner": "Guest854"
+    "parent": "q7ln"
   },
   "bysc": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-08d32a62-306d-44ff-a1ae-e3f7bc9ba424",
     "id": "bysc",
-    "z": 9530,
-    "selectionOrder": 67,
+    "z": 12725,
+    "selectionOrder": 21,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "q7ln",
-    "activeFace": 1
+    "parent": "q7ln"
   },
   "25ov": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-5d6e0a41-c57f-416c-b1de-b0d7c0ee2034",
     "id": "25ov",
-    "z": 18,
-    "selectionOrder": 17,
+    "z": 12765,
+    "selectionOrder": 20,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "hand",
-    "activeFace": 1,
-    "x": 770,
-    "y": 270,
-    "owner": "Guest854"
+    "parent": "q7ln"
   },
   "qay2": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-5db36a7f-2082-4be8-a9ae-601cad6fb5d5",
     "id": "qay2",
-    "z": 9731,
-    "selectionOrder": 1,
+    "z": 12754,
+    "selectionOrder": 23,
     "cssPosition": "absolute",
     "selectedMargin": "0",
     "parent": "q7ln"
@@ -7535,35 +7663,30 @@
     "type": "card",
     "cardType": "type-9f5b3fd0-9c92-44a3-ab56-562be3030dcb",
     "id": "p3nw",
-    "z": 9559,
-    "selectionOrder": 95,
+    "z": 12678,
+    "selectionOrder": 24,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "q7ln",
-    "activeFace": 1
+    "parent": "q7ln"
   },
   "2jke": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-d8943c68-7151-4780-bcac-42702fc9c861",
     "id": "2jke",
-    "z": 27,
+    "z": 12698,
     "selectionOrder": 26,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "hand",
-    "activeFace": 1,
-    "x": 980,
-    "y": 233,
-    "owner": "Guest854"
+    "parent": "q7ln"
   },
   "w7hh": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-3f51ea92-b6a6-42cc-a4a6-b641b60cc18a",
     "id": "w7hh",
-    "z": 9723,
-    "selectionOrder": 1,
+    "z": 12732,
+    "selectionOrder": 2,
     "cssPosition": "absolute",
     "selectedMargin": "0",
     "parent": "q7ln"
@@ -7573,20 +7696,19 @@
     "type": "card",
     "cardType": "type-49e91ab6-c531-46be-b2d4-8bbfc93b50a9",
     "id": "pwx5",
-    "z": 9533,
-    "selectionOrder": 10,
+    "z": 12750,
+    "selectionOrder": 1,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "q7ln",
-    "activeFace": 1
+    "parent": "q7ln"
   },
   "3o8z": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-19f849a2-0861-4bf7-a558-96bcb4f62b84",
     "id": "3o8z",
-    "z": 9757,
-    "selectionOrder": 5,
+    "z": 12691,
+    "selectionOrder": 4,
     "cssPosition": "absolute",
     "selectedMargin": "0",
     "parent": "q7ln"
@@ -7596,162 +7718,132 @@
     "type": "card",
     "cardType": "type-f152f8dc-b9a9-4719-a744-21f6088757cd",
     "id": "lpac",
-    "z": 12,
+    "z": 12713,
     "selectionOrder": 11,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "hand",
-    "activeFace": 1,
-    "x": 350,
-    "y": 270,
-    "owner": "Guest281"
+    "parent": "q7ln"
   },
   "cao3": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-42eda34f-fb63-4abd-a08d-9d0178259ebc",
     "id": "cao3",
-    "z": 9524,
-    "selectionOrder": 40,
+    "z": 12706,
+    "selectionOrder": 7,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "q7ln",
-    "activeFace": 1
+    "parent": "q7ln"
   },
   "w3jn": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-e4d685e7-0302-4d56-bac7-5a834011a33d",
     "id": "w3jn",
-    "z": 9539,
-    "selectionOrder": 41,
+    "z": 12669,
+    "selectionOrder": 10,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "q7ln",
-    "activeFace": 1
+    "parent": "q7ln"
   },
   "jw4y": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-ab533439-5426-4d60-938d-7d1cc7608e41",
     "id": "jw4y",
-    "z": 14,
-    "selectionOrder": 13,
+    "z": 12679,
+    "selectionOrder": 16,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "hand",
-    "activeFace": 1,
-    "x": 560,
-    "y": 233,
-    "owner": "Guest854"
+    "parent": "q7ln"
   },
   "wdht": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-cb114114-97f9-451e-b276-40a59a8649dc",
     "id": "wdht",
-    "z": 16,
-    "selectionOrder": 15,
+    "z": 12684,
+    "selectionOrder": 14,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "hand",
-    "activeFace": 1,
-    "x": 630,
-    "y": 233,
-    "owner": "Guest854"
+    "parent": "q7ln"
   },
   "lwi8": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-45e2a0cf-043a-4d7b-9dff-d46406693372",
     "id": "lwi8",
-    "z": 9557,
-    "selectionOrder": 70,
+    "z": 12671,
+    "selectionOrder": 15,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "q7ln",
-    "activeFace": 1
+    "parent": "q7ln"
   },
   "u65e": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-1b4bb6ff-2384-4786-ad31-6ae4961107c3",
     "id": "u65e",
-    "z": 19,
+    "z": 12763,
     "selectionOrder": 18,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "hand",
-    "activeFace": 1,
-    "x": 770,
-    "y": 233,
-    "owner": "Guest854"
+    "parent": "q7ln"
   },
   "vdfa": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-bba45090-c15c-47c9-9670-fcdb99bcb2e8",
     "id": "vdfa",
-    "z": 9549,
-    "selectionOrder": 81,
+    "z": 12674,
+    "selectionOrder": 6,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "q7ln",
-    "activeFace": 1
+    "parent": "q7ln"
   },
   "dkky": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-fcaf63a3-0fbe-446a-b2af-c239cb9b610d",
     "id": "dkky",
-    "z": 26,
-    "selectionOrder": 25,
+    "z": 12742,
+    "selectionOrder": 23,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "hand",
-    "activeFace": 1,
-    "x": 910,
-    "y": 270,
-    "owner": "Guest854"
+    "parent": "q7ln"
   },
   "29q4": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-f1f3584f-62e1-4595-bca9-70d7de093e2c",
     "id": "29q4",
-    "z": 9553,
-    "selectionOrder": 103,
+    "z": 12744,
+    "selectionOrder": 25,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "q7ln",
-    "activeFace": 1
+    "parent": "q7ln"
   },
   "uwi6": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-1787efe2-0b94-4405-9aeb-e88ab55764b0",
     "id": "uwi6",
-    "z": 9515,
-    "selectionOrder": 108,
+    "z": 12675,
+    "selectionOrder": 26,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "q7ln",
-    "activeFace": 1
+    "parent": "q7ln"
   },
   "ezeb": {
     "deck": "deck4",
     "type": "card",
     "cardType": "type-c5e8a186-7555-43b5-8713-ca9b48758895",
     "id": "ezeb",
-    "z": 28,
+    "z": 12734,
     "selectionOrder": 27,
     "cssPosition": "absolute",
     "selectedMargin": "0",
-    "parent": "hand",
-    "activeFace": 1,
-    "x": 1120,
-    "y": 270,
-    "owner": "Guest281"
+    "parent": "q7ln"
   },
   "y356": {
     "type": "pile",
@@ -8158,43 +8250,51 @@
   },
   "turnIcon2": {
     "id": "turnIcon2",
-    "x": 320,
-    "y": 267,
+    "x": 315,
+    "y": 262,
     "image": "/assets/-1946727849_23273",
     "scale": 0,
     "z": 81082,
     "layer": -4,
-    "movable": false
+    "movable": false,
+    "width": 110,
+    "height": 110
   },
   "turnIcon3": {
     "id": "turnIcon3",
-    "x": 750,
-    "y": 363,
+    "x": 745,
+    "y": 358,
     "image": "/assets/-1946727849_23273",
     "scale": 0,
     "z": 81083,
     "layer": -4,
-    "movable": false
+    "movable": false,
+    "width": 110,
+    "height": 110
   },
   "turnIcon4": {
     "id": "turnIcon4",
     "image": "/assets/-1946727849_23273",
     "z": 81085,
     "scale": 0,
-    "x": 1180,
-    "y": 267,
+    "x": 1175,
+    "y": 262,
     "layer": -4,
-    "movable": false
+    "movable": false,
+    "width": 110,
+    "height": 110
   },
   "turnIcon1": {
     "id": "turnIcon1",
-    "x": 750,
-    "y": 177,
+    "x": 745,
+    "y": 172,
     "z": 81082,
     "image": "/assets/-1946727849_23273",
     "scale": 0,
     "layer": -4,
-    "movable": false
+    "movable": false,
+    "width": 110,
+    "height": 110
   },
   "dragSelector1": {
     "type": "button",
@@ -8205,7 +8305,7 @@
     "height": 40,
     "borderRadius": "20px",
     "layer": 1,
-    "z": 81384,
+    "z": 81398,
     "movable": true,
     "backgroundColor": "#1F5CA6BB",
     "backgroundColorOH": "#1F5CA6BB",
@@ -8511,9 +8611,9 @@
     "id": "dragSelector3",
     "inheritFrom": "dragSelector1",
     "select": true,
-    "z": 81385,
-    "x": 178,
-    "y": 817,
+    "z": 81392,
+    "x": "170",
+    "y": "815",
     "backgroundColor": "#1F5CA6BB",
     "backgroundColorOH": "#1F5CA6BB",
     "onlyVisibleForSeat": [
@@ -8525,7 +8625,7 @@
     "id": "dragSelector4",
     "inheritFrom": "dragSelector1",
     "select": true,
-    "z": 81381,
+    "z": 81397,
     "x": "170",
     "y": "815",
     "backgroundColor": "#1F5CA6BB",

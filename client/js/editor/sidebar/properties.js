@@ -378,7 +378,7 @@ class PropertiesModule extends SidebarModule {
             if(button != templateButton)
               button.classList.remove('selected');
           templateButton.classList.toggle('selected');
-          createButton.disabled = false;
+          createButton.disabled = !$a('.selected.deckTemplateButton', target).length;
         };
         deck.id = generateUniqueWidgetID();
       }
@@ -589,14 +589,14 @@ class PropertiesModule extends SidebarModule {
           <div>
             <div class=rows>Rows (if multiple cards):<br><input type=range value=1 max=10> <input type=number value=1 min=0></div>
             <div class=cols>Cols (if multiple cards):<br><input type=range value=1 max=10> <input type=number value=1 min=0></div>
-            <div class=card>Cards to add:<br><input type=range value=1 max=10> <input type=number value=1 min=0></div>
+            <div class=cards>Cards to add:<br><input type=range value=1 max=10> <input type=number value=1 min=0></div>
             <button icon=delete>Delete</button>
           </div>
         </div>
       `);
       dom.dataset.imagePath = imagePath;
       dom.dataset.fileName = fileName;
-      for(const name of [ 'rows', 'cols', 'card' ]) {
+      for(const name of [ 'rows', 'cols', 'cards' ]) {
         $(`.${name} [type=range]`, dom).oninput = e=>$(`.${name} [type=number]`, dom).value=e.target.value;
         $(`.${name} [type=number]`, dom).oninput = e=>$(`.${name} [type=range]`, dom).value=e.target.value;
       }
@@ -623,14 +623,14 @@ class PropertiesModule extends SidebarModule {
                 deckWidth: cols,
                 deckHeight: rows
               };
-              counts[cardType] = $('.card input', previewDiv).value;
+              counts[cardType] = $('.cards input', previewDiv).value;
             }
           }
         } else {
           cardTypes[previewDiv.dataset.fileName] = {
             image: previewDiv.dataset.imagePath
           };
-          counts[previewDiv.dataset.fileName] = $('.card input', previewDiv).value;
+          counts[previewDiv.dataset.fileName] = $('.cards input', previewDiv).value;
         }
       }
 

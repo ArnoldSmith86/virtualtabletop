@@ -177,7 +177,8 @@ export class Widget extends StateManaged {
     let fromTransform = null;
     let newParent = undefined;
     if(delta.parent !== undefined) {
-      newParent = delta.parent ? widgets.get(delta.parent).domElement : $('#topSurface');
+      newParent = delta.parent && widgets.has(delta.parent) ? widgets.get(delta.parent).domElement : $('#topSurface');
+      this.setLimbo(delta.parent && !widgets.has(delta.parent));
       // If the widget wasn't newly created, transition from its previous location.
       if (delta.id === undefined)
         fromTransform = getElementTransformRelativeTo(this.domElement, newParent);
@@ -206,7 +207,7 @@ export class Widget extends StateManaged {
         this.domElement.style.transform = this.targetTransform;
       }
 
-      if(delta.parent !== null) {
+      if(delta.parent !== null && widgets.has(delta.parent)) {
         this.parent = widgets.get(delta.parent);
         this.parent.applyChildAdd(this);
       } else {
@@ -415,6 +416,8 @@ export class Widget extends StateManaged {
       if(!widgetFilter(w=>asArray(linkedToSeat).indexOf(w.get('id')) != -1 && w.get('player')).length)
         className += ' foreign';
 
+    if(this.isLimbo)
+      className += ' limbo';
     if(this.get('hoverParent') && widgets.has(this.get('hoverParent')) && widgets.get(this.get('hoverParent')).domElement.classList.contains('showCardBack'))
       className += ' showCardBack';
 
@@ -865,11 +868,13 @@ export class Widget extends StateManaged {
     let collections = initialCollections;
     if(!byReference) {
       const playerSeats = widgetFilter(w=>w.get('type')=='seat'&&w.get('player')==playerName);
+      const activeSeats = widgetFilter(w=>w.get('type')=='seat'&&w.get('player')!='');
       variables = Object.assign({
         activeColors,
         mouseCoords,
         seatIndex: playerSeats.length ? playerSeats[0].get('index') : null,
-        seatID: playerSeats.length ? playerSeats[0].get('id') : null
+        seatID: playerSeats.length ? playerSeats[0].get('id') : null,
+        activeSeats: activeSeats.length ? activeSeats.map(seat=>seat.get('id')) : null
       }, initialVariables, {
         playerName,
         playerColor,
@@ -877,7 +882,8 @@ export class Widget extends StateManaged {
         thisID : this.get('id')
       });
       collections = Object.assign({
-        playerSeats
+        playerSeats,
+        activeSeats
       }, initialCollections, {
         thisButton : [this]
       });
@@ -2471,6 +2477,18 @@ export class Widget extends StateManaged {
       else
         this.domElement.classList.remove('selectedInEdit');
     }
+  }
+
+  setLimbo(isLimbo) {
+    if(this.isLimbo == isLimbo)
+      return;
+    if(isLimbo) {
+      const topTransform = getElementTransformRelativeTo(this.domElement, $('#topSurface')) || 'none';
+      $('#topSurface').appendChild(this.domElement);
+      this.domElement.style.transform = topTransform;
+    }
+    this.domElement.classList.toggle('limbo', isLimbo);
+    this.isLimbo = isLimbo;
   }
 
   async setText(text, mode, problems) {
