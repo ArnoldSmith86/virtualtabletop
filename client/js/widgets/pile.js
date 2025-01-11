@@ -203,7 +203,7 @@ class Pile extends Widget {
       cancelButton.addEventListener('click', async e=>{
         showOverlay('pileOverlay');
       });
-      cancelButton.className = 'ui-button pilecancelbutton material-icons';
+      cancelButton.className = 'ui-button pilecancelbutton material-symbols';
       buttonBar4.appendChild(cancelButton);
 
 
