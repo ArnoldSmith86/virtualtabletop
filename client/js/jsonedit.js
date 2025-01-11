@@ -1074,7 +1074,7 @@ function jeAddRoutineOperationCommands(command, defaults) {
 
 function jeAddCommands() {
   const widgetTypes = [ 'all' ];
-  const collectionNames = [ 'all', 'DEFAULT', 'thisButton', 'child', 'widget', 'playerSeats' ];
+  const collectionNames = [ 'all', 'DEFAULT', 'thisButton', 'child', 'widget', 'playerSeats', 'activeSeats' ];
 
   const widgetBase = new Widget();
   widgetTypes.push(jeAddWidgetPropertyCommands(new BasicWidget(), widgetBase));
