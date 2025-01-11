@@ -1458,7 +1458,16 @@ function populateAddWidgetOverlay() {
     });
     
     // Add a holder fanning Line widget
-    addCompositeWidgetToAddWidgetOverlay(generateFannedHolders('add-fan', 75, 800), async function() {
+    addCompositeWidgetToAddWidgetOverlay(
+      [{type: "basic",
+        x: 100,
+        y: 800,
+        width: 150,
+        height: 150,
+        rotation: -25,
+        css: "border-radius: 50%",
+        image: "/i/game-icons.net/lorc/poker-hand.svg",
+      }], async function() {
       const id = generateUniqueWidgetID();
       for (const w of generateFannedHolders(id, 200, 200))
         await addWidgetLocal(w);
