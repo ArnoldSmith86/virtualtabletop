@@ -1971,7 +1971,7 @@ export class Widget extends StateManaged {
 
         if (c.length == 0) {
           if(jeRoutineLogging)
-            jeLoggingRoutineOperationSummary(`no active seats found in collection ${a.source}`);
+            jeLoggingRoutineOperationSummary(`No active seats found in collection ${a.source}.`);
         } else {
           if (c.length > 1) {
             if (a.turnCycle == 'forward' || a.turnCycle == 'position') {
@@ -2030,9 +2030,13 @@ export class Widget extends StateManaged {
           }
 
           if(jeRoutineLogging) {
-            const indexList = c.map(w=>w.get('index'));
-            const turn = target.get('index');
-            jeLoggingRoutineOperationSummary(`changed turn of seats to ${turn} - active seats: ${JSON.stringify(indexList)}`);
+            if (target) {
+              const indexList = c.map(w => w.get('index'));
+              const turn = target.get('index');
+              jeLoggingRoutineOperationSummary(`Changed turn of seats to ${turn} - active seats: ${JSON.stringify(indexList)}`);
+            } else {
+              jeLoggingRoutineOperationSummary(`All seats in collection '${a.source}' have 'skipTurn' set to true. No turn change.`);
+            }
           }
         }
       }
