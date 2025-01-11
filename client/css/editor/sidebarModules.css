@@ -40,7 +40,7 @@
   border: 3px solid var(--VTTblue);
 }
 .editorModule .widgetSelectionButton.selected::after {
-  font-family: 'Material Icons';
+  font-family: 'Material Symbols';
   line-height: 1.25em;
   text-align: center;
   height: 1.25em;
@@ -194,7 +194,7 @@
 }
 
 .image.editorModule .externalLink::after {
-  font-family: "Material Icons";
+  font-family: "Material Symbols";
   font-size: 40px;
   position: absolute;
   top: 5px;
