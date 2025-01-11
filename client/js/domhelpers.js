@@ -405,12 +405,16 @@ function images2emojis(dom) {
   dom.innerHTML = dom.innerHTML.replace(regexpUnicodeModified, (m,g)=>g);
 }
 
+function replaceMaterialIcons(html) {
+  return html.replace(/\b(material-icons(?:-(outlined|round|sharp|twotone))?)\b/g, "material-symbols");
+}
+
 export function applyValuesToDOM(parent, obj) {
   for(const dom of $a('[data-field]', parent)) {
     if(obj[dom.dataset.field]) {
       dom.classList.remove('hidden');
       if(dom.dataset.html)
-        dom.innerHTML = DOMPurify.sanitize(mapAssetURLs(obj[dom.dataset.field]), { USE_PROFILES: { html: true } });
+        dom.innerHTML = DOMPurify.sanitize(replaceMaterialIcons(mapAssetURLs(obj[dom.dataset.field])), { USE_PROFILES: { html: true } });
       else
         dom[dom.dataset.target || 'innerText'] = obj[dom.dataset.field];
       if(dom.dataset.target == 'src')
@@ -515,19 +519,23 @@ export async function loadSymbolPicker() {
       if(category == 'Emoji - Flags')
         continue;
       list += `<h2 class="${category.match(/Material|VTT|Emoji/)?'fontCategory':'imageCategory'}">${category}</h2>`;
-      for(const [ symbol, keywords ] of Object.entries(symbols)) {
+      for(let [ symbol, keywords ] of Object.entries(symbols)) {
         if(symbol.includes('/')) {
           const gameIconsIndex = keywords.shift();
           // increase resource limits in /etc/ImageMagick-6/policy.xml to 8GiB and then: montage -background none assets/game-icons.net/*/*.svg -geometry 48x48+0+0 -tile 60x assets/game-icons.net/overview.png
           list += `<i class="gameicons" title="game-icons.net: ${symbol}" data-type="game-icons" data-symbol="${symbol}" data-keywords="${symbol.split('/')[1]},${keywords.join().toLowerCase()}" style="--x:${gameIconsIndex%60};--y:${Math.floor(gameIconsIndex/60)};--url:url('i/game-icons.net/${symbol}.svg')"></i>`;
         } else {
+          const hasNoFillVariant = symbol.match(/ \(FILL\+NOFILL\)$/);
+          symbol = symbol.replace(/ \(FILL\+NOFILL\)$/, '');
           let className = 'emoji-monochrome';
           if(symbol[0] == '[')
             className = 'symbols';
           else if(symbol.match(/^[a-z0-9_]+$/))
-            className = 'material-icons';
+            className = 'material-symbols';
           if(className != 'emoji-monochrome' || !skipForNotoMonochrome(symbol))
             list += `<i class="${className}" title="${className}: ${symbol}" data-type="${className}" data-symbol="${symbol}" data-keywords="${symbol},${keywords.join().toLowerCase()}" style="--url:url('i/noto-emoji/emoji_u${emojiToFilename(symbol)}.svg')">${toNotoMonochrome(symbol)}</i>`;
+          if(className == 'material-symbols' && hasNoFillVariant)
+            list += `<i class="material-symbols-nofill" title="material-symbols-nofill: ${symbol}" data-type="material-symbols-nofill" data-symbol="${symbol}" data-keywords="${symbol},${keywords.join().toLowerCase()}">${symbol}</i>`;
         }
       }
     }
