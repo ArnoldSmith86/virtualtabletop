@@ -318,6 +318,19 @@ export class StateManaged {
     return heirs;
   }
 
+  findHeirsForProperty(heirlist, source, sourceProperty, partial=false) {
+    // heirlist is notifyInheritance() output
+    return heirlist.filter(item => item.source === source && 
+      ( (item.sourceProperty === sourceProperty) ||
+        (item.sourceProperty.startsWith(sourceProperty) && partial)
+      )) 
+      .map(item => ({
+                    destination: item.destination,
+                    sourceProperty: item.sourceProperty,
+                    targetProperty: item.targetProperty
+                    })
+    );
+}
 
   inheritFromUnregister() {
     for(const wID in StateManaged.inheritFromMapping)
