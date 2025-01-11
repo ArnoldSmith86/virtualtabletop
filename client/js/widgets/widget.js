@@ -868,11 +868,13 @@ export class Widget extends StateManaged {
     let collections = initialCollections;
     if(!byReference) {
       const playerSeats = widgetFilter(w=>w.get('type')=='seat'&&w.get('player')==playerName);
+      const activeSeats = widgetFilter(w=>w.get('type')=='seat'&&w.get('player')!='');
       variables = Object.assign({
         activeColors,
         mouseCoords,
         seatIndex: playerSeats.length ? playerSeats[0].get('index') : null,
-        seatID: playerSeats.length ? playerSeats[0].get('id') : null
+        seatID: playerSeats.length ? playerSeats[0].get('id') : null,
+        activeSeats: activeSeats.length ? activeSeats.map(seat=>seat.get('id')) : null
       }, initialVariables, {
         playerName,
         playerColor,
@@ -880,7 +882,8 @@ export class Widget extends StateManaged {
         thisID : this.get('id')
       });
       collections = Object.assign({
-        playerSeats
+        playerSeats,
+        activeSeats
       }, initialCollections, {
         thisButton : [this]
       });
@@ -1968,7 +1971,7 @@ export class Widget extends StateManaged {
 
         if (c.length == 0) {
           if(jeRoutineLogging)
-            jeLoggingRoutineOperationSummary(`no active seats found in collection ${a.source}`);
+            jeLoggingRoutineOperationSummary(`No active seats found in collection ${a.source}.`);
         } else {
           if (c.length > 1) {
             if (a.turnCycle == 'forward' || a.turnCycle == 'position') {
@@ -2027,9 +2030,13 @@ export class Widget extends StateManaged {
           }
 
           if(jeRoutineLogging) {
-            const indexList = c.map(w=>w.get('index'));
-            const turn = target.get('index');
-            jeLoggingRoutineOperationSummary(`changed turn of seats to ${turn} - active seats: ${JSON.stringify(indexList)}`);
+            if (target) {
+              const indexList = c.map(w => w.get('index'));
+              const turn = target.get('index');
+              jeLoggingRoutineOperationSummary(`Changed turn of seats to ${turn} - active seats: ${JSON.stringify(indexList)}`);
+            } else {
+              jeLoggingRoutineOperationSummary(`All seats in collection '${a.source}' have 'skipTurn' set to true. No turn change.`);
+            }
           }
         }
       }

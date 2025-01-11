@@ -306,7 +306,7 @@ const jeCommands = [
       }
     },
     show: function() {
-      return [ 'symbols', 'material-icons', 'emoji-monochrome' ].indexOf(jeStateNow.classes) != -1;
+      return [ 'symbols', 'material-symbols', 'material-symbols-nofill', 'emoji-monochrome' ].indexOf(jeStateNow.classes) != -1;
     }
   },
   {
@@ -319,6 +319,45 @@ const jeCommands = [
         jeInsert(null, jeGetLastKey(), a);
         await jeApplyChanges();
       }
+    }
+  },
+  {
+    id: 'je_cardDefaultsHeightAndWidth',
+    name: 'height and width',
+    context: '^deck ↦ cardDefaults',
+    call: async function() {     
+      jeStateNow.cardDefaults = {
+        ...jeStateNow.cardDefaults,
+        height: '###SELECT ME###',
+        width: 103
+      };
+      jeSetAndSelect(160);
+      await jeApplyChanges();
+    },
+    show: function() {
+      return !(jeStateNow.cardDefaults && (jeStateNow.cardDefaults.height || jeStateNow.cardDefaults.width));
+    }
+  },
+  {
+    id: 'je_onPileCreation',
+    name: 'onPileCreation template',
+    context: '^deck ↦ cardDefaults',
+    call: async function() {
+      const onPileCreation = {
+        handleCSS: '###SELECT ME###',
+        handleSize: 'auto',
+        handleOffset: 15,
+        handlePosition: 'top right'
+      };  
+      jeStateNow.cardDefaults = {
+        ...jeStateNow.cardDefaults,
+        onPileCreation: onPileCreation
+      };
+      jeSetAndSelect('');
+      await jeApplyChanges();
+    },
+    show: function() {
+      return !(jeStateNow.cardDefaults && jeStateNow.cardDefaults.onPileCreation);
     }
   },
   {
@@ -1035,7 +1074,7 @@ function jeAddRoutineOperationCommands(command, defaults) {
 
 function jeAddCommands() {
   const widgetTypes = [ 'all' ];
-  const collectionNames = [ 'all', 'DEFAULT', 'thisButton', 'child', 'widget', 'playerSeats' ];
+  const collectionNames = [ 'all', 'DEFAULT', 'thisButton', 'child', 'widget', 'playerSeats', 'activeSeats' ];
 
   const widgetBase = new Widget();
   widgetTypes.push(jeAddWidgetPropertyCommands(new BasicWidget(), widgetBase));
@@ -1135,18 +1174,24 @@ function jeAddCommands() {
   jeAddEnumCommands('^[a-z]+ ↦ type', widgetTypes.slice(1));
   jeAddEnumCommands('^.*\\([A-Z]+\\) ↦ value', [ '${}' ]);
   jeAddEnumCommands('^deck ↦ faceTemplates ↦ [0-9]+ ↦ objects ↦ [0-9]+ ↦ textAlign', [ 'left', 'center', 'right' ]);
+  jeAddEnumCommands('^[a-z]+ ↦ classes', ['transparent', 'transition', 'symbols', 'material-symbols', 'material-symbols-nofill', 'standard_font', 'handwriting_font', 'handwriting_casual_font', 'condensed_font', 'serif_font', 'fantasy_font', 'gothic_font', 'horror_font', 'tech_font']);
   jeAddEnumCommands('^.*\\(AUDIO\\) ↦ player', [ '${}', '${getPlayerDetails().playerName}' ]);
+  jeAddEnumCommands('^.*\\(AUDIO\\) ↦ count', [ 1, 'loop' ]);
   jeAddEnumCommands('^.*\\(CANVAS\\) ↦ mode', [ 'set', 'inc', 'dec', 'change', 'reset', 'setPixel' ]);
   jeAddEnumCommands('^.*\\(CLICK\\) ↦ mode', [ 'respect', 'ignoreClickable', 'ignoreClickRoutine', 'ignoreAll' ]);
   jeAddEnumCommands('^.*\\(FLIP\\) ↦ faceCycle', [ 'forward', 'backward', 'random' ]);
+  jeAddEnumCommands('^.*\\(FLIP\\) ↦ count', [ 1, 'all' ]);
   jeAddEnumCommands('^.*\\(GET\\) ↦ aggregation', [ 'first', 'last', 'array', 'average', 'median', 'min', 'max', 'sum' ]);
   jeAddEnumCommands('^.*\\(IF\\) ↦ relation', [ '<', '<=', '==', '!=', '>', '>=' ]);
   jeAddEnumCommands('^.*\\(IF\\) ↦ (operand1|operand2|condition)', [ '${}' ]);
   jeAddEnumCommands('^.*\\(INPUT\\) ↦ fields ↦ [0-9]+ ↦ mode', [ 'widgets', 'faces' ]);
   jeAddEnumCommands('^.*\\(INPUT\\) ↦ fields ↦ [0-9]+ ↦ type', [ 'checkbox', 'choose', 'color', 'number', 'palette', 'select', 'string', 'subtitle', 'switch', 'text', 'title' ]);
   jeAddEnumCommands('^.*\\(LABEL\\) ↦ mode', [ 'set', 'dec', 'inc', 'append' ]);
+  jeAddEnumCommands('^.*\\(MOVE\\) ↦ count', [ 1, 'all' ]);
+  jeAddEnumCommands('^.*\\(MOVEXY\\) ↦ count', [ 1, 'all' ]);
   jeAddEnumCommands('^.*\\(ROTATE\\) ↦ angle', [ 45, 60, 90, 135, 180 ]);
   jeAddEnumCommands('^.*\\(ROTATE\\) ↦ mode', [ 'set', 'add' ]);
+  jeAddEnumCommands('^.*\\(ROTATE\\) ↦ count', [ 1, 'all' ]);
   jeAddEnumCommands('^.*\\(SCORE\\) ↦ mode', [ 'set', 'inc', 'dec' ]);
   jeAddEnumCommands('^.*\\(SELECT\\) ↦ mode', [ 'set', 'add', 'remove', 'intersect' ]);
   jeAddEnumCommands('^.*\\(SELECT\\) ↦ relation', [ '<', '<=', '==', '!=', '>', '>=', 'in' ]);
