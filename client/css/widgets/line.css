@@ -21,6 +21,6 @@ body.edit .selectedInEdit > .controlPoint,
 body.jsonEdit .selectedInEdit > * > .controlPoint,
 body.edit .selectedInEdit > * > .controlPoint,
 .selectedInEdit .controlPoint {
-    display: flex;
+    display: flex !important;
 }
 
