@@ -98,7 +98,7 @@ class GridButton extends PersistentToolbarToggleButton {
       const cancelButton = document.createElement('button');
       cancelButton.textContent = 'close';
       cancelButton.addEventListener('click', () => showOverlay('gridOverlay'));
-      cancelButton.className = 'ui-button pilecancelbutton material-icons';
+      cancelButton.className = 'ui-button pilecancelbutton material-symbols';
       $('#gridOverlay > .modal').appendChild(document.createElement('div').appendChild(cancelButton));
     } else {
       $('body').classList.remove('gridLines', 'gridLines33', 'gridLines25', 'gridLines20');

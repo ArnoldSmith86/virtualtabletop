@@ -10,7 +10,7 @@
   padding: 10px;
 }
 
-#stateFilters .material-icons {
+#stateFilters .material-symbols {
   line-height: 0.5;
   position: relative;
   top: 6px;
@@ -24,7 +24,7 @@
   border-radius: 11px;
 }
 
-#filterByTextWrapper .material-icons {
+#filterByTextWrapper .material-symbols {
   font-size: 20px;
   left: -2px;
 }
@@ -477,7 +477,7 @@ div:nth-of-type(2) > .list > .roomState .star {
   margin-top: 0;
   margin-bottom: 8px;
 }
-#mainDetails .material-icons, #similarDetails .material-icons {
+#mainDetails .material-symbols, #similarDetails .material-symbols {
   top: 5px;
   position: relative;
 }
@@ -530,7 +530,7 @@ div:nth-of-type(2) > .list > .roomState .star {
   position: relative;
   min-height: 24px;
 }
-#similarDetails > .details > .hideForEdit > i.material-icons {
+#similarDetails > .details > .hideForEdit > i.material-symbols {
   position: absolute;
   top: -2px;
 }
@@ -538,7 +538,7 @@ div:nth-of-type(2) > .list > .roomState .star {
   margin-left: 28px;
   display: inline-block;
 }
-#similarDetails > .details > .hideForEdit > a .material-icons {
+#similarDetails > .details > .hideForEdit > a .material-symbols {
   line-height: 0;
 }
 #similarDetails h1 {
@@ -753,7 +753,7 @@ div:nth-of-type(2) > .list > .roomState .star {
     font-size: 14px;
     margin-right: 10px;
   }
-  #mainDetails .material-icons {
+  #mainDetails .material-symbols {
     font-size: 18px;
     top: 3px;
   }
