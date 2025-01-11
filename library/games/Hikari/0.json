@@ -4,8 +4,8 @@
     "type": "card",
     "cardType": "Black 7",
     "id": "3731",
-    "z": 24138,
-    "parent": "18ih"
+    "z": 27615,
+    "parent": "41yz"
   },
   "_meta": {
     "version": 17,
@@ -19,7 +19,7 @@
       "time": "30",
       "attribution": "Room layout and scripting by Shobu and LawDawg (with assistance by IndigoPotter) released to the Public Domain as CC0.<div><br></div><div>Icons on cards from game-icons.net as attributed in the About button.&nbsp; Card layout by LawDawg and released to the Public Domain as CC0.\n\nLibrary image generated using the MyNinja artificial intelligence image generator, https://myninja.ai/, using the following prompt: \"Sky sun light poetic japanese style\"\n<div><br></div></div>",
       "importerTime": 1736164713208,
-      "lastUpdate": 1736622563694,
+      "lastUpdate": 1736623890000,
       "importer": "PCIO",
       "showName": true,
       "skill": "medium",
@@ -29,7 +29,7 @@
       "similarDesigner": "Taiki Shinzawa",
       "similarAwards": "",
       "ruleText": "The deck is made of 5 suits with colored back (1-8/3p, 1-10/4p, 1-12/5p).<div>&nbsp;\nEach player receives 10 cards (10 cards are undealt), face down and sorted low-to high from left-to-right. A player can see their opponents' cards, but cannot see their own cards values (only their suits).<div><br></div><div>Starting from the first player, each player will bid how many tricks they intend to collect. The game follows the classical \"must-follow\" trick-taking rules. Yellow is a permanent trump suit.</div><div>\nScore 10 points if you meet your bid goal, otherwise score -5 points per trick off your goal.&nbsp; There is a safety bet, which allow you more flexibility by allowing one extra trick (ex: 3+1, mean you can aim for 3 or 4 tricks). But this bid goal will only score 5 points.</div><div>\nPlay 4 deals, starting player will rotate at each round.&nbsp; &nbsp;</div></div>",
-      "helpText": "- Seat in sequential order from top to bottom\n- Click on deal button\n- Click on the chooser below your trick count to make a bid\n- Drag a card from your holder to your play area (located on the left)\n- Trick winner must click on the Take button to collect the trick and automatically increment the trick counter\n- Round scoring has to be done manually<div>- Click on the deal button to shuffle the cards and deal again</div>",
+      "helpText": "- All players take seats\n- Click on deal button\n- Click on the chooser below your trick count to make a bid\n- Drag a card from your holder to your play area (located on the left)\n- Trick winner must click on the Take button to collect the trick and automatically increment the trick counter\n- Round scoring has to be done manually<div>- Click on the deal button to shuffle the cards and deal again</div>",
       "variantImage": "",
       "variant": "",
       "language": "en-US",
@@ -487,8 +487,8 @@
     "y": 653,
     "z": 9513,
     "index": 4,
-    "linkedToSeat": "P4",
-    "hand": "P4Hand"
+    "hand": "P4Hand",
+    "linkedToSeat": "P4"
   },
   "P5": {
     "type": "seat",
@@ -540,302 +540,362 @@
       "Black 1": {
         "shade": "#000000",
         "shape": "/i/game-icons.net/delapouite/cantua.svg",
-        "text": 1
+        "text": 1,
+        "sort": 1
       },
       "Black 2": {
         "shade": "#000000",
         "shape": "/i/game-icons.net/delapouite/cantua.svg",
-        "text": 2
+        "text": 2,
+        "sort": 2
       },
       "Black 3": {
         "shade": "#000000",
         "shape": "/i/game-icons.net/delapouite/cantua.svg",
-        "text": 3
+        "text": 3,
+        "sort": 3
       },
       "Black 4": {
         "shade": "#000000",
         "shape": "/i/game-icons.net/delapouite/cantua.svg",
-        "text": 4
+        "text": 4,
+        "sort": 4
       },
       "Black 5": {
         "shade": "#000000",
         "shape": "/i/game-icons.net/delapouite/cantua.svg",
-        "text": 5
+        "text": 5,
+        "sort": 5
       },
       "Black 6": {
         "shade": "#000000",
         "shape": "/i/game-icons.net/delapouite/cantua.svg",
-        "text": 6
+        "text": 6,
+        "sort": 6
       },
       "Black 7": {
         "shade": "#000000",
         "shape": "/i/game-icons.net/delapouite/cantua.svg",
-        "text": 7
+        "text": 7,
+        "sort": 7
       },
       "Black 8": {
         "shade": "#000000",
         "shape": "/i/game-icons.net/delapouite/cantua.svg",
-        "text": 8
+        "text": 8,
+        "sort": 8
       },
       "Black 9": {
         "shade": "#000000",
         "shape": "/i/game-icons.net/delapouite/cantua.svg",
-        "text": 9
+        "text": 9,
+        "sort": 9
       },
       "Black 10": {
         "shade": "#000000",
         "shape": "/i/game-icons.net/delapouite/cantua.svg",
-        "text": 10
+        "text": 10,
+        "sort": 10
       },
       "Black 11": {
         "shade": "#000000",
         "shape": "/i/game-icons.net/delapouite/cantua.svg",
-        "text": 11
+        "text": 11,
+        "sort": 11
       },
       "Black 12": {
         "shade": "#000000",
         "shape": "/i/game-icons.net/delapouite/cantua.svg",
-        "text": 12
+        "text": 12,
+        "sort": 12
       },
       "Blue 1": {
         "shade": "#1a489c",
         "shape": "/i/game-icons.net/lorc/daisy.svg",
-        "text": 1
+        "text": 1,
+        "sort": 101
       },
       "Blue 2": {
         "shade": "#1a489c",
         "shape": "/i/game-icons.net/lorc/daisy.svg",
-        "text": 2
+        "text": 2,
+        "sort": 102
       },
       "Blue 3": {
         "shade": "#1a489c",
         "shape": "/i/game-icons.net/lorc/daisy.svg",
-        "text": 3
+        "text": 3,
+        "sort": 103
       },
       "Blue 4": {
         "shade": "#1a489c",
         "shape": "/i/game-icons.net/lorc/daisy.svg",
-        "text": 4
+        "text": 4,
+        "sort": 104
       },
       "Blue 5": {
         "shade": "#1a489c",
         "shape": "/i/game-icons.net/lorc/daisy.svg",
-        "text": 5
+        "text": 5,
+        "sort": 105
       },
       "Blue 6": {
         "shade": "#1a489c",
         "shape": "/i/game-icons.net/lorc/daisy.svg",
-        "text": 6
+        "text": 6,
+        "sort": 106
       },
       "Blue 7": {
         "shade": "#1a489c",
         "shape": "/i/game-icons.net/lorc/daisy.svg",
-        "text": 7
+        "text": 7,
+        "sort": 107
       },
       "Blue 8": {
         "shade": "#1a489c",
         "shape": "/i/game-icons.net/lorc/daisy.svg",
-        "text": 8
+        "text": 8,
+        "sort": 108
       },
       "Blue 9": {
         "shade": "#1a489c",
         "shape": "/i/game-icons.net/lorc/daisy.svg",
-        "text": 9
+        "text": 9,
+        "sort": 109
       },
       "Blue 10": {
         "shade": "#1a489c",
         "shape": "/i/game-icons.net/lorc/daisy.svg",
-        "text": 10
+        "text": 10,
+        "sort": 110
       },
       "Blue 11": {
         "shade": "#1a489c",
         "shape": "/i/game-icons.net/lorc/daisy.svg",
-        "text": 11
+        "text": 11,
+        "sort": 111
       },
       "Blue 12": {
         "shade": "#1a489c",
         "shape": "/i/game-icons.net/lorc/daisy.svg",
-        "text": 12
+        "text": 12,
+        "sort": 112
       },
       "Red 1": {
         "shade": "#d60413",
         "shape": "/i/game-icons.net/lorc/shut-rose.svg",
-        "text": 1
+        "text": 1,
+        "sort": 201
       },
       "Red 2": {
         "shade": "#d60413",
         "shape": "/i/game-icons.net/lorc/shut-rose.svg",
-        "text": 2
+        "text": 2,
+        "sort": 202
       },
       "Red 3": {
         "shade": "#d60413",
         "shape": "/i/game-icons.net/lorc/shut-rose.svg",
-        "text": 3
+        "text": 3,
+        "sort": 203
       },
       "Red 4": {
         "shade": "#d60413",
         "shape": "/i/game-icons.net/lorc/shut-rose.svg",
-        "text": 4
+        "text": 4,
+        "sort": 204
       },
       "Red 5": {
         "shade": "#d60413",
         "shape": "/i/game-icons.net/lorc/shut-rose.svg",
-        "text": 5
+        "text": 5,
+        "sort": 205
       },
       "Red 6": {
         "shade": "#d60413",
         "shape": "/i/game-icons.net/lorc/shut-rose.svg",
-        "text": 6
+        "text": 6,
+        "sort": 206
       },
       "Red 7": {
         "shade": "#d60413",
         "shape": "/i/game-icons.net/lorc/shut-rose.svg",
-        "text": 7
+        "text": 7,
+        "sort": 207
       },
       "Red 8": {
         "shade": "#d60413",
         "shape": "/i/game-icons.net/lorc/shut-rose.svg",
-        "text": 8
+        "text": 8,
+        "sort": 208
       },
       "Red 9": {
         "shade": "#d60413",
         "shape": "/i/game-icons.net/lorc/shut-rose.svg",
-        "text": 9
+        "text": 9,
+        "sort": 209
       },
       "Red 10": {
         "shade": "#d60413",
         "shape": "/i/game-icons.net/lorc/shut-rose.svg",
-        "text": 10
+        "text": 10,
+        "sort": 210
       },
       "Red 11": {
         "shade": "#d60413",
         "shape": "/i/game-icons.net/lorc/shut-rose.svg",
-        "text": 11
+        "text": 11,
+        "sort": 211
       },
       "Red 12": {
         "shade": "#d60413",
         "shape": "/i/game-icons.net/lorc/shut-rose.svg",
-        "text": 12
+        "text": 12,
+        "sort": 212
       },
       "Green 1": {
         "shade": "#216c07",
         "shape": "/i/game-icons.net/delapouite/jasmine.svg",
-        "text": 1
+        "text": 1,
+        "sort": 301
       },
       "Green 2": {
         "shade": "#216c07",
         "shape": "/i/game-icons.net/delapouite/jasmine.svg",
-        "text": 2
+        "text": 2,
+        "sort": 302
       },
       "Green 3": {
         "shade": "#216c07",
         "shape": "/i/game-icons.net/delapouite/jasmine.svg",
-        "text": 3
+        "text": 3,
+        "sort": 303
       },
       "Green 4": {
         "shade": "#216c07",
         "shape": "/i/game-icons.net/delapouite/jasmine.svg",
-        "text": 4
+        "text": 4,
+        "sort": 304
       },
       "Green 5": {
         "shade": "#216c07",
         "shape": "/i/game-icons.net/delapouite/jasmine.svg",
-        "text": 5
+        "text": 5,
+        "sort": 305
       },
       "Green 6": {
         "shade": "#216c07",
         "shape": "/i/game-icons.net/delapouite/jasmine.svg",
-        "text": 6
+        "text": 6,
+        "sort": 306
       },
       "Green 7": {
         "shade": "#216c07",
         "shape": "/i/game-icons.net/delapouite/jasmine.svg",
-        "text": 7
+        "text": 7,
+        "sort": 307
       },
       "Green 8": {
         "shade": "#216c07",
         "shape": "/i/game-icons.net/delapouite/jasmine.svg",
-        "text": 8
+        "text": 8,
+        "sort": 308
       },
       "Green 9": {
         "shade": "#216c07",
         "shape": "/i/game-icons.net/delapouite/jasmine.svg",
-        "text": 9
+        "text": 9,
+        "sort": 309
       },
       "Green 10": {
         "shade": "#216c07",
         "shape": "/i/game-icons.net/delapouite/jasmine.svg",
-        "text": 10
+        "text": 10,
+        "sort": 310
       },
       "Green 11": {
         "shade": "#216c07",
         "shape": "/i/game-icons.net/delapouite/jasmine.svg",
-        "text": 11
+        "text": 11,
+        "sort": 311
       },
       "Green 12": {
         "shade": "#216c07",
         "shape": "/i/game-icons.net/delapouite/jasmine.svg",
-        "text": 12
+        "text": 12,
+        "sort": 312
       },
       "Yellow 1": {
         "shade": "#ebc700",
         "shape": "/i/game-icons.net/lorc/tree-branch.svg",
-        "text": 1
+        "text": 1,
+        "sort": 401
       },
       "Yellow 2": {
         "shade": "#ebc700",
         "shape": "/i/game-icons.net/lorc/tree-branch.svg",
-        "text": 2
+        "text": 2,
+        "sort": 402
       },
       "Yellow 3": {
         "shade": "#ebc700",
         "shape": "/i/game-icons.net/lorc/tree-branch.svg",
-        "text": 3
+        "text": 3,
+        "sort": 403
       },
       "Yellow 4": {
         "shade": "#ebc700",
         "shape": "/i/game-icons.net/lorc/tree-branch.svg",
-        "text": 4
+        "text": 4,
+        "sort": 404
       },
       "Yellow 5": {
         "shade": "#ebc700",
         "shape": "/i/game-icons.net/lorc/tree-branch.svg",
-        "text": 5
+        "text": 5,
+        "sort": 405
       },
       "Yellow 6": {
         "shade": "#ebc700",
         "shape": "/i/game-icons.net/lorc/tree-branch.svg",
-        "text": 6
+        "text": 6,
+        "sort": 406
       },
       "Yellow 7": {
         "shade": "#ebc700",
         "shape": "/i/game-icons.net/lorc/tree-branch.svg",
-        "text": 7
+        "text": 7,
+        "sort": 407
       },
       "Yellow 8": {
         "shade": "#ebc700",
         "shape": "/i/game-icons.net/lorc/tree-branch.svg",
-        "text": 8
+        "text": 8,
+        "sort": 408
       },
       "Yellow 9": {
         "shade": "#ebc700",
         "shape": "/i/game-icons.net/lorc/tree-branch.svg",
-        "text": 9
+        "text": 9,
+        "sort": 409
       },
       "Yellow 10": {
         "shade": "#ebc700",
         "shape": "/i/game-icons.net/lorc/tree-branch.svg",
-        "text": 10
+        "text": 10,
+        "sort": 410
       },
       "Yellow 11": {
         "shade": "#ebc700",
         "shape": "/i/game-icons.net/lorc/tree-branch.svg",
-        "text": 11
+        "text": 11,
+        "sort": 411
       },
       "Yellow 12": {
         "shade": "#ebc700",
         "shape": "/i/game-icons.net/lorc/tree-branch.svg",
-        "text": 12
+        "text": 12,
+        "sort": 412
       }
     },
     "faceTemplates": [
@@ -920,232 +980,232 @@
     "type": "card",
     "cardType": "Black 1",
     "id": "rq0a",
-    "z": 24143,
-    "parent": "18ih"
+    "z": 27624,
+    "parent": "41yz"
   },
   "w7fo": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "Black 9",
     "id": "w7fo",
-    "z": 24160,
-    "parent": "18ih"
+    "z": 27640,
+    "parent": "41yz"
   },
   "gt6c": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "Black 10",
     "id": "gt6c",
-    "z": 24120,
-    "parent": "18ih"
+    "z": 27613,
+    "parent": "41yz"
   },
   "cnbd": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "Black 11",
     "id": "cnbd",
-    "z": 24152,
-    "parent": "18ih"
+    "z": 27626,
+    "parent": "41yz"
   },
   "09y2": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "Black 12",
     "id": "09y2",
-    "z": 24137,
-    "parent": "18ih"
+    "z": 27596,
+    "parent": "41yz"
   },
   "pf3d": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "Blue 4",
     "id": "pf3d",
-    "z": 24140,
-    "parent": "18ih"
+    "z": 27644,
+    "parent": "41yz"
   },
   "2wsd": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "Blue 9",
     "id": "2wsd",
-    "z": 24115,
-    "parent": "18ih"
+    "z": 27625,
+    "parent": "41yz"
   },
   "j9w8": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "Blue 10",
     "id": "j9w8",
-    "z": 24157,
-    "parent": "18ih"
+    "z": 27620,
+    "parent": "41yz"
   },
   "h3n2": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "Blue 11",
     "id": "h3n2",
-    "z": 24141,
-    "parent": "18ih"
+    "z": 27622,
+    "parent": "41yz"
   },
   "unas": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "Blue 12",
     "id": "unas",
-    "z": 24118,
-    "parent": "18ih"
+    "z": 27614,
+    "parent": "41yz"
   },
   "6mw9": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "Red 3",
     "id": "6mw9",
-    "z": 24107,
-    "parent": "18ih"
+    "z": 27591,
+    "parent": "41yz"
   },
   "qyu6": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "Red 4",
     "id": "qyu6",
-    "z": 24105,
-    "parent": "18ih"
+    "z": 27637,
+    "parent": "41yz"
   },
   "wxsy": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "Red 6",
     "id": "wxsy",
-    "z": 24145,
-    "parent": "18ih"
+    "z": 27617,
+    "parent": "41yz"
   },
   "fhs0": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "Red 9",
     "id": "fhs0",
-    "z": 24110,
-    "parent": "18ih"
+    "z": 27592,
+    "parent": "41yz"
   },
   "o9xm": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "Red 10",
     "id": "o9xm",
-    "z": 24161,
-    "parent": "18ih"
+    "z": 27598,
+    "parent": "41yz"
   },
   "8n5m": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "Red 11",
     "id": "8n5m",
-    "z": 24128,
-    "parent": "18ih"
+    "z": 27629,
+    "parent": "41yz"
   },
   "j5wo": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "Red 12",
     "id": "j5wo",
-    "z": 24122,
-    "parent": "18ih"
+    "z": 27641,
+    "parent": "41yz"
   },
   "notx": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "Green 8",
     "id": "notx",
-    "z": 24123,
-    "parent": "18ih"
+    "z": 27649,
+    "parent": "41yz"
   },
   "6itd": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "Green 9",
     "id": "6itd",
-    "z": 24158,
-    "parent": "18ih"
+    "z": 27639,
+    "parent": "41yz"
   },
   "114c": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "Green 10",
     "id": "114c",
-    "z": 24114,
-    "parent": "18ih"
+    "z": 27612,
+    "parent": "41yz"
   },
   "jdiy": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "Green 11",
     "id": "jdiy",
-    "z": 24129,
-    "parent": "18ih"
+    "z": 27594,
+    "parent": "41yz"
   },
   "x5lj": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "Green 12",
     "id": "x5lj",
-    "z": 24163,
-    "parent": "18ih"
+    "z": 27606,
+    "parent": "41yz"
   },
   "ultt": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "Yellow 2",
     "id": "ultt",
-    "z": 24155,
-    "parent": "18ih"
+    "z": 27646,
+    "parent": "41yz"
   },
   "az1r": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "Yellow 5",
     "id": "az1r",
-    "z": 24111,
-    "parent": "18ih"
+    "z": 27645,
+    "parent": "41yz"
   },
   "zt8e": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "Yellow 8",
     "id": "zt8e",
-    "z": 24150,
-    "parent": "18ih"
+    "z": 27635,
+    "parent": "41yz"
   },
   "c1v0": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "Yellow 9",
     "id": "c1v0",
-    "z": 24136,
-    "parent": "18ih"
+    "z": 27631,
+    "parent": "41yz"
   },
   "vysx": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "Yellow 10",
     "id": "vysx",
-    "z": 24104,
-    "parent": "18ih"
+    "z": 27638,
+    "parent": "41yz"
   },
   "qeyx": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "Yellow 11",
     "id": "qeyx",
-    "z": 24125,
-    "parent": "18ih"
+    "z": 27593,
+    "parent": "41yz"
   },
   "m9es": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "Yellow 12",
     "id": "m9es",
-    "z": 24121,
-    "parent": "18ih"
+    "z": 27643,
+    "parent": "41yz"
   },
   "offHolder": {
     "type": "holder",
@@ -1335,7 +1395,7 @@
       "var playerCount = length ${activeSeats}",
       "var 3p = ${playerCount} < 4",
       "var 4p = ${playerCount} == 4",
-      "var 5p = ${playerCount} == 5",
+      "var 5p = ${playerCount} = 5",
       {
         "func": "IF",
         "condition": "${3p}",
@@ -1390,12 +1450,7 @@
           {
             "func": "SORT",
             "holder": "P${value}Hand",
-            "key": "text"
-          },
-          {
-            "func": "SORT",
-            "holder": "P${value}Hand",
-            "key": "cardType"
+            "key": "sort"
           },
           {
             "func": "LABEL",
@@ -2109,240 +2164,240 @@
     "type": "card",
     "cardType": "Green 3",
     "id": "zwo1",
-    "z": 24117,
-    "parent": "18ih"
+    "z": 27642,
+    "parent": "41yz"
   },
   "ltpg": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "Black 2",
     "id": "ltpg",
-    "z": 24127,
-    "parent": "18ih"
+    "z": 27610,
+    "parent": "41yz"
   },
   "5s4e": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "Black 3",
     "id": "5s4e",
-    "z": 24119,
-    "parent": "18ih"
+    "z": 27623,
+    "parent": "41yz"
   },
   "e57k": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "Black 4",
     "id": "e57k",
-    "z": 24126,
-    "parent": "18ih"
+    "z": 27600,
+    "parent": "41yz"
   },
   "7t72": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "Black 5",
     "id": "7t72",
-    "z": 24142,
-    "parent": "18ih"
+    "z": 27595,
+    "parent": "41yz"
   },
   "9kdh": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "Black 6",
     "id": "9kdh",
-    "z": 24144,
-    "parent": "18ih"
+    "z": 27611,
+    "parent": "41yz"
   },
   "i31u": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "Black 8",
     "id": "i31u",
-    "z": 24151,
-    "parent": "18ih"
+    "z": 27618,
+    "parent": "41yz"
   },
   "owka": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "Blue 1",
     "id": "owka",
-    "z": 24139,
-    "parent": "18ih"
+    "z": 27603,
+    "parent": "41yz"
   },
   "zpdi": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "Blue 2",
     "id": "zpdi",
-    "z": 24154,
-    "parent": "18ih"
+    "z": 27616,
+    "parent": "41yz"
   },
   "jj6m": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "Blue 3",
     "id": "jj6m",
-    "z": 24147,
-    "parent": "18ih"
+    "z": 27597,
+    "parent": "41yz"
   },
   "4q1u": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "Blue 5",
     "id": "4q1u",
-    "z": 24112,
-    "parent": "18ih"
+    "z": 27605,
+    "parent": "41yz"
   },
   "piio": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "Blue 6",
     "id": "piio",
-    "z": 24134,
-    "parent": "18ih"
+    "z": 27628,
+    "parent": "41yz"
   },
   "g9a0": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "Blue 7",
     "id": "g9a0",
-    "z": 24162,
-    "parent": "18ih"
+    "z": 27634,
+    "parent": "41yz"
   },
   "j6f5": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "Blue 8",
     "id": "j6f5",
-    "z": 24146,
-    "parent": "18ih"
+    "z": 27636,
+    "parent": "41yz"
   },
   "dq68": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "Red 1",
     "id": "dq68",
-    "z": 24156,
-    "parent": "18ih"
+    "z": 27630,
+    "parent": "41yz"
   },
   "w7c9": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "Red 2",
     "id": "w7c9",
-    "z": 24106,
-    "parent": "18ih"
+    "z": 27647,
+    "parent": "41yz"
   },
   "t532": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "Red 5",
     "id": "t532",
-    "z": 24116,
-    "parent": "18ih"
+    "z": 27601,
+    "parent": "41yz"
   },
   "5t42": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "Red 7",
     "id": "5t42",
-    "z": 24109,
-    "parent": "18ih"
+    "z": 27609,
+    "parent": "41yz"
   },
   "58ti": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "Red 8",
     "id": "58ti",
-    "z": 24108,
-    "parent": "18ih"
+    "z": 27621,
+    "parent": "41yz"
   },
   "e1ln": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "Green 1",
     "id": "e1ln",
-    "z": 24113,
-    "parent": "18ih"
+    "z": 27602,
+    "parent": "41yz"
   },
   "a4tc": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "Green 2",
     "id": "a4tc",
-    "z": 24153,
-    "parent": "18ih"
+    "z": 27604,
+    "parent": "41yz"
   },
   "ibrl": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "Green 4",
     "id": "ibrl",
-    "z": 24149,
-    "parent": "18ih"
+    "z": 27607,
+    "parent": "41yz"
   },
   "2hob": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "Green 5",
     "id": "2hob",
-    "z": 24131,
-    "parent": "18ih"
+    "z": 27599,
+    "parent": "41yz"
   },
   "ofpo": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "Green 6",
     "id": "ofpo",
-    "z": 24132,
-    "parent": "18ih"
+    "z": 27632,
+    "parent": "41yz"
   },
   "iqkz": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "Green 7",
     "id": "iqkz",
-    "z": 24133,
-    "parent": "18ih"
+    "z": 27648,
+    "parent": "41yz"
   },
   "zjkg": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "Yellow 1",
     "id": "zjkg",
-    "z": 24130,
-    "parent": "18ih"
+    "z": 27608,
+    "parent": "41yz"
   },
   "ycra": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "Yellow 3",
     "id": "ycra",
-    "z": 24159,
-    "parent": "18ih"
+    "z": 27650,
+    "parent": "41yz"
   },
   "1wiu": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "Yellow 4",
     "id": "1wiu",
-    "z": 24148,
-    "parent": "18ih"
+    "z": 27619,
+    "parent": "41yz"
   },
   "ec6y": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "Yellow 7",
     "id": "ec6y",
-    "z": 24124,
-    "parent": "18ih"
+    "z": 27627,
+    "parent": "41yz"
   },
   "jz3k": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "Yellow 6",
     "id": "jz3k",
-    "z": 24135,
-    "parent": "18ih"
+    "z": 27633,
+    "parent": "41yz"
   },
   "P1TakeButton": {
     "type": "button",
@@ -2652,13 +2707,13 @@
       }
     ]
   },
-  "18ih": {
+  "41yz": {
     "type": "pile",
     "parent": "deckHolder",
     "x": 4,
     "y": 4,
     "width": 80,
     "height": 80,
-    "id": "18ih"
+    "id": "41yz"
   }
 }
