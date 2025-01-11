@@ -1,4 +1,4 @@
-export const VERSION = 16;
+export const VERSION = 17;
 
 export default function FileUpdater(state) {
   const v = state._meta.version;
@@ -8,6 +8,7 @@ export default function FileUpdater(state) {
     throw Error(`File version ${v} is newer than the supported version ${VERSION}.`);
 
   const globalProperties = computeGlobalProperties(state, v);
+
   for(const id in state)
     updateProperties(state[id], v, globalProperties);
 
@@ -98,6 +99,7 @@ function updateProperties(properties, v, globalProperties) {
   v<13 && v13EnlargeTinyLabels(properties);
   v<14 && v14HidePlayerCursors(properties);
   v<15 && v15SkipTurnProperty(properties);
+  v<17 && v17MaterialSymbols(properties);
 }
 
 function updateRoutine(routine, v, globalProperties) {
@@ -486,6 +488,16 @@ function v16UpdateCountParameter(routine) {
           };
         }
       }
+    }
+  }
+}
+
+function v17MaterialSymbols(properties) {
+  for (const key in properties) {
+    if (typeof properties[key] === 'object' && properties[key] !== null) {
+      v17MaterialSymbols(properties[key]);
+    } else if (typeof properties[key] === 'string') {
+      properties[key] = properties[key].replace(/\b(material-icons(?:-(outlined|round|sharp|twotone))?)\b/g, "material-symbols");
     }
   }
 }
