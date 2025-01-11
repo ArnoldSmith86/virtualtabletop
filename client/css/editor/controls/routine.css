@@ -2,5 +2,10 @@
   padding-left: 10px;
 }
 .routine-editor-operation {
-  padding-left: 20px;
+  padding-left: 10px;
+}
+
+.routine-editor-operation-parameter {
+  color: blue;
+  font-weight: bold;
 }
