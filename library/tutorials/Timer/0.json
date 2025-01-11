@@ -11,7 +11,7 @@
     "id": "8fr3"
   },
   "_meta": {
-    "version": 4,
+    "version": 16,
     "info": {
       "name": "Timer",
       "image": "/assets/509206781_3477",
@@ -20,9 +20,9 @@
       "year": "2021",
       "mode": "Tutorial",
       "time": "",
-      "attribution": "The clock face, by temas, is in the Public Domain under CC0, and is available at https://openclipart.org/detail/134335/diy-clock-face-by-temas-134335.\n\nThe stopwatch face is the based on the clock face, but the numbers were modified by LawDawg96.  It is released to the Public Domain under CC0.\n\nThe hour and minute hands are in the Public Domain under CC0, and are available at https://freesvg.org/minute-hand-mitchell-joh.",
+      "attribution": "<div>The buzzer sound is in the Public Domain under CC0 and is available from Wikimedia Commons at&nbsp;https://commons.wikimedia.org/wiki/File:Buzzer.wav.</div><div><br></div>The clock face, by temas, is in the Public Domain under CC0, and is available at https://openclipart.org/detail/134335/diy-clock-face-by-temas-134335.\n\nThe stopwatch face is the based on the clock face, but the numbers were modified by LawDawg96.  It is released to the Public Domain under CC0.\n\nThe hour and minute hands are in the Public Domain under CC0, and are available at https://freesvg.org/minute-hand-mitchell-joh.",
       "showName": false,
-      "lastUpdate": 1677731215882,
+      "lastUpdate": 1733077146017,
       "skill": "",
       "description": "",
       "similarImage": "",
@@ -30,6 +30,7 @@
       "similarAwards": "",
       "ruleText": "",
       "helpText": "",
+      "similarDesigner": "",
       "variantImage": "",
       "variant": "Basics",
       "language": "en-US",
@@ -50,7 +51,7 @@
     "type": "timer",
     "id": "9ezq",
     "x": 100,
-    "y": 260,
+    "y": 243,
     "z": 3
   },
   "9ezqP": {
@@ -65,7 +66,7 @@
     "clickRoutine": [
       {
         "func": "TIMER",
-        "timer": "9ezq"
+        "timer": "${PROPERTY parent}"
       }
     ],
     "image": "/i/button-icons/White-Play_Pause.svg",
@@ -83,7 +84,7 @@
     "clickRoutine": [
       {
         "func": "TIMER",
-        "timer": "9ezq",
+        "timer": "${PROPERTY parent}",
         "mode": "reset"
       }
     ],
@@ -91,11 +92,11 @@
     "css": "background-size: 80% 80%"
   },
   "u4ka": {
-    "text": "This is the basic timer widget, which can be added from the Add Widget button on the left side of the screen. The timer will stop and start by either pressing on the numbers of the timer itself or on the play/pause symbol. The timer defaults to counting in one second increments (shown as 1000 milliseconds in the JSON) and counting up. You can edit some of the settings using the Edit Mode button to the left and additional changes can be made using the JSON editor. You can also interact with the controls or the JSON using any type of Routine or Call function.",
+    "text": "This is the basic timer widget, which can be added from the Add Widget button on the left side of the screen. The timer will stop and start by either pressing on the numbers of the timer itself or on the play/pause symbol. The timer defaults to counting in one second increments (shown as 1000 milliseconds in the JSON) and counting up. You can edit some of the settings using the Edit Mode button to the left and additional changes can be made using the JSON editor. You can also interact with the controls or the JSON using any type of routine or CALL function.",
     "css": "font-size: 20px",
     "width": 1200,
     "x": 275,
-    "y": 254,
+    "y": 237,
     "z": 72,
     "id": "u4ka"
   },
@@ -103,12 +104,13 @@
     "type": "timer",
     "id": "v2hc",
     "x": 100,
-    "y": 418,
+    "y": 502,
     "z": 13,
     "countdown": true,
-    "start": 10000,
-    "end": 5000,
-    "milliseconds": 10000
+    "start": 5000,
+    "alertSound": "/assets/567497926_17196",
+    "end": 0,
+    "milliseconds": 5000
   },
   "v2hcP": {
     "parent": "v2hc",
@@ -122,11 +124,12 @@
     "clickRoutine": [
       {
         "func": "TIMER",
-        "timer": "v2hc"
+        "timer": "${PROPERTY parent}"
       }
     ],
     "image": "/i/button-icons/White-Play_Pause.svg",
-    "css": "background-size: 75% 75%"
+    "css": "background-size: 75% 75%",
+    "z": 89
   },
   "v2hcR": {
     "parent": "v2hc",
@@ -140,27 +143,27 @@
     "clickRoutine": [
       {
         "func": "TIMER",
-        "timer": "v2hc",
+        "timer": "${PROPERTY parent}",
         "mode": "reset"
       }
     ],
     "image": "/i/button-icons/White-Reset.svg",
-    "css": "background-size: 80% 80%"
+    "css": "background-size: 80% 80%",
+    "z": 4
   },
   "dlo0": {
-    "text": "This timer is in the countdown mode, starting at 10 seconds. When it reaches the designated time of 5 seconds, the numbers will change to red to indicate the countdown is over, but the timer will still continue to count down.  ",
+    "text": "This timer is in the countdown mode, starting at 5 seconds. When it reaches 0, just like in the previous timer, the numbers will change to red, but a sound is also played because the 'alertSound' property is set.",
     "css": "font-size: 20px",
     "width": 1200,
     "x": 271,
-    "y": 414,
-    "z": 91,
+    "y": 498,
     "id": "dlo0"
   },
   "oueu": {
     "type": "timer",
     "id": "oueu",
     "x": 100,
-    "y": 536,
+    "y": 620,
     "z": 12,
     "precision": 5000
   },
@@ -176,11 +179,12 @@
     "clickRoutine": [
       {
         "func": "TIMER",
-        "timer": "oueu"
+        "timer": "${PROPERTY parent}"
       }
     ],
     "image": "/i/button-icons/White-Play_Pause.svg",
-    "css": "background-size: 75% 75%"
+    "css": "background-size: 75% 75%",
+    "z": 92
   },
   "oueuR": {
     "parent": "oueu",
@@ -194,27 +198,28 @@
     "clickRoutine": [
       {
         "func": "TIMER",
-        "timer": "oueu",
+        "timer": "${PROPERTY parent}",
         "mode": "reset"
       }
     ],
     "image": "/i/button-icons/White-Reset.svg",
-    "css": "background-size: 80% 80%"
+    "css": "background-size: 80% 80%",
+    "z": 91
   },
   "xe6r": {
     "text": "This timer has its precision function set to 5000 milliseconds.  That means the timer will only update on the screen and in the JSON every 5 seconds.",
     "css": "font-size: 20px",
     "width": 1200,
     "x": 275,
-    "y": 532,
-    "z": 89,
+    "y": 616,
+    "z": 90,
     "id": "xe6r"
   },
   "xen9": {
     "type": "timer",
     "id": "xen9",
     "x": 100,
-    "y": 650,
+    "y": 734,
     "z": 11,
     "changeRoutine": [
       "var Red = randInt 0 255",
@@ -251,11 +256,12 @@
     "clickRoutine": [
       {
         "func": "TIMER",
-        "timer": "xen9"
+        "timer": "${PROPERTY parent}"
       }
     ],
     "image": "/i/button-icons/White-Play_Pause.svg",
-    "css": "background-size: 75% 75%"
+    "css": "background-size: 75% 75%",
+    "z": 94
   },
   "xen9R": {
     "parent": "xen9",
@@ -269,29 +275,89 @@
     "clickRoutine": [
       {
         "func": "TIMER",
-        "timer": "xen9",
+        "timer": "${PROPERTY parent}",
         "mode": "reset"
       }
     ],
     "image": "/i/button-icons/White-Reset.svg",
-    "css": "background-size: 80% 80%"
+    "css": "background-size: 80% 80%",
+    "z": 93
   },
   "tli4": {
     "text": "This timer has its precision property set to 500 milliseconds (the lowest possible setting is 100; lower values in the JSON are possible, but will round up to 100 for all calculations).  That means the JSON will update every 1/2 second (look using the JSON editor to confirm), but the on screen number display will only update every second. This feature can be used with changeRoutines to automate changes very rapidly. For example, the background color of the small holder below the timer is changing to a random color every 500 milliseconds.",
     "css": "font-size: 20px",
     "width": 1200,
     "x": 275,
-    "y": 648,
-    "z": 90,
+    "y": 732,
+    "z": 95,
     "id": "tli4"
   },
   "myHolder": {
     "type": "holder",
     "id": "myHolder",
     "x": 193,
-    "y": 700,
+    "y": 784,
     "width": 40,
     "height": 40,
+    "z": 96,
+    "css": "background: rgb(255,255,255)"
+  },
+  "v3hc": {
+    "type": "timer",
+    "id": "v3hc",
+    "x": 100,
+    "y": 402,
+    "z": 13,
+    "countdown": true,
+    "start": 10000,
+    "end": 5000,
+    "milliseconds": 10000
+  },
+  "v3hcP": {
+    "parent": "v3hc",
+    "id": "v3hcP",
+    "x": 120,
+    "y": -3,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "clickRoutine": [
+      {
+        "func": "TIMER",
+        "timer": "${PROPERTY parent}"
+      }
+    ],
+    "image": "/i/button-icons/White-Play_Pause.svg",
+    "css": "background-size: 75% 75%",
+    "z": 89
+  },
+  "v3hcR": {
+    "parent": "v3hc",
+    "id": "v3hcR",
+    "x": 80,
+    "y": -3,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "clickRoutine": [
+      {
+        "func": "TIMER",
+        "timer": "${PROPERTY parent}",
+        "mode": "reset"
+      }
+    ],
+    "image": "/i/button-icons/White-Reset.svg",
+    "css": "background-size: 80% 80%",
     "z": 4
+  },
+  "dlo1": {
+    "text": "This timer is in the countdown mode, starting at 10 seconds. When it reaches the designated time of 5 seconds, the numbers will change to red to indicate the countdown is over, but the timer will still continue to count down. The 'alert' property will also be set to true. If the 'end' property was not set, then the timer would continue counting down, but would not turn red. ",
+    "css": "font-size: 20px",
+    "width": 1200,
+    "x": 271,
+    "y": 398,
+    "id": "dlo1"
   }
 }
