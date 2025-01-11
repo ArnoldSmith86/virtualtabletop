@@ -247,11 +247,15 @@ async function updateWidgetId(widget, oldID) {
 
   // If widget is a deck, update dropTarget properties on holder widgets.
   if (widget.type === 'deck') {
-    for (const w of widgetFilter(w => w.get('dropTarget') && asArray(w.get('dropTarget')).some(d => d.deck === oldID))) {
-      const dropTarget = asArray(w.get('dropTarget')).map(d =>
-        d.deck === oldID ? { ...d, deck: id } : d
-      );
-      await w.set('dropTarget', dropTarget);
+    for (const w of widgetFilter(w => w.get('dropTarget') && asArray(w.get('dropTarget')).some(d => d && d.deck === oldID))) {
+      if(Array.isArray(w.get('dropTarget'))) {
+        const dropTarget = w.get('dropTarget').map(d =>
+          d && d.deck === oldID ? { ...d, deck: id } : d
+        );
+        await w.set('dropTarget', dropTarget);
+      } else {
+        await w.set('dropTarget', { ...w.get('dropTarget'), deck: id });
+      }
     }
   }
 
