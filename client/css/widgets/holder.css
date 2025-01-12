@@ -35,4 +35,9 @@
 
 .holder.showCardBack > .card.widget > :not(.active).cardFace, .card.widget.showCardBack > :not(.active).cardFace {
   display: block;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  box-sizing: border-box;
 }
