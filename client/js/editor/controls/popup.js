@@ -213,11 +213,11 @@ async function newRoutineValue(popup) {
 }
 
 function infoButton(appendTo, infoHTML, tutorialName=null, videoFilename=null) {
-  const dom = div(appendTo, 'info-button', `<span class=material-icons>info</span>`);
+  const dom = div(appendTo, 'info-button', `<span class=material-symbols>info</span>`);
   if(tutorialName)
-    dom.innerHTML += `<span class=material-icons>school</span>`;
+    dom.innerHTML += `<span class=material-symbols>school</span>`;
   if(videoFilename)
-    dom.innerHTML += `<span class=material-icons>movie</span>`;
+    dom.innerHTML += `<span class=material-symbols>movie</span>`;
   dom.style.cursor = 'pointer';
   dom.style.color = 'gray';
   dom.style.display = 'inline-block';
