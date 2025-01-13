@@ -10,7 +10,7 @@
       "mode": "vs",
       "time": "15",
       "attribution": "<div>Card deck created by QwertyMartin and released under CC0&nbsp;<span style=\"color: var(--overlayFontColor);\">to the public domain.&nbsp;</span><span style=\"color: var(--overlayFontColor);\">Room layout and scripting by DexDouglas and released under CC0 to the public domain.</span></div><br><div>Cover image created using https://labs.google/fx/tools/image-fx with prompt: \"Two fencers, one in red with long hair, and one in blue with short hair. Swords crossed.\"</div>",
-      "lastUpdate": 1736748635965,
+      "lastUpdate": 1736778746534,
       "showName": true,
       "skill": "low",
       "description": "Escrime (French word for fencing) is a duel between two fencers. Manage your hand of cards to bait and attack your opponent when they least expect it. First to 5 points, wins.",
@@ -681,7 +681,7 @@
   },
   "30405940-6ce5-4791-b59a-4a55170b8e75": {
     "id": "30405940-6ce5-4791-b59a-4a55170b8e75",
-    "z": 21614,
+    "z": 22255,
     "type": "card",
     "deck": "bc255891-e546-449a-857a-2b1ac06992af",
     "cardType": "type-019276c7-e22b-49d5-8e82-557ad841e64d",
@@ -689,7 +689,7 @@
   },
   "140be4cd-2853-431a-92b2-1840d73ae477": {
     "id": "140be4cd-2853-431a-92b2-1840d73ae477",
-    "z": 21632,
+    "z": 22252,
     "type": "card",
     "deck": "bc255891-e546-449a-857a-2b1ac06992af",
     "cardType": "type-4e2fdcdc-e836-4a29-b42e-80028913b616",
@@ -697,7 +697,7 @@
   },
   "7fc22c09-e193-4ba6-98a4-c33b5a96fbed": {
     "id": "7fc22c09-e193-4ba6-98a4-c33b5a96fbed",
-    "z": 21628,
+    "z": 22265,
     "type": "card",
     "deck": "bc255891-e546-449a-857a-2b1ac06992af",
     "cardType": "type-5804c7cc-2739-490c-90ba-ad18540e33a5",
@@ -705,7 +705,7 @@
   },
   "de11e896-096c-4df1-ad37-2e7da9d707bf": {
     "id": "de11e896-096c-4df1-ad37-2e7da9d707bf",
-    "z": 21629,
+    "z": 22249,
     "type": "card",
     "deck": "bc255891-e546-449a-857a-2b1ac06992af",
     "cardType": "type-8d416427-0c77-4ffd-a937-f3108b69ba39",
@@ -713,7 +713,7 @@
   },
   "3e4c02ea-5bf1-4824-b542-0522d35b6fbb": {
     "id": "3e4c02ea-5bf1-4824-b542-0522d35b6fbb",
-    "z": 21631,
+    "z": 22270,
     "type": "card",
     "deck": "bc255891-e546-449a-857a-2b1ac06992af",
     "cardType": "type-8d416427-0c77-4ffd-a937-f3108b69ba39",
@@ -721,7 +721,7 @@
   },
   "c18211db-c577-4229-8d84-8fa1773a7650": {
     "id": "c18211db-c577-4229-8d84-8fa1773a7650",
-    "z": 21627,
+    "z": 22260,
     "type": "card",
     "deck": "bc255891-e546-449a-857a-2b1ac06992af",
     "cardType": "type-8d416427-0c77-4ffd-a937-f3108b69ba39",
@@ -729,7 +729,7 @@
   },
   "b6bbf100-6c82-4cca-a114-14c5451781b1": {
     "id": "b6bbf100-6c82-4cca-a114-14c5451781b1",
-    "z": 21611,
+    "z": 22247,
     "type": "card",
     "deck": "bc255891-e546-449a-857a-2b1ac06992af",
     "cardType": "type-8d416427-0c77-4ffd-a937-f3108b69ba39",
@@ -737,7 +737,7 @@
   },
   "5874d907-489f-42ec-bfcf-77ef2b7968a8": {
     "id": "5874d907-489f-42ec-bfcf-77ef2b7968a8",
-    "z": 21623,
+    "z": 22248,
     "type": "card",
     "deck": "bc255891-e546-449a-857a-2b1ac06992af",
     "cardType": "type-8d416427-0c77-4ffd-a937-f3108b69ba39",
@@ -745,7 +745,7 @@
   },
   "7f3ef169-3ed0-487f-8ad7-6fe887635469": {
     "id": "7f3ef169-3ed0-487f-8ad7-6fe887635469",
-    "z": 21630,
+    "z": 22266,
     "type": "card",
     "deck": "bc255891-e546-449a-857a-2b1ac06992af",
     "cardType": "type-6680684f-f092-4599-812f-b76fc2523fe1",
@@ -753,7 +753,7 @@
   },
   "1ead5c2c-ddc0-4d7c-a03b-c898fe47ad99": {
     "id": "1ead5c2c-ddc0-4d7c-a03b-c898fe47ad99",
-    "z": 21619,
+    "z": 22250,
     "type": "card",
     "deck": "bc255891-e546-449a-857a-2b1ac06992af",
     "cardType": "type-6680684f-f092-4599-812f-b76fc2523fe1",
@@ -761,7 +761,7 @@
   },
   "e4e4ec3b-792d-46cb-8f3f-4273b41d50d6": {
     "id": "e4e4ec3b-792d-46cb-8f3f-4273b41d50d6",
-    "z": 21622,
+    "z": 22269,
     "type": "card",
     "deck": "bc255891-e546-449a-857a-2b1ac06992af",
     "cardType": "type-6680684f-f092-4599-812f-b76fc2523fe1",
@@ -769,7 +769,7 @@
   },
   "1a2b1f54-fc93-48fe-b498-cb9da1a5a9c6": {
     "id": "1a2b1f54-fc93-48fe-b498-cb9da1a5a9c6",
-    "z": 21617,
+    "z": 22264,
     "type": "card",
     "deck": "bc255891-e546-449a-857a-2b1ac06992af",
     "cardType": "type-6680684f-f092-4599-812f-b76fc2523fe1",
@@ -777,7 +777,7 @@
   },
   "e4349902-ca85-4c10-8151-ca580f7681c5": {
     "id": "e4349902-ca85-4c10-8151-ca580f7681c5",
-    "z": 21612,
+    "z": 22251,
     "type": "card",
     "deck": "bc255891-e546-449a-857a-2b1ac06992af",
     "cardType": "type-6680684f-f092-4599-812f-b76fc2523fe1",
@@ -785,7 +785,7 @@
   },
   "1a99e696-bf33-49ca-9aa4-e0aa7bba9725": {
     "id": "1a99e696-bf33-49ca-9aa4-e0aa7bba9725",
-    "z": 21626,
+    "z": 22258,
     "type": "card",
     "deck": "bc255891-e546-449a-857a-2b1ac06992af",
     "cardType": "type-019276c7-e22b-49d5-8e82-557ad841e64d",
@@ -793,7 +793,7 @@
   },
   "8b399e62-d153-49fb-af16-b29400c83491": {
     "id": "8b399e62-d153-49fb-af16-b29400c83491",
-    "z": 21621,
+    "z": 22254,
     "type": "card",
     "deck": "bc255891-e546-449a-857a-2b1ac06992af",
     "cardType": "type-019276c7-e22b-49d5-8e82-557ad841e64d",
@@ -801,7 +801,7 @@
   },
   "2d016827-1607-4974-a9a3-40d3162a1d10": {
     "id": "2d016827-1607-4974-a9a3-40d3162a1d10",
-    "z": 21616,
+    "z": 22271,
     "type": "card",
     "deck": "bc255891-e546-449a-857a-2b1ac06992af",
     "cardType": "type-019276c7-e22b-49d5-8e82-557ad841e64d",
@@ -809,7 +809,7 @@
   },
   "f3f1d620-def1-4eea-a9b2-e969af24c85f": {
     "id": "f3f1d620-def1-4eea-a9b2-e969af24c85f",
-    "z": 21610,
+    "z": 22256,
     "type": "card",
     "deck": "bc255891-e546-449a-857a-2b1ac06992af",
     "cardType": "type-019276c7-e22b-49d5-8e82-557ad841e64d",
@@ -817,7 +817,7 @@
   },
   "ec4d3cb0-a2bf-4032-a641-6c0c998a3d68": {
     "id": "ec4d3cb0-a2bf-4032-a641-6c0c998a3d68",
-    "z": 21618,
+    "z": 22253,
     "type": "card",
     "deck": "bc255891-e546-449a-857a-2b1ac06992af",
     "cardType": "type-4e2fdcdc-e836-4a29-b42e-80028913b616",
@@ -825,7 +825,7 @@
   },
   "cb6512e6-ac8b-4bb5-a481-235566499e8a": {
     "id": "cb6512e6-ac8b-4bb5-a481-235566499e8a",
-    "z": 21615,
+    "z": 22261,
     "type": "card",
     "deck": "bc255891-e546-449a-857a-2b1ac06992af",
     "cardType": "type-4e2fdcdc-e836-4a29-b42e-80028913b616",
@@ -833,7 +833,7 @@
   },
   "da662641-b539-4e83-9996-6c644b455a6c": {
     "id": "da662641-b539-4e83-9996-6c644b455a6c",
-    "z": 21633,
+    "z": 22268,
     "type": "card",
     "deck": "bc255891-e546-449a-857a-2b1ac06992af",
     "cardType": "type-4e2fdcdc-e836-4a29-b42e-80028913b616",
@@ -841,7 +841,7 @@
   },
   "4fd4c262-3da7-47f6-9399-8054cc7346a3": {
     "id": "4fd4c262-3da7-47f6-9399-8054cc7346a3",
-    "z": 21609,
+    "z": 22257,
     "type": "card",
     "deck": "bc255891-e546-449a-857a-2b1ac06992af",
     "cardType": "type-4e2fdcdc-e836-4a29-b42e-80028913b616",
@@ -849,7 +849,7 @@
   },
   "b9fea932-3af7-4aa7-91ac-e095dbecd037": {
     "id": "b9fea932-3af7-4aa7-91ac-e095dbecd037",
-    "z": 21625,
+    "z": 22263,
     "type": "card",
     "deck": "bc255891-e546-449a-857a-2b1ac06992af",
     "cardType": "type-5804c7cc-2739-490c-90ba-ad18540e33a5",
@@ -857,7 +857,7 @@
   },
   "2fd0c91f-060e-4a58-bff7-73b81c60d785": {
     "id": "2fd0c91f-060e-4a58-bff7-73b81c60d785",
-    "z": 21613,
+    "z": 22267,
     "type": "card",
     "deck": "bc255891-e546-449a-857a-2b1ac06992af",
     "cardType": "type-5804c7cc-2739-490c-90ba-ad18540e33a5",
@@ -865,7 +865,7 @@
   },
   "71215a1a-21d1-44c4-ae31-18d147b2aba0": {
     "id": "71215a1a-21d1-44c4-ae31-18d147b2aba0",
-    "z": 21624,
+    "z": 22259,
     "type": "card",
     "deck": "bc255891-e546-449a-857a-2b1ac06992af",
     "cardType": "type-5804c7cc-2739-490c-90ba-ad18540e33a5",
@@ -873,7 +873,7 @@
   },
   "d9cae7c0-fd53-487c-9561-b67cb656a58d": {
     "id": "d9cae7c0-fd53-487c-9561-b67cb656a58d",
-    "z": 21620,
+    "z": 22262,
     "type": "card",
     "deck": "bc255891-e546-449a-857a-2b1ac06992af",
     "cardType": "type-5804c7cc-2739-490c-90ba-ad18540e33a5",
@@ -1090,7 +1090,7 @@
     "id": "redFighter",
     "deck": "0qbx",
     "cardType": "1 of plain-circle",
-    "z": 21635,
+    "z": 22272,
     "activeFace": 1,
     "x": 4,
     "y": 4,
@@ -1261,7 +1261,7 @@
     "type": "button",
     "id": "startButton",
     "x": 600,
-    "y": -179,
+    "y": 221,
     "z": 16201,
     "text": "Start game",
     "clickRoutine": [
@@ -1333,23 +1333,21 @@
       {
         "func": "TURN"
       },
-      "var buttonY = ${PROPERTY y OF startButton} - 400",
       {
         "func": "SET",
         "collection": [
           "startButton"
         ],
-        "property": "y",
-        "value": "${buttonY}"
+        "property": "display",
+        "value": false
       },
-      "var buttonY = ${PROPERTY y OF Reset} + 400",
       {
         "func": "SET",
         "collection": [
           "Reset"
         ],
-        "property": "y",
-        "value": "${buttonY}"
+        "property": "display",
+        "value": true
       }
     ],
     "width": 121,
@@ -1447,7 +1445,7 @@
     "id": "blueFighter",
     "deck": "coul",
     "cardType": "1 of plain-circle",
-    "z": 21637,
+    "z": 22273,
     "css": {
       "transform": "scaleX(-1)"
     },
@@ -1498,28 +1496,27 @@
         "func": "MOVE",
         "to": "space23"
       },
-      "var buttonY = ${PROPERTY y OF startButton} + 400",
       {
         "func": "SET",
         "collection": [
           "startButton"
         ],
-        "property": "y",
-        "value": "${buttonY}"
+        "property": "display",
+        "value": true
       },
-      "var buttonY = ${PROPERTY y OF Reset} - 400",
       {
         "func": "SET",
         "collection": [
           "Reset"
         ],
-        "property": "y",
-        "value": "${buttonY}"
+        "property": "display",
+        "value": false
       }
     ],
     "width": 60,
     "height": 60,
-    "y": 10
+    "y": 10,
+    "display": false
   },
   "tempHolder": {
     "type": "holder",
@@ -1578,13 +1575,15 @@
     "id": "actionsInfo",
     "x": 5,
     "width": 570,
-    "height": 255,
+    "height": 245,
     "z": 446,
     "movable": false,
     "css": {
       "default": {
         "font-size": "18px",
-        "border": "1px solid black"
+        "border-left": "1px solid black",
+        "border-right": "1px solid black",
+        "border-bottom": "1px solid black"
       },
       " h2": {
         "font-weight": "Bold",
@@ -1592,8 +1591,9 @@
         "font-size": "22px",
         "line-height": "1.1em",
         "border-bottom": "1px solid black",
+        "border-top": "1px solid black",
         "padding": "0 0 0 0",
-        "margin": "5px 0 5px 0"
+        "margin": "0px 0 5px 0"
       },
       " h3": {
         "font-style": "italic",
@@ -1617,7 +1617,7 @@
         "margin": "0 0 0 5px"
       }
     },
-    "html": "<h2>Actions</h2><h3>Choose one and draw:</h3><ul><li>Play one card to move forward or backward</li><li>Play one, or more, cards to attack</li><li>Play one card to move forward, and then play one or more cards to attack</li></ul><h2>Rections</h2><h3>Choose one:</h3><ul><li>Play one, or more, cards to block and then take your turn. Do not draw until your turn is over.</li><li>Play one card to retreat (move backward). Your turn is over. Draw up to 5 cards.</li></ul>",
+    "html": "<h2>Actions</h2><h3>Choose one and draw:</h3><ul><li>Play one card to move forward or backward</li><li>Play one, or more, cards to attack</li><li>Play one card to move forward, and then play one or more cards to attack</li></ul><h2>Reactions</h2><h3>Choose one:</h3><ul><li>Play one, or more, cards to block and then take your turn. Do not draw until your turn is over.</li><li>Play one card to retreat (move backward). Your turn is over. Draw up to 5 cards.</li></ul>",
     "y": 5
   },
   "endRoundInfo": {
@@ -1663,6 +1663,7 @@
         "margin": "0 0 0 5px"
       }
     },
-    "html": "<h2>End of Round</h2><h3>Point scored if any of these occur</h3><ul><li>If you directly attack and opponent has no way to block</li><li>If your opponent has to move off the track</li><li>If the deck runs out, check the following</li><ul><li>Reveal all cards in hand. The player who has more cards for a direct attack, wins.</li><li>If still tied, the winner is who has advanced farthest from their home space.</li><li>If still tied, the round is a draw.</li></ul></ul>"
+    "html": "<h2>End of Round</h2><h3>Point scored if any of these occur</h3><ul><li>If you directly attack and opponent has no way to block</li><li>If your opponent has to move off the track</li><li>If the deck runs out, check the following</li><ul><li>Reveal all cards in hand. The player who has more cards for a direct attack, wins.</li><li>If still tied, the winner is who has advanced farthest from their home space.</li><li>If still tied, the round is a draw.</li></ul></ul>",
+    "movable": false
   }
 }
