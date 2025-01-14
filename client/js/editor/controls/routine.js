@@ -104,7 +104,7 @@ class RoutineOperationEditor {
     dom.innerHTML = this.operation.func || this.operation;
     if(this.operation.func == 'MOVE') {
       const template = '➡️ MOVE {count:number} widgets from {from:string} to {to:string}';
-      dom.innerHTML = template.replace(/\{([a-zA-Z]+):([a-zA-Z]+)\}/g, (match , p1, p2)=>`<span class="routine-editor-operation-parameter">${this.operation[p1]}</span>`);
+      dom.innerHTML = template.replace(/\{([a-zA-Z]+):([a-zA-Z]+)\}/g, (match , p1, p2)=>`<span class="routine-editor-operation-parameter">${String(this.operation[p1]) || '?'}</span>`);
       $a('span', dom)[0].addEventListener('click', async _=>{
         const value = await newRoutineValue(new RoutineNumberPopup($('span', dom), this.operation.func, 'count', this.widget, this.variables, this.collections, { specialValues: [ 'all' ] }));
         this.operation.count = value;
