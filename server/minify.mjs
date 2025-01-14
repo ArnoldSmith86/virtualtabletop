@@ -125,6 +125,7 @@ export default async function minifyHTML() {
     'client/js/editor/sidebar/toolbox.js',
     'client/js/editor/controls/routine.js',
     'client/js/editor/controls/popup.js',
+    'client/js/editor/controls/widgetselection.js',    
     
     'client/js/editmode.js',
     'client/js/jsonedit.js',

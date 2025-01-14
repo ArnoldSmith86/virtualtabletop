@@ -105,12 +105,23 @@ class RoutineOperationEditor {
     if(this.operation.func == 'MOVE') {
       const template = '➡️ MOVE {count:number} widgets from {from:string} to {to:string}';
       dom.innerHTML = template.replace(/\{([a-zA-Z]+):([a-zA-Z]+)\}/g, (match , p1, p2)=>`<span class="routine-editor-operation-parameter">${this.operation[p1]}</span>`);
-      $('span', dom).addEventListener('click', async _=>{
+      $a('span', dom)[0].addEventListener('click', async _=>{
         const value = await newRoutineValue(new RoutineNumberPopup($('span', dom), this.operation.func, 'count', this.widget, this.variables, this.collections, { specialValues: [ 'all' ] }));
         this.operation.count = value;
         this.notifyChangeListeners(this.operation);
       });
-      $('span', dom).style.cursor = 'pointer';
+      $a('span', dom)[1].addEventListener('click', async _=>{
+        const value = await newRoutineValue(new RoutineWidgetIDPopup($a('span', dom)[1], this.operation.func, 'from', this.widget, this.variables, this.collections));
+        this.operation.from = value;
+        this.notifyChangeListeners(this.operation);
+      });
+      $a('span', dom)[2].addEventListener('click', async _=>{
+        const value = await newRoutineValue(new RoutineWidgetIDPopup($a('span', dom)[2], this.operation.func, 'to', this.widget, this.variables, this.collections));
+        this.operation.to = value;
+        this.notifyChangeListeners(this.operation);
+      });
+
+      $a('span', dom).forEach(span=>span.style.cursor = 'pointer');
     }
     for(const [key, value] of Object.entries(this.operation)) {
       if(key.match(/Routine$/)) {

@@ -195,11 +195,30 @@ class RoutineNumberPopup extends RoutinePopup {
   }
 }
 
+class RoutineWidgetIDPopup extends RoutinePopup {
+  constructor(source, operationName, parameterNames, widget, variables, collections, options) {
+    super(source, operationName, parameterNames, widget, variables, collections);
+    this.options = options;
+  }
+
+  show() {
+    super.show(false, false);
+    const [ title, content ] = this.addAccordionSection('Holders')
+    this.holderSelection = new WidgetSelection([], widgets=>{
+      this.notifyChangeListeners(widgets.map(w=>w.id));
+      this.moveIntoView();
+    });
+    this.holderSelection.render();
+    content.appendChild(this.holderSelection.domElement);
+  }
+}
+
 function button(appendTo, text, onClick) {
   const button = document.createElement('button');
   button.textContent = text;
   button.addEventListener('click', onClick);
   appendTo.append(button);
+  return button;
 }
 
 async function newRoutineValue(popup) {
