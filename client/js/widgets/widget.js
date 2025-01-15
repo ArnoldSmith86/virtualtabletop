@@ -90,7 +90,8 @@ export class Widget extends StateManaged {
       gameStartRoutine: null,
       hotkey: null,
 
-      animatePropertyChange: []
+      animatePropertyChange: [],
+      resetProperties: {},
     });
     this.domElement.timer = false
 
@@ -1617,6 +1618,24 @@ export class Widget extends StateManaged {
           if(jeRoutineLogging) {
             jeLoggingRoutineOperationSummary(`'${a.holder}' ${a.owned ? ' (including hands)' : ''}`);
           }
+        }
+      }
+
+      if (a.func == 'RESET') {
+        setDefaults(a, { property: 'resetProperties' });
+      
+        const widgetsToReset = Array.from(widgets.values()).filter(widget => {
+          const propertyValue = widget.get(a.property) ?? {};
+          return Object.keys(propertyValue).length > 0;
+        });
+        for (const widget of widgetsToReset) {
+          const propertyValue = widget.get(a.property) ?? {};
+          for (const [key, value] of Object.entries(propertyValue)) {
+            await widget.set(key, value);
+          }
+        }      
+        if (jeRoutineLogging) {
+          jeLoggingRoutineOperationSummary(`Reset properties for widgets with property '${a.property}'`);
         }
       }
 
