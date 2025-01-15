@@ -1622,18 +1622,10 @@ export class Widget extends StateManaged {
       }
 
       if (a.func == 'RESET') {
-        setDefaults(a, { property: 'resetProperties' });
-      
-        const widgetsToReset = Array.from(widgets.values()).filter(widget => {
-          const propertyValue = widget.get(a.property) ?? {};
-          return Object.keys(propertyValue).length > 0;
-        });
-        for (const widget of widgetsToReset) {
-          const propertyValue = widget.get(a.property) ?? {};
-          for (const [key, value] of Object.entries(propertyValue)) {
+        setDefaults(a, { property: 'resetProperties' });      
+        for(const widget of widgets.values())
+          for(const [ key, value ] of Object.entries(widget.get(a.property) ?? {}))
             await widget.set(key, value);
-          }
-        }      
         if (jeRoutineLogging) {
           jeLoggingRoutineOperationSummary(`Reset properties for widgets with property '${a.property}'`);
         }
