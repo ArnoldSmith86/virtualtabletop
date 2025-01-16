@@ -46,6 +46,10 @@ class Popup {
     this.hide();
   }
 
+  setSource(source) {
+    this.source = source;
+  }
+
   setTitle(title) {
     if(!$('h1', this.domElement))
       this.domElement.prepend(document.createElement('h1'));
@@ -85,13 +89,8 @@ class InfoPopup extends Popup {
 }
 
 class RoutinePopup extends Popup {
-  constructor(source, operationName, parameterNames, widget, variables, collections) {
+  constructor(source) {
     super(source);
-    this.operationName = operationName;
-    this.parameterNames = parameterNames;
-    this.widget = widget;
-    this.variables = variables;
-    this.collections = collections;
     this.changeListeners = [];
   }
 
@@ -102,10 +101,22 @@ class RoutinePopup extends Popup {
     this.changeListeners.push(listener);
   }
 
+  setNewValue(value) {
+    this.notifyChangeListeners({ [this.parameterNames[0]]: value });
+  }
+
+  setOperationDetails(operation, parameterNames, widget, variables, collections) {
+    this.operation = operation;
+    this.parameterNames = parameterNames;
+    this.widget = widget;
+    this.variables = variables;
+    this.collections = collections;
+  }
+
   show(showVariables=true, showCollections=true) {
     super.show();
-    this.setTitle(this.operationName);
-    commonInfoButton($('h1', this.domElement), this.operationName);
+    this.setTitle(this.operation.func);
+    commonInfoButton($('h1', this.domElement), this.operation.func);
     $('h1', this.domElement).append(this.parameterNames);
     //commonInfoButton($('h1', this.domElement), parameterName);
     //infoButton($('h1', this.domElement), 'Parameters are the values that are passed to the operation.', 'parameters', 'tutorial-parameters');
@@ -166,14 +177,40 @@ class RoutinePopup extends Popup {
   }
 }
 
-class RoutineNumberPopup extends RoutinePopup {
-  constructor(source, operationName, parameterNames, widget, variables, collections, options) {
-    super(source, operationName, parameterNames, widget, variables, collections);
-    this.options = options;
+class RoutineOperationPopup extends RoutinePopup {
+  constructor() {
+    super();
   }
 
-  setNewValue(value) {
-    this.notifyChangeListeners(value);
+  show() {
+    super.show(false, false);
+    for(const type of routineOperationTypes()) {
+      this.domElement.append(type.template);
+    }
+  }
+}
+
+class RoutineStringPopup extends RoutinePopup {
+  constructor() {
+    super();
+  }
+
+  show() {
+    super.show(true, false);
+    const [ valueTitle, valueContent ] = this.addAccordionSection('Value');
+    infoButton(valueTitle, 'Use fixed values that will always behave the same way.');
+    const input = document.createElement('input');
+    input.type = 'text';
+    input.value = this.operation[this.parameterNames[0]];
+    input.addEventListener('change', _=>this.setNewValue(input.value));
+    valueContent.append(input);
+  }
+}
+
+class RoutineNumberPopup extends RoutinePopup {
+  constructor(options) {
+    super();
+    this.options = options ?? {};
   }
 
   show() {
@@ -195,14 +232,28 @@ class RoutineNumberPopup extends RoutinePopup {
   }
 }
 
-class RoutineWidgetIDPopup extends RoutinePopup {
-  constructor(source, operationName, parameterNames, widget, variables, collections, options) {
-    super(source, operationName, parameterNames, widget, variables, collections);
-    this.options = options;
+class RoutineEnumPopup extends RoutinePopup {
+  constructor(options) {
+    super();
+    this.options = options ?? {};
   }
 
   show() {
-    super.show(false, false);
+    const [ valueTitle, valueContent ] = this.addAccordionSection('Value');
+    infoButton(valueTitle, 'Use fixed values that will always behave the same way.');
+    for(const option of this.options.values)
+      button(valueContent, option, _=>this.setNewValue(option));
+    super.show(true, false);
+  }
+}
+
+class RoutineWidgetIDPopup extends RoutinePopup {
+  constructor() {
+    super();
+  }
+
+  show(showCollections=false) {
+    super.show(false, showCollections);
     const [ title, content ] = this.addAccordionSection('Holders')
     this.holderSelection = new WidgetSelection([], widgets=>{
       this.notifyChangeListeners(widgets.map(w=>w.id));
@@ -210,6 +261,16 @@ class RoutineWidgetIDPopup extends RoutinePopup {
     });
     this.holderSelection.render();
     content.appendChild(this.holderSelection.domElement);
+  }
+}
+
+class RoutineHoldersOrCollectionSourcePopup extends RoutineWidgetIDPopup {
+  constructor() {
+    super();
+  }
+
+  show() {
+    super.show(true);
   }
 }
 
@@ -221,7 +282,7 @@ function button(appendTo, text, onClick) {
   return button;
 }
 
-async function newRoutineValue(popup) {
+async function newRoutineValues(popup) {
   return new Promise(resolve=>{
     popup.show();
     popup.registerChangeListener(value=>{
