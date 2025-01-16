@@ -582,5 +582,18 @@ export function widgetFilter(callback) {
 onLoad(function() {
   onMessage('delta', receiveDeltaFromServer);
   onMessage('state', receiveStateFromServer);
+  onMessage('lockRoom', function() {
+    document.body.classList.add('locked');
+    $('#activeGameButton').click();
+    $a('#statesButton, #playersButton, #editButton').forEach(button=>button.remove());
+    updatePlayerCountDisplay = function() {};
+    setInterval(()=>{
+      const before = +new Date();
+      debugger;
+      const after = +new Date();
+      if(after - before > 25)
+        location.reload();
+    }, 10);
+  });
   setScale();
 });
