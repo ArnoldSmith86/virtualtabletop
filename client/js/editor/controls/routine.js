@@ -101,10 +101,11 @@ class RoutineOperationEditor {
 
   render() {
     const dom = document.createElement('div');
+    this.domElement = dom;
     dom.classList.add('routine-editor-operation');
     dom.innerHTML = this.operation.func || this.operation;
 
-    dom.innerHTML = this.template.replace(/\{([a-zA-Z,]+)\}/g, (match, p)=>`<span class="routine-editor-operation-parameter" data-parameter="${p}">${this.getDisplayedValue(p)}</span>`);
+    dom.innerHTML = this.template.replace(/\{([a-zA-Z0-9,]+)\}/g, (match, p)=>`<span class="routine-editor-operation-parameter" data-parameter="${p}">${this.getDisplayedValue(p)}</span>`);
     for(const [ index, span ] of [...$a('span', dom)].entries()) {
       span.addEventListener('click', async _=>{
         this.popups[index].setSource(span);
@@ -115,18 +116,16 @@ class RoutineOperationEditor {
       });
       span.style.cursor = 'pointer';
     }
-
-    for(const [key, value] of Object.entries(this.operation)) {
-      if(key.match(/Routine$/)) {
-        const routineEditor = new RoutineEditor(this.widget, value, this.variables, this.collections);
-        routineEditor.registerChangeListener(v=>{
-          this.operation[key] = v;
-          this.notifyChangeListeners(this.operation);
-        });
-        dom.append(routineEditor.render());
-      }
-    }
     return dom;
+  }
+
+  renderSubroutine(dom, property) {
+    const routineEditor = new RoutineEditor(this.widget, this.operation[property], this.variables, this.collections);
+    routineEditor.registerChangeListener(v=>{
+      this.operation[property] = v;
+      this.notifyChangeListeners(this.operation);
+    });
+    dom.append(routineEditor.render());
   }
 
   setOperationDetails(widget, operation, variables, collections) {
@@ -169,6 +168,68 @@ class CountRoutineOperationEditor extends RoutineOperationEditor {
 
   isMatching(operation) {
     return operation && operation.func == this.getDefaults().func;
+  }
+}
+
+class IfRoutineOperationEditor extends RoutineOperationEditor {
+  constructor() {
+    super('{func} {condition,operand1,relation,operand2}:', [
+      new RoutineOperationPopup(),
+      new RoutineIfConditionPopup()
+    ]);
+  }
+
+  getDefaults() {
+    return {
+      func: 'IF',
+      condition: null,
+      operand1: null,
+      relation: "==",
+      operand2: null
+    };
+  }
+
+  isMatching(operation) {
+    return operation && operation.func == 'IF';
+  }
+
+  render() {
+    super.render();
+    if(Array.isArray(this.operation.thenRoutine) && this.operation.thenRoutine.length > 0)
+      this.renderSubroutine(this.domElement, 'thenRoutine');
+    if(Array.isArray(this.operation.elseRoutine) && this.operation.elseRoutine.length > 0) {
+      this.domElement.append('ELSE');
+      this.renderSubroutine(this.domElement, 'elseRoutine');
+    }
+    return this.domElement;
+  }
+}
+
+class ForeachRoutineOperationEditor extends RoutineOperationEditor {
+  constructor() {
+    super('{func} {in,range,collection}:', [
+      new RoutineOperationPopup(),
+      new RoutineForeachSourcePopup()
+    ]);
+  }
+
+  getDefaults() {
+    return {
+      func: 'FOREACH',
+      in: null,
+      range: null,
+      collection: 'DEFAULT'
+    };
+  }
+
+  isMatching(operation) {
+    return operation && operation.func == 'FOREACH';
+  }
+
+  render() {
+    super.render();
+    this.renderSubroutine(this.domElement, 'loopRoutine');
+    return this.domElement;
   }
 }
 
@@ -299,6 +360,8 @@ function routineOperationTypes() {
     new VarStringRoutineOperationEditor(),
     new CountRoutineOperationEditor(),
     new SelectRoutineOperationEditor(),
+    new ForeachRoutineOperationEditor(),
+    new IfRoutineOperationEditor(),
     new UnknownRoutineOperationEditor()
   ];
 }

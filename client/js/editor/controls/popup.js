@@ -274,6 +274,26 @@ class RoutineHoldersOrCollectionSourcePopup extends RoutineWidgetIDPopup {
   }
 }
 
+class RoutineIfConditionPopup extends RoutinePopup {
+  constructor() {
+    super();
+  }
+
+  show() {
+    super.show(true);
+  }
+}
+
+class RoutineForeachSourcePopup extends RoutinePopup {
+  constructor() {
+    super();
+  }
+
+  show() {
+    super.show(true);
+  }
+}
+
 function button(appendTo, text, onClick) {
   const button = document.createElement('button');
   button.textContent = text;
