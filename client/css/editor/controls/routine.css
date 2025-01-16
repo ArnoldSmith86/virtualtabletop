@@ -1,0 +1,11 @@
+.routine-editor {
+  padding-left: 10px;
+}
+.routine-editor-operation {
+  padding-left: 10px;
+}
+
+.routine-editor-operation-parameter {
+  color: #88f;
+  font-weight: bold;
+}
