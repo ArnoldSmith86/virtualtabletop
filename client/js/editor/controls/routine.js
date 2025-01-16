@@ -281,7 +281,7 @@ class MoveRoutineOperationEditor extends RoutineOperationEditor {
 
 class SelectRoutineOperationEditor extends RoutineOperationEditor {
   constructor() {
-    super('{func} {max} {type} from {source} having {property} {relation} {value}, {mode} {collection}', [
+    super('{func} {max} {type} from {source} having {property} {relation} {value} and {mode} {collection}', [
       new RoutineOperationPopup(),
       new RoutineNumberPopup({ specialValues: [ 'all' ] }),
       new RoutineEnumPopup({ values: [ 'all', 'button', 'canvas', 'card', 'deck', 'dice', 'holder', 'label', 'pile', 'scoreboard', 'seat', 'spinner', 'timer' ] }),
@@ -317,7 +317,7 @@ class SelectRoutineOperationEditor extends RoutineOperationEditor {
       max: { '999999': 'all' },
       source: { 'all': 'all widgets' },
       type: { 'all': 'widgets', 'button': 'buttons', 'canvas': 'canvases', 'card': 'cards', 'deck': 'decks', 'dice': 'dice', 'holder': 'holders', 'label': 'labels', 'pile': 'piles', 'scoreboard': 'scoreboards', 'seat': 'seats', 'spinner': 'spinners', 'timer': 'timers' },
-      mode: { 'set': 'set as', 'add': 'add to', 'remove': 'remove from', 'intersect': 'intersect with' }
+      mode: { 'set': 'store in', 'add': 'add to', 'remove': 'remove from', 'intersect': 'intersect with' }
     };
   }
 
