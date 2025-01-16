@@ -170,7 +170,18 @@ class RoutinePopup extends Popup {
         </pre>
       `);
       for(const collection of this.collections.sort())
-        button(collectionsContent, collection, _=>this.setNewValue(`\$\{${collection}\}`));
+        button(collectionsContent, collection, _=>this.setNewValue(collection));
+
+      const [ predefinedCollectionsTitle, predefinedCollectionsContent ] = this.addAccordionSection('Predefined Collections');
+      infoButton(predefinedCollectionsTitle, `
+        <pre>
+        playerSeats - the collection of all seats occupied by the player
+        activeSeats - the collection of all seats with an active player
+        thisButton - the widget that contains the routine (not necessarily a button)
+        </pre>
+      `);
+      for(const collection of ['playerSeats', 'activeSeats', 'thisButton'])
+        button(predefinedCollectionsContent, collection, _=>this.setNewValue(collection));
     }
 
     this.moveIntoView();
