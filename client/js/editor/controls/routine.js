@@ -77,21 +77,33 @@ class RoutineOperationEditor {
   getDisplayedValue(property) {
     if(property.match(/,/)) {
       for(const p of property.split(',')) {
-        if(typeof this.operation[p] != 'undefined' || this.getDefaults()[p] !== null)
+        if(this.operation && typeof this.operation[p] != 'undefined' || this.getDefaults()[p] !== null)
           return this.getDisplayedValue(p);
       }
       return '?';
     }
 
-    const value = this.operation[property] ?? this.getDefaults()[property];
+    const value = this.operation && typeof this.operation[property] != 'undefined' ? this.operation[property] : this.getDefaults()[property];
     if(this.getDisplayMap()[property])
       return this.getDisplayMap()[property][value] ?? value;
     return value;
   }
 
+  getExampleWithDefaults() {
+    return this.template.replace(/\{([a-zA-Z0-9,]+)\}/g, (_, p)=>this.getDisplayedValue(p));
+  }
+
   notifyChangeListeners(value) {
-    for(const listener of this.changeListeners) {
+    for(const listener of this.changeListeners)
       listener(value);
+  }
+
+  onNewValue(values) {
+    if(typeof values == 'string') {
+      this.notifyChangeListeners(values);
+    } else {
+      Object.assign(this.operation, values);
+      this.notifyChangeListeners(JSON.parse(JSON.stringify(this.operation)));
     }
   }
 
@@ -105,14 +117,12 @@ class RoutineOperationEditor {
     dom.classList.add('routine-editor-operation');
     dom.innerHTML = this.operation.func || this.operation;
 
-    dom.innerHTML = this.template.replace(/\{([a-zA-Z0-9,]+)\}/g, (match, p)=>`<span class="routine-editor-operation-parameter" data-parameter="${p}">${this.getDisplayedValue(p)}</span>`);
+    dom.innerHTML = this.template.replace(/\{([a-zA-Z0-9,]+)\}/g, (_, p)=>`<span class="routine-editor-operation-parameter" data-parameter="${p}">${this.getDisplayedValue(p)}</span>`);
     for(const [ index, span ] of [...$a('span', dom)].entries()) {
       span.addEventListener('click', async _=>{
         this.popups[index].setSource(span);
         this.popups[index].setOperationDetails(this.operation, span.dataset.parameter.split(','), this.widget, this.variables, this.collections);
-        const newValues = await newRoutineValues(this.popups[index]);
-        Object.assign(this.operation, newValues);
-        this.notifyChangeListeners(this.operation);
+        this.onNewValue(await newRoutineValues(this.popups[index]));
       });
       span.style.cursor = 'pointer';
     }
@@ -228,7 +238,8 @@ class ForeachRoutineOperationEditor extends RoutineOperationEditor {
 
   render() {
     super.render();
-    this.renderSubroutine(this.domElement, 'loopRoutine');
+    if(Array.isArray(this.operation.loopRoutine) && this.operation.loopRoutine.length > 0)
+      this.renderSubroutine(this.domElement, 'loopRoutine');
     return this.domElement;
   }
 }
@@ -240,7 +251,7 @@ class MoveRoutineOperationEditor extends RoutineOperationEditor {
       new RoutineNumberPopup({ specialValues: [ 'all' ] }),
       new RoutineHoldersOrCollectionSourcePopup(),
       new RoutineHoldersOrCollectionSourcePopup(),
-      new RoutineNumberPopup()
+      new RoutineNumberPopup({ specialValues: [ null ] })
     ]);
   }
 
@@ -258,7 +269,8 @@ class MoveRoutineOperationEditor extends RoutineOperationEditor {
 
   getDisplayMap() {
     return {
-      to: { 'null': '?' }
+      to: { 'null': '?' },
+      face: { 'null': 'unchanged' }
     };
   }
 
@@ -328,9 +340,9 @@ class VarStringRoutineOperationEditor extends RoutineOperationEditor {
 
   getDisplayedValue(property) {
     if(property == 'variable')
-      return this.operation.replace(/^var ([^ ]+) .*$/, '$1');
+      return this.operation ? this.operation.replace(/^var ([^ ]+) .*$/, '$1') : 'variable';
     if(property == 'expression')
-      return this.operation.replace(/^.* = (.*)$/, '$1');
+      return this.operation ? this.operation.replace(/^.* = (.*)$/, '$1') : 'expression';
   }
 
   isMatching(operation) {

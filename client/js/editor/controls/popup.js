@@ -117,7 +117,7 @@ class RoutinePopup extends Popup {
     super.show();
     this.setTitle(this.operation.func);
     commonInfoButton($('h1', this.domElement), this.operation.func);
-    $('h1', this.domElement).append(this.parameterNames);
+    $('h1', this.domElement).append(' - ' + this.parameterNames.join(', '));
     //commonInfoButton($('h1', this.domElement), parameterName);
     //infoButton($('h1', this.domElement), 'Parameters are the values that are passed to the operation.', 'parameters', 'tutorial-parameters');
 
@@ -182,10 +182,25 @@ class RoutineOperationPopup extends RoutinePopup {
     super();
   }
 
+  setNewValue(value) {
+    if(value) {
+      const newValue = {};
+      for(const key in this.operation)
+        newValue[key] = undefined;
+      newValue.func = value;
+      this.notifyChangeListeners(newValue);
+    } else {
+      this.notifyChangeListeners("var variable = 1");
+    }
+  }
+
   show() {
     super.show(false, false);
     for(const type of routineOperationTypes()) {
-      this.domElement.append(type.template);
+      if(type.constructor.name != 'UnknownRoutineOperationEditor') {
+        button(this.domElement, type.getExampleWithDefaults(), _=>this.setNewValue(type.getDefaults().func));
+        this.domElement.append(document.createElement('br'));
+      }
     }
   }
 }
