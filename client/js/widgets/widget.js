@@ -295,9 +295,19 @@ export class Widget extends StateManaged {
   }
 
   applyInheritedValuesToObject(inheritDefinition, sourceDelta, targetDelta, targetWidget) {
-    for(const key in sourceDelta)
-      if(this.inheritFromIsValid(inheritDefinition, key) && targetWidget.state[key] === undefined)
+    for (const key in sourceDelta) {
+      if (typeof inheritDefinition === 'object' && !Array.isArray(inheritDefinition)) {
+        // Handle complex object mapping
+        for (const [sourceProp, targetProp] of Object.entries(inheritDefinition)) {
+          const sourceValue = this.getNestedValue(sourceDelta, sourceProp);
+            if (sourceValue !== undefined && targetWidget.state[targetProp] === undefined) {
+              targetDelta[targetProp] = JSON.stringify(sourceValue) === JSON.stringify(this.defaults[sourceProp]) ? null : sourceValue;
+            }
+        }
+      } else if (this.inheritFromIsValid(inheritDefinition, key) && targetWidget.state[key] === undefined) {
         targetDelta[key] = JSON.stringify(sourceDelta[key]) === JSON.stringify(this.defaults[key]) ? null : sourceDelta[key];
+      }
+    }
   }
 
   applyInheritedValuesToDOM(inheritFrom, pushasArray) {
