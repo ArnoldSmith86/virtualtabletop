@@ -10,7 +10,7 @@
       "mode": "Tutorial",
       "time": "",
       "attribution": "",
-      "lastUpdate": 1729453177504,
+      "lastUpdate": 1737074336659,
       "showName": false,
       "skill": "",
       "description": "",
@@ -47,7 +47,7 @@
     "css": {
       "font-size": "19px"
     },
-    "text": "This is a Material icon an a basic widget.",
+    "text": "This is a Material Symbol an a basic widget.",
     "x": 323
   },
   "notes3": {
@@ -313,6 +313,6 @@
       "font-size": "25px",
       "color": "black"
     },
-    "text": "Several widget types have an 'icon' property: buttons, dice, and basic widgets. Card faceTemplate objects also accept a type 'icon'. Icons (other than for cards) can be selected by using the blue and white buttons in the JSON Editor to either choose from an included VTT icon or to upload a custom image. The VTT icon sets include icons custom made for VTT, icons from the game-icons.net website, Google Material icons, and emojis. "
+    "text": "Several widget types have an 'icon' property: buttons, dice, and basic widgets. Card faceTemplate objects also accept a type 'icon'. Icons (other than for cards) can be selected by using the blue and white buttons in the JSON Editor to either choose from an included VTT icon or to upload a custom image. The VTT icon sets include icons custom made for VTT, icons from the game-icons.net website, Google Material Symbols, and emojis. "
   }
 }
