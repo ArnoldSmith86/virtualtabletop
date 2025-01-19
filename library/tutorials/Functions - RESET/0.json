@@ -1,0 +1,1103 @@
+{
+  "_meta": {
+    "version": 17,
+    "info": {
+      "name": "Functions - RESET",
+      "image": "/assets/1042468064_1967",
+      "rules": "",
+      "bgg": "",
+      "year": "",
+      "mode": "Tutorial",
+      "time": "0",
+      "attribution": "",
+      "lastUpdate": 1737065890550,
+      "showName": false,
+      "skill": "",
+      "description": "",
+      "similarImage": "",
+      "similarName": "",
+      "similarDesigner": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": "",
+      "variantImage": "",
+      "variant": "",
+      "language": "en-US",
+      "players": "1"
+    }
+  },
+  "fzoqD": {
+    "type": "deck",
+    "id": "fzoqD",
+    "x": 12,
+    "y": 41,
+    "cardTypes": {
+      "T 1J": {
+        "image": "/i/cards-default/1J.svg",
+        "suit": "T",
+        "suitColor": "🃏",
+        "suitAlt": "5J",
+        "rank": "J1",
+        "rankA": "J1",
+        "rankFixed": "J1 T"
+      },
+      "T 2J": {
+        "image": "/i/cards-default/2J.svg",
+        "suit": "T",
+        "suitColor": "🃏",
+        "suitAlt": "5J",
+        "rank": "J2",
+        "rankA": "J2",
+        "rankFixed": "J2 T"
+      },
+      "C 01": {
+        "image": "/i/cards-default/AC.svg",
+        "suit": "C",
+        "suitColor": "♣",
+        "suitAlt": "1♣",
+        "rank": "01",
+        "rankA": "5A",
+        "rankFixed": "01 C"
+      },
+      "C 02": {
+        "image": "/i/cards-default/2C.svg",
+        "suit": "C",
+        "suitColor": "♣",
+        "suitAlt": "1♣",
+        "rank": "02",
+        "rankA": "02",
+        "rankFixed": "02 C"
+      },
+      "C 03": {
+        "image": "/i/cards-default/3C.svg",
+        "suit": "C",
+        "suitColor": "♣",
+        "suitAlt": "1♣",
+        "rank": "03",
+        "rankA": "03",
+        "rankFixed": "03 C"
+      },
+      "C 04": {
+        "image": "/i/cards-default/4C.svg",
+        "suit": "C",
+        "suitColor": "♣",
+        "suitAlt": "1♣",
+        "rank": "04",
+        "rankA": "04",
+        "rankFixed": "04 C"
+      },
+      "C 05": {
+        "image": "/i/cards-default/5C.svg",
+        "suit": "C",
+        "suitColor": "♣",
+        "suitAlt": "1♣",
+        "rank": "05",
+        "rankA": "05",
+        "rankFixed": "05 C"
+      },
+      "C 06": {
+        "image": "/i/cards-default/6C.svg",
+        "suit": "C",
+        "suitColor": "♣",
+        "suitAlt": "1♣",
+        "rank": "06",
+        "rankA": "06",
+        "rankFixed": "06 C"
+      },
+      "C 07": {
+        "image": "/i/cards-default/7C.svg",
+        "suit": "C",
+        "suitColor": "♣",
+        "suitAlt": "1♣",
+        "rank": "07",
+        "rankA": "07",
+        "rankFixed": "07 C"
+      },
+      "C 08": {
+        "image": "/i/cards-default/8C.svg",
+        "suit": "C",
+        "suitColor": "♣",
+        "suitAlt": "1♣",
+        "rank": "08",
+        "rankA": "08",
+        "rankFixed": "08 C"
+      },
+      "C 09": {
+        "image": "/i/cards-default/9C.svg",
+        "suit": "C",
+        "suitColor": "♣",
+        "suitAlt": "1♣",
+        "rank": "09",
+        "rankA": "09",
+        "rankFixed": "09 C"
+      },
+      "C 10": {
+        "image": "/i/cards-default/TC.svg",
+        "suit": "C",
+        "suitColor": "♣",
+        "suitAlt": "1♣",
+        "rank": "10",
+        "rankA": "10",
+        "rankFixed": "10 C"
+      },
+      "C 2J": {
+        "image": "/i/cards-default/JC.svg",
+        "suit": "C",
+        "suitColor": "♣",
+        "suitAlt": "1♣",
+        "rank": "2J",
+        "rankA": "2J",
+        "rankFixed": "2J C"
+      },
+      "C 3Q": {
+        "image": "/i/cards-default/QC.svg",
+        "suit": "C",
+        "suitColor": "♣",
+        "suitAlt": "1♣",
+        "rank": "3Q",
+        "rankA": "3Q",
+        "rankFixed": "3Q C"
+      },
+      "C 4K": {
+        "image": "/i/cards-default/KC.svg",
+        "suit": "C",
+        "suitColor": "♣",
+        "suitAlt": "1♣",
+        "rank": "4K",
+        "rankA": "4K",
+        "rankFixed": "4K C"
+      },
+      "D 01": {
+        "image": "/i/cards-default/AD.svg",
+        "suit": "D",
+        "suitColor": "♦",
+        "suitAlt": "4♦",
+        "rank": "01",
+        "rankA": "5A",
+        "rankFixed": "01 D"
+      },
+      "D 02": {
+        "image": "/i/cards-default/2D.svg",
+        "suit": "D",
+        "suitColor": "♦",
+        "suitAlt": "4♦",
+        "rank": "02",
+        "rankA": "02",
+        "rankFixed": "02 D"
+      },
+      "D 03": {
+        "image": "/i/cards-default/3D.svg",
+        "suit": "D",
+        "suitColor": "♦",
+        "suitAlt": "4♦",
+        "rank": "03",
+        "rankA": "03",
+        "rankFixed": "03 D"
+      },
+      "D 04": {
+        "image": "/i/cards-default/4D.svg",
+        "suit": "D",
+        "suitColor": "♦",
+        "suitAlt": "4♦",
+        "rank": "04",
+        "rankA": "04",
+        "rankFixed": "04 D"
+      },
+      "D 05": {
+        "image": "/i/cards-default/5D.svg",
+        "suit": "D",
+        "suitColor": "♦",
+        "suitAlt": "4♦",
+        "rank": "05",
+        "rankA": "05",
+        "rankFixed": "05 D"
+      },
+      "D 06": {
+        "image": "/i/cards-default/6D.svg",
+        "suit": "D",
+        "suitColor": "♦",
+        "suitAlt": "4♦",
+        "rank": "06",
+        "rankA": "06",
+        "rankFixed": "06 D"
+      },
+      "D 07": {
+        "image": "/i/cards-default/7D.svg",
+        "suit": "D",
+        "suitColor": "♦",
+        "suitAlt": "4♦",
+        "rank": "07",
+        "rankA": "07",
+        "rankFixed": "07 D"
+      },
+      "D 08": {
+        "image": "/i/cards-default/8D.svg",
+        "suit": "D",
+        "suitColor": "♦",
+        "suitAlt": "4♦",
+        "rank": "08",
+        "rankA": "08",
+        "rankFixed": "08 D"
+      },
+      "D 09": {
+        "image": "/i/cards-default/9D.svg",
+        "suit": "D",
+        "suitColor": "♦",
+        "suitAlt": "4♦",
+        "rank": "09",
+        "rankA": "09",
+        "rankFixed": "09 D"
+      },
+      "D 10": {
+        "image": "/i/cards-default/TD.svg",
+        "suit": "D",
+        "suitColor": "♦",
+        "suitAlt": "4♦",
+        "rank": "10",
+        "rankA": "10",
+        "rankFixed": "10 D"
+      },
+      "D 2J": {
+        "image": "/i/cards-default/JD.svg",
+        "suit": "D",
+        "suitColor": "♦",
+        "suitAlt": "4♦",
+        "rank": "2J",
+        "rankA": "2J",
+        "rankFixed": "2J D"
+      },
+      "D 3Q": {
+        "image": "/i/cards-default/QD.svg",
+        "suit": "D",
+        "suitColor": "♦",
+        "suitAlt": "4♦",
+        "rank": "3Q",
+        "rankA": "3Q",
+        "rankFixed": "3Q D"
+      },
+      "D 4K": {
+        "image": "/i/cards-default/KD.svg",
+        "suit": "D",
+        "suitColor": "♦",
+        "suitAlt": "4♦",
+        "rank": "4K",
+        "rankA": "4K",
+        "rankFixed": "4K D"
+      },
+      "H 01": {
+        "image": "/i/cards-default/AH.svg",
+        "suit": "H",
+        "suitColor": "♥",
+        "suitAlt": "2♥",
+        "rank": "01",
+        "rankA": "5A",
+        "rankFixed": "01 H"
+      },
+      "H 02": {
+        "image": "/i/cards-default/2H.svg",
+        "suit": "H",
+        "suitColor": "♥",
+        "suitAlt": "2♥",
+        "rank": "02",
+        "rankA": "02",
+        "rankFixed": "02 H"
+      },
+      "H 03": {
+        "image": "/i/cards-default/3H.svg",
+        "suit": "H",
+        "suitColor": "♥",
+        "suitAlt": "2♥",
+        "rank": "03",
+        "rankA": "03",
+        "rankFixed": "03 H"
+      },
+      "H 04": {
+        "image": "/i/cards-default/4H.svg",
+        "suit": "H",
+        "suitColor": "♥",
+        "suitAlt": "2♥",
+        "rank": "04",
+        "rankA": "04",
+        "rankFixed": "04 H"
+      },
+      "H 05": {
+        "image": "/i/cards-default/5H.svg",
+        "suit": "H",
+        "suitColor": "♥",
+        "suitAlt": "2♥",
+        "rank": "05",
+        "rankA": "05",
+        "rankFixed": "05 H"
+      },
+      "H 06": {
+        "image": "/i/cards-default/6H.svg",
+        "suit": "H",
+        "suitColor": "♥",
+        "suitAlt": "2♥",
+        "rank": "06",
+        "rankA": "06",
+        "rankFixed": "06 H"
+      },
+      "H 07": {
+        "image": "/i/cards-default/7H.svg",
+        "suit": "H",
+        "suitColor": "♥",
+        "suitAlt": "2♥",
+        "rank": "07",
+        "rankA": "07",
+        "rankFixed": "07 H"
+      },
+      "H 08": {
+        "image": "/i/cards-default/8H.svg",
+        "suit": "H",
+        "suitColor": "♥",
+        "suitAlt": "2♥",
+        "rank": "08",
+        "rankA": "08",
+        "rankFixed": "08 H"
+      },
+      "H 09": {
+        "image": "/i/cards-default/9H.svg",
+        "suit": "H",
+        "suitColor": "♥",
+        "suitAlt": "2♥",
+        "rank": "09",
+        "rankA": "09",
+        "rankFixed": "09 H"
+      },
+      "H 10": {
+        "image": "/i/cards-default/TH.svg",
+        "suit": "H",
+        "suitColor": "♥",
+        "suitAlt": "2♥",
+        "rank": "10",
+        "rankA": "10",
+        "rankFixed": "10 H"
+      },
+      "H 2J": {
+        "image": "/i/cards-default/JH.svg",
+        "suit": "H",
+        "suitColor": "♥",
+        "suitAlt": "2♥",
+        "rank": "2J",
+        "rankA": "2J",
+        "rankFixed": "2J H"
+      },
+      "H 3Q": {
+        "image": "/i/cards-default/QH.svg",
+        "suit": "H",
+        "suitColor": "♥",
+        "suitAlt": "2♥",
+        "rank": "3Q",
+        "rankA": "3Q",
+        "rankFixed": "3Q H"
+      },
+      "H 4K": {
+        "image": "/i/cards-default/KH.svg",
+        "suit": "H",
+        "suitColor": "♥",
+        "suitAlt": "2♥",
+        "rank": "4K",
+        "rankA": "4K",
+        "rankFixed": "4K H"
+      },
+      "S 01": {
+        "image": "/i/cards-default/AS.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "01",
+        "rankA": "5A",
+        "rankFixed": "01 S"
+      },
+      "S 02": {
+        "image": "/i/cards-default/2S.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "02",
+        "rankA": "02",
+        "rankFixed": "02 S"
+      },
+      "S 03": {
+        "image": "/i/cards-default/3S.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "03",
+        "rankA": "03",
+        "rankFixed": "03 S"
+      },
+      "S 04": {
+        "image": "/i/cards-default/4S.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "04",
+        "rankA": "04",
+        "rankFixed": "04 S"
+      },
+      "S 05": {
+        "image": "/i/cards-default/5S.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "05",
+        "rankA": "05",
+        "rankFixed": "05 S"
+      },
+      "S 06": {
+        "image": "/i/cards-default/6S.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "06",
+        "rankA": "06",
+        "rankFixed": "06 S"
+      },
+      "S 07": {
+        "image": "/i/cards-default/7S.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "07",
+        "rankA": "07",
+        "rankFixed": "07 S"
+      },
+      "S 08": {
+        "image": "/i/cards-default/8S.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "08",
+        "rankA": "08",
+        "rankFixed": "08 S"
+      },
+      "S 09": {
+        "image": "/i/cards-default/9S.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "09",
+        "rankA": "09",
+        "rankFixed": "09 S"
+      },
+      "S 10": {
+        "image": "/i/cards-default/TS.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "10",
+        "rankA": "10",
+        "rankFixed": "10 S"
+      },
+      "S 2J": {
+        "image": "/i/cards-default/JS.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "2J",
+        "rankA": "2J",
+        "rankFixed": "2J S"
+      },
+      "S 3Q": {
+        "image": "/i/cards-default/QS.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "3Q",
+        "rankA": "3Q",
+        "rankFixed": "3Q S"
+      },
+      "S 4K": {
+        "image": "/i/cards-default/KS.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "4K",
+        "rankA": "4K",
+        "rankFixed": "4K S"
+      }
+    },
+    "faceTemplates": [
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 103,
+            "height": 160,
+            "color": "transparent",
+            "value": "/i/cards-default/2B.svg"
+          }
+        ]
+      },
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 103,
+            "height": 160,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image"
+            }
+          }
+        ]
+      }
+    ],
+    "parent": "cardHolder",
+    "cardDefaults": {
+      "button3Reset": {
+        "parent": "cardHolder",
+        "activeFace": 0
+      }
+    }
+  },
+  "cardHolder": {
+    "type": "holder",
+    "id": "cardHolder",
+    "x": 840,
+    "y": 269,
+    "z": 128,
+    "dropTarget": {
+      "type": "card"
+    }
+  },
+  "header": {
+    "id": "header",
+    "x": 400,
+    "y": -2,
+    "width": 800,
+    "height": 60,
+    "z": 74,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "font-size: 60px;text-align:center",
+    "text": "Functions: RESET"
+  },
+  "mainText": {
+    "id": "mainText",
+    "x": 100,
+    "y": 100,
+    "width": 1405,
+    "height": 150,
+    "layer": -3,
+    "z": 124,
+    "css": "font-size: 25px; ",
+    "text": "RESET is a simple function that only accepts one parameter: `property`. The default value is `resetProperties` and it should be an object with key:value pairs such as {x:0, y:100}. When used, RESET looks for every widget in the room with the property specified in the parameter and changes the widget properties to match what is in the object. Basically, this resets widgets to a default state that you designate. The JSON Editor can also help you easily create `resetProperties` for your widgets.",
+    "movable": false
+  },
+  "meeple": {
+    "id": "meeple",
+    "x": 86,
+    "y": 832,
+    "width": 66.5,
+    "height": 70,
+    "z": 10080,
+    "color": "#1f5ca6",
+    "css": {
+      "border-radius": "45% 65% 70% 30%/ 45% 50% 20% 20%",
+      "transition": "linear 1s"
+    },
+    "image": "i/game-pieces/3D/Meeple-3D.svg",
+    "resetProperties": {
+      "x": 68,
+      "y": 342,
+      "rotation": 0,
+      "scale": 1
+    },
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 1,
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "rotation",
+        "relation": "+",
+        "value": 45
+      }
+    ],
+    "rotation": 540,
+    "scale": 2
+  },
+  "wood": {
+    "id": "wood",
+    "x": 268,
+    "y": 828,
+    "width": 26,
+    "z": 10031,
+    "color": "#1f5ca6",
+    "image": "i/game-pieces/3D/Road240-3D.svg",
+    "resetProperties": {
+      "x": 244,
+      "y": 327,
+      "rotation": 0
+    },
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 1,
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "rotation",
+        "relation": "+",
+        "value": 45
+      }
+    ],
+    "rotation": 90,
+    "css": {
+      "transition": "linear 1s"
+    }
+  },
+  "button1": {
+    "type": "button",
+    "id": "button1",
+    "x": 151,
+    "y": 450,
+    "z": 8,
+    "text": "RESET",
+    "clickRoutine": [
+      {
+        "func": "RESET"
+      }
+    ]
+  },
+  "button2": {
+    "type": "button",
+    "id": "button2",
+    "x": 502,
+    "y": 450,
+    "z": 9,
+    "css": {
+      "background": "red"
+    },
+    "text": "RESET",
+    "clickRoutine": [
+      {
+        "func": "RESET",
+        "property": "redReset"
+      }
+    ]
+  },
+  "button3": {
+    "type": "button",
+    "id": "button3",
+    "x": 939,
+    "y": 450,
+    "z": 9,
+    "text": "RESET",
+    "clickRoutine": [
+      {
+        "func": "RESET",
+        "property": "button3Reset"
+      }
+    ],
+    "css": {
+      "background": "green"
+    }
+  },
+  "button1Text": {
+    "id": "button1Text",
+    "x": 60,
+    "y": 600,
+    "width": 306,
+    "z": 185,
+    "movable": false,
+    "text": "Look at the meeple and stick below in the JSON editor and note the `resetProperties`. The grey pawn and house also have resetProperties. The button above updates the properties on the widget to match the `resetProperties`. So they will move, rotate, and scale as needed. A css transition is applied to the widgets to clearly demonstrate the effect."
+  },
+  "button2Text": {
+    "id": "button2Text",
+    "x": 410,
+    "y": 600,
+    "width": 300,
+    "z": 121,
+    "movable": false,
+    "text": "The button above applies the RESET function to a different custom property, redReset. The gray pawn and house are updated by both the blue and red buttons, but for different properties. In the case of the pawn and house, only the color property is changed."
+  },
+  "pawn": {
+    "id": "pawn",
+    "x": 449,
+    "y": 832,
+    "width": 50.4,
+    "height": 90,
+    "z": 10032,
+    "color": "#808080",
+    "css": {
+      "border-radius": "40% 40% 50% 50%/ 80% 80% 10% 10%",
+      "transition": "linear 1s"
+    },
+    "image": "i/game-pieces/3D/Pawn-3D.svg",
+    "resetProperties": {
+      "x": 460,
+      "y": 337
+    },
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "black",
+    "borderWidth": 1,
+    "redReset": {
+      "color": "red"
+    }
+  },
+  "house": {
+    "id": "house",
+    "x": 596,
+    "y": 848,
+    "width": 60,
+    "height": 60,
+    "z": 10033,
+    "color": "#808080",
+    "css": {
+      "border-radius": "26% 74% 46% 54%/ 50% 55% 45% 50%",
+      "transition": "linear 1s"
+    },
+    "image": "/i/game-pieces/3D/House-3D.svg",
+    "resetProperties": {
+      "x": 588,
+      "y": 358
+    },
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 2,
+    "redReset": {
+      "color": "red"
+    }
+  },
+  "button3Text": {
+    "id": "button3Text",
+    "x": 746,
+    "y": 600,
+    "width": 500,
+    "z": 9732,
+    "movable": false,
+    "text": "The cards, cubes, and marbles all use RESET for the `parent` property. The cards have the reset property on the `cardDefaults` and the Ace has an additional reset directly on it. The cards and cubes are moved in an order not controllable by the game designer. Use a sort, shuffle or whatever else is appropriate. Order of the properties in the reset property matters. For example, the marbles are being parented to the seat in a particular location. But the yellow marble has its parent set after the x/y are set, so it is not in the location you might expect. "
+  },
+  "zdvo": {
+    "deck": "fzoqD",
+    "type": "card",
+    "cardType": "C 01",
+    "id": "zdvo",
+    "z": 10942,
+    "x": 1014,
+    "y": 830,
+    "activeFace": 1,
+    "button3Reset": {
+      "x": 718,
+      "y": 271
+    }
+  },
+  "371o": {
+    "deck": "fzoqD",
+    "type": "card",
+    "cardType": "C 02",
+    "id": "371o",
+    "z": 10941,
+    "activeFace": 1,
+    "x": 964,
+    "y": 805
+  },
+  "zw4e": {
+    "deck": "fzoqD",
+    "type": "card",
+    "cardType": "C 03",
+    "id": "zw4e",
+    "z": 10938,
+    "activeFace": 1,
+    "x": 914,
+    "y": 780
+  },
+  "c3av": {
+    "deck": "fzoqD",
+    "type": "card",
+    "cardType": "C 04",
+    "id": "c3av",
+    "z": 10937,
+    "activeFace": 1,
+    "x": 864,
+    "y": 755
+  },
+  "cube1": {
+    "id": "cube1",
+    "width": 36,
+    "height": 40,
+    "z": 10077,
+    "color": "orange",
+    "css": "border-radius: 50%/35%;",
+    "image": "/i/game-pieces/3D/Cube-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "white",
+    "borderWidth": 1,
+    "secondaryColor": "black",
+    "button3Reset": {
+      "parent": "cubeHolder"
+    },
+    "x": 852,
+    "y": 947
+  },
+  "cubeHolder": {
+    "type": "holder",
+    "id": "cubeHolder",
+    "x": 964,
+    "y": 269,
+    "z": 129,
+    "width": 196,
+    "height": 40,
+    "dropTarget": {},
+    "stackOffsetX": 40,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0
+  },
+  "seat1": {
+    "type": "seat",
+    "id": "seat1",
+    "x": 980,
+    "y": 347,
+    "color": "#1f5ca6",
+    "player": "Test Player"
+  },
+  "cube2": {
+    "inheritFrom": {
+      "cube1": "!parent"
+    },
+    "id": "cube2",
+    "x": 778,
+    "y": 947,
+    "color": "purple",
+    "button3Reset": {
+      "parent": "cubeHolder"
+    },
+    "z": 10075
+  },
+  "cube3": {
+    "inheritFrom": {
+      "cube1": "!parent"
+    },
+    "id": "cube3",
+    "x": 926,
+    "y": 947,
+    "color": "yellow",
+    "button3Reset": {
+      "parent": "cubeHolder"
+    },
+    "z": 10071
+  },
+  "cube4": {
+    "inheritFrom": {
+      "cube1": "!parent"
+    },
+    "id": "cube4",
+    "x": 889,
+    "y": 947,
+    "color": "green",
+    "button3Reset": {
+      "parent": "cubeHolder"
+    },
+    "z": 10070
+  },
+  "cube5": {
+    "inheritFrom": {
+      "cube1": "!parent"
+    },
+    "id": "cube5",
+    "x": 815,
+    "y": 947,
+    "color": "blue",
+    "button3Reset": {
+      "parent": "cubeHolder"
+    },
+    "z": 10076
+  },
+  "marble1": {
+    "id": "marble1",
+    "x": 1120,
+    "y": 755,
+    "width": 35,
+    "height": 35,
+    "z": 10089,
+    "color": "orange",
+    "css": "border-radius: 50%;",
+    "image": "/i/game-pieces/3D/Marble-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#ffffff",
+    "borderWidth": 1,
+    "secondaryColor": "#000000",
+    "button3Reset": {
+      "parent": "seat1",
+      "x": -23,
+      "y": 50
+    }
+  },
+  "marble2": {
+    "id": "marble2",
+    "width": 35,
+    "height": 35,
+    "z": 10090,
+    "color": "purple",
+    "css": "border-radius: 50%;",
+    "image": "/i/game-pieces/3D/Marble-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#ffffff",
+    "borderWidth": 1,
+    "secondaryColor": "#000000",
+    "y": 806,
+    "button3Reset": {
+      "parent": "seat1",
+      "x": 17,
+      "y": 50
+    },
+    "x": 1120
+  },
+  "marble3": {
+    "id": "marble3",
+    "x": 1120,
+    "y": 906,
+    "width": 35,
+    "height": 35,
+    "z": 10092,
+    "color": "yellow",
+    "css": "border-radius: 50%;",
+    "image": "/i/game-pieces/3D/Marble-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#ffffff",
+    "borderWidth": 1,
+    "secondaryColor": "#000000",
+    "button3Reset": {
+      "x": 56,
+      "y": 50,
+      "parent": "seat1"
+    }
+  },
+  "marble4": {
+    "id": "marble4",
+    "x": 1120,
+    "y": 957,
+    "width": 35,
+    "height": 35,
+    "z": 10093,
+    "color": "green",
+    "css": "border-radius: 50%;",
+    "image": "/i/game-pieces/3D/Marble-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#ffffff",
+    "borderWidth": 1,
+    "secondaryColor": "#000000",
+    "button3Reset": {
+      "parent": "seat1",
+      "x": 96,
+      "y": 50
+    }
+  },
+  "marble5": {
+    "id": "marble5",
+    "x": 1120,
+    "y": 856,
+    "width": 35,
+    "height": 35,
+    "z": 10091,
+    "color": "blue",
+    "css": "border-radius: 50%;",
+    "image": "/i/game-pieces/3D/Marble-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#ffffff",
+    "borderWidth": 1,
+    "secondaryColor": "#000000",
+    "button3Reset": {
+      "parent": "seat1",
+      "x": 135,
+      "y": 50
+    }
+  },
+  "json1": {
+    "id": "json1",
+    "x": 1327,
+    "y": 329,
+    "width": 200,
+    "height": 200,
+    "image": "/assets/-738418506_3024",
+    "z": 10094,
+    "movable": false
+  },
+  "json2": {
+    "id": "json2",
+    "x": 1291,
+    "y": 686,
+    "width": 300,
+    "height": 300,
+    "image": "/assets/606927958_4524",
+    "movable": false
+  },
+  "JSONText2": {
+    "id": "JSONText2",
+    "x": 1290,
+    "y": 527,
+    "width": 306,
+    "z": 185,
+    "movable": false,
+    "text": "While the cursor is in the `resetProperties` property, you can click on any of these available buttons for common properties. The current value of that property will be added, so having the widget where you want it to reset to is a good idea. But you can also enter any property and customize the value."
+  },
+  "JSONText1": {
+    "id": "JSONText1",
+    "x": 1290,
+    "y": 254,
+    "width": 306,
+    "z": 185,
+    "movable": false,
+    "text": "To use the JSON Editor, put the cursor in the properties area of the widget that is not a routine and look near the bottom of the available buttons for `resetProperties`."
+  }
+}
