@@ -1,29 +1,29 @@
 {
   "_meta": {
-    "version": 16,
+    "version": 17,
     "info": {
       "name": "CONTEST",
+      "lastUpdate": 1736738752893,
       "image": "/assets/-1336405461_70212",
-      "rules": "https://boardgamegeek.com/filepage/288097/english-rules",
-      "bgg": "https://boardgamegeek.com/boardgame/425056/conic",
-      "year": "2024",
-      "mode": "vs",
-      "time": "20",
-      "attribution": "Game layout and design originally by Shobu. Additional modifications and scripting done by Dexdouglas and released to the Public Domain by CC0.<div><br></div><div>Board design and library image by Dexdouglas using Microsoft paint and are released to the Public Domain by CC0.</div>",
-      "lastUpdate": 1735489170120,
       "showName": true,
-      "skill": "low",
+      "time": "20",
+      "mode": "vs",
+      "skill": "Low",
       "description": "In Contest, you are simultaneously playing discs and comparing your numbers to your opponents. The higher number (usually) wins a spot on the board.",
-      "similarImage": "",
-      "similarName": "CONIC",
-      "similarDesigner": "Reiner Knizia",
-      "similarAwards": "",
-      "ruleText": "<div><b>SUMMARY</b></div>In CONTEST, 2-4 players will compete for control over columns on the board, and score points for controlling the majority of the spaces in those columns. They will also score additional points for their largest contiguous grouping.&nbsp;<div><br></div><div><b>OVERVIEW</b></div><div>Each player gets 12 discs, numbered 0-10 with a single X. There are 16 spaces on the board and all 16 will have a disc on them at the end of the game. A round of the game consists of everyone selecting one of their discs and placing it in their holder. Everyone will reveal simultaneously and you will assess what happens next.&nbsp;</div><div><br></div><div><b>RESOLUTION</b></div><div>If anyone played a 0, they return this disc to their hand. If everyone played a 0, then return the 0s to everyone's hand, and place a black disc on the space with the pawn.</div><div>If everyone played numbers, you assess who played the highest number and that person replaces the pawn on the board with their numbered disc. They will select where the pawn will go next. **Note** If someone played a 10, and someone else played a 1, the 1 becomes the highest number and wins the round.</div><div>If an X is played, this player (or players) discards the X and replaces it with a numbered chip from their hand.&nbsp;</div><div>In case of a tie with the highest numbered disc, everyone else discards their discs and the tied players then play another disc simultaneously from their hand. This process is repeated until either one player is victorious, or a black disc needs to be played due to 0s being played.&nbsp;</div><div><br></div><div><b>SCORING</b></div><div>Assess each of the columns to see who scores points. Black discs do NOT affect scoring and should be ignored.&nbsp;</div><div>First, determine if someone has more discs in the column than any other player. If so, they win the points for that column (1,2,3,4). If no player has more discs than any other player, then tally the value of the discs in that column among the tied players. Whoever has the higher value, scores the points for the column. If players are tied in value, then nobody scores the column.&nbsp;</div><div>Players then score once for their largest group of adjacent discs. The discs need to be touching to be considered adjacent. As an example, no discs in the 4 column are touching each other, but they could be connected if they were each next to the same space in the 3 column.</div><div><br></div><div>**NOTE** in an earlier iteration of this game (CATENA), the adjacency points were not considered as part of final scoring. Feel free to try this variant if you prefer.&nbsp;</div>",
-      "helpText": "Have all players take a seat. Your 12 discs will go to your hand. Place the pawn on either end of the center 4 column. Drag a disc from your hand to your holder. Once everyone has a disc in their holder, click on it to reveal it. The winner places their disc on the board, everyone else either discards their number or X, or returns the 0 disc to their hand.",
       "variantImage": "",
       "variant": "CONTEST",
       "language": "en-GB",
-      "players": "2-4"
+      "players": "2-4",
+      "similarImage": "",
+      "similarName": "CONIC",
+      "year": "2024",
+      "similarDesigner": "Reiner Knizia",
+      "similarAwards": "",
+      "bgg": "https://boardgamegeek.com/boardgame/425056/conic",
+      "rules": "https://boardgamegeek.com/filepage/288097/english-rules",
+      "ruleText": "<div><b>SUMMARY</b></div>In CONTEST, 2-4 players will compete for control over columns on the board, and score points for controlling the majority of the spaces in those columns. They will also score additional points for their largest contiguous grouping.&nbsp;<div><br></div><div><b>OVERVIEW</b></div><div>Each player gets 12 discs, numbered 0-10 with a single X. There are 16 spaces on the board and it is likely, but not required, that all 16 will have a disc on them at the end of the game. A round of the game consists of everyone selecting one of their discs and placing it in their holder. Everyone will click on their disc to reveal it simultaneously and then assess what happens next.&nbsp;</div><div><br></div><div><b>RESOLUTION</b></div><div>If anyone played a 0, they return this disc to their hand. If everyone played a 0, then return the 0s to everyone's hand, and place a black \"Neutral\" disc on the space with the pawn.</div><div>If everyone played numbers, you assess who played the highest number and that person replaces the pawn on the board with their numbered disc. They will select where the pawn will go next. **Note** If someone played a 10, and someone else played a 1, the 1 becomes the highest number and wins the round.</div><div>If an X is played, this player (or players) discards the X and replaces it with a numbered chip from their hand.&nbsp;</div><div>In case of a tie with the highest numbered disc, everyone else discards their discs and the tied players then play another disc simultaneously from their hand. This process is repeated until either one player is victorious, or a black disc needs to be played due to 0s being played.&nbsp;</div><div><br></div><div><b>SCORING</b></div><div>Assess each of the columns to see who scores points. Black discs do NOT affect scoring and should be ignored.&nbsp;</div><div>First, determine if someone has more discs in the column than any other player. If so, they win the points for that column (1,2,3,4). If no player has more discs than any other player, then tally the value of the discs in that column among the tied players. Whoever has the higher value, scores the points for the column. If players are tied in value, then nobody scores the column.&nbsp;</div><div>Players then score once for their largest group of adjacent discs. The discs need to be touching to be considered adjacent. As an example, no discs in the 4 column are touching each other, but they could be connected if they were each next to the same space in the 3 column.</div><div><br></div><div>**NOTE** in an earlier iteration of this game (CATENA), the adjacency points were not considered as part of final scoring. Feel free to try this variant if you prefer.&nbsp;</div>",
+      "helpText": "Have all players take a seat. Your 12 discs will go to your hand. Place the pawn on either end of the center 4 column. Drag a disc from your hand to your holder. Once everyone has a disc in their holder, click on it to reveal it. The winner places their disc on the board, everyone else either discards their number or X, or returns the 0 disc to their hand. Pressing the Discard button while a 0 is in the holder, will return the 0 to your hand.&nbsp;<div><br></div><div>The Discard pile is visible on the table but is hidden information. In the event that someone has discarded something accidentally, you may retrieve it from this holder.&nbsp;</div>",
+      "attribution": "Game layout and design originally by Shobu. Additional modifications and scripting done by Dexdouglas and released to the Public Domain by CC0.<div><br></div><div>Board design and library image by Dexdouglas using Microsoft paint and are released to the Public Domain by CC0.</div>"
     }
   },
   "8zjq": {
@@ -144,22 +144,9 @@
       }
     ]
   },
-  "8byg": {
-    "type": "label",
-    "text": 0,
-    "id": "8byg",
-    "x": 130,
-    "y": 128,
-    "width": 65,
-    "height": 40,
-    "css": "font-size: 30px;",
-    "editable": true,
-    "hideWhenUnused": true,
-    "linkedToSeat": "seat1"
-  },
   "8bygD": {
     "id": "8bygD",
-    "parent": "8byg",
+    "parent": "seat1Score",
     "fixedParent": true,
     "x": -38,
     "y": 1,
@@ -182,7 +169,7 @@
   },
   "8bygU": {
     "id": "8bygU",
-    "parent": "8byg",
+    "parent": "seat1Score",
     "fixedParent": true,
     "x": 68,
     "y": 1,
@@ -204,21 +191,9 @@
     "hideWhenUnused": true,
     "linkedToSeat": "seat1"
   },
-  "9byg": {
-    "type": "label",
-    "text": 0,
-    "id": "9byg",
-    "x": 1392,
-    "y": 131,
-    "width": 65,
-    "height": 40,
-    "css": "font-size: 30px;",
-    "editable": true,
-    "linkedToSeat": "seat2"
-  },
   "9bygD": {
     "id": "9bygD",
-    "parent": "9byg",
+    "parent": "seat2Score",
     "fixedParent": true,
     "x": -38,
     "y": 1,
@@ -240,7 +215,7 @@
   },
   "9bygU": {
     "id": "9bygU",
-    "parent": "9byg",
+    "parent": "seat2Score",
     "fixedParent": true,
     "x": 68,
     "y": 1,
@@ -261,10 +236,10 @@
     ]
   },
   "6o7j": {
-    "x": 881,
-    "y": 708,
-    "width": 50.4,
-    "height": 90,
+    "x": 783,
+    "y": 124,
+    "width": 40.4,
+    "height": 75,
     "color": "#1f5ca6",
     "css": "border-radius: 40% 40% 50% 50%/ 80% 80% 10% 10%; ",
     "image": "i/game-pieces/3D/Pawn-3D.svg",
@@ -275,8 +250,12 @@
     },
     "borderColor": "black",
     "borderWidth": 1,
-    "z": 4160,
-    "id": "6o7j"
+    "z": 4161,
+    "id": "6o7j",
+    "newReset": {
+      "x": 783,
+      "y": 124
+    }
   },
   "2wdt": {
     "type": "deck",
@@ -975,168 +954,85 @@
     "x": 12,
     "parent": "holder4"
   },
-  "wjlu": {
-    "type": "deck",
-    "id": "wjlu",
-    "cardTypes": {
-      " of plain-circle": {
-        "suit": "/i/game-icons.net/delapouite/plain-circle.svg",
-        "suitColor": "#000000",
-        "rank": "",
-        "rankImage": "/i/cards-default/D-face.svg"
-      }
-    },
-    "cardDefaults": {
-      "width": 100,
-      "height": 100
-    },
-    "faceTemplates": [
-      {
-        "border": 1,
-        "radius": 56,
-        "objects": [
-          {
-            "type": "image",
-            "width": 100,
-            "height": 100,
-            "color": "#000000",
-            "svgReplaces": {
-              "currentColor": "logoColor"
-            }
-          }
-        ]
-      },
-      {
-        "radius": 16,
-        "objects": [
-          {
-            "type": "image",
-            "width": 100,
-            "height": 100,
-            "color": "transparent",
-            "svgReplaces": {
-              "#000": "suitColor"
-            },
-            "dynamicProperties": {
-              "value": "suit"
-            }
-          },
-          {
-            "type": "text",
-            "y": 18,
-            "fontSize": 40,
-            "textAlign": "center",
-            "color": "white",
-            "width": 100,
-            "dynamicProperties": {
-              "value": "rank"
-            }
-          }
-        ]
-      }
-    ],
-    "x": 759,
-    "y": 714
-  },
   "wjlu  of plain-circle": {
     "type": "card",
     "id": "wjlu  of plain-circle",
-    "deck": "wjlu",
+    "deck": "neutralDeck",
     "cardType": " of plain-circle",
-    "z": 3030,
-    "activeFace": 1,
-    "parent": "jkrv"
+    "z": 7256,
+    "parent": "30ty"
   },
   "oo0j": {
-    "deck": "wjlu",
+    "deck": "neutralDeck",
     "type": "card",
     "cardType": " of plain-circle",
     "id": "oo0j",
-    "parent": "jkrv",
-    "z": 9,
-    "activeFace": 1
+    "parent": "30ty",
+    "z": 7257
   },
   "idf3": {
-    "deck": "wjlu",
+    "deck": "neutralDeck",
     "type": "card",
     "cardType": " of plain-circle",
     "id": "idf3",
-    "z": 8,
-    "parent": "jkrv",
-    "activeFace": 1
-  },
-  "jkrv": {
-    "type": "pile",
-    "parent": null,
-    "x": 753,
-    "y": 708,
-    "width": 80,
-    "height": 80,
-    "id": "jkrv",
-    "z": 5807
+    "z": 7258,
+    "parent": "30ty"
   },
   "3cwf": {
-    "deck": "wjlu",
+    "deck": "neutralDeck",
     "type": "card",
     "cardType": " of plain-circle",
     "id": "3cwf",
-    "z": 7,
-    "parent": "jkrv",
-    "activeFace": 1
+    "z": 7259,
+    "parent": "30ty"
   },
   "ltai": {
-    "deck": "wjlu",
+    "deck": "neutralDeck",
     "type": "card",
     "cardType": " of plain-circle",
     "id": "ltai",
-    "z": 6,
-    "parent": "jkrv",
-    "activeFace": 1
+    "z": 7260,
+    "parent": "30ty"
   },
   "t8m8": {
-    "deck": "wjlu",
+    "deck": "neutralDeck",
     "type": "card",
     "cardType": " of plain-circle",
     "id": "t8m8",
-    "z": 5,
-    "parent": "jkrv",
-    "activeFace": 1
+    "z": 7261,
+    "parent": "30ty"
   },
   "jknv": {
-    "deck": "wjlu",
+    "deck": "neutralDeck",
     "type": "card",
     "cardType": " of plain-circle",
     "id": "jknv",
-    "z": 4,
-    "parent": "jkrv",
-    "activeFace": 1
+    "z": 7262,
+    "parent": "30ty"
   },
   "ewc7": {
-    "deck": "wjlu",
+    "deck": "neutralDeck",
     "type": "card",
     "cardType": " of plain-circle",
     "id": "ewc7",
-    "z": 3,
-    "parent": "jkrv",
-    "activeFace": 1
+    "z": 7263,
+    "parent": "30ty"
   },
   "lan2": {
-    "deck": "wjlu",
+    "deck": "neutralDeck",
     "type": "card",
     "cardType": " of plain-circle",
     "id": "lan2",
-    "z": 2,
-    "parent": "jkrv",
-    "activeFace": 1
+    "z": 7264,
+    "parent": "30ty"
   },
   "oguv": {
-    "deck": "wjlu",
+    "deck": "neutralDeck",
     "type": "card",
     "cardType": " of plain-circle",
     "id": "oguv",
-    "z": 1,
-    "parent": "jkrv",
-    "activeFace": 1
+    "z": 7265,
+    "parent": "30ty"
   },
   "tqy8C": {
     "id": "tqy8C",
@@ -1269,137 +1165,9 @@
       }
     }
   },
-  "5pb3B": {
-    "id": "5pb3B",
-    "parent": "holder1",
-    "fixedParent": true,
-    "y": 119,
-    "width": 111,
-    "height": 40,
-    "type": "button",
-    "text": "Recall",
-    "movableInEdit": false,
-    "clickRoutine": [
-      {
-        "func": "RECALL",
-        "holder": "${PROPERTY parent}"
-      },
-      {
-        "func": "FLIP",
-        "holder": "${PROPERTY parent}",
-        "face": 0
-      },
-      {
-        "func": "SORT",
-        "holder": "${PROPERTY parent}",
-        "key": "rank"
-      }
-    ],
-    "hideWhenUnused": true,
-    "linkedToSeat": "seat1"
-  },
-  "qluzB": {
-    "id": "qluzB",
-    "parent": "holder3",
-    "fixedParent": true,
-    "y": 121,
-    "width": 111,
-    "height": 40,
-    "type": "button",
-    "text": "Recall",
-    "movableInEdit": false,
-    "clickRoutine": [
-      {
-        "func": "RECALL",
-        "holder": "${PROPERTY parent}"
-      },
-      {
-        "func": "FLIP",
-        "holder": "${PROPERTY parent}",
-        "face": 0
-      },
-      {
-        "func": "SORT",
-        "holder": "${PROPERTY parent}",
-        "key": "rank"
-      }
-    ],
-    "x": -6,
-    "linkedToSeat": "seat3"
-  },
-  "ns70B": {
-    "id": "ns70B",
-    "parent": "holder2",
-    "fixedParent": true,
-    "y": 118,
-    "width": 111,
-    "height": 40,
-    "type": "button",
-    "text": "Recall",
-    "movableInEdit": false,
-    "clickRoutine": [
-      {
-        "func": "RECALL",
-        "holder": "${PROPERTY parent}"
-      },
-      {
-        "func": "FLIP",
-        "holder": "${PROPERTY parent}",
-        "face": 0
-      },
-      {
-        "func": "SORT",
-        "holder": "${PROPERTY parent}",
-        "key": "rank"
-      }
-    ],
-    "x": 1,
-    "linkedToSeat": "seat2"
-  },
-  "bho1B": {
-    "id": "bho1B",
-    "parent": "holder4",
-    "fixedParent": true,
-    "y": 120,
-    "width": 111,
-    "height": 40,
-    "type": "button",
-    "text": "Recall",
-    "movableInEdit": false,
-    "clickRoutine": [
-      {
-        "func": "RECALL",
-        "holder": "${PROPERTY parent}"
-      },
-      {
-        "func": "FLIP",
-        "holder": "${PROPERTY parent}",
-        "face": 0
-      },
-      {
-        "func": "SORT",
-        "holder": "${PROPERTY parent}",
-        "key": "rank"
-      }
-    ],
-    "x": -2,
-    "linkedToSeat": "seat4"
-  },
-  "11byg": {
-    "type": "label",
-    "text": 0,
-    "id": "11byg",
-    "x": 1385,
-    "y": 737,
-    "width": 65,
-    "height": 40,
-    "css": "font-size: 30px;",
-    "editable": true,
-    "linkedToSeat": "seat4"
-  },
   "13bygD": {
     "id": "13bygD",
-    "parent": "11byg",
+    "parent": "seat4Score",
     "fixedParent": true,
     "x": -38,
     "y": 1,
@@ -1422,7 +1190,7 @@
   },
   "12bygU": {
     "id": "12bygU",
-    "parent": "11byg",
+    "parent": "seat4Score",
     "fixedParent": true,
     "x": 68,
     "y": 1,
@@ -1443,21 +1211,9 @@
     ],
     "linkedToSeat": "seat4"
   },
-  "12byg": {
-    "type": "label",
-    "text": 0,
-    "id": "12byg",
-    "x": 130,
-    "y": 739,
-    "width": 65,
-    "height": 40,
-    "css": "font-size: 30px;",
-    "editable": true,
-    "linkedToSeat": "seat3"
-  },
   "15bygD": {
     "id": "15bygD",
-    "parent": "12byg",
+    "parent": "seat3Score",
     "fixedParent": true,
     "y": 1,
     "width": 36,
@@ -1480,7 +1236,7 @@
   },
   "14bygU": {
     "id": "14bygU",
-    "parent": "12byg",
+    "parent": "seat3Score",
     "fixedParent": true,
     "x": 68,
     "y": 1,
@@ -1904,11 +1660,36 @@
     "text": "Discard",
     "clickRoutine": [
       {
-        "func": "MOVE",
-        "from": "holder1",
-        "count": 50,
-        "to": "discard",
-        "face": 1
+        "func": "SELECT",
+        "type": "card",
+        "property": "parent",
+        "value": "holder1"
+      },
+      {
+        "func": "FOREACH",
+        "loopRoutine": [
+          {
+            "func": "GET",
+            "property": "rank"
+          },
+          {
+            "func": "IF",
+            "operand1": "${rank}",
+            "operand2": 0,
+            "thenRoutine": [
+              {
+                "func": "MOVE",
+                "to": "hand"
+              }
+            ],
+            "elseRoutine": [
+              {
+                "func": "MOVE",
+                "to": "discard"
+              }
+            ]
+          }
+        ]
       }
     ],
     "width": 100,
@@ -1918,11 +1699,11 @@
   "discard": {
     "type": "holder",
     "id": "discard",
-    "x": 722,
+    "x": 674,
     "width": 110,
     "height": 110,
     "z": 1,
-    "y": -127
+    "y": 652
   },
   "e453d1c2-1937-4359-a100-91aa209216b1": {
     "type": "button",
@@ -1933,11 +1714,36 @@
     "text": "Discard",
     "clickRoutine": [
       {
-        "func": "MOVE",
-        "from": "holder4",
-        "count": 50,
-        "to": "discard",
-        "face": 1
+        "func": "SELECT",
+        "type": "card",
+        "property": "parent",
+        "value": "holder4"
+      },
+      {
+        "func": "FOREACH",
+        "loopRoutine": [
+          {
+            "func": "GET",
+            "property": "rank"
+          },
+          {
+            "func": "IF",
+            "operand1": "${rank}",
+            "operand2": 0,
+            "thenRoutine": [
+              {
+                "func": "MOVE",
+                "to": "hand"
+              }
+            ],
+            "elseRoutine": [
+              {
+                "func": "MOVE",
+                "to": "discard"
+              }
+            ]
+          }
+        ]
       }
     ],
     "width": 100,
@@ -1953,11 +1759,36 @@
     "text": "Discard",
     "clickRoutine": [
       {
-        "func": "MOVE",
-        "from": "holder3",
-        "count": 50,
-        "to": "discard",
-        "face": 1
+        "func": "SELECT",
+        "type": "card",
+        "property": "parent",
+        "value": "holder3"
+      },
+      {
+        "func": "FOREACH",
+        "loopRoutine": [
+          {
+            "func": "GET",
+            "property": "rank"
+          },
+          {
+            "func": "IF",
+            "operand1": "${rank}",
+            "operand2": 0,
+            "thenRoutine": [
+              {
+                "func": "MOVE",
+                "to": "hand"
+              }
+            ],
+            "elseRoutine": [
+              {
+                "func": "MOVE",
+                "to": "discard"
+              }
+            ]
+          }
+        ]
       }
     ],
     "width": 100,
@@ -1973,11 +1804,36 @@
     "text": "Discard",
     "clickRoutine": [
       {
-        "func": "MOVE",
-        "from": "holder2",
-        "count": 50,
-        "to": "discard",
-        "face": 1
+        "func": "SELECT",
+        "type": "card",
+        "property": "parent",
+        "value": "holder2"
+      },
+      {
+        "func": "FOREACH",
+        "loopRoutine": [
+          {
+            "func": "GET",
+            "property": "rank"
+          },
+          {
+            "func": "IF",
+            "operand1": "${rank}",
+            "operand2": 0,
+            "thenRoutine": [
+              {
+                "func": "MOVE",
+                "to": "hand"
+              }
+            ],
+            "elseRoutine": [
+              {
+                "func": "MOVE",
+                "to": "discard"
+              }
+            ]
+          }
+        ]
       }
     ],
     "width": 100,
@@ -2245,419 +2101,647 @@
     "type": "card",
     "cardType": "0 of plain-circle",
     "id": "y6ey",
-    "z": 1,
-    "parent": "bqgz"
+    "z": 7220,
+    "parent": "5rsg"
   },
   "vri3": {
     "deck": "3vct",
     "type": "card",
     "cardType": "1 of plain-circle",
     "id": "vri3",
-    "z": 5867,
-    "parent": "bqgz"
+    "z": 7221,
+    "parent": "5rsg"
   },
   "t9nm": {
     "deck": "3vct",
     "type": "card",
     "cardType": "2 of plain-circle",
     "id": "t9nm",
-    "z": 5868,
-    "parent": "bqgz"
+    "z": 7222,
+    "parent": "5rsg"
   },
   "2wcg": {
     "deck": "3vct",
     "type": "card",
     "cardType": "3 of plain-circle",
     "id": "2wcg",
-    "z": 5869,
-    "parent": "bqgz"
+    "z": 7223,
+    "parent": "5rsg"
   },
   "k68c": {
     "deck": "3vct",
     "type": "card",
     "cardType": "4 of plain-circle",
     "id": "k68c",
-    "z": 5870,
-    "parent": "bqgz"
+    "z": 7224,
+    "parent": "5rsg"
   },
   "ncx1": {
     "deck": "3vct",
     "type": "card",
     "cardType": "5 of plain-circle",
     "id": "ncx1",
-    "z": 5871,
-    "parent": "bqgz"
+    "z": 7225,
+    "parent": "5rsg"
   },
   "1orr": {
     "deck": "3vct",
     "type": "card",
     "cardType": "6 of plain-circle",
     "id": "1orr",
-    "z": 5872,
-    "parent": "bqgz"
+    "z": 7226,
+    "parent": "5rsg"
   },
   "fyef": {
     "deck": "3vct",
     "type": "card",
     "cardType": "7 of plain-circle",
     "id": "fyef",
-    "z": 5873,
-    "parent": "bqgz"
+    "z": 7227,
+    "parent": "5rsg"
   },
   "2p9j": {
     "deck": "3vct",
     "type": "card",
     "cardType": "8 of plain-circle",
     "id": "2p9j",
-    "z": 5874,
-    "parent": "bqgz"
+    "z": 7228,
+    "parent": "5rsg"
   },
   "v1lm": {
     "deck": "3vct",
     "type": "card",
     "cardType": "9 of plain-circle",
     "id": "v1lm",
-    "z": 5875,
-    "parent": "bqgz"
+    "z": 7229,
+    "parent": "5rsg"
   },
   "8bwu": {
     "deck": "3vct",
     "type": "card",
     "cardType": "10 of plain-circle",
     "id": "8bwu",
-    "z": 5876,
-    "parent": "bqgz"
+    "z": 7230,
+    "parent": "5rsg"
   },
   "wd82": {
     "deck": "3vct",
     "type": "card",
     "cardType": "X of plain-circle",
     "id": "wd82",
-    "z": 5877,
-    "parent": "bqgz"
+    "z": 7231,
+    "parent": "5rsg"
   },
   "09oh": {
     "deck": "7j02",
     "type": "card",
     "cardType": "0 of plain-circle",
     "id": "09oh",
-    "z": 1,
-    "parent": "6zng"
+    "z": 7208,
+    "parent": "4jj7"
   },
   "2q87": {
     "deck": "7j02",
     "type": "card",
     "cardType": "1 of plain-circle",
     "id": "2q87",
-    "z": 5972,
-    "parent": "6zng"
+    "z": 7209,
+    "parent": "4jj7"
   },
   "eeed": {
     "deck": "7j02",
     "type": "card",
     "cardType": "2 of plain-circle",
     "id": "eeed",
-    "z": 5973,
-    "parent": "6zng"
+    "z": 7210,
+    "parent": "4jj7"
   },
   "hl2d": {
     "deck": "7j02",
     "type": "card",
     "cardType": "3 of plain-circle",
     "id": "hl2d",
-    "z": 5974,
-    "parent": "6zng"
+    "z": 7211,
+    "parent": "4jj7"
   },
   "v507": {
     "deck": "7j02",
     "type": "card",
     "cardType": "4 of plain-circle",
     "id": "v507",
-    "z": 5975,
-    "parent": "6zng"
+    "z": 7212,
+    "parent": "4jj7"
   },
   "pp73": {
     "deck": "7j02",
     "type": "card",
     "cardType": "5 of plain-circle",
     "id": "pp73",
-    "z": 5976,
-    "parent": "6zng"
+    "z": 7213,
+    "parent": "4jj7"
   },
   "ai4m": {
     "deck": "7j02",
     "type": "card",
     "cardType": "6 of plain-circle",
     "id": "ai4m",
-    "z": 5977,
-    "parent": "6zng"
+    "z": 7214,
+    "parent": "4jj7"
   },
   "wfol": {
     "deck": "7j02",
     "type": "card",
     "cardType": "7 of plain-circle",
     "id": "wfol",
-    "z": 5978,
-    "parent": "6zng"
+    "z": 7215,
+    "parent": "4jj7"
   },
   "3phb": {
     "deck": "7j02",
     "type": "card",
     "cardType": "8 of plain-circle",
     "id": "3phb",
-    "z": 5979,
-    "parent": "6zng"
+    "z": 7216,
+    "parent": "4jj7"
   },
   "r3zh": {
     "deck": "7j02",
     "type": "card",
     "cardType": "9 of plain-circle",
     "id": "r3zh",
-    "z": 5980,
-    "parent": "6zng"
+    "z": 7217,
+    "parent": "4jj7"
   },
   "7e25": {
     "deck": "7j02",
     "type": "card",
     "cardType": "10 of plain-circle",
     "id": "7e25",
-    "z": 5981,
-    "parent": "6zng"
+    "z": 7218,
+    "parent": "4jj7"
   },
   "64tz": {
     "deck": "7j02",
     "type": "card",
     "cardType": "X of plain-circle",
     "id": "64tz",
-    "z": 5982,
-    "parent": "6zng"
+    "z": 7219,
+    "parent": "4jj7"
   },
   "0pd4": {
     "deck": "2wdt",
     "type": "card",
     "cardType": "0 of plain-circle",
     "id": "0pd4",
-    "z": 1,
-    "parent": "1d17"
+    "z": 7232,
+    "parent": "c1as"
   },
   "fa7b": {
     "deck": "2wdt",
     "type": "card",
     "cardType": "1 of plain-circle",
     "id": "fa7b",
-    "z": 5937,
-    "parent": "1d17"
+    "z": 7233,
+    "parent": "c1as"
   },
   "2d5y": {
     "deck": "2wdt",
     "type": "card",
     "cardType": "2 of plain-circle",
     "id": "2d5y",
-    "z": 5938,
-    "parent": "1d17"
+    "z": 7234,
+    "parent": "c1as"
   },
   "7xhf": {
     "deck": "2wdt",
     "type": "card",
     "cardType": "3 of plain-circle",
     "id": "7xhf",
-    "z": 5939,
-    "parent": "1d17"
+    "z": 7235,
+    "parent": "c1as"
   },
   "34lh": {
     "deck": "2wdt",
     "type": "card",
     "cardType": "4 of plain-circle",
     "id": "34lh",
-    "z": 5940,
-    "parent": "1d17"
+    "z": 7236,
+    "parent": "c1as"
   },
   "8yn3": {
     "deck": "2wdt",
     "type": "card",
     "cardType": "5 of plain-circle",
     "id": "8yn3",
-    "z": 5941,
-    "parent": "1d17"
+    "z": 7237,
+    "parent": "c1as"
   },
   "miyr": {
     "deck": "2wdt",
     "type": "card",
     "cardType": "6 of plain-circle",
     "id": "miyr",
-    "z": 5942,
-    "parent": "1d17"
+    "z": 7238,
+    "parent": "c1as"
   },
   "aclz": {
     "deck": "2wdt",
     "type": "card",
     "cardType": "7 of plain-circle",
     "id": "aclz",
-    "z": 5943,
-    "parent": "1d17"
+    "z": 7239,
+    "parent": "c1as"
   },
   "6i18": {
     "deck": "2wdt",
     "type": "card",
     "cardType": "8 of plain-circle",
     "id": "6i18",
-    "z": 5944,
-    "parent": "1d17"
+    "z": 7240,
+    "parent": "c1as"
   },
   "xlx1": {
     "deck": "2wdt",
     "type": "card",
     "cardType": "9 of plain-circle",
     "id": "xlx1",
-    "z": 5945,
-    "parent": "1d17"
+    "z": 7241,
+    "parent": "c1as"
   },
   "73hf": {
     "deck": "2wdt",
     "type": "card",
     "cardType": "10 of plain-circle",
     "id": "73hf",
-    "z": 5946,
-    "parent": "1d17"
+    "z": 7242,
+    "parent": "c1as"
   },
   "ap0y": {
     "deck": "2wdt",
     "type": "card",
     "cardType": "X of plain-circle",
     "id": "ap0y",
-    "z": 5947,
-    "parent": "1d17"
+    "z": 7243,
+    "parent": "c1as"
   },
   "ps1g": {
     "deck": "6ggy",
     "type": "card",
     "cardType": "0 of plain-circle",
     "id": "ps1g",
-    "z": 1,
-    "parent": "5gn1"
+    "z": 7244,
+    "parent": "zmq2"
   },
   "qo8q": {
     "deck": "6ggy",
     "type": "card",
     "cardType": "1 of plain-circle",
     "id": "qo8q",
-    "z": 5902,
-    "parent": "5gn1"
+    "z": 7245,
+    "parent": "zmq2"
   },
   "q4ay": {
     "deck": "6ggy",
     "type": "card",
     "cardType": "2 of plain-circle",
     "id": "q4ay",
-    "z": 5903,
-    "parent": "5gn1"
+    "z": 7246,
+    "parent": "zmq2"
   },
   "kzvo": {
     "deck": "6ggy",
     "type": "card",
     "cardType": "3 of plain-circle",
     "id": "kzvo",
-    "z": 5904,
-    "parent": "5gn1"
+    "z": 7247,
+    "parent": "zmq2"
   },
   "r8eo": {
     "deck": "6ggy",
     "type": "card",
     "cardType": "4 of plain-circle",
     "id": "r8eo",
-    "z": 5905,
-    "parent": "5gn1"
+    "z": 7248,
+    "parent": "zmq2"
   },
   "e7qn": {
     "deck": "6ggy",
     "type": "card",
     "cardType": "5 of plain-circle",
     "id": "e7qn",
-    "z": 5906,
-    "parent": "5gn1"
+    "z": 7249,
+    "parent": "zmq2"
   },
   "iahp": {
     "deck": "6ggy",
     "type": "card",
     "cardType": "6 of plain-circle",
     "id": "iahp",
-    "z": 5907,
-    "parent": "5gn1"
+    "z": 7250,
+    "parent": "zmq2"
   },
   "2z04": {
     "deck": "6ggy",
     "type": "card",
     "cardType": "7 of plain-circle",
     "id": "2z04",
-    "z": 5908,
-    "parent": "5gn1"
+    "z": 7251,
+    "parent": "zmq2"
   },
   "u0kp": {
     "deck": "6ggy",
     "type": "card",
     "cardType": "8 of plain-circle",
     "id": "u0kp",
-    "z": 5909,
-    "parent": "5gn1"
+    "z": 7252,
+    "parent": "zmq2"
   },
   "mr4q": {
     "deck": "6ggy",
     "type": "card",
     "cardType": "9 of plain-circle",
     "id": "mr4q",
-    "z": 5910,
-    "parent": "5gn1"
+    "z": 7253,
+    "parent": "zmq2"
   },
   "86c9": {
     "deck": "6ggy",
     "type": "card",
     "cardType": "10 of plain-circle",
     "id": "86c9",
-    "z": 5911,
-    "parent": "5gn1"
+    "z": 7254,
+    "parent": "zmq2"
   },
   "n46b": {
     "deck": "6ggy",
     "type": "card",
     "cardType": "X of plain-circle",
     "id": "n46b",
-    "z": 5912,
-    "parent": "5gn1"
+    "z": 7255,
+    "parent": "zmq2"
   },
-  "bqgz": {
-    "type": "pile",
-    "parent": "holder2",
-    "x": 4,
-    "y": 4,
-    "width": 100,
-    "height": 100,
-    "id": "bqgz"
+  "vdjl": {
+    "type": "button",
+    "text": "New Game",
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "header": "Start a new game?",
+        "fields": [
+          {
+            "type": "text",
+            "text": "Are you sure you want to recall all discs and start a new game?"
+          }
+        ]
+      },
+      {
+        "func": "RECALL",
+        "holder": [
+          "holder1",
+          "holder2",
+          "holder3",
+          "holder4",
+          "neutralHolder"
+        ],
+        "owned": true
+      },
+      {
+        "func": "FLIP",
+        "holder": [
+          "holder1",
+          "holder2",
+          "holder3",
+          "holder4",
+          "neutralHolder"
+        ],
+        "face": 0
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "seat1Score",
+          "seat2Score",
+          "seat3Score",
+          "seat4Score"
+        ],
+        "property": "text",
+        "value": 0
+      },
+      {
+        "func": "SELECT",
+        "property": "newReset",
+        "relation": "!=",
+        "value": null
+      },
+      {
+        "func": "FOREACH",
+        "loopRoutine": [
+          {
+            "func": "FOREACH",
+            "in": "${PROPERTY newReset OF $widgetID}",
+            "loopRoutine": [
+              {
+                "func": "SET",
+                "property": "${key}",
+                "value": "${value}"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "x": 757,
+    "y": 13,
+    "z": 14121,
+    "id": "vdjl"
   },
-  "5gn1": {
-    "type": "pile",
-    "parent": "holder4",
-    "x": 4,
-    "y": 4,
-    "width": 100,
-    "height": 100,
-    "id": "5gn1"
+  "seat2Score": {
+    "type": "label",
+    "id": "seat2Score",
+    "x": 1392,
+    "y": 131,
+    "width": 65,
+    "height": 40,
+    "css": "font-size: 30px;",
+    "editable": true,
+    "linkedToSeat": "seat2",
+    "text": 0
   },
-  "1d17": {
-    "type": "pile",
-    "parent": "holder3",
-    "x": 4,
-    "y": 4,
-    "width": 100,
-    "height": 100,
-    "id": "1d17"
+  "seat1Score": {
+    "type": "label",
+    "id": "seat1Score",
+    "x": 130,
+    "y": 128,
+    "width": 65,
+    "height": 40,
+    "css": "font-size: 30px;",
+    "editable": true,
+    "linkedToSeat": "seat1",
+    "text": 0,
+    "hideWhenUnused": true
   },
-  "6zng": {
+  "seat4Score": {
+    "type": "label",
+    "id": "seat4Score",
+    "x": 1385,
+    "y": 737,
+    "width": 65,
+    "height": 40,
+    "css": "font-size: 30px;",
+    "editable": true,
+    "linkedToSeat": "seat4",
+    "text": 0
+  },
+  "seat3Score": {
+    "type": "label",
+    "id": "seat3Score",
+    "x": 130,
+    "y": 739,
+    "width": 65,
+    "height": 40,
+    "css": "font-size: 30px;",
+    "editable": true,
+    "linkedToSeat": "seat3",
+    "text": 0
+  },
+  "4jj7": {
     "type": "pile",
     "parent": "holder1",
     "x": 4,
     "y": 4,
     "width": 100,
     "height": 100,
-    "id": "6zng"
+    "id": "4jj7"
+  },
+  "5rsg": {
+    "type": "pile",
+    "parent": "holder2",
+    "x": 4,
+    "y": 4,
+    "width": 100,
+    "height": 100,
+    "id": "5rsg"
+  },
+  "zmq2": {
+    "type": "pile",
+    "parent": "holder4",
+    "x": 4,
+    "y": 4,
+    "width": 100,
+    "height": 100,
+    "id": "zmq2"
+  },
+  "u8rv": {
+    "type": "label",
+    "text": "Discards",
+    "css": "font-size: 30px",
+    "height": 42,
+    "width": 200,
+    "x": 629,
+    "y": 768,
+    "z": 1,
+    "id": "u8rv"
+  },
+  "ijf6": {
+    "type": "label",
+    "text": "Neutral",
+    "css": "font-size: 30px",
+    "height": 42,
+    "width": 200,
+    "x": 837,
+    "y": 759,
+    "z": 2,
+    "id": "ijf6"
+  },
+  "neutralHolder": {
+    "type": "holder",
+    "id": "neutralHolder",
+    "x": 882,
+    "y": 652,
+    "width": 110,
+    "height": 110,
+    "z": 1
+  },
+  "neutralDeck": {
+    "type": "deck",
+    "id": "neutralDeck",
+    "x": 14,
+    "y": 18,
+    "cardDefaults": {
+      "width": 100,
+      "height": 100
+    },
+    "cardTypes": {
+      " of plain-circle": {
+        "suit": "/i/game-icons.net/delapouite/plain-circle.svg",
+        "suitColor": "#000000",
+        "rank": "",
+        "rankImage": "/i/cards-default/D-face.svg"
+      }
+    },
+    "faceTemplates": [
+      {
+        "border": 1,
+        "radius": 56,
+        "objects": [
+          {
+            "type": "image",
+            "width": 100,
+            "height": 100,
+            "color": "#000000",
+            "svgReplaces": {
+              "currentColor": "logoColor"
+            }
+          }
+        ]
+      },
+      {
+        "radius": 16,
+        "objects": [
+          {
+            "type": "image",
+            "width": 100,
+            "height": 100,
+            "color": "transparent",
+            "svgReplaces": {
+              "#000": "suitColor"
+            },
+            "dynamicProperties": {
+              "value": "suit"
+            }
+          },
+          {
+            "type": "text",
+            "y": 18,
+            "fontSize": 40,
+            "textAlign": "center",
+            "color": "white",
+            "width": 100,
+            "dynamicProperties": {
+              "value": "rank"
+            }
+          }
+        ]
+      }
+    ],
+    "parent": "neutralHolder"
+  },
+  "30ty": {
+    "type": "pile",
+    "parent": "neutralHolder",
+    "x": 4,
+    "y": 4,
+    "width": 100,
+    "height": 100,
+    "id": "30ty"
+  },
+  "c1as": {
+    "type": "pile",
+    "parent": "holder3",
+    "x": 4,
+    "y": 4,
+    "width": 100,
+    "height": 100,
+    "id": "c1as"
   }
 }
