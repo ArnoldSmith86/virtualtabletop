@@ -1,0 +1,217 @@
+{
+  "_meta": {
+    "version": 17,
+    "info": {
+      "name": "Icons, Symbols, and Emojis",
+      "image": "/assets/1923406359_3510",
+      "rules": "",
+      "bgg": "",
+      "year": "",
+      "mode": "Tutorial",
+      "time": "0",
+      "attribution": "",
+      "lastUpdate": 1737418482872,
+      "showName": false,
+      "skill": "",
+      "description": "",
+      "similarImage": "",
+      "similarName": "",
+      "similarDesigner": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": "",
+      "variantImage": "",
+      "variant": "svgReplaces",
+      "language": "en-US",
+      "players": "1"
+    }
+  },
+  "header": {
+    "id": "header",
+    "x": 200,
+    "y": -2,
+    "height": 60,
+    "z": 74,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "font-size: 60px;text-align:center",
+    "text": "Icons, Symbols, and Emojis: svgReplaces",
+    "width": 1200
+  },
+  "mainText": {
+    "id": "mainText",
+    "x": 100,
+    "y": 100,
+    "width": 1405,
+    "height": 150,
+    "layer": -3,
+    "z": 124,
+    "css": "font-size: 25px; ",
+    "movable": false,
+    "html": "The icons in VTT represented through images (not text) are SVG files. SVGs are described with text-like code and can be adjusted dynamically through the VTT `svgReplaces` property. For more background about SVGs see <a href='https://www.w3schools.com/graphics/svg_intro.asp'>this website</a>. In a typical case, you are simply replacing a color with another color, but the property can be used in more powerful ways. These same techniques work on any SVG images and not just the ones available by default on VTT."
+  },
+  "button1Text": {
+    "id": "button1Text",
+    "x": 60,
+    "y": 587,
+    "width": 300,
+    "z": 185,
+    "movable": false,
+    "text": "The boat on the left is from the game-icons.net collection. They all have the default fill color as #000, so that is what you replace. Look at the boat in the JSON Editor. The `svgReplaces` property is saying take any instances where `#000` appears in the SVG and change it to whatever is set in the property `newColor`. You can name the property whatever you want. Then in that property, identify the color that should replace the black #000. \n\nThe meeple on the right is part of a custom set of VTT icons. They use `currentColor` (which defaults to black) and so that is what needs to be replaced."
+  },
+  "button2Text": {
+    "id": "button2Text",
+    "x": 410,
+    "y": 587,
+    "width": 300,
+    "z": 121,
+    "movable": false,
+    "html": "Many SVGs have more than one color. The emoji above on the left has 4. You can see the colors by opening the svg in a text editor. To do that, first download the svg by going to <a href='https://virtualtabletop.io/i/noto-emoji/emoji_u23ef.svg'>https://virtualtabletop.io/i/noto-emoji/emoji_u23ef.svg</a> and save the file to your computer. Then open it in a text editor. You will see the available colors are #F77E00, #FF9800, #FFBD52, and #FAFAFA.\n\nThe emoji on the right has `svgReplaces` for the three orangish colors. Note that the replacement is case sensitive, so #f77e00 would not work."
+  },
+  "button3Text": {
+    "id": "button3Text",
+    "x": 760,
+    "y": 587,
+    "width": 300,
+    "z": 9732,
+    "movable": false,
+    "text": "The rainbows above are just another example of color replacement in an emoji with multiple colors.."
+  },
+  "background": {
+    "id": "background",
+    "width": 1600,
+    "height": 1000,
+    "layer": -4,
+    "z": 94,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "background-color": "#96a7cf"
+    }
+  },
+  "example1": {
+    "id": "example1",
+    "x": 100,
+    "y": 288,
+    "z": 10097,
+    "image": "/i/game-icons.net/delapouite/fishing-boat.svg",
+    "movable": false,
+    "svgReplaces": {
+      "#000": "newColor"
+    },
+    "newColor": "gold"
+  },
+  "button4Text": {
+    "id": "button4Text",
+    "x": 1110,
+    "y": 587,
+    "width": 300,
+    "z": 9732,
+    "movable": false,
+    "text": "These examples take a simple SVG that has a fill but no stroke, and adds the stroke for a different effect. This technique will work on many SVGs. But you really should understand the structure of the SVG you intend to modify before trying something like this.\n\nThe example on the top uses a simple color svgReplaces to modify the color. Then on the bottom images, in the case of the bricks, the stroke (the area around each brick) is set to a thick, dark red stroke that is slightly opaque. The fire is similar with a thick, gold stroke added around the orange fire."
+  },
+  "example2": {
+    "id": "example2",
+    "x": 213,
+    "y": 288,
+    "z": 10097,
+    "image": "i/icons/meeple_3d.svg",
+    "movable": false,
+    "svgReplaces": {
+      "currentColor": "canBeAnything"
+    },
+    "canBeAnything": "red"
+  },
+  "example3": {
+    "id": "example3",
+    "x": 432,
+    "y": 288,
+    "z": 10097,
+    "image": "/i/noto-emoji/emoji_u23ef.svg",
+    "movable": false
+  },
+  "example4": {
+    "id": "example4",
+    "x": 563,
+    "y": 288,
+    "z": 10097,
+    "image": "/i/noto-emoji/emoji_u23ef.svg",
+    "movable": false,
+    "svgReplaces": {
+      "#FF9800": "mainColor",
+      "#FFBD52": "glintColor",
+      "#F77E00": "highlightColor"
+    },
+    "mainColor": "#5624d6",
+    "glintColor": "#b29aee",
+    "highlightColor": "#31147a"
+  },
+  "example6": {
+    "id": "example6",
+    "x": 924,
+    "y": 288,
+    "movable": false,
+    "image": "/i/noto-emoji/emoji_u1f308.svg",
+    "svgReplaces": {
+      "#8177FA": "color1",
+      "#00C0E9": "color2",
+      "#97CC37": "color3",
+      "#F9D81E": "color4",
+      "#FF8E00": "color5",
+      "#FF5117": "color6"
+    },
+    "color1": "indigo",
+    "color2": "blue",
+    "color3": "green",
+    "color4": "yellow",
+    "color5": "orange",
+    "color6": "red"
+  },
+  "example5": {
+    "id": "example5",
+    "x": 788,
+    "y": 288,
+    "movable": false,
+    "image": "/i/noto-emoji/emoji_u1f308.svg"
+  },
+  "example8": {
+    "id": "example8",
+    "x": 1117,
+    "y": 425,
+    "image": "/i/game-icons.net/delapouite/brick-wall.svg",
+    "svgReplaces": {
+      "#000": "customCSS"
+    },
+    "customCSS": "red\" stroke-width=\"15\" stroke-opacity=\"0.8\" stroke=\"darkred"
+  },
+  "example7": {
+    "id": "example7",
+    "x": 1117,
+    "y": 288,
+    "image": "/i/game-icons.net/delapouite/brick-wall.svg",
+    "svgReplaces": {
+      "#000": "brickColor"
+    },
+    "brickColor": "red"
+  },
+  "example9": {
+    "id": "example9",
+    "x": 1299,
+    "y": 425,
+    "image": "/i/game-icons.net/carl-olsen/flame.svg",
+    "svgReplaces": {
+      "#000": "customCSS"
+    },
+    "customCSS": "orange\" stroke-width=\"25\" stroke=\"gold"
+  },
+  "example10": {
+    "id": "example10",
+    "x": 1299,
+    "y": 288,
+    "image": "/i/game-icons.net/carl-olsen/flame.svg",
+    "svgReplaces": {
+      "#000": "newColor"
+    },
+    "newColor": "orange"
+  }
+}

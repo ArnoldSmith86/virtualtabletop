@@ -1,0 +1,436 @@
+{
+  "_meta": {
+    "version": 17,
+    "info": {
+      "name": "Icons, Symbols, and Emojis",
+      "image": "/assets/1923406359_3510",
+      "rules": "",
+      "bgg": "",
+      "year": "",
+      "mode": "Tutorial",
+      "time": "0",
+      "attribution": "",
+      "lastUpdate": 1737418482866,
+      "showName": false,
+      "skill": "",
+      "description": "",
+      "similarImage": "",
+      "similarName": "",
+      "similarDesigner": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": "",
+      "variantImage": "",
+      "variant": "CSS",
+      "language": "en-US",
+      "players": "1"
+    }
+  },
+  "header": {
+    "id": "header",
+    "x": 300,
+    "y": -2,
+    "height": 60,
+    "z": 74,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "font-size: 60px;text-align:center",
+    "text": "Icons, Symbols, and Emojis: CSS",
+    "width": 1000
+  },
+  "mainText": {
+    "id": "mainText",
+    "x": 100,
+    "y": 100,
+    "width": 1405,
+    "height": 150,
+    "layer": -3,
+    "z": 124,
+    "css": "font-size: 25px; ",
+    "movable": false,
+    "html": "The items below are expressed in VTT as either a `text` property or an `image` property. See the <a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Fonts-and-Symbols'>Fonts and Symbols wiki page</a> for additional information about which items can be text, which images, and which can be either. In each group, the top left item has limited css applied. The top right item uses a varierty of different drop-shadow techniques. The lower left image demonstrates borderRadius (a special VTT property) and box-shadow. The bottom right image is clickable and uses a transition to show the difference between filter attributes (from left to right): blur, brightness, contrast, saturation."
+  },
+  "button1Text": {
+    "id": "button1Text",
+    "x": 60,
+    "y": 587,
+    "width": 300,
+    "z": 185,
+    "movable": false,
+    "text": "The paint buckets are from game-icons.net and are expressed in the image property. Open the JSON Editor and select one. Put the cursor on the image property and a button appears at the top of the row of buttons allowing you to choose another image.\n\nThe top right paint bucket has this `filter` css: `drop-shadow(0 0 5px gold)`. The first value is the horizontal offset in pixels. It can be negative. The second value is the vertical offset in pixels and it can also be negative. The third value is the amount of blur (in pixels) for the shadow. The last value is the shadow color. "
+  },
+  "button2Text": {
+    "id": "button2Text",
+    "x": 410,
+    "y": 587,
+    "width": 300,
+    "z": 121,
+    "movable": false,
+    "text": "The buses are part of the material symbols font and are expressed in the text property. To see some font options, put the cursor on the classes property in a widget above. Then put the cursor on the text value and you will get a button to change to one of the many symbols available. Some css appears on all of these widgets for basic formatting: font-size (self-explanatory); display, justify-content, align-items (used to center the image inside the widget); color (self-explanatory).\n\nThe bottom left bus has this `box-shadow` css: `5px 5px 10px 2px #4c556a`. The values are for the horizontal and vertical spread and color."
+  },
+  "button3Text": {
+    "id": "button3Text",
+    "x": 760,
+    "y": 587,
+    "width": 300,
+    "z": 9732,
+    "movable": false,
+    "text": "The pumpkins are part of the (monocolor) emoji font that is expressed through the classes and text properties like the buses. They have the same css as the buses to size, center, and color the pumpkins.\n\nThe bottom left pumpkin combines box-shadow and drop-shadow."
+  },
+  "background": {
+    "id": "background",
+    "width": 1600,
+    "height": 1000,
+    "layer": -4,
+    "z": 94,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "background-color": "#96a7cf"
+    }
+  },
+  "example2": {
+    "id": "example2",
+    "x": 210,
+    "y": 292,
+    "z": 10098,
+    "css": {
+      "filter": "drop-shadow(0 0 5px gold)"
+    },
+    "image": "/i/game-icons.net/delapouite/paint-bucket.svg",
+    "movable": false
+  },
+  "example1": {
+    "id": "example1",
+    "x": 100,
+    "y": 292,
+    "z": 10097,
+    "image": "/i/game-icons.net/delapouite/paint-bucket.svg",
+    "movable": false
+  },
+  "example3": {
+    "id": "example3",
+    "x": 100,
+    "y": 416,
+    "z": 10100,
+    "css": {
+      "box-shadow": "0 0 10px 2px #4c556a"
+    },
+    "image": "/i/game-icons.net/delapouite/paint-bucket.svg",
+    "movable": false
+  },
+  "example4": {
+    "id": "example4",
+    "x": 210,
+    "y": 416,
+    "z": 10099,
+    "css": {
+      "filter": "blur(${PROPERTY blur}px)",
+      "transition": "linear 0.5s"
+    },
+    "image": "/i/game-icons.net/delapouite/paint-bucket.svg",
+    "movable": false,
+    "clickRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY blur}",
+        "operand2": 5,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "blur",
+            "value": 0
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "blur",
+            "value": 5
+          }
+        ]
+      }
+    ],
+    "blur": 5
+  },
+  "example5": {
+    "id": "example5",
+    "x": 570,
+    "y": 292,
+    "z": 10098,
+    "css": {
+      "font-size": "90px",
+      "display": "flex",
+      "justify-content": "center",
+      "align-items": "center",
+      "color": "#2d5da8",
+      "filter": "drop-shadow(-7px 0 6px #2d5da8bb)"
+    },
+    "movable": false,
+    "classes": "material-symbols",
+    "text": "directions_bus"
+  },
+  "example6": {
+    "id": "example6",
+    "x": 460,
+    "y": 292,
+    "z": 10097,
+    "movable": false,
+    "classes": "material-symbols",
+    "text": "directions_bus",
+    "css": {
+      "font-size": "90px",
+      "display": "flex",
+      "justify-content": "center",
+      "align-items": "center",
+      "color": "#2d5da8"
+    }
+  },
+  "example7": {
+    "id": "example7",
+    "x": 460,
+    "y": 416,
+    "z": 10100,
+    "css": {
+      "font-size": "90px",
+      "display": "flex",
+      "justify-content": "center",
+      "align-items": "center",
+      "color": "#2d5da8",
+      "box-shadow": "5px 5px 10px 2px #4c556a"
+    },
+    "borderRadius": 8,
+    "movable": false,
+    "classes": "material-symbols",
+    "text": "directions_bus"
+  },
+  "example8": {
+    "id": "example8",
+    "x": 570,
+    "y": 416,
+    "z": 10099,
+    "css": {
+      "font-size": "90px",
+      "display": "flex",
+      "justify-content": "center",
+      "align-items": "center",
+      "color": "#2d5da8",
+      "filter": "brightness(${PROPERTY brightness})",
+      "transition": "linear 0.5s"
+    },
+    "movable": false,
+    "clickRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY brightness}",
+        "operand2": 0.5,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "brightness",
+            "value": 1.5
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "brightness",
+            "value": 0.5
+          }
+        ]
+      }
+    ],
+    "classes": "material-symbols",
+    "text": "directions_bus",
+    "brightness": 0.5
+  },
+  "example9": {
+    "id": "example9",
+    "x": 919,
+    "y": 292,
+    "z": 10098,
+    "css": {
+      "font-size": "90px",
+      "display": "flex",
+      "justify-content": "center",
+      "align-items": "center",
+      "color": "#e4651c",
+      "filter": "drop-shadow(2px 2px 2px #000000)"
+    },
+    "movable": false,
+    "text": "🎃",
+    "classes": "emoji-monochrome"
+  },
+  "example10": {
+    "id": "example10",
+    "x": 809,
+    "y": 292,
+    "z": 10097,
+    "movable": false,
+    "classes": "emoji-monochrome",
+    "text": "🎃",
+    "css": {
+      "font-size": "90px",
+      "display": "flex",
+      "justify-content": "center",
+      "align-items": "center",
+      "color": "#e4651c"
+    }
+  },
+  "example11": {
+    "id": "example11",
+    "x": 809,
+    "y": 416,
+    "z": 10100,
+    "css": {
+      "font-size": "90px",
+      "display": "flex",
+      "justify-content": "center",
+      "align-items": "center",
+      "color": "#e4651c",
+      "box-shadow": "3px 3px 3px 9px #606060",
+      "filter": "drop-shadow(10px 5px 9px #0000)"
+    },
+    "borderRadius": 20,
+    "movable": false,
+    "text": "🎃",
+    "classes": "emoji-monochrome"
+  },
+  "example12": {
+    "id": "example12",
+    "x": 919,
+    "y": 416,
+    "z": 10099,
+    "css": {
+      "font-size": "90px",
+      "display": "flex",
+      "justify-content": "center",
+      "align-items": "center",
+      "color": "#e4651c",
+      "filter": "contrast(${PROPERTY contrast})",
+      "transition": "linear 0.5s"
+    },
+    "movable": false,
+    "clickRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY contrast}",
+        "operand2": 0.5,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "contrast",
+            "value": 2
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "contrast",
+            "value": 0.5
+          }
+        ]
+      }
+    ],
+    "classes": "emoji-monochrome",
+    "text": "🎃",
+    "contrast": 0.5
+  },
+  "button4Text": {
+    "id": "button4Text",
+    "x": 1110,
+    "y": 587,
+    "width": 300,
+    "z": 9732,
+    "movable": false,
+    "text": "The octopuses are part of the colored emoji font that is expressed through the image property. Recoloring images like the octopuses and paint buckets requires either using `svgReplaces` or css filter properties, both of which are demonstrated in the other variants of this tutorial."
+  },
+  "example13": {
+    "id": "example13",
+    "x": 1269,
+    "y": 292,
+    "z": 10098,
+    "css": {
+      "font-size": "90px",
+      "display": "flex",
+      "justify-content": "center",
+      "align-items": "center",
+      "color": "#e4651c",
+      "filter": "drop-shadow(0 0 20px #ffffff)"
+    },
+    "movable": false,
+    "image": "/i/noto-emoji/emoji_u1f419.svg"
+  },
+  "example14": {
+    "id": "example14",
+    "x": 1159,
+    "y": 292,
+    "z": 10097,
+    "movable": false,
+    "image": "/i/noto-emoji/emoji_u1f419.svg"
+  },
+  "example15": {
+    "id": "example15",
+    "x": 1159,
+    "y": 416,
+    "z": 10100,
+    "css": {
+      "font-size": "90px",
+      "display": "flex",
+      "justify-content": "center",
+      "align-items": "center",
+      "color": "#e4651c",
+      "box-shadow": "3px 3px 7px 7px #4c556a"
+    },
+    "borderRadius": 100,
+    "movable": false,
+    "image": "/i/noto-emoji/emoji_u1f419.svg"
+  },
+  "example16": {
+    "id": "example16",
+    "x": 1269,
+    "y": 416,
+    "z": 10099,
+    "css": {
+      "font-size": "90px",
+      "display": "flex",
+      "justify-content": "center",
+      "align-items": "center",
+      "color": "#e4651c",
+      "filter": "saturate(${PROPERTY saturate})",
+      "transition": "linear 0.5s"
+    },
+    "movable": false,
+    "clickRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY saturate}",
+        "operand2": 0.5,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "saturate",
+            "value": 2
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "saturate",
+            "value": 0.5
+          }
+        ]
+      }
+    ],
+    "image": "/i/noto-emoji/emoji_u1f419.svg",
+    "saturate": 0.5
+  }
+}
