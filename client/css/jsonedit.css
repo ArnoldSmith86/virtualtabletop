@@ -241,6 +241,17 @@ i.error   { color: var(--textHighlightColor3); font-weight: bold; }
   flex-direction: column;
 }
 
+#jeSVGColors {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  height: 100%;
+  width: var(--commandPaneWidth);
+  display: flex;
+  flex-direction: column;
+}
+
 #jeWidgetLayers {
   background: var(--backgroundColor);
   position: absolute;
@@ -518,6 +529,12 @@ body.jsonEdit #toolbar {
 }
 
 #jeCommands .context{
+  font-weight: bold;
+  margin: 1px;
+  margin-top: 8px;
+}
+
+#jeSVGColors .context{
   font-weight: bold;
   margin: 1px;
   margin-top: 8px;
