@@ -1949,6 +1949,18 @@ function jeSVGColors() {
     div.remove();
     observer.disconnect();
   });
+
+  // Close the color viewer if the widget is deselected
+  const widgetDiv = document.querySelector(`#w_${jeStateNow.id}`);
+  if (widgetDiv) {
+    const classObserver = new MutationObserver(() => {
+      if (!widgetDiv.classList.contains('selectedInEdit')) {
+        div.remove();
+        classObserver.disconnect();
+      }
+    });
+    classObserver.observe(widgetDiv, { attributes: true, attributeFilter: ['class'] });
+  }
 }
 
 function jeUpdateMulti() {
