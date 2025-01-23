@@ -219,11 +219,13 @@ const jeCommands = [
     }
   },
   {
-    id: 'je_svgColors',
-    name: 'Show colors in widget SVG image',
+    id: 'je_SVGColors',
+    name: 'Show colors in SVG image',
     icon: 'colors',
-    call: async function() {
+    show: _=>jeStateNow && jeStateNow.image && jeStateNow.image.match(/\.svg$/),
+    call: async function(options) {  
       jeSVGColors();
+      jeShowCommands();  
     }
   },
   /* Now the context-dependent stuff */
@@ -1712,17 +1714,8 @@ async function jeCallCommand(command) {
 function jeCommandOptions() {
   const div = document.createElement('div');
   div.id = 'jeCommandOptions';
-  div.innerHTML = `<b>Command options:</b><div><b>Loading SVG Colors...</b></div><button>Go</button><button>Cancel</button>`;
+  div.innerHTML = '<b>Command options:</b><div></div><button>Go</button><button>Cancel</button>';
   $('#jeCommands').insertBefore(div, $('#jeTopButtons').nextSibling);
-
-  const w = widgets.get(jeStateNow.id);
-  extractHexColors(w.get('image')).then(colors => {
-  const colorsDiv = div.querySelector('div');
-  if (colorsDiv) {
-    colorsDiv.innerHTML = '<b>SVG Colors:</b><br>' + colors.map(color => {
-      return `<div style="background-color: ${color}; color: ${contrastAnyColor(color, 1)}; border: 1px solid #808080; padding: 5px; margin: 2px 0;">${color}</div>`;
-    }).join('');
-  }});
 
   for(const option of jeCommandWithOptions.options) {
     formField(option, $('#jeCommandOptions div'), `${jeCommandWithOptions.id}_${option.label}`);
@@ -1904,33 +1897,56 @@ function jeHighlightWidgets() {
 }
 
 function jeSVGColors() {
-  //This is where the SVG Colors function should work, but the div is not being displayed.
   const div = document.createElement('div');
-  div.id = 'SVGColorsList';
-  div.innerHTML = `<b>Stuff:</b><div><b>Loading SVG Colors...</b></div><button>Go</button><button>Cancel</button>`;
-  const jeTopButtons = document.querySelector('#jeTopButtons');
-  jeTopButtons.insertAdjacentElement('afterend', div);
+  div.id = 'jeSVGColors';
+  div.innerHTML = `<b>SVG Colors:</b><div></div><button>Close</button>`;
+  $('#jeCommands').insertBefore(div, $('#jeTopButtons').nextSibling);
 
-  const w = widgets.get(jeStateNow.id);
-  extractHexColors(w.get('image')).then(colors => {
-  const colorsDiv = div.querySelector('div');
-  if (colorsDiv) {
-    colorsDiv.innerHTML = '<b>SVG Colors:</b><br>' + colors.map(color => {
-      return `<div style="background-color: ${color}; color: ${contrastAnyColor(color, 1)}; border: 1px solid #808080; padding: 5px; margin: 2px 0;">${color}</div>`;
-    }).join('');
-  }});
-}
+  // Reinsert the div because it gets removed
+  const observer = new MutationObserver(() => {
+    if (!document.querySelector('#jeSVGColors')) {
+      $('#jeCommands').insertBefore(div, $('#jeTopButtons').nextSibling);
+    }
+  });
+  const jeCommands = document.querySelector('#jeCommands');
+  if (jeCommands) {
+    observer.observe(jeCommands, { childList: true, subtree: false });
+  }
 
-function extractHexColors(url) {
-  const svgCache = {};
-  return fetch(mapAssetURLs(url))
-    .then(response => response.text())
-    .then(svg => {
-      svgCache[url] = svg;
-      const hexColorRegex = /#(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{6})\b/g;
-      const uniqueColors = Array.from(svg.matchAll(hexColorRegex), match => match[0]);
-      return [...new Set(uniqueColors)];
-    });
+  // Extract and display SVG colors
+  fetch(mapAssetURLs(jeStateNow.image))
+  .then(response => response.text())
+  .then(svg => {
+    const hexColorRegex = /#(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{6})\b/g;
+    const uniqueColors = Array.from(svg.matchAll(hexColorRegex), match => match[0]);
+    const colors = [...new Set(uniqueColors)];
+    const colorsDiv = div.querySelector('div');
+    if (colorsDiv) {
+      colorsDiv.innerHTML = colors.map(color => {
+        return `<button style="width: 100%; background-color: ${color}; color: ${contrastAnyColor(color, 1)}; border: 1px solid #808080; padding: 5px; margin: 2px 0;" data-color="${color}">${color}</button>`;
+      }).join('');
+
+      // Create the buttons
+      const buttons = colorsDiv.querySelectorAll('button');
+      buttons.forEach(button => {
+        button.addEventListener('click', function() {
+          if (!jeStateNow.svgReplaces) {
+            jeStateNow.svgReplaces = {};
+          }
+          const color = this.getAttribute('data-color');
+          if (!(color in jeStateNow.svgReplaces)) {
+            jeStateNow.svgReplaces[color] = "###SELECT ME###";
+            jeSetAndSelect("");
+          }
+        });
+      });
+    }
+  });
+
+  $a('#jeSVGColors button')[0].addEventListener('click', function () {
+    div.remove();
+    observer.disconnect();
+  });
 }
 
 function jeUpdateMulti() {
