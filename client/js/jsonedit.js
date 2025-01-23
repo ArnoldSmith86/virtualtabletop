@@ -1917,13 +1917,15 @@ function jeSVGColors() {
   fetch(mapAssetURLs(jeStateNow.image))
   .then(response => response.text())
   .then(svg => {
-    const hexColorRegex = /#(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{6})\b/g;
+    const hexColorRegex = /#(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{6})\b|currentColor/g;
     const uniqueColors = Array.from(svg.matchAll(hexColorRegex), match => match[0]);
     const colors = [...new Set(uniqueColors)];
     const colorsDiv = div.querySelector('div');
     if (colorsDiv) {
       colorsDiv.innerHTML = colors.map(color => {
-        return `<button style="width: 100%; background-color: ${color}; color: ${contrastAnyColor(color, 1)}; border: 1px solid #808080; padding: 5px; margin: 2px 0;" data-color="${color}">${color}</button>`;
+        const backgroundColor = color === 'currentColor' ? 'black' : color;
+        const textColor = color === 'currentColor' ? 'white' : contrastAnyColor(color, 1);
+        return `<button style="width: 100%; background-color: ${backgroundColor}; color: ${textColor}; border: 1px solid #808080; padding: 5px; margin: 2px 0;" data-color="${color}">${color}</button>`;
       }).join('');
 
       // Create the buttons
