@@ -1693,7 +1693,7 @@ export class Widget extends StateManaged {
       }
 
       if(a.func == 'SELECT') {
-        setDefaults(a, { type: 'all', property: 'parent', relation: '==', value: null, max: 999999, collection: 'DEFAULT', mode: 'set', source: 'all' });
+        setDefaults(a, { type: 'all', property: 'parent', relation: '==', value: null, max: 999999, collection: 'DEFAULT', mode: 'set', source: 'all', random: false });
         let source;
         if(a.source == 'all' || (source = getCollection(a.source))) {
           if([ 'add', 'set', 'remove', 'intersect' ].indexOf(a.mode) == -1)
@@ -1719,6 +1719,14 @@ export class Widget extends StateManaged {
               problems.push(`Warning: Relation ${a.relation} interpreted as ==.`);
             return w.get(a.property) === a.value;
           });
+
+          if (a.random) {
+            const len = c.length;
+            for (let i = len-1; i > 0; i--) {
+                let j = Math.floor(rand() * (i+1));
+                [c[i], c[j]] = [c[j], c[i]];
+            }
+          }
 
           // resolve piles
           if(a.type != 'pile') {

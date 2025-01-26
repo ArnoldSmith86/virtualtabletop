@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "version": 6,
+    "version": 17,
     "info": {
       "name": "Functions - SELECT",
       "image": "/assets/-1377217046_5932",
@@ -9,12 +9,21 @@
       "year": "2020",
       "mode": "Tutorial",
       "time": "0",
-      "players": "1",
-      "language": "en-US",
-      "variant": "Relation",
       "attribution": "",
       "showName": false,
-      "lastUpdate": 1640816495000
+      "lastUpdate": 1737923515326,
+      "skill": "",
+      "description": "",
+      "similarImage": "",
+      "similarName": "",
+      "similarDesigner": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": "",
+      "variantImage": "",
+      "variant": "Relation",
+      "language": "en-US",
+      "players": "1"
     }
   },
   "8fr3": {
@@ -26,23 +35,22 @@
     "movable": false,
     "movableInEdit": false,
     "css": "font-size: 60px;text-align:center",
-    "text": "Functions: SELECT\nRelation",
+    "text": "Functions: SELECT\nBasics",
     "x": 400
   },
   "406b": {
     "id": "406b",
     "x": 100,
-    "y": 161,
+    "y": 164,
     "width": 1400,
-    "height": 50,
     "layer": -3,
-    "z": 136,
+    "z": 132,
     "css": "font-size: 25px; ",
-    "text": "The 'relation' parameter is used to specify the comparator between the 'property' parameter and the 'value' parameter. Accepted operators are < / <= / == / === / != / >= / > / in. The default is ==. ",
+    "text": "SELECT is an important function as it is used to create collections. Most other functions use collections as the basis for performing their actions. A collection can be one widget or many. Note: anonymous collections can be created without using SELECT so long as you know the name(s) of the widget(s) you want to use. See the wiki section Functions and the entry on Collections for more information about collections.",
     "movable": false
   },
   "bm4j": {
-    "text": "One way to select all widgets in the room is to use the not equal operator (!=) for the 'relation' parameter with a 'property' parameter of 'id' and a 'value' parameter of 'null'. To see the result of the SELECT button above, use the JSON Editor (control j) and hover over the 'Show Routine Debug Output' text below the room. Then click on the small arrows on the pop up display to drill down into the specific details of which widgets were selected. Note that the pile ('id' czb8) is not selected. To see how to SELECT a pile look at the wiki entry for the SELECT function.",
+    "text": "The button above SELECTs all the spinners in the room by using the 'type' parameter and then CLICKs them. The collection is stored in DEFAULT even though that parameter is not specified. Most other functions take their action on the DEFAULT collection, so this is one way to simplify the JSON by not specifying unneeded parameters. However, in many cases, you will need to specify the name of the collection.",
     "id": "bm4j",
     "x": 60,
     "y": 700,
@@ -51,7 +59,7 @@
     "movable": false
   },
   "bm5j": {
-    "text": "This button SELECTs widgets with a 'value' property equal to or greater than 4 and then CLICKs them.",
+    "text": "This button SELECTs all widgets with property y equal to 300 (which in this room is the top three spinners).  It puts the collection into 'myWidgets' and then CLICKs all the widgets in the collection.",
     "id": "bm5j",
     "x": 410,
     "y": 700,
@@ -65,7 +73,7 @@
     "y": 700,
     "z": 9732,
     "width": 300,
-    "text": "This button uses the 'in' option for the 'relation' parameter. When using 'in', the value should be an array. In this example, it is an array of the possible odd values for the spinner. So the collection consists of any spinners with the value 1, 3, or 5. The button then CLICKs the spinners in the collection.",
+    "text": "This button is the same as the previous one ('Property') except that it sets the 'max' parameter to 1. The default value is 999999. By setting max to 2, only 2 widgets will be in the collection. Widgets are selected in the order they appear in the JSON tree listing (while ignoring order created by being child widgets). In this room, those are the top middle and right spinners.\n\nBy setting random to true in the right button, the collection of 2 will be randomly selected from all widgts with y = 300 (2 of the top 3 spinners).",
     "movable": false
   },
   "jkmt": {
@@ -73,81 +81,80 @@
     "clickRoutine": [
       {
         "func": "SELECT",
-        "property": "id",
-        "relation": "!=",
-        "value": null
+        "type": "spinner"
+      },
+      {
+        "func": "CLICK"
       }
     ],
     "x": 151,
     "y": 550,
     "z": 10,
     "id": "jkmt",
-    "text": "!=",
-    "css": "font-size: 30px; "
+    "text": "Type"
   },
   "jkmt1": {
     "type": "button",
     "x": 501,
-    "y": 548,
-    "z": 13,
+    "y": 550,
+    "z": 11,
     "id": "jkmt1",
     "clickRoutine": [
       {
         "func": "SELECT",
-        "property": "value",
-        "relation": ">=",
-        "value": 4
+        "property": "y",
+        "value": 300,
+        "collection": "myWidgets"
       },
       {
-        "func": "CLICK"
+        "func": "CLICK",
+        "collection": "myWidgets"
       }
     ],
-    "text": ">=",
-    "css": "font-size: 30px; "
+    "text": "Property"
   },
   "jkmt2": {
     "type": "button",
     "clickRoutine": [
       {
         "func": "SELECT",
-        "property": "value",
-        "relation": "in",
-        "value": [
-          1,
-          3,
-          5
-        ]
+        "property": "y",
+        "value": 300,
+        "max": 2
       },
       {
         "func": "CLICK"
       }
     ],
-    "x": 900,
-    "y": 550,
+    "x": 843,
+    "y": 548,
     "z": 12,
     "id": "jkmt2",
-    "text": "in",
-    "css": "font-size: 30px; "
+    "text": "Max"
   },
   "jkmt3": {
     "type": "button",
     "clickRoutine": [
       {
-        "func": "SELECT",
-        "property": "value",
-        "relation": "==",
-        "value": "5"
+        "func": "SELECT"
       },
       {
-        "func": "CLICK"
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "value",
+        "value": 1
+      },
+      {
+        "func": "SET",
+        "property": "value",
+        "value": 99
       }
     ],
     "x": 1280,
     "y": 550,
     "z": 11,
     "id": "jkmt3",
-    "text": "==",
-    "css": "background: red; font-size:30px"
+    "text": "Source"
   },
   "bm7j": {
     "id": "bm7j",
@@ -155,8 +162,8 @@
     "y": 700,
     "z": 9732,
     "width": 300,
-    "movable": false,
-    "text": "In JavaScript, === means strictly equal and to match, both values must be of the same type. For example, the number 5 and the string '5' are not strictly equal. In JavaScript, == means equal and will attempt to match operands of different types. So number 5 and string '5' are equal using ==. However, VTT does not currently work the same way. All == operators are treated as ===. That may change in the future. The button above DOES NOT WORK the way a similar statement in JavaScript would because it uses === in trying to match the spinners with value number 5 with an operand of a string '5'."
+    "text": "This button uses 2 SELECTs. The first one uses all default properties, so it SELECTs widgets with parent = null and puts them into the DEFAULT collection. This means the cards above are not part of the collection as they are all child widgets. The next SELECT uses the previous collection (DEFAULT) as the source, essentially acting as a filter to further narrow the collection. It SELECTs any widgets (such as a spinner) with the value of 1 and changes them to 99. If none of the spinners have the value of 1, the collection will be empty and nothing will be changed.",
+    "movable": false
   },
   "7ykk": {
     "type": "holder",
@@ -193,6 +200,14 @@
         "holder": "${PROPERTY parent}"
       }
     ]
+  },
+  "7ykkP": {
+    "type": "pile",
+    "id": "7ykkP",
+    "width": 103,
+    "height": 160,
+    "z": 10959,
+    "parent": "7ykk"
   },
   "7ykkD": {
     "type": "deck",
@@ -725,423 +740,423 @@
   },
   "7ykk_A_C": {
     "id": "7ykk_A_C",
-    "parent": "czb8",
+    "parent": "7ykkP",
     "deck": "7ykkD",
     "type": "card",
     "cardType": "C 01",
-    "z": 2101
+    "z": 9393
   },
   "7ykk_2_C": {
     "id": "7ykk_2_C",
-    "parent": "czb8",
+    "parent": "7ykkP",
     "deck": "7ykkD",
     "type": "card",
     "cardType": "C 02",
-    "z": 5723
+    "z": 4134
   },
   "7ykk_3_C": {
     "id": "7ykk_3_C",
-    "parent": "czb8",
+    "parent": "7ykkP",
     "deck": "7ykkD",
     "type": "card",
     "cardType": "C 03",
-    "z": 5850
+    "z": 313
   },
   "7ykk_4_C": {
     "id": "7ykk_4_C",
-    "parent": "czb8",
+    "parent": "7ykkP",
     "deck": "7ykkD",
     "type": "card",
     "cardType": "C 04",
-    "z": 8598
+    "z": 962
   },
   "7ykk_5_C": {
     "id": "7ykk_5_C",
-    "parent": "czb8",
+    "parent": "7ykkP",
     "deck": "7ykkD",
     "type": "card",
     "cardType": "C 05",
-    "z": 8635
+    "z": 1250
   },
   "7ykk_6_C": {
     "id": "7ykk_6_C",
-    "parent": "czb8",
+    "parent": "7ykkP",
     "deck": "7ykkD",
     "type": "card",
     "cardType": "C 06",
-    "z": 7415
+    "z": 4707
   },
   "7ykk_7_C": {
     "id": "7ykk_7_C",
-    "parent": "czb8",
+    "parent": "7ykkP",
     "deck": "7ykkD",
     "type": "card",
     "cardType": "C 07",
-    "z": 2817
+    "z": 9759
   },
   "7ykk_8_C": {
     "id": "7ykk_8_C",
-    "parent": "czb8",
+    "parent": "7ykkP",
     "deck": "7ykkD",
     "type": "card",
     "cardType": "C 08",
-    "z": 3702
+    "z": 4794
   },
   "7ykk_9_C": {
     "id": "7ykk_9_C",
-    "parent": "czb8",
+    "parent": "7ykkP",
     "deck": "7ykkD",
     "type": "card",
     "cardType": "C 09",
-    "z": 5745
+    "z": 4470
   },
   "7ykk_T_C": {
     "id": "7ykk_T_C",
-    "parent": "czb8",
+    "parent": "7ykkP",
     "deck": "7ykkD",
     "type": "card",
     "cardType": "C 10",
-    "z": 6546
+    "z": 4430
   },
   "7ykk_J_C": {
     "id": "7ykk_J_C",
-    "parent": "czb8",
+    "parent": "7ykkP",
     "deck": "7ykkD",
     "type": "card",
     "cardType": "C 2J",
-    "z": 2956
+    "z": 4803
   },
   "7ykk_Q_C": {
     "id": "7ykk_Q_C",
-    "parent": "czb8",
+    "parent": "7ykkP",
     "deck": "7ykkD",
     "type": "card",
     "cardType": "C 3Q",
-    "z": 7657
+    "z": 6147
   },
   "7ykk_K_C": {
     "id": "7ykk_K_C",
-    "parent": "czb8",
+    "parent": "7ykkP",
     "deck": "7ykkD",
     "type": "card",
     "cardType": "C 4K",
-    "z": 8107
+    "z": 2997
   },
   "7ykk_A_D": {
     "id": "7ykk_A_D",
-    "parent": "czb8",
+    "parent": "7ykkP",
     "deck": "7ykkD",
     "type": "card",
     "cardType": "D 01",
-    "z": 6588
+    "z": 1206
   },
   "7ykk_2_D": {
     "id": "7ykk_2_D",
-    "parent": "czb8",
+    "parent": "7ykkP",
     "deck": "7ykkD",
     "type": "card",
     "cardType": "D 02",
-    "z": 5768
+    "z": 1730
   },
   "7ykk_3_D": {
     "id": "7ykk_3_D",
-    "parent": "czb8",
+    "parent": "7ykkP",
     "deck": "7ykkD",
     "type": "card",
     "cardType": "D 03",
-    "z": 3101
+    "z": 9686
   },
   "7ykk_4_D": {
     "id": "7ykk_4_D",
-    "parent": "czb8",
+    "parent": "7ykkP",
     "deck": "7ykkD",
     "type": "card",
     "cardType": "D 04",
-    "z": 5505
+    "z": 3818
   },
   "7ykk_5_D": {
     "id": "7ykk_5_D",
-    "parent": "czb8",
+    "parent": "7ykkP",
     "deck": "7ykkD",
     "type": "card",
     "cardType": "D 05",
-    "z": 5166
+    "z": 6442
   },
   "7ykk_6_D": {
     "id": "7ykk_6_D",
-    "parent": "czb8",
+    "parent": "7ykkP",
     "deck": "7ykkD",
     "type": "card",
     "cardType": "D 06",
-    "z": 9223
+    "z": 2624
   },
   "7ykk_7_D": {
     "id": "7ykk_7_D",
-    "parent": "czb8",
+    "parent": "7ykkP",
     "deck": "7ykkD",
     "type": "card",
     "cardType": "D 07",
-    "z": 5475
+    "z": 2528
   },
   "7ykk_8_D": {
     "id": "7ykk_8_D",
-    "parent": "czb8",
+    "parent": "7ykkP",
     "deck": "7ykkD",
     "type": "card",
     "cardType": "D 08",
-    "z": 5941
+    "z": 4863
   },
   "7ykk_9_D": {
     "id": "7ykk_9_D",
-    "parent": "czb8",
+    "parent": "7ykkP",
     "deck": "7ykkD",
     "type": "card",
     "cardType": "D 09",
-    "z": 1250
+    "z": 6980
   },
   "7ykk_T_D": {
     "id": "7ykk_T_D",
-    "parent": "czb8",
+    "parent": "7ykkP",
     "deck": "7ykkD",
     "type": "card",
     "cardType": "D 10",
-    "z": 903
+    "z": 884
   },
   "7ykk_J_D": {
     "id": "7ykk_J_D",
-    "parent": "czb8",
+    "parent": "7ykkP",
     "deck": "7ykkD",
     "type": "card",
     "cardType": "D 2J",
-    "z": 353
+    "z": 2292
   },
   "7ykk_Q_D": {
     "id": "7ykk_Q_D",
-    "parent": "czb8",
+    "parent": "7ykkP",
     "deck": "7ykkD",
     "type": "card",
     "cardType": "D 3Q",
-    "z": 3599
+    "z": 7550
   },
   "7ykk_K_D": {
     "id": "7ykk_K_D",
-    "parent": "czb8",
+    "parent": "7ykkP",
     "deck": "7ykkD",
     "type": "card",
     "cardType": "D 4K",
-    "z": 9846
+    "z": 471
   },
   "7ykk_A_H": {
     "id": "7ykk_A_H",
-    "parent": "czb8",
+    "parent": "7ykkP",
     "deck": "7ykkD",
     "type": "card",
     "cardType": "H 01",
-    "z": 7310
+    "z": 6784
   },
   "7ykk_2_H": {
     "id": "7ykk_2_H",
-    "parent": "czb8",
+    "parent": "7ykkP",
     "deck": "7ykkD",
     "type": "card",
     "cardType": "H 02",
-    "z": 6461
+    "z": 244
   },
   "7ykk_3_H": {
     "id": "7ykk_3_H",
     "deck": "7ykkD",
     "type": "card",
     "cardType": "H 03",
-    "z": 1124,
-    "parent": "czb8"
+    "z": 10957,
+    "parent": "7ykkP"
   },
   "7ykk_4_H": {
     "id": "7ykk_4_H",
-    "parent": "czb8",
+    "parent": "7ykkP",
     "deck": "7ykkD",
     "type": "card",
     "cardType": "H 04",
-    "z": 1902
+    "z": 722
   },
   "7ykk_5_H": {
     "id": "7ykk_5_H",
-    "parent": "czb8",
+    "parent": "7ykkP",
     "deck": "7ykkD",
     "type": "card",
     "cardType": "H 05",
-    "z": 6670
+    "z": 4301
   },
   "7ykk_6_H": {
     "id": "7ykk_6_H",
-    "parent": "czb8",
+    "parent": "7ykkP",
     "deck": "7ykkD",
     "type": "card",
     "cardType": "H 06",
-    "z": 1033
+    "z": 8824
   },
   "7ykk_7_H": {
     "id": "7ykk_7_H",
-    "parent": "czb8",
+    "parent": "7ykkP",
     "deck": "7ykkD",
     "type": "card",
     "cardType": "H 07",
-    "z": 3139
+    "z": 3942
   },
   "7ykk_8_H": {
     "id": "7ykk_8_H",
-    "parent": "czb8",
+    "parent": "7ykkP",
     "deck": "7ykkD",
     "type": "card",
     "cardType": "H 08",
-    "z": 544
+    "z": 8198
   },
   "7ykk_9_H": {
     "id": "7ykk_9_H",
-    "parent": "czb8",
+    "parent": "7ykkP",
     "deck": "7ykkD",
     "type": "card",
     "cardType": "H 09",
-    "z": 4535
+    "z": 8568
   },
   "7ykk_T_H": {
     "id": "7ykk_T_H",
-    "parent": "czb8",
+    "parent": "7ykkP",
     "deck": "7ykkD",
     "type": "card",
     "cardType": "H 10",
-    "z": 8461
+    "z": 6561
   },
   "7ykk_J_H": {
     "id": "7ykk_J_H",
-    "parent": "czb8",
+    "parent": "7ykkP",
     "deck": "7ykkD",
     "type": "card",
     "cardType": "H 2J",
-    "z": 3827
+    "z": 2149
   },
   "7ykk_Q_H": {
     "id": "7ykk_Q_H",
-    "parent": "czb8",
+    "parent": "7ykkP",
     "deck": "7ykkD",
     "type": "card",
     "cardType": "H 3Q",
-    "z": 9524
+    "z": 2593
   },
   "7ykk_K_H": {
     "id": "7ykk_K_H",
-    "parent": "czb8",
+    "parent": "7ykkP",
     "deck": "7ykkD",
     "type": "card",
     "cardType": "H 4K",
-    "z": 3865
+    "z": 2947
   },
   "7ykk_A_S": {
     "id": "7ykk_A_S",
-    "parent": "czb8",
+    "parent": "7ykkP",
     "deck": "7ykkD",
     "type": "card",
     "cardType": "S 01",
-    "z": 4824
+    "z": 5262
   },
   "7ykk_2_S": {
     "id": "7ykk_2_S",
-    "parent": "czb8",
+    "parent": "7ykkP",
     "deck": "7ykkD",
     "type": "card",
     "cardType": "S 02",
-    "z": 7389
+    "z": 186
   },
   "7ykk_3_S": {
     "id": "7ykk_3_S",
-    "parent": "czb8",
+    "parent": "7ykkP",
     "deck": "7ykkD",
     "type": "card",
     "cardType": "S 03",
-    "z": 2051
+    "z": 4796
   },
   "7ykk_4_S": {
     "id": "7ykk_4_S",
-    "parent": "czb8",
+    "parent": "7ykkP",
     "deck": "7ykkD",
     "type": "card",
     "cardType": "S 04",
-    "z": 5795
+    "z": 7988
   },
   "7ykk_5_S": {
     "id": "7ykk_5_S",
-    "parent": "czb8",
+    "parent": "7ykkP",
     "deck": "7ykkD",
     "type": "card",
     "cardType": "S 05",
-    "z": 4052
+    "z": 9247
   },
   "7ykk_6_S": {
     "id": "7ykk_6_S",
-    "parent": "czb8",
+    "parent": "7ykkP",
     "deck": "7ykkD",
     "type": "card",
     "cardType": "S 06",
-    "z": 876
+    "z": 4541
   },
   "7ykk_7_S": {
     "id": "7ykk_7_S",
-    "parent": "czb8",
+    "parent": "7ykkP",
     "deck": "7ykkD",
     "type": "card",
     "cardType": "S 07",
-    "z": 3678
+    "z": 2424
   },
   "7ykk_8_S": {
     "id": "7ykk_8_S",
-    "parent": "czb8",
+    "parent": "7ykkP",
     "deck": "7ykkD",
     "type": "card",
     "cardType": "S 08",
-    "z": 1834
+    "z": 4462
   },
   "7ykk_9_S": {
     "id": "7ykk_9_S",
-    "parent": "czb8",
+    "parent": "7ykkP",
     "deck": "7ykkD",
     "type": "card",
     "cardType": "S 09",
-    "z": 2346
+    "z": 7183
   },
   "7ykk_T_S": {
     "id": "7ykk_T_S",
-    "parent": "czb8",
+    "parent": "7ykkP",
     "deck": "7ykkD",
     "type": "card",
     "cardType": "S 10",
-    "z": 2614
+    "z": 3098
   },
   "7ykk_J_S": {
     "id": "7ykk_J_S",
-    "parent": "czb8",
+    "parent": "7ykkP",
     "deck": "7ykkD",
     "type": "card",
     "cardType": "S 2J",
-    "z": 299
+    "z": 5764
   },
   "7ykk_Q_S": {
     "id": "7ykk_Q_S",
-    "parent": "czb8",
+    "parent": "7ykkP",
     "deck": "7ykkD",
     "type": "card",
     "cardType": "S 3Q",
-    "z": 2309
+    "z": 6242
   },
   "7ykk_K_S": {
     "id": "7ykk_K_S",
-    "parent": "czb8",
+    "parent": "7ykkP",
     "deck": "7ykkD",
     "type": "card",
     "cardType": "S 4K",
-    "z": 1178
+    "z": 4327
   },
   "jv7o": {
     "type": "spinner",
-    "value": 4,
+    "value": 6,
     "options": [
       1,
       2,
@@ -1154,12 +1169,12 @@
     "y": 300,
     "z": 10952,
     "id": "jv7o",
-    "angle": 20757,
+    "angle": 15064,
     "movable": false
   },
   "odp2": {
     "type": "spinner",
-    "value": 4,
+    "value": 2,
     "options": [
       1,
       2,
@@ -1172,12 +1187,12 @@
     "y": 300,
     "z": 10950,
     "id": "odp2",
-    "angle": 15698,
+    "angle": 13078,
     "movable": false
   },
   "3pti": {
     "type": "spinner",
-    "value": 5,
+    "value": 1,
     "options": [
       1,
       2,
@@ -1190,12 +1205,12 @@
     "y": 400,
     "z": 10949,
     "id": "3pti",
-    "angle": 15444,
+    "angle": 10817,
     "movable": false
   },
   "i7av": {
     "type": "spinner",
-    "value": 2,
+    "value": 5,
     "options": [
       1,
       2,
@@ -1207,13 +1222,13 @@
     "x": 535,
     "y": 300,
     "z": 10953,
-    "angle": 15902,
+    "angle": 13232,
     "movable": false,
     "id": "i7av"
   },
   "gns9": {
     "type": "spinner",
-    "value": 1,
+    "value": 4,
     "options": [
       1,
       2,
@@ -1224,17 +1239,28 @@
     ],
     "y": 400,
     "z": 10949,
-    "angle": 15497,
+    "angle": 11021,
     "id": "gns9",
     "x": 605,
     "movable": false
   },
-  "czb8": {
-    "type": "pile",
-    "width": 103,
-    "height": 160,
-    "id": "czb8",
-    "z": 10955,
-    "parent": "7ykk"
+  "jkmt4": {
+    "type": "button",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "y",
+        "value": 300,
+        "max": 2
+      },
+      {
+        "func": "CLICK"
+      }
+    ],
+    "x": 977,
+    "y": 548,
+    "z": 12,
+    "id": "jkmt4",
+    "text": "Random"
   }
 }
