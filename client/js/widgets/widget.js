@@ -1721,11 +1721,7 @@ export class Widget extends StateManaged {
           });
 
           if (a.random) {
-            const len = c.length;
-            for (let i = len-1; i > 0; i--) {
-                let j = Math.floor(rand() * (i+1));
-                [c[i], c[j]] = [c[j], c[i]];
-            }
+            c = shuffleArray(Object.values(c));
           }
 
           // resolve piles
