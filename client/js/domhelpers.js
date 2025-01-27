@@ -138,7 +138,6 @@ export function domByTemplate(id, obj, type='div') {
 export function shuffleArray(array) {
   const isString = typeof array === 'string';
   array = [...array];
-  console.log(array);
   for (let i = array.length - 1; i > 0; i--) {
     const j = Math.floor(rand() * (i + 1));
     [array[i], array[j]] = [array[j], array[i]];
