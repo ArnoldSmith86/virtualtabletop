@@ -1721,7 +1721,7 @@ export class Widget extends StateManaged {
           });
 
           if (a.random) {
-            c = shuffleArray(Object.values(c));
+            c = shuffleArray(c);
           }
 
           // resolve piles
