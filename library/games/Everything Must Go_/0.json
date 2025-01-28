@@ -59,33 +59,6 @@
     "editable": true,
     "z": 20
   },
-  "_meta": {
-    "version": 17,
-    "info": {
-      "name": "Everything Must Go!",
-      "image": "/assets/-2049741076_35361",
-      "rules": "https://cdn.shopify.com/s/files/1/0143/6178/8473/files/Bites_Rulebook_190807.pdf?v=1645044345",
-      "bgg": "https://boardgamegeek.com/boardgame/277927/bites",
-      "year": "2020",
-      "mode": "vs",
-      "time": "20",
-      "attribution": "<div>Room layout and design maddie. Released to the Public Domain under CC0.</div><div><br></div>Cover image by Basher Eyre (CC BY-SA 2.0). Available at: https://commons.wikimedia.org/w/index.php?curid=13795463",
-      "lastUpdate": 1736903343165,
-      "showName": true,
-      "skill": "",
-      "description": "It's Black Friday and the meeples are on a shopping spree! As a salesperson of the store, direct the customers towards the right products to maximize your commissions.",
-      "similarImage": "",
-      "similarName": "Bites",
-      "similarDesigner": "Wolfgang Ditt, Brigitte Ditt",
-      "similarAwards": "2020 Golden Geek Light Game of the Year Nominee",
-      "ruleText": "",
-      "helpText": "This module adapts only the base setup of Bites.",
-      "variantImage": "",
-      "variant": "",
-      "language": "en-US",
-      "players": "2-5"
-    }
-  },
   "h1": {
     "type": "holder",
     "id": "h1",
@@ -994,8 +967,8 @@
     "type": "card",
     "cardType": "fridge",
     "id": "agjk",
-    "z": 11762,
-    "parent": "h24",
+    "z": 12857,
+    "parent": "h4",
     "x": -20,
     "y": -20
   },
@@ -1004,8 +977,8 @@
     "type": "card",
     "cardType": "fridge",
     "id": "sj9j",
-    "z": 11767,
-    "parent": "h29",
+    "z": 12888,
+    "parent": "h35",
     "x": -20,
     "y": -20
   },
@@ -1014,8 +987,8 @@
     "type": "card",
     "cardType": "fridge",
     "id": "n0i7",
-    "z": 11777,
-    "parent": "h39",
+    "z": 12882,
+    "parent": "h29",
     "x": -20,
     "y": -20
   },
@@ -1024,8 +997,8 @@
     "type": "card",
     "cardType": "fridge",
     "id": "sncz",
-    "z": 11768,
-    "parent": "h30",
+    "z": 12877,
+    "parent": "h24",
     "x": -20,
     "y": -20
   },
@@ -1034,8 +1007,8 @@
     "type": "card",
     "cardType": "fridge",
     "id": "a2ix",
-    "z": 11769,
-    "parent": "h31",
+    "z": 12864,
+    "parent": "h11",
     "x": -20,
     "y": -20
   },
@@ -1044,8 +1017,8 @@
     "type": "card",
     "cardType": "fridge",
     "id": "3pgd",
-    "z": 11789,
-    "parent": "h51",
+    "z": 12866,
+    "parent": "h13",
     "x": -20,
     "y": -20
   },
@@ -1054,8 +1027,8 @@
     "type": "card",
     "cardType": "fridge",
     "id": "fizq",
-    "z": 11745,
-    "parent": "h7",
+    "z": 12881,
+    "parent": "h28",
     "x": -20,
     "y": -20
   },
@@ -1064,8 +1037,8 @@
     "type": "card",
     "cardType": "fridge",
     "id": "6hxe",
-    "z": 11744,
-    "parent": "h6",
+    "z": 12891,
+    "parent": "h38",
     "x": -20,
     "y": -20
   },
@@ -1074,8 +1047,8 @@
     "type": "card",
     "cardType": "fridge",
     "id": "azze",
-    "z": 11787,
-    "parent": "h49",
+    "z": 12875,
+    "parent": "h22",
     "x": -20,
     "y": -20
   },
@@ -1084,8 +1057,8 @@
     "type": "card",
     "cardType": "necklace",
     "id": "rxqp",
-    "z": 11770,
-    "parent": "h32",
+    "z": 12884,
+    "parent": "h31",
     "x": -20,
     "y": -20
   },
@@ -1094,8 +1067,8 @@
     "type": "card",
     "cardType": "necklace",
     "id": "xwfo",
-    "z": 11753,
-    "parent": "h15",
+    "z": 12871,
+    "parent": "h18",
     "x": -20,
     "y": -20
   },
@@ -1104,8 +1077,8 @@
     "type": "card",
     "cardType": "necklace",
     "id": "52n8",
-    "z": 11775,
-    "parent": "h37",
+    "z": 12870,
+    "parent": "h17",
     "x": -20,
     "y": -20
   },
@@ -1114,8 +1087,8 @@
     "type": "card",
     "cardType": "necklace",
     "id": "dl56",
-    "z": 11790,
-    "parent": "h52",
+    "z": 12878,
+    "parent": "h25",
     "x": -20,
     "y": -20
   },
@@ -1124,8 +1097,8 @@
     "type": "card",
     "cardType": "necklace",
     "id": "z0m9",
-    "z": 11759,
-    "parent": "h21",
+    "z": 12897,
+    "parent": "h44",
     "x": -20,
     "y": -20
   },
@@ -1134,8 +1107,8 @@
     "type": "card",
     "cardType": "necklace",
     "id": "o309",
-    "z": 11743,
-    "parent": "h5",
+    "z": 12902,
+    "parent": "h49",
     "x": -20,
     "y": -20
   },
@@ -1144,8 +1117,8 @@
     "type": "card",
     "cardType": "necklace",
     "id": "vj5r",
-    "z": 11778,
-    "parent": "h40",
+    "z": 12869,
+    "parent": "h16",
     "x": -20,
     "y": -20
   },
@@ -1154,8 +1127,8 @@
     "type": "card",
     "cardType": "necklace",
     "id": "xs00",
-    "z": 11739,
-    "parent": "h1",
+    "z": 12892,
+    "parent": "h39",
     "x": -20,
     "y": -20
   },
@@ -1164,8 +1137,8 @@
     "type": "card",
     "cardType": "necklace",
     "id": "0zph",
-    "z": 11764,
-    "parent": "h26",
+    "z": 12907,
+    "parent": "h54",
     "x": -20,
     "y": -20
   },
@@ -1174,7 +1147,7 @@
     "type": "card",
     "cardType": "xbox",
     "id": "o9no",
-    "z": 11748,
+    "z": 12863,
     "parent": "h10",
     "x": -20,
     "y": -20
@@ -1184,8 +1157,8 @@
     "type": "card",
     "cardType": "xbox",
     "id": "zv9j",
-    "z": 11792,
-    "parent": "h54",
+    "z": 12887,
+    "parent": "h34",
     "x": -20,
     "y": -20
   },
@@ -1194,8 +1167,8 @@
     "type": "card",
     "cardType": "xbox",
     "id": "qdx1",
-    "z": 11776,
-    "parent": "h38",
+    "z": 12868,
+    "parent": "h15",
     "x": -20,
     "y": -20
   },
@@ -1204,8 +1177,8 @@
     "type": "card",
     "cardType": "xbox",
     "id": "tt4h",
-    "z": 11772,
-    "parent": "h34",
+    "z": 12903,
+    "parent": "h50",
     "x": -20,
     "y": -20
   },
@@ -1214,8 +1187,8 @@
     "type": "card",
     "cardType": "xbox",
     "id": "zkdm",
-    "z": 11780,
-    "parent": "h42",
+    "z": 12867,
+    "parent": "h14",
     "x": -20,
     "y": -20
   },
@@ -1224,8 +1197,8 @@
     "type": "card",
     "cardType": "xbox",
     "id": "mkds",
-    "z": 11757,
-    "parent": "h19",
+    "z": 12879,
+    "parent": "h26",
     "x": -20,
     "y": -20
   },
@@ -1234,8 +1207,8 @@
     "type": "card",
     "cardType": "xbox",
     "id": "7hr7",
-    "z": 11746,
-    "parent": "h8",
+    "z": 12890,
+    "parent": "h37",
     "x": -20,
     "y": -20
   },
@@ -1244,8 +1217,8 @@
     "type": "card",
     "cardType": "xbox",
     "id": "easv",
-    "z": 11774,
-    "parent": "h36",
+    "z": 12885,
+    "parent": "h32",
     "x": -20,
     "y": -20
   },
@@ -1254,8 +1227,8 @@
     "type": "card",
     "cardType": "xbox",
     "id": "t8tb",
-    "z": 11750,
-    "parent": "h12",
+    "z": 12876,
+    "parent": "h23",
     "x": -20,
     "y": -20
   },
@@ -1264,8 +1237,8 @@
     "type": "card",
     "cardType": "shoes",
     "id": "7suz",
-    "z": 11765,
-    "parent": "h27",
+    "z": 12860,
+    "parent": "h7",
     "x": -20,
     "y": -20
   },
@@ -1274,8 +1247,8 @@
     "type": "card",
     "cardType": "shoes",
     "id": "rm7k",
-    "z": 11747,
-    "parent": "h9",
+    "z": 12896,
+    "parent": "h43",
     "x": -20,
     "y": -20
   },
@@ -1284,8 +1257,8 @@
     "type": "card",
     "cardType": "shoes",
     "id": "j1ua",
-    "z": 11761,
-    "parent": "h23",
+    "z": 12901,
+    "parent": "h48",
     "x": -20,
     "y": -20
   },
@@ -1294,8 +1267,8 @@
     "type": "card",
     "cardType": "shoes",
     "id": "p7u1",
-    "z": 11749,
-    "parent": "h11",
+    "z": 12854,
+    "parent": "h1",
     "x": -20,
     "y": -20
   },
@@ -1304,8 +1277,8 @@
     "type": "card",
     "cardType": "shoes",
     "id": "s3kf",
-    "z": 11786,
-    "parent": "h48",
+    "z": 12861,
+    "parent": "h8",
     "x": -20,
     "y": -20
   },
@@ -1314,8 +1287,8 @@
     "type": "card",
     "cardType": "shoes",
     "id": "744a",
-    "z": 11760,
-    "parent": "h22",
+    "z": 12865,
+    "parent": "h12",
     "x": -20,
     "y": -20
   },
@@ -1324,8 +1297,8 @@
     "type": "card",
     "cardType": "shoes",
     "id": "m8wg",
-    "z": 11779,
-    "parent": "h41",
+    "z": 12906,
+    "parent": "h53",
     "x": -20,
     "y": -20
   },
@@ -1334,8 +1307,8 @@
     "type": "card",
     "cardType": "shoes",
     "id": "cy2j",
-    "z": 11793,
-    "parent": "h55",
+    "z": 12856,
+    "parent": "h3",
     "x": -20,
     "y": -20
   },
@@ -1344,8 +1317,8 @@
     "type": "card",
     "cardType": "shoes",
     "id": "5hul",
-    "z": 11741,
-    "parent": "h3",
+    "z": 12886,
+    "parent": "h33",
     "x": -20,
     "y": -20
   },
@@ -1354,8 +1327,8 @@
     "type": "card",
     "cardType": "coupon",
     "id": "ie4d",
-    "z": 11740,
-    "parent": "h2",
+    "z": 12895,
+    "parent": "h42",
     "x": -20,
     "y": -20
   },
@@ -1364,8 +1337,8 @@
     "type": "card",
     "cardType": "coupon",
     "id": "a537",
-    "z": 11763,
-    "parent": "h25",
+    "z": 12894,
+    "parent": "h41",
     "x": -20,
     "y": -20
   },
@@ -1374,8 +1347,8 @@
     "type": "card",
     "cardType": "coupon",
     "id": "1qzh",
-    "z": 11785,
-    "parent": "h47",
+    "z": 12859,
+    "parent": "h6",
     "x": -20,
     "y": -20
   },
@@ -1384,8 +1357,8 @@
     "type": "card",
     "cardType": "coupon",
     "id": "b0jx",
-    "z": 11771,
-    "parent": "h33",
+    "z": 12855,
+    "parent": "h2",
     "x": -20,
     "y": -20
   },
@@ -1394,8 +1367,8 @@
     "type": "card",
     "cardType": "coupon",
     "id": "3ui7",
-    "z": 11781,
-    "parent": "h43",
+    "z": 12873,
+    "parent": "h20",
     "x": -20,
     "y": -20
   },
@@ -1404,8 +1377,8 @@
     "type": "card",
     "cardType": "wine",
     "id": "airb",
-    "z": 11751,
-    "parent": "h13",
+    "z": 12874,
+    "parent": "h21",
     "x": -20,
     "y": -20
   },
@@ -1414,8 +1387,8 @@
     "type": "card",
     "cardType": "wine",
     "id": "dtun",
-    "z": 11784,
-    "parent": "h46",
+    "z": 12880,
+    "parent": "h27",
     "x": -20,
     "y": -20
   },
@@ -1424,8 +1397,8 @@
     "type": "card",
     "cardType": "wine",
     "id": "73yi",
-    "z": 11742,
-    "parent": "h4",
+    "z": 12883,
+    "parent": "h30",
     "x": -20,
     "y": -20
   },
@@ -1434,8 +1407,8 @@
     "type": "card",
     "cardType": "wine",
     "id": "tuya",
-    "z": 11754,
-    "parent": "h16",
+    "z": 12900,
+    "parent": "h47",
     "x": -20,
     "y": -20
   },
@@ -1444,8 +1417,8 @@
     "type": "card",
     "cardType": "wine",
     "id": "v03f",
-    "z": 11791,
-    "parent": "h53",
+    "z": 12872,
+    "parent": "h19",
     "x": -20,
     "y": -20
   },
@@ -1454,8 +1427,8 @@
     "type": "card",
     "cardType": "tv",
     "id": "aks6",
-    "z": 11752,
-    "parent": "h14",
+    "z": 12905,
+    "parent": "h52",
     "x": -20,
     "y": -20
   },
@@ -1464,8 +1437,8 @@
     "type": "card",
     "cardType": "tv",
     "id": "k28o",
-    "z": 11783,
-    "parent": "h45",
+    "z": 12908,
+    "parent": "h55",
     "x": -20,
     "y": -20
   },
@@ -1474,8 +1447,8 @@
     "type": "card",
     "cardType": "tv",
     "id": "fi6s",
-    "z": 11773,
-    "parent": "h35",
+    "z": 12898,
+    "parent": "h45",
     "x": -20,
     "y": -20
   },
@@ -1484,8 +1457,8 @@
     "type": "card",
     "cardType": "tv",
     "id": "9g9z",
-    "z": 11755,
-    "parent": "h17",
+    "z": 12889,
+    "parent": "h36",
     "x": -20,
     "y": -20
   },
@@ -1494,8 +1467,8 @@
     "type": "card",
     "cardType": "tv",
     "id": "be4r",
-    "z": 11766,
-    "parent": "h28",
+    "z": 12899,
+    "parent": "h46",
     "x": -20,
     "y": -20
   },
@@ -1504,8 +1477,8 @@
     "type": "card",
     "cardType": "tv",
     "id": "u1ru",
-    "z": 11788,
-    "parent": "h50",
+    "z": 12904,
+    "parent": "h51",
     "x": -20,
     "y": -20
   },
@@ -1514,8 +1487,8 @@
     "type": "card",
     "cardType": "tv",
     "id": "udri",
-    "z": 11756,
-    "parent": "h18",
+    "z": 12862,
+    "parent": "h9",
     "x": -20,
     "y": -20
   },
@@ -1524,8 +1497,8 @@
     "type": "card",
     "cardType": "tv",
     "id": "4d7h",
-    "z": 11782,
-    "parent": "h44",
+    "z": 12893,
+    "parent": "h40",
     "x": -20,
     "y": -20
   },
@@ -1534,8 +1507,8 @@
     "type": "card",
     "cardType": "tv",
     "id": "vlqu",
-    "z": 11758,
-    "parent": "h20",
+    "z": 12858,
+    "parent": "h5",
     "x": -20,
     "y": -20
   },
@@ -1622,10 +1595,14 @@
           "h55"
         ],
         "from": "bigbag"
+      },
+      {
+        "func": "TURN",
+        "turnCycle": "random"
       }
     ],
     "x": 119,
-    "y": 2
+    "y": 26
   },
   "final1": {
     "type": "holder",
@@ -2031,14 +2008,6 @@
     "y": -20,
     "parent": "final2"
   },
-  "bbdc4": {
-    "type": "seat",
-    "index": 1,
-    "x": 1433,
-    "y": 784,
-    "id": "bbdc4",
-    "z": 35
-  },
   "ph1": {
     "type": "holder",
     "id": "ph1",
@@ -2109,38 +2078,6 @@
     "inheritFrom": "ph1",
     "movable": false,
     "movableInEdit": true
-  },
-  "bbdc5": {
-    "type": "seat",
-    "index": 1,
-    "x": 1433,
-    "y": 621,
-    "id": "bbdc5",
-    "z": 34
-  },
-  "bbdc6": {
-    "type": "seat",
-    "index": 1,
-    "x": 1432,
-    "y": 445,
-    "id": "bbdc6",
-    "z": 33
-  },
-  "bbdc7": {
-    "type": "seat",
-    "index": 1,
-    "x": 1432,
-    "y": 272,
-    "id": "bbdc7",
-    "z": 31
-  },
-  "bbdc8": {
-    "type": "seat",
-    "index": 1,
-    "x": 1431,
-    "y": 946,
-    "id": "bbdc8",
-    "z": 37
   },
   "ph7": {
     "type": "holder",
@@ -2689,5 +2626,90 @@
         "value": 1
       }
     ]
+  },
+  "s1": {
+    "type": "seat",
+    "id": "s1",
+    "x": 1432,
+    "y": 272,
+    "z": 31,
+    "hideWhenUnused": true
+  },
+  "s2": {
+    "type": "seat",
+    "id": "s2",
+    "x": 1432,
+    "y": 445,
+    "z": 33,
+    "hideWhenUnused": true,
+    "index": 2
+  },
+  "s3": {
+    "type": "seat",
+    "id": "s3",
+    "x": 1433,
+    "y": 621,
+    "z": 34,
+    "index": 3,
+    "hideWhenUnused": true
+  },
+  "s4": {
+    "type": "seat",
+    "id": "s4",
+    "x": 1433,
+    "y": 784,
+    "z": 35,
+    "index": 4,
+    "hideWhenUnused": true
+  },
+  "s5": {
+    "type": "seat",
+    "id": "s5",
+    "x": 1431,
+    "y": 946,
+    "z": 37,
+    "hideWhenUnused": true,
+    "index": 5
+  },
+  "ejpz": {
+    "type": "button",
+    "clickRoutine": [
+      {
+        "func": "TURN",
+        "turnCycle": "forward"
+      }
+    ],
+    "x": 1459,
+    "y": 26,
+    "z": 39,
+    "id": "ejpz",
+    "text": "END TURN"
+  },
+  "_meta": {
+    "version": 17,
+    "info": {
+      "name": "Everything Must Go!",
+      "image": "/assets/-2049741076_35361",
+      "rules": "https://cdn.shopify.com/s/files/1/0143/6178/8473/files/Bites_Rulebook_190807.pdf?v=1645044345",
+      "bgg": "https://boardgamegeek.com/boardgame/277927/bites",
+      "year": "2020",
+      "mode": "vs",
+      "time": "20",
+      "attribution": "<div>Room layout and design by maddie. Released to the Public Domain under CC0.</div><div><br></div>Cover image by Basher Eyre (CC BY-SA 2.0). Available at: https://commons.wikimedia.org/w/index.php?curid=13795463",
+      "lastUpdate": 1737353634640,
+      "showName": true,
+      "skill": "",
+      "description": "It's Black Friday and the meeples are on a shopping spree! As a salesperson of the store, direct the customers towards the right products to maximize your commissions.",
+      "similarImage": "",
+      "similarName": "Bites",
+      "similarDesigner": "Wolfgang Ditt, Brigitte Ditt",
+      "similarAwards": "2020 Golden Geek Light Game of the Year Nominee",
+      "ruleText": "This module adapts only the base setup of Bites.<div><br></div><div>The following are alternative rules that can be used with this module:</div><div><br></div><div>Meeple Allocation:</div><div><br></div><div>1. Meeples are allocated to the checkouts from highest position to lowest.</div><div>2. Meeples are allocated from lowest position to highest.</div><div>3. Meeples are allocated in this order: 4, 2, 0, 3, 1.</div><div><br></div><div>Coupon Ability:</div><div><br></div><div>1. Before or after your turn, choose a player to give you one product of their choice (make sure there are no coupons in the first 1/4 of the trail before playing).</div><div>2. When moving a meeple, skip the first product that matches their color.</div><div>3. Replacing normal turn, move a meeple one space forward (ignoring color), then take the products both in front and behind it.</div><div>4. Before or after turn, move a meeple at the checkout to an adjacent empty position at the checkout. Each meeple can only be moved once total.</div><div>5. Take a second turn, moving a meeple backward rather than forward. Take a product like usual.</div><div>6. Replacing your turn, move a meeple back to the start of the trail, then take two moves with it.</div><div>7. Before your turn, pick up the three items at the very beginning of the trail. Choose one to keep, and place the other two at the end of the trail.</div><div><br></div><div>Wine Scoring:</div><div><br></div><div>1. Each wine is worth one point for each of the product you have the most of.</div><div>2. Each wine is worth one point for each product you have that is worth 1 or 0 points.</div><div>3. Each wine is worth one point for each wine you have total.</div><div>4. 0 Wine = -3 Points,&nbsp; 1 = 2P,&nbsp; 2 = 3P,&nbsp; 3 = 12P,&nbsp; 4 = 12P,&nbsp; 5 = 12P</div><div>5. 0 Wine = 0 Points,&nbsp; 1 = 5P,&nbsp; 2 = 8P,&nbsp; 3 = 9P,&nbsp; 4 = 8P,&nbsp; 5 = 5P</div><div>6. If you end the game with exactly 1 wine, gain 7 points, otherwise gain 0 points.</div>",
+      "helpText": "",
+      "variantImage": "",
+      "variant": "",
+      "language": "en-US",
+      "players": "2-5"
+    }
   }
 }
