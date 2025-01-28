@@ -1720,10 +1720,6 @@ export class Widget extends StateManaged {
             return w.get(a.property) === a.value;
           });
 
-          if (a.random) {
-            c = shuffleArray(c);
-          }
-
           // resolve piles
           if(a.type != 'pile') {
             c.filter(w=>w.get('type')=='pile').forEach(w=>c.push(...w.children()));
