@@ -1730,6 +1730,9 @@ export class Widget extends StateManaged {
             c = c.filter(w=>w.get('type')!='pile');
           }
 
+          if (a.random) 
+            c = shuffleArray(c);
+
           c = c.slice(0, a.max); // a.mode == 'set'
           if(a.mode == 'intersect')
             c = collections[a.collection] ? collections[a.collection].filter(value => c.includes(value)) : [];
