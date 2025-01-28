@@ -1791,10 +1791,10 @@ export class Widget extends StateManaged {
                     break;
                   }
                   const currentParent = widgets.get(currentParentId);
-                  if(!currentParent || !currentParent.state || !currentParent.state.parent) {
+                  if(!currentParent || !currentParent.state || !currentParent.get('parent')) {
                     break;
                   }
-                  currentParentId = currentParent.state.parent;
+                  currentParentId = currentParent.get('parent');
                 }
                 if(isDescendant) {
                   problems.push(`Widget ${w.id} cannot set its parent to ${a.value} because ${a.value} is a descendant of ${w.id}.`);

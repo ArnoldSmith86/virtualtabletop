@@ -1327,10 +1327,10 @@ async function updateWidget(currentState, oldState, applyChangesFromUI) {
         break;
       }
       const currentParent = widgets.get(currentParentId);
-      if(!currentParent || !currentParent.state || !currentParent.state.parent) {
+      if(!currentParent || !currentParent.state || !currentParent.get('parent')) {
         break;
       }
-      currentParentId = currentParent.state.parent;
+      currentParentId = currentParent.get('parent');
     }
 
     if(isDescendant) {
