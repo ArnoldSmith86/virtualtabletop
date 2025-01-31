@@ -1628,7 +1628,8 @@ class PropertiesModule extends SidebarModule {
         }, state), parent);
       }
       widgets.delete(widget.id, widget);
-      positionElementsInArc(parent.children, parent.children[0].clientHeight, 45, parent);
+      if (parent.children[0]) 
+        positionElementsInArc(parent.children, parent.children[0].clientHeight, 45, parent);
     } else {
       widget.renderReadonlyCopyRaw(state, button);
     }
