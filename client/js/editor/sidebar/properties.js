@@ -454,7 +454,7 @@ class PropertiesModule extends SidebarModule {
     }
     target.append(suitCustomizeDiv);
 
-    function getDeckDefinition() {
+    function getDeckDefinition(sampleDeck) {
       const id = generateUniqueWidgetID();
       const cardTypes = {};
       let suitIndex = 0;
@@ -471,7 +471,8 @@ class PropertiesModule extends SidebarModule {
           const setCardTypes = (conditions, cardTypesKeys) => {
             if(conditions)
               for(const key of cardTypesKeys)
-                cardTypes[cT][`suit-${key}`] = suitURL;
+                if (!sampleDeck)
+                  cardTypes[cT][`suit-${key}`] = suitURL;
           };
           if(String(rank).match(/^[0-9]+$/) && rank <= 21) {
             setCardTypes(rank     >=  4,                           ['P11', 'P13', 'P51', 'P53']);
@@ -511,8 +512,12 @@ class PropertiesModule extends SidebarModule {
     createButton.disabled = true;
     createButton.setAttribute('icon', 'add');
     createButton.onclick = async e=>{
+      let sampleDeck = true;
+      const deckTemplateButton = document.querySelectorAll('.deckTemplateButton')[0];
+      if (deckTemplateButton && deckTemplateButton.classList.contains('selected')) 
+        sampleDeck = false
       batchStart();
-      const deck = getDeckDefinition();
+      const deck = getDeckDefinition(sampleDeck);
       setDeltaCause(`${getPlayerDetails().playerName} added custom deck "${deck.id}" in editor`);
       await addWidgetLocal(deckTemplates[$('.selected.deckTemplateButton', target).dataset.index](deck));
 
