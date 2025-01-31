@@ -471,7 +471,7 @@ class PropertiesModule extends SidebarModule {
           const setCardTypes = (conditions, cardTypesKeys) => {
             if(conditions)
               for(const key of cardTypesKeys)
-                if (standardDeck)
+                if(standardDeck)
                   cardTypes[cT][`suit-${key}`] = suitURL;
           };
           if(String(rank).match(/^[0-9]+$/) && rank <= 21) {
