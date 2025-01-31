@@ -10,7 +10,7 @@
       "mode": "vs",
       "time": "45",
       "attribution": "<p class=\"MsoNormal\">Layout by Mitchell Stolycia. Credit is also awarded to ArnoldSmith86 for creating the script for the combiner. All other scripting was done my Mitchell Stolycia.</p><p class=\"MsoNormal\">The “join” icon used for the combiner button is from game-icons.net, created by Delapouite, and available for use as described in the About section.</p><p class=\"MsoNormal\">All card backs are defaults from virtualtabletop.io, created by Adrian Kennard, and available for use as described in the About section.</p><p class=\"MsoNormal\">Card faces and the public library image were created by\nMitchell Stolycia, released to the public domain under CC0.</p>",
-      "lastUpdate": 1737483345389,
+      "lastUpdate": 1738334015702,
       "showName": true,
       "skill": "",
       "description": "Construct and modify your own cards in a simple ladder climbing game.",
@@ -19,11 +19,11 @@
       "similarDesigner": "John D. Clair",
       "similarAwards": "2018 Origins Awards Best Card Game Nominee\n2017 Golden Geek Best Card Game Nominee",
       "ruleText": "",
-      "helpText": "<div><b>Combining cards</b><br></div><div><ol><li>Add card and advancements to the combiner.<br></li><li>Click the combiner button.</li></ol><div>As per the game rules, do not combine multiple cards/advancements which have their attributes in the same region of the card.</div><blockquote><div><i>For example, you can combine two advancements if they contain a +6 on the bottom left of the card and a -1 on the bottom right of the card respectively. However, advancements containing +6 and -1 both on the bottom left of their cards <b>cannot </b>be combined.</i><br></div></blockquote></div><div><b>Playing cards</b><br></div><div>Play cards to one of the play areas. On the next player's turn, they should play cards to the empty play area.</div><div><br></div><div>Player turns will get skipped automatically if they are out of the round (have zero cards in hand).</div><div><br></div><div><b>Starting a new round</b></div><div>Make sure no cards are left on the table before beginning a new round. <br></div><blockquote><div><b>IMPORTANT:</b> Place all played green cards left over either back into your hand or into an active play area before beginning a new round.<br></div></blockquote>",
-      "variantImage": "",
-      "variant": "Card Constructor",
+      "helpText": "<div><b>Combining cards</b><br></div><div><ol><li>Add card and advancements to the combiner.<br></li><li>Click the combiner button.</li></ol><div>As per the game rules, do not combine multiple cards/advancements which have their attributes in the same region of the card.</div><blockquote><div><i>For example, you can combine two advancements if they contain a +6 on the bottom left of the card and a -1 on the bottom right of the card respectively. However, advancements containing +6 and -1 both on the bottom left of their cards <b>cannot </b>be combined.</i><br></div></blockquote></div><div><b>Playing cards</b><br></div><div>Play cards to one of the play areas. On the next player's turn, they should play cards to the empty play area.</div><div><br></div><div>Player turns will get skipped automatically if they are out of the round (have zero cards in hand).</div>",
+      "players": "3-6",
       "language": "en-GB",
-      "players": "3-6"
+      "variant": "Card Constructor",
+      "variantImage": "/assets/1757111183_1666161"
     }
   },
   "template": {
@@ -31,8 +31,11 @@
     "id": "template",
     "deck": "clone",
     "cardType": "dummy",
-    "x": -341,
-    "y": -17
+    "z": 36814,
+    "parent": "trash",
+    "hand": "hand",
+    "x": 4,
+    "y": 4
   },
   "trash": {
     "type": "holder",
@@ -577,6 +580,11 @@
         "note": "Set a random player as start player",
         "func": "TURN",
         "turnCycle": "random"
+      },
+      {
+        "func": "LABEL",
+        "label": "r",
+        "value": 1
       }
     ]
   },
@@ -965,7 +973,6 @@
     "x": 10,
     "y": 45,
     "z": 2,
-    "hand": "overlayHand",
     "hideWhenUnused": true,
     "parent": "xgws"
   },
@@ -2066,7 +2073,7 @@
     "deck": "ref",
     "cardType": "4ref.jpg",
     "activeFace": 1,
-    "z": 33703,
+    "z": 38391,
     "parent": "6lt9"
   },
   "fs7e 3ref.jpg": {
@@ -2075,7 +2082,7 @@
     "deck": "ref",
     "cardType": "3ref.jpg",
     "activeFace": 1,
-    "z": 33705,
+    "z": 38393,
     "parent": "6lt9"
   },
   "fs7e 5ref.jpg": {
@@ -2084,7 +2091,7 @@
     "deck": "ref",
     "cardType": "5ref.jpg",
     "activeFace": 1,
-    "z": 33706,
+    "z": 38394,
     "parent": "6lt9"
   },
   "fs7e 6ref.jpg": {
@@ -2093,7 +2100,7 @@
     "deck": "ref",
     "cardType": "6ref.jpg",
     "activeFace": 1,
-    "z": 33707,
+    "z": 38395,
     "parent": "6lt9"
   },
   "ref": {
@@ -2106,7 +2113,7 @@
       "width": 200,
       "height": 100,
       "movable": false,
-      "enlarge": 2
+      "enlarge": 3
     },
     "cardTypes": {
       "4ref.jpg": {
@@ -2221,6 +2228,25 @@
         ]
       },
       {
+        "func": "SELECT",
+        "property": "deck",
+        "value": "clone"
+      },
+      {
+        "func": "MOVE",
+        "to": "baseHolder",
+        "count": "all"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "template"
+      },
+      {
+        "func": "MOVE",
+        "to": "trash"
+      },
+      {
         "func": "MOVE",
         "from": "holder1",
         "to": "baseHolder",
@@ -2244,10 +2270,6 @@
         "property": "player",
         "relation": "!=",
         "value": ""
-      },
-      {
-        "note": "count the number of seats",
-        "func": "COUNT"
       },
       {
         "note": "for each widget (seat) in the default collection...",
@@ -2288,11 +2310,17 @@
             "key": "cardType"
           }
         ]
+      },
+      {
+        "func": "LABEL",
+        "label": "r",
+        "value": 1,
+        "mode": "inc"
       }
     ],
-    "x": 1501,
+    "x": 1481,
     "y": 907,
-    "z": 7,
+    "z": 9,
     "id": "kusv",
     "css": {
       "default": {
@@ -2412,7 +2440,7 @@
     "id": "xmd7 Picture01.png",
     "deck": "6p",
     "cardType": "Picture01.png",
-    "z": 33668,
+    "z": 38352,
     "parent": "8jss"
   },
   "xmd7 Picture02.png": {
@@ -2420,7 +2448,7 @@
     "id": "xmd7 Picture02.png",
     "deck": "6p",
     "cardType": "Picture02.png",
-    "z": 33669,
+    "z": 38351,
     "parent": "8jss"
   },
   "xmd7 Picture03.png": {
@@ -2428,7 +2456,7 @@
     "id": "xmd7 Picture03.png",
     "deck": "6p",
     "cardType": "Picture03.png",
-    "z": 33672,
+    "z": 38353,
     "parent": "8jss"
   },
   "xmd7 Picture05.png": {
@@ -2436,7 +2464,7 @@
     "id": "xmd7 Picture05.png",
     "deck": "6p",
     "cardType": "Picture05.png",
-    "z": 33671,
+    "z": 38360,
     "parent": "8jss"
   },
   "xmd7 Picture04.png": {
@@ -2444,7 +2472,7 @@
     "id": "xmd7 Picture04.png",
     "deck": "6p",
     "cardType": "Picture04.png",
-    "z": 33665,
+    "z": 38356,
     "parent": "8jss"
   },
   "xmd7 Picture06.png": {
@@ -2452,7 +2480,7 @@
     "id": "xmd7 Picture06.png",
     "deck": "6p",
     "cardType": "Picture06.png",
-    "z": 33667,
+    "z": 38354,
     "parent": "8jss"
   },
   "xmd7 Picture07.png": {
@@ -2460,7 +2488,7 @@
     "id": "xmd7 Picture07.png",
     "deck": "6p",
     "cardType": "Picture07.png",
-    "z": 33670,
+    "z": 38358,
     "parent": "8jss"
   },
   "xmd7 Picture08.png": {
@@ -2468,7 +2496,7 @@
     "id": "xmd7 Picture08.png",
     "deck": "6p",
     "cardType": "Picture08.png",
-    "z": 33666,
+    "z": 38359,
     "parent": "8jss"
   },
   "xmd7 Picture09.png": {
@@ -2476,7 +2504,7 @@
     "id": "xmd7 Picture09.png",
     "deck": "6p",
     "cardType": "Picture09.png",
-    "z": 33664,
+    "z": 38355,
     "parent": "8jss"
   },
   "xmd7 Picture10.png": {
@@ -2484,7 +2512,7 @@
     "id": "xmd7 Picture10.png",
     "deck": "6p",
     "cardType": "Picture10.png",
-    "z": 33663,
+    "z": 38357,
     "parent": "8jss"
   },
   "6p": {
@@ -2575,7 +2603,7 @@
     "id": "rg2m Picture02.png",
     "deck": "5p",
     "cardType": "Picture02.png",
-    "z": 33650,
+    "z": 38331,
     "parent": "qkqm"
   },
   "rg2m Picture03.png": {
@@ -2583,7 +2611,7 @@
     "id": "rg2m Picture03.png",
     "deck": "5p",
     "cardType": "Picture03.png",
-    "z": 33652,
+    "z": 38337,
     "parent": "qkqm"
   },
   "rg2m Picture01.png": {
@@ -2591,7 +2619,7 @@
     "id": "rg2m Picture01.png",
     "deck": "5p",
     "cardType": "Picture01.png",
-    "z": 33645,
+    "z": 38338,
     "parent": "qkqm"
   },
   "rg2m Picture04.png": {
@@ -2599,7 +2627,7 @@
     "id": "rg2m Picture04.png",
     "deck": "5p",
     "cardType": "Picture04.png",
-    "z": 33649,
+    "z": 38340,
     "parent": "qkqm"
   },
   "rg2m Picture05.png": {
@@ -2607,7 +2635,7 @@
     "id": "rg2m Picture05.png",
     "deck": "5p",
     "cardType": "Picture05.png",
-    "z": 33644,
+    "z": 38336,
     "parent": "qkqm"
   },
   "rg2m Picture06.png": {
@@ -2615,7 +2643,7 @@
     "id": "rg2m Picture06.png",
     "deck": "5p",
     "cardType": "Picture06.png",
-    "z": 33646,
+    "z": 38339,
     "parent": "qkqm"
   },
   "rg2m Picture07.png": {
@@ -2623,7 +2651,7 @@
     "id": "rg2m Picture07.png",
     "deck": "5p",
     "cardType": "Picture07.png",
-    "z": 33643,
+    "z": 38332,
     "parent": "qkqm"
   },
   "rg2m Picture08.png": {
@@ -2631,7 +2659,7 @@
     "id": "rg2m Picture08.png",
     "deck": "5p",
     "cardType": "Picture08.png",
-    "z": 33648,
+    "z": 38334,
     "parent": "qkqm"
   },
   "rg2m Picture10.png": {
@@ -2639,7 +2667,7 @@
     "id": "rg2m Picture10.png",
     "deck": "5p",
     "cardType": "Picture10.png",
-    "z": 33647,
+    "z": 38333,
     "parent": "qkqm"
   },
   "rg2m Picture09.png": {
@@ -2647,7 +2675,7 @@
     "id": "rg2m Picture09.png",
     "deck": "5p",
     "cardType": "Picture09.png",
-    "z": 33651,
+    "z": 38335,
     "parent": "qkqm"
   },
   "5p": {
@@ -2738,7 +2766,7 @@
     "id": "b3kd Picture02.png",
     "deck": "4p",
     "cardType": "Picture02.png",
-    "z": 33395,
+    "z": 38320,
     "parent": "a6n9"
   },
   "b3kd Picture03.png": {
@@ -2746,7 +2774,7 @@
     "id": "b3kd Picture03.png",
     "deck": "4p",
     "cardType": "Picture03.png",
-    "z": 33393,
+    "z": 38315,
     "parent": "a6n9"
   },
   "b3kd Picture04.png": {
@@ -2754,7 +2782,7 @@
     "id": "b3kd Picture04.png",
     "deck": "4p",
     "cardType": "Picture04.png",
-    "z": 33391,
+    "z": 38313,
     "parent": "a6n9"
   },
   "b3kd Picture01.png": {
@@ -2762,7 +2790,7 @@
     "id": "b3kd Picture01.png",
     "deck": "4p",
     "cardType": "Picture01.png",
-    "z": 33394,
+    "z": 38316,
     "parent": "a6n9"
   },
   "b3kd Picture06.png": {
@@ -2770,7 +2798,7 @@
     "id": "b3kd Picture06.png",
     "deck": "4p",
     "cardType": "Picture06.png",
-    "z": 33392,
+    "z": 38318,
     "parent": "a6n9"
   },
   "b3kd Picture05.png": {
@@ -2778,7 +2806,7 @@
     "id": "b3kd Picture05.png",
     "deck": "4p",
     "cardType": "Picture05.png",
-    "z": 33396,
+    "z": 38311,
     "parent": "a6n9"
   },
   "b3kd Picture07.png": {
@@ -2786,7 +2814,7 @@
     "id": "b3kd Picture07.png",
     "deck": "4p",
     "cardType": "Picture07.png",
-    "z": 33397,
+    "z": 38319,
     "parent": "a6n9"
   },
   "b3kd Picture08.png": {
@@ -2794,7 +2822,7 @@
     "id": "b3kd Picture08.png",
     "deck": "4p",
     "cardType": "Picture08.png",
-    "z": 33400,
+    "z": 38314,
     "parent": "a6n9"
   },
   "b3kd Picture10.png": {
@@ -2802,7 +2830,7 @@
     "id": "b3kd Picture10.png",
     "deck": "4p",
     "cardType": "Picture10.png",
-    "z": 33398,
+    "z": 38312,
     "parent": "a6n9"
   },
   "b3kd Picture09.png": {
@@ -2810,7 +2838,7 @@
     "id": "b3kd Picture09.png",
     "deck": "4p",
     "cardType": "Picture09.png",
-    "z": 33399,
+    "z": 38317,
     "parent": "a6n9"
   },
   "4p": {
@@ -2892,240 +2920,240 @@
     "id": "ymjf Picture02.png 1",
     "deck": "base",
     "cardType": "Picture02.png",
-    "z": 33609,
-    "parent": "a8v1"
+    "z": 38283,
+    "parent": "8z6x"
   },
   "ymjf Picture02.png 2": {
     "type": "card",
     "id": "ymjf Picture02.png 2",
     "deck": "base",
     "cardType": "Picture02.png",
-    "z": 33611,
-    "parent": "a8v1"
+    "z": 38276,
+    "parent": "8z6x"
   },
   "ymjf Picture02.png 3": {
     "type": "card",
     "id": "ymjf Picture02.png 3",
     "deck": "base",
     "cardType": "Picture02.png",
-    "z": 33605,
-    "parent": "a8v1"
+    "z": 38299,
+    "parent": "8z6x"
   },
   "ymjf Picture01.png 1": {
     "type": "card",
     "id": "ymjf Picture01.png 1",
     "deck": "base",
     "cardType": "Picture01.png",
-    "z": 33618,
-    "parent": "a8v1"
+    "z": 38285,
+    "parent": "8z6x"
   },
   "ymjf Picture01.png 2": {
     "type": "card",
     "id": "ymjf Picture01.png 2",
     "deck": "base",
     "cardType": "Picture01.png",
-    "z": 33619,
-    "parent": "a8v1"
+    "z": 38273,
+    "parent": "8z6x"
   },
   "ymjf Picture01.png 3": {
     "type": "card",
     "id": "ymjf Picture01.png 3",
     "deck": "base",
     "cardType": "Picture01.png",
-    "z": 33625,
-    "parent": "a8v1"
+    "z": 38298,
+    "parent": "8z6x"
   },
   "ymjf Picture03.png 1": {
     "type": "card",
     "id": "ymjf Picture03.png 1",
     "deck": "base",
     "cardType": "Picture03.png",
-    "z": 33606,
-    "parent": "a8v1"
+    "z": 38277,
+    "parent": "8z6x"
   },
   "ymjf Picture03.png 2": {
     "type": "card",
     "id": "ymjf Picture03.png 2",
     "deck": "base",
     "cardType": "Picture03.png",
-    "z": 33610,
-    "parent": "a8v1"
+    "z": 38271,
+    "parent": "8z6x"
   },
   "ymjf Picture03.png 3": {
     "type": "card",
     "id": "ymjf Picture03.png 3",
     "deck": "base",
     "cardType": "Picture03.png",
-    "z": 33630,
-    "parent": "a8v1"
+    "z": 38289,
+    "parent": "8z6x"
   },
   "ymjf Picture04.png 1": {
     "type": "card",
     "id": "ymjf Picture04.png 1",
     "deck": "base",
     "cardType": "Picture04.png",
-    "z": 33627,
-    "parent": "a8v1"
+    "z": 38274,
+    "parent": "8z6x"
   },
   "ymjf Picture04.png 2": {
     "type": "card",
     "id": "ymjf Picture04.png 2",
     "deck": "base",
     "cardType": "Picture04.png",
-    "z": 33615,
-    "parent": "a8v1"
+    "z": 38288,
+    "parent": "8z6x"
   },
   "ymjf Picture04.png 3": {
     "type": "card",
     "id": "ymjf Picture04.png 3",
     "deck": "base",
     "cardType": "Picture04.png",
-    "z": 33607,
-    "parent": "a8v1"
+    "z": 38292,
+    "parent": "8z6x"
   },
   "ymjf Picture06.png 1": {
     "type": "card",
     "id": "ymjf Picture06.png 1",
     "deck": "base",
     "cardType": "Picture06.png",
-    "z": 33621,
-    "parent": "a8v1"
+    "z": 38279,
+    "parent": "8z6x"
   },
   "ymjf Picture06.png 2": {
     "type": "card",
     "id": "ymjf Picture06.png 2",
     "deck": "base",
     "cardType": "Picture06.png",
-    "z": 33613,
-    "parent": "a8v1"
+    "z": 38287,
+    "parent": "8z6x"
   },
   "ymjf Picture06.png 3": {
     "type": "card",
     "id": "ymjf Picture06.png 3",
     "deck": "base",
     "cardType": "Picture06.png",
-    "z": 33620,
-    "parent": "a8v1"
+    "z": 38294,
+    "parent": "8z6x"
   },
   "ymjf Picture05.png 1": {
     "type": "card",
     "id": "ymjf Picture05.png 1",
     "deck": "base",
     "cardType": "Picture05.png",
-    "z": 33632,
-    "parent": "a8v1"
+    "z": 38293,
+    "parent": "8z6x"
   },
   "ymjf Picture05.png 2": {
     "type": "card",
     "id": "ymjf Picture05.png 2",
     "deck": "base",
     "cardType": "Picture05.png",
-    "z": 33608,
-    "parent": "a8v1"
+    "z": 38290,
+    "parent": "8z6x"
   },
   "ymjf Picture05.png 3": {
     "type": "card",
     "id": "ymjf Picture05.png 3",
     "deck": "base",
     "cardType": "Picture05.png",
-    "z": 33617,
-    "parent": "a8v1"
+    "z": 38297,
+    "parent": "8z6x"
   },
   "ymjf Picture07.png 1": {
     "type": "card",
     "id": "ymjf Picture07.png 1",
     "deck": "base",
     "cardType": "Picture07.png",
-    "z": 33623,
-    "parent": "a8v1"
+    "z": 38275,
+    "parent": "8z6x"
   },
   "ymjf Picture07.png 2": {
     "type": "card",
     "id": "ymjf Picture07.png 2",
     "deck": "base",
     "cardType": "Picture07.png",
-    "z": 33629,
-    "parent": "a8v1"
+    "z": 38272,
+    "parent": "8z6x"
   },
   "ymjf Picture07.png 3": {
     "type": "card",
     "id": "ymjf Picture07.png 3",
     "deck": "base",
     "cardType": "Picture07.png",
-    "z": 33614,
-    "parent": "a8v1"
+    "z": 38281,
+    "parent": "8z6x"
   },
   "ymjf Picture09.png 1": {
     "type": "card",
     "id": "ymjf Picture09.png 1",
     "deck": "base",
     "cardType": "Picture09.png",
-    "z": 33616,
-    "parent": "a8v1"
+    "z": 38280,
+    "parent": "8z6x"
   },
   "ymjf Picture09.png 2": {
     "type": "card",
     "id": "ymjf Picture09.png 2",
     "deck": "base",
     "cardType": "Picture09.png",
-    "z": 33626,
-    "parent": "a8v1"
+    "z": 38300,
+    "parent": "8z6x"
   },
   "ymjf Picture09.png 3": {
     "type": "card",
     "id": "ymjf Picture09.png 3",
     "deck": "base",
     "cardType": "Picture09.png",
-    "z": 33603,
-    "parent": "a8v1"
+    "z": 38278,
+    "parent": "8z6x"
   },
   "ymjf Picture08.png 1": {
     "type": "card",
     "id": "ymjf Picture08.png 1",
     "deck": "base",
     "cardType": "Picture08.png",
-    "z": 33624,
-    "parent": "a8v1"
+    "z": 38286,
+    "parent": "8z6x"
   },
   "ymjf Picture08.png 2": {
     "type": "card",
     "id": "ymjf Picture08.png 2",
     "deck": "base",
     "cardType": "Picture08.png",
-    "z": 33628,
-    "parent": "a8v1"
+    "z": 38291,
+    "parent": "8z6x"
   },
   "ymjf Picture08.png 3": {
     "type": "card",
     "id": "ymjf Picture08.png 3",
     "deck": "base",
     "cardType": "Picture08.png",
-    "z": 33622,
-    "parent": "a8v1"
+    "z": 38282,
+    "parent": "8z6x"
   },
   "ymjf Picture10.png 1": {
     "type": "card",
     "id": "ymjf Picture10.png 1",
     "deck": "base",
     "cardType": "Picture10.png",
-    "z": 33631,
-    "parent": "a8v1"
+    "z": 38295,
+    "parent": "8z6x"
   },
   "ymjf Picture10.png 2": {
     "type": "card",
     "id": "ymjf Picture10.png 2",
     "deck": "base",
     "cardType": "Picture10.png",
-    "z": 33612,
-    "parent": "a8v1"
+    "z": 38296,
+    "parent": "8z6x"
   },
   "ymjf Picture10.png 3": {
     "type": "card",
     "id": "ymjf Picture10.png 3",
     "deck": "base",
     "cardType": "Picture10.png",
-    "z": 33604,
-    "parent": "a8v1"
+    "z": 38284,
+    "parent": "8z6x"
   },
   "base": {
     "type": "deck",
@@ -3206,7 +3234,7 @@
     "id": "rkpu +3.png 1",
     "deck": "overlay",
     "cardType": "+3.png",
-    "z": 33489,
+    "z": 38187,
     "parent": "1oqf"
   },
   "rkpu +3.png 2": {
@@ -3214,7 +3242,7 @@
     "id": "rkpu +3.png 2",
     "deck": "overlay",
     "cardType": "+3.png",
-    "z": 33481,
+    "z": 38167,
     "parent": "1oqf"
   },
   "rkpu +2.png 1": {
@@ -3222,7 +3250,7 @@
     "id": "rkpu +2.png 1",
     "deck": "overlay",
     "cardType": "+2.png",
-    "z": 33510,
+    "z": 38177,
     "parent": "1oqf"
   },
   "rkpu +2.png 2": {
@@ -3230,7 +3258,7 @@
     "id": "rkpu +2.png 2",
     "deck": "overlay",
     "cardType": "+2.png",
-    "z": 33498,
+    "z": 38164,
     "parent": "1oqf"
   },
   "rkpu +7.png": {
@@ -3238,7 +3266,7 @@
     "id": "rkpu +7.png",
     "deck": "overlay",
     "cardType": "+7.png",
-    "z": 33483,
+    "z": 38141,
     "parent": "1oqf"
   },
   "rkpu +1.png 1": {
@@ -3246,7 +3274,7 @@
     "id": "rkpu +1.png 1",
     "deck": "overlay",
     "cardType": "+1.png",
-    "z": 33547,
+    "z": 38155,
     "parent": "1oqf"
   },
   "rkpu +1.png 2": {
@@ -3254,7 +3282,7 @@
     "id": "rkpu +1.png 2",
     "deck": "overlay",
     "cardType": "+1.png",
-    "z": 33533,
+    "z": 38183,
     "parent": "1oqf"
   },
   "rkpu +4.png 1": {
@@ -3262,7 +3290,7 @@
     "id": "rkpu +4.png 1",
     "deck": "overlay",
     "cardType": "+4.png",
-    "z": 33522,
+    "z": 38178,
     "parent": "1oqf"
   },
   "rkpu +4.png 2": {
@@ -3270,7 +3298,7 @@
     "id": "rkpu +4.png 2",
     "deck": "overlay",
     "cardType": "+4.png",
-    "z": 33515,
+    "z": 38152,
     "parent": "1oqf"
   },
   "rkpu +6.png": {
@@ -3278,7 +3306,7 @@
     "id": "rkpu +6.png",
     "deck": "overlay",
     "cardType": "+6.png",
-    "z": 33536,
+    "z": 38160,
     "parent": "1oqf"
   },
   "rkpu +9.png": {
@@ -3286,7 +3314,7 @@
     "id": "rkpu +9.png",
     "deck": "overlay",
     "cardType": "+9.png",
-    "z": 33523,
+    "z": 38195,
     "parent": "1oqf"
   },
   "rkpu +8.png": {
@@ -3294,7 +3322,7 @@
     "id": "rkpu +8.png",
     "deck": "overlay",
     "cardType": "+8.png",
-    "z": 33548,
+    "z": 38203,
     "parent": "1oqf"
   },
   "rkpu -1.png 2": {
@@ -3302,7 +3330,7 @@
     "id": "rkpu -1.png 2",
     "deck": "overlay",
     "cardType": "-1.png",
-    "z": 33487,
+    "z": 38202,
     "parent": "1oqf"
   },
   "rkpu -1.png 3": {
@@ -3310,7 +3338,7 @@
     "id": "rkpu -1.png 3",
     "deck": "overlay",
     "cardType": "-1.png",
-    "z": 33499,
+    "z": 38197,
     "parent": "1oqf"
   },
   "rkpu -3.png": {
@@ -3318,7 +3346,7 @@
     "id": "rkpu -3.png",
     "deck": "overlay",
     "cardType": "-3.png",
-    "z": 33543,
+    "z": 38193,
     "parent": "1oqf"
   },
   "rkpu -4.png": {
@@ -3326,7 +3354,7 @@
     "id": "rkpu -4.png",
     "deck": "overlay",
     "cardType": "-4.png",
-    "z": 33514,
+    "z": 38204,
     "parent": "1oqf"
   },
   "rkpu a+1.png 1": {
@@ -3334,7 +3362,7 @@
     "id": "rkpu a+1.png 1",
     "deck": "overlay",
     "cardType": "a+1.png",
-    "z": 33482,
+    "z": 38145,
     "parent": "1oqf"
   },
   "rkpu a+1.png 2": {
@@ -3342,7 +3370,7 @@
     "id": "rkpu a+1.png 2",
     "deck": "overlay",
     "cardType": "a+1.png",
-    "z": 33491,
+    "z": 38176,
     "parent": "1oqf"
   },
   "rkpu a+2.png 1": {
@@ -3350,7 +3378,7 @@
     "id": "rkpu a+2.png 1",
     "deck": "overlay",
     "cardType": "a+2.png",
-    "z": 33500,
+    "z": 38208,
     "parent": "1oqf"
   },
   "rkpu a+2.png 2": {
@@ -3358,7 +3386,7 @@
     "id": "rkpu a+2.png 2",
     "deck": "overlay",
     "cardType": "a+2.png",
-    "z": 33525,
+    "z": 38144,
     "parent": "1oqf"
   },
   "rkpu a+3.png 1": {
@@ -3366,7 +3394,7 @@
     "id": "rkpu a+3.png 1",
     "deck": "overlay",
     "cardType": "a+3.png",
-    "z": 33496,
+    "z": 38199,
     "parent": "1oqf"
   },
   "rkpu a+3.png 2": {
@@ -3374,7 +3402,7 @@
     "id": "rkpu a+3.png 2",
     "deck": "overlay",
     "cardType": "a+3.png",
-    "z": 33542,
+    "z": 38148,
     "parent": "1oqf"
   },
   "rkpu a+4.png 1": {
@@ -3382,7 +3410,7 @@
     "id": "rkpu a+4.png 1",
     "deck": "overlay",
     "cardType": "a+4.png",
-    "z": 33507,
+    "z": 38188,
     "parent": "1oqf"
   },
   "rkpu a+4.png 2": {
@@ -3390,7 +3418,7 @@
     "id": "rkpu a+4.png 2",
     "deck": "overlay",
     "cardType": "a+4.png",
-    "z": 33505,
+    "z": 38151,
     "parent": "1oqf"
   },
   "rkpu a+5.png 1": {
@@ -3398,7 +3426,7 @@
     "id": "rkpu a+5.png 1",
     "deck": "overlay",
     "cardType": "a+5.png",
-    "z": 33478,
+    "z": 38168,
     "parent": "1oqf"
   },
   "rkpu a+5.png 2": {
@@ -3406,7 +3434,7 @@
     "id": "rkpu a+5.png 2",
     "deck": "overlay",
     "cardType": "a+5.png",
-    "z": 33524,
+    "z": 38147,
     "parent": "1oqf"
   },
   "rkpu a+7.png": {
@@ -3414,7 +3442,7 @@
     "id": "rkpu a+7.png",
     "deck": "overlay",
     "cardType": "a+7.png",
-    "z": 33488,
+    "z": 38142,
     "parent": "1oqf"
   },
   "rkpu a+8.png": {
@@ -3422,7 +3450,7 @@
     "id": "rkpu a+8.png",
     "deck": "overlay",
     "cardType": "a+8.png",
-    "z": 33497,
+    "z": 38185,
     "parent": "1oqf"
   },
   "rkpu a-1.png 1": {
@@ -3430,7 +3458,7 @@
     "id": "rkpu a-1.png 1",
     "deck": "overlay",
     "cardType": "a-1.png",
-    "z": 33512,
+    "z": 38169,
     "parent": "1oqf"
   },
   "rkpu a-1.png 2": {
@@ -3438,7 +3466,7 @@
     "id": "rkpu a-1.png 2",
     "deck": "overlay",
     "cardType": "a-1.png",
-    "z": 33495,
+    "z": 38191,
     "parent": "1oqf"
   },
   "rkpu a-2.png 1": {
@@ -3446,7 +3474,7 @@
     "id": "rkpu a-2.png 1",
     "deck": "overlay",
     "cardType": "a-2.png",
-    "z": 33479,
+    "z": 38163,
     "parent": "1oqf"
   },
   "rkpu a-2.png 2": {
@@ -3454,7 +3482,7 @@
     "id": "rkpu a-2.png 2",
     "deck": "overlay",
     "cardType": "a-2.png",
-    "z": 33501,
+    "z": 38189,
     "parent": "1oqf"
   },
   "rkpu a-2.png 3": {
@@ -3462,7 +3490,7 @@
     "id": "rkpu a-2.png 3",
     "deck": "overlay",
     "cardType": "a-2.png",
-    "z": 33484,
+    "z": 38156,
     "parent": "1oqf"
   },
   "rkpu power3.png 1": {
@@ -3470,7 +3498,7 @@
     "id": "rkpu power3.png 1",
     "deck": "overlay",
     "cardType": "power3.png",
-    "z": 33504,
+    "z": 38206,
     "parent": "1oqf"
   },
   "rkpu power3.png 2": {
@@ -3478,7 +3506,7 @@
     "id": "rkpu power3.png 2",
     "deck": "overlay",
     "cardType": "power3.png",
-    "z": 33530,
+    "z": 38205,
     "parent": "1oqf"
   },
   "rkpu power3.png 3": {
@@ -3486,7 +3514,7 @@
     "id": "rkpu power3.png 3",
     "deck": "overlay",
     "cardType": "power3.png",
-    "z": 33494,
+    "z": 38157,
     "parent": "1oqf"
   },
   "rkpu power3.png 4": {
@@ -3494,7 +3522,7 @@
     "id": "rkpu power3.png 4",
     "deck": "overlay",
     "cardType": "power3.png",
-    "z": 33519,
+    "z": 38150,
     "parent": "1oqf"
   },
   "rkpu power4.png 1": {
@@ -3502,7 +3530,7 @@
     "id": "rkpu power4.png 1",
     "deck": "overlay",
     "cardType": "power4.png",
-    "z": 33527,
+    "z": 38140,
     "parent": "1oqf"
   },
   "rkpu power4.png 2": {
@@ -3510,7 +3538,7 @@
     "id": "rkpu power4.png 2",
     "deck": "overlay",
     "cardType": "power4.png",
-    "z": 33521,
+    "z": 38174,
     "parent": "1oqf"
   },
   "rkpu power4.png 3": {
@@ -3518,7 +3546,7 @@
     "id": "rkpu power4.png 3",
     "deck": "overlay",
     "cardType": "power4.png",
-    "z": 33534,
+    "z": 38154,
     "parent": "1oqf"
   },
   "rkpu power4.png 4": {
@@ -3526,7 +3554,7 @@
     "id": "rkpu power4.png 4",
     "deck": "overlay",
     "cardType": "power4.png",
-    "z": 33529,
+    "z": 38186,
     "parent": "1oqf"
   },
   "rkpu power4.png 5": {
@@ -3534,7 +3562,7 @@
     "id": "rkpu power4.png 5",
     "deck": "overlay",
     "cardType": "power4.png",
-    "z": 33532,
+    "z": 38165,
     "parent": "1oqf"
   },
   "rkpu power5.png 1": {
@@ -3542,7 +3570,7 @@
     "id": "rkpu power5.png 1",
     "deck": "overlay",
     "cardType": "power5.png",
-    "z": 33508,
+    "z": 38209,
     "parent": "1oqf"
   },
   "rkpu power5.png 2": {
@@ -3550,7 +3578,7 @@
     "id": "rkpu power5.png 2",
     "deck": "overlay",
     "cardType": "power5.png",
-    "z": 33517,
+    "z": 38159,
     "parent": "1oqf"
   },
   "rkpu power5.png 3": {
@@ -3558,7 +3586,7 @@
     "id": "rkpu power5.png 3",
     "deck": "overlay",
     "cardType": "power5.png",
-    "z": 33544,
+    "z": 38175,
     "parent": "1oqf"
   },
   "rkpu power5.png 4": {
@@ -3566,7 +3594,7 @@
     "id": "rkpu power5.png 4",
     "deck": "overlay",
     "cardType": "power5.png",
-    "z": 33545,
+    "z": 38153,
     "parent": "1oqf"
   },
   "rkpu power5.png 5": {
@@ -3574,7 +3602,7 @@
     "id": "rkpu power5.png 5",
     "deck": "overlay",
     "cardType": "power5.png",
-    "z": 33531,
+    "z": 38207,
     "parent": "1oqf"
   },
   "rkpu power5.png 6": {
@@ -3582,7 +3610,7 @@
     "id": "rkpu power5.png 6",
     "deck": "overlay",
     "cardType": "power5.png",
-    "z": 33503,
+    "z": 38170,
     "parent": "1oqf"
   },
   "rkpu power5.png 7": {
@@ -3590,7 +3618,7 @@
     "id": "rkpu power5.png 7",
     "deck": "overlay",
     "cardType": "power5.png",
-    "z": 33540,
+    "z": 38210,
     "parent": "1oqf"
   },
   "rkpu power5.png 8": {
@@ -3598,7 +3626,7 @@
     "id": "rkpu power5.png 8",
     "deck": "overlay",
     "cardType": "power5.png",
-    "z": 33520,
+    "z": 38143,
     "parent": "1oqf"
   },
   "rkpu power6.png 1": {
@@ -3606,7 +3634,7 @@
     "id": "rkpu power6.png 1",
     "deck": "overlay",
     "cardType": "power6.png",
-    "z": 33493,
+    "z": 38192,
     "parent": "1oqf"
   },
   "rkpu power6.png 2": {
@@ -3614,7 +3642,7 @@
     "id": "rkpu power6.png 2",
     "deck": "overlay",
     "cardType": "power6.png",
-    "z": 33518,
+    "z": 38184,
     "parent": "1oqf"
   },
   "rkpu power6.png 3": {
@@ -3622,7 +3650,7 @@
     "id": "rkpu power6.png 3",
     "deck": "overlay",
     "cardType": "power6.png",
-    "z": 33546,
+    "z": 38196,
     "parent": "1oqf"
   },
   "rkpu power6.png 4": {
@@ -3630,7 +3658,7 @@
     "id": "rkpu power6.png 4",
     "deck": "overlay",
     "cardType": "power6.png",
-    "z": 33490,
+    "z": 38194,
     "parent": "1oqf"
   },
   "rkpu power6.png 5": {
@@ -3638,7 +3666,7 @@
     "id": "rkpu power6.png 5",
     "deck": "overlay",
     "cardType": "power6.png",
-    "z": 33511,
+    "z": 38181,
     "parent": "1oqf"
   },
   "rkpu power6.png 6": {
@@ -3646,7 +3674,7 @@
     "id": "rkpu power6.png 6",
     "deck": "overlay",
     "cardType": "power6.png",
-    "z": 33539,
+    "z": 38139,
     "parent": "1oqf"
   },
   "rkpu power6.png 7": {
@@ -3654,7 +3682,7 @@
     "id": "rkpu power6.png 7",
     "deck": "overlay",
     "cardType": "power6.png",
-    "z": 33535,
+    "z": 38166,
     "parent": "1oqf"
   },
   "rkpu power6.png 8": {
@@ -3662,7 +3690,7 @@
     "id": "rkpu power6.png 8",
     "deck": "overlay",
     "cardType": "power6.png",
-    "z": 33513,
+    "z": 38161,
     "parent": "1oqf"
   },
   "rkpu r5.png": {
@@ -3670,7 +3698,7 @@
     "id": "rkpu r5.png",
     "deck": "overlay",
     "cardType": "r5.png",
-    "z": 33509,
+    "z": 38180,
     "parent": "1oqf"
   },
   "rkpu r6.png": {
@@ -3678,7 +3706,7 @@
     "id": "rkpu r6.png",
     "deck": "overlay",
     "cardType": "r6.png",
-    "z": 33485,
+    "z": 38171,
     "parent": "1oqf"
   },
   "rkpu r7.png": {
@@ -3686,7 +3714,7 @@
     "id": "rkpu r7.png",
     "deck": "overlay",
     "cardType": "r7.png",
-    "z": 33477,
+    "z": 38158,
     "parent": "1oqf"
   },
   "rkpu r8.png 1": {
@@ -3694,7 +3722,7 @@
     "id": "rkpu r8.png 1",
     "deck": "overlay",
     "cardType": "r8.png",
-    "z": 33492,
+    "z": 38201,
     "parent": "1oqf"
   },
   "rkpu r8.png 2": {
@@ -3702,7 +3730,7 @@
     "id": "rkpu r8.png 2",
     "deck": "overlay",
     "cardType": "r8.png",
-    "z": 33541,
+    "z": 38179,
     "parent": "1oqf"
   },
   "rkpu r9.png 1": {
@@ -3710,7 +3738,7 @@
     "id": "rkpu r9.png 1",
     "deck": "overlay",
     "cardType": "r9.png",
-    "z": 33538,
+    "z": 38198,
     "parent": "1oqf"
   },
   "rkpu r9.png 2": {
@@ -3718,7 +3746,7 @@
     "id": "rkpu r9.png 2",
     "deck": "overlay",
     "cardType": "r9.png",
-    "z": 33537,
+    "z": 38173,
     "parent": "1oqf"
   },
   "rkpu r10.png 1": {
@@ -3726,7 +3754,7 @@
     "id": "rkpu r10.png 1",
     "deck": "overlay",
     "cardType": "r10.png",
-    "z": 33480,
+    "z": 38162,
     "parent": "1oqf"
   },
   "rkpu r10.png 2": {
@@ -3734,7 +3762,7 @@
     "id": "rkpu r10.png 2",
     "deck": "overlay",
     "cardType": "r10.png",
-    "z": 33486,
+    "z": 38182,
     "parent": "1oqf"
   },
   "rkpu r11.png 1": {
@@ -3742,7 +3770,7 @@
     "id": "rkpu r11.png 1",
     "deck": "overlay",
     "cardType": "r11.png",
-    "z": 33526,
+    "z": 38190,
     "parent": "1oqf"
   },
   "rkpu r11.png 2": {
@@ -3750,7 +3778,7 @@
     "id": "rkpu r11.png 2",
     "deck": "overlay",
     "cardType": "r11.png",
-    "z": 33549,
+    "z": 38211,
     "parent": "1oqf"
   },
   "rkpu r12.png 1": {
@@ -3758,7 +3786,7 @@
     "id": "rkpu r12.png 1",
     "deck": "overlay",
     "cardType": "r12.png",
-    "z": 33506,
+    "z": 38146,
     "parent": "1oqf"
   },
   "rkpu r12.png 2": {
@@ -3766,7 +3794,7 @@
     "id": "rkpu r12.png 2",
     "deck": "overlay",
     "cardType": "r12.png",
-    "z": 33528,
+    "z": 38172,
     "parent": "1oqf"
   },
   "rkpu r13.png": {
@@ -3774,7 +3802,7 @@
     "id": "rkpu r13.png",
     "deck": "overlay",
     "cardType": "r13.png",
-    "z": 33502,
+    "z": 38200,
     "parent": "1oqf"
   },
   "rkpu r14.png": {
@@ -3782,7 +3810,7 @@
     "id": "rkpu r14.png",
     "deck": "overlay",
     "cardType": "r14.png",
-    "z": 33516,
+    "z": 38149,
     "parent": "1oqf"
   },
   "overlay": {
@@ -3945,7 +3973,7 @@
     "id": "r0ox power2.png 1",
     "deck": "pink",
     "cardType": "power2.png",
-    "z": 33701,
+    "z": 38389,
     "parent": "dlf0"
   },
   "r0ox power2.png 2": {
@@ -3953,7 +3981,7 @@
     "id": "r0ox power2.png 2",
     "deck": "pink",
     "cardType": "power2.png",
-    "z": 33700,
+    "z": 38387,
     "parent": "dlf0"
   },
   "r0ox power2.png 3": {
@@ -3961,7 +3989,7 @@
     "id": "r0ox power2.png 3",
     "deck": "pink",
     "cardType": "power2.png",
-    "z": 33698,
+    "z": 38390,
     "parent": "dlf0"
   },
   "r0ox power2.png 4": {
@@ -3969,7 +3997,7 @@
     "id": "r0ox power2.png 4",
     "deck": "pink",
     "cardType": "power2.png",
-    "z": 33702,
+    "z": 38386,
     "parent": "dlf0"
   },
   "r0ox power2.png 5": {
@@ -3977,7 +4005,7 @@
     "id": "r0ox power2.png 5",
     "deck": "pink",
     "cardType": "power2.png",
-    "z": 33697,
+    "z": 38388,
     "parent": "dlf0"
   },
   "r0ox power2.png 6": {
@@ -3985,7 +4013,7 @@
     "id": "r0ox power2.png 6",
     "deck": "pink",
     "cardType": "power2.png",
-    "z": 33699,
+    "z": 38385,
     "parent": "dlf0"
   },
   "pink": {
@@ -4040,7 +4068,7 @@
     "id": "njv7 power1.png 1",
     "deck": "green",
     "cardType": "power1.png",
-    "z": 33683,
+    "z": 38372,
     "parent": "u4o0"
   },
   "njv7 power1.png 2": {
@@ -4048,7 +4076,7 @@
     "id": "njv7 power1.png 2",
     "deck": "green",
     "cardType": "power1.png",
-    "z": 33686,
+    "z": 38373,
     "parent": "u4o0"
   },
   "njv7 power1.png 3": {
@@ -4056,7 +4084,7 @@
     "id": "njv7 power1.png 3",
     "deck": "green",
     "cardType": "power1.png",
-    "z": 33687,
+    "z": 38370,
     "parent": "u4o0"
   },
   "njv7 power1.png 4": {
@@ -4064,7 +4092,7 @@
     "id": "njv7 power1.png 4",
     "deck": "green",
     "cardType": "power1.png",
-    "z": 33684,
+    "z": 38374,
     "parent": "u4o0"
   },
   "njv7 power1.png 5": {
@@ -4072,7 +4100,7 @@
     "id": "njv7 power1.png 5",
     "deck": "green",
     "cardType": "power1.png",
-    "z": 33685,
+    "z": 38375,
     "parent": "u4o0"
   },
   "njv7 power1.png 6": {
@@ -4080,7 +4108,7 @@
     "id": "njv7 power1.png 6",
     "deck": "green",
     "cardType": "power1.png",
-    "z": 33682,
+    "z": 38371,
     "parent": "u4o0"
   },
   "green": {
@@ -4243,13 +4271,35 @@
     "id": "nrtb",
     "width": 122
   },
-  "a8v1": {
+  "6adm": {
+    "type": "label",
+    "text": "Round",
+    "css": "font-size: 30px",
+    "height": 42,
+    "x": 1458,
+    "y": 866,
+    "z": 19,
+    "id": "6adm"
+  },
+  "r": {
+    "type": "label",
+    "id": "r",
+    "x": 1533,
+    "y": 866,
+    "width": 65,
+    "height": 40,
+    "z": 18,
+    "css": "font-size: 30px;",
+    "editable": true,
+    "text": 0
+  },
+  "8z6x": {
     "type": "pile",
     "parent": "baseHolder",
     "x": 4,
     "y": 4,
     "width": 114,
     "height": 160,
-    "id": "a8v1"
+    "id": "8z6x"
   }
 }
