@@ -368,7 +368,7 @@ class PropertiesModule extends SidebarModule {
         return;
       }
 
-      const deck = getDeckDefinition();
+      const deck = getDeckDefinition(true);
       for(const [ index, deckTemplate ] of Object.entries(deckTemplates)) {
         const templateButton = this.renderWidgetButton(new Deck(deck.id), deckTemplate(deck), designSelectionDiv);
         templateButton.classList.add('deckTemplateButton');
@@ -454,7 +454,7 @@ class PropertiesModule extends SidebarModule {
     }
     target.append(suitCustomizeDiv);
 
-    function getDeckDefinition(standardDeck = true) {
+    function getDeckDefinition(standardDeck) {
       const id = generateUniqueWidgetID();
       const cardTypes = {};
       let suitIndex = 0;
