@@ -11,7 +11,7 @@
       "time": "20",
       "attribution": "Room layout and scripting by Shobu and released to the Public Domain as CC0.<div><br></div><div>Library image generated using the MyNinja artificial intelligence image generator, https://myninja.ai/, using the following prompt: \"2 trader fighting with bill, nasdaq, funny, old cartoon style\"<br></div>",
       "importerTime": 1738872455735,
-      "lastUpdate": 1739114400502,
+      "lastUpdate": 1739114778914,
       "importer": "PCIO",
       "showName": true,
       "skill": "medium",
@@ -1182,7 +1182,8 @@
       "color": "black"
     },
     "editable": true,
-    "text": 20
+    "text": 20,
+    "onlyVisibleForSeat": "p1"
   },
   "score-p2": {
     "type": "label",
@@ -1197,7 +1198,8 @@
       "color": "black"
     },
     "editable": true,
-    "text": 20
+    "text": 20,
+    "onlyVisibleForSeat": "p2"
   },
   "p2": {
     "type": "seat",
@@ -1205,9 +1207,7 @@
     "x": 1336,
     "y": 192,
     "z": 34938,
-    "index": 2,
-    "player": "Mike",
-    "color": "#007901"
+    "index": 2
   },
   "p1": {
     "type": "seat",
@@ -2242,7 +2242,7 @@
     "css": {
       "font-size": "14px"
     },
-    "text": "Hide $$$",
+    "text": "Show $$$",
     "clickRoutine": [
       {
         "func": "IF",
