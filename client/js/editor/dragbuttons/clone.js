@@ -1,6 +1,11 @@
 class CloneDragButton extends DragButton {
-  constructor() {
-    super('content_copy', 'Clone', 'Drag to clone the selected widgets into a grid.');
+  constructor(smartClone = false) {
+    if(smartClone) {
+      super('auto_awesome', 'Smart clone', 'Drag to clone the selected widgets into a grid and keep the copies updated.');
+    } else {
+      super('content_copy', 'Clone', 'Drag to clone the selected widgets into a grid.');
+    }
+    this.smartClone = smartClone;
     this.clones = [];
   }
 
@@ -85,8 +90,19 @@ class CloneDragButton extends DragButton {
 
     const newSelection = [...selectedWidgets];
     const problems = [];
-    for(const [ widget, html ] of this.dragStartHTML)
-      newSelection.push(...await duplicateWidget(widget, true, false, [], 'Numbers', 'dropTarget,hand,index,inheritFrom,linkedToSeat,onlyVisibleForSeat,text'.split(','), this.x ? Math.round(this.dx/getScale()*Math.sign(this.x)) : 0, this.y ? Math.round(this.dy/getScale()*Math.sign(this.y)) : 0, Math.abs(this.x), Math.abs(this.y), problems));
+    for(const [ widget, html ] of this.dragStartHTML) {
+      const clones = await duplicateWidget(widget, !this.smartClone, false, [], 'Numbers', 'dropTarget,hand,index,inheritFrom,linkedToSeat,onlyVisibleForSeat,text'.split(','), this.x ? Math.round(this.dx/getScale()*Math.sign(this.x)) : 0, this.y ? Math.round(this.dy/getScale()*Math.sign(this.y)) : 0, Math.abs(this.x), Math.abs(this.y), problems);
+      newSelection.push(...clones);
+      if(this.smartClone) {
+        for(const clone of clones) {
+          for(const property in clone.state)
+            if(!['x', 'y', 'rotation', 'parent', 'type', 'id'].includes(property))
+              await clone.set(property, null);
+          await clone.set('editorSmartClone', {});
+          await clone.set('inheritFrom', { [widget.get('id')]: [ '!x', '!y', '!rotation', '!parent' ] });
+        }
+      }
+    }
 
     setSelection(newSelection.filter(w=>newSelection.indexOf(widgets.get(w.get('parent'))) == -1));
   }
