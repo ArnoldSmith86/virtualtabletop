@@ -862,7 +862,7 @@ export default class Room {
     if(mode == 'addState')
       this.saveCurrentState_write(Math.random().toString(36).substring(3, 7), 0, { name });
     if(mode == 'quickSave')
-      this.saveCurrentState_write('quicksave', this.state._meta.states['quicksave'] ? this.state._meta.states['quicksave'].variants.length : 0, { name: 'Quicksave', variant: `${new Date().toISOString().substr(0,16).replace(/T/, ' ')}` }, false);
+      this.saveCurrentState_write('quicksave', this.state._meta.states['quicksave'] ? this.state._meta.states['quicksave'].variants.length : 0, { name: 'Quicksave', variant: new Date().toLocaleString(undefined, { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', hour12: false }).replace(',', '') }, false);
   }
 
   saveCurrentState_write(stateID, variantID, metadata, setToActiveState=true) {
