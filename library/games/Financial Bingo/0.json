@@ -4283,6 +4283,10 @@
         "func": "SET",
         "property": "y",
         "value": 20
+      },
+      {
+        "func": "TURN",
+        "turnCycle": "random"
       }
     ],
     "x": 765,
