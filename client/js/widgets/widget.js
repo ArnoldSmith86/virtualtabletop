@@ -1821,6 +1821,10 @@ export class Widget extends StateManaged {
         } else if(collection = getCollection(a.collection)) {
           if(collections[collection].length) {
             await shuffleWidgets(collections[collection]);
+            await w(collections[collection].map(i=>i.get('parent')), async holder=>{
+              if(holder.get('type') == 'holder')
+                await holder.updateAfterShuffle();
+            });
           } else {
             problems.push(`Collection ${a.collection} is empty.`);
           }
