@@ -3,22 +3,26 @@
 }
 
 #editorSidebar {
-  background: var(--VTTblue);
   position: absolute;
-  width: var(--editSidebarWidth);
+  width: calc(var(--modulesWidth));
   right: 0;
-  top: calc(var(--editToolbarHeight) - 1px);
+  top: 0;
   bottom: 0;
-  z-index: 2;
+  z-index: 3;
   display: flex;
   flex-direction: column;
 }
 
-#editorSidebar button span {
+.sidebarButtons {
+  background: var(--VTTblue);
+}
+
+.sidebarButtons button span {
   display: none;
   position: absolute;
-  right: calc(var(--editSidebarWidth) + 1px);
+  right: calc(var(--sidebarButtonsWidth) + 1px);
   background: var(--VTTblueDark);
+  top: 40px;
   margin: 0;
   padding: 9px;
   border-radius: 5px;
@@ -26,51 +30,71 @@
   width: 200px;
 }
 
-#editorSidebar button:hover span {
+.sidebarButtons button {
+  display: inline-flex;
+}
+
+.sidebarButtons button:hover span {
   display: block;
 }
 
-#editorSidebar button.active {
+.sidebarButtons button.active {
   position: relative;
-  left: -2px;
-  border-radius: 0 5px 5px 0;
+  bottom: -2px;
+  border-radius: 5px 5px 0 0;
   background: var(--backgroundColor);
   color: var(--VTTblue);
 }
-body.edit.darkMode #editorSidebar button.active {
+body.edit.darkMode .sidebarButtons button.active {
   color: var(--textColor);
 }
 
-#editorSidebar button.active::before {
+.sidebarButtons button.active::before {
   position: relative;
   left: 2px;
 }
 
-#editorSidebar button.active span {
+.sidebarButtons button.active span {
   color: white;
   right: calc(var(--editSidebarWidth) - 2px);
 }
 
-#editorModules {
-  display: none;
-  position: absolute;
-  right: var(--editSidebarWidth);
-  top: var(--editToolbarHeight);
-  bottom: 0;
-  min-width: 250px;
-  max-width: 90vw;
-  width: calc(var(--modulesWidth) - var(--editSidebarWidth));
+.editorModule {
+  position: relative;
+  right: 0;
   z-index: 1;
   box-sizing: border-box;
   padding: 10px;
   background: var(--backgroundColor);
-  grid-template-columns: 2fr 1fr;
-  grid-template-rows: 2fr 1fr;
-  grid-gap: 10px;
+  overflow: auto;
+  color: var(--textColor);
+  background-color: var(--backgroundColor);
 }
 
-#editorModules ::-webkit-scrollbar-track {
+.editorModule ::-webkit-scrollbar-track {
   background: var(--backgroundColor);
+}
+
+#editorEditSidebar {
+  top: 0;
+}
+
+#editorAuxiliarySidebar {
+  bottom: 0;
+}
+
+#editorEditModule {
+  flex-grow: 1;
+}
+
+#editorAuxiliaryModule {
+  height: 33%;
+  flex-shrink: 0;
+  border-top: 2px solid var(--VTTblue);
+}
+
+#editorAuxiliaryModule:not(.active) {
+  display: none;
 }
 
 #editorModulesResizer {
@@ -78,6 +102,7 @@ body.edit.darkMode #editorSidebar button.active {
   height: 100%;
   width: 5px;
   cursor: ew-resize;
+  z-index: 5;
 }
 body.editorModulesResizing {
   cursor: ew-resize !important;
@@ -86,116 +111,6 @@ body.editorModulesResizing {
 
 #editorModules.active {
   display: grid;
-}
-
-#editor.hasTopLeft #editorModules.active {
-  grid-template-areas:
-    "topleft topleft"
-    "topleft topleft";
-}
-
-#editor.hasTopRight #editorModules.active {
-  grid-template-areas:
-    "topright topright"
-    "topright topright";
-}
-
-#editor.hasBottomLeft #editorModules.active {
-  grid-template-areas:
-    "bottomleft bottomleft"
-    "bottomleft bottomleft";
-}
-
-#editor.hasBottomRight #editorModules.active {
-  grid-template-areas:
-    "bottomright bottomright"
-    "bottomright bottomright";
-}
-
-#editor.hasTopLeft.hasBottomLeft #editorModules.active {
-  grid-template-areas:
-    "topleft topleft"
-    "bottomleft bottomleft";
-}
-
-#editor.hasTopRight.hasBottomRight #editorModules.active {
-  grid-template-areas:
-    "topright topright"
-    "bottomright bottomright";
-}
-
-#editor.hasTopRight.hasTopLeft #editorModules.active {
-  grid-template-areas:
-    "topleft topright"
-    "topleft topright";
-}
-
-#editor.hasBottomRight.hasBottomLeft #editorModules.active {
-  grid-template-areas:
-    "bottomleft bottomright"
-    "bottomleft bottomright";
-}
-
-#editor.hasTopRight.hasBottomLeft #editorModules.active {
-  grid-template-areas:
-    "topright topright"
-    "bottomleft bottomleft";
-}
-
-#editor.hasTopLeft.hasBottomRight #editorModules.active {
-  grid-template-areas:
-    "topleft topleft"
-    "bottomright bottomright";
-}
-
-#editor.hasTopRight.hasBottomLeft.hasBottomRight #editorModules.active {
-  grid-template-areas:
-    "topright topright"
-    "bottomleft bottomright";
-}
-
-#editor.hasTopLeft.hasBottomLeft.hasBottomRight #editorModules.active {
-  grid-template-areas:
-    "topleft topleft"
-    "bottomleft bottomright";
-}
-
-#editor.hasTopLeft.hasTopRight.hasBottomRight #editorModules.active {
-  grid-template-areas:
-    "topleft topright"
-    "bottomright bottomright";
-}
-
-#editor.hasTopLeft.hasTopRight.hasBottomLeft #editorModules.active {
-  grid-template-areas:
-    "topleft topright"
-    "bottomleft bottomleft";
-}
-
-#editor.hasTopLeft.hasTopRight.hasBottomLeft.hasBottomRight #editorModules.active {
-  grid-template-areas:
-    "topleft topright"
-    "bottomleft bottomright";
-}
-
-.editorModule {
-  display: none;
-  position: relative;
-  overflow: auto;
-  color: var(--textColor);
-  background-color: var(--backgroundColor);
-}
-
-#editorModuleOverlay {
-  background-color: var(--backgroundColor);
-}
-
-#editorModuleInOverlay {
-  position: absolute;
-  left: 10px;
-  right: 10px;
-  top: 10px;
-  bottom: 10px;
 }
 
 .editorModule .widget {
@@ -220,20 +135,6 @@ body.draggingEditorSidebarModule .editorModule {
 
 body.draggingEditorSidebarModule .editorModule.dragHighlight {
   border: 2px red solid;
-}
-
-
-#editorModuleTopLeft {
-  grid-area: topleft;
-}
-#editorModuleTopRight {
-  grid-area: topright;
-}
-#editorModuleBottomLeft {
-  grid-area: bottomleft;
-}
-#editorModuleBottomRight {
-  grid-area: bottomright;
 }
 
 .active.editorModule {
