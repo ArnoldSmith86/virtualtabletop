@@ -1,34 +1,7 @@
 {
-  "_meta": {
-    "version": 17,
-    "info": {
-      "name": "Henny's Star Buffet",
-      "image": "/assets/-1264675580_1706497",
-      "rules": "https://boardgamegeek.com/filepage/234194/heckmeck-am-karteneck-rules-english",
-      "bgg": "https://boardgamegeek.com/boardgame/348870/heckmeck-am-karteneck",
-      "year": "2021",
-      "mode": "vs",
-      "time": "20",
-      "attribution": "<div>Original layout, coding, and asset design done by Bohnanzus and licensed for use on VTT.&nbsp;<span style=\"color: var(--overlayFontColor);\">Code modifications and functionality adjustments performed by Dexdouglas, with assistance from LawDawg, licensed for use on VTT</span><span style=\"color: var(--overlayFontColor);\">.</span></div><div><br></div>Cover image created using AI https://labs.google/fx/tools/image-fx with a prompt of \"Cartoon style hen in outer space wearing space suit and with a plate of stars.\"",
-      "lastUpdate": 1741963464442,
-      "showName": true,
-      "skill": "Medium",
-      "description": "In Henny's Star Buffet, you compete with other players to have the most stars collected by the end of the game. Every round, a platter of delicious stars are served and each player needs to bid with the money they have in hand to get the best plate. If they don't include a tip, they are going to get the lowest offering available.",
-      "similarImage": "",
-      "similarName": "Heckmeck am Karteneck",
-      "similarDesigner": "Reiner Knizia",
-      "similarAwards": "",
-      "ruleText": "<span id=\"docs-internal-guid-49df9870-7fff-cdb6-d6e3-60eb466876bc\"><p style=\"line-height:1.656;margin-top:0pt;margin-bottom:0pt;\" dir=\"ltr\"><span style=\"font-size:11pt;font-family:Arial,sans-serif;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;\">You are all hens in outer space with a hankering for some stars so you stop in at your favorite restaurant, \"Henny's Star Buffet\" for a quick bite. The objective is to end the game with more stars in your collection than any other player. You start the game with 6 money cards and you only replenish your hand minimally each turn so be careful with how and when you choose to play your cards. If you don’t play a grey “tip” card for the wait staff each round, you will always get the lowest valued star card there is, no matter how much money you are spending.</span></p><p style=\"line-height:1.38;margin-top:0pt;margin-bottom:0pt;\" dir=\"ltr\"><b id=\"docs-internal-guid-4f400b58-7fff-e4f6-595e-175b409e6e3a\" style=\"font-weight:normal;\"><br></b></p><p style=\"line-height:1.38;margin-top:0pt;margin-bottom:0pt;\" dir=\"ltr\"><span style=\"font-size:11pt;font-family:Arial,sans-serif;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;\">The game consists of 110 cards (17 money cards of value 1-5, and 25 gray “tip” cards of value 5) and 30 star cards (3x0, and 16-42 with 1-9 stars on each card).</span></p><p style=\"line-height:1.38;margin-top:0pt;margin-bottom:0pt;\" dir=\"ltr\"><b style=\"font-weight:normal;\"><br></b></p><p style=\"line-height:1.656;margin-top:0pt;margin-bottom:0pt;\" dir=\"ltr\"><span style=\"font-size:11pt;font-family:Arial,sans-serif;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;\">After everyone is seated and you select the number of players in a game, deal star cards to the center of the board. The star cards have two pieces of info, the number value on the top, and the # of stars on the bottom. The stars are the points that you count at the end of the game.&nbsp;</span></p><p style=\"line-height:1.38;margin-top:0pt;margin-bottom:0pt;\" dir=\"ltr\"><b style=\"font-weight:normal;\"><br></b></p><p style=\"line-height:1.656;margin-top:0pt;margin-bottom:0pt;\" dir=\"ltr\"><span style=\"font-size:11pt;font-family:Arial,sans-serif;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;\">In turn order, you play any number of cards from your hand that are all the same color. You do not have to play all of the cards of the same color that you have in your hand, but you are only permitted to play this selected color once in a round. Once you have played cards to your bid area, your total is updated for everyone to see, then draw a card by hitting the +1. It doesn’t matter how many cards you play, you will only ever draw 1 after playing a turn.</span></p><p style=\"line-height:1.38;margin-top:0pt;margin-bottom:0pt;\" dir=\"ltr\"><b style=\"font-weight:normal;\"><br></b></p><p style=\"line-height:1.656;margin-top:0pt;margin-bottom:0pt;\" dir=\"ltr\"><span style=\"font-size:11pt;font-family:Arial,sans-serif;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;\">If you do not, or can not, play any more in a round, you can pass. If you are not the last person to pass, you will draw 2 cards. If you are the last person to pass, you will not draw any additional cards.</span></p><p style=\"line-height:1.38;margin-top:0pt;margin-bottom:0pt;\" dir=\"ltr\"><b style=\"font-weight:normal;\"><br></b></p><p style=\"line-height:1.656;margin-top:0pt;margin-bottom:0pt;\" dir=\"ltr\"><span style=\"font-size:11pt;font-family:Arial,sans-serif;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;\">When you pass, if you do not have at least one grey 5 “tip” card played in front of you, you will immediately take the lowest valued star card in the center. You will not collect any more star cards this round. You can then discard your cards from your bid area.&nbsp;</span></p><p style=\"line-height:1.38;margin-top:0pt;margin-bottom:0pt;\" dir=\"ltr\"><b style=\"font-weight:normal;\"><br></b></p><p style=\"line-height:1.656;margin-top:0pt;margin-bottom:0pt;\" dir=\"ltr\"><span style=\"font-size:11pt;font-family:Arial,sans-serif;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;\">If you pass and you DO have at least one grey 5 tip card in front of you, you will first assess if your total played value is equal to anyone’s top star card they have collected. If it is, you must immediately collect it from that player and place it in your stack. If not, then hold tight until everyone else has passed as well.&nbsp;</span></p><p style=\"line-height:1.38;margin-top:0pt;margin-bottom:0pt;\" dir=\"ltr\"><b style=\"font-weight:normal;\"><br></b></p><p style=\"line-height:1.656;margin-top:0pt;margin-bottom:0pt;\" dir=\"ltr\"><span style=\"font-size:11pt;font-family:Arial,sans-serif;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;\">**NOTE** Even if you pass, you can still have star cards stolen from you.&nbsp;</span></p><p style=\"line-height:1.38;margin-top:0pt;margin-bottom:0pt;\" dir=\"ltr\"><b style=\"font-weight:normal;\"><br></b></p><p style=\"line-height:1.656;margin-top:0pt;margin-bottom:0pt;\" dir=\"ltr\"><span style=\"font-size:11pt;font-family:Arial,sans-serif;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;\">Once everyone has passed, those with grey 5 tip cards in front of them will then be served a plate of delicious stars. The highest value played will get the highest value star card, the second highest will get the second highest star card, and so on. In the event of a tie, the grey tip card with the highest number in the center will be considered the highest.</span></p><p style=\"line-height:1.38;margin-top:0pt;margin-bottom:0pt;\" dir=\"ltr\"><br></p><p style=\"line-height:1.656;margin-top:0pt;margin-bottom:0pt;\" dir=\"ltr\"><span style=\"font-size:11pt;font-family:Arial,sans-serif;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;\">Once everyone has collected their star cards, discard all your cards from the bid area, and the start player for the next round will be the last player who collected a star card in the previous round (usually the lowest value bid with a grey card). The next round begins with pressing the \"Deal Star Cards\" button in the center of the table for more star cards to be laid out. Continue like this until there are no more star cards in the deck. The winner is the one with the highest total number of stars collected on their cards. In the event of a tie. The player with the highest value star card is the winner.</span></p></span>",
-      "helpText": "<span id=\"docs-internal-guid-cbde914d-7fff-3c5a-3a9d-2cb9d4a6831a\"><p style=\"line-height:1.656;margin-top:0pt;margin-bottom:0pt;\" dir=\"ltr\"><span style=\"font-size:11pt;font-family:Arial,sans-serif;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;\">Click to sit at any seat. When all players are seated, click the number of players on the middle right to deal out a starting hand of 6 cards to each player, assign a start player (glowing name), and load the star card holder with star cards for the game. Depending on how many players you have, you will have 18, 24, 28, or 30 cards in the stack. Press the “Deal Star Cards” button in the center of the table to deal star cards equal to the number of players in the game.</span></p><p style=\"line-height:1.656;margin-top:0pt;margin-bottom:0pt;\" dir=\"ltr\"><span style=\"font-size:11pt;font-family:Arial,sans-serif;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;\"><br></span></p><p style=\"line-height:1.656;margin-top:0pt;margin-bottom:0pt;\" dir=\"ltr\"><span style=\"font-size:11pt;font-family:Arial,sans-serif;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;\">Drag cards from your hand to your bid holder next to your name. After playing any number of cards, the value next to your name will be updated with the value of your bid. Then press the “+1” button to draw a card and pass the turn to the next player.&nbsp;</span></p><p style=\"line-height:1.656;margin-top:0pt;margin-bottom:0pt;\" dir=\"ltr\"><span style=\"font-size:11pt;font-family:Arial,sans-serif;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;\"><br></span></p><p style=\"line-height:1.656;margin-top:0pt;margin-bottom:0pt;\" dir=\"ltr\"><span style=\"font-size:11pt;font-family:Arial,sans-serif;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;\">If you are not playing any cards and you are not the last player in the round to pass, then press the “Pass &amp; +2” button to pass your turn and draw 2 cards. For the rest of the round, when the turn comes to you, just press the “pass” button to do nothing and pass the turn.</span></p><p style=\"line-height:1.656;margin-top:0pt;margin-bottom:0pt;\" dir=\"ltr\"><span style=\"font-size:11pt;font-family:Arial,sans-serif;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;\"><br></span></p><p style=\"line-height:1.656;margin-top:0pt;margin-bottom:0pt;\" dir=\"ltr\"><span style=\"font-size:11pt;font-family:Arial,sans-serif;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;\">When all star cards are distributed for the round, press the “Deal Star Cards” button again to deal star cards for the next round. Then press the “pass” button until you have highlighted the player whose turn it is in the new round (the player who last took a star card in the previous round).&nbsp;</span></p><p style=\"line-height:1.38;margin-top:0pt;margin-bottom:0pt;\" dir=\"ltr\"><b id=\"docs-internal-guid-ea29137d-7fff-6b18-218c-57fbdb7922fe\" style=\"font-weight:normal;\"><br></b></p><p style=\"line-height:1.656;margin-top:0pt;margin-bottom:0pt;\" dir=\"ltr\"><span style=\"font-size:11pt;font-family:Arial,sans-serif;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;\">If you need to discard the cards in your bid holder, press the “Discard” button next to your name. This will move the cards to the Discard holder. When the draw deck is empty, press the “Shuffle discard” button to shuffle the discards and place them face down on the draw stack.</span></p><p style=\"line-height:1.38;margin-top:0pt;margin-bottom:0pt;\" dir=\"ltr\"><b style=\"font-weight:normal;\"><br></b></p><p style=\"line-height:1.656;margin-top:0pt;margin-bottom:0pt;\" dir=\"ltr\"><span style=\"font-size:11pt;font-family:Arial,sans-serif;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;\">When you win a star card, drag it to the small rectangular holder next to your name. As you win more star cards, you will stack them on top of each other in this holder. Players are able to steal star cards from this holder if they pass and their total equals the number value on your top-most star card, and they have a grey tip card. Multiple people can steal from a player in a turn and a star card can be stolen multiple times in a game, or even a round.&nbsp;</span></p><p style=\"line-height:1.38;margin-top:0pt;margin-bottom:0pt;\" dir=\"ltr\"></p><p style=\"line-height:1.656;margin-top:0pt;margin-bottom:0pt;\" dir=\"ltr\"><span style=\"font-size:11pt;font-family:Arial,sans-serif;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;\"><br></span><span style=\"font-size:11pt;font-family:Arial,sans-serif;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;\">The game ends at the end of the round when there are no more star cards to auction off in the center. When this happens, click the \"Final Score\" button to calculate the value of star cards in your holder. This value will be updated next to your name. The player with the highest # of stars is the winner. If tied, the player with the higher numbered star card is the winner.</span></p><div><span style=\"font-size:11pt;font-family:Arial,sans-serif;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;\"><br></span></div></span>",
-      "variantImage": "",
-      "variant": "Henny's Star Buffet",
-      "language": "en-GB",
-      "players": "2-6"
-    }
-  },
   "238934c5-449d-4a33-b0fb-83a07a0a8191": {
     "id": "238934c5-449d-4a33-b0fb-83a07a0a8191",
-    "z": 47170,
+    "z": 47984,
     "type": "card",
     "deck": "maindeck",
     "cardType": "type-071875c1-a228-4d47-b5f6-6c33fb20d7b5",
@@ -36,7 +9,7 @@
   },
   "ef1df5ce-00a3-4240-980b-44accd1e0e4d": {
     "id": "ef1df5ce-00a3-4240-980b-44accd1e0e4d",
-    "z": 47171,
+    "z": 47986,
     "type": "card",
     "deck": "maindeck",
     "cardType": "type-ba239f5f-97fc-4ca5-9214-66683427d459",
@@ -44,27 +17,23 @@
   },
   "bddfd9e4-5fcc-422e-b287-c95566c89ec0": {
     "id": "bddfd9e4-5fcc-422e-b287-c95566c89ec0",
-    "z": 46486,
+    "z": 47498,
     "type": "card",
     "deck": "dominodeck",
     "cardType": "type-38728756-9414-4822-aaac-3dc67f3076ca",
-    "parent": "svl6"
+    "parent": "wydr"
   },
   "01730a94-709f-410a-8be4-5955422cb61c": {
     "id": "01730a94-709f-410a-8be4-5955422cb61c",
-    "z": 1,
+    "z": 47980,
     "type": "card",
     "deck": "maindeck",
     "cardType": "type-137dcd31-e4a9-4e1f-8b61-480c88f0be63",
-    "parent": "hand",
-    "activeFace": 1,
-    "x": 6,
-    "y": 6,
-    "owner": "Guest207"
+    "parent": "rpuc"
   },
   "821e43b0-130a-4ed0-b599-1816c7af1365": {
     "id": "821e43b0-130a-4ed0-b599-1816c7af1365",
-    "z": 47172,
+    "z": 47987,
     "type": "card",
     "deck": "maindeck",
     "cardType": "type-1b84e617-ee80-486b-b093-3b1fae2a98b9",
@@ -72,7 +41,7 @@
   },
   "4f866427-3b68-457a-a643-43c941f01dcc": {
     "id": "4f866427-3b68-457a-a643-43c941f01dcc",
-    "z": 47164,
+    "z": 47988,
     "type": "card",
     "deck": "maindeck",
     "cardType": "type-137dcd31-e4a9-4e1f-8b61-480c88f0be63",
@@ -80,7 +49,7 @@
   },
   "2ee3ae55-deaa-4165-8436-0b00d8cc565c": {
     "id": "2ee3ae55-deaa-4165-8436-0b00d8cc565c",
-    "z": 47173,
+    "z": 47989,
     "type": "card",
     "deck": "maindeck",
     "cardType": "type-137dcd31-e4a9-4e1f-8b61-480c88f0be63",
@@ -88,7 +57,7 @@
   },
   "f541e719-6407-40a2-b160-61269c068d0c": {
     "id": "f541e719-6407-40a2-b160-61269c068d0c",
-    "z": 47174,
+    "z": 47990,
     "type": "card",
     "deck": "maindeck",
     "cardType": "type-c2be1792-7552-4723-a94d-f36e8757301e",
@@ -96,23 +65,23 @@
   },
   "776446a0-3182-4203-8003-e8660f3dbcf4": {
     "id": "776446a0-3182-4203-8003-e8660f3dbcf4",
-    "z": 47276,
+    "z": 47643,
     "type": "card",
     "deck": "dominodeck",
     "cardType": "type-d287ac01-6968-49da-9a75-093b97be6102",
-    "parent": "svl6"
+    "parent": "haci"
   },
   "8af8f531-6adb-4afb-bc11-7c2120a386b1": {
     "id": "8af8f531-6adb-4afb-bc11-7c2120a386b1",
-    "z": 46470,
+    "z": 47499,
     "type": "card",
     "deck": "dominodeck",
     "cardType": "type-b23f1b67-1f66-4191-885b-244fe733ff2a",
-    "parent": "svl6"
+    "parent": "wydr"
   },
   "c7e6b0f7-cbf7-4e98-949a-a21bd89244f8": {
     "id": "c7e6b0f7-cbf7-4e98-949a-a21bd89244f8",
-    "z": 47175,
+    "z": 47991,
     "type": "card",
     "deck": "maindeck",
     "cardType": "type-c2be1792-7552-4723-a94d-f36e8757301e",
@@ -120,7 +89,7 @@
   },
   "e47cc85f-d005-4651-ba1b-bed46bd4951f": {
     "id": "e47cc85f-d005-4651-ba1b-bed46bd4951f",
-    "z": 47176,
+    "z": 47992,
     "type": "card",
     "deck": "maindeck",
     "cardType": "type-18752b22-4687-4e4e-8dc9-195b09963c8b",
@@ -128,7 +97,7 @@
   },
   "7fb35a53-b5bb-4e57-a443-d8b863967e2f": {
     "id": "7fb35a53-b5bb-4e57-a443-d8b863967e2f",
-    "z": 47177,
+    "z": 47993,
     "type": "card",
     "deck": "maindeck",
     "cardType": "type-29d22dc8-3e28-4073-9bc1-1aba42876669",
@@ -136,15 +105,15 @@
   },
   "d8a741af-5580-4522-80b7-ac672d6f6215": {
     "id": "d8a741af-5580-4522-80b7-ac672d6f6215",
-    "z": 46471,
+    "z": 47509,
     "type": "card",
     "deck": "dominodeck",
     "cardType": "type-9622f1f4-c105-4579-a743-4ad328025f54",
-    "parent": "svl6"
+    "parent": "wydr"
   },
   "f443fc74-2e6f-4191-9b10-79804921df25": {
     "id": "f443fc74-2e6f-4191-9b10-79804921df25",
-    "z": 47165,
+    "z": 47994,
     "type": "card",
     "deck": "maindeck",
     "cardType": "type-a2bc2fc5-1b19-4f10-9afc-161c444b08d3",
@@ -152,7 +121,7 @@
   },
   "9a5b74a6-d0aa-48c3-b6c3-d34638d1e8f2": {
     "id": "9a5b74a6-d0aa-48c3-b6c3-d34638d1e8f2",
-    "z": 47178,
+    "z": 47995,
     "type": "card",
     "deck": "maindeck",
     "cardType": "type-a680198b-661d-48d3-b0ff-630cc5a62f8b",
@@ -160,7 +129,7 @@
   },
   "b20f6ed3-e4cf-442e-8e8f-3fa92bb675c8": {
     "id": "b20f6ed3-e4cf-442e-8e8f-3fa92bb675c8",
-    "z": 47179,
+    "z": 47996,
     "type": "card",
     "deck": "maindeck",
     "cardType": "type-a680198b-661d-48d3-b0ff-630cc5a62f8b",
@@ -168,7 +137,7 @@
   },
   "48055309-132a-470c-a4a3-f0165919e06c": {
     "id": "48055309-132a-470c-a4a3-f0165919e06c",
-    "z": 47180,
+    "z": 47997,
     "type": "card",
     "deck": "maindeck",
     "cardType": "type-137dcd31-e4a9-4e1f-8b61-480c88f0be63",
@@ -176,7 +145,7 @@
   },
   "6502f8d0-e716-47b7-a494-40c1533579a7": {
     "id": "6502f8d0-e716-47b7-a494-40c1533579a7",
-    "z": 47181,
+    "z": 47998,
     "type": "card",
     "deck": "maindeck",
     "cardType": "type-071875c1-a228-4d47-b5f6-6c33fb20d7b5",
@@ -184,15 +153,15 @@
   },
   "9c2542fd-82fe-4de5-8ea5-27a13ffd5937": {
     "id": "9c2542fd-82fe-4de5-8ea5-27a13ffd5937",
-    "z": 46491,
+    "z": 47502,
     "type": "card",
     "deck": "dominodeck",
     "cardType": "type-de4c99cf-993b-4226-8617-a61abbe17dab",
-    "parent": "svl6"
+    "parent": "wydr"
   },
   "60d3e0a4-fbae-4ed5-b004-a114a420a5e9": {
     "id": "60d3e0a4-fbae-4ed5-b004-a114a420a5e9",
-    "z": 47182,
+    "z": 47999,
     "type": "card",
     "deck": "maindeck",
     "cardType": "type-ba239f5f-97fc-4ca5-9214-66683427d459",
@@ -200,19 +169,15 @@
   },
   "345dc5a0-69a9-4ac6-920c-e4c62a6273ac": {
     "id": "345dc5a0-69a9-4ac6-920c-e4c62a6273ac",
-    "z": 2,
+    "z": 47981,
     "type": "card",
     "deck": "maindeck",
     "cardType": "type-c2be1792-7552-4723-a94d-f36e8757301e",
-    "parent": "hand",
-    "activeFace": 1,
-    "x": 46,
-    "y": 6,
-    "owner": "Guest207"
+    "parent": "rpuc"
   },
   "cb4fbef7-7f06-4bdd-9f6d-d57ba8b38174": {
     "id": "cb4fbef7-7f06-4bdd-9f6d-d57ba8b38174",
-    "z": 47183,
+    "z": 48000,
     "type": "card",
     "deck": "maindeck",
     "cardType": "type-ba239f5f-97fc-4ca5-9214-66683427d459",
@@ -220,7 +185,7 @@
   },
   "cfc75d0d-9c61-4b48-8a6b-4e51c2f20393": {
     "id": "cfc75d0d-9c61-4b48-8a6b-4e51c2f20393",
-    "z": 47184,
+    "z": 48001,
     "type": "card",
     "deck": "maindeck",
     "cardType": "type-071875c1-a228-4d47-b5f6-6c33fb20d7b5",
@@ -228,7 +193,7 @@
   },
   "4ef5d149-f30b-4368-bac1-121530b882e4": {
     "id": "4ef5d149-f30b-4368-bac1-121530b882e4",
-    "z": 47185,
+    "z": 48002,
     "type": "card",
     "deck": "maindeck",
     "cardType": "type-071875c1-a228-4d47-b5f6-6c33fb20d7b5",
@@ -236,15 +201,15 @@
   },
   "3d86e752-5fb5-4c4e-8f45-75acfbfe92cd": {
     "id": "3d86e752-5fb5-4c4e-8f45-75acfbfe92cd",
-    "z": 46490,
+    "z": 47500,
     "type": "card",
     "deck": "dominodeck",
     "cardType": "type-954e8aa5-1268-4a86-8ff6-5621e3b93054",
-    "parent": "svl6"
+    "parent": "wydr"
   },
   "1e296627-5faf-45d0-a190-95893daa4d78": {
     "id": "1e296627-5faf-45d0-a190-95893daa4d78",
-    "z": 47186,
+    "z": 48003,
     "type": "card",
     "deck": "maindeck",
     "cardType": "type-c2be1792-7552-4723-a94d-f36e8757301e",
@@ -252,7 +217,7 @@
   },
   "588aef8c-3ff7-4f20-8a47-b8a1277c3f85": {
     "id": "588aef8c-3ff7-4f20-8a47-b8a1277c3f85",
-    "z": 47187,
+    "z": 48004,
     "type": "card",
     "deck": "maindeck",
     "cardType": "type-071875c1-a228-4d47-b5f6-6c33fb20d7b5",
@@ -260,7 +225,7 @@
   },
   "d75df018-5d93-46db-b5d8-033cab2d45e0": {
     "id": "d75df018-5d93-46db-b5d8-033cab2d45e0",
-    "z": 47188,
+    "z": 48005,
     "type": "card",
     "deck": "maindeck",
     "cardType": "type-137dcd31-e4a9-4e1f-8b61-480c88f0be63",
@@ -268,15 +233,15 @@
   },
   "81dcdfdd-ef05-482f-81a1-549a9ae9a5fd": {
     "id": "81dcdfdd-ef05-482f-81a1-549a9ae9a5fd",
-    "z": 46482,
+    "z": 47657,
     "type": "card",
     "deck": "dominodeck",
     "cardType": "type-0c878966-3a62-48f9-a1b4-5080f3c1316c",
-    "parent": "svl6"
+    "parent": "haci"
   },
   "32288591-213c-4cd3-a2fb-427c056f6bdd": {
     "id": "32288591-213c-4cd3-a2fb-427c056f6bdd",
-    "z": 47189,
+    "z": 48006,
     "type": "card",
     "deck": "maindeck",
     "cardType": "type-071875c1-a228-4d47-b5f6-6c33fb20d7b5",
@@ -284,7 +249,7 @@
   },
   "5359d17d-42d0-473e-a4e1-8931c7e600e1": {
     "id": "5359d17d-42d0-473e-a4e1-8931c7e600e1",
-    "z": 47190,
+    "z": 48007,
     "type": "card",
     "deck": "maindeck",
     "cardType": "type-071875c1-a228-4d47-b5f6-6c33fb20d7b5",
@@ -292,7 +257,7 @@
   },
   "566e0d42-8091-4dd1-aa9a-bc7b9978ee63": {
     "id": "566e0d42-8091-4dd1-aa9a-bc7b9978ee63",
-    "z": 47191,
+    "z": 48009,
     "type": "card",
     "deck": "maindeck",
     "cardType": "type-c2be1792-7552-4723-a94d-f36e8757301e",
@@ -300,7 +265,7 @@
   },
   "b05fdc9f-9630-46ec-992a-81ef10d61b27": {
     "id": "b05fdc9f-9630-46ec-992a-81ef10d61b27",
-    "z": 47192,
+    "z": 48010,
     "type": "card",
     "deck": "maindeck",
     "cardType": "type-d953b535-6390-419c-80f1-0be62983f421",
@@ -308,7 +273,7 @@
   },
   "859210f2-6e0a-4eee-805b-ef561914ef1b": {
     "id": "859210f2-6e0a-4eee-805b-ef561914ef1b",
-    "z": 47193,
+    "z": 48011,
     "type": "card",
     "deck": "maindeck",
     "cardType": "type-ba239f5f-97fc-4ca5-9214-66683427d459",
@@ -316,7 +281,7 @@
   },
   "a90c5d37-46ef-4a25-a448-11a33a0f35a4": {
     "id": "a90c5d37-46ef-4a25-a448-11a33a0f35a4",
-    "z": 47194,
+    "z": 48012,
     "type": "card",
     "deck": "maindeck",
     "cardType": "type-a680198b-661d-48d3-b0ff-630cc5a62f8b",
@@ -324,7 +289,7 @@
   },
   "80e034f5-1139-4d03-8b05-c474b928e054": {
     "id": "80e034f5-1139-4d03-8b05-c474b928e054",
-    "z": 47195,
+    "z": 48013,
     "type": "card",
     "deck": "maindeck",
     "cardType": "type-3f412eca-4682-4b6b-b5de-d754c8aa59e9",
@@ -332,7 +297,7 @@
   },
   "ade875b7-7113-43e2-9b86-d9190bd6d0ef": {
     "id": "ade875b7-7113-43e2-9b86-d9190bd6d0ef",
-    "z": 47196,
+    "z": 48014,
     "type": "card",
     "deck": "maindeck",
     "cardType": "type-a680198b-661d-48d3-b0ff-630cc5a62f8b",
@@ -340,7 +305,7 @@
   },
   "4c813980-b886-4455-bb6c-3adc36ed9ecb": {
     "id": "4c813980-b886-4455-bb6c-3adc36ed9ecb",
-    "z": 47197,
+    "z": 48015,
     "type": "card",
     "deck": "maindeck",
     "cardType": "type-071875c1-a228-4d47-b5f6-6c33fb20d7b5",
@@ -348,7 +313,7 @@
   },
   "bf0fb62f-cc46-414c-99f0-72649631324c": {
     "id": "bf0fb62f-cc46-414c-99f0-72649631324c",
-    "z": 47198,
+    "z": 48016,
     "type": "card",
     "deck": "maindeck",
     "cardType": "type-071875c1-a228-4d47-b5f6-6c33fb20d7b5",
@@ -356,7 +321,7 @@
   },
   "400db9aa-0b92-46b0-afea-6083cf1692b2": {
     "id": "400db9aa-0b92-46b0-afea-6083cf1692b2",
-    "z": 47166,
+    "z": 48017,
     "type": "card",
     "deck": "maindeck",
     "cardType": "type-ba239f5f-97fc-4ca5-9214-66683427d459",
@@ -364,7 +329,7 @@
   },
   "46f26a0a-79ec-42d4-abc6-df8f4147a1d2": {
     "id": "46f26a0a-79ec-42d4-abc6-df8f4147a1d2",
-    "z": 47199,
+    "z": 48018,
     "type": "card",
     "deck": "maindeck",
     "cardType": "type-ba239f5f-97fc-4ca5-9214-66683427d459",
@@ -372,7 +337,7 @@
   },
   "7fb637d8-4c75-494a-8e4e-4976255fa003": {
     "id": "7fb637d8-4c75-494a-8e4e-4976255fa003",
-    "z": 47167,
+    "z": 48019,
     "type": "card",
     "deck": "maindeck",
     "cardType": "type-c2be1792-7552-4723-a94d-f36e8757301e",
@@ -380,7 +345,7 @@
   },
   "8249c7d0-91cc-4ac2-a94e-758035fd0c29": {
     "id": "8249c7d0-91cc-4ac2-a94e-758035fd0c29",
-    "z": 47200,
+    "z": 48020,
     "type": "card",
     "deck": "maindeck",
     "cardType": "type-ae429a33-4c82-45aa-99c9-05fa832264e7",
@@ -388,7 +353,7 @@
   },
   "d7cebecc-c70a-4ddd-929c-0f4b137bb7f8": {
     "id": "d7cebecc-c70a-4ddd-929c-0f4b137bb7f8",
-    "z": 47201,
+    "z": 48021,
     "type": "card",
     "deck": "maindeck",
     "cardType": "type-a2a72e72-ba15-48da-abb4-70d611cae293",
@@ -396,15 +361,15 @@
   },
   "f4a193cc-67de-4a0c-8682-f439f49f374f": {
     "id": "f4a193cc-67de-4a0c-8682-f439f49f374f",
-    "z": 46488,
+    "z": 47506,
     "type": "card",
     "deck": "dominodeck",
     "cardType": "type-0ad493c7-82ab-4cae-b9f8-b0574bba47f5",
-    "parent": "svl6"
+    "parent": "wydr"
   },
   "2a3c8924-4e3d-4d14-9792-353924518380": {
     "id": "2a3c8924-4e3d-4d14-9792-353924518380",
-    "z": 47202,
+    "z": 48022,
     "type": "card",
     "deck": "maindeck",
     "cardType": "type-137dcd31-e4a9-4e1f-8b61-480c88f0be63",
@@ -412,7 +377,7 @@
   },
   "24e70205-f773-4d9a-94c8-466ec49a9db8": {
     "id": "24e70205-f773-4d9a-94c8-466ec49a9db8",
-    "z": 47204,
+    "z": 48023,
     "type": "card",
     "deck": "maindeck",
     "cardType": "type-ba239f5f-97fc-4ca5-9214-66683427d459",
@@ -420,7 +385,7 @@
   },
   "3c2ec4a7-b8dd-4056-b2cf-110bcfe08aeb": {
     "id": "3c2ec4a7-b8dd-4056-b2cf-110bcfe08aeb",
-    "z": 47205,
+    "z": 48024,
     "type": "card",
     "deck": "maindeck",
     "cardType": "type-c2be1792-7552-4723-a94d-f36e8757301e",
@@ -428,7 +393,7 @@
   },
   "3efc0152-4d33-4abb-8225-29bf819acde2": {
     "id": "3efc0152-4d33-4abb-8225-29bf819acde2",
-    "z": 47206,
+    "z": 48025,
     "type": "card",
     "deck": "maindeck",
     "cardType": "type-137dcd31-e4a9-4e1f-8b61-480c88f0be63",
@@ -436,23 +401,23 @@
   },
   "bf1cf599-ed4f-4e68-8fcc-4552574827bb": {
     "id": "bf1cf599-ed4f-4e68-8fcc-4552574827bb",
-    "z": 46480,
+    "z": 47647,
     "type": "card",
     "deck": "dominodeck",
     "cardType": "type-9cf727e9-bdc3-461f-a257-88105d7c1584",
-    "parent": "svl6"
+    "parent": "haci"
   },
   "334c3266-5274-46cf-8ac9-6df11a021056": {
     "id": "334c3266-5274-46cf-8ac9-6df11a021056",
-    "z": 46479,
+    "z": 47655,
     "type": "card",
     "deck": "dominodeck",
     "cardType": "type-3395b665-cd48-4ead-b71e-742e8d4808a2",
-    "parent": "svl6"
+    "parent": "haci"
   },
   "182008f9-c770-4063-b474-d19f1d53fd34": {
     "id": "182008f9-c770-4063-b474-d19f1d53fd34",
-    "z": 47207,
+    "z": 48026,
     "type": "card",
     "deck": "maindeck",
     "cardType": "type-137dcd31-e4a9-4e1f-8b61-480c88f0be63",
@@ -460,15 +425,15 @@
   },
   "6b54ef8b-033a-4b52-bb05-fe74ce4f1774": {
     "id": "6b54ef8b-033a-4b52-bb05-fe74ce4f1774",
-    "z": 46740,
+    "z": 47505,
     "type": "card",
     "deck": "dominodeck",
     "cardType": "type-fed5c0fe-8894-4408-b523-4bdb52446b15",
-    "parent": "svl6"
+    "parent": "wydr"
   },
   "c7d2ba3d-5edb-4c51-9ff1-ab7cc3fa0f3f": {
     "id": "c7d2ba3d-5edb-4c51-9ff1-ab7cc3fa0f3f",
-    "z": 47208,
+    "z": 48028,
     "type": "card",
     "deck": "maindeck",
     "cardType": "type-137dcd31-e4a9-4e1f-8b61-480c88f0be63",
@@ -476,15 +441,15 @@
   },
   "3b1b6db6-eea8-4009-9413-b1b0c89de3ca": {
     "id": "3b1b6db6-eea8-4009-9413-b1b0c89de3ca",
-    "z": 46478,
+    "z": 47635,
     "type": "card",
     "deck": "dominodeck",
     "cardType": "type-6ffd953a-3df6-4f4d-b676-6269e526346b",
-    "parent": "svl6"
+    "parent": "haci"
   },
   "a1e41989-2385-4c70-b510-0dcacec431b6": {
     "id": "a1e41989-2385-4c70-b510-0dcacec431b6",
-    "z": 47209,
+    "z": 48029,
     "type": "card",
     "deck": "maindeck",
     "cardType": "type-c2be1792-7552-4723-a94d-f36e8757301e",
@@ -492,7 +457,7 @@
   },
   "8ddedeb7-d1f1-47f9-a790-b8eaaa34a1e7": {
     "id": "8ddedeb7-d1f1-47f9-a790-b8eaaa34a1e7",
-    "z": 47210,
+    "z": 48030,
     "type": "card",
     "deck": "maindeck",
     "cardType": "type-22434823-94d9-44c3-92e7-bb434ab50aec",
@@ -500,7 +465,7 @@
   },
   "45bf4511-cadb-4f88-a556-664f7c50029b": {
     "id": "45bf4511-cadb-4f88-a556-664f7c50029b",
-    "z": 47211,
+    "z": 48031,
     "type": "card",
     "deck": "maindeck",
     "cardType": "type-ba239f5f-97fc-4ca5-9214-66683427d459",
@@ -508,15 +473,15 @@
   },
   "702ede65-2f15-4702-a767-bac00d28dedf": {
     "id": "702ede65-2f15-4702-a767-bac00d28dedf",
-    "z": 46469,
+    "z": 47501,
     "type": "card",
     "deck": "dominodeck",
     "cardType": "type-b23f1b67-1f66-4191-885b-244fe733ff2a",
-    "parent": "svl6"
+    "parent": "wydr"
   },
   "4b2f54b5-fe4e-44db-bab0-e0f99b663950": {
     "id": "4b2f54b5-fe4e-44db-bab0-e0f99b663950",
-    "z": 47212,
+    "z": 48032,
     "type": "card",
     "deck": "maindeck",
     "cardType": "type-c2be1792-7552-4723-a94d-f36e8757301e",
@@ -524,7 +489,7 @@
   },
   "8771eed3-9eb2-474f-95f1-232ca292fd0f": {
     "id": "8771eed3-9eb2-474f-95f1-232ca292fd0f",
-    "z": 47213,
+    "z": 48033,
     "type": "card",
     "deck": "maindeck",
     "cardType": "type-a680198b-661d-48d3-b0ff-630cc5a62f8b",
@@ -532,7 +497,7 @@
   },
   "3bd7ce21-841d-48bf-93b2-f85587188304": {
     "id": "3bd7ce21-841d-48bf-93b2-f85587188304",
-    "z": 47214,
+    "z": 48034,
     "type": "card",
     "deck": "maindeck",
     "cardType": "type-ba239f5f-97fc-4ca5-9214-66683427d459",
@@ -540,7 +505,7 @@
   },
   "ed6b9c40-16ca-415c-9712-24e7dc967743": {
     "id": "ed6b9c40-16ca-415c-9712-24e7dc967743",
-    "z": 47215,
+    "z": 48035,
     "type": "card",
     "deck": "maindeck",
     "cardType": "type-a680198b-661d-48d3-b0ff-630cc5a62f8b",
@@ -548,15 +513,15 @@
   },
   "c9a4264a-4c93-42b6-9d86-b7af7d6c3128": {
     "id": "c9a4264a-4c93-42b6-9d86-b7af7d6c3128",
-    "z": 46472,
+    "z": 47508,
     "type": "card",
     "deck": "dominodeck",
     "cardType": "type-b23f1b67-1f66-4191-885b-244fe733ff2a",
-    "parent": "svl6"
+    "parent": "wydr"
   },
   "e05f7c97-ea43-4859-8fe4-24eba853c365": {
     "id": "e05f7c97-ea43-4859-8fe4-24eba853c365",
-    "z": 47216,
+    "z": 48036,
     "type": "card",
     "deck": "maindeck",
     "cardType": "type-a680198b-661d-48d3-b0ff-630cc5a62f8b",
@@ -564,15 +529,15 @@
   },
   "c6989889-a56c-48da-9065-f8c21e9a908d": {
     "id": "c6989889-a56c-48da-9065-f8c21e9a908d",
-    "z": 46489,
+    "z": 47512,
     "type": "card",
     "deck": "dominodeck",
     "cardType": "type-0a92b317-8791-4d59-b21c-738606a95537",
-    "parent": "svl6"
+    "parent": "wydr"
   },
   "c3cc3f10-b93b-4b61-9be2-c50a8efc7b55": {
     "id": "c3cc3f10-b93b-4b61-9be2-c50a8efc7b55",
-    "z": 47217,
+    "z": 48037,
     "type": "card",
     "deck": "maindeck",
     "cardType": "type-a680198b-661d-48d3-b0ff-630cc5a62f8b",
@@ -580,7 +545,7 @@
   },
   "b9667574-4b60-4bf5-a71f-4e3d4f719f7d": {
     "id": "b9667574-4b60-4bf5-a71f-4e3d4f719f7d",
-    "z": 47218,
+    "z": 48038,
     "type": "card",
     "deck": "maindeck",
     "cardType": "type-25289149-39da-486a-9eb9-22dcfa91cb68",
@@ -588,7 +553,7 @@
   },
   "231a631c-259a-44c5-b8b2-f3cf84e12c93": {
     "id": "231a631c-259a-44c5-b8b2-f3cf84e12c93",
-    "z": 47219,
+    "z": 48039,
     "type": "card",
     "deck": "maindeck",
     "cardType": "type-137dcd31-e4a9-4e1f-8b61-480c88f0be63",
@@ -596,15 +561,15 @@
   },
   "4918b585-aa1d-4ab5-b18e-14dfbd9a717f": {
     "id": "4918b585-aa1d-4ab5-b18e-14dfbd9a717f",
-    "z": 47155,
+    "z": 47637,
     "type": "card",
     "deck": "dominodeck",
     "cardType": "type-8d467129-1911-4d1a-a564-6c4ca6b506c4",
-    "parent": "svl6"
+    "parent": "haci"
   },
   "63016c61-52e0-47d9-8bd9-94c94a405874": {
     "id": "63016c61-52e0-47d9-8bd9-94c94a405874",
-    "z": 47220,
+    "z": 48040,
     "type": "card",
     "deck": "maindeck",
     "cardType": "type-071875c1-a228-4d47-b5f6-6c33fb20d7b5",
@@ -612,31 +577,31 @@
   },
   "d00c1c1a-e366-4c62-9ffb-bba90f9071f1": {
     "id": "d00c1c1a-e366-4c62-9ffb-bba90f9071f1",
-    "z": 47277,
+    "z": 47645,
     "type": "card",
     "deck": "dominodeck",
     "cardType": "type-df4ff3f5-d930-4abf-9967-73a18f907923",
-    "parent": "svl6"
+    "parent": "haci"
   },
   "c0c40d54-1664-4edb-b180-1ba897b7be4e": {
     "id": "c0c40d54-1664-4edb-b180-1ba897b7be4e",
-    "z": 46734,
+    "z": 47496,
     "type": "card",
     "deck": "dominodeck",
     "cardType": "type-2dfffc92-5c9d-4517-923b-1ea46d2f77d6",
-    "parent": "svl6"
+    "parent": "wydr"
   },
   "6f081325-deb0-42e1-9360-25e2102c88a5": {
     "id": "6f081325-deb0-42e1-9360-25e2102c88a5",
-    "z": 46485,
+    "z": 47497,
     "type": "card",
     "deck": "dominodeck",
     "cardType": "type-1ce0b4cb-4eeb-492f-90db-3ad4d0d3a801",
-    "parent": "svl6"
+    "parent": "wydr"
   },
   "8d0f8a47-4001-4d37-8812-9077804f578e": {
     "id": "8d0f8a47-4001-4d37-8812-9077804f578e",
-    "z": 47221,
+    "z": 48041,
     "type": "card",
     "deck": "maindeck",
     "cardType": "type-137dcd31-e4a9-4e1f-8b61-480c88f0be63",
@@ -644,15 +609,15 @@
   },
   "5037e537-49ec-4de4-9fac-4306edab5b7f": {
     "id": "5037e537-49ec-4de4-9fac-4306edab5b7f",
-    "z": 46474,
+    "z": 47653,
     "type": "card",
     "deck": "dominodeck",
     "cardType": "type-f4952fe2-0c52-4397-bab6-79166fb39aff",
-    "parent": "svl6"
+    "parent": "haci"
   },
   "659c073f-baac-4997-a286-0a1a1143d6f0": {
     "id": "659c073f-baac-4997-a286-0a1a1143d6f0",
-    "z": 47222,
+    "z": 48042,
     "type": "card",
     "deck": "maindeck",
     "cardType": "type-071875c1-a228-4d47-b5f6-6c33fb20d7b5",
@@ -660,7 +625,7 @@
   },
   "706a85ab-d04e-466f-af6f-80fdb1b7c39c": {
     "id": "706a85ab-d04e-466f-af6f-80fdb1b7c39c",
-    "z": 47223,
+    "z": 48043,
     "type": "card",
     "deck": "maindeck",
     "cardType": "type-dd0ab287-b6c0-4d4d-a7e9-d8cfff298153",
@@ -668,7 +633,7 @@
   },
   "06889a3c-e668-4534-9664-665cf5216f0f": {
     "id": "06889a3c-e668-4534-9664-665cf5216f0f",
-    "z": 47224,
+    "z": 48044,
     "type": "card",
     "deck": "maindeck",
     "cardType": "type-c2be1792-7552-4723-a94d-f36e8757301e",
@@ -676,7 +641,7 @@
   },
   "85e383d3-742d-40f0-b587-138392bc51e0": {
     "id": "85e383d3-742d-40f0-b587-138392bc51e0",
-    "z": 47225,
+    "z": 48045,
     "type": "card",
     "deck": "maindeck",
     "cardType": "type-137dcd31-e4a9-4e1f-8b61-480c88f0be63",
@@ -684,7 +649,7 @@
   },
   "8111c7bb-e700-43c7-9737-d001d2babcb2": {
     "id": "8111c7bb-e700-43c7-9737-d001d2babcb2",
-    "z": 47226,
+    "z": 48046,
     "type": "card",
     "deck": "maindeck",
     "cardType": "type-0ea134a4-afe0-48ac-927a-a6eab1e634fc",
@@ -692,7 +657,7 @@
   },
   "e1c21616-c054-4662-b425-d0d5509eea7f": {
     "id": "e1c21616-c054-4662-b425-d0d5509eea7f",
-    "z": 47227,
+    "z": 48048,
     "type": "card",
     "deck": "maindeck",
     "cardType": "type-c2be1792-7552-4723-a94d-f36e8757301e",
@@ -700,31 +665,31 @@
   },
   "63400cf4-88e1-4317-a468-e36239d7f512": {
     "id": "63400cf4-88e1-4317-a468-e36239d7f512",
-    "z": 46487,
+    "z": 47495,
     "type": "card",
     "deck": "dominodeck",
     "cardType": "type-42befe2a-e7cb-4daa-a7e7-fcb4cd4466e8",
-    "parent": "svl6"
+    "parent": "wydr"
   },
   "69a8b6bd-5274-4fb1-9bd3-a0c44e86fd2d": {
     "id": "69a8b6bd-5274-4fb1-9bd3-a0c44e86fd2d",
-    "z": 46737,
+    "z": 47639,
     "type": "card",
     "deck": "dominodeck",
     "cardType": "type-ed6db030-06fb-491c-a001-4704c45e77cb",
-    "parent": "svl6"
+    "parent": "haci"
   },
   "67faa1d2-2881-4f88-a2aa-cb4351027841": {
     "id": "67faa1d2-2881-4f88-a2aa-cb4351027841",
-    "z": 46492,
+    "z": 47510,
     "type": "card",
     "deck": "dominodeck",
     "cardType": "type-dff3f9a5-cdf4-41fb-87f7-8642f1cef3b1",
-    "parent": "svl6"
+    "parent": "wydr"
   },
   "515c4475-c52d-4514-b278-a4ea05183e3c": {
     "id": "515c4475-c52d-4514-b278-a4ea05183e3c",
-    "z": 47228,
+    "z": 48049,
     "type": "card",
     "deck": "maindeck",
     "cardType": "type-0c11c122-4ee9-4aa1-b3b6-1f311994e3d2",
@@ -732,7 +697,7 @@
   },
   "3074d6da-3482-4371-bad5-109e616f52d3": {
     "id": "3074d6da-3482-4371-bad5-109e616f52d3",
-    "z": 47229,
+    "z": 48050,
     "type": "card",
     "deck": "maindeck",
     "cardType": "type-a680198b-661d-48d3-b0ff-630cc5a62f8b",
@@ -740,15 +705,15 @@
   },
   "aff2b5c6-9bf3-4804-b3a9-67ec3b1aaec5": {
     "id": "aff2b5c6-9bf3-4804-b3a9-67ec3b1aaec5",
-    "z": 46481,
+    "z": 47507,
     "type": "card",
     "deck": "dominodeck",
     "cardType": "type-7b28f90f-3dc1-442e-8dfd-88a5c8d1622f",
-    "parent": "svl6"
+    "parent": "wydr"
   },
   "9fbe3c80-3ffb-4c56-bd30-b9be283fa665": {
     "id": "9fbe3c80-3ffb-4c56-bd30-b9be283fa665",
-    "z": 47230,
+    "z": 48051,
     "type": "card",
     "deck": "maindeck",
     "cardType": "type-137dcd31-e4a9-4e1f-8b61-480c88f0be63",
@@ -756,19 +721,15 @@
   },
   "a0abe7ab-5857-4301-b5dd-00e441713ce4": {
     "id": "a0abe7ab-5857-4301-b5dd-00e441713ce4",
-    "z": 4,
+    "z": 47982,
     "type": "card",
     "deck": "maindeck",
     "cardType": "type-a680198b-661d-48d3-b0ff-630cc5a62f8b",
-    "parent": "hand",
-    "x": 126,
-    "y": 6,
-    "owner": "Guest207",
-    "activeFace": 1
+    "parent": "rpuc"
   },
   "5145c33f-31cf-4355-982b-195067972969": {
     "id": "5145c33f-31cf-4355-982b-195067972969",
-    "z": 47231,
+    "z": 48052,
     "type": "card",
     "deck": "maindeck",
     "cardType": "type-ba239f5f-97fc-4ca5-9214-66683427d459",
@@ -776,7 +737,7 @@
   },
   "8fdd20d6-d136-4f13-ae08-541f4f193e13": {
     "id": "8fdd20d6-d136-4f13-ae08-541f4f193e13",
-    "z": 47232,
+    "z": 48053,
     "type": "card",
     "deck": "maindeck",
     "cardType": "type-a680198b-661d-48d3-b0ff-630cc5a62f8b",
@@ -784,7 +745,7 @@
   },
   "179712e9-b2ff-4524-83a7-10a2cc35b320": {
     "id": "179712e9-b2ff-4524-83a7-10a2cc35b320",
-    "z": 47233,
+    "z": 48054,
     "type": "card",
     "deck": "maindeck",
     "cardType": "type-02b9bc97-6ff3-411a-af76-4ee9c56a069d",
@@ -792,7 +753,7 @@
   },
   "0d2a7a02-b8aa-4379-b054-e0f51a77a894": {
     "id": "0d2a7a02-b8aa-4379-b054-e0f51a77a894",
-    "z": 47234,
+    "z": 48056,
     "type": "card",
     "deck": "maindeck",
     "cardType": "type-b7a99fb4-6a57-428e-99b3-a6104acbdf81",
@@ -800,15 +761,15 @@
   },
   "f2b56a85-5ec7-47ac-bb1e-3d254c1af9ae": {
     "id": "f2b56a85-5ec7-47ac-bb1e-3d254c1af9ae",
-    "z": 46475,
+    "z": 47649,
     "type": "card",
     "deck": "dominodeck",
     "cardType": "type-f5b162c5-e83b-432a-a391-7ea5c5dde807",
-    "parent": "svl6"
+    "parent": "haci"
   },
   "f708f4b2-9f1b-4676-8156-cb64d945461d": {
     "id": "f708f4b2-9f1b-4676-8156-cb64d945461d",
-    "z": 47235,
+    "z": 48057,
     "type": "card",
     "deck": "maindeck",
     "cardType": "type-a680198b-661d-48d3-b0ff-630cc5a62f8b",
@@ -816,7 +777,7 @@
   },
   "09ca2e4b-a6ca-4535-98c9-1c22437ffdbc": {
     "id": "09ca2e4b-a6ca-4535-98c9-1c22437ffdbc",
-    "z": 47236,
+    "z": 48058,
     "type": "card",
     "deck": "maindeck",
     "cardType": "type-a680198b-661d-48d3-b0ff-630cc5a62f8b",
@@ -824,7 +785,7 @@
   },
   "66ce9b68-0a08-473f-b012-f9d6b45adb51": {
     "id": "66ce9b68-0a08-473f-b012-f9d6b45adb51",
-    "z": 47237,
+    "z": 48059,
     "type": "card",
     "deck": "maindeck",
     "cardType": "type-c2be1792-7552-4723-a94d-f36e8757301e",
@@ -832,7 +793,7 @@
   },
   "3c0a2f6d-f838-4215-8798-397b1da6d02f": {
     "id": "3c0a2f6d-f838-4215-8798-397b1da6d02f",
-    "z": 47238,
+    "z": 48060,
     "type": "card",
     "deck": "maindeck",
     "cardType": "type-137dcd31-e4a9-4e1f-8b61-480c88f0be63",
@@ -840,7 +801,7 @@
   },
   "69c9da22-f971-40b1-aafb-66aec9d20603": {
     "id": "69c9da22-f971-40b1-aafb-66aec9d20603",
-    "z": 47239,
+    "z": 48061,
     "type": "card",
     "deck": "maindeck",
     "cardType": "type-071875c1-a228-4d47-b5f6-6c33fb20d7b5",
@@ -848,7 +809,7 @@
   },
   "ebae99d1-c487-46e1-81c1-eb10f4af7f88": {
     "id": "ebae99d1-c487-46e1-81c1-eb10f4af7f88",
-    "z": 47240,
+    "z": 48062,
     "type": "card",
     "deck": "maindeck",
     "cardType": "type-071875c1-a228-4d47-b5f6-6c33fb20d7b5",
@@ -856,19 +817,15 @@
   },
   "96d92fe2-5901-4551-b003-135c5283c566": {
     "id": "96d92fe2-5901-4551-b003-135c5283c566",
-    "z": 3,
+    "z": 47983,
     "type": "card",
     "deck": "maindeck",
     "cardType": "type-794593f5-bef7-43e0-9c9e-c46e6ce95d17",
-    "parent": "hand",
-    "activeFace": 1,
-    "x": 86,
-    "y": 6,
-    "owner": "Guest207"
+    "parent": "rpuc"
   },
   "7a2fb84d-ca81-4450-a9fc-d199d7e28fa9": {
     "id": "7a2fb84d-ca81-4450-a9fc-d199d7e28fa9",
-    "z": 47241,
+    "z": 48063,
     "type": "card",
     "deck": "maindeck",
     "cardType": "type-a680198b-661d-48d3-b0ff-630cc5a62f8b",
@@ -876,7 +833,7 @@
   },
   "8e5f262b-44ad-4a0c-8e86-10fcbe39a50d": {
     "id": "8e5f262b-44ad-4a0c-8e86-10fcbe39a50d",
-    "z": 47242,
+    "z": 48064,
     "type": "card",
     "deck": "maindeck",
     "cardType": "type-74bdadcc-578a-43c3-b31f-11c1992b4d74",
@@ -884,7 +841,7 @@
   },
   "c91a6e76-6d47-40b0-bea4-9aef5d5686e7": {
     "id": "c91a6e76-6d47-40b0-bea4-9aef5d5686e7",
-    "z": 47243,
+    "z": 48065,
     "type": "card",
     "deck": "maindeck",
     "cardType": "type-f30c204f-89fe-4a3d-b4f2-62e91dd20305",
@@ -892,7 +849,7 @@
   },
   "c2c336f1-0ca0-4a26-8ea7-68b0fc1b0405": {
     "id": "c2c336f1-0ca0-4a26-8ea7-68b0fc1b0405",
-    "z": 47244,
+    "z": 48066,
     "type": "card",
     "deck": "maindeck",
     "cardType": "type-c2be1792-7552-4723-a94d-f36e8757301e",
@@ -900,7 +857,7 @@
   },
   "0c549a17-ec0e-456b-b446-092a324a3abb": {
     "id": "0c549a17-ec0e-456b-b446-092a324a3abb",
-    "z": 47245,
+    "z": 48067,
     "type": "card",
     "deck": "maindeck",
     "cardType": "type-311b9f10-72e5-4e47-bde5-7a6ae7d8dc45",
@@ -908,7 +865,7 @@
   },
   "ce03ae99-63fc-4b31-ad85-3e649995a6ce": {
     "id": "ce03ae99-63fc-4b31-ad85-3e649995a6ce",
-    "z": 47246,
+    "z": 48068,
     "type": "card",
     "deck": "maindeck",
     "cardType": "type-c2be1792-7552-4723-a94d-f36e8757301e",
@@ -916,7 +873,7 @@
   },
   "7093124b-d188-4b02-935b-efce9f802f8d": {
     "id": "7093124b-d188-4b02-935b-efce9f802f8d",
-    "z": 47248,
+    "z": 48069,
     "type": "card",
     "deck": "maindeck",
     "cardType": "type-ba239f5f-97fc-4ca5-9214-66683427d459",
@@ -924,7 +881,7 @@
   },
   "9d5c13e9-be16-47ac-a165-f462884816e7": {
     "id": "9d5c13e9-be16-47ac-a165-f462884816e7",
-    "z": 47249,
+    "z": 48070,
     "type": "card",
     "deck": "maindeck",
     "cardType": "type-137dcd31-e4a9-4e1f-8b61-480c88f0be63",
@@ -932,7 +889,7 @@
   },
   "a884a08b-22c2-4936-9848-ef96290c8922": {
     "id": "a884a08b-22c2-4936-9848-ef96290c8922",
-    "z": 47250,
+    "z": 48071,
     "type": "card",
     "deck": "maindeck",
     "cardType": "type-c24851a0-acf3-44e4-af09-1ccd00846de4",
@@ -940,7 +897,7 @@
   },
   "0624d71b-4898-431e-8307-b1f6340e6cae": {
     "id": "0624d71b-4898-431e-8307-b1f6340e6cae",
-    "z": 47251,
+    "z": 48072,
     "type": "card",
     "deck": "maindeck",
     "cardType": "type-a680198b-661d-48d3-b0ff-630cc5a62f8b",
@@ -948,7 +905,7 @@
   },
   "da177042-2e62-40a8-a66d-77b034dfb1e9": {
     "id": "da177042-2e62-40a8-a66d-77b034dfb1e9",
-    "z": 47252,
+    "z": 48073,
     "type": "card",
     "deck": "maindeck",
     "cardType": "type-a680198b-661d-48d3-b0ff-630cc5a62f8b",
@@ -956,7 +913,7 @@
   },
   "7c33d0ff-a180-4b89-a9d3-68d88e671681": {
     "id": "7c33d0ff-a180-4b89-a9d3-68d88e671681",
-    "z": 47253,
+    "z": 48074,
     "type": "card",
     "deck": "maindeck",
     "cardType": "type-137dcd31-e4a9-4e1f-8b61-480c88f0be63",
@@ -964,7 +921,7 @@
   },
   "8f885163-bedf-452d-b743-bb594859733c": {
     "id": "8f885163-bedf-452d-b743-bb594859733c",
-    "z": 47254,
+    "z": 48075,
     "type": "card",
     "deck": "maindeck",
     "cardType": "type-ba239f5f-97fc-4ca5-9214-66683427d459",
@@ -972,7 +929,7 @@
   },
   "a9235acc-f079-4f30-a10b-c99353e24741": {
     "id": "a9235acc-f079-4f30-a10b-c99353e24741",
-    "z": 47255,
+    "z": 48076,
     "type": "card",
     "deck": "maindeck",
     "cardType": "type-071875c1-a228-4d47-b5f6-6c33fb20d7b5",
@@ -980,7 +937,7 @@
   },
   "9683c34b-4755-4b67-b288-287e4f2bef4b": {
     "id": "9683c34b-4755-4b67-b288-287e4f2bef4b",
-    "z": 47256,
+    "z": 48077,
     "type": "card",
     "deck": "maindeck",
     "cardType": "type-137dcd31-e4a9-4e1f-8b61-480c88f0be63",
@@ -988,23 +945,23 @@
   },
   "3c50080c-4210-4dda-ac25-3cda3f4d24a9": {
     "id": "3c50080c-4210-4dda-ac25-3cda3f4d24a9",
-    "z": 46483,
+    "z": 47503,
     "type": "card",
     "deck": "dominodeck",
     "cardType": "type-238f8435-9a49-4f52-ab25-5d4a74dab0ff",
-    "parent": "svl6"
+    "parent": "wydr"
   },
   "13e3942a-70be-455c-a291-2f6c85186e87": {
     "id": "13e3942a-70be-455c-a291-2f6c85186e87",
-    "z": 46477,
+    "z": 47641,
     "type": "card",
     "deck": "dominodeck",
     "cardType": "type-2485c304-b275-4b08-8d04-d30ae52f6e63",
-    "parent": "svl6"
+    "parent": "haci"
   },
   "21aa2615-9fe7-4a38-b3f2-928b363e9757": {
     "id": "21aa2615-9fe7-4a38-b3f2-928b363e9757",
-    "z": 47168,
+    "z": 48078,
     "type": "card",
     "deck": "maindeck",
     "cardType": "type-ba239f5f-97fc-4ca5-9214-66683427d459",
@@ -1012,7 +969,7 @@
   },
   "5956dd51-3db2-4d73-a637-78f7771d2d23": {
     "id": "5956dd51-3db2-4d73-a637-78f7771d2d23",
-    "z": 47257,
+    "z": 48079,
     "type": "card",
     "deck": "maindeck",
     "cardType": "type-453d1bc0-2e92-49a2-9e2d-a3ec9bc12943",
@@ -1020,7 +977,7 @@
   },
   "67e37ec1-a252-4899-98fd-c2dba50d700d": {
     "id": "67e37ec1-a252-4899-98fd-c2dba50d700d",
-    "z": 47258,
+    "z": 48080,
     "type": "card",
     "deck": "maindeck",
     "cardType": "type-c2be1792-7552-4723-a94d-f36e8757301e",
@@ -1028,15 +985,15 @@
   },
   "f946950b-6283-4e31-8a15-4306da01f6a7": {
     "id": "f946950b-6283-4e31-8a15-4306da01f6a7",
-    "z": 46484,
+    "z": 47651,
     "type": "card",
     "deck": "dominodeck",
     "cardType": "type-688b40f0-e052-4cf1-b6e0-8e97c042f966",
-    "parent": "svl6"
+    "parent": "haci"
   },
   "71d84c25-3076-4c05-aaf1-5889dc488426": {
     "id": "71d84c25-3076-4c05-aaf1-5889dc488426",
-    "z": 47259,
+    "z": 48081,
     "type": "card",
     "deck": "maindeck",
     "cardType": "type-a680198b-661d-48d3-b0ff-630cc5a62f8b",
@@ -1044,7 +1001,7 @@
   },
   "1882180f-b941-40a0-bd9a-22534e5a7b3b": {
     "id": "1882180f-b941-40a0-bd9a-22534e5a7b3b",
-    "z": 47169,
+    "z": 48082,
     "type": "card",
     "deck": "maindeck",
     "cardType": "type-071875c1-a228-4d47-b5f6-6c33fb20d7b5",
@@ -1052,7 +1009,7 @@
   },
   "4f9ceea8-92b3-4d58-ae97-33aa0008ad8c": {
     "id": "4f9ceea8-92b3-4d58-ae97-33aa0008ad8c",
-    "z": 47260,
+    "z": 48083,
     "type": "card",
     "deck": "maindeck",
     "cardType": "type-ba239f5f-97fc-4ca5-9214-66683427d459",
@@ -1060,7 +1017,7 @@
   },
   "e0df1136-d818-48a7-ac97-b51f132fddab": {
     "id": "e0df1136-d818-48a7-ac97-b51f132fddab",
-    "z": 47261,
+    "z": 48084,
     "type": "card",
     "deck": "maindeck",
     "cardType": "type-071875c1-a228-4d47-b5f6-6c33fb20d7b5",
@@ -1068,7 +1025,7 @@
   },
   "cc5f646c-4efc-4a8c-9f0a-44ab135dc3cd": {
     "id": "cc5f646c-4efc-4a8c-9f0a-44ab135dc3cd",
-    "z": 47262,
+    "z": 48085,
     "type": "card",
     "deck": "maindeck",
     "cardType": "type-ba239f5f-97fc-4ca5-9214-66683427d459",
@@ -1076,7 +1033,7 @@
   },
   "13649955-9fb1-4289-995e-4644154c0215": {
     "id": "13649955-9fb1-4289-995e-4644154c0215",
-    "z": 47263,
+    "z": 48086,
     "type": "card",
     "deck": "maindeck",
     "cardType": "type-86993790-5c3f-40be-9b8f-c11b99857755",
@@ -1084,7 +1041,7 @@
   },
   "6e848302-fc2e-45ce-99fa-8199d72fe664": {
     "id": "6e848302-fc2e-45ce-99fa-8199d72fe664",
-    "z": 47265,
+    "z": 48087,
     "type": "card",
     "deck": "maindeck",
     "cardType": "type-ba239f5f-97fc-4ca5-9214-66683427d459",
@@ -1092,7 +1049,7 @@
   },
   "c9a7e92a-d5b9-4d85-aca7-a27258e198b4": {
     "id": "c9a7e92a-d5b9-4d85-aca7-a27258e198b4",
-    "z": 47266,
+    "z": 48088,
     "type": "card",
     "deck": "maindeck",
     "cardType": "type-c2be1792-7552-4723-a94d-f36e8757301e",
@@ -1100,7 +1057,7 @@
   },
   "61faa802-4dff-4f2c-8470-0c4435fa46a4": {
     "id": "61faa802-4dff-4f2c-8470-0c4435fa46a4",
-    "z": 47267,
+    "z": 48089,
     "type": "card",
     "deck": "maindeck",
     "cardType": "type-07cc01d6-386c-434a-a804-8b3cb756152c",
@@ -1108,7 +1065,7 @@
   },
   "b3233856-b07f-48fa-95be-7d6c838ba839": {
     "id": "b3233856-b07f-48fa-95be-7d6c838ba839",
-    "z": 47268,
+    "z": 48090,
     "type": "card",
     "deck": "maindeck",
     "cardType": "type-071875c1-a228-4d47-b5f6-6c33fb20d7b5",
@@ -1116,7 +1073,7 @@
   },
   "af090f80-c3b4-4253-bd8b-2bf2f7b20527": {
     "id": "af090f80-c3b4-4253-bd8b-2bf2f7b20527",
-    "z": 47269,
+    "z": 48091,
     "type": "card",
     "deck": "maindeck",
     "cardType": "type-ba239f5f-97fc-4ca5-9214-66683427d459",
@@ -1124,7 +1081,7 @@
   },
   "7f4a98ba-1395-4378-ba24-14276048550b": {
     "id": "7f4a98ba-1395-4378-ba24-14276048550b",
-    "z": 47270,
+    "z": 48092,
     "type": "card",
     "deck": "maindeck",
     "cardType": "type-f01a34c3-cef2-45d4-b5c9-3f7a8de9abb7",
@@ -1157,7 +1114,7 @@
   },
   "bc7f1eea-2605-44d4-98a9-b4eb81bbaf29": {
     "id": "bc7f1eea-2605-44d4-98a9-b4eb81bbaf29",
-    "z": 47271,
+    "z": 48094,
     "type": "card",
     "deck": "maindeck",
     "cardType": "type-8f044e18-b563-487f-bef3-c70c567e768d",
@@ -1165,7 +1122,7 @@
   },
   "860567ba-92dd-48ca-bc4d-71ff960713f5": {
     "id": "860567ba-92dd-48ca-bc4d-71ff960713f5",
-    "z": 47272,
+    "z": 48095,
     "type": "card",
     "deck": "maindeck",
     "cardType": "type-c2be1792-7552-4723-a94d-f36e8757301e",
@@ -1173,19 +1130,19 @@
   },
   "0564997e-a739-4eaa-a7c1-537e7fd45ef9": {
     "id": "0564997e-a739-4eaa-a7c1-537e7fd45ef9",
-    "z": 46473,
+    "z": 47511,
     "type": "card",
     "deck": "dominodeck",
     "cardType": "type-6f43acb2-f946-4efc-9925-eb227de908fa",
-    "parent": "svl6"
+    "parent": "wydr"
   },
   "46a1f8f8-d8fa-4476-87f2-baef279b68b9": {
     "id": "46a1f8f8-d8fa-4476-87f2-baef279b68b9",
-    "z": 46476,
+    "z": 47504,
     "type": "card",
     "deck": "dominodeck",
     "cardType": "type-369c478a-cbe7-44bc-86d8-b51a0e9878c1",
-    "parent": "svl6"
+    "parent": "wydr"
   },
   "e453d1c2-1937-4359-a100-91aa209216b0": {
     "id": "e453d1c2-1937-4359-a100-91aa209216b0",
@@ -2052,8 +2009,7 @@
     "y": 20,
     "hideWhenUnused": true,
     "linkedToSeat": "seat1",
-    "width": 130,
-    "turn": true
+    "width": 130
   },
   "seat2": {
     "type": "seat",
@@ -2082,7 +2038,8 @@
     "index": 4,
     "linkedToSeat": "seat4",
     "hideWhenUnused": true,
-    "width": 130
+    "width": 130,
+    "turn": true
   },
   "seat5": {
     "type": "seat",
@@ -2243,7 +2200,7 @@
       }
     ],
     "onlyVisibleForSeat": "seat2",
-    "linkedToSeat": "seat1",
+    "linkedToSeat": "seat2",
     "hideWhenUnused": true
   },
   "plus5": {
@@ -2525,7 +2482,7 @@
     ],
     "hideWhenUnused": true,
     "onlyVisibleForSeat": "seat2",
-    "linkedToSeat": "seat1"
+    "linkedToSeat": "seat2"
   },
   "pass6": {
     "type": "button",
@@ -3611,13 +3568,49 @@
       }
     ]
   },
-  "svl6": {
+  "wydr": {
     "type": "pile",
-    "x": 1517,
-    "y": 376,
+    "parent": "dominogameholder",
+    "x": 6,
+    "y": 6,
     "width": 45,
     "height": 80,
-    "id": "svl6",
-    "z": 47279
+    "id": "wydr"
+  },
+  "haci": {
+    "type": "pile",
+    "parent": "dominoholderunused",
+    "x": 6,
+    "y": 6,
+    "width": 45,
+    "height": 80,
+    "id": "haci"
+  },
+  "_meta": {
+    "version": 17,
+    "info": {
+      "name": "Henny's Star Buffet",
+      "image": "/assets/-1264675580_1706497",
+      "rules": "https://boardgamegeek.com/filepage/234194/heckmeck-am-karteneck-rules-english",
+      "bgg": "https://boardgamegeek.com/boardgame/348870/heckmeck-am-karteneck",
+      "year": "2021",
+      "mode": "vs",
+      "time": "20",
+      "attribution": "<div>Original layout, coding, and asset design done by Bohnanzus and licensed for use on VTT.&nbsp;<span style=\"color: var(--overlayFontColor);\">Code modifications and functionality adjustments performed by Dexdouglas, with assistance from LawDawg, licensed for use on VTT</span><span style=\"color: var(--overlayFontColor);\">.</span></div><div><br></div>Cover image created using AI https://labs.google/fx/tools/image-fx with a prompt of \"Cartoon style hen in outer space wearing space suit and with a plate of stars.\"",
+      "lastUpdate": 1742164770339,
+      "showName": true,
+      "skill": "Medium",
+      "description": "In Henny's Star Buffet, you compete with other players to have the most stars collected by the end of the game. Every round, a platter of delicious stars are served and each player needs to bid with the money they have in hand to get the best plate. If they don't include a tip, they are going to get the lowest offering available.",
+      "similarImage": "",
+      "similarName": "Heckmeck am Karteneck",
+      "similarDesigner": "Reiner Knizia",
+      "similarAwards": "",
+      "ruleText": "<span id=\"docs-internal-guid-49df9870-7fff-cdb6-d6e3-60eb466876bc\"><p style=\"line-height:1.656;margin-top:0pt;margin-bottom:0pt;\" dir=\"ltr\"><span style=\"font-size:11pt;font-family:Arial,sans-serif;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;\">You are all hens in outer space with a hankering for some stars so you stop in at your favorite restaurant, \"Henny's Star Buffet\" for a quick bite. The objective is to end the game with more stars in your collection than any other player. You start the game with 6 money cards and you only replenish your hand minimally each turn so be careful with how and when you choose to play your cards. If you don’t play a grey “tip” card for the wait staff each round, you will always get the lowest valued star card there is, no matter how much money you are spending.</span></p><p style=\"line-height:1.38;margin-top:0pt;margin-bottom:0pt;\" dir=\"ltr\"><b id=\"docs-internal-guid-4f400b58-7fff-e4f6-595e-175b409e6e3a\" style=\"font-weight:normal;\"><br></b></p><p style=\"line-height:1.38;margin-top:0pt;margin-bottom:0pt;\" dir=\"ltr\"><span style=\"font-size:11pt;font-family:Arial,sans-serif;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;\">The game consists of 110 cards (17 money cards of value 1-5, and 25 gray “tip” cards of value 5) and 30 star cards (3x0, and 16-42 with 1-9 stars on each card).</span></p><p style=\"line-height:1.38;margin-top:0pt;margin-bottom:0pt;\" dir=\"ltr\"><b style=\"font-weight:normal;\"><br></b></p><p style=\"line-height:1.656;margin-top:0pt;margin-bottom:0pt;\" dir=\"ltr\"><span style=\"font-size:11pt;font-family:Arial,sans-serif;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;\">After everyone is seated and you select the number of players in a game, deal star cards to the center of the board. The star cards have two pieces of info, the number value on the top, and the # of stars on the bottom. The stars are the points that you count at the end of the game.&nbsp;</span></p><p style=\"line-height:1.38;margin-top:0pt;margin-bottom:0pt;\" dir=\"ltr\"><b style=\"font-weight:normal;\"><br></b></p><p style=\"line-height:1.656;margin-top:0pt;margin-bottom:0pt;\" dir=\"ltr\"><span style=\"font-size:11pt;font-family:Arial,sans-serif;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;\">In turn order, you play any number of cards from your hand that are all the same color. You do not have to play all of the cards of the same color that you have in your hand, but you are only permitted to play this selected color once in a round. Once you have played cards to your bid area, your total is updated for everyone to see, then draw a card by hitting the +1. It doesn’t matter how many cards you play, you will only ever draw 1 after playing a turn.</span></p><p style=\"line-height:1.38;margin-top:0pt;margin-bottom:0pt;\" dir=\"ltr\"><b style=\"font-weight:normal;\"><br></b></p><p style=\"line-height:1.656;margin-top:0pt;margin-bottom:0pt;\" dir=\"ltr\"><span style=\"font-size:11pt;font-family:Arial,sans-serif;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;\">If you do not, or can not, play any more in a round, you can pass. If you are not the last person to pass, you will draw 2 cards. If you are the last person to pass, you will not draw any additional cards.</span></p><p style=\"line-height:1.38;margin-top:0pt;margin-bottom:0pt;\" dir=\"ltr\"><b style=\"font-weight:normal;\"><br></b></p><p style=\"line-height:1.656;margin-top:0pt;margin-bottom:0pt;\" dir=\"ltr\"><span style=\"font-size:11pt;font-family:Arial,sans-serif;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;\">When you pass, if you do not have at least one grey 5 “tip” card played in front of you, you will immediately take the lowest valued star card in the center. You will not collect any more star cards this round. You can then discard your cards from your bid area.&nbsp;</span></p><p style=\"line-height:1.38;margin-top:0pt;margin-bottom:0pt;\" dir=\"ltr\"><b style=\"font-weight:normal;\"><br></b></p><p style=\"line-height:1.656;margin-top:0pt;margin-bottom:0pt;\" dir=\"ltr\"><span style=\"font-size:11pt;font-family:Arial,sans-serif;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;\">If you pass and you DO have at least one grey 5 tip card in front of you, you will first assess if your total played value is equal to anyone’s top star card they have collected. If it is, you must immediately collect it from that player and place it in your stack. If not, then hold tight until everyone else has passed as well.&nbsp;</span></p><p style=\"line-height:1.38;margin-top:0pt;margin-bottom:0pt;\" dir=\"ltr\"><b style=\"font-weight:normal;\"><br></b></p><p style=\"line-height:1.656;margin-top:0pt;margin-bottom:0pt;\" dir=\"ltr\"><span style=\"font-size:11pt;font-family:Arial,sans-serif;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;\">**NOTE** Even if you pass, you can still have star cards stolen from you.&nbsp;</span></p><p style=\"line-height:1.38;margin-top:0pt;margin-bottom:0pt;\" dir=\"ltr\"><b style=\"font-weight:normal;\"><br></b></p><p style=\"line-height:1.656;margin-top:0pt;margin-bottom:0pt;\" dir=\"ltr\"><span style=\"font-size:11pt;font-family:Arial,sans-serif;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;\">Once everyone has passed, those with grey 5 tip cards in front of them will then be served a plate of delicious stars. The highest value played will get the highest value star card, the second highest will get the second highest star card, and so on. In the event of a tie, the grey tip card with the highest number in the center will be considered the highest.</span></p><p style=\"line-height:1.38;margin-top:0pt;margin-bottom:0pt;\" dir=\"ltr\"><br></p><p style=\"line-height:1.656;margin-top:0pt;margin-bottom:0pt;\" dir=\"ltr\"><span style=\"font-size:11pt;font-family:Arial,sans-serif;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;\">Once everyone has collected their star cards, discard all your cards from the bid area, and the start player for the next round will be the last player who collected a star card in the previous round (usually the lowest value bid with a grey card). The next round begins with pressing the \"Deal Star Cards\" button in the center of the table for more star cards to be laid out. Continue like this until there are no more star cards in the deck. The winner is the one with the highest total number of stars collected on their cards. In the event of a tie. The player with the highest value star card is the winner.</span></p></span>",
+      "helpText": "<span id=\"docs-internal-guid-cbde914d-7fff-3c5a-3a9d-2cb9d4a6831a\"><p style=\"line-height:1.656;margin-top:0pt;margin-bottom:0pt;\" dir=\"ltr\"><span style=\"font-size:11pt;font-family:Arial,sans-serif;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;\">Click to sit at any seat. When all players are seated, click the number of players on the middle right to deal out a starting hand of 6 cards to each player, assign a start player (glowing name), and load the star card holder with star cards for the game. Depending on how many players you have, you will have 18, 24, 28, or 30 cards in the stack. Press the “Deal Star Cards” button in the center of the table to deal star cards equal to the number of players in the game.</span></p><p style=\"line-height:1.656;margin-top:0pt;margin-bottom:0pt;\" dir=\"ltr\"><span style=\"font-size:11pt;font-family:Arial,sans-serif;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;\"><br></span></p><p style=\"line-height:1.656;margin-top:0pt;margin-bottom:0pt;\" dir=\"ltr\"><span style=\"font-size:11pt;font-family:Arial,sans-serif;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;\">Drag cards from your hand to your bid holder next to your name. After playing any number of cards, the value next to your name will be updated with the value of your bid. Then press the “+1” button to draw a card and pass the turn to the next player.&nbsp;</span></p><p style=\"line-height:1.656;margin-top:0pt;margin-bottom:0pt;\" dir=\"ltr\"><span style=\"font-size:11pt;font-family:Arial,sans-serif;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;\"><br></span></p><p style=\"line-height:1.656;margin-top:0pt;margin-bottom:0pt;\" dir=\"ltr\"><span style=\"font-size:11pt;font-family:Arial,sans-serif;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;\">If you are not playing any cards and you are not the last player in the round to pass, then press the “Pass &amp; +2” button to pass your turn and draw 2 cards. For the rest of the round, when the turn comes to you, just press the “pass” button to do nothing and pass the turn.</span></p><p style=\"line-height:1.656;margin-top:0pt;margin-bottom:0pt;\" dir=\"ltr\"><span style=\"font-size:11pt;font-family:Arial,sans-serif;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;\"><br></span></p><p style=\"line-height:1.656;margin-top:0pt;margin-bottom:0pt;\" dir=\"ltr\"><span style=\"font-size:11pt;font-family:Arial,sans-serif;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;\">When all star cards are distributed for the round, press the “Deal Star Cards” button again to deal star cards for the next round. Then press the “pass” button until you have highlighted the player whose turn it is in the new round (the player who last took a star card in the previous round).&nbsp;</span></p><p style=\"line-height:1.38;margin-top:0pt;margin-bottom:0pt;\" dir=\"ltr\"><b id=\"docs-internal-guid-ea29137d-7fff-6b18-218c-57fbdb7922fe\" style=\"font-weight:normal;\"><br></b></p><p style=\"line-height:1.656;margin-top:0pt;margin-bottom:0pt;\" dir=\"ltr\"><span style=\"font-size:11pt;font-family:Arial,sans-serif;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;\">If you need to discard the cards in your bid holder, press the “Discard” button next to your name. This will move the cards to the Discard holder. When the draw deck is empty, press the “Shuffle discard” button to shuffle the discards and place them face down on the draw stack.</span></p><p style=\"line-height:1.38;margin-top:0pt;margin-bottom:0pt;\" dir=\"ltr\"><b style=\"font-weight:normal;\"><br></b></p><p style=\"line-height:1.656;margin-top:0pt;margin-bottom:0pt;\" dir=\"ltr\"><span style=\"font-size:11pt;font-family:Arial,sans-serif;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;\">When you win a star card, drag it to the small rectangular holder next to your name. As you win more star cards, you will stack them on top of each other in this holder. Players are able to steal star cards from this holder if they pass and their total equals the number value on your top-most star card, and they have a grey tip card. Multiple people can steal from a player in a turn and a star card can be stolen multiple times in a game, or even a round.&nbsp;</span></p><p style=\"line-height:1.38;margin-top:0pt;margin-bottom:0pt;\" dir=\"ltr\"></p><p style=\"line-height:1.656;margin-top:0pt;margin-bottom:0pt;\" dir=\"ltr\"><span style=\"font-size:11pt;font-family:Arial,sans-serif;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;\"><br></span><span style=\"font-size:11pt;font-family:Arial,sans-serif;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;\">The game ends at the end of the round when there are no more star cards to auction off in the center. When this happens, click the \"Final Score\" button to calculate the value of star cards in your holder. This value will be updated next to your name. The player with the highest # of stars is the winner. If tied, the player with the higher numbered star card is the winner.</span></p><div><span style=\"font-size:11pt;font-family:Arial,sans-serif;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;\"><br></span></div></span>",
+      "variantImage": "",
+      "variant": "Henny's Star Buffet",
+      "language": "en-GB",
+      "players": "2-6"
+    }
   }
 }
