@@ -11,7 +11,7 @@
       "time": "20-30",
       "attribution": "Room layout and scripting by Shobu, with minor edits by maddie and LawDawg, released to the Public Domain as CC0.\n\nLibrary image generated using the MyNinja artificial intelligence image generator, https://myninja.ai/, using the following prompt: \"The longest run, metaphorical, cartoon, funny\"",
       "importerTime": 1736545117981,
-      "lastUpdate": 1742091233033,
+      "lastUpdate": 1742143450062,
       "importer": "PCIO",
       "showName": true,
       "skill": "medium",
@@ -5330,7 +5330,10 @@
     "css": {
       "background": "#ffffff60"
     },
-    "layer": -4
+    "layer": -4,
+    "dropTarget": {
+      "none": "none"
+    }
   },
   "widgetCount": {
     "id": "widgetCount",
@@ -6121,7 +6124,10 @@
     "css": {
       "background": "#ffffff60"
     },
-    "layer": -4
+    "layer": -4,
+    "dropTarget": {
+      "none": "none"
+    }
   },
   "background": {
     "id": "background",
@@ -6454,7 +6460,7 @@
       "font-size": "22px",
       "text-align": "left"
     },
-    "width": 350,
+    "width": 320,
     "z": 46276,
     "height": 370
   },
@@ -6537,7 +6543,10 @@
     "css": {
       "background": "#ffffff60"
     },
-    "layer": -4
+    "layer": -4,
+    "dropTarget": {
+      "none": "none"
+    }
   },
   "dsxc": {
     "type": "pile",
