@@ -89,8 +89,6 @@
     "z": 5,
     "resetProperties": {
       "parent": "fuug",
-      "x": 282,
-      "y": 284,
       "activeFace": 2
     },
     "x": 1044,
@@ -132,8 +130,6 @@
     "z": 6,
     "resetProperties": {
       "parent": "fuug",
-      "x": 8,
-      "y": 15,
       "activeFace": 2
     },
     "x": 1304,
@@ -176,8 +172,6 @@
     "y": 4,
     "resetProperties": {
       "parent": "fuug",
-      "x": 536,
-      "y": 26,
       "activeFace": 2
     },
     "activeFace": 2,
@@ -219,8 +213,6 @@
     "z": 3,
     "resetProperties": {
       "parent": "fuug",
-      "x": 273,
-      "y": 17,
       "activeFace": 2
     },
     "parent": "fuug",
@@ -262,8 +254,6 @@
     "y": 4,
     "resetProperties": {
       "parent": "fuug",
-      "x": 540,
-      "y": 287,
       "activeFace": 2
     },
     "activeFace": 2,
@@ -304,8 +294,6 @@
     "z": 4,
     "resetProperties": {
       "parent": "fuug",
-      "x": 12,
-      "y": 282,
       "activeFace": 2
     },
     "x": 784,
@@ -334,7 +322,7 @@
     "color": "red"
   },
   "_meta": {
-    "version": 15,
+    "version": 17,
     "info": {
       "name": "Mauer",
       "image": "/i/noto-emoji/emoji_u1faa4.svg",
@@ -344,7 +332,7 @@
       "mode": "vs",
       "time": "20",
       "attribution": "<div>The layout was created by ArnoldSmith86 and his son and is released to the public domain using CC0.</div><div><br></div><div>It only uses images included with VTT. Some Noto emojis and icons from game-icons.net that are licensed as CC BY 3.0:</div><div><div><br></div><div>By Delapouite:<div>https://game-icons.net/1x1/delapouite/dice-eight-faces-eight.html<div>https://game-icons.net/1x1/delapouite/dice-fire.html</div></div></div><div>https://game-icons.net/1x1/delapouite/ketchup.html</div><br><div>By Lord Berandas:<br></div>https://game-icons.net/1x1/lord-berandas/power-button.html<br></div>",
-      "lastUpdate": 1725532552035,
+      "lastUpdate": 1742219550148,
       "showName": true,
       "skill": "",
       "description": "Roll ingredients for your delicious burgers and trade them for points.",
@@ -352,12 +340,12 @@
       "similarName": "Heckmeck Junior",
       "similarDesigner": "Reiner Knizia",
       "similarAwards": "2011 Golden GeekBest Children's Board Game Nominee",
-      "ruleText": "<div>Let me start by saying that I created this together with my 5yo son and so far I'm not allowed to improve a few things. 😁&nbsp;You never need the&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/dice-eight-faces-eight.svg\"></i> button. It will reroll <i>all</i> dice.<br></div><h4>Goal</h4><div>Each round, you keep rolling dice until no new faces appear and take one of the cards at the top. When no cards are left, the player with the most 🐛 wins.</div><h4>Setup</h4><div><ol><li>Every player <b>takes a seat</b> by clicking on \"click to sit\".</li><li><b>Press the</b>&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/lord-berandas/power-button.svg\"></i> <b>button</b> to choose a random start player (seat will get a highlight) and clean up the previous game.<br></li></ol></div><h4>Rolling Dice</h4><div><ol><li>Click the&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/dice-fire.svg\"></i> button to <b>roll the dice</b> in the top holder.</li><li>Pick one ingredient type (dice face) and <b>drag all dice showing that ingredient</b> to the bottom holder.</li><li><b>Repeat</b> steps 1 and 2. You can never pick an ingredient that's already in the bottom holder.</li><li>Roll <b>until no dice are left</b> or they only show ingredients you already picked.</li></ol><h4>Picking Cards</h4><div><ol><li>You may only pick cards if at least one of the dice in the bottom holder shows a 🪱.</li><li>Count the dice. Each 🥯 counts as 2.</li><li>Drag a <b>card&nbsp;that shows your dice score</b> from the top to the holder below your seat.</li><ul><li>If there is <b>no matching number, you can steal</b> from your opponents (see below).</li><li>If you can't or don't want to steal, pick the highest available <b>lower number</b>.</li></ul><li>If <b>you can't get a card</b> from the top or your opponents, <b>flip over the highest card</b> in the top holder by clicking on it.</li></ol><h4>Stealing</h4><div><ul><li>If - <i>and only if</i> - there's <b>no card available</b> at the top for your <i>exact</i> dice score, you may <b>steal the top-most card</b> of any opponent.</li><li>The stolen card must have the <b>exact number</b> of your score on it.</li><li>You can choose to <b>stop rolling dice at any point</b> in order to try to steal from an opponent. But if you roll your dice, you have to pick dice. And you always need to pick all matching dice when picking an ingredient.</li></ul><h4>End of Round</h4><div>After taking or flipping a card, <b>press the</b>&nbsp;➡️ <b>button</b> to reset the dice and highlight the seat of the next active player.</div><h4>End of Game</h4><div><ul><li>As soon as there are <b>no face-up cards left</b> in the top holder, the game ends.</li><li>Each player drags their won cards somewhere to <b>count all the</b>&nbsp;🐛 on them. The 8 has 3&nbsp;🐛 and the 9 has 4 🐛. The number at the top of the card does <i>not</i> matter.<br></li></ul></div></div></div></div>",
+      "ruleText": "<div><span>Let me start by saying that I created this together with my 5yo son and so far I'm not allowed to improve a few things. 😁&nbsp;You never need the&nbsp;</span><i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/dice-eight-faces-eight.svg\"></i> button. It will reroll <i>all</i> dice.<br></div><h4>Goal</h4><div><span>Each round, you keep rolling dice until no new faces appear and take one of the cards at the top. When no cards are left, the player with the most 🐛 wins.</span></div><h4>Setup</h4><div><ol><li>Every player <b>takes a seat</b> by clicking on \"click to sit\".</li><li><b>Press the</b>&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/lord-berandas/power-button.svg\"></i> <b>button</b> to choose a random start player (seat will get a highlight) and clean up the previous game.<br></li></ol></div><h4>Rolling Dice</h4><div><ol><li>Click the&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/dice-fire.svg\"></i> button to <b>roll the dice</b> in the top holder.</li><li>Pick one ingredient type (dice face) and <b>drag all dice showing that ingredient</b> to the bottom holder.</li><li><b>Repeat</b> steps 1 and 2. You can never pick an ingredient that's already in the bottom holder.</li><li>Roll <b>until no dice are left</b> or they only show ingredients you already picked.</li></ol><h4>Picking Cards</h4><div><ol><li><span>You may only pick cards if at least one of the dice in the bottom holder shows a 🪱.</span></li><li><span>Count the dice. Each 🥯 counts as 2.</span></li><li>Drag a <b>card&nbsp;that shows your dice score</b> from the top to the holder below your seat.</li><ul><li>If there is <b>no matching number, you can steal</b> from your opponents (see below).</li><li>If you can't or don't want to steal, pick the highest available <b>lower number</b>.</li></ul><li>If <b>you can't get a card</b> from the top or your opponents, <b>flip over the highest card</b> in the top holder by clicking on it.</li></ol><h4>Stealing</h4><div><ul><li>If - <i>and only if</i> - there's <b>no card available</b> at the top for your <i>exact</i> dice score, you may <b>steal the top-most card</b> of any opponent.</li><li>The stolen card must have the <b>exact number</b> of your score on it.</li><li>You can choose to <b>stop rolling dice at any point</b> in order to try to steal from an opponent. But if you roll your dice, you have to pick dice. And you always need to pick all matching dice when picking an ingredient.</li></ul><h4>End of Round</h4><div>After taking or flipping a card, <b>press the</b><span>&nbsp;➡️ </span><b>button</b> to reset the dice and highlight the seat of the next active player.</div><h4>End of Game</h4><div><ul><li>As soon as there are <b>no face-up cards left</b> in the top holder, the game ends.</li><li>Each player drags their won cards somewhere to <b>count all the</b><span>&nbsp;🐛 on them. The 8 has 3&nbsp;🐛 and the 9 has 4 🐛. The number at the top of the card does </span><i>not</i> matter.<br></li></ul></div></div></div></div>",
       "helpText": "",
-      "players": "2-5",
-      "language": "",
+      "variantImage": "",
       "variant": "",
-      "variantImage": ""
+      "language": "",
+      "players": "2-5"
     }
   },
   "hmz5": {
@@ -710,30 +698,7 @@
     "id": "wj10s",
     "clickRoutine": [
       {
-        "func": "SELECT",
-        "property": "resetProperties",
-        "relation": "!=",
-        "value": null
-      },
-      {
-        "func": "FOREACH",
-        "loopRoutine": [
-          {
-            "func": "FOREACH",
-            "in": "${PROPERTY resetProperties OF $widgetID}",
-            "loopRoutine": [
-              {
-                "func": "SET",
-                "property": "${key}",
-                "value": "${value}"
-              }
-            ]
-          }
-        ]
-      },
-      {
-        "func": "MOVE",
-        "to": "fuug"
+        "func": "RESET"
       },
       {
         "func": "TURN",
