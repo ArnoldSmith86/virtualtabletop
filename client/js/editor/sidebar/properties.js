@@ -266,6 +266,13 @@ class PropertiesModule extends SidebarModule {
         case 'spinner': this.renderForSpinner(widget); break;
 
         default:
+          if(widget.get('clickRoutine')) {
+            this.addHeader('Routine Editor Demo');
+            const routineEditor = new RoutineEditor(widget, widget.get('clickRoutine'));
+            this.addPropertyListener(widget, 'clickRoutine', _=>routineEditor.onPropertyChange(widget.get('clickRoutine')));
+            routineEditor.registerChangeListener(v=>this.inputValueUpdated(widget, 'clickRoutine', v));
+            this.moduleDOM.append(routineEditor.domElement);
+          }
           this.addHeader(widget.id);
           this.renderGenericProperties(widget);
           break;
