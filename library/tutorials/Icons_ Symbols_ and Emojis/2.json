@@ -10,7 +10,7 @@
       "mode": "Tutorial",
       "time": "0",
       "attribution": "",
-      "lastUpdate": 1737418482872,
+      "lastUpdate": 1737687060417,
       "showName": false,
       "skill": "",
       "description": "",
@@ -53,7 +53,7 @@
   "button1Text": {
     "id": "button1Text",
     "x": 60,
-    "y": 587,
+    "y": 580,
     "width": 300,
     "z": 185,
     "movable": false,
@@ -62,20 +62,20 @@
   "button2Text": {
     "id": "button2Text",
     "x": 410,
-    "y": 587,
+    "y": 580,
     "width": 300,
     "z": 121,
     "movable": false,
-    "html": "Many SVGs have more than one color. The emoji above on the left has 4. You can see the colors by opening the svg in a text editor. To do that, first download the svg by going to <a href='https://virtualtabletop.io/i/noto-emoji/emoji_u23ef.svg'>https://virtualtabletop.io/i/noto-emoji/emoji_u23ef.svg</a> and save the file to your computer. Then open it in a text editor. You will see the available colors are #F77E00, #FF9800, #FFBD52, and #FAFAFA.\n\nThe emoji on the right has `svgReplaces` for the three orangish colors. Note that the replacement is case sensitive, so #f77e00 would not work."
+    "html": "Many SVGs have more than one color. The play/pause emoji above has 4. You can see the original colors as specified in the SVG file in the JSON Editor by clicking on the paint bucket icon at the top row of buttons on the right side.\n\nClick on the orange play/pause icon above and then the paint bucket icon. You will see the available colors. If you click on one of those colored buttons, the beginning part of the svgReplaces will be added for you. The emoji on the right has `svgReplaces` for the three orangish colors. Note that the replacement is case sensitive, so #f77e00 would not work. Also, if you click on the paint bucket icon, you will still see the original orange colors.\n\nThe ranbows are just another example of color replacement in an emoji with multiple colors."
   },
   "button3Text": {
     "id": "button3Text",
     "x": 760,
-    "y": 587,
+    "y": 580,
     "width": 300,
     "z": 9732,
     "movable": false,
-    "text": "The rainbows above are just another example of color replacement in an emoji with multiple colors.."
+    "text": "The icons above are part of the game 'pieces' that can be added using the add widget overlay. They are similar to the VTT icons except some of them have multiple colors possible. The values you would be replacing there are things like primaryColor, secondaryColor, borderColor, etc.\n\nThese widgets do not work with the automatic color display in the paint icon button, but the naming convention for the replacement is more obvious and you can also choose a primary color when adding a piece through the overlay."
   },
   "background": {
     "id": "background",
@@ -104,7 +104,7 @@
   "button4Text": {
     "id": "button4Text",
     "x": 1110,
-    "y": 587,
+    "y": 580,
     "width": 300,
     "z": 9732,
     "movable": false,
@@ -148,8 +148,8 @@
   },
   "example6": {
     "id": "example6",
-    "x": 924,
-    "y": 288,
+    "x": 563,
+    "y": 425,
     "movable": false,
     "image": "/i/noto-emoji/emoji_u1f308.svg",
     "svgReplaces": {
@@ -165,14 +165,16 @@
     "color3": "green",
     "color4": "yellow",
     "color5": "orange",
-    "color6": "red"
+    "color6": "red",
+    "z": 3
   },
   "example5": {
     "id": "example5",
-    "x": 788,
-    "y": 288,
+    "x": 432,
+    "y": 425,
     "movable": false,
-    "image": "/i/noto-emoji/emoji_u1f308.svg"
+    "image": "/i/noto-emoji/emoji_u1f308.svg",
+    "z": 2
   },
   "example8": {
     "id": "example8",
@@ -202,7 +204,8 @@
     "svgReplaces": {
       "#000": "customCSS"
     },
-    "customCSS": "orange\" stroke-width=\"25\" stroke=\"gold"
+    "customCSS": "orange\" stroke-width=\"25\" stroke=\"gold",
+    "z": 1
   },
   "example10": {
     "id": "example10",
@@ -213,5 +216,55 @@
       "#000": "newColor"
     },
     "newColor": "orange"
+  },
+  "04q8": {
+    "x": 808,
+    "y": 306,
+    "width": 69,
+    "height": 77,
+    "color": "#107203",
+    "css": "border-radius: 52% 48% 35% 65%/30% 70% 25% 45%;",
+    "image": "/i/game-pieces/3D/Building-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 1,
+    "z": 10102,
+    "id": "04q8"
+  },
+  "32dh": {
+    "x": 920,
+    "y": 319,
+    "width": 75,
+    "height": 54.75,
+    "activeFace": 1,
+    "classes": "chip3D",
+    "color": "#5a35ed",
+    "faces": [
+      {
+        "image": "i/game-pieces/3D/Checkers-3D.svg",
+        "crowned": false
+      },
+      {
+        "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+        "crowned": true
+      }
+    ],
+    "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 1,
+    "crowned": true,
+    "secondaryColor": "#ffffff",
+    "z": 10103,
+    "id": "32dh"
   }
 }
