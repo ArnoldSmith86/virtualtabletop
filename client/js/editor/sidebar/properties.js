@@ -368,7 +368,7 @@ class PropertiesModule extends SidebarModule {
         return;
       }
 
-      const deck = getDeckDefinition();
+      const deck = getDeckDefinition(true);
       for(const [ index, deckTemplate ] of Object.entries(deckTemplates)) {
         const templateButton = this.renderWidgetButton(new Deck(deck.id), deckTemplate(deck), designSelectionDiv);
         templateButton.classList.add('deckTemplateButton');
@@ -454,7 +454,7 @@ class PropertiesModule extends SidebarModule {
     }
     target.append(suitCustomizeDiv);
 
-    function getDeckDefinition() {
+    function getDeckDefinition(standardDeck) {
       const id = generateUniqueWidgetID();
       const cardTypes = {};
       let suitIndex = 0;
@@ -471,7 +471,8 @@ class PropertiesModule extends SidebarModule {
           const setCardTypes = (conditions, cardTypesKeys) => {
             if(conditions)
               for(const key of cardTypesKeys)
-                cardTypes[cT][`suit-${key}`] = suitURL;
+                if(standardDeck)
+                  cardTypes[cT][`suit-${key}`] = suitURL;
           };
           if(String(rank).match(/^[0-9]+$/) && rank <= 21) {
             setCardTypes(rank     >=  4,                           ['P11', 'P13', 'P51', 'P53']);
@@ -511,8 +512,12 @@ class PropertiesModule extends SidebarModule {
     createButton.disabled = true;
     createButton.setAttribute('icon', 'add');
     createButton.onclick = async e=>{
+      let standardDeck = false;
+      const deckTemplateButton = document.querySelectorAll('.deckTemplateButton')[0];
+      if (deckTemplateButton && deckTemplateButton.classList.contains('selected'))
+        standardDeck = true
       batchStart();
-      const deck = getDeckDefinition();
+      const deck = getDeckDefinition(standardDeck);
       setDeltaCause(`${getPlayerDetails().playerName} added custom deck "${deck.id}" in editor`);
       await addWidgetLocal(deckTemplates[$('.selected.deckTemplateButton', target).dataset.index](deck));
 
@@ -1628,7 +1633,8 @@ class PropertiesModule extends SidebarModule {
         }, state), parent);
       }
       widgets.delete(widget.id, widget);
-      positionElementsInArc(parent.children, parent.children[0].clientHeight, 45, parent);
+      if (parent.children[0]) 
+        positionElementsInArc(parent.children, parent.children[0].clientHeight, 45, parent);
     } else {
       widget.renderReadonlyCopyRaw(state, button);
     }
