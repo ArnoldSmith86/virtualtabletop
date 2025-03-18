@@ -1704,7 +1704,7 @@ export class Widget extends StateManaged {
       }
 
       if(a.func == 'SELECT') {
-        setDefaults(a, { type: 'all', property: 'parent', relation: '==', value: null, max: 999999, collection: 'DEFAULT', mode: 'set', source: 'all' });
+        setDefaults(a, { type: 'all', property: 'parent', relation: '==', value: null, max: 999999, collection: 'DEFAULT', mode: 'set', source: 'all', random: false });
         let source;
         if(a.source == 'all' || (source = getCollection(a.source))) {
           if([ 'add', 'set', 'remove', 'intersect' ].indexOf(a.mode) == -1)
@@ -1736,6 +1736,9 @@ export class Widget extends StateManaged {
             c.filter(w=>w.get('type')=='pile').forEach(w=>c.push(...w.children()));
             c = c.filter(w=>w.get('type')!='pile');
           }
+
+          if (a.random) 
+            c = shuffleArray(c);
 
           c = c.slice(0, a.max); // a.mode == 'set'
           if(a.mode == 'intersect')
