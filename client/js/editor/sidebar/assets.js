@@ -56,9 +56,10 @@ function getAssetTargetSize(asset, originalWidth, originalHeight) {
 
             if(key)
                 for(const [ t, template ] of Object.entries(deck.get('faceTemplates')))
-                    for(const [ o, faceObject ] of Object.entries(template.objects))
-                        if(faceObject.dynamicProperties && faceObject.dynamicProperties.value == key)
-                            objects.push([ t, o ]);
+                    if(Array.isArray(template.objects))
+                        for(const [ o, faceObject ] of Object.entries(template.objects))
+                            if(faceObject.dynamicProperties && faceObject.dynamicProperties.value == key)
+                                objects.push([ t, o ]);
 
             for(const [ face, object ] of objects) {
                 const targetFace   = deck.get('faceTemplates')[face];
