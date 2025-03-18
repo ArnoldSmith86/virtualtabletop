@@ -1492,6 +1492,10 @@ export class Widget extends StateManaged {
             await applyFlip();
             await c.bringToFront();
             ++moved;
+          } else if(c == target) {
+            problems.push(`Skipping move of ${c.id} to itself.`);
+          } else if(target.isDescendantOf(c)) {
+            problems.push(`Skipping move of ${c.id} to its descendant ${target.id}.`);
           } else if(!a.fillTo || target.children().length < a.fillTo) {
             c.movedByButton = true;
             if(target.get('type') == 'seat') {
@@ -2165,6 +2169,16 @@ export class Widget extends StateManaged {
     if (thisParent && widgets.has(thisParent))
       seatVisibility = widgets.get(thisParent).inheritSeatVisibility(seatVisibility);
     return seatVisibility;
+  }
+
+  isDescendantOf(widget) {
+    if (this.get('parent') == widget.get('id')) {
+      return true;
+    }
+    if (widgets.has(this.get('parent'))) {
+      return widgets.get(this.get('parent')).isDescendantOf(widget);
+    }
+    return false;
   }
 
   isValidID(id, problems) {
