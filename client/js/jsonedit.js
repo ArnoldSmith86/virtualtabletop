@@ -218,6 +218,16 @@ const jeCommands = [
       jeHighlightWidgets();
     }
   },
+  {
+    id: 'je_SVGColors',
+    name: 'Show colors in SVG image',
+    icon: 'colors',
+    show: _=>jeStateNow && jeStateNow.image && jeStateNow.image.match(/\.svg$/),
+    call: async function(options) {  
+      jeSVGColors();
+      jeShowCommands();  
+    }
+  },
   /* Now the context-dependent stuff */
   {
     id: 'je_toggleBoolean',
@@ -1107,6 +1117,7 @@ function jeAddCommands() {
   jeAddRoutineOperationCommands('MOVE', { count: 1, face: null, from: null, to: null, fillTo: null, collection: 'DEFAULT' });
   jeAddRoutineOperationCommands('MOVEXY', { count: 1, face: null, from: null, x: 0, y: 0, snapToGrid: true, resetOwner: true });
   jeAddRoutineOperationCommands('RECALL', { owned: true, inHolder: true, holder: null, excludeCollection: null });
+  jeAddRoutineOperationCommands('RESET', { property: 'resetProperties' });
   jeAddRoutineOperationCommands('ROTATE', { count: 1, angle: 90, mode: 'add', holder: null, collection: 'DEFAULT' });
   jeAddRoutineOperationCommands('SCORE', { mode: 'set', property: 'score', seats: null, round: null, value: null });
   jeAddRoutineOperationCommands('SELECT', { type: 'all', property: 'parent', relation: '==', value: null, max: 999999, collection: 'DEFAULT', mode: 'set', source: 'all', sortBy: '###SEE jeAddRoutineOperation###', random: false});
@@ -1148,6 +1159,15 @@ function jeAddCommands() {
   // Default max limits are computed dynamically.
   jeAddLimitCommand('maxX');
   jeAddLimitCommand('maxY');
+
+  // Default values computed dynamically.
+  jeAddResetPropertiesCommand('parent');
+  jeAddResetPropertiesCommand('x');
+  jeAddResetPropertiesCommand('y');
+  jeAddResetPropertiesCommand('rotation');
+  jeAddResetPropertiesCommand('activeFace');
+  jeAddResetPropertiesCommand('scale');
+  jeAddResetPropertiesCommand('display');
 
   jeAddFieldCommand('text', 'subtitle|title|text', '');
   jeAddFieldCommand('label', 'checkbox|choose|color|number|palette|select|string|switch', '');
@@ -1480,6 +1500,21 @@ function jeAddNumberCommand(name, key, callback) {
       const newValue = callback(jeGetValue()[jeGetLastKey()]);
       jeGetValue()[jeGetLastKey()] = '###SELECT ME###';
       jeSetAndSelect(newValue);
+    }
+  });
+}
+
+function jeAddResetPropertiesCommand(key) {
+  jeCommands.push({
+    id: 'rProp_' + key,
+    name: key,
+    context: '^[^ ]* ↦ resetProperties',
+    show: _=>typeof jeStateNow.resetProperties == "object" && jeStateNow.resetProperties !== null && !(key in jeStateNow.resetProperties),
+    call: async function() {
+      const w = widgets.get(jeStateNow.id);
+      jeStateNow.resetProperties[key] = '###SELECT ME###';
+      let rProp = w.get(key);
+      jeSetAndSelect(rProp);
     }
   });
 }
@@ -1884,6 +1919,73 @@ function jeHighlightWidgets() {
   const selectedIDs = jeSelectedIDs();
   for(const [ id, w ] of widgets)
     w.setHighlighted(jeWidgetHighlighting && selectedIDs.indexOf(id) != -1);
+}
+
+function jeSVGColors() {
+  const div = document.createElement('div');
+  div.id = 'jeSVGColors';
+  div.innerHTML = `<b>SVG Colors:</b><div></div><button>Close</button>`;
+  $('#jeCommands').insertBefore(div, $('#jeTopButtons').nextSibling);
+
+  // Reinsert the div because it gets removed
+  const observer = new MutationObserver(() => {
+    if (!document.querySelector('#jeSVGColors')) {
+      $('#jeCommands').insertBefore(div, $('#jeTopButtons').nextSibling);
+    }
+  });
+  const jeCommands = document.querySelector('#jeCommands');
+  if (jeCommands) {
+    observer.observe(jeCommands, { childList: true, subtree: false });
+  }
+
+  // Extract and display SVG colors
+  fetch(mapAssetURLs(jeStateNow.image))
+  .then(response => response.text())
+  .then(svg => {
+    const hexColorRegex = /#(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{6})\b|currentColor/g;
+    const uniqueColors = Array.from(svg.matchAll(hexColorRegex), match => match[0]);
+    const colors = [...new Set(uniqueColors)];
+    const colorsDiv = div.querySelector('div');
+    if (colorsDiv) {
+      colorsDiv.innerHTML = colors.map(color => {
+        const backgroundColor = color === 'currentColor' ? 'black' : color;
+        const textColor = color === 'currentColor' ? 'white' : contrastAnyColor(color, 1);
+        return `<button style="width: 100%; background-color: ${backgroundColor}; color: ${textColor}; border: 1px solid #808080; padding: 5px; margin: 2px 0;" data-color="${color}">${color}</button>`;
+      }).join('');
+
+      // Create the buttons
+      const buttons = colorsDiv.querySelectorAll('button');
+      buttons.forEach(button => {
+        button.addEventListener('click', function() {
+          if (!jeStateNow.svgReplaces) {
+            jeStateNow.svgReplaces = {};
+          }
+          const color = this.getAttribute('data-color');
+          if (!(color in jeStateNow.svgReplaces)) {
+            jeStateNow.svgReplaces[color] = "###SELECT ME###";
+            jeSetAndSelect("");
+          }
+        });
+      });
+    }
+  });
+
+  $a('#jeSVGColors button')[0].addEventListener('click', function () {
+    div.remove();
+    observer.disconnect();
+  });
+
+  // Close the color viewer if the widget is deselected
+  const widgetDiv = document.querySelector(`#w_${jeStateNow.id}`);
+  if (widgetDiv) {
+    const classObserver = new MutationObserver(() => {
+      if (!widgetDiv.classList.contains('selectedInEdit')) {
+        div.remove();
+        classObserver.disconnect();
+      }
+    });
+    classObserver.observe(widgetDiv, { attributes: true, attributeFilter: ['class'] });
+  }
 }
 
 function jeUpdateMulti() {
