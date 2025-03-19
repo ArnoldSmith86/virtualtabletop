@@ -378,10 +378,12 @@ const jeCommands = [
       const cardType = {};
       const cssVariables = {};
       for(const face of jeStateNow.faceTemplates || []) {
-        for(const object of face.objects) {
-          for(const property in object.dynamicProperties || {})
-            cardType[object.dynamicProperties[property]] = '';
-          (JSON.stringify(object.css || '').match(/--[a-zA-Z]+/g) || []).forEach(m=>cssVariables[`${m}: black`]=true);
+        if(Array.isArray(face.objects)) {
+          for(const object of face.objects) {
+            for(const property in object.dynamicProperties || {})
+              cardType[object.dynamicProperties[property]] = '';
+            (JSON.stringify(object.css || '').match(/--[a-zA-Z]+/g) || []).forEach(m=>cssVariables[`${m}: black`]=true);
+          }
         }
       }
       const css = Object.keys(cssVariables).join('; ');
