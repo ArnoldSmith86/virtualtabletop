@@ -178,7 +178,7 @@ class Holder extends Widget {
     const marginY = this.get('stackOffsetY') >= 0 ? dropY : containerHeight - (dropY + firstChildHeight);
     let x = dropX, y = dropY, z = 1;
     const effectiveX = this.effectiveStackOffset(this.get('stackOffsetX'), this.get('stackOffsetAutoX'), marginX, containerWidth, firstChildWidth, children.length);
-    const effectiveY = this.calculateEffectiveStackOffset(this.get('stackOffsetY'), this.get('stackOffsetAutoY'), marginY, containerHeight, firstChildHeight, children.length);
+    const effectiveY = this.effectiveStackOffset(this.get('stackOffsetY'), this.get('stackOffsetAutoY'), marginY, containerHeight, firstChildHeight, children.length);
     for (let i = 0; i < children.length; i++) {
       await children[i].setPosition(x, y, z++);
       x += effectiveX;
