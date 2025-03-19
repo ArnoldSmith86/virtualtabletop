@@ -3310,7 +3310,7 @@
     "text": "Score"
   },
   "_meta": {
-    "version": 12,
+    "version": 17,
     "info": {
       "name": "Crossed",
       "image": "/assets/1786145751_17624",
@@ -3323,17 +3323,17 @@
       "similarName": "Encore!",
       "description": "Take turns rolling dice to figure out which sections on scoresheet to mark off. Player rolling dice can remove two dice and other players choose from remaining dice. Highest score wins.",
       "showName": true,
-      "lastUpdate": 1710498583000,
+      "lastUpdate": 1742326099755,
       "skill": "",
       "similarImage": "",
       "similarAwards": "",
       "ruleText": "",
       "helpText": "",
-      "variantImage": "",
-      "variant": "",
-      "language": "en-US",
+      "similarDesigner": "Inka Brand, Markus Brand",
       "players": "2-4",
-      "similarDesigner": "Inka Brand, Markus Brand"
+      "language": "en-US",
+      "variant": "",
+      "variantImage": ""
     }
   },
   "Player 2 - Joker 1": {
@@ -8892,15 +8892,21 @@
     "movable": false,
     "faces": [
       {
+        "color": "transparent",
         "css": "background-color: transparent"
       },
       {
-        "css": "background-color: #000"
+        "color": "#0d0",
+        "css": "background-color: #0008; background-size: 80%"
       }
     ],
     "isCover": true,
     "width": 60,
-    "height": 60
+    "height": 60,
+    "image": "/i/game-icons.net/delapouite/check-mark.svg",
+    "svgReplaces": {
+      "#000": "color"
+    }
   },
   "Cover 2": {
     "id": "Cover 2",
@@ -8922,13 +8928,19 @@
     "activeFace": 0,
     "faces": [
       {
+        "color": "transparent",
         "css": "background-color: transparent"
       },
       {
-        "css": "background-color: #ddd"
+        "color": "#0d0",
+        "css": "background-color: #0008; background-size: 80%"
       }
     ],
-    "inheritFrom": "Cover 1"
+    "inheritFrom": "Cover 1",
+    "image": "/i/game-icons.net/delapouite/check-mark.svg",
+    "svgReplaces": {
+      "#000": "color"
+    }
   },
   "Cover 5": {
     "id": "Cover 5",
