@@ -167,18 +167,22 @@ class Holder extends Widget {
   }
   
   async rearrangeChildren(children, card) {
-    if (this.preventRearrangeDuringPileDrop) return;
+    if(this.preventRearrangeDuringPileDrop)
+      return;
     const containerWidth = this.get('width');
     const containerHeight = this.get('height');
     const dropX = this.get('dropOffsetX');
     const dropY = this.get('dropOffsetY');
+    let x = dropX;
+    let y = dropY;
+    let z = 1;
     const firstChildWidth = children.length ? children[0].get('width') : 0;
     const firstChildHeight = children.length ? children[0].get('height') : 0;
     const marginX = this.get('stackOffsetX') >= 0 ? dropX : containerWidth - (dropX + firstChildWidth);
-    const marginY = this.get('stackOffsetY') >= 0 ? dropY : containerHeight - (dropY + firstChildHeight);
-    let x = dropX, y = dropY, z = 1;
+    const marginY = this.get('stackOffsetY') >= 0 ? dropY : containerHeight - (dropY + firstChildHeight);    
     const effectiveX = this.effectiveStackOffset(this.get('stackOffsetX'), this.get('stackOffsetAutoX'), marginX, containerWidth, firstChildWidth, children.length);
     const effectiveY = this.effectiveStackOffset(this.get('stackOffsetY'), this.get('stackOffsetAutoY'), marginY, containerHeight, firstChildHeight, children.length);
+
     for (let i = 0; i < children.length; i++) {
       await children[i].setPosition(x, y, z++);
       x += effectiveX;
