@@ -154,7 +154,7 @@ class Holder extends Widget {
     await this.rearrangeChildren(children, card);
   }
 
-  calculateEffectiveStackOffset(stackOffset, stackOffsetAuto, margin, dimension, childDimension, childrenLength) {
+  effectiveStackOffset(stackOffset, stackOffsetAuto, margin, dimension, childDimension, childrenLength) {
     if (!stackOffsetAuto || childrenLength <= 1) return stackOffset;
     const available = dimension - 2 * margin - childDimension;
     if (stackOffset > 0) {
@@ -177,22 +177,8 @@ class Holder extends Widget {
     const marginX = this.get('stackOffsetX') >= 0 ? dropX : containerWidth - (dropX + firstChildWidth);
     const marginY = this.get('stackOffsetY') >= 0 ? dropY : containerHeight - (dropY + firstChildHeight);
     let x = dropX, y = dropY, z = 1;
-    const effectiveX = this.calculateEffectiveStackOffset(
-      this.get('stackOffsetX'),
-      this.get('stackOffsetAutoX'),
-      marginX,
-      containerWidth,
-      firstChildWidth,
-      children.length
-    );
-    const effectiveY = this.calculateEffectiveStackOffset(
-      this.get('stackOffsetY'),
-      this.get('stackOffsetAutoY'),
-      marginY,
-      containerHeight,
-      firstChildHeight,
-      children.length
-    );
+    const effectiveX = this.effectiveStackOffset(this.get('stackOffsetX'), this.get('stackOffsetAutoX'), marginX, containerWidth, firstChildWidth, children.length);
+    const effectiveY = this.calculateEffectiveStackOffset(this.get('stackOffsetY'), this.get('stackOffsetAutoY'), marginY, containerHeight, firstChildHeight, children.length);
     for (let i = 0; i < children.length; i++) {
       await children[i].setPosition(x, y, z++);
       x += effectiveX;
