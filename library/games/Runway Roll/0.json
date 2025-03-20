@@ -43,7 +43,7 @@
     "borderColor": "lightblue",
     "color": "lightblue",
     "pipColor": "white",
-    "rollCount": 80,
+    "rollCount": 81,
     "z": 1,
     "movable": true,
     "clickRoutine": [
@@ -94,7 +94,7 @@
     "y": 4,
     "width": 50,
     "height": 50,
-    "activeFace": 2,
+    "activeFace": 1,
     "inheritFrom": {
       "Pilot - Die 1": [
         "borderColor",
@@ -105,7 +105,7 @@
       ]
     },
     "z": 2,
-    "rollCount": 70,
+    "rollCount": 71,
     "parent": "Pilot - Dice Holder"
   },
   "Pilot - Roll Button": {
@@ -160,7 +160,7 @@
       ]
     },
     "z": 3,
-    "rollCount": 70,
+    "rollCount": 71,
     "parent": "Pilot - Dice Holder"
   },
   "Pilot - Die 4": {
@@ -170,7 +170,7 @@
     "y": 4,
     "width": 50,
     "height": 50,
-    "activeFace": 4,
+    "activeFace": 3,
     "inheritFrom": {
       "Pilot - Die 1": [
         "borderColor",
@@ -181,7 +181,7 @@
       ]
     },
     "z": 4,
-    "rollCount": 70,
+    "rollCount": 71,
     "parent": "Pilot - Dice Holder"
   },
   "Co-Pilot - Die 1": {
@@ -194,14 +194,14 @@
     "borderColor": "orange",
     "color": "orange",
     "pipColor": "white",
-    "rollCount": 68,
+    "rollCount": 69,
     "parent": "Pilot - Dice Holder1",
     "inheritFrom": {
       "Pilot - Die 1": [
         "clickRoutine"
       ]
     },
-    "activeFace": 4
+    "activeFace": 2
   },
   "Co-Pilot - Die 2": {
     "type": "dice",
@@ -211,7 +211,7 @@
     "width": 50,
     "height": 50,
     "z": 2,
-    "activeFace": 2,
+    "activeFace": 4,
     "inheritFrom": {
       "Co-Pilot - Die 1": [
         "borderColor",
@@ -221,7 +221,7 @@
         "clickRoutine"
       ]
     },
-    "rollCount": 60,
+    "rollCount": 61,
     "parent": "Pilot - Dice Holder1"
   },
   "Co-Pilot - Die 3": {
@@ -232,7 +232,7 @@
     "width": 50,
     "height": 50,
     "z": 3,
-    "activeFace": 2,
+    "activeFace": 4,
     "inheritFrom": {
       "Co-Pilot - Die 1": [
         "borderColor",
@@ -242,7 +242,7 @@
         "clickRoutine"
       ]
     },
-    "rollCount": 60,
+    "rollCount": 61,
     "hoverParent": "Pilot - Dice Holder1",
     "parent": "Pilot - Dice Holder1"
   },
@@ -254,7 +254,7 @@
     "width": 50,
     "height": 50,
     "z": 4,
-    "activeFace": 5,
+    "activeFace": 2,
     "inheritFrom": {
       "Co-Pilot - Die 1": [
         "borderColor",
@@ -264,7 +264,7 @@
         "clickRoutine"
       ]
     },
-    "rollCount": 60,
+    "rollCount": 61,
     "parent": "Pilot - Dice Holder1"
   },
   "Coffee Dice Holder 1": {
@@ -2896,78 +2896,78 @@
     "id": "Intern Die 1",
     "x": 4,
     "y": 4,
-    "z": 3592,
+    "z": 3646,
     "movable": true,
     "borderColor": "#a5ff00",
     "color": "#a5ff00",
     "rollCount": 30,
     "clickable": false,
-    "parent": "Intern Dice Holder 2"
+    "parent": "Intern Dice Holder 3"
   },
   "Intern Die 2": {
     "type": "dice",
     "id": "Intern Die 2",
     "x": 4,
     "y": 4,
-    "z": 3596,
+    "z": 3648,
     "movable": true,
     "activeFace": 1,
     "borderColor": "#a5ff00",
     "color": "#a5ff00",
     "rollCount": 30,
-    "parent": "Intern Dice Holder 6"
+    "parent": "Intern Dice Holder 5"
   },
   "Intern Die 3": {
     "type": "dice",
     "id": "Intern Die 3",
     "x": 4,
     "y": 4,
-    "z": 3595,
+    "z": 3647,
     "movable": true,
     "activeFace": 2,
     "borderColor": "#a5ff00",
     "color": "#a5ff00",
     "rollCount": 30,
-    "parent": "Intern Dice Holder 5"
+    "parent": "Intern Dice Holder 4"
   },
   "Intern Die 4": {
     "type": "dice",
     "id": "Intern Die 4",
     "x": 4,
     "y": 4,
-    "z": 3594,
+    "z": 3649,
     "movable": true,
     "activeFace": 3,
     "borderColor": "#a5ff00",
     "color": "#a5ff00",
     "rollCount": 30,
-    "parent": "Intern Dice Holder 4"
+    "parent": "Intern Dice Holder 6"
   },
   "Intern Die 5": {
     "type": "dice",
     "id": "Intern Die 5",
     "x": 4,
     "y": 4,
-    "z": 3593,
+    "z": 3644,
     "movable": true,
     "activeFace": 4,
     "borderColor": "#a5ff00",
     "color": "#a5ff00",
     "rollCount": 30,
-    "parent": "Intern Dice Holder 3"
+    "parent": "Intern Dice Holder 1"
   },
   "Intern Die 6": {
     "type": "dice",
     "id": "Intern Die 6",
     "x": 4,
     "y": 4,
-    "z": 3591,
+    "z": 3645,
     "movable": true,
     "activeFace": 5,
     "borderColor": "#a5ff00",
     "color": "#a5ff00",
     "rollCount": 30,
-    "parent": "Intern Dice Holder 1"
+    "parent": "Intern Dice Holder 2"
   },
   "Switch Deck": {
     "type": "deck",
@@ -4234,6 +4234,7 @@
           "var modules = ${scenario.Modules}",
           "var module1 = ''",
           "var module2 = ''",
+          "var expansion = ${scenario.Expansion}",
           {
             "func": "IF",
             "condition": "${modules.0}",
@@ -4299,7 +4300,8 @@
               "axis": "${axis}",
               "abilities": "${scenario.Abilities}",
               "module1": "${module1}",
-              "module2": "${module2}"
+              "module2": "${module2}",
+              "expansion": "${expansion}"
             }
           }
         ]
@@ -4361,6 +4363,82 @@
             }
           },
           "var moduleX = ${moduleX} - 35"
+        ]
+      },
+      "var isGreen = ${color} == 'Green'",
+      "var isYellow = ${color} == 'Yellow'",
+      "var isEasy = ${isGreen} || ${isYellow}",
+      {
+        "func": "IF",
+        "condition": "${isEasy}",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "Reroll Token 1"
+            ],
+            "property": "resetProperties",
+            "value": {
+              "parent": "Altitude Track",
+              "x": 137,
+              "y": 206
+            }
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "Reroll Token 1"
+            ],
+            "property": "resetProperties",
+            "value": {
+              "parent": null,
+              "x": 1421,
+              "y": 114
+            }
+          }
+        ]
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "Altitude Track"
+        ],
+        "property": "resetProperties",
+        "value": {
+          "x": 1390,
+          "y": 300
+        }
+      },
+      {
+        "func": "IF",
+        "condition": "${scenario.Custom}",
+        "thenRoutine": [
+          {
+            "func": "FOREACH",
+            "in": "${scenario.Custom}",
+            "loopRoutine": [
+              {
+                "func": "IF",
+                "operand1": "${value}",
+                "operand2": "5000",
+                "thenRoutine": [
+                  {
+                    "func": "SET",
+                    "collection": [
+                      "Altitude Track"
+                    ],
+                    "property": "resetProperties",
+                    "value": {
+                      "x": 1390,
+                      "y": 400
+                    }
+                  }
+                ]
+              }
+            ]
+          }
         ]
       },
       "var reverseUpdatesInPlace = reverse ${scenario.Modules}",
@@ -4988,12 +5066,13 @@
         "Difficulty": "Red",
         "Name": "HND",
         "Modules": [
+          "Kerosene",
           "Intern"
         ],
         "Abilities": 1,
         "Track": [
           {
-            "Planes": 2
+            "Planes": 1
           },
           {
             "Planes": 1,
@@ -5222,6 +5301,140 @@
             "Dice": 3
           }
         ]
+      },
+      {
+        "Expansion": "Ready to Play",
+        "Difficulty": "Red",
+        "Name": "YUL",
+        "Modules": [
+          "Ice Brakes",
+          "Intern"
+        ],
+        "Abilities": 1,
+        "Track": [
+          {
+            "Planes": 2
+          },
+          {
+            "Planes": 3
+          },
+          {
+            "Planes": 1
+          },
+          {
+            "Planes": 2
+          },
+          {
+            "Planes": 1
+          },
+          {},
+          {}
+        ]
+      },
+      {
+        "Expansion": "Ready to Play",
+        "Difficulty": "Red",
+        "Name": "LHR",
+        "Modules": [],
+        "Abilities": 1,
+        "Custom": [
+          "5000"
+        ],
+        "Track": [
+          {
+            "Planes": 2
+          },
+          {
+            "Planes": 2,
+            "Dice": 1
+          },
+          {
+            "Planes": 2
+          },
+          {
+            "Planes": 1,
+            "Dice": 1
+          },
+          {
+            "Planes": 1
+          },
+          {
+            "Planes": 1,
+            "Dice": 1
+          }
+        ]
+      },
+      {
+        "Expansion": "Ready to Play",
+        "Difficulty": "Red",
+        "Name": "PRG",
+        "Modules": [
+          "Kerosene",
+          "Wind"
+        ],
+        "Abilities": 1,
+        "Track": [
+          {
+            "Planes": 1
+          },
+          {
+            "Planes": 1
+          },
+          {
+            "Planes": 1,
+            "Dice": 1
+          },
+          {},
+          {
+            "Planes": 1,
+            "Axis": "00011"
+          },
+          {
+            "Planes": 1,
+            "Dice": 1
+          },
+          {
+            "Planes": 1,
+            "Axis": "01100"
+          },
+          {
+            "Planes": 1,
+            "Dice": 1
+          }
+        ]
+      },
+      {
+        "Expansion": "Ready to Play",
+        "Difficulty": "Black",
+        "Name": "ATL",
+        "Modules": [
+          "Kerosene"
+        ],
+        "Abilities": 1,
+        "Track": [
+          {
+            "Planes": 2
+          },
+          {
+            "Planes": 1
+          },
+          {
+            "Planes": 2,
+            "Dice": 1
+          },
+          {
+            "Planes": 1,
+            "Dice": 1
+          },
+          {},
+          {
+            "Dice": 1
+          },
+          {},
+          {
+            "Dice": 4
+          }
+        ]
       }
     ],
     "z": 944
@@ -5232,7 +5445,7 @@
     "deck": "Scenario Card Deck",
     "cardType": "Generic",
     "z": 559,
-    "parent": "d5in"
+    "parent": "5fdk"
   },
   "Scenario Card Deck": {
     "type": "deck",
@@ -5396,35 +5609,61 @@
       {
         "func": "SELECT",
         "property": "clonedFrom",
-        "value": "Scenario Card Template"
+        "value": "Scenario Card Template",
+        "collection": "Scenarios"
+      },
+      {
+        "func": "SELECT",
+        "source": "Scenarios",
+        "property": "expansion"
       },
       {
         "func": "SELECT",
         "source": "DEFAULT",
         "property": "color",
         "value": "#15960a",
-        "collection": "Green"
+        "collection": "Base-Green"
       },
       {
         "func": "SELECT",
         "source": "DEFAULT",
         "property": "color",
         "value": "#f5c211",
-        "collection": "Yellow"
+        "collection": "Base-Yellow"
       },
       {
         "func": "SELECT",
         "source": "DEFAULT",
         "property": "color",
         "value": "#c01c28",
-        "collection": "Red"
+        "collection": "Base-Red"
       },
       {
         "func": "SELECT",
         "source": "DEFAULT",
         "property": "color",
         "value": "#888888",
-        "collection": "Black"
+        "collection": "Base-Black"
+      },
+      {
+        "func": "SELECT",
+        "source": "Scenarios",
+        "property": "expansion",
+        "value": "Ready to Play"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "color",
+        "value": "#c01c28",
+        "collection": "RtP-Red"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "color",
+        "value": "#888888",
+        "collection": "RtP-Black"
       },
       {
         "func": "INPUT",
@@ -5439,37 +5678,57 @@
           },
           {
             "type": "choose",
-            "variable": "green",
-            "source": "Green",
+            "variable": "base-green",
+            "source": "Base-Green",
             "max": 100,
             "scale": 0.8
           },
           {
             "type": "choose",
-            "variable": "yellow",
-            "source": "Yellow",
+            "variable": "base-yellow",
+            "source": "Base-Yellow",
             "max": 100,
             "scale": 0.8
           },
           {
             "type": "choose",
-            "variable": "red",
-            "source": "Red",
+            "variable": "base-red",
+            "source": "Base-Red",
             "max": 100,
             "scale": 0.8
           },
           {
             "type": "choose",
-            "variable": "black",
-            "source": "Black",
+            "variable": "base-black",
+            "source": "Base-Black",
+            "max": 100,
+            "scale": 0.8
+          },
+          {
+            "type": "title",
+            "text": "Ready to Play"
+          },
+          {
+            "type": "choose",
+            "variable": "rtp-red",
+            "source": "RtP-Red",
+            "max": 100,
+            "scale": 0.8
+          },
+          {
+            "type": "choose",
+            "variable": "rtp-black",
+            "source": "RtP-Black",
             "max": 100,
             "scale": 0.8
           }
         ]
       },
-      "var all = ${green} concat ${yellow}",
-      "var all = ${all} concat ${red}",
-      "var all = ${all} concat ${black}",
+      "var all = ${base-green} concat ${base-yellow}",
+      "var all = ${all} concat ${base-red}",
+      "var all = ${all} concat ${base-black}",
+      "var all = ${all} concat ${rtp-red}",
+      "var all = ${all} concat ${rtp-black}",
       "var all = shuffle ${all}",
       "var scenario = ${all.0}",
       {
@@ -5859,395 +6118,6 @@
     "cardType": "20",
     "z": 69
   },
-  "Scenario Card - Green - YUL": {
-    "type": "card",
-    "id": "Scenario Card - Green - YUL",
-    "deck": "Scenario Card Deck",
-    "cardType": "Generic",
-    "z": 2374,
-    "x": null,
-    "y": null,
-    "name": "YUL",
-    "color": "#15960a",
-    "key": "0",
-    "planes": 9,
-    "dice": 0,
-    "axis": 0,
-    "abilities": 0,
-    "module1": "",
-    "module2": "",
-    "clonedFrom": "Scenario Card Template",
-    "parent": "d5in"
-  },
-  "d5in": {
-    "type": "pile",
-    "parent": null,
-    "x": 1031,
-    "y": -144,
-    "width": 200,
-    "height": 100,
-    "id": "d5in"
-  },
-  "Scenario Card - Green - LHR": {
-    "type": "card",
-    "id": "Scenario Card - Green - LHR",
-    "deck": "Scenario Card Deck",
-    "cardType": "Generic",
-    "z": 2375,
-    "name": "LHR",
-    "color": "#15960a",
-    "key": "1",
-    "planes": 8,
-    "dice": 3,
-    "axis": 0,
-    "abilities": 0,
-    "module1": "",
-    "module2": "",
-    "clonedFrom": "Scenario Card Template",
-    "parent": "d5in"
-  },
-  "Scenario Card - Green - HND": {
-    "type": "card",
-    "id": "Scenario Card - Green - HND",
-    "deck": "Scenario Card Deck",
-    "cardType": "Generic",
-    "z": 2376,
-    "name": "HND",
-    "color": "#15960a",
-    "key": "2",
-    "planes": 8,
-    "dice": 2,
-    "axis": 3,
-    "abilities": 0,
-    "module1": "",
-    "module2": "",
-    "clonedFrom": "Scenario Card Template",
-    "parent": "d5in"
-  },
-  "Scenario Card - Green - OSL": {
-    "type": "card",
-    "id": "Scenario Card - Green - OSL",
-    "deck": "Scenario Card Deck",
-    "cardType": "Generic",
-    "z": 2377,
-    "name": "OSL",
-    "color": "#15960a",
-    "key": "3",
-    "planes": 4,
-    "dice": 3,
-    "axis": 0,
-    "abilities": 0,
-    "module1": "/i/game-icons.net/delapouite/fuel-tank.svg",
-    "module2": "",
-    "clonedFrom": "Scenario Card Template",
-    "parent": "d5in"
-  },
-  "Scenario Card - Green - ATL": {
-    "type": "card",
-    "id": "Scenario Card - Green - ATL",
-    "deck": "Scenario Card Deck",
-    "cardType": "Generic",
-    "z": 2378,
-    "name": "ATL",
-    "color": "#15960a",
-    "key": "4",
-    "planes": 6,
-    "dice": 7,
-    "axis": 0,
-    "abilities": 0,
-    "module1": "/i/game-icons.net/delapouite/id-card.svg",
-    "module2": "",
-    "clonedFrom": "Scenario Card Template",
-    "parent": "d5in"
-  },
-  "Scenario Card - Green - PRG": {
-    "type": "card",
-    "id": "Scenario Card - Green - PRG",
-    "deck": "Scenario Card Deck",
-    "cardType": "Generic",
-    "z": 2379,
-    "name": "PRG",
-    "color": "#15960a",
-    "key": "5",
-    "planes": 5,
-    "dice": 3,
-    "axis": 2,
-    "abilities": 2,
-    "module1": "/i/game-icons.net/delapouite/fuel-tank.svg",
-    "module2": "",
-    "clonedFrom": "Scenario Card Template",
-    "parent": "d5in"
-  },
-  "Scenario Card - Yellow - LHR": {
-    "type": "card",
-    "id": "Scenario Card - Yellow - LHR",
-    "deck": "Scenario Card Deck",
-    "cardType": "Generic",
-    "z": 2380,
-    "name": "LHR",
-    "color": "#f5c211",
-    "key": "6",
-    "planes": 8,
-    "dice": 5,
-    "axis": 0,
-    "abilities": 0,
-    "module1": "/i/game-icons.net/delapouite/id-card.svg",
-    "module2": "",
-    "clonedFrom": "Scenario Card Template",
-    "parent": "d5in"
-  },
-  "Scenario Card - Yellow - TGU": {
-    "type": "card",
-    "id": "Scenario Card - Yellow - TGU",
-    "deck": "Scenario Card Deck",
-    "cardType": "Generic",
-    "z": 2381,
-    "name": "TGU",
-    "color": "#f5c211",
-    "key": "7",
-    "planes": 4,
-    "dice": 3,
-    "axis": 3,
-    "abilities": 2,
-    "module1": "/i/game-icons.net/delapouite/fuel-tank.svg",
-    "module2": "",
-    "clonedFrom": "Scenario Card Template",
-    "parent": "d5in"
-  },
-  "Scenario Card - Yellow - GIG": {
-    "type": "card",
-    "id": "Scenario Card - Yellow - GIG",
-    "deck": "Scenario Card Deck",
-    "cardType": "Generic",
-    "z": 2382,
-    "name": "GIG",
-    "color": "#f5c211",
-    "key": "8",
-    "planes": 9,
-    "dice": 4,
-    "axis": 0,
-    "abilities": 1,
-    "module1": "/i/game-icons.net/delapouite/windsock.svg",
-    "module2": "",
-    "clonedFrom": "Scenario Card Template",
-    "parent": "d5in"
-  },
-  "Scenario Card - Yellow - KEF": {
-    "type": "card",
-    "id": "Scenario Card - Yellow - KEF",
-    "deck": "Scenario Card Deck",
-    "cardType": "Generic",
-    "z": 2383,
-    "name": "KEF",
-    "color": "#f5c211",
-    "key": "9",
-    "planes": 3,
-    "dice": 4,
-    "axis": 0,
-    "abilities": 1,
-    "module1": "/i/game-icons.net/lorc/snowflake-2.svg",
-    "module2": "",
-    "clonedFrom": "Scenario Card Template",
-    "parent": "d5in"
-  },
-  "Scenario Card - Yellow - PRG": {
-    "type": "card",
-    "id": "Scenario Card - Yellow - PRG",
-    "deck": "Scenario Card Deck",
-    "cardType": "Generic",
-    "z": 2384,
-    "name": "PRG",
-    "color": "#f5c211",
-    "key": "10",
-    "planes": 12,
-    "dice": 2,
-    "axis": 0,
-    "abilities": 2,
-    "module1": "/i/game-icons.net/delapouite/barrel-leak.svg",
-    "module2": "",
-    "clonedFrom": "Scenario Card Template",
-    "parent": "d5in"
-  },
-  "Scenario Card - Yellow - KUL": {
-    "type": "card",
-    "id": "Scenario Card - Yellow - KUL",
-    "deck": "Scenario Card Deck",
-    "cardType": "Generic",
-    "z": 2385,
-    "name": "KUL",
-    "color": "#f5c211",
-    "key": "11",
-    "planes": 5,
-    "dice": 3,
-    "axis": 4,
-    "abilities": 1,
-    "module1": "/i/game-icons.net/delapouite/fuel-tank.svg",
-    "module2": "",
-    "clonedFrom": "Scenario Card Template",
-    "parent": "d5in"
-  },
-  "Scenario Card - Yellow - ATL": {
-    "type": "card",
-    "id": "Scenario Card - Yellow - ATL",
-    "deck": "Scenario Card Deck",
-    "cardType": "Generic",
-    "z": 2386,
-    "name": "ATL",
-    "color": "#f5c211",
-    "key": "12",
-    "planes": 10,
-    "dice": 5,
-    "axis": 2,
-    "abilities": 1,
-    "module1": "/i/game-icons.net/delapouite/barrel-leak.svg",
-    "module2": "",
-    "clonedFrom": "Scenario Card Template",
-    "parent": "d5in"
-  },
-  "Scenario Card - Red - PBH": {
-    "type": "card",
-    "id": "Scenario Card - Red - PBH",
-    "deck": "Scenario Card Deck",
-    "cardType": "Generic",
-    "z": 2387,
-    "name": "PBH",
-    "color": "#c01c28",
-    "key": "13",
-    "planes": 5,
-    "dice": 4,
-    "axis": 3,
-    "abilities": 2,
-    "module1": "/i/game-icons.net/lorc/sands-of-time.svg",
-    "module2": "/i/game-icons.net/delapouite/fuel-tank.svg",
-    "clonedFrom": "Scenario Card Template",
-    "parent": "d5in"
-  },
-  "Scenario Card - Red - HND": {
-    "type": "card",
-    "id": "Scenario Card - Red - HND",
-    "deck": "Scenario Card Deck",
-    "cardType": "Generic",
-    "z": 2388,
-    "name": "HND",
-    "color": "#c01c28",
-    "key": "14",
-    "planes": 9,
-    "dice": 6,
-    "axis": 4,
-    "abilities": 1,
-    "module1": "/i/game-icons.net/delapouite/id-card.svg",
-    "module2": "",
-    "clonedFrom": "Scenario Card Template",
-    "parent": "d5in"
-  },
-  "Scenario Card - Red - GIG": {
-    "type": "card",
-    "id": "Scenario Card - Red - GIG",
-    "deck": "Scenario Card Deck",
-    "cardType": "Generic",
-    "z": 2389,
-    "name": "GIG",
-    "color": "#c01c28",
-    "key": "15",
-    "planes": 9,
-    "dice": 5,
-    "axis": 0,
-    "abilities": 2,
-    "module1": "/i/game-icons.net/delapouite/barrel-leak.svg",
-    "module2": "/i/game-icons.net/delapouite/windsock.svg",
-    "clonedFrom": "Scenario Card Template",
-    "parent": "d5in"
-  },
-  "Scenario Card - Red - OSL": {
-    "type": "card",
-    "id": "Scenario Card - Red - OSL",
-    "deck": "Scenario Card Deck",
-    "cardType": "Generic",
-    "z": 2390,
-    "name": "OSL",
-    "color": "#c01c28",
-    "key": "16",
-    "planes": 2,
-    "dice": 6,
-    "axis": 0,
-    "abilities": 2,
-    "module1": "/i/game-icons.net/lorc/snowflake-2.svg",
-    "module2": "/i/game-icons.net/delapouite/barrel-leak.svg",
-    "clonedFrom": "Scenario Card Template",
-    "parent": "d5in"
-  },
-  "Scenario Card - Red - TGU": {
-    "type": "card",
-    "id": "Scenario Card - Red - TGU",
-    "deck": "Scenario Card Deck",
-    "cardType": "Generic",
-    "z": 2391,
-    "name": "TGU",
-    "color": "#c01c28",
-    "key": "17",
-    "planes": 5,
-    "dice": 5,
-    "axis": 3,
-    "abilities": 2,
-    "module1": "/i/game-icons.net/delapouite/windsock.svg",
-    "module2": "/i/game-icons.net/delapouite/fuel-tank.svg",
-    "clonedFrom": "Scenario Card Template",
-    "parent": "d5in"
-  },
-  "Scenario Card - Black - KEF": {
-    "type": "card",
-    "id": "Scenario Card - Black - KEF",
-    "deck": "Scenario Card Deck",
-    "cardType": "Generic",
-    "z": 2392,
-    "name": "KEF",
-    "color": "#888888",
-    "key": "18",
-    "planes": 4,
-    "dice": 3,
-    "axis": 3,
-    "abilities": 2,
-    "module1": "/i/game-icons.net/lorc/snowflake-2.svg",
-    "module2": "/i/game-icons.net/delapouite/windsock.svg",
-    "clonedFrom": "Scenario Card Template",
-    "parent": "d5in"
-  },
-  "Scenario Card - Black - KUL": {
-    "type": "card",
-    "id": "Scenario Card - Black - KUL",
-    "deck": "Scenario Card Deck",
-    "cardType": "Generic",
-    "z": 2393,
-    "name": "KUL",
-    "color": "#888888",
-    "key": "19",
-    "planes": 5,
-    "dice": 5,
-    "axis": 5,
-    "abilities": 2,
-    "module1": "/i/game-icons.net/lorc/sands-of-time.svg",
-    "module2": "/i/game-icons.net/delapouite/fuel-tank.svg",
-    "clonedFrom": "Scenario Card Template",
-    "parent": "d5in"
-  },
-  "Scenario Card - Black - PBH": {
-    "type": "card",
-    "id": "Scenario Card - Black - PBH",
-    "deck": "Scenario Card Deck",
-    "cardType": "Generic",
-    "z": 2394,
-    "name": "PBH",
-    "color": "#888888",
-    "key": "20",
-    "planes": 5,
-    "dice": 6,
-    "axis": 3,
-    "abilities": 2,
-    "module1": "/i/game-icons.net/lorc/sands-of-time.svg",
-    "module2": "/i/game-icons.net/delapouite/fuel-tank.svg",
-    "clonedFrom": "Scenario Card Template",
-    "parent": "d5in"
-  },
   "y717": {
     "parent": null,
     "x": 52,
@@ -6347,7 +6217,7 @@
     "css": {
       "font-size": "68px"
     },
-    "classes": "material-icons",
+    "classes": "material-symbols",
     "text": "restart_alt",
     "resetRoutine": [
       {
@@ -6389,7 +6259,7 @@
     ]
   },
   "_meta": {
-    "version": 15,
+    "version": 17,
     "info": {
       "name": "Runway Roll",
       "image": "/i/noto-emoji/emoji_u1f6ec.svg",
@@ -6399,7 +6269,7 @@
       "mode": "coop",
       "time": "15",
       "attribution": "<div>The layout was done by ArnoldSmith86 and is released to the public domain by CC0.</div><div><br></div><div>These images were used from game-icons.net and are licensed as CC BY 3.0:<br></div><div><br></div><div>By delapouite:<br></div><div>https://game-icons.net/1x1/delapouite/barrel-leak.html</div>https://game-icons.net/1x1/delapouite/car-wheel.html<br>https://game-icons.net/1x1/delapouite/check-mark.html<br>https://game-icons.net/1x1/delapouite/coffee-cup.html<br>https://game-icons.net/1x1/delapouite/commercial-airplane.html<br>https://game-icons.net/1x1/delapouite/control-tower.html<br>https://game-icons.net/1x1/delapouite/dice-six-faces-one.html<br>https://game-icons.net/1x1/delapouite/dice-six-faces-six.html<br>https://game-icons.net/1x1/delapouite/dice-target.html<br>https://game-icons.net/1x1/delapouite/fuel-tank.html<br>https://game-icons.net/1x1/delapouite/id-card.html<br>https://game-icons.net/1x1/delapouite/perspective-dice-six-faces-random.html<br>https://game-icons.net/1x1/delapouite/plain-arrow.html<br>https://game-icons.net/1x1/delapouite/plane-wing.html<br>https://game-icons.net/1x1/delapouite/pocket-radio.html<br>https://game-icons.net/1x1/delapouite/rolling-dices.html<br>https://game-icons.net/1x1/delapouite/seven-pointed-star.html<br>https://game-icons.net/1x1/delapouite/speedometer.html<br>https://game-icons.net/1x1/delapouite/sun-cloud.html<br>https://game-icons.net/1x1/delapouite/turbine.html<br><div>https://game-icons.net/1x1/delapouite/windsock.html</div><div><br></div><div>By lorc:<br></div>https://game-icons.net/1x1/lorc/body-swapping.html<br>https://game-icons.net/1x1/lorc/sands-of-time.html<br><div>https://game-icons.net/1x1/lorc/snowflake-2.html</div><div><br></div><div>By quoting:<br></div>https://game-icons.net/1x1/quoting/biplane.html<br><br>",
-      "lastUpdate": 1725609895443,
+      "lastUpdate": 1742465680566,
       "showName": true,
       "skill": "",
       "description": "Roll and place dice to control an aircraft and eventually land it safely on an airport.",
@@ -6414,6 +6284,492 @@
       "variant": "",
       "variantImage": ""
     }
+  },
+  "Scenario Card - Green - YUL": {
+    "type": "card",
+    "id": "Scenario Card - Green - YUL",
+    "deck": "Scenario Card Deck",
+    "cardType": "Generic",
+    "z": 2891,
+    "x": null,
+    "y": null,
+    "name": "YUL",
+    "color": "#15960a",
+    "key": "0",
+    "planes": 9,
+    "dice": 0,
+    "axis": 0,
+    "abilities": 0,
+    "module1": "",
+    "module2": "",
+    "expansion": null,
+    "clonedFrom": "Scenario Card Template",
+    "parent": "5fdk"
+  },
+  "5fdk": {
+    "type": "pile",
+    "parent": null,
+    "x": 1031,
+    "y": -144,
+    "width": 200,
+    "height": 100,
+    "id": "5fdk"
+  },
+  "Scenario Card - Green - LHR": {
+    "type": "card",
+    "id": "Scenario Card - Green - LHR",
+    "deck": "Scenario Card Deck",
+    "cardType": "Generic",
+    "z": 2892,
+    "name": "LHR",
+    "color": "#15960a",
+    "key": "1",
+    "planes": 8,
+    "dice": 3,
+    "axis": 0,
+    "abilities": 0,
+    "module1": "",
+    "module2": "",
+    "expansion": null,
+    "clonedFrom": "Scenario Card Template",
+    "parent": "5fdk"
+  },
+  "Scenario Card - Green - HND": {
+    "type": "card",
+    "id": "Scenario Card - Green - HND",
+    "deck": "Scenario Card Deck",
+    "cardType": "Generic",
+    "z": 2893,
+    "name": "HND",
+    "color": "#15960a",
+    "key": "2",
+    "planes": 8,
+    "dice": 2,
+    "axis": 3,
+    "abilities": 0,
+    "module1": "",
+    "module2": "",
+    "expansion": null,
+    "clonedFrom": "Scenario Card Template",
+    "parent": "5fdk"
+  },
+  "Scenario Card - Green - OSL": {
+    "type": "card",
+    "id": "Scenario Card - Green - OSL",
+    "deck": "Scenario Card Deck",
+    "cardType": "Generic",
+    "z": 2894,
+    "name": "OSL",
+    "color": "#15960a",
+    "key": "3",
+    "planes": 4,
+    "dice": 3,
+    "axis": 0,
+    "abilities": 0,
+    "module1": "/i/game-icons.net/delapouite/fuel-tank.svg",
+    "module2": "",
+    "expansion": null,
+    "clonedFrom": "Scenario Card Template",
+    "parent": "5fdk"
+  },
+  "Scenario Card - Green - ATL": {
+    "type": "card",
+    "id": "Scenario Card - Green - ATL",
+    "deck": "Scenario Card Deck",
+    "cardType": "Generic",
+    "z": 2895,
+    "name": "ATL",
+    "color": "#15960a",
+    "key": "4",
+    "planes": 6,
+    "dice": 7,
+    "axis": 0,
+    "abilities": 0,
+    "module1": "/i/game-icons.net/delapouite/id-card.svg",
+    "module2": "",
+    "expansion": null,
+    "clonedFrom": "Scenario Card Template",
+    "parent": "5fdk"
+  },
+  "Scenario Card - Green - PRG": {
+    "type": "card",
+    "id": "Scenario Card - Green - PRG",
+    "deck": "Scenario Card Deck",
+    "cardType": "Generic",
+    "z": 2896,
+    "name": "PRG",
+    "color": "#15960a",
+    "key": "5",
+    "planes": 5,
+    "dice": 3,
+    "axis": 2,
+    "abilities": 2,
+    "module1": "/i/game-icons.net/delapouite/fuel-tank.svg",
+    "module2": "",
+    "expansion": null,
+    "clonedFrom": "Scenario Card Template",
+    "parent": "5fdk"
+  },
+  "Scenario Card - Yellow - LHR": {
+    "type": "card",
+    "id": "Scenario Card - Yellow - LHR",
+    "deck": "Scenario Card Deck",
+    "cardType": "Generic",
+    "z": 2897,
+    "name": "LHR",
+    "color": "#f5c211",
+    "key": "6",
+    "planes": 8,
+    "dice": 5,
+    "axis": 0,
+    "abilities": 0,
+    "module1": "/i/game-icons.net/delapouite/id-card.svg",
+    "module2": "",
+    "expansion": null,
+    "clonedFrom": "Scenario Card Template",
+    "parent": "5fdk"
+  },
+  "Scenario Card - Yellow - TGU": {
+    "type": "card",
+    "id": "Scenario Card - Yellow - TGU",
+    "deck": "Scenario Card Deck",
+    "cardType": "Generic",
+    "z": 2898,
+    "name": "TGU",
+    "color": "#f5c211",
+    "key": "7",
+    "planes": 4,
+    "dice": 3,
+    "axis": 3,
+    "abilities": 2,
+    "module1": "/i/game-icons.net/delapouite/fuel-tank.svg",
+    "module2": "",
+    "expansion": null,
+    "clonedFrom": "Scenario Card Template",
+    "parent": "5fdk"
+  },
+  "Scenario Card - Yellow - GIG": {
+    "type": "card",
+    "id": "Scenario Card - Yellow - GIG",
+    "deck": "Scenario Card Deck",
+    "cardType": "Generic",
+    "z": 2899,
+    "name": "GIG",
+    "color": "#f5c211",
+    "key": "8",
+    "planes": 9,
+    "dice": 4,
+    "axis": 0,
+    "abilities": 1,
+    "module1": "/i/game-icons.net/delapouite/windsock.svg",
+    "module2": "",
+    "expansion": null,
+    "clonedFrom": "Scenario Card Template",
+    "parent": "5fdk"
+  },
+  "Scenario Card - Yellow - KEF": {
+    "type": "card",
+    "id": "Scenario Card - Yellow - KEF",
+    "deck": "Scenario Card Deck",
+    "cardType": "Generic",
+    "z": 2900,
+    "name": "KEF",
+    "color": "#f5c211",
+    "key": "9",
+    "planes": 3,
+    "dice": 4,
+    "axis": 0,
+    "abilities": 1,
+    "module1": "/i/game-icons.net/lorc/snowflake-2.svg",
+    "module2": "",
+    "expansion": null,
+    "clonedFrom": "Scenario Card Template",
+    "parent": "5fdk"
+  },
+  "Scenario Card - Yellow - PRG": {
+    "type": "card",
+    "id": "Scenario Card - Yellow - PRG",
+    "deck": "Scenario Card Deck",
+    "cardType": "Generic",
+    "z": 2901,
+    "name": "PRG",
+    "color": "#f5c211",
+    "key": "10",
+    "planes": 12,
+    "dice": 2,
+    "axis": 0,
+    "abilities": 2,
+    "module1": "/i/game-icons.net/delapouite/barrel-leak.svg",
+    "module2": "",
+    "expansion": null,
+    "clonedFrom": "Scenario Card Template",
+    "parent": "5fdk"
+  },
+  "Scenario Card - Yellow - KUL": {
+    "type": "card",
+    "id": "Scenario Card - Yellow - KUL",
+    "deck": "Scenario Card Deck",
+    "cardType": "Generic",
+    "z": 2902,
+    "name": "KUL",
+    "color": "#f5c211",
+    "key": "11",
+    "planes": 5,
+    "dice": 3,
+    "axis": 4,
+    "abilities": 1,
+    "module1": "/i/game-icons.net/delapouite/fuel-tank.svg",
+    "module2": "",
+    "expansion": null,
+    "clonedFrom": "Scenario Card Template",
+    "parent": "5fdk"
+  },
+  "Scenario Card - Yellow - ATL": {
+    "type": "card",
+    "id": "Scenario Card - Yellow - ATL",
+    "deck": "Scenario Card Deck",
+    "cardType": "Generic",
+    "z": 2903,
+    "name": "ATL",
+    "color": "#f5c211",
+    "key": "12",
+    "planes": 10,
+    "dice": 5,
+    "axis": 2,
+    "abilities": 1,
+    "module1": "/i/game-icons.net/delapouite/barrel-leak.svg",
+    "module2": "",
+    "expansion": null,
+    "clonedFrom": "Scenario Card Template",
+    "parent": "5fdk"
+  },
+  "Scenario Card - Red - PBH": {
+    "type": "card",
+    "id": "Scenario Card - Red - PBH",
+    "deck": "Scenario Card Deck",
+    "cardType": "Generic",
+    "z": 2904,
+    "name": "PBH",
+    "color": "#c01c28",
+    "key": "13",
+    "planes": 5,
+    "dice": 4,
+    "axis": 3,
+    "abilities": 2,
+    "module1": "/i/game-icons.net/lorc/sands-of-time.svg",
+    "module2": "/i/game-icons.net/delapouite/fuel-tank.svg",
+    "expansion": null,
+    "clonedFrom": "Scenario Card Template",
+    "parent": "5fdk"
+  },
+  "Scenario Card - Red - HND": {
+    "type": "card",
+    "id": "Scenario Card - Red - HND",
+    "deck": "Scenario Card Deck",
+    "cardType": "Generic",
+    "z": 2905,
+    "name": "HND",
+    "color": "#c01c28",
+    "key": "14",
+    "planes": 8,
+    "dice": 6,
+    "axis": 4,
+    "abilities": 1,
+    "module1": "/i/game-icons.net/delapouite/id-card.svg",
+    "module2": "/i/game-icons.net/delapouite/fuel-tank.svg",
+    "expansion": null,
+    "clonedFrom": "Scenario Card Template",
+    "parent": "5fdk"
+  },
+  "Scenario Card - Red - GIG": {
+    "type": "card",
+    "id": "Scenario Card - Red - GIG",
+    "deck": "Scenario Card Deck",
+    "cardType": "Generic",
+    "z": 2906,
+    "name": "GIG",
+    "color": "#c01c28",
+    "key": "15",
+    "planes": 9,
+    "dice": 5,
+    "axis": 0,
+    "abilities": 2,
+    "module1": "/i/game-icons.net/delapouite/barrel-leak.svg",
+    "module2": "/i/game-icons.net/delapouite/windsock.svg",
+    "expansion": null,
+    "clonedFrom": "Scenario Card Template",
+    "parent": "5fdk"
+  },
+  "Scenario Card - Red - OSL": {
+    "type": "card",
+    "id": "Scenario Card - Red - OSL",
+    "deck": "Scenario Card Deck",
+    "cardType": "Generic",
+    "z": 2907,
+    "name": "OSL",
+    "color": "#c01c28",
+    "key": "16",
+    "planes": 2,
+    "dice": 6,
+    "axis": 0,
+    "abilities": 2,
+    "module1": "/i/game-icons.net/lorc/snowflake-2.svg",
+    "module2": "/i/game-icons.net/delapouite/barrel-leak.svg",
+    "expansion": null,
+    "clonedFrom": "Scenario Card Template",
+    "parent": "5fdk"
+  },
+  "Scenario Card - Red - TGU": {
+    "type": "card",
+    "id": "Scenario Card - Red - TGU",
+    "deck": "Scenario Card Deck",
+    "cardType": "Generic",
+    "z": 2908,
+    "name": "TGU",
+    "color": "#c01c28",
+    "key": "17",
+    "planes": 5,
+    "dice": 5,
+    "axis": 3,
+    "abilities": 2,
+    "module1": "/i/game-icons.net/delapouite/windsock.svg",
+    "module2": "/i/game-icons.net/delapouite/fuel-tank.svg",
+    "expansion": null,
+    "clonedFrom": "Scenario Card Template",
+    "parent": "5fdk"
+  },
+  "Scenario Card - Black - KEF": {
+    "type": "card",
+    "id": "Scenario Card - Black - KEF",
+    "deck": "Scenario Card Deck",
+    "cardType": "Generic",
+    "z": 2909,
+    "name": "KEF",
+    "color": "#888888",
+    "key": "18",
+    "planes": 4,
+    "dice": 3,
+    "axis": 3,
+    "abilities": 2,
+    "module1": "/i/game-icons.net/lorc/snowflake-2.svg",
+    "module2": "/i/game-icons.net/delapouite/windsock.svg",
+    "expansion": null,
+    "clonedFrom": "Scenario Card Template",
+    "parent": "5fdk"
+  },
+  "Scenario Card - Black - KUL": {
+    "type": "card",
+    "id": "Scenario Card - Black - KUL",
+    "deck": "Scenario Card Deck",
+    "cardType": "Generic",
+    "z": 2910,
+    "name": "KUL",
+    "color": "#888888",
+    "key": "19",
+    "planes": 5,
+    "dice": 5,
+    "axis": 5,
+    "abilities": 2,
+    "module1": "/i/game-icons.net/lorc/sands-of-time.svg",
+    "module2": "/i/game-icons.net/delapouite/fuel-tank.svg",
+    "expansion": null,
+    "clonedFrom": "Scenario Card Template",
+    "parent": "5fdk"
+  },
+  "Scenario Card - Black - PBH": {
+    "type": "card",
+    "id": "Scenario Card - Black - PBH",
+    "deck": "Scenario Card Deck",
+    "cardType": "Generic",
+    "z": 2911,
+    "name": "PBH",
+    "color": "#888888",
+    "key": "20",
+    "planes": 5,
+    "dice": 6,
+    "axis": 3,
+    "abilities": 2,
+    "module1": "/i/game-icons.net/lorc/sands-of-time.svg",
+    "module2": "/i/game-icons.net/delapouite/fuel-tank.svg",
+    "expansion": null,
+    "clonedFrom": "Scenario Card Template",
+    "parent": "5fdk"
+  },
+  "Scenario Card - Red - YUL": {
+    "type": "card",
+    "id": "Scenario Card - Red - YUL",
+    "deck": "Scenario Card Deck",
+    "cardType": "Generic",
+    "z": 2912,
+    "name": "YUL",
+    "color": "#c01c28",
+    "key": "21",
+    "planes": 9,
+    "dice": 0,
+    "axis": 0,
+    "abilities": 1,
+    "module1": "/i/game-icons.net/delapouite/id-card.svg",
+    "module2": "/i/game-icons.net/lorc/snowflake-2.svg",
+    "expansion": "Ready to Play",
+    "clonedFrom": "Scenario Card Template",
+    "parent": "5fdk"
+  },
+  "Scenario Card - Red - LHR": {
+    "type": "card",
+    "id": "Scenario Card - Red - LHR",
+    "deck": "Scenario Card Deck",
+    "cardType": "Generic",
+    "z": 2913,
+    "name": "LHR",
+    "color": "#c01c28",
+    "key": "22",
+    "planes": 9,
+    "dice": 3,
+    "axis": 0,
+    "abilities": 1,
+    "module1": "",
+    "module2": "",
+    "expansion": "Ready to Play",
+    "clonedFrom": "Scenario Card Template",
+    "parent": "5fdk"
+  },
+  "Scenario Card - Red - PRG": {
+    "type": "card",
+    "id": "Scenario Card - Red - PRG",
+    "deck": "Scenario Card Deck",
+    "cardType": "Generic",
+    "z": 2914,
+    "name": "PRG",
+    "color": "#c01c28",
+    "key": "23",
+    "planes": 7,
+    "dice": 3,
+    "axis": 2,
+    "abilities": 1,
+    "module1": "/i/game-icons.net/delapouite/windsock.svg",
+    "module2": "/i/game-icons.net/delapouite/fuel-tank.svg",
+    "expansion": "Ready to Play",
+    "clonedFrom": "Scenario Card Template",
+    "parent": "5fdk"
+  },
+  "Scenario Card - Black - ATL": {
+    "type": "card",
+    "id": "Scenario Card - Black - ATL",
+    "deck": "Scenario Card Deck",
+    "cardType": "Generic",
+    "z": 2915,
+    "name": "ATL",
+    "color": "#888888",
+    "key": "24",
+    "planes": 6,
+    "dice": 7,
+    "axis": 0,
+    "abilities": 1,
+    "module1": "/i/game-icons.net/delapouite/fuel-tank.svg",
+    "module2": "",
+    "expansion": "Ready to Play",
+    "clonedFrom": "Scenario Card Template",
+    "parent": "5fdk"
   },
   "Approach Track - Green - YUL": {
     "id": "Approach Track - Green - YUL",
@@ -6459,7 +6815,7 @@
       "approachTrack": true
     },
     "preventPiles": true,
-    "z": 2229,
+    "z": 2187,
     "clonedFrom": "Approach Track - Track Holder Template",
     "parent": "Approach Track - Green - YUL",
     "x": null
@@ -6485,7 +6841,7 @@
         "value": "${angle}"
       }
     ],
-    "z": 2230,
+    "z": 2188,
     "clonedFrom": "Approach Track - Aircraft Holder Template",
     "parent": "Approach Track - Green - YUL",
     "x": null
@@ -6495,44 +6851,44 @@
     "id": "Approach Track - Green - YUL - Track Planes 50",
     "deck": "Approach Track - Planes Deck",
     "cardType": 40,
-    "z": 2882,
+    "z": 2916,
     "clonedFrom": "Approach Track - Planes Template",
     "parent": "Approach Track - Green - YUL - Track Holder 50"
   },
   "Approach Track - Green - YUL - 50 - Plane 1": {
     "id": "Approach Track - Green - YUL - 50 - Plane 1",
-    "x": 17,
-    "y": 2,
+    "x": 26,
+    "y": 35,
     "width": 60,
     "height": 60,
-    "rotation": 229,
-    "z": 3544,
+    "rotation": 345,
+    "z": 3597,
     "hoverParent": "z200u",
     "image": "/i/game-icons.net/delapouite/commercial-airplane.svg",
     "token": "aircraft",
     "resetProperties": {
       "parent": "Approach Track - Green - YUL - Planes Holder 50",
-      "x": 17,
-      "y": 2
+      "x": 26,
+      "y": 35
     },
     "clonedFrom": "Approach Track - Aircraft Token Template",
     "parent": "Approach Track - Green - YUL - Planes Holder 50"
   },
   "Approach Track - Green - YUL - 50 - Plane 2": {
     "id": "Approach Track - Green - YUL - 50 - Plane 2",
-    "x": 111,
-    "y": 34,
+    "x": 105,
+    "y": 26,
     "width": 60,
     "height": 60,
-    "rotation": 36,
-    "z": 3545,
+    "rotation": 300,
+    "z": 3598,
     "hoverParent": "z200u",
     "image": "/i/game-icons.net/delapouite/commercial-airplane.svg",
     "token": "aircraft",
     "resetProperties": {
       "parent": "Approach Track - Green - YUL - Planes Holder 50",
-      "x": 111,
-      "y": 34
+      "x": 105,
+      "y": 26
     },
     "clonedFrom": "Approach Track - Aircraft Token Template",
     "parent": "Approach Track - Green - YUL - Planes Holder 50"
@@ -6542,7 +6898,7 @@
     "id": "Approach Track - Green - YUL - Track Airport",
     "deck": "Approach Track - Background Deck",
     "cardType": "airport",
-    "z": 2883,
+    "z": 2917,
     "clonedFrom": "Approach Track - Background Template",
     "parent": "Approach Track - Green - YUL - Track Holder 50"
   },
@@ -6559,7 +6915,7 @@
       "approachTrack": true
     },
     "preventPiles": true,
-    "z": 2231,
+    "z": 2189,
     "clonedFrom": "Approach Track - Track Holder Template",
     "parent": "Approach Track - Green - YUL",
     "x": null
@@ -6585,7 +6941,7 @@
         "value": "${angle}"
       }
     ],
-    "z": 2232,
+    "z": 2190,
     "clonedFrom": "Approach Track - Aircraft Holder Template",
     "parent": "Approach Track - Green - YUL",
     "x": null
@@ -6595,63 +6951,63 @@
     "id": "Approach Track - Green - YUL - Track Planes 150",
     "deck": "Approach Track - Planes Deck",
     "cardType": 60,
-    "z": 2884,
+    "z": 2918,
     "clonedFrom": "Approach Track - Planes Template",
     "parent": "Approach Track - Green - YUL - Track Holder 150"
   },
   "Approach Track - Green - YUL - 150 - Plane 1": {
     "id": "Approach Track - Green - YUL - 150 - Plane 1",
-    "x": -0.3333333333333286,
-    "y": 2,
+    "x": 17.66666666666667,
+    "y": 15,
     "width": 60,
     "height": 60,
-    "rotation": 183,
-    "z": 3546,
+    "rotation": 70,
+    "z": 3599,
     "hoverParent": "z200u",
     "image": "/i/game-icons.net/delapouite/commercial-airplane.svg",
     "token": "aircraft",
     "resetProperties": {
       "parent": "Approach Track - Green - YUL - Planes Holder 150",
-      "x": -0.3333333333333286,
-      "y": 2
+      "x": 17.66666666666667,
+      "y": 15
     },
     "clonedFrom": "Approach Track - Aircraft Token Template",
     "parent": "Approach Track - Green - YUL - Planes Holder 150"
   },
   "Approach Track - Green - YUL - 150 - Plane 2": {
     "id": "Approach Track - Green - YUL - 150 - Plane 2",
-    "x": 64,
-    "y": 5,
+    "x": 80,
+    "y": 19,
     "width": 60,
     "height": 60,
     "rotation": 90,
-    "z": 3547,
+    "z": 3600,
     "hoverParent": "z200u",
     "image": "/i/game-icons.net/delapouite/commercial-airplane.svg",
     "token": "aircraft",
     "resetProperties": {
       "parent": "Approach Track - Green - YUL - Planes Holder 150",
-      "x": 64,
-      "y": 5
+      "x": 80,
+      "y": 19
     },
     "clonedFrom": "Approach Track - Aircraft Token Template",
     "parent": "Approach Track - Green - YUL - Planes Holder 150"
   },
   "Approach Track - Green - YUL - 150 - Plane 3": {
     "id": "Approach Track - Green - YUL - 150 - Plane 3",
-    "x": 137.33333333333334,
-    "y": 21,
+    "x": 129.33333333333334,
+    "y": 8,
     "width": 60,
     "height": 60,
-    "rotation": 63,
-    "z": 3548,
+    "rotation": 24,
+    "z": 3601,
     "hoverParent": "z200u",
     "image": "/i/game-icons.net/delapouite/commercial-airplane.svg",
     "token": "aircraft",
     "resetProperties": {
       "parent": "Approach Track - Green - YUL - Planes Holder 150",
-      "x": 137.33333333333334,
-      "y": 21
+      "x": 129.33333333333334,
+      "y": 8
     },
     "clonedFrom": "Approach Track - Aircraft Token Template",
     "parent": "Approach Track - Green - YUL - Planes Holder 150"
@@ -6669,7 +7025,7 @@
       "approachTrack": true
     },
     "preventPiles": true,
-    "z": 2233,
+    "z": 2191,
     "clonedFrom": "Approach Track - Track Holder Template",
     "parent": "Approach Track - Green - YUL",
     "x": null
@@ -6695,7 +7051,7 @@
         "value": "${angle}"
       }
     ],
-    "z": 2234,
+    "z": 2192,
     "clonedFrom": "Approach Track - Aircraft Holder Template",
     "parent": "Approach Track - Green - YUL",
     "x": null
@@ -6705,25 +7061,25 @@
     "id": "Approach Track - Green - YUL - Track Planes 250",
     "deck": "Approach Track - Planes Deck",
     "cardType": 20,
-    "z": 2885,
+    "z": 2919,
     "clonedFrom": "Approach Track - Planes Template",
     "parent": "Approach Track - Green - YUL - Track Holder 250"
   },
   "Approach Track - Green - YUL - 250 - Plane 1": {
     "id": "Approach Track - Green - YUL - 250 - Plane 1",
-    "x": 74,
-    "y": 39,
+    "x": 75,
+    "y": 11,
     "width": 60,
     "height": 60,
-    "rotation": 285,
-    "z": 3549,
+    "rotation": 90,
+    "z": 3602,
     "hoverParent": "z200u",
     "image": "/i/game-icons.net/delapouite/commercial-airplane.svg",
     "token": "aircraft",
     "resetProperties": {
       "parent": "Approach Track - Green - YUL - Planes Holder 250",
-      "x": 74,
-      "y": 39
+      "x": 75,
+      "y": 11
     },
     "clonedFrom": "Approach Track - Aircraft Token Template",
     "parent": "Approach Track - Green - YUL - Planes Holder 250"
@@ -6741,7 +7097,7 @@
       "approachTrack": true
     },
     "preventPiles": true,
-    "z": 2235,
+    "z": 2193,
     "clonedFrom": "Approach Track - Track Holder Template",
     "parent": "Approach Track - Green - YUL",
     "x": null
@@ -6767,7 +7123,7 @@
         "value": "${angle}"
       }
     ],
-    "z": 2236,
+    "z": 2194,
     "clonedFrom": "Approach Track - Aircraft Holder Template",
     "parent": "Approach Track - Green - YUL",
     "x": null
@@ -6777,44 +7133,44 @@
     "id": "Approach Track - Green - YUL - Track Planes 350",
     "deck": "Approach Track - Planes Deck",
     "cardType": 40,
-    "z": 2886,
+    "z": 2920,
     "clonedFrom": "Approach Track - Planes Template",
     "parent": "Approach Track - Green - YUL - Track Holder 350"
   },
   "Approach Track - Green - YUL - 350 - Plane 1": {
     "id": "Approach Track - Green - YUL - 350 - Plane 1",
-    "x": 39,
-    "y": 31,
+    "x": 35,
+    "y": 21,
     "width": 60,
     "height": 60,
-    "rotation": 201,
-    "z": 3550,
+    "rotation": 339,
+    "z": 3603,
     "hoverParent": "z200u",
     "image": "/i/game-icons.net/delapouite/commercial-airplane.svg",
     "token": "aircraft",
     "resetProperties": {
       "parent": "Approach Track - Green - YUL - Planes Holder 350",
-      "x": 39,
-      "y": 31
+      "x": 35,
+      "y": 21
     },
     "clonedFrom": "Approach Track - Aircraft Token Template",
     "parent": "Approach Track - Green - YUL - Planes Holder 350"
   },
   "Approach Track - Green - YUL - 350 - Plane 2": {
     "id": "Approach Track - Green - YUL - 350 - Plane 2",
-    "x": 108,
-    "y": 37,
+    "x": 91,
+    "y": 5,
     "width": 60,
     "height": 60,
-    "rotation": 6,
-    "z": 3551,
+    "rotation": 311,
+    "z": 3604,
     "hoverParent": "z200u",
     "image": "/i/game-icons.net/delapouite/commercial-airplane.svg",
     "token": "aircraft",
     "resetProperties": {
       "parent": "Approach Track - Green - YUL - Planes Holder 350",
-      "x": 108,
-      "y": 37
+      "x": 91,
+      "y": 5
     },
     "clonedFrom": "Approach Track - Aircraft Token Template",
     "parent": "Approach Track - Green - YUL - Planes Holder 350"
@@ -6832,7 +7188,7 @@
       "approachTrack": true
     },
     "preventPiles": true,
-    "z": 2237,
+    "z": 2195,
     "clonedFrom": "Approach Track - Track Holder Template",
     "parent": "Approach Track - Green - YUL",
     "x": null
@@ -6858,7 +7214,7 @@
         "value": "${angle}"
       }
     ],
-    "z": 2238,
+    "z": 2196,
     "clonedFrom": "Approach Track - Aircraft Holder Template",
     "parent": "Approach Track - Green - YUL",
     "x": null
@@ -6868,25 +7224,25 @@
     "id": "Approach Track - Green - YUL - Track Planes 450",
     "deck": "Approach Track - Planes Deck",
     "cardType": 20,
-    "z": 2887,
+    "z": 2921,
     "clonedFrom": "Approach Track - Planes Template",
     "parent": "Approach Track - Green - YUL - Track Holder 450"
   },
   "Approach Track - Green - YUL - 450 - Plane 1": {
     "id": "Approach Track - Green - YUL - 450 - Plane 1",
     "x": 86,
-    "y": 35,
+    "y": 38,
     "width": 60,
     "height": 60,
-    "rotation": 335,
-    "z": 3552,
+    "rotation": 218,
+    "z": 3605,
     "hoverParent": "z200u",
     "image": "/i/game-icons.net/delapouite/commercial-airplane.svg",
     "token": "aircraft",
     "resetProperties": {
       "parent": "Approach Track - Green - YUL - Planes Holder 450",
       "x": 86,
-      "y": 35
+      "y": 38
     },
     "clonedFrom": "Approach Track - Aircraft Token Template",
     "parent": "Approach Track - Green - YUL - Planes Holder 450"
@@ -6904,7 +7260,7 @@
       "approachTrack": true
     },
     "preventPiles": true,
-    "z": 2239,
+    "z": 2197,
     "clonedFrom": "Approach Track - Track Holder Template",
     "parent": "Approach Track - Green - YUL",
     "x": null
@@ -6930,7 +7286,7 @@
         "value": "${angle}"
       }
     ],
-    "z": 2240,
+    "z": 2198,
     "clonedFrom": "Approach Track - Aircraft Holder Template",
     "parent": "Approach Track - Green - YUL",
     "x": null
@@ -6940,7 +7296,7 @@
     "id": "Approach Track - Green - YUL - Track Planes 550",
     "deck": "Approach Track - Planes Deck",
     "cardType": "0",
-    "z": 2888,
+    "z": 2922,
     "clonedFrom": "Approach Track - Planes Template",
     "parent": "Approach Track - Green - YUL - Track Holder 550"
   },
@@ -6957,7 +7313,7 @@
       "approachTrack": true
     },
     "preventPiles": true,
-    "z": 2241,
+    "z": 2199,
     "clonedFrom": "Approach Track - Track Holder Template",
     "parent": "Approach Track - Green - YUL",
     "x": null
@@ -6983,7 +7339,7 @@
         "value": "${angle}"
       }
     ],
-    "z": 2242,
+    "z": 2200,
     "clonedFrom": "Approach Track - Aircraft Holder Template",
     "parent": "Approach Track - Green - YUL",
     "x": null
@@ -6993,7 +7349,7 @@
     "id": "Approach Track - Green - YUL - Track Planes 650",
     "deck": "Approach Track - Planes Deck",
     "cardType": "0",
-    "z": 2889,
+    "z": 2923,
     "clonedFrom": "Approach Track - Planes Template",
     "parent": "Approach Track - Green - YUL - Track Holder 650"
   },
@@ -7002,7 +7358,7 @@
     "id": "Approach Track - Green - YUL - Track Clouds",
     "deck": "Approach Track - Background Deck",
     "cardType": "clouds",
-    "z": 2890,
+    "z": 2924,
     "clonedFrom": "Approach Track - Background Template",
     "parent": "Approach Track - Green - YUL - Track Holder 650"
   }
