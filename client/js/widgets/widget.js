@@ -1581,7 +1581,7 @@ export class Widget extends StateManaged {
       }
 
       if(a.func == 'RECALL') {
-        setDefaults(a, { owned: true, inHolder: true, excludeCollection: null });
+        setDefaults(a, { owned: true, inHolder: true, excludeCollection: null, byDistance: false });
 
         let excludeCollection = null;
         if(a.excludeCollection) {
@@ -1604,6 +1604,22 @@ export class Widget extends StateManaged {
                   cards = cards.filter(c=>!c.get('_ancestor'));
                 if(a.excludeCollection && excludeCollection)
                   cards = cards.filter(c=>!excludeCollection.includes(c));
+                
+                if(a.byDistance === true){
+                  cards.sort((c1, c2) => {
+                    const dx1 = deck.get('_centerAbsoluteX') - c1.get('_centerAbsoluteX');
+                    const dy1 = deck.get('_centerAbsoluteY') - c1.get('_centerAbsoluteY');
+                    const d1 = Math.sqrt(dx1 * dx1 + dy1 * dy1);                    
+                    const dx2 = deck.get('_centerAbsoluteX') - c2.get('_centerAbsoluteX');
+                    const dy2 = deck.get('_centerAbsoluteY') - c2.get('_centerAbsoluteY');
+                    const d2 = Math.sqrt(dx2 * dx2 + dy2 * dy2);
+                    
+                    if(d1 !== d2)
+                      return d1 - d2;
+                    return c1.get('z') - c2.get('z');
+                  });
+                }
+                
                 for(const c of cards) {
                   if(c.get('_ancestor') == holder && !c.get('owner'))
                     await c.bringToFront();
@@ -1618,16 +1634,6 @@ export class Widget extends StateManaged {
           if(jeRoutineLogging) {
             jeLoggingRoutineOperationSummary(`'${a.holder}' ${a.owned ? ' (including hands)' : ''}`);
           }
-        }
-      }
-
-      if (a.func == 'RESET') {
-        setDefaults(a, { property: 'resetProperties' });      
-        for(const widget of widgets.values())
-          for(const [ key, value ] of Object.entries(widget.get(a.property) || {}))
-            await widget.set(key, value);
-        if (jeRoutineLogging) {
-          jeLoggingRoutineOperationSummary(`Reset properties for widgets with property '${a.property}'`);
         }
       }
 
