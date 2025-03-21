@@ -1815,12 +1815,12 @@ export class Widget extends StateManaged {
       }
 
       if(a.func == 'SHUFFLE') {
-        setDefaults(a, { collection: 'DEFAULT' });
+        setDefaults(a, { collection: 'DEFAULT', mode: 'traditional', modeValue: 1 });
         let collection;
         if(a.holder !== undefined) {
           if(this.isValidID(a.holder, problems)) {
             await w(a.holder, async holder=>{
-              await shuffleWidgets(holder.children());
+              await shuffleWidgets(holder.children(), a.mode, a.modeValue);
               if(typeof holder.updateAfterShuffle == 'function')
                 await holder.updateAfterShuffle();
             });
@@ -1829,7 +1829,7 @@ export class Widget extends StateManaged {
           }
         } else if(collection = getCollection(a.collection)) {
           if(collections[collection].length) {
-            await shuffleWidgets(collections[collection]);
+            await shuffleWidgets(collections[collection], a.mode, a.modeValue);
           } else {
             problems.push(`Collection ${a.collection} is empty.`);
           }
