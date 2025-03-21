@@ -81,7 +81,7 @@ async function checkIfSVG(url) {
     const response = await fetch(url);
     if (!response.ok) return false;
     const text = await response.text();
-    return /^\s*(<\?xml\s+[^>]*>\s*(<!--[\s\S]*?-->\s*)*)?<svg\b/i.test(text);
+    return /^\s*(<\?xml\s+[^>]*>\s*(?:\s|<!--.*?-->)*\s*)?<svg\b/i.test(text);
   } catch (e) {
     return false;
   }
