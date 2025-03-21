@@ -77,20 +77,37 @@ if (w.type=="seat" && w.player==null) {
 const jeOrder = [ 'type', 'id#', 'parent', 'fixedParent', 'deck', 'cardType', 'index*', 'owner#', 'x*', 'y*', 'width*', 'height*', 'borderRadius', 'scale', 'rotation#', 'layer', 'z', 'inheritChildZ#', 'movable*', 'movableInEdit*#' ];
 
 function checkIfSVG(url) {
-  return new Promise(resolve => {
-    const xhr = new XMLHttpRequest();
-    xhr.onload = function () {
-      if (xhr.status === 200 && /svg/i.test(xhr.responseText)) {
-        resolve(true);
-      } else {
-        resolve(false);
+  // Log the input URL.
+  console.log("Input URL:", url);
+
+  const { origin } = location;
+  console.log("origin:", origin);
+
+  if (url.startsWith(origin)) {
+    url = url.slice(origin.length);
+    console.log("Stripped URL:", url);
+  }
+  
+  return fetch(url)
+    .then(response => {
+      console.log("Response status:", response.status);
+      if (!response.ok) {
+        console.log("Response not OK, returning false");
+        return false;
       }
-    };
-    xhr.onerror = () => resolve(false);
-    xhr.open("GET", url);
-    xhr.send();
-    console.log(xhr);
-  });
+      return response.text();
+    })
+    .then(text => {
+      // Log the first 100 characters of the text for brevity.
+      console.log("Fetched text (first 100 chars):", text.slice(0, 100));
+      const result = /<svg\b/i.test(text);
+      console.log("SVG regex test result:", result);
+      return result;
+    })
+    .catch(err => {
+      console.error("Error in checkIfSVG:", err);
+      return false;
+    });
 }
 
 const jeCommands = [
