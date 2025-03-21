@@ -76,16 +76,22 @@ if (w.type=="seat" && w.player==null) {
 
 const jeOrder = [ 'type', 'id#', 'parent', 'fixedParent', 'deck', 'cardType', 'index*', 'owner#', 'x*', 'y*', 'width*', 'height*', 'borderRadius', 'scale', 'rotation#', 'layer', 'z', 'inheritChildZ#', 'movable*', 'movableInEdit*#' ];
 
-async function checkIfSVG(url) {
-  try {
-    const response = await fetch(url);
-    if (!response.ok) return false;
-    const text = await response.text();
-    return /svg/i.test(text);
-  } catch (e) {
-    return false;
-  }
-};
+function checkIfSVG(url) {
+  return new Promise(resolve => {
+    const xhr = new XMLHttpRequest();
+    xhr.onload = function () {
+      if (xhr.status === 200 && /svg/i.test(xhr.responseText)) {
+        resolve(true);
+      } else {
+        resolve(false);
+      }
+    };
+    xhr.onerror = () => resolve(false);
+    xhr.open("GET", url);
+    xhr.send();
+    console.log(xhr);
+  });
+}
 
 const jeCommands = [
   /* Just for editing convenience, the top (command) buttons are listed first */
