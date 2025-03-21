@@ -259,7 +259,7 @@ export async function shuffleWidgets(collection, mode = "traditional", modeValue
   
  const fisherYates = () => {
     for (let i = len - 1; i > 0; i--) {
-      let j = Math.floor(randFunc() * (i + 1));
+      let j = Math.floor(rand() * (i + 1));
       [indexes[i], indexes[j]] = [indexes[j], indexes[i]];
     }
   };
