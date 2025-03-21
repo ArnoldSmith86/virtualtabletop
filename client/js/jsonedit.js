@@ -77,38 +77,42 @@ if (w.type=="seat" && w.player==null) {
 const jeOrder = [ 'type', 'id#', 'parent', 'fixedParent', 'deck', 'cardType', 'index*', 'owner#', 'x*', 'y*', 'width*', 'height*', 'borderRadius', 'scale', 'rotation#', 'layer', 'z', 'inheritChildZ#', 'movable*', 'movableInEdit*#' ];
 
 function checkIfSVG(url) {
-  // Log the input URL.
-  console.log("Input URL:", url);
-
-  const { origin } = location;
-  console.log("origin:", origin);
-
-  if (url.startsWith(origin)) {
-    url = url.slice(origin.length);
-    console.log("Stripped URL:", url);
+  console.log("checkIfSVG called with URL:", url);
+  try {
+    const parsedUrl = new URL(url, window.location.href);
+    console.log("Parsed URL:", parsedUrl.href);
+    if (parsedUrl.origin === window.location.origin) {
+      const relativeUrl = parsedUrl.pathname + parsedUrl.search;
+      console.log("URL is on the same origin. Converted to relative URL:", relativeUrl);
+      url = relativeUrl;
+    } else {
+      console.log("URL is external. Using absolute URL:", url);
+    }
+  } catch (e) {
+    console.error("Error parsing URL. Using original URL:", url, e);
   }
   
+  console.log("Fetching URL:", url);
   return fetch(url)
     .then(response => {
-      console.log("Response status:", response.status);
+      console.log("Fetch response received. Status:", response.status);
       if (!response.ok) {
-        console.log("Response not OK, returning false");
+        console.warn("Response not OK. Status:", response.status);
         return false;
       }
-      return response.text();
+      return response.text().then(text => {
+        console.log("Fetched text length:", text.length);
+        const isSVG = /<svg\b/i.test(text);
+        console.log("SVG check result:", isSVG);
+        return isSVG;
+      });
     })
-    .then(text => {
-      // Log the first 100 characters of the text for brevity.
-      console.log("Fetched text (first 100 chars):", text.slice(0, 100));
-      const result = /<svg\b/i.test(text);
-      console.log("SVG regex test result:", result);
-      return result;
-    })
-    .catch(err => {
-      console.error("Error in checkIfSVG:", err);
+    .catch(error => {
+      console.error("Fetch error:", error);
       return false;
     });
 }
+
 
 const jeCommands = [
   /* Just for editing convenience, the top (command) buttons are listed first */
