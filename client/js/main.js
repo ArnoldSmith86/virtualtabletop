@@ -241,28 +241,33 @@ function getRoomRectangle() {
 export async function shuffleWidgets(collection, mode = "traditional", modeValue = 1) {
   const len = collection.length;
   let indexes = [...Array(len).keys()];
-  
+
   let randFunc = (typeof rand === "function") ? rand : Math.random;
   
-  if (mode === "seeded") {
-    const seededRand = (function(s) {
-      let seed = s % 2147483647;
-      if (seed <= 0) 
-        seed += 2147483646;
-      return function() {
-        seed = (seed * 16807) % 2147483647;
-        return seed / 2147483647;
-      };
-    })(modeValue);
-    randFunc = seededRand;
-  }
-  
- const fisherYates = () => {
-    for (let i = len - 1; i > 0; i--) {
-      let j = Math.floor(rand() * (i + 1));
+  const fisherYates = () => {
+    for (let i = len-1; i > 0; i--) {
+      let j = Math.floor(rand() * (i+1));
       [indexes[i], indexes[j]] = [indexes[j], indexes[i]];
     }
   };
+
+  let fisherYatesSeeded = null;
+  if (mode === "seeded") {
+    let seed = modeValue % 2147483647;
+    if (seed <= 0)
+      seed += 2147483646;
+    const seededRand = function() {
+      seed = (seed * 16807) % 2147483647;
+      return seed / 2147483647;
+    };
+
+    fisherYatesSeeded = () => {
+      for (let i = len-1; i > 0; i--) {
+        let j = Math.floor(seededRand() * (i+1));
+        [indexes[i], indexes[j]] = [indexes[j], indexes[i]];
+      }
+    };
+  }
   
   const riffleShuffle = () => {
     const mid = Math.floor(len * (0.45 + randFunc() * 0.1));
@@ -300,9 +305,11 @@ export async function shuffleWidgets(collection, mode = "traditional", modeValue
   for (let i = 0; i < iterations; i++) {
     switch (mode) {
       case "traditional":
-      case "seeded":
         fisherYates();
-        fisherYates(); //Needed twice for reasons
+        break;
+      case "seeded":
+        fisherYatesSeeded();
+        fisherYatesSeeded(); //Needed twice for reasons
         break;
       case "riffle":
         riffleShuffle();
