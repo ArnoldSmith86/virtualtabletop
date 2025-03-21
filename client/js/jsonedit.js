@@ -79,8 +79,37 @@ const jeOrder = [ 'type', 'id#', 'parent', 'fixedParent', 'deck', 'cardType', 'i
 function checkIfSVG(url) {
   console.log("checkIfSVG called with URL:", url);
   try {
+    // Parse the incoming URL relative to the current page
     const parsedUrl = new URL(url, window.location.href);
     console.log("Parsed URL:", parsedUrl.href);
+
+    // On test servers, the asset URL should include a base folder (e.g., "PR-2502")
+    // We assume that if the hostname starts with "test.", then the first segment of the current page's path is our base.
+    let baseSegment = "";
+    if (window.location.hostname.startsWith("test.")) {
+      const segments = window.location.pathname.split("/").filter(Boolean);
+      if (segments.length > 0) {
+        baseSegment = segments[0];
+        console.log("Detected base segment from window.location.pathname:", baseSegment);
+      }
+    }
+
+    // If we have a base segment and the parsed URL's pathname does not start with it,
+    // then adjust the pathname by prepending the base segment.
+    if (baseSegment) {
+      if (!parsedUrl.pathname.startsWith(`/${baseSegment}/`)) {
+        console.log("Asset pathname before adjustment:", parsedUrl.pathname);
+        // Prepend the base segment
+        parsedUrl.pathname = `/${baseSegment}${parsedUrl.pathname}`;
+        console.log("Adjusted pathname to include base segment:", parsedUrl.pathname);
+      } else {
+        console.log("Asset pathname already includes the base segment.");
+      }
+    } else {
+      console.log("No base segment adjustment needed.");
+    }
+
+    // If the URL is on the same origin as the current page, convert it to a relative URL.
     if (parsedUrl.origin === window.location.origin) {
       const relativeUrl = parsedUrl.pathname + parsedUrl.search;
       console.log("URL is on the same origin. Converted to relative URL:", relativeUrl);
@@ -91,7 +120,7 @@ function checkIfSVG(url) {
   } catch (e) {
     console.error("Error parsing URL. Using original URL:", url, e);
   }
-  
+
   console.log("Fetching URL:", url);
   return fetch(url)
     .then(response => {
@@ -112,7 +141,6 @@ function checkIfSVG(url) {
       return false;
     });
 }
-
 
 const jeCommands = [
   /* Just for editing convenience, the top (command) buttons are listed first */
