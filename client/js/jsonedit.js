@@ -76,70 +76,15 @@ if (w.type=="seat" && w.player==null) {
 
 const jeOrder = [ 'type', 'id#', 'parent', 'fixedParent', 'deck', 'cardType', 'index*', 'owner#', 'x*', 'y*', 'width*', 'height*', 'borderRadius', 'scale', 'rotation#', 'layer', 'z', 'inheritChildZ#', 'movable*', 'movableInEdit*#' ];
 
-function checkIfSVG(url) {
-  console.log("checkIfSVG called with URL:", url);
+async function checkIfSVG(url) {
   try {
-    // Parse the incoming URL relative to the current page
-    const parsedUrl = new URL(url, window.location.href);
-    console.log("Parsed URL:", parsedUrl.href);
-
-    // On test servers, the asset URL should include a base folder (e.g., "PR-2502")
-    // We assume that if the hostname starts with "test.", then the first segment of the current page's path is our base.
-    let baseSegment = "";
-    if (window.location.hostname.startsWith("test.")) {
-      const segments = window.location.pathname.split("/").filter(Boolean);
-      if (segments.length > 0) {
-        baseSegment = segments[0];
-        console.log("Detected base segment from window.location.pathname:", baseSegment);
-      }
-    }
-
-    // If we have a base segment and the parsed URL's pathname does not start with it,
-    // then adjust the pathname by prepending the base segment.
-    if (baseSegment) {
-      if (!parsedUrl.pathname.startsWith(`/${baseSegment}/`)) {
-        console.log("Asset pathname before adjustment:", parsedUrl.pathname);
-        // Prepend the base segment
-        parsedUrl.pathname = `/${baseSegment}${parsedUrl.pathname}`;
-        console.log("Adjusted pathname to include base segment:", parsedUrl.pathname);
-      } else {
-        console.log("Asset pathname already includes the base segment.");
-      }
-    } else {
-      console.log("No base segment adjustment needed.");
-    }
-
-    // If the URL is on the same origin as the current page, convert it to a relative URL.
-    if (parsedUrl.origin === window.location.origin) {
-      const relativeUrl = parsedUrl.pathname + parsedUrl.search;
-      console.log("URL is on the same origin. Converted to relative URL:", relativeUrl);
-      url = relativeUrl;
-    } else {
-      console.log("URL is external. Using absolute URL:", url);
-    }
+    const response = await fetch(url);
+    if (!response.ok) return false;
+    const text = await response.text();
+    return /svg/i.test(text);
   } catch (e) {
-    console.error("Error parsing URL. Using original URL:", url, e);
+    return false;
   }
-
-  console.log("Fetching URL:", url);
-  return fetch(url)
-    .then(response => {
-      console.log("Fetch response received. Status:", response.status);
-      if (!response.ok) {
-        console.warn("Response not OK. Status:", response.status);
-        return false;
-      }
-      return response.text().then(text => {
-        console.log("Fetched text length:", text.length);
-        const isSVG = /<svg\b/i.test(text);
-        console.log("SVG check result:", isSVG);
-        return isSVG;
-      });
-    })
-    .catch(error => {
-      console.error("Fetch error:", error);
-      return false;
-    });
 }
 
 const jeCommands = [
@@ -296,7 +241,7 @@ const jeCommands = [
         jeShowCommands();
         return true;
       }
-      checkIfSVG(jeStateNow.image).then(result => { 
+      checkIfSVG(mapAssetURLs(jeStateNow.image)).then(result => { 
         jeStateNow.isSVG = result; 
         jeShowCommands(); 
       });
