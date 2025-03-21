@@ -76,6 +76,17 @@ if (w.type=="seat" && w.player==null) {
 
 const jeOrder = [ 'type', 'id#', 'parent', 'fixedParent', 'deck', 'cardType', 'index*', 'owner#', 'x*', 'y*', 'width*', 'height*', 'borderRadius', 'scale', 'rotation#', 'layer', 'z', 'inheritChildZ#', 'movable*', 'movableInEdit*#' ];
 
+async function checkIfSVG(url) {
+  try {
+    const response = await fetch(url);
+    if (!response.ok) return false;
+    const text = await response.text();
+    return /^\s*(<\?xml\s+[^>]*>\s*(<!--[\s\S]*?-->\s*)*)?<svg\b/i.test(text);
+  } catch (e) {
+    return false;
+  }
+};
+
 const jeCommands = [
   /* Just for editing convenience, the top (command) buttons are listed first */
   {
@@ -222,10 +233,22 @@ const jeCommands = [
     id: 'je_SVGColors',
     name: 'Show colors in SVG image',
     icon: 'colors',
-    show: _=>jeStateNow && jeStateNow.image && jeStateNow.image.match(/\.svg$/),
+    show: function() {
+      if (!jeStateNow?.image) return false;
+      if (typeof jeStateNow.isSVG === 'boolean') return jeStateNow.isSVG;
+      if (jeStateNow.image.match(/\.svg$/i)) {
+        jeStateNow.isSVG = true;
+        jeShowCommands();
+        return true;
+      }
+      checkIfSVG(jeStateNow.image).then(result => { 
+        jeStateNow.isSVG = result; 
+        jeShowCommands(); 
+      });
+      return false;
+    },
     call: async function(options) {  
       jeSVGColors();
-      jeShowCommands();  
     }
   },
   /* Now the context-dependent stuff */
