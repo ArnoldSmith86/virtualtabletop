@@ -234,7 +234,7 @@ const jeCommands = [
     name: 'Show colors in SVG image',
     icon: 'colors',
     show: function() {
-      if (!jeStateNow?.image) return false;
+      if (!jeStateNow || !jeStateNow.image) return false;
       if (typeof jeStateNow.isSVG === 'boolean') return jeStateNow.isSVG;
       if (jeStateNow.image.match(/\.svg$/i)) {
         jeStateNow.isSVG = true;
