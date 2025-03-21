@@ -1637,6 +1637,16 @@ export class Widget extends StateManaged {
         }
       }
 
+      if (a.func == 'RESET') {
+        setDefaults(a, { property: 'resetProperties' });      
+        for(const widget of widgets.values())
+          for(const [ key, value ] of Object.entries(widget.get(a.property) || {}))
+            await widget.set(key, value);
+        if (jeRoutineLogging) {
+          jeLoggingRoutineOperationSummary(`Reset properties for widgets with property '${a.property}'`);
+        }
+      }
+
       if(a.func == 'ROTATE') {
         setDefaults(a, { count: 1, angle: 90, mode: 'add', collection: 'DEFAULT' });
         if(a.count === 'all')
