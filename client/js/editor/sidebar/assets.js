@@ -56,9 +56,10 @@ function getAssetTargetSize(asset, originalWidth, originalHeight) {
 
             if(key)
                 for(const [ t, template ] of Object.entries(deck.get('faceTemplates')))
-                    for(const [ o, faceObject ] of Object.entries(template.objects))
-                        if(faceObject.dynamicProperties && faceObject.dynamicProperties.value == key)
-                            objects.push([ t, o ]);
+                    if(Array.isArray(template.objects))
+                        for(const [ o, faceObject ] of Object.entries(template.objects))
+                            if(faceObject.dynamicProperties && faceObject.dynamicProperties.value == key)
+                                objects.push([ t, o ]);
 
             for(const [ face, object ] of objects) {
                 const targetFace   = deck.get('faceTemplates')[face];
@@ -387,12 +388,13 @@ class AssetsModule extends SidebarModule {
 
     this.addSubHeader('Included Assets');
     div(target, 'buttonBar', `
-      <p>Here you can download all the assets used in this game as a zip file so you can process them on your computer (replace/resize/...).</p>
-      <p>When you upload assets, you can use the same filenames as the original assets to replace them. Be sure <b>not</b> to zip them again but select all the assets themselves in the file selection dialog.</p>
+      <p>The Compress Assets button allows you to choose image by image to reduce the file size of the assets by compression or by converting to another file type. Make the desired selection for each image, click the Replace Selected Images button at the bottom of the screen, and then save the game.</p>
+      <button icon=compress id=compressAssetsButton>Compress assets</button>
+      <p>These download buttons will download all the assets used in this game as a zip file so you can process them on your computer (replace/resize/...).</p>
       <button icon=cloud_download id=downloadAllAssetsButton>Download all assets</button>
       <button icon=cloud_download id=downloadAllAssetsByPropertyButton>Download all assets by property</button>
+      <p>You can replace existing assets in your game by using the Upload Assets button. You must use the same filenames as the original assets. Be sure <b>not</b> to zip them again but select all the assets themselves in the file selection dialog. This button is only for replacing existing assets and not uploading new ones.</p>
       <button icon=cloud_upload id=uploadAllAssetsButton>Upload assets</button>
-      <button icon=compress id=compressAssetsButton>Compress assets</button>
     `);
     $('#downloadAllAssetsButton').onclick = e=>this.button_assetDownload(false);
     $('#downloadAllAssetsByPropertyButton').onclick = e=>this.button_assetDownload(true);

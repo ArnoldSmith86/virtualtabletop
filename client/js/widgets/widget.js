@@ -90,7 +90,8 @@ export class Widget extends StateManaged {
       gameStartRoutine: null,
       hotkey: null,
 
-      animatePropertyChange: []
+      animatePropertyChange: [],
+      resetProperties: {},
     });
     this.domElement.timer = false
 
@@ -177,16 +178,15 @@ export class Widget extends StateManaged {
     let fromTransform = null;
     let newParent = undefined;
     if(delta.parent !== undefined) {
-      newParent = delta.parent ? widgets.get(delta.parent).domElement : $('#topSurface');
+      newParent = delta.parent && widgets.has(delta.parent) ? widgets.get(delta.parent).domElement : $('#topSurface');
+      this.setLimbo(delta.parent && !widgets.has(delta.parent));
       // If the widget wasn't newly created, transition from its previous location.
       if (delta.id === undefined)
         fromTransform = getElementTransformRelativeTo(this.domElement, newParent);
     }
 
     this.applyCSS(delta);
-    if(delta.audio !== null)
-      this.addAudio(this);
-
+    
     if(delta.z !== undefined)
       this.applyZ(true);
 
@@ -208,7 +208,7 @@ export class Widget extends StateManaged {
         this.domElement.style.transform = this.targetTransform;
       }
 
-      if(delta.parent !== null) {
+      if(delta.parent !== null && widgets.has(delta.parent)) {
         this.parent = widgets.get(delta.parent);
         this.parent.applyChildAdd(this);
       } else {
@@ -417,6 +417,8 @@ export class Widget extends StateManaged {
       if(!widgetFilter(w=>asArray(linkedToSeat).indexOf(w.get('id')) != -1 && w.get('player')).length)
         className += ' foreign';
 
+    if(this.isLimbo)
+      className += ' limbo';
     if(this.get('hoverParent') && widgets.has(this.get('hoverParent')) && widgets.get(this.get('hoverParent')).domElement.classList.contains('showCardBack'))
       className += ' showCardBack';
 
@@ -458,9 +460,16 @@ export class Widget extends StateManaged {
 
     if(!this.get('clickable') && !(mode == 'ignoreClickable' || mode =='ignoreAll'))
       return true;
-
-    if(this.get('clickSound'))
-      this.set('audio','source: ' + this.get('clickSound') + ', type: audio/mpeg , maxVolume: 1.0, length: null, player: null');
+    
+    if(this.get('clickSound')) {
+      toServer('audio', {
+        audioSource: this.get('clickSound'),
+        maxVolume: 1.0,
+        length: null,
+        players: [],
+        count: 1
+      });
+    }
 
     if(Array.isArray(this.get('clickRoutine')) && !(mode == 'ignoreClickRoutine' || mode =='ignoreAll')) {
       await this.evaluateRoutine('clickRoutine', {}, {});
@@ -860,11 +869,13 @@ export class Widget extends StateManaged {
     let collections = initialCollections;
     if(!byReference) {
       const playerSeats = widgetFilter(w=>w.get('type')=='seat'&&w.get('player')==playerName);
+      const activeSeats = widgetFilter(w=>w.get('type')=='seat'&&w.get('player')!='');
       variables = Object.assign({
         activeColors,
         mouseCoords,
         seatIndex: playerSeats.length ? playerSeats[0].get('index') : null,
-        seatID: playerSeats.length ? playerSeats[0].get('id') : null
+        seatID: playerSeats.length ? playerSeats[0].get('id') : null,
+        activeSeats: activeSeats.length ? activeSeats.map(seat=>seat.get('id')) : null
       }, initialVariables, {
         playerName,
         playerColor,
@@ -872,7 +883,8 @@ export class Widget extends StateManaged {
         thisID : this.get('id')
       });
       collections = Object.assign({
-        playerSeats
+        playerSeats,
+        activeSeats
       }, initialCollections, {
         thisButton : [this]
       });
@@ -993,10 +1005,16 @@ export class Widget extends StateManaged {
       }
 
       if(a.func == 'AUDIO') {
-        setDefaults(a, { source: '', type: 'audio/mpeg', maxVolume: 1.0, length: null, player: null });
-        if(a.source !== undefined) {
-          this.set('audio', 'source: ' + a.source + ', type: ' + a.type + ', maxVolume: ' + a.maxVolume + ', length: ' + a.length + ', player: ' + a.player);
-        }
+        setDefaults(a, { source: '', maxVolume: 1.0, length: null, player: null, silence: false, count: 1 });
+        const validPlayers = a.player ? asArray(a.player) : [];
+        toServer('audio', {
+          audioSource: a.source,
+          maxVolume: a.maxVolume,
+          length: a.length,
+          players: validPlayers,
+          silence: a.silence,
+          count: a.count
+        });
       }
 
       if(a.func == 'CALL') {
@@ -1603,6 +1621,16 @@ export class Widget extends StateManaged {
         }
       }
 
+      if (a.func == 'RESET') {
+        setDefaults(a, { property: 'resetProperties' });      
+        for(const widget of widgets.values())
+          for(const [ key, value ] of Object.entries(widget.get(a.property) || {}))
+            await widget.set(key, value);
+        if (jeRoutineLogging) {
+          jeLoggingRoutineOperationSummary(`Reset properties for widgets with property '${a.property}'`);
+        }
+      }
+
       if(a.func == 'ROTATE') {
         setDefaults(a, { count: 1, angle: 90, mode: 'add', collection: 'DEFAULT' });
         if(a.count === 'all')
@@ -1676,7 +1704,7 @@ export class Widget extends StateManaged {
       }
 
       if(a.func == 'SELECT') {
-        setDefaults(a, { type: 'all', property: 'parent', relation: '==', value: null, max: 999999, collection: 'DEFAULT', mode: 'set', source: 'all' });
+        setDefaults(a, { type: 'all', property: 'parent', relation: '==', value: null, max: 999999, collection: 'DEFAULT', mode: 'set', source: 'all', random: false });
         let source;
         if(a.source == 'all' || (source = getCollection(a.source))) {
           if([ 'add', 'set', 'remove', 'intersect' ].indexOf(a.mode) == -1)
@@ -1708,6 +1736,9 @@ export class Widget extends StateManaged {
             c.filter(w=>w.get('type')=='pile').forEach(w=>c.push(...w.children()));
             c = c.filter(w=>w.get('type')!='pile');
           }
+
+          if (a.random) 
+            c = shuffleArray(c);
 
           c = c.slice(0, a.max); // a.mode == 'set'
           if(a.mode == 'intersect')
@@ -1954,7 +1985,7 @@ export class Widget extends StateManaged {
 
         if (c.length == 0) {
           if(jeRoutineLogging)
-            jeLoggingRoutineOperationSummary(`no active seats found in collection ${a.source}`);
+            jeLoggingRoutineOperationSummary(`No active seats found in collection ${a.source}.`);
         } else {
           if (c.length > 1) {
             if (a.turnCycle == 'forward' || a.turnCycle == 'position') {
@@ -2013,9 +2044,13 @@ export class Widget extends StateManaged {
           }
 
           if(jeRoutineLogging) {
-            const indexList = c.map(w=>w.get('index'));
-            const turn = target.get('index');
-            jeLoggingRoutineOperationSummary(`changed turn of seats to ${turn} - active seats: ${JSON.stringify(indexList)}`);
+            if (target) {
+              const indexList = c.map(w => w.get('index'));
+              const turn = target.get('index');
+              jeLoggingRoutineOperationSummary(`Changed turn of seats to ${turn} - active seats: ${JSON.stringify(indexList)}`);
+            } else {
+              jeLoggingRoutineOperationSummary(`All seats in collection '${a.source}' have 'skipTurn' set to true. No turn change.`);
+            }
           }
         }
       }
@@ -2110,52 +2145,6 @@ export class Widget extends StateManaged {
       $('#enlarged').classList.add('hidden');
       if($('#enlargeStyle'))
         removeFromDOM($('#enlargeStyle'));
-    }
-  }
-
-  async addAudio(widget){
-    if(widget.get('audio')) {
-      const audioString = widget.get('audio');
-      const audioArray = audioString.split(/:\s|,\s/);
-      const source = audioArray[1];
-      const type = audioArray[3];
-      const maxVolume = audioArray[5];
-      const length = audioArray[7];
-      const pName = audioArray[9];
-
-      if(pName == "null" || pName == playerName) {
-        var audioElement = document.createElement('audio');
-        audioElement.setAttribute('class', 'audio');
-        audioElement.setAttribute('src', mapAssetURLs(source));
-        audioElement.setAttribute('type', type);
-        audioElement.setAttribute('maxVolume', maxVolume);
-        audioElement.volume = Math.min(maxVolume * (((10 ** (document.getElementById('volume').value / 96.025)) / 10) - 0.1), 1); // converts slider to log scale with zero = no volume
-        document.body.appendChild(audioElement);
-        audioElement.play();
-
-        if(length != "null") {
-          setInterval(function(){
-            if(audioElement.currentTime>=0){
-              audioElement.pause();
-              clearInterval();
-              if(audioElement.parentNode)
-                audioElement.parentNode.removeChild(audioElement);
-            }}, length);
-        } else {
-          audioElement.onended = function() {
-            audioElement.pause();
-            clearInterval();
-            if(audioElement.parentNode)
-              audioElement.parentNode.removeChild(audioElement);
-          };
-          audioElement.onerror = function() {
-            if(audioElement.parentNode)
-              audioElement.parentNode.removeChild(audioElement);
-          }
-        }
-      }
-      setInterval(function(){
-        widget.set('audio', null);}, 100);
     }
   }
 
@@ -2506,6 +2495,18 @@ export class Widget extends StateManaged {
       else
         this.domElement.classList.remove('selectedInEdit');
     }
+  }
+
+  setLimbo(isLimbo) {
+    if(this.isLimbo == isLimbo)
+      return;
+    if(isLimbo) {
+      const topTransform = getElementTransformRelativeTo(this.domElement, $('#topSurface')) || 'none';
+      $('#topSurface').appendChild(this.domElement);
+      this.domElement.style.transform = topTransform;
+    }
+    this.domElement.classList.toggle('limbo', isLimbo);
+    this.isLimbo = isLimbo;
   }
 
   async setText(text, mode, problems) {

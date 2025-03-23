@@ -687,6 +687,12 @@ export default class Room {
     return randomHue(this.state._meta.players)
   }
 
+  playAudio(args) {
+    for(const player of this.players)
+      if(args.players.length === 0 || args.players.includes(player.name))
+        player.send('audio', args);
+  }
+
   receiveDelta(player, delta) {
     for(const widgetID in delta.s) {
       if(delta.s[widgetID] === null) {

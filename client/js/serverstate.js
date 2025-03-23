@@ -245,6 +245,20 @@ async function updateWidgetId(widget, oldID) {
     }
   }
 
+  // If widget is a deck, update dropTarget properties on holder widgets.
+  if (widget.type === 'deck') {
+    for (const w of widgetFilter(w => w.get('dropTarget') && asArray(w.get('dropTarget')).some(d => d && d.deck === oldID))) {
+      if(Array.isArray(w.get('dropTarget'))) {
+        const dropTarget = w.get('dropTarget').map(d =>
+          d && d.deck === oldID ? { ...d, deck: id } : d
+        );
+        await w.set('dropTarget', dropTarget);
+      } else {
+        await w.set('dropTarget', { ...w.get('dropTarget'), deck: id });
+      }
+    }
+  }
+
   // If widget is a seat, change widgets with onlyVisibleForSeat and linkedToSeat naming that seat.
   if(widget.type == 'seat') {
     for(const prop of ['onlyVisibleForSeat', 'linkedToSeat']) {
@@ -287,14 +301,9 @@ function receiveDelta(delta) {
   addDeltaEntryToUndoProtocol(delta);
 
   // the order of widget changes is not necessarily correct and in order to avoid cyclic children, this first moves affected widgets to the top level
-  for(const widgetID in delta.s) {
-    if(delta.s[widgetID] && delta.s[widgetID].parent !== undefined && delta.s[widgetID].id === undefined) {
-      const domElement = widgets.get(widgetID).domElement;
-      const topTransform = getElementTransformRelativeTo(domElement, $('#topSurface')) || 'none';
-      $('#topSurface').appendChild(domElement);
-      domElement.style.transform = topTransform;
-    }
-  }
+  for(const widgetID in delta.s)
+    if(delta.s[widgetID] && delta.s[widgetID].parent !== undefined && delta.s[widgetID].id === undefined)
+      widgets.get(widgetID).setLimbo(true);
 
   for(const widgetID in delta.s)
     if(delta.s[widgetID] !== null && !widgets.has(widgetID))
@@ -430,7 +439,8 @@ function receiveStateFromServer(args) {
 
   mouseTarget = null;
   deltaID = args._meta.deltaID;
-  for(const widget of widgetFilter(w=>w.get('parent')===null))
+  const topSurface = $('#topSurface');
+  for(const widget of widgetFilter(w=>w.domElement.parentElement === topSurface))
     widget.applyRemoveRecursive();
   widgets.clear();
   dropTargets.clear();

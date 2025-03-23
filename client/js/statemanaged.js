@@ -86,7 +86,7 @@ export class StateManaged {
   }
 
   inheritFromIsValid(properties, key) {
-    if([ 'id', 'type', 'deck', 'cardType', 'audio' ].indexOf(key) != -1)
+    if([ 'id', 'type', 'deck', 'cardType' ].indexOf(key) != -1)
       return false;
     if(properties == '*')
       return true;
@@ -130,7 +130,7 @@ export class StateManaged {
 
     if(Array.isArray(this.get(`${property}ChangeRoutine`)))
       await this.evaluateRoutine(`${property}ChangeRoutine`, { oldValue, value }, {});
-    if(Array.isArray(this.get('changeRoutine')) && property != 'audio')
+    if(Array.isArray(this.get('changeRoutine')))
       await this.evaluateRoutine('changeRoutine', { property, oldValue, value }, {});
 
     if(!StateManaged.isInGlobalUpdateRoutine) {

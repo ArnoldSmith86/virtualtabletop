@@ -366,6 +366,10 @@ export function formField(field, dom, id) {
   }
 }
 
+function html(string) {
+  return String(string).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
+
 function emojis2images(dom) {
   const regex = /\ud83c\udff4(\udb40[\udc61-\udc7a])+\udb40\udc7f|(\ud83c[\udde6-\uddff]){2}|([\#\*0-9]\ufe0f?\u20e3)|(\u00a9|\u00ae|[\u203c\u2049\u20e3\u2122\u2139\u2194-\u2199\u21a9\u21aa\u231a\u231b\u2328\u23cf\u23e9-\u23fa\u24c2\u25aa\u25ab\u25b6\u25c0\u25fb-\u25fe\u2600-\u2604\u260e\u2611\u2614\u2615\u2618\u261d\u2620\u2622\u2623\u2626\u262a\u262e\u262f\u2638-\u263a\u2640\u2642\u2648-\u2653\u265f\u2660\u2663\u2665\u2666\u2668\u267b\u267e\u267f\u2692-\u2697\u2699\u269b\u269c\u26a0\u26a1\u26a7\u26aa\u26ab\u26b0\u26b1\u26bd\u26be\u26c4\u26c5\u26c8\u26ce\u26cf\u26d1\u26d3\u26d4\u26e9\u26ea\u26f0-\u26f5\u26f7-\u26fa\u26fd\u2702\u2705\u2708-\u270d\u270f\u2712\u2714\u2716\u271d\u2721\u2728\u2733\u2734\u2744\u2747\u274c\u274e\u2753-\u2755\u2757\u2763\u2764\u2795-\u2797\u27a1\u27b0\u27bf\u2934\u2935\u2b05-\u2b07\u2b1b\u2b1c\u2b50\u2b55\u3030\u303d\u3297\u3299]|\ud83c[\udc04\udccf\udd70\udd71\udd7e\udd7f\udd8e\udd91-\udd9a\udde6-\uddff\ude01\ude02\ude1a\ude2f\ude32-\ude3a\ude50\ude51\udf00-\udf21\udf24-\udf93\udf96\udf97\udf99-\udf9b\udf9e-\udff0\udff3-\udff5\udff7-\udfff]|\ud83d[\udc00-\udcfd\udcff-\udd3d\udd49-\udd4e\udd50-\udd67\udd6f\udd70\udd73-\udd7a\udd87\udd8a-\udd8d\udd90\udd95\udd96\udda4\udda5\udda8\uddb1\uddb2\uddbc\uddc2-\uddc4\uddd1-\uddd3\udddc-\uddde\udde1\udde3\udde8\uddef\uddf3\uddfa-\ude4f\ude80-\udec5\udecb-\uded2\uded5-\uded7\udedc-\udee5\udee9\udeeb\udeec\udef0\udef3-\udefc\udfe0-\udfeb\udff0]|\ud83e[\udd0c-\udd3a\udd3c-\udd45\udd47-\ude7c\ude80-\ude88\ude90-\udebd\udebf-\udec5\udece-\udedb\udee0-\udee8\udef0-\udef8])((\ud83c[\udffb-\udfff])?(\ud83e[\uddb0-\uddb3])?(\ufe0f?\u200d([\u2000-\u3300]|[\ud83c-\ud83e][\ud000-\udfff])\ufe0f?)?)*/g;
 
@@ -378,12 +382,15 @@ function emojis2images(dom) {
     // Process text nodes only
     node.childNodes.forEach(child => {
       if (child.nodeType === Node.TEXT_NODE) {
-        const replacedContent = child.textContent.replace(regex, m =>
+        const originalContent = html(child.textContent);
+        const replacedContent = originalContent.replace(regex, m =>
           `<img class="emoji" src="i/noto-emoji/emoji_u${emojiToFilename(m)}.svg" alt="${m}">`
         );
-        const span = document.createElement('span');
-        span.innerHTML = replacedContent;
-        child.replaceWith(span);
+        if(replacedContent != originalContent) {
+          const span = document.createElement('span');
+          span.innerHTML = replacedContent;
+          child.replaceWith(span);
+        }
       } else if (child.nodeType === Node.ELEMENT_NODE) {
         replaceEmojisInNode(child);  // Recurse into child elements
       }
@@ -398,12 +405,16 @@ function images2emojis(dom) {
   dom.innerHTML = dom.innerHTML.replace(regexpUnicodeModified, (m,g)=>g);
 }
 
+function replaceMaterialIcons(html) {
+  return html.replace(/\b(material-icons(?:-(outlined|round|sharp|twotone))?)\b/g, "material-symbols");
+}
+
 export function applyValuesToDOM(parent, obj) {
   for(const dom of $a('[data-field]', parent)) {
     if(obj[dom.dataset.field]) {
       dom.classList.remove('hidden');
       if(dom.dataset.html)
-        dom.innerHTML = DOMPurify.sanitize(mapAssetURLs(obj[dom.dataset.field]), { USE_PROFILES: { html: true } });
+        dom.innerHTML = DOMPurify.sanitize(replaceMaterialIcons(mapAssetURLs(obj[dom.dataset.field])), { USE_PROFILES: { html: true } });
       else
         dom[dom.dataset.target || 'innerText'] = obj[dom.dataset.field];
       if(dom.dataset.target == 'src')
@@ -508,19 +519,23 @@ export async function loadSymbolPicker() {
       if(category == 'Emoji - Flags')
         continue;
       list += `<h2 class="${category.match(/Material|VTT|Emoji/)?'fontCategory':'imageCategory'}">${category}</h2>`;
-      for(const [ symbol, keywords ] of Object.entries(symbols)) {
+      for(let [ symbol, keywords ] of Object.entries(symbols)) {
         if(symbol.includes('/')) {
           const gameIconsIndex = keywords.shift();
           // increase resource limits in /etc/ImageMagick-6/policy.xml to 8GiB and then: montage -background none assets/game-icons.net/*/*.svg -geometry 48x48+0+0 -tile 60x assets/game-icons.net/overview.png
           list += `<i class="gameicons" title="game-icons.net: ${symbol}" data-type="game-icons" data-symbol="${symbol}" data-keywords="${symbol.split('/')[1]},${keywords.join().toLowerCase()}" style="--x:${gameIconsIndex%60};--y:${Math.floor(gameIconsIndex/60)};--url:url('i/game-icons.net/${symbol}.svg')"></i>`;
         } else {
+          const hasNoFillVariant = symbol.match(/ \(FILL\+NOFILL\)$/);
+          symbol = symbol.replace(/ \(FILL\+NOFILL\)$/, '');
           let className = 'emoji-monochrome';
           if(symbol[0] == '[')
             className = 'symbols';
           else if(symbol.match(/^[a-z0-9_]+$/))
-            className = 'material-icons';
+            className = 'material-symbols';
           if(className != 'emoji-monochrome' || !skipForNotoMonochrome(symbol))
             list += `<i class="${className}" title="${className}: ${symbol}" data-type="${className}" data-symbol="${symbol}" data-keywords="${symbol},${keywords.join().toLowerCase()}" style="--url:url('i/noto-emoji/emoji_u${emojiToFilename(symbol)}.svg')">${toNotoMonochrome(symbol)}</i>`;
+          if(className == 'material-symbols' && hasNoFillVariant)
+            list += `<i class="material-symbols-nofill" title="material-symbols-nofill: ${symbol}" data-type="material-symbols-nofill" data-symbol="${symbol}" data-keywords="${symbol},${keywords.join().toLowerCase()}">${symbol}</i>`;
         }
       }
     }
@@ -599,6 +614,9 @@ export function addRichtextControls(dom) {
   loadSymbolPicker();
 
   $('[icon=format_size]', controls).onclick = function() {
+    const selection = window.getSelection();
+    if (!selection.rangeCount)
+      return;
     const parent = window.getSelection().getRangeAt(0).startContainer.parentNode.closest('h4');
     if(parent)
       parent.replaceWith(...parent.children);
@@ -607,6 +625,9 @@ export function addRichtextControls(dom) {
     dom.focus();
   };
   $('[icon=palette]', controls).onclick = function() {
+    const selection = window.getSelection();
+    if (!selection.rangeCount)
+      return;
     const range = window.getSelection().getRangeAt(0);
     document.execCommand('forecolor', false, '#000000');
     const input = document.createElement('input');
@@ -643,6 +664,9 @@ export function addRichtextControls(dom) {
     }
   };
   $('[icon=add_reaction]', controls).onclick = async function() {
+    const selection = window.getSelection();
+    if (!selection.rangeCount)
+      return;
     const range = window.getSelection().getRangeAt(0);
 
     showStatesOverlay('symbolPickerOverlay');

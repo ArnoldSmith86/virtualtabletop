@@ -368,7 +368,7 @@ class PropertiesModule extends SidebarModule {
         return;
       }
 
-      const deck = getDeckDefinition();
+      const deck = getDeckDefinition(true);
       for(const [ index, deckTemplate ] of Object.entries(deckTemplates)) {
         const templateButton = this.renderWidgetButton(new Deck(deck.id), deckTemplate(deck), designSelectionDiv);
         templateButton.classList.add('deckTemplateButton');
@@ -378,7 +378,7 @@ class PropertiesModule extends SidebarModule {
             if(button != templateButton)
               button.classList.remove('selected');
           templateButton.classList.toggle('selected');
-          createButton.disabled = false;
+          createButton.disabled = !$a('.selected.deckTemplateButton', target).length;
         };
         deck.id = generateUniqueWidgetID();
       }
@@ -454,7 +454,7 @@ class PropertiesModule extends SidebarModule {
     }
     target.append(suitCustomizeDiv);
 
-    function getDeckDefinition() {
+    function getDeckDefinition(standardDeck) {
       const id = generateUniqueWidgetID();
       const cardTypes = {};
       let suitIndex = 0;
@@ -471,7 +471,8 @@ class PropertiesModule extends SidebarModule {
           const setCardTypes = (conditions, cardTypesKeys) => {
             if(conditions)
               for(const key of cardTypesKeys)
-                cardTypes[cT][`suit-${key}`] = suitURL;
+                if(standardDeck)
+                  cardTypes[cT][`suit-${key}`] = suitURL;
           };
           if(String(rank).match(/^[0-9]+$/) && rank <= 21) {
             setCardTypes(rank     >=  4,                           ['P11', 'P13', 'P51', 'P53']);
@@ -511,8 +512,12 @@ class PropertiesModule extends SidebarModule {
     createButton.disabled = true;
     createButton.setAttribute('icon', 'add');
     createButton.onclick = async e=>{
+      let standardDeck = false;
+      const deckTemplateButton = document.querySelectorAll('.deckTemplateButton')[0];
+      if (deckTemplateButton && deckTemplateButton.classList.contains('selected'))
+        standardDeck = true
       batchStart();
-      const deck = getDeckDefinition();
+      const deck = getDeckDefinition(standardDeck);
       setDeltaCause(`${getPlayerDetails().playerName} added custom deck "${deck.id}" in editor`);
       await addWidgetLocal(deckTemplates[$('.selected.deckTemplateButton', target).dataset.index](deck));
 
@@ -589,14 +594,14 @@ class PropertiesModule extends SidebarModule {
           <div>
             <div class=rows>Rows (if multiple cards):<br><input type=range value=1 max=10> <input type=number value=1 min=0></div>
             <div class=cols>Cols (if multiple cards):<br><input type=range value=1 max=10> <input type=number value=1 min=0></div>
-            <div class=card>Cards to add:<br><input type=range value=1 max=10> <input type=number value=1 min=0></div>
+            <div class=cards>Cards to add:<br><input type=range value=1 max=10> <input type=number value=1 min=0></div>
             <button icon=delete>Delete</button>
           </div>
         </div>
       `);
       dom.dataset.imagePath = imagePath;
       dom.dataset.fileName = fileName;
-      for(const name of [ 'rows', 'cols', 'card' ]) {
+      for(const name of [ 'rows', 'cols', 'cards' ]) {
         $(`.${name} [type=range]`, dom).oninput = e=>$(`.${name} [type=number]`, dom).value=e.target.value;
         $(`.${name} [type=number]`, dom).oninput = e=>$(`.${name} [type=range]`, dom).value=e.target.value;
       }
@@ -623,14 +628,14 @@ class PropertiesModule extends SidebarModule {
                 deckWidth: cols,
                 deckHeight: rows
               };
-              counts[cardType] = $('.card input', previewDiv).value;
+              counts[cardType] = $('.cards input', previewDiv).value;
             }
           }
         } else {
           cardTypes[previewDiv.dataset.fileName] = {
             image: previewDiv.dataset.imagePath
           };
-          counts[previewDiv.dataset.fileName] = $('.card input', previewDiv).value;
+          counts[previewDiv.dataset.fileName] = $('.cards input', previewDiv).value;
         }
       }
 
@@ -1628,7 +1633,8 @@ class PropertiesModule extends SidebarModule {
         }, state), parent);
       }
       widgets.delete(widget.id, widget);
-      positionElementsInArc(parent.children, parent.children[0].clientHeight, 45, parent);
+      if (parent.children[0]) 
+        positionElementsInArc(parent.children, parent.children[0].clientHeight, 45, parent);
     } else {
       widget.renderReadonlyCopyRaw(state, button);
     }

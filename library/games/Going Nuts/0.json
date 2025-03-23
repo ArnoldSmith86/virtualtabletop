@@ -869,7 +869,7 @@
         "content": "\"${PROPERTY text}\""
       }
     },
-    "classes": "material-icons",
+    "classes": "material-symbols",
     "text": "swap_vert",
     "onEnter": {
       "activeFace": 0
@@ -893,14 +893,14 @@
           {
             "func": "MOVE",
             "from": "deckHolder",
-            "to": "hand",
+            "to": "hand${seatIndex}",
             "count": 3
           },
           {
             "func": "MOVE",
             "from": "swapHolder",
             "to": "deckHolder",
-            "count": 0,
+            "count": "all",
             "face": 0
           },
           {
@@ -1041,8 +1041,8 @@
         {
           "x": 52,
           "y": 52,
-          "offsetX": 5,
-          "offsetY": 28
+          "offsetX": -21,
+          "offsetY": 2
         }
       ],
       "onlyVisibleForSeat": null
@@ -2253,7 +2253,7 @@
     "language": "English"
   },
   "_meta": {
-    "version": 6,
+    "version": 17,
     "info": {
       "name": "Going Nuts",
       "image": "/assets/-1761079877_27723",
@@ -2267,16 +2267,16 @@
       "description": "Play letter tiles in crossword pattern until all tiles are used. First to play valid words and run out of tiles wins.",
       "showName": true,
       "helpText": "Players choose seats. If desired, change settings using gear icon. Press play button to begin. Letter tiles will automatically be dealt to seated players. Each player can sort tiles alphabetically by clicking on the sort tile button (ascending stacked line icon) to the bottom left. Drag tiles from hand to main board to play them. After you run out of letters, press +1 All button to distribute one tile to all players. To swap one tile for 3, drop tile into swap holder above +1 button. Three replacement tiles will automatically be moved to that player's hand. To view board and hand of another player, press the eye icon below the player's name. Be sure to switch back to your own view before making changes by clicking the eye icon below your own name. The numbers beside the eye icon show how many cards are in the hand of that player. The number above the stack of tiles shows how many are remaining. The tiles do not stack, so there are no pile drag handles.",
-      "lastUpdate": 1647839274000,
+      "lastUpdate": 1741044719592,
       "skill": "",
-      "variantImage": "",
-      "variant": "",
-      "language": "en-US",
-      "players": "1-8",
       "similarImage": "",
       "similarAwards": "",
       "ruleText": "",
-      "similarDesigner": "Rena Nathanson, Abe Nathanson"
+      "similarDesigner": "Rena Nathanson, Abe Nathanson",
+      "variantImage": "",
+      "variant": "",
+      "language": "en-US",
+      "players": "1-8"
     }
   },
   "x0dd": {
@@ -3176,7 +3176,8 @@
     "seat": 1,
     "onlyVisibleForSeat": [
       "seat1"
-    ]
+    ],
+    "hoverInheritVisibleForSeat": false
   },
   "hand2": {
     "inheritFrom": "hand1",
@@ -3187,7 +3188,8 @@
     "onlyVisibleForSeat": [
       "seat2"
     ],
-    "seat": 2
+    "seat": 2,
+    "hoverInheritVisibleForSeat": false
   },
   "hand3": {
     "inheritFrom": "hand1",
@@ -3198,7 +3200,8 @@
     "onlyVisibleForSeat": [
       "seat3"
     ],
-    "seat": 3
+    "seat": 3,
+    "hoverInheritVisibleForSeat": false
   },
   "settings": {
     "type": "button",
@@ -3291,7 +3294,7 @@
             "func": "MOVE",
             "from": "wilds",
             "to": "deckHolder",
-            "count": 0
+            "count": "all"
           },
           {
             "func": "SHUFFLE",
@@ -3313,10 +3316,10 @@
         ]
       }
     ],
-    "css": "font-size: 35px",
+    "css": "font-size: 35px;padding-top: 3px",
     "textColorOH": "#ffbd74",
     "text": "settings",
-    "classes": "material-icons",
+    "classes": "material-symbols",
     "startTiles": 0,
     "tileArray": [
       21,
@@ -3402,7 +3405,7 @@
     "backgroundColor": "#b97a56",
     "borderColor": "white",
     "borderColorOH": "#b97a56",
-    "classes": "material-icons",
+    "classes": "material-symbols",
     "clickRoutine": [
       {
         "func": "SET",
@@ -3494,7 +3497,8 @@
     "onlyVisibleForSeat": [
       "seat4"
     ],
-    "seat": 4
+    "seat": 4,
+    "hoverInheritVisibleForSeat": false
   },
   "hand5": {
     "inheritFrom": "hand1",
@@ -3505,7 +3509,8 @@
     "onlyVisibleForSeat": [
       "seat5"
     ],
-    "seat": 5
+    "seat": 5,
+    "hoverInheritVisibleForSeat": false
   },
   "hand6": {
     "inheritFrom": "hand1",
@@ -3516,7 +3521,8 @@
     "onlyVisibleForSeat": [
       "seat6"
     ],
-    "seat": 6
+    "seat": 6,
+    "hoverInheritVisibleForSeat": false
   },
   "hand7": {
     "inheritFrom": "hand1",
@@ -3527,7 +3533,8 @@
     "onlyVisibleForSeat": [
       "seat7"
     ],
-    "seat": 7
+    "seat": 7,
+    "hoverInheritVisibleForSeat": false
   },
   "hand8": {
     "inheritFrom": "hand1",
@@ -3538,7 +3545,8 @@
     "onlyVisibleForSeat": [
       "seat8"
     ],
-    "seat": 8
+    "seat": 8,
+    "hoverInheritVisibleForSeat": false
   },
   "warning": {
     "id": "warning",
@@ -3552,7 +3560,8 @@
     "movableInEdit": false,
     "css": "font-size: 18px; border: 3px dashed red; background: white; ",
     "onlyVisibleForSeat": [],
-    "text": "You are viewing another player's tiles."
+    "text": "You are viewing another player's tiles.",
+    "hoverInheritVisibleForSeat": false
   },
   "93nf": {
     "type": "pile",
