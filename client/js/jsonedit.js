@@ -1820,6 +1820,7 @@ function jeCursorStateGet() {
       defaultValueToAdd = defaultValueMatch[1];
   } catch(e) {}
   return {
+    scroll: $('#jeText').scrollTop,
     currentLine,
     defaultValueToAdd,
     sameLinesBefore: linesUntilCursor.filter(l=>l==currentLine).length,
@@ -1841,11 +1842,25 @@ function jeCursorStateSet(state) {
       offset += line.length + 1;
     }
   }
+  $('#jeText').scrollTop = state.scroll;
 }
 
-function jeSelectWidget(widget, addToSelection, restoreCursorPosition) {
-  if(restoreCursorPosition)
-    var cursorState = jeCursorStateGet();
+const jeCursorStateStorage = {};
+function jeSaveCursorState(widget, cursorState) {
+  if(widget && widget.id)
+    jeCursorStateStorage[widget.id] = cursorState;
+}
+
+function jeLoadCursorState(widget) {
+  if(widget && widget.id)
+    return jeCursorStateStorage[widget.id];
+}
+
+function jeSelectWidget(widget, addToSelection) {
+  const cursorState = jeCursorStateGet();
+  jeSaveCursorState(jeWidget, cursorState);
+
+  const newCursorState = jeLoadCursorState(widget);
 
   if(addToSelection && (jeMode == 'widget' || jeMode == 'multi')) {
     jeSelectWidgetMulti(widget);
@@ -1855,16 +1870,16 @@ function jeSelectWidget(widget, addToSelection, restoreCursorPosition) {
     jePlainWidget = new widget.constructor();
     jeKeyIsDownDeltas = [];
     jeStateNow = JSON.parse(JSON.stringify(widget.state));
-    if(restoreCursorPosition && cursorState.defaultValueToAdd && jeStateNow[cursorState.defaultValueToAdd] === undefined)
-      jeStateNow[cursorState.defaultValueToAdd] = jeWidget.getDefaultValue(cursorState.defaultValueToAdd);
+    if(newCursorState && newCursorState.defaultValueToAdd && jeStateNow[newCursorState.defaultValueToAdd] === undefined)
+      jeStateNow[newCursorState.defaultValueToAdd] = jeWidget.getDefaultValue(newCursorState.defaultValueToAdd);
     jeSet(jeStateBefore = jePreProcessText(JSON.stringify(jePreProcessObject(jeStateNow), null, '  ')),);
     editPanel.style.setProperty('--treeHeight', "20%");
   }
 
-  jeCenterSelection();
+  if(newCursorState)
+    jeCursorStateSet(newCursorState);
 
-  if(restoreCursorPosition)
-    jeCursorStateSet(cursorState);
+  jeCenterSelection();
 
   jeGetContext();
 }
