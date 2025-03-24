@@ -10,6 +10,7 @@ let jeJSONerror = null;
 let jeCommandError = null;
 let jeCommandWithOptions = null;
 let jeFKeyOrderDescending = 1;
+let jeIsSVG = {};
 let jeWidgetHighlighting = true;
 let jeDebugViewing = null;
 let jeInMacroExecution = false;
@@ -235,15 +236,13 @@ const jeCommands = [
     icon: 'colors',
     show: function() {
       if (!jeStateNow || !jeStateNow.image) return false;
-      if (typeof jeStateNow.isSVG === 'boolean') return jeStateNow.isSVG;
-      if (jeStateNow.image.match(/\.svg$/i)) {
-        jeStateNow.isSVG = true;
-        jeShowCommands();
+      const url = jeStateNow.image;
+      if (typeof jeIsSVG[url] === 'boolean') return jeIsSVG[url];
+      if (url.match(/\.svg$/i))
         return true;
-      }
-      checkIfSVG(mapAssetURLs(jeStateNow.image)).then(result => { 
-        jeStateNow.isSVG = result; 
-        jeShowCommands(); 
+      checkIfSVG(mapAssetURLs(url)).then(result => {
+        jeIsSVG[url] = result;
+        jeShowCommands();
       });
       return false;
     },
