@@ -190,7 +190,7 @@
         "func": "FOREACH",
         "collection": "buttons",
         "loopRoutine": [
-          "// This next line builds the array be adding the `id` of the current widget to the end of the array.",
+          "// This next line builds the array by adding the `id` of the current widget to the end of the array.",
           "var buttonList = push ${widgetID}",
           "// This GET retrieves the text value of each of the buttons. Note that the variable `text` will end up as the last button in the loop, but while the loop is running, it is the value of the current button. You can track this in the debugger.",
           {
@@ -257,7 +257,7 @@
       "// You can also use a variable as the widget id like the following which sets the variable `thisText` to the property text of whatever value is in the variable `${thisButtonID}` (which in this case is `button1`.",
       "var thisText = ${PROPERTY text OF $thisButtonID}",
       "// What follows looks like it would give the same result as the previous `thisText` variable. But this is also invalid syntax that yields `null` because what comes after the `OF` must either be a widget name or a variable.",
-      "var anotherInvalid = ${PROPERTy text OF PROPERTY id}"
+      "var anotherInvalid = ${PROPERTY text OF PROPERTY id}"
     ],
     "text": "var = other var"
   },

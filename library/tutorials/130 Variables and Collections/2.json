@@ -57,7 +57,7 @@
         "relation": "!=",
         "value": null
       },
-      "// This SELECT does the same thing except it specifies the name of the output collection as `buttons`. Now there are two collections in the room containing an array of the `id`s of the buttons. Not that the `collection` parameter in SELECT is for the name of the output.",
+      "// This SELECT does the same thing except it specifies the name of the output collection as `buttons`. Now there are two collections in the room containing an array of the `id`s of the buttons. Note that the `collection` parameter in SELECT is for the name of the output.",
       {
         "func": "SELECT",
         "type": "button",
@@ -66,7 +66,7 @@
         "value": null,
         "collection": "buttons"
       },
-      "// Think of using multiple SELECTs as a filter. If you want to use a collection as a starting input to further refine a collection, then use the `source` parameter as the name of the input collection. `Source` defaults to all widgets unless your change it. In the next example, the SELECT starts with the `buttons` collection and narrows it down to those buttons that have the text specified in the `value` parameter. Now the `DEFAULT` collection will contain only button1 and button2. Any functions following this one would use the newly defined `DEFAULT` collection and not the one created earlier.",
+      "// Think of using multiple SELECTs as a filter. If you want to use a collection as a starting input to further refine a collection, then use the `source` parameter as the name of the input collection. `Source` defaults to all widgets unless you change it. In the next example, the SELECT starts with the `buttons` collection and narrows it down to those buttons that have the text specified in the `value` parameter. Now the `DEFAULT` collection will contain only button1 and button2. Any functions following this one would use the newly defined `DEFAULT` collection and not the one created earlier.",
       {
         "func": "SELECT",
         "source": "buttons",
@@ -74,7 +74,7 @@
         "relation": "in",
         "value": [
           "Pre-defined",
-          "Creating",
+          "Creating (Output)",
           "Does not exist example"
         ]
       }
@@ -149,7 +149,7 @@
     "y": 402,
     "z": 22840,
     "clickRoutine": [
-      "// Assume you want this button to CLICK the Recall & Shuffle button below. CLICK works on the collection of widgets specified in the `collection` parameter. One way to do this would be to SELECT the button then CLICK it. The two functions below work with the default collection named `DEFAULT`:",
+      "// Assume you want this button to CLICK the Recall & Shuffle button at the bottom of this room. CLICK works on the collection of widgets specified in the `collection` parameter. One way to do this would be to SELECT the button and then CLICK it. The two functions below work with the default collection named `DEFAULT`:",
       {
         "func": "SELECT",
         "property": "id",
@@ -243,7 +243,7 @@
     "css": {
       "font-size": "22px"
     },
-    "html": "Another way to provide an input collection into a function is to use 'anonymous collections'. These are really just pseduo-collections as they do not exist beyond the specific function they are used it. They consist of an array of the `id` or `id`s that the function will work with."
+    "html": "Another way to provide an input collection into a function is to use 'anonymous collections'. These are really just pseudo-collections as they do not exist beyond the specific function they are used in. They consist of an array of the `id` or `id`s that the function will work with."
   },
   "hjlkP": {
     "type": "pile",

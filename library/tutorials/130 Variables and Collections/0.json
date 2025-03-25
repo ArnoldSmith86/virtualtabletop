@@ -70,7 +70,7 @@
     "movable": false,
     "movableInEdit": false,
     "css": "font-size: 25px; ",
-    "html": "Variables are like containers that are named (almost anything can be a valid name) and can be used to store data that can be referenced and maniputed by other JSON code. Variable names are case sensitve. Variables are either predefined by the VTT engine and available in every kind of routine or they are created in the code. Variables created by the game designer are only accessible while that particular routine is active and do not persist within the room or game after the routine ends. If you need that data for later, store it on a custom widget property. Variables can hold many types of data including numbers, strings, boolean and null values, arrays, and objects. For each button below, click on it and compare what you see in the JSON with what shows up in the debugger output."
+    "html": "Variables are like containers that are named (almost anything can be a valid name) and can be used to store data that can be referenced and manipulated by other JSON code. Variable names are case sensitve. Variables are either predefined by the VTT engine and available in every kind of routine or they are created in the code. Variables created by the game designer are only accessible while that particular routine is active and do not persist within the room or game after the routine ends. If you need that data for later, store it on a custom widget property. Variables can hold many types of data including numbers, strings, boolean and null values, arrays, and objects. For each button below, click on it and compare what you see in the JSON with what shows up in the debugger output."
   },
   "button3": {
     "type": "button",
