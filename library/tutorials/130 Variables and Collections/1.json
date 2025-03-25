@@ -115,7 +115,7 @@
     "movable": false,
     "movableInEdit": false,
     "css": "font-size: 25px; ",
-    "html": "The previous variant demonstrated how to create variables with basic values using a `var variableName = 7` syntax or similar type of expression. This variant explains how to create variables in other ways. A tutorial focused on how to manipulate and modify variables using dynamic expressions and other operations is in the works, but many of the FUNCTIONS tutorials have examples of this already. Click each button and review the debug output."
+    "html": "The previous variant demonstrated how to create variables with basic values using a <b>var variableName = 7</b> syntax or similar type of expression. This variant explains how to create variables in other ways. A tutorial focused on how to manipulate and modify variables using dynamic expressions and other operations is in the works, but many of the FUNCTIONS tutorials have examples of this already. Click each button and review the debug output."
   },
   "button3": {
     "type": "button",
@@ -124,7 +124,7 @@
     "y": 402,
     "z": 22840,
     "clickRoutine": [
-      "// This VAR is used to set the values of several variables. The `variables` parameter takes the form of an object with key-value pairs. The key is the name of the variable. The value is its value.",
+      "// This VAR is used to set the values of several variables. The <b>variables</b> parameter takes the form of an object with key-value pairs. The key is the name of the variable. The value is its value.",
       {
         "func": "VAR",
         "variables": {
@@ -239,7 +239,7 @@
     "css": {
       "font-size": "22px"
     },
-    "html": "Variables can be assigned to the value of another variable using the syntax `${variable name}`. If the other variable is an array, you can append the index like `${variable name.index}` to get the value associated with that index.\n\nAnd a variable can be set to the value of any widget property.  Use `$ {PROPERTY text}` for the text property of this widget and `$ {PROPERTY text OF widgetID}` for another widget."
+    "html": "Variables can be assigned to the value of another variable using the syntax <b>${variable name}</b>. If the other variable is an array, you can append the index like <b>${variable name.index}</b> to get the value associated with that index.\n\nAnd a variable can be set to the value of any widget property.  Use <b>$ {PROPERTY text}</b> for the text property of this widget and <b>$ {PROPERTY text OF widgetID}</b> for another widget."
   },
   "button1": {
     "type": "button",
@@ -272,7 +272,7 @@
     "css": {
       "font-size": "22px"
     },
-    "html": "Several functions create a variable as part of the operation. See the tutorials (and wikis) for <a href='https://virtualtabletop.io/tutorial/functions-call'>CALL</a> (<a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Functions#call'>wiki</a>), <a href='https://virtualtabletop.io/tutorial/functions-count'>COUNT</a> (<a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Functions#count'>wiki</a>), <a href='https://virtualtabletop.io/tutorial/functions-get'>GET</a> (<a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Functions#get'>wiki</a>) and <a href='https://virtualtabletop.io/tutorial/functions-input'>INPUT</a> (<a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Functions#input'>wiki</a>). The function <a href='https://virtualtabletop.io/tutorial/functions-foreach'>FOREACH</a> (<a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Functions#foreach'>wiki</a>) is slightly different in that it creates several variables that are only available inside the `loopRoutine`. Finally VAR is a special case that is covered in the button to the right."
+    "html": "Several functions create a variable as part of the operation. See the tutorials (and wikis) for <a href='https://virtualtabletop.io/tutorial/functions-call'>CALL</a> (<a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Functions#call'>wiki</a>), <a href='https://virtualtabletop.io/tutorial/functions-count'>COUNT</a> (<a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Functions#count'>wiki</a>), <a href='https://virtualtabletop.io/tutorial/functions-get'>GET</a> (<a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Functions#get'>wiki</a>) and <a href='https://virtualtabletop.io/tutorial/functions-input'>INPUT</a> (<a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Functions#input'>wiki</a>). The function <a href='https://virtualtabletop.io/tutorial/functions-foreach'>FOREACH</a> (<a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Functions#foreach'>wiki</a>) is slightly different in that it creates several variables that are only available inside the <b>loopRoutine</b>. Finally VAR is a special case that is covered in the button to the right."
   },
   "text3": {
     "id": "text3",
@@ -285,7 +285,7 @@
     "css": {
       "font-size": "22px"
     },
-    "html": "VAR as a function is different than `var`. Use VAR to set the values of multiple variables at the same time, or to directly set the values of arrays or objects. See the <a href='https://virtualtabletop.io/tutorial/functions-var'>VAR tutorial</a> and <a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Functions#var'>wiki</a>."
+    "html": "VAR as a function is different than <b>var</b>. Use VAR to set the values of multiple variables at the same time, or to directly set the values of arrays or objects. See the <a href='https://virtualtabletop.io/tutorial/functions-var'>VAR tutorial</a> and <a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Functions#var'>wiki</a>."
   },
   "text4": {
     "id": "text4",
@@ -298,7 +298,7 @@
     "css": {
       "font-size": "22px"
     },
-    "html": "Another way to set the value of an array is to use the `${PROPERTY ...}` syntax. For example, the button above has an array hard-coded into it as a property. The button makes a variable available for use in that routine by setting the variable to the value of that property. The second example in the button uses a FOREACH loop similar to the one demonstrated in the Functions button, but this time creates an array of the button `id`s."
+    "html": "Another way to set the value of an array is to use the <b>${PROPERTY ...}</b> syntax. For example, the button above has an array hard-coded into it as a property. The button makes a variable available for use in that routine by setting the variable to the value of that property. The second example in the button uses a FOREACH loop similar to the one demonstrated in the Functions button, but this time creates an array of the button <b>id</b>s."
   },
   "text5": {
     "id": "text5",
@@ -311,6 +311,6 @@
     "css": {
       "font-size": "22px"
     },
-    "html": "Similar to arrays, you can create variables with object values by hard-coding them into widgets. That example is demonstated above. You could also use a `loopRoutine` to create the key-value pairs, but that is beyond the scope of this tutorial. For more about objects see the <a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Dynamic-Expressions#complex-objects'>Complex Objects wiki</a>."
+    "html": "Similar to arrays, you can create variables with object values by hard-coding them into widgets. That example is demonstated above. You could also use a <b>loopRoutine</b> to create the key-value pairs, but that is beyond the scope of this tutorial. For more about objects see the <a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Dynamic-Expressions#complex-objects'>Complex Objects wiki</a>."
   }
 }
