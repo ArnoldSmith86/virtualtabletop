@@ -1,0 +1,316 @@
+{
+  "_meta": {
+    "version": 17,
+    "info": {
+      "name": "130 Variables and Collections",
+      "image": "/assets/975182181_6987",
+      "rules": "",
+      "bgg": "",
+      "year": "",
+      "mode": "Tutorial",
+      "time": "",
+      "attribution": "",
+      "lastUpdate": 1742863184252,
+      "showName": false,
+      "skill": "",
+      "description": "",
+      "similarImage": "",
+      "similarName": "",
+      "similarDesigner": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": "",
+      "variantImage": "",
+      "variant": "Variables: Creating",
+      "language": "en-US",
+      "players": "1"
+    }
+  },
+  "title": {
+    "id": "title",
+    "x": 400,
+    "y": -2,
+    "width": 800,
+    "height": 60,
+    "z": 74,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "font-size: 60px;text-align:center",
+    "text": "Variables: Creating"
+  },
+  "button2": {
+    "type": "button",
+    "id": "button2",
+    "x": 416,
+    "y": 402,
+    "z": 22839,
+    "clickRoutine": [
+      "// The routine that gets CALLed returns the variable 'result' by default and makes it available back in the calling routine.",
+      {
+        "func": "CALL",
+        "routine": "testRoutine",
+        "variable": "result"
+      },
+      "// This puts all the buttons in the room into a collection for use with other functions demonstrated in this routine.",
+      {
+        "func": "SELECT",
+        "type": "button",
+        "property": "id",
+        "relation": "!=",
+        "value": null,
+        "collection": "buttons"
+      },
+      "// COUNT returns the variable 'COUNT' by default.",
+      {
+        "func": "COUNT",
+        "collection": "buttons",
+        "variable": "COUNT"
+      },
+      "// GET returns the variable of the property name parameter by default. This example gets the id's of all the buttons into array form.",
+      {
+        "func": "GET",
+        "collection": "buttons",
+        "property": "id",
+        "variable": "id",
+        "aggregation": "array"
+      },
+      "// This FOREACH does a loop over the array in the variable 'id' from the GET directly above (which has a list of all the button id's. Looping using the 'in' parameter creates two variables: key and value, represented below by the cyan text with a dollar sign and curly brackets.",
+      {
+        "func": "FOREACH",
+        "in": "${id}",
+        "loopRoutine": [
+          "// 'key' is the same as the index of the array, so it starts with 0 and increases by one for each loop iteration.",
+          "var checkKey = ${key}",
+          "// 'value' is the value of the array that corresponds with the key index. In this case, it is the 'id' of each button in turn. The SELECT gathers that single button into a DEFAULT collection.",
+          {
+            "func": "SELECT",
+            "property": "id",
+            "value": "${value}",
+            "collection": "DEFAULT"
+          },
+          "// This GET puts the text value of the collection (a single widget) into a variable 'text'.",
+          {
+            "func": "GET",
+            "collection": "DEFAULT",
+            "property": "text",
+            "variable": "text"
+          }
+        ]
+      }
+    ],
+    "text": "Functions",
+    "testRoutine": [
+      "// This is the routine being called.",
+      "var result = 99.99"
+    ]
+  },
+  "overview": {
+    "id": "overview",
+    "x": 108,
+    "y": 80,
+    "width": 1400,
+    "height": 150,
+    "layer": -3,
+    "z": 129,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "font-size: 25px; ",
+    "html": "The previous variant demonstrated how to create variables with basic values using a `var variableName = 7` syntax or similar type of expression. This variant explains how to create variables in other ways. A tutorial focused on how to manipulate and modify variables using dynamic expressions and other operations is in the works, but many of the FUNCTIONS tutorials have examples of this already. Click each button and review the debug output."
+  },
+  "button3": {
+    "type": "button",
+    "id": "button3",
+    "x": 743,
+    "y": 402,
+    "z": 22840,
+    "clickRoutine": [
+      "// This VAR is used to set the values of several variables. The `variables` parameter takes the form of an object with key-value pairs. The key is the name of the variable. The value is its value.",
+      {
+        "func": "VAR",
+        "variables": {
+          "variable1": 1,
+          "variable2": "a string",
+          "variable3": null
+        }
+      },
+      "// This VAR is used to create a variable in the form of an array consisting of the first few prime numbers.",
+      {
+        "func": "VAR",
+        "variables": {
+          "varPrime": [
+            2,
+            3,
+            5,
+            7,
+            11,
+            13,
+            17,
+            19
+          ]
+        }
+      },
+      "// This VAR is used to set a variable which contains a few common css properties.",
+      {
+        "func": "VAR",
+        "variables": {
+          "cssProps": {
+            "border": "1px solid black",
+            "font-size": "25px",
+            "background-color": "red",
+            "color": "white"
+          }
+        }
+      }
+    ],
+    "text": "VAR"
+  },
+  "button4": {
+    "type": "button",
+    "id": "button4",
+    "x": 1062,
+    "y": 402,
+    "z": 22840,
+    "clickRoutine": [
+      "// Create an array by using PROPERTY syntax.",
+      "var shoppingList = ${PROPERTY groceryArray}",
+      "// The `listItem` variable is assigned using the `${variable name.index}` syntax to retrieve the 4th item (index = 3) on the list: eggs. The `.index` must be a valid index number for that array, but it could itself also be a variable and that would look like `${variable name.$indexVariable}`.",
+      "var listItem = ${shoppingList.3}",
+      "// Create an array by using a FOREACH loop and techniques that are covered in other tutorials. This FOREACH loop uses the `collection` parameter instead of the `in` parameter used in the Functions button example. Before building an array using a loopRoutine, you must first create a variable with an empty array.",
+      "var buttonList = []",
+      {
+        "func": "SELECT",
+        "type": "button",
+        "property": "id",
+        "relation": "!=",
+        "value": null,
+        "collection": "buttons"
+      },
+      "// Looping using the `collection` parameter gives the variable `widgetID` that is the `id` of the widget in the current loop iteration as well as collection `DEFAULT` that contain the one widget in that loop iteration.",
+      {
+        "func": "FOREACH",
+        "collection": "buttons",
+        "loopRoutine": [
+          "// This next line builds the array be adding the `id` of the current widget to the end of the array.",
+          "var buttonList = push ${widgetID}",
+          "// This GET retrieves the text value of each of the buttons. Note that the variable `text` will end up as the last button in the loop, but while the loop is running, it is the value of the current button. You can track this in the debugger.",
+          {
+            "func": "GET",
+            "collection": "DEFAULT",
+            "property": "text",
+            "variable": "text"
+          }
+        ]
+      }
+    ],
+    "text": "Arrays",
+    "groceryArray": [
+      "Bread",
+      "Butter",
+      "Cheese",
+      "Eggs",
+      "Milk"
+    ]
+  },
+  "button5": {
+    "type": "button",
+    "id": "button5",
+    "x": 1386,
+    "y": 402,
+    "z": 11,
+    "clickRoutine": [
+      "// The variable `cssProps` is created using the `PROPERTY` syntax with the css object on this widget.",
+      "var cssProps = ${PROPERTY css}"
+    ],
+    "text": "Objects",
+    "css": {
+      "background": "#1f5ca6",
+      "color": "white",
+      "font-size": "16px"
+    }
+  },
+  "text1": {
+    "id": "text1",
+    "x": 4,
+    "y": 552,
+    "width": 300,
+    "z": 185,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "22px"
+    },
+    "html": "Variables can be assigned to the value of another variable using the syntax `${variable name}`. If the other variable is an array, you can append the index like `${variable name.index}` to get the value associated with that index.\n\nAnd a variable can be set to the value of any widget property.  Use `$ {PROPERTY text}` for the text property of this widget and `$ {PROPERTY text OF widgetID}` for another widget."
+  },
+  "button1": {
+    "type": "button",
+    "id": "button1",
+    "x": 95,
+    "y": 402,
+    "z": 22841,
+    "clickRoutine": [
+      "// This gets the id of this widget.",
+      "var thisButtonID = ${PROPERTY id}",
+      "// This gets the x position of the 'title' widget.",
+      "var titleX = ${PROPERTY x OF title}",
+      "// You must capitalize `PROPERTY` and `OF` and the property name (and widget id if used) are case sensitive. For example, this is an invalid variable declaration and will give `null` as the value.",
+      "var invalid = ${PROPERTY x of button2}",
+      "// You can also use a variable as the widget id like the following which sets the variable `thisText` to the property text of whatever value is in the variable `${thisButtonID}` (which in this case is `button1`.",
+      "var thisText = ${PROPERTY text OF $thisButtonID}",
+      "// What follows looks like it would give the same result as the previous `thisText` variable. But this is also invalid syntax that yields `null` because what comes after the `OF` must either be a widget name or a variable.",
+      "var anotherInvalid = ${PROPERTy text OF PROPERTY id}"
+    ],
+    "text": "var = other var"
+  },
+  "text2": {
+    "id": "text2",
+    "x": 325,
+    "y": 552,
+    "width": 300,
+    "z": 121,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "22px"
+    },
+    "html": "Several functions create a variable as part of the operation. See the tutorials (and wikis) for <a href='https://virtualtabletop.io/tutorial/functions-call'>CALL</a> (<a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Functions#call'>wiki</a>), <a href='https://virtualtabletop.io/tutorial/functions-count'>COUNT</a> (<a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Functions#count'>wiki</a>), <a href='https://virtualtabletop.io/tutorial/functions-get'>GET</a> (<a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Functions#get'>wiki</a>) and <a href='https://virtualtabletop.io/tutorial/functions-input'>INPUT</a> (<a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Functions#input'>wiki</a>). The function <a href='https://virtualtabletop.io/tutorial/functions-foreach'>FOREACH</a> (<a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Functions#foreach'>wiki</a>) is slightly different in that it creates several variables that are only available inside the `loopRoutine`. Finally VAR is a special case that is covered in the button to the right."
+  },
+  "text3": {
+    "id": "text3",
+    "x": 651,
+    "y": 552,
+    "width": 300,
+    "z": 9732,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "22px"
+    },
+    "html": "VAR as a function is different than `var`. Use VAR to set the values of multiple variables at the same time, or to directly set the values of arrays or objects. See the <a href='https://virtualtabletop.io/tutorial/functions-var'>VAR tutorial</a> and <a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Functions#var'>wiki</a>."
+  },
+  "text4": {
+    "id": "text4",
+    "x": 964,
+    "y": 552,
+    "width": 300,
+    "z": 9732,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "22px"
+    },
+    "html": "Another way to set the value of an array is to use the `${PROPERTY ...}` syntax. For example, the button above has an array hard-coded into it as a property. The button makes a variable available for use in that routine by setting the variable to the value of that property. The second example in the button uses a FOREACH loop similar to the one demonstrated in the Functions button, but this time creates an array of the button `id`s."
+  },
+  "text5": {
+    "id": "text5",
+    "x": 1294,
+    "y": 552,
+    "width": 300,
+    "z": 9732,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "22px"
+    },
+    "html": "Similar to arrays, you can create variables with object values by hard-coding them into widgets. That example is demonstated above. You could also use a `loopRoutine` to create the key-value pairs, but that is beyond the scope of this tutorial. For more about objects see the <a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Dynamic-Expressions#complex-objects'>Complex Objects wiki</a>."
+  }
+}
