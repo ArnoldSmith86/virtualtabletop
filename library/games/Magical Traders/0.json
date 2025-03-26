@@ -18177,12 +18177,12 @@
       "similarImage": "",
       "similarName": "Hansa Teutonica",
       "similarDesigner": "Andreas Steding",
-      "similarAwards": "",
-      "ruleText": "Use the \"Rules overview link\" above to learn the game. All iconography modifications from the original rules are explained below.",
+      "similarAwards": "2011 Nederlandse Spellenprijs Winner\n2011 Nederlandse Spellenprijs Nominee\n2010 Spiel des Jahres Recommended\n2010 Spiel der Spiele Hit für Experten Recommended\n2010 JoTa Best Heavy Board Game Nominee\n2010 International Gamers Awards - General Strategy; Multi-player Nominee\n2010 Golden Geek Most Innovative Board Game Nominee\n2010 Golden Geek Board Game of the Year Winner\n2010 Golden Geek Best Strategy Board Game Winner\n2009 Meeples Choice Award Winner\n2009 Meeples Choice Award Nominee ",
+      "ruleText": "Use the \"Rules overview link\" above or to the left to learn the game. All iconography modifications from the original rules are explained below.",
       "helpText": "<div><div><b>ICONOGRAPHY</b></div><div>The original game's iconography has been changed, and you can find detailed explanations of these by hovering your mouse over \"Bonuses Info\" in the top-left corner.</div></div><div><br></div><div><b>SETUP, BOARD SELECTION, &amp; CURRENT TURN</b></div><div>Once all players are seated, click the \"setup\" button to begin the game. A random player will be assigned as the current player to begin the game. The current player has the \"Click to end turn\" button next to their name. Once they have finished their turn, they should click this button to alert the next player that it is their turn.</div><div><br></div><div>The correct board will automatically show, depending on the number of players seated.</div><div><br></div><div><b>MODIFY SCORE</b></div><div>To modify a player's score, click the \"edit points\" button next to their score and input the score change. Finish by clicking the green button.</div><div><b><br></b></div><div><b>PLAYER BOARD</b></div><div>The scoring value of each row and column is automatically calculated. These values are shown on each side of the row or column. They account for all special tiles, and with Rocks they show separate values for each side of that Rock tile.</div><div><br></div><div>When modifying your score, click the \"edit points\" button and input the score change.</div><div><b><br></b></div><div>You may use the small blue pawn to track the row and column that is currently being scored.</div><div><br></div><div><b>ALERT SETTINGS</b></div>At the start of your turn you will hear a soft sound and see a text alert on screen. Clicking anywhere on the screen will remove the text alert. If you do not want to hear the sound and/or see the text alert when it is your turn, click the \"Turn Settings\" button in the bottom left corner and change your preferences.",
       "variantImage": "",
       "variant": "",
-      "language": "eng-US",
+      "language": "en-US",
       "players": "3-5"
     }
   }
