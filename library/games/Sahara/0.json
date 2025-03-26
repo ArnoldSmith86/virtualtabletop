@@ -19,14 +19,14 @@
     "version": 17,
     "info": {
       "name": "Sahara",
-      "image": "https://image.pollinations.ai/prompt/many%20camels%20in%20sand%20desert%2C%20view%20from%20sky%2C%20black%20and%20white%2C%20pencil?seed=649844734&width=1000&height=1000&model=flux&nologo=True&referer=discordbot",
+      "image": "/assets/1575306790_10080",
       "rules": "https://boardgamegeek.com/filepage/261843/great-kingdom-english-rulebook-first-edition",
       "bgg": "https://boardgamegeek.com/boardgame/390607/great-kingdom",
       "year": "2023",
       "mode": "vs",
       "time": "20",
       "attribution": "Room layout and design by Shobu. Released to the Public Domain under CC0.\n\nThe following assets are by Delapouite, available from https://game-icons.net under CC BY 3.0:\n\nDelapouite :\nhttps://game-icons.net/1x1/delapouite/camel.html\nhttps://game-icons.net/1x1/delapouite/palm-tree.html\n\nBackground image generated using the Pollinations artificial intelligence image generator, https://pollinations.ai/, using the following prompt:\n\"plain landscape drawn in minimalist style, poetic\"\n\nLibrary image generated using the Pollinations artificial intelligence image generator, https://pollinations.ai/, using the following prompt:\n\"many camels in sand desert, view from sky, black and white, pencil\"\n<div><br></div>",
-      "lastUpdate": 1742959724059,
+      "lastUpdate": 1742979712680,
       "showName": true,
       "skill": "medium",
       "description": "Deploy your caravans and be the king of the desert!",
@@ -36,10 +36,10 @@
       "similarAwards": "",
       "ruleText": "<b>Principles</b>\n- Board center (palm tree) is considered as a void cell and shares the same properties as an edge<div>&nbsp;- Groups and liberties are defined the same way as Go. However, camel drops are only possible in empty regions adjacent to friendly camels (players cannot invade enemy claimed territories)\n- A player claims a territory when he completely surrounds an area with no opponent's camels inside. That territory worth its amount of a free cell. Note: a single territory cannot make use of the 4 edges of the board\n\n<b>Play</b></div><div>&nbsp;Black plays first\n\nOn their turn, players place a camel of their color on any point in an empty region that is adjacent to a camel of their color.\nA player can also pass.\n\n<b>Game end&nbsp;</b></div><div>Game ends when either:\n- A player captures an enemy group (one or several camels) that have no liberties. If a placement captures both white AND black groups, remove first the enemy group.</div><div>&nbsp;- Both players have passed their turn in succession, then they proceed to compare their territories' worth (black must own at least 3 more cells than white to win)&nbsp; &nbsp; &nbsp; &nbsp;</div>",
       "helpText": "- Players take seats<div>- On their turn, players place one camel from their stock on the board</div>",
-      "players": "2",
-      "language": "en-GB",
+      "variantImage": "",
       "variant": "",
-      "variantImage": ""
+      "language": "en-GB",
+      "players": "2"
     }
   },
   "seat1": {
