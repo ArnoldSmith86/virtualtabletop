@@ -4,10 +4,10 @@
     "type": "card",
     "cardType": "Pie",
     "id": "4870",
-    "z": 89623,
+    "z": 89887,
     "x": -2,
     "y": -2,
-    "parent": "holder-node-a3"
+    "parent": "holder-node-b3"
   },
   "ffmqD": {
     "id": "ffmqD",
@@ -572,26 +572,26 @@
     "type": "card",
     "cardType": "MoveYourAnt",
     "id": "kr57",
-    "z": 89657,
+    "z": 89916,
     "activeFace": 1,
     "x": 3,
-    "parent": "holder-ability-3"
+    "parent": "holder-ability-2b"
   },
   "vuow": {
     "deck": "deck-abilities",
     "type": "card",
     "cardType": "PlaceAcrossStitch",
     "id": "vuow",
-    "z": 89661,
+    "z": 89918,
     "x": 3,
-    "parent": "holder-ability-1a"
+    "parent": "holder-ability-1b"
   },
   "3vaa": {
     "deck": "deck-abilities",
     "type": "card",
     "cardType": "ScoreConnection",
     "id": "3vaa",
-    "z": 89659,
+    "z": 89917,
     "dropLimit": 1,
     "x": 3,
     "activeFace": 1,
@@ -602,20 +602,20 @@
     "type": "card",
     "cardType": "SelectSameRowOpponent",
     "id": "p9i1",
-    "z": 89660,
+    "z": 89915,
     "activeFace": 1,
     "x": 3,
-    "parent": "holder-ability-1b"
+    "parent": "holder-ability-3"
   },
   "fxyf": {
     "deck": "deck-abilities",
     "type": "card",
     "cardType": "SelectSameRowYourself",
     "id": "fxyf",
-    "z": 89658,
+    "z": 89919,
     "activeFace": 1,
     "x": 3,
-    "parent": "holder-ability-2b"
+    "parent": "holder-ability-1a"
   },
   "a84l": {
     "deck": "deck-ants",
@@ -1778,6 +1778,28 @@
         "property": "button-2p-reset"
       },
       {
+        "func": "FOREACH",
+        "in": [
+          "Blue",
+          "Green",
+          "Orange",
+          "Pink"
+        ],
+        "loopRoutine": [
+          "var key = ${key} + 1",
+          {
+            "func": "SELECT",
+            "type": "card",
+            "property": "cardType",
+            "value": "queen${value}"
+          },
+          {
+            "func": "MOVE",
+            "to": "holder-queens-p${key}"
+          }
+        ]
+      },
+      {
         "func": "SELECT",
         "property": "id",
         "value": "board-master-2p"
@@ -1962,6 +1984,28 @@
       {
         "func": "RESET",
         "property": "button-3-4p-reset"
+      },
+      {
+        "func": "FOREACH",
+        "in": [
+          "Blue",
+          "Green",
+          "Orange",
+          "Pink"
+        ],
+        "loopRoutine": [
+          "var key = ${key} + 1",
+          {
+            "func": "SELECT",
+            "type": "card",
+            "property": "cardType",
+            "value": "queen${value}"
+          },
+          {
+            "func": "MOVE",
+            "to": "holder-queens-p${key}"
+          }
+        ]
       },
       {
         "func": "SELECT",
@@ -2402,40 +2446,16 @@
     },
     "cardTypes": {
       "queenBlue": {
-        "image": "/assets/1566146814_6849",
-        "button-2p-reset": {
-          "parent": "holder-queens-p1"
-        },
-        "button-3-4p-reset": {
-          "parent": "holder-queens-p1"
-        }
+        "image": "/assets/1566146814_6849"
       },
       "queenGreen": {
-        "image": "/assets/-1743381266_6980",
-        "button-2p-reset": {
-          "parent": "holder-queens-p2"
-        },
-        "button-3-4p-reset": {
-          "parent": "holder-queens-p2"
-        }
+        "image": "/assets/-1743381266_6980"
       },
       "queenOrange": {
-        "image": "/assets/1887860579_6937",
-        "button-2p-reset": {
-          "parent": "holder-queens-p3"
-        },
-        "button-3-4p-reset": {
-          "parent": "holder-queens-p3"
-        }
+        "image": "/assets/1887860579_6937"
       },
       "queenPink": {
-        "image": "/assets/2055770264_7108",
-        "button-2p-reset": {
-          "parent": "holder-queens-p4"
-        },
-        "button-3-4p-reset": {
-          "parent": "holder-queens-p4"
-        }
+        "image": "/assets/2055770264_7108"
       }
     },
     "faceTemplates": [
@@ -2480,58 +2500,48 @@
     "type": "card",
     "cardType": "queenOrange",
     "id": "g1bg",
-    "z": 89577,
-    "hoverParent": "holder-queens-p3",
-    "parent": "fdzx"
+    "z": 89832,
+    "parent": "3m7t"
   },
   "qd54": {
     "deck": "deck-queens",
     "type": "card",
     "cardType": "queenOrange",
     "id": "qd54",
-    "z": 89576,
-    "hoverParent": "holder-queens-p3",
-    "parent": "fdzx",
-    "x": 5,
-    "y": 3
+    "z": 89834,
+    "parent": "3m7t"
   },
   "ilos": {
     "deck": "deck-queens",
     "type": "card",
     "cardType": "queenGreen",
     "id": "ilos",
-    "z": 89573,
-    "hoverParent": "holder-queens-p2",
-    "parent": "x5t0"
+    "z": 89829,
+    "parent": "p5k9"
   },
   "xesd": {
     "deck": "deck-queens",
     "type": "card",
     "cardType": "queenGreen",
     "id": "xesd",
-    "z": 89572,
-    "parent": "x5t0",
-    "x": 5,
-    "y": 3
+    "z": 89831,
+    "parent": "p5k9"
   },
   "afpk": {
     "deck": "deck-queens",
     "type": "card",
     "cardType": "queenBlue",
     "id": "afpk",
-    "z": 89575,
-    "hoverParent": "holder-queens-p1",
-    "parent": "i688"
+    "z": 89826,
+    "parent": "sfsy"
   },
   "jsp7": {
     "deck": "deck-queens",
     "type": "card",
     "cardType": "queenBlue",
     "id": "jsp7",
-    "z": 89574,
-    "parent": "i688",
-    "x": 5,
-    "y": 3
+    "z": 89828,
+    "parent": "sfsy"
   },
   "deck-ants": {
     "type": "deck",
@@ -7046,10 +7056,10 @@
     "type": "card",
     "cardType": "Cherry",
     "id": "4e14",
-    "z": 89244,
+    "z": 89755,
     "x": -2,
     "y": -2,
-    "parent": "holder-node-bb3"
+    "parent": "holder-node-bb2"
   },
   "qy00": {
     "deck": "deck-claims-sugar",
@@ -7096,23 +7106,23 @@
     "cardType": "claimLollipopBlue",
     "id": "mk8s",
     "z": 89568,
-    "parent": "5jr3"
+    "parent": "f9aj"
   },
   "pb9o": {
     "deck": "deck-claims-sugar",
     "type": "card",
     "cardType": "claimLollipopGreen",
     "id": "pb9o",
-    "z": 89569,
-    "parent": "5jr3"
+    "z": 89823,
+    "parent": "f9aj"
   },
   "uzmw": {
     "deck": "deck-claims-sugar",
     "type": "card",
     "cardType": "claimLollipopOrange",
     "id": "uzmw",
-    "z": 89570,
-    "parent": "5jr3"
+    "z": 89824,
+    "parent": "f9aj"
   },
   "3t3x": {
     "deck": "deck-claims-sugar",
@@ -7197,8 +7207,8 @@
     "type": "card",
     "cardType": "claimLollipopPink",
     "id": "pxhn",
-    "z": 89571,
-    "parent": "5jr3"
+    "z": 89825,
+    "parent": "f9aj"
   },
   "oeiw": {
     "deck": "deck-claims-sugar",
@@ -7499,8 +7509,8 @@
     "type": "card",
     "cardType": "Cherry",
     "id": "09cj",
-    "z": 89248,
-    "parent": "holder-node-cc2",
+    "z": 89749,
+    "parent": "holder-node-aa1",
     "x": -2,
     "y": -2
   },
@@ -7509,8 +7519,8 @@
     "type": "card",
     "cardType": "Cherry",
     "id": "6a6q",
-    "z": 89256,
-    "parent": "holder-node-dd5",
+    "z": 89759,
+    "parent": "holder-node-cc1",
     "x": -2,
     "y": -2
   },
@@ -7519,8 +7529,8 @@
     "type": "card",
     "cardType": "Cherry",
     "id": "tzeh",
-    "z": 89250,
-    "parent": "holder-node-cc4",
+    "z": 89760,
+    "parent": "holder-node-cc2",
     "x": -2,
     "y": -2
   },
@@ -7529,8 +7539,8 @@
     "type": "card",
     "cardType": "Cherry",
     "id": "hdvh",
-    "z": 89247,
-    "parent": "holder-node-cc1",
+    "z": 89762,
+    "parent": "holder-node-cc4",
     "x": -2,
     "y": -2
   },
@@ -7539,8 +7549,8 @@
     "type": "card",
     "cardType": "Cookie",
     "id": "v81x",
-    "z": 89243,
-    "parent": "holder-node-bb2",
+    "z": 89768,
+    "parent": "holder-node-dd5",
     "x": -2,
     "y": -2
   },
@@ -7549,8 +7559,8 @@
     "type": "card",
     "cardType": "Cookie",
     "id": "gauz",
-    "z": 89237,
-    "parent": "holder-node-aa1",
+    "z": 89758,
+    "parent": "holder-node-bb5",
     "x": -2,
     "y": -2
   },
@@ -7559,8 +7569,8 @@
     "type": "card",
     "cardType": "Cookie",
     "id": "jbyt",
-    "z": 89241,
-    "parent": "holder-node-aa5",
+    "z": 89756,
+    "parent": "holder-node-bb3",
     "x": -2,
     "y": -2
   },
@@ -7569,8 +7579,8 @@
     "type": "card",
     "cardType": "Cookie",
     "id": "f8zq",
-    "z": 89251,
-    "parent": "holder-node-cc5",
+    "z": 89767,
+    "parent": "holder-node-dd4",
     "x": -2,
     "y": -2
   },
@@ -7579,8 +7589,8 @@
     "type": "card",
     "cardType": "Cookie",
     "id": "ifxs",
-    "z": 89240,
-    "parent": "holder-node-aa4",
+    "z": 89772,
+    "parent": "holder-node-ee4",
     "x": -2,
     "y": -2
   },
@@ -7589,8 +7599,8 @@
     "type": "card",
     "cardType": "Cupcake",
     "id": "ryvk",
-    "z": 89239,
-    "parent": "holder-node-aa3",
+    "z": 89750,
+    "parent": "holder-node-aa2",
     "x": -2,
     "y": -2
   },
@@ -7599,8 +7609,8 @@
     "type": "card",
     "cardType": "Cupcake",
     "id": "2y3f",
-    "z": 89260,
-    "parent": "holder-node-ee4",
+    "z": 89752,
+    "parent": "holder-node-aa4",
     "x": -2,
     "y": -2
   },
@@ -7609,8 +7619,8 @@
     "type": "card",
     "cardType": "Cupcake",
     "id": "gzkd",
-    "z": 89238,
-    "parent": "holder-node-aa2",
+    "z": 89765,
+    "parent": "holder-node-dd2",
     "x": -2,
     "y": -2
   },
@@ -7619,8 +7629,8 @@
     "type": "card",
     "cardType": "Cupcake",
     "id": "okqy",
-    "z": 89245,
-    "parent": "holder-node-bb4",
+    "z": 89761,
+    "parent": "holder-node-cc3",
     "x": -2,
     "y": -2
   },
@@ -7629,8 +7639,8 @@
     "type": "card",
     "cardType": "Cupcake",
     "id": "eg61",
-    "z": 89254,
-    "parent": "holder-node-dd3",
+    "z": 89757,
+    "parent": "holder-node-bb4",
     "x": -2,
     "y": -2
   },
@@ -7639,8 +7649,8 @@
     "type": "card",
     "cardType": "Lollipop",
     "id": "k0t8",
-    "z": 89261,
-    "parent": "holder-node-ee5",
+    "z": 89766,
+    "parent": "holder-node-dd3",
     "x": -2,
     "y": -2
   },
@@ -7649,8 +7659,8 @@
     "type": "card",
     "cardType": "Lollipop",
     "id": "tmx7",
-    "z": 89258,
-    "parent": "holder-node-ee2",
+    "z": 89753,
+    "parent": "holder-node-aa5",
     "x": -2,
     "y": -2
   },
@@ -7659,8 +7669,8 @@
     "type": "card",
     "cardType": "Lollipop",
     "id": "vb8k",
-    "z": 89252,
-    "parent": "holder-node-dd1",
+    "z": 89769,
+    "parent": "holder-node-ee1",
     "x": -2,
     "y": -2
   },
@@ -7669,8 +7679,8 @@
     "type": "card",
     "cardType": "Lollipop",
     "id": "twas",
-    "z": 89249,
-    "parent": "holder-node-cc3",
+    "z": 89773,
+    "parent": "holder-node-ee5",
     "x": -2,
     "y": -2
   },
@@ -7679,8 +7689,8 @@
     "type": "card",
     "cardType": "Lollipop",
     "id": "a3sr",
-    "z": 89257,
-    "parent": "holder-node-ee1",
+    "z": 89751,
+    "parent": "holder-node-aa3",
     "x": -2,
     "y": -2
   },
@@ -7689,8 +7699,8 @@
     "type": "card",
     "cardType": "Pie",
     "id": "dyaa",
-    "z": 89255,
-    "parent": "holder-node-dd4",
+    "z": 89771,
+    "parent": "holder-node-ee3",
     "x": -2,
     "y": -2
   },
@@ -7699,8 +7709,8 @@
     "type": "card",
     "cardType": "Pie",
     "id": "1nbo",
-    "z": 89246,
-    "parent": "holder-node-bb5",
+    "z": 89754,
+    "parent": "holder-node-bb1",
     "x": -2,
     "y": -2
   },
@@ -7709,18 +7719,18 @@
     "type": "card",
     "cardType": "Pie",
     "id": "kfih",
-    "z": 89242,
+    "z": 89764,
     "x": -2,
     "y": -2,
-    "parent": "holder-node-bb1"
+    "parent": "holder-node-dd1"
   },
   "oab0": {
     "deck": "deck-sweets-2p",
     "type": "card",
     "cardType": "Pie",
     "id": "oab0",
-    "z": 89253,
-    "parent": "holder-node-dd2",
+    "z": 89763,
+    "parent": "holder-node-cc5",
     "x": -2,
     "y": -2
   },
@@ -7729,8 +7739,8 @@
     "type": "card",
     "cardType": "Pie",
     "id": "md77",
-    "z": 89259,
-    "parent": "holder-node-ee3",
+    "z": 89770,
+    "parent": "holder-node-ee2",
     "x": -2,
     "y": -2
   },
@@ -7739,8 +7749,8 @@
     "type": "card",
     "cardType": "Cookie",
     "id": "a97e",
-    "z": 89626,
-    "parent": "holder-node-a6",
+    "z": 89894,
+    "parent": "holder-node-c4",
     "x": -2,
     "y": -2
   },
@@ -7749,25 +7759,24 @@
     "type": "card",
     "cardType": "queenPink",
     "id": "umi3",
-    "z": 89671,
-    "hoverParent": "holder-queens-p4",
-    "parent": "5pw8"
+    "z": 89835,
+    "parent": "aqls"
   },
   "rtdy": {
     "deck": "deck-queens",
     "type": "card",
     "cardType": "queenPink",
     "id": "rtdy",
-    "z": 89578,
-    "parent": "5pw8"
+    "z": 89837,
+    "parent": "aqls"
   },
   "j18g": {
     "deck": "deck-sweets-3-4p",
     "type": "card",
     "cardType": "Cookie",
     "id": "j18g",
-    "z": 89640,
-    "parent": "holder-node-d2",
+    "z": 89891,
+    "parent": "holder-node-c1",
     "x": -2,
     "y": -2
   },
@@ -7776,8 +7785,8 @@
     "type": "card",
     "cardType": "Cookie",
     "id": "hwex",
-    "z": 89654,
-    "parent": "holder-node-f4",
+    "z": 89911,
+    "parent": "holder-node-f3",
     "x": -2,
     "y": -2
   },
@@ -7786,8 +7795,8 @@
     "type": "card",
     "cardType": "Cookie",
     "id": "vyd8",
-    "z": 89647,
-    "parent": "holder-node-e3",
+    "z": 89888,
+    "parent": "holder-node-b4",
     "x": -2,
     "y": -2
   },
@@ -7796,8 +7805,8 @@
     "type": "card",
     "cardType": "Cookie",
     "id": "xet1",
-    "z": 89630,
-    "parent": "holder-node-b4",
+    "z": 89880,
+    "parent": "holder-node-a2",
     "x": -2,
     "y": -2
   },
@@ -7806,8 +7815,8 @@
     "type": "card",
     "cardType": "Cookie",
     "id": "yags",
-    "z": 89621,
-    "parent": "holder-node-a1",
+    "z": 89910,
+    "parent": "holder-node-f2",
     "x": -2,
     "y": -2
   },
@@ -7816,8 +7825,8 @@
     "type": "card",
     "cardType": "Cookie",
     "id": "5b1c",
-    "z": 89656,
-    "parent": "holder-node-f6",
+    "z": 89884,
+    "parent": "holder-node-a6",
     "x": -2,
     "y": -2
   },
@@ -7826,18 +7835,18 @@
     "type": "card",
     "cardType": "Cookie",
     "id": "zxa4",
-    "z": 89632,
+    "z": 89907,
     "x": -2,
     "y": -2,
-    "parent": "holder-node-b6"
+    "parent": "holder-node-e5"
   },
   "i9oy": {
     "deck": "deck-sweets-3-4p",
     "type": "card",
     "cardType": "Cookie",
     "id": "i9oy",
-    "z": 89655,
-    "parent": "holder-node-f5",
+    "z": 89902,
+    "parent": "holder-node-d6",
     "x": -2,
     "y": -2
   },
@@ -7846,8 +7855,8 @@
     "type": "card",
     "cardType": "Cupcake",
     "id": "yz4y",
-    "z": 89637,
-    "parent": "holder-node-c5",
+    "z": 89905,
+    "parent": "holder-node-e3",
     "x": -2,
     "y": -2
   },
@@ -7856,8 +7865,8 @@
     "type": "card",
     "cardType": "Cupcake",
     "id": "eenb",
-    "z": 89642,
-    "parent": "holder-node-d4",
+    "z": 89882,
+    "parent": "holder-node-a4",
     "x": -2,
     "y": -2
   },
@@ -7866,8 +7875,8 @@
     "type": "card",
     "cardType": "Cupcake",
     "id": "us4k",
-    "z": 89646,
-    "parent": "holder-node-e2",
+    "z": 89897,
+    "parent": "holder-node-d1",
     "x": -2,
     "y": -2
   },
@@ -7876,8 +7885,8 @@
     "type": "card",
     "cardType": "Cupcake",
     "id": "jv9m",
-    "z": 89639,
-    "parent": "holder-node-d1",
+    "z": 89912,
+    "parent": "holder-node-f4",
     "x": -2,
     "y": -2
   },
@@ -7886,18 +7895,18 @@
     "type": "card",
     "cardType": "Cupcake",
     "id": "qeqs",
-    "z": 89653,
+    "z": 89914,
     "x": -2,
     "y": -2,
-    "parent": "holder-node-f3"
+    "parent": "holder-node-f6"
   },
   "sm4h": {
     "deck": "deck-sweets-3-4p",
     "type": "card",
     "cardType": "Cupcake",
     "id": "sm4h",
-    "z": 89643,
-    "parent": "holder-node-d5",
+    "z": 89893,
+    "parent": "holder-node-c3",
     "x": -2,
     "y": -2
   },
@@ -7906,8 +7915,8 @@
     "type": "card",
     "cardType": "Cupcake",
     "id": "czgo",
-    "z": 89652,
-    "parent": "holder-node-f2",
+    "z": 89898,
+    "parent": "holder-node-d2",
     "x": -2,
     "y": -2
   },
@@ -7916,8 +7925,8 @@
     "type": "card",
     "cardType": "Cupcake",
     "id": "sxmf",
-    "z": 89650,
-    "parent": "holder-node-e6",
+    "z": 89883,
+    "parent": "holder-node-a5",
     "x": -2,
     "y": -2
   },
@@ -7926,8 +7935,8 @@
     "type": "card",
     "cardType": "Cupcake",
     "id": "9e7y",
-    "z": 89641,
-    "parent": "holder-node-d3",
+    "z": 89890,
+    "parent": "holder-node-b6",
     "x": -2,
     "y": -2
   },
@@ -7936,8 +7945,8 @@
     "type": "card",
     "cardType": "Cherry",
     "id": "98kp",
-    "z": 89628,
-    "parent": "holder-node-b2",
+    "z": 89913,
+    "parent": "holder-node-f5",
     "x": -2,
     "y": -2
   },
@@ -7946,8 +7955,8 @@
     "type": "card",
     "cardType": "Cherry",
     "id": "s0yq",
-    "z": 89627,
-    "parent": "holder-node-b1",
+    "z": 89903,
+    "parent": "holder-node-e1",
     "x": -2,
     "y": -2
   },
@@ -7956,8 +7965,8 @@
     "type": "card",
     "cardType": "Cherry",
     "id": "1vrq",
-    "z": 89636,
-    "parent": "holder-node-c4",
+    "z": 89885,
+    "parent": "holder-node-b1",
     "x": -2,
     "y": -2
   },
@@ -7966,8 +7975,8 @@
     "type": "card",
     "cardType": "Cherry",
     "id": "ffyl",
-    "z": 89648,
-    "parent": "holder-node-e4",
+    "z": 89908,
+    "parent": "holder-node-e6",
     "x": -2,
     "y": -2
   },
@@ -7976,8 +7985,8 @@
     "type": "card",
     "cardType": "Cherry",
     "id": "8oow",
-    "z": 89644,
-    "parent": "holder-node-d6",
+    "z": 89899,
+    "parent": "holder-node-d3",
     "x": -2,
     "y": -2
   },
@@ -7986,28 +7995,28 @@
     "type": "card",
     "cardType": "Cherry",
     "id": "8iut",
-    "z": 89645,
+    "z": 89900,
     "x": -2,
     "y": -2,
-    "parent": "holder-node-e1"
+    "parent": "holder-node-d4"
   },
   "fp6g": {
     "deck": "deck-sweets-3-4p",
     "type": "card",
     "cardType": "Cherry",
     "id": "fp6g",
-    "z": 89633,
+    "z": 89896,
     "x": -2,
     "y": -2,
-    "parent": "holder-node-c1"
+    "parent": "holder-node-c6"
   },
   "fsrx": {
     "deck": "deck-sweets-3-4p",
     "type": "card",
     "cardType": "Cherry",
     "id": "fsrx",
-    "z": 89651,
-    "parent": "holder-node-f1",
+    "z": 89892,
+    "parent": "holder-node-c2",
     "x": -2,
     "y": -2
   },
@@ -8016,8 +8025,8 @@
     "type": "card",
     "cardType": "Cherry",
     "id": "tz1k",
-    "z": 89629,
-    "parent": "holder-node-b3",
+    "z": 89879,
+    "parent": "holder-node-a1",
     "x": -2,
     "y": -2
   },
@@ -8026,8 +8035,8 @@
     "type": "card",
     "cardType": "Pie",
     "id": "k1lm",
-    "z": 89634,
-    "parent": "holder-node-c2",
+    "z": 89895,
+    "parent": "holder-node-c5",
     "x": -2,
     "y": -2
   },
@@ -8036,8 +8045,8 @@
     "type": "card",
     "cardType": "Pie",
     "id": "9igl",
-    "z": 89624,
-    "parent": "holder-node-a4",
+    "z": 89901,
+    "parent": "holder-node-d5",
     "x": -2,
     "y": -2
   },
@@ -8046,8 +8055,8 @@
     "type": "card",
     "cardType": "Pie",
     "id": "2q9z",
-    "z": 89625,
-    "parent": "holder-node-a5",
+    "z": 89904,
+    "parent": "holder-node-e2",
     "x": -2,
     "y": -2
   },
@@ -8056,8 +8065,8 @@
     "type": "card",
     "cardType": "Pie",
     "id": "pd2x",
-    "z": 89638,
-    "parent": "holder-node-c6",
+    "z": 89889,
+    "parent": "holder-node-b5",
     "x": -2,
     "y": -2
   },
@@ -8066,8 +8075,8 @@
     "type": "card",
     "cardType": "Pie",
     "id": "0cnf",
-    "z": 89635,
-    "parent": "holder-node-c3",
+    "z": 89881,
+    "parent": "holder-node-a3",
     "x": -2,
     "y": -2
   },
@@ -8076,8 +8085,8 @@
     "type": "card",
     "cardType": "Pie",
     "id": "c1um",
-    "z": 89649,
-    "parent": "holder-node-e5",
+    "z": 89909,
+    "parent": "holder-node-f1",
     "x": -2,
     "y": -2
   },
@@ -8086,8 +8095,8 @@
     "type": "card",
     "cardType": "Pie",
     "id": "65v9",
-    "z": 89622,
-    "parent": "holder-node-a2",
+    "z": 89906,
+    "parent": "holder-node-e4",
     "x": -2,
     "y": -2
   },
@@ -8096,8 +8105,8 @@
     "type": "card",
     "cardType": "Pie",
     "id": "dc1t",
-    "z": 89631,
-    "parent": "holder-node-b5",
+    "z": 89886,
+    "parent": "holder-node-b2",
     "x": -2,
     "y": -2
   },
@@ -8112,7 +8121,7 @@
       "mode": "vs",
       "time": "20-40",
       "attribution": "<div>Game design by Robert Hovakimyan.<br><br>Art assets by Alisha Giroux.</div><div><br></div><div>Layout and scripting by Robin Harn, released to the Public Domain under CC0.</div>\nGame name and all art assets used with permission from the rights holder, Bitewing Games.",
-      "lastUpdate": 1742924639314,
+      "lastUpdate": 1742957611936,
       "showName": false,
       "skill": "",
       "description": "Deploy ants on a picnic blanket to connect and stockpile sweets.",
@@ -8738,7 +8747,7 @@
     "y": 20,
     "parent": "holder-cubes"
   },
-  "5jr3": {
+  "f9aj": {
     "type": "pile",
     "parent": "holder-claims-sugar",
     "x": 4,
@@ -8747,42 +8756,42 @@
     "height": 50,
     "handleCSS": "position:sticky; width:20px; height:20px; background-color:black;color:white;font-size:18px;font-weight:bold; padding:0.2rem 0.2rem 0.2rem 0.2rem;",
     "handlePosition": "right",
-    "id": "5jr3"
+    "id": "f9aj"
   },
-  "x5t0": {
-    "type": "pile",
-    "parent": "holder-queens-p2",
-    "x": 0,
-    "y": 0,
-    "width": 51,
-    "height": 51,
-    "handleCSS": "position:sticky; width:16px; height:16px; background-color:black;color:white;font-size:16px;font-weight:bold; padding:0.2rem 0.2rem 0.2rem 0.2rem;",
-    "handlePosition": "right",
-    "id": "x5t0"
-  },
-  "i688": {
+  "sfsy": {
     "type": "pile",
     "parent": "holder-queens-p1",
-    "x": 0,
-    "y": 0,
+    "x": 5,
+    "y": 3,
     "width": 51,
     "height": 51,
     "handleCSS": "position:sticky; width:16px; height:16px; background-color:black;color:white;font-size:16px;font-weight:bold; padding:0.2rem 0.2rem 0.2rem 0.2rem;",
     "handlePosition": "right",
-    "id": "i688"
+    "id": "sfsy"
   },
-  "fdzx": {
+  "p5k9": {
+    "type": "pile",
+    "parent": "holder-queens-p2",
+    "x": 5,
+    "y": 3,
+    "width": 51,
+    "height": 51,
+    "handleCSS": "position:sticky; width:16px; height:16px; background-color:black;color:white;font-size:16px;font-weight:bold; padding:0.2rem 0.2rem 0.2rem 0.2rem;",
+    "handlePosition": "right",
+    "id": "p5k9"
+  },
+  "3m7t": {
     "type": "pile",
     "parent": "holder-queens-p3",
-    "x": 0,
-    "y": 0,
+    "x": 5,
+    "y": 3,
     "width": 51,
     "height": 51,
     "handleCSS": "position:sticky; width:16px; height:16px; background-color:black;color:white;font-size:16px;font-weight:bold; padding:0.2rem 0.2rem 0.2rem 0.2rem;",
     "handlePosition": "right",
-    "id": "fdzx"
+    "id": "3m7t"
   },
-  "5pw8": {
+  "aqls": {
     "type": "pile",
     "parent": "holder-queens-p4",
     "x": 5,
@@ -8791,6 +8800,6 @@
     "height": 51,
     "handleCSS": "position:sticky; width:16px; height:16px; background-color:black;color:white;font-size:16px;font-weight:bold; padding:0.2rem 0.2rem 0.2rem 0.2rem;",
     "handlePosition": "right",
-    "id": "5pw8"
+    "id": "aqls"
   }
 }
