@@ -602,27 +602,27 @@
     "cardTypes": {
       "type-8d416427-0c77-4ffd-a937-f3108b69ba39": {
         "label": "1_1",
-        "image": "https://raw.githubusercontent.com/mcgriffiths/cardgames/master/generic_svg/card_1_1.svg",
+        "image": "/assets/-860144223_897",
         "sortingOrder": 1
       },
       "type-6680684f-f092-4599-812f-b76fc2523fe1": {
         "label": "2_1",
-        "image": "https://raw.githubusercontent.com/mcgriffiths/cardgames/master/generic_svg/card_2_1.svg",
+        "image": "/assets/1237250751_897",
         "sortingOrder": 2
       },
       "type-019276c7-e22b-49d5-8e82-557ad841e64d": {
         "label": "3_1",
-        "image": "https://raw.githubusercontent.com/mcgriffiths/cardgames/master/generic_svg/card_3_1.svg",
+        "image": "/assets/-2087537270_897",
         "sortingOrder": 3
       },
       "type-4e2fdcdc-e836-4a29-b42e-80028913b616": {
         "label": "4_1",
-        "image": "https://raw.githubusercontent.com/mcgriffiths/cardgames/master/generic_svg/card_4_1.svg",
+        "image": "/assets/-1731958078_897",
         "sortingOrder": 4
       },
       "type-5804c7cc-2739-490c-90ba-ad18540e33a5": {
         "label": "5_1",
-        "image": "https://raw.githubusercontent.com/mcgriffiths/cardgames/master/generic_svg/card_5_1.svg",
+        "image": "/assets/1390947831_897",
         "sortingOrder": 5
       }
     },
