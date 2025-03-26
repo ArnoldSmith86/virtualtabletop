@@ -1,31 +1,4 @@
 {
-  "_meta": {
-    "version": 17,
-    "info": {
-      "name": "130 Variables and Collections",
-      "image": "/assets/975182181_6987",
-      "rules": "",
-      "bgg": "",
-      "year": "",
-      "mode": "Tutorial",
-      "time": "",
-      "attribution": "",
-      "lastUpdate": 1742863184255,
-      "showName": false,
-      "skill": "",
-      "description": "",
-      "similarImage": "",
-      "similarName": "",
-      "similarDesigner": "",
-      "similarAwards": "",
-      "ruleText": "",
-      "helpText": "",
-      "variantImage": "",
-      "variant": "Collections",
-      "language": "en-US",
-      "players": "1"
-    }
-  },
   "title": {
     "id": "title",
     "x": 400,
@@ -45,11 +18,11 @@
     "y": 402,
     "z": 22839,
     "clickRoutine": [
-      "// The simplest form of SELECT uses all the default parameters and will create a collection named `DEFAULT` that is all the widgets that do not have a parent. No widgets in this room have a parent so they are all in the collection. Click on the debugger and the SELECT function, be sure to view both `Original and applied operation` and `Variables, collection, and delta afterwards.",
+      "// The simplest form of SELECT uses all the default parameters and will create a collection named `DEFAULT` that is all the widgets that do not have a parent. No widgets in this room have a parent so they are all in the collection. Click on the debugger and the SELECT function, be sure to view both `Original and applied operation` and `Variables, collection, and delta afterwards`.",
       {
         "func": "SELECT"
       },
-      "// Usually, the SELECT will be more narrowly defined. A common method of selecting all of one type of widget, for example, is to use the relationship value of != (not equal) to null on the `id`. The following SELECT function puts all of the buttons in the room into a collection named `DEFAULT`",
+      "// Usually, the SELECT will be more narrowly defined. A common method of selecting all of one type of widget, for example, is to use the relationship value of `!=` (not equal) to `null` on the `id`. The following SELECT function puts all of the buttons in the room into a collection named `DEFAULT`",
       {
         "func": "SELECT",
         "type": "button",
@@ -92,7 +65,7 @@
     "movable": false,
     "movableInEdit": false,
     "css": "font-size: 25px; ",
-    "html": "Collections are a group of widgets. They are stored in the form of an array and can be an empty array if there are no widgets in the collection. Collections are created (output) by four functions, each of which has a tutorial (and wiki):  <a href='https://virtualtabletop.io/tutorial/functions-clone-and-delete'>CLONE</a> (<a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Functions#clone'>wiki</a>),  <a href='https://virtualtabletop.io/tutorial/functions-input'>INPUT</a> (<a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Functions#input'>wiki</a>), <a href='https://virtualtabletop.io/tutorial/functions-select'>SELECT</a> (<a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Functions#select'>wiki</a>), and  <a href='https://virtualtabletop.io/tutorial/seats'>TURN</a> (<a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Functions#turn'>wiki</a>). SELECT is the most common way to create a collection as that is its entire purpose. A few collections, like some variables, are predefined by the VTT code. Collections are available while that particular routine is active and do not persist within the room or game after the routine ends. Most functions act on collections and use those as the input for what the function will do. Depending on the function, the input parameter may be called <b>collection</b> or <b>source</b>.  The four functions listed above optionally do both: they accept collections as input and also provide a collection as output. For each button below, click on it and compare what you see in the JSON with what shows up in the debugger output."
+    "html": "Collections are a group of widgets. They are stored in the form of an array consisting of the <b>id</b> of the widget. A collection can be an empty array if there are no widgets in it. Collections are created (output) by four functions, each of which has a tutorial (and wiki):  <a href='https://virtualtabletop.io/tutorial/functions-clone-and-delete'>CLONE</a> (<a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Functions#clone'>wiki</a>),  <a href='https://virtualtabletop.io/tutorial/functions-input'>INPUT</a> (<a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Functions#input'>wiki</a>), <a href='https://virtualtabletop.io/tutorial/functions-select'>SELECT</a> (<a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Functions#select'>wiki</a>), and  <a href='https://virtualtabletop.io/tutorial/seats'>TURN</a> (<a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Functions#turn'>wiki</a>). SELECT is the most common way to create a collection as that is its entire purpose. A few collections, like some variables, are predefined by the VTT code. Collections are available while that particular routine is active and do not persist within the room or game after the routine ends. Most functions act on collections and use those as the source (input) for what the function will do. Depending on the function, the input parameter may be called <b>collection</b> or <b>source</b>.  The four functions listed above do both: they optionally accept collections as input and also provide a collection as output. For each button below, click on it and compare what you see in the JSON with what shows up in the debugger output."
   },
   "button3": {
     "type": "button",
@@ -120,7 +93,7 @@
         "func": "COUNT",
         "collection": "allCards"
       },
-      "// Now let's assume we want to GET the id of the top card. We can do a SELECT and sort it at the same time. This sorts the output collection by z (the way widgets are arranged in a pile).",
+      "// Now let's assume we want to GET the id of the top card. We can do a SELECT and sort it at the same time. This sorts the output collection by their `z` property (the order widgets are stacked in a pile).",
       {
         "func": "SELECT",
         "type": "card",
@@ -132,7 +105,7 @@
           "reverse": true
         }
       },
-      "// And now the GET outputs a variable that contains the id of the top card. The default get aggregation is `first` which means it only works on the first widget in the collection. Look at the GET tutorial for more types of aggregation examples.",
+      "// And now the GET outputs a variable that contains the `id` of the top card. The default get aggregation is `first` which means it only GET's the first widget in the collection. Look at the GET tutorial for more types of aggregation examples.",
       {
         "func": "GET",
         "collection": "allCards",
@@ -160,14 +133,14 @@
         "func": "CLICK",
         "collection": "DEFAULT"
       },
-      "// Using anonymous collections is an alternative way. Note how the `collection` parameter value is specified as an array and within the array is the name of the widget to be clicked.",
+      "// Using anonymous collections is an alternative way. Note how the `collection` parameter value is specified as an array and within the array is the `id` of the widget to be clicked.",
       {
         "func": "CLICK",
         "collection": [
           "recallButton"
         ]
       },
-      "// This also works with multiple widgets. The FLIP below works on the 3 checkers.",
+      "// Anonymous collections also work with multiple widgets. The FLIP below works on the 3 checkers.",
       {
         "func": "CLICK",
         "collection": [
@@ -175,12 +148,22 @@
           "checker2",
           "checker3"
         ]
+      },
+      "// Anonymous collections also work with variables so long as the variable is an array. The COUNT below works on `checkersList` property on this widget.",
+      {
+        "func": "COUNT",
+        "collection": "${PROPERTY checkersList}"
       }
     ],
     "text": "Anonymous Collections",
     "css": {
       "font-size": "14px"
-    }
+    },
+    "checkersList": [
+      "checker1",
+      "checker2",
+      "checker3"
+    ]
   },
   "text1": {
     "id": "text1",
@@ -217,7 +200,7 @@
     "css": {
       "font-size": "22px"
     },
-    "html": "The button above demonstrates the most common way to create collections using the SELECT function. SELECT has multiple parameters and options. Be sure to look at the <a href='https://virtualtabletop.io/tutorial/functions-select'>SELECT tutorial</a>."
+    "html": "The button above demonstrates the most common way to create collections using the SELECT function. SELECT has multiple parameters and options. View the <a href='https://virtualtabletop.io/tutorial/functions-select'>SELECT tutorial</a> for more."
   },
   "text3": {
     "id": "text3",
@@ -806,7 +789,7 @@
     "deck": "hjlkD",
     "type": "card",
     "cardType": "C 01",
-    "z": 4688
+    "z": 5084
   },
   "hjlk_2_C": {
     "id": "hjlk_2_C",
@@ -814,7 +797,7 @@
     "deck": "hjlkD",
     "type": "card",
     "cardType": "C 02",
-    "z": 4663
+    "z": 5090
   },
   "hjlk_3_C": {
     "id": "hjlk_3_C",
@@ -822,7 +805,7 @@
     "deck": "hjlkD",
     "type": "card",
     "cardType": "C 03",
-    "z": 4649
+    "z": 5096
   },
   "hjlk_4_C": {
     "id": "hjlk_4_C",
@@ -830,7 +813,7 @@
     "deck": "hjlkD",
     "type": "card",
     "cardType": "C 04",
-    "z": 4680
+    "z": 5097
   },
   "hjlk_5_C": {
     "id": "hjlk_5_C",
@@ -838,7 +821,7 @@
     "deck": "hjlkD",
     "type": "card",
     "cardType": "C 05",
-    "z": 4673
+    "z": 5057
   },
   "hjlk_6_C": {
     "id": "hjlk_6_C",
@@ -846,7 +829,7 @@
     "deck": "hjlkD",
     "type": "card",
     "cardType": "C 06",
-    "z": 4666
+    "z": 5092
   },
   "hjlk_7_C": {
     "id": "hjlk_7_C",
@@ -854,7 +837,7 @@
     "deck": "hjlkD",
     "type": "card",
     "cardType": "C 07",
-    "z": 4682
+    "z": 5072
   },
   "hjlk_8_C": {
     "id": "hjlk_8_C",
@@ -862,7 +845,7 @@
     "deck": "hjlkD",
     "type": "card",
     "cardType": "C 08",
-    "z": 4661
+    "z": 5106
   },
   "hjlk_9_C": {
     "id": "hjlk_9_C",
@@ -870,7 +853,7 @@
     "deck": "hjlkD",
     "type": "card",
     "cardType": "C 09",
-    "z": 4653
+    "z": 5094
   },
   "hjlk_T_C": {
     "id": "hjlk_T_C",
@@ -878,7 +861,7 @@
     "deck": "hjlkD",
     "type": "card",
     "cardType": "C 10",
-    "z": 4669
+    "z": 5060
   },
   "hjlk_J_C": {
     "id": "hjlk_J_C",
@@ -886,7 +869,7 @@
     "deck": "hjlkD",
     "type": "card",
     "cardType": "C 2J",
-    "z": 4645
+    "z": 5076
   },
   "hjlk_Q_C": {
     "id": "hjlk_Q_C",
@@ -894,7 +877,7 @@
     "deck": "hjlkD",
     "type": "card",
     "cardType": "C 3Q",
-    "z": 4640
+    "z": 5063
   },
   "hjlk_K_C": {
     "id": "hjlk_K_C",
@@ -902,7 +885,7 @@
     "deck": "hjlkD",
     "type": "card",
     "cardType": "C 4K",
-    "z": 4686
+    "z": 5073
   },
   "hjlk_A_D": {
     "id": "hjlk_A_D",
@@ -910,7 +893,7 @@
     "deck": "hjlkD",
     "type": "card",
     "cardType": "D 01",
-    "z": 4657
+    "z": 5086
   },
   "hjlk_2_D": {
     "id": "hjlk_2_D",
@@ -918,7 +901,7 @@
     "deck": "hjlkD",
     "type": "card",
     "cardType": "D 02",
-    "z": 4644
+    "z": 5065
   },
   "hjlk_3_D": {
     "id": "hjlk_3_D",
@@ -926,7 +909,7 @@
     "deck": "hjlkD",
     "type": "card",
     "cardType": "D 03",
-    "z": 4690
+    "z": 5091
   },
   "hjlk_4_D": {
     "id": "hjlk_4_D",
@@ -934,7 +917,7 @@
     "deck": "hjlkD",
     "type": "card",
     "cardType": "D 04",
-    "z": 4684
+    "z": 5085
   },
   "hjlk_5_D": {
     "id": "hjlk_5_D",
@@ -942,7 +925,7 @@
     "deck": "hjlkD",
     "type": "card",
     "cardType": "D 05",
-    "z": 4639
+    "z": 5104
   },
   "hjlk_6_D": {
     "id": "hjlk_6_D",
@@ -950,7 +933,7 @@
     "deck": "hjlkD",
     "type": "card",
     "cardType": "D 06",
-    "z": 4668
+    "z": 5062
   },
   "hjlk_7_D": {
     "id": "hjlk_7_D",
@@ -958,7 +941,7 @@
     "deck": "hjlkD",
     "type": "card",
     "cardType": "D 07",
-    "z": 4687
+    "z": 5061
   },
   "hjlk_8_D": {
     "id": "hjlk_8_D",
@@ -966,14 +949,14 @@
     "deck": "hjlkD",
     "type": "card",
     "cardType": "D 08",
-    "z": 4655
+    "z": 5069
   },
   "hjlk_9_D": {
     "id": "hjlk_9_D",
     "deck": "hjlkD",
     "type": "card",
     "cardType": "D 09",
-    "z": 4674,
+    "z": 5077,
     "parent": "hjlkP"
   },
   "hjlk_T_D": {
@@ -982,7 +965,7 @@
     "deck": "hjlkD",
     "type": "card",
     "cardType": "D 10",
-    "z": 4671
+    "z": 5064
   },
   "hjlk_J_D": {
     "id": "hjlk_J_D",
@@ -990,7 +973,7 @@
     "deck": "hjlkD",
     "type": "card",
     "cardType": "D 2J",
-    "z": 4683
+    "z": 5099
   },
   "hjlk_Q_D": {
     "id": "hjlk_Q_D",
@@ -998,7 +981,7 @@
     "deck": "hjlkD",
     "type": "card",
     "cardType": "D 3Q",
-    "z": 4670
+    "z": 5067
   },
   "hjlk_K_D": {
     "id": "hjlk_K_D",
@@ -1006,7 +989,7 @@
     "deck": "hjlkD",
     "type": "card",
     "cardType": "D 4K",
-    "z": 4678
+    "z": 5075
   },
   "hjlk_A_H": {
     "id": "hjlk_A_H",
@@ -1014,7 +997,7 @@
     "deck": "hjlkD",
     "type": "card",
     "cardType": "H 01",
-    "z": 4665
+    "z": 5102
   },
   "hjlk_2_H": {
     "id": "hjlk_2_H",
@@ -1022,7 +1005,7 @@
     "deck": "hjlkD",
     "type": "card",
     "cardType": "H 02",
-    "z": 4672
+    "z": 5058
   },
   "hjlk_3_H": {
     "id": "hjlk_3_H",
@@ -1030,7 +1013,7 @@
     "deck": "hjlkD",
     "type": "card",
     "cardType": "H 03",
-    "z": 4658
+    "z": 5059
   },
   "hjlk_4_H": {
     "id": "hjlk_4_H",
@@ -1038,7 +1021,7 @@
     "deck": "hjlkD",
     "type": "card",
     "cardType": "H 04",
-    "z": 4643
+    "z": 5105
   },
   "hjlk_5_H": {
     "id": "hjlk_5_H",
@@ -1046,7 +1029,7 @@
     "deck": "hjlkD",
     "type": "card",
     "cardType": "H 05",
-    "z": 4647
+    "z": 5068
   },
   "hjlk_6_H": {
     "id": "hjlk_6_H",
@@ -1054,7 +1037,7 @@
     "deck": "hjlkD",
     "type": "card",
     "cardType": "H 06",
-    "z": 4651
+    "z": 5078
   },
   "hjlk_7_H": {
     "id": "hjlk_7_H",
@@ -1062,7 +1045,7 @@
     "deck": "hjlkD",
     "type": "card",
     "cardType": "H 07",
-    "z": 4660
+    "z": 5083
   },
   "hjlk_8_H": {
     "id": "hjlk_8_H",
@@ -1070,7 +1053,7 @@
     "deck": "hjlkD",
     "type": "card",
     "cardType": "H 08",
-    "z": 4641
+    "z": 5071
   },
   "hjlk_9_H": {
     "id": "hjlk_9_H",
@@ -1078,7 +1061,7 @@
     "deck": "hjlkD",
     "type": "card",
     "cardType": "H 09",
-    "z": 4648
+    "z": 5070
   },
   "hjlk_T_H": {
     "id": "hjlk_T_H",
@@ -1086,7 +1069,7 @@
     "deck": "hjlkD",
     "type": "card",
     "cardType": "H 10",
-    "z": 4689
+    "z": 5081
   },
   "hjlk_J_H": {
     "id": "hjlk_J_H",
@@ -1094,7 +1077,7 @@
     "deck": "hjlkD",
     "type": "card",
     "cardType": "H 2J",
-    "z": 4656
+    "z": 5056
   },
   "hjlk_Q_H": {
     "id": "hjlk_Q_H",
@@ -1102,7 +1085,7 @@
     "deck": "hjlkD",
     "type": "card",
     "cardType": "H 3Q",
-    "z": 4675
+    "z": 5093
   },
   "hjlk_K_H": {
     "id": "hjlk_K_H",
@@ -1110,7 +1093,7 @@
     "deck": "hjlkD",
     "type": "card",
     "cardType": "H 4K",
-    "z": 4659
+    "z": 5082
   },
   "hjlk_A_S": {
     "id": "hjlk_A_S",
@@ -1118,7 +1101,7 @@
     "deck": "hjlkD",
     "type": "card",
     "cardType": "S 01",
-    "z": 4679
+    "z": 5066
   },
   "hjlk_2_S": {
     "id": "hjlk_2_S",
@@ -1126,7 +1109,7 @@
     "deck": "hjlkD",
     "type": "card",
     "cardType": "S 02",
-    "z": 4646
+    "z": 5101
   },
   "hjlk_3_S": {
     "id": "hjlk_3_S",
@@ -1134,7 +1117,7 @@
     "deck": "hjlkD",
     "type": "card",
     "cardType": "S 03",
-    "z": 4664
+    "z": 5079
   },
   "hjlk_4_S": {
     "id": "hjlk_4_S",
@@ -1142,7 +1125,7 @@
     "deck": "hjlkD",
     "type": "card",
     "cardType": "S 04",
-    "z": 4677
+    "z": 5074
   },
   "hjlk_5_S": {
     "id": "hjlk_5_S",
@@ -1150,7 +1133,7 @@
     "deck": "hjlkD",
     "type": "card",
     "cardType": "S 05",
-    "z": 4650
+    "z": 5055
   },
   "hjlk_6_S": {
     "id": "hjlk_6_S",
@@ -1158,7 +1141,7 @@
     "deck": "hjlkD",
     "type": "card",
     "cardType": "S 06",
-    "z": 4676
+    "z": 5095
   },
   "hjlk_7_S": {
     "id": "hjlk_7_S",
@@ -1166,14 +1149,14 @@
     "deck": "hjlkD",
     "type": "card",
     "cardType": "S 07",
-    "z": 4654
+    "z": 5098
   },
   "hjlk_8_S": {
     "id": "hjlk_8_S",
     "deck": "hjlkD",
     "type": "card",
     "cardType": "S 08",
-    "z": 4662,
+    "z": 5087,
     "hoverParent": "holder3",
     "parent": "hjlkP"
   },
@@ -1183,7 +1166,7 @@
     "deck": "hjlkD",
     "type": "card",
     "cardType": "S 09",
-    "z": 4642
+    "z": 5103
   },
   "hjlk_T_S": {
     "id": "hjlk_T_S",
@@ -1191,7 +1174,7 @@
     "deck": "hjlkD",
     "type": "card",
     "cardType": "S 10",
-    "z": 4667
+    "z": 5100
   },
   "hjlk_J_S": {
     "id": "hjlk_J_S",
@@ -1199,7 +1182,7 @@
     "deck": "hjlkD",
     "type": "card",
     "cardType": "S 2J",
-    "z": 4652
+    "z": 5080
   },
   "hjlk_Q_S": {
     "id": "hjlk_Q_S",
@@ -1207,7 +1190,7 @@
     "deck": "hjlkD",
     "type": "card",
     "cardType": "S 3Q",
-    "z": 4685
+    "z": 5088
   },
   "hjlk_K_S": {
     "id": "hjlk_K_S",
@@ -1215,7 +1198,7 @@
     "deck": "hjlkD",
     "type": "card",
     "cardType": "S 4K",
-    "z": 4681
+    "z": 5089
   },
   "holder3": {
     "type": "holder",
@@ -1349,5 +1332,32 @@
     "crowned": true,
     "secondaryColor": "#ffffff",
     "activeFace": 1
+  },
+  "_meta": {
+    "version": 17,
+    "info": {
+      "name": "130 Variables and Collections",
+      "image": "/assets/975182181_6987",
+      "rules": "",
+      "bgg": "",
+      "year": "",
+      "mode": "Tutorial",
+      "time": "",
+      "attribution": "",
+      "lastUpdate": 1742958109680,
+      "showName": false,
+      "skill": "",
+      "description": "",
+      "similarImage": "",
+      "similarName": "",
+      "similarDesigner": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": "",
+      "variantImage": "",
+      "variant": "Collections",
+      "language": "en-US",
+      "players": "1"
+    }
   }
 }

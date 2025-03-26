@@ -1,31 +1,4 @@
 {
-  "_meta": {
-    "version": 17,
-    "info": {
-      "name": "130 Variables and Collections",
-      "image": "/assets/975182181_6987",
-      "rules": "",
-      "bgg": "",
-      "year": "",
-      "mode": "Tutorial",
-      "time": "",
-      "attribution": "",
-      "lastUpdate": 1742863184252,
-      "showName": false,
-      "skill": "",
-      "description": "",
-      "similarImage": "",
-      "similarName": "",
-      "similarDesigner": "",
-      "similarAwards": "",
-      "ruleText": "",
-      "helpText": "",
-      "variantImage": "",
-      "variant": "Variables: Creating",
-      "language": "en-US",
-      "players": "1"
-    }
-  },
   "title": {
     "id": "title",
     "x": 400,
@@ -45,13 +18,13 @@
     "y": 402,
     "z": 22839,
     "clickRoutine": [
-      "// The routine that gets CALLed returns the variable 'result' by default and makes it available back in the calling routine.",
+      "// The routine that gets CALLed returns the variable 'result' by default and makes it available back in the calling routine. At the bottom of this widget is a custom routine named `testRoutine` that gets CALLed. The CALLed routine can be aon another widget if the `widget` parameter is changed.",
       {
         "func": "CALL",
         "routine": "testRoutine",
         "variable": "result"
       },
-      "// This puts all the buttons in the room into a collection for use with other functions demonstrated in this routine.",
+      "// This puts all the buttons in the room into a collection for use with other functions demonstrated in this routine:",
       {
         "func": "SELECT",
         "type": "button",
@@ -66,7 +39,7 @@
         "collection": "buttons",
         "variable": "COUNT"
       },
-      "// GET returns the variable of the property name parameter by default. This example gets the id's of all the buttons into array form.",
+      "// GET returns the variable of the property name parameter by default. This example gets the `id`s of all the buttons into array form:",
       {
         "func": "GET",
         "collection": "buttons",
@@ -74,21 +47,21 @@
         "variable": "id",
         "aggregation": "array"
       },
-      "// This FOREACH does a loop over the array in the variable 'id' from the GET directly above (which has a list of all the button id's. Looping using the 'in' parameter creates two variables: key and value, represented below by the cyan text with a dollar sign and curly brackets.",
+      "// This FOREACH does a loop over the array in the variable `id` from the GET directly above (which has a list of all the button `id`s. Looping using the `in` parameter creates two variables: `key` and `value`, represented below by the cyan text with a dollar sign and curly brackets.",
       {
         "func": "FOREACH",
         "in": "${id}",
         "loopRoutine": [
-          "// 'key' is the same as the index of the array, so it starts with 0 and increases by one for each loop iteration.",
+          "// `key` is the same as the index of the array, so it starts with 0 and increases by one for each loop iteration.",
           "var checkKey = ${key}",
-          "// 'value' is the value of the array that corresponds with the key index. In this case, it is the 'id' of each button in turn. The SELECT gathers that single button into a DEFAULT collection.",
+          "// `value` is the value of the array that corresponds with the `key` index. In this case, it is the `id` of each button in turn. The SELECT gathers that single button into a `DEFAULT` collection.",
           {
             "func": "SELECT",
             "property": "id",
             "value": "${value}",
             "collection": "DEFAULT"
           },
-          "// This GET puts the text value of the collection (a single widget) into a variable 'text'.",
+          "// This GET puts the text value of the collection (a single widget) into a variable `text`:",
           {
             "func": "GET",
             "collection": "DEFAULT",
@@ -239,7 +212,7 @@
     "css": {
       "font-size": "22px"
     },
-    "html": "Variables can be assigned to the value of another variable using the syntax <b>${variable name}</b>. If the other variable is an array, you can append the index like <b>${variable name.index}</b> to get the value associated with that index.\n\nAnd a variable can be set to the value of any widget property.  Use <b>$ {PROPERTY text}</b> for the text property of this widget and <b>$ {PROPERTY text OF widgetID}</b> for another widget."
+    "html": "Variables can be assigned to the value of another variable using the syntax <b>${variable name}</b>. If the other variable is an array, you can append the index like <b>${variable name.index}</b> to get the value associated with that index.\n\nAnd a variable can be set to the value of any widget property.  Use <b>{PROPERTY text}</b> for the text property of this widget and <b>{PROPERTY text OF widgetID}</b> for another widget."
   },
   "button1": {
     "type": "button",
@@ -248,13 +221,13 @@
     "y": 402,
     "z": 22841,
     "clickRoutine": [
-      "// This gets the id of this widget.",
+      "// This gets the id of this widget:",
       "var thisButtonID = ${PROPERTY id}",
-      "// This gets the x position of the 'title' widget.",
+      "// This gets the x position of the 'title' widget:",
       "var titleX = ${PROPERTY x OF title}",
-      "// You must capitalize `PROPERTY` and `OF` and the property name (and widget id if used) are case sensitive. For example, this is an invalid variable declaration and will give `null` as the value.",
+      "// You must capitalize `PROPERTY` and `OF`. The property name (and widget id if used) are case sensitive. For example, this is an invalid variable declaration and will give `null` as the value:",
       "var invalid = ${PROPERTY x of button2}",
-      "// You can also use a variable as the widget id like the following which sets the variable `thisText` to the property text of whatever value is in the variable `${thisButtonID}` (which in this case is `button1`.",
+      "// You can also use a variable as the widget `id` like the following which sets the variable `thisText` to the property text of whatever value is in the variable `${thisButtonID}` (which in this case is `button1`):",
       "var thisText = ${PROPERTY text OF $thisButtonID}",
       "// What follows looks like it would give the same result as the previous `thisText` variable. But this is also invalid syntax that yields `null` because what comes after the `OF` must either be a widget name or a variable.",
       "var anotherInvalid = ${PROPERTY text OF PROPERTY id}"
@@ -312,5 +285,32 @@
       "font-size": "22px"
     },
     "html": "Similar to arrays, you can create variables with object values by hard-coding them into widgets. That example is demonstated above. You could also use a <b>loopRoutine</b> to create the key-value pairs, but that is beyond the scope of this tutorial. For more about objects see the <a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Dynamic-Expressions#complex-objects'>Complex Objects wiki</a>."
+  },
+  "_meta": {
+    "version": 17,
+    "info": {
+      "name": "130 Variables and Collections",
+      "image": "/assets/975182181_6987",
+      "rules": "",
+      "bgg": "",
+      "year": "",
+      "mode": "Tutorial",
+      "time": "",
+      "attribution": "",
+      "lastUpdate": 1742958109677,
+      "showName": false,
+      "skill": "",
+      "description": "",
+      "similarImage": "",
+      "similarName": "",
+      "similarDesigner": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": "",
+      "variantImage": "",
+      "variant": "Variables: Creating",
+      "language": "en-US",
+      "players": "1"
+    }
   }
 }
