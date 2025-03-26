@@ -21,3 +21,12 @@ jobs:
         with:
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/virtualtabletop:latest
+
+      - name: Remove library files
+        run: rm -rf library/*/*
+
+      - name: Build and push without library
+        uses: docker/build-push-action@v5
+        with:
+          push: true
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/virtualtabletop:without-public-library
