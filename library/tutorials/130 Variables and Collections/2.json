@@ -1,0 +1,1363 @@
+{
+  "title": {
+    "id": "title",
+    "x": 400,
+    "y": -2,
+    "width": 800,
+    "height": 60,
+    "z": 74,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "font-size: 60px;text-align:center",
+    "text": "Collections"
+  },
+  "button2": {
+    "type": "button",
+    "id": "button2",
+    "x": 416,
+    "y": 402,
+    "z": 22839,
+    "clickRoutine": [
+      "// The simplest form of SELECT uses all the default parameters and will create a collection named `DEFAULT` that is all the widgets that do not have a parent. No widgets in this room have a parent so they are all in the collection. Click on the debugger and the SELECT function, be sure to view both `Original and applied operation` and `Variables, collection, and delta afterwards`.",
+      {
+        "func": "SELECT"
+      },
+      "// Usually, the SELECT will be more narrowly defined. A common method of selecting all of one type of widget, for example, is to use the relationship value of `!=` (not equal) to `null` on the `id`. The following SELECT function puts all of the buttons in the room into a collection named `DEFAULT`",
+      {
+        "func": "SELECT",
+        "type": "button",
+        "property": "id",
+        "relation": "!=",
+        "value": null
+      },
+      "// This SELECT does the same thing except it specifies the name of the output collection as `buttons`. Now there are two collections in the room containing an array of the `id`s of the buttons. Note that the `collection` parameter in SELECT is for the name of the output.",
+      {
+        "func": "SELECT",
+        "type": "button",
+        "property": "id",
+        "relation": "!=",
+        "value": null,
+        "collection": "buttons"
+      },
+      "// Think of using multiple SELECTs as a filter. If you want to use a collection as a starting input to further refine a collection, then use the `source` parameter as the name of the input collection. `Source` defaults to all widgets unless you change it. In the next example, the SELECT starts with the `buttons` collection and narrows it down to those buttons that have the text specified in the `value` parameter. Now the `DEFAULT` collection will contain only button1 and button2. Any functions following this one would use the newly defined `DEFAULT` collection and not the one created earlier.",
+      {
+        "func": "SELECT",
+        "source": "buttons",
+        "property": "text",
+        "relation": "in",
+        "value": [
+          "Pre-defined",
+          "Creating (Output)",
+          "Does not exist example"
+        ]
+      }
+    ],
+    "text": "Creating (Output)"
+  },
+  "overview": {
+    "id": "overview",
+    "x": 108,
+    "y": 80,
+    "width": 1400,
+    "height": 150,
+    "layer": -3,
+    "z": 129,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "font-size: 25px; ",
+    "html": "Collections are a group of widgets. They are stored in the form of an array consisting of the <b>id</b> of the widget. A collection can be an empty array if there are no widgets in it. Collections are created (output) by four functions, each of which has a tutorial (and wiki):  <a href='https://virtualtabletop.io/tutorial/functions-clone-and-delete'>CLONE</a> (<a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Functions#clone'>wiki</a>),  <a href='https://virtualtabletop.io/tutorial/functions-input'>INPUT</a> (<a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Functions#input'>wiki</a>), <a href='https://virtualtabletop.io/tutorial/functions-select'>SELECT</a> (<a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Functions#select'>wiki</a>), and  <a href='https://virtualtabletop.io/tutorial/seats'>TURN</a> (<a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Functions#turn'>wiki</a>). SELECT is the most common way to create a collection as that is its entire purpose. A few collections, like some variables, are predefined by the VTT code. Collections are available while that particular routine is active and do not persist within the room or game after the routine ends. Most functions act on collections and use those as the source (input) for what the function will do. Depending on the function, the input parameter may be called <b>collection</b> or <b>source</b>.  The four functions listed above do both: they optionally accept collections as input and also provide a collection as output. For each button below, click on it and compare what you see in the JSON with what shows up in the debugger output."
+  },
+  "button3": {
+    "type": "button",
+    "id": "button3",
+    "x": 743,
+    "y": 402,
+    "z": 22840,
+    "clickRoutine": [
+      "// First, we need to create a collection to work with. This time, we will SELECT all of the cards in the holder below. This example is actually not what we want, but it is here only as a teaching tool.",
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "holder3"
+      },
+      "// Look at the output from the previous SELECT.  There are 52 cards but the SELECT gathered 54 widgets. What happened? The Recall and Shuffle button and the pile are also children of holder3. That is not what we want. A better way to do that in this case is the following which limits the SELECT to widgets that are of the type `card`. The collection is named `allCards`.",
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "parent",
+        "value": "holder3",
+        "collection": "allCards"
+      },
+      "// To count the number of objects in a collection, you can simply do this. The `collection` parameter is the name of the existing collection we already made. The resulting variable name `COUNT` is the default variable name.",
+      {
+        "func": "COUNT",
+        "collection": "allCards"
+      },
+      "// Now let's assume we want to GET the id of the top card. We can do a SELECT and sort it at the same time. This sorts the output collection by their `z` property (the order widgets are stacked in a pile).",
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "parent",
+        "value": "holder3",
+        "collection": "allCards",
+        "sortBy": {
+          "key": "z",
+          "reverse": true
+        }
+      },
+      "// And now the GET outputs a variable that contains the `id` of the top card. The default get aggregation is `first` which means it only GET's the first widget in the collection. Look at the GET tutorial for more types of aggregation examples.",
+      {
+        "func": "GET",
+        "collection": "allCards",
+        "aggregation": "first",
+        "variable": "topCard"
+      }
+    ],
+    "text": "Using (Input)"
+  },
+  "button4": {
+    "type": "button",
+    "id": "button4",
+    "x": 1062,
+    "y": 402,
+    "z": 22840,
+    "clickRoutine": [
+      "// Assume you want this button to CLICK the Recall & Shuffle button at the bottom of this room. CLICK works on the collection of widgets specified in the `collection` parameter. One way to do this would be to SELECT the button and then CLICK it. The two functions below work with the default collection named `DEFAULT`:",
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "recallButton",
+        "collection": "DEFAULT"
+      },
+      {
+        "func": "CLICK",
+        "collection": "DEFAULT"
+      },
+      "// Using anonymous collections is an alternative way. Note how the `collection` parameter value is specified as an array and within the array is the `id` of the widget to be clicked.",
+      {
+        "func": "CLICK",
+        "collection": [
+          "recallButton"
+        ]
+      },
+      "// Anonymous collections also work with multiple widgets. The FLIP below works on the 3 checkers.",
+      {
+        "func": "CLICK",
+        "collection": [
+          "checker1",
+          "checker2",
+          "checker3"
+        ]
+      },
+      "// Anonymous collections also work with variables so long as the variable is an array. The COUNT below works on `checkersList` property on this widget.",
+      {
+        "func": "COUNT",
+        "collection": "${PROPERTY checkersList}"
+      }
+    ],
+    "text": "Anonymous Collections",
+    "css": {
+      "font-size": "14px"
+    },
+    "checkersList": [
+      "checker1",
+      "checker2",
+      "checker3"
+    ]
+  },
+  "text1": {
+    "id": "text1",
+    "x": 4,
+    "y": 552,
+    "width": 300,
+    "z": 185,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "22px"
+    },
+    "html": "The button above has a click routine with no functions, so it does nothing. But look at the debug output. You will see a list of predefined collections. Every routine has these: activeSeats, playerSeats, and thisButton. Read more at <a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Functions#predefined-variables'>Predefined Collections wiki</a>."
+  },
+  "button1": {
+    "type": "button",
+    "id": "button1",
+    "x": 95,
+    "y": 402,
+    "z": 22841,
+    "clickRoutine": [
+      "// Nothing to see here. Click and look at Debug report."
+    ],
+    "text": "Pre-defined"
+  },
+  "text2": {
+    "id": "text2",
+    "x": 325,
+    "y": 552,
+    "width": 300,
+    "z": 121,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "22px"
+    },
+    "html": "The button above demonstrates the most common way to create collections using the SELECT function. SELECT has multiple parameters and options. View the <a href='https://virtualtabletop.io/tutorial/functions-select'>SELECT tutorial</a> for more."
+  },
+  "text3": {
+    "id": "text3",
+    "x": 651,
+    "y": 552,
+    "width": 300,
+    "z": 9732,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "22px"
+    },
+    "html": "Once a collection is created, it can be used by other functions. The button above shows examples using COUNT and GET, but most functions work with collections."
+  },
+  "text4": {
+    "id": "text4",
+    "x": 964,
+    "y": 552,
+    "width": 300,
+    "z": 9732,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "22px"
+    },
+    "html": "Another way to provide an input collection into a function is to use 'anonymous collections'. These are really just pseudo-collections as they do not exist beyond the specific function they are used in. They consist of an array of the <b>id</b> or <b>id</b>s that the function will work with."
+  },
+  "hjlkP": {
+    "type": "pile",
+    "id": "hjlkP",
+    "width": 103,
+    "height": 160,
+    "z": 106,
+    "parent": "holder3"
+  },
+  "hjlkD": {
+    "type": "deck",
+    "id": "hjlkD",
+    "parent": "holder3",
+    "x": 12,
+    "y": 41,
+    "cardTypes": {
+      "T 1J": {
+        "image": "/i/cards-default/1J.svg",
+        "suit": "T",
+        "suitColor": "🃏",
+        "suitAlt": "5J",
+        "rank": "J1",
+        "rankA": "J1",
+        "rankFixed": "J1 T"
+      },
+      "T 2J": {
+        "image": "/i/cards-default/2J.svg",
+        "suit": "T",
+        "suitColor": "🃏",
+        "suitAlt": "5J",
+        "rank": "J2",
+        "rankA": "J2",
+        "rankFixed": "J2 T"
+      },
+      "T 3J": {
+        "image": "/i/cards-default/3J.svg",
+        "suit": "T",
+        "suitColor": "🃏",
+        "suitAlt": "5J",
+        "rank": "J3",
+        "rankA": "J3",
+        "rankFixed": "J3 T"
+      },
+      "T 4J": {
+        "image": "/i/cards-default/4J.svg",
+        "suit": "T",
+        "suitColor": "🃏",
+        "suitAlt": "5J",
+        "rank": "J4",
+        "rankA": "J4",
+        "rankFixed": "J4 T"
+      },
+      "C 01": {
+        "image": "/i/cards-default/AC.svg",
+        "suit": "C",
+        "suitColor": "♣",
+        "suitAlt": "1♣",
+        "rank": "01",
+        "rankA": "5A",
+        "rankFixed": "01 C"
+      },
+      "C 02": {
+        "image": "/i/cards-default/2C.svg",
+        "suit": "C",
+        "suitColor": "♣",
+        "suitAlt": "1♣",
+        "rank": "02",
+        "rankA": "02",
+        "rankFixed": "02 C"
+      },
+      "C 03": {
+        "image": "/i/cards-default/3C.svg",
+        "suit": "C",
+        "suitColor": "♣",
+        "suitAlt": "1♣",
+        "rank": "03",
+        "rankA": "03",
+        "rankFixed": "03 C"
+      },
+      "C 04": {
+        "image": "/i/cards-default/4C.svg",
+        "suit": "C",
+        "suitColor": "♣",
+        "suitAlt": "1♣",
+        "rank": "04",
+        "rankA": "04",
+        "rankFixed": "04 C"
+      },
+      "C 05": {
+        "image": "/i/cards-default/5C.svg",
+        "suit": "C",
+        "suitColor": "♣",
+        "suitAlt": "1♣",
+        "rank": "05",
+        "rankA": "05",
+        "rankFixed": "05 C"
+      },
+      "C 06": {
+        "image": "/i/cards-default/6C.svg",
+        "suit": "C",
+        "suitColor": "♣",
+        "suitAlt": "1♣",
+        "rank": "06",
+        "rankA": "06",
+        "rankFixed": "06 C"
+      },
+      "C 07": {
+        "image": "/i/cards-default/7C.svg",
+        "suit": "C",
+        "suitColor": "♣",
+        "suitAlt": "1♣",
+        "rank": "07",
+        "rankA": "07",
+        "rankFixed": "07 C"
+      },
+      "C 08": {
+        "image": "/i/cards-default/8C.svg",
+        "suit": "C",
+        "suitColor": "♣",
+        "suitAlt": "1♣",
+        "rank": "08",
+        "rankA": "08",
+        "rankFixed": "08 C"
+      },
+      "C 09": {
+        "image": "/i/cards-default/9C.svg",
+        "suit": "C",
+        "suitColor": "♣",
+        "suitAlt": "1♣",
+        "rank": "09",
+        "rankA": "09",
+        "rankFixed": "09 C"
+      },
+      "C 10": {
+        "image": "/i/cards-default/TC.svg",
+        "suit": "C",
+        "suitColor": "♣",
+        "suitAlt": "1♣",
+        "rank": "10",
+        "rankA": "10",
+        "rankFixed": "10 C"
+      },
+      "C 2J": {
+        "image": "/i/cards-default/JC.svg",
+        "suit": "C",
+        "suitColor": "♣",
+        "suitAlt": "1♣",
+        "rank": "2J",
+        "rankA": "2J",
+        "rankFixed": "2J C"
+      },
+      "C 3Q": {
+        "image": "/i/cards-default/QC.svg",
+        "suit": "C",
+        "suitColor": "♣",
+        "suitAlt": "1♣",
+        "rank": "3Q",
+        "rankA": "3Q",
+        "rankFixed": "3Q C"
+      },
+      "C 4K": {
+        "image": "/i/cards-default/KC.svg",
+        "suit": "C",
+        "suitColor": "♣",
+        "suitAlt": "1♣",
+        "rank": "4K",
+        "rankA": "4K",
+        "rankFixed": "4K C"
+      },
+      "D 01": {
+        "image": "/i/cards-default/AD.svg",
+        "suit": "D",
+        "suitColor": "♦",
+        "suitAlt": "4♦",
+        "rank": "01",
+        "rankA": "5A",
+        "rankFixed": "01 D"
+      },
+      "D 02": {
+        "image": "/i/cards-default/2D.svg",
+        "suit": "D",
+        "suitColor": "♦",
+        "suitAlt": "4♦",
+        "rank": "02",
+        "rankA": "02",
+        "rankFixed": "02 D"
+      },
+      "D 03": {
+        "image": "/i/cards-default/3D.svg",
+        "suit": "D",
+        "suitColor": "♦",
+        "suitAlt": "4♦",
+        "rank": "03",
+        "rankA": "03",
+        "rankFixed": "03 D"
+      },
+      "D 04": {
+        "image": "/i/cards-default/4D.svg",
+        "suit": "D",
+        "suitColor": "♦",
+        "suitAlt": "4♦",
+        "rank": "04",
+        "rankA": "04",
+        "rankFixed": "04 D"
+      },
+      "D 05": {
+        "image": "/i/cards-default/5D.svg",
+        "suit": "D",
+        "suitColor": "♦",
+        "suitAlt": "4♦",
+        "rank": "05",
+        "rankA": "05",
+        "rankFixed": "05 D"
+      },
+      "D 06": {
+        "image": "/i/cards-default/6D.svg",
+        "suit": "D",
+        "suitColor": "♦",
+        "suitAlt": "4♦",
+        "rank": "06",
+        "rankA": "06",
+        "rankFixed": "06 D"
+      },
+      "D 07": {
+        "image": "/i/cards-default/7D.svg",
+        "suit": "D",
+        "suitColor": "♦",
+        "suitAlt": "4♦",
+        "rank": "07",
+        "rankA": "07",
+        "rankFixed": "07 D"
+      },
+      "D 08": {
+        "image": "/i/cards-default/8D.svg",
+        "suit": "D",
+        "suitColor": "♦",
+        "suitAlt": "4♦",
+        "rank": "08",
+        "rankA": "08",
+        "rankFixed": "08 D"
+      },
+      "D 09": {
+        "image": "/i/cards-default/9D.svg",
+        "suit": "D",
+        "suitColor": "♦",
+        "suitAlt": "4♦",
+        "rank": "09",
+        "rankA": "09",
+        "rankFixed": "09 D"
+      },
+      "D 10": {
+        "image": "/i/cards-default/TD.svg",
+        "suit": "D",
+        "suitColor": "♦",
+        "suitAlt": "4♦",
+        "rank": "10",
+        "rankA": "10",
+        "rankFixed": "10 D"
+      },
+      "D 2J": {
+        "image": "/i/cards-default/JD.svg",
+        "suit": "D",
+        "suitColor": "♦",
+        "suitAlt": "4♦",
+        "rank": "2J",
+        "rankA": "2J",
+        "rankFixed": "2J D"
+      },
+      "D 3Q": {
+        "image": "/i/cards-default/QD.svg",
+        "suit": "D",
+        "suitColor": "♦",
+        "suitAlt": "4♦",
+        "rank": "3Q",
+        "rankA": "3Q",
+        "rankFixed": "3Q D"
+      },
+      "D 4K": {
+        "image": "/i/cards-default/KD.svg",
+        "suit": "D",
+        "suitColor": "♦",
+        "suitAlt": "4♦",
+        "rank": "4K",
+        "rankA": "4K",
+        "rankFixed": "4K D"
+      },
+      "H 01": {
+        "image": "/i/cards-default/AH.svg",
+        "suit": "H",
+        "suitColor": "♥",
+        "suitAlt": "2♥",
+        "rank": "01",
+        "rankA": "5A",
+        "rankFixed": "01 H"
+      },
+      "H 02": {
+        "image": "/i/cards-default/2H.svg",
+        "suit": "H",
+        "suitColor": "♥",
+        "suitAlt": "2♥",
+        "rank": "02",
+        "rankA": "02",
+        "rankFixed": "02 H"
+      },
+      "H 03": {
+        "image": "/i/cards-default/3H.svg",
+        "suit": "H",
+        "suitColor": "♥",
+        "suitAlt": "2♥",
+        "rank": "03",
+        "rankA": "03",
+        "rankFixed": "03 H"
+      },
+      "H 04": {
+        "image": "/i/cards-default/4H.svg",
+        "suit": "H",
+        "suitColor": "♥",
+        "suitAlt": "2♥",
+        "rank": "04",
+        "rankA": "04",
+        "rankFixed": "04 H"
+      },
+      "H 05": {
+        "image": "/i/cards-default/5H.svg",
+        "suit": "H",
+        "suitColor": "♥",
+        "suitAlt": "2♥",
+        "rank": "05",
+        "rankA": "05",
+        "rankFixed": "05 H"
+      },
+      "H 06": {
+        "image": "/i/cards-default/6H.svg",
+        "suit": "H",
+        "suitColor": "♥",
+        "suitAlt": "2♥",
+        "rank": "06",
+        "rankA": "06",
+        "rankFixed": "06 H"
+      },
+      "H 07": {
+        "image": "/i/cards-default/7H.svg",
+        "suit": "H",
+        "suitColor": "♥",
+        "suitAlt": "2♥",
+        "rank": "07",
+        "rankA": "07",
+        "rankFixed": "07 H"
+      },
+      "H 08": {
+        "image": "/i/cards-default/8H.svg",
+        "suit": "H",
+        "suitColor": "♥",
+        "suitAlt": "2♥",
+        "rank": "08",
+        "rankA": "08",
+        "rankFixed": "08 H"
+      },
+      "H 09": {
+        "image": "/i/cards-default/9H.svg",
+        "suit": "H",
+        "suitColor": "♥",
+        "suitAlt": "2♥",
+        "rank": "09",
+        "rankA": "09",
+        "rankFixed": "09 H"
+      },
+      "H 10": {
+        "image": "/i/cards-default/TH.svg",
+        "suit": "H",
+        "suitColor": "♥",
+        "suitAlt": "2♥",
+        "rank": "10",
+        "rankA": "10",
+        "rankFixed": "10 H"
+      },
+      "H 2J": {
+        "image": "/i/cards-default/JH.svg",
+        "suit": "H",
+        "suitColor": "♥",
+        "suitAlt": "2♥",
+        "rank": "2J",
+        "rankA": "2J",
+        "rankFixed": "2J H"
+      },
+      "H 3Q": {
+        "image": "/i/cards-default/QH.svg",
+        "suit": "H",
+        "suitColor": "♥",
+        "suitAlt": "2♥",
+        "rank": "3Q",
+        "rankA": "3Q",
+        "rankFixed": "3Q H"
+      },
+      "H 4K": {
+        "image": "/i/cards-default/KH.svg",
+        "suit": "H",
+        "suitColor": "♥",
+        "suitAlt": "2♥",
+        "rank": "4K",
+        "rankA": "4K",
+        "rankFixed": "4K H"
+      },
+      "S 01": {
+        "image": "/i/cards-default/AS.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "01",
+        "rankA": "5A",
+        "rankFixed": "01 S"
+      },
+      "S 02": {
+        "image": "/i/cards-default/2S.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "02",
+        "rankA": "02",
+        "rankFixed": "02 S"
+      },
+      "S 03": {
+        "image": "/i/cards-default/3S.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "03",
+        "rankA": "03",
+        "rankFixed": "03 S"
+      },
+      "S 04": {
+        "image": "/i/cards-default/4S.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "04",
+        "rankA": "04",
+        "rankFixed": "04 S"
+      },
+      "S 05": {
+        "image": "/i/cards-default/5S.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "05",
+        "rankA": "05",
+        "rankFixed": "05 S"
+      },
+      "S 06": {
+        "image": "/i/cards-default/6S.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "06",
+        "rankA": "06",
+        "rankFixed": "06 S"
+      },
+      "S 07": {
+        "image": "/i/cards-default/7S.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "07",
+        "rankA": "07",
+        "rankFixed": "07 S"
+      },
+      "S 08": {
+        "image": "/i/cards-default/8S.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "08",
+        "rankA": "08",
+        "rankFixed": "08 S"
+      },
+      "S 09": {
+        "image": "/i/cards-default/9S.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "09",
+        "rankA": "09",
+        "rankFixed": "09 S"
+      },
+      "S 10": {
+        "image": "/i/cards-default/TS.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "10",
+        "rankA": "10",
+        "rankFixed": "10 S"
+      },
+      "S 2J": {
+        "image": "/i/cards-default/JS.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "2J",
+        "rankA": "2J",
+        "rankFixed": "2J S"
+      },
+      "S 3Q": {
+        "image": "/i/cards-default/QS.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "3Q",
+        "rankA": "3Q",
+        "rankFixed": "3Q S"
+      },
+      "S 4K": {
+        "image": "/i/cards-default/KS.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "4K",
+        "rankA": "4K",
+        "rankFixed": "4K S"
+      }
+    },
+    "faceTemplates": [
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 103,
+            "height": 160,
+            "color": "transparent",
+            "value": "/i/cards-default/2B.svg"
+          }
+        ]
+      },
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 103,
+            "height": 160,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "hjlk_A_C": {
+    "id": "hjlk_A_C",
+    "parent": "hjlkP",
+    "deck": "hjlkD",
+    "type": "card",
+    "cardType": "C 01",
+    "z": 5084
+  },
+  "hjlk_2_C": {
+    "id": "hjlk_2_C",
+    "parent": "hjlkP",
+    "deck": "hjlkD",
+    "type": "card",
+    "cardType": "C 02",
+    "z": 5090
+  },
+  "hjlk_3_C": {
+    "id": "hjlk_3_C",
+    "parent": "hjlkP",
+    "deck": "hjlkD",
+    "type": "card",
+    "cardType": "C 03",
+    "z": 5096
+  },
+  "hjlk_4_C": {
+    "id": "hjlk_4_C",
+    "parent": "hjlkP",
+    "deck": "hjlkD",
+    "type": "card",
+    "cardType": "C 04",
+    "z": 5097
+  },
+  "hjlk_5_C": {
+    "id": "hjlk_5_C",
+    "parent": "hjlkP",
+    "deck": "hjlkD",
+    "type": "card",
+    "cardType": "C 05",
+    "z": 5057
+  },
+  "hjlk_6_C": {
+    "id": "hjlk_6_C",
+    "parent": "hjlkP",
+    "deck": "hjlkD",
+    "type": "card",
+    "cardType": "C 06",
+    "z": 5092
+  },
+  "hjlk_7_C": {
+    "id": "hjlk_7_C",
+    "parent": "hjlkP",
+    "deck": "hjlkD",
+    "type": "card",
+    "cardType": "C 07",
+    "z": 5072
+  },
+  "hjlk_8_C": {
+    "id": "hjlk_8_C",
+    "parent": "hjlkP",
+    "deck": "hjlkD",
+    "type": "card",
+    "cardType": "C 08",
+    "z": 5106
+  },
+  "hjlk_9_C": {
+    "id": "hjlk_9_C",
+    "parent": "hjlkP",
+    "deck": "hjlkD",
+    "type": "card",
+    "cardType": "C 09",
+    "z": 5094
+  },
+  "hjlk_T_C": {
+    "id": "hjlk_T_C",
+    "parent": "hjlkP",
+    "deck": "hjlkD",
+    "type": "card",
+    "cardType": "C 10",
+    "z": 5060
+  },
+  "hjlk_J_C": {
+    "id": "hjlk_J_C",
+    "parent": "hjlkP",
+    "deck": "hjlkD",
+    "type": "card",
+    "cardType": "C 2J",
+    "z": 5076
+  },
+  "hjlk_Q_C": {
+    "id": "hjlk_Q_C",
+    "parent": "hjlkP",
+    "deck": "hjlkD",
+    "type": "card",
+    "cardType": "C 3Q",
+    "z": 5063
+  },
+  "hjlk_K_C": {
+    "id": "hjlk_K_C",
+    "parent": "hjlkP",
+    "deck": "hjlkD",
+    "type": "card",
+    "cardType": "C 4K",
+    "z": 5073
+  },
+  "hjlk_A_D": {
+    "id": "hjlk_A_D",
+    "parent": "hjlkP",
+    "deck": "hjlkD",
+    "type": "card",
+    "cardType": "D 01",
+    "z": 5086
+  },
+  "hjlk_2_D": {
+    "id": "hjlk_2_D",
+    "parent": "hjlkP",
+    "deck": "hjlkD",
+    "type": "card",
+    "cardType": "D 02",
+    "z": 5065
+  },
+  "hjlk_3_D": {
+    "id": "hjlk_3_D",
+    "parent": "hjlkP",
+    "deck": "hjlkD",
+    "type": "card",
+    "cardType": "D 03",
+    "z": 5091
+  },
+  "hjlk_4_D": {
+    "id": "hjlk_4_D",
+    "parent": "hjlkP",
+    "deck": "hjlkD",
+    "type": "card",
+    "cardType": "D 04",
+    "z": 5085
+  },
+  "hjlk_5_D": {
+    "id": "hjlk_5_D",
+    "parent": "hjlkP",
+    "deck": "hjlkD",
+    "type": "card",
+    "cardType": "D 05",
+    "z": 5104
+  },
+  "hjlk_6_D": {
+    "id": "hjlk_6_D",
+    "parent": "hjlkP",
+    "deck": "hjlkD",
+    "type": "card",
+    "cardType": "D 06",
+    "z": 5062
+  },
+  "hjlk_7_D": {
+    "id": "hjlk_7_D",
+    "parent": "hjlkP",
+    "deck": "hjlkD",
+    "type": "card",
+    "cardType": "D 07",
+    "z": 5061
+  },
+  "hjlk_8_D": {
+    "id": "hjlk_8_D",
+    "parent": "hjlkP",
+    "deck": "hjlkD",
+    "type": "card",
+    "cardType": "D 08",
+    "z": 5069
+  },
+  "hjlk_9_D": {
+    "id": "hjlk_9_D",
+    "deck": "hjlkD",
+    "type": "card",
+    "cardType": "D 09",
+    "z": 5077,
+    "parent": "hjlkP"
+  },
+  "hjlk_T_D": {
+    "id": "hjlk_T_D",
+    "parent": "hjlkP",
+    "deck": "hjlkD",
+    "type": "card",
+    "cardType": "D 10",
+    "z": 5064
+  },
+  "hjlk_J_D": {
+    "id": "hjlk_J_D",
+    "parent": "hjlkP",
+    "deck": "hjlkD",
+    "type": "card",
+    "cardType": "D 2J",
+    "z": 5099
+  },
+  "hjlk_Q_D": {
+    "id": "hjlk_Q_D",
+    "parent": "hjlkP",
+    "deck": "hjlkD",
+    "type": "card",
+    "cardType": "D 3Q",
+    "z": 5067
+  },
+  "hjlk_K_D": {
+    "id": "hjlk_K_D",
+    "parent": "hjlkP",
+    "deck": "hjlkD",
+    "type": "card",
+    "cardType": "D 4K",
+    "z": 5075
+  },
+  "hjlk_A_H": {
+    "id": "hjlk_A_H",
+    "parent": "hjlkP",
+    "deck": "hjlkD",
+    "type": "card",
+    "cardType": "H 01",
+    "z": 5102
+  },
+  "hjlk_2_H": {
+    "id": "hjlk_2_H",
+    "parent": "hjlkP",
+    "deck": "hjlkD",
+    "type": "card",
+    "cardType": "H 02",
+    "z": 5058
+  },
+  "hjlk_3_H": {
+    "id": "hjlk_3_H",
+    "parent": "hjlkP",
+    "deck": "hjlkD",
+    "type": "card",
+    "cardType": "H 03",
+    "z": 5059
+  },
+  "hjlk_4_H": {
+    "id": "hjlk_4_H",
+    "parent": "hjlkP",
+    "deck": "hjlkD",
+    "type": "card",
+    "cardType": "H 04",
+    "z": 5105
+  },
+  "hjlk_5_H": {
+    "id": "hjlk_5_H",
+    "parent": "hjlkP",
+    "deck": "hjlkD",
+    "type": "card",
+    "cardType": "H 05",
+    "z": 5068
+  },
+  "hjlk_6_H": {
+    "id": "hjlk_6_H",
+    "parent": "hjlkP",
+    "deck": "hjlkD",
+    "type": "card",
+    "cardType": "H 06",
+    "z": 5078
+  },
+  "hjlk_7_H": {
+    "id": "hjlk_7_H",
+    "parent": "hjlkP",
+    "deck": "hjlkD",
+    "type": "card",
+    "cardType": "H 07",
+    "z": 5083
+  },
+  "hjlk_8_H": {
+    "id": "hjlk_8_H",
+    "parent": "hjlkP",
+    "deck": "hjlkD",
+    "type": "card",
+    "cardType": "H 08",
+    "z": 5071
+  },
+  "hjlk_9_H": {
+    "id": "hjlk_9_H",
+    "parent": "hjlkP",
+    "deck": "hjlkD",
+    "type": "card",
+    "cardType": "H 09",
+    "z": 5070
+  },
+  "hjlk_T_H": {
+    "id": "hjlk_T_H",
+    "parent": "hjlkP",
+    "deck": "hjlkD",
+    "type": "card",
+    "cardType": "H 10",
+    "z": 5081
+  },
+  "hjlk_J_H": {
+    "id": "hjlk_J_H",
+    "parent": "hjlkP",
+    "deck": "hjlkD",
+    "type": "card",
+    "cardType": "H 2J",
+    "z": 5056
+  },
+  "hjlk_Q_H": {
+    "id": "hjlk_Q_H",
+    "parent": "hjlkP",
+    "deck": "hjlkD",
+    "type": "card",
+    "cardType": "H 3Q",
+    "z": 5093
+  },
+  "hjlk_K_H": {
+    "id": "hjlk_K_H",
+    "parent": "hjlkP",
+    "deck": "hjlkD",
+    "type": "card",
+    "cardType": "H 4K",
+    "z": 5082
+  },
+  "hjlk_A_S": {
+    "id": "hjlk_A_S",
+    "parent": "hjlkP",
+    "deck": "hjlkD",
+    "type": "card",
+    "cardType": "S 01",
+    "z": 5066
+  },
+  "hjlk_2_S": {
+    "id": "hjlk_2_S",
+    "parent": "hjlkP",
+    "deck": "hjlkD",
+    "type": "card",
+    "cardType": "S 02",
+    "z": 5101
+  },
+  "hjlk_3_S": {
+    "id": "hjlk_3_S",
+    "parent": "hjlkP",
+    "deck": "hjlkD",
+    "type": "card",
+    "cardType": "S 03",
+    "z": 5079
+  },
+  "hjlk_4_S": {
+    "id": "hjlk_4_S",
+    "parent": "hjlkP",
+    "deck": "hjlkD",
+    "type": "card",
+    "cardType": "S 04",
+    "z": 5074
+  },
+  "hjlk_5_S": {
+    "id": "hjlk_5_S",
+    "parent": "hjlkP",
+    "deck": "hjlkD",
+    "type": "card",
+    "cardType": "S 05",
+    "z": 5055
+  },
+  "hjlk_6_S": {
+    "id": "hjlk_6_S",
+    "parent": "hjlkP",
+    "deck": "hjlkD",
+    "type": "card",
+    "cardType": "S 06",
+    "z": 5095
+  },
+  "hjlk_7_S": {
+    "id": "hjlk_7_S",
+    "parent": "hjlkP",
+    "deck": "hjlkD",
+    "type": "card",
+    "cardType": "S 07",
+    "z": 5098
+  },
+  "hjlk_8_S": {
+    "id": "hjlk_8_S",
+    "deck": "hjlkD",
+    "type": "card",
+    "cardType": "S 08",
+    "z": 5087,
+    "hoverParent": "holder3",
+    "parent": "hjlkP"
+  },
+  "hjlk_9_S": {
+    "id": "hjlk_9_S",
+    "parent": "hjlkP",
+    "deck": "hjlkD",
+    "type": "card",
+    "cardType": "S 09",
+    "z": 5103
+  },
+  "hjlk_T_S": {
+    "id": "hjlk_T_S",
+    "parent": "hjlkP",
+    "deck": "hjlkD",
+    "type": "card",
+    "cardType": "S 10",
+    "z": 5100
+  },
+  "hjlk_J_S": {
+    "id": "hjlk_J_S",
+    "parent": "hjlkP",
+    "deck": "hjlkD",
+    "type": "card",
+    "cardType": "S 2J",
+    "z": 5080
+  },
+  "hjlk_Q_S": {
+    "id": "hjlk_Q_S",
+    "parent": "hjlkP",
+    "deck": "hjlkD",
+    "type": "card",
+    "cardType": "S 3Q",
+    "z": 5088
+  },
+  "hjlk_K_S": {
+    "id": "hjlk_K_S",
+    "parent": "hjlkP",
+    "deck": "hjlkD",
+    "type": "card",
+    "cardType": "S 4K",
+    "z": 5089
+  },
+  "holder3": {
+    "type": "holder",
+    "id": "holder3",
+    "x": 734,
+    "y": 756,
+    "dropTarget": {
+      "type": "card"
+    },
+    "z": 130
+  },
+  "recallButton": {
+    "type": "button",
+    "id": "recallButton",
+    "parent": "holder3",
+    "fixedParent": true,
+    "y": 171.36,
+    "width": 111,
+    "height": 40,
+    "movableInEdit": false,
+    "text": "Recall & Shuffle",
+    "clickRoutine": [
+      "// Except for these comments, this button is the default clickRoutine added whenever you had a deck of cards from the add widget overlay. Note that it does not work with collections. It works by specifying the holder to perform the RECALL, FLIP, and SHUFFLE functions on.",
+      {
+        "func": "RECALL",
+        "holder": "${PROPERTY parent}"
+      },
+      {
+        "func": "FLIP",
+        "holder": "${PROPERTY parent}",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "${PROPERTY parent}"
+      }
+    ]
+  },
+  "checker3": {
+    "id": "checker3",
+    "x": 1130,
+    "y": 859,
+    "width": 75,
+    "height": 75,
+    "z": 9733,
+    "classes": "chip",
+    "color": "purple",
+    "faces": [
+      {
+        "image": "i/game-pieces/2D/Checkers-2D.svg",
+        "crowned": false
+      },
+      {
+        "image": "i/game-pieces/2D/Crowned-Checkers-2D.svg",
+        "crowned": true
+      }
+    ],
+    "image": "i/game-pieces/2D/Crowned-Checkers-2D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 1,
+    "crowned": true,
+    "secondaryColor": "#ffffff",
+    "activeFace": 1
+  },
+  "checker2": {
+    "id": "checker2",
+    "x": 1055,
+    "y": 859,
+    "width": 75,
+    "height": 75,
+    "z": 9733,
+    "classes": "chip",
+    "color": "orange",
+    "faces": [
+      {
+        "image": "i/game-pieces/2D/Checkers-2D.svg",
+        "crowned": false
+      },
+      {
+        "image": "i/game-pieces/2D/Crowned-Checkers-2D.svg",
+        "crowned": true
+      }
+    ],
+    "image": "i/game-pieces/2D/Crowned-Checkers-2D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 1,
+    "crowned": true,
+    "secondaryColor": "#ffffff",
+    "activeFace": 1
+  },
+  "checker1": {
+    "id": "checker1",
+    "x": 980,
+    "y": 859,
+    "width": 75,
+    "height": 75,
+    "z": 9733,
+    "classes": "chip",
+    "color": "red",
+    "faces": [
+      {
+        "image": "i/game-pieces/2D/Checkers-2D.svg",
+        "crowned": false
+      },
+      {
+        "image": "i/game-pieces/2D/Crowned-Checkers-2D.svg",
+        "crowned": true
+      }
+    ],
+    "image": "i/game-pieces/2D/Crowned-Checkers-2D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 1,
+    "crowned": true,
+    "secondaryColor": "#ffffff",
+    "activeFace": 1
+  },
+  "_meta": {
+    "version": 17,
+    "info": {
+      "name": "130 Variables and Collections",
+      "image": "/assets/975182181_6987",
+      "rules": "",
+      "bgg": "",
+      "year": "",
+      "mode": "Tutorial",
+      "time": "",
+      "attribution": "",
+      "lastUpdate": 1742958109680,
+      "showName": false,
+      "skill": "",
+      "description": "",
+      "similarImage": "",
+      "similarName": "",
+      "similarDesigner": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": "",
+      "variantImage": "",
+      "variant": "Collections",
+      "language": "en-US",
+      "players": "1"
+    }
+  }
+}
