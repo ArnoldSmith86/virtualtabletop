@@ -1649,12 +1649,6 @@
             "property": "onlyVisibleForSeat",
             "relation": "=",
             "value": null
-          },
-          {
-            "func": "SET",
-            "property": "text",
-            "relation": "=",
-            "value": 0
           }
         ]
       }
@@ -8121,7 +8115,7 @@
       "mode": "vs",
       "time": "20-40",
       "attribution": "<div>Game design by Robert Hovakimyan.<br><br>Art assets by Alisha Giroux.</div><div><br></div><div>Layout and scripting by Robin Harn, released to the Public Domain under CC0.</div>\nGame name and all art assets used with permission from the rights holder, Bitewing Games.",
-      "lastUpdate": 1742957611936,
+      "lastUpdate": 1743009936684,
       "showName": false,
       "skill": "",
       "description": "Deploy ants on a picnic blanket to connect and stockpile sweets.",
