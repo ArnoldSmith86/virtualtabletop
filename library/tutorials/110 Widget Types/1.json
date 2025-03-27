@@ -87,7 +87,7 @@
     "css": {
       "font-size": "22px"
     },
-    "html": "Seats are used in games to indicate which widgets belong to certain players, to limit visibility of certain widgets to certain players, and to indicate whose turn it is. Two default seats are available. They are identical except that the bottom one has a small round counter that shows the number of cards in that players hand."
+    "html": "Seats are used in games to indicate which widgets belong to certain players, to limit visibility of certain widgets to certain players, and to indicate whose turn it is. Two default seats are available. They are identical except that the bottom one has a small round counter that shows the number of cards in that player's hand."
   },
   "_meta": {
     "version": 17,
@@ -100,7 +100,7 @@
       "mode": "Tutorial",
       "time": "",
       "attribution": "",
-      "lastUpdate": 1743043408804,
+      "lastUpdate": 1743096712988,
       "showName": false,
       "skill": "",
       "description": "",
@@ -1089,7 +1089,7 @@
   "label1": {
     "type": "label",
     "id": "label1",
-    "x": 1071,
+    "x": 1056,
     "y": 347,
     "z": 1,
     "text": "Label"
@@ -1097,7 +1097,7 @@
   "label2": {
     "type": "label",
     "id": "label2",
-    "x": 1021,
+    "x": 1006,
     "y": 439,
     "width": 200,
     "height": 42,
