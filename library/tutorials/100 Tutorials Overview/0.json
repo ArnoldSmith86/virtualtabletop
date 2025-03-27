@@ -10,7 +10,7 @@
       "mode": "Tutorial",
       "time": "",
       "attribution": "",
-      "lastUpdate": 1742863179483,
+      "lastUpdate": 1743110591351,
       "showName": false,
       "skill": "",
       "description": "",
@@ -62,7 +62,7 @@
     "css": {
       "font-size": "22px"
     },
-    "html": "At the beginning of the tutorials are a few that cover basic but important concepts in using JSON to create games on VTT. You should look at all of these first and in order. They are numbered. The ones that are currently completed have a *. The others are in progress.\n\n*100 Tutorials Overview\n110 Widget Types\n120 Widget Properties\n*130 Variables and Collections\n140 Functions Overview\n150 Dynamic Expressions\n160 Computations Operations"
+    "html": "At the beginning of the tutorials are a few that cover basic but important concepts in using JSON to create games on VTT. You should look at all of these first and in order. They are numbered. The ones that are still in progress have *.\n\n100 Tutorials Overview\n110 Widget Types\n120 Widget Properties\n130 Variables and Collections\n140 Functions Overview\n*150 Dynamic Expressions\n*160 Computations Operations"
   },
   "text2": {
     "id": "text2",
