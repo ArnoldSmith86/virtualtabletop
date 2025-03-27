@@ -1830,7 +1830,7 @@ export class Widget extends StateManaged {
         if(a.holder !== undefined) {
           if(this.isValidID(a.holder, problems)) {
             await w(a.holder, async holder=>{
-              await shuffleWidgets(holder.children(), a.mode, a.modeValue);
+              await shuffleWidgets(holder.children().reverse(), a.mode, a.modeValue);
               if(typeof holder.updateAfterShuffle == 'function')
                 await holder.updateAfterShuffle();
             });

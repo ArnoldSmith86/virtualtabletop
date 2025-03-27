@@ -309,7 +309,6 @@ export async function shuffleWidgets(collection, mode = "true random", modeValue
         break;
       case "seeded":
         fisherYatesSeeded();
-        fisherYatesSeeded(); //Needed twice for reasons
         break;
       case "riffle":
         riffleShuffle();
@@ -319,7 +318,6 @@ export async function shuffleWidgets(collection, mode = "true random", modeValue
         break;
       case "reverse":
         reverseMode();
-        reverseMode(); //Needed twice for reasons
         break;
       default:
         fisherYates();
