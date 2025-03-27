@@ -48,7 +48,7 @@
     "css": {
       "font-size": "22px"
     },
-    "html": "The default deck is above. Players do not interact with and cannot even see a deck widget. Decks are used to define what cards look like and act like. Cards are the only widget type that form piles.\n\n<a href='https://virtualtabletop.io/tutorial/piles'>Piles</a> (<a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Widgets#pile'>wiki</a>) are their own widget type, but typically they are automatically manged by the VTT engine. Players can click on the pile to get a few limited options or they can click and drag the entire pile as a group."
+    "html": "The default deck is above. Players do not interact with and cannot even see a deck widget. Decks are used to define what cards look like and act like. Cards are the only widget type that form piles.\n\n<a href='https://virtualtabletop.io/tutorial/piles'>Piles</a> (<a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Widgets#pile'>wiki</a>) are their own widget type, but typically they are automatically managed by the VTT engine. Players can click on the pile handle to get a few limited options or they can click and drag the entire pile as a group."
   },
   "text3": {
     "id": "text3",
@@ -61,7 +61,7 @@
     "css": {
       "font-size": "22px"
     },
-    "html": "The default holder is above. By default, only cards can be dragged into a holder, but that can be changed to any widget type. When widgets are in a holder, they are `children` of the holder (or the pile, but more on that later) and the holder (or pile) is the `parent`.\n\n `Hands`, used to keep certain widgets only visibile to the player holding them, are just a holder type widget with the property <b>children per owner</b> set to true."
+    "html": "The default holder is above. By default, only cards can be dragged into a holder, but that can be changed to any widget type. When widgets are in a holder, they are <i>children</i> of the holder (or the pile, but more on that later) and the holder (or pile) is the <b>parent</b>.\n\n <i>Hands</i>, used to keep certain widgets only visibile to the player holding them, are just a holder type widget with the property <b>childrenPerOwner</b> set to true."
   },
   "text4": {
     "id": "text4",

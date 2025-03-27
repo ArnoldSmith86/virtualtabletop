@@ -61,7 +61,7 @@
     "css": {
       "font-size": "22px"
     },
-    "html": "In the lower right of the add widget overlay is an area called Custom. Upload Board and Upload Token both allow you to upload an image into a basic widget. The difference is that a board fills the screen and is not movable while a token is smaller and movable (by deault). Or you can choose the 3rd option to Add Basic Widget and you get the example above."
+    "html": "In the lower right of the add widget overlay is an area called Custom. Upload Board and Upload Token both allow you to upload an image into a basic widget. The difference is that a board fills the screen and is not movable while a token is smaller and movable (by default). Or you can choose the 3rd option to Add Basic Widget and you get the example above."
   },
   "text4": {
     "id": "text4",
