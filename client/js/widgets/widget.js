@@ -1825,7 +1825,7 @@ export class Widget extends StateManaged {
       }
 
       if(a.func == 'SHUFFLE') {
-        setDefaults(a, { collection: 'DEFAULT', mode: 'traditional', modeValue: 1 });
+        setDefaults(a, { collection: 'DEFAULT', mode: 'true random', modeValue: 1 });
         let collection;
         if(a.holder !== undefined) {
           if(this.isValidID(a.holder, problems)) {

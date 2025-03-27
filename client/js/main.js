@@ -238,7 +238,7 @@ function getRoomRectangle() {
   return roomRectangle;
 }
 
-export async function shuffleWidgets(collection, mode = "traditional", modeValue = 1) {
+export async function shuffleWidgets(collection, mode = "true random", modeValue = 1) {
   const len = collection.length;
   let indexes = [...Array(len).keys()];
 
@@ -304,7 +304,7 @@ export async function shuffleWidgets(collection, mode = "traditional", modeValue
   let iterations = (mode === "riffle" || mode === "overhand") ? modeValue : 1;
   for (let i = 0; i < iterations; i++) {
     switch (mode) {
-      case "traditional":
+      case "true random":
         fisherYates();
         break;
       case "seeded":
