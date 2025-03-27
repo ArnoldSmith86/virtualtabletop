@@ -1609,10 +1609,10 @@ export class Widget extends StateManaged {
                   cards.sort((c1, c2) => {
                     const dx1 = deck.get('_centerAbsoluteX') - c1.get('_centerAbsoluteX');
                     const dy1 = deck.get('_centerAbsoluteY') - c1.get('_centerAbsoluteY');
-                    const d1 = Math.sqrt(dx1 * dx1 + dy1 * dy1);                    
+                    const d1 = dx1 * dx1 + dy1 * dy1;                    
                     const dx2 = deck.get('_centerAbsoluteX') - c2.get('_centerAbsoluteX');
                     const dy2 = deck.get('_centerAbsoluteY') - c2.get('_centerAbsoluteY');
-                    const d2 = Math.sqrt(dx2 * dx2 + dy2 * dy2);
+                    const d2 = dx2 * dx2 + dy2 * dy2;
                     
                     if(d1 !== d2)
                       return d1 - d2;
