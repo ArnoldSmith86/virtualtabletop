@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' viewBox='0 0 74.16 115.20'>
+<defs>
+  <style type='text/css'><![CDATA[
+    line, polyline, polygon, path, rect, circle {
+      fill: none;
+      stroke: #000000;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-miterlimit: 10.00;
+    }
+  ]]></style>
+</defs>
+<rect width='100%' height='100%' style='stroke: none; fill: #FFFFFF;'/>
+<rect x='0.00' y='-0.000000000000028' width='74.16' height='115.20' style='stroke-width: 0.75; fill: #000000;' />
+<text x='7.36' y='18.36' style='font-size: 22.04px; fill: #FFFFFF; font-family: Arial;' textLength='12.26px' lengthAdjust='spacingAndGlyphs'>4</text>
+<text x='21.26' y='77.97' style='font-size: 56.91px; fill: #FFFFFF; font-family: Arial;' textLength='31.65px' lengthAdjust='spacingAndGlyphs'>4</text>
+</svg>
