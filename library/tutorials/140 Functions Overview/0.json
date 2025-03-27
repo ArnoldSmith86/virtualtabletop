@@ -1,0 +1,1269 @@
+{
+  "title": {
+    "id": "title",
+    "x": 400,
+    "y": -2,
+    "width": 800,
+    "height": 60,
+    "z": 74,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "font-size: 60px;text-align:center",
+    "text": "Functions Overview"
+  },
+  "overview": {
+    "id": "overview",
+    "x": 108,
+    "y": 80,
+    "width": 1400,
+    "height": 150,
+    "layer": -3,
+    "z": 129,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "font-size: 25px; ",
+    "html": "Functions (<a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Functions'>wiki</a>) are the key to automating activities in VTT. Functions are bits of JSON code that tell the VTT engine to take some action within specified (or default) parameters. Functions only work inside <a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Functions#predefined-routines'>routines</a> which are a kind of widget property. Each function and its parameters are described in the wiki and there is a separate tutorial for each function.\n\nAn important technical note about functions and routines: they operate on the local browser of the player that took the action. The resulting changes are sent to the VTT servers and then broadcast out to the other players to see the change. You can simulate this by having the same room open in two different browsers (or in the same browser if another tab is in incognito mode). This means there might be a slight processing delay and it means that if you are debugging problems (see the last button in this tutorial), you can only see the debug output for room changes that your browser initiated."
+  },
+  "text1": {
+    "id": "text1",
+    "x": 4,
+    "y": 552,
+    "width": 300,
+    "z": 185,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "22px"
+    },
+    "html": "Look at the JSON of the button above in Edit Mode. Each type of routine is presented there with a brief comment about how to trigger the routine. The button itself actually does nothing. It just contains routines with comments. Routines are listed in alphabetical order in the list of widget properties. See the <a href='https://virtualtabletop.io/tutorial/routines'>Routines tutorial</a> for more. Special purpose routines that are part of FOREACH and IF functions are not covered here."
+  },
+  "text2": {
+    "id": "text2",
+    "x": 325,
+    "y": 552,
+    "width": 300,
+    "z": 121,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "22px"
+    },
+    "html": "To add a function, in Edit Mode place the cursor inside a routine. The Editor will display a list of functions. In the button above, add COUNT. The Editor changes to display a list of parameters available for that function: <b>collection</b>, <b>comment</b>, <b>holder</b>, <b>owner</b>, and <b>variable</b>. Clicking those adds them to the JSON for that function. <u>Important</u>: the function uses the default values whether shown in the JSON or not unless the default is changed."
+  },
+  "text3": {
+    "id": "text3",
+    "x": 651,
+    "y": 552,
+    "width": 300,
+    "z": 9732,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "22px"
+    },
+    "html": "To continue from the previous example... The first two COUNT functions in the button above do the exact same thing. Why? The 1st COUNT has implied default values for the paramaters that you do not see in the JSON. The 2nd COUNT lists those defaults as part of the JSON. The 3rd COUNT changes the collection parameter. When adding functions, you can either leave out or include the default values, but you must specify any non-default values."
+  },
+  "text4": {
+    "id": "text4",
+    "x": 964,
+    "y": 552,
+    "width": 300,
+    "z": 9732,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "22px"
+    },
+    "html": "Functions make changes to a room, sometimes visible and sometimes not. Changes made depend on the function and what input is given: variables or collections (<a href='https://virtualtabletop.io/tutorial/variables-and-collections'>tutorial</a>) or properties (<a href='https://virtualtabletop.io/tutorial/widget-properties'>tutorial</a>). Output also depends on the function. Some work only with certain widget types, and others work with any. Usually the result of a function will be to modify a variable, collection, or property. Click the button above for examples."
+  },
+  "text5": {
+    "id": "text5",
+    "x": 1294,
+    "y": 552,
+    "width": 300,
+    "z": 9732,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "22px"
+    },
+    "html": "When developing a game, use the debug output (<a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Edit-Mode#Debug'>wiki</a>) to get a better idea of what is happening. Sometimes the problems are obvious because you see a red arrow. Other times, you may get a red arrow, but that is not really the problem. And often, there will be no red arrows but things still are not as expected. Review the tutorials and wiki and do not be afraid to ask for help on Discord. Click the button above for examples."
+  },
+  "_meta": {
+    "version": 17,
+    "info": {
+      "name": "140 Functions Overview",
+      "image": "/assets/130052497_4746",
+      "rules": "",
+      "bgg": "",
+      "year": "",
+      "mode": "Tutorial",
+      "time": "",
+      "attribution": "",
+      "lastUpdate": 1743110426619,
+      "showName": false,
+      "skill": "",
+      "description": "",
+      "similarImage": "",
+      "similarName": "",
+      "similarDesigner": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": "",
+      "players": "",
+      "language": "en-US",
+      "variant": "",
+      "variantImage": ""
+    }
+  },
+  "button1": {
+    "type": "button",
+    "id": "button1",
+    "x": 95,
+    "y": 402,
+    "z": 22841,
+    "clickRoutine": [
+      "// The most common and intuitive routine. Buttons are a typical example, but a `clickRoutine` can be on any widget except decks. As long as the widget is visible and the `clickable` property is true, then the routine will activate."
+    ],
+    "text": "Routines",
+    "changeRoutine": [
+      "// This will trigger whenever any property of this widget changes. You can limit the sensitivity to a particular property of the widget by adding that property at the beginning and then capitalizing the C. For example, `xChangeRoutine` will trigger whenever the `x` property changes."
+    ],
+    "gameStartRoutine": [
+      "// This routine starts as soon as the game is loaded by pressing the play button for the game on the Game Shelf."
+    ],
+    "globalUpdateRoutine": [
+      "// This is similar to `changeRoutine` except that it triggers when ANY property of ANY widget changes. You probably almost never want that. So specify the property you want to trigger the routine like this: `ownerGlobalUpdateRoutine`. That will trigger whenever the `owner` property of any widget changes. This is how the seat counter on the seat widgets works.",
+      "// The Example and Debug & Errors buttons make changes in the room that will trigger this routine. You can see it in the debug output after clicking on those buttons."
+    ],
+    "enterRoutine": [
+      "// Triggered whenever a widget becomes a child of this widget. Usually during play, this is when a widget is moved into a holder. But this is also triggered by using routines to make a widget a child of a parent. The routine can be triggered multiple times in the same action. For example, dragging a pile of 52 cards triggers the routine 53 times: once for each card and once for the pile."
+    ],
+    "leaveRoutine": [
+      "// Activated whenever a child is removed from this widget. Warning: depending on how this happens, a `leaveRoutine` can be triggered from 1 to 4 times for a single widget. Most commonly it happens twice. So keep in mind that the `leaveRoutine` will usually trigger multiple times for each widget that will no longer be a child of this widget."
+    ],
+    "customRoutine": [
+      "// Like with custom properties, you can create any routine name you want as long as it ends with `Routine`. The limitation, however, is that these kinds of routines are only activated by using the CALL function within some other kind of routine."
+    ],
+    "layer": 2
+  },
+  "button2": {
+    "type": "button",
+    "id": "button2",
+    "z": 22846,
+    "clickRoutine": [],
+    "x": 420,
+    "y": 402,
+    "text": "Parameters",
+    "css": {
+      "font-size": "14px"
+    },
+    "layer": 2
+  },
+  "button3": {
+    "type": "button",
+    "id": "button3",
+    "z": 22845,
+    "clickRoutine": [
+      "// Do not worry about the debug error caused by this button. The Debug & Errors button on the right explains this.",
+      "// The first two functions are identical in result although they differ in appearance.",
+      {
+        "func": "COUNT"
+      },
+      {
+        "func": "COUNT",
+        "collection": "DEFAULT",
+        "holder": null,
+        "owner": null,
+        "variable": "COUNT"
+      },
+      "// This function works on a different collection because the collection is changed from `DEFAULT` to an anonymous collection.",
+      {
+        "func": "COUNT",
+        "collection": [
+          "button1",
+          "button2",
+          "button3",
+          "button4",
+          "button5"
+        ]
+      }
+    ],
+    "x": 745,
+    "y": 402,
+    "text": "Defaults",
+    "layer": 2
+  },
+  "button4": {
+    "type": "button",
+    "id": "button4",
+    "z": 22844,
+    "clickRoutine": [
+      "// This SELECT chooses all of the text areas in this tutorial, except for the large font title at the top, by looking for the `html` property. Basic widgets like the text in this room have that property but buttons do not. Note the source/input is the default `all` so all widgets are initially considered as input for the SELECT. That is specified below for clarity, but need not be included in the JSON. The output will be a collection named `DEFAULT`. That is not specified below but is implied because it is the default name for the output collection. So turning the function below into plain text it does this: Select from all widgets those that have an html property that is not null and put those widgets into a collection named DEFAULT.",
+      {
+        "func": "SELECT",
+        "source": "all",
+        "property": "html",
+        "relation": "!=",
+        "value": null
+      },
+      "// This ROTATE takes as input the DEFAULT collection created by the previous SELECT. The output is to change their rotation. The `collection` and `mode` are the default values, but the `count` and `angle` are not default values. To translate the function below into plain text: Using the widgets in the DEFAULT collection, increase the rotation of all of them by 180 degrees. The result of this function is to modify the `rotation` property on each of those widgets.",
+      {
+        "func": "ROTATE",
+        "collection": "DEFAULT",
+        "count": "all",
+        "mode": "add",
+        "angle": 180
+      }
+    ],
+    "x": 1069,
+    "y": 402,
+    "text": "Example",
+    "layer": 2
+  },
+  "button5": {
+    "type": "button",
+    "id": "button5",
+    "z": 22847,
+    "clickRoutine": [
+      "// The COUNT function below is identical to the first one in the Defaults button. It attempts to count the collection named `DEFAULT`. However, there is no collection so the debug report says the collection DEFAULT does not exist or is not an array. That is the explanation of the problem. COUNT needs a holder or a collection as input and there is not one.",
+      {
+        "func": "COUNT"
+      },
+      "// The SELECT function below is identical to the one in the Example button that selected 6 text areas except that the relation parameter is changed from `!=` to `>`. So now this SELECT is looking for widgets with an html property greater than null. In terms of properties and their relationships, that does not make sense, but it is not an error. However, 0 widgets are selected and put into the collection. So when the subsequent COUNT executes, the result is 0. In this case, the problem is not with COUNT, but again with the SELECT and creation of a collection.",
+      {
+        "func": "SELECT",
+        "source": "all",
+        "property": "html",
+        "relation": ">",
+        "value": null,
+        "collection": "DEFAULT"
+      },
+      {
+        "func": "COUNT"
+      },
+      "// Consider the following common example of when a red arrow does not indicate a problem. Offscreen (you can use the magnifying glass toggle icon at the top of the screen to see them) are some seats, cards, and holders. They are off screen to keep the room appearance simple, but they behave the same. The MOVE function moves up to 10 cards to each seat. This technique is often used. However, only seats 1 and 2 are occupied. The debug output shows a red arrow indicating seat3 and seat4 are empty. But that is not really a problem. seat1 and seat2 got their cards. Despite the red arrow, this is not really a bug.",
+      {
+        "func": "MOVE",
+        "from": "deckHolder",
+        "to": [
+          "seat1",
+          "seat2",
+          "seat3",
+          "seat4"
+        ],
+        "fillTo": 10
+      },
+      "// Finally, some functions have the capability to freeze the browser and force a refresh. For example, if you add a CALL function to this button with no other parameters, the room will freeze. You will not see a debug output. After a few seconds, you will have to reload the room. That happens with CALL because the default values are to CALL the `clickRoutine` on this widget. That CALLs the same routine over and over in an endless cycles called recursion. Recursion is the most typical example of a cause of freezing and can be difficult to track down since you do not get debug results. If you want to try that, go ahead, no harm will be done."
+    ],
+    "x": 1394,
+    "y": 402,
+    "layer": 2,
+    "text": "Debug & Errors"
+  },
+  "seat1": {
+    "type": "seat",
+    "id": "seat1",
+    "x": 709,
+    "y": 1033,
+    "player": "player 1",
+    "color": "hsl(39, 100%, 50%)"
+  },
+  "seat2": {
+    "type": "seat",
+    "id": "seat2",
+    "x": 859,
+    "y": 1033,
+    "index": 2,
+    "player": "player 2",
+    "color": "hsl(314, 100%, 50%)"
+  },
+  "seat3": {
+    "type": "seat",
+    "id": "seat3",
+    "x": 1009,
+    "y": 1033,
+    "index": 3
+  },
+  "seat4": {
+    "type": "seat",
+    "id": "seat4",
+    "x": 1159,
+    "y": 1033,
+    "index": 4
+  },
+  "hand": {
+    "type": "holder",
+    "onEnter": {
+      "activeFace": 1
+    },
+    "onLeave": {
+      "activeFace": 0
+    },
+    "dropOffsetX": 10,
+    "dropOffsetY": 14,
+    "stackOffsetX": 40,
+    "childrenPerOwner": true,
+    "dropShadow": true,
+    "hidePlayerCursors": true,
+    "x": 113,
+    "y": 1139,
+    "width": 1500,
+    "height": 180,
+    "id": "hand"
+  },
+  "kbb6B": {
+    "id": "kbb6B",
+    "parent": "deckHolder",
+    "fixedParent": true,
+    "y": 171.36,
+    "width": 111,
+    "height": 40,
+    "type": "button",
+    "text": "Recall & Shuffle",
+    "movableInEdit": false,
+    "clickRoutine": [
+      {
+        "func": "RECALL",
+        "holder": "${PROPERTY parent}"
+      },
+      {
+        "func": "FLIP",
+        "holder": "${PROPERTY parent}",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "${PROPERTY parent}"
+      }
+    ]
+  },
+  "kbb6P": {
+    "type": "pile",
+    "id": "kbb6P",
+    "width": 103,
+    "height": 160,
+    "z": 4,
+    "parent": "deckHolder"
+  },
+  "kbb6D": {
+    "type": "deck",
+    "id": "kbb6D",
+    "parent": "deckHolder",
+    "x": 12,
+    "y": 41,
+    "cardTypes": {
+      "T 1J": {
+        "image": "/i/cards-default/1J.svg",
+        "suit": "T",
+        "suitColor": "🃏",
+        "suitAlt": "5J",
+        "rank": "J1",
+        "rankA": "J1",
+        "rankFixed": "J1 T"
+      },
+      "T 2J": {
+        "image": "/i/cards-default/2J.svg",
+        "suit": "T",
+        "suitColor": "🃏",
+        "suitAlt": "5J",
+        "rank": "J2",
+        "rankA": "J2",
+        "rankFixed": "J2 T"
+      },
+      "T 3J": {
+        "image": "/i/cards-default/3J.svg",
+        "suit": "T",
+        "suitColor": "🃏",
+        "suitAlt": "5J",
+        "rank": "J3",
+        "rankA": "J3",
+        "rankFixed": "J3 T"
+      },
+      "T 4J": {
+        "image": "/i/cards-default/4J.svg",
+        "suit": "T",
+        "suitColor": "🃏",
+        "suitAlt": "5J",
+        "rank": "J4",
+        "rankA": "J4",
+        "rankFixed": "J4 T"
+      },
+      "C 01": {
+        "image": "/i/cards-default/AC.svg",
+        "suit": "C",
+        "suitColor": "♣",
+        "suitAlt": "1♣",
+        "rank": "01",
+        "rankA": "5A",
+        "rankFixed": "01 C"
+      },
+      "C 02": {
+        "image": "/i/cards-default/2C.svg",
+        "suit": "C",
+        "suitColor": "♣",
+        "suitAlt": "1♣",
+        "rank": "02",
+        "rankA": "02",
+        "rankFixed": "02 C"
+      },
+      "C 03": {
+        "image": "/i/cards-default/3C.svg",
+        "suit": "C",
+        "suitColor": "♣",
+        "suitAlt": "1♣",
+        "rank": "03",
+        "rankA": "03",
+        "rankFixed": "03 C"
+      },
+      "C 04": {
+        "image": "/i/cards-default/4C.svg",
+        "suit": "C",
+        "suitColor": "♣",
+        "suitAlt": "1♣",
+        "rank": "04",
+        "rankA": "04",
+        "rankFixed": "04 C"
+      },
+      "C 05": {
+        "image": "/i/cards-default/5C.svg",
+        "suit": "C",
+        "suitColor": "♣",
+        "suitAlt": "1♣",
+        "rank": "05",
+        "rankA": "05",
+        "rankFixed": "05 C"
+      },
+      "C 06": {
+        "image": "/i/cards-default/6C.svg",
+        "suit": "C",
+        "suitColor": "♣",
+        "suitAlt": "1♣",
+        "rank": "06",
+        "rankA": "06",
+        "rankFixed": "06 C"
+      },
+      "C 07": {
+        "image": "/i/cards-default/7C.svg",
+        "suit": "C",
+        "suitColor": "♣",
+        "suitAlt": "1♣",
+        "rank": "07",
+        "rankA": "07",
+        "rankFixed": "07 C"
+      },
+      "C 08": {
+        "image": "/i/cards-default/8C.svg",
+        "suit": "C",
+        "suitColor": "♣",
+        "suitAlt": "1♣",
+        "rank": "08",
+        "rankA": "08",
+        "rankFixed": "08 C"
+      },
+      "C 09": {
+        "image": "/i/cards-default/9C.svg",
+        "suit": "C",
+        "suitColor": "♣",
+        "suitAlt": "1♣",
+        "rank": "09",
+        "rankA": "09",
+        "rankFixed": "09 C"
+      },
+      "C 10": {
+        "image": "/i/cards-default/TC.svg",
+        "suit": "C",
+        "suitColor": "♣",
+        "suitAlt": "1♣",
+        "rank": "10",
+        "rankA": "10",
+        "rankFixed": "10 C"
+      },
+      "C 2J": {
+        "image": "/i/cards-default/JC.svg",
+        "suit": "C",
+        "suitColor": "♣",
+        "suitAlt": "1♣",
+        "rank": "2J",
+        "rankA": "2J",
+        "rankFixed": "2J C"
+      },
+      "C 3Q": {
+        "image": "/i/cards-default/QC.svg",
+        "suit": "C",
+        "suitColor": "♣",
+        "suitAlt": "1♣",
+        "rank": "3Q",
+        "rankA": "3Q",
+        "rankFixed": "3Q C"
+      },
+      "C 4K": {
+        "image": "/i/cards-default/KC.svg",
+        "suit": "C",
+        "suitColor": "♣",
+        "suitAlt": "1♣",
+        "rank": "4K",
+        "rankA": "4K",
+        "rankFixed": "4K C"
+      },
+      "D 01": {
+        "image": "/i/cards-default/AD.svg",
+        "suit": "D",
+        "suitColor": "♦",
+        "suitAlt": "4♦",
+        "rank": "01",
+        "rankA": "5A",
+        "rankFixed": "01 D"
+      },
+      "D 02": {
+        "image": "/i/cards-default/2D.svg",
+        "suit": "D",
+        "suitColor": "♦",
+        "suitAlt": "4♦",
+        "rank": "02",
+        "rankA": "02",
+        "rankFixed": "02 D"
+      },
+      "D 03": {
+        "image": "/i/cards-default/3D.svg",
+        "suit": "D",
+        "suitColor": "♦",
+        "suitAlt": "4♦",
+        "rank": "03",
+        "rankA": "03",
+        "rankFixed": "03 D"
+      },
+      "D 04": {
+        "image": "/i/cards-default/4D.svg",
+        "suit": "D",
+        "suitColor": "♦",
+        "suitAlt": "4♦",
+        "rank": "04",
+        "rankA": "04",
+        "rankFixed": "04 D"
+      },
+      "D 05": {
+        "image": "/i/cards-default/5D.svg",
+        "suit": "D",
+        "suitColor": "♦",
+        "suitAlt": "4♦",
+        "rank": "05",
+        "rankA": "05",
+        "rankFixed": "05 D"
+      },
+      "D 06": {
+        "image": "/i/cards-default/6D.svg",
+        "suit": "D",
+        "suitColor": "♦",
+        "suitAlt": "4♦",
+        "rank": "06",
+        "rankA": "06",
+        "rankFixed": "06 D"
+      },
+      "D 07": {
+        "image": "/i/cards-default/7D.svg",
+        "suit": "D",
+        "suitColor": "♦",
+        "suitAlt": "4♦",
+        "rank": "07",
+        "rankA": "07",
+        "rankFixed": "07 D"
+      },
+      "D 08": {
+        "image": "/i/cards-default/8D.svg",
+        "suit": "D",
+        "suitColor": "♦",
+        "suitAlt": "4♦",
+        "rank": "08",
+        "rankA": "08",
+        "rankFixed": "08 D"
+      },
+      "D 09": {
+        "image": "/i/cards-default/9D.svg",
+        "suit": "D",
+        "suitColor": "♦",
+        "suitAlt": "4♦",
+        "rank": "09",
+        "rankA": "09",
+        "rankFixed": "09 D"
+      },
+      "D 10": {
+        "image": "/i/cards-default/TD.svg",
+        "suit": "D",
+        "suitColor": "♦",
+        "suitAlt": "4♦",
+        "rank": "10",
+        "rankA": "10",
+        "rankFixed": "10 D"
+      },
+      "D 2J": {
+        "image": "/i/cards-default/JD.svg",
+        "suit": "D",
+        "suitColor": "♦",
+        "suitAlt": "4♦",
+        "rank": "2J",
+        "rankA": "2J",
+        "rankFixed": "2J D"
+      },
+      "D 3Q": {
+        "image": "/i/cards-default/QD.svg",
+        "suit": "D",
+        "suitColor": "♦",
+        "suitAlt": "4♦",
+        "rank": "3Q",
+        "rankA": "3Q",
+        "rankFixed": "3Q D"
+      },
+      "D 4K": {
+        "image": "/i/cards-default/KD.svg",
+        "suit": "D",
+        "suitColor": "♦",
+        "suitAlt": "4♦",
+        "rank": "4K",
+        "rankA": "4K",
+        "rankFixed": "4K D"
+      },
+      "H 01": {
+        "image": "/i/cards-default/AH.svg",
+        "suit": "H",
+        "suitColor": "♥",
+        "suitAlt": "2♥",
+        "rank": "01",
+        "rankA": "5A",
+        "rankFixed": "01 H"
+      },
+      "H 02": {
+        "image": "/i/cards-default/2H.svg",
+        "suit": "H",
+        "suitColor": "♥",
+        "suitAlt": "2♥",
+        "rank": "02",
+        "rankA": "02",
+        "rankFixed": "02 H"
+      },
+      "H 03": {
+        "image": "/i/cards-default/3H.svg",
+        "suit": "H",
+        "suitColor": "♥",
+        "suitAlt": "2♥",
+        "rank": "03",
+        "rankA": "03",
+        "rankFixed": "03 H"
+      },
+      "H 04": {
+        "image": "/i/cards-default/4H.svg",
+        "suit": "H",
+        "suitColor": "♥",
+        "suitAlt": "2♥",
+        "rank": "04",
+        "rankA": "04",
+        "rankFixed": "04 H"
+      },
+      "H 05": {
+        "image": "/i/cards-default/5H.svg",
+        "suit": "H",
+        "suitColor": "♥",
+        "suitAlt": "2♥",
+        "rank": "05",
+        "rankA": "05",
+        "rankFixed": "05 H"
+      },
+      "H 06": {
+        "image": "/i/cards-default/6H.svg",
+        "suit": "H",
+        "suitColor": "♥",
+        "suitAlt": "2♥",
+        "rank": "06",
+        "rankA": "06",
+        "rankFixed": "06 H"
+      },
+      "H 07": {
+        "image": "/i/cards-default/7H.svg",
+        "suit": "H",
+        "suitColor": "♥",
+        "suitAlt": "2♥",
+        "rank": "07",
+        "rankA": "07",
+        "rankFixed": "07 H"
+      },
+      "H 08": {
+        "image": "/i/cards-default/8H.svg",
+        "suit": "H",
+        "suitColor": "♥",
+        "suitAlt": "2♥",
+        "rank": "08",
+        "rankA": "08",
+        "rankFixed": "08 H"
+      },
+      "H 09": {
+        "image": "/i/cards-default/9H.svg",
+        "suit": "H",
+        "suitColor": "♥",
+        "suitAlt": "2♥",
+        "rank": "09",
+        "rankA": "09",
+        "rankFixed": "09 H"
+      },
+      "H 10": {
+        "image": "/i/cards-default/TH.svg",
+        "suit": "H",
+        "suitColor": "♥",
+        "suitAlt": "2♥",
+        "rank": "10",
+        "rankA": "10",
+        "rankFixed": "10 H"
+      },
+      "H 2J": {
+        "image": "/i/cards-default/JH.svg",
+        "suit": "H",
+        "suitColor": "♥",
+        "suitAlt": "2♥",
+        "rank": "2J",
+        "rankA": "2J",
+        "rankFixed": "2J H"
+      },
+      "H 3Q": {
+        "image": "/i/cards-default/QH.svg",
+        "suit": "H",
+        "suitColor": "♥",
+        "suitAlt": "2♥",
+        "rank": "3Q",
+        "rankA": "3Q",
+        "rankFixed": "3Q H"
+      },
+      "H 4K": {
+        "image": "/i/cards-default/KH.svg",
+        "suit": "H",
+        "suitColor": "♥",
+        "suitAlt": "2♥",
+        "rank": "4K",
+        "rankA": "4K",
+        "rankFixed": "4K H"
+      },
+      "S 01": {
+        "image": "/i/cards-default/AS.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "01",
+        "rankA": "5A",
+        "rankFixed": "01 S"
+      },
+      "S 02": {
+        "image": "/i/cards-default/2S.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "02",
+        "rankA": "02",
+        "rankFixed": "02 S"
+      },
+      "S 03": {
+        "image": "/i/cards-default/3S.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "03",
+        "rankA": "03",
+        "rankFixed": "03 S"
+      },
+      "S 04": {
+        "image": "/i/cards-default/4S.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "04",
+        "rankA": "04",
+        "rankFixed": "04 S"
+      },
+      "S 05": {
+        "image": "/i/cards-default/5S.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "05",
+        "rankA": "05",
+        "rankFixed": "05 S"
+      },
+      "S 06": {
+        "image": "/i/cards-default/6S.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "06",
+        "rankA": "06",
+        "rankFixed": "06 S"
+      },
+      "S 07": {
+        "image": "/i/cards-default/7S.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "07",
+        "rankA": "07",
+        "rankFixed": "07 S"
+      },
+      "S 08": {
+        "image": "/i/cards-default/8S.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "08",
+        "rankA": "08",
+        "rankFixed": "08 S"
+      },
+      "S 09": {
+        "image": "/i/cards-default/9S.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "09",
+        "rankA": "09",
+        "rankFixed": "09 S"
+      },
+      "S 10": {
+        "image": "/i/cards-default/TS.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "10",
+        "rankA": "10",
+        "rankFixed": "10 S"
+      },
+      "S 2J": {
+        "image": "/i/cards-default/JS.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "2J",
+        "rankA": "2J",
+        "rankFixed": "2J S"
+      },
+      "S 3Q": {
+        "image": "/i/cards-default/QS.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "3Q",
+        "rankA": "3Q",
+        "rankFixed": "3Q S"
+      },
+      "S 4K": {
+        "image": "/i/cards-default/KS.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "4K",
+        "rankA": "4K",
+        "rankFixed": "4K S"
+      }
+    },
+    "faceTemplates": [
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 103,
+            "height": 160,
+            "color": "transparent",
+            "value": "/i/cards-default/2B.svg"
+          }
+        ]
+      },
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 103,
+            "height": 160,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "kbb6_A_C": {
+    "id": "kbb6_A_C",
+    "parent": "kbb6P",
+    "deck": "kbb6D",
+    "type": "card",
+    "cardType": "C 01"
+  },
+  "kbb6_2_C": {
+    "id": "kbb6_2_C",
+    "parent": "kbb6P",
+    "deck": "kbb6D",
+    "type": "card",
+    "cardType": "C 02"
+  },
+  "kbb6_3_C": {
+    "id": "kbb6_3_C",
+    "parent": "kbb6P",
+    "deck": "kbb6D",
+    "type": "card",
+    "cardType": "C 03"
+  },
+  "kbb6_4_C": {
+    "id": "kbb6_4_C",
+    "parent": "kbb6P",
+    "deck": "kbb6D",
+    "type": "card",
+    "cardType": "C 04"
+  },
+  "kbb6_5_C": {
+    "id": "kbb6_5_C",
+    "parent": "kbb6P",
+    "deck": "kbb6D",
+    "type": "card",
+    "cardType": "C 05"
+  },
+  "kbb6_6_C": {
+    "id": "kbb6_6_C",
+    "parent": "kbb6P",
+    "deck": "kbb6D",
+    "type": "card",
+    "cardType": "C 06"
+  },
+  "kbb6_7_C": {
+    "id": "kbb6_7_C",
+    "parent": "kbb6P",
+    "deck": "kbb6D",
+    "type": "card",
+    "cardType": "C 07"
+  },
+  "kbb6_8_C": {
+    "id": "kbb6_8_C",
+    "parent": "kbb6P",
+    "deck": "kbb6D",
+    "type": "card",
+    "cardType": "C 08"
+  },
+  "kbb6_9_C": {
+    "id": "kbb6_9_C",
+    "parent": "kbb6P",
+    "deck": "kbb6D",
+    "type": "card",
+    "cardType": "C 09"
+  },
+  "kbb6_T_C": {
+    "id": "kbb6_T_C",
+    "parent": "kbb6P",
+    "deck": "kbb6D",
+    "type": "card",
+    "cardType": "C 10"
+  },
+  "kbb6_J_C": {
+    "id": "kbb6_J_C",
+    "parent": "kbb6P",
+    "deck": "kbb6D",
+    "type": "card",
+    "cardType": "C 2J"
+  },
+  "kbb6_Q_C": {
+    "id": "kbb6_Q_C",
+    "parent": "kbb6P",
+    "deck": "kbb6D",
+    "type": "card",
+    "cardType": "C 3Q"
+  },
+  "kbb6_K_C": {
+    "id": "kbb6_K_C",
+    "parent": "kbb6P",
+    "deck": "kbb6D",
+    "type": "card",
+    "cardType": "C 4K"
+  },
+  "kbb6_A_D": {
+    "id": "kbb6_A_D",
+    "parent": "kbb6P",
+    "deck": "kbb6D",
+    "type": "card",
+    "cardType": "D 01"
+  },
+  "kbb6_2_D": {
+    "id": "kbb6_2_D",
+    "parent": "kbb6P",
+    "deck": "kbb6D",
+    "type": "card",
+    "cardType": "D 02"
+  },
+  "kbb6_3_D": {
+    "id": "kbb6_3_D",
+    "parent": "kbb6P",
+    "deck": "kbb6D",
+    "type": "card",
+    "cardType": "D 03"
+  },
+  "kbb6_4_D": {
+    "id": "kbb6_4_D",
+    "parent": "kbb6P",
+    "deck": "kbb6D",
+    "type": "card",
+    "cardType": "D 04"
+  },
+  "kbb6_5_D": {
+    "id": "kbb6_5_D",
+    "parent": "kbb6P",
+    "deck": "kbb6D",
+    "type": "card",
+    "cardType": "D 05"
+  },
+  "kbb6_6_D": {
+    "id": "kbb6_6_D",
+    "parent": "kbb6P",
+    "deck": "kbb6D",
+    "type": "card",
+    "cardType": "D 06"
+  },
+  "kbb6_7_D": {
+    "id": "kbb6_7_D",
+    "parent": "kbb6P",
+    "deck": "kbb6D",
+    "type": "card",
+    "cardType": "D 07"
+  },
+  "kbb6_8_D": {
+    "id": "kbb6_8_D",
+    "parent": "kbb6P",
+    "deck": "kbb6D",
+    "type": "card",
+    "cardType": "D 08"
+  },
+  "kbb6_9_D": {
+    "id": "kbb6_9_D",
+    "parent": "kbb6P",
+    "deck": "kbb6D",
+    "type": "card",
+    "cardType": "D 09"
+  },
+  "kbb6_T_D": {
+    "id": "kbb6_T_D",
+    "parent": "kbb6P",
+    "deck": "kbb6D",
+    "type": "card",
+    "cardType": "D 10"
+  },
+  "kbb6_J_D": {
+    "id": "kbb6_J_D",
+    "parent": "kbb6P",
+    "deck": "kbb6D",
+    "type": "card",
+    "cardType": "D 2J"
+  },
+  "kbb6_Q_D": {
+    "id": "kbb6_Q_D",
+    "parent": "kbb6P",
+    "deck": "kbb6D",
+    "type": "card",
+    "cardType": "D 3Q"
+  },
+  "kbb6_K_D": {
+    "id": "kbb6_K_D",
+    "parent": "kbb6P",
+    "deck": "kbb6D",
+    "type": "card",
+    "cardType": "D 4K"
+  },
+  "kbb6_A_H": {
+    "id": "kbb6_A_H",
+    "parent": "kbb6P",
+    "deck": "kbb6D",
+    "type": "card",
+    "cardType": "H 01"
+  },
+  "kbb6_2_H": {
+    "id": "kbb6_2_H",
+    "parent": "kbb6P",
+    "deck": "kbb6D",
+    "type": "card",
+    "cardType": "H 02"
+  },
+  "kbb6_3_H": {
+    "id": "kbb6_3_H",
+    "parent": "kbb6P",
+    "deck": "kbb6D",
+    "type": "card",
+    "cardType": "H 03"
+  },
+  "kbb6_4_H": {
+    "id": "kbb6_4_H",
+    "parent": "kbb6P",
+    "deck": "kbb6D",
+    "type": "card",
+    "cardType": "H 04"
+  },
+  "kbb6_5_H": {
+    "id": "kbb6_5_H",
+    "parent": "kbb6P",
+    "deck": "kbb6D",
+    "type": "card",
+    "cardType": "H 05"
+  },
+  "kbb6_6_H": {
+    "id": "kbb6_6_H",
+    "parent": "kbb6P",
+    "deck": "kbb6D",
+    "type": "card",
+    "cardType": "H 06"
+  },
+  "kbb6_7_H": {
+    "id": "kbb6_7_H",
+    "parent": "kbb6P",
+    "deck": "kbb6D",
+    "type": "card",
+    "cardType": "H 07"
+  },
+  "kbb6_8_H": {
+    "id": "kbb6_8_H",
+    "parent": "kbb6P",
+    "deck": "kbb6D",
+    "type": "card",
+    "cardType": "H 08"
+  },
+  "kbb6_9_H": {
+    "id": "kbb6_9_H",
+    "parent": "kbb6P",
+    "deck": "kbb6D",
+    "type": "card",
+    "cardType": "H 09"
+  },
+  "kbb6_T_H": {
+    "id": "kbb6_T_H",
+    "parent": "kbb6P",
+    "deck": "kbb6D",
+    "type": "card",
+    "cardType": "H 10"
+  },
+  "kbb6_J_H": {
+    "id": "kbb6_J_H",
+    "parent": "kbb6P",
+    "deck": "kbb6D",
+    "type": "card",
+    "cardType": "H 2J"
+  },
+  "kbb6_Q_H": {
+    "id": "kbb6_Q_H",
+    "parent": "kbb6P",
+    "deck": "kbb6D",
+    "type": "card",
+    "cardType": "H 3Q"
+  },
+  "kbb6_K_H": {
+    "id": "kbb6_K_H",
+    "parent": "kbb6P",
+    "deck": "kbb6D",
+    "type": "card",
+    "cardType": "H 4K"
+  },
+  "kbb6_A_S": {
+    "id": "kbb6_A_S",
+    "parent": "kbb6P",
+    "deck": "kbb6D",
+    "type": "card",
+    "cardType": "S 01"
+  },
+  "kbb6_2_S": {
+    "id": "kbb6_2_S",
+    "parent": "kbb6P",
+    "deck": "kbb6D",
+    "type": "card",
+    "cardType": "S 02"
+  },
+  "kbb6_3_S": {
+    "id": "kbb6_3_S",
+    "parent": "kbb6P",
+    "deck": "kbb6D",
+    "type": "card",
+    "cardType": "S 03"
+  },
+  "kbb6_4_S": {
+    "id": "kbb6_4_S",
+    "parent": "kbb6P",
+    "deck": "kbb6D",
+    "type": "card",
+    "cardType": "S 04"
+  },
+  "kbb6_5_S": {
+    "id": "kbb6_5_S",
+    "parent": "kbb6P",
+    "deck": "kbb6D",
+    "type": "card",
+    "cardType": "S 05"
+  },
+  "kbb6_6_S": {
+    "id": "kbb6_6_S",
+    "parent": "kbb6P",
+    "deck": "kbb6D",
+    "type": "card",
+    "cardType": "S 06"
+  },
+  "kbb6_7_S": {
+    "id": "kbb6_7_S",
+    "parent": "kbb6P",
+    "deck": "kbb6D",
+    "type": "card",
+    "cardType": "S 07"
+  },
+  "kbb6_8_S": {
+    "id": "kbb6_8_S",
+    "parent": "kbb6P",
+    "deck": "kbb6D",
+    "type": "card",
+    "cardType": "S 08"
+  },
+  "kbb6_9_S": {
+    "id": "kbb6_9_S",
+    "parent": "kbb6P",
+    "deck": "kbb6D",
+    "type": "card",
+    "cardType": "S 09"
+  },
+  "kbb6_T_S": {
+    "id": "kbb6_T_S",
+    "parent": "kbb6P",
+    "deck": "kbb6D",
+    "type": "card",
+    "cardType": "S 10"
+  },
+  "kbb6_J_S": {
+    "id": "kbb6_J_S",
+    "parent": "kbb6P",
+    "deck": "kbb6D",
+    "type": "card",
+    "cardType": "S 2J"
+  },
+  "kbb6_Q_S": {
+    "id": "kbb6_Q_S",
+    "parent": "kbb6P",
+    "deck": "kbb6D",
+    "type": "card",
+    "cardType": "S 3Q"
+  },
+  "kbb6_K_S": {
+    "id": "kbb6_K_S",
+    "parent": "kbb6P",
+    "deck": "kbb6D",
+    "type": "card",
+    "cardType": "S 4K"
+  },
+  "deckHolder": {
+    "type": "holder",
+    "id": "deckHolder",
+    "x": -35,
+    "y": 1139,
+    "dropTarget": {
+      "type": "card"
+    }
+  }
+}
