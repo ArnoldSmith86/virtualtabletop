@@ -238,9 +238,11 @@ function getRoomRectangle() {
   return roomRectangle;
 }
 
-export async function shuffleWidgets(collection, mode = "true random", modeValue = 1) {
+export async function shuffleWidgets(collection, mode = "true random", modeValue = 1, reverseForNonRandom = false) {
   const len = collection.length;
   let indexes = [...Array(len).keys()];
+  if (reverseForNonRandom)
+    indexes = indexes.reverse();
 
   let randFunc = (typeof rand === "function") ? rand : Math.random;
   
@@ -303,6 +305,8 @@ export async function shuffleWidgets(collection, mode = "true random", modeValue
   for (let i = 0; i < iterations; i++) {
     switch (mode) {
       case "true random":
+        if (reverseForNonRandom)
+          indexes = indexes.reverse();
         fisherYates();
         break;
       case "seeded":
