@@ -253,12 +253,10 @@ export async function shuffleWidgets(collection, mode = "true random", modeValue
 
   let fisherYatesSeeded = null;
   if (mode === "seeded") {
-    let seed = modeValue % 2147483647;
-    if (seed <= 0)
-      seed += 2147483646;
+    let seed = modeValue;
     const seededRand = function() {
-      seed = (seed * 16807) % 2147483647;
-      return seed / 2147483647;
+      const x = Math.sin(seed++) * 10000;
+      return Math.round((x - Math.floor(x))*1000000)/1000000;
     };
 
     fisherYatesSeeded = () => {
