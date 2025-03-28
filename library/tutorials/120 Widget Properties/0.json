@@ -22,7 +22,7 @@
     "movable": false,
     "movableInEdit": false,
     "css": "font-size: 25px; ",
-    "html": "Widgets (<a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Widgets'>wiki</a>) are the visual representation of objects you need for playing a game. Widgets properties are the JSON code that control the widget's position, appearance, and functionality. Some properties are on every widget and some are specific to certain widget types. Every property has a default which usually can be changed. The game designer can change the property using Edit Mode, or functions (<a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Functions'>wiki</a>) can be used to change properties. In some case, the changes are handled automatically behind the scenes by the VTT game engine. The same property may have different defaults for different widget types. The properties, the default values, and a brief description of what each one does is available on the Widgets wiki page. Some of the more advanced or potentially confusing properties have their own tutorials. See the list in <a href='https://virtualtabletop.io/tutorial/tutorials-overview'>100 Tutorials Overivew</a>."
+    "html": "Widgets (<a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Widgets'>wiki</a>) are the visual representation of objects you need for playing a game. Widget properties are the JSON code that control the widget's position, appearance, and functionality. Some properties are on every widget and some are specific to certain widget types. Every property has a default which usually can be changed. The game designer can change the property using Edit Mode, or functions (<a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Functions'>wiki</a>) can be used to change properties. In some cases, the changes are handled automatically behind the scenes by the VTT game engine. The same property may have different defaults for different widget types. The properties, the default values, and a brief description of what each one does is available on the Widgets wiki page. Some of the more advanced or potentially confusing properties have their own tutorials. See the list in <a href='https://virtualtabletop.io/tutorial/tutorials-overview'>100 Tutorials Overview</a>."
   },
   "text1": {
     "id": "text1",
@@ -61,7 +61,7 @@
     "css": {
       "font-size": "22px"
     },
-    "html": "Look at the basic widget above. Colors are important indicators. Gray shows the property value is the default for that widget type. Yellow is used for property names (and object keys). Orange is used for custom properties. Those are properties added by designer or by auotmation to store some type of data. They can be used by routines, but do not directly affect widgets. For more about the colors, see (<a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Edit-Mode#editing-widgets'>Editing widgets</a>)."
+    "html": "Look at the basic widget above. Colors are important indicators. Gray shows the property value is the default for that widget type. Yellow is used for property names (and object keys). Orange is used for custom properties. Those are properties added by designer or by automation to store some type of data. They can be used by routines, but do not directly affect widgets. For more about the colors, see (<a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Edit-Mode#editing-widgets'>Editing widgets</a>)."
   },
   "text4": {
     "id": "text4",

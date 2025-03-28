@@ -22,7 +22,7 @@
     "movable": false,
     "movableInEdit": false,
     "css": "font-size: 25px; ",
-    "html": "Functions (<a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Functions'>wiki</a>) are the key to automating activities in VTT. Functions are bits of JSON code that tell the VTT engine to take some action within specified (or default) parameters. Functions only work inside <a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Functions#predefined-routines'>routines</a> which are a kind of widget property. Each function and its parameters are described in the wiki and there is a separate tutorial for each function.\n\nAn important technical note about functions and routines: they operate on the local browser of the player that took the action. The resulting changes are sent to the VTT servers and then broadcast out to the other players to see the change. You can simulate this by having the same room open in two different browsers (or in the same browser if another tab is in incognito mode). This means there might be a slight processing delay and it means that if you are debugging problems (see the last button in this tutorial), you can only see the debug output for room changes that your browser initiated."
+    "html": "Functions (<a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Functions'>wiki</a>) are the key to automating activities in VTT. Functions are bits of JSON code that tell the VTT engine to take some action within specified (or default) parameters. Functions only work inside <a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Functions#predefined-routines'>routines</a> which are a kind of widget property. Each function and its parameters are described in the wiki and there is a separate tutorial for each function.\n\nAn important technical note about functions and routines: they operate on the local browser of the player that took the action. The resulting changes are sent to the VTT servers and then broadcast out to the other players to see the change. You can simulate this by having the same room open in two different browser windows (use a second browser or incognito mode to simulate distinct players). This means there might be a slight processing delay and it means that if you are debugging problems (see the last button in this tutorial), you can only see the debug output for room changes that your browser initiated."
   },
   "text1": {
     "id": "text1",
@@ -118,7 +118,7 @@
       "variantImage": "",
       "variant": "",
       "language": "en-US",
-      "players": ""
+      "players": "1"
     }
   },
   "button1": {
@@ -138,7 +138,7 @@
       "// This routine starts as soon as the game is loaded by pressing the play button for the game on the Game Shelf."
     ],
     "globalUpdateRoutine": [
-      "// This is similar to `changeRoutine` except that it triggers when ANY property of ANY widget changes. You probably almost never want that. So specify the property you want to trigger the routine like this: `ownerGlobalUpdateRoutine`. That will trigger whenever the `owner` property of any widget changes. This is how the seat counter on the seat widgets works.",
+      "// This is similar to `changeRoutine` except that it triggers when ANY property of ANY widget changes. You probably almost never want that. So specify the property you want to trigger the routine like this: `ownerGlobalUpdateRoutine`. That will trigger whenever the `owner` property of any widget changes. This is how the card counter on the seat widgets works.",
       "// The Example and Debug & Errors buttons make changes in the room that will trigger this routine. You can see it in the debug output after clicking on those buttons."
     ],
     "enterRoutine": [
@@ -259,7 +259,7 @@
         ],
         "fillTo": 10
       },
-      "// Finally, some functions have the capability to freeze the browser and force a refresh. For example, if you add a CALL function to this button with no other parameters, the room will freeze. You will not see a debug output. After a few seconds, you will have to reload the room. That happens with CALL because the default values are to CALL the `clickRoutine` on this widget. That CALLs the same routine over and over in an endless cycles called recursion. Recursion is the most typical example of a cause of freezing and can be difficult to track down since you do not get debug results. If you want to try that, go ahead, no harm will be done."
+      "// Finally, some functions have the capability to freeze the browser and force a refresh. For example, if you add a CALL function to this button with no other parameters, the room will freeze. You will not see a debug output. After a few seconds, you will have to reload the room. That happens with CALL because the default values are to CALL the `clickRoutine` on this widget. That CALLs the same routine over and over in an endless cycle called recursion. Recursion is the most typical example of a cause of freezing and can be difficult to track down since you do not get debug results. If you want to try that, go ahead, no harm will be done."
     ],
     "x": 1394,
     "y": 402,
