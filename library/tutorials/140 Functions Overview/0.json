@@ -16,7 +16,7 @@
     "x": 108,
     "y": 80,
     "width": 1400,
-    "height": 150,
+    "height": 275,
     "layer": -3,
     "z": 129,
     "movable": false,
@@ -35,7 +35,8 @@
     "css": {
       "font-size": "22px"
     },
-    "html": "Look at the JSON of the button above in Edit Mode. Each type of routine is presented there with a brief comment about how to trigger the routine. The button itself actually does nothing. It just contains routines with comments. Routines are listed in alphabetical order in the list of widget properties. See the <a href='https://virtualtabletop.io/tutorial/routines'>Routines tutorial</a> for more. Special purpose routines that are part of FOREACH and IF functions are not covered here."
+    "html": "Look at the JSON of the button above in Edit Mode. Each type of routine is presented there with a brief comment about how to trigger the routine. The button itself actually does nothing. It just contains routines with comments. Routines are listed in alphabetical order in the list of widget properties. See the <a href='https://virtualtabletop.io/tutorial/routines'>Routines tutorial</a> for more. Special purpose routines that are part of FOREACH and IF functions are not covered here.",
+    "height": 445
   },
   "text2": {
     "id": "text2",
@@ -48,7 +49,8 @@
     "css": {
       "font-size": "22px"
     },
-    "html": "To add a function, in Edit Mode place the cursor inside a routine. The Editor will display a list of functions. In the button above, add COUNT. The Editor changes to display a list of parameters available for that function: <b>collection</b>, <b>comment</b>, <b>holder</b>, <b>owner</b>, and <b>variable</b>. Clicking those adds them to the JSON for that function. <u>Important</u>: the function uses the default values whether shown in the JSON or not unless the default is changed."
+    "html": "To add a function, in Edit Mode place the cursor inside a routine. The Editor will display a list of functions. In the button above, add COUNT. The Editor changes to display a list of parameters available for that function: <b>collection</b>, <b>comment</b>, <b>holder</b>, <b>owner</b>, and <b>variable</b>. Clicking those adds them to the JSON for that function. <u>Important</u>: the function uses the default values whether shown in the JSON or not unless the default is changed.",
+    "height": 445
   },
   "text3": {
     "id": "text3",
@@ -61,7 +63,8 @@
     "css": {
       "font-size": "22px"
     },
-    "html": "To continue from the previous example... The first two COUNT functions in the button above do the exact same thing. Why? The 1st COUNT has implied default values for the paramaters that you do not see in the JSON. The 2nd COUNT lists those defaults as part of the JSON. The 3rd COUNT changes the collection parameter. When adding functions, you can either leave out or include the default values, but you must specify any non-default values."
+    "html": "To continue from the previous example... The first two COUNT functions in the button above do the exact same thing. Why? The 1st COUNT has implied default values for the paramaters that you do not see in the JSON. The 2nd COUNT lists those defaults as part of the JSON. The 3rd COUNT changes the collection parameter. When adding functions, you can either leave out or include the default values, but you must specify any non-default values.",
+    "height": 445
   },
   "text4": {
     "id": "text4",
@@ -74,7 +77,8 @@
     "css": {
       "font-size": "22px"
     },
-    "html": "Functions make changes to a room, sometimes visible and sometimes not. Changes made depend on the function and what input is given: variables or collections (<a href='https://virtualtabletop.io/tutorial/variables-and-collections'>tutorial</a>) or properties (<a href='https://virtualtabletop.io/tutorial/widget-properties'>tutorial</a>). Output also depends on the function. Some work only with certain widget types, and others work with any. Usually the result of a function will be to modify a variable, collection, or property. Click the button above for examples."
+    "html": "Functions make changes to a room, sometimes visible and sometimes not. Changes made depend on the function and what input is given: variables or collections (<a href='https://virtualtabletop.io/tutorial/variables-and-collections'>tutorial</a>) or properties (<a href='https://virtualtabletop.io/tutorial/widget-properties'>tutorial</a>). Output also depends on the function. Some work only with certain widget types, and others work with any. Usually the result of a function will be to modify a variable, collection, or property. Click the button above for examples.",
+    "height": 445
   },
   "text5": {
     "id": "text5",
@@ -87,7 +91,8 @@
     "css": {
       "font-size": "22px"
     },
-    "html": "When developing a game, use the debug output (<a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Edit-Mode#Debug'>wiki</a>) to get a better idea of what is happening. Sometimes the problems are obvious because you see a red arrow. Other times, you may get a red arrow, but that is not really the problem. And often, there will be no red arrows but things still are not as expected. Review the tutorials and wiki and do not be afraid to ask for help on Discord. Click the button above for examples."
+    "html": "When developing a game, use the debug output (<a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Edit-Mode#Debug'>wiki</a>) to get a better idea of what is happening. Sometimes the problems are obvious because you see a red arrow. Other times, you may get a red arrow, but that is not really the problem. And often, there will be no red arrows but things still are not as expected. Review the tutorials and wiki and do not be afraid to ask for help on Discord. Click the button above for examples.",
+    "height": 445
   },
   "_meta": {
     "version": 17,
@@ -100,7 +105,7 @@
       "mode": "Tutorial",
       "time": "",
       "attribution": "",
-      "lastUpdate": 1743110426619,
+      "lastUpdate": 1743138180308,
       "showName": false,
       "skill": "",
       "description": "",
@@ -110,10 +115,10 @@
       "similarAwards": "",
       "ruleText": "",
       "helpText": "",
-      "players": "",
-      "language": "en-US",
+      "variantImage": "",
       "variant": "",
-      "variantImage": ""
+      "language": "en-US",
+      "players": ""
     }
   },
   "button1": {
