@@ -10,7 +10,7 @@
       "mode": "vs",
       "time": "30",
       "attribution": "Room layout and design by Shobu. Released to the Public Domain under CC0.\n\nThe following assets are by Delapouite, available from https://game-icons.net under CC BY 3.0:\n\nDelapouite :\nhttps://game-icons.net/1x1/delapouite/token.html\n\nLibrary image generated using the Pollinations artificial intelligence image generator, https://pollinations.ai/, using the following prompt:\n\"human pyramid celebration in spain, draw with old french comic style\"",
-      "lastUpdate": 1743216764838,
+      "lastUpdate": 1743252392443,
       "showName": true,
       "skill": "medium",
       "description": "Be the first to reach the highest spot!",
@@ -22,7 +22,7 @@
       "helpText": "- Players take seat<div>- On their turn, players move a stack or a piece by dragging it on the board</div>",
       "variantImage": "",
       "variant": "",
-      "language": "en-US",
+      "language": "",
       "players": "2"
     }
   },
