@@ -10,9 +10,9 @@
       "mode": "Tutorial",
       "time": "",
       "attribution": "",
-      "lastUpdate": 1743203523520,
+      "lastUpdate": 1743217835723,
       "showName": false,
-      "skill": "empty>",
+      "skill": "",
       "description": "",
       "similarImage": "",
       "similarName": "",
@@ -127,7 +127,7 @@
     "css": {
       "font-size": "22px"
     },
-    "html": "The button above shows a typical SHUFFLE scenario. Just specify which holder or seat <b>id</b> (or array of <b>id</b>s) has the widgets you want to shuffle. This uses the default mode of `true random`. To show you the results, the button also moves all the cards to the hand.",
+    "html": "The button above is a typical SHUFFLE scenario. Just specify which holder or seat <b>id</b> (or array of <b>id</b>s) has the widgets you want to shuffle. This uses the default mode of `true random`. To show you the results, the button also moves all the cards to the hand.",
     "layer": -3
   },
   "button1": {

@@ -11,7 +11,7 @@
       "time": "",
       "attribution": "",
       "showName": false,
-      "lastUpdate": 1743191811580,
+      "lastUpdate": 1743217514264,
       "skill": "",
       "description": "",
       "similarImage": "",
@@ -134,7 +134,7 @@
     "css": {
       "font-size": "22px"
     },
-    "html": "The button above shows a typical RECALL scenario. Just specify which holder <b>id</b> or array of <b>id</b>s has the deck(s) you want to recall. To see how the order of the cards is always the same after RECALL, drag the entire pile and drop it into the hand.",
+    "html": "The button above is a typical RECALL scenario. Just specify which holder <b>id</b> (or array of <b>id</b>s) has the deck(s) you want to recall. To see how the order of the cards is always the same after RECALL, drag the entire pile and drop it into the hand holder below.",
     "layer": -3
   },
   "button1": {
@@ -162,7 +162,7 @@
     "css": {
       "font-size": "22px"
     },
-    "html": "You can limit the cards being recalled to only those in that are not in holders. The button above sets the <b>inHolder</b> parameter to false and only cards not in holders are recalled. The parameter default is true.",
+    "html": "You can limit the cards being recalled to only those that are not in holders. The button above sets the <b>inHolder</b> parameter to false and only cards not in holders are recalled. The parameter default is true.",
     "layer": -3
   },
   "text3": {
@@ -176,7 +176,7 @@
     "css": {
       "font-size": "22px"
     },
-    "html": "The <b>owned</b> parameter controls whether cards 'owned' by a player (because the <b>owner</b> property is not null) are recalled or not. The button above changes the parameter to false and the cards in the hand are not recalled. The parameter default is true.",
+    "html": "The <b>owned</b> parameter controls whether cards 'owned' by a player (because the <b>owner</b> property is not null) are recalled or not. The button above sets the parameter to false and the cards in the hand are not recalled. The parameter default is true.",
     "layer": -3
   },
   "text4": {
@@ -204,7 +204,7 @@
     "css": {
       "font-size": "22px"
     },
-    "html": "The <b>byDistance</b> parameter is an exception to the general rule that cards are recalled in a standard order. When this parameter is true, cards are recalled based on their distance to their deck (in this case the deck is in the holder in the upper left).",
+    "html": "The <b>byDistance</b> parameter is an exception to the rule that cards are recalled in a standard order. When set to true, the cards closest to their deck are recalled first. In this case the deck is in the holder in the upper left. Drag the pile to the hand below to see.",
     "layer": -3
   },
   "ewewD": {
@@ -516,17 +516,17 @@
     "type": "card",
     "cardType": "C 01",
     "id": "9t1i",
-    "z": 1747,
+    "z": 2450,
     "activeFace": 1,
-    "parent": "7kya"
+    "parent": "k54x"
   },
   "8lrb": {
     "deck": "ewewD",
     "type": "card",
     "cardType": "C 02",
     "id": "8lrb",
-    "z": 1749,
-    "parent": "7kya",
+    "z": 2452,
+    "parent": "k54x",
     "activeFace": 1
   },
   "wdkb": {
@@ -534,8 +534,8 @@
     "type": "card",
     "cardType": "C 03",
     "id": "wdkb",
-    "z": 1751,
-    "parent": "7kya",
+    "z": 2454,
+    "parent": "k54x",
     "activeFace": 1
   },
   "kwnn": {
@@ -543,8 +543,8 @@
     "type": "card",
     "cardType": "C 04",
     "id": "kwnn",
-    "z": 1753,
-    "parent": "7kya",
+    "z": 2456,
+    "parent": "k54x",
     "activeFace": 1
   },
   "h7vn": {
@@ -552,8 +552,8 @@
     "type": "card",
     "cardType": "C 05",
     "id": "h7vn",
-    "z": 1755,
-    "parent": "7kya",
+    "z": 2458,
+    "parent": "k54x",
     "activeFace": 1
   },
   "a20u": {
@@ -561,8 +561,8 @@
     "type": "card",
     "cardType": "C 06",
     "id": "a20u",
-    "z": 1757,
-    "parent": "7kya",
+    "z": 2460,
+    "parent": "k54x",
     "activeFace": 1
   },
   "8hxu": {
@@ -570,8 +570,8 @@
     "type": "card",
     "cardType": "C 07",
     "id": "8hxu",
-    "z": 1759,
-    "parent": "7kya",
+    "z": 2462,
+    "parent": "k54x",
     "activeFace": 1
   },
   "uhtw": {
@@ -579,8 +579,8 @@
     "type": "card",
     "cardType": "C 08",
     "id": "uhtw",
-    "z": 1761,
-    "parent": "7kya",
+    "z": 2464,
+    "parent": "k54x",
     "activeFace": 1
   },
   "mwuz": {
@@ -588,8 +588,8 @@
     "type": "card",
     "cardType": "C 09",
     "id": "mwuz",
-    "z": 1763,
-    "parent": "7kya",
+    "z": 2466,
+    "parent": "k54x",
     "activeFace": 1
   },
   "qnxn": {
@@ -597,8 +597,8 @@
     "type": "card",
     "cardType": "C 10",
     "id": "qnxn",
-    "z": 1765,
-    "parent": "7kya",
+    "z": 2468,
+    "parent": "k54x",
     "activeFace": 1
   },
   "62pa": {
@@ -606,8 +606,8 @@
     "type": "card",
     "cardType": "C 2J",
     "id": "62pa",
-    "z": 1767,
-    "parent": "7kya",
+    "z": 2470,
+    "parent": "k54x",
     "activeFace": 1
   },
   "u5s0": {
@@ -615,8 +615,8 @@
     "type": "card",
     "cardType": "C 3Q",
     "id": "u5s0",
-    "z": 1769,
-    "parent": "7kya",
+    "z": 2472,
+    "parent": "k54x",
     "activeFace": 1
   },
   "6bk0": {
@@ -624,17 +624,17 @@
     "type": "card",
     "cardType": "C 4K",
     "id": "6bk0",
-    "z": 1771,
+    "z": 2474,
     "activeFace": 1,
-    "parent": "7kya"
+    "parent": "k54x"
   },
   "cfan": {
     "deck": "ewewD",
     "type": "card",
     "cardType": "D 01",
     "id": "cfan",
-    "z": 1773,
-    "parent": "7kya",
+    "z": 2476,
+    "parent": "k54x",
     "activeFace": 1
   },
   "fscc": {
@@ -642,8 +642,8 @@
     "type": "card",
     "cardType": "D 02",
     "id": "fscc",
-    "z": 1775,
-    "parent": "7kya",
+    "z": 2478,
+    "parent": "k54x",
     "activeFace": 1
   },
   "bcfn": {
@@ -651,8 +651,8 @@
     "type": "card",
     "cardType": "D 03",
     "id": "bcfn",
-    "z": 1777,
-    "parent": "7kya",
+    "z": 2480,
+    "parent": "k54x",
     "activeFace": 1
   },
   "llx9": {
@@ -660,8 +660,8 @@
     "type": "card",
     "cardType": "D 04",
     "id": "llx9",
-    "z": 1779,
-    "parent": "7kya",
+    "z": 2482,
+    "parent": "k54x",
     "activeFace": 1
   },
   "hmhu": {
@@ -669,8 +669,8 @@
     "type": "card",
     "cardType": "D 05",
     "id": "hmhu",
-    "z": 1781,
-    "parent": "7kya",
+    "z": 2484,
+    "parent": "k54x",
     "activeFace": 1
   },
   "xxc1": {
@@ -678,8 +678,8 @@
     "type": "card",
     "cardType": "D 06",
     "id": "xxc1",
-    "z": 1783,
-    "parent": "7kya",
+    "z": 2486,
+    "parent": "k54x",
     "activeFace": 1
   },
   "kmpq": {
@@ -687,8 +687,8 @@
     "type": "card",
     "cardType": "D 07",
     "id": "kmpq",
-    "z": 1785,
-    "parent": "7kya",
+    "z": 2488,
+    "parent": "k54x",
     "activeFace": 1
   },
   "ucnt": {
@@ -696,8 +696,8 @@
     "type": "card",
     "cardType": "D 08",
     "id": "ucnt",
-    "z": 1787,
-    "parent": "7kya",
+    "z": 2490,
+    "parent": "k54x",
     "activeFace": 1
   },
   "4we9": {
@@ -705,46 +705,45 @@
     "type": "card",
     "cardType": "D 09",
     "id": "4we9",
-    "z": 1789,
+    "z": 2492,
     "activeFace": 1,
-    "parent": "7kya"
+    "parent": "k54x"
   },
   "43dl": {
     "deck": "ewewD",
     "type": "card",
     "cardType": "D 10",
     "id": "43dl",
-    "z": 1791,
+    "z": 2494,
     "activeFace": 1,
-    "parent": "7kya"
+    "parent": "k54x"
   },
   "a0iy": {
     "deck": "ewewD",
     "type": "card",
     "cardType": "D 2J",
     "id": "a0iy",
-    "z": 1793,
+    "z": 2496,
     "activeFace": 1,
-    "parent": "7kya"
+    "parent": "k54x"
   },
   "o433": {
     "deck": "ewewD",
     "type": "card",
     "cardType": "D 3Q",
     "id": "o433",
-    "z": 1795,
+    "z": 2498,
     "activeFace": 1,
-    "parent": "7kya"
+    "parent": "k54x"
   },
   "2hyi": {
     "deck": "ewewD",
     "type": "card",
     "cardType": "D 4K",
     "id": "2hyi",
-    "z": 1800,
+    "z": 2500,
     "activeFace": 1,
-    "hoverParent": "holder1",
-    "parent": "7kya"
+    "parent": "k54x"
   },
   "62ri": {
     "type": "button",
@@ -802,7 +801,7 @@
       }
     ],
     "x": 49,
-    "y": 259,
+    "y": 34,
     "z": 22844,
     "id": "62ri",
     "height": 41,
@@ -829,16 +828,16 @@
     "movable": false,
     "movableInEdit": false,
     "css": "font-size: 25px; ",
-    "html": "To use this room, make sure the cards are in the holder to the left (use the round `RECALL` button). Then press the `Move `Cards button to simulate cards being distributed around the room.",
+    "html": "To use this room, make sure the cards are in the holder to the left (use the `RECALL` button in the row below). Then press the `Move Cards` button to simulate cards being distributed around the room. Then press the button related to the parameter you want to see demonstrated.",
     "height": 50
   },
-  "7kya": {
+  "k54x": {
     "type": "pile",
     "parent": "holder1",
     "x": 4,
     "y": 4,
     "width": 103,
     "height": 160,
-    "id": "7kya"
+    "id": "k54x"
   }
 }

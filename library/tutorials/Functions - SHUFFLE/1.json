@@ -10,9 +10,9 @@
       "mode": "Tutorial",
       "time": "",
       "attribution": "",
-      "lastUpdate": 1743203523524,
+      "lastUpdate": 1743217835725,
       "showName": false,
-      "skill": "empty>",
+      "skill": "",
       "description": "",
       "similarImage": "",
       "similarName": "",
@@ -96,7 +96,7 @@
     "movable": false,
     "movableInEdit": false,
     "css": "font-size: 25px; ",
-    "html": "The SHUFFLE function (<a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Functions#shuffle'>wiki</a>) has <b>mode</b> parameters that allow for less than fully random shuffling. Using `seeded` guarantees that the cards will first be give a true random shuffle, but that the output will always be the same given the same starting order of the cards and the same seed value. (If you RECALL all of the cards in a deck the starting order will be the same). The `overhand` and `riffle` <b>mode</b>s are useful in some games that require less than full shuffles. This can be especially useful in connection with a RECALL with the <b>byDistance</b> parameter set to true. Each of these also accept a <b>modeValue</b> parameter that is used either as the seed value or as the number of times the cards are riffled or overhand shuffled. Each button in this room recalls the cards before the shuffle.",
+    "html": "The SHUFFLE function (<a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Functions#shuffle'>wiki</a>) has <b>mode</b> parameters that allow for less than fully random shuffling. Using `seeded` guarantees that the cards will first be give a true random shuffle, but that the output will always be the same given the same starting order of the cards and the same seed value. (If you RECALL all of the cards in a deck the starting order will be the same). The `overhand` and `riffle` <b>mode</b>s are useful in some games that require less than full shuffles. You may consider using this with a RECALL with the <b>byDistance</b> parameter set to true. Each of these also accept a <b>modeValue</b> parameter that is used either as the seed value or as the number of times the cards are riffled or overhand shuffled. The demo buttons in this room recall the cards before the shuffle.",
     "height": 150
   },
   "button3": {
@@ -158,7 +158,7 @@
     "css": {
       "font-size": "22px"
     },
-    "html": "Click the button above and enter a seed value in the pop up. Look at the results in the hand below. Seeded shuffles could be useful, for example, in a solo game mode where you want the same starting conditions so you can improve the score.",
+    "html": "Click the button above and enter a seed value in the pop up. Look at the results in the hand below. Seeded shuffles could be useful, for example, in a solo game mode where you want the same starting conditions so you can improve the score. You may also use it when testing games.",
     "layer": -3
   },
   "button1": {
@@ -234,7 +234,7 @@
     "css": {
       "font-size": "22px"
     },
-    "html": "Overhand simulates the overhand shuffle by dividing the cards into small random groups and then reversing the order of the groups. The <b>modeValue</b> parameter specifies how many times that should be repeated and not how many or the size of the groupings. This is random.",
+    "html": "Overhand simulates the overhand shuffle by dividing the cards into small random groups and then reversing the order of the groups. The <b>modeValue</b> parameter specifies how many times that should be repeated and not how many groups or their sizes.",
     "layer": -3
   },
   "hand": {
@@ -828,479 +828,479 @@
   },
   "f9et_A_C": {
     "id": "f9et_A_C",
-    "parent": "o292",
+    "parent": "5y85",
     "deck": "f9etD",
     "type": "card",
     "cardType": "C 01",
-    "z": 11242,
+    "z": 12019,
     "activeFace": 1
   },
   "f9et_2_C": {
     "id": "f9et_2_C",
-    "parent": "o292",
+    "parent": "5y85",
     "deck": "f9etD",
     "type": "card",
     "cardType": "C 02",
-    "z": 11244,
+    "z": 12021,
     "activeFace": 1
   },
   "f9et_3_C": {
     "id": "f9et_3_C",
-    "parent": "o292",
+    "parent": "5y85",
     "deck": "f9etD",
     "type": "card",
     "cardType": "C 03",
-    "z": 11246,
+    "z": 12023,
     "activeFace": 1
   },
   "f9et_4_C": {
     "id": "f9et_4_C",
-    "parent": "o292",
+    "parent": "5y85",
     "deck": "f9etD",
     "type": "card",
     "cardType": "C 04",
-    "z": 11248,
+    "z": 12025,
     "activeFace": 1
   },
   "f9et_5_C": {
     "id": "f9et_5_C",
-    "parent": "o292",
+    "parent": "5y85",
     "deck": "f9etD",
     "type": "card",
     "cardType": "C 05",
-    "z": 11250,
+    "z": 12027,
     "activeFace": 1
   },
   "f9et_6_C": {
     "id": "f9et_6_C",
-    "parent": "o292",
+    "parent": "5y85",
     "deck": "f9etD",
     "type": "card",
     "cardType": "C 06",
-    "z": 11252,
+    "z": 12029,
     "activeFace": 1
   },
   "f9et_7_C": {
     "id": "f9et_7_C",
-    "parent": "o292",
+    "parent": "5y85",
     "deck": "f9etD",
     "type": "card",
     "cardType": "C 07",
-    "z": 11254,
+    "z": 12031,
     "activeFace": 1
   },
   "f9et_8_C": {
     "id": "f9et_8_C",
-    "parent": "o292",
+    "parent": "5y85",
     "deck": "f9etD",
     "type": "card",
     "cardType": "C 08",
-    "z": 11256,
+    "z": 12033,
     "activeFace": 1
   },
   "f9et_9_C": {
     "id": "f9et_9_C",
-    "parent": "o292",
+    "parent": "5y85",
     "deck": "f9etD",
     "type": "card",
     "cardType": "C 09",
-    "z": 11258,
+    "z": 12035,
     "activeFace": 1
   },
   "f9et_T_C": {
     "id": "f9et_T_C",
-    "parent": "o292",
+    "parent": "5y85",
     "deck": "f9etD",
     "type": "card",
     "cardType": "C 10",
-    "z": 11260,
+    "z": 12037,
     "activeFace": 1
   },
   "f9et_J_C": {
     "id": "f9et_J_C",
-    "parent": "o292",
+    "parent": "5y85",
     "deck": "f9etD",
     "type": "card",
     "cardType": "C 2J",
-    "z": 11262,
+    "z": 12039,
     "activeFace": 1
   },
   "f9et_Q_C": {
     "id": "f9et_Q_C",
-    "parent": "o292",
+    "parent": "5y85",
     "deck": "f9etD",
     "type": "card",
     "cardType": "C 3Q",
-    "z": 11264,
+    "z": 12041,
     "activeFace": 1
   },
   "f9et_K_C": {
     "id": "f9et_K_C",
-    "parent": "o292",
+    "parent": "5y85",
     "deck": "f9etD",
     "type": "card",
     "cardType": "C 4K",
-    "z": 11266,
+    "z": 12043,
     "activeFace": 1
   },
   "f9et_A_D": {
     "id": "f9et_A_D",
-    "parent": "o292",
+    "parent": "5y85",
     "deck": "f9etD",
     "type": "card",
     "cardType": "D 01",
-    "z": 11268,
+    "z": 12045,
     "activeFace": 1
   },
   "f9et_2_D": {
     "id": "f9et_2_D",
-    "parent": "o292",
+    "parent": "5y85",
     "deck": "f9etD",
     "type": "card",
     "cardType": "D 02",
-    "z": 11270,
+    "z": 12047,
     "activeFace": 1
   },
   "f9et_3_D": {
     "id": "f9et_3_D",
-    "parent": "o292",
+    "parent": "5y85",
     "deck": "f9etD",
     "type": "card",
     "cardType": "D 03",
-    "z": 11272,
+    "z": 12049,
     "activeFace": 1
   },
   "f9et_4_D": {
     "id": "f9et_4_D",
-    "parent": "o292",
+    "parent": "5y85",
     "deck": "f9etD",
     "type": "card",
     "cardType": "D 04",
-    "z": 11274,
+    "z": 12051,
     "activeFace": 1
   },
   "f9et_5_D": {
     "id": "f9et_5_D",
-    "parent": "o292",
+    "parent": "5y85",
     "deck": "f9etD",
     "type": "card",
     "cardType": "D 05",
-    "z": 11276,
+    "z": 12053,
     "activeFace": 1
   },
   "f9et_6_D": {
     "id": "f9et_6_D",
-    "parent": "o292",
+    "parent": "5y85",
     "deck": "f9etD",
     "type": "card",
     "cardType": "D 06",
-    "z": 11278,
+    "z": 12055,
     "activeFace": 1
   },
   "f9et_7_D": {
     "id": "f9et_7_D",
-    "parent": "o292",
+    "parent": "5y85",
     "deck": "f9etD",
     "type": "card",
     "cardType": "D 07",
-    "z": 11280,
+    "z": 12057,
     "activeFace": 1
   },
   "f9et_8_D": {
     "id": "f9et_8_D",
-    "parent": "o292",
+    "parent": "5y85",
     "deck": "f9etD",
     "type": "card",
     "cardType": "D 08",
-    "z": 11282,
+    "z": 12059,
     "activeFace": 1
   },
   "f9et_9_D": {
     "id": "f9et_9_D",
-    "parent": "o292",
+    "parent": "5y85",
     "deck": "f9etD",
     "type": "card",
     "cardType": "D 09",
-    "z": 11284,
+    "z": 12061,
     "activeFace": 1
   },
   "f9et_T_D": {
     "id": "f9et_T_D",
-    "parent": "o292",
+    "parent": "5y85",
     "deck": "f9etD",
     "type": "card",
     "cardType": "D 10",
-    "z": 11286,
+    "z": 12063,
     "activeFace": 1
   },
   "f9et_J_D": {
     "id": "f9et_J_D",
-    "parent": "o292",
+    "parent": "5y85",
     "deck": "f9etD",
     "type": "card",
     "cardType": "D 2J",
-    "z": 11288,
+    "z": 12065,
     "activeFace": 1
   },
   "f9et_Q_D": {
     "id": "f9et_Q_D",
-    "parent": "o292",
+    "parent": "5y85",
     "deck": "f9etD",
     "type": "card",
     "cardType": "D 3Q",
-    "z": 11290,
+    "z": 12067,
     "activeFace": 1
   },
   "f9et_K_D": {
     "id": "f9et_K_D",
-    "parent": "o292",
+    "parent": "5y85",
     "deck": "f9etD",
     "type": "card",
     "cardType": "D 4K",
-    "z": 11292,
+    "z": 12069,
     "activeFace": 1
   },
   "f9et_A_H": {
     "id": "f9et_A_H",
-    "parent": "o292",
+    "parent": "5y85",
     "deck": "f9etD",
     "type": "card",
     "cardType": "H 01",
-    "z": 11294,
+    "z": 12071,
     "activeFace": 1
   },
   "f9et_2_H": {
     "id": "f9et_2_H",
-    "parent": "o292",
+    "parent": "5y85",
     "deck": "f9etD",
     "type": "card",
     "cardType": "H 02",
-    "z": 11296,
+    "z": 12073,
     "activeFace": 1
   },
   "f9et_3_H": {
     "id": "f9et_3_H",
-    "parent": "o292",
+    "parent": "5y85",
     "deck": "f9etD",
     "type": "card",
     "cardType": "H 03",
-    "z": 11298,
+    "z": 12075,
     "activeFace": 1
   },
   "f9et_4_H": {
     "id": "f9et_4_H",
-    "parent": "o292",
+    "parent": "5y85",
     "deck": "f9etD",
     "type": "card",
     "cardType": "H 04",
-    "z": 11300,
+    "z": 12077,
     "activeFace": 1
   },
   "f9et_5_H": {
     "id": "f9et_5_H",
-    "parent": "o292",
+    "parent": "5y85",
     "deck": "f9etD",
     "type": "card",
     "cardType": "H 05",
-    "z": 11302,
+    "z": 12079,
     "activeFace": 1
   },
   "f9et_6_H": {
     "id": "f9et_6_H",
-    "parent": "o292",
+    "parent": "5y85",
     "deck": "f9etD",
     "type": "card",
     "cardType": "H 06",
-    "z": 11304,
+    "z": 12081,
     "activeFace": 1
   },
   "f9et_7_H": {
     "id": "f9et_7_H",
-    "parent": "o292",
+    "parent": "5y85",
     "deck": "f9etD",
     "type": "card",
     "cardType": "H 07",
-    "z": 11306,
+    "z": 12083,
     "activeFace": 1
   },
   "f9et_8_H": {
     "id": "f9et_8_H",
-    "parent": "o292",
+    "parent": "5y85",
     "deck": "f9etD",
     "type": "card",
     "cardType": "H 08",
-    "z": 11308,
+    "z": 12085,
     "activeFace": 1
   },
   "f9et_9_H": {
     "id": "f9et_9_H",
-    "parent": "o292",
+    "parent": "5y85",
     "deck": "f9etD",
     "type": "card",
     "cardType": "H 09",
-    "z": 11310,
+    "z": 12087,
     "activeFace": 1
   },
   "f9et_T_H": {
     "id": "f9et_T_H",
-    "parent": "o292",
+    "parent": "5y85",
     "deck": "f9etD",
     "type": "card",
     "cardType": "H 10",
-    "z": 11312,
+    "z": 12089,
     "activeFace": 1
   },
   "f9et_J_H": {
     "id": "f9et_J_H",
-    "parent": "o292",
+    "parent": "5y85",
     "deck": "f9etD",
     "type": "card",
     "cardType": "H 2J",
-    "z": 11314,
+    "z": 12091,
     "activeFace": 1
   },
   "f9et_Q_H": {
     "id": "f9et_Q_H",
-    "parent": "o292",
+    "parent": "5y85",
     "deck": "f9etD",
     "type": "card",
     "cardType": "H 3Q",
-    "z": 11316,
+    "z": 12093,
     "activeFace": 1
   },
   "f9et_K_H": {
     "id": "f9et_K_H",
-    "parent": "o292",
+    "parent": "5y85",
     "deck": "f9etD",
     "type": "card",
     "cardType": "H 4K",
-    "z": 11318,
+    "z": 12095,
     "activeFace": 1
   },
   "f9et_A_S": {
     "id": "f9et_A_S",
-    "parent": "o292",
+    "parent": "5y85",
     "deck": "f9etD",
     "type": "card",
     "cardType": "S 01",
-    "z": 11320,
+    "z": 12097,
     "activeFace": 1
   },
   "f9et_2_S": {
     "id": "f9et_2_S",
-    "parent": "o292",
+    "parent": "5y85",
     "deck": "f9etD",
     "type": "card",
     "cardType": "S 02",
-    "z": 11322,
+    "z": 12099,
     "activeFace": 1
   },
   "f9et_3_S": {
     "id": "f9et_3_S",
-    "parent": "o292",
+    "parent": "5y85",
     "deck": "f9etD",
     "type": "card",
     "cardType": "S 03",
-    "z": 11324,
+    "z": 12101,
     "activeFace": 1
   },
   "f9et_4_S": {
     "id": "f9et_4_S",
-    "parent": "o292",
+    "parent": "5y85",
     "deck": "f9etD",
     "type": "card",
     "cardType": "S 04",
-    "z": 11326,
+    "z": 12103,
     "activeFace": 1
   },
   "f9et_5_S": {
     "id": "f9et_5_S",
-    "parent": "o292",
+    "parent": "5y85",
     "deck": "f9etD",
     "type": "card",
     "cardType": "S 05",
-    "z": 11328,
+    "z": 12105,
     "activeFace": 1
   },
   "f9et_6_S": {
     "id": "f9et_6_S",
-    "parent": "o292",
+    "parent": "5y85",
     "deck": "f9etD",
     "type": "card",
     "cardType": "S 06",
-    "z": 11330,
+    "z": 12107,
     "activeFace": 1
   },
   "f9et_7_S": {
     "id": "f9et_7_S",
-    "parent": "o292",
+    "parent": "5y85",
     "deck": "f9etD",
     "type": "card",
     "cardType": "S 07",
-    "z": 11332,
+    "z": 12109,
     "activeFace": 1
   },
   "f9et_8_S": {
     "id": "f9et_8_S",
-    "parent": "o292",
+    "parent": "5y85",
     "deck": "f9etD",
     "type": "card",
     "cardType": "S 08",
-    "z": 11334,
+    "z": 12111,
     "activeFace": 1
   },
   "f9et_9_S": {
     "id": "f9et_9_S",
-    "parent": "o292",
+    "parent": "5y85",
     "deck": "f9etD",
     "type": "card",
     "cardType": "S 09",
-    "z": 11336,
+    "z": 12113,
     "activeFace": 1
   },
   "f9et_T_S": {
     "id": "f9et_T_S",
-    "parent": "o292",
+    "parent": "5y85",
     "deck": "f9etD",
     "type": "card",
     "cardType": "S 10",
-    "z": 11338,
+    "z": 12115,
     "activeFace": 1
   },
   "f9et_J_S": {
     "id": "f9et_J_S",
-    "parent": "o292",
+    "parent": "5y85",
     "deck": "f9etD",
     "type": "card",
     "cardType": "S 2J",
-    "z": 11340,
+    "z": 12117,
     "activeFace": 1
   },
   "f9et_Q_S": {
     "id": "f9et_Q_S",
-    "parent": "o292",
+    "parent": "5y85",
     "deck": "f9etD",
     "type": "card",
     "cardType": "S 3Q",
-    "z": 11342,
+    "z": 12119,
     "activeFace": 1
   },
   "f9et_K_S": {
     "id": "f9et_K_S",
-    "parent": "o292",
+    "parent": "5y85",
     "deck": "f9etD",
     "type": "card",
     "cardType": "S 4K",
-    "z": 11344,
+    "z": 12121,
     "activeFace": 1
   },
-  "o292": {
+  "5y85": {
     "type": "pile",
     "parent": "holder1",
     "x": 4,
     "y": 4,
     "width": 103,
     "height": 160,
-    "id": "o292"
+    "id": "5y85"
   }
 }
