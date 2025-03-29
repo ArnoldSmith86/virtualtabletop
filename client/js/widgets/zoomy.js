@@ -51,7 +51,7 @@ export class Zoomy extends Widget {
   }
 
   set(property, value) {
-    if(this.isBig) {
+    if(this.isBig && $('body').classList.contains('edit')) {
       if(property == 'x')
         this.set('zoomedX', value);
       else if(property == 'y')
