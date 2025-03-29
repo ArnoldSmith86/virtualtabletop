@@ -1,0 +1,6110 @@
+{
+  "_meta": {
+    "version": 17,
+    "info": {
+      "name": "Merchant Ships",
+      "image": "/assets/-1010238207_2174238",
+      "rules": "n/a",
+      "bgg": "https://boardgamegeek.com/boardgame/280/neue-spiele-im-alten-rom",
+      "year": "1994",
+      "mode": "vs",
+      "time": "15",
+      "attribution": "<div>Original layout, coding, and asset design done by Shobu and licensed for use on VTT.&nbsp;<span style=\"color: var(--overlayFontColor);\">Code modifications and functionality adjustments performed by Dexdouglas, with assistance from AndyPy and LawDawg, licensed for use on VTT</span><span style=\"color: var(--overlayFontColor);\">.</span></div><div><br></div>Cover image created using AI https://labs.google/fx/tools/image-fx with a prompt of \"Renaissance era style pencil drawing of a ship and a captain buying goods at an auction with light color at a dock\"",
+      "lastUpdate": 1743215867586,
+      "showName": true,
+      "skill": "Medium",
+      "description": "In Merchant Ships, players are Renaissance era merchant captains competing to acquire and sell the most valuable goods, aiming for the highest profits by the end of the game.",
+      "similarImage": "",
+      "similarName": "Mercator",
+      "similarDesigner": "Reiner Knizia",
+      "similarAwards": "",
+      "ruleText": "To start the game, have all players \"Click to sit\" and hit the \"New Game\" button. The game will select a random starting player and your \"Player Bank\" of 50 points will remain hidden throughout the game to the other players. If playing with less than 7 players, some cards will be moved to the Discard holder. The deck of 50 cards contains cards valued 1-10 in 5 suits.\n\nOn your turn, you can reveal 1, 2, or 3 cards faceup from the deck by dragging them from the deck to the 3 white holders next to the deck. After revealing a card, you can choose to start an auction by pressing the \"Start Auction\" button. Everyone will then secretly enter a bid amount by clicking the circle under the \"Player Bid\" area. A bid of 0 is valid. As bids are entered, the green check mark will be visible next to the bid area. Once all bids are in, the active player can hit the \"End Auction\" button and reveal all bids. A \"Winner\" or a \"No Winner\" button will be shown. The highest bidder will hit the \"Winner\" button which will move all the auctioned cards to their holding area and tally the value of their cards so be shown under the \"Round Total\". The Winner button will also reduce the players bank by the value of their bid. All other players do not spend anything, and the player indicator will move to the next player in turn order to start the next round of auctions. \n\nIn the event of a tie, the person sitting closest in clockwise order from the start player, but NOT including the start player, will win the tie. \n\nIf everyone bids 0 on the selection of cards, the \"No Winner\" button will be revealed, and the start player should hit the \"No Winner\" button to move the revealed cards to the discard and shift the player indicator to the next person in turn order. \n\nYou cannot bid on lots if you don't have enough space for all the cards.&nbsp;<b style=\"color: var(--overlayFontColor);\">NOTE</b><span style=\"color: var(--overlayFontColor);\">: You can only reveal as many cards as at least one other player has room for. This means that you can reveal cards for an auction that you cannot bid on.</span><div>\nAs you bid for cards, you are depleting your bank of points in the hopes that at the end of the game you will have made wise business decisions, and your cards will be worth more than you paid for them. \n\n<b>NOTE</b>: If you have filled all 6 of your available spaces, you will not be able to take any further turns for the game and your turn will be skipped. Your green check mark next to your bid will remain green for the rest of the game. If you have at least 1 open space, you can still reveal cards. \n\n<b>NOTE</b>: If you are the last player with open spaces, you will drag cards from the top of the deck to your open spaces for free until you have completely filled your empty spaces.\n\n<b>GAME END</b>\nThe game ends as soon as all players have filled their ships. The game will also end if the last of the cards are auctioned and the deck is empty.\n\nThe player with the highest total receives the most points for their cards. The next player receives fewer points and so on. The table at the bottom left of the screen details the points dispensed. In the event of a tie, the tied players add all the values between them and divide equally, rounding down. \n\n<b>Example:</b>&nbsp;in a 5-player game, player A has the highest Round Total of 35 and earns 40 points, Player B and C both have the next highest Round Total with 27 and must sum the 2nd and 3rd place points (30+20) and divide them equally amongst the 2 of them (25 points each). Player D had the 3rd highest Round Total with 26 but they only receive 10 points. Player E receives nothing as they were the 5th highest Round Total and 5th place receives nothing in a 5-player game. \n\n<b>Variants:</b>\n\n<b>Color bonus:</b>\nAs an added method of scoring points, you can award an additional 10-point bonus at the end of the game if someone has managed to acquire 5 different colors of cards to their area.\n\n<b>Live Auction:</b>\nAnother variant is to allow all players to bid aloud, like a live auction, with the start player announcing \"going once, going twice, sold\" once the bids start to slow down. The starting player can of course still bid in this fashion, but they need to allow others time to speak after their bid and before closing the auction.\n\n<b>Multiple games:</b>\nYou can choose to play several games in a row but allowing the scores to carry over between games. Do not reveal your scores at the end of each game and only reveal after the agreed upon # of rounds are complete. </div>",
+      "helpText": "",
+      "saveState": null,
+      "saveVariant": null,
+      "savePlayers": null,
+      "saveDate": null,
+      "saveLinkState": null,
+      "variantImage": "",
+      "variant": "Merchant Ships",
+      "language": "en-GB",
+      "players": "3-7"
+    }
+  },
+  "2b1761ea-8cd5-4e2b-a36e-8b354df38cc4_label": {
+    "id": "2b1761ea-8cd5-4e2b-a36e-8b354df38cc4_label",
+    "parent": "deck",
+    "x": -9,
+    "y": -34,
+    "width": 134,
+    "type": "label",
+    "text": "Deck",
+    "twoRowBottomAlign": true,
+    "movableInEdit": false
+  },
+  "p1-bid": {
+    "type": "label",
+    "id": "p1-bid",
+    "x": 247,
+    "y": 200,
+    "width": 129.6,
+    "height": 40,
+    "movableInEdit": false,
+    "editable": true,
+    "text": "Player 1 Bid",
+    "twoRowBottomAlign": true,
+    "linkedToSeat": "seat1"
+  },
+  "p2-bid": {
+    "type": "label",
+    "id": "p2-bid",
+    "x": 408,
+    "y": 200,
+    "width": 129.6,
+    "height": 40,
+    "movableInEdit": false,
+    "editable": true,
+    "text": "Player 2 Bid",
+    "twoRowBottomAlign": true,
+    "linkedToSeat": "seat2"
+  },
+  "p3-bid": {
+    "type": "label",
+    "id": "p3-bid",
+    "x": 573,
+    "y": 200,
+    "width": 129.6,
+    "height": 40,
+    "movableInEdit": false,
+    "editable": true,
+    "text": "Player 3 Bid",
+    "twoRowBottomAlign": true,
+    "linkedToSeat": "seat3"
+  },
+  "p4-bid": {
+    "type": "label",
+    "id": "p4-bid",
+    "x": 739,
+    "y": 200,
+    "width": 129.6,
+    "height": 40,
+    "movableInEdit": false,
+    "editable": true,
+    "text": "Player 4 Bid",
+    "twoRowBottomAlign": true,
+    "linkedToSeat": "seat4"
+  },
+  "p5-bid": {
+    "type": "label",
+    "id": "p5-bid",
+    "x": 900,
+    "y": 200,
+    "width": 129.6,
+    "height": 40,
+    "movableInEdit": false,
+    "editable": true,
+    "text": "Player 5 Bid",
+    "twoRowBottomAlign": true,
+    "linkedToSeat": "seat5"
+  },
+  "22y3": {
+    "id": "22y3",
+    "x": 245,
+    "y": 65,
+    "width": 144,
+    "height": 300,
+    "layer": -3,
+    "movable": false,
+    "editorGroup": true
+  },
+  "22y4": {
+    "id": "22y4",
+    "x": 398,
+    "y": 65,
+    "width": 144,
+    "height": 300,
+    "layer": -3,
+    "movable": false,
+    "editorGroup": true
+  },
+  "22y5": {
+    "id": "22y5",
+    "x": 564,
+    "y": 69,
+    "width": 144,
+    "height": 300,
+    "layer": -3,
+    "movable": false,
+    "editorGroup": true
+  },
+  "22y6": {
+    "id": "22y6",
+    "x": 736,
+    "y": 66,
+    "width": 144,
+    "height": 300,
+    "layer": -3,
+    "movable": false,
+    "editorGroup": true
+  },
+  "22y7": {
+    "id": "22y7",
+    "x": 896,
+    "y": 68,
+    "width": 144,
+    "height": 300,
+    "layer": -3,
+    "movable": false,
+    "editorGroup": true
+  },
+  "button-auction": {
+    "type": "button",
+    "id": "button-auction",
+    "x": 1079,
+    "y": 738,
+    "width": 100,
+    "height": 40,
+    "z": 85,
+    "css": {
+      "font-size": "14px"
+    },
+    "text": "Start Auction",
+    "auction": 74,
+    "clickRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY text}",
+        "operand2": "Start Auction",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "button-auction"
+            ],
+            "property": "text",
+            "value": "End Auction"
+          },
+          {
+            "func": "FOREACH",
+            "range": 7,
+            "loopRoutine": [
+              {
+                "func": "SET",
+                "collection": [
+                  "bid-p${value}"
+                ],
+                "property": "onlyVisibleForSeat",
+                "value": "seat${value}"
+              },
+              {
+                "func": "SET",
+                "collection": [
+                  "bid-p${value}"
+                ],
+                "property": "text",
+                "value": 0
+              }
+            ]
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "button-no-winner"
+            ],
+            "property": "display",
+            "value": false
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "button-winner"
+            ],
+            "property": "display",
+            "value": false
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "COUNT",
+            "collection": "activeSeats",
+            "variable": "players"
+          },
+          {
+            "func": "SELECT",
+            "property": "check",
+            "value": true
+          },
+          {
+            "func": "SELECT",
+            "source": "DEFAULT",
+            "property": "activeFace",
+            "value": 1
+          },
+          {
+            "func": "COUNT",
+            "variable": "checks"
+          },
+          {
+            "func": "IF",
+            "operand1": "${players}",
+            "relation": "!=",
+            "operand2": "${checks}",
+            "thenRoutine": [
+              {
+                "func": "INPUT",
+                "fields": [
+                  {
+                    "type": "title",
+                    "text": "Not all players are ready..."
+                  },
+                  {
+                    "type": "subtitle",
+                    "text": "Not all players have indicated they are ready. Are you sure you want to end the auction?"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "button-auction"
+            ],
+            "property": "text",
+            "value": "Start Auction"
+          },
+          {
+            "func": "FOREACH",
+            "range": 7,
+            "loopRoutine": [
+              {
+                "func": "SET",
+                "collection": [
+                  "bid-p${value}"
+                ],
+                "property": "onlyVisibleForSeat",
+                "value": null
+              }
+            ]
+          },
+          {
+            "func": "CALL",
+            "routine": "winnerButtonRoutine"
+          }
+        ]
+      }
+    ],
+    "winnerButtonRoutine": [
+      {
+        "func": "COUNT",
+        "collection": "activeSeats",
+        "variable": "players"
+      },
+      {
+        "func": "SELECT",
+        "property": "check",
+        "value": true
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "activeFace",
+        "value": 1
+      },
+      {
+        "func": "COUNT",
+        "variable": "checks"
+      },
+      {
+        "func": "GET",
+        "collection": [
+          "bid-p1",
+          "bid-p2",
+          "bid-p3",
+          "bid-p4",
+          "bid-p5",
+          "bid-p6",
+          "bid-p7"
+        ],
+        "property": "text",
+        "aggregation": "sum",
+        "variable": "bidsTotal"
+      },
+      {
+        "func": "IF",
+        "operand1": "${players}",
+        "operand2": "${checks}",
+        "thenRoutine": [
+          {
+            "func": "IF",
+            "operand1": "${bidsTotal}",
+            "relation": ">",
+            "operand2": 0,
+            "thenRoutine": [
+              {
+                "func": "SET",
+                "collection": [
+                  "button-winner"
+                ],
+                "property": "display",
+                "value": true
+              }
+            ],
+            "elseRoutine": [
+              {
+                "func": "SET",
+                "collection": [
+                  "button-no-winner"
+                ],
+                "property": "display",
+                "value": true
+              }
+            ]
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "button-winner"
+            ],
+            "property": "display",
+            "value": false
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "button-no-winner"
+            ],
+            "property": "display",
+            "value": false
+          }
+        ]
+      }
+    ]
+  },
+  "bid-p1": {
+    "id": "bid-p1",
+    "z": 3419,
+    "movableInEdit": false,
+    "css": {
+      "color": "black",
+      "font-size": "46px",
+      "line-height": "100px",
+      "text-align": "center"
+    },
+    "image": "/assets/929442417_5904",
+    "linkedToSeat": "seat1",
+    "text": 0,
+    "readyMarker": "ready-p1",
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": [
+          "${PROPERTY readyMarker}"
+        ],
+        "property": "activeFace",
+        "value": 0
+      },
+      "var header = 'Enter bid amount'",
+      {
+        "func": "INPUT",
+        "header": "${header}",
+        "confirmButtonText": "OK",
+        "cancelButtonText": "Cancel",
+        "fields": [
+          {
+            "type": "number",
+            "value": "${PROPERTY text}",
+            "variable": "newValue"
+          }
+        ]
+      },
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY id}",
+        "value": "${newValue}"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "${PROPERTY readyMarker}"
+        ],
+        "property": "activeFace",
+        "value": 1
+      }
+    ],
+    "y": 255,
+    "x": 259,
+    "hoverParent": "22y3",
+    "movable": false
+  },
+  "seat1": {
+    "type": "seat",
+    "id": "seat1",
+    "parent": "22y3",
+    "x": -6,
+    "y": -1,
+    "z": 48,
+    "movableInEdit": false,
+    "hideWhenUnused": true,
+    "width": 131,
+    "height": 32,
+    "colorEmpty": "#F07F0E",
+    "color": "#F07F0E",
+    "clickRoutine": [
+      {
+        "func": "CLICK",
+        "collection": "thisButton",
+        "mode": "ignoreClickRoutine"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "color",
+        "value": "${PROPERTY colorEmpty}"
+      },
+      {
+        "func": "SELECT",
+        "type": "seat",
+        "property": "player",
+        "relation": "!=",
+        "value": ""
+      }
+    ]
+  },
+  "ready-p1": {
+    "type": "basic",
+    "id": "ready-p1",
+    "parent": "22y3",
+    "y": 178,
+    "width": 30,
+    "height": 30,
+    "z": 2,
+    "movableInEdit": false,
+    "faces": [
+      {
+        "css": {
+          "background": "#ff0000",
+          "border-color": "black",
+          "border-radius": "8px",
+          "border-style": "solid",
+          "border-width": "2px",
+          "color": "white",
+          "font-size": "30px",
+          "line-height": "30px",
+          "text-align": "center"
+        },
+        "text": "✗"
+      },
+      {
+        "css": {
+          "background": "#00ff00",
+          "border-color": "black",
+          "border-radius": "8px",
+          "border-style": "solid",
+          "border-width": "2px",
+          "color": "black",
+          "font-size": "30px",
+          "line-height": "30px",
+          "text-align": "center"
+        },
+        "text": "✓"
+      }
+    ],
+    "linkedToSeat": "seat1",
+    "x": -15,
+    "movable": false,
+    "check": true
+  },
+  "bid-p2": {
+    "id": "bid-p2",
+    "parent": "22y4",
+    "z": 3383,
+    "movableInEdit": false,
+    "css": {
+      "color": "black",
+      "font-size": "46px",
+      "line-height": "100px",
+      "text-align": "center"
+    },
+    "image": "/assets/929442417_5904",
+    "linkedToSeat": "seat2",
+    "text": 0,
+    "readyMarker": "ready-p2",
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": [
+          "${PROPERTY readyMarker}"
+        ],
+        "property": "activeFace",
+        "value": 0
+      },
+      "var header = 'Enter bid amount'",
+      {
+        "func": "INPUT",
+        "header": "${header}",
+        "confirmButtonText": "OK",
+        "cancelButtonText": "Cancel",
+        "fields": [
+          {
+            "type": "number",
+            "value": "${PROPERTY text}",
+            "variable": "newValue"
+          }
+        ]
+      },
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY id}",
+        "value": "${newValue}"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "${PROPERTY readyMarker}"
+        ],
+        "property": "activeFace",
+        "value": 1
+      }
+    ],
+    "y": 190,
+    "x": 26,
+    "movable": false
+  },
+  "seat2": {
+    "type": "seat",
+    "id": "seat2",
+    "parent": "22y4",
+    "z": 48,
+    "movableInEdit": false,
+    "x": 5,
+    "y": -1,
+    "width": 131,
+    "height": 32,
+    "color": "#Cf2fe8",
+    "colorEmpty": "#Cf2fe8",
+    "index": 2,
+    "movable": false,
+    "inheritFrom": {
+      "seat1": "clickRoutine"
+    },
+    "hideWhenUnused": true,
+    "turn": false,
+    "skipTurn": false
+  },
+  "ready-p2": {
+    "type": "basic",
+    "id": "ready-p2",
+    "parent": "22y4",
+    "y": 182,
+    "width": 30,
+    "height": 30,
+    "z": 2,
+    "movableInEdit": false,
+    "faces": [
+      {
+        "css": {
+          "background": "#ff0000",
+          "border-color": "black",
+          "border-radius": "8px",
+          "border-style": "solid",
+          "border-width": "2px",
+          "color": "white",
+          "font-size": "30px",
+          "line-height": "30px",
+          "text-align": "center"
+        },
+        "text": "✗"
+      },
+      {
+        "css": {
+          "background": "#00ff00",
+          "border-color": "black",
+          "border-radius": "8px",
+          "border-style": "solid",
+          "border-width": "2px",
+          "color": "black",
+          "font-size": "30px",
+          "line-height": "30px",
+          "text-align": "center"
+        },
+        "text": "✓"
+      }
+    ],
+    "linkedToSeat": "seat2",
+    "x": -4,
+    "movable": false,
+    "check": true,
+    "inheritFrom": {
+      "ready-p1": "activeFaceChangeRoutine"
+    },
+    "activeFace": 0
+  },
+  "seat3": {
+    "type": "seat",
+    "id": "seat3",
+    "parent": "22y5",
+    "z": 48,
+    "movableInEdit": false,
+    "x": 1,
+    "y": -5,
+    "width": 131,
+    "height": 32,
+    "color": "#A1A4A0",
+    "colorEmpty": "#A1A4A0",
+    "inheritFrom": {
+      "seat1": "clickRoutine"
+    },
+    "hideWhenUnused": true,
+    "index": 3,
+    "turn": false,
+    "skipTurn": false
+  },
+  "bid-p3": {
+    "id": "bid-p3",
+    "parent": "22y5",
+    "z": 3383,
+    "movableInEdit": false,
+    "css": {
+      "color": "black",
+      "font-size": "46px",
+      "line-height": "100px",
+      "text-align": "center"
+    },
+    "image": "/assets/929442417_5904",
+    "linkedToSeat": "seat3",
+    "text": 0,
+    "readyMarker": "ready-p3",
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": [
+          "${PROPERTY readyMarker}"
+        ],
+        "property": "activeFace",
+        "value": 0
+      },
+      "var header = 'Enter bid amount'",
+      {
+        "func": "INPUT",
+        "header": "${header}",
+        "confirmButtonText": "OK",
+        "cancelButtonText": "Cancel",
+        "fields": [
+          {
+            "type": "number",
+            "value": "${PROPERTY text}",
+            "variable": "newValue"
+          }
+        ]
+      },
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY id}",
+        "value": "${newValue}"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "${PROPERTY readyMarker}"
+        ],
+        "property": "activeFace",
+        "value": 1
+      }
+    ],
+    "y": 186,
+    "x": 24,
+    "movable": false
+  },
+  "ready-p3": {
+    "type": "basic",
+    "id": "ready-p3",
+    "parent": "22y5",
+    "y": 176,
+    "width": 30,
+    "height": 30,
+    "z": 2,
+    "movableInEdit": false,
+    "faces": [
+      {
+        "css": {
+          "background": "#ff0000",
+          "border-color": "black",
+          "border-radius": "8px",
+          "border-style": "solid",
+          "border-width": "2px",
+          "color": "white",
+          "font-size": "30px",
+          "line-height": "30px",
+          "text-align": "center"
+        },
+        "text": "✗"
+      },
+      {
+        "css": {
+          "background": "#00ff00",
+          "border-color": "black",
+          "border-radius": "8px",
+          "border-style": "solid",
+          "border-width": "2px",
+          "color": "black",
+          "font-size": "30px",
+          "line-height": "30px",
+          "text-align": "center"
+        },
+        "text": "✓"
+      }
+    ],
+    "linkedToSeat": "seat3",
+    "x": -6,
+    "movable": false,
+    "check": true,
+    "activeFace": 0,
+    "inheritFrom": {
+      "ready-p1": "activeFaceChangeRoutine"
+    }
+  },
+  "seat4": {
+    "type": "seat",
+    "id": "seat4",
+    "parent": "22y6",
+    "z": 48,
+    "movableInEdit": false,
+    "y": -2,
+    "width": 131,
+    "height": 32,
+    "x": -8,
+    "color": "#109E44",
+    "colorEmpty": "#109E44",
+    "inheritFrom": {
+      "seat1": "clickRoutine"
+    },
+    "hideWhenUnused": true,
+    "index": 4,
+    "turn": false,
+    "skipTurn": false
+  },
+  "seat5": {
+    "type": "seat",
+    "id": "seat5",
+    "parent": "22y7",
+    "z": 48,
+    "movableInEdit": false,
+    "y": -4,
+    "width": 131,
+    "height": 32,
+    "x": -5,
+    "color": "#EFFE14",
+    "colorEmpty": "#EFFE14",
+    "inheritFrom": {
+      "seat1": "clickRoutine"
+    },
+    "hideWhenUnused": true,
+    "index": 5,
+    "turn": true,
+    "skipTurn": false
+  },
+  "bid-p4": {
+    "id": "bid-p4",
+    "z": 3418,
+    "movableInEdit": false,
+    "css": {
+      "color": "black",
+      "font-size": "46px",
+      "line-height": "100px",
+      "text-align": "center"
+    },
+    "image": "/assets/929442417_5904",
+    "linkedToSeat": "seat4",
+    "text": 0,
+    "readyMarker": "ready-p4",
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": [
+          "${PROPERTY readyMarker}"
+        ],
+        "property": "activeFace",
+        "value": 0
+      },
+      "var header = 'Enter bid amount'",
+      {
+        "func": "INPUT",
+        "header": "${header}",
+        "confirmButtonText": "OK",
+        "cancelButtonText": "Cancel",
+        "fields": [
+          {
+            "type": "number",
+            "value": "${PROPERTY text}",
+            "variable": "newValue"
+          }
+        ]
+      },
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY id}",
+        "value": "${newValue}"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "${PROPERTY readyMarker}"
+        ],
+        "property": "activeFace",
+        "value": 1
+      }
+    ],
+    "y": 248,
+    "x": 763,
+    "hoverParent": "22y6",
+    "movable": false
+  },
+  "ready-p4": {
+    "type": "basic",
+    "id": "ready-p4",
+    "y": 243,
+    "width": 30,
+    "height": 30,
+    "z": 3402,
+    "movableInEdit": false,
+    "faces": [
+      {
+        "css": {
+          "background": "#ff0000",
+          "border-color": "black",
+          "border-radius": "8px",
+          "border-style": "solid",
+          "border-width": "2px",
+          "color": "white",
+          "font-size": "30px",
+          "line-height": "30px",
+          "text-align": "center"
+        },
+        "text": "✗"
+      },
+      {
+        "css": {
+          "background": "#00ff00",
+          "border-color": "black",
+          "border-radius": "8px",
+          "border-style": "solid",
+          "border-width": "2px",
+          "color": "black",
+          "font-size": "30px",
+          "line-height": "30px",
+          "text-align": "center"
+        },
+        "text": "✓"
+      }
+    ],
+    "linkedToSeat": "seat4",
+    "x": 721,
+    "hoverParent": "22y6",
+    "movable": false,
+    "check": true,
+    "inheritFrom": {
+      "ready-p1": "activeFaceChangeRoutine"
+    },
+    "activeFace": 0
+  },
+  "bid-p5": {
+    "id": "bid-p5",
+    "z": 3389,
+    "movableInEdit": false,
+    "css": {
+      "color": "black",
+      "font-size": "46px",
+      "line-height": "100px",
+      "text-align": "center"
+    },
+    "image": "/assets/929442417_5904",
+    "linkedToSeat": "seat5",
+    "text": 0,
+    "readyMarker": "ready-p5",
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": [
+          "${PROPERTY readyMarker}"
+        ],
+        "property": "activeFace",
+        "value": 0
+      },
+      "var header = 'Enter bid amount'",
+      {
+        "func": "INPUT",
+        "header": "${header}",
+        "confirmButtonText": "OK",
+        "cancelButtonText": "Cancel",
+        "fields": [
+          {
+            "type": "number",
+            "value": "${PROPERTY text}",
+            "variable": "newValue"
+          }
+        ]
+      },
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY id}",
+        "value": "${newValue}"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "${PROPERTY readyMarker}"
+        ],
+        "property": "activeFace",
+        "value": 1
+      }
+    ],
+    "y": 248,
+    "x": 910,
+    "hoverParent": "22y7",
+    "movable": false
+  },
+  "ready-p5": {
+    "type": "basic",
+    "id": "ready-p5",
+    "parent": "22y7",
+    "y": 175,
+    "width": 30,
+    "height": 30,
+    "z": 2,
+    "movableInEdit": false,
+    "faces": [
+      {
+        "css": {
+          "background": "#ff0000",
+          "border-color": "black",
+          "border-radius": "8px",
+          "border-style": "solid",
+          "border-width": "2px",
+          "color": "white",
+          "font-size": "30px",
+          "line-height": "30px",
+          "text-align": "center"
+        },
+        "text": "✗"
+      },
+      {
+        "css": {
+          "background": "#00ff00",
+          "border-color": "black",
+          "border-radius": "8px",
+          "border-style": "solid",
+          "border-width": "2px",
+          "color": "black",
+          "font-size": "30px",
+          "line-height": "30px",
+          "text-align": "center"
+        },
+        "text": "✓"
+      }
+    ],
+    "linkedToSeat": "seat5",
+    "x": -11,
+    "movable": false,
+    "check": true,
+    "inheritFrom": {
+      "ready-p1": "activeFaceChangeRoutine"
+    },
+    "activeFace": 0
+  },
+  "hide player scores": {
+    "type": "button",
+    "id": "hide player scores",
+    "x": 36,
+    "y": 500,
+    "width": 70,
+    "height": 70,
+    "z": 84,
+    "css": {
+      "font-size": "14px"
+    },
+    "text": "Show scores",
+    "clickRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY text}",
+        "operand2": "Hide scores",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "hide player scores"
+            ],
+            "property": "text",
+            "value": "Show scores"
+          },
+          {
+            "func": "FOREACH",
+            "range": 7,
+            "loopRoutine": [
+              {
+                "func": "SET",
+                "collection": [
+                  "score-p${value}"
+                ],
+                "property": "onlyVisibleForSeat",
+                "value": "seat${value}"
+              }
+            ]
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "hide player scores"
+            ],
+            "property": "text",
+            "value": "Hide scores"
+          },
+          {
+            "func": "FOREACH",
+            "range": 7,
+            "loopRoutine": [
+              {
+                "func": "SET",
+                "collection": [
+                  "score-p${value}"
+                ],
+                "property": "onlyVisibleForSeat",
+                "value": null
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "score-p1": {
+    "type": "label",
+    "id": "score-p1",
+    "x": 241,
+    "y": 167,
+    "width": 140,
+    "height": 44,
+    "z": 1091,
+    "css": "font-size: 30px;",
+    "editable": true,
+    "linkedToSeat": "seat1",
+    "text": 50,
+    "onlyVisibleForSeat": "seat1"
+  },
+  "8aa36c03-7384-411e-a6db-c2d4cce485d4_decrementButton": {
+    "id": "8aa36c03-7384-411e-a6db-c2d4cce485d4_decrementButton",
+    "parent": "score-p1",
+    "x": 4,
+    "y": -2,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "-",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "score-p1",
+        "mode": "inc",
+        "value": -1
+      }
+    ]
+  },
+  "8aa36c03-7384-411e-a6db-c2d4cce485d4_incrementButton": {
+    "id": "8aa36c03-7384-411e-a6db-c2d4cce485d4_incrementButton",
+    "parent": "score-p1",
+    "x": 100,
+    "y": -2,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "+",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "score-p1",
+        "mode": "inc",
+        "value": 1
+      }
+    ]
+  },
+  "8aa36c03-7384-411e-a6db-c2d4cce485d4label": {
+    "id": "8aa36c03-7384-411e-a6db-c2d4cce485d4label",
+    "parent": "score-p1",
+    "movableInEdit": false,
+    "y": -28,
+    "width": 140,
+    "type": "label",
+    "text": "Player 1 Bank",
+    "linkedToSeat": "seat1"
+  },
+  "score-p2": {
+    "type": "label",
+    "id": "score-p2",
+    "x": 403,
+    "y": 167,
+    "width": 140,
+    "height": 44,
+    "z": 1002,
+    "css": "font-size: 30px;",
+    "editable": true,
+    "linkedToSeat": "seat2",
+    "text": 50,
+    "onlyVisibleForSeat": "seat2"
+  },
+  "aba2342e-f150-43f9-ac54-053b5a3f2c7f_decrementButton": {
+    "id": "aba2342e-f150-43f9-ac54-053b5a3f2c7f_decrementButton",
+    "parent": "score-p2",
+    "x": 4,
+    "y": -2,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "-",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "score-p2",
+        "mode": "inc",
+        "value": -1
+      }
+    ]
+  },
+  "aba2342e-f150-43f9-ac54-053b5a3f2c7f_incrementButton": {
+    "id": "aba2342e-f150-43f9-ac54-053b5a3f2c7f_incrementButton",
+    "parent": "score-p2",
+    "x": 100,
+    "y": -2,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "+",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "score-p2",
+        "mode": "inc",
+        "value": 1
+      }
+    ]
+  },
+  "aba2342e-f150-43f9-ac54-053b5a3f2c7flabel": {
+    "id": "aba2342e-f150-43f9-ac54-053b5a3f2c7flabel",
+    "parent": "score-p2",
+    "movableInEdit": false,
+    "y": -28,
+    "width": 140,
+    "type": "label",
+    "text": "Player 2 Bank",
+    "linkedToSeat": "seat2"
+  },
+  "score-p3": {
+    "type": "label",
+    "id": "score-p3",
+    "x": 565,
+    "y": 167,
+    "width": 140,
+    "height": 44,
+    "z": 1009,
+    "css": "font-size: 30px;",
+    "editable": true,
+    "linkedToSeat": "seat3",
+    "text": 50,
+    "onlyVisibleForSeat": "seat3"
+  },
+  "bf144ceb-7eef-4ef8-b4aa-b307c54cf58a_decrementButton": {
+    "id": "bf144ceb-7eef-4ef8-b4aa-b307c54cf58a_decrementButton",
+    "parent": "score-p3",
+    "x": 4,
+    "y": -2,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "-",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "score-p3",
+        "mode": "inc",
+        "value": -1
+      }
+    ]
+  },
+  "bf144ceb-7eef-4ef8-b4aa-b307c54cf58a_incrementButton": {
+    "id": "bf144ceb-7eef-4ef8-b4aa-b307c54cf58a_incrementButton",
+    "parent": "score-p3",
+    "x": 100,
+    "y": -2,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "+",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "score-p3",
+        "mode": "inc",
+        "value": 1
+      }
+    ]
+  },
+  "bf144ceb-7eef-4ef8-b4aa-b307c54cf58alabel": {
+    "id": "bf144ceb-7eef-4ef8-b4aa-b307c54cf58alabel",
+    "parent": "score-p3",
+    "movableInEdit": false,
+    "y": -28,
+    "width": 140,
+    "type": "label",
+    "text": "Player 3 Bank",
+    "linkedToSeat": "seat3"
+  },
+  "score-p4": {
+    "type": "label",
+    "id": "score-p4",
+    "x": 735,
+    "y": 166,
+    "width": 140,
+    "height": 44,
+    "z": 1015,
+    "css": "font-size: 30px;",
+    "editable": true,
+    "linkedToSeat": "seat4",
+    "text": 50,
+    "onlyVisibleForSeat": "seat4"
+  },
+  "56d2dcc5-77af-4b03-a60a-a8f1a8a1f1d0_decrementButton": {
+    "id": "56d2dcc5-77af-4b03-a60a-a8f1a8a1f1d0_decrementButton",
+    "parent": "score-p4",
+    "x": 4,
+    "y": -2,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "-",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "score-p4",
+        "mode": "inc",
+        "value": -1
+      }
+    ]
+  },
+  "56d2dcc5-77af-4b03-a60a-a8f1a8a1f1d0_incrementButton": {
+    "id": "56d2dcc5-77af-4b03-a60a-a8f1a8a1f1d0_incrementButton",
+    "parent": "score-p4",
+    "x": 100,
+    "y": -2,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "+",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "score-p4",
+        "mode": "inc",
+        "value": 1
+      }
+    ]
+  },
+  "56d2dcc5-77af-4b03-a60a-a8f1a8a1f1d0label": {
+    "id": "56d2dcc5-77af-4b03-a60a-a8f1a8a1f1d0label",
+    "parent": "score-p4",
+    "movableInEdit": false,
+    "y": -28,
+    "width": 140,
+    "type": "label",
+    "text": "Player 4 Bank",
+    "linkedToSeat": "seat4"
+  },
+  "score-p5": {
+    "type": "label",
+    "id": "score-p5",
+    "x": 902,
+    "y": 166,
+    "width": 140,
+    "height": 44,
+    "z": 1018,
+    "css": "font-size: 30px;",
+    "editable": true,
+    "linkedToSeat": "seat5",
+    "text": 50,
+    "onlyVisibleForSeat": "seat5"
+  },
+  "d1c1eb3a-ec88-40c0-8636-39f7ea59aade_decrementButton": {
+    "id": "d1c1eb3a-ec88-40c0-8636-39f7ea59aade_decrementButton",
+    "parent": "score-p5",
+    "x": 4,
+    "y": -2,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "-",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "score-p5",
+        "mode": "inc",
+        "value": -1
+      }
+    ]
+  },
+  "d1c1eb3a-ec88-40c0-8636-39f7ea59aade_incrementButton": {
+    "id": "d1c1eb3a-ec88-40c0-8636-39f7ea59aade_incrementButton",
+    "parent": "score-p5",
+    "x": 103,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "+",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "score-p5",
+        "mode": "inc",
+        "value": 1
+      }
+    ]
+  },
+  "d1c1eb3a-ec88-40c0-8636-39f7ea59aadelabel": {
+    "id": "d1c1eb3a-ec88-40c0-8636-39f7ea59aadelabel",
+    "parent": "score-p5",
+    "movableInEdit": false,
+    "y": -28,
+    "width": 140,
+    "type": "label",
+    "text": "Player 5 Bank",
+    "linkedToSeat": "seat5"
+  },
+  "auction1": {
+    "type": "holder",
+    "id": "auction1",
+    "x": 701,
+    "y": 700,
+    "width": 108,
+    "height": 108,
+    "z": 1212,
+    "inheritChildZ": true,
+    "onEnter": {
+      "activeFace": 1
+    }
+  },
+  "auction2": {
+    "type": "holder",
+    "id": "auction2",
+    "x": 824,
+    "y": 700,
+    "width": 108,
+    "height": 108,
+    "z": 1203,
+    "inheritChildZ": true,
+    "onEnter": {
+      "activeFace": 1
+    }
+  },
+  "auction3": {
+    "type": "holder",
+    "id": "auction3",
+    "x": 944,
+    "y": 700,
+    "width": 108,
+    "height": 108,
+    "z": 1213,
+    "inheritChildZ": true,
+    "onEnter": {
+      "activeFace": 1
+    }
+  },
+  "auctionDeck": {
+    "type": "deck",
+    "id": "auctionDeck",
+    "cardDefaults": {
+      "width": 100,
+      "height": 100
+    },
+    "cardTypes": {
+      "A1_1": {
+        "suitColor": "#FFDE5E",
+        "rank": "1"
+      },
+      "A2_1": {
+        "suitColor": "#FFDE5E",
+        "rank": "2"
+      },
+      "A3_1": {
+        "suitColor": "#FFDE5E",
+        "rank": "3"
+      },
+      "A4_1": {
+        "suitColor": "#FFDE5E",
+        "rank": "4"
+      },
+      "A5_1": {
+        "suitColor": "#FFDE5E",
+        "rank": "5"
+      },
+      "A6_1": {
+        "suitColor": "#FFDE5E",
+        "rank": "6"
+      },
+      "A7_1": {
+        "suitColor": "#FFDE5E",
+        "rank": "7"
+      },
+      "A8_1": {
+        "suitColor": "#FFDE5E",
+        "rank": "8"
+      },
+      "A9_1": {
+        "suitColor": "#FFDE5E",
+        "rank": "9"
+      },
+      "A10_1": {
+        "suitColor": "#FFDE5E",
+        "rank": "10"
+      },
+      "A1_2": {
+        "suitColor": "#F07F0E",
+        "rank": "1"
+      },
+      "A2_2": {
+        "suitColor": "#F07F0E",
+        "rank": "2"
+      },
+      "A3_2": {
+        "suitColor": "#F07F0E",
+        "rank": "3"
+      },
+      "A4_2": {
+        "suitColor": "#F07F0E",
+        "rank": "4"
+      },
+      "A5_2": {
+        "suitColor": "#F07F0E",
+        "rank": "5"
+      },
+      "A6_2": {
+        "suitColor": "#F07F0E",
+        "rank": "6"
+      },
+      "A7_2": {
+        "suitColor": "#F07F0E",
+        "rank": "7"
+      },
+      "A8_2": {
+        "suitColor": "#F07F0E",
+        "rank": "8"
+      },
+      "A9_2": {
+        "suitColor": "#F07F0E",
+        "rank": "9",
+        "value": "9"
+      },
+      "A10_2": {
+        "suitColor": "#F07F0E",
+        "rank": "10"
+      },
+      "A1_3": {
+        "suitColor": "#F10E0E",
+        "rank": "1"
+      },
+      "A2_3": {
+        "suitColor": "#F10E0E",
+        "rank": "2"
+      },
+      "A3_3": {
+        "suitColor": "#F10E0E",
+        "rank": "3"
+      },
+      "A4_3": {
+        "suitColor": "#F10E0E",
+        "rank": "4"
+      },
+      "A5_3": {
+        "suitColor": "#F10E0E",
+        "rank": "5"
+      },
+      "A6_3": {
+        "suitColor": "#F10E0E",
+        "rank": "6"
+      },
+      "A7_3": {
+        "suitColor": "#F10E0E",
+        "rank": "7"
+      },
+      "A8_3": {
+        "suitColor": "#F10E0E",
+        "rank": "8"
+      },
+      "A9_3": {
+        "suitColor": "#F10E0E",
+        "rank": "9"
+      },
+      "A10_3": {
+        "suitColor": "#F10E0E",
+        "rank": "10"
+      },
+      "A1_4": {
+        "suitColor": "#109E44",
+        "rank": "1"
+      },
+      "A2_4": {
+        "suitColor": "#109E44",
+        "rank": "2"
+      },
+      "A3_4": {
+        "suitColor": "#109E44",
+        "rank": "3"
+      },
+      "A4_4": {
+        "suitColor": "#109E44",
+        "rank": "4"
+      },
+      "A5_4": {
+        "suitColor": "#109E44",
+        "rank": "5"
+      },
+      "A6_4": {
+        "suitColor": "#109E44",
+        "rank": "6"
+      },
+      "A7_4": {
+        "suitColor": "#109E44",
+        "rank": "7"
+      },
+      "A8_4": {
+        "suitColor": "#109E44",
+        "rank": "8"
+      },
+      "A9_4": {
+        "suitColor": "#109E44",
+        "rank": "9"
+      },
+      "A10_4": {
+        "suitColor": "#109E44",
+        "rank": "10"
+      },
+      "A1_5": {
+        "suitColor": "#Cf2fe8",
+        "rank": "1"
+      },
+      "A2_5": {
+        "suitColor": "#Cf2fe8",
+        "rank": "2"
+      },
+      "A3_5": {
+        "suitColor": "#Cf2fe8",
+        "rank": "3"
+      },
+      "A4_5": {
+        "suitColor": "#Cf2fe8",
+        "rank": "4"
+      },
+      "A5_5": {
+        "suitColor": "#Cf2fe8",
+        "rank": "5"
+      },
+      "A6_5": {
+        "suitColor": "#Cf2fe8",
+        "rank": "6"
+      },
+      "A7_5": {
+        "suitColor": "#Cf2fe8",
+        "rank": "7"
+      },
+      "A8_5": {
+        "suitColor": "#Cf2fe8",
+        "rank": "8"
+      },
+      "A9_5": {
+        "suitColor": "#Cf2fe8",
+        "rank": "9"
+      },
+      "A10_5": {
+        "suitColor": "#Cf2fe8",
+        "rank": "10"
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "width": 100,
+            "height": 100,
+            "color": "GRAY"
+          }
+        ],
+        "radius": 16
+      },
+      {
+        "radius": 16,
+        "objects": [
+          {
+            "type": "image",
+            "width": 100,
+            "height": 100,
+            "dynamicProperties": {
+              "color": "suitColor"
+            }
+          },
+          {
+            "type": "image",
+            "x": 10,
+            "y": 10,
+            "width": 83,
+            "height": 83,
+            "color": "transparent",
+            "svgReplaces": {
+              "#000": "white"
+            },
+            "dynamicProperties": {
+              "value": "suit"
+            }
+          },
+          {
+            "type": "text",
+            "y": 10,
+            "fontSize": 60,
+            "textAlign": "center",
+            "color": "white",
+            "width": 100,
+            "dynamicProperties": {
+              "value": "rank"
+            }
+          }
+        ]
+      }
+    ],
+    "z": 25267,
+    "parent": "deck"
+  },
+  "background": {
+    "id": "background",
+    "width": 1600,
+    "height": 1000,
+    "layer": -4,
+    "z": 94,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "background-image": "linear-gradient(315deg, #e3efe8 0%, #96a7cf 74%)"
+    },
+    "x": -1,
+    "y": -1
+  },
+  "score-p6": {
+    "type": "label",
+    "id": "score-p6",
+    "x": 1068,
+    "y": 169,
+    "width": 140,
+    "height": 44,
+    "z": 1018,
+    "css": "font-size: 30px;",
+    "editable": true,
+    "linkedToSeat": "seat6",
+    "text": 50,
+    "onlyVisibleForSeat": "seat6"
+  },
+  "d1c1eb3a-ec88-40c0-8636-39f7ea60aade_decrementButton": {
+    "id": "d1c1eb3a-ec88-40c0-8636-39f7ea60aade_decrementButton",
+    "parent": "score-p6",
+    "x": 4,
+    "y": -2,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "-",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "score-p6",
+        "mode": "inc",
+        "value": -1
+      }
+    ]
+  },
+  "d1c1eb3a-ec88-40c0-8636-39f7ea60aade_incrementButton": {
+    "id": "d1c1eb3a-ec88-40c0-8636-39f7ea60aade_incrementButton",
+    "parent": "score-p6",
+    "x": 100,
+    "y": -2,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "+",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "score-p6",
+        "mode": "inc",
+        "value": 1
+      }
+    ]
+  },
+  "d1c1eb3a-ec88-40c0-8636-39f7ea60aadelabel": {
+    "id": "d1c1eb3a-ec88-40c0-8636-39f7ea60aadelabel",
+    "parent": "score-p6",
+    "movableInEdit": false,
+    "y": -28,
+    "width": 140,
+    "type": "label",
+    "text": "Player 6 Bank",
+    "linkedToSeat": "seat6"
+  },
+  "score-p7": {
+    "type": "label",
+    "id": "score-p7",
+    "x": 1232,
+    "y": 169,
+    "width": 140,
+    "height": 44,
+    "z": 1018,
+    "css": "font-size: 30px;",
+    "editable": true,
+    "linkedToSeat": "seat7",
+    "text": 50,
+    "onlyVisibleForSeat": "seat7"
+  },
+  "d1c1eb3a-ec88-40c0-8636-39f7ea61aade_decrementButton": {
+    "id": "d1c1eb3a-ec88-40c0-8636-39f7ea61aade_decrementButton",
+    "parent": "score-p7",
+    "x": 4,
+    "y": -2,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "-",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "score-p7",
+        "mode": "inc",
+        "value": -1
+      }
+    ]
+  },
+  "d1c1eb3a-ec88-40c0-8636-39f7ea61aade_incrementButton": {
+    "id": "d1c1eb3a-ec88-40c0-8636-39f7ea61aade_incrementButton",
+    "parent": "score-p7",
+    "x": 100,
+    "y": -2,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "+",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "score-p7",
+        "mode": "inc",
+        "value": 1
+      }
+    ]
+  },
+  "d1c1eb3a-ec88-40c0-8636-39f7ea61aadelabel": {
+    "id": "d1c1eb3a-ec88-40c0-8636-39f7ea61aadelabel",
+    "parent": "score-p7",
+    "movableInEdit": false,
+    "y": -28,
+    "width": 140,
+    "type": "label",
+    "text": "Player 7 Bank",
+    "linkedToSeat": "seat7"
+  },
+  "p6-bid": {
+    "type": "label",
+    "id": "p6-bid",
+    "x": 1066,
+    "y": 200,
+    "width": 129.6,
+    "height": 40,
+    "movableInEdit": false,
+    "editable": true,
+    "text": "Player 6 Bid",
+    "twoRowBottomAlign": true,
+    "linkedToSeat": "seat6"
+  },
+  "p7-bid": {
+    "type": "label",
+    "id": "p7-bid",
+    "x": 1232,
+    "y": 200,
+    "width": 129.6,
+    "height": 40,
+    "movableInEdit": false,
+    "editable": true,
+    "text": "Player 7 Bid",
+    "twoRowBottomAlign": true,
+    "linkedToSeat": "seat7"
+  },
+  "22y8": {
+    "id": "22y8",
+    "x": 1062,
+    "y": 68,
+    "width": 144,
+    "height": 300,
+    "layer": -3,
+    "movable": false,
+    "editorGroup": true
+  },
+  "seat6": {
+    "type": "seat",
+    "id": "seat6",
+    "parent": "22y8",
+    "z": 48,
+    "movableInEdit": false,
+    "y": -4,
+    "width": 131,
+    "height": 32,
+    "x": -5,
+    "color": "#F10E0E",
+    "colorEmpty": "#F10E0E",
+    "inheritFrom": {
+      "seat1": "clickRoutine"
+    },
+    "hideWhenUnused": true,
+    "index": 6,
+    "turn": false,
+    "skipTurn": false
+  },
+  "bid-p6": {
+    "id": "bid-p6",
+    "parent": "22y8",
+    "z": 3383,
+    "movableInEdit": false,
+    "css": {
+      "color": "black",
+      "font-size": "46px",
+      "line-height": "100px",
+      "text-align": "center"
+    },
+    "image": "/assets/929442417_5904",
+    "linkedToSeat": "seat6",
+    "text": 0,
+    "readyMarker": "ready-p6",
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": [
+          "${PROPERTY readyMarker}"
+        ],
+        "property": "activeFace",
+        "value": 0
+      },
+      "var header = 'Enter bid amount'",
+      {
+        "func": "INPUT",
+        "header": "${header}",
+        "confirmButtonText": "OK",
+        "cancelButtonText": "Cancel",
+        "fields": [
+          {
+            "type": "number",
+            "value": "${PROPERTY text}",
+            "variable": "newValue"
+          }
+        ]
+      },
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY id}",
+        "value": "${newValue}"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "${PROPERTY readyMarker}"
+        ],
+        "property": "activeFace",
+        "value": 1
+      }
+    ],
+    "y": 182,
+    "x": 17,
+    "movable": false
+  },
+  "ready-p6": {
+    "type": "basic",
+    "id": "ready-p6",
+    "parent": "22y8",
+    "y": 175,
+    "width": 30,
+    "height": 30,
+    "z": 2,
+    "movableInEdit": false,
+    "faces": [
+      {
+        "css": {
+          "background": "#ff0000",
+          "border-color": "black",
+          "border-radius": "8px",
+          "border-style": "solid",
+          "border-width": "2px",
+          "color": "white",
+          "font-size": "30px",
+          "line-height": "30px",
+          "text-align": "center"
+        },
+        "text": "✗"
+      },
+      {
+        "css": {
+          "background": "#00ff00",
+          "border-color": "black",
+          "border-radius": "8px",
+          "border-style": "solid",
+          "border-width": "2px",
+          "color": "black",
+          "font-size": "30px",
+          "line-height": "30px",
+          "text-align": "center"
+        },
+        "text": "✓"
+      }
+    ],
+    "linkedToSeat": "seat6",
+    "x": -11,
+    "movable": false,
+    "check": true,
+    "activeFace": 0,
+    "inheritFrom": {
+      "ready-p1": "activeFaceChangeRoutine"
+    }
+  },
+  "22y9": {
+    "id": "22y9",
+    "x": 1228,
+    "y": 68,
+    "width": 144,
+    "height": 300,
+    "layer": -3,
+    "movable": false,
+    "editorGroup": true
+  },
+  "seat7": {
+    "type": "seat",
+    "id": "seat7",
+    "parent": "22y9",
+    "z": 48,
+    "movableInEdit": false,
+    "y": -4,
+    "width": 131,
+    "height": 32,
+    "x": 2,
+    "color": "#1A1E1D",
+    "colorEmpty": "#1A1E1D",
+    "inheritFrom": {
+      "seat1": "clickRoutine"
+    },
+    "hideWhenUnused": true,
+    "index": 7,
+    "turn": false,
+    "skipTurn": false
+  },
+  "bid-p7": {
+    "id": "bid-p7",
+    "z": 3386,
+    "movableInEdit": false,
+    "css": {
+      "color": "black",
+      "font-size": "46px",
+      "line-height": "100px",
+      "text-align": "center"
+    },
+    "image": "/assets/929442417_5904",
+    "linkedToSeat": "seat7",
+    "text": 0,
+    "readyMarker": "ready-p7",
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": [
+          "${PROPERTY readyMarker}"
+        ],
+        "property": "activeFace",
+        "value": 0
+      },
+      "var header = 'Enter bid amount'",
+      {
+        "func": "INPUT",
+        "header": "${header}",
+        "confirmButtonText": "OK",
+        "cancelButtonText": "Cancel",
+        "fields": [
+          {
+            "type": "number",
+            "value": "${PROPERTY text}",
+            "variable": "newValue"
+          }
+        ]
+      },
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY id}",
+        "value": "${newValue}"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "${PROPERTY readyMarker}"
+        ],
+        "property": "activeFace",
+        "value": 1
+      }
+    ],
+    "y": 253,
+    "x": 1252,
+    "hoverParent": "22y9",
+    "movable": false
+  },
+  "ready-p7": {
+    "type": "basic",
+    "id": "ready-p7",
+    "parent": "22y9",
+    "y": 175,
+    "width": 30,
+    "height": 30,
+    "z": 2,
+    "movableInEdit": false,
+    "faces": [
+      {
+        "css": {
+          "background": "#ff0000",
+          "border-color": "black",
+          "border-radius": "8px",
+          "border-style": "solid",
+          "border-width": "2px",
+          "color": "white",
+          "font-size": "30px",
+          "line-height": "30px",
+          "text-align": "center"
+        },
+        "text": "✗"
+      },
+      {
+        "css": {
+          "background": "#00ff00",
+          "border-color": "black",
+          "border-radius": "8px",
+          "border-style": "solid",
+          "border-width": "2px",
+          "color": "black",
+          "font-size": "30px",
+          "line-height": "30px",
+          "text-align": "center"
+        },
+        "text": "✓"
+      }
+    ],
+    "linkedToSeat": "seat7",
+    "x": -11,
+    "movable": false,
+    "check": true,
+    "inheritFrom": {
+      "ready-p1": "activeFaceChangeRoutine"
+    },
+    "activeFace": 0
+  },
+  "2b1761ea-8cd5-4e2b-a36e-8b354df38cc5_label": {
+    "id": "2b1761ea-8cd5-4e2b-a36e-8b354df38cc5_label",
+    "parent": "discard",
+    "x": -9,
+    "y": -34,
+    "width": 134,
+    "type": "label",
+    "text": "Discard",
+    "twoRowBottomAlign": true,
+    "movableInEdit": false
+  },
+  "2epn": {
+    "deck": "auctionDeck",
+    "type": "card",
+    "cardType": "A1_1",
+    "id": "2epn",
+    "z": 31838,
+    "parent": "4ksu"
+  },
+  "cd70": {
+    "deck": "auctionDeck",
+    "type": "card",
+    "cardType": "A2_1",
+    "id": "cd70",
+    "z": 31839,
+    "parent": "4ksu"
+  },
+  "alti": {
+    "deck": "auctionDeck",
+    "type": "card",
+    "cardType": "A3_1",
+    "id": "alti",
+    "z": 31860,
+    "parent": "4ksu"
+  },
+  "2sna": {
+    "deck": "auctionDeck",
+    "type": "card",
+    "cardType": "A4_1",
+    "id": "2sna",
+    "z": 31871,
+    "parent": "4ksu"
+  },
+  "0l9c": {
+    "deck": "auctionDeck",
+    "type": "card",
+    "cardType": "A5_1",
+    "id": "0l9c",
+    "z": 31851,
+    "parent": "4ksu"
+  },
+  "o4l3": {
+    "deck": "auctionDeck",
+    "type": "card",
+    "cardType": "A6_1",
+    "id": "o4l3",
+    "z": 31891,
+    "parent": "4ksu"
+  },
+  "vdne": {
+    "deck": "auctionDeck",
+    "type": "card",
+    "cardType": "A7_1",
+    "id": "vdne",
+    "z": 31874,
+    "parent": "4ksu"
+  },
+  "k170": {
+    "deck": "auctionDeck",
+    "type": "card",
+    "cardType": "A8_1",
+    "id": "k170",
+    "z": 31845,
+    "parent": "4ksu"
+  },
+  "1l4t": {
+    "deck": "auctionDeck",
+    "type": "card",
+    "cardType": "A9_1",
+    "id": "1l4t",
+    "z": 31858,
+    "parent": "4ksu"
+  },
+  "tn0m": {
+    "deck": "auctionDeck",
+    "type": "card",
+    "cardType": "A10_1",
+    "id": "tn0m",
+    "z": 31830,
+    "parent": "4ksu"
+  },
+  "334t": {
+    "deck": "auctionDeck",
+    "type": "card",
+    "cardType": "A1_2",
+    "id": "334t",
+    "z": 31843,
+    "parent": "4ksu"
+  },
+  "ke2a": {
+    "deck": "auctionDeck",
+    "type": "card",
+    "cardType": "A2_2",
+    "id": "ke2a",
+    "z": 31850,
+    "parent": "4ksu"
+  },
+  "klgr": {
+    "deck": "auctionDeck",
+    "type": "card",
+    "cardType": "A3_2",
+    "id": "klgr",
+    "z": 31844,
+    "parent": "4ksu"
+  },
+  "q4g1": {
+    "deck": "auctionDeck",
+    "type": "card",
+    "cardType": "A4_2",
+    "id": "q4g1",
+    "z": 31861,
+    "parent": "4ksu"
+  },
+  "ttp3": {
+    "deck": "auctionDeck",
+    "type": "card",
+    "cardType": "A5_2",
+    "id": "ttp3",
+    "z": 31893,
+    "parent": "4ksu"
+  },
+  "foel": {
+    "deck": "auctionDeck",
+    "type": "card",
+    "cardType": "A6_2",
+    "id": "foel",
+    "z": 31833,
+    "parent": "4ksu"
+  },
+  "hhbx": {
+    "deck": "auctionDeck",
+    "type": "card",
+    "cardType": "A7_2",
+    "id": "hhbx",
+    "z": 31895,
+    "parent": "4ksu"
+  },
+  "nf94": {
+    "deck": "auctionDeck",
+    "type": "card",
+    "cardType": "A8_2",
+    "id": "nf94",
+    "z": 31842,
+    "parent": "4ksu"
+  },
+  "ymu1": {
+    "deck": "auctionDeck",
+    "type": "card",
+    "cardType": "A9_2",
+    "id": "ymu1",
+    "z": 31865,
+    "parent": "4ksu"
+  },
+  "xg4i": {
+    "deck": "auctionDeck",
+    "type": "card",
+    "cardType": "A10_2",
+    "id": "xg4i",
+    "z": 31849,
+    "parent": "4ksu"
+  },
+  "56dh": {
+    "deck": "auctionDeck",
+    "type": "card",
+    "cardType": "A1_3",
+    "id": "56dh",
+    "z": 31855,
+    "parent": "4ksu"
+  },
+  "1jsl": {
+    "deck": "auctionDeck",
+    "type": "card",
+    "cardType": "A2_3",
+    "id": "1jsl",
+    "z": 31869,
+    "parent": "4ksu"
+  },
+  "l7km": {
+    "deck": "auctionDeck",
+    "type": "card",
+    "cardType": "A3_3",
+    "id": "l7km",
+    "z": 31847,
+    "parent": "4ksu"
+  },
+  "iig1": {
+    "deck": "auctionDeck",
+    "type": "card",
+    "cardType": "A4_3",
+    "id": "iig1",
+    "z": 31864,
+    "parent": "4ksu"
+  },
+  "3jiz": {
+    "deck": "auctionDeck",
+    "type": "card",
+    "cardType": "A5_3",
+    "id": "3jiz",
+    "z": 31848,
+    "parent": "4ksu"
+  },
+  "jani": {
+    "deck": "auctionDeck",
+    "type": "card",
+    "cardType": "A6_3",
+    "id": "jani",
+    "z": 31834,
+    "parent": "4ksu"
+  },
+  "bceo": {
+    "deck": "auctionDeck",
+    "type": "card",
+    "cardType": "A7_3",
+    "id": "bceo",
+    "z": 31896,
+    "parent": "4ksu"
+  },
+  "wvec": {
+    "deck": "auctionDeck",
+    "type": "card",
+    "cardType": "A8_3",
+    "id": "wvec",
+    "z": 31873,
+    "parent": "4ksu"
+  },
+  "12s7": {
+    "deck": "auctionDeck",
+    "type": "card",
+    "cardType": "A9_3",
+    "id": "12s7",
+    "z": 31863,
+    "parent": "4ksu"
+  },
+  "2vbh": {
+    "deck": "auctionDeck",
+    "type": "card",
+    "cardType": "A10_3",
+    "id": "2vbh",
+    "z": 31841,
+    "parent": "4ksu"
+  },
+  "6dwu": {
+    "deck": "auctionDeck",
+    "type": "card",
+    "cardType": "A1_4",
+    "id": "6dwu",
+    "z": 31837,
+    "parent": "4ksu"
+  },
+  "g3ke": {
+    "deck": "auctionDeck",
+    "type": "card",
+    "cardType": "A2_4",
+    "id": "g3ke",
+    "z": 31862,
+    "parent": "4ksu"
+  },
+  "n61j": {
+    "deck": "auctionDeck",
+    "type": "card",
+    "cardType": "A3_4",
+    "id": "n61j",
+    "z": 31853,
+    "parent": "4ksu"
+  },
+  "pcs3": {
+    "deck": "auctionDeck",
+    "type": "card",
+    "cardType": "A4_4",
+    "id": "pcs3",
+    "z": 31831,
+    "parent": "4ksu"
+  },
+  "16b5": {
+    "deck": "auctionDeck",
+    "type": "card",
+    "cardType": "A5_4",
+    "id": "16b5",
+    "z": 31867,
+    "parent": "4ksu"
+  },
+  "mxdb": {
+    "deck": "auctionDeck",
+    "type": "card",
+    "cardType": "A6_4",
+    "id": "mxdb",
+    "z": 31857,
+    "parent": "4ksu"
+  },
+  "beg6": {
+    "deck": "auctionDeck",
+    "type": "card",
+    "cardType": "A7_4",
+    "id": "beg6",
+    "z": 31840,
+    "parent": "4ksu"
+  },
+  "kyto": {
+    "deck": "auctionDeck",
+    "type": "card",
+    "cardType": "A8_4",
+    "id": "kyto",
+    "z": 31846,
+    "parent": "4ksu"
+  },
+  "louh": {
+    "deck": "auctionDeck",
+    "type": "card",
+    "cardType": "A9_4",
+    "id": "louh",
+    "z": 31859,
+    "parent": "4ksu"
+  },
+  "4l1n": {
+    "deck": "auctionDeck",
+    "type": "card",
+    "cardType": "A10_4",
+    "id": "4l1n",
+    "z": 31868,
+    "parent": "4ksu"
+  },
+  "66fo": {
+    "deck": "auctionDeck",
+    "type": "card",
+    "cardType": "A1_5",
+    "id": "66fo",
+    "z": 31832,
+    "parent": "4ksu"
+  },
+  "q2da": {
+    "deck": "auctionDeck",
+    "type": "card",
+    "cardType": "A2_5",
+    "id": "q2da",
+    "z": 31866,
+    "parent": "4ksu"
+  },
+  "6ixg": {
+    "deck": "auctionDeck",
+    "type": "card",
+    "cardType": "A3_5",
+    "id": "6ixg",
+    "z": 31854,
+    "parent": "4ksu"
+  },
+  "kk22": {
+    "deck": "auctionDeck",
+    "type": "card",
+    "cardType": "A4_5",
+    "id": "kk22",
+    "z": 31836,
+    "parent": "4ksu"
+  },
+  "zqvc": {
+    "deck": "auctionDeck",
+    "type": "card",
+    "cardType": "A5_5",
+    "id": "zqvc",
+    "z": 31835,
+    "parent": "4ksu"
+  },
+  "on87": {
+    "deck": "auctionDeck",
+    "type": "card",
+    "cardType": "A6_5",
+    "id": "on87",
+    "z": 31852,
+    "parent": "4ksu"
+  },
+  "de7c": {
+    "deck": "auctionDeck",
+    "type": "card",
+    "cardType": "A7_5",
+    "id": "de7c",
+    "z": 31892,
+    "parent": "4ksu"
+  },
+  "5hs6": {
+    "deck": "auctionDeck",
+    "type": "card",
+    "cardType": "A8_5",
+    "id": "5hs6",
+    "z": 31856,
+    "parent": "4ksu"
+  },
+  "0h6h": {
+    "deck": "auctionDeck",
+    "type": "card",
+    "cardType": "A9_5",
+    "id": "0h6h",
+    "z": 31872,
+    "parent": "4ksu"
+  },
+  "htv8": {
+    "deck": "auctionDeck",
+    "type": "card",
+    "cardType": "A10_5",
+    "id": "htv8",
+    "z": 31870,
+    "parent": "4ksu"
+  },
+  "f7fl": {
+    "type": "label",
+    "text": "Variants",
+    "css": "font-size: 30px",
+    "height": 43,
+    "width": 208,
+    "x": 1291,
+    "y": 652,
+    "z": 1093,
+    "id": "f7fl"
+  },
+  "sp69": {
+    "type": "label",
+    "text": "Color Bonus:",
+    "x": 1297,
+    "y": 704,
+    "z": 1094,
+    "id": "sp69",
+    "width": 200
+  },
+  "sp70": {
+    "type": "label",
+    "x": 1297,
+    "y": 724,
+    "z": 1094,
+    "id": "sp70",
+    "width": 210,
+    "text": "You earn an additional 10 point bonus if all 5 colors are represented on your boat",
+    "height": 80
+  },
+  "sp71": {
+    "type": "label",
+    "x": 1297,
+    "y": 804,
+    "z": 1094,
+    "id": "sp71",
+    "width": 200,
+    "text": "Open Auction: Instead of a blind bid, try a live auction with everyone bidding freely. Once the bids slow down, the start player should announce: Going once, going twice, sold.",
+    "height": 150
+  },
+  "cx2c": {
+    "type": "label",
+    "text": "Deck = 1-10 in 5 colors",
+    "css": "font-size: 30px",
+    "height": 42,
+    "width": 360,
+    "x": 686,
+    "y": 836,
+    "z": 1092,
+    "id": "cx2c"
+  },
+  "ship12": {
+    "type": "holder",
+    "id": "ship12",
+    "x": 291,
+    "y": 349,
+    "width": 108,
+    "height": 108,
+    "scale": 0.5,
+    "z": 1219,
+    "inheritChildZ": true,
+    "linkedToSeat": "seat1",
+    "onEnter": {
+      "activeFace": 1
+    },
+    "pid": 1,
+    "countValueRoutine": [
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "parent",
+        "value": [
+          "ship${PROPERTY pid}1",
+          "ship${PROPERTY pid}2",
+          "ship${PROPERTY pid}3",
+          "ship${PROPERTY pid}4",
+          "ship${PROPERTY pid}5",
+          "ship${PROPERTY pid}6"
+        ],
+        "relation": "in"
+      },
+      {
+        "func": "GET",
+        "property": "rank",
+        "aggregation": "sum"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "shipcount${PROPERTY pid}"
+        ],
+        "property": "text",
+        "value": "${rank}"
+      }
+    ],
+    "enterRoutine": [
+      {
+        "func": "CALL",
+        "routine": "countValueRoutine"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "CALL",
+        "routine": "countValueRoutine"
+      }
+    ],
+    "dropLimit": 1,
+    "ship": true
+  },
+  "ship13": {
+    "type": "holder",
+    "id": "ship13",
+    "x": 237,
+    "y": 403,
+    "width": 108,
+    "height": 108,
+    "scale": 0.5,
+    "z": 1219,
+    "inheritChildZ": true,
+    "linkedToSeat": "seat1",
+    "onEnter": {
+      "activeFace": 1
+    },
+    "pid": 1,
+    "countValueRoutine": [
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "parent",
+        "value": [
+          "ship${PROPERTY pid}1",
+          "ship${PROPERTY pid}2",
+          "ship${PROPERTY pid}3",
+          "ship${PROPERTY pid}4",
+          "ship${PROPERTY pid}5",
+          "ship${PROPERTY pid}6"
+        ],
+        "relation": "in"
+      },
+      {
+        "func": "GET",
+        "property": "rank",
+        "aggregation": "sum"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "shipcount${PROPERTY pid}"
+        ],
+        "property": "text",
+        "value": "${rank}"
+      }
+    ],
+    "enterRoutine": [
+      {
+        "func": "CALL",
+        "routine": "countValueRoutine"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "CALL",
+        "routine": "countValueRoutine"
+      }
+    ],
+    "dropLimit": 1,
+    "ship": true
+  },
+  "ship14": {
+    "type": "holder",
+    "id": "ship14",
+    "x": 291,
+    "y": 403,
+    "width": 108,
+    "height": 108,
+    "scale": 0.5,
+    "z": 1219,
+    "inheritChildZ": true,
+    "linkedToSeat": "seat1",
+    "onEnter": {
+      "activeFace": 1
+    },
+    "pid": 1,
+    "countValueRoutine": [
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "parent",
+        "value": [
+          "ship${PROPERTY pid}1",
+          "ship${PROPERTY pid}2",
+          "ship${PROPERTY pid}3",
+          "ship${PROPERTY pid}4",
+          "ship${PROPERTY pid}5",
+          "ship${PROPERTY pid}6"
+        ],
+        "relation": "in"
+      },
+      {
+        "func": "GET",
+        "property": "rank",
+        "aggregation": "sum"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "shipcount${PROPERTY pid}"
+        ],
+        "property": "text",
+        "value": "${rank}"
+      }
+    ],
+    "enterRoutine": [
+      {
+        "func": "CALL",
+        "routine": "countValueRoutine"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "CALL",
+        "routine": "countValueRoutine"
+      }
+    ],
+    "dropLimit": 1,
+    "ship": true
+  },
+  "ship15": {
+    "type": "holder",
+    "id": "ship15",
+    "x": 237,
+    "y": 457,
+    "width": 108,
+    "height": 108,
+    "scale": 0.5,
+    "z": 1219,
+    "inheritChildZ": true,
+    "linkedToSeat": "seat1",
+    "onEnter": {
+      "activeFace": 1
+    },
+    "pid": 1,
+    "countValueRoutine": [
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "parent",
+        "value": [
+          "ship${PROPERTY pid}1",
+          "ship${PROPERTY pid}2",
+          "ship${PROPERTY pid}3",
+          "ship${PROPERTY pid}4",
+          "ship${PROPERTY pid}5",
+          "ship${PROPERTY pid}6"
+        ],
+        "relation": "in"
+      },
+      {
+        "func": "GET",
+        "property": "rank",
+        "aggregation": "sum"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "shipcount${PROPERTY pid}"
+        ],
+        "property": "text",
+        "value": "${rank}"
+      }
+    ],
+    "enterRoutine": [
+      {
+        "func": "CALL",
+        "routine": "countValueRoutine"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "CALL",
+        "routine": "countValueRoutine"
+      }
+    ],
+    "dropLimit": 1,
+    "ship": true
+  },
+  "ship16": {
+    "type": "holder",
+    "id": "ship16",
+    "x": 291,
+    "y": 457,
+    "width": 108,
+    "height": 108,
+    "scale": 0.5,
+    "z": 1219,
+    "inheritChildZ": true,
+    "linkedToSeat": "seat1",
+    "onEnter": {
+      "activeFace": 1
+    },
+    "pid": 1,
+    "countValueRoutine": [
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "parent",
+        "value": [
+          "ship${PROPERTY pid}1",
+          "ship${PROPERTY pid}2",
+          "ship${PROPERTY pid}3",
+          "ship${PROPERTY pid}4",
+          "ship${PROPERTY pid}5",
+          "ship${PROPERTY pid}6"
+        ],
+        "relation": "in"
+      },
+      {
+        "func": "GET",
+        "property": "rank",
+        "aggregation": "sum"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "shipcount${PROPERTY pid}"
+        ],
+        "property": "text",
+        "value": "${rank}"
+      }
+    ],
+    "enterRoutine": [
+      {
+        "func": "CALL",
+        "routine": "countValueRoutine"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "CALL",
+        "routine": "countValueRoutine"
+      }
+    ],
+    "dropLimit": 1,
+    "ship": true
+  },
+  "shipcount1": {
+    "type": "label",
+    "id": "shipcount1",
+    "x": 282,
+    "y": 572,
+    "width": 65,
+    "height": 40,
+    "css": "font-size: 30px;",
+    "editable": true,
+    "linkedToSeat": "seat1",
+    "text": 0,
+    "resetProperties": {}
+  },
+  "ship11": {
+    "type": "holder",
+    "id": "ship11",
+    "x": 237,
+    "y": 349,
+    "width": 108,
+    "height": 108,
+    "scale": 0.5,
+    "z": 1219,
+    "inheritChildZ": true,
+    "linkedToSeat": "seat1",
+    "onEnter": {
+      "activeFace": 1
+    },
+    "countValueRoutine": [
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "parent",
+        "value": [
+          "ship${PROPERTY pid}1",
+          "ship${PROPERTY pid}2",
+          "ship${PROPERTY pid}3",
+          "ship${PROPERTY pid}4",
+          "ship${PROPERTY pid}5",
+          "ship${PROPERTY pid}6"
+        ],
+        "relation": "in"
+      },
+      {
+        "func": "GET",
+        "property": "rank",
+        "aggregation": "sum"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "shipcount${PROPERTY pid}"
+        ],
+        "property": "text",
+        "value": "${rank}"
+      }
+    ],
+    "enterRoutine": [
+      {
+        "func": "CALL",
+        "routine": "countValueRoutine"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "CALL",
+        "routine": "countValueRoutine"
+      }
+    ],
+    "pid": 1,
+    "dropLimit": 1,
+    "ship": true
+  },
+  "ship21": {
+    "type": "holder",
+    "id": "ship21",
+    "x": 392,
+    "y": 349,
+    "width": 108,
+    "height": 108,
+    "scale": 0.5,
+    "z": 1212,
+    "inheritChildZ": true,
+    "linkedToSeat": "seat2",
+    "onEnter": {
+      "activeFace": 1
+    },
+    "dropLimit": 1,
+    "pid": 2,
+    "countValueRoutine": [
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "parent",
+        "value": [
+          "ship${PROPERTY pid}1",
+          "ship${PROPERTY pid}2",
+          "ship${PROPERTY pid}3",
+          "ship${PROPERTY pid}4",
+          "ship${PROPERTY pid}5",
+          "ship${PROPERTY pid}6"
+        ],
+        "relation": "in"
+      },
+      {
+        "func": "GET",
+        "property": "rank",
+        "aggregation": "sum"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "shipcount${PROPERTY pid}"
+        ],
+        "property": "text",
+        "value": "${rank}"
+      }
+    ],
+    "enterRoutine": [
+      {
+        "func": "CALL",
+        "routine": "countValueRoutine"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "CALL",
+        "routine": "countValueRoutine"
+      }
+    ],
+    "ship": true
+  },
+  "ship22": {
+    "type": "holder",
+    "id": "ship22",
+    "x": 446,
+    "y": 349,
+    "width": 108,
+    "height": 108,
+    "scale": 0.5,
+    "z": 1212,
+    "inheritChildZ": true,
+    "linkedToSeat": "seat2",
+    "onEnter": {
+      "activeFace": 1
+    },
+    "dropLimit": 1,
+    "pid": 2,
+    "countValueRoutine": [
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "parent",
+        "value": [
+          "ship${PROPERTY pid}1",
+          "ship${PROPERTY pid}2",
+          "ship${PROPERTY pid}3",
+          "ship${PROPERTY pid}4",
+          "ship${PROPERTY pid}5",
+          "ship${PROPERTY pid}6"
+        ],
+        "relation": "in"
+      },
+      {
+        "func": "GET",
+        "property": "rank",
+        "aggregation": "sum"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "shipcount${PROPERTY pid}"
+        ],
+        "property": "text",
+        "value": "${rank}"
+      }
+    ],
+    "enterRoutine": [
+      {
+        "func": "CALL",
+        "routine": "countValueRoutine"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "CALL",
+        "routine": "countValueRoutine"
+      }
+    ],
+    "ship": true
+  },
+  "ship23": {
+    "type": "holder",
+    "id": "ship23",
+    "x": 392,
+    "y": 403,
+    "width": 108,
+    "height": 108,
+    "scale": 0.5,
+    "z": 1212,
+    "inheritChildZ": true,
+    "linkedToSeat": "seat2",
+    "onEnter": {
+      "activeFace": 1
+    },
+    "dropLimit": 1,
+    "pid": 2,
+    "countValueRoutine": [
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "parent",
+        "value": [
+          "ship${PROPERTY pid}1",
+          "ship${PROPERTY pid}2",
+          "ship${PROPERTY pid}3",
+          "ship${PROPERTY pid}4",
+          "ship${PROPERTY pid}5",
+          "ship${PROPERTY pid}6"
+        ],
+        "relation": "in"
+      },
+      {
+        "func": "GET",
+        "property": "rank",
+        "aggregation": "sum"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "shipcount${PROPERTY pid}"
+        ],
+        "property": "text",
+        "value": "${rank}"
+      }
+    ],
+    "enterRoutine": [
+      {
+        "func": "CALL",
+        "routine": "countValueRoutine"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "CALL",
+        "routine": "countValueRoutine"
+      }
+    ],
+    "ship": true
+  },
+  "ship24": {
+    "type": "holder",
+    "id": "ship24",
+    "x": 446,
+    "y": 403,
+    "width": 108,
+    "height": 108,
+    "scale": 0.5,
+    "z": 1212,
+    "inheritChildZ": true,
+    "linkedToSeat": "seat2",
+    "onEnter": {
+      "activeFace": 1
+    },
+    "dropLimit": 1,
+    "pid": 2,
+    "countValueRoutine": [
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "parent",
+        "value": [
+          "ship${PROPERTY pid}1",
+          "ship${PROPERTY pid}2",
+          "ship${PROPERTY pid}3",
+          "ship${PROPERTY pid}4",
+          "ship${PROPERTY pid}5",
+          "ship${PROPERTY pid}6"
+        ],
+        "relation": "in"
+      },
+      {
+        "func": "GET",
+        "property": "rank",
+        "aggregation": "sum"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "shipcount${PROPERTY pid}"
+        ],
+        "property": "text",
+        "value": "${rank}"
+      }
+    ],
+    "enterRoutine": [
+      {
+        "func": "CALL",
+        "routine": "countValueRoutine"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "CALL",
+        "routine": "countValueRoutine"
+      }
+    ],
+    "ship": true
+  },
+  "ship25": {
+    "type": "holder",
+    "id": "ship25",
+    "x": 392,
+    "y": 457,
+    "width": 108,
+    "height": 108,
+    "scale": 0.5,
+    "z": 1212,
+    "inheritChildZ": true,
+    "linkedToSeat": "seat2",
+    "onEnter": {
+      "activeFace": 1
+    },
+    "dropLimit": 1,
+    "pid": 2,
+    "countValueRoutine": [
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "parent",
+        "value": [
+          "ship${PROPERTY pid}1",
+          "ship${PROPERTY pid}2",
+          "ship${PROPERTY pid}3",
+          "ship${PROPERTY pid}4",
+          "ship${PROPERTY pid}5",
+          "ship${PROPERTY pid}6"
+        ],
+        "relation": "in"
+      },
+      {
+        "func": "GET",
+        "property": "rank",
+        "aggregation": "sum"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "shipcount${PROPERTY pid}"
+        ],
+        "property": "text",
+        "value": "${rank}"
+      }
+    ],
+    "enterRoutine": [
+      {
+        "func": "CALL",
+        "routine": "countValueRoutine"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "CALL",
+        "routine": "countValueRoutine"
+      }
+    ],
+    "ship": true
+  },
+  "ship26": {
+    "type": "holder",
+    "id": "ship26",
+    "x": 446,
+    "y": 457,
+    "width": 108,
+    "height": 108,
+    "scale": 0.5,
+    "z": 1212,
+    "inheritChildZ": true,
+    "linkedToSeat": "seat2",
+    "onEnter": {
+      "activeFace": 1
+    },
+    "dropLimit": 1,
+    "pid": 2,
+    "countValueRoutine": [
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "parent",
+        "value": [
+          "ship${PROPERTY pid}1",
+          "ship${PROPERTY pid}2",
+          "ship${PROPERTY pid}3",
+          "ship${PROPERTY pid}4",
+          "ship${PROPERTY pid}5",
+          "ship${PROPERTY pid}6"
+        ],
+        "relation": "in"
+      },
+      {
+        "func": "GET",
+        "property": "rank",
+        "aggregation": "sum"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "shipcount${PROPERTY pid}"
+        ],
+        "property": "text",
+        "value": "${rank}"
+      }
+    ],
+    "enterRoutine": [
+      {
+        "func": "CALL",
+        "routine": "countValueRoutine"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "CALL",
+        "routine": "countValueRoutine"
+      }
+    ],
+    "ship": true
+  },
+  "ship31": {
+    "type": "holder",
+    "id": "ship31",
+    "x": 558,
+    "y": 349,
+    "width": 108,
+    "height": 108,
+    "scale": 0.5,
+    "z": 1212,
+    "inheritChildZ": true,
+    "linkedToSeat": "seat3",
+    "onEnter": {
+      "activeFace": 1
+    },
+    "dropLimit": 1,
+    "pid": 3,
+    "countValueRoutine": [
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "parent",
+        "value": [
+          "ship${PROPERTY pid}1",
+          "ship${PROPERTY pid}2",
+          "ship${PROPERTY pid}3",
+          "ship${PROPERTY pid}4",
+          "ship${PROPERTY pid}5",
+          "ship${PROPERTY pid}6"
+        ],
+        "relation": "in"
+      },
+      {
+        "func": "GET",
+        "property": "rank",
+        "aggregation": "sum"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "shipcount${PROPERTY pid}"
+        ],
+        "property": "text",
+        "value": "${rank}"
+      }
+    ],
+    "enterRoutine": [
+      {
+        "func": "CALL",
+        "routine": "countValueRoutine"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "CALL",
+        "routine": "countValueRoutine"
+      }
+    ],
+    "ship": true
+  },
+  "ship32": {
+    "type": "holder",
+    "id": "ship32",
+    "x": 612,
+    "y": 349,
+    "width": 108,
+    "height": 108,
+    "scale": 0.5,
+    "z": 1212,
+    "inheritChildZ": true,
+    "linkedToSeat": "seat3",
+    "onEnter": {
+      "activeFace": 1
+    },
+    "dropLimit": 1,
+    "pid": 3,
+    "countValueRoutine": [
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "parent",
+        "value": [
+          "ship${PROPERTY pid}1",
+          "ship${PROPERTY pid}2",
+          "ship${PROPERTY pid}3",
+          "ship${PROPERTY pid}4",
+          "ship${PROPERTY pid}5",
+          "ship${PROPERTY pid}6"
+        ],
+        "relation": "in"
+      },
+      {
+        "func": "GET",
+        "property": "rank",
+        "aggregation": "sum"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "shipcount${PROPERTY pid}"
+        ],
+        "property": "text",
+        "value": "${rank}"
+      }
+    ],
+    "enterRoutine": [
+      {
+        "func": "CALL",
+        "routine": "countValueRoutine"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "CALL",
+        "routine": "countValueRoutine"
+      }
+    ],
+    "ship": true
+  },
+  "ship33": {
+    "type": "holder",
+    "id": "ship33",
+    "x": 558,
+    "y": 403,
+    "width": 108,
+    "height": 108,
+    "scale": 0.5,
+    "z": 1212,
+    "inheritChildZ": true,
+    "linkedToSeat": "seat3",
+    "onEnter": {
+      "activeFace": 1
+    },
+    "dropLimit": 1,
+    "pid": 3,
+    "countValueRoutine": [
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "parent",
+        "value": [
+          "ship${PROPERTY pid}1",
+          "ship${PROPERTY pid}2",
+          "ship${PROPERTY pid}3",
+          "ship${PROPERTY pid}4",
+          "ship${PROPERTY pid}5",
+          "ship${PROPERTY pid}6"
+        ],
+        "relation": "in"
+      },
+      {
+        "func": "GET",
+        "property": "rank",
+        "aggregation": "sum"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "shipcount${PROPERTY pid}"
+        ],
+        "property": "text",
+        "value": "${rank}"
+      }
+    ],
+    "enterRoutine": [
+      {
+        "func": "CALL",
+        "routine": "countValueRoutine"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "CALL",
+        "routine": "countValueRoutine"
+      }
+    ],
+    "ship": true
+  },
+  "ship34": {
+    "type": "holder",
+    "id": "ship34",
+    "x": 612,
+    "y": 403,
+    "width": 108,
+    "height": 108,
+    "scale": 0.5,
+    "z": 1212,
+    "inheritChildZ": true,
+    "linkedToSeat": "seat3",
+    "onEnter": {
+      "activeFace": 1
+    },
+    "dropLimit": 1,
+    "pid": 3,
+    "countValueRoutine": [
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "parent",
+        "value": [
+          "ship${PROPERTY pid}1",
+          "ship${PROPERTY pid}2",
+          "ship${PROPERTY pid}3",
+          "ship${PROPERTY pid}4",
+          "ship${PROPERTY pid}5",
+          "ship${PROPERTY pid}6"
+        ],
+        "relation": "in"
+      },
+      {
+        "func": "GET",
+        "property": "rank",
+        "aggregation": "sum"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "shipcount${PROPERTY pid}"
+        ],
+        "property": "text",
+        "value": "${rank}"
+      }
+    ],
+    "enterRoutine": [
+      {
+        "func": "CALL",
+        "routine": "countValueRoutine"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "CALL",
+        "routine": "countValueRoutine"
+      }
+    ],
+    "ship": true
+  },
+  "ship35": {
+    "type": "holder",
+    "id": "ship35",
+    "x": 558,
+    "y": 457,
+    "width": 108,
+    "height": 108,
+    "scale": 0.5,
+    "z": 1212,
+    "inheritChildZ": true,
+    "linkedToSeat": "seat3",
+    "onEnter": {
+      "activeFace": 1
+    },
+    "dropLimit": 1,
+    "pid": 3,
+    "countValueRoutine": [
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "parent",
+        "value": [
+          "ship${PROPERTY pid}1",
+          "ship${PROPERTY pid}2",
+          "ship${PROPERTY pid}3",
+          "ship${PROPERTY pid}4",
+          "ship${PROPERTY pid}5",
+          "ship${PROPERTY pid}6"
+        ],
+        "relation": "in"
+      },
+      {
+        "func": "GET",
+        "property": "rank",
+        "aggregation": "sum"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "shipcount${PROPERTY pid}"
+        ],
+        "property": "text",
+        "value": "${rank}"
+      }
+    ],
+    "enterRoutine": [
+      {
+        "func": "CALL",
+        "routine": "countValueRoutine"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "CALL",
+        "routine": "countValueRoutine"
+      }
+    ],
+    "ship": true
+  },
+  "ship36": {
+    "type": "holder",
+    "id": "ship36",
+    "x": 612,
+    "y": 457,
+    "width": 108,
+    "height": 108,
+    "scale": 0.5,
+    "z": 1212,
+    "inheritChildZ": true,
+    "linkedToSeat": "seat3",
+    "onEnter": {
+      "activeFace": 1
+    },
+    "dropLimit": 1,
+    "pid": 3,
+    "countValueRoutine": [
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "parent",
+        "value": [
+          "ship${PROPERTY pid}1",
+          "ship${PROPERTY pid}2",
+          "ship${PROPERTY pid}3",
+          "ship${PROPERTY pid}4",
+          "ship${PROPERTY pid}5",
+          "ship${PROPERTY pid}6"
+        ],
+        "relation": "in"
+      },
+      {
+        "func": "GET",
+        "property": "rank",
+        "aggregation": "sum"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "shipcount${PROPERTY pid}"
+        ],
+        "property": "text",
+        "value": "${rank}"
+      }
+    ],
+    "enterRoutine": [
+      {
+        "func": "CALL",
+        "routine": "countValueRoutine"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "CALL",
+        "routine": "countValueRoutine"
+      }
+    ],
+    "ship": true
+  },
+  "ship41": {
+    "type": "holder",
+    "id": "ship41",
+    "x": 726,
+    "y": 348,
+    "width": 108,
+    "height": 108,
+    "scale": 0.5,
+    "z": 1212,
+    "inheritChildZ": true,
+    "linkedToSeat": "seat4",
+    "onEnter": {
+      "activeFace": 1
+    },
+    "dropLimit": 1,
+    "pid": 4,
+    "countValueRoutine": [
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "parent",
+        "value": [
+          "ship${PROPERTY pid}1",
+          "ship${PROPERTY pid}2",
+          "ship${PROPERTY pid}3",
+          "ship${PROPERTY pid}4",
+          "ship${PROPERTY pid}5",
+          "ship${PROPERTY pid}6"
+        ],
+        "relation": "in"
+      },
+      {
+        "func": "GET",
+        "property": "rank",
+        "aggregation": "sum"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "shipcount${PROPERTY pid}"
+        ],
+        "property": "text",
+        "value": "${rank}"
+      }
+    ],
+    "enterRoutine": [
+      {
+        "func": "CALL",
+        "routine": "countValueRoutine"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "CALL",
+        "routine": "countValueRoutine"
+      }
+    ],
+    "ship": true
+  },
+  "ship42": {
+    "type": "holder",
+    "id": "ship42",
+    "x": 780,
+    "y": 348,
+    "width": 108,
+    "height": 108,
+    "scale": 0.5,
+    "z": 1212,
+    "inheritChildZ": true,
+    "linkedToSeat": "seat4",
+    "onEnter": {
+      "activeFace": 1
+    },
+    "dropLimit": 1,
+    "pid": 4,
+    "countValueRoutine": [
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "parent",
+        "value": [
+          "ship${PROPERTY pid}1",
+          "ship${PROPERTY pid}2",
+          "ship${PROPERTY pid}3",
+          "ship${PROPERTY pid}4",
+          "ship${PROPERTY pid}5",
+          "ship${PROPERTY pid}6"
+        ],
+        "relation": "in"
+      },
+      {
+        "func": "GET",
+        "property": "rank",
+        "aggregation": "sum"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "shipcount${PROPERTY pid}"
+        ],
+        "property": "text",
+        "value": "${rank}"
+      }
+    ],
+    "enterRoutine": [
+      {
+        "func": "CALL",
+        "routine": "countValueRoutine"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "CALL",
+        "routine": "countValueRoutine"
+      }
+    ],
+    "ship": true
+  },
+  "ship43": {
+    "type": "holder",
+    "id": "ship43",
+    "x": 726,
+    "y": 402,
+    "width": 108,
+    "height": 108,
+    "scale": 0.5,
+    "z": 1212,
+    "inheritChildZ": true,
+    "linkedToSeat": "seat4",
+    "onEnter": {
+      "activeFace": 1
+    },
+    "dropLimit": 1,
+    "pid": 4,
+    "countValueRoutine": [
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "parent",
+        "value": [
+          "ship${PROPERTY pid}1",
+          "ship${PROPERTY pid}2",
+          "ship${PROPERTY pid}3",
+          "ship${PROPERTY pid}4",
+          "ship${PROPERTY pid}5",
+          "ship${PROPERTY pid}6"
+        ],
+        "relation": "in"
+      },
+      {
+        "func": "GET",
+        "property": "rank",
+        "aggregation": "sum"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "shipcount${PROPERTY pid}"
+        ],
+        "property": "text",
+        "value": "${rank}"
+      }
+    ],
+    "enterRoutine": [
+      {
+        "func": "CALL",
+        "routine": "countValueRoutine"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "CALL",
+        "routine": "countValueRoutine"
+      }
+    ],
+    "ship": true
+  },
+  "ship44": {
+    "type": "holder",
+    "id": "ship44",
+    "x": 780,
+    "y": 402,
+    "width": 108,
+    "height": 108,
+    "scale": 0.5,
+    "z": 1212,
+    "inheritChildZ": true,
+    "linkedToSeat": "seat4",
+    "onEnter": {
+      "activeFace": 1
+    },
+    "dropLimit": 1,
+    "pid": 4,
+    "countValueRoutine": [
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "parent",
+        "value": [
+          "ship${PROPERTY pid}1",
+          "ship${PROPERTY pid}2",
+          "ship${PROPERTY pid}3",
+          "ship${PROPERTY pid}4",
+          "ship${PROPERTY pid}5",
+          "ship${PROPERTY pid}6"
+        ],
+        "relation": "in"
+      },
+      {
+        "func": "GET",
+        "property": "rank",
+        "aggregation": "sum"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "shipcount${PROPERTY pid}"
+        ],
+        "property": "text",
+        "value": "${rank}"
+      }
+    ],
+    "enterRoutine": [
+      {
+        "func": "CALL",
+        "routine": "countValueRoutine"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "CALL",
+        "routine": "countValueRoutine"
+      }
+    ],
+    "ship": true
+  },
+  "ship45": {
+    "type": "holder",
+    "id": "ship45",
+    "x": 726,
+    "y": 456,
+    "width": 108,
+    "height": 108,
+    "scale": 0.5,
+    "z": 1212,
+    "inheritChildZ": true,
+    "linkedToSeat": "seat4",
+    "onEnter": {
+      "activeFace": 1
+    },
+    "dropLimit": 1,
+    "pid": 4,
+    "countValueRoutine": [
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "parent",
+        "value": [
+          "ship${PROPERTY pid}1",
+          "ship${PROPERTY pid}2",
+          "ship${PROPERTY pid}3",
+          "ship${PROPERTY pid}4",
+          "ship${PROPERTY pid}5",
+          "ship${PROPERTY pid}6"
+        ],
+        "relation": "in"
+      },
+      {
+        "func": "GET",
+        "property": "rank",
+        "aggregation": "sum"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "shipcount${PROPERTY pid}"
+        ],
+        "property": "text",
+        "value": "${rank}"
+      }
+    ],
+    "enterRoutine": [
+      {
+        "func": "CALL",
+        "routine": "countValueRoutine"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "CALL",
+        "routine": "countValueRoutine"
+      }
+    ],
+    "ship": true
+  },
+  "ship46": {
+    "type": "holder",
+    "id": "ship46",
+    "x": 780,
+    "y": 456,
+    "width": 108,
+    "height": 108,
+    "scale": 0.5,
+    "z": 1212,
+    "inheritChildZ": true,
+    "linkedToSeat": "seat4",
+    "onEnter": {
+      "activeFace": 1
+    },
+    "dropLimit": 1,
+    "pid": 4,
+    "countValueRoutine": [
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "parent",
+        "value": [
+          "ship${PROPERTY pid}1",
+          "ship${PROPERTY pid}2",
+          "ship${PROPERTY pid}3",
+          "ship${PROPERTY pid}4",
+          "ship${PROPERTY pid}5",
+          "ship${PROPERTY pid}6"
+        ],
+        "relation": "in"
+      },
+      {
+        "func": "GET",
+        "property": "rank",
+        "aggregation": "sum"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "shipcount${PROPERTY pid}"
+        ],
+        "property": "text",
+        "value": "${rank}"
+      }
+    ],
+    "enterRoutine": [
+      {
+        "func": "CALL",
+        "routine": "countValueRoutine"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "CALL",
+        "routine": "countValueRoutine"
+      }
+    ],
+    "ship": true
+  },
+  "shipcount2": {
+    "type": "label",
+    "id": "shipcount2",
+    "x": 444,
+    "y": 572,
+    "width": 65,
+    "height": 40,
+    "css": "font-size: 30px;",
+    "editable": true,
+    "linkedToSeat": "seat2",
+    "text": 0
+  },
+  "shipcount3": {
+    "type": "label",
+    "id": "shipcount3",
+    "x": 609,
+    "y": 572,
+    "width": 65,
+    "height": 40,
+    "css": "font-size: 30px;",
+    "editable": true,
+    "linkedToSeat": "seat3",
+    "text": 0
+  },
+  "shipcount4": {
+    "type": "label",
+    "id": "shipcount4",
+    "x": 776,
+    "y": 572,
+    "width": 65,
+    "height": 40,
+    "css": "font-size: 30px;",
+    "editable": true,
+    "linkedToSeat": "seat4",
+    "text": 0
+  },
+  "3psetup": {
+    "type": "button",
+    "id": "3psetup",
+    "y": 100,
+    "z": 11131,
+    "text": "3 Players",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": [
+          "shipcount1",
+          "shipcount2",
+          "shipcount3",
+          "shipcount4",
+          "shipcount5",
+          "shipcount6",
+          "shipcount7"
+        ],
+        "value": 0
+      },
+      {
+        "func": "LABEL",
+        "label": [
+          "score-p1",
+          "score-p2",
+          "score-p3",
+          "score-p4",
+          "score-p5",
+          "score-p6",
+          "score-p7"
+        ],
+        "value": 50
+      },
+      {
+        "func": "LABEL",
+        "label": [
+          "bid-p1",
+          "bid-p2",
+          "bid-p3",
+          "bid-p4",
+          "bid-p5",
+          "bid-p6",
+          "bid-p7"
+        ],
+        "value": 0
+      },
+      {
+        "func": "RECALL",
+        "holder": "deck"
+      },
+      {
+        "func": "FLIP",
+        "holder": [
+          "deck"
+        ],
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "deck"
+      },
+      {
+        "func": "MOVE",
+        "from": "deck",
+        "count": 26,
+        "to": "discard",
+        "face": 0
+      },
+      {
+        "func": "TURN",
+        "turnCycle": "random"
+      }
+    ],
+    "width": 111,
+    "height": 40,
+    "x": -172
+  },
+  "4psetup": {
+    "type": "button",
+    "id": "4psetup",
+    "y": 153,
+    "z": 11131,
+    "text": "4 Players",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": [
+          "shipcount1",
+          "shipcount2",
+          "shipcount3",
+          "shipcount4",
+          "shipcount5",
+          "shipcount6",
+          "shipcount7"
+        ],
+        "value": 0
+      },
+      {
+        "func": "LABEL",
+        "label": [
+          "score-p1",
+          "score-p2",
+          "score-p3",
+          "score-p4",
+          "score-p5",
+          "score-p6",
+          "score-p7"
+        ],
+        "value": 50
+      },
+      {
+        "func": "LABEL",
+        "label": [
+          "bid-p1",
+          "bid-p2",
+          "bid-p3",
+          "bid-p4",
+          "bid-p5",
+          "bid-p6",
+          "bid-p7"
+        ],
+        "value": 0
+      },
+      {
+        "func": "RECALL",
+        "holder": "deck"
+      },
+      {
+        "func": "FLIP",
+        "holder": [
+          "deck"
+        ],
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "deck"
+      },
+      {
+        "func": "MOVE",
+        "from": "deck",
+        "count": 18,
+        "to": "discard",
+        "face": 0
+      },
+      {
+        "func": "TURN",
+        "turnCycle": "random"
+      }
+    ],
+    "width": 110,
+    "height": 40,
+    "x": -172
+  },
+  "5psetup": {
+    "type": "button",
+    "id": "5psetup",
+    "y": 208,
+    "z": 11131,
+    "text": "5 Players",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": [
+          "shipcount1",
+          "shipcount2",
+          "shipcount3",
+          "shipcount4",
+          "shipcount5",
+          "shipcount6",
+          "shipcount7"
+        ],
+        "value": 0
+      },
+      {
+        "func": "LABEL",
+        "label": [
+          "score-p1",
+          "score-p2",
+          "score-p3",
+          "score-p4",
+          "score-p5",
+          "score-p6",
+          "score-p7"
+        ],
+        "value": 50
+      },
+      {
+        "func": "LABEL",
+        "label": [
+          "bid-p1",
+          "bid-p2",
+          "bid-p3",
+          "bid-p4",
+          "bid-p5",
+          "bid-p6",
+          "bid-p7"
+        ],
+        "value": 0
+      },
+      {
+        "func": "RECALL",
+        "holder": "deck"
+      },
+      {
+        "func": "FLIP",
+        "holder": [
+          "deck"
+        ],
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "deck"
+      },
+      {
+        "func": "MOVE",
+        "from": "deck",
+        "count": 10,
+        "to": "discard",
+        "face": 0
+      },
+      {
+        "func": "TURN",
+        "turnCycle": "random"
+      }
+    ],
+    "width": 111,
+    "height": 40,
+    "x": -172
+  },
+  "6psetup": {
+    "type": "button",
+    "id": "6psetup",
+    "y": 263,
+    "z": 11131,
+    "text": "6 Players",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": [
+          "shipcount1",
+          "shipcount2",
+          "shipcount3",
+          "shipcount4",
+          "shipcount5",
+          "shipcount6",
+          "shipcount7"
+        ],
+        "value": 0
+      },
+      {
+        "func": "LABEL",
+        "label": [
+          "score-p1",
+          "score-p2",
+          "score-p3",
+          "score-p4",
+          "score-p5",
+          "score-p6",
+          "score-p7"
+        ],
+        "value": 50
+      },
+      {
+        "func": "LABEL",
+        "label": [
+          "bid-p1",
+          "bid-p2",
+          "bid-p3",
+          "bid-p4",
+          "bid-p5",
+          "bid-p6",
+          "bid-p7"
+        ],
+        "value": 0
+      },
+      {
+        "func": "RECALL",
+        "holder": "deck"
+      },
+      {
+        "func": "FLIP",
+        "holder": [
+          "deck"
+        ],
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "deck"
+      },
+      {
+        "func": "MOVE",
+        "from": "deck",
+        "count": 5,
+        "to": "discard",
+        "face": 0
+      },
+      {
+        "func": "TURN",
+        "turnCycle": "random"
+      }
+    ],
+    "width": 111,
+    "height": 40,
+    "x": -172
+  },
+  "7psetup": {
+    "type": "button",
+    "id": "7psetup",
+    "y": 319,
+    "z": 11131,
+    "text": "7 Players",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": [
+          "shipcount1",
+          "shipcount2",
+          "shipcount3",
+          "shipcount4",
+          "shipcount5",
+          "shipcount6",
+          "shipcount7"
+        ],
+        "value": 0
+      },
+      {
+        "func": "LABEL",
+        "label": [
+          "score-p1",
+          "score-p2",
+          "score-p3",
+          "score-p4",
+          "score-p5",
+          "score-p6",
+          "score-p7"
+        ],
+        "value": 50
+      },
+      {
+        "func": "LABEL",
+        "label": [
+          "bid-p1",
+          "bid-p2",
+          "bid-p3",
+          "bid-p4",
+          "bid-p5",
+          "bid-p6",
+          "bid-p7"
+        ],
+        "value": 0
+      },
+      {
+        "func": "RECALL",
+        "holder": "deck"
+      },
+      {
+        "func": "FLIP",
+        "holder": [
+          "deck"
+        ],
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "deck"
+      },
+      {
+        "func": "MOVE",
+        "from": "deck",
+        "count": 0,
+        "to": "discard",
+        "face": 0
+      },
+      {
+        "func": "TURN",
+        "turnCycle": "random"
+      }
+    ],
+    "width": 111,
+    "height": 40,
+    "x": -172
+  },
+  "deck": {
+    "type": "holder",
+    "id": "deck",
+    "x": 565,
+    "y": 700,
+    "width": 108,
+    "height": 108,
+    "z": 1211,
+    "inheritChildZ": true,
+    "onEnter": {
+      "activeFace": 0
+    }
+  },
+  "recallShuffle": {
+    "type": "button",
+    "id": "recallShuffle",
+    "parent": "deck",
+    "fixedParent": true,
+    "y": 121,
+    "width": 111,
+    "height": 40,
+    "movableInEdit": false,
+    "text": "New Game",
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "header": "New Game",
+        "fields": [
+          {
+            "type": "text",
+            "text": "Reset for new game?"
+          }
+        ]
+      },
+      {
+        "func": "FOREACH",
+        "range": [
+          7
+        ],
+        "loopRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "seat${value}"
+            ],
+            "property": "skipTurn",
+            "value": false
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "ready-p${value}"
+            ],
+            "property": "activeFace",
+            "value": 0
+          },
+          {
+            "func": "LABEL",
+            "label": "shipcount${value}",
+            "value": 0
+          },
+          {
+            "func": "LABEL",
+            "label": "score-p${value}",
+            "value": 50
+          },
+          {
+            "func": "LABEL",
+            "label": "bid-p${value}",
+            "value": 0
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY text OF button-auction}",
+        "operand2": "End Auction",
+        "thenRoutine": [
+          {
+            "func": "CLICK",
+            "collection": [
+              "button-auction"
+            ]
+          }
+        ]
+      },
+      {
+        "func": "RECALL",
+        "holder": "${PROPERTY parent}"
+      },
+      {
+        "func": "FLIP",
+        "holder": "${PROPERTY parent}",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "${PROPERTY parent}"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "button-winner"
+        ],
+        "property": "display",
+        "value": false
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "button-no-winner"
+        ],
+        "property": "display",
+        "value": false
+      },
+      {
+        "func": "SELECT",
+        "type": "seat",
+        "property": "player",
+        "relation": "!=",
+        "value": ""
+      },
+      {
+        "func": "COUNT"
+      },
+      {
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "operand2": 0,
+        "thenRoutine": [
+          "// This just makes sure some cards are dealt so long as at least one seat is occupied. Useful for testing and messing around."
+        ],
+        "elseRoutine": [
+          {
+            "func": "IF",
+            "operand1": "${COUNT}",
+            "relation": "<",
+            "operand2": 3,
+            "thenRoutine": [
+              "var COUNT = 3"
+            ]
+          }
+        ]
+      },
+      {
+        "func": "CLICK",
+        "collection": [
+          "${COUNT}psetup"
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY text OF hide player scores}",
+        "operand2": "Hide scores",
+        "thenRoutine": [
+          {
+            "func": "CLICK",
+            "collection": [
+              "hide player scores"
+            ]
+          }
+        ]
+      }
+    ],
+    "x": -4
+  },
+  "shipcount5": {
+    "type": "label",
+    "id": "shipcount5",
+    "x": 936,
+    "y": 572,
+    "width": 65,
+    "height": 40,
+    "css": "font-size: 30px;",
+    "editable": true,
+    "linkedToSeat": "seat5",
+    "text": 0
+  },
+  "shipcount6": {
+    "type": "label",
+    "id": "shipcount6",
+    "x": 1103,
+    "y": 572,
+    "width": 65,
+    "height": 40,
+    "css": "font-size: 30px;",
+    "editable": true,
+    "linkedToSeat": "seat6",
+    "text": 0
+  },
+  "shipcount7": {
+    "type": "label",
+    "id": "shipcount7",
+    "x": 1286,
+    "y": 573,
+    "width": 65,
+    "height": 40,
+    "css": "font-size: 30px;",
+    "editable": true,
+    "linkedToSeat": "seat7",
+    "text": 0
+  },
+  "ship56": {
+    "type": "holder",
+    "id": "ship56",
+    "x": 936,
+    "y": 454,
+    "width": 108,
+    "height": 108,
+    "scale": 0.5,
+    "z": 1212,
+    "inheritChildZ": true,
+    "dropLimit": 1,
+    "linkedToSeat": "seat5",
+    "onEnter": {
+      "activeFace": 1
+    },
+    "pid": 5,
+    "countValueRoutine": [
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "parent",
+        "value": [
+          "ship${PROPERTY pid}1",
+          "ship${PROPERTY pid}2",
+          "ship${PROPERTY pid}3",
+          "ship${PROPERTY pid}4",
+          "ship${PROPERTY pid}5",
+          "ship${PROPERTY pid}6"
+        ],
+        "relation": "in"
+      },
+      {
+        "func": "GET",
+        "property": "rank",
+        "aggregation": "sum"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "shipcount${PROPERTY pid}"
+        ],
+        "property": "text",
+        "value": "${rank}"
+      }
+    ],
+    "enterRoutine": [
+      {
+        "func": "CALL",
+        "routine": "countValueRoutine"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "CALL",
+        "routine": "countValueRoutine"
+      }
+    ],
+    "ship": true
+  },
+  "ship51": {
+    "type": "holder",
+    "id": "ship51",
+    "x": 882,
+    "y": 346,
+    "width": 108,
+    "height": 108,
+    "scale": 0.5,
+    "z": 1212,
+    "inheritChildZ": true,
+    "dropLimit": 1,
+    "linkedToSeat": "seat5",
+    "onEnter": {
+      "activeFace": 1
+    },
+    "pid": 5,
+    "countValueRoutine": [
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "parent",
+        "value": [
+          "ship${PROPERTY pid}1",
+          "ship${PROPERTY pid}2",
+          "ship${PROPERTY pid}3",
+          "ship${PROPERTY pid}4",
+          "ship${PROPERTY pid}5",
+          "ship${PROPERTY pid}6"
+        ],
+        "relation": "in"
+      },
+      {
+        "func": "GET",
+        "property": "rank",
+        "aggregation": "sum"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "shipcount${PROPERTY pid}"
+        ],
+        "property": "text",
+        "value": "${rank}"
+      }
+    ],
+    "enterRoutine": [
+      {
+        "func": "CALL",
+        "routine": "countValueRoutine"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "CALL",
+        "routine": "countValueRoutine"
+      }
+    ],
+    "ship": true
+  },
+  "ship52": {
+    "type": "holder",
+    "id": "ship52",
+    "x": 936,
+    "y": 346,
+    "width": 108,
+    "height": 108,
+    "scale": 0.5,
+    "z": 1212,
+    "inheritChildZ": true,
+    "dropLimit": 1,
+    "linkedToSeat": "seat5",
+    "onEnter": {
+      "activeFace": 1
+    },
+    "pid": 5,
+    "countValueRoutine": [
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "parent",
+        "value": [
+          "ship${PROPERTY pid}1",
+          "ship${PROPERTY pid}2",
+          "ship${PROPERTY pid}3",
+          "ship${PROPERTY pid}4",
+          "ship${PROPERTY pid}5",
+          "ship${PROPERTY pid}6"
+        ],
+        "relation": "in"
+      },
+      {
+        "func": "GET",
+        "property": "rank",
+        "aggregation": "sum"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "shipcount${PROPERTY pid}"
+        ],
+        "property": "text",
+        "value": "${rank}"
+      }
+    ],
+    "enterRoutine": [
+      {
+        "func": "CALL",
+        "routine": "countValueRoutine"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "CALL",
+        "routine": "countValueRoutine"
+      }
+    ],
+    "ship": true
+  },
+  "ship53": {
+    "type": "holder",
+    "id": "ship53",
+    "x": 882,
+    "y": 400,
+    "width": 108,
+    "height": 108,
+    "scale": 0.5,
+    "z": 1212,
+    "inheritChildZ": true,
+    "dropLimit": 1,
+    "linkedToSeat": "seat5",
+    "onEnter": {
+      "activeFace": 1
+    },
+    "pid": 5,
+    "countValueRoutine": [
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "parent",
+        "value": [
+          "ship${PROPERTY pid}1",
+          "ship${PROPERTY pid}2",
+          "ship${PROPERTY pid}3",
+          "ship${PROPERTY pid}4",
+          "ship${PROPERTY pid}5",
+          "ship${PROPERTY pid}6"
+        ],
+        "relation": "in"
+      },
+      {
+        "func": "GET",
+        "property": "rank",
+        "aggregation": "sum"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "shipcount${PROPERTY pid}"
+        ],
+        "property": "text",
+        "value": "${rank}"
+      }
+    ],
+    "enterRoutine": [
+      {
+        "func": "CALL",
+        "routine": "countValueRoutine"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "CALL",
+        "routine": "countValueRoutine"
+      }
+    ],
+    "ship": true
+  },
+  "ship54": {
+    "type": "holder",
+    "id": "ship54",
+    "x": 936,
+    "y": 400,
+    "width": 108,
+    "height": 108,
+    "scale": 0.5,
+    "z": 1212,
+    "inheritChildZ": true,
+    "dropLimit": 1,
+    "linkedToSeat": "seat5",
+    "onEnter": {
+      "activeFace": 1
+    },
+    "pid": 5,
+    "countValueRoutine": [
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "parent",
+        "value": [
+          "ship${PROPERTY pid}1",
+          "ship${PROPERTY pid}2",
+          "ship${PROPERTY pid}3",
+          "ship${PROPERTY pid}4",
+          "ship${PROPERTY pid}5",
+          "ship${PROPERTY pid}6"
+        ],
+        "relation": "in"
+      },
+      {
+        "func": "GET",
+        "property": "rank",
+        "aggregation": "sum"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "shipcount${PROPERTY pid}"
+        ],
+        "property": "text",
+        "value": "${rank}"
+      }
+    ],
+    "enterRoutine": [
+      {
+        "func": "CALL",
+        "routine": "countValueRoutine"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "CALL",
+        "routine": "countValueRoutine"
+      }
+    ],
+    "ship": true
+  },
+  "ship55": {
+    "type": "holder",
+    "id": "ship55",
+    "x": 882,
+    "y": 454,
+    "width": 108,
+    "height": 108,
+    "scale": 0.5,
+    "z": 1212,
+    "inheritChildZ": true,
+    "dropLimit": 1,
+    "linkedToSeat": "seat5",
+    "onEnter": {
+      "activeFace": 1
+    },
+    "pid": 5,
+    "countValueRoutine": [
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "parent",
+        "value": [
+          "ship${PROPERTY pid}1",
+          "ship${PROPERTY pid}2",
+          "ship${PROPERTY pid}3",
+          "ship${PROPERTY pid}4",
+          "ship${PROPERTY pid}5",
+          "ship${PROPERTY pid}6"
+        ],
+        "relation": "in"
+      },
+      {
+        "func": "GET",
+        "property": "rank",
+        "aggregation": "sum"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "shipcount${PROPERTY pid}"
+        ],
+        "property": "text",
+        "value": "${rank}"
+      }
+    ],
+    "enterRoutine": [
+      {
+        "func": "CALL",
+        "routine": "countValueRoutine"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "CALL",
+        "routine": "countValueRoutine"
+      }
+    ],
+    "ship": true
+  },
+  "ship61": {
+    "type": "holder",
+    "id": "ship61",
+    "x": 1050,
+    "y": 342,
+    "width": 108,
+    "height": 108,
+    "scale": 0.5,
+    "z": 1212,
+    "inheritChildZ": true,
+    "dropLimit": 1,
+    "linkedToSeat": "seat6",
+    "onEnter": {
+      "activeFace": 1
+    },
+    "pid": 6,
+    "countValueRoutine": [
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "parent",
+        "value": [
+          "ship${PROPERTY pid}1",
+          "ship${PROPERTY pid}2",
+          "ship${PROPERTY pid}3",
+          "ship${PROPERTY pid}4",
+          "ship${PROPERTY pid}5",
+          "ship${PROPERTY pid}6"
+        ],
+        "relation": "in"
+      },
+      {
+        "func": "GET",
+        "property": "rank",
+        "aggregation": "sum"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "shipcount${PROPERTY pid}"
+        ],
+        "property": "text",
+        "value": "${rank}"
+      }
+    ],
+    "enterRoutine": [
+      {
+        "func": "CALL",
+        "routine": "countValueRoutine"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "CALL",
+        "routine": "countValueRoutine"
+      }
+    ],
+    "ship": true
+  },
+  "ship62": {
+    "type": "holder",
+    "id": "ship62",
+    "x": 1104,
+    "y": 342,
+    "width": 108,
+    "height": 108,
+    "scale": 0.5,
+    "z": 1212,
+    "inheritChildZ": true,
+    "dropLimit": 1,
+    "linkedToSeat": "seat6",
+    "onEnter": {
+      "activeFace": 1
+    },
+    "pid": 6,
+    "countValueRoutine": [
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "parent",
+        "value": [
+          "ship${PROPERTY pid}1",
+          "ship${PROPERTY pid}2",
+          "ship${PROPERTY pid}3",
+          "ship${PROPERTY pid}4",
+          "ship${PROPERTY pid}5",
+          "ship${PROPERTY pid}6"
+        ],
+        "relation": "in"
+      },
+      {
+        "func": "GET",
+        "property": "rank",
+        "aggregation": "sum"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "shipcount${PROPERTY pid}"
+        ],
+        "property": "text",
+        "value": "${rank}"
+      }
+    ],
+    "enterRoutine": [
+      {
+        "func": "CALL",
+        "routine": "countValueRoutine"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "CALL",
+        "routine": "countValueRoutine"
+      }
+    ],
+    "ship": true
+  },
+  "ship63": {
+    "type": "holder",
+    "id": "ship63",
+    "x": 1050,
+    "y": 396,
+    "width": 108,
+    "height": 108,
+    "scale": 0.5,
+    "z": 1212,
+    "inheritChildZ": true,
+    "dropLimit": 1,
+    "linkedToSeat": "seat6",
+    "onEnter": {
+      "activeFace": 1
+    },
+    "pid": 6,
+    "countValueRoutine": [
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "parent",
+        "value": [
+          "ship${PROPERTY pid}1",
+          "ship${PROPERTY pid}2",
+          "ship${PROPERTY pid}3",
+          "ship${PROPERTY pid}4",
+          "ship${PROPERTY pid}5",
+          "ship${PROPERTY pid}6"
+        ],
+        "relation": "in"
+      },
+      {
+        "func": "GET",
+        "property": "rank",
+        "aggregation": "sum"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "shipcount${PROPERTY pid}"
+        ],
+        "property": "text",
+        "value": "${rank}"
+      }
+    ],
+    "enterRoutine": [
+      {
+        "func": "CALL",
+        "routine": "countValueRoutine"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "CALL",
+        "routine": "countValueRoutine"
+      }
+    ],
+    "ship": true
+  },
+  "ship64": {
+    "type": "holder",
+    "id": "ship64",
+    "x": 1104,
+    "y": 396,
+    "width": 108,
+    "height": 108,
+    "scale": 0.5,
+    "z": 1212,
+    "inheritChildZ": true,
+    "dropLimit": 1,
+    "linkedToSeat": "seat6",
+    "onEnter": {
+      "activeFace": 1
+    },
+    "pid": 6,
+    "countValueRoutine": [
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "parent",
+        "value": [
+          "ship${PROPERTY pid}1",
+          "ship${PROPERTY pid}2",
+          "ship${PROPERTY pid}3",
+          "ship${PROPERTY pid}4",
+          "ship${PROPERTY pid}5",
+          "ship${PROPERTY pid}6"
+        ],
+        "relation": "in"
+      },
+      {
+        "func": "GET",
+        "property": "rank",
+        "aggregation": "sum"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "shipcount${PROPERTY pid}"
+        ],
+        "property": "text",
+        "value": "${rank}"
+      }
+    ],
+    "enterRoutine": [
+      {
+        "func": "CALL",
+        "routine": "countValueRoutine"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "CALL",
+        "routine": "countValueRoutine"
+      }
+    ],
+    "ship": true
+  },
+  "ship65": {
+    "type": "holder",
+    "id": "ship65",
+    "x": 1050,
+    "y": 450,
+    "width": 108,
+    "height": 108,
+    "scale": 0.5,
+    "z": 1212,
+    "inheritChildZ": true,
+    "dropLimit": 1,
+    "linkedToSeat": "seat6",
+    "onEnter": {
+      "activeFace": 1
+    },
+    "pid": 6,
+    "countValueRoutine": [
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "parent",
+        "value": [
+          "ship${PROPERTY pid}1",
+          "ship${PROPERTY pid}2",
+          "ship${PROPERTY pid}3",
+          "ship${PROPERTY pid}4",
+          "ship${PROPERTY pid}5",
+          "ship${PROPERTY pid}6"
+        ],
+        "relation": "in"
+      },
+      {
+        "func": "GET",
+        "property": "rank",
+        "aggregation": "sum"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "shipcount${PROPERTY pid}"
+        ],
+        "property": "text",
+        "value": "${rank}"
+      }
+    ],
+    "enterRoutine": [
+      {
+        "func": "CALL",
+        "routine": "countValueRoutine"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "CALL",
+        "routine": "countValueRoutine"
+      }
+    ],
+    "ship": true
+  },
+  "ship66": {
+    "type": "holder",
+    "id": "ship66",
+    "x": 1104,
+    "y": 450,
+    "width": 108,
+    "height": 108,
+    "scale": 0.5,
+    "z": 1212,
+    "inheritChildZ": true,
+    "dropLimit": 1,
+    "linkedToSeat": "seat6",
+    "onEnter": {
+      "activeFace": 1
+    },
+    "pid": 6,
+    "countValueRoutine": [
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "parent",
+        "value": [
+          "ship${PROPERTY pid}1",
+          "ship${PROPERTY pid}2",
+          "ship${PROPERTY pid}3",
+          "ship${PROPERTY pid}4",
+          "ship${PROPERTY pid}5",
+          "ship${PROPERTY pid}6"
+        ],
+        "relation": "in"
+      },
+      {
+        "func": "GET",
+        "property": "rank",
+        "aggregation": "sum"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "shipcount${PROPERTY pid}"
+        ],
+        "property": "text",
+        "value": "${rank}"
+      }
+    ],
+    "enterRoutine": [
+      {
+        "func": "CALL",
+        "routine": "countValueRoutine"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "CALL",
+        "routine": "countValueRoutine"
+      }
+    ],
+    "ship": true
+  },
+  "ship71": {
+    "type": "holder",
+    "id": "ship71",
+    "x": 1225,
+    "y": 339,
+    "width": 108,
+    "height": 108,
+    "scale": 0.5,
+    "z": 1212,
+    "inheritChildZ": true,
+    "dropLimit": 1,
+    "linkedToSeat": "seat7",
+    "onEnter": {
+      "activeFace": 1
+    },
+    "pid": 7,
+    "countValueRoutine": [
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "parent",
+        "value": [
+          "ship${PROPERTY pid}1",
+          "ship${PROPERTY pid}2",
+          "ship${PROPERTY pid}3",
+          "ship${PROPERTY pid}4",
+          "ship${PROPERTY pid}5",
+          "ship${PROPERTY pid}6"
+        ],
+        "relation": "in"
+      },
+      {
+        "func": "GET",
+        "property": "rank",
+        "aggregation": "sum"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "shipcount${PROPERTY pid}"
+        ],
+        "property": "text",
+        "value": "${rank}"
+      }
+    ],
+    "enterRoutine": [
+      {
+        "func": "CALL",
+        "routine": "countValueRoutine"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "CALL",
+        "routine": "countValueRoutine"
+      }
+    ],
+    "ship": true
+  },
+  "ship72": {
+    "type": "holder",
+    "id": "ship72",
+    "x": 1279,
+    "y": 339,
+    "width": 108,
+    "height": 108,
+    "scale": 0.5,
+    "z": 1212,
+    "inheritChildZ": true,
+    "dropLimit": 1,
+    "linkedToSeat": "seat7",
+    "onEnter": {
+      "activeFace": 1
+    },
+    "pid": 7,
+    "countValueRoutine": [
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "parent",
+        "value": [
+          "ship${PROPERTY pid}1",
+          "ship${PROPERTY pid}2",
+          "ship${PROPERTY pid}3",
+          "ship${PROPERTY pid}4",
+          "ship${PROPERTY pid}5",
+          "ship${PROPERTY pid}6"
+        ],
+        "relation": "in"
+      },
+      {
+        "func": "GET",
+        "property": "rank",
+        "aggregation": "sum"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "shipcount${PROPERTY pid}"
+        ],
+        "property": "text",
+        "value": "${rank}"
+      }
+    ],
+    "enterRoutine": [
+      {
+        "func": "CALL",
+        "routine": "countValueRoutine"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "CALL",
+        "routine": "countValueRoutine"
+      }
+    ],
+    "ship": true
+  },
+  "ship73": {
+    "type": "holder",
+    "id": "ship73",
+    "x": 1225,
+    "y": 393,
+    "width": 108,
+    "height": 108,
+    "scale": 0.5,
+    "z": 1212,
+    "inheritChildZ": true,
+    "dropLimit": 1,
+    "linkedToSeat": "seat7",
+    "onEnter": {
+      "activeFace": 1
+    },
+    "pid": 7,
+    "countValueRoutine": [
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "parent",
+        "value": [
+          "ship${PROPERTY pid}1",
+          "ship${PROPERTY pid}2",
+          "ship${PROPERTY pid}3",
+          "ship${PROPERTY pid}4",
+          "ship${PROPERTY pid}5",
+          "ship${PROPERTY pid}6"
+        ],
+        "relation": "in"
+      },
+      {
+        "func": "GET",
+        "property": "rank",
+        "aggregation": "sum"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "shipcount${PROPERTY pid}"
+        ],
+        "property": "text",
+        "value": "${rank}"
+      }
+    ],
+    "enterRoutine": [
+      {
+        "func": "CALL",
+        "routine": "countValueRoutine"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "CALL",
+        "routine": "countValueRoutine"
+      }
+    ],
+    "ship": true
+  },
+  "ship74": {
+    "type": "holder",
+    "id": "ship74",
+    "x": 1279,
+    "y": 393,
+    "width": 108,
+    "height": 108,
+    "scale": 0.5,
+    "z": 1212,
+    "inheritChildZ": true,
+    "dropLimit": 1,
+    "linkedToSeat": "seat7",
+    "onEnter": {
+      "activeFace": 1
+    },
+    "pid": 7,
+    "countValueRoutine": [
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "parent",
+        "value": [
+          "ship${PROPERTY pid}1",
+          "ship${PROPERTY pid}2",
+          "ship${PROPERTY pid}3",
+          "ship${PROPERTY pid}4",
+          "ship${PROPERTY pid}5",
+          "ship${PROPERTY pid}6"
+        ],
+        "relation": "in"
+      },
+      {
+        "func": "GET",
+        "property": "rank",
+        "aggregation": "sum"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "shipcount${PROPERTY pid}"
+        ],
+        "property": "text",
+        "value": "${rank}"
+      }
+    ],
+    "enterRoutine": [
+      {
+        "func": "CALL",
+        "routine": "countValueRoutine"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "CALL",
+        "routine": "countValueRoutine"
+      }
+    ],
+    "ship": true
+  },
+  "ship75": {
+    "type": "holder",
+    "id": "ship75",
+    "x": 1225,
+    "y": 447,
+    "width": 108,
+    "height": 108,
+    "scale": 0.5,
+    "z": 1212,
+    "inheritChildZ": true,
+    "dropLimit": 1,
+    "linkedToSeat": "seat7",
+    "onEnter": {
+      "activeFace": 1
+    },
+    "pid": 7,
+    "countValueRoutine": [
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "parent",
+        "value": [
+          "ship${PROPERTY pid}1",
+          "ship${PROPERTY pid}2",
+          "ship${PROPERTY pid}3",
+          "ship${PROPERTY pid}4",
+          "ship${PROPERTY pid}5",
+          "ship${PROPERTY pid}6"
+        ],
+        "relation": "in"
+      },
+      {
+        "func": "GET",
+        "property": "rank",
+        "aggregation": "sum"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "shipcount${PROPERTY pid}"
+        ],
+        "property": "text",
+        "value": "${rank}"
+      }
+    ],
+    "enterRoutine": [
+      {
+        "func": "CALL",
+        "routine": "countValueRoutine"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "CALL",
+        "routine": "countValueRoutine"
+      }
+    ],
+    "ship": true
+  },
+  "ship76": {
+    "type": "holder",
+    "id": "ship76",
+    "x": 1279,
+    "y": 447,
+    "width": 108,
+    "height": 108,
+    "scale": 0.5,
+    "z": 1212,
+    "inheritChildZ": true,
+    "dropLimit": 1,
+    "linkedToSeat": "seat7",
+    "onEnter": {
+      "activeFace": 1
+    },
+    "pid": 7,
+    "countValueRoutine": [
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "parent",
+        "value": [
+          "ship${PROPERTY pid}1",
+          "ship${PROPERTY pid}2",
+          "ship${PROPERTY pid}3",
+          "ship${PROPERTY pid}4",
+          "ship${PROPERTY pid}5",
+          "ship${PROPERTY pid}6"
+        ],
+        "relation": "in"
+      },
+      {
+        "func": "GET",
+        "property": "rank",
+        "aggregation": "sum"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "shipcount${PROPERTY pid}"
+        ],
+        "property": "text",
+        "value": "${rank}"
+      }
+    ],
+    "enterRoutine": [
+      {
+        "func": "CALL",
+        "routine": "countValueRoutine"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "CALL",
+        "routine": "countValueRoutine"
+      }
+    ],
+    "ship": true
+  },
+  "Score": {
+    "id": "Score",
+    "y": 761,
+    "width": 450,
+    "z": 440,
+    "css": {
+      "font-size": "20px",
+      "border": "1px solid black"
+    },
+    "html": "<table style='width: 100%; text-align:left'><tr><th>No. of Players</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><tr><td>1st Place</td><td>30</td><td>30</td><td>40</td><td>50</td><td>60</td></tr><tr><td>2nd place</td><td>15</td><td>20</td><td>30</td><td>40</td><td>50</td></tr></tr><tr><td>3rd Place</td><td></td><td>10</td><td>20</td><td>30</td><td>40</td></tr><tr><td>4th Place</td><td></td><td></td><td>10</td><td>20</td><td>30</td></tr><tr><td>5th Place</td><td></td><td></td><td></td><td>10</td><td>20</td></tr><tr><td>6th Place</td><td></td><td></td><td></td><td></td><td>10</td></tr></table>",
+    "movable": false,
+    "height": 200,
+    "x": 17
+  },
+  "f8fl": {
+    "type": "label",
+    "text": "Setup",
+    "css": {
+      "font-size": "30px",
+      "color": "white"
+    },
+    "height": 43,
+    "width": 111,
+    "y": 57,
+    "z": 1093,
+    "id": "f8fl",
+    "x": -172
+  },
+  "button-turn": {
+    "type": "button",
+    "id": "button-turn",
+    "x": -158,
+    "y": 689,
+    "z": 11132,
+    "text": "End Turn",
+    "clickRoutine": [
+      {
+        "func": "FOREACH",
+        "range": [
+          7
+        ],
+        "loopRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "bid-p${value}"
+            ],
+            "property": "text",
+            "value": 0
+          },
+          {
+            "func": "SELECT",
+            "property": "ship",
+            "value": true
+          },
+          {
+            "func": "SELECT",
+            "source": "DEFAULT",
+            "property": "pid",
+            "value": "${value}",
+            "collection": "ships"
+          },
+          {
+            "func": "GET",
+            "collection": "ships",
+            "property": "id",
+            "variable": "shipsID",
+            "aggregation": "array"
+          },
+          {
+            "func": "SELECT",
+            "type": "card",
+            "property": "parent",
+            "relation": "in",
+            "value": "${shipsID}"
+          },
+          {
+            "func": "COUNT"
+          },
+          {
+            "func": "IF",
+            "operand1": "${COUNT}",
+            "operand2": 6,
+            "thenRoutine": [
+              {
+                "func": "SET",
+                "collection": [
+                  "seat${value}"
+                ],
+                "property": "skipTurn",
+                "value": true
+              },
+              {
+                "func": "SET",
+                "collection": [
+                  "ready-p${value}"
+                ],
+                "property": "activeFace",
+                "value": 1
+              }
+            ],
+            "elseRoutine": [
+              {
+                "func": "SET",
+                "collection": [
+                  "ready-p${value}"
+                ],
+                "property": "activeFace",
+                "value": 0
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "TURN"
+      }
+    ]
+  },
+  "tempHolder": {
+    "type": "holder",
+    "id": "tempHolder",
+    "x": -174,
+    "y": 450,
+    "z": 1221,
+    "enterRoutine": [
+      {
+        "func": "FOREACH",
+        "collection": "child",
+        "loopRoutine": [
+          "var cardID = ${widgetID}",
+          {
+            "func": "FOREACH",
+            "range": [
+              6,
+              1,
+              -1
+            ],
+            "loopRoutine": [
+              {
+                "func": "COUNT",
+                "holder": "ship${seatIndex}${value}"
+              },
+              {
+                "func": "IF",
+                "operand1": "${COUNT}",
+                "operand2": 0,
+                "thenRoutine": [
+                  {
+                    "func": "MOVE",
+                    "collection": [
+                      "${cardID}"
+                    ],
+                    "to": "ship${seatIndex}${value}"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "discard": {
+    "type": "holder",
+    "id": "discard",
+    "x": 21,
+    "y": 620,
+    "width": 108,
+    "height": 108,
+    "z": 1217,
+    "inheritChildZ": true,
+    "onEnter": {
+      "activeFace": 0
+    }
+  },
+  "button-winner": {
+    "type": "button",
+    "id": "button-winner",
+    "x": 782,
+    "y": 887,
+    "z": 11133,
+    "css": {
+      "--wcMain": "green",
+      "--wcMainOH": "darkgreen",
+      "--wcBorder": "darkgreen",
+      "--wcBorderOH": "green"
+    },
+    "text": "Winner",
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "fields": [
+          {
+            "type": "title",
+            "text": "End the round"
+          },
+          {
+            "type": "subtitle",
+            "text": "This will update scores, move the auction cards, and change the turn. Only the auction winner should press this button. Are you sure?"
+          }
+        ]
+      },
+      "var bank = 'score-p' + ${seatIndex}",
+      "var bid = 'bid-p' + ${seatIndex}",
+      {
+        "func": "GET",
+        "collection": [
+          "${bank}"
+        ],
+        "property": "text",
+        "variable": "bankAmt"
+      },
+      {
+        "func": "GET",
+        "collection": [
+          "${bid}"
+        ],
+        "property": "text",
+        "variable": "bidAmt"
+      },
+      "var newBankAmt = ${bankAmt} - ${bidAmt}",
+      {
+        "func": "SET",
+        "collection": [
+          "${bank}"
+        ],
+        "property": "text",
+        "value": "${newBankAmt}"
+      },
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "parent",
+        "relation": "in",
+        "value": [
+          "auction1",
+          "auction2",
+          "auction3"
+        ]
+      },
+      {
+        "func": "MOVE",
+        "collection": "DEFAULT",
+        "to": "tempHolder"
+      },
+      {
+        "func": "CLICK",
+        "collection": [
+          "button-turn"
+        ]
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "display",
+        "value": false
+      }
+    ],
+    "display": false
+  },
+  "button-no-winner": {
+    "type": "button",
+    "id": "button-no-winner",
+    "x": 782,
+    "y": 887,
+    "z": 11133,
+    "css": {
+      "--wcMain": "black",
+      "--wcMainOH": "red",
+      "--wcBorder": "red",
+      "--wcBorderOH": "black"
+    },
+    "text": "No Winner",
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "fields": [
+          {
+            "type": "title",
+            "text": "End the round"
+          },
+          {
+            "type": "subtitle",
+            "text": "If nobody won the auction, this will discard the auction cards, and change the turn. Is that ok?"
+          }
+        ]
+      },
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "parent",
+        "relation": "in",
+        "value": [
+          "auction1",
+          "auction2",
+          "auction3"
+        ]
+      },
+      {
+        "func": "MOVE",
+        "collection": "DEFAULT",
+        "to": "discard"
+      },
+      {
+        "func": "CLICK",
+        "collection": [
+          "button-turn"
+        ]
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "display",
+        "value": false
+      }
+    ],
+    "display": false
+  },
+  "4ksu": {
+    "type": "pile",
+    "parent": "deck",
+    "x": 4,
+    "y": 4,
+    "width": 100,
+    "height": 100,
+    "id": "4ksu"
+  },
+  "RoundTotalp1": {
+    "type": "label",
+    "id": "RoundTotalp1",
+    "x": 243,
+    "y": 545,
+    "width": 140,
+    "movableInEdit": false,
+    "linkedToSeat": "seat1",
+    "text": "Round Total"
+  },
+  "RoundTotalp2": {
+    "type": "label",
+    "id": "RoundTotalp2",
+    "y": 545,
+    "width": 140,
+    "z": 1,
+    "movableInEdit": false,
+    "linkedToSeat": "seat2",
+    "text": "Round Total",
+    "x": 403
+  },
+  "RoundTotalp3": {
+    "type": "label",
+    "id": "RoundTotalp3",
+    "x": 572,
+    "y": 545,
+    "width": 140,
+    "z": 2,
+    "movableInEdit": false,
+    "linkedToSeat": "seat3",
+    "text": "Round Total"
+  },
+  "RoundTotalp4": {
+    "type": "label",
+    "id": "RoundTotalp4",
+    "x": 738,
+    "y": 545,
+    "width": 140,
+    "z": 3,
+    "movableInEdit": false,
+    "linkedToSeat": "seat4",
+    "text": "Round Total"
+  },
+  "RoundTotalp5": {
+    "type": "label",
+    "id": "RoundTotalp5",
+    "x": 892,
+    "y": 545,
+    "width": 140,
+    "z": 4,
+    "movableInEdit": false,
+    "linkedToSeat": "seat5",
+    "text": "Round Total"
+  },
+  "RoundTotalp6": {
+    "type": "label",
+    "id": "RoundTotalp6",
+    "x": 1063,
+    "y": 545,
+    "width": 140,
+    "z": 5,
+    "movableInEdit": false,
+    "linkedToSeat": "seat6",
+    "text": "Round Total"
+  },
+  "RoundTotalp7": {
+    "type": "label",
+    "id": "RoundTotalp7",
+    "x": 1238,
+    "y": 541,
+    "width": 140,
+    "z": 6,
+    "movableInEdit": false,
+    "linkedToSeat": "seat7",
+    "text": "Round Total"
+  }
+}
