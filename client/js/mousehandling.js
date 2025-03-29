@@ -20,6 +20,7 @@ function eventCoords(name, e) {
 }
 
 async function inputHandler(name, e) {
+  if(e.button == 2) return;
   const isMiddleMouseButton = name.startsWith('mouse') && e.button == 1;
   if(edit && !isMiddleMouseButton && editInputHandler(name, e))
     return;
