@@ -1124,6 +1124,7 @@ function jeAddCommands() {
   widgetTypes.push(jeAddWidgetPropertyCommands(new Seat(), widgetBase));
   widgetTypes.push(jeAddWidgetPropertyCommands(new Spinner(), widgetBase));
   widgetTypes.push(jeAddWidgetPropertyCommands(new Timer(), widgetBase));
+  widgetTypes.push(jeAddWidgetPropertyCommands(new Zoomy(), widgetBase));
 
   jeAddRoutineOperationCommands('AUDIO', { source: '', maxVolume: 1.0, length: null, player: null, silence: false, count: 1 });
   jeAddRoutineOperationCommands('CALL', { widget: 'id', routine: 'clickRoutine', return: true, arguments: {}, variable: 'result' });

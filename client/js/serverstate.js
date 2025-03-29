@@ -82,6 +82,8 @@ export function addWidget(widget, instance) {
     w = new Spinner(id);
   } else if(widget.type == 'timer') {
     w = new Timer(id);
+  } else if(widget.type == 'zoomy') {
+    w = new Zoomy(id);
   } else {
     w = new BasicWidget(id);
   }

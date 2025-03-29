@@ -72,6 +72,7 @@ export default async function minifyHTML() {
     'client/js/widgets/seat.js',
     'client/js/widgets/spinner.js',
     'client/js/widgets/timer.js',
+    'client/js/widgets/zoomy.js',
 
     'client/js/main.js'
   ]);
