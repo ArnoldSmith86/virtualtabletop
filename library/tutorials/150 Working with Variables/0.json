@@ -1,0 +1,265 @@
+{
+  "_meta": {
+    "version": 17,
+    "info": {
+      "name": "150 Working with Variables",
+      "image": "/assets/1807710996_5541",
+      "rules": "",
+      "bgg": "",
+      "year": "",
+      "mode": "Tutorial",
+      "time": "",
+      "attribution": "",
+      "lastUpdate": 1743395157032,
+      "showName": false,
+      "skill": "",
+      "description": "",
+      "variantImage": "",
+      "variant": "",
+      "language": "en-US",
+      "players": "1",
+      "similarImage": "",
+      "similarName": "",
+      "similarDesigner": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": ""
+    }
+  },
+  "title": {
+    "id": "title",
+    "x": 400,
+    "y": -2,
+    "width": 800,
+    "height": 60,
+    "z": 74,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "font-size: 60px;text-align:center",
+    "text": "Working with Variables"
+  },
+  "button2": {
+    "type": "button",
+    "id": "button2",
+    "x": 416,
+    "y": 402,
+    "z": 22839,
+    "clickRoutine": [
+      "// Basic math examples",
+      "var add = 100 + 10",
+      "var subtract = ${add} - 60",
+      "var divide = ${subtract} / 2",
+      "var multiply = ${divide} * -4",
+      "// Or that could all be done on one line",
+      "var combo = (${add} - 60 ) / 2 * -4",
+      "// More advanced math features",
+      "var absMultiply1 = abs ${multiply}",
+      "// The same thing can be written this way",
+      "var absMultiply2 = ${multiply} abs",
+      "// More advanced math features",
+      "var sign = sign ${multiply}",
+      "var sign2 = sign ${absMultiply1}",
+      "// Note that the following does not work. Stringing together anything other than basic math or logical comparisons will give an error.",
+      "var sign3 = sign ${absMultiply2} + 1",
+      "// Generate a random number between 1 and 100",
+      "var random = randInt 1 100",
+      "// Some basic alphanumeric comparisons",
+      "var bigger1 = 'z' > 'a'",
+      "var bigger2 = 'a' > 'z'",
+      "var smaller1 = 100 < 1000",
+      "var smaller2 = 100 < ${absMultiply1}",
+      "// And some logical comparisons",
+      "var logicalAnd = ${bigger1} && ${bigger2}",
+      "var logicalOr = ${bigger1} || ${bigger2}"
+    ],
+    "text": "Math & Comparisons",
+    "css": {
+      "font-size": "13px"
+    }
+  },
+  "overview": {
+    "id": "overview",
+    "x": 108,
+    "y": 80,
+    "width": 1400,
+    "height": 150,
+    "layer": -3,
+    "z": 129,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "font-size: 25px; ",
+    "html": "Refer back to the <a href='https://virtualtabletop.io/tutorial/variables-and-collections'>130 Variables and Collections tutorial</a> for information about the purpose of variables, their limitations, and how to create them. This tutorial is an overview of methods of how to modify and use variables in routines. Additional information is also available in the <a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Dynamic-Expressions'>Dynamic Expressions wiki</a> and the <a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Computations'>Computations wiki</a>.\n\nOther than the basic dynamic expressions described in the button on the left below, VTT supports many types of computations. The buttons are just a brief into into these concepts. Those operations generally use one of these formats: </p><ul><li><b>var a = <u>operation</u> operand1</b> or <b>operand1 <u>operation</u></b></li><li><b>var b = operand1 <u>operation</u> operand2 [operand3]</b> or <b>var c = <u>operation</u> operand1 operand2 [operand3]</b></li><li><b>var c = operand1 <u>operation1</u> operand2 <u>operation2</u> operand3 <u>operation3</u> operand4</b> (& etc. for most math and comparisons)</li></ul>"
+  },
+  "button3": {
+    "type": "button",
+    "id": "button3",
+    "x": 743,
+    "y": 402,
+    "z": 22840,
+    "clickRoutine": [
+      "// Some simple example string operations",
+      "var fox = 'the quick brown fox jumped over the lazy dog back'",
+      "var character = ${fox} charAt 8",
+      "var includes1 = ${fox} includes 's'",
+      "var includes2 = ${fox} includes 'k'",
+      "var length = length ${fox}",
+      "var shuffle = shuffle ${fox}",
+      "// Remember in the examples above, it does not matter if the operation or the operand is listed first",
+      "// For operations that use 3 operands, the operation must go first or between the first and second operands. The order of the operands matter. For example in the following, a slice of the `fox` variable is extracted from the 10th position to the 15th.",
+      "var slice = slice ${fox} 10 15"
+    ],
+    "text": "Strings"
+  },
+  "button4": {
+    "type": "button",
+    "id": "button4",
+    "x": 1062,
+    "y": 402,
+    "z": 22840,
+    "clickRoutine": [
+      "// Some simple example array operations. First we make a string variable (aString) and an array made of of strings (aArray).",
+      {
+        "func": "VAR",
+        "variables": {
+          "aString": "this is a string",
+          "aArray": [
+            "delta",
+            "charlie",
+            "bravo",
+            "alpha"
+          ]
+        }
+      },
+      "// Now check whether the variables are strings and what their length is.",
+      "var isArray1 = ${aString} isArray",
+      "var isArray2 = ${aArray} isArray",
+      "var length1 = ${aString} length",
+      "var length2 = ${aArray} length",
+      "var sort2 = sort ${aArray}",
+      "// Note that the following sort on a string does not work",
+      "var sort1 = sort ${aString}"
+    ],
+    "text": "Arrays"
+  },
+  "button5": {
+    "type": "button",
+    "id": "button5",
+    "x": 1386,
+    "y": 402,
+    "z": 11,
+    "clickRoutine": [
+      "// Use color functions to swap between hex and RGB formats",
+      "var aColor = 'rgb(0, 128, 128)'",
+      "var red = '#FF0000' colorToRGB",
+      "var teal = ${aColor} colorToHex",
+      "// Color functions can work with contrast, hue, and luminance so that color work will with each other or contrast from each other. For example, will white or black text be the easiest to read when on top of the previous colors? For red, it will be black, but for teal, it is white.",
+      "var bestContrast1 = ${red} colorContrast",
+      "var bestContrast2 = ${teal} colorContrast",
+      "// The JSON Operations are fairly advanced concepts and work with JSON objects. But just to give you an example, the `fetch` and `jsonParse` operations below work on whatever module is currently loaded in the Tutorials webpage. That will be this module if you are at the url, but could be something else if you are viewing this tutorial in another room.",
+      "var json = fetch 'https://virtualtabletop.io/state/Tutorials'",
+      "var parsed = jsonParse ${json} "
+    ],
+    "text": "Color & JSON"
+  },
+  "text1": {
+    "id": "text1",
+    "x": 4,
+    "y": 552,
+    "width": 300,
+    "z": 185,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "22px"
+    },
+    "html": "The most basic way of modifying and using variables is to use one variable in the context of another variable or dynamic expression. See the button for examples."
+  },
+  "button1": {
+    "type": "button",
+    "id": "button1",
+    "x": 95,
+    "y": 402,
+    "z": 22841,
+    "clickRoutine": [
+      "// Look at the four dynamic expressions below. What do you think the value of  the variable `end` will be? Click and look at the debug to find out.",
+      "var start = 1",
+      "var middle = 500",
+      "var something = 'end'",
+      "var $something = 1000",
+      "// The second expression creates a variable `something` equal to the string `end`. The next expression the value of the `something` variable (end) and sets it to be equal to 1000. Thus a new variable is created (end) with a value (1000).",
+      "// Remember that the VAR function can create multiple variables at the same time and can direclty create arrays and objects. The one below creates the `demoArray` array consisting of 4 values in index positiions 0,1,2,3.",
+      {
+        "func": "VAR",
+        "variables": {
+          "demoArray": [
+            10,
+            20,
+            30,
+            40
+          ]
+        }
+      },
+      "// The variable declaration involving an array can also direclty access the value at the given index position. For example `anIndexValue` and `anotherIndexValue` are equal to 20. In the first case because the index position is explicity 1. In the second case because the value of the variable `start` is also 1 because it was created earlier in the routine.",
+      "var anIndexValue = ${demoArray.1}",
+      "var anotherIndexValue = ${demoArray.$start}",
+      "// That is useful for obtaining a given index value. What if we want to just change one value?",
+      "var demoArray.$start = 200",
+      "// Above we changed, and not just read, the demoArray variable. The index at position 1 is now 200.  This does NOT change the already created values for `anIndexValue` or `anotherIndexValue. In the debugger, you can see what their values are at this point.",
+      "// But if we redeclare `anIndexValue`, then it will have changed.",
+      "var anIndexValue = ${demoArray.1}"
+    ],
+    "text": "var &\nVAR"
+  },
+  "text2": {
+    "id": "text2",
+    "x": 325,
+    "y": 552,
+    "width": 300,
+    "z": 121,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "22px"
+    },
+    "html": "Math functions do basic things like adding, subtracting, multiplying and dividing. They also include trigonometric functions, absolute values, max/min, etc. Comparison operations include concepts such as greater than, less than, and not equal to as well as logical (AND, OR, NOT) comparisons. Comparisons give either a true or false value. More at <a href='https://virtualtabletop.io/tutorial/math'>Math tutorial</a> (<a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Computations#mathematical-functions-and-constants'>wiki</a>) and <a href='https://virtualtabletop.io/tutorial/comparisons'>Comparisons tutorial</a> (<a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Computations#comparison-operations'>wiki</a>). A few examples are in the button above."
+  },
+  "text3": {
+    "id": "text3",
+    "x": 651,
+    "y": 552,
+    "width": 300,
+    "z": 9732,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "22px"
+    },
+    "html": "String operations can create, read, and modify strings. More at <a href='https://virtualtabletop.io/tutorial/strings'>Strings tutorial</a> (<a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Computations#string-operations'>wiki</a>). A few examples are in the button above."
+  },
+  "text4": {
+    "id": "text4",
+    "x": 964,
+    "y": 552,
+    "width": 300,
+    "z": 9732,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "22px"
+    },
+    "html": "Array operations can create, read, and modify arrays. These same operations also work on strings. More at <a href='https://virtualtabletop.io/tutorial/arrays'>Arrays tutorial</a> (<a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Computations#array-operations'>wiki</a>). A few examples are in the button above.\n\nObjects work similarly to arrays, but are more complicated and outside the scope of the tutorial. See the <a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Dynamic-Expressions#complex-objects'>Complex Objects wiki</a>) for examples."
+  },
+  "text5": {
+    "id": "text5",
+    "x": 1294,
+    "y": 552,
+    "width": 300,
+    "z": 9732,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "22px"
+    },
+    "html": "Color operations are useful for converting color formats or creating colors that contrast with each other to ensure text is readable. For example, seats do this automatically. The JSON operations are useful with working with JSON data in another room or outside of VTT entirely. More at <a href='https://virtualtabletop.io/tutorial/color'>Color tutorial</a> (<a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Computations#color-operations'>wiki</a>) and <a href='https://virtualtabletop.io/tutorial/json-operations'>JSON Operations tutorial</a> (<a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Computations#json-operations'>wiki</a>). A few examples are in the button above."
+  }
+}
