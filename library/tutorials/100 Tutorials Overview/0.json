@@ -10,7 +10,7 @@
       "mode": "Tutorial",
       "time": "",
       "attribution": "",
-      "lastUpdate": 1743474623328,
+      "lastUpdate": 1743528989286,
       "showName": false,
       "skill": "",
       "description": "",
@@ -62,7 +62,7 @@
     "css": {
       "font-size": "22px"
     },
-    "html": "At the beginning of the tutorials are a few that cover basic but important concepts in using JSON to create games on VTT. You should look at all of these first and in order. They are numbered for reference.\n\n100 Tutorials Overview\n110 Widget Types\n120 Widget Properties Overview\n121 Fundamental Widget Properties\n130 Variables and Collections\n140 Functions Overview\n150 Working with Variables"
+    "html": "At the beginning of the tutorials are a few that cover basic but important concepts in using JSON to create games on VTT. You should look at all of these first and in order. They are numbered for reference.\n\n100 Tutorials Overview\n110 Widget Types\n120 Widget Properties Overview\n121 Fundamental Widget Properties\n130 Variables and Collections\n131 Working with Variables\n140 Functions Overview"
   },
   "text2": {
     "id": "text2",
