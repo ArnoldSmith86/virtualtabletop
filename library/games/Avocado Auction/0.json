@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "version": 15,
+    "version": 17,
     "info": {
       "name": "Avocado Auction",
       "image": "/assets/623154753_148698",
@@ -10,7 +10,7 @@
       "mode": "vs",
       "time": "10",
       "attribution": "Room design and layout by LawDawg96. Released to the Public Domain under CC0.<div><br></div><div>The images are available under the Pixabay license:</div><div><div><ul><li><span style=\"color: var(--overlayFontColor);\">Avocado button by cvalerama at https://pixabay.com/vectors/avocado-vegetable-drawing-5984252/</span></li><li>Avocado background by imagine1883 at https://pixabay.com/illustrations/avocado-organic-healthy-food-8718834/</li></ul></div><div><br></div></div>",
-      "lastUpdate": 1718813447706,
+      "lastUpdate": 1743369897946,
       "showName": true,
       "skill": "",
       "description": "Collect the most avocados using secret bidding. You can bid any amount, even if you do not have any avocados. But if the highest bidder cannot pay the difference between that bid and the next highest, they lose all their avocados. The first player to collect 200 avocados wins.",
@@ -19,358 +19,12 @@
       "similarDesigner": "Mads Emil Christensen",
       "similarAwards": "",
       "ruleText": "",
-      "helpText": "Players sit in seats. When ready, press the&nbsp;<i class=\"richtextSymbol material-icons\">restart_alt</i>&nbsp;button in the upper right.<div><br></div><div>Press the&nbsp;<i style=\"color: var(--overlayFontColor);\" class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/guard13007/play-button.svg\"></i><span style=\"color: var(--overlayFontColor);\">button to begin the auction cycle. Each player enters a secret bid by typing into the label or pressing the red and green + and - buttons above the seats. When the bid is complete, press the green&nbsp;</span><i style=\"color: var(--overlayFontColor);\" class=\"richtextSymbol material-icons\">check_circle</i><span style=\"color: var(--overlayFontColor);\">&nbsp;button and the seat details change to indicate the player has bid.</span></div><div><br></div><div>Once all players have bid, press the&nbsp;<i style=\"color: var(--overlayFontColor);\" class=\"richtextSymbol material-icons\">remove_red_eye</i><span style=\"color: var(--overlayFontColor);\">&nbsp;button. The highest bids are highlighted in a solid green border. The next highest bids are highlighted in a dashed light green border. Bids in which the bonus cannot be paid are highlighted in a dotted red border.</span></div><div><br></div><div>Press the&nbsp;<i style=\"color: var(--overlayFontColor);\" class=\"richtextSymbol material-icons\">scoreboard</i><span style=\"color: var(--overlayFontColor);\">&nbsp;button to automatically update the stash values.</span></div><div><br></div><div>Press the&nbsp;<span style=\"color: var(--overlayFontColor);\" class=\"richtextSymbol gameicons\"><img src=\"https://virtualtabletop.io/i/game-icons.net/guard13007/play-button.svg\"></span><span style=\"color: var(--overlayFontColor);\">button</span>&nbsp;to begin a new auction.</div>",
-      "players": "2-6",
-      "language": "",
+      "helpText": "Players sit in seats. When ready, press the&nbsp;<i class=\"richtextSymbol material-symbols\">restart_alt</i>&nbsp;button in the upper right.<div><br></div><div>Press the&nbsp;<i style=\"color: var(--overlayFontColor);\" class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/guard13007/play-button.svg\"></i><span style=\"color: var(--overlayFontColor);\">button to begin the auction cycle. Each player enters a secret bid by typing into the label or pressing the red and green + and - buttons above the seats. When the bid is complete, press the green&nbsp;</span><i style=\"color: var(--overlayFontColor);\" class=\"richtextSymbol material-symbols\">check_circle</i><span style=\"color: var(--overlayFontColor);\">&nbsp;button and the seat details change to indicate the player has bid.</span></div><div><br></div><div>Once all players have bid, press the&nbsp;<i style=\"color: var(--overlayFontColor);\" class=\"richtextSymbol material-symbols\">remove_red_eye</i><span style=\"color: var(--overlayFontColor);\">&nbsp;button. The highest bids are highlighted in a solid green border. The next highest bids (or tied highest bids) are highlighted in a dashed light green border. Bids in which the bonus cannot be paid are highlighted in a dotted red border.</span></div><div><br></div><div>Press the&nbsp;<i style=\"color: var(--overlayFontColor);\" class=\"richtextSymbol material-symbols\">scoreboard</i><span style=\"color: var(--overlayFontColor);\">&nbsp;button to automatically update the stash values.</span></div><div><br></div><div>Press the&nbsp;<span style=\"color: var(--overlayFontColor);\" class=\"richtextSymbol gameicons\"><img src=\"https://virtualtabletop.io/i/game-icons.net/guard13007/play-button.svg\"></span><span style=\"color: var(--overlayFontColor);\">button</span>&nbsp;to begin a new auction.</div>",
+      "variantImage": "",
       "variant": "",
-      "variantImage": ""
+      "language": "",
+      "players": "2-6"
     }
-  },
-  "seat1": {
-    "type": "seat",
-    "id": "seat1",
-    "x": 160,
-    "y": 622,
-    "width": 172,
-    "height": 48,
-    "borderRadius": 8,
-    "css": {
-      "default": {
-        "cursor": "pointer",
-        "gap": "5px",
-        "font-size": "21px",
-        "box-shadow": "0 2px 5px #00000066",
-        "text-shadow": "${PROPERTY textShadowDistance}px ${PROPERTY textShadowDistance}px ${PROPERTY textShadowBlur}px ${PROPERTY outlineColor}, -${PROPERTY textShadowDistance}px ${PROPERTY textShadowDistance}px ${PROPERTY textShadowBlur}px ${PROPERTY outlineColor}, ${PROPERTY textShadowDistance}px -${PROPERTY textShadowDistance}px ${PROPERTY textShadowBlur}px ${PROPERTY outlineColor}, -${PROPERTY textShadowDistance}px -${PROPERTY textShadowDistance}px ${PROPERTY textShadowBlur}px ${PROPERTY outlineColor}",
-        "background": "${PROPERTY mainColor}",
-        "color": "white",
-        "border": "${PROPERTY textShadowDistance}px solid ${PROPERTY outlineColor}",
-        "box-sizing": "border-box"
-      },
-      ".seated.turn": {
-        "box-shadow": "0px 0px 20px 5px ${PROPERTY glowColor}"
-      },
-      ".seated.turn::after": {
-        "xcontent": "'Active Player'",
-        "content": "'url('/assets/1421287058_6465')'",
-        "font-size": "18px",
-        "line-height": "1em",
-        "white-space": "wrap",
-        "background-color": "${PROPERTY outlineColor}",
-        "border": "${PROPERTY textShadowDistance}px solid ${PROPERTY mainColor}",
-        "background-size": "200% auto",
-        "color": "${PROPERTY mainColor}",
-        "text-shadow": "0 1px 5px #000000cc",
-        "width": "1em",
-        "height": "1em",
-        "text-align": "center",
-        "text-transform": "uppercase",
-        "position": "absolute",
-        "right": "-12px",
-        "top": "-12px",
-        "padding": "2px",
-        "border-radius": "100px",
-        "box-shadow": "0 0 5px #000000bb",
-        "pointer-events": "none"
-      }
-    },
-    "hand": "hand1",
-    "hideWhenUnused": true,
-    "colorArray": [
-      "#000000",
-      "#dddddd",
-      "#f44336",
-      "#f06292",
-      "#9c27b0",
-      "#3f51b5",
-      "#1976d2",
-      "#00bcd4",
-      "#009688",
-      "#4caf50",
-      "#8bc34a",
-      "#cddc39",
-      "#ffeb3b",
-      "#ffc107",
-      "#ff9800",
-      "#bf360c",
-      "#795548",
-      "#607d8b"
-    ],
-    "colorContrast": "#000000",
-    "mainColor": "#dddddd",
-    "outlineColor": "#000000bb",
-    "score": [],
-    "textColor": "#000000",
-    "textShadowBlur": 2,
-    "textShadowDistance": 2,
-    "clickRoutine": [
-      {
-        "func": "CALL",
-        "routine": "useSeatRoutine"
-      },
-      "var playerColor = ${result.0}",
-      "var playerName = ${result.1}"
-    ],
-    "colorChangeRoutine": [
-      {
-        "func": "SET",
-        "collection": [
-          "marker${PROPERTY index}"
-        ],
-        "property": "color",
-        "value": "${PROPERTY color}"
-      }
-    ],
-    "markerColorRoutine": [
-      "// Sets the colors on the markers and climbers",
-      "var markerContrast = ${PROPERTY mainColor} colorContrast 0.15",
-      {
-        "func": "SELECT",
-        "property": "parent",
-        "value": "climberHolder${PROPERTY index}"
-      },
-      {
-        "func": "SET",
-        "property": "bgColor1",
-        "value": "${PROPERTY mainColor}"
-      },
-      {
-        "func": "SET",
-        "property": "bgColor2",
-        "value": "${markerContrast}"
-      },
-      {
-        "func": "SELECT",
-        "property": "parent",
-        "value": "markerHolder${PROPERTY index}"
-      },
-      {
-        "func": "SET",
-        "property": "bgColor",
-        "value": "${PROPERTY mainColor}"
-      }
-    ],
-    "useSeatRoutine": [
-      "// Customized seat color and options routine",
-      "var leaveSeat = false",
-      "var name = ${PROPERTY player}",
-      "var color = ${PROPERTY color}",
-      "var result = []",
-      "var colorArray = ${PROPERTY colorArray}",
-      "var colorList = ${colorArray} indexOf ${playerColor}",
-      {
-        "func": "IF",
-        "operand1": "${colorList}",
-        "relation": ">",
-        "operand2": "-1",
-        "elseRoutine": [
-          "var playerColor = ${colorArray.0}"
-        ]
-      },
-      {
-        "func": "IF",
-        "operand1": "${PROPERTY player}",
-        "relation": "==",
-        "operand2": "",
-        "thenRoutine": [
-          {
-            "func": "INPUT",
-            "header": "Enter your name and choice of player color.",
-            "fields": [
-              {
-                "type": "string",
-                "label": "Your Name:",
-                "variable": "name",
-                "value": "${playerName}"
-              },
-              {
-                "type": "palette",
-                "label": "Your Color:",
-                "colors": "${PROPERTY colorArray}",
-                "variable": "color",
-                "value": "${playerColor}"
-              }
-            ]
-          }
-        ],
-        "elseRoutine": [
-          {
-            "func": "IF",
-            "operand1": "${PROPERTY player}",
-            "relation": "==",
-            "operand2": "${playerName}",
-            "thenRoutine": [
-              {
-                "func": "INPUT",
-                "header": "Enter your name and choice of player color.",
-                "fields": [
-                  {
-                    "type": "string",
-                    "label": "Your Name:",
-                    "variable": "name",
-                    "value": "${playerName}"
-                  },
-                  {
-                    "type": "palette",
-                    "label": "Your Color:",
-                    "colors": "${PROPERTY colorArray}",
-                    "variable": "color",
-                    "value": "${playerColor}"
-                  },
-                  {
-                    "type": "subtitle",
-                    "text": "All done?",
-                    "css": "background-color: var(--VTTblue);color:white;"
-                  },
-                  {
-                    "type": "checkbox",
-                    "label": "Stand up from seat",
-                    "variable": "leaveSeat",
-                    "value": false
-                  }
-                ]
-              }
-            ],
-            "elseRoutine": [
-              {
-                "func": "INPUT",
-                "header": "Are you sure you want to remove ${PROPERTY player} from this seat?",
-                "cancelButtonText": "Cancel",
-                "confirmButtonText": "Okay",
-                "fields": [
-                  {
-                    "type": "checkbox",
-                    "label": "Remove this player from their seat",
-                    "variable": "leaveSeat",
-                    "value": false
-                  }
-                ]
-              }
-            ]
-          }
-        ]
-      },
-      {
-        "func": "IF",
-        "condition": "${leaveSeat}",
-        "thenRoutine": [
-          {
-            "func": "SET",
-            "collection": "thisButton",
-            "property": "color",
-            "value": null
-          },
-          {
-            "func": "SET",
-            "collection": "thisButton",
-            "property": "player",
-            "value": ""
-          }
-        ],
-        "elseRoutine": [
-          "var updatePlayerandColor = false",
-          {
-            "func": "IF",
-            "operand1": "${PROPERTY player}",
-            "relation": "==",
-            "operand2": "${playerName}",
-            "thenRoutine": [
-              "var updatePlayerandColor = true"
-            ]
-          },
-          {
-            "func": "IF",
-            "operand1": "${PROPERTY player}",
-            "relation": "==",
-            "operand2": "",
-            "thenRoutine": [
-              "var updatePlayerandColor = true"
-            ]
-          },
-          {
-            "func": "IF",
-            "condition": "${name}",
-            "elseRoutine": [
-              "var updatePlayerandColor = false"
-            ]
-          },
-          {
-            "func": "IF",
-            "condition": "${updatePlayerandColor}",
-            "thenRoutine": [
-              {
-                "func": "SET",
-                "collection": "thisButton",
-                "property": "color",
-                "value": "${color}"
-              },
-              "var result = push ${color}",
-              {
-                "func": "SET",
-                "collection": "thisButton",
-                "property": "player",
-                "value": "${name}"
-              },
-              "var result = push ${name}",
-              {
-                "func": "SET",
-                "collection": "thisButton",
-                "property": "mainColor",
-                "value": "${result.0}"
-              },
-              "var newText = colorContrast ${PROPERTY mainColor}",
-              "var newGlow = colorContrast ${PROPERTY mainColor} 0.3",
-              {
-                "func": "SET",
-                "collection": "thisButton",
-                "property": "textColor",
-                "value": "${newText}"
-              },
-              {
-                "func": "SET",
-                "collection": "thisButton",
-                "property": "glowColor",
-                "value": "${newGlow}"
-              },
-              {
-                "func": "CALL",
-                "routine": "markerColorRoutine"
-              }
-            ]
-          }
-        ]
-      },
-      {
-        "func": "IF",
-        "operand1": "${PROPERTY player}",
-        "relation": "==",
-        "operand2": "",
-        "thenRoutine": [
-          {
-            "func": "SET",
-            "collection": "thisButton",
-            "property": "mainColor",
-            "value": "#dddddd"
-          },
-          {
-            "func": "SET",
-            "collection": "thisButton",
-            "property": "textColor",
-            "value": "#000000"
-          },
-          {
-            "func": "SET",
-            "collection": "thisButton",
-            "property": "glowColor",
-            "value": null
-          },
-          {
-            "func": "CALL",
-            "routine": "markerColorRoutine"
-          }
-        ],
-        "elseRoutine": []
-      }
-    ]
   },
   "seat2": {
     "type": "seat",
@@ -2541,7 +2195,7 @@
         "transition": "linear 0.75s"
       }
     },
-    "classes": "material-icons",
+    "classes": "material-symbols",
     "scale": 0
   },
   "startAuctionButton": {
@@ -2680,7 +2334,7 @@
         "transition": "linear 0.75s"
       }
     },
-    "classes": "material-icons",
+    "classes": "material-symbols",
     "scale": 0
   },
   "storage1": {
@@ -3312,7 +2966,7 @@
               "boat${maxBidBoat}"
             ],
             "property": "bgStyle",
-            "value": "solid green"
+            "value": "dashed lightgreen"
           }
         ]
       }
@@ -3334,7 +2988,7 @@
         "transition": "linear 0.75s"
       }
     },
-    "classes": "material-icons",
+    "classes": "material-symbols",
     "scale": 0
   },
   "score+10": {
@@ -3767,5 +3421,351 @@
     "y": -5,
     "z": 3,
     "movable": false
+  },
+  "seat1": {
+    "type": "seat",
+    "id": "seat1",
+    "x": 160,
+    "y": 622,
+    "width": 172,
+    "height": 48,
+    "borderRadius": 8,
+    "css": {
+      "default": {
+        "cursor": "pointer",
+        "gap": "5px",
+        "font-size": "21px",
+        "box-shadow": "0 2px 5px #00000066",
+        "text-shadow": "${PROPERTY textShadowDistance}px ${PROPERTY textShadowDistance}px ${PROPERTY textShadowBlur}px ${PROPERTY outlineColor}, -${PROPERTY textShadowDistance}px ${PROPERTY textShadowDistance}px ${PROPERTY textShadowBlur}px ${PROPERTY outlineColor}, ${PROPERTY textShadowDistance}px -${PROPERTY textShadowDistance}px ${PROPERTY textShadowBlur}px ${PROPERTY outlineColor}, -${PROPERTY textShadowDistance}px -${PROPERTY textShadowDistance}px ${PROPERTY textShadowBlur}px ${PROPERTY outlineColor}",
+        "background": "${PROPERTY mainColor}",
+        "color": "white",
+        "border": "${PROPERTY textShadowDistance}px solid ${PROPERTY outlineColor}",
+        "box-sizing": "border-box"
+      },
+      ".seated.turn": {
+        "box-shadow": "0px 0px 20px 5px ${PROPERTY glowColor}"
+      },
+      ".seated.turn::after": {
+        "xcontent": "'Active Player'",
+        "content": "'!'",
+        "font-size": "18px",
+        "line-height": "1em",
+        "white-space": "wrap",
+        "background-color": "${PROPERTY outlineColor}",
+        "border": "${PROPERTY textShadowDistance}px solid ${PROPERTY mainColor}",
+        "background-size": "200% auto",
+        "color": "${PROPERTY mainColor}",
+        "text-shadow": "0 1px 5px #000000cc",
+        "width": "1em",
+        "height": "1em",
+        "text-align": "center",
+        "text-transform": "uppercase",
+        "position": "absolute",
+        "right": "-12px",
+        "top": "-12px",
+        "padding": "2px",
+        "border-radius": "100px",
+        "box-shadow": "0 0 5px #000000bb",
+        "pointer-events": "none"
+      }
+    },
+    "hand": "hand7",
+    "hideWhenUnused": true,
+    "colorArray": [
+      "#000000",
+      "#dddddd",
+      "#f44336",
+      "#f06292",
+      "#9c27b0",
+      "#3f51b5",
+      "#1976d2",
+      "#00bcd4",
+      "#009688",
+      "#4caf50",
+      "#8bc34a",
+      "#cddc39",
+      "#ffeb3b",
+      "#ffc107",
+      "#ff9800",
+      "#bf360c",
+      "#795548",
+      "#607d8b"
+    ],
+    "colorContrast": "#000000",
+    "mainColor": "#dddddd",
+    "outlineColor": "#000000bb",
+    "score": [],
+    "textColor": "#000000",
+    "textShadowBlur": 2,
+    "textShadowDistance": 2,
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "routine": "useSeatRoutine"
+      },
+      "var playerColor = ${result.0}",
+      "var playerName = ${result.1}"
+    ],
+    "colorChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": [
+          "marker${PROPERTY index}"
+        ],
+        "property": "color",
+        "value": "${PROPERTY color}"
+      }
+    ],
+    "markerColorRoutine": [
+      "// Sets the colors on the markers and climbers",
+      "var markerContrast = ${PROPERTY mainColor} colorContrast 0.15",
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "climberHolder${PROPERTY index}"
+      },
+      {
+        "func": "SET",
+        "property": "bgColor1",
+        "value": "${PROPERTY mainColor}"
+      },
+      {
+        "func": "SET",
+        "property": "bgColor2",
+        "value": "${markerContrast}"
+      },
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "markerHolder${PROPERTY index}"
+      },
+      {
+        "func": "SET",
+        "property": "bgColor",
+        "value": "${PROPERTY mainColor}"
+      }
+    ],
+    "useSeatRoutine": [
+      "// Customized seat color and options routine",
+      "var leaveSeat = false",
+      "var name = ${PROPERTY player}",
+      "var color = ${PROPERTY color}",
+      "var result = []",
+      "var colorArray = ${PROPERTY colorArray}",
+      "var colorList = ${colorArray} indexOf ${playerColor}",
+      {
+        "func": "IF",
+        "operand1": "${colorList}",
+        "relation": ">",
+        "operand2": "-1",
+        "elseRoutine": [
+          "var playerColor = ${colorArray.0}"
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY player}",
+        "relation": "==",
+        "operand2": "",
+        "thenRoutine": [
+          {
+            "func": "INPUT",
+            "header": "Enter your name and choice of player color.",
+            "fields": [
+              {
+                "type": "string",
+                "label": "Your Name:",
+                "variable": "name",
+                "value": "${playerName}"
+              },
+              {
+                "type": "palette",
+                "label": "Your Color:",
+                "colors": "${PROPERTY colorArray}",
+                "variable": "color",
+                "value": "${playerColor}"
+              }
+            ]
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "IF",
+            "operand1": "${PROPERTY player}",
+            "relation": "==",
+            "operand2": "${playerName}",
+            "thenRoutine": [
+              {
+                "func": "INPUT",
+                "header": "Enter your name and choice of player color.",
+                "fields": [
+                  {
+                    "type": "string",
+                    "label": "Your Name:",
+                    "variable": "name",
+                    "value": "${playerName}"
+                  },
+                  {
+                    "type": "palette",
+                    "label": "Your Color:",
+                    "colors": "${PROPERTY colorArray}",
+                    "variable": "color",
+                    "value": "${playerColor}"
+                  },
+                  {
+                    "type": "subtitle",
+                    "text": "All done?",
+                    "css": "background-color: var(--VTTblue);color:white;"
+                  },
+                  {
+                    "type": "checkbox",
+                    "label": "Stand up from seat",
+                    "variable": "leaveSeat",
+                    "value": false
+                  }
+                ]
+              }
+            ],
+            "elseRoutine": [
+              {
+                "func": "INPUT",
+                "header": "Are you sure you want to remove ${PROPERTY player} from this seat?",
+                "cancelButtonText": "Cancel",
+                "confirmButtonText": "Okay",
+                "fields": [
+                  {
+                    "type": "checkbox",
+                    "label": "Remove this player from their seat",
+                    "variable": "leaveSeat",
+                    "value": false
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "condition": "${leaveSeat}",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "color",
+            "value": null
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "player",
+            "value": ""
+          }
+        ],
+        "elseRoutine": [
+          "var updatePlayerandColor = false",
+          {
+            "func": "IF",
+            "operand1": "${PROPERTY player}",
+            "relation": "==",
+            "operand2": "${playerName}",
+            "thenRoutine": [
+              "var updatePlayerandColor = true"
+            ]
+          },
+          {
+            "func": "IF",
+            "operand1": "${PROPERTY player}",
+            "relation": "==",
+            "operand2": "",
+            "thenRoutine": [
+              "var updatePlayerandColor = true"
+            ]
+          },
+          {
+            "func": "IF",
+            "condition": "${name}",
+            "elseRoutine": [
+              "var updatePlayerandColor = false"
+            ]
+          },
+          {
+            "func": "IF",
+            "condition": "${updatePlayerandColor}",
+            "thenRoutine": [
+              {
+                "func": "SET",
+                "collection": "thisButton",
+                "property": "color",
+                "value": "${color}"
+              },
+              "var result = push ${color}",
+              {
+                "func": "SET",
+                "collection": "thisButton",
+                "property": "player",
+                "value": "${name}"
+              },
+              "var result = push ${name}",
+              {
+                "func": "SET",
+                "collection": "thisButton",
+                "property": "mainColor",
+                "value": "${result.0}"
+              },
+              "var newText = colorContrast ${PROPERTY mainColor}",
+              "var newGlow = colorContrast ${PROPERTY mainColor} 0.3",
+              {
+                "func": "SET",
+                "collection": "thisButton",
+                "property": "textColor",
+                "value": "${newText}"
+              },
+              {
+                "func": "SET",
+                "collection": "thisButton",
+                "property": "glowColor",
+                "value": "${newGlow}"
+              },
+              {
+                "func": "CALL",
+                "routine": "markerColorRoutine"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY player}",
+        "relation": "==",
+        "operand2": "",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "mainColor",
+            "value": "#dddddd"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "textColor",
+            "value": "#000000"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "glowColor",
+            "value": null
+          },
+          {
+            "func": "CALL",
+            "routine": "markerColorRoutine"
+          }
+        ],
+        "elseRoutine": []
+      }
+    ]
   }
 }
