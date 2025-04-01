@@ -1,9 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 200" width="128" height="200">
-	<style>
-		tspan { white-space:pre }
-		.shp0 { fill: #303030 } 
-	</style>
-	<g id="espada">
-		<path id="&lt;Compound Path&gt;" fill-rule="evenodd" class="shp0" d="M96.25 128.71L32.25 128.71L64.25 73.29L96.25 128.71ZM35.71 126.71L92.79 126.71L64.25 77.29L35.71 126.71Z" />
-	</g>
-</svg>
