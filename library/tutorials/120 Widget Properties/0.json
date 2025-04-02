@@ -92,15 +92,15 @@
   "_meta": {
     "version": 17,
     "info": {
-      "name": "120 Widget Properties",
-      "image": "/assets/1829322726_5244",
+      "name": "120 Widget Properties Overview",
+      "image": "/assets/-673105727_6630",
       "rules": "",
       "bgg": "",
       "year": "",
       "mode": "Tutorial",
       "time": "",
       "attribution": "",
-      "lastUpdate": 1743096857045,
+      "lastUpdate": 1743474416312,
       "showName": false,
       "skill": "",
       "description": "",
@@ -110,10 +110,10 @@
       "similarAwards": "",
       "ruleText": "",
       "helpText": "",
-      "players": "1",
-      "language": "en-US",
+      "variantImage": "",
       "variant": "",
-      "variantImage": ""
+      "language": "en-US",
+      "players": "1"
     }
   },
   "basic3": {
