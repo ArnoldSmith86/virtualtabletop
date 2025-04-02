@@ -4,11 +4,12 @@ export class Zoomy extends Widget {
   constructor(id) {
     super(id);
 
-    this.isBig = false;
     this.addDefaults({
       movable: false,
       layer: -2,
       typeClasses: 'widget zoomy',
+
+      zoomedPlayers: [],
 
       zoomedX: 0,
       zoomedY: 0,
@@ -20,17 +21,21 @@ export class Zoomy extends Widget {
       <button class="zoomy-button">+</button>
     `;
 
-    $('.zoomy-button', this.domElement).addEventListener('click', () => {
-      this.isBig = !this.isBig;
-      this.updateScale();
+    $('.zoomy-button', this.domElement).addEventListener('click', async () => {
+      batchStart();
+      if(this.get('zoomedPlayers').includes(playerName))
+        await this.set('zoomedPlayers', this.get('zoomedPlayers').filter(player => player != playerName));
+      else
+        await this.set('zoomedPlayers', [...this.get('zoomedPlayers'), playerName]);
+      batchEnd();
     });
   }
 
   cssTransform() {
-    const x        = this.isBig ? this.get('zoomedX'       ) : this.get('x'       );
-    const y        = this.isBig ? this.get('zoomedY'       ) : this.get('y'       );
-    const scale    = this.isBig ? this.get('zoomedScale'   ) : this.get('scale'   );
-    const rotation = this.isBig ? this.get('zoomedRotation') : this.get('rotation');
+    const x        = this.isZoomed() ? this.get('zoomedX'       ) : this.get('x'       );
+    const y        = this.isZoomed() ? this.get('zoomedY'       ) : this.get('y'       );
+    const scale    = this.isZoomed() ? this.get('zoomedScale'   ) : this.get('scale'   );
+    const rotation = this.isZoomed() ? this.get('zoomedRotation') : this.get('rotation');
 
     let transform = `translate(${x}px, ${y}px)`;
 
@@ -45,25 +50,29 @@ export class Zoomy extends Widget {
   cssTransformProperties() {
     const properties = super.cssTransformProperties();
 
-    properties.push('zoomedX', 'zoomedY', 'zoomedScale', 'zoomedRotation');
+    properties.push('zoomedPlayers', 'zoomedX', 'zoomedY', 'zoomedScale', 'zoomedRotation');
 
     return properties;
   }
 
-  set(property, value) {
-    if(this.isBig && $('body').classList.contains('edit')) {
+  isZoomed() {
+    return this.get('zoomedPlayers').includes(playerName);
+  }
+
+  async set(property, value) {
+    if(this.isZoomed() && $('body').classList.contains('edit')) {
       if(property == 'x')
-        this.set('zoomedX', value);
+        await this.set('zoomedX', value);
       else if(property == 'y')
-        this.set('zoomedY', value);
+        await this.set('zoomedY', value);
       else if(property == 'scale')
-        this.set('zoomedScale', value);
+        await this.set('zoomedScale', value);
       else if(property == 'rotation')
-        this.set('zoomedRotation', value);
+        await this.set('zoomedRotation', value);
       else
-        super.set(property, value);
+        await super.set(property, value);
     } else {
-      super.set(property, value);
+      await super.set(property, value);
     }
   }
 
