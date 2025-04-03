@@ -13,6 +13,7 @@ export class Zoomy extends Widget {
 
       zoomedX: 0,
       zoomedY: 0,
+      zoomedZ: 0,
       zoomedScale: 2,
       zoomedRotation: 0
     });
@@ -29,6 +30,19 @@ export class Zoomy extends Widget {
         await this.set('zoomedPlayers', [...this.get('zoomedPlayers'), playerName]);
       batchEnd();
     });
+  }
+
+  applyDeltaToDOM(delta) {
+    super.applyDeltaToDOM(delta);
+    if(delta.z !== undefined || delta.zoomedZ !== undefined || delta.zoomedPlayers !== undefined)
+      this.applyZ(true);
+  }
+
+  calculateZ() {
+    const z = super.calculateZ();
+    if(this.isZoomed())
+      return z - this.get('z') + this.get('zoomedZ');
+    return z;
   }
 
   cssTransform() {
