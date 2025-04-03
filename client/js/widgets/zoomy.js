@@ -10,6 +10,7 @@ export class Zoomy extends Widget {
       typeClasses: 'widget zoomy',
 
       zoomedPlayers: [],
+      groupedWith: [],
 
       zoomedX: 0,
       zoomedY: 0,
@@ -24,10 +25,10 @@ export class Zoomy extends Widget {
 
     $('.zoomy-button', this.domElement).addEventListener('click', async () => {
       batchStart();
-      if(this.get('zoomedPlayers').includes(playerName))
-        await this.set('zoomedPlayers', this.get('zoomedPlayers').filter(player => player != playerName));
+      if(this.isZoomed())
+        await this.setZoomed(false);
       else
-        await this.set('zoomedPlayers', [...this.get('zoomedPlayers'), playerName]);
+        await this.setZoomed(true);
       batchEnd();
     });
   }
@@ -88,6 +89,16 @@ export class Zoomy extends Widget {
     } else {
       await super.set(property, value);
     }
+  }
+
+  async setZoomed(zoomed) {
+    for(const groupedWith of this.get('groupedWith'))
+      if(groupedWith != this.id && widgets.has(groupedWith) && widgets.get(groupedWith).isZoomed())
+        await widgets.get(groupedWith).setZoomed(false);
+    if(zoomed)
+      await this.set('zoomedPlayers', [...this.get('zoomedPlayers'), playerName]);
+    else
+      await this.set('zoomedPlayers', [...this.get('zoomedPlayers').filter(player => player != playerName)]);
   }
 
   updateScale() {
