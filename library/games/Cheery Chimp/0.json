@@ -9,21 +9,21 @@
       "year": "2007",
       "mode": "vs",
       "time": "20",
-      "attribution": "<div>Game layout, library image, and scripting by Robin Harn, released to the Public Domain under CC0.</div><div><br></div><div>The following graphics are from https://game-icons.net and are released to the Public Domain under CC0:</div><div><br>* Stack: https://game-icons.net/1x1/delapouite/stack.html</div><div>* Skull Crossbones: https://game-icons.net/1x1/lorc/skull-crossed-bones.html<br>* Card Draw: https://game-icons.net/1x1/quoting/card-play.html</div><div><br></div><div>Animal graphics are from Google Noto Color Emoji and are released to the Public Domain under   the SIL Open Font License: https://fonts.google.com/noto/specimen/Noto+Color+Emoji</div>",
-      "lastUpdate": 1743696393714,
+      "attribution": "<div>Game layout, library image, and scripting by Robin Harn, released to the Public Domain under CC0.</div><div><br></div><div>The following graphics are from https://game-icons.net and under CC BY 3.0:</div><div><br>* Stack: https://game-icons.net/1x1/delapouite/stack.html</div><div>* Skull Crossbones: https://game-icons.net/1x1/lorc/skull-crossed-bones.html<br>* Card Draw: https://game-icons.net/1x1/quoting/card-play.html</div><div>* Uncertainty: https://game-icons.net/1x1/lorc/uncertainty.html</div><div><br></div><div>Animal graphics are from Google Noto Color Emoji and are under   the SIL Open Font License: https://fonts.google.com/noto/specimen/Noto+Color+Emoji</div>",
+      "lastUpdate": 1743772004715,
       "showName": true,
       "skill": "",
       "description": "",
       "similarImage": "",
       "similarName": "Cheeky Monkey",
       "similarDesigner": "Reiner Knizia",
-      "similarAwards": "",
-      "ruleText": "<div>ON YOUR TURN:</div><div><br></div><div>1a) Draw a card</div><div>1b) If the card matches an existing&nbsp;animal in the holding area, you must return all cards in the holding area back to the deck, and end turn</div><div><br></div><div>2a) Steal any opponents' top cards of a matching animal, and add them to the holding area</div><div>2b) Steal again if any newly-revealed top cards are of a matching&nbsp;animal, and add them to the holding area</div><div><br></div><div>3) Add the drawn card to the holding area</div><div><br></div><div>-then-</div><div><br></div><div>4) Collect all cards in the holding area onto your personal stack (in any order) and end turn</div><div><br></div><div>-or-</div><div><br></div><div>4) Take another turn, and repeat steps 1-3<br></div><div><br></div><div>SPECIAL RULES:</div><div><br></div><div>* If you draw a monkey into the holding area, you may swap the monkey with the top card of any one opponent's personal stack<br>* If your holding area contains just one type of animal, you may end turn and tuck all those animals into the bottom of your personal stack</div><div><br>ENDGAME:</div><div><br></div><div>The endgame is triggered immediately when the deck runs out of cards. At that time, click \"reveal card counts\" to see which players have a majority of animals collected.</div><div><br></div><div>Add 1 point per card in your personal stack, then add points equal to the bonus tile value for each majority of animals you claimed.<br><br>The player with the most points wins the game. If tied, the player who has the highest-valued bonus tile wins the game.</div>",
+      "similarAwards": "2008 Japan Boardgame Prize U-more Award Nominee\n2008 Golden Geek Best Children's Board Game Nominee",
+      "ruleText": "<div>ON YOUR TURN:</div><div><br></div><div>1a) Draw a card</div><div>1b) If the card matches an existing&nbsp;animal in the holding area, you must return all cards in the holding area back to the deck, and end turn</div><div><br></div><div>2a) Steal any opponents' top cards of a matching animal, and add them to the holding area</div><div>2b) Steal again if any newly-revealed top cards are of a matching&nbsp;animal, and add them to the holding area</div><div><br></div><div>3) Add the drawn card to the holding area</div><div><br></div><div>-then-</div><div><br></div><div>4) End your turn, and collect all cards in the holding area onto your personal stack (in any order)</div><div><br></div><div>-or-</div><div><br></div><div>4) Take another turn, and repeat steps 1-3<br></div><div><br></div><div>SPECIAL RULES:</div><div><br></div><div>* If you draw a monkey into the holding area, you may swap the monkey with the top card of any one opponent's personal stack</div><div><br></div><div>* If your holding area contains just one type of animal, you may end turn and tuck all those animals into the bottom of your personal stack; you can do this by dragging your entire personal stack pile out of its holder, then dragging the new cards in, and then dragging the entire personal stack pile back on top of it</div><div><br>ENDGAME:</div><div><br></div><div>The endgame is triggered when the deck runs out of cards at the end of a player's turn. At that time, click \"reveal card counts\" to see which players have a majority of animals collected. If tied on majority, then no player collects the bonus tile for that animal.</div><div><br></div><div>Add 1 point per card in your personal stack, then add points equal to the bonus tile value for each majority of animals you claimed.<br><br>The player with the most points wins the game. If tied, the player who has the highest-valued bonus tile wins the game.</div>",
       "helpText": "",
-      "players": "3-6",
+      "players": "2-6",
       "language": "en-US",
       "variant": "",
-      "variantImage": ""
+      "variantImage": "/assets/-1152618865_58117"
     }
   },
   "fj2lD": {
@@ -400,7 +400,7 @@
     "type": "button",
     "id": "button-draw",
     "x": 900,
-    "y": 80,
+    "y": 81,
     "width": 160,
     "height": 60,
     "z": 188,
@@ -421,8 +421,8 @@
   "holder-bag": {
     "type": "holder",
     "id": "holder-bag",
-    "x": 1164,
-    "y": 30,
+    "x": 1168,
+    "y": 35,
     "width": 107,
     "height": 107,
     "z": 5235,
@@ -932,7 +932,7 @@
   "deck-bag": {
     "type": "deck",
     "id": "deck-bag",
-    "x": 4,
+    "x": 3,
     "z": 14589,
     "cardDefaults": {
       "classes": "transition",
@@ -942,8 +942,9 @@
         "parent": "holder-bag"
       },
       "onPileCreation": {
-        "handleCSS": "color:green;font-weight:600;font-size:20px;border-style:solid;border-width:2px"
-      }
+        "handleCSS": "color:green;font-weight:600;font-size:20px;border-style:solid;border-width:3px"
+      },
+      "customCSS": "#ffffff\" stroke-width=\"20\" stroke=\"#000000"
     },
     "cardTypes": {
       "elephant": {
@@ -999,11 +1000,14 @@
           },
           {
             "type": "image",
-            "x": -5,
-            "y": -5,
-            "value": "/assets/752318688_21919",
-            "width": 111,
-            "height": 111
+            "x": 0,
+            "y": 0,
+            "value": "/i/game-icons.net/lorc/uncertainty.svg",
+            "svgReplaces": {
+              "#000": "customCSS"
+            },
+            "width": 99,
+            "height": 99
           }
         ],
         "border": 1,
@@ -1400,7 +1404,7 @@
     "css": {
       "font-weight": "bold",
       "font-size": "20px",
-      "color": "silver"
+      "color": "black"
     },
     "text": 0,
     "height": 24,
@@ -2435,7 +2439,7 @@
     "type": "pile",
     "width": 99,
     "height": 99,
-    "handleCSS": "color:green;font-weight:600;font-size:20px;border-style:solid;border-width:2px",
+    "handleCSS": "color:green;font-weight:600;font-size:20px;border-style:solid;border-width:3px",
     "id": "51q4",
     "z": 14839,
     "parent": "holder-bag"
@@ -2449,7 +2453,7 @@
     "width": 65,
     "height": 40,
     "z": 38,
-    "css": "font-size: 30px;",
+    "css": "font-size: 30px; color: black",
     "editable": true,
     "text": 0
   },
@@ -2462,7 +2466,7 @@
     "width": 65,
     "height": 40,
     "z": 38,
-    "css": "font-size: 30px;",
+    "css": "font-size: 30px; color: black",
     "editable": true,
     "text": 0
   },
@@ -2475,7 +2479,7 @@
     "width": 65,
     "height": 40,
     "z": 38,
-    "css": "font-size: 30px;",
+    "css": "font-size: 30px; color: black",
     "editable": true,
     "text": 0
   },
@@ -2488,7 +2492,7 @@
     "width": 65,
     "height": 40,
     "z": 38,
-    "css": "font-size: 30px;",
+    "css": "font-size: 30px; color: black",
     "editable": true,
     "text": 0
   },
@@ -2501,7 +2505,7 @@
     "width": 65,
     "height": 40,
     "z": 38,
-    "css": "font-size: 30px;",
+    "css": "font-size: 30px; color: black",
     "editable": true,
     "text": 0
   },
@@ -2514,7 +2518,7 @@
     "width": 65,
     "height": 40,
     "z": 38,
-    "css": "font-size: 30px;",
+    "css": "font-size: 30px; color: black",
     "editable": true,
     "text": 0
   }
