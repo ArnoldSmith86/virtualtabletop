@@ -3,14 +3,14 @@
     "version": 17,
     "info": {
       "name": "Cheery Chimp",
-      "image": "/assets/-1152618865_58117",
+      "image": "/assets/1322913211_30659",
       "rules": "https://boardgamegeek.com/filepage/180296/official-rules-for-cheeky-monkey-rules-2018-eagle",
       "bgg": "https://boardgamegeek.com/boardgame/29773/cheeky-monkey",
       "year": "2007",
       "mode": "vs",
       "time": "20",
       "attribution": "<div>Game layout, library image, and scripting by Robin Harn, released to the Public Domain under CC0.</div><div><br></div><div>The following graphics are from https://game-icons.net and under CC BY 3.0:</div><div><br>* Stack: https://game-icons.net/1x1/delapouite/stack.html</div><div>* Skull Crossbones: https://game-icons.net/1x1/lorc/skull-crossed-bones.html<br>* Card Draw: https://game-icons.net/1x1/quoting/card-play.html</div><div>* Uncertainty: https://game-icons.net/1x1/lorc/uncertainty.html</div><div><br></div><div>Animal graphics are from Google Noto Color Emoji and are under   the SIL Open Font License: https://fonts.google.com/noto/specimen/Noto+Color+Emoji</div>",
-      "lastUpdate": 1743772004715,
+      "lastUpdate": 1743777890052,
       "showName": true,
       "skill": "",
       "description": "",
@@ -20,10 +20,10 @@
       "similarAwards": "2008 Japan Boardgame Prize U-more Award Nominee\n2008 Golden Geek Best Children's Board Game Nominee",
       "ruleText": "<div>ON YOUR TURN:</div><div><br></div><div>1a) Draw a card</div><div>1b) If the card matches an existing&nbsp;animal in the holding area, you must return all cards in the holding area back to the deck, and end turn</div><div><br></div><div>2a) Steal any opponents' top cards of a matching animal, and add them to the holding area</div><div>2b) Steal again if any newly-revealed top cards are of a matching&nbsp;animal, and add them to the holding area</div><div><br></div><div>3) Add the drawn card to the holding area</div><div><br></div><div>-then-</div><div><br></div><div>4) End your turn, and collect all cards in the holding area onto your personal stack (in any order)</div><div><br></div><div>-or-</div><div><br></div><div>4) Take another turn, and repeat steps 1-3<br></div><div><br></div><div>SPECIAL RULES:</div><div><br></div><div>* If you draw a monkey into the holding area, you may swap the monkey with the top card of any one opponent's personal stack</div><div><br></div><div>* If your holding area contains just one type of animal, you may end turn and tuck all those animals into the bottom of your personal stack; you can do this by dragging your entire personal stack pile out of its holder, then dragging the new cards in, and then dragging the entire personal stack pile back on top of it</div><div><br>ENDGAME:</div><div><br></div><div>The endgame is triggered when the deck runs out of cards at the end of a player's turn. At that time, click \"reveal card counts\" to see which players have a majority of animals collected. If tied on majority, then no player collects the bonus tile for that animal.</div><div><br></div><div>Add 1 point per card in your personal stack, then add points equal to the bonus tile value for each majority of animals you claimed.<br><br>The player with the most points wins the game. If tied, the player who has the highest-valued bonus tile wins the game.</div>",
       "helpText": "",
-      "players": "2-6",
-      "language": "en-US",
+      "variantImage": "",
       "variant": "",
-      "variantImage": "/assets/-1152618865_58117"
+      "language": "en-US",
+      "players": "2-6"
     }
   },
   "fj2lD": {
@@ -440,9 +440,13 @@
     "width": 50,
     "height": 50,
     "z": 20,
-    "image": "/assets/445464681_3064",
+    "image": "/i/game-icons.net/lorc/skull-crossed-bones.svg",
     "movable": false,
-    "parent": "button-return"
+    "parent": "button-return",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "color": "#3f3f3f"
   },
   "button-reset": {
     "type": "button",
@@ -832,7 +836,7 @@
         "button-resetReset": {
           "parent": "holder-bonus-4"
         },
-        "image": "/assets/-1745905011_10062"
+        "image": "/i/noto-emoji/emoji_u1f405.svg"
       },
       "bonus-giraffe": {
         "label": "giraffe",
@@ -841,7 +845,7 @@
         "button-resetReset": {
           "parent": "holder-bonus-5"
         },
-        "image": "/assets/485030117_3420"
+        "image": "/i/noto-emoji/emoji_u1f992.svg"
       },
       "bonus-zebra": {
         "label": "zebra",
@@ -850,7 +854,7 @@
         "button-resetReset": {
           "parent": "holder-bonus-6"
         },
-        "image": "/assets/-1636562167_5445"
+        "image": "/i/noto-emoji/emoji_u1f993.svg"
       },
       "bonus-penguin": {
         "label": "penguin",
@@ -859,7 +863,8 @@
         "button-resetReset": {
           "parent": "holder-bonus-7"
         },
-        "image": "/i/noto-emoji/emoji_u1f427.svg"
+        "image": "/i/noto-emoji/emoji_u1f427.svg",
+        "grayColor": "#4d4d4d"
       },
       "bonus-bird": {
         "label": "bird",
@@ -868,7 +873,8 @@
         "button-resetReset": {
           "parent": "holder-bonus-8"
         },
-        "image": "/assets/-1995781540_2137"
+        "image": "/i/noto-emoji/emoji_u1f426_200d_2b1b.svg",
+        "grayColor": "#50b5e3"
       },
       "bonus-snake": {
         "label": "snake",
@@ -905,6 +911,9 @@
             "y": -3,
             "width": 61,
             "height": 61,
+            "svgReplaces": {
+              "#4D4D4D": "grayColor"
+            },
             "dynamicProperties": {
               "value": "image"
             }
@@ -955,27 +964,29 @@
       "tiger": {
         "label": "tiger",
         "rank": "4",
-        "image": "/assets/-1745905011_10062"
+        "image": "/i/noto-emoji/emoji_u1f405.svg"
       },
       "giraffe": {
         "label": "giraffe",
         "rank": "5",
-        "image": "/assets/485030117_3420"
+        "image": "/i/noto-emoji/emoji_u1f992.svg"
       },
       "zebra": {
         "label": "zebra",
         "rank": "6",
-        "image": "/assets/-1636562167_5445"
+        "image": "/i/noto-emoji/emoji_u1f993.svg"
       },
       "penguin": {
         "label": "penguin",
         "rank": "7",
-        "image": "/i/noto-emoji/emoji_u1f427.svg"
+        "image": "/i/noto-emoji/emoji_u1f427.svg",
+        "grayColor": "#4d4d4d"
       },
       "bird": {
         "label": "bird",
         "rank": "8",
-        "image": "/assets/-1995781540_2137"
+        "image": "/i/noto-emoji/emoji_u1f426_200d_2b1b.svg",
+        "grayColor": "#50b5e3"
       },
       "snake": {
         "label": "snake",
@@ -1028,6 +1039,9 @@
             "y": 3,
             "width": 95,
             "height": 95,
+            "svgReplaces": {
+              "#4D4D4D": "grayColor"
+            },
             "dynamicProperties": {
               "value": "image"
             }
@@ -1965,416 +1979,416 @@
     "type": "card",
     "cardType": "elephant",
     "id": "58k9",
-    "z": 15108,
-    "parent": "51q4"
+    "z": 15383,
+    "parent": "cta6"
   },
   "xk5q": {
     "deck": "deck-bag",
     "type": "card",
     "cardType": "elephant",
     "id": "xk5q",
-    "z": 15086,
-    "parent": "51q4"
+    "z": 15359,
+    "parent": "cta6"
   },
   "mgfq": {
     "deck": "deck-bag",
     "type": "card",
     "cardType": "elephant",
     "id": "mgfq",
-    "z": 15096,
-    "parent": "51q4"
+    "z": 15360,
+    "parent": "cta6"
   },
   "dlh0": {
     "deck": "deck-bag",
     "type": "card",
     "cardType": "tiger",
     "id": "dlh0",
-    "z": 15076,
-    "parent": "51q4"
+    "z": 15382,
+    "parent": "cta6"
   },
   "wid0": {
     "deck": "deck-bag",
     "type": "card",
     "cardType": "tiger",
     "id": "wid0",
-    "z": 15089,
-    "parent": "51q4"
+    "z": 15398,
+    "parent": "cta6"
   },
   "qt2k": {
     "deck": "deck-bag",
     "type": "card",
     "cardType": "tiger",
     "id": "qt2k",
-    "z": 15095,
-    "parent": "51q4"
+    "z": 15384,
+    "parent": "cta6"
   },
   "gpoh": {
     "deck": "deck-bag",
     "type": "card",
     "cardType": "tiger",
     "id": "gpoh",
-    "z": 15065,
-    "parent": "51q4"
+    "z": 15362,
+    "parent": "cta6"
   },
   "er4x": {
     "deck": "deck-bag",
     "type": "card",
     "cardType": "giraffe",
     "id": "er4x",
-    "z": 15106,
-    "parent": "51q4"
+    "z": 15385,
+    "parent": "cta6"
   },
   "rpof": {
     "deck": "deck-bag",
     "type": "card",
     "cardType": "giraffe",
     "id": "rpof",
-    "z": 15080,
-    "parent": "51q4"
+    "z": 15392,
+    "parent": "cta6"
   },
   "7nbn": {
     "deck": "deck-bag",
     "type": "card",
     "cardType": "giraffe",
     "id": "7nbn",
-    "z": 15075,
-    "parent": "51q4"
+    "z": 15388,
+    "parent": "cta6"
   },
   "kouf": {
     "deck": "deck-bag",
     "type": "card",
     "cardType": "giraffe",
     "id": "kouf",
-    "z": 15102,
-    "parent": "51q4"
+    "z": 15395,
+    "parent": "cta6"
   },
   "u7jb": {
     "deck": "deck-bag",
     "type": "card",
     "cardType": "giraffe",
     "id": "u7jb",
-    "z": 15104,
-    "parent": "51q4"
+    "z": 15375,
+    "parent": "cta6"
   },
   "kxjr": {
     "deck": "deck-bag",
     "type": "card",
     "cardType": "zebra",
     "id": "kxjr",
-    "z": 15109,
-    "parent": "51q4"
+    "z": 15389,
+    "parent": "cta6"
   },
   "45ql": {
     "deck": "deck-bag",
     "type": "card",
     "cardType": "zebra",
     "id": "45ql",
-    "z": 15068,
-    "parent": "51q4"
+    "z": 15354,
+    "parent": "cta6"
   },
   "khgx": {
     "deck": "deck-bag",
     "type": "card",
     "cardType": "zebra",
     "id": "khgx",
-    "z": 15082,
-    "parent": "51q4"
+    "z": 15386,
+    "parent": "cta6"
   },
   "zday": {
     "deck": "deck-bag",
     "type": "card",
     "cardType": "zebra",
     "id": "zday",
-    "z": 15067,
-    "parent": "51q4"
+    "z": 15351,
+    "parent": "cta6"
   },
   "9fue": {
     "deck": "deck-bag",
     "type": "card",
     "cardType": "zebra",
     "id": "9fue",
-    "z": 15077,
-    "parent": "51q4"
+    "z": 15355,
+    "parent": "cta6"
   },
   "jx8t": {
     "deck": "deck-bag",
     "type": "card",
     "cardType": "zebra",
     "id": "jx8t",
-    "z": 15071,
-    "parent": "51q4"
+    "z": 15401,
+    "parent": "cta6"
   },
   "jh0r": {
     "deck": "deck-bag",
     "type": "card",
     "cardType": "penguin",
     "id": "jh0r",
-    "z": 15066,
-    "parent": "51q4"
+    "z": 15400,
+    "parent": "cta6"
   },
   "y65m": {
     "deck": "deck-bag",
     "type": "card",
     "cardType": "penguin",
     "id": "y65m",
-    "z": 15059,
-    "parent": "51q4"
+    "z": 15380,
+    "parent": "cta6"
   },
   "tzp5": {
     "deck": "deck-bag",
     "type": "card",
     "cardType": "penguin",
     "id": "tzp5",
-    "z": 15090,
-    "parent": "51q4"
+    "z": 15357,
+    "parent": "cta6"
   },
   "tytd": {
     "deck": "deck-bag",
     "type": "card",
     "cardType": "penguin",
     "id": "tytd",
-    "z": 15091,
-    "parent": "51q4"
+    "z": 15368,
+    "parent": "cta6"
   },
   "aa05": {
     "deck": "deck-bag",
     "type": "card",
     "cardType": "penguin",
     "id": "aa05",
-    "z": 15110,
-    "parent": "51q4"
+    "z": 15366,
+    "parent": "cta6"
   },
   "2odj": {
     "deck": "deck-bag",
     "type": "card",
     "cardType": "penguin",
     "id": "2odj",
-    "z": 15064,
-    "parent": "51q4"
+    "z": 15397,
+    "parent": "cta6"
   },
   "t42s": {
     "deck": "deck-bag",
     "type": "card",
     "cardType": "penguin",
     "id": "t42s",
-    "z": 15098,
-    "parent": "51q4"
+    "z": 15394,
+    "parent": "cta6"
   },
   "bl9v": {
     "deck": "deck-bag",
     "type": "card",
     "cardType": "bird",
     "id": "bl9v",
-    "z": 15069,
-    "parent": "51q4"
+    "z": 15376,
+    "parent": "cta6"
   },
   "qtu9": {
     "deck": "deck-bag",
     "type": "card",
     "cardType": "bird",
     "id": "qtu9",
-    "z": 15072,
-    "parent": "51q4"
+    "z": 15378,
+    "parent": "cta6"
   },
   "8dck": {
     "deck": "deck-bag",
     "type": "card",
     "cardType": "bird",
     "id": "8dck",
-    "z": 15097,
-    "parent": "51q4"
+    "z": 15363,
+    "parent": "cta6"
   },
   "u32h": {
     "deck": "deck-bag",
     "type": "card",
     "cardType": "bird",
     "id": "u32h",
-    "z": 15062,
-    "parent": "51q4"
+    "z": 15352,
+    "parent": "cta6"
   },
   "ljrq": {
     "deck": "deck-bag",
     "type": "card",
     "cardType": "bird",
     "id": "ljrq",
-    "z": 15094,
-    "parent": "51q4"
+    "z": 15353,
+    "parent": "cta6"
   },
   "lm9j": {
     "deck": "deck-bag",
     "type": "card",
     "cardType": "bird",
     "id": "lm9j",
-    "z": 15073,
-    "parent": "51q4"
+    "z": 15379,
+    "parent": "cta6"
   },
   "4dgo": {
     "deck": "deck-bag",
     "type": "card",
     "cardType": "bird",
     "id": "4dgo",
-    "z": 15081,
-    "parent": "51q4"
+    "z": 15373,
+    "parent": "cta6"
   },
   "7os2": {
     "deck": "deck-bag",
     "type": "card",
     "cardType": "bird",
     "id": "7os2",
-    "z": 15060,
-    "parent": "51q4"
+    "z": 15396,
+    "parent": "cta6"
   },
   "ehnj": {
     "deck": "deck-bag",
     "type": "card",
     "cardType": "snake",
     "id": "ehnj",
-    "z": 15101,
-    "parent": "51q4"
+    "z": 15381,
+    "parent": "cta6"
   },
   "tiuk": {
     "deck": "deck-bag",
     "type": "card",
     "cardType": "snake",
     "id": "tiuk",
-    "z": 15088,
-    "parent": "51q4"
+    "z": 15377,
+    "parent": "cta6"
   },
   "t5yt": {
     "deck": "deck-bag",
     "type": "card",
     "cardType": "snake",
     "id": "t5yt",
-    "z": 15085,
-    "parent": "51q4"
+    "z": 15361,
+    "parent": "cta6"
   },
   "jtky": {
     "deck": "deck-bag",
     "type": "card",
     "cardType": "snake",
     "id": "jtky",
-    "z": 15074,
-    "parent": "51q4"
+    "z": 15364,
+    "parent": "cta6"
   },
   "q03a": {
     "deck": "deck-bag",
     "type": "card",
     "cardType": "snake",
     "id": "q03a",
-    "z": 15107,
-    "parent": "51q4"
+    "z": 15369,
+    "parent": "cta6"
   },
   "vqu1": {
     "deck": "deck-bag",
     "type": "card",
     "cardType": "snake",
     "id": "vqu1",
-    "z": 15078,
-    "parent": "51q4"
+    "z": 15367,
+    "parent": "cta6"
   },
   "vikv": {
     "deck": "deck-bag",
     "type": "card",
     "cardType": "snake",
     "id": "vikv",
-    "z": 15087,
-    "parent": "51q4"
+    "z": 15371,
+    "parent": "cta6"
   },
   "xct0": {
     "deck": "deck-bag",
     "type": "card",
     "cardType": "snake",
     "id": "xct0",
-    "z": 15105,
-    "parent": "51q4"
+    "z": 15387,
+    "parent": "cta6"
   },
   "in80": {
     "deck": "deck-bag",
     "type": "card",
     "cardType": "snake",
     "id": "in80",
-    "z": 15100,
-    "parent": "51q4"
+    "z": 15350,
+    "parent": "cta6"
   },
   "ue6d": {
     "deck": "deck-bag",
     "type": "card",
     "cardType": "monkey",
     "id": "ue6d",
-    "z": 15070,
-    "parent": "51q4"
+    "z": 15393,
+    "parent": "cta6"
   },
   "r4p9": {
     "deck": "deck-bag",
     "type": "card",
     "cardType": "monkey",
     "id": "r4p9",
-    "z": 15083,
-    "parent": "51q4"
+    "z": 15391,
+    "parent": "cta6"
   },
   "3xjl": {
     "deck": "deck-bag",
     "type": "card",
     "cardType": "monkey",
     "id": "3xjl",
-    "z": 15079,
-    "parent": "51q4"
+    "z": 15390,
+    "parent": "cta6"
   },
   "n4qm": {
     "deck": "deck-bag",
     "type": "card",
     "cardType": "monkey",
     "id": "n4qm",
-    "z": 15099,
-    "parent": "51q4"
+    "z": 15365,
+    "parent": "cta6"
   },
   "omdz": {
     "deck": "deck-bag",
     "type": "card",
     "cardType": "monkey",
     "id": "omdz",
-    "z": 15061,
-    "parent": "51q4"
+    "z": 15372,
+    "parent": "cta6"
   },
   "ndl6": {
     "deck": "deck-bag",
     "type": "card",
     "cardType": "monkey",
     "id": "ndl6",
-    "z": 15093,
-    "parent": "51q4"
+    "z": 15370,
+    "parent": "cta6"
   },
   "lozu": {
     "deck": "deck-bag",
     "type": "card",
     "cardType": "monkey",
     "id": "lozu",
-    "z": 15103,
-    "parent": "51q4"
+    "z": 15358,
+    "parent": "cta6"
   },
   "4bmm": {
     "deck": "deck-bag",
     "type": "card",
     "cardType": "monkey",
     "id": "4bmm",
-    "z": 15092,
-    "parent": "51q4"
+    "z": 15374,
+    "parent": "cta6"
   },
   "lqfl": {
     "deck": "deck-bag",
     "type": "card",
     "cardType": "monkey",
     "id": "lqfl",
-    "z": 15084,
-    "parent": "51q4"
+    "z": 15356,
+    "parent": "cta6"
   },
   "ec2j": {
     "deck": "deck-bag",
     "type": "card",
     "cardType": "monkey",
     "id": "ec2j",
-    "z": 15063,
-    "parent": "51q4"
+    "z": 15399,
+    "parent": "cta6"
   },
   "group-counts": {
     "id": "group-counts",
@@ -2422,8 +2436,13 @@
     "width": 50,
     "height": 50,
     "z": 182,
-    "image": "/assets/845989849_519",
-    "parent": "button-collect"
+    "image": "/i/game-icons.net/delapouite/stack.svg",
+    "parent": "button-collect",
+    "svgReplaces": {
+      "#000": "customCSS"
+    },
+    "movable": false,
+    "customCSS": "#ffffff\" stroke-width=\"10\" stroke=\"#000000"
   },
   "image-draw": {
     "id": "image-draw",
@@ -2431,18 +2450,14 @@
     "width": 50,
     "height": 50,
     "z": 184,
-    "image": "/assets/-295043125_1002",
+    "image": "/i/game-icons.net/quoting/card-play.svg",
     "y": -60,
-    "parent": "button-draw"
-  },
-  "51q4": {
-    "type": "pile",
-    "width": 99,
-    "height": 99,
-    "handleCSS": "color:green;font-weight:600;font-size:20px;border-style:solid;border-width:3px",
-    "id": "51q4",
-    "z": 14839,
-    "parent": "holder-bag"
+    "parent": "button-draw",
+    "movable": false,
+    "svgReplaces": {
+      "#000": "customCSS"
+    },
+    "customCSS": "#ffffff\" stroke-width=\"10\" stroke=\"#000000"
   },
   "score-p1": {
     "type": "label",
@@ -2521,5 +2536,15 @@
     "css": "font-size: 30px; color: black",
     "editable": true,
     "text": 0
+  },
+  "cta6": {
+    "type": "pile",
+    "parent": "holder-bag",
+    "x": 4,
+    "y": 4,
+    "width": 99,
+    "height": 99,
+    "handleCSS": "color:green;font-weight:600;font-size:20px;border-style:solid;border-width:3px",
+    "id": "cta6"
   }
 }
