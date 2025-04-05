@@ -10,7 +10,7 @@
       "mode": "vs",
       "time": "15",
       "attribution": "<div>Layout and design by LawDawg96. Released to the Public Domain under CC0.</div><div><br></div><div>Wood grain background by RyanPro available under the Pixabay license from https://pixabay.com/photos/trees-wood-yellow-wood-oak-1915247/.</div><div><br></div><div>Rabbit icon in the Public Domain at&nbsp;https://www.svgrepo.com/svg/15010/rabbit-hand-drawn-animal-head.</div><div><br></div><div>Library image text, rabbit, and movement marks created by ChatGPT 4o.&nbsp; LawDawg96 added the game hexes and icons.</div>",
-      "lastUpdate": 1743805447610,
+      "lastUpdate": 1743881761780,
       "showName": true,
       "skill": "",
       "description": "Get your bunnies out to their burrows. But better be quick about it. The player that takes over the most spaces wins.",
@@ -902,13 +902,172 @@
         "radius": 100
       }
     ],
-    "inheritFrom": {
-      "pinkDeck": "cardDefaults"
-    },
     "parent": "orangeHome",
     "fixedParent": true,
     "x": 20,
-    "y": 20
+    "y": 20,
+    "cardDefaults": {
+      "onPileCreation": {
+        "deck": "orange",
+        "handleSize": 59,
+        "handlePosition": "middle center",
+        "handleCSS": "background-color:transparent;color:#000000;font-size:45px",
+        "pileSnapRange": 40,
+        "showMenu": true,
+        "clickRoutine": [
+          {
+            "func": "IF",
+            "operand1": "${PROPERTY showMenu}",
+            "operand2": true,
+            "thenRoutine": [
+              {
+                "func": "SELECT",
+                "property": "id",
+                "value": "pileMenu"
+              },
+              {
+                "func": "CLONE",
+                "properties": {
+                  "x": 0,
+                  "y": 0,
+                  "forPile": "${thisID}",
+                  "owner": "${playerName}",
+                  "width": 1600,
+                  "height": 1000
+                }
+              },
+              {
+                "func": "GET",
+                "property": "id",
+                "variable": "menuID"
+              },
+              {
+                "func": "SELECT",
+                "property": "parent",
+                "value": "pileMenu"
+              },
+              "var width = ${PROPERTY width} + ${PROPERTY width OF pileMenuContainer}",
+              "var width = ${width} + ${PROPERTY distance OF pileMenuContainer}",
+              "var width = 1600 - ${width}",
+              {
+                "func": "IF",
+                "operand1": "${PROPERTY _absoluteX}",
+                "operand2": "${width}",
+                "relation": "<",
+                "thenRoutine": [
+                  "var x = ${PROPERTY _absoluteX} + ${PROPERTY width}",
+                  "var x = ${x} + ${PROPERTY distance OF pileMenuContainer} - 25",
+                  {
+                    "func": "CLONE",
+                    "properties": {
+                      "parent": "${menuID}",
+                      "x": "${x}",
+                      "y": "${PROPERTY _absoluteY}"
+                    }
+                  },
+                  {
+                    "func": "GET",
+                    "property": "id",
+                    "variable": "containerID"
+                  },
+                  {
+                    "func": "SELECT",
+                    "property": "parent",
+                    "value": "pileMenuContainer"
+                  },
+                  {
+                    "func": "CLONE",
+                    "properties": {
+                      "parent": "${containerID}"
+                    }
+                  }
+                ],
+                "elseRoutine": [
+                  "var x = ${PROPERTY _absoluteX} - ${PROPERTY distance OF pileMenuContainer}",
+                  "var x = ${x} - ${PROPERTY width OF pileMenuContainer} + 25",
+                  {
+                    "func": "CLONE",
+                    "properties": {
+                      "parent": "${menuID}",
+                      "x": "${x}",
+                      "y": "${PROPERTY _absoluteY}"
+                    }
+                  },
+                  {
+                    "func": "GET",
+                    "property": "id",
+                    "variable": "containerID"
+                  },
+                  {
+                    "func": "SELECT",
+                    "property": "parent",
+                    "value": "pileMenuContainer"
+                  },
+                  {
+                    "func": "CLONE",
+                    "properties": {
+                      "parent": "${containerID}"
+                    }
+                  }
+                ]
+              },
+              {
+                "func": "COUNT",
+                "holder": "${thisID}"
+              },
+              {
+                "func": "SELECT",
+                "property": "clonedFrom",
+                "value": "splitCount"
+              },
+              {
+                "func": "SELECT",
+                "property": "parent",
+                "value": "${containerID}",
+                "source": "DEFAULT"
+              },
+              {
+                "func": "SET",
+                "property": "max",
+                "value": "${COUNT}"
+              },
+              "var COUNT = ${COUNT} / 2",
+              "var COUNT = floor ${COUNT}",
+              {
+                "func": "SET",
+                "property": "text",
+                "value": "${COUNT}"
+              },
+              {
+                "func": "SET",
+                "property": "showMenu",
+                "value": false,
+                "collection": "thisButton"
+              }
+            ],
+            "elseRoutine": [
+              {
+                "func": "SELECT",
+                "property": "forPile",
+                "value": "${thisID}"
+              },
+              {
+                "func": "DELETE"
+              },
+              {
+                "func": "SET",
+                "property": "showMenu",
+                "value": true,
+                "collection": "thisButton"
+              }
+            ]
+          }
+        ]
+      },
+      "width": 60,
+      "height": 60,
+      "layer": 3
+    }
   },
   "orangeHome": {
     "type": "holder",
@@ -1081,13 +1240,172 @@
         "radius": 100
       }
     ],
-    "inheritFrom": {
-      "pinkDeck": "cardDefaults"
-    },
     "parent": "yellowHome",
     "fixedParent": true,
     "x": 20,
-    "y": 20
+    "y": 20,
+    "cardDefaults": {
+      "onPileCreation": {
+        "deck": "yellow",
+        "handleSize": 59,
+        "handlePosition": "middle center",
+        "handleCSS": "background-color:transparent;color:#000000;font-size:45px",
+        "pileSnapRange": 40,
+        "showMenu": true,
+        "clickRoutine": [
+          {
+            "func": "IF",
+            "operand1": "${PROPERTY showMenu}",
+            "operand2": true,
+            "thenRoutine": [
+              {
+                "func": "SELECT",
+                "property": "id",
+                "value": "pileMenu"
+              },
+              {
+                "func": "CLONE",
+                "properties": {
+                  "x": 0,
+                  "y": 0,
+                  "forPile": "${thisID}",
+                  "owner": "${playerName}",
+                  "width": 1600,
+                  "height": 1000
+                }
+              },
+              {
+                "func": "GET",
+                "property": "id",
+                "variable": "menuID"
+              },
+              {
+                "func": "SELECT",
+                "property": "parent",
+                "value": "pileMenu"
+              },
+              "var width = ${PROPERTY width} + ${PROPERTY width OF pileMenuContainer}",
+              "var width = ${width} + ${PROPERTY distance OF pileMenuContainer}",
+              "var width = 1600 - ${width}",
+              {
+                "func": "IF",
+                "operand1": "${PROPERTY _absoluteX}",
+                "operand2": "${width}",
+                "relation": "<",
+                "thenRoutine": [
+                  "var x = ${PROPERTY _absoluteX} + ${PROPERTY width}",
+                  "var x = ${x} + ${PROPERTY distance OF pileMenuContainer} - 25",
+                  {
+                    "func": "CLONE",
+                    "properties": {
+                      "parent": "${menuID}",
+                      "x": "${x}",
+                      "y": "${PROPERTY _absoluteY}"
+                    }
+                  },
+                  {
+                    "func": "GET",
+                    "property": "id",
+                    "variable": "containerID"
+                  },
+                  {
+                    "func": "SELECT",
+                    "property": "parent",
+                    "value": "pileMenuContainer"
+                  },
+                  {
+                    "func": "CLONE",
+                    "properties": {
+                      "parent": "${containerID}"
+                    }
+                  }
+                ],
+                "elseRoutine": [
+                  "var x = ${PROPERTY _absoluteX} - ${PROPERTY distance OF pileMenuContainer}",
+                  "var x = ${x} - ${PROPERTY width OF pileMenuContainer} + 25",
+                  {
+                    "func": "CLONE",
+                    "properties": {
+                      "parent": "${menuID}",
+                      "x": "${x}",
+                      "y": "${PROPERTY _absoluteY}"
+                    }
+                  },
+                  {
+                    "func": "GET",
+                    "property": "id",
+                    "variable": "containerID"
+                  },
+                  {
+                    "func": "SELECT",
+                    "property": "parent",
+                    "value": "pileMenuContainer"
+                  },
+                  {
+                    "func": "CLONE",
+                    "properties": {
+                      "parent": "${containerID}"
+                    }
+                  }
+                ]
+              },
+              {
+                "func": "COUNT",
+                "holder": "${thisID}"
+              },
+              {
+                "func": "SELECT",
+                "property": "clonedFrom",
+                "value": "splitCount"
+              },
+              {
+                "func": "SELECT",
+                "property": "parent",
+                "value": "${containerID}",
+                "source": "DEFAULT"
+              },
+              {
+                "func": "SET",
+                "property": "max",
+                "value": "${COUNT}"
+              },
+              "var COUNT = ${COUNT} / 2",
+              "var COUNT = floor ${COUNT}",
+              {
+                "func": "SET",
+                "property": "text",
+                "value": "${COUNT}"
+              },
+              {
+                "func": "SET",
+                "property": "showMenu",
+                "value": false,
+                "collection": "thisButton"
+              }
+            ],
+            "elseRoutine": [
+              {
+                "func": "SELECT",
+                "property": "forPile",
+                "value": "${thisID}"
+              },
+              {
+                "func": "DELETE"
+              },
+              {
+                "func": "SET",
+                "property": "showMenu",
+                "value": true,
+                "collection": "thisButton"
+              }
+            ]
+          }
+        ]
+      },
+      "width": 60,
+      "height": 60,
+      "layer": 3
+    }
   },
   "yellowHome": {
     "type": "holder",
@@ -1260,13 +1578,172 @@
         "radius": 100
       }
     ],
-    "inheritFrom": {
-      "pinkDeck": "cardDefaults"
-    },
     "parent": "blueHome",
     "fixedParent": true,
     "x": 20,
-    "y": 20
+    "y": 20,
+    "cardDefaults": {
+      "onPileCreation": {
+        "deck": "blue",
+        "handleSize": 59,
+        "handlePosition": "middle center",
+        "handleCSS": "background-color:transparent;color:#000000;font-size:45px",
+        "pileSnapRange": 40,
+        "showMenu": true,
+        "clickRoutine": [
+          {
+            "func": "IF",
+            "operand1": "${PROPERTY showMenu}",
+            "operand2": true,
+            "thenRoutine": [
+              {
+                "func": "SELECT",
+                "property": "id",
+                "value": "pileMenu"
+              },
+              {
+                "func": "CLONE",
+                "properties": {
+                  "x": 0,
+                  "y": 0,
+                  "forPile": "${thisID}",
+                  "owner": "${playerName}",
+                  "width": 1600,
+                  "height": 1000
+                }
+              },
+              {
+                "func": "GET",
+                "property": "id",
+                "variable": "menuID"
+              },
+              {
+                "func": "SELECT",
+                "property": "parent",
+                "value": "pileMenu"
+              },
+              "var width = ${PROPERTY width} + ${PROPERTY width OF pileMenuContainer}",
+              "var width = ${width} + ${PROPERTY distance OF pileMenuContainer}",
+              "var width = 1600 - ${width}",
+              {
+                "func": "IF",
+                "operand1": "${PROPERTY _absoluteX}",
+                "operand2": "${width}",
+                "relation": "<",
+                "thenRoutine": [
+                  "var x = ${PROPERTY _absoluteX} + ${PROPERTY width}",
+                  "var x = ${x} + ${PROPERTY distance OF pileMenuContainer} - 25",
+                  {
+                    "func": "CLONE",
+                    "properties": {
+                      "parent": "${menuID}",
+                      "x": "${x}",
+                      "y": "${PROPERTY _absoluteY}"
+                    }
+                  },
+                  {
+                    "func": "GET",
+                    "property": "id",
+                    "variable": "containerID"
+                  },
+                  {
+                    "func": "SELECT",
+                    "property": "parent",
+                    "value": "pileMenuContainer"
+                  },
+                  {
+                    "func": "CLONE",
+                    "properties": {
+                      "parent": "${containerID}"
+                    }
+                  }
+                ],
+                "elseRoutine": [
+                  "var x = ${PROPERTY _absoluteX} - ${PROPERTY distance OF pileMenuContainer}",
+                  "var x = ${x} - ${PROPERTY width OF pileMenuContainer} + 25",
+                  {
+                    "func": "CLONE",
+                    "properties": {
+                      "parent": "${menuID}",
+                      "x": "${x}",
+                      "y": "${PROPERTY _absoluteY}"
+                    }
+                  },
+                  {
+                    "func": "GET",
+                    "property": "id",
+                    "variable": "containerID"
+                  },
+                  {
+                    "func": "SELECT",
+                    "property": "parent",
+                    "value": "pileMenuContainer"
+                  },
+                  {
+                    "func": "CLONE",
+                    "properties": {
+                      "parent": "${containerID}"
+                    }
+                  }
+                ]
+              },
+              {
+                "func": "COUNT",
+                "holder": "${thisID}"
+              },
+              {
+                "func": "SELECT",
+                "property": "clonedFrom",
+                "value": "splitCount"
+              },
+              {
+                "func": "SELECT",
+                "property": "parent",
+                "value": "${containerID}",
+                "source": "DEFAULT"
+              },
+              {
+                "func": "SET",
+                "property": "max",
+                "value": "${COUNT}"
+              },
+              "var COUNT = ${COUNT} / 2",
+              "var COUNT = floor ${COUNT}",
+              {
+                "func": "SET",
+                "property": "text",
+                "value": "${COUNT}"
+              },
+              {
+                "func": "SET",
+                "property": "showMenu",
+                "value": false,
+                "collection": "thisButton"
+              }
+            ],
+            "elseRoutine": [
+              {
+                "func": "SELECT",
+                "property": "forPile",
+                "value": "${thisID}"
+              },
+              {
+                "func": "DELETE"
+              },
+              {
+                "func": "SET",
+                "property": "showMenu",
+                "value": true,
+                "collection": "thisButton"
+              }
+            ]
+          }
+        ]
+      },
+      "width": 60,
+      "height": 60,
+      "layer": 3
+    }
   },
   "blueHome": {
     "type": "holder",
