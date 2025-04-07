@@ -16,7 +16,9 @@ export class Zoomy extends Widget {
       zoomedY: 0,
       zoomedZ: 0,
       zoomedScale: 2,
-      zoomedRotation: 0
+      zoomedRotation: 0,
+
+      zoomedMovable: false
     });
 
     this.domElement.innerHTML = `
@@ -68,6 +70,12 @@ export class Zoomy extends Widget {
     properties.push('zoomedPlayers', 'zoomedX', 'zoomedY', 'zoomedScale', 'zoomedRotation');
 
     return properties;
+  }
+
+  get(property) {
+    if(property == 'movable' && this.isZoomed())
+      return this.get('zoomedMovable');
+    return super.get(property);
   }
 
   isZoomed() {
