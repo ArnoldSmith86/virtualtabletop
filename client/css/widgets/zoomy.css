@@ -1,0 +1,3 @@
+.zoomy.widget.animate_zoomedPlayers {
+  transition: transform 0.5s ease-in-out;
+}

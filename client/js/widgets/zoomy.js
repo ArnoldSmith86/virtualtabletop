@@ -8,6 +8,12 @@ export class Zoomy extends Widget {
       movable: false,
       layer: -2,
       typeClasses: 'widget zoomy',
+      animatePropertyChange: [
+        {
+          property: 'zoomedPlayers',
+          duration: 500
+        }
+      ],
 
       zoomedPlayers: [],
       groupedWith: [],

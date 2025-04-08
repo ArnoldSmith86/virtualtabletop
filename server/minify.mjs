@@ -37,6 +37,7 @@ export default async function minifyHTML() {
     'client/css/widgets/seat.css',
     'client/css/widgets/spinner.css',
     'client/css/widgets/timer.css',
+    'client/css/widgets/zoomy.css',
 
     'client/css/fonts.css',
     'client/css/custom.css'
