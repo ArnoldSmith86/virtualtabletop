@@ -1,3 +1,12 @@
+.zoomy.widget {
+  transform-origin: top left;
+  box-sizing: border-box;
+}
+
+.zoomy.widget.defaultStyle {
+  background: white;
+}
+
 .zoomy.widget.animate_zoomedPlayers {
   transition: transform 0.5s ease-in-out;
 }

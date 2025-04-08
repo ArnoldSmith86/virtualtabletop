@@ -5,23 +5,33 @@ export class Zoomy extends Widget {
     super(id);
 
     this.addDefaults({
-      movable: false,
-      layer: -2,
       typeClasses: 'widget zoomy',
+
+      x: 100,
+      y: 100,
+      width: 800,
+      height: 800,
+      scale: 0.5,
+      layer: -1,
+      movable: false,
+
       animatePropertyChange: [
         {
           property: 'zoomedPlayers',
           duration: 500
         }
       ],
+      hidePlayerCursors: true,
+      dropTarget: {},
 
+      defaultStyle: true,
       zoomedPlayers: [],
       groupedWith: [],
 
-      zoomedX: 0,
-      zoomedY: 0,
-      zoomedLayer: 0.5,
-      zoomedScale: 2,
+      zoomedX: 400,
+      zoomedY: 100,
+      zoomedLayer: -0.5,
+      zoomedScale: 1,
       zoomedRotation: 0,
 
       zoomedMovable: false
@@ -52,6 +62,23 @@ export class Zoomy extends Widget {
     if(this.isZoomed())
       return z - ((this.get('layer') + 10) * 100000) + ((this.get('zoomedLayer') + 10) * 100000);
     return z;
+  }
+
+  classes(includeTemporary = true) {
+    let className = super.classes(includeTemporary);
+
+    if(this.get('defaultStyle'))
+      className += ' defaultStyle';
+
+    return className;
+  }
+
+  classesProperties() {
+    const properties = super.classesProperties();
+
+    properties.push('defaultStyle');
+
+    return properties;
   }
 
   cssTransform() {
