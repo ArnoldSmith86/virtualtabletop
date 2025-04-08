@@ -14,7 +14,7 @@ export class Zoomy extends Widget {
 
       zoomedX: 0,
       zoomedY: 0,
-      zoomedZ: 0,
+      zoomedLayer: 0.5,
       zoomedScale: 2,
       zoomedRotation: 0,
 
@@ -37,14 +37,14 @@ export class Zoomy extends Widget {
 
   applyDeltaToDOM(delta) {
     super.applyDeltaToDOM(delta);
-    if(delta.z !== undefined || delta.zoomedZ !== undefined || delta.zoomedPlayers !== undefined)
+    if(delta.layer !== undefined || delta.zoomedLayer !== undefined || delta.zoomedPlayers !== undefined)
       this.applyZ(true);
   }
 
   calculateZ() {
     const z = super.calculateZ();
     if(this.isZoomed())
-      return z - this.get('z') + this.get('zoomedZ');
+      return z - ((this.get('layer') + 10) * 100000) + ((this.get('zoomedLayer') + 10) * 100000);
     return z;
   }
 
