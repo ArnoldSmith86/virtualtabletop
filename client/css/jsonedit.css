@@ -105,6 +105,10 @@
 #jeText {
   padding-left: calc(var(--linenumbers-digits) * 8px + 2px);
 }
+#jeText::selection {
+  background-color: var(--backgroundHighlightColor1);
+  color: var(--textColor);
+}
 
 /**** End of line number styles ****/
 
