@@ -1,0 +1,3759 @@
+{
+  "_meta": {
+    "version": 17,
+    "info": {
+      "name": "Stairs",
+      "image": "/assets/1997012270_92140",
+      "rules": "https://cdn.shopify.com/s/files/1/0578/3502/8664/files/Stairs_EN.pdf?v=1680795871",
+      "bgg": "https://boardgamegeek.com/boardgame/383703/stairs",
+      "year": "2023",
+      "mode": "vs",
+      "time": "15-30",
+      "attribution": "Game name, design, library image, and rules manual copyright Kanare Kato. Used with permission from the rights holder, Kanare-Abstract (https://kanare-abstract.com/).&nbsp;<div>\nLayout and scripting by Shobu, released to the Public Domain under CC0.\n\nWood grain background by RyanPro available under the Pixabay license from https://pixabay.com/photos/trees-wood-yellow-wood-oak-1915247/.\n\nThe following assets are by Delapouite, available from https://game-icons.net under CC BY 3.0:&nbsp;<span style=\"color: var(--overlayFontColor);\">&nbsp;https://game-icons.net/1x1/delapouite/token.html</span></div>",
+      "lastUpdate": 1744327796078,
+      "showName": false,
+      "skill": "medium",
+      "description": "Stairs is a stacking game consisting of a simple rule set. The goal is to place your piece higher than your opponent.",
+      "similarImage": "",
+      "similarName": "",
+      "similarDesigner": "Kanare Kato",
+      "similarAwards": "",
+      "ruleText": "<b>OVERVIEW</b><div>Stairs is a stacking game consisting of a simple rule set. Players basically just move one of their pieces to an adjacent space, but one step higher than before the move. There is also the restriction that the player must always move the piece on the lowest stack as possible. The object of the game is to place one of your pieces on the highest stack.\n<br><div><b>COMPONENTS</b></div><div><span style=\"color: var(--overlayFontColor);\">- 6×6 square board</span></div><div><span style=\"color: var(--overlayFontColor);\">- 36 two-colored pieces (18 for each)</span></div><div><span style=\"color: var(--overlayFontColor);\"><br></span><b>SETUP</b>\nDecide which player will use which color in an appropriate manner.\n\n<b>GAMEPLAY</b>\nThe player with light color plays first, then turns alternate. The turn player moves a piece of their color according to the following rules. Passing is not allowed, unless you have no pieces to move.</div><div>\n1. Pieces move onto adjacent pieces of either color, either vertically, horizontally or diagonally.\n<br></div><div>2. Only the topmost piece in a stack can be moved.\n<br></div><div>3. Pieces must always be moved on top of other pieces of the same height as itself. In other words, a moved piece is always one piece higher than it was before the move.\n<br></div><div>4. On your turn, <b>you must move the lowest of your pieces that can be moved</b>.</div><div>&nbsp;</div></div><div><b>PIE RULE (OPTIONAL)\n</b>The pie rule can be added as an optional rule to adjust the first move's advantage.</div><div>\nIf this rule is added, the second player (dark) can choose whether or not to exchange colors after the first move of the first player (light). If the colors are exchanged, the player who was the first player continues to take the turn as the second player (dark).<br></div><div><br></div><div><b>GAME END</b>\nThe game ends when neither player can move anymore.\n*However, the game may end by agreement if the possible subsequent moves are clearly irrelevant to determining the winner.\n\nWinners are determined as follows:\n1. The player with the highest stack wins.\n2. If both players have reached the same height, the player with more pieces on that height wins.\n3. If there is a tie, the player who places that number of pieces at that height before the opponent wins&nbsp;&nbsp;</div>",
+      "helpText": "- Players take seats<div>- Pieces can be moved on the board by clicking/dragging</div>",
+      "variantImage": "",
+      "variant": "",
+      "language": "en-GB",
+      "players": "2"
+    }
+  },
+  "seat1": {
+    "type": "seat",
+    "id": "seat1",
+    "z": 35006,
+    "y": 28,
+    "x": 77,
+    "color": "#616060",
+    "permanentPlayerColor": "#616060",
+    "colorChangeRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY color}",
+        "relation": "!=",
+        "operand2": "${PROPERTY permanentPlayerColor}",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "property": "color",
+            "value": "${PROPERTY permanentPlayerColor}",
+            "collection": "thisButton"
+          }
+        ]
+      }
+    ],
+    "css": {
+      "background": "#ffffff60"
+    },
+    "borderRadius": "20px 20px 20px 20px"
+  },
+  "seat2": {
+    "type": "seat",
+    "id": "seat2",
+    "z": 35007,
+    "y": 29,
+    "index": 2,
+    "x": 1350,
+    "permanentPlayerColor": "#E8E8E7",
+    "color": "#E8E8E7",
+    "width": 150,
+    "height": 40,
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": {
+      "seat1": [
+        "colorChangeRoutine"
+      ]
+    },
+    "css": {
+      "background": "#ffffff60"
+    },
+    "borderRadius": "20px 20px 20px 20px"
+  },
+  "reset": {
+    "type": "button",
+    "id": "reset",
+    "height": 40,
+    "z": 35009,
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "fields": [
+          {
+            "type": "title",
+            "text": "Restarting ..."
+          },
+          {
+            "type": "subtitle",
+            "text": "Are you sure you want to restart the game?"
+          }
+        ]
+      },
+      {
+        "func": "SELECT",
+        "property": "resetProperties",
+        "relation": "!=",
+        "value": null
+      },
+      {
+        "func": "FOREACH",
+        "loopRoutine": [
+          {
+            "func": "FOREACH",
+            "in": "${PROPERTY resetProperties OF $widgetID}",
+            "loopRoutine": [
+              {
+                "func": "SET",
+                "property": "${key}",
+                "value": "${value}"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "SELECT",
+        "type": "holder",
+        "property": "id",
+        "relation": "!=",
+        "value": null
+      },
+      {
+        "func": "SET",
+        "property": "z",
+        "value": 1
+      },
+      {
+        "func": "SET",
+        "property": "text",
+        "value": 1
+      }
+    ],
+    "text": "RESET",
+    "x": 1499,
+    "y": 945,
+    "css": "font-size: 18px; background-color:VTTblue; border-color:whitee",
+    "scale": 0.7
+  },
+  "grid3": {
+    "type": "holder",
+    "id": "grid3",
+    "x": 320,
+    "y": 24,
+    "width": 160,
+    "height": 160,
+    "z": 1,
+    "css": {
+      "background": "#D4A867"
+    },
+    "dropTarget": {
+      "type": "holder"
+    },
+    "dropOffsetY": 77,
+    "dropLimit": 1,
+    "borderRadius": "30px 30px 30px 30px",
+    "dropOffsetX": 33,
+    "text": 1
+  },
+  "grid4": {
+    "type": "holder",
+    "id": "grid4",
+    "x": 480,
+    "y": 24,
+    "width": 160,
+    "height": 160,
+    "z": 1,
+    "css": {
+      "background": "#D4A867"
+    },
+    "dropTarget": {
+      "type": "holder"
+    },
+    "dropOffsetY": 77,
+    "dropLimit": 1,
+    "borderRadius": "30px 30px 30px 30px",
+    "dropOffsetX": 33,
+    "text": 1
+  },
+  "grid5": {
+    "type": "holder",
+    "id": "grid5",
+    "x": 640,
+    "y": 24,
+    "width": 160,
+    "height": 160,
+    "z": 1,
+    "css": {
+      "background": "#D4A867"
+    },
+    "dropTarget": {
+      "type": "holder"
+    },
+    "dropOffsetY": 77,
+    "dropLimit": 1,
+    "borderRadius": "30px 30px 30px 30px",
+    "dropOffsetX": 33,
+    "text": 1
+  },
+  "grid6": {
+    "type": "holder",
+    "id": "grid6",
+    "x": 800,
+    "y": 24,
+    "width": 160,
+    "height": 160,
+    "z": 1,
+    "css": {
+      "background": "#D4A867"
+    },
+    "dropTarget": {
+      "type": "holder"
+    },
+    "dropOffsetY": 77,
+    "dropLimit": 1,
+    "borderRadius": "30px 30px 30px 30px",
+    "dropOffsetX": 33,
+    "text": 1
+  },
+  "grid7": {
+    "type": "holder",
+    "id": "grid7",
+    "x": 960,
+    "y": 24,
+    "width": 160,
+    "height": 160,
+    "z": 1,
+    "css": {
+      "background": "#D4A867"
+    },
+    "dropTarget": {
+      "type": "holder"
+    },
+    "dropOffsetY": 77,
+    "dropLimit": 1,
+    "borderRadius": "30px 30px 30px 30px",
+    "dropOffsetX": 33,
+    "text": 1
+  },
+  "grid8": {
+    "type": "holder",
+    "id": "grid8",
+    "x": 1120,
+    "y": 24,
+    "width": 160,
+    "height": 160,
+    "z": 1,
+    "css": {
+      "background": "#D4A867"
+    },
+    "dropTarget": {
+      "type": "holder"
+    },
+    "dropOffsetY": 77,
+    "dropLimit": 1,
+    "borderRadius": "30px 30px 30px 30px",
+    "dropOffsetX": 33,
+    "text": 1
+  },
+  "grid9": {
+    "type": "holder",
+    "id": "grid9",
+    "x": 320,
+    "y": 184,
+    "width": 160,
+    "height": 160,
+    "z": 1,
+    "css": {
+      "background": "#D4A867"
+    },
+    "dropTarget": {
+      "type": "holder"
+    },
+    "dropOffsetY": 77,
+    "dropLimit": 1,
+    "borderRadius": "30px 30px 30px 30px",
+    "dropOffsetX": 33,
+    "text": 1
+  },
+  "grid10": {
+    "type": "holder",
+    "id": "grid10",
+    "x": 480,
+    "y": 184,
+    "width": 160,
+    "height": 160,
+    "z": 1,
+    "css": {
+      "background": "#D4A867"
+    },
+    "dropTarget": {
+      "type": "holder"
+    },
+    "dropOffsetY": 77,
+    "dropLimit": 1,
+    "borderRadius": "30px 30px 30px 30px",
+    "dropOffsetX": 33,
+    "text": 1
+  },
+  "grid11": {
+    "type": "holder",
+    "id": "grid11",
+    "x": 640,
+    "y": 184,
+    "width": 160,
+    "height": 160,
+    "z": 1,
+    "css": {
+      "background": "#D4A867"
+    },
+    "dropTarget": {
+      "type": "holder"
+    },
+    "dropOffsetY": 77,
+    "dropLimit": 1,
+    "borderRadius": "30px 30px 30px 30px",
+    "dropOffsetX": 33,
+    "text": 1
+  },
+  "grid12": {
+    "type": "holder",
+    "id": "grid12",
+    "x": 800,
+    "y": 184,
+    "width": 160,
+    "height": 160,
+    "z": 1,
+    "css": {
+      "background": "#D4A867"
+    },
+    "dropTarget": {
+      "type": "holder"
+    },
+    "dropOffsetY": 77,
+    "dropLimit": 1,
+    "borderRadius": "30px 30px 30px 30px",
+    "dropOffsetX": 33,
+    "text": 1
+  },
+  "grid13": {
+    "type": "holder",
+    "id": "grid13",
+    "x": 960,
+    "y": 184,
+    "width": 160,
+    "height": 160,
+    "z": 1,
+    "css": {
+      "background": "#D4A867"
+    },
+    "dropTarget": {
+      "type": "holder"
+    },
+    "dropOffsetY": 77,
+    "dropLimit": 1,
+    "borderRadius": "30px 30px 30px 30px",
+    "dropOffsetX": 33,
+    "text": 1
+  },
+  "grid14": {
+    "type": "holder",
+    "id": "grid14",
+    "x": 1120,
+    "y": 184,
+    "width": 160,
+    "height": 160,
+    "z": 1,
+    "css": {
+      "background": "#D4A867"
+    },
+    "dropTarget": {
+      "type": "holder"
+    },
+    "dropOffsetY": 77,
+    "dropLimit": 1,
+    "borderRadius": "30px 30px 30px 30px",
+    "dropOffsetX": 33,
+    "text": 1
+  },
+  "grid15": {
+    "type": "holder",
+    "id": "grid15",
+    "x": 320,
+    "y": 344,
+    "width": 160,
+    "height": 160,
+    "z": 1,
+    "css": {
+      "background": "#D4A867"
+    },
+    "dropTarget": {
+      "type": "holder"
+    },
+    "dropOffsetY": 77,
+    "dropLimit": 1,
+    "borderRadius": "30px 30px 30px 30px",
+    "dropOffsetX": 33,
+    "text": 1
+  },
+  "grid16": {
+    "type": "holder",
+    "id": "grid16",
+    "x": 480,
+    "y": 344,
+    "width": 160,
+    "height": 160,
+    "z": 1,
+    "css": {
+      "background": "#D4A867"
+    },
+    "dropTarget": {
+      "type": "holder"
+    },
+    "dropOffsetY": 77,
+    "dropLimit": 1,
+    "borderRadius": "30px 30px 30px 30px",
+    "dropOffsetX": 33,
+    "text": 1
+  },
+  "grid17": {
+    "type": "holder",
+    "id": "grid17",
+    "x": 640,
+    "y": 344,
+    "width": 160,
+    "height": 160,
+    "z": 1,
+    "css": {
+      "background": "#D4A867"
+    },
+    "dropTarget": {
+      "type": "holder"
+    },
+    "dropOffsetY": 77,
+    "dropLimit": 1,
+    "borderRadius": "30px 30px 30px 30px",
+    "dropOffsetX": 33,
+    "text": 1
+  },
+  "grid18": {
+    "type": "holder",
+    "id": "grid18",
+    "x": 800,
+    "y": 344,
+    "width": 160,
+    "height": 160,
+    "z": 1,
+    "css": {
+      "background": "#D4A867"
+    },
+    "dropTarget": {
+      "type": "holder"
+    },
+    "dropOffsetY": 77,
+    "dropLimit": 1,
+    "borderRadius": "30px 30px 30px 30px",
+    "dropOffsetX": 33,
+    "text": 1
+  },
+  "grid19": {
+    "type": "holder",
+    "id": "grid19",
+    "x": 960,
+    "y": 344,
+    "width": 160,
+    "height": 160,
+    "z": 1,
+    "css": {
+      "background": "#D4A867"
+    },
+    "dropTarget": {
+      "type": "holder"
+    },
+    "dropOffsetY": 77,
+    "dropLimit": 1,
+    "borderRadius": "30px 30px 30px 30px",
+    "dropOffsetX": 33,
+    "text": 1
+  },
+  "grid20": {
+    "type": "holder",
+    "id": "grid20",
+    "x": 1120,
+    "y": 344,
+    "width": 160,
+    "height": 160,
+    "z": 1,
+    "css": {
+      "background": "#D4A867"
+    },
+    "dropTarget": {
+      "type": "holder"
+    },
+    "dropOffsetY": 77,
+    "dropLimit": 1,
+    "borderRadius": "30px 30px 30px 30px",
+    "dropOffsetX": 33,
+    "text": 1
+  },
+  "grid21": {
+    "type": "holder",
+    "id": "grid21",
+    "x": 320,
+    "y": 504,
+    "width": 160,
+    "height": 160,
+    "z": 1,
+    "css": {
+      "background": "#D4A867"
+    },
+    "dropTarget": {
+      "type": "holder"
+    },
+    "dropOffsetY": 77,
+    "dropLimit": 1,
+    "borderRadius": "30px 30px 30px 30px",
+    "dropOffsetX": 33,
+    "text": 1
+  },
+  "grid22": {
+    "type": "holder",
+    "id": "grid22",
+    "x": 480,
+    "y": 504,
+    "width": 160,
+    "height": 160,
+    "z": 1,
+    "css": {
+      "background": "#D4A867"
+    },
+    "dropTarget": {
+      "type": "holder"
+    },
+    "dropOffsetY": 77,
+    "dropLimit": 1,
+    "borderRadius": "30px 30px 30px 30px",
+    "dropOffsetX": 33,
+    "text": 1
+  },
+  "grid23": {
+    "type": "holder",
+    "id": "grid23",
+    "x": 640,
+    "y": 504,
+    "width": 160,
+    "height": 160,
+    "z": 1,
+    "css": {
+      "background": "#D4A867"
+    },
+    "dropTarget": {
+      "type": "holder"
+    },
+    "dropOffsetY": 77,
+    "dropLimit": 1,
+    "borderRadius": "30px 30px 30px 30px",
+    "dropOffsetX": 33,
+    "text": 1
+  },
+  "grid24": {
+    "type": "holder",
+    "id": "grid24",
+    "x": 800,
+    "y": 504,
+    "width": 160,
+    "height": 160,
+    "z": 1,
+    "css": {
+      "background": "#D4A867"
+    },
+    "dropTarget": {
+      "type": "holder"
+    },
+    "dropOffsetY": 77,
+    "dropLimit": 1,
+    "borderRadius": "30px 30px 30px 30px",
+    "dropOffsetX": 33,
+    "text": 1
+  },
+  "grid25": {
+    "type": "holder",
+    "id": "grid25",
+    "x": 960,
+    "y": 504,
+    "width": 160,
+    "height": 160,
+    "z": 1,
+    "css": {
+      "background": "#D4A867"
+    },
+    "dropTarget": {
+      "type": "holder"
+    },
+    "dropOffsetY": 77,
+    "dropLimit": 1,
+    "borderRadius": "30px 30px 30px 30px",
+    "dropOffsetX": 33,
+    "text": 1
+  },
+  "grid26": {
+    "type": "holder",
+    "id": "grid26",
+    "x": 1120,
+    "y": 504,
+    "width": 160,
+    "height": 160,
+    "z": 1,
+    "css": {
+      "background": "#D4A867"
+    },
+    "dropTarget": {
+      "type": "holder"
+    },
+    "dropOffsetY": 77,
+    "dropLimit": 1,
+    "borderRadius": "30px 30px 30px 30px",
+    "dropOffsetX": 33,
+    "text": 1
+  },
+  "grid27": {
+    "type": "holder",
+    "id": "grid27",
+    "x": 320,
+    "y": 664,
+    "width": 160,
+    "height": 160,
+    "z": 1,
+    "css": {
+      "background": "#D4A867"
+    },
+    "dropTarget": {
+      "type": "holder"
+    },
+    "dropOffsetY": 77,
+    "dropLimit": 1,
+    "borderRadius": "30px 30px 30px 30px",
+    "dropOffsetX": 33,
+    "text": 1
+  },
+  "grid28": {
+    "type": "holder",
+    "id": "grid28",
+    "x": 480,
+    "y": 664,
+    "width": 160,
+    "height": 160,
+    "z": 1,
+    "css": {
+      "background": "#D4A867"
+    },
+    "dropTarget": {
+      "type": "holder"
+    },
+    "dropOffsetY": 77,
+    "dropLimit": 1,
+    "borderRadius": "30px 30px 30px 30px",
+    "dropOffsetX": 33,
+    "text": 1
+  },
+  "grid29": {
+    "type": "holder",
+    "id": "grid29",
+    "x": 640,
+    "y": 664,
+    "width": 160,
+    "height": 160,
+    "z": 1,
+    "css": {
+      "background": "#D4A867"
+    },
+    "dropTarget": {
+      "type": "holder"
+    },
+    "dropOffsetY": 77,
+    "dropLimit": 1,
+    "borderRadius": "30px 30px 30px 30px",
+    "dropOffsetX": 33,
+    "text": 1
+  },
+  "grid30": {
+    "type": "holder",
+    "id": "grid30",
+    "x": 800,
+    "y": 664,
+    "width": 160,
+    "height": 160,
+    "z": 1,
+    "css": {
+      "background": "#D4A867"
+    },
+    "dropTarget": {
+      "type": "holder"
+    },
+    "dropOffsetY": 77,
+    "dropLimit": 1,
+    "borderRadius": "30px 30px 30px 30px",
+    "dropOffsetX": 33,
+    "text": 1
+  },
+  "grid31": {
+    "type": "holder",
+    "id": "grid31",
+    "x": 960,
+    "y": 664,
+    "width": 160,
+    "height": 160,
+    "z": 1,
+    "css": {
+      "background": "#D4A867"
+    },
+    "dropTarget": {
+      "type": "holder"
+    },
+    "dropOffsetY": 77,
+    "dropLimit": 1,
+    "borderRadius": "30px 30px 30px 30px",
+    "dropOffsetX": 33,
+    "text": 1
+  },
+  "grid32": {
+    "type": "holder",
+    "id": "grid32",
+    "x": 1120,
+    "y": 664,
+    "width": 160,
+    "height": 160,
+    "z": 1,
+    "css": {
+      "background": "#D4A867"
+    },
+    "dropTarget": {
+      "type": "holder"
+    },
+    "dropOffsetY": 77,
+    "dropLimit": 1,
+    "borderRadius": "30px 30px 30px 30px",
+    "dropOffsetX": 33,
+    "text": 1
+  },
+  "grid33": {
+    "type": "holder",
+    "id": "grid33",
+    "x": 320,
+    "y": 824,
+    "width": 160,
+    "height": 160,
+    "z": 1,
+    "css": {
+      "background": "#D4A867"
+    },
+    "dropTarget": {
+      "type": "holder"
+    },
+    "dropOffsetY": 77,
+    "dropLimit": 1,
+    "borderRadius": "30px 30px 30px 30px",
+    "dropOffsetX": 33,
+    "text": 1
+  },
+  "grid34": {
+    "type": "holder",
+    "id": "grid34",
+    "x": 480,
+    "y": 824,
+    "width": 160,
+    "height": 160,
+    "z": 1,
+    "css": {
+      "background": "#D4A867"
+    },
+    "dropTarget": {
+      "type": "holder"
+    },
+    "dropOffsetY": 77,
+    "dropLimit": 1,
+    "borderRadius": "30px 30px 30px 30px",
+    "dropOffsetX": 33,
+    "text": 1
+  },
+  "grid35": {
+    "type": "holder",
+    "id": "grid35",
+    "x": 640,
+    "y": 824,
+    "width": 160,
+    "height": 160,
+    "z": 1,
+    "css": {
+      "background": "#D4A867"
+    },
+    "dropTarget": {
+      "type": "holder"
+    },
+    "dropOffsetY": 77,
+    "dropLimit": 1,
+    "borderRadius": "30px 30px 30px 30px",
+    "dropOffsetX": 33,
+    "text": 1
+  },
+  "grid36": {
+    "type": "holder",
+    "id": "grid36",
+    "x": 800,
+    "y": 824,
+    "width": 160,
+    "height": 160,
+    "z": 1,
+    "css": {
+      "background": "#D4A867"
+    },
+    "dropTarget": {
+      "type": "holder"
+    },
+    "dropOffsetY": 77,
+    "dropLimit": 1,
+    "borderRadius": "30px 30px 30px 30px",
+    "dropOffsetX": 33,
+    "text": 1
+  },
+  "grid37": {
+    "type": "holder",
+    "id": "grid37",
+    "x": 960,
+    "y": 824,
+    "width": 160,
+    "height": 160,
+    "z": 1,
+    "css": {
+      "background": "#D4A867"
+    },
+    "dropTarget": {
+      "type": "holder"
+    },
+    "dropOffsetY": 77,
+    "dropLimit": 1,
+    "borderRadius": "30px 30px 30px 30px",
+    "dropOffsetX": 33,
+    "text": 1
+  },
+  "grid38": {
+    "type": "holder",
+    "id": "grid38",
+    "x": 1120,
+    "y": 824,
+    "width": 160,
+    "height": 160,
+    "z": 1,
+    "css": {
+      "background": "#D4A867"
+    },
+    "dropTarget": {
+      "type": "holder"
+    },
+    "dropOffsetY": 77,
+    "dropLimit": 1,
+    "borderRadius": "30px 30px 30px 30px",
+    "dropOffsetX": 33,
+    "text": 1
+  },
+  "coin-black1": {
+    "type": "holder",
+    "id": "coin-black1",
+    "x": 33,
+    "y": 77,
+    "width": 90,
+    "height": 68,
+    "z": 6,
+    "movable": true,
+    "classes": "transparent",
+    "css": {
+      "default": {
+        "background-image": "url(\"data:image/svg+xml,%3Csvg version='1.2' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' width='90' height='90'%3E%3Cpath fill='${PROPERTY color}' stroke='${PROPERTY outline}' stroke-width='4' d='m50 22.9c-12.7 0-24.3 2.2-32.4 5.8-4.1 1.7-7.4 3.8-9.5 6-2.2 2.2-3.2 4.4-3.2 6.7 0 2.3 1 4.5 3.2 6.7 2.1 2.2 5.4 4.3 9.5 6.1 8.1 3.5 19.7 5.8 32.4 5.8 12.7 0 24.3-2.3 32.4-5.8 4.1-1.8 7.4-3.9 9.5-6.1 2.2-2.2 3.2-4.4 3.2-6.7 0-2.3-1-4.5-3.2-6.7-2.1-2.2-5.4-4.3-9.5-6-8.1-3.6-19.7-5.8-32.4-5.8zm-45.1 26.9v9.8c0 1.3 1 3.5 3.2 5.7 2.1 2.2 5.4 4.3 9.5 6 8.1 3.6 19.7 5.8 32.4 5.8 12.7 0 24.3-2.2 32.4-5.8 4.1-1.7 7.4-3.8 9.5-6 2.2-2.2 3.2-4.4 3.2-5.7v-9.8q-0.3 0.4-0.6 0.7c-2.6 2.7-6.3 5-10.7 6.9-8.7 3.8-20.7 6.1-33.8 6.1-13.1 0-25.1-2.3-33.8-6.1-4.4-1.9-8.1-4.2-10.6-6.9q-0.4-0.3-0.7-0.7z'/%3E%3C/svg%3E\")",
+        "background-position-y": "20%",
+        "display": "flex",
+        "align-items": "center",
+        "justify-content": "center",
+        "font-size": "20px"
+      },
+      "::before": {
+        "content": "\"${PROPERTY text}\"",
+        "color": "white",
+        "transform": "translateY(-3px) skewX(20deg)"
+      }
+    },
+    "dropLimit": 1,
+    "dropOffsetX": -1,
+    "dropOffsetY": -15,
+    "dropTarget": {
+      "token": true
+    },
+    "resetProperties": {
+      "parent": "grid3",
+      "x": 33,
+      "y": 77
+    },
+    "color": "%23616060",
+    "outline": "black",
+    "text": 1,
+    "token": true,
+    "enterRoutine": [
+      "var newCount = ${PROPERTY text} + 1",
+      {
+        "func": "SET",
+        "collection": "child",
+        "property": "text",
+        "value": "${newCount}"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "SET",
+        "collection": "child",
+        "property": "text",
+        "value": 1
+      }
+    ],
+    "textChangeRoutine": [
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "${PROPERTY id}"
+      },
+      {
+        "func": "GET",
+        "property": "id",
+        "variable": "childID"
+      },
+      "var childCount = ${PROPERTY text} + 1",
+      {
+        "func": "SET",
+        "collection": [
+          "${childID}"
+        ],
+        "property": "text",
+        "value": "${childCount}"
+      }
+    ],
+    "parent": "grid3"
+  },
+  "coin-white1": {
+    "type": "holder",
+    "id": "coin-white1",
+    "x": 33,
+    "y": 77,
+    "width": 90,
+    "height": 68,
+    "z": 1,
+    "movable": true,
+    "classes": "transparent",
+    "css": {
+      "default": {
+        "background-image": "url(\"data:image/svg+xml,%3Csvg version='1.2' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' width='90' height='90'%3E%3Cpath fill='${PROPERTY color}' stroke='${PROPERTY outline}' stroke-width='4' d='m50 22.9c-12.7 0-24.3 2.2-32.4 5.8-4.1 1.7-7.4 3.8-9.5 6-2.2 2.2-3.2 4.4-3.2 6.7 0 2.3 1 4.5 3.2 6.7 2.1 2.2 5.4 4.3 9.5 6.1 8.1 3.5 19.7 5.8 32.4 5.8 12.7 0 24.3-2.3 32.4-5.8 4.1-1.8 7.4-3.9 9.5-6.1 2.2-2.2 3.2-4.4 3.2-6.7 0-2.3-1-4.5-3.2-6.7-2.1-2.2-5.4-4.3-9.5-6-8.1-3.6-19.7-5.8-32.4-5.8zm-45.1 26.9v9.8c0 1.3 1 3.5 3.2 5.7 2.1 2.2 5.4 4.3 9.5 6 8.1 3.6 19.7 5.8 32.4 5.8 12.7 0 24.3-2.2 32.4-5.8 4.1-1.7 7.4-3.8 9.5-6 2.2-2.2 3.2-4.4 3.2-5.7v-9.8q-0.3 0.4-0.6 0.7c-2.6 2.7-6.3 5-10.7 6.9-8.7 3.8-20.7 6.1-33.8 6.1-13.1 0-25.1-2.3-33.8-6.1-4.4-1.9-8.1-4.2-10.6-6.9q-0.4-0.3-0.7-0.7z'/%3E%3C/svg%3E\")",
+        "background-position-y": "20%",
+        "display": "flex",
+        "align-items": "center",
+        "justify-content": "center",
+        "font-size": "20px"
+      },
+      "::before": {
+        "content": "\"${PROPERTY text}\"",
+        "color": "grey",
+        "transform": "translateY(-3px) skewX(20deg)"
+      }
+    },
+    "dropLimit": 1,
+    "dropOffsetX": -1,
+    "dropOffsetY": -15,
+    "dropTarget": {
+      "token": true
+    },
+    "resetProperties": {
+      "parent": "grid4",
+      "x": 33,
+      "y": 77
+    },
+    "color": "%23E8E8E7",
+    "outline": "black",
+    "text": 1,
+    "token": true,
+    "enterRoutine": [
+      "var newCount = ${PROPERTY text} + 1",
+      {
+        "func": "SET",
+        "collection": "child",
+        "property": "text",
+        "value": "${newCount}"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "SET",
+        "collection": "child",
+        "property": "text",
+        "value": 1
+      }
+    ],
+    "textChangeRoutine": [
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "${PROPERTY id}"
+      },
+      {
+        "func": "GET",
+        "property": "id",
+        "variable": "childID"
+      },
+      "var childCount = ${PROPERTY text} + 1",
+      {
+        "func": "SET",
+        "collection": [
+          "${childID}"
+        ],
+        "property": "text",
+        "value": "${childCount}"
+      }
+    ],
+    "parent": "grid4"
+  },
+  "coin-black2": {
+    "type": "holder",
+    "id": "coin-black2",
+    "x": 33,
+    "y": 77,
+    "width": 90,
+    "height": 68,
+    "z": 1,
+    "movable": true,
+    "classes": "transparent",
+    "css": {
+      "default": {
+        "background-image": "url(\"data:image/svg+xml,%3Csvg version='1.2' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' width='90' height='90'%3E%3Cpath fill='${PROPERTY color}' stroke='${PROPERTY outline}' stroke-width='4' d='m50 22.9c-12.7 0-24.3 2.2-32.4 5.8-4.1 1.7-7.4 3.8-9.5 6-2.2 2.2-3.2 4.4-3.2 6.7 0 2.3 1 4.5 3.2 6.7 2.1 2.2 5.4 4.3 9.5 6.1 8.1 3.5 19.7 5.8 32.4 5.8 12.7 0 24.3-2.3 32.4-5.8 4.1-1.8 7.4-3.9 9.5-6.1 2.2-2.2 3.2-4.4 3.2-6.7 0-2.3-1-4.5-3.2-6.7-2.1-2.2-5.4-4.3-9.5-6-8.1-3.6-19.7-5.8-32.4-5.8zm-45.1 26.9v9.8c0 1.3 1 3.5 3.2 5.7 2.1 2.2 5.4 4.3 9.5 6 8.1 3.6 19.7 5.8 32.4 5.8 12.7 0 24.3-2.2 32.4-5.8 4.1-1.7 7.4-3.8 9.5-6 2.2-2.2 3.2-4.4 3.2-5.7v-9.8q-0.3 0.4-0.6 0.7c-2.6 2.7-6.3 5-10.7 6.9-8.7 3.8-20.7 6.1-33.8 6.1-13.1 0-25.1-2.3-33.8-6.1-4.4-1.9-8.1-4.2-10.6-6.9q-0.4-0.3-0.7-0.7z'/%3E%3C/svg%3E\")",
+        "background-position-y": "20%",
+        "display": "flex",
+        "align-items": "center",
+        "justify-content": "center",
+        "font-size": "20px"
+      },
+      "::before": {
+        "content": "\"${PROPERTY text}\"",
+        "color": "white",
+        "transform": "translateY(-3px) skewX(20deg)"
+      }
+    },
+    "dropLimit": 1,
+    "dropOffsetX": -1,
+    "dropOffsetY": -15,
+    "dropTarget": {
+      "token": true
+    },
+    "resetProperties": {
+      "parent": "grid5",
+      "x": 33,
+      "y": 77
+    },
+    "color": "%23616060",
+    "outline": "black",
+    "text": 1,
+    "token": true,
+    "enterRoutine": [
+      "var newCount = ${PROPERTY text} + 1",
+      {
+        "func": "SET",
+        "collection": "child",
+        "property": "text",
+        "value": "${newCount}"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "SET",
+        "collection": "child",
+        "property": "text",
+        "value": 1
+      }
+    ],
+    "textChangeRoutine": [
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "${PROPERTY id}"
+      },
+      {
+        "func": "GET",
+        "property": "id",
+        "variable": "childID"
+      },
+      "var childCount = ${PROPERTY text} + 1",
+      {
+        "func": "SET",
+        "collection": [
+          "${childID}"
+        ],
+        "property": "text",
+        "value": "${childCount}"
+      }
+    ],
+    "parent": "grid5"
+  },
+  "coin-black3": {
+    "type": "holder",
+    "id": "coin-black3",
+    "x": 33,
+    "y": 77,
+    "width": 90,
+    "height": 68,
+    "z": 1,
+    "movable": true,
+    "classes": "transparent",
+    "css": {
+      "default": {
+        "background-image": "url(\"data:image/svg+xml,%3Csvg version='1.2' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' width='90' height='90'%3E%3Cpath fill='${PROPERTY color}' stroke='${PROPERTY outline}' stroke-width='4' d='m50 22.9c-12.7 0-24.3 2.2-32.4 5.8-4.1 1.7-7.4 3.8-9.5 6-2.2 2.2-3.2 4.4-3.2 6.7 0 2.3 1 4.5 3.2 6.7 2.1 2.2 5.4 4.3 9.5 6.1 8.1 3.5 19.7 5.8 32.4 5.8 12.7 0 24.3-2.3 32.4-5.8 4.1-1.8 7.4-3.9 9.5-6.1 2.2-2.2 3.2-4.4 3.2-6.7 0-2.3-1-4.5-3.2-6.7-2.1-2.2-5.4-4.3-9.5-6-8.1-3.6-19.7-5.8-32.4-5.8zm-45.1 26.9v9.8c0 1.3 1 3.5 3.2 5.7 2.1 2.2 5.4 4.3 9.5 6 8.1 3.6 19.7 5.8 32.4 5.8 12.7 0 24.3-2.2 32.4-5.8 4.1-1.7 7.4-3.8 9.5-6 2.2-2.2 3.2-4.4 3.2-5.7v-9.8q-0.3 0.4-0.6 0.7c-2.6 2.7-6.3 5-10.7 6.9-8.7 3.8-20.7 6.1-33.8 6.1-13.1 0-25.1-2.3-33.8-6.1-4.4-1.9-8.1-4.2-10.6-6.9q-0.4-0.3-0.7-0.7z'/%3E%3C/svg%3E\")",
+        "background-position-y": "20%",
+        "display": "flex",
+        "align-items": "center",
+        "justify-content": "center",
+        "font-size": "20px"
+      },
+      "::before": {
+        "content": "\"${PROPERTY text}\"",
+        "color": "white",
+        "transform": "translateY(-3px) skewX(20deg)"
+      }
+    },
+    "dropLimit": 1,
+    "dropOffsetX": -1,
+    "dropOffsetY": -15,
+    "dropTarget": {
+      "token": true
+    },
+    "resetProperties": {
+      "parent": "grid7",
+      "x": 33,
+      "y": 77
+    },
+    "color": "%23616060",
+    "outline": "black",
+    "text": 1,
+    "token": true,
+    "enterRoutine": [
+      "var newCount = ${PROPERTY text} + 1",
+      {
+        "func": "SET",
+        "collection": "child",
+        "property": "text",
+        "value": "${newCount}"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "SET",
+        "collection": "child",
+        "property": "text",
+        "value": 1
+      }
+    ],
+    "textChangeRoutine": [
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "${PROPERTY id}"
+      },
+      {
+        "func": "GET",
+        "property": "id",
+        "variable": "childID"
+      },
+      "var childCount = ${PROPERTY text} + 1",
+      {
+        "func": "SET",
+        "collection": [
+          "${childID}"
+        ],
+        "property": "text",
+        "value": "${childCount}"
+      }
+    ],
+    "parent": "grid7"
+  },
+  "coin-black4": {
+    "type": "holder",
+    "id": "coin-black4",
+    "x": 33,
+    "y": 77,
+    "width": 90,
+    "height": 68,
+    "z": 1,
+    "movable": true,
+    "classes": "transparent",
+    "css": {
+      "default": {
+        "background-image": "url(\"data:image/svg+xml,%3Csvg version='1.2' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' width='90' height='90'%3E%3Cpath fill='${PROPERTY color}' stroke='${PROPERTY outline}' stroke-width='4' d='m50 22.9c-12.7 0-24.3 2.2-32.4 5.8-4.1 1.7-7.4 3.8-9.5 6-2.2 2.2-3.2 4.4-3.2 6.7 0 2.3 1 4.5 3.2 6.7 2.1 2.2 5.4 4.3 9.5 6.1 8.1 3.5 19.7 5.8 32.4 5.8 12.7 0 24.3-2.3 32.4-5.8 4.1-1.8 7.4-3.9 9.5-6.1 2.2-2.2 3.2-4.4 3.2-6.7 0-2.3-1-4.5-3.2-6.7-2.1-2.2-5.4-4.3-9.5-6-8.1-3.6-19.7-5.8-32.4-5.8zm-45.1 26.9v9.8c0 1.3 1 3.5 3.2 5.7 2.1 2.2 5.4 4.3 9.5 6 8.1 3.6 19.7 5.8 32.4 5.8 12.7 0 24.3-2.2 32.4-5.8 4.1-1.7 7.4-3.8 9.5-6 2.2-2.2 3.2-4.4 3.2-5.7v-9.8q-0.3 0.4-0.6 0.7c-2.6 2.7-6.3 5-10.7 6.9-8.7 3.8-20.7 6.1-33.8 6.1-13.1 0-25.1-2.3-33.8-6.1-4.4-1.9-8.1-4.2-10.6-6.9q-0.4-0.3-0.7-0.7z'/%3E%3C/svg%3E\")",
+        "background-position-y": "20%",
+        "display": "flex",
+        "align-items": "center",
+        "justify-content": "center",
+        "font-size": "20px"
+      },
+      "::before": {
+        "content": "\"${PROPERTY text}\"",
+        "color": "white",
+        "transform": "translateY(-3px) skewX(20deg)"
+      }
+    },
+    "dropLimit": 1,
+    "dropOffsetX": -1,
+    "dropOffsetY": -15,
+    "dropTarget": {
+      "token": true
+    },
+    "resetProperties": {
+      "parent": "grid10",
+      "x": 33,
+      "y": 77
+    },
+    "color": "%23616060",
+    "outline": "black",
+    "text": 1,
+    "token": true,
+    "enterRoutine": [
+      "var newCount = ${PROPERTY text} + 1",
+      {
+        "func": "SET",
+        "collection": "child",
+        "property": "text",
+        "value": "${newCount}"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "SET",
+        "collection": "child",
+        "property": "text",
+        "value": 1
+      }
+    ],
+    "textChangeRoutine": [
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "${PROPERTY id}"
+      },
+      {
+        "func": "GET",
+        "property": "id",
+        "variable": "childID"
+      },
+      "var childCount = ${PROPERTY text} + 1",
+      {
+        "func": "SET",
+        "collection": [
+          "${childID}"
+        ],
+        "property": "text",
+        "value": "${childCount}"
+      }
+    ],
+    "parent": "grid10"
+  },
+  "coin-black5": {
+    "type": "holder",
+    "id": "coin-black5",
+    "x": 33,
+    "y": 77,
+    "width": 90,
+    "height": 68,
+    "z": 1,
+    "movable": true,
+    "classes": "transparent",
+    "css": {
+      "default": {
+        "background-image": "url(\"data:image/svg+xml,%3Csvg version='1.2' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' width='90' height='90'%3E%3Cpath fill='${PROPERTY color}' stroke='${PROPERTY outline}' stroke-width='4' d='m50 22.9c-12.7 0-24.3 2.2-32.4 5.8-4.1 1.7-7.4 3.8-9.5 6-2.2 2.2-3.2 4.4-3.2 6.7 0 2.3 1 4.5 3.2 6.7 2.1 2.2 5.4 4.3 9.5 6.1 8.1 3.5 19.7 5.8 32.4 5.8 12.7 0 24.3-2.3 32.4-5.8 4.1-1.8 7.4-3.9 9.5-6.1 2.2-2.2 3.2-4.4 3.2-6.7 0-2.3-1-4.5-3.2-6.7-2.1-2.2-5.4-4.3-9.5-6-8.1-3.6-19.7-5.8-32.4-5.8zm-45.1 26.9v9.8c0 1.3 1 3.5 3.2 5.7 2.1 2.2 5.4 4.3 9.5 6 8.1 3.6 19.7 5.8 32.4 5.8 12.7 0 24.3-2.2 32.4-5.8 4.1-1.7 7.4-3.8 9.5-6 2.2-2.2 3.2-4.4 3.2-5.7v-9.8q-0.3 0.4-0.6 0.7c-2.6 2.7-6.3 5-10.7 6.9-8.7 3.8-20.7 6.1-33.8 6.1-13.1 0-25.1-2.3-33.8-6.1-4.4-1.9-8.1-4.2-10.6-6.9q-0.4-0.3-0.7-0.7z'/%3E%3C/svg%3E\")",
+        "background-position-y": "20%",
+        "display": "flex",
+        "align-items": "center",
+        "justify-content": "center",
+        "font-size": "20px"
+      },
+      "::before": {
+        "content": "\"${PROPERTY text}\"",
+        "color": "white",
+        "transform": "translateY(-3px) skewX(20deg)"
+      }
+    },
+    "dropLimit": 1,
+    "dropOffsetX": -1,
+    "dropOffsetY": -15,
+    "dropTarget": {
+      "token": true
+    },
+    "resetProperties": {
+      "parent": "grid12",
+      "x": 33,
+      "y": 77
+    },
+    "color": "%23616060",
+    "outline": "black",
+    "text": 1,
+    "token": true,
+    "enterRoutine": [
+      "var newCount = ${PROPERTY text} + 1",
+      {
+        "func": "SET",
+        "collection": "child",
+        "property": "text",
+        "value": "${newCount}"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "SET",
+        "collection": "child",
+        "property": "text",
+        "value": 1
+      }
+    ],
+    "textChangeRoutine": [
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "${PROPERTY id}"
+      },
+      {
+        "func": "GET",
+        "property": "id",
+        "variable": "childID"
+      },
+      "var childCount = ${PROPERTY text} + 1",
+      {
+        "func": "SET",
+        "collection": [
+          "${childID}"
+        ],
+        "property": "text",
+        "value": "${childCount}"
+      }
+    ],
+    "parent": "grid12"
+  },
+  "coin-black6": {
+    "type": "holder",
+    "id": "coin-black6",
+    "x": 33,
+    "y": 77,
+    "width": 90,
+    "height": 68,
+    "z": 1,
+    "movable": true,
+    "classes": "transparent",
+    "css": {
+      "default": {
+        "background-image": "url(\"data:image/svg+xml,%3Csvg version='1.2' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' width='90' height='90'%3E%3Cpath fill='${PROPERTY color}' stroke='${PROPERTY outline}' stroke-width='4' d='m50 22.9c-12.7 0-24.3 2.2-32.4 5.8-4.1 1.7-7.4 3.8-9.5 6-2.2 2.2-3.2 4.4-3.2 6.7 0 2.3 1 4.5 3.2 6.7 2.1 2.2 5.4 4.3 9.5 6.1 8.1 3.5 19.7 5.8 32.4 5.8 12.7 0 24.3-2.3 32.4-5.8 4.1-1.8 7.4-3.9 9.5-6.1 2.2-2.2 3.2-4.4 3.2-6.7 0-2.3-1-4.5-3.2-6.7-2.1-2.2-5.4-4.3-9.5-6-8.1-3.6-19.7-5.8-32.4-5.8zm-45.1 26.9v9.8c0 1.3 1 3.5 3.2 5.7 2.1 2.2 5.4 4.3 9.5 6 8.1 3.6 19.7 5.8 32.4 5.8 12.7 0 24.3-2.2 32.4-5.8 4.1-1.7 7.4-3.8 9.5-6 2.2-2.2 3.2-4.4 3.2-5.7v-9.8q-0.3 0.4-0.6 0.7c-2.6 2.7-6.3 5-10.7 6.9-8.7 3.8-20.7 6.1-33.8 6.1-13.1 0-25.1-2.3-33.8-6.1-4.4-1.9-8.1-4.2-10.6-6.9q-0.4-0.3-0.7-0.7z'/%3E%3C/svg%3E\")",
+        "background-position-y": "20%",
+        "display": "flex",
+        "align-items": "center",
+        "justify-content": "center",
+        "font-size": "20px"
+      },
+      "::before": {
+        "content": "\"${PROPERTY text}\"",
+        "color": "white",
+        "transform": "translateY(-3px) skewX(20deg)"
+      }
+    },
+    "dropLimit": 1,
+    "dropOffsetX": -1,
+    "dropOffsetY": -15,
+    "dropTarget": {
+      "token": true
+    },
+    "resetProperties": {
+      "parent": "grid14",
+      "x": 33,
+      "y": 77
+    },
+    "color": "%23616060",
+    "outline": "black",
+    "text": 1,
+    "token": true,
+    "enterRoutine": [
+      "var newCount = ${PROPERTY text} + 1",
+      {
+        "func": "SET",
+        "collection": "child",
+        "property": "text",
+        "value": "${newCount}"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "SET",
+        "collection": "child",
+        "property": "text",
+        "value": 1
+      }
+    ],
+    "textChangeRoutine": [
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "${PROPERTY id}"
+      },
+      {
+        "func": "GET",
+        "property": "id",
+        "variable": "childID"
+      },
+      "var childCount = ${PROPERTY text} + 1",
+      {
+        "func": "SET",
+        "collection": [
+          "${childID}"
+        ],
+        "property": "text",
+        "value": "${childCount}"
+      }
+    ],
+    "parent": "grid14"
+  },
+  "coin-black7": {
+    "type": "holder",
+    "id": "coin-black7",
+    "x": 33,
+    "y": 77,
+    "width": 90,
+    "height": 68,
+    "z": 1,
+    "movable": true,
+    "classes": "transparent",
+    "css": {
+      "default": {
+        "background-image": "url(\"data:image/svg+xml,%3Csvg version='1.2' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' width='90' height='90'%3E%3Cpath fill='${PROPERTY color}' stroke='${PROPERTY outline}' stroke-width='4' d='m50 22.9c-12.7 0-24.3 2.2-32.4 5.8-4.1 1.7-7.4 3.8-9.5 6-2.2 2.2-3.2 4.4-3.2 6.7 0 2.3 1 4.5 3.2 6.7 2.1 2.2 5.4 4.3 9.5 6.1 8.1 3.5 19.7 5.8 32.4 5.8 12.7 0 24.3-2.3 32.4-5.8 4.1-1.8 7.4-3.9 9.5-6.1 2.2-2.2 3.2-4.4 3.2-6.7 0-2.3-1-4.5-3.2-6.7-2.1-2.2-5.4-4.3-9.5-6-8.1-3.6-19.7-5.8-32.4-5.8zm-45.1 26.9v9.8c0 1.3 1 3.5 3.2 5.7 2.1 2.2 5.4 4.3 9.5 6 8.1 3.6 19.7 5.8 32.4 5.8 12.7 0 24.3-2.2 32.4-5.8 4.1-1.7 7.4-3.8 9.5-6 2.2-2.2 3.2-4.4 3.2-5.7v-9.8q-0.3 0.4-0.6 0.7c-2.6 2.7-6.3 5-10.7 6.9-8.7 3.8-20.7 6.1-33.8 6.1-13.1 0-25.1-2.3-33.8-6.1-4.4-1.9-8.1-4.2-10.6-6.9q-0.4-0.3-0.7-0.7z'/%3E%3C/svg%3E\")",
+        "background-position-y": "20%",
+        "display": "flex",
+        "align-items": "center",
+        "justify-content": "center",
+        "font-size": "20px"
+      },
+      "::before": {
+        "content": "\"${PROPERTY text}\"",
+        "color": "white",
+        "transform": "translateY(-3px) skewX(20deg)"
+      }
+    },
+    "dropLimit": 1,
+    "dropOffsetX": -1,
+    "dropOffsetY": -15,
+    "dropTarget": {
+      "token": true
+    },
+    "resetProperties": {
+      "parent": "grid27",
+      "x": 33,
+      "y": 77
+    },
+    "color": "%23616060",
+    "outline": "black",
+    "text": 1,
+    "token": true,
+    "enterRoutine": [
+      "var newCount = ${PROPERTY text} + 1",
+      {
+        "func": "SET",
+        "collection": "child",
+        "property": "text",
+        "value": "${newCount}"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "SET",
+        "collection": "child",
+        "property": "text",
+        "value": 1
+      }
+    ],
+    "textChangeRoutine": [
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "${PROPERTY id}"
+      },
+      {
+        "func": "GET",
+        "property": "id",
+        "variable": "childID"
+      },
+      "var childCount = ${PROPERTY text} + 1",
+      {
+        "func": "SET",
+        "collection": [
+          "${childID}"
+        ],
+        "property": "text",
+        "value": "${childCount}"
+      }
+    ],
+    "parent": "grid27"
+  },
+  "coin-black8": {
+    "type": "holder",
+    "id": "coin-black8",
+    "x": 33,
+    "y": 77,
+    "width": 90,
+    "height": 68,
+    "z": 1,
+    "movable": true,
+    "classes": "transparent",
+    "css": {
+      "default": {
+        "background-image": "url(\"data:image/svg+xml,%3Csvg version='1.2' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' width='90' height='90'%3E%3Cpath fill='${PROPERTY color}' stroke='${PROPERTY outline}' stroke-width='4' d='m50 22.9c-12.7 0-24.3 2.2-32.4 5.8-4.1 1.7-7.4 3.8-9.5 6-2.2 2.2-3.2 4.4-3.2 6.7 0 2.3 1 4.5 3.2 6.7 2.1 2.2 5.4 4.3 9.5 6.1 8.1 3.5 19.7 5.8 32.4 5.8 12.7 0 24.3-2.3 32.4-5.8 4.1-1.8 7.4-3.9 9.5-6.1 2.2-2.2 3.2-4.4 3.2-6.7 0-2.3-1-4.5-3.2-6.7-2.1-2.2-5.4-4.3-9.5-6-8.1-3.6-19.7-5.8-32.4-5.8zm-45.1 26.9v9.8c0 1.3 1 3.5 3.2 5.7 2.1 2.2 5.4 4.3 9.5 6 8.1 3.6 19.7 5.8 32.4 5.8 12.7 0 24.3-2.2 32.4-5.8 4.1-1.7 7.4-3.8 9.5-6 2.2-2.2 3.2-4.4 3.2-5.7v-9.8q-0.3 0.4-0.6 0.7c-2.6 2.7-6.3 5-10.7 6.9-8.7 3.8-20.7 6.1-33.8 6.1-13.1 0-25.1-2.3-33.8-6.1-4.4-1.9-8.1-4.2-10.6-6.9q-0.4-0.3-0.7-0.7z'/%3E%3C/svg%3E\")",
+        "background-position-y": "20%",
+        "display": "flex",
+        "align-items": "center",
+        "justify-content": "center",
+        "font-size": "20px"
+      },
+      "::before": {
+        "content": "\"${PROPERTY text}\"",
+        "color": "white",
+        "transform": "translateY(-3px) skewX(20deg)"
+      }
+    },
+    "dropLimit": 1,
+    "dropOffsetX": -1,
+    "dropOffsetY": -15,
+    "dropTarget": {
+      "token": true
+    },
+    "resetProperties": {
+      "parent": "grid15",
+      "x": 33,
+      "y": 77
+    },
+    "color": "%23616060",
+    "outline": "black",
+    "text": 1,
+    "token": true,
+    "enterRoutine": [
+      "var newCount = ${PROPERTY text} + 1",
+      {
+        "func": "SET",
+        "collection": "child",
+        "property": "text",
+        "value": "${newCount}"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "SET",
+        "collection": "child",
+        "property": "text",
+        "value": 1
+      }
+    ],
+    "textChangeRoutine": [
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "${PROPERTY id}"
+      },
+      {
+        "func": "GET",
+        "property": "id",
+        "variable": "childID"
+      },
+      "var childCount = ${PROPERTY text} + 1",
+      {
+        "func": "SET",
+        "collection": [
+          "${childID}"
+        ],
+        "property": "text",
+        "value": "${childCount}"
+      }
+    ],
+    "parent": "grid15"
+  },
+  "coin-black9": {
+    "type": "holder",
+    "id": "coin-black9",
+    "x": 33,
+    "y": 77,
+    "width": 90,
+    "height": 68,
+    "z": 1,
+    "movable": true,
+    "classes": "transparent",
+    "css": {
+      "default": {
+        "background-image": "url(\"data:image/svg+xml,%3Csvg version='1.2' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' width='90' height='90'%3E%3Cpath fill='${PROPERTY color}' stroke='${PROPERTY outline}' stroke-width='4' d='m50 22.9c-12.7 0-24.3 2.2-32.4 5.8-4.1 1.7-7.4 3.8-9.5 6-2.2 2.2-3.2 4.4-3.2 6.7 0 2.3 1 4.5 3.2 6.7 2.1 2.2 5.4 4.3 9.5 6.1 8.1 3.5 19.7 5.8 32.4 5.8 12.7 0 24.3-2.3 32.4-5.8 4.1-1.8 7.4-3.9 9.5-6.1 2.2-2.2 3.2-4.4 3.2-6.7 0-2.3-1-4.5-3.2-6.7-2.1-2.2-5.4-4.3-9.5-6-8.1-3.6-19.7-5.8-32.4-5.8zm-45.1 26.9v9.8c0 1.3 1 3.5 3.2 5.7 2.1 2.2 5.4 4.3 9.5 6 8.1 3.6 19.7 5.8 32.4 5.8 12.7 0 24.3-2.2 32.4-5.8 4.1-1.7 7.4-3.8 9.5-6 2.2-2.2 3.2-4.4 3.2-5.7v-9.8q-0.3 0.4-0.6 0.7c-2.6 2.7-6.3 5-10.7 6.9-8.7 3.8-20.7 6.1-33.8 6.1-13.1 0-25.1-2.3-33.8-6.1-4.4-1.9-8.1-4.2-10.6-6.9q-0.4-0.3-0.7-0.7z'/%3E%3C/svg%3E\")",
+        "background-position-y": "20%",
+        "display": "flex",
+        "align-items": "center",
+        "justify-content": "center",
+        "font-size": "20px"
+      },
+      "::before": {
+        "content": "\"${PROPERTY text}\"",
+        "color": "white",
+        "transform": "translateY(-3px) skewX(20deg)"
+      }
+    },
+    "dropLimit": 1,
+    "dropOffsetX": -1,
+    "dropOffsetY": -15,
+    "dropTarget": {
+      "token": true
+    },
+    "resetProperties": {
+      "parent": "grid29",
+      "x": 33,
+      "y": 77
+    },
+    "color": "%23616060",
+    "outline": "black",
+    "text": 1,
+    "token": true,
+    "enterRoutine": [
+      "var newCount = ${PROPERTY text} + 1",
+      {
+        "func": "SET",
+        "collection": "child",
+        "property": "text",
+        "value": "${newCount}"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "SET",
+        "collection": "child",
+        "property": "text",
+        "value": 1
+      }
+    ],
+    "textChangeRoutine": [
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "${PROPERTY id}"
+      },
+      {
+        "func": "GET",
+        "property": "id",
+        "variable": "childID"
+      },
+      "var childCount = ${PROPERTY text} + 1",
+      {
+        "func": "SET",
+        "collection": [
+          "${childID}"
+        ],
+        "property": "text",
+        "value": "${childCount}"
+      }
+    ],
+    "parent": "grid29"
+  },
+  "coin-black10": {
+    "type": "holder",
+    "id": "coin-black10",
+    "x": 33,
+    "y": 77,
+    "width": 90,
+    "height": 68,
+    "z": 1,
+    "movable": true,
+    "classes": "transparent",
+    "css": {
+      "default": {
+        "background-image": "url(\"data:image/svg+xml,%3Csvg version='1.2' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' width='90' height='90'%3E%3Cpath fill='${PROPERTY color}' stroke='${PROPERTY outline}' stroke-width='4' d='m50 22.9c-12.7 0-24.3 2.2-32.4 5.8-4.1 1.7-7.4 3.8-9.5 6-2.2 2.2-3.2 4.4-3.2 6.7 0 2.3 1 4.5 3.2 6.7 2.1 2.2 5.4 4.3 9.5 6.1 8.1 3.5 19.7 5.8 32.4 5.8 12.7 0 24.3-2.3 32.4-5.8 4.1-1.8 7.4-3.9 9.5-6.1 2.2-2.2 3.2-4.4 3.2-6.7 0-2.3-1-4.5-3.2-6.7-2.1-2.2-5.4-4.3-9.5-6-8.1-3.6-19.7-5.8-32.4-5.8zm-45.1 26.9v9.8c0 1.3 1 3.5 3.2 5.7 2.1 2.2 5.4 4.3 9.5 6 8.1 3.6 19.7 5.8 32.4 5.8 12.7 0 24.3-2.2 32.4-5.8 4.1-1.7 7.4-3.8 9.5-6 2.2-2.2 3.2-4.4 3.2-5.7v-9.8q-0.3 0.4-0.6 0.7c-2.6 2.7-6.3 5-10.7 6.9-8.7 3.8-20.7 6.1-33.8 6.1-13.1 0-25.1-2.3-33.8-6.1-4.4-1.9-8.1-4.2-10.6-6.9q-0.4-0.3-0.7-0.7z'/%3E%3C/svg%3E\")",
+        "background-position-y": "20%",
+        "display": "flex",
+        "align-items": "center",
+        "justify-content": "center",
+        "font-size": "20px"
+      },
+      "::before": {
+        "content": "\"${PROPERTY text}\"",
+        "color": "white",
+        "transform": "translateY(-3px) skewX(20deg)"
+      }
+    },
+    "dropLimit": 1,
+    "dropOffsetX": -1,
+    "dropOffsetY": -15,
+    "dropTarget": {
+      "token": true
+    },
+    "resetProperties": {
+      "parent": "grid17",
+      "x": 33,
+      "y": 77
+    },
+    "color": "%23616060",
+    "outline": "black",
+    "text": 1,
+    "token": true,
+    "enterRoutine": [
+      "var newCount = ${PROPERTY text} + 1",
+      {
+        "func": "SET",
+        "collection": "child",
+        "property": "text",
+        "value": "${newCount}"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "SET",
+        "collection": "child",
+        "property": "text",
+        "value": 1
+      }
+    ],
+    "textChangeRoutine": [
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "${PROPERTY id}"
+      },
+      {
+        "func": "GET",
+        "property": "id",
+        "variable": "childID"
+      },
+      "var childCount = ${PROPERTY text} + 1",
+      {
+        "func": "SET",
+        "collection": [
+          "${childID}"
+        ],
+        "property": "text",
+        "value": "${childCount}"
+      }
+    ],
+    "parent": "grid17"
+  },
+  "coin-black11": {
+    "type": "holder",
+    "id": "coin-black11",
+    "x": 33,
+    "y": 77,
+    "width": 90,
+    "height": 68,
+    "z": 1,
+    "movable": true,
+    "classes": "transparent",
+    "css": {
+      "default": {
+        "background-image": "url(\"data:image/svg+xml,%3Csvg version='1.2' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' width='90' height='90'%3E%3Cpath fill='${PROPERTY color}' stroke='${PROPERTY outline}' stroke-width='4' d='m50 22.9c-12.7 0-24.3 2.2-32.4 5.8-4.1 1.7-7.4 3.8-9.5 6-2.2 2.2-3.2 4.4-3.2 6.7 0 2.3 1 4.5 3.2 6.7 2.1 2.2 5.4 4.3 9.5 6.1 8.1 3.5 19.7 5.8 32.4 5.8 12.7 0 24.3-2.3 32.4-5.8 4.1-1.8 7.4-3.9 9.5-6.1 2.2-2.2 3.2-4.4 3.2-6.7 0-2.3-1-4.5-3.2-6.7-2.1-2.2-5.4-4.3-9.5-6-8.1-3.6-19.7-5.8-32.4-5.8zm-45.1 26.9v9.8c0 1.3 1 3.5 3.2 5.7 2.1 2.2 5.4 4.3 9.5 6 8.1 3.6 19.7 5.8 32.4 5.8 12.7 0 24.3-2.2 32.4-5.8 4.1-1.7 7.4-3.8 9.5-6 2.2-2.2 3.2-4.4 3.2-5.7v-9.8q-0.3 0.4-0.6 0.7c-2.6 2.7-6.3 5-10.7 6.9-8.7 3.8-20.7 6.1-33.8 6.1-13.1 0-25.1-2.3-33.8-6.1-4.4-1.9-8.1-4.2-10.6-6.9q-0.4-0.3-0.7-0.7z'/%3E%3C/svg%3E\")",
+        "background-position-y": "20%",
+        "display": "flex",
+        "align-items": "center",
+        "justify-content": "center",
+        "font-size": "20px"
+      },
+      "::before": {
+        "content": "\"${PROPERTY text}\"",
+        "color": "white",
+        "transform": "translateY(-3px) skewX(20deg)"
+      }
+    },
+    "dropLimit": 1,
+    "dropOffsetX": -1,
+    "dropOffsetY": -15,
+    "dropTarget": {
+      "token": true
+    },
+    "resetProperties": {
+      "parent": "grid31",
+      "x": 33,
+      "y": 77
+    },
+    "color": "%23616060",
+    "outline": "black",
+    "text": 1,
+    "token": true,
+    "enterRoutine": [
+      "var newCount = ${PROPERTY text} + 1",
+      {
+        "func": "SET",
+        "collection": "child",
+        "property": "text",
+        "value": "${newCount}"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "SET",
+        "collection": "child",
+        "property": "text",
+        "value": 1
+      }
+    ],
+    "textChangeRoutine": [
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "${PROPERTY id}"
+      },
+      {
+        "func": "GET",
+        "property": "id",
+        "variable": "childID"
+      },
+      "var childCount = ${PROPERTY text} + 1",
+      {
+        "func": "SET",
+        "collection": [
+          "${childID}"
+        ],
+        "property": "text",
+        "value": "${childCount}"
+      }
+    ],
+    "parent": "grid31"
+  },
+  "coin-black12": {
+    "type": "holder",
+    "id": "coin-black12",
+    "x": 33,
+    "y": 77,
+    "width": 90,
+    "height": 68,
+    "z": 1,
+    "movable": true,
+    "classes": "transparent",
+    "css": {
+      "default": {
+        "background-image": "url(\"data:image/svg+xml,%3Csvg version='1.2' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' width='90' height='90'%3E%3Cpath fill='${PROPERTY color}' stroke='${PROPERTY outline}' stroke-width='4' d='m50 22.9c-12.7 0-24.3 2.2-32.4 5.8-4.1 1.7-7.4 3.8-9.5 6-2.2 2.2-3.2 4.4-3.2 6.7 0 2.3 1 4.5 3.2 6.7 2.1 2.2 5.4 4.3 9.5 6.1 8.1 3.5 19.7 5.8 32.4 5.8 12.7 0 24.3-2.3 32.4-5.8 4.1-1.8 7.4-3.9 9.5-6.1 2.2-2.2 3.2-4.4 3.2-6.7 0-2.3-1-4.5-3.2-6.7-2.1-2.2-5.4-4.3-9.5-6-8.1-3.6-19.7-5.8-32.4-5.8zm-45.1 26.9v9.8c0 1.3 1 3.5 3.2 5.7 2.1 2.2 5.4 4.3 9.5 6 8.1 3.6 19.7 5.8 32.4 5.8 12.7 0 24.3-2.2 32.4-5.8 4.1-1.7 7.4-3.8 9.5-6 2.2-2.2 3.2-4.4 3.2-5.7v-9.8q-0.3 0.4-0.6 0.7c-2.6 2.7-6.3 5-10.7 6.9-8.7 3.8-20.7 6.1-33.8 6.1-13.1 0-25.1-2.3-33.8-6.1-4.4-1.9-8.1-4.2-10.6-6.9q-0.4-0.3-0.7-0.7z'/%3E%3C/svg%3E\")",
+        "background-position-y": "20%",
+        "display": "flex",
+        "align-items": "center",
+        "justify-content": "center",
+        "font-size": "20px"
+      },
+      "::before": {
+        "content": "\"${PROPERTY text}\"",
+        "color": "white",
+        "transform": "translateY(-3px) skewX(20deg)"
+      }
+    },
+    "dropLimit": 1,
+    "dropOffsetX": -1,
+    "dropOffsetY": -15,
+    "dropTarget": {
+      "token": true
+    },
+    "resetProperties": {
+      "parent": "grid19",
+      "x": 33,
+      "y": 77
+    },
+    "color": "%23616060",
+    "outline": "black",
+    "text": 1,
+    "token": true,
+    "enterRoutine": [
+      "var newCount = ${PROPERTY text} + 1",
+      {
+        "func": "SET",
+        "collection": "child",
+        "property": "text",
+        "value": "${newCount}"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "SET",
+        "collection": "child",
+        "property": "text",
+        "value": 1
+      }
+    ],
+    "textChangeRoutine": [
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "${PROPERTY id}"
+      },
+      {
+        "func": "GET",
+        "property": "id",
+        "variable": "childID"
+      },
+      "var childCount = ${PROPERTY text} + 1",
+      {
+        "func": "SET",
+        "collection": [
+          "${childID}"
+        ],
+        "property": "text",
+        "value": "${childCount}"
+      }
+    ],
+    "parent": "grid19"
+  },
+  "coin-black13": {
+    "type": "holder",
+    "id": "coin-black13",
+    "x": 33,
+    "y": 77,
+    "width": 90,
+    "height": 68,
+    "z": 1,
+    "movable": true,
+    "classes": "transparent",
+    "css": {
+      "default": {
+        "background-image": "url(\"data:image/svg+xml,%3Csvg version='1.2' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' width='90' height='90'%3E%3Cpath fill='${PROPERTY color}' stroke='${PROPERTY outline}' stroke-width='4' d='m50 22.9c-12.7 0-24.3 2.2-32.4 5.8-4.1 1.7-7.4 3.8-9.5 6-2.2 2.2-3.2 4.4-3.2 6.7 0 2.3 1 4.5 3.2 6.7 2.1 2.2 5.4 4.3 9.5 6.1 8.1 3.5 19.7 5.8 32.4 5.8 12.7 0 24.3-2.3 32.4-5.8 4.1-1.8 7.4-3.9 9.5-6.1 2.2-2.2 3.2-4.4 3.2-6.7 0-2.3-1-4.5-3.2-6.7-2.1-2.2-5.4-4.3-9.5-6-8.1-3.6-19.7-5.8-32.4-5.8zm-45.1 26.9v9.8c0 1.3 1 3.5 3.2 5.7 2.1 2.2 5.4 4.3 9.5 6 8.1 3.6 19.7 5.8 32.4 5.8 12.7 0 24.3-2.2 32.4-5.8 4.1-1.7 7.4-3.8 9.5-6 2.2-2.2 3.2-4.4 3.2-5.7v-9.8q-0.3 0.4-0.6 0.7c-2.6 2.7-6.3 5-10.7 6.9-8.7 3.8-20.7 6.1-33.8 6.1-13.1 0-25.1-2.3-33.8-6.1-4.4-1.9-8.1-4.2-10.6-6.9q-0.4-0.3-0.7-0.7z'/%3E%3C/svg%3E\")",
+        "background-position-y": "20%",
+        "display": "flex",
+        "align-items": "center",
+        "justify-content": "center",
+        "font-size": "20px"
+      },
+      "::before": {
+        "content": "\"${PROPERTY text}\"",
+        "color": "white",
+        "transform": "translateY(-3px) skewX(20deg)"
+      }
+    },
+    "dropLimit": 1,
+    "dropOffsetX": -1,
+    "dropOffsetY": -15,
+    "dropTarget": {
+      "token": true
+    },
+    "resetProperties": {
+      "parent": "grid36",
+      "x": 33,
+      "y": 77
+    },
+    "color": "%23616060",
+    "outline": "black",
+    "text": 1,
+    "token": true,
+    "enterRoutine": [
+      "var newCount = ${PROPERTY text} + 1",
+      {
+        "func": "SET",
+        "collection": "child",
+        "property": "text",
+        "value": "${newCount}"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "SET",
+        "collection": "child",
+        "property": "text",
+        "value": 1
+      }
+    ],
+    "textChangeRoutine": [
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "${PROPERTY id}"
+      },
+      {
+        "func": "GET",
+        "property": "id",
+        "variable": "childID"
+      },
+      "var childCount = ${PROPERTY text} + 1",
+      {
+        "func": "SET",
+        "collection": [
+          "${childID}"
+        ],
+        "property": "text",
+        "value": "${childCount}"
+      }
+    ],
+    "parent": "grid36"
+  },
+  "coin-black14": {
+    "type": "holder",
+    "id": "coin-black14",
+    "x": 33,
+    "y": 77,
+    "width": 90,
+    "height": 68,
+    "z": 1,
+    "movable": true,
+    "classes": "transparent",
+    "css": {
+      "default": {
+        "background-image": "url(\"data:image/svg+xml,%3Csvg version='1.2' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' width='90' height='90'%3E%3Cpath fill='${PROPERTY color}' stroke='${PROPERTY outline}' stroke-width='4' d='m50 22.9c-12.7 0-24.3 2.2-32.4 5.8-4.1 1.7-7.4 3.8-9.5 6-2.2 2.2-3.2 4.4-3.2 6.7 0 2.3 1 4.5 3.2 6.7 2.1 2.2 5.4 4.3 9.5 6.1 8.1 3.5 19.7 5.8 32.4 5.8 12.7 0 24.3-2.3 32.4-5.8 4.1-1.8 7.4-3.9 9.5-6.1 2.2-2.2 3.2-4.4 3.2-6.7 0-2.3-1-4.5-3.2-6.7-2.1-2.2-5.4-4.3-9.5-6-8.1-3.6-19.7-5.8-32.4-5.8zm-45.1 26.9v9.8c0 1.3 1 3.5 3.2 5.7 2.1 2.2 5.4 4.3 9.5 6 8.1 3.6 19.7 5.8 32.4 5.8 12.7 0 24.3-2.2 32.4-5.8 4.1-1.7 7.4-3.8 9.5-6 2.2-2.2 3.2-4.4 3.2-5.7v-9.8q-0.3 0.4-0.6 0.7c-2.6 2.7-6.3 5-10.7 6.9-8.7 3.8-20.7 6.1-33.8 6.1-13.1 0-25.1-2.3-33.8-6.1-4.4-1.9-8.1-4.2-10.6-6.9q-0.4-0.3-0.7-0.7z'/%3E%3C/svg%3E\")",
+        "background-position-y": "20%",
+        "display": "flex",
+        "align-items": "center",
+        "justify-content": "center",
+        "font-size": "20px"
+      },
+      "::before": {
+        "content": "\"${PROPERTY text}\"",
+        "color": "white",
+        "transform": "translateY(-3px) skewX(20deg)"
+      }
+    },
+    "dropLimit": 1,
+    "dropOffsetX": -1,
+    "dropOffsetY": -15,
+    "dropTarget": {
+      "token": true
+    },
+    "resetProperties": {
+      "parent": "grid22",
+      "x": 33,
+      "y": 77
+    },
+    "color": "%23616060",
+    "outline": "black",
+    "text": 1,
+    "token": true,
+    "enterRoutine": [
+      "var newCount = ${PROPERTY text} + 1",
+      {
+        "func": "SET",
+        "collection": "child",
+        "property": "text",
+        "value": "${newCount}"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "SET",
+        "collection": "child",
+        "property": "text",
+        "value": 1
+      }
+    ],
+    "textChangeRoutine": [
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "${PROPERTY id}"
+      },
+      {
+        "func": "GET",
+        "property": "id",
+        "variable": "childID"
+      },
+      "var childCount = ${PROPERTY text} + 1",
+      {
+        "func": "SET",
+        "collection": [
+          "${childID}"
+        ],
+        "property": "text",
+        "value": "${childCount}"
+      }
+    ],
+    "parent": "grid22"
+  },
+  "coin-black15": {
+    "type": "holder",
+    "id": "coin-black15",
+    "x": 33,
+    "y": 77,
+    "width": 90,
+    "height": 68,
+    "z": 1,
+    "movable": true,
+    "classes": "transparent",
+    "css": {
+      "default": {
+        "background-image": "url(\"data:image/svg+xml,%3Csvg version='1.2' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' width='90' height='90'%3E%3Cpath fill='${PROPERTY color}' stroke='${PROPERTY outline}' stroke-width='4' d='m50 22.9c-12.7 0-24.3 2.2-32.4 5.8-4.1 1.7-7.4 3.8-9.5 6-2.2 2.2-3.2 4.4-3.2 6.7 0 2.3 1 4.5 3.2 6.7 2.1 2.2 5.4 4.3 9.5 6.1 8.1 3.5 19.7 5.8 32.4 5.8 12.7 0 24.3-2.3 32.4-5.8 4.1-1.8 7.4-3.9 9.5-6.1 2.2-2.2 3.2-4.4 3.2-6.7 0-2.3-1-4.5-3.2-6.7-2.1-2.2-5.4-4.3-9.5-6-8.1-3.6-19.7-5.8-32.4-5.8zm-45.1 26.9v9.8c0 1.3 1 3.5 3.2 5.7 2.1 2.2 5.4 4.3 9.5 6 8.1 3.6 19.7 5.8 32.4 5.8 12.7 0 24.3-2.2 32.4-5.8 4.1-1.7 7.4-3.8 9.5-6 2.2-2.2 3.2-4.4 3.2-5.7v-9.8q-0.3 0.4-0.6 0.7c-2.6 2.7-6.3 5-10.7 6.9-8.7 3.8-20.7 6.1-33.8 6.1-13.1 0-25.1-2.3-33.8-6.1-4.4-1.9-8.1-4.2-10.6-6.9q-0.4-0.3-0.7-0.7z'/%3E%3C/svg%3E\")",
+        "background-position-y": "20%",
+        "display": "flex",
+        "align-items": "center",
+        "justify-content": "center",
+        "font-size": "20px"
+      },
+      "::before": {
+        "content": "\"${PROPERTY text}\"",
+        "color": "white",
+        "transform": "translateY(-3px) skewX(20deg)"
+      }
+    },
+    "dropLimit": 1,
+    "dropOffsetX": -1,
+    "dropOffsetY": -15,
+    "dropTarget": {
+      "token": true
+    },
+    "resetProperties": {
+      "parent": "grid38",
+      "x": 33,
+      "y": 77
+    },
+    "color": "%23616060",
+    "outline": "black",
+    "text": 1,
+    "token": true,
+    "enterRoutine": [
+      "var newCount = ${PROPERTY text} + 1",
+      {
+        "func": "SET",
+        "collection": "child",
+        "property": "text",
+        "value": "${newCount}"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "SET",
+        "collection": "child",
+        "property": "text",
+        "value": 1
+      }
+    ],
+    "textChangeRoutine": [
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "${PROPERTY id}"
+      },
+      {
+        "func": "GET",
+        "property": "id",
+        "variable": "childID"
+      },
+      "var childCount = ${PROPERTY text} + 1",
+      {
+        "func": "SET",
+        "collection": [
+          "${childID}"
+        ],
+        "property": "text",
+        "value": "${childCount}"
+      }
+    ],
+    "parent": "grid38"
+  },
+  "coin-black16": {
+    "type": "holder",
+    "id": "coin-black16",
+    "x": 33,
+    "y": 77,
+    "width": 90,
+    "height": 68,
+    "z": 1,
+    "movable": true,
+    "classes": "transparent",
+    "css": {
+      "default": {
+        "background-image": "url(\"data:image/svg+xml,%3Csvg version='1.2' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' width='90' height='90'%3E%3Cpath fill='${PROPERTY color}' stroke='${PROPERTY outline}' stroke-width='4' d='m50 22.9c-12.7 0-24.3 2.2-32.4 5.8-4.1 1.7-7.4 3.8-9.5 6-2.2 2.2-3.2 4.4-3.2 6.7 0 2.3 1 4.5 3.2 6.7 2.1 2.2 5.4 4.3 9.5 6.1 8.1 3.5 19.7 5.8 32.4 5.8 12.7 0 24.3-2.3 32.4-5.8 4.1-1.8 7.4-3.9 9.5-6.1 2.2-2.2 3.2-4.4 3.2-6.7 0-2.3-1-4.5-3.2-6.7-2.1-2.2-5.4-4.3-9.5-6-8.1-3.6-19.7-5.8-32.4-5.8zm-45.1 26.9v9.8c0 1.3 1 3.5 3.2 5.7 2.1 2.2 5.4 4.3 9.5 6 8.1 3.6 19.7 5.8 32.4 5.8 12.7 0 24.3-2.2 32.4-5.8 4.1-1.7 7.4-3.8 9.5-6 2.2-2.2 3.2-4.4 3.2-5.7v-9.8q-0.3 0.4-0.6 0.7c-2.6 2.7-6.3 5-10.7 6.9-8.7 3.8-20.7 6.1-33.8 6.1-13.1 0-25.1-2.3-33.8-6.1-4.4-1.9-8.1-4.2-10.6-6.9q-0.4-0.3-0.7-0.7z'/%3E%3C/svg%3E\")",
+        "background-position-y": "20%",
+        "display": "flex",
+        "align-items": "center",
+        "justify-content": "center",
+        "font-size": "20px"
+      },
+      "::before": {
+        "content": "\"${PROPERTY text}\"",
+        "color": "white",
+        "transform": "translateY(-3px) skewX(20deg)"
+      }
+    },
+    "dropLimit": 1,
+    "dropOffsetX": -1,
+    "dropOffsetY": -15,
+    "dropTarget": {
+      "token": true
+    },
+    "resetProperties": {
+      "parent": "grid24",
+      "x": 33,
+      "y": 77
+    },
+    "color": "%23616060",
+    "outline": "black",
+    "text": 1,
+    "token": true,
+    "enterRoutine": [
+      "var newCount = ${PROPERTY text} + 1",
+      {
+        "func": "SET",
+        "collection": "child",
+        "property": "text",
+        "value": "${newCount}"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "SET",
+        "collection": "child",
+        "property": "text",
+        "value": 1
+      }
+    ],
+    "textChangeRoutine": [
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "${PROPERTY id}"
+      },
+      {
+        "func": "GET",
+        "property": "id",
+        "variable": "childID"
+      },
+      "var childCount = ${PROPERTY text} + 1",
+      {
+        "func": "SET",
+        "collection": [
+          "${childID}"
+        ],
+        "property": "text",
+        "value": "${childCount}"
+      }
+    ],
+    "parent": "grid24"
+  },
+  "coin-black17": {
+    "type": "holder",
+    "id": "coin-black17",
+    "x": 33,
+    "y": 77,
+    "width": 90,
+    "height": 68,
+    "z": 1,
+    "movable": true,
+    "classes": "transparent",
+    "css": {
+      "default": {
+        "background-image": "url(\"data:image/svg+xml,%3Csvg version='1.2' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' width='90' height='90'%3E%3Cpath fill='${PROPERTY color}' stroke='${PROPERTY outline}' stroke-width='4' d='m50 22.9c-12.7 0-24.3 2.2-32.4 5.8-4.1 1.7-7.4 3.8-9.5 6-2.2 2.2-3.2 4.4-3.2 6.7 0 2.3 1 4.5 3.2 6.7 2.1 2.2 5.4 4.3 9.5 6.1 8.1 3.5 19.7 5.8 32.4 5.8 12.7 0 24.3-2.3 32.4-5.8 4.1-1.8 7.4-3.9 9.5-6.1 2.2-2.2 3.2-4.4 3.2-6.7 0-2.3-1-4.5-3.2-6.7-2.1-2.2-5.4-4.3-9.5-6-8.1-3.6-19.7-5.8-32.4-5.8zm-45.1 26.9v9.8c0 1.3 1 3.5 3.2 5.7 2.1 2.2 5.4 4.3 9.5 6 8.1 3.6 19.7 5.8 32.4 5.8 12.7 0 24.3-2.2 32.4-5.8 4.1-1.7 7.4-3.8 9.5-6 2.2-2.2 3.2-4.4 3.2-5.7v-9.8q-0.3 0.4-0.6 0.7c-2.6 2.7-6.3 5-10.7 6.9-8.7 3.8-20.7 6.1-33.8 6.1-13.1 0-25.1-2.3-33.8-6.1-4.4-1.9-8.1-4.2-10.6-6.9q-0.4-0.3-0.7-0.7z'/%3E%3C/svg%3E\")",
+        "background-position-y": "20%",
+        "display": "flex",
+        "align-items": "center",
+        "justify-content": "center",
+        "font-size": "20px"
+      },
+      "::before": {
+        "content": "\"${PROPERTY text}\"",
+        "color": "white",
+        "transform": "translateY(-3px) skewX(20deg)"
+      }
+    },
+    "dropLimit": 1,
+    "dropOffsetX": -1,
+    "dropOffsetY": -15,
+    "dropTarget": {
+      "token": true
+    },
+    "resetProperties": {
+      "parent": "grid34",
+      "x": 33,
+      "y": 77
+    },
+    "color": "%23616060",
+    "outline": "black",
+    "text": 1,
+    "token": true,
+    "enterRoutine": [
+      "var newCount = ${PROPERTY text} + 1",
+      {
+        "func": "SET",
+        "collection": "child",
+        "property": "text",
+        "value": "${newCount}"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "SET",
+        "collection": "child",
+        "property": "text",
+        "value": 1
+      }
+    ],
+    "textChangeRoutine": [
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "${PROPERTY id}"
+      },
+      {
+        "func": "GET",
+        "property": "id",
+        "variable": "childID"
+      },
+      "var childCount = ${PROPERTY text} + 1",
+      {
+        "func": "SET",
+        "collection": [
+          "${childID}"
+        ],
+        "property": "text",
+        "value": "${childCount}"
+      }
+    ],
+    "parent": "grid34"
+  },
+  "coin-black18": {
+    "type": "holder",
+    "id": "coin-black18",
+    "x": 33,
+    "y": 77,
+    "width": 90,
+    "height": 68,
+    "z": 1,
+    "movable": true,
+    "classes": "transparent",
+    "css": {
+      "default": {
+        "background-image": "url(\"data:image/svg+xml,%3Csvg version='1.2' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' width='90' height='90'%3E%3Cpath fill='${PROPERTY color}' stroke='${PROPERTY outline}' stroke-width='4' d='m50 22.9c-12.7 0-24.3 2.2-32.4 5.8-4.1 1.7-7.4 3.8-9.5 6-2.2 2.2-3.2 4.4-3.2 6.7 0 2.3 1 4.5 3.2 6.7 2.1 2.2 5.4 4.3 9.5 6.1 8.1 3.5 19.7 5.8 32.4 5.8 12.7 0 24.3-2.3 32.4-5.8 4.1-1.8 7.4-3.9 9.5-6.1 2.2-2.2 3.2-4.4 3.2-6.7 0-2.3-1-4.5-3.2-6.7-2.1-2.2-5.4-4.3-9.5-6-8.1-3.6-19.7-5.8-32.4-5.8zm-45.1 26.9v9.8c0 1.3 1 3.5 3.2 5.7 2.1 2.2 5.4 4.3 9.5 6 8.1 3.6 19.7 5.8 32.4 5.8 12.7 0 24.3-2.2 32.4-5.8 4.1-1.7 7.4-3.8 9.5-6 2.2-2.2 3.2-4.4 3.2-5.7v-9.8q-0.3 0.4-0.6 0.7c-2.6 2.7-6.3 5-10.7 6.9-8.7 3.8-20.7 6.1-33.8 6.1-13.1 0-25.1-2.3-33.8-6.1-4.4-1.9-8.1-4.2-10.6-6.9q-0.4-0.3-0.7-0.7z'/%3E%3C/svg%3E\")",
+        "background-position-y": "20%",
+        "display": "flex",
+        "align-items": "center",
+        "justify-content": "center",
+        "font-size": "20px"
+      },
+      "::before": {
+        "content": "\"${PROPERTY text}\"",
+        "color": "white",
+        "transform": "translateY(-3px) skewX(20deg)"
+      }
+    },
+    "dropLimit": 1,
+    "dropOffsetX": -1,
+    "dropOffsetY": -15,
+    "dropTarget": {
+      "token": true
+    },
+    "resetProperties": {
+      "parent": "grid26",
+      "x": 33,
+      "y": 77
+    },
+    "color": "%23616060",
+    "outline": "black",
+    "text": 1,
+    "token": true,
+    "enterRoutine": [
+      "var newCount = ${PROPERTY text} + 1",
+      {
+        "func": "SET",
+        "collection": "child",
+        "property": "text",
+        "value": "${newCount}"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "SET",
+        "collection": "child",
+        "property": "text",
+        "value": 1
+      }
+    ],
+    "textChangeRoutine": [
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "${PROPERTY id}"
+      },
+      {
+        "func": "GET",
+        "property": "id",
+        "variable": "childID"
+      },
+      "var childCount = ${PROPERTY text} + 1",
+      {
+        "func": "SET",
+        "collection": [
+          "${childID}"
+        ],
+        "property": "text",
+        "value": "${childCount}"
+      }
+    ],
+    "parent": "grid26"
+  },
+  "coin-white2": {
+    "type": "holder",
+    "id": "coin-white2",
+    "x": 33,
+    "y": 77,
+    "width": 90,
+    "height": 68,
+    "z": 1,
+    "movable": true,
+    "classes": "transparent",
+    "css": {
+      "default": {
+        "background-image": "url(\"data:image/svg+xml,%3Csvg version='1.2' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' width='90' height='90'%3E%3Cpath fill='${PROPERTY color}' stroke='${PROPERTY outline}' stroke-width='4' d='m50 22.9c-12.7 0-24.3 2.2-32.4 5.8-4.1 1.7-7.4 3.8-9.5 6-2.2 2.2-3.2 4.4-3.2 6.7 0 2.3 1 4.5 3.2 6.7 2.1 2.2 5.4 4.3 9.5 6.1 8.1 3.5 19.7 5.8 32.4 5.8 12.7 0 24.3-2.3 32.4-5.8 4.1-1.8 7.4-3.9 9.5-6.1 2.2-2.2 3.2-4.4 3.2-6.7 0-2.3-1-4.5-3.2-6.7-2.1-2.2-5.4-4.3-9.5-6-8.1-3.6-19.7-5.8-32.4-5.8zm-45.1 26.9v9.8c0 1.3 1 3.5 3.2 5.7 2.1 2.2 5.4 4.3 9.5 6 8.1 3.6 19.7 5.8 32.4 5.8 12.7 0 24.3-2.2 32.4-5.8 4.1-1.7 7.4-3.8 9.5-6 2.2-2.2 3.2-4.4 3.2-5.7v-9.8q-0.3 0.4-0.6 0.7c-2.6 2.7-6.3 5-10.7 6.9-8.7 3.8-20.7 6.1-33.8 6.1-13.1 0-25.1-2.3-33.8-6.1-4.4-1.9-8.1-4.2-10.6-6.9q-0.4-0.3-0.7-0.7z'/%3E%3C/svg%3E\")",
+        "background-position-y": "20%",
+        "display": "flex",
+        "align-items": "center",
+        "justify-content": "center",
+        "font-size": "20px"
+      },
+      "::before": {
+        "content": "\"${PROPERTY text}\"",
+        "color": "grey",
+        "transform": "translateY(-3px) skewX(20deg)"
+      }
+    },
+    "dropLimit": 1,
+    "dropOffsetX": -1,
+    "dropOffsetY": -15,
+    "dropTarget": {
+      "token": true
+    },
+    "resetProperties": {
+      "parent": "grid6",
+      "x": 33,
+      "y": 77
+    },
+    "color": "%23E8E8E7",
+    "outline": "black",
+    "text": 1,
+    "token": true,
+    "enterRoutine": [
+      "var newCount = ${PROPERTY text} + 1",
+      {
+        "func": "SET",
+        "collection": "child",
+        "property": "text",
+        "value": "${newCount}"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "SET",
+        "collection": "child",
+        "property": "text",
+        "value": 1
+      }
+    ],
+    "textChangeRoutine": [
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "${PROPERTY id}"
+      },
+      {
+        "func": "GET",
+        "property": "id",
+        "variable": "childID"
+      },
+      "var childCount = ${PROPERTY text} + 1",
+      {
+        "func": "SET",
+        "collection": [
+          "${childID}"
+        ],
+        "property": "text",
+        "value": "${childCount}"
+      }
+    ],
+    "parent": "grid6"
+  },
+  "coin-white3": {
+    "type": "holder",
+    "id": "coin-white3",
+    "x": 33,
+    "y": 77,
+    "width": 90,
+    "height": 68,
+    "z": 1,
+    "movable": true,
+    "classes": "transparent",
+    "css": {
+      "default": {
+        "background-image": "url(\"data:image/svg+xml,%3Csvg version='1.2' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' width='90' height='90'%3E%3Cpath fill='${PROPERTY color}' stroke='${PROPERTY outline}' stroke-width='4' d='m50 22.9c-12.7 0-24.3 2.2-32.4 5.8-4.1 1.7-7.4 3.8-9.5 6-2.2 2.2-3.2 4.4-3.2 6.7 0 2.3 1 4.5 3.2 6.7 2.1 2.2 5.4 4.3 9.5 6.1 8.1 3.5 19.7 5.8 32.4 5.8 12.7 0 24.3-2.3 32.4-5.8 4.1-1.8 7.4-3.9 9.5-6.1 2.2-2.2 3.2-4.4 3.2-6.7 0-2.3-1-4.5-3.2-6.7-2.1-2.2-5.4-4.3-9.5-6-8.1-3.6-19.7-5.8-32.4-5.8zm-45.1 26.9v9.8c0 1.3 1 3.5 3.2 5.7 2.1 2.2 5.4 4.3 9.5 6 8.1 3.6 19.7 5.8 32.4 5.8 12.7 0 24.3-2.2 32.4-5.8 4.1-1.7 7.4-3.8 9.5-6 2.2-2.2 3.2-4.4 3.2-5.7v-9.8q-0.3 0.4-0.6 0.7c-2.6 2.7-6.3 5-10.7 6.9-8.7 3.8-20.7 6.1-33.8 6.1-13.1 0-25.1-2.3-33.8-6.1-4.4-1.9-8.1-4.2-10.6-6.9q-0.4-0.3-0.7-0.7z'/%3E%3C/svg%3E\")",
+        "background-position-y": "20%",
+        "display": "flex",
+        "align-items": "center",
+        "justify-content": "center",
+        "font-size": "20px"
+      },
+      "::before": {
+        "content": "\"${PROPERTY text}\"",
+        "color": "grey",
+        "transform": "translateY(-3px) skewX(20deg)"
+      }
+    },
+    "dropLimit": 1,
+    "dropOffsetX": -1,
+    "dropOffsetY": -15,
+    "dropTarget": {
+      "token": true
+    },
+    "resetProperties": {
+      "parent": "grid8",
+      "x": 33,
+      "y": 77
+    },
+    "color": "%23E8E8E7",
+    "outline": "black",
+    "text": 1,
+    "token": true,
+    "enterRoutine": [
+      "var newCount = ${PROPERTY text} + 1",
+      {
+        "func": "SET",
+        "collection": "child",
+        "property": "text",
+        "value": "${newCount}"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "SET",
+        "collection": "child",
+        "property": "text",
+        "value": 1
+      }
+    ],
+    "textChangeRoutine": [
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "${PROPERTY id}"
+      },
+      {
+        "func": "GET",
+        "property": "id",
+        "variable": "childID"
+      },
+      "var childCount = ${PROPERTY text} + 1",
+      {
+        "func": "SET",
+        "collection": [
+          "${childID}"
+        ],
+        "property": "text",
+        "value": "${childCount}"
+      }
+    ],
+    "parent": "grid8"
+  },
+  "coin-white4": {
+    "type": "holder",
+    "id": "coin-white4",
+    "x": 33,
+    "y": 77,
+    "width": 90,
+    "height": 68,
+    "z": 1,
+    "movable": true,
+    "classes": "transparent",
+    "css": {
+      "default": {
+        "background-image": "url(\"data:image/svg+xml,%3Csvg version='1.2' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' width='90' height='90'%3E%3Cpath fill='${PROPERTY color}' stroke='${PROPERTY outline}' stroke-width='4' d='m50 22.9c-12.7 0-24.3 2.2-32.4 5.8-4.1 1.7-7.4 3.8-9.5 6-2.2 2.2-3.2 4.4-3.2 6.7 0 2.3 1 4.5 3.2 6.7 2.1 2.2 5.4 4.3 9.5 6.1 8.1 3.5 19.7 5.8 32.4 5.8 12.7 0 24.3-2.3 32.4-5.8 4.1-1.8 7.4-3.9 9.5-6.1 2.2-2.2 3.2-4.4 3.2-6.7 0-2.3-1-4.5-3.2-6.7-2.1-2.2-5.4-4.3-9.5-6-8.1-3.6-19.7-5.8-32.4-5.8zm-45.1 26.9v9.8c0 1.3 1 3.5 3.2 5.7 2.1 2.2 5.4 4.3 9.5 6 8.1 3.6 19.7 5.8 32.4 5.8 12.7 0 24.3-2.2 32.4-5.8 4.1-1.7 7.4-3.8 9.5-6 2.2-2.2 3.2-4.4 3.2-5.7v-9.8q-0.3 0.4-0.6 0.7c-2.6 2.7-6.3 5-10.7 6.9-8.7 3.8-20.7 6.1-33.8 6.1-13.1 0-25.1-2.3-33.8-6.1-4.4-1.9-8.1-4.2-10.6-6.9q-0.4-0.3-0.7-0.7z'/%3E%3C/svg%3E\")",
+        "background-position-y": "20%",
+        "display": "flex",
+        "align-items": "center",
+        "justify-content": "center",
+        "font-size": "20px"
+      },
+      "::before": {
+        "content": "\"${PROPERTY text}\"",
+        "color": "grey",
+        "transform": "translateY(-3px) skewX(20deg)"
+      }
+    },
+    "dropLimit": 1,
+    "dropOffsetX": -1,
+    "dropOffsetY": -15,
+    "dropTarget": {
+      "token": true
+    },
+    "resetProperties": {
+      "parent": "grid9",
+      "x": 33,
+      "y": 77
+    },
+    "color": "%23E8E8E7",
+    "outline": "black",
+    "text": 1,
+    "token": true,
+    "enterRoutine": [
+      "var newCount = ${PROPERTY text} + 1",
+      {
+        "func": "SET",
+        "collection": "child",
+        "property": "text",
+        "value": "${newCount}"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "SET",
+        "collection": "child",
+        "property": "text",
+        "value": 1
+      }
+    ],
+    "textChangeRoutine": [
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "${PROPERTY id}"
+      },
+      {
+        "func": "GET",
+        "property": "id",
+        "variable": "childID"
+      },
+      "var childCount = ${PROPERTY text} + 1",
+      {
+        "func": "SET",
+        "collection": [
+          "${childID}"
+        ],
+        "property": "text",
+        "value": "${childCount}"
+      }
+    ],
+    "parent": "grid9"
+  },
+  "coin-white5": {
+    "type": "holder",
+    "id": "coin-white5",
+    "x": 33,
+    "y": 77,
+    "width": 90,
+    "height": 68,
+    "z": 1,
+    "movable": true,
+    "classes": "transparent",
+    "css": {
+      "default": {
+        "background-image": "url(\"data:image/svg+xml,%3Csvg version='1.2' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' width='90' height='90'%3E%3Cpath fill='${PROPERTY color}' stroke='${PROPERTY outline}' stroke-width='4' d='m50 22.9c-12.7 0-24.3 2.2-32.4 5.8-4.1 1.7-7.4 3.8-9.5 6-2.2 2.2-3.2 4.4-3.2 6.7 0 2.3 1 4.5 3.2 6.7 2.1 2.2 5.4 4.3 9.5 6.1 8.1 3.5 19.7 5.8 32.4 5.8 12.7 0 24.3-2.3 32.4-5.8 4.1-1.8 7.4-3.9 9.5-6.1 2.2-2.2 3.2-4.4 3.2-6.7 0-2.3-1-4.5-3.2-6.7-2.1-2.2-5.4-4.3-9.5-6-8.1-3.6-19.7-5.8-32.4-5.8zm-45.1 26.9v9.8c0 1.3 1 3.5 3.2 5.7 2.1 2.2 5.4 4.3 9.5 6 8.1 3.6 19.7 5.8 32.4 5.8 12.7 0 24.3-2.2 32.4-5.8 4.1-1.7 7.4-3.8 9.5-6 2.2-2.2 3.2-4.4 3.2-5.7v-9.8q-0.3 0.4-0.6 0.7c-2.6 2.7-6.3 5-10.7 6.9-8.7 3.8-20.7 6.1-33.8 6.1-13.1 0-25.1-2.3-33.8-6.1-4.4-1.9-8.1-4.2-10.6-6.9q-0.4-0.3-0.7-0.7z'/%3E%3C/svg%3E\")",
+        "background-position-y": "20%",
+        "display": "flex",
+        "align-items": "center",
+        "justify-content": "center",
+        "font-size": "20px"
+      },
+      "::before": {
+        "content": "\"${PROPERTY text}\"",
+        "color": "grey",
+        "transform": "translateY(-3px) skewX(20deg)"
+      }
+    },
+    "dropLimit": 1,
+    "dropOffsetX": -1,
+    "dropOffsetY": -15,
+    "dropTarget": {
+      "token": true
+    },
+    "resetProperties": {
+      "parent": "grid13",
+      "x": 33,
+      "y": 77
+    },
+    "color": "%23E8E8E7",
+    "outline": "black",
+    "text": 1,
+    "token": true,
+    "enterRoutine": [
+      "var newCount = ${PROPERTY text} + 1",
+      {
+        "func": "SET",
+        "collection": "child",
+        "property": "text",
+        "value": "${newCount}"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "SET",
+        "collection": "child",
+        "property": "text",
+        "value": 1
+      }
+    ],
+    "textChangeRoutine": [
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "${PROPERTY id}"
+      },
+      {
+        "func": "GET",
+        "property": "id",
+        "variable": "childID"
+      },
+      "var childCount = ${PROPERTY text} + 1",
+      {
+        "func": "SET",
+        "collection": [
+          "${childID}"
+        ],
+        "property": "text",
+        "value": "${childCount}"
+      }
+    ],
+    "parent": "grid13"
+  },
+  "coin-white6": {
+    "type": "holder",
+    "id": "coin-white6",
+    "x": 33,
+    "y": 77,
+    "width": 90,
+    "height": 68,
+    "z": 1,
+    "movable": true,
+    "classes": "transparent",
+    "css": {
+      "default": {
+        "background-image": "url(\"data:image/svg+xml,%3Csvg version='1.2' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' width='90' height='90'%3E%3Cpath fill='${PROPERTY color}' stroke='${PROPERTY outline}' stroke-width='4' d='m50 22.9c-12.7 0-24.3 2.2-32.4 5.8-4.1 1.7-7.4 3.8-9.5 6-2.2 2.2-3.2 4.4-3.2 6.7 0 2.3 1 4.5 3.2 6.7 2.1 2.2 5.4 4.3 9.5 6.1 8.1 3.5 19.7 5.8 32.4 5.8 12.7 0 24.3-2.3 32.4-5.8 4.1-1.8 7.4-3.9 9.5-6.1 2.2-2.2 3.2-4.4 3.2-6.7 0-2.3-1-4.5-3.2-6.7-2.1-2.2-5.4-4.3-9.5-6-8.1-3.6-19.7-5.8-32.4-5.8zm-45.1 26.9v9.8c0 1.3 1 3.5 3.2 5.7 2.1 2.2 5.4 4.3 9.5 6 8.1 3.6 19.7 5.8 32.4 5.8 12.7 0 24.3-2.2 32.4-5.8 4.1-1.7 7.4-3.8 9.5-6 2.2-2.2 3.2-4.4 3.2-5.7v-9.8q-0.3 0.4-0.6 0.7c-2.6 2.7-6.3 5-10.7 6.9-8.7 3.8-20.7 6.1-33.8 6.1-13.1 0-25.1-2.3-33.8-6.1-4.4-1.9-8.1-4.2-10.6-6.9q-0.4-0.3-0.7-0.7z'/%3E%3C/svg%3E\")",
+        "background-position-y": "20%",
+        "display": "flex",
+        "align-items": "center",
+        "justify-content": "center",
+        "font-size": "20px"
+      },
+      "::before": {
+        "content": "\"${PROPERTY text}\"",
+        "color": "grey",
+        "transform": "translateY(-3px) skewX(20deg)"
+      }
+    },
+    "dropLimit": 1,
+    "dropOffsetX": -1,
+    "dropOffsetY": -15,
+    "dropTarget": {
+      "token": true
+    },
+    "resetProperties": {
+      "parent": "grid11",
+      "x": 33,
+      "y": 77
+    },
+    "color": "%23E8E8E7",
+    "outline": "black",
+    "text": 1,
+    "token": true,
+    "enterRoutine": [
+      "var newCount = ${PROPERTY text} + 1",
+      {
+        "func": "SET",
+        "collection": "child",
+        "property": "text",
+        "value": "${newCount}"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "SET",
+        "collection": "child",
+        "property": "text",
+        "value": 1
+      }
+    ],
+    "textChangeRoutine": [
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "${PROPERTY id}"
+      },
+      {
+        "func": "GET",
+        "property": "id",
+        "variable": "childID"
+      },
+      "var childCount = ${PROPERTY text} + 1",
+      {
+        "func": "SET",
+        "collection": [
+          "${childID}"
+        ],
+        "property": "text",
+        "value": "${childCount}"
+      }
+    ],
+    "parent": "grid11"
+  },
+  "coin-white7": {
+    "type": "holder",
+    "id": "coin-white7",
+    "x": 33,
+    "y": 77,
+    "width": 90,
+    "height": 68,
+    "z": 1,
+    "movable": true,
+    "classes": "transparent",
+    "css": {
+      "default": {
+        "background-image": "url(\"data:image/svg+xml,%3Csvg version='1.2' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' width='90' height='90'%3E%3Cpath fill='${PROPERTY color}' stroke='${PROPERTY outline}' stroke-width='4' d='m50 22.9c-12.7 0-24.3 2.2-32.4 5.8-4.1 1.7-7.4 3.8-9.5 6-2.2 2.2-3.2 4.4-3.2 6.7 0 2.3 1 4.5 3.2 6.7 2.1 2.2 5.4 4.3 9.5 6.1 8.1 3.5 19.7 5.8 32.4 5.8 12.7 0 24.3-2.3 32.4-5.8 4.1-1.8 7.4-3.9 9.5-6.1 2.2-2.2 3.2-4.4 3.2-6.7 0-2.3-1-4.5-3.2-6.7-2.1-2.2-5.4-4.3-9.5-6-8.1-3.6-19.7-5.8-32.4-5.8zm-45.1 26.9v9.8c0 1.3 1 3.5 3.2 5.7 2.1 2.2 5.4 4.3 9.5 6 8.1 3.6 19.7 5.8 32.4 5.8 12.7 0 24.3-2.2 32.4-5.8 4.1-1.7 7.4-3.8 9.5-6 2.2-2.2 3.2-4.4 3.2-5.7v-9.8q-0.3 0.4-0.6 0.7c-2.6 2.7-6.3 5-10.7 6.9-8.7 3.8-20.7 6.1-33.8 6.1-13.1 0-25.1-2.3-33.8-6.1-4.4-1.9-8.1-4.2-10.6-6.9q-0.4-0.3-0.7-0.7z'/%3E%3C/svg%3E\")",
+        "background-position-y": "20%",
+        "display": "flex",
+        "align-items": "center",
+        "justify-content": "center",
+        "font-size": "20px"
+      },
+      "::before": {
+        "content": "\"${PROPERTY text}\"",
+        "color": "grey",
+        "transform": "translateY(-3px) skewX(20deg)"
+      }
+    },
+    "dropLimit": 1,
+    "dropOffsetX": -1,
+    "dropOffsetY": -15,
+    "dropTarget": {
+      "token": true
+    },
+    "resetProperties": {
+      "parent": "grid16",
+      "x": 33,
+      "y": 77
+    },
+    "color": "%23E8E8E7",
+    "outline": "black",
+    "text": 1,
+    "token": true,
+    "enterRoutine": [
+      "var newCount = ${PROPERTY text} + 1",
+      {
+        "func": "SET",
+        "collection": "child",
+        "property": "text",
+        "value": "${newCount}"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "SET",
+        "collection": "child",
+        "property": "text",
+        "value": 1
+      }
+    ],
+    "textChangeRoutine": [
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "${PROPERTY id}"
+      },
+      {
+        "func": "GET",
+        "property": "id",
+        "variable": "childID"
+      },
+      "var childCount = ${PROPERTY text} + 1",
+      {
+        "func": "SET",
+        "collection": [
+          "${childID}"
+        ],
+        "property": "text",
+        "value": "${childCount}"
+      }
+    ],
+    "parent": "grid16"
+  },
+  "coin-white8": {
+    "type": "holder",
+    "id": "coin-white8",
+    "x": 33,
+    "y": 77,
+    "width": 90,
+    "height": 68,
+    "z": 1,
+    "movable": true,
+    "classes": "transparent",
+    "css": {
+      "default": {
+        "background-image": "url(\"data:image/svg+xml,%3Csvg version='1.2' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' width='90' height='90'%3E%3Cpath fill='${PROPERTY color}' stroke='${PROPERTY outline}' stroke-width='4' d='m50 22.9c-12.7 0-24.3 2.2-32.4 5.8-4.1 1.7-7.4 3.8-9.5 6-2.2 2.2-3.2 4.4-3.2 6.7 0 2.3 1 4.5 3.2 6.7 2.1 2.2 5.4 4.3 9.5 6.1 8.1 3.5 19.7 5.8 32.4 5.8 12.7 0 24.3-2.3 32.4-5.8 4.1-1.8 7.4-3.9 9.5-6.1 2.2-2.2 3.2-4.4 3.2-6.7 0-2.3-1-4.5-3.2-6.7-2.1-2.2-5.4-4.3-9.5-6-8.1-3.6-19.7-5.8-32.4-5.8zm-45.1 26.9v9.8c0 1.3 1 3.5 3.2 5.7 2.1 2.2 5.4 4.3 9.5 6 8.1 3.6 19.7 5.8 32.4 5.8 12.7 0 24.3-2.2 32.4-5.8 4.1-1.7 7.4-3.8 9.5-6 2.2-2.2 3.2-4.4 3.2-5.7v-9.8q-0.3 0.4-0.6 0.7c-2.6 2.7-6.3 5-10.7 6.9-8.7 3.8-20.7 6.1-33.8 6.1-13.1 0-25.1-2.3-33.8-6.1-4.4-1.9-8.1-4.2-10.6-6.9q-0.4-0.3-0.7-0.7z'/%3E%3C/svg%3E\")",
+        "background-position-y": "20%",
+        "display": "flex",
+        "align-items": "center",
+        "justify-content": "center",
+        "font-size": "20px"
+      },
+      "::before": {
+        "content": "\"${PROPERTY text}\"",
+        "color": "grey",
+        "transform": "translateY(-3px) skewX(20deg)"
+      }
+    },
+    "dropLimit": 1,
+    "dropOffsetX": -1,
+    "dropOffsetY": -15,
+    "dropTarget": {
+      "token": true
+    },
+    "resetProperties": {
+      "parent": "grid18",
+      "x": 33,
+      "y": 77
+    },
+    "color": "%23E8E8E7",
+    "outline": "black",
+    "text": 1,
+    "token": true,
+    "enterRoutine": [
+      "var newCount = ${PROPERTY text} + 1",
+      {
+        "func": "SET",
+        "collection": "child",
+        "property": "text",
+        "value": "${newCount}"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "SET",
+        "collection": "child",
+        "property": "text",
+        "value": 1
+      }
+    ],
+    "textChangeRoutine": [
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "${PROPERTY id}"
+      },
+      {
+        "func": "GET",
+        "property": "id",
+        "variable": "childID"
+      },
+      "var childCount = ${PROPERTY text} + 1",
+      {
+        "func": "SET",
+        "collection": [
+          "${childID}"
+        ],
+        "property": "text",
+        "value": "${childCount}"
+      }
+    ],
+    "parent": "grid18"
+  },
+  "coin-white9": {
+    "type": "holder",
+    "id": "coin-white9",
+    "x": 33,
+    "y": 77,
+    "width": 90,
+    "height": 68,
+    "z": 1,
+    "movable": true,
+    "classes": "transparent",
+    "css": {
+      "default": {
+        "background-image": "url(\"data:image/svg+xml,%3Csvg version='1.2' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' width='90' height='90'%3E%3Cpath fill='${PROPERTY color}' stroke='${PROPERTY outline}' stroke-width='4' d='m50 22.9c-12.7 0-24.3 2.2-32.4 5.8-4.1 1.7-7.4 3.8-9.5 6-2.2 2.2-3.2 4.4-3.2 6.7 0 2.3 1 4.5 3.2 6.7 2.1 2.2 5.4 4.3 9.5 6.1 8.1 3.5 19.7 5.8 32.4 5.8 12.7 0 24.3-2.3 32.4-5.8 4.1-1.8 7.4-3.9 9.5-6.1 2.2-2.2 3.2-4.4 3.2-6.7 0-2.3-1-4.5-3.2-6.7-2.1-2.2-5.4-4.3-9.5-6-8.1-3.6-19.7-5.8-32.4-5.8zm-45.1 26.9v9.8c0 1.3 1 3.5 3.2 5.7 2.1 2.2 5.4 4.3 9.5 6 8.1 3.6 19.7 5.8 32.4 5.8 12.7 0 24.3-2.2 32.4-5.8 4.1-1.7 7.4-3.8 9.5-6 2.2-2.2 3.2-4.4 3.2-5.7v-9.8q-0.3 0.4-0.6 0.7c-2.6 2.7-6.3 5-10.7 6.9-8.7 3.8-20.7 6.1-33.8 6.1-13.1 0-25.1-2.3-33.8-6.1-4.4-1.9-8.1-4.2-10.6-6.9q-0.4-0.3-0.7-0.7z'/%3E%3C/svg%3E\")",
+        "background-position-y": "20%",
+        "display": "flex",
+        "align-items": "center",
+        "justify-content": "center",
+        "font-size": "20px"
+      },
+      "::before": {
+        "content": "\"${PROPERTY text}\"",
+        "color": "grey",
+        "transform": "translateY(-3px) skewX(20deg)"
+      }
+    },
+    "dropLimit": 1,
+    "dropOffsetX": -1,
+    "dropOffsetY": -15,
+    "dropTarget": {
+      "token": true
+    },
+    "resetProperties": {
+      "parent": "grid33",
+      "x": 33,
+      "y": 77
+    },
+    "color": "%23E8E8E7",
+    "outline": "black",
+    "text": 1,
+    "token": true,
+    "enterRoutine": [
+      "var newCount = ${PROPERTY text} + 1",
+      {
+        "func": "SET",
+        "collection": "child",
+        "property": "text",
+        "value": "${newCount}"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "SET",
+        "collection": "child",
+        "property": "text",
+        "value": 1
+      }
+    ],
+    "textChangeRoutine": [
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "${PROPERTY id}"
+      },
+      {
+        "func": "GET",
+        "property": "id",
+        "variable": "childID"
+      },
+      "var childCount = ${PROPERTY text} + 1",
+      {
+        "func": "SET",
+        "collection": [
+          "${childID}"
+        ],
+        "property": "text",
+        "value": "${childCount}"
+      }
+    ],
+    "parent": "grid33"
+  },
+  "coin-white10": {
+    "type": "holder",
+    "id": "coin-white10",
+    "x": 33,
+    "y": 77,
+    "width": 90,
+    "height": 68,
+    "z": 1,
+    "movable": true,
+    "classes": "transparent",
+    "css": {
+      "default": {
+        "background-image": "url(\"data:image/svg+xml,%3Csvg version='1.2' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' width='90' height='90'%3E%3Cpath fill='${PROPERTY color}' stroke='${PROPERTY outline}' stroke-width='4' d='m50 22.9c-12.7 0-24.3 2.2-32.4 5.8-4.1 1.7-7.4 3.8-9.5 6-2.2 2.2-3.2 4.4-3.2 6.7 0 2.3 1 4.5 3.2 6.7 2.1 2.2 5.4 4.3 9.5 6.1 8.1 3.5 19.7 5.8 32.4 5.8 12.7 0 24.3-2.3 32.4-5.8 4.1-1.8 7.4-3.9 9.5-6.1 2.2-2.2 3.2-4.4 3.2-6.7 0-2.3-1-4.5-3.2-6.7-2.1-2.2-5.4-4.3-9.5-6-8.1-3.6-19.7-5.8-32.4-5.8zm-45.1 26.9v9.8c0 1.3 1 3.5 3.2 5.7 2.1 2.2 5.4 4.3 9.5 6 8.1 3.6 19.7 5.8 32.4 5.8 12.7 0 24.3-2.2 32.4-5.8 4.1-1.7 7.4-3.8 9.5-6 2.2-2.2 3.2-4.4 3.2-5.7v-9.8q-0.3 0.4-0.6 0.7c-2.6 2.7-6.3 5-10.7 6.9-8.7 3.8-20.7 6.1-33.8 6.1-13.1 0-25.1-2.3-33.8-6.1-4.4-1.9-8.1-4.2-10.6-6.9q-0.4-0.3-0.7-0.7z'/%3E%3C/svg%3E\")",
+        "background-position-y": "20%",
+        "display": "flex",
+        "align-items": "center",
+        "justify-content": "center",
+        "font-size": "20px"
+      },
+      "::before": {
+        "content": "\"${PROPERTY text}\"",
+        "color": "grey",
+        "transform": "translateY(-3px) skewX(20deg)"
+      }
+    },
+    "dropLimit": 1,
+    "dropOffsetX": -1,
+    "dropOffsetY": -15,
+    "dropTarget": {
+      "token": true
+    },
+    "resetProperties": {
+      "parent": "grid20",
+      "x": 33,
+      "y": 77
+    },
+    "color": "%23E8E8E7",
+    "outline": "black",
+    "text": 1,
+    "token": true,
+    "enterRoutine": [
+      "var newCount = ${PROPERTY text} + 1",
+      {
+        "func": "SET",
+        "collection": "child",
+        "property": "text",
+        "value": "${newCount}"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "SET",
+        "collection": "child",
+        "property": "text",
+        "value": 1
+      }
+    ],
+    "textChangeRoutine": [
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "${PROPERTY id}"
+      },
+      {
+        "func": "GET",
+        "property": "id",
+        "variable": "childID"
+      },
+      "var childCount = ${PROPERTY text} + 1",
+      {
+        "func": "SET",
+        "collection": [
+          "${childID}"
+        ],
+        "property": "text",
+        "value": "${childCount}"
+      }
+    ],
+    "parent": "grid20"
+  },
+  "coin-white11": {
+    "type": "holder",
+    "id": "coin-white11",
+    "x": 33,
+    "y": 77,
+    "width": 90,
+    "height": 68,
+    "z": 1,
+    "movable": true,
+    "classes": "transparent",
+    "css": {
+      "default": {
+        "background-image": "url(\"data:image/svg+xml,%3Csvg version='1.2' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' width='90' height='90'%3E%3Cpath fill='${PROPERTY color}' stroke='${PROPERTY outline}' stroke-width='4' d='m50 22.9c-12.7 0-24.3 2.2-32.4 5.8-4.1 1.7-7.4 3.8-9.5 6-2.2 2.2-3.2 4.4-3.2 6.7 0 2.3 1 4.5 3.2 6.7 2.1 2.2 5.4 4.3 9.5 6.1 8.1 3.5 19.7 5.8 32.4 5.8 12.7 0 24.3-2.3 32.4-5.8 4.1-1.8 7.4-3.9 9.5-6.1 2.2-2.2 3.2-4.4 3.2-6.7 0-2.3-1-4.5-3.2-6.7-2.1-2.2-5.4-4.3-9.5-6-8.1-3.6-19.7-5.8-32.4-5.8zm-45.1 26.9v9.8c0 1.3 1 3.5 3.2 5.7 2.1 2.2 5.4 4.3 9.5 6 8.1 3.6 19.7 5.8 32.4 5.8 12.7 0 24.3-2.2 32.4-5.8 4.1-1.7 7.4-3.8 9.5-6 2.2-2.2 3.2-4.4 3.2-5.7v-9.8q-0.3 0.4-0.6 0.7c-2.6 2.7-6.3 5-10.7 6.9-8.7 3.8-20.7 6.1-33.8 6.1-13.1 0-25.1-2.3-33.8-6.1-4.4-1.9-8.1-4.2-10.6-6.9q-0.4-0.3-0.7-0.7z'/%3E%3C/svg%3E\")",
+        "background-position-y": "20%",
+        "display": "flex",
+        "align-items": "center",
+        "justify-content": "center",
+        "font-size": "20px"
+      },
+      "::before": {
+        "content": "\"${PROPERTY text}\"",
+        "color": "grey",
+        "transform": "translateY(-3px) skewX(20deg)"
+      }
+    },
+    "dropLimit": 1,
+    "dropOffsetX": -1,
+    "dropOffsetY": -15,
+    "dropTarget": {
+      "token": true
+    },
+    "resetProperties": {
+      "parent": "grid37",
+      "x": 33,
+      "y": 77
+    },
+    "color": "%23E8E8E7",
+    "outline": "black",
+    "text": 1,
+    "token": true,
+    "enterRoutine": [
+      "var newCount = ${PROPERTY text} + 1",
+      {
+        "func": "SET",
+        "collection": "child",
+        "property": "text",
+        "value": "${newCount}"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "SET",
+        "collection": "child",
+        "property": "text",
+        "value": 1
+      }
+    ],
+    "textChangeRoutine": [
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "${PROPERTY id}"
+      },
+      {
+        "func": "GET",
+        "property": "id",
+        "variable": "childID"
+      },
+      "var childCount = ${PROPERTY text} + 1",
+      {
+        "func": "SET",
+        "collection": [
+          "${childID}"
+        ],
+        "property": "text",
+        "value": "${childCount}"
+      }
+    ],
+    "parent": "grid37"
+  },
+  "coin-white12": {
+    "type": "holder",
+    "id": "coin-white12",
+    "x": 33,
+    "y": 77,
+    "width": 90,
+    "height": 68,
+    "z": 1,
+    "movable": true,
+    "classes": "transparent",
+    "css": {
+      "default": {
+        "background-image": "url(\"data:image/svg+xml,%3Csvg version='1.2' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' width='90' height='90'%3E%3Cpath fill='${PROPERTY color}' stroke='${PROPERTY outline}' stroke-width='4' d='m50 22.9c-12.7 0-24.3 2.2-32.4 5.8-4.1 1.7-7.4 3.8-9.5 6-2.2 2.2-3.2 4.4-3.2 6.7 0 2.3 1 4.5 3.2 6.7 2.1 2.2 5.4 4.3 9.5 6.1 8.1 3.5 19.7 5.8 32.4 5.8 12.7 0 24.3-2.3 32.4-5.8 4.1-1.8 7.4-3.9 9.5-6.1 2.2-2.2 3.2-4.4 3.2-6.7 0-2.3-1-4.5-3.2-6.7-2.1-2.2-5.4-4.3-9.5-6-8.1-3.6-19.7-5.8-32.4-5.8zm-45.1 26.9v9.8c0 1.3 1 3.5 3.2 5.7 2.1 2.2 5.4 4.3 9.5 6 8.1 3.6 19.7 5.8 32.4 5.8 12.7 0 24.3-2.2 32.4-5.8 4.1-1.7 7.4-3.8 9.5-6 2.2-2.2 3.2-4.4 3.2-5.7v-9.8q-0.3 0.4-0.6 0.7c-2.6 2.7-6.3 5-10.7 6.9-8.7 3.8-20.7 6.1-33.8 6.1-13.1 0-25.1-2.3-33.8-6.1-4.4-1.9-8.1-4.2-10.6-6.9q-0.4-0.3-0.7-0.7z'/%3E%3C/svg%3E\")",
+        "background-position-y": "20%",
+        "display": "flex",
+        "align-items": "center",
+        "justify-content": "center",
+        "font-size": "20px"
+      },
+      "::before": {
+        "content": "\"${PROPERTY text}\"",
+        "color": "grey",
+        "transform": "translateY(-3px) skewX(20deg)"
+      }
+    },
+    "dropLimit": 1,
+    "dropOffsetX": -1,
+    "dropOffsetY": -15,
+    "dropTarget": {
+      "token": true
+    },
+    "resetProperties": {
+      "parent": "grid21",
+      "x": 33,
+      "y": 77
+    },
+    "color": "%23E8E8E7",
+    "outline": "black",
+    "text": 1,
+    "token": true,
+    "enterRoutine": [
+      "var newCount = ${PROPERTY text} + 1",
+      {
+        "func": "SET",
+        "collection": "child",
+        "property": "text",
+        "value": "${newCount}"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "SET",
+        "collection": "child",
+        "property": "text",
+        "value": 1
+      }
+    ],
+    "textChangeRoutine": [
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "${PROPERTY id}"
+      },
+      {
+        "func": "GET",
+        "property": "id",
+        "variable": "childID"
+      },
+      "var childCount = ${PROPERTY text} + 1",
+      {
+        "func": "SET",
+        "collection": [
+          "${childID}"
+        ],
+        "property": "text",
+        "value": "${childCount}"
+      }
+    ],
+    "parent": "grid21"
+  },
+  "coin-white13": {
+    "type": "holder",
+    "id": "coin-white13",
+    "x": 33,
+    "y": 77,
+    "width": 90,
+    "height": 68,
+    "z": 1,
+    "movable": true,
+    "classes": "transparent",
+    "css": {
+      "default": {
+        "background-image": "url(\"data:image/svg+xml,%3Csvg version='1.2' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' width='90' height='90'%3E%3Cpath fill='${PROPERTY color}' stroke='${PROPERTY outline}' stroke-width='4' d='m50 22.9c-12.7 0-24.3 2.2-32.4 5.8-4.1 1.7-7.4 3.8-9.5 6-2.2 2.2-3.2 4.4-3.2 6.7 0 2.3 1 4.5 3.2 6.7 2.1 2.2 5.4 4.3 9.5 6.1 8.1 3.5 19.7 5.8 32.4 5.8 12.7 0 24.3-2.3 32.4-5.8 4.1-1.8 7.4-3.9 9.5-6.1 2.2-2.2 3.2-4.4 3.2-6.7 0-2.3-1-4.5-3.2-6.7-2.1-2.2-5.4-4.3-9.5-6-8.1-3.6-19.7-5.8-32.4-5.8zm-45.1 26.9v9.8c0 1.3 1 3.5 3.2 5.7 2.1 2.2 5.4 4.3 9.5 6 8.1 3.6 19.7 5.8 32.4 5.8 12.7 0 24.3-2.2 32.4-5.8 4.1-1.7 7.4-3.8 9.5-6 2.2-2.2 3.2-4.4 3.2-5.7v-9.8q-0.3 0.4-0.6 0.7c-2.6 2.7-6.3 5-10.7 6.9-8.7 3.8-20.7 6.1-33.8 6.1-13.1 0-25.1-2.3-33.8-6.1-4.4-1.9-8.1-4.2-10.6-6.9q-0.4-0.3-0.7-0.7z'/%3E%3C/svg%3E\")",
+        "background-position-y": "20%",
+        "display": "flex",
+        "align-items": "center",
+        "justify-content": "center",
+        "font-size": "20px"
+      },
+      "::before": {
+        "content": "\"${PROPERTY text}\"",
+        "color": "grey",
+        "transform": "translateY(-3px) skewX(20deg)"
+      }
+    },
+    "dropLimit": 1,
+    "dropOffsetX": -1,
+    "dropOffsetY": -15,
+    "dropTarget": {
+      "token": true
+    },
+    "resetProperties": {
+      "parent": "grid35",
+      "x": 33,
+      "y": 77
+    },
+    "color": "%23E8E8E7",
+    "outline": "black",
+    "text": 1,
+    "token": true,
+    "enterRoutine": [
+      "var newCount = ${PROPERTY text} + 1",
+      {
+        "func": "SET",
+        "collection": "child",
+        "property": "text",
+        "value": "${newCount}"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "SET",
+        "collection": "child",
+        "property": "text",
+        "value": 1
+      }
+    ],
+    "textChangeRoutine": [
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "${PROPERTY id}"
+      },
+      {
+        "func": "GET",
+        "property": "id",
+        "variable": "childID"
+      },
+      "var childCount = ${PROPERTY text} + 1",
+      {
+        "func": "SET",
+        "collection": [
+          "${childID}"
+        ],
+        "property": "text",
+        "value": "${childCount}"
+      }
+    ],
+    "parent": "grid35"
+  },
+  "coin-white14": {
+    "type": "holder",
+    "id": "coin-white14",
+    "x": 33,
+    "y": 77,
+    "width": 90,
+    "height": 68,
+    "z": 1,
+    "movable": true,
+    "classes": "transparent",
+    "css": {
+      "default": {
+        "background-image": "url(\"data:image/svg+xml,%3Csvg version='1.2' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' width='90' height='90'%3E%3Cpath fill='${PROPERTY color}' stroke='${PROPERTY outline}' stroke-width='4' d='m50 22.9c-12.7 0-24.3 2.2-32.4 5.8-4.1 1.7-7.4 3.8-9.5 6-2.2 2.2-3.2 4.4-3.2 6.7 0 2.3 1 4.5 3.2 6.7 2.1 2.2 5.4 4.3 9.5 6.1 8.1 3.5 19.7 5.8 32.4 5.8 12.7 0 24.3-2.3 32.4-5.8 4.1-1.8 7.4-3.9 9.5-6.1 2.2-2.2 3.2-4.4 3.2-6.7 0-2.3-1-4.5-3.2-6.7-2.1-2.2-5.4-4.3-9.5-6-8.1-3.6-19.7-5.8-32.4-5.8zm-45.1 26.9v9.8c0 1.3 1 3.5 3.2 5.7 2.1 2.2 5.4 4.3 9.5 6 8.1 3.6 19.7 5.8 32.4 5.8 12.7 0 24.3-2.2 32.4-5.8 4.1-1.7 7.4-3.8 9.5-6 2.2-2.2 3.2-4.4 3.2-5.7v-9.8q-0.3 0.4-0.6 0.7c-2.6 2.7-6.3 5-10.7 6.9-8.7 3.8-20.7 6.1-33.8 6.1-13.1 0-25.1-2.3-33.8-6.1-4.4-1.9-8.1-4.2-10.6-6.9q-0.4-0.3-0.7-0.7z'/%3E%3C/svg%3E\")",
+        "background-position-y": "20%",
+        "display": "flex",
+        "align-items": "center",
+        "justify-content": "center",
+        "font-size": "20px"
+      },
+      "::before": {
+        "content": "\"${PROPERTY text}\"",
+        "color": "grey",
+        "transform": "translateY(-3px) skewX(20deg)"
+      }
+    },
+    "dropLimit": 1,
+    "dropOffsetX": -1,
+    "dropOffsetY": -15,
+    "dropTarget": {
+      "token": true
+    },
+    "resetProperties": {
+      "parent": "grid23",
+      "x": 33,
+      "y": 77
+    },
+    "color": "%23E8E8E7",
+    "outline": "black",
+    "text": 1,
+    "token": true,
+    "enterRoutine": [
+      "var newCount = ${PROPERTY text} + 1",
+      {
+        "func": "SET",
+        "collection": "child",
+        "property": "text",
+        "value": "${newCount}"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "SET",
+        "collection": "child",
+        "property": "text",
+        "value": 1
+      }
+    ],
+    "textChangeRoutine": [
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "${PROPERTY id}"
+      },
+      {
+        "func": "GET",
+        "property": "id",
+        "variable": "childID"
+      },
+      "var childCount = ${PROPERTY text} + 1",
+      {
+        "func": "SET",
+        "collection": [
+          "${childID}"
+        ],
+        "property": "text",
+        "value": "${childCount}"
+      }
+    ],
+    "parent": "grid23"
+  },
+  "coin-white15": {
+    "type": "holder",
+    "id": "coin-white15",
+    "x": 33,
+    "y": 77,
+    "width": 90,
+    "height": 68,
+    "z": 1,
+    "movable": true,
+    "classes": "transparent",
+    "css": {
+      "default": {
+        "background-image": "url(\"data:image/svg+xml,%3Csvg version='1.2' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' width='90' height='90'%3E%3Cpath fill='${PROPERTY color}' stroke='${PROPERTY outline}' stroke-width='4' d='m50 22.9c-12.7 0-24.3 2.2-32.4 5.8-4.1 1.7-7.4 3.8-9.5 6-2.2 2.2-3.2 4.4-3.2 6.7 0 2.3 1 4.5 3.2 6.7 2.1 2.2 5.4 4.3 9.5 6.1 8.1 3.5 19.7 5.8 32.4 5.8 12.7 0 24.3-2.3 32.4-5.8 4.1-1.8 7.4-3.9 9.5-6.1 2.2-2.2 3.2-4.4 3.2-6.7 0-2.3-1-4.5-3.2-6.7-2.1-2.2-5.4-4.3-9.5-6-8.1-3.6-19.7-5.8-32.4-5.8zm-45.1 26.9v9.8c0 1.3 1 3.5 3.2 5.7 2.1 2.2 5.4 4.3 9.5 6 8.1 3.6 19.7 5.8 32.4 5.8 12.7 0 24.3-2.2 32.4-5.8 4.1-1.7 7.4-3.8 9.5-6 2.2-2.2 3.2-4.4 3.2-5.7v-9.8q-0.3 0.4-0.6 0.7c-2.6 2.7-6.3 5-10.7 6.9-8.7 3.8-20.7 6.1-33.8 6.1-13.1 0-25.1-2.3-33.8-6.1-4.4-1.9-8.1-4.2-10.6-6.9q-0.4-0.3-0.7-0.7z'/%3E%3C/svg%3E\")",
+        "background-position-y": "20%",
+        "display": "flex",
+        "align-items": "center",
+        "justify-content": "center",
+        "font-size": "20px"
+      },
+      "::before": {
+        "content": "\"${PROPERTY text}\"",
+        "color": "grey",
+        "transform": "translateY(-3px) skewX(20deg)"
+      }
+    },
+    "dropLimit": 1,
+    "dropOffsetX": -1,
+    "dropOffsetY": -15,
+    "dropTarget": {
+      "token": true
+    },
+    "resetProperties": {
+      "parent": "grid32",
+      "x": 33,
+      "y": 77
+    },
+    "color": "%23E8E8E7",
+    "outline": "black",
+    "text": 1,
+    "token": true,
+    "enterRoutine": [
+      "var newCount = ${PROPERTY text} + 1",
+      {
+        "func": "SET",
+        "collection": "child",
+        "property": "text",
+        "value": "${newCount}"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "SET",
+        "collection": "child",
+        "property": "text",
+        "value": 1
+      }
+    ],
+    "textChangeRoutine": [
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "${PROPERTY id}"
+      },
+      {
+        "func": "GET",
+        "property": "id",
+        "variable": "childID"
+      },
+      "var childCount = ${PROPERTY text} + 1",
+      {
+        "func": "SET",
+        "collection": [
+          "${childID}"
+        ],
+        "property": "text",
+        "value": "${childCount}"
+      }
+    ],
+    "parent": "grid32"
+  },
+  "coin-white16": {
+    "type": "holder",
+    "id": "coin-white16",
+    "x": 33,
+    "y": 77,
+    "width": 90,
+    "height": 68,
+    "z": 1,
+    "movable": true,
+    "classes": "transparent",
+    "css": {
+      "default": {
+        "background-image": "url(\"data:image/svg+xml,%3Csvg version='1.2' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' width='90' height='90'%3E%3Cpath fill='${PROPERTY color}' stroke='${PROPERTY outline}' stroke-width='4' d='m50 22.9c-12.7 0-24.3 2.2-32.4 5.8-4.1 1.7-7.4 3.8-9.5 6-2.2 2.2-3.2 4.4-3.2 6.7 0 2.3 1 4.5 3.2 6.7 2.1 2.2 5.4 4.3 9.5 6.1 8.1 3.5 19.7 5.8 32.4 5.8 12.7 0 24.3-2.3 32.4-5.8 4.1-1.8 7.4-3.9 9.5-6.1 2.2-2.2 3.2-4.4 3.2-6.7 0-2.3-1-4.5-3.2-6.7-2.1-2.2-5.4-4.3-9.5-6-8.1-3.6-19.7-5.8-32.4-5.8zm-45.1 26.9v9.8c0 1.3 1 3.5 3.2 5.7 2.1 2.2 5.4 4.3 9.5 6 8.1 3.6 19.7 5.8 32.4 5.8 12.7 0 24.3-2.2 32.4-5.8 4.1-1.7 7.4-3.8 9.5-6 2.2-2.2 3.2-4.4 3.2-5.7v-9.8q-0.3 0.4-0.6 0.7c-2.6 2.7-6.3 5-10.7 6.9-8.7 3.8-20.7 6.1-33.8 6.1-13.1 0-25.1-2.3-33.8-6.1-4.4-1.9-8.1-4.2-10.6-6.9q-0.4-0.3-0.7-0.7z'/%3E%3C/svg%3E\")",
+        "background-position-y": "20%",
+        "display": "flex",
+        "align-items": "center",
+        "justify-content": "center",
+        "font-size": "20px"
+      },
+      "::before": {
+        "content": "\"${PROPERTY text}\"",
+        "color": "grey",
+        "transform": "translateY(-3px) skewX(20deg)"
+      }
+    },
+    "dropLimit": 1,
+    "dropOffsetX": -1,
+    "dropOffsetY": -15,
+    "dropTarget": {
+      "token": true
+    },
+    "resetProperties": {
+      "parent": "grid25",
+      "x": 33,
+      "y": 77
+    },
+    "color": "%23E8E8E7",
+    "outline": "black",
+    "text": 1,
+    "token": true,
+    "enterRoutine": [
+      "var newCount = ${PROPERTY text} + 1",
+      {
+        "func": "SET",
+        "collection": "child",
+        "property": "text",
+        "value": "${newCount}"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "SET",
+        "collection": "child",
+        "property": "text",
+        "value": 1
+      }
+    ],
+    "textChangeRoutine": [
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "${PROPERTY id}"
+      },
+      {
+        "func": "GET",
+        "property": "id",
+        "variable": "childID"
+      },
+      "var childCount = ${PROPERTY text} + 1",
+      {
+        "func": "SET",
+        "collection": [
+          "${childID}"
+        ],
+        "property": "text",
+        "value": "${childCount}"
+      }
+    ],
+    "parent": "grid25"
+  },
+  "coin-white17": {
+    "type": "holder",
+    "id": "coin-white17",
+    "x": 33,
+    "y": 77,
+    "width": 90,
+    "height": 68,
+    "z": 1,
+    "movable": true,
+    "classes": "transparent",
+    "css": {
+      "default": {
+        "background-image": "url(\"data:image/svg+xml,%3Csvg version='1.2' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' width='90' height='90'%3E%3Cpath fill='${PROPERTY color}' stroke='${PROPERTY outline}' stroke-width='4' d='m50 22.9c-12.7 0-24.3 2.2-32.4 5.8-4.1 1.7-7.4 3.8-9.5 6-2.2 2.2-3.2 4.4-3.2 6.7 0 2.3 1 4.5 3.2 6.7 2.1 2.2 5.4 4.3 9.5 6.1 8.1 3.5 19.7 5.8 32.4 5.8 12.7 0 24.3-2.3 32.4-5.8 4.1-1.8 7.4-3.9 9.5-6.1 2.2-2.2 3.2-4.4 3.2-6.7 0-2.3-1-4.5-3.2-6.7-2.1-2.2-5.4-4.3-9.5-6-8.1-3.6-19.7-5.8-32.4-5.8zm-45.1 26.9v9.8c0 1.3 1 3.5 3.2 5.7 2.1 2.2 5.4 4.3 9.5 6 8.1 3.6 19.7 5.8 32.4 5.8 12.7 0 24.3-2.2 32.4-5.8 4.1-1.7 7.4-3.8 9.5-6 2.2-2.2 3.2-4.4 3.2-5.7v-9.8q-0.3 0.4-0.6 0.7c-2.6 2.7-6.3 5-10.7 6.9-8.7 3.8-20.7 6.1-33.8 6.1-13.1 0-25.1-2.3-33.8-6.1-4.4-1.9-8.1-4.2-10.6-6.9q-0.4-0.3-0.7-0.7z'/%3E%3C/svg%3E\")",
+        "background-position-y": "20%",
+        "display": "flex",
+        "align-items": "center",
+        "justify-content": "center",
+        "font-size": "20px"
+      },
+      "::before": {
+        "content": "\"${PROPERTY text}\"",
+        "color": "grey",
+        "transform": "translateY(-3px) skewX(20deg)"
+      }
+    },
+    "dropLimit": 1,
+    "dropOffsetX": -1,
+    "dropOffsetY": -15,
+    "dropTarget": {
+      "token": true
+    },
+    "resetProperties": {
+      "parent": "grid30",
+      "x": 33,
+      "y": 77
+    },
+    "color": "%23E8E8E7",
+    "outline": "black",
+    "text": 1,
+    "token": true,
+    "enterRoutine": [
+      "var newCount = ${PROPERTY text} + 1",
+      {
+        "func": "SET",
+        "collection": "child",
+        "property": "text",
+        "value": "${newCount}"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "SET",
+        "collection": "child",
+        "property": "text",
+        "value": 1
+      }
+    ],
+    "textChangeRoutine": [
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "${PROPERTY id}"
+      },
+      {
+        "func": "GET",
+        "property": "id",
+        "variable": "childID"
+      },
+      "var childCount = ${PROPERTY text} + 1",
+      {
+        "func": "SET",
+        "collection": [
+          "${childID}"
+        ],
+        "property": "text",
+        "value": "${childCount}"
+      }
+    ],
+    "parent": "grid30"
+  },
+  "coin-white18": {
+    "type": "holder",
+    "id": "coin-white18",
+    "x": 33,
+    "y": 77,
+    "width": 90,
+    "height": 68,
+    "z": 1,
+    "movable": true,
+    "classes": "transparent",
+    "css": {
+      "default": {
+        "background-image": "url(\"data:image/svg+xml,%3Csvg version='1.2' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' width='90' height='90'%3E%3Cpath fill='${PROPERTY color}' stroke='${PROPERTY outline}' stroke-width='4' d='m50 22.9c-12.7 0-24.3 2.2-32.4 5.8-4.1 1.7-7.4 3.8-9.5 6-2.2 2.2-3.2 4.4-3.2 6.7 0 2.3 1 4.5 3.2 6.7 2.1 2.2 5.4 4.3 9.5 6.1 8.1 3.5 19.7 5.8 32.4 5.8 12.7 0 24.3-2.3 32.4-5.8 4.1-1.8 7.4-3.9 9.5-6.1 2.2-2.2 3.2-4.4 3.2-6.7 0-2.3-1-4.5-3.2-6.7-2.1-2.2-5.4-4.3-9.5-6-8.1-3.6-19.7-5.8-32.4-5.8zm-45.1 26.9v9.8c0 1.3 1 3.5 3.2 5.7 2.1 2.2 5.4 4.3 9.5 6 8.1 3.6 19.7 5.8 32.4 5.8 12.7 0 24.3-2.2 32.4-5.8 4.1-1.7 7.4-3.8 9.5-6 2.2-2.2 3.2-4.4 3.2-5.7v-9.8q-0.3 0.4-0.6 0.7c-2.6 2.7-6.3 5-10.7 6.9-8.7 3.8-20.7 6.1-33.8 6.1-13.1 0-25.1-2.3-33.8-6.1-4.4-1.9-8.1-4.2-10.6-6.9q-0.4-0.3-0.7-0.7z'/%3E%3C/svg%3E\")",
+        "background-position-y": "20%",
+        "display": "flex",
+        "align-items": "center",
+        "justify-content": "center",
+        "font-size": "20px"
+      },
+      "::before": {
+        "content": "\"${PROPERTY text}\"",
+        "color": "grey",
+        "transform": "translateY(-3px) skewX(20deg)"
+      }
+    },
+    "dropLimit": 1,
+    "dropOffsetX": -1,
+    "dropOffsetY": -15,
+    "dropTarget": {
+      "token": true
+    },
+    "resetProperties": {
+      "parent": "grid28",
+      "x": 33,
+      "y": 77
+    },
+    "color": "%23E8E8E7",
+    "outline": "black",
+    "text": 1,
+    "token": true,
+    "enterRoutine": [
+      "var newCount = ${PROPERTY text} + 1",
+      {
+        "func": "SET",
+        "collection": "child",
+        "property": "text",
+        "value": "${newCount}"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "SET",
+        "collection": "child",
+        "property": "text",
+        "value": 1
+      }
+    ],
+    "textChangeRoutine": [
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "${PROPERTY id}"
+      },
+      {
+        "func": "GET",
+        "property": "id",
+        "variable": "childID"
+      },
+      "var childCount = ${PROPERTY text} + 1",
+      {
+        "func": "SET",
+        "collection": [
+          "${childID}"
+        ],
+        "property": "text",
+        "value": "${childCount}"
+      }
+    ],
+    "parent": "grid28"
+  },
+  "background": {
+    "id": "background",
+    "width": 1920,
+    "height": 960,
+    "scale": 1.09,
+    "layer": -4,
+    "movable": false,
+    "css": {
+      "opacity": "0.6"
+    },
+    "image": "/assets/-52589506_548214",
+    "z": 1
+  }
+}
