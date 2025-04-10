@@ -11,27 +11,27 @@
     "version": 17,
     "info": {
       "name": "Floor of City",
+      "lastUpdate": 1742053816411,
       "image": "/assets/2060727169_8288",
-      "rules": "https://www.arcanewonders.com/wp-content/uploads/2024/06/FoM_Rulebook_Final_v2.pdf",
-      "bgg": "https://boardgamegeek.com/boardgame/412865/foundations-of-metropolis",
-      "year": "2024",
-      "mode": "vs",
-      "time": "60",
-      "attribution": "Code / Layout by maddie, with minor tweaks by LawDawg. Released to the Public Domain under CC0.<div><br></div><div>Icons 'person', 'token', 'crown coin', 'round star', 'family house', 'laurel-crown' and 'capitol' used from game-icons.net as attributed in the About overlay.</div><div><br></div><div>All other graphics made by maddie, released to the Public Domain under CC0.</div>",
-      "lastUpdate": 1743512130161,
       "showName": true,
+      "time": "60",
+      "mode": "vs",
       "skill": "",
       "description": "The city has devolved into abstract shapes! But life must go on... Help reconstruct city so that [work] [money] [fun]!",
+      "variantImage": "/assets/2060727169_8288",
+      "variant": "Floor of City",
+      "language": "",
+      "players": "2-4",
       "similarImage": "",
       "similarName": "Foundations of Metropolis",
+      "year": "2024",
       "similarDesigner": "Emerson Matsuuchi",
       "similarAwards": "",
-      "ruleText": "",
-      "helpText": "<div>Floor of City is color-blind friendly.</div><div><br></div><div><b>Overview:</b></div><div>Click on a seat to display the player board of your color on your screen. Only you can see your board, but once a building is dragged from its slot, it becomes visible to other players.&nbsp;<span style=\"color: var(--overlayFontColor);\">Only the portion of the shared board relevant to your player count will be visible.&nbsp;</span><span style=\"color: var(--overlayFontColor);\">The gold number trackers are for measuring money, the cyan trackers are for measuring population, and the topmost trackers are for measuring victory points. Each player has a Card Pile and Setup box that function as private hands. The difference is important when playing with the drafting variant.</span></div><div><span style=\"color: var(--overlayFontColor);\"><br></span></div><b>Setup:</b>\nOnce all players are seated, press the setup button. This will reset components, setup and shuffle the deck, fill the market, deal players cards and choose a random start player. Players should place their lot markers according to their dealt cards. Once you have played out your lot markers, you may press the&nbsp;🠄 button to shift your cards from the setup box to your personal pile.<div><br></div><div><i>Compensation coins for players late in turn order will need to be given manually.</i><div><div><br></div><div><b>Taking Actions:</b></div><div>When purchasing a lot or taking income, adjust your money value accordingly with the gold number trackers. Empty slots in the market will automatically be refilled after you press the END TURN button, which also cycles the turn tracker.</div><div><b><br></b></div><div>Lot markers and buildings should be dragged onto the board. Remember to place a lot marker every time you buy a new lot. Buildings will automatically snap to the grid, and can be rotated by clicking on them.&nbsp;<span style=\"color: var(--overlayFontColor);\">Lot markers can be removed from the board instantly by clicking on them. You can hover over civic buildings to enlarge them.</span><br></div><div><span style=\"color: var(--overlayFontColor);\"><br></span></div><div><span style=\"color: var(--overlayFontColor);\"><b>New Year:</b></span></div><div><span style=\"color: var(--overlayFontColor);\">When the market is empty and the last turn of the year is over, the active player should NOT click the END TURN button. Press the NEW YEAR button to automatically set up the market and move the turn tracker forward.</span></div><div><span style=\"color: var(--overlayFontColor);\"><br></span></div><div><span style=\"color: var(--overlayFontColor);\"><b>End of Game:</b></span></div><div><span style=\"color: var(--overlayFontColor);\">When the third year is over, there is no need to press the NEW YEAR button again. Tally up your final scores to determine the winner. Remember that money is the tie-breaker. If you wish to play again in the same room, press the SETUP button again, which will reset all components except for point trackers.</span></div><blockquote style=\"margin: 0 0 0 40px; border: none; padding: 0px;\"><h4><span style=\"color: var(--overlayFontColor);\">Variants</span></h4></blockquote><div style=\"color: var(--overlayFontColor);\"><b>Card Drafting</b></div><div style=\"\">The SETUP button will ask you if you want to play with card drafting. If you click Yes, the&nbsp;<span style=\"color: var(--overlayFontColor);\">🠄&nbsp; button will become the&nbsp;</span><span style=\"color: var(--overlayFontColor);\">↻ button. Each player should move one card from the Setup Box to their Pile, then when all players have chosen a card, everyone should place a lot token on the board representing their new lot. Next, one player should press the&nbsp;</span><span style=\"color: var(--overlayFontColor);\">↻ button to swap all player's hands. Repeat until all cards have been claimed and each player has six lot tokens on the board. You are now ready to begin the game as usual.</span></div><div style=\"color: var(--overlayFontColor); font-weight: bold;\"><span style=\"color: var(--overlayFontColor);\"><b><br></b></span></div><b style=\"color: var(--overlayFontColor);\">Trading and Stealing</b><div>At the bottom left of the screen you will find the 'favor tokens' that are used in the stealing module.&nbsp;<span style=\"color: var(--overlayFontColor);\">Click on these to flip them.</span><span style=\"color: var(--overlayFontColor);\">&nbsp;The colored holders represent which tokens are owned by which player.&nbsp;</span><span style=\"color: var(--overlayFontColor);\">Ignore the tokens if you not playing with this variant.</span></div></div></div>",
-      "variantImage": "",
-      "variant": "Floor of City",
-      "language": "en-US",
-      "players": "2-4"
+      "bgg": "https://boardgamegeek.com/boardgame/412865/foundations-of-metropolis",
+      "rules": "https://www.arcanewonders.com/wp-content/uploads/2024/06/FoM_Rulebook_Final_v2.pdf",
+      "ruleText": "Additional rules for the Trading &amp; Stealing Module can be found here:&nbsp;<div>https://www.arcanewonders.com/eu/wp-content/uploads/sites/6/2024/06/FoR_Rulebook_EN.pdf</div>",
+      "helpText": "<div>Floor of City is color-blind friendly.</div><div><br></div><div><b>Overview:</b></div><div>Click on a seat to display the player board of your color on your screen. Only you can see your board, but once a building is dragged from its slot, it becomes visible to other players.&nbsp;<span style=\"color: var(--overlayFontColor);\">Only the portion of the shared board relevant to your player count will be visible.&nbsp;</span><span style=\"color: var(--overlayFontColor);\">The gold number trackers are for measuring money, the cyan trackers are for measuring population, and the topmost trackers are for measuring victory points. Each player has a Card Pile and Setup box that function as private hands. The difference is important when playing with the drafting variant.</span></div><div><span style=\"color: var(--overlayFontColor);\"><br></span></div><b>Setup:</b>\nOnce all players are seated, press the setup button. This will reset components, setup and shuffle the deck, fill the market, deal players cards and choose a random start player. Players should place their lot markers according to their dealt cards. Once you've played out your lot markers, you may press the&nbsp;🠄 button to shift your cards from the setup box to your personal pile.<div><br></div><div><i>Compensation coins for players late in turn order will need to be given manually.</i><div><div><br></div><div><b>Taking Actions:</b></div><div>When purchasing a lot or taking income, adjust your money value accordingly with the gold number trackers. Empty slots in the market will automatically be refilled after you press the END TURN button, which also cycles the turn tracker.</div><div><b><br></b></div><div>Lot markers and buildings should be dragged onto the board. Remember to place a lot marker every time you buy a new lot. Buildings will automatically snap to the grid, and can be rotated by clicking on them.&nbsp;<span style=\"color: var(--overlayFontColor);\">Lot markers can be removed from the board instantly by clicking on them. You can hover over civic buildings to enlarge them.</span><br></div><div><span style=\"color: var(--overlayFontColor);\"><br></span></div><div><span style=\"color: var(--overlayFontColor);\"><b>New Year:</b></span></div><div><span style=\"color: var(--overlayFontColor);\">When the market is empty and the last turn of the year is over, the active player should NOT click the END TURN button. Press the NEW YEAR button to automatically set up the market and move the turn tracker forward.</span></div><div><span style=\"color: var(--overlayFontColor);\"><br></span></div><div><span style=\"color: var(--overlayFontColor);\"><b>End of Game:</b></span></div><div><span style=\"color: var(--overlayFontColor);\">When the third year is over, there is no need to press the NEW YEAR button again. Tally up your final scores to determine the winner. Remember that money is the tie-breaker. If you wish to play again in the same room, press the SETUP button again, which will reset all components except for point trackers.</span></div><blockquote style=\"margin: 0 0 0 40px; border: none; padding: 0px;\"><h4><span style=\"color: var(--overlayFontColor);\">Variants</span></h4></blockquote><div style=\"color: var(--overlayFontColor);\"><b>Card Drafting</b></div><div style=\"\">The SETUP button will ask you if you want to play with card drafting. If you click Yes, the&nbsp;<span style=\"color: var(--overlayFontColor);\">🠄&nbsp; button will become the&nbsp;</span><span style=\"color: var(--overlayFontColor);\">↻ button. Each player should move one card from the Setup Box to their Pile, then when all players have chosen a card, everyone should place a lot token on the board representing their new lot. Next, one player should press the&nbsp;</span><span style=\"color: var(--overlayFontColor);\">↻ button to swap all player's hands. Repeat until all cards have been claimed and each player has six lot tokens on the board. You are now ready to begin the game as usual.</span></div><div style=\"color: var(--overlayFontColor); font-weight: bold;\"><span style=\"color: var(--overlayFontColor);\"><b><br></b></span></div><b style=\"color: var(--overlayFontColor);\">Trading and Stealing</b><div>At the bottom left of the screen you will find the 'favor tokens' that are used in the stealing module.&nbsp;<span style=\"color: var(--overlayFontColor);\">Click on these to flip them.</span><span style=\"color: var(--overlayFontColor);\">&nbsp;The colored holders represent which tokens are owned by which player.&nbsp;</span><span style=\"color: var(--overlayFontColor);\">Ignore the tokens if you not playing with this variant.</span></div></div></div>",
+      "attribution": "Code / Layout by maddie released under CC 0. Some code derived from Tantrums by LawDawg. General assistance provided by LawDawg.<div><br></div><div>Icons 'person', 'token', 'crown coin', 'round star', 'family house', 'laurel-crown' and 'capitol' used from game-icons.net.</div><div><br></div><div>All other graphics made by maddie, released under CC 0.</div>"
     }
   },
   "square29": {
@@ -1226,7 +1226,7 @@
         "elseRoutine": [
           {
             "func": "IF",
-            "relation": "=",
+            "relation": "==",
             "operand1": "${playerCount}",
             "operand2": 4,
             "thenRoutine": [
@@ -1354,7 +1354,10 @@
     },
     "stackOffsetX": 50,
     "layer": -5,
-    "parent": "whiteboard2"
+    "parent": "whiteboard2",
+    "onLeave": {
+      "activeFace": 1
+    }
   },
   "eiqv": {
     "deck": "cards",
@@ -1961,7 +1964,7 @@
     "type": "card",
     "cardType": "basic",
     "id": "6haz",
-    "z": 52852,
+    "z": 52873,
     "lot": "F3",
     "parent": "s513",
     "activeFace": 1
@@ -3320,7 +3323,7 @@
     "type": "card",
     "cardType": "basic",
     "id": "5ogv",
-    "z": 41788,
+    "z": 41791,
     "parent": "llrj"
   },
   "ak3k": {
@@ -3905,7 +3908,7 @@
     "z": 152,
     "id": "l2u7",
     "width": 155,
-    "height": 111,
+    "height": 117,
     "css": "text-align: left;",
     "parent": "2koa"
   },
@@ -5892,7 +5895,7 @@
     "parent": "2koa"
   },
   "tcb6": {
-    "image": "/assets/-119211830_2538",
+    "image": "/assets/-329907465_8344",
     "movable": false,
     "width": 60,
     "height": 60,
@@ -5904,7 +5907,7 @@
     "parent": "board-blue"
   },
   "tcb7": {
-    "image": "/assets/-119211830_2538",
+    "image": "/assets/-329907465_8344",
     "movable": false,
     "width": 60,
     "height": 60,
@@ -5916,7 +5919,7 @@
     "parent": "board-blue"
   },
   "tcb8": {
-    "image": "/assets/-1143832770_2712",
+    "image": "/assets/-634127406_12131",
     "movable": false,
     "width": 60,
     "height": 60,
@@ -5928,7 +5931,7 @@
     "parent": "board-blue"
   },
   "tcb10": {
-    "image": "/assets/-1728137573_2592",
+    "image": "/assets/-363914373_9920",
     "movable": false,
     "width": 60,
     "height": 60,
@@ -5940,7 +5943,7 @@
     "parent": "board-blue"
   },
   "tcb9": {
-    "image": "/assets/-1143832770_2712",
+    "image": "/assets/-634127406_12131",
     "movable": false,
     "width": 60,
     "height": 60,
@@ -5952,7 +5955,7 @@
     "parent": "board-blue"
   },
   "tcb11": {
-    "image": "/assets/-1728137573_2592",
+    "image": "/assets/-363914373_9920",
     "movable": false,
     "width": 60,
     "height": 60,
@@ -5964,7 +5967,7 @@
     "parent": "board-blue"
   },
   "tcb12": {
-    "image": "/assets/2129273893_2638",
+    "image": "/assets/186495568_10685",
     "movable": false,
     "width": 60,
     "height": 60,
@@ -5976,7 +5979,7 @@
     "parent": "board-blue"
   },
   "tcb13": {
-    "image": "/assets/742179370_2918",
+    "image": "/assets/989113994_14835",
     "movable": false,
     "width": 60,
     "height": 60,
@@ -5988,7 +5991,7 @@
     "parent": "board-blue"
   },
   "tcb14": {
-    "image": "/assets/-811967842_3192",
+    "image": "/assets/1627177626_21724",
     "movable": false,
     "width": 60,
     "height": 60,
@@ -6000,7 +6003,7 @@
     "parent": "board-blue"
   },
   "tcb15": {
-    "image": "/assets/2129273893_2638",
+    "image": "/assets/186495568_10685",
     "movable": false,
     "width": 60,
     "height": 60,
@@ -6012,7 +6015,7 @@
     "parent": "board-blue"
   },
   "tcb16": {
-    "image": "/assets/742179370_2918",
+    "image": "/assets/989113994_14835",
     "movable": false,
     "width": 60,
     "height": 60,
@@ -6024,7 +6027,7 @@
     "parent": "board-blue"
   },
   "tcb17": {
-    "image": "/assets/742179370_2918",
+    "image": "/assets/989113994_14835",
     "movable": false,
     "width": 60,
     "height": 60,
@@ -6036,7 +6039,7 @@
     "parent": "board-blue"
   },
   "tcb18": {
-    "image": "/assets/742179370_2918",
+    "image": "/assets/989113994_14835",
     "movable": false,
     "width": 60,
     "height": 60,
@@ -6048,7 +6051,7 @@
     "parent": "board-blue"
   },
   "tcb19": {
-    "image": "/assets/-367684015_2856",
+    "image": "/assets/1662655593_6796",
     "movable": false,
     "width": 60,
     "height": 60,
@@ -6060,7 +6063,7 @@
     "parent": "board-blue"
   },
   "tcb20": {
-    "image": "/assets/-367684015_2856",
+    "image": "/assets/1662655593_6796",
     "movable": false,
     "width": 60,
     "height": 60,
@@ -6072,7 +6075,7 @@
     "parent": "board-blue"
   },
   "tcb21": {
-    "image": "/assets/81297639_2826",
+    "image": "/assets/-702903543_6801",
     "movable": false,
     "width": 60,
     "height": 60,
@@ -6084,7 +6087,7 @@
     "parent": "board-blue"
   },
   "tcb22": {
-    "image": "/assets/623262298_3170",
+    "image": "/assets/1391089470_21848",
     "movable": false,
     "width": 60,
     "height": 60,
@@ -6096,7 +6099,7 @@
     "parent": "board-blue"
   },
   "tcb23": {
-    "image": "/assets/623262298_3170",
+    "image": "/assets/1391089470_21848",
     "movable": false,
     "width": 60,
     "height": 60,
@@ -6108,7 +6111,7 @@
     "parent": "board-blue"
   },
   "tcb24": {
-    "image": "/assets/81297639_2826",
+    "image": "/assets/-702903543_6801",
     "movable": false,
     "width": 60,
     "height": 60,
@@ -6120,7 +6123,7 @@
     "parent": "board-blue"
   },
   "tcb25": {
-    "image": "/assets/199467471_2764",
+    "image": "/assets/1767161567_6055",
     "movable": false,
     "width": 60,
     "height": 60,
@@ -6132,7 +6135,7 @@
     "parent": "board-blue"
   },
   "tcb27": {
-    "image": "/assets/199467471_2764",
+    "image": "/assets/1767161567_6055",
     "movable": false,
     "width": 60,
     "height": 60,
@@ -6144,7 +6147,7 @@
     "parent": "board-blue"
   },
   "tcb28": {
-    "image": "/assets/-811967842_3192",
+    "image": "/assets/1627177626_21724",
     "movable": false,
     "width": 60,
     "height": 60,
@@ -8299,7 +8302,7 @@
     "parent": "t5m-h"
   },
   "tcb29": {
-    "image": "/assets/-119211830_2538",
+    "image": "/assets/-329907465_8344",
     "movable": false,
     "width": 60,
     "height": 60,
@@ -8311,7 +8314,7 @@
     "parent": "board-yellow"
   },
   "tcb30": {
-    "image": "/assets/-119211830_2538",
+    "image": "/assets/-329907465_8344",
     "movable": false,
     "width": 60,
     "height": 60,
@@ -8323,7 +8326,7 @@
     "parent": "board-yellow"
   },
   "tcb31": {
-    "image": "/assets/-1143832770_2712",
+    "image": "/assets/-634127406_12131",
     "movable": false,
     "width": 60,
     "height": 60,
@@ -8335,7 +8338,7 @@
     "parent": "board-yellow"
   },
   "tcb32": {
-    "image": "/assets/-1728137573_2592",
+    "image": "/assets/-363914373_9920",
     "movable": false,
     "width": 60,
     "height": 60,
@@ -8347,7 +8350,7 @@
     "parent": "board-yellow"
   },
   "tcb33": {
-    "image": "/assets/-1143832770_2712",
+    "image": "/assets/-634127406_12131",
     "movable": false,
     "width": 60,
     "height": 60,
@@ -8359,7 +8362,7 @@
     "parent": "board-yellow"
   },
   "tcb34": {
-    "image": "/assets/-1728137573_2592",
+    "image": "/assets/-363914373_9920",
     "movable": false,
     "width": 60,
     "height": 60,
@@ -8371,7 +8374,7 @@
     "parent": "board-yellow"
   },
   "tcb35": {
-    "image": "/assets/2129273893_2638",
+    "image": "/assets/186495568_10685",
     "movable": false,
     "width": 60,
     "height": 60,
@@ -8383,7 +8386,7 @@
     "parent": "board-yellow"
   },
   "tcb36": {
-    "image": "/assets/742179370_2918",
+    "image": "/assets/989113994_14835",
     "movable": false,
     "width": 60,
     "height": 60,
@@ -8395,7 +8398,7 @@
     "parent": "board-yellow"
   },
   "tcb37": {
-    "image": "/assets/-811967842_3192",
+    "image": "/assets/1627177626_21724",
     "movable": false,
     "width": 60,
     "height": 60,
@@ -8407,7 +8410,7 @@
     "parent": "board-yellow"
   },
   "tcb38": {
-    "image": "/assets/2129273893_2638",
+    "image": "/assets/186495568_10685",
     "movable": false,
     "width": 60,
     "height": 60,
@@ -8419,7 +8422,7 @@
     "parent": "board-yellow"
   },
   "tcb39": {
-    "image": "/assets/742179370_2918",
+    "image": "/assets/989113994_14835",
     "movable": false,
     "width": 60,
     "height": 60,
@@ -8431,7 +8434,7 @@
     "parent": "board-yellow"
   },
   "tcb40": {
-    "image": "/assets/742179370_2918",
+    "image": "/assets/989113994_14835",
     "movable": false,
     "width": 60,
     "height": 60,
@@ -8443,7 +8446,7 @@
     "parent": "board-yellow"
   },
   "tcb41": {
-    "image": "/assets/742179370_2918",
+    "image": "/assets/989113994_14835",
     "movable": false,
     "width": 60,
     "height": 60,
@@ -8455,7 +8458,7 @@
     "parent": "board-yellow"
   },
   "tcb42": {
-    "image": "/assets/-367684015_2856",
+    "image": "/assets/1662655593_6796",
     "movable": false,
     "width": 60,
     "height": 60,
@@ -8467,7 +8470,7 @@
     "parent": "board-yellow"
   },
   "tcb43": {
-    "image": "/assets/-367684015_2856",
+    "image": "/assets/1662655593_6796",
     "movable": false,
     "width": 60,
     "height": 60,
@@ -8479,7 +8482,7 @@
     "parent": "board-yellow"
   },
   "tcb44": {
-    "image": "/assets/81297639_2826",
+    "image": "/assets/-702903543_6801",
     "movable": false,
     "width": 60,
     "height": 60,
@@ -8491,7 +8494,7 @@
     "parent": "board-yellow"
   },
   "tcb45": {
-    "image": "/assets/623262298_3170",
+    "image": "/assets/1391089470_21848",
     "movable": false,
     "width": 60,
     "height": 60,
@@ -8503,7 +8506,7 @@
     "parent": "board-yellow"
   },
   "tcb46": {
-    "image": "/assets/623262298_3170",
+    "image": "/assets/1391089470_21848",
     "movable": false,
     "width": 60,
     "height": 60,
@@ -8515,7 +8518,7 @@
     "parent": "board-yellow"
   },
   "tcb47": {
-    "image": "/assets/81297639_2826",
+    "image": "/assets/-702903543_6801",
     "movable": false,
     "width": 60,
     "height": 60,
@@ -8527,7 +8530,7 @@
     "parent": "board-yellow"
   },
   "tcb48": {
-    "image": "/assets/199467471_2764",
+    "image": "/assets/1767161567_6055",
     "movable": false,
     "width": 60,
     "height": 60,
@@ -8539,7 +8542,7 @@
     "parent": "board-yellow"
   },
   "tcb49": {
-    "image": "/assets/199467471_2764",
+    "image": "/assets/1767161567_6055",
     "movable": false,
     "width": 60,
     "height": 60,
@@ -8551,7 +8554,7 @@
     "parent": "board-yellow"
   },
   "tcb50": {
-    "image": "/assets/-811967842_3192",
+    "image": "/assets/1627177626_21724",
     "movable": false,
     "width": 60,
     "height": 60,
@@ -10579,7 +10582,7 @@
     "parent": "t6m-h"
   },
   "tcb51": {
-    "image": "/assets/-119211830_2538",
+    "image": "/assets/-329907465_8344",
     "movable": false,
     "width": 60,
     "height": 60,
@@ -10591,7 +10594,7 @@
     "parent": "board-green"
   },
   "tcb52": {
-    "image": "/assets/-119211830_2538",
+    "image": "/assets/-329907465_8344",
     "movable": false,
     "width": 60,
     "height": 60,
@@ -10603,7 +10606,7 @@
     "parent": "board-green"
   },
   "tcb53": {
-    "image": "/assets/-1143832770_2712",
+    "image": "/assets/-634127406_12131",
     "movable": false,
     "width": 60,
     "height": 60,
@@ -10615,7 +10618,7 @@
     "parent": "board-green"
   },
   "tcb54": {
-    "image": "/assets/-1728137573_2592",
+    "image": "/assets/-363914373_9920",
     "movable": false,
     "width": 60,
     "height": 60,
@@ -10627,7 +10630,7 @@
     "parent": "board-green"
   },
   "tcb55": {
-    "image": "/assets/-1143832770_2712",
+    "image": "/assets/-634127406_12131",
     "movable": false,
     "width": 60,
     "height": 60,
@@ -10639,7 +10642,7 @@
     "parent": "board-green"
   },
   "tcb56": {
-    "image": "/assets/-1728137573_2592",
+    "image": "/assets/-363914373_9920",
     "movable": false,
     "width": 60,
     "height": 60,
@@ -10651,7 +10654,7 @@
     "parent": "board-green"
   },
   "tcb57": {
-    "image": "/assets/2129273893_2638",
+    "image": "/assets/186495568_10685",
     "movable": false,
     "width": 60,
     "height": 60,
@@ -10663,7 +10666,7 @@
     "parent": "board-green"
   },
   "tcb58": {
-    "image": "/assets/742179370_2918",
+    "image": "/assets/989113994_14835",
     "movable": false,
     "width": 60,
     "height": 60,
@@ -10675,7 +10678,7 @@
     "parent": "board-green"
   },
   "tcb59": {
-    "image": "/assets/-811967842_3192",
+    "image": "/assets/1627177626_21724",
     "movable": false,
     "width": 60,
     "height": 60,
@@ -10687,7 +10690,7 @@
     "parent": "board-green"
   },
   "tcb60": {
-    "image": "/assets/2129273893_2638",
+    "image": "/assets/186495568_10685",
     "movable": false,
     "width": 60,
     "height": 60,
@@ -10699,7 +10702,7 @@
     "parent": "board-green"
   },
   "tcb61": {
-    "image": "/assets/742179370_2918",
+    "image": "/assets/989113994_14835",
     "movable": false,
     "width": 60,
     "height": 60,
@@ -10711,7 +10714,7 @@
     "parent": "board-green"
   },
   "tcb62": {
-    "image": "/assets/742179370_2918",
+    "image": "/assets/989113994_14835",
     "movable": false,
     "width": 60,
     "height": 60,
@@ -10723,7 +10726,7 @@
     "parent": "board-green"
   },
   "tcb63": {
-    "image": "/assets/742179370_2918",
+    "image": "/assets/989113994_14835",
     "movable": false,
     "width": 60,
     "height": 60,
@@ -10735,7 +10738,7 @@
     "parent": "board-green"
   },
   "tcb64": {
-    "image": "/assets/-367684015_2856",
+    "image": "/assets/1662655593_6796",
     "movable": false,
     "width": 60,
     "height": 60,
@@ -10747,7 +10750,7 @@
     "parent": "board-green"
   },
   "tcb65": {
-    "image": "/assets/-367684015_2856",
+    "image": "/assets/1662655593_6796",
     "movable": false,
     "width": 60,
     "height": 60,
@@ -10759,7 +10762,7 @@
     "parent": "board-green"
   },
   "tcb66": {
-    "image": "/assets/81297639_2826",
+    "image": "/assets/-702903543_6801",
     "movable": false,
     "width": 60,
     "height": 60,
@@ -10771,7 +10774,7 @@
     "parent": "board-green"
   },
   "tcb67": {
-    "image": "/assets/623262298_3170",
+    "image": "/assets/1391089470_21848",
     "movable": false,
     "width": 60,
     "height": 60,
@@ -10783,7 +10786,7 @@
     "parent": "board-green"
   },
   "tcb68": {
-    "image": "/assets/623262298_3170",
+    "image": "/assets/1391089470_21848",
     "movable": false,
     "width": 60,
     "height": 60,
@@ -10795,7 +10798,7 @@
     "parent": "board-green"
   },
   "tcb69": {
-    "image": "/assets/81297639_2826",
+    "image": "/assets/-702903543_6801",
     "movable": false,
     "width": 60,
     "height": 60,
@@ -10807,7 +10810,7 @@
     "parent": "board-green"
   },
   "tcb70": {
-    "image": "/assets/199467471_2764",
+    "image": "/assets/1767161567_6055",
     "movable": false,
     "width": 60,
     "height": 60,
@@ -10819,7 +10822,7 @@
     "parent": "board-green"
   },
   "tcb71": {
-    "image": "/assets/199467471_2764",
+    "image": "/assets/1767161567_6055",
     "movable": false,
     "width": 60,
     "height": 60,
@@ -10831,7 +10834,7 @@
     "parent": "board-green"
   },
   "tcb72": {
-    "image": "/assets/-811967842_3192",
+    "image": "/assets/1627177626_21724",
     "movable": false,
     "width": 60,
     "height": 60,
@@ -12861,7 +12864,7 @@
     "parent": "t7m-h"
   },
   "tcb73": {
-    "image": "/assets/-119211830_2538",
+    "image": "/assets/-329907465_8344",
     "movable": false,
     "width": 60,
     "height": 60,
@@ -12873,7 +12876,7 @@
     "parent": "board-red"
   },
   "tcb74": {
-    "image": "/assets/-119211830_2538",
+    "image": "/assets/-329907465_8344",
     "movable": false,
     "width": 60,
     "height": 60,
@@ -12885,7 +12888,7 @@
     "parent": "board-red"
   },
   "tcb75": {
-    "image": "/assets/-1143832770_2712",
+    "image": "/assets/-634127406_12131",
     "movable": false,
     "width": 60,
     "height": 60,
@@ -12897,7 +12900,7 @@
     "parent": "board-red"
   },
   "tcb76": {
-    "image": "/assets/-1728137573_2592",
+    "image": "/assets/-363914373_9920",
     "movable": false,
     "width": 60,
     "height": 60,
@@ -12909,7 +12912,7 @@
     "parent": "board-red"
   },
   "tcb77": {
-    "image": "/assets/-1143832770_2712",
+    "image": "/assets/-634127406_12131",
     "movable": false,
     "width": 60,
     "height": 60,
@@ -12921,7 +12924,7 @@
     "parent": "board-red"
   },
   "tcb78": {
-    "image": "/assets/-1728137573_2592",
+    "image": "/assets/-363914373_9920",
     "movable": false,
     "width": 60,
     "height": 60,
@@ -12933,7 +12936,7 @@
     "parent": "board-red"
   },
   "tcb79": {
-    "image": "/assets/2129273893_2638",
+    "image": "/assets/186495568_10685",
     "movable": false,
     "width": 60,
     "height": 60,
@@ -12945,7 +12948,7 @@
     "parent": "board-red"
   },
   "tcb80": {
-    "image": "/assets/742179370_2918",
+    "image": "/assets/989113994_14835",
     "movable": false,
     "width": 60,
     "height": 60,
@@ -12957,7 +12960,7 @@
     "parent": "board-red"
   },
   "tcb81": {
-    "image": "/assets/-811967842_3192",
+    "image": "/assets/1627177626_21724",
     "movable": false,
     "width": 60,
     "height": 60,
@@ -12969,7 +12972,7 @@
     "parent": "board-red"
   },
   "tcb82": {
-    "image": "/assets/2129273893_2638",
+    "image": "/assets/186495568_10685",
     "movable": false,
     "width": 60,
     "height": 60,
@@ -12981,7 +12984,7 @@
     "parent": "board-red"
   },
   "tcb83": {
-    "image": "/assets/742179370_2918",
+    "image": "/assets/989113994_14835",
     "movable": false,
     "width": 60,
     "height": 60,
@@ -12993,7 +12996,7 @@
     "parent": "board-red"
   },
   "tcb84": {
-    "image": "/assets/742179370_2918",
+    "image": "/assets/989113994_14835",
     "movable": false,
     "width": 60,
     "height": 60,
@@ -13005,7 +13008,7 @@
     "parent": "board-red"
   },
   "tcb85": {
-    "image": "/assets/742179370_2918",
+    "image": "/assets/989113994_14835",
     "movable": false,
     "width": 60,
     "height": 60,
@@ -13017,7 +13020,7 @@
     "parent": "board-red"
   },
   "tcb86": {
-    "image": "/assets/-367684015_2856",
+    "image": "/assets/1662655593_6796",
     "movable": false,
     "width": 60,
     "height": 60,
@@ -13029,7 +13032,7 @@
     "parent": "board-red"
   },
   "tcb87": {
-    "image": "/assets/-367684015_2856",
+    "image": "/assets/1662655593_6796",
     "movable": false,
     "width": 60,
     "height": 60,
@@ -13041,7 +13044,7 @@
     "parent": "board-red"
   },
   "tcb88": {
-    "image": "/assets/81297639_2826",
+    "image": "/assets/-702903543_6801",
     "movable": false,
     "width": 60,
     "height": 60,
@@ -13053,7 +13056,7 @@
     "parent": "board-red"
   },
   "tcb89": {
-    "image": "/assets/623262298_3170",
+    "image": "/assets/1391089470_21848",
     "movable": false,
     "width": 60,
     "height": 60,
@@ -13065,7 +13068,7 @@
     "parent": "board-red"
   },
   "tcb90": {
-    "image": "/assets/623262298_3170",
+    "image": "/assets/1391089470_21848",
     "movable": false,
     "width": 60,
     "height": 60,
@@ -13077,7 +13080,7 @@
     "parent": "board-red"
   },
   "tcb91": {
-    "image": "/assets/81297639_2826",
+    "image": "/assets/-702903543_6801",
     "movable": false,
     "width": 60,
     "height": 60,
@@ -13089,7 +13092,7 @@
     "parent": "board-red"
   },
   "tcb92": {
-    "image": "/assets/199467471_2764",
+    "image": "/assets/1767161567_6055",
     "movable": false,
     "width": 60,
     "height": 60,
@@ -13101,7 +13104,7 @@
     "parent": "board-red"
   },
   "tcb93": {
-    "image": "/assets/199467471_2764",
+    "image": "/assets/1767161567_6055",
     "movable": false,
     "width": 60,
     "height": 60,
@@ -13113,7 +13116,7 @@
     "parent": "board-red"
   },
   "tcb94": {
-    "image": "/assets/-811967842_3192",
+    "image": "/assets/1627177626_21724",
     "movable": false,
     "width": 60,
     "height": 60,
@@ -14090,7 +14093,7 @@
     "height": 52,
     "z": 315,
     "css": {
-      "border": "2px solid grey",
+      "border": "2px solid #0072B2",
       "background": "#d1e3ed"
     },
     "dropOffsetX": 0,
@@ -14110,7 +14113,7 @@
     "height": 52,
     "z": 314,
     "css": {
-      "border": "2px solid grey",
+      "border": "2px solid #009E73",
       "background": "#d2e8e2"
     },
     "dropOffsetX": 0,
@@ -14126,7 +14129,7 @@
     "height": 52,
     "z": 313,
     "css": {
-      "border": "2px solid grey",
+      "border": "2px solid #F0E442",
       "background": "#edebcf"
     },
     "dropOffsetX": 0,
@@ -14142,7 +14145,7 @@
     "height": 52,
     "z": 296,
     "css": {
-      "border": "2px solid grey",
+      "border": "2px solid #D55E00",
       "background": "#efe5dc"
     },
     "dropOffsetX": 0,
@@ -14160,7 +14163,6 @@
       "parent": "lbh",
       "activeFace": 0
     },
-    "hoverParent": "lbh",
     "parent": "lbh"
   },
   "lg1": {
@@ -14427,6 +14429,18 @@
           }
         ],
         "elseRoutine": [
+          {
+            "func": "INPUT",
+            "header": "Swap Hands?",
+            "confirmButtonText": "Yes",
+            "cancelButtonText": "No",
+            "fields": [
+              {
+                "type": "subtitle",
+                "text": "Make sure every player has moved one card from Setup Box to Card Pile."
+              }
+            ]
+          },
           {
             "func": "SELECT",
             "property": "type",
