@@ -1,0 +1,443 @@
+{
+  "_meta": {
+    "version": 17,
+    "info": {
+      "name": "svgReplaces",
+      "image": "/assets/1295727122_5031",
+      "rules": "",
+      "bgg": "",
+      "year": "",
+      "mode": "Tutorial",
+      "time": "",
+      "attribution": "",
+      "lastUpdate": 1744475596240,
+      "showName": false,
+      "skill": "",
+      "description": "",
+      "similarImage": "",
+      "similarName": "",
+      "similarDesigner": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": "",
+      "variantImage": "",
+      "variant": "Cards",
+      "language": "en-US",
+      "players": "1"
+    }
+  },
+  "header": {
+    "id": "header",
+    "x": 200,
+    "y": -2,
+    "height": 60,
+    "z": 74,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "font-size: 60px;text-align:center",
+    "text": "svgReplaces: Cards",
+    "width": 1200
+  },
+  "mainText": {
+    "id": "mainText",
+    "x": 100,
+    "y": 100,
+    "width": 1405,
+    "height": 150,
+    "layer": -3,
+    "z": 124,
+    "css": "font-size: 25px; ",
+    "movable": false,
+    "html": "<b>svgReplaces</b> can also be used on decks to change the color of cards. The syntax and location of the property have to be adjusted to account for being used on those types of widgets, however."
+  },
+  "button1Text": {
+    "id": "button1Text",
+    "x": 60,
+    "y": 580,
+    "width": 300,
+    "z": 185,
+    "movable": false,
+    "html": "The example above are cards with a single face and a single image. The <b>svgReplaces</b> property is located in the <b>object</b> of the <b>faceTemplate></b> portion of the deck. Then the color changing property is unique to each <b>cardType</b>.",
+    "css": {
+      "font-size": "22px"
+    }
+  },
+  "button2Text": {
+    "id": "button2Text",
+    "x": 410,
+    "y": 580,
+    "width": 300,
+    "z": 121,
+    "movable": false,
+    "html": "This set of cards is from the <a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Widgets'>VTT Wiki</a> section about cards and deck with showing the step by step example. It is shown here as a demonstration of how to use <b>svgReplaces</b> on a deck.",
+    "css": {
+      "font-size": "22px"
+    }
+  },
+  "kw48": {
+    "deck": "basicDeck",
+    "type": "card",
+    "cardType": "tower",
+    "id": "kw48",
+    "x": 96,
+    "y": 342
+  },
+  "basicDeck": {
+    "type": "deck",
+    "id": "basicDeck",
+    "x": 133,
+    "y": 838,
+    "cardDefaults": {
+      "height": 100,
+      "width": 100
+    },
+    "cardTypes": {
+      "red": {
+        "iconColor": "red"
+      },
+      "green": {
+        "iconColor": "green"
+      }
+    },
+    "faceTemplates": [
+      {
+        "border": false,
+        "objects": [
+          {
+            "type": "image",
+            "width": 100,
+            "height": 100,
+            "color": "white",
+            "value": "/i/game-icons.net/delapouite/boat-fishing.svg",
+            "svgReplaces": {
+              "#000": "iconColor"
+            }
+          }
+        ]
+      }
+    ],
+    "z": 20
+  },
+  "example1": {
+    "type": "card",
+    "id": "example1",
+    "deck": "basicDeck",
+    "cardType": "red",
+    "x": 74,
+    "y": 342,
+    "z": 2,
+    "movable": false
+  },
+  "example2": {
+    "type": "card",
+    "id": "example2",
+    "deck": "basicDeck",
+    "cardType": "green",
+    "x": 226,
+    "y": 342,
+    "z": 3,
+    "movable": false
+  },
+  "advancedDeck": {
+    "type": "deck",
+    "id": "advancedDeck",
+    "x": 499,
+    "y": 834,
+    "cardDefaults": {
+      "height": 100,
+      "width": 100,
+      "logoColor": "#1f5ca6",
+      "shapeColor": "#ffffff80"
+    },
+    "cardTypes": {
+      "Blue 1": {
+        "shade": "blue",
+        "shape": "/i/game-icons.net/sbed/big-egg.svg",
+        "text": 1
+      },
+      "Blue 2": {
+        "shade": "blue",
+        "shape": "/i/game-icons.net/sbed/big-egg.svg",
+        "text": 2
+      },
+      "Blue 3": {
+        "shade": "blue",
+        "shape": "/i/game-icons.net/sbed/big-egg.svg",
+        "text": 3
+      },
+      "Blue 4": {
+        "shade": "blue",
+        "shape": "/i/game-icons.net/sbed/big-egg.svg",
+        "text": 4
+      },
+      "Red 1": {
+        "shade": "red",
+        "shape": "/i/game-icons.net/skoll/hearts.svg",
+        "text": 1
+      },
+      "Red 2": {
+        "shade": "red",
+        "shape": "/i/game-icons.net/skoll/hearts.svg",
+        "text": 2
+      },
+      "Red 3": {
+        "shade": "red",
+        "shape": "/i/game-icons.net/skoll/hearts.svg",
+        "text": 3
+      },
+      "Red 4": {
+        "shade": "red",
+        "shape": "/i/game-icons.net/skoll/hearts.svg",
+        "text": 4
+      },
+      "Green 1": {
+        "shade": "green",
+        "shape": "/i/game-icons.net/delapouite/plain-circle.svg",
+        "text": 1
+      },
+      "Green 2": {
+        "shade": "green",
+        "shape": "/i/game-icons.net/delapouite/plain-circle.svg",
+        "text": 2
+      },
+      "Green 3": {
+        "shade": "green",
+        "shape": "/i/game-icons.net/delapouite/plain-circle.svg",
+        "text": 3
+      },
+      "Green 4": {
+        "shade": "green",
+        "shape": "/i/game-icons.net/delapouite/plain-circle.svg",
+        "text": 4
+      },
+      "Orange 1": {
+        "shade": "orange",
+        "shape": "/i/game-icons.net/delapouite/plain-arrow.svg",
+        "text": 1
+      },
+      "Orange 2": {
+        "shade": "orange",
+        "shape": "/i/game-icons.net/delapouite/plain-arrow.svg",
+        "text": 2
+      },
+      "Orange 3": {
+        "shade": "orange",
+        "shape": "/i/game-icons.net/delapouite/plain-arrow.svg",
+        "text": 3
+      },
+      "Orange 4": {
+        "shade": "orange",
+        "shape": "/i/game-icons.net/delapouite/plain-arrow.svg",
+        "text": 4
+      }
+    },
+    "faceTemplates": [
+      {
+        "border": 1,
+        "radius": 8,
+        "objects": [
+          {
+            "type": "image",
+            "width": 100,
+            "height": 100,
+            "color": "white",
+            "value": "/i/icons/vtt_logo.svg",
+            "svgReplaces": {
+              "currentColor": "logoColor"
+            }
+          }
+        ]
+      },
+      {
+        "border": 1,
+        "radius": 8,
+        "objects": [
+          {
+            "type": "image",
+            "width": 100,
+            "height": 100,
+            "svgReplaces": {
+              "#000": "shapeColor"
+            },
+            "dynamicProperties": {
+              "color": "shade",
+              "value": "shape"
+            }
+          },
+          {
+            "type": "text",
+            "x": 0,
+            "y": 18,
+            "color": "black",
+            "fontSize": 50,
+            "textAlign": "center",
+            "width": 100,
+            "dynamicProperties": {
+              "value": "text"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "0w09": {
+    "deck": "advancedDeck",
+    "type": "card",
+    "cardType": "Blue 1",
+    "id": "0w09",
+    "x": 1051,
+    "y": 804,
+    "z": 43,
+    "activeFace": 1
+  },
+  "9wh2": {
+    "deck": "advancedDeck",
+    "type": "card",
+    "cardType": "Blue 2",
+    "id": "9wh2",
+    "z": 42,
+    "x": 943,
+    "y": 804,
+    "activeFace": 1
+  },
+  "y10n": {
+    "deck": "advancedDeck",
+    "type": "card",
+    "cardType": "Blue 3",
+    "id": "y10n",
+    "z": 41,
+    "x": 836,
+    "y": 804,
+    "activeFace": 1
+  },
+  "20zo": {
+    "deck": "advancedDeck",
+    "type": "card",
+    "cardType": "Blue 4",
+    "id": "20zo",
+    "z": 40,
+    "x": 728,
+    "y": 804,
+    "activeFace": 1
+  },
+  "bsd8": {
+    "deck": "advancedDeck",
+    "type": "card",
+    "cardType": "Red 1",
+    "id": "bsd8",
+    "z": 39,
+    "x": 1051,
+    "y": 691,
+    "activeFace": 1
+  },
+  "nvgz": {
+    "deck": "advancedDeck",
+    "type": "card",
+    "cardType": "Red 2",
+    "id": "nvgz",
+    "z": 37,
+    "x": 943,
+    "y": 691,
+    "activeFace": 1
+  },
+  "tgkr": {
+    "deck": "advancedDeck",
+    "type": "card",
+    "cardType": "Red 3",
+    "id": "tgkr",
+    "z": 35,
+    "x": 836,
+    "y": 691,
+    "activeFace": 1
+  },
+  "y6qp": {
+    "deck": "advancedDeck",
+    "type": "card",
+    "cardType": "Red 4",
+    "id": "y6qp",
+    "z": 32,
+    "x": 728,
+    "y": 691,
+    "activeFace": 1
+  },
+  "5gj2": {
+    "deck": "advancedDeck",
+    "type": "card",
+    "cardType": "Green 1",
+    "id": "5gj2",
+    "z": 29,
+    "x": 1051,
+    "y": 577,
+    "activeFace": 1
+  },
+  "sqm9": {
+    "deck": "advancedDeck",
+    "type": "card",
+    "cardType": "Green 2",
+    "id": "sqm9",
+    "z": 27,
+    "x": 943,
+    "y": 577,
+    "activeFace": 1
+  },
+  "0bin": {
+    "deck": "advancedDeck",
+    "type": "card",
+    "cardType": "Green 3",
+    "id": "0bin",
+    "z": 26,
+    "x": 836,
+    "y": 577,
+    "activeFace": 1
+  },
+  "2his": {
+    "deck": "advancedDeck",
+    "type": "card",
+    "cardType": "Green 4",
+    "id": "2his",
+    "z": 25,
+    "x": 728,
+    "y": 577,
+    "activeFace": 1
+  },
+  "exsa": {
+    "deck": "advancedDeck",
+    "type": "card",
+    "cardType": "Orange 1",
+    "id": "exsa",
+    "z": 24,
+    "activeFace": 1,
+    "x": 1051,
+    "y": 464
+  },
+  "x9po": {
+    "deck": "advancedDeck",
+    "type": "card",
+    "cardType": "Orange 2",
+    "id": "x9po",
+    "z": 23,
+    "activeFace": 1,
+    "x": 943,
+    "y": 464
+  },
+  "f8l0": {
+    "deck": "advancedDeck",
+    "type": "card",
+    "cardType": "Orange 3",
+    "id": "f8l0",
+    "z": 22,
+    "activeFace": 1,
+    "x": 836,
+    "y": 464
+  },
+  "flsd": {
+    "deck": "advancedDeck",
+    "type": "card",
+    "cardType": "Orange 4",
+    "id": "flsd",
+    "z": 21,
+    "activeFace": 1,
+    "x": 728,
+    "y": 464
+  }
+}

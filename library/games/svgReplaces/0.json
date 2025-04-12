@@ -1,0 +1,231 @@
+{
+  "_meta": {
+    "version": 17,
+    "info": {
+      "name": "svgReplaces",
+      "image": "/assets/1295727122_5031",
+      "rules": "",
+      "bgg": "",
+      "year": "",
+      "mode": "Tutorial",
+      "time": "",
+      "attribution": "",
+      "lastUpdate": 1744475596236,
+      "showName": false,
+      "skill": "",
+      "description": "",
+      "similarImage": "",
+      "similarName": "",
+      "similarDesigner": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": "",
+      "variantImage": "",
+      "variant": "Basic",
+      "language": "en-US",
+      "players": "1"
+    }
+  },
+  "header": {
+    "id": "header",
+    "x": 200,
+    "y": -2,
+    "height": 60,
+    "z": 74,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "font-size: 60px;text-align:center",
+    "text": "svgReplaces: Basic",
+    "width": 1200
+  },
+  "mainText": {
+    "id": "mainText",
+    "x": 100,
+    "y": 100,
+    "width": 1405,
+    "height": 150,
+    "layer": -3,
+    "z": 124,
+    "css": "font-size: 25px; ",
+    "movable": false,
+    "html": "SVGs are described with text-like code and can be adjusted dynamically through the VTT <b>svgReplaces</b> property. If you are bringing in a custom SVG that you want to be able to dynamically recolor, or if you are using built-in VTT icons, this is a useful tool. For more background about SVGs see <a href='https://www.w3schools.com/graphics/svg_intro.asp'>this website</a>. In a typical case, you are simply replacing a color with another color, but the property can be used in more powerful ways as show in the Advanced variant of this tutorial. These examples all use images available in VTT, but the concept works the same for any SVG image."
+  },
+  "button1Text": {
+    "id": "button1Text",
+    "x": 60,
+    "y": 459,
+    "width": 300,
+    "z": 185,
+    "movable": false,
+    "html": "The boat on the left is from the game-icons.net collection. They all have the default fill color as #000, so that is what you replace. Look at the boat in the JSON Editor. The <b>svgReplaces</b> property is saying take any instances where `#000` appears in the SVG and change it to whatever is set in the property <b>newColor</b>. You can name the property whatever you want. Then in that property, identify the color that should replace the black #000. \n\nThe meeple on the right is part of a custom set of VTT icons. They use <b>currentColor</b> (which defaults to black) and so that is what needs to be replaced.",
+    "css": {
+      "font-size": "21px"
+    }
+  },
+  "button2Text": {
+    "id": "button2Text",
+    "x": 410,
+    "y": 459,
+    "width": 300,
+    "z": 121,
+    "movable": false,
+    "html": "Many SVGs have more than one color. The play/pause emoji above has 4. You can see the original colors as specified in the SVG file in the JSON Editor by clicking on the paint bucket icon at the top row of buttons on the right side.\n\nClick on the orange play/pause icon above and then the paint bucket icon. You will see the available colors. If you click on one of those colored buttons, the beginning part of the svgReplaces will be added for you. The emoji on the right has <b>svgReplaces</b> for the three orangish colors. Note that the replacement is case sensitive, so #f77e00 would not work. Also, if you click on the paint bucket icon, you will still see the original orange colors.",
+    "css": {
+      "font-size": "19px"
+    }
+  },
+  "button3Text": {
+    "id": "button3Text",
+    "x": 760,
+    "y": 459,
+    "width": 300,
+    "z": 9732,
+    "movable": false,
+    "text": "The ranbows are just another example of color replacement in an emoji with multiple colors.",
+    "css": {
+      "font-size": "22px"
+    }
+  },
+  "example1": {
+    "id": "example1",
+    "x": 100,
+    "y": 311,
+    "z": 10097,
+    "image": "/i/game-icons.net/delapouite/fishing-boat.svg",
+    "movable": false,
+    "svgReplaces": {
+      "#000": "newColor"
+    },
+    "newColor": "gold"
+  },
+  "button4Text": {
+    "id": "button4Text",
+    "x": 1110,
+    "y": 459,
+    "width": 300,
+    "z": 9732,
+    "movable": false,
+    "text": "The icons above are part of the game 'pieces' that can be added using the add widget overlay. They are similar to the VTT icons except some of them have multiple colors possible. The values you would be replacing there are things like primaryColor, secondaryColor, borderColor, etc.\n\nThese widgets do not work with the automatic color display in the paint icon button, but the naming convention for the replacement is more obvious and you can also choose a primary color when adding a piece through the overlay.",
+    "css": {
+      "font-size": "21px"
+    }
+  },
+  "example2": {
+    "id": "example2",
+    "x": 213,
+    "y": 311,
+    "z": 10097,
+    "image": "i/icons/meeple_3d.svg",
+    "movable": false,
+    "svgReplaces": {
+      "currentColor": "canBeAnything"
+    },
+    "canBeAnything": "red"
+  },
+  "example3": {
+    "id": "example3",
+    "x": 432,
+    "y": 311,
+    "z": 10097,
+    "image": "/i/noto-emoji/emoji_u23ef.svg",
+    "movable": false
+  },
+  "example4": {
+    "id": "example4",
+    "x": 563,
+    "y": 311,
+    "z": 10097,
+    "image": "/i/noto-emoji/emoji_u23ef.svg",
+    "movable": false,
+    "svgReplaces": {
+      "#FF9800": "mainColor",
+      "#FFBD52": "glintColor",
+      "#F77E00": "highlightColor"
+    },
+    "mainColor": "#5624d6",
+    "glintColor": "#b29aee",
+    "highlightColor": "#31147a"
+  },
+  "example6": {
+    "id": "example6",
+    "x": 924,
+    "y": 311,
+    "movable": false,
+    "image": "/i/noto-emoji/emoji_u1f308.svg",
+    "svgReplaces": {
+      "#8177FA": "color1",
+      "#00C0E9": "color2",
+      "#97CC37": "color3",
+      "#F9D81E": "color4",
+      "#FF8E00": "color5",
+      "#FF5117": "color6"
+    },
+    "color1": "indigo",
+    "color2": "blue",
+    "color3": "green",
+    "color4": "yellow",
+    "color5": "orange",
+    "color6": "red",
+    "z": 3
+  },
+  "example5": {
+    "id": "example5",
+    "x": 793,
+    "y": 311,
+    "movable": false,
+    "image": "/i/noto-emoji/emoji_u1f308.svg",
+    "z": 2
+  },
+  "04q8": {
+    "x": 1157,
+    "y": 329,
+    "width": 69,
+    "height": 77,
+    "color": "#107203",
+    "css": "border-radius: 52% 48% 35% 65%/30% 70% 25% 45%;",
+    "image": "/i/game-pieces/3D/Building-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 1,
+    "z": 10102,
+    "id": "04q8",
+    "movable": false
+  },
+  "32dh": {
+    "x": 1269,
+    "y": 342,
+    "width": 75,
+    "height": 54.75,
+    "activeFace": 1,
+    "classes": "chip3D",
+    "color": "#5a35ed",
+    "faces": [
+      {
+        "image": "i/game-pieces/3D/Checkers-3D.svg",
+        "crowned": false
+      },
+      {
+        "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+        "crowned": true
+      }
+    ],
+    "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 1,
+    "crowned": true,
+    "secondaryColor": "#ffffff",
+    "z": 10103,
+    "id": "32dh",
+    "movable": false
+  }
+}
