@@ -10,7 +10,7 @@
       "mode": "Tutorial",
       "time": "",
       "attribution": "",
-      "lastUpdate": 1744475596238,
+      "lastUpdate": 1744476403720,
       "showName": false,
       "skill": "",
       "description": "",
@@ -53,7 +53,7 @@
   "button1Text": {
     "id": "button1Text",
     "x": 60,
-    "y": 529,
+    "y": 494,
     "width": 300,
     "z": 185,
     "movable": false,
@@ -65,7 +65,7 @@
   "button2Text": {
     "id": "button2Text",
     "x": 410,
-    "y": 529,
+    "y": 494,
     "width": 300,
     "z": 121,
     "movable": false,
@@ -77,7 +77,7 @@
   "button3Text": {
     "id": "button3Text",
     "x": 760,
-    "y": 529,
+    "y": 494,
     "width": 300,
     "z": 9732,
     "movable": false,
@@ -89,13 +89,13 @@
   "button4Text": {
     "id": "button4Text",
     "x": 1110,
-    "y": 529,
+    "y": 494,
     "width": 300,
     "z": 9732,
     "movable": false,
-    "html": "You can even make more complicated shapes. But there are also other ways to achieve the same effect. The example on the left is a single widget and adds a hexagon background in the same way as the rectangle and circle were added before.\n\nThe image on the right is two SVGs. The tower is the child of the the hexagon which is a separate SVG file using <b>svgReplaces</b>.",
+    "html": "You can even make more complicated shapes. But there are also other ways to achieve the same effect. The example on the left is a single widget and adds a hexagon background in the same way as the rectangle and circle were added before.\n\nThe image on the right is two SVGs. The tower is the child of the the hexagon which is a separate SVG file using <b>svgReplaces</b>.\n\nYou could also build something like this using cards, as demonstrated in the next variant.",
     "css": {
-      "font-size": "22px"
+      "font-size": "21px"
     }
   },
   "example1": {
@@ -104,10 +104,10 @@
     "y": 311,
     "image": "/i/game-icons.net/delapouite/brick-wall.svg",
     "svgReplaces": {
-      "#000": "brickColor"
+      "#000": "customCSS"
     },
-    "brickColor": "red",
-    "movable": false
+    "movable": false,
+    "customCSS": "red\" stroke-width=\"15\" stroke-opacity=\"0.8\" stroke=\"darkred"
   },
   "example2": {
     "id": "example2",
@@ -115,10 +115,10 @@
     "y": 311,
     "image": "/i/game-icons.net/carl-olsen/flame.svg",
     "svgReplaces": {
-      "#000": "newColor"
+      "#000": "newCSS"
     },
-    "newColor": "orange",
-    "movable": false
+    "movable": false,
+    "newCSS": "orange\" stroke-width=\"25\" stroke=\"gold"
   },
   "example": {
     "id": "example",
@@ -159,7 +159,7 @@
   },
   "example5": {
     "id": "example5",
-    "x": 1106,
+    "x": 1113,
     "y": 311,
     "borderRadius": 100,
     "movable": false,
@@ -178,7 +178,7 @@
   },
   "example6Parent": {
     "id": "example6Parent",
-    "x": 1241,
+    "x": 1268,
     "y": 311,
     "z": 9733,
     "movable": false,

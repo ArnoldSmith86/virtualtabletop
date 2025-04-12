@@ -10,7 +10,7 @@
       "mode": "Tutorial",
       "time": "",
       "attribution": "",
-      "lastUpdate": 1744475596236,
+      "lastUpdate": 1744476403719,
       "showName": false,
       "skill": "",
       "description": "",
@@ -81,10 +81,10 @@
     "width": 300,
     "z": 9732,
     "movable": false,
-    "text": "The ranbows are just another example of color replacement in an emoji with multiple colors.",
     "css": {
       "font-size": "22px"
-    }
+    },
+    "html": "The ranbows are just another example of color replacement in an emoji with multiple colors."
   },
   "example1": {
     "id": "example1",
@@ -105,10 +105,10 @@
     "width": 300,
     "z": 9732,
     "movable": false,
-    "text": "The icons above are part of the game 'pieces' that can be added using the add widget overlay. They are similar to the VTT icons except some of them have multiple colors possible. The values you would be replacing there are things like primaryColor, secondaryColor, borderColor, etc.\n\nThese widgets do not work with the automatic color display in the paint icon button, but the naming convention for the replacement is more obvious and you can also choose a primary color when adding a piece through the overlay.",
     "css": {
       "font-size": "21px"
-    }
+    },
+    "html": "The icons above are part of the game 'pieces' that can be added using the add widget overlay. They are similar to the VTT icons except some of them have multiple colors possible. The values you would be replacing there are things like <b>primaryColor</b>, <b>secondaryColor</b>, <b>borderColor</b>, etc.\n\nThese widgets do not work with the automatic color display in the paint icon button, but the naming convention for the replacement is more obvious and you can also choose a primary color when adding a piece through the overlay."
   },
   "example2": {
     "id": "example2",

@@ -10,7 +10,7 @@
       "mode": "Tutorial",
       "time": "",
       "attribution": "",
-      "lastUpdate": 1744475596240,
+      "lastUpdate": 1744476403721,
       "showName": false,
       "skill": "",
       "description": "",
@@ -57,7 +57,7 @@
     "width": 300,
     "z": 185,
     "movable": false,
-    "html": "The example above are cards with a single face and a single image. The <b>svgReplaces</b> property is located in the <b>object</b> of the <b>faceTemplate></b> portion of the deck. Then the color changing property is unique to each <b>cardType</b>.",
+    "html": "The example above are cards with a single face and a single image. The <b>svgReplaces</b> property is located in the <b>object</b> of the <b>faceTemplate</b> portion of the deck. Then the color changing property is unique to each <b>cardType</b>.",
     "css": {
       "font-size": "22px"
     }
