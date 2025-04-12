@@ -28,8 +28,8 @@
       "year": "2007",
       "mode": "vs",
       "time": "30",
-      "attribution": "<div>Game layout, library image, and scripting by Robin Harn, released to the Public Domain under CC0.<div><br>* Blob shapes by juicy_fish on Freepik: https://www.freepik.com/free-vector/set-black-blobs_43472408.htm</div><div><br></div><div>* Pier waterfront by brgfx on Freepik: https://www.freepik.com/free-vector/aerial-view-summer-background-set_5019356.htm</div></div><div><br></div><div>Graphics are from https://game-icons.net/ and http://www.freepik.com and are used under the CC BY 3.0 license:<br><br>* Clock Stopwatch: https://game-icons.net/1x1/lorc/stopwatch.html<br>* Arrow Cursor: https://game-icons.net/1x1/delapouite/arrow-cursor.html<br>* Cancel: https://game-icons.net/1x1/sbed/cancel.html<br>* Space Needle: https://game-icons.net/1x1/delapouite/space-needle.html<br>* Cherry: https://game-icons.net/1x1/delapouite/cherry.html<br>* Beer Mug: https://game-icons.net/1x1/lorc/beer-stein.html<br>* Shrimp: https://game-icons.net/1x1/delapouite/shrimp.html<br>* Asparagus: https://game-icons.net/1x1/delapouite/asparagus.html<br>* Fire Bowl: https://game-icons.net/1x1/lorc/fire-bowl.html<br>* Mussel: https://game-icons.net/1x1/delapouite/mussel.html<br>* Crab Claw: https://game-icons.net/1x1/lorc/crab-claw.html<br>* Pig: https://game-icons.net/1x1/skoll/pig.html<br>* Sushi: https://game-icons.net/1x1/delapouite/sushis.html<br>* Fried Fish: https://game-icons.net/1x1/darkzaitzev/fried-fish.html<br>* Star Gate: https://game-icons.net/1x1/delapouite/star-gate.html</div>",
-      "lastUpdate": 1744344542927,
+      "attribution": "<div>Game layout, library image, and scripting by Robin Harn, released to the Public Domain under CC0.</div><div><br></div><div>The following image are available under the Freepik license:<br><div><br>* Blob shapes by juicy_fish on Freepik: https://www.freepik.com/free-vector/set-black-blobs_43472408.htm</div><div>* Pier waterfront by brgfx on Freepik: https://www.freepik.com/free-vector/aerial-view-summer-background-set_5019356.htm</div></div><div><br></div><div>The following images are available under the CC BY 3.0 license:<br><br>* Clock Stopwatch: https://game-icons.net/1x1/lorc/stopwatch.html<br>* Arrow Cursor: https://game-icons.net/1x1/delapouite/arrow-cursor.html<br>* Cancel: https://game-icons.net/1x1/sbed/cancel.html<br>* Space Needle: https://game-icons.net/1x1/delapouite/space-needle.html<br>* Cherry: https://game-icons.net/1x1/delapouite/cherry.html<br>* Beer Mug: https://game-icons.net/1x1/lorc/beer-stein.html<br>* Shrimp: https://game-icons.net/1x1/delapouite/shrimp.html<br>* Asparagus: https://game-icons.net/1x1/delapouite/asparagus.html<br>* Fire Bowl: https://game-icons.net/1x1/lorc/fire-bowl.html<br>* Mussel: https://game-icons.net/1x1/delapouite/mussel.html<br>* Crab Claw: https://game-icons.net/1x1/lorc/crab-claw.html<br>* Pig: https://game-icons.net/1x1/skoll/pig.html<br>* Sushi: https://game-icons.net/1x1/delapouite/sushis.html<br>* Fried Fish: https://game-icons.net/1x1/darkzaitzev/fried-fish.html<br>* Star Gate: https://game-icons.net/1x1/delapouite/star-gate.html</div>",
+      "lastUpdate": 1744476974604,
       "showName": true,
       "skill": "",
       "description": "Claim the most lucrative food stand locations at the world famous public market center. Attract wealthy customers to your stands, and backstab your rival street vendors along the way!",
@@ -39,10 +39,10 @@
       "similarAwards": "2008 Boardgames Australia Awards Best International Game Nominee\n2007 Vuoden Peli Adult Game of the Year Nominee\n2007 Kinderspielexperten \"8-to-13-year-olds\" Nominee\n2007 Årets Spel Best Family Game Winner",
       "ruleText": "(see rules overview link)",
       "helpText": "",
-      "players": "2-4",
-      "language": "en-US",
+      "variantImage": "",
       "variant": "",
-      "variantImage": ""
+      "language": "en-US",
+      "players": "2-4"
     }
   },
   "seat-p1": {
