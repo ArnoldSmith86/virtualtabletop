@@ -27,6 +27,7 @@ export class Zoomy extends Widget {
       defaultStyle: true,
       zoomedPlayers: [],
       groupedWith: [],
+      allPlayers: false,
 
       zoomedX: 400,
       zoomedY: 100,
@@ -109,7 +110,7 @@ export class Zoomy extends Widget {
   }
 
   isZoomed() {
-    return this.get('zoomedPlayers').includes(playerName);
+    return this.get('zoomedPlayers') == 'all' || this.get('zoomedPlayers').includes(playerName);
   }
 
   async set(property, value) {
@@ -133,7 +134,13 @@ export class Zoomy extends Widget {
     for(const groupedWith of this.get('groupedWith'))
       if(groupedWith != this.id && widgets.has(groupedWith) && widgets.get(groupedWith).isZoomed())
         await widgets.get(groupedWith).setZoomed(false);
-    if(zoomed)
+    if(zoomed && this.get('allPlayers'))
+      await this.set('zoomedPlayers', 'all');
+    else if(!zoomed && this.get('allPlayers'))
+      await this.set('zoomedPlayers', []);
+    else if(this.get('zoomedPlayers') == 'all')
+      await this.set('zoomedPlayers', []);
+    else if(zoomed)
       await this.set('zoomedPlayers', [...this.get('zoomedPlayers'), playerName]);
     else
       await this.set('zoomedPlayers', [...this.get('zoomedPlayers').filter(player => player != playerName)]);
