@@ -48,7 +48,7 @@
     "z": 124,
     "css": "font-size: 25px; ",
     "movable": false,
-    "html": "SVGs are described with text-like code and can be adjusted dynamically through the VTT <b>svgReplaces</b> property. If you are bringing in a custom SVG that you want to be able to dynamically recolor, or if you are using built-in VTT icons, this is a useful tool. For more background about SVGs see <a href='https://www.w3schools.com/graphics/svg_intro.asp'>this website</a>. In a typical case, you are simply replacing a color with another color, but the property can be used in more powerful ways as show in the Advanced variant of this tutorial. These examples all use images available in VTT, but the concept works the same for any SVG image."
+    "html": "SVGs are described with text-like code and can be adjusted dynamically through the VTT <b>svgReplaces</b> property. If you are bringing in a custom SVG that you want to be able to dynamically recolor, or if you are using built-in VTT icons, this is a useful tool. For more background about SVGs see <a href='https://www.w3schools.com/graphics/svg_intro.asp'>this website</a>. In a typical case, you are simply replacing a color with another color, but the property can be used in more powerful ways as shown in the Advanced variant of this tutorial. These examples all use images available in VTT, but the concept works the same for any SVG image."
   },
   "button1Text": {
     "id": "button1Text",
@@ -59,7 +59,7 @@
     "movable": false,
     "html": "The boat on the left is from the game-icons.net collection. They all have the default fill color as #000, so that is what you replace. Look at the boat in the JSON Editor. The <b>svgReplaces</b> property is saying take any instances where `#000` appears in the SVG and change it to whatever is set in the property <b>newColor</b>. You can name the property whatever you want. Then in that property, identify the color that should replace the black #000. \n\nThe meeple on the right is part of a custom set of VTT icons. They use <b>currentColor</b> (which defaults to black) and so that is what needs to be replaced.",
     "css": {
-      "font-size": "21px"
+      "font-size": "20px"
     }
   },
   "button2Text": {
@@ -84,7 +84,7 @@
     "css": {
       "font-size": "22px"
     },
-    "html": "The ranbows are just another example of color replacement in an emoji with multiple colors."
+    "html": "The rainbows are just another example of color replacement in an emoji with multiple colors."
   },
   "example1": {
     "id": "example1",

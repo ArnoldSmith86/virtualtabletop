@@ -93,9 +93,9 @@
     "width": 300,
     "z": 9732,
     "movable": false,
-    "html": "You can even make more complicated shapes. But there are also other ways to achieve the same effect. The example on the left is a single widget and adds a hexagon background in the same way as the rectangle and circle were added before.\n\nThe image on the right is two SVGs. The tower is the child of the the hexagon which is a separate SVG file using <b>svgReplaces</b>.\n\nYou could also build something like this using cards, as demonstrated in the next variant.",
+    "html": "You can even make more complicated shapes. But there are also other ways to achieve the same effect. The example on the left is a single widget and adds a hexagon background in the same way as the rectangle and circle were added before.\n\nThe image on the right is two SVGs. The tower is the child of the hexagon which is a separate SVG file using <b>svgReplaces</b>.\n\nYou could also build something like this using cards, as demonstrated in the next variant.",
     "css": {
-      "font-size": "21px"
+      "font-size": "20px"
     }
   },
   "example1": {
