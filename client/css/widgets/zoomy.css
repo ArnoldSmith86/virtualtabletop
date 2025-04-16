@@ -1,7 +1,6 @@
 .zoomy.widget {
   transform-origin: top left;
   box-sizing: border-box;
-  position: relative;
 }
 
 .zoomy.widget.lockChildren:not(.zoomed) * {
