@@ -1,0 +1,3860 @@
+{
+  "_meta": {
+    "version": 17,
+    "info": {
+      "name": "Hare Trigger",
+      "image": "/assets/-2137670227_36450",
+      "rules": "",
+      "bgg": "https://boardgamegeek.com/boardgame/54137/battle-sheep",
+      "year": "2010",
+      "mode": "vs",
+      "time": "15",
+      "attribution": "<div>Layout and design by LawDawg96. Released to the Public Domain under CC0.</div><div><br></div><div>Wood grain background by RyanPro available under the Pixabay license from https://pixabay.com/photos/trees-wood-yellow-wood-oak-1915247/.</div><div><br></div><div>Rabbit icon in the Public Domain at&nbsp;https://www.svgrepo.com/svg/15010/rabbit-hand-drawn-animal-head.</div><div><br></div><div>Library image text, rabbit, and movement marks created by ChatGPT 4o.&nbsp; LawDawg96 added the game hexes and icons.</div>",
+      "lastUpdate": 1743881761780,
+      "showName": true,
+      "skill": "",
+      "description": "Get your bunnies out to their burrows. But better be quick about it. The player that takes over the most spaces wins.",
+      "similarImage": "",
+      "similarName": "Battle Sheep",
+      "similarDesigner": "Francesco Rotta",
+      "similarAwards": "2015 Mensa Recommended\n2015 Årets Spill Best Family Game Nominee\n2015 Årets Spil Best Family Game Winner\n2015 Årets Spil Best Family Game Nominee\n2015 Årets Spel Best Family Game Nominee\n2014/Spring Parents' Choice Recommended\n2014 Vuoden Peli Family Game of the Year Winner\n2014 Vuoden Peli Family Game of the Year Nominee\n2014 Spiel des Jahres Recommended\n2014 Spiel der Spiele Hit für Familien Recommended\n2014 Lys Enfant Finalist",
+      "ruleText": "",
+      "helpText": "Players sit in seats. Press restart button to select a random player to begin. Set up board by dragging hex cards. Click to rotate the hexes. Move the entire board by clicking and dragging any blank area.&nbsp;<div><br></div><div><b>Do not press the turn button until the board is completely set up</b>. Once the turn button is pressed, the board pieces are locked into place.</div><div><br></div><div>Move each player's pile of tokens to desired place on a hex. To move a part of the pile, click the pile and enter the number of tokens to be moved. That part of the pile will be broken off into a separate pile which is then dragged to its place.</div>",
+      "variantImage": "",
+      "variant": "",
+      "language": "",
+      "players": "2-4"
+    }
+  },
+  "splitCount": {
+    "type": "label",
+    "id": "splitCount",
+    "parent": "pileMenuContainer",
+    "width": 30,
+    "height": 22,
+    "css": {
+      "border": "1px solid #888888",
+      "text-align": "center",
+      "color": "#000000"
+    },
+    "editable": true,
+    "layer": 0,
+    "x": 43,
+    "y": 35,
+    "z": 1
+  },
+  "f9ftD": {
+    "id": "f9ftD",
+    "parent": "pileMenuContainer",
+    "fixedParent": true,
+    "width": 25,
+    "height": 25,
+    "type": "button",
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": "font-size: 28px",
+    "text": "remove",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "clonedFrom",
+        "value": "splitCount"
+      },
+      {
+        "func": "GET",
+        "property": "text"
+      },
+      {
+        "func": "IF",
+        "operand1": "${text}",
+        "relation": ">",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "func": "LABEL",
+            "mode": "dec",
+            "value": 1
+          }
+        ]
+      }
+    ],
+    "y": 35,
+    "x": 5,
+    "z": 1
+  },
+  "f9ftU": {
+    "id": "f9ftU",
+    "parent": "pileMenuContainer",
+    "fixedParent": true,
+    "x": 90,
+    "width": 25,
+    "height": 25,
+    "type": "button",
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": "font-size: 28px",
+    "text": "add",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "clonedFrom",
+        "value": "splitCount"
+      },
+      {
+        "func": "GET",
+        "property": "text"
+      },
+      {
+        "func": "GET",
+        "property": "max"
+      },
+      "var max = ${max} - 1",
+      {
+        "func": "IF",
+        "operand1": "${text}",
+        "relation": "<",
+        "operand2": "${max}",
+        "thenRoutine": [
+          {
+            "func": "LABEL",
+            "mode": "inc",
+            "value": 1
+          }
+        ]
+      }
+    ],
+    "y": 36,
+    "z": 1
+  },
+  "split": {
+    "type": "button",
+    "id": "split",
+    "parent": "pileMenuContainer",
+    "fixedParent": true,
+    "x": 10,
+    "y": 4,
+    "width": 100,
+    "height": 25,
+    "layer": 1,
+    "z": 1,
+    "returnChar": "\n",
+    "clickRoutine": [
+      "var parent = ${PROPERTY parent}",
+      "var parent = ${PROPERTY parent OF $parent}",
+      "var parent = ${PROPERTY forPile OF $parent}",
+      {
+        "func": "SELECT",
+        "property": "clonedFrom",
+        "value": "splitCount"
+      },
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "${PROPERTY parent}",
+        "source": "DEFAULT"
+      },
+      {
+        "func": "GET",
+        "property": "text",
+        "variable": "splitText"
+      },
+      "var dy = ${PROPERTY _absoluteY OF $parent} - 40",
+      {
+        "func": "IF",
+        "condition": "${splitText}",
+        "thenRoutine": [
+          {
+            "func": "MOVEXY",
+            "count": "${splitText}",
+            "from": "${parent}",
+            "x": "${PROPERTY _absoluteX OF $parent}",
+            "y": "${dy}",
+            "resetOwner": true
+          }
+        ]
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "${parent}",
+        "type": "pile"
+      },
+      {
+        "func": "SET",
+        "property": "showMenu",
+        "value": true
+      },
+      {
+        "func": "SELECT",
+        "property": "forPile",
+        "value": "${parent}"
+      },
+      {
+        "func": "DELETE"
+      }
+    ],
+    "text": "Split"
+  },
+  "pileMenuContainer": {
+    "id": "pileMenuContainer",
+    "parent": "pileMenu",
+    "fixedParent": true,
+    "width": 120,
+    "height": 65,
+    "css": "background: white; border: 1px solid #888888;border-radius: 8px;  ",
+    "distance": 30,
+    "movable": false,
+    "x": 70,
+    "z": 1
+  },
+  "pileMenu": {
+    "id": "pileMenu",
+    "fixedParent": true,
+    "width": 70,
+    "height": 50,
+    "layer": 5,
+    "z": 1,
+    "movable": false,
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "${PROPERTY forPile}",
+        "type": "pile"
+      },
+      {
+        "func": "CLICK"
+      }
+    ],
+    "css": "background: #00000066; transform-origin:0% 0% ",
+    "x": -233
+  },
+  "hex2": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "id": "hex2",
+    "type": "holder",
+    "x": 69.28,
+    "y": 0,
+    "z": 1,
+    "layer": 2
+  },
+  "hex3": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "id": "hex3",
+    "type": "holder",
+    "x": 34.64,
+    "y": 60,
+    "z": 1
+  },
+  "hex4": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "id": "hex4",
+    "type": "holder",
+    "x": 103.92,
+    "y": 60,
+    "z": 1
+  },
+  "reset": {
+    "type": "button",
+    "id": "reset",
+    "x": 1550,
+    "y": 1,
+    "width": 50,
+    "height": 50,
+    "z": 1,
+    "classes": "symbols",
+    "color": "white",
+    "css": {
+      "default": {
+        "font-size": "40px",
+        "--wcMain": "black",
+        "--wcBorder": "white",
+        "--wcMainOH": "grey",
+        "--wcBorderOH": "black"
+      },
+      "::after": {
+        "content": "\"Reset\"",
+        "display": "none",
+        "position": "absolute",
+        "margin-top": "71px",
+        "color": "black",
+        "font-size": "14px",
+        "font-family": "Roboto"
+      },
+      ":hover::after": {
+        "display": "block"
+      }
+    },
+    "text": "restart",
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "fields": [
+          {
+            "type": "title",
+            "text": "Resetting ..."
+          },
+          {
+            "type": "subtitle",
+            "text": "Are you sure you want to reset the game?"
+          }
+        ]
+      },
+      {
+        "func": "RECALL",
+        "holder": [
+          "pinkHome",
+          "orangeHome",
+          "yellowHome",
+          "blueHome"
+        ]
+      },
+      {
+        "func": "SELECT",
+        "property": "hexBase",
+        "value": true
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "hexBaseHome"
+      },
+      {
+        "func": "TURN",
+        "turnCycle": "random"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "hex1"
+        ],
+        "property": "clickable",
+        "value": true
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "hexBase1"
+        ],
+        "property": "movable",
+        "value": true
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "hexBaseHome",
+          "hexCount"
+        ],
+        "property": "display",
+        "value": true
+      },
+      {
+        "func": "RESET"
+      }
+    ]
+  },
+  "seat1": {
+    "type": "seat",
+    "id": "seat1",
+    "x": 342,
+    "y": 8,
+    "color": "#dd7dad",
+    "clickRoutine": [
+      {
+        "func": "CLICK",
+        "collection": "thisButton",
+        "mode": "ignoreClickRoutine"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "color",
+        "value": "#dd7dad"
+      }
+    ],
+    "hideWhenUnused": true,
+    "turn": true,
+    "z": 1
+  },
+  "seat3": {
+    "type": "seat",
+    "id": "seat3",
+    "x": 942,
+    "y": 8,
+    "clickRoutine": [
+      {
+        "func": "CLICK",
+        "collection": "thisButton",
+        "mode": "ignoreClickRoutine"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "color",
+        "value": "#f2e611"
+      }
+    ],
+    "color": "#f2e611",
+    "hideWhenUnused": true,
+    "index": 3,
+    "z": 1
+  },
+  "ulup": {
+    "deck": "pinkDeck",
+    "type": "card",
+    "cardType": "pink",
+    "id": "ulup",
+    "z": 1,
+    "parent": "ch4i"
+  },
+  "kb2q": {
+    "deck": "pinkDeck",
+    "type": "card",
+    "cardType": "pink",
+    "id": "kb2q",
+    "z": 1,
+    "parent": "ch4i"
+  },
+  "e4lg": {
+    "deck": "pinkDeck",
+    "type": "card",
+    "cardType": "pink",
+    "id": "e4lg",
+    "z": 1,
+    "parent": "ch4i"
+  },
+  "6qhx": {
+    "deck": "pinkDeck",
+    "type": "card",
+    "cardType": "pink",
+    "id": "6qhx",
+    "z": 1,
+    "parent": "ch4i"
+  },
+  "g11j": {
+    "deck": "pinkDeck",
+    "type": "card",
+    "cardType": "pink",
+    "id": "g11j",
+    "z": 1,
+    "parent": "ch4i"
+  },
+  "zgpr": {
+    "deck": "pinkDeck",
+    "type": "card",
+    "cardType": "pink",
+    "id": "zgpr",
+    "z": 1,
+    "parent": "ch4i"
+  },
+  "kf4d": {
+    "deck": "pinkDeck",
+    "type": "card",
+    "cardType": "pink",
+    "id": "kf4d",
+    "z": 1,
+    "parent": "ch4i"
+  },
+  "lyzl": {
+    "deck": "pinkDeck",
+    "type": "card",
+    "cardType": "pink",
+    "id": "lyzl",
+    "z": 1,
+    "parent": "ch4i"
+  },
+  "msuu": {
+    "deck": "pinkDeck",
+    "type": "card",
+    "cardType": "pink",
+    "id": "msuu",
+    "z": 1,
+    "parent": "ch4i"
+  },
+  "bipo": {
+    "deck": "pinkDeck",
+    "type": "card",
+    "cardType": "pink",
+    "id": "bipo",
+    "z": 1,
+    "parent": "ch4i"
+  },
+  "tv9k": {
+    "deck": "pinkDeck",
+    "type": "card",
+    "cardType": "pink",
+    "id": "tv9k",
+    "z": 1,
+    "parent": "ch4i"
+  },
+  "t0cl": {
+    "deck": "pinkDeck",
+    "type": "card",
+    "cardType": "pink",
+    "id": "t0cl",
+    "z": 1,
+    "parent": "ch4i"
+  },
+  "1r0n": {
+    "deck": "pinkDeck",
+    "type": "card",
+    "cardType": "pink",
+    "id": "1r0n",
+    "z": 1,
+    "parent": "ch4i"
+  },
+  "nimc": {
+    "deck": "pinkDeck",
+    "type": "card",
+    "cardType": "pink",
+    "id": "nimc",
+    "z": 1,
+    "parent": "ch4i"
+  },
+  "ixmx": {
+    "deck": "pinkDeck",
+    "type": "card",
+    "cardType": "pink",
+    "id": "ixmx",
+    "z": 1,
+    "parent": "ch4i"
+  },
+  "pinkDeck": {
+    "type": "deck",
+    "id": "pinkDeck",
+    "z": 1,
+    "cardDefaults": {
+      "onPileCreation": {
+        "deck": "pink",
+        "handleSize": 59,
+        "handlePosition": "middle center",
+        "handleCSS": "background-color:transparent;color:#000000;font-size:45px",
+        "pileSnapRange": 40,
+        "showMenu": true,
+        "clickRoutine": [
+          {
+            "func": "IF",
+            "operand1": "${PROPERTY showMenu}",
+            "operand2": true,
+            "thenRoutine": [
+              {
+                "func": "SELECT",
+                "property": "id",
+                "value": "pileMenu"
+              },
+              {
+                "func": "CLONE",
+                "properties": {
+                  "x": 0,
+                  "y": 0,
+                  "forPile": "${thisID}",
+                  "owner": "${playerName}",
+                  "width": 1600,
+                  "height": 1000
+                }
+              },
+              {
+                "func": "GET",
+                "property": "id",
+                "variable": "menuID"
+              },
+              {
+                "func": "SELECT",
+                "property": "parent",
+                "value": "pileMenu"
+              },
+              "var width = ${PROPERTY width} + ${PROPERTY width OF pileMenuContainer}",
+              "var width = ${width} + ${PROPERTY distance OF pileMenuContainer}",
+              "var width = 1600 - ${width}",
+              {
+                "func": "IF",
+                "operand1": "${PROPERTY _absoluteX}",
+                "operand2": "${width}",
+                "relation": "<",
+                "thenRoutine": [
+                  "var x = ${PROPERTY _absoluteX} + ${PROPERTY width}",
+                  "var x = ${x} + ${PROPERTY distance OF pileMenuContainer} - 25",
+                  {
+                    "func": "CLONE",
+                    "properties": {
+                      "parent": "${menuID}",
+                      "x": "${x}",
+                      "y": "${PROPERTY _absoluteY}"
+                    }
+                  },
+                  {
+                    "func": "GET",
+                    "property": "id",
+                    "variable": "containerID"
+                  },
+                  {
+                    "func": "SELECT",
+                    "property": "parent",
+                    "value": "pileMenuContainer"
+                  },
+                  {
+                    "func": "CLONE",
+                    "properties": {
+                      "parent": "${containerID}"
+                    }
+                  }
+                ],
+                "elseRoutine": [
+                  "var x = ${PROPERTY _absoluteX} - ${PROPERTY distance OF pileMenuContainer}",
+                  "var x = ${x} - ${PROPERTY width OF pileMenuContainer} + 25",
+                  {
+                    "func": "CLONE",
+                    "properties": {
+                      "parent": "${menuID}",
+                      "x": "${x}",
+                      "y": "${PROPERTY _absoluteY}"
+                    }
+                  },
+                  {
+                    "func": "GET",
+                    "property": "id",
+                    "variable": "containerID"
+                  },
+                  {
+                    "func": "SELECT",
+                    "property": "parent",
+                    "value": "pileMenuContainer"
+                  },
+                  {
+                    "func": "CLONE",
+                    "properties": {
+                      "parent": "${containerID}"
+                    }
+                  }
+                ]
+              },
+              {
+                "func": "COUNT",
+                "holder": "${thisID}"
+              },
+              {
+                "func": "SELECT",
+                "property": "clonedFrom",
+                "value": "splitCount"
+              },
+              {
+                "func": "SELECT",
+                "property": "parent",
+                "value": "${containerID}",
+                "source": "DEFAULT"
+              },
+              {
+                "func": "SET",
+                "property": "max",
+                "value": "${COUNT}"
+              },
+              "var COUNT = ${COUNT} / 2",
+              "var COUNT = floor ${COUNT}",
+              {
+                "func": "SET",
+                "property": "text",
+                "value": "${COUNT}"
+              },
+              {
+                "func": "SET",
+                "property": "showMenu",
+                "value": false,
+                "collection": "thisButton"
+              }
+            ],
+            "elseRoutine": [
+              {
+                "func": "SELECT",
+                "property": "forPile",
+                "value": "${thisID}"
+              },
+              {
+                "func": "DELETE"
+              },
+              {
+                "func": "SET",
+                "property": "showMenu",
+                "value": true,
+                "collection": "thisButton"
+              }
+            ]
+          }
+        ]
+      },
+      "width": 60,
+      "height": 60,
+      "layer": 3
+    },
+    "cardTypes": {
+      "pink": {
+        "pieceColor": "#dd7dad"
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 60,
+            "height": 60,
+            "dynamicProperties": {
+              "color": "pieceColor"
+            }
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "value": "/assets/-566437935_5478",
+            "width": 60,
+            "height": 60,
+            "css": "opacity:0.2"
+          }
+        ],
+        "border": false,
+        "radius": 100
+      }
+    ],
+    "parent": "pinkHome",
+    "fixedParent": true,
+    "x": 20,
+    "y": 20
+  },
+  "pinkHome": {
+    "type": "holder",
+    "id": "pinkHome",
+    "x": 392,
+    "y": 72,
+    "z": 1,
+    "width": 60,
+    "height": 60,
+    "borderRadius": 100,
+    "dropTarget": {
+      "deck": "pinkDeck"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "linkedToSeat": "seat1",
+    "layer": 1,
+    "classes": "transparent"
+  },
+  "6zqa": {
+    "deck": "orangeDeck",
+    "type": "card",
+    "cardType": "orange",
+    "id": "6zqa",
+    "z": 1,
+    "parent": "slez"
+  },
+  "maqx": {
+    "deck": "orangeDeck",
+    "type": "card",
+    "cardType": "orange",
+    "id": "maqx",
+    "z": 1,
+    "parent": "slez"
+  },
+  "3dil": {
+    "deck": "orangeDeck",
+    "type": "card",
+    "cardType": "orange",
+    "id": "3dil",
+    "z": 1,
+    "parent": "slez"
+  },
+  "7han": {
+    "deck": "orangeDeck",
+    "type": "card",
+    "cardType": "orange",
+    "id": "7han",
+    "z": 1,
+    "parent": "slez"
+  },
+  "2whh": {
+    "deck": "orangeDeck",
+    "type": "card",
+    "cardType": "orange",
+    "id": "2whh",
+    "z": 1,
+    "parent": "slez"
+  },
+  "qato": {
+    "deck": "orangeDeck",
+    "type": "card",
+    "cardType": "orange",
+    "id": "qato",
+    "z": 1,
+    "parent": "slez"
+  },
+  "e8rs": {
+    "deck": "orangeDeck",
+    "type": "card",
+    "cardType": "orange",
+    "id": "e8rs",
+    "z": 1,
+    "parent": "slez"
+  },
+  "zdgz": {
+    "deck": "orangeDeck",
+    "type": "card",
+    "cardType": "orange",
+    "id": "zdgz",
+    "z": 1,
+    "parent": "slez"
+  },
+  "xdz7": {
+    "deck": "orangeDeck",
+    "type": "card",
+    "cardType": "orange",
+    "id": "xdz7",
+    "z": 1,
+    "parent": "slez"
+  },
+  "kvsm": {
+    "deck": "orangeDeck",
+    "type": "card",
+    "cardType": "orange",
+    "id": "kvsm",
+    "z": 1,
+    "parent": "slez"
+  },
+  "ritr": {
+    "deck": "orangeDeck",
+    "type": "card",
+    "cardType": "orange",
+    "id": "ritr",
+    "z": 1,
+    "parent": "slez"
+  },
+  "fomg": {
+    "deck": "orangeDeck",
+    "type": "card",
+    "cardType": "orange",
+    "id": "fomg",
+    "z": 1,
+    "parent": "slez"
+  },
+  "tvc4": {
+    "deck": "orangeDeck",
+    "type": "card",
+    "cardType": "orange",
+    "id": "tvc4",
+    "z": 1,
+    "parent": "slez"
+  },
+  "jkv3": {
+    "deck": "orangeDeck",
+    "type": "card",
+    "cardType": "orange",
+    "id": "jkv3",
+    "z": 1,
+    "parent": "slez"
+  },
+  "ggic": {
+    "deck": "orangeDeck",
+    "type": "card",
+    "cardType": "orange",
+    "id": "ggic",
+    "z": 1,
+    "parent": "slez"
+  },
+  "orangeDeck": {
+    "type": "deck",
+    "id": "orangeDeck",
+    "z": 1,
+    "cardTypes": {
+      "orange": {
+        "pieceColor": "#f3a100"
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 60,
+            "height": 60,
+            "dynamicProperties": {
+              "color": "pieceColor"
+            }
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "value": "/assets/-566437935_5478",
+            "width": 60,
+            "height": 60,
+            "css": "opacity:0.2"
+          }
+        ],
+        "border": false,
+        "radius": 100
+      }
+    ],
+    "parent": "orangeHome",
+    "fixedParent": true,
+    "x": 20,
+    "y": 20,
+    "cardDefaults": {
+      "onPileCreation": {
+        "deck": "orange",
+        "handleSize": 59,
+        "handlePosition": "middle center",
+        "handleCSS": "background-color:transparent;color:#000000;font-size:45px",
+        "pileSnapRange": 40,
+        "showMenu": true,
+        "clickRoutine": [
+          {
+            "func": "IF",
+            "operand1": "${PROPERTY showMenu}",
+            "operand2": true,
+            "thenRoutine": [
+              {
+                "func": "SELECT",
+                "property": "id",
+                "value": "pileMenu"
+              },
+              {
+                "func": "CLONE",
+                "properties": {
+                  "x": 0,
+                  "y": 0,
+                  "forPile": "${thisID}",
+                  "owner": "${playerName}",
+                  "width": 1600,
+                  "height": 1000
+                }
+              },
+              {
+                "func": "GET",
+                "property": "id",
+                "variable": "menuID"
+              },
+              {
+                "func": "SELECT",
+                "property": "parent",
+                "value": "pileMenu"
+              },
+              "var width = ${PROPERTY width} + ${PROPERTY width OF pileMenuContainer}",
+              "var width = ${width} + ${PROPERTY distance OF pileMenuContainer}",
+              "var width = 1600 - ${width}",
+              {
+                "func": "IF",
+                "operand1": "${PROPERTY _absoluteX}",
+                "operand2": "${width}",
+                "relation": "<",
+                "thenRoutine": [
+                  "var x = ${PROPERTY _absoluteX} + ${PROPERTY width}",
+                  "var x = ${x} + ${PROPERTY distance OF pileMenuContainer} - 25",
+                  {
+                    "func": "CLONE",
+                    "properties": {
+                      "parent": "${menuID}",
+                      "x": "${x}",
+                      "y": "${PROPERTY _absoluteY}"
+                    }
+                  },
+                  {
+                    "func": "GET",
+                    "property": "id",
+                    "variable": "containerID"
+                  },
+                  {
+                    "func": "SELECT",
+                    "property": "parent",
+                    "value": "pileMenuContainer"
+                  },
+                  {
+                    "func": "CLONE",
+                    "properties": {
+                      "parent": "${containerID}"
+                    }
+                  }
+                ],
+                "elseRoutine": [
+                  "var x = ${PROPERTY _absoluteX} - ${PROPERTY distance OF pileMenuContainer}",
+                  "var x = ${x} - ${PROPERTY width OF pileMenuContainer} + 25",
+                  {
+                    "func": "CLONE",
+                    "properties": {
+                      "parent": "${menuID}",
+                      "x": "${x}",
+                      "y": "${PROPERTY _absoluteY}"
+                    }
+                  },
+                  {
+                    "func": "GET",
+                    "property": "id",
+                    "variable": "containerID"
+                  },
+                  {
+                    "func": "SELECT",
+                    "property": "parent",
+                    "value": "pileMenuContainer"
+                  },
+                  {
+                    "func": "CLONE",
+                    "properties": {
+                      "parent": "${containerID}"
+                    }
+                  }
+                ]
+              },
+              {
+                "func": "COUNT",
+                "holder": "${thisID}"
+              },
+              {
+                "func": "SELECT",
+                "property": "clonedFrom",
+                "value": "splitCount"
+              },
+              {
+                "func": "SELECT",
+                "property": "parent",
+                "value": "${containerID}",
+                "source": "DEFAULT"
+              },
+              {
+                "func": "SET",
+                "property": "max",
+                "value": "${COUNT}"
+              },
+              "var COUNT = ${COUNT} / 2",
+              "var COUNT = floor ${COUNT}",
+              {
+                "func": "SET",
+                "property": "text",
+                "value": "${COUNT}"
+              },
+              {
+                "func": "SET",
+                "property": "showMenu",
+                "value": false,
+                "collection": "thisButton"
+              }
+            ],
+            "elseRoutine": [
+              {
+                "func": "SELECT",
+                "property": "forPile",
+                "value": "${thisID}"
+              },
+              {
+                "func": "DELETE"
+              },
+              {
+                "func": "SET",
+                "property": "showMenu",
+                "value": true,
+                "collection": "thisButton"
+              }
+            ]
+          }
+        ]
+      },
+      "width": 60,
+      "height": 60,
+      "layer": 3
+    }
+  },
+  "orangeHome": {
+    "type": "holder",
+    "id": "orangeHome",
+    "x": 692,
+    "y": 72,
+    "inheritFrom": {
+      "pinkHome": "*"
+    },
+    "linkedToSeat": "seat2",
+    "z": 1,
+    "layer": 1,
+    "dropTarget": {
+      "deck": "orangeDeck"
+    }
+  },
+  "o2te": {
+    "deck": "yellowDeck",
+    "type": "card",
+    "cardType": "yellow",
+    "id": "o2te",
+    "z": 1,
+    "parent": "kry7"
+  },
+  "mls9": {
+    "deck": "yellowDeck",
+    "type": "card",
+    "cardType": "yellow",
+    "id": "mls9",
+    "z": 1,
+    "parent": "kry7"
+  },
+  "uare": {
+    "deck": "yellowDeck",
+    "type": "card",
+    "cardType": "yellow",
+    "id": "uare",
+    "z": 1,
+    "parent": "kry7"
+  },
+  "ahv4": {
+    "deck": "yellowDeck",
+    "type": "card",
+    "cardType": "yellow",
+    "id": "ahv4",
+    "z": 1,
+    "parent": "kry7"
+  },
+  "xthg": {
+    "deck": "yellowDeck",
+    "type": "card",
+    "cardType": "yellow",
+    "id": "xthg",
+    "z": 1,
+    "parent": "kry7"
+  },
+  "orqp": {
+    "deck": "yellowDeck",
+    "type": "card",
+    "cardType": "yellow",
+    "id": "orqp",
+    "z": 1,
+    "parent": "kry7"
+  },
+  "rtko": {
+    "deck": "yellowDeck",
+    "type": "card",
+    "cardType": "yellow",
+    "id": "rtko",
+    "z": 1,
+    "parent": "kry7"
+  },
+  "i1cs": {
+    "deck": "yellowDeck",
+    "type": "card",
+    "cardType": "yellow",
+    "id": "i1cs",
+    "z": 1,
+    "parent": "kry7"
+  },
+  "njgd": {
+    "deck": "yellowDeck",
+    "type": "card",
+    "cardType": "yellow",
+    "id": "njgd",
+    "z": 1,
+    "parent": "kry7"
+  },
+  "8jl2": {
+    "deck": "yellowDeck",
+    "type": "card",
+    "cardType": "yellow",
+    "id": "8jl2",
+    "z": 1,
+    "parent": "kry7"
+  },
+  "wkl5": {
+    "deck": "yellowDeck",
+    "type": "card",
+    "cardType": "yellow",
+    "id": "wkl5",
+    "z": 1,
+    "parent": "kry7"
+  },
+  "4yrf": {
+    "deck": "yellowDeck",
+    "type": "card",
+    "cardType": "yellow",
+    "id": "4yrf",
+    "z": 1,
+    "parent": "kry7"
+  },
+  "ar2x": {
+    "deck": "yellowDeck",
+    "type": "card",
+    "cardType": "yellow",
+    "id": "ar2x",
+    "z": 1,
+    "parent": "kry7"
+  },
+  "bh9e": {
+    "deck": "yellowDeck",
+    "type": "card",
+    "cardType": "yellow",
+    "id": "bh9e",
+    "z": 1,
+    "parent": "kry7"
+  },
+  "2sed": {
+    "deck": "yellowDeck",
+    "type": "card",
+    "cardType": "yellow",
+    "id": "2sed",
+    "z": 1,
+    "parent": "kry7"
+  },
+  "yellowDeck": {
+    "type": "deck",
+    "id": "yellowDeck",
+    "z": 1,
+    "cardTypes": {
+      "yellow": {
+        "pieceColor": "#f2e611"
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 60,
+            "height": 60,
+            "dynamicProperties": {
+              "color": "pieceColor"
+            }
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "value": "/assets/-566437935_5478",
+            "width": 60,
+            "height": 60,
+            "css": "opacity:0.2"
+          }
+        ],
+        "border": false,
+        "radius": 100
+      }
+    ],
+    "parent": "yellowHome",
+    "fixedParent": true,
+    "x": 20,
+    "y": 20,
+    "cardDefaults": {
+      "onPileCreation": {
+        "deck": "yellow",
+        "handleSize": 59,
+        "handlePosition": "middle center",
+        "handleCSS": "background-color:transparent;color:#000000;font-size:45px",
+        "pileSnapRange": 40,
+        "showMenu": true,
+        "clickRoutine": [
+          {
+            "func": "IF",
+            "operand1": "${PROPERTY showMenu}",
+            "operand2": true,
+            "thenRoutine": [
+              {
+                "func": "SELECT",
+                "property": "id",
+                "value": "pileMenu"
+              },
+              {
+                "func": "CLONE",
+                "properties": {
+                  "x": 0,
+                  "y": 0,
+                  "forPile": "${thisID}",
+                  "owner": "${playerName}",
+                  "width": 1600,
+                  "height": 1000
+                }
+              },
+              {
+                "func": "GET",
+                "property": "id",
+                "variable": "menuID"
+              },
+              {
+                "func": "SELECT",
+                "property": "parent",
+                "value": "pileMenu"
+              },
+              "var width = ${PROPERTY width} + ${PROPERTY width OF pileMenuContainer}",
+              "var width = ${width} + ${PROPERTY distance OF pileMenuContainer}",
+              "var width = 1600 - ${width}",
+              {
+                "func": "IF",
+                "operand1": "${PROPERTY _absoluteX}",
+                "operand2": "${width}",
+                "relation": "<",
+                "thenRoutine": [
+                  "var x = ${PROPERTY _absoluteX} + ${PROPERTY width}",
+                  "var x = ${x} + ${PROPERTY distance OF pileMenuContainer} - 25",
+                  {
+                    "func": "CLONE",
+                    "properties": {
+                      "parent": "${menuID}",
+                      "x": "${x}",
+                      "y": "${PROPERTY _absoluteY}"
+                    }
+                  },
+                  {
+                    "func": "GET",
+                    "property": "id",
+                    "variable": "containerID"
+                  },
+                  {
+                    "func": "SELECT",
+                    "property": "parent",
+                    "value": "pileMenuContainer"
+                  },
+                  {
+                    "func": "CLONE",
+                    "properties": {
+                      "parent": "${containerID}"
+                    }
+                  }
+                ],
+                "elseRoutine": [
+                  "var x = ${PROPERTY _absoluteX} - ${PROPERTY distance OF pileMenuContainer}",
+                  "var x = ${x} - ${PROPERTY width OF pileMenuContainer} + 25",
+                  {
+                    "func": "CLONE",
+                    "properties": {
+                      "parent": "${menuID}",
+                      "x": "${x}",
+                      "y": "${PROPERTY _absoluteY}"
+                    }
+                  },
+                  {
+                    "func": "GET",
+                    "property": "id",
+                    "variable": "containerID"
+                  },
+                  {
+                    "func": "SELECT",
+                    "property": "parent",
+                    "value": "pileMenuContainer"
+                  },
+                  {
+                    "func": "CLONE",
+                    "properties": {
+                      "parent": "${containerID}"
+                    }
+                  }
+                ]
+              },
+              {
+                "func": "COUNT",
+                "holder": "${thisID}"
+              },
+              {
+                "func": "SELECT",
+                "property": "clonedFrom",
+                "value": "splitCount"
+              },
+              {
+                "func": "SELECT",
+                "property": "parent",
+                "value": "${containerID}",
+                "source": "DEFAULT"
+              },
+              {
+                "func": "SET",
+                "property": "max",
+                "value": "${COUNT}"
+              },
+              "var COUNT = ${COUNT} / 2",
+              "var COUNT = floor ${COUNT}",
+              {
+                "func": "SET",
+                "property": "text",
+                "value": "${COUNT}"
+              },
+              {
+                "func": "SET",
+                "property": "showMenu",
+                "value": false,
+                "collection": "thisButton"
+              }
+            ],
+            "elseRoutine": [
+              {
+                "func": "SELECT",
+                "property": "forPile",
+                "value": "${thisID}"
+              },
+              {
+                "func": "DELETE"
+              },
+              {
+                "func": "SET",
+                "property": "showMenu",
+                "value": true,
+                "collection": "thisButton"
+              }
+            ]
+          }
+        ]
+      },
+      "width": 60,
+      "height": 60,
+      "layer": 3
+    }
+  },
+  "yellowHome": {
+    "type": "holder",
+    "id": "yellowHome",
+    "x": 992,
+    "y": 72,
+    "inheritFrom": {
+      "pinkHome": "*"
+    },
+    "linkedToSeat": "seat3",
+    "z": 1,
+    "layer": 1,
+    "dropTarget": {
+      "deck": "yellowDeck"
+    }
+  },
+  "q2ou": {
+    "deck": "blueDeck",
+    "type": "card",
+    "cardType": "blue",
+    "id": "q2ou",
+    "z": 1,
+    "parent": "64va"
+  },
+  "4x3k": {
+    "deck": "blueDeck",
+    "type": "card",
+    "cardType": "blue",
+    "id": "4x3k",
+    "z": 1,
+    "parent": "64va"
+  },
+  "e6dh": {
+    "deck": "blueDeck",
+    "type": "card",
+    "cardType": "blue",
+    "id": "e6dh",
+    "z": 1,
+    "parent": "64va"
+  },
+  "pggj": {
+    "deck": "blueDeck",
+    "type": "card",
+    "cardType": "blue",
+    "id": "pggj",
+    "z": 1,
+    "parent": "64va"
+  },
+  "wfmb": {
+    "deck": "blueDeck",
+    "type": "card",
+    "cardType": "blue",
+    "id": "wfmb",
+    "z": 1,
+    "parent": "64va"
+  },
+  "of5j": {
+    "deck": "blueDeck",
+    "type": "card",
+    "cardType": "blue",
+    "id": "of5j",
+    "z": 1,
+    "parent": "64va"
+  },
+  "0ilo": {
+    "deck": "blueDeck",
+    "type": "card",
+    "cardType": "blue",
+    "id": "0ilo",
+    "z": 1,
+    "parent": "64va"
+  },
+  "7yjp": {
+    "deck": "blueDeck",
+    "type": "card",
+    "cardType": "blue",
+    "id": "7yjp",
+    "z": 1,
+    "parent": "64va"
+  },
+  "wg66": {
+    "deck": "blueDeck",
+    "type": "card",
+    "cardType": "blue",
+    "id": "wg66",
+    "z": 1,
+    "parent": "64va"
+  },
+  "ippu": {
+    "deck": "blueDeck",
+    "type": "card",
+    "cardType": "blue",
+    "id": "ippu",
+    "z": 1,
+    "parent": "64va"
+  },
+  "14yy": {
+    "deck": "blueDeck",
+    "type": "card",
+    "cardType": "blue",
+    "id": "14yy",
+    "z": 1,
+    "parent": "64va"
+  },
+  "mc7m": {
+    "deck": "blueDeck",
+    "type": "card",
+    "cardType": "blue",
+    "id": "mc7m",
+    "z": 1,
+    "parent": "64va"
+  },
+  "n0x8": {
+    "deck": "blueDeck",
+    "type": "card",
+    "cardType": "blue",
+    "id": "n0x8",
+    "z": 1,
+    "parent": "64va"
+  },
+  "ika1": {
+    "deck": "blueDeck",
+    "type": "card",
+    "cardType": "blue",
+    "id": "ika1",
+    "z": 1,
+    "parent": "64va"
+  },
+  "5mvi": {
+    "deck": "blueDeck",
+    "type": "card",
+    "cardType": "blue",
+    "id": "5mvi",
+    "z": 1,
+    "parent": "64va"
+  },
+  "blueDeck": {
+    "type": "deck",
+    "id": "blueDeck",
+    "z": 1,
+    "cardTypes": {
+      "blue": {
+        "pieceColor": "#1fb8ee"
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 60,
+            "height": 60,
+            "dynamicProperties": {
+              "color": "pieceColor"
+            }
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "value": "/assets/-566437935_5478",
+            "width": 60,
+            "height": 60,
+            "css": "opacity:0.2"
+          }
+        ],
+        "border": false,
+        "radius": 100
+      }
+    ],
+    "parent": "blueHome",
+    "fixedParent": true,
+    "x": 20,
+    "y": 20,
+    "cardDefaults": {
+      "onPileCreation": {
+        "deck": "blue",
+        "handleSize": 59,
+        "handlePosition": "middle center",
+        "handleCSS": "background-color:transparent;color:#000000;font-size:45px",
+        "pileSnapRange": 40,
+        "showMenu": true,
+        "clickRoutine": [
+          {
+            "func": "IF",
+            "operand1": "${PROPERTY showMenu}",
+            "operand2": true,
+            "thenRoutine": [
+              {
+                "func": "SELECT",
+                "property": "id",
+                "value": "pileMenu"
+              },
+              {
+                "func": "CLONE",
+                "properties": {
+                  "x": 0,
+                  "y": 0,
+                  "forPile": "${thisID}",
+                  "owner": "${playerName}",
+                  "width": 1600,
+                  "height": 1000
+                }
+              },
+              {
+                "func": "GET",
+                "property": "id",
+                "variable": "menuID"
+              },
+              {
+                "func": "SELECT",
+                "property": "parent",
+                "value": "pileMenu"
+              },
+              "var width = ${PROPERTY width} + ${PROPERTY width OF pileMenuContainer}",
+              "var width = ${width} + ${PROPERTY distance OF pileMenuContainer}",
+              "var width = 1600 - ${width}",
+              {
+                "func": "IF",
+                "operand1": "${PROPERTY _absoluteX}",
+                "operand2": "${width}",
+                "relation": "<",
+                "thenRoutine": [
+                  "var x = ${PROPERTY _absoluteX} + ${PROPERTY width}",
+                  "var x = ${x} + ${PROPERTY distance OF pileMenuContainer} - 25",
+                  {
+                    "func": "CLONE",
+                    "properties": {
+                      "parent": "${menuID}",
+                      "x": "${x}",
+                      "y": "${PROPERTY _absoluteY}"
+                    }
+                  },
+                  {
+                    "func": "GET",
+                    "property": "id",
+                    "variable": "containerID"
+                  },
+                  {
+                    "func": "SELECT",
+                    "property": "parent",
+                    "value": "pileMenuContainer"
+                  },
+                  {
+                    "func": "CLONE",
+                    "properties": {
+                      "parent": "${containerID}"
+                    }
+                  }
+                ],
+                "elseRoutine": [
+                  "var x = ${PROPERTY _absoluteX} - ${PROPERTY distance OF pileMenuContainer}",
+                  "var x = ${x} - ${PROPERTY width OF pileMenuContainer} + 25",
+                  {
+                    "func": "CLONE",
+                    "properties": {
+                      "parent": "${menuID}",
+                      "x": "${x}",
+                      "y": "${PROPERTY _absoluteY}"
+                    }
+                  },
+                  {
+                    "func": "GET",
+                    "property": "id",
+                    "variable": "containerID"
+                  },
+                  {
+                    "func": "SELECT",
+                    "property": "parent",
+                    "value": "pileMenuContainer"
+                  },
+                  {
+                    "func": "CLONE",
+                    "properties": {
+                      "parent": "${containerID}"
+                    }
+                  }
+                ]
+              },
+              {
+                "func": "COUNT",
+                "holder": "${thisID}"
+              },
+              {
+                "func": "SELECT",
+                "property": "clonedFrom",
+                "value": "splitCount"
+              },
+              {
+                "func": "SELECT",
+                "property": "parent",
+                "value": "${containerID}",
+                "source": "DEFAULT"
+              },
+              {
+                "func": "SET",
+                "property": "max",
+                "value": "${COUNT}"
+              },
+              "var COUNT = ${COUNT} / 2",
+              "var COUNT = floor ${COUNT}",
+              {
+                "func": "SET",
+                "property": "text",
+                "value": "${COUNT}"
+              },
+              {
+                "func": "SET",
+                "property": "showMenu",
+                "value": false,
+                "collection": "thisButton"
+              }
+            ],
+            "elseRoutine": [
+              {
+                "func": "SELECT",
+                "property": "forPile",
+                "value": "${thisID}"
+              },
+              {
+                "func": "DELETE"
+              },
+              {
+                "func": "SET",
+                "property": "showMenu",
+                "value": true,
+                "collection": "thisButton"
+              }
+            ]
+          }
+        ]
+      },
+      "width": 60,
+      "height": 60,
+      "layer": 3
+    }
+  },
+  "blueHome": {
+    "type": "holder",
+    "id": "blueHome",
+    "x": 1292,
+    "y": 72,
+    "inheritFrom": {
+      "pinkHome": "*"
+    },
+    "linkedToSeat": "seat4",
+    "z": 1,
+    "layer": 1,
+    "dropTarget": {
+      "deck": "blueDeck"
+    }
+  },
+  "hex1": {
+    "id": "hex1",
+    "width": 80,
+    "height": 80,
+    "layer": 2,
+    "z": 1,
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": [
+          "${PROPERTY parent}"
+        ],
+        "property": "rotation",
+        "relation": "+",
+        "value": 60
+      }
+    ],
+    "type": "holder",
+    "css": {
+      "clip-path": "polygon(50% 1%, 92.3% 26%, 92.3% 74%, 50% 99%, 7.7% 74%, 7.7% 26%)"
+    },
+    "fixedParent": true,
+    "parent": "hexBase1",
+    "classes": "transparent",
+    "dropOffsetX": 9,
+    "dropOffsetY": 9,
+    "movableInEdit": false,
+    "enterRoutine": [
+      {
+        "func": "GET",
+        "collection": "thisButton",
+        "property": "_absoluteRotation",
+        "variable": "deg"
+      },
+      {
+        "func": "SET",
+        "collection": "child",
+        "property": "rotation",
+        "relation": "-",
+        "value": "${deg}"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "SET",
+        "collection": "child",
+        "property": "rotation",
+        "value": 0
+      }
+    ]
+  },
+  "hexBase2": {
+    "inheritFrom": {
+      "hexBase1": "!hexBase"
+    },
+    "id": "hexBase2",
+    "parent": "hexBase1",
+    "fixedParent": true,
+    "x": 69.28,
+    "y": 0,
+    "z": 1,
+    "activeFace": 0
+  },
+  "hexBase3": {
+    "inheritFrom": {
+      "hexBase1": "!hexBase"
+    },
+    "id": "hexBase3",
+    "z": 1,
+    "parent": "hexBase1",
+    "fixedParent": true,
+    "x": 34.64,
+    "y": 60,
+    "activeFace": 0
+  },
+  "hexBase4": {
+    "inheritFrom": {
+      "hexBase1": "!hexBase"
+    },
+    "id": "hexBase4",
+    "z": 1,
+    "parent": "hexBase1",
+    "fixedParent": true,
+    "x": 103.92,
+    "y": 60
+  },
+  "hexBase1": {
+    "id": "hexBase1",
+    "width": 80,
+    "height": 80,
+    "z": 1,
+    "image": "/assets/1525185647_199",
+    "svgReplaces": {
+      "fillColor": "fillColor",
+      "strokeColor": "strokeColor",
+      "strokeWidth": "strokeWidth"
+    },
+    "fillColor": "#92c8b3",
+    "strokeColor": "#000000",
+    "strokeWidth": 2,
+    "grid": [
+      {
+        "x": 69.28,
+        "y": 120,
+        "offsetX": 34.64,
+        "offsetY": 60
+      },
+      {
+        "x": 69.28,
+        "y": 120,
+        "offsetX": 0,
+        "offsetY": 0
+      }
+    ],
+    "hexBase": true,
+    "x": 4,
+    "y": 4,
+    "hoverParent": "surface",
+    "parent": "hexBaseHome"
+  },
+  "hex5": {
+    "inheritFrom": {
+      "hex2": "*"
+    },
+    "id": "hex5",
+    "type": "holder",
+    "parent": "hexBase5",
+    "z": 1
+  },
+  "hex6": {
+    "inheritFrom": {
+      "hex3": "*"
+    },
+    "id": "hex6",
+    "type": "holder",
+    "parent": "hexBase5",
+    "z": 1
+  },
+  "hex7": {
+    "inheritFrom": {
+      "hex4": "*"
+    },
+    "id": "hex7",
+    "type": "holder",
+    "parent": "hexBase5",
+    "z": 1
+  },
+  "hex8": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "id": "hex8",
+    "type": "holder",
+    "parent": "hexBase5",
+    "z": 1
+  },
+  "hexBase6": {
+    "inheritFrom": {
+      "hexBase2": "*"
+    },
+    "id": "hexBase6",
+    "parent": "hexBase5",
+    "z": 1
+  },
+  "hexBase7": {
+    "inheritFrom": {
+      "hexBase3": "*"
+    },
+    "id": "hexBase7",
+    "parent": "hexBase5",
+    "z": 1
+  },
+  "hexBase8": {
+    "inheritFrom": {
+      "hexBase4": "*"
+    },
+    "id": "hexBase8",
+    "parent": "hexBase5",
+    "z": 1
+  },
+  "hexBase5": {
+    "inheritFrom": {
+      "hexBase1": "!parent"
+    },
+    "id": "hexBase5",
+    "x": 4,
+    "y": 4,
+    "z": 1,
+    "rotation": 0,
+    "hoverParent": "surface",
+    "parent": "hexBaseHome"
+  },
+  "hex9": {
+    "inheritFrom": {
+      "hex2": "*"
+    },
+    "id": "hex9",
+    "type": "holder",
+    "parent": "hexBase9",
+    "z": 1
+  },
+  "hex10": {
+    "inheritFrom": {
+      "hex3": "*"
+    },
+    "id": "hex10",
+    "type": "holder",
+    "parent": "hexBase9",
+    "z": 1
+  },
+  "hex11": {
+    "inheritFrom": {
+      "hex4": "*"
+    },
+    "id": "hex11",
+    "type": "holder",
+    "parent": "hexBase9",
+    "z": 1
+  },
+  "hex12": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "id": "hex12",
+    "type": "holder",
+    "parent": "hexBase9",
+    "z": 1
+  },
+  "hexBase10": {
+    "inheritFrom": {
+      "hexBase2": "*"
+    },
+    "id": "hexBase10",
+    "parent": "hexBase9",
+    "z": 1
+  },
+  "hexBase11": {
+    "inheritFrom": {
+      "hexBase3": "*"
+    },
+    "id": "hexBase11",
+    "parent": "hexBase9",
+    "z": 1
+  },
+  "hexBase12": {
+    "inheritFrom": {
+      "hexBase4": "*"
+    },
+    "id": "hexBase12",
+    "parent": "hexBase9",
+    "z": 1
+  },
+  "hexBase9": {
+    "inheritFrom": {
+      "hexBase1": "!parent"
+    },
+    "id": "hexBase9",
+    "x": 4,
+    "y": 4,
+    "z": 1,
+    "rotation": 0,
+    "hoverParent": "surface",
+    "parent": "hexBaseHome"
+  },
+  "hex13": {
+    "inheritFrom": {
+      "hex2": "*"
+    },
+    "id": "hex13",
+    "type": "holder",
+    "parent": "hexBase13",
+    "z": 1
+  },
+  "hex14": {
+    "inheritFrom": {
+      "hex3": "*"
+    },
+    "id": "hex14",
+    "type": "holder",
+    "parent": "hexBase13",
+    "z": 1
+  },
+  "hex15": {
+    "inheritFrom": {
+      "hex4": "*"
+    },
+    "id": "hex15",
+    "type": "holder",
+    "parent": "hexBase13",
+    "z": 1
+  },
+  "hex16": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "id": "hex16",
+    "type": "holder",
+    "parent": "hexBase13",
+    "z": 1
+  },
+  "hexBase14": {
+    "inheritFrom": {
+      "hexBase2": "*"
+    },
+    "id": "hexBase14",
+    "parent": "hexBase13",
+    "z": 1
+  },
+  "hexBase15": {
+    "inheritFrom": {
+      "hexBase3": "*"
+    },
+    "id": "hexBase15",
+    "parent": "hexBase13",
+    "z": 1
+  },
+  "hexBase16": {
+    "inheritFrom": {
+      "hexBase4": "*"
+    },
+    "id": "hexBase16",
+    "parent": "hexBase13",
+    "z": 1
+  },
+  "hexBase13": {
+    "inheritFrom": {
+      "hexBase1": "!parent"
+    },
+    "id": "hexBase13",
+    "x": 4,
+    "y": 4,
+    "z": 1,
+    "rotation": 0,
+    "hoverParent": "surface",
+    "parent": "hexBaseHome"
+  },
+  "hex17": {
+    "inheritFrom": {
+      "hex2": "*"
+    },
+    "id": "hex17",
+    "type": "holder",
+    "parent": "hexBase17",
+    "z": 1
+  },
+  "hex18": {
+    "inheritFrom": {
+      "hex3": "*"
+    },
+    "id": "hex18",
+    "type": "holder",
+    "parent": "hexBase17",
+    "z": 1
+  },
+  "hex19": {
+    "inheritFrom": {
+      "hex4": "*"
+    },
+    "id": "hex19",
+    "type": "holder",
+    "parent": "hexBase17",
+    "z": 1
+  },
+  "hex20": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "id": "hex20",
+    "type": "holder",
+    "parent": "hexBase17",
+    "z": 1
+  },
+  "hexBase18": {
+    "inheritFrom": {
+      "hexBase2": "*"
+    },
+    "id": "hexBase18",
+    "parent": "hexBase17",
+    "z": 1
+  },
+  "hexBase19": {
+    "inheritFrom": {
+      "hexBase3": "*"
+    },
+    "id": "hexBase19",
+    "parent": "hexBase17",
+    "z": 1
+  },
+  "hexBase20": {
+    "inheritFrom": {
+      "hexBase4": "*"
+    },
+    "id": "hexBase20",
+    "parent": "hexBase17",
+    "z": 1
+  },
+  "hexBase17": {
+    "inheritFrom": {
+      "hexBase1": "!parent"
+    },
+    "id": "hexBase17",
+    "x": 4,
+    "y": 4,
+    "z": 1,
+    "rotation": 0,
+    "hoverParent": "surface",
+    "parent": "hexBaseHome"
+  },
+  "hex21": {
+    "inheritFrom": {
+      "hex2": "*"
+    },
+    "id": "hex21",
+    "type": "holder",
+    "parent": "hexBase21",
+    "z": 1
+  },
+  "hex22": {
+    "inheritFrom": {
+      "hex3": "*"
+    },
+    "id": "hex22",
+    "type": "holder",
+    "parent": "hexBase21",
+    "z": 1
+  },
+  "hex23": {
+    "inheritFrom": {
+      "hex4": "*"
+    },
+    "id": "hex23",
+    "type": "holder",
+    "parent": "hexBase21",
+    "z": 1
+  },
+  "hex24": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "id": "hex24",
+    "type": "holder",
+    "parent": "hexBase21",
+    "z": 1
+  },
+  "hexBase22": {
+    "inheritFrom": {
+      "hexBase2": "*"
+    },
+    "id": "hexBase22",
+    "parent": "hexBase21",
+    "z": 1
+  },
+  "hexBase23": {
+    "inheritFrom": {
+      "hexBase3": "*"
+    },
+    "id": "hexBase23",
+    "parent": "hexBase21",
+    "z": 1
+  },
+  "hexBase24": {
+    "inheritFrom": {
+      "hexBase4": "*"
+    },
+    "id": "hexBase24",
+    "parent": "hexBase21",
+    "z": 1
+  },
+  "hexBase21": {
+    "inheritFrom": {
+      "hexBase1": "!parent"
+    },
+    "id": "hexBase21",
+    "x": 4,
+    "y": 4,
+    "z": 1,
+    "rotation": 0,
+    "hoverParent": "surface",
+    "parent": "hexBaseHome"
+  },
+  "hex25": {
+    "inheritFrom": {
+      "hex2": "*"
+    },
+    "id": "hex25",
+    "type": "holder",
+    "parent": "hexBase25",
+    "z": 1
+  },
+  "hex26": {
+    "inheritFrom": {
+      "hex3": "*"
+    },
+    "id": "hex26",
+    "type": "holder",
+    "parent": "hexBase25",
+    "z": 1
+  },
+  "hex27": {
+    "inheritFrom": {
+      "hex4": "*"
+    },
+    "id": "hex27",
+    "type": "holder",
+    "parent": "hexBase25",
+    "z": 1
+  },
+  "hex28": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "id": "hex28",
+    "type": "holder",
+    "parent": "hexBase25",
+    "z": 1
+  },
+  "hexBase26": {
+    "inheritFrom": {
+      "hexBase2": "*"
+    },
+    "id": "hexBase26",
+    "parent": "hexBase25",
+    "z": 1
+  },
+  "hexBase27": {
+    "inheritFrom": {
+      "hexBase3": "*"
+    },
+    "id": "hexBase27",
+    "parent": "hexBase25",
+    "z": 1
+  },
+  "hexBase28": {
+    "inheritFrom": {
+      "hexBase4": "*"
+    },
+    "id": "hexBase28",
+    "parent": "hexBase25",
+    "z": 1
+  },
+  "hexBase25": {
+    "inheritFrom": {
+      "hexBase1": "!parent"
+    },
+    "id": "hexBase25",
+    "x": 4,
+    "y": 4,
+    "z": 1,
+    "rotation": 0,
+    "parent": "hexBaseHome"
+  },
+  "hex29": {
+    "inheritFrom": {
+      "hex2": "*"
+    },
+    "id": "hex29",
+    "type": "holder",
+    "parent": "hexBase29",
+    "z": 1
+  },
+  "hex30": {
+    "inheritFrom": {
+      "hex3": "*"
+    },
+    "id": "hex30",
+    "type": "holder",
+    "parent": "hexBase29",
+    "z": 1
+  },
+  "hex31": {
+    "inheritFrom": {
+      "hex4": "*"
+    },
+    "id": "hex31",
+    "type": "holder",
+    "parent": "hexBase29",
+    "z": 1
+  },
+  "hex32": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "id": "hex32",
+    "type": "holder",
+    "parent": "hexBase29",
+    "z": 1
+  },
+  "hexBase30": {
+    "inheritFrom": {
+      "hexBase2": "*"
+    },
+    "id": "hexBase30",
+    "parent": "hexBase29",
+    "z": 1
+  },
+  "hexBase31": {
+    "inheritFrom": {
+      "hexBase3": "*"
+    },
+    "id": "hexBase31",
+    "parent": "hexBase29",
+    "z": 1
+  },
+  "hexBase32": {
+    "inheritFrom": {
+      "hexBase4": "*"
+    },
+    "id": "hexBase32",
+    "parent": "hexBase29",
+    "z": 1
+  },
+  "hexBase29": {
+    "inheritFrom": {
+      "hexBase1": "!parent"
+    },
+    "id": "hexBase29",
+    "x": 4,
+    "y": 4,
+    "z": 1,
+    "rotation": 0,
+    "parent": "hexBaseHome"
+  },
+  "hex33": {
+    "inheritFrom": {
+      "hex2": "*"
+    },
+    "id": "hex33",
+    "type": "holder",
+    "parent": "hexBase33",
+    "z": 1
+  },
+  "hex34": {
+    "inheritFrom": {
+      "hex3": "*"
+    },
+    "id": "hex34",
+    "type": "holder",
+    "parent": "hexBase33",
+    "z": 1
+  },
+  "hex35": {
+    "inheritFrom": {
+      "hex4": "*"
+    },
+    "id": "hex35",
+    "type": "holder",
+    "parent": "hexBase33",
+    "z": 1
+  },
+  "hex36": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "id": "hex36",
+    "type": "holder",
+    "parent": "hexBase33",
+    "z": 1
+  },
+  "hexBase34": {
+    "inheritFrom": {
+      "hexBase2": "*"
+    },
+    "id": "hexBase34",
+    "parent": "hexBase33",
+    "z": 1,
+    "x": 69.28,
+    "y": 0
+  },
+  "hexBase35": {
+    "inheritFrom": {
+      "hexBase3": "*"
+    },
+    "id": "hexBase35",
+    "parent": "hexBase33",
+    "z": 1
+  },
+  "hexBase36": {
+    "inheritFrom": {
+      "hexBase4": "*"
+    },
+    "id": "hexBase36",
+    "parent": "hexBase33",
+    "z": 1
+  },
+  "hexBase33": {
+    "inheritFrom": {
+      "hexBase1": "!parent"
+    },
+    "id": "hexBase33",
+    "x": 4,
+    "y": 4,
+    "z": 1,
+    "rotation": 0,
+    "parent": "hexBaseHome"
+  },
+  "hex37": {
+    "inheritFrom": {
+      "hex2": "*"
+    },
+    "id": "hex37",
+    "type": "holder",
+    "parent": "hexBase37",
+    "z": 1
+  },
+  "hex38": {
+    "inheritFrom": {
+      "hex3": "*"
+    },
+    "id": "hex38",
+    "type": "holder",
+    "parent": "hexBase37",
+    "z": 1
+  },
+  "hex39": {
+    "inheritFrom": {
+      "hex4": "*"
+    },
+    "id": "hex39",
+    "type": "holder",
+    "parent": "hexBase37",
+    "z": 1
+  },
+  "hex40": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "id": "hex40",
+    "type": "holder",
+    "parent": "hexBase37",
+    "z": 1
+  },
+  "hexBase38": {
+    "inheritFrom": {
+      "hexBase2": "*"
+    },
+    "id": "hexBase38",
+    "parent": "hexBase37",
+    "z": 1
+  },
+  "hexBase39": {
+    "inheritFrom": {
+      "hexBase3": "*"
+    },
+    "id": "hexBase39",
+    "parent": "hexBase37",
+    "activeFace": 0,
+    "z": 1
+  },
+  "hexBase40": {
+    "inheritFrom": {
+      "hexBase4": "*"
+    },
+    "id": "hexBase40",
+    "parent": "hexBase37",
+    "z": 1
+  },
+  "hexBase37": {
+    "inheritFrom": {
+      "hexBase1": "!parent"
+    },
+    "id": "hexBase37",
+    "x": 4,
+    "y": 4,
+    "z": 1,
+    "rotation": 0,
+    "parent": "hexBaseHome"
+  },
+  "hex41": {
+    "inheritFrom": {
+      "hex2": "*"
+    },
+    "id": "hex41",
+    "type": "holder",
+    "parent": "hexBase41",
+    "z": 1
+  },
+  "hex42": {
+    "inheritFrom": {
+      "hex3": "*"
+    },
+    "id": "hex42",
+    "type": "holder",
+    "parent": "hexBase41",
+    "z": 1
+  },
+  "hex43": {
+    "inheritFrom": {
+      "hex4": "*"
+    },
+    "id": "hex43",
+    "type": "holder",
+    "parent": "hexBase41",
+    "z": 1
+  },
+  "hex44": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "id": "hex44",
+    "type": "holder",
+    "parent": "hexBase41",
+    "z": 1
+  },
+  "hexBase42": {
+    "inheritFrom": {
+      "hexBase2": "*"
+    },
+    "id": "hexBase42",
+    "parent": "hexBase41",
+    "z": 1
+  },
+  "hexBase43": {
+    "inheritFrom": {
+      "hexBase3": "*"
+    },
+    "id": "hexBase43",
+    "parent": "hexBase41",
+    "z": 1
+  },
+  "hexBase44": {
+    "inheritFrom": {
+      "hexBase4": "*"
+    },
+    "id": "hexBase44",
+    "parent": "hexBase41",
+    "z": 1
+  },
+  "hexBase41": {
+    "inheritFrom": {
+      "hexBase1": "!parent"
+    },
+    "id": "hexBase41",
+    "x": 4,
+    "y": 4,
+    "z": 1,
+    "rotation": 0,
+    "parent": "hexBaseHome"
+  },
+  "hex45": {
+    "inheritFrom": {
+      "hex2": "*"
+    },
+    "id": "hex45",
+    "type": "holder",
+    "parent": "hexBase45",
+    "z": 1
+  },
+  "hex46": {
+    "inheritFrom": {
+      "hex3": "*"
+    },
+    "id": "hex46",
+    "type": "holder",
+    "parent": "hexBase45",
+    "z": 1
+  },
+  "hex47": {
+    "inheritFrom": {
+      "hex4": "*"
+    },
+    "id": "hex47",
+    "type": "holder",
+    "parent": "hexBase45",
+    "z": 1
+  },
+  "hex48": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "id": "hex48",
+    "type": "holder",
+    "parent": "hexBase45",
+    "z": 1
+  },
+  "hexBase46": {
+    "inheritFrom": {
+      "hexBase2": "*"
+    },
+    "id": "hexBase46",
+    "parent": "hexBase45",
+    "z": 1
+  },
+  "hexBase47": {
+    "inheritFrom": {
+      "hexBase3": "*"
+    },
+    "id": "hexBase47",
+    "parent": "hexBase45",
+    "z": 1
+  },
+  "hexBase48": {
+    "inheritFrom": {
+      "hexBase4": "*"
+    },
+    "id": "hexBase48",
+    "parent": "hexBase45",
+    "z": 1
+  },
+  "hexBase45": {
+    "inheritFrom": {
+      "hexBase1": "!parent"
+    },
+    "id": "hexBase45",
+    "x": 4,
+    "y": 4,
+    "z": 1,
+    "rotation": 0,
+    "parent": "hexBaseHome"
+  },
+  "hex49": {
+    "inheritFrom": {
+      "hex2": "*"
+    },
+    "id": "hex49",
+    "type": "holder",
+    "parent": "hexBase49",
+    "z": 1
+  },
+  "hex50": {
+    "inheritFrom": {
+      "hex3": "*"
+    },
+    "id": "hex50",
+    "type": "holder",
+    "parent": "hexBase49",
+    "z": 1
+  },
+  "hex51": {
+    "inheritFrom": {
+      "hex4": "*"
+    },
+    "id": "hex51",
+    "type": "holder",
+    "parent": "hexBase49",
+    "z": 1
+  },
+  "hex52": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "id": "hex52",
+    "type": "holder",
+    "parent": "hexBase49",
+    "z": 1
+  },
+  "hexBase50": {
+    "inheritFrom": {
+      "hexBase2": "*"
+    },
+    "id": "hexBase50",
+    "parent": "hexBase49",
+    "z": 1
+  },
+  "hexBase51": {
+    "inheritFrom": {
+      "hexBase3": "*"
+    },
+    "id": "hexBase51",
+    "parent": "hexBase49",
+    "z": 1
+  },
+  "hexBase52": {
+    "inheritFrom": {
+      "hexBase4": "*"
+    },
+    "id": "hexBase52",
+    "parent": "hexBase49",
+    "z": 1
+  },
+  "hexBase49": {
+    "inheritFrom": {
+      "hexBase1": "!parent"
+    },
+    "id": "hexBase49",
+    "x": 4,
+    "y": 4,
+    "z": 1,
+    "rotation": 0,
+    "parent": "hexBaseHome"
+  },
+  "hex53": {
+    "inheritFrom": {
+      "hex2": "*"
+    },
+    "id": "hex53",
+    "type": "holder",
+    "parent": "hexBase53",
+    "z": 1
+  },
+  "hex54": {
+    "inheritFrom": {
+      "hex3": "*"
+    },
+    "id": "hex54",
+    "type": "holder",
+    "parent": "hexBase53",
+    "z": 1
+  },
+  "hex55": {
+    "inheritFrom": {
+      "hex4": "*"
+    },
+    "id": "hex55",
+    "type": "holder",
+    "parent": "hexBase53",
+    "z": 1
+  },
+  "hex56": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "id": "hex56",
+    "type": "holder",
+    "parent": "hexBase53",
+    "z": 1
+  },
+  "hexBase54": {
+    "inheritFrom": {
+      "hexBase2": "*"
+    },
+    "id": "hexBase54",
+    "parent": "hexBase53",
+    "z": 1
+  },
+  "hexBase55": {
+    "inheritFrom": {
+      "hexBase3": "*"
+    },
+    "id": "hexBase55",
+    "parent": "hexBase53",
+    "z": 1
+  },
+  "hexBase56": {
+    "inheritFrom": {
+      "hexBase4": "*"
+    },
+    "id": "hexBase56",
+    "parent": "hexBase53",
+    "z": 1
+  },
+  "hexBase53": {
+    "inheritFrom": {
+      "hexBase1": "!parent"
+    },
+    "id": "hexBase53",
+    "x": 4,
+    "y": 4,
+    "z": 1,
+    "rotation": 0,
+    "parent": "hexBaseHome"
+  },
+  "hex57": {
+    "inheritFrom": {
+      "hex2": "*"
+    },
+    "id": "hex57",
+    "type": "holder",
+    "parent": "hexBase57",
+    "z": 1
+  },
+  "hex58": {
+    "inheritFrom": {
+      "hex3": "*"
+    },
+    "id": "hex58",
+    "type": "holder",
+    "parent": "hexBase57",
+    "z": 1
+  },
+  "hex59": {
+    "inheritFrom": {
+      "hex4": "*"
+    },
+    "id": "hex59",
+    "type": "holder",
+    "parent": "hexBase57",
+    "z": 1
+  },
+  "hex60": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "id": "hex60",
+    "type": "holder",
+    "parent": "hexBase57",
+    "z": 1
+  },
+  "hexBase58": {
+    "inheritFrom": {
+      "hexBase2": "*"
+    },
+    "id": "hexBase58",
+    "parent": "hexBase57",
+    "z": 1
+  },
+  "hexBase59": {
+    "inheritFrom": {
+      "hexBase3": "*"
+    },
+    "id": "hexBase59",
+    "parent": "hexBase57",
+    "z": 1
+  },
+  "hexBase60": {
+    "inheritFrom": {
+      "hexBase4": "*"
+    },
+    "id": "hexBase60",
+    "parent": "hexBase57",
+    "z": 1
+  },
+  "hexBase57": {
+    "inheritFrom": {
+      "hexBase1": "!parent"
+    },
+    "id": "hexBase57",
+    "x": 4,
+    "y": 4,
+    "z": 1,
+    "rotation": 0,
+    "parent": "hexBaseHome"
+  },
+  "hex61": {
+    "inheritFrom": {
+      "hex2": "*"
+    },
+    "id": "hex61",
+    "type": "holder",
+    "parent": "hexBase61",
+    "z": 1
+  },
+  "hex62": {
+    "inheritFrom": {
+      "hex3": "*"
+    },
+    "id": "hex62",
+    "type": "holder",
+    "parent": "hexBase61",
+    "z": 1
+  },
+  "hex63": {
+    "inheritFrom": {
+      "hex4": "*"
+    },
+    "id": "hex63",
+    "type": "holder",
+    "parent": "hexBase61",
+    "z": 1
+  },
+  "hex64": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "id": "hex64",
+    "type": "holder",
+    "parent": "hexBase61",
+    "z": 1
+  },
+  "hexBase62": {
+    "inheritFrom": {
+      "hexBase2": "*"
+    },
+    "id": "hexBase62",
+    "parent": "hexBase61",
+    "z": 1
+  },
+  "hexBase63": {
+    "inheritFrom": {
+      "hexBase3": "*"
+    },
+    "id": "hexBase63",
+    "parent": "hexBase61",
+    "z": 1
+  },
+  "hexBase64": {
+    "inheritFrom": {
+      "hexBase4": "*"
+    },
+    "id": "hexBase64",
+    "parent": "hexBase61",
+    "z": 1
+  },
+  "hexBase61": {
+    "inheritFrom": {
+      "hexBase1": "!parent"
+    },
+    "id": "hexBase61",
+    "x": 4,
+    "y": 4,
+    "z": 1,
+    "rotation": 0,
+    "parent": "hexBaseHome"
+  },
+  "surface": {
+    "id": "surface",
+    "width": 3150,
+    "height": 2600,
+    "type": "holder",
+    "classes": "transparent",
+    "resetProperties": {
+      "x": -762.08,
+      "y": -720
+    },
+    "z": 1,
+    "dropTarget": {},
+    "alignChildren": false,
+    "movable": true,
+    "movableInEdit": false,
+    "css": {
+      "border": "none"
+    },
+    "grid": [
+      {
+        "x": 69.28,
+        "y": 120,
+        "offsetX": 34.64,
+        "offsetY": 60
+      },
+      {
+        "x": 69.28,
+        "y": 120,
+        "offsetX": 0,
+        "offsetY": 0
+      }
+    ],
+    "y": -720,
+    "x": -762.08
+  },
+  "hexBaseHome": {
+    "type": "holder",
+    "id": "hexBaseHome",
+    "z": 1,
+    "dropTarget": {
+      "hexBase": true
+    },
+    "width": 190,
+    "height": 150,
+    "css": {
+      "background": "#ffffff80",
+      "border": "none"
+    },
+    "onEnter": {
+      "rotation": 0
+    },
+    "enterRoutine": [
+      {
+        "func": "CALL",
+        "routine": "countRoutine"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "CALL",
+        "routine": "countRoutine"
+      }
+    ],
+    "countRoutine": [
+      {
+        "func": "COUNT",
+        "holder": "${thisID}"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "hexCount"
+        ],
+        "property": "text",
+        "value": "${COUNT}"
+      }
+    ],
+    "layer": 1
+  },
+  "hexCount": {
+    "id": "hexCount",
+    "x": 159,
+    "y": -1,
+    "text": 16,
+    "css": {
+      "font-size": "25px",
+      "color": "black"
+    },
+    "width": 20,
+    "height": 20,
+    "movable": false,
+    "z": 1
+  },
+  "seat2": {
+    "type": "seat",
+    "id": "seat2",
+    "x": 642,
+    "y": 8,
+    "clickRoutine": [
+      {
+        "func": "CLICK",
+        "collection": "thisButton",
+        "mode": "ignoreClickRoutine"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "color",
+        "value": "#f3a100"
+      }
+    ],
+    "color": "#f3a100",
+    "hideWhenUnused": true,
+    "index": 2,
+    "z": 1
+  },
+  "seat4": {
+    "type": "seat",
+    "id": "seat4",
+    "x": 1242,
+    "y": 8,
+    "clickRoutine": [
+      {
+        "func": "CLICK",
+        "collection": "thisButton",
+        "mode": "ignoreClickRoutine"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "color",
+        "value": "#1fb8ee"
+      }
+    ],
+    "color": "#1fb8ee",
+    "hideWhenUnused": true,
+    "index": 4,
+    "z": 1
+  },
+  "reset1": {
+    "type": "button",
+    "id": "reset1",
+    "x": 203,
+    "y": 1,
+    "width": 50,
+    "height": 50,
+    "z": 1,
+    "classes": "symbols",
+    "color": "white",
+    "css": {
+      "default": {
+        "font-size": "40px",
+        "--wcMain": "black",
+        "--wcBorder": "white",
+        "--wcMainOH": "grey",
+        "--wcBorderOH": "black"
+      },
+      "::after": {
+        "content": "\"Turn\"",
+        "display": "none",
+        "position": "absolute",
+        "margin-top": "71px",
+        "color": "black",
+        "font-size": "14px",
+        "font-family": "Roboto"
+      },
+      ":hover::after": {
+        "display": "block"
+      }
+    },
+    "clickRoutine": [
+      {
+        "func": "TURN"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "hex1"
+        ],
+        "property": "clickable",
+        "value": false
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "hexBase1"
+        ],
+        "property": "movable",
+        "value": false
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "hexBaseHome",
+          "hexCount"
+        ],
+        "property": "display",
+        "value": false
+      }
+    ],
+    "text": "play_arrow"
+  },
+  "background": {
+    "id": "background",
+    "width": 1920,
+    "height": 960,
+    "scale": 1.09,
+    "layer": -4,
+    "movable": false,
+    "css": {
+      "opacity": "0.6"
+    },
+    "image": "/assets/-52589506_548214",
+    "z": 1
+  },
+  "0emv": {
+    "deck": "pinkDeck",
+    "type": "card",
+    "cardType": "pink",
+    "id": "0emv",
+    "z": 1,
+    "parent": "ch4i"
+  },
+  "outm": {
+    "deck": "orangeDeck",
+    "type": "card",
+    "cardType": "orange",
+    "id": "outm",
+    "z": 1,
+    "parent": "slez"
+  },
+  "hfqk": {
+    "deck": "yellowDeck",
+    "type": "card",
+    "cardType": "yellow",
+    "id": "hfqk",
+    "z": 1,
+    "parent": "kry7"
+  },
+  "qb9j": {
+    "deck": "blueDeck",
+    "type": "card",
+    "cardType": "blue",
+    "id": "qb9j",
+    "z": 1,
+    "parent": "64va"
+  },
+  "ch4i": {
+    "type": "pile",
+    "x": 0,
+    "y": 0,
+    "width": 60,
+    "height": 60,
+    "deck": "pink",
+    "handleSize": 59,
+    "handlePosition": "middle center",
+    "handleCSS": "background-color:transparent;color:#000000;font-size:45px",
+    "pileSnapRange": 40,
+    "showMenu": true,
+    "clickRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY showMenu}",
+        "operand2": true,
+        "thenRoutine": [
+          {
+            "func": "SELECT",
+            "property": "id",
+            "value": "pileMenu"
+          },
+          {
+            "func": "CLONE",
+            "properties": {
+              "x": 0,
+              "y": 0,
+              "forPile": "${thisID}",
+              "owner": "${playerName}",
+              "width": 1600,
+              "height": 1000
+            }
+          },
+          {
+            "func": "GET",
+            "property": "id",
+            "variable": "menuID"
+          },
+          {
+            "func": "SELECT",
+            "property": "parent",
+            "value": "pileMenu"
+          },
+          "var width = ${PROPERTY width} + ${PROPERTY width OF pileMenuContainer}",
+          "var width = ${width} + ${PROPERTY distance OF pileMenuContainer}",
+          "var width = 1600 - ${width}",
+          {
+            "func": "IF",
+            "operand1": "${PROPERTY _absoluteX}",
+            "operand2": "${width}",
+            "relation": "<",
+            "thenRoutine": [
+              "var x = ${PROPERTY _absoluteX} + ${PROPERTY width}",
+              "var x = ${x} + ${PROPERTY distance OF pileMenuContainer} - 25",
+              {
+                "func": "CLONE",
+                "properties": {
+                  "parent": "${menuID}",
+                  "x": "${x}",
+                  "y": "${PROPERTY _absoluteY}"
+                }
+              },
+              {
+                "func": "GET",
+                "property": "id",
+                "variable": "containerID"
+              },
+              {
+                "func": "SELECT",
+                "property": "parent",
+                "value": "pileMenuContainer"
+              },
+              {
+                "func": "CLONE",
+                "properties": {
+                  "parent": "${containerID}"
+                }
+              }
+            ],
+            "elseRoutine": [
+              "var x = ${PROPERTY _absoluteX} - ${PROPERTY distance OF pileMenuContainer}",
+              "var x = ${x} - ${PROPERTY width OF pileMenuContainer} + 25",
+              {
+                "func": "CLONE",
+                "properties": {
+                  "parent": "${menuID}",
+                  "x": "${x}",
+                  "y": "${PROPERTY _absoluteY}"
+                }
+              },
+              {
+                "func": "GET",
+                "property": "id",
+                "variable": "containerID"
+              },
+              {
+                "func": "SELECT",
+                "property": "parent",
+                "value": "pileMenuContainer"
+              },
+              {
+                "func": "CLONE",
+                "properties": {
+                  "parent": "${containerID}"
+                }
+              }
+            ]
+          },
+          {
+            "func": "COUNT",
+            "holder": "${thisID}"
+          },
+          {
+            "func": "SELECT",
+            "property": "clonedFrom",
+            "value": "splitCount"
+          },
+          {
+            "func": "SELECT",
+            "property": "parent",
+            "value": "${containerID}",
+            "source": "DEFAULT"
+          },
+          {
+            "func": "SET",
+            "property": "max",
+            "value": "${COUNT}"
+          },
+          "var COUNT = ${COUNT} / 2",
+          "var COUNT = floor ${COUNT}",
+          {
+            "func": "SET",
+            "property": "text",
+            "value": "${COUNT}"
+          },
+          {
+            "func": "SET",
+            "property": "showMenu",
+            "value": false,
+            "collection": "thisButton"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SELECT",
+            "property": "forPile",
+            "value": "${thisID}"
+          },
+          {
+            "func": "DELETE"
+          },
+          {
+            "func": "SET",
+            "property": "showMenu",
+            "value": true,
+            "collection": "thisButton"
+          }
+        ]
+      }
+    ],
+    "id": "ch4i",
+    "z": 10,
+    "parent": "pinkHome"
+  },
+  "slez": {
+    "type": "pile",
+    "parent": "orangeHome",
+    "x": 0,
+    "y": 0,
+    "width": 60,
+    "height": 60,
+    "deck": "pink",
+    "handleSize": 59,
+    "handlePosition": "middle center",
+    "handleCSS": "background-color:transparent;color:#000000;font-size:45px",
+    "pileSnapRange": 40,
+    "showMenu": true,
+    "clickRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY showMenu}",
+        "operand2": true,
+        "thenRoutine": [
+          {
+            "func": "SELECT",
+            "property": "id",
+            "value": "pileMenu"
+          },
+          {
+            "func": "CLONE",
+            "properties": {
+              "x": 0,
+              "y": 0,
+              "forPile": "${thisID}",
+              "owner": "${playerName}",
+              "width": 1600,
+              "height": 1000
+            }
+          },
+          {
+            "func": "GET",
+            "property": "id",
+            "variable": "menuID"
+          },
+          {
+            "func": "SELECT",
+            "property": "parent",
+            "value": "pileMenu"
+          },
+          "var width = ${PROPERTY width} + ${PROPERTY width OF pileMenuContainer}",
+          "var width = ${width} + ${PROPERTY distance OF pileMenuContainer}",
+          "var width = 1600 - ${width}",
+          {
+            "func": "IF",
+            "operand1": "${PROPERTY _absoluteX}",
+            "operand2": "${width}",
+            "relation": "<",
+            "thenRoutine": [
+              "var x = ${PROPERTY _absoluteX} + ${PROPERTY width}",
+              "var x = ${x} + ${PROPERTY distance OF pileMenuContainer} - 25",
+              {
+                "func": "CLONE",
+                "properties": {
+                  "parent": "${menuID}",
+                  "x": "${x}",
+                  "y": "${PROPERTY _absoluteY}"
+                }
+              },
+              {
+                "func": "GET",
+                "property": "id",
+                "variable": "containerID"
+              },
+              {
+                "func": "SELECT",
+                "property": "parent",
+                "value": "pileMenuContainer"
+              },
+              {
+                "func": "CLONE",
+                "properties": {
+                  "parent": "${containerID}"
+                }
+              }
+            ],
+            "elseRoutine": [
+              "var x = ${PROPERTY _absoluteX} - ${PROPERTY distance OF pileMenuContainer}",
+              "var x = ${x} - ${PROPERTY width OF pileMenuContainer} + 25",
+              {
+                "func": "CLONE",
+                "properties": {
+                  "parent": "${menuID}",
+                  "x": "${x}",
+                  "y": "${PROPERTY _absoluteY}"
+                }
+              },
+              {
+                "func": "GET",
+                "property": "id",
+                "variable": "containerID"
+              },
+              {
+                "func": "SELECT",
+                "property": "parent",
+                "value": "pileMenuContainer"
+              },
+              {
+                "func": "CLONE",
+                "properties": {
+                  "parent": "${containerID}"
+                }
+              }
+            ]
+          },
+          {
+            "func": "COUNT",
+            "holder": "${thisID}"
+          },
+          {
+            "func": "SELECT",
+            "property": "clonedFrom",
+            "value": "splitCount"
+          },
+          {
+            "func": "SELECT",
+            "property": "parent",
+            "value": "${containerID}",
+            "source": "DEFAULT"
+          },
+          {
+            "func": "SET",
+            "property": "max",
+            "value": "${COUNT}"
+          },
+          "var COUNT = ${COUNT} / 2",
+          "var COUNT = floor ${COUNT}",
+          {
+            "func": "SET",
+            "property": "text",
+            "value": "${COUNT}"
+          },
+          {
+            "func": "SET",
+            "property": "showMenu",
+            "value": false,
+            "collection": "thisButton"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SELECT",
+            "property": "forPile",
+            "value": "${thisID}"
+          },
+          {
+            "func": "DELETE"
+          },
+          {
+            "func": "SET",
+            "property": "showMenu",
+            "value": true,
+            "collection": "thisButton"
+          }
+        ]
+      }
+    ],
+    "id": "slez"
+  },
+  "kry7": {
+    "type": "pile",
+    "parent": "yellowHome",
+    "x": 0,
+    "y": 0,
+    "width": 60,
+    "height": 60,
+    "deck": "pink",
+    "handleSize": 59,
+    "handlePosition": "middle center",
+    "handleCSS": "background-color:transparent;color:#000000;font-size:45px",
+    "pileSnapRange": 40,
+    "showMenu": true,
+    "clickRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY showMenu}",
+        "operand2": true,
+        "thenRoutine": [
+          {
+            "func": "SELECT",
+            "property": "id",
+            "value": "pileMenu"
+          },
+          {
+            "func": "CLONE",
+            "properties": {
+              "x": 0,
+              "y": 0,
+              "forPile": "${thisID}",
+              "owner": "${playerName}",
+              "width": 1600,
+              "height": 1000
+            }
+          },
+          {
+            "func": "GET",
+            "property": "id",
+            "variable": "menuID"
+          },
+          {
+            "func": "SELECT",
+            "property": "parent",
+            "value": "pileMenu"
+          },
+          "var width = ${PROPERTY width} + ${PROPERTY width OF pileMenuContainer}",
+          "var width = ${width} + ${PROPERTY distance OF pileMenuContainer}",
+          "var width = 1600 - ${width}",
+          {
+            "func": "IF",
+            "operand1": "${PROPERTY _absoluteX}",
+            "operand2": "${width}",
+            "relation": "<",
+            "thenRoutine": [
+              "var x = ${PROPERTY _absoluteX} + ${PROPERTY width}",
+              "var x = ${x} + ${PROPERTY distance OF pileMenuContainer} - 25",
+              {
+                "func": "CLONE",
+                "properties": {
+                  "parent": "${menuID}",
+                  "x": "${x}",
+                  "y": "${PROPERTY _absoluteY}"
+                }
+              },
+              {
+                "func": "GET",
+                "property": "id",
+                "variable": "containerID"
+              },
+              {
+                "func": "SELECT",
+                "property": "parent",
+                "value": "pileMenuContainer"
+              },
+              {
+                "func": "CLONE",
+                "properties": {
+                  "parent": "${containerID}"
+                }
+              }
+            ],
+            "elseRoutine": [
+              "var x = ${PROPERTY _absoluteX} - ${PROPERTY distance OF pileMenuContainer}",
+              "var x = ${x} - ${PROPERTY width OF pileMenuContainer} + 25",
+              {
+                "func": "CLONE",
+                "properties": {
+                  "parent": "${menuID}",
+                  "x": "${x}",
+                  "y": "${PROPERTY _absoluteY}"
+                }
+              },
+              {
+                "func": "GET",
+                "property": "id",
+                "variable": "containerID"
+              },
+              {
+                "func": "SELECT",
+                "property": "parent",
+                "value": "pileMenuContainer"
+              },
+              {
+                "func": "CLONE",
+                "properties": {
+                  "parent": "${containerID}"
+                }
+              }
+            ]
+          },
+          {
+            "func": "COUNT",
+            "holder": "${thisID}"
+          },
+          {
+            "func": "SELECT",
+            "property": "clonedFrom",
+            "value": "splitCount"
+          },
+          {
+            "func": "SELECT",
+            "property": "parent",
+            "value": "${containerID}",
+            "source": "DEFAULT"
+          },
+          {
+            "func": "SET",
+            "property": "max",
+            "value": "${COUNT}"
+          },
+          "var COUNT = ${COUNT} / 2",
+          "var COUNT = floor ${COUNT}",
+          {
+            "func": "SET",
+            "property": "text",
+            "value": "${COUNT}"
+          },
+          {
+            "func": "SET",
+            "property": "showMenu",
+            "value": false,
+            "collection": "thisButton"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SELECT",
+            "property": "forPile",
+            "value": "${thisID}"
+          },
+          {
+            "func": "DELETE"
+          },
+          {
+            "func": "SET",
+            "property": "showMenu",
+            "value": true,
+            "collection": "thisButton"
+          }
+        ]
+      }
+    ],
+    "id": "kry7"
+  },
+  "64va": {
+    "type": "pile",
+    "parent": "blueHome",
+    "x": 0,
+    "y": 0,
+    "width": 60,
+    "height": 60,
+    "deck": "pink",
+    "handleSize": 59,
+    "handlePosition": "middle center",
+    "handleCSS": "background-color:transparent;color:#000000;font-size:45px",
+    "pileSnapRange": 40,
+    "showMenu": true,
+    "clickRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY showMenu}",
+        "operand2": true,
+        "thenRoutine": [
+          {
+            "func": "SELECT",
+            "property": "id",
+            "value": "pileMenu"
+          },
+          {
+            "func": "CLONE",
+            "properties": {
+              "x": 0,
+              "y": 0,
+              "forPile": "${thisID}",
+              "owner": "${playerName}",
+              "width": 1600,
+              "height": 1000
+            }
+          },
+          {
+            "func": "GET",
+            "property": "id",
+            "variable": "menuID"
+          },
+          {
+            "func": "SELECT",
+            "property": "parent",
+            "value": "pileMenu"
+          },
+          "var width = ${PROPERTY width} + ${PROPERTY width OF pileMenuContainer}",
+          "var width = ${width} + ${PROPERTY distance OF pileMenuContainer}",
+          "var width = 1600 - ${width}",
+          {
+            "func": "IF",
+            "operand1": "${PROPERTY _absoluteX}",
+            "operand2": "${width}",
+            "relation": "<",
+            "thenRoutine": [
+              "var x = ${PROPERTY _absoluteX} + ${PROPERTY width}",
+              "var x = ${x} + ${PROPERTY distance OF pileMenuContainer} - 25",
+              {
+                "func": "CLONE",
+                "properties": {
+                  "parent": "${menuID}",
+                  "x": "${x}",
+                  "y": "${PROPERTY _absoluteY}"
+                }
+              },
+              {
+                "func": "GET",
+                "property": "id",
+                "variable": "containerID"
+              },
+              {
+                "func": "SELECT",
+                "property": "parent",
+                "value": "pileMenuContainer"
+              },
+              {
+                "func": "CLONE",
+                "properties": {
+                  "parent": "${containerID}"
+                }
+              }
+            ],
+            "elseRoutine": [
+              "var x = ${PROPERTY _absoluteX} - ${PROPERTY distance OF pileMenuContainer}",
+              "var x = ${x} - ${PROPERTY width OF pileMenuContainer} + 25",
+              {
+                "func": "CLONE",
+                "properties": {
+                  "parent": "${menuID}",
+                  "x": "${x}",
+                  "y": "${PROPERTY _absoluteY}"
+                }
+              },
+              {
+                "func": "GET",
+                "property": "id",
+                "variable": "containerID"
+              },
+              {
+                "func": "SELECT",
+                "property": "parent",
+                "value": "pileMenuContainer"
+              },
+              {
+                "func": "CLONE",
+                "properties": {
+                  "parent": "${containerID}"
+                }
+              }
+            ]
+          },
+          {
+            "func": "COUNT",
+            "holder": "${thisID}"
+          },
+          {
+            "func": "SELECT",
+            "property": "clonedFrom",
+            "value": "splitCount"
+          },
+          {
+            "func": "SELECT",
+            "property": "parent",
+            "value": "${containerID}",
+            "source": "DEFAULT"
+          },
+          {
+            "func": "SET",
+            "property": "max",
+            "value": "${COUNT}"
+          },
+          "var COUNT = ${COUNT} / 2",
+          "var COUNT = floor ${COUNT}",
+          {
+            "func": "SET",
+            "property": "text",
+            "value": "${COUNT}"
+          },
+          {
+            "func": "SET",
+            "property": "showMenu",
+            "value": false,
+            "collection": "thisButton"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SELECT",
+            "property": "forPile",
+            "value": "${thisID}"
+          },
+          {
+            "func": "DELETE"
+          },
+          {
+            "func": "SET",
+            "property": "showMenu",
+            "value": true,
+            "collection": "thisButton"
+          }
+        ]
+      }
+    ],
+    "id": "64va"
+  }
+}
