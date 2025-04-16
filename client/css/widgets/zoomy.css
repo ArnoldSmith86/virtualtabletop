@@ -4,6 +4,10 @@
   position: relative;
 }
 
+.zoomy.widget.lockChildren:not(.zoomed) * {
+  pointer-events: none;
+}
+
 .zoomy.widget.defaultStyle {
   background: white;
 }

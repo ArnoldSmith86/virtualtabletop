@@ -34,7 +34,8 @@ export class Zoomy extends Widget {
       zoomedScale: 1,
       zoomedRotation: 0,
 
-      zoomedMovable: false
+      zoomedMovable: false,
+      lockChildren: true
     });
   }
 
@@ -58,6 +59,8 @@ export class Zoomy extends Widget {
       className += ' defaultStyle';
     if(this.isZoomed())
       className += ' zoomed';
+    if(!this.get('lockChildren'))
+      className += ' lockChildren';
 
     return className;
   }
@@ -65,7 +68,7 @@ export class Zoomy extends Widget {
   classesProperties() {
     const properties = super.classesProperties();
 
-    properties.push('defaultStyle', 'zoomedPlayers');
+    properties.push('defaultStyle', 'zoomedPlayers', 'lockChildren');
 
     return properties;
   }
