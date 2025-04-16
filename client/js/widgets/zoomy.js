@@ -56,6 +56,8 @@ export class Zoomy extends Widget {
 
     if(this.get('defaultStyle'))
       className += ' defaultStyle';
+    if(this.isZoomed())
+      className += ' zoomed';
 
     return className;
   }
@@ -63,7 +65,7 @@ export class Zoomy extends Widget {
   classesProperties() {
     const properties = super.classesProperties();
 
-    properties.push('defaultStyle');
+    properties.push('defaultStyle', 'zoomedPlayers');
 
     return properties;
   }

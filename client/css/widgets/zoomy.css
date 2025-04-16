@@ -1,10 +1,26 @@
 .zoomy.widget {
   transform-origin: top left;
   box-sizing: border-box;
+  position: relative;
 }
 
 .zoomy.widget.defaultStyle {
   background: white;
+}
+
+.zoomy.widget.defaultStyle::after {
+  content: "zoom_in";
+  font-family: 'Material Symbols';
+  position: absolute;
+  bottom: -12px;
+  right: 5px;
+  font-size: 200px;
+  pointer-events: none;
+  color: var(--roomColor);
+}
+
+.zoomy.widget.defaultStyle.zoomed::after {
+  content: "zoom_out";
 }
 
 .zoomy.widget.animate_zoomedPlayers {
