@@ -3,14 +3,14 @@
     "version": 17,
     "info": {
       "name": "Snail trafficking",
-      "image": "/assets/1849105361_2056467",
+      "image": "/assets/927573239_81708",
       "rules": "",
       "bgg": "https://boardgamegeek.com/boardgame/204/stephensons-rocket",
       "year": "1999",
       "mode": "vs",
       "time": "60",
       "attribution": "<div>Game layout and implementation by Mitchell Stolycia.</div><div><br></div><div>@star.frey created the art assets for the library image, snails, mucus tracks, and tardigrades.&nbsp;These are available for use under CC BY 4.0.</div><div>Find her at <b>instagram.com/star.frey</b></div><div><br></div><div>All other assets, such as the art of all three game boards, the four different foods, the rocks, and the egg, were created by Mitchell Stolycia, and are available for use under CC BY 4.0.</div>",
-      "lastUpdate": 1744772050511,
+      "lastUpdate": 1744809585537,
       "showName": true,
       "skill": "",
       "description": "The year is 2025, and even micro-animals like tardigrades are struggling to survive in this economy. As a result, countless of these creatures have turned to snail trafficking (nine of them, to be exact).\n\nWith no money and limited resources, snails now have no choice but to race for the little food that remains in this back garden, which is uncannily similar to the shape of England. They have been taught by the tardigrades to be ruthless and merciless upon the sight of other snailkind, in order to survive in this ungodly world.",
@@ -23,7 +23,7 @@
       "players": "2-4",
       "language": "en-GB",
       "variant": "Snail trafficking",
-      "variantImage": "/assets/1849105361_2056467"
+      "variantImage": "/assets/927573239_81708"
     }
   },
   "ipss": {
@@ -31,7 +31,7 @@
     "id": "ipss"
   },
   "8b8c": {
-    "image": "/assets/-173854845_6071",
+    "image": "/assets/-1277482593_16712",
     "movable": false,
     "width": 343,
     "height": 368,
@@ -42,7 +42,7 @@
     "movableInEdit": false
   },
   "mapv": {
-    "image": "/assets/-2098595411_12955",
+    "image": "/assets/-141229074_6614",
     "movable": false,
     "width": 241,
     "height": 585,
@@ -5927,7 +5927,7 @@
     "type": "card",
     "cardType": "mucus",
     "id": "c14gx",
-    "z": 25381,
+    "z": 25658,
     "rotation": 90,
     "parent": "03nc"
   },
@@ -5966,7 +5966,7 @@
     "layer": -4,
     "movable": false,
     "movableInEdit": false,
-    "image": "/assets/1302763787_53541"
+    "image": "/assets/-283675011_95702"
   },
   "hexa31": {
     "type": "holder",
@@ -6064,7 +6064,7 @@
     "type": "card",
     "cardType": "tardigrade",
     "id": "3f70",
-    "z": 5896,
+    "z": 6006,
     "parent": "r5hr"
   },
   "v9xv": {
@@ -6072,7 +6072,7 @@
     "type": "card",
     "cardType": "tardigrade",
     "id": "v9xv",
-    "z": 5895,
+    "z": 6000,
     "parent": "r5hr"
   },
   "ugdt": {
@@ -6080,7 +6080,7 @@
     "type": "card",
     "cardType": "tardigrade",
     "id": "ugdt",
-    "z": 5901,
+    "z": 6001,
     "parent": "r5hr"
   },
   "k6pu": {
@@ -6088,7 +6088,7 @@
     "type": "card",
     "cardType": "tardigrade",
     "id": "k6pu",
-    "z": 5898,
+    "z": 6004,
     "parent": "r5hr"
   },
   "df8a": {
@@ -6096,7 +6096,7 @@
     "type": "card",
     "cardType": "tardigrade",
     "id": "df8a",
-    "z": 5897,
+    "z": 6007,
     "parent": "r5hr"
   },
   "03io": {
@@ -6104,7 +6104,7 @@
     "type": "card",
     "cardType": "tardigrade",
     "id": "03io",
-    "z": 5902,
+    "z": 6005,
     "parent": "r5hr"
   },
   "n9x0": {
@@ -6112,7 +6112,7 @@
     "type": "card",
     "cardType": "tardigrade",
     "id": "n9x0",
-    "z": 5931,
+    "z": 5999,
     "hoverParent": "tardigradeHolder",
     "parent": "r5hr"
   },
@@ -6121,7 +6121,7 @@
     "type": "card",
     "cardType": "tardigrade",
     "id": "txrd",
-    "z": 5899,
+    "z": 6003,
     "parent": "r5hr"
   },
   "dk77": {
@@ -6129,7 +6129,7 @@
     "type": "card",
     "cardType": "tardigrade",
     "id": "dk77",
-    "z": 5900,
+    "z": 6002,
     "parent": "r5hr"
   },
   "r5hr": {
@@ -6270,7 +6270,7 @@
     "type": "card",
     "cardType": "compost",
     "id": "8i2m",
-    "z": 8867,
+    "z": 9065,
     "parent": "qta8"
   },
   "4v7k": {
@@ -6278,7 +6278,7 @@
     "type": "card",
     "cardType": "compost",
     "id": "4v7k",
-    "z": 8868,
+    "z": 9066,
     "parent": "qta8"
   },
   "zo6n": {
@@ -6286,7 +6286,7 @@
     "type": "card",
     "cardType": "compost",
     "id": "zo6n",
-    "z": 8869,
+    "z": 9067,
     "parent": "qta8"
   },
   "t10rl": {
@@ -6294,7 +6294,7 @@
     "type": "card",
     "cardType": "compost",
     "id": "t10rl",
-    "z": 8870,
+    "z": 9068,
     "parent": "qta8"
   },
   "1amp": {
@@ -6302,7 +6302,7 @@
     "type": "card",
     "cardType": "compost",
     "id": "1amp",
-    "z": 8871,
+    "z": 9069,
     "parent": "qta8"
   },
   "7ubp": {
@@ -6310,7 +6310,7 @@
     "type": "card",
     "cardType": "compost",
     "id": "7ubp",
-    "z": 8872,
+    "z": 9070,
     "parent": "qta8"
   },
   "dyfm1": {
@@ -6318,7 +6318,7 @@
     "type": "card",
     "cardType": "compost",
     "id": "dyfm1",
-    "z": 8874,
+    "z": 9071,
     "parent": "qta8"
   },
   "qta8": {
@@ -6381,7 +6381,7 @@
     "type": "card",
     "cardType": "compost",
     "id": "lqif2",
-    "z": 8897,
+    "z": 9093,
     "parent": "ji0o"
   },
   "11oyv": {
@@ -6389,7 +6389,7 @@
     "type": "card",
     "cardType": "compost",
     "id": "11oyv",
-    "z": 8898,
+    "z": 9094,
     "parent": "ji0o"
   },
   "3bk11": {
@@ -6397,7 +6397,7 @@
     "type": "card",
     "cardType": "compost",
     "id": "3bk11",
-    "z": 8899,
+    "z": 9095,
     "parent": "ji0o"
   },
   "cs10b": {
@@ -6405,7 +6405,7 @@
     "type": "card",
     "cardType": "compost",
     "id": "cs10b",
-    "z": 8900,
+    "z": 9096,
     "parent": "ji0o"
   },
   "tmtw2": {
@@ -6413,7 +6413,7 @@
     "type": "card",
     "cardType": "compost",
     "id": "tmtw2",
-    "z": 8901,
+    "z": 9097,
     "parent": "ji0o"
   },
   "7ntq": {
@@ -6421,7 +6421,7 @@
     "type": "card",
     "cardType": "compost",
     "id": "7ntq",
-    "z": 8902,
+    "z": 9098,
     "parent": "ji0o"
   },
   "xfma2": {
@@ -6429,7 +6429,7 @@
     "type": "card",
     "cardType": "compost",
     "id": "xfma2",
-    "z": 8903,
+    "z": 9099,
     "parent": "ji0o"
   },
   "0sc5": {
@@ -6437,7 +6437,7 @@
     "type": "card",
     "cardType": "compost",
     "id": "0sc5",
-    "z": 8911,
+    "z": 9107,
     "parent": "gu4t"
   },
   "ve21": {
@@ -6445,7 +6445,7 @@
     "type": "card",
     "cardType": "compost",
     "id": "ve21",
-    "z": 8912,
+    "z": 9108,
     "parent": "gu4t"
   },
   "a9gk": {
@@ -6453,7 +6453,7 @@
     "type": "card",
     "cardType": "compost",
     "id": "a9gk",
-    "z": 8913,
+    "z": 9109,
     "parent": "gu4t"
   },
   "fsja": {
@@ -6461,7 +6461,7 @@
     "type": "card",
     "cardType": "compost",
     "id": "fsja",
-    "z": 8914,
+    "z": 9110,
     "parent": "gu4t"
   },
   "hm2q": {
@@ -6469,7 +6469,7 @@
     "type": "card",
     "cardType": "compost",
     "id": "hm2q",
-    "z": 8915,
+    "z": 9111,
     "parent": "gu4t"
   },
   "0dbl": {
@@ -6477,7 +6477,7 @@
     "type": "card",
     "cardType": "compost",
     "id": "0dbl",
-    "z": 8916,
+    "z": 9112,
     "parent": "gu4t"
   },
   "8tpw": {
@@ -6485,7 +6485,7 @@
     "type": "card",
     "cardType": "compost",
     "id": "8tpw",
-    "z": 8917,
+    "z": 9113,
     "parent": "gu4t"
   },
   "tardigradeHolder": {
@@ -6590,7 +6590,7 @@
     "id": "mucusCard0",
     "deck": "mucusDeck",
     "cardType": "mucus",
-    "z": 25441,
+    "z": 25715,
     "y": 4,
     "x": 4,
     "rotation": 60,
@@ -6601,10 +6601,10 @@
     "id": "snail1",
     "deck": "snailDeck",
     "cardType": "snail",
-    "z": 6888,
+    "z": 6966,
     "snailNo": 1,
     "image": "/assets/-1784391324_5474",
-    "parent": "q6vy"
+    "parent": "r0be"
   },
   "hexb7": {
     "type": "holder",
@@ -8077,7 +8077,7 @@
     "type": "card",
     "cardType": "mucus",
     "id": "c15gx",
-    "z": 25382,
+    "z": 25659,
     "rotation": 90,
     "parent": "03nc"
   },
@@ -8098,7 +8098,7 @@
     "type": "card",
     "cardType": "mucus",
     "id": "c16gx",
-    "z": 25383,
+    "z": 25660,
     "rotation": 90,
     "parent": "03nc"
   },
@@ -8119,7 +8119,7 @@
     "type": "card",
     "cardType": "mucus",
     "id": "c17gx",
-    "z": 25384,
+    "z": 25661,
     "rotation": 90,
     "parent": "03nc"
   },
@@ -8140,7 +8140,7 @@
     "type": "card",
     "cardType": "mucus",
     "id": "c18gx",
-    "z": 25385,
+    "z": 25662,
     "rotation": 90,
     "parent": "03nc"
   },
@@ -8161,7 +8161,7 @@
     "type": "card",
     "cardType": "mucus",
     "id": "c19gx",
-    "z": 25386,
+    "z": 25663,
     "rotation": 90,
     "parent": "03nc"
   },
@@ -8182,7 +8182,7 @@
     "type": "card",
     "cardType": "mucus",
     "id": "c20gx",
-    "z": 25387,
+    "z": 25664,
     "rotation": 90,
     "parent": "03nc"
   },
@@ -8203,7 +8203,7 @@
     "type": "card",
     "cardType": "mucus",
     "id": "c21gx",
-    "z": 25388,
+    "z": 25665,
     "rotation": 90,
     "parent": "03nc"
   },
@@ -8224,7 +8224,7 @@
     "type": "card",
     "cardType": "mucus",
     "id": "c22gx",
-    "z": 25389,
+    "z": 25666,
     "rotation": 90,
     "parent": "03nc"
   },
@@ -8245,7 +8245,7 @@
     "type": "card",
     "cardType": "mucus",
     "id": "c23gx",
-    "z": 25390,
+    "z": 25667,
     "rotation": 90,
     "parent": "03nc"
   },
@@ -8266,7 +8266,7 @@
     "type": "card",
     "cardType": "mucus",
     "id": "c24gx",
-    "z": 25391,
+    "z": 25668,
     "rotation": 90,
     "parent": "03nc"
   },
@@ -8287,7 +8287,7 @@
     "type": "card",
     "cardType": "mucus",
     "id": "c25gx",
-    "z": 25392,
+    "z": 25669,
     "rotation": 90,
     "parent": "03nc"
   },
@@ -8308,7 +8308,7 @@
     "type": "card",
     "cardType": "mucus",
     "id": "c26gx",
-    "z": 25393,
+    "z": 25670,
     "rotation": 90,
     "parent": "03nc"
   },
@@ -8329,7 +8329,7 @@
     "type": "card",
     "cardType": "mucus",
     "id": "c27gx",
-    "z": 25394,
+    "z": 25671,
     "rotation": 90,
     "parent": "03nc"
   },
@@ -8350,7 +8350,7 @@
     "type": "card",
     "cardType": "mucus",
     "id": "c28gx",
-    "z": 25395,
+    "z": 25672,
     "rotation": 90,
     "parent": "03nc"
   },
@@ -8371,7 +8371,7 @@
     "type": "card",
     "cardType": "mucus",
     "id": "c29gx",
-    "z": 25396,
+    "z": 25673,
     "rotation": 90,
     "parent": "03nc"
   },
@@ -8392,7 +8392,7 @@
     "type": "card",
     "cardType": "mucus",
     "id": "c30gx",
-    "z": 25397,
+    "z": 25674,
     "rotation": 90,
     "parent": "03nc"
   },
@@ -8413,7 +8413,7 @@
     "type": "card",
     "cardType": "mucus",
     "id": "c31gx",
-    "z": 25398,
+    "z": 25675,
     "rotation": 90,
     "parent": "03nc"
   },
@@ -8434,7 +8434,7 @@
     "type": "card",
     "cardType": "mucus",
     "id": "c32gx",
-    "z": 25399,
+    "z": 25676,
     "rotation": 90,
     "parent": "03nc"
   },
@@ -8455,7 +8455,7 @@
     "type": "card",
     "cardType": "mucus",
     "id": "c33gx",
-    "z": 25400,
+    "z": 25677,
     "rotation": 90,
     "parent": "03nc"
   },
@@ -8476,7 +8476,7 @@
     "type": "card",
     "cardType": "mucus",
     "id": "c34gx",
-    "z": 25401,
+    "z": 25678,
     "rotation": 90,
     "parent": "03nc"
   },
@@ -8497,7 +8497,7 @@
     "type": "card",
     "cardType": "mucus",
     "id": "c35gx",
-    "z": 25402,
+    "z": 25679,
     "rotation": 90,
     "parent": "03nc"
   },
@@ -8518,7 +8518,7 @@
     "type": "card",
     "cardType": "mucus",
     "id": "c36gx",
-    "z": 25403,
+    "z": 25680,
     "rotation": 90,
     "parent": "03nc"
   },
@@ -8539,7 +8539,7 @@
     "type": "card",
     "cardType": "mucus",
     "id": "c37gx",
-    "z": 25404,
+    "z": 25681,
     "rotation": 90,
     "parent": "03nc"
   },
@@ -8560,7 +8560,7 @@
     "type": "card",
     "cardType": "mucus",
     "id": "c38gx",
-    "z": 25405,
+    "z": 25682,
     "rotation": 90,
     "parent": "03nc"
   },
@@ -8581,7 +8581,7 @@
     "type": "card",
     "cardType": "mucus",
     "id": "c39gx",
-    "z": 25406,
+    "z": 25683,
     "rotation": 90,
     "parent": "03nc"
   },
@@ -8602,7 +8602,7 @@
     "type": "card",
     "cardType": "mucus",
     "id": "c40gx",
-    "z": 25407,
+    "z": 25684,
     "rotation": 90,
     "parent": "03nc"
   },
@@ -8623,7 +8623,7 @@
     "type": "card",
     "cardType": "mucus",
     "id": "c41gx",
-    "z": 25408,
+    "z": 25685,
     "rotation": 90,
     "parent": "03nc"
   },
@@ -8644,7 +8644,7 @@
     "type": "card",
     "cardType": "mucus",
     "id": "c42gx",
-    "z": 25409,
+    "z": 25686,
     "rotation": 90,
     "parent": "03nc"
   },
@@ -8665,7 +8665,7 @@
     "type": "card",
     "cardType": "mucus",
     "id": "c43gx",
-    "z": 25410,
+    "z": 25687,
     "rotation": 90,
     "parent": "03nc"
   },
@@ -8686,7 +8686,7 @@
     "type": "card",
     "cardType": "mucus",
     "id": "c44gx",
-    "z": 25411,
+    "z": 25688,
     "rotation": 90,
     "parent": "03nc"
   },
@@ -8707,7 +8707,7 @@
     "type": "card",
     "cardType": "mucus",
     "id": "c45gx",
-    "z": 25412,
+    "z": 25689,
     "rotation": 90,
     "parent": "03nc"
   },
@@ -8728,7 +8728,7 @@
     "type": "card",
     "cardType": "mucus",
     "id": "c46gx",
-    "z": 25413,
+    "z": 25690,
     "rotation": 90,
     "parent": "03nc"
   },
@@ -8749,7 +8749,7 @@
     "type": "card",
     "cardType": "mucus",
     "id": "c47gx",
-    "z": 25414,
+    "z": 25691,
     "rotation": 90,
     "parent": "03nc"
   },
@@ -8770,7 +8770,7 @@
     "type": "card",
     "cardType": "mucus",
     "id": "c48gx",
-    "z": 25415,
+    "z": 25692,
     "rotation": 90,
     "parent": "03nc"
   },
@@ -8791,7 +8791,7 @@
     "type": "card",
     "cardType": "mucus",
     "id": "c49gx",
-    "z": 25416,
+    "z": 25693,
     "rotation": 90,
     "parent": "03nc"
   },
@@ -8812,7 +8812,7 @@
     "type": "card",
     "cardType": "mucus",
     "id": "c50gx",
-    "z": 25417,
+    "z": 25694,
     "rotation": 90,
     "parent": "03nc"
   },
@@ -8833,7 +8833,7 @@
     "type": "card",
     "cardType": "mucus",
     "id": "c51gx",
-    "z": 25418,
+    "z": 25695,
     "rotation": 90,
     "parent": "03nc"
   },
@@ -8854,7 +8854,7 @@
     "type": "card",
     "cardType": "mucus",
     "id": "c52gx",
-    "z": 25419,
+    "z": 25696,
     "parent": "03nc",
     "rotation": 90
   },
@@ -8875,7 +8875,7 @@
     "type": "card",
     "cardType": "mucus",
     "id": "c53gx",
-    "z": 25420,
+    "z": 25697,
     "rotation": 90,
     "parent": "03nc"
   },
@@ -8896,7 +8896,7 @@
     "type": "card",
     "cardType": "mucus",
     "id": "c54gx",
-    "z": 25421,
+    "z": 25698,
     "rotation": 90,
     "parent": "03nc"
   },
@@ -8917,7 +8917,7 @@
     "type": "card",
     "cardType": "mucus",
     "id": "c55gx",
-    "z": 25422,
+    "z": 25699,
     "rotation": 90,
     "parent": "03nc"
   },
@@ -8938,7 +8938,7 @@
     "type": "card",
     "cardType": "mucus",
     "id": "c56gx",
-    "z": 25423,
+    "z": 25700,
     "parent": "03nc",
     "rotation": 90
   },
@@ -8959,7 +8959,7 @@
     "type": "card",
     "cardType": "mucus",
     "id": "c57gx",
-    "z": 25424,
+    "z": 25701,
     "rotation": 90,
     "parent": "03nc"
   },
@@ -8980,7 +8980,7 @@
     "type": "card",
     "cardType": "mucus",
     "id": "c58gx",
-    "z": 25425,
+    "z": 25702,
     "rotation": 90,
     "parent": "03nc"
   },
@@ -9001,7 +9001,7 @@
     "type": "card",
     "cardType": "mucus",
     "id": "c59gx",
-    "z": 25426,
+    "z": 25703,
     "rotation": 90,
     "parent": "03nc"
   },
@@ -9022,7 +9022,7 @@
     "type": "card",
     "cardType": "mucus",
     "id": "c60gx",
-    "z": 25427,
+    "z": 25704,
     "rotation": 90,
     "parent": "03nc"
   },
@@ -9043,7 +9043,7 @@
     "type": "card",
     "cardType": "mucus",
     "id": "c61gx",
-    "z": 25428,
+    "z": 25705,
     "rotation": 90,
     "parent": "03nc"
   },
@@ -9064,7 +9064,7 @@
     "type": "card",
     "cardType": "mucus",
     "id": "c62gx",
-    "z": 25429,
+    "z": 25706,
     "parent": "03nc",
     "rotation": 90
   },
@@ -9085,7 +9085,7 @@
     "type": "card",
     "cardType": "mucus",
     "id": "c63gx",
-    "z": 25430,
+    "z": 25707,
     "rotation": 90,
     "parent": "03nc"
   },
@@ -9106,7 +9106,7 @@
     "type": "card",
     "cardType": "mucus",
     "id": "c64gx",
-    "z": 25431,
+    "z": 25708,
     "rotation": 90,
     "parent": "03nc"
   },
@@ -9127,7 +9127,7 @@
     "type": "card",
     "cardType": "mucus",
     "id": "c65gx",
-    "z": 25432,
+    "z": 25709,
     "rotation": 90,
     "parent": "03nc"
   },
@@ -9148,7 +9148,7 @@
     "type": "card",
     "cardType": "mucus",
     "id": "c66gx",
-    "z": 25433,
+    "z": 25710,
     "rotation": 90,
     "parent": "03nc"
   },
@@ -9169,7 +9169,7 @@
     "type": "card",
     "cardType": "mucus",
     "id": "c67gx",
-    "z": 25434,
+    "z": 25711,
     "parent": "03nc",
     "rotation": 90
   },
@@ -9190,7 +9190,7 @@
     "type": "card",
     "cardType": "mucus",
     "id": "c68gx",
-    "z": 25435,
+    "z": 25712,
     "parent": "03nc",
     "rotation": 90
   },
@@ -9211,7 +9211,7 @@
     "type": "card",
     "cardType": "mucus",
     "id": "c69gx",
-    "z": 25436,
+    "z": 25713,
     "parent": "03nc",
     "rotation": 90
   },
@@ -9232,7 +9232,7 @@
     "type": "card",
     "cardType": "mucus",
     "id": "c70gx",
-    "z": 25437,
+    "z": 25714,
     "rotation": 90,
     "parent": "03nc"
   },
@@ -9253,7 +9253,7 @@
     "type": "card",
     "cardType": "mucus",
     "id": "c71gx",
-    "z": 25438,
+    "z": 25655,
     "parent": "03nc",
     "rotation": 90
   },
@@ -9274,7 +9274,7 @@
     "type": "card",
     "cardType": "mucus",
     "id": "c72gx",
-    "z": 25439,
+    "z": 25656,
     "parent": "03nc",
     "rotation": 90
   },
@@ -9295,7 +9295,7 @@
     "type": "card",
     "cardType": "mucus",
     "id": "c73gx",
-    "z": 25440,
+    "z": 25657,
     "parent": "03nc",
     "rotation": 90
   },
@@ -9369,14 +9369,14 @@
     "cardType": "compost",
     "id": "y4th",
     "parent": "ss8y",
-    "z": 8904
+    "z": 9100
   },
   "mlyo": {
     "deck": "compostDeck2",
     "type": "card",
     "cardType": "compost",
     "id": "mlyo",
-    "z": 8905,
+    "z": 9101,
     "parent": "ss8y"
   },
   "h8wu": {
@@ -9384,7 +9384,7 @@
     "type": "card",
     "cardType": "compost",
     "id": "h8wu",
-    "z": 8906,
+    "z": 9102,
     "parent": "ss8y"
   },
   "0sr8": {
@@ -9392,7 +9392,7 @@
     "type": "card",
     "cardType": "compost",
     "id": "0sr8",
-    "z": 8907,
+    "z": 9103,
     "parent": "ss8y"
   },
   "cl0b": {
@@ -9400,7 +9400,7 @@
     "type": "card",
     "cardType": "compost",
     "id": "cl0b",
-    "z": 8908,
+    "z": 9104,
     "parent": "ss8y"
   },
   "7amv": {
@@ -9408,7 +9408,7 @@
     "type": "card",
     "cardType": "compost",
     "id": "7amv",
-    "z": 8909,
+    "z": 9105,
     "parent": "ss8y"
   },
   "trc4": {
@@ -9416,7 +9416,7 @@
     "type": "card",
     "cardType": "compost",
     "id": "trc4",
-    "z": 8910,
+    "z": 9106,
     "parent": "ss8y"
   },
   "ss8y": {
@@ -9512,7 +9512,7 @@
     "y": 165,
     "z": 8,
     "text": "Anti-clockwise twice",
-    "tileID": "",
+    "tileID": "hexa198",
     "clickRoutine": [
       {
         "func": "GET",
@@ -9549,60 +9549,60 @@
     "id": "snail2",
     "deck": "snailDeck",
     "cardType": "snail",
-    "z": 6889,
+    "z": 6968,
     "snailNo": 2,
     "image": "/assets/-875861445_4988",
-    "parent": "q6vy"
+    "parent": "r0be"
   },
   "snail3": {
     "type": "card",
     "id": "snail3",
     "deck": "snailDeck",
     "cardType": "snail",
-    "z": 6890,
+    "z": 6970,
     "snailNo": 3,
     "image": "/assets/-1114050681_5544",
-    "parent": "q6vy"
+    "parent": "r0be"
   },
   "snail4": {
     "type": "card",
     "id": "snail4",
     "deck": "snailDeck",
     "cardType": "snail",
-    "z": 6891,
+    "z": 6972,
     "snailNo": 4,
     "image": "/assets/1533683433_5400",
-    "parent": "q6vy"
+    "parent": "r0be"
   },
   "snail5": {
     "type": "card",
     "id": "snail5",
     "deck": "snailDeck",
     "cardType": "snail",
-    "z": 6892,
+    "z": 6974,
     "snailNo": 5,
     "image": "/assets/1349244876_5292",
-    "parent": "q6vy"
+    "parent": "r0be"
   },
   "snail6": {
     "type": "card",
     "id": "snail6",
     "deck": "snailDeck",
     "cardType": "snail",
-    "z": 6893,
+    "z": 6976,
     "snailNo": 6,
     "image": "/assets/-1157074742_5856",
-    "parent": "q6vy"
+    "parent": "r0be"
   },
   "snail7": {
     "type": "card",
     "id": "snail7",
     "deck": "snailDeck",
     "cardType": "snail",
-    "z": 6894,
+    "z": 6978,
     "snailNo": 7,
     "image": "/assets/2022954189_5552",
-    "parent": "q6vy"
+    "parent": "r0be"
   },
   "gu4t": {
     "type": "pile",
@@ -9941,15 +9941,6 @@
     "z": 10075,
     "id": "9rep"
   },
-  "q6vy": {
-    "type": "pile",
-    "parent": "snailHolder",
-    "x": 4,
-    "y": 4,
-    "width": 57,
-    "height": 57,
-    "id": "q6vy"
-  },
   "geds x.png": {
     "type": "card",
     "id": "geds x.png",
@@ -10002,5 +9993,14 @@
     "image": "/assets/1508772751_1714",
     "movable": false,
     "movableInEdit": false
+  },
+  "r0be": {
+    "type": "pile",
+    "parent": "snailHolder",
+    "x": 4,
+    "y": 4,
+    "width": 57,
+    "height": 57,
+    "id": "r0be"
   }
 }
