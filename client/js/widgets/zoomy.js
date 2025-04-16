@@ -149,4 +149,9 @@ export class Zoomy extends Widget {
   updateScale() {
     this.targetTransform = this.domElement.style.transform = this.cssTransform();
   }
+
+  updateOwner() {
+    super.updateOwner();
+    this.domElement.style.transform = this.cssTransform();
+  }
 }
