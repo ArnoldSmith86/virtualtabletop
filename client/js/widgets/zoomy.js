@@ -138,7 +138,7 @@ export class Zoomy extends Widget {
       await this.set('zoomedPlayers', 'all');
     else if(!zoomed && this.get('allPlayers'))
       await this.set('zoomedPlayers', []);
-    else if(this.get('zoomedPlayers') == 'all')
+    else if(!Array.isArray(this.get('zoomedPlayers')))
       await this.set('zoomedPlayers', []);
     else if(zoomed)
       await this.set('zoomedPlayers', [...this.get('zoomedPlayers'), playerName]);
