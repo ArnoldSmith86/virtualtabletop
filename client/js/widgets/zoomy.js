@@ -131,9 +131,10 @@ export class Zoomy extends Widget {
   }
 
   async setZoomed(zoomed) {
-    for(const groupedWith of this.get('groupedWith'))
-      if(groupedWith != this.id && widgets.has(groupedWith) && widgets.get(groupedWith).isZoomed())
-        await widgets.get(groupedWith).setZoomed(false);
+    if(Array.isArray(this.get('groupedWith')))
+      for(const groupedWith of this.get('groupedWith'))
+        if(groupedWith != this.id && widgets.has(groupedWith) && widgets.get(groupedWith).get('type') == 'zoomy' && widgets.get(groupedWith).isZoomed())
+          await widgets.get(groupedWith).setZoomed(false);
     if(zoomed && this.get('allPlayers'))
       await this.set('zoomedPlayers', 'all');
     else if(!zoomed && this.get('allPlayers'))
