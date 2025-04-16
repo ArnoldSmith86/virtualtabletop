@@ -10,7 +10,7 @@
       "mode": "Tutorial",
       "time": "",
       "attribution": "",
-      "lastUpdate": 1743528989286,
+      "lastUpdate": 1744475783498,
       "showName": false,
       "skill": "",
       "description": "",
@@ -88,7 +88,7 @@
     "css": {
       "font-size": "22px"
     },
-    "html": "Other tutorials broadly fall into these categories.<p><u>Widget types</u>: Canvas, Decks, Dice, Holders, Piles, Scoreboard, Seats, Spinners, and Timer<p><u>Widget properties</u>: CSS, Dragging, Enlarge, Grids, HTML, Icons, and inheritFrom<p><u>Routines & operations</u>: Arrays, Color, Comparisons, JSON Operations, Math, Routines, and Strings<p><u>Changing appearances</u>: Button Appearance, CSS, Cursor, and Hexagonal Cards<p><u>Miscellaneous</u>: Hands, Master Button, Menus, and State Dependent Routines"
+    "html": "Other tutorials broadly fall into these categories.<p><u>Widget types</u>: Canvas, Decks, Dice, Holders, Piles, Scoreboard, Seats, Spinners, and Timer<p><u>Widget properties</u>: CSS, Dragging, Enlarge, Grids, HTML, inheritFrom, and svgReplaces<p><u>Routines & operations</u>: Arrays, Color, Comparisons, JSON Operations, Math, Routines, and Strings<p><u>Changing appearances</u>: Button Appearance, CSS, Cursor, and Hexagonal Cards<p><u>Miscellaneous</u>: Hands, Icons, Master Button, Menus, and State Dependent Routines"
   },
   "subTitle1": {
     "id": "subTitle1",
