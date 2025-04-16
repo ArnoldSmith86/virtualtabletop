@@ -36,19 +36,6 @@ export class Zoomy extends Widget {
 
       zoomedMovable: false
     });
-
-    this.domElement.innerHTML = `
-      <button class="zoomy-button">+</button>
-    `;
-
-    $('.zoomy-button', this.domElement).addEventListener('click', async () => {
-      batchStart();
-      if(this.isZoomed())
-        await this.setZoomed(false);
-      else
-        await this.setZoomed(true);
-      batchEnd();
-    });
   }
 
   applyDeltaToDOM(delta) {
@@ -79,6 +66,11 @@ export class Zoomy extends Widget {
     properties.push('defaultStyle');
 
     return properties;
+  }
+
+  async click(mode='respect') {
+    if(!await super.click(mode))
+      await this.setZoomed(!this.isZoomed());
   }
 
   cssTransform() {
