@@ -36,7 +36,7 @@ export class Zoomy extends Widget {
       zoomedRotation: 0,
 
       zoomedMovable: false,
-      lockChildren: true
+      lockChildren: false
     });
   }
 
@@ -60,7 +60,7 @@ export class Zoomy extends Widget {
       className += ' defaultStyle';
     if(this.isZoomed())
       className += ' zoomed';
-    if(!this.get('lockChildren'))
+    if(this.get('lockChildren'))
       className += ' lockChildren';
 
     return className;
