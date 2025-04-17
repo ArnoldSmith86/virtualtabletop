@@ -323,8 +323,6 @@ function loadGameFromURLproperties(states) {
     let targetStateID = 'PL:games:' + match[1].substr(0, match[1].length-4);
     if(match[1].match(/^Tutorial%20-%20/))
       targetStateID = 'PL:tutorials:'+match[1].substr(15, match[1].length-19);
-    else if(match[1].match(/^Assets%20-%20/))
-      targetStateID = 'PL:assets:'+match[1].substr(13, match[1].length-17);
 
     if(states[targetStateID])
       toServer('loadState', { stateID: targetStateID, variantID: match[3] || 0 });
@@ -533,8 +531,6 @@ function fillStatesList(states, starred, activeState, returnServer, activePlayer
 
     if(state.publicLibrary && state.publicLibrary.match(/tutorials/))
       entry.dataset.type = 'Tutorials';
-    else if(state.publicLibrary && state.publicLibrary.match(/assets/))
-      entry.dataset.type = 'Assets';
     else
       entry.dataset.type = 'Games';
 
