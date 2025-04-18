@@ -1,43 +1,7 @@
 {
-  "kaus": {
-    "image": "/assets/1492100806_511538",
-    "movable": false,
-    "width": 1600,
-    "height": 1000,
-    "layer": -4,
-    "id": "kaus",
-    "z": 2,
-    "movableInEdit": false
-  },
-  "bluetray": {
-    "image": "/assets/-2145676693_61548",
-    "id": "bluetray",
-    "height": 1000,
-    "width": 350,
-    "movable": false,
-    "movableInEdit": false,
-    "z": 5,
-    "parent": "blueholder",
-    "holdblue": true,
-    "layer": -1
-  },
-  "blueholder": {
-    "type": "holder",
-    "z": 1,
-    "id": "blueholder",
-    "height": 1000,
-    "width": 350,
-    "dropTarget": {
-      "holdblue": true
-    },
-    "alignChildren": false,
-    "layer": -2,
-    "classes": "transparent",
-    "x": -500
-  },
   "b001": {
     "id": "b001",
-    "z": 3007,
+    "z": 3108,
     "x": 40,
     "width": 80,
     "height": 160,
@@ -141,14 +105,17 @@
     ],
     "image": "/assets/-355892761_1586",
     "rotation": 90,
-    "y": -40,
     "clicks": 0,
+    "resetProperties": {
+      "parent": "b001h"
+    },
+    "y": -40,
     "parent": "b001h"
   },
   "b002": {
     "image": "/assets/-1864104821_1591",
     "id": "b002",
-    "z": 2722,
+    "z": 3109,
     "x": 4,
     "width": 120,
     "height": 120,
@@ -197,11 +164,14 @@
     ],
     "rotation": 270,
     "y": 4,
+    "resetProperties": {
+      "parent": "b002h"
+    },
     "parent": "b002h"
   },
   "b003": {
     "id": "b003",
-    "z": 3008,
+    "z": 3111,
     "y": 4,
     "width": 120,
     "height": 120,
@@ -307,12 +277,15 @@
     "x": -40,
     "rotation": 180,
     "clicks": 0,
+    "resetProperties": {
+      "parent": "b003h"
+    },
     "parent": "b003h"
   },
   "b004": {
     "image": "/assets/1113465273_1591",
     "id": "b004",
-    "z": 2723,
+    "z": 3110,
     "x": -40,
     "y": -40,
     "width": 120,
@@ -360,11 +333,14 @@
         "offsetY": -20
       }
     ],
+    "resetProperties": {
+      "parent": "b004h"
+    },
     "parent": "b004h"
   },
   "b005": {
     "id": "b005",
-    "z": 3009,
+    "z": 3114,
     "x": 40,
     "y": -40,
     "width": 80,
@@ -470,11 +446,14 @@
     "image": "/assets/154559586_1588",
     "rotation": 90,
     "clicks": 0,
+    "resetProperties": {
+      "parent": "b005h"
+    },
     "parent": "b005h"
   },
   "b006": {
     "id": "b006",
-    "z": 3005,
+    "z": 3112,
     "x": -40,
     "y": 4,
     "width": 120,
@@ -579,12 +558,15 @@
     ],
     "image": "/assets/2078261809_1590",
     "clicks": 0,
+    "resetProperties": {
+      "parent": "b006h"
+    },
     "parent": "b006h"
   },
   "b007": {
     "image": "/assets/-1719860879_2419",
     "id": "b007",
-    "z": 2724,
+    "z": 3116,
     "width": 120,
     "height": 120,
     "grid": [
@@ -633,12 +615,15 @@
     "rotation": 90,
     "x": -40,
     "y": 4,
+    "resetProperties": {
+      "parent": "b007h"
+    },
     "parent": "b007h"
   },
   "b008": {
     "image": "/assets/1636117967_1591",
     "id": "b008",
-    "z": 2802,
+    "z": 3115,
     "x": -40,
     "y": 4,
     "width": 120,
@@ -655,12 +640,15 @@
         "offsetY": -20
       }
     ],
+    "resetProperties": {
+      "parent": "b008h"
+    },
     "parent": "b008h"
   },
   "b009": {
     "image": "/assets/1892895428_1587",
     "id": "b009",
-    "z": 2725,
+    "z": 3113,
     "x": 4,
     "y": 4,
     "width": 40,
@@ -708,11 +696,14 @@
         "value": null
       }
     ],
+    "resetProperties": {
+      "parent": "b009h"
+    },
     "parent": "b009h"
   },
   "b010": {
     "id": "b010",
-    "z": 3010,
+    "z": 3118,
     "y": -40,
     "width": 120,
     "height": 120,
@@ -818,12 +809,15 @@
     "rotation": 90,
     "clicks": 0,
     "x": 4,
+    "resetProperties": {
+      "parent": "b010h"
+    },
     "parent": "b010h"
   },
   "b011": {
     "image": "/assets/1538160559_1589",
     "id": "b011",
-    "z": 2726,
+    "z": 3117,
     "x": 4,
     "y": -80,
     "width": 120,
@@ -872,11 +866,14 @@
         "value": null
       }
     ],
+    "resetProperties": {
+      "parent": "b011h"
+    },
     "parent": "b011h"
   },
   "b012": {
     "id": "b012",
-    "z": 3011,
+    "z": 3120,
     "x": 40,
     "y": -40,
     "width": 80,
@@ -982,11 +979,14 @@
     "image": "/assets/-2004589812_1590",
     "rotation": 270,
     "clicks": 0,
+    "resetProperties": {
+      "parent": "b012h"
+    },
     "parent": "b012h"
   },
   "b013": {
     "id": "b013",
-    "z": 3012,
+    "z": 3122,
     "y": 4,
     "width": 120,
     "height": 120,
@@ -1091,12 +1091,15 @@
     "image": "/assets/440693267_2039",
     "rotation": 90,
     "clicks": 0,
+    "resetProperties": {
+      "parent": "b013h"
+    },
     "x": -40,
     "parent": "b013h"
   },
   "b014": {
     "id": "b014",
-    "z": 3006,
+    "z": 3121,
     "x": -40,
     "y": 4,
     "width": 120,
@@ -1202,12 +1205,15 @@
     ],
     "rotation": 90,
     "clicks": 0,
+    "resetProperties": {
+      "parent": "b014h"
+    },
     "parent": "b014h"
   },
   "b015": {
     "image": "/assets/-1922562495_2037",
     "id": "b015",
-    "z": 2727,
+    "z": 3119,
     "x": 4,
     "y": 4,
     "width": 80,
@@ -1255,12 +1261,15 @@
         "value": null
       }
     ],
+    "resetProperties": {
+      "parent": "b015h"
+    },
     "parent": "b015h"
   },
   "b016": {
     "image": "/assets/109454772_1298",
     "id": "b016",
-    "z": 2732,
+    "z": 3125,
     "x": 4,
     "y": 4,
     "width": 80,
@@ -1277,12 +1286,15 @@
         "offsetY": -20
       }
     ],
+    "resetProperties": {
+      "parent": "b016h"
+    },
     "parent": "b016h"
   },
   "b017": {
     "image": "/assets/437454489_2039",
     "id": "b017",
-    "z": 2801,
+    "z": 3123,
     "x": 4,
     "y": -40,
     "width": 120,
@@ -1330,12 +1342,15 @@
         "value": null
       }
     ],
+    "resetProperties": {
+      "parent": "b017h"
+    },
     "parent": "b017h"
   },
   "b018": {
     "image": "/assets/1565472747_1011",
     "id": "b018",
-    "z": 2731,
+    "z": 3127,
     "x": 4,
     "y": 4,
     "width": 80,
@@ -1383,12 +1398,15 @@
         "value": "${rotation}"
       }
     ],
+    "resetProperties": {
+      "parent": "b018h"
+    },
     "parent": "b018h"
   },
   "b019": {
     "image": "/assets/-508561172_1266",
     "id": "b019",
-    "z": 2730,
+    "z": 3126,
     "y": 4,
     "x": 4,
     "width": 80,
@@ -1436,12 +1454,15 @@
         "value": "${rotation}"
       }
     ],
+    "resetProperties": {
+      "parent": "b019h"
+    },
     "parent": "b019h"
   },
   "b020": {
     "image": "/assets/-196694124_1013",
     "id": "b020",
-    "z": 2729,
+    "z": 3178,
     "y": 4,
     "x": 4,
     "width": 40,
@@ -1489,12 +1510,15 @@
         "value": "${rotation}"
       }
     ],
+    "resetProperties": {
+      "parent": "b020h"
+    },
     "parent": "b020h"
   },
   "b021": {
     "image": "/assets/1975447975_439",
     "id": "b021",
-    "z": 2733,
+    "z": 3179,
     "x": 4,
     "y": 4,
     "width": 40,
@@ -1511,6 +1535,9 @@
         "offsetY": -20
       }
     ],
+    "resetProperties": {
+      "parent": "b021h"
+    },
     "parent": "b021h"
   },
   "b001h": {
@@ -1530,7 +1557,7 @@
       "clicks": 0
     },
     "layer": 2,
-    "parent": "blueholder",
+    "parent": "blueHolder",
     "classes": "transparent",
     "dropOffsetY": -40,
     "dropOffsetX": 40
@@ -1551,7 +1578,7 @@
     "layer": 2,
     "classes": "transparent",
     "id": "b002h",
-    "parent": "blueholder"
+    "parent": "blueHolder"
   },
   "b003h": {
     "type": "holder",
@@ -1572,7 +1599,7 @@
     "classes": "transparent",
     "id": "b003h",
     "dropOffsetX": -40,
-    "parent": "blueholder"
+    "parent": "blueHolder"
   },
   "b004h": {
     "type": "holder",
@@ -1592,7 +1619,7 @@
     "dropOffsetX": -40,
     "id": "b004h",
     "dropOffsetY": -40,
-    "parent": "blueholder"
+    "parent": "blueHolder"
   },
   "b006h": {
     "type": "holder",
@@ -1613,7 +1640,7 @@
     "classes": "transparent",
     "id": "b006h",
     "dropOffsetX": -40,
-    "parent": "blueholder"
+    "parent": "blueHolder"
   },
   "b005h": {
     "type": "holder",
@@ -1633,7 +1660,7 @@
     "layer": 2,
     "classes": "transparent",
     "id": "b005h",
-    "parent": "blueholder",
+    "parent": "blueHolder",
     "dropOffsetX": 40,
     "dropOffsetY": -40
   },
@@ -1654,7 +1681,7 @@
     "classes": "transparent",
     "dropOffsetX": -40,
     "id": "b007h",
-    "parent": "blueholder"
+    "parent": "blueHolder"
   },
   "b008h": {
     "type": "holder",
@@ -1670,7 +1697,7 @@
     "classes": "transparent",
     "dropOffsetX": -40,
     "id": "b008h",
-    "parent": "blueholder"
+    "parent": "blueHolder"
   },
   "b009h": {
     "type": "holder",
@@ -1688,7 +1715,7 @@
     "layer": 2,
     "classes": "transparent",
     "id": "b009h",
-    "parent": "blueholder"
+    "parent": "blueHolder"
   },
   "b010h": {
     "type": "holder",
@@ -1709,7 +1736,7 @@
     "classes": "transparent",
     "dropOffsetY": -40,
     "id": "b010h",
-    "parent": "blueholder"
+    "parent": "blueHolder"
   },
   "b011h": {
     "type": "holder",
@@ -1728,7 +1755,7 @@
     "classes": "transparent",
     "id": "b011h",
     "dropOffsetY": -80,
-    "parent": "blueholder"
+    "parent": "blueHolder"
   },
   "b012h": {
     "type": "holder",
@@ -1750,7 +1777,7 @@
     "dropOffsetX": 40,
     "dropOffsetY": -40,
     "id": "b012h",
-    "parent": "blueholder"
+    "parent": "blueHolder"
   },
   "b013h": {
     "type": "holder",
@@ -1771,7 +1798,7 @@
     "classes": "transparent",
     "dropOffsetX": -40,
     "id": "b013h",
-    "parent": "blueholder"
+    "parent": "blueHolder"
   },
   "b014h": {
     "type": "holder",
@@ -1792,7 +1819,7 @@
     "classes": "transparent",
     "dropOffsetX": -40,
     "id": "b014h",
-    "parent": "blueholder"
+    "parent": "blueHolder"
   },
   "b015h": {
     "type": "holder",
@@ -1810,7 +1837,7 @@
     "layer": 2,
     "classes": "transparent",
     "id": "b015h",
-    "parent": "blueholder"
+    "parent": "blueHolder"
   },
   "b016h": {
     "type": "holder",
@@ -1825,7 +1852,7 @@
     "layer": 2,
     "classes": "transparent",
     "id": "b016h",
-    "parent": "blueholder"
+    "parent": "blueHolder"
   },
   "b017h": {
     "type": "holder",
@@ -1844,7 +1871,7 @@
     "classes": "transparent",
     "dropOffsetY": -40,
     "id": "b017h",
-    "parent": "blueholder"
+    "parent": "blueHolder"
   },
   "b018h": {
     "type": "holder",
@@ -1862,7 +1889,7 @@
     "layer": 2,
     "classes": "transparent",
     "id": "b018h",
-    "parent": "blueholder"
+    "parent": "blueHolder"
   },
   "b019h": {
     "type": "holder",
@@ -1880,7 +1907,7 @@
     "layer": 2,
     "classes": "transparent",
     "id": "b019h",
-    "parent": "blueholder"
+    "parent": "blueHolder"
   },
   "b021h": {
     "type": "holder",
@@ -1898,7 +1925,7 @@
     "layer": 2,
     "classes": "transparent",
     "id": "b021h",
-    "parent": "blueholder"
+    "parent": "blueHolder"
   },
   "b020h": {
     "type": "holder",
@@ -1916,173 +1943,7 @@
     "layer": 2,
     "classes": "transparent",
     "id": "b020h",
-    "parent": "blueholder"
-  },
-  "omog": {
-    "image": "/assets/-770343366_3137",
-    "id": "omog",
-    "z": 855,
-    "x": 386,
-    "y": -26,
-    "scale": 0.6,
-    "movable": false,
-    "movableInEdit": false
-  },
-  "640k": {
-    "image": "/assets/1699496124_3186",
-    "id": "640k",
-    "z": 857,
-    "x": 332,
-    "scale": 0.6,
-    "y": -26,
-    "movable": false,
-    "movableInEdit": false
-  },
-  "isp2": {
-    "type": "button",
-    "clickRoutine": [
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "blueholder"
-      },
-      {
-        "func": "SET",
-        "property": "x",
-        "value": -500
-      }
-    ],
-    "x": 356,
-    "z": 38,
-    "id": "isp2",
-    "css": "background-color:transparent; border-radius: 0px; border-color:transparent",
-    "width": 50,
-    "height": 50,
-    "layer": 10,
-    "y": -0.5,
-    "movableInEdit": false
-  },
-  "b47e": {
-    "type": "button",
-    "clickRoutine": [
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "blueholder"
-      },
-      {
-        "func": "SET",
-        "property": "x",
-        "value": 0
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "blueholder-copy001"
-      },
-      {
-        "func": "SET",
-        "property": "y",
-        "value": 1100
-      }
-    ],
-    "x": 411,
-    "z": 39,
-    "css": "background-color:transparent; border-radius: 0px; border-color:transparent",
-    "id": "b47e",
-    "width": 50,
-    "height": 50,
-    "layer": 10,
-    "y": -0.5,
-    "movableInEdit": false
-  },
-  "t4qx": {
-    "image": "/assets/1392066681_2867",
-    "id": "t4qx",
-    "z": 996,
-    "x": 332,
-    "y": 920,
-    "scale": 0.6,
-    "movable": false,
-    "movableInEdit": false
-  },
-  "zxh1": {
-    "image": "/assets/-914851433_2828",
-    "id": "zxh1",
-    "z": 995,
-    "x": 386,
-    "y": 920,
-    "scale": 0.6,
-    "movable": false,
-    "movableInEdit": false
-  },
-  "f73a": {
-    "image": "/assets/-114178549_3507",
-    "id": "f73a",
-    "z": 1144,
-    "x": 1167,
-    "y": -26,
-    "scale": 0.6,
-    "movable": false,
-    "movableInEdit": false
-  },
-  "3ofd": {
-    "image": "/assets/-962907861_3568",
-    "id": "3ofd",
-    "z": 1143,
-    "x": 1112,
-    "scale": 0.6,
-    "y": -26,
-    "movable": false,
-    "movableInEdit": false
-  },
-  "rj8v": {
-    "image": "/assets/1326216368_3327",
-    "id": "rj8v",
-    "z": 1231,
-    "x": 1167,
-    "y": 920,
-    "scale": 0.6,
-    "movable": false,
-    "movableInEdit": false
-  },
-  "7p1q": {
-    "image": "/assets/503244104_3367",
-    "id": "7p1q",
-    "z": 1232,
-    "x": 1112,
-    "y": 920,
-    "scale": 0.6,
-    "movable": false,
-    "movableInEdit": false
-  },
-  "bluetray-copy001": {
-    "image": "/assets/-2145676693_61548",
-    "id": "bluetray-copy001",
-    "height": 1000,
-    "width": 350,
-    "movable": false,
-    "movableInEdit": false,
-    "parent": "blueholder-copy001",
-    "holdblue": true,
-    "layer": -1,
-    "x": null,
-    "y": null,
-    "z": 942
-  },
-  "blueholder-copy001": {
-    "type": "holder",
-    "id": "blueholder-copy001",
-    "height": 1000,
-    "width": 350,
-    "dropTarget": {
-      "holdred": true
-    },
-    "alignChildren": false,
-    "layer": -2,
-    "classes": "transparent",
-    "z": 943,
-    "y": 1100
+    "parent": "blueHolder"
   },
   "r001": {
     "id": "r001",
@@ -2101,7 +1962,7 @@
         "offsetY": -20
       }
     ],
-    "z": 3022,
+    "z": 3087,
     "clickRoutine": [
       {
         "func": "SET",
@@ -2192,6 +2053,9 @@
     "rotation": 90,
     "clicks": 0,
     "y": -40,
+    "resetProperties": {
+      "parent": "b001h-copy001"
+    },
     "parent": "b001h-copy001"
   },
   "r002": {
@@ -2213,7 +2077,7 @@
         "offsetY": -20
       }
     ],
-    "z": 2710,
+    "z": 3088,
     "clickRoutine": [
       {
         "func": "SET",
@@ -2246,6 +2110,9 @@
       }
     ],
     "rotation": 270,
+    "resetProperties": {
+      "parent": "b002h-copy001"
+    },
     "parent": "b002h-copy001"
   },
   "r003": {
@@ -2265,7 +2132,7 @@
         "offsetY": -20
       }
     ],
-    "z": 3024,
+    "z": 3089,
     "clickRoutine": [
       {
         "func": "SET",
@@ -2356,6 +2223,9 @@
     "x": -40,
     "rotation": 180,
     "clicks": 0,
+    "resetProperties": {
+      "parent": "b003h-copy001"
+    },
     "parent": "b003h-copy001"
   },
   "r004": {
@@ -2377,7 +2247,7 @@
         "offsetY": -20
       }
     ],
-    "z": 2711,
+    "z": 3090,
     "clickRoutine": [
       {
         "func": "SET",
@@ -2409,6 +2279,9 @@
         "value": null
       }
     ],
+    "resetProperties": {
+      "parent": "b004h-copy001"
+    },
     "parent": "b004h-copy001"
   },
   "r005": {
@@ -2428,7 +2301,7 @@
         "offsetY": -20
       }
     ],
-    "z": 3028,
+    "z": 3092,
     "clickRoutine": [
       {
         "func": "SET",
@@ -2519,6 +2392,9 @@
     "rotation": 90,
     "clicks": 0,
     "x": 40,
+    "resetProperties": {
+      "parent": "b005h-copy001"
+    },
     "parent": "b005h-copy001"
   },
   "r006": {
@@ -2540,7 +2416,7 @@
       }
     ],
     "dropOffsetY": 80,
-    "z": 3004,
+    "z": 3091,
     "clickRoutine": [
       {
         "func": "SET",
@@ -2629,6 +2505,9 @@
       }
     ],
     "clicks": 0,
+    "resetProperties": {
+      "parent": "b006h-copy001"
+    },
     "parent": "b006h-copy001"
   },
   "r007": {
@@ -2650,7 +2529,7 @@
         "offsetY": -20
       }
     ],
-    "z": 2712,
+    "z": 3095,
     "clickRoutine": [
       {
         "func": "SET",
@@ -2683,6 +2562,9 @@
       }
     ],
     "rotation": 90,
+    "resetProperties": {
+      "parent": "b007h-copy001"
+    },
     "parent": "b007h-copy001"
   },
   "r008": {
@@ -2704,7 +2586,10 @@
         "offsetY": -20
       }
     ],
-    "z": 2237,
+    "z": 3094,
+    "resetProperties": {
+      "parent": "b008h-copy001"
+    },
     "parent": "b008h-copy001"
   },
   "r009": {
@@ -2726,7 +2611,7 @@
         "offsetY": -20
       }
     ],
-    "z": 2713,
+    "z": 3093,
     "clickRoutine": [
       {
         "func": "SET",
@@ -2758,6 +2643,9 @@
         "value": null
       }
     ],
+    "resetProperties": {
+      "parent": "b009h-copy001"
+    },
     "parent": "b009h-copy001"
   },
   "r010": {
@@ -2778,7 +2666,7 @@
         "offsetY": -20
       }
     ],
-    "z": 3030,
+    "z": 3097,
     "clickRoutine": [
       {
         "func": "SET",
@@ -2868,6 +2756,9 @@
     ],
     "rotation": 90,
     "clicks": 0,
+    "resetProperties": {
+      "parent": "b010h-copy001"
+    },
     "parent": "b010h-copy001"
   },
   "r011": {
@@ -2889,7 +2780,7 @@
         "offsetY": -20
       }
     ],
-    "z": 2714,
+    "z": 3096,
     "clickRoutine": [
       {
         "func": "SET",
@@ -2922,6 +2813,9 @@
       }
     ],
     "rotation": 180,
+    "resetProperties": {
+      "parent": "b011h-copy001"
+    },
     "parent": "b011h-copy001"
   },
   "r012": {
@@ -2942,7 +2836,7 @@
         "offsetY": -20
       }
     ],
-    "z": 3036,
+    "z": 3100,
     "clickRoutine": [
       {
         "func": "SET",
@@ -3032,6 +2926,9 @@
     ],
     "rotation": 270,
     "clicks": 0,
+    "resetProperties": {
+      "parent": "b012h-copy001"
+    },
     "parent": "b012h-copy001"
   },
   "r013": {
@@ -3052,7 +2949,7 @@
       }
     ],
     "x": -40,
-    "z": 3039,
+    "z": 3102,
     "clickRoutine": [
       {
         "func": "SET",
@@ -3142,6 +3039,9 @@
     ],
     "rotation": 90,
     "clicks": 0,
+    "resetProperties": {
+      "parent": "b013h-copy001"
+    },
     "parent": "b013h-copy001"
   },
   "r014": {
@@ -3162,7 +3062,7 @@
         "offsetY": -20
       }
     ],
-    "z": 3001,
+    "z": 3101,
     "clickRoutine": [
       {
         "func": "SET",
@@ -3252,6 +3152,9 @@
     ],
     "rotation": 90,
     "clicks": 0,
+    "resetProperties": {
+      "parent": "b014h-copy001"
+    },
     "parent": "b014h-copy001"
   },
   "r015": {
@@ -3273,7 +3176,7 @@
         "offsetY": -20
       }
     ],
-    "z": 2715,
+    "z": 3098,
     "clickRoutine": [
       {
         "func": "SET",
@@ -3305,6 +3208,9 @@
         "value": null
       }
     ],
+    "resetProperties": {
+      "parent": "b015h-copy001"
+    },
     "parent": "b015h-copy001"
   },
   "r016": {
@@ -3326,7 +3232,10 @@
         "offsetY": -20
       }
     ],
-    "z": 2249,
+    "z": 3104,
+    "resetProperties": {
+      "parent": "b016h-copy001"
+    },
     "parent": "b016h-copy001"
   },
   "r017": {
@@ -3348,7 +3257,7 @@
         "offsetY": -20
       }
     ],
-    "z": 2716,
+    "z": 3103,
     "clickRoutine": [
       {
         "func": "SET",
@@ -3380,6 +3289,9 @@
         "value": null
       }
     ],
+    "resetProperties": {
+      "parent": "b017h-copy001"
+    },
     "parent": "b017h-copy001"
   },
   "r018": {
@@ -3401,7 +3313,7 @@
         "offsetY": -20
       }
     ],
-    "z": 2717,
+    "z": 3106,
     "clickRoutine": [
       {
         "func": "SET",
@@ -3433,6 +3345,9 @@
         "value": null
       }
     ],
+    "resetProperties": {
+      "parent": "b018h-copy001"
+    },
     "parent": "b018h-copy001"
   },
   "r019": {
@@ -3454,7 +3369,7 @@
         "offsetY": -20
       }
     ],
-    "z": 2719,
+    "z": 3105,
     "clickRoutine": [
       {
         "func": "SET",
@@ -3486,6 +3401,9 @@
         "value": null
       }
     ],
+    "resetProperties": {
+      "parent": "b019h-copy001"
+    },
     "parent": "b019h-copy001"
   },
   "r020": {
@@ -3507,7 +3425,7 @@
         "offsetY": -20
       }
     ],
-    "z": 2718,
+    "z": 3099,
     "clickRoutine": [
       {
         "func": "SET",
@@ -3539,6 +3457,9 @@
         "value": null
       }
     ],
+    "resetProperties": {
+      "parent": "b020h-copy001"
+    },
     "parent": "b020h-copy001"
   },
   "r021": {
@@ -3560,7 +3481,10 @@
         "offsetY": -20
       }
     ],
-    "z": 2254,
+    "z": 3107,
+    "resetProperties": {
+      "parent": "b021h-copy001"
+    },
     "parent": "b021h-copy001"
   },
   "b001h-copy001": {
@@ -3579,7 +3503,7 @@
       "clicks": 0
     },
     "layer": 2,
-    "parent": "blueholder-copy001",
+    "parent": "redHolder",
     "classes": "transparent",
     "dropOffsetY": -40,
     "dropOffsetX": 40,
@@ -3601,7 +3525,7 @@
     "layer": 2,
     "classes": "transparent",
     "id": "b002h-copy001",
-    "parent": "blueholder-copy001",
+    "parent": "redHolder",
     "z": 966,
     "holdred": true
   },
@@ -3623,7 +3547,7 @@
     "classes": "transparent",
     "id": "b003h-copy001",
     "dropOffsetX": -40,
-    "parent": "blueholder-copy001",
+    "parent": "redHolder",
     "z": 967,
     "holdred": true
   },
@@ -3644,7 +3568,7 @@
     "dropOffsetX": -40,
     "id": "b004h-copy001",
     "dropOffsetY": -40,
-    "parent": "blueholder-copy001",
+    "parent": "redHolder",
     "z": 968,
     "holdred": true
   },
@@ -3666,7 +3590,7 @@
     "classes": "transparent",
     "id": "b006h-copy001",
     "dropOffsetX": -40,
-    "parent": "blueholder-copy001",
+    "parent": "redHolder",
     "z": 969,
     "holdred": true
   },
@@ -3687,7 +3611,7 @@
     "layer": 2,
     "classes": "transparent",
     "id": "b005h-copy001",
-    "parent": "blueholder-copy001",
+    "parent": "redHolder",
     "dropOffsetX": 40,
     "dropOffsetY": -40,
     "z": 970,
@@ -3710,7 +3634,7 @@
     "classes": "transparent",
     "dropOffsetX": -40,
     "id": "b007h-copy001",
-    "parent": "blueholder-copy001",
+    "parent": "redHolder",
     "z": 971,
     "holdred": true
   },
@@ -3730,7 +3654,7 @@
     "classes": "transparent",
     "dropOffsetX": -40,
     "id": "b008h-copy001",
-    "parent": "blueholder-copy001",
+    "parent": "redHolder",
     "z": 972,
     "holdred": true
   },
@@ -3750,7 +3674,7 @@
     "layer": 2,
     "classes": "transparent",
     "id": "b009h-copy001",
-    "parent": "blueholder-copy001",
+    "parent": "redHolder",
     "z": 973,
     "holdred": true
   },
@@ -3772,7 +3696,7 @@
     "classes": "transparent",
     "dropOffsetY": -40,
     "id": "b010h-copy001",
-    "parent": "blueholder-copy001",
+    "parent": "redHolder",
     "z": 974,
     "holdred": true
   },
@@ -3792,7 +3716,7 @@
     "classes": "transparent",
     "id": "b011h-copy001",
     "dropOffsetY": -80,
-    "parent": "blueholder-copy001",
+    "parent": "redHolder",
     "z": 975,
     "holdred": true
   },
@@ -3815,7 +3739,7 @@
     "dropOffsetX": 40,
     "dropOffsetY": -40,
     "id": "b012h-copy001",
-    "parent": "blueholder-copy001",
+    "parent": "redHolder",
     "z": 976,
     "holdred": true
   },
@@ -3837,7 +3761,7 @@
     "classes": "transparent",
     "dropOffsetX": -40,
     "id": "b013h-copy001",
-    "parent": "blueholder-copy001",
+    "parent": "redHolder",
     "z": 977,
     "holdred": true
   },
@@ -3859,7 +3783,7 @@
     "classes": "transparent",
     "dropOffsetX": -40,
     "id": "b014h-copy001",
-    "parent": "blueholder-copy001",
+    "parent": "redHolder",
     "z": 978,
     "holdred": true
   },
@@ -3878,7 +3802,7 @@
     "layer": 2,
     "classes": "transparent",
     "id": "b015h-copy001",
-    "parent": "blueholder-copy001",
+    "parent": "redHolder",
     "z": 979,
     "holdred": true
   },
@@ -3894,7 +3818,7 @@
     "layer": 2,
     "classes": "transparent",
     "id": "b016h-copy001",
-    "parent": "blueholder-copy001",
+    "parent": "redHolder",
     "z": 980,
     "holdred": true
   },
@@ -3914,7 +3838,7 @@
     "classes": "transparent",
     "dropOffsetY": -40,
     "id": "b017h-copy001",
-    "parent": "blueholder-copy001",
+    "parent": "redHolder",
     "z": 981,
     "holdred": true
   },
@@ -3933,7 +3857,7 @@
     "layer": 2,
     "classes": "transparent",
     "id": "b018h-copy001",
-    "parent": "blueholder-copy001",
+    "parent": "redHolder",
     "z": 982,
     "holdred": true
   },
@@ -3952,7 +3876,7 @@
     "layer": 2,
     "classes": "transparent",
     "id": "b019h-copy001",
-    "parent": "blueholder-copy001",
+    "parent": "redHolder",
     "z": 983,
     "holdred": true
   },
@@ -3971,7 +3895,7 @@
     "layer": 2,
     "classes": "transparent",
     "id": "b021h-copy001",
-    "parent": "blueholder-copy001",
+    "parent": "redHolder",
     "z": 984,
     "holdred": true
   },
@@ -3990,93 +3914,9 @@
     "layer": 2,
     "classes": "transparent",
     "id": "b020h-copy001",
-    "parent": "blueholder-copy001",
+    "parent": "redHolder",
     "z": 985,
     "holdred": true
-  },
-  "wm2q": {
-    "type": "button",
-    "clickRoutine": [
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "blueholder-copy001"
-      },
-      {
-        "func": "SET",
-        "property": "y",
-        "value": 1100
-      }
-    ],
-    "x": 358,
-    "z": 34,
-    "css": "background-color:transparent; border-radius: 0px; border-color:transparent",
-    "width": 50,
-    "height": 50,
-    "layer": 10,
-    "y": 947,
-    "id": "wm2q",
-    "movableInEdit": false
-  },
-  "86dm": {
-    "type": "button",
-    "clickRoutine": [
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "blueholder-copy001"
-      },
-      {
-        "func": "SET",
-        "property": "y",
-        "value": 0
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "blueholder"
-      },
-      {
-        "func": "SET",
-        "property": "x",
-        "value": -500
-      }
-    ],
-    "x": 411,
-    "z": 35,
-    "css": "background-color:transparent; border-radius: 0px; border-color:transparent",
-    "width": 50,
-    "height": 50,
-    "layer": 10,
-    "y": 947,
-    "id": "86dm",
-    "movableInEdit": false
-  },
-  "bluetray-copy002": {
-    "image": "/assets/-2145676693_61548",
-    "id": "bluetray-copy002",
-    "height": 1000,
-    "width": 350,
-    "movable": false,
-    "movableInEdit": false,
-    "parent": "blueholder-copy002",
-    "holdblue": true,
-    "layer": -1,
-    "z": 1053
-  },
-  "blueholder-copy002": {
-    "type": "holder",
-    "id": "blueholder-copy002",
-    "height": 1000,
-    "width": 350,
-    "dropTarget": {
-      "holdgreen": true
-    },
-    "alignChildren": false,
-    "layer": -2,
-    "classes": "transparent",
-    "z": 1054,
-    "x": 1700
   },
   "g001": {
     "id": "g001",
@@ -4095,7 +3935,7 @@
         "offsetY": -20
       }
     ],
-    "z": 2928,
+    "z": 3131,
     "y": -40,
     "clickRoutine": [
       {
@@ -4186,6 +4026,9 @@
     ],
     "rotation": 90,
     "clicks": 0,
+    "resetProperties": {
+      "parent": "b001h-copy002"
+    },
     "parent": "b001h-copy002"
   },
   "g002": {
@@ -4206,7 +4049,7 @@
         "offsetY": -20
       }
     ],
-    "z": 2673,
+    "z": 3138,
     "clickRoutine": [
       {
         "func": "SET",
@@ -4240,6 +4083,9 @@
     ],
     "rotation": 270,
     "image": "/assets/-898971815_1591",
+    "resetProperties": {
+      "parent": "b002h-copy002"
+    },
     "parent": "b002h-copy002"
   },
   "g003": {
@@ -4260,7 +4106,7 @@
       }
     ],
     "x": -40,
-    "z": 2930,
+    "z": 3137,
     "clickRoutine": [
       {
         "func": "SET",
@@ -4350,6 +4196,9 @@
     ],
     "rotation": 180,
     "clicks": 0,
+    "resetProperties": {
+      "parent": "b003h-copy002"
+    },
     "parent": "b003h-copy002"
   },
   "g004": {
@@ -4371,7 +4220,7 @@
         "offsetY": -20
       }
     ],
-    "z": 2675,
+    "z": 3140,
     "clickRoutine": [
       {
         "func": "SET",
@@ -4403,6 +4252,9 @@
         "value": null
       }
     ],
+    "resetProperties": {
+      "parent": "b004h-copy002"
+    },
     "parent": "b004h-copy002"
   },
   "g005": {
@@ -4423,7 +4275,7 @@
         "offsetY": -20
       }
     ],
-    "z": 2932,
+    "z": 3132,
     "clickRoutine": [
       {
         "func": "SET",
@@ -4513,6 +4365,9 @@
     ],
     "rotation": 90,
     "clicks": 0,
+    "resetProperties": {
+      "parent": "b005h-copy002"
+    },
     "parent": "b005h-copy002"
   },
   "g006": {
@@ -4533,7 +4388,7 @@
         "offsetY": -20
       }
     ],
-    "z": 2921,
+    "z": 3139,
     "clickRoutine": [
       {
         "func": "SET",
@@ -4622,6 +4477,9 @@
       }
     ],
     "clicks": 0,
+    "resetProperties": {
+      "parent": "b006h-copy002"
+    },
     "parent": "b006h-copy002"
   },
   "g007": {
@@ -4643,7 +4501,7 @@
         "offsetY": -20
       }
     ],
-    "z": 2671,
+    "z": 3135,
     "clickRoutine": [
       {
         "func": "SET",
@@ -4676,6 +4534,9 @@
       }
     ],
     "rotation": 90,
+    "resetProperties": {
+      "parent": "b007h-copy002"
+    },
     "parent": "b007h-copy002"
   },
   "g008": {
@@ -4697,7 +4558,10 @@
         "offsetY": -20
       }
     ],
-    "z": 2269,
+    "z": 3136,
+    "resetProperties": {
+      "parent": "b008h-copy002"
+    },
     "parent": "b008h-copy002"
   },
   "g009": {
@@ -4719,7 +4583,7 @@
         "offsetY": -20
       }
     ],
-    "z": 2669,
+    "z": 3141,
     "clickRoutine": [
       {
         "func": "SET",
@@ -4751,6 +4615,9 @@
         "value": null
       }
     ],
+    "resetProperties": {
+      "parent": "b009h-copy002"
+    },
     "parent": "b009h-copy002"
   },
   "g010": {
@@ -4771,7 +4638,7 @@
         "offsetY": -20
       }
     ],
-    "z": 2934,
+    "z": 3133,
     "clickRoutine": [
       {
         "func": "SET",
@@ -4861,6 +4728,9 @@
     ],
     "rotation": 90,
     "clicks": 0,
+    "resetProperties": {
+      "parent": "b010h-copy002"
+    },
     "parent": "b010h-copy002"
   },
   "g011": {
@@ -4882,7 +4752,7 @@
         "offsetY": -20
       }
     ],
-    "z": 2665,
+    "z": 3142,
     "clickRoutine": [
       {
         "func": "SET",
@@ -4915,6 +4785,9 @@
       }
     ],
     "rotation": 180,
+    "resetProperties": {
+      "parent": "b011h-copy002"
+    },
     "parent": "b011h-copy002"
   },
   "g012": {
@@ -4935,7 +4808,7 @@
         "offsetY": -20
       }
     ],
-    "z": 2936,
+    "z": 3134,
     "clickRoutine": [
       {
         "func": "SET",
@@ -5025,6 +4898,9 @@
     ],
     "rotation": 270,
     "clicks": 0,
+    "resetProperties": {
+      "parent": "b012h-copy002"
+    },
     "parent": "b012h-copy002"
   },
   "g013": {
@@ -5045,7 +4921,7 @@
       }
     ],
     "x": -40,
-    "z": 2944,
+    "z": 3143,
     "clickRoutine": [
       {
         "func": "SET",
@@ -5135,6 +5011,9 @@
     ],
     "rotation": 90,
     "clicks": 0,
+    "resetProperties": {
+      "parent": "b013h-copy002"
+    },
     "parent": "b013h-copy002"
   },
   "g014": {
@@ -5155,7 +5034,7 @@
         "offsetY": -20
       }
     ],
-    "z": 2915,
+    "z": 3144,
     "clickRoutine": [
       {
         "func": "SET",
@@ -5245,6 +5124,9 @@
     ],
     "rotation": 90,
     "clicks": 0,
+    "resetProperties": {
+      "parent": "b014h-copy002"
+    },
     "parent": "b014h-copy002"
   },
   "g015": {
@@ -5266,7 +5148,7 @@
         "offsetY": -20
       }
     ],
-    "z": 2667,
+    "z": 3145,
     "clickRoutine": [
       {
         "func": "SET",
@@ -5298,6 +5180,9 @@
         "value": null
       }
     ],
+    "resetProperties": {
+      "parent": "b015h-copy002"
+    },
     "parent": "b015h-copy002"
   },
   "g016": {
@@ -5319,7 +5204,10 @@
         "offsetY": -20
       }
     ],
-    "z": 2282,
+    "z": 3146,
+    "resetProperties": {
+      "parent": "b016h-copy002"
+    },
     "parent": "b016h-copy002"
   },
   "g017": {
@@ -5341,7 +5229,7 @@
         "offsetY": -20
       }
     ],
-    "z": 2663,
+    "z": 3147,
     "clickRoutine": [
       {
         "func": "SET",
@@ -5373,6 +5261,9 @@
         "value": null
       }
     ],
+    "resetProperties": {
+      "parent": "b017h-copy002"
+    },
     "parent": "b017h-copy002"
   },
   "g018": {
@@ -5394,7 +5285,7 @@
         "offsetY": -20
       }
     ],
-    "z": 2942,
+    "z": 3148,
     "clickRoutine": [
       {
         "func": "SET",
@@ -5426,6 +5317,9 @@
         "value": null
       }
     ],
+    "resetProperties": {
+      "parent": "b018h-copy002"
+    },
     "parent": "b018h-copy002"
   },
   "g019": {
@@ -5447,7 +5341,7 @@
         "offsetY": -20
       }
     ],
-    "z": 2659,
+    "z": 3149,
     "clickRoutine": [
       {
         "func": "SET",
@@ -5479,6 +5373,9 @@
         "value": null
       }
     ],
+    "resetProperties": {
+      "parent": "b019h-copy002"
+    },
     "parent": "b019h-copy002"
   },
   "g020": {
@@ -5500,7 +5397,7 @@
         "offsetY": -20
       }
     ],
-    "z": 2657,
+    "z": 3151,
     "clickRoutine": [
       {
         "func": "SET",
@@ -5532,6 +5429,9 @@
         "value": null
       }
     ],
+    "resetProperties": {
+      "parent": "b020h-copy002"
+    },
     "parent": "b020h-copy002"
   },
   "g021": {
@@ -5553,7 +5453,10 @@
         "offsetY": -20
       }
     ],
-    "z": 2286,
+    "z": 3150,
+    "resetProperties": {
+      "parent": "b021h-copy002"
+    },
     "parent": "b021h-copy002"
   },
   "b001h-copy002": {
@@ -5572,7 +5475,7 @@
       "clicks": 0
     },
     "layer": 2,
-    "parent": "blueholder-copy002",
+    "parent": "greenHolder",
     "classes": "transparent",
     "dropOffsetY": -40,
     "dropOffsetX": 40,
@@ -5594,7 +5497,7 @@
     "layer": 2,
     "classes": "transparent",
     "id": "b002h-copy002",
-    "parent": "blueholder-copy002",
+    "parent": "greenHolder",
     "z": 1077,
     "holdgreen": true
   },
@@ -5616,7 +5519,7 @@
     "classes": "transparent",
     "id": "b003h-copy002",
     "dropOffsetX": -40,
-    "parent": "blueholder-copy002",
+    "parent": "greenHolder",
     "z": 1078,
     "holdgreen": true
   },
@@ -5637,7 +5540,7 @@
     "dropOffsetX": -40,
     "id": "b004h-copy002",
     "dropOffsetY": -40,
-    "parent": "blueholder-copy002",
+    "parent": "greenHolder",
     "z": 1079,
     "holdgreen": true
   },
@@ -5659,7 +5562,7 @@
     "classes": "transparent",
     "id": "b006h-copy002",
     "dropOffsetX": -40,
-    "parent": "blueholder-copy002",
+    "parent": "greenHolder",
     "z": 1080,
     "holdgreen": true
   },
@@ -5680,7 +5583,7 @@
     "layer": 2,
     "classes": "transparent",
     "id": "b005h-copy002",
-    "parent": "blueholder-copy002",
+    "parent": "greenHolder",
     "dropOffsetX": 40,
     "dropOffsetY": -40,
     "z": 1081,
@@ -5702,7 +5605,7 @@
     "classes": "transparent",
     "dropOffsetX": -40,
     "id": "b007h-copy002",
-    "parent": "blueholder-copy002",
+    "parent": "greenHolder",
     "z": 1082,
     "holdgreen": true
   },
@@ -5722,7 +5625,7 @@
     "classes": "transparent",
     "dropOffsetX": -40,
     "id": "b008h-copy002",
-    "parent": "blueholder-copy002",
+    "parent": "greenHolder",
     "z": 1083,
     "holdgreen": true
   },
@@ -5741,7 +5644,7 @@
     "layer": 2,
     "classes": "transparent",
     "id": "b009h-copy002",
-    "parent": "blueholder-copy002",
+    "parent": "greenHolder",
     "z": 1084,
     "holdgreen": true
   },
@@ -5763,7 +5666,7 @@
     "classes": "transparent",
     "dropOffsetY": -40,
     "id": "b010h-copy002",
-    "parent": "blueholder-copy002",
+    "parent": "greenHolder",
     "z": 1085,
     "holdgreen": true
   },
@@ -5783,7 +5686,7 @@
     "classes": "transparent",
     "id": "b011h-copy002",
     "dropOffsetY": -80,
-    "parent": "blueholder-copy002",
+    "parent": "greenHolder",
     "z": 1086,
     "holdgreen": true
   },
@@ -5806,7 +5709,7 @@
     "dropOffsetX": 40,
     "dropOffsetY": -40,
     "id": "b012h-copy002",
-    "parent": "blueholder-copy002",
+    "parent": "greenHolder",
     "z": 1087,
     "holdgreen": true
   },
@@ -5828,7 +5731,7 @@
     "classes": "transparent",
     "dropOffsetX": -40,
     "id": "b013h-copy002",
-    "parent": "blueholder-copy002",
+    "parent": "greenHolder",
     "z": 1088,
     "holdgreen": true
   },
@@ -5850,7 +5753,7 @@
     "classes": "transparent",
     "dropOffsetX": -40,
     "id": "b014h-copy002",
-    "parent": "blueholder-copy002",
+    "parent": "greenHolder",
     "z": 1089,
     "holdgreen": true
   },
@@ -5869,7 +5772,7 @@
     "layer": 2,
     "classes": "transparent",
     "id": "b015h-copy002",
-    "parent": "blueholder-copy002",
+    "parent": "greenHolder",
     "z": 1090,
     "holdgreen": true
   },
@@ -5885,7 +5788,7 @@
     "layer": 2,
     "classes": "transparent",
     "id": "b016h-copy002",
-    "parent": "blueholder-copy002",
+    "parent": "greenHolder",
     "z": 1091,
     "holdgreen": true
   },
@@ -5905,7 +5808,7 @@
     "classes": "transparent",
     "dropOffsetY": -40,
     "id": "b017h-copy002",
-    "parent": "blueholder-copy002",
+    "parent": "greenHolder",
     "z": 1092,
     "holdgreen": true
   },
@@ -5924,7 +5827,7 @@
     "layer": 2,
     "classes": "transparent",
     "id": "b018h-copy002",
-    "parent": "blueholder-copy002",
+    "parent": "greenHolder",
     "z": 1093,
     "holdgreen": true
   },
@@ -5943,7 +5846,7 @@
     "layer": 2,
     "classes": "transparent",
     "id": "b019h-copy002",
-    "parent": "blueholder-copy002",
+    "parent": "greenHolder",
     "z": 1094,
     "holdgreen": true
   },
@@ -5962,7 +5865,7 @@
     "layer": 2,
     "classes": "transparent",
     "id": "b021h-copy002",
-    "parent": "blueholder-copy002",
+    "parent": "greenHolder",
     "z": 1095,
     "holdgreen": true
   },
@@ -5981,96 +5884,9 @@
     "layer": 2,
     "classes": "transparent",
     "id": "b020h-copy002",
-    "parent": "blueholder-copy002",
+    "parent": "greenHolder",
     "z": 1096,
     "holdgreen": true
-  },
-  "8d0r": {
-    "type": "button",
-    "clickRoutine": [
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "blueholder-copy002"
-      },
-      {
-        "func": "SET",
-        "property": "x",
-        "value": 1700
-      }
-    ],
-    "x": 1191,
-    "z": 33,
-    "css": "background-color:transparent; border-radius: 0px; border-color:transparent",
-    "width": 50,
-    "height": 50,
-    "layer": 10,
-    "id": "8d0r",
-    "y": -0.5,
-    "movableInEdit": false
-  },
-  "8fa1": {
-    "type": "button",
-    "clickRoutine": [
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "blueholder-copy002"
-      },
-      {
-        "func": "SET",
-        "property": "x",
-        "value": 1250
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "blueholder-copy003"
-      },
-      {
-        "func": "SET",
-        "property": "y",
-        "value": 1100
-      }
-    ],
-    "x": 1138,
-    "z": 32,
-    "css": "background-color:transparent; border-radius: 0px; border-color:transparent",
-    "width": 50,
-    "height": 50,
-    "layer": 10,
-    "y": -0.5,
-    "id": "8fa1",
-    "movableInEdit": false
-  },
-  "bluetray-copy003": {
-    "image": "/assets/-2145676693_61548",
-    "id": "bluetray-copy003",
-    "height": 1000,
-    "width": 350,
-    "movable": false,
-    "movableInEdit": false,
-    "parent": "blueholder-copy003",
-    "holdblue": true,
-    "layer": -1,
-    "x": null,
-    "y": null,
-    "z": 1145
-  },
-  "blueholder-copy003": {
-    "type": "holder",
-    "id": "blueholder-copy003",
-    "height": 1000,
-    "width": 350,
-    "dropTarget": {
-      "holdyellow": true
-    },
-    "alignChildren": false,
-    "layer": -2,
-    "classes": "transparent",
-    "x": 1250,
-    "z": 1146,
-    "y": 1100
   },
   "y001": {
     "id": "y001",
@@ -6089,7 +5905,7 @@
         "offsetY": -20
       }
     ],
-    "z": 2975,
+    "z": 3177,
     "clickRoutine": [
       {
         "func": "SET",
@@ -6180,6 +5996,9 @@
     "rotation": 90,
     "y": -40,
     "clicks": 0,
+    "resetProperties": {
+      "parent": "b001h-copy003"
+    },
     "parent": "b001h-copy003"
   },
   "y002": {
@@ -6200,7 +6019,7 @@
         "offsetY": -20
       }
     ],
-    "z": 2721,
+    "z": 3154,
     "clickRoutine": [
       {
         "func": "SET",
@@ -6234,6 +6053,9 @@
     ],
     "rotation": 270,
     "y": 4,
+    "resetProperties": {
+      "parent": "b002h-copy003"
+    },
     "parent": "b002h-copy003"
   },
   "y003": {
@@ -6254,7 +6076,7 @@
       }
     ],
     "x": -40,
-    "z": 2978,
+    "z": 3153,
     "clickRoutine": [
       {
         "func": "SET",
@@ -6344,6 +6166,9 @@
     ],
     "rotation": 180,
     "clicks": 0,
+    "resetProperties": {
+      "parent": "b003h-copy003"
+    },
     "parent": "b003h-copy003"
   },
   "y004": {
@@ -6365,7 +6190,7 @@
         "offsetY": -20
       }
     ],
-    "z": 2679,
+    "z": 3155,
     "clickRoutine": [
       {
         "func": "SET",
@@ -6397,6 +6222,9 @@
         "value": null
       }
     ],
+    "resetProperties": {
+      "parent": "b004h-copy003"
+    },
     "parent": "b004h-copy003"
   },
   "y005": {
@@ -6417,7 +6245,7 @@
         "offsetY": -20
       }
     ],
-    "z": 2981,
+    "z": 3156,
     "clickRoutine": [
       {
         "func": "SET",
@@ -6507,6 +6335,9 @@
     ],
     "rotation": 90,
     "clicks": 0,
+    "resetProperties": {
+      "parent": "b005h-copy003"
+    },
     "parent": "b005h-copy003"
   },
   "y006": {
@@ -6527,7 +6358,7 @@
       }
     ],
     "dropOffsetY": 80,
-    "z": 2963,
+    "z": 3157,
     "clickRoutine": [
       {
         "func": "SET",
@@ -6616,7 +6447,10 @@
       }
     ],
     "y": 4,
-    "clicks": 2,
+    "clicks": 0,
+    "resetProperties": {
+      "parent": "b006h-copy003"
+    },
     "parent": "b006h-copy003"
   },
   "y007": {
@@ -6638,7 +6472,7 @@
         "offsetY": -20
       }
     ],
-    "z": 2954,
+    "z": 3158,
     "clickRoutine": [
       {
         "func": "SET",
@@ -6670,7 +6504,10 @@
         "value": null
       }
     ],
-    "rotation": 1170,
+    "rotation": 90,
+    "resetProperties": {
+      "parent": "b007h-copy003"
+    },
     "parent": "b007h-copy003"
   },
   "y008": {
@@ -6692,7 +6529,10 @@
         "offsetY": -20
       }
     ],
-    "z": 2328,
+    "z": 3159,
+    "resetProperties": {
+      "parent": "b008h-copy003"
+    },
     "parent": "b008h-copy003"
   },
   "y009": {
@@ -6714,7 +6554,7 @@
         "offsetY": -20
       }
     ],
-    "z": 2956,
+    "z": 3160,
     "clickRoutine": [
       {
         "func": "SET",
@@ -6746,6 +6586,9 @@
         "value": null
       }
     ],
+    "resetProperties": {
+      "parent": "b009h-copy003"
+    },
     "parent": "b009h-copy003"
   },
   "y010": {
@@ -6766,7 +6609,7 @@
         "offsetY": -20
       }
     ],
-    "z": 2983,
+    "z": 3161,
     "clickRoutine": [
       {
         "func": "SET",
@@ -6856,6 +6699,9 @@
     ],
     "rotation": 90,
     "clicks": 0,
+    "resetProperties": {
+      "parent": "b010h-copy003"
+    },
     "parent": "b010h-copy003"
   },
   "y011": {
@@ -6877,7 +6723,7 @@
         "offsetY": -20
       }
     ],
-    "z": 2682,
+    "z": 3162,
     "clickRoutine": [
       {
         "func": "SET",
@@ -6910,6 +6756,9 @@
       }
     ],
     "rotation": 180,
+    "resetProperties": {
+      "parent": "b011h-copy003"
+    },
     "parent": "b011h-copy003"
   },
   "y012": {
@@ -6930,7 +6779,7 @@
         "offsetY": -20
       }
     ],
-    "z": 2985,
+    "z": 3163,
     "clickRoutine": [
       {
         "func": "SET",
@@ -7020,6 +6869,9 @@
     ],
     "rotation": 270,
     "clicks": 0,
+    "resetProperties": {
+      "parent": "b012h-copy003"
+    },
     "parent": "b012h-copy003"
   },
   "y013": {
@@ -7040,7 +6892,7 @@
       }
     ],
     "x": -40,
-    "z": 2987,
+    "z": 3164,
     "clickRoutine": [
       {
         "func": "SET",
@@ -7130,6 +6982,9 @@
     ],
     "rotation": 90,
     "clicks": 0,
+    "resetProperties": {
+      "parent": "b013h-copy003"
+    },
     "parent": "b013h-copy003"
   },
   "y014": {
@@ -7150,7 +7005,7 @@
         "offsetY": -20
       }
     ],
-    "z": 2965,
+    "z": 3165,
     "clickRoutine": [
       {
         "func": "SET",
@@ -7239,7 +7094,10 @@
       }
     ],
     "rotation": 90,
-    "clicks": 1,
+    "clicks": 0,
+    "resetProperties": {
+      "parent": "b014h-copy003"
+    },
     "parent": "b014h-copy003"
   },
   "y015": {
@@ -7261,7 +7119,7 @@
         "offsetY": -20
       }
     ],
-    "z": 2683,
+    "z": 3168,
     "clickRoutine": [
       {
         "func": "SET",
@@ -7293,6 +7151,9 @@
         "value": null
       }
     ],
+    "resetProperties": {
+      "parent": "b015h-copy003"
+    },
     "parent": "b015h-copy003"
   },
   "y016": {
@@ -7314,7 +7175,10 @@
         "offsetY": -20
       }
     ],
-    "z": 2360,
+    "z": 3166,
+    "resetProperties": {
+      "parent": "b016h-copy003"
+    },
     "parent": "b016h-copy003"
   },
   "y017": {
@@ -7336,7 +7200,7 @@
         "offsetY": -20
       }
     ],
-    "z": 2684,
+    "z": 3167,
     "clickRoutine": [
       {
         "func": "SET",
@@ -7368,6 +7232,9 @@
         "value": null
       }
     ],
+    "resetProperties": {
+      "parent": "b017h-copy003"
+    },
     "parent": "b017h-copy003"
   },
   "y018": {
@@ -7389,7 +7256,7 @@
         "offsetY": -20
       }
     ],
-    "z": 2685,
+    "z": 3169,
     "clickRoutine": [
       {
         "func": "SET",
@@ -7421,6 +7288,9 @@
         "value": null
       }
     ],
+    "resetProperties": {
+      "parent": "b018h-copy003"
+    },
     "parent": "b018h-copy003"
   },
   "y019": {
@@ -7442,7 +7312,7 @@
         "offsetY": -20
       }
     ],
-    "z": 2689,
+    "z": 3170,
     "clickRoutine": [
       {
         "func": "SET",
@@ -7474,6 +7344,9 @@
         "value": null
       }
     ],
+    "resetProperties": {
+      "parent": "b019h-copy003"
+    },
     "parent": "b019h-copy003"
   },
   "y020": {
@@ -7495,7 +7368,7 @@
         "offsetY": -20
       }
     ],
-    "z": 2687,
+    "z": 3172,
     "clickRoutine": [
       {
         "func": "SET",
@@ -7527,6 +7400,9 @@
         "value": null
       }
     ],
+    "resetProperties": {
+      "parent": "b020h-copy003"
+    },
     "parent": "b020h-copy003"
   },
   "y021": {
@@ -7548,7 +7424,10 @@
         "offsetY": -20
       }
     ],
-    "z": 2382,
+    "z": 3171,
+    "resetProperties": {
+      "parent": "b021h-copy003"
+    },
     "parent": "b021h-copy003"
   },
   "b001h-copy003": {
@@ -7567,7 +7446,7 @@
       "clicks": 0
     },
     "layer": 2,
-    "parent": "blueholder-copy003",
+    "parent": "yellowHolder",
     "classes": "transparent",
     "dropOffsetY": -40,
     "dropOffsetX": 40,
@@ -7589,7 +7468,7 @@
     "layer": 2,
     "classes": "transparent",
     "id": "b002h-copy003",
-    "parent": "blueholder-copy003",
+    "parent": "yellowHolder",
     "z": 1169,
     "holdyellow": true
   },
@@ -7611,7 +7490,7 @@
     "classes": "transparent",
     "id": "b003h-copy003",
     "dropOffsetX": -40,
-    "parent": "blueholder-copy003",
+    "parent": "yellowHolder",
     "z": 1170,
     "holdyellow": true
   },
@@ -7632,7 +7511,7 @@
     "dropOffsetX": -40,
     "id": "b004h-copy003",
     "dropOffsetY": -40,
-    "parent": "blueholder-copy003",
+    "parent": "yellowHolder",
     "z": 1171,
     "holdyellow": true
   },
@@ -7654,7 +7533,7 @@
     "classes": "transparent",
     "id": "b006h-copy003",
     "dropOffsetX": -40,
-    "parent": "blueholder-copy003",
+    "parent": "yellowHolder",
     "z": 1172,
     "holdyellow": true
   },
@@ -7675,7 +7554,7 @@
     "layer": 2,
     "classes": "transparent",
     "id": "b005h-copy003",
-    "parent": "blueholder-copy003",
+    "parent": "yellowHolder",
     "dropOffsetX": 40,
     "dropOffsetY": -40,
     "z": 1173,
@@ -7697,7 +7576,7 @@
     "classes": "transparent",
     "dropOffsetX": -40,
     "id": "b007h-copy003",
-    "parent": "blueholder-copy003",
+    "parent": "yellowHolder",
     "z": 1174,
     "holdyellow": true
   },
@@ -7717,7 +7596,7 @@
     "classes": "transparent",
     "dropOffsetX": -40,
     "id": "b008h-copy003",
-    "parent": "blueholder-copy003",
+    "parent": "yellowHolder",
     "z": 1175,
     "holdyellow": true
   },
@@ -7736,7 +7615,7 @@
     "layer": 2,
     "classes": "transparent",
     "id": "b009h-copy003",
-    "parent": "blueholder-copy003",
+    "parent": "yellowHolder",
     "z": 1176,
     "holdyellow": true
   },
@@ -7758,7 +7637,7 @@
     "classes": "transparent",
     "dropOffsetY": -40,
     "id": "b010h-copy003",
-    "parent": "blueholder-copy003",
+    "parent": "yellowHolder",
     "z": 1177,
     "holdyellow": true
   },
@@ -7778,7 +7657,7 @@
     "classes": "transparent",
     "id": "b011h-copy003",
     "dropOffsetY": -80,
-    "parent": "blueholder-copy003",
+    "parent": "yellowHolder",
     "z": 1178,
     "holdyellow": true
   },
@@ -7801,7 +7680,7 @@
     "dropOffsetX": 40,
     "dropOffsetY": -40,
     "id": "b012h-copy003",
-    "parent": "blueholder-copy003",
+    "parent": "yellowHolder",
     "z": 1179,
     "holdyellow": true
   },
@@ -7823,7 +7702,7 @@
     "classes": "transparent",
     "dropOffsetX": -40,
     "id": "b013h-copy003",
-    "parent": "blueholder-copy003",
+    "parent": "yellowHolder",
     "z": 1180,
     "holdyellow": true
   },
@@ -7845,7 +7724,7 @@
     "classes": "transparent",
     "dropOffsetX": -40,
     "id": "b014h-copy003",
-    "parent": "blueholder-copy003",
+    "parent": "yellowHolder",
     "z": 1181,
     "holdyellow": true
   },
@@ -7864,7 +7743,7 @@
     "layer": 2,
     "classes": "transparent",
     "id": "b015h-copy003",
-    "parent": "blueholder-copy003",
+    "parent": "yellowHolder",
     "z": 1182,
     "holdyellow": true
   },
@@ -7880,7 +7759,7 @@
     "layer": 2,
     "classes": "transparent",
     "id": "b016h-copy003",
-    "parent": "blueholder-copy003",
+    "parent": "yellowHolder",
     "z": 1183,
     "holdyellow": true
   },
@@ -7900,7 +7779,7 @@
     "classes": "transparent",
     "dropOffsetY": -40,
     "id": "b017h-copy003",
-    "parent": "blueholder-copy003",
+    "parent": "yellowHolder",
     "z": 1184,
     "holdyellow": true
   },
@@ -7919,7 +7798,7 @@
     "layer": 2,
     "classes": "transparent",
     "id": "b018h-copy003",
-    "parent": "blueholder-copy003",
+    "parent": "yellowHolder",
     "z": 1185,
     "holdyellow": true
   },
@@ -7938,7 +7817,7 @@
     "layer": 2,
     "classes": "transparent",
     "id": "b019h-copy003",
-    "parent": "blueholder-copy003",
+    "parent": "yellowHolder",
     "z": 1186,
     "holdyellow": true
   },
@@ -7957,7 +7836,7 @@
     "layer": 2,
     "classes": "transparent",
     "id": "b021h-copy003",
-    "parent": "blueholder-copy003",
+    "parent": "yellowHolder",
     "z": 1187,
     "holdyellow": true
   },
@@ -7976,70 +7855,12 @@
     "layer": 2,
     "classes": "transparent",
     "id": "b020h-copy003",
-    "parent": "blueholder-copy003",
+    "parent": "yellowHolder",
     "z": 1188,
     "holdyellow": true
   },
-  "ljzr": {
-    "type": "button",
-    "clickRoutine": [
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "blueholder-copy003"
-      },
-      {
-        "func": "SET",
-        "property": "y",
-        "value": 0
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "blueholder-copy002"
-      },
-      {
-        "func": "SET",
-        "property": "x",
-        "value": 1700
-      }
-    ],
-    "x": 1138,
-    "z": 36,
-    "css": "background-color:transparent; border-radius: 0px; border-color:transparent",
-    "width": 50,
-    "height": 50,
-    "layer": 10,
-    "y": 947,
-    "id": "ljzr",
-    "movableInEdit": false
-  },
-  "6zwg": {
-    "type": "button",
-    "clickRoutine": [
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "blueholder-copy003"
-      },
-      {
-        "func": "SET",
-        "property": "y",
-        "value": 1100
-      }
-    ],
-    "x": 1190,
-    "z": 37,
-    "css": "background-color:transparent; border-radius: 0px; border-color:transparent",
-    "width": 50,
-    "height": 50,
-    "layer": 10,
-    "y": 947,
-    "id": "6zwg",
-    "movableInEdit": false
-  },
   "_meta": {
-    "version": 12,
+    "version": 17,
     "info": {
       "name": "Stratagem",
       "image": "/assets/2024267804_41263",
@@ -8048,21 +7869,21 @@
       "year": "2000",
       "mode": "vs",
       "time": "20",
-      "attribution": "The game layout, board, and piece designs were done by LawDawg and are released to the Public Domain under CC0.<div><br></div><div>Library image generated using the Midjourney artificial intelligence image generator, https://www.midjourney.com/home/, using the following prompt: \"puzzle blocks colored pencil drawing --ar 1:1 --v 5.1\"<br></div>",
+      "attribution": "Game layout, board, and piece designs were done by LawDawg and are released to the Public Domain under CC0.<div><br></div><div>Marble background by PRAIRAT_FHUNTA available under the Pixabay license from https://pixabay.com/illustrations/marble-background-white-abstract-2398946/.<br><div><br></div><div>Library image generated using the Midjourney artificial intelligence image generator, https://www.midjourney.com/home/, using the following prompt: \"puzzle blocks colored pencil drawing --ar 1:1 --v 5.1\"<br></div></div>",
       "similarName": "Blokus",
       "description": "Place colored shapes onto board with corners touching. Fewest unit squares remaning wins.",
       "showName": true,
-      "helpText": "Seats are optional. Use arrows to show or hide trays with colored pieces.",
-      "lastUpdate": 1678631384243,
+      "helpText": "Seats are optional. Use the magnifying glass (or click on any part of the border) on each player's board to enlarge or shrink the board. The view only changes for the player clicking the board.",
+      "lastUpdate": 1745006752275,
       "skill": "",
       "similarImage": "",
-      "similarAwards": "",
+      "similarAwards": "2008 Gra Roku Game of the Year Nominee\n2005 Årets Spill Best Family Game Nominee\n2004 Årets Spel Best Family Game Winner\n2003 Vuoden Peli Family Game of the Year Winner\n2003 Mensa Select Winner\n2003 Australian Games Association Game of the Year\n2002 Spiel des Jahres Recommended\n2002 Japan Boardgame Prize Best Japanese Game Winner",
       "ruleText": "",
+      "similarDesigner": "Bernard Tavitian",
       "variantImage": "",
       "variant": "",
       "language": "",
-      "players": "2-4",
-      "similarDesigner": "Bernard Tavitian"
+      "players": "2-4"
     }
   },
   "recall_button": {
@@ -8082,884 +7903,7 @@
         ]
       },
       {
-        "func": "SELECT",
-        "property": "id",
-        "value": "b001"
-      },
-      {
-        "func": "SET",
-        "property": "parent",
-        "value": "b001h"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "b002"
-      },
-      {
-        "func": "SET",
-        "property": "parent",
-        "value": "b002h"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "b003"
-      },
-      {
-        "func": "SET",
-        "property": "parent",
-        "value": "b003h"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "b004"
-      },
-      {
-        "func": "SET",
-        "property": "parent",
-        "value": "b004h"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "b005"
-      },
-      {
-        "func": "SET",
-        "property": "parent",
-        "value": "b005h"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "b006"
-      },
-      {
-        "func": "SET",
-        "property": "parent",
-        "value": "b006h"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "b007"
-      },
-      {
-        "func": "SET",
-        "property": "parent",
-        "value": "b007h"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "b008"
-      },
-      {
-        "func": "SET",
-        "property": "parent",
-        "value": "b008h"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "b009"
-      },
-      {
-        "func": "SET",
-        "property": "parent",
-        "value": "b009h"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "b010"
-      },
-      {
-        "func": "SET",
-        "property": "parent",
-        "value": "b010h"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "b011"
-      },
-      {
-        "func": "SET",
-        "property": "parent",
-        "value": "b011h"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "b012"
-      },
-      {
-        "func": "SET",
-        "property": "parent",
-        "value": "b012h"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "b013"
-      },
-      {
-        "func": "SET",
-        "property": "parent",
-        "value": "b013h"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "b014"
-      },
-      {
-        "func": "SET",
-        "property": "parent",
-        "value": "b014h"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "b015"
-      },
-      {
-        "func": "SET",
-        "property": "parent",
-        "value": "b015h"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "b016"
-      },
-      {
-        "func": "SET",
-        "property": "parent",
-        "value": "b016h"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "b017"
-      },
-      {
-        "func": "SET",
-        "property": "parent",
-        "value": "b017h"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "b018"
-      },
-      {
-        "func": "SET",
-        "property": "parent",
-        "value": "b018h"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "b019"
-      },
-      {
-        "func": "SET",
-        "property": "parent",
-        "value": "b019h"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "b020"
-      },
-      {
-        "func": "SET",
-        "property": "parent",
-        "value": "b020h"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "b021"
-      },
-      {
-        "func": "SET",
-        "property": "parent",
-        "value": "b021h"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "r001"
-      },
-      {
-        "func": "SET",
-        "property": "parent",
-        "value": "b001h-copy001"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "r002"
-      },
-      {
-        "func": "SET",
-        "property": "parent",
-        "value": "b002h-copy001"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "r003"
-      },
-      {
-        "func": "SET",
-        "property": "parent",
-        "value": "b003h-copy001"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "r004"
-      },
-      {
-        "func": "SET",
-        "property": "parent",
-        "value": "b004h-copy001"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "r005"
-      },
-      {
-        "func": "SET",
-        "property": "parent",
-        "value": "b005h-copy001"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "r006"
-      },
-      {
-        "func": "SET",
-        "property": "parent",
-        "value": "b006h-copy001"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "r007"
-      },
-      {
-        "func": "SET",
-        "property": "parent",
-        "value": "b007h-copy001"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "r008"
-      },
-      {
-        "func": "SET",
-        "property": "parent",
-        "value": "b008h-copy001"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "r009"
-      },
-      {
-        "func": "SET",
-        "property": "parent",
-        "value": "b009h-copy001"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "r010"
-      },
-      {
-        "func": "SET",
-        "property": "parent",
-        "value": "b010h-copy001"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "r011"
-      },
-      {
-        "func": "SET",
-        "property": "parent",
-        "value": "b011h-copy001"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "r012"
-      },
-      {
-        "func": "SET",
-        "property": "parent",
-        "value": "b012h-copy001"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "r013"
-      },
-      {
-        "func": "SET",
-        "property": "parent",
-        "value": "b013h-copy001"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "r014"
-      },
-      {
-        "func": "SET",
-        "property": "parent",
-        "value": "b014h-copy001"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "r015"
-      },
-      {
-        "func": "SET",
-        "property": "parent",
-        "value": "b015h-copy001"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "r016"
-      },
-      {
-        "func": "SET",
-        "property": "parent",
-        "value": "b016h-copy001"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "r017"
-      },
-      {
-        "func": "SET",
-        "property": "parent",
-        "value": "b017h-copy001"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "r018"
-      },
-      {
-        "func": "SET",
-        "property": "parent",
-        "value": "b018h-copy001"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "r019"
-      },
-      {
-        "func": "SET",
-        "property": "parent",
-        "value": "b019h-copy001"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "r020"
-      },
-      {
-        "func": "SET",
-        "property": "parent",
-        "value": "b020h-copy001"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "r021"
-      },
-      {
-        "func": "SET",
-        "property": "parent",
-        "value": "b021h-copy001"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "g001"
-      },
-      {
-        "func": "SET",
-        "property": "parent",
-        "value": "b001h-copy002"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "g002"
-      },
-      {
-        "func": "SET",
-        "property": "parent",
-        "value": "b002h-copy002"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "g003"
-      },
-      {
-        "func": "SET",
-        "property": "parent",
-        "value": "b003h-copy002"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "g004"
-      },
-      {
-        "func": "SET",
-        "property": "parent",
-        "value": "b004h-copy002"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "g005"
-      },
-      {
-        "func": "SET",
-        "property": "parent",
-        "value": "b005h-copy002"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "g006"
-      },
-      {
-        "func": "SET",
-        "property": "parent",
-        "value": "b006h-copy002"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "g007"
-      },
-      {
-        "func": "SET",
-        "property": "parent",
-        "value": "b007h-copy002"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "g008"
-      },
-      {
-        "func": "SET",
-        "property": "parent",
-        "value": "b008h-copy002"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "g009"
-      },
-      {
-        "func": "SET",
-        "property": "parent",
-        "value": "b009h-copy002"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "g010"
-      },
-      {
-        "func": "SET",
-        "property": "parent",
-        "value": "b010h-copy002"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "g011"
-      },
-      {
-        "func": "SET",
-        "property": "parent",
-        "value": "b011h-copy002"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "g012"
-      },
-      {
-        "func": "SET",
-        "property": "parent",
-        "value": "b012h-copy002"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "g013"
-      },
-      {
-        "func": "SET",
-        "property": "parent",
-        "value": "b013h-copy002"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "g014"
-      },
-      {
-        "func": "SET",
-        "property": "parent",
-        "value": "b014h-copy002"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "g015"
-      },
-      {
-        "func": "SET",
-        "property": "parent",
-        "value": "b015h-copy002"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "g016"
-      },
-      {
-        "func": "SET",
-        "property": "parent",
-        "value": "b016h-copy002"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "g017"
-      },
-      {
-        "func": "SET",
-        "property": "parent",
-        "value": "b017h-copy002"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "g018"
-      },
-      {
-        "func": "SET",
-        "property": "parent",
-        "value": "b018h-copy002"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "g019"
-      },
-      {
-        "func": "SET",
-        "property": "parent",
-        "value": "b019h-copy002"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "g020"
-      },
-      {
-        "func": "SET",
-        "property": "parent",
-        "value": "b020h-copy002"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "g021"
-      },
-      {
-        "func": "SET",
-        "property": "parent",
-        "value": "b021h-copy002"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "y001"
-      },
-      {
-        "func": "SET",
-        "property": "parent",
-        "value": "b001h-copy003"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "y002"
-      },
-      {
-        "func": "SET",
-        "property": "parent",
-        "value": "b002h-copy003"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "y003"
-      },
-      {
-        "func": "SET",
-        "property": "parent",
-        "value": "b003h-copy003"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "y004"
-      },
-      {
-        "func": "SET",
-        "property": "parent",
-        "value": "b004h-copy003"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "y005"
-      },
-      {
-        "func": "SET",
-        "property": "parent",
-        "value": "b005h-copy003"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "y006"
-      },
-      {
-        "func": "SET",
-        "property": "parent",
-        "value": "b006h-copy003"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "y007"
-      },
-      {
-        "func": "SET",
-        "property": "parent",
-        "value": "b007h-copy003"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "y008"
-      },
-      {
-        "func": "SET",
-        "property": "parent",
-        "value": "b008h-copy003"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "y009"
-      },
-      {
-        "func": "SET",
-        "property": "parent",
-        "value": "b009h-copy003"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "y010"
-      },
-      {
-        "func": "SET",
-        "property": "parent",
-        "value": "b010h-copy003"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "y011"
-      },
-      {
-        "func": "SET",
-        "property": "parent",
-        "value": "b011h-copy003"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "y012"
-      },
-      {
-        "func": "SET",
-        "property": "parent",
-        "value": "b012h-copy003"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "y013"
-      },
-      {
-        "func": "SET",
-        "property": "parent",
-        "value": "b013h-copy003"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "y014"
-      },
-      {
-        "func": "SET",
-        "property": "parent",
-        "value": "b014h-copy003"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "y015"
-      },
-      {
-        "func": "SET",
-        "property": "parent",
-        "value": "b015h-copy003"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "y016"
-      },
-      {
-        "func": "SET",
-        "property": "parent",
-        "value": "b016h-copy003"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "y017"
-      },
-      {
-        "func": "SET",
-        "property": "parent",
-        "value": "b017h-copy003"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "y018"
-      },
-      {
-        "func": "SET",
-        "property": "parent",
-        "value": "b018h-copy003"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "y019"
-      },
-      {
-        "func": "SET",
-        "property": "parent",
-        "value": "b019h-copy003"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "y020"
-      },
-      {
-        "func": "SET",
-        "property": "parent",
-        "value": "b020h-copy003"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "y021"
-      },
-      {
-        "func": "SET",
-        "property": "parent",
-        "value": "b021h-copy003"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "blueholder"
-      },
-      {
-        "func": "SET",
-        "property": "x",
-        "value": -500
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "blueholder-copy001"
-      },
-      {
-        "func": "SET",
-        "property": "y",
-        "value": 1100
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "blueholder-copy002"
-      },
-      {
-        "func": "SET",
-        "property": "x",
-        "value": 1700
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "blueholder-copy003"
-      },
-      {
-        "func": "SET",
-        "property": "y",
-        "value": 1100
+        "func": "RESET"
       }
     ],
     "y": 950,
@@ -8975,30 +7919,241 @@
   "seat1": {
     "type": "seat",
     "id": "seat1",
-    "x": 470,
+    "x": 355,
     "movableInEdit": false
   },
   "seat2": {
     "type": "seat",
     "id": "seat2",
-    "x": 965,
+    "x": 1085,
     "movableInEdit": false,
     "index": 2
   },
   "seat3": {
     "type": "seat",
     "id": "seat3",
-    "x": 470,
     "movableInEdit": false,
     "y": 945,
-    "index": 3
+    "index": 3,
+    "x": 355
   },
   "seat4": {
     "type": "seat",
     "id": "seat4",
-    "x": 965,
+    "x": 1085,
     "movableInEdit": false,
     "index": 4,
     "y": 945
+  },
+  "zoomy1": {
+    "type": "zoomy",
+    "id": "zoomy1",
+    "y": 0,
+    "width": 350,
+    "height": 1000,
+    "z": 2089,
+    "zoomedX": 0,
+    "zoomedY": 0,
+    "css": {
+      "default": {
+        "background-color": "#d7d6ff",
+        "border-radius": "20px",
+        "box-shadow": "0 0 0 6px #c0c0c0 inset, -8px -8px 16px #ffffff inset, 8px 8px 16px #888888 inset"
+      },
+      "::after": {
+        "font-size": "50px",
+        "color": "black",
+        "top": "-5px",
+        "right": 0
+      }
+    }
+  },
+  "zoomy2": {
+    "type": "zoomy",
+    "id": "zoomy2",
+    "width": 350,
+    "height": 1000,
+    "z": 2095,
+    "zoomedX": 1250,
+    "zoomedY": 0,
+    "css": {
+      "default": {
+        "background-color": "#e4f3d7",
+        "border-radius": "20px",
+        "box-shadow": "0 0 0 6px #c0c0c0 inset, -8px -8px 16px #ffffff inset, 8px 8px 16px #888888 inset"
+      },
+      "::after": {
+        "font-size": "50px",
+        "color": "black",
+        "top": "-5px",
+        "right": 0
+      }
+    },
+    "x": 1350,
+    "y": 5
+  },
+  "zoomy3": {
+    "type": "zoomy",
+    "id": "zoomy3",
+    "width": 350,
+    "height": 1000,
+    "z": 2092,
+    "zoomedX": 0,
+    "zoomedY": 0,
+    "css": {
+      "default": {
+        "background-color": "#fbcfcf",
+        "border-radius": "20px",
+        "box-shadow": "0 0 0 6px #c0c0c0 inset, -8px -8px 16px #ffffff inset, 8px 8px 16px #888888 inset"
+      },
+      "::after": {
+        "font-size": "50px",
+        "color": "black",
+        "top": "-5px",
+        "right": 0
+      }
+    },
+    "y": 500
+  },
+  "zoomy4": {
+    "type": "zoomy",
+    "id": "zoomy4",
+    "width": 350,
+    "height": 1000,
+    "z": 2096,
+    "zoomedX": 1250,
+    "zoomedY": 0,
+    "css": {
+      "default": {
+        "background-color": "#fdf6cf",
+        "border-radius": "20px",
+        "box-shadow": "0 0 0 6px #c0c0c0 inset, -8px -8px 16px #ffffff inset, 8px 8px 16px #888888 inset"
+      },
+      "::after": {
+        "font-size": "50px",
+        "color": "black",
+        "top": "-5px",
+        "right": 0
+      }
+    },
+    "x": 1350,
+    "y": 500
+  },
+  "greenHolder": {
+    "type": "holder",
+    "id": "greenHolder",
+    "parent": "zoomy2",
+    "fixedParent": true,
+    "width": 350,
+    "height": 1000,
+    "layer": -2,
+    "z": 1054,
+    "alignChildren": false,
+    "classes": "transparent",
+    "dropTarget": {
+      "holdgreen": true
+    },
+    "clickRoutine": [
+      {
+        "func": "CLICK",
+        "collection": [
+          "${PROPERTY parent}"
+        ]
+      }
+    ]
+  },
+  "blueHolder": {
+    "type": "holder",
+    "id": "blueHolder",
+    "parent": "zoomy1",
+    "fixedParent": true,
+    "width": 350,
+    "height": 1000,
+    "layer": -2,
+    "z": 1,
+    "alignChildren": false,
+    "classes": "transparent",
+    "dropTarget": {
+      "holdblue": true
+    },
+    "clickRoutine": [
+      {
+        "func": "CLICK",
+        "collection": [
+          "${PROPERTY parent}"
+        ]
+      }
+    ]
+  },
+  "redHolder": {
+    "type": "holder",
+    "id": "redHolder",
+    "parent": "zoomy3",
+    "fixedParent": true,
+    "width": 350,
+    "height": 1000,
+    "layer": -2,
+    "z": 943,
+    "alignChildren": false,
+    "classes": "transparent",
+    "dropTarget": {
+      "holdred": true
+    },
+    "clickRoutine": [
+      {
+        "func": "CLICK",
+        "collection": [
+          "${PROPERTY parent}"
+        ]
+      }
+    ]
+  },
+  "yellowHolder": {
+    "type": "holder",
+    "id": "yellowHolder",
+    "parent": "zoomy4",
+    "fixedParent": true,
+    "width": 350,
+    "height": 1000,
+    "layer": -2,
+    "z": 1146,
+    "alignChildren": false,
+    "classes": "transparent",
+    "dropTarget": {
+      "holdyellow": true
+    },
+    "clickRoutine": [
+      {
+        "func": "CLICK",
+        "collection": [
+          "${PROPERTY parent}"
+        ]
+      }
+    ]
+  },
+  "board": {
+    "id": "board",
+    "x": 350,
+    "y": 50,
+    "width": 900,
+    "height": 900,
+    "layer": -4,
+    "z": 3075,
+    "movable": false,
+    "image": "/assets/1079563960_7235699"
+  },
+  "background": {
+    "id": "background",
+    "width": 1622,
+    "height": 1132,
+    "layer": -5,
+    "image": "/assets/1798373892_32724",
+    "z": 1,
+    "y": -23,
+    "x": -1,
+    "movable": false,
+    "css": {
+      "opacity": 0.8
+    }
   }
 }
