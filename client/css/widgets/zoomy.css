@@ -8,7 +8,7 @@
 }
 
 .zoomy.widget.defaultStyle {
-  background: white;
+  background: #c0c0c0;
 }
 
 .zoomy.widget.defaultStyle::after {
@@ -17,7 +17,7 @@
   position: absolute;
   bottom: -12px;
   right: 5px;
-  font-size: 200px;
+  font-size: 80px;
   pointer-events: none;
   color: var(--roomColor);
 }
