@@ -182,7 +182,7 @@ const jeCommands = [
     show: _=>jeStateNow,
     options: [
       { label: 'Increment IDs',          type: 'select', options: [ { value: 'Numbers', text: 'Numbers' }, { value: 'Letters', text: 'Letters' }, { value: '', text: 'None'  } ] },
-      { label: 'Increment In',           type: 'string',   value: 'dropTarget,hand,index,inheritFrom,linkedToSeat,onlyVisibleForSeat,text' },
+      { label: 'Increment In',           type: 'string',   value: 'dropTarget,hand,index,inheritFrom,linkedToSeat,onlyVisibleForSeat,onlyUsableBySeat,text' },
       { label: 'Copy using inheritFrom', type: 'checkbox', value: false },
       { label: 'Inherit properties',     type: 'string', value: '' },
       { label: 'Copy recursively',       type: 'checkbox', value: true  },
