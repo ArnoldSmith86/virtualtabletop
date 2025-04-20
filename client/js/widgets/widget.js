@@ -421,8 +421,12 @@ export class Widget extends StateManaged {
         break;
       }
     }
-    if(notUsable)
-      className += ' notUsable';
+    if(notUsable) {
+      if (this.get('type') === 'zoomy')
+        className += ' zoomyNotUsable';
+      else
+        className += ' notUsable';
+    }
 
     const linkedToSeat = this.get('linkedToSeat');
     if(linkedToSeat && widgetFilter(w=>w.get('type') == 'seat' && w.get('player') == playerName).length)

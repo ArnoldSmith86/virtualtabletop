@@ -812,9 +812,17 @@ body.jsonEdit:not(.hitTest) .widget.foreign, body.jsonEdit:not(.hitTest):not(.sh
  --notUsable:true;
 }
 
-body:not(.jsonEdit) .widget.notUsable  > *{
+body:not(.jsonEdit) .widget.notUsable {
   pointer-events: none !important;
 }
+
+.widget.zoomyNotUsable {
+  --zoomyNotUsable:true;
+ }
+ 
+ body:not(.jsonEdit) .widget.zoomyNotUsable > * {
+   pointer-events: none !important;
+ }
 
 .widget.limbo {
   opacity: 0.5;
