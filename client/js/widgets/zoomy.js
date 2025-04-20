@@ -159,28 +159,28 @@ export class Zoomy extends Widget {
     return this.get('zoomedPlayers') == 'all' || this.get('zoomedPlayers').includes(playerName);
   }
 
-  async set(property, value) {
-    if(this.isZoomed() && $('body').classList.contains('edit')) {
-      if(property == 'x')
-        await this.set('zoomedX', value);
-      else if(property == 'y')
-        await this.set('zoomedY', value);
-      else if(property == 'scale')
-        await this.set('zoomedScale', value);
-      else if(property == 'rotation')
-        await this.set('zoomedRotation', value);
-      else
-        await super.set(property, value);
-    } else {
-      await super.set(property, value);
-    }
-  }
-
   async setZoomed(zoomed) {
-    if(zoomed && Array.isArray(this.get('groupedWith')))
+    const selfScale = Number(this.get('zoomedScale'));
+    const trigger = (selfScale >= 0.5 && zoomed) || (selfScale < 0.5 && !zoomed);
+  
+    if(trigger && Array.isArray(this.get('groupedWith')))
       for(const groupedWith of this.get('groupedWith'))
-        if(groupedWith != this.id && widgets.has(groupedWith) && widgets.get(groupedWith).get('type') == 'zoomy' && widgets.get(groupedWith).isZoomed())
-          await widgets.get(groupedWith).setZoomed(false);
+        if(groupedWith !== this.id && widgets.has(groupedWith)) {
+          const other = widgets.get(groupedWith);
+          if(other.get('type') === 'zoomy') {
+            const invert = Number(other.get('zoomedScale')) < 0.5;
+            const targetZoom = invert ? true : false;
+            if(other.isZoomed() !== targetZoom)
+              if(other.get('allPlayers'))
+                await other.set('zoomedPlayers', targetZoom ? 'all' : []);
+              else {
+                const current = asArray(other.get('zoomedPlayers'));
+                const updated = targetZoom ? [...current, playerName] : current.filter(p => p !== playerName);
+                await other.set('zoomedPlayers', updated);
+              }
+          }
+        }
+  
     if(zoomed && this.get('allPlayers'))
       await this.set('zoomedPlayers', 'all');
     else if(!zoomed && this.get('allPlayers'))
