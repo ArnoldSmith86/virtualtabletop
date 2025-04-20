@@ -193,6 +193,13 @@ export class Zoomy extends Widget {
       await this.set('zoomedPlayers', [...this.get('zoomedPlayers').filter(player => player != playerName)]);
   }
 
+  async moveZoomed(newCoords, localAnchor) {
+    const newZoomedX = newCoords.x - localAnchor.x;
+    const newZoomedY = newCoords.y - localAnchor.y;
+    await this.set('zoomedX', newZoomedX);
+    await this.set('zoomedY', newZoomedY);
+  }
+
   updateScale() {
     this.targetTransform = this.domElement.style.transform = this.cssTransform();
   }
