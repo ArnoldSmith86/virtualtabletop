@@ -2483,7 +2483,6 @@ export class Widget extends StateManaged {
     state.owner = null;
     state.linkedToSeat = null;
     state.onlyVisibleForSeat = null;
-    state.onlyUsableBySeat = null;
 
     this.applyInitialDelta(state);
     target.appendChild(this.domElement);
