@@ -118,6 +118,6 @@ class Seat extends Widget {
   }
 
   updateLinkedWidgets() {
-    widgetFilter(w=>w.get('onlyVisibleForSeat') || w.get('linkedToSeat') || w.get('showInactiveFaceToSeat') || w.get('type') == 'seat').forEach(wc=>wc.updateOwner());
+    widgetFilter(w=>w.get('onlyVisibleForSeat') || w.get('onlyUsableBySeat') || w.get('linkedToSeat') || w.get('showInactiveFaceToSeat') || w.get('type') == 'seat').forEach(wc=>wc.updateOwner());
   }
 }

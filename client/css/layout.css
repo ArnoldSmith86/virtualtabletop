@@ -808,6 +808,14 @@ body.jsonEdit:not(.hitTest) .widget.foreign, body.jsonEdit:not(.hitTest):not(.sh
   pointer-events: none;
 }
 
+.widget.notUsable {
+ --notUsable:true;
+}
+
+body:not(.jsonEdit) .widget.notUsable  > *{
+  pointer-events: none !important;
+}
+
 .widget.limbo {
   opacity: 0.5;
   border: 5px dashed darkred;

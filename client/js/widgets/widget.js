@@ -80,6 +80,7 @@ export class Widget extends StateManaged {
 
       linkedToSeat: null,
       onlyVisibleForSeat: null,
+      onlyUsableBySeat: null,
       hoverInheritVisibleForSeat: true,
 
       clickRoutine: null,
@@ -412,6 +413,17 @@ export class Widget extends StateManaged {
     if(invisible)
       className += ' foreign';
 
+    let onlyUsableBySeat = this.get('onlyUsableBySeat');
+    let notUsable = onlyUsableBySeat !== null;
+    for(const seatID of asArray(onlyUsableBySeat) || []) {
+      if(widgets.has(seatID) && widgets.get(seatID).get('player') == playerName) {
+        notUsable = false;
+        break;
+      }
+    }
+    if(notUsable)
+      className += ' notUsable';
+
     const linkedToSeat = this.get('linkedToSeat');
     if(linkedToSeat && widgetFilter(w=>w.get('type') == 'seat' && w.get('player') == playerName).length)
       if(!widgetFilter(w=>asArray(linkedToSeat).indexOf(w.get('id')) != -1 && w.get('player')).length)
@@ -451,7 +463,7 @@ export class Widget extends StateManaged {
   }
 
   classesProperties() {
-    return [ 'classes', 'display', 'dragging', 'dropShadowOwner', 'hoverTarget', 'linkedToSeat', 'onlyVisibleForSeat', 'owner', 'typeClasses', 'movable', 'enlarge', 'clickable' ];
+    return [ 'classes', 'display', 'dragging', 'dropShadowOwner', 'hoverTarget', 'linkedToSeat', 'onlyVisibleForSeat', 'onlyUsableBySeat', 'owner', 'typeClasses', 'movable', 'enlarge', 'clickable' ];
   }
 
   async click(mode='respect') {
@@ -2467,6 +2479,7 @@ export class Widget extends StateManaged {
     state.owner = null;
     state.linkedToSeat = null;
     state.onlyVisibleForSeat = null;
+    state.onlyUsableBySeat = null;
 
     this.applyInitialDelta(state);
     target.appendChild(this.domElement);

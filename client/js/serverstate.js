@@ -261,9 +261,9 @@ async function updateWidgetId(widget, oldID) {
     }
   }
 
-  // If widget is a seat, change widgets with onlyVisibleForSeat and linkedToSeat naming that seat.
+  // If widget is a seat, change widgets with onlyVisibleForSeat, onlyUsableBySeat, and linkedToSeat naming that seat.
   if(widget.type == 'seat') {
-    for(const prop of ['onlyVisibleForSeat', 'linkedToSeat']) {
+    for(const prop of ['onlyVisibleForSeat', 'onlyUsableBySeat', 'linkedToSeat']) {
       for(const w of widgetFilter(w => w.get(prop) && asArray(w.get(prop)).includes(oldID))) {
         if(typeof w.get(prop) === 'string') {
           await w.set(prop, id)
