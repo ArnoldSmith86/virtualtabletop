@@ -24,7 +24,7 @@ export class Zoomy extends Widget {
       hidePlayerCursors: true,
       dropTarget: {},
 
-      defaultStyle: true,
+      showIcon: 'bottom right',
       zoomedPlayers: [],
       groupedWith: [],
       allPlayers: false,
@@ -56,8 +56,21 @@ export class Zoomy extends Widget {
   classes(includeTemporary = true) {
     let className = super.classes(includeTemporary);
 
-    if(this.get('defaultStyle'))
-      className += ' defaultStyle';
+    const showIconValue = this.get('showIcon');
+    if (showIconValue) {
+      className += ' showIcon';
+      const parts = showIconValue.trim().toLowerCase().split(/\s+/);
+      let vertical = 'bottom';
+      let horizontal = 'right';
+
+      for (const part of parts) {
+        if (['top', 'middle', 'bottom'].includes(part)) vertical = part;
+        else if (['left', 'center', 'right'].includes(part)) horizontal = part;
+      }
+
+      className += ' ' + horizontal + ' ' + vertical;
+    }
+
     if(this.isZoomed())
       className += ' zoomed';
     if(this.get('lockChildren'))
@@ -69,7 +82,7 @@ export class Zoomy extends Widget {
   classesProperties() {
     const properties = super.classesProperties();
 
-    properties.push('defaultStyle', 'zoomedPlayers', 'lockChildren');
+    properties.push('showIcon', 'zoomedPlayers', 'lockChildren');
 
     return properties;
   }
