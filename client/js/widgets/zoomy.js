@@ -210,11 +210,15 @@ export class Zoomy extends Widget {
       await this.set('zoomedPlayers', [...this.get('zoomedPlayers').filter(player => player != playerName)]);
   }
 
-  async moveZoomed(newCoords, localAnchor) {
-    const newZoomedX = newCoords.x - localAnchor.x;
-    const newZoomedY = newCoords.y - localAnchor.y;
-    await this.set('zoomedX', newZoomedX);
-    await this.set('zoomedY', newZoomedY);
+  async move(coordGlobal, localAnchor) {
+    if (this.isZoomed()) {
+      const newCoord = this.dragCorner(coordGlobal, localAnchor);
+      await this.set('zoomedX', newCoord.x);
+      await this.set('zoomedY', newCoord.y);
+      await this.snapToGrid();
+    } else {
+      await super.move(coordGlobal, localAnchor);
+    }
   }
 
   updateScale() {

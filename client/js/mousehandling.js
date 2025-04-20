@@ -122,12 +122,7 @@ async function inputHandler(name, e) {
       mouseStatus[target.id].coords = coords;
       if(mouseStatus[target.id].moveTarget) {
         setDeltaCause(`${playerName} dragged ${widget.id}`);
-        const mt = mouseStatus[target.id].moveTarget;
-        if(mt.get('type') === 'zoomy' && mt.isZoomed()) {
-          await mt.moveZoomed(coords, mouseStatus[target.id].localAnchor);
-        } else {
-          await mt.move(coords, mouseStatus[target.id].localAnchor);
-        }
+        await mouseStatus[target.id].moveTarget.move(coords, mouseStatus[target.id].localAnchor);
       }
     }
     batchEnd();
