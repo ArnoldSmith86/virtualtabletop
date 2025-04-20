@@ -159,6 +159,23 @@ export class Zoomy extends Widget {
     return this.get('zoomedPlayers') == 'all' || this.get('zoomedPlayers').includes(playerName);
   }
 
+  async set(property, value) {
+    if(this.isZoomed() && $('body').classList.contains('edit')) {
+      if(property == 'x')
+        await this.set('zoomedX', value);
+      else if(property == 'y')
+        await this.set('zoomedY', value);
+      else if(property == 'scale')
+        await this.set('zoomedScale', value);
+      else if(property == 'rotation')
+        await this.set('zoomedRotation', value);
+      else
+        await super.set(property, value);
+    } else {
+      await super.set(property, value);
+    }
+  }
+
   async setZoomed(zoomed) {
     const selfScale = Number(this.get('zoomedScale'));
     const trigger = (selfScale >= 0.5 && zoomed) || (selfScale < 0.5 && !zoomed);
