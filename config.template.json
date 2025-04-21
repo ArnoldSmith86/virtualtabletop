@@ -5,6 +5,7 @@
   "urlPrefix": "",
   "minifyJavascript": false,
   "forceTracing": false,
+  "simulateServerLag": 0,
   "customTab": null,
 
   "allowPublicLibraryEdits": false,

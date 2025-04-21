@@ -46,7 +46,8 @@
         "relation": "=="
       },
       {
-        "func": "CLICK"
+        "func": "CLICK",
+        "mode": "ignoreClickable"
       }
     ],
     "x": 28,
@@ -99,9 +100,17 @@
       },
       {
         "func": "TURN"
+      },
+      {
+        "func": "CALL",
+        "widget": "v5ea"
       }
     ],
-    "z": 35006
+    "z": 35006,
+    "backgroundColor": "#fff",
+    "borderColor": "#f5a622",
+    "textColor": "#f5a622",
+    "textColorOH": "#fff"
   },
   "b92eed53-bf9a-40c5-aa42-e30bd8535ba6": {
     "id": "b92eed53-bf9a-40c5-aa42-e30bd8535ba6",
@@ -111,312 +120,84 @@
     "type": "deck",
     "cardTypes": {
       "type-ceec75cf-d39a-4cff-a5af-290f079a1a0c": {
-        "label": "blue square.png",
-        "sortingOrder": 1,
         "image1": "/assets/-357213206_3173",
-        "text1": "21"
+        "text1": "21",
+        "score": 1
       },
       "type-0d0c5608-5943-4781-b879-29596b6e0d11": {
         "image1": "/assets/-357213206_3173",
         "text1": "22",
-        "sortingOrder": 2
+        "score": 1
       },
       "type-dae6dc11-d9e3-4db1-b459-e9a760b5a677": {
         "image1": "/assets/-357213206_3173",
         "text1": "23",
-        "sortingOrder": 3
+        "score": 1
       },
       "type-74d83a07-9543-4525-9258-0ea4f54b654a": {
         "image1": "/assets/-357213206_3173",
         "text1": "24",
-        "sortingOrder": 4
+        "score": 1
       },
       "type-85fc61ae-79fa-475b-b768-6d519a81e3db": {
         "image1": "/assets/-1581079654_3631",
         "text1": "25",
-        "sortingOrder": 5
+        "score": 2
       },
       "type-e5fa9bf6-5207-43eb-a289-124f0be69341": {
         "image1": "/assets/-1581079654_3631",
         "text1": "26",
-        "sortingOrder": 6
+        "score": 2
       },
       "type-d2cce1f2-b95e-4d72-a084-78f314e9d93f": {
         "image1": "/assets/-1581079654_3631",
         "text1": "27",
-        "sortingOrder": 7
+        "score": 2
       },
       "type-3d750924-17de-4f28-9fe1-17113d301454": {
         "image1": "/assets/-1581079654_3631",
         "text1": "28",
-        "sortingOrder": 8
+        "score": 2
       },
       "type-f06c6164-7f05-46f1-807a-a37e897c94a2": {
         "image1": "/assets/-1918410956_3964",
         "text1": "29",
-        "sortingOrder": 9
+        "score": 3
       },
       "type-3915c5b7-e3f2-494e-8048-8e3e47b62527": {
         "image1": "/assets/-1918410956_3964",
         "text1": "30",
-        "sortingOrder": 10
+        "score": 3
       },
       "type-98bec708-5902-483f-a2aa-ea4513904b4c": {
         "image1": "/assets/-1918410956_3964",
         "text1": "31",
-        "sortingOrder": 11
+        "score": 3
       },
       "type-ac2c852d-cbb4-482e-bb84-30f9730bcb79": {
         "image1": "/assets/-1918410956_3964",
         "text1": "32",
-        "sortingOrder": 12
+        "score": 3
       },
       "type-7a3cd332-c01f-4ff7-9a2e-73f959ce048a": {
         "image1": "/assets/-591346775_9190",
         "text1": "33",
-        "sortingOrder": 13
+        "score": 4
       },
       "type-d588b14c-4203-4c74-a87d-5947d1f02861": {
         "image1": "/assets/-591346775_9190",
         "text1": "34",
-        "sortingOrder": 14
+        "score": 4
       },
       "type-31d8328a-6032-49c2-a7b6-7867eae846e8": {
         "image1": "/assets/-591346775_9190",
         "text1": "35",
-        "sortingOrder": 15
+        "score": 4
       },
       "type-cafa94bc-5162-49b3-9d5d-8d9f9b35de45": {
         "image1": "/assets/-591346775_9190",
         "text1": "36",
-        "sortingOrder": 16
-      },
-      "type-d2041b8b-1e2e-4169-84bf-e5a0a56a805b": {
-        "image1": "/assets/1139003759_2969",
-        "text1": "17",
-        "sortingOrder": 17
-      },
-      "type-3d0285ed-0719-4aaf-b044-78f723b589e8": {
-        "image1": "/assets/1139003759_2969",
-        "text1": "18",
-        "sortingOrder": 18
-      },
-      "type-9a360ba3-c78c-4d02-9252-32f575fad660": {
-        "image1": "/assets/1139003759_2969",
-        "text1": "19",
-        "sortingOrder": 19
-      },
-      "type-445cd748-fe91-43f1-8e86-4c87f795d913": {
-        "image1": "/assets/1139003759_2969",
-        "text1": "20",
-        "sortingOrder": 20
-      },
-      "type-0a5a324d-2b91-43d0-882f-4d80fe5d71a0": {
-        "image1": "/assets/-222934316_2947",
-        "label": "green square.png",
-        "text1": "Disc.",
-        "sortingOrder": 21
-      },
-      "type-40aab999-2462-4b76-a794-eb8be6464d46": {
-        "image1": "/assets/-222934316_2947",
-        "text1": "2",
-        "sortingOrder": 22
-      },
-      "type-f34507ba-3670-4bae-9ae7-741c2cd85040": {
-        "image1": "/assets/-222934316_2947",
-        "text1": "3",
-        "sortingOrder": 23
-      },
-      "type-657dd2e7-b9dd-4108-99f9-26106deb5be2": {
-        "image1": "/assets/-222934316_2947",
-        "text1": "4",
-        "sortingOrder": 24
-      },
-      "type-fad993b2-6c3b-4735-8f97-9d6fcd4eb911": {
-        "image1": "/assets/-222934316_2947",
-        "text1": "5",
-        "sortingOrder": 25
-      },
-      "type-21ccd57a-6764-43b4-8ebc-c9603e37d7e3": {
-        "image1": "/assets/-222934316_2947",
-        "text1": "6",
-        "sortingOrder": 26
-      },
-      "type-e43b1e1a-b0fc-4d56-9323-aa450302d842": {
-        "image1": "/assets/-222934316_2947",
-        "text1": "7",
-        "sortingOrder": 27
-      },
-      "type-d7d5a4eb-4b8f-4d82-9064-398f1c2503e7": {
-        "image1": "/assets/-222934316_2947",
-        "text1": "8",
-        "sortingOrder": 28
-      },
-      "type-60521987-974c-4ba1-b1d6-91388908bffa": {
-        "image1": "/assets/-222934316_2947",
-        "text1": "9",
-        "sortingOrder": 29
-      },
-      "type-7bb39cfe-a9a0-4990-bce3-e37636d41fc7": {
-        "image1": "/assets/-222934316_2947",
-        "text1": "10",
-        "sortingOrder": 30
-      },
-      "type-ee806d6b-1b54-44a4-8e24-acc74cd1438e": {
-        "image1": "/assets/-222934316_2947",
-        "text1": "11",
-        "sortingOrder": 31
-      },
-      "type-3a60ced1-49d2-4f8e-8248-4c697233be22": {
-        "image1": "/assets/-222934316_2947",
-        "text1": "12",
-        "sortingOrder": 32
-      },
-      "type-0ec53891-1641-42d5-a78f-a572f246f946": {
-        "image1": "/assets/-222934316_2947",
-        "text1": "13",
-        "sortingOrder": 33
-      },
-      "type-4e4287a3-2456-49a7-aaf6-f4ece7d5c864": {
-        "image1": "/assets/-222934316_2947",
-        "text1": "14",
-        "sortingOrder": 34
-      },
-      "type-e39889e6-fc50-4940-ac6a-ac7f4a5d7139": {
-        "image1": "/assets/-222934316_2947",
-        "text1": "15",
-        "sortingOrder": 35
-      },
-      "type-b0b11184-2997-4d91-a7b1-aed5103d1d61": {
-        "image1": "/assets/-222934316_2947",
-        "text1": "16",
-        "sortingOrder": 36
-      },
-      "type-63a6e57f-c7c6-422d-8495-442b1735f60b": {
-        "image1": "/assets/-222934316_2947",
-        "text1": "17",
-        "sortingOrder": 37
-      },
-      "type-fe699dc9-faa1-49b6-9af0-d73cb5ed21c8": {
-        "image1": "/assets/-222934316_2947",
-        "text1": "18",
-        "sortingOrder": 38
-      },
-      "type-aa322f55-44a8-42fd-b6cd-cfca75692225": {
-        "image1": "/assets/-222934316_2947",
-        "text1": "19",
-        "sortingOrder": 39
-      },
-      "type-ce5a2cf4-ec2a-4b81-99f6-f8ce2d8912c0": {
-        "image1": "/assets/-222934316_2947",
-        "text1": "20",
-        "sortingOrder": 40
-      },
-      "type-003c02fa-ce28-4acb-a4f1-b5c4b3b31760": {
-        "image1": "/assets/-1703909484_2946",
-        "label": "orange square.png",
-        "text1": "-1",
-        "sortingOrder": 41
-      },
-      "type-90dfb5f7-437b-422e-80d1-4d8506055688": {
-        "image1": "/assets/-1703909484_2946",
-        "text1": "2",
-        "sortingOrder": 42
-      },
-      "type-9918701e-2c16-4c48-98fb-98fbe1eda15f": {
-        "image1": "/assets/-1703909484_2946",
-        "text1": "-3",
-        "sortingOrder": 43
-      },
-      "type-3c1764d1-dd60-427e-85e0-c3e16aa4bbbd": {
-        "image1": "/assets/-1703909484_2946",
-        "text1": "4",
-        "sortingOrder": 44
-      },
-      "type-40f3ba8b-9e80-4cfa-9a80-f68a61fe72e7": {
-        "image1": "/assets/-1703909484_2946",
-        "text1": "-5",
-        "sortingOrder": 45
-      },
-      "type-9a730747-6c22-4530-a4a5-b6c992d5ca87": {
-        "image1": "/assets/-1703909484_2946",
-        "text1": "6",
-        "sortingOrder": 46
-      },
-      "type-91660507-68b4-412e-9380-4c858dc48a67": {
-        "image1": "/assets/-1703909484_2946",
-        "text1": "-7",
-        "sortingOrder": 47
-      },
-      "type-05ab0a2e-839a-49e7-98b2-21196fc666f6": {
-        "image1": "/assets/-1703909484_2946",
-        "text1": "8",
-        "sortingOrder": 48
-      },
-      "type-7261d97a-56aa-4ac2-944d-50ad6aa68915": {
-        "image1": "/assets/-1703909484_2946",
-        "text1": "9",
-        "sortingOrder": 49
-      },
-      "type-cfdb3cd1-cec2-41d6-82e9-63ad95bef89c": {
-        "image1": "/assets/-1703909484_2946",
-        "text1": "-10",
-        "sortingOrder": 50
-      },
-      "type-3ea4ae8d-6904-4f73-9259-7a33542677e3": {
-        "image1": "/assets/-1703909484_2946",
-        "text1": "11",
-        "sortingOrder": 51
-      },
-      "type-b373fa13-c3ab-44e5-ba5e-1a62658cc0d2": {
-        "image1": "/assets/-1703909484_2946",
-        "text1": "12",
-        "sortingOrder": 52
-      },
-      "type-745debaa-d714-4cb1-ac2b-019491cf4a3f": {
-        "image1": "/assets/-1703909484_2946",
-        "text1": "13",
-        "sortingOrder": 53
-      },
-      "type-1928cc5a-6ed2-4741-9073-4615fdc4d752": {
-        "image1": "/assets/-1703909484_2946",
-        "text1": "14",
-        "sortingOrder": 54
-      },
-      "type-dcc502bd-24e9-44df-a2ff-21d5ca202bf3": {
-        "image1": "/assets/-1703909484_2946",
-        "text1": "15",
-        "sortingOrder": 55
-      },
-      "type-ff5d1dda-5c08-4c00-a51b-ae1081756c77": {
-        "image1": "/assets/-1703909484_2946",
-        "text1": "16",
-        "sortingOrder": 56
-      },
-      "type-e3c83c8e-331d-49b9-81c7-56f8fb4c85a0": {
-        "image1": "/assets/-1703909484_2946",
-        "text1": "17",
-        "sortingOrder": 57
-      },
-      "type-6936f4e3-bf7c-4fbc-bc4e-7ee347caf9fd": {
-        "image1": "/assets/-1703909484_2946",
-        "text1": "18",
-        "sortingOrder": 58
-      },
-      "type-f36738f4-a08e-4cea-8211-8b4eb98f9007": {
-        "image1": "/assets/-1703909484_2946",
-        "text1": "19",
-        "sortingOrder": 59
-      },
-      "type-b040760a-c744-4a2c-93ce-f3857d253f9e": {
-        "image1": "/assets/-1703909484_2946",
-        "text1": "0/-20",
-        "sortingOrder": 60
-      },
-      "c78feb25-8939-4c75-aab3-9736c76a8db1.png": {
-        "image": "/assets/1004473835_2846",
-        "text1": "+1",
-        "image1": "/assets/1004473835_2846"
+        "score": 4
       }
     },
     "faceTemplates": [
@@ -508,7 +289,17 @@
       },
       {
         "func": "SORT",
-        "holder": "4e26b75e-0310-4e32-a967-8c96314d78a1"
+        "holder": "4e26b75e-0310-4e32-a967-8c96314d78a1",
+        "key": "text1"
+      },
+      {
+        "func": "SELECT",
+        "property": "type",
+        "value": "label"
+      },
+      {
+        "func": "SET",
+        "property": "text"
       }
     ],
     "backgroundColor": "#e9d0b3",
@@ -523,11 +314,18 @@
     "type": "holder",
     "inheritChildZ": true,
     "width": 1348,
-    "height": 176,
+    "height": 178,
     "stackOffsetX": 84,
     "css": {
       "background": "#ffffff60"
-    }
+    },
+    "enterRoutine": [
+      {
+        "func": "SORT",
+        "holder": "${PROPERTY id}",
+        "key": "text1"
+      }
+    ]
   },
   "ea9579fc-59ef-4a0d-bd40-7420a5165dc6": {
     "id": "ea9579fc-59ef-4a0d-bd40-7420a5165dc6",
@@ -603,7 +401,6 @@
   },
   "w2q7": {
     "type": "label",
-    "text": "0\n",
     "id": "w2q7",
     "x": 205.5,
     "y": 20,
@@ -614,53 +411,8 @@
     "z": 7,
     "linkedToSeat": "wdh4"
   },
-  "w2q7D": {
-    "id": "w2q7D",
-    "parent": "w2q7",
-    "fixedParent": true,
-    "x": -38,
-    "y": 1,
-    "width": 36,
-    "height": 36,
-    "type": "button",
-    "movableInEdit": false,
-    "classes": "symbols",
-    "css": "font-size: 28px",
-    "text": "remove",
-    "clickRoutine": [
-      {
-        "func": "LABEL",
-        "label": "${PROPERTY parent}",
-        "mode": "dec",
-        "value": 1
-      }
-    ]
-  },
-  "w2q7U": {
-    "id": "w2q7U",
-    "parent": "w2q7",
-    "fixedParent": true,
-    "x": 68,
-    "y": 1,
-    "width": 36,
-    "height": 36,
-    "type": "button",
-    "movableInEdit": false,
-    "classes": "symbols",
-    "css": "font-size: 28px",
-    "text": "add",
-    "clickRoutine": [
-      {
-        "func": "LABEL",
-        "label": "${PROPERTY parent}",
-        "mode": "inc",
-        "value": 1
-      }
-    ]
-  },
   "w2q8": {
     "type": "label",
-    "text": 0,
     "id": "w2q8",
     "x": 486.5,
     "y": 20,
@@ -671,53 +423,8 @@
     "z": 16,
     "linkedToSeat": "wdh2"
   },
-  "w2q8D": {
-    "id": "w2q8D",
-    "parent": "w2q8",
-    "fixedParent": true,
-    "x": -38,
-    "y": 1,
-    "width": 36,
-    "height": 36,
-    "type": "button",
-    "movableInEdit": false,
-    "classes": "symbols",
-    "css": "font-size: 28px",
-    "text": "remove",
-    "clickRoutine": [
-      {
-        "func": "LABEL",
-        "label": "${PROPERTY parent}",
-        "mode": "dec",
-        "value": 1
-      }
-    ]
-  },
-  "w2q8U": {
-    "id": "w2q8U",
-    "parent": "w2q8",
-    "fixedParent": true,
-    "x": 68,
-    "y": 1,
-    "width": 36,
-    "height": 36,
-    "type": "button",
-    "movableInEdit": false,
-    "classes": "symbols",
-    "css": "font-size: 28px",
-    "text": "add",
-    "clickRoutine": [
-      {
-        "func": "LABEL",
-        "label": "${PROPERTY parent}",
-        "mode": "inc",
-        "value": 1
-      }
-    ]
-  },
   "w2q9": {
     "type": "label",
-    "text": 0,
     "id": "w2q9",
     "x": 767.5,
     "y": 20,
@@ -728,53 +435,8 @@
     "z": 17,
     "linkedToSeat": "wdh3"
   },
-  "w2q9D": {
-    "id": "w2q9D",
-    "parent": "w2q9",
-    "fixedParent": true,
-    "x": -38,
-    "y": 1,
-    "width": 36,
-    "height": 36,
-    "type": "button",
-    "movableInEdit": false,
-    "classes": "symbols",
-    "css": "font-size: 28px",
-    "text": "remove",
-    "clickRoutine": [
-      {
-        "func": "LABEL",
-        "label": "${PROPERTY parent}",
-        "mode": "dec",
-        "value": 1
-      }
-    ]
-  },
-  "w2q9U": {
-    "id": "w2q9U",
-    "parent": "w2q9",
-    "fixedParent": true,
-    "x": 68,
-    "y": 1,
-    "width": 36,
-    "height": 36,
-    "type": "button",
-    "movableInEdit": false,
-    "classes": "symbols",
-    "css": "font-size: 28px",
-    "text": "add",
-    "clickRoutine": [
-      {
-        "func": "LABEL",
-        "label": "${PROPERTY parent}",
-        "mode": "inc",
-        "value": 1
-      }
-    ]
-  },
   "w2q10": {
     "type": "label",
-    "text": 0,
     "id": "w2q10",
     "x": 1048.5,
     "y": 20,
@@ -785,76 +447,26 @@
     "z": 18,
     "linkedToSeat": "wdh5"
   },
-  "w2q10D": {
-    "id": "w2q10D",
-    "parent": "w2q10",
-    "fixedParent": true,
-    "x": -38,
-    "y": 1,
-    "width": 36,
-    "height": 36,
-    "type": "button",
-    "movableInEdit": false,
-    "classes": "symbols",
-    "css": "font-size: 28px",
-    "text": "remove",
-    "clickRoutine": [
-      {
-        "func": "LABEL",
-        "label": "${PROPERTY parent}",
-        "mode": "dec",
-        "value": 1
-      }
-    ]
-  },
-  "w2q10U": {
-    "id": "w2q10U",
-    "parent": "w2q10",
-    "fixedParent": true,
-    "x": 68,
-    "y": 1,
-    "width": 36,
-    "height": 36,
-    "type": "button",
-    "movableInEdit": false,
-    "classes": "symbols",
-    "css": "font-size: 28px",
-    "text": "add",
-    "clickRoutine": [
-      {
-        "func": "LABEL",
-        "label": "${PROPERTY parent}",
-        "mode": "inc",
-        "value": 1
-      }
-    ]
-  },
   "26zkx": {
     "type": "dice",
     "x": 11,
-    "faces": [
-      1,
-      2,
-      3,
-      4,
-      5,
-      {
-        "image": "/assets/834358786_25582",
-        "value": 5
-      }
-    ],
-    "z": 2591,
     "id": "26zkx",
-    "rollCount": 515,
-    "movable": "true",
-    "width": 90,
-    "height": 90,
     "y": 87,
-    "activeFace": 2,
-    "parent": "ck9c"
+    "parent": "ck9c",
+    "inheritFrom": {
+      "33zkx": [
+        "width",
+        "height",
+        "movable",
+        "faces",
+        "svgReplaces",
+        "chopstickColor",
+        "clickable"
+      ]
+    }
   },
   "_meta": {
-    "version": 12,
+    "version": 15,
     "info": {
       "name": "Sashimi Dice",
       "image": "/assets/-923231317_22699",
@@ -864,7 +476,7 @@
       "mode": "vs",
       "time": "20",
       "attribution": "<div>Board layout by Shobu and ArnoldSmith86. Released to public domain under CC0.</div><div><br></div><div>The background image (and library image) were generated by Midjourney using the prompt \"Sushi shop anime background --ar 16:10\".<br></div><div><br></div><div>All other graphics are from https://game-icons.net/ and are used under the CC BY 3.0 license (created by Delapouite):</div><div><br></div><div>https://game-icons.net/1x1/delapouite/sushis.html</div><div>https://game-icons.net/1x1/delapouite/chef-toque.html</div><div>https://game-icons.net/1x1/delapouite/chopsticks.html</div><div>https://game-icons.net/1x1/delapouite/rolling-dices.html<br></div>",
-      "lastUpdate": 1677688037773,
+      "lastUpdate": 1710846300177,
       "showName": true,
       "skill": "",
       "description": "Roll dice and use your chopsticks to pick up the most sushi.",
@@ -873,156 +485,120 @@
       "similarAwards": "",
       "ruleText": "<div>To reset for a new game, use the Chef's hat button to recall all the tiles onto the conveyor belt.</div><div><br></div><div>During the game, use the button with the two dice in order to roll the dice.<br></div><br><div>After each roll, choose one dice face from those rolled that is different from those set aside before, collect all matching dice, and put them in the \"Sum\" holder on the bottom right. The chopsticks dice face is worth 5.<br></div><ul><li>If the sum of all your set-aside dice faces is the same or higher than a sushi tile on the conveyor belt, and includes at least one chopstick, you can place that tile on top of your own stack. </li><li>If your dice sum exactly matches the top tile of another player's pile,  and includes at least one chopstick, you may take that tile instead.</li></ul><div>You bust if you:</div><div><ol><li>have no chopsticks in your set-aside dice, <br></li><li>make a roll with no unique dice faces (from those set aside), or <br></li><li>have too low a sum of the set-aside dice face numbers to pick up a sushi tile. </li></ol></div><div>When you bust, return the top tile from your stack to the conveyor belt and flip the highest sushi tile on the belt face down (if you have no tiles, your turn simply ends). <br></div><div><br></div><div>After your turn ends, either by taking a tile or busting, click the \"Next player\" button to return all the dice to the middle bottom and highlight the next player's name.<br></div><div><br></div><div>The game ends when all the sushi tiles have been taken from or flipped face down on the conveyor belt in the middle.</div><div><br></div><div> Add up the number of sushi shown on the tiles you collected. Most sushi (and not number of tiles) collected wins the game.</div>",
       "helpText": "",
-      "variantImage": "",
-      "variant": "",
-      "language": "",
+      "similarDesigner": "Reiner Knizia",
       "players": "2-5",
-      "similarDesigner": "Reiner Knizia"
+      "language": "",
+      "variant": "",
+      "variantImage": ""
     }
   },
   "27zkx": {
     "type": "dice",
     "x": 356,
-    "faces": [
-      1,
-      2,
-      3,
-      4,
-      5,
-      {
-        "image": "/assets/834358786_25582",
-        "value": 5
-      }
-    ],
-    "z": 2618,
     "id": "27zkx",
-    "rollCount": 516,
-    "movable": "true",
-    "width": 90,
-    "height": 90,
     "y": 101,
-    "activeFace": 3,
-    "parent": "ck9c"
+    "parent": "ck9c",
+    "inheritFrom": {
+      "33zkx": [
+        "width",
+        "height",
+        "movable",
+        "faces",
+        "svgReplaces",
+        "chopstickColor",
+        "clickable"
+      ]
+    }
   },
   "28zkx": {
     "type": "dice",
     "x": 196,
-    "faces": [
-      1,
-      2,
-      3,
-      4,
-      5,
-      {
-        "image": "/assets/834358786_25582",
-        "value": 5
-      }
-    ],
-    "z": 2623,
     "id": "28zkx",
-    "rollCount": 533,
-    "movable": "true",
-    "width": 90,
-    "height": 90,
     "y": 64,
-    "activeFace": 4,
-    "parent": "ck9c"
+    "parent": "ck9c",
+    "inheritFrom": {
+      "33zkx": [
+        "width",
+        "height",
+        "movable",
+        "faces",
+        "svgReplaces",
+        "chopstickColor",
+        "clickable"
+      ]
+    }
   },
   "29zkx": {
     "type": "dice",
     "x": 676,
-    "faces": [
-      1,
-      2,
-      3,
-      4,
-      5,
-      {
-        "image": "/assets/834358786_25582",
-        "value": 5
-      }
-    ],
-    "z": 2627,
     "id": "29zkx",
-    "rollCount": 513,
-    "movable": "true",
-    "width": 90,
-    "height": 90,
     "y": 161,
-    "activeFace": 3,
-    "parent": "ck9c"
+    "parent": "ck9c",
+    "inheritFrom": {
+      "33zkx": [
+        "width",
+        "height",
+        "movable",
+        "faces",
+        "svgReplaces",
+        "chopstickColor",
+        "clickable"
+      ]
+    }
   },
   "30zkx": {
     "type": "dice",
     "x": 509,
-    "faces": [
-      1,
-      2,
-      3,
-      4,
-      5,
-      {
-        "image": "/assets/834358786_25582",
-        "value": 5
-      }
-    ],
-    "z": 2603,
     "id": "30zkx",
-    "rollCount": 510,
-    "movable": "true",
-    "width": 90,
-    "height": 90,
     "y": 196,
     "parent": "ck9c",
-    "activeFace": 1
+    "inheritFrom": {
+      "33zkx": [
+        "width",
+        "height",
+        "movable",
+        "faces",
+        "svgReplaces",
+        "chopstickColor",
+        "clickable"
+      ]
+    }
   },
   "31zkx": {
     "type": "dice",
     "x": 687,
-    "faces": [
-      1,
-      2,
-      3,
-      4,
-      5,
-      {
-        "image": "/assets/834358786_25582",
-        "value": 5
-      }
-    ],
-    "z": 2614,
     "id": "31zkx",
-    "rollCount": 513,
-    "movable": "true",
-    "width": 90,
-    "height": 90,
     "y": 21,
-    "activeFace": 5,
-    "parent": "ck9c"
+    "parent": "ck9c",
+    "inheritFrom": {
+      "33zkx": [
+        "width",
+        "height",
+        "movable",
+        "faces",
+        "svgReplaces",
+        "chopstickColor",
+        "clickable"
+      ]
+    }
   },
   "32zkx": {
     "type": "dice",
     "x": 474,
-    "faces": [
-      1,
-      2,
-      3,
-      4,
-      5,
-      {
-        "image": "/assets/834358786_25582",
-        "value": 5
-      }
-    ],
-    "z": 2629,
     "id": "32zkx",
-    "rollCount": 509,
-    "movable": "true",
-    "width": 90,
-    "height": 90,
     "y": 58,
-    "activeFace": 4,
-    "parent": "ck9c"
+    "parent": "ck9c",
+    "inheritFrom": {
+      "33zkx": [
+        "width",
+        "height",
+        "movable",
+        "faces",
+        "svgReplaces",
+        "chopstickColor",
+        "clickable"
+      ]
+    }
   },
   "33zkx": {
     "type": "dice",
@@ -1033,7 +609,7 @@
       4,
       5,
       {
-        "image": "/assets/834358786_25582",
+        "image": "/i/game-icons.net/delapouite/chopsticks.svg",
         "value": 5
       }
     ],
@@ -1041,22 +617,31 @@
     "id": "33zkx",
     "rollCount": 516,
     "movable": "true",
-    "width": 90,
-    "height": 90,
     "y": 7,
     "x": 584,
-    "activeFace": 5,
-    "parent": "ck9c"
+    "parent": "ck9c",
+    "svgReplaces": {
+      "#000": "chopstickColor"
+    },
+    "chopstickColor": "#f5a622",
+    "width": 90,
+    "height": 90,
+    "clickable": false
   },
   "n1vj": {
-    "image": "/assets/-1137383578_180294",
+    "image": "/assets/-1767470630_81900",
     "movable": false,
-    "width": 1600,
-    "height": 1000,
+    "width": 1610,
+    "height": 1010,
     "layer": -4,
     "id": "n1vj",
     "z": 2,
-    "movableInEdit": false
+    "movableInEdit": false,
+    "x": -5,
+    "y": -5,
+    "css": {
+      "filter": "blur(2px)"
+    }
   },
   "t5ye": {
     "deck": "b92eed53-bf9a-40c5-aa42-e30bd8535ba6",
@@ -1086,10 +671,11 @@
     "cardType": "type-dae6dc11-d9e3-4db1-b459-e9a760b5a677",
     "id": "bx9k",
     "z": 3,
-    "parent": "4e26b75e-0310-4e32-a967-8c96314d78a1",
     "x": 172,
     "y": 4,
-    "activeFace": 1
+    "activeFace": 1,
+    "hoverParent": "4e26b75e-0310-4e32-a967-8c96314d78a1",
+    "parent": "4e26b75e-0310-4e32-a967-8c96314d78a1"
   },
   "ni9l": {
     "deck": "b92eed53-bf9a-40c5-aa42-e30bd8535ba6",
@@ -1098,9 +684,9 @@
     "id": "ni9l",
     "z": 4,
     "activeFace": 1,
-    "parent": "4e26b75e-0310-4e32-a967-8c96314d78a1",
     "x": 256,
-    "y": 4
+    "y": 4,
+    "parent": "4e26b75e-0310-4e32-a967-8c96314d78a1"
   },
   "ewfs": {
     "deck": "b92eed53-bf9a-40c5-aa42-e30bd8535ba6",
@@ -1109,9 +695,9 @@
     "id": "ewfs",
     "z": 5,
     "activeFace": 1,
-    "parent": "4e26b75e-0310-4e32-a967-8c96314d78a1",
     "x": 340,
-    "y": 4
+    "y": 4,
+    "parent": "4e26b75e-0310-4e32-a967-8c96314d78a1"
   },
   "4pdd": {
     "deck": "b92eed53-bf9a-40c5-aa42-e30bd8535ba6",
@@ -1132,8 +718,8 @@
     "z": 7,
     "x": 508,
     "y": 4,
-    "parent": "4e26b75e-0310-4e32-a967-8c96314d78a1",
-    "activeFace": 1
+    "activeFace": 1,
+    "parent": "4e26b75e-0310-4e32-a967-8c96314d78a1"
   },
   "8uo7": {
     "deck": "b92eed53-bf9a-40c5-aa42-e30bd8535ba6",
@@ -1177,6 +763,7 @@
     "activeFace": 1,
     "x": 844,
     "y": 4,
+    "hoverParent": "4e26b75e-0310-4e32-a967-8c96314d78a1",
     "parent": "4e26b75e-0310-4e32-a967-8c96314d78a1"
   },
   "pjtt": {
@@ -1185,10 +772,10 @@
     "cardType": "type-ac2c852d-cbb4-482e-bb84-30f9730bcb79",
     "id": "pjtt",
     "z": 12,
-    "parent": "4e26b75e-0310-4e32-a967-8c96314d78a1",
     "x": 928,
     "y": 4,
-    "activeFace": 1
+    "activeFace": 1,
+    "parent": "4e26b75e-0310-4e32-a967-8c96314d78a1"
   },
   "rcu8": {
     "deck": "b92eed53-bf9a-40c5-aa42-e30bd8535ba6",
@@ -1196,10 +783,10 @@
     "cardType": "type-7a3cd332-c01f-4ff7-9a2e-73f959ce048a",
     "id": "rcu8",
     "z": 13,
-    "parent": "4e26b75e-0310-4e32-a967-8c96314d78a1",
     "x": 1012,
     "y": 4,
-    "activeFace": 1
+    "activeFace": 1,
+    "parent": "4e26b75e-0310-4e32-a967-8c96314d78a1"
   },
   "x040": {
     "deck": "b92eed53-bf9a-40c5-aa42-e30bd8535ba6",
@@ -1231,8 +818,8 @@
     "z": 16,
     "x": 1264,
     "y": 4,
-    "parent": "4e26b75e-0310-4e32-a967-8c96314d78a1",
-    "activeFace": 1
+    "activeFace": 1,
+    "parent": "4e26b75e-0310-4e32-a967-8c96314d78a1"
   },
   "ofat": {
     "type": "label",
@@ -1312,7 +899,6 @@
   },
   "w2q11": {
     "type": "label",
-    "text": 0,
     "id": "w2q11",
     "x": 1329.5,
     "y": 20,
@@ -1322,50 +908,6 @@
     "editable": true,
     "z": 19,
     "linkedToSeat": "wdh6"
-  },
-  "w2q11D": {
-    "id": "w2q11D",
-    "parent": "w2q11",
-    "fixedParent": true,
-    "x": -38,
-    "y": 1,
-    "width": 36,
-    "height": 36,
-    "type": "button",
-    "movableInEdit": false,
-    "classes": "symbols",
-    "css": "font-size: 28px",
-    "text": "remove",
-    "clickRoutine": [
-      {
-        "func": "LABEL",
-        "label": "${PROPERTY parent}",
-        "mode": "dec",
-        "value": 1
-      }
-    ]
-  },
-  "w2q11U": {
-    "id": "w2q11U",
-    "parent": "w2q11",
-    "fixedParent": true,
-    "x": 68,
-    "y": 1,
-    "width": 36,
-    "height": 36,
-    "type": "button",
-    "movableInEdit": false,
-    "classes": "symbols",
-    "css": "font-size: 28px",
-    "text": "add",
-    "clickRoutine": [
-      {
-        "func": "LABEL",
-        "label": "${PROPERTY parent}",
-        "mode": "inc",
-        "value": 1
-      }
-    ]
   },
   "n2vj": {
     "movable": false,
@@ -1378,5 +920,62 @@
     "css": {
       "background": "#00000040"
     }
+  },
+  "scoreButton": {
+    "type": "button",
+    "id": "scoreButton",
+    "x": 16,
+    "y": 12,
+    "backgroundColor": "#fff",
+    "borderColor": "#f5a622",
+    "classes": "material-icons",
+    "css": {
+      "font-size": "60px",
+      "line-height": "70px"
+    },
+    "text": "scoreboard",
+    "textColor": "#f5a622",
+    "textColorOH": "#fff",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "type",
+        "value": "seat"
+      },
+      {
+        "func": "FOREACH",
+        "loopRoutine": [
+          {
+            "func": "SELECT",
+            "property": "linkedToSeat",
+            "value": "${widgetID}",
+            "type": "holder"
+          },
+          {
+            "func": "GET"
+          },
+          {
+            "func": "SELECT",
+            "value": "${id}"
+          },
+          {
+            "func": "GET",
+            "property": "score",
+            "aggregation": "sum"
+          },
+          {
+            "func": "SELECT",
+            "property": "linkedToSeat",
+            "value": "${widgetID}",
+            "type": "label"
+          },
+          {
+            "func": "SET",
+            "property": "text",
+            "value": "${score}"
+          }
+        ]
+      }
+    ]
   }
 }

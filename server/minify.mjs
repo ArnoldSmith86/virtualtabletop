@@ -52,6 +52,7 @@ export default async function minifyHTML() {
     'client/js/tracing.js',
     'client/js/statemanaged.js',
     'client/js/color.js',
+    'client/js/audio.js',
 
     'client/js/overlays/players.js',
     'client/js/overlays/states.js',
@@ -95,6 +96,7 @@ export default async function minifyHTML() {
     'client/js/editor/toolbar/save.js',
     'client/js/editor/toolbar/darkmode.js',
     'client/js/editor/toolbar/zoomout.js',
+    'client/js/editor/toolbar/display.js',
     'client/js/editor/toolbar/fullscreen.js',
     'client/js/editor/toolbar/close.js',
     'client/js/editor/toolbar/undo.js',
@@ -104,12 +106,15 @@ export default async function minifyHTML() {
     'client/js/editor/toolbar/align.js',
     'client/js/editor/toolbar/group.js',
     'client/js/editor/toolbar/grid.js',
+    'client/js/editor/toolbar/tutorials.js',
+    'client/js/editor/toolbar/wiki.js',
     'client/js/editor/dragButton.js',
     'client/js/editor/dragbuttons/drag.js',
     'client/js/editor/dragbuttons/clone.js',
     'client/js/editor/dragbuttons/spacing.js',
     'client/js/editor/dragbuttons/rotate.js',
     'client/js/editor/dragbuttons/move.js',
+    'client/js/editor/dragbuttons/resize.js',
     'client/js/editor/sidebarModule.js',
     'client/js/editor/sidebar/properties.js',
     'client/js/editor/sidebar/undo.js',
@@ -142,18 +147,32 @@ export default async function minifyHTML() {
 }
 
 async function compressCSS(cssFiles) {
+  const combinedCSSContent = cssFiles
+    .map(filePath => fs.readFileSync(filePath, 'utf8'))  // Read each file
+    .join('\n');  // Combine them into a single string
+
   return await minify({
     compressor: cleanCSS,
-    input: cssFiles,
-    output: os.tmpdir() + '/out.css'
+    content: combinedCSSContent
   });
 }
 
+// Helper function to remove import statements
+function removeImportStatements(jsContent) {
+  return jsContent.replace(/^import\s+[^;]+;\r?\n/gm, '');
+}
+
 async function compressJS(jsFiles) {
+  // Combine all JavaScript files and remove import statements
+  const combinedJSContent = jsFiles
+    .map(filePath => fs.readFileSync(filePath, 'utf8'))  // Read each file
+    .map(jsContent => removeImportStatements(jsContent))  // Remove import statements
+    .join('\n');  // Combine them into a single string
+
+  // Perform compression
   return await minify({
     compressor: Config.get('minifyJavascript') ? uglifyES : noCompress,
-    input: jsFiles,
-    output: os.tmpdir() + '/out.js'
+    content: combinedJSContent
   });
 }
 
@@ -163,10 +182,10 @@ async function compress(htmlFile, cssFiles, jsFiles) {
   htmlString = htmlString.replace(/\ \/\*\*\*\ EXTERNAL_URL\ \*\*\*\/\ /g, _=>Config.get('externalURL'));
 
   const css = await compressCSS(cssFiles);
-  htmlString = htmlString.replace(/\ \/\*\*\*\ CSS\ \*\*\*\/\ /, _=>css).replace(/\ \/\/\*\*\*\ CONFIG\ \*\*\*\/\/\ /, _=>`const config = ${JSON.stringify(Config.config)};`);
+  htmlString = htmlString.replace(/\ \/\*\*\*\ CSS\ \*\*\*\/\ /, _=>css).replace(/\ \/\/\*\*\*\ CONFIG\ \*\*\*\/\/\ /, _=>`const config = ${JSON.stringify(Config.getClientConfig())};`);
 
   const js = await compressJS(jsFiles);
-  htmlString = htmlString.replace(/\ \/\/\*\*\*\ JS\ \*\*\*\/\/\ /, _=>js.replace(/\bimport[^(][^;]*\.\/[^;]*;/g, ""));
+  htmlString = htmlString.replace(/\ \/\/\*\*\*\ JS\ \*\*\*\/\/\ /, _=>js);
 
   const html = await minify({
     compressor: htmlMinifier,

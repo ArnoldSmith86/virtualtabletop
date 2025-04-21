@@ -1,3 +1,4 @@
+let usedTouch = false;
 let mouseTarget = null;
 const mouseStatus = {};
 
@@ -43,7 +44,11 @@ async function inputHandler(name, e) {
       return;
     target = target.parentNode;
   }
-  const targetForHiddenCursorCheck = target && target.id && target.id.slice(0,2) == 'w_' && widgets.has(unescapeID(target.id.slice(2))) ? target : null;
+
+  if(!usedTouch && name == 'touchstart') {
+    usedTouch = true;
+    $('body').classList.add('usedTouch');
+  }
 
   e.preventDefault();
 
@@ -129,7 +134,9 @@ async function inputHandler(name, e) {
   clientPointer.style.top = `${coords.clientY}px`;
   clientPointer.style.left = `${coords.clientX}px`;
 
-  if(targetForHiddenCursorCheck && widgets.has(unescapeID(targetForHiddenCursorCheck.id.slice(2))) && widgets.get(unescapeID(targetForHiddenCursorCheck.id.slice(2))).requiresHiddenCursor()) {
+  let hoveredWidgetsWithHiddenCursor = document.elementsFromPoint(coords.clientX, coords.clientY).map(el => widgets.get(unescapeID(el.id.slice(2)))).filter(w => w != null && w.requiresHiddenCursor());
+
+  if(hoveredWidgetsWithHiddenCursor.length) {
     toServer('mouse', { hidden: true });
   } else {
     toServer('mouse',
@@ -142,8 +149,19 @@ async function inputHandler(name, e) {
   }
 }
 
+async function keyHandler(e) {
+  if(isLoading || overlayActive || $('body').classList.contains('edit') || e.target.tagName == 'INPUT' || e.target.tagName == 'TEXTAREA')
+    return;
+
+  batchStart();
+  for(const widget of widgetFilter(w=>w.get('hotkey')===e.key&&w.isVisible()).sort((a,b)=>String(a.get('id')).localeCompare(b.get('id'))))
+    await widget.click();
+  batchEnd();
+}
+
 onLoad(function() {
   [ 'touchstart', 'touchend', 'touchmove', 'touchcancel', 'mousedown', 'mousemove', 'mouseup', 'contextmenu' ].forEach(function(event) {
     window.addEventListener(event, e => inputHandler(event, e));
   });
+  window.addEventListener('keydown', e => keyHandler(e));
 });

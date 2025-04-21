@@ -20,7 +20,7 @@ body {
   --gridMajor: 25;
 }
 
-body.darkMode {
+body.edit.darkMode {
   --backgroundColor: #08090a;
   --textColor: #f8f8f2;
 
@@ -37,6 +37,9 @@ body.darkMode {
   --textDimColor1: #606060;
 
   color-scheme: dark;
+}
+#room {
+  color-scheme: light;
 }
 
 body:not(.edit) #editor,

@@ -89,11 +89,9 @@ export default class Room {
       for(const v in states[state]) {
         const newVariantID = String(addAsVariant ? this.state._meta.states[stateID].variants.length : 0);
         let name = type == 'file' && srcName || 'Unnamed';
-        if(state.match(/\.pcio$/))
-          name = state;
 
         const variant = states[state][v];
-        const meta = (variant._meta || {}).info || {
+        const meta = Object.assign({
           name: name.replace(/\.pcio/, ''),
           image: '',
           rules: '',
@@ -106,7 +104,7 @@ export default class Room {
           variant: '',
           link: '',
           attribution: ''
-        };
+        }, (variant._meta || {}).info || {});
 
         if(stateID.match(/^PL:/)) {
           this.writePublicLibraryToFilesystem(stateID, newVariantID, variant);
@@ -689,6 +687,12 @@ export default class Room {
     return randomHue(this.state._meta.players)
   }
 
+  playAudio(args) {
+    for(const player of this.players)
+      if(args.players.length === 0 || args.players.includes(player.name))
+        player.send('audio', args);
+  }
+
   receiveDelta(player, delta) {
     for(const widgetID in delta.s) {
       if(delta.s[widgetID] === null) {
@@ -862,6 +866,8 @@ export default class Room {
   }
 
   saveCurrentState_write(stateID, variantID, metadata, setToActiveState=true) {
+    metadata.lastUpdate = +new Date();
+
     const newState = {...this.state};
     newState._meta = {
       version: this.state._meta.version,

@@ -1,0 +1,1669 @@
+{
+  "_meta": {
+    "version": 17,
+    "info": {
+      "name": "Escrime",
+      "image": "/assets/2098067311_1842706",
+      "rules": "https://boardgamegeek.com/filepage/48133/english-rules-en-garde-advanced-game",
+      "bgg": "https://boardgamegeek.com/boardgame/169/en-garde",
+      "year": "1993",
+      "mode": "vs",
+      "time": "15",
+      "attribution": "<div>Card deck created by QwertyMartin and released under CC0&nbsp;<span style=\"color: var(--overlayFontColor);\">to the public domain.&nbsp;</span><span style=\"color: var(--overlayFontColor);\">Room layout and scripting by DexDouglas and released under CC0 to the public domain.</span></div><br><div>Cover image created using https://labs.google/fx/tools/image-fx with prompt: \"Two fencers, one in red with long hair, and one in blue with short hair. Swords crossed.\"</div>",
+      "lastUpdate": 1736778746534,
+      "showName": true,
+      "skill": "low",
+      "description": "Escrime (French word for fencing) is a duel between two fencers. Manage your hand of cards to bait and attack your opponent when they least expect it. First to 5 points, wins.",
+      "similarImage": "",
+      "similarName": "En Garde",
+      "similarDesigner": "Reiner Knizia",
+      "similarAwards": "1993 Fairplay À la carte Runner-up",
+      "ruleText": "",
+      "helpText": "Both players should \"Click to Sit\" at their choice of color, then hit \"Start Game\". This will deal 5 cards to each player and randomly select a start player whose name will be glowing. The Start Game button disappears but if you need it back, hit the \"Reset\" button to revert the game back to the original state.<div>\nThe \"Next Round\" button should be hit once a winner for the current round is determined. It will recall all cards, move the fighters back to their starting positions, deal 5 new cards, and make the other player the start player for the round.</div><div><br><div>When you win a point in a match, increment your score using the + button.&nbsp;\nWhen you play a movement card, click the <b>&lt;</b> or <b>&gt;</b> as many times as needed to move your fighter to their new space.</div><div><br></div><div>If you are moving, attacking, or moving &amp; attacking, you can hit the \"Discard played cards &amp; Fill hand\" button to discard all your played cards and fill your hand to 5.&nbsp;</div><div><br></div><div>If you are just blocking an attack, do not hit that button as you do not draw cards after a block. Just hit the \"Discard block\" button under your \"Attack/Block\" holder, and continue your turn with your cards in hand. Once your turn is over, you can hit the \"Discard played...\" button.</div><div><br></div><div>Ensure that each player refills their hand in turn order as this could be important as a tie breaker for the round.&nbsp;</div></div>",
+      "variantImage": "",
+      "variant": "Escrime",
+      "language": "en-US",
+      "players": "2"
+    }
+  },
+  "hand": {
+    "id": "hand",
+    "x": 538,
+    "y": 801,
+    "z": 2,
+    "type": "holder",
+    "onEnter": {
+      "activeFace": 1
+    },
+    "onLeave": {
+      "activeFace": 0
+    },
+    "dropOffsetX": 6,
+    "dropOffsetY": 6,
+    "inheritChildZ": true,
+    "childrenPerOwner": true,
+    "width": 515,
+    "height": 180,
+    "dropShadow": true,
+    "hidePlayerCursors": true,
+    "preventPiles": true,
+    "stackOffsetX": 100,
+    "enterRoutine": [
+      {
+        "func": "SORT",
+        "holder": "${PROPERTY id}",
+        "key": "sortingOrder"
+      }
+    ]
+  },
+  "8e1260c2-ed79-4442-9445-a1ecfa49382c": {
+    "id": "8e1260c2-ed79-4442-9445-a1ecfa49382c",
+    "x": 49,
+    "y": 387,
+    "z": 407,
+    "type": "label",
+    "width": 140,
+    "height": 44,
+    "css": "font-size: 30px;",
+    "text": 0,
+    "editable": true
+  },
+  "8e1260c2-ed79-4442-9445-a1ecfa49382c_decrementButton": {
+    "id": "8e1260c2-ed79-4442-9445-a1ecfa49382c_decrementButton",
+    "parent": "8e1260c2-ed79-4442-9445-a1ecfa49382c",
+    "x": 4,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "-",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "8e1260c2-ed79-4442-9445-a1ecfa49382c",
+        "mode": "inc",
+        "value": -1
+      }
+    ],
+    "linkedToSeat": "seat1",
+    "onlyVisibleForSeat": "seat1",
+    "hideWhenUnused": true,
+    "y": -2,
+    "z": 4
+  },
+  "8e1260c2-ed79-4442-9445-a1ecfa49382c_incrementButton": {
+    "id": "8e1260c2-ed79-4442-9445-a1ecfa49382c_incrementButton",
+    "parent": "8e1260c2-ed79-4442-9445-a1ecfa49382c",
+    "x": 100,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "+",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "8e1260c2-ed79-4442-9445-a1ecfa49382c",
+        "mode": "inc",
+        "value": 1
+      }
+    ],
+    "linkedToSeat": "seat1",
+    "onlyVisibleForSeat": "seat1",
+    "hideWhenUnused": true,
+    "y": -2,
+    "z": 5
+  },
+  "8e1260c2-ed79-4442-9445-a1ecfa49382clabel": {
+    "id": "8e1260c2-ed79-4442-9445-a1ecfa49382clabel",
+    "parent": "8e1260c2-ed79-4442-9445-a1ecfa49382c",
+    "movableInEdit": false,
+    "y": -28,
+    "width": 140,
+    "type": "label",
+    "text": "Red Score",
+    "z": 2
+  },
+  "3e2e362a-c262-4146-8f40-7e10157a83b7": {
+    "id": "3e2e362a-c262-4146-8f40-7e10157a83b7",
+    "x": 1408,
+    "y": 388,
+    "z": 406,
+    "type": "label",
+    "width": 140,
+    "height": 44,
+    "css": "font-size: 30px;",
+    "text": 0,
+    "editable": true
+  },
+  "3e2e362a-c262-4146-8f40-7e10157a83b7_decrementButton": {
+    "id": "3e2e362a-c262-4146-8f40-7e10157a83b7_decrementButton",
+    "parent": "3e2e362a-c262-4146-8f40-7e10157a83b7",
+    "x": 4,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "-",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "3e2e362a-c262-4146-8f40-7e10157a83b7",
+        "mode": "inc",
+        "value": -1
+      }
+    ],
+    "linkedToSeat": "seat2",
+    "onlyVisibleForSeat": "seat2",
+    "hideWhenUnused": true,
+    "y": -2,
+    "z": 6
+  },
+  "3e2e362a-c262-4146-8f40-7e10157a83b7_incrementButton": {
+    "id": "3e2e362a-c262-4146-8f40-7e10157a83b7_incrementButton",
+    "parent": "3e2e362a-c262-4146-8f40-7e10157a83b7",
+    "x": 100,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "+",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "3e2e362a-c262-4146-8f40-7e10157a83b7",
+        "mode": "inc",
+        "value": 1
+      }
+    ],
+    "linkedToSeat": "seat2",
+    "onlyVisibleForSeat": "seat2",
+    "hideWhenUnused": true,
+    "y": -2,
+    "z": 7
+  },
+  "3e2e362a-c262-4146-8f40-7e10157a83b7label": {
+    "id": "3e2e362a-c262-4146-8f40-7e10157a83b7label",
+    "parent": "3e2e362a-c262-4146-8f40-7e10157a83b7",
+    "movableInEdit": false,
+    "y": -28,
+    "width": 140,
+    "type": "label",
+    "text": "Blue Score",
+    "z": 3
+  },
+  "0qbx": {
+    "type": "deck",
+    "id": "0qbx",
+    "cardTypes": {
+      "1 of plain-circle": {
+        "suit": "/i/game-icons.net/cathelineau/swordman.svg",
+        "suitColor": "#f70202",
+        "suit-P32": "/i/game-icons.net/cathelineau/swordman.svg"
+      }
+    },
+    "cardDefaults": {
+      "width": 56,
+      "height": 56
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "width": 56,
+            "height": 56,
+            "Color": "transparent",
+            "value": "/i/game-icons.net/cathelineau/swordman.svg"
+          }
+        ]
+      },
+      {
+        "radius": 16,
+        "objects": [
+          {
+            "type": "image",
+            "width": 56,
+            "height": 56,
+            "color": "transparent",
+            "svgReplaces": {
+              "#000": "suitColor"
+            },
+            "dynamicProperties": {
+              "value": "suit"
+            }
+          },
+          {
+            "type": "text",
+            "y": 18,
+            "fontSize": 40,
+            "textAlign": "center",
+            "width": 80,
+            "dynamicProperties": {
+              "value": "rank"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "coul": {
+    "type": "deck",
+    "id": "coul",
+    "cardTypes": {
+      "1 of plain-circle": {
+        "suit": "/i/game-icons.net/cathelineau/swordman.svg",
+        "suitColor": "#0062ff",
+        "suit-P32": "/i/game-icons.net/cathelineau/swordman.svg"
+      }
+    },
+    "cardDefaults": {
+      "width": 56,
+      "height": 56
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "width": 56,
+            "height": 56,
+            "color": "white",
+            "value": "/i/game-icons.net/cathelineau/swordman.svg"
+          }
+        ]
+      },
+      {
+        "radius": 16,
+        "objects": [
+          {
+            "type": "image",
+            "width": 56,
+            "height": 56,
+            "color": "transparent",
+            "svgReplaces": {
+              "#000": "suitColor"
+            },
+            "css": {
+              "transform": "rotateY(180deg)"
+            },
+            "dynamicProperties": {
+              "value": "suit"
+            }
+          },
+          {
+            "type": "text",
+            "y": 18,
+            "fontSize": 40,
+            "textAlign": "center",
+            "color": "white",
+            "width": 80,
+            "dynamicProperties": {
+              "value": "rank"
+            }
+          }
+        ]
+      }
+    ],
+    "x": 1495,
+    "y": 12
+  },
+  "8b61": {
+    "type": "holder",
+    "x": 134,
+    "y": 474,
+    "z": 414,
+    "id": "8b61",
+    "width": 63,
+    "height": 63
+  },
+  "8b62": {
+    "type": "holder",
+    "x": 197,
+    "y": 474,
+    "z": 414,
+    "id": "8b62",
+    "width": 63,
+    "height": 63
+  },
+  "8b63": {
+    "type": "holder",
+    "x": 260,
+    "y": 474,
+    "z": 414,
+    "id": "8b63",
+    "width": 63,
+    "height": 63
+  },
+  "8b64": {
+    "type": "holder",
+    "x": 323,
+    "y": 474,
+    "z": 414,
+    "id": "8b64",
+    "width": 63,
+    "height": 63
+  },
+  "8b65": {
+    "type": "holder",
+    "x": 386,
+    "y": 474,
+    "z": 414,
+    "id": "8b65",
+    "width": 63,
+    "height": 63
+  },
+  "8b66": {
+    "type": "holder",
+    "x": 449,
+    "y": 474,
+    "z": 414,
+    "id": "8b66",
+    "width": 63,
+    "height": 63
+  },
+  "8b67": {
+    "type": "holder",
+    "x": 512,
+    "y": 474,
+    "z": 414,
+    "id": "8b67",
+    "width": 63,
+    "height": 63
+  },
+  "8b68": {
+    "type": "holder",
+    "x": 575,
+    "y": 474,
+    "z": 414,
+    "id": "8b68",
+    "width": 63,
+    "height": 63
+  },
+  "8b69": {
+    "type": "holder",
+    "x": 638,
+    "y": 474,
+    "z": 414,
+    "id": "8b69",
+    "width": 63,
+    "height": 63
+  },
+  "8b70": {
+    "type": "holder",
+    "x": 701,
+    "y": 474,
+    "z": 414,
+    "id": "8b70",
+    "width": 63,
+    "height": 63
+  },
+  "8b71": {
+    "type": "holder",
+    "x": 764,
+    "y": 474,
+    "z": 414,
+    "id": "8b71",
+    "width": 63,
+    "height": 63
+  },
+  "8b72": {
+    "type": "holder",
+    "x": 827,
+    "y": 474,
+    "z": 414,
+    "id": "8b72",
+    "width": 63,
+    "height": 63
+  },
+  "8b73": {
+    "type": "holder",
+    "x": 890,
+    "y": 474,
+    "z": 414,
+    "id": "8b73",
+    "width": 63,
+    "height": 63
+  },
+  "8b74": {
+    "type": "holder",
+    "x": 953,
+    "y": 474,
+    "z": 414,
+    "id": "8b74",
+    "width": 63,
+    "height": 63
+  },
+  "8b75": {
+    "type": "holder",
+    "x": 1016,
+    "y": 474,
+    "z": 414,
+    "id": "8b75",
+    "width": 63,
+    "height": 63
+  },
+  "8b76": {
+    "type": "holder",
+    "x": 1079,
+    "y": 474,
+    "z": 414,
+    "id": "8b76",
+    "width": 63,
+    "height": 63
+  },
+  "8b77": {
+    "type": "holder",
+    "x": 1142,
+    "y": 474,
+    "z": 414,
+    "id": "8b77",
+    "width": 63,
+    "height": 63
+  },
+  "8b78": {
+    "type": "holder",
+    "x": 1205,
+    "y": 474,
+    "z": 414,
+    "id": "8b78",
+    "width": 63,
+    "height": 63
+  },
+  "8b79": {
+    "type": "holder",
+    "x": 1268,
+    "y": 474,
+    "z": 414,
+    "id": "8b79",
+    "width": 63,
+    "height": 63
+  },
+  "8b80": {
+    "type": "holder",
+    "x": 1331,
+    "y": 474,
+    "z": 414,
+    "id": "8b80",
+    "width": 63,
+    "height": 63
+  },
+  "8b81": {
+    "type": "holder",
+    "x": 1394,
+    "y": 474,
+    "z": 414,
+    "id": "8b81",
+    "width": 63,
+    "height": 63
+  },
+  "seat1": {
+    "type": "seat",
+    "id": "seat1",
+    "x": 38,
+    "y": 295,
+    "color": "#ff0000",
+    "colorEmpty": "#ff0000",
+    "hideWhenUnused": true,
+    "clickRoutine": [
+      {
+        "func": "CLICK",
+        "collection": "thisButton",
+        "mode": "ignoreClickRoutine"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "color",
+        "value": "${PROPERTY colorEmpty}"
+      },
+      {
+        "func": "SELECT",
+        "type": "seat",
+        "property": "player",
+        "relation": "!=",
+        "value": ""
+      }
+    ],
+    "turn": true,
+    "z": 1
+  },
+  "bvtcC": {
+    "id": "bvtcC",
+    "parent": "seat1",
+    "fixedParent": true,
+    "x": -20,
+    "y": -20,
+    "width": 30,
+    "height": 30,
+    "borderRadius": 100,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "css": {
+      "font-size": "18px",
+      "display": "flex",
+      "align-items": "center",
+      "justify-content": "center",
+      "color": "#6d6d6d",
+      "background": "#e4e4e4",
+      "border": "2px solid #999999"
+    },
+    "text": 0,
+    "ownerGlobalUpdateRoutine": [
+      "var parent = ${PROPERTY parent}",
+      "var COUNT = 0",
+      {
+        "func": "SELECT",
+        "property": "_ancestor",
+        "value": "${PROPERTY hand OF $parent}"
+      },
+      {
+        "func": "COUNT",
+        "owner": "${PROPERTY player OF $parent}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "text",
+        "value": "${COUNT}"
+      }
+    ],
+    "playerGlobalUpdateRoutine": [
+      {
+        "func": "CALL",
+        "routine": "ownerGlobalUpdateRoutine",
+        "widget": "${PROPERTY id}"
+      }
+    ]
+  },
+  "deck": {
+    "type": "holder",
+    "id": "deck",
+    "x": 601,
+    "y": 41,
+    "z": 226,
+    "inheritChildZ": true
+  },
+  "su05": {
+    "id": "su05",
+    "type": "pile",
+    "width": 103,
+    "height": 160,
+    "parent": "deck"
+  },
+  "bc255891-e546-449a-857a-2b1ac06992af": {
+    "id": "bc255891-e546-449a-857a-2b1ac06992af",
+    "x": 14.560000000000002,
+    "y": 44,
+    "z": 168,
+    "type": "deck",
+    "parent": "deck",
+    "cardTypes": {
+      "type-8d416427-0c77-4ffd-a937-f3108b69ba39": {
+        "label": "1_1",
+        "image": "/assets/-860144223_897",
+        "sortingOrder": 1
+      },
+      "type-6680684f-f092-4599-812f-b76fc2523fe1": {
+        "label": "2_1",
+        "image": "/assets/1237250751_897",
+        "sortingOrder": 2
+      },
+      "type-019276c7-e22b-49d5-8e82-557ad841e64d": {
+        "label": "3_1",
+        "image": "/assets/-2087537270_897",
+        "sortingOrder": 3
+      },
+      "type-4e2fdcdc-e836-4a29-b42e-80028913b616": {
+        "label": "4_1",
+        "image": "/assets/-1731958078_897",
+        "sortingOrder": 4
+      },
+      "type-5804c7cc-2739-490c-90ba-ad18540e33a5": {
+        "label": "5_1",
+        "image": "/assets/1390947831_897",
+        "sortingOrder": 5
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "width": 103,
+            "height": 160,
+            "type": "image",
+            "color": "white",
+            "value": ""
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "#a23b2a",
+            "value": "/i/cards-default/2B.svg",
+            "width": 103,
+            "height": 160
+          }
+        ],
+        "border": false,
+        "radius": 8
+      },
+      {
+        "objects": [
+          {
+            "width": 103,
+            "height": 160,
+            "type": "image",
+            "color": "white",
+            "value": ""
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "white",
+            "width": 103,
+            "height": 160,
+            "dynamicProperties": {
+              "value": "image"
+            }
+          }
+        ],
+        "border": 1,
+        "radius": 8
+      }
+    ],
+    "cardDefaults": {
+      "overlap": true,
+      "ignoreOnLeave": true
+    }
+  },
+  "30405940-6ce5-4791-b59a-4a55170b8e75": {
+    "id": "30405940-6ce5-4791-b59a-4a55170b8e75",
+    "z": 22255,
+    "type": "card",
+    "deck": "bc255891-e546-449a-857a-2b1ac06992af",
+    "cardType": "type-019276c7-e22b-49d5-8e82-557ad841e64d",
+    "parent": "su05"
+  },
+  "140be4cd-2853-431a-92b2-1840d73ae477": {
+    "id": "140be4cd-2853-431a-92b2-1840d73ae477",
+    "z": 22252,
+    "type": "card",
+    "deck": "bc255891-e546-449a-857a-2b1ac06992af",
+    "cardType": "type-4e2fdcdc-e836-4a29-b42e-80028913b616",
+    "parent": "su05"
+  },
+  "7fc22c09-e193-4ba6-98a4-c33b5a96fbed": {
+    "id": "7fc22c09-e193-4ba6-98a4-c33b5a96fbed",
+    "z": 22265,
+    "type": "card",
+    "deck": "bc255891-e546-449a-857a-2b1ac06992af",
+    "cardType": "type-5804c7cc-2739-490c-90ba-ad18540e33a5",
+    "parent": "su05"
+  },
+  "de11e896-096c-4df1-ad37-2e7da9d707bf": {
+    "id": "de11e896-096c-4df1-ad37-2e7da9d707bf",
+    "z": 22249,
+    "type": "card",
+    "deck": "bc255891-e546-449a-857a-2b1ac06992af",
+    "cardType": "type-8d416427-0c77-4ffd-a937-f3108b69ba39",
+    "parent": "su05"
+  },
+  "3e4c02ea-5bf1-4824-b542-0522d35b6fbb": {
+    "id": "3e4c02ea-5bf1-4824-b542-0522d35b6fbb",
+    "z": 22270,
+    "type": "card",
+    "deck": "bc255891-e546-449a-857a-2b1ac06992af",
+    "cardType": "type-8d416427-0c77-4ffd-a937-f3108b69ba39",
+    "parent": "su05"
+  },
+  "c18211db-c577-4229-8d84-8fa1773a7650": {
+    "id": "c18211db-c577-4229-8d84-8fa1773a7650",
+    "z": 22260,
+    "type": "card",
+    "deck": "bc255891-e546-449a-857a-2b1ac06992af",
+    "cardType": "type-8d416427-0c77-4ffd-a937-f3108b69ba39",
+    "parent": "su05"
+  },
+  "b6bbf100-6c82-4cca-a114-14c5451781b1": {
+    "id": "b6bbf100-6c82-4cca-a114-14c5451781b1",
+    "z": 22247,
+    "type": "card",
+    "deck": "bc255891-e546-449a-857a-2b1ac06992af",
+    "cardType": "type-8d416427-0c77-4ffd-a937-f3108b69ba39",
+    "parent": "su05"
+  },
+  "5874d907-489f-42ec-bfcf-77ef2b7968a8": {
+    "id": "5874d907-489f-42ec-bfcf-77ef2b7968a8",
+    "z": 22248,
+    "type": "card",
+    "deck": "bc255891-e546-449a-857a-2b1ac06992af",
+    "cardType": "type-8d416427-0c77-4ffd-a937-f3108b69ba39",
+    "parent": "su05"
+  },
+  "7f3ef169-3ed0-487f-8ad7-6fe887635469": {
+    "id": "7f3ef169-3ed0-487f-8ad7-6fe887635469",
+    "z": 22266,
+    "type": "card",
+    "deck": "bc255891-e546-449a-857a-2b1ac06992af",
+    "cardType": "type-6680684f-f092-4599-812f-b76fc2523fe1",
+    "parent": "su05"
+  },
+  "1ead5c2c-ddc0-4d7c-a03b-c898fe47ad99": {
+    "id": "1ead5c2c-ddc0-4d7c-a03b-c898fe47ad99",
+    "z": 22250,
+    "type": "card",
+    "deck": "bc255891-e546-449a-857a-2b1ac06992af",
+    "cardType": "type-6680684f-f092-4599-812f-b76fc2523fe1",
+    "parent": "su05"
+  },
+  "e4e4ec3b-792d-46cb-8f3f-4273b41d50d6": {
+    "id": "e4e4ec3b-792d-46cb-8f3f-4273b41d50d6",
+    "z": 22269,
+    "type": "card",
+    "deck": "bc255891-e546-449a-857a-2b1ac06992af",
+    "cardType": "type-6680684f-f092-4599-812f-b76fc2523fe1",
+    "parent": "su05"
+  },
+  "1a2b1f54-fc93-48fe-b498-cb9da1a5a9c6": {
+    "id": "1a2b1f54-fc93-48fe-b498-cb9da1a5a9c6",
+    "z": 22264,
+    "type": "card",
+    "deck": "bc255891-e546-449a-857a-2b1ac06992af",
+    "cardType": "type-6680684f-f092-4599-812f-b76fc2523fe1",
+    "parent": "su05"
+  },
+  "e4349902-ca85-4c10-8151-ca580f7681c5": {
+    "id": "e4349902-ca85-4c10-8151-ca580f7681c5",
+    "z": 22251,
+    "type": "card",
+    "deck": "bc255891-e546-449a-857a-2b1ac06992af",
+    "cardType": "type-6680684f-f092-4599-812f-b76fc2523fe1",
+    "parent": "su05"
+  },
+  "1a99e696-bf33-49ca-9aa4-e0aa7bba9725": {
+    "id": "1a99e696-bf33-49ca-9aa4-e0aa7bba9725",
+    "z": 22258,
+    "type": "card",
+    "deck": "bc255891-e546-449a-857a-2b1ac06992af",
+    "cardType": "type-019276c7-e22b-49d5-8e82-557ad841e64d",
+    "parent": "su05"
+  },
+  "8b399e62-d153-49fb-af16-b29400c83491": {
+    "id": "8b399e62-d153-49fb-af16-b29400c83491",
+    "z": 22254,
+    "type": "card",
+    "deck": "bc255891-e546-449a-857a-2b1ac06992af",
+    "cardType": "type-019276c7-e22b-49d5-8e82-557ad841e64d",
+    "parent": "su05"
+  },
+  "2d016827-1607-4974-a9a3-40d3162a1d10": {
+    "id": "2d016827-1607-4974-a9a3-40d3162a1d10",
+    "z": 22271,
+    "type": "card",
+    "deck": "bc255891-e546-449a-857a-2b1ac06992af",
+    "cardType": "type-019276c7-e22b-49d5-8e82-557ad841e64d",
+    "parent": "su05"
+  },
+  "f3f1d620-def1-4eea-a9b2-e969af24c85f": {
+    "id": "f3f1d620-def1-4eea-a9b2-e969af24c85f",
+    "z": 22256,
+    "type": "card",
+    "deck": "bc255891-e546-449a-857a-2b1ac06992af",
+    "cardType": "type-019276c7-e22b-49d5-8e82-557ad841e64d",
+    "parent": "su05"
+  },
+  "ec4d3cb0-a2bf-4032-a641-6c0c998a3d68": {
+    "id": "ec4d3cb0-a2bf-4032-a641-6c0c998a3d68",
+    "z": 22253,
+    "type": "card",
+    "deck": "bc255891-e546-449a-857a-2b1ac06992af",
+    "cardType": "type-4e2fdcdc-e836-4a29-b42e-80028913b616",
+    "parent": "su05"
+  },
+  "cb6512e6-ac8b-4bb5-a481-235566499e8a": {
+    "id": "cb6512e6-ac8b-4bb5-a481-235566499e8a",
+    "z": 22261,
+    "type": "card",
+    "deck": "bc255891-e546-449a-857a-2b1ac06992af",
+    "cardType": "type-4e2fdcdc-e836-4a29-b42e-80028913b616",
+    "parent": "su05"
+  },
+  "da662641-b539-4e83-9996-6c644b455a6c": {
+    "id": "da662641-b539-4e83-9996-6c644b455a6c",
+    "z": 22268,
+    "type": "card",
+    "deck": "bc255891-e546-449a-857a-2b1ac06992af",
+    "cardType": "type-4e2fdcdc-e836-4a29-b42e-80028913b616",
+    "parent": "su05"
+  },
+  "4fd4c262-3da7-47f6-9399-8054cc7346a3": {
+    "id": "4fd4c262-3da7-47f6-9399-8054cc7346a3",
+    "z": 22257,
+    "type": "card",
+    "deck": "bc255891-e546-449a-857a-2b1ac06992af",
+    "cardType": "type-4e2fdcdc-e836-4a29-b42e-80028913b616",
+    "parent": "su05"
+  },
+  "b9fea932-3af7-4aa7-91ac-e095dbecd037": {
+    "id": "b9fea932-3af7-4aa7-91ac-e095dbecd037",
+    "z": 22263,
+    "type": "card",
+    "deck": "bc255891-e546-449a-857a-2b1ac06992af",
+    "cardType": "type-5804c7cc-2739-490c-90ba-ad18540e33a5",
+    "parent": "su05"
+  },
+  "2fd0c91f-060e-4a58-bff7-73b81c60d785": {
+    "id": "2fd0c91f-060e-4a58-bff7-73b81c60d785",
+    "z": 22267,
+    "type": "card",
+    "deck": "bc255891-e546-449a-857a-2b1ac06992af",
+    "cardType": "type-5804c7cc-2739-490c-90ba-ad18540e33a5",
+    "parent": "su05"
+  },
+  "71215a1a-21d1-44c4-ae31-18d147b2aba0": {
+    "id": "71215a1a-21d1-44c4-ae31-18d147b2aba0",
+    "z": 22259,
+    "type": "card",
+    "deck": "bc255891-e546-449a-857a-2b1ac06992af",
+    "cardType": "type-5804c7cc-2739-490c-90ba-ad18540e33a5",
+    "parent": "su05"
+  },
+  "d9cae7c0-fd53-487c-9561-b67cb656a58d": {
+    "id": "d9cae7c0-fd53-487c-9561-b67cb656a58d",
+    "z": 22262,
+    "type": "card",
+    "deck": "bc255891-e546-449a-857a-2b1ac06992af",
+    "cardType": "type-5804c7cc-2739-490c-90ba-ad18540e33a5",
+    "parent": "su05"
+  },
+  "discardHolder": {
+    "type": "holder",
+    "id": "discardHolder",
+    "x": 787,
+    "y": 45,
+    "z": 402,
+    "inheritChildZ": true
+  },
+  "aa8113c3-2932-4c48-918c-f2d4b33c5bc9_label": {
+    "id": "aa8113c3-2932-4c48-918c-f2d4b33c5bc9_label",
+    "parent": "discardHolder",
+    "x": -11.100000000000001,
+    "y": -40,
+    "width": 133.2,
+    "height": 40,
+    "type": "label",
+    "text": "Discard Pile",
+    "twoRowBottomAlign": true,
+    "movableInEdit": false
+  },
+  "seat2": {
+    "type": "seat",
+    "id": "seat2",
+    "x": 1397,
+    "y": 293,
+    "color": "blue",
+    "colorEmpty": "blue",
+    "hideWhenUnused": true,
+    "clickRoutine": [
+      {
+        "func": "CLICK",
+        "collection": "thisButton",
+        "mode": "ignoreClickRoutine"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "color",
+        "value": "${PROPERTY colorEmpty}"
+      },
+      {
+        "func": "SELECT",
+        "type": "seat",
+        "property": "player",
+        "relation": "!=",
+        "value": ""
+      }
+    ],
+    "index": 2
+  },
+  "bvtcC2": {
+    "id": "bvtcC2",
+    "parent": "seat2",
+    "fixedParent": true,
+    "x": -20,
+    "y": -20,
+    "width": 30,
+    "height": 30,
+    "borderRadius": 100,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "css": {
+      "font-size": "18px",
+      "display": "flex",
+      "align-items": "center",
+      "justify-content": "center",
+      "color": "#6d6d6d",
+      "background": "#e4e4e4",
+      "border": "2px solid #999999"
+    },
+    "text": 0,
+    "ownerGlobalUpdateRoutine": [
+      "var parent = ${PROPERTY parent}",
+      "var COUNT = 0",
+      {
+        "func": "SELECT",
+        "property": "_ancestor",
+        "value": "${PROPERTY hand OF $parent}"
+      },
+      {
+        "func": "COUNT",
+        "owner": "${PROPERTY player OF $parent}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "text",
+        "value": "${COUNT}"
+      }
+    ],
+    "playerGlobalUpdateRoutine": [
+      {
+        "func": "CALL",
+        "routine": "ownerGlobalUpdateRoutine",
+        "widget": "${PROPERTY id}"
+      }
+    ]
+  },
+  "8z57": {
+    "type": "label",
+    "text": "Move/Retreat",
+    "css": "font-size: 30px",
+    "height": 42,
+    "width": 200,
+    "x": 53,
+    "y": 767,
+    "z": 408,
+    "id": "8z57"
+  },
+  "8z58": {
+    "type": "label",
+    "text": "Attack/Block",
+    "css": "font-size: 30px",
+    "height": 42,
+    "width": 200,
+    "x": 359,
+    "y": 767,
+    "z": 408,
+    "id": "8z58"
+  },
+  "8z59": {
+    "type": "label",
+    "text": "Move/Retreat",
+    "css": "font-size: 30px",
+    "height": 42,
+    "width": 200,
+    "x": 1024,
+    "y": 765,
+    "z": 408,
+    "id": "8z59"
+  },
+  "8z60": {
+    "type": "label",
+    "text": "Attack/Block",
+    "css": "font-size: 30px",
+    "height": 42,
+    "width": 200,
+    "x": 1331,
+    "y": 765,
+    "z": 408,
+    "id": "8z60"
+  },
+  "redMove": {
+    "type": "holder",
+    "id": "redMove",
+    "x": 59,
+    "y": 586,
+    "z": 415
+  },
+  "redAttack": {
+    "type": "holder",
+    "id": "redAttack",
+    "x": 268,
+    "y": 586,
+    "width": 291,
+    "z": 416,
+    "stackOffsetX": 60
+  },
+  "blueAttack": {
+    "type": "holder",
+    "id": "blueAttack",
+    "x": 1240,
+    "y": 586,
+    "width": 291,
+    "z": 416,
+    "stackOffsetX": 60
+  },
+  "blueMove": {
+    "type": "holder",
+    "id": "blueMove",
+    "x": 1024,
+    "y": 584,
+    "z": 415
+  },
+  "2ncc": {
+    "type": "label",
+    "text": "23    22    21    20    19    18    17    16    15    14    13    12    11    10    09    08    07    06    05    04    03    02    01",
+    "css": "font-size: 30px",
+    "height": 42,
+    "y": 431,
+    "z": 410,
+    "id": "2ncc",
+    "x": 66,
+    "width": 1460
+  },
+  "3ncc": {
+    "type": "label",
+    "text": "01    02    03    04    05    06    07    08    09    10    11    12    13    14    15    16    17    18    19    20    21    22    23",
+    "css": "font-size: 30px",
+    "height": 42,
+    "y": 540,
+    "z": 410,
+    "id": "3ncc",
+    "x": 64,
+    "width": 1460
+  },
+  "space1": {
+    "type": "holder",
+    "id": "space1",
+    "x": 71,
+    "y": 474,
+    "width": 63,
+    "height": 63,
+    "z": 414
+  },
+  "redFighter": {
+    "type": "card",
+    "id": "redFighter",
+    "deck": "0qbx",
+    "cardType": "1 of plain-circle",
+    "z": 22272,
+    "activeFace": 1,
+    "x": 4,
+    "y": 4,
+    "parent": "space1",
+    "movable": false
+  },
+  "drawRed": {
+    "type": "button",
+    "id": "drawRed",
+    "x": 399,
+    "y": 856,
+    "z": 16200,
+    "text": "Discard played cards & Fill hand",
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "deck",
+        "to": "${seatID}",
+        "fillTo": 5
+      },
+      {
+        "func": "MOVE",
+        "from": "redMove",
+        "count": 1,
+        "face": 1,
+        "to": "discardHolder"
+      },
+      {
+        "func": "MOVE",
+        "from": "redAttack",
+        "count": 5,
+        "face": 1,
+        "to": "discardHolder"
+      }
+    ],
+    "linkedToSeat": "seat1",
+    "onlyVisibleForSeat": "seat1",
+    "hideWhenUnused": true,
+    "width": 130
+  },
+  "drawBlue": {
+    "type": "button",
+    "id": "drawBlue",
+    "x": 1067,
+    "y": 852,
+    "z": 16200,
+    "text": "Discard played cards & Fill hand",
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "deck",
+        "to": "${seatID}",
+        "fillTo": 5
+      },
+      {
+        "func": "MOVE",
+        "from": "blueMove",
+        "count": 1,
+        "face": 1,
+        "to": "discardHolder"
+      },
+      {
+        "func": "MOVE",
+        "from": "blueAttack",
+        "count": 5,
+        "face": 1,
+        "to": "discardHolder"
+      }
+    ],
+    "linkedToSeat": "seat2",
+    "onlyVisibleForSeat": "seat2",
+    "hideWhenUnused": true,
+    "width": 130
+  },
+  "MoveForwardRed": {
+    "type": "button",
+    "id": "MoveForwardRed",
+    "x": 180,
+    "y": 665,
+    "z": 54,
+    "text": ">",
+    "clickRoutine": [
+      "var pawnX = ${PROPERTY x OF redFighter} + 63",
+      {
+        "func": "SET",
+        "collection": [
+          "redFighter"
+        ],
+        "property": "x",
+        "value": "${pawnX}"
+      }
+    ],
+    "height": 40,
+    "linkedToSeat": "seat1",
+    "onlyVisibleForSeat": "seat1",
+    "width": 40
+  },
+  "MoveBackwardRed": {
+    "type": "button",
+    "id": "MoveBackwardRed",
+    "x": 180,
+    "y": 714,
+    "height": 40,
+    "z": 54,
+    "text": "<",
+    "clickRoutine": [
+      "var pawnX = ${PROPERTY x OF redFighter} - 63",
+      {
+        "func": "SET",
+        "collection": [
+          "redFighter"
+        ],
+        "property": "x",
+        "value": "${pawnX}"
+      }
+    ],
+    "linkedToSeat": "seat1",
+    "onlyVisibleForSeat": "seat1",
+    "width": 40
+  },
+  "MoveForwardBlue1": {
+    "type": "button",
+    "id": "MoveForwardBlue1",
+    "x": 1142,
+    "y": 662,
+    "height": 40,
+    "z": 54,
+    "linkedToSeat": "seat2",
+    "onlyVisibleForSeat": "seat2",
+    "text": "<",
+    "clickRoutine": [
+      "var pawnX = ${PROPERTY x OF blueFighter} - 63",
+      {
+        "func": "SET",
+        "collection": [
+          "blueFighter"
+        ],
+        "property": "x",
+        "value": "${pawnX}"
+      }
+    ],
+    "width": 40
+  },
+  "MoveBackwardBlue1": {
+    "type": "button",
+    "id": "MoveBackwardBlue1",
+    "x": 1142,
+    "y": 712,
+    "height": 40,
+    "z": 54,
+    "linkedToSeat": "seat2",
+    "onlyVisibleForSeat": "seat2",
+    "text": ">",
+    "clickRoutine": [
+      "var pawnX = ${PROPERTY x OF blueFighter} + 63",
+      {
+        "func": "SET",
+        "collection": [
+          "blueFighter"
+        ],
+        "property": "x",
+        "value": "${pawnX}"
+      }
+    ],
+    "width": 40
+  },
+  "startButton": {
+    "type": "button",
+    "id": "startButton",
+    "x": 600,
+    "y": 221,
+    "z": 16201,
+    "text": "Start game",
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "header": "Ready to start?",
+        "fields": [
+          {
+            "type": "text",
+            "text": "Is everyone seated?"
+          }
+        ]
+      },
+      {
+        "func": "RECALL",
+        "holder": "deck",
+        "owned": "${owned}"
+      },
+      {
+        "func": "FLIP",
+        "holder": "deck",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "deck"
+      },
+      {
+        "func": "TURN",
+        "turnCycle": "random"
+      },
+      {
+        "func": "MOVE",
+        "from": "deck",
+        "count": 5,
+        "to": [
+          "seat1",
+          "seat2"
+        ]
+      },
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "id",
+        "value": "redFighter"
+      },
+      {
+        "func": "MOVE",
+        "to": "tempHolder"
+      },
+      {
+        "func": "MOVE",
+        "to": "space1"
+      },
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "id",
+        "value": "blueFighter"
+      },
+      {
+        "func": "MOVE",
+        "to": "tempHolder"
+      },
+      {
+        "func": "MOVE",
+        "to": "space23"
+      },
+      {
+        "func": "TURN"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "startButton"
+        ],
+        "property": "display",
+        "value": false
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "Reset"
+        ],
+        "property": "display",
+        "value": true
+      }
+    ],
+    "width": 121,
+    "height": 62,
+    "layer": 10
+  },
+  "nextRound": {
+    "type": "button",
+    "id": "nextRound",
+    "parent": "deck",
+    "y": 192,
+    "width": 111,
+    "height": 32,
+    "movableInEdit": false,
+    "text": "Next Round",
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "header": "Recalling cards...",
+        "fields": [
+          {
+            "type": "text",
+            "text": "Reset for next round?"
+          }
+        ]
+      },
+      {
+        "func": "RECALL",
+        "holder": "deck",
+        "owned": "${owned}"
+      },
+      {
+        "func": "FLIP",
+        "holder": "deck",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "deck"
+      },
+      {
+        "func": "TURN"
+      },
+      {
+        "func": "MOVE",
+        "from": "deck",
+        "count": 5,
+        "to": [
+          "seat1",
+          "seat2"
+        ]
+      },
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "id",
+        "value": "redFighter"
+      },
+      {
+        "func": "MOVE",
+        "to": "tempHolder"
+      },
+      {
+        "func": "MOVE",
+        "to": "space1"
+      },
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "id",
+        "value": "blueFighter"
+      },
+      {
+        "func": "MOVE",
+        "to": "tempHolder"
+      },
+      {
+        "func": "MOVE",
+        "to": "space23"
+      }
+    ],
+    "layer": -10
+  },
+  "space23": {
+    "type": "holder",
+    "id": "space23",
+    "x": 1457,
+    "y": 474,
+    "width": 63,
+    "height": 63,
+    "z": 414
+  },
+  "blueFighter": {
+    "type": "card",
+    "id": "blueFighter",
+    "deck": "coul",
+    "cardType": "1 of plain-circle",
+    "z": 22273,
+    "css": {
+      "transform": "scaleX(-1)"
+    },
+    "activeFace": 1,
+    "x": 4,
+    "y": 4,
+    "parent": "space23",
+    "movable": false
+  },
+  "Reset": {
+    "type": "button",
+    "id": "Reset",
+    "x": 1530,
+    "z": 16202,
+    "text": "Reset",
+    "clickRoutine": [
+      {
+        "func": "RECALL",
+        "holder": "deck",
+        "owned": "${owned}"
+      },
+      {
+        "func": "FLIP",
+        "holder": "deck",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "deck"
+      },
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "id",
+        "value": "redFighter"
+      },
+      {
+        "func": "MOVE",
+        "to": "space1"
+      },
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "id",
+        "value": "blueFighter"
+      },
+      {
+        "func": "MOVE",
+        "to": "space23"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "startButton"
+        ],
+        "property": "display",
+        "value": true
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "Reset"
+        ],
+        "property": "display",
+        "value": false
+      }
+    ],
+    "width": 60,
+    "height": 60,
+    "y": 10,
+    "display": false
+  },
+  "tempHolder": {
+    "type": "holder",
+    "id": "tempHolder",
+    "x": 685,
+    "y": -142,
+    "z": 417,
+    "width": 50,
+    "height": 50
+  },
+  "discardRed": {
+    "type": "button",
+    "id": "discardRed",
+    "x": 275,
+    "y": 763,
+    "width": 70,
+    "height": 60,
+    "z": 16200,
+    "linkedToSeat": "seat1",
+    "onlyVisibleForSeat": "seat1",
+    "text": "Discard block",
+    "hideWhenUnused": true,
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "redAttack",
+        "count": 5,
+        "face": 1,
+        "to": "discardHolder"
+      }
+    ]
+  },
+  "discardBlue": {
+    "type": "button",
+    "id": "discardBlue",
+    "x": 1255,
+    "y": 757,
+    "width": 70,
+    "height": 60,
+    "z": 16200,
+    "linkedToSeat": "seat2",
+    "onlyVisibleForSeat": "seat2",
+    "text": "Discard block",
+    "hideWhenUnused": true,
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "blueAttack",
+        "count": 5,
+        "face": 1,
+        "to": "discardHolder"
+      }
+    ]
+  },
+  "actionsInfo": {
+    "id": "actionsInfo",
+    "x": 5,
+    "width": 570,
+    "height": 245,
+    "z": 446,
+    "movable": false,
+    "css": {
+      "default": {
+        "font-size": "18px",
+        "border-left": "1px solid black",
+        "border-right": "1px solid black",
+        "border-bottom": "1px solid black"
+      },
+      " h2": {
+        "font-weight": "Bold",
+        "text-align": "center",
+        "font-size": "22px",
+        "line-height": "1.1em",
+        "border-bottom": "1px solid black",
+        "border-top": "1px solid black",
+        "padding": "0 0 0 0",
+        "margin": "0px 0 5px 0"
+      },
+      " h3": {
+        "font-style": "italic",
+        "font-size": "18px",
+        "line-height": "1.1em",
+        "padding": "0 0 0 0",
+        "margin": "5px 0 5px 5px"
+      },
+      " p": {
+        "line-height": "1.1em",
+        "margin": "5px 0 0 5px",
+        "padding": "0",
+        "text-align": "left",
+        "font-size": "18px"
+      },
+      " ul": {
+        "margin": "0"
+      },
+      " li": {
+        "font-size": "16px",
+        "margin": "0 0 0 5px"
+      }
+    },
+    "html": "<h2>Actions</h2><h3>Choose one and draw:</h3><ul><li>Play one card to move forward or backward</li><li>Play one, or more, cards to attack</li><li>Play one card to move forward, and then play one or more cards to attack</li></ul><h2>Reactions</h2><h3>Choose one:</h3><ul><li>Play one, or more, cards to block and then take your turn. Do not draw until your turn is over.</li><li>Play one card to retreat (move backward). Your turn is over. Draw up to 5 cards.</li></ul>",
+    "y": 5
+  },
+  "endRoundInfo": {
+    "id": "endRoundInfo",
+    "x": 1000,
+    "y": 5,
+    "width": 500,
+    "height": 215,
+    "z": 449,
+    "css": {
+      "default": {
+        "font-size": "18px",
+        "border": "1px solid black"
+      },
+      " h2": {
+        "font-weight": "Bold",
+        "text-align": "center",
+        "font-size": "22px",
+        "line-height": "1.1em",
+        "border-bottom": "1px solid black",
+        "padding": "0 0 0 0",
+        "margin": "5px 0 5px 0"
+      },
+      " h3": {
+        "font-style": "italic",
+        "font-size": "18px",
+        "line-height": "1.1em",
+        "padding": "0 0 0 0",
+        "margin": "5px 0 5px 5px"
+      },
+      " p": {
+        "line-height": "1.1em",
+        "margin": "5px 0 0 5px",
+        "padding": "0",
+        "text-align": "left",
+        "font-size": "18px"
+      },
+      " ul": {
+        "margin": "0"
+      },
+      " li": {
+        "font-size": "16px",
+        "margin": "0 0 0 5px"
+      }
+    },
+    "html": "<h2>End of Round</h2><h3>Point scored if any of these occur</h3><ul><li>If you directly attack and opponent has no way to block</li><li>If your opponent has to move off the track</li><li>If the deck runs out, check the following</li><ul><li>Reveal all cards in hand. The player who has more cards for a direct attack, wins.</li><li>If still tied, the winner is who has advanced farthest from their home space.</li><li>If still tied, the round is a draw.</li></ul></ul>",
+    "movable": false
+  }
+}

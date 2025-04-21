@@ -1,0 +1,3545 @@
+{
+  "3617": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "1-12",
+    "id": "3617",
+    "z": 27784,
+    "parent": "r0x5"
+  },
+  "_meta": {
+    "version": 16,
+    "info": {
+      "name": "Mystic Tiles",
+      "image": "/assets/1746095057_101091",
+      "rules": "",
+      "bgg": "https://boardgamegeek.com/boardgame/302280/shifting-stones",
+      "year": "2020",
+      "mode": "solo; vs",
+      "time": "20",
+      "attribution": "<div><span style=\"color: var(--overlayFontColor);\"><span><span><span><span><span>Room design, layout, and library image by LawDawg96.&nbsp; Released to the Public Domain under CC0.</span></span></span></span></span></span></div><div><div><br></div><div><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span>Wood grain background by RyanPro available under the Pixabay license from https://pixabay.com/photos/trees-wood-yellow-wood-oak-1915247/</span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></div></div><div><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><br></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></div><div><span><span><span><span><span>Card back created at https://pattern.monster/batik-6&nbsp;under MIT License available at https://github.com/catchspider2002/svelte-svg-patterns.</span></span></span></span></span></div>",
+      "lastUpdate": 1732376803473,
+      "showName": true,
+      "skill": "",
+      "description": "Move and flip tiles to match the patterned cards in your hand. Highest score wins.",
+      "similarImage": "",
+      "similarName": "Shifting Stones",
+      "similarDesigner": "J. Evan Raitt",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": "<span><span><span><span><span>Sit in seats. Click the reset button to begin.</span></span></span></span></span><div><br></div><div><span><span><span><span><span>Drag and drop a tile onto an adjacent tile and they will swap automatically.</span></span></span></span></span></div><div><span><span><span><br></span></span></span></div><div><span><span><span><span><span>The other side of the tile is indicated in a small image in the lower right.</span></span></span></span></span></div><div><br></div><div><span><span><span><span><span>Scoring is automatic when dropping a scoring card into the holder below the seat, but the value can be manually edited.&nbsp; The score does not take into account the 3-point bonus at the end of the game for the player(s) with the most 1-point cards.</span></span></span></span></span></div><div><br></div><div><span><span><span><span><span>End the game after each player has had an equal number of turns in the turn in which a player gets the following number of scoring cards:</span></span></span></span></span></div><div><span><span><span><span><span>&nbsp; 2 players: 10 cards</span></span></span></span></span></div><div><span><span><span><span><span>&nbsp; 3 players: 9 cards</span></span></span></span></span></div><div><span><span><span><span><span>&nbsp; 4 players: 8 cards</span></span></span></span></span></div><div><span><span><span><span><span>&nbsp; 5 players: 7 cards</span></span></span></span></span></div><div><br></div><div><span><span><span><span><span>Solo mode: When only one player sits is in a seat and the reset button is pressed, solo mode is started. A smaller deck of 16 cards is available and a reminder of how to win is added to the in-game text.</span></span></span></span></span></div>",
+      "variantImage": "",
+      "variant": "",
+      "language": "",
+      "players": "1-5"
+    }
+  },
+  "r73b": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "1-1",
+    "id": "r73b",
+    "z": 27796,
+    "parent": "r0x5"
+  },
+  "jp1k": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "1-2",
+    "id": "jp1k",
+    "z": 27824,
+    "parent": "r0x5"
+  },
+  "6ppy": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "1-3",
+    "id": "6ppy",
+    "z": 27793,
+    "parent": "r0x5"
+  },
+  "z8mp": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "1-4",
+    "id": "z8mp",
+    "z": 27837,
+    "parent": "r0x5"
+  },
+  "pbav": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "1-5",
+    "id": "pbav",
+    "z": 27825,
+    "parent": "r0x5"
+  },
+  "au30": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "1-6",
+    "id": "au30",
+    "z": 27852,
+    "parent": "r0x5"
+  },
+  "v1zt": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "1-7",
+    "id": "v1zt",
+    "z": 27806,
+    "parent": "r0x5"
+  },
+  "k9hk": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "1-8",
+    "id": "k9hk",
+    "z": 27851,
+    "parent": "r0x5"
+  },
+  "jo96": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "1-9",
+    "id": "jo96",
+    "z": 27833,
+    "parent": "r0x5"
+  },
+  "8j9r": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "1-10",
+    "id": "8j9r",
+    "z": 27797,
+    "parent": "r0x5"
+  },
+  "dgce": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "1-11",
+    "id": "dgce",
+    "z": 27815,
+    "parent": "r0x5"
+  },
+  "uaef": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "1-13",
+    "id": "uaef",
+    "z": 27843,
+    "parent": "r0x5"
+  },
+  "cwjp": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "1-14",
+    "id": "cwjp",
+    "z": 27788,
+    "parent": "r0x5"
+  },
+  "qjon": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "1-15",
+    "id": "qjon",
+    "z": 27792,
+    "parent": "r0x5"
+  },
+  "248u": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "1-16",
+    "id": "248u",
+    "z": 27810,
+    "parent": "r0x5"
+  },
+  "f6u8": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "1-17",
+    "id": "f6u8",
+    "z": 27841,
+    "parent": "r0x5"
+  },
+  "qs9u": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "1-18",
+    "id": "qs9u",
+    "z": 27816,
+    "parent": "r0x5"
+  },
+  "abhn": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "1-19",
+    "id": "abhn",
+    "z": 27802,
+    "parent": "r0x5"
+  },
+  "5w5q": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "1-20",
+    "id": "5w5q",
+    "z": 27783,
+    "parent": "r0x5"
+  },
+  "5pup": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "1-21",
+    "id": "5pup",
+    "z": 27838,
+    "parent": "r0x5"
+  },
+  "y523": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "1-22",
+    "id": "y523",
+    "z": 27832,
+    "parent": "r0x5"
+  },
+  "uewb": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "1-23",
+    "id": "uewb",
+    "z": 27834,
+    "parent": "r0x5"
+  },
+  "t655": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "1-24",
+    "id": "t655",
+    "z": 27850,
+    "parent": "r0x5"
+  },
+  "uls7": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "1-25",
+    "id": "uls7",
+    "z": 27835,
+    "parent": "r0x5"
+  },
+  "cgav": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "1-26",
+    "id": "cgav",
+    "z": 27785,
+    "parent": "r0x5"
+  },
+  "ljdx": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "1-27",
+    "id": "ljdx",
+    "z": 27814,
+    "parent": "r0x5"
+  },
+  "7ibn": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "1-28",
+    "id": "7ibn",
+    "z": 27782,
+    "parent": "r0x5"
+  },
+  "f98n": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "2-1",
+    "id": "f98n",
+    "z": 27803,
+    "parent": "r0x5"
+  },
+  "kiy9": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "2-2",
+    "id": "kiy9",
+    "z": 27822,
+    "parent": "r0x5"
+  },
+  "v7vq": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "2-3",
+    "id": "v7vq",
+    "z": 27829,
+    "parent": "r0x5"
+  },
+  "eisk": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "2-4",
+    "id": "eisk",
+    "z": 27845,
+    "parent": "r0x5"
+  },
+  "qcxg": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "2-5",
+    "id": "qcxg",
+    "z": 27809,
+    "parent": "r0x5"
+  },
+  "gofw": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "2-6",
+    "id": "gofw",
+    "z": 27812,
+    "parent": "r0x5"
+  },
+  "lgzb": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "2-7",
+    "id": "lgzb",
+    "z": 27842,
+    "parent": "r0x5"
+  },
+  "xa56": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "2-8",
+    "id": "xa56",
+    "z": 27811,
+    "parent": "r0x5"
+  },
+  "0b1v": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "2-9",
+    "id": "0b1v",
+    "z": 27847,
+    "parent": "r0x5"
+  },
+  "vnqp": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "2-10",
+    "id": "vnqp",
+    "z": 27844,
+    "parent": "r0x5"
+  },
+  "11l4": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "2-11",
+    "id": "11l4",
+    "z": 27823,
+    "parent": "r0x5"
+  },
+  "ewi8": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "2-12",
+    "id": "ewi8",
+    "z": 27818,
+    "parent": "r0x5"
+  },
+  "7f0l": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "2-13",
+    "id": "7f0l",
+    "z": 27828,
+    "parent": "r0x5"
+  },
+  "92o4": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "2-14",
+    "id": "92o4",
+    "z": 27790,
+    "parent": "r0x5"
+  },
+  "4nmg": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "2-15",
+    "id": "4nmg",
+    "z": 27840,
+    "parent": "r0x5"
+  },
+  "4qa5": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "2-16",
+    "id": "4qa5",
+    "z": 27805,
+    "parent": "r0x5"
+  },
+  "8vi1": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "2-17",
+    "id": "8vi1",
+    "z": 27819,
+    "parent": "r0x5"
+  },
+  "156s": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "2-18",
+    "id": "156s",
+    "z": 27820,
+    "parent": "r0x5"
+  },
+  "5r95": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "2-19",
+    "id": "5r95",
+    "z": 27830,
+    "parent": "r0x5"
+  },
+  "s4ns": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "2-20",
+    "id": "s4ns",
+    "z": 27786,
+    "parent": "r0x5"
+  },
+  "47a7": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "2-21",
+    "id": "47a7",
+    "z": 27846,
+    "parent": "r0x5"
+  },
+  "gr3r": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "2-22",
+    "id": "gr3r",
+    "z": 27799,
+    "parent": "r0x5"
+  },
+  "ce9k": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "2-23",
+    "id": "ce9k",
+    "z": 27836,
+    "parent": "r0x5"
+  },
+  "udrh": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "2-24",
+    "id": "udrh",
+    "z": 27831,
+    "parent": "r0x5"
+  },
+  "19zm": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "2-25",
+    "id": "19zm",
+    "z": 27853,
+    "parent": "r0x5"
+  },
+  "dcvq": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "2-26",
+    "id": "dcvq",
+    "z": 27848,
+    "parent": "r0x5"
+  },
+  "t1ix": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "3-1",
+    "id": "t1ix",
+    "z": 27798,
+    "parent": "r0x5"
+  },
+  "r102": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "3-2",
+    "id": "r102",
+    "z": 27800,
+    "parent": "r0x5"
+  },
+  "mb5i": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "3-3",
+    "id": "mb5i",
+    "z": 27789,
+    "parent": "r0x5"
+  },
+  "v1tk": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "3-4",
+    "id": "v1tk",
+    "z": 27813,
+    "parent": "r0x5"
+  },
+  "z6y4": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "3-5",
+    "id": "z6y4",
+    "z": 27804,
+    "parent": "r0x5"
+  },
+  "d9nv": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "3-6",
+    "id": "d9nv",
+    "z": 27787,
+    "parent": "r0x5"
+  },
+  "bq9i": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "3-7",
+    "id": "bq9i",
+    "z": 27795,
+    "parent": "r0x5"
+  },
+  "1uml": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "3-8",
+    "id": "1uml",
+    "z": 27849,
+    "parent": "r0x5"
+  },
+  "cv58": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "3-9",
+    "id": "cv58",
+    "z": 27826,
+    "parent": "r0x5"
+  },
+  "bxk7": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "3-10",
+    "id": "bxk7",
+    "z": 27808,
+    "parent": "r0x5"
+  },
+  "p9wp": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "3-11",
+    "id": "p9wp",
+    "z": 27827,
+    "parent": "r0x5"
+  },
+  "qo6p": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "3-12",
+    "id": "qo6p",
+    "z": 27817,
+    "parent": "r0x5"
+  },
+  "xrpv": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "3-13",
+    "id": "xrpv",
+    "z": 27801,
+    "parent": "r0x5"
+  },
+  "alb0": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "5-1",
+    "id": "alb0",
+    "z": 27839,
+    "parent": "r0x5"
+  },
+  "51zh": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "5-2",
+    "id": "51zh",
+    "z": 27821,
+    "parent": "r0x5"
+  },
+  "s0rh": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "5-3",
+    "id": "s0rh",
+    "z": 27794,
+    "parent": "r0x5"
+  },
+  "a95l": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "5-4",
+    "id": "a95l",
+    "z": 27807,
+    "parent": "r0x5"
+  },
+  "h67y": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "5-5",
+    "id": "h67y",
+    "z": 27791,
+    "parent": "r0x5"
+  },
+  "cardDeckHolder": {
+    "type": "holder",
+    "id": "cardDeckHolder",
+    "y": 770,
+    "width": 160,
+    "height": 225,
+    "z": 1,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "onEnter": {
+      "activeFace": 0
+    },
+    "x": 5,
+    "css": {
+      "background": "#ffffff50",
+      "border": "1px solid black"
+    },
+    "borderRadius": 15,
+    "dropTarget": {
+      "deck": "cardDeck"
+    }
+  },
+  "sgy4": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "purpleTeal",
+    "id": "sgy4",
+    "z": 27889,
+    "lastHolder": "tileHolder1",
+    "activeFace": 1,
+    "parent": "aw67"
+  },
+  "84bv": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "purpleTeal",
+    "id": "84bv",
+    "z": 27905,
+    "lastHolder": "tileHolder5",
+    "parent": "aw67"
+  },
+  "7ik1": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "purpleTeal",
+    "id": "7ik1",
+    "z": 27902,
+    "lastHolder": "tileHolder9",
+    "parent": "aw67"
+  },
+  "tjsl": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "greenWhite",
+    "id": "tjsl",
+    "z": 27914,
+    "lastHolder": "tileHolder3",
+    "parent": "aw67"
+  },
+  "wn8q": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "greenWhite",
+    "id": "wn8q",
+    "z": 27896,
+    "lastHolder": "tileHolder7",
+    "activeFace": 1,
+    "parent": "aw67"
+  },
+  "hgin": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "greenWhite",
+    "id": "hgin",
+    "z": 27908,
+    "lastHolder": "tileHolder6",
+    "activeFace": 1,
+    "parent": "aw67"
+  },
+  "tcwj": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "orangeRed",
+    "id": "tcwj",
+    "z": 27893,
+    "lastHolder": "tileHolder4",
+    "activeFace": 1,
+    "parent": "aw67"
+  },
+  "fzwc": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "orangeRed",
+    "id": "fzwc",
+    "z": 27911,
+    "lastHolder": "tileHolder2",
+    "activeFace": 1,
+    "parent": "aw67"
+  },
+  "mk8z": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "blackYellow",
+    "id": "mk8z",
+    "z": 27899,
+    "lastHolder": "tileHolder8",
+    "parent": "aw67"
+  },
+  "tileDeckHolder": {
+    "type": "holder",
+    "id": "tileDeckHolder",
+    "x": -311,
+    "y": 63,
+    "width": 200,
+    "height": 200,
+    "z": 1,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0
+  },
+  "background": {
+    "id": "background",
+    "width": 1920,
+    "height": 960,
+    "scale": 1.09,
+    "layer": -4,
+    "z": 1,
+    "movable": false,
+    "css": {
+      "opacity": "0.6"
+    },
+    "image": "/assets/-52589506_548214"
+  },
+  "tileHolder1": {
+    "type": "holder",
+    "id": "tileHolder1",
+    "z": 2,
+    "width": 200,
+    "height": 200,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "deck": "tileDeck"
+    },
+    "parent": "tileHolderBase",
+    "css": {
+      "background": "#ffffff60"
+    },
+    "leaveRoutine": [
+      {
+        "func": "SET",
+        "collection": "child",
+        "property": "lastHolder",
+        "value": "${PROPERTY id}"
+      }
+    ],
+    "enterRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY active}",
+        "operand2": false,
+        "thenRoutine": [
+          {
+            "func": "GET",
+            "collection": "child",
+            "property": "lastHolder"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "movedFrom",
+            "value": "${lastHolder}"
+          },
+          {
+            "func": "MOVE",
+            "from": "${PROPERTY id}",
+            "to": "tileDeckHolder"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "tileHolder1"
+            ],
+            "property": "active",
+            "value": true
+          },
+          {
+            "func": "MOVE",
+            "from": "${PROPERTY id}",
+            "to": "${PROPERTY movedFrom}"
+          },
+          {
+            "func": "MOVE",
+            "from": "tileDeckHolder",
+            "to": "${PROPERTY id}"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "tileHolder1"
+            ],
+            "property": "active",
+            "value": false
+          }
+        ]
+      }
+    ],
+    "movedFrom": "tileHolder2",
+    "active": false
+  },
+  "tileHolder2": {
+    "inheritFrom": {
+      "tileHolder1": "*"
+    },
+    "type": "holder",
+    "id": "tileHolder2",
+    "x": 210,
+    "y": 0,
+    "parent": "tileHolderBase",
+    "z": 2,
+    "movedFrom": "tileHolder3"
+  },
+  "tileHolder3": {
+    "inheritFrom": {
+      "tileHolder1": "*"
+    },
+    "type": "holder",
+    "id": "tileHolder3",
+    "x": 420,
+    "y": 0,
+    "parent": "tileHolderBase",
+    "z": 2,
+    "movedFrom": "tileHolder6"
+  },
+  "tileHolder4": {
+    "inheritFrom": {
+      "tileHolder1": "*"
+    },
+    "type": "holder",
+    "id": "tileHolder4",
+    "x": 0,
+    "y": 210,
+    "parent": "tileHolderBase",
+    "z": 2,
+    "movedFrom": "tileHolder5"
+  },
+  "tileHolder5": {
+    "inheritFrom": {
+      "tileHolder1": "*"
+    },
+    "type": "holder",
+    "id": "tileHolder5",
+    "x": 210,
+    "y": 210,
+    "parent": "tileHolderBase",
+    "z": 2,
+    "movedFrom": "tileHolder6"
+  },
+  "tileHolder6": {
+    "inheritFrom": {
+      "tileHolder1": "*"
+    },
+    "type": "holder",
+    "id": "tileHolder6",
+    "x": 420,
+    "y": 210,
+    "parent": "tileHolderBase",
+    "z": 2,
+    "movedFrom": "tileHolder3"
+  },
+  "tileHolder7": {
+    "inheritFrom": {
+      "tileHolder1": "*"
+    },
+    "type": "holder",
+    "id": "tileHolder7",
+    "x": 0,
+    "y": 420,
+    "parent": "tileHolderBase",
+    "z": 2,
+    "movedFrom": "tileHolder1"
+  },
+  "tileHolder8": {
+    "inheritFrom": {
+      "tileHolder1": "*"
+    },
+    "type": "holder",
+    "id": "tileHolder8",
+    "x": 210,
+    "y": 420,
+    "parent": "tileHolderBase",
+    "z": 2,
+    "movedFrom": "tileHolder5"
+  },
+  "tileHolder9": {
+    "inheritFrom": {
+      "tileHolder1": "*"
+    },
+    "type": "holder",
+    "id": "tileHolder9",
+    "x": 420,
+    "y": 420,
+    "parent": "tileHolderBase",
+    "z": 2,
+    "movedFrom": "tileHolder3"
+  },
+  "tileDeck": {
+    "type": "deck",
+    "id": "tileDeck",
+    "parent": "tileDeckHolder",
+    "x": 54,
+    "y": 16,
+    "cardDefaults": {
+      "classes": "transition",
+      "width": 200,
+      "height": 200,
+      "css": {
+        "opacity": 1
+      }
+    },
+    "cardTypes": {
+      "purpleTeal": {
+        "sideColor1": "#9f6fcf",
+        "sideShape1": "/i/game-icons.net/viscious-speed/abstract-053.svg",
+        "sideColor2": "#00aabb",
+        "sideShape2": "/i/game-icons.net/viscious-speed/abstract-001.svg"
+      },
+      "greenWhite": {
+        "sideColor1": "#48aa08",
+        "sideShape1": "/i/game-icons.net/viscious-speed/abstract-013.svg",
+        "sideColor2": "white",
+        "sideShape2": "/i/game-icons.net/lorc/swirl-ring.svg"
+      },
+      "orangeRed": {
+        "sideColor1": "orange",
+        "sideShape1": "/i/game-icons.net/viscious-speed/abstract-079.svg",
+        "sideColor2": "red",
+        "sideShape2": "/i/game-icons.net/viscious-speed/abstract-055.svg"
+      },
+      "blackYellow": {
+        "sideColor1": "#608299",
+        "sideShape1": "/i/game-icons.net/lorc/zigzag-cage.svg",
+        "sideColor2": "gold",
+        "sideShape2": "/i/game-icons.net/viscious-speed/abstract-070.svg"
+      }
+    },
+    "faceTemplates": [
+      {
+        "border": 1,
+        "radius": 8,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 200,
+            "height": 200,
+            "dynamicProperties": {
+              "color": "sideColor1"
+            }
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 200,
+            "height": 200,
+            "color": "transparent",
+            "css": {
+              "opacity": 0.5
+            },
+            "dynamicProperties": {
+              "value": "sideShape1"
+            }
+          },
+          {
+            "type": "image",
+            "x": 170,
+            "y": 170,
+            "width": 30,
+            "height": 30,
+            "css": {
+              "border-Radius": "5px"
+            },
+            "dynamicProperties": {
+              "color": "sideColor2"
+            }
+          },
+          {
+            "type": "image",
+            "x": 170,
+            "y": 170,
+            "width": 30,
+            "height": 30,
+            "color": "transparent",
+            "css": {
+              "opacity": 0.5
+            },
+            "dynamicProperties": {
+              "value": "sideShape2"
+            }
+          }
+        ]
+      },
+      {
+        "border": 1,
+        "radius": 8,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 200,
+            "height": 200,
+            "dynamicProperties": {
+              "color": "sideColor2"
+            }
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 200,
+            "height": 200,
+            "color": "transparent",
+            "css": {
+              "opacity": 0.5
+            },
+            "dynamicProperties": {
+              "value": "sideShape2"
+            }
+          },
+          {
+            "type": "image",
+            "x": 170,
+            "y": 170,
+            "width": 30,
+            "height": 30,
+            "css": {
+              "border-Radius": "5px"
+            },
+            "dynamicProperties": {
+              "color": "sideColor1"
+            }
+          },
+          {
+            "type": "image",
+            "x": 170,
+            "y": 170,
+            "width": 30,
+            "height": 30,
+            "color": "transparent",
+            "css": {
+              "opacity": 0.5
+            },
+            "dynamicProperties": {
+              "value": "sideShape1"
+            }
+          }
+        ]
+      }
+    ],
+    "css": {
+      "": {
+        "font-size": "20px"
+      },
+      "_, .transition": {
+        "transition": "transform 600ms"
+      },
+      "_, .transition.dragging": {
+        "transition": "none"
+      }
+    }
+  },
+  "cardDeck": {
+    "type": "deck",
+    "id": "cardDeck",
+    "parent": "cardDeckHolder",
+    "x": 32,
+    "y": 37,
+    "cardDefaults": {
+      "width": 160,
+      "height": 225
+    },
+    "cardTypes": {
+      "1-1": {
+        "points": 1,
+        "color1": " ",
+        "color2": "white",
+        "shape2": "/i/game-icons.net/lorc/swirl-ring.svg",
+        "color3": " ",
+        "color4": " ",
+        "color5": "white",
+        "shape5": "/i/game-icons.net/lorc/swirl-ring.svg",
+        "color6": " ",
+        "color7": " ",
+        "color8": " ",
+        "color9": " "
+      },
+      "1-2": {
+        "points": 1,
+        "color1": " ",
+        "color2": "#00aabb",
+        "shape2": "/i/game-icons.net/viscious-speed/abstract-001.svg",
+        "color3": " ",
+        "color4": " ",
+        "color5": "#00aabb",
+        "shape5": "/i/game-icons.net/viscious-speed/abstract-001.svg",
+        "color6": " ",
+        "color7": " ",
+        "color8": " ",
+        "color9": " "
+      },
+      "1-3": {
+        "points": 1,
+        "color1": " ",
+        "color2": "white",
+        "shape2": "/i/game-icons.net/lorc/swirl-ring.svg",
+        "color3": " ",
+        "color4": " ",
+        "color5": "#48aa08",
+        "shape5": "/i/game-icons.net/viscious-speed/abstract-013.svg",
+        "color6": " ",
+        "color7": " ",
+        "color8": " ",
+        "color9": " "
+      },
+      "1-4": {
+        "points": 1,
+        "color1": " ",
+        "color2": "#9f6fcf",
+        "shape2": "/i/game-icons.net/viscious-speed/abstract-053.svg",
+        "color3": " ",
+        "color4": " ",
+        "color5": "#00aabb",
+        "shape5": "/i/game-icons.net/viscious-speed/abstract-001.svg",
+        "color6": " ",
+        "color7": " ",
+        "color8": " ",
+        "color9": " "
+      },
+      "1-5": {
+        "points": 1,
+        "color1": " ",
+        "color2": "#00aabb",
+        "shape2": "/i/game-icons.net/viscious-speed/abstract-001.svg",
+        "color3": " ",
+        "color4": " ",
+        "color5": "orange",
+        "shape5": "/i/game-icons.net/viscious-speed/abstract-079.svg",
+        "color6": " ",
+        "color7": " ",
+        "color8": " ",
+        "color9": " "
+      },
+      "1-6": {
+        "points": 1,
+        "color1": " ",
+        "color2": "red",
+        "shape2": "/i/game-icons.net/viscious-speed/abstract-055.svg",
+        "color3": " ",
+        "color4": " ",
+        "color5": "white",
+        "shape5": "/i/game-icons.net/lorc/swirl-ring.svg",
+        "color6": " ",
+        "color7": " ",
+        "color8": " ",
+        "color9": " "
+      },
+      "1-7": {
+        "points": 1,
+        "color1": " ",
+        "color2": "#48aa08",
+        "shape2": "/i/game-icons.net/viscious-speed/abstract-013.svg",
+        "color3": " ",
+        "color4": " ",
+        "color5": "white",
+        "shape5": "/i/game-icons.net/lorc/swirl-ring.svg",
+        "color6": " ",
+        "color7": " ",
+        "color8": " ",
+        "color9": " "
+      },
+      "1-8": {
+        "points": 1,
+        "color1": " ",
+        "color2": " ",
+        "color3": " ",
+        "color4": "white",
+        "shape4": "/i/game-icons.net/lorc/swirl-ring.svg",
+        "color5": "#48aa08",
+        "shape5": "/i/game-icons.net/viscious-speed/abstract-013.svg",
+        "color6": " ",
+        "color7": " ",
+        "color8": " ",
+        "color9": " "
+      },
+      "1-9": {
+        "points": 1,
+        "color1": " ",
+        "color2": " ",
+        "color3": " ",
+        "color4": "#48aa08",
+        "shape4": "/i/game-icons.net/viscious-speed/abstract-013.svg",
+        "color5": "white",
+        "shape5": "/i/game-icons.net/lorc/swirl-ring.svg",
+        "color6": " ",
+        "color7": " ",
+        "color8": " ",
+        "color9": " "
+      },
+      "1-10": {
+        "points": 1,
+        "color1": " ",
+        "color2": " ",
+        "color3": " ",
+        "color4": "orange",
+        "shape4": "/i/game-icons.net/viscious-speed/abstract-079.svg",
+        "color5": "#48aa08",
+        "shape5": "/i/game-icons.net/viscious-speed/abstract-013.svg",
+        "color6": " ",
+        "color7": " ",
+        "color8": " ",
+        "color9": " "
+      },
+      "1-11": {
+        "points": 1,
+        "color1": " ",
+        "color2": " ",
+        "color3": " ",
+        "color4": "#00aabb",
+        "shape4": "/i/game-icons.net/viscious-speed/abstract-001.svg",
+        "color5": "#9f6fcf",
+        "shape5": "/i/game-icons.net/viscious-speed/abstract-053.svg",
+        "color6": " ",
+        "color7": " ",
+        "color8": " ",
+        "color9": " "
+      },
+      "1-12": {
+        "points": 1,
+        "color1": " ",
+        "color2": " ",
+        "color3": " ",
+        "color4": "#00aabb",
+        "shape4": "/i/game-icons.net/viscious-speed/abstract-001.svg",
+        "color5": "red",
+        "shape5": "/i/game-icons.net/viscious-speed/abstract-055.svg",
+        "color6": " ",
+        "color7": " ",
+        "color8": " ",
+        "color9": " "
+      },
+      "1-13": {
+        "points": 1,
+        "color1": " ",
+        "color2": " ",
+        "color3": " ",
+        "color4": "#48aa08",
+        "shape4": "/i/game-icons.net/viscious-speed/abstract-013.svg",
+        "color5": "#48aa08",
+        "shape5": "/i/game-icons.net/viscious-speed/abstract-013.svg",
+        "color6": " ",
+        "color7": " ",
+        "color8": " ",
+        "color9": " "
+      },
+      "1-14": {
+        "points": 1,
+        "color1": " ",
+        "color2": " ",
+        "color3": " ",
+        "color4": "#9f6fcf",
+        "shape4": "/i/game-icons.net/viscious-speed/abstract-053.svg",
+        "color5": "#9f6fcf",
+        "shape5": "/i/game-icons.net/viscious-speed/abstract-053.svg",
+        "color6": " ",
+        "color7": " ",
+        "color8": " ",
+        "color9": " "
+      },
+      "1-15": {
+        "points": 1,
+        "color1": " ",
+        "color2": " ",
+        "color3": " ",
+        "color4": "white",
+        "shape4": "/i/game-icons.net/lorc/swirl-ring.svg",
+        "color5": "orange",
+        "shape5": "/i/game-icons.net/viscious-speed/abstract-079.svg",
+        "color6": " ",
+        "color7": " ",
+        "color8": " ",
+        "color9": " "
+      },
+      "1-16": {
+        "points": 1,
+        "color1": " ",
+        "color2": " ",
+        "color3": " ",
+        "color4": "white",
+        "shape4": "/i/game-icons.net/lorc/swirl-ring.svg",
+        "color5": "#00aabb",
+        "shape5": "/i/game-icons.net/viscious-speed/abstract-001.svg",
+        "color6": " ",
+        "color7": " ",
+        "color8": " ",
+        "color9": " "
+      },
+      "1-17": {
+        "points": 1,
+        "color1": " ",
+        "color2": " ",
+        "color3": " ",
+        "color4": "red",
+        "shape4": "/i/game-icons.net/viscious-speed/abstract-055.svg",
+        "color5": "#9f6fcf",
+        "shape5": "/i/game-icons.net/viscious-speed/abstract-053.svg",
+        "color6": " ",
+        "color7": " ",
+        "color8": " ",
+        "color9": " "
+      },
+      "1-18": {
+        "points": 1,
+        "color1": " ",
+        "color2": " ",
+        "color3": " ",
+        "color4": "#9f6fcf",
+        "shape4": "/i/game-icons.net/viscious-speed/abstract-053.svg",
+        "color5": "#00aabb",
+        "shape5": "/i/game-icons.net/viscious-speed/abstract-001.svg",
+        "color6": " ",
+        "color7": " ",
+        "color8": " ",
+        "color9": " "
+      },
+      "1-19": {
+        "points": 1,
+        "color1": " ",
+        "color2": " ",
+        "color3": " ",
+        "color4": "#48aa08",
+        "shape4": "/i/game-icons.net/viscious-speed/abstract-013.svg",
+        "color5": "#9f6fcf",
+        "shape5": "/i/game-icons.net/viscious-speed/abstract-053.svg",
+        "color6": " ",
+        "color7": " ",
+        "color8": " ",
+        "color9": " "
+      },
+      "1-20": {
+        "points": 1,
+        "color1": " ",
+        "color2": "#48aa08",
+        "shape2": "/i/game-icons.net/viscious-speed/abstract-013.svg",
+        "color3": " ",
+        "color4": " ",
+        "color5": "#9f6fcf",
+        "shape5": "/i/game-icons.net/viscious-speed/abstract-053.svg",
+        "color6": " ",
+        "color7": " ",
+        "color8": " ",
+        "color9": " "
+      },
+      "1-21": {
+        "points": 1,
+        "color1": " ",
+        "color2": "#48aa08",
+        "shape2": "/i/game-icons.net/viscious-speed/abstract-013.svg",
+        "color3": " ",
+        "color4": " ",
+        "color5": "red",
+        "shape5": "/i/game-icons.net/viscious-speed/abstract-055.svg",
+        "color6": " ",
+        "color7": " ",
+        "color8": " ",
+        "color9": " "
+      },
+      "1-22": {
+        "points": 1,
+        "color1": " ",
+        "color2": "#00aabb",
+        "shape2": "/i/game-icons.net/viscious-speed/abstract-001.svg",
+        "color3": " ",
+        "color4": " ",
+        "color5": "#9f6fcf",
+        "shape5": "/i/game-icons.net/viscious-speed/abstract-053.svg",
+        "color6": " ",
+        "color7": " ",
+        "color8": " ",
+        "color9": " "
+      },
+      "1-23": {
+        "points": 1,
+        "color1": " ",
+        "color2": "orange",
+        "shape2": "/i/game-icons.net/viscious-speed/abstract-079.svg",
+        "color3": " ",
+        "color4": " ",
+        "color5": "#9f6fcf",
+        "shape5": "/i/game-icons.net/viscious-speed/abstract-053.svg",
+        "color6": " ",
+        "color7": " ",
+        "color8": " ",
+        "color9": " "
+      },
+      "1-24": {
+        "points": 1,
+        "color1": " ",
+        "color2": "#00aabb",
+        "shape2": "/i/game-icons.net/viscious-speed/abstract-001.svg",
+        "color3": " ",
+        "color4": " ",
+        "color5": "white",
+        "shape5": "/i/game-icons.net/lorc/swirl-ring.svg",
+        "color6": " ",
+        "color7": " ",
+        "color8": " ",
+        "color9": " "
+      },
+      "1-25": {
+        "points": 1,
+        "color1": "lightgrey",
+        "color2": "white",
+        "shape2": "/i/game-icons.net/lorc/swirl-ring.svg",
+        "color3": " ",
+        "color4": "#00aabb",
+        "shape4": "/i/game-icons.net/viscious-speed/abstract-001.svg",
+        "color5": "lightgrey",
+        "color6": " ",
+        "color7": " ",
+        "color8": " ",
+        "color9": " "
+      },
+      "1-26": {
+        "points": 1,
+        "color1": "#48aa08",
+        "shape1": "/i/game-icons.net/viscious-speed/abstract-013.svg",
+        "color2": "lightgrey",
+        "color3": " ",
+        "color4": "lightgrey",
+        "color5": "#9f6fcf",
+        "shape5": "/i/game-icons.net/viscious-speed/abstract-053.svg",
+        "color6": " ",
+        "color7": " ",
+        "color8": " ",
+        "color9": " "
+      },
+      "1-27": {
+        "points": 1,
+        "color1": "lightgrey",
+        "color2": "lightgrey",
+        "color3": "lightgrey",
+        "color4": "lightgrey",
+        "color5": "orange",
+        "shape5": "/i/game-icons.net/viscious-speed/abstract-079.svg",
+        "color6": "lightgrey",
+        "color7": "lightgrey",
+        "color8": "lightgrey",
+        "color9": "lightgrey"
+      },
+      "1-28": {
+        "points": 1,
+        "color1": "lightgrey",
+        "color2": "lightgrey",
+        "color3": "lightgrey",
+        "color4": "lightgrey",
+        "color5": "red",
+        "shape5": "/i/game-icons.net/viscious-speed/abstract-055.svg",
+        "color6": "lightgrey",
+        "color7": "lightgrey",
+        "color8": "lightgrey",
+        "color9": "lightgrey"
+      },
+      "2-1": {
+        "points": 2,
+        "color1": " ",
+        "color2": "red",
+        "shape2": "/i/game-icons.net/viscious-speed/abstract-055.svg",
+        "color3": " ",
+        "color4": " ",
+        "color5": "red",
+        "shape5": "/i/game-icons.net/viscious-speed/abstract-055.svg",
+        "color6": " ",
+        "color7": " ",
+        "color8": " ",
+        "color9": " "
+      },
+      "2-2": {
+        "points": 2,
+        "color1": " ",
+        "color2": "#608299",
+        "shape2": "/i/game-icons.net/lorc/zigzag-cage.svg",
+        "color3": " ",
+        "color4": " ",
+        "color5": "white",
+        "shape5": "/i/game-icons.net/lorc/swirl-ring.svg",
+        "color6": " ",
+        "color7": " ",
+        "color8": " ",
+        "color9": " "
+      },
+      "2-3": {
+        "points": 2,
+        "color1": " ",
+        "color2": "#48aa08",
+        "shape2": "/i/game-icons.net/viscious-speed/abstract-013.svg",
+        "color3": " ",
+        "color4": " ",
+        "color5": "gold",
+        "shape5": "/i/game-icons.net/viscious-speed/abstract-070.svg",
+        "color6": " ",
+        "color7": " ",
+        "color8": " ",
+        "color9": " "
+      },
+      "2-4": {
+        "points": 2,
+        "color1": " ",
+        "color2": " ",
+        "color3": " ",
+        "color4": "orange",
+        "shape4": "/i/game-icons.net/viscious-speed/abstract-079.svg",
+        "color5": "orange",
+        "shape5": "/i/game-icons.net/viscious-speed/abstract-079.svg",
+        "color6": " ",
+        "color7": " ",
+        "color8": " ",
+        "color9": " "
+      },
+      "2-5": {
+        "points": 2,
+        "color1": " ",
+        "color2": " ",
+        "color3": " ",
+        "color4": "gold",
+        "shape4": "/i/game-icons.net/viscious-speed/abstract-070.svg",
+        "color5": "#9f6fcf",
+        "shape5": "/i/game-icons.net/viscious-speed/abstract-053.svg",
+        "color6": " ",
+        "color7": " ",
+        "color8": " ",
+        "color9": " "
+      },
+      "2-6": {
+        "points": 2,
+        "color1": " ",
+        "color2": " ",
+        "color3": " ",
+        "color4": "#00aabb",
+        "shape4": "/i/game-icons.net/viscious-speed/abstract-001.svg",
+        "color5": "#608299",
+        "shape5": "/i/game-icons.net/lorc/zigzag-cage.svg",
+        "color6": " ",
+        "color7": " ",
+        "color8": " ",
+        "color9": " "
+      },
+      "2-7": {
+        "points": 2,
+        "color1": " ",
+        "color2": "lightgrey",
+        "color3": " ",
+        "color4": " ",
+        "color5": "lightgrey",
+        "color6": " ",
+        "color7": " ",
+        "color8": "#608299",
+        "shape8": "/i/game-icons.net/lorc/zigzag-cage.svg",
+        "color9": " "
+      },
+      "2-8": {
+        "points": 2,
+        "color1": " ",
+        "color2": "gold",
+        "shape2": "/i/game-icons.net/viscious-speed/abstract-070.svg",
+        "color3": " ",
+        "color4": " ",
+        "color5": "lightgrey",
+        "color6": " ",
+        "color7": " ",
+        "color8": "lightgrey",
+        "color9": " "
+      },
+      "2-9": {
+        "points": 2,
+        "color1": " ",
+        "color2": "orange",
+        "shape2": "/i/game-icons.net/viscious-speed/abstract-079.svg",
+        "color3": " ",
+        "color4": " ",
+        "color5": "lightgrey",
+        "color6": " ",
+        "color7": " ",
+        "color8": "#48aa08",
+        "shape8": "/i/game-icons.net/viscious-speed/abstract-013.svg",
+        "color9": " "
+      },
+      "2-10": {
+        "points": 2,
+        "color1": " ",
+        "color2": "white",
+        "shape2": "/i/game-icons.net/lorc/swirl-ring.svg",
+        "color3": " ",
+        "color4": " ",
+        "color5": "lightgrey",
+        "color6": " ",
+        "color7": " ",
+        "color8": "red",
+        "shape8": "/i/game-icons.net/viscious-speed/abstract-055.svg",
+        "color9": " "
+      },
+      "2-11": {
+        "points": 2,
+        "color1": " ",
+        "color2": " ",
+        "color3": " ",
+        "color4": "#9f6fcf",
+        "shape4": "/i/game-icons.net/viscious-speed/abstract-053.svg",
+        "color5": "lightgrey",
+        "color6": "#9f6fcf",
+        "shape6": "/i/game-icons.net/viscious-speed/abstract-053.svg",
+        "color7": " ",
+        "color8": " ",
+        "color9": " "
+      },
+      "2-12": {
+        "points": 2,
+        "color1": " ",
+        "color2": " ",
+        "color3": " ",
+        "color4": "#48aa08",
+        "shape4": "/i/game-icons.net/viscious-speed/abstract-013.svg",
+        "color5": "lightgrey",
+        "color6": "white",
+        "shape6": "/i/game-icons.net/lorc/swirl-ring.svg",
+        "color7": " ",
+        "color8": " ",
+        "color9": " "
+      },
+      "2-13": {
+        "points": 2,
+        "color1": " ",
+        "color2": " ",
+        "color3": " ",
+        "color4": "#00aabb",
+        "shape4": "/i/game-icons.net/viscious-speed/abstract-001.svg",
+        "color5": "lightgrey",
+        "color6": "#00aabb",
+        "shape6": "/i/game-icons.net/viscious-speed/abstract-001.svg",
+        "color7": " ",
+        "color8": " ",
+        "color9": " "
+      },
+      "2-14": {
+        "points": 2,
+        "color1": " ",
+        "color2": " ",
+        "color3": " ",
+        "color4": "white",
+        "shape4": "/i/game-icons.net/lorc/swirl-ring.svg",
+        "color5": "lightgrey",
+        "color6": "#48aa08",
+        "shape6": "/i/game-icons.net/viscious-speed/abstract-013.svg",
+        "color7": " ",
+        "color8": " ",
+        "color9": " "
+      },
+      "2-15": {
+        "points": 2,
+        "color1": " ",
+        "color2": " ",
+        "color3": " ",
+        "color4": "orange",
+        "shape4": "/i/game-icons.net/viscious-speed/abstract-079.svg",
+        "color5": "#00aabb",
+        "shape5": "/i/game-icons.net/viscious-speed/abstract-001.svg",
+        "color6": "lightgrey",
+        "color7": " ",
+        "color8": " ",
+        "color9": " "
+      },
+      "2-16": {
+        "points": 2,
+        "color1": " ",
+        "color2": " ",
+        "color3": " ",
+        "color4": "lightgrey",
+        "color5": "#9f6fcf",
+        "shape5": "/i/game-icons.net/viscious-speed/abstract-053.svg",
+        "color6": "red",
+        "shape6": "/i/game-icons.net/viscious-speed/abstract-055.svg",
+        "color7": " ",
+        "color8": " ",
+        "color9": " "
+      },
+      "2-17": {
+        "points": 2,
+        "color1": " ",
+        "color2": " ",
+        "color3": " ",
+        "color4": "#608299",
+        "shape4": "/i/game-icons.net/lorc/zigzag-cage.svg",
+        "color5": "lightgrey",
+        "color6": "lightgrey",
+        "color7": " ",
+        "color8": " ",
+        "color9": " "
+      },
+      "2-18": {
+        "points": 2,
+        "color1": " ",
+        "color2": " ",
+        "color3": " ",
+        "color4": "lightgrey",
+        "color5": "lightgrey",
+        "color6": "gold",
+        "shape6": "/i/game-icons.net/viscious-speed/abstract-070.svg",
+        "color7": " ",
+        "color8": " ",
+        "color9": " "
+      },
+      "2-19": {
+        "points": 2,
+        "color1": "#9f6fcf",
+        "shape1": "/i/game-icons.net/viscious-speed/abstract-053.svg",
+        "color2": "lightgrey",
+        "color3": " ",
+        "color4": "lightgrey",
+        "color5": "orange",
+        "shape5": "/i/game-icons.net/viscious-speed/abstract-079.svg",
+        "color6": " ",
+        "color7": " ",
+        "color8": " ",
+        "color9": " "
+      },
+      "2-20": {
+        "points": 2,
+        "color1": "lightgrey",
+        "color2": "#48aa08",
+        "shape2": "/i/game-icons.net/viscious-speed/abstract-013.svg",
+        "color3": " ",
+        "color4": "red",
+        "shape4": "/i/game-icons.net/viscious-speed/abstract-055.svg",
+        "color5": "lightgrey",
+        "color6": " ",
+        "color7": " ",
+        "color8": " ",
+        "color9": " "
+      },
+      "2-21": {
+        "points": 2,
+        "color1": "gold",
+        "shape1": "/i/game-icons.net/viscious-speed/abstract-070.svg",
+        "color2": "lightgrey",
+        "color3": "lightgrey",
+        "color4": "lightgrey",
+        "color5": "lightgrey",
+        "color6": "lightgrey",
+        "color7": "lightgrey",
+        "color8": "lightgrey",
+        "color9": "lightgrey"
+      },
+      "2-22": {
+        "points": 2,
+        "color1": "lightgrey",
+        "color2": "lightgrey",
+        "color3": "lightgrey",
+        "color4": "lightgrey",
+        "color5": "lightgrey",
+        "color6": "lightgrey",
+        "color7": "lightgrey",
+        "color8": "lightgrey",
+        "color9": "#608299",
+        "shape9": "/i/game-icons.net/lorc/zigzag-cage.svg"
+      },
+      "2-23": {
+        "points": 2,
+        "color1": "#9f6fcf",
+        "shape1": "/i/game-icons.net/viscious-speed/abstract-053.svg",
+        "color2": "lightgrey",
+        "color3": "lightgrey",
+        "color4": "lightgrey",
+        "color5": "lightgrey",
+        "color6": "lightgrey",
+        "color7": "lightgrey",
+        "color8": "lightgrey",
+        "color9": "#9f6fcf",
+        "shape9": "/i/game-icons.net/viscious-speed/abstract-053.svg"
+      },
+      "2-24": {
+        "points": 2,
+        "color1": "lightgrey",
+        "color2": "lightgrey",
+        "color3": "white",
+        "shape3": "/i/game-icons.net/lorc/swirl-ring.svg",
+        "color4": "lightgrey",
+        "color5": "lightgrey",
+        "color6": "lightgrey",
+        "color7": "white",
+        "shape7": "/i/game-icons.net/lorc/swirl-ring.svg",
+        "color8": "lightgrey",
+        "color9": "lightgrey"
+      },
+      "2-25": {
+        "points": 2,
+        "color1": "lightgrey",
+        "color2": "lightgrey",
+        "color3": "red",
+        "shape3": "/i/game-icons.net/viscious-speed/abstract-055.svg",
+        "color4": "lightgrey",
+        "color5": "lightgrey",
+        "color6": "lightgrey",
+        "color7": "#00aabb",
+        "shape7": "/i/game-icons.net/viscious-speed/abstract-001.svg",
+        "color8": "lightgrey",
+        "color9": "lightgrey"
+      },
+      "2-26": {
+        "points": 2,
+        "color1": "#48aa08",
+        "shape1": "/i/game-icons.net/viscious-speed/abstract-013.svg",
+        "color2": "lightgrey",
+        "color3": "lightgrey",
+        "color4": "lightgrey",
+        "color5": "lightgrey",
+        "color6": "lightgrey",
+        "color7": "lightgrey",
+        "color8": "lightgrey",
+        "color9": "orange",
+        "shape9": "/i/game-icons.net/viscious-speed/abstract-079.svg"
+      },
+      "3-1": {
+        "points": 3,
+        "color1": " ",
+        "color2": "orange",
+        "shape2": "/i/game-icons.net/viscious-speed/abstract-079.svg",
+        "color3": " ",
+        "color4": " ",
+        "color5": "lightgrey",
+        "color6": " ",
+        "color7": " ",
+        "color8": "orange",
+        "shape8": "/i/game-icons.net/viscious-speed/abstract-079.svg",
+        "color9": " "
+      },
+      "3-2": {
+        "points": 3,
+        "color1": " ",
+        "color2": "#00aabb",
+        "shape2": "/i/game-icons.net/viscious-speed/abstract-001.svg",
+        "color3": " ",
+        "color4": " ",
+        "color5": "#00aabb",
+        "shape5": "/i/game-icons.net/viscious-speed/abstract-001.svg",
+        "color6": " ",
+        "color7": " ",
+        "color8": "#00aabb",
+        "shape8": "/i/game-icons.net/viscious-speed/abstract-001.svg",
+        "color9": " "
+      },
+      "3-3": {
+        "points": 3,
+        "color1": " ",
+        "color2": "#9f6fcf",
+        "shape2": "/i/game-icons.net/viscious-speed/abstract-053.svg",
+        "color3": " ",
+        "color4": " ",
+        "color5": "#9f6fcf",
+        "shape5": "/i/game-icons.net/viscious-speed/abstract-053.svg",
+        "color6": " ",
+        "color7": " ",
+        "color8": "#9f6fcf",
+        "shape8": "/i/game-icons.net/viscious-speed/abstract-053.svg",
+        "color9": " "
+      },
+      "3-4": {
+        "points": 3,
+        "color1": " ",
+        "color2": "orange",
+        "shape2": "/i/game-icons.net/viscious-speed/abstract-079.svg",
+        "color3": " ",
+        "color4": " ",
+        "color5": "#48aa08",
+        "shape5": "/i/game-icons.net/viscious-speed/abstract-013.svg",
+        "color6": " ",
+        "color7": " ",
+        "color8": "#9f6fcf",
+        "shape8": "/i/game-icons.net/viscious-speed/abstract-053.svg",
+        "color9": " "
+      },
+      "3-5": {
+        "points": 3,
+        "color1": " ",
+        "color2": " ",
+        "color3": " ",
+        "color4": "#48aa08",
+        "shape4": "/i/game-icons.net/viscious-speed/abstract-013.svg",
+        "color5": "#48aa08",
+        "shape5": "/i/game-icons.net/viscious-speed/abstract-013.svg",
+        "color6": "#48aa08",
+        "shape6": "/i/game-icons.net/viscious-speed/abstract-013.svg",
+        "color7": " ",
+        "color8": " ",
+        "color9": " "
+      },
+      "3-6": {
+        "points": 3,
+        "color1": " ",
+        "color2": " ",
+        "color3": " ",
+        "color4": "white",
+        "shape4": "/i/game-icons.net/lorc/swirl-ring.svg",
+        "color5": "white",
+        "shape5": "/i/game-icons.net/lorc/swirl-ring.svg",
+        "color6": "white",
+        "shape6": "/i/game-icons.net/lorc/swirl-ring.svg",
+        "color7": " ",
+        "color8": " ",
+        "color9": " "
+      },
+      "3-7": {
+        "points": 3,
+        "color1": " ",
+        "color2": " ",
+        "color3": " ",
+        "color4": "red",
+        "shape4": "/i/game-icons.net/viscious-speed/abstract-055.svg",
+        "color5": "lightgrey",
+        "color6": "red",
+        "shape6": "/i/game-icons.net/viscious-speed/abstract-055.svg",
+        "color7": " ",
+        "color8": " ",
+        "color9": " "
+      },
+      "3-8": {
+        "points": 3,
+        "color1": " ",
+        "color2": " ",
+        "color3": " ",
+        "color4": "#48aa08",
+        "shape4": "/i/game-icons.net/viscious-speed/abstract-013.svg",
+        "color5": "orange",
+        "shape5": "/i/game-icons.net/viscious-speed/abstract-079.svg",
+        "color6": "#00aabb",
+        "shape6": "/i/game-icons.net/viscious-speed/abstract-001.svg",
+        "color7": " ",
+        "color8": " ",
+        "color9": " "
+      },
+      "3-9": {
+        "points": 3,
+        "color1": " ",
+        "color2": " ",
+        "color3": " ",
+        "color4": "#9f6fcf",
+        "shape4": "/i/game-icons.net/viscious-speed/abstract-053.svg",
+        "color5": "red",
+        "shape5": "/i/game-icons.net/viscious-speed/abstract-055.svg",
+        "color6": "white",
+        "shape6": "/i/game-icons.net/lorc/swirl-ring.svg",
+        "color7": " ",
+        "color8": " ",
+        "color9": " "
+      },
+      "3-10": {
+        "points": 3,
+        "color1": "#48aa08",
+        "shape1": "/i/game-icons.net/viscious-speed/abstract-013.svg",
+        "color2": "lightgrey",
+        "color3": " ",
+        "color4": "gold",
+        "shape4": "/i/game-icons.net/viscious-speed/abstract-070.svg",
+        "color5": "#48aa08",
+        "shape5": "/i/game-icons.net/viscious-speed/abstract-013.svg",
+        "color6": " ",
+        "color7": " ",
+        "color8": " ",
+        "color9": " "
+      },
+      "3-11": {
+        "points": 3,
+        "color1": "lightgrey",
+        "color2": "#00aabb",
+        "shape2": "/i/game-icons.net/viscious-speed/abstract-001.svg",
+        "color3": " ",
+        "color4": "#00aabb",
+        "shape4": "/i/game-icons.net/viscious-speed/abstract-001.svg",
+        "color5": "#608299",
+        "shape5": "/i/game-icons.net/lorc/zigzag-cage.svg",
+        "color6": " ",
+        "color7": " ",
+        "color8": " ",
+        "color9": " "
+      },
+      "3-12": {
+        "points": 3,
+        "color1": "lightgrey",
+        "color2": "white",
+        "shape2": "/i/game-icons.net/lorc/swirl-ring.svg",
+        "color3": "lightgrey",
+        "color4": "lightgrey",
+        "color5": "lightgrey",
+        "color6": "lightgrey",
+        "color7": "white",
+        "shape7": "/i/game-icons.net/lorc/swirl-ring.svg",
+        "color8": "lightgrey",
+        "color9": "white",
+        "shape9": "/i/game-icons.net/lorc/swirl-ring.svg"
+      },
+      "3-13": {
+        "points": 3,
+        "color1": "#48aa08",
+        "shape1": "/i/game-icons.net/viscious-speed/abstract-013.svg",
+        "color2": "lightgrey",
+        "color3": "#48aa08",
+        "shape3": "/i/game-icons.net/viscious-speed/abstract-013.svg",
+        "color4": "lightgrey",
+        "color5": "lightgrey",
+        "color6": "lightgrey",
+        "color7": "lightgrey",
+        "color8": "#00aabb",
+        "shape8": "/i/game-icons.net/viscious-speed/abstract-001.svg",
+        "color9": "lightgrey"
+      },
+      "5-1": {
+        "points": 5,
+        "color1": "#608299",
+        "shape1": "/i/game-icons.net/lorc/zigzag-cage.svg",
+        "color2": "lightgrey",
+        "color3": "lightgrey",
+        "color4": "lightgrey",
+        "color5": "orange",
+        "shape5": "/i/game-icons.net/viscious-speed/abstract-079.svg",
+        "color6": "lightgrey",
+        "color7": "lightgrey",
+        "color8": "lightgrey",
+        "color9": "orange",
+        "shape9": "/i/game-icons.net/viscious-speed/abstract-079.svg"
+      },
+      "5-2": {
+        "points": 5,
+        "color1": "lightgrey",
+        "color2": "gold",
+        "shape2": "/i/game-icons.net/viscious-speed/abstract-070.svg",
+        "color3": "lightgrey",
+        "color4": "lightgrey",
+        "color5": "lightgrey",
+        "color6": "lightgrey",
+        "color7": "red",
+        "shape7": "/i/game-icons.net/viscious-speed/abstract-055.svg",
+        "color8": "lightgrey",
+        "color9": "red",
+        "shape9": "/i/game-icons.net/viscious-speed/abstract-055.svg"
+      },
+      "5-3": {
+        "points": 5,
+        "color1": "lightgrey",
+        "color2": "#48aa08",
+        "shape2": "/i/game-icons.net/viscious-speed/abstract-013.svg",
+        "color3": "lightgrey",
+        "color4": "orange",
+        "shape4": "/i/game-icons.net/viscious-speed/abstract-079.svg",
+        "color5": "lightgrey",
+        "color6": "orange",
+        "shape6": "/i/game-icons.net/viscious-speed/abstract-079.svg",
+        "color7": "lightgrey",
+        "color8": "#00aabb",
+        "shape8": "/i/game-icons.net/viscious-speed/abstract-001.svg",
+        "color9": "lightgrey"
+      },
+      "5-4": {
+        "points": 5,
+        "color1": "lightgrey",
+        "color2": "white",
+        "shape2": "/i/game-icons.net/lorc/swirl-ring.svg",
+        "color3": "lightgrey",
+        "color4": "#9f6fcf",
+        "shape4": "/i/game-icons.net/viscious-speed/abstract-053.svg",
+        "color5": "lightgrey",
+        "color6": "#9f6fcf",
+        "shape6": "/i/game-icons.net/viscious-speed/abstract-053.svg",
+        "color7": "lightgrey",
+        "color8": "#608299",
+        "shape8": "/i/game-icons.net/lorc/zigzag-cage.svg",
+        "color9": "lightgrey"
+      },
+      "5-5": {
+        "points": 5,
+        "color1": "#9f6fcf",
+        "shape1": "/i/game-icons.net/viscious-speed/abstract-053.svg",
+        "color2": "lightgrey",
+        "color3": "#48aa08",
+        "shape3": "/i/game-icons.net/viscious-speed/abstract-013.svg",
+        "color4": "lightgrey",
+        "color5": "lightgrey",
+        "color6": "lightgrey",
+        "color7": "white",
+        "shape7": "/i/game-icons.net/lorc/swirl-ring.svg",
+        "color8": "lightgrey",
+        "color9": "#00aabb",
+        "shape9": "/i/game-icons.net/viscious-speed/abstract-001.svg"
+      }
+    },
+    "faceTemplates": [
+      {
+        "border": false,
+        "radius": 15,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 160,
+            "height": 225,
+            "color": "transparent",
+            "value": "/assets/-1306714309_4745"
+          }
+        ]
+      },
+      {
+        "border": false,
+        "radius": 15,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 160,
+            "height": 225,
+            "css": {
+              "background-image": "linear-gradient(#e38f5eaa,#8b4203bb)"
+            }
+          },
+          {
+            "type": "text",
+            "x": 0,
+            "y": 10,
+            "fontSize": 30,
+            "textAlign": "center",
+            "width": 160,
+            "dynamicProperties": {
+              "value": "points"
+            }
+          },
+          {
+            "type": "image",
+            "x": 10,
+            "y": 60,
+            "width": 40,
+            "height": 40,
+            "dynamicProperties": {
+              "color": "color1"
+            }
+          },
+          {
+            "type": "image",
+            "x": 60,
+            "y": 60,
+            "width": 40,
+            "height": 40,
+            "dynamicProperties": {
+              "color": "color2"
+            }
+          },
+          {
+            "type": "image",
+            "x": 110,
+            "y": 60,
+            "width": 40,
+            "height": 40,
+            "dynamicProperties": {
+              "color": "color3"
+            }
+          },
+          {
+            "type": "image",
+            "x": 10,
+            "y": 110,
+            "width": 40,
+            "height": 40,
+            "dynamicProperties": {
+              "color": "color4"
+            }
+          },
+          {
+            "type": "image",
+            "x": 60,
+            "y": 110,
+            "width": 40,
+            "height": 40,
+            "dynamicProperties": {
+              "color": "color5"
+            }
+          },
+          {
+            "type": "image",
+            "x": 110,
+            "y": 110,
+            "width": 40,
+            "height": 40,
+            "dynamicProperties": {
+              "color": "color6"
+            }
+          },
+          {
+            "type": "image",
+            "x": 10,
+            "y": 160,
+            "width": 40,
+            "height": 40,
+            "dynamicProperties": {
+              "color": "color7"
+            }
+          },
+          {
+            "type": "image",
+            "x": 60,
+            "y": 160,
+            "width": 40,
+            "height": 40,
+            "dynamicProperties": {
+              "color": "color8"
+            }
+          },
+          {
+            "type": "image",
+            "x": 110,
+            "y": 160,
+            "width": 40,
+            "height": 40,
+            "dynamicProperties": {
+              "color": "color9"
+            }
+          },
+          {
+            "type": "image",
+            "x": 10,
+            "y": 60,
+            "width": 40,
+            "height": 40,
+            "color": "transparent",
+            "css": {
+              "opacity": 0.5
+            },
+            "dynamicProperties": {
+              "value": "shape1"
+            }
+          },
+          {
+            "type": "image",
+            "x": 60,
+            "y": 60,
+            "width": 40,
+            "height": 40,
+            "color": "transparent",
+            "css": {
+              "opacity": 0.5
+            },
+            "dynamicProperties": {
+              "value": "shape2"
+            }
+          },
+          {
+            "type": "image",
+            "x": 110,
+            "y": 60,
+            "width": 40,
+            "height": 40,
+            "color": "transparent",
+            "css": {
+              "opacity": 0.5
+            },
+            "dynamicProperties": {
+              "value": "shape3"
+            }
+          },
+          {
+            "type": "image",
+            "x": 10,
+            "y": 110,
+            "width": 40,
+            "height": 40,
+            "color": "transparent",
+            "css": {
+              "opacity": 0.5
+            },
+            "dynamicProperties": {
+              "value": "shape4"
+            }
+          },
+          {
+            "type": "image",
+            "x": 60,
+            "y": 110,
+            "width": 40,
+            "height": 40,
+            "color": "transparent",
+            "css": {
+              "opacity": 0.5
+            },
+            "dynamicProperties": {
+              "value": "shape5"
+            }
+          },
+          {
+            "type": "image",
+            "x": 110,
+            "y": 110,
+            "width": 40,
+            "height": 40,
+            "color": "transparent",
+            "css": {
+              "opacity": 0.5
+            },
+            "dynamicProperties": {
+              "value": "shape6"
+            }
+          },
+          {
+            "type": "image",
+            "x": 10,
+            "y": 160,
+            "width": 40,
+            "height": 40,
+            "color": "transparent",
+            "css": {
+              "opacity": 0.5
+            },
+            "dynamicProperties": {
+              "value": "shape7"
+            }
+          },
+          {
+            "type": "image",
+            "x": 60,
+            "y": 160,
+            "width": 40,
+            "height": 40,
+            "color": "transparent",
+            "css": {
+              "opacity": 0.5
+            },
+            "dynamicProperties": {
+              "value": "shape8"
+            }
+          },
+          {
+            "type": "image",
+            "x": 110,
+            "y": 160,
+            "width": 40,
+            "height": 40,
+            "color": "transparent",
+            "css": {
+              "opacity": 0.5
+            },
+            "dynamicProperties": {
+              "value": "shape9"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "tileHolderBase": {
+    "id": "tileHolderBase",
+    "x": 493,
+    "y": 47,
+    "width": 620,
+    "height": 620,
+    "layer": -3,
+    "movable": false,
+    "editorGroup": true
+  },
+  "restart": {
+    "type": "button",
+    "id": "restart",
+    "x": 1550,
+    "y": 1,
+    "width": 50,
+    "height": 50,
+    "z": 1,
+    "classes": "symbols",
+    "color": "white",
+    "css": {
+      "default": {
+        "font-size": "40px",
+        "--wcMain": "black",
+        "--wcBorder": "white",
+        "--wcMainOH": "grey",
+        "--wcBorderOH": "black"
+      },
+      "::after": {
+        "content": "\"Reset\"",
+        "display": "none",
+        "position": "absolute",
+        "margin-top": "71px",
+        "color": "black",
+        "font-size": "14px",
+        "font-family": "Roboto"
+      },
+      ":hover::after": {
+        "display": "block"
+      }
+    },
+    "text": "restart",
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "fields": [
+          {
+            "type": "title",
+            "text": "Restarting ..."
+          },
+          {
+            "type": "subtitle",
+            "text": "Are you sure you want to restart the game?"
+          }
+        ]
+      },
+      {
+        "func": "CALL",
+        "routine": "resetRoutine"
+      }
+    ],
+    "resetRoutine": [
+      {
+        "func": "SET",
+        "collection": [
+          "tileHolder1"
+        ],
+        "property": "active",
+        "value": true
+      },
+      {
+        "func": "CLICK",
+        "collection": [
+          "recallTiles",
+          "recallCards"
+        ]
+      },
+      {
+        "func": "MOVE",
+        "from": "tileDeckHolder",
+        "to": [
+          "tileHolder1",
+          "tileHolder2",
+          "tileHolder3",
+          "tileHolder4",
+          "tileHolder5",
+          "tileHolder6",
+          "tileHolder7",
+          "tileHolder8",
+          "tileHolder9"
+        ]
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "tileHolder1"
+        ],
+        "property": "active",
+        "value": false
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "score1",
+          "score2",
+          "score3",
+          "score4",
+          "score5"
+        ],
+        "property": "text",
+        "value": 0
+      },
+      {
+        "func": "TURN",
+        "turnCycle": "random"
+      },
+      {
+        "func": "SELECT",
+        "type": "seat",
+        "property": "player",
+        "relation": "!=",
+        "value": ""
+      },
+      {
+        "func": "COUNT"
+      },
+      {
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "operand2": 1,
+        "thenRoutine": [
+          {
+            "func": "FOREACH",
+            "in": [
+              1,
+              2,
+              3,
+              5
+            ],
+            "loopRoutine": [
+              {
+                "func": "SELECT",
+                "type": "card",
+                "property": "points",
+                "value": "${value}"
+              },
+              {
+                "func": "SET",
+                "property": "parent",
+                "value": "offHolder${value}"
+              },
+              {
+                "func": "SHUFFLE",
+                "holder": "offHolder${value}"
+              }
+            ]
+          },
+          {
+            "func": "MOVE",
+            "from": "offHolder1",
+            "to": "cardDeckHolder",
+            "count": 8
+          },
+          {
+            "func": "MOVE",
+            "from": "offHolder2",
+            "to": "cardDeckHolder",
+            "count": 4
+          },
+          {
+            "func": "MOVE",
+            "from": "offHolder3",
+            "to": "cardDeckHolder",
+            "count": 3
+          },
+          {
+            "func": "MOVE",
+            "from": "offHolder5",
+            "to": "cardDeckHolder",
+            "count": 1
+          },
+          {
+            "func": "SHUFFLE",
+            "holder": "cardDeckHolder"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "strike1",
+              "strike2",
+              "strike3",
+              "strike4"
+            ],
+            "property": "activeFace",
+            "value": 0
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "actions1P"
+            ],
+            "property": "display",
+            "value": true
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "actions1P"
+            ],
+            "property": "display",
+            "value": false
+          }
+        ]
+      },
+      {
+        "func": "MOVE",
+        "from": "cardDeckHolder",
+        "to": [
+          "seat1",
+          "seat2",
+          "seat3",
+          "seat4",
+          "seat5"
+        ],
+        "fillTo": 4
+      },
+      {
+        "func": "SORT",
+        "holder": "hand",
+        "key": "cardType"
+      }
+    ]
+  },
+  "recallCards": {
+    "type": "button",
+    "id": "recallCards",
+    "parent": "cardDeckHolder",
+    "fixedParent": true,
+    "x": 18,
+    "y": 259,
+    "width": 111,
+    "height": 40,
+    "movableInEdit": false,
+    "text": "Recall & Shuffle",
+    "clickRoutine": [
+      {
+        "func": "RECALL",
+        "holder": "${PROPERTY parent}"
+      },
+      {
+        "func": "FLIP",
+        "holder": "${PROPERTY parent}",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "${PROPERTY parent}"
+      }
+    ]
+  },
+  "recallTiles": {
+    "type": "button",
+    "id": "recallTiles",
+    "parent": "tileDeckHolder",
+    "fixedParent": true,
+    "x": 40,
+    "y": 207,
+    "width": 111,
+    "height": 40,
+    "movableInEdit": false,
+    "text": "Recall & Shuffle",
+    "clickRoutine": [
+      {
+        "func": "RECALL",
+        "holder": "${PROPERTY parent}"
+      },
+      {
+        "func": "FLIP",
+        "holder": "${PROPERTY parent}",
+        "faceCycle": "random"
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "${PROPERTY parent}"
+      }
+    ]
+  },
+  "discardHolder": {
+    "type": "holder",
+    "id": "discardHolder",
+    "x": 1435,
+    "y": 770,
+    "width": 160,
+    "height": 225,
+    "z": 1,
+    "css": {
+      "background": "#ffffff50",
+      "border": "1px solid black"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "onEnter": {
+      "activeFace": 1
+    },
+    "borderRadius": 15,
+    "dropTarget": {
+      "deck": "cardDeck"
+    }
+  },
+  "hand": {
+    "type": "holder",
+    "onEnter": {
+      "activeFace": 1
+    },
+    "onLeave": {
+      "activeFace": 1
+    },
+    "childrenPerOwner": true,
+    "dropShadow": true,
+    "hidePlayerCursors": true,
+    "x": 223,
+    "y": 757,
+    "width": 1160,
+    "height": 233,
+    "id": "hand",
+    "css": {
+      "background": "#ffffff60"
+    },
+    "stackOffsetX": 165,
+    "dropTarget": {
+      "deck": "cardDeck"
+    }
+  },
+  "7o66C": {
+    "id": "7o66C",
+    "parent": "seat1",
+    "fixedParent": true,
+    "x": -20,
+    "y": -20,
+    "width": 30,
+    "height": 30,
+    "borderRadius": 100,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "css": {
+      "font-size": "18px",
+      "display": "flex",
+      "align-items": "center",
+      "justify-content": "center",
+      "color": "#6d6d6d",
+      "background": "#e4e4e4",
+      "border": "2px solid #999999",
+      "text-shadow": "none"
+    },
+    "text": 0,
+    "ownerGlobalUpdateRoutine": [
+      "var parent = ${PROPERTY parent}",
+      "var COUNT = 0",
+      {
+        "func": "SELECT",
+        "property": "_ancestor",
+        "value": "${PROPERTY hand OF $parent}"
+      },
+      {
+        "func": "COUNT",
+        "owner": "${PROPERTY player OF $parent}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "text",
+        "value": "${COUNT}"
+      }
+    ],
+    "playerGlobalUpdateRoutine": [
+      {
+        "func": "CALL",
+        "routine": "ownerGlobalUpdateRoutine",
+        "widget": "${PROPERTY id}"
+      }
+    ]
+  },
+  "discardLabel": {
+    "id": "discardLabel",
+    "parent": "discardHolder",
+    "x": 40,
+    "y": -27,
+    "height": 30,
+    "movable": false,
+    "css": {
+      "font-size": "25px"
+    },
+    "text": "Discard"
+  },
+  "seat1": {
+    "type": "seat",
+    "id": "seat1",
+    "x": 17,
+    "y": 51,
+    "hideWhenUnused": true,
+    "turn": true
+  },
+  "seat2": {
+    "type": "seat",
+    "id": "seat2",
+    "x": 265,
+    "y": 51,
+    "index": 2,
+    "hideWhenUnused": true
+  },
+  "7o67C": {
+    "id": "7o67C",
+    "parent": "seat2",
+    "fixedParent": true,
+    "x": -20,
+    "y": -20,
+    "width": 30,
+    "height": 30,
+    "borderRadius": 100,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "css": {
+      "font-size": "18px",
+      "display": "flex",
+      "align-items": "center",
+      "justify-content": "center",
+      "color": "#6d6d6d",
+      "background": "#e4e4e4",
+      "border": "2px solid #999999",
+      "text-shadow": "none"
+    },
+    "text": 0,
+    "ownerGlobalUpdateRoutine": [
+      "var parent = ${PROPERTY parent}",
+      "var COUNT = 0",
+      {
+        "func": "SELECT",
+        "property": "_ancestor",
+        "value": "${PROPERTY hand OF $parent}"
+      },
+      {
+        "func": "COUNT",
+        "owner": "${PROPERTY player OF $parent}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "text",
+        "value": "${COUNT}"
+      }
+    ],
+    "playerGlobalUpdateRoutine": [
+      {
+        "func": "CALL",
+        "routine": "ownerGlobalUpdateRoutine",
+        "widget": "${PROPERTY id}"
+      }
+    ]
+  },
+  "seat3": {
+    "type": "seat",
+    "id": "seat3",
+    "x": 17,
+    "y": 289,
+    "index": 3,
+    "z": 1,
+    "hideWhenUnused": true
+  },
+  "7o68C": {
+    "id": "7o68C",
+    "parent": "seat3",
+    "fixedParent": true,
+    "x": -20,
+    "y": -20,
+    "width": 30,
+    "height": 30,
+    "borderRadius": 100,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "css": {
+      "font-size": "18px",
+      "display": "flex",
+      "align-items": "center",
+      "justify-content": "center",
+      "color": "#6d6d6d",
+      "background": "#e4e4e4",
+      "border": "2px solid #999999",
+      "text-shadow": "none"
+    },
+    "text": 0,
+    "ownerGlobalUpdateRoutine": [
+      "var parent = ${PROPERTY parent}",
+      "var COUNT = 0",
+      {
+        "func": "SELECT",
+        "property": "_ancestor",
+        "value": "${PROPERTY hand OF $parent}"
+      },
+      {
+        "func": "COUNT",
+        "owner": "${PROPERTY player OF $parent}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "text",
+        "value": "${COUNT}"
+      }
+    ],
+    "playerGlobalUpdateRoutine": [
+      {
+        "func": "CALL",
+        "routine": "ownerGlobalUpdateRoutine",
+        "widget": "${PROPERTY id}"
+      }
+    ]
+  },
+  "seat4": {
+    "type": "seat",
+    "id": "seat4",
+    "x": 265,
+    "y": 289,
+    "index": 4,
+    "hideWhenUnused": true
+  },
+  "7o69C": {
+    "id": "7o69C",
+    "parent": "seat4",
+    "fixedParent": true,
+    "x": -20,
+    "width": 30,
+    "height": 30,
+    "borderRadius": 100,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "css": {
+      "font-size": "18px",
+      "display": "flex",
+      "align-items": "center",
+      "justify-content": "center",
+      "color": "#6d6d6d",
+      "background": "#e4e4e4",
+      "border": "2px solid #999999",
+      "text-shadow": "none"
+    },
+    "text": 0,
+    "ownerGlobalUpdateRoutine": [
+      "var parent = ${PROPERTY parent}",
+      "var COUNT = 0",
+      {
+        "func": "SELECT",
+        "property": "_ancestor",
+        "value": "${PROPERTY hand OF $parent}"
+      },
+      {
+        "func": "COUNT",
+        "owner": "${PROPERTY player OF $parent}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "text",
+        "value": "${COUNT}"
+      }
+    ],
+    "playerGlobalUpdateRoutine": [
+      {
+        "func": "CALL",
+        "routine": "ownerGlobalUpdateRoutine",
+        "widget": "${PROPERTY id}"
+      }
+    ],
+    "y": -20
+  },
+  "seat5": {
+    "type": "seat",
+    "id": "seat5",
+    "x": 17,
+    "y": 527,
+    "index": 5,
+    "z": 2,
+    "hideWhenUnused": true
+  },
+  "7o70C": {
+    "id": "7o70C",
+    "parent": "seat5",
+    "fixedParent": true,
+    "x": -20,
+    "y": -20,
+    "width": 30,
+    "height": 30,
+    "borderRadius": 100,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "css": {
+      "font-size": "18px",
+      "display": "flex",
+      "align-items": "center",
+      "justify-content": "center",
+      "color": "#6d6d6d",
+      "background": "#e4e4e4",
+      "border": "2px solid #999999",
+      "text-shadow": "none"
+    },
+    "text": 0,
+    "ownerGlobalUpdateRoutine": [
+      "var parent = ${PROPERTY parent}",
+      "var COUNT = 0",
+      {
+        "func": "SELECT",
+        "property": "_ancestor",
+        "value": "${PROPERTY hand OF $parent}"
+      },
+      {
+        "func": "COUNT",
+        "owner": "${PROPERTY player OF $parent}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "text",
+        "value": "${COUNT}"
+      }
+    ],
+    "playerGlobalUpdateRoutine": [
+      {
+        "func": "CALL",
+        "routine": "ownerGlobalUpdateRoutine",
+        "widget": "${PROPERTY id}"
+      }
+    ]
+  },
+  "score1": {
+    "type": "label",
+    "id": "score1",
+    "parent": "seat1",
+    "x": 154,
+    "y": -3,
+    "width": 60,
+    "height": 50,
+    "z": 1,
+    "css": {
+      "font-size": "40px",
+      "color": "black"
+    },
+    "editable": true,
+    "text": 0
+  },
+  "score2": {
+    "type": "label",
+    "id": "score2",
+    "parent": "seat2",
+    "x": 154,
+    "y": -3,
+    "width": 60,
+    "height": 50,
+    "z": 1,
+    "css": {
+      "font-size": "40px",
+      "color": "black"
+    },
+    "editable": true,
+    "text": 0
+  },
+  "score3": {
+    "type": "label",
+    "id": "score3",
+    "parent": "seat3",
+    "x": 154,
+    "y": -3,
+    "width": 60,
+    "height": 50,
+    "z": 1,
+    "css": {
+      "font-size": "40px",
+      "color": "black"
+    },
+    "editable": true,
+    "text": 0
+  },
+  "score4": {
+    "type": "label",
+    "id": "score4",
+    "parent": "seat4",
+    "x": 154,
+    "y": -3,
+    "width": 60,
+    "height": 50,
+    "z": 1,
+    "css": {
+      "font-size": "40px",
+      "color": "black"
+    },
+    "editable": true,
+    "text": 0
+  },
+  "score5": {
+    "type": "label",
+    "id": "score5",
+    "parent": "seat5",
+    "x": 154,
+    "y": -3,
+    "width": 60,
+    "height": 50,
+    "z": 1,
+    "css": {
+      "font-size": "40px",
+      "color": "black"
+    },
+    "editable": true,
+    "text": 0
+  },
+  "recallShuffleCards": {
+    "type": "button",
+    "id": "recallShuffleCards",
+    "parent": "cardDeckHolder",
+    "x": 59,
+    "y": 83,
+    "width": 50,
+    "height": 50,
+    "z": 1,
+    "classes": "symbols",
+    "color": "white",
+    "css": {
+      "default": {
+        "font-size": "40px",
+        "--wcMain": "black",
+        "--wcBorder": "white",
+        "--wcMainOH": "grey",
+        "--wcBorderOH": "black"
+      },
+      "::after": {
+        "content": "\"Recall Shuffle\"",
+        "display": "none",
+        "position": "absolute",
+        "margin-top": "81px",
+        "color": "black",
+        "font-size": "14px",
+        "font-family": "Roboto"
+      },
+      ":hover::after": {
+        "display": "block"
+      }
+    },
+    "text": "shuffle",
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "fields": [
+          {
+            "type": "title",
+            "text": "Recalling ..."
+          },
+          {
+            "type": "subtitle",
+            "text": "This will recall and shuffle the discard pile only. Are you sure you want to continue?"
+          }
+        ]
+      },
+      {
+        "func": "MOVE",
+        "from": "discardHolder",
+        "to": "cardDeckHolder",
+        "count": 999
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "cardDeckHolder"
+      },
+      {
+        "func": "FLIP",
+        "holder": "cardDeckHolder",
+        "face": 0
+      }
+    ]
+  },
+  "turn": {
+    "type": "button",
+    "id": "turn",
+    "x": 777,
+    "y": 681,
+    "width": 50,
+    "height": 50,
+    "z": 1,
+    "classes": "symbols",
+    "color": "white",
+    "css": {
+      "default": {
+        "font-size": "40px",
+        "--wcMain": "black",
+        "--wcBorder": "white",
+        "--wcMainOH": "grey",
+        "--wcBorderOH": "black"
+      },
+      "::after": {
+        "content": "\"Turn\"",
+        "display": "none",
+        "position": "absolute",
+        "margin-top": "71px",
+        "color": "black",
+        "font-size": "14px",
+        "font-family": "Roboto"
+      },
+      ":hover::after": {
+        "display": "block"
+      }
+    },
+    "clickRoutine": [
+      {
+        "func": "TURN"
+      },
+      {
+        "func": "MOVE",
+        "from": "cardDeckHolder",
+        "to": "${seatID}",
+        "fillTo": 4
+      }
+    ],
+    "text": "skip_next"
+  },
+  "scoreHolder1": {
+    "type": "holder",
+    "id": "scoreHolder1",
+    "y": 11,
+    "width": 160,
+    "height": 225,
+    "borderRadius": 15,
+    "z": 1,
+    "css": {
+      "background": "#ffffff50",
+      "border": "1px solid black",
+      "text-shadow": "none"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "onEnter": {
+      "activeFace": 1
+    },
+    "scale": 0.6,
+    "pID": 1,
+    "leaveRoutine": [
+      {
+        "func": "CALL",
+        "routine": "scoreRoutine"
+      }
+    ],
+    "parent": "seat1",
+    "x": -5,
+    "scoreRoutine": [
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "_ancestor",
+        "value": "${PROPERTY id}"
+      },
+      {
+        "func": "GET",
+        "property": "points",
+        "aggregation": "sum"
+      },
+      {
+        "func": "LABEL",
+        "mode": "set",
+        "collection": [
+          "score${PROPERTY pID}"
+        ],
+        "value": "${points}"
+      }
+    ],
+    "enterRoutine": [
+      {
+        "func": "CALL",
+        "routine": "scoreRoutine"
+      }
+    ],
+    "dropTarget": {
+      "deck": "cardDeck"
+    }
+  },
+  "scoreHolder2": {
+    "inheritFrom": {
+      "scoreHolder1": "*"
+    },
+    "type": "holder",
+    "id": "scoreHolder2",
+    "x": -5,
+    "y": 11,
+    "parent": "seat2",
+    "pID": 2
+  },
+  "scoreHolder3": {
+    "inheritFrom": {
+      "scoreHolder1": "*"
+    },
+    "type": "holder",
+    "id": "scoreHolder3",
+    "x": -5,
+    "y": 11,
+    "parent": "seat3",
+    "pID": 3
+  },
+  "scoreHolder4": {
+    "inheritFrom": {
+      "scoreHolder1": "*"
+    },
+    "type": "holder",
+    "id": "scoreHolder4",
+    "x": -5,
+    "y": 11,
+    "parent": "seat4",
+    "pID": 4
+  },
+  "scoreHolder5": {
+    "inheritFrom": {
+      "scoreHolder1": "*"
+    },
+    "type": "holder",
+    "id": "scoreHolder5",
+    "x": -5,
+    "y": 11,
+    "parent": "seat5",
+    "pID": 5
+  },
+  "actions": {
+    "id": "actions",
+    "x": 1141,
+    "width": 401,
+    "height": 590,
+    "z": 442,
+    "movable": false,
+    "css": {
+      "default": {
+        "border": "1px solid black"
+      },
+      " h2": {
+        "font-weight": "Bold",
+        "text-align": "center",
+        "font-size": "25px",
+        "line-height": "1.1em",
+        "color": "black",
+        "border-bottom": "1px solid black",
+        "padding": "0 0 0 0",
+        "margin": "5px 0 5px 0"
+      },
+      " h3": {
+        "font-weight": "Bold",
+        "font-size": "20px",
+        "line-height": "1.1em",
+        "color": "maroon",
+        "margin": "5px "
+      },
+      " p": {
+        "line-height": "1.1em",
+        "margin": "10px",
+        "padding": "0",
+        "text-align": "left",
+        "font-size": "19px"
+      }
+    },
+    "html": "<h2>Actions During Turn</h2><h3>Skip Turn</h3><p>Skip your turn and draw 2 cards from the deck. You cannot skip twice in a row.</p><br><h3>Swap Tiles</h3><p>Switch places of two tiles by dragging one of the tiles to an adjacent (not diagonal) tile. Discard one of your cards.</p><br><h3>Flip Tiles</h3><p>Flip a tile over by clicking on it. Discard one of your cards.</p><br><h3>Score</h3><p>Move a card that matches a pattern of tiles on the board to the score holder beneath your seat.</p><br><h3>End Turn</h3><p>End your turn by pressing the black and white turn button to refill your hand to 4 cards.</p>",
+    "borderRadius": 5,
+    "y": 48
+  },
+  "offHolder1": {
+    "type": "holder",
+    "id": "offHolder1",
+    "x": -320,
+    "y": 1108,
+    "width": 160,
+    "height": 225,
+    "z": 3
+  },
+  "offHolder2": {
+    "type": "holder",
+    "id": "offHolder2",
+    "x": -113,
+    "y": 1108,
+    "width": 160,
+    "height": 225,
+    "z": 3
+  },
+  "offHolder3": {
+    "type": "holder",
+    "id": "offHolder3",
+    "y": 1108,
+    "width": 160,
+    "height": 225,
+    "z": 3,
+    "x": 93
+  },
+  "offHolder5": {
+    "type": "holder",
+    "id": "offHolder5",
+    "x": 300,
+    "y": 1108,
+    "width": 160,
+    "height": 225,
+    "z": 3
+  },
+  "actions1P": {
+    "id": "actions1P",
+    "y": 590,
+    "width": 401,
+    "borderRadius": 5,
+    "z": 442,
+    "movable": false,
+    "css": {
+      "default": {
+        "border": "1px solid black"
+      },
+      " h2": {
+        "font-weight": "Bold",
+        "text-align": "center",
+        "font-size": "25px",
+        "line-height": "1.1em",
+        "color": "black",
+        "border-bottom": "1px solid black",
+        "padding": "0 0 0 0",
+        "margin": "5px 0 5px 0"
+      },
+      " h3": {
+        "font-weight": "Bold",
+        "font-size": "20px",
+        "line-height": "1.1em",
+        "color": "maroon",
+        "margin": "5px "
+      },
+      " p": {
+        "line-height": "1.1em",
+        "margin": "10px",
+        "padding": "0",
+        "text-align": "left",
+        "font-size": "19px"
+      }
+    },
+    "html": "<h2>Solo Mode</h2><p>Win by scoring all 16 cards before getting 4 strikes. End turn without scoring = 1 strike. Click on square to left to indicate a strike.</p>",
+    "parent": "actions",
+    "x": -1,
+    "height": 105,
+    "display": false
+  },
+  "strike1": {
+    "id": "strike1",
+    "x": 16,
+    "width": 40,
+    "height": 40,
+    "movable": false,
+    "css": {
+      "background": "white",
+      "color": "red",
+      "font-size": "35px",
+      "text-align": "center"
+    },
+    "borderRadius": 4,
+    "faces": [
+      {
+        "text": ""
+      },
+      {
+        "text": "X"
+      }
+    ],
+    "y": 15,
+    "parent": "strikeHolder"
+  },
+  "strikeHolder": {
+    "id": "strikeHolder",
+    "parent": "actions1P",
+    "x": -254,
+    "y": 32,
+    "width": 250,
+    "height": 70,
+    "borderRadius": 5,
+    "movable": false,
+    "css": {
+      "border": "1px solid black"
+    }
+  },
+  "strike2": {
+    "id": "strike2",
+    "x": 73,
+    "width": 40,
+    "height": 40,
+    "movable": false,
+    "css": {
+      "background": "white",
+      "color": "red",
+      "font-size": "35px",
+      "text-align": "center"
+    },
+    "borderRadius": 4,
+    "faces": [
+      {
+        "text": ""
+      },
+      {
+        "text": "X"
+      }
+    ],
+    "y": 15,
+    "parent": "strikeHolder"
+  },
+  "strike3": {
+    "id": "strike3",
+    "x": 131,
+    "width": 40,
+    "height": 40,
+    "movable": false,
+    "css": {
+      "background": "white",
+      "color": "red",
+      "font-size": "35px",
+      "text-align": "center"
+    },
+    "borderRadius": 4,
+    "faces": [
+      {
+        "text": ""
+      },
+      {
+        "text": "X"
+      }
+    ],
+    "y": 15,
+    "parent": "strikeHolder"
+  },
+  "strike4": {
+    "id": "strike4",
+    "x": 189,
+    "width": 40,
+    "height": 40,
+    "movable": false,
+    "css": {
+      "background": "white",
+      "color": "red",
+      "font-size": "35px",
+      "text-align": "center"
+    },
+    "borderRadius": 4,
+    "faces": [
+      {
+        "text": ""
+      },
+      {
+        "text": "X"
+      }
+    ],
+    "y": 15,
+    "parent": "strikeHolder"
+  },
+  "r0x5": {
+    "type": "pile",
+    "parent": "cardDeckHolder",
+    "x": 0,
+    "y": 0,
+    "width": 160,
+    "height": 225,
+    "id": "r0x5"
+  },
+  "aw67": {
+    "type": "pile",
+    "parent": "tileDeckHolder",
+    "x": 0,
+    "y": 0,
+    "width": 200,
+    "height": 200,
+    "id": "aw67"
+  }
+}

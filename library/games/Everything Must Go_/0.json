@@ -1,0 +1,2715 @@
+{
+  "8013": {
+    "type": "label",
+    "text": 0,
+    "id": "8013",
+    "x": 1320,
+    "y": 273,
+    "width": 65,
+    "height": 40,
+    "css": "font-size: 30px;",
+    "editable": true,
+    "z": 23
+  },
+  "8014": {
+    "type": "label",
+    "text": 0,
+    "id": "8014",
+    "x": 1320,
+    "y": 955,
+    "width": 65,
+    "height": 40,
+    "css": "font-size: 30px;",
+    "editable": true,
+    "z": 19
+  },
+  "8015": {
+    "type": "label",
+    "text": 0,
+    "id": "8015",
+    "x": 1320,
+    "y": 447,
+    "width": 65,
+    "height": 40,
+    "css": "font-size: 30px;",
+    "editable": true,
+    "z": 22
+  },
+  "8016": {
+    "type": "label",
+    "text": 0,
+    "id": "8016",
+    "x": 1320,
+    "y": 623,
+    "width": 65,
+    "height": 40,
+    "css": "font-size: 30px;",
+    "editable": true,
+    "z": 21
+  },
+  "8017": {
+    "type": "label",
+    "text": 0,
+    "id": "8017",
+    "x": 1320,
+    "y": 793,
+    "width": 65,
+    "height": 40,
+    "css": "font-size: 30px;",
+    "editable": true,
+    "z": 20
+  },
+  "h1": {
+    "type": "holder",
+    "id": "h1",
+    "x": 166,
+    "y": 937,
+    "width": 40,
+    "height": 30,
+    "z": 86,
+    "dropOffsetX": -20,
+    "dropOffsetY": -20,
+    "dropTarget": [
+      {
+        "type": "card"
+      }
+    ]
+  },
+  "h2": {
+    "type": "holder",
+    "id": "h2",
+    "x": 263,
+    "y": 937,
+    "width": 30,
+    "height": 30,
+    "z": 273,
+    "inheritFrom": "h1",
+    "movable": false,
+    "movableInEdit": true
+  },
+  "h3": {
+    "type": "holder",
+    "id": "h3",
+    "x": 350,
+    "y": 937,
+    "width": 30,
+    "height": 30,
+    "z": 274,
+    "inheritFrom": "h1",
+    "movable": false,
+    "movableInEdit": true
+  },
+  "h4": {
+    "type": "holder",
+    "id": "h4",
+    "x": 436,
+    "y": 937,
+    "width": 30,
+    "height": 30,
+    "z": 275,
+    "inheritFrom": "h1",
+    "movable": false,
+    "movableInEdit": true
+  },
+  "h5": {
+    "type": "holder",
+    "id": "h5",
+    "x": 523,
+    "y": 937,
+    "width": 30,
+    "height": 30,
+    "z": 276,
+    "inheritFrom": "h1",
+    "movable": false,
+    "movableInEdit": true
+  },
+  "h6": {
+    "type": "holder",
+    "id": "h6",
+    "x": 610,
+    "y": 937,
+    "width": 30,
+    "height": 30,
+    "z": 277,
+    "inheritFrom": "h1",
+    "movable": false,
+    "movableInEdit": true
+  },
+  "h7": {
+    "type": "holder",
+    "id": "h7",
+    "x": 697,
+    "y": 937,
+    "width": 30,
+    "height": 30,
+    "z": 278,
+    "inheritFrom": "h1",
+    "movable": false,
+    "movableInEdit": true
+  },
+  "h8": {
+    "type": "holder",
+    "id": "h8",
+    "x": 783,
+    "y": 937,
+    "width": 30,
+    "height": 30,
+    "z": 279,
+    "inheritFrom": "h1",
+    "movable": false,
+    "movableInEdit": true
+  },
+  "h9": {
+    "type": "holder",
+    "id": "h9",
+    "x": 870,
+    "y": 937,
+    "width": 30,
+    "height": 30,
+    "z": 280,
+    "inheritFrom": "h1",
+    "movable": false,
+    "movableInEdit": true
+  },
+  "h10": {
+    "type": "holder",
+    "id": "h10",
+    "x": 957,
+    "y": 937,
+    "width": 30,
+    "height": 30,
+    "z": 281,
+    "inheritFrom": "h1",
+    "movable": false,
+    "movableInEdit": true
+  },
+  "h11": {
+    "type": "holder",
+    "id": "h11",
+    "x": 1040,
+    "y": 818,
+    "width": 30,
+    "height": 30,
+    "z": 385,
+    "inheritFrom": "h1",
+    "movable": false,
+    "movableInEdit": true
+  },
+  "h12": {
+    "type": "holder",
+    "id": "h12",
+    "x": 992,
+    "y": 761,
+    "width": 30,
+    "height": 30,
+    "z": 384,
+    "inheritFrom": "h1",
+    "movable": false,
+    "movableInEdit": true
+  },
+  "h13": {
+    "type": "holder",
+    "id": "h13",
+    "x": 932,
+    "y": 754,
+    "width": 30,
+    "height": 30,
+    "z": 383,
+    "inheritFrom": "h1",
+    "movable": false,
+    "movableInEdit": true
+  },
+  "h14": {
+    "type": "holder",
+    "id": "h14",
+    "x": 851,
+    "y": 749,
+    "width": 30,
+    "height": 30,
+    "z": 290,
+    "inheritFrom": "h1",
+    "movable": false,
+    "movableInEdit": true
+  },
+  "h15": {
+    "type": "holder",
+    "id": "h15",
+    "x": 764,
+    "y": 750,
+    "width": 30,
+    "height": 30,
+    "z": 291,
+    "inheritFrom": "h1",
+    "movable": false,
+    "movableInEdit": true
+  },
+  "h16": {
+    "type": "holder",
+    "id": "h16",
+    "x": 678,
+    "y": 749,
+    "width": 30,
+    "height": 30,
+    "z": 289,
+    "inheritFrom": "h1",
+    "movable": false,
+    "movableInEdit": true
+  },
+  "h17": {
+    "type": "holder",
+    "id": "h17",
+    "x": 591,
+    "y": 749,
+    "width": 30,
+    "height": 30,
+    "z": 292,
+    "inheritFrom": "h1",
+    "movable": false,
+    "movableInEdit": true
+  },
+  "h18": {
+    "type": "holder",
+    "id": "h18",
+    "x": 504,
+    "y": 750,
+    "width": 30,
+    "height": 30,
+    "z": 293,
+    "inheritFrom": "h1",
+    "movable": false,
+    "movableInEdit": true
+  },
+  "h19": {
+    "type": "holder",
+    "id": "h19",
+    "x": 417,
+    "y": 749,
+    "width": 30,
+    "height": 30,
+    "z": 294,
+    "inheritFrom": "h1",
+    "movable": false,
+    "movableInEdit": true
+  },
+  "h20": {
+    "type": "holder",
+    "id": "h20",
+    "x": 331,
+    "y": 749,
+    "width": 30,
+    "height": 30,
+    "z": 295,
+    "inheritFrom": "h1",
+    "movable": false,
+    "movableInEdit": true
+  },
+  "h21": {
+    "type": "holder",
+    "id": "h21",
+    "x": 244,
+    "y": 750,
+    "width": 30,
+    "height": 30,
+    "z": 296,
+    "inheritFrom": "h1",
+    "movable": false,
+    "movableInEdit": true
+  },
+  "h22": {
+    "type": "holder",
+    "id": "h22",
+    "x": 76,
+    "y": 670,
+    "width": 30,
+    "height": 30,
+    "z": 302,
+    "inheritFrom": "h1",
+    "movable": false,
+    "movableInEdit": true
+  },
+  "h23": {
+    "type": "holder",
+    "id": "h23",
+    "x": 152,
+    "y": 589,
+    "width": 30,
+    "height": 30,
+    "z": 299,
+    "inheritFrom": "h1",
+    "movable": false,
+    "movableInEdit": true
+  },
+  "h24": {
+    "type": "holder",
+    "id": "h24",
+    "x": 241,
+    "y": 588,
+    "width": 30,
+    "height": 30,
+    "z": 300,
+    "inheritFrom": "h1",
+    "movable": false,
+    "movableInEdit": true
+  },
+  "h25": {
+    "type": "holder",
+    "id": "h25",
+    "x": 330,
+    "y": 588,
+    "width": 30,
+    "height": 30,
+    "z": 301,
+    "inheritFrom": "h1",
+    "movable": false,
+    "movableInEdit": true
+  },
+  "h26": {
+    "type": "holder",
+    "id": "h26",
+    "x": 419,
+    "y": 589,
+    "width": 30,
+    "height": 30,
+    "z": 303,
+    "inheritFrom": "h1",
+    "movable": false,
+    "movableInEdit": true
+  },
+  "h27": {
+    "type": "holder",
+    "id": "h27",
+    "x": 508,
+    "y": 588,
+    "width": 30,
+    "height": 30,
+    "z": 304,
+    "inheritFrom": "h1",
+    "movable": false,
+    "movableInEdit": true
+  },
+  "h28": {
+    "type": "holder",
+    "id": "h28",
+    "x": 597,
+    "y": 588,
+    "width": 30,
+    "height": 30,
+    "z": 305,
+    "inheritFrom": "h1",
+    "movable": false,
+    "movableInEdit": true
+  },
+  "h29": {
+    "type": "holder",
+    "id": "h29",
+    "x": 686,
+    "y": 588,
+    "width": 30,
+    "height": 30,
+    "z": 306,
+    "inheritFrom": "h1",
+    "movable": false,
+    "movableInEdit": true
+  },
+  "h30": {
+    "type": "holder",
+    "id": "h30",
+    "x": 775,
+    "y": 588,
+    "width": 30,
+    "height": 30,
+    "z": 307,
+    "inheritFrom": "h1",
+    "movable": false,
+    "movableInEdit": true
+  },
+  "h31": {
+    "type": "holder",
+    "id": "h31",
+    "x": 864,
+    "y": 589,
+    "width": 30,
+    "height": 30,
+    "z": 308,
+    "inheritFrom": "h1",
+    "movable": false,
+    "movableInEdit": true
+  },
+  "h32": {
+    "type": "holder",
+    "id": "h32",
+    "x": 953,
+    "y": 588,
+    "width": 30,
+    "height": 30,
+    "z": 309,
+    "inheritFrom": "h1",
+    "movable": false,
+    "movableInEdit": true
+  },
+  "h33": {
+    "type": "holder",
+    "id": "h33",
+    "x": 998,
+    "y": 523,
+    "width": 30,
+    "height": 30,
+    "z": 386,
+    "inheritFrom": "h1",
+    "movable": false,
+    "movableInEdit": true
+  },
+  "h34": {
+    "type": "holder",
+    "id": "h34",
+    "x": 933,
+    "y": 465,
+    "width": 30,
+    "height": 30,
+    "z": 352,
+    "inheritFrom": "h1",
+    "movable": false,
+    "movableInEdit": true
+  },
+  "h35": {
+    "type": "holder",
+    "id": "h35",
+    "x": 762,
+    "y": 416,
+    "width": 30,
+    "height": 30,
+    "z": 322,
+    "inheritFrom": "h1",
+    "movable": false,
+    "movableInEdit": true
+  },
+  "h36": {
+    "type": "holder",
+    "id": "h36",
+    "x": 673,
+    "y": 416,
+    "width": 30,
+    "height": 30,
+    "z": 323,
+    "inheritFrom": "h1",
+    "movable": false,
+    "movableInEdit": true
+  },
+  "h37": {
+    "type": "holder",
+    "id": "h37",
+    "x": 584,
+    "y": 416,
+    "width": 30,
+    "height": 30,
+    "z": 324,
+    "inheritFrom": "h1",
+    "movable": false,
+    "movableInEdit": true
+  },
+  "h38": {
+    "type": "holder",
+    "id": "h38",
+    "x": 494,
+    "y": 416,
+    "width": 30,
+    "height": 30,
+    "z": 325,
+    "inheritFrom": "h1",
+    "movable": false,
+    "movableInEdit": true
+  },
+  "h39": {
+    "type": "holder",
+    "id": "h39",
+    "x": 405,
+    "y": 416,
+    "width": 30,
+    "height": 30,
+    "z": 326,
+    "inheritFrom": "h1",
+    "movable": false,
+    "movableInEdit": true
+  },
+  "h40": {
+    "type": "holder",
+    "id": "h40",
+    "x": 227,
+    "y": 416,
+    "width": 30,
+    "height": 30,
+    "z": 328,
+    "inheritFrom": "h1",
+    "movable": false,
+    "movableInEdit": true
+  },
+  "h41": {
+    "type": "holder",
+    "id": "h41",
+    "x": 144,
+    "y": 381,
+    "width": 30,
+    "height": 30,
+    "z": 355,
+    "inheritFrom": "h1",
+    "movable": false,
+    "movableInEdit": true
+  },
+  "h42": {
+    "type": "holder",
+    "id": "h42",
+    "x": 70,
+    "y": 300,
+    "width": 30,
+    "height": 30,
+    "z": 358,
+    "inheritFrom": "h1",
+    "movable": false,
+    "movableInEdit": true
+  },
+  "h43": {
+    "type": "holder",
+    "id": "h43",
+    "x": 140,
+    "y": 230,
+    "width": 30,
+    "height": 30,
+    "z": 356,
+    "inheritFrom": "h1",
+    "movable": false,
+    "movableInEdit": true
+  },
+  "h44": {
+    "type": "holder",
+    "id": "h44",
+    "x": 230,
+    "y": 230,
+    "width": 30,
+    "height": 30,
+    "z": 341,
+    "inheritFrom": "h1",
+    "movable": false,
+    "movableInEdit": true
+  },
+  "h45": {
+    "type": "holder",
+    "id": "h45",
+    "x": 321,
+    "y": 230,
+    "width": 30,
+    "height": 30,
+    "z": 340,
+    "inheritFrom": "h1",
+    "movable": false,
+    "movableInEdit": true
+  },
+  "h46": {
+    "type": "holder",
+    "id": "h46",
+    "x": 411,
+    "y": 230,
+    "width": 30,
+    "height": 30,
+    "z": 343,
+    "inheritFrom": "h1",
+    "movable": false,
+    "movableInEdit": true
+  },
+  "h47": {
+    "type": "holder",
+    "id": "h47",
+    "x": 501,
+    "y": 230,
+    "width": 30,
+    "height": 30,
+    "z": 344,
+    "inheritFrom": "h1",
+    "movable": false,
+    "movableInEdit": true
+  },
+  "h48": {
+    "type": "holder",
+    "id": "h48",
+    "x": 591,
+    "y": 230,
+    "width": 30,
+    "height": 30,
+    "z": 345,
+    "inheritFrom": "h1",
+    "movable": false,
+    "movableInEdit": true
+  },
+  "h49": {
+    "type": "holder",
+    "id": "h49",
+    "x": 682,
+    "y": 230,
+    "width": 30,
+    "height": 30,
+    "z": 346,
+    "inheritFrom": "h1",
+    "movable": false,
+    "movableInEdit": true
+  },
+  "h50": {
+    "type": "holder",
+    "id": "h50",
+    "x": 772,
+    "y": 230,
+    "width": 30,
+    "height": 30,
+    "z": 347,
+    "inheritFrom": "h1",
+    "movable": false,
+    "movableInEdit": true
+  },
+  "h51": {
+    "type": "holder",
+    "id": "h51",
+    "x": 862,
+    "y": 230,
+    "width": 30,
+    "height": 30,
+    "z": 348,
+    "inheritFrom": "h1",
+    "movable": false,
+    "movableInEdit": true
+  },
+  "h52": {
+    "type": "holder",
+    "id": "h52",
+    "x": 157,
+    "y": 750,
+    "width": 30,
+    "height": 30,
+    "z": 297,
+    "inheritFrom": "h1",
+    "movable": false,
+    "movableInEdit": true
+  },
+  "h53": {
+    "type": "holder",
+    "id": "h53",
+    "x": 316,
+    "y": 416,
+    "width": 30,
+    "height": 30,
+    "z": 327,
+    "inheritFrom": "h1",
+    "movable": false,
+    "movableInEdit": true
+  },
+  "h54": {
+    "type": "holder",
+    "id": "h54",
+    "x": 1010,
+    "y": 899,
+    "width": 30,
+    "height": 30,
+    "z": 381,
+    "inheritFrom": "h1",
+    "movable": false,
+    "movableInEdit": true
+  },
+  "h55": {
+    "type": "holder",
+    "id": "h55",
+    "x": 851,
+    "y": 416,
+    "width": 30,
+    "height": 30,
+    "z": 353,
+    "inheritFrom": "h1",
+    "movable": false,
+    "movableInEdit": true
+  },
+  "u525": {
+    "x": 51,
+    "y": 920,
+    "width": 56,
+    "height": 56,
+    "color": "#8a34df",
+    "css": "border-radius: 100% 100% 25% 25%; ",
+    "image": "i/game-pieces/2D/Meeple-2D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 3,
+    "z": 78,
+    "id": "u525"
+  },
+  "71c0": {
+    "x": 86,
+    "y": 857,
+    "width": 56,
+    "height": 56,
+    "color": "#f22c2c",
+    "css": "border-radius: 100% 100% 25% 25%; ",
+    "image": "i/game-pieces/2D/Meeple-2D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 3,
+    "z": 77,
+    "id": "71c0"
+  },
+  "l4vf": {
+    "x": 18,
+    "y": 857,
+    "width": 56,
+    "height": 56,
+    "color": "#fb9623",
+    "css": "border-radius: 100% 100% 25% 25%; ",
+    "image": "i/game-pieces/2D/Meeple-2D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 3,
+    "z": 14,
+    "id": "l4vf"
+  },
+  "g23g": {
+    "x": 18,
+    "y": 786,
+    "width": 56,
+    "height": 56,
+    "color": "#eff240",
+    "css": "border-radius: 100% 100% 25% 25%; ",
+    "image": "i/game-pieces/2D/Meeple-2D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 3,
+    "z": 74,
+    "id": "g23g"
+  },
+  "umdi": {
+    "x": 86,
+    "y": 787,
+    "width": 56,
+    "height": 56,
+    "color": "#23d750",
+    "css": "border-radius: 100% 100% 25% 25%; ",
+    "image": "i/game-pieces/2D/Meeple-2D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 3,
+    "z": 73,
+    "id": "umdi"
+  },
+  "jwagB": {
+    "id": "jwagB",
+    "parent": "bigbag",
+    "y": 90,
+    "width": 111,
+    "height": 40,
+    "type": "button",
+    "text": "Recall & Shuffle",
+    "movableInEdit": false,
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "relation": "in",
+        "value": [
+          "final1",
+          "final2",
+          "final3",
+          "final4",
+          "final5"
+        ],
+        "mode": "set",
+        "collection": "setup-exclusion"
+      },
+      {
+        "func": "RECALL",
+        "holder": "${PROPERTY parent}",
+        "excludeCollection": "setup-exclusion"
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "${PROPERTY parent}"
+      }
+    ],
+    "fixedParent": true,
+    "x": -10,
+    "gameStartRoutine": [
+      {
+        "func": "CLICK",
+        "collection": "thisButton"
+      },
+      {
+        "func": "CLICK",
+        "collection": [
+          "spread"
+        ]
+      }
+    ]
+  },
+  "jwagD": {
+    "type": "deck",
+    "id": "jwagD",
+    "x": 4,
+    "y": 4,
+    "cardTypes": {
+      "tv": {
+        "image": "/i/game-icons.net/delapouite/tv.svg",
+        "color": "#f22c2c\" stroke-width=\"10",
+        "w": "70",
+        "h": "70",
+        "width": 70,
+        "height": 70
+      },
+      "fridge": {
+        "image": "/i/game-icons.net/caro-asercion/fridge.svg",
+        "color": "#eff240",
+        "w": "80",
+        "h": "80",
+        "width": 80,
+        "height": 80,
+        "OffsetY": 10
+      },
+      "necklace": {
+        "image": "/i/game-icons.net/lorc/gem-pendant.svg",
+        "color": "#8a34df",
+        "w": "70",
+        "h": "70",
+        "width": 70,
+        "height": 70
+      },
+      "xbox": {
+        "image": "/i/game-icons.net/delapouite/game-console.svg",
+        "color": "#23d750",
+        "w": "70",
+        "h": "70",
+        "width": 70,
+        "height": 70
+      },
+      "shoes": {
+        "image": "/i/game-icons.net/delapouite/converse-shoe.svg",
+        "color": "#fb9623",
+        "w": "70",
+        "h": "70",
+        "width": 70,
+        "height": 70
+      },
+      "coupon": {
+        "image": "/i/game-icons.net/delapouite/ticket.svg",
+        "color": "#7D2014",
+        "w": "70",
+        "h": "70",
+        "width": 70,
+        "height": 70
+      },
+      "wine": {
+        "image": "/assets/-1290380067_311",
+        "color": "beige\" stroke-width=\"8\" stroke=\"black",
+        "w": "80",
+        "h": "80",
+        "width": 80,
+        "height": 80
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "width": 60,
+            "height": 60,
+            "type": "image",
+            "color": "transparent",
+            "value": ""
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image",
+              "width": "w",
+              "height": "h"
+            },
+            "svgReplaces": {
+              "#000": "color",
+              "#borderColor": "borderColor",
+              "#borderWidth": "borderWidth"
+            }
+          }
+        ]
+      }
+    ],
+    "cardDefaults": {
+      "width": 70,
+      "height": 70
+    },
+    "z": 4885,
+    "parent": "bigbag"
+  },
+  "agjk": {
+    "deck": "jwagD",
+    "type": "card",
+    "cardType": "fridge",
+    "id": "agjk",
+    "z": 12857,
+    "parent": "h4",
+    "x": -20,
+    "y": -20
+  },
+  "sj9j": {
+    "deck": "jwagD",
+    "type": "card",
+    "cardType": "fridge",
+    "id": "sj9j",
+    "z": 12888,
+    "parent": "h35",
+    "x": -20,
+    "y": -20
+  },
+  "n0i7": {
+    "deck": "jwagD",
+    "type": "card",
+    "cardType": "fridge",
+    "id": "n0i7",
+    "z": 12882,
+    "parent": "h29",
+    "x": -20,
+    "y": -20
+  },
+  "sncz": {
+    "deck": "jwagD",
+    "type": "card",
+    "cardType": "fridge",
+    "id": "sncz",
+    "z": 12877,
+    "parent": "h24",
+    "x": -20,
+    "y": -20
+  },
+  "a2ix": {
+    "deck": "jwagD",
+    "type": "card",
+    "cardType": "fridge",
+    "id": "a2ix",
+    "z": 12864,
+    "parent": "h11",
+    "x": -20,
+    "y": -20
+  },
+  "3pgd": {
+    "deck": "jwagD",
+    "type": "card",
+    "cardType": "fridge",
+    "id": "3pgd",
+    "z": 12866,
+    "parent": "h13",
+    "x": -20,
+    "y": -20
+  },
+  "fizq": {
+    "deck": "jwagD",
+    "type": "card",
+    "cardType": "fridge",
+    "id": "fizq",
+    "z": 12881,
+    "parent": "h28",
+    "x": -20,
+    "y": -20
+  },
+  "6hxe": {
+    "deck": "jwagD",
+    "type": "card",
+    "cardType": "fridge",
+    "id": "6hxe",
+    "z": 12891,
+    "parent": "h38",
+    "x": -20,
+    "y": -20
+  },
+  "azze": {
+    "deck": "jwagD",
+    "type": "card",
+    "cardType": "fridge",
+    "id": "azze",
+    "z": 12875,
+    "parent": "h22",
+    "x": -20,
+    "y": -20
+  },
+  "rxqp": {
+    "deck": "jwagD",
+    "type": "card",
+    "cardType": "necklace",
+    "id": "rxqp",
+    "z": 12884,
+    "parent": "h31",
+    "x": -20,
+    "y": -20
+  },
+  "xwfo": {
+    "deck": "jwagD",
+    "type": "card",
+    "cardType": "necklace",
+    "id": "xwfo",
+    "z": 12871,
+    "parent": "h18",
+    "x": -20,
+    "y": -20
+  },
+  "52n8": {
+    "deck": "jwagD",
+    "type": "card",
+    "cardType": "necklace",
+    "id": "52n8",
+    "z": 12870,
+    "parent": "h17",
+    "x": -20,
+    "y": -20
+  },
+  "dl56": {
+    "deck": "jwagD",
+    "type": "card",
+    "cardType": "necklace",
+    "id": "dl56",
+    "z": 12878,
+    "parent": "h25",
+    "x": -20,
+    "y": -20
+  },
+  "z0m9": {
+    "deck": "jwagD",
+    "type": "card",
+    "cardType": "necklace",
+    "id": "z0m9",
+    "z": 12897,
+    "parent": "h44",
+    "x": -20,
+    "y": -20
+  },
+  "o309": {
+    "deck": "jwagD",
+    "type": "card",
+    "cardType": "necklace",
+    "id": "o309",
+    "z": 12902,
+    "parent": "h49",
+    "x": -20,
+    "y": -20
+  },
+  "vj5r": {
+    "deck": "jwagD",
+    "type": "card",
+    "cardType": "necklace",
+    "id": "vj5r",
+    "z": 12869,
+    "parent": "h16",
+    "x": -20,
+    "y": -20
+  },
+  "xs00": {
+    "deck": "jwagD",
+    "type": "card",
+    "cardType": "necklace",
+    "id": "xs00",
+    "z": 12892,
+    "parent": "h39",
+    "x": -20,
+    "y": -20
+  },
+  "0zph": {
+    "deck": "jwagD",
+    "type": "card",
+    "cardType": "necklace",
+    "id": "0zph",
+    "z": 12907,
+    "parent": "h54",
+    "x": -20,
+    "y": -20
+  },
+  "o9no": {
+    "deck": "jwagD",
+    "type": "card",
+    "cardType": "xbox",
+    "id": "o9no",
+    "z": 12863,
+    "parent": "h10",
+    "x": -20,
+    "y": -20
+  },
+  "zv9j": {
+    "deck": "jwagD",
+    "type": "card",
+    "cardType": "xbox",
+    "id": "zv9j",
+    "z": 12887,
+    "parent": "h34",
+    "x": -20,
+    "y": -20
+  },
+  "qdx1": {
+    "deck": "jwagD",
+    "type": "card",
+    "cardType": "xbox",
+    "id": "qdx1",
+    "z": 12868,
+    "parent": "h15",
+    "x": -20,
+    "y": -20
+  },
+  "tt4h": {
+    "deck": "jwagD",
+    "type": "card",
+    "cardType": "xbox",
+    "id": "tt4h",
+    "z": 12903,
+    "parent": "h50",
+    "x": -20,
+    "y": -20
+  },
+  "zkdm": {
+    "deck": "jwagD",
+    "type": "card",
+    "cardType": "xbox",
+    "id": "zkdm",
+    "z": 12867,
+    "parent": "h14",
+    "x": -20,
+    "y": -20
+  },
+  "mkds": {
+    "deck": "jwagD",
+    "type": "card",
+    "cardType": "xbox",
+    "id": "mkds",
+    "z": 12879,
+    "parent": "h26",
+    "x": -20,
+    "y": -20
+  },
+  "7hr7": {
+    "deck": "jwagD",
+    "type": "card",
+    "cardType": "xbox",
+    "id": "7hr7",
+    "z": 12890,
+    "parent": "h37",
+    "x": -20,
+    "y": -20
+  },
+  "easv": {
+    "deck": "jwagD",
+    "type": "card",
+    "cardType": "xbox",
+    "id": "easv",
+    "z": 12885,
+    "parent": "h32",
+    "x": -20,
+    "y": -20
+  },
+  "t8tb": {
+    "deck": "jwagD",
+    "type": "card",
+    "cardType": "xbox",
+    "id": "t8tb",
+    "z": 12876,
+    "parent": "h23",
+    "x": -20,
+    "y": -20
+  },
+  "7suz": {
+    "deck": "jwagD",
+    "type": "card",
+    "cardType": "shoes",
+    "id": "7suz",
+    "z": 12860,
+    "parent": "h7",
+    "x": -20,
+    "y": -20
+  },
+  "rm7k": {
+    "deck": "jwagD",
+    "type": "card",
+    "cardType": "shoes",
+    "id": "rm7k",
+    "z": 12896,
+    "parent": "h43",
+    "x": -20,
+    "y": -20
+  },
+  "j1ua": {
+    "deck": "jwagD",
+    "type": "card",
+    "cardType": "shoes",
+    "id": "j1ua",
+    "z": 12901,
+    "parent": "h48",
+    "x": -20,
+    "y": -20
+  },
+  "p7u1": {
+    "deck": "jwagD",
+    "type": "card",
+    "cardType": "shoes",
+    "id": "p7u1",
+    "z": 12854,
+    "parent": "h1",
+    "x": -20,
+    "y": -20
+  },
+  "s3kf": {
+    "deck": "jwagD",
+    "type": "card",
+    "cardType": "shoes",
+    "id": "s3kf",
+    "z": 12861,
+    "parent": "h8",
+    "x": -20,
+    "y": -20
+  },
+  "744a": {
+    "deck": "jwagD",
+    "type": "card",
+    "cardType": "shoes",
+    "id": "744a",
+    "z": 12865,
+    "parent": "h12",
+    "x": -20,
+    "y": -20
+  },
+  "m8wg": {
+    "deck": "jwagD",
+    "type": "card",
+    "cardType": "shoes",
+    "id": "m8wg",
+    "z": 12906,
+    "parent": "h53",
+    "x": -20,
+    "y": -20
+  },
+  "cy2j": {
+    "deck": "jwagD",
+    "type": "card",
+    "cardType": "shoes",
+    "id": "cy2j",
+    "z": 12856,
+    "parent": "h3",
+    "x": -20,
+    "y": -20
+  },
+  "5hul": {
+    "deck": "jwagD",
+    "type": "card",
+    "cardType": "shoes",
+    "id": "5hul",
+    "z": 12886,
+    "parent": "h33",
+    "x": -20,
+    "y": -20
+  },
+  "ie4d": {
+    "deck": "jwagD",
+    "type": "card",
+    "cardType": "coupon",
+    "id": "ie4d",
+    "z": 12895,
+    "parent": "h42",
+    "x": -20,
+    "y": -20
+  },
+  "a537": {
+    "deck": "jwagD",
+    "type": "card",
+    "cardType": "coupon",
+    "id": "a537",
+    "z": 12894,
+    "parent": "h41",
+    "x": -20,
+    "y": -20
+  },
+  "1qzh": {
+    "deck": "jwagD",
+    "type": "card",
+    "cardType": "coupon",
+    "id": "1qzh",
+    "z": 12859,
+    "parent": "h6",
+    "x": -20,
+    "y": -20
+  },
+  "b0jx": {
+    "deck": "jwagD",
+    "type": "card",
+    "cardType": "coupon",
+    "id": "b0jx",
+    "z": 12855,
+    "parent": "h2",
+    "x": -20,
+    "y": -20
+  },
+  "3ui7": {
+    "deck": "jwagD",
+    "type": "card",
+    "cardType": "coupon",
+    "id": "3ui7",
+    "z": 12873,
+    "parent": "h20",
+    "x": -20,
+    "y": -20
+  },
+  "airb": {
+    "deck": "jwagD",
+    "type": "card",
+    "cardType": "wine",
+    "id": "airb",
+    "z": 12874,
+    "parent": "h21",
+    "x": -20,
+    "y": -20
+  },
+  "dtun": {
+    "deck": "jwagD",
+    "type": "card",
+    "cardType": "wine",
+    "id": "dtun",
+    "z": 12880,
+    "parent": "h27",
+    "x": -20,
+    "y": -20
+  },
+  "73yi": {
+    "deck": "jwagD",
+    "type": "card",
+    "cardType": "wine",
+    "id": "73yi",
+    "z": 12883,
+    "parent": "h30",
+    "x": -20,
+    "y": -20
+  },
+  "tuya": {
+    "deck": "jwagD",
+    "type": "card",
+    "cardType": "wine",
+    "id": "tuya",
+    "z": 12900,
+    "parent": "h47",
+    "x": -20,
+    "y": -20
+  },
+  "v03f": {
+    "deck": "jwagD",
+    "type": "card",
+    "cardType": "wine",
+    "id": "v03f",
+    "z": 12872,
+    "parent": "h19",
+    "x": -20,
+    "y": -20
+  },
+  "aks6": {
+    "deck": "jwagD",
+    "type": "card",
+    "cardType": "tv",
+    "id": "aks6",
+    "z": 12905,
+    "parent": "h52",
+    "x": -20,
+    "y": -20
+  },
+  "k28o": {
+    "deck": "jwagD",
+    "type": "card",
+    "cardType": "tv",
+    "id": "k28o",
+    "z": 12908,
+    "parent": "h55",
+    "x": -20,
+    "y": -20
+  },
+  "fi6s": {
+    "deck": "jwagD",
+    "type": "card",
+    "cardType": "tv",
+    "id": "fi6s",
+    "z": 12898,
+    "parent": "h45",
+    "x": -20,
+    "y": -20
+  },
+  "9g9z": {
+    "deck": "jwagD",
+    "type": "card",
+    "cardType": "tv",
+    "id": "9g9z",
+    "z": 12889,
+    "parent": "h36",
+    "x": -20,
+    "y": -20
+  },
+  "be4r": {
+    "deck": "jwagD",
+    "type": "card",
+    "cardType": "tv",
+    "id": "be4r",
+    "z": 12899,
+    "parent": "h46",
+    "x": -20,
+    "y": -20
+  },
+  "u1ru": {
+    "deck": "jwagD",
+    "type": "card",
+    "cardType": "tv",
+    "id": "u1ru",
+    "z": 12904,
+    "parent": "h51",
+    "x": -20,
+    "y": -20
+  },
+  "udri": {
+    "deck": "jwagD",
+    "type": "card",
+    "cardType": "tv",
+    "id": "udri",
+    "z": 12862,
+    "parent": "h9",
+    "x": -20,
+    "y": -20
+  },
+  "4d7h": {
+    "deck": "jwagD",
+    "type": "card",
+    "cardType": "tv",
+    "id": "4d7h",
+    "z": 12893,
+    "parent": "h40",
+    "x": -20,
+    "y": -20
+  },
+  "vlqu": {
+    "deck": "jwagD",
+    "type": "card",
+    "cardType": "tv",
+    "id": "vlqu",
+    "z": 12858,
+    "parent": "h5",
+    "x": -20,
+    "y": -20
+  },
+  "bigbag": {
+    "type": "holder",
+    "id": "bigbag",
+    "width": 90,
+    "height": 90,
+    "z": 359,
+    "dropTarget": {
+      "type": "card"
+    },
+    "y": 12,
+    "x": 12
+  },
+  "spread": {
+    "type": "button",
+    "id": "spread",
+    "z": 36,
+    "text": "STOCK SHELVES",
+    "clickRoutine": [
+      {
+        "func": "SHUFFLE",
+        "holder": "bigbag"
+      },
+      {
+        "func": "MOVE",
+        "holder": "goodie-bag",
+        "to": [
+          "h1",
+          "h2",
+          "h3",
+          "h4",
+          "h5",
+          "h6",
+          "h7",
+          "h8",
+          "h9",
+          "h10",
+          "h11",
+          "h12",
+          "h13",
+          "h14",
+          "h15",
+          "h16",
+          "h17",
+          "h18",
+          "h19",
+          "h20",
+          "h21",
+          "h22",
+          "h23",
+          "h24",
+          "h25",
+          "h26",
+          "h27",
+          "h28",
+          "h29",
+          "h30",
+          "h31",
+          "h32",
+          "h33",
+          "h34",
+          "h35",
+          "h36",
+          "h37",
+          "h38",
+          "h39",
+          "h40",
+          "h41",
+          "h42",
+          "h43",
+          "h44",
+          "h45",
+          "h46",
+          "h47",
+          "h48",
+          "h49",
+          "h50",
+          "h51",
+          "h52",
+          "h53",
+          "h54",
+          "h55"
+        ],
+        "from": "bigbag"
+      },
+      {
+        "func": "TURN",
+        "turnCycle": "random"
+      }
+    ],
+    "x": 119,
+    "y": 26
+  },
+  "final1": {
+    "type": "holder",
+    "id": "final1",
+    "x": 1215,
+    "y": 36,
+    "width": 30,
+    "height": 30,
+    "z": 243,
+    "inheritFrom": "h1",
+    "dropTarget": [
+      {
+        "type": "card"
+      }
+    ]
+  },
+  "final2": {
+    "type": "holder",
+    "id": "final2",
+    "x": 1216,
+    "y": 110,
+    "width": 30,
+    "height": 30,
+    "z": 200,
+    "inheritFrom": "h1"
+  },
+  "final3": {
+    "type": "holder",
+    "id": "final3",
+    "x": 1360,
+    "y": 71,
+    "width": 30,
+    "height": 30,
+    "z": 201,
+    "inheritFrom": "h1"
+  },
+  "final4": {
+    "type": "holder",
+    "id": "final4",
+    "x": 1291,
+    "y": 35,
+    "width": 30,
+    "height": 30,
+    "z": 203,
+    "inheritFrom": "h1"
+  },
+  "final5": {
+    "type": "holder",
+    "id": "final5",
+    "x": 1289,
+    "y": 99,
+    "width": 30,
+    "height": 30,
+    "z": 246,
+    "inheritFrom": "h1"
+  },
+  "k3uq": {
+    "x": 127,
+    "y": 257,
+    "color": "#1f5ca6",
+    "css": "border-radius: 50%/35%; opacity: 0.2;",
+    "image": "/i/game-icons.net/skoll/footsteps.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "white",
+    "borderWidth": 1,
+    "secondaryColor": "black",
+    "id": "k3uq",
+    "rotation": 415,
+    "width": 130,
+    "height": 130,
+    "movable": false,
+    "inheritFrom": "footsteps",
+    "z": 6
+  },
+  "k6uq": {
+    "x": 605,
+    "y": 640,
+    "color": "#1f5ca6",
+    "css": "border-radius: 50%/35%; opacity: 0.2;",
+    "image": "/i/game-icons.net/skoll/footsteps.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "white",
+    "borderWidth": 1,
+    "secondaryColor": "black",
+    "id": "k6uq",
+    "rotation": 305,
+    "width": 130,
+    "height": 130,
+    "movable": false,
+    "inheritFrom": "footsteps",
+    "z": 14
+  },
+  "k8uq": {
+    "x": 762,
+    "y": 822,
+    "color": "#1f5ca6",
+    "css": "border-radius: 50%/35%; opacity: 0.2;",
+    "image": "/i/game-icons.net/skoll/footsteps.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "white",
+    "borderWidth": 1,
+    "secondaryColor": "black",
+    "id": "k8uq",
+    "rotation": 481,
+    "width": 130,
+    "height": 130,
+    "movable": false,
+    "inheritFrom": "footsteps",
+    "z": 13,
+    "activeFace": 0
+  },
+  "k9uq": {
+    "x": 395,
+    "y": 482,
+    "color": "#1f5ca6",
+    "css": "border-radius: 50%/35%; opacity: 0.2;",
+    "image": "/i/game-icons.net/skoll/footsteps.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "white",
+    "borderWidth": 1,
+    "secondaryColor": "black",
+    "id": "k9uq",
+    "rotation": 122,
+    "width": 130,
+    "height": 130,
+    "movable": false,
+    "inheritFrom": "footsteps",
+    "z": 21
+  },
+  "k11uq": {
+    "x": 736,
+    "y": 317,
+    "color": "#1f5ca6",
+    "css": "border-radius: 50%/35%; opacity: 0.2;",
+    "image": "/i/game-icons.net/skoll/footsteps.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "white",
+    "borderWidth": 1,
+    "secondaryColor": "black",
+    "id": "k11uq",
+    "rotation": 302,
+    "width": 130,
+    "height": 130,
+    "movable": false,
+    "inheritFrom": "footsteps",
+    "z": 4
+  },
+  "k12uq": {
+    "x": 541,
+    "y": 126,
+    "color": "#1f5ca6",
+    "css": "border-radius: 50%/35%; opacity: 0.2;",
+    "image": "/i/game-icons.net/skoll/footsteps.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "white",
+    "borderWidth": 1,
+    "secondaryColor": "black",
+    "id": "k12uq",
+    "rotation": 122,
+    "width": 130,
+    "height": 130,
+    "movable": false,
+    "inheritFrom": "footsteps",
+    "z": 7
+  },
+  "k13uq": {
+    "x": 964,
+    "color": "#1f5ca6",
+    "css": "border-radius: 50%/35%",
+    "image": "/i/game-icons.net/delapouite/shopping-cart.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "white",
+    "borderWidth": 1,
+    "secondaryColor": "black",
+    "z": 66,
+    "id": "k13uq",
+    "height": 102,
+    "width": 74,
+    "y": 6,
+    "movable": false
+  },
+  "ikxc": {
+    "type": "label",
+    "css": "font-size: 30px",
+    "height": 42,
+    "width": 200,
+    "x": 854,
+    "y": 47,
+    "z": 4,
+    "id": "ikxc",
+    "text": "4"
+  },
+  "k14uq": {
+    "x": 964,
+    "y": 84,
+    "color": "#1f5ca6",
+    "css": "border-radius: 50%/35%",
+    "image": "/i/game-icons.net/delapouite/shopping-cart.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "white",
+    "borderWidth": 1,
+    "secondaryColor": "black",
+    "z": 67,
+    "id": "k14uq",
+    "height": 102,
+    "width": 74,
+    "movable": false
+  },
+  "k15uq": {
+    "x": 964,
+    "y": 162,
+    "color": "#1f5ca6",
+    "css": "border-radius: 50%/35%",
+    "image": "/i/game-icons.net/delapouite/shopping-cart.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "white",
+    "borderWidth": 1,
+    "secondaryColor": "black",
+    "z": 68,
+    "id": "k15uq",
+    "height": 102,
+    "width": 74,
+    "movable": false
+  },
+  "k16uq": {
+    "x": 964,
+    "y": 241,
+    "color": "#1f5ca6",
+    "css": "border-radius: 50%/35%",
+    "image": "/i/game-icons.net/delapouite/shopping-cart.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "white",
+    "borderWidth": 1,
+    "secondaryColor": "black",
+    "z": 69,
+    "id": "k16uq",
+    "height": 102,
+    "width": 74,
+    "movable": false
+  },
+  "k17uq": {
+    "x": 964,
+    "y": 319,
+    "color": "#1f5ca6",
+    "css": "border-radius: 50%/35%",
+    "image": "/i/game-icons.net/delapouite/shopping-cart.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "white",
+    "borderWidth": 1,
+    "secondaryColor": "black",
+    "z": 70,
+    "id": "k17uq",
+    "height": 102,
+    "width": 74,
+    "movable": false
+  },
+  "ikxc1": {
+    "type": "label",
+    "css": "font-size: 30px",
+    "height": 42,
+    "width": 200,
+    "x": 852,
+    "y": 122,
+    "z": 13,
+    "id": "ikxc1",
+    "text": "3"
+  },
+  "ikxc2": {
+    "type": "label",
+    "css": "font-size: 30px",
+    "height": 42,
+    "width": 200,
+    "x": 854,
+    "y": 202,
+    "z": 7,
+    "id": "ikxc2",
+    "text": "2"
+  },
+  "ikxc3": {
+    "type": "label",
+    "css": "font-size: 30px",
+    "height": 42,
+    "width": 200,
+    "x": 854,
+    "y": 280,
+    "z": 6,
+    "id": "ikxc3",
+    "text": "1"
+  },
+  "ikxc4": {
+    "type": "label",
+    "css": "font-size: 30px",
+    "height": 42,
+    "width": 200,
+    "x": 854,
+    "y": 358,
+    "z": 5,
+    "id": "ikxc4",
+    "text": "0"
+  },
+  "specialtv": {
+    "type": "card",
+    "id": "specialtv",
+    "deck": "jwagD",
+    "cardType": "tv",
+    "z": 4063,
+    "parent": "final1",
+    "x": -20,
+    "y": -20
+  },
+  "specialxbox": {
+    "type": "card",
+    "id": "specialxbox",
+    "deck": "jwagD",
+    "cardType": "xbox",
+    "z": 11812,
+    "x": -20,
+    "y": -20,
+    "parent": "final3"
+  },
+  "specialfridge": {
+    "type": "card",
+    "id": "specialfridge",
+    "deck": "jwagD",
+    "cardType": "fridge",
+    "z": 11804,
+    "x": -20,
+    "y": -20,
+    "parent": "final5"
+  },
+  "specialshoes": {
+    "type": "card",
+    "id": "specialshoes",
+    "deck": "jwagD",
+    "cardType": "shoes",
+    "z": 11808,
+    "x": -20,
+    "y": -20,
+    "parent": "final4"
+  },
+  "specialnecklace": {
+    "type": "card",
+    "id": "specialnecklace",
+    "deck": "jwagD",
+    "cardType": "necklace",
+    "z": 11798,
+    "x": -20,
+    "y": -20,
+    "parent": "final2"
+  },
+  "ph1": {
+    "type": "holder",
+    "id": "ph1",
+    "x": 1151,
+    "y": 893,
+    "width": 50,
+    "height": 50,
+    "z": 373,
+    "dropOffsetX": -10,
+    "dropOffsetY": -10
+  },
+  "ph2": {
+    "type": "holder",
+    "id": "ph2",
+    "x": 1222,
+    "y": 893,
+    "width": 50,
+    "height": 50,
+    "z": 374,
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": "ph1"
+  },
+  "ph3": {
+    "type": "holder",
+    "id": "ph3",
+    "x": 1292,
+    "y": 893,
+    "width": 50,
+    "height": 50,
+    "z": 375,
+    "inheritFrom": "ph1",
+    "movable": false,
+    "movableInEdit": true
+  },
+  "ph4": {
+    "type": "holder",
+    "id": "ph4",
+    "x": 1363,
+    "y": 893,
+    "width": 50,
+    "height": 50,
+    "z": 376,
+    "inheritFrom": "ph1",
+    "movable": false,
+    "movableInEdit": true
+  },
+  "ph5": {
+    "type": "holder",
+    "id": "ph5",
+    "x": 1433,
+    "y": 893,
+    "width": 50,
+    "height": 50,
+    "z": 371,
+    "inheritFrom": "ph1",
+    "movable": false,
+    "movableInEdit": true
+  },
+  "ph6": {
+    "type": "holder",
+    "id": "ph6",
+    "x": 1504,
+    "y": 893,
+    "width": 50,
+    "height": 50,
+    "z": 254,
+    "inheritFrom": "ph1",
+    "movable": false,
+    "movableInEdit": true
+  },
+  "ph7": {
+    "type": "holder",
+    "id": "ph7",
+    "x": 1151,
+    "y": 733,
+    "width": 50,
+    "height": 50,
+    "z": 254,
+    "inheritFrom": "ph1",
+    "movable": false,
+    "movableInEdit": true
+  },
+  "ph8": {
+    "type": "holder",
+    "id": "ph8",
+    "x": 1151,
+    "y": 566,
+    "width": 50,
+    "height": 50,
+    "z": 254,
+    "inheritFrom": "ph1"
+  },
+  "ph9": {
+    "type": "holder",
+    "id": "ph9",
+    "x": 1151,
+    "y": 393,
+    "width": 50,
+    "height": 50,
+    "z": 254,
+    "inheritFrom": "ph1"
+  },
+  "ph10": {
+    "type": "holder",
+    "id": "ph10",
+    "x": 1151,
+    "y": 220,
+    "width": 50,
+    "height": 50,
+    "z": 254,
+    "inheritFrom": "ph1"
+  },
+  "ph11": {
+    "type": "holder",
+    "id": "ph11",
+    "x": 1222,
+    "y": 733,
+    "width": 50,
+    "height": 50,
+    "z": 254,
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": "ph1"
+  },
+  "ph12": {
+    "type": "holder",
+    "id": "ph12",
+    "x": 1222,
+    "y": 566,
+    "width": 50,
+    "height": 50,
+    "z": 254,
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": "ph1"
+  },
+  "ph13": {
+    "type": "holder",
+    "id": "ph13",
+    "x": 1222,
+    "y": 393,
+    "width": 50,
+    "height": 50,
+    "z": 254,
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": "ph1"
+  },
+  "ph14": {
+    "type": "holder",
+    "id": "ph14",
+    "x": 1222,
+    "y": 220,
+    "width": 50,
+    "height": 50,
+    "z": 254,
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": "ph1"
+  },
+  "ph15": {
+    "type": "holder",
+    "id": "ph15",
+    "x": 1292,
+    "y": 733,
+    "width": 50,
+    "height": 50,
+    "z": 254,
+    "inheritFrom": "ph1",
+    "movable": false,
+    "movableInEdit": true
+  },
+  "ph16": {
+    "type": "holder",
+    "id": "ph16",
+    "x": 1292,
+    "y": 566,
+    "width": 50,
+    "height": 50,
+    "z": 254,
+    "inheritFrom": "ph1",
+    "movable": false,
+    "movableInEdit": true
+  },
+  "ph17": {
+    "type": "holder",
+    "id": "ph17",
+    "x": 1292,
+    "y": 393,
+    "width": 50,
+    "height": 50,
+    "z": 254,
+    "inheritFrom": "ph1",
+    "movable": false,
+    "movableInEdit": true
+  },
+  "ph18": {
+    "type": "holder",
+    "id": "ph18",
+    "x": 1292,
+    "y": 220,
+    "width": 50,
+    "height": 50,
+    "z": 254,
+    "inheritFrom": "ph1",
+    "movable": false,
+    "movableInEdit": true
+  },
+  "ph19": {
+    "type": "holder",
+    "id": "ph19",
+    "x": 1363,
+    "y": 733,
+    "width": 50,
+    "height": 50,
+    "z": 254,
+    "inheritFrom": "ph1",
+    "movable": false,
+    "movableInEdit": true
+  },
+  "ph20": {
+    "type": "holder",
+    "id": "ph20",
+    "x": 1363,
+    "y": 566,
+    "width": 50,
+    "height": 50,
+    "z": 254,
+    "inheritFrom": "ph1",
+    "movable": false,
+    "movableInEdit": true
+  },
+  "ph21": {
+    "type": "holder",
+    "id": "ph21",
+    "x": 1363,
+    "y": 393,
+    "width": 50,
+    "height": 50,
+    "z": 254,
+    "inheritFrom": "ph1",
+    "movable": false,
+    "movableInEdit": true
+  },
+  "ph22": {
+    "type": "holder",
+    "id": "ph22",
+    "x": 1363,
+    "y": 220,
+    "width": 50,
+    "height": 50,
+    "z": 254,
+    "inheritFrom": "ph1",
+    "movable": false,
+    "movableInEdit": true
+  },
+  "ph23": {
+    "type": "holder",
+    "id": "ph23",
+    "x": 1433,
+    "y": 733,
+    "width": 50,
+    "height": 50,
+    "z": 254,
+    "inheritFrom": "ph1",
+    "movable": false,
+    "movableInEdit": true
+  },
+  "ph24": {
+    "type": "holder",
+    "id": "ph24",
+    "x": 1433,
+    "y": 566,
+    "width": 50,
+    "height": 50,
+    "z": 254,
+    "inheritFrom": "ph1",
+    "movable": false,
+    "movableInEdit": true
+  },
+  "ph25": {
+    "type": "holder",
+    "id": "ph25",
+    "x": 1433,
+    "y": 393,
+    "width": 50,
+    "height": 50,
+    "z": 254,
+    "inheritFrom": "ph1",
+    "movable": false,
+    "movableInEdit": true
+  },
+  "ph26": {
+    "type": "holder",
+    "id": "ph26",
+    "x": 1433,
+    "y": 220,
+    "width": 50,
+    "height": 50,
+    "z": 254,
+    "inheritFrom": "ph1",
+    "movable": false,
+    "movableInEdit": true
+  },
+  "ph27": {
+    "type": "holder",
+    "id": "ph27",
+    "x": 1504,
+    "y": 733,
+    "width": 50,
+    "height": 50,
+    "z": 254,
+    "inheritFrom": "ph1",
+    "movable": false,
+    "movableInEdit": true
+  },
+  "ph28": {
+    "type": "holder",
+    "id": "ph28",
+    "x": 1504,
+    "y": 566,
+    "width": 50,
+    "height": 50,
+    "z": 254,
+    "inheritFrom": "ph1",
+    "movable": false,
+    "movableInEdit": true
+  },
+  "ph29": {
+    "type": "holder",
+    "id": "ph29",
+    "x": 1504,
+    "y": 393,
+    "width": 50,
+    "height": 50,
+    "z": 254,
+    "inheritFrom": "ph1",
+    "movable": false,
+    "movableInEdit": true
+  },
+  "ph30": {
+    "type": "holder",
+    "id": "ph30",
+    "x": 1504,
+    "y": 220,
+    "width": 50,
+    "height": 50,
+    "z": 254,
+    "inheritFrom": "ph1",
+    "movable": false,
+    "movableInEdit": true
+  },
+  "footsteps": {
+    "id": "footsteps",
+    "x": 348,
+    "y": 833,
+    "width": 130,
+    "height": 130,
+    "rotation": 121,
+    "layer": -4,
+    "movable": false,
+    "color": "#1f5ca6",
+    "css": "border-radius: 50%/35%; opacity: 0.2;",
+    "image": "/i/game-icons.net/skoll/footsteps.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "white",
+    "borderWidth": 1,
+    "secondaryColor": "black",
+    "z": 23,
+    "movableInEdit": false
+  },
+  "1bco": {
+    "type": "label",
+    "text": "Coupon: Spend after your turn to take a second product with the same meeple.",
+    "css": "font-size: 30px; text-align: left;",
+    "height": 150,
+    "width": 350,
+    "x": 218,
+    "y": 18,
+    "z": 16,
+    "id": "1bco"
+  },
+  "2bco": {
+    "type": "label",
+    "text": "Wine: One point per each different type of product you have at least one of.",
+    "css": "font-size: 30px; text-align: left;",
+    "height": 150,
+    "width": 350,
+    "x": 590,
+    "y": 18,
+    "z": 17,
+    "id": "2bco"
+  },
+  "8013D": {
+    "id": "8013D",
+    "parent": "8013",
+    "fixedParent": true,
+    "x": -38,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": "font-size: 28px",
+    "text": "remove",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 1
+      }
+    ]
+  },
+  "8013U": {
+    "id": "8013U",
+    "parent": "8013",
+    "fixedParent": true,
+    "x": 68,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": "font-size: 28px",
+    "text": "add",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 1
+      }
+    ]
+  },
+  "8014D": {
+    "id": "8014D",
+    "parent": "8014",
+    "fixedParent": true,
+    "x": -38,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": "font-size: 28px",
+    "text": "remove",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 1
+      }
+    ]
+  },
+  "8014U": {
+    "id": "8014U",
+    "parent": "8014",
+    "fixedParent": true,
+    "x": 68,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": "font-size: 28px",
+    "text": "add",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 1
+      }
+    ]
+  },
+  "8015D": {
+    "id": "8015D",
+    "parent": "8015",
+    "fixedParent": true,
+    "x": -38,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": "font-size: 28px",
+    "text": "remove",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 1
+      }
+    ]
+  },
+  "8015U": {
+    "id": "8015U",
+    "parent": "8015",
+    "fixedParent": true,
+    "x": 68,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": "font-size: 28px",
+    "text": "add",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 1
+      }
+    ]
+  },
+  "8016D": {
+    "id": "8016D",
+    "parent": "8016",
+    "fixedParent": true,
+    "x": -38,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": "font-size: 28px",
+    "text": "remove",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 1
+      }
+    ]
+  },
+  "8016U": {
+    "id": "8016U",
+    "parent": "8016",
+    "fixedParent": true,
+    "x": 68,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": "font-size: 28px",
+    "text": "add",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 1
+      }
+    ]
+  },
+  "8017D": {
+    "id": "8017D",
+    "parent": "8017",
+    "fixedParent": true,
+    "x": -38,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": "font-size: 28px",
+    "text": "remove",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 1
+      }
+    ]
+  },
+  "8017U": {
+    "id": "8017U",
+    "parent": "8017",
+    "fixedParent": true,
+    "x": 68,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": "font-size: 28px",
+    "text": "add",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 1
+      }
+    ]
+  },
+  "s1": {
+    "type": "seat",
+    "id": "s1",
+    "x": 1432,
+    "y": 272,
+    "z": 31,
+    "hideWhenUnused": true
+  },
+  "s2": {
+    "type": "seat",
+    "id": "s2",
+    "x": 1432,
+    "y": 445,
+    "z": 33,
+    "hideWhenUnused": true,
+    "index": 2
+  },
+  "s3": {
+    "type": "seat",
+    "id": "s3",
+    "x": 1433,
+    "y": 621,
+    "z": 34,
+    "index": 3,
+    "hideWhenUnused": true
+  },
+  "s4": {
+    "type": "seat",
+    "id": "s4",
+    "x": 1433,
+    "y": 784,
+    "z": 35,
+    "index": 4,
+    "hideWhenUnused": true
+  },
+  "s5": {
+    "type": "seat",
+    "id": "s5",
+    "x": 1431,
+    "y": 946,
+    "z": 37,
+    "hideWhenUnused": true,
+    "index": 5
+  },
+  "ejpz": {
+    "type": "button",
+    "clickRoutine": [
+      {
+        "func": "TURN",
+        "turnCycle": "forward"
+      }
+    ],
+    "x": 1459,
+    "y": 26,
+    "z": 39,
+    "id": "ejpz",
+    "text": "END TURN"
+  },
+  "_meta": {
+    "version": 17,
+    "info": {
+      "name": "Everything Must Go!",
+      "image": "/assets/-2049741076_35361",
+      "rules": "https://cdn.shopify.com/s/files/1/0143/6178/8473/files/Bites_Rulebook_190807.pdf?v=1645044345",
+      "bgg": "https://boardgamegeek.com/boardgame/277927/bites",
+      "year": "2020",
+      "mode": "vs",
+      "time": "20",
+      "attribution": "<div>Room layout and design by maddie. Released to the Public Domain under CC0.</div><div><br></div>Cover image by Basher Eyre (CC BY-SA 2.0). Available at: https://commons.wikimedia.org/w/index.php?curid=13795463",
+      "lastUpdate": 1737353634640,
+      "showName": true,
+      "skill": "",
+      "description": "It's Black Friday and the meeples are on a shopping spree! As a salesperson of the store, direct the customers towards the right products to maximize your commissions.",
+      "similarImage": "",
+      "similarName": "Bites",
+      "similarDesigner": "Wolfgang Ditt, Brigitte Ditt",
+      "similarAwards": "2020 Golden Geek Light Game of the Year Nominee",
+      "ruleText": "This module adapts only the base setup of Bites.<div><br></div><div>The following are alternative rules that can be used with this module:</div><div><br></div><div>Meeple Allocation:</div><div><br></div><div>1. Meeples are allocated to the checkouts from highest position to lowest.</div><div>2. Meeples are allocated from lowest position to highest.</div><div>3. Meeples are allocated in this order: 4, 2, 0, 3, 1.</div><div><br></div><div>Coupon Ability:</div><div><br></div><div>1. Before or after your turn, choose a player to give you one product of their choice (make sure there are no coupons in the first 1/4 of the trail before playing).</div><div>2. When moving a meeple, skip the first product that matches their color.</div><div>3. Replacing normal turn, move a meeple one space forward (ignoring color), then take the products both in front and behind it.</div><div>4. Before or after turn, move a meeple at the checkout to an adjacent empty position at the checkout. Each meeple can only be moved once total.</div><div>5. Take a second turn, moving a meeple backward rather than forward. Take a product like usual.</div><div>6. Replacing your turn, move a meeple back to the start of the trail, then take two moves with it.</div><div>7. Before your turn, pick up the three items at the very beginning of the trail. Choose one to keep, and place the other two at the end of the trail.</div><div><br></div><div>Wine Scoring:</div><div><br></div><div>1. Each wine is worth one point for each of the product you have the most of.</div><div>2. Each wine is worth one point for each product you have that is worth 1 or 0 points.</div><div>3. Each wine is worth one point for each wine you have total.</div><div>4. 0 Wine = -3 Points,&nbsp; 1 = 2P,&nbsp; 2 = 3P,&nbsp; 3 = 12P,&nbsp; 4 = 12P,&nbsp; 5 = 12P</div><div>5. 0 Wine = 0 Points,&nbsp; 1 = 5P,&nbsp; 2 = 8P,&nbsp; 3 = 9P,&nbsp; 4 = 8P,&nbsp; 5 = 5P</div><div>6. If you end the game with exactly 1 wine, gain 7 points, otherwise gain 0 points.</div>",
+      "helpText": "",
+      "variantImage": "",
+      "variant": "",
+      "language": "en-US",
+      "players": "2-5"
+    }
+  }
+}

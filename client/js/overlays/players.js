@@ -30,7 +30,7 @@ function getPlayerDetails() {
 function addPlayerCursor(playerName, playerColor) {
   playerCursors[playerName] = document.createElement('div');
   playerCursors[playerName].className = 'cursor';
-  playerCursors[playerName].style = `--playerName:''${playerName}'';--playerColor:${playerColor};`;
+  playerCursors[playerName].style = `--playerName:"${playerName}";--playerColor:${playerColor};`;
   playerCursors[playerName].style.transform = `translate(-50px, -50px)`;
   playerCursors[playerName].setAttribute("data-player",playerName);
   $('#playerCursors').appendChild(playerCursors[playerName]);
@@ -69,12 +69,27 @@ function fillPlayerList(players, active) {
   if(activePlayers.length < 2){
     document.getElementById("template-playerlist-entry").insertAdjacentHTML("afterend", "<div class='nothingtoshow'>There are no other players at this table.</div>");
   }
+  updatePlayerCountDisplay();
+}
+
+function updatePlayerCountDisplay() {
+  const playersButton = $('#playersButton');
+  const playerCount = activePlayers.length;
+
+  const tooltip = $('.tooltip', playersButton);
+  if (tooltip) tooltip.textContent = `Players: ${playerCount}`;
+
+  [playersButton, tooltip].forEach(element => element.classList.add('playerChange'));
+  
+  setTimeout(() => {
+    [playersButton, tooltip].forEach(element => element.classList.remove('playerChange'));
+  }, 1000);
 }
 
 onLoad(function() {
   onMessage('meta', args=>fillPlayerList(args.meta.players, args.activePlayers));
   onMessage('mouse', function(args) {
-    if(args.player != playerName) {
+    if(args.player != playerName && playerCursors[args.player]) {
       clearTimeout(playerCursorsTimeout[args.player]);
       playerCursors[args.player].classList.toggle('hidden', !!args.mouseState.hidden);
       if(args.mouseState.inactive) {

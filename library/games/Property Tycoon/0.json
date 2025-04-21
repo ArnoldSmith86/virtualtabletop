@@ -225,7 +225,7 @@
     "type": "card",
     "cardType": "1",
     "id": "zu9u",
-    "z": 18195,
+    "z": 18253,
     "parent": "nfab"
   },
   "0t3j": {
@@ -233,7 +233,7 @@
     "type": "card",
     "cardType": "2",
     "id": "0t3j",
-    "z": 18208,
+    "z": 18267,
     "parent": "nfab"
   },
   "oa9o": {
@@ -241,7 +241,7 @@
     "type": "card",
     "cardType": "3",
     "id": "oa9o",
-    "z": 18221,
+    "z": 18269,
     "parent": "nfab"
   },
   "puuh": {
@@ -249,7 +249,7 @@
     "type": "card",
     "cardType": "4",
     "id": "puuh",
-    "z": 18222,
+    "z": 18263,
     "parent": "nfab"
   },
   "n7gv": {
@@ -257,7 +257,7 @@
     "type": "card",
     "cardType": "5",
     "id": "n7gv",
-    "z": 18209,
+    "z": 18275,
     "parent": "nfab"
   },
   "bahg": {
@@ -265,7 +265,7 @@
     "type": "card",
     "cardType": "6",
     "id": "bahg",
-    "z": 18217,
+    "z": 18258,
     "parent": "nfab"
   },
   "jytc": {
@@ -273,7 +273,7 @@
     "type": "card",
     "cardType": "7",
     "id": "jytc",
-    "z": 18203,
+    "z": 18271,
     "parent": "nfab"
   },
   "e4tz": {
@@ -281,7 +281,7 @@
     "type": "card",
     "cardType": "8",
     "id": "e4tz",
-    "z": 18196,
+    "z": 18254,
     "parent": "nfab"
   },
   "awo7": {
@@ -289,7 +289,7 @@
     "type": "card",
     "cardType": "9",
     "id": "awo7",
-    "z": 18204,
+    "z": 18278,
     "parent": "nfab"
   },
   "pwdb": {
@@ -297,7 +297,7 @@
     "type": "card",
     "cardType": "10",
     "id": "pwdb",
-    "z": 18213,
+    "z": 18273,
     "parent": "nfab"
   },
   "hh53": {
@@ -305,7 +305,7 @@
     "type": "card",
     "cardType": "11",
     "id": "hh53",
-    "z": 18202,
+    "z": 18272,
     "parent": "nfab"
   },
   "i3kz": {
@@ -313,7 +313,7 @@
     "type": "card",
     "cardType": "12",
     "id": "i3kz",
-    "z": 18214,
+    "z": 18276,
     "parent": "nfab"
   },
   "ao5k": {
@@ -321,7 +321,7 @@
     "type": "card",
     "cardType": "13",
     "id": "ao5k",
-    "z": 18198,
+    "z": 18274,
     "parent": "nfab"
   },
   "bhk2": {
@@ -329,7 +329,7 @@
     "type": "card",
     "cardType": "14",
     "id": "bhk2",
-    "z": 18197,
+    "z": 18268,
     "parent": "nfab"
   },
   "sybf": {
@@ -337,7 +337,7 @@
     "type": "card",
     "cardType": "15",
     "id": "sybf",
-    "z": 18219,
+    "z": 18270,
     "parent": "nfab"
   },
   "22k6": {
@@ -345,7 +345,7 @@
     "type": "card",
     "cardType": "16",
     "id": "22k6",
-    "z": 18218,
+    "z": 18264,
     "parent": "nfab"
   },
   "t08q": {
@@ -353,7 +353,7 @@
     "type": "card",
     "cardType": "17",
     "id": "t08q",
-    "z": 18200,
+    "z": 18279,
     "parent": "nfab"
   },
   "m9le": {
@@ -361,7 +361,7 @@
     "type": "card",
     "cardType": "18",
     "id": "m9le",
-    "z": 18201,
+    "z": 18259,
     "parent": "nfab"
   },
   "dyjr": {
@@ -369,7 +369,7 @@
     "type": "card",
     "cardType": "19",
     "id": "dyjr",
-    "z": 18220,
+    "z": 18262,
     "parent": "nfab"
   },
   "4deh": {
@@ -377,7 +377,7 @@
     "type": "card",
     "cardType": "20",
     "id": "4deh",
-    "z": 18211,
+    "z": 18282,
     "parent": "nfab"
   },
   "fxsv": {
@@ -385,7 +385,7 @@
     "type": "card",
     "cardType": "21",
     "id": "fxsv",
-    "z": 18215,
+    "z": 18255,
     "parent": "nfab"
   },
   "ushk": {
@@ -393,7 +393,7 @@
     "type": "card",
     "cardType": "22",
     "id": "ushk",
-    "z": 18199,
+    "z": 18256,
     "parent": "nfab"
   },
   "vlay": {
@@ -401,7 +401,7 @@
     "type": "card",
     "cardType": "23",
     "id": "vlay",
-    "z": 18207,
+    "z": 18265,
     "parent": "nfab"
   },
   "b9ny": {
@@ -409,7 +409,7 @@
     "type": "card",
     "cardType": "24",
     "id": "b9ny",
-    "z": 18194,
+    "z": 18260,
     "parent": "nfab"
   },
   "hpdv": {
@@ -417,7 +417,7 @@
     "type": "card",
     "cardType": "25",
     "id": "hpdv",
-    "z": 18216,
+    "z": 18266,
     "parent": "nfab"
   },
   "a0fc": {
@@ -425,7 +425,7 @@
     "type": "card",
     "cardType": "26",
     "id": "a0fc",
-    "z": 18193,
+    "z": 18280,
     "parent": "nfab"
   },
   "lkli": {
@@ -433,7 +433,7 @@
     "type": "card",
     "cardType": "27",
     "id": "lkli",
-    "z": 18206,
+    "z": 18261,
     "parent": "nfab"
   },
   "10wv": {
@@ -441,7 +441,7 @@
     "type": "card",
     "cardType": "28",
     "id": "10wv",
-    "z": 18210,
+    "z": 18257,
     "parent": "nfab"
   },
   "7n39": {
@@ -449,7 +449,7 @@
     "type": "card",
     "cardType": "29",
     "id": "7n39",
-    "z": 18212,
+    "z": 18281,
     "parent": "nfab"
   },
   "bgdf": {
@@ -457,7 +457,7 @@
     "type": "card",
     "cardType": "30",
     "id": "bgdf",
-    "z": 18205,
+    "z": 18277,
     "parent": "nfab"
   },
   "moneyHolder": {
@@ -584,7 +584,7 @@
     "type": "card",
     "cardType": "0",
     "id": "hmwc",
-    "z": 18234,
+    "z": 18285,
     "parent": "4959"
   },
   "795e": {
@@ -592,7 +592,7 @@
     "type": "card",
     "cardType": "2",
     "id": "795e",
-    "z": 18225,
+    "z": 18289,
     "parent": "4959"
   },
   "tw3t": {
@@ -600,7 +600,7 @@
     "type": "card",
     "cardType": "3",
     "id": "tw3t",
-    "z": 18233,
+    "z": 18298,
     "parent": "4959"
   },
   "ekom": {
@@ -608,7 +608,7 @@
     "type": "card",
     "cardType": "4",
     "id": "ekom",
-    "z": 18230,
+    "z": 18296,
     "parent": "4959"
   },
   "385f": {
@@ -616,7 +616,7 @@
     "type": "card",
     "cardType": "5",
     "id": "385f",
-    "z": 18239,
+    "z": 18288,
     "parent": "4959"
   },
   "uvui": {
@@ -624,7 +624,7 @@
     "type": "card",
     "cardType": "6",
     "id": "uvui",
-    "z": 18231,
+    "z": 18300,
     "parent": "4959"
   },
   "x0ds": {
@@ -632,7 +632,7 @@
     "type": "card",
     "cardType": "7",
     "id": "x0ds",
-    "z": 18236,
+    "z": 18308,
     "parent": "4959"
   },
   "kf5g": {
@@ -640,7 +640,7 @@
     "type": "card",
     "cardType": "8",
     "id": "kf5g",
-    "z": 18238,
+    "z": 18290,
     "parent": "4959"
   },
   "1jd1": {
@@ -648,7 +648,7 @@
     "type": "card",
     "cardType": "9",
     "id": "1jd1",
-    "z": 18247,
+    "z": 18301,
     "parent": "4959"
   },
   "bh51": {
@@ -656,7 +656,7 @@
     "type": "card",
     "cardType": "10",
     "id": "bh51",
-    "z": 18235,
+    "z": 18291,
     "parent": "4959"
   },
   "ylw2": {
@@ -664,7 +664,7 @@
     "type": "card",
     "cardType": "11",
     "id": "ylw2",
-    "z": 18237,
+    "z": 18294,
     "parent": "4959"
   },
   "og2n": {
@@ -672,7 +672,7 @@
     "type": "card",
     "cardType": "12",
     "id": "og2n",
-    "z": 18227,
+    "z": 18303,
     "parent": "4959"
   },
   "3fot": {
@@ -680,7 +680,7 @@
     "type": "card",
     "cardType": "13",
     "id": "3fot",
-    "z": 18250,
+    "z": 18304,
     "parent": "4959"
   },
   "p36y": {
@@ -688,7 +688,7 @@
     "type": "card",
     "cardType": "14",
     "id": "p36y",
-    "z": 18242,
+    "z": 18306,
     "parent": "4959"
   },
   "760k": {
@@ -696,7 +696,7 @@
     "type": "card",
     "cardType": "15",
     "id": "760k",
-    "z": 18248,
+    "z": 18295,
     "parent": "4959"
   },
   "keic": {
@@ -704,7 +704,7 @@
     "type": "card",
     "cardType": "0",
     "id": "keic",
-    "z": 18244,
+    "z": 18297,
     "parent": "4959"
   },
   "t5un": {
@@ -712,7 +712,7 @@
     "type": "card",
     "cardType": "2",
     "id": "t5un",
-    "z": 18224,
+    "z": 18310,
     "parent": "4959"
   },
   "jc0r": {
@@ -720,7 +720,7 @@
     "type": "card",
     "cardType": "3",
     "id": "jc0r",
-    "z": 18223,
+    "z": 18311,
     "parent": "4959"
   },
   "ecra": {
@@ -728,7 +728,7 @@
     "type": "card",
     "cardType": "4",
     "id": "ecra",
-    "z": 18228,
+    "z": 18293,
     "parent": "4959"
   },
   "vmmw": {
@@ -736,7 +736,7 @@
     "type": "card",
     "cardType": "5",
     "id": "vmmw",
-    "z": 18241,
+    "z": 18287,
     "parent": "4959"
   },
   "wb06": {
@@ -744,7 +744,7 @@
     "type": "card",
     "cardType": "6",
     "id": "wb06",
-    "z": 18240,
+    "z": 18307,
     "parent": "4959"
   },
   "5ma9": {
@@ -752,7 +752,7 @@
     "type": "card",
     "cardType": "7",
     "id": "5ma9",
-    "z": 18246,
+    "z": 18312,
     "parent": "4959"
   },
   "2ltl": {
@@ -760,7 +760,7 @@
     "type": "card",
     "cardType": "8",
     "id": "2ltl",
-    "z": 18249,
+    "z": 18299,
     "parent": "4959"
   },
   "hjoz": {
@@ -768,7 +768,7 @@
     "type": "card",
     "cardType": "9",
     "id": "hjoz",
-    "z": 18232,
+    "z": 18286,
     "parent": "4959"
   },
   "8fhh": {
@@ -776,7 +776,7 @@
     "type": "card",
     "cardType": "10",
     "id": "8fhh",
-    "z": 18243,
+    "z": 18302,
     "parent": "4959"
   },
   "zl58": {
@@ -784,7 +784,7 @@
     "type": "card",
     "cardType": "11",
     "id": "zl58",
-    "z": 18245,
+    "z": 18283,
     "parent": "4959"
   },
   "rjkq": {
@@ -792,7 +792,7 @@
     "type": "card",
     "cardType": "12",
     "id": "rjkq",
-    "z": 18251,
+    "z": 18309,
     "parent": "4959"
   },
   "pf3k": {
@@ -800,7 +800,7 @@
     "type": "card",
     "cardType": "13",
     "id": "pf3k",
-    "z": 18252,
+    "z": 18305,
     "parent": "4959"
   },
   "792o": {
@@ -808,7 +808,7 @@
     "type": "card",
     "cardType": "14",
     "id": "792o",
-    "z": 18226,
+    "z": 18284,
     "parent": "4959"
   },
   "0po8": {
@@ -816,7 +816,7 @@
     "type": "card",
     "cardType": "15",
     "id": "0po8",
-    "z": 18229,
+    "z": 18292,
     "parent": "4959"
   },
   "background": {
@@ -845,7 +845,7 @@
       "mode": "vs",
       "time": "30",
       "attribution": "<div>Room layout and design by LawDawg. Released to the public domain under CC0.</div><div><br></div>The coin icon is available under the Pixabay license at https://pixabay.com/vectors/coin-money-penny-1873955/.<div><br></div><div>Other icons are from https://game-icons.net/ and available under CC BY 3.0:\n&nbsp; &nbsp; Delapouite: piggy bank,&nbsp;https://game-icons.net/1x1/delapouite/piggy-bank.html</div><div>&nbsp; &nbsp; lorc: gavel,&nbsp;https://game-icons.net/1x1/lorc/gavel.html<br><div><br></div><div><div><span style=\"color: var(--overlayFontColor);\">The properties were generated using the Midjourney artificial intelligence image generator, https://www.midjourney.com/home/, using a prompt that generally described what the property was plus: \"anime drawing --ar 5:8\".</span><br></div><div><span style=\"color: var(--overlayFontColor);\"><br></span></div><div><span style=\"color: var(--overlayFontColor);\">The room background was generated using MidJourney with the prompt \"anime drawing of suburban neighborhood --ar 16:10\".</span></div><div><br></div><div>The house icon was generated using Midjourney with the prompt \"house [or gold coin] icon anime sprite sheet\".</div><div><br></div></div></div>",
-      "lastUpdate": 1700709175644,
+      "lastUpdate": 1724362756097,
       "showName": true,
       "skill": "",
       "description": "Bid for properties at auction and then sell them for the most profit.",
@@ -1979,7 +1979,7 @@
     "parent": "seatArea6",
     "onlyVisibleForSeat": "seat6",
     "index": 6,
-    "scale": 0
+    "scale": 1
   },
   "revealHolder1": {
     "type": "holder",
@@ -2145,7 +2145,7 @@
       "dec1": "*"
     },
     "onlyVisibleForSeat": "seat6",
-    "scale": 0
+    "scale": 1
   },
   "inc6": {
     "type": "button",
@@ -2156,7 +2156,7 @@
       "inc1": "*"
     },
     "onlyVisibleForSeat": "seat6",
-    "scale": 0
+    "scale": 1
   },
   "coins1": {
     "type": "label",

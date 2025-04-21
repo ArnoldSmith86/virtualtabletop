@@ -1,4 +1,4 @@
-export const VERSION = 15;
+export const VERSION = 17;
 
 export default function FileUpdater(state) {
   const v = state._meta.version;
@@ -8,6 +8,7 @@ export default function FileUpdater(state) {
     throw Error(`File version ${v} is newer than the supported version ${VERSION}.`);
 
   const globalProperties = computeGlobalProperties(state, v);
+
   for(const id in state)
     updateProperties(state[id], v, globalProperties);
 
@@ -98,6 +99,7 @@ function updateProperties(properties, v, globalProperties) {
   v<13 && v13EnlargeTinyLabels(properties);
   v<14 && v14HidePlayerCursors(properties);
   v<15 && v15SkipTurnProperty(properties);
+  v<17 && v17MaterialSymbols(properties);
 }
 
 function updateRoutine(routine, v, globalProperties) {
@@ -122,6 +124,7 @@ function updateRoutine(routine, v, globalProperties) {
   v<9 && v9NumericStringSort(routine);
   v<11 && v11OwnerMOVEXY(routine);
   v<15 && v15SkipTurnRoutine(routine);
+  v<16 && v16UpdateCountParameter(routine);
 }
 
 function v2UpdateSelectDefault(routine) {
@@ -463,4 +466,38 @@ function v15SkipTurnProperty(properties) {
 function v15SkipTurnRoutine(routine) {
   for(const key in routine)
     routine[key] = JSON.parse(JSON.stringify(routine[key]).replace(/\bskipTurn\b/g, 'skipTurnFileUpdater'));
+}
+
+function v16UpdateCountParameter(routine) {
+  for(const key in routine) {
+    if(routine[key] && [ 'FLIP', 'MOVE', 'MOVEXY', 'ROTATE' ].indexOf(routine[key].func) != -1) {
+      if(typeof routine[key].count != 'undefined' && (key != 'MOVE' || !routine[key].fillTo || String(routine[key].fillTo).includes('$'))) {
+        if(!routine[key].count) {
+          routine[key].count = 'all';
+        } else if(typeof routine[key].count == 'string' && routine[key].count.includes('$')) {
+          routine[key] = {
+            note: `This was added by the automatic file migration because the behavior of ${routine[key].func} with count=0 changed.`,
+            func: 'IF',
+            condition: routine[key].count,
+            thenRoutine: [
+              {...routine[key]}
+            ],
+            elseRoutine: [
+              Object.assign({}, routine[key], { count: 'all' })
+            ]
+          };
+        }
+      }
+    }
+  }
+}
+
+function v17MaterialSymbols(properties) {
+  for (const key in properties) {
+    if (typeof properties[key] === 'object' && properties[key] !== null) {
+      v17MaterialSymbols(properties[key]);
+    } else if (typeof properties[key] === 'string') {
+      properties[key] = properties[key].replace(/\b(material-icons(?:-(outlined|round|sharp|twotone))?)\b/g, "material-symbols");
+    }
+  }
 }

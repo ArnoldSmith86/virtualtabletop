@@ -18,14 +18,6 @@ function positionElementsInArc(elements, radius, arcAngle, container) {
   }
 }
 
-function shuffleArray(array) {
-  for (let i = array.length - 1; i > 0; i--) {
-    const j = Math.floor(rand() * (i + 1));
-    [array[i], array[j]] = [array[j], array[i]];
-  }
-  return array;
-}
-
 function getBoundingClientRectWithAbsoluteChildren(element) {
   const rect = element.children.length ? { left: 9999, top: 9999, right: 0, bottom: 0 } : element.getBoundingClientRect();
   let left = rect.left;
@@ -269,7 +261,9 @@ class PropertiesModule extends SidebarModule {
       switch(widget.get('type')) {
         case 'card':   this.renderForCard(widget);   break;
         case 'deck':   this.renderForDeck(widget);   break;
+        case 'dice': this.renderForDice(widget); break;
         case 'holder': this.renderForHolder(widget); break;
+        case 'spinner': this.renderForSpinner(widget); break;
 
         default:
           this.addHeader(widget.id);
@@ -318,8 +312,8 @@ class PropertiesModule extends SidebarModule {
         description: 'Generate a deck by defining suits (symbols and colors) and ranks for each suit'
       },
       images: {
-        header: 'Upload one image per card',
-        description: 'Generate a deck by uploading an image per card that covers the whole card'
+        header: 'Upload one image per card or tiled images with multiple cards',
+        description: 'Generate a deck by uploading images that cover the whole card. You may need to remove gaps or margins for tiled images in an image editor.'
       }
     }, v=>{
       options.innerHTML = '';
@@ -374,7 +368,7 @@ class PropertiesModule extends SidebarModule {
         return;
       }
 
-      const deck = getDeckDefinition();
+      const deck = getDeckDefinition(true);
       for(const [ index, deckTemplate ] of Object.entries(deckTemplates)) {
         const templateButton = this.renderWidgetButton(new Deck(deck.id), deckTemplate(deck), designSelectionDiv);
         templateButton.classList.add('deckTemplateButton');
@@ -384,7 +378,7 @@ class PropertiesModule extends SidebarModule {
             if(button != templateButton)
               button.classList.remove('selected');
           templateButton.classList.toggle('selected');
-          createButton.disabled = false;
+          createButton.disabled = !$a('.selected.deckTemplateButton', target).length;
         };
         deck.id = generateUniqueWidgetID();
       }
@@ -460,7 +454,7 @@ class PropertiesModule extends SidebarModule {
     }
     target.append(suitCustomizeDiv);
 
-    function getDeckDefinition() {
+    function getDeckDefinition(standardDeck) {
       const id = generateUniqueWidgetID();
       const cardTypes = {};
       let suitIndex = 0;
@@ -477,7 +471,8 @@ class PropertiesModule extends SidebarModule {
           const setCardTypes = (conditions, cardTypesKeys) => {
             if(conditions)
               for(const key of cardTypesKeys)
-                cardTypes[cT][`suit-${key}`] = suitURL;
+                if(standardDeck)
+                  cardTypes[cT][`suit-${key}`] = suitURL;
           };
           if(String(rank).match(/^[0-9]+$/) && rank <= 21) {
             setCardTypes(rank     >=  4,                           ['P11', 'P13', 'P51', 'P53']);
@@ -517,8 +512,12 @@ class PropertiesModule extends SidebarModule {
     createButton.disabled = true;
     createButton.setAttribute('icon', 'add');
     createButton.onclick = async e=>{
+      let standardDeck = false;
+      const deckTemplateButton = document.querySelectorAll('.deckTemplateButton')[0];
+      if (deckTemplateButton && deckTemplateButton.classList.contains('selected'))
+        standardDeck = true
       batchStart();
-      const deck = getDeckDefinition();
+      const deck = getDeckDefinition(standardDeck);
       setDeltaCause(`${getPlayerDetails().playerName} added custom deck "${deck.id}" in editor`);
       await addWidgetLocal(deckTemplates[$('.selected.deckTemplateButton', target).dataset.index](deck));
 
@@ -590,18 +589,22 @@ class PropertiesModule extends SidebarModule {
 
     $('#frontsButton').onclick = _=>uploadAsset(async function(imagePath, fileName) {
       const dom = div(preview, 'cardFrontPreview', `
-        <img src="${imagePath}">
+        <img src="${mapAssetURLs(imagePath)}">
         <div class=flexCenter>
           <div>
-            <input type=range value=1 max=10> <input type=number value=1 min=0>
+            <div class=rows>Rows (if multiple cards):<br><input type=range value=1 max=10> <input type=number value=1 min=0></div>
+            <div class=cols>Cols (if multiple cards):<br><input type=range value=1 max=10> <input type=number value=1 min=0></div>
+            <div class=cards>Cards to add:<br><input type=range value=1 max=10> <input type=number value=1 min=0></div>
             <button icon=delete>Delete</button>
           </div>
         </div>
       `);
       dom.dataset.imagePath = imagePath;
       dom.dataset.fileName = fileName;
-      $('[type=range]', dom).oninput = e=>$('[type=number]', dom).value=e.target.value;
-      $('[type=number]', dom).oninput = e=>$('[type=range]', dom).value=e.target.value;
+      for(const name of [ 'rows', 'cols', 'cards' ]) {
+        $(`.${name} [type=range]`, dom).oninput = e=>$(`.${name} [type=number]`, dom).value=e.target.value;
+        $(`.${name} [type=number]`, dom).oninput = e=>$(`.${name} [type=range]`, dom).value=e.target.value;
+      }
       $('[icon=delete]', dom).onclick = e=>dom.remove();
       $('.goButton [icon=add]', target).disabled = false;
     });
@@ -610,11 +613,30 @@ class PropertiesModule extends SidebarModule {
       const id = generateUniqueWidgetID();
       const cardTypes = {};
       const counts = {};
+      const hasTiledImage = [...$a('.rows input, .cols input')].filter(d=>d.value>1).length > 0;
       for(const previewDiv of $a('.cardFrontPreview', preview)) {
-        cardTypes[previewDiv.dataset.fileName] = {
-          image: previewDiv.dataset.imagePath
-        };
-        counts[previewDiv.dataset.fileName] = $('input', previewDiv).value;
+        const rows = $('.rows input', previewDiv).value;
+        const cols = $('.cols input', previewDiv).value;
+        if(hasTiledImage) {
+          for(let i=0; i<rows; ++i) {
+            for(let j=0; j<cols; ++j) {
+              const cardType = `${previewDiv.dataset.fileName} ${i},${j}`;
+              cardTypes[cardType] = {
+                image: previewDiv.dataset.imagePath,
+                offsetX: j,
+                offsetY: i,
+                deckWidth: cols,
+                deckHeight: rows
+              };
+              counts[cardType] = $('.cards input', previewDiv).value;
+            }
+          }
+        } else {
+          cardTypes[previewDiv.dataset.fileName] = {
+            image: previewDiv.dataset.imagePath
+          };
+          counts[previewDiv.dataset.fileName] = $('.cards input', previewDiv).value;
+        }
       }
 
       const deck = {
@@ -627,9 +649,11 @@ class PropertiesModule extends SidebarModule {
               {
                 "type": "image",
                 "color": "transparent",
-                "width": 103,
-                "height": 160,
-                "value": backImageURL
+                "value": backImageURL,
+                "dynamicProperties": {
+                  "height": "height",
+                  "width": "width"
+                }
               }
             ]
           },
@@ -638,10 +662,10 @@ class PropertiesModule extends SidebarModule {
               {
                 "type": "image",
                 "color": "transparent",
-                "width": 103,
-                "height": 160,
                 "dynamicProperties": {
-                  "value": "image"
+                  "value": "image",
+                  "height": "height",
+                  "width": "width"
                 }
               }
             ]
@@ -649,12 +673,27 @@ class PropertiesModule extends SidebarModule {
         ]
       };
 
-      const cardWidth = Math.round($('.cardFrontPreview img', preview).width / $('.cardFrontPreview img', preview).height * 160);
-      if(cardWidth != 103) {
+      let cardWidth = Math.round($('.cardFrontPreview img', preview).width / $('.cardFrontPreview img', preview).height * 160);
+      if(hasTiledImage)
+        cardWidth *= $('.rows input', preview).value / $('.cols input', preview).value;
+      if(cardWidth != 103)
         deck.cardDefaults = { width: cardWidth };
-        deck.faceTemplates[0].objects[0].width = cardWidth;
-        deck.faceTemplates[1].objects[0].width = cardWidth;
+
+      if(hasTiledImage) {
+        deck.faceTemplates[1].objects[0].css = {
+          "background-size": "calc(var(--width) * var(--deckWidth) * 1px) calc(var(--height) * var(--deckHeight) * 1px)",
+          "background-position": "calc(var(--width) * var(--offsetX) * -1px) calc(var(--height) * var(--offsetY) * -1px)"
+        };
+        deck.cardDefaults.css = {
+          '--offsetX':    '${PROPERTY offsetX}',
+          '--offsetY':    '${PROPERTY offsetY}',
+          '--deckWidth':  '${PROPERTY deckWidth}',
+          '--deckHeight': '${PROPERTY deckHeight}',
+          '--width':      '${PROPERTY width}',
+          '--height':     '${PROPERTY height}'
+        }
       }
+
       await this.addDeckWithCards(deck, 'image', counts);
     };
   }
@@ -1162,6 +1201,7 @@ class PropertiesModule extends SidebarModule {
   renderCardTypes(deck, onlyCardType=null) {
     const card = new Card();
     card.state.deck = deck.id;
+    card.deck = deck;
     const cardTypes = this.cardTypes = JSON.parse(JSON.stringify(deck.get('cardTypes')));
 
     this.cardTypeCards = [];
@@ -1191,7 +1231,7 @@ class PropertiesModule extends SidebarModule {
 
       const cardClone = new Card();
       const newState = {...card.state};
-      newState.activeFace = deck.get('faceTemplates').length>1?1:0;
+      newState.activeFace = card.getFaceCount()>1?1:0;
       newState.cardType = cardType;
       cardClone.renderReadonlyCopyRaw(newState, $('.renderedWidget', cardTypeDiv));
 
@@ -1321,6 +1361,104 @@ class PropertiesModule extends SidebarModule {
     this.renderGenericProperties(widget, [ 'cardTypes', 'faceTemplates', 'cardDefaults', 'x', 'y', 'z' ]);
   }
 
+  renderForDice(widget) {
+    this.addHeader(`Dice ${widget.id}`);
+    const widgetFaces = widget.get('faces');
+    const faceCount = Array.isArray(widgetFaces) ? widgetFaces.length : 0;
+
+    this.addSubHeader('Dice types');
+    const faces = [
+      ["H", "T"],
+      [1, 2, 3, 4],
+      [1, 2, 3, 4, 5, 6],
+      [1, 2, 3, 4, 5, 6, 7, 8],
+      [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+      [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+      [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+      [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
+    ];
+
+    for (const f of faces) {
+      const dice = this.renderWidgetButton(new Dice(), {
+        type: 'dice',
+        faces: f,
+        activeFace: f.length - 1,
+        shape3d: widget.get('shape3d'),
+        pipSymbols: widget.get('pipSymbols')
+      }, this.moduleDOM);
+
+      this.addPropertyListener(widget, 'faces', widget => {
+        if (JSON.stringify(widgetFaces) === JSON.stringify(f)) {
+          dice.classList.add('selected');
+        } else {
+          dice.classList.remove('selected');
+        }
+      });
+      dice.onclick = async e => {
+        if (!dice.classList.contains('selected')) {
+          widget.set('faces', f);
+        }
+      };
+    }
+
+    this.addSubHeader('Dice shape');
+    const shape = [true, false];
+
+    for (const s of shape) {
+      const diceShape = this.renderWidgetButton(new Dice(), {
+        type: 'dice',
+        faces: widgetFaces,
+        activeFace: faceCount - 1,
+        shape3d: s,
+        pipSymbols: widget.get('pipSymbols')
+      }, this.moduleDOM);
+
+      this.addPropertyListener(widget, 'shape3d', widget => {
+        if (JSON.stringify(widget.get('shape3d')) === JSON.stringify(s)) {
+          diceShape.classList.add('selected');
+        } else {
+          diceShape.classList.remove('selected');
+        }
+      });
+
+      diceShape.onclick = async e => {
+        if (!diceShape.classList.contains('selected')) {
+          widget.set('shape3d', s);
+        }
+      };
+    }
+
+    this.addSubHeader('Face type');
+    const pipType = [true, false];
+
+    for (const p of pipType) {
+      const dicePip = this.renderWidgetButton(new Dice(), {
+        type: 'dice',
+        faces: widgetFaces,
+        activeFace: faceCount - 1,
+        shape3d: widget.get('shape3d'),
+        pipSymbols: p
+      }, this.moduleDOM);
+
+      this.addPropertyListener(widget, 'pipSymbols', widget => {
+        if (JSON.stringify(widget.get('pipSymbols')) === JSON.stringify(p)) {
+          dicePip.classList.add('selected');
+        } else {
+          dicePip.classList.remove('selected');
+        }
+      });
+
+      dicePip.onclick = async e => {
+        if (!dicePip.classList.contains('selected')) {
+          widget.set('pipSymbols', p);
+        }
+      };
+    }
+
+    this.addSubHeader(`Dice properties`);
+    this.renderGenericProperties(widget, ['faces','pipSymbols','shape3d']);
+  }
+
   renderForHolder(widget) {
     this.addHeader(`Holder ${widget.id}`);
     this.addSubHeader('Target widgets');
@@ -1420,6 +1558,47 @@ class PropertiesModule extends SidebarModule {
     this.renderGenericProperties(widget, [ 'dropTarget' ]);
   }
 
+  renderForSpinner(widget) {
+    this.addHeader(`Spinner ${widget.id}`);
+    
+    this.addSubHeader('Spinner Options');
+    const options = [
+      ["H", "T"],
+      [1, 2, 3],
+      [1, 2, 3, 4],
+      [1, 2, 3, 4, 5, 6],
+      [1, 2, 3, 4, 5, 6, 7, 8],
+      [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+      [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+      [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+      [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
+    ];
+
+    for (const option of options) {
+      const spinner = this.renderWidgetButton(new Spinner(), {
+        type: 'spinner',
+        options: option
+      }, this.moduleDOM);
+
+      this.addPropertyListener(widget, 'options', widget => {
+        if (JSON.stringify(widget.get('options')) === JSON.stringify(option)) {
+          spinner.classList.add('selected');
+        } else {
+          spinner.classList.remove('selected');
+        }
+      });
+
+      spinner.onclick = async e => {
+        if (!spinner.classList.contains('selected')) {
+          widget.set('options', option);
+        }
+      };
+    }
+
+    this.addSubHeader(`Spinner properties`);
+    this.renderGenericProperties(widget, ['options']);
+  }    
+
   renderGenericProperties(widget, exclude) {
     for(const property in widget.state) {
       if([ 'id', 'type', 'parent' ].concat(exclude).indexOf(property) != -1)
@@ -1444,16 +1623,18 @@ class PropertiesModule extends SidebarModule {
 
     if(widget.get('type') == 'deck') {
       const parent = new BasicWidget().renderReadonlyCopyRaw({}, button).domElement;
+      const faceTemplates = widget.get('faceTemplates');
       widgets.set(widget.id, widget);
       for(const cardType of shuffleArray(Object.keys(widget.get('cardTypes'))).slice(0, 5)) {
         new Card().renderReadonlyCopyRaw(Object.assign({
           deck: widget.id,
           cardType,
-          activeFace: widget.get('faceTemplates').length > 1 ? 1 : 0
+          activeFace: Array.isArray(faceTemplates) && faceTemplates.length > 1 ? 1 : 0
         }, state), parent);
       }
       widgets.delete(widget.id, widget);
-      positionElementsInArc(parent.children, parent.children[0].clientHeight, 45, parent);
+      if (parent.children[0]) 
+        positionElementsInArc(parent.children, parent.children[0].clientHeight, 45, parent);
     } else {
       widget.renderReadonlyCopyRaw(state, button);
     }

@@ -35,7 +35,7 @@ class Canvas extends Widget {
         this.canvas.height = this.getResolution();
       }
 
-      const colors = this.get('colorMap');
+      const colors = this.getColorMap();
       const regionRes = Math.floor(this.getResolution()/10);
 
       for(let x=0; x<10; ++x) {
@@ -101,6 +101,13 @@ class Canvas extends Widget {
     return code;
   }
 
+  getColorMap() {
+    if(Array.isArray(this.get('colorMap')))
+      return this.get('colorMap');
+    else
+      return Canvas.defaultColors;
+  }
+
   getResolution() {
     return Math.max(Math.min(Math.round(parseInt(this.get('resolution'))/10)*10, 500), 10);
   }
@@ -125,9 +132,9 @@ class Canvas extends Widget {
     if(this.lastPixelX !== undefined && state != 'down') {
       const steps = Math.max(Math.abs(pixelX-this.lastPixelX), Math.abs(pixelY-this.lastPixelY));
       for(let i=0; i<steps; ++i)
-        this.setPixel(this.lastPixelX + (pixelX-this.lastPixelX)/steps*i, this.lastPixelY + (pixelY-this.lastPixelY)/steps*i);
+        await this.setPixel(this.lastPixelX + (pixelX-this.lastPixelX)/steps*i, this.lastPixelY + (pixelY-this.lastPixelY)/steps*i);
     } else {
-      this.setPixel(pixelX, pixelY);
+      await this.setPixel(pixelX, pixelY);
     }
 
     this.lastPixelX = pixelX;

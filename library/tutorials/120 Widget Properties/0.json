@@ -1,0 +1,222 @@
+{
+  "title": {
+    "id": "title",
+    "x": 400,
+    "y": -2,
+    "width": 800,
+    "height": 60,
+    "z": 74,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "font-size: 60px;text-align:center",
+    "text": "Widget Properties"
+  },
+  "overview": {
+    "id": "overview",
+    "x": 108,
+    "y": 80,
+    "width": 1400,
+    "height": 150,
+    "layer": -3,
+    "z": 129,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "font-size: 25px; ",
+    "html": "Widgets (<a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Widgets'>wiki</a>) are the visual representation of objects you need for playing a game. Widget properties are the JSON code that control the widget's position, appearance, and functionality. Some properties are on every widget and some are specific to certain widget types. Every property has a default which usually can be changed. The game designer can change the property using Edit Mode, or functions (<a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Functions'>wiki</a>) can be used to change properties. In some cases, the changes are handled automatically behind the scenes by the VTT game engine. The same property may have different defaults for different widget types. The properties, the default values, and a brief description of what each one does is available on the Widgets wiki page. Some of the more advanced or potentially confusing properties have their own tutorials. See the list in <a href='https://virtualtabletop.io/tutorial/tutorials-overview'>100 Tutorials Overview</a>."
+  },
+  "text1": {
+    "id": "text1",
+    "x": 4,
+    "y": 552,
+    "width": 300,
+    "z": 185,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "22px"
+    },
+    "html": "Look at the JSON of the button above in Edit Mode. The properties appear between the first and last curly bracket. The property name is first inside quotation marks, then a colon, then the property value inside either quotes or brackets, then a comma (except for the last property). All VTT JSON has this structure and every entry is a property. A few common or important properties are always at the top. After that, they are alphabetical. "
+  },
+  "text2": {
+    "id": "text2",
+    "x": 325,
+    "y": 552,
+    "width": 300,
+    "z": 121,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "22px"
+    },
+    "html": "Look at the dice JSON before you do anything with it. Now move it around. The x and y (position in the room from the upper left corner) and z (vertical position relative to other widgets) change. Now click the dice. A new property <b>rollCount</b> is added and increases each time it is clicked. These are examples of VTT automatically changing property values."
+  },
+  "text3": {
+    "id": "text3",
+    "x": 651,
+    "y": 552,
+    "width": 300,
+    "z": 9732,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "22px"
+    },
+    "html": "Look at the basic widget above. Colors are important indicators. Gray shows the property value is the default for that widget type. Yellow is used for property names (and object keys). Orange is used for custom properties. Those are properties added by designer or by automation to store some type of data. They can be used by routines, but do not directly affect widgets. For more about the colors, see (<a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Edit-Mode#editing-widgets'>Editing widgets</a>)."
+  },
+  "text4": {
+    "id": "text4",
+    "x": 964,
+    "y": 552,
+    "width": 300,
+    "z": 9732,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "22px"
+    },
+    "html": "There are a few special properties. The <b>type</b> defines many key attributes of the widget. It can be changed in Edit Mode, but not by automation. For example, change the <b>type</b> in the button above to spinner and then back to button. Read only properties start with an underscore, are never visible in the JSON, and cannot be changed or set. But they can be used in automation and show up in the debug. Click the button and look in debug."
+  },
+  "text5": {
+    "id": "text5",
+    "x": 1294,
+    "y": 552,
+    "width": 300,
+    "z": 9732,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "22px"
+    },
+    "html": "Look at the seat's JSON in Edit Mode. Put the cursor on the <b>id</b> line. On the right below `seat` is a list of properties in clickable buttons. That shows properties unique to seats that have not yet been added to the widget. Click on some of the buttons. Properties with default values are added and the buttons disappear. In the JSON delete a property and the button reappears. Lower on the right are properties available for any widget type that work the same way."
+  },
+  "_meta": {
+    "version": 17,
+    "info": {
+      "name": "120 Widget Properties Overview",
+      "image": "/assets/-673105727_6630",
+      "rules": "",
+      "bgg": "",
+      "year": "",
+      "mode": "Tutorial",
+      "time": "",
+      "attribution": "",
+      "lastUpdate": 1743474416312,
+      "showName": false,
+      "skill": "",
+      "description": "",
+      "similarImage": "",
+      "similarName": "",
+      "similarDesigner": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": "",
+      "variantImage": "",
+      "variant": "",
+      "language": "en-US",
+      "players": "1"
+    }
+  },
+  "basic3": {
+    "id": "basic3",
+    "x": 738,
+    "y": 435,
+    "text": "Basic widget",
+    "movable": false,
+    "customNumber": -10.8,
+    "customString": "This can be almost anything but some characters are not allowed.",
+    "cusstomBoolean": true,
+    "customArray": [
+      1,
+      2,
+      3,
+      "Numbers, strings, boolean/null, or arrays"
+    ],
+    "customObject": {
+      "key": "value",
+      "anotherKey": "another value"
+    }
+  },
+  "button1": {
+    "type": "button",
+    "id": "button1",
+    "x": 95,
+    "y": 402,
+    "z": 22841,
+    "clickRoutine": [],
+    "text": "DEAL"
+  },
+  "dice1": {
+    "type": "dice",
+    "id": "dice1",
+    "x": 427,
+    "y": 423,
+    "z": 1,
+    "faces": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "shape3d": true
+  },
+  "button4": {
+    "type": "button",
+    "id": "button4",
+    "x": 1062,
+    "y": 402,
+    "z": 22840,
+    "text": "Read\nOnly",
+    "clickRoutine": [
+      "// This clickRoutine SELECTs the widget into a collection and from that collection, it GETs every one of the possible read only properties.",
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "button4"
+      },
+      {
+        "func": "GET",
+        "property": "_absoluteRotation"
+      },
+      {
+        "func": "GET",
+        "property": "_absoluteScale"
+      },
+      {
+        "func": "GET",
+        "property": "_absoluteX"
+      },
+      {
+        "func": "GET",
+        "property": "_absoluteY"
+      },
+      {
+        "func": "GET",
+        "property": "_ancestor"
+      },
+      {
+        "func": "GET",
+        "property": "_centerAbsoluteX"
+      },
+      {
+        "func": "GET",
+        "property": "_centerAbsoluteY"
+      },
+      {
+        "func": "GET",
+        "property": "_localOriginAbsoluteX"
+      },
+      {
+        "func": "GET",
+        "property": "_localOriginAbsoluteX"
+      }
+    ]
+  },
+  "seat1": {
+    "type": "seat",
+    "id": "seat1",
+    "x": 1347,
+    "y": 410
+  }
+}

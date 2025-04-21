@@ -23,7 +23,7 @@ class ToolbarButton {
   }
 
   onKeyDown(e) {
-    if(e.key == this.hotkey && !this.domElement.disabled)
+    if(e.key == this.hotkey && !$('button', this.domElement).disabled)
       this.onClick();
   }
 
@@ -45,8 +45,8 @@ class ToolbarButton {
 
   setMinimumSelection(count) {
     this.minimumSelection = count;
-    if(this.domElement)
-      this.domElement.disabled = selectedWidgets.length < count;
+    if(this.domElement && $('button', this.domElement))
+      $('button', this.domElement).disabled = selectedWidgets.length < count;
   }
 }
 

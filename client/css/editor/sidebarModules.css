@@ -40,7 +40,7 @@
   border: 3px solid var(--VTTblue);
 }
 .editorModule .widgetSelectionButton.selected::after {
-  font-family: 'Material Icons';
+  font-family: 'Material Symbols';
   line-height: 1.25em;
   text-align: center;
   height: 1.25em;
@@ -55,6 +55,9 @@
   position: absolute;
   top: -3px;
   right: -3px;
+}
+.editorModule .widgetSelectionButton .spinner > svg.background {
+  left: 0;
 }
 
 .tune.editorModule .faceTemplateEdit {
@@ -96,6 +99,11 @@
 
 .tune.editorModule .cardFrontPreview > div {
   flex-grow: 1;
+  text-align: left;
+}
+
+.tune.editorModule .cardFrontPreview img {
+  max-width: 50%;
 }
 
 .tune.editorModule .cardFrontPreview [type=number] {
@@ -186,7 +194,7 @@
 }
 
 .image.editorModule .externalLink::after {
-  font-family: "Material Icons";
+  font-family: "Material Symbols";
   font-size: 40px;
   position: absolute;
   top: 5px;

@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "version": 14,
+    "version": 16,
     "info": {
       "name": "Functions - MOVE",
       "image": "/assets/1395250784_7006",
@@ -11,19 +11,19 @@
       "time": "0",
       "attribution": "",
       "showName": false,
-      "lastUpdate": 1698776591315,
+      "lastUpdate": 1726239435757,
       "skill": "",
       "description": "",
-      "variantImage": "",
-      "variant": "",
-      "language": "en-US",
-      "players": "1",
       "similarImage": "",
       "similarName": "",
       "similarDesigner": "",
       "similarAwards": "",
       "ruleText": "",
-      "helpText": ""
+      "helpText": "",
+      "variantImage": "",
+      "variant": "",
+      "language": "en-US",
+      "players": "1"
     }
   },
   "8fr3": {
@@ -47,7 +47,7 @@
     "layer": -3,
     "z": 15,
     "css": "font-size: 25px; ",
-    "text": "MOVE is used to move widgets, usually from from one holder to another. It works on any type of widget, but cards are a typical type. Use the count parameter to specify the number of widgets (the default is 1).",
+    "text": "MOVE is used to move widgets, usually from from one holder to another. It works on any type of widget, but cards are a typical type. It also works on collections. Use the count parameter to specify the number of widgets. It defaults to 1.",
     "movable": false
   },
   "bm4j": {
@@ -75,7 +75,7 @@
     "x": 808,
     "z": 75,
     "width": 300,
-    "text": "This button moves all the cards from the left to the right holder. There is no setting for 'all' cards, so use a high count value, such as 999, to ensure they are all moved. This also sets the the cards to be face up using the 'face' parameter. However, if the receiving holder has an onEnter property to set the activeFace to something else (like a hand), the onEnter will override the MOVE's face parameter. Note that the pile is not flipped as you would with a physical deck. The order of the cards is unchanged. They are each turned face up and remain in the same order.",
+    "text": "This button moves the specified number of cards from the left to the right holder. Negative numbers move all but that number of cards out of the from holder. These buttons also set the cards to be face up using the 'face' parameter. However, if the receiving holder has an onEnter property to set the activeFace to something else (like a hand), the onEnter will override the MOVE's face parameter. Note that the pile is not flipped as you would with a physical deck. The order of the cards is unchanged. They are each turned face up and remain in the same order.",
     "movable": false,
     "y": 530,
     "layer": -1
@@ -109,23 +109,6 @@
     "y": 450,
     "z": 13,
     "id": "jkmt1",
-    "text": "Move"
-  },
-  "jkmt2": {
-    "type": "button",
-    "clickRoutine": [
-      {
-        "func": "MOVE",
-        "from": "2om8",
-        "to": "r88q",
-        "count": 999,
-        "face": 1
-      }
-    ],
-    "x": 900,
-    "y": 450,
-    "z": 11,
-    "id": "jkmt2",
     "text": "Move"
   },
   "jkmt3": {
@@ -2645,5 +2628,73 @@
     "width": 103,
     "height": 160,
     "id": "dp87"
+  },
+  "jkmt2": {
+    "type": "button",
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "2om8",
+        "to": "r88q",
+        "count": 0,
+        "face": 1
+      }
+    ],
+    "z": 11,
+    "id": "jkmt2",
+    "text": "MOVE 0",
+    "x": 754,
+    "y": 443
+  },
+  "jkmt6": {
+    "type": "button",
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "2om8",
+        "to": "r88q",
+        "count": 10,
+        "face": 1
+      }
+    ],
+    "z": 12,
+    "id": "jkmt6",
+    "text": "MOVE 10",
+    "x": 856,
+    "y": 443
+  },
+  "jkmt7": {
+    "type": "button",
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "2om8",
+        "to": "r88q",
+        "count": -15,
+        "face": 1
+      }
+    ],
+    "z": 13,
+    "id": "jkmt7",
+    "text": "MOVE -15",
+    "x": 958,
+    "y": 443
+  },
+  "jkmt8": {
+    "type": "button",
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "2om8",
+        "to": "r88q",
+        "count": "all",
+        "face": 1
+      }
+    ],
+    "z": 13,
+    "id": "jkmt8",
+    "text": "MOVE all",
+    "x": 1060,
+    "y": 443
   }
 }
