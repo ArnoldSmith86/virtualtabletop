@@ -393,18 +393,18 @@ function populateAddWidgetOverlay() {
   addWidgetToAddWidgetOverlay(new Holder('add-holder'), {
     type: 'holder',
     x,
-    y: 150
+    y: 188
   });
 
-  addCompositeWidgetToAddWidgetOverlay(generateCardDeckWidgets('add-empty-deck', x, 340, false), async function() {
+  addCompositeWidgetToAddWidgetOverlay(generateCardDeckWidgets('add-empty-deck', x, 376, false), async function() {
     const id = generateUniqueWidgetID();
-    for(const w of generateCardDeckWidgets(id, x, 340, false))
+    for(const w of generateCardDeckWidgets(id, x, 376, false))
       await addWidgetLocal(w);
     return id
   });
-  addCompositeWidgetToAddWidgetOverlay(generateCardDeckWidgets('add-deck', x, 570, true), async function() {
+  addCompositeWidgetToAddWidgetOverlay(generateCardDeckWidgets('add-deck', x, 604, true), async function() {
     const id = generateUniqueWidgetID();
-    for(const w of generateCardDeckWidgets(id, x, 570, true))
+    for(const w of generateCardDeckWidgets(id, x, 604, true))
       await addWidgetLocal(w);
     return id
   });
@@ -1485,6 +1485,13 @@ export function initializeEditMode(currentMetaData) {
     if(!widgets.has('hand'))
       hand.id = 'hand';
     overlayDone(await addWidgetLocal(hand));
+  });
+
+  on('#addZoomy', 'click', async function() {
+    const id = await addWidgetLocal({
+      type: 'zoomy'
+    })
+    overlayDone(id);
   });
 
   on('#addCanvas', 'click', async function() {
