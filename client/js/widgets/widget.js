@@ -422,10 +422,7 @@ export class Widget extends StateManaged {
       }
     }
     if(notUsable) {
-      if (this.get('type') === 'zoomy')
-        className += ' zoomyNotUsable';
-      else
-        className += ' notUsable';
+      className += ' notUsable';     
     }
 
     const linkedToSeat = this.get('linkedToSeat');
