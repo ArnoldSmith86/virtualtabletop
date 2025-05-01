@@ -14,6 +14,7 @@ export class Timer extends Widget {
       precision: 1000,
       paused: true,
       alert: false,
+      alertSound: null,
       countdown: false,
       start: 0,
       end: null
@@ -32,6 +33,11 @@ export class Timer extends Widget {
       if(!this.get('paused'))
         this.startTimer();
     }
+
+    if (delta.alert === true && this.get('alertSound')) {
+      addAudio(this.get('alertSound'), 1, 0, 1);
+  }
+  
   }
 
   applyInitialDelta(delta) {
