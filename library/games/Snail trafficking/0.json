@@ -10,7 +10,7 @@
       "mode": "vs",
       "time": "60",
       "attribution": "<div>Game layout and implementation by Mitchell Stolycia.</div><div><br></div><div>@star.frey created the art assets for the library image, snails, mucus tracks, and tardigrades.&nbsp;These are available for use under CC BY 4.0.</div><div>Find her at <b>instagram.com/star.frey</b></div><div><br></div><div>All other assets, such as the art of all three game boards, the four different foods, the rocks, and the egg, were created by Mitchell Stolycia, and are available for use under CC BY 4.0.</div>",
-      "lastUpdate": 1744809585537,
+      "lastUpdate": 1746050305116,
       "showName": true,
       "skill": "",
       "description": "The year is 2025, and even micro-animals like tardigrades are struggling to survive in this economy. As a result, countless of these creatures have turned to snail trafficking (nine of them, to be exact).\n\nWith no money and limited resources, snails now have no choice but to race for the little food that remains in this back garden, which is uncannily similar to the shape of England. They have been taught by the tardigrades to be ruthless and merciless upon the sight of other snailkind, in order to survive in this ungodly world.",
@@ -19,11 +19,11 @@
       "similarDesigner": "Reiner Knizia",
       "similarAwards": "2000 International Gamers Awards - General Strategy; Multi-player Nominee\n1999 Meeples Choice Award Nominee",
       "ruleText": "",
-      "helpText": "<div><b>To start the game:</b></div><div><ol><li>All players must sit down by clicking on a seat.</li><li>Click <i>Setup</i> in the top left corner of the screen.</li></ol><b>Scoring:</b></div><blockquote><div>Use the labels by the player seats and the -/+ buttons to decrease/increase your score throughout the game.</div><div><br></div><div><b>For scoring aids</b>,<b> </b>hover your cursor over the relevant scoring type in the <i>Scoring references</i> area of the screen, whether that be when a snail reaches a white hex, a grey hex, a snail dies, or for end game scoring.</div></blockquote><div><b>Hex board and tiles:</b></div><div><ul><li><b>After a snail moves</b>, the active player will automatically gain one share in that snail. This automation only occurs once per snail per turn, as the same snail may not move twice in one turn. Furthermore, a mucus trail tile will also appear behind the snail.</li><ul><li><b>To rotate a snail</b> anti-clockwise/clockwise, click the left/right hand side of the snail</li></ul><li><b>Mucus trail tiles: </b><br></li><ul><li>The mucus trails will do their best to automatically match the direction a snail moves in, but they're not too smart (or even sentient). Luckily, you are! So feel free to correct their mistakes as below:</li><ul><li>The most common mistake is that a curved snail trail will get dealt to the board with an incorrect rotation. Most of the time, clicking the <i><b>anti-clockwise twice</b></i> button will correct this, otherwise:</li><li>To flip between straight and curved, click on the left hand side of the tile.</li><li>To rotate (clockwise), click on the right hand side of the tile.</li></ul><li><b>There are no connector tiles. When a snail dies</b> and two mucus trails join to become one: simply remove the (now dead) snail from the board, putting its carcass elsewhere on the table for display. Then manually draw a mucus trail tile from the draw pile to put in its place. Finally, click on the name of the snail on the snail shares board (bottom left board). An <i>X</i> will appear as a reminder that the snail is removed from play.</li></ul></ul><b>Feeding area (top left board):</b></div><div><ul><li><b>To purchase food</b>, the active player clicks on the circle they would like to commit to. The colour will change to the active player's colour. If clicked again, it will revert to neutral.</li><li><b>To mark a grey city hex as scored</b>, click on the square on the left hand side of the table before the corresponding city number. This will turn the square black. Only cities with black squares next to their number on the food board will score at the end of the game.</li></ul><div><b>Snail shares (bottom left board):</b></div><div><ul><li><b>To decrease/increase your number of shares</b>, click on the left/right hand side of the share square you wish to modify. This will adjust the number of shares by one (1).</li><li><b>When a snail dies </b>click on the name of the snail. An <i>X</i> will appear as a reminder that the snail is removed from play.</li></ul><b>Placing a rock on the hex board:</b></div><blockquote><div>Move a rock of your colour from the holder nearby your seat to your desired hex. It will slot in nicely.</div><div>The rocks face different directions to make them easier to distinguish for people with colour blindness.</div></blockquote><div><b>Claiming a tardigrade:</b></div><blockquote><div>You can only claim a tardigrade when you move a snail to another player's rock.</div><div>To claim, move one of the nine tardigrades from its holder to anywhere nearby your seat.</div></blockquote><div><b>Vetoing</b></div><blockquote><div>Vetoing is played out manually, as if playing the board game.</div><div><br></div><div>If a snail changes direction due to a veto, a mucus trail hex may have to be manually adjusted.</div></blockquote><blockquote><div><ul><li>To flip between straight and curved, click on the left hand side of the tile.</li><li>To rotate (clockwise), click on the right hand side of the tile.</li></ul></div></blockquote></div>",
+      "helpText": "<div><b>To start the game:</b></div><div><ol><li>All players must sit down by clicking on a seat.</li><li>Click <i>Setup</i> in the top left corner of the screen.</li></ol><b>Scoring:</b></div><blockquote><div>Use the labels by the player seats and the -/+ buttons to decrease/increase your score throughout the game.</div><div><br></div><div><b>For scoring aids</b>,<b> </b>hover your cursor over the relevant scoring type in the <i>Scoring references</i> area of the screen, whether that be when a snail reaches a grey numbered hex,&nbsp;a white flower hex, a snail dies, or for end game scoring.</div></blockquote><div><b>Hex board and tiles:</b></div><div><ul><li><b>Before moving a snail </b>orient it in your desired direction.</li><ul><li><b>To rotate a snail</b> anti-clockwise/clockwise, click the left/right hand side of the snail.</li></ul></ul></div><div><ul><li><b>After a snail moves</b> the active player will automatically gain one share in that snail. This automation only occurs once per snail per turn, as the same snail may not move twice in one turn. Furthermore, a mucus trail tile will also appear behind the snail.</li><li><b>Mucus trail tiles: </b><br></li><ul><li>The mucus trails will do their best to automatically match the direction a snail moves in, but they're not too smart (or even sentient). Luckily, you are! So feel free to correct their mistakes as below:</li><ul><li>The most common mistake is that a curved snail trail will get dealt to the board with an incorrect rotation. Most of the time, clicking the <i><b>anti-clockwise twice</b></i> button will correct this, otherwise:</li><li>To flip between straight and curved, click on the left hand side of the tile.</li><li>To rotate (clockwise), click on the right hand side of the tile.</li></ul><li><b>There are no connector tiles. When a snail dies</b> and two mucus trails join to become one simply remove the (now dead) snail from the board, putting its carcass elsewhere on the table for display. Then, manually draw a mucus trail tile from the draw pile to put in its place. Finally, click on the name of the snail on the snail shares board (bottom left board). An <i>X</i> will appear as a reminder that the snail is removed from play.</li></ul></ul><b>Feeding area (top left board):</b></div><div><ul><li><b>To purchase food</b>, the active player clicks on the circle they would like to commit to. The colour will change to the active player's colour. If clicked again it will revert to neutral.</li><li><b>To mark a grey numbered hex as scored</b>, click on the square on the left hand side of the table before the corresponding hex number. This will turn the square black. Only grey numbered hexes with black squares next to their number on the food board will score at the end of the game.</li></ul><div><b>Snail shares (bottom left board):</b></div><div><ul><li><b>To decrease/increase your number of shares</b>, click on the left/right hand side of the share square you wish to modify. This will adjust the number of shares by one (1).</li><li><b>When a snail dies or becomes isolated</b>,<b> </b>click on the name of the snail. An <i>X</i> will appear as a reminder that the snail is removed from play. This snail will no longer reward shares for moving.</li></ul><b>Placing a rock on the hex board:</b></div><blockquote><div>Move a rock of your colour from the holder nearby your seat to your desired hex. It will slot in nicely.</div><div>The rocks face different directions to make them easier to distinguish for people with colour blindness.</div></blockquote><div><b>Claiming a tardigrade:</b></div><blockquote><div>You can only claim a tardigrade when you move a snail to another player's rock.</div><div>To claim, move one of the nine tardigrades from its holder to anywhere nearby your seat.</div></blockquote><div><b>Vetoing</b></div><blockquote><div>Vetoing is played out manually, as if playing the board game.</div><div><br></div><div>If a snail changes direction due to a veto, a mucus trail hex may have to be manually adjusted.</div></blockquote><blockquote><div><ul><li>To flip between straight and curved, click on the left hand side of the tile.</li><li>To rotate (clockwise), click on the right hand side of the tile.</li></ul></div></blockquote></div>",
       "players": "2-4",
       "language": "en-GB",
       "variant": "Snail trafficking",
-      "variantImage": "/assets/927573239_81708"
+      "variantImage": ""
     }
   },
   "ipss": {
@@ -3508,6 +3508,7 @@
     ],
     "y": -217,
     "enterRoutine": [
+      "// enterRoutine does not effect the mucus trails; only the share tracks",
       "var x = 1",
       {
         "func": "GET",
@@ -3546,6 +3547,7 @@
         "loopRoutine": [
           "var name = ${x} + 'Move'",
           "var value = ${$name}",
+          "var namex = 'x' + ${x}",
           {
             "func": "IF",
             "operand1": "${id}",
@@ -3561,25 +3563,42 @@
                   {
                     "func": "SELECT",
                     "property": "id",
-                    "value": "share${index}${x}"
+                    "value": "${namex}"
                   },
                   {
-                    "note": "MOVE STOCK TRACKS +1",
-                    "func": "LABEL",
-                    "mode": "inc",
-                    "value": 1
-                  },
-                  "var value = ${value} + 1",
-                  {
-                    "func": "SELECT",
-                    "property": "id",
-                    "value": "endTurn"
+                    "func": "GET",
+                    "property": "activeFace"
                   },
                   {
-                    "func": "SET",
-                    "property": "${x}Move",
-                    "value": 1,
-                    "relation": "+"
+                    "func": "IF",
+                    "operand1": "${activeFace}",
+                    "relation": "!=",
+                    "operand2": 1,
+                    "thenRoutine": [
+                      {
+                        "func": "SELECT",
+                        "property": "id",
+                        "value": "share${index}${x}"
+                      },
+                      {
+                        "note": "MOVE STOCK TRACKS +1",
+                        "func": "LABEL",
+                        "mode": "inc",
+                        "value": 1
+                      },
+                      "var value = ${value} + 1",
+                      {
+                        "func": "SELECT",
+                        "property": "id",
+                        "value": "endTurn"
+                      },
+                      {
+                        "func": "SET",
+                        "property": "${x}Move",
+                        "value": 1,
+                        "relation": "+"
+                      }
+                    ]
                   }
                 ]
               }
@@ -3593,63 +3612,63 @@
   "hexa1": {
     "type": "holder",
     "id": "hexa1",
-    "x": 418,
-    "y": 136,
+    "x": 419,
+    "y": 140,
     "inheritFrom": "hexa"
   },
   "hexa2": {
     "type": "holder",
     "id": "hexa2",
-    "x": 418,
-    "y": 190,
+    "x": 419,
+    "y": 194,
     "inheritFrom": "hexa"
   },
   "hexa3": {
     "type": "holder",
     "id": "hexa3",
-    "x": 417,
-    "y": 244,
+    "x": 419,
+    "y": 248,
     "inheritFrom": "hexa"
   },
   "hexa4": {
     "type": "holder",
     "id": "hexa4",
     "x": 419,
-    "y": 301,
+    "y": 302,
     "inheritFrom": "hexa"
   },
   "hexa5": {
     "type": "holder",
     "id": "hexa5",
     "x": 419,
-    "y": 354,
+    "y": 355,
     "inheritFrom": "hexa"
   },
   "hexa6": {
     "type": "holder",
     "id": "hexa6",
     "x": 419,
-    "y": 407,
+    "y": 409,
     "inheritFrom": "hexa"
   },
   "hexa7": {
     "type": "holder",
     "id": "hexa7",
-    "x": 418,
-    "y": 462,
+    "x": 419,
+    "y": 463,
     "inheritFrom": "hexa"
   },
   "hexa8": {
     "type": "holder",
     "id": "hexa8",
     "x": 419,
-    "y": 515,
+    "y": 517,
     "inheritFrom": "hexa"
   },
   "hexa9": {
     "type": "holder",
     "id": "hexa9",
-    "x": 418,
+    "x": 419,
     "y": 732,
     "inheritFrom": "hexa"
   },
@@ -3657,111 +3676,111 @@
     "type": "holder",
     "id": "hexa11",
     "x": 419,
-    "y": 785,
+    "y": 786,
     "inheritFrom": "hexa"
   },
   "hexa12": {
     "type": "holder",
     "id": "hexa12",
     "x": 466,
-    "y": 704,
+    "y": 706,
     "inheritFrom": "hexa"
   },
   "hexa13": {
     "type": "holder",
     "id": "hexa13",
-    "x": 465,
-    "y": 758,
+    "x": 466,
+    "y": 760,
     "inheritFrom": "hexa"
   },
   "hexa14": {
     "type": "holder",
     "id": "hexa14",
-    "x": 465,
-    "y": 812,
+    "x": 466,
+    "y": 813,
     "inheritFrom": "hexa"
   },
   "hexa15": {
     "type": "holder",
     "id": "hexa15",
     "x": 466,
-    "y": 650,
+    "y": 652,
     "inheritFrom": "hexa"
   },
   "hexa16": {
     "type": "holder",
     "id": "hexa16",
-    "x": 464,
-    "y": 162,
+    "x": 466,
+    "y": 167,
     "inheritFrom": "hexa"
   },
   "hexa17": {
     "type": "holder",
     "id": "hexa17",
-    "x": 464,
-    "y": 216,
+    "x": 466,
+    "y": 221,
     "inheritFrom": "hexa"
   },
   "hexa18": {
     "type": "holder",
     "id": "hexa18",
-    "x": 463,
-    "y": 270,
+    "x": 466,
+    "y": 275,
     "inheritFrom": "hexa"
   },
   "hexa19": {
     "type": "holder",
     "id": "hexa19",
-    "x": 465,
-    "y": 327,
+    "x": 466,
+    "y": 328,
     "inheritFrom": "hexa"
   },
   "hexa20": {
     "type": "holder",
     "id": "hexa20",
-    "x": 465,
-    "y": 380,
+    "x": 466,
+    "y": 382,
     "inheritFrom": "hexa"
   },
   "hexa21": {
     "type": "holder",
     "id": "hexa21",
-    "x": 465,
-    "y": 433,
+    "x": 466,
+    "y": 436,
     "inheritFrom": "hexa"
   },
   "hexa22": {
     "type": "holder",
     "id": "hexa22",
-    "x": 464,
-    "y": 488,
+    "x": 466,
+    "y": 490,
     "inheritFrom": "hexa"
   },
   "hexa23": {
     "type": "holder",
     "id": "hexa23",
-    "x": 465,
-    "y": 541,
+    "x": 466,
+    "y": 544,
     "inheritFrom": "hexa"
   },
   "hexa24": {
     "type": "holder",
     "id": "hexa24",
-    "x": 464,
-    "y": 55,
+    "x": 466,
+    "y": 59,
     "inheritFrom": "hexa"
   },
   "hexa25": {
     "type": "holder",
     "id": "hexa25",
-    "x": 464,
-    "y": 109,
+    "x": 466,
+    "y": 113,
     "inheritFrom": "hexa"
   },
   "hexa26": {
     "type": "holder",
     "id": "hexa26",
-    "x": 513,
+    "x": 512,
     "y": 732,
     "inheritFrom": "hexa"
   },
@@ -3776,27 +3795,27 @@
     "type": "holder",
     "id": "hexa28",
     "x": 512,
-    "y": 840,
+    "y": 839,
     "inheritFrom": "hexa"
   },
   "hexa29": {
     "type": "holder",
     "id": "hexa29",
-    "x": 513,
-    "y": 676,
+    "x": 512,
+    "y": 678,
     "inheritFrom": "hexa"
   },
   "hexa30": {
     "type": "holder",
     "id": "hexa30",
-    "x": 511,
-    "y": 190,
+    "x": 512,
+    "y": 194,
     "inheritFrom": "hexa"
   },
   "hexa32": {
     "type": "holder",
     "id": "hexa32",
-    "x": 511,
+    "x": 512,
     "y": 301,
     "inheritFrom": "hexa"
   },
@@ -3811,168 +3830,168 @@
     "type": "holder",
     "id": "hexa34",
     "x": 512,
-    "y": 408,
+    "y": 409,
     "inheritFrom": "hexa"
   },
   "hexa35": {
     "type": "holder",
     "id": "hexa35",
     "x": 512,
-    "y": 461,
+    "y": 463,
     "inheritFrom": "hexa"
   },
   "hexa36": {
     "type": "holder",
     "id": "hexa36",
-    "x": 511,
+    "x": 512,
     "y": 516,
     "inheritFrom": "hexa"
   },
   "hexa37": {
     "type": "holder",
     "id": "hexa37",
-    "x": 511,
-    "y": 569,
+    "x": 512,
+    "y": 570,
     "inheritFrom": "hexa"
   },
   "hexa38": {
     "type": "holder",
     "id": "hexa38",
-    "x": 511,
-    "y": 83,
+    "x": 512,
+    "y": 87,
     "inheritFrom": "hexa"
   },
   "hexa39": {
     "type": "holder",
     "id": "hexa39",
-    "x": 511,
-    "y": 137,
+    "x": 512,
+    "y": 140,
     "inheritFrom": "hexa"
   },
   "hexa40": {
     "type": "holder",
     "id": "hexa40",
-    "x": 513,
-    "y": 623,
+    "x": 512,
+    "y": 624,
     "inheritFrom": "hexa"
   },
   "hexa41": {
     "type": "holder",
     "id": "hexa41",
-    "x": 511,
-    "y": 28,
+    "x": 512,
+    "y": 33,
     "inheritFrom": "hexa"
   },
   "hexa42": {
     "type": "holder",
     "id": "hexa42",
     "x": 559,
-    "y": 758,
+    "y": 759,
     "inheritFrom": "hexa"
   },
   "hexa43": {
     "type": "holder",
     "id": "hexa43",
-    "x": 558,
-    "y": 812,
+    "x": 559,
+    "y": 813,
     "inheritFrom": "hexa"
   },
   "hexa44": {
     "type": "holder",
     "id": "hexa44",
-    "x": 558,
-    "y": 866,
+    "x": 559,
+    "y": 867,
     "inheritFrom": "hexa"
   },
   "hexa45": {
     "type": "holder",
     "id": "hexa45",
     "x": 559,
-    "y": 702,
+    "y": 705,
     "inheritFrom": "hexa"
   },
   "hexa46": {
     "type": "holder",
     "id": "hexa46",
     "x": 559,
-    "y": 218,
+    "y": 221,
     "inheritFrom": "hexa"
   },
   "hexa47": {
     "type": "holder",
     "id": "hexa47",
     "x": 559,
-    "y": 272,
+    "y": 274,
     "inheritFrom": "hexa"
   },
   "hexa48": {
     "type": "holder",
     "id": "hexa48",
-    "x": 558,
-    "y": 326,
+    "x": 559,
+    "y": 328,
     "inheritFrom": "hexa"
   },
   "hexa49": {
     "type": "holder",
     "id": "hexa49",
     "x": 559,
-    "y": 380,
+    "y": 382,
     "inheritFrom": "hexa"
   },
   "hexa50": {
     "type": "holder",
     "id": "hexa50",
     "x": 559,
-    "y": 433,
+    "y": 436,
     "inheritFrom": "hexa"
   },
   "hexa51": {
     "type": "holder",
     "id": "hexa51",
     "x": 559,
-    "y": 486,
+    "y": 490,
     "inheritFrom": "hexa"
   },
   "hexa52": {
     "type": "holder",
     "id": "hexa52",
-    "x": 558,
-    "y": 541,
+    "x": 559,
+    "y": 544,
     "inheritFrom": "hexa"
   },
   "hexa53": {
     "type": "holder",
     "id": "hexa53",
     "x": 559,
-    "y": 594,
+    "y": 598,
     "inheritFrom": "hexa"
   },
   "hexa54": {
     "type": "holder",
     "id": "hexa54",
     "x": 559,
-    "y": 111,
+    "y": 113,
     "inheritFrom": "hexa"
   },
   "hexa55": {
     "type": "holder",
     "id": "hexa55",
     "x": 559,
-    "y": 165,
+    "y": 167,
     "inheritFrom": "hexa"
   },
   "hexa56": {
     "type": "holder",
     "id": "hexa56",
     "x": 559,
-    "y": 649,
+    "y": 652,
     "inheritFrom": "hexa"
   },
   "hexa57": {
     "type": "holder",
     "id": "hexa57",
     "x": 559,
-    "y": 56,
+    "y": 59,
     "inheritFrom": "hexa"
   },
   "hexa58": {
@@ -3985,7 +4004,7 @@
   "hexa59": {
     "type": "holder",
     "id": "hexa59",
-    "x": 605,
+    "x": 606,
     "y": 786,
     "inheritFrom": "hexa"
   },
@@ -3993,111 +4012,111 @@
     "type": "holder",
     "id": "hexa60",
     "x": 606,
-    "y": 838,
+    "y": 840,
     "inheritFrom": "hexa"
   },
   "hexa61": {
     "type": "holder",
     "id": "hexa61",
     "x": 606,
-    "y": 676,
+    "y": 679,
     "inheritFrom": "hexa"
   },
   "hexa62": {
     "type": "holder",
     "id": "hexa62",
     "x": 606,
-    "y": 192,
+    "y": 194,
     "inheritFrom": "hexa"
   },
   "hexa63": {
     "type": "holder",
     "id": "hexa63",
     "x": 606,
-    "y": 246,
+    "y": 248,
     "inheritFrom": "hexa"
   },
   "hexa64": {
     "type": "holder",
     "id": "hexa64",
-    "x": 605,
-    "y": 300,
+    "x": 606,
+    "y": 302,
     "inheritFrom": "hexa"
   },
   "hexa65": {
     "type": "holder",
     "id": "hexa65",
     "x": 606,
-    "y": 354,
+    "y": 356,
     "inheritFrom": "hexa"
   },
   "hexa66": {
     "type": "holder",
     "id": "hexa66",
     "x": 606,
-    "y": 407,
+    "y": 410,
     "inheritFrom": "hexa"
   },
   "hexa67": {
     "type": "holder",
     "id": "hexa67",
     "x": 606,
-    "y": 460,
+    "y": 463,
     "inheritFrom": "hexa"
   },
   "hexa68": {
     "type": "holder",
     "id": "hexa68",
-    "x": 605,
-    "y": 515,
+    "x": 606,
+    "y": 517,
     "inheritFrom": "hexa"
   },
   "hexa69": {
     "type": "holder",
     "id": "hexa69",
     "x": 606,
-    "y": 568,
+    "y": 571,
     "inheritFrom": "hexa"
   },
   "hexa70": {
     "type": "holder",
     "id": "hexa70",
     "x": 606,
-    "y": 85,
+    "y": 87,
     "inheritFrom": "hexa"
   },
   "hexa71": {
     "type": "holder",
     "id": "hexa71",
     "x": 606,
-    "y": 139,
+    "y": 141,
     "inheritFrom": "hexa"
   },
   "hexa72": {
     "type": "holder",
     "id": "hexa72",
     "x": 606,
-    "y": 623,
+    "y": 625,
     "inheritFrom": "hexa"
   },
   "hexa73": {
     "type": "holder",
     "id": "hexa73",
     "x": 606,
-    "y": 30,
+    "y": 33,
     "inheritFrom": "hexa"
   },
   "hexa74": {
     "type": "holder",
     "id": "hexa74",
     "x": 652,
-    "y": 758,
+    "y": 759,
     "inheritFrom": "hexa"
   },
   "hexa75": {
     "type": "holder",
     "id": "hexa75",
-    "x": 651,
+    "x": 652,
     "y": 812,
     "inheritFrom": "hexa"
   },
@@ -4105,91 +4124,91 @@
     "type": "holder",
     "id": "hexa77",
     "x": 652,
-    "y": 702,
+    "y": 705,
     "inheritFrom": "hexa"
   },
   "hexa78": {
     "type": "holder",
     "id": "hexa78",
     "x": 652,
-    "y": 218,
+    "y": 221,
     "inheritFrom": "hexa"
   },
   "hexa79": {
     "type": "holder",
     "id": "hexa79",
     "x": 652,
-    "y": 272,
+    "y": 275,
     "inheritFrom": "hexa"
   },
   "hexa80": {
     "type": "holder",
     "id": "hexa80",
-    "x": 651,
-    "y": 326,
+    "x": 652,
+    "y": 329,
     "inheritFrom": "hexa"
   },
   "hexa81": {
     "type": "holder",
     "id": "hexa81",
     "x": 652,
-    "y": 380,
+    "y": 382,
     "inheritFrom": "hexa"
   },
   "hexa82": {
     "type": "holder",
     "id": "hexa82",
     "x": 652,
-    "y": 433,
+    "y": 436,
     "inheritFrom": "hexa"
   },
   "hexa83": {
     "type": "holder",
     "id": "hexa83",
     "x": 652,
-    "y": 486,
+    "y": 490,
     "inheritFrom": "hexa"
   },
   "hexa84": {
     "type": "holder",
     "id": "hexa84",
-    "x": 651,
-    "y": 541,
+    "x": 652,
+    "y": 544,
     "inheritFrom": "hexa"
   },
   "hexa85": {
     "type": "holder",
     "id": "hexa85",
     "x": 652,
-    "y": 594,
+    "y": 597,
     "inheritFrom": "hexa"
   },
   "hexa86": {
     "type": "holder",
     "id": "hexa86",
     "x": 652,
-    "y": 111,
+    "y": 114,
     "inheritFrom": "hexa"
   },
   "hexa87": {
     "type": "holder",
     "id": "hexa87",
     "x": 652,
-    "y": 165,
+    "y": 167,
     "inheritFrom": "hexa"
   },
   "hexa88": {
     "type": "holder",
     "id": "hexa88",
     "x": 652,
-    "y": 649,
+    "y": 651,
     "inheritFrom": "hexa"
   },
   "hexa89": {
     "type": "holder",
     "id": "hexa89",
     "x": 652,
-    "y": 56,
+    "y": 60,
     "inheritFrom": "hexa"
   },
   "hexa90": {
@@ -4202,7 +4221,7 @@
   "hexa91": {
     "type": "holder",
     "id": "hexa91",
-    "x": 698,
+    "x": 699,
     "y": 786,
     "inheritFrom": "hexa"
   },
@@ -4210,245 +4229,245 @@
     "type": "holder",
     "id": "hexa92",
     "x": 699,
-    "y": 838,
+    "y": 840,
     "inheritFrom": "hexa"
   },
   "hexa93": {
     "type": "holder",
     "id": "hexa93",
     "x": 699,
-    "y": 676,
+    "y": 679,
     "inheritFrom": "hexa"
   },
   "hexa94": {
     "type": "holder",
     "id": "hexa94",
     "x": 699,
-    "y": 192,
+    "y": 194,
     "inheritFrom": "hexa"
   },
   "hexa95": {
     "type": "holder",
     "id": "hexa95",
     "x": 699,
-    "y": 246,
+    "y": 248,
     "inheritFrom": "hexa"
   },
   "hexa96": {
     "type": "holder",
     "id": "hexa96",
-    "x": 698,
-    "y": 300,
+    "x": 699,
+    "y": 302,
     "inheritFrom": "hexa"
   },
   "hexa97": {
     "type": "holder",
     "id": "hexa97",
     "x": 699,
-    "y": 354,
+    "y": 356,
     "inheritFrom": "hexa"
   },
   "hexa98": {
     "type": "holder",
     "id": "hexa98",
     "x": 699,
-    "y": 407,
+    "y": 410,
     "inheritFrom": "hexa"
   },
   "hexa99": {
     "type": "holder",
     "id": "hexa99",
     "x": 699,
-    "y": 460,
+    "y": 463,
     "inheritFrom": "hexa"
   },
   "hexa100": {
     "type": "holder",
     "id": "hexa100",
-    "x": 698,
-    "y": 515,
+    "x": 699,
+    "y": 517,
     "inheritFrom": "hexa"
   },
   "hexa101": {
     "type": "holder",
     "id": "hexa101",
     "x": 699,
-    "y": 568,
+    "y": 571,
     "inheritFrom": "hexa"
   },
   "hexa102": {
     "type": "holder",
     "id": "hexa102",
-    "x": 697,
-    "y": 83,
+    "x": 699,
+    "y": 87,
     "inheritFrom": "hexa"
   },
   "hexa103": {
     "type": "holder",
     "id": "hexa103",
     "x": 699,
-    "y": 137,
+    "y": 141,
     "inheritFrom": "hexa"
   },
   "hexa104": {
     "type": "holder",
     "id": "hexa104",
     "x": 699,
-    "y": 623,
+    "y": 625,
     "inheritFrom": "hexa"
   },
   "hexa105": {
     "type": "holder",
     "id": "hexa105",
     "x": 699,
-    "y": 30,
+    "y": 33,
     "inheritFrom": "hexa"
   },
   "hexa106": {
     "type": "holder",
     "id": "hexa106",
     "x": 745,
-    "y": 758,
+    "y": 759,
     "inheritFrom": "hexa"
   },
   "hexa107": {
     "type": "holder",
     "id": "hexa107",
-    "x": 744,
-    "y": 812,
+    "x": 745,
+    "y": 813,
     "inheritFrom": "hexa"
   },
   "hexa108": {
     "type": "holder",
     "id": "hexa108",
     "x": 745,
-    "y": 864,
+    "y": 867,
     "inheritFrom": "hexa"
   },
   "hexa109": {
     "type": "holder",
     "id": "hexa109",
     "x": 745,
-    "y": 702,
+    "y": 705,
     "inheritFrom": "hexa"
   },
   "hexa110": {
     "type": "holder",
     "id": "hexa110",
     "x": 745,
-    "y": 218,
+    "y": 221,
     "inheritFrom": "hexa"
   },
   "hexa111": {
     "type": "holder",
     "id": "hexa111",
     "x": 745,
-    "y": 272,
+    "y": 274,
     "inheritFrom": "hexa"
   },
   "hexa112": {
     "type": "holder",
     "id": "hexa112",
-    "x": 744,
-    "y": 326,
+    "x": 745,
+    "y": 328,
     "inheritFrom": "hexa"
   },
   "hexa113": {
     "type": "holder",
     "id": "hexa113",
     "x": 745,
-    "y": 380,
+    "y": 382,
     "inheritFrom": "hexa"
   },
   "hexa114": {
     "type": "holder",
     "id": "hexa114",
     "x": 745,
-    "y": 433,
+    "y": 436,
     "inheritFrom": "hexa"
   },
   "hexa115": {
     "type": "holder",
     "id": "hexa115",
     "x": 745,
-    "y": 486,
+    "y": 490,
     "inheritFrom": "hexa"
   },
   "hexa116": {
     "type": "holder",
     "id": "hexa116",
-    "x": 744,
-    "y": 541,
+    "x": 745,
+    "y": 544,
     "inheritFrom": "hexa"
   },
   "hexa117": {
     "type": "holder",
     "id": "hexa117",
     "x": 745,
-    "y": 594,
+    "y": 598,
     "inheritFrom": "hexa"
   },
   "hexa118": {
     "type": "holder",
     "id": "hexa118",
     "x": 745,
-    "y": 111,
+    "y": 113,
     "inheritFrom": "hexa"
   },
   "hexa119": {
     "type": "holder",
     "id": "hexa119",
     "x": 745,
-    "y": 165,
+    "y": 167,
     "inheritFrom": "hexa"
   },
   "hexa120": {
     "type": "holder",
     "id": "hexa120",
     "x": 745,
-    "y": 649,
+    "y": 652,
     "inheritFrom": "hexa"
   },
   "hexa121": {
     "type": "holder",
     "id": "hexa121",
     "x": 745,
-    "y": 56,
+    "y": 59,
     "inheritFrom": "hexa"
   },
   "hexa122": {
     "type": "holder",
     "id": "hexa122",
     "x": 792,
-    "y": 730,
+    "y": 732,
     "inheritFrom": "hexa"
   },
   "hexa123": {
     "type": "holder",
     "id": "hexa123",
     "x": 792,
-    "y": 785,
+    "y": 786,
     "inheritFrom": "hexa"
   },
   "hexa124": {
     "type": "holder",
     "id": "hexa124",
     "x": 792,
-    "y": 839,
+    "y": 840,
     "inheritFrom": "hexa"
   },
   "hexa125": {
     "type": "holder",
     "id": "hexa125",
     "x": 792,
-    "y": 677,
+    "y": 678,
     "inheritFrom": "hexa"
   },
   "hexa126": {
     "type": "holder",
     "id": "hexa126",
     "x": 792,
-    "y": 193,
+    "y": 194,
     "inheritFrom": "hexa"
   },
   "hexa127": {
@@ -4461,8 +4480,8 @@
   "hexa128": {
     "type": "holder",
     "id": "hexa128",
-    "x": 793,
-    "y": 300,
+    "x": 792,
+    "y": 301,
     "inheritFrom": "hexa"
   },
   "hexa129": {
@@ -4476,651 +4495,651 @@
     "type": "holder",
     "id": "hexa130",
     "x": 792,
-    "y": 408,
+    "y": 409,
     "inheritFrom": "hexa"
   },
   "hexa131": {
     "type": "holder",
     "id": "hexa131",
     "x": 792,
-    "y": 461,
+    "y": 463,
     "inheritFrom": "hexa"
   },
   "hexa132": {
     "type": "holder",
     "id": "hexa132",
-    "x": 791,
-    "y": 516,
+    "x": 792,
+    "y": 517,
     "inheritFrom": "hexa"
   },
   "hexa133": {
     "type": "holder",
     "id": "hexa133",
     "x": 792,
-    "y": 569,
+    "y": 571,
     "inheritFrom": "hexa"
   },
   "hexa134": {
     "type": "holder",
     "id": "hexa134",
     "x": 792,
-    "y": 82,
+    "y": 86,
     "inheritFrom": "hexa"
   },
   "hexa135": {
     "type": "holder",
     "id": "hexa135",
     "x": 792,
-    "y": 138,
+    "y": 140,
     "inheritFrom": "hexa"
   },
   "hexa136": {
     "type": "holder",
     "id": "hexa136",
     "x": 792,
-    "y": 624,
+    "y": 625,
     "inheritFrom": "hexa"
   },
   "hexa138": {
     "type": "holder",
     "id": "hexa138",
-    "x": 838,
-    "y": 755,
+    "x": 839,
+    "y": 759,
     "inheritFrom": "hexa"
   },
   "hexa139": {
     "type": "holder",
     "id": "hexa139",
-    "x": 838,
-    "y": 810,
+    "x": 839,
+    "y": 813,
     "inheritFrom": "hexa"
   },
   "hexa140": {
     "type": "holder",
     "id": "hexa140",
-    "x": 838,
-    "y": 864,
+    "x": 839,
+    "y": 867,
     "inheritFrom": "hexa"
   },
   "hexa141": {
     "type": "holder",
     "id": "hexa141",
-    "x": 838,
-    "y": 702,
+    "x": 839,
+    "y": 706,
     "inheritFrom": "hexa"
   },
   "hexa142": {
     "type": "holder",
     "id": "hexa142",
-    "x": 838,
-    "y": 218,
+    "x": 839,
+    "y": 221,
     "inheritFrom": "hexa"
   },
   "hexa143": {
     "type": "holder",
     "id": "hexa143",
-    "x": 838,
-    "y": 272,
+    "x": 839,
+    "y": 275,
     "inheritFrom": "hexa"
   },
   "hexa144": {
     "type": "holder",
     "id": "hexa144",
-    "x": 837,
-    "y": 326,
+    "x": 839,
+    "y": 329,
     "inheritFrom": "hexa"
   },
   "hexa145": {
     "type": "holder",
     "id": "hexa145",
-    "x": 838,
-    "y": 380,
+    "x": 839,
+    "y": 383,
     "inheritFrom": "hexa"
   },
   "hexa146": {
     "type": "holder",
     "id": "hexa146",
-    "x": 838,
-    "y": 433,
+    "x": 839,
+    "y": 437,
     "inheritFrom": "hexa"
   },
   "hexa147": {
     "type": "holder",
     "id": "hexa147",
-    "x": 838,
-    "y": 486,
+    "x": 839,
+    "y": 490,
     "inheritFrom": "hexa"
   },
   "hexa148": {
     "type": "holder",
     "id": "hexa148",
-    "x": 837,
-    "y": 541,
+    "x": 839,
+    "y": 544,
     "inheritFrom": "hexa"
   },
   "hexa149": {
     "type": "holder",
     "id": "hexa149",
-    "x": 838,
-    "y": 594,
+    "x": 839,
+    "y": 598,
     "inheritFrom": "hexa"
   },
   "hexa150": {
     "type": "holder",
     "id": "hexa150",
-    "x": 838,
-    "y": 111,
+    "x": 839,
+    "y": 113,
     "inheritFrom": "hexa"
   },
   "hexa151": {
     "type": "holder",
     "id": "hexa151",
-    "x": 838,
-    "y": 165,
+    "x": 839,
+    "y": 167,
     "inheritFrom": "hexa"
   },
   "hexa152": {
     "type": "holder",
     "id": "hexa152",
-    "x": 838,
-    "y": 649,
+    "x": 839,
+    "y": 652,
     "inheritFrom": "hexa"
   },
   "hexa153": {
     "type": "holder",
     "id": "hexa153",
-    "x": 838,
-    "y": 56,
+    "x": 839,
+    "y": 60,
     "inheritFrom": "hexa"
   },
   "hexa154": {
     "type": "holder",
     "id": "hexa154",
-    "x": 885,
-    "y": 783,
+    "x": 886,
+    "y": 787,
     "inheritFrom": "hexa"
   },
   "hexa155": {
     "type": "holder",
     "id": "hexa155",
-    "x": 885,
-    "y": 838,
+    "x": 886,
+    "y": 841,
     "inheritFrom": "hexa"
   },
   "hexa156": {
     "type": "holder",
     "id": "hexa156",
-    "x": 885,
-    "y": 892,
+    "x": 886,
+    "y": 895,
     "inheritFrom": "hexa"
   },
   "hexa157": {
     "type": "holder",
     "id": "hexa157",
-    "x": 885,
-    "y": 730,
+    "x": 886,
+    "y": 733,
     "inheritFrom": "hexa"
   },
   "hexa158": {
     "type": "holder",
     "id": "hexa158",
-    "x": 885,
-    "y": 246,
+    "x": 886,
+    "y": 248,
     "inheritFrom": "hexa"
   },
   "hexa159": {
     "type": "holder",
     "id": "hexa159",
-    "x": 885,
-    "y": 300,
+    "x": 886,
+    "y": 302,
     "inheritFrom": "hexa"
   },
   "hexa160": {
     "type": "holder",
     "id": "hexa160",
-    "x": 884,
-    "y": 354,
+    "x": 886,
+    "y": 356,
     "inheritFrom": "hexa"
   },
   "hexa161": {
     "type": "holder",
     "id": "hexa161",
-    "x": 885,
-    "y": 408,
+    "x": 886,
+    "y": 410,
     "inheritFrom": "hexa"
   },
   "hexa162": {
     "type": "holder",
     "id": "hexa162",
-    "x": 885,
-    "y": 461,
+    "x": 886,
+    "y": 464,
     "inheritFrom": "hexa"
   },
   "hexa163": {
     "type": "holder",
     "id": "hexa163",
-    "x": 885,
-    "y": 514,
+    "x": 886,
+    "y": 517,
     "inheritFrom": "hexa"
   },
   "hexa164": {
     "type": "holder",
     "id": "hexa164",
-    "x": 884,
-    "y": 569,
+    "x": 886,
+    "y": 571,
     "inheritFrom": "hexa"
   },
   "hexa165": {
     "type": "holder",
     "id": "hexa165",
-    "x": 885,
-    "y": 622,
+    "x": 886,
+    "y": 625,
     "inheritFrom": "hexa"
   },
   "hexa166": {
     "type": "holder",
     "id": "hexa166",
-    "x": 885,
-    "y": 139,
+    "x": 886,
+    "y": 140,
     "inheritFrom": "hexa"
   },
   "hexa167": {
     "type": "holder",
     "id": "hexa167",
-    "x": 885,
-    "y": 193,
+    "x": 886,
+    "y": 194,
     "inheritFrom": "hexa"
   },
   "hexa168": {
     "type": "holder",
     "id": "hexa168",
-    "x": 885,
-    "y": 677,
+    "x": 886,
+    "y": 679,
     "inheritFrom": "hexa"
   },
   "hexa169": {
     "type": "holder",
     "id": "hexa169",
-    "x": 885,
-    "y": 84,
+    "x": 886,
+    "y": 86,
     "inheritFrom": "hexa"
   },
   "hexa170": {
     "type": "holder",
     "id": "hexa170",
-    "x": 932,
-    "y": 756,
+    "x": 933,
+    "y": 759,
     "inheritFrom": "hexa"
   },
   "hexa171": {
     "type": "holder",
     "id": "hexa171",
-    "x": 932,
-    "y": 811,
+    "x": 933,
+    "y": 813,
     "inheritFrom": "hexa"
   },
   "hexa172": {
     "type": "holder",
     "id": "hexa172",
-    "x": 932,
-    "y": 865,
+    "x": 933,
+    "y": 867,
     "inheritFrom": "hexa"
   },
   "hexa173": {
     "type": "holder",
     "id": "hexa173",
-    "x": 932,
-    "y": 703,
+    "x": 933,
+    "y": 705,
     "inheritFrom": "hexa"
   },
   "hexa174": {
     "type": "holder",
     "id": "hexa174",
-    "x": 932,
-    "y": 219,
+    "x": 933,
+    "y": 221,
     "inheritFrom": "hexa"
   },
   "hexa175": {
     "type": "holder",
     "id": "hexa175",
-    "x": 932,
-    "y": 273,
+    "x": 933,
+    "y": 275,
     "inheritFrom": "hexa"
   },
   "hexa176": {
     "type": "holder",
     "id": "hexa176",
-    "x": 931,
-    "y": 327,
+    "x": 933,
+    "y": 328,
     "inheritFrom": "hexa"
   },
   "hexa177": {
     "type": "holder",
     "id": "hexa177",
-    "x": 932,
-    "y": 381,
+    "x": 933,
+    "y": 382,
     "inheritFrom": "hexa"
   },
   "hexa178": {
     "type": "holder",
     "id": "hexa178",
-    "x": 932,
-    "y": 434,
+    "x": 933,
+    "y": 436,
     "inheritFrom": "hexa"
   },
   "hexa179": {
     "type": "holder",
     "id": "hexa179",
-    "x": 932,
-    "y": 487,
+    "x": 933,
+    "y": 490,
     "inheritFrom": "hexa"
   },
   "hexa180": {
     "type": "holder",
     "id": "hexa180",
-    "x": 931,
-    "y": 542,
+    "x": 933,
+    "y": 544,
     "inheritFrom": "hexa"
   },
   "hexa181": {
     "type": "holder",
     "id": "hexa181",
-    "x": 932,
-    "y": 595,
+    "x": 933,
+    "y": 598,
     "inheritFrom": "hexa"
   },
   "hexa182": {
     "type": "holder",
     "id": "hexa182",
-    "x": 932,
-    "y": 112,
+    "x": 933,
+    "y": 113,
     "inheritFrom": "hexa"
   },
   "hexa183": {
     "type": "holder",
     "id": "hexa183",
-    "x": 932,
-    "y": 166,
+    "x": 933,
+    "y": 167,
     "inheritFrom": "hexa"
   },
   "hexa184": {
     "type": "holder",
     "id": "hexa184",
-    "x": 932,
-    "y": 650,
+    "x": 933,
+    "y": 652,
     "inheritFrom": "hexa"
   },
   "hexa185": {
     "type": "holder",
     "id": "hexa185",
-    "x": 978,
-    "y": 785,
+    "x": 979,
+    "y": 786,
     "inheritFrom": "hexa"
   },
   "hexa186": {
     "type": "holder",
     "id": "hexa186",
-    "x": 980,
-    "y": 837,
+    "x": 979,
+    "y": 840,
     "inheritFrom": "hexa"
   },
   "hexa187": {
     "type": "holder",
     "id": "hexa187",
-    "x": 980,
-    "y": 891,
+    "x": 979,
+    "y": 894,
     "inheritFrom": "hexa"
   },
   "hexa188": {
     "type": "holder",
     "id": "hexa188",
-    "x": 978,
-    "y": 731,
+    "x": 979,
+    "y": 732,
     "inheritFrom": "hexa"
   },
   "hexa191": {
     "type": "holder",
     "id": "hexa191",
     "x": 979,
-    "y": 353,
+    "y": 355,
     "inheritFrom": "hexa"
   },
   "hexa192": {
     "type": "holder",
     "id": "hexa192",
-    "x": 980,
-    "y": 407,
+    "x": 979,
+    "y": 409,
     "inheritFrom": "hexa"
   },
   "hexa193": {
     "type": "holder",
     "id": "hexa193",
-    "x": 980,
-    "y": 460,
+    "x": 979,
+    "y": 463,
     "inheritFrom": "hexa"
   },
   "hexa194": {
     "type": "holder",
     "id": "hexa194",
     "x": 979,
-    "y": 514,
+    "y": 517,
     "inheritFrom": "hexa"
   },
   "hexa195": {
     "type": "holder",
     "id": "hexa195",
     "x": 979,
-    "y": 568,
+    "y": 571,
     "inheritFrom": "hexa"
   },
   "hexa196": {
     "type": "holder",
     "id": "hexa196",
-    "x": 978,
-    "y": 623,
+    "x": 979,
+    "y": 624,
     "inheritFrom": "hexa"
   },
   "hexa199": {
     "type": "holder",
     "id": "hexa199",
-    "x": 978,
-    "y": 677,
+    "x": 979,
+    "y": 678,
     "inheritFrom": "hexa"
   },
   "hexa189": {
     "type": "holder",
     "id": "hexa189",
-    "x": 1025,
-    "y": 759,
+    "x": 1026,
+    "y": 760,
     "inheritFrom": "hexa"
   },
   "hexa190": {
     "type": "holder",
     "id": "hexa190",
-    "x": 1025,
-    "y": 811,
+    "x": 1026,
+    "y": 814,
     "inheritFrom": "hexa"
   },
   "hexa197": {
     "type": "holder",
     "id": "hexa197",
-    "x": 1025,
-    "y": 865,
+    "x": 1026,
+    "y": 868,
     "inheritFrom": "hexa"
   },
   "hexa200": {
     "type": "holder",
     "id": "hexa200",
-    "x": 1025,
-    "y": 327,
+    "x": 1026,
+    "y": 328,
     "inheritFrom": "hexa"
   },
   "hexa201": {
     "type": "holder",
     "id": "hexa201",
-    "x": 1025,
-    "y": 381,
+    "x": 1026,
+    "y": 382,
     "inheritFrom": "hexa"
   },
   "hexa202": {
     "type": "holder",
     "id": "hexa202",
-    "x": 1025,
-    "y": 434,
+    "x": 1026,
+    "y": 436,
     "inheritFrom": "hexa"
   },
   "hexa203": {
     "type": "holder",
     "id": "hexa203",
-    "x": 1025,
-    "y": 488,
+    "x": 1026,
+    "y": 490,
     "inheritFrom": "hexa"
   },
   "hexa204": {
     "type": "holder",
     "id": "hexa204",
-    "x": 1025,
-    "y": 542,
+    "x": 1026,
+    "y": 543,
     "inheritFrom": "hexa"
   },
   "hexa205": {
     "type": "holder",
     "id": "hexa205",
-    "x": 1025,
-    "y": 596,
+    "x": 1026,
+    "y": 598,
     "inheritFrom": "hexa"
   },
   "hexa206": {
     "type": "holder",
     "id": "hexa206",
-    "x": 1025,
-    "y": 650,
+    "x": 1026,
+    "y": 651,
     "inheritFrom": "hexa"
   },
   "hexa198": {
     "type": "holder",
     "id": "hexa198",
     "x": 1072,
-    "y": 785,
+    "y": 787,
     "inheritFrom": "hexa"
   },
   "hexa207": {
     "type": "holder",
     "id": "hexa207",
     "x": 1072,
-    "y": 839,
+    "y": 840,
     "inheritFrom": "hexa"
   },
   "hexa209": {
     "type": "holder",
     "id": "hexa209",
-    "x": 1071,
-    "y": 300,
+    "x": 1072,
+    "y": 302,
     "inheritFrom": "hexa"
   },
   "hexa210": {
     "type": "holder",
     "id": "hexa210",
-    "x": 1071,
-    "y": 354,
+    "x": 1072,
+    "y": 356,
     "inheritFrom": "hexa"
   },
   "hexa212": {
     "type": "holder",
     "id": "hexa212",
-    "x": 1071,
-    "y": 461,
+    "x": 1073,
+    "y": 463,
     "inheritFrom": "hexa"
   },
   "hexa213": {
     "type": "holder",
     "id": "hexa213",
-    "x": 1071,
-    "y": 515,
+    "x": 1072,
+    "y": 517,
     "inheritFrom": "hexa"
   },
   "hexa214": {
     "type": "holder",
     "id": "hexa214",
-    "x": 1071,
-    "y": 569,
+    "x": 1072,
+    "y": 571,
     "inheritFrom": "hexa"
   },
   "hexa215": {
     "type": "holder",
     "id": "hexa215",
-    "x": 1071,
-    "y": 623,
+    "x": 1072,
+    "y": 625,
     "inheritFrom": "hexa"
   },
   "hexa216": {
     "type": "holder",
     "id": "hexa216",
     "x": 1119,
-    "y": 327,
+    "y": 329,
     "inheritFrom": "hexa"
   },
   "hexa217": {
     "type": "holder",
     "id": "hexa217",
     "x": 1119,
-    "y": 380,
+    "y": 383,
     "inheritFrom": "hexa"
   },
   "hexa218": {
     "type": "holder",
     "id": "hexa218",
     "x": 1119,
-    "y": 434,
+    "y": 437,
     "inheritFrom": "hexa"
   },
   "hexa219": {
     "type": "holder",
     "id": "hexa219",
     "x": 1119,
-    "y": 488,
+    "y": 490,
     "inheritFrom": "hexa"
   },
   "hexa220": {
     "type": "holder",
     "id": "hexa220",
     "x": 1119,
-    "y": 542,
+    "y": 544,
     "inheritFrom": "hexa"
   },
   "hexa221": {
     "type": "holder",
     "id": "hexa221",
     "x": 1119,
-    "y": 596,
+    "y": 598,
     "inheritFrom": "hexa"
   },
   "hexa222": {
     "type": "holder",
     "id": "hexa222",
-    "x": 1165,
-    "y": 353,
+    "x": 1166,
+    "y": 356,
     "inheritFrom": "hexa"
   },
   "hexa223": {
     "type": "holder",
     "id": "hexa223",
-    "x": 1165,
-    "y": 407,
+    "x": 1166,
+    "y": 410,
     "inheritFrom": "hexa"
   },
   "hexa224": {
     "type": "holder",
     "id": "hexa224",
-    "x": 1165,
-    "y": 461,
+    "x": 1166,
+    "y": 463,
     "inheritFrom": "hexa"
   },
   "hexa225": {
     "type": "holder",
     "id": "hexa225",
-    "x": 1165,
-    "y": 515,
+    "x": 1166,
+    "y": 517,
     "inheritFrom": "hexa"
   },
   "blackSquareDeck": {
@@ -5331,10 +5350,10 @@
     "z": 10072,
     "css": {
       "default": {
-        "background-image": "url('/assets/-485602420_2369')"
+        "background-image": "url('/assets/-405822299_7908')"
       },
       "#enlarged": {
-        "background-image": "url('/assets/-1514175156_28496')",
+        "background-image": "url('/assets/410050503_30850')",
         "background-size": "contain",
         "background-repeat": "no-repeat",
         "background-position": "center",
@@ -5345,7 +5364,8 @@
         "transform-origin": "top left"
       }
     },
-    "enlarge": 10
+    "enlarge": 10,
+    "movable": false
   },
   "greyRef": {
     "id": "greyRef",
@@ -5366,7 +5386,8 @@
     },
     "enlarge": 10,
     "height": 50,
-    "width": 57
+    "width": 57,
+    "movable": false
   },
   "endRef": {
     "id": "endRef",
@@ -5380,14 +5401,15 @@
         "background-image": "url('/assets/-392676936_5892')"
       },
       "#enlarged": {
-        "background-image": "url('/assets/1041267930_36764')",
+        "background-image": "url('/assets/-332590895_38482')",
         "left": "calc(var(--roomLeft) + (${PROPERTY x}px + ${PROPERTY width}px / 2 * (1 - ${PROPERTY enlarge})) * var(--scale))",
         "top": "calc(var(--roomTop) + (${PROPERTY y}px + ${PROPERTY height}px / 3 * (13 - ${PROPERTY enlarge})) * var(--scale))",
         "right": "unset",
         "transform-origin": "top left"
       }
     },
-    "enlarge": 10
+    "enlarge": 10,
+    "movable": false
   },
   "65mb townScoring.svg 1": {
     "type": "card",
@@ -5927,9 +5949,9 @@
     "type": "card",
     "cardType": "mucus",
     "id": "c14gx",
-    "z": 25658,
+    "z": 27714,
     "rotation": 90,
-    "parent": "03nc"
+    "parent": "m3dc"
   },
   "cardB8": {
     "type": "button",
@@ -5959,20 +5981,20 @@
   },
   "map": {
     "id": "map",
-    "x": 402,
-    "y": 10,
-    "width": 827,
-    "height": 962,
+    "x": 415,
+    "width": 810,
+    "height": 945,
     "layer": -4,
     "movable": false,
     "movableInEdit": false,
-    "image": "/assets/-283675011_95702"
+    "image": "/assets/-2402977_106716",
+    "y": 15
   },
   "hexa31": {
     "type": "holder",
     "id": "hexa31",
     "x": 419,
-    "y": 837,
+    "y": 840,
     "inheritFrom": "hexa"
   },
   "hexa76": {
@@ -5985,8 +6007,8 @@
   "hexa137": {
     "type": "holder",
     "id": "hexa137",
-    "x": 465,
-    "y": 865,
+    "x": 466,
+    "y": 867,
     "inheritFrom": "hexa"
   },
   "mj8qB": {
@@ -6064,7 +6086,7 @@
     "type": "card",
     "cardType": "tardigrade",
     "id": "3f70",
-    "z": 6006,
+    "z": 6131,
     "parent": "r5hr"
   },
   "v9xv": {
@@ -6072,7 +6094,7 @@
     "type": "card",
     "cardType": "tardigrade",
     "id": "v9xv",
-    "z": 6000,
+    "z": 6132,
     "parent": "r5hr"
   },
   "ugdt": {
@@ -6080,7 +6102,7 @@
     "type": "card",
     "cardType": "tardigrade",
     "id": "ugdt",
-    "z": 6001,
+    "z": 6133,
     "parent": "r5hr"
   },
   "k6pu": {
@@ -6088,7 +6110,7 @@
     "type": "card",
     "cardType": "tardigrade",
     "id": "k6pu",
-    "z": 6004,
+    "z": 6130,
     "parent": "r5hr"
   },
   "df8a": {
@@ -6096,7 +6118,7 @@
     "type": "card",
     "cardType": "tardigrade",
     "id": "df8a",
-    "z": 6007,
+    "z": 6127,
     "parent": "r5hr"
   },
   "03io": {
@@ -6104,7 +6126,7 @@
     "type": "card",
     "cardType": "tardigrade",
     "id": "03io",
-    "z": 6005,
+    "z": 6134,
     "parent": "r5hr"
   },
   "n9x0": {
@@ -6112,7 +6134,7 @@
     "type": "card",
     "cardType": "tardigrade",
     "id": "n9x0",
-    "z": 5999,
+    "z": 6129,
     "hoverParent": "tardigradeHolder",
     "parent": "r5hr"
   },
@@ -6121,7 +6143,7 @@
     "type": "card",
     "cardType": "tardigrade",
     "id": "txrd",
-    "z": 6003,
+    "z": 6128,
     "parent": "r5hr"
   },
   "dk77": {
@@ -6129,7 +6151,7 @@
     "type": "card",
     "cardType": "tardigrade",
     "id": "dk77",
-    "z": 6002,
+    "z": 6135,
     "parent": "r5hr"
   },
   "r5hr": {
@@ -6270,7 +6292,7 @@
     "type": "card",
     "cardType": "compost",
     "id": "8i2m",
-    "z": 9065,
+    "z": 9408,
     "parent": "qta8"
   },
   "4v7k": {
@@ -6278,7 +6300,7 @@
     "type": "card",
     "cardType": "compost",
     "id": "4v7k",
-    "z": 9066,
+    "z": 9409,
     "parent": "qta8"
   },
   "zo6n": {
@@ -6286,7 +6308,7 @@
     "type": "card",
     "cardType": "compost",
     "id": "zo6n",
-    "z": 9067,
+    "z": 9410,
     "parent": "qta8"
   },
   "t10rl": {
@@ -6294,7 +6316,7 @@
     "type": "card",
     "cardType": "compost",
     "id": "t10rl",
-    "z": 9068,
+    "z": 9411,
     "parent": "qta8"
   },
   "1amp": {
@@ -6302,7 +6324,7 @@
     "type": "card",
     "cardType": "compost",
     "id": "1amp",
-    "z": 9069,
+    "z": 9412,
     "parent": "qta8"
   },
   "7ubp": {
@@ -6310,7 +6332,7 @@
     "type": "card",
     "cardType": "compost",
     "id": "7ubp",
-    "z": 9070,
+    "z": 9413,
     "parent": "qta8"
   },
   "dyfm1": {
@@ -6318,7 +6340,7 @@
     "type": "card",
     "cardType": "compost",
     "id": "dyfm1",
-    "z": 9071,
+    "z": 9414,
     "parent": "qta8"
   },
   "qta8": {
@@ -6381,7 +6403,7 @@
     "type": "card",
     "cardType": "compost",
     "id": "lqif2",
-    "z": 9093,
+    "z": 9436,
     "parent": "ji0o"
   },
   "11oyv": {
@@ -6389,7 +6411,7 @@
     "type": "card",
     "cardType": "compost",
     "id": "11oyv",
-    "z": 9094,
+    "z": 9437,
     "parent": "ji0o"
   },
   "3bk11": {
@@ -6397,7 +6419,7 @@
     "type": "card",
     "cardType": "compost",
     "id": "3bk11",
-    "z": 9095,
+    "z": 9438,
     "parent": "ji0o"
   },
   "cs10b": {
@@ -6405,7 +6427,7 @@
     "type": "card",
     "cardType": "compost",
     "id": "cs10b",
-    "z": 9096,
+    "z": 9439,
     "parent": "ji0o"
   },
   "tmtw2": {
@@ -6413,7 +6435,7 @@
     "type": "card",
     "cardType": "compost",
     "id": "tmtw2",
-    "z": 9097,
+    "z": 9440,
     "parent": "ji0o"
   },
   "7ntq": {
@@ -6421,7 +6443,7 @@
     "type": "card",
     "cardType": "compost",
     "id": "7ntq",
-    "z": 9098,
+    "z": 9441,
     "parent": "ji0o"
   },
   "xfma2": {
@@ -6429,7 +6451,7 @@
     "type": "card",
     "cardType": "compost",
     "id": "xfma2",
-    "z": 9099,
+    "z": 9442,
     "parent": "ji0o"
   },
   "0sc5": {
@@ -6437,7 +6459,7 @@
     "type": "card",
     "cardType": "compost",
     "id": "0sc5",
-    "z": 9107,
+    "z": 9450,
     "parent": "gu4t"
   },
   "ve21": {
@@ -6445,7 +6467,7 @@
     "type": "card",
     "cardType": "compost",
     "id": "ve21",
-    "z": 9108,
+    "z": 9451,
     "parent": "gu4t"
   },
   "a9gk": {
@@ -6453,7 +6475,7 @@
     "type": "card",
     "cardType": "compost",
     "id": "a9gk",
-    "z": 9109,
+    "z": 9452,
     "parent": "gu4t"
   },
   "fsja": {
@@ -6461,7 +6483,7 @@
     "type": "card",
     "cardType": "compost",
     "id": "fsja",
-    "z": 9110,
+    "z": 9453,
     "parent": "gu4t"
   },
   "hm2q": {
@@ -6469,7 +6491,7 @@
     "type": "card",
     "cardType": "compost",
     "id": "hm2q",
-    "z": 9111,
+    "z": 9454,
     "parent": "gu4t"
   },
   "0dbl": {
@@ -6477,7 +6499,7 @@
     "type": "card",
     "cardType": "compost",
     "id": "0dbl",
-    "z": 9112,
+    "z": 9455,
     "parent": "gu4t"
   },
   "8tpw": {
@@ -6485,7 +6507,7 @@
     "type": "card",
     "cardType": "compost",
     "id": "8tpw",
-    "z": 9113,
+    "z": 9456,
     "parent": "gu4t"
   },
   "tardigradeHolder": {
@@ -6590,7 +6612,7 @@
     "id": "mucusCard0",
     "deck": "mucusDeck",
     "cardType": "mucus",
-    "z": 25715,
+    "z": 27833,
     "y": 4,
     "x": 4,
     "rotation": 60,
@@ -6601,16 +6623,16 @@
     "id": "snail1",
     "deck": "snailDeck",
     "cardType": "snail",
-    "z": 6966,
+    "z": 7110,
     "snailNo": 1,
     "image": "/assets/-1784391324_5474",
-    "parent": "r0be"
+    "parent": "ui94"
   },
   "hexb7": {
     "type": "holder",
     "id": "hexb7",
-    "x": 1119,
-    "y": 811,
+    "x": 1118,
+    "y": 813,
     "inheritFrom": "hexb2",
     "enterRoutine": [
       {
@@ -6624,7 +6646,7 @@
     "type": "holder",
     "id": "hexb6",
     "x": 652,
-    "y": 864,
+    "y": 866,
     "inheritFrom": "hexb2",
     "enterRoutine": [
       {
@@ -6680,8 +6702,8 @@
   "hexb5": {
     "type": "holder",
     "id": "hexb5",
-    "x": 417,
-    "y": 677,
+    "x": 419,
+    "y": 678,
     "inheritFrom": "hexb2",
     "enterRoutine": [
       {
@@ -6694,8 +6716,8 @@
   "hexb4": {
     "type": "holder",
     "id": "hexb4",
-    "x": 1071,
-    "y": 407,
+    "x": 1072,
+    "y": 410,
     "inheritFrom": "hexb2",
     "enterRoutine": [
       {
@@ -6708,8 +6730,8 @@
   "hexb3": {
     "type": "holder",
     "id": "hexb3",
-    "x": 511,
-    "y": 244,
+    "x": 512,
+    "y": 248,
     "inheritFrom": "hexb2",
     "enterRoutine": [
       {
@@ -6723,7 +6745,7 @@
     "type": "holder",
     "id": "hexb2",
     "x": 792,
-    "y": 31,
+    "y": 32,
     "width": 57,
     "height": 49,
     "layer": -2,
@@ -6753,8 +6775,8 @@
   "hexb1": {
     "type": "holder",
     "id": "hexb1",
-    "x": 418,
-    "y": 83,
+    "x": 419,
+    "y": 85,
     "inheritFrom": "hexb2",
     "enterRoutine": [
       {
@@ -8077,9 +8099,9 @@
     "type": "card",
     "cardType": "mucus",
     "id": "c15gx",
-    "z": 25659,
+    "z": 27716,
     "rotation": 90,
-    "parent": "03nc"
+    "parent": "m3dc"
   },
   "cardB9": {
     "type": "button",
@@ -8098,9 +8120,9 @@
     "type": "card",
     "cardType": "mucus",
     "id": "c16gx",
-    "z": 25660,
+    "z": 27718,
     "rotation": 90,
-    "parent": "03nc"
+    "parent": "m3dc"
   },
   "cardB10": {
     "type": "button",
@@ -8119,9 +8141,9 @@
     "type": "card",
     "cardType": "mucus",
     "id": "c17gx",
-    "z": 25661,
+    "z": 27720,
     "rotation": 90,
-    "parent": "03nc"
+    "parent": "m3dc"
   },
   "cardB11": {
     "type": "button",
@@ -8140,9 +8162,9 @@
     "type": "card",
     "cardType": "mucus",
     "id": "c18gx",
-    "z": 25662,
+    "z": 27722,
     "rotation": 90,
-    "parent": "03nc"
+    "parent": "m3dc"
   },
   "cardB12": {
     "type": "button",
@@ -8161,9 +8183,9 @@
     "type": "card",
     "cardType": "mucus",
     "id": "c19gx",
-    "z": 25663,
-    "rotation": 90,
-    "parent": "03nc"
+    "z": 27724,
+    "parent": "m3dc",
+    "rotation": 90
   },
   "cardB13": {
     "type": "button",
@@ -8182,9 +8204,9 @@
     "type": "card",
     "cardType": "mucus",
     "id": "c20gx",
-    "z": 25664,
+    "z": 27726,
     "rotation": 90,
-    "parent": "03nc"
+    "parent": "m3dc"
   },
   "cardB14": {
     "type": "button",
@@ -8203,9 +8225,9 @@
     "type": "card",
     "cardType": "mucus",
     "id": "c21gx",
-    "z": 25665,
+    "z": 27728,
     "rotation": 90,
-    "parent": "03nc"
+    "parent": "m3dc"
   },
   "cardB15": {
     "type": "button",
@@ -8224,9 +8246,9 @@
     "type": "card",
     "cardType": "mucus",
     "id": "c22gx",
-    "z": 25666,
+    "z": 27730,
     "rotation": 90,
-    "parent": "03nc"
+    "parent": "m3dc"
   },
   "cardB16": {
     "type": "button",
@@ -8245,9 +8267,9 @@
     "type": "card",
     "cardType": "mucus",
     "id": "c23gx",
-    "z": 25667,
+    "z": 27732,
     "rotation": 90,
-    "parent": "03nc"
+    "parent": "m3dc"
   },
   "cardB17": {
     "type": "button",
@@ -8266,9 +8288,9 @@
     "type": "card",
     "cardType": "mucus",
     "id": "c24gx",
-    "z": 25668,
+    "z": 27734,
     "rotation": 90,
-    "parent": "03nc"
+    "parent": "m3dc"
   },
   "cardB18": {
     "type": "button",
@@ -8287,9 +8309,9 @@
     "type": "card",
     "cardType": "mucus",
     "id": "c25gx",
-    "z": 25669,
+    "z": 27736,
     "rotation": 90,
-    "parent": "03nc"
+    "parent": "m3dc"
   },
   "cardB19": {
     "type": "button",
@@ -8308,9 +8330,9 @@
     "type": "card",
     "cardType": "mucus",
     "id": "c26gx",
-    "z": 25670,
+    "z": 27738,
     "rotation": 90,
-    "parent": "03nc"
+    "parent": "m3dc"
   },
   "cardB20": {
     "type": "button",
@@ -8329,9 +8351,9 @@
     "type": "card",
     "cardType": "mucus",
     "id": "c27gx",
-    "z": 25671,
+    "z": 27740,
     "rotation": 90,
-    "parent": "03nc"
+    "parent": "m3dc"
   },
   "cardB21": {
     "type": "button",
@@ -8350,9 +8372,9 @@
     "type": "card",
     "cardType": "mucus",
     "id": "c28gx",
-    "z": 25672,
+    "z": 27742,
     "rotation": 90,
-    "parent": "03nc"
+    "parent": "m3dc"
   },
   "cardB22": {
     "type": "button",
@@ -8371,9 +8393,9 @@
     "type": "card",
     "cardType": "mucus",
     "id": "c29gx",
-    "z": 25673,
+    "z": 27744,
     "rotation": 90,
-    "parent": "03nc"
+    "parent": "m3dc"
   },
   "cardB23": {
     "type": "button",
@@ -8392,9 +8414,9 @@
     "type": "card",
     "cardType": "mucus",
     "id": "c30gx",
-    "z": 25674,
+    "z": 27746,
     "rotation": 90,
-    "parent": "03nc"
+    "parent": "m3dc"
   },
   "cardB24": {
     "type": "button",
@@ -8413,9 +8435,9 @@
     "type": "card",
     "cardType": "mucus",
     "id": "c31gx",
-    "z": 25675,
+    "z": 27748,
     "rotation": 90,
-    "parent": "03nc"
+    "parent": "m3dc"
   },
   "cardB25": {
     "type": "button",
@@ -8434,9 +8456,9 @@
     "type": "card",
     "cardType": "mucus",
     "id": "c32gx",
-    "z": 25676,
+    "z": 27750,
     "rotation": 90,
-    "parent": "03nc"
+    "parent": "m3dc"
   },
   "cardB26": {
     "type": "button",
@@ -8455,9 +8477,9 @@
     "type": "card",
     "cardType": "mucus",
     "id": "c33gx",
-    "z": 25677,
+    "z": 27752,
     "rotation": 90,
-    "parent": "03nc"
+    "parent": "m3dc"
   },
   "cardB27": {
     "type": "button",
@@ -8476,9 +8498,9 @@
     "type": "card",
     "cardType": "mucus",
     "id": "c34gx",
-    "z": 25678,
+    "z": 27754,
     "rotation": 90,
-    "parent": "03nc"
+    "parent": "m3dc"
   },
   "cardB28": {
     "type": "button",
@@ -8497,9 +8519,9 @@
     "type": "card",
     "cardType": "mucus",
     "id": "c35gx",
-    "z": 25679,
+    "z": 27756,
     "rotation": 90,
-    "parent": "03nc"
+    "parent": "m3dc"
   },
   "cardB29": {
     "type": "button",
@@ -8518,9 +8540,9 @@
     "type": "card",
     "cardType": "mucus",
     "id": "c36gx",
-    "z": 25680,
+    "z": 27758,
     "rotation": 90,
-    "parent": "03nc"
+    "parent": "m3dc"
   },
   "cardB30": {
     "type": "button",
@@ -8539,9 +8561,9 @@
     "type": "card",
     "cardType": "mucus",
     "id": "c37gx",
-    "z": 25681,
+    "z": 27760,
     "rotation": 90,
-    "parent": "03nc"
+    "parent": "m3dc"
   },
   "cardB31": {
     "type": "button",
@@ -8560,9 +8582,9 @@
     "type": "card",
     "cardType": "mucus",
     "id": "c38gx",
-    "z": 25682,
+    "z": 27762,
     "rotation": 90,
-    "parent": "03nc"
+    "parent": "m3dc"
   },
   "cardB32": {
     "type": "button",
@@ -8581,9 +8603,9 @@
     "type": "card",
     "cardType": "mucus",
     "id": "c39gx",
-    "z": 25683,
+    "z": 27764,
     "rotation": 90,
-    "parent": "03nc"
+    "parent": "m3dc"
   },
   "cardB33": {
     "type": "button",
@@ -8602,9 +8624,9 @@
     "type": "card",
     "cardType": "mucus",
     "id": "c40gx",
-    "z": 25684,
+    "z": 27766,
     "rotation": 90,
-    "parent": "03nc"
+    "parent": "m3dc"
   },
   "cardB34": {
     "type": "button",
@@ -8623,9 +8645,9 @@
     "type": "card",
     "cardType": "mucus",
     "id": "c41gx",
-    "z": 25685,
+    "z": 27768,
     "rotation": 90,
-    "parent": "03nc"
+    "parent": "m3dc"
   },
   "cardB35": {
     "type": "button",
@@ -8644,9 +8666,9 @@
     "type": "card",
     "cardType": "mucus",
     "id": "c42gx",
-    "z": 25686,
+    "z": 27770,
     "rotation": 90,
-    "parent": "03nc"
+    "parent": "m3dc"
   },
   "cardB36": {
     "type": "button",
@@ -8665,9 +8687,9 @@
     "type": "card",
     "cardType": "mucus",
     "id": "c43gx",
-    "z": 25687,
+    "z": 27772,
     "rotation": 90,
-    "parent": "03nc"
+    "parent": "m3dc"
   },
   "cardB37": {
     "type": "button",
@@ -8686,9 +8708,9 @@
     "type": "card",
     "cardType": "mucus",
     "id": "c44gx",
-    "z": 25688,
+    "z": 27774,
     "rotation": 90,
-    "parent": "03nc"
+    "parent": "m3dc"
   },
   "cardB38": {
     "type": "button",
@@ -8707,9 +8729,9 @@
     "type": "card",
     "cardType": "mucus",
     "id": "c45gx",
-    "z": 25689,
+    "z": 27776,
     "rotation": 90,
-    "parent": "03nc"
+    "parent": "m3dc"
   },
   "cardB39": {
     "type": "button",
@@ -8728,9 +8750,9 @@
     "type": "card",
     "cardType": "mucus",
     "id": "c46gx",
-    "z": 25690,
+    "z": 27778,
     "rotation": 90,
-    "parent": "03nc"
+    "parent": "m3dc"
   },
   "cardB40": {
     "type": "button",
@@ -8749,9 +8771,9 @@
     "type": "card",
     "cardType": "mucus",
     "id": "c47gx",
-    "z": 25691,
+    "z": 27780,
     "rotation": 90,
-    "parent": "03nc"
+    "parent": "m3dc"
   },
   "cardB41": {
     "type": "button",
@@ -8770,9 +8792,9 @@
     "type": "card",
     "cardType": "mucus",
     "id": "c48gx",
-    "z": 25692,
+    "z": 27782,
     "rotation": 90,
-    "parent": "03nc"
+    "parent": "m3dc"
   },
   "cardB42": {
     "type": "button",
@@ -8791,9 +8813,9 @@
     "type": "card",
     "cardType": "mucus",
     "id": "c49gx",
-    "z": 25693,
+    "z": 27784,
     "rotation": 90,
-    "parent": "03nc"
+    "parent": "m3dc"
   },
   "cardB43": {
     "type": "button",
@@ -8812,9 +8834,9 @@
     "type": "card",
     "cardType": "mucus",
     "id": "c50gx",
-    "z": 25694,
+    "z": 27786,
     "rotation": 90,
-    "parent": "03nc"
+    "parent": "m3dc"
   },
   "cardB44": {
     "type": "button",
@@ -8833,9 +8855,9 @@
     "type": "card",
     "cardType": "mucus",
     "id": "c51gx",
-    "z": 25695,
+    "z": 27788,
     "rotation": 90,
-    "parent": "03nc"
+    "parent": "m3dc"
   },
   "cardB45": {
     "type": "button",
@@ -8854,9 +8876,9 @@
     "type": "card",
     "cardType": "mucus",
     "id": "c52gx",
-    "z": 25696,
-    "parent": "03nc",
-    "rotation": 90
+    "z": 27790,
+    "rotation": 90,
+    "parent": "m3dc"
   },
   "cardB46": {
     "type": "button",
@@ -8875,9 +8897,9 @@
     "type": "card",
     "cardType": "mucus",
     "id": "c53gx",
-    "z": 25697,
+    "z": 27792,
     "rotation": 90,
-    "parent": "03nc"
+    "parent": "m3dc"
   },
   "cardB47": {
     "type": "button",
@@ -8896,9 +8918,9 @@
     "type": "card",
     "cardType": "mucus",
     "id": "c54gx",
-    "z": 25698,
+    "z": 27794,
     "rotation": 90,
-    "parent": "03nc"
+    "parent": "m3dc"
   },
   "cardB48": {
     "type": "button",
@@ -8917,9 +8939,9 @@
     "type": "card",
     "cardType": "mucus",
     "id": "c55gx",
-    "z": 25699,
+    "z": 27796,
     "rotation": 90,
-    "parent": "03nc"
+    "parent": "m3dc"
   },
   "cardB49": {
     "type": "button",
@@ -8938,9 +8960,9 @@
     "type": "card",
     "cardType": "mucus",
     "id": "c56gx",
-    "z": 25700,
-    "parent": "03nc",
-    "rotation": 90
+    "z": 27798,
+    "rotation": 90,
+    "parent": "m3dc"
   },
   "cardB50": {
     "type": "button",
@@ -8959,9 +8981,9 @@
     "type": "card",
     "cardType": "mucus",
     "id": "c57gx",
-    "z": 25701,
+    "z": 27800,
     "rotation": 90,
-    "parent": "03nc"
+    "parent": "m3dc"
   },
   "cardB51": {
     "type": "button",
@@ -8980,9 +9002,9 @@
     "type": "card",
     "cardType": "mucus",
     "id": "c58gx",
-    "z": 25702,
+    "z": 27802,
     "rotation": 90,
-    "parent": "03nc"
+    "parent": "m3dc"
   },
   "cardB52": {
     "type": "button",
@@ -9001,9 +9023,9 @@
     "type": "card",
     "cardType": "mucus",
     "id": "c59gx",
-    "z": 25703,
+    "z": 27804,
     "rotation": 90,
-    "parent": "03nc"
+    "parent": "m3dc"
   },
   "cardB53": {
     "type": "button",
@@ -9022,9 +9044,9 @@
     "type": "card",
     "cardType": "mucus",
     "id": "c60gx",
-    "z": 25704,
+    "z": 27806,
     "rotation": 90,
-    "parent": "03nc"
+    "parent": "m3dc"
   },
   "cardB54": {
     "type": "button",
@@ -9043,9 +9065,9 @@
     "type": "card",
     "cardType": "mucus",
     "id": "c61gx",
-    "z": 25705,
+    "z": 27808,
     "rotation": 90,
-    "parent": "03nc"
+    "parent": "m3dc"
   },
   "cardB55": {
     "type": "button",
@@ -9064,9 +9086,9 @@
     "type": "card",
     "cardType": "mucus",
     "id": "c62gx",
-    "z": 25706,
-    "parent": "03nc",
-    "rotation": 90
+    "z": 27810,
+    "rotation": 90,
+    "parent": "m3dc"
   },
   "cardB56": {
     "type": "button",
@@ -9085,9 +9107,9 @@
     "type": "card",
     "cardType": "mucus",
     "id": "c63gx",
-    "z": 25707,
+    "z": 27812,
     "rotation": 90,
-    "parent": "03nc"
+    "parent": "m3dc"
   },
   "cardB57": {
     "type": "button",
@@ -9106,9 +9128,9 @@
     "type": "card",
     "cardType": "mucus",
     "id": "c64gx",
-    "z": 25708,
+    "z": 27814,
     "rotation": 90,
-    "parent": "03nc"
+    "parent": "m3dc"
   },
   "cardB58": {
     "type": "button",
@@ -9127,9 +9149,9 @@
     "type": "card",
     "cardType": "mucus",
     "id": "c65gx",
-    "z": 25709,
+    "z": 27816,
     "rotation": 90,
-    "parent": "03nc"
+    "parent": "m3dc"
   },
   "cardB59": {
     "type": "button",
@@ -9148,9 +9170,9 @@
     "type": "card",
     "cardType": "mucus",
     "id": "c66gx",
-    "z": 25710,
+    "z": 27818,
     "rotation": 90,
-    "parent": "03nc"
+    "parent": "m3dc"
   },
   "cardB60": {
     "type": "button",
@@ -9169,9 +9191,9 @@
     "type": "card",
     "cardType": "mucus",
     "id": "c67gx",
-    "z": 25711,
-    "parent": "03nc",
-    "rotation": 90
+    "z": 27820,
+    "rotation": 90,
+    "parent": "m3dc"
   },
   "cardB61": {
     "type": "button",
@@ -9190,9 +9212,9 @@
     "type": "card",
     "cardType": "mucus",
     "id": "c68gx",
-    "z": 25712,
-    "parent": "03nc",
-    "rotation": 90
+    "z": 27822,
+    "rotation": 90,
+    "parent": "m3dc"
   },
   "cardB62": {
     "type": "button",
@@ -9211,9 +9233,9 @@
     "type": "card",
     "cardType": "mucus",
     "id": "c69gx",
-    "z": 25713,
-    "parent": "03nc",
-    "rotation": 90
+    "z": 27824,
+    "rotation": 90,
+    "parent": "m3dc"
   },
   "cardB63": {
     "type": "button",
@@ -9232,9 +9254,9 @@
     "type": "card",
     "cardType": "mucus",
     "id": "c70gx",
-    "z": 25714,
+    "z": 27826,
     "rotation": 90,
-    "parent": "03nc"
+    "parent": "m3dc"
   },
   "cardB64": {
     "type": "button",
@@ -9253,9 +9275,9 @@
     "type": "card",
     "cardType": "mucus",
     "id": "c71gx",
-    "z": 25655,
-    "parent": "03nc",
-    "rotation": 90
+    "z": 27828,
+    "rotation": 90,
+    "parent": "m3dc"
   },
   "cardB65": {
     "type": "button",
@@ -9274,9 +9296,9 @@
     "type": "card",
     "cardType": "mucus",
     "id": "c72gx",
-    "z": 25656,
-    "parent": "03nc",
-    "rotation": 90
+    "z": 27830,
+    "rotation": 90,
+    "parent": "m3dc"
   },
   "cardB66": {
     "type": "button",
@@ -9295,9 +9317,9 @@
     "type": "card",
     "cardType": "mucus",
     "id": "c73gx",
-    "z": 25657,
-    "parent": "03nc",
-    "rotation": 90
+    "z": 27872,
+    "rotation": 90,
+    "parent": "m3dc"
   },
   "cardB67": {
     "type": "button",
@@ -9369,14 +9391,14 @@
     "cardType": "compost",
     "id": "y4th",
     "parent": "ss8y",
-    "z": 9100
+    "z": 9443
   },
   "mlyo": {
     "deck": "compostDeck2",
     "type": "card",
     "cardType": "compost",
     "id": "mlyo",
-    "z": 9101,
+    "z": 9444,
     "parent": "ss8y"
   },
   "h8wu": {
@@ -9384,7 +9406,7 @@
     "type": "card",
     "cardType": "compost",
     "id": "h8wu",
-    "z": 9102,
+    "z": 9445,
     "parent": "ss8y"
   },
   "0sr8": {
@@ -9392,7 +9414,7 @@
     "type": "card",
     "cardType": "compost",
     "id": "0sr8",
-    "z": 9103,
+    "z": 9446,
     "parent": "ss8y"
   },
   "cl0b": {
@@ -9400,7 +9422,7 @@
     "type": "card",
     "cardType": "compost",
     "id": "cl0b",
-    "z": 9104,
+    "z": 9447,
     "parent": "ss8y"
   },
   "7amv": {
@@ -9408,7 +9430,7 @@
     "type": "card",
     "cardType": "compost",
     "id": "7amv",
-    "z": 9105,
+    "z": 9448,
     "parent": "ss8y"
   },
   "trc4": {
@@ -9416,7 +9438,7 @@
     "type": "card",
     "cardType": "compost",
     "id": "trc4",
-    "z": 9106,
+    "z": 9449,
     "parent": "ss8y"
   },
   "ss8y": {
@@ -9436,18 +9458,6 @@
     "width": 30,
     "height": 30,
     "id": "ji0o"
-  },
-  "03nc": {
-    "type": "pile",
-    "width": 57,
-    "height": 49,
-    "id": "03nc",
-    "handleSize": 40,
-    "handleOffset": 25,
-    "z": 5600,
-    "x": 2,
-    "y": 2,
-    "parent": "mucusHolder"
   },
   "label3": {
     "type": "label",
@@ -9512,7 +9522,7 @@
     "y": 165,
     "z": 8,
     "text": "Anti-clockwise twice",
-    "tileID": "hexa198",
+    "tileID": "hexa27",
     "clickRoutine": [
       {
         "func": "GET",
@@ -9549,60 +9559,60 @@
     "id": "snail2",
     "deck": "snailDeck",
     "cardType": "snail",
-    "z": 6968,
+    "z": 7111,
     "snailNo": 2,
     "image": "/assets/-875861445_4988",
-    "parent": "r0be"
+    "parent": "ui94"
   },
   "snail3": {
     "type": "card",
     "id": "snail3",
     "deck": "snailDeck",
     "cardType": "snail",
-    "z": 6970,
+    "z": 7112,
     "snailNo": 3,
     "image": "/assets/-1114050681_5544",
-    "parent": "r0be"
+    "parent": "ui94"
   },
   "snail4": {
     "type": "card",
     "id": "snail4",
     "deck": "snailDeck",
     "cardType": "snail",
-    "z": 6972,
+    "z": 7113,
     "snailNo": 4,
     "image": "/assets/1533683433_5400",
-    "parent": "r0be"
+    "parent": "ui94"
   },
   "snail5": {
     "type": "card",
     "id": "snail5",
     "deck": "snailDeck",
     "cardType": "snail",
-    "z": 6974,
+    "z": 7114,
     "snailNo": 5,
     "image": "/assets/1349244876_5292",
-    "parent": "r0be"
+    "parent": "ui94"
   },
   "snail6": {
     "type": "card",
     "id": "snail6",
     "deck": "snailDeck",
     "cardType": "snail",
-    "z": 6976,
+    "z": 7115,
     "snailNo": 6,
     "image": "/assets/-1157074742_5856",
-    "parent": "r0be"
+    "parent": "ui94"
   },
   "snail7": {
     "type": "card",
     "id": "snail7",
     "deck": "snailDeck",
     "cardType": "snail",
-    "z": 6978,
+    "z": 7116,
     "snailNo": 7,
     "image": "/assets/2022954189_5552",
-    "parent": "r0be"
+    "parent": "ui94"
   },
   "gu4t": {
     "type": "pile",
@@ -9789,14 +9799,15 @@
         "background-image": "url('/assets/-1684354208_41258')"
       },
       "#enlarged": {
-        "background-image": "url('/assets/-1505180057_61816')",
+        "background-image": "url('/assets/751415772_69472')",
         "left": "calc(var(--roomLeft) + (${PROPERTY x}px + ${PROPERTY width}px / 2 * (0 - ${PROPERTY enlarge})) * var(--scale))",
         "top": "calc(var(--roomTop) + (${PROPERTY y}px + ${PROPERTY height}px / 3 * (-2 - ${PROPERTY enlarge})) * var(--scale))",
         "right": "unset",
         "transform-origin": "top left"
       }
     },
-    "enlarge": 25
+    "enlarge": 25,
+    "movable": false
   },
   "refLabel": {
     "type": "label",
@@ -9994,13 +10005,22 @@
     "movable": false,
     "movableInEdit": false
   },
-  "r0be": {
+  "ui94": {
     "type": "pile",
     "parent": "snailHolder",
     "x": 4,
     "y": 4,
     "width": 57,
     "height": 57,
-    "id": "r0be"
+    "id": "ui94"
+  },
+  "m3dc": {
+    "type": "pile",
+    "parent": "mucusHolder",
+    "x": 2,
+    "y": 2,
+    "width": 60,
+    "height": 52,
+    "id": "m3dc"
   }
 }
