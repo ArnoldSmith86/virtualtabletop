@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- Created with Inkscape (http://www.inkscape.org/) and export_objects.py -->
+<svg xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" version="1.1" width="0.75000003125in" height="1.49999979167in" viewBox="0 0 19.0500007937 38.0999947083" id="svg8" inkscape:version="0.92.3 (2405546, 2018-03-11)" sodipodi:docname="spade-12.svg"><sodipodi:namedview id="base" pagecolor="#ffffff" bordercolor="#666666" borderopacity="1.0" inkscape:pageopacity="0.0" inkscape:pageshadow="2" inkscape:zoom="0.7644654" inkscape:cx="1581.9145" inkscape:cy="1075.3584" inkscape:document-units="in" inkscape:current-layer="layer3" showgrid="true" units="in" inkscape:snap-others="true" inkscape:snap-grids="true" inkscape:window-width="1280" inkscape:window-height="940" inkscape:window-x="1909" inkscape:window-y="43" inkscape:window-maximized="1" inkscape:snap-midpoints="false" inkscape:object-nodes="true" inkscape:snap-text-baseline="true" inkscape:snap-smooth-nodes="false" showguides="false" inkscape:snap-object-midpoints="true" inkscape:snap-center="true" inkscape:snap-to-guides="false" inkscape:snap-nodes="true" inkscape:snap-intersection-paths="false">
+    <inkscape:grid type="xygrid" id="grid10" units="pt" spacingx="3.1750001" spacingy="3.1750001"/>
+    <sodipodi:guide position="380.20625,103.1875" orientation="0,1" id="guide9455" inkscape:locked="false"/>
+  </sodipodi:namedview>
+  <metadata id="metadata5">
+    <rdf:RDF>
+      <cc:Work rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+        <dc:title/>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g inkscape:groupmode="layer" inkscape:label="spade-" transform="matrix(1.000000,0.000000,0.000000,1.000000,-304.800000,139.699995)"><g id="g10183" inkscape:label="12">
+      <rect y="-139.7" x="304.80002" height="38.099995" width="19.050001" id="rect15303-1" style="display:inline;opacity:1;fill:none;fill-opacity:1;stroke:none;stroke-width:0.17638889;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:47.14606857;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:markers fill stroke"/>
+      <path inkscape:connector-curvature="0" style="opacity:1;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.07055558;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;paint-order:normal" d="m 314.32503,-119.06248 -5.32517,6.29978 h 5.3e-4 a 3.0192901,3.0192901 0 0 0 -0.71379,1.9491 3.0192901,3.0192901 0 0 0 3.01929,3.0193 3.0192901,3.0192901 0 0 0 2.61855,-1.52364 l -1.21739,4.54291 h 3.23614 l -1.2159,-4.53802 a 3.0192901,3.0192901 0 0 0 2.6172,1.51875 3.0192901,3.0192901 0 0 0 3.01926,-3.0193 3.0192901,3.0192901 0 0 0 -0.71379,-1.9491 h 5.3e-4 z" id="path15369-3" inkscape:export-filename="C:\mine\Vira\Vira table excerpts\Tourne.png" inkscape:export-xdpi="96" inkscape:export-ydpi="96"/>
+      <g id="text15377-1" style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:21.16666794px;line-height:125%;font-family:'Stint Ultra Condensed';-inkscape-font-specification:'Stint Ultra Condensed, ';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;text-align:center;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458335" aria-label="4">
+        <path id="path9952" style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:21.16666794px;font-family:'Stint Ultra Condensed';-inkscape-font-specification:'Stint Ultra Condensed, ';text-align:center;text-anchor:middle;stroke-width:0.26458335" d="m 313.43618,-123.40531 h 1.2609 v -2.53214 h -3.48299 v -1.08521 l 3.09025,-9.41544 h 1.64331 v 9.39477 h 1.46761 v 1.10588 h -1.46761 v 2.53214 h 1.27124 v 1.16789 h -3.78271 z m 1.2609,-11.00708 -2.38745,7.36906 h 2.38745 z"/>
+      </g>
+    </g>
+    </g></svg>
