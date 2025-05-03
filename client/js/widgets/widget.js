@@ -96,8 +96,8 @@ export class Widget extends StateManaged {
     this.domElement.timer = false
 
     this.domElement.addEventListener('contextmenu', e => this.showEnlarged(e), false);
-    this.domElement.addEventListener('mouseenter',  e => this.showEnlarged(e), false);
-    this.domElement.addEventListener('mouseleave',  e => this.hideEnlarged(e), false);
+    //this.domElement.addEventListener('mouseenter',  e => this.showEnlarged(e), false);
+    //this.domElement.addEventListener('mouseleave',  e => this.hideEnlarged(e), false);
     this.domElement.addEventListener("touchstart", e => this.touchstart(), false);
     this.domElement.addEventListener("touchend", e => this.touchend(), false);
 
@@ -2157,7 +2157,7 @@ export class Widget extends StateManaged {
   }
 
   hideEnlarged() {
-    if (!this.domElement.className.match(/selected/)) {
+    if (!$a('#enlarged button').length && !this.domElement.className.match(/selected/)) {
       $('#enlarged').classList.add('hidden');
       if($('#enlargeStyle'))
         removeFromDOM($('#enlargeStyle'));
@@ -2590,6 +2590,22 @@ export class Widget extends StateManaged {
       const clonedTextareas   = [...$a('textarea', e)];
       for(const i in originalTextareas)
         clonedTextareas[i].value = originalTextareas[i].value;
+
+      for(const [ property, value ] of Object.entries(this.state)) {
+        const contextRoutine = property.match(/^context-(.+)Routine$/);
+        if(contextRoutine) {
+          const context = contextRoutine[1];
+          const button = document.createElement('button');
+          button.textContent = context;
+          button.addEventListener('click', async () => {
+            await this.evaluateRoutine(property, {}, { child: [ this ] });
+            for(const b of $a('#enlarged button'))
+              b.remove();
+            this.hideEnlarged();
+          });
+          e.appendChild(button);
+        }
+      }
 
       e.style.cssText = cssText;
       e.style.display = this.domElement.style.display;
