@@ -55,8 +55,12 @@ function initializeEditor(currentMetaData) {
 
     new ToolbarDivider(),
 
-    new CloneDragButton(),
+    new CloneDragButton(false),
+    new CloneDragButton(true),
     new SpacingDragButton(),
+
+    new ToolbarDivider(),
+
     new RotateDragButton(),
     new ResizeDragButton(false),
     new ResizeDragButton(true),
@@ -87,6 +91,7 @@ function metaReceived(data) {
 }
 
 export function openEditor() {
+  smartCloneInit();
   setJEroutineLogging(jeRoutineLogging = true);
   for(const module of sidebarModules)
     module.onEditorOpen();

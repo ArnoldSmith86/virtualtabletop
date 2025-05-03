@@ -258,17 +258,21 @@ class PropertiesModule extends SidebarModule {
     for(const widget of newSelection) {
       this.inputUpdaters[widget.id] = {};
 
-      switch(widget.get('type')) {
-        case 'card':   this.renderForCard(widget);   break;
-        case 'deck':   this.renderForDeck(widget);   break;
-        case 'dice': this.renderForDice(widget); break;
-        case 'holder': this.renderForHolder(widget); break;
-        case 'spinner': this.renderForSpinner(widget); break;
+      if(widget.get('editorSmartClone')) {
+        this.renderForSmartClone(widget);
+      } else {
+        switch(widget.get('type')) {
+          case 'card':    this.renderForCard(widget);    break;
+          case 'deck':    this.renderForDeck(widget);    break;
+          case 'dice':    this.renderForDice(widget);    break;
+          case 'holder':  this.renderForHolder(widget);  break;
+          case 'spinner': this.renderForSpinner(widget); break;
 
-        default:
-          this.addHeader(widget.id);
-          this.renderGenericProperties(widget);
-          break;
+          default:
+            this.addHeader(widget.id);
+            this.renderGenericProperties(widget);
+            break;
+        }
       }
     }
 
@@ -1598,6 +1602,22 @@ class PropertiesModule extends SidebarModule {
     this.addSubHeader(`Spinner properties`);
     this.renderGenericProperties(widget, ['options']);
   }    
+
+  renderForSmartClone(widget) {
+    this.addHeader(`Smart Clone ${widget.id}`);
+    const cloneDiv = div(this.moduleDOM, '', `
+      <p>This widget was created using the smart clone tool. This means that the editor will keep it and its children updated when you change the source.</p>
+      <p>Click the button below to unlink this widget from its source if you want to make changes to its children.</p>
+      <label><input type=checkbox class=flipX> Flip X</label><br>
+      <label><input type=checkbox class=flipY> Flip Y</label><br>
+      <button icon=link_off>Unlink</button>
+    `);
+    $('.flipX', cloneDiv).onchange = e=>widget.set('editorSmartClone', Object.assign({}, widget.get('editorSmartClone'), { flipX: e.target.checked }));
+    $('.flipY', cloneDiv).onchange = e=>widget.set('editorSmartClone', Object.assign({}, widget.get('editorSmartClone'), { flipY: e.target.checked }));
+    $('.flipX', cloneDiv).checked = (widget.get('editorSmartClone') || {}).flipX;
+    $('.flipY', cloneDiv).checked = (widget.get('editorSmartClone') || {}).flipY;
+    $('[icon=link_off]', cloneDiv).onclick = e=>widget.set('editorSmartClone', null);
+  }
 
   renderGenericProperties(widget, exclude) {
     for(const property in widget.state) {
