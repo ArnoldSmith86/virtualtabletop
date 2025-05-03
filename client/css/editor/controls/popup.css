@@ -1,0 +1,24 @@
+.inline-popup {
+  position: fixed;
+  background: pink;
+  z-index: 9;
+  padding: 10px;
+  border-radius: 10px;
+  max-width: 50vw;
+  max-height: 80vh;
+  overflow: auto;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
+  border: 1px solid #ccc;
+}
+
+.accordion-section h3 {
+  cursor: pointer;
+}
+
+.accordion-content {
+  display: none;
+}
+
+.accordion-content.open {
+  display: block;
+}
