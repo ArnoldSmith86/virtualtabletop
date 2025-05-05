@@ -1,0 +1,19 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- Created with Inkscape (http://www.inkscape.org/) and export_objects.py -->
+<svg xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" version="1.1" width="54.00000225pt" height="107.99997pt" viewBox="0 0 19.0500007937 38.0999894167" id="svg8" inkscape:version="0.92.3 (2405546, 2018-03-11)" sodipodi:docname="joker04.svg"><sodipodi:namedview id="base" pagecolor="#ffffff" bordercolor="#666666" borderopacity="1.0" inkscape:pageopacity="0.0" inkscape:pageshadow="2" inkscape:zoom="0.43945308" inkscape:cx="948.00004" inkscape:cy="106.98243" inkscape:document-units="pt" inkscape:current-layer="layer3" showgrid="true" units="pt" inkscape:snap-others="false" inkscape:snap-grids="true" inkscape:window-width="1280" inkscape:window-height="940" inkscape:window-x="1909" inkscape:window-y="43" inkscape:window-maximized="1" inkscape:snap-midpoints="false" inkscape:object-nodes="true" inkscape:snap-text-baseline="true" inkscape:snap-smooth-nodes="false" inkscape:snap-bbox="false" inkscape:snap-bbox-edge-midpoints="false" inkscape:snap-nodes="true" inkscape:bbox-nodes="true">
+    <inkscape:grid type="xygrid" id="grid10" units="pt" spacingx="0.79375002" spacingy="0.79375002"/>
+  </sodipodi:namedview>
+  <metadata id="metadata5">
+    <rdf:RDF>
+      <cc:Work rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+        <dc:title/>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g inkscape:groupmode="layer" inkscape:label="joker" transform="matrix(1.000000,0.000000,0.000000,1.000000,-6.350000,-193.674997)"><g id="g2812" inkscape:label="04">
+      <rect style="display:inline;opacity:1;fill:none;fill-opacity:1;stroke:none;stroke-width:0.17638887;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:47.14606857;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:markers fill stroke" id="rect2517" width="19.050001" height="38.099991" x="6.3500004" y="274.77499" transform="translate(0,-81.099993)"/>
+      <path d="m 8.3476979,202.3061 h 5.7437651 l 1.783539,-5.4561 1.79313,5.4561 h 5.734176 l -4.64104,3.38488 1.78354,5.44652 -4.669806,-3.3753 -4.660215,3.3753 1.773951,-5.44652 z" style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:medium;line-height:100%;font-family:'Chess Leipzig';-inkscape-font-specification:'Chess Leipzig';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#fb4810;fill-opacity:1;stroke:none;stroke-width:0.26458335" id="path2505" inkscape:connector-curvature="0"/>
+    </g>
+    </g></svg>
