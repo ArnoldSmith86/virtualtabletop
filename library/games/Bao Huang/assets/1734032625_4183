@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- Created with Inkscape (http://www.inkscape.org/) and export_objects.py -->
+<svg xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" version="1.1" width="0.75000003125in" height="1.49999979167in" viewBox="0 0 19.0500007937 38.0999947083" id="svg8" inkscape:version="0.92.3 (2405546, 2018-03-11)" sodipodi:docname="diamond-09.svg"><sodipodi:namedview id="base" pagecolor="#ffffff" bordercolor="#666666" borderopacity="1.0" inkscape:pageopacity="0.0" inkscape:pageshadow="2" inkscape:zoom="0.7644654" inkscape:cx="1581.9145" inkscape:cy="1075.3584" inkscape:document-units="in" inkscape:current-layer="layer3" showgrid="true" units="in" inkscape:snap-others="true" inkscape:snap-grids="true" inkscape:window-width="1280" inkscape:window-height="940" inkscape:window-x="1909" inkscape:window-y="43" inkscape:window-maximized="1" inkscape:snap-midpoints="false" inkscape:object-nodes="true" inkscape:snap-text-baseline="true" inkscape:snap-smooth-nodes="false" showguides="false" inkscape:snap-object-midpoints="true" inkscape:snap-center="true" inkscape:snap-to-guides="false" inkscape:snap-nodes="true" inkscape:snap-intersection-paths="false">
+    <inkscape:grid type="xygrid" id="grid10" units="pt" spacingx="3.1750001" spacingy="3.1750001"/>
+    <sodipodi:guide position="380.20625,103.1875" orientation="0,1" id="guide9455" inkscape:locked="false"/>
+  </sodipodi:namedview>
+  <metadata id="metadata5">
+    <rdf:RDF>
+      <cc:Work rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+        <dc:title/>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g inkscape:groupmode="layer" inkscape:label="diamond-" transform="matrix(1.000000,0.000000,0.000000,1.000000,-371.475000,57.149976)"><g id="g10518" inkscape:label="09">
+      <rect y="-57.149979" x="371.47501" height="38.099995" width="19.050001" id="rect8289" style="display:inline;opacity:1;fill:none;fill-opacity:1;stroke:none;stroke-width:0.17638889;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:47.14606857;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:markers fill stroke"/>
+      <path style="display:inline;opacity:1;fill:#800000;fill-opacity:1;stroke:none;stroke-width:0.07055555;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;paint-order:normal" d="m 381.00001,-36.512479 -6.03858,7.143735 6.03858,7.14373 6.03863,-7.14373 z" id="path8471" inkscape:connector-curvature="0" inkscape:export-filename="C:\mine\Vira\Vira table excerpts\diamond-icon.png" inkscape:export-xdpi="96" inkscape:export-ydpi="96"/>
+      <g id="text8331" style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:21.16666794px;line-height:125%;font-family:'Stint Ultra Condensed';-inkscape-font-specification:'Stint Ultra Condensed, ';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;text-align:center;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#800000;fill-opacity:1;stroke:none;stroke-width:0.26458335" aria-label="7">
+        <path id="path9879" style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:21.16666794px;font-family:'Stint Ultra Condensed';-inkscape-font-specification:'Stint Ultra Condensed, ';text-align:center;text-anchor:middle;fill:#800000;stroke-width:0.26458335" d="m 378.46785,-50.064086 v -3.824056 h 5.47771 v 0.713134 q -1.29191,2.687175 -2.01538,6.025473 -0.71314,3.338297 -0.71314,7.462077 h -1.35392 q 0,-2.511475 0.27905,-4.537191 0.28939,-2.036052 0.69247,-3.627686 0.40307,-1.601969 0.84749,-2.800863 0.45475,-1.198893 0.78548,-2.056722 h -2.88354 v 2.645834 z" inkscape:connector-curvature="0"/>
+      </g>
+    </g>
+    </g></svg>
