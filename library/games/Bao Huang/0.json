@@ -3549,7 +3549,7 @@
             "css": {
               "border": "3px solid white",
               "border-radius": "8px",
-              "background": "gray url(/assets/0_0) center / 200%"
+              "background": ""
             }
           }
         ]
@@ -4613,325 +4613,325 @@
     "cardTypes": {
       "type-86a16652-ad7b-4329-9ebd-1e908bc306ad": {
         "label": "club-02",
-        "image": "/assets/-2012380419_5070",
+        "image": "",
         "rank": "2",
         "sortingOrder": 1
       },
       "type-ce574729-4a4d-47af-9aa1-534f4f8b067d": {
         "label": "club-03",
-        "image": "/assets/-548551815_5189",
+        "image": "",
         "rank": "3",
         "sortingOrder": 2
       },
       "type-1e8cc3c9-2158-4100-bc43-e79d2782fa9c": {
         "label": "club-04",
-        "image": "/assets/-881163370_4562",
+        "image": "",
         "rank": "4",
         "sortingOrder": 3
       },
       "type-0288d46f-6b57-44e0-8ad5-04924240d7c0": {
         "label": "club-05",
-        "image": "/assets/-654747311_5197",
+        "image": "",
         "rank": "5",
         "sortingOrder": 4
       },
       "type-b06daf65-de4b-466a-af11-62d4005d0da6": {
         "label": "club-06",
-        "image": "/assets/-132001891_5877",
+        "image": "",
         "rank": "6",
         "sortingOrder": 5
       },
       "type-a9c19e3f-0e2e-4595-b0f7-2efe3eb1b5ad": {
         "label": "club-07",
-        "image": "/assets/1171543315_4627",
+        "image": "",
         "rank": "7",
         "sortingOrder": 6
       },
       "type-c1419741-1fa0-44e9-a3fb-c1231a76dc04": {
         "label": "club-08",
-        "image": "/assets/-705169633_6191",
+        "image": "",
         "rank": "8",
         "sortingOrder": 7
       },
       "type-4453f8b6-d0d8-450d-bf27-e64d65901a28": {
         "label": "club-09",
-        "image": "/assets/419606554_5871",
+        "image": "",
         "rank": "9",
         "sortingOrder": 8
       },
       "type-44c936ad-e563-4046-a2b6-b8bbdb47e0ff": {
         "label": "club-10",
-        "image": "/assets/-1981121929_5883",
+        "image": "",
         "rank": "10",
         "sortingOrder": 9
       },
       "type-fc5504e7-bf4e-4735-9ca9-cc1471dd45ab": {
         "label": "club-j",
-        "image": "/assets/804309481_4949",
+        "image": "",
         "rank": "11",
         "sortingOrder": 10
       },
       "type-25a17a4c-aca9-4dce-8b18-6dd6f54e6947": {
         "label": "club-q",
-        "image": "/assets/2106560071_5430",
+        "image": "",
         "rank": "12",
         "sortingOrder": 11
       },
       "type-50f08327-e9f4-4c72-97c6-dbd2ea1fb0b8": {
         "label": "club-k",
-        "image": "/assets/1929418487_4715",
+        "image": "",
         "rank": "13",
         "sortingOrder": 12
       },
       "type-a87aa3de-b789-4299-a513-1d43c2b7fd9e": {
         "label": "club-a",
-        "image": "/assets/-59942387_4809",
+        "image": "",
         "rank": "14",
         "sortingOrder": 13
       },
       "type-b0c9bc06-fcc7-4bb4-bcd5-2fba7438eafa": {
         "label": "diamond-02",
-        "image": "/assets/-231414321_4644",
+        "image": "",
         "rank": "2",
         "sortingOrder": 14
       },
       "type-f8defc55-18a9-4acf-8ff6-a5758affd4ed": {
         "label": "diamond-03",
-        "image": "/assets/830507396_4761",
+        "image": "",
         "rank": "3",
         "sortingOrder": 15
       },
       "type-8caae31c-62ed-4cfe-9d22-7c1d5c8dc555": {
         "label": "diamond-04",
-        "image": "/assets/1155636310_4112",
+        "image": "",
         "rank": "4",
         "sortingOrder": 16
       },
       "type-2d716a15-19f4-4773-ac37-4ab60aabbae3": {
         "label": "diamond-05",
-        "image": "/assets/-1890688403_4781",
+        "image": "",
         "rank": "5",
         "sortingOrder": 17
       },
       "type-29399050-7af4-4b72-9a4d-01969e90f4ba": {
         "label": "diamond-06",
-        "image": "/assets/1783423642_5497",
+        "image": "",
         "rank": "6",
         "sortingOrder": 18
       },
       "type-eba6c97b-857b-46c6-b37c-383dfa4dede4": {
         "label": "diamond-07",
-        "image": "/assets/1734032625_4183",
+        "image": "",
         "rank": "7",
         "sortingOrder": 19
       },
       "type-c36019ae-54d0-43b8-b254-9c449c75cc85": {
         "label": "diamond-08",
-        "image": "/assets/1945184486_5837",
+        "image": "",
         "rank": "8",
         "sortingOrder": 20
       },
       "type-52fd0ad5-7930-4cbc-b1e7-da163fbbf32c": {
         "label": "diamond-09",
-        "image": "/assets/1190012281_5494",
+        "image": "",
         "rank": "9",
         "sortingOrder": 21
       },
       "type-b395c302-35f1-4d9e-a790-bb74ced58117": {
         "label": "diamond-10",
-        "image": "/assets/-1582936523_5492",
+        "image": "",
         "rank": "10",
         "sortingOrder": 22
       },
       "type-ac7cddcb-1a7b-4413-8fca-492da66e4cb2": {
         "label": "diamond-j",
-        "image": "/assets/687204081_4234",
+        "image": "",
         "rank": "11",
         "sortingOrder": 23
       },
       "type-2b6ca134-a4eb-488e-9515-bd5df8be5856": {
         "label": "diamond-q",
-        "image": "/assets/766153609_4693",
+        "image": "",
         "rank": "12",
         "sortingOrder": 24
       },
       "type-68f2038b-e191-4518-a338-1d17c38ae13c": {
         "label": "diamond-k",
-        "image": "/assets/629104712_3951",
+        "image": "",
         "rank": "13",
         "sortingOrder": 25
       },
       "type-761be0f4-6468-4ab6-9a69-554dec7fe552": {
         "label": "diamond-a",
-        "image": "/assets/1246286907_4371",
+        "image": "",
         "rank": "14",
         "sortingOrder": 26
       },
       "type-9c717736-6433-4f32-9573-8cc3e9daa4cc": {
         "label": "heart-02",
-        "image": "/assets/-236114126_4752",
+        "image": "",
         "rank": "2",
         "sortingOrder": 27
       },
       "type-0aaecfba-d327-4b6a-800e-e79df45879f8": {
         "label": "heart-03",
-        "image": "/assets/-1491115145_4877",
+        "image": "",
         "rank": "3",
         "sortingOrder": 28
       },
       "type-fa2e5aa5-f0ba-4244-9f44-46cd7a81afb1": {
         "label": "heart-04",
-        "image": "/assets/532666546_4251",
+        "image": "",
         "rank": "4",
         "sortingOrder": 29
       },
       "type-e709b1a1-6bbc-446c-9163-fca3fa6c3809": {
         "label": "heart-05",
-        "image": "/assets/-809291071_4878",
+        "image": "",
         "rank": "5",
         "sortingOrder": 30
       },
       "type-d22288a9-3ab7-4f85-bae0-548a5755c444": {
         "label": "heart-06",
-        "image": "/assets/860098223_5561",
+        "image": "",
         "rank": "6",
         "sortingOrder": 31
       },
       "type-d758ecce-7b1b-4771-b002-ceca01827b75": {
         "label": "heart-07",
-        "image": "/assets/-1886166290_4315",
+        "image": "",
         "rank": "7",
         "sortingOrder": 32
       },
       "type-b6cdb90b-3d19-4c8b-b9a6-0a234fec851d": {
         "label": "heart-08",
-        "image": "/assets/-215869574_5885",
+        "image": "",
         "rank": "8",
         "sortingOrder": 33
       },
       "type-140f4890-00b9-4668-9285-9366ed8a9085": {
         "label": "heart-09",
-        "image": "/assets/1792200306_5559",
+        "image": "",
         "rank": "9",
         "sortingOrder": 34
       },
       "type-08d32a62-306d-44ff-a1ae-e3f7bc9ba424": {
         "label": "heart-10",
-        "image": "/assets/-494945254_5592",
+        "image": "2",
         "rank": "10",
         "sortingOrder": 35
       },
       "type-5d6e0a41-c57f-416c-b1de-b0d7c0ee2034": {
         "label": "heart-j",
-        "image": "/assets/1629354103_4631",
+        "image": "1",
         "rank": "11",
         "sortingOrder": 36
       },
       "type-5db36a7f-2082-4be8-a9ae-601cad6fb5d5": {
         "label": "heart-q",
-        "image": "/assets/255574396_5115",
+        "image": "",
         "rank": "12",
         "sortingOrder": 37
       },
       "type-9f5b3fd0-9c92-44a3-ab56-562be3030dcb": {
         "label": "heart-k",
-        "image": "/assets/-928334641_4406",
+        "image": "",
         "rank": "13",
         "sortingOrder": 38
       },
       "type-d8943c68-7151-4780-bcac-42702fc9c861": {
         "label": "heart-a",
-        "image": "/assets/-850807230_4494",
+        "image": "",
         "rank": "14",
         "sortingOrder": 39
       },
       "type-3f51ea92-b6a6-42cc-a4a6-b641b60cc18a": {
         "label": "spade-02",
-        "image": "/assets/1388723097_4834",
+        "image": "",
         "rank": "2",
         "sortingOrder": 40
       },
       "type-49e91ab6-c531-46be-b2d4-8bbfc93b50a9": {
         "label": "spade-03",
-        "image": "/assets/1863927892_4939",
+        "image": "",
         "rank": "3",
         "sortingOrder": 41
       },
       "type-19f849a2-0861-4bf7-a558-96bcb4f62b84": {
         "label": "spade-04",
-        "image": "/assets/-1705631436_4327",
+        "image": "",
         "rank": "4",
         "sortingOrder": 42
       },
       "type-f152f8dc-b9a9-4719-a744-21f6088757cd": {
         "label": "spade-05",
-        "image": "/assets/1246901786_4960",
+        "image": "",
         "rank": "5",
         "sortingOrder": 43
       },
       "type-42eda34f-fb63-4abd-a08d-9d0178259ebc": {
         "label": "spade-06",
-        "image": "/assets/-118976403_5643",
+        "image": "",
         "rank": "6",
         "sortingOrder": 44
       },
       "type-e4d685e7-0302-4d56-bac7-5a834011a33d": {
         "label": "spade-07",
-        "image": "/assets/241668980_4394",
+        "image": "",
         "rank": "7",
         "sortingOrder": 45
       },
       "type-ab533439-5426-4d60-938d-7d1cc7608e41": {
         "label": "spade-08",
-        "image": "/assets/-393057984_5963",
+        "image": "",
         "rank": "8",
         "sortingOrder": 46
       },
       "type-cb114114-97f9-451e-b276-40a59a8649dc": {
         "label": "spade-09",
-        "image": "/assets/-578751968_5642",
+        "image": "",
         "rank": "9",
         "sortingOrder": 47
       },
       "type-45e2a0cf-043a-4d7b-9dff-d46406693372": {
         "label": "spade-10",
-        "image": "/assets/619233662_5614",
+        "image": "",
         "rank": "10",
         "sortingOrder": 48
       },
       "type-1b4bb6ff-2384-4786-ad31-6ae4961107c3": {
         "label": "spade-j",
-        "image": "/assets/1928713398_4718",
+        "image": "",
         "rank": "11",
         "sortingOrder": 49
       },
       "type-bba45090-c15c-47c9-9670-fcdb99bcb2e8": {
         "label": "spade-q",
-        "image": "/assets/-1296182990_5142",
+        "image": "",
         "rank": "12",
         "sortingOrder": 50
       },
       "type-fcaf63a3-0fbe-446a-b2af-c239cb9b610d": {
         "label": "spade-k",
-        "image": "/assets/-43448799_4448",
+        "image": "",
         "rank": "13",
         "sortingOrder": 51
       },
       "type-f1f3584f-62e1-4595-bca9-70d7de093e2c": {
         "label": "spade-a",
-        "image": "/assets/-203772142_4530",
+        "image": "",
         "rank": "14",
         "sortingOrder": 52
       },
       "type-1787efe2-0b94-4405-9aeb-e88ab55764b0": {
         "label": "joker-heart",
-        "image": "/assets/1000398692_3054",
+        "image": "",
         "rank": "16",
         "sortingOrder": 53
       },
       "type-c5e8a186-7555-43b5-8713-ca9b48758895": {
         "label": "joker-spade",
-        "image": "/assets/-627027473_3356",
+        "image": "",
         "rank": "15",
         "sortingOrder": 54
       }
@@ -4951,7 +4951,7 @@
             "x": 0,
             "y": 0,
             "color": "rgb(126,214,77)",
-            "value": "/assets/1182224109_11432",
+            "value": "",
             "width": 60,
             "height": 160
           }
@@ -5358,7 +5358,7 @@
         "gap": "10px",
         "padding": "10px",
         "overflow": "hidden",
-        "background-image": "url('/assets/-184397527_8398')"
+        "background-image": "url('')"
       },
       "_, .transition": {
         "transition": "transform 500ms, background-position 0.25s"
