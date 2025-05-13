@@ -1,0 +1,33 @@
+name: Check Library
+
+on:
+  pull_request:
+    paths:
+      - 'library/**'
+
+jobs:
+  check-library:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      
+      - name: Check asset file names
+        run: |
+          found_error=false
+          for file in $(git diff --name-only ${{ github.event.pull_request.base.sha }} ${{ github.sha }} | grep 'library/.*/assets/'); do
+            size=$(stat -c %s "$file" 2>/dev/null)
+            crc=$(printf "%d\n" $((0x$(crc32 "$file") > 0x7fffffff ? 0x$(crc32 "$file") - 0x100000000 : 0x$(crc32 "$file"))))
+            expected="${crc}_${size}"
+            if [[ "$(basename "$file")" != "$expected" ]]; then
+              echo "❌ $file"
+              found_error=true
+            else
+              echo "✅ $file"
+            fi
+          done
+          if [ "$found_error" = true ]; then
+            echo "Found files with inconsistent naming patterns"
+            exit 1
+          fi 
