@@ -45,4 +45,33 @@ jobs:
           if [ "$found_error" = true ]; then
             echo "Found files with inconsistent naming patterns"
             exit 1
+          fi
+
+      - name: Check changed JSON languages are known
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          changed_json=$(git diff --name-only ${{ github.event.pull_request.base.sha }} ${{ github.sha }} | grep '^library/.*/.*/.*\.json$' || true)
+          all_json=$(find library -type f -name '*.json')
+          unchanged_json=$(comm -23 <(echo "$all_json" | sort) <(echo "$changed_json" | sort))
+          # Collect all known languages from unchanged files (one-liner, no try-catch)
+          known_langs=$(python3 -c "import glob,json; import sys; langs=set(); [langs.update(l.strip() for l in json.load(open(f)).get('_meta',{}).get('info',{}).get('language','').split(', ') if l.strip()) for f in sys.stdin]; print('\n'.join(langs))" <<< "$unchanged_json")
+          error=0
+          unknowns=""
+          for f in $changed_json; do
+            [ -f "$f" ] || continue
+            for lang in $(python3 -c "import json,sys; print('\n'.join(l.strip() for l in json.load(open(sys.argv[1])).get('_meta',{}).get('info',{}).get('language','').split(', ') if l.strip()))" "$f"); do
+              if [ "$lang" ] &&! grep -qxF "$lang" <<< "$known_langs"; then
+                echo "❌ $f has unknown language: $lang"
+                unknowns="$unknowns- $f: $lang"$'\n'
+                error=1
+              fi
+            done
+          done
+          if [ "$error" = 1 ]; then
+            echo "Some changed JSON files have unknown languages."
+            # Post a comment to the PR
+            gh pr comment ${{ github.event.pull_request.number }} --body "Some changed JSON files have unknown languages:\n$unknowns"
+          else
+            echo "All changed JSON files have only known languages."
           fi 
