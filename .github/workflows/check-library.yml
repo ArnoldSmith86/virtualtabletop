@@ -48,6 +48,7 @@ jobs:
           fi
 
       - name: Check changed JSON languages are known
+        if: always()
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
