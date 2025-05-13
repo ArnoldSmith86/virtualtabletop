@@ -13,24 +13,35 @@ jobs:
         with:
           fetch-depth: 0
       
-      - name: Install dependencies
-        run: sudo apt-get update && sudo apt-get install -y libarchive-tools
-
       - name: Check asset file names
         run: |
-          found_error=false
-          for file in $(git diff --name-only ${{ github.event.pull_request.base.sha }} ${{ github.sha }} | grep 'library/.*/assets/'); do
-            size=$(stat -c %s "$file" 2>/dev/null)
-            crc=$(printf "%d\n" $((0x$(crc32 "$file") > 0x7fffffff ? 0x$(crc32 "$file") - 0x100000000 : 0x$(crc32 "$file"))))
-            expected="${crc}_${size}"
-            if [[ "$(basename "$file")" != "$expected" ]]; then
-              echo "❌ $file"
-              found_error=true
-            else
-              echo "✅ $file"
-            fi
-          done
-          if [ "$found_error" = true ]; then
-            echo "Found files with inconsistent naming patterns"
-            exit 1
-          fi 
+          python3 - <<'EOF'
+          import os, sys, zlib, subprocess
+          found_error = False
+          base = os.environ.get('GITHUB_EVENT_PULL_REQUEST_BASE_SHA')
+          head = os.environ.get('GITHUB_SHA')
+          diff_cmd = f"git diff --name-only {base} {head}"
+          changed = subprocess.check_output(diff_cmd, shell=True).decode().splitlines()
+          assets = [f for f in changed if '/assets/' in f]
+          for file in assets:
+              try:
+                  with open(file, 'rb') as fh:
+                      data = fh.read()
+                  crc = zlib.crc32(data)
+                  if crc > 0x7fffffff:
+                      crc -= 0x100000000
+                  size = os.path.getsize(file)
+                  expected = f'{crc}_{size}'
+                  actual = os.path.basename(file)
+                  if actual == expected:
+                      print(f'✅ {file}')
+                  else:
+                      print(f'❌ {file}')
+                      found_error = True
+              except Exception as e:
+                  print(f'❌ {file} (error: {e})')
+                  found_error = True
+          if found_error:
+              print('Found files with inconsistent naming patterns')
+              sys.exit(1)
+          EOF 
