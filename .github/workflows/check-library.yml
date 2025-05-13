@@ -13,6 +13,9 @@ jobs:
         with:
           fetch-depth: 0
       
+      - name: Install dependencies
+        run: sudo apt-get update && sudo apt-get install -y libarchive-tools
+
       - name: Check asset file names
         run: |
           found_error=false
