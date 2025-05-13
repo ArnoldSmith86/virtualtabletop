@@ -1,0 +1,19 @@
+name: Check Asset File Names
+
+on:
+  pull_request:
+    paths:
+      - 'library/**/assets/**'
+
+jobs:
+  check-names:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Check asset file names
+        run: |
+          if ls -l library/*/*/assets/* 2>/dev/null | awk '{split($0, a, "_"); if (a[length(a)] != $5) print $0}' | grep -Po 'library/[^/]+/\K.*'; then
+            echo "Found files with inconsistent naming patterns"
+            exit 1
+          fi 
