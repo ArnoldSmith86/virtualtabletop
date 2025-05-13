@@ -2520,6 +2520,35 @@ export function jeLoggingRoutineGetData() {
   return { jeHTMLStack, jeLoggingHTML, jeRoutineResult };
 }
 
+function jeLoggingFilterLog(filter) {
+  for(const className of ['jeLogFilterMatch', 'jeLogFilterNoMatch', 'jeLogFilterChildMatch', 'active', 'jeExpander-down'])
+    for(const entry of $a(`#jeLog .jeLogNested .${className}`))
+      entry.classList.remove(className);
+  if(!filter) return;
+
+  for(const entry of $a('#jeLog .jeLogNested .jeExpander')) {
+    if(entry.textContent.toLowerCase().indexOf(filter.toLowerCase()) == -1) {
+      entry.classList.add('jeLogFilterNoMatch');
+    } else {
+      entry.classList.add('jeLogFilterMatch');
+      entry.classList.remove('jeLogFilterNoMatch');
+      let parent = entry.parentElement.parentElement;
+      while(parent.id != 'jeLog') {
+        if(parent.classList.contains('jeLogOperation')) {
+          parent.classList.add('jeLogFilterChildMatch');
+          parent.classList.add('jeExpander-down');
+          // Only add 'active' to direct .jeLogNested child
+          const nested = Array.from(parent.children).find(
+            el => el.classList && el.classList.contains('jeLogNested')
+          );
+          if(nested) nested.classList.add('active');
+        }
+        parent = parent.parentElement;
+      }
+    }
+  }
+}
+
 // END routine logging
 
 function jeNewline() {
