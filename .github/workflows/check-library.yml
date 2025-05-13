@@ -21,11 +21,13 @@ jobs:
           fixed_any=false
           for file in $(git diff --name-only ${{ github.event.pull_request.base.sha }} ${{ github.sha }} | grep 'library/.*/assets/'); do
             expected=$(python3 -c "import sys,os,zlib; f=sys.argv[1]; d=open(f,'rb').read(); c=zlib.crc32(d); s=os.path.getsize(f); print(f'{c-0x100000000 if c>0x7fffffff else c}_{s}')" "$file")
-            if [[ "$(basename "$file")" != "$expected" ]]; then
+            if [[ "$(basename "$file")" == "$expected" ]]; then
+              echo "✅ $file"
+            else
               # Try converting to DOS line endings
               sed -i 's/$/\r/' "$file"
               expected=$(python3 -c "import sys,os,zlib; f=sys.argv[1]; d=open(f,'rb').read(); c=zlib.crc32(d); s=os.path.getsize(f); print(f'{c-0x100000000 if c>0x7fffffff else c}_{s}')" "$file")
-              if [[ "$(basename "$file")" != "$expected" ]]; then
+              if [[ "$(basename "$file")" == "$expected" ]]; then
                 echo "✅ $file (auto-fixed)"
                 git add "$file"
                 fixed_any=true
@@ -34,12 +36,10 @@ jobs:
                 git checkout "$file"
                 found_error=true
               fi
-            else
-              echo "✅ $file"
             fi
           done
           if [ "$fixed_any" = true ]; then
-            git commit -m "fix: convert asset to DOS line endings and correct filename"
+            git commit -m "fix: convert asset to DOS line endings"
             git push origin HEAD:${GITHUB_HEAD_REF}
           fi
           if [ "$found_error" = true ]; then
