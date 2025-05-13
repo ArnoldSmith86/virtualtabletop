@@ -27,10 +27,11 @@ jobs:
               expected=$(python3 -c "import sys,os,zlib; f=sys.argv[1]; d=open(f,'rb').read(); c=zlib.crc32(d); s=os.path.getsize(f); print(f'{c-0x100000000 if c>0x7fffffff else c}_{s}')" "$file")
               if [[ "$(basename "$file")" != "$expected" ]]; then
                 echo "✅ $file (auto-fixed)"
+                git add "$file"
                 fixed_any=true
               else
                 echo "❌ $file (expected: $expected)"
-                git checkout -- "$file"
+                git checkout "$file"
                 found_error=true
               fi
             else
