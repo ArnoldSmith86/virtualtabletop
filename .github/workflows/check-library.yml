@@ -40,7 +40,7 @@ jobs:
           done
           if [ "$fixed_any" = true ]; then
             git commit -m "fix: convert asset to DOS line endings and correct filename"
-            git push
+            git push origin HEAD:${GITHUB_HEAD_REF}
           fi
           if [ "$found_error" = true ]; then
             echo "Found files with inconsistent naming patterns"
