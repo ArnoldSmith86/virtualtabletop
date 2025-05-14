@@ -2140,7 +2140,8 @@
     },
     "dropTarget": {
       "deck": "deck-kings"
-    }
+    },
+    "preventPiles": true
   },
   "holder-kings-p2": {
     "type": "holder",
@@ -2166,277 +2167,547 @@
     "parent": "seat-p5",
     "inheritFrom": "holder-kings-p1"
   },
-  "piece-king-p1-1": {
+  "piece-king-p1-01": {
     "type": "card",
-    "id": "piece-king-p1-1",
-    "parent": "1b2e",
+    "id": "piece-king-p1-01",
+    "parent": "holder-kings-p1",
     "deck": "deck-kings",
     "cardType": "king",
-    "z": 23973,
+    "z": 1,
     "playerIndex": 1,
     "width": 40,
     "height": 40
   },
-  "piece-king-p1-2": {
+  "piece-king-p1-02": {
     "type": "card",
-    "id": "piece-king-p1-2",
-    "parent": "1b2e",
+    "id": "piece-king-p1-02",
+    "parent": "holder-kings-p1",
     "deck": "deck-kings",
     "cardType": "king",
-    "z": 23975,
+    "z": 2,
     "playerIndex": 1
   },
-  "piece-king-p1-3": {
+  "piece-king-p1-03": {
     "type": "card",
-    "id": "piece-king-p1-3",
-    "parent": "1b2e",
+    "id": "piece-king-p1-03",
+    "parent": "holder-kings-p1",
     "deck": "deck-kings",
     "cardType": "king",
-    "z": 23977,
+    "z": 3,
     "playerIndex": 1
   },
-  "piece-king-p1-4": {
+  "piece-king-p1-04": {
     "type": "card",
-    "id": "piece-king-p1-4",
-    "parent": "1b2e",
+    "id": "piece-king-p1-04",
+    "parent": "holder-kings-p1",
     "deck": "deck-kings",
     "cardType": "king",
-    "z": 23979,
+    "z": 4,
     "playerIndex": 1
   },
-  "piece-king-p1-5": {
+  "piece-king-p1-05": {
     "type": "card",
-    "id": "piece-king-p1-5",
+    "id": "piece-king-p1-05",
     "deck": "deck-kings",
     "cardType": "king",
-    "z": 23981,
+    "z": 5,
     "playerIndex": 1,
-    "parent": "1b2e"
+    "parent": "holder-kings-p1"
   },
-  "piece-king-p1-6": {
+  "piece-king-p1-06": {
     "type": "card",
-    "id": "piece-king-p1-6",
+    "id": "piece-king-p1-06",
     "deck": "deck-kings",
     "cardType": "king",
-    "z": 23983,
+    "z": 6,
     "playerIndex": 1,
-    "parent": "1b2e"
+    "parent": "holder-kings-p1"
   },
-  "piece-king-p2-1": {
+  "piece-king-p1-07": {
     "type": "card",
-    "id": "piece-king-p2-1",
-    "parent": "e6h1",
+    "id": "piece-king-p1-07",
     "deck": "deck-kings",
     "cardType": "king",
-    "z": 24038,
+    "z": 7,
+    "playerIndex": 1,
+    "parent": "holder-kings-p1"
+  },
+  "piece-king-p1-08": {
+    "type": "card",
+    "id": "piece-king-p1-08",
+    "deck": "deck-kings",
+    "cardType": "king",
+    "z": 8,
+    "playerIndex": 1,
+    "parent": "holder-kings-p1"
+  },
+  "piece-king-p1-09": {
+    "type": "card",
+    "id": "piece-king-p1-09",
+    "deck": "deck-kings",
+    "cardType": "king",
+    "z": 9,
+    "playerIndex": 1,
+    "parent": "holder-kings-p1"
+  },
+  "piece-king-p1-10": {
+    "type": "card",
+    "id": "piece-king-p1-10",
+    "deck": "deck-kings",
+    "cardType": "king",
+    "z": 10,
+    "playerIndex": 1,
+    "parent": "holder-kings-p1"
+  },
+  "piece-king-p1-11": {
+    "type": "card",
+    "id": "piece-king-p1-11",
+    "deck": "deck-kings",
+    "cardType": "king",
+    "z": 11,
+    "playerIndex": 1,
+    "parent": "holder-kings-p1"
+  },
+  "piece-king-p1-12": {
+    "type": "card",
+    "id": "piece-king-p1-12",
+    "deck": "deck-kings",
+    "cardType": "king",
+    "z": 12,
+    "playerIndex": 1,
+    "parent": "holder-kings-p1"
+  },
+  "piece-king-p2-01": {
+    "type": "card",
+    "id": "piece-king-p2-01",
+    "parent": "holder-kings-p2",
+    "deck": "deck-kings",
+    "cardType": "king",
+    "z": 1,
     "playerIndex": 2
   },
-  "piece-king-p2-2": {
+  "piece-king-p2-02": {
     "type": "card",
-    "id": "piece-king-p2-2",
-    "parent": "e6h1",
+    "id": "piece-king-p2-02",
+    "parent": "holder-kings-p2",
     "deck": "deck-kings",
     "cardType": "king",
-    "z": 24040,
+    "z": 2,
     "playerIndex": 2
   },
-  "piece-king-p2-3": {
+  "piece-king-p2-03": {
     "type": "card",
-    "id": "piece-king-p2-3",
-    "parent": "e6h1",
+    "id": "piece-king-p2-03",
+    "parent": "holder-kings-p2",
     "deck": "deck-kings",
     "cardType": "king",
-    "z": 24042,
+    "z": 3,
     "playerIndex": 2
   },
-  "piece-king-p2-4": {
+  "piece-king-p2-04": {
     "type": "card",
-    "id": "piece-king-p2-4",
-    "parent": "e6h1",
+    "id": "piece-king-p2-04",
+    "parent": "holder-kings-p2",
     "deck": "deck-kings",
     "cardType": "king",
-    "z": 24044,
+    "z": 4,
     "playerIndex": 2
   },
-  "piece-king-p2-5": {
+  "piece-king-p2-05": {
     "type": "card",
-    "id": "piece-king-p2-5",
-    "parent": "e6h1",
+    "id": "piece-king-p2-05",
+    "parent": "holder-kings-p2",
     "deck": "deck-kings",
     "cardType": "king",
-    "z": 24046,
+    "z": 5,
     "playerIndex": 2
   },
-  "piece-king-p2-6": {
+  "piece-king-p2-06": {
     "type": "card",
-    "id": "piece-king-p2-6",
-    "parent": "e6h1",
+    "id": "piece-king-p2-06",
+    "parent": "holder-kings-p2",
     "deck": "deck-kings",
     "cardType": "king",
-    "z": 24048,
+    "z": 6,
     "playerIndex": 2
   },
-  "piece-king-p3-1": {
+  "piece-king-p2-07": {
     "type": "card",
-    "id": "piece-king-p3-1",
-    "parent": "yihr",
+    "id": "piece-king-p2-07",
+    "parent": "holder-kings-p2",
     "deck": "deck-kings",
     "cardType": "king",
-    "z": 24103,
+    "z": 7,
+    "playerIndex": 2
+  },
+  "piece-king-p2-08": {
+    "type": "card",
+    "id": "piece-king-p2-08",
+    "parent": "holder-kings-p2",
+    "deck": "deck-kings",
+    "cardType": "king",
+    "z": 8,
+    "playerIndex": 2
+  },
+  "piece-king-p2-09": {
+    "type": "card",
+    "id": "piece-king-p2-09",
+    "parent": "holder-kings-p2",
+    "deck": "deck-kings",
+    "cardType": "king",
+    "z": 9,
+    "playerIndex": 2
+  },
+  "piece-king-p2-10": {
+    "type": "card",
+    "id": "piece-king-p2-10",
+    "parent": "holder-kings-p2",
+    "deck": "deck-kings",
+    "cardType": "king",
+    "z": 10,
+    "playerIndex": 2
+  },
+  "piece-king-p2-11": {
+    "type": "card",
+    "id": "piece-king-p2-11",
+    "parent": "holder-kings-p2",
+    "deck": "deck-kings",
+    "cardType": "king",
+    "z": 11,
+    "playerIndex": 2
+  },
+  "piece-king-p2-12": {
+    "type": "card",
+    "id": "piece-king-p2-12",
+    "parent": "holder-kings-p2",
+    "deck": "deck-kings",
+    "cardType": "king",
+    "z": 12,
+    "playerIndex": 2
+  },
+  "piece-king-p3-01": {
+    "type": "card",
+    "id": "piece-king-p3-01",
+    "parent": "holder-kings-p3",
+    "deck": "deck-kings",
+    "cardType": "king",
+    "z": 1,
     "playerIndex": 3
   },
-  "piece-king-p3-2": {
+  "piece-king-p3-02": {
     "type": "card",
-    "id": "piece-king-p3-2",
-    "parent": "yihr",
+    "id": "piece-king-p3-02",
+    "parent": "holder-kings-p3",
     "deck": "deck-kings",
     "cardType": "king",
-    "z": 24105,
+    "z": 2,
     "playerIndex": 3
   },
-  "piece-king-p3-3": {
+  "piece-king-p3-03": {
     "type": "card",
-    "id": "piece-king-p3-3",
-    "parent": "yihr",
+    "id": "piece-king-p3-03",
+    "parent": "holder-kings-p3",
     "deck": "deck-kings",
     "cardType": "king",
-    "z": 24107,
+    "z": 3,
     "playerIndex": 3
   },
-  "piece-king-p3-4": {
+  "piece-king-p3-04": {
     "type": "card",
-    "id": "piece-king-p3-4",
-    "parent": "yihr",
+    "id": "piece-king-p3-04",
+    "parent": "holder-kings-p3",
     "deck": "deck-kings",
     "cardType": "king",
-    "z": 24109,
+    "z": 4,
     "playerIndex": 3
   },
-  "piece-king-p3-5": {
+  "piece-king-p3-05": {
     "type": "card",
-    "id": "piece-king-p3-5",
-    "parent": "yihr",
+    "id": "piece-king-p3-05",
+    "parent": "holder-kings-p3",
     "deck": "deck-kings",
     "cardType": "king",
-    "z": 24111,
+    "z": 5,
     "playerIndex": 3
   },
-  "piece-king-p3-6": {
+  "piece-king-p3-06": {
     "type": "card",
-    "id": "piece-king-p3-6",
-    "parent": "yihr",
+    "id": "piece-king-p3-06",
+    "parent": "holder-kings-p3",
     "deck": "deck-kings",
     "cardType": "king",
-    "z": 24113,
+    "z": 6,
     "playerIndex": 3
   },
-  "piece-king-p4-1": {
+  "piece-king-p3-07": {
     "type": "card",
-    "id": "piece-king-p4-1",
-    "parent": "i5pb",
+    "id": "piece-king-p3-07",
+    "parent": "holder-kings-p3",
     "deck": "deck-kings",
     "cardType": "king",
-    "z": 24168,
+    "z": 7,
+    "playerIndex": 3
+  },
+  "piece-king-p3-08": {
+    "type": "card",
+    "id": "piece-king-p3-08",
+    "parent": "holder-kings-p3",
+    "deck": "deck-kings",
+    "cardType": "king",
+    "z": 8,
+    "playerIndex": 3
+  },
+  "piece-king-p3-09": {
+    "type": "card",
+    "id": "piece-king-p3-09",
+    "parent": "holder-kings-p3",
+    "deck": "deck-kings",
+    "cardType": "king",
+    "z": 9,
+    "playerIndex": 3
+  },
+  "piece-king-p3-10": {
+    "type": "card",
+    "id": "piece-king-p3-10",
+    "parent": "holder-kings-p3",
+    "deck": "deck-kings",
+    "cardType": "king",
+    "z": 10,
+    "playerIndex": 3
+  },
+  "piece-king-p3-11": {
+    "type": "card",
+    "id": "piece-king-p3-11",
+    "parent": "holder-kings-p3",
+    "deck": "deck-kings",
+    "cardType": "king",
+    "z": 11,
+    "playerIndex": 3
+  },
+  "piece-king-p3-12": {
+    "type": "card",
+    "id": "piece-king-p3-12",
+    "parent": "holder-kings-p3",
+    "deck": "deck-kings",
+    "cardType": "king",
+    "z": 12,
+    "playerIndex": 3
+  },
+  "piece-king-p4-01": {
+    "type": "card",
+    "id": "piece-king-p4-01",
+    "parent": "holder-kings-p4",
+    "deck": "deck-kings",
+    "cardType": "king",
+    "z": 1,
     "playerIndex": 4
   },
-  "piece-king-p4-2": {
+  "piece-king-p4-02": {
     "type": "card",
-    "id": "piece-king-p4-2",
-    "parent": "i5pb",
+    "id": "piece-king-p4-02",
+    "parent": "holder-kings-p4",
     "deck": "deck-kings",
     "cardType": "king",
-    "z": 24170,
+    "z": 2,
     "playerIndex": 4
   },
-  "piece-king-p4-4": {
+  "piece-king-p4-03": {
     "type": "card",
-    "id": "piece-king-p4-4",
-    "parent": "i5pb",
+    "id": "piece-king-p4-03",
+    "parent": "holder-kings-p4",
     "deck": "deck-kings",
     "cardType": "king",
-    "z": 24172,
+    "z": 3,
     "playerIndex": 4
   },
-  "piece-king-p4-3": {
+  "piece-king-p4-04": {
     "type": "card",
-    "id": "piece-king-p4-3",
-    "parent": "i5pb",
+    "id": "piece-king-p4-04",
+    "parent": "holder-kings-p4",
     "deck": "deck-kings",
     "cardType": "king",
-    "z": 24174,
+    "z": 4,
     "playerIndex": 4
   },
-  "piece-king-p4-5": {
+  "piece-king-p4-05": {
     "type": "card",
-    "id": "piece-king-p4-5",
+    "id": "piece-king-p4-05",
     "deck": "deck-kings",
     "cardType": "king",
-    "z": 24176,
+    "z": 5,
     "playerIndex": 4,
-    "parent": "i5pb"
+    "parent": "holder-kings-p4"
   },
-  "piece-king-p4-6": {
+  "piece-king-p4-06": {
     "type": "card",
-    "id": "piece-king-p4-6",
+    "id": "piece-king-p4-06",
     "deck": "deck-kings",
     "cardType": "king",
-    "z": 24178,
+    "z": 6,
     "playerIndex": 4,
-    "parent": "i5pb"
+    "parent": "holder-kings-p4"
   },
-  "piece-king-p5-1": {
+  "piece-king-p4-07": {
     "type": "card",
-    "id": "piece-king-p5-1",
-    "parent": "oszu",
+    "id": "piece-king-p4-07",
     "deck": "deck-kings",
     "cardType": "king",
-    "z": 24233,
+    "z": 7,
+    "playerIndex": 4,
+    "parent": "holder-kings-p4"
+  },
+  "piece-king-p4-08": {
+    "type": "card",
+    "id": "piece-king-p4-08",
+    "deck": "deck-kings",
+    "cardType": "king",
+    "z": 8,
+    "playerIndex": 4,
+    "parent": "holder-kings-p4"
+  },
+  "piece-king-p4-09": {
+    "type": "card",
+    "id": "piece-king-p4-09",
+    "deck": "deck-kings",
+    "cardType": "king",
+    "z": 9,
+    "playerIndex": 4,
+    "parent": "holder-kings-p4"
+  },
+  "piece-king-p4-10": {
+    "type": "card",
+    "id": "piece-king-p4-10",
+    "deck": "deck-kings",
+    "cardType": "king",
+    "z": 10,
+    "playerIndex": 4,
+    "parent": "holder-kings-p4"
+  },
+  "piece-king-p4-11": {
+    "type": "card",
+    "id": "piece-king-p4-11",
+    "deck": "deck-kings",
+    "cardType": "king",
+    "z": 11,
+    "playerIndex": 4,
+    "parent": "holder-kings-p4"
+  },
+  "piece-king-p4-12": {
+    "type": "card",
+    "id": "piece-king-p4-12",
+    "deck": "deck-kings",
+    "cardType": "king",
+    "z": 12,
+    "playerIndex": 4,
+    "parent": "holder-kings-p4"
+  },
+  "piece-king-p5-01": {
+    "type": "card",
+    "id": "piece-king-p5-01",
+    "parent": "holder-kings-p5",
+    "deck": "deck-kings",
+    "cardType": "king",
+    "z": 1,
     "playerIndex": 5
   },
-  "piece-king-p5-2": {
+  "piece-king-p5-02": {
     "type": "card",
-    "id": "piece-king-p5-2",
-    "parent": "oszu",
+    "id": "piece-king-p5-02",
+    "parent": "holder-kings-p5",
     "deck": "deck-kings",
     "cardType": "king",
-    "z": 24235,
+    "z": 2,
     "playerIndex": 5
   },
-  "piece-king-p5-3": {
+  "piece-king-p5-03": {
     "type": "card",
-    "id": "piece-king-p5-3",
-    "parent": "oszu",
+    "id": "piece-king-p5-03",
+    "parent": "holder-kings-p5",
     "deck": "deck-kings",
     "cardType": "king",
-    "z": 24237,
+    "z": 3,
     "playerIndex": 5
   },
-  "piece-king-p5-4": {
+  "piece-king-p5-04": {
     "type": "card",
-    "id": "piece-king-p5-4",
-    "parent": "oszu",
+    "id": "piece-king-p5-04",
+    "parent": "holder-kings-p5",
     "deck": "deck-kings",
     "cardType": "king",
-    "z": 24239,
+    "z": 4,
     "playerIndex": 5
   },
-  "piece-king-p5-5": {
+  "piece-king-p5-05": {
     "type": "card",
-    "id": "piece-king-p5-5",
+    "id": "piece-king-p5-05",
     "deck": "deck-kings",
     "cardType": "king",
-    "z": 24241,
+    "z": 5,
     "playerIndex": 5,
-    "parent": "oszu"
+    "parent": "holder-kings-p5"
   },
-  "piece-king-p5-6": {
+  "piece-king-p5-06": {
     "type": "card",
-    "id": "piece-king-p5-6",
+    "id": "piece-king-p5-06",
     "deck": "deck-kings",
     "cardType": "king",
-    "z": 24243,
+    "z": 6,
     "playerIndex": 5,
-    "parent": "oszu"
+    "parent": "holder-kings-p5"
+  },
+  "piece-king-p5-07": {
+    "type": "card",
+    "id": "piece-king-p5-07",
+    "deck": "deck-kings",
+    "cardType": "king",
+    "z": 7,
+    "playerIndex": 5,
+    "parent": "holder-kings-p5"
+  },
+  "piece-king-p5-08": {
+    "type": "card",
+    "id": "piece-king-p5-08",
+    "deck": "deck-kings",
+    "cardType": "king",
+    "z": 8,
+    "playerIndex": 5,
+    "parent": "holder-kings-p5"
+  },
+  "piece-king-p5-09": {
+    "type": "card",
+    "id": "piece-king-p5-09",
+    "deck": "deck-kings",
+    "cardType": "king",
+    "z": 9,
+    "playerIndex": 5,
+    "parent": "holder-kings-p5"
+  },
+  "piece-king-p5-10": {
+    "type": "card",
+    "id": "piece-king-p5-10",
+    "deck": "deck-kings",
+    "cardType": "king",
+    "z": 10,
+    "playerIndex": 5,
+    "parent": "holder-kings-p5"
+  },
+  "piece-king-p5-11": {
+    "type": "card",
+    "id": "piece-king-p5-11",
+    "deck": "deck-kings",
+    "cardType": "king",
+    "z": 11,
+    "playerIndex": 5,
+    "parent": "holder-kings-p5"
+  },
+  "piece-king-p5-12": {
+    "type": "card",
+    "id": "piece-king-p5-12",
+    "deck": "deck-kings",
+    "cardType": "king",
+    "z": 12,
+    "playerIndex": 5,
+    "parent": "holder-kings-p5"
   },
   "piece-knight-p1-1": {
     "type": "card",
@@ -3807,20 +4078,6 @@
     "handleSize": 30,
     "id": "lkjq"
   },
-  "1b2e": {
-    "type": "pile",
-    "parent": "holder-kings-p1",
-    "x": 0,
-    "y": 0,
-    "width": 40,
-    "height": 40,
-    "handleCSS": {
-      "background": "black",
-      "color": "white"
-    },
-    "handleSize": 30,
-    "id": "1b2e"
-  },
   "7f3r": {
     "type": "pile",
     "parent": "holder-knights-p1",
@@ -3848,20 +4105,6 @@
     },
     "handleSize": 30,
     "id": "0kvk"
-  },
-  "e6h1": {
-    "type": "pile",
-    "parent": "holder-kings-p2",
-    "x": 0,
-    "y": 0,
-    "width": 40,
-    "height": 40,
-    "handleCSS": {
-      "background": "black",
-      "color": "white"
-    },
-    "handleSize": 30,
-    "id": "e6h1"
   },
   "oaru": {
     "type": "pile",
@@ -3891,20 +4134,6 @@
     "handleSize": 30,
     "id": "pyke"
   },
-  "yihr": {
-    "type": "pile",
-    "parent": "holder-kings-p3",
-    "x": 0,
-    "y": 0,
-    "width": 40,
-    "height": 40,
-    "handleCSS": {
-      "background": "black",
-      "color": "white"
-    },
-    "handleSize": 30,
-    "id": "yihr"
-  },
   "voto": {
     "type": "pile",
     "parent": "holder-knights-p3",
@@ -3933,20 +4162,6 @@
     "handleSize": 30,
     "id": "w4mi"
   },
-  "i5pb": {
-    "type": "pile",
-    "parent": "holder-kings-p4",
-    "x": 0,
-    "y": 0,
-    "width": 40,
-    "height": 40,
-    "handleCSS": {
-      "background": "black",
-      "color": "white"
-    },
-    "handleSize": 30,
-    "id": "i5pb"
-  },
   "z418": {
     "type": "pile",
     "parent": "holder-knights-p4",
@@ -3974,20 +4189,6 @@
     },
     "handleSize": 30,
     "id": "nllx"
-  },
-  "oszu": {
-    "type": "pile",
-    "parent": "holder-kings-p5",
-    "x": 0,
-    "y": 0,
-    "width": 40,
-    "height": 40,
-    "handleCSS": {
-      "background": "black",
-      "color": "white"
-    },
-    "handleSize": 30,
-    "id": "oszu"
   },
   "pfbp": {
     "type": "pile",
