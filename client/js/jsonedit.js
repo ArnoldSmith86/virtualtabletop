@@ -2526,7 +2526,7 @@ function jeLoggingFilterLog(filter) {
       entry.classList.remove(className);
   if(!filter) return;
 
-  for(const entry of $a('#jeLog .jeLogNested .jeExpander')) {
+  for(const entry of $a('#jeLog .jeLogNested .jeExpander, #jeLog .jeLogNested .jeRedExpander')) {
     if(entry.textContent.toLowerCase().indexOf(filter.toLowerCase()) == -1) {
       entry.classList.add('jeLogFilterNoMatch');
     } else {
