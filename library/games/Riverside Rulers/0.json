@@ -3942,12 +3942,11 @@
         "collection": "players"
       },
       {
-        "func": "SET",
+        "func": "MOVE",
         "collection": [
           "card-shuffle"
         ],
-        "property": "parent",
-        "value": "holder-discard"
+        "to": "holder-discard"
       },
       {
         "func": "SHUFFLE",
@@ -3966,12 +3965,11 @@
         ]
       },
       {
-        "func": "SET",
+        "func": "MOVE",
         "collection": [
           "card-shuffle"
         ],
-        "property": "parent",
-        "value": "holder-draw"
+        "to": "holder-draw"
       },
       {
         "func": "SHUFFLE",
