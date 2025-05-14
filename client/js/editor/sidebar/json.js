@@ -110,6 +110,10 @@ class DebugModule extends SidebarModule {
       jeLoggingHTML = '';
   }
 
+  button_filter() {
+    jeLoggingFilterLog($('#jeLogFilter').value);
+  }
+
   onClose() {
     $('#jsonEditor').append($('#jeLog'));
   }
@@ -120,11 +124,13 @@ class DebugModule extends SidebarModule {
 
   renderModule(target) {
     div(target, 'buttonBar', `
+      <input type=text id=jeLogFilter placeholder="Filter log...">
       <input type=checkbox id=autoClearLog checked><label for=autoClearLog> Clear after each interaction</label>
       <button icon=backspace id=clearLogButton disabled>Clear</button>
     `);
     target.append($('#jeLog'));
 
+    on('#jeLogFilter', 'input', e=>this.button_filter());
     on('#autoClearLog', 'change', e=>this.button_clearCheckbox());
     on('#clearLogButton', 'click', e=>this.button_clearButton());
   }
