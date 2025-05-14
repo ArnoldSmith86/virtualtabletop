@@ -2428,6 +2428,7 @@ export function jeLoggingRoutineEnd(variables, collections) {
       }
     }
   }
+  jeLoggingFilterLog($('#jeLogFilter').value);
 }
 
 export function jeLoggingRoutineOperationStart(original, applied) {
