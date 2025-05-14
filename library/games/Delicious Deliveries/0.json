@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "version": 14,
+    "version": 17,
     "info": {
       "name": "Delicious Deliveries",
       "image": "/assets/957305411_260972",
@@ -547,18 +547,17 @@
             "operand1": "${PROPERTY players OF $value}",
             "operand2": "${playerCount}",
             "thenRoutine": [
-              "var board = ${value}",
               {
                 "func": "SET",
-                "property": "y",
-                "value": "${PROPERTY activeY OF $value}"
+                "property": "display",
+                "value": true
               }
             ],
             "elseRoutine": [
               {
                 "func": "SET",
-                "property": "y",
-                "value": -1000
+                "property": "display",
+                "value": false
               }
             ]
           }
@@ -1153,7 +1152,6 @@
     },
     "movable": false,
     "players": 5,
-    "activeY": 25,
     "corners": [
       "space-5p-a1",
       "space-5p-a10",
@@ -2087,7 +2085,7 @@
   "board-4p": {
     "id": "board-4p",
     "x": 672.5,
-    "y": -1000,
+    "y": 72.5,
     "layer": -4,
     "width": 855,
     "height": 855,
@@ -2097,8 +2095,8 @@
       ]
     },
     "movable": false,
+    "display": false,
     "players": 4,
-    "activeY": 72.5,
     "corners": [
       "space-4p-a1",
       "space-4p-a9",
@@ -2820,7 +2818,7 @@
   "board-3p": {
     "id": "board-3p",
     "x": 720,
-    "y": -1000,
+    "y": 120,
     "layer": -4,
     "width": 760,
     "height": 760,
@@ -2830,8 +2828,8 @@
       ]
     },
     "movable": false,
+    "display": false,
     "players": 3,
-    "activeY": 120,
     "corners": [
       "space-3p-a1",
       "space-3p-a8",
@@ -3419,7 +3417,7 @@
   "board-2p": {
     "id": "board-2p",
     "x": 767.5,
-    "y": -1000,
+    "y": 167.5,
     "layer": -4,
     "width": 665,
     "height": 665,
@@ -3429,8 +3427,8 @@
       ]
     },
     "movable": false,
+    "display": false,
     "players": 2,
-    "activeY": 167.5,
     "corners": [
       "space-2p-a1",
       "space-2p-a7",
