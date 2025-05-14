@@ -173,6 +173,10 @@ body.lightsOff .jeTreeExpander::before, body.lightsOff .jeTreeExpander-down::bef
   opacity: 0.2;
 }
 
+.jeLogFilterMatch + .jeLogNested > .jeLogDetails > .jeExpander {
+  opacity: 1;
+}
+
 #jeText {
   background: none;
   -webkit-text-fill-color: transparent;
