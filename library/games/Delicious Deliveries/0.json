@@ -2191,18 +2191,7 @@
     "id": "space-4p-a1",
     "type": "holder",
     "parent": "board-4p",
-    "width": 95,
-    "height": 95,
-    "css": {
-      "border-color": "black",
-      "border-radius": "0px",
-      "border-style": "solid",
-      "border-width": "1px",
-      "background-color": "transparent"
-    },
-    "dropOffsetX": 0,
-    "dropOffsetY": 0,
-    "dropLimit": 1
+    "inheritFrom": "space-5p-a1"
   },
   "space-4p-a2": {
     "id": "space-4p-a2",
@@ -2935,18 +2924,7 @@
     "id": "space-3p-a1",
     "type": "holder",
     "parent": "board-3p",
-    "width": 95,
-    "height": 95,
-    "css": {
-      "border-color": "black",
-      "border-radius": "0px",
-      "border-style": "solid",
-      "border-width": "1px",
-      "background-color": "transparent"
-    },
-    "dropOffsetX": 0,
-    "dropOffsetY": 0,
-    "dropLimit": 1
+    "inheritFrom": "space-5p-a1"
   },
   "space-3p-a2": {
     "id": "space-3p-a2",
@@ -3517,18 +3495,7 @@
     "id": "space-2p-a1",
     "type": "holder",
     "parent": "board-2p",
-    "width": 95,
-    "height": 95,
-    "css": {
-      "border-color": "black",
-      "border-radius": "0px",
-      "border-style": "solid",
-      "border-width": "1px",
-      "background-color": "transparent"
-    },
-    "dropOffsetX": 0,
-    "dropOffsetY": 0,
-    "dropLimit": 1
+    "inheritFrom": "space-5p-a1"
   },
   "space-2p-a2": {
     "id": "space-2p-a2",
