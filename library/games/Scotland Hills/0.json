@@ -1,0 +1,4163 @@
+{
+  "_meta": {
+    "version": 17,
+    "info": {
+      "name": "Scotland Hills",
+      "image": "/assets/-245216316_167148",
+      "rules": "https://cdn.1j1ju.com/medias/d5/72/2f-schotten-totten-rulebook.pdf",
+      "bgg": "https://boardgamegeek.com/boardgame/372/schotten-totten",
+      "year": "1999",
+      "mode": "Vs",
+      "time": "30",
+      "attribution": "Library image is \"Glencoe, United Kingdom\" from Wikimedia Commons by Ilya Ilyukhin licensed under CC0 1.0\nhttps://commons.wikimedia.org/wiki/File:Glencoe,_United_Kingdom_(Unsplash_W8OhSnVPE2Q).jpg\n<div>Game layout, scripting, and scoring summary by dexdouglas, released to the Public Domain under CC0.</div>",
+      "lastUpdate": 1747254610532,
+      "showName": true,
+      "skill": "low",
+      "description": "In Scotland Hills, you compete for majority control over 9 hills by playing cards that represent clans fighting for dominance.",
+      "similarImage": "",
+      "similarName": "Schotten Totten and Battle Line",
+      "similarDesigner": "Reiner Knizia",
+      "similarAwards": "2005 Fairplay À la carte Runner-up. \n2000 International Gamers Awards - General Strategy; Two-players.\n1999 Meeples Choice Award Nominee",
+      "ruleText": "While there are 3 different ways to play this implementation, they all follow the same basic principle and learning one will teach you all.\nI will explain the Scotland Hills way first and then explain the differences:<div>In Scotland Hills, two players are vying for control of the land by fighting over the hills. To win the game, you either need to control 3 hills that are directly adjacent to each other, or you need to control any 5 hills at the end of your turn.</div><div><br></div><div>On your turn, you play a card from your hand to any of the columns/hills on your side of the board. Check to see if you have won the hill. If you have, drag the token in the middle of the two hills to your side. Keep it aligned with the hill you won as it's important for the end game winning condition. Whether you have or haven't won a hill, you will click the \"Draw 1\" button to take a card and pass the turn to the next player.&nbsp;</div><div><br></div><div><b>How to determine if you've won a hill:</b></div><div>You will always have to play at least 3 cards to your side of the hill in order to win it. The cards you play will create a \"poker hand\" of sorts. The strength ranking of these hands is displayed in the upper left with the strongest combination being at the top (straight flush) and the weakest combination at the bottom (highest sum). If you've played 3 cards to your side of the hill, at the end of your turn, you can assess if you've won the hill. If your opponent has also played 3 cards, this is easy to determine. Simply compare the strength of your two hands and the winner claims the token at the end of their turn (<b>NOTE</b>: if you play a card that allowed your opponent to win the hill, they DO NOT claim the token until the end of <u>THEIR</u> turn.). If you both play the same poker hand, then compare the highest total sum of the cards. If the strength and the sum of the two hands is equal, then the player who played the last card on the hill loses.</div><div><br></div><div>You can win a hill (or multiple hills!) even if your opponent has not played at least 3 cards to their side of the hill. If you can prove, using the cards face up on hills, that your hand combination can not be beat by any possible combination that your opponent can create, then the hill is won by you. You cannot show cards in your hand to prove that your opponent can't win, the cards must be face up and visible for all in order to do this. (Example: You have played a red 2,3,4 on your side of the board. A Straight Flush! Your opponent has two 5's on their side of the board. The best combination they could create is a Three of a Kind which will always lose to a Straight Flush. You can claim the token in this hill at the end of your turn.</div><div><br></div><div>Once a hill has been claimed, you can never play more cards to it, even if you played less than 3 cards to the hill.</div><div><br></div><div>The game is over once a player controls 3 hills that are directly adjacent to each other, or a player controls any 5 hills at the end of their turn.</div><div><br></div><div><b>If you want to play multiple rounds</b>&nbsp;<b>as a series</b>- Decide on how many rounds you will play before starting. The winner of the game will score 5 points and the loser gains as many points as hills they control at the end of the game.</div><div><br></div><div><b><u><br></u></b></div><div><b><u>Scotland Hills + Schemes</u></b></div><div>This variant uses all the same rules as above with the following additional deck of 10 Scheme cards. At the start of the game, you will draw 7 cards from the deck, and after playing a card, you can choose to draw from the Scheme deck instead of the standard number deck. You can only play 1 <i>more</i>&nbsp;Scheme card than your opponent, regardless of how many you may hold in your hand. Example: Your opponent has played 1 Scheme card, you have played 0. Your opponent cannot play any more Scheme cards but you could play 1 on each of your next two turns which would put your played number of Scheme cards at 2, compared to their 1.&nbsp;</div><div><b>The Scheme cards have the following effects:</b></div><div><ul><li><b>1-9</b>&nbsp;- This card is a wild and can be played in your hill. When you are claiming your hill, you can choose to assign it any value and any suit. There are two of these in the deck but you can only ever have one on your side of the hill. If you draw a second one while your first is still on your side, it must sit in your hand for the rest of the game or until the wild has been removed from your side of the hills.</li><li><b>7</b>&nbsp;- This card is a 7 in any suit and can be played in your hill. You assign the suit when the hill is claimed.&nbsp;</li><li><b>123</b> - This card and can be played in your hill. It is any suit and can be a 1, 2, or 3 when you are claiming a hill.&nbsp;</li><li><b>+#</b> - You can play this card in-between you and your opponents where the hill marker sits as long as it has not been claimed. When this card is present, none of the hand combinations matter for strength. Only the sum of all the cards present will determine who wins the hill.&nbsp;</li><li><b>+1</b> - You can play this card in-between you and your opponents where the hill marker sits as long as it has not been claimed. For this hill to be claimed, 4 cards must be played. All poker combinations must include all 4 cards to be valid (example: a red 3,4,5 plus a green 7 will only count for Highest Sum).&nbsp;</li><li><b>Draw 3, discard 2</b> - Draw 3 cards from one or both decks. After drawing, select 2 cards from your hand to return to the bottom of their respective decks. To do this, you will need to drag the deck out of the holder by clicking and holding the number in the upper right of the deck, to move it out of the way. Then drag your discarded card to the holder, then drag the remaining cards back on top them.&nbsp;</li><li><b>Move your card </b>- Choose any card (number or scheme) on one of your hills that have NOT been claimed yet. You can move this card to a different hill on your side of the board that is unclaimed, or you can discard it faceup.&nbsp;</li><li><b>Steal opp card - </b>Choose a number card (not scheme) on your opponents side of the board on an unclaimed hill and move it to one of your unclaimed hills.&nbsp;</li><li><b>Discard opp card </b>- Choose any card (number or scheme) on your opponents side of the board on a hill that has not been claimed yet. Discard this card faceup.&nbsp;</li></ul><div><br></div></div><div><div><b><u>Scotland Battles</u></b></div><div>This variant uses all the same rules as above but has a deck of 1-10 in 6 suits instead of 1-9. It also uses a deck of 10 Scheme cards with some small modifications. The simplest is that the wild 1-9 card is now a 1-10 card and the wild 7 is now a wild 8. The more interesting twist is the \"<b>Draw 3, Discard 2</b>\". In this variant, the 2 cards that you discard are placed face down <u>ON TOP</u> of the respective draw piles, so you have insight into what your opponent or you will draw next.&nbsp;</div></div>",
+      "helpText": "Players should click to sit and select which way they want to play Scotland Hills/Battle.&nbsp;<div><br><div><u><i>Summary:</i></u><br><div><b>Scotland Hills</b>: You are dealt 6 cards from a deck of 54 cards which are numbered 1-9 in six suits.&nbsp;</div></div><div><b>Scotland Hills + Schemes</b>: You are dealt 7 cards from a deck of 54 cards which are numbered 1-9 in six suits. There is also a deck of Scheme cards which are available to draw from.</div><div><b>Scotland Battles</b>: You are dealt 7 cards from a deck of 60 cards which are numbered 1-10 in six suits. There is also a deck of Scheme cards which are available to draw from.</div><div><br></div><div>If you want to reset the game for a new round, press the Reset button in the upper right corner.&nbsp;</div></div>",
+      "players": "2",
+      "language": "en-US",
+      "variant": "Scotland Hills",
+      "variantImage": ""
+    }
+  },
+  "hand": {
+    "id": "hand",
+    "x": 600,
+    "y": 898,
+    "z": 5883,
+    "type": "holder",
+    "onEnter": {
+      "activeFace": 1
+    },
+    "onLeave": {
+      "activeFace": 0
+    },
+    "dropOffsetX": 6,
+    "dropOffsetY": 6,
+    "stackOffsetX": 80,
+    "inheritChildZ": true,
+    "childrenPerOwner": true,
+    "width": 580,
+    "height": 180,
+    "dropShadow": true,
+    "hidePlayerCursors": true,
+    "scale": 1.5,
+    "css": {
+      "default": {
+        "background": "transparent",
+        "border-color": "black",
+        "border": "black"
+      }
+    }
+  },
+  "1d9cC": {
+    "id": "1d9cC",
+    "parent": "seat1",
+    "fixedParent": true,
+    "x": -20,
+    "y": -20,
+    "width": 30,
+    "height": 30,
+    "borderRadius": 100,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "css": {
+      "font-size": "18px",
+      "display": "flex",
+      "align-items": "center",
+      "justify-content": "center",
+      "color": "#6d6d6d",
+      "background": "#e4e4e4",
+      "border": "2px solid #999999"
+    },
+    "text": 0,
+    "ownerGlobalUpdateRoutine": [
+      "var parent = ${PROPERTY parent}",
+      "var COUNT = 0",
+      {
+        "func": "SELECT",
+        "property": "_ancestor",
+        "value": "${PROPERTY hand OF $parent}"
+      },
+      {
+        "func": "COUNT",
+        "owner": "${PROPERTY player OF $parent}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "text",
+        "value": "${COUNT}"
+      }
+    ],
+    "playerGlobalUpdateRoutine": [
+      {
+        "func": "CALL",
+        "routine": "ownerGlobalUpdateRoutine",
+        "widget": "${PROPERTY id}"
+      }
+    ]
+  },
+  "seat1": {
+    "type": "seat",
+    "id": "seat1",
+    "x": 56,
+    "y": 16
+  },
+  "smklC": {
+    "id": "smklC",
+    "parent": "seat2",
+    "fixedParent": true,
+    "x": -20,
+    "y": -20,
+    "width": 30,
+    "height": 30,
+    "borderRadius": 100,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "css": {
+      "font-size": "18px",
+      "display": "flex",
+      "align-items": "center",
+      "justify-content": "center",
+      "color": "#6d6d6d",
+      "background": "#e4e4e4",
+      "border": "2px solid #999999"
+    },
+    "text": 0,
+    "ownerGlobalUpdateRoutine": [
+      "var parent = ${PROPERTY parent}",
+      "var COUNT = 0",
+      {
+        "func": "SELECT",
+        "property": "_ancestor",
+        "value": "${PROPERTY hand OF $parent}"
+      },
+      {
+        "func": "COUNT",
+        "owner": "${PROPERTY player OF $parent}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "text",
+        "value": "${COUNT}"
+      }
+    ],
+    "playerGlobalUpdateRoutine": [
+      {
+        "func": "CALL",
+        "routine": "ownerGlobalUpdateRoutine",
+        "widget": "${PROPERTY id}"
+      }
+    ]
+  },
+  "seat2": {
+    "type": "seat",
+    "id": "seat2",
+    "index": 2,
+    "x": 56,
+    "y": 758,
+    "turn": true
+  },
+  "ec76": {
+    "image": "/assets/-319137838_21387",
+    "id": "ec76",
+    "y": 82,
+    "x": 10,
+    "width": 230,
+    "height": 230,
+    "z": 7,
+    "movable": false,
+    "layer": -1
+  },
+  "marble1": {
+    "type": "card",
+    "id": "marble1",
+    "deck": "columnMarkers",
+    "cardType": "red",
+    "z": 51071,
+    "reset": {
+      "parent": "border1"
+    },
+    "x": 4,
+    "activeFace": 1,
+    "scale": 1.5,
+    "y": 4,
+    "parent": "border1"
+  },
+  "border1": {
+    "type": "holder",
+    "id": "border1",
+    "x": 315,
+    "width": 40,
+    "height": 40,
+    "z": 5684,
+    "inheritChildZ": true,
+    "y": 387,
+    "dropLimit": 1,
+    "layer": 3,
+    "css": {
+      "default": {
+        "background": "transparent",
+        "border-color": "transparent",
+        "border": "transparent"
+      }
+    }
+  },
+  "columnMarkers": {
+    "type": "deck",
+    "id": "columnMarkers",
+    "x": 1506,
+    "y": 374,
+    "z": 5859,
+    "cardDefaults": {
+      "width": 40,
+      "height": 40
+    },
+    "cardTypes": {
+      "black": {
+        "label": "Black",
+        "image": "/i/game-pieces/3D/Marble-3D.svg",
+        "imageColor": "#666565",
+        "sortingOrder": 1
+      },
+      "white": {
+        "label": "White",
+        "image": "/i/game-pieces/3D/Marble-3D.svg",
+        "imageColor": "#dae0df",
+        "sortingOrder": 2
+      },
+      "red": {
+        "label": "Red",
+        "image": "/i/game-icons.net/delapouite/pick-of-destiny.svg",
+        "imageColor": "#ed1b43",
+        "sortingOrder": 3
+      },
+      "orange": {
+        "label": "Orange",
+        "image": "/i/game-pieces/3D/Marble-3D.svg",
+        "imageColor": "#ff7b23",
+        "sortingOrder": 4
+      },
+      "peach": {
+        "label": "Peach",
+        "image": "/i/game-pieces/3D/Marble-3D.svg",
+        "imageColor": "#f2948c",
+        "sortingOrder": 5
+      },
+      "yellow": {
+        "label": "Yellow",
+        "image": "/i/game-pieces/3D/Marble-3D.svg",
+        "imageColor": "#ffce00",
+        "sortingOrder": 6
+      },
+      "green": {
+        "label": "Green",
+        "image": "/i/game-pieces/3D/Marble-3D.svg",
+        "imageColor": "#69d83a",
+        "sortingOrder": 7
+      },
+      "teal": {
+        "label": "Teal",
+        "image": "/i/game-pieces/3D/Marble-3D.svg",
+        "imageColor": "#2fd1cd",
+        "sortingOrder": 8
+      },
+      "blue": {
+        "label": "Blue",
+        "image": "/i/game-pieces/3D/Marble-3D.svg",
+        "imageColor": "#5894f4",
+        "sortingOrder": 9
+      },
+      "purple": {
+        "label": "Purple",
+        "image": "/i/game-pieces/3D/Marble-3D.svg",
+        "imageColor": "#9458f4",
+        "sortingOrder": 10
+      },
+      "pink": {
+        "label": "Pink",
+        "image": "/i/game-pieces/3D/Marble-3D.svg",
+        "imageColor": "#ff69b3",
+        "sortingOrder": 11
+      },
+      "brown": {
+        "label": "Brown",
+        "image": "/i/game-pieces/3D/Marble-3D.svg",
+        "imageColor": "#a8570e",
+        "sortingOrder": 12
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "width": 40,
+            "height": 40,
+            "type": "image",
+            "color": "transparent",
+            "value": ""
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "transparent",
+            "width": 40,
+            "height": 40,
+            "svgReplaces": {
+              "#primaryColor": "imageColor",
+              "#labelColor": "imageLabelColor"
+            },
+            "dynamicProperties": {
+              "value": "image"
+            }
+          }
+        ],
+        "border": false,
+        "radius": false
+      }
+    ]
+  },
+  "9ixk 1 of diamonds": {
+    "type": "card",
+    "id": "9ixk 1 of diamonds",
+    "deck": "stDeck",
+    "cardType": "1 of diamonds",
+    "z": 53060,
+    "parent": "rv5k"
+  },
+  "9ixk 2 of diamonds": {
+    "type": "card",
+    "id": "9ixk 2 of diamonds",
+    "deck": "stDeck",
+    "cardType": "2 of diamonds",
+    "z": 53091,
+    "parent": "rv5k"
+  },
+  "9ixk 3 of diamonds": {
+    "type": "card",
+    "id": "9ixk 3 of diamonds",
+    "deck": "stDeck",
+    "cardType": "3 of diamonds",
+    "z": 53081,
+    "parent": "rv5k"
+  },
+  "9ixk 4 of diamonds": {
+    "type": "card",
+    "id": "9ixk 4 of diamonds",
+    "deck": "stDeck",
+    "cardType": "4 of diamonds",
+    "z": 53064,
+    "parent": "rv5k"
+  },
+  "9ixk 5 of diamonds": {
+    "type": "card",
+    "id": "9ixk 5 of diamonds",
+    "deck": "stDeck",
+    "cardType": "5 of diamonds",
+    "z": 53069,
+    "parent": "rv5k"
+  },
+  "9ixk 6 of diamonds": {
+    "type": "card",
+    "id": "9ixk 6 of diamonds",
+    "deck": "stDeck",
+    "cardType": "6 of diamonds",
+    "z": 53083,
+    "parent": "rv5k"
+  },
+  "9ixk 7 of diamonds": {
+    "type": "card",
+    "id": "9ixk 7 of diamonds",
+    "deck": "stDeck",
+    "cardType": "7 of diamonds",
+    "z": 53050,
+    "parent": "rv5k"
+  },
+  "9ixk 8 of diamonds": {
+    "type": "card",
+    "id": "9ixk 8 of diamonds",
+    "deck": "stDeck",
+    "cardType": "8 of diamonds",
+    "z": 53051,
+    "parent": "rv5k"
+  },
+  "9ixk 9 of diamonds": {
+    "type": "card",
+    "id": "9ixk 9 of diamonds",
+    "deck": "stDeck",
+    "cardType": "9 of diamonds",
+    "z": 53061,
+    "parent": "rv5k"
+  },
+  "9ixk 1 of hearts": {
+    "type": "card",
+    "id": "9ixk 1 of hearts",
+    "deck": "stDeck",
+    "cardType": "1 of hearts",
+    "z": 53070,
+    "parent": "rv5k"
+  },
+  "9ixk 2 of hearts": {
+    "type": "card",
+    "id": "9ixk 2 of hearts",
+    "deck": "stDeck",
+    "cardType": "2 of hearts",
+    "z": 53090,
+    "parent": "rv5k"
+  },
+  "9ixk 3 of hearts": {
+    "type": "card",
+    "id": "9ixk 3 of hearts",
+    "deck": "stDeck",
+    "cardType": "3 of hearts",
+    "z": 53077,
+    "parent": "rv5k"
+  },
+  "9ixk 4 of hearts": {
+    "type": "card",
+    "id": "9ixk 4 of hearts",
+    "deck": "stDeck",
+    "cardType": "4 of hearts",
+    "z": 53087,
+    "parent": "rv5k"
+  },
+  "9ixk 5 of hearts": {
+    "type": "card",
+    "id": "9ixk 5 of hearts",
+    "deck": "stDeck",
+    "cardType": "5 of hearts",
+    "z": 53057,
+    "parent": "rv5k"
+  },
+  "9ixk 6 of hearts": {
+    "type": "card",
+    "id": "9ixk 6 of hearts",
+    "deck": "stDeck",
+    "cardType": "6 of hearts",
+    "z": 53092,
+    "parent": "rv5k"
+  },
+  "9ixk 7 of hearts": {
+    "type": "card",
+    "id": "9ixk 7 of hearts",
+    "deck": "stDeck",
+    "cardType": "7 of hearts",
+    "z": 53079,
+    "parent": "rv5k"
+  },
+  "9ixk 8 of hearts": {
+    "type": "card",
+    "id": "9ixk 8 of hearts",
+    "deck": "stDeck",
+    "cardType": "8 of hearts",
+    "z": 53080,
+    "parent": "rv5k"
+  },
+  "9ixk 9 of hearts": {
+    "type": "card",
+    "id": "9ixk 9 of hearts",
+    "deck": "stDeck",
+    "cardType": "9 of hearts",
+    "z": 53095,
+    "parent": "rv5k"
+  },
+  "9ixk 1 of clubs": {
+    "type": "card",
+    "id": "9ixk 1 of clubs",
+    "deck": "stDeck",
+    "cardType": "1 of clubs",
+    "z": 53097,
+    "parent": "rv5k"
+  },
+  "9ixk 2 of clubs": {
+    "type": "card",
+    "id": "9ixk 2 of clubs",
+    "deck": "stDeck",
+    "cardType": "2 of clubs",
+    "z": 53073,
+    "parent": "rv5k"
+  },
+  "9ixk 3 of clubs": {
+    "type": "card",
+    "id": "9ixk 3 of clubs",
+    "deck": "stDeck",
+    "cardType": "3 of clubs",
+    "z": 53076,
+    "parent": "rv5k"
+  },
+  "9ixk 4 of clubs": {
+    "type": "card",
+    "id": "9ixk 4 of clubs",
+    "deck": "stDeck",
+    "cardType": "4 of clubs",
+    "z": 53054,
+    "parent": "rv5k"
+  },
+  "9ixk 5 of clubs": {
+    "type": "card",
+    "id": "9ixk 5 of clubs",
+    "deck": "stDeck",
+    "cardType": "5 of clubs",
+    "z": 53089,
+    "parent": "rv5k"
+  },
+  "9ixk 6 of clubs": {
+    "type": "card",
+    "id": "9ixk 6 of clubs",
+    "deck": "stDeck",
+    "cardType": "6 of clubs",
+    "z": 53063,
+    "parent": "rv5k"
+  },
+  "9ixk 7 of clubs": {
+    "type": "card",
+    "id": "9ixk 7 of clubs",
+    "deck": "stDeck",
+    "cardType": "7 of clubs",
+    "z": 53062,
+    "parent": "rv5k"
+  },
+  "9ixk 8 of clubs": {
+    "type": "card",
+    "id": "9ixk 8 of clubs",
+    "deck": "stDeck",
+    "cardType": "8 of clubs",
+    "z": 53099,
+    "parent": "rv5k"
+  },
+  "9ixk 9 of clubs": {
+    "type": "card",
+    "id": "9ixk 9 of clubs",
+    "deck": "stDeck",
+    "cardType": "9 of clubs",
+    "z": 53078,
+    "parent": "rv5k"
+  },
+  "9ixk 1 of spades": {
+    "type": "card",
+    "id": "9ixk 1 of spades",
+    "deck": "stDeck",
+    "cardType": "1 of spades",
+    "z": 53056,
+    "parent": "rv5k"
+  },
+  "9ixk 2 of spades": {
+    "type": "card",
+    "id": "9ixk 2 of spades",
+    "deck": "stDeck",
+    "cardType": "2 of spades",
+    "z": 53067,
+    "parent": "rv5k"
+  },
+  "9ixk 3 of spades": {
+    "type": "card",
+    "id": "9ixk 3 of spades",
+    "deck": "stDeck",
+    "cardType": "3 of spades",
+    "z": 53074,
+    "parent": "rv5k"
+  },
+  "9ixk 4 of spades": {
+    "type": "card",
+    "id": "9ixk 4 of spades",
+    "deck": "stDeck",
+    "cardType": "4 of spades",
+    "z": 53058,
+    "parent": "rv5k"
+  },
+  "9ixk 5 of spades": {
+    "type": "card",
+    "id": "9ixk 5 of spades",
+    "deck": "stDeck",
+    "cardType": "5 of spades",
+    "z": 53100,
+    "parent": "rv5k"
+  },
+  "9ixk 6 of spades": {
+    "type": "card",
+    "id": "9ixk 6 of spades",
+    "deck": "stDeck",
+    "cardType": "6 of spades",
+    "z": 53059,
+    "parent": "rv5k"
+  },
+  "9ixk 7 of spades": {
+    "type": "card",
+    "id": "9ixk 7 of spades",
+    "deck": "stDeck",
+    "cardType": "7 of spades",
+    "z": 53084,
+    "parent": "rv5k"
+  },
+  "9ixk 8 of spades": {
+    "type": "card",
+    "id": "9ixk 8 of spades",
+    "deck": "stDeck",
+    "cardType": "8 of spades",
+    "z": 53096,
+    "parent": "rv5k"
+  },
+  "9ixk 9 of spades": {
+    "type": "card",
+    "id": "9ixk 9 of spades",
+    "deck": "stDeck",
+    "cardType": "9 of spades",
+    "z": 53071,
+    "parent": "rv5k"
+  },
+  "9ixk 1 of round-star": {
+    "type": "card",
+    "id": "9ixk 1 of round-star",
+    "deck": "stDeck",
+    "cardType": "1 of round-star",
+    "z": 53102,
+    "parent": "rv5k"
+  },
+  "9ixk 2 of round-star": {
+    "type": "card",
+    "id": "9ixk 2 of round-star",
+    "deck": "stDeck",
+    "cardType": "2 of round-star",
+    "z": 53066,
+    "parent": "rv5k"
+  },
+  "9ixk 3 of round-star": {
+    "type": "card",
+    "id": "9ixk 3 of round-star",
+    "deck": "stDeck",
+    "cardType": "3 of round-star",
+    "z": 53101,
+    "parent": "rv5k"
+  },
+  "9ixk 4 of round-star": {
+    "type": "card",
+    "id": "9ixk 4 of round-star",
+    "deck": "stDeck",
+    "cardType": "4 of round-star",
+    "z": 53085,
+    "parent": "rv5k"
+  },
+  "9ixk 5 of round-star": {
+    "type": "card",
+    "id": "9ixk 5 of round-star",
+    "deck": "stDeck",
+    "cardType": "5 of round-star",
+    "z": 53093,
+    "parent": "rv5k"
+  },
+  "9ixk 6 of round-star": {
+    "type": "card",
+    "id": "9ixk 6 of round-star",
+    "deck": "stDeck",
+    "cardType": "6 of round-star",
+    "z": 53094,
+    "parent": "rv5k"
+  },
+  "9ixk 7 of round-star": {
+    "type": "card",
+    "id": "9ixk 7 of round-star",
+    "deck": "stDeck",
+    "cardType": "7 of round-star",
+    "z": 53098,
+    "parent": "rv5k"
+  },
+  "9ixk 8 of round-star": {
+    "type": "card",
+    "id": "9ixk 8 of round-star",
+    "deck": "stDeck",
+    "cardType": "8 of round-star",
+    "z": 53052,
+    "parent": "rv5k"
+  },
+  "9ixk 9 of round-star": {
+    "type": "card",
+    "id": "9ixk 9 of round-star",
+    "deck": "stDeck",
+    "cardType": "9 of round-star",
+    "z": 53068,
+    "parent": "rv5k"
+  },
+  "9ixk 1 of flower-emblem": {
+    "type": "card",
+    "id": "9ixk 1 of flower-emblem",
+    "deck": "stDeck",
+    "cardType": "1 of flower-emblem",
+    "z": 53086,
+    "parent": "rv5k"
+  },
+  "9ixk 2 of flower-emblem": {
+    "type": "card",
+    "id": "9ixk 2 of flower-emblem",
+    "deck": "stDeck",
+    "cardType": "2 of flower-emblem",
+    "z": 53088,
+    "parent": "rv5k"
+  },
+  "9ixk 3 of flower-emblem": {
+    "type": "card",
+    "id": "9ixk 3 of flower-emblem",
+    "deck": "stDeck",
+    "cardType": "3 of flower-emblem",
+    "z": 53049,
+    "parent": "rv5k"
+  },
+  "9ixk 4 of flower-emblem": {
+    "type": "card",
+    "id": "9ixk 4 of flower-emblem",
+    "deck": "stDeck",
+    "cardType": "4 of flower-emblem",
+    "z": 53055,
+    "parent": "rv5k"
+  },
+  "9ixk 5 of flower-emblem": {
+    "type": "card",
+    "id": "9ixk 5 of flower-emblem",
+    "deck": "stDeck",
+    "cardType": "5 of flower-emblem",
+    "z": 53065,
+    "parent": "rv5k"
+  },
+  "9ixk 6 of flower-emblem": {
+    "type": "card",
+    "id": "9ixk 6 of flower-emblem",
+    "deck": "stDeck",
+    "cardType": "6 of flower-emblem",
+    "z": 53053,
+    "parent": "rv5k"
+  },
+  "9ixk 7 of flower-emblem": {
+    "type": "card",
+    "id": "9ixk 7 of flower-emblem",
+    "deck": "stDeck",
+    "cardType": "7 of flower-emblem",
+    "z": 53075,
+    "parent": "rv5k"
+  },
+  "9ixk 8 of flower-emblem": {
+    "type": "card",
+    "id": "9ixk 8 of flower-emblem",
+    "deck": "stDeck",
+    "cardType": "8 of flower-emblem",
+    "z": 53082,
+    "parent": "rv5k"
+  },
+  "9ixk 9 of flower-emblem": {
+    "type": "card",
+    "id": "9ixk 9 of flower-emblem",
+    "deck": "stDeck",
+    "cardType": "9 of flower-emblem",
+    "z": 53072,
+    "parent": "rv5k"
+  },
+  "stDeck": {
+    "type": "deck",
+    "id": "stDeck",
+    "parent": "deckHolderSH",
+    "cardDefaults": {
+      "width": 80,
+      "height": 80
+    },
+    "cardTypes": {
+      "0 of diamonds": {
+        "suit": "/i/game-icons.net/skoll/diamonds.svg",
+        "suitColor": "#0a92e6",
+        "rank": 0
+      },
+      "1 of diamonds": {
+        "suit": "/i/game-icons.net/skoll/diamonds.svg",
+        "suitColor": "#0a92e6",
+        "rank": 1
+      },
+      "2 of diamonds": {
+        "suit": "/i/game-icons.net/skoll/diamonds.svg",
+        "suitColor": "#0a92e6",
+        "rank": 2
+      },
+      "3 of diamonds": {
+        "suit": "/i/game-icons.net/skoll/diamonds.svg",
+        "suitColor": "#0a92e6",
+        "rank": 3
+      },
+      "4 of diamonds": {
+        "suit": "/i/game-icons.net/skoll/diamonds.svg",
+        "suitColor": "#0a92e6",
+        "rank": 4
+      },
+      "5 of diamonds": {
+        "suit": "/i/game-icons.net/skoll/diamonds.svg",
+        "suitColor": "#0a92e6",
+        "rank": 5
+      },
+      "6 of diamonds": {
+        "suit": "/i/game-icons.net/skoll/diamonds.svg",
+        "suitColor": "#0a92e6",
+        "rank": 6
+      },
+      "7 of diamonds": {
+        "suit": "/i/game-icons.net/skoll/diamonds.svg",
+        "suitColor": "#0a92e6",
+        "rank": 7
+      },
+      "8 of diamonds": {
+        "suit": "/i/game-icons.net/skoll/diamonds.svg",
+        "suitColor": "#0a92e6",
+        "rank": 8
+      },
+      "9 of diamonds": {
+        "suit": "/i/game-icons.net/skoll/diamonds.svg",
+        "suitColor": "#0a92e6",
+        "rank": 9
+      },
+      "10 of diamonds": {
+        "suit": "/i/game-icons.net/skoll/diamonds.svg",
+        "suitColor": "#0a92e6",
+        "rank": 10
+      },
+      "11 of diamonds": {
+        "suit": "/i/game-icons.net/skoll/diamonds.svg",
+        "suitColor": "#0a92e6",
+        "rank": 11
+      },
+      "0 of hearts": {
+        "suit": "/i/game-icons.net/skoll/hearts.svg",
+        "suitColor": "#e50932",
+        "rank": 0
+      },
+      "1 of hearts": {
+        "suit": "/i/game-icons.net/skoll/hearts.svg",
+        "suitColor": "#e50932",
+        "rank": 1
+      },
+      "2 of hearts": {
+        "suit": "/i/game-icons.net/skoll/hearts.svg",
+        "suitColor": "#e50932",
+        "rank": 2
+      },
+      "3 of hearts": {
+        "suit": "/i/game-icons.net/skoll/hearts.svg",
+        "suitColor": "#e50932",
+        "rank": 3
+      },
+      "4 of hearts": {
+        "suit": "/i/game-icons.net/skoll/hearts.svg",
+        "suitColor": "#e50932",
+        "rank": 4
+      },
+      "5 of hearts": {
+        "suit": "/i/game-icons.net/skoll/hearts.svg",
+        "suitColor": "#e50932",
+        "rank": 5
+      },
+      "6 of hearts": {
+        "suit": "/i/game-icons.net/skoll/hearts.svg",
+        "suitColor": "#e50932",
+        "rank": 6
+      },
+      "7 of hearts": {
+        "suit": "/i/game-icons.net/skoll/hearts.svg",
+        "suitColor": "#e50932",
+        "rank": 7
+      },
+      "8 of hearts": {
+        "suit": "/i/game-icons.net/skoll/hearts.svg",
+        "suitColor": "#e50932",
+        "rank": 8
+      },
+      "9 of hearts": {
+        "suit": "/i/game-icons.net/skoll/hearts.svg",
+        "suitColor": "#e50932",
+        "rank": 9
+      },
+      "10 of hearts": {
+        "suit": "/i/game-icons.net/skoll/hearts.svg",
+        "suitColor": "#e50932",
+        "rank": 10
+      },
+      "11 of hearts": {
+        "suit": "/i/game-icons.net/skoll/hearts.svg",
+        "suitColor": "#e50932",
+        "rank": 11
+      },
+      "0 of clubs": {
+        "suit": "/i/game-icons.net/skoll/clubs.svg",
+        "suitColor": "#ff8a05",
+        "rank": 0
+      },
+      "1 of clubs": {
+        "suit": "/i/game-icons.net/skoll/clubs.svg",
+        "suitColor": "#ff8a05",
+        "rank": 1
+      },
+      "2 of clubs": {
+        "suit": "/i/game-icons.net/skoll/clubs.svg",
+        "suitColor": "#ff8a05",
+        "rank": 2
+      },
+      "3 of clubs": {
+        "suit": "/i/game-icons.net/skoll/clubs.svg",
+        "suitColor": "#ff8a05",
+        "rank": 3
+      },
+      "4 of clubs": {
+        "suit": "/i/game-icons.net/skoll/clubs.svg",
+        "suitColor": "#ff8a05",
+        "rank": 4
+      },
+      "5 of clubs": {
+        "suit": "/i/game-icons.net/skoll/clubs.svg",
+        "suitColor": "#ff8a05",
+        "rank": 5
+      },
+      "6 of clubs": {
+        "suit": "/i/game-icons.net/skoll/clubs.svg",
+        "suitColor": "#ff8a05",
+        "rank": 6
+      },
+      "7 of clubs": {
+        "suit": "/i/game-icons.net/skoll/clubs.svg",
+        "suitColor": "#ff8a05",
+        "rank": 7
+      },
+      "8 of clubs": {
+        "suit": "/i/game-icons.net/skoll/clubs.svg",
+        "suitColor": "#ff8a05",
+        "rank": 8
+      },
+      "9 of clubs": {
+        "suit": "/i/game-icons.net/skoll/clubs.svg",
+        "suitColor": "#ff8a05",
+        "rank": 9
+      },
+      "10 of clubs": {
+        "suit": "/i/game-icons.net/skoll/clubs.svg",
+        "suitColor": "#ff8a05",
+        "rank": 10
+      },
+      "11 of clubs": {
+        "suit": "/i/game-icons.net/skoll/clubs.svg",
+        "suitColor": "#ff8a05",
+        "rank": 11
+      },
+      "0 of spades": {
+        "suit": "/i/game-icons.net/skoll/spades.svg",
+        "suitColor": "#44d704",
+        "rank": 0
+      },
+      "1 of spades": {
+        "suit": "/i/game-icons.net/skoll/spades.svg",
+        "suitColor": "#44d704",
+        "rank": 1
+      },
+      "2 of spades": {
+        "suit": "/i/game-icons.net/skoll/spades.svg",
+        "suitColor": "#44d704",
+        "rank": 2
+      },
+      "3 of spades": {
+        "suit": "/i/game-icons.net/skoll/spades.svg",
+        "suitColor": "#44d704",
+        "rank": 3
+      },
+      "4 of spades": {
+        "suit": "/i/game-icons.net/skoll/spades.svg",
+        "suitColor": "#44d704",
+        "rank": 4
+      },
+      "5 of spades": {
+        "suit": "/i/game-icons.net/skoll/spades.svg",
+        "suitColor": "#44d704",
+        "rank": 5
+      },
+      "6 of spades": {
+        "suit": "/i/game-icons.net/skoll/spades.svg",
+        "suitColor": "#44d704",
+        "rank": 6
+      },
+      "7 of spades": {
+        "suit": "/i/game-icons.net/skoll/spades.svg",
+        "suitColor": "#44d704",
+        "rank": 7
+      },
+      "8 of spades": {
+        "suit": "/i/game-icons.net/skoll/spades.svg",
+        "suitColor": "#44d704",
+        "rank": 8
+      },
+      "9 of spades": {
+        "suit": "/i/game-icons.net/skoll/spades.svg",
+        "suitColor": "#44d704",
+        "rank": 9
+      },
+      "10 of spades": {
+        "suit": "/i/game-icons.net/skoll/spades.svg",
+        "suitColor": "#44d704",
+        "rank": 10
+      },
+      "11 of spades": {
+        "suit": "/i/game-icons.net/skoll/spades.svg",
+        "suitColor": "#44d704",
+        "rank": 11
+      },
+      "0 of round-star": {
+        "suit": "/i/game-icons.net/delapouite/round-star.svg",
+        "suitColor": "#f6fa00",
+        "rank": 0
+      },
+      "1 of round-star": {
+        "suit": "/i/game-icons.net/delapouite/round-star.svg",
+        "suitColor": "#f6fa00",
+        "rank": 1
+      },
+      "2 of round-star": {
+        "suit": "/i/game-icons.net/delapouite/round-star.svg",
+        "suitColor": "#f6fa00",
+        "rank": 2
+      },
+      "3 of round-star": {
+        "suit": "/i/game-icons.net/delapouite/round-star.svg",
+        "suitColor": "#f6fa00",
+        "rank": 3
+      },
+      "4 of round-star": {
+        "suit": "/i/game-icons.net/delapouite/round-star.svg",
+        "suitColor": "#f6fa00",
+        "rank": 4
+      },
+      "5 of round-star": {
+        "suit": "/i/game-icons.net/delapouite/round-star.svg",
+        "suitColor": "#f6fa00",
+        "rank": 5
+      },
+      "6 of round-star": {
+        "suit": "/i/game-icons.net/delapouite/round-star.svg",
+        "suitColor": "#f6fa00",
+        "rank": 6
+      },
+      "7 of round-star": {
+        "suit": "/i/game-icons.net/delapouite/round-star.svg",
+        "suitColor": "#f6fa00",
+        "rank": 7
+      },
+      "8 of round-star": {
+        "suit": "/i/game-icons.net/delapouite/round-star.svg",
+        "suitColor": "#f6fa00",
+        "rank": 8
+      },
+      "9 of round-star": {
+        "suit": "/i/game-icons.net/delapouite/round-star.svg",
+        "suitColor": "#f6fa00",
+        "rank": 9
+      },
+      "10 of round-star": {
+        "suit": "/i/game-icons.net/delapouite/round-star.svg",
+        "suitColor": "#f6fa00",
+        "rank": 10
+      },
+      "11 of round-star": {
+        "suit": "/i/game-icons.net/delapouite/round-star.svg",
+        "suitColor": "#f6fa00",
+        "rank": 11
+      },
+      "0 of flower-emblem": {
+        "suit": "/i/game-icons.net/delapouite/flower-emblem.svg",
+        "suitColor": "#a615f4",
+        "rank": 0
+      },
+      "1 of flower-emblem": {
+        "suit": "/i/game-icons.net/delapouite/flower-emblem.svg",
+        "suitColor": "#a615f4",
+        "rank": 1
+      },
+      "2 of flower-emblem": {
+        "suit": "/i/game-icons.net/delapouite/flower-emblem.svg",
+        "suitColor": "#a615f4",
+        "rank": 2
+      },
+      "3 of flower-emblem": {
+        "suit": "/i/game-icons.net/delapouite/flower-emblem.svg",
+        "suitColor": "#a615f4",
+        "rank": 3
+      },
+      "4 of flower-emblem": {
+        "suit": "/i/game-icons.net/delapouite/flower-emblem.svg",
+        "suitColor": "#a615f4",
+        "rank": 4
+      },
+      "5 of flower-emblem": {
+        "suit": "/i/game-icons.net/delapouite/flower-emblem.svg",
+        "suitColor": "#a615f4",
+        "rank": 5
+      },
+      "6 of flower-emblem": {
+        "suit": "/i/game-icons.net/delapouite/flower-emblem.svg",
+        "suitColor": "#a615f4",
+        "rank": 6
+      },
+      "7 of flower-emblem": {
+        "suit": "/i/game-icons.net/delapouite/flower-emblem.svg",
+        "suitColor": "#a615f4",
+        "rank": 7
+      },
+      "8 of flower-emblem": {
+        "suit": "/i/game-icons.net/delapouite/flower-emblem.svg",
+        "suitColor": "#a615f4",
+        "rank": 8
+      },
+      "9 of flower-emblem": {
+        "suit": "/i/game-icons.net/delapouite/flower-emblem.svg",
+        "suitColor": "#a615f4",
+        "rank": 9
+      },
+      "10 of flower-emblem": {
+        "suit": "/i/game-icons.net/delapouite/flower-emblem.svg",
+        "suitColor": "#a615f4",
+        "rank": 10
+      },
+      "11 of flower-emblem": {
+        "suit": "/i/game-icons.net/delapouite/flower-emblem.svg",
+        "suitColor": "#a615f4",
+        "rank": 11
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "width": 80,
+            "height": 80,
+            "color": "#ffffff"
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "transparent",
+            "width": 80,
+            "height": 80,
+            "value": "/i/game-icons.net/viscious-speed/abstract-111.svg"
+          }
+        ],
+        "radius": 16
+      },
+      {
+        "radius": 16,
+        "objects": [
+          {
+            "type": "image",
+            "width": 80,
+            "height": 80,
+            "dynamicProperties": {
+              "color": "suitColor"
+            }
+          },
+          {
+            "type": "image",
+            "x": 40,
+            "y": 10,
+            "width": 30,
+            "height": 40,
+            "color": "transparent",
+            "svgReplaces": {
+              "#000": "black"
+            },
+            "dynamicProperties": {
+              "value": "suit"
+            }
+          },
+          {
+            "type": "text",
+            "x": 5,
+            "y": 0,
+            "fontSize": 50,
+            "color": "Black",
+            "width": 100,
+            "dynamicProperties": {
+              "value": "rank"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "rv5k": {
+    "type": "pile",
+    "width": 80,
+    "height": 80,
+    "id": "rv5k",
+    "z": 51047,
+    "parent": "deckHolderSH"
+  },
+  "columnA1": {
+    "type": "holder",
+    "id": "columnA1",
+    "x": 299,
+    "y": 82,
+    "width": 88,
+    "height": 230,
+    "z": 5682,
+    "inheritChildZ": true,
+    "onEnter": {
+      "activeFace": 1
+    },
+    "stackOffsetY": 70
+  },
+  "columnA2": {
+    "type": "holder",
+    "id": "columnA2",
+    "x": 439,
+    "y": 82,
+    "width": 88,
+    "height": 230,
+    "z": 5682,
+    "inheritChildZ": true,
+    "onEnter": {
+      "activeFace": 1
+    },
+    "stackOffsetY": 70
+  },
+  "columnA3": {
+    "type": "holder",
+    "id": "columnA3",
+    "x": 580,
+    "y": 82,
+    "width": 88,
+    "height": 230,
+    "z": 5682,
+    "inheritChildZ": true,
+    "onEnter": {
+      "activeFace": 1
+    },
+    "stackOffsetY": 70
+  },
+  "columnA4": {
+    "type": "holder",
+    "id": "columnA4",
+    "x": 719,
+    "y": 82,
+    "width": 88,
+    "height": 230,
+    "z": 5682,
+    "inheritChildZ": true,
+    "onEnter": {
+      "activeFace": 1
+    },
+    "stackOffsetY": 70
+  },
+  "columnA5": {
+    "type": "holder",
+    "id": "columnA5",
+    "x": 859,
+    "y": 82,
+    "width": 88,
+    "height": 230,
+    "z": 5682,
+    "inheritChildZ": true,
+    "onEnter": {
+      "activeFace": 1
+    },
+    "stackOffsetY": 70
+  },
+  "columnA6": {
+    "type": "holder",
+    "id": "columnA6",
+    "x": 999,
+    "y": 82,
+    "width": 88,
+    "height": 230,
+    "z": 5682,
+    "inheritChildZ": true,
+    "onEnter": {
+      "activeFace": 1
+    },
+    "stackOffsetY": 70
+  },
+  "columnA7": {
+    "type": "holder",
+    "id": "columnA7",
+    "x": 1138,
+    "y": 82,
+    "width": 88,
+    "height": 230,
+    "z": 5682,
+    "inheritChildZ": true,
+    "onEnter": {
+      "activeFace": 1
+    },
+    "stackOffsetY": 70
+  },
+  "columnA8": {
+    "type": "holder",
+    "id": "columnA8",
+    "x": 1278,
+    "y": 82,
+    "width": 88,
+    "height": 230,
+    "z": 5682,
+    "inheritChildZ": true,
+    "onEnter": {
+      "activeFace": 1
+    },
+    "stackOffsetY": 70
+  },
+  "columnA9": {
+    "type": "holder",
+    "id": "columnA9",
+    "x": 1418,
+    "y": 82,
+    "width": 88,
+    "height": 230,
+    "z": 5682,
+    "inheritChildZ": true,
+    "preventPiles": true,
+    "onEnter": {
+      "activeFace": 1
+    },
+    "stackOffsetY": 70
+  },
+  "marble2": {
+    "type": "card",
+    "id": "marble2",
+    "deck": "columnMarkers",
+    "cardType": "red",
+    "z": 51470,
+    "reset": {
+      "parent": "border2"
+    },
+    "x": 4,
+    "y": 4,
+    "activeFace": 1,
+    "scale": 1.5,
+    "hoverParent": "border2",
+    "parent": "border2"
+  },
+  "border2": {
+    "type": "holder",
+    "id": "border2",
+    "x": 463,
+    "width": 40,
+    "height": 40,
+    "z": 5684,
+    "inheritChildZ": true,
+    "y": 387,
+    "dropLimit": 1,
+    "layer": 3,
+    "css": {
+      "default": {
+        "background": "transparent",
+        "border-color": "transparent",
+        "border": "transparent"
+      }
+    }
+  },
+  "marble3": {
+    "type": "card",
+    "id": "marble3",
+    "deck": "columnMarkers",
+    "cardType": "red",
+    "z": 51472,
+    "reset": {
+      "parent": "border3"
+    },
+    "x": 4,
+    "y": 4,
+    "activeFace": 1,
+    "scale": 1.5,
+    "hoverParent": "border3",
+    "parent": "border3"
+  },
+  "border3": {
+    "type": "holder",
+    "id": "border3",
+    "x": 604,
+    "width": 40,
+    "height": 40,
+    "z": 5684,
+    "inheritChildZ": true,
+    "y": 387,
+    "dropLimit": 1,
+    "layer": 3,
+    "css": {
+      "default": {
+        "background": "transparent",
+        "border-color": "transparent",
+        "border": "transparent"
+      }
+    }
+  },
+  "marble4": {
+    "type": "card",
+    "id": "marble4",
+    "deck": "columnMarkers",
+    "cardType": "red",
+    "z": 51474,
+    "reset": {
+      "parent": "border4"
+    },
+    "x": 4,
+    "y": 4,
+    "activeFace": 1,
+    "scale": 1.5,
+    "hoverParent": "border4",
+    "parent": "border4"
+  },
+  "border4": {
+    "type": "holder",
+    "id": "border4",
+    "x": 743,
+    "width": 40,
+    "height": 40,
+    "z": 5684,
+    "inheritChildZ": true,
+    "y": 387,
+    "dropLimit": 1,
+    "layer": 3,
+    "css": {
+      "default": {
+        "background": "transparent",
+        "border-color": "transparent",
+        "border": "transparent"
+      }
+    }
+  },
+  "marble5": {
+    "type": "card",
+    "id": "marble5",
+    "deck": "columnMarkers",
+    "cardType": "red",
+    "z": 51476,
+    "reset": {
+      "parent": "border5"
+    },
+    "activeFace": 1,
+    "x": 4,
+    "y": 4,
+    "scale": 1.5,
+    "hoverParent": "border5",
+    "parent": "border5"
+  },
+  "border5": {
+    "type": "holder",
+    "id": "border5",
+    "x": 876,
+    "width": 40,
+    "height": 40,
+    "z": 5684,
+    "inheritChildZ": true,
+    "y": 387,
+    "dropLimit": 1,
+    "layer": 3,
+    "css": {
+      "default": {
+        "background": "transparent",
+        "border-color": "transparent",
+        "border": "transparent"
+      }
+    }
+  },
+  "marble6": {
+    "type": "card",
+    "id": "marble6",
+    "deck": "columnMarkers",
+    "cardType": "red",
+    "z": 51761,
+    "reset": {
+      "parent": "border6"
+    },
+    "x": 4,
+    "y": 4,
+    "activeFace": 1,
+    "scale": 1.5,
+    "parent": "border6"
+  },
+  "border6": {
+    "type": "holder",
+    "id": "border6",
+    "x": 1023,
+    "width": 40,
+    "height": 40,
+    "z": 5684,
+    "inheritChildZ": true,
+    "y": 387,
+    "dropLimit": 1,
+    "layer": 3,
+    "css": {
+      "default": {
+        "background": "transparent",
+        "border-color": "transparent",
+        "border": "transparent"
+      }
+    }
+  },
+  "marble7": {
+    "type": "card",
+    "id": "marble7",
+    "deck": "columnMarkers",
+    "cardType": "red",
+    "z": 51480,
+    "reset": {
+      "parent": "border7"
+    },
+    "x": 4,
+    "y": 4,
+    "activeFace": 1,
+    "scale": 1.5,
+    "hoverParent": "border7",
+    "parent": "border7"
+  },
+  "border7": {
+    "type": "holder",
+    "id": "border7",
+    "x": 1162,
+    "width": 40,
+    "height": 40,
+    "z": 5684,
+    "inheritChildZ": true,
+    "y": 387,
+    "dropLimit": 1,
+    "layer": 3,
+    "css": {
+      "default": {
+        "background": "transparent",
+        "border-color": "transparent",
+        "border": "transparent"
+      }
+    }
+  },
+  "marble8": {
+    "type": "card",
+    "id": "marble8",
+    "deck": "columnMarkers",
+    "cardType": "red",
+    "z": 51482,
+    "reset": {
+      "parent": "border8"
+    },
+    "x": 4,
+    "y": 4,
+    "activeFace": 1,
+    "scale": 1.5,
+    "hoverParent": "border8",
+    "parent": "border8"
+  },
+  "border8": {
+    "type": "holder",
+    "id": "border8",
+    "x": 1296,
+    "width": 40,
+    "height": 40,
+    "z": 5684,
+    "inheritChildZ": true,
+    "y": 387,
+    "dropLimit": 1,
+    "layer": 3,
+    "css": {
+      "default": {
+        "background": "transparent",
+        "border-color": "transparent",
+        "border": "transparent"
+      }
+    }
+  },
+  "marble9": {
+    "type": "card",
+    "id": "marble9",
+    "deck": "columnMarkers",
+    "cardType": "red",
+    "z": 51484,
+    "reset": {
+      "parent": "border9"
+    },
+    "y": 4,
+    "x": 4,
+    "scale": 1.5,
+    "hoverParent": "border9",
+    "parent": "border9"
+  },
+  "border9": {
+    "type": "holder",
+    "id": "border9",
+    "x": 1439,
+    "width": 40,
+    "height": 40,
+    "z": 5684,
+    "inheritChildZ": true,
+    "y": 387,
+    "dropLimit": 1,
+    "layer": 3,
+    "css": {
+      "default": {
+        "background": "transparent",
+        "border-color": "transparent",
+        "border": "transparent"
+      }
+    }
+  },
+  "columnB1": {
+    "type": "holder",
+    "id": "columnB1",
+    "x": 299,
+    "y": 500,
+    "width": 88,
+    "height": 230,
+    "z": 5682,
+    "inheritChildZ": true,
+    "onEnter": {
+      "activeFace": 1
+    },
+    "stackOffsetY": 70
+  },
+  "columnAB2": {
+    "type": "holder",
+    "id": "columnAB2",
+    "x": 439,
+    "y": 500,
+    "width": 88,
+    "height": 230,
+    "z": 5682,
+    "inheritChildZ": true,
+    "onEnter": {
+      "activeFace": 1
+    },
+    "stackOffsetY": 70
+  },
+  "columnB3": {
+    "type": "holder",
+    "id": "columnB3",
+    "x": 580,
+    "y": 500,
+    "width": 88,
+    "height": 230,
+    "z": 5682,
+    "inheritChildZ": true,
+    "onEnter": {
+      "activeFace": 1
+    },
+    "stackOffsetY": 70
+  },
+  "columnAB4": {
+    "type": "holder",
+    "id": "columnAB4",
+    "x": 719,
+    "y": 500,
+    "width": 88,
+    "height": 230,
+    "z": 5682,
+    "inheritChildZ": true,
+    "onEnter": {
+      "activeFace": 1
+    },
+    "stackOffsetY": 70
+  },
+  "columnAB5": {
+    "type": "holder",
+    "id": "columnAB5",
+    "x": 859,
+    "y": 500,
+    "width": 88,
+    "height": 230,
+    "z": 5682,
+    "inheritChildZ": true,
+    "onEnter": {
+      "activeFace": 1
+    },
+    "stackOffsetY": 70
+  },
+  "columnAB6": {
+    "type": "holder",
+    "id": "columnAB6",
+    "x": 999,
+    "y": 500,
+    "width": 88,
+    "height": 230,
+    "z": 5682,
+    "inheritChildZ": true,
+    "onEnter": {
+      "activeFace": 1
+    },
+    "stackOffsetY": 70
+  },
+  "columnB7": {
+    "type": "holder",
+    "id": "columnB7",
+    "x": 1138,
+    "y": 500,
+    "width": 88,
+    "height": 230,
+    "z": 5682,
+    "inheritChildZ": true,
+    "onEnter": {
+      "activeFace": 1
+    },
+    "stackOffsetY": 70
+  },
+  "columnAB8": {
+    "type": "holder",
+    "id": "columnAB8",
+    "x": 1278,
+    "y": 500,
+    "width": 88,
+    "height": 230,
+    "z": 5682,
+    "inheritChildZ": true,
+    "onEnter": {
+      "activeFace": 1
+    },
+    "stackOffsetY": 70
+  },
+  "columnAB9": {
+    "type": "holder",
+    "id": "columnAB9",
+    "x": 1418,
+    "y": 500,
+    "width": 88,
+    "height": 230,
+    "z": 5682,
+    "inheritChildZ": true,
+    "onEnter": {
+      "activeFace": 1
+    },
+    "preventPiles": true,
+    "stackOffsetY": 70
+  },
+  "9nzg J of fluffy-trefoil": {
+    "type": "card",
+    "id": "9nzg J of fluffy-trefoil",
+    "deck": "schemeDeckSH",
+    "cardType": "J of fluffy-trefoil",
+    "z": 53116,
+    "parent": "64nb"
+  },
+  "9nzg  J of fluffy-trefoil": {
+    "type": "card",
+    "id": "9nzg  J of fluffy-trefoil",
+    "deck": "schemeDeckSH",
+    "cardType": " J of fluffy-trefoil",
+    "z": 53118,
+    "parent": "64nb"
+  },
+  "9nzg  7 of fluffy-trefoil": {
+    "type": "card",
+    "id": "9nzg  7 of fluffy-trefoil",
+    "deck": "schemeDeckSH",
+    "cardType": " 7 of fluffy-trefoil",
+    "z": 53122,
+    "parent": "64nb"
+  },
+  "9nzg  123 of fluffy-trefoil": {
+    "type": "card",
+    "id": "9nzg  123 of fluffy-trefoil",
+    "deck": "schemeDeckSH",
+    "cardType": " 123 of fluffy-trefoil",
+    "z": 53113,
+    "parent": "64nb"
+  },
+  "9nzg  4 cards of fluffy-trefoil": {
+    "type": "card",
+    "id": "9nzg  4 cards of fluffy-trefoil",
+    "deck": "schemeDeckSH",
+    "cardType": " 4 cards of fluffy-trefoil",
+    "z": 53119,
+    "parent": "64nb"
+  },
+  "9nzg  ### of fluffy-trefoil": {
+    "type": "card",
+    "id": "9nzg  ### of fluffy-trefoil",
+    "deck": "schemeDeckSH",
+    "cardType": " ### of fluffy-trefoil",
+    "z": 53114,
+    "parent": "64nb"
+  },
+  "9nzg  draw 3 of fluffy-trefoil": {
+    "type": "card",
+    "id": "9nzg  draw 3 of fluffy-trefoil",
+    "deck": "schemeDeckSH",
+    "cardType": " draw 3 of fluffy-trefoil",
+    "z": 53120,
+    "parent": "64nb"
+  },
+  "9nzg  Move your card of fluffy-trefoil": {
+    "type": "card",
+    "id": "9nzg  Move your card of fluffy-trefoil",
+    "deck": "schemeDeckSH",
+    "cardType": " Move your card of fluffy-trefoil",
+    "z": 53117,
+    "parent": "64nb"
+  },
+  "9nzg  Move opp card of fluffy-trefoil": {
+    "type": "card",
+    "id": "9nzg  Move opp card of fluffy-trefoil",
+    "deck": "schemeDeckSH",
+    "cardType": " Move opp card of fluffy-trefoil",
+    "z": 53115,
+    "parent": "64nb"
+  },
+  "9nzg  Discard opp card of fluffy-trefoil": {
+    "type": "card",
+    "id": "9nzg  Discard opp card of fluffy-trefoil",
+    "deck": "schemeDeckSH",
+    "cardType": " Discard opp card of fluffy-trefoil",
+    "z": 53121,
+    "hoverParent": "schemeDeckHolderSH",
+    "parent": "64nb"
+  },
+  "schemeDeckHolderSH": {
+    "type": "holder",
+    "id": "schemeDeckHolderSH",
+    "x": -166,
+    "y": 520,
+    "width": 86,
+    "height": 86,
+    "dropTarget": {
+      "type": "card"
+    },
+    "onEnter": {
+      "activeFace": 0
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "width": 80,
+            "height": 80,
+            "color": "gray"
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "transparent",
+            "width": 80,
+            "height": 80,
+            "dynamicProperties": {
+              "value": "image"
+            }
+          }
+        ],
+        "radius": 16
+      },
+      {
+        "radius": 16,
+        "objects": [
+          {
+            "type": "image",
+            "width": 80,
+            "height": 80,
+            "dynamicProperties": {
+              "color": "suitColor"
+            }
+          },
+          {
+            "type": "image",
+            "x": 40,
+            "y": 10,
+            "width": 40,
+            "height": 40,
+            "color": "transparent",
+            "svgReplaces": {
+              "#000": "black"
+            },
+            "dynamicProperties": {
+              "value": "suit"
+            }
+          },
+          {
+            "type": "text",
+            "y": 0,
+            "fontSize": 20,
+            "color": "Black",
+            "width": 100,
+            "dynamicProperties": {
+              "value": "rank"
+            }
+          }
+        ]
+      }
+    ],
+    "shSchemeReset": {
+      "x": 25,
+      "y": 520
+    },
+    "offscreenReset": {
+      "x": -166,
+      "y": 520
+    }
+  },
+  "schemeDeckSH": {
+    "type": "deck",
+    "id": "schemeDeckSH",
+    "parent": "schemeDeckHolderSH",
+    "cardDefaults": {
+      "width": 80,
+      "height": 80
+    },
+    "cardTypes": {
+      "J of fluffy-trefoil": {
+        "suitColor": "#f8f7f7",
+        "rank": "1-9",
+        "line1": "",
+        "line2": ""
+      },
+      " J of fluffy-trefoil": {
+        "suitColor": "#f8f7f7",
+        "rank": "1-9",
+        "line1": "",
+        "line2": ""
+      },
+      " 7 of fluffy-trefoil": {
+        "suitColor": "#f8f7f7",
+        "rank": "7"
+      },
+      " 123 of fluffy-trefoil": {
+        "suitColor": "#f8f7f7",
+        "rank": "123"
+      },
+      " 4 cards of fluffy-trefoil": {
+        "suitColor": "#f8f7f7",
+        "rank": "",
+        "line1": "+1",
+        "line2": "+1",
+        "line3": "+1",
+        "line4": "+1"
+      },
+      " ### of fluffy-trefoil": {
+        "suitColor": "#f8f7f7",
+        "rank": "",
+        "line1": "+#",
+        "line2": "+#",
+        "line3": "+#",
+        "line4": "+#"
+      },
+      " draw 3 of fluffy-trefoil": {
+        "suitColor": "#f8f7f7",
+        "text1": "Draw",
+        "text2": "3,",
+        "text3": "Discard",
+        "text4": "2"
+      },
+      " Move your card of fluffy-trefoil": {
+        "suitColor": "#f8f7f7",
+        "text1": "Move your card"
+      },
+      " Move opp card of fluffy-trefoil": {
+        "suitColor": "#f8f7f7",
+        "text1": "Steal opp card"
+      },
+      " Discard opp card of fluffy-trefoil": {
+        "suitColor": "#f8f7f7",
+        "text1": "Discard opp card"
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "width": 80,
+            "height": 80,
+            "color": "#ffffff"
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "transparent",
+            "width": 80,
+            "height": 80,
+            "value": "/i/game-icons.net/delapouite/pick-of-destiny.svg"
+          }
+        ],
+        "radius": 16
+      },
+      {
+        "radius": 16,
+        "objects": [
+          {
+            "type": "image",
+            "width": 80,
+            "height": 80,
+            "dynamicProperties": {
+              "color": "suitColor"
+            }
+          },
+          {
+            "type": "image",
+            "x": 40,
+            "y": 10,
+            "width": 40,
+            "height": 40,
+            "color": "transparent",
+            "svgReplaces": {
+              "#000": "black"
+            },
+            "dynamicProperties": {
+              "value": "suit"
+            }
+          },
+          {
+            "type": "text",
+            "x": 0,
+            "y": 0,
+            "fontSize": 40,
+            "color": "black",
+            "width": 100,
+            "dynamicProperties": {
+              "value": "rank"
+            }
+          },
+          {
+            "type": "text",
+            "x": 0,
+            "y": 0,
+            "fontSize": "20",
+            "color": "black",
+            "width": 40,
+            "dynamicProperties": {
+              "value": "line1"
+            }
+          },
+          {
+            "type": "text",
+            "x": 55,
+            "y": 0,
+            "color": "black",
+            "fontSize": "20",
+            "width": 40,
+            "dynamicProperties": {
+              "value": "line2"
+            }
+          },
+          {
+            "type": "text",
+            "x": 0,
+            "y": 55,
+            "color": "black",
+            "fontSize": "20",
+            "width": 40,
+            "dynamicProperties": {
+              "value": "line3"
+            }
+          },
+          {
+            "type": "text",
+            "x": 2,
+            "y": 5,
+            "color": "black",
+            "fontSize": "20",
+            "width": 40,
+            "dynamicProperties": {
+              "value": "text1"
+            }
+          },
+          {
+            "type": "text",
+            "x": 55,
+            "y": 5,
+            "color": "black",
+            "fontSize": "20",
+            "width": 40,
+            "dynamicProperties": {
+              "value": "text2"
+            }
+          },
+          {
+            "type": "text",
+            "x": 0,
+            "y": 35,
+            "color": "black",
+            "fontSize": "20",
+            "width": 40,
+            "dynamicProperties": {
+              "value": "text3"
+            }
+          },
+          {
+            "type": "text",
+            "x": 70,
+            "y": 35,
+            "color": "black",
+            "fontSize": "20",
+            "width": 40,
+            "dynamicProperties": {
+              "value": "text4"
+            }
+          },
+          {
+            "type": "text",
+            "x": 55,
+            "y": 55,
+            "color": "black",
+            "fontSize": "20",
+            "width": 40,
+            "dynamicProperties": {
+              "value": "line4"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "deckHolderSH": {
+    "type": "holder",
+    "id": "deckHolderSH",
+    "x": -166,
+    "y": 380,
+    "width": 88,
+    "height": 88,
+    "z": 5881,
+    "inheritChildZ": true,
+    "onEnter": {
+      "activeFace": 0
+    },
+    "shReset": {
+      "x": 25,
+      "y": 380
+    },
+    "shSchemeReset": {
+      "x": 25,
+      "y": 380
+    },
+    "offscreenReset": {
+      "x": -166,
+      "y": 380
+    }
+  },
+  "shNewGame": {
+    "type": "button",
+    "id": "shNewGame",
+    "x": 84,
+    "y": 357,
+    "width": 88,
+    "height": 62,
+    "movableInEdit": false,
+    "text": "Scotland Hills",
+    "clickRoutine": [
+      {
+        "func": "TURN",
+        "turnCycle": "random"
+      },
+      {
+        "func": "INPUT",
+        "header": "Ready to start?",
+        "fields": [
+          {
+            "type": "text",
+            "text": "Is everyone seated?"
+          }
+        ]
+      },
+      {
+        "func": "RECALL",
+        "holder": "columnMarkers"
+      },
+      {
+        "func": "RECALL",
+        "holder": "deckHolderSH"
+      },
+      {
+        "func": "FLIP",
+        "holder": "deckHolderSH",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "deckHolderSH"
+      },
+      {
+        "func": "MOVE",
+        "count": 6,
+        "to": [
+          "seat1",
+          "seat2"
+        ],
+        "from": "deckHolderSH"
+      },
+      {
+        "func": "SORT",
+        "holder": [
+          "seat1",
+          "seat2"
+        ],
+        "key": "sortingOrder",
+        "reverse": true
+      },
+      {
+        "func": "SELECT",
+        "property": "shReset",
+        "relation": "!=",
+        "value": null
+      },
+      {
+        "func": "FOREACH",
+        "loopRoutine": [
+          {
+            "func": "FOREACH",
+            "in": "${PROPERTY shReset OF $widgetID}",
+            "loopRoutine": [
+              {
+                "func": "SET",
+                "property": "${key}",
+                "value": "${value}"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "SELECT",
+        "property": "reset",
+        "relation": "!=",
+        "value": null
+      },
+      {
+        "func": "FOREACH",
+        "loopRoutine": [
+          {
+            "func": "FOREACH",
+            "in": "${PROPERTY reset OF $widgetID}",
+            "loopRoutine": [
+              {
+                "func": "SET",
+                "property": "${key}",
+                "value": "${value}"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "shNewGame"
+        ],
+        "property": "display",
+        "value": false
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "shBattle"
+        ],
+        "property": "display",
+        "value": false
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "choose"
+        ],
+        "property": "display",
+        "value": false
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "shSchemeNewGame"
+        ],
+        "property": "display",
+        "value": false
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "Reset"
+        ],
+        "property": "display",
+        "value": true
+      }
+    ]
+  },
+  "Reset": {
+    "type": "button",
+    "id": "Reset",
+    "x": 1530,
+    "y": 10,
+    "width": 60,
+    "height": 60,
+    "z": 16202,
+    "text": "Reset",
+    "clickRoutine": [
+      {
+        "func": "RECALL",
+        "holder": "columnMarkers"
+      },
+      {
+        "func": "RECALL",
+        "holder": "deckHolderSH"
+      },
+      {
+        "func": "FLIP",
+        "holder": "deckHolderSH",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "deckHolderSH"
+      },
+      {
+        "func": "RECALL",
+        "holder": "schemeDeckHolderSH"
+      },
+      {
+        "func": "FLIP",
+        "holder": "schemeDeckHolderSH",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "schemeDeckHolderSH"
+      },
+      {
+        "func": "RECALL",
+        "holder": "deckHolderSB"
+      },
+      {
+        "func": "FLIP",
+        "holder": "deckHolderSB",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "deckHolderSB"
+      },
+      {
+        "func": "RECALL",
+        "holder": "schemeDeckHolderSB"
+      },
+      {
+        "func": "FLIP",
+        "holder": "schemeDeckHolderSB",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "schemeDeckHolderSB"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "shNewGame"
+        ],
+        "property": "display",
+        "value": true
+      },
+      {
+        "func": "SELECT",
+        "property": "reset",
+        "relation": "!=",
+        "value": null
+      },
+      {
+        "func": "FOREACH",
+        "loopRoutine": [
+          {
+            "func": "FOREACH",
+            "in": "${PROPERTY reset OF $widgetID}",
+            "loopRoutine": [
+              {
+                "func": "SET",
+                "property": "${key}",
+                "value": "${value}"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "shSchemeNewGame"
+        ],
+        "property": "display",
+        "value": true
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "shBattle"
+        ],
+        "property": "display",
+        "value": true
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "Reset"
+        ],
+        "property": "display",
+        "value": false
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "choose"
+        ],
+        "property": "display",
+        "value": true
+      },
+      {
+        "func": "SELECT",
+        "property": "offscreenReset",
+        "relation": "!=",
+        "value": null
+      },
+      {
+        "func": "FOREACH",
+        "loopRoutine": [
+          {
+            "func": "FOREACH",
+            "in": "${PROPERTY offscreenReset OF $widgetID}",
+            "loopRoutine": [
+              {
+                "func": "SET",
+                "property": "${key}",
+                "value": "${value}"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "display": false
+  },
+  "shSchemeNewGame": {
+    "type": "button",
+    "id": "shSchemeNewGame",
+    "y": 431,
+    "width": 100,
+    "height": 62,
+    "movableInEdit": false,
+    "text": "Scotland Hills + Schemes",
+    "clickRoutine": [
+      {
+        "func": "TURN",
+        "turnCycle": "random"
+      },
+      {
+        "func": "INPUT",
+        "header": "Ready to start?",
+        "fields": [
+          {
+            "type": "text",
+            "text": "Is everyone seated?"
+          }
+        ]
+      },
+      {
+        "func": "RECALL",
+        "holder": "columnMarkers"
+      },
+      {
+        "func": "RECALL",
+        "holder": "deckHolderSH"
+      },
+      {
+        "func": "FLIP",
+        "holder": "deckHolderSH",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "deckHolderSH"
+      },
+      {
+        "func": "MOVE",
+        "count": 7,
+        "to": [
+          "seat1",
+          "seat2"
+        ],
+        "from": "deckHolderSH"
+      },
+      {
+        "func": "SORT",
+        "holder": [
+          "seat1",
+          "seat2"
+        ],
+        "key": "sortingOrder",
+        "reverse": true
+      },
+      {
+        "func": "SELECT",
+        "property": "shReset",
+        "relation": "!=",
+        "value": null
+      },
+      {
+        "func": "FOREACH",
+        "loopRoutine": [
+          {
+            "func": "FOREACH",
+            "in": "${PROPERTY shReset OF $widgetID}",
+            "loopRoutine": [
+              {
+                "func": "SET",
+                "property": "${key}",
+                "value": "${value}"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "SELECT",
+        "property": "shSchemeReset",
+        "relation": "!=",
+        "value": null
+      },
+      {
+        "func": "FOREACH",
+        "loopRoutine": [
+          {
+            "func": "FOREACH",
+            "in": "${PROPERTY shSchemeReset OF $widgetID}",
+            "loopRoutine": [
+              {
+                "func": "SET",
+                "property": "${key}",
+                "value": "${value}"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "SELECT",
+        "property": "reset",
+        "relation": "!=",
+        "value": null
+      },
+      {
+        "func": "FOREACH",
+        "loopRoutine": [
+          {
+            "func": "FOREACH",
+            "in": "${PROPERTY reset OF $widgetID}",
+            "loopRoutine": [
+              {
+                "func": "SET",
+                "property": "${key}",
+                "value": "${value}"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "shNewGame"
+        ],
+        "property": "display",
+        "value": false
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "shBattle"
+        ],
+        "property": "display",
+        "value": false
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "choose"
+        ],
+        "property": "display",
+        "value": false
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "shSchemeNewGame"
+        ],
+        "property": "display",
+        "value": false
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "Reset"
+        ],
+        "property": "display",
+        "value": true
+      }
+    ],
+    "x": 78
+  },
+  "choose": {
+    "type": "label",
+    "id": "choose",
+    "x": 30,
+    "y": 323,
+    "width": 200,
+    "height": 42,
+    "z": 1,
+    "css": "font-size: 20px",
+    "text": "Choose your game"
+  },
+  "shBattle": {
+    "type": "button",
+    "id": "shBattle",
+    "x": 88,
+    "y": 509,
+    "height": 62,
+    "movableInEdit": false,
+    "text": "Scotland Battles",
+    "clickRoutine": [
+      {
+        "func": "TURN",
+        "turnCycle": "random"
+      },
+      {
+        "func": "INPUT",
+        "header": "Ready to start?",
+        "fields": [
+          {
+            "type": "text",
+            "text": "Is everyone seated?"
+          }
+        ]
+      },
+      {
+        "func": "RECALL",
+        "holder": "columnMarkers"
+      },
+      {
+        "func": "RECALL",
+        "holder": "deckHolderSB"
+      },
+      {
+        "func": "FLIP",
+        "holder": "deckHolderSB",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "deckHolderSB"
+      },
+      {
+        "func": "MOVE",
+        "count": 7,
+        "to": [
+          "seat1",
+          "seat2"
+        ],
+        "from": "deckHolderSB"
+      },
+      {
+        "func": "SORT",
+        "holder": [
+          "seat1",
+          "seat2"
+        ],
+        "key": "sortingOrder",
+        "reverse": true
+      },
+      {
+        "func": "SELECT",
+        "property": "sbReset",
+        "relation": "!=",
+        "value": null
+      },
+      {
+        "func": "FOREACH",
+        "loopRoutine": [
+          {
+            "func": "FOREACH",
+            "in": "${PROPERTY sbReset OF $widgetID}",
+            "loopRoutine": [
+              {
+                "func": "SET",
+                "property": "${key}",
+                "value": "${value}"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "SELECT",
+        "property": "reset",
+        "relation": "!=",
+        "value": null
+      },
+      {
+        "func": "FOREACH",
+        "loopRoutine": [
+          {
+            "func": "FOREACH",
+            "in": "${PROPERTY reset OF $widgetID}",
+            "loopRoutine": [
+              {
+                "func": "SET",
+                "property": "${key}",
+                "value": "${value}"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "shNewGame"
+        ],
+        "property": "display",
+        "value": false
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "choose"
+        ],
+        "property": "display",
+        "value": false
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "shBattle"
+        ],
+        "property": "display",
+        "value": false
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "shSchemeNewGame"
+        ],
+        "property": "display",
+        "value": false
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "Reset"
+        ],
+        "property": "display",
+        "value": true
+      }
+    ]
+  },
+  "sjop 1 of diamonds": {
+    "type": "card",
+    "id": "sjop 1 of diamonds",
+    "deck": "sbDeck",
+    "cardType": "1 of diamonds",
+    "z": 53245,
+    "parent": "5zu7"
+  },
+  "sjop 2 of diamonds": {
+    "type": "card",
+    "id": "sjop 2 of diamonds",
+    "deck": "sbDeck",
+    "cardType": "2 of diamonds",
+    "z": 53237,
+    "parent": "5zu7"
+  },
+  "sjop 3 of diamonds": {
+    "type": "card",
+    "id": "sjop 3 of diamonds",
+    "deck": "sbDeck",
+    "cardType": "3 of diamonds",
+    "z": 53239,
+    "parent": "5zu7"
+  },
+  "sjop 4 of diamonds": {
+    "type": "card",
+    "id": "sjop 4 of diamonds",
+    "deck": "sbDeck",
+    "cardType": "4 of diamonds",
+    "z": 53233,
+    "parent": "5zu7"
+  },
+  "sjop 5 of diamonds": {
+    "type": "card",
+    "id": "sjop 5 of diamonds",
+    "deck": "sbDeck",
+    "cardType": "5 of diamonds",
+    "z": 53231,
+    "parent": "5zu7"
+  },
+  "sjop 6 of diamonds": {
+    "type": "card",
+    "id": "sjop 6 of diamonds",
+    "deck": "sbDeck",
+    "cardType": "6 of diamonds",
+    "z": 53227,
+    "parent": "5zu7"
+  },
+  "sjop 7 of diamonds": {
+    "type": "card",
+    "id": "sjop 7 of diamonds",
+    "deck": "sbDeck",
+    "cardType": "7 of diamonds",
+    "z": 53211,
+    "parent": "5zu7"
+  },
+  "sjop 8 of diamonds": {
+    "type": "card",
+    "id": "sjop 8 of diamonds",
+    "deck": "sbDeck",
+    "cardType": "8 of diamonds",
+    "z": 53235,
+    "parent": "5zu7"
+  },
+  "sjop 9 of diamonds": {
+    "type": "card",
+    "id": "sjop 9 of diamonds",
+    "deck": "sbDeck",
+    "cardType": "9 of diamonds",
+    "z": 53256,
+    "parent": "5zu7"
+  },
+  "sjop 10 of diamonds": {
+    "type": "card",
+    "id": "sjop 10 of diamonds",
+    "deck": "sbDeck",
+    "cardType": "10 of diamonds",
+    "z": 53215,
+    "parent": "5zu7"
+  },
+  "sjop 1 of hearts": {
+    "type": "card",
+    "id": "sjop 1 of hearts",
+    "deck": "sbDeck",
+    "cardType": "1 of hearts",
+    "z": 53213,
+    "parent": "5zu7"
+  },
+  "sjop 2 of hearts": {
+    "type": "card",
+    "id": "sjop 2 of hearts",
+    "deck": "sbDeck",
+    "cardType": "2 of hearts",
+    "z": 53229,
+    "parent": "5zu7"
+  },
+  "sjop 3 of hearts": {
+    "type": "card",
+    "id": "sjop 3 of hearts",
+    "deck": "sbDeck",
+    "cardType": "3 of hearts",
+    "z": 53219,
+    "parent": "5zu7"
+  },
+  "sjop 4 of hearts": {
+    "type": "card",
+    "id": "sjop 4 of hearts",
+    "deck": "sbDeck",
+    "cardType": "4 of hearts",
+    "z": 53210,
+    "parent": "5zu7"
+  },
+  "sjop 5 of hearts": {
+    "type": "card",
+    "id": "sjop 5 of hearts",
+    "deck": "sbDeck",
+    "cardType": "5 of hearts",
+    "z": 53266,
+    "parent": "5zu7"
+  },
+  "sjop 6 of hearts": {
+    "type": "card",
+    "id": "sjop 6 of hearts",
+    "deck": "sbDeck",
+    "cardType": "6 of hearts",
+    "z": 53243,
+    "parent": "5zu7"
+  },
+  "sjop 7 of hearts": {
+    "type": "card",
+    "id": "sjop 7 of hearts",
+    "deck": "sbDeck",
+    "cardType": "7 of hearts",
+    "z": 53251,
+    "parent": "5zu7"
+  },
+  "sjop 8 of hearts": {
+    "type": "card",
+    "id": "sjop 8 of hearts",
+    "deck": "sbDeck",
+    "cardType": "8 of hearts",
+    "z": 53224,
+    "parent": "5zu7"
+  },
+  "sjop 9 of hearts": {
+    "type": "card",
+    "id": "sjop 9 of hearts",
+    "deck": "sbDeck",
+    "cardType": "9 of hearts",
+    "z": 53258,
+    "parent": "5zu7"
+  },
+  "sjop 10 of hearts": {
+    "type": "card",
+    "id": "sjop 10 of hearts",
+    "deck": "sbDeck",
+    "cardType": "10 of hearts",
+    "z": 53236,
+    "parent": "5zu7"
+  },
+  "sjop 1 of clubs": {
+    "type": "card",
+    "id": "sjop 1 of clubs",
+    "deck": "sbDeck",
+    "cardType": "1 of clubs",
+    "z": 53257,
+    "parent": "5zu7"
+  },
+  "sjop 2 of clubs": {
+    "type": "card",
+    "id": "sjop 2 of clubs",
+    "deck": "sbDeck",
+    "cardType": "2 of clubs",
+    "z": 53222,
+    "parent": "5zu7"
+  },
+  "sjop 3 of clubs": {
+    "type": "card",
+    "id": "sjop 3 of clubs",
+    "deck": "sbDeck",
+    "cardType": "3 of clubs",
+    "z": 53249,
+    "parent": "5zu7"
+  },
+  "sjop 4 of clubs": {
+    "type": "card",
+    "id": "sjop 4 of clubs",
+    "deck": "sbDeck",
+    "cardType": "4 of clubs",
+    "z": 53218,
+    "parent": "5zu7"
+  },
+  "sjop 5 of clubs": {
+    "type": "card",
+    "id": "sjop 5 of clubs",
+    "deck": "sbDeck",
+    "cardType": "5 of clubs",
+    "z": 53241,
+    "parent": "5zu7"
+  },
+  "sjop 6 of clubs": {
+    "type": "card",
+    "id": "sjop 6 of clubs",
+    "deck": "sbDeck",
+    "cardType": "6 of clubs",
+    "z": 53230,
+    "parent": "5zu7"
+  },
+  "sjop 7 of clubs": {
+    "type": "card",
+    "id": "sjop 7 of clubs",
+    "deck": "sbDeck",
+    "cardType": "7 of clubs",
+    "z": 53254,
+    "parent": "5zu7"
+  },
+  "sjop 8 of clubs": {
+    "type": "card",
+    "id": "sjop 8 of clubs",
+    "deck": "sbDeck",
+    "cardType": "8 of clubs",
+    "z": 53214,
+    "parent": "5zu7"
+  },
+  "sjop 9 of clubs": {
+    "type": "card",
+    "id": "sjop 9 of clubs",
+    "deck": "sbDeck",
+    "cardType": "9 of clubs",
+    "z": 53216,
+    "parent": "5zu7"
+  },
+  "sjop 10 of clubs": {
+    "type": "card",
+    "id": "sjop 10 of clubs",
+    "deck": "sbDeck",
+    "cardType": "10 of clubs",
+    "z": 53262,
+    "parent": "5zu7"
+  },
+  "sjop 1 of spades": {
+    "type": "card",
+    "id": "sjop 1 of spades",
+    "deck": "sbDeck",
+    "cardType": "1 of spades",
+    "z": 53220,
+    "parent": "5zu7"
+  },
+  "sjop 2 of spades": {
+    "type": "card",
+    "id": "sjop 2 of spades",
+    "deck": "sbDeck",
+    "cardType": "2 of spades",
+    "z": 53252,
+    "parent": "5zu7"
+  },
+  "sjop 3 of spades": {
+    "type": "card",
+    "id": "sjop 3 of spades",
+    "deck": "sbDeck",
+    "cardType": "3 of spades",
+    "z": 53217,
+    "parent": "5zu7"
+  },
+  "sjop 4 of spades": {
+    "type": "card",
+    "id": "sjop 4 of spades",
+    "deck": "sbDeck",
+    "cardType": "4 of spades",
+    "z": 53265,
+    "parent": "5zu7"
+  },
+  "sjop 5 of spades": {
+    "type": "card",
+    "id": "sjop 5 of spades",
+    "deck": "sbDeck",
+    "cardType": "5 of spades",
+    "z": 53208,
+    "parent": "5zu7"
+  },
+  "sjop 6 of spades": {
+    "type": "card",
+    "id": "sjop 6 of spades",
+    "deck": "sbDeck",
+    "cardType": "6 of spades",
+    "z": 53248,
+    "parent": "5zu7"
+  },
+  "sjop 7 of spades": {
+    "type": "card",
+    "id": "sjop 7 of spades",
+    "deck": "sbDeck",
+    "cardType": "7 of spades",
+    "z": 53228,
+    "parent": "5zu7"
+  },
+  "sjop 8 of spades": {
+    "type": "card",
+    "id": "sjop 8 of spades",
+    "deck": "sbDeck",
+    "cardType": "8 of spades",
+    "z": 53240,
+    "parent": "5zu7"
+  },
+  "sjop 9 of spades": {
+    "type": "card",
+    "id": "sjop 9 of spades",
+    "deck": "sbDeck",
+    "cardType": "9 of spades",
+    "z": 53225,
+    "parent": "5zu7"
+  },
+  "sjop 10 of spades": {
+    "type": "card",
+    "id": "sjop 10 of spades",
+    "deck": "sbDeck",
+    "cardType": "10 of spades",
+    "z": 53260,
+    "parent": "5zu7"
+  },
+  "sjop 1 of flower-emblem": {
+    "type": "card",
+    "id": "sjop 1 of flower-emblem",
+    "deck": "sbDeck",
+    "cardType": "1 of flower-emblem",
+    "z": 53246,
+    "parent": "5zu7"
+  },
+  "sjop 2 of flower-emblem": {
+    "type": "card",
+    "id": "sjop 2 of flower-emblem",
+    "deck": "sbDeck",
+    "cardType": "2 of flower-emblem",
+    "z": 53247,
+    "parent": "5zu7"
+  },
+  "sjop 3 of flower-emblem": {
+    "type": "card",
+    "id": "sjop 3 of flower-emblem",
+    "deck": "sbDeck",
+    "cardType": "3 of flower-emblem",
+    "z": 53226,
+    "parent": "5zu7"
+  },
+  "sjop 4 of flower-emblem": {
+    "type": "card",
+    "id": "sjop 4 of flower-emblem",
+    "deck": "sbDeck",
+    "cardType": "4 of flower-emblem",
+    "z": 53234,
+    "parent": "5zu7"
+  },
+  "sjop 5 of flower-emblem": {
+    "type": "card",
+    "id": "sjop 5 of flower-emblem",
+    "deck": "sbDeck",
+    "cardType": "5 of flower-emblem",
+    "z": 53212,
+    "parent": "5zu7"
+  },
+  "sjop 6 of flower-emblem": {
+    "type": "card",
+    "id": "sjop 6 of flower-emblem",
+    "deck": "sbDeck",
+    "cardType": "6 of flower-emblem",
+    "z": 53261,
+    "parent": "5zu7"
+  },
+  "sjop 7 of flower-emblem": {
+    "type": "card",
+    "id": "sjop 7 of flower-emblem",
+    "deck": "sbDeck",
+    "cardType": "7 of flower-emblem",
+    "z": 53238,
+    "parent": "5zu7"
+  },
+  "sjop 8 of flower-emblem": {
+    "type": "card",
+    "id": "sjop 8 of flower-emblem",
+    "deck": "sbDeck",
+    "cardType": "8 of flower-emblem",
+    "z": 53253,
+    "parent": "5zu7"
+  },
+  "sjop 9 of flower-emblem": {
+    "type": "card",
+    "id": "sjop 9 of flower-emblem",
+    "deck": "sbDeck",
+    "cardType": "9 of flower-emblem",
+    "z": 53255,
+    "parent": "5zu7"
+  },
+  "sjop 10 of flower-emblem": {
+    "type": "card",
+    "id": "sjop 10 of flower-emblem",
+    "deck": "sbDeck",
+    "cardType": "10 of flower-emblem",
+    "z": 53264,
+    "parent": "5zu7"
+  },
+  "sjop 1 of round-star": {
+    "type": "card",
+    "id": "sjop 1 of round-star",
+    "deck": "sbDeck",
+    "cardType": "1 of round-star",
+    "z": 53259,
+    "parent": "5zu7"
+  },
+  "sjop 2 of round-star": {
+    "type": "card",
+    "id": "sjop 2 of round-star",
+    "deck": "sbDeck",
+    "cardType": "2 of round-star",
+    "z": 53250,
+    "parent": "5zu7"
+  },
+  "sjop 3 of round-star": {
+    "type": "card",
+    "id": "sjop 3 of round-star",
+    "deck": "sbDeck",
+    "cardType": "3 of round-star",
+    "z": 53209,
+    "parent": "5zu7"
+  },
+  "sjop 4 of round-star": {
+    "type": "card",
+    "id": "sjop 4 of round-star",
+    "deck": "sbDeck",
+    "cardType": "4 of round-star",
+    "z": 53207,
+    "parent": "5zu7"
+  },
+  "sjop 5 of round-star": {
+    "type": "card",
+    "id": "sjop 5 of round-star",
+    "deck": "sbDeck",
+    "cardType": "5 of round-star",
+    "z": 53263,
+    "parent": "5zu7"
+  },
+  "sjop 6 of round-star": {
+    "type": "card",
+    "id": "sjop 6 of round-star",
+    "deck": "sbDeck",
+    "cardType": "6 of round-star",
+    "z": 53223,
+    "parent": "5zu7"
+  },
+  "sjop 7 of round-star": {
+    "type": "card",
+    "id": "sjop 7 of round-star",
+    "deck": "sbDeck",
+    "cardType": "7 of round-star",
+    "z": 53221,
+    "parent": "5zu7"
+  },
+  "sjop 8 of round-star": {
+    "type": "card",
+    "id": "sjop 8 of round-star",
+    "deck": "sbDeck",
+    "cardType": "8 of round-star",
+    "z": 53232,
+    "parent": "5zu7"
+  },
+  "sjop 9 of round-star": {
+    "type": "card",
+    "id": "sjop 9 of round-star",
+    "deck": "sbDeck",
+    "cardType": "9 of round-star",
+    "z": 53242,
+    "parent": "5zu7"
+  },
+  "sjop 10 of round-star": {
+    "type": "card",
+    "id": "sjop 10 of round-star",
+    "deck": "sbDeck",
+    "cardType": "10 of round-star",
+    "z": 53244,
+    "parent": "5zu7"
+  },
+  "sbDeck": {
+    "type": "deck",
+    "id": "sbDeck",
+    "cardDefaults": {
+      "width": 80,
+      "height": 80
+    },
+    "cardTypes": {
+      "1 of diamonds": {
+        "suit": "/i/game-icons.net/skoll/diamonds.svg",
+        "suitColor": "#0a92e6",
+        "rank": 1
+      },
+      "2 of diamonds": {
+        "suit": "/i/game-icons.net/skoll/diamonds.svg",
+        "suitColor": "#0a92e6",
+        "rank": 2
+      },
+      "3 of diamonds": {
+        "suit": "/i/game-icons.net/skoll/diamonds.svg",
+        "suitColor": "#0a92e6",
+        "rank": 3
+      },
+      "4 of diamonds": {
+        "suit": "/i/game-icons.net/skoll/diamonds.svg",
+        "suitColor": "#0a92e6",
+        "rank": 4
+      },
+      "5 of diamonds": {
+        "suit": "/i/game-icons.net/skoll/diamonds.svg",
+        "suitColor": "#0a92e6",
+        "rank": 5
+      },
+      "6 of diamonds": {
+        "suit": "/i/game-icons.net/skoll/diamonds.svg",
+        "suitColor": "#0a92e6",
+        "rank": 6
+      },
+      "7 of diamonds": {
+        "suit": "/i/game-icons.net/skoll/diamonds.svg",
+        "suitColor": "#0a92e6",
+        "rank": 7
+      },
+      "8 of diamonds": {
+        "suit": "/i/game-icons.net/skoll/diamonds.svg",
+        "suitColor": "#0a92e6",
+        "rank": 8
+      },
+      "9 of diamonds": {
+        "suit": "/i/game-icons.net/skoll/diamonds.svg",
+        "suitColor": "#0a92e6",
+        "rank": 9
+      },
+      "10 of diamonds": {
+        "suit": "/i/game-icons.net/skoll/diamonds.svg",
+        "suitColor": "#0a92e6",
+        "rank": 10
+      },
+      "1 of hearts": {
+        "suit": "/i/game-icons.net/skoll/hearts.svg",
+        "suitColor": "#e50932",
+        "rank": 1
+      },
+      "2 of hearts": {
+        "suit": "/i/game-icons.net/skoll/hearts.svg",
+        "suitColor": "#e50932",
+        "rank": 2
+      },
+      "3 of hearts": {
+        "suit": "/i/game-icons.net/skoll/hearts.svg",
+        "suitColor": "#e50932",
+        "rank": 3
+      },
+      "4 of hearts": {
+        "suit": "/i/game-icons.net/skoll/hearts.svg",
+        "suitColor": "#e50932",
+        "rank": 4
+      },
+      "5 of hearts": {
+        "suit": "/i/game-icons.net/skoll/hearts.svg",
+        "suitColor": "#e50932",
+        "rank": 5
+      },
+      "6 of hearts": {
+        "suit": "/i/game-icons.net/skoll/hearts.svg",
+        "suitColor": "#e50932",
+        "rank": 6
+      },
+      "7 of hearts": {
+        "suit": "/i/game-icons.net/skoll/hearts.svg",
+        "suitColor": "#e50932",
+        "rank": 7
+      },
+      "8 of hearts": {
+        "suit": "/i/game-icons.net/skoll/hearts.svg",
+        "suitColor": "#e50932",
+        "rank": 8
+      },
+      "9 of hearts": {
+        "suit": "/i/game-icons.net/skoll/hearts.svg",
+        "suitColor": "#e50932",
+        "rank": 9
+      },
+      "10 of hearts": {
+        "suit": "/i/game-icons.net/skoll/hearts.svg",
+        "suitColor": "#e50932",
+        "rank": 10
+      },
+      "1 of clubs": {
+        "suit": "/i/game-icons.net/skoll/clubs.svg",
+        "suitColor": "#ff8a05",
+        "rank": 1
+      },
+      "2 of clubs": {
+        "suit": "/i/game-icons.net/skoll/clubs.svg",
+        "suitColor": "#ff8a05",
+        "rank": 2
+      },
+      "3 of clubs": {
+        "suit": "/i/game-icons.net/skoll/clubs.svg",
+        "suitColor": "#ff8a05",
+        "rank": 3
+      },
+      "4 of clubs": {
+        "suit": "/i/game-icons.net/skoll/clubs.svg",
+        "suitColor": "#ff8a05",
+        "rank": 4
+      },
+      "5 of clubs": {
+        "suit": "/i/game-icons.net/skoll/clubs.svg",
+        "suitColor": "#ff8a05",
+        "rank": 5
+      },
+      "6 of clubs": {
+        "suit": "/i/game-icons.net/skoll/clubs.svg",
+        "suitColor": "#ff8a05",
+        "rank": 6
+      },
+      "7 of clubs": {
+        "suit": "/i/game-icons.net/skoll/clubs.svg",
+        "suitColor": "#ff8a05",
+        "rank": 7
+      },
+      "8 of clubs": {
+        "suit": "/i/game-icons.net/skoll/clubs.svg",
+        "suitColor": "#ff8a05",
+        "rank": 8
+      },
+      "9 of clubs": {
+        "suit": "/i/game-icons.net/skoll/clubs.svg",
+        "suitColor": "#ff8a05",
+        "rank": 9
+      },
+      "10 of clubs": {
+        "suit": "/i/game-icons.net/skoll/clubs.svg",
+        "suitColor": "#ff8a05",
+        "rank": 10
+      },
+      "1 of spades": {
+        "suit": "/i/game-icons.net/skoll/spades.svg",
+        "suitColor": "#44d704",
+        "rank": 1
+      },
+      "2 of spades": {
+        "suit": "/i/game-icons.net/skoll/spades.svg",
+        "suitColor": "#44d704",
+        "rank": 2
+      },
+      "3 of spades": {
+        "suit": "/i/game-icons.net/skoll/spades.svg",
+        "suitColor": "#44d704",
+        "rank": 3
+      },
+      "4 of spades": {
+        "suit": "/i/game-icons.net/skoll/spades.svg",
+        "suitColor": "#44d704",
+        "rank": 4
+      },
+      "5 of spades": {
+        "suit": "/i/game-icons.net/skoll/spades.svg",
+        "suitColor": "#44d704",
+        "rank": 5
+      },
+      "6 of spades": {
+        "suit": "/i/game-icons.net/skoll/spades.svg",
+        "suitColor": "#44d704",
+        "rank": 6
+      },
+      "7 of spades": {
+        "suit": "/i/game-icons.net/skoll/spades.svg",
+        "suitColor": "#44d704",
+        "rank": 7
+      },
+      "8 of spades": {
+        "suit": "/i/game-icons.net/skoll/spades.svg",
+        "suitColor": "#44d704",
+        "rank": 8
+      },
+      "9 of spades": {
+        "suit": "/i/game-icons.net/skoll/spades.svg",
+        "suitColor": "#44d704",
+        "rank": 9
+      },
+      "10 of spades": {
+        "suit": "/i/game-icons.net/skoll/spades.svg",
+        "suitColor": "#44d704",
+        "rank": 10
+      },
+      "1 of flower-emblem": {
+        "suit": "/i/game-icons.net/delapouite/flower-emblem.svg",
+        "suitColor": "#a615f4",
+        "rank": 1
+      },
+      "2 of flower-emblem": {
+        "suit": "/i/game-icons.net/delapouite/flower-emblem.svg",
+        "suitColor": "#a615f4",
+        "rank": 2
+      },
+      "3 of flower-emblem": {
+        "suit": "/i/game-icons.net/delapouite/flower-emblem.svg",
+        "suitColor": "#a615f4",
+        "rank": 3
+      },
+      "4 of flower-emblem": {
+        "suit": "/i/game-icons.net/delapouite/flower-emblem.svg",
+        "suitColor": "#a615f4",
+        "rank": 4
+      },
+      "5 of flower-emblem": {
+        "suit": "/i/game-icons.net/delapouite/flower-emblem.svg",
+        "suitColor": "#a615f4",
+        "rank": 5
+      },
+      "6 of flower-emblem": {
+        "suit": "/i/game-icons.net/delapouite/flower-emblem.svg",
+        "suitColor": "#a615f4",
+        "rank": 6
+      },
+      "7 of flower-emblem": {
+        "suit": "/i/game-icons.net/delapouite/flower-emblem.svg",
+        "suitColor": "#a615f4",
+        "rank": 7
+      },
+      "8 of flower-emblem": {
+        "suit": "/i/game-icons.net/delapouite/flower-emblem.svg",
+        "suitColor": "#a615f4",
+        "rank": 8
+      },
+      "9 of flower-emblem": {
+        "suit": "/i/game-icons.net/delapouite/flower-emblem.svg",
+        "suitColor": "#a615f4",
+        "rank": 9
+      },
+      "10 of flower-emblem": {
+        "suit": "/i/game-icons.net/delapouite/flower-emblem.svg",
+        "suitColor": "#a615f4",
+        "rank": 10
+      },
+      "1 of round-star": {
+        "suit": "/i/game-icons.net/delapouite/round-star.svg",
+        "suitColor": "#f6fa00",
+        "rank": 1
+      },
+      "2 of round-star": {
+        "suit": "/i/game-icons.net/delapouite/round-star.svg",
+        "suitColor": "#f6fa00",
+        "rank": 2
+      },
+      "3 of round-star": {
+        "suit": "/i/game-icons.net/delapouite/round-star.svg",
+        "suitColor": "#f6fa00",
+        "rank": 3
+      },
+      "4 of round-star": {
+        "suit": "/i/game-icons.net/delapouite/round-star.svg",
+        "suitColor": "#f6fa00",
+        "rank": 4
+      },
+      "5 of round-star": {
+        "suit": "/i/game-icons.net/delapouite/round-star.svg",
+        "suitColor": "#f6fa00",
+        "rank": 5
+      },
+      "6 of round-star": {
+        "suit": "/i/game-icons.net/delapouite/round-star.svg",
+        "suitColor": "#f6fa00",
+        "rank": 6
+      },
+      "7 of round-star": {
+        "suit": "/i/game-icons.net/delapouite/round-star.svg",
+        "suitColor": "#f6fa00",
+        "rank": 7
+      },
+      "8 of round-star": {
+        "suit": "/i/game-icons.net/delapouite/round-star.svg",
+        "suitColor": "#f6fa00",
+        "rank": 8
+      },
+      "9 of round-star": {
+        "suit": "/i/game-icons.net/delapouite/round-star.svg",
+        "suitColor": "#f6fa00",
+        "rank": 9
+      },
+      "10 of round-star": {
+        "suit": "/i/game-icons.net/delapouite/round-star.svg",
+        "suitColor": "#f6fa00",
+        "rank": 10
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "width": 80,
+            "height": 80,
+            "color": "#ffffff"
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "transparent",
+            "width": 80,
+            "height": 80,
+            "value": "/i/game-icons.net/viscious-speed/abstract-111.svg"
+          }
+        ],
+        "radius": 16
+      },
+      {
+        "radius": 16,
+        "objects": [
+          {
+            "type": "image",
+            "width": 80,
+            "height": 80,
+            "dynamicProperties": {
+              "color": "suitColor"
+            }
+          },
+          {
+            "type": "image",
+            "x": 42,
+            "y": 5,
+            "width": 37,
+            "height": 37,
+            "color": "transparent",
+            "svgReplaces": {
+              "#000": "black"
+            },
+            "dynamicProperties": {
+              "value": "suit"
+            }
+          },
+          {
+            "type": "text",
+            "y": 0,
+            "fontSize": 40,
+            "color": "Black",
+            "width": 100,
+            "dynamicProperties": {
+              "value": "rank"
+            }
+          }
+        ]
+      }
+    ],
+    "parent": "deckHolderSB"
+  },
+  "5zu7": {
+    "type": "pile",
+    "parent": "deckHolderSB",
+    "width": 103,
+    "height": 160,
+    "id": "5zu7",
+    "x": 4,
+    "y": 4
+  },
+  "deckHolderSB": {
+    "type": "holder",
+    "id": "deckHolderSB",
+    "x": -366,
+    "y": 380,
+    "width": 88,
+    "height": 88,
+    "z": 5881,
+    "inheritChildZ": true,
+    "onEnter": {
+      "activeFace": 0
+    },
+    "offscreenReset": {
+      "x": -366,
+      "y": 380
+    },
+    "sbReset": {
+      "x": 25,
+      "y": 380
+    },
+    "shReset": {
+      "x": -366,
+      "y": 380
+    },
+    "shSchemeReset": {
+      "x": -366,
+      "y": 380
+    }
+  },
+  "draw1buttonSB": {
+    "type": "button",
+    "id": "draw1buttonSB",
+    "x": -345,
+    "y": 255,
+    "z": 5275,
+    "text": "Draw 1",
+    "offscreenReset": {
+      "x": -345,
+      "y": 255
+    },
+    "sbReset": {
+      "x": 145,
+      "y": 380
+    },
+    "shReset": {
+      "x": -345,
+      "y": 255
+    },
+    "shSchemeReset": {
+      "x": -345,
+      "y": 255
+    },
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "deckHolderSB",
+        "to": "hand",
+        "count": 1
+      },
+      {
+        "func": "TURN"
+      }
+    ]
+  },
+  "draw1buttonSH": {
+    "type": "button",
+    "id": "draw1buttonSH",
+    "x": -166,
+    "y": 255,
+    "z": 5275,
+    "text": "Draw 1",
+    "offscreenReset": {
+      "x": -166,
+      "y": 255
+    },
+    "shReset": {
+      "x": 145,
+      "y": 380
+    },
+    "shSchemeReset": {
+      "x": 145,
+      "y": 380
+    },
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "deckHolderSH",
+        "to": "hand",
+        "count": 1
+      },
+      {
+        "func": "TURN"
+      }
+    ]
+  },
+  "draw1buttonSHScheme": {
+    "type": "button",
+    "id": "draw1buttonSHScheme",
+    "parent": "schemeDeckHolderSH",
+    "x": -11,
+    "y": 103,
+    "width": 110,
+    "height": 60,
+    "z": 5275,
+    "text": "Draw 1 Scheme Card",
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "schemeDeckHolderSH",
+        "to": "hand",
+        "count": 1
+      },
+      {
+        "func": "TURN"
+      }
+    ]
+  },
+  "10nzg J of fluffy-trefoil": {
+    "type": "card",
+    "id": "10nzg J of fluffy-trefoil",
+    "deck": "schemeDeckSB",
+    "cardType": "J of fluffy-trefoil",
+    "z": 53286,
+    "parent": "f7gy"
+  },
+  "10nzg  J of fluffy-trefoil": {
+    "type": "card",
+    "id": "10nzg  J of fluffy-trefoil",
+    "deck": "schemeDeckSB",
+    "cardType": " J of fluffy-trefoil",
+    "z": 53282,
+    "parent": "f7gy"
+  },
+  "9nzg  8 of fluffy-trefoil": {
+    "type": "card",
+    "id": "9nzg  8 of fluffy-trefoil",
+    "deck": "schemeDeckSB",
+    "cardType": " 7 of fluffy-trefoil",
+    "z": 53277,
+    "parent": "f7gy"
+  },
+  "9nzg  124 of fluffy-trefoil": {
+    "type": "card",
+    "id": "9nzg  124 of fluffy-trefoil",
+    "deck": "schemeDeckSB",
+    "cardType": " 123 of fluffy-trefoil",
+    "z": 53279,
+    "parent": "f7gy"
+  },
+  "9nzg  5 cards of fluffy-trefoil": {
+    "type": "card",
+    "id": "9nzg  5 cards of fluffy-trefoil",
+    "deck": "schemeDeckSB",
+    "cardType": " 4 cards of fluffy-trefoil",
+    "z": 53280,
+    "parent": "f7gy"
+  },
+  "10nzg  ### of fluffy-trefoil": {
+    "type": "card",
+    "id": "10nzg  ### of fluffy-trefoil",
+    "deck": "schemeDeckSB",
+    "cardType": " ### of fluffy-trefoil",
+    "z": 53278,
+    "parent": "f7gy"
+  },
+  "9nzg  draw 4 of fluffy-trefoil": {
+    "type": "card",
+    "id": "9nzg  draw 4 of fluffy-trefoil",
+    "deck": "schemeDeckSB",
+    "cardType": " draw 3 of fluffy-trefoil",
+    "z": 53284,
+    "parent": "f7gy"
+  },
+  "10nzg  Move your card of fluffy-trefoil": {
+    "type": "card",
+    "id": "10nzg  Move your card of fluffy-trefoil",
+    "deck": "schemeDeckSB",
+    "cardType": " Move your card of fluffy-trefoil",
+    "z": 53285,
+    "parent": "f7gy"
+  },
+  "10nzg  Move opp card of fluffy-trefoil": {
+    "type": "card",
+    "id": "10nzg  Move opp card of fluffy-trefoil",
+    "deck": "schemeDeckSB",
+    "cardType": " Move opp card of fluffy-trefoil",
+    "z": 53281,
+    "parent": "f7gy"
+  },
+  "10nzg  Discard opp card of fluffy-trefoil": {
+    "type": "card",
+    "id": "10nzg  Discard opp card of fluffy-trefoil",
+    "deck": "schemeDeckSB",
+    "cardType": " Discard opp card of fluffy-trefoil",
+    "z": 53283,
+    "parent": "f7gy"
+  },
+  "schemeDeckHolderSB": {
+    "type": "holder",
+    "id": "schemeDeckHolderSB",
+    "x": -366,
+    "y": 520,
+    "width": 86,
+    "height": 86,
+    "dropTarget": {
+      "type": "card"
+    },
+    "onEnter": {
+      "activeFace": 0
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "width": 80,
+            "height": 80,
+            "color": "gray"
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "transparent",
+            "width": 80,
+            "height": 80,
+            "dynamicProperties": {
+              "value": "image"
+            }
+          }
+        ],
+        "radius": 16
+      },
+      {
+        "radius": 16,
+        "objects": [
+          {
+            "type": "image",
+            "width": 80,
+            "height": 80,
+            "dynamicProperties": {
+              "color": "suitColor"
+            }
+          },
+          {
+            "type": "image",
+            "x": 40,
+            "y": 10,
+            "width": 40,
+            "height": 40,
+            "color": "transparent",
+            "svgReplaces": {
+              "#000": "black"
+            },
+            "dynamicProperties": {
+              "value": "suit"
+            }
+          },
+          {
+            "type": "text",
+            "y": 0,
+            "fontSize": 20,
+            "color": "Black",
+            "width": 100,
+            "dynamicProperties": {
+              "value": "rank"
+            }
+          }
+        ]
+      }
+    ],
+    "offscreenReset": {
+      "x": -366,
+      "y": 520
+    },
+    "sbReset": {
+      "x": 25,
+      "y": 520
+    }
+  },
+  "draw1buttonSBScheme": {
+    "type": "button",
+    "id": "draw1buttonSBScheme",
+    "parent": "schemeDeckHolderSB",
+    "x": -11,
+    "y": 103,
+    "width": 110,
+    "height": 60,
+    "z": 5275,
+    "text": "Draw 1 Scheme Card",
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "schemeDeckHolderSB",
+        "to": "hand",
+        "count": 1
+      },
+      {
+        "func": "TURN"
+      }
+    ]
+  },
+  "schemeDeckSB": {
+    "type": "deck",
+    "id": "schemeDeckSB",
+    "parent": "schemeDeckHolderSB",
+    "cardDefaults": {
+      "width": 80,
+      "height": 80
+    },
+    "cardTypes": {
+      "J of fluffy-trefoil": {
+        "suitColor": "#f8f7f7",
+        "rank": "1-10",
+        "line1": "",
+        "line2": ""
+      },
+      " J of fluffy-trefoil": {
+        "suitColor": "#f8f7f7",
+        "rank": "1-10",
+        "line1": "",
+        "line2": ""
+      },
+      " 7 of fluffy-trefoil": {
+        "suitColor": "#f8f7f7",
+        "rank": "8"
+      },
+      " 123 of fluffy-trefoil": {
+        "suitColor": "#f8f7f7",
+        "rank": "123"
+      },
+      " 4 cards of fluffy-trefoil": {
+        "suitColor": "#f8f7f7",
+        "rank": "",
+        "line1": "+1",
+        "line2": "+1",
+        "line3": "+1",
+        "line4": "+1"
+      },
+      " ### of fluffy-trefoil": {
+        "suitColor": "#f8f7f7",
+        "rank": "",
+        "line1": "+#",
+        "line2": "+#",
+        "line3": "+#",
+        "line4": "+#"
+      },
+      " draw 3 of fluffy-trefoil": {
+        "suitColor": "#f8f7f7",
+        "text1": "Draw",
+        "text2": "3,",
+        "text3": "Discard",
+        "text4": "2"
+      },
+      " Move your card of fluffy-trefoil": {
+        "suitColor": "#f8f7f7",
+        "text1": "Move your card"
+      },
+      " Move opp card of fluffy-trefoil": {
+        "suitColor": "#f8f7f7",
+        "text1": "Steal opp card"
+      },
+      " Discard opp card of fluffy-trefoil": {
+        "suitColor": "#f8f7f7",
+        "text1": "Discard opp card"
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "width": 80,
+            "height": 80,
+            "color": "#ffffff"
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "transparent",
+            "width": 80,
+            "height": 80,
+            "value": "/i/game-icons.net/delapouite/pick-of-destiny.svg"
+          }
+        ],
+        "radius": 16
+      },
+      {
+        "radius": 16,
+        "objects": [
+          {
+            "type": "image",
+            "width": 80,
+            "height": 80,
+            "dynamicProperties": {
+              "color": "suitColor"
+            }
+          },
+          {
+            "type": "image",
+            "x": 40,
+            "y": 10,
+            "width": 40,
+            "height": 40,
+            "color": "transparent",
+            "svgReplaces": {
+              "#000": "black"
+            },
+            "dynamicProperties": {
+              "value": "suit"
+            }
+          },
+          {
+            "type": "text",
+            "x": 0,
+            "y": 0,
+            "fontSize": 40,
+            "color": "black",
+            "width": 100,
+            "dynamicProperties": {
+              "value": "rank"
+            }
+          },
+          {
+            "type": "text",
+            "x": 0,
+            "y": 0,
+            "fontSize": "20",
+            "color": "black",
+            "width": 40,
+            "dynamicProperties": {
+              "value": "line1"
+            }
+          },
+          {
+            "type": "text",
+            "x": 55,
+            "y": 0,
+            "color": "black",
+            "fontSize": "20",
+            "width": 40,
+            "dynamicProperties": {
+              "value": "line2"
+            }
+          },
+          {
+            "type": "text",
+            "x": 0,
+            "y": 55,
+            "color": "black",
+            "fontSize": "20",
+            "width": 40,
+            "dynamicProperties": {
+              "value": "line3"
+            }
+          },
+          {
+            "type": "text",
+            "x": 2,
+            "y": 5,
+            "color": "black",
+            "fontSize": "20",
+            "width": 40,
+            "dynamicProperties": {
+              "value": "text1"
+            }
+          },
+          {
+            "type": "text",
+            "x": 55,
+            "y": 5,
+            "color": "black",
+            "fontSize": "20",
+            "width": 40,
+            "dynamicProperties": {
+              "value": "text2"
+            }
+          },
+          {
+            "type": "text",
+            "x": 0,
+            "y": 35,
+            "color": "black",
+            "fontSize": "20",
+            "width": 40,
+            "dynamicProperties": {
+              "value": "text3"
+            }
+          },
+          {
+            "type": "text",
+            "x": 70,
+            "y": 35,
+            "color": "black",
+            "fontSize": "20",
+            "width": 40,
+            "dynamicProperties": {
+              "value": "text4"
+            }
+          },
+          {
+            "type": "text",
+            "x": 55,
+            "y": 55,
+            "color": "black",
+            "fontSize": "20",
+            "width": 40,
+            "dynamicProperties": {
+              "value": "line4"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "f7gy": {
+    "type": "pile",
+    "parent": "schemeDeckHolderSB",
+    "x": 4,
+    "y": 4,
+    "width": 80,
+    "height": 80,
+    "id": "f7gy"
+  },
+  "64nb": {
+    "type": "pile",
+    "parent": "schemeDeckHolderSH",
+    "x": 4,
+    "y": 4,
+    "width": 80,
+    "height": 80,
+    "id": "64nb"
+  },
+  "background": {
+    "id": "background",
+    "width": 1920,
+    "height": 960,
+    "scale": 1.09,
+    "layer": -4,
+    "movable": false,
+    "css": {
+      "opacity": "0.6"
+    },
+    "image": "/assets/-52589506_548214",
+    "z": 1
+  }
+}
