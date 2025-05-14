@@ -5240,17 +5240,14 @@
         "value": 1
       }
     ],
-    "readyMarker": "ready-p1",
-    "onlyVisibleForSeat": "seat-p1"
+    "readyMarker": "ready-p1"
   },
   "bid-p2": {
     "id": "bid-p2",
     "parent": "area-p2",
     "inheritFrom": "bid-p1",
     "text": 0,
-    "readyMarker": "ready-p2",
-    "onlyVisibleToSeat": "seat-p2",
-    "onlyVisibleForSeat": "seat-p2"
+    "readyMarker": "ready-p2"
   },
   "cash-p7-label": {
     "type": "label",
@@ -5264,9 +5261,7 @@
     "parent": "area-p3",
     "inheritFrom": "bid-p1",
     "text": 0,
-    "readyMarker": "ready-p3",
-    "onlyVisibleToSeat": "seat-p3",
-    "onlyVisibleForSeat": "seat-p3"
+    "readyMarker": "ready-p3"
   },
   "cash-p8-label": {
     "type": "label",
@@ -5280,9 +5275,7 @@
     "parent": "area-p4",
     "inheritFrom": "bid-p1",
     "text": 0,
-    "readyMarker": "ready-p4",
-    "onlyVisibleToSeat": "seat-p4",
-    "onlyVisibleForSeat": "seat-p4"
+    "readyMarker": "ready-p4"
   },
   "cash-p9-label": {
     "type": "label",
@@ -5296,9 +5289,7 @@
     "parent": "area-p5",
     "inheritFrom": "bid-p1",
     "text": 0,
-    "readyMarker": "ready-p5",
-    "onlyVisibleToSeat": "seat-p5",
-    "onlyVisibleForSeat": "seat-p5"
+    "readyMarker": "ready-p5"
   },
   "cash-p10-label": {
     "type": "label",
@@ -5525,7 +5516,7 @@
         ]
       }
     ],
-    "text": "End Auction",
+    "text": "Start Auction",
     "css": {
       "font-size": "14px"
     }
