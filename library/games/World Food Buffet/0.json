@@ -1,23 +1,23 @@
 {
   "_meta": {
-    "version": 13,
+    "version": 17,
     "info": {
-      "name": "Safari Scramble",
-      "image": "/assets/1513438080_189203",
+      "name": "World Food Buffet",
+      "image": "/assets/1870598459_214333",
       "rules": "",
-      "bgg": "https://boardgamegeek.com/boardgame/398/flinke-pinke",
+      "bgg": "https://boardgamegeek.com/boardgame/398/botswana",
       "year": "1994",
       "mode": "vs",
       "time": "30",
-      "attribution": "Game layout and scripting by Andy Pymont, released to public domain under CC0.\n\nLibrary image generated using the Midjourney artificial intelligence image generator, https://www.midjourney.com/home/, using the following prompt: \"going on safari, watercolor\".\n\nAnimal graphics are from https:///thenounproject.com/ and are used under the CC BY 3.0 license:\n\nEucalyp:\n- Safari https://thenounproject.com/icon/safari-4932030/\nFran Couto:\n- Zebra https://thenounproject.com/icon/zebra-3785903/\nIconic:\n- Elephant https://thenounproject.com/icon/elephant-1046624/\nIronSV:\n- Lion https://thenounproject.com/icon/lion-3063323/\ntulpahn:\n- Leopard https://thenounproject.com/icon/leopard-3839691/\n- Rhino https://thenounproject.com/icon/rhino-3839674/",
-      "lastUpdate": 1680963140205,
+      "attribution": "Game layout and scripting by Andy Pymont, released to public domain under CC0.\n\nLibrary image is a photograph by Sheila Brown, also public domain under CC0: https://www.publicdomainpictures.net/en/view-image.php?image=312948",
+      "lastUpdate": 1747325253168,
       "showName": true,
-      "description": "Can you collect the most valuable animals?",
-      "helpText": "Have each player take a seat and then click the New Round button to deal a hand of cards.\nOn your turn:\n• Drag and drop a card from your hand at the bottom of the screen into the area for the appropriate animal/suit, such that the latest played is the visible/right most card. (The other cards will be stacked such that all players can see what has been played.)\n• Drag and drop an animal tile from the supply column into your holder for that type of animal (vertically in line with the supply and horizontally in line with your seat/player name.)>\n\nAt the end of each round, click New Round again to record current scores (based on played cards and collected tiles) and collect back, shuffle, and re deal cards. Also press this at the end of the final round to finish scoring (you'll be dealt a new hand but can simply ignore this).",
+      "description": "Will you enjoy the most successful trip to your city's top dining experience?",
+      "helpText": "Have each player take a seat and then click the New Round button to deal a hand of cards.\nOn your turn:\n• Drag and drop a card from your hand at the bottom of the screen into the area for the appropriate food/suit, such that the latest played is the visible/right most card. (The other cards will be stacked such that all players can see what has been played.)\n• Drag and drop a food tile from the supply column into your holder for that type of food (vertically in line with the supply and horizontally in line with your seat/player name.)>\n\nAt the end of each round, click New Round again to record current scores (based on played cards and collected tiles) and collect back, shuffle, and re deal cards. Also press this at the end of the final round to finish scoring (you'll be dealt a new hand but can simply ignore this).",
       "similarImage": "",
-      "similarName": "Flinke Pinke",
+      "similarName": "Botswana",
       "similarAwards": "1994 Fairplay À la carte Runner-up\n2003 Japan Boardgame Prize Best Foreign Game for Beginners Nominee",
-      "ruleText": "Play one hand per player, with each player being start player once.\n\nOn your turn, you must play a card into the area for the matching animal on the table. You must then take any one animal (not necessarily the same animal as the card you played) into your personal area, unless there are no animals remaining.\n\nIf, after a player's turn, all 6 cards (0, 1, 2, 3, 4, and 5) for any single animal have been played, the hand ends.\n\nWhen the hand ends, players score each animal in their personal area. Each animal is worth the value printed on the latest card of that animal that was played. If no cards have been played for that animal, then it is worth 0.",
+      "ruleText": "Play one hand per player, with each player being start player once.\n\nOn your turn, you must play a card into the area for the matching food on the table. You must then take any one food tile (not necessarily for the same food as the card you played) into your personal area, unless there are no food tiles remaining.\n\nIf, after a player's turn, all 6 cards (0, 1, 2, 3, 4, and 5) for any single food type have been played, the hand ends.\n\nWhen the hand ends, players score each food tile in their personal area. Each food tile is worth the value printed on the latest card of that food type that was played. If no cards have been played for that food type, then it is worth 0.",
       "similarDesigner": "Reiner Knizia",
       "id": "9gz4",
       "skill": "",
@@ -112,19 +112,19 @@
         "value": 0
       },
       {
-        "note": "Iterate through animals and add them to the scores",
+        "note": "Iterate through foods and add them to the scores",
         "func": "FOREACH",
         "in": [
-          "elephant",
-          "leopard",
-          "lion",
-          "rhino",
-          "zebra"
+          "burger",
+          "pizza",
+          "pretzel",
+          "sushi",
+          "taco"
         ],
         "loopRoutine": [
           "var suit = ${value}",
           {
-            "note": "Inspect the played cards for this animal",
+            "note": "Inspect the played cards for this food",
             "func": "SELECT",
             "property": "parent",
             "value": "holder-cards-${suit}"
@@ -308,17 +308,17 @@
       {
         "note": "Recall the tiles",
         "func": "RECALL",
-        "holder": "holder-elephant"
+        "holder": "holder-burger"
       },
       {
         "note": "Move the tiles into their respective suit holders",
         "func": "FOREACH",
         "in": [
-          "elephant",
-          "leopard",
-          "lion",
-          "rhino",
-          "zebra"
+          "burger",
+          "pizza",
+          "pretzel",
+          "sushi",
+          "taco"
         ],
         "loopRoutine": [
           {
@@ -419,30 +419,25 @@
     "type": "deck",
     "parent": "holder-cards",
     "cardTypes": {
-      "card-elephant": {
-        "bgcolor": "#202020",
-        "fgcolor": "#ffffff",
-        "image": "/assets/-639579438_5490"
+      "card-burger": {
+        "bgcolor": "#fff9c4",
+        "image": "/i/noto-emoji/emoji_u1f354.svg"
       },
-      "card-leopard": {
-        "bgcolor": "#ffdd00",
-        "fgcolor": "#000000",
-        "image": "/assets/13752037_7242"
+      "card-pizza": {
+        "bgcolor": "#c8e6c9",
+        "image": "/i/noto-emoji/emoji_u1f355.svg"
       },
-      "card-lion": {
-        "bgcolor": "#ff5000",
-        "fgcolor": "#000000",
-        "image": "/assets/-479135004_8746"
+      "card-pretzel": {
+        "bgcolor": "#d7ccc8",
+        "image": "/i/noto-emoji/emoji_u1f968.svg"
       },
-      "card-rhino": {
-        "bgcolor": "#808080",
-        "fgcolor": "#000000",
-        "image": "/assets/-678511477_5190"
+      "card-sushi": {
+        "bgcolor": "#ffcdd2",
+        "image": "/i/noto-emoji/emoji_u1f363.svg"
       },
-      "card-zebra": {
-        "bgcolor": "#eeeeee",
-        "fgcolor": "#000000",
-        "image": "/assets/2083982857_6862"
+      "card-taco": {
+        "bgcolor": "#cfd8dc",
+        "image": "/i/noto-emoji/emoji_u1f32e.svg"
       }
     },
     "faceTemplates": [
@@ -454,7 +449,7 @@
             "y": 0,
             "width": 100,
             "height": 140,
-            "color": "#509050",
+            "color": "#c8e6c9",
             "css": {
               "border-radius": "8px",
               "border-style": "solid",
@@ -463,12 +458,12 @@
           },
           {
             "type": "image",
-            "x": 5,
-            "y": 25,
-            "width": 90,
-            "height": 90,
+            "x": 15,
+            "y": 35,
+            "width": 70,
+            "height": 70,
             "color": "transparent",
-            "value": "/assets/-1803867062_6916"
+            "value": "/i/noto-emoji/emoji_u1f37d.svg"
           }
         ]
       },
@@ -497,7 +492,6 @@
               "font-size": "35px"
             },
             "dynamicProperties": {
-              "color": "fgcolor",
               "value": "value"
             }
           },
@@ -510,22 +504,18 @@
               "font-size": "35px"
             },
             "dynamicProperties": {
-              "color": "fgcolor",
               "value": "value"
             }
           },
           {
             "type": "image",
-            "x": 5,
-            "y": 25,
-            "width": 90,
-            "height": 90,
+            "x": 15,
+            "y": 35,
+            "width": 70,
+            "height": 70,
             "color": "transparent",
             "dynamicProperties": {
               "value": "image"
-            },
-            "svgReplaces": {
-              "#000000": "fgcolor"
             }
           }
         ]
@@ -542,8 +532,8 @@
       }
     }
   },
-  "holder-cards-elephant": {
-    "id": "holder-cards-elephant",
+  "holder-cards-burger": {
+    "id": "holder-cards-burger",
     "type": "holder",
     "x": 550,
     "y": 85,
@@ -551,7 +541,7 @@
     "height": 140,
     "dropTarget": {
       "deck": "deck-cards",
-      "cardType": "card-elephant"
+      "cardType": "card-burger"
     },
     "dropOffsetX": 0,
     "dropOffsetY": 0,
@@ -561,44 +551,44 @@
       "activeFace": 1
     }
   },
-  "holder-cards-leopard": {
-    "id": "holder-cards-leopard",
+  "holder-cards-pizza": {
+    "id": "holder-cards-pizza",
     "type": "holder",
-    "inheritFrom": "holder-cards-elephant",
+    "inheritFrom": "holder-cards-burger",
     "y": 235,
     "dropTarget": {
       "deck": "deck-cards",
-      "cardType": "card-leopard"
+      "cardType": "card-pizza"
     }
   },
-  "holder-cards-lion": {
-    "id": "holder-cards-lion",
+  "holder-cards-pretzel": {
+    "id": "holder-cards-pretzel",
     "type": "holder",
-    "inheritFrom": "holder-cards-elephant",
+    "inheritFrom": "holder-cards-burger",
     "y": 385,
     "dropTarget": {
       "deck": "deck-cards",
-      "cardType": "card-lion"
+      "cardType": "card-pretzel"
     }
   },
-  "holder-cards-rhino": {
-    "id": "holder-cards-rhino",
+  "holder-cards-sushi": {
+    "id": "holder-cards-sushi",
     "type": "holder",
-    "inheritFrom": "holder-cards-elephant",
+    "inheritFrom": "holder-cards-burger",
     "y": 535,
     "dropTarget": {
       "deck": "deck-cards",
-      "cardType": "card-rhino"
+      "cardType": "card-sushi"
     }
   },
-  "holder-cards-zebra": {
-    "id": "holder-cards-zebra",
+  "holder-cards-taco": {
+    "id": "holder-cards-taco",
     "type": "holder",
-    "inheritFrom": "holder-cards-elephant",
+    "inheritFrom": "holder-cards-burger",
     "y": 685,
     "dropTarget": {
       "deck": "deck-cards",
-      "cardType": "card-zebra"
+      "cardType": "card-taco"
     }
   },
   "seat-p1": {
@@ -759,8 +749,8 @@
     "text": 0,
     "inheritFrom": "hand-counter-p1"
   },
-  "holder-elephant": {
-    "id": "holder-elephant",
+  "holder-burger": {
+    "id": "holder-burger",
     "type": "holder",
     "x": 855,
     "y": 117.5,
@@ -770,38 +760,38 @@
     "dropOffsetY": 2.5,
     "dropTarget": {
       "deck": "deck-tiles",
-      "cardType": "tile-elephant"
+      "cardType": "tile-burger"
     }
   },
   "deck-tiles": {
     "id": "deck-tiles",
     "type": "deck",
-    "parent": "holder-elephant",
+    "parent": "holder-burger",
     "cardTypes": {
-      "tile-elephant": {
-        "bgcolor": "#202020",
+      "tile-burger": {
+        "bgcolor": "#fff9c4",
         "fgcolor": "#ffffff",
-        "image": "/assets/-639579438_5490"
+        "image": "/i/noto-emoji/emoji_u1f354.svg"
       },
-      "tile-leopard": {
-        "bgcolor": "#ffdd00",
+      "tile-pizza": {
+        "bgcolor": "#c8e6c9",
         "fgcolor": "#000000",
-        "image": "/assets/13752037_7242"
+        "image": "/i/noto-emoji/emoji_u1f355.svg"
       },
-      "tile-lion": {
-        "bgcolor": "#ff5000",
+      "tile-pretzel": {
+        "bgcolor": "#d7ccc8",
         "fgcolor": "#000000",
-        "image": "/assets/-479135004_8746"
+        "image": "/i/noto-emoji/emoji_u1f968.svg"
       },
-      "tile-rhino": {
-        "bgcolor": "#808080",
+      "tile-sushi": {
+        "bgcolor": "#ffcdd2",
         "fgcolor": "#000000",
-        "image": "/assets/-678511477_5190"
+        "image": "/i/noto-emoji/emoji_u1f363.svg"
       },
-      "tile-zebra": {
-        "bgcolor": "#eeeeee",
+      "tile-taco": {
+        "bgcolor": "#cfd8dc",
         "fgcolor": "#000000",
-        "image": "/assets/2083982857_6862"
+        "image": "/i/noto-emoji/emoji_u1f32e.svg"
       }
     },
     "faceTemplates": [
@@ -841,305 +831,305 @@
       }
     }
   },
-  "holder-elephant-p1": {
-    "id": "holder-elephant-p1",
+  "holder-burger-p1": {
+    "id": "holder-burger-p1",
     "type": "holder",
-    "inheritFrom": "holder-elephant",
+    "inheritFrom": "holder-burger",
     "x": 980,
     "linkedToSeat": "seat-p1"
   },
-  "holder-elephant-p2": {
-    "id": "holder-elephant-p2",
+  "holder-burger-p2": {
+    "id": "holder-burger-p2",
     "type": "holder",
-    "inheritFrom": "holder-elephant-p1",
+    "inheritFrom": "holder-burger-p1",
     "x": 1110,
     "linkedToSeat": "seat-p2"
   },
-  "holder-elephant-p3": {
-    "id": "holder-elephant-p3",
+  "holder-burger-p3": {
+    "id": "holder-burger-p3",
     "type": "holder",
-    "inheritFrom": "holder-elephant-p1",
+    "inheritFrom": "holder-burger-p1",
     "x": 1240,
     "linkedToSeat": "seat-p3"
   },
-  "holder-elephant-p4": {
-    "id": "holder-elephant-p4",
+  "holder-burger-p4": {
+    "id": "holder-burger-p4",
     "type": "holder",
-    "inheritFrom": "holder-elephant-p1",
+    "inheritFrom": "holder-burger-p1",
     "x": 1370,
     "linkedToSeat": "seat-p4"
   },
-  "holder-elephant-p5": {
-    "id": "holder-elephant-p5",
+  "holder-burger-p5": {
+    "id": "holder-burger-p5",
     "type": "holder",
-    "inheritFrom": "holder-elephant-p1",
+    "inheritFrom": "holder-burger-p1",
     "x": 1500,
     "linkedToSeat": "seat-p5"
   },
-  "holder-leopard": {
-    "id": "holder-leopard",
+  "holder-pizza": {
+    "id": "holder-pizza",
     "type": "holder",
-    "inheritFrom": "holder-elephant",
+    "inheritFrom": "holder-burger",
     "y": 265.5,
     "dropTarget": {
       "deck": "deck-tiles",
-      "cardType": "tile-leopard"
+      "cardType": "tile-pizza"
     }
   },
-  "holder-leopard-p1": {
-    "id": "holder-leopard-p1",
+  "holder-pizza-p1": {
+    "id": "holder-pizza-p1",
     "type": "holder",
     "inheritFrom": {
-      "holder-elephant-p1": [
+      "holder-burger-p1": [
         "x",
         "linkedToSeat"
       ],
-      "holder-leopard": "*"
+      "holder-pizza": "*"
     }
   },
-  "holder-leopard-p2": {
-    "id": "holder-leopard-p2",
+  "holder-pizza-p2": {
+    "id": "holder-pizza-p2",
     "type": "holder",
     "inheritFrom": {
-      "holder-elephant-p2": [
+      "holder-burger-p2": [
         "x",
         "linkedToSeat"
       ],
-      "holder-leopard": "*"
+      "holder-pizza": "*"
     }
   },
-  "holder-leopard-p3": {
-    "id": "holder-leopard-p3",
+  "holder-pizza-p3": {
+    "id": "holder-pizza-p3",
     "type": "holder",
     "inheritFrom": {
-      "holder-elephant-p3": [
+      "holder-burger-p3": [
         "x",
         "linkedToSeat"
       ],
-      "holder-leopard": "*"
+      "holder-pizza": "*"
     }
   },
-  "holder-leopard-p4": {
-    "id": "holder-leopard-p4",
+  "holder-pizza-p4": {
+    "id": "holder-pizza-p4",
     "type": "holder",
     "inheritFrom": {
-      "holder-elephant-p4": [
+      "holder-burger-p4": [
         "x",
         "linkedToSeat"
       ],
-      "holder-leopard": "*"
+      "holder-pizza": "*"
     }
   },
-  "holder-leopard-p5": {
-    "id": "holder-leopard-p5",
+  "holder-pizza-p5": {
+    "id": "holder-pizza-p5",
     "type": "holder",
     "inheritFrom": {
-      "holder-elephant-p5": [
+      "holder-burger-p5": [
         "x",
         "linkedToSeat"
       ],
-      "holder-leopard": "*"
+      "holder-pizza": "*"
     }
   },
-  "holder-lion": {
-    "id": "holder-lion",
+  "holder-pretzel": {
+    "id": "holder-pretzel",
     "type": "holder",
-    "inheritFrom": "holder-elephant",
+    "inheritFrom": "holder-burger",
     "y": 417.5,
     "dropTarget": {
       "deck": "deck-tiles",
-      "cardType": "tile-lion"
+      "cardType": "tile-pretzel"
     }
   },
-  "holder-lion-p1": {
-    "id": "holder-lion-p1",
+  "holder-pretzel-p1": {
+    "id": "holder-pretzel-p1",
     "type": "holder",
     "inheritFrom": {
-      "holder-elephant-p1": [
+      "holder-burger-p1": [
         "x",
         "linkedToSeat"
       ],
-      "holder-lion": "*"
+      "holder-pretzel": "*"
     }
   },
-  "holder-lion-p2": {
-    "id": "holder-lion-p2",
+  "holder-pretzel-p2": {
+    "id": "holder-pretzel-p2",
     "type": "holder",
     "inheritFrom": {
-      "holder-elephant-p2": [
+      "holder-burger-p2": [
         "x",
         "linkedToSeat"
       ],
-      "holder-lion": "*"
+      "holder-pretzel": "*"
     }
   },
-  "holder-lion-p3": {
-    "id": "holder-lion-p3",
+  "holder-pretzel-p3": {
+    "id": "holder-pretzel-p3",
     "type": "holder",
     "inheritFrom": {
-      "holder-elephant-p3": [
+      "holder-burger-p3": [
         "x",
         "linkedToSeat"
       ],
-      "holder-lion": "*"
+      "holder-pretzel": "*"
     }
   },
-  "holder-lion-p4": {
-    "id": "holder-lion-p4",
+  "holder-pretzel-p4": {
+    "id": "holder-pretzel-p4",
     "type": "holder",
     "inheritFrom": {
-      "holder-elephant-p4": [
+      "holder-burger-p4": [
         "x",
         "linkedToSeat"
       ],
-      "holder-lion": "*"
+      "holder-pretzel": "*"
     }
   },
-  "holder-lion-p5": {
-    "id": "holder-lion-p5",
+  "holder-pretzel-p5": {
+    "id": "holder-pretzel-p5",
     "type": "holder",
     "inheritFrom": {
-      "holder-elephant-p5": [
+      "holder-burger-p5": [
         "x",
         "linkedToSeat"
       ],
-      "holder-lion": "*"
+      "holder-pretzel": "*"
     }
   },
-  "holder-rhino": {
-    "id": "holder-rhino",
+  "holder-sushi": {
+    "id": "holder-sushi",
     "type": "holder",
-    "inheritFrom": "holder-elephant",
+    "inheritFrom": "holder-burger",
     "y": 567.5,
     "dropTarget": {
       "deck": "deck-tiles",
-      "cardType": "tile-rhino"
+      "cardType": "tile-sushi"
     }
   },
-  "holder-rhino-p1": {
-    "id": "holder-rhino-p1",
+  "holder-sushi-p1": {
+    "id": "holder-sushi-p1",
     "type": "holder",
     "inheritFrom": {
-      "holder-elephant-p1": [
+      "holder-burger-p1": [
         "x",
         "linkedToSeat"
       ],
-      "holder-rhino": "*"
+      "holder-sushi": "*"
     }
   },
-  "holder-rhino-p2": {
-    "id": "holder-rhino-p2",
+  "holder-sushi-p2": {
+    "id": "holder-sushi-p2",
     "type": "holder",
     "inheritFrom": {
-      "holder-elephant-p2": [
+      "holder-burger-p2": [
         "x",
         "linkedToSeat"
       ],
-      "holder-rhino": "*"
+      "holder-sushi": "*"
     }
   },
-  "holder-rhino-p3": {
-    "id": "holder-rhino-p3",
+  "holder-sushi-p3": {
+    "id": "holder-sushi-p3",
     "type": "holder",
     "inheritFrom": {
-      "holder-elephant-p3": [
+      "holder-burger-p3": [
         "x",
         "linkedToSeat"
       ],
-      "holder-rhino": "*"
+      "holder-sushi": "*"
     }
   },
-  "holder-rhino-p4": {
-    "id": "holder-rhino-p4",
+  "holder-sushi-p4": {
+    "id": "holder-sushi-p4",
     "type": "holder",
     "inheritFrom": {
-      "holder-elephant-p4": [
+      "holder-burger-p4": [
         "x",
         "linkedToSeat"
       ],
-      "holder-rhino": "*"
+      "holder-sushi": "*"
     }
   },
-  "holder-rhino-p5": {
-    "id": "holder-rhino-p5",
+  "holder-sushi-p5": {
+    "id": "holder-sushi-p5",
     "type": "holder",
     "inheritFrom": {
-      "holder-elephant-p5": [
+      "holder-burger-p5": [
         "x",
         "linkedToSeat"
       ],
-      "holder-rhino": "*"
+      "holder-sushi": "*"
     }
   },
-  "holder-zebra": {
-    "id": "holder-zebra",
+  "holder-taco": {
+    "id": "holder-taco",
     "type": "holder",
-    "inheritFrom": "holder-elephant",
+    "inheritFrom": "holder-burger",
     "y": 717.5,
     "dropTarget": {
       "deck": "deck-tiles",
-      "cardType": "tile-zebra"
+      "cardType": "tile-taco"
     }
   },
-  "holder-zebra-p1": {
-    "id": "holder-zebra-p1",
+  "holder-taco-p1": {
+    "id": "holder-taco-p1",
     "type": "holder",
     "inheritFrom": {
-      "holder-elephant-p1": [
+      "holder-burger-p1": [
         "x",
         "linkedToSeat"
       ],
-      "holder-zebra": "*"
+      "holder-taco": "*"
     }
   },
-  "holder-zebra-p2": {
-    "id": "holder-zebra-p2",
+  "holder-taco-p2": {
+    "id": "holder-taco-p2",
     "type": "holder",
     "inheritFrom": {
-      "holder-elephant-p2": [
+      "holder-burger-p2": [
         "x",
         "linkedToSeat"
       ],
-      "holder-zebra": "*"
+      "holder-taco": "*"
     }
   },
-  "holder-zebra-p3": {
-    "id": "holder-zebra-p3",
+  "holder-taco-p3": {
+    "id": "holder-taco-p3",
     "type": "holder",
     "inheritFrom": {
-      "holder-elephant-p3": [
+      "holder-burger-p3": [
         "x",
         "linkedToSeat"
       ],
-      "holder-zebra": "*"
+      "holder-taco": "*"
     }
   },
-  "holder-zebra-p4": {
-    "id": "holder-zebra-p4",
+  "holder-taco-p4": {
+    "id": "holder-taco-p4",
     "type": "holder",
     "inheritFrom": {
-      "holder-elephant-p4": [
+      "holder-burger-p4": [
         "x",
         "linkedToSeat"
       ],
-      "holder-zebra": "*"
+      "holder-taco": "*"
     }
   },
-  "holder-zebra-p5": {
-    "id": "holder-zebra-p5",
+  "holder-taco-p5": {
+    "id": "holder-taco-p5",
     "type": "holder",
     "inheritFrom": {
-      "holder-elephant-p5": [
+      "holder-burger-p5": [
         "x",
         "linkedToSeat"
       ],
-      "holder-zebra": "*"
+      "holder-taco": "*"
     }
   },
-  "pile-tile-elephant": {
-    "id": "pile-tile-elephant",
+  "pile-tile-burger": {
+    "id": "pile-tile-burger",
     "type": "pile",
-    "parent": "holder-elephant",
+    "parent": "holder-burger",
     "x": 2.5,
     "y": 2.5,
     "width": 70,
@@ -1150,45 +1140,45 @@
     },
     "handlePosition": "top left"
   },
-  "tile-elephant-1": {
-    "id": "tile-elephant-1",
+  "tile-burger-1": {
+    "id": "tile-burger-1",
     "type": "card",
-    "parent": "pile-tile-elephant",
+    "parent": "pile-tile-burger",
     "deck": "deck-tiles",
-    "cardType": "tile-elephant"
+    "cardType": "tile-burger"
   },
-  "tile-elephant-2": {
-    "id": "tile-elephant-2",
+  "tile-burger-2": {
+    "id": "tile-burger-2",
     "type": "card",
-    "parent": "pile-tile-elephant",
+    "parent": "pile-tile-burger",
     "deck": "deck-tiles",
-    "cardType": "tile-elephant"
+    "cardType": "tile-burger"
   },
-  "tile-elephant-3": {
-    "id": "tile-elephant-3",
+  "tile-burger-3": {
+    "id": "tile-burger-3",
     "type": "card",
-    "parent": "pile-tile-elephant",
+    "parent": "pile-tile-burger",
     "deck": "deck-tiles",
-    "cardType": "tile-elephant"
+    "cardType": "tile-burger"
   },
-  "tile-elephant-4": {
-    "id": "tile-elephant-4",
+  "tile-burger-4": {
+    "id": "tile-burger-4",
     "type": "card",
-    "parent": "pile-tile-elephant",
+    "parent": "pile-tile-burger",
     "deck": "deck-tiles",
-    "cardType": "tile-elephant"
+    "cardType": "tile-burger"
   },
-  "tile-elephant-5": {
-    "id": "tile-elephant-5",
+  "tile-burger-5": {
+    "id": "tile-burger-5",
     "type": "card",
-    "parent": "pile-tile-elephant",
+    "parent": "pile-tile-burger",
     "deck": "deck-tiles",
-    "cardType": "tile-elephant"
+    "cardType": "tile-burger"
   },
-  "pile-tile-leopard": {
-    "id": "pile-tile-leopard",
+  "pile-tile-pizza": {
+    "id": "pile-tile-pizza",
     "type": "pile",
-    "parent": "holder-leopard",
+    "parent": "holder-pizza",
     "x": 2.5,
     "y": 2.5,
     "width": 70,
@@ -1199,45 +1189,45 @@
     },
     "handlePosition": "top left"
   },
-  "tile-leopard-1": {
-    "id": "tile-leopard-1",
+  "tile-pizza-1": {
+    "id": "tile-pizza-1",
     "type": "card",
-    "parent": "pile-tile-leopard",
+    "parent": "pile-tile-pizza",
     "deck": "deck-tiles",
-    "cardType": "tile-leopard"
+    "cardType": "tile-pizza"
   },
-  "tile-leopard-2": {
-    "id": "tile-leopard-2",
+  "tile-pizza-2": {
+    "id": "tile-pizza-2",
     "type": "card",
-    "parent": "pile-tile-leopard",
+    "parent": "pile-tile-pizza",
     "deck": "deck-tiles",
-    "cardType": "tile-leopard"
+    "cardType": "tile-pizza"
   },
-  "tile-leopard-3": {
-    "id": "tile-leopard-3",
+  "tile-pizza-3": {
+    "id": "tile-pizza-3",
     "type": "card",
-    "parent": "pile-tile-leopard",
+    "parent": "pile-tile-pizza",
     "deck": "deck-tiles",
-    "cardType": "tile-leopard"
+    "cardType": "tile-pizza"
   },
-  "tile-leopard-4": {
-    "id": "tile-leopard-4",
+  "tile-pizza-4": {
+    "id": "tile-pizza-4",
     "type": "card",
-    "parent": "pile-tile-leopard",
+    "parent": "pile-tile-pizza",
     "deck": "deck-tiles",
-    "cardType": "tile-leopard"
+    "cardType": "tile-pizza"
   },
-  "tile-leopard-5": {
-    "id": "tile-leopard-5",
+  "tile-pizza-5": {
+    "id": "tile-pizza-5",
     "type": "card",
-    "parent": "pile-tile-leopard",
+    "parent": "pile-tile-pizza",
     "deck": "deck-tiles",
-    "cardType": "tile-leopard"
+    "cardType": "tile-pizza"
   },
-  "pile-tile-lion": {
-    "id": "pile-tile-lion",
+  "pile-tile-pretzel": {
+    "id": "pile-tile-pretzel",
     "type": "pile",
-    "parent": "holder-lion",
+    "parent": "holder-pretzel",
     "x": 2.5,
     "y": 2.5,
     "width": 70,
@@ -1248,45 +1238,45 @@
     },
     "handlePosition": "top left"
   },
-  "tile-lion-1": {
-    "id": "tile-lion-1",
+  "tile-pretzel-1": {
+    "id": "tile-pretzel-1",
     "type": "card",
-    "parent": "pile-tile-lion",
+    "parent": "pile-tile-pretzel",
     "deck": "deck-tiles",
-    "cardType": "tile-lion"
+    "cardType": "tile-pretzel"
   },
-  "tile-lion-2": {
-    "id": "tile-lion-2",
+  "tile-pretzel-2": {
+    "id": "tile-pretzel-2",
     "type": "card",
-    "parent": "pile-tile-lion",
+    "parent": "pile-tile-pretzel",
     "deck": "deck-tiles",
-    "cardType": "tile-lion"
+    "cardType": "tile-pretzel"
   },
-  "tile-lion-3": {
-    "id": "tile-lion-3",
+  "tile-pretzel-3": {
+    "id": "tile-pretzel-3",
     "type": "card",
-    "parent": "pile-tile-lion",
+    "parent": "pile-tile-pretzel",
     "deck": "deck-tiles",
-    "cardType": "tile-lion"
+    "cardType": "tile-pretzel"
   },
-  "tile-lion-4": {
-    "id": "tile-lion-4",
+  "tile-pretzel-4": {
+    "id": "tile-pretzel-4",
     "type": "card",
-    "parent": "pile-tile-lion",
+    "parent": "pile-tile-pretzel",
     "deck": "deck-tiles",
-    "cardType": "tile-lion"
+    "cardType": "tile-pretzel"
   },
-  "tile-lion-5": {
-    "id": "tile-lion-5",
+  "tile-pretzel-5": {
+    "id": "tile-pretzel-5",
     "type": "card",
-    "parent": "pile-tile-lion",
+    "parent": "pile-tile-pretzel",
     "deck": "deck-tiles",
-    "cardType": "tile-lion"
+    "cardType": "tile-pretzel"
   },
-  "pile-tile-rhino": {
-    "id": "pile-tile-rhino",
+  "pile-tile-sushi": {
+    "id": "pile-tile-sushi",
     "type": "pile",
-    "parent": "holder-rhino",
+    "parent": "holder-sushi",
     "x": 2.5,
     "y": 2.5,
     "width": 70,
@@ -1297,45 +1287,45 @@
     },
     "handlePosition": "top left"
   },
-  "tile-rhino-1": {
-    "id": "tile-rhino-1",
+  "tile-sushi-1": {
+    "id": "tile-sushi-1",
     "type": "card",
-    "parent": "pile-tile-rhino",
+    "parent": "pile-tile-sushi",
     "deck": "deck-tiles",
-    "cardType": "tile-rhino"
+    "cardType": "tile-sushi"
   },
-  "tile-rhino-2": {
-    "id": "tile-rhino-2",
+  "tile-sushi-2": {
+    "id": "tile-sushi-2",
     "type": "card",
-    "parent": "pile-tile-rhino",
+    "parent": "pile-tile-sushi",
     "deck": "deck-tiles",
-    "cardType": "tile-rhino"
+    "cardType": "tile-sushi"
   },
-  "tile-rhino-3": {
-    "id": "tile-rhino-3",
+  "tile-sushi-3": {
+    "id": "tile-sushi-3",
     "type": "card",
-    "parent": "pile-tile-rhino",
+    "parent": "pile-tile-sushi",
     "deck": "deck-tiles",
-    "cardType": "tile-rhino"
+    "cardType": "tile-sushi"
   },
-  "tile-rhino-4": {
-    "id": "tile-rhino-4",
+  "tile-sushi-4": {
+    "id": "tile-sushi-4",
     "type": "card",
-    "parent": "pile-tile-rhino",
+    "parent": "pile-tile-sushi",
     "deck": "deck-tiles",
-    "cardType": "tile-rhino"
+    "cardType": "tile-sushi"
   },
-  "tile-rhino-5": {
-    "id": "tile-rhino-5",
+  "tile-sushi-5": {
+    "id": "tile-sushi-5",
     "type": "card",
-    "parent": "pile-tile-rhino",
+    "parent": "pile-tile-sushi",
     "deck": "deck-tiles",
-    "cardType": "tile-rhino"
+    "cardType": "tile-sushi"
   },
-  "pile-tile-zebra": {
-    "id": "pile-tile-zebra",
+  "pile-tile-taco": {
+    "id": "pile-tile-taco",
     "type": "pile",
-    "parent": "holder-zebra",
+    "parent": "holder-taco",
     "x": 2.5,
     "y": 2.5,
     "width": 70,
@@ -1346,40 +1336,40 @@
     },
     "handlePosition": "top left"
   },
-  "tile-zebra-1": {
-    "id": "tile-zebra-1",
+  "tile-taco-1": {
+    "id": "tile-taco-1",
     "type": "card",
-    "parent": "pile-tile-zebra",
+    "parent": "pile-tile-taco",
     "deck": "deck-tiles",
-    "cardType": "tile-zebra"
+    "cardType": "tile-taco"
   },
-  "tile-zebra-2": {
-    "id": "tile-zebra-2",
+  "tile-taco-2": {
+    "id": "tile-taco-2",
     "type": "card",
-    "parent": "pile-tile-zebra",
+    "parent": "pile-tile-taco",
     "deck": "deck-tiles",
-    "cardType": "tile-zebra"
+    "cardType": "tile-taco"
   },
-  "tile-zebra-3": {
-    "id": "tile-zebra-3",
+  "tile-taco-3": {
+    "id": "tile-taco-3",
     "type": "card",
-    "parent": "pile-tile-zebra",
+    "parent": "pile-tile-taco",
     "deck": "deck-tiles",
-    "cardType": "tile-zebra"
+    "cardType": "tile-taco"
   },
-  "tile-zebra-4": {
-    "id": "tile-zebra-4",
+  "tile-taco-4": {
+    "id": "tile-taco-4",
     "type": "card",
-    "parent": "pile-tile-zebra",
+    "parent": "pile-tile-taco",
     "deck": "deck-tiles",
-    "cardType": "tile-zebra"
+    "cardType": "tile-taco"
   },
-  "tile-zebra-5": {
-    "id": "tile-zebra-5",
+  "tile-taco-5": {
+    "id": "tile-taco-5",
     "type": "card",
-    "parent": "pile-tile-zebra",
+    "parent": "pile-tile-taco",
     "deck": "deck-tiles",
-    "cardType": "tile-zebra"
+    "cardType": "tile-taco"
   },
   "pile-draw": {
     "id": "pile-draw",
@@ -1394,244 +1384,244 @@
       "color": "white"
     }
   },
-  "card-elephant-0": {
-    "id": "card-elephant-0",
+  "card-burger-0": {
+    "id": "card-burger-0",
     "type": "card",
     "parent": "pile-draw",
     "deck": "deck-cards",
-    "cardType": "card-elephant",
+    "cardType": "card-burger",
     "value": 0
   },
-  "card-elephant-1": {
-    "id": "card-elephant-1",
+  "card-burger-1": {
+    "id": "card-burger-1",
     "type": "card",
     "parent": "pile-draw",
     "deck": "deck-cards",
-    "cardType": "card-elephant",
+    "cardType": "card-burger",
     "value": 1
   },
-  "card-elephant-2": {
-    "id": "card-elephant-2",
+  "card-burger-2": {
+    "id": "card-burger-2",
     "type": "card",
     "parent": "pile-draw",
     "deck": "deck-cards",
-    "cardType": "card-elephant",
+    "cardType": "card-burger",
     "value": 2
   },
-  "card-elephant-3": {
-    "id": "card-elephant-3",
+  "card-burger-3": {
+    "id": "card-burger-3",
     "type": "card",
     "parent": "pile-draw",
     "deck": "deck-cards",
-    "cardType": "card-elephant",
+    "cardType": "card-burger",
     "value": 3
   },
-  "card-elephant-4": {
-    "id": "card-elephant-4",
+  "card-burger-4": {
+    "id": "card-burger-4",
     "type": "card",
     "parent": "pile-draw",
     "deck": "deck-cards",
-    "cardType": "card-elephant",
+    "cardType": "card-burger",
     "value": 4
   },
-  "card-elephant-5": {
-    "id": "card-elephant-5",
+  "card-burger-5": {
+    "id": "card-burger-5",
     "type": "card",
     "parent": "pile-draw",
     "deck": "deck-cards",
-    "cardType": "card-elephant",
+    "cardType": "card-burger",
     "value": 5
   },
-  "card-leopard-0": {
-    "id": "card-leopard-0",
+  "card-pizza-0": {
+    "id": "card-pizza-0",
     "type": "card",
     "parent": "pile-draw",
     "deck": "deck-cards",
-    "cardType": "card-leopard",
+    "cardType": "card-pizza",
     "value": 0
   },
-  "card-leopard-1": {
-    "id": "card-leopard-1",
+  "card-pizza-1": {
+    "id": "card-pizza-1",
     "type": "card",
     "parent": "pile-draw",
     "deck": "deck-cards",
-    "cardType": "card-leopard",
+    "cardType": "card-pizza",
     "value": 1
   },
-  "card-leopard-2": {
-    "id": "card-leopard-2",
+  "card-pizza-2": {
+    "id": "card-pizza-2",
     "type": "card",
     "parent": "pile-draw",
     "deck": "deck-cards",
-    "cardType": "card-leopard",
+    "cardType": "card-pizza",
     "value": 2
   },
-  "card-leopard-3": {
-    "id": "card-leopard-3",
+  "card-pizza-3": {
+    "id": "card-pizza-3",
     "type": "card",
     "parent": "pile-draw",
     "deck": "deck-cards",
-    "cardType": "card-leopard",
+    "cardType": "card-pizza",
     "value": 3
   },
-  "card-leopard-4": {
-    "id": "card-leopard-4",
+  "card-pizza-4": {
+    "id": "card-pizza-4",
     "type": "card",
     "parent": "pile-draw",
     "deck": "deck-cards",
-    "cardType": "card-leopard",
+    "cardType": "card-pizza",
     "value": 4
   },
-  "card-leopard-5": {
-    "id": "card-leopard-5",
+  "card-pizza-5": {
+    "id": "card-pizza-5",
     "type": "card",
     "parent": "pile-draw",
     "deck": "deck-cards",
-    "cardType": "card-leopard",
+    "cardType": "card-pizza",
     "value": 5
   },
-  "card-lion-0": {
-    "id": "card-lion-0",
+  "card-pretzel-0": {
+    "id": "card-pretzel-0",
     "type": "card",
     "parent": "pile-draw",
     "deck": "deck-cards",
-    "cardType": "card-lion",
+    "cardType": "card-pretzel",
     "value": 0
   },
-  "card-lion-1": {
-    "id": "card-lion-1",
+  "card-pretzel-1": {
+    "id": "card-pretzel-1",
     "type": "card",
     "parent": "pile-draw",
     "deck": "deck-cards",
-    "cardType": "card-lion",
+    "cardType": "card-pretzel",
     "value": 1
   },
-  "card-lion-2": {
-    "id": "card-lion-2",
+  "card-pretzel-2": {
+    "id": "card-pretzel-2",
     "type": "card",
     "parent": "pile-draw",
     "deck": "deck-cards",
-    "cardType": "card-lion",
+    "cardType": "card-pretzel",
     "value": 2
   },
-  "card-lion-3": {
-    "id": "card-lion-3",
+  "card-pretzel-3": {
+    "id": "card-pretzel-3",
     "type": "card",
     "parent": "pile-draw",
     "deck": "deck-cards",
-    "cardType": "card-lion",
+    "cardType": "card-pretzel",
     "value": 3
   },
-  "card-lion-4": {
-    "id": "card-lion-4",
+  "card-pretzel-4": {
+    "id": "card-pretzel-4",
     "type": "card",
     "parent": "pile-draw",
     "deck": "deck-cards",
-    "cardType": "card-lion",
+    "cardType": "card-pretzel",
     "value": 4
   },
-  "card-lion-5": {
-    "id": "card-lion-5",
+  "card-pretzel-5": {
+    "id": "card-pretzel-5",
     "type": "card",
     "parent": "pile-draw",
     "deck": "deck-cards",
-    "cardType": "card-lion",
+    "cardType": "card-pretzel",
     "value": 5
   },
-  "card-rhino-0": {
-    "id": "card-rhino-0",
+  "card-sushi-0": {
+    "id": "card-sushi-0",
     "type": "card",
     "parent": "pile-draw",
     "deck": "deck-cards",
-    "cardType": "card-rhino",
+    "cardType": "card-sushi",
     "value": 0
   },
-  "card-rhino-1": {
-    "id": "card-rhino-1",
+  "card-sushi-1": {
+    "id": "card-sushi-1",
     "type": "card",
     "parent": "pile-draw",
     "deck": "deck-cards",
-    "cardType": "card-rhino",
+    "cardType": "card-sushi",
     "value": 1
   },
-  "card-rhino-2": {
-    "id": "card-rhino-2",
+  "card-sushi-2": {
+    "id": "card-sushi-2",
     "type": "card",
     "parent": "pile-draw",
     "deck": "deck-cards",
-    "cardType": "card-rhino",
+    "cardType": "card-sushi",
     "value": 2
   },
-  "card-rhino-3": {
-    "id": "card-rhino-3",
+  "card-sushi-3": {
+    "id": "card-sushi-3",
     "type": "card",
     "parent": "pile-draw",
     "deck": "deck-cards",
-    "cardType": "card-rhino",
+    "cardType": "card-sushi",
     "value": 3
   },
-  "card-rhino-4": {
-    "id": "card-rhino-4",
+  "card-sushi-4": {
+    "id": "card-sushi-4",
     "type": "card",
     "parent": "pile-draw",
     "deck": "deck-cards",
-    "cardType": "card-rhino",
+    "cardType": "card-sushi",
     "value": 4
   },
-  "card-rhino-5": {
-    "id": "card-rhino-5",
+  "card-sushi-5": {
+    "id": "card-sushi-5",
     "type": "card",
     "parent": "pile-draw",
     "deck": "deck-cards",
-    "cardType": "card-rhino",
+    "cardType": "card-sushi",
     "value": 5
   },
-  "card-zebra-0": {
-    "id": "card-zebra-0",
+  "card-taco-0": {
+    "id": "card-taco-0",
     "type": "card",
     "parent": "pile-draw",
     "deck": "deck-cards",
-    "cardType": "card-zebra",
+    "cardType": "card-taco",
     "value": 0
   },
-  "card-zebra-1": {
-    "id": "card-zebra-1",
+  "card-taco-1": {
+    "id": "card-taco-1",
     "type": "card",
     "parent": "pile-draw",
     "deck": "deck-cards",
-    "cardType": "card-zebra",
+    "cardType": "card-taco",
     "value": 1
   },
-  "card-zebra-2": {
-    "id": "card-zebra-2",
+  "card-taco-2": {
+    "id": "card-taco-2",
     "type": "card",
     "parent": "pile-draw",
     "deck": "deck-cards",
-    "cardType": "card-zebra",
+    "cardType": "card-taco",
     "value": 2
   },
-  "card-zebra-3": {
-    "id": "card-zebra-3",
+  "card-taco-3": {
+    "id": "card-taco-3",
     "type": "card",
     "parent": "pile-draw",
     "deck": "deck-cards",
-    "cardType": "card-zebra",
+    "cardType": "card-taco",
     "value": 3
   },
-  "card-zebra-4": {
-    "id": "card-zebra-4",
+  "card-taco-4": {
+    "id": "card-taco-4",
     "type": "card",
     "parent": "pile-draw",
     "deck": "deck-cards",
-    "cardType": "card-zebra",
+    "cardType": "card-taco",
     "value": 4
   },
-  "card-zebra-5": {
-    "id": "card-zebra-5",
+  "card-taco-5": {
+    "id": "card-taco-5",
     "type": "card",
     "parent": "pile-draw",
     "deck": "deck-cards",
-    "cardType": "card-zebra",
+    "cardType": "card-taco",
     "value": 5
   }
 }
