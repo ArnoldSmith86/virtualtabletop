@@ -105,14 +105,13 @@
     "verticalHeader": true,
     "skipScoring": true,
     "calculateScoresRoutine": [
-      "var skipScoring = ${PROPERTY skipScoring}",
       {
         "func": "IF",
-        "operand1": "${skipScoring}",
+        "operand1": "${PROPERTY skipScoring}",
         "operand2": false,
         "thenRoutine": [
           {
-            "note": "Set scores to zero first",
+            "note": "First set scores to zero",
             "func": "SCORE",
             "mode": "set",
             "round": "${PROPERTY text OF round-counter}",
@@ -129,8 +128,13 @@
               "taco"
             ],
             "loopRoutine": [
-              "var suit = ${value}",
-              "var suitHolder = concat 'holder-cards-' ${suit}",
+              {
+                "func": "VAR",
+                "variables": {
+                  "suit": "${value}",
+                  "suitHolder": "holder-cards-${value}"
+                }
+              },
               "var suitValue = ${PROPERTY value OF $suitHolder}",
               {
                 "note": "Score each player for this suit",
@@ -138,10 +142,13 @@
                 "range": 5,
                 "loopRoutine": [
                   {
-                    "func": "COUNT",
-                    "holder": "holder-${suit}-p${value}"
+                    "func": "VAR",
+                    "variables": {
+                      "playerHolder": "holder-${suit}-p${value}"
+                    }
                   },
-                  "var subtotal = ${COUNT} * ${suitValue}",
+                  "var count = ${PROPERTY count OF $playerHolder}",
+                  "var subtotal = ${count} * ${suitValue}",
                   {
                     "func": "SCORE",
                     "mode": "inc",
@@ -243,12 +250,7 @@
         "value": 1
       },
       {
-        "note": "Recall the tiles",
-        "func": "RECALL",
-        "holder": "holder-burger"
-      },
-      {
-        "note": "Move the tiles into their respective suit holders",
+        "note": "Move the tiles back to their respective holders",
         "func": "FOREACH",
         "in": [
           "burger",
@@ -260,13 +262,14 @@
         "loopRoutine": [
           {
             "func": "SELECT",
+            "type": "card",
             "property": "cardType",
             "value": "tile-${value}"
           },
           {
-            "func": "SET",
-            "property": "parent",
-            "value": "holder-${value}"
+            "func": "MOVE",
+            "collection": "DEFAULT",
+            "to": "holder-${value}"
           }
         ]
       },
@@ -490,8 +493,7 @@
     "onEnter": {
       "activeFace": 1
     },
-    "value": 0,
-    "calculateValueRoutine": [
+    "valueRoutine": [
       {
         "func": "SELECT",
         "type": "card",
@@ -501,23 +503,19 @@
       {
         "func": "COUNT"
       },
-      "var value = 0",
       {
         "func": "IF",
         "operand1": "${COUNT}",
-        "relation": ">",
         "operand2": 0,
         "thenRoutine": [
+          "var value = 0"
+        ],
+        "elseRoutine": [
           {
-            "func": "GET",
-            "property": "z",
-            "aggregation": "max"
-          },
-          {
-            "func": "SELECT",
-            "source": "DEFAULT",
-            "property": "z",
-            "value": "${z}"
+            "func": "SORT",
+            "key": "z",
+            "reverse": true,
+            "rearrange": false
           },
           {
             "func": "GET",
@@ -527,9 +525,7 @@
       },
       {
         "func": "SET",
-        "collection": [
-          "${PROPERTY id}"
-        ],
+        "collection": "thisButton",
         "property": "value",
         "value": "${value}"
       },
@@ -542,15 +538,16 @@
     "enterRoutine": [
       {
         "func": "CALL",
-        "routine": "calculateValueRoutine"
+        "routine": "valueRoutine"
       }
     ],
     "leaveRoutine": [
       {
         "func": "CALL",
-        "routine": "calculateValueRoutine"
+        "routine": "valueRoutine"
       }
-    ]
+    ],
+    "value": 0
   },
   "holder-cards-pizza": {
     "id": "holder-cards-pizza",
@@ -767,36 +764,22 @@
       "deck": "deck-tiles",
       "cardType": "tile-burger"
     },
-    "preventPiles": true,
+    "count": 5,
     "countRoutine": [
       {
-        "func": "COUNT",
-        "holder": "${PROPERTY id}"
+        "func": "SELECT",
+        "type": "card",
+        "property": "_ancestor",
+        "value": "${PROPERTY id}"
       },
-      "var display = true",
       {
-        "func": "IF",
-        "operand1": "${COUNT}",
-        "operand2": 0,
-        "thenRoutine": [
-          "var display = false"
-        ]
+        "func": "COUNT"
       },
       {
         "func": "SET",
-        "collection": [
-          "${PROPERTY id}-counter"
-        ],
-        "property": "text",
+        "collection": "thisButton",
+        "property": "count",
         "value": "${COUNT}"
-      },
-      {
-        "func": "SET",
-        "collection": [
-          "${PROPERTY id}-counter"
-        ],
-        "property": "display",
-        "value": "${display}"
       },
       {
         "func": "CALL",
@@ -885,98 +868,45 @@
       }
     }
   },
-  "holder-burger-counter": {
-    "id": "holder-burger-counter",
-    "parent": "holder-burger",
-    "fixedParent": true,
-    "movable": false,
-    "movableInEdit": false,
-    "x": -16,
-    "y": -16,
-    "layer": 1,
-    "height": 32,
-    "width": 32,
-    "text": 5,
-    "css": {
-      "border-radius": "17px",
-      "font-size": "18px",
-      "display": "flex",
-      "align-items": "center",
-      "justify-content": "center",
-      "color": "#ffffff",
-      "background": "#000000",
-      "border": "2px solid #000000"
-    }
-  },
   "holder-burger-p1": {
     "id": "holder-burger-p1",
     "type": "holder",
     "inheritFrom": "holder-burger",
     "x": 980,
-    "linkedToSeat": "seat-p1"
-  },
-  "holder-burger-p1-counter": {
-    "id": "holder-burger-p1-counter",
-    "parent": "holder-burger-p1",
-    "inheritFrom": "holder-burger-counter",
-    "text": 0,
-    "display": false
+    "linkedToSeat": "seat-p1",
+    "count": 0
   },
   "holder-burger-p2": {
     "id": "holder-burger-p2",
     "type": "holder",
     "inheritFrom": "holder-burger-p1",
     "x": 1110,
-    "linkedToSeat": "seat-p2"
-  },
-  "holder-burger-p2-counter": {
-    "id": "holder-burger-p2-counter",
-    "parent": "holder-burger-p2",
-    "inheritFrom": "holder-burger-counter",
-    "text": 0,
-    "display": false
+    "linkedToSeat": "seat-p2",
+    "count": 0
   },
   "holder-burger-p3": {
     "id": "holder-burger-p3",
     "type": "holder",
     "inheritFrom": "holder-burger-p1",
     "x": 1240,
-    "linkedToSeat": "seat-p3"
-  },
-  "holder-burger-p3-counter": {
-    "id": "holder-burger-p3-counter",
-    "parent": "holder-burger-p3",
-    "inheritFrom": "holder-burger-counter",
-    "text": 0,
-    "display": false
+    "linkedToSeat": "seat-p3",
+    "count": 0
   },
   "holder-burger-p4": {
     "id": "holder-burger-p4",
     "type": "holder",
     "inheritFrom": "holder-burger-p1",
     "x": 1370,
-    "linkedToSeat": "seat-p4"
-  },
-  "holder-burger-p4-counter": {
-    "id": "holder-burger-p4-counter",
-    "parent": "holder-burger-p4",
-    "inheritFrom": "holder-burger-counter",
-    "text": 0,
-    "display": false
+    "linkedToSeat": "seat-p4",
+    "count": 0
   },
   "holder-burger-p5": {
     "id": "holder-burger-p5",
     "type": "holder",
     "inheritFrom": "holder-burger-p1",
     "x": 1500,
-    "linkedToSeat": "seat-p5"
-  },
-  "holder-burger-p5-counter": {
-    "id": "holder-burger-p5-counter",
-    "parent": "holder-burger-p5",
-    "inheritFrom": "holder-burger-counter",
-    "text": 0,
-    "display": false
+    "linkedToSeat": "seat-p5",
+    "count": 0
   },
   "holder-pizza": {
     "id": "holder-pizza",
@@ -986,13 +916,8 @@
     "dropTarget": {
       "deck": "deck-tiles",
       "cardType": "tile-pizza"
-    }
-  },
-  "holder-pizza-counter": {
-    "id": "holder-pizza-counter",
-    "parent": "holder-pizza",
-    "inheritFrom": "holder-burger-counter",
-    "text": 5
+    },
+    "count": 5
   },
   "holder-pizza-p1": {
     "id": "holder-pizza-p1",
@@ -1003,14 +928,8 @@
         "linkedToSeat"
       ],
       "holder-pizza": "*"
-    }
-  },
-  "holder-pizza-p1-counter": {
-    "id": "holder-pizza-p1-counter",
-    "parent": "holder-pizza-p1",
-    "inheritFrom": "holder-burger-counter",
-    "text": 0,
-    "display": false
+    },
+    "count": 0
   },
   "holder-pizza-p2": {
     "id": "holder-pizza-p2",
@@ -1021,14 +940,8 @@
         "linkedToSeat"
       ],
       "holder-pizza": "*"
-    }
-  },
-  "holder-pizza-p2-counter": {
-    "id": "holder-pizza-p2-counter",
-    "parent": "holder-pizza-p2",
-    "inheritFrom": "holder-burger-counter",
-    "text": 0,
-    "display": false
+    },
+    "count": 0
   },
   "holder-pizza-p3": {
     "id": "holder-pizza-p3",
@@ -1039,14 +952,8 @@
         "linkedToSeat"
       ],
       "holder-pizza": "*"
-    }
-  },
-  "holder-pizza-p3-counter": {
-    "id": "holder-pizza-p3-counter",
-    "parent": "holder-pizza-p3",
-    "inheritFrom": "holder-burger-counter",
-    "text": 0,
-    "display": false
+    },
+    "count": 0
   },
   "holder-pizza-p4": {
     "id": "holder-pizza-p4",
@@ -1057,14 +964,8 @@
         "linkedToSeat"
       ],
       "holder-pizza": "*"
-    }
-  },
-  "holder-pizza-p4-counter": {
-    "id": "holder-pizza-p4-counter",
-    "parent": "holder-pizza-p4",
-    "inheritFrom": "holder-burger-counter",
-    "text": 0,
-    "display": false
+    },
+    "count": 0
   },
   "holder-pizza-p5": {
     "id": "holder-pizza-p5",
@@ -1075,14 +976,8 @@
         "linkedToSeat"
       ],
       "holder-pizza": "*"
-    }
-  },
-  "holder-pizza-p5-counter": {
-    "id": "holder-pizza-p5-counter",
-    "parent": "holder-pizza-p5",
-    "inheritFrom": "holder-burger-counter",
-    "text": 0,
-    "display": false
+    },
+    "count": 0
   },
   "holder-pretzel": {
     "id": "holder-pretzel",
@@ -1092,13 +987,8 @@
     "dropTarget": {
       "deck": "deck-tiles",
       "cardType": "tile-pretzel"
-    }
-  },
-  "holder-pretzel-counter": {
-    "id": "holder-pretzel-counter",
-    "parent": "holder-pretzel",
-    "inheritFrom": "holder-burger-counter",
-    "text": 5
+    },
+    "count": 5
   },
   "holder-pretzel-p1": {
     "id": "holder-pretzel-p1",
@@ -1109,14 +999,8 @@
         "linkedToSeat"
       ],
       "holder-pretzel": "*"
-    }
-  },
-  "holder-pretzel-p1-counter": {
-    "id": "holder-pretzel-p1-counter",
-    "parent": "holder-pretzel-p1",
-    "inheritFrom": "holder-burger-counter",
-    "text": 0,
-    "display": false
+    },
+    "count": 0
   },
   "holder-pretzel-p2": {
     "id": "holder-pretzel-p2",
@@ -1127,14 +1011,8 @@
         "linkedToSeat"
       ],
       "holder-pretzel": "*"
-    }
-  },
-  "holder-pretzel-p2-counter": {
-    "id": "holder-pretzel-p2-counter",
-    "parent": "holder-pretzel-p2",
-    "inheritFrom": "holder-burger-counter",
-    "text": 0,
-    "display": false
+    },
+    "count": 0
   },
   "holder-pretzel-p3": {
     "id": "holder-pretzel-p3",
@@ -1145,14 +1023,8 @@
         "linkedToSeat"
       ],
       "holder-pretzel": "*"
-    }
-  },
-  "holder-pretzel-p3-counter": {
-    "id": "holder-pretzel-p3-counter",
-    "parent": "holder-pretzel-p3",
-    "inheritFrom": "holder-burger-counter",
-    "text": 0,
-    "display": false
+    },
+    "count": 0
   },
   "holder-pretzel-p4": {
     "id": "holder-pretzel-p4",
@@ -1163,14 +1035,8 @@
         "linkedToSeat"
       ],
       "holder-pretzel": "*"
-    }
-  },
-  "holder-pretzel-p4-counter": {
-    "id": "holder-pretzel-p4-counter",
-    "parent": "holder-pretzel-p4",
-    "inheritFrom": "holder-burger-counter",
-    "text": 0,
-    "display": false
+    },
+    "count": 0
   },
   "holder-pretzel-p5": {
     "id": "holder-pretzel-p5",
@@ -1181,14 +1047,8 @@
         "linkedToSeat"
       ],
       "holder-pretzel": "*"
-    }
-  },
-  "holder-pretzel-p5-counter": {
-    "id": "holder-pretzel-p5-counter",
-    "parent": "holder-pretzel-p5",
-    "inheritFrom": "holder-burger-counter",
-    "text": 0,
-    "display": false
+    },
+    "count": 0
   },
   "holder-sushi": {
     "id": "holder-sushi",
@@ -1198,13 +1058,8 @@
     "dropTarget": {
       "deck": "deck-tiles",
       "cardType": "tile-sushi"
-    }
-  },
-  "holder-sushi-counter": {
-    "id": "holder-sushi-counter",
-    "parent": "holder-sushi",
-    "inheritFrom": "holder-burger-counter",
-    "text": 5
+    },
+    "count": 5
   },
   "holder-sushi-p1": {
     "id": "holder-sushi-p1",
@@ -1215,14 +1070,8 @@
         "linkedToSeat"
       ],
       "holder-sushi": "*"
-    }
-  },
-  "holder-sushi-p1-counter": {
-    "id": "holder-sushi-p1-counter",
-    "parent": "holder-sushi-p1",
-    "inheritFrom": "holder-burger-counter",
-    "text": 0,
-    "display": false
+    },
+    "count": 0
   },
   "holder-sushi-p2": {
     "id": "holder-sushi-p2",
@@ -1233,14 +1082,8 @@
         "linkedToSeat"
       ],
       "holder-sushi": "*"
-    }
-  },
-  "holder-sushi-p2-counter": {
-    "id": "holder-sushi-p2-counter",
-    "parent": "holder-sushi-p2",
-    "inheritFrom": "holder-burger-counter",
-    "text": 0,
-    "display": false
+    },
+    "count": 0
   },
   "holder-sushi-p3": {
     "id": "holder-sushi-p3",
@@ -1251,14 +1094,8 @@
         "linkedToSeat"
       ],
       "holder-sushi": "*"
-    }
-  },
-  "holder-sushi-p3-counter": {
-    "id": "holder-sushi-p3-counter",
-    "parent": "holder-sushi-p3",
-    "inheritFrom": "holder-burger-counter",
-    "text": 0,
-    "display": false
+    },
+    "count": 0
   },
   "holder-sushi-p4": {
     "id": "holder-sushi-p4",
@@ -1269,14 +1106,8 @@
         "linkedToSeat"
       ],
       "holder-sushi": "*"
-    }
-  },
-  "holder-sushi-p4-counter": {
-    "id": "holder-sushi-p4-counter",
-    "parent": "holder-sushi-p4",
-    "inheritFrom": "holder-burger-counter",
-    "text": 0,
-    "display": false
+    },
+    "count": 0
   },
   "holder-sushi-p5": {
     "id": "holder-sushi-p5",
@@ -1287,14 +1118,8 @@
         "linkedToSeat"
       ],
       "holder-sushi": "*"
-    }
-  },
-  "holder-sushi-p5-counter": {
-    "id": "holder-sushi-p5-counter",
-    "parent": "holder-sushi-p5",
-    "inheritFrom": "holder-burger-counter",
-    "text": 0,
-    "display": false
+    },
+    "count": 0
   },
   "holder-taco": {
     "id": "holder-taco",
@@ -1304,13 +1129,8 @@
     "dropTarget": {
       "deck": "deck-tiles",
       "cardType": "tile-taco"
-    }
-  },
-  "holder-taco-counter": {
-    "id": "holder-taco-counter",
-    "parent": "holder-taco",
-    "inheritFrom": "holder-burger-counter",
-    "text": 5
+    },
+    "count": 5
   },
   "holder-taco-p1": {
     "id": "holder-taco-p1",
@@ -1321,14 +1141,8 @@
         "linkedToSeat"
       ],
       "holder-taco": "*"
-    }
-  },
-  "holder-taco-p1-counter": {
-    "id": "holder-taco-p1-counter",
-    "parent": "holder-taco-p1",
-    "inheritFrom": "holder-burger-counter",
-    "text": 0,
-    "display": false
+    },
+    "count": 0
   },
   "holder-taco-p2": {
     "id": "holder-taco-p2",
@@ -1339,14 +1153,8 @@
         "linkedToSeat"
       ],
       "holder-taco": "*"
-    }
-  },
-  "holder-taco-p2-counter": {
-    "id": "holder-taco-p2-counter",
-    "parent": "holder-taco-p2",
-    "inheritFrom": "holder-burger-counter",
-    "text": 0,
-    "display": false
+    },
+    "count": 0
   },
   "holder-taco-p3": {
     "id": "holder-taco-p3",
@@ -1357,14 +1165,8 @@
         "linkedToSeat"
       ],
       "holder-taco": "*"
-    }
-  },
-  "holder-taco-p3-counter": {
-    "id": "holder-taco-p3-counter",
-    "parent": "holder-taco-p3",
-    "inheritFrom": "holder-burger-counter",
-    "text": 0,
-    "display": false
+    },
+    "count": 0
   },
   "holder-taco-p4": {
     "id": "holder-taco-p4",
@@ -1375,14 +1177,8 @@
         "linkedToSeat"
       ],
       "holder-taco": "*"
-    }
-  },
-  "holder-taco-p4-counter": {
-    "id": "holder-taco-p4-counter",
-    "parent": "holder-taco-p4",
-    "inheritFrom": "holder-burger-counter",
-    "text": 0,
-    "display": false
+    },
+    "count": 0
   },
   "holder-taco-p5": {
     "id": "holder-taco-p5",
@@ -1393,239 +1189,253 @@
         "linkedToSeat"
       ],
       "holder-taco": "*"
-    }
+    },
+    "count": 0
   },
-  "holder-taco-p5-counter": {
-    "id": "holder-taco-p5-counter",
-    "parent": "holder-taco-p5",
-    "inheritFrom": "holder-burger-counter",
-    "text": 0,
-    "display": false
+  "pile-tile-burger": {
+    "id": "pile-tile-burger",
+    "type": "pile",
+    "parent": "holder-burger",
+    "x": 2.5,
+    "y": 2.5,
+    "width": 70,
+    "height": 70,
+    "handleCSS": {
+      "background": "black",
+      "color": "white"
+    },
+    "handlePosition": "top left"
   },
   "tile-burger-1": {
     "id": "tile-burger-1",
     "type": "card",
-    "parent": "holder-burger",
+    "parent": "pile-tile-burger",
     "deck": "deck-tiles",
-    "cardType": "tile-burger",
-    "x": 2.5,
-    "y": 2.5
+    "cardType": "tile-burger"
   },
   "tile-burger-2": {
     "id": "tile-burger-2",
     "type": "card",
-    "parent": "holder-burger",
+    "parent": "pile-tile-burger",
     "deck": "deck-tiles",
-    "cardType": "tile-burger",
-    "x": 2.5,
-    "y": 2.5
+    "cardType": "tile-burger"
   },
   "tile-burger-3": {
     "id": "tile-burger-3",
     "type": "card",
-    "parent": "holder-burger",
+    "parent": "pile-tile-burger",
     "deck": "deck-tiles",
-    "cardType": "tile-burger",
-    "x": 2.5,
-    "y": 2.5
+    "cardType": "tile-burger"
   },
   "tile-burger-4": {
     "id": "tile-burger-4",
     "type": "card",
-    "parent": "holder-burger",
+    "parent": "pile-tile-burger",
     "deck": "deck-tiles",
-    "cardType": "tile-burger",
-    "x": 2.5,
-    "y": 2.5
+    "cardType": "tile-burger"
   },
   "tile-burger-5": {
     "id": "tile-burger-5",
     "type": "card",
-    "parent": "holder-burger",
+    "parent": "pile-tile-burger",
     "deck": "deck-tiles",
-    "cardType": "tile-burger",
+    "cardType": "tile-burger"
+  },
+  "pile-tile-pizza": {
+    "id": "pile-tile-pizza",
+    "type": "pile",
+    "parent": "holder-pizza",
     "x": 2.5,
-    "y": 2.5
+    "y": 2.5,
+    "width": 70,
+    "height": 70,
+    "handleCSS": {
+      "background": "black",
+      "color": "white"
+    },
+    "handlePosition": "top left"
   },
   "tile-pizza-1": {
     "id": "tile-pizza-1",
     "type": "card",
-    "parent": "holder-pizza",
+    "parent": "pile-tile-pizza",
     "deck": "deck-tiles",
-    "cardType": "tile-pizza",
-    "x": 2.5,
-    "y": 2.5
+    "cardType": "tile-pizza"
   },
   "tile-pizza-2": {
     "id": "tile-pizza-2",
     "type": "card",
-    "parent": "holder-pizza",
+    "parent": "pile-tile-pizza",
     "deck": "deck-tiles",
-    "cardType": "tile-pizza",
-    "x": 2.5,
-    "y": 2.5
+    "cardType": "tile-pizza"
   },
   "tile-pizza-3": {
     "id": "tile-pizza-3",
     "type": "card",
-    "parent": "holder-pizza",
+    "parent": "pile-tile-pizza",
     "deck": "deck-tiles",
-    "cardType": "tile-pizza",
-    "x": 2.5,
-    "y": 2.5
+    "cardType": "tile-pizza"
   },
   "tile-pizza-4": {
     "id": "tile-pizza-4",
     "type": "card",
-    "parent": "holder-pizza",
+    "parent": "pile-tile-pizza",
     "deck": "deck-tiles",
-    "cardType": "tile-pizza",
-    "x": 2.5,
-    "y": 2.5
+    "cardType": "tile-pizza"
   },
   "tile-pizza-5": {
     "id": "tile-pizza-5",
     "type": "card",
-    "parent": "holder-pizza",
+    "parent": "pile-tile-pizza",
     "deck": "deck-tiles",
-    "cardType": "tile-pizza",
+    "cardType": "tile-pizza"
+  },
+  "pile-tile-pretzel": {
+    "id": "pile-tile-pretzel",
+    "type": "pile",
+    "parent": "holder-pretzel",
     "x": 2.5,
-    "y": 2.5
+    "y": 2.5,
+    "width": 70,
+    "height": 70,
+    "handleCSS": {
+      "background": "black",
+      "color": "white"
+    },
+    "handlePosition": "top left"
   },
   "tile-pretzel-1": {
     "id": "tile-pretzel-1",
     "type": "card",
-    "parent": "holder-pretzel",
+    "parent": "pile-tile-pretzel",
     "deck": "deck-tiles",
-    "cardType": "tile-pretzel",
-    "x": 2.5,
-    "y": 2.5
+    "cardType": "tile-pretzel"
   },
   "tile-pretzel-2": {
     "id": "tile-pretzel-2",
     "type": "card",
-    "parent": "holder-pretzel",
+    "parent": "pile-tile-pretzel",
     "deck": "deck-tiles",
-    "cardType": "tile-pretzel",
-    "x": 2.5,
-    "y": 2.5
+    "cardType": "tile-pretzel"
   },
   "tile-pretzel-3": {
     "id": "tile-pretzel-3",
     "type": "card",
-    "parent": "holder-pretzel",
+    "parent": "pile-tile-pretzel",
     "deck": "deck-tiles",
-    "cardType": "tile-pretzel",
-    "x": 2.5,
-    "y": 2.5
+    "cardType": "tile-pretzel"
   },
   "tile-pretzel-4": {
     "id": "tile-pretzel-4",
     "type": "card",
-    "parent": "holder-pretzel",
+    "parent": "pile-tile-pretzel",
     "deck": "deck-tiles",
-    "cardType": "tile-pretzel",
-    "x": 2.5,
-    "y": 2.5
+    "cardType": "tile-pretzel"
   },
   "tile-pretzel-5": {
     "id": "tile-pretzel-5",
     "type": "card",
-    "parent": "holder-pretzel",
+    "parent": "pile-tile-pretzel",
     "deck": "deck-tiles",
-    "cardType": "tile-pretzel",
+    "cardType": "tile-pretzel"
+  },
+  "pile-tile-sushi": {
+    "id": "pile-tile-sushi",
+    "type": "pile",
+    "parent": "holder-sushi",
     "x": 2.5,
-    "y": 2.5
+    "y": 2.5,
+    "width": 70,
+    "height": 70,
+    "handleCSS": {
+      "background": "black",
+      "color": "white"
+    },
+    "handlePosition": "top left"
   },
   "tile-sushi-1": {
     "id": "tile-sushi-1",
     "type": "card",
-    "parent": "holder-sushi",
+    "parent": "pile-tile-sushi",
     "deck": "deck-tiles",
-    "cardType": "tile-sushi",
-    "x": 2.5,
-    "y": 2.5
+    "cardType": "tile-sushi"
   },
   "tile-sushi-2": {
     "id": "tile-sushi-2",
     "type": "card",
-    "parent": "holder-sushi",
+    "parent": "pile-tile-sushi",
     "deck": "deck-tiles",
-    "cardType": "tile-sushi",
-    "x": 2.5,
-    "y": 2.5
+    "cardType": "tile-sushi"
   },
   "tile-sushi-3": {
     "id": "tile-sushi-3",
     "type": "card",
-    "parent": "holder-sushi",
+    "parent": "pile-tile-sushi",
     "deck": "deck-tiles",
-    "cardType": "tile-sushi",
-    "x": 2.5,
-    "y": 2.5
+    "cardType": "tile-sushi"
   },
   "tile-sushi-4": {
     "id": "tile-sushi-4",
     "type": "card",
-    "parent": "holder-sushi",
+    "parent": "pile-tile-sushi",
     "deck": "deck-tiles",
-    "cardType": "tile-sushi",
-    "x": 2.5,
-    "y": 2.5
+    "cardType": "tile-sushi"
   },
   "tile-sushi-5": {
     "id": "tile-sushi-5",
     "type": "card",
-    "parent": "holder-sushi",
+    "parent": "pile-tile-sushi",
     "deck": "deck-tiles",
-    "cardType": "tile-sushi",
+    "cardType": "tile-sushi"
+  },
+  "pile-tile-taco": {
+    "id": "pile-tile-taco",
+    "type": "pile",
+    "parent": "holder-taco",
     "x": 2.5,
-    "y": 2.5
+    "y": 2.5,
+    "width": 70,
+    "height": 70,
+    "handleCSS": {
+      "background": "black",
+      "color": "white"
+    },
+    "handlePosition": "top left"
   },
   "tile-taco-1": {
     "id": "tile-taco-1",
     "type": "card",
-    "parent": "holder-taco",
+    "parent": "pile-tile-taco",
     "deck": "deck-tiles",
-    "cardType": "tile-taco",
-    "x": 2.5,
-    "y": 2.5
+    "cardType": "tile-taco"
   },
   "tile-taco-2": {
     "id": "tile-taco-2",
     "type": "card",
-    "parent": "holder-taco",
+    "parent": "pile-tile-taco",
     "deck": "deck-tiles",
-    "cardType": "tile-taco",
-    "x": 2.5,
-    "y": 2.5
+    "cardType": "tile-taco"
   },
   "tile-taco-3": {
     "id": "tile-taco-3",
     "type": "card",
-    "parent": "holder-taco",
+    "parent": "pile-tile-taco",
     "deck": "deck-tiles",
-    "cardType": "tile-taco",
-    "x": 2.5,
-    "y": 2.5
+    "cardType": "tile-taco"
   },
   "tile-taco-4": {
     "id": "tile-taco-4",
     "type": "card",
-    "parent": "holder-taco",
+    "parent": "pile-tile-taco",
     "deck": "deck-tiles",
-    "cardType": "tile-taco",
-    "x": 2.5,
-    "y": 2.5
+    "cardType": "tile-taco"
   },
   "tile-taco-5": {
     "id": "tile-taco-5",
     "type": "card",
-    "parent": "holder-taco",
+    "parent": "pile-tile-taco",
     "deck": "deck-tiles",
-    "cardType": "tile-taco",
-    "x": 2.5,
-    "y": 2.5
+    "cardType": "tile-taco"
   },
   "pile-draw": {
     "id": "pile-draw",
