@@ -1,732 +1,154 @@
 {
-  "f6mlAC": {
-    "id": "f6mlAC",
-    "parent": "3mv9",
-    "type": "card",
-    "cardType": "AC",
-    "deck": "myCards",
-    "z": 416
-  },
-  "f6ml2C": {
-    "id": "f6ml2C",
-    "type": "card",
-    "cardType": "2C",
-    "deck": "myCards",
-    "z": 8264,
-    "parent": "3mv9"
-  },
-  "f6ml3C": {
-    "id": "f6ml3C",
-    "type": "card",
-    "cardType": "3C",
-    "deck": "myCards",
-    "z": 4219,
-    "parent": "3mv9"
-  },
-  "f6ml4C": {
-    "id": "f6ml4C",
-    "type": "card",
-    "cardType": "4C",
-    "deck": "myCards",
-    "z": 3821,
-    "parent": "3mv9"
-  },
-  "f6ml5C": {
-    "id": "f6ml5C",
-    "parent": "3mv9",
-    "type": "card",
-    "cardType": "5C",
-    "deck": "myCards",
-    "z": 1343
-  },
-  "f6ml6C": {
-    "id": "f6ml6C",
-    "type": "card",
-    "cardType": "6C",
-    "deck": "myCards",
-    "z": 2366,
-    "parent": "3mv9"
-  },
-  "f6ml7C": {
-    "id": "f6ml7C",
-    "type": "card",
-    "cardType": "7C",
-    "deck": "myCards",
-    "z": 3449,
-    "parent": "3mv9"
-  },
-  "f6ml8C": {
-    "id": "f6ml8C",
-    "type": "card",
-    "cardType": "8C",
-    "deck": "myCards",
-    "z": 5551,
-    "parent": "3mv9"
-  },
-  "f6ml9C": {
-    "id": "f6ml9C",
-    "type": "card",
-    "cardType": "9C",
-    "deck": "myCards",
-    "z": 40,
-    "parent": "3mv9"
-  },
-  "f6mlTC": {
-    "id": "f6mlTC",
-    "type": "card",
-    "cardType": "TC",
-    "deck": "myCards",
-    "z": 3453,
-    "parent": "3mv9"
-  },
-  "f6mlJC": {
-    "id": "f6mlJC",
-    "type": "card",
-    "cardType": "JC",
-    "deck": "myCards",
-    "z": 8014,
-    "parent": "3mv9"
-  },
-  "f6mlQC": {
-    "id": "f6mlQC",
-    "type": "card",
-    "cardType": "QC",
-    "deck": "myCards",
-    "z": 2115,
-    "parent": "3mv9"
-  },
-  "f6mlKC": {
-    "id": "f6mlKC",
-    "type": "card",
-    "cardType": "KC",
-    "deck": "myCards",
-    "z": 7898,
-    "parent": "3mv9"
-  },
-  "f6mlAD": {
-    "id": "f6mlAD",
-    "type": "card",
-    "cardType": "AD",
-    "deck": "myCards",
-    "z": 2844,
-    "parent": "3mv9"
-  },
-  "f6ml2D": {
-    "id": "f6ml2D",
-    "type": "card",
-    "cardType": "2D",
-    "deck": "myCards",
-    "z": 1011,
-    "parent": "3mv9"
-  },
-  "f6ml3D": {
-    "id": "f6ml3D",
-    "parent": "3mv9",
-    "type": "card",
-    "cardType": "3D",
-    "deck": "myCards",
-    "z": 7060
-  },
-  "f6ml4D": {
-    "id": "f6ml4D",
-    "type": "card",
-    "cardType": "4D",
-    "deck": "myCards",
-    "z": 1705,
-    "parent": "3mv9"
-  },
-  "f6ml5D": {
-    "id": "f6ml5D",
-    "type": "card",
-    "cardType": "5D",
-    "deck": "myCards",
-    "z": 1651,
-    "parent": "3mv9"
-  },
-  "f6ml6D": {
-    "id": "f6ml6D",
-    "parent": "3mv9",
-    "type": "card",
-    "cardType": "6D",
-    "deck": "myCards",
-    "z": 1202
-  },
-  "f6ml7D": {
-    "id": "f6ml7D",
-    "type": "card",
-    "cardType": "7D",
-    "deck": "myCards",
-    "z": 4733,
-    "parent": "3mv9"
-  },
-  "f6ml8D": {
-    "id": "f6ml8D",
-    "type": "card",
-    "cardType": "8D",
-    "deck": "myCards",
-    "z": 4586,
-    "parent": "3mv9"
-  },
-  "f6ml9D": {
-    "id": "f6ml9D",
-    "type": "card",
-    "cardType": "9D",
-    "deck": "myCards",
-    "z": 1701,
-    "parent": "3mv9"
-  },
-  "f6mlTD": {
-    "id": "f6mlTD",
-    "parent": "3mv9",
-    "type": "card",
-    "cardType": "TD",
-    "deck": "myCards",
-    "z": 3804
-  },
-  "f6mlJD": {
-    "id": "f6mlJD",
-    "type": "card",
-    "cardType": "JD",
-    "deck": "myCards",
-    "z": 20,
-    "parent": "3mv9"
-  },
-  "f6mlQD": {
-    "id": "f6mlQD",
-    "type": "card",
-    "cardType": "QD",
-    "deck": "myCards",
-    "z": 2418,
-    "parent": "3mv9"
-  },
-  "f6mlKD": {
-    "id": "f6mlKD",
-    "type": "card",
-    "cardType": "KD",
-    "deck": "myCards",
-    "z": 7590,
-    "parent": "3mv9"
-  },
-  "f6mlAH": {
-    "id": "f6mlAH",
-    "type": "card",
-    "cardType": "AH",
-    "deck": "myCards",
-    "z": 297,
-    "parent": "3mv9"
-  },
-  "f6ml2H": {
-    "id": "f6ml2H",
-    "type": "card",
-    "cardType": "2H",
-    "deck": "myCards",
-    "z": 5860,
-    "parent": "3mv9"
-  },
-  "f6ml3H": {
-    "id": "f6ml3H",
-    "parent": "3mv9",
-    "type": "card",
-    "cardType": "3H",
-    "deck": "myCards",
-    "z": 590
-  },
-  "f6ml4H": {
-    "id": "f6ml4H",
-    "type": "card",
-    "cardType": "4H",
-    "deck": "myCards",
-    "z": 1653,
-    "parent": "3mv9"
-  },
-  "f6ml5H": {
-    "id": "f6ml5H",
-    "type": "card",
-    "cardType": "5H",
-    "deck": "myCards",
-    "z": 8620,
-    "parent": "3mv9"
-  },
-  "f6ml6H": {
-    "id": "f6ml6H",
-    "parent": "3mv9",
-    "type": "card",
-    "cardType": "6H",
-    "deck": "myCards",
-    "z": 2252
-  },
-  "f6ml7H": {
-    "id": "f6ml7H",
-    "type": "card",
-    "cardType": "7H",
-    "deck": "myCards",
-    "z": 7338,
-    "parent": "3mv9"
-  },
-  "f6ml8H": {
-    "id": "f6ml8H",
-    "type": "card",
-    "cardType": "8H",
-    "deck": "myCards",
-    "z": 3518,
-    "parent": "3mv9"
-  },
-  "f6ml9H": {
-    "id": "f6ml9H",
-    "type": "card",
-    "cardType": "9H",
-    "deck": "myCards",
-    "z": 6803,
-    "parent": "3mv9"
-  },
-  "f6mlTH": {
-    "id": "f6mlTH",
-    "type": "card",
-    "cardType": "TH",
-    "deck": "myCards",
-    "z": 6493,
-    "parent": "3mv9"
-  },
-  "f6mlJH": {
-    "id": "f6mlJH",
-    "type": "card",
-    "cardType": "JH",
-    "deck": "myCards",
-    "z": 788,
-    "parent": "3mv9"
-  },
-  "f6mlQH": {
-    "id": "f6mlQH",
-    "type": "card",
-    "cardType": "QH",
-    "deck": "myCards",
-    "z": 8871,
-    "parent": "3mv9"
-  },
-  "f6mlKH": {
-    "id": "f6mlKH",
-    "parent": "3mv9",
-    "type": "card",
-    "cardType": "KH",
-    "deck": "myCards",
-    "z": 7209
-  },
-  "f6mlAS": {
-    "id": "f6mlAS",
-    "type": "card",
-    "cardType": "AS",
-    "deck": "myCards",
-    "z": 1560,
-    "parent": "3mv9"
-  },
-  "f6ml2S": {
-    "id": "f6ml2S",
-    "parent": "3mv9",
-    "type": "card",
-    "cardType": "2S",
-    "deck": "myCards",
-    "z": 9568
-  },
-  "f6ml3S": {
-    "id": "f6ml3S",
-    "type": "card",
-    "cardType": "3S",
-    "deck": "myCards",
-    "z": 3344,
-    "parent": "3mv9"
-  },
-  "f6ml4S": {
-    "id": "f6ml4S",
-    "type": "card",
-    "cardType": "4S",
-    "deck": "myCards",
-    "z": 2563,
-    "parent": "3mv9"
-  },
-  "f6ml5S": {
-    "id": "f6ml5S",
-    "type": "card",
-    "cardType": "5S",
-    "deck": "myCards",
-    "z": 7288,
-    "parent": "3mv9"
-  },
-  "f6ml6S": {
-    "id": "f6ml6S",
-    "type": "card",
-    "cardType": "6S",
-    "deck": "myCards",
-    "z": 8433,
-    "parent": "3mv9"
-  },
-  "f6ml7S": {
-    "id": "f6ml7S",
-    "type": "card",
-    "cardType": "7S",
-    "deck": "myCards",
-    "z": 2990,
-    "parent": "3mv9"
-  },
-  "f6ml8S": {
-    "id": "f6ml8S",
-    "parent": "3mv9",
-    "type": "card",
-    "cardType": "8S",
-    "deck": "myCards",
-    "z": 2405
-  },
-  "f6ml9S": {
-    "id": "f6ml9S",
-    "type": "card",
-    "cardType": "9S",
-    "deck": "myCards",
-    "z": 8289,
-    "parent": "3mv9"
-  },
-  "f6mlTS": {
-    "id": "f6mlTS",
-    "type": "card",
-    "cardType": "TS",
-    "deck": "myCards",
-    "z": 3096,
-    "parent": "3mv9"
-  },
-  "f6mlJS": {
-    "id": "f6mlJS",
-    "type": "card",
-    "cardType": "JS",
-    "deck": "myCards",
-    "z": 6930,
-    "parent": "3mv9"
-  },
-  "f6mlQS": {
-    "id": "f6mlQS",
-    "type": "card",
-    "cardType": "QS",
-    "deck": "myCards",
-    "z": 7051,
-    "parent": "3mv9"
-  },
-  "f6mlKS": {
-    "id": "f6mlKS",
-    "type": "card",
-    "cardType": "KS",
-    "deck": "myCards",
-    "z": 4361,
-    "parent": "3mv9"
-  },
-  "9t4gP": {
-    "type": "pile",
-    "id": "9t4gP",
-    "width": 103,
-    "height": 160,
-    "z": 16731,
-    "parent": "covers"
-  },
-  "3mv9": {
-    "type": "pile",
-    "parent": "myDeck",
-    "x": 4,
-    "y": 4,
-    "width": 103,
-    "height": 160,
-    "id": "3mv9"
-  },
-  "bwyv": {
-    "deck": "covercard",
-    "type": "card",
-    "cardType": "BlueCover",
-    "id": "bwyv",
-    "z": 26324,
-    "parent": "9t4gP"
-  },
-  "86eu": {
-    "deck": "covercard",
-    "type": "card",
-    "cardType": "BlueCover",
-    "id": "86eu",
-    "z": 26326,
-    "parent": "9t4gP"
-  },
-  "b4oh": {
-    "deck": "covercard",
-    "type": "card",
-    "cardType": "BlueCover",
-    "id": "b4oh",
-    "z": 26328,
-    "parent": "9t4gP"
-  },
-  "sk2a": {
-    "deck": "covercard",
-    "type": "card",
-    "cardType": "BlueCover",
-    "id": "sk2a",
-    "z": 26330,
-    "parent": "9t4gP"
-  },
-  "4cjh": {
-    "deck": "covercard",
-    "type": "card",
-    "cardType": "BlueCover",
-    "id": "4cjh",
-    "z": 26332,
-    "parent": "9t4gP"
-  },
-  "k0he": {
-    "deck": "covercard",
-    "type": "card",
-    "cardType": "BlueCover",
-    "id": "k0he",
-    "z": 26334,
-    "parent": "9t4gP"
-  },
-  "95du": {
-    "deck": "covercard",
-    "type": "card",
-    "cardType": "BlueCover",
-    "id": "95du",
-    "z": 26336,
-    "parent": "9t4gP"
-  },
-  "6eh0": {
-    "deck": "covercard",
-    "type": "card",
-    "cardType": "BlueCover",
-    "id": "6eh0",
-    "z": 26338,
-    "parent": "9t4gP"
-  },
-  "yo1e": {
-    "deck": "covercard",
-    "type": "card",
-    "cardType": "BlueCover",
-    "id": "yo1e",
-    "z": 26340,
-    "parent": "9t4gP"
-  },
-  "ts5z": {
-    "deck": "covercard",
-    "type": "card",
-    "cardType": "BlueCover",
-    "id": "ts5z",
-    "z": 26342,
-    "parent": "9t4gP"
-  },
-  "8fr3": {
-    "type": "label",
-    "text": "Arrays: Creating",
-    "css": "font-size: 60px",
-    "height": 160,
-    "width": 1000,
-    "x": 280,
-    "z": 26392,
-    "id": "8fr3",
-    "y": 1
-  },
-  "xzn5": {
-    "type": "label",
-    "text": "Split",
-    "css": "font-size: 40px",
-    "height": 50,
-    "width": 200,
-    "x": 229,
-    "z": 26426,
-    "layer": 1,
-    "id": "xzn5",
-    "y": 103
-  },
-  "uttb": {
-    "type": "label",
-    "text": "The Array",
-    "css": "font-size: 30px",
+  "title": {
+    "id": "title",
+    "x": 400,
+    "y": -2,
+    "width": 800,
     "height": 60,
-    "width": 200,
-    "x": 680,
-    "z": 26422,
-    "layer": 1,
-    "y": 486,
-    "id": "uttb"
+    "z": 74,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "font-size: 60px;text-align:center",
+    "text": "Arrays: Overview"
   },
-  "array": {
-    "type": "label",
-    "x": 623,
-    "y": 565,
-    "z": 26395,
-    "width": 300,
-    "css": "background-color:light-grey; border-style: solid; font-size:20px",
-    "height": 90,
-    "id": "array",
-    "array": [
-      1,
-      3,
-      5,
-      7,
-      11,
-      13,
-      17,
-      19,
-      23,
-      29,
-      31,
-      37,
-      41
-    ],
-    "text": [
-      "Apple",
-      "Banana",
-      "Carrot",
-      "Duck",
-      "Egg"
-    ]
-  },
-  "splitText": {
-    "type": "label",
-    "text": "Apple,Banana,Carrot,Duck,Egg",
-    "x": 173,
-    "y": 466,
-    "z": 26396,
-    "id": "splitText",
-    "editable": true,
-    "width": 300,
-    "css": "background-color:white; border-style: solid;",
-    "height": 60
-  },
-  "nr98": {
-    "type": "label",
-    "text": "From",
-    "css": "font-size: 40px",
-    "height": 50,
-    "width": 200,
-    "x": 679,
-    "z": 26425,
-    "layer": 1,
-    "y": 101,
-    "id": "nr98"
-  },
-  "i1bj": {
-    "id": "i1bj",
-    "x": 48,
-    "y": 205,
-    "z": 26421,
-    "width": 500,
-    "height": 50,
-    "css": "font-size: 20px; ",
-    "text": "This button creates an array out of strings by splitting the string by a deliminator, which is usually a comma. This example starts with a list of words, but you can create your own string. Just enter words separated by a comma with no space in between. This example uses words. The other examples use numbers."
-  },
-  "9gpn": {
-    "x": 589,
-    "y": 200,
-    "z": 26429,
-    "width": 500,
-    "height": 50,
-    "css": "font-size: 20px; ",
-    "text": "The 'from' button creates an array from a list that is predefined as a property in a widget.",
-    "id": "9gpn"
-  },
-  "0t2f": {
-    "type": "label",
-    "text": "Concat",
-    "css": "font-size: 40px",
-    "height": 50,
-    "width": 200,
-    "x": 672,
-    "z": 26432,
-    "layer": 1,
-    "y": 723,
-    "id": "0t2f"
-  },
-  "3czq": {
-    "x": 549,
-    "y": 794,
-    "z": 26435,
-    "width": 500,
-    "height": 50,
-    "css": "font-size: 20px; ",
-    "text": "This button gets the values in the text box and the values in the 'from' button into two arrays and then concatenates those two arrays together to return a new array.",
-    "id": "3czq"
-  },
-  "n7pi": {
+  "button2": {
     "type": "button",
+    "id": "button2",
+    "x": 416,
+    "y": 402,
+    "z": 22839,
     "clickRoutine": [
-      "var text = ${PROPERTY text OF splitText}",
-      "var splitArray = ${text} split ',' //Recreate what happens in the split button",
-      "var arrayValues = ${PROPERTY arrayValues OF frombtn}",
-      "var fromArray = from ${arrayValues} //Recreate what happens in the from button",
-      "var combinedArray = ${splitArray} concatArray ${fromArray} //Concat the two arrays into one",
-      {
-        "func": "LABEL",
-        "label": "array",
-        "value": "${combinedArray}"
-      }
-    ],
-    "x": 733,
-    "y": 916,
-    "z": 26409,
-    "id": "n7pi",
-    "text": "concatArray",
-    "css": "font-size: 13px; "
-  },
-  "frombtn": {
-    "type": "button",
-    "id": "frombtn",
-    "x": 742,
-    "y": 373,
-    "z": 26405,
-    "arrayValues": [
-      1,
-      3,
-      5,
-      7,
-      11,
-      13,
-      17,
-      19,
-      23,
-      29,
-      31,
-      37,
-      41
-    ],
-    "clickRoutine": [
-      "var myArray = from ${PROPERTY arrayValues} //Create an array from the arrayValues property in this button.",
-      {
-        "func": "LABEL",
-        "label": "array",
-        "value": "${myArray}"
-      }
-    ],
-    "text": "from"
-  },
-  "splitbtn": {
-    "type": "button",
-    "id": "splitbtn",
-    "x": 280,
-    "y": 358,
-    "z": 26406,
-    "clickRoutine": [
-      "var text = ${PROPERTY text OF splitText}",
-      "var splitArray = ${text} split ',' //Use a comma to split the values in the textbox and create an array",
+      "// First SELECT every widget in the room",
       {
         "func": "SELECT",
         "property": "id",
-        "value": "array"
+        "relation": "!=",
+        "value": null
       },
+      "// Then from that DEFAULT collection, GET the x value of every widget and store it as an array.",
+      {
+        "func": "GET",
+        "property": "x",
+        "aggregation": "array",
+        "variable": "allX"
+      },
+      "// Finally, store the array as a custom widget property using SET.",
       {
         "func": "SET",
-        "property": "text",
-        "value": "${splitArray}"
+        "collection": "thisButton",
+        "property": "xArray",
+        "value": "${allX}"
       }
     ],
-    "text": "split"
+    "text": "Create & SET"
   },
-  "rye3": {
+  "overview": {
+    "id": "overview",
+    "x": 108,
+    "y": 80,
+    "width": 1400,
+    "height": 150,
+    "layer": -3,
+    "z": 129,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "font-size: 25px; ",
+    "html": "Arrays are fundamental tools used to handle groups of values efficiently. An array is essentially a list where each element is stored in a specific order and accessed using an index. Think of an array like a row of boxes, where each box can hold a different value and can be accessed by its position, known as an index. The first position is always index 0, the second is 1, and so on. The row of boxes can hold any type of data, including strings, numbers, boolean values, or even other arrays. Arrays are dynamic so their contents can be set or modified during routines using dynamic expressions or functions.\n\nArrays enable automation that would be cumbersome to implement manually. For example, instead of writing out separate operations for every number in a series, you can store the values in an array and loop through them. Arrays can be sorted, counted, have number values totaled, and have many other operations performed on them. Arrays are also used with the predefined collections <b>activeColors</b>, <b>activePlayers</b>, and <b>activeSeats</b>."
+  },
+  "button3": {
     "type": "button",
-    "id": "rye3",
-    "x": 1259,
-    "y": 373,
-    "z": 26410,
-    "arrayValues": [
-      1,
+    "id": "button3",
+    "x": 743,
+    "y": 402,
+    "z": 22840,
+    "clickRoutine": [
+      "// First create a variable from the property in the previous button.",
+      "var sortedArray = ${PROPERTY xArray OF button2}",
+      "// Then use the array sort operation.",
+      "var sortedArray = numericSort ${sortedArray}",
+      "// Finally, store the array as a custom widget property using SET.",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "sortedArray",
+        "value": "${sortedArray}"
+      }
+    ],
+    "text": "Sort"
+  },
+  "button4": {
+    "type": "button",
+    "id": "button4",
+    "x": 1062,
+    "y": 402,
+    "z": 22840,
+    "clickRoutine": [
+      "// First create a variable from the property in the previous button.",
+      "var sortedArray = ${PROPERTY sortedArray OF button3}",
+      "// Then use either method to get the value",
+      "var methodA = ${sortedArray.5}",
+      "var methodB = ${sortedArray} getIndex 5"
+    ],
+    "text": "Index"
+  },
+  "button5": {
+    "type": "button",
+    "id": "button5",
+    "x": 1386,
+    "y": 402,
+    "z": 11,
+    "clickRoutine": [
+      "// First create a variable from the property in the button 3.",
+      "var sortedArray = ${PROPERTY sortedArray OF button3}",
+      "// Then create an empty array to use as a shell for putting the new values.",
+      "var arrayPlus100 = []",
+      "// Use a FOREACH and loopRoutine that works with each value of the array",
+      {
+        "func": "FOREACH",
+        "in": "${sortedArray}",
+        "loopRoutine": [
+          "// For each of the index positions in the `sortedArray`, there is a predefined variable of value which is the value of the data at that position. The dynamic expression below uses that value and adds 100 to it.",
+          "var thisValue = ${value} + 100",
+          "// Then next dynamic expression begins with the empty array of `arrayPlus100` and then pushes the calcualted value into it on the first iteration of the loopRoutine. On the next iteration, `arrayPlus100` already has the 0 index filled, so it pushes the next value into the array, and so on until all values have been processed.",
+          "var arrayPlus100 = push ${thisValue}"
+        ]
+      },
+      "// Finally, store the array as a custom widget property using SET. Compare the array on this widget with the one on button 3 and you will see that each value has been increased by 100.",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "finalArray",
+        "value": "${arrayPlus100}"
+      }
+    ],
+    "text": "Add & Create"
+  },
+  "text1": {
+    "id": "text1",
+    "x": 4,
+    "y": 552,
+    "width": 300,
+    "z": 185,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "22px"
+    },
+    "html": "Arrays are usable during routines. In some instances, you may want to hard code the array as a widget property when the data is static and will not change. For example, the button above has the first several prime numbers in an array. The <b>clickRoutine</b> simply creates a variable from that array that could then be used for anything in the routine."
+  },
+  "button1": {
+    "type": "button",
+    "id": "button1",
+    "x": 95,
+    "y": 402,
+    "z": 22841,
+    "clickRoutine": [
+      "// Click and look at debug report.",
+      "var primeArray = ${PROPERTY primeArray}"
+    ],
+    "text": "Hard Coded",
+    "primeArray": [
+      2,
       3,
       5,
       7,
@@ -734,24 +156,63 @@
       13,
       17,
       19,
-      23,
-      29,
-      31,
-      37,
-      41
-    ],
-    "clickRoutine": [
-      "var myArray = ${PROPERTY arrayValues}",
-      {
-        "func": "LABEL",
-        "label": "array",
-        "value": "${myArray}"
-      }
-    ],
-    "text": "var x = [ ]"
+      23
+    ]
+  },
+  "text2": {
+    "id": "text2",
+    "x": 325,
+    "y": 552,
+    "width": 300,
+    "z": 121,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "22px"
+    },
+    "html": "More commonly, arrays will be created dynamically from data in the game. Again, that can be used during the execution of that routine, but it can also be <b>SET</b> as a property on a widget so that it accessible later. Look at the JSON of the button above before you click it. There is no array stored on there. Then click the button and look how the routine created an array of widget <b>x</b> value to store as the array content in the property `xArray`."
+  },
+  "text3": {
+    "id": "text3",
+    "x": 651,
+    "y": 552,
+    "width": 300,
+    "z": 9732,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "22px"
+    },
+    "html": "Once an array is created, you can use the array operations to evaluate and change it. Most of the other variants of this tutorial demonstrate all the array operations features. For now, consider the idArray from the previous button. Note how the array values are not sorted. The button above sorts the array data and stores it as a new property on itself.<br/><br/>Note that you must have already pressed the previous button for this to work."
+  },
+  "text4": {
+    "id": "text4",
+    "x": 964,
+    "y": 552,
+    "width": 300,
+    "z": 9732,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "22px"
+    },
+    "html": "Once we have the sorted array, we might need to, for example, find the value of a particular index. Let's assume we need to look at the sixth value; that will be index 5. Then there are a couple of methods demonstrated in the button above for how to get that value.<br/><br/>Note that you must have already pressed the previous two buttons for this to work."
+  },
+  "text5": {
+    "id": "text5",
+    "x": 1294,
+    "y": 552,
+    "width": 300,
+    "z": 9732,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "22px"
+    },
+    "html": "As a final example in this overview, let's create a new array by using a <b>loopRoutine</b> to add 100 to each value in the array we have been working with. Make sure you have pressed all the previous buttons in order and then click the button above look at the JSON output.<br/><br/>This just scratches the surface of all the things possible with arrays. Look at the other variants for more detail or see the <a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Computations#array-operations'>wiki</a>."
   },
   "_meta": {
-    "version": 3,
+    "version": 17,
     "info": {
       "name": "Arrays",
       "image": "/assets/-2001287493_6748",
@@ -762,7 +223,7 @@
       "time": "",
       "attribution": "",
       "showName": false,
-      "lastUpdate": 1725248837877,
+      "lastUpdate": 1747540416862,
       "skill": "",
       "description": "",
       "similarImage": "",
@@ -770,33 +231,11 @@
       "similarAwards": "",
       "ruleText": "",
       "helpText": "",
+      "similarDesigner": "",
       "variantImage": "",
-      "variant": "Creating",
+      "variant": "Overview",
       "language": "en-US",
-      "players": "1",
-      "similarDesigner": ""
+      "players": "1"
     }
-  },
-  "10gpn": {
-    "x": 1100,
-    "y": 200,
-    "z": 26429,
-    "width": 500,
-    "height": 50,
-    "css": "font-size: 20px; ",
-    "text": "Use a dynamic expression like 'var x = ${PROPERTY arrayValues}' to create an array from a list that is predefined as a property in a widget. You can also create a new array using some of the functions described in the Modifying - Advanced variant of this tutorial. But you must first create a blank array with something like 'var x = [ ]'.",
-    "id": "10gpn"
-  },
-  "62cm": {
-    "type": "label",
-    "css": "font-size: 40px",
-    "height": 50,
-    "width": 200,
-    "x": 1229,
-    "z": 26426,
-    "layer": 1,
-    "y": 83,
-    "id": "62cm",
-    "text": "Dynamic Expression"
   }
 }
