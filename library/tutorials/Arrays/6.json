@@ -1,4 +1,12 @@
 {
+  "4": {
+    "type": "label",
+    "text": "4",
+    "x": 771,
+    "y": 247,
+    "z": 26408,
+    "id": "4"
+  },
   "f6mlAC": {
     "id": "f6mlAC",
     "parent": "3mv9",
@@ -514,7 +522,7 @@
   },
   "8fr3": {
     "type": "label",
-    "text": "Array Example: Random Word",
+    "text": "Array Example: Moving Widget",
     "css": "font-size: 60px",
     "height": 160,
     "width": 1000,
@@ -523,21 +531,20 @@
     "id": "8fr3",
     "y": 1
   },
-  "m247": {
+  "uttb": {
     "type": "label",
-    "text": "The button creates an array using Split. Then uses Shuffle to choose one random word from that list.",
-    "x": 501,
-    "y": 421,
-    "z": 26425,
-    "id": "m247",
-    "width": 500,
-    "height": 150,
-    "css": {
-      "font-size": "26px"
-    }
+    "text": "The Array",
+    "css": "font-size: 30px",
+    "height": 60,
+    "width": 200,
+    "x": 1239,
+    "z": 26354,
+    "layer": 1,
+    "y": 186,
+    "id": "uttb"
   },
   "_meta": {
-    "version": 13,
+    "version": 3,
     "info": {
       "name": "Arrays",
       "image": "/assets/-2001287493_6748",
@@ -548,7 +555,7 @@
       "time": "",
       "attribution": "",
       "showName": false,
-      "lastUpdate": 1747540416866,
+      "lastUpdate": 1747540416867,
       "skill": "",
       "description": "",
       "similarImage": "",
@@ -558,39 +565,406 @@
       "helpText": "",
       "similarDesigner": "",
       "variantImage": "",
-      "variant": "Example: Random Word",
+      "variant": "Example: Moving Widget",
       "language": "en-US",
       "players": "1"
     }
   },
-  "Word 5-5": {
+  "arrayText": {
     "type": "label",
-    "css": "font-size: 30px",
-    "height": 42,
-    "width": 300,
-    "x": 859,
-    "y": 284,
-    "z": 26428,
-    "id": "Word 5-5",
-    "text": "alpha"
+    "text": [
+      "holder1",
+      "holder2",
+      "holder3",
+      "holder4"
+    ],
+    "x": 1149,
+    "y": 224,
+    "z": 26409,
+    "width": 400,
+    "css": "background-color:light-grey; border-style: solid; font-size:20px",
+    "height": 40,
+    "id": "arrayText"
   },
-  "Word Button": {
+  "holder1": {
+    "type": "holder",
+    "x": 299,
+    "y": 241,
+    "z": 15,
+    "id": "holder1",
+    "text": "1",
+    "dropTarget": {
+      "type": "button"
+    },
+    "width": 110,
+    "height": 110
+  },
+  "ekra": {
+    "type": "label",
+    "text": "1",
+    "x": 289,
+    "y": 249,
+    "z": 26401,
+    "id": "ekra",
+    "width": 40,
+    "height": 40
+  },
+  "i8ax": {
+    "type": "label",
+    "text": "2",
+    "x": 260,
+    "y": 632,
+    "z": 26403,
+    "id": "i8ax"
+  },
+  "holder2": {
+    "type": "holder",
+    "x": 299,
+    "y": 629,
+    "z": 16,
+    "text": "1",
+    "dropTarget": {
+      "type": "button"
+    },
+    "width": 110,
+    "height": 110,
+    "id": "holder2"
+  },
+  "holder3": {
+    "type": "holder",
+    "x": 809,
+    "y": 629,
+    "z": 17,
+    "text": "1",
+    "dropTarget": {
+      "type": "button"
+    },
+    "width": 110,
+    "height": 110,
+    "id": "holder3"
+  },
+  "4u4t": {
+    "type": "label",
+    "text": "3",
+    "x": 769,
+    "y": 635,
+    "z": 26406,
+    "id": "4u4t"
+  },
+  "clickme": {
     "type": "button",
-    "id": "Word Button",
-    "x": 717,
-    "y": 264,
-    "z": 19,
-    "text": "Random Word",
-    "target": "Word 5-5",
+    "text": "Click me",
     "clickRoutine": [
-      "var words = 'alpha,bravo,charlie,delta,echo,foxtrot,golf,hotel,india,juliet,kilo,lima,mike,november,oscar,papa,quebec,romeo,sierra,tango,uniform,victor,whiskey,x-ray,yankee,zulu' split ',' //Split the list of words into an array using commas as a split point",
-      "var wordsShuffled = ${words} shuffle",
-      "var wordsShuffled = ${wordsShuffled} pop",
       {
-        "func": "LABEL",
-        "label": "${PROPERTY target}",
-        "value": "${wordsShuffled}"
+        "func": "SELECT",
+        "property": "id",
+        "value": "${thisID}",
+        "collection": "me"
+      },
+      "var index = ${PROPERTY index}",
+      "var array = ${PROPERTY array}",
+      "var newIndex = ${index} + 1",
+      "var arrayLength = ${array} length",
+      "var dontresetIndex = ${newIndex} != ${arrayLength}",
+      {
+        "func": "IF",
+        "condition": "${dontresetIndex}",
+        "elseRoutine": [
+          "var newIndex = 0"
+        ]
+      },
+      "var holder = ${array} getIndex ${newIndex}",
+      {
+        "func": "SET",
+        "collection": "me",
+        "property": "parent",
+        "value": "${holder}"
+      },
+      {
+        "func": "SET",
+        "collection": "me",
+        "property": "index",
+        "value": "${newIndex}"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "indexText",
+        "collection": "indexText"
+      },
+      {
+        "func": "SET",
+        "collection": "indexText",
+        "property": "text",
+        "value": "${newIndex}"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "holderText",
+        "collection": "holderText"
+      },
+      {
+        "func": "SET",
+        "collection": "holderText",
+        "property": "text",
+        "value": "${holder}"
       }
-    ]
+    ],
+    "x": 4,
+    "y": 4,
+    "z": 26372,
+    "id": "clickme",
+    "array": [
+      "holder1",
+      "holder2",
+      "holder3",
+      "holder4"
+    ],
+    "width": 100,
+    "height": 100,
+    "index": 0,
+    "parent": "holder1"
+  },
+  "holder4": {
+    "type": "holder",
+    "x": 810,
+    "y": 242,
+    "z": 14,
+    "text": "1",
+    "dropTarget": {
+      "type": "button"
+    },
+    "width": 110,
+    "height": 110,
+    "id": "holder4"
+  },
+  "indexLabel": {
+    "type": "label",
+    "text": "Index:",
+    "x": 1184,
+    "y": 279,
+    "z": 26415,
+    "width": 200,
+    "css": "font-size: 25px",
+    "height": 60,
+    "id": "indexLabel",
+    "layer": 1
+  },
+  "indexText": {
+    "type": "label",
+    "text": 0,
+    "x": 1334,
+    "y": 276,
+    "z": 26414,
+    "width": 100,
+    "css": "background-color:light-grey; border-style: solid; font-size:20px",
+    "height": 40,
+    "id": "indexText"
+  },
+  "holderLabel": {
+    "type": "label",
+    "text": "Holder:",
+    "css": "font-size: 25px",
+    "height": 60,
+    "width": 200,
+    "x": 1185,
+    "z": 26416,
+    "layer": 1,
+    "y": 324,
+    "id": "holderLabel"
+  },
+  "holderText": {
+    "type": "label",
+    "text": "holder1",
+    "x": 1333,
+    "y": 320,
+    "z": 26415,
+    "width": 100,
+    "css": "background-color:light-grey; border-style: solid; font-size:20px",
+    "height": 40,
+    "id": "holderText"
+  },
+  "m247": {
+    "type": "label",
+    "text": "The array of holders is stored as a property of the button. The index value holds which index of the array the button is currently at. Each time the button is pressed it increments the index value by 1 and then gets the corresponding holder id from the array. To loop back to the start of the array it checks if the 'newIndex' == length of the array, if they match then the newIndex is set back to 0.",
+    "x": 369,
+    "y": 421,
+    "z": 26424,
+    "id": "m247",
+    "width": 500,
+    "height": 150
+  },
+  "yxcq": {
+    "type": "button",
+    "text": "Reset",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "clickme",
+        "collection": "clickme"
+      },
+      {
+        "func": "SET",
+        "collection": "clickme",
+        "property": "index",
+        "value": 0
+      },
+      {
+        "func": "SET",
+        "collection": "clickme",
+        "property": "array",
+        "value": [
+          "holder1",
+          "holder2",
+          "holder3",
+          "holder4"
+        ]
+      },
+      {
+        "func": "SET",
+        "collection": "clickme",
+        "property": "parent",
+        "value": "holder1"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "arrayText",
+        "collection": "arrayText"
+      },
+      {
+        "func": "SET",
+        "collection": "arrayText",
+        "property": "text",
+        "value": [
+          "holder1",
+          "holder2",
+          "holder3",
+          "holder4"
+        ]
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "indexText",
+        "collection": "indexText"
+      },
+      {
+        "func": "SET",
+        "collection": "indexText",
+        "property": "text",
+        "value": 0
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "holderText",
+        "collection": "holderText"
+      },
+      {
+        "func": "SET",
+        "collection": "holderText",
+        "property": "text",
+        "value": "holder1"
+      }
+    ],
+    "x": 1171,
+    "y": 363,
+    "z": 26375,
+    "id": "yxcq"
+  },
+  "cqr2": {
+    "type": "button",
+    "text": "Remove Holder",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "clickme",
+        "collection": "clickme"
+      },
+      "var array = ${PROPERTY array OF clickme}",
+      "var poppedValue = ${array} pop",
+      {
+        "func": "SET",
+        "collection": "clickme",
+        "property": "index",
+        "value": 0
+      },
+      {
+        "func": "SET",
+        "collection": "clickme",
+        "property": "array",
+        "value": "${array}"
+      },
+      {
+        "func": "SET",
+        "collection": "clickme",
+        "property": "parent",
+        "value": "holder1"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "arrayText",
+        "collection": "arrayText"
+      },
+      {
+        "func": "SET",
+        "collection": "arrayText",
+        "property": "text",
+        "value": "${array}"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "indexText",
+        "collection": "indexText"
+      },
+      {
+        "func": "SET",
+        "collection": "indexText",
+        "property": "text",
+        "value": 0
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "holderText",
+        "collection": "holderText"
+      },
+      {
+        "func": "SET",
+        "collection": "holderText",
+        "property": "text",
+        "value": "holder1"
+      }
+    ],
+    "x": 1417,
+    "y": 370,
+    "z": 26376,
+    "id": "cqr2"
+  },
+  "vwp0": {
+    "type": "label",
+    "text": "Reset the Array back to all 4 holders",
+    "x": 1084,
+    "y": 453,
+    "z": 26421,
+    "width": 250,
+    "height": 150,
+    "id": "vwp0"
+  },
+  "1vb2": {
+    "type": "label",
+    "text": "Use 'pop' to remove the last holder from the array. This could be used to reduce locations of token if the player count was lower.",
+    "x": 1327,
+    "y": 453,
+    "z": 26423,
+    "width": 250,
+    "height": 150,
+    "id": "1vb2"
   }
 }
