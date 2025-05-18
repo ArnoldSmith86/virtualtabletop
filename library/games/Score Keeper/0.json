@@ -89,7 +89,7 @@
         "font-size": "18px",
         "color": "white",
         "background": "green",
-        "border-color": "darkgreen"
+        "border": "2px solid darkgreen"
       },
       ":hover": {
         "border-color": "green",
@@ -108,7 +108,7 @@
         "font-size": "18px",
         "color": "white",
         "background": "red",
-        "border-color": "crimson"
+        "border": "2px solid crimson"
       },
       ":hover": {
         "border-color": "red",
@@ -263,10 +263,10 @@
   "scoreButtonBack": {
     "id": "scoreButtonBack",
     "x": 570,
-    "y": 30,
+    "y": 69,
     "width": 500,
     "height": 68,
-    "scale": 1.25,
+    "scale": 2.85,
     "layer": -3,
     "movable": false,
     "movableInEdit": false
@@ -399,7 +399,7 @@
     "type": "scoreboard",
     "id": "score",
     "x": 500,
-    "y": 210,
+    "y": 389,
     "z": 232,
     "playersInColumns": false,
     "roundLabel": "Players",
@@ -439,7 +439,8 @@
         }
       }
     ],
-    "height": 60
+    "height": 60,
+    "scale": 1.4
   },
   "addPlayer": {
     "type": "button",
@@ -645,8 +646,8 @@
   },
   "sortPlayer": {
     "id": "sortPlayer",
-    "x": 635,
-    "y": 125,
+    "x": 575,
+    "y": 212,
     "width": 60,
     "height": 60,
     "borderRadius": 8,
@@ -771,8 +772,8 @@
   },
   "sortScore": {
     "id": "sortScore",
-    "x": 935,
-    "y": 125,
+    "x": 1005,
+    "y": 212,
     "width": 60,
     "height": 60,
     "borderRadius": 8,
@@ -1199,6 +1200,15 @@
         ],
         "property": "color",
         "value": "${color}"
+      },
+      {
+        "func": "CALL",
+        "widget": "seatHolder",
+        "routine": "sortRoutine",
+        "arguments": {
+          "key": "${PROPERTY sortField OF score}",
+          "order": "${PROPERTY sortAscending OF score}"
+        }
       }
     ],
     "x": -50,
@@ -1256,7 +1266,7 @@
       "mode": "vs",
       "time": "0",
       "attribution": "Room layout, design, and library image by LawDawg. Inspired by a design by mousewax. Released to the Public Domain under CC0.",
-      "lastUpdate": 1747284943351,
+      "lastUpdate": 1747521418491,
       "showName": true,
       "skill": "",
       "description": "This is not a game. It is a utility. Use it to keep score in many physical or online games.",
@@ -1265,11 +1275,11 @@
       "similarDesigner": "",
       "similarAwards": "",
       "ruleText": "",
-      "helpText": "Chose a variant based on whether you want a single running total or need a record of each individual round. Any player, or combination of players, can update scores at the same time.<div><br></div><div>Click Add Player button and enter a name and color for each player. Use the black buttons to the left to delete a player or change the name or color.</div><div><br></div><div>To enter a score, click on a player's row or the box at the right end of the row to select that player. Use the red and green buttons at the top of the screen to add or subtract points.</div><div><br></div><div>Click the sort button above the Player column to sort alphabetically or reverse alphabetically by the players' names. Click the sort button above the Score column to sort the scores from high to low or low to high.</div><div><br></div><div>If using the rounds variant, click the icon in the upper left to end the scoring for a round and start a new round.</div><div><br></div><div>Click the reset icon in the upper right to reset all scores to 0 (or to some other value) and to optionally delete all player rows.</div><div><br></div><div>The maximum number of players is 13.&nbsp; The maximum number of rounds is 25.</div>",
+      "helpText": "Chose a variant based on whether you want a single running total or need a record of each individual round. Any player, or combination of players, can update scores at the same time.<div><br></div><div>Click Add Player button and enter a name and color for each player. Use the black buttons to the left to delete a player or change the name or color.</div><div><br></div><div>To enter a score, click on a player's row or the box at the right end of the row to select that player. Use the red and green buttons at the top of the screen to add or subtract points.</div><div><br></div><div>Click the sort button above the Player column to sort alphabetically or reverse alphabetically by the players' names. Click the sort button above the Score column to sort the scores from high to low or low to high.</div><div><br></div><div>If using the rounds variant, click the icon in the upper left to end the scoring for a round and start a new round.</div><div><br></div><div>Click the reset icon in the upper right to reset all scores to 0 (or to some other value) and to optionally delete all player rows.</div>",
       "variantImage": "",
       "variant": "Total Only",
       "language": "",
-      "players": "1-13"
+      "players": "1-8"
     }
   }
 }
