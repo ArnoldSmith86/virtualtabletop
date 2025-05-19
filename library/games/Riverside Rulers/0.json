@@ -3,7 +3,7 @@
     "version": 15,
     "info": {
       "name": "Riverside Rulers",
-      "image": "/assets/148112221_192739",
+      "image": "/assets/-685071358_40277",
       "showName": true,
       "time": "45",
       "mode": "vs",
@@ -18,8 +18,8 @@
       "rules": "",
       "ruleText": "<div><b>Premise &amp; Objective<br></b></div><div>During the course of the game you will place your knights&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/skoll/chess-knight.svg\"></i> onto spaces on the game board. Groups of knights will form kingdoms, with the player with the most knights present in a kingdom declared its ruler <i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/skoll/chess-king.svg\"></i>. By being ruler of the most valuable duchies, you will collect points during and at the end of the game. The player with the most points wins the game.<br></div><div><br></div><div><b>The Board<br></b></div><div>The board consists of spaces marked with a black outline. Each space is either a land (green) or river (blue) space. The river spaces are numbered.</div><div><br></div><div>Two spaces are adjacent to one another if their edges touch - but not if they touch only at a corner.</div><div><br></div><div>Landmarks - gray circular features marked with a number or symbol - are also present on the board. A landmark is not a space, but rather modifies those spaces that it touches.<br></div><div><br></div><div><b>The Deck</b></div><div>The card deck consists of 55 cards: one card for each of the 54 numbered river spaces, and one extra card which is red and marked with the&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/lorc/cycle.svg\"></i> icon.</div><div><br></div><b>Kingdoms</b><div>A group of 2 or more contiguously-connected spaces occupied by knights (irrespective of which players' knights) forms a kingdom. When a new kingdom is formed, if one player has more knights&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/skoll/chess-knight.svg\"></i> within it than each other player, then they place a ruler&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/skoll/chess-king.svg\"></i> nearby to indicate that they rule this kingdom.<b><br></b></div><div><b><br></b></div><b>Player Turns</b><div>One player is appointed start player and takes a turn first. Each player in turn around the table will take one turn, repeating until the game ends.<br></div><div><br></div><div>A player's turn consists of the following steps in this order:<br></div><div>• Play one card from your hand and place a knight <i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/skoll/chess-knight.svg\"></i>;</div><div>• Optionally, place one of your bastions <i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/skoll/chess-rook.svg\"></i>;</div><div>• If you now have no knights&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/skoll/chess-knight.svg\"></i> remaining, final scoring takes place and then the game ends;</div><div>• If the game has not ended, you draw a new card to replenish your hand to 5 cards.</div><div>• If you drew the card marked <i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/lorc/cycle.svg\"></i>, then you re-shuffle the discards into the deck and draw again, continuing this process until you draw a numbered card.<br></div><div><br></div><div><b>Placing a Knight </b><i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/skoll/chess-knight.svg\"></i></div><div>The main part of your turn consists of playing a card and placing a knight. You play one numbered card from your hand. This allows you to play a knight on one of the two land spaces next to the correspondingly-numbered river space. If all such land spaces are occupied, you may instead place your knight into the river space with the matching number.</div><div><br></div><div>Alternatively, when playing your card you may instead state that you are using it to reinforce one of your existing knights. In this case, ignore the number on the card and instead place a knight into any unoccupied land (not river) space which is adjacent to one of your existing knights and not adjacent to any other player's knight.</div><div><br></div><div>Through placing your knights, a new kingdom may be formed, two kingdoms may be merged, or ownership of existing kingdoms may change. Check for these things immediately after placing your knight.</div><div><br></div><div><b>Forming a New Kingdom</b></div><div>If the knight forms a new group of 2 or more contiguously-connected knights that were not part of an existing kingdom, then a kingdom is now formed. If one player has more knights in the kingdom than all other players, then they are appointed ruler and place one of their rulers&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/skoll/chess-king.svg\"></i> nearby to the kingdom to indicate this.</div><div><br></div><div><b>Changing Ownership of a Kingdom</b></div><div>If the new knight causes a player to now have more knights in a kingdom than all other players, then they become the ruler of the kingdom, replacing any existing ruler. The owner of the old ruler removes that ruler&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/skoll/chess-king.svg\"></i> and scores the value of the kingdom as assessed before this placement. The new ruler places their ruler&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/skoll/chess-king.svg\"></i> next to the kingdom instead.</div><div><br></div><div>Note that you must have more knights than the existing ruler - equaling their number of knights is not sufficient.</div><div><br></div><div><b>Merging two Kingdoms</b></div><div>If you place a knight that combines two existing kingdoms, then determine which player - if any - has more knights than all other players in the new, larger, kingdom. This player retains one of their rulers&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/skoll/chess-king.svg\"></i> next to the kingdom (or places one, if they were not ruler of either of the original kingdoms). All other rulers&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/skoll/chess-king.svg\"></i> are removed.</div><div><br></div><div>In the case where a player was the ruler of both kingdoms involved in a merger, they remove the ruler&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/skoll/chess-king.svg\"></i> of the lesser-valued (in points, see below) of the two kingdoms.</div><div><br></div><div><b>Scoring for Ruler&nbsp;</b><i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/skoll/chess-king.svg\"></i><b> Removal</b></div><div>Whenever a player's ruler&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/skoll/chess-king.svg\"></i> is removed from the board, they score the value of the kingdom in question before the latest placement. The value of a kingdom is calculated by summing the following values:</div><div>• 1 point for the ruler <i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/skoll/chess-king.svg\"></i>;</div><div>• 1 point for each church&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/church.svg\"></i> and/or castle&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/castle.svg\"></i> landmark adjacent to any knight in the kingdom;</div><div>• 2, 3, or 4 points for each numbered town landmark adjacent to any knight in the kingdom, as shown on the town itself.<br></div><div><br></div><div><b>Church Landmarks </b><i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/church.svg\"></i></div><div>As described above, the church landmarks&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/church.svg\"></i> contribute 1 point to the value of a kingdom.</div><div><br>Additionally, each ruler&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/skoll/chess-king.svg\"></i> who has one or more churches in their kingdom also appoints a bishop <i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/skoll/chess-bishop.svg\"></i>. Place the bishop&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/skoll/chess-bishop.svg\"></i> next to the ruler&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/skoll/chess-king.svg\"></i> token to indicate this.</div><div><br></div><div>At all times during the game, the single player who controls the most rulers with bishops&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/skoll/chess-bishop.svg\"></i> has control of the Archbishop marker <i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/pope-crown.svg\"></i>. Note that you must retain a lead in the number of bishops to keep hold of the Archbishop&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/pope-crown.svg\"></i> - if another player ties your count of bishops, then return the Archbishop marker to the board, near the draw deck, until a player has more bishops than any other and can claim it.<br></div><div><b><br></b></div><div><b>Power of the Archbishop </b><i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/pope-crown.svg\"></i></div><div>The player that controls the Archbishop&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/pope-crown.svg\"></i> has the power of conversion. When playing a numbered card, instead of placing a knight, they may replace an existing knight of another player on a land space next to the river with the corresponding number.<br></div><div><br></div><div>The archbishop is also worth 5 points for a player that controls it at the end of the game.</div><div><b><br></b></div><div><b>Castle Landmarks </b><i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/castle.svg\"></i></div><div><div>As described above, the castle landmarks&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/castle.svg\"></i> contribute 1 point to the value of a kingdom.</div><br></div><div>Whenever a knight is placed next to a castle, then this will lead to an additional knight being placed, on the castle landmark itself. This knight forms part of a kingdom with the knights in the spaces that the castle touches.</div><div><br></div><div>Determine which player will place the additional knight before checking for new owners of kingdoms.</div><div><br>If the standard knight placed during the turn forms part of an existing kingdom, then the additional knight will be placed by the player that rules that kingdom. Otherwise or if there is no ruler of such an existing kingdom, the active player who placed the knight next to the castle places the additional knight.</div><div><br></div><div>Whenever a new ruler&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/skoll/chess-king.svg\"></i> takes over the kingdom containing one or more castles, they also take over all castles in the kingdom. Remove the existing knights from the castles and replace them with knights of the new ruler.<br></div><div><br></div><div><div><b>Placing a Bastion </b><i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/skoll/chess-rook.svg\"></i></div><div>After placing your knight, you may also place one bastion&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/skoll/chess-rook.svg\"></i> on a single empty land space on the board. Bastions occupy spaces, stopping knights from being placed there. Bastions are never part of a kingdom, effectively acting as walls/barriers.<br></div></div><div><br></div><div><b>End Game Scoring</b></div><div>When the game ends, all rulers&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/skoll/chess-king.svg\"></i> remaining on the board score their kingdom. The same scoring is used as described above for a ruler being removed, except that the ruler&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/skoll/chess-king.svg\"></i> is worth 5 points instead of 1 during this end-game scoring.<br></div><div><br></div><div>Additionally, award 5 points to the current owner of the Archbishop <i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/pope-crown.svg\"></i>, if there is one.</div><div><br></div><div>Once this scoring is complete, the player with the most points wins.</div>",
       "helpText": "<div>Have all players take a seat and press the New Game button to shuffle the deck, distribute starting hands, give the players the appropriate number of knights&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/skoll/chess-knight.svg\"></i> for the player count, and select a random start player.</div><div><br></div><div>Use the —, +1, and +X buttons next to the player seats to adjust players' scores as required during play.</div><div><br></div><div>Press the End Turn button at the end of your turn to change which seat is highlighted and to draw your hand back to five cards automatically. If you draw the&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/lorc/cycle.svg\"></i> card, press the Reshuffle button to shuffle that card and the discards back into the deck and draw back to 5 cards.<br></div>",
-      "attribution": "Game layout and scripting, plus game board image, by Andy Pymont, released to the Public Domain by CC0.\n\nLibrary image generated using the Midjourney artificial intelligence \nimage generator, https://www.midjourney.com/home/, using the following prompt: \"a duke and bishop in front of a river, cartoon\". The card back is a cropped section of the same image.\n\nIcon graphics are from https://game-icons.net/ and are used under the CC BY 3.0 license:\n\nDelapouite\n• Archbishop card icon: https://game-icons.net/1x1/delapouite/pope-crown.html\n<div>• Castle https://game-icons.net/1x1/delapouite/castle.html</div><div>• Church https://game-icons.net/1x1/delapouite/church.html</div>\nLorc\n<div>• Cycle icon for reshuffle card: https://game-icons.net/1x1/lorc/cycle.html</div><div><br></div><div>Skoll</div><div>• Bishop https://game-icons.net/1x1/skoll/chess-bishop.html</div><div>• King https://game-icons.net/1x1/skoll/chess-king.html</div><div>• Knight https://game-icons.net/1x1/skoll/chess-knight.html</div><div>• Rook https://game-icons.net/1x1/skoll/chess-rook.html</div>",
-      "lastUpdate": 1700055087053,
+      "attribution": "Game layout and scripting, plus game board image, by Andy Pymont, released to the Public Domain by CC0.\n\nIcon graphics are from https://game-icons.net/ and are used under the CC BY 3.0 license:\n\nDelapouite\n• Archbishop card icon: https://game-icons.net/1x1/delapouite/pope-crown.html\n<div>• Castle https://game-icons.net/1x1/delapouite/castle.html</div><div>• Church https://game-icons.net/1x1/delapouite/church.html</div>\nLorc\n<div>• Cycle icon for reshuffle card: https://game-icons.net/1x1/lorc/cycle.html</div><div><br></div><div>Skoll</div><div>• Bishop https://game-icons.net/1x1/skoll/chess-bishop.html</div><div>• King https://game-icons.net/1x1/skoll/chess-king.html</div><div>• Knight https://game-icons.net/1x1/skoll/chess-knight.html</div><div>• Rook https://game-icons.net/1x1/skoll/chess-rook.html</div>",
+      "lastUpdate": 1747247072470,
       "variantImage": "",
       "variant": "",
       "language": "en-US",
@@ -103,10 +103,9 @@
             "type": "image",
             "x": 0,
             "y": 0,
-            "color": "transparent",
+            "color": "gray",
             "width": 70,
-            "height": 70,
-            "value": "/assets/-1971356831_4030"
+            "height": 70
           }
         ]
       },
@@ -2140,7 +2139,8 @@
     },
     "dropTarget": {
       "deck": "deck-kings"
-    }
+    },
+    "preventPiles": true
   },
   "holder-kings-p2": {
     "type": "holder",
@@ -2166,277 +2166,547 @@
     "parent": "seat-p5",
     "inheritFrom": "holder-kings-p1"
   },
-  "piece-king-p1-1": {
+  "piece-king-p1-01": {
     "type": "card",
-    "id": "piece-king-p1-1",
-    "parent": "1b2e",
+    "id": "piece-king-p1-01",
+    "parent": "holder-kings-p1",
     "deck": "deck-kings",
     "cardType": "king",
-    "z": 23973,
+    "z": 1,
     "playerIndex": 1,
     "width": 40,
     "height": 40
   },
-  "piece-king-p1-2": {
+  "piece-king-p1-02": {
     "type": "card",
-    "id": "piece-king-p1-2",
-    "parent": "1b2e",
+    "id": "piece-king-p1-02",
+    "parent": "holder-kings-p1",
     "deck": "deck-kings",
     "cardType": "king",
-    "z": 23975,
+    "z": 2,
     "playerIndex": 1
   },
-  "piece-king-p1-3": {
+  "piece-king-p1-03": {
     "type": "card",
-    "id": "piece-king-p1-3",
-    "parent": "1b2e",
+    "id": "piece-king-p1-03",
+    "parent": "holder-kings-p1",
     "deck": "deck-kings",
     "cardType": "king",
-    "z": 23977,
+    "z": 3,
     "playerIndex": 1
   },
-  "piece-king-p1-4": {
+  "piece-king-p1-04": {
     "type": "card",
-    "id": "piece-king-p1-4",
-    "parent": "1b2e",
+    "id": "piece-king-p1-04",
+    "parent": "holder-kings-p1",
     "deck": "deck-kings",
     "cardType": "king",
-    "z": 23979,
+    "z": 4,
     "playerIndex": 1
   },
-  "piece-king-p1-5": {
+  "piece-king-p1-05": {
     "type": "card",
-    "id": "piece-king-p1-5",
+    "id": "piece-king-p1-05",
     "deck": "deck-kings",
     "cardType": "king",
-    "z": 23981,
+    "z": 5,
     "playerIndex": 1,
-    "parent": "1b2e"
+    "parent": "holder-kings-p1"
   },
-  "piece-king-p1-6": {
+  "piece-king-p1-06": {
     "type": "card",
-    "id": "piece-king-p1-6",
+    "id": "piece-king-p1-06",
     "deck": "deck-kings",
     "cardType": "king",
-    "z": 23983,
+    "z": 6,
     "playerIndex": 1,
-    "parent": "1b2e"
+    "parent": "holder-kings-p1"
   },
-  "piece-king-p2-1": {
+  "piece-king-p1-07": {
     "type": "card",
-    "id": "piece-king-p2-1",
-    "parent": "e6h1",
+    "id": "piece-king-p1-07",
     "deck": "deck-kings",
     "cardType": "king",
-    "z": 24038,
+    "z": 7,
+    "playerIndex": 1,
+    "parent": "holder-kings-p1"
+  },
+  "piece-king-p1-08": {
+    "type": "card",
+    "id": "piece-king-p1-08",
+    "deck": "deck-kings",
+    "cardType": "king",
+    "z": 8,
+    "playerIndex": 1,
+    "parent": "holder-kings-p1"
+  },
+  "piece-king-p1-09": {
+    "type": "card",
+    "id": "piece-king-p1-09",
+    "deck": "deck-kings",
+    "cardType": "king",
+    "z": 9,
+    "playerIndex": 1,
+    "parent": "holder-kings-p1"
+  },
+  "piece-king-p1-10": {
+    "type": "card",
+    "id": "piece-king-p1-10",
+    "deck": "deck-kings",
+    "cardType": "king",
+    "z": 10,
+    "playerIndex": 1,
+    "parent": "holder-kings-p1"
+  },
+  "piece-king-p1-11": {
+    "type": "card",
+    "id": "piece-king-p1-11",
+    "deck": "deck-kings",
+    "cardType": "king",
+    "z": 11,
+    "playerIndex": 1,
+    "parent": "holder-kings-p1"
+  },
+  "piece-king-p1-12": {
+    "type": "card",
+    "id": "piece-king-p1-12",
+    "deck": "deck-kings",
+    "cardType": "king",
+    "z": 12,
+    "playerIndex": 1,
+    "parent": "holder-kings-p1"
+  },
+  "piece-king-p2-01": {
+    "type": "card",
+    "id": "piece-king-p2-01",
+    "parent": "holder-kings-p2",
+    "deck": "deck-kings",
+    "cardType": "king",
+    "z": 1,
     "playerIndex": 2
   },
-  "piece-king-p2-2": {
+  "piece-king-p2-02": {
     "type": "card",
-    "id": "piece-king-p2-2",
-    "parent": "e6h1",
+    "id": "piece-king-p2-02",
+    "parent": "holder-kings-p2",
     "deck": "deck-kings",
     "cardType": "king",
-    "z": 24040,
+    "z": 2,
     "playerIndex": 2
   },
-  "piece-king-p2-3": {
+  "piece-king-p2-03": {
     "type": "card",
-    "id": "piece-king-p2-3",
-    "parent": "e6h1",
+    "id": "piece-king-p2-03",
+    "parent": "holder-kings-p2",
     "deck": "deck-kings",
     "cardType": "king",
-    "z": 24042,
+    "z": 3,
     "playerIndex": 2
   },
-  "piece-king-p2-4": {
+  "piece-king-p2-04": {
     "type": "card",
-    "id": "piece-king-p2-4",
-    "parent": "e6h1",
+    "id": "piece-king-p2-04",
+    "parent": "holder-kings-p2",
     "deck": "deck-kings",
     "cardType": "king",
-    "z": 24044,
+    "z": 4,
     "playerIndex": 2
   },
-  "piece-king-p2-5": {
+  "piece-king-p2-05": {
     "type": "card",
-    "id": "piece-king-p2-5",
-    "parent": "e6h1",
+    "id": "piece-king-p2-05",
+    "parent": "holder-kings-p2",
     "deck": "deck-kings",
     "cardType": "king",
-    "z": 24046,
+    "z": 5,
     "playerIndex": 2
   },
-  "piece-king-p2-6": {
+  "piece-king-p2-06": {
     "type": "card",
-    "id": "piece-king-p2-6",
-    "parent": "e6h1",
+    "id": "piece-king-p2-06",
+    "parent": "holder-kings-p2",
     "deck": "deck-kings",
     "cardType": "king",
-    "z": 24048,
+    "z": 6,
     "playerIndex": 2
   },
-  "piece-king-p3-1": {
+  "piece-king-p2-07": {
     "type": "card",
-    "id": "piece-king-p3-1",
-    "parent": "yihr",
+    "id": "piece-king-p2-07",
+    "parent": "holder-kings-p2",
     "deck": "deck-kings",
     "cardType": "king",
-    "z": 24103,
+    "z": 7,
+    "playerIndex": 2
+  },
+  "piece-king-p2-08": {
+    "type": "card",
+    "id": "piece-king-p2-08",
+    "parent": "holder-kings-p2",
+    "deck": "deck-kings",
+    "cardType": "king",
+    "z": 8,
+    "playerIndex": 2
+  },
+  "piece-king-p2-09": {
+    "type": "card",
+    "id": "piece-king-p2-09",
+    "parent": "holder-kings-p2",
+    "deck": "deck-kings",
+    "cardType": "king",
+    "z": 9,
+    "playerIndex": 2
+  },
+  "piece-king-p2-10": {
+    "type": "card",
+    "id": "piece-king-p2-10",
+    "parent": "holder-kings-p2",
+    "deck": "deck-kings",
+    "cardType": "king",
+    "z": 10,
+    "playerIndex": 2
+  },
+  "piece-king-p2-11": {
+    "type": "card",
+    "id": "piece-king-p2-11",
+    "parent": "holder-kings-p2",
+    "deck": "deck-kings",
+    "cardType": "king",
+    "z": 11,
+    "playerIndex": 2
+  },
+  "piece-king-p2-12": {
+    "type": "card",
+    "id": "piece-king-p2-12",
+    "parent": "holder-kings-p2",
+    "deck": "deck-kings",
+    "cardType": "king",
+    "z": 12,
+    "playerIndex": 2
+  },
+  "piece-king-p3-01": {
+    "type": "card",
+    "id": "piece-king-p3-01",
+    "parent": "holder-kings-p3",
+    "deck": "deck-kings",
+    "cardType": "king",
+    "z": 1,
     "playerIndex": 3
   },
-  "piece-king-p3-2": {
+  "piece-king-p3-02": {
     "type": "card",
-    "id": "piece-king-p3-2",
-    "parent": "yihr",
+    "id": "piece-king-p3-02",
+    "parent": "holder-kings-p3",
     "deck": "deck-kings",
     "cardType": "king",
-    "z": 24105,
+    "z": 2,
     "playerIndex": 3
   },
-  "piece-king-p3-3": {
+  "piece-king-p3-03": {
     "type": "card",
-    "id": "piece-king-p3-3",
-    "parent": "yihr",
+    "id": "piece-king-p3-03",
+    "parent": "holder-kings-p3",
     "deck": "deck-kings",
     "cardType": "king",
-    "z": 24107,
+    "z": 3,
     "playerIndex": 3
   },
-  "piece-king-p3-4": {
+  "piece-king-p3-04": {
     "type": "card",
-    "id": "piece-king-p3-4",
-    "parent": "yihr",
+    "id": "piece-king-p3-04",
+    "parent": "holder-kings-p3",
     "deck": "deck-kings",
     "cardType": "king",
-    "z": 24109,
+    "z": 4,
     "playerIndex": 3
   },
-  "piece-king-p3-5": {
+  "piece-king-p3-05": {
     "type": "card",
-    "id": "piece-king-p3-5",
-    "parent": "yihr",
+    "id": "piece-king-p3-05",
+    "parent": "holder-kings-p3",
     "deck": "deck-kings",
     "cardType": "king",
-    "z": 24111,
+    "z": 5,
     "playerIndex": 3
   },
-  "piece-king-p3-6": {
+  "piece-king-p3-06": {
     "type": "card",
-    "id": "piece-king-p3-6",
-    "parent": "yihr",
+    "id": "piece-king-p3-06",
+    "parent": "holder-kings-p3",
     "deck": "deck-kings",
     "cardType": "king",
-    "z": 24113,
+    "z": 6,
     "playerIndex": 3
   },
-  "piece-king-p4-1": {
+  "piece-king-p3-07": {
     "type": "card",
-    "id": "piece-king-p4-1",
-    "parent": "i5pb",
+    "id": "piece-king-p3-07",
+    "parent": "holder-kings-p3",
     "deck": "deck-kings",
     "cardType": "king",
-    "z": 24168,
+    "z": 7,
+    "playerIndex": 3
+  },
+  "piece-king-p3-08": {
+    "type": "card",
+    "id": "piece-king-p3-08",
+    "parent": "holder-kings-p3",
+    "deck": "deck-kings",
+    "cardType": "king",
+    "z": 8,
+    "playerIndex": 3
+  },
+  "piece-king-p3-09": {
+    "type": "card",
+    "id": "piece-king-p3-09",
+    "parent": "holder-kings-p3",
+    "deck": "deck-kings",
+    "cardType": "king",
+    "z": 9,
+    "playerIndex": 3
+  },
+  "piece-king-p3-10": {
+    "type": "card",
+    "id": "piece-king-p3-10",
+    "parent": "holder-kings-p3",
+    "deck": "deck-kings",
+    "cardType": "king",
+    "z": 10,
+    "playerIndex": 3
+  },
+  "piece-king-p3-11": {
+    "type": "card",
+    "id": "piece-king-p3-11",
+    "parent": "holder-kings-p3",
+    "deck": "deck-kings",
+    "cardType": "king",
+    "z": 11,
+    "playerIndex": 3
+  },
+  "piece-king-p3-12": {
+    "type": "card",
+    "id": "piece-king-p3-12",
+    "parent": "holder-kings-p3",
+    "deck": "deck-kings",
+    "cardType": "king",
+    "z": 12,
+    "playerIndex": 3
+  },
+  "piece-king-p4-01": {
+    "type": "card",
+    "id": "piece-king-p4-01",
+    "parent": "holder-kings-p4",
+    "deck": "deck-kings",
+    "cardType": "king",
+    "z": 1,
     "playerIndex": 4
   },
-  "piece-king-p4-2": {
+  "piece-king-p4-02": {
     "type": "card",
-    "id": "piece-king-p4-2",
-    "parent": "i5pb",
+    "id": "piece-king-p4-02",
+    "parent": "holder-kings-p4",
     "deck": "deck-kings",
     "cardType": "king",
-    "z": 24170,
+    "z": 2,
     "playerIndex": 4
   },
-  "piece-king-p4-4": {
+  "piece-king-p4-03": {
     "type": "card",
-    "id": "piece-king-p4-4",
-    "parent": "i5pb",
+    "id": "piece-king-p4-03",
+    "parent": "holder-kings-p4",
     "deck": "deck-kings",
     "cardType": "king",
-    "z": 24172,
+    "z": 3,
     "playerIndex": 4
   },
-  "piece-king-p4-3": {
+  "piece-king-p4-04": {
     "type": "card",
-    "id": "piece-king-p4-3",
-    "parent": "i5pb",
+    "id": "piece-king-p4-04",
+    "parent": "holder-kings-p4",
     "deck": "deck-kings",
     "cardType": "king",
-    "z": 24174,
+    "z": 4,
     "playerIndex": 4
   },
-  "piece-king-p4-5": {
+  "piece-king-p4-05": {
     "type": "card",
-    "id": "piece-king-p4-5",
+    "id": "piece-king-p4-05",
     "deck": "deck-kings",
     "cardType": "king",
-    "z": 24176,
+    "z": 5,
     "playerIndex": 4,
-    "parent": "i5pb"
+    "parent": "holder-kings-p4"
   },
-  "piece-king-p4-6": {
+  "piece-king-p4-06": {
     "type": "card",
-    "id": "piece-king-p4-6",
+    "id": "piece-king-p4-06",
     "deck": "deck-kings",
     "cardType": "king",
-    "z": 24178,
+    "z": 6,
     "playerIndex": 4,
-    "parent": "i5pb"
+    "parent": "holder-kings-p4"
   },
-  "piece-king-p5-1": {
+  "piece-king-p4-07": {
     "type": "card",
-    "id": "piece-king-p5-1",
-    "parent": "oszu",
+    "id": "piece-king-p4-07",
     "deck": "deck-kings",
     "cardType": "king",
-    "z": 24233,
+    "z": 7,
+    "playerIndex": 4,
+    "parent": "holder-kings-p4"
+  },
+  "piece-king-p4-08": {
+    "type": "card",
+    "id": "piece-king-p4-08",
+    "deck": "deck-kings",
+    "cardType": "king",
+    "z": 8,
+    "playerIndex": 4,
+    "parent": "holder-kings-p4"
+  },
+  "piece-king-p4-09": {
+    "type": "card",
+    "id": "piece-king-p4-09",
+    "deck": "deck-kings",
+    "cardType": "king",
+    "z": 9,
+    "playerIndex": 4,
+    "parent": "holder-kings-p4"
+  },
+  "piece-king-p4-10": {
+    "type": "card",
+    "id": "piece-king-p4-10",
+    "deck": "deck-kings",
+    "cardType": "king",
+    "z": 10,
+    "playerIndex": 4,
+    "parent": "holder-kings-p4"
+  },
+  "piece-king-p4-11": {
+    "type": "card",
+    "id": "piece-king-p4-11",
+    "deck": "deck-kings",
+    "cardType": "king",
+    "z": 11,
+    "playerIndex": 4,
+    "parent": "holder-kings-p4"
+  },
+  "piece-king-p4-12": {
+    "type": "card",
+    "id": "piece-king-p4-12",
+    "deck": "deck-kings",
+    "cardType": "king",
+    "z": 12,
+    "playerIndex": 4,
+    "parent": "holder-kings-p4"
+  },
+  "piece-king-p5-01": {
+    "type": "card",
+    "id": "piece-king-p5-01",
+    "parent": "holder-kings-p5",
+    "deck": "deck-kings",
+    "cardType": "king",
+    "z": 1,
     "playerIndex": 5
   },
-  "piece-king-p5-2": {
+  "piece-king-p5-02": {
     "type": "card",
-    "id": "piece-king-p5-2",
-    "parent": "oszu",
+    "id": "piece-king-p5-02",
+    "parent": "holder-kings-p5",
     "deck": "deck-kings",
     "cardType": "king",
-    "z": 24235,
+    "z": 2,
     "playerIndex": 5
   },
-  "piece-king-p5-3": {
+  "piece-king-p5-03": {
     "type": "card",
-    "id": "piece-king-p5-3",
-    "parent": "oszu",
+    "id": "piece-king-p5-03",
+    "parent": "holder-kings-p5",
     "deck": "deck-kings",
     "cardType": "king",
-    "z": 24237,
+    "z": 3,
     "playerIndex": 5
   },
-  "piece-king-p5-4": {
+  "piece-king-p5-04": {
     "type": "card",
-    "id": "piece-king-p5-4",
-    "parent": "oszu",
+    "id": "piece-king-p5-04",
+    "parent": "holder-kings-p5",
     "deck": "deck-kings",
     "cardType": "king",
-    "z": 24239,
+    "z": 4,
     "playerIndex": 5
   },
-  "piece-king-p5-5": {
+  "piece-king-p5-05": {
     "type": "card",
-    "id": "piece-king-p5-5",
+    "id": "piece-king-p5-05",
     "deck": "deck-kings",
     "cardType": "king",
-    "z": 24241,
+    "z": 5,
     "playerIndex": 5,
-    "parent": "oszu"
+    "parent": "holder-kings-p5"
   },
-  "piece-king-p5-6": {
+  "piece-king-p5-06": {
     "type": "card",
-    "id": "piece-king-p5-6",
+    "id": "piece-king-p5-06",
     "deck": "deck-kings",
     "cardType": "king",
-    "z": 24243,
+    "z": 6,
     "playerIndex": 5,
-    "parent": "oszu"
+    "parent": "holder-kings-p5"
+  },
+  "piece-king-p5-07": {
+    "type": "card",
+    "id": "piece-king-p5-07",
+    "deck": "deck-kings",
+    "cardType": "king",
+    "z": 7,
+    "playerIndex": 5,
+    "parent": "holder-kings-p5"
+  },
+  "piece-king-p5-08": {
+    "type": "card",
+    "id": "piece-king-p5-08",
+    "deck": "deck-kings",
+    "cardType": "king",
+    "z": 8,
+    "playerIndex": 5,
+    "parent": "holder-kings-p5"
+  },
+  "piece-king-p5-09": {
+    "type": "card",
+    "id": "piece-king-p5-09",
+    "deck": "deck-kings",
+    "cardType": "king",
+    "z": 9,
+    "playerIndex": 5,
+    "parent": "holder-kings-p5"
+  },
+  "piece-king-p5-10": {
+    "type": "card",
+    "id": "piece-king-p5-10",
+    "deck": "deck-kings",
+    "cardType": "king",
+    "z": 10,
+    "playerIndex": 5,
+    "parent": "holder-kings-p5"
+  },
+  "piece-king-p5-11": {
+    "type": "card",
+    "id": "piece-king-p5-11",
+    "deck": "deck-kings",
+    "cardType": "king",
+    "z": 11,
+    "playerIndex": 5,
+    "parent": "holder-kings-p5"
+  },
+  "piece-king-p5-12": {
+    "type": "card",
+    "id": "piece-king-p5-12",
+    "deck": "deck-kings",
+    "cardType": "king",
+    "z": 12,
+    "playerIndex": 5,
+    "parent": "holder-kings-p5"
   },
   "piece-knight-p1-1": {
     "type": "card",
@@ -3672,12 +3942,11 @@
         "collection": "players"
       },
       {
-        "func": "SET",
+        "func": "MOVE",
         "collection": [
           "card-shuffle"
         ],
-        "property": "parent",
-        "value": "holder-discard"
+        "to": "holder-discard"
       },
       {
         "func": "SHUFFLE",
@@ -3696,12 +3965,11 @@
         ]
       },
       {
-        "func": "SET",
+        "func": "MOVE",
         "collection": [
           "card-shuffle"
         ],
-        "property": "parent",
-        "value": "holder-draw"
+        "to": "holder-draw"
       },
       {
         "func": "SHUFFLE",
@@ -3807,20 +4075,6 @@
     "handleSize": 30,
     "id": "lkjq"
   },
-  "1b2e": {
-    "type": "pile",
-    "parent": "holder-kings-p1",
-    "x": 0,
-    "y": 0,
-    "width": 40,
-    "height": 40,
-    "handleCSS": {
-      "background": "black",
-      "color": "white"
-    },
-    "handleSize": 30,
-    "id": "1b2e"
-  },
   "7f3r": {
     "type": "pile",
     "parent": "holder-knights-p1",
@@ -3848,20 +4102,6 @@
     },
     "handleSize": 30,
     "id": "0kvk"
-  },
-  "e6h1": {
-    "type": "pile",
-    "parent": "holder-kings-p2",
-    "x": 0,
-    "y": 0,
-    "width": 40,
-    "height": 40,
-    "handleCSS": {
-      "background": "black",
-      "color": "white"
-    },
-    "handleSize": 30,
-    "id": "e6h1"
   },
   "oaru": {
     "type": "pile",
@@ -3891,20 +4131,6 @@
     "handleSize": 30,
     "id": "pyke"
   },
-  "yihr": {
-    "type": "pile",
-    "parent": "holder-kings-p3",
-    "x": 0,
-    "y": 0,
-    "width": 40,
-    "height": 40,
-    "handleCSS": {
-      "background": "black",
-      "color": "white"
-    },
-    "handleSize": 30,
-    "id": "yihr"
-  },
   "voto": {
     "type": "pile",
     "parent": "holder-knights-p3",
@@ -3933,20 +4159,6 @@
     "handleSize": 30,
     "id": "w4mi"
   },
-  "i5pb": {
-    "type": "pile",
-    "parent": "holder-kings-p4",
-    "x": 0,
-    "y": 0,
-    "width": 40,
-    "height": 40,
-    "handleCSS": {
-      "background": "black",
-      "color": "white"
-    },
-    "handleSize": 30,
-    "id": "i5pb"
-  },
   "z418": {
     "type": "pile",
     "parent": "holder-knights-p4",
@@ -3974,20 +4186,6 @@
     },
     "handleSize": 30,
     "id": "nllx"
-  },
-  "oszu": {
-    "type": "pile",
-    "parent": "holder-kings-p5",
-    "x": 0,
-    "y": 0,
-    "width": 40,
-    "height": 40,
-    "handleCSS": {
-      "background": "black",
-      "color": "white"
-    },
-    "handleSize": 30,
-    "id": "oszu"
   },
   "pfbp": {
     "type": "pile",
