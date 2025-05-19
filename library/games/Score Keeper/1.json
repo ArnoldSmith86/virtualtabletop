@@ -1,0 +1,1440 @@
+{
+  "score+10": {
+    "type": "button",
+    "id": "score+10",
+    "parent": "scoreButtonBack",
+    "text": "+10",
+    "thisValue": 10,
+    "x": 115,
+    "inheritFrom": {
+      "score+1": "*"
+    }
+  },
+  "score+15": {
+    "inheritFrom": {
+      "score-1": "*"
+    },
+    "type": "button",
+    "id": "score+15",
+    "text": "-10",
+    "thisValue": 10,
+    "y": 0,
+    "x": 115,
+    "parent": "scoreButtonBack",
+    "z": 0
+  },
+  "score+5": {
+    "type": "button",
+    "id": "score+5",
+    "x": 55,
+    "inheritFrom": {
+      "score+1": "*"
+    },
+    "text": "+ 5",
+    "thisValue": 5,
+    "parent": "scoreButtonBack",
+    "z": 0
+  },
+  "score+1": {
+    "type": "button",
+    "id": "score+1",
+    "x": -5,
+    "text": "+ 1",
+    "thisSign": "+",
+    "thisValue": 1,
+    "parent": "scoreButtonBack",
+    "y": 40,
+    "clickRoutine": [
+      "var round = ${PROPERTY currentRound OF score}",
+      {
+        "func": "SELECT",
+        "property": "check",
+        "relation": ">",
+        "value": 0
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "activeFace",
+        "value": 1
+      },
+      {
+        "func": "GET",
+        "collection": "DEFAULT",
+        "property": "check"
+      },
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY thisSign}",
+        "operand2": "+",
+        "thenRoutine": [
+          "var mode = 'inc'"
+        ],
+        "elseRoutine": [
+          "var mode = 'dec'"
+        ]
+      },
+      {
+        "func": "SCORE",
+        "mode": "${mode}",
+        "seats": [
+          "seat${check}"
+        ],
+        "value": "${PROPERTY thisValue}",
+        "round": "${round}"
+      },
+      {
+        "func": "CALL",
+        "widget": "seatHolder",
+        "routine": "sortRoutine",
+        "arguments": {
+          "key": "${PROPERTY sortField OF score}",
+          "order": "${PROPERTY sortAscending OF score}"
+        }
+      }
+    ],
+    "width": 55,
+    "height": 28,
+    "movableInEdit": false,
+    "css": {
+      "default": {
+        "font-size": "18px",
+        "color": "white",
+        "background": "green",
+        "border": "2px solid darkgreen"
+      },
+      ":hover": {
+        "border-color": "green",
+        "background": "lightgreen",
+        "color": "black"
+      }
+    },
+    "fixedParent": true
+  },
+  "score-1": {
+    "type": "button",
+    "id": "score-1",
+    "x": -5,
+    "css": {
+      "default": {
+        "font-size": "18px",
+        "color": "white",
+        "background": "red",
+        "border": "2px solid crimson"
+      },
+      ":hover": {
+        "border-color": "red",
+        "background": "pink",
+        "color": "black"
+      }
+    },
+    "inheritFrom": {
+      "score+1": "*"
+    },
+    "text": "- 1",
+    "thisSign": "-",
+    "thisValue": 1,
+    "y": 0,
+    "parent": "scoreButtonBack",
+    "z": 0
+  },
+  "score-5": {
+    "type": "button",
+    "id": "score-5",
+    "x": 55,
+    "inheritFrom": {
+      "score-1": "*"
+    },
+    "text": "- 5",
+    "thisValue": 5,
+    "y": 0,
+    "parent": "scoreButtonBack",
+    "z": 0
+  },
+  "score+50": {
+    "type": "button",
+    "id": "score+50",
+    "x": 175,
+    "inheritFrom": {
+      "score+10": "*"
+    },
+    "text": "+50",
+    "thisValue": 50,
+    "parent": "scoreButtonBack",
+    "z": 0
+  },
+  "score+100": {
+    "type": "button",
+    "id": "score+100",
+    "x": 235,
+    "inheritFrom": {
+      "score+10": "*"
+    },
+    "text": "+ 100",
+    "thisValue": 100,
+    "parent": "scoreButtonBack",
+    "z": 0
+  },
+  "score-50": {
+    "type": "button",
+    "id": "score-50",
+    "x": 175,
+    "y": 0,
+    "inheritFrom": {
+      "score-1": "*"
+    },
+    "text": "- 50",
+    "thisValue": 50,
+    "parent": "scoreButtonBack",
+    "z": 0
+  },
+  "score-100": {
+    "type": "button",
+    "id": "score-100",
+    "x": 235,
+    "y": 0,
+    "inheritFrom": {
+      "score-1": "*"
+    },
+    "text": "- 100",
+    "thisValue": 100,
+    "parent": "scoreButtonBack",
+    "z": 0
+  },
+  "score-250": {
+    "type": "button",
+    "id": "score-250",
+    "inheritFrom": {
+      "score-1": "*"
+    },
+    "text": "- 250",
+    "thisValue": 250,
+    "x": "295",
+    "parent": "scoreButtonBack"
+  },
+  "score-500": {
+    "type": "button",
+    "id": "score-500",
+    "inheritFrom": {
+      "score-1": "*"
+    },
+    "text": "- 500",
+    "thisValue": 500,
+    "x": "355",
+    "parent": "scoreButtonBack"
+  },
+  "score-1000": {
+    "type": "button",
+    "id": "score-1000",
+    "width": 65,
+    "inheritFrom": {
+      "score-1": "*"
+    },
+    "text": "- 1000",
+    "thisValue": 1000,
+    "x": 415,
+    "parent": "scoreButtonBack"
+  },
+  "score+250": {
+    "type": "button",
+    "id": "score+250",
+    "parent": "scoreButtonBack",
+    "x": 295,
+    "z": 0,
+    "inheritFrom": {
+      "score+10": "*"
+    },
+    "text": "+ 250",
+    "thisValue": 250
+  },
+  "score+500": {
+    "type": "button",
+    "id": "score+500",
+    "parent": "scoreButtonBack",
+    "x": 355,
+    "z": 0,
+    "inheritFrom": {
+      "score+10": "*"
+    },
+    "text": "+ 500",
+    "thisValue": 500
+  },
+  "score+1000": {
+    "type": "button",
+    "id": "score+1000",
+    "parent": "scoreButtonBack",
+    "x": 415,
+    "z": 0,
+    "inheritFrom": {
+      "score+10": "*"
+    },
+    "text": "+ 1000",
+    "thisValue": 1000,
+    "width": 65
+  },
+  "scoreButtonBack": {
+    "id": "scoreButtonBack",
+    "x": 570,
+    "y": 69,
+    "width": 500,
+    "height": 68,
+    "scale": 2.85,
+    "layer": -3,
+    "movable": false,
+    "movableInEdit": false
+  },
+  "reset": {
+    "type": "button",
+    "id": "reset",
+    "x": 1535,
+    "y": 5,
+    "z": 3,
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "fields": [
+          {
+            "type": "title",
+            "text": "Reset scores..."
+          },
+          {
+            "type": "number",
+            "label": "Reset all scores to",
+            "value": 0,
+            "variable": "reset"
+          },
+          {
+            "type": "checkbox",
+            "label": "Check the box to also delete all players.",
+            "variable": "deleteAll"
+          }
+        ],
+        "confirmButtonText": "Confirm",
+        "cancelButtonText": "Cancel"
+      },
+      {
+        "func": "SELECT",
+        "type": "seat",
+        "property": "id",
+        "relation": "!=",
+        "value": null
+      },
+      "var reset = parseFloat ${reset}",
+      {
+        "func": "SET",
+        "property": "score",
+        "value": [
+          "${reset}"
+        ]
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "score"
+        ],
+        "property": "currentRound",
+        "value": 1
+      },
+      {
+        "func": "SELECT",
+        "property": "check",
+        "relation": ">",
+        "value": 0
+      },
+      {
+        "func": "SET",
+        "property": "activeFace",
+        "value": 0
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "outline"
+        ],
+        "property": "parent",
+        "value": "seatHolder"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "outline"
+        ],
+        "property": "opacity",
+        "value": 0
+      },
+      {
+        "func": "IF",
+        "condition": "${deleteAll}",
+        "thenRoutine": [
+          {
+            "func": "SELECT",
+            "type": "seat",
+            "property": "index",
+            "relation": ">",
+            "value": 0
+          },
+          {
+            "func": "SET",
+            "property": "player",
+            "value": null
+          },
+          {
+            "func": "MOVE",
+            "to": "tempHolder"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "score"
+            ],
+            "property": "height",
+            "value": 60
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "addPlayer"
+            ],
+            "property": "y",
+            "value": 80
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "addPlayer"
+            ],
+            "property": "playerCount",
+            "value": 0
+          }
+        ]
+      }
+    ],
+    "text": "restart_alt",
+    "classes": "material-symbols",
+    "css": {
+      "font-size": "50px"
+    },
+    "width": 60,
+    "height": 60
+  },
+  "score": {
+    "type": "scoreboard",
+    "id": "score",
+    "y": 400,
+    "z": 232,
+    "playersInColumns": false,
+    "roundLabel": "Players",
+    "totalsLabel": "Score",
+    "sortField": "player",
+    "css": {
+      "default": {},
+      ".scoreboard td": {
+        "text-align": "center",
+        "font-size": "35px",
+        "height": "44px",
+        "width": "100px"
+      },
+      ".scoreboard td:first-child": {
+        "width": "110px",
+        "text-align": "left"
+      }
+    },
+    "width": 1090,
+    "clickable": false,
+    "movable": false,
+    "movableInEdit": false,
+    "sortFieldChangeRoutine": [
+      {
+        "func": "CALL",
+        "widget": "seatHolder",
+        "routine": "sortRoutine",
+        "arguments": {
+          "key": "${PROPERTY sortField}",
+          "order": "${PROPERTY sortAscending}"
+        }
+      }
+    ],
+    "sortAscendingChangeRoutine": [
+      {
+        "func": "CALL",
+        "widget": "seatHolder",
+        "routine": "sortRoutine",
+        "arguments": {
+          "key": "${PROPERTY sortField}",
+          "order": "${PROPERTY sortAscending}"
+        }
+      }
+    ],
+    "height": 60,
+    "currentRound": 1,
+    "autosizeColumns": false,
+    "x": 285,
+    "scale": 1.3
+  },
+  "addPlayer": {
+    "type": "button",
+    "id": "addPlayer",
+    "z": 134,
+    "text": "Add Player",
+    "playerCount": 0,
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "fields": [
+          {
+            "type": "title",
+            "text": "Adding player..."
+          },
+          {
+            "type": "subtitle",
+            "text": "Enter player name and color"
+          },
+          {
+            "type": "string",
+            "variable": "player"
+          },
+          {
+            "type": "palette",
+            "variable": "color",
+            "value": "#607d8b",
+            "colors": [
+              "#ffffff",
+              "#f44336",
+              "#f06292",
+              "#9c27b0",
+              "#3f51b5",
+              "#1976d2",
+              "#00bcd4",
+              "#009688",
+              "#4caf50",
+              "#8bc34a",
+              "#cddc39",
+              "#ffeb3b",
+              "#ffc107",
+              "#ff9800",
+              "#bf360c",
+              "#795548",
+              "#607d8b",
+              "#000000"
+            ]
+          }
+        ],
+        "confirmButtonText": "Confirm",
+        "cancelButtonText": "Cancel"
+      },
+      {
+        "func": "SELECT",
+        "type": "seat",
+        "property": "parent",
+        "value": "tempHolder"
+      },
+      {
+        "func": "DELETE"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "playerCount",
+        "relation": "+",
+        "value": 1
+      },
+      {
+        "func": "SELECT",
+        "type": "seat",
+        "property": "parent",
+        "value": "seatHolder"
+      },
+      "var maxIndex = 0",
+      {
+        "func": "GET",
+        "property": "index",
+        "aggregation": "max",
+        "variable": "maxIndex"
+      },
+      "var maxIndexPlus = ${maxIndex} + 1",
+      {
+        "func": "CLONE",
+        "source": [
+          "seat0"
+        ],
+        "properties": {
+          "index": "${maxIndexPlus}",
+          "id": "seat${maxIndexPlus}",
+          "opacity": 1,
+          "player": "${player}",
+          "parent": "seatHolder",
+          "color": "${color}"
+        },
+        "recursive": true
+      },
+      {
+        "func": "SELECT",
+        "type": "check",
+        "property": "parent",
+        "value": "seat${maxIndexPlus}"
+      },
+      {
+        "func": "SET",
+        "property": "check",
+        "value": "${maxIndexPlus}"
+      },
+      "var xCheck = ${PROPERTY currentRound OF score}",
+      {
+        "func": "IF",
+        "operand1": "${xCheck}",
+        "relation": ">",
+        "operand2": 1,
+        "thenRoutine": [
+          "var xCheck = ${xCheck} - 1",
+          "var xCheck = ${xCheck} * 100"
+        ]
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "relation": "+",
+        "value": "${xCheck}"
+      },
+      "var height = 60 + (${PROPERTY playerCount} * 55)",
+      {
+        "func": "SET",
+        "collection": [
+          "score"
+        ],
+        "property": "height",
+        "value": "${height}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "y",
+        "relation": "+",
+        "value": 55
+      },
+      {
+        "func": "CALL",
+        "widget": "seatHolder",
+        "routine": "sortRoutine",
+        "arguments": {
+          "key": "${PROPERTY sortField OF score}",
+          "order": "${PROPERTY sortAscending OF score}"
+        }
+      }
+    ],
+    "height": 50,
+    "width": 150,
+    "y": 80,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "25px"
+    },
+    "fixedParent": true,
+    "parent": "score"
+  },
+  "seatHolder": {
+    "type": "holder",
+    "id": "seatHolder",
+    "z": 2,
+    "fixedParent": true,
+    "parent": "score",
+    "width": 600,
+    "height": 645,
+    "movableInEdit": false,
+    "dropTarget": {
+      "type": "seat"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "stackOffsetY": 55,
+    "sortRoutine": [
+      {
+        "func": "IF",
+        "condition": "${order}",
+        "thenRoutine": [
+          "var order = false"
+        ],
+        "elseRoutine": [
+          "var order = true"
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${key}",
+        "operand2": "total",
+        "thenRoutine": [
+          "var key = 'total'"
+        ]
+      },
+      {
+        "func": "SORT",
+        "holder": "${PROPERTY id}",
+        "key": [
+          "${key}",
+          "id"
+        ],
+        "reverse": "${order}"
+      }
+    ],
+    "css": {
+      "border": "none",
+      "background": "transparent"
+    },
+    "y": 55
+  },
+  "tempHolder": {
+    "type": "holder",
+    "id": "tempHolder",
+    "x": 466,
+    "y": 122,
+    "z": 3,
+    "display": false
+  },
+  "sortPlayer": {
+    "id": "sortPlayer",
+    "y": -85,
+    "width": 60,
+    "height": 60,
+    "borderRadius": 8,
+    "z": 118,
+    "css": {
+      "default": {
+        "font-size": "20px",
+        "line-height": "18px",
+        "border": "1px solid black",
+        "background": "#dddd",
+        "text-align": "center",
+        "display": "flex",
+        "justify-content": "center",
+        "align-items": "center",
+        "opacity": "${PROPERTY opacity}"
+      },
+      ":hover": {
+        "background": "#989898"
+      }
+    },
+    "text": "A\n|\nZ",
+    "opacity": 1,
+    "movable": false,
+    "movableInEdit": false,
+    "clickRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY opacity}",
+        "operand2": 1,
+        "thenRoutine": [
+          {
+            "func": "IF",
+            "operand1": "${PROPERTY text}",
+            "operand2": "A\n|\nZ",
+            "thenRoutine": [
+              {
+                "func": "SET",
+                "collection": "thisButton",
+                "property": "text",
+                "value": "Z\n|\nA"
+              },
+              {
+                "func": "SET",
+                "collection": [
+                  "score"
+                ],
+                "property": "sortAscending",
+                "value": false
+              }
+            ],
+            "elseRoutine": [
+              {
+                "func": "SET",
+                "collection": "thisButton",
+                "property": "text",
+                "value": "A\n|\nZ"
+              },
+              {
+                "func": "SET",
+                "collection": [
+                  "score"
+                ],
+                "property": "sortAscending",
+                "value": true
+              }
+            ]
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "score"
+            ],
+            "property": "sortField",
+            "value": "player"
+          },
+          {
+            "func": "IF",
+            "operand1": "${PROPERTY text}",
+            "operand2": "A\n|\nZ",
+            "thenRoutine": [
+              {
+                "func": "SET",
+                "collection": [
+                  "score"
+                ],
+                "property": "sortAscending",
+                "value": true
+              }
+            ],
+            "elseRoutine": [
+              {
+                "func": "SET",
+                "collection": [
+                  "score"
+                ],
+                "property": "sortAscending",
+                "value": false
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "score"
+        ],
+        "property": "sortField",
+        "value": "player"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "sortScore"
+        ],
+        "property": "opacity",
+        "value": 0.3
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "sortPlayer"
+        ],
+        "property": "opacity",
+        "value": 1
+      }
+    ],
+    "fixedParent": true,
+    "parent": "score",
+    "x": 5
+  },
+  "sortScore": {
+    "id": "sortScore",
+    "x": 1025,
+    "y": -85,
+    "width": 60,
+    "height": 60,
+    "borderRadius": 8,
+    "z": 4,
+    "classes": "symbols",
+    "css": {
+      "default": {
+        "font-size": "65px",
+        "border": "1px solid black",
+        "background": "#dddd",
+        "text-align": "center",
+        "display": "flex",
+        "justify-content": "center",
+        "align-items": "center",
+        "opacity": "${PROPERTY opacity}"
+      },
+      ":hover": {
+        "background": "#989898"
+      }
+    },
+    "text": "[sort_descending]",
+    "opacity": 0.3,
+    "clickRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY opacity}",
+        "operand2": 1,
+        "thenRoutine": [
+          {
+            "func": "IF",
+            "operand1": "${PROPERTY text}",
+            "operand2": "[sort_ascending]",
+            "thenRoutine": [
+              {
+                "func": "SET",
+                "collection": "thisButton",
+                "property": "text",
+                "value": "[sort_descending]"
+              },
+              {
+                "func": "SET",
+                "collection": [
+                  "score"
+                ],
+                "property": "sortAscending",
+                "value": false
+              }
+            ],
+            "elseRoutine": [
+              {
+                "func": "SET",
+                "collection": "thisButton",
+                "property": "text",
+                "value": "[sort_ascending]"
+              },
+              {
+                "func": "SET",
+                "collection": [
+                  "score"
+                ],
+                "property": "sortAscending",
+                "value": true
+              }
+            ]
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "score"
+            ],
+            "property": "sortField",
+            "value": "total"
+          },
+          {
+            "func": "IF",
+            "operand1": "${PROPERTY text}",
+            "operand2": "[sort_ascending]",
+            "thenRoutine": [
+              {
+                "func": "SET",
+                "collection": [
+                  "score"
+                ],
+                "property": "sortAscending",
+                "value": true
+              }
+            ],
+            "elseRoutine": [
+              {
+                "func": "SET",
+                "collection": [
+                  "score"
+                ],
+                "property": "sortAscending",
+                "value": false
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "score"
+        ],
+        "property": "sortField",
+        "value": "total"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "sortScore"
+        ],
+        "property": "opacity",
+        "value": 1
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "sortPlayer"
+        ],
+        "property": "opacity",
+        "value": 0.3
+      }
+    ],
+    "movable": false,
+    "movableInEdit": false,
+    "parent": "score",
+    "fixedParent": true
+  },
+  "outline": {
+    "id": "outline",
+    "height": 40,
+    "z": 137,
+    "css": {
+      "border": "10px dashed red",
+      "pointer-events": "none",
+      "opacity": "${PROPERTY opacity}"
+    },
+    "movable": false,
+    "movableInEdit": false,
+    "parent": "seatHolder",
+    "opacity": 0,
+    "width": 1070
+  },
+  "trash0": {
+    "id": "trash0",
+    "width": 40,
+    "height": 40,
+    "movable": false,
+    "movableInEdit": false,
+    "fixedParent": true,
+    "parent": "seat0",
+    "y": 5,
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": [
+          "addPlayer"
+        ],
+        "property": "playerCount",
+        "relation": "-",
+        "value": 1
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "${PROPERTY parent}",
+        "collection": "parentSeat"
+      },
+      {
+        "func": "SET",
+        "collection": "parentSeat",
+        "property": "player",
+        "value": ""
+      },
+      {
+        "func": "MOVE",
+        "collection": "parentSeat",
+        "to": "tempHolder"
+      },
+      {
+        "func": "GET",
+        "collection": "parentSeat",
+        "property": "id"
+      },
+      "var newID = '-' concat ${id}",
+      {
+        "func": "SET",
+        "collection": "parentSeat",
+        "property": "id",
+        "value": "${newID}"
+      },
+      {
+        "func": "CALL",
+        "widget": "seatHolder",
+        "routine": "sortRoutine",
+        "arguments": {
+          "key": "${PROPERTY sortField OF score}",
+          "order": "${PROPERTY sortAscending OF score}"
+        }
+      },
+      "var height = 60 + (${PROPERTY playerCount OF addPlayer} * 55)",
+      {
+        "func": "SET",
+        "collection": [
+          "score"
+        ],
+        "property": "height",
+        "value": "${height}"
+      },
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY parent OF outline}",
+        "operand2": "${PROPERTY parent}",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "outline"
+            ],
+            "property": "parent",
+            "value": "seatHolder"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "outline"
+            ],
+            "property": "opacity",
+            "value": 0
+          }
+        ]
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "addPlayer"
+        ],
+        "property": "y",
+        "relation": "-",
+        "value": 55
+      }
+    ],
+    "css": {
+      "default": {
+        "color": "#000000",
+        "font-size": "42px"
+      },
+      ":hover": {
+        "color": "#00000060"
+      }
+    },
+    "classes": "material-symbols",
+    "text": "delete_forever",
+    "x": -95
+  },
+  "check0": {
+    "id": "check0",
+    "parent": "seat0",
+    "fixedParent": true,
+    "x": 1094,
+    "width": 40,
+    "height": 40,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "default": {
+        "border": "1px solid #000000"
+      },
+      ":hover": {
+        "border": "1px solid #00000060"
+      }
+    },
+    "faces": [
+      {
+        "image": ""
+      },
+      {
+        "image": "/i/game-icons.net/delapouite/check-mark.svg"
+      }
+    ],
+    "check": 0,
+    "y": 8,
+    "borderRadius": 4,
+    "clickRoutine": [
+      {
+        "func": "GET",
+        "collection": "thisButton",
+        "property": "activeFace"
+      },
+      {
+        "func": "SELECT",
+        "type": "check",
+        "property": "activeFace",
+        "value": 1
+      },
+      {
+        "func": "SET",
+        "property": "activeFace",
+        "value": 0
+      },
+      {
+        "func": "IF",
+        "operand1": "${activeFace}",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "func": "CLICK",
+            "collection": "thisButton",
+            "mode": "ignoreClickRoutine"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "outline"
+            ],
+            "property": "parent",
+            "value": "${PROPERTY parent}"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "outline"
+            ],
+            "property": "opacity",
+            "value": 1
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "outline"
+            ],
+            "property": "parent",
+            "value": "seatHolder"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "outline"
+            ],
+            "property": "opacity",
+            "value": 0
+          }
+        ]
+      }
+    ],
+    "type": "check"
+  },
+  "color0": {
+    "id": "color0",
+    "parent": "seat0",
+    "fixedParent": true,
+    "y": 5,
+    "width": 40,
+    "height": 40,
+    "movable": false,
+    "movableInEdit": false,
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "type": "seat",
+        "property": "id",
+        "value": "${PROPERTY parent}"
+      },
+      {
+        "func": "GET",
+        "property": "player"
+      },
+      {
+        "func": "GET",
+        "property": "color"
+      },
+      {
+        "func": "INPUT",
+        "fields": [
+          {
+            "type": "title",
+            "text": "Update name and color"
+          },
+          {
+            "type": "subtitle",
+            "text": "Enter player name and color"
+          },
+          {
+            "type": "string",
+            "variable": "player",
+            "value": "${player}"
+          },
+          {
+            "type": "palette",
+            "variable": "color",
+            "value": "${color}",
+            "colors": [
+              "#ffffff",
+              "#f44336",
+              "#f06292",
+              "#9c27b0",
+              "#3f51b5",
+              "#1976d2",
+              "#00bcd4",
+              "#009688",
+              "#4caf50",
+              "#8bc34a",
+              "#cddc39",
+              "#ffeb3b",
+              "#ffc107",
+              "#ff9800",
+              "#bf360c",
+              "#795548",
+              "#607d8b"
+            ]
+          }
+        ],
+        "confirmButtonText": "Confirm",
+        "cancelButtonText": "Cancel"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "${PROPERTY parent}"
+        ],
+        "property": "player",
+        "value": "${player}"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "${PROPERTY parent}"
+        ],
+        "property": "color",
+        "value": "${color}"
+      },
+      {
+        "func": "CALL",
+        "widget": "seatHolder",
+        "routine": "sortRoutine",
+        "arguments": {
+          "key": "${PROPERTY sortField OF score}",
+          "order": "${PROPERTY sortAscending OF score}"
+        }
+      }
+    ],
+    "x": -50,
+    "classes": "material-symbols",
+    "css": {
+      "default": {
+        "color": "#000000",
+        "font-size": "42px"
+      },
+      ":hover": {
+        "color": "#00000060"
+      }
+    },
+    "text": "palette"
+  },
+  "seat0": {
+    "type": "seat",
+    "id": "seat0",
+    "score": [
+      0
+    ],
+    "css": {
+      "opacity": "${PROPERTY opacity}",
+      "border": "none",
+      "background": "transparent",
+      "font-size": "0px",
+      "transition": "linear 0.25s"
+    },
+    "movableInEdit": false,
+    "opacity": 0,
+    "fixedParent": true,
+    "parent": "score",
+    "width": 1090,
+    "z": 1,
+    "height": 55,
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "type": "check",
+        "property": "check",
+        "value": "${PROPERTY index}"
+      },
+      {
+        "func": "CLICK"
+      }
+    ],
+    "index": 0,
+    "scoreChangeRoutine": [
+      "var total = sum ${PROPERTY score}",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "total",
+        "value": "${total}"
+      }
+    ],
+    "total": 0
+  },
+  "round": {
+    "type": "button",
+    "id": "round",
+    "x": 5,
+    "width": 60,
+    "height": 60,
+    "z": 3,
+    "classes": "material-symbols",
+    "css": {
+      "font-size": "45px",
+      "padding-top": "3px"
+    },
+    "text": "queue_play_next",
+    "clickRoutine": [
+      "var round = ${PROPERTY currentRound OF score}",
+      "var roundPlus = ${round} + 1",
+      {
+        "func": "INPUT",
+        "fields": [
+          {
+            "type": "title",
+            "text": "Next round..."
+          },
+          {
+            "type": "subtitle",
+            "text": "This will start round ${roundPlus} and cannot be undone. Are you sure you want to continue?"
+          }
+        ],
+        "confirmButtonText": "Yes",
+        "cancelButtonText": "Cancel"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "score"
+        ],
+        "property": "currentRound",
+        "relation": "+",
+        "value": 1
+      },
+      {
+        "func": "SCORE",
+        "mode": "set",
+        "value": 0,
+        "round": "${roundPlus}"
+      },
+      {
+        "func": "SELECT",
+        "property": "check",
+        "relation": ">",
+        "value": 0
+      },
+      {
+        "func": "SET",
+        "property": "activeFace",
+        "value": 0
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "outline"
+        ],
+        "property": "parent",
+        "value": "seatHolder"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "outline"
+        ],
+        "property": "opacity",
+        "value": 0
+      }
+    ],
+    "borderRadius": 8,
+    "movableInEdit": false,
+    "y": 5
+  },
+  "_meta": {
+    "version": 17,
+    "info": {
+      "name": "Score Keeper",
+      "image": "/assets/1097877566_21066",
+      "rules": "",
+      "bgg": "",
+      "year": "",
+      "mode": "vs",
+      "time": "0",
+      "attribution": "Room layout, design, and library image by LawDawg. Inspired by a design by mousewax. Released to the Public Domain under CC0.",
+      "lastUpdate": 1747521418492,
+      "showName": true,
+      "skill": "",
+      "description": "This is not a game. It is a utility. Use it to keep score in many physical or online games.",
+      "similarImage": "",
+      "similarName": "",
+      "similarDesigner": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": "Chose a variant based on whether you want a single running total or need a record of each individual round. Any player, or combination of players, can update scores at the same time.<div><br></div><div>Click Add Player button and enter a name and color for each player. Use the black buttons to the left to delete a player or change the name or color.</div><div><br></div><div>To enter a score, click on a player's row or the box at the right end of the row to select that player. Use the red and green buttons at the top of the screen to add or subtract points.</div><div><br></div><div>Click the sort button above the Player column to sort alphabetically or reverse alphabetically by the players' names. Click the sort button above the Score column to sort the scores from high to low or low to high.</div><div><br></div><div>If using the rounds variant, click the icon in the upper left to end the scoring for a round and start a new round.</div><div><br></div><div>Click the reset icon in the upper right to reset all scores to 0 (or to some other value) and to optionally delete all player rows.</div>",
+      "variantImage": "",
+      "variant": "Rounds and Total",
+      "language": "",
+      "players": "1-8"
+    }
+  }
+}
