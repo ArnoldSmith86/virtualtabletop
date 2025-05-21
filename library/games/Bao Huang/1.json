@@ -3545,7 +3545,7 @@
             "css": {
               "border": "3px solid white",
               "border-radius": "8px",
-              "background": ""
+              "background": "gray url(/assets/-1385755993_173134) center / 200%"
             }
           }
         ]
