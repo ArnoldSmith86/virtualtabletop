@@ -3256,7 +3256,6 @@
         "suit": "/i/game-icons.net/skoll/clubs.svg",
         "suitColor": "#212121",
         "label": "a",
-        "image": "/assets/-59942387_4809",
         "rank": "14",
         "sortingOrder": 13
       },
@@ -3355,7 +3354,6 @@
         "suit": "/i/game-icons.net/skoll/hearts.svg",
         "suitColor": "#F44336",
         "label": "2",
-        "image": "/assets/-236114126_4752",
         "rank": "2",
         "sortingOrder": 27
       },
@@ -3413,7 +3411,6 @@
         "suit": "/i/game-icons.net/skoll/hearts.svg",
         "suitColor": "#F44336",
         "label": "10",
-        "image": "/assets/-494945254_5592",
         "rank": "10",
         "sortingOrder": 35
       },
@@ -3421,7 +3418,6 @@
         "suit": "/i/game-icons.net/skoll/hearts.svg",
         "suitColor": "#F44336",
         "label": "j",
-        "image": "/assets/1629354103_4631",
         "rank": "11",
         "sortingOrder": 36
       },
@@ -3443,7 +3439,6 @@
         "suit": "/i/game-icons.net/skoll/hearts.svg",
         "suitColor": "#F44336",
         "label": "a",
-        "image": "/assets/-850807230_4494",
         "rank": "14",
         "sortingOrder": 39
       },
@@ -3472,7 +3467,6 @@
         "suit": "/i/game-icons.net/skoll/spades.svg",
         "suitColor": "#212121",
         "label": "5",
-        "image": "/assets/1246901786_4960",
         "rank": "5",
         "sortingOrder": 43
       },
@@ -3515,7 +3509,6 @@
         "suit": "/i/game-icons.net/skoll/spades.svg",
         "suitColor": "#212121",
         "label": "j",
-        "image": "/assets/1928713398_4718",
         "rank": "11",
         "sortingOrder": 49
       },
@@ -4995,7 +4988,7 @@
             "x": 0,
             "y": 0,
             "color": "rgb(126,214,77)",
-            "value": "/assets/1182224109_11432",
+            "value": "",
             "width": 60,
             "height": 160
           }
@@ -6776,7 +6769,7 @@
       "mode": "vs",
       "time": "120",
       "attribution": "Room layout and design and player aid by Shobu, jade_alarm, and anewcar released to the public domain by CC0.\n\nThe following graphics are from https://game-icons.net and are used under CC BY 3.0:\n* Poker Hand: https://game-icons.net/1x1/lorc/poker-hand.html\n* Round Star: https://game-icons.net/1x1/delapouite/round-star.html\n* Hearts: https://game-icons.net/1x1/skoll/hearts.html\n* Diamonds: https://game-icons.net/1x1/skoll/diamonds.html\n* Spades: https://game-icons.net/1x1/skoll/spades.html\n* Clubs: https://game-icons.net/1x1/skoll/clubs.html&nbsp;&nbsp;<div><br></div><div>Library image generated using the MyNinja artificial intelligence image generator, https://myninja.ai/, using the following prompt: \"evasion from Chinese jail, happy prisoners holding 27 cards guan dan, funny cartoon\"<br></div>",
-      "lastUpdate": 1746149335657,
+      "lastUpdate": 1748023045562,
       "showName": true,
       "skill": "high",
       "description": "An intense and popular climbing game where two teams of 3 players tries to sneak their way out first!",
@@ -6786,10 +6779,10 @@
       "similarAwards": "",
       "ruleText": "Refer to the player aid available in the room.\nThis implementation uses a modernized ruleset from the TV feature&nbsp;\"Chess and Card Game\" (\"弈棋耍大牌\").<div><br><div><span style=\"white-space: normal;\">Find players on : Online Card Players (https://discord.gg/wXdPDFgQtS), Guan Dan (https://discord.gg/B2hRAt5DNv)</span><br></div></div>",
       "helpText": "SETUP\nPlayers take seats, then click on the Deal Button  (clickable area between the Red/Blue score counter). First player is randomized, then will automatically rotate on each new deal.<div><br></div><div>HOW TO PLAY CARDS\n On your turn:\n- Select cards from your hand and click PLAY to play cards from your hand to the table. Cards can be choosen by clicking on them or by using the blue circle selector\n- Click PASS to pass turn to next player\n\nFUNCTION BUTTONS\nClick on those (personal) buttons for:\n- UNSELECT ALL: cancel cards selection\n- AID: see a rules summary\n- SORT: sort cards by rank\n- TURN: move active player around the table (for changing round starter, or passing lead to a partner)\n- CLEAN: delete your played cards when you've gone out\n- + - : update team score\n\nThose steps are NOT automated :\n- Tribute / Card exchange\n- Meld cleaning when going out\n- Scoring&nbsp;</div>",
-      "variantImage": "",
-      "variant": "",
+      "players": "6",
       "language": "en-US",
-      "players": "6"
+      "variant": "",
+      "variantImage": ""
     }
   },
   "seat4": {
