@@ -5810,7 +5810,7 @@
     "type": "button",
     "id": "dealB",
     "x": 743,
-    "y": -7,
+    "y": 0,
     "width": 110,
     "borderRadius": 0,
     "z": 80538,
@@ -6332,7 +6332,7 @@
   "changeTurnB": {
     "type": "button",
     "id": "changeTurnB",
-    "x": 1475,
+    "x": 1477,
     "y": 870,
     "width": 40,
     "borderRadius": "0px 10px 10px 0px",
@@ -7145,7 +7145,7 @@
     "clickable": true,
     "parent": "dealB",
     "x": 55,
-    "y": 58
+    "y": 59
   },
   "itui": {
     "type": "label",
