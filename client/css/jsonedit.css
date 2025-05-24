@@ -169,11 +169,14 @@ body.lightsOff .jeTreeExpander::before, body.lightsOff .jeTreeExpander-down::bef
   display: block;
 }
 
-.jeLogFilterNoMatch {
-  opacity: 0.2;
+.jeLogFilterMatch {
+  font-weight: bold;
 }
 
-.jeLogFilterMatch + .jeLogNested > .jeLogDetails > .jeExpander {
+.jeLogFilterNoMatch {
+  opacity: 0.5;
+}
+.jeLogFilterNoMatch:hover {
   opacity: 1;
 }
 

@@ -2416,6 +2416,9 @@ export function jeLoggingRoutineEnd(variables, collections) {
         if(this.classList.contains('jeExpander-down')) {
           this.classList.add('manuallyExpanded');
           this.parentNode.querySelector('.jeLogNested').classList.add('manuallyExpanded');
+        } else {
+          this.classList.remove('manuallyExpanded');
+          this.parentNode.querySelector('.jeLogNested').classList.remove('manuallyExpanded');
         }
       });
     }
@@ -2534,7 +2537,7 @@ function jeLoggingFilterLog(filter) {
   if(!filter) return;
 
   for(const entry of $a('#jeLog .jeLogNested .jeExpander, #jeLog .jeLogNested .jeRedExpander')) {
-    if(entry.textContent.toLowerCase().indexOf(filter.toLowerCase()) == -1) {
+    if(entry.parentElement.classList.contains('jeLogDetails') || entry.textContent.toLowerCase().indexOf(filter.toLowerCase()) == -1) {
       entry.classList.add('jeLogFilterNoMatch');
     } else {
       entry.classList.add('jeLogFilterMatch');
