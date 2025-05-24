@@ -1,0 +1,5336 @@
+{
+  "_meta": {
+    "version": 17,
+    "info": {
+      "name": "The Diamond Dilemma",
+      "image": "/assets/893548483_551656",
+      "rules": "",
+      "bgg": "https://boardgamegeek.com/boardgame/169654/deep-sea-adventure",
+      "year": "2014",
+      "mode": "vs",
+      "time": "30",
+      "attribution": "<span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span>Game layout, design, and scripting by Markus Roßkopf and released to the Public Domain by CC0.\n\nTile graphics are from https://game-icons.net/ and are used under the CC BY 3.0 license:\n\nDelapouite\n• Item order 1 / piggy bank icon: https://game-icons.net/1x1/delapouite/piggy-bank.html</span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span><div><span><span><span><span><span><span><span><span><span><span>• Item order 3 / pearl necklace icon: https://game-icons.net/1x1/delapouite/pearl-necklace.html</span></span></span></span></span></span></span></span></span></span></div><div><span><span><span><span><span><span><span><span><span><span>• Button homeward / stairs goal icon: https://game-icons.net/1x1/delapouite/stairs-goal.html</span></span></span></span></span></span></span></span></span></span></div><div><span><span><span><span><span><span><span><span><span>• Button move / walk icon: https://game-icons.net/1x1/delapouite/walk.html</span></span></span></span></span></span></span></span></span></div><div><span><span><span><span><span><span><span><span><span>• Button roll / rolling dices icon: https://game-icons.net/1x1/delapouite/rolling-dices.html</span></span></span></span></span></span></span></span></span></div><div><span><span><span><span><span><span><span><span><span>• Button turn / player next icon: https://game-icons.net/1x1/delapouite/player-next.html</span></span></span></span></span></span></span></span></span><br><div><span><span><span><span><span><span><span><span><span><br></span></span></span></span></span></span></span></span></span><div><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span>Lorc\n• Item order 2 / swap bag icon: https://game-icons.net/1x1/lorc/swap-bag.html</span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></div><div><div><br></div><div><span><span><span><span><span><span><span><span>Quoting</span></span></span></span></span></span></span></span><br></div><div><span><span><span><span><span><span><span><span>• Button item action / card pickup icon: https://game-icons.net/1x1/quoting/card-pickup.html</span></span></span></span></span></span></span></span></div></div><div><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><br></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></div><div><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span>Skoll</span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></div><div><span><span><span><span><span><span><span><span><span><span>• Item order 4 / open treasure chest icon: https://game-icons.net/1x1/skoll/open-treasure-chest.html</span></span></span></span></span></span></span></span></span></span></div><div><br></div><div><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span>The library image,&nbsp;</span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span>serving as the game room background</span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span>,</span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span>&nbsp;was generated using the ChatGPT artificial intelligence image generator, https://www.chatgpt.com, using the following prompt: \"Draw a picture of an aquarium in which colorful fish swim, and plants grow, and treasures, like a ring, a chain, are. The style should not be photorealistic, but should be clearly drawn in bright colors. There should be a harmonious color scheme. And it should not be too full.\"</span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span><br></div></div></div>",
+      "lastUpdate": 1732638415141,
+      "showName": true,
+      "skill": "",
+      "description": "Brave meeples compete to retrieve shimmering diamonds from the depths of an aquarium, but the dwindling air supply forces them to choose between greed and survival as they rush back to safety.",
+      "similarImage": "",
+      "similarName": "Deep Sea Adventure",
+      "similarDesigner": "Jun Sasaki, Goro Sasaki",
+      "similarAwards": "",
+      "ruleText": "<div><span><span><span><span><span><span><span><span><span><span><span><span><span><span>GOAL</span></span></span></span></span></span></span></span></span></span></span></span></span></span></div><div><span><span><span><span><span><span><span>In </span></span></span></span></span></span></span><em><span><span><span><span><span><span><span>The Diamond Dilemma</span></span></span></span></span></span></span></em><span><span><span><span><span><span><span>, players are divers competing to collect valuable items from the aquarium floor and return to the water surface before the shared time of a 25-unit round runs out.</span></span></span></span></span></span></span><br></div><div><br></div><div><span><span><span><span><span><span><span><span><span><span><span><span><span><span>PLAY</span></span></span></span></span></span></span></span></span></span></span></span></span></span></div><div><span><span><span><span><span><span>At the start of each turn, reduce the remaining time by the number of items you're carrying. Then, choose to turn back or move deeper. Once you turn back, this decision is final for the rest of the round. Roll two dice to move, subtracting one space per item carried. Skip spaces with other meeples.</span></span></span></span></span></span><br></div><div><span><span><span><span><span><span>After moving, you can pick up an item or leave one, if the space is empty. Return to the surface before time runs out to score your collected items.</span></span></span></span></span></span></div><div><span><span><span><span><span><span>The round ends when all players return or time runs out,&nbsp;</span></span></span></span></span></span><span><span><span>after completing the current turn</span></span></span><span><span><span><span><span><span>. Items from players who fail to return are&nbsp;</span></span></span></span></span></span><span>added at the end</span><span><span><span><span><span><span>&nbsp;in stacks of three and can be retrieved later as a single item.</span></span></span></span></span></span><br></div><div><br></div><div><span><span><span><span><span><span><span><span><span><span><span><span><span><span>FINAL</span></span></span></span></span></span></span></span></span></span></span></span></span></span></div><div><span><span><span><span><span><span><span><span><span><span><span><span><span><span>After three rounds, the player with the highest score wins. Ties are broken by the number of scored items of level 4.</span></span></span></span></span></span></span></span></span></span></span></span></span></span><br></div>",
+      "helpText": "<div><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span>QUICK GAME INSTRUCTIONS</span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></div><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><ul><li>Use the <b>buttons </b>at each player seat - the game is fully automated.</li><li>All players must sit down and select <b>different colours</b>. Then press&nbsp;<b><i class=\"richtextSymbol material-symbols\">restart_alt</i>New Game</b>&nbsp;to start.<br></li></ul></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span><div>GAMEPLAY</div><div><ol><li>The randomly chosen <b>starting player </b>presses&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/rolling-dices.svg\"></i>&nbsp;<b>Roll Dice </b>and then moves according to the appearing number by pressing&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/walk.svg\"></i><b>Move.</b></li><li>On the target space, they can use&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/quoting/card-pickup.svg\"></i>&nbsp;<b>Take / Drop </b>to pick up or leave an item.</li><li>Then pass the turn using&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/player-next.svg\"></i>&nbsp;<b>Next</b>.</li></ol>SPECIAL OPTION (from Round 2)</div><div><ul><li>From round 2 onwards, players may&nbsp;<b>resurface </b>at the beginning of their turn using&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/stairs-goal.svg\"></i>&nbsp;<b>Move Up</b>, and move backward from then on.</li></ul><div>ROUND DISPLAY</div></div><div><ul><li>The display above the seats&nbsp;<i class=\"richtextSymbol material-symbols\">pin</i>&nbsp;shows the <b>remaining time</b>&nbsp;for the round.</li><li>Its <b>colour </b>indicates the round:</li><ul><li><b>Black </b>= Round 1</li><li><b>Half black / half gray </b>= Round 2</li><li><b>Gray </b>= Round 3</li></ul></ul><div>END OF ROUND</div></div><div>At the end of a round, press&nbsp;<i class=\"richtextSymbol material-symbols\">rotate_right</i>&nbsp;<b>End Round </b>to trigger scoring and reset.</div><div><br></div><div>SCORE DISPLAY &amp; VIEWING ITEMS</div><div><ul><li>The <b>score&nbsp;</b><i class=\"richtextSymbol material-symbols\">pin</i>&nbsp;is shown to the <b>left of each player's seat.</b></li><li>At any time, players can click<b>&nbsp;</b>the<b> score display&nbsp;</b><i class=\"richtextSymbol material-symbols\">pin</i>&nbsp;to view the items they have collected.</li></ul></div>",
+      "variantImage": "",
+      "variant": "Default",
+      "language": "en-GB",
+      "players": "2-6"
+    }
+  },
+  "background": {
+    "id": "background",
+    "height": 1000,
+    "layer": -4,
+    "movable": false,
+    "image": "/assets/893548483_551656",
+    "width": 1000,
+    "y": 1,
+    "movableInEdit": false,
+    "css": {
+      "opacity": 0.6,
+      "transition": "linear 2s"
+    }
+  },
+  "seat1": {
+    "type": "seat",
+    "id": "seat1",
+    "width": 172,
+    "height": 48,
+    "borderRadius": 8,
+    "css": {
+      "default": {
+        "cursor": "pointer",
+        "gap": "5px",
+        "font-size": "21px",
+        "box-shadow": "0 2px 5px #00000066",
+        "text-shadow": "${PROPERTY textShadowDistance}px ${PROPERTY textShadowDistance}px ${PROPERTY textShadowBlur}px ${PROPERTY outlineColor}, -${PROPERTY textShadowDistance}px ${PROPERTY textShadowDistance}px ${PROPERTY textShadowBlur}px ${PROPERTY outlineColor}, ${PROPERTY textShadowDistance}px -${PROPERTY textShadowDistance}px ${PROPERTY textShadowBlur}px ${PROPERTY outlineColor}, -${PROPERTY textShadowDistance}px -${PROPERTY textShadowDistance}px ${PROPERTY textShadowBlur}px ${PROPERTY outlineColor}",
+        "background": "${PROPERTY mainColor}",
+        "color": "white",
+        "border": "${PROPERTY textShadowDistance}px solid ${PROPERTY outlineColor}",
+        "box-sizing": "border-box"
+      },
+      ".seated.turn": {
+        "box-shadow": "0px 0px 20px 5px ${PROPERTY glowColor}"
+      },
+      ".seated.turn::after": {
+        "xcontent": "'Active Player'",
+        "content": "'!'",
+        "font-size": "18px",
+        "line-height": "1em",
+        "white-space": "wrap",
+        "background-color": "${PROPERTY outlineColor}",
+        "border": "${PROPERTY textShadowDistance}px solid ${PROPERTY mainColor}",
+        "background-size": "200% auto",
+        "color": "${PROPERTY mainColor}",
+        "text-shadow": "0 1px 5px #000000cc",
+        "width": "1em",
+        "height": "1em",
+        "text-align": "center",
+        "text-transform": "uppercase",
+        "position": "absolute",
+        "right": "-12px",
+        "top": "-12px",
+        "padding": "2px",
+        "border-radius": "100px",
+        "box-shadow": "0 0 5px #000000bb",
+        "pointer-events": "none"
+      }
+    },
+    "colorArray": [
+      "#f44336",
+      "#f06292",
+      "#9c27b0",
+      "#3f51b5",
+      "#1976d2",
+      "#00bcd4",
+      "#009688",
+      "#4caf50",
+      "#8bc34a",
+      "#cddc39",
+      "#ffeb3b",
+      "#ffc107",
+      "#ff9800",
+      "#bf360c",
+      "#795548"
+    ],
+    "colorContrast": "#000000",
+    "mainColor": "#dddddd",
+    "outlineColor": "#000000bb",
+    "score": 0,
+    "textColor": "#000000",
+    "textShadowBlur": 2,
+    "textShadowDistance": 2,
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "routine": "useSeatRoutine"
+      },
+      "var playerColor = ${result.0}",
+      "var playerName = ${result.1}"
+    ],
+    "colorChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": [
+          "marker${PROPERTY index}"
+        ],
+        "property": "color",
+        "value": "${PROPERTY color}"
+      }
+    ],
+    "useSeatRoutine": [
+      "// Customized seat color and options routine",
+      "var leaveSeat = false",
+      "var name = ${PROPERTY player}",
+      "var color = ${PROPERTY color}",
+      "var result = []",
+      "var colorArray = ${PROPERTY colorArray}",
+      "var colorList = ${colorArray} indexOf ${playerColor}",
+      {
+        "func": "IF",
+        "operand1": "${colorList}",
+        "relation": ">",
+        "operand2": "-1",
+        "elseRoutine": [
+          "var playerColor = ${colorArray.0}"
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY player}",
+        "relation": "==",
+        "operand2": "",
+        "thenRoutine": [
+          {
+            "func": "INPUT",
+            "header": "Enter your name and choice of player color.",
+            "fields": [
+              {
+                "type": "string",
+                "label": "Your Name:",
+                "variable": "name",
+                "value": "${playerName}"
+              },
+              {
+                "type": "palette",
+                "label": "Your Color:",
+                "colors": "${PROPERTY colorArray}",
+                "variable": "color",
+                "value": "${playerColor}"
+              }
+            ]
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "IF",
+            "operand1": "${PROPERTY player}",
+            "relation": "==",
+            "operand2": "${playerName}",
+            "thenRoutine": [
+              {
+                "func": "INPUT",
+                "header": "Enter your name and choice of player color.",
+                "fields": [
+                  {
+                    "type": "string",
+                    "label": "Your Name:",
+                    "variable": "name",
+                    "value": "${playerName}"
+                  },
+                  {
+                    "type": "palette",
+                    "label": "Your Color:",
+                    "colors": "${PROPERTY colorArray}",
+                    "variable": "color",
+                    "value": "${playerColor}"
+                  },
+                  {
+                    "type": "subtitle",
+                    "text": "All done?",
+                    "css": "background-color: var(--VTTblue);color:white;"
+                  },
+                  {
+                    "type": "checkbox",
+                    "label": "Stand up from seat",
+                    "variable": "leaveSeat",
+                    "value": false
+                  }
+                ]
+              }
+            ],
+            "elseRoutine": [
+              {
+                "func": "INPUT",
+                "header": "Are you sure you want to remove ${PROPERTY player} from this seat?",
+                "cancelButtonText": "Cancel",
+                "confirmButtonText": "Okay",
+                "fields": [
+                  {
+                    "type": "checkbox",
+                    "label": "Remove this player from their seat",
+                    "variable": "leaveSeat",
+                    "value": false
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "condition": "${leaveSeat}",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "color",
+            "value": null
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "player",
+            "value": ""
+          }
+        ],
+        "elseRoutine": [
+          "var updatePlayerandColor = false",
+          {
+            "func": "IF",
+            "operand1": "${PROPERTY player}",
+            "relation": "==",
+            "operand2": "${playerName}",
+            "thenRoutine": [
+              "var updatePlayerandColor = true"
+            ]
+          },
+          {
+            "func": "IF",
+            "operand1": "${PROPERTY player}",
+            "relation": "==",
+            "operand2": "",
+            "thenRoutine": [
+              "var updatePlayerandColor = true"
+            ]
+          },
+          {
+            "func": "IF",
+            "condition": "${name}",
+            "elseRoutine": [
+              "var updatePlayerandColor = false"
+            ]
+          },
+          {
+            "func": "IF",
+            "condition": "${updatePlayerandColor}",
+            "thenRoutine": [
+              {
+                "func": "SET",
+                "collection": "thisButton",
+                "property": "color",
+                "value": "${color}"
+              },
+              "var result = push ${color}",
+              {
+                "func": "SET",
+                "collection": "thisButton",
+                "property": "player",
+                "value": "${name}"
+              },
+              "var result = push ${name}",
+              {
+                "func": "SET",
+                "collection": "thisButton",
+                "property": "mainColor",
+                "value": "${result.0}"
+              },
+              "var newText = colorContrast ${PROPERTY mainColor}",
+              "var newGlow = colorContrast ${PROPERTY mainColor} 0.3",
+              {
+                "func": "SET",
+                "collection": "thisButton",
+                "property": "textColor",
+                "value": "${newText}"
+              },
+              {
+                "func": "SET",
+                "collection": "thisButton",
+                "property": "glowColor",
+                "value": "${newGlow}"
+              },
+              {
+                "func": "CALL",
+                "routine": "markerColorRoutine"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY player}",
+        "relation": "==",
+        "operand2": "",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "mainColor",
+            "value": "#dddddd"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "textColor",
+            "value": "#000000"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "glowColor",
+            "value": null
+          },
+          {
+            "func": "CALL",
+            "routine": "markerColorRoutine"
+          }
+        ],
+        "elseRoutine": []
+      }
+    ],
+    "markerColorRoutine": [
+      "// Sets the colors on the markers and climbers",
+      "var markerContrast = ${PROPERTY mainColor} colorContrast 0.15",
+      {
+        "func": "SELECT",
+        "property": "climber",
+        "value": true
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "pid",
+        "value": "${PROPERTY index}"
+      },
+      {
+        "func": "SET",
+        "property": "bgColor1",
+        "value": "${PROPERTY mainColor}"
+      },
+      {
+        "func": "SET",
+        "property": "bgColor2",
+        "value": "${markerContrast}"
+      },
+      {
+        "func": "SELECT",
+        "property": "marker",
+        "value": true
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "pid",
+        "value": "${PROPERTY index}"
+      },
+      {
+        "func": "SET",
+        "property": "bgColor",
+        "value": "${PROPERTY mainColor}"
+      },
+      {
+        "func": "SELECT",
+        "property": "type",
+        "value": "meeple"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "pid",
+        "value": "${PROPERTY index}"
+      },
+      {
+        "func": "SET",
+        "property": "color",
+        "value": "${PROPERTY mainColor}"
+      }
+    ],
+    "x": 1085,
+    "y": 89,
+    "z": 33093,
+    "slowdown": 0,
+    "hideWhenUnused": true
+  },
+  "holder2": {
+    "type": "holder",
+    "id": "holder2",
+    "x": 777,
+    "y": 176,
+    "inheritFrom": {
+      "holder1": "*"
+    },
+    "z": 4833,
+    "exhausted": false,
+    "occupied": false
+  },
+  "diceHolder2": {
+    "type": "holder",
+    "id": "diceHolder2",
+    "pid": 2,
+    "linkedToSeat": "seat2",
+    "inheritFrom": {
+      "diceHolder1": "*"
+    },
+    "x": 1346,
+    "y": 240
+  },
+  "roll2": {
+    "id": "roll2",
+    "parent": "diceHolder2",
+    "scale": 0,
+    "inheritFrom": {
+      "roll1": "*"
+    },
+    "z": 33133,
+    "pid": 2,
+    "x": 28,
+    "y": 49
+  },
+  "dice4": {
+    "type": "dice",
+    "id": "dice4",
+    "activeFace": 1,
+    "inheritFrom": {
+      "dice2": "*"
+    },
+    "rollCount": 71,
+    "parent": "diceHolder2",
+    "z": 2
+  },
+  "seatAreaBorder2": {
+    "id": "seatAreaBorder2",
+    "parent": "diceHolder2",
+    "inheritFrom": {
+      "seatAreaBorder1": "*"
+    }
+  },
+  "seat2": {
+    "type": "seat",
+    "id": "seat2",
+    "mainColor": "#dddddd",
+    "textColor": "#000000",
+    "turn": false,
+    "player": "",
+    "index": 2,
+    "inheritFrom": {
+      "seat1": "*"
+    },
+    "x": 1085,
+    "y": 244,
+    "z": 33078,
+    "skipTurn": false,
+    "slowdown": 0,
+    "pid": 2,
+    "score": 0
+  },
+  "dice3": {
+    "type": "dice",
+    "id": "dice3",
+    "parent": "diceHolder2",
+    "activeFace": 2,
+    "inheritFrom": {
+      "dice1": "*"
+    },
+    "rollCount": 71,
+    "z": 1
+  },
+  "option2": {
+    "id": "option2",
+    "parent": "diceHolder2",
+    "inheritFrom": {
+      "option1": "*"
+    },
+    "text": 3,
+    "pid": 2,
+    "scale": 0,
+    "bgColor": "white",
+    "activeFace": 0
+  },
+  "loot2": {
+    "type": "holder",
+    "id": "loot2",
+    "pid": 2,
+    "parent": "diceHolder2",
+    "inheritFrom": {
+      "loot1": "*"
+    }
+  },
+  "turn2": {
+    "id": "turn2",
+    "inheritFrom": {
+      "turn1": "*"
+    },
+    "pid": 2,
+    "parent": "diceHolder2",
+    "scale": 0
+  },
+  "slowdown2": {
+    "id": "slowdown2",
+    "parent": "diceHolder2",
+    "inheritFrom": {
+      "slowdown1": "*"
+    },
+    "text": 0,
+    "activeFace": 0
+  },
+  "diceHolder1": {
+    "type": "holder",
+    "id": "diceHolder1",
+    "x": 1346,
+    "y": 86,
+    "width": 100,
+    "height": 40,
+    "z": 4650,
+    "css": {
+      "background": "transparent",
+      "border": "transparent"
+    },
+    "dropOffsetX": -5,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "type": "dice"
+    },
+    "linkedToSeat": "seat1",
+    "stackOffsetX": 63,
+    "claimed": 0,
+    "climbers": [],
+    "markers": [],
+    "pid": 1,
+    "claimedChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": [
+          "claimed${PROPERTY pid}"
+        ],
+        "property": "text",
+        "value": "${PROPERTY claimed}"
+      },
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY claimed}",
+        "relation": ">=",
+        "operand2": "${PROPERTY toWin OF settings}",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "winner${PROPERTY pid}"
+            ],
+            "property": "scale",
+            "value": 1
+          },
+          {
+            "func": "FOREACH",
+            "range": [
+              6
+            ],
+            "loopRoutine": [
+              {
+                "func": "SET",
+                "collection": [
+                  "roll${value}"
+                ],
+                "property": "scale",
+                "value": 0
+              },
+              {
+                "func": "SET",
+                "collection": [
+                  "setClimbers${value}"
+                ],
+                "property": "scale",
+                "value": 0
+              },
+              {
+                "func": "SET",
+                "collection": [
+                  "setMarkers${value}"
+                ],
+                "property": "scale",
+                "value": 0
+              },
+              {
+                "func": "SET",
+                "collection": [
+                  "fail${value}"
+                ],
+                "property": "scale",
+                "value": 0
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "roll1": {
+    "id": "roll1",
+    "parent": "diceHolder1",
+    "width": 50,
+    "height": 50,
+    "movable": false,
+    "image": "/i/game-icons.net/delapouite/rolling-dices.svg",
+    "#000": "newColor",
+    "newColor": "#fff",
+    "clickRoutine": [
+      "var idParent = ${PROPERTY parent}",
+      "var idSlowdown = 'slowdown' + ${PROPERTY pid}",
+      "var curSlowdown = ${PROPERTY text OF $idSlowdown}",
+      "var intDiceSum = 0",
+      "var intSteps = 0",
+      {
+        "func": "IF",
+        "operand1": "${seatIndex}",
+        "operand2": "${PROPERTY pid}",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "option${PROPERTY pid}"
+            ],
+            "property": "scale",
+            "value": 1
+          },
+          {
+            "func": "SELECT",
+            "type": "dice",
+            "property": "parent",
+            "value": "${idParent}",
+            "sortBy": {
+              "key": "z",
+              "reverse": false
+            }
+          },
+          {
+            "func": "CLICK",
+            "mode": "ignoreClickable"
+          },
+          {
+            "func": "FOREACH",
+            "collection": "DEFAULT",
+            "loopRoutine": [
+              {
+                "func": "GET",
+                "property": "value",
+                "variable": "intDiceResult"
+              },
+              "var intDiceSum = ${intDiceSum} + ${intDiceResult}"
+            ]
+          },
+          "var intSteps = ${intDiceSum} - ${curSlowdown}",
+          "// Reset the sum to zero if it is negative to prevent moving in the wrong direction.",
+          {
+            "func": "IF",
+            "operand1": "${intSteps}",
+            "operand2": 0,
+            "relation": "<",
+            "thenRoutine": [
+              "var intSteps = 0"
+            ]
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "option${PROPERTY pid}"
+            ],
+            "property": "text",
+            "value": "${intSteps}"
+          },
+          {
+            "func": "SET",
+            "property": "scale",
+            "value": 0,
+            "collection": "thisButton"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "move${PROPERTY pid}"
+            ],
+            "property": "scale",
+            "value": 1
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "option${PROPERTY pid}"
+            ],
+            "property": "scale",
+            "value": 1
+          },
+          "// Scale down the homeward button if it has not been clicked yet.",
+          {
+            "func": "GET",
+            "collection": [
+              "homeward${PROPERTY pid}"
+            ],
+            "property": "newBorder"
+          },
+          {
+            "func": "IF",
+            "operand1": "${newBorder}",
+            "operand2": "0px solid black",
+            "thenRoutine": [
+              {
+                "func": "SET",
+                "collection": [
+                  "homeward${PROPERTY pid}"
+                ],
+                "property": "scale",
+                "value": 0
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "css": {
+      "default": {},
+      "::after": {
+        "content": "\"Roll Dice\"",
+        "display": "none",
+        "position": "absolute",
+        "margin-top": "50px",
+        "margin-left": "-3px",
+        "width": "75px",
+        "color": "black",
+        "font-size": "14px"
+      },
+      ":hover::after": {
+        "display": "block"
+      }
+    },
+    "z": 33112,
+    "y": 49,
+    "x": 29,
+    "pid": 1,
+    "rollButton": true,
+    "scale": 0
+  },
+  "dice1": {
+    "type": "dice",
+    "id": "dice1",
+    "z": 1,
+    "clickable": false,
+    "faces": [
+      1,
+      2,
+      3
+    ],
+    "shape3d": true,
+    "parent": "diceHolder1",
+    "width": 40,
+    "height": 40,
+    "x": 1,
+    "y": -1,
+    "rollCount": 78,
+    "activeFace": 1
+  },
+  "dice2": {
+    "type": "dice",
+    "id": "dice2",
+    "z": 2,
+    "activeFace": 2,
+    "inheritFrom": {
+      "dice1": "*"
+    },
+    "rollCount": 78,
+    "parent": "diceHolder1",
+    "x": 67,
+    "y": -1
+  },
+  "seatAreaBorder1": {
+    "id": "seatAreaBorder1",
+    "parent": "diceHolder1",
+    "x": -338,
+    "width": 580,
+    "height": 145,
+    "movable": false,
+    "css": {
+      "pointer-events": "none",
+      "border": "2px dashed grey"
+    },
+    "y": -10
+  },
+  "option1": {
+    "id": "option1",
+    "width": 30,
+    "height": 30,
+    "borderRadius": 100,
+    "movable": false,
+    "css": {
+      "default": {
+        "background": "${PROPERTY bgColor}",
+        "color": "${PROPERTY textColor}",
+        "border": "2px ${PROPERTY borderColor}",
+        "font-size": "22px",
+        "text-align": "center",
+        "display": "flex",
+        "justify-content": "center",
+        "align-items": "center"
+      }
+    },
+    "bgColor": "white",
+    "borderColor": "solid #000000",
+    "optionButton": true,
+    "pair": "option12",
+    "pid": 1,
+    "textColor": "#000000",
+    "x": 91,
+    "z": 33126,
+    "parent": "diceHolder1",
+    "y": 60,
+    "text": 5,
+    "scale": 0
+  },
+  "loot1": {
+    "type": "holder",
+    "id": "loot1",
+    "x": -417,
+    "width": 350,
+    "height": 80,
+    "z": 4713,
+    "preventPiles": true,
+    "stackOffsetX": 70,
+    "dropTarget": {
+      "type": "card"
+    },
+    "pid": 1,
+    "parent": "diceHolder1",
+    "scale": 0.5,
+    "enterRoutine": [
+      {
+        "func": "CALL",
+        "routine": "slowdownRoutine"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "CALL",
+        "routine": "slowdownRoutine"
+      }
+    ],
+    "y": 48,
+    "slowdownRoutine": [
+      "// Count the number of cards the player is carrying, set the value on the player's seat, and display it next to the dice.",
+      {
+        "func": "COUNT",
+        "holder": "${thisID}"
+      },
+      {
+        "func": "SET",
+        "property": "text",
+        "value": "${COUNT}",
+        "collection": [
+          "slowdown${PROPERTY pid}"
+        ]
+      },
+      {
+        "func": "SET",
+        "property": "slowdown",
+        "value": "${COUNT}",
+        "collection": [
+          "seat${PROPERTY pid}"
+        ]
+      }
+    ],
+    "css": {
+      "background": "white"
+    },
+    "onEnter": {
+      "movable": true
+    }
+  },
+  "slowdown1": {
+    "id": "slowdown1",
+    "x": 133,
+    "width": 40,
+    "height": 40,
+    "borderRadius": 4,
+    "z": 33123,
+    "css": {
+      "font-size": "35px",
+      "text-align": "center",
+      "display": "flex",
+      "justify-content": "center",
+      "align-items": "center",
+      "background": "grey",
+      "color": "white"
+    },
+    "text": 0,
+    "parent": "diceHolder1",
+    "y": -1,
+    "movable": false
+  },
+  "turn1": {
+    "id": "turn1",
+    "z": 33120,
+    "css": {
+      "default": {},
+      "::after": {
+        "content": "\"Next\"",
+        "display": "none",
+        "position": "absolute",
+        "margin-top": "50px",
+        "margin-left": "10px",
+        "width": "105px",
+        "color": "black",
+        "font-size": "14px"
+      },
+      ":hover::after": {
+        "display": "block"
+      }
+    },
+    "clickRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${seatIndex}",
+        "operand2": "${PROPERTY pid}",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "property": "scale",
+            "value": 0,
+            "collection": "thisButton"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "itemAction${PROPERTY pid}"
+            ],
+            "property": "scale",
+            "value": 0
+          },
+          "// Pass the turn to the next player in sequence.",
+          {
+            "func": "TURN",
+            "turnCycle": "forward"
+          },
+          "// if the meeple reaches home the player will be skiped during this round.",
+          "var curMeeple = 'meeple' + ${PROPERTY pid}",
+          {
+            "func": "IF",
+            "operand1": "${PROPERTY homeward OF $curMeeple}",
+            "operand2": true,
+            "thenRoutine": [
+              {
+                "func": "IF",
+                "operand1": "${PROPERTY home OF $curMeeple}",
+                "operand2": true,
+                "thenRoutine": [
+                  {
+                    "func": "SET",
+                    "collection": [
+                      "seat${PROPERTY pid}"
+                    ],
+                    "property": "skipTurn",
+                    "value": true
+                  }
+                ]
+              }
+            ]
+          },
+          "// Calculate and set the remaining time by subtracting the current player's slowdown.",
+          {
+            "func": "GET",
+            "collection": "TURN",
+            "property": "slowdown",
+            "variable": "currentSlowdown"
+          },
+          {
+            "func": "GET",
+            "collection": [
+              "roundCounter"
+            ],
+            "property": "text",
+            "variable": "currentTime"
+          },
+          "var newTime = ${currentTime} - ${currentSlowdown}",
+          "// If the remaining time falls below 0, set it to 0.",
+          {
+            "func": "IF",
+            "operand1": "${newTime}",
+            "operand2": 0,
+            "relation": "<",
+            "thenRoutine": [
+              "var newTime = 0"
+            ]
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "roundCounter"
+            ],
+            "property": "text",
+            "value": "${newTime}"
+          },
+          "// Show the homeward and roll button for the new player.",
+          {
+            "func": "GET",
+            "collection": "TURN",
+            "property": "index"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "roll${index}"
+            ],
+            "property": "scale",
+            "value": 1
+          },
+          "// Only show homeward button if the next meeple is not at home.",
+          "var nextMeeple = 'meeple' + ${index}",
+          "var isHome = ${PROPERTY home OF $nextMeeple}",
+          {
+            "func": "IF",
+            "operand1": "${isHome}",
+            "operand2": false,
+            "thenRoutine": [
+              {
+                "func": "SET",
+                "collection": [
+                  "homeward${index}"
+                ],
+                "property": "scale",
+                "value": 1
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "image": "/i/game-icons.net/delapouite/player-next.svg",
+    "svgReplaces": {
+      "#000": "newColor"
+    },
+    "newColor": "black",
+    "pid": 1,
+    "width": 50,
+    "height": 50,
+    "x": 186,
+    "y": 67,
+    "parent": "diceHolder1",
+    "movable": false,
+    "turnButton": true,
+    "scale": 0
+  },
+  "score1": {
+    "id": "score1",
+    "parent": "diceHolder1",
+    "x": -329,
+    "width": 60,
+    "height": 35,
+    "borderRadius": 4,
+    "z": 33098,
+    "movable": false,
+    "css": {
+      "font-size": "35px",
+      "text-align": "center",
+      "display": "flex",
+      "justify-content": "center",
+      "align-items": "center",
+      "background": "black",
+      "color": "white"
+    },
+    "text": 0,
+    "clickRoutine": [
+      "// Any player can access the scored items of another player. This blends the respective items in or out.",
+      "var thisParent = ${PROPERTY parent}",
+      "var thisPid = ${PROPERTY pid OF $thisParent}",
+      "var scoredItems = 'scoredItems' + ${thisPid}",
+      "var newDisplay = true",
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY display OF $scoredItems}",
+        "operand2": true,
+        "thenRoutine": [
+          "var newDisplay = false"
+        ]
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "${scoredItems}"
+        ],
+        "property": "display",
+        "value": "${newDisplay}"
+      }
+    ],
+    "y": 10
+  },
+  "scoredItems1": {
+    "type": "holder",
+    "id": "scoredItems1",
+    "pid": 1,
+    "parent": "diceHolder1",
+    "x": -597,
+    "y": 75,
+    "width": 1100,
+    "height": 80,
+    "scale": 0.5,
+    "z": 4871,
+    "css": {
+      "background": "white"
+    },
+    "dropTarget": {
+      "type": "card"
+    },
+    "onEnter": {
+      "activeFace": 1,
+      "movable": false,
+      "clickable": true
+    },
+    "preventPiles": true,
+    "stackOffsetX": 70,
+    "enterRoutine": [
+      {
+        "func": "CALL",
+        "routine": "scoreRoutine"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "CALL",
+        "routine": "scoreRoutine"
+      }
+    ],
+    "scoreRoutine": [
+      "// Count the value of the cards the player has scored, set the sum on the player's seat, and display it next to the their seat.",
+      "var newScore = 0",
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "parent",
+        "value": "${thisID}"
+      },
+      {
+        "func": "FOREACH",
+        "collection": "DEFAULT",
+        "loopRoutine": [
+          "var newScore = ${newScore} + ${PROPERTY rank OF $widgetID} + ${PROPERTY rank1 OF $widgetID} + ${PROPERTY rank2 OF $widgetID} + ${PROPERTY rank3 OF $widgetID}"
+        ]
+      },
+      {
+        "func": "SET",
+        "property": "text",
+        "value": "${newScore}",
+        "collection": [
+          "score${PROPERTY pid}"
+        ]
+      },
+      {
+        "func": "SET",
+        "property": "score",
+        "value": "${newScore}",
+        "collection": [
+          "seat${PROPERTY pid}"
+        ]
+      }
+    ],
+    "scoredItems": true,
+    "display": false
+  },
+  "scoredItems2": {
+    "type": "holder",
+    "id": "scoredItems2",
+    "pid": 2,
+    "inheritFrom": {
+      "scoredItems1": "*"
+    },
+    "parent": "diceHolder2",
+    "display": false
+  },
+  "debugRecall": {
+    "type": "button",
+    "id": "debugRecall",
+    "x": 1279,
+    "z": 33088,
+    "text": "Debug Recall",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "deck",
+        "value": "stocksDeck"
+      },
+      {
+        "func": "MOVE",
+        "to": "itemsHome"
+      },
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "cardType",
+        "value": "itemStack"
+      },
+      {
+        "func": "MOVE",
+        "to": "itemStacksHome"
+      }
+    ],
+    "y": -100
+  },
+  "score2": {
+    "id": "score2",
+    "parent": "diceHolder2",
+    "inheritFrom": {
+      "score1": "*"
+    },
+    "text": 0,
+    "z": 33117
+  },
+  "itemAction1": {
+    "id": "itemAction1",
+    "parent": "diceHolder1",
+    "x": 186,
+    "width": 50,
+    "height": 50,
+    "z": 33103,
+    "movable": false,
+    "css": {
+      "default": {},
+      "::after": {
+        "content": "\"Take / Drop\"",
+        "display": "none",
+        "position": "absolute",
+        "margin-top": "50px",
+        "margin-left": "-15px",
+        "width": "105px",
+        "color": "black",
+        "font-size": "14px"
+      },
+      ":hover::after": {
+        "display": "block"
+      }
+    },
+    "image": "/i/game-icons.net/quoting/card-pickup.svg",
+    "svgReplaces": {
+      "#000": "newColor"
+    },
+    "newColor": "black",
+    "pid": 1,
+    "clickRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${seatIndex}",
+        "operand2": "${PROPERTY pid}",
+        "thenRoutine": [
+          {
+            "func": "SELECT",
+            "type": "meeple",
+            "property": "pid",
+            "value": "${PROPERTY pid}",
+            "collection": "myMeeple"
+          },
+          {
+            "func": "GET",
+            "collection": "myMeeple",
+            "property": "parent",
+            "variable": "currentHolder"
+          },
+          {
+            "func": "SELECT",
+            "type": "card",
+            "property": "parent",
+            "value": "${currentHolder}",
+            "collection": "currentTreasure"
+          },
+          {
+            "func": "COUNT",
+            "collection": "currentTreasure"
+          },
+          {
+            "func": "IF",
+            "operand1": "${COUNT}",
+            "operand2": 0,
+            "relation": ">",
+            "thenRoutine": [
+              {
+                "func": "MOVE",
+                "collection": "currentTreasure",
+                "to": "loot${PROPERTY pid}",
+                "property": "owner",
+                "value": "${playerName}"
+              },
+              {
+                "func": "SET",
+                "collection": "thisButton",
+                "property": "scale",
+                "value": 0
+              }
+            ],
+            "elseRoutine": [
+              {
+                "func": "INPUT",
+                "fields": [
+                  {
+                    "type": "title",
+                    "text": "Put item back on board"
+                  },
+                  {
+                    "type": "subtitle",
+                    "text": "Select 1"
+                  },
+                  {
+                    "type": "choose",
+                    "holder": [
+                      "loot${PROPERTY pid}"
+                    ],
+                    "collection": "thisCollection",
+                    "variable": "thisVariable",
+                    "max": 1
+                  }
+                ]
+              },
+              {
+                "func": "SET",
+                "collection": [
+                  "variable"
+                ],
+                "property": "text",
+                "value": "${thisVariable}"
+              },
+              "var array = []",
+              {
+                "func": "FOREACH",
+                "collection": "thisCollection",
+                "loopRoutine": [
+                  {
+                    "func": "GET",
+                    "property": "id"
+                  },
+                  "var array = ${array} + ${id}"
+                ]
+              },
+              {
+                "func": "SET",
+                "collection": [
+                  "collection"
+                ],
+                "property": "text",
+                "value": "${array}"
+              },
+              {
+                "func": "MOVE",
+                "collection": "thisCollection",
+                "to": "${currentHolder}"
+              },
+              {
+                "func": "SET",
+                "collection": "thisButton",
+                "property": "scale",
+                "value": 0
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "y": -2,
+    "itemActionButton": true,
+    "scale": 0
+  },
+  "itemAction2": {
+    "id": "itemAction2",
+    "parent": "diceHolder2",
+    "inheritFrom": {
+      "itemAction1": "*"
+    },
+    "pid": 2,
+    "scale": 0
+  },
+  "move1": {
+    "id": "move1",
+    "parent": "diceHolder1",
+    "y": 49,
+    "width": 50,
+    "height": 50,
+    "z": 33127,
+    "movable": false,
+    "css": {
+      "default": {},
+      "::after": {
+        "content": "\"Move.\"",
+        "display": "none",
+        "position": "absolute",
+        "margin-top": "50px",
+        "margin-left": "5px",
+        "width": "75px",
+        "color": "black",
+        "font-size": "14px"
+      },
+      ":hover::after": {
+        "display": "block"
+      }
+    },
+    "image": "/i/game-icons.net/delapouite/walk.svg",
+    "svgReplaces": {
+      "#000": "newColor"
+    },
+    "newColor": "black",
+    "pid": 1,
+    "clickRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${seatIndex}",
+        "operand2": "${PROPERTY pid}",
+        "thenRoutine": [
+          "var myMeepleId = 'meeple' + ${PROPERTY pid}",
+          {
+            "func": "SELECT",
+            "property": "id",
+            "value": "option${PROPERTY pid}",
+            "collection": "myOption"
+          },
+          {
+            "func": "GET",
+            "collection": "myOption",
+            "property": "text",
+            "variable": "steps"
+          },
+          "// Construct an array of all holders that are either free or contain the player's meeple. Then, calculate the next field by adding the dice result to the player's meeple holder index.",
+          {
+            "func": "SELECT",
+            "type": "meeple",
+            "property": "pid",
+            "value": "${PROPERTY pid}",
+            "collection": "myMeeple"
+          },
+          {
+            "func": "GET",
+            "collection": "myMeeple",
+            "property": "parent",
+            "variable": "currentHolder"
+          },
+          {
+            "func": "SELECT",
+            "type": "holder",
+            "property": "parent",
+            "value": "boardBase",
+            "collection": "allHolders"
+          },
+          {
+            "func": "SELECT",
+            "source": "allHolders",
+            "property": "occupied",
+            "relation": "!=",
+            "value": true,
+            "collection": "collFreeHolders"
+          },
+          {
+            "func": "GET",
+            "property": "id",
+            "aggregation": "array",
+            "variable": "arrFreeHolders",
+            "collection": "collFreeHolders"
+          },
+          "var arrFreeHolders = push ${currentHolder}",
+          "var arrFreeHolders = ${arrFreeHolders} numericStringSort",
+          "// When the meeple is on the way back, reverse sort the array.",
+          {
+            "func": "IF",
+            "condition": "${PROPERTY homeward OF $myMeepleId}",
+            "thenRoutine": [
+              "var arrFreeHolders = ${arrFreeHolders} reverse"
+            ]
+          },
+          "var freeHoldersCount = length ${arrFreeHolders}",
+          "var lastFreeHolderIdx = ${freeHoldersCount} - 1",
+          "// Check if the meeple is on the player's seat or on the game board.",
+          {
+            "func": "IF",
+            "operand1": "${currentHolder}",
+            "operand2": "meepleHolder${PROPERTY pid}",
+            "thenRoutine": [
+              "var currentHolderIdx = -1"
+            ],
+            "elseRoutine": [
+              "var currentHolderIdx = ${arrFreeHolders} indexOf ${currentHolder}"
+            ]
+          },
+          "// Calculate the index of the next holder.",
+          "var nextHolderIdx = ${steps} + ${currentHolderIdx}",
+          "// If the last field is reached, the meeple stays there. However, if it moves beyond the first space on the way back, it jumps to the player's seat.",
+          {
+            "func": "IF",
+            "operand1": "${nextHolderIdx}",
+            "operand2": "${lastFreeHolderIdx}",
+            "relation": ">",
+            "thenRoutine": [
+              {
+                "func": "IF",
+                "condition": "${PROPERTY homeward OF $myMeepleId}",
+                "thenRoutine": [
+                  "var nextHolder = 'meepleHolder' + ${PROPERTY pid}"
+                ],
+                "elseRoutine": [
+                  "var nextHolder = ${arrFreeHolders} getIndex ${lastFreeHolderIdx}"
+                ]
+              }
+            ],
+            "elseRoutine": [
+              "var nextHolder = ${arrFreeHolders} getIndex ${nextHolderIdx}"
+            ]
+          },
+          "// Move the meeple.",
+          {
+            "func": "MOVE",
+            "collection": "myMeeple",
+            "to": "${nextHolder}"
+          },
+          {
+            "func": "SET",
+            "property": "scale",
+            "value": 0,
+            "collection": "thisButton"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "option${PROPERTY pid}"
+            ],
+            "property": "scale",
+            "value": 0
+          },
+          "// The other condition that ends the round is that the time is up. Check for that as well. And in case show the end round button.",
+          {
+            "func": "GET",
+            "property": "text",
+            "collection": [
+              "roundCounter"
+            ]
+          },
+          {
+            "func": "IF",
+            "operand1": "${text}",
+            "operand2": 0,
+            "relation": "==",
+            "thenRoutine": [
+              {
+                "func": "SET",
+                "collection": [
+                  "endRound"
+                ],
+                "property": "scale",
+                "value": 1
+              }
+            ],
+            "elseRoutine": [
+              "// Check if there is any meeple remaining on the board and if true show the turn button. If all meeples are at home, show the end turn button instead.",
+              {
+                "func": "SELECT",
+                "property": "meeple",
+                "value": true,
+                "collection": "allMeeples"
+              },
+              "var meepleOnBoard = false",
+              {
+                "func": "FOREACH",
+                "collection": "allMeeples",
+                "loopRoutine": [
+                  {
+                    "func": "IF",
+                    "operand1": "${PROPERTY home OF $widgetID}",
+                    "operand2": false,
+                    "thenRoutine": [
+                      "var meepleOnBoard = true"
+                    ]
+                  }
+                ]
+              },
+              {
+                "func": "IF",
+                "condition": "${meepleOnBoard}",
+                "thenRoutine": [
+                  {
+                    "func": "SET",
+                    "collection": [
+                      "turn${PROPERTY pid}"
+                    ],
+                    "property": "scale",
+                    "value": 1
+                  }
+                ],
+                "elseRoutine": [
+                  {
+                    "func": "SET",
+                    "collection": [
+                      "endRound"
+                    ],
+                    "property": "scale",
+                    "value": 1
+                  }
+                ]
+              },
+              "// Only show the item action button if the meeple is not returned home yet.",
+              {
+                "func": "IF",
+                "operand1": "${PROPERTY home OF $myMeepleId}",
+                "operand2": false,
+                "thenRoutine": [
+                  {
+                    "func": "SET",
+                    "collection": [
+                      "itemAction${PROPERTY pid}"
+                    ],
+                    "property": "scale",
+                    "value": 1
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "x": 50,
+    "moveButton": true,
+    "scale": 0
+  },
+  "move2": {
+    "id": "move2",
+    "parent": "diceHolder2",
+    "inheritFrom": {
+      "move1": "*"
+    },
+    "pid": 2,
+    "scale": 0,
+    "z": 33132
+  },
+  "homeward1": {
+    "id": "homeward1",
+    "parent": "diceHolder1",
+    "x": -65,
+    "width": 50,
+    "height": 50,
+    "z": 33131,
+    "movable": false,
+    "css": {
+      "default": {
+        "border": "${PROPERTY newBorder}"
+      },
+      "::after": {
+        "content": "\" Move Up\"",
+        "display": "none",
+        "position": "absolute",
+        "margin-top": "50px",
+        "margin-left": "-5px",
+        "width": "75px",
+        "color": "black",
+        "font-size": "14px"
+      },
+      ":hover::after": {
+        "display": "block"
+      }
+    },
+    "image": "/i/game-icons.net/delapouite/stairs-goal.svg",
+    "svgReplaces": {
+      "#000": "newColor"
+    },
+    "newColor": "black",
+    "clickRoutine": [
+      "var idParent = ${PROPERTY parent}",
+      "var idMeeple = 'meeple' + ${PROPERTY pid}",
+      {
+        "func": "IF",
+        "operand1": "${seatIndex}",
+        "operand2": "${PROPERTY pid}",
+        "thenRoutine": [
+          "// Set the homeward to true and hide this button for the rest of the round.",
+          {
+            "func": "SELECT",
+            "property": "id",
+            "value": "${idMeeple}"
+          },
+          {
+            "func": "SET",
+            "property": "homeward",
+            "value": true
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "scale",
+            "value": 1
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "newBorder",
+            "value": "2px solid black"
+          }
+        ]
+      }
+    ],
+    "y": 49,
+    "newBorder": "0px solid black",
+    "homewardButton": true,
+    "pid": 1,
+    "scale": 0
+  },
+  "homeward2": {
+    "id": "homeward2",
+    "parent": "diceHolder2",
+    "inheritFrom": {
+      "homeward1": [
+        "!newBorder"
+      ]
+    },
+    "z": 33116,
+    "newBorder": "0px solid black",
+    "pid": 2,
+    "scale": 0
+  },
+  "meepleHolder1": {
+    "type": "holder",
+    "id": "meepleHolder1",
+    "parent": "diceHolder1",
+    "x": -142,
+    "y": 68,
+    "width": 50,
+    "height": 40,
+    "z": 4709,
+    "dropOffsetX": -8,
+    "dropOffsetY": -15,
+    "dropTarget": {
+      "type": "meeple"
+    },
+    "stackOffsetX": 36,
+    "pid": 1,
+    "enterRoutine": [
+      "// Set 'home' (bool) to true when a meeple enters this holder.",
+      {
+        "func": "SET",
+        "collection": "child",
+        "property": "home",
+        "value": true
+      },
+      "// Hide the homeward button of the returned meeple.",
+      {
+        "func": "SET",
+        "collection": [
+          "homeward${PROPERTY pid}"
+        ],
+        "property": "scale",
+        "value": 0
+      }
+    ],
+    "leaveRoutine": [
+      "// Set 'home' (bool) to false when a meeple leaves this holder.",
+      {
+        "func": "SET",
+        "collection": "child",
+        "property": "home",
+        "value": false
+      }
+    ]
+  },
+  "meepleHolder2": {
+    "type": "holder",
+    "id": "meepleHolder2",
+    "parent": "diceHolder2",
+    "inheritFrom": {
+      "meepleHolder1": "*"
+    },
+    "pid": 2
+  },
+  "meeple2": {
+    "id": "meeple2",
+    "width": 66.5,
+    "height": 70,
+    "z": 1,
+    "bgColor": "#1976d2",
+    "bgColor1": "#bf360c",
+    "bgColor2": "#e55c32",
+    "borderColor": "#000000",
+    "borderWidth": 1,
+    "pid": 2,
+    "state": "alive",
+    "color": "#dddddd",
+    "css": {
+      "": {
+        "text-align": "center",
+        "padding": "1em",
+        "border-radius": "45% 65% 70% 30%/ 45% 50% 20% 20%",
+        "box-sizing": "border-box",
+        "transition": "opacity 1s, linear 0.65s",
+        "opacity": 1
+      },
+      ":hover": {
+        "opacity": 0.5
+      }
+    },
+    "faces": [
+      {
+        "image": "i/game-pieces/3D/Meeple-3D.svg",
+        "rotation": 0,
+        "state": "alive"
+      }
+    ],
+    "image": "i/game-pieces/3D/Meeple-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "classes": "transition",
+    "type": "meeple",
+    "layer": 501,
+    "homeward": false,
+    "home": true,
+    "x": -8,
+    "y": -15,
+    "parent": "meepleHolder2",
+    "meeple": true,
+    "movable": false
+  },
+  "boardBase": {
+    "id": "boardBase",
+    "width": 1000,
+    "height": 1000,
+    "z": 8707,
+    "movable": false,
+    "css": {
+      "background-color": "transparent",
+      "border-radius": "20px",
+      "border": "b"
+    },
+    "movableInEdit": false
+  },
+  "holder1": {
+    "type": "holder",
+    "id": "holder1",
+    "parent": "boardBase",
+    "x": 869,
+    "y": 122,
+    "width": 70,
+    "height": 70,
+    "z": 4817,
+    "enterRoutine": [
+      {
+        "func": "GET",
+        "property": "type",
+        "collection": "child"
+      },
+      "// Set 'occupied' (bool) to true when a meeple enters this holder.",
+      {
+        "func": "IF",
+        "operand1": "${type}",
+        "operand2": "meeple",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "occupied",
+            "value": true
+          }
+        ]
+      },
+      "// Set 'exhausted' (bool) to false when a resource enters this holder.",
+      {
+        "func": "IF",
+        "operand1": "${type}",
+        "operand2": "card",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "exhausted",
+            "value": false
+          },
+          {
+            "func": "SET",
+            "collection": "child",
+            "property": "onBoard",
+            "value": true
+          }
+        ]
+      }
+    ],
+    "occupied": false,
+    "leaveRoutine": [
+      {
+        "func": "GET",
+        "property": "type",
+        "collection": "child"
+      },
+      "// Set 'occupied' (bool) to false when a meeple leaves this holder.",
+      {
+        "func": "IF",
+        "operand1": "${type}",
+        "operand2": "meeple",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "occupied",
+            "value": false
+          }
+        ]
+      },
+      "// Set 'exhausted' (bool) to true when a resource leaves this holder.",
+      {
+        "func": "IF",
+        "operand1": "${type}",
+        "operand2": "card",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "exhausted",
+            "value": true
+          },
+          {
+            "func": "SET",
+            "collection": "child",
+            "property": "onBoard",
+            "value": false
+          }
+        ]
+      }
+    ],
+    "dropTarget": [
+      {
+        "type": "meeple"
+      },
+      {
+        "type": "card"
+      }
+    ],
+    "exhausted": false,
+    "classes": "transition",
+    "css": {
+      "default": {
+        "display": "flex",
+        "justify-content": "center",
+        "align-items": "center",
+        "font-size": "26px",
+        "opacity": "1",
+        "background": "transparent",
+        "border": "1px solid black"
+      }
+    }
+  },
+  "roundCounter": {
+    "id": "roundCounter",
+    "parent": "boardBase",
+    "x": 1262,
+    "y": 5,
+    "height": 50,
+    "borderRadius": 4,
+    "z": 33019,
+    "movable": false,
+    "css": {
+      "font-size": "35px",
+      "text-align": "center",
+      "display": "flex",
+      "justify-content": "center",
+      "align-items": "center",
+      "background": "black",
+      "color": "white"
+    },
+    "text": 25,
+    "width": 75
+  },
+  "endRound": {
+    "type": "button",
+    "id": "endRound",
+    "x": 1009,
+    "y": 5,
+    "width": 70,
+    "height": 50,
+    "z": 33106,
+    "text": "rotate_left",
+    "clickRoutine": [
+      "// For all Meeples that have made it home, move all items collected in this round to their scoredItems holder.",
+      {
+        "func": "SELECT",
+        "type": "meeple",
+        "property": "home",
+        "value": true
+      },
+      {
+        "func": "FOREACH",
+        "collection": "DEFAULT",
+        "loopRoutine": [
+          {
+            "func": "GET",
+            "property": "pid"
+          },
+          {
+            "func": "MOVE",
+            "from": "loot${pid}",
+            "to": "scoredItems${pid}",
+            "count": 99999
+          }
+        ]
+      },
+      "// Handle the Meeples that have not returned. Move them home and save the order from farthest to nearest.",
+      {
+        "func": "SELECT",
+        "type": "meeple",
+        "property": "home",
+        "value": false
+      },
+      {
+        "func": "GET",
+        "property": "parent",
+        "aggregation": "array",
+        "variable": "arrBoardFieldMeeples"
+      },
+      "var arrBoardFieldMeeples = ${arrBoardFieldMeeples} numericStringSort",
+      "var arrBoardFieldMeeples = ${arrBoardFieldMeeples} reverse",
+      "var pidOrder = []",
+      {
+        "func": "FOREACH",
+        "in": "${arrBoardFieldMeeples}",
+        "loopRoutine": [
+          {
+            "func": "SELECT",
+            "type": "meeple",
+            "property": "parent",
+            "value": "${value}",
+            "collection": "colMeeple"
+          },
+          {
+            "func": "GET",
+            "property": "pid",
+            "collection": "colMeeple"
+          },
+          {
+            "func": "MOVE",
+            "collection": "colMeeple",
+            "to": "meepleHolder${pid}"
+          },
+          "var pidOrder = push ${pid}"
+        ]
+      },
+      "// Close any gaps on the game board by shifting all items forward.",
+      {
+        "func": "SELECT",
+        "type": "holder",
+        "property": "parent",
+        "value": "boardBase"
+      },
+      {
+        "func": "GET",
+        "property": "id",
+        "aggregation": "array",
+        "variable": "arrBoardFields"
+      },
+      "var arrBoardFields = ${arrBoardFields} numericStringSort",
+      "var arrBoardFields = ${arrBoardFields} reverse",
+      {
+        "func": "FOREACH",
+        "in": "${arrBoardFields}",
+        "loopRoutine": [
+          {
+            "func": "MOVE",
+            "from": "${value}",
+            "to": "itemsHome"
+          }
+        ]
+      },
+      "var arrBoardFields = ${arrBoardFields} numericStringSort",
+      {
+        "func": "FOREACH",
+        "in": "${arrBoardFields}",
+        "loopRoutine": [
+          {
+            "func": "MOVE",
+            "from": "itemsHome",
+            "to": "${value}"
+          }
+        ]
+      },
+      "// Handle items of not returned Meeples and put them in pidOrder order in stacks of 3 on the board. Use new Cardtype.",
+      "var arrItemsToReturn = []",
+      {
+        "func": "FOREACH",
+        "in": "${pidOrder}",
+        "loopRoutine": [
+          {
+            "func": "SELECT",
+            "type": "card",
+            "property": "parent",
+            "value": "loot${value}"
+          },
+          {
+            "func": "SORT",
+            "collection": "DEFAULT",
+            "key": "z"
+          },
+          {
+            "func": "FOREACH",
+            "loopRoutine": [
+              {
+                "func": "GET",
+                "property": "id"
+              },
+              "var arrItemsToReturn = push ${id}"
+            ]
+          }
+        ]
+      },
+      "// Selects a card from the stack",
+      "var moveItem = false",
+      {
+        "func": "SELECT",
+        "property": "cardType",
+        "value": "itemStack"
+      },
+      {
+        "func": "SELECT",
+        "collection": "CollItemStack",
+        "property": "order",
+        "value": 1,
+        "source": "DEFAULT"
+      },
+      {
+        "func": "SELECT",
+        "collection": "CollItemStack",
+        "property": "order",
+        "value": 2,
+        "source": "DEFAULT",
+        "mode": "add"
+      },
+      {
+        "func": "SELECT",
+        "collection": "CollItemStack",
+        "property": "onBoard",
+        "value": true,
+        "source": "CollItemStack"
+      },
+      {
+        "func": "COUNT",
+        "collection": "CollItemStack"
+      },
+      {
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "func": "SELECT",
+            "type": "pile",
+            "property": "parent",
+            "value": "itemStacksHome"
+          },
+          {
+            "func": "GET",
+            "property": "id",
+            "collection": "DEFAULT"
+          },
+          {
+            "func": "SELECT",
+            "type": "card",
+            "max": 1,
+            "property": "parent",
+            "value": "${id}",
+            "collection": "CollItemStack"
+          },
+          "var moveItem = true"
+        ]
+      },
+      {
+        "func": "GET",
+        "property": "order",
+        "collection": "CollItemStack",
+        "variable": "numOrder"
+      },
+      "var numRank = ${numOrder}",
+      {
+        "func": "FOREACH",
+        "in": "${arrItemsToReturn}",
+        "loopRoutine": [
+          {
+            "func": "IF",
+            "operand1": "${PROPERTY cardType OF $value}",
+            "operand2": "itemStack",
+            "relation": "==",
+            "thenRoutine": [
+              {
+                "func": "GET",
+                "property": "order",
+                "collection": [
+                  "${value}"
+                ],
+                "variable": "numOrderLoot"
+              },
+              {
+                "func": "GET",
+                "property": "suit",
+                "collection": [
+                  "${value}"
+                ],
+                "variable": "numSuitLoot"
+              },
+              "var arrSuit = ${numSuitLoot} split '|'",
+              "var garbage = ${arrSuit} shift",
+              {
+                "func": "GET",
+                "property": "id",
+                "collection": [
+                  "${value}"
+                ],
+                "variable": "stackItemId"
+              },
+              {
+                "func": "FOREACH",
+                "range": [
+                  "${numOrderLoot}"
+                ],
+                "loopRoutine": [
+                  "// rank clock",
+                  "var numRank = ${numRank} % 3",
+                  "var numRank = ${numRank} + 1",
+                  "// accumulate new Level as preface.",
+                  "var suitElement = ${arrSuit} shift",
+                  {
+                    "func": "GET",
+                    "property": "suit",
+                    "collection": "CollItemStack",
+                    "variable": "origSuit"
+                  },
+                  "var newSuit = ${origSuit} concat '|'",
+                  "var newSuit = ${newSuit} concat ${suitElement}",
+                  {
+                    "func": "SET",
+                    "property": "suit",
+                    "collection": "CollItemStack",
+                    "value": "${newSuit}"
+                  },
+                  {
+                    "func": "GET",
+                    "property": "rank${value}",
+                    "variable": "stackItemRank",
+                    "collection": [
+                      "${stackItemId}"
+                    ]
+                  },
+                  {
+                    "func": "SET",
+                    "property": "rank${numRank}",
+                    "collection": "CollItemStack",
+                    "value": "${stackItemRank}"
+                  },
+                  {
+                    "func": "GET",
+                    "property": "order",
+                    "collection": "CollItemStack",
+                    "variable": "numOrder"
+                  },
+                  "var numOrder = ${numOrder} + 1",
+                  {
+                    "func": "SET",
+                    "property": "order",
+                    "collection": "CollItemStack",
+                    "value": "${numOrder}"
+                  },
+                  {
+                    "func": "IF",
+                    "operand1": "${numOrder}",
+                    "operand2": 3,
+                    "relation": "==",
+                    "thenRoutine": [
+                      "// Don't move if card was taken from the board. Otherwise move a 'full' card from the pile onto the board.",
+                      {
+                        "func": "IF",
+                        "condition": "${moveItem}",
+                        "thenRoutine": [
+                          {
+                            "func": "SELECT",
+                            "type": "holder",
+                            "property": "parent",
+                            "value": "boardBase"
+                          },
+                          {
+                            "func": "SELECT",
+                            "collection": "DEFAULT",
+                            "property": "exhausted",
+                            "value": true
+                          },
+                          {
+                            "func": "GET",
+                            "property": "id",
+                            "aggregation": "array",
+                            "variable": "arrBoardFields"
+                          },
+                          "var arrBoardFields = ${arrBoardFields} numericStringSort",
+                          "var idFreeField = ${arrBoardFields} getIndex 0",
+                          {
+                            "func": "MOVE",
+                            "collection": "CollItemStack",
+                            "to": "${idFreeField}"
+                          }
+                        ]
+                      },
+                      {
+                        "func": "SELECT",
+                        "type": "pile",
+                        "property": "parent",
+                        "value": "itemStacksHome"
+                      },
+                      {
+                        "func": "GET",
+                        "property": "id",
+                        "collection": "DEFAULT"
+                      },
+                      {
+                        "func": "SELECT",
+                        "type": "card",
+                        "max": 1,
+                        "property": "parent",
+                        "value": "${id}",
+                        "collection": "CollItemStack"
+                      },
+                      "var moveItem = true"
+                    ]
+                  }
+                ]
+              }
+            ],
+            "elseRoutine": [
+              "var numRank = ${numRank} % 3",
+              "var numRank = ${numRank} + 1",
+              {
+                "func": "SET",
+                "property": "rank${numRank}",
+                "collection": "CollItemStack",
+                "value": "${PROPERTY rank OF $value}"
+              },
+              {
+                "func": "GET",
+                "property": "order",
+                "collection": [
+                  "${value}"
+                ]
+              },
+              "// Write the Level of the replaced card on the stack item.",
+              {
+                "func": "GET",
+                "property": "order",
+                "collection": [
+                  "${value}"
+                ],
+                "variable": "origOrder"
+              },
+              {
+                "func": "GET",
+                "property": "suit",
+                "collection": "CollItemStack",
+                "variable": "origSuit"
+              },
+              "var newSuit = ${origSuit} concat '|'",
+              "var newSuit = ${newSuit} concat ${origOrder}",
+              {
+                "func": "SET",
+                "property": "suit",
+                "collection": "CollItemStack",
+                "value": "${newSuit}"
+              },
+              "// Write the Order of the replaced card on the stack item.",
+              {
+                "func": "GET",
+                "property": "order",
+                "collection": "CollItemStack",
+                "variable": "numOrder"
+              },
+              "var numOrder = ${numOrder} + 1",
+              {
+                "func": "SET",
+                "property": "order",
+                "collection": "CollItemStack",
+                "value": "${numOrder}"
+              },
+              {
+                "func": "IF",
+                "operand1": "${numOrder}",
+                "operand2": 3,
+                "relation": "==",
+                "thenRoutine": [
+                  "// Don't move if card was taken from the board. Otherwise move a 'full' card from the pile onto the board.",
+                  {
+                    "func": "IF",
+                    "condition": "${moveItem}",
+                    "thenRoutine": [
+                      {
+                        "func": "SELECT",
+                        "type": "holder",
+                        "property": "parent",
+                        "value": "boardBase"
+                      },
+                      {
+                        "func": "SELECT",
+                        "collection": "DEFAULT",
+                        "property": "exhausted",
+                        "value": true
+                      },
+                      {
+                        "func": "GET",
+                        "property": "id",
+                        "aggregation": "array",
+                        "variable": "arrBoardFields"
+                      },
+                      "var arrBoardFields = ${arrBoardFields} numericStringSort",
+                      "var idFreeField = ${arrBoardFields} getIndex 0",
+                      {
+                        "func": "MOVE",
+                        "collection": "CollItemStack",
+                        "to": "${idFreeField}"
+                      }
+                    ]
+                  },
+                  {
+                    "func": "SELECT",
+                    "type": "pile",
+                    "property": "parent",
+                    "value": "itemStacksHome"
+                  },
+                  {
+                    "func": "GET",
+                    "property": "id",
+                    "collection": "DEFAULT"
+                  },
+                  {
+                    "func": "SELECT",
+                    "type": "card",
+                    "max": 1,
+                    "property": "parent",
+                    "value": "${id}",
+                    "collection": "CollItemStack"
+                  },
+                  "var moveItem = true"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "GET",
+        "property": "order",
+        "collection": "CollItemStack"
+      },
+      "// If the loop has ended without starting to fill a new one skip otherwise move the card filed with one or two from the stack on the board.",
+      {
+        "func": "IF",
+        "operand1": "${order}",
+        "operand2": 0,
+        "relation": "!=",
+        "thenRoutine": [
+          "// Don't move if card was taken from the board.",
+          {
+            "func": "IF",
+            "condition": "${moveItem}",
+            "thenRoutine": [
+              {
+                "func": "SELECT",
+                "type": "holder",
+                "property": "parent",
+                "value": "boardBase"
+              },
+              {
+                "func": "SELECT",
+                "source": "DEFAULT",
+                "property": "exhausted",
+                "value": true
+              },
+              {
+                "func": "GET",
+                "property": "id",
+                "aggregation": "array",
+                "variable": "arrBoardFields"
+              },
+              "var arrBoardFields = ${arrBoardFields} numericStringSort",
+              "var idFreeField = ${arrBoardFields} getIndex 0",
+              {
+                "func": "MOVE",
+                "collection": "CollItemStack",
+                "to": "${idFreeField}"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "FOREACH",
+        "in": "${pidOrder}",
+        "loopRoutine": [
+          {
+            "func": "MOVE",
+            "from": "loot${value}",
+            "to": "discard",
+            "count": 99999
+          }
+        ]
+      },
+      "// set empty (exhausted==true) board fields to occupied so that meeples won't access them anymore.",
+      {
+        "func": "SELECT",
+        "type": "holder",
+        "property": "parent",
+        "value": "boardBase"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "exhausted",
+        "value": true
+      },
+      {
+        "func": "SET",
+        "source": "DEFAULT",
+        "property": "occupied",
+        "value": true
+      },
+      "// set full (exhausted==false) board fields to not occupied so that meeples can access them.",
+      {
+        "func": "SELECT",
+        "type": "holder",
+        "property": "parent",
+        "value": "boardBase"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "exhausted",
+        "value": false
+      },
+      {
+        "func": "SET",
+        "source": "DEFAULT",
+        "property": "occupied",
+        "value": false
+      },
+      "// Reset the skipTurn flag for all players.",
+      {
+        "func": "SELECT",
+        "type": "seat"
+      },
+      {
+        "func": "SET",
+        "property": "skipTurn",
+        "value": false
+      },
+      "// Reset the homeward button for all players.",
+      {
+        "func": "SELECT",
+        "property": "homewardButton",
+        "value": true
+      },
+      {
+        "func": "SET",
+        "property": "newBorder",
+        "value": "0px solid black"
+      },
+      "// Reset the homeward boolean status for all meeples.",
+      {
+        "func": "SELECT",
+        "property": "type",
+        "value": "meeple"
+      },
+      {
+        "func": "SET",
+        "property": "homeward",
+        "value": false
+      },
+      "// Reset the round counter.",
+      {
+        "func": "SET",
+        "collection": [
+          "roundCounter"
+        ],
+        "property": "text",
+        "value": 25
+      },
+      "// If any player has not reached home, the player farthest from home starts the next turn.",
+      "var pidOrderLength = ${pidOrder} length",
+      {
+        "func": "IF",
+        "operand1": "${pidOrder} length",
+        "operand2": "0",
+        "relation": ">",
+        "thenRoutine": [
+          "var startPlayerPid = ${pidOrder} shift",
+          "var startPlayer = 'seat' + ${startPlayerPid}",
+          {
+            "func": "TURN",
+            "source": [
+              "${startPlayer}"
+            ]
+          }
+        ]
+      },
+      {
+        "func": "SELECT",
+        "type": "seat",
+        "property": "turn",
+        "value": true
+      },
+      {
+        "func": "GET",
+        "property": "index"
+      },
+      {
+        "func": "SET",
+        "property": "scale",
+        "value": 1,
+        "collection": [
+          "roll${index}"
+        ]
+      },
+      "// Forward the game counter.",
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY display OF gameCounter1}",
+        "operand2": true,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "property": "display",
+            "value": true,
+            "collection": [
+              "gameCounter2"
+            ]
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY display OF gameCounter2}",
+        "operand2": false,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "property": "display",
+            "value": true,
+            "collection": [
+              "gameCounter1"
+            ]
+          }
+        ]
+      },
+      {
+        "func": "SET",
+        "property": "scale",
+        "collection": "thisButton",
+        "value": 0
+      }
+    ],
+    "classes": "symbols",
+    "color": "white",
+    "css": {
+      "default": {
+        "font-size": "40px",
+        "--wcMain": "black",
+        "--wcBorder": "white",
+        "--wcMainOH": "grey",
+        "--wcBorderOH": "black"
+      },
+      "::after": {
+        "content": "\"End Round\"",
+        "display": "none",
+        "position": "absolute",
+        "margin-top": "71px",
+        "width": "105px",
+        "color": "black",
+        "font-size": "14px",
+        "font-family": "Roboto"
+      },
+      ":hover::after": {
+        "display": "block"
+      }
+    },
+    "scale": 0
+  },
+  "itemsHome": {
+    "type": "holder",
+    "id": "itemsHome",
+    "x": 1496,
+    "y": -124,
+    "width": 100,
+    "height": 100,
+    "z": 4869,
+    "onEnter": {
+      "activeFace": 0,
+      "movable": false,
+      "clickable": false
+    }
+  },
+  "stocksDeck": {
+    "type": "deck",
+    "id": "stocksDeck",
+    "x": 4,
+    "y": 4,
+    "z": 218,
+    "cardDefaults": {
+      "width": 66,
+      "height": 66,
+      "layer": 500,
+      "white": "#fff8\" stroke=\"#fff2\" stroke-width=\"00",
+      "onPileCreation": {
+        "XhandleSize": 500,
+        "XhandleCSS": "background:white;left:0;right:0;bottom:-100%;top:50%;margin:auto",
+        "handleCSS": "right:-15px;top:-30px"
+      }
+    },
+    "cardTypes": {
+      "piggy-bank0": {
+        "treasureType": "piggy-bank",
+        "order": 1,
+        "suit": "/i/game-icons.net/delapouite/piggy-bank.svg",
+        "suitColor": "#c8d5ff",
+        "rank": "0"
+      },
+      "piggy-bank1": {
+        "treasureType": "piggy-bank",
+        "order": 1,
+        "suit": "/i/game-icons.net/delapouite/piggy-bank.svg",
+        "suitColor": "#c8d5ff",
+        "rank": "1"
+      },
+      "piggy-bank2": {
+        "treaureType": "piggy-bank",
+        "order": 1,
+        "suit": "/i/game-icons.net/delapouite/piggy-bank.svg",
+        "suitColor": "#c8d5ff",
+        "rank": "2"
+      },
+      "piggy-bank3": {
+        "treasureType": "piggy-bank",
+        "order": 1,
+        "suit": "/i/game-icons.net/delapouite/piggy-bank.svg",
+        "suitColor": "#c8d5ff",
+        "rank": "3"
+      },
+      "swap-bag4": {
+        "treasureType": "swap-bag",
+        "order": 2,
+        "suit": "/i/game-icons.net/lorc/swap-bag.svg",
+        "suitColor": "#89adff",
+        "rank": "4"
+      },
+      "swap-bag5": {
+        "treasureType": "swap-bag",
+        "order": 2,
+        "suit": "/i/game-icons.net/lorc/swap-bag.svg",
+        "suitColor": "#89adff",
+        "rank": "5"
+      },
+      "swap-bag6": {
+        "treasureType": "swap-bag",
+        "order": 2,
+        "suit": "/i/game-icons.net/lorc/swap-bag.svg",
+        "suitColor": "#89adff",
+        "rank": "6"
+      },
+      "swap-bag7": {
+        "treasureType": "swap-bag",
+        "order": 2,
+        "suit": "/i/game-icons.net/lorc/swap-bag.svg",
+        "suitColor": "#89adff",
+        "rank": "7"
+      },
+      "pearl-necklace8": {
+        "treasureType": "pearl-necklace",
+        "order": 3,
+        "suit": "/i/game-icons.net/delapouite/pearl-necklace.svg",
+        "suitColor": "#0088ff",
+        "rank": "8"
+      },
+      "pearl-necklace9": {
+        "treasureType": "pearl-necklace",
+        "order": 3,
+        "suit": "/i/game-icons.net/delapouite/pearl-necklace.svg",
+        "suitColor": "#0088ff",
+        "rank": "9"
+      },
+      "pearl-necklace10": {
+        "treasureType": "pearl-necklace",
+        "order": 3,
+        "suit": "/i/game-icons.net/delapouite/pearl-necklace.svg",
+        "suitColor": "#0088ff",
+        "rank": "10"
+      },
+      "pearl-necklace11": {
+        "treasureType": "pearl-necklace",
+        "order": 3,
+        "suit": "/i/game-icons.net/delapouite/pearl-necklace.svg",
+        "suitColor": "#0088ff",
+        "rank": "11"
+      },
+      "treasure-chest12": {
+        "treasureType": "treasure-chest",
+        "order": 4,
+        "suit": "/i/game-icons.net/skoll/open-treasure-chest.svg",
+        "suitColor": "#2159a2",
+        "rank": "12"
+      },
+      "treasure-chest13": {
+        "treasureType": "treasure-chest",
+        "order": 4,
+        "suit": "/i/game-icons.net/skoll/open-treasure-chest.svg",
+        "suitColor": "#2159a2",
+        "rank": "13"
+      },
+      "treasure-chest14": {
+        "treasureType": "treasure-chest",
+        "order": 4,
+        "suit": "/i/game-icons.net/skoll/open-treasure-chest.svg",
+        "suitColor": "#2159a2",
+        "rank": "14"
+      },
+      "treasure-chest15": {
+        "treasureType": "treasure-chest",
+        "order": 4,
+        "suit": "/i/game-icons.net/skoll/open-treasure-chest.svg",
+        "suitColor": "#2159a2",
+        "rank": "15"
+      }
+    },
+    "faceTemplates": [
+      {
+        "radius": 16,
+        "objects": [
+          {
+            "type": "image",
+            "width": 103,
+            "height": 160,
+            "dynamicProperties": {
+              "color": "suitColor"
+            }
+          },
+          {
+            "type": "image",
+            "x": 10,
+            "y": 10,
+            "width": 46,
+            "height": 45,
+            "color": "transparent",
+            "svgReplaces": {
+              "#000": "white"
+            },
+            "dynamicProperties": {
+              "value": "suit"
+            }
+          }
+        ]
+      },
+      {
+        "radius": 16,
+        "objects": [
+          {
+            "type": "image",
+            "width": 103,
+            "height": 160,
+            "dynamicProperties": {
+              "color": "suitColor"
+            }
+          },
+          {
+            "type": "text",
+            "x": -18,
+            "y": 11,
+            "fontSize": 40,
+            "textAlign": "center",
+            "width": 103,
+            "color": "white",
+            "dynamicProperties": {
+              "value": "rank"
+            }
+          }
+        ]
+      }
+    ],
+    "hoverParent": "itemsHome",
+    "parent": "itemsHome"
+  },
+  "buttonSetup": {
+    "type": "button",
+    "id": "buttonSetup",
+    "parent": "itemsHome",
+    "fixedParent": true,
+    "x": 22,
+    "z": 33108,
+    "text": "restart",
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "header": "Starting game...",
+        "fields": [
+          {
+            "type": "subtitle",
+            "text": "This will start a new game. Are you sure?"
+          }
+        ],
+        "confirmButtonText": "Yes"
+      },
+      "// Reset all dynamic values (suit, order, and ranks) of exchange cards. And move exchange cards back to their home holder.",
+      {
+        "func": "SELECT",
+        "property": "cardType",
+        "value": "itemStack",
+        "collection": "itemStacks"
+      },
+      {
+        "func": "SET",
+        "collection": "itemStacks",
+        "property": "order",
+        "value": "0"
+      },
+      {
+        "func": "SET",
+        "collection": "itemStacks",
+        "property": "suit",
+        "value": "Level \n"
+      },
+      {
+        "func": "FOREACH",
+        "in": [
+          1,
+          2,
+          3
+        ],
+        "loopRoutine": [
+          {
+            "func": "SET",
+            "collection": "itemStacks",
+            "property": "rank${value}",
+            "value": "0"
+          }
+        ]
+      },
+      {
+        "func": "MOVE",
+        "collection": "itemStacks",
+        "to": "itemStacksHome"
+      },
+      "// Reset the skipTurn flag for all players.",
+      {
+        "func": "SELECT",
+        "type": "seat"
+      },
+      {
+        "func": "SET",
+        "property": "skipTurn",
+        "value": false
+      },
+      "// Reset the homeward boolean status for all meeples and move them home.",
+      {
+        "func": "SELECT",
+        "property": "type",
+        "value": "meeple",
+        "collection": "allMeeples"
+      },
+      {
+        "func": "SET",
+        "property": "homeward",
+        "value": false,
+        "collection": "allMeeples"
+      },
+      {
+        "func": "FOREACH",
+        "collection": "allMeeples",
+        "loopRoutine": [
+          {
+            "func": "MOVE",
+            "to": "meepleHolder${PROPERTY pid OF $widgetID}"
+          }
+        ]
+      },
+      "// Reset the round counter.",
+      {
+        "func": "SET",
+        "collection": [
+          "roundCounter"
+        ],
+        "property": "text",
+        "value": 25
+      },
+      "// Recall all non-exchange cards to their home folder, shuffle them, and sort by order (low to high). Draw and move them back to the board one by one.",
+      {
+        "func": "RECALL",
+        "holder": "${PROPERTY parent}"
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "${PROPERTY parent}"
+      },
+      {
+        "func": "SORT",
+        "holder": "${PROPERTY parent}",
+        "key": "order",
+        "reverse": true
+      },
+      {
+        "func": "SELECT",
+        "type": "holder",
+        "property": "parent",
+        "value": "boardBase",
+        "collection": "boardHolders"
+      },
+      {
+        "func": "GET",
+        "property": "id",
+        "aggregation": "array",
+        "variable": "arrayHolderTreasureIds",
+        "collection": "boardHolders"
+      },
+      "var arrayHolderTreasureIdsSorted = ${arrayHolderTreasureIds} numericStringSort",
+      {
+        "func": "FOREACH",
+        "in": "${arrayHolderTreasureIds}",
+        "loopRoutine": [
+          {
+            "func": "MOVE",
+            "from": "itemsHome",
+            "to": "${value}"
+          }
+        ]
+      },
+      "// Reset the last empty fields, which were manually set to occupied (true) at round end, back to false to allow meeples to enter again.",
+      {
+        "func": "SET",
+        "property": "occupied",
+        "value": false,
+        "collection": "boardHolders"
+      },
+      "// Reset the homeward button for all players.",
+      {
+        "func": "SELECT",
+        "property": "homewardButton",
+        "value": true
+      },
+      {
+        "func": "SET",
+        "property": "newBorder",
+        "value": "0px solid black"
+      },
+      {
+        "func": "SET",
+        "property": "scale",
+        "value": 0
+      },
+      "// Reset the roll button for all players.",
+      {
+        "func": "SELECT",
+        "property": "rollButton",
+        "value": true
+      },
+      {
+        "func": "SET",
+        "property": "scale",
+        "value": 0
+      },
+      "// Reset the move button for all players.",
+      {
+        "func": "SELECT",
+        "property": "moveButton",
+        "value": true
+      },
+      {
+        "func": "SET",
+        "property": "scale",
+        "value": 0
+      },
+      "// Reset the option button for all players.",
+      {
+        "func": "SELECT",
+        "property": "optionButton",
+        "value": true
+      },
+      {
+        "func": "SET",
+        "property": "scale",
+        "value": 0
+      },
+      "// Reset the item action button for all players.",
+      {
+        "func": "SELECT",
+        "property": "itemActionButton",
+        "value": true
+      },
+      {
+        "func": "SET",
+        "property": "scale",
+        "value": 0
+      },
+      "// Reset the turn button for all players.",
+      {
+        "func": "SELECT",
+        "property": "turnButton",
+        "value": true
+      },
+      {
+        "func": "SET",
+        "property": "scale",
+        "value": 0
+      },
+      "// Unassign the turn true boolean for the active player.",
+      {
+        "func": "SELECT",
+        "property": "turn",
+        "value": true
+      },
+      {
+        "func": "SET",
+        "property": "turn",
+        "value": false
+      },
+      "// Randomly choose a start player.",
+      {
+        "func": "TURN",
+        "turnCycle": "random"
+      },
+      {
+        "func": "SELECT",
+        "property": "turn",
+        "value": true
+      },
+      {
+        "func": "GET",
+        "collection": "DEFAULT",
+        "variable": "startPlayerIndex",
+        "property": "index"
+      },
+      {
+        "func": "SET",
+        "property": "scale",
+        "value": 1,
+        "collection": [
+          "roll${startPlayerIndex}"
+        ]
+      },
+      "// Reset the game counter.",
+      {
+        "func": "FOREACH",
+        "in": [
+          1,
+          2
+        ],
+        "loopRoutine": [
+          {
+            "func": "SET",
+            "property": "display",
+            "collection": [
+              "gameCounter${value}"
+            ],
+            "value": false
+          }
+        ]
+      }
+    ],
+    "y": 129,
+    "width": 70,
+    "height": 50,
+    "classes": "symbols",
+    "color": "white",
+    "css": {
+      "default": {
+        "font-size": "40px",
+        "--wcMain": "black",
+        "--wcBorder": "white",
+        "--wcMainOH": "grey",
+        "--wcBorderOH": "black"
+      },
+      "::after": {
+        "content": "\"New Game\"",
+        "display": "none",
+        "position": "absolute",
+        "margin-top": "71px",
+        "width": "105px",
+        "color": "black",
+        "font-size": "14px",
+        "font-family": "Roboto"
+      },
+      ":hover::after": {
+        "display": "block"
+      }
+    }
+  },
+  "discard": {
+    "type": "holder",
+    "id": "discard",
+    "x": 1100,
+    "width": 80,
+    "height": 80,
+    "z": 4739,
+    "y": -110
+  },
+  "itemStacksHome": {
+    "type": "holder",
+    "id": "itemStacksHome",
+    "x": 1374,
+    "y": -122,
+    "width": 100,
+    "height": 100,
+    "z": 4870,
+    "dropTarget": {
+      "type": "card"
+    },
+    "onEnter": {
+      "activeFace": 0,
+      "movable": false,
+      "clickable": false
+    }
+  },
+  "stackDeck": {
+    "type": "deck",
+    "id": "stackDeck",
+    "x": 4,
+    "y": 4,
+    "z": 221,
+    "cardDefaults": {
+      "width": 66,
+      "height": 66,
+      "layer": 500,
+      "white": "#fff8\" stroke=\"#fff2\" stroke-width=\"00",
+      "onPileCreation": {
+        "XhandleSize": 500,
+        "XhandleCSS": "background:white;left:0;right:0;bottom:-100%;top:50%;margin:auto",
+        "handleCSS": "right:-15px;top:-30px"
+      }
+    },
+    "cardTypes": {
+      "itemStack": {
+        "itemType": "stack",
+        "order": "0",
+        "suit": "Level \n",
+        "suitColor": "#02175c",
+        "rank1": "0",
+        "rank2": "0",
+        "rank3": "0"
+      }
+    },
+    "faceTemplates": [
+      {
+        "radius": 16,
+        "objects": [
+          {
+            "type": "image",
+            "width": 103,
+            "height": 160,
+            "dynamicProperties": {
+              "color": "suitColor"
+            }
+          },
+          {
+            "type": "text",
+            "x": -18,
+            "y": 11,
+            "fontSize": 20,
+            "textAlign": "center",
+            "width": 103,
+            "color": "white",
+            "dynamicProperties": {
+              "value": "suit"
+            }
+          }
+        ]
+      },
+      {
+        "radius": 16,
+        "objects": [
+          {
+            "type": "image",
+            "width": 103,
+            "height": 160,
+            "dynamicProperties": {
+              "color": "suitColor"
+            }
+          },
+          {
+            "type": "text",
+            "x": -18,
+            "y": 11,
+            "fontSize": 40,
+            "textAlign": "center",
+            "width": 103,
+            "color": "white",
+            "dynamicProperties": {
+              "value": "rank1"
+            }
+          }
+        ]
+      },
+      {
+        "radius": 16,
+        "objects": [
+          {
+            "type": "image",
+            "width": 103,
+            "height": 160,
+            "dynamicProperties": {
+              "color": "suitColor"
+            }
+          },
+          {
+            "type": "text",
+            "x": -18,
+            "y": 11,
+            "fontSize": 40,
+            "textAlign": "center",
+            "width": 103,
+            "color": "white",
+            "dynamicProperties": {
+              "value": "rank2"
+            }
+          }
+        ]
+      },
+      {
+        "radius": 16,
+        "objects": [
+          {
+            "type": "image",
+            "width": 103,
+            "height": 160,
+            "dynamicProperties": {
+              "color": "suitColor"
+            }
+          },
+          {
+            "type": "text",
+            "x": -18,
+            "y": 11,
+            "fontSize": 40,
+            "textAlign": "center",
+            "width": 103,
+            "color": "white",
+            "dynamicProperties": {
+              "value": "rank3"
+            }
+          }
+        ]
+      }
+    ],
+    "hoverParent": "itemStacksHome",
+    "parent": "itemStacksHome"
+  },
+  "holder3": {
+    "type": "holder",
+    "id": "holder3",
+    "x": 685,
+    "y": 198,
+    "inheritFrom": {
+      "holder1": "*"
+    },
+    "z": 4834,
+    "exhausted": false,
+    "occupied": false
+  },
+  "holder4": {
+    "type": "holder",
+    "id": "holder4",
+    "x": 593,
+    "y": 221,
+    "inheritFrom": {
+      "holder1": "*"
+    },
+    "z": 4814,
+    "exhausted": false,
+    "occupied": false
+  },
+  "holder5": {
+    "type": "holder",
+    "id": "holder5",
+    "x": 501,
+    "y": 237,
+    "inheritFrom": {
+      "holder1": "*"
+    },
+    "z": 4813,
+    "exhausted": false,
+    "occupied": false
+  },
+  "holder6": {
+    "type": "holder",
+    "id": "holder6",
+    "x": 410,
+    "y": 254,
+    "inheritFrom": {
+      "holder1": "*"
+    },
+    "z": 4812,
+    "exhausted": false,
+    "occupied": false
+  },
+  "holder7": {
+    "type": "holder",
+    "id": "holder7",
+    "x": 318,
+    "y": 267,
+    "inheritFrom": {
+      "holder1": "*"
+    },
+    "z": 4811,
+    "exhausted": false,
+    "occupied": false
+  },
+  "holder8": {
+    "type": "holder",
+    "id": "holder8",
+    "x": 226,
+    "y": 297,
+    "inheritFrom": {
+      "holder1": "*"
+    },
+    "z": 4810,
+    "exhausted": false,
+    "occupied": false
+  },
+  "holder9": {
+    "type": "holder",
+    "id": "holder9",
+    "x": 134,
+    "y": 314,
+    "inheritFrom": {
+      "holder1": "*"
+    },
+    "z": 4808,
+    "exhausted": false,
+    "occupied": false
+  },
+  "holder10": {
+    "type": "holder",
+    "id": "holder10",
+    "x": 42,
+    "y": 345,
+    "inheritFrom": {
+      "holder1": "*"
+    },
+    "z": 4823,
+    "exhausted": false,
+    "occupied": false
+  },
+  "holder11": {
+    "type": "holder",
+    "id": "holder11",
+    "x": 31,
+    "y": 432,
+    "inheritFrom": {
+      "holder1": "*"
+    },
+    "z": 4824,
+    "exhausted": false,
+    "occupied": false
+  },
+  "holder12": {
+    "type": "holder",
+    "id": "holder12",
+    "x": 137,
+    "y": 450,
+    "inheritFrom": {
+      "holder1": "*"
+    },
+    "z": 4835,
+    "exhausted": false,
+    "occupied": false
+  },
+  "holder13": {
+    "type": "holder",
+    "id": "holder13",
+    "x": 243,
+    "y": 454,
+    "inheritFrom": {
+      "holder1": "*"
+    },
+    "z": 4836,
+    "exhausted": false,
+    "occupied": false
+  },
+  "holder14": {
+    "type": "holder",
+    "id": "holder14",
+    "x": 350,
+    "y": 472,
+    "inheritFrom": {
+      "holder1": "*"
+    },
+    "z": 4837,
+    "exhausted": false,
+    "occupied": false
+  },
+  "holder15": {
+    "type": "holder",
+    "id": "holder15",
+    "x": 456,
+    "y": 476,
+    "inheritFrom": {
+      "holder1": "*"
+    },
+    "z": 4838,
+    "exhausted": false,
+    "occupied": false
+  },
+  "holder16": {
+    "type": "holder",
+    "id": "holder16",
+    "x": 562,
+    "y": 484,
+    "inheritFrom": {
+      "holder1": "*"
+    },
+    "z": 4840,
+    "exhausted": false,
+    "occupied": false
+  },
+  "holder17": {
+    "type": "holder",
+    "id": "holder17",
+    "x": 668,
+    "y": 496,
+    "inheritFrom": {
+      "holder1": "*"
+    },
+    "z": 4841,
+    "exhausted": false,
+    "occupied": false
+  },
+  "holder18": {
+    "type": "holder",
+    "id": "holder18",
+    "x": 775,
+    "y": 509,
+    "inheritFrom": {
+      "holder1": "*"
+    },
+    "z": 4842,
+    "exhausted": false,
+    "occupied": false
+  },
+  "holder19": {
+    "type": "holder",
+    "id": "holder19",
+    "x": 881,
+    "y": 526,
+    "inheritFrom": {
+      "holder1": "*"
+    },
+    "z": 4844,
+    "exhausted": false,
+    "occupied": false
+  },
+  "holder20": {
+    "type": "holder",
+    "id": "holder20",
+    "x": 890,
+    "y": 624,
+    "inheritFrom": {
+      "holder1": "*"
+    },
+    "z": 4845,
+    "exhausted": false,
+    "occupied": false
+  },
+  "holder21": {
+    "type": "holder",
+    "id": "holder21",
+    "x": 786,
+    "y": 633,
+    "inheritFrom": {
+      "holder1": "*"
+    },
+    "z": 4848,
+    "exhausted": false,
+    "occupied": false
+  },
+  "holder22": {
+    "type": "holder",
+    "id": "holder22",
+    "x": 682,
+    "y": 645,
+    "inheritFrom": {
+      "holder1": "*"
+    },
+    "z": 4847,
+    "exhausted": false,
+    "occupied": false
+  },
+  "holder23": {
+    "type": "holder",
+    "id": "holder23",
+    "x": 578,
+    "y": 667,
+    "inheritFrom": {
+      "holder1": "*"
+    },
+    "z": 4849,
+    "exhausted": false,
+    "occupied": false
+  },
+  "holder24": {
+    "type": "holder",
+    "id": "holder24",
+    "x": 474,
+    "y": 676,
+    "inheritFrom": {
+      "holder1": "*"
+    },
+    "z": 4850,
+    "exhausted": false,
+    "occupied": false
+  },
+  "holder25": {
+    "type": "holder",
+    "id": "holder25",
+    "x": 370,
+    "y": 678,
+    "inheritFrom": {
+      "holder1": "*"
+    },
+    "z": 4851,
+    "exhausted": false,
+    "occupied": false
+  },
+  "holder26": {
+    "type": "holder",
+    "id": "holder26",
+    "x": 266,
+    "y": 684,
+    "inheritFrom": {
+      "holder1": "*"
+    },
+    "z": 4852,
+    "exhausted": false,
+    "occupied": false
+  },
+  "holder27": {
+    "type": "holder",
+    "id": "holder27",
+    "x": 162,
+    "y": 695,
+    "inheritFrom": {
+      "holder1": "*"
+    },
+    "z": 4859,
+    "exhausted": false,
+    "occupied": false
+  },
+  "holder28": {
+    "type": "holder",
+    "id": "holder28",
+    "x": 58,
+    "y": 703,
+    "inheritFrom": {
+      "holder1": "*"
+    },
+    "z": 4860,
+    "exhausted": false,
+    "occupied": false
+  },
+  "meeple1": {
+    "id": "meeple1",
+    "width": 66.5,
+    "height": 70,
+    "z": 1,
+    "bgColor": "#1976d2",
+    "bgColor1": "#bf360c",
+    "bgColor2": "#e55c32",
+    "borderColor": "#000000",
+    "borderWidth": 1,
+    "pid": 1,
+    "state": "alive",
+    "color": "#dddddd",
+    "css": {
+      "": {
+        "text-align": "center",
+        "padding": "1em",
+        "border-radius": "45% 65% 70% 30%/ 45% 50% 20% 20%",
+        "box-sizing": "border-box",
+        "transition": "opacity 1s, linear 0.65s",
+        "opacity": 1
+      },
+      ":hover": {
+        "opacity": 0.5
+      }
+    },
+    "faces": [
+      {
+        "image": "i/game-pieces/3D/Meeple-3D.svg",
+        "rotation": 0,
+        "state": "alive"
+      }
+    ],
+    "image": "i/game-pieces/3D/Meeple-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "classes": "transition",
+    "type": "meeple",
+    "layer": 501,
+    "homeward": false,
+    "home": true,
+    "x": -8,
+    "y": -15,
+    "parent": "meepleHolder1",
+    "meeple": true,
+    "movable": false
+  },
+  "holder29": {
+    "type": "holder",
+    "id": "holder29",
+    "x": 33,
+    "y": 783,
+    "inheritFrom": {
+      "holder1": "*"
+    },
+    "z": 4863,
+    "exhausted": false,
+    "occupied": false
+  },
+  "holder30": {
+    "type": "holder",
+    "id": "holder30",
+    "x": 126,
+    "y": 806,
+    "inheritFrom": {
+      "holder1": "*"
+    },
+    "z": 4864,
+    "exhausted": false,
+    "occupied": false
+  },
+  "holder31": {
+    "type": "holder",
+    "id": "holder31",
+    "x": 253,
+    "y": 812,
+    "inheritFrom": {
+      "holder1": "*"
+    },
+    "z": 4865,
+    "exhausted": false,
+    "occupied": false
+  },
+  "holder32": {
+    "type": "holder",
+    "id": "holder32",
+    "x": 379,
+    "y": 818,
+    "inheritFrom": {
+      "holder1": "*"
+    },
+    "z": 4866,
+    "exhausted": false,
+    "occupied": false
+  },
+  "mom8": {
+    "deck": "stocksDeck",
+    "type": "card",
+    "cardType": "piggy-bank0",
+    "id": "mom8",
+    "z": 33993,
+    "onBoard": true,
+    "parent": "holder3",
+    "movable": false,
+    "clickable": false,
+    "x": 4,
+    "y": 4
+  },
+  "8g4g": {
+    "deck": "stocksDeck",
+    "type": "card",
+    "cardType": "piggy-bank0",
+    "id": "8g4g",
+    "z": 33991,
+    "onBoard": true,
+    "parent": "holder1",
+    "movable": false,
+    "clickable": false,
+    "x": 4,
+    "y": 4
+  },
+  "hsoy": {
+    "deck": "stocksDeck",
+    "type": "card",
+    "cardType": "piggy-bank1",
+    "id": "hsoy",
+    "z": 33997,
+    "onBoard": true,
+    "parent": "holder7",
+    "movable": false,
+    "clickable": false,
+    "x": 4,
+    "y": 4
+  },
+  "attn": {
+    "deck": "stocksDeck",
+    "type": "card",
+    "cardType": "piggy-bank1",
+    "id": "attn",
+    "z": 33996,
+    "onBoard": true,
+    "parent": "holder6",
+    "movable": false,
+    "clickable": false,
+    "x": 4,
+    "y": 4
+  },
+  "cd17": {
+    "deck": "stocksDeck",
+    "type": "card",
+    "cardType": "piggy-bank2",
+    "id": "cd17",
+    "z": 33998,
+    "onBoard": true,
+    "parent": "holder8",
+    "movable": false,
+    "clickable": false,
+    "x": 4,
+    "y": 4
+  },
+  "vqma": {
+    "deck": "stocksDeck",
+    "type": "card",
+    "cardType": "piggy-bank2",
+    "id": "vqma",
+    "z": 33992,
+    "onBoard": true,
+    "parent": "holder2",
+    "x": 4,
+    "y": 4,
+    "movable": false,
+    "clickable": false
+  },
+  "sev9": {
+    "deck": "stocksDeck",
+    "type": "card",
+    "cardType": "swap-bag5",
+    "id": "sev9",
+    "z": 34004,
+    "onBoard": true,
+    "parent": "holder14",
+    "clickable": false,
+    "movable": false,
+    "x": 4,
+    "y": 4
+  },
+  "c1gc": {
+    "deck": "stocksDeck",
+    "type": "card",
+    "cardType": "swap-bag5",
+    "id": "c1gc",
+    "z": 33999,
+    "onBoard": true,
+    "parent": "holder9",
+    "movable": false,
+    "clickable": false,
+    "x": 4,
+    "y": 4
+  },
+  "mbkv": {
+    "deck": "stocksDeck",
+    "type": "card",
+    "cardType": "swap-bag4",
+    "id": "mbkv",
+    "z": 34003,
+    "onBoard": true,
+    "parent": "holder13",
+    "movable": false,
+    "clickable": false,
+    "x": 4,
+    "y": 4
+  },
+  "ebcl": {
+    "deck": "stocksDeck",
+    "type": "card",
+    "cardType": "swap-bag4",
+    "id": "ebcl",
+    "z": 34002,
+    "onBoard": true,
+    "parent": "holder12",
+    "movable": false,
+    "clickable": false,
+    "x": 4,
+    "y": 4
+  },
+  "l792": {
+    "deck": "stocksDeck",
+    "type": "card",
+    "cardType": "piggy-bank3",
+    "id": "l792",
+    "z": 33995,
+    "onBoard": true,
+    "parent": "holder5",
+    "movable": false,
+    "clickable": false,
+    "x": 4,
+    "y": 4
+  },
+  "f1v7": {
+    "deck": "stocksDeck",
+    "type": "card",
+    "cardType": "piggy-bank3",
+    "id": "f1v7",
+    "z": 33994,
+    "onBoard": true,
+    "parent": "holder4",
+    "clickable": false,
+    "x": 4,
+    "y": 4,
+    "movable": false
+  },
+  "t601": {
+    "deck": "stocksDeck",
+    "type": "card",
+    "cardType": "swap-bag6",
+    "id": "t601",
+    "z": 34000,
+    "onBoard": true,
+    "parent": "holder10",
+    "movable": false,
+    "clickable": false,
+    "x": 4,
+    "y": 4
+  },
+  "77nj": {
+    "deck": "stocksDeck",
+    "type": "card",
+    "cardType": "swap-bag6",
+    "id": "77nj",
+    "z": 34001,
+    "onBoard": true,
+    "parent": "holder11",
+    "movable": false,
+    "clickable": false,
+    "x": 4,
+    "y": 4
+  },
+  "uzbj": {
+    "deck": "stocksDeck",
+    "type": "card",
+    "cardType": "swap-bag7",
+    "id": "uzbj",
+    "z": 34005,
+    "onBoard": true,
+    "clickable": false,
+    "parent": "holder15",
+    "movable": false,
+    "x": 4,
+    "y": 4
+  },
+  "fe2b": {
+    "deck": "stocksDeck",
+    "type": "card",
+    "cardType": "swap-bag7",
+    "id": "fe2b",
+    "z": 34006,
+    "parent": "holder16",
+    "onBoard": true,
+    "clickable": false,
+    "movable": false,
+    "x": 4,
+    "y": 4
+  },
+  "2mwl": {
+    "deck": "stocksDeck",
+    "type": "card",
+    "cardType": "pearl-necklace8",
+    "id": "2mwl",
+    "z": 34007,
+    "onBoard": true,
+    "parent": "holder17",
+    "clickable": false,
+    "movable": false,
+    "x": 4,
+    "y": 4
+  },
+  "baur": {
+    "deck": "stocksDeck",
+    "type": "card",
+    "cardType": "pearl-necklace8",
+    "id": "baur",
+    "z": 34012,
+    "onBoard": true,
+    "parent": "holder22",
+    "movable": false,
+    "clickable": false,
+    "x": 4,
+    "y": 4
+  },
+  "pb30": {
+    "deck": "stocksDeck",
+    "type": "card",
+    "cardType": "pearl-necklace11",
+    "id": "pb30",
+    "z": 34008,
+    "onBoard": true,
+    "parent": "holder18",
+    "movable": false,
+    "clickable": false,
+    "x": 4,
+    "y": 4
+  },
+  "viss": {
+    "deck": "stocksDeck",
+    "type": "card",
+    "cardType": "pearl-necklace11",
+    "id": "viss",
+    "z": 34009,
+    "parent": "holder19",
+    "onBoard": true,
+    "movable": false,
+    "clickable": false,
+    "x": 4,
+    "y": 4
+  },
+  "utnv": {
+    "deck": "stocksDeck",
+    "type": "card",
+    "cardType": "pearl-necklace10",
+    "id": "utnv",
+    "z": 34014,
+    "onBoard": true,
+    "parent": "holder24",
+    "movable": false,
+    "clickable": false,
+    "x": 4,
+    "y": 4
+  },
+  "l9lg": {
+    "deck": "stocksDeck",
+    "type": "card",
+    "cardType": "pearl-necklace10",
+    "id": "l9lg",
+    "z": 34011,
+    "onBoard": true,
+    "parent": "holder21",
+    "movable": false,
+    "clickable": false,
+    "x": 4,
+    "y": 4
+  },
+  "7ytn": {
+    "deck": "stocksDeck",
+    "type": "card",
+    "cardType": "pearl-necklace9",
+    "id": "7ytn",
+    "z": 34013,
+    "onBoard": true,
+    "parent": "holder23",
+    "movable": false,
+    "clickable": false,
+    "x": 4,
+    "y": 4
+  },
+  "ngzq": {
+    "deck": "stocksDeck",
+    "type": "card",
+    "cardType": "pearl-necklace9",
+    "id": "ngzq",
+    "z": 34010,
+    "onBoard": true,
+    "parent": "holder20",
+    "movable": false,
+    "clickable": false,
+    "x": 4,
+    "y": 4
+  },
+  "l52t": {
+    "deck": "stocksDeck",
+    "type": "card",
+    "cardType": "treasure-chest12",
+    "id": "l52t",
+    "z": 34019,
+    "onBoard": true,
+    "parent": "holder29",
+    "movable": false,
+    "clickable": false,
+    "x": 4,
+    "y": 4
+  },
+  "ao91": {
+    "deck": "stocksDeck",
+    "type": "card",
+    "cardType": "treasure-chest12",
+    "id": "ao91",
+    "z": 34022,
+    "onBoard": true,
+    "parent": "holder32",
+    "movable": false,
+    "clickable": false,
+    "x": 4,
+    "y": 4
+  },
+  "o7ps": {
+    "deck": "stocksDeck",
+    "type": "card",
+    "cardType": "treasure-chest13",
+    "id": "o7ps",
+    "z": 34015,
+    "parent": "holder25",
+    "onBoard": true,
+    "clickable": false,
+    "movable": false,
+    "x": 4,
+    "y": 4
+  },
+  "7xbj": {
+    "deck": "stocksDeck",
+    "type": "card",
+    "cardType": "treasure-chest13",
+    "id": "7xbj",
+    "z": 34020,
+    "onBoard": true,
+    "parent": "holder30",
+    "clickable": false,
+    "movable": false,
+    "x": 4,
+    "y": 4
+  },
+  "mt64": {
+    "deck": "stocksDeck",
+    "type": "card",
+    "cardType": "treasure-chest14",
+    "id": "mt64",
+    "z": 34021,
+    "onBoard": true,
+    "parent": "holder31",
+    "clickable": false,
+    "movable": false,
+    "x": 4,
+    "y": 4
+  },
+  "wog8": {
+    "deck": "stocksDeck",
+    "type": "card",
+    "cardType": "treasure-chest14",
+    "id": "wog8",
+    "z": 34018,
+    "onBoard": true,
+    "clickable": false,
+    "parent": "holder28",
+    "movable": false,
+    "x": 4,
+    "y": 4
+  },
+  "s41q": {
+    "deck": "stocksDeck",
+    "type": "card",
+    "cardType": "treasure-chest15",
+    "id": "s41q",
+    "z": 34016,
+    "onBoard": true,
+    "parent": "holder26",
+    "movable": false,
+    "clickable": false,
+    "x": 4,
+    "y": 4
+  },
+  "jz1i": {
+    "deck": "stocksDeck",
+    "type": "card",
+    "cardType": "treasure-chest15",
+    "id": "jz1i",
+    "z": 34017,
+    "onBoard": true,
+    "parent": "holder27",
+    "movable": false,
+    "clickable": false,
+    "x": 4,
+    "y": 4
+  },
+  "cp5z": {
+    "deck": "stackDeck",
+    "type": "card",
+    "cardType": "itemStack",
+    "id": "cp5z",
+    "z": 33867,
+    "onBoard": false,
+    "parent": "dkyc",
+    "movable": false,
+    "clickable": false
+  },
+  "ewwe": {
+    "deck": "stackDeck",
+    "type": "card",
+    "cardType": "itemStack",
+    "id": "ewwe",
+    "z": 33869,
+    "onBoard": false,
+    "clickable": false,
+    "parent": "dkyc",
+    "movable": false
+  },
+  "rkzw": {
+    "deck": "stackDeck",
+    "type": "card",
+    "cardType": "itemStack",
+    "id": "rkzw",
+    "z": 33871,
+    "onBoard": false,
+    "parent": "dkyc",
+    "movable": false,
+    "clickable": false
+  },
+  "dzo0": {
+    "deck": "stackDeck",
+    "type": "card",
+    "cardType": "itemStack",
+    "id": "dzo0",
+    "z": 33873,
+    "onBoard": false,
+    "parent": "dkyc",
+    "movable": false,
+    "clickable": false
+  },
+  "kiip": {
+    "deck": "stackDeck",
+    "type": "card",
+    "cardType": "itemStack",
+    "id": "kiip",
+    "z": 33875,
+    "onBoard": false,
+    "parent": "dkyc",
+    "movable": false,
+    "clickable": false
+  },
+  "01w7": {
+    "deck": "stackDeck",
+    "type": "card",
+    "cardType": "itemStack",
+    "id": "01w7",
+    "z": 33877,
+    "onBoard": false,
+    "parent": "dkyc",
+    "movable": false,
+    "clickable": false
+  },
+  "71kv": {
+    "deck": "stackDeck",
+    "type": "card",
+    "cardType": "itemStack",
+    "id": "71kv",
+    "z": 33879,
+    "onBoard": false,
+    "parent": "dkyc",
+    "movable": false,
+    "clickable": false
+  },
+  "oc16": {
+    "deck": "stackDeck",
+    "type": "card",
+    "cardType": "itemStack",
+    "id": "oc16",
+    "z": 33881,
+    "onBoard": false,
+    "parent": "dkyc",
+    "movable": false,
+    "clickable": false
+  },
+  "yu2o": {
+    "deck": "stackDeck",
+    "type": "card",
+    "cardType": "itemStack",
+    "id": "yu2o",
+    "z": 33883,
+    "parent": "dkyc",
+    "movable": false,
+    "clickable": false
+  },
+  "urzm": {
+    "deck": "stackDeck",
+    "type": "card",
+    "cardType": "itemStack",
+    "id": "urzm",
+    "z": 33885,
+    "parent": "dkyc",
+    "movable": false,
+    "clickable": false
+  },
+  "71gx": {
+    "deck": "stackDeck",
+    "type": "card",
+    "cardType": "itemStack",
+    "id": "71gx",
+    "z": 33887,
+    "parent": "dkyc",
+    "movable": false,
+    "clickable": false
+  },
+  "t1ld": {
+    "deck": "stackDeck",
+    "type": "card",
+    "cardType": "itemStack",
+    "id": "t1ld",
+    "z": 33889,
+    "parent": "dkyc",
+    "movable": false,
+    "clickable": false
+  },
+  "ye7y": {
+    "deck": "stackDeck",
+    "type": "card",
+    "cardType": "itemStack",
+    "id": "ye7y",
+    "z": 33891,
+    "parent": "dkyc",
+    "movable": false,
+    "clickable": false
+  },
+  "0f6k": {
+    "deck": "stackDeck",
+    "type": "card",
+    "cardType": "itemStack",
+    "id": "0f6k",
+    "z": 33893,
+    "parent": "dkyc",
+    "movable": false,
+    "clickable": false
+  },
+  "ttft": {
+    "deck": "stackDeck",
+    "type": "card",
+    "cardType": "itemStack",
+    "id": "ttft",
+    "z": 33895,
+    "parent": "dkyc",
+    "movable": false,
+    "clickable": false
+  },
+  "dkyc": {
+    "type": "pile",
+    "parent": "itemStacksHome",
+    "x": 4,
+    "y": 4,
+    "width": 66,
+    "height": 66,
+    "XhandleSize": 500,
+    "XhandleCSS": "background:white;left:0;right:0;bottom:-100%;top:50%;margin:auto",
+    "handleCSS": "right:-15px;top:-30px",
+    "id": "dkyc"
+  },
+  "plusMinus1": {
+    "id": "plusMinus1",
+    "parent": "diceHolder1",
+    "x": 35,
+    "y": 1,
+    "height": 35,
+    "borderRadius": 4,
+    "z": 33019,
+    "movable": false,
+    "css": {
+      "font-size": "30px",
+      "text-align": "center",
+      "display": "flex",
+      "justify-content": "center",
+      "align-items": "center",
+      "background": "transparent",
+      "color": "black"
+    },
+    "text": "+       -",
+    "layer": -5
+  },
+  "plusMinus2": {
+    "id": "plusMinus2",
+    "parent": "diceHolder2",
+    "inheritFrom": {
+      "plusMinus1": "*"
+    },
+    "pid": 2
+  },
+  "diceHolder3": {
+    "type": "holder",
+    "id": "diceHolder3",
+    "pid": 3,
+    "linkedToSeat": "seat3",
+    "inheritFrom": {
+      "diceHolder1": "*"
+    },
+    "x": 1346,
+    "y": 393
+  },
+  "roll3": {
+    "id": "roll3",
+    "parent": "diceHolder3",
+    "scale": 0,
+    "inheritFrom": {
+      "roll1": "*"
+    },
+    "z": 33122,
+    "pid": 3
+  },
+  "dice5": {
+    "type": "dice",
+    "id": "dice5",
+    "activeFace": 2,
+    "inheritFrom": {
+      "dice2": "*"
+    },
+    "parent": "diceHolder3",
+    "z": 2,
+    "rollCount": 1
+  },
+  "seatAreaBorder3": {
+    "id": "seatAreaBorder3",
+    "parent": "diceHolder3",
+    "inheritFrom": {
+      "seatAreaBorder1": "*"
+    }
+  },
+  "dice6": {
+    "type": "dice",
+    "id": "dice6",
+    "parent": "diceHolder3",
+    "activeFace": 2,
+    "inheritFrom": {
+      "dice1": "*"
+    },
+    "z": 1,
+    "rollCount": 1
+  },
+  "option3": {
+    "id": "option3",
+    "parent": "diceHolder3",
+    "inheritFrom": {
+      "option1": "*"
+    },
+    "text": 4,
+    "pid": 3,
+    "scale": 0,
+    "bgColor": "white"
+  },
+  "loot3": {
+    "type": "holder",
+    "id": "loot3",
+    "pid": 3,
+    "parent": "diceHolder3",
+    "inheritFrom": {
+      "loot1": "*"
+    }
+  },
+  "turn3": {
+    "id": "turn3",
+    "inheritFrom": {
+      "turn1": "*"
+    },
+    "pid": 3,
+    "parent": "diceHolder3",
+    "scale": 0
+  },
+  "slowdown3": {
+    "id": "slowdown3",
+    "parent": "diceHolder3",
+    "inheritFrom": {
+      "slowdown1": "*"
+    },
+    "text": 0,
+    "activeFace": 0
+  },
+  "scoredItems3": {
+    "type": "holder",
+    "id": "scoredItems3",
+    "pid": 3,
+    "inheritFrom": {
+      "scoredItems1": "*"
+    },
+    "parent": "diceHolder3",
+    "display": false
+  },
+  "score3": {
+    "id": "score3",
+    "parent": "diceHolder3",
+    "inheritFrom": {
+      "score1": "*"
+    },
+    "text": 0,
+    "z": 33117
+  },
+  "itemAction3": {
+    "id": "itemAction3",
+    "parent": "diceHolder3",
+    "inheritFrom": {
+      "itemAction1": "*"
+    },
+    "pid": 3,
+    "scale": 0
+  },
+  "move3": {
+    "id": "move3",
+    "parent": "diceHolder3",
+    "inheritFrom": {
+      "move1": "*"
+    },
+    "pid": 3,
+    "scale": 0
+  },
+  "homeward3": {
+    "id": "homeward3",
+    "parent": "diceHolder3",
+    "inheritFrom": {
+      "homeward1": [
+        "!newBorder"
+      ]
+    },
+    "z": 33116,
+    "newBorder": "0px solid black",
+    "pid": 3,
+    "scale": 0
+  },
+  "meepleHolder3": {
+    "type": "holder",
+    "id": "meepleHolder3",
+    "parent": "diceHolder3",
+    "inheritFrom": {
+      "meepleHolder1": "*"
+    },
+    "pid": 3
+  },
+  "meeple3": {
+    "id": "meeple3",
+    "width": 66.5,
+    "height": 70,
+    "z": 1,
+    "bgColor": "#1976d2",
+    "bgColor1": "#bf360c",
+    "bgColor2": "#e55c32",
+    "borderColor": "#000000",
+    "borderWidth": 1,
+    "pid": 3,
+    "state": "alive",
+    "color": "#dddddd",
+    "css": {
+      "": {
+        "text-align": "center",
+        "padding": "1em",
+        "border-radius": "45% 65% 70% 30%/ 45% 50% 20% 20%",
+        "box-sizing": "border-box",
+        "transition": "opacity 1s, linear 0.65s",
+        "opacity": 1
+      },
+      ":hover": {
+        "opacity": 0.5
+      }
+    },
+    "faces": [
+      {
+        "image": "i/game-pieces/3D/Meeple-3D.svg",
+        "rotation": 0,
+        "state": "alive"
+      }
+    ],
+    "image": "i/game-pieces/3D/Meeple-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "classes": "transition",
+    "type": "meeple",
+    "layer": 501,
+    "homeward": false,
+    "home": true,
+    "x": -8,
+    "y": -15,
+    "meeple": true,
+    "parent": "meepleHolder3",
+    "movable": false
+  },
+  "plusMinus3": {
+    "id": "plusMinus3",
+    "parent": "diceHolder3",
+    "inheritFrom": {
+      "plusMinus1": "*"
+    },
+    "pid": 2
+  },
+  "seat3": {
+    "type": "seat",
+    "id": "seat3",
+    "mainColor": "#dddddd",
+    "textColor": "#000000",
+    "turn": false,
+    "player": "",
+    "index": 3,
+    "inheritFrom": {
+      "seat1": "*"
+    },
+    "x": 1085,
+    "y": 397,
+    "z": 33078,
+    "skipTurn": false,
+    "slowdown": 0,
+    "pid": 2,
+    "score": 0
+  },
+  "diceHolder4": {
+    "type": "holder",
+    "id": "diceHolder4",
+    "pid": 4,
+    "linkedToSeat": "seat4",
+    "inheritFrom": {
+      "diceHolder1": "*"
+    },
+    "x": 1346,
+    "y": 547
+  },
+  "roll4": {
+    "id": "roll4",
+    "parent": "diceHolder4",
+    "scale": 0,
+    "inheritFrom": {
+      "roll1": "*"
+    },
+    "z": 33122,
+    "pid": 4
+  },
+  "dice7": {
+    "type": "dice",
+    "id": "dice7",
+    "activeFace": 1,
+    "inheritFrom": {
+      "dice2": "*"
+    },
+    "parent": "diceHolder4",
+    "z": 2,
+    "rollCount": 1
+  },
+  "seatAreaBorder4": {
+    "id": "seatAreaBorder4",
+    "parent": "diceHolder4",
+    "inheritFrom": {
+      "seatAreaBorder1": "*"
+    }
+  },
+  "dice8": {
+    "type": "dice",
+    "id": "dice8",
+    "parent": "diceHolder4",
+    "activeFace": 1,
+    "inheritFrom": {
+      "dice1": "*"
+    },
+    "z": 1,
+    "rollCount": 1
+  },
+  "option4": {
+    "id": "option4",
+    "parent": "diceHolder4",
+    "inheritFrom": {
+      "option1": "*"
+    },
+    "pid": 4,
+    "text": 1,
+    "scale": 0,
+    "bgColor": "white"
+  },
+  "loot4": {
+    "type": "holder",
+    "id": "loot4",
+    "pid": 4,
+    "parent": "diceHolder4",
+    "inheritFrom": {
+      "loot1": "*"
+    }
+  },
+  "turn4": {
+    "id": "turn4",
+    "inheritFrom": {
+      "turn1": "*"
+    },
+    "pid": 4,
+    "parent": "diceHolder4",
+    "scale": 0
+  },
+  "slowdown4": {
+    "id": "slowdown4",
+    "parent": "diceHolder4",
+    "inheritFrom": {
+      "slowdown1": "*"
+    },
+    "text": 0,
+    "activeFace": 0
+  },
+  "scoredItems4": {
+    "type": "holder",
+    "id": "scoredItems4",
+    "pid": 4,
+    "inheritFrom": {
+      "scoredItems1": "*"
+    },
+    "parent": "diceHolder4",
+    "display": false
+  },
+  "score4": {
+    "id": "score4",
+    "parent": "diceHolder4",
+    "inheritFrom": {
+      "score1": "*"
+    },
+    "text": 0,
+    "z": 33117,
+    "x": -329
+  },
+  "itemAction4": {
+    "id": "itemAction4",
+    "parent": "diceHolder4",
+    "inheritFrom": {
+      "itemAction1": "*"
+    },
+    "pid": 4,
+    "scale": 0
+  },
+  "move4": {
+    "id": "move4",
+    "parent": "diceHolder4",
+    "inheritFrom": {
+      "move1": "*"
+    },
+    "pid": 4,
+    "scale": 0
+  },
+  "homeward4": {
+    "id": "homeward4",
+    "parent": "diceHolder4",
+    "inheritFrom": {
+      "homeward1": [
+        "!newBorder"
+      ]
+    },
+    "z": 33116,
+    "newBorder": "0px solid black",
+    "pid": 4,
+    "scale": 0
+  },
+  "meepleHolder4": {
+    "type": "holder",
+    "id": "meepleHolder4",
+    "parent": "diceHolder4",
+    "inheritFrom": {
+      "meepleHolder1": "*"
+    },
+    "pid": 4
+  },
+  "meeple4": {
+    "id": "meeple4",
+    "width": 66.5,
+    "height": 70,
+    "z": 1,
+    "bgColor": "#1976d2",
+    "bgColor1": "#bf360c",
+    "bgColor2": "#e55c32",
+    "borderColor": "#000000",
+    "borderWidth": 1,
+    "pid": 4,
+    "state": "alive",
+    "color": "#dddddd",
+    "css": {
+      "": {
+        "text-align": "center",
+        "padding": "1em",
+        "border-radius": "45% 65% 70% 30%/ 45% 50% 20% 20%",
+        "box-sizing": "border-box",
+        "transition": "opacity 1s, linear 0.65s",
+        "opacity": 1
+      },
+      ":hover": {
+        "opacity": 0.5
+      }
+    },
+    "faces": [
+      {
+        "image": "i/game-pieces/3D/Meeple-3D.svg",
+        "rotation": 0,
+        "state": "alive"
+      }
+    ],
+    "image": "i/game-pieces/3D/Meeple-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "classes": "transition",
+    "type": "meeple",
+    "layer": 501,
+    "homeward": false,
+    "home": true,
+    "x": -8,
+    "y": -15,
+    "parent": "meepleHolder4",
+    "meeple": true,
+    "movable": false
+  },
+  "plusMinus4": {
+    "id": "plusMinus4",
+    "parent": "diceHolder4",
+    "inheritFrom": {
+      "plusMinus1": "*"
+    },
+    "pid": 2
+  },
+  "seat4": {
+    "type": "seat",
+    "id": "seat4",
+    "mainColor": "#dddddd",
+    "textColor": "#000000",
+    "turn": false,
+    "player": "",
+    "index": 4,
+    "inheritFrom": {
+      "seat1": "*"
+    },
+    "x": 1085,
+    "y": 551,
+    "z": 33078,
+    "skipTurn": false,
+    "slowdown": 0,
+    "pid": 2,
+    "score": 0
+  },
+  "diceHolder5": {
+    "type": "holder",
+    "id": "diceHolder5",
+    "pid": 5,
+    "linkedToSeat": "seat5",
+    "inheritFrom": {
+      "diceHolder1": "*"
+    },
+    "x": 1346,
+    "y": 701
+  },
+  "roll5": {
+    "id": "roll5",
+    "parent": "diceHolder5",
+    "scale": 0,
+    "inheritFrom": {
+      "roll1": "*"
+    },
+    "z": 33122,
+    "pid": 5
+  },
+  "dice9": {
+    "type": "dice",
+    "id": "dice9",
+    "activeFace": 2,
+    "inheritFrom": {
+      "dice2": "*"
+    },
+    "rollCount": 1,
+    "parent": "diceHolder5",
+    "z": 2
+  },
+  "seatAreaBorder5": {
+    "id": "seatAreaBorder5",
+    "parent": "diceHolder5",
+    "inheritFrom": {
+      "seatAreaBorder1": "*"
+    }
+  },
+  "dice10": {
+    "type": "dice",
+    "id": "dice10",
+    "parent": "diceHolder5",
+    "activeFace": 1,
+    "inheritFrom": {
+      "dice1": "*"
+    },
+    "z": 1,
+    "rollCount": 1
+  },
+  "option5": {
+    "id": "option5",
+    "parent": "diceHolder5",
+    "inheritFrom": {
+      "option1": "*"
+    },
+    "pid": 5,
+    "text": "0",
+    "scale": 0
+  },
+  "loot5": {
+    "type": "holder",
+    "id": "loot5",
+    "pid": 5,
+    "parent": "diceHolder5",
+    "inheritFrom": {
+      "loot1": "*"
+    }
+  },
+  "turn5": {
+    "id": "turn5",
+    "inheritFrom": {
+      "turn1": "*"
+    },
+    "pid": 5,
+    "parent": "diceHolder5",
+    "scale": 0
+  },
+  "slowdown5": {
+    "id": "slowdown5",
+    "parent": "diceHolder5",
+    "inheritFrom": {
+      "slowdown1": "*"
+    },
+    "text": 0,
+    "activeFace": 0
+  },
+  "scoredItems5": {
+    "type": "holder",
+    "id": "scoredItems5",
+    "pid": 5,
+    "inheritFrom": {
+      "scoredItems1": "*"
+    },
+    "parent": "diceHolder5",
+    "display": false
+  },
+  "score5": {
+    "id": "score5",
+    "parent": "diceHolder5",
+    "inheritFrom": {
+      "score1": "*"
+    },
+    "text": 0,
+    "z": 33117
+  },
+  "itemAction5": {
+    "id": "itemAction5",
+    "parent": "diceHolder5",
+    "inheritFrom": {
+      "itemAction1": "*"
+    },
+    "pid": 5,
+    "scale": 0
+  },
+  "move5": {
+    "id": "move5",
+    "parent": "diceHolder5",
+    "inheritFrom": {
+      "move1": "*"
+    },
+    "pid": 5,
+    "scale": 0
+  },
+  "homeward5": {
+    "id": "homeward5",
+    "parent": "diceHolder5",
+    "inheritFrom": {
+      "homeward1": [
+        "!newBorder"
+      ]
+    },
+    "z": 33116,
+    "newBorder": "0px solid black",
+    "pid": 5,
+    "scale": 0
+  },
+  "meepleHolder5": {
+    "type": "holder",
+    "id": "meepleHolder5",
+    "parent": "diceHolder5",
+    "inheritFrom": {
+      "meepleHolder1": "*"
+    },
+    "pid": 5
+  },
+  "meeple5": {
+    "id": "meeple5",
+    "width": 66.5,
+    "height": 70,
+    "z": 1,
+    "bgColor": "#1976d2",
+    "bgColor1": "#bf360c",
+    "bgColor2": "#e55c32",
+    "borderColor": "#000000",
+    "borderWidth": 1,
+    "pid": 5,
+    "state": "alive",
+    "color": "#dddddd",
+    "css": {
+      "": {
+        "text-align": "center",
+        "padding": "1em",
+        "border-radius": "45% 65% 70% 30%/ 45% 50% 20% 20%",
+        "box-sizing": "border-box",
+        "transition": "opacity 1s, linear 0.65s",
+        "opacity": 1
+      },
+      ":hover": {
+        "opacity": 0.5
+      }
+    },
+    "faces": [
+      {
+        "image": "i/game-pieces/3D/Meeple-3D.svg",
+        "rotation": 0,
+        "state": "alive"
+      }
+    ],
+    "image": "i/game-pieces/3D/Meeple-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "classes": "transition",
+    "type": "meeple",
+    "layer": 501,
+    "homeward": false,
+    "home": true,
+    "x": -8,
+    "y": -15,
+    "parent": "meepleHolder5",
+    "meeple": true,
+    "movable": false
+  },
+  "plusMinus5": {
+    "id": "plusMinus5",
+    "parent": "diceHolder5",
+    "inheritFrom": {
+      "plusMinus1": "*"
+    },
+    "pid": 2
+  },
+  "seat5": {
+    "type": "seat",
+    "id": "seat5",
+    "mainColor": "#dddddd",
+    "textColor": "#000000",
+    "turn": false,
+    "player": "",
+    "index": 5,
+    "inheritFrom": {
+      "seat1": "*"
+    },
+    "x": 1085,
+    "y": 705,
+    "z": 33078,
+    "skipTurn": false,
+    "slowdown": 0,
+    "pid": 2,
+    "score": 0
+  },
+  "diceHolder6": {
+    "type": "holder",
+    "id": "diceHolder6",
+    "pid": 6,
+    "linkedToSeat": "seat6",
+    "inheritFrom": {
+      "diceHolder1": "*"
+    },
+    "x": 1346,
+    "y": 855
+  },
+  "roll6": {
+    "id": "roll6",
+    "parent": "diceHolder6",
+    "scale": 0,
+    "inheritFrom": {
+      "roll1": "*"
+    },
+    "z": 33122,
+    "pid": 6
+  },
+  "dice11": {
+    "type": "dice",
+    "id": "dice11",
+    "activeFace": 2,
+    "inheritFrom": {
+      "dice2": "*"
+    },
+    "rollCount": 1,
+    "parent": "diceHolder6",
+    "z": 2
+  },
+  "seatAreaBorder6": {
+    "id": "seatAreaBorder6",
+    "parent": "diceHolder6",
+    "inheritFrom": {
+      "seatAreaBorder1": "*"
+    }
+  },
+  "dice12": {
+    "type": "dice",
+    "id": "dice12",
+    "parent": "diceHolder6",
+    "activeFace": 1,
+    "inheritFrom": {
+      "dice1": "*"
+    },
+    "rollCount": 1,
+    "z": 1
+  },
+  "option6": {
+    "id": "option6",
+    "parent": "diceHolder6",
+    "inheritFrom": {
+      "option1": "*"
+    },
+    "pid": 6,
+    "text": "0",
+    "scale": 0
+  },
+  "loot6": {
+    "type": "holder",
+    "id": "loot6",
+    "pid": 6,
+    "parent": "diceHolder6",
+    "inheritFrom": {
+      "loot1": "*"
+    }
+  },
+  "turn6": {
+    "id": "turn6",
+    "inheritFrom": {
+      "turn1": "*"
+    },
+    "pid": 6,
+    "parent": "diceHolder6",
+    "scale": 0
+  },
+  "slowdown6": {
+    "id": "slowdown6",
+    "parent": "diceHolder6",
+    "inheritFrom": {
+      "slowdown1": "*"
+    },
+    "text": 0,
+    "activeFace": 0
+  },
+  "scoredItems6": {
+    "type": "holder",
+    "id": "scoredItems6",
+    "pid": 6,
+    "inheritFrom": {
+      "scoredItems1": "*"
+    },
+    "parent": "diceHolder6",
+    "display": false
+  },
+  "score6": {
+    "id": "score6",
+    "parent": "diceHolder6",
+    "inheritFrom": {
+      "score1": "*"
+    },
+    "text": 0,
+    "z": 33117
+  },
+  "itemAction6": {
+    "id": "itemAction6",
+    "parent": "diceHolder6",
+    "inheritFrom": {
+      "itemAction1": "*"
+    },
+    "pid": 6,
+    "scale": 0
+  },
+  "move6": {
+    "id": "move6",
+    "parent": "diceHolder6",
+    "inheritFrom": {
+      "move1": "*"
+    },
+    "pid": 6,
+    "scale": 0
+  },
+  "homeward6": {
+    "id": "homeward6",
+    "parent": "diceHolder6",
+    "inheritFrom": {
+      "homeward1": [
+        "!newBorder"
+      ]
+    },
+    "z": 33116,
+    "newBorder": "0px solid black",
+    "pid": 6,
+    "scale": 0
+  },
+  "meepleHolder6": {
+    "type": "holder",
+    "id": "meepleHolder6",
+    "parent": "diceHolder6",
+    "inheritFrom": {
+      "meepleHolder1": "*"
+    },
+    "pid": 6
+  },
+  "meeple6": {
+    "id": "meeple6",
+    "width": 66.5,
+    "height": 70,
+    "z": 1,
+    "bgColor": "#1976d2",
+    "bgColor1": "#bf360c",
+    "bgColor2": "#e55c32",
+    "borderColor": "#000000",
+    "borderWidth": 1,
+    "pid": 6,
+    "state": "alive",
+    "color": "#dddddd",
+    "css": {
+      "": {
+        "text-align": "center",
+        "padding": "1em",
+        "border-radius": "45% 65% 70% 30%/ 45% 50% 20% 20%",
+        "box-sizing": "border-box",
+        "transition": "opacity 1s, linear 0.65s",
+        "opacity": 1
+      },
+      ":hover": {
+        "opacity": 0.5
+      }
+    },
+    "faces": [
+      {
+        "image": "i/game-pieces/3D/Meeple-3D.svg",
+        "rotation": 0,
+        "state": "alive"
+      }
+    ],
+    "image": "i/game-pieces/3D/Meeple-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "classes": "transition",
+    "type": "meeple",
+    "layer": 501,
+    "homeward": false,
+    "home": true,
+    "x": -8,
+    "y": -15,
+    "parent": "meepleHolder6",
+    "meeple": true,
+    "movable": false
+  },
+  "plusMinus6": {
+    "id": "plusMinus6",
+    "parent": "diceHolder6",
+    "inheritFrom": {
+      "plusMinus1": "*"
+    },
+    "pid": 2
+  },
+  "seat6": {
+    "type": "seat",
+    "id": "seat6",
+    "mainColor": "#dddddd",
+    "textColor": "#000000",
+    "turn": false,
+    "player": "",
+    "index": 6,
+    "inheritFrom": {
+      "seat1": "*"
+    },
+    "x": 1085,
+    "y": 859,
+    "z": 33078,
+    "skipTurn": false,
+    "slowdown": 0,
+    "pid": 2,
+    "score": 0
+  },
+  "gameCounter1": {
+    "id": "gameCounter1",
+    "parent": "boardBase",
+    "x": 1262,
+    "y": 30,
+    "width": 75,
+    "height": 25,
+    "borderRadius": 4,
+    "z": 33019,
+    "movable": false,
+    "css": {
+      "font-size": "35px",
+      "text-align": "center",
+      "display": "flex",
+      "justify-content": "center",
+      "align-items": "center",
+      "background": "white",
+      "color": "white",
+      "opacity": 0.5
+    },
+    "display": false
+  },
+  "gameCounter2": {
+    "id": "gameCounter2",
+    "parent": "boardBase",
+    "x": 1262,
+    "y": 5,
+    "width": 75,
+    "height": 25,
+    "borderRadius": 4,
+    "z": 33019,
+    "movable": false,
+    "css": {
+      "font-size": "35px",
+      "text-align": "center",
+      "display": "flex",
+      "justify-content": "center",
+      "align-items": "center",
+      "background": "white",
+      "color": "white",
+      "opacity": 0.5
+    },
+    "display": false
+  }
+}

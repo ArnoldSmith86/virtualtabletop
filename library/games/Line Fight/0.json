@@ -2018,8 +2018,6 @@
     "button_background_color": "grey",
     "button_border_color": "#1976d2",
     "current_turn_index": "1",
-    "defaultX": 1093,
-    "defaultY": -144,
     "turn_holder": true,
     "ModifyButtonRoutine": [
       {
@@ -5999,7 +5997,7 @@
       "mode": "vs",
       "time": "45",
       "attribution": "The game layout, cards, and library image were created by an anonymous person who gave the work to virtualtabletop.io. Virtualtabletop.io releases all of this to the Public Domain under CC0.",
-      "lastUpdate": 1742651623610,
+      "lastUpdate": 1746491961654,
       "showName": true,
       "skill": "simple",
       "description": "Compete in rows and columns, increasing your score while destroying your opponents.",

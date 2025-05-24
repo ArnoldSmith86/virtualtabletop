@@ -1,536 +1,6 @@
 {
-  "mwyl": {
-    "type": "button",
-    "clickRoutine": [
-      "var wordArray = ${PROPERTY wordArray OF theArray}",
-      "var numArray = ${PROPERTY numArray OF theArray}",
-      "var mixedArray = ${PROPERTY mixedArray OF theArray}",
-      "var wordArray = ${wordArray} isArray //Returns true if the variable is an array, even if the array is empty",
-      "var numArray = ${numArray} isArray",
-      "var mixedArray = ${mixedArray} isArray",
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "output1"
-      },
-      {
-        "func": "SET",
-        "property": "text",
-        "value": "${wordArray}"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "output2"
-      },
-      {
-        "func": "SET",
-        "property": "text",
-        "value": "${numArray}"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "output3"
-      },
-      {
-        "func": "SET",
-        "property": "text",
-        "value": "${mixedArray}"
-      }
-    ],
-    "x": 120,
-    "y": 250,
-    "z": 273,
-    "id": "mwyl",
-    "text": "isArray"
-  },
-  "uc3i": {
-    "type": "button",
-    "clickRoutine": [
-      "var wordArray = ${PROPERTY wordArray OF theArray}",
-      "var numArray = ${PROPERTY numArray OF theArray}",
-      "var mixedArray = ${PROPERTY mixedArray OF theArray}",
-      "var wordArray = ${wordArray} length //Returns the number of elements in an array",
-      "var numArray = ${numArray} length",
-      "var mixedArray = ${mixedArray} length",
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "output1"
-      },
-      {
-        "func": "SET",
-        "property": "text",
-        "value": "${wordArray}"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "output2"
-      },
-      {
-        "func": "SET",
-        "property": "text",
-        "value": "${numArray}"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "output3"
-      },
-      {
-        "func": "SET",
-        "property": "text",
-        "value": "${mixedArray}"
-      }
-    ],
-    "x": 374,
-    "y": 250,
-    "z": 274,
-    "id": "uc3i",
-    "text": "length"
-  },
-  "2rti": {
-    "type": "button",
-    "clickRoutine": [
-      "var wordArray = ${PROPERTY wordArray OF theArray}",
-      "var numArray = ${PROPERTY numArray OF theArray}",
-      "var mixedArray = ${PROPERTY mixedArray OF theArray}",
-      "var pos = ${PROPERTY text OF atString3}",
-      "var wordArray = ${wordArray} getIndex ${pos} //Returns the element in the array at the nth position (starts with 0)",
-      "var numArray = ${numArray} getIndex ${pos}",
-      "var mixedArray = ${mixedArray} getIndex ${pos}",
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "output1"
-      },
-      {
-        "func": "SET",
-        "property": "text",
-        "value": "${wordArray}"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "output2"
-      },
-      {
-        "func": "SET",
-        "property": "text",
-        "value": "${numArray}"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "output3"
-      },
-      {
-        "func": "SET",
-        "property": "text",
-        "value": "${mixedArray}"
-      }
-    ],
-    "x": 619,
-    "y": 250,
-    "z": 289,
-    "id": "2rti",
-    "text": "getIndex"
-  },
-  "0zgn": {
-    "type": "button",
-    "clickRoutine": [
-      "var wordArray = ${PROPERTY wordArray OF theArray}",
-      "var numArray = ${PROPERTY numArray OF theArray}",
-      "var mixedArray = ${PROPERTY mixedArray OF theArray}",
-      "var str = ${PROPERTY text OF atString4}",
-      "var wordArray = ${wordArray} includes ${str} //Returns true if the array includes the reference string or value",
-      "var numArray = ${numArray} includes ${str}",
-      "var mixedArray = ${mixedArray} includes ${str}",
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "output1"
-      },
-      {
-        "func": "SET",
-        "property": "text",
-        "value": "${wordArray}"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "output2"
-      },
-      {
-        "func": "SET",
-        "property": "text",
-        "value": "${numArray}"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "output3"
-      },
-      {
-        "func": "SET",
-        "property": "text",
-        "value": "${mixedArray}"
-      }
-    ],
-    "x": 872,
-    "y": 250,
-    "z": 288,
-    "id": "0zgn",
-    "text": "includes"
-  },
-  "l1ak": {
-    "type": "button",
-    "clickRoutine": [
-      "var wordArray = ${PROPERTY wordArray OF theArray}",
-      "var numArray = ${PROPERTY numArray OF theArray}",
-      "var mixedArray = ${PROPERTY mixedArray OF theArray}",
-      "var pos = ${PROPERTY text OF atString5}",
-      "var wordArray = ${wordArray} indexOf ${pos} //Returns the first index number of the array (starts with 0) that contains the reference string, or -1 if no match",
-      "var numArray = ${numArray} indexOf ${pos}",
-      "var mixedArray = ${mixedArray} indexOf ${pos}",
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "output1"
-      },
-      {
-        "func": "SET",
-        "property": "text",
-        "value": "${wordArray}"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "output2"
-      },
-      {
-        "func": "SET",
-        "property": "text",
-        "value": "${numArray}"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "output3"
-      },
-      {
-        "func": "SET",
-        "property": "text",
-        "value": "${mixedArray}"
-      }
-    ],
-    "x": 1115,
-    "y": 250,
-    "z": 287,
-    "id": "l1ak",
-    "text": "indexOf"
-  },
-  "c9ee": {
-    "type": "button",
-    "clickRoutine": [
-      "var wordArray = ${PROPERTY wordArray OF theArray}",
-      "var numArray = ${PROPERTY numArray OF theArray}",
-      "var mixedArray = ${PROPERTY mixedArray OF theArray}",
-      "var str = ${PROPERTY text OF atString6}",
-      "var wordArray = ${wordArray} lastIndexOf ${str} //Returns the last index number of the array (starts with 0) that contains the reference string, or -1 if no match",
-      "var numArray = ${numArray} lastIndexOf ${str}",
-      "var mixedArray = ${mixedArray} lastIndexOf ${str}",
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "output1"
-      },
-      {
-        "func": "SET",
-        "property": "text",
-        "value": "${wordArray}"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "output2"
-      },
-      {
-        "func": "SET",
-        "property": "text",
-        "value": "${numArray}"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "output3"
-      },
-      {
-        "func": "SET",
-        "property": "text",
-        "value": "${mixedArray}"
-      }
-    ],
-    "y": 250,
-    "z": 286,
-    "id": "c9ee",
-    "x": 1374,
-    "text": "lastIndexOf",
-    "css": "font-size: 14px; "
-  },
-  "8fr3": {
-    "type": "label",
-    "text": "Arrays: Evaluating",
-    "css": "font-size: 60px",
-    "height": 160,
-    "width": 1000,
-    "x": 280,
-    "z": 26392,
-    "id": "8fr3",
-    "y": 1
-  },
-  "atString6": {
-    "type": "label",
-    "id": "atString6",
-    "x": 1364,
-    "y": 361,
-    "height": 40,
-    "z": 26431,
-    "editable": true,
-    "css": "background-color:white; border-style: solid;",
-    "text": "apple"
-  },
-  "atString5": {
-    "type": "label",
-    "id": "atString5",
-    "x": 1105,
-    "y": 361,
-    "height": 40,
-    "z": 26432,
-    "editable": true,
-    "css": "background-color:white; border-style: solid;",
-    "text": 41
-  },
-  "atString4": {
-    "type": "label",
-    "id": "atString4",
-    "x": 862,
-    "y": 361,
-    "height": 40,
-    "z": 26433,
-    "editable": true,
-    "css": "background-color:white; border-style: solid;",
-    "text": "Duck"
-  },
-  "atString3": {
-    "type": "label",
-    "id": "atString3",
-    "x": 609,
-    "y": 361,
-    "height": 40,
-    "z": 26434,
-    "editable": true,
-    "css": "background-color:white; border-style: solid;",
-    "text": 4
-  },
-  "output2": {
-    "type": "label",
-    "id": "output2",
-    "x": 599,
-    "y": 804,
-    "width": 400,
-    "height": 60,
-    "z": 26446,
-    "css": "border: 2px dashed black; font-size:30px; color:black ",
-    "text": [
-      1,
-      3,
-      5,
-      7,
-      11,
-      13,
-      17,
-      19,
-      23,
-      29,
-      31,
-      37,
-      41
-    ]
-  },
-  "output3": {
-    "type": "label",
-    "id": "output3",
-    "x": 1194,
-    "y": 804,
-    "width": 400,
-    "height": 60,
-    "z": 26446,
-    "css": "border: 2px dashed black; font-size:30px; color:black ",
-    "text": [
-      1,
-      3,
-      5,
-      "Egg",
-      "Duck",
-      7,
-      11,
-      "Carrot",
-      13,
-      17,
-      19,
-      "Banana",
-      23,
-      29,
-      31,
-      "Apple",
-      37,
-      41
-    ]
-  },
-  "theArray": {
-    "id": "theArray",
-    "x": 281,
-    "y": 102,
-    "width": 1000,
-    "z": 16,
-    "css": "font-size: 20px; ",
-    "text": "These functions can be used to evaluate arrays. Press each button to see how the function works with the three sample arrays to output the result below. For functions with a white textbox, you have an option to modify the value on the screen without entering into the JSON and then pressing the button to see the revised output. Red buttons are functions that are either pending implementation or are not working as intended/described.",
-    "numArray": [
-      1,
-      3,
-      5,
-      7,
-      11,
-      13,
-      17,
-      19,
-      23,
-      29,
-      31,
-      37,
-      41
-    ],
-    "mixedArray": [
-      1,
-      3,
-      5,
-      "Egg",
-      "Duck",
-      7,
-      11,
-      "Carrot",
-      13,
-      17,
-      19,
-      "Banana",
-      23,
-      29,
-      31,
-      "Apple",
-      37,
-      41
-    ],
-    "wordArray": [
-      "Apple",
-      "Banana",
-      "Carrot",
-      "Duck",
-      "Egg"
-    ]
-  },
-  "label1": {
-    "id": "label1",
-    "x": 132,
-    "y": 727,
-    "width": 250,
-    "height": 50,
-    "z": 13,
-    "movable": null,
-    "movableInEdit": null,
-    "css": "font-size: 30px; ",
-    "text": "Word Array"
-  },
-  "label2": {
-    "id": "label2",
-    "x": 692,
-    "y": 727,
-    "width": 250,
-    "height": 50,
-    "z": 12,
-    "movable": null,
-    "movableInEdit": null,
-    "css": "font-size: 30px; ",
-    "text": "Numerical Array"
-  },
-  "label3": {
-    "id": "label3",
-    "x": 1322,
-    "y": 727,
-    "width": 250,
-    "height": 50,
-    "z": 15,
-    "movable": null,
-    "movableInEdit": null,
-    "css": "font-size: 30px; ",
-    "text": "Mixed Array"
-  },
-  "output1": {
-    "type": "label",
-    "id": "output1",
-    "x": 5,
-    "y": 804,
-    "width": 400,
-    "height": 60,
-    "z": 26446,
-    "movable": null,
-    "movableInEdit": null,
-    "css": "border: 2px dashed black; font-size:30px; color:black ",
-    "text": [
-      "Apple",
-      "Banana",
-      "Carrot",
-      "Duck",
-      "Egg"
-    ]
-  },
-  "4k5w": {
-    "type": "label",
-    "id": "4k5w",
-    "x": 5,
-    "y": 904,
-    "width": 400,
-    "height": 60,
-    "z": 26446,
-    "css": "color:black; text-align:left;font-size:20px",
-    "text": "Apple,Banana,Carrot,Duck,Egg"
-  },
-  "6v7v": {
-    "type": "label",
-    "id": "6v7v",
-    "x": 599,
-    "y": 904,
-    "width": 400,
-    "height": 60,
-    "z": 26446,
-    "css": "color:black; text-align:left; font-size:20px",
-    "text": "1,3,5,7,11,13,17,19,23,29,31,37,41"
-  },
-  "huq3": {
-    "type": "label",
-    "id": "huq3",
-    "x": 1194,
-    "y": 904,
-    "width": 390,
-    "height": 60,
-    "z": 26446,
-    "css": "color:black; text-align:left;font-size:20px",
-    "text": "1,3,5,Egg,Duck,7,11,Carrot,13,17,19,Banana,23,29,31,Apple,37,41"
-  },
   "_meta": {
-    "version": 15,
+    "version": 17,
     "info": {
       "name": "Arrays",
       "image": "/assets/-2001287493_6748",
@@ -541,7 +11,7 @@
       "time": "",
       "attribution": "",
       "showName": false,
-      "lastUpdate": 1725248837877,
+      "lastUpdate": 1747540416863,
       "skill": "",
       "description": "",
       "similarImage": "",
@@ -549,161 +19,288 @@
       "similarAwards": "",
       "ruleText": "",
       "helpText": "",
+      "similarDesigner": "",
       "variantImage": "",
-      "variant": "Evaluating",
+      "variant": "Creating",
       "language": "en-US",
-      "players": "1",
-      "similarDesigner": ""
+      "players": "1"
     }
   },
-  "pc6t": {
+  "title": {
+    "id": "title",
+    "x": 400,
+    "y": -2,
+    "width": 800,
+    "height": 60,
+    "z": 74,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "font-size: 60px;text-align:center",
+    "text": "Arrays: Creating"
+  },
+  "button2": {
     "type": "button",
-    "id": "pc6t",
-    "x": 120,
-    "y": 487,
-    "z": 279,
+    "id": "button2",
+    "x": 416,
+    "y": 402,
+    "z": 22839,
     "clickRoutine": [
-      "var wordArray = ${PROPERTY wordArray OF theArray}",
-      "var numArray = ${PROPERTY numArray OF theArray}",
-      "var mixedArray = ${PROPERTY mixedArray OF theArray}",
-      "var str = ${PROPERTY text OF atString7}",
-      "var wordArray = ${str} in ${wordArray} //Returns true if the reference string is included in the array",
-      "var numArray = ${str} in ${numArray}",
-      "var mixedArray = ${str} in ${mixedArray}",
+      "// First SELECT every widget in the room",
       {
         "func": "SELECT",
         "property": "id",
-        "value": "output1"
+        "relation": "!=",
+        "value": null
       },
+      "// Then from that DEFAULT collection, GET the id of every widget and store it as an array.",
       {
-        "func": "SET",
-        "property": "text",
-        "value": "${wordArray}"
-      },
-      {
-        "func": "SELECT",
+        "func": "GET",
         "property": "id",
-        "value": "output2"
+        "aggregation": "array",
+        "variable": "allID"
       },
+      "// Finally, SET the array onto the text property of the box in the middle of the screen.",
       {
         "func": "SET",
+        "collection": [
+          "array"
+        ],
         "property": "text",
-        "value": "${numArray}"
+        "value": "${allID}"
       },
+      "// VAR can be used to create a new array as well. In this example, the data is hard coded, but the values could just as easily be dynamic variables using the ${variableName} syntax or ${PROPERTY propertyName} syntax.",
       {
-        "func": "SELECT",
-        "property": "id",
-        "value": "output3"
-      },
-      {
-        "func": "SET",
-        "property": "text",
-        "value": "${mixedArray}"
+        "func": "VAR",
+        "variables": {
+          "newArray": [
+            "Two",
+            "Three",
+            "Five",
+            "Seven",
+            "Eleven",
+            "Thirteen",
+            "Seventeen",
+            "Nineteen",
+            "Twenty-three"
+          ]
+        }
       }
     ],
-    "text": "in"
+    "text": "GET & VAR"
   },
-  "atString7": {
+  "overview": {
+    "id": "overview",
+    "x": 108,
+    "y": 80,
+    "width": 1400,
+    "height": 150,
+    "layer": -3,
+    "z": 129,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "font-size: 25px; ",
+    "html": "Arrays can be created using dynamic expressions, the functions <b>GET</b> and <b>VAR</b>, or using the array operations concatArray, split, or from. The main limitation to remember is that you cannot create an array using a syntax like <b>var newArray = [1,2,3]</b>. You can create an empty array that way, but to fill it with data, you must use another method. The various buttons in the room display their results in the box below."
+  },
+  "button3": {
+    "type": "button",
+    "id": "button3",
+    "x": 743,
+    "y": 402,
+    "z": 22840,
+    "clickRoutine": [
+      "// Use concatArray to combine two dynamic variables.",
+      "var myArray = ${PROPERTY arrayValues OF button1} concatArray ${PROPERTY arrayValues}",
+      "// Then SET the array onto the text property of the box in the middle of the screen.",
+      {
+        "func": "SET",
+        "collection": [
+          "array"
+        ],
+        "property": "text",
+        "value": "${myArray}"
+      }
+    ],
+    "text": "concatArray",
+    "css": {
+      "font-size": "14px"
+    },
+    "arrayValues": [
+      "Apple",
+      "Banana",
+      "Carrot",
+      "Duck",
+      "Egg"
+    ]
+  },
+  "button4": {
+    "type": "button",
+    "id": "button4",
+    "x": 1062,
+    "y": 402,
+    "z": 22840,
+    "clickRoutine": [
+      "// Use from to create an array from a string.",
+      "var myArray = from ${PROPERTY html OF text4}",
+      "// Then SET the array onto the text property of the box in the middle of the screen.",
+      {
+        "func": "SET",
+        "collection": [
+          "array"
+        ],
+        "property": "text",
+        "value": "${myArray}"
+      }
+    ],
+    "text": "from"
+  },
+  "button5": {
+    "type": "button",
+    "id": "button5",
+    "x": 1386,
+    "y": 402,
+    "z": 11,
+    "clickRoutine": [
+      "// Use split to create an array from a list of items in a string.",
+      "var myArray = split ${PROPERTY text OF splitText}",
+      "// Then SET the array onto the text property of the box in the middle of the screen.",
+      {
+        "func": "SET",
+        "collection": [
+          "array"
+        ],
+        "property": "text",
+        "value": "${myArray}"
+      }
+    ],
+    "text": "split"
+  },
+  "text1": {
+    "id": "text1",
+    "x": 4,
+    "y": 552,
+    "width": 300,
+    "z": 185,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "22px"
+    },
+    "text": "Use a dynamic expression like `var x = []` to create an empty array. Or use 'var x = ${PROPERTY arrayValues}' to create an variable array from an existing array that is a property of a widget. You can also create a new array using some of the operations described in the Modifying - Advanced variant of this tutorial such as push. This is aldo demonstrated in the Overview variant."
+  },
+  "button1": {
+    "type": "button",
+    "id": "button1",
+    "x": 95,
+    "y": 402,
+    "z": 22841,
+    "clickRoutine": [
+      "// Create an empty array. Nothing is done with it in this routine. This is just to show how to do it",
+      "var newArray = []",
+      "// This creates an array of the prime numbers in the `arrayValues` property on this button.",
+      "var myArray = ${PROPERTY arrayValues}",
+      "// Finally, SET the array onto the text property of the box in the middle of the screen.",
+      {
+        "func": "SET",
+        "collection": [
+          "array"
+        ],
+        "property": "text",
+        "value": "${myArray}"
+      }
+    ],
+    "text": "var x = []",
+    "arrayValues": [
+      2,
+      3,
+      5,
+      7,
+      11,
+      13,
+      17,
+      19,
+      23
+    ]
+  },
+  "text2": {
+    "id": "text2",
+    "x": 325,
+    "y": 552,
+    "width": 300,
+    "z": 121,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "22px"
+    },
+    "html": "<b>GET</b> optionally uses the aggregation parameter `array` to put the results of the function into an array. The button above does that for the <b>id</b>s of all the widgets in the room and displays it in the box above.<br/><br/>Also, look at the JSON and the debug output for an example of how to use <b>VAR</b>."
+  },
+  "text3": {
+    "id": "text3",
+    "x": 651,
+    "y": 552,
+    "width": 300,
+    "z": 9732,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "22px"
+    },
+    "html": "The array operation `concatArray` takes two arrays, combines them, and creates a new array. The button above combines the `arrayValue` properties on button 1 and button 3."
+  },
+  "text4": {
+    "id": "text4",
+    "x": 964,
+    "y": 552,
+    "width": 300,
+    "z": 9732,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "22px"
+    },
+    "html": "The array operation `from` in the button above creates an array from this string of text."
+  },
+  "text5": {
+    "id": "text5",
+    "x": 1294,
+    "y": 552,
+    "width": 300,
+    "z": 9732,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "22px"
+    },
+    "html": "The array operation `split` creates an array out of strings by splitting the string by a deliminator, which is usually a comma. This example starts with a list of words, but you can create your own string. Just enter words in the box below separated by a comma with no space in between."
+  },
+  "array": {
+    "id": "array",
+    "x": 623,
+    "y": 240,
+    "width": 300,
+    "height": 90,
+    "z": 26395,
+    "movable": false,
+    "css": {
+      "background-color": "light-grey",
+      "border-style": "solid",
+      "font-size": "20px"
+    },
+    "text": [
+      "Apple,Banana,Carrot,Duck,Egg"
+    ],
+    "type": "label"
+  },
+  "splitText": {
     "type": "label",
-    "id": "atString7",
-    "x": 100,
-    "y": 596,
-    "width": 100,
-    "height": 40,
-    "z": 26425,
-    "movable": null,
-    "movableInEdit": null,
+    "id": "splitText",
+    "x": 1284,
+    "y": 846,
+    "width": 300,
+    "height": 60,
+    "z": 26396,
     "css": "background-color:white; border-style: solid;",
     "editable": true,
-    "text": "Duck"
-  },
-  "kibv": {
-    "type": "button",
-    "clickRoutine": [
-      "var wordArray = ${PROPERTY wordArray OF theArray}",
-      "var numArray = ${PROPERTY numArray OF theArray}",
-      "var mixedArray = ${PROPERTY mixedArray OF theArray}",
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "output1"
-      },
-      {
-        "func": "SET",
-        "property": "text",
-        "value": "${wordArray}"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "output2"
-      },
-      {
-        "func": "SET",
-        "property": "text",
-        "value": "${numArray}"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "output3"
-      },
-      {
-        "func": "SET",
-        "property": "text",
-        "value": "${mixedArray}"
-      }
-    ],
-    "y": 6,
-    "z": 300,
-    "id": "kibv",
-    "x": 9,
-    "text": "Reset"
-  },
-  "uc4i": {
-    "type": "button",
-    "clickRoutine": [
-      "var wordArray = ${PROPERTY wordArray OF theArray}",
-      "var numArray = ${PROPERTY numArray OF theArray}",
-      "var mixedArray = ${PROPERTY mixedArray OF theArray}",
-      "var wordArray = ${wordArray} sum //Adds the elements in an array",
-      "var numArray = ${numArray} sum",
-      "var mixedArray = ${mixedArray} sum",
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "output1"
-      },
-      {
-        "func": "SET",
-        "property": "text",
-        "value": "${wordArray}"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "output2"
-      },
-      {
-        "func": "SET",
-        "property": "text",
-        "value": "${numArray}"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "output3"
-      },
-      {
-        "func": "SET",
-        "property": "text",
-        "value": "${mixedArray}"
-      }
-    ],
-    "x": 374,
-    "y": 487,
-    "z": 274,
-    "id": "uc4i",
-    "text": "sum"
+    "text": "Apple,Banana,Carrot,Duck,Egg"
   }
 }

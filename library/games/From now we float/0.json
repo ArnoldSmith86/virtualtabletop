@@ -3,14 +3,14 @@
     "version": 17,
     "info": {
       "name": "From now we float",
-      "image": "/assets/-483587050_226391",
+      "image": "/assets/-740190026_45260",
       "rules": "https://boardgamegeek.com/filepage/295587/ethnos-2nd-edition-rulebook",
       "bgg": "https://boardgamegeek.com/boardgame/432527/ethnos-2nd-edition",
       "year": "2025",
       "mode": "vs",
       "time": "60",
       "attribution": "<div>Game implementation and layout by Mitchell Stolycia. Released under CC BY 4.0</div><div><br></div><div>The discard hand icon is by sbed, from gameicons.net, and usable under CC BY 3.0, as described in the About page of virtualtabletop.io.</div><div>All other art assets, including the library image were created by Mitchell Stolycia and are released under CC BY 4.0.</div>",
-      "lastUpdate": 1742869304202,
+      "lastUpdate": 1746051258771,
       "showName": true,
       "skill": "",
       "description": "Antarctica gone. The planet flooded. From now we float.",
@@ -18,12 +18,12 @@
       "similarName": "Ethnos: 2nd Edition",
       "similarDesigner": "Paolo Mori",
       "similarAwards": "",
-      "ruleText": "<div>This section does not outline the entirety of the game, only a reminder of the value <i>x</i>, and the faction abilities.</div><div><br></div><div><b>Value x</b></div><blockquote><div>Value x represents the party size, i.e. the number of cards played in a party.</div></blockquote><div><br></div><div><b>Faction abilities</b></div><div><b><br></b></div><blockquote><div><b>A:</b></div><div>Take an A token (star-shaped) from the supply up to value x. Whoever has the highest sum at the end of the round will be favoured in a tie in any region they are present.</div><div>If players are still tied, on both region influence, and A sum values, they split the points for their both their positions. i.e. If two players tie for first, split the points for first and second, if available.</div><blockquote><div><i>Example: If Josh played 3 cards with an A leader, he could take the A 3 token from the supply. If Susan already had the A 3 token in front of her, Josh would have to take either the A 2 or A 1 token instead, if available.</i></div></blockquote><div><b>B:</b></div><div>If the played party is now the largest B party, place the B token on this holder after pressing <i>End turn</i>. Score 4 VP immediately.</div><div>The player who has control of this token at the end of the round scores points as if it was a region.</div><div><b><br></b></div><div><b>C:</b></div><div>One fewer card is needed to increase influence in an area.</div><blockquote><div><i>Example: Susan may play a C lead party with only 2 cards to place gain her 3rd influence in a region.</i></div></blockquote><div><b>D:</b></div><div>Click on the region which matches the colour you played to this turn. For each black slot at the end of a round, you may empty the slots by clicking on them to score points according to the D board. If you do not empty them between rounds, they do not score, but may be emptied next round and scored instead.</div><div><br></div><div><b>E:</b></div><div>Keep up to x cards in hand.</div><blockquote><div><i>Example: Willie plays an E lead party of size 4. He may keep up to 4 cards that he still has in his hand. The rest must be returned to the display.</i></div></blockquote><div>When keeping some cards in hand with this ability, manually drag any cards to the display that you are not keeping in hand.</div><div><b><br></b></div><div><b>F:</b></div><div>Draw x cards from the deck (not the display), after discarding your hand.</div><div>This will be done automatically when you end your turn.</div><div>If any clock cards are drawn, manually drag any cards you're owed from the <i>Draw deck.</i></div><div><b><br></b></div><div><b>G:</b></div><div>If influence was increased in an area this turn, you may play another party before discarding, regardless of the following leader or colour.</div><div>This second leader is also activated, even if it is another G leader.</div><div>Play all the sets you would like to use at the same time before ending you turn when using this ability. Do not manually adjust influence.</div><div><b><br></b></div><div><b>H:</b></div><div>At round end, each party with an H leader scores as if it contains an extra card.</div><blockquote><div><i>Example: Fanny has played a size 4 party with an H leader. At the end of the round, this will score 10 VP for party size as opposed to the usual 6.</i></div></blockquote><div><b><br></b></div><div><b>I:</b></div><div>Put the lowest value I marker from the supply in the matching region.</div><div>These markers add value to first place scoring this round.</div><div>They are returned to the supply at the end of a round.</div><div><b><br></b></div><div><b>J:</b></div><div>Move your square up the J board x spaces. If you cross a <i>+1 influence anywhere space, </i>increase your influence in any region.</div><div>Players score the J board according to the table as if it's a region.</div><div>Cubes on the J board never reset.</div><div><b><br></b></div><div><b>K:</b></div><div>Gain one influence in any one region, instead of just the matching colour. The party must still be large enough to influence following normal rules.</div><div>Do this by manually clicking on the right hand side of the desired influence marker (coloured square).</div><div><b><br></b></div><div><b>L:</b></div><div>L cards cannot be leaders. L cards can be played as party of any party, regardless of colour or faction.</div><div>They count towards increasing influence in a region, but not towards party size at the end of a round. This will be noted on your holders by a number and an L in brackets, after your cards have been cleared.</div><blockquote><div><i>Example: Jezebel has played a J leader with a party size of 5, with 2 L cards presents. When she clicks 'End turn', her cards are cleared, leaving her with a holder that reads \"5J (2L)\". <br></i></div><div><i>At the end of the round Jezebel will score 3 VP for the size of this party.</i></div></blockquote></blockquote>",
+      "ruleText": "This implementation includes 15 playable factions, including 3 of the promotional factions.<div>This section does not outline the entirety of the game, only a reminder of the value <i>x</i>, and the faction abilities.</div><div><br></div><div><b>Value x</b></div><blockquote><div>Value x represents the party size, i.e. the number of cards played in a party.</div></blockquote><div><br></div><div><b>Faction abilities</b></div><div><b><br></b></div><blockquote><div><b>A:</b></div><div>Take an A token (star-shaped) from the supply up to value x. Whoever has the highest sum at the end of the round will be favoured in a tie in any region they are present.</div><div>If players are still tied, on both region influence, and A sum values, they split the points for their both their positions. i.e. If two players tie for first, split the points for first and second, if available.</div><blockquote><div><i>Example: If Josh played 3 cards with an A leader, he could take the A 3 token from the supply. If Susan already had the A 3 token in front of her, Josh would have to take either the A 2 or A 1 token instead, if available.</i></div></blockquote><div><b>B:</b></div><div>If the played party is now the largest B party, place the B token on this holder after pressing <i>End turn</i>. Score 4 VP immediately.</div><div>The player who has control of this token at the end of the round scores points as if it was a region.</div><div><b><br></b></div><div><b>C:</b></div><div>One fewer card is needed to increase influence in an area.</div><blockquote><div><i>Example: Susan may play a C lead party with only 2 cards to place gain her 3rd influence in a region.</i></div></blockquote><div><b>D:</b></div><div>Click on the region which matches the colour you played to this turn. For each black slot at the end of a round, you may empty the slots by clicking on them to score points according to the D board. If you do not empty them between rounds, they do not score, but may be emptied next round and scored instead.</div><div><br></div><div><b>E:</b></div><div>Keep up to x cards in hand.</div><blockquote><div><i>Example: Willie plays an E lead party of size 4. He may keep up to 4 cards that he still has in his hand. The rest must be returned to the display.</i></div></blockquote><div>When keeping some cards in hand with this ability, manually drag any cards to the display that you are not keeping in hand.</div><div><b><br></b></div><div><b>F:</b></div><div>Draw x cards from the deck (not the display), after discarding your hand.</div><div>This will be done automatically when you end your turn.</div><div>If any clock cards are drawn, manually drag any cards you're owed from the <i>Draw deck.</i></div><div><b><br></b></div><div><b>G:</b></div><div>If influence was increased in an area this turn, you may play another party before discarding, regardless of the following leader or colour.</div><div>This second leader is also activated, even if it is another G leader.</div><div>Play all the sets you would like to use at the same time before ending you turn when using this ability. Do not manually adjust influence.</div><div><b><br></b></div><div><b>H:</b></div><div>At round end, each party with an H leader scores as if it contains an extra card.</div><blockquote><div><i>Example: Fanny has played a size 4 party with an H leader. At the end of the round, this will score 10 VP for party size as opposed to the usual 6.</i></div></blockquote><div><b><br></b></div><div><b>I:</b></div><div>Put the lowest value I marker from the supply in the matching region.</div><div>These markers add value to first place scoring this round.</div><div>They are returned to the supply at the end of a round.</div><div><b><br></b></div><div><b>J:</b></div><div>Manually move your square up the J board x spaces. If you reach or cross a <i>+1 influence anywhere space, </i>increase your influence in any region.</div><div>Players score the J board according to the table as if it's a region.</div><div>Squares on the J board never reset.</div><div><br></div><div><div></div><div>The O board can be moved by dragging it.</div><br></div><div><b>K:</b></div><div>Gain one influence in any one region, instead of just the matching colour. The party must still be large enough to influence following normal rules.</div><div>Do this by manually clicking on the right hand side of the desired influence marker (coloured square).</div><div><b><br></b></div><div><b>L:</b></div><div>L cards cannot be leaders. L cards can be played as party of any party, regardless of colour or faction.</div><div>They count towards increasing influence in a region, but not towards party size at the end of a round. This will be noted on your holders by a number and an L in brackets, after your cards have been cleared.</div><blockquote><div><i>Example: Jezebel has played a J leader with a party size of 5, with 2 L cards presents. When she clicks 'End turn', her cards are cleared, leaving her with a holder that reads \"5J (2L)\". <br></i></div><div><i>At the end of the round Jezebel will score 3 VP for the size of this party.</i></div></blockquote><div><b>M:</b></div><div>If an M card is played as a leader, you will not gain influence in that region. There are twice as many M cards in the deck.</div><div>Using an M card in a party with a different leader acts the same as all other cards.</div><div><br></div><div><b>N:</b></div><div>After ending your turn and discarding your hand to the display, x cards will be moved from the deck to the display. After this, you may take any 2 cards from the display.</div><div>Any parties with N leaders at the end of a round will score as if they have one fewer card.</div><blockquote><div><i>Example: Josh has 5 cards in hand before playing a party of 3 with an N leader. After doing so, Josh discards returns the other two cards to the display, and 3 cards are moved from the deck to the display. Josh then decides to draw one card that he returned to the display, and one other card from the display to his hand.</i></div></blockquote><blockquote><div><i><b>Implementation note: </b></i>When drawing these two cards from the display, drag them to your hand. Otherwise - or alternatively - you may cycle through players' turns with the <i>Force next turn</i> button.</div></blockquote><div><b>O:</b></div><div><div>Manually move your square up the O board x spaces. If you reach or cross spaces 3<i>, </i>7, 12, 15<i>, </i>or 18, you may move influence from one region to either an adjacent or any region, depending on the space on the O board</div><div>Players score the O board according to the table as if it's a region.</div><div>Squares on the O board never reset.</div><div><br></div><div>The O board can be moved by dragging it.</div></div></blockquote>",
       "helpText": "<div><b>To start:</b></div><div><ol><li>All players sit down by clicking on a seat each.</li><li>Click the <i>Prepare for new game</i> button.</li><li>This will take you to a menu where you can choose which factions you would like to be in play.</li><li>If random factions are not chosen, click <i>Setup </i>when you are happy with your selected factions placed in the appropriate holders.</li></ol><div><b>Drawing a card:</b><ul><li>Click on a card - or the deck - to draw. This will also end your turn.</li><ul><li>If drawing via the <b>F</b> faction ability, these will be added to your hand automatically. If any clock cards are drawn, manually drag any cards you're owed from the <i>Draw deck.</i></li></ul></ul><b>Playing a party:</b><br><ul><li>Drag the cards you wish to play to one of your eight designated player holders.</li><li>Make sure your desired leader is on top of the party.</li><li>Click End Turn. This will automatically increase your influence in the lead region colour, if possible.</li><ul><li>This also accounts for faction ability <b>C</b>.</li><li>If playing a <b>K</b> leader, manually adjust your influence in a region by clicking on the right hand side of your influence marker (coloured square).</li></ul><li>In the unlikely event that you <b>run out of space</b>, and have filled all eight of your holders, it is recommended you play cards to a holder with value 1 on it, as these score no points at the end of a round for party size.</li><ul><li>Do not overwrite any previously played <b>H</b> leaders in this way.</li></ul></ul><b>Increasing influence:</b></div><div><ul><li>In most cases, influence will increase automatically in the played regions.</li><li>To <b>manually increase/decrease your influence</b>, click on the right/left hand side of your influence marker (coloured square).</li></ul><b>Discarding your hand:</b></div><div><ul><li>Your hand will be discarded automatically if<i> End turn</i> is clicked.</li><ul><li>If an <b>E</b> leader has been used, this will not occur. Drag any discarded cards to the display instead.</li></ul></ul><b>Scoring VP:</b></div><div><ul><li>To keep track of points throughout the game, use the counters next to the seats to manually adjust scores.</li></ul><b>Next round:</b></div><div><ul><li>Click the <i>Next round</i> button.</li><ul><li><b>A</b> tokens will be returned to the supply automatically.</li></ul></ul>The <i>Force next turn</i> button will cycle to the next player turn. Due to the speed of player turns, it can be easy to accidentally skip someone's turn. Use this button only to cycle to the correct player. This should not be necessary, but is present to help with correcting misplays.</div></div>",
       "players": "2-6",
       "language": "en-GB",
       "variant": "From now we float",
-      "variantImage": ""
+      "variantImage": "/assets/-740190026_45260"
     }
   },
   "seat1": {
@@ -2664,7 +2664,7 @@
     "id": "gamq A_brown.png",
     "deck": "cardDeck",
     "cardType": "A_brown.png",
-    "z": 21130,
+    "z": 40528,
     "parent": "mjw2"
   },
   "gamq A_blue.png": {
@@ -2672,7 +2672,7 @@
     "id": "gamq A_blue.png",
     "deck": "cardDeck",
     "cardType": "A_blue.png",
-    "z": 21165,
+    "z": 40599,
     "parent": "mjw2"
   },
   "gamq A_green.png": {
@@ -2680,7 +2680,7 @@
     "id": "gamq A_green.png",
     "deck": "cardDeck",
     "cardType": "A_green.png",
-    "z": 21192,
+    "z": 40447,
     "parent": "mjw2"
   },
   "gamq A_grey.png": {
@@ -2688,7 +2688,7 @@
     "id": "gamq A_grey.png",
     "deck": "cardDeck",
     "cardType": "A_grey.png",
-    "z": 21180,
+    "z": 40504,
     "parent": "mjw2"
   },
   "gamq B_blue.png": {
@@ -2696,7 +2696,7 @@
     "id": "gamq B_blue.png",
     "deck": "cardDeck",
     "cardType": "B_blue.png",
-    "z": 21185,
+    "z": 40507,
     "parent": "mjw2"
   },
   "gamq B_brown.png": {
@@ -2704,7 +2704,7 @@
     "id": "gamq B_brown.png",
     "deck": "cardDeck",
     "cardType": "B_brown.png",
-    "z": 21224,
+    "z": 40511,
     "parent": "mjw2"
   },
   "gamq B_green.png": {
@@ -2712,7 +2712,7 @@
     "id": "gamq B_green.png",
     "deck": "cardDeck",
     "cardType": "B_green.png",
-    "z": 21216,
+    "z": 40556,
     "parent": "mjw2"
   },
   "gamq A_w.png": {
@@ -2720,7 +2720,7 @@
     "id": "gamq A_w.png",
     "deck": "cardDeck",
     "cardType": "A_w.png",
-    "z": 21175,
+    "z": 40583,
     "parent": "mjw2"
   },
   "gamq B_grey.png": {
@@ -2728,7 +2728,7 @@
     "id": "gamq B_grey.png",
     "deck": "cardDeck",
     "cardType": "B_grey.png",
-    "z": 21137,
+    "z": 40555,
     "parent": "mjw2"
   },
   "gamq A_p.png": {
@@ -2736,7 +2736,7 @@
     "id": "gamq A_p.png",
     "deck": "cardDeck",
     "cardType": "A_p.png",
-    "z": 21172,
+    "z": 40575,
     "parent": "mjw2"
   },
   "gamq B_p.png": {
@@ -2744,7 +2744,7 @@
     "id": "gamq B_p.png",
     "deck": "cardDeck",
     "cardType": "B_p.png",
-    "z": 21218,
+    "z": 40487,
     "parent": "mjw2"
   },
   "gamq B_w.png": {
@@ -2752,7 +2752,7 @@
     "id": "gamq B_w.png",
     "deck": "cardDeck",
     "cardType": "B_w.png",
-    "z": 21200,
+    "z": 40466,
     "parent": "mjw2"
   },
   "gamq C_blue.png": {
@@ -2760,7 +2760,7 @@
     "id": "gamq C_blue.png",
     "deck": "cardDeck",
     "cardType": "C_blue.png",
-    "z": 21208,
+    "z": 40441,
     "parent": "mjw2"
   },
   "gamq C_brown.png": {
@@ -2768,7 +2768,7 @@
     "id": "gamq C_brown.png",
     "deck": "cardDeck",
     "cardType": "C_brown.png",
-    "z": 21163,
+    "z": 40595,
     "parent": "mjw2"
   },
   "gamq C_green.png": {
@@ -2776,7 +2776,7 @@
     "id": "gamq C_green.png",
     "deck": "cardDeck",
     "cardType": "C_green.png",
-    "z": 21122,
+    "z": 40451,
     "parent": "mjw2"
   },
   "gamq C_p.png": {
@@ -2784,7 +2784,7 @@
     "id": "gamq C_p.png",
     "deck": "cardDeck",
     "cardType": "C_p.png",
-    "z": 21169,
+    "z": 40582,
     "parent": "mjw2"
   },
   "gamq C_grey.png": {
@@ -2792,7 +2792,7 @@
     "id": "gamq C_grey.png",
     "deck": "cardDeck",
     "cardType": "C_grey.png",
-    "z": 21144,
+    "z": 40411,
     "parent": "mjw2"
   },
   "gamq C_w.png": {
@@ -2800,7 +2800,7 @@
     "id": "gamq C_w.png",
     "deck": "cardDeck",
     "cardType": "C_w.png",
-    "z": 21195,
+    "z": 40461,
     "parent": "mjw2"
   },
   "gamq D_blue.png": {
@@ -2808,7 +2808,7 @@
     "id": "gamq D_blue.png",
     "deck": "cardDeck",
     "cardType": "D_blue.png",
-    "z": 21156,
+    "z": 40524,
     "parent": "mjw2"
   },
   "gamq D_brown.png": {
@@ -2816,7 +2816,7 @@
     "id": "gamq D_brown.png",
     "deck": "cardDeck",
     "cardType": "D_brown.png",
-    "z": 21188,
+    "z": 40562,
     "parent": "mjw2"
   },
   "gamq D_green.png": {
@@ -2824,7 +2824,7 @@
     "id": "gamq D_green.png",
     "deck": "cardDeck",
     "cardType": "D_green.png",
-    "z": 21213,
+    "z": 40503,
     "parent": "mjw2"
   },
   "gamq D_grey.png": {
@@ -2832,7 +2832,7 @@
     "id": "gamq D_grey.png",
     "deck": "cardDeck",
     "cardType": "D_grey.png",
-    "z": 21247,
+    "z": 40587,
     "parent": "mjw2"
   },
   "gamq D_p.png": {
@@ -2840,7 +2840,7 @@
     "id": "gamq D_p.png",
     "deck": "cardDeck",
     "cardType": "D_p.png",
-    "z": 21194,
+    "z": 40522,
     "parent": "mjw2"
   },
   "gamq D_w.png": {
@@ -2848,7 +2848,7 @@
     "id": "gamq D_w.png",
     "deck": "cardDeck",
     "cardType": "D_w.png",
-    "z": 21167,
+    "z": 40505,
     "parent": "mjw2"
   },
   "gamq E_blue.png": {
@@ -2856,7 +2856,7 @@
     "id": "gamq E_blue.png",
     "deck": "cardDeck",
     "cardType": "E_blue.png",
-    "z": 21230,
+    "z": 40497,
     "parent": "mjw2"
   },
   "gamq E_brown.png": {
@@ -2864,7 +2864,7 @@
     "id": "gamq E_brown.png",
     "deck": "cardDeck",
     "cardType": "E_brown.png",
-    "z": 21155,
+    "z": 40410,
     "parent": "mjw2"
   },
   "gamq E_green.png": {
@@ -2872,7 +2872,7 @@
     "id": "gamq E_green.png",
     "deck": "cardDeck",
     "cardType": "E_green.png",
-    "z": 21178,
+    "z": 40415,
     "parent": "mjw2"
   },
   "gamq E_grey.png": {
@@ -2880,7 +2880,7 @@
     "id": "gamq E_grey.png",
     "deck": "cardDeck",
     "cardType": "E_grey.png",
-    "z": 21129,
+    "z": 40475,
     "parent": "mjw2"
   },
   "gamq E_p.png": {
@@ -2888,7 +2888,7 @@
     "id": "gamq E_p.png",
     "deck": "cardDeck",
     "cardType": "E_p.png",
-    "z": 21191,
+    "z": 40482,
     "parent": "mjw2"
   },
   "gamq E_w.png": {
@@ -2896,7 +2896,7 @@
     "id": "gamq E_w.png",
     "deck": "cardDeck",
     "cardType": "E_w.png",
-    "z": 21254,
+    "z": 40471,
     "parent": "mjw2"
   },
   "gamq F_blue.png": {
@@ -2904,7 +2904,7 @@
     "id": "gamq F_blue.png",
     "deck": "cardDeck",
     "cardType": "F_blue.png",
-    "z": 21154,
+    "z": 40592,
     "parent": "mjw2"
   },
   "gamq F_green.png": {
@@ -2912,7 +2912,7 @@
     "id": "gamq F_green.png",
     "deck": "cardDeck",
     "cardType": "F_green.png",
-    "z": 21251,
+    "z": 40581,
     "parent": "mjw2"
   },
   "gamq F_brown.png": {
@@ -2920,7 +2920,7 @@
     "id": "gamq F_brown.png",
     "deck": "cardDeck",
     "cardType": "F_brown.png",
-    "z": 21220,
+    "z": 40531,
     "parent": "mjw2"
   },
   "gamq F_grey.png": {
@@ -2928,7 +2928,7 @@
     "id": "gamq F_grey.png",
     "deck": "cardDeck",
     "cardType": "F_grey.png",
-    "z": 21184,
+    "z": 40544,
     "parent": "mjw2"
   },
   "gamq F_p.png": {
@@ -2936,7 +2936,7 @@
     "id": "gamq F_p.png",
     "deck": "cardDeck",
     "cardType": "F_p.png",
-    "z": 21168,
+    "z": 40446,
     "parent": "mjw2"
   },
   "gamq F_w.png": {
@@ -2944,7 +2944,7 @@
     "id": "gamq F_w.png",
     "deck": "cardDeck",
     "cardType": "F_w.png",
-    "z": 21199,
+    "z": 40436,
     "parent": "mjw2"
   },
   "gamq G_blue.png": {
@@ -2952,7 +2952,7 @@
     "id": "gamq G_blue.png",
     "deck": "cardDeck",
     "cardType": "G_blue.png",
-    "z": 21229,
+    "z": 40419,
     "parent": "mjw2"
   },
   "gamq G_brown.png": {
@@ -2960,7 +2960,7 @@
     "id": "gamq G_brown.png",
     "deck": "cardDeck",
     "cardType": "G_brown.png",
-    "z": 21221,
+    "z": 40409,
     "parent": "mjw2"
   },
   "gamq G_green.png": {
@@ -2968,7 +2968,7 @@
     "id": "gamq G_green.png",
     "deck": "cardDeck",
     "cardType": "G_green.png",
-    "z": 21253,
+    "z": 40431,
     "parent": "mjw2"
   },
   "gamq G_grey.png": {
@@ -2976,7 +2976,7 @@
     "id": "gamq G_grey.png",
     "deck": "cardDeck",
     "cardType": "G_grey.png",
-    "z": 21190,
+    "z": 40533,
     "parent": "mjw2"
   },
   "gamq G_p.png": {
@@ -2984,7 +2984,7 @@
     "id": "gamq G_p.png",
     "deck": "cardDeck",
     "cardType": "G_p.png",
-    "z": 21170,
+    "z": 40534,
     "parent": "mjw2"
   },
   "gamq G_w.png": {
@@ -2992,7 +2992,7 @@
     "id": "gamq G_w.png",
     "deck": "cardDeck",
     "cardType": "G_w.png",
-    "z": 21234,
+    "z": 40529,
     "parent": "mjw2"
   },
   "gamq H_blue.png": {
@@ -3000,7 +3000,7 @@
     "id": "gamq H_blue.png",
     "deck": "cardDeck",
     "cardType": "H_blue.png",
-    "z": 21174,
+    "z": 40502,
     "parent": "mjw2"
   },
   "gamq H_brown.png": {
@@ -3008,7 +3008,7 @@
     "id": "gamq H_brown.png",
     "deck": "cardDeck",
     "cardType": "H_brown.png",
-    "z": 21149,
+    "z": 40463,
     "parent": "mjw2"
   },
   "gamq H_green.png": {
@@ -3016,7 +3016,7 @@
     "id": "gamq H_green.png",
     "deck": "cardDeck",
     "cardType": "H_green.png",
-    "z": 21193,
+    "z": 40422,
     "parent": "mjw2"
   },
   "gamq H_grey.png": {
@@ -3024,7 +3024,7 @@
     "id": "gamq H_grey.png",
     "deck": "cardDeck",
     "cardType": "H_grey.png",
-    "z": 21248,
+    "z": 40570,
     "parent": "mjw2"
   },
   "gamq H_p.png": {
@@ -3032,7 +3032,7 @@
     "id": "gamq H_p.png",
     "deck": "cardDeck",
     "cardType": "H_p.png",
-    "z": 21164,
+    "z": 40448,
     "parent": "mjw2"
   },
   "gamq H_w.png": {
@@ -3040,7 +3040,7 @@
     "id": "gamq H_w.png",
     "deck": "cardDeck",
     "cardType": "H_w.png",
-    "z": 21162,
+    "z": 40506,
     "parent": "mjw2"
   },
   "gamq I_blue.png": {
@@ -3048,7 +3048,7 @@
     "id": "gamq I_blue.png",
     "deck": "cardDeck",
     "cardType": "I_blue.png",
-    "z": 21207,
+    "z": 40535,
     "parent": "mjw2"
   },
   "gamq I_brown.png": {
@@ -3056,7 +3056,7 @@
     "id": "gamq I_brown.png",
     "deck": "cardDeck",
     "cardType": "I_brown.png",
-    "z": 21228,
+    "z": 40438,
     "parent": "mjw2"
   },
   "gamq I_green.png": {
@@ -3064,7 +3064,7 @@
     "id": "gamq I_green.png",
     "deck": "cardDeck",
     "cardType": "I_green.png",
-    "z": 21127,
+    "z": 40494,
     "parent": "mjw2"
   },
   "gamq I_grey.png": {
@@ -3072,7 +3072,7 @@
     "id": "gamq I_grey.png",
     "deck": "cardDeck",
     "cardType": "I_grey.png",
-    "z": 21171,
+    "z": 40546,
     "parent": "mjw2"
   },
   "gamq I_p.png": {
@@ -3080,7 +3080,7 @@
     "id": "gamq I_p.png",
     "deck": "cardDeck",
     "cardType": "I_p.png",
-    "z": 21249,
+    "z": 40474,
     "parent": "mjw2"
   },
   "gamq I_w.png": {
@@ -3088,7 +3088,7 @@
     "id": "gamq I_w.png",
     "deck": "cardDeck",
     "cardType": "I_w.png",
-    "z": 21242,
+    "z": 40435,
     "parent": "mjw2"
   },
   "gamq J_blue.png": {
@@ -3096,7 +3096,7 @@
     "id": "gamq J_blue.png",
     "deck": "cardDeck",
     "cardType": "J_blue.png",
-    "z": 21150,
+    "z": 40416,
     "parent": "mjw2"
   },
   "gamq J_brown.png": {
@@ -3104,7 +3104,7 @@
     "id": "gamq J_brown.png",
     "deck": "cardDeck",
     "cardType": "J_brown.png",
-    "z": 21183,
+    "z": 40558,
     "parent": "mjw2"
   },
   "gamq J_green.png": {
@@ -3112,7 +3112,7 @@
     "id": "gamq J_green.png",
     "deck": "cardDeck",
     "cardType": "J_green.png",
-    "z": 21161,
+    "z": 40430,
     "parent": "mjw2"
   },
   "gamq J_grey.png": {
@@ -3120,7 +3120,7 @@
     "id": "gamq J_grey.png",
     "deck": "cardDeck",
     "cardType": "J_grey.png",
-    "z": 21160,
+    "z": 40559,
     "parent": "mjw2"
   },
   "gamq J_p.png": {
@@ -3128,7 +3128,7 @@
     "id": "gamq J_p.png",
     "deck": "cardDeck",
     "cardType": "J_p.png",
-    "z": 21252,
+    "z": 40566,
     "parent": "mjw2"
   },
   "gamq J_w.png": {
@@ -3136,7 +3136,7 @@
     "id": "gamq J_w.png",
     "deck": "cardDeck",
     "cardType": "J_w.png",
-    "z": 21139,
+    "z": 40412,
     "parent": "mjw2"
   },
   "gamq K_blue.png": {
@@ -3144,7 +3144,7 @@
     "id": "gamq K_blue.png",
     "deck": "cardDeck",
     "cardType": "K_blue.png",
-    "z": 21240,
+    "z": 40443,
     "parent": "mjw2"
   },
   "gamq K_brown.png": {
@@ -3152,7 +3152,7 @@
     "id": "gamq K_brown.png",
     "deck": "cardDeck",
     "cardType": "K_brown.png",
-    "z": 21132,
+    "z": 40509,
     "parent": "mjw2"
   },
   "gamq K_green.png": {
@@ -3160,7 +3160,7 @@
     "id": "gamq K_green.png",
     "deck": "cardDeck",
     "cardType": "K_green.png",
-    "z": 21203,
+    "z": 40588,
     "parent": "mjw2"
   },
   "gamq K_grey.png": {
@@ -3168,7 +3168,7 @@
     "id": "gamq K_grey.png",
     "deck": "cardDeck",
     "cardType": "K_grey.png",
-    "z": 21157,
+    "z": 40571,
     "parent": "mjw2"
   },
   "gamq K_p.png": {
@@ -3176,7 +3176,7 @@
     "id": "gamq K_p.png",
     "deck": "cardDeck",
     "cardType": "K_p.png",
-    "z": 21120,
+    "z": 40530,
     "parent": "mjw2"
   },
   "gamq l.png": {
@@ -3184,7 +3184,7 @@
     "id": "gamq l.png",
     "deck": "cardDeck",
     "cardType": "l.png",
-    "z": 21246,
+    "z": 40472,
     "parent": "mjw2"
   },
   "gamq K_w.png": {
@@ -3192,7 +3192,7 @@
     "id": "gamq K_w.png",
     "deck": "cardDeck",
     "cardType": "K_w.png",
-    "z": 21257,
+    "z": 40477,
     "parent": "mjw2"
   },
   "un82": {
@@ -3200,7 +3200,7 @@
     "type": "card",
     "cardType": "A_brown.png",
     "id": "un82",
-    "z": 21140,
+    "z": 40551,
     "parent": "mjw2"
   },
   "r66q": {
@@ -3208,7 +3208,7 @@
     "type": "card",
     "cardType": "A_blue.png",
     "id": "r66q",
-    "z": 21126,
+    "z": 40591,
     "parent": "mjw2"
   },
   "spfe": {
@@ -3216,7 +3216,7 @@
     "type": "card",
     "cardType": "A_green.png",
     "id": "spfe",
-    "z": 21151,
+    "z": 40468,
     "parent": "mjw2"
   },
   "e3an": {
@@ -3224,7 +3224,7 @@
     "type": "card",
     "cardType": "A_grey.png",
     "id": "e3an",
-    "z": 21166,
+    "z": 40550,
     "parent": "mjw2"
   },
   "8yvi": {
@@ -3232,7 +3232,7 @@
     "type": "card",
     "cardType": "B_blue.png",
     "id": "8yvi",
-    "z": 21244,
+    "z": 40457,
     "parent": "mjw2"
   },
   "t5se": {
@@ -3240,7 +3240,7 @@
     "type": "card",
     "cardType": "B_brown.png",
     "id": "t5se",
-    "z": 21239,
+    "z": 40514,
     "parent": "mjw2"
   },
   "e4f5": {
@@ -3248,7 +3248,7 @@
     "type": "card",
     "cardType": "B_green.png",
     "id": "e4f5",
-    "z": 21146,
+    "z": 40573,
     "parent": "mjw2"
   },
   "k2q6": {
@@ -3256,7 +3256,7 @@
     "type": "card",
     "cardType": "A_w.png",
     "id": "k2q6",
-    "z": 21198,
+    "z": 40444,
     "parent": "mjw2"
   },
   "4yti": {
@@ -3264,7 +3264,7 @@
     "type": "card",
     "cardType": "B_grey.png",
     "id": "4yti",
-    "z": 21215,
+    "z": 40485,
     "parent": "mjw2"
   },
   "ml3y": {
@@ -3272,7 +3272,7 @@
     "type": "card",
     "cardType": "A_p.png",
     "id": "ml3y",
-    "z": 21235,
+    "z": 40580,
     "parent": "mjw2"
   },
   "n3v7": {
@@ -3280,7 +3280,7 @@
     "type": "card",
     "cardType": "B_p.png",
     "id": "n3v7",
-    "z": 21148,
+    "z": 40526,
     "parent": "mjw2"
   },
   "mxsq": {
@@ -3288,7 +3288,7 @@
     "type": "card",
     "cardType": "B_w.png",
     "id": "mxsq",
-    "z": 21217,
+    "z": 40423,
     "parent": "mjw2"
   },
   "useb": {
@@ -3296,7 +3296,7 @@
     "type": "card",
     "cardType": "C_blue.png",
     "id": "useb",
-    "z": 21136,
+    "z": 40578,
     "parent": "mjw2"
   },
   "n15i": {
@@ -3304,7 +3304,7 @@
     "type": "card",
     "cardType": "C_brown.png",
     "id": "n15i",
-    "z": 21231,
+    "z": 40565,
     "parent": "mjw2"
   },
   "hn08": {
@@ -3312,7 +3312,7 @@
     "type": "card",
     "cardType": "C_green.png",
     "id": "hn08",
-    "z": 21187,
+    "z": 40439,
     "parent": "mjw2"
   },
   "xprh": {
@@ -3320,7 +3320,7 @@
     "type": "card",
     "cardType": "C_p.png",
     "id": "xprh",
-    "z": 21133,
+    "z": 40491,
     "parent": "mjw2"
   },
   "mrfu": {
@@ -3328,7 +3328,7 @@
     "type": "card",
     "cardType": "C_grey.png",
     "id": "mrfu",
-    "z": 21138,
+    "z": 40520,
     "parent": "mjw2"
   },
   "j9cr": {
@@ -3336,7 +3336,7 @@
     "type": "card",
     "cardType": "C_w.png",
     "id": "j9cr",
-    "z": 21145,
+    "z": 40513,
     "parent": "mjw2"
   },
   "3zmy": {
@@ -3344,7 +3344,7 @@
     "type": "card",
     "cardType": "D_blue.png",
     "id": "3zmy",
-    "z": 21186,
+    "z": 40496,
     "parent": "mjw2"
   },
   "792s": {
@@ -3352,7 +3352,7 @@
     "type": "card",
     "cardType": "D_brown.png",
     "id": "792s",
-    "z": 21158,
+    "z": 40458,
     "parent": "mjw2"
   },
   "5agq": {
@@ -3360,7 +3360,7 @@
     "type": "card",
     "cardType": "D_green.png",
     "id": "5agq",
-    "z": 21182,
+    "z": 40437,
     "parent": "mjw2"
   },
   "bfol": {
@@ -3368,7 +3368,7 @@
     "type": "card",
     "cardType": "D_grey.png",
     "id": "bfol",
-    "z": 21119,
+    "z": 40517,
     "parent": "mjw2"
   },
   "6igh": {
@@ -3376,7 +3376,7 @@
     "type": "card",
     "cardType": "D_p.png",
     "id": "6igh",
-    "z": 21176,
+    "z": 40557,
     "parent": "mjw2"
   },
   "x6bm": {
@@ -3384,7 +3384,7 @@
     "type": "card",
     "cardType": "D_w.png",
     "id": "x6bm",
-    "z": 21233,
+    "z": 40414,
     "parent": "mjw2"
   },
   "t2ba": {
@@ -3392,7 +3392,7 @@
     "type": "card",
     "cardType": "E_blue.png",
     "id": "t2ba",
-    "z": 21201,
+    "z": 40537,
     "parent": "mjw2"
   },
   "9f7m": {
@@ -3400,7 +3400,7 @@
     "type": "card",
     "cardType": "E_brown.png",
     "id": "9f7m",
-    "z": 21241,
+    "z": 40518,
     "parent": "mjw2"
   },
   "jdfh": {
@@ -3408,7 +3408,7 @@
     "type": "card",
     "cardType": "E_green.png",
     "id": "jdfh",
-    "z": 21225,
+    "z": 40501,
     "parent": "mjw2"
   },
   "t97q": {
@@ -3416,7 +3416,7 @@
     "type": "card",
     "cardType": "E_grey.png",
     "id": "t97q",
-    "z": 21243,
+    "z": 40418,
     "parent": "mjw2"
   },
   "aaw1": {
@@ -3424,7 +3424,7 @@
     "type": "card",
     "cardType": "E_p.png",
     "id": "aaw1",
-    "z": 21212,
+    "z": 40452,
     "parent": "mjw2"
   },
   "sahv": {
@@ -3432,7 +3432,7 @@
     "type": "card",
     "cardType": "E_w.png",
     "id": "sahv",
-    "z": 21143,
+    "z": 40500,
     "parent": "mjw2"
   },
   "othv": {
@@ -3440,7 +3440,7 @@
     "type": "card",
     "cardType": "F_blue.png",
     "id": "othv",
-    "z": 21227,
+    "z": 40483,
     "parent": "mjw2"
   },
   "d2td": {
@@ -3448,7 +3448,7 @@
     "type": "card",
     "cardType": "F_green.png",
     "id": "d2td",
-    "z": 21236,
+    "z": 40549,
     "parent": "mjw2"
   },
   "ir9n": {
@@ -3456,7 +3456,7 @@
     "type": "card",
     "cardType": "F_brown.png",
     "id": "ir9n",
-    "z": 21123,
+    "z": 40585,
     "parent": "mjw2"
   },
   "kmsn": {
@@ -3464,7 +3464,7 @@
     "type": "card",
     "cardType": "F_grey.png",
     "id": "kmsn",
-    "z": 21134,
+    "z": 40547,
     "parent": "mjw2"
   },
   "ndvz": {
@@ -3472,7 +3472,7 @@
     "type": "card",
     "cardType": "F_p.png",
     "id": "ndvz",
-    "z": 21177,
+    "z": 40563,
     "parent": "mjw2"
   },
   "cejw": {
@@ -3480,7 +3480,7 @@
     "type": "card",
     "cardType": "F_w.png",
     "id": "cejw",
-    "z": 21117,
+    "z": 40484,
     "parent": "mjw2"
   },
   "24mj": {
@@ -3488,7 +3488,7 @@
     "type": "card",
     "cardType": "G_blue.png",
     "id": "24mj",
-    "z": 21125,
+    "z": 40428,
     "parent": "mjw2"
   },
   "rx3s": {
@@ -3496,7 +3496,7 @@
     "type": "card",
     "cardType": "G_brown.png",
     "id": "rx3s",
-    "z": 21238,
+    "z": 40516,
     "parent": "mjw2"
   },
   "9edo": {
@@ -3504,7 +3504,7 @@
     "type": "card",
     "cardType": "G_green.png",
     "id": "9edo",
-    "z": 21237,
+    "z": 40552,
     "parent": "mjw2"
   },
   "3mp8": {
@@ -3512,7 +3512,7 @@
     "type": "card",
     "cardType": "G_grey.png",
     "id": "3mp8",
-    "z": 21255,
+    "z": 40572,
     "parent": "mjw2"
   },
   "uemj": {
@@ -3520,7 +3520,7 @@
     "type": "card",
     "cardType": "G_p.png",
     "id": "uemj",
-    "z": 21232,
+    "z": 40470,
     "parent": "mjw2"
   },
   "t16a": {
@@ -3528,7 +3528,7 @@
     "type": "card",
     "cardType": "G_w.png",
     "id": "t16a",
-    "z": 21222,
+    "z": 40492,
     "parent": "mjw2"
   },
   "s9ec": {
@@ -3536,7 +3536,7 @@
     "type": "card",
     "cardType": "H_blue.png",
     "id": "s9ec",
-    "z": 21181,
+    "z": 40465,
     "parent": "mjw2"
   },
   "4zcn": {
@@ -3544,7 +3544,7 @@
     "type": "card",
     "cardType": "H_brown.png",
     "id": "4zcn",
-    "z": 21115,
+    "z": 40429,
     "parent": "mjw2"
   },
   "byqn": {
@@ -3552,7 +3552,7 @@
     "type": "card",
     "cardType": "H_green.png",
     "id": "byqn",
-    "z": 21159,
+    "z": 40586,
     "parent": "mjw2"
   },
   "67t9": {
@@ -3560,7 +3560,7 @@
     "type": "card",
     "cardType": "H_grey.png",
     "id": "67t9",
-    "z": 21179,
+    "z": 40568,
     "parent": "mjw2"
   },
   "z2s1": {
@@ -3568,7 +3568,7 @@
     "type": "card",
     "cardType": "H_p.png",
     "id": "z2s1",
-    "z": 21153,
+    "z": 40450,
     "parent": "mjw2"
   },
   "46h4": {
@@ -3576,7 +3576,7 @@
     "type": "card",
     "cardType": "H_w.png",
     "id": "46h4",
-    "z": 21245,
+    "z": 40510,
     "parent": "mjw2"
   },
   "6ku8": {
@@ -3584,7 +3584,7 @@
     "type": "card",
     "cardType": "I_blue.png",
     "id": "6ku8",
-    "z": 21141,
+    "z": 40545,
     "parent": "mjw2"
   },
   "cawu": {
@@ -3592,7 +3592,7 @@
     "type": "card",
     "cardType": "I_brown.png",
     "id": "cawu",
-    "z": 21147,
+    "z": 40453,
     "parent": "mjw2"
   },
   "cez7": {
@@ -3600,7 +3600,7 @@
     "type": "card",
     "cardType": "I_green.png",
     "id": "cez7",
-    "z": 21223,
+    "z": 40594,
     "parent": "mjw2"
   },
   "cd6y": {
@@ -3608,7 +3608,7 @@
     "type": "card",
     "cardType": "I_grey.png",
     "id": "cd6y",
-    "z": 21210,
+    "z": 40574,
     "parent": "mjw2"
   },
   "f0d6": {
@@ -3616,7 +3616,7 @@
     "type": "card",
     "cardType": "I_p.png",
     "id": "f0d6",
-    "z": 21131,
+    "z": 40433,
     "parent": "mjw2"
   },
   "m9d5": {
@@ -3624,7 +3624,7 @@
     "type": "card",
     "cardType": "I_w.png",
     "id": "m9d5",
-    "z": 21204,
+    "z": 40498,
     "parent": "mjw2"
   },
   "pjf1": {
@@ -3632,7 +3632,7 @@
     "type": "card",
     "cardType": "J_blue.png",
     "id": "pjf1",
-    "z": 21124,
+    "z": 40425,
     "parent": "mjw2"
   },
   "uy2u": {
@@ -3640,7 +3640,7 @@
     "type": "card",
     "cardType": "J_brown.png",
     "id": "uy2u",
-    "z": 21121,
+    "z": 40508,
     "parent": "mjw2"
   },
   "oux5": {
@@ -3648,7 +3648,7 @@
     "type": "card",
     "cardType": "J_green.png",
     "id": "oux5",
-    "z": 21135,
+    "z": 40593,
     "parent": "mjw2"
   },
   "t342": {
@@ -3656,7 +3656,7 @@
     "type": "card",
     "cardType": "J_grey.png",
     "id": "t342",
-    "z": 21209,
+    "z": 40589,
     "parent": "mjw2"
   },
   "agac": {
@@ -3664,7 +3664,7 @@
     "type": "card",
     "cardType": "J_p.png",
     "id": "agac",
-    "z": 21118,
+    "z": 40449,
     "parent": "mjw2"
   },
   "saa4": {
@@ -3672,7 +3672,7 @@
     "type": "card",
     "cardType": "J_w.png",
     "id": "saa4",
-    "z": 21250,
+    "z": 40490,
     "parent": "mjw2"
   },
   "2omh": {
@@ -3680,7 +3680,7 @@
     "type": "card",
     "cardType": "K_blue.png",
     "id": "2omh",
-    "z": 21173,
+    "z": 40421,
     "parent": "mjw2"
   },
   "gsfi": {
@@ -3688,7 +3688,7 @@
     "type": "card",
     "cardType": "K_brown.png",
     "id": "gsfi",
-    "z": 21189,
+    "z": 40479,
     "parent": "mjw2"
   },
   "o0ph": {
@@ -3696,7 +3696,7 @@
     "type": "card",
     "cardType": "K_green.png",
     "id": "o0ph",
-    "z": 21214,
+    "z": 40538,
     "parent": "mjw2"
   },
   "wqon": {
@@ -3704,7 +3704,7 @@
     "type": "card",
     "cardType": "K_grey.png",
     "id": "wqon",
-    "z": 21211,
+    "z": 40478,
     "parent": "mjw2"
   },
   "gocu": {
@@ -3712,7 +3712,7 @@
     "type": "card",
     "cardType": "K_p.png",
     "id": "gocu",
-    "z": 21256,
+    "z": 40424,
     "parent": "mjw2"
   },
   "aiq4": {
@@ -3720,7 +3720,7 @@
     "type": "card",
     "cardType": "l.png",
     "id": "aiq4",
-    "z": 21258,
+    "z": 40426,
     "parent": "mjw2"
   },
   "bkyq": {
@@ -3728,7 +3728,7 @@
     "type": "card",
     "cardType": "K_w.png",
     "id": "bkyq",
-    "z": 21196,
+    "z": 40476,
     "parent": "mjw2"
   },
   "hqei": {
@@ -3736,7 +3736,7 @@
     "type": "card",
     "cardType": "l.png",
     "id": "hqei",
-    "z": 21128,
+    "z": 40486,
     "parent": "mjw2"
   },
   "1ak7": {
@@ -3744,7 +3744,7 @@
     "type": "card",
     "cardType": "l.png",
     "id": "1ak7",
-    "z": 21152,
+    "z": 40499,
     "parent": "mjw2"
   },
   "yaql": {
@@ -3752,7 +3752,7 @@
     "type": "card",
     "cardType": "l.png",
     "id": "yaql",
-    "z": 21197,
+    "z": 40460,
     "parent": "mjw2"
   },
   "0wrt": {
@@ -3760,7 +3760,7 @@
     "type": "card",
     "cardType": "l.png",
     "id": "0wrt",
-    "z": 21142,
+    "z": 40596,
     "parent": "mjw2"
   },
   "bhok": {
@@ -3768,7 +3768,7 @@
     "type": "card",
     "cardType": "l.png",
     "id": "bhok",
-    "z": 21116,
+    "z": 40554,
     "parent": "mjw2"
   },
   "d0dn": {
@@ -3776,7 +3776,7 @@
     "type": "card",
     "cardType": "l.png",
     "id": "d0dn",
-    "z": 21226,
+    "z": 40521,
     "parent": "mjw2"
   },
   "v8dc": {
@@ -3784,7 +3784,7 @@
     "type": "card",
     "cardType": "l.png",
     "id": "v8dc",
-    "z": 21206,
+    "z": 40434,
     "parent": "mjw2"
   },
   "banx": {
@@ -3792,7 +3792,7 @@
     "type": "card",
     "cardType": "l.png",
     "id": "banx",
-    "z": 21205,
+    "z": 40590,
     "parent": "mjw2"
   },
   "obkn": {
@@ -3800,7 +3800,7 @@
     "type": "card",
     "cardType": "l.png",
     "id": "obkn",
-    "z": 21202,
+    "z": 40576,
     "parent": "mjw2"
   },
   "akhd": {
@@ -3808,7 +3808,7 @@
     "type": "card",
     "cardType": "l.png",
     "id": "akhd",
-    "z": 21219,
+    "z": 40536,
     "parent": "mjw2"
   },
   "setupHolder1": {
@@ -3868,8 +3868,8 @@
     "x": 1500,
     "y": -337,
     "inheritFrom": "setupHolder1",
-    "rightY": 476,
-    "Y": 412.5,
+    "rightY": -211,
+    "Y": -274.5,
     "css": {
       "border": "3px solid blue"
     }
@@ -3976,6 +3976,18 @@
                 ]
               },
               {
+                "func": "IF",
+                "operand1": "${letter}",
+                "relation": "==",
+                "operand2": "N",
+                "thenRoutine": [
+                  "var nCount = ${COUNT}"
+                ],
+                "elseRoutine": [
+                  "VAR nCount = 0"
+                ]
+              },
+              {
                 "note": "doing L related labelling",
                 "func": "SELECT",
                 "property": "parent",
@@ -4060,43 +4072,51 @@
               },
               {
                 "func": "IF",
-                "operand1": "${partySize}",
-                "relation": ">",
-                "operand2": "${partySizeC}",
+                "operand1": "${leader}",
+                "relation": "!=",
+                "operand2": "M",
                 "thenRoutine": [
                   {
                     "func": "IF",
                     "operand1": "${partySize}",
                     "relation": ">",
-                    "operand2": "${text}",
+                    "operand2": "${partySizeC}",
                     "thenRoutine": [
                       {
-                        "func": "LABEL",
-                        "label": "share${seatNo}${colorPos}",
-                        "value": 1,
-                        "mode": "inc"
+                        "func": "IF",
+                        "operand1": "${partySize}",
+                        "relation": ">",
+                        "operand2": "${text}",
+                        "thenRoutine": [
+                          {
+                            "func": "LABEL",
+                            "label": "share${seatNo}${colorPos}",
+                            "value": 1,
+                            "mode": "inc"
+                          }
+                        ]
                       }
                     ]
-                  }
-                ]
-              },
-              {
-                "func": "IF",
-                "operand1": "${partySizeC}",
-                "relation": ">",
-                "operand2": "${partySize}",
-                "thenRoutine": [
+                  },
                   {
                     "func": "IF",
                     "operand1": "${partySizeC}",
                     "relation": ">",
-                    "operand2": "${text}",
+                    "operand2": "${partySize}",
                     "thenRoutine": [
                       {
-                        "func": "LABEL",
-                        "label": "share${seatNo}${colorPos}",
-                        "value": 1,
-                        "mode": "inc"
+                        "func": "IF",
+                        "operand1": "${partySizeC}",
+                        "relation": ">",
+                        "operand2": "${text}",
+                        "thenRoutine": [
+                          {
+                            "func": "LABEL",
+                            "label": "share${seatNo}${colorPos}",
+                            "value": 1,
+                            "mode": "inc"
+                          }
+                        ]
                       }
                     ]
                   }
@@ -4155,6 +4175,20 @@
             "from": "gameHolder",
             "to": "${hand}",
             "count": "${fCount}"
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${nCount}",
+        "relation": ">",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "func": "MOVE",
+            "from": "gameHolder",
+            "to": "display",
+            "count": "${nCount}"
           }
         ]
       },
@@ -5220,7 +5254,7 @@
     "stackOffsetX": 90,
     "hAnchorPos": "center",
     "minWidth": 90,
-    "rightX": 1925,
+    "rightX": 2060,
     "enterRoutine": [
       {
         "func": "CALL",
@@ -5691,6 +5725,96 @@
         "image": "/assets/-893820531_12474",
         "letter": "K",
         "colorPos": 5
+      },
+      "M_blue.png": {
+        "image": "/assets/-232849638_26704",
+        "letter": "M",
+        "colorPos": 1
+      },
+      "M_brown.png": {
+        "image": "/assets/1864469736_24098",
+        "letter": "M",
+        "colorPos": 3
+      },
+      "M_green.png": {
+        "image": "/assets/774453640_29826",
+        "letter": "M",
+        "colorPos": 2
+      },
+      "M_grey.png": {
+        "image": "/assets/1144778945_24078",
+        "letter": "M",
+        "colorPos": 6
+      },
+      "M_p.png": {
+        "image": "/assets/1266763242_24196",
+        "letter": "M",
+        "colorPos": 4
+      },
+      "M_w.png": {
+        "image": "/assets/2029626458_22670",
+        "letter": "M",
+        "colorPos": 5
+      },
+      "N_blue.png": {
+        "image": "/assets/673326377_39344",
+        "letter": "N",
+        "colorPos": 1
+      },
+      "N_brown.png": {
+        "image": "/assets/597519167_36614",
+        "letter": "N",
+        "colorPos": 3
+      },
+      "N_green.png": {
+        "image": "/assets/1283239763_41842",
+        "letter": "N",
+        "colorPos": 2
+      },
+      "N_grey.png": {
+        "image": "/assets/102636374_36526",
+        "letter": "N",
+        "colorPos": 6
+      },
+      "N_p.png": {
+        "image": "/assets/-936638213_35678",
+        "letter": "N",
+        "colorPos": 4
+      },
+      "N_w.png": {
+        "image": "/assets/1200285414_34746",
+        "letter": "N",
+        "colorPos": 5
+      },
+      "O_blue.png": {
+        "image": "/assets/1010565314_17954",
+        "letter": "O",
+        "colorPos": 1
+      },
+      "O_brown.png": {
+        "image": "/assets/729832148_15200",
+        "letter": "O",
+        "colorPos": 3
+      },
+      "O_green.png": {
+        "image": "/assets/-1266415518_20488",
+        "letter": "O",
+        "colorPos": 2
+      },
+      "O_grey.png": {
+        "image": "/assets/-1231988663_15146",
+        "letter": "O",
+        "colorPos": 6
+      },
+      "O_p.png": {
+        "image": "/assets/1457690150_15036",
+        "letter": "O",
+        "colorPos": 4
+      },
+      "O_w.png": {
+        "image": "/assets/106478330_14096",
+        "letter": "O",
+        "colorPos": 5
       }
     },
     "faceTemplates": [
@@ -5739,8 +5863,8 @@
     "x": 1140,
     "y": -200,
     "inheritFrom": "setupHolder7",
-    "rightY": 476,
-    "Y": 412.5
+    "rightY": -74,
+    "Y": -137.5
   },
   "setupHolder9": {
     "type": "holder",
@@ -5748,8 +5872,8 @@
     "x": 1230,
     "y": -200,
     "inheritFrom": "setupHolder7",
-    "rightY": 476,
-    "Y": 412.5
+    "rightY": -74,
+    "Y": -137.5
   },
   "setupHolder10": {
     "type": "holder",
@@ -5757,8 +5881,8 @@
     "x": 1320,
     "y": -200,
     "inheritFrom": "setupHolder7",
-    "rightY": 476,
-    "Y": 412.5
+    "rightY": -74,
+    "Y": -137.5
   },
   "setupHolder11": {
     "type": "holder",
@@ -5766,8 +5890,8 @@
     "x": 1410,
     "y": -200,
     "inheritFrom": "setupHolder7",
-    "rightY": 476,
-    "Y": 412.5
+    "rightY": -74,
+    "Y": -137.5
   },
   "setupHolder12": {
     "type": "holder",
@@ -5775,8 +5899,8 @@
     "x": 1500,
     "y": -200,
     "inheritFrom": "setupHolder7",
-    "rightY": 476,
-    "Y": 412.5
+    "rightY": -74,
+    "Y": -137.5
   },
   "setupHolder7": {
     "type": "holder",
@@ -5784,8 +5908,8 @@
     "x": 1050,
     "y": -200,
     "inheritFrom": "setupHolder1",
-    "Y": 412.5,
-    "rightY": 476,
+    "Y": -137.5,
+    "rightY": -74,
     "css": {
       "border": "1px solid black"
     }
@@ -5859,24 +5983,24 @@
     "id": "nk2r clock.png 1",
     "deck": "clockDeck",
     "cardType": "clock.png",
-    "z": 21263,
-    "parent": "l0oy"
+    "z": 40608,
+    "parent": "eguy"
   },
   "nk2r clock.png 2": {
     "type": "card",
     "id": "nk2r clock.png 2",
     "deck": "clockDeck",
     "cardType": "clock.png",
-    "z": 21262,
-    "parent": "l0oy"
+    "z": 40607,
+    "parent": "eguy"
   },
   "nk2r clock.png 3": {
     "type": "card",
     "id": "nk2r clock.png 3",
     "deck": "clockDeck",
     "cardType": "clock.png",
-    "z": 21264,
-    "parent": "l0oy"
+    "z": 40606,
+    "parent": "eguy"
   },
   "reserve": {
     "type": "holder",
@@ -6040,10 +6164,10 @@
           "var a = ${a} + 1"
         ]
       },
-      "var xPos = 902",
+      "var xPos = ${xPos} + 45",
       {
         "func": "FOREACH",
-        "range": 6,
+        "range": 9,
         "loopRoutine": [
           {
             "func": "SELECT",
@@ -6279,6 +6403,54 @@
         "to": "setupHolder12"
       },
       {
+        "func": "SELECT",
+        "property": "deck",
+        "value": "cardDeck"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "cardType",
+        "value": "M_w.png",
+        "max": 1
+      },
+      {
+        "func": "MOVE",
+        "to": "setupHolder13"
+      },
+      {
+        "func": "SELECT",
+        "property": "deck",
+        "value": "cardDeck"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "cardType",
+        "value": "N_green.png",
+        "max": 1
+      },
+      {
+        "func": "MOVE",
+        "to": "setupHolder14"
+      },
+      {
+        "func": "SELECT",
+        "property": "deck",
+        "value": "cardDeck"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "cardType",
+        "value": "O_p.png",
+        "max": 1
+      },
+      {
+        "func": "MOVE",
+        "to": "setupHolder15"
+      },
+      {
         "func": "MOVEXY",
         "from": "helpHolder",
         "x": 510,
@@ -6305,7 +6477,7 @@
       {
         "func": "CLICK"
       },
-      "var words = 'A_p,B_p,C_p,D_p,E_p,F_p,G_p,H_p,I_p,J_p,K_p,l' split ',' //Split the list of words into an array using commas as a split point",
+      "var words = 'A_p,B_p,C_p,D_p,E_p,F_p,G_p,H_p,I_p,J_p,K_p,l,M_p,N_p,O_p' split ',' //Split the list of words into an array using commas as a split point",
       "var wordsShuffled = ${words} shuffle",
       "var wordsShuffled = remove 1 6",
       "var word1 = ${wordsShuffled} pop 1",
@@ -6559,6 +6731,64 @@
                 "func": "IF",
                 "operand1": "${letter}",
                 "relation": "==",
+                "operand2": "O",
+                "thenRoutine": [
+                  {
+                    "func": "SELECT",
+                    "property": "deck",
+                    "value": "oboard"
+                  },
+                  {
+                    "func": "GET",
+                    "property": "xboard"
+                  },
+                  {
+                    "func": "GET",
+                    "property": "yboard"
+                  },
+                  {
+                    "func": "SET",
+                    "property": "parent",
+                    "value": null
+                  },
+                  {
+                    "func": "SET",
+                    "property": "x",
+                    "value": "${xboard}"
+                  },
+                  {
+                    "func": "SET",
+                    "property": "y",
+                    "value": "${yboard}"
+                  },
+                  {
+                    "func": "IF",
+                    "operand1": "${pCount}",
+                    "relation": "<",
+                    "operand2": 4,
+                    "thenRoutine": [
+                      {
+                        "func": "FLIP",
+                        "face": 0
+                      }
+                    ]
+                  },
+                  {
+                    "func": "SELECT",
+                    "property": "deck",
+                    "value": "cubeDeck1"
+                  },
+                  {
+                    "func": "MOVE",
+                    "to": "oStart",
+                    "count": "all"
+                  }
+                ]
+              },
+              {
+                "func": "IF",
+                "operand1": "${letter}",
+                "relation": "==",
                 "operand2": "I",
                 "thenRoutine": [
                   {
@@ -6700,12 +6930,12 @@
           "var a = ${a} - 1"
         ]
       },
-      "var a = 12",
-      "var xPos = 1500",
+      "var a = 15",
+      "var xPos = 1770",
       "var yPos = -200",
       {
         "func": "FOREACH",
-        "range": 6,
+        "range": 9,
         "loopRoutine": [
           {
             "func": "SELECT",
@@ -6851,10 +7081,9 @@
     "cardType": "setupInstructions.png",
     "x": 4,
     "y": 4,
-    "activeFace": 1,
     "width": 580,
     "height": 304,
-    "z": 21265,
+    "z": 40609,
     "parent": "helpHolder"
   },
   "oc0uB": {
@@ -6881,7 +7110,8 @@
     "x": 4,
     "y": 4,
     "cardDefaults": {
-      "width": 305
+      "width": 305,
+      "movable": false
     },
     "cardTypes": {
       "setupInstructions.png": {
@@ -7054,7 +7284,7 @@
     "id": "lubi 04.png 1",
     "deck": "scoreDeck",
     "cardType": "04.png",
-    "z": 21300,
+    "z": 40641,
     "parent": "0dbj"
   },
   "lubi 04.png 2": {
@@ -7062,7 +7292,7 @@
     "id": "lubi 04.png 2",
     "deck": "scoreDeck",
     "cardType": "04.png",
-    "z": 21290,
+    "z": 40635,
     "parent": "0dbj"
   },
   "lubi 04.png 3": {
@@ -7070,7 +7300,7 @@
     "id": "lubi 04.png 3",
     "deck": "scoreDeck",
     "cardType": "04.png",
-    "z": 21291,
+    "z": 40643,
     "parent": "0dbj"
   },
   "lubi 04.png 4": {
@@ -7078,7 +7308,7 @@
     "id": "lubi 04.png 4",
     "deck": "scoreDeck",
     "cardType": "04.png",
-    "z": 21287,
+    "z": 40630,
     "parent": "0dbj"
   },
   "lubi 04.png 5": {
@@ -7086,7 +7316,7 @@
     "id": "lubi 04.png 5",
     "deck": "scoreDeck",
     "cardType": "04.png",
-    "z": 21301,
+    "z": 40631,
     "parent": "0dbj"
   },
   "lubi 04.png 6": {
@@ -7094,7 +7324,7 @@
     "id": "lubi 04.png 6",
     "deck": "scoreDeck",
     "cardType": "04.png",
-    "z": 21288,
+    "z": 40640,
     "parent": "0dbj"
   },
   "lubi 06.png 1": {
@@ -7102,7 +7332,7 @@
     "id": "lubi 06.png 1",
     "deck": "scoreDeck",
     "cardType": "06.png",
-    "z": 21298,
+    "z": 40629,
     "parent": "0dbj"
   },
   "lubi 06.png 2": {
@@ -7110,7 +7340,7 @@
     "id": "lubi 06.png 2",
     "deck": "scoreDeck",
     "cardType": "06.png",
-    "z": 21294,
+    "z": 40642,
     "parent": "0dbj"
   },
   "lubi 06.png 3": {
@@ -7118,7 +7348,7 @@
     "id": "lubi 06.png 3",
     "deck": "scoreDeck",
     "cardType": "06.png",
-    "z": 21292,
+    "z": 40644,
     "parent": "0dbj"
   },
   "lubi 06.png 4": {
@@ -7126,7 +7356,7 @@
     "id": "lubi 06.png 4",
     "deck": "scoreDeck",
     "cardType": "06.png",
-    "z": 21295,
+    "z": 40634,
     "parent": "0dbj"
   },
   "lubi 06.png 5": {
@@ -7134,7 +7364,7 @@
     "id": "lubi 06.png 5",
     "deck": "scoreDeck",
     "cardType": "06.png",
-    "z": 21285,
+    "z": 40628,
     "parent": "0dbj"
   },
   "lubi 08.png 1": {
@@ -7142,7 +7372,7 @@
     "id": "lubi 08.png 1",
     "deck": "scoreDeck",
     "cardType": "08.png",
-    "z": 21289,
+    "z": 40632,
     "parent": "0dbj"
   },
   "lubi 08.png 2": {
@@ -7150,7 +7380,7 @@
     "id": "lubi 08.png 2",
     "deck": "scoreDeck",
     "cardType": "08.png",
-    "z": 21297,
+    "z": 40638,
     "parent": "0dbj"
   },
   "lubi 08.png 3": {
@@ -7158,7 +7388,7 @@
     "id": "lubi 08.png 3",
     "deck": "scoreDeck",
     "cardType": "08.png",
-    "z": 21286,
+    "z": 40639,
     "parent": "0dbj"
   },
   "lubi 08.png 4": {
@@ -7166,7 +7396,7 @@
     "id": "lubi 08.png 4",
     "deck": "scoreDeck",
     "cardType": "08.png",
-    "z": 21296,
+    "z": 40633,
     "parent": "0dbj"
   },
   "lubi 10.png 1": {
@@ -7174,7 +7404,7 @@
     "id": "lubi 10.png 1",
     "deck": "scoreDeck",
     "cardType": "10.png",
-    "z": 21284,
+    "z": 40636,
     "parent": "0dbj"
   },
   "lubi 10.png 2": {
@@ -7182,7 +7412,7 @@
     "id": "lubi 10.png 2",
     "deck": "scoreDeck",
     "cardType": "10.png",
-    "z": 21299,
+    "z": 40645,
     "parent": "0dbj"
   },
   "lubi 12.png": {
@@ -7190,7 +7420,7 @@
     "id": "lubi 12.png",
     "deck": "scoreDeck",
     "cardType": "12.png",
-    "z": 21293,
+    "z": 40637,
     "parent": "0dbj"
   },
   "scoreDeck": {
@@ -7243,104 +7473,104 @@
     "id": "okzc 04.png 1",
     "deck": "scoreDeck2",
     "cardType": "04.png",
-    "z": 21318,
-    "parent": "75xd"
+    "z": 40672,
+    "parent": "goth"
   },
   "okzc 04.png 2": {
     "type": "card",
     "id": "okzc 04.png 2",
     "deck": "scoreDeck2",
     "cardType": "04.png",
-    "z": 21319,
-    "parent": "75xd"
+    "z": 40682,
+    "parent": "goth"
   },
   "okzc 04.png 3": {
     "type": "card",
     "id": "okzc 04.png 3",
     "deck": "scoreDeck2",
     "cardType": "04.png",
-    "z": 21321,
-    "parent": "75xd"
+    "z": 40674,
+    "parent": "goth"
   },
   "okzc 06.png 1": {
     "type": "card",
     "id": "okzc 06.png 1",
     "deck": "scoreDeck2",
     "cardType": "06.png",
-    "z": 21317,
-    "parent": "75xd"
+    "z": 40676,
+    "parent": "goth"
   },
   "okzc 06.png 2": {
     "type": "card",
     "id": "okzc 06.png 2",
     "deck": "scoreDeck2",
     "cardType": "06.png",
-    "z": 21322,
-    "parent": "75xd"
+    "z": 40671,
+    "parent": "goth"
   },
   "okzc 06.png 3": {
     "type": "card",
     "id": "okzc 06.png 3",
     "deck": "scoreDeck2",
     "cardType": "06.png",
-    "z": 21320,
-    "parent": "75xd"
+    "z": 40680,
+    "parent": "goth"
   },
   "okzc 08.png 1": {
     "type": "card",
     "id": "okzc 08.png 1",
     "deck": "scoreDeck2",
     "cardType": "08.png",
-    "z": 21323,
-    "parent": "75xd"
+    "z": 40678,
+    "parent": "goth"
   },
   "okzc 08.png 2": {
     "type": "card",
     "id": "okzc 08.png 2",
     "deck": "scoreDeck2",
     "cardType": "08.png",
-    "z": 21315,
-    "parent": "75xd"
+    "z": 40673,
+    "parent": "goth"
   },
   "okzc 08.png 3": {
     "type": "card",
     "id": "okzc 08.png 3",
     "deck": "scoreDeck2",
     "cardType": "08.png",
-    "z": 21326,
-    "parent": "75xd"
+    "z": 40675,
+    "parent": "goth"
   },
   "okzc 08.png 4": {
     "type": "card",
     "id": "okzc 08.png 4",
     "deck": "scoreDeck2",
     "cardType": "08.png",
-    "z": 21316,
-    "parent": "75xd"
+    "z": 40683,
+    "parent": "goth"
   },
   "okzc 10.png 1": {
     "type": "card",
     "id": "okzc 10.png 1",
     "deck": "scoreDeck2",
     "cardType": "10.png",
-    "z": 21325,
-    "parent": "75xd"
+    "z": 40679,
+    "parent": "goth"
   },
   "okzc 10.png 2": {
     "type": "card",
     "id": "okzc 10.png 2",
     "deck": "scoreDeck2",
     "cardType": "10.png",
-    "z": 21324,
-    "parent": "75xd"
+    "z": 40681,
+    "parent": "goth"
   },
   "okzc 12.png": {
     "type": "card",
     "id": "okzc 12.png",
     "deck": "scoreDeck2",
     "cardType": "12.png",
-    "z": 21327,
-    "parent": "75xd"
+    "z": 40677,
+    "parent": "goth"
   },
   "scoreDeck2": {
     "type": "deck",
@@ -7850,7 +8080,7 @@
     "linkedToSeat": "seat1",
     "xboard": 5,
     "yboard": 313,
-    "parent": "kck2"
+    "parent": "bmuu"
   },
   "0b5b dboard.png 2": {
     "type": "card",
@@ -7862,7 +8092,7 @@
     "linkedToSeat": "seat2",
     "xboard": 5,
     "yboard": 449,
-    "parent": "kck2"
+    "parent": "bmuu"
   },
   "0b5b dboard.png 3": {
     "type": "card",
@@ -7874,7 +8104,7 @@
     "linkedToSeat": "seat3",
     "xboard": 516,
     "yboard": 449,
-    "parent": "kck2"
+    "parent": "bmuu"
   },
   "0b5b dboard.png 4": {
     "type": "card",
@@ -7886,7 +8116,7 @@
     "linkedToSeat": "seat4",
     "xboard": 951,
     "yboard": 449,
-    "parent": "kck2"
+    "parent": "bmuu"
   },
   "0b5b dboard.png 5": {
     "type": "card",
@@ -7898,7 +8128,7 @@
     "linkedToSeat": "seat5",
     "xboard": 1455,
     "yboard": 449,
-    "parent": "kck2"
+    "parent": "bmuu"
   },
   "0b5b dboard.png 6": {
     "type": "card",
@@ -7909,7 +8139,7 @@
     "linkedToSeat": "seat6",
     "xboard": 1455,
     "yboard": 313,
-    "parent": "kck2"
+    "parent": "bmuu"
   },
   "dboardDeck": {
     "type": "deck",
@@ -8419,7 +8649,7 @@
     "cardType": "a1.png",
     "activeFace": 1,
     "z": 7,
-    "parent": "eyzi"
+    "parent": "hk3v"
   },
   "to0g a2.png": {
     "type": "card",
@@ -8428,7 +8658,7 @@
     "cardType": "a2.png",
     "activeFace": 1,
     "z": 6,
-    "parent": "eyzi"
+    "parent": "hk3v"
   },
   "to0g a3.png": {
     "type": "card",
@@ -8437,7 +8667,7 @@
     "cardType": "a3.png",
     "activeFace": 1,
     "z": 5,
-    "parent": "eyzi"
+    "parent": "hk3v"
   },
   "to0g a4.png": {
     "type": "card",
@@ -8446,7 +8676,7 @@
     "cardType": "a4.png",
     "activeFace": 1,
     "z": 4,
-    "parent": "eyzi"
+    "parent": "hk3v"
   },
   "to0g a5.png": {
     "type": "card",
@@ -8455,7 +8685,7 @@
     "cardType": "a5.png",
     "activeFace": 1,
     "z": 3,
-    "parent": "eyzi"
+    "parent": "hk3v"
   },
   "to0g a6.png": {
     "type": "card",
@@ -8464,7 +8694,7 @@
     "cardType": "a6.png",
     "activeFace": 1,
     "z": 2,
-    "parent": "eyzi"
+    "parent": "hk3v"
   },
   "starDeck": {
     "type": "deck",
@@ -8592,7 +8822,7 @@
     "cardType": "plus2.png",
     "activeFace": 1,
     "z": 15,
-    "parent": "xo4s"
+    "parent": "d8gq"
   },
   "q0uu plus2.png 2": {
     "type": "card",
@@ -8601,7 +8831,7 @@
     "cardType": "plus2.png",
     "activeFace": 1,
     "z": 14,
-    "parent": "xo4s"
+    "parent": "d8gq"
   },
   "q0uu plus2.png 3": {
     "type": "card",
@@ -8610,7 +8840,7 @@
     "cardType": "plus2.png",
     "activeFace": 1,
     "z": 13,
-    "parent": "xo4s"
+    "parent": "d8gq"
   },
   "q0uu plus2.png 4": {
     "type": "card",
@@ -8619,7 +8849,7 @@
     "cardType": "plus2.png",
     "activeFace": 1,
     "z": 12,
-    "parent": "xo4s"
+    "parent": "d8gq"
   },
   "q0uu plus4.png 1": {
     "type": "card",
@@ -8628,7 +8858,7 @@
     "cardType": "plus4.png",
     "activeFace": 1,
     "z": 11,
-    "parent": "xo4s"
+    "parent": "d8gq"
   },
   "q0uu plus4.png 2": {
     "type": "card",
@@ -8637,7 +8867,7 @@
     "cardType": "plus4.png",
     "activeFace": 1,
     "z": 10,
-    "parent": "xo4s"
+    "parent": "d8gq"
   },
   "q0uu plus4.png 3": {
     "type": "card",
@@ -8646,7 +8876,7 @@
     "cardType": "plus4.png",
     "activeFace": 1,
     "z": 9,
-    "parent": "xo4s"
+    "parent": "d8gq"
   },
   "q0uu plus4.png 4": {
     "type": "card",
@@ -8655,7 +8885,7 @@
     "cardType": "plus4.png",
     "activeFace": 1,
     "z": 8,
-    "parent": "xo4s"
+    "parent": "d8gq"
   },
   "q0uu plus4.png 5": {
     "type": "card",
@@ -8664,7 +8894,7 @@
     "cardType": "plus4.png",
     "activeFace": 1,
     "z": 7,
-    "parent": "xo4s"
+    "parent": "d8gq"
   },
   "q0uu plus4.png 6": {
     "type": "card",
@@ -8673,7 +8903,7 @@
     "cardType": "plus4.png",
     "activeFace": 1,
     "z": 6,
-    "parent": "xo4s"
+    "parent": "d8gq"
   },
   "q0uu plus6.png 1": {
     "type": "card",
@@ -8682,7 +8912,7 @@
     "cardType": "plus6.png",
     "activeFace": 1,
     "z": 5,
-    "parent": "xo4s"
+    "parent": "d8gq"
   },
   "q0uu plus6.png 2": {
     "type": "card",
@@ -8691,7 +8921,7 @@
     "cardType": "plus6.png",
     "activeFace": 1,
     "z": 4,
-    "parent": "xo4s"
+    "parent": "d8gq"
   },
   "q0uu plus6.png 3": {
     "type": "card",
@@ -8700,7 +8930,7 @@
     "cardType": "plus6.png",
     "activeFace": 1,
     "z": 3,
-    "parent": "xo4s"
+    "parent": "d8gq"
   },
   "q0uu plus6.png 4": {
     "type": "card",
@@ -8709,7 +8939,7 @@
     "cardType": "plus6.png",
     "activeFace": 1,
     "z": 2,
-    "parent": "xo4s"
+    "parent": "d8gq"
   },
   "iDeck": {
     "type": "deck",
@@ -8799,7 +9029,7 @@
     "id": "2816 btoken.png",
     "deck": "btokenDeck",
     "cardType": "btoken.png",
-    "z": 21354,
+    "z": 40710,
     "x": 4,
     "y": 4,
     "parent": "btokenHolder"
@@ -8886,17 +9116,6 @@
     ],
     "recall": 1
   },
-  "cbdm jboard.png": {
-    "type": "card",
-    "id": "cbdm jboard.png",
-    "deck": "jboard",
-    "cardType": "jboard.png",
-    "x": 4,
-    "y": 4,
-    "z": 107,
-    "parent": "jboardHolder",
-    "activeFace": 1
-  },
   "jboard": {
     "type": "deck",
     "id": "jboard",
@@ -8909,7 +9128,7 @@
       "height": 160,
       "enlarge": 5,
       "xNo": 1900,
-      "xboard": 173,
+      "xboard": 8,
       "layer": -1,
       "yboard": 347,
       "clickable": false
@@ -9452,7 +9671,8 @@
     "cardDefaults": {
       "width": 20,
       "height": 20,
-      "parent": "cbdm jboard.png"
+      "parent": "cbdm jboard.png",
+      "z": 200
     },
     "cardTypes": {
       "1cube": {
@@ -9531,59 +9751,368 @@
       }
     ]
   },
-  "lden": {
-    "deck": "cubeDeck",
-    "type": "card",
-    "cardType": "1cube",
-    "id": "lden",
-    "z": 1,
-    "linkedToSeat": "seat1",
-    "parent": "jStart"
-  },
-  "vld2": {
-    "deck": "cubeDeck",
-    "type": "card",
-    "cardType": "2cube",
-    "id": "vld2",
-    "z": 2,
+  "holder50": {
+    "type": "holder",
+    "id": "holder50",
+    "x": 11,
+    "y": 664,
+    "inheritFrom": "holder1",
     "linkedToSeat": "seat2",
-    "hoverParent": "jStart",
-    "parent": "jStart",
+    "rightY": 790,
+    "Y": 664,
+    "height": 126
+  },
+  "label50": {
+    "type": "label",
+    "id": "label50",
+    "z": 7,
+    "parent": "holder50",
+    "y": 50,
+    "inheritFrom": "label2"
+  },
+  "0dbj": {
+    "type": "pile",
+    "parent": "scoreHolder",
     "x": 4,
-    "y": 4
+    "y": 4,
+    "width": 40,
+    "height": 40,
+    "id": "0dbj"
   },
-  "2wje": {
-    "deck": "cubeDeck",
-    "type": "card",
-    "cardType": "3cube",
-    "id": "2wje",
-    "z": 3,
-    "linkedToSeat": "seat5",
-    "x": 8,
-    "y": 8,
-    "parent": "jStart"
+  "s3e3": {
+    "type": "button",
+    "text": "Force\nnext\nturn",
+    "clickRoutine": [
+      {
+        "func": "TURN",
+        "turnCycle": "forward"
+      }
+    ],
+    "x": 14,
+    "y": 889,
+    "z": 101,
+    "id": "s3e3",
+    "borderRadius": 0,
+    "css": {
+      "default": {
+        "font-size": "20px"
+      }
+    }
   },
-  "e1qc": {
-    "deck": "cubeDeck",
+  "ayh9": {
+    "deck": "cardDeck",
     "type": "card",
-    "cardType": "4cube",
-    "id": "e1qc",
-    "z": 5,
-    "linkedToSeat": "seat3",
-    "x": 16,
-    "y": 16,
-    "parent": "jStart"
+    "cardType": "O_w.png",
+    "id": "ayh9",
+    "z": 40519,
+    "parent": "mjw2"
   },
-  "owlx": {
-    "deck": "cubeDeck",
+  "ugt7": {
+    "deck": "cardDeck",
     "type": "card",
-    "cardType": "5cube",
-    "id": "owlx",
-    "z": 4,
-    "linkedToSeat": "seat4",
-    "parent": "jStart",
-    "x": 12,
-    "y": 12
+    "cardType": "O_w.png",
+    "id": "ugt7",
+    "z": 40561,
+    "parent": "mjw2"
+  },
+  "rbez": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "O_grey.png",
+    "id": "rbez",
+    "z": 40598,
+    "parent": "mjw2"
+  },
+  "kmpn": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "O_grey.png",
+    "id": "kmpn",
+    "z": 40467,
+    "parent": "mjw2"
+  },
+  "qi73": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "O_p.png",
+    "id": "qi73",
+    "z": 40481,
+    "parent": "mjw2"
+  },
+  "4oks": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "O_p.png",
+    "id": "4oks",
+    "z": 40543,
+    "parent": "mjw2"
+  },
+  "1qvf": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "O_green.png",
+    "id": "1qvf",
+    "z": 40432,
+    "parent": "mjw2"
+  },
+  "r6k8": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "O_green.png",
+    "id": "r6k8",
+    "z": 40525,
+    "parent": "mjw2"
+  },
+  "ymme": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "N_w.png",
+    "id": "ymme",
+    "z": 40553,
+    "parent": "mjw2"
+  },
+  "9wqb": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "N_w.png",
+    "id": "9wqb",
+    "z": 40515,
+    "parent": "mjw2"
+  },
+  "09py": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "O_blue.png",
+    "id": "09py",
+    "z": 40480,
+    "parent": "mjw2"
+  },
+  "vo0s": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "O_blue.png",
+    "id": "vo0s",
+    "z": 40413,
+    "parent": "mjw2"
+  },
+  "jx7h": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "O_brown.png",
+    "id": "jx7h",
+    "z": 40464,
+    "parent": "mjw2"
+  },
+  "zkca": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "O_brown.png",
+    "id": "zkca",
+    "z": 40462,
+    "parent": "mjw2"
+  },
+  "mbx7": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "N_p.png",
+    "id": "mbx7",
+    "z": 40488,
+    "parent": "mjw2"
+  },
+  "0oq1": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "N_p.png",
+    "id": "0oq1",
+    "z": 40542,
+    "parent": "mjw2"
+  },
+  "0kko": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "N_grey.png",
+    "id": "0kko",
+    "z": 40567,
+    "parent": "mjw2"
+  },
+  "9hcj": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "N_grey.png",
+    "id": "9hcj",
+    "z": 40539,
+    "parent": "mjw2"
+  },
+  "4jf8": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "N_green.png",
+    "id": "4jf8",
+    "z": 40420,
+    "parent": "mjw2"
+  },
+  "jadk": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "N_green.png",
+    "id": "jadk",
+    "z": 40564,
+    "parent": "mjw2"
+  },
+  "pynf": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "M_w.png",
+    "id": "pynf",
+    "z": 40512,
+    "parent": "mjw2"
+  },
+  "4a07": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "M_w.png",
+    "id": "4a07",
+    "z": 40473,
+    "parent": "mjw2"
+  },
+  "gce6": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "N_blue.png",
+    "id": "gce6",
+    "z": 40527,
+    "parent": "mjw2"
+  },
+  "0x0q": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "N_blue.png",
+    "id": "0x0q",
+    "z": 40532,
+    "parent": "mjw2"
+  },
+  "hf50": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "N_brown.png",
+    "id": "hf50",
+    "z": 40445,
+    "parent": "mjw2"
+  },
+  "d5m8": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "N_brown.png",
+    "id": "d5m8",
+    "z": 40548,
+    "parent": "mjw2"
+  },
+  "ni4j": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "M_p.png",
+    "id": "ni4j",
+    "z": 40440,
+    "parent": "mjw2"
+  },
+  "mq52": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "M_p.png",
+    "id": "mq52",
+    "z": 40469,
+    "parent": "mjw2"
+  },
+  "llzi": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "M_grey.png",
+    "id": "llzi",
+    "z": 40456,
+    "parent": "mjw2"
+  },
+  "cvja": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "M_grey.png",
+    "id": "cvja",
+    "z": 40459,
+    "parent": "mjw2"
+  },
+  "flge": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "M_green.png",
+    "id": "flge",
+    "z": 40579,
+    "parent": "mjw2"
+  },
+  "fghj": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "M_green.png",
+    "id": "fghj",
+    "z": 40584,
+    "parent": "mjw2"
+  },
+  "2flj": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "M_blue.png",
+    "id": "2flj",
+    "z": 40523,
+    "parent": "mjw2"
+  },
+  "mdcv": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "M_blue.png",
+    "id": "mdcv",
+    "z": 40493,
+    "parent": "mjw2"
+  },
+  "wrfp": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "M_brown.png",
+    "id": "wrfp",
+    "z": 40417,
+    "parent": "mjw2"
+  },
+  "lwau": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "M_brown.png",
+    "id": "lwau",
+    "z": 40569,
+    "parent": "mjw2"
+  },
+  "setupHolder13": {
+    "type": "holder",
+    "id": "setupHolder13",
+    "x": 1590,
+    "y": -200,
+    "inheritFrom": "setupHolder7",
+    "rightY": -74,
+    "Y": -137.5
+  },
+  "setupHolder14": {
+    "type": "holder",
+    "id": "setupHolder14",
+    "x": 1680,
+    "y": -200,
+    "inheritFrom": "setupHolder7",
+    "rightY": -74,
+    "Y": -137.5
+  },
+  "setupHolder15": {
+    "type": "holder",
+    "id": "setupHolder15",
+    "x": 1770,
+    "y": -200,
+    "inheritFrom": "setupHolder7",
+    "rightY": -74,
+    "Y": -137.5
   },
   "j1": {
     "type": "holder",
@@ -9791,6 +10320,60 @@
     "z": 14,
     "inheritFrom": "j1"
   },
+  "vld2": {
+    "deck": "cubeDeck",
+    "type": "card",
+    "cardType": "2cube",
+    "id": "vld2",
+    "z": 1,
+    "linkedToSeat": "seat2",
+    "hoverParent": "jStart",
+    "parent": "jStart"
+  },
+  "2wje": {
+    "deck": "cubeDeck",
+    "type": "card",
+    "cardType": "3cube",
+    "id": "2wje",
+    "z": 2,
+    "linkedToSeat": "seat5",
+    "x": 4,
+    "y": 4,
+    "parent": "jStart"
+  },
+  "e1qc": {
+    "deck": "cubeDeck",
+    "type": "card",
+    "cardType": "4cube",
+    "id": "e1qc",
+    "z": 3,
+    "linkedToSeat": "seat3",
+    "x": 8,
+    "y": 8,
+    "parent": "jStart"
+  },
+  "owlx": {
+    "deck": "cubeDeck",
+    "type": "card",
+    "cardType": "5cube",
+    "id": "owlx",
+    "z": 4,
+    "linkedToSeat": "seat4",
+    "parent": "jStart",
+    "x": 12,
+    "y": 12
+  },
+  "elou": {
+    "deck": "cubeDeck",
+    "type": "card",
+    "cardType": "6cube",
+    "id": "elou",
+    "z": 5,
+    "linkedToSeat": "seat6",
+    "parent": "jStart",
+    "x": 16,
+    "y": 16
+  },
   "jStart": {
     "type": "holder",
     "id": "jStart",
@@ -9802,108 +10385,709 @@
     "z": 14,
     "inheritFrom": "j1"
   },
-  "elou": {
+  "cbdm jboard.png": {
+    "type": "card",
+    "id": "cbdm jboard.png",
+    "deck": "jboard",
+    "cardType": "jboard.png",
+    "x": 4,
+    "y": 4,
+    "z": 140,
+    "parent": "jboardHolder",
+    "activeFace": 1
+  },
+  "oboardHolder": {
+    "type": "holder",
+    "id": "oboardHolder",
+    "x": 1845,
+    "y": 1317,
+    "z": 15,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0
+  },
+  "oboardHolderB": {
+    "type": "button",
+    "id": "oboardHolderB",
+    "parent": "oboardHolder",
+    "fixedParent": true,
+    "y": 171.36,
+    "width": 111,
+    "height": 40,
+    "movableInEdit": false,
+    "text": "Recall & Shuffle",
+    "recall": 1,
+    "clickRoutine": [
+      {
+        "func": "RECALL",
+        "holder": "${PROPERTY parent}"
+      },
+      {
+        "func": "FLIP",
+        "holder": "${PROPERTY parent}",
+        "face": 1
+      }
+    ]
+  },
+  "b8uz oboard.png": {
+    "type": "card",
+    "id": "b8uz oboard.png",
+    "deck": "oboard",
+    "cardType": "oboard.png",
+    "z": 40711,
+    "parent": "oboardHolder",
+    "activeFace": 1
+  },
+  "oboard": {
+    "type": "deck",
+    "id": "oboard",
+    "z": 25162,
+    "cardDefaults": {
+      "width": 125,
+      "enlarge": 5,
+      "clickable": false,
+      "xboard": 178,
+      "yboard": 347
+    },
+    "cardTypes": {
+      "oboard.png": {
+        "image": "/assets/-1835942971_119692"
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "color": "transparent",
+            "value": "/assets/-980647858_117104",
+            "dynamicProperties": {
+              "height": "height",
+              "width": "width"
+            }
+          }
+        ]
+      },
+      {
+        "objects": [
+          {
+            "type": "image",
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image",
+              "height": "height",
+              "width": "width"
+            }
+          }
+        ]
+      }
+    ],
+    "parent": "oboardHolder"
+  },
+  "oStart": {
+    "type": "holder",
+    "id": "oStart",
+    "parent": "b8uz oboard.png",
+    "x": 86,
+    "y": 2,
+    "width": 20,
+    "height": 20,
+    "z": 14,
+    "inheritFrom": "j1"
+  },
+  "lden": {
     "deck": "cubeDeck",
     "type": "card",
-    "cardType": "6cube",
-    "id": "elou",
+    "cardType": "1cube",
+    "id": "lden",
     "z": 6,
-    "linkedToSeat": "seat6",
+    "linkedToSeat": "seat1",
     "parent": "jStart",
     "x": 20,
     "y": 20
   },
-  "holder50": {
+  "cubeHolder1": {
     "type": "holder",
-    "id": "holder50",
-    "x": 11,
-    "y": 664,
-    "inheritFrom": "holder1",
-    "linkedToSeat": "seat2",
-    "rightY": 790,
-    "Y": 664,
-    "height": 126
-  },
-  "label50": {
-    "type": "label",
-    "id": "label50",
-    "z": 7,
-    "parent": "holder50",
-    "y": 50,
-    "inheritFrom": "label2"
-  },
-  "0dbj": {
-    "type": "pile",
-    "parent": "scoreHolder",
-    "x": 4,
-    "y": 4,
-    "width": 40,
-    "height": 40,
-    "id": "0dbj"
-  },
-  "kck2": {
-    "type": "pile",
-    "parent": "dboardHolder",
-    "x": 4,
-    "y": 4,
-    "width": 138,
-    "height": 89,
-    "id": "kck2"
-  },
-  "s3e3": {
-    "type": "button",
-    "text": "Force\nnext\nturn",
-    "clickRoutine": [
-      {
-        "func": "TURN",
-        "turnCycle": "forward"
-      }
-    ],
-    "x": 14,
-    "y": 889,
-    "z": 101,
-    "id": "s3e3",
-    "borderRadius": 0,
-    "css": {
-      "default": {
-        "font-size": "20px"
-      }
+    "id": "cubeHolder1",
+    "x": 80,
+    "y": 1203,
+    "dropTarget": {
+      "type": "card"
     }
   },
-  "eyzi": {
-    "type": "pile",
-    "parent": "starHolder",
+  "cubeDeck1": {
+    "type": "deck",
+    "id": "cubeDeck1",
     "x": 4,
     "y": 4,
-    "width": 50,
-    "height": 50,
-    "id": "eyzi"
+    "z": 92,
+    "cardDefaults": {
+      "width": 20,
+      "height": 20,
+      "parent": "b8uz oboard.png",
+      "z": 200
+    },
+    "cardTypes": {
+      "1cube": {
+        "color": "yellow"
+      },
+      "2cube": {
+        "color": "pink"
+      },
+      "3cube": {
+        "color": "lightblue"
+      },
+      "4cube": {
+        "color": "green"
+      },
+      "5cube": {
+        "color": "grey"
+      },
+      "6cube": {
+        "color": "brown"
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "dynamicProperties": {
+              "height": "height",
+              "color": "color",
+              "width": "width"
+            }
+          }
+        ],
+        "border": 3
+      }
+    ],
+    "parent": "cubeHolder1"
   },
-  "xo4s": {
+  "cubeHolderB1": {
+    "type": "button",
+    "id": "cubeHolderB1",
+    "parent": "cubeHolder1",
+    "fixedParent": true,
+    "y": 171.36,
+    "width": 111,
+    "height": 40,
+    "movableInEdit": false,
+    "text": "Recall & Shuffle",
+    "clickRoutine": [
+      {
+        "func": "RECALL",
+        "holder": "${PROPERTY parent}"
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "${PROPERTY parent}"
+      },
+      {
+        "func": "SELECT",
+        "property": "deck",
+        "value": "cubeDeck"
+      },
+      {
+        "func": "MOVE",
+        "to": "jStart",
+        "count": "all"
+      }
+    ]
+  },
+  "7lab": {
+    "deck": "cubeDeck1",
+    "type": "card",
+    "cardType": "1cube",
+    "id": "7lab",
+    "z": 1,
+    "linkedToSeat": "seat1",
+    "hoverParent": "oStart",
+    "parent": "oStart"
+  },
+  "z69n": {
+    "deck": "cubeDeck1",
+    "type": "card",
+    "cardType": "2cube",
+    "id": "z69n",
+    "z": 2,
+    "x": 4,
+    "y": 4,
+    "linkedToSeat": "seat2",
+    "hoverParent": "oStart",
+    "parent": "oStart"
+  },
+  "f6gm": {
+    "deck": "cubeDeck1",
+    "type": "card",
+    "cardType": "3cube",
+    "id": "f6gm",
+    "z": 3,
+    "x": 8,
+    "y": 8,
+    "linkedToSeat": "seat5",
+    "hoverParent": "oStart",
+    "parent": "oStart"
+  },
+  "46tt": {
+    "deck": "cubeDeck1",
+    "type": "card",
+    "cardType": "4cube",
+    "id": "46tt",
+    "z": 4,
+    "x": 12,
+    "y": 12,
+    "linkedToSeat": "seat3",
+    "parent": "oStart"
+  },
+  "3l5e": {
+    "deck": "cubeDeck1",
+    "type": "card",
+    "cardType": "5cube",
+    "id": "3l5e",
+    "z": 5,
+    "linkedToSeat": "seat4",
+    "x": 16,
+    "y": 16,
+    "parent": "oStart"
+  },
+  "zta7": {
+    "deck": "cubeDeck1",
+    "type": "card",
+    "cardType": "6cube",
+    "id": "zta7",
+    "z": 6,
+    "linkedToSeat": "seat6",
+    "x": 20,
+    "y": 20,
+    "parent": "oStart"
+  },
+  "o1": {
+    "type": "holder",
+    "id": "o1",
+    "parent": "b8uz oboard.png",
+    "x": 2,
+    "y": 120,
+    "width": 20,
+    "height": 32,
+    "z": 14,
+    "css": {
+      "color": "transparent",
+      "background": "transparent",
+      "border": "0px solid black"
+    },
+    "stackOffsetY": 4
+  },
+  "o2": {
+    "type": "holder",
+    "id": "o2",
+    "parent": "b8uz oboard.png",
+    "x": 21,
+    "y": 120,
+    "width": 20,
+    "height": 32,
+    "z": 14,
+    "css": {
+      "color": "transparent",
+      "background": "transparent",
+      "border": "0px solid black"
+    },
+    "stackOffsetY": 4
+  },
+  "o3": {
+    "type": "holder",
+    "id": "o3",
+    "parent": "b8uz oboard.png",
+    "x": 40,
+    "y": 120,
+    "width": 20,
+    "height": 32,
+    "z": 14,
+    "css": {
+      "color": "transparent",
+      "background": "transparent",
+      "border": "0px solid black"
+    },
+    "stackOffsetY": 4
+  },
+  "o4": {
+    "type": "holder",
+    "id": "o4",
+    "parent": "b8uz oboard.png",
+    "x": 58,
+    "y": 120,
+    "width": 20,
+    "height": 32,
+    "z": 14,
+    "css": {
+      "color": "transparent",
+      "background": "transparent",
+      "border": "0px solid black"
+    },
+    "stackOffsetY": 4
+  },
+  "o5": {
+    "type": "holder",
+    "id": "o5",
+    "parent": "b8uz oboard.png",
+    "x": 77,
+    "y": 120,
+    "width": 20,
+    "height": 32,
+    "z": 14,
+    "css": {
+      "color": "transparent",
+      "background": "transparent",
+      "border": "0px solid black"
+    },
+    "stackOffsetY": 4
+  },
+  "o6": {
+    "type": "holder",
+    "id": "o6",
+    "parent": "b8uz oboard.png",
+    "x": 96,
+    "y": 120,
+    "width": 20,
+    "height": 32,
+    "z": 14,
+    "css": {
+      "color": "transparent",
+      "background": "transparent",
+      "border": "0px solid black"
+    },
+    "stackOffsetY": 4
+  },
+  "o7": {
+    "type": "holder",
+    "id": "o7",
+    "parent": "b8uz oboard.png",
+    "x": 2,
+    "y": 88,
+    "width": 20,
+    "height": 32,
+    "z": 14,
+    "css": {
+      "color": "transparent",
+      "background": "transparent",
+      "border": "0px solid black"
+    },
+    "stackOffsetY": 4
+  },
+  "o8": {
+    "type": "holder",
+    "id": "o8",
+    "parent": "b8uz oboard.png",
+    "x": 2,
+    "y": 56,
+    "width": 20,
+    "height": 32,
+    "z": 14,
+    "css": {
+      "color": "transparent",
+      "background": "transparent",
+      "border": "0px solid black"
+    },
+    "stackOffsetY": 4
+  },
+  "o9": {
+    "type": "holder",
+    "id": "o9",
+    "parent": "b8uz oboard.png",
+    "x": 21,
+    "y": 88,
+    "width": 20,
+    "height": 32,
+    "z": 14,
+    "css": {
+      "color": "transparent",
+      "background": "transparent",
+      "border": "0px solid black"
+    },
+    "stackOffsetY": 4
+  },
+  "o10": {
+    "type": "holder",
+    "id": "o10",
+    "parent": "b8uz oboard.png",
+    "x": 21,
+    "y": 56,
+    "width": 20,
+    "height": 32,
+    "z": 14,
+    "css": {
+      "color": "transparent",
+      "background": "transparent",
+      "border": "0px solid black"
+    },
+    "stackOffsetY": 4
+  },
+  "o11": {
+    "type": "holder",
+    "id": "o11",
+    "parent": "b8uz oboard.png",
+    "x": 40,
+    "y": 88,
+    "width": 20,
+    "height": 32,
+    "z": 14,
+    "css": {
+      "color": "transparent",
+      "background": "transparent",
+      "border": "0px solid black"
+    },
+    "stackOffsetY": 4
+  },
+  "o12": {
+    "type": "holder",
+    "id": "o12",
+    "parent": "b8uz oboard.png",
+    "x": 40,
+    "y": 56,
+    "width": 20,
+    "height": 32,
+    "z": 14,
+    "css": {
+      "color": "transparent",
+      "background": "transparent",
+      "border": "0px solid black"
+    },
+    "stackOffsetY": 4
+  },
+  "o13": {
+    "type": "holder",
+    "id": "o13",
+    "parent": "b8uz oboard.png",
+    "x": 58,
+    "y": 88,
+    "width": 20,
+    "height": 32,
+    "z": 14,
+    "css": {
+      "color": "transparent",
+      "background": "transparent",
+      "border": "0px solid black"
+    },
+    "stackOffsetY": 4
+  },
+  "o14": {
+    "type": "holder",
+    "id": "o14",
+    "parent": "b8uz oboard.png",
+    "x": 58,
+    "y": 56,
+    "width": 20,
+    "height": 32,
+    "z": 14,
+    "css": {
+      "color": "transparent",
+      "background": "transparent",
+      "border": "0px solid black"
+    },
+    "stackOffsetY": 4
+  },
+  "o15": {
+    "type": "holder",
+    "id": "o15",
+    "parent": "b8uz oboard.png",
+    "x": 77,
+    "y": 88,
+    "width": 20,
+    "height": 32,
+    "z": 14,
+    "css": {
+      "color": "transparent",
+      "background": "transparent",
+      "border": "0px solid black"
+    },
+    "stackOffsetY": 4
+  },
+  "o16": {
+    "type": "holder",
+    "id": "o16",
+    "parent": "b8uz oboard.png",
+    "x": 77,
+    "y": 56,
+    "width": 20,
+    "height": 32,
+    "z": 14,
+    "css": {
+      "color": "transparent",
+      "background": "transparent",
+      "border": "0px solid black"
+    },
+    "stackOffsetY": 4
+  },
+  "o17": {
+    "type": "holder",
+    "id": "o17",
+    "parent": "b8uz oboard.png",
+    "x": 96,
+    "y": 88,
+    "width": 20,
+    "height": 32,
+    "z": 14,
+    "css": {
+      "color": "transparent",
+      "background": "transparent",
+      "border": "0px solid black"
+    },
+    "stackOffsetY": 4
+  },
+  "o18": {
+    "type": "holder",
+    "id": "o18",
+    "parent": "b8uz oboard.png",
+    "x": 96,
+    "y": 56,
+    "width": 20,
+    "height": 32,
+    "z": 14,
+    "css": {
+      "color": "transparent",
+      "background": "transparent",
+      "border": "0px solid black"
+    },
+    "stackOffsetY": 4
+  },
+  "epol": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "M_blue.png",
+    "id": "epol",
+    "z": 40541,
+    "parent": "mjw2"
+  },
+  "9wvz": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "M_blue.png",
+    "id": "9wvz",
+    "z": 40577,
+    "parent": "mjw2"
+  },
+  "uh38": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "M_brown.png",
+    "id": "uh38",
+    "z": 40597,
+    "parent": "mjw2"
+  },
+  "x4y1": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "M_brown.png",
+    "id": "x4y1",
+    "z": 40540,
+    "parent": "mjw2"
+  },
+  "x9ol": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "M_green.png",
+    "id": "x9ol",
+    "z": 40442,
+    "parent": "mjw2"
+  },
+  "1pys": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "M_green.png",
+    "id": "1pys",
+    "z": 40454,
+    "parent": "mjw2"
+  },
+  "t6w5": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "M_grey.png",
+    "id": "t6w5",
+    "z": 40495,
+    "parent": "mjw2"
+  },
+  "1yob": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "M_grey.png",
+    "id": "1yob",
+    "z": 40600,
+    "parent": "mjw2"
+  },
+  "lqi5": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "M_p.png",
+    "id": "lqi5",
+    "z": 40489,
+    "parent": "mjw2"
+  },
+  "9rbd": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "M_p.png",
+    "id": "9rbd",
+    "z": 40560,
+    "parent": "mjw2"
+  },
+  "rhpd": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "M_w.png",
+    "id": "rhpd",
+    "z": 40455,
+    "parent": "mjw2"
+  },
+  "o0bq": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "M_w.png",
+    "id": "o0bq",
+    "z": 40427,
+    "parent": "mjw2"
+  },
+  "d8gq": {
     "type": "pile",
     "parent": "iHolder",
     "x": 4,
     "y": 4,
     "width": 40,
     "height": 40,
-    "id": "xo4s"
+    "id": "d8gq"
   },
-  "l0oy": {
+  "bmuu": {
+    "type": "pile",
+    "parent": "dboardHolder",
+    "x": 4,
+    "y": 4,
+    "width": 138,
+    "height": 89,
+    "id": "bmuu"
+  },
+  "hk3v": {
+    "type": "pile",
+    "parent": "starHolder",
+    "x": 4,
+    "y": 4,
+    "width": 50,
+    "height": 50,
+    "id": "hk3v"
+  },
+  "eguy": {
     "type": "pile",
     "parent": "clockHolder",
     "x": 4,
     "y": 4,
     "width": 90,
     "height": 123,
-    "id": "l0oy"
+    "id": "eguy"
   },
-  "75xd": {
+  "goth": {
     "type": "pile",
     "parent": "scoreHolder2",
     "x": 4,
     "y": 4,
     "width": 40,
     "height": 40,
-    "id": "75xd"
+    "id": "goth"
   }
 }
