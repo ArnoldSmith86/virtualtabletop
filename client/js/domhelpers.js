@@ -6,6 +6,13 @@ export function $a(selector, parent) {
   return (parent || document).querySelectorAll(selector);
 }
 
+// returns the first matching direct child of the parent
+export function $c(selector, parent) {
+  return Array.from(parent.children).find(
+    el => el.matches(selector)
+  );
+}
+
 export function div(parent, className, html) {
   const div = document.createElement('div');
   if(className)
