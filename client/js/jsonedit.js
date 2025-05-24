@@ -2543,12 +2543,8 @@ function jeLoggingFilterLog(filter) {
       while(parent.id != 'jeLog') {
         if(parent.classList.contains('jeLogOperation')) {
           parent.classList.add('jeLogFilterChildMatch');
-          parent.classList.add('jeExpander-down');
-          // Only add 'active' to direct .jeLogNested child
-          const nested = Array.from(parent.children).find(
-            el => el.classList && el.classList.contains('jeLogNested')
-          );
-          if(nested) nested.classList.add('active');
+          $c('.jeLogNested', parent).classList.add('active');
+          $c('.jeExpander, .jeRedExpander', parent).classList.add('jeExpander-down');
         }
         parent = parent.parentElement;
       }
