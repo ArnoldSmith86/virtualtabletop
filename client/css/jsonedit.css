@@ -169,6 +169,17 @@ body.lightsOff .jeTreeExpander::before, body.lightsOff .jeTreeExpander-down::bef
   display: block;
 }
 
+.jeLogFilterMatch {
+  font-weight: bold;
+}
+
+.jeLogFilterNoMatch {
+  opacity: 0.5;
+}
+.jeLogFilterNoMatch:hover {
+  opacity: 1;
+}
+
 #jeText {
   background: none;
   -webkit-text-fill-color: transparent;

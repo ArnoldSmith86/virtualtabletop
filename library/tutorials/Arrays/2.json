@@ -5,9 +5,10 @@
       "var wordArray = ${PROPERTY wordArray OF theArray}",
       "var numArray = ${PROPERTY numArray OF theArray}",
       "var mixedArray = ${PROPERTY mixedArray OF theArray}",
-      "var wordArray.3 = 9 //Sets index position 3 equal to the number 9.",
-      "var numArray.3 = 9",
-      "var mixedArray.3 = 9",
+      "var str = ${PROPERTY text OF atString6}",
+      "var wordArray = ${wordArray} lastIndexOf ${str} //Returns the last index number of the array (starts with 0) that contains the reference string, or -1 if no match",
+      "var numArray = ${numArray} lastIndexOf ${str}",
+      "var mixedArray = ${mixedArray} lastIndexOf ${str}",
       {
         "func": "SELECT",
         "property": "id",
@@ -39,20 +40,21 @@
         "value": "${mixedArray}"
       }
     ],
-    "y": 227,
-    "z": 293,
+    "y": 250,
+    "z": 286,
     "id": "c9ee",
-    "x": 274,
-    "text": "Example 1"
+    "x": 1374,
+    "text": "lastIndexOf",
+    "css": "font-size: 14px; "
   },
   "8fr3": {
     "type": "label",
-    "text": "Arrays: Modifying - Basic",
+    "text": "Arrays: Evaluating",
     "css": "font-size: 60px",
     "height": 160,
     "width": 1000,
-    "x": 279,
-    "z": 26447,
+    "x": 280,
+    "z": 26392,
     "id": "8fr3",
     "y": 1
   },
@@ -118,7 +120,7 @@
     "width": 1000,
     "z": 16,
     "css": "font-size: 20px; ",
-    "text": "The easiest way to add items to an array is to work directly with the dynamic expression using some variation of \"var x = y\". You can use numbers or variables to make the changes. Each of the examples below illustrates a slightly different way of doing the same thing. You can change the position/index number and the string to be entered in the white textboxes to the left side of the screen for Example 4.  The other 3 examples use static values.",
+    "text": "These functions can be used to evaluate arrays. Press each button to see how the function works with the three sample arrays to output the result below. For functions with a white textbox, you have an option to modify the value on the screen without entering into the JSON and then pressing the button to see the revised output. Red buttons are functions that are either pending implementation or are not working as intended/described.",
     "numArray": [
       1,
       3,
@@ -169,8 +171,6 @@
     "width": 250,
     "height": 50,
     "z": 13,
-    "movable": null,
-    "movableInEdit": null,
     "css": "font-size: 30px; ",
     "text": "Word Array"
   },
@@ -181,8 +181,6 @@
     "width": 250,
     "height": 50,
     "z": 12,
-    "movable": null,
-    "movableInEdit": null,
     "css": "font-size: 30px; ",
     "text": "Numerical Array"
   },
@@ -193,8 +191,6 @@
     "width": 250,
     "height": 50,
     "z": 15,
-    "movable": null,
-    "movableInEdit": null,
     "css": "font-size: 30px; ",
     "text": "Mixed Array"
   },
@@ -248,167 +244,32 @@
     "css": "color:black; text-align:left;font-size:20px",
     "text": "1,3,5,Egg,Duck,7,11,Carrot,13,17,19,Banana,23,29,31,Apple,37,41"
   },
-  "atString1a": {
-    "type": "label",
-    "id": "atString1a",
-    "x": 100,
-    "y": 411,
-    "height": 40,
-    "z": 26431,
-    "css": "background-color:white; border-style: solid;",
-    "editable": true,
-    "text": "3"
-  },
-  "atString1b": {
-    "type": "label",
-    "id": "atString1b",
-    "x": 100,
-    "y": 461,
-    "height": 40,
-    "z": 26431,
-    "css": "background-color:white; border-style: solid;",
-    "editable": true,
-    "text": "hello"
-  },
-  "irmd": {
-    "type": "button",
-    "clickRoutine": [
-      "var wordArray = ${PROPERTY wordArray OF theArray}",
-      "var numArray = ${PROPERTY numArray OF theArray}",
-      "var mixedArray = ${PROPERTY mixedArray OF theArray}",
-      "var wordArray.3 = 'testing' //Sets index position 3 equal to the string 'testing'",
-      "var numArray.3 = 'testing'",
-      "var mixedArray.3 = 'testing'",
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "output1"
-      },
-      {
-        "func": "SET",
-        "property": "text",
-        "value": "${wordArray}"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "output2"
-      },
-      {
-        "func": "SET",
-        "property": "text",
-        "value": "${numArray}"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "output3"
-      },
-      {
-        "func": "SET",
-        "property": "text",
-        "value": "${mixedArray}"
-      }
-    ],
-    "y": 349,
-    "z": 294,
-    "id": "irmd",
-    "x": 274,
-    "text": "Example 2"
-  },
-  "re3e": {
-    "type": "button",
-    "clickRoutine": [
-      "var wordArray = ${PROPERTY wordArray OF theArray}",
-      "var numArray = ${PROPERTY numArray OF theArray}",
-      "var mixedArray = ${PROPERTY mixedArray OF theArray}",
-      "var wordArray.3 = null //Sets index position 3 equal to null (but it is still an array element and has not been removed)",
-      "var numArray.3 = null",
-      "var mixedArray.3 = null",
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "output1"
-      },
-      {
-        "func": "SET",
-        "property": "text",
-        "value": "${wordArray}"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "output2"
-      },
-      {
-        "func": "SET",
-        "property": "text",
-        "value": "${numArray}"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "output3"
-      },
-      {
-        "func": "SET",
-        "property": "text",
-        "value": "${mixedArray}"
-      }
-    ],
-    "y": 471,
-    "z": 296,
-    "id": "re3e",
-    "x": 274,
-    "text": "Example 3"
-  },
-  "0ryp": {
-    "type": "button",
-    "clickRoutine": [
-      "var wordArray = ${PROPERTY wordArray OF theArray}",
-      "var numArray = ${PROPERTY numArray OF theArray}",
-      "var mixedArray = ${PROPERTY mixedArray OF theArray}",
-      "var pos = ${PROPERTY text OF atString1a}",
-      "var str = ${PROPERTY text OF atString1b}",
-      "var wordArray.$pos = ${str} //Sets index position of the first number equal to the reference string; note curly brackets are not used on the left side of the function",
-      "var numArray.$pos = ${str}",
-      "var mixedArray.$pos = ${str}",
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "output1"
-      },
-      {
-        "func": "SET",
-        "property": "text",
-        "value": "${wordArray}"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "output2"
-      },
-      {
-        "func": "SET",
-        "property": "text",
-        "value": "${numArray}"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "output3"
-      },
-      {
-        "func": "SET",
-        "property": "text",
-        "value": "${mixedArray}"
-      }
-    ],
-    "y": 593,
-    "z": 301,
-    "id": "0ryp",
-    "x": 274,
-    "text": "Example 4"
+  "_meta": {
+    "version": 17,
+    "info": {
+      "name": "Arrays",
+      "image": "/assets/-2001287493_6748",
+      "rules": "",
+      "bgg": "",
+      "year": "2021",
+      "mode": "Tutorial",
+      "time": "",
+      "attribution": "",
+      "showName": false,
+      "lastUpdate": 1747540416863,
+      "skill": "",
+      "description": "",
+      "similarImage": "",
+      "similarName": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": "",
+      "similarDesigner": "",
+      "variantImage": "",
+      "variant": "Evaluating",
+      "language": "en-US",
+      "players": "1"
+    }
   },
   "kibv": {
     "type": "button",
@@ -453,71 +314,386 @@
     "x": 9,
     "text": "Reset"
   },
-  "qeyq": {
-    "id": "qeyq",
-    "x": 388,
-    "y": 246,
-    "width": 400,
-    "z": 18,
-    "css": "font-size: 24px; ",
-    "text": "var wordArray.3 = 9",
-    "height": 50
+  "mwyl": {
+    "type": "button",
+    "clickRoutine": [
+      "var wordArray = ${PROPERTY wordArray OF theArray}",
+      "var numArray = ${PROPERTY numArray OF theArray}",
+      "var mixedArray = ${PROPERTY mixedArray OF theArray}",
+      "var wordArray = ${wordArray} isArray //Returns true if the variable is an array, even if the array is empty",
+      "var numArray = ${numArray} isArray",
+      "var mixedArray = ${mixedArray} isArray",
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "output1"
+      },
+      {
+        "func": "SET",
+        "property": "text",
+        "value": "${wordArray}"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "output2"
+      },
+      {
+        "func": "SET",
+        "property": "text",
+        "value": "${numArray}"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "output3"
+      },
+      {
+        "func": "SET",
+        "property": "text",
+        "value": "${mixedArray}"
+      }
+    ],
+    "x": 120,
+    "y": 250,
+    "z": 273,
+    "id": "mwyl",
+    "text": "isArray"
   },
-  "phiq": {
-    "id": "phiq",
-    "x": 388,
-    "y": 369,
-    "width": 400,
-    "z": 19,
-    "css": "font-size: 24px; ",
-    "text": "var wordArray.3 = 'testing'",
-    "height": 50
+  "uc3i": {
+    "type": "button",
+    "clickRoutine": [
+      "var wordArray = ${PROPERTY wordArray OF theArray}",
+      "var numArray = ${PROPERTY numArray OF theArray}",
+      "var mixedArray = ${PROPERTY mixedArray OF theArray}",
+      "var wordArray = ${wordArray} length //Returns the number of elements in an array",
+      "var numArray = ${numArray} length",
+      "var mixedArray = ${mixedArray} length",
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "output1"
+      },
+      {
+        "func": "SET",
+        "property": "text",
+        "value": "${wordArray}"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "output2"
+      },
+      {
+        "func": "SET",
+        "property": "text",
+        "value": "${numArray}"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "output3"
+      },
+      {
+        "func": "SET",
+        "property": "text",
+        "value": "${mixedArray}"
+      }
+    ],
+    "x": 374,
+    "y": 250,
+    "z": 274,
+    "id": "uc3i",
+    "text": "length"
   },
-  "osw0": {
-    "id": "osw0",
-    "x": 388,
-    "y": 489,
-    "width": 400,
-    "z": 20,
-    "css": "font-size: 24px; ",
-    "text": "var wordArray.3 = null",
-    "height": 50
+  "2rti": {
+    "type": "button",
+    "clickRoutine": [
+      "var wordArray = ${PROPERTY wordArray OF theArray}",
+      "var numArray = ${PROPERTY numArray OF theArray}",
+      "var mixedArray = ${PROPERTY mixedArray OF theArray}",
+      "var pos = ${PROPERTY text OF atString3}",
+      "var wordArray = ${wordArray} getIndex ${pos} //Returns the element in the array at the nth position (starts with 0)",
+      "var numArray = ${numArray} getIndex ${pos}",
+      "var mixedArray = ${mixedArray} getIndex ${pos}",
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "output1"
+      },
+      {
+        "func": "SET",
+        "property": "text",
+        "value": "${wordArray}"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "output2"
+      },
+      {
+        "func": "SET",
+        "property": "text",
+        "value": "${numArray}"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "output3"
+      },
+      {
+        "func": "SET",
+        "property": "text",
+        "value": "${mixedArray}"
+      }
+    ],
+    "x": 619,
+    "y": 250,
+    "z": 289,
+    "id": "2rti",
+    "text": "getIndex"
   },
-  "nwt2": {
-    "id": "nwt2",
-    "x": 388,
-    "y": 609,
-    "width": 400,
-    "z": 21,
-    "css": "font-size: 24px; ",
-    "text": "var wordArray.$pos = ${str}",
-    "height": 50
+  "0zgn": {
+    "type": "button",
+    "clickRoutine": [
+      "var wordArray = ${PROPERTY wordArray OF theArray}",
+      "var numArray = ${PROPERTY numArray OF theArray}",
+      "var mixedArray = ${PROPERTY mixedArray OF theArray}",
+      "var str = ${PROPERTY text OF atString4}",
+      "var wordArray = ${wordArray} includes ${str} //Returns true if the array includes the reference string or value",
+      "var numArray = ${numArray} includes ${str}",
+      "var mixedArray = ${mixedArray} includes ${str}",
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "output1"
+      },
+      {
+        "func": "SET",
+        "property": "text",
+        "value": "${wordArray}"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "output2"
+      },
+      {
+        "func": "SET",
+        "property": "text",
+        "value": "${numArray}"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "output3"
+      },
+      {
+        "func": "SET",
+        "property": "text",
+        "value": "${mixedArray}"
+      }
+    ],
+    "x": 872,
+    "y": 250,
+    "z": 288,
+    "id": "0zgn",
+    "text": "includes"
   },
-  "_meta": {
-    "version": 3,
-    "info": {
-      "name": "Arrays",
-      "image": "/assets/-2001287493_6748",
-      "rules": "",
-      "bgg": "",
-      "year": "2021",
-      "mode": "Tutorial",
-      "time": "",
-      "attribution": "",
-      "showName": false,
-      "lastUpdate": 1725248837878,
-      "skill": "",
-      "description": "",
-      "similarImage": "",
-      "similarName": "",
-      "similarAwards": "",
-      "ruleText": "",
-      "helpText": "",
-      "variantImage": "",
-      "variant": "Modifying - Basic",
-      "language": "en-US",
-      "players": "1",
-      "similarDesigner": ""
-    }
+  "l1ak": {
+    "type": "button",
+    "clickRoutine": [
+      "var wordArray = ${PROPERTY wordArray OF theArray}",
+      "var numArray = ${PROPERTY numArray OF theArray}",
+      "var mixedArray = ${PROPERTY mixedArray OF theArray}",
+      "var pos = ${PROPERTY text OF atString5}",
+      "var wordArray = ${wordArray} indexOf ${pos} //Returns the first index number of the array (starts with 0) that contains the reference string, or -1 if no match",
+      "var numArray = ${numArray} indexOf ${pos}",
+      "var mixedArray = ${mixedArray} indexOf ${pos}",
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "output1"
+      },
+      {
+        "func": "SET",
+        "property": "text",
+        "value": "${wordArray}"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "output2"
+      },
+      {
+        "func": "SET",
+        "property": "text",
+        "value": "${numArray}"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "output3"
+      },
+      {
+        "func": "SET",
+        "property": "text",
+        "value": "${mixedArray}"
+      }
+    ],
+    "x": 1115,
+    "y": 250,
+    "z": 287,
+    "id": "l1ak",
+    "text": "indexOf"
+  },
+  "atString6": {
+    "type": "label",
+    "id": "atString6",
+    "x": 1364,
+    "y": 361,
+    "height": 40,
+    "z": 26431,
+    "editable": true,
+    "css": "background-color:white; border-style: solid;",
+    "text": "apple"
+  },
+  "atString5": {
+    "type": "label",
+    "id": "atString5",
+    "x": 1105,
+    "y": 361,
+    "height": 40,
+    "z": 26432,
+    "editable": true,
+    "css": "background-color:white; border-style: solid;",
+    "text": 41
+  },
+  "atString4": {
+    "type": "label",
+    "id": "atString4",
+    "x": 862,
+    "y": 361,
+    "height": 40,
+    "z": 26433,
+    "editable": true,
+    "css": "background-color:white; border-style: solid;",
+    "text": "Duck"
+  },
+  "atString3": {
+    "type": "label",
+    "id": "atString3",
+    "x": 609,
+    "y": 361,
+    "height": 40,
+    "z": 26434,
+    "editable": true,
+    "css": "background-color:white; border-style: solid;",
+    "text": 4
+  },
+  "pc6t": {
+    "type": "button",
+    "id": "pc6t",
+    "x": 120,
+    "y": 487,
+    "z": 279,
+    "clickRoutine": [
+      "var wordArray = ${PROPERTY wordArray OF theArray}",
+      "var numArray = ${PROPERTY numArray OF theArray}",
+      "var mixedArray = ${PROPERTY mixedArray OF theArray}",
+      "var str = ${PROPERTY text OF atString7}",
+      "var wordArray = ${str} in ${wordArray} //Returns true if the reference string is included in the array",
+      "var numArray = ${str} in ${numArray}",
+      "var mixedArray = ${str} in ${mixedArray}",
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "output1"
+      },
+      {
+        "func": "SET",
+        "property": "text",
+        "value": "${wordArray}"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "output2"
+      },
+      {
+        "func": "SET",
+        "property": "text",
+        "value": "${numArray}"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "output3"
+      },
+      {
+        "func": "SET",
+        "property": "text",
+        "value": "${mixedArray}"
+      }
+    ],
+    "text": "in"
+  },
+  "atString7": {
+    "type": "label",
+    "id": "atString7",
+    "x": 100,
+    "y": 596,
+    "width": 100,
+    "height": 40,
+    "z": 26425,
+    "css": "background-color:white; border-style: solid;",
+    "editable": true,
+    "text": "Duck"
+  },
+  "uc4i": {
+    "type": "button",
+    "clickRoutine": [
+      "var wordArray = ${PROPERTY wordArray OF theArray}",
+      "var numArray = ${PROPERTY numArray OF theArray}",
+      "var mixedArray = ${PROPERTY mixedArray OF theArray}",
+      "var wordArray = ${wordArray} sum //Adds the elements in an array",
+      "var numArray = ${numArray} sum",
+      "var mixedArray = ${mixedArray} sum",
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "output1"
+      },
+      {
+        "func": "SET",
+        "property": "text",
+        "value": "${wordArray}"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "output2"
+      },
+      {
+        "func": "SET",
+        "property": "text",
+        "value": "${numArray}"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "output3"
+      },
+      {
+        "func": "SET",
+        "property": "text",
+        "value": "${mixedArray}"
+      }
+    ],
+    "x": 374,
+    "y": 487,
+    "z": 274,
+    "id": "uc4i",
+    "text": "sum"
   }
 }
