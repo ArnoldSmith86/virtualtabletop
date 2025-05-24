@@ -2413,6 +2413,13 @@ export function jeLoggingRoutineEnd(variables, collections) {
       expanders[i].addEventListener('click', function() {
         this.classList.toggle('jeExpander-down');
         this.parentNode.querySelector('.jeLogNested').classList.toggle('active');
+        if(this.classList.contains('jeExpander-down')) {
+          this.classList.add('manuallyExpanded');
+          this.parentNode.querySelector('.jeLogNested').classList.add('manuallyExpanded');
+        } else {
+          this.classList.remove('manuallyExpanded');
+          this.parentNode.querySelector('.jeLogNested').classList.remove('manuallyExpanded');
+        }
       });
     }
     // Make expander arrows that are parents of nodes with problems show up red.
@@ -2428,6 +2435,8 @@ export function jeLoggingRoutineEnd(variables, collections) {
       }
     }
   }
+  if($('#jeLogFilter'))
+    jeLoggingFilterLog($('#jeLogFilter').value);
 }
 
 export function jeLoggingRoutineOperationStart(original, applied) {
@@ -2518,6 +2527,32 @@ export function jeLoggingRoutineOperationSummary(definition, result) {
 
 export function jeLoggingRoutineGetData() {
   return { jeHTMLStack, jeLoggingHTML, jeRoutineResult };
+}
+
+function jeLoggingFilterLog(filter) {
+  for(const className of ['jeLogFilterMatch', 'jeLogFilterNoMatch', 'jeLogFilterChildMatch', 'active', 'jeExpander-down'])
+    for(const entry of $a(`#jeLog .jeLogNested .${className}`))
+      if(!entry.classList.contains('manuallyExpanded') || className.endsWith('Match'))
+        entry.classList.remove(className);
+  if(!filter) return;
+
+  for(const entry of $a('#jeLog .jeLogNested .jeExpander, #jeLog .jeLogNested .jeRedExpander')) {
+    if(entry.parentElement.classList.contains('jeLogDetails') || entry.textContent.toLowerCase().indexOf(filter.toLowerCase()) == -1) {
+      entry.classList.add('jeLogFilterNoMatch');
+    } else {
+      entry.classList.add('jeLogFilterMatch');
+      entry.classList.remove('jeLogFilterNoMatch');
+      let parent = entry.parentElement.parentElement;
+      while(parent.id != 'jeLog') {
+        if(parent.classList.contains('jeLogOperation')) {
+          parent.classList.add('jeLogFilterChildMatch');
+          $c('.jeLogNested', parent).classList.add('active');
+          $c('.jeExpander, .jeRedExpander', parent).classList.add('jeExpander-down');
+        }
+        parent = parent.parentElement;
+      }
+    }
+  }
 }
 
 // END routine logging
