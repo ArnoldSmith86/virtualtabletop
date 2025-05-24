@@ -1,0 +1,1693 @@
+{
+  "_meta": {
+    "version": 17,
+    "info": {
+      "name": "World Food Buffet",
+      "image": "/assets/1870598459_214333",
+      "rules": "",
+      "bgg": "https://boardgamegeek.com/boardgame/398/botswana",
+      "year": "1994",
+      "mode": "vs",
+      "time": "30",
+      "attribution": "Game layout and scripting by Andy Pymont, released to public domain under CC0.\n\nLibrary image is a photograph by Sheila Brown, also public domain under CC0: https://www.publicdomainpictures.net/en/view-image.php?image=312948",
+      "lastUpdate": 1747325253168,
+      "showName": true,
+      "description": "Will you enjoy the most successful trip to your city's top dining experience?",
+      "helpText": "Have each player take a seat and then click the New Round button to deal a hand of cards.\nOn your turn:\n• Drag and drop a card from your hand at the bottom of the screen into the area for the appropriate food/suit, such that the latest played is the visible/right most card. (The other cards will be stacked such that all players can see what has been played.)\n• Drag and drop a food tile from the supply column into your holder for that type of food (vertically in line with the supply and horizontally in line with your seat/player name.)>\n\nScores will update as cards are played and tiles taken. At the end of each round, click New Round to start a new line on the scoreboard and to collect back, shuffle, and re deal cards.",
+      "similarImage": "",
+      "similarName": "Botswana",
+      "similarAwards": "1994 Fairplay À la carte Runner-up\n2003 Japan Boardgame Prize Best Foreign Game for Beginners Nominee",
+      "ruleText": "Play one hand per player, with each player being start player once.\n\nOn your turn, you must play a card into the area for the matching food on the table. You must then take any one food tile (not necessarily for the same food as the card you played) into your personal area, unless there are no food tiles remaining.\n\nIf, after a player's turn, all 6 cards (0, 1, 2, 3, 4, and 5) for any single food type have been played, the hand ends.\n\nWhen the hand ends, players score each food tile in their personal area. Each food tile is worth the value printed on the latest card of that food type that was played. If no cards have been played for that food type, then it is worth 0.",
+      "similarDesigner": "Reiner Knizia",
+      "id": "9gz4",
+      "skill": "",
+      "variantImage": "",
+      "variant": "",
+      "language": "en-US",
+      "players": "2-5"
+    }
+  },
+  "hand": {
+    "id": "hand",
+    "type": "holder",
+    "childrenPerOwner": true,
+    "x": 97.5,
+    "y": 852.5,
+    "width": 1405,
+    "height": 145,
+    "dropTarget": {
+      "deck": "deck-cards"
+    },
+    "dropOffsetX": 2.5,
+    "dropOffsetY": 2.5,
+    "stackOffsetX": 100,
+    "stackOffsetY": 0,
+    "onEnter": {
+      "activeFace": 1
+    },
+    "countRoutine": [
+      {
+        "func": "FOREACH",
+        "range": 5,
+        "loopRoutine": [
+          {
+            "func": "GET",
+            "collection": [
+              "seat-p${value}"
+            ],
+            "property": "player",
+            "variable": "pID"
+          },
+          {
+            "func": "SELECT",
+            "property": "parent",
+            "value": "${PROPERTY id}"
+          },
+          {
+            "func": "SELECT",
+            "source": "DEFAULT",
+            "property": "owner",
+            "value": "${pID}"
+          },
+          {
+            "func": "COUNT"
+          },
+          {
+            "func": "LABEL",
+            "label": "hand-counter-p${value}",
+            "value": "${COUNT}"
+          }
+        ]
+      }
+    ],
+    "enterRoutine": [
+      {
+        "func": "CALL",
+        "routine": "countRoutine"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "CALL",
+        "routine": "countRoutine"
+      }
+    ]
+  },
+  "scoreboard": {
+    "id": "scoreboard",
+    "type": "scoreboard",
+    "x": 25,
+    "y": 105,
+    "width": 490,
+    "height": 400,
+    "movable": false,
+    "movableInEdit": false,
+    "verticalHeader": true,
+    "skipScoring": true,
+    "calculateScoresRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY skipScoring}",
+        "operand2": false,
+        "thenRoutine": [
+          {
+            "note": "First set scores to zero",
+            "func": "SCORE",
+            "mode": "set",
+            "round": "${PROPERTY text OF round-counter}",
+            "value": 0
+          },
+          {
+            "note": "Iterate through food types and score each",
+            "func": "FOREACH",
+            "in": [
+              "burger",
+              "pizza",
+              "pretzel",
+              "sushi",
+              "taco"
+            ],
+            "loopRoutine": [
+              {
+                "func": "VAR",
+                "variables": {
+                  "suit": "${value}",
+                  "suitHolder": "holder-cards-${value}"
+                }
+              },
+              "var suitValue = ${PROPERTY value OF $suitHolder}",
+              {
+                "note": "Score each player for this suit",
+                "func": "FOREACH",
+                "range": 5,
+                "loopRoutine": [
+                  {
+                    "func": "VAR",
+                    "variables": {
+                      "playerHolder": "holder-${suit}-p${value}"
+                    }
+                  },
+                  "var count = ${PROPERTY count OF $playerHolder}",
+                  "var subtotal = ${count} * ${suitValue}",
+                  {
+                    "func": "SCORE",
+                    "mode": "inc",
+                    "seats": "seat-p${value}",
+                    "round": "${PROPERTY text OF round-counter}",
+                    "value": "${subtotal}"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "holder-cards": {
+    "id": "holder-cards",
+    "type": "holder",
+    "x": 100,
+    "y": 600,
+    "width": 100,
+    "height": 140,
+    "dropTarget": {
+      "deck": "deck-cards"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "onEnter": {
+      "activeFace": 0
+    }
+  },
+  "round-counter": {
+    "id": "round-counter",
+    "type": "label",
+    "x": 285,
+    "y": 620,
+    "width": 65,
+    "height": 40,
+    "css": {
+      "font-size": "30px"
+    },
+    "editable": false,
+    "text": 0
+  },
+  "round-counter-title": {
+    "id": "round-counter-title",
+    "type": "label",
+    "parent": "round-counter",
+    "fixedParent": true,
+    "x": 0,
+    "y": -20,
+    "width": 65,
+    "height": 30,
+    "css": {
+      "font-size": "16px",
+      "font-weight": "bold"
+    },
+    "editable": false,
+    "movable": false,
+    "movableInEdit": false,
+    "text": "ROUND"
+  },
+  "button-new-round": {
+    "id": "button-new-round",
+    "type": "button",
+    "parent": "round-counter",
+    "fixedParent": true,
+    "x": -25,
+    "y": 40,
+    "width": 120,
+    "height": 30,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "16px"
+    },
+    "text": "New Round",
+    "clickRoutine": [
+      {
+        "note": "Score the round that is finishing",
+        "func": "CALL",
+        "widget": "scoreboard",
+        "routine": "calculateScoresRoutine"
+      },
+      {
+        "note": "Disable scoring during upcoming movements",
+        "func": "SET",
+        "collection": [
+          "scoreboard"
+        ],
+        "property": "skipScoring",
+        "value": true
+      },
+      {
+        "note": "Increment the round number",
+        "func": "LABEL",
+        "label": "round-counter",
+        "mode": "inc",
+        "value": 1
+      },
+      {
+        "note": "Move the tiles back to their respective holders",
+        "func": "FOREACH",
+        "in": [
+          "burger",
+          "pizza",
+          "pretzel",
+          "sushi",
+          "taco"
+        ],
+        "loopRoutine": [
+          {
+            "func": "SELECT",
+            "type": "card",
+            "property": "cardType",
+            "value": "tile-${value}"
+          },
+          {
+            "func": "MOVE",
+            "collection": "DEFAULT",
+            "to": "holder-${value}"
+          }
+        ]
+      },
+      {
+        "note": "Recall the cards",
+        "func": "RECALL",
+        "holder": "holder-cards"
+      },
+      {
+        "note": "Shuffle the cards",
+        "func": "SHUFFLE",
+        "holder": "holder-cards"
+      },
+      {
+        "note": "Determine the player count",
+        "func": "COUNT",
+        "collection": "activeSeats"
+      },
+      {
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "operand2": 5,
+        "thenRoutine": [
+          "var handSize = 6"
+        ],
+        "elseRoutine": [
+          {
+            "func": "IF",
+            "operand1": "${COUNT}",
+            "operand2": 4,
+            "thenRoutine": [
+              "var handSize = 7"
+            ],
+            "elseRoutine": [
+              {
+                "func": "IF",
+                "operand1": "${COUNT}",
+                "operand2": 3,
+                "thenRoutine": [
+                  "var handSize = 9"
+                ],
+                "elseRoutine": [
+                  "var handSize = 14"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "note": "Deal players their hands for the new round",
+        "func": "MOVE",
+        "from": "holder-cards",
+        "to": "${activeSeats}",
+        "count": "${handSize}"
+      },
+      {
+        "note": "Sort players' hands by id (effectively by suit, then by value)",
+        "func": "SORT",
+        "holder": "hand",
+        "key": "id"
+      },
+      {
+        "note": "Re-enable scoring if the game is not already over",
+        "func": "IF",
+        "operand1": "${PROPERTY text OF round-counter}",
+        "relation": "<=",
+        "operand2": "${COUNT}",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "scoreboard"
+            ],
+            "property": "skipScoring",
+            "value": false
+          },
+          {
+            "func": "SCORE",
+            "mode": "set",
+            "round": "${PROPERTY text OF round-counter}",
+            "value": 0
+          }
+        ]
+      }
+    ]
+  },
+  "deck-cards": {
+    "id": "deck-cards",
+    "type": "deck",
+    "parent": "holder-cards",
+    "cardTypes": {
+      "card-burger": {
+        "bgcolor": "#fff9c4",
+        "image": "/i/noto-emoji/emoji_u1f354.svg"
+      },
+      "card-pizza": {
+        "bgcolor": "#c8e6c9",
+        "image": "/i/noto-emoji/emoji_u1f355.svg"
+      },
+      "card-pretzel": {
+        "bgcolor": "#d7ccc8",
+        "image": "/i/noto-emoji/emoji_u1f968.svg"
+      },
+      "card-sushi": {
+        "bgcolor": "#ffcdd2",
+        "image": "/i/noto-emoji/emoji_u1f363.svg"
+      },
+      "card-taco": {
+        "bgcolor": "#cfd8dc",
+        "image": "/i/noto-emoji/emoji_u1f32e.svg"
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 100,
+            "height": 140,
+            "color": "#c8e6c9",
+            "css": {
+              "border-radius": "8px",
+              "border-style": "solid",
+              "border-width": "1px"
+            }
+          },
+          {
+            "type": "image",
+            "x": 15,
+            "y": 35,
+            "width": 70,
+            "height": 70,
+            "color": "transparent",
+            "value": "/i/noto-emoji/emoji_u1f37d.svg"
+          }
+        ]
+      },
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 100,
+            "height": 140,
+            "css": {
+              "border-radius": "8px",
+              "border-style": "solid",
+              "border-width": "1px"
+            },
+            "dynamicProperties": {
+              "color": "bgcolor"
+            }
+          },
+          {
+            "type": "text",
+            "x": 8,
+            "y": 0,
+            "css": {
+              "font-size": "35px"
+            },
+            "dynamicProperties": {
+              "value": "value"
+            }
+          },
+          {
+            "type": "text",
+            "x": 74,
+            "y": 97,
+            "rotation": 180,
+            "css": {
+              "font-size": "35px"
+            },
+            "dynamicProperties": {
+              "value": "value"
+            }
+          },
+          {
+            "type": "image",
+            "x": 15,
+            "y": 35,
+            "width": 70,
+            "height": 70,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image"
+            }
+          }
+        ]
+      }
+    ],
+    "cardDefaults": {
+      "width": 100,
+      "height": 140,
+      "onPileCreation": {
+        "handleCSS": {
+          "background": "black",
+          "color": "white"
+        }
+      }
+    }
+  },
+  "holder-cards-burger": {
+    "id": "holder-cards-burger",
+    "type": "holder",
+    "x": 550,
+    "y": 85,
+    "width": 250,
+    "height": 140,
+    "dropTarget": {
+      "deck": "deck-cards",
+      "cardType": "card-burger"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "stackOffsetX": 30,
+    "stackOffsetY": 0,
+    "onEnter": {
+      "activeFace": 1
+    },
+    "valueRoutine": [
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "parent",
+        "value": "${PROPERTY id}"
+      },
+      {
+        "func": "COUNT"
+      },
+      {
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "operand2": 0,
+        "thenRoutine": [
+          "var value = 0"
+        ],
+        "elseRoutine": [
+          {
+            "func": "SORT",
+            "key": "z",
+            "reverse": true,
+            "rearrange": false
+          },
+          {
+            "func": "GET",
+            "property": "value"
+          }
+        ]
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "value",
+        "value": "${value}"
+      },
+      {
+        "func": "CALL",
+        "widget": "scoreboard",
+        "routine": "calculateScoresRoutine"
+      }
+    ],
+    "enterRoutine": [
+      {
+        "func": "CALL",
+        "routine": "valueRoutine"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "CALL",
+        "routine": "valueRoutine"
+      }
+    ],
+    "value": 0
+  },
+  "holder-cards-pizza": {
+    "id": "holder-cards-pizza",
+    "type": "holder",
+    "inheritFrom": "holder-cards-burger",
+    "y": 235,
+    "dropTarget": {
+      "deck": "deck-cards",
+      "cardType": "card-pizza"
+    },
+    "value": 0
+  },
+  "holder-cards-pretzel": {
+    "id": "holder-cards-pretzel",
+    "type": "holder",
+    "inheritFrom": "holder-cards-burger",
+    "y": 385,
+    "dropTarget": {
+      "deck": "deck-cards",
+      "cardType": "card-pretzel"
+    },
+    "value": 0
+  },
+  "holder-cards-sushi": {
+    "id": "holder-cards-sushi",
+    "type": "holder",
+    "inheritFrom": "holder-cards-burger",
+    "y": 535,
+    "dropTarget": {
+      "deck": "deck-cards",
+      "cardType": "card-sushi"
+    },
+    "value": 0
+  },
+  "holder-cards-taco": {
+    "id": "holder-cards-taco",
+    "type": "holder",
+    "inheritFrom": "holder-cards-burger",
+    "y": 685,
+    "dropTarget": {
+      "deck": "deck-cards",
+      "cardType": "card-taco"
+    },
+    "value": 0
+  },
+  "seat-p1": {
+    "id": "seat-p1",
+    "type": "seat",
+    "index": 1,
+    "x": 960,
+    "y": 35,
+    "width": 110,
+    "height": 45,
+    "clickRoutine": [
+      {
+        "func": "CLICK",
+        "collection": "thisButton",
+        "mode": "ignoreClickRoutine"
+      },
+      "var foreground = colorContrast ${PROPERTY color}",
+      {
+        "func": "SET",
+        "collection": [
+          "${PROPERTY id}"
+        ],
+        "property": "foreground",
+        "value": "${foreground}"
+      }
+    ],
+    "css": {
+      "default": {
+        "border": "5px solid #999999",
+        "box-shadow": "0 2px 5px #00000066",
+        "box-sizing": "border-box",
+        "color": "#000000",
+        "font-size": "18px"
+      },
+      ".seated": {
+        "background": "${PROPERTY color}",
+        "border": "5px solid #000000",
+        "color": "${PROPERTY foreground}"
+      },
+      ".seated.turn": {
+        "border": "5px dotted ${PROPERTY foreground}"
+      }
+    },
+    "foreground": "#000000",
+    "hideWhenUnused": true
+  },
+  "hand-counter-p1": {
+    "id": "hand-counter-p1",
+    "parent": "seat-p1",
+    "x": -20,
+    "y": -20,
+    "width": 30,
+    "height": 30,
+    "borderRadius": 100,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "css": {
+      "font-size": "18px",
+      "display": "flex",
+      "align-items": "center",
+      "justify-content": "center",
+      "color": "#000000",
+      "background": "#ffffff",
+      "border": "2px solid #000000"
+    },
+    "text": 0
+  },
+  "seat-p2": {
+    "id": "seat-p2",
+    "type": "seat",
+    "index": 2,
+    "x": 1090,
+    "foreground": "#000000",
+    "inheritFrom": {
+      "seat-p1": [
+        "y",
+        "width",
+        "height",
+        "clickRoutine",
+        "css",
+        "hideWhenUnused"
+      ]
+    }
+  },
+  "hand-counter-p2": {
+    "id": "hand-counter-p2",
+    "parent": "seat-p2",
+    "text": 0,
+    "inheritFrom": "hand-counter-p1"
+  },
+  "seat-p3": {
+    "id": "seat-p3",
+    "type": "seat",
+    "index": 3,
+    "x": 1220,
+    "foreground": "#000000",
+    "inheritFrom": {
+      "seat-p1": [
+        "y",
+        "width",
+        "height",
+        "clickRoutine",
+        "css",
+        "hideWhenUnused"
+      ]
+    }
+  },
+  "hand-counter-p3": {
+    "id": "hand-counter-p3",
+    "parent": "seat-p3",
+    "text": 0,
+    "inheritFrom": "hand-counter-p1"
+  },
+  "seat-p4": {
+    "id": "seat-p4",
+    "type": "seat",
+    "index": 4,
+    "x": 1350,
+    "foreground": "#000000",
+    "inheritFrom": {
+      "seat-p1": [
+        "y",
+        "width",
+        "height",
+        "clickRoutine",
+        "css",
+        "hideWhenUnused"
+      ]
+    }
+  },
+  "hand-counter-p4": {
+    "id": "hand-counter-p4",
+    "parent": "seat-p4",
+    "text": 0,
+    "inheritFrom": "hand-counter-p1"
+  },
+  "seat-p5": {
+    "id": "seat-p5",
+    "type": "seat",
+    "index": 5,
+    "x": 1480,
+    "foreground": "#000000",
+    "inheritFrom": {
+      "seat-p1": [
+        "y",
+        "width",
+        "height",
+        "clickRoutine",
+        "css",
+        "hideWhenUnused"
+      ]
+    }
+  },
+  "hand-counter-p5": {
+    "id": "hand-counter-p5",
+    "parent": "seat-p5",
+    "text": 0,
+    "inheritFrom": "hand-counter-p1"
+  },
+  "holder-burger": {
+    "id": "holder-burger",
+    "type": "holder",
+    "x": 855,
+    "y": 117.5,
+    "width": 75,
+    "height": 75,
+    "dropOffsetX": 2.5,
+    "dropOffsetY": 2.5,
+    "dropTarget": {
+      "deck": "deck-tiles",
+      "cardType": "tile-burger"
+    },
+    "count": 5,
+    "countRoutine": [
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "_ancestor",
+        "value": "${PROPERTY id}"
+      },
+      {
+        "func": "COUNT"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "count",
+        "value": "${COUNT}"
+      },
+      {
+        "func": "CALL",
+        "widget": "scoreboard",
+        "routine": "calculateScoresRoutine"
+      }
+    ],
+    "enterRoutine": [
+      {
+        "func": "CALL",
+        "routine": "countRoutine"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "CALL",
+        "routine": "countRoutine"
+      }
+    ]
+  },
+  "deck-tiles": {
+    "id": "deck-tiles",
+    "type": "deck",
+    "parent": "holder-burger",
+    "cardTypes": {
+      "tile-burger": {
+        "bgcolor": "#fff9c4",
+        "fgcolor": "#ffffff",
+        "image": "/i/noto-emoji/emoji_u1f354.svg"
+      },
+      "tile-pizza": {
+        "bgcolor": "#c8e6c9",
+        "fgcolor": "#000000",
+        "image": "/i/noto-emoji/emoji_u1f355.svg"
+      },
+      "tile-pretzel": {
+        "bgcolor": "#d7ccc8",
+        "fgcolor": "#000000",
+        "image": "/i/noto-emoji/emoji_u1f968.svg"
+      },
+      "tile-sushi": {
+        "bgcolor": "#ffcdd2",
+        "fgcolor": "#000000",
+        "image": "/i/noto-emoji/emoji_u1f363.svg"
+      },
+      "tile-taco": {
+        "bgcolor": "#cfd8dc",
+        "fgcolor": "#000000",
+        "image": "/i/noto-emoji/emoji_u1f32e.svg"
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 70,
+            "height": 70,
+            "css": {
+              "border-radius": "8px",
+              "border-style": "solid",
+              "border-width": "1px"
+            },
+            "dynamicProperties": {
+              "color": "bgcolor",
+              "value": "image"
+            },
+            "svgReplaces": {
+              "#000000": "fgcolor"
+            }
+          }
+        ]
+      }
+    ],
+    "cardDefaults": {
+      "width": 70,
+      "height": 70,
+      "onPileCreation": {
+        "handleCSS": {
+          "background": "black",
+          "color": "white"
+        },
+        "handlePosition": "top left"
+      }
+    }
+  },
+  "holder-burger-p1": {
+    "id": "holder-burger-p1",
+    "type": "holder",
+    "inheritFrom": "holder-burger",
+    "x": 980,
+    "linkedToSeat": "seat-p1",
+    "count": 0
+  },
+  "holder-burger-p2": {
+    "id": "holder-burger-p2",
+    "type": "holder",
+    "inheritFrom": "holder-burger-p1",
+    "x": 1110,
+    "linkedToSeat": "seat-p2",
+    "count": 0
+  },
+  "holder-burger-p3": {
+    "id": "holder-burger-p3",
+    "type": "holder",
+    "inheritFrom": "holder-burger-p1",
+    "x": 1240,
+    "linkedToSeat": "seat-p3",
+    "count": 0
+  },
+  "holder-burger-p4": {
+    "id": "holder-burger-p4",
+    "type": "holder",
+    "inheritFrom": "holder-burger-p1",
+    "x": 1370,
+    "linkedToSeat": "seat-p4",
+    "count": 0
+  },
+  "holder-burger-p5": {
+    "id": "holder-burger-p5",
+    "type": "holder",
+    "inheritFrom": "holder-burger-p1",
+    "x": 1500,
+    "linkedToSeat": "seat-p5",
+    "count": 0
+  },
+  "holder-pizza": {
+    "id": "holder-pizza",
+    "type": "holder",
+    "inheritFrom": "holder-burger",
+    "y": 265.5,
+    "dropTarget": {
+      "deck": "deck-tiles",
+      "cardType": "tile-pizza"
+    },
+    "count": 5
+  },
+  "holder-pizza-p1": {
+    "id": "holder-pizza-p1",
+    "type": "holder",
+    "inheritFrom": {
+      "holder-burger-p1": [
+        "x",
+        "linkedToSeat"
+      ],
+      "holder-pizza": "*"
+    },
+    "count": 0
+  },
+  "holder-pizza-p2": {
+    "id": "holder-pizza-p2",
+    "type": "holder",
+    "inheritFrom": {
+      "holder-burger-p2": [
+        "x",
+        "linkedToSeat"
+      ],
+      "holder-pizza": "*"
+    },
+    "count": 0
+  },
+  "holder-pizza-p3": {
+    "id": "holder-pizza-p3",
+    "type": "holder",
+    "inheritFrom": {
+      "holder-burger-p3": [
+        "x",
+        "linkedToSeat"
+      ],
+      "holder-pizza": "*"
+    },
+    "count": 0
+  },
+  "holder-pizza-p4": {
+    "id": "holder-pizza-p4",
+    "type": "holder",
+    "inheritFrom": {
+      "holder-burger-p4": [
+        "x",
+        "linkedToSeat"
+      ],
+      "holder-pizza": "*"
+    },
+    "count": 0
+  },
+  "holder-pizza-p5": {
+    "id": "holder-pizza-p5",
+    "type": "holder",
+    "inheritFrom": {
+      "holder-burger-p5": [
+        "x",
+        "linkedToSeat"
+      ],
+      "holder-pizza": "*"
+    },
+    "count": 0
+  },
+  "holder-pretzel": {
+    "id": "holder-pretzel",
+    "type": "holder",
+    "inheritFrom": "holder-burger",
+    "y": 417.5,
+    "dropTarget": {
+      "deck": "deck-tiles",
+      "cardType": "tile-pretzel"
+    },
+    "count": 5
+  },
+  "holder-pretzel-p1": {
+    "id": "holder-pretzel-p1",
+    "type": "holder",
+    "inheritFrom": {
+      "holder-burger-p1": [
+        "x",
+        "linkedToSeat"
+      ],
+      "holder-pretzel": "*"
+    },
+    "count": 0
+  },
+  "holder-pretzel-p2": {
+    "id": "holder-pretzel-p2",
+    "type": "holder",
+    "inheritFrom": {
+      "holder-burger-p2": [
+        "x",
+        "linkedToSeat"
+      ],
+      "holder-pretzel": "*"
+    },
+    "count": 0
+  },
+  "holder-pretzel-p3": {
+    "id": "holder-pretzel-p3",
+    "type": "holder",
+    "inheritFrom": {
+      "holder-burger-p3": [
+        "x",
+        "linkedToSeat"
+      ],
+      "holder-pretzel": "*"
+    },
+    "count": 0
+  },
+  "holder-pretzel-p4": {
+    "id": "holder-pretzel-p4",
+    "type": "holder",
+    "inheritFrom": {
+      "holder-burger-p4": [
+        "x",
+        "linkedToSeat"
+      ],
+      "holder-pretzel": "*"
+    },
+    "count": 0
+  },
+  "holder-pretzel-p5": {
+    "id": "holder-pretzel-p5",
+    "type": "holder",
+    "inheritFrom": {
+      "holder-burger-p5": [
+        "x",
+        "linkedToSeat"
+      ],
+      "holder-pretzel": "*"
+    },
+    "count": 0
+  },
+  "holder-sushi": {
+    "id": "holder-sushi",
+    "type": "holder",
+    "inheritFrom": "holder-burger",
+    "y": 567.5,
+    "dropTarget": {
+      "deck": "deck-tiles",
+      "cardType": "tile-sushi"
+    },
+    "count": 5
+  },
+  "holder-sushi-p1": {
+    "id": "holder-sushi-p1",
+    "type": "holder",
+    "inheritFrom": {
+      "holder-burger-p1": [
+        "x",
+        "linkedToSeat"
+      ],
+      "holder-sushi": "*"
+    },
+    "count": 0
+  },
+  "holder-sushi-p2": {
+    "id": "holder-sushi-p2",
+    "type": "holder",
+    "inheritFrom": {
+      "holder-burger-p2": [
+        "x",
+        "linkedToSeat"
+      ],
+      "holder-sushi": "*"
+    },
+    "count": 0
+  },
+  "holder-sushi-p3": {
+    "id": "holder-sushi-p3",
+    "type": "holder",
+    "inheritFrom": {
+      "holder-burger-p3": [
+        "x",
+        "linkedToSeat"
+      ],
+      "holder-sushi": "*"
+    },
+    "count": 0
+  },
+  "holder-sushi-p4": {
+    "id": "holder-sushi-p4",
+    "type": "holder",
+    "inheritFrom": {
+      "holder-burger-p4": [
+        "x",
+        "linkedToSeat"
+      ],
+      "holder-sushi": "*"
+    },
+    "count": 0
+  },
+  "holder-sushi-p5": {
+    "id": "holder-sushi-p5",
+    "type": "holder",
+    "inheritFrom": {
+      "holder-burger-p5": [
+        "x",
+        "linkedToSeat"
+      ],
+      "holder-sushi": "*"
+    },
+    "count": 0
+  },
+  "holder-taco": {
+    "id": "holder-taco",
+    "type": "holder",
+    "inheritFrom": "holder-burger",
+    "y": 717.5,
+    "dropTarget": {
+      "deck": "deck-tiles",
+      "cardType": "tile-taco"
+    },
+    "count": 5
+  },
+  "holder-taco-p1": {
+    "id": "holder-taco-p1",
+    "type": "holder",
+    "inheritFrom": {
+      "holder-burger-p1": [
+        "x",
+        "linkedToSeat"
+      ],
+      "holder-taco": "*"
+    },
+    "count": 0
+  },
+  "holder-taco-p2": {
+    "id": "holder-taco-p2",
+    "type": "holder",
+    "inheritFrom": {
+      "holder-burger-p2": [
+        "x",
+        "linkedToSeat"
+      ],
+      "holder-taco": "*"
+    },
+    "count": 0
+  },
+  "holder-taco-p3": {
+    "id": "holder-taco-p3",
+    "type": "holder",
+    "inheritFrom": {
+      "holder-burger-p3": [
+        "x",
+        "linkedToSeat"
+      ],
+      "holder-taco": "*"
+    },
+    "count": 0
+  },
+  "holder-taco-p4": {
+    "id": "holder-taco-p4",
+    "type": "holder",
+    "inheritFrom": {
+      "holder-burger-p4": [
+        "x",
+        "linkedToSeat"
+      ],
+      "holder-taco": "*"
+    },
+    "count": 0
+  },
+  "holder-taco-p5": {
+    "id": "holder-taco-p5",
+    "type": "holder",
+    "inheritFrom": {
+      "holder-burger-p5": [
+        "x",
+        "linkedToSeat"
+      ],
+      "holder-taco": "*"
+    },
+    "count": 0
+  },
+  "pile-tile-burger": {
+    "id": "pile-tile-burger",
+    "type": "pile",
+    "parent": "holder-burger",
+    "x": 2.5,
+    "y": 2.5,
+    "width": 70,
+    "height": 70,
+    "handleCSS": {
+      "background": "black",
+      "color": "white"
+    },
+    "handlePosition": "top left"
+  },
+  "tile-burger-1": {
+    "id": "tile-burger-1",
+    "type": "card",
+    "parent": "pile-tile-burger",
+    "deck": "deck-tiles",
+    "cardType": "tile-burger"
+  },
+  "tile-burger-2": {
+    "id": "tile-burger-2",
+    "type": "card",
+    "parent": "pile-tile-burger",
+    "deck": "deck-tiles",
+    "cardType": "tile-burger"
+  },
+  "tile-burger-3": {
+    "id": "tile-burger-3",
+    "type": "card",
+    "parent": "pile-tile-burger",
+    "deck": "deck-tiles",
+    "cardType": "tile-burger"
+  },
+  "tile-burger-4": {
+    "id": "tile-burger-4",
+    "type": "card",
+    "parent": "pile-tile-burger",
+    "deck": "deck-tiles",
+    "cardType": "tile-burger"
+  },
+  "tile-burger-5": {
+    "id": "tile-burger-5",
+    "type": "card",
+    "parent": "pile-tile-burger",
+    "deck": "deck-tiles",
+    "cardType": "tile-burger"
+  },
+  "pile-tile-pizza": {
+    "id": "pile-tile-pizza",
+    "type": "pile",
+    "parent": "holder-pizza",
+    "x": 2.5,
+    "y": 2.5,
+    "width": 70,
+    "height": 70,
+    "handleCSS": {
+      "background": "black",
+      "color": "white"
+    },
+    "handlePosition": "top left"
+  },
+  "tile-pizza-1": {
+    "id": "tile-pizza-1",
+    "type": "card",
+    "parent": "pile-tile-pizza",
+    "deck": "deck-tiles",
+    "cardType": "tile-pizza"
+  },
+  "tile-pizza-2": {
+    "id": "tile-pizza-2",
+    "type": "card",
+    "parent": "pile-tile-pizza",
+    "deck": "deck-tiles",
+    "cardType": "tile-pizza"
+  },
+  "tile-pizza-3": {
+    "id": "tile-pizza-3",
+    "type": "card",
+    "parent": "pile-tile-pizza",
+    "deck": "deck-tiles",
+    "cardType": "tile-pizza"
+  },
+  "tile-pizza-4": {
+    "id": "tile-pizza-4",
+    "type": "card",
+    "parent": "pile-tile-pizza",
+    "deck": "deck-tiles",
+    "cardType": "tile-pizza"
+  },
+  "tile-pizza-5": {
+    "id": "tile-pizza-5",
+    "type": "card",
+    "parent": "pile-tile-pizza",
+    "deck": "deck-tiles",
+    "cardType": "tile-pizza"
+  },
+  "pile-tile-pretzel": {
+    "id": "pile-tile-pretzel",
+    "type": "pile",
+    "parent": "holder-pretzel",
+    "x": 2.5,
+    "y": 2.5,
+    "width": 70,
+    "height": 70,
+    "handleCSS": {
+      "background": "black",
+      "color": "white"
+    },
+    "handlePosition": "top left"
+  },
+  "tile-pretzel-1": {
+    "id": "tile-pretzel-1",
+    "type": "card",
+    "parent": "pile-tile-pretzel",
+    "deck": "deck-tiles",
+    "cardType": "tile-pretzel"
+  },
+  "tile-pretzel-2": {
+    "id": "tile-pretzel-2",
+    "type": "card",
+    "parent": "pile-tile-pretzel",
+    "deck": "deck-tiles",
+    "cardType": "tile-pretzel"
+  },
+  "tile-pretzel-3": {
+    "id": "tile-pretzel-3",
+    "type": "card",
+    "parent": "pile-tile-pretzel",
+    "deck": "deck-tiles",
+    "cardType": "tile-pretzel"
+  },
+  "tile-pretzel-4": {
+    "id": "tile-pretzel-4",
+    "type": "card",
+    "parent": "pile-tile-pretzel",
+    "deck": "deck-tiles",
+    "cardType": "tile-pretzel"
+  },
+  "tile-pretzel-5": {
+    "id": "tile-pretzel-5",
+    "type": "card",
+    "parent": "pile-tile-pretzel",
+    "deck": "deck-tiles",
+    "cardType": "tile-pretzel"
+  },
+  "pile-tile-sushi": {
+    "id": "pile-tile-sushi",
+    "type": "pile",
+    "parent": "holder-sushi",
+    "x": 2.5,
+    "y": 2.5,
+    "width": 70,
+    "height": 70,
+    "handleCSS": {
+      "background": "black",
+      "color": "white"
+    },
+    "handlePosition": "top left"
+  },
+  "tile-sushi-1": {
+    "id": "tile-sushi-1",
+    "type": "card",
+    "parent": "pile-tile-sushi",
+    "deck": "deck-tiles",
+    "cardType": "tile-sushi"
+  },
+  "tile-sushi-2": {
+    "id": "tile-sushi-2",
+    "type": "card",
+    "parent": "pile-tile-sushi",
+    "deck": "deck-tiles",
+    "cardType": "tile-sushi"
+  },
+  "tile-sushi-3": {
+    "id": "tile-sushi-3",
+    "type": "card",
+    "parent": "pile-tile-sushi",
+    "deck": "deck-tiles",
+    "cardType": "tile-sushi"
+  },
+  "tile-sushi-4": {
+    "id": "tile-sushi-4",
+    "type": "card",
+    "parent": "pile-tile-sushi",
+    "deck": "deck-tiles",
+    "cardType": "tile-sushi"
+  },
+  "tile-sushi-5": {
+    "id": "tile-sushi-5",
+    "type": "card",
+    "parent": "pile-tile-sushi",
+    "deck": "deck-tiles",
+    "cardType": "tile-sushi"
+  },
+  "pile-tile-taco": {
+    "id": "pile-tile-taco",
+    "type": "pile",
+    "parent": "holder-taco",
+    "x": 2.5,
+    "y": 2.5,
+    "width": 70,
+    "height": 70,
+    "handleCSS": {
+      "background": "black",
+      "color": "white"
+    },
+    "handlePosition": "top left"
+  },
+  "tile-taco-1": {
+    "id": "tile-taco-1",
+    "type": "card",
+    "parent": "pile-tile-taco",
+    "deck": "deck-tiles",
+    "cardType": "tile-taco"
+  },
+  "tile-taco-2": {
+    "id": "tile-taco-2",
+    "type": "card",
+    "parent": "pile-tile-taco",
+    "deck": "deck-tiles",
+    "cardType": "tile-taco"
+  },
+  "tile-taco-3": {
+    "id": "tile-taco-3",
+    "type": "card",
+    "parent": "pile-tile-taco",
+    "deck": "deck-tiles",
+    "cardType": "tile-taco"
+  },
+  "tile-taco-4": {
+    "id": "tile-taco-4",
+    "type": "card",
+    "parent": "pile-tile-taco",
+    "deck": "deck-tiles",
+    "cardType": "tile-taco"
+  },
+  "tile-taco-5": {
+    "id": "tile-taco-5",
+    "type": "card",
+    "parent": "pile-tile-taco",
+    "deck": "deck-tiles",
+    "cardType": "tile-taco"
+  },
+  "pile-draw": {
+    "id": "pile-draw",
+    "type": "pile",
+    "parent": "holder-cards",
+    "x": 0,
+    "y": 0,
+    "width": 100,
+    "height": 140,
+    "handleCSS": {
+      "background": "black",
+      "color": "white"
+    }
+  },
+  "card-burger-0": {
+    "id": "card-burger-0",
+    "type": "card",
+    "parent": "pile-draw",
+    "deck": "deck-cards",
+    "cardType": "card-burger",
+    "value": 0
+  },
+  "card-burger-1": {
+    "id": "card-burger-1",
+    "type": "card",
+    "parent": "pile-draw",
+    "deck": "deck-cards",
+    "cardType": "card-burger",
+    "value": 1
+  },
+  "card-burger-2": {
+    "id": "card-burger-2",
+    "type": "card",
+    "parent": "pile-draw",
+    "deck": "deck-cards",
+    "cardType": "card-burger",
+    "value": 2
+  },
+  "card-burger-3": {
+    "id": "card-burger-3",
+    "type": "card",
+    "parent": "pile-draw",
+    "deck": "deck-cards",
+    "cardType": "card-burger",
+    "value": 3
+  },
+  "card-burger-4": {
+    "id": "card-burger-4",
+    "type": "card",
+    "parent": "pile-draw",
+    "deck": "deck-cards",
+    "cardType": "card-burger",
+    "value": 4
+  },
+  "card-burger-5": {
+    "id": "card-burger-5",
+    "type": "card",
+    "parent": "pile-draw",
+    "deck": "deck-cards",
+    "cardType": "card-burger",
+    "value": 5
+  },
+  "card-pizza-0": {
+    "id": "card-pizza-0",
+    "type": "card",
+    "parent": "pile-draw",
+    "deck": "deck-cards",
+    "cardType": "card-pizza",
+    "value": 0
+  },
+  "card-pizza-1": {
+    "id": "card-pizza-1",
+    "type": "card",
+    "parent": "pile-draw",
+    "deck": "deck-cards",
+    "cardType": "card-pizza",
+    "value": 1
+  },
+  "card-pizza-2": {
+    "id": "card-pizza-2",
+    "type": "card",
+    "parent": "pile-draw",
+    "deck": "deck-cards",
+    "cardType": "card-pizza",
+    "value": 2
+  },
+  "card-pizza-3": {
+    "id": "card-pizza-3",
+    "type": "card",
+    "parent": "pile-draw",
+    "deck": "deck-cards",
+    "cardType": "card-pizza",
+    "value": 3
+  },
+  "card-pizza-4": {
+    "id": "card-pizza-4",
+    "type": "card",
+    "parent": "pile-draw",
+    "deck": "deck-cards",
+    "cardType": "card-pizza",
+    "value": 4
+  },
+  "card-pizza-5": {
+    "id": "card-pizza-5",
+    "type": "card",
+    "parent": "pile-draw",
+    "deck": "deck-cards",
+    "cardType": "card-pizza",
+    "value": 5
+  },
+  "card-pretzel-0": {
+    "id": "card-pretzel-0",
+    "type": "card",
+    "parent": "pile-draw",
+    "deck": "deck-cards",
+    "cardType": "card-pretzel",
+    "value": 0
+  },
+  "card-pretzel-1": {
+    "id": "card-pretzel-1",
+    "type": "card",
+    "parent": "pile-draw",
+    "deck": "deck-cards",
+    "cardType": "card-pretzel",
+    "value": 1
+  },
+  "card-pretzel-2": {
+    "id": "card-pretzel-2",
+    "type": "card",
+    "parent": "pile-draw",
+    "deck": "deck-cards",
+    "cardType": "card-pretzel",
+    "value": 2
+  },
+  "card-pretzel-3": {
+    "id": "card-pretzel-3",
+    "type": "card",
+    "parent": "pile-draw",
+    "deck": "deck-cards",
+    "cardType": "card-pretzel",
+    "value": 3
+  },
+  "card-pretzel-4": {
+    "id": "card-pretzel-4",
+    "type": "card",
+    "parent": "pile-draw",
+    "deck": "deck-cards",
+    "cardType": "card-pretzel",
+    "value": 4
+  },
+  "card-pretzel-5": {
+    "id": "card-pretzel-5",
+    "type": "card",
+    "parent": "pile-draw",
+    "deck": "deck-cards",
+    "cardType": "card-pretzel",
+    "value": 5
+  },
+  "card-sushi-0": {
+    "id": "card-sushi-0",
+    "type": "card",
+    "parent": "pile-draw",
+    "deck": "deck-cards",
+    "cardType": "card-sushi",
+    "value": 0
+  },
+  "card-sushi-1": {
+    "id": "card-sushi-1",
+    "type": "card",
+    "parent": "pile-draw",
+    "deck": "deck-cards",
+    "cardType": "card-sushi",
+    "value": 1
+  },
+  "card-sushi-2": {
+    "id": "card-sushi-2",
+    "type": "card",
+    "parent": "pile-draw",
+    "deck": "deck-cards",
+    "cardType": "card-sushi",
+    "value": 2
+  },
+  "card-sushi-3": {
+    "id": "card-sushi-3",
+    "type": "card",
+    "parent": "pile-draw",
+    "deck": "deck-cards",
+    "cardType": "card-sushi",
+    "value": 3
+  },
+  "card-sushi-4": {
+    "id": "card-sushi-4",
+    "type": "card",
+    "parent": "pile-draw",
+    "deck": "deck-cards",
+    "cardType": "card-sushi",
+    "value": 4
+  },
+  "card-sushi-5": {
+    "id": "card-sushi-5",
+    "type": "card",
+    "parent": "pile-draw",
+    "deck": "deck-cards",
+    "cardType": "card-sushi",
+    "value": 5
+  },
+  "card-taco-0": {
+    "id": "card-taco-0",
+    "type": "card",
+    "parent": "pile-draw",
+    "deck": "deck-cards",
+    "cardType": "card-taco",
+    "value": 0
+  },
+  "card-taco-1": {
+    "id": "card-taco-1",
+    "type": "card",
+    "parent": "pile-draw",
+    "deck": "deck-cards",
+    "cardType": "card-taco",
+    "value": 1
+  },
+  "card-taco-2": {
+    "id": "card-taco-2",
+    "type": "card",
+    "parent": "pile-draw",
+    "deck": "deck-cards",
+    "cardType": "card-taco",
+    "value": 2
+  },
+  "card-taco-3": {
+    "id": "card-taco-3",
+    "type": "card",
+    "parent": "pile-draw",
+    "deck": "deck-cards",
+    "cardType": "card-taco",
+    "value": 3
+  },
+  "card-taco-4": {
+    "id": "card-taco-4",
+    "type": "card",
+    "parent": "pile-draw",
+    "deck": "deck-cards",
+    "cardType": "card-taco",
+    "value": 4
+  },
+  "card-taco-5": {
+    "id": "card-taco-5",
+    "type": "card",
+    "parent": "pile-draw",
+    "deck": "deck-cards",
+    "cardType": "card-taco",
+    "value": 5
+  }
+}

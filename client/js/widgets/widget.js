@@ -1652,9 +1652,15 @@ export class Widget extends StateManaged {
 
       if (a.func == 'RESET') {
         setDefaults(a, { property: 'resetProperties' });      
-        for(const widget of widgets.values())
-          for(const [ key, value ] of Object.entries(widget.get(a.property) || {}))
-            await widget.set(key, value);
+        for(const widget of widgets.values()) {
+          for(const [ key, value ] of Object.entries(widget.get(a.property) || {})) {
+            if((key == 'parent' || key == 'deck') && value !== null && !widgets.has(value)) {
+              problems.push(`Tried setting ${key} on widget ${widget.id} to ${value} which doesn't exist.`);
+            } else {
+              await widget.set(key, value);
+            }
+          }
+        }
         if (jeRoutineLogging) {
           jeLoggingRoutineOperationSummary(`Reset properties for widgets with property '${a.property}'`);
         }
