@@ -4,13 +4,13 @@ class Seat extends Widget {
 
     this.addDefaults({
       typeClasses: 'widget seat',
-      clickable: true,
       width: 150,
       height: 40,
       movable: false,
 
       index: 1,
       turn: false,
+      skipTurn: false,
       player: '',
       display: 'playerName',
       displayEmpty: 'click to sit',
@@ -34,6 +34,8 @@ class Seat extends Widget {
       displayedText = displayedText.replaceAll('playerName',this.get('player'))
       setText(this.domElement, displayedText);
     }
+
+    this.updateScoreboards(delta)
     if(delta.player !== undefined)
       this.updateLinkedWidgets();
   }
@@ -43,8 +45,14 @@ class Seat extends Widget {
     this.updateLinkedWidgets();
   }
 
-  classes() {
-    let className = super.classes();
+  children() {
+    if(this.get('hand') && this.get('player') && widgets.has(this.get('hand')))
+      return widgetFilter(w=>w.get('parent')==this.get('hand')&&w.get('owner')==this.get('player'));
+    return [];
+  }
+
+  classes(includeTemporary=true) {
+    let className = super.classes(includeTemporary);
 
     if(this.get('player') != '')
       className += ' seated';
@@ -93,11 +101,23 @@ class Seat extends Widget {
     }
   }
 
-  updateLinkedWidgets() {
-    for(const seat of widgetFilter(w=>w.get('type') == 'seat')) {
-      const inProperty = p=>asArray(p).indexOf(seat.id) != -1;
-      widgetFilter(w=>inProperty(w.get('linkedToSeat')) || inProperty(w.get('onlyVisibleForSeat'))).forEach(wc=>wc.updateOwner());
-      seat.updateOwner();
+  updateAfterShuffle() {
+    if(this.get('hand') && widgets.has(this.get('hand')))
+      widgets.get(this.get('hand')).updateAfterShuffle();
+  }
+
+  updateScoreboards(delta) {
+    const seatID = this.get('id');
+    const scoreboard = widgetFilter(w => w.get('type') == 'scoreboard');
+    const deltaProps = Object.keys(delta);
+    for(const board of scoreboard) {
+      const boardProps = board.seatProperties(seatID);
+      if(boardProps.some(p=>deltaProps.includes(p)))
+        board.updateTable();
     }
+  }
+
+  updateLinkedWidgets() {
+    widgetFilter(w=>w.get('onlyVisibleForSeat') || w.get('linkedToSeat') || w.get('showInactiveFaceToSeat') || w.get('type') == 'seat').forEach(wc=>wc.updateOwner());
   }
 }

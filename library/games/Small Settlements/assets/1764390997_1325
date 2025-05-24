@@ -1,0 +1,24 @@
+<svg version="1.2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600" width="600" height="600">
+	<title>Board</title>
+	<style>
+		.s0 { fill: #c7f8b7 } 
+		.s1 { fill: none;stroke: #abcaa1;stroke-width: 20 } 
+	</style>
+	<path id="Background" class="s0" d="m0 0h600v600h-600z"/>
+	<path id="Square" class="s1" d="m0 0h150v150h-150z"/>
+	<path id="Square copy 15" class="s1" d="m450 450h150v150h-150z"/>
+	<path id="Square copy 14" class="s1" d="m300 450h150v150h-150z"/>
+	<path id="Square copy 13" class="s1" d="m150 450h150v150h-150z"/>
+	<path id="Square copy 12" class="s1" d="m0 450h150v150h-150z"/>
+	<path id="Square copy 11" class="s1" d="m450 300h150v150h-150z"/>
+	<path id="Square copy 10" class="s1" d="m300 300h150v150h-150z"/>
+	<path id="Square copy 9" class="s1" d="m150 300h150v150h-150z"/>
+	<path id="Square copy 8" class="s1" d="m0 300h150v150h-150z"/>
+	<path id="Square copy 7" class="s1" d="m450 150h150v150h-150z"/>
+	<path id="Square copy 6" class="s1" d="m300 150h150v150h-150z"/>
+	<path id="Square copy 5" class="s1" d="m150 150h150v150h-150z"/>
+	<path id="Square copy 4" class="s1" d="m0 150h150v150h-150z"/>
+	<path id="Square copy 3" class="s1" d="m450 0h150v150h-150z"/>
+	<path id="Square copy 2" class="s1" d="m300 0h150v150h-150z"/>
+	<path id="Square copy" class="s1" d="m150 0h150v150h-150z"/>
+</svg>

@@ -1,0 +1,419 @@
+{
+  "_meta": {
+    "version": 17,
+    "info": {
+      "name": "121 Fundamental Widget Properties",
+      "image": "/assets/-1026984733_7129",
+      "rules": "",
+      "bgg": "",
+      "year": "",
+      "mode": "Tutorial",
+      "time": "",
+      "attribution": "",
+      "lastUpdate": 1743476398587,
+      "showName": false,
+      "skill": "",
+      "description": "",
+      "similarImage": "",
+      "similarName": "",
+      "similarDesigner": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": "",
+      "variantImage": "",
+      "variant": "X, Y, and Parent",
+      "language": "en-US",
+      "players": "1"
+    }
+  },
+  "title": {
+    "id": "title",
+    "x": 400,
+    "width": 800,
+    "height": 60,
+    "z": 74,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "font-size: 60px;text-align:center",
+    "text": "X, Y, and Parent"
+  },
+  "button2": {
+    "type": "button",
+    "id": "button2",
+    "x": 376,
+    "y": 402,
+    "z": 22839,
+    "clickRoutine": [
+      "// This button does not do anything."
+    ],
+    "text": "Do Nothing"
+  },
+  "overview": {
+    "id": "overview",
+    "x": 108,
+    "y": 80,
+    "width": 1400,
+    "height": 150,
+    "layer": -2,
+    "z": 129,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "font-size: 25px; ",
+    "html": "The VTT play area is 1600 pixels wide by 1000 high. The 0,0 coordinate is in the upper left corner. The property <b>x</b> is a widget's horizontal position in the room and <b>y</b> is the vertical position. The <b>x,y</b> position is for the upper left corner of a (usually invisible) square that surrounds the widget. There is an area of the room visible in Edit Mode (use the magnifying glass icon on the top row) that surrounds the play area and extends to -800,-850 and 2400,1850. Some games that use a lot of widgets keep some of them invisible to the players offscreen. A widget's <b>x,y</b> position is relative to its parent. A widget without a parent uses the room's 0,0 position and a widget with a parent uses its parent's 0,0 position.\n\nA widget can have a parent and it then becomes a `child`. Parent/child status is important for many things, including positional information and other topics covered in variants of this tutorial. A widget is a child if its <b>parent</b> property set to the <b>id</b> of another widget. There is no corresponding property on the parent that shows which children widgets are linked to it."
+  },
+  "button4": {
+    "type": "button",
+    "id": "button4",
+    "x": 1062,
+    "y": 402,
+    "z": 22840,
+    "clickRoutine": [
+      "// SELECT cards with `cardType` equal to `T 3J` (the colorful joker)",
+      {
+        "func": "SELECT",
+        "property": "cardType",
+        "value": "T 3J"
+      },
+      "// SET the parent of the card to `holder2`",
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "holder2"
+      },
+      "// And change the `y` to - 100 relative to `holder2`",
+      {
+        "func": "SET",
+        "property": "y",
+        "value": -100
+      }
+    ],
+    "text": "SET parent"
+  },
+  "text1": {
+    "id": "text1",
+    "x": 4,
+    "y": 552,
+    "width": 300,
+    "z": 185,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "22px"
+    },
+    "html": "The button above is at 95 (x) and 402 (y). It does not have a parent so those positions are relative to the room 0,0. The coordinates can be changed in the editor or using automation. Trying changing the number in the <b>x</b> or <b>y</b> properties. Then click the button to change its position by 10 pixels per click in both the x and y directions.",
+    "layer": -2
+  },
+  "button1": {
+    "type": "button",
+    "id": "button1",
+    "x": 95,
+    "y": 402,
+    "z": 22841,
+    "clickRoutine": [
+      "// Increase the `x` property of thisButton by 10. `thisButton` is a pre-defined collection that actually refers to whatever widget (even non-buttons) the routine is in. It is a shortcut way to do something to the widget with the routine.",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "x",
+        "relation": "+",
+        "value": 10
+      },
+      "// Do the same for the `y` value.",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "y",
+        "relation": "+",
+        "value": 10
+      }
+    ],
+    "text": "x,y"
+  },
+  "text2": {
+    "id": "text2",
+    "x": 325,
+    "y": 552,
+    "width": 300,
+    "z": 121,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "22px"
+    },
+    "html": "The square around the button is another widget for demo. They both have the same coordinates, width, and height. For purposes of setting coordinates, every widget is treated like a rectangle. Same for the pawn. If you select it, the yellow outline shape follows the pawn. But the 0,0 coords are where the upper left corner of the box are. You can verify this in Edit Mode by putting the cursor there and seeing the cursor coords in white text in the upper right.  ",
+    "layer": -2
+  },
+  "text3": {
+    "id": "text3",
+    "x": 651,
+    "y": 552,
+    "width": 300,
+    "z": 9732,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "22px"
+    },
+    "html": "In Edit Mode, add  <b>parent: pawn1</b> to the red checker. Its position immediately changes to a location that is x:65 and y:402 relative to the upper left corner of the pawn. The green checker is parented to the title widget at the top of the screen. As soon as you move it, it loses its parent and the x,y coords become relative to the room. The orange checker is the same except it has <b>fixedParent: true</b> so it keeps the same parent and relative coords even as it moves.",
+    "layer": -2
+  },
+  "text4": {
+    "id": "text4",
+    "x": 964,
+    "y": 552,
+    "width": 300,
+    "z": 9732,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "22px"
+    },
+    "html": "A widget's parent will change when it is moved from a holder or dropped in a holder. When players are dragging widgets around, the only way to change parent is to drop in a holder or on a pile. Using automation, parent can be set to any widget. Look at the card as you move it around. You can also change a parent in a routine by using SET. You can optioally change the <b>x,y</b> coords at the same time. The button above demonstrates that.",
+    "layer": -2
+  },
+  "basic1": {
+    "id": "basic1",
+    "x": 376,
+    "y": 402,
+    "width": 80,
+    "height": 80,
+    "css": {
+      "outline": "1px solid black"
+    },
+    "layer": -2
+  },
+  "basic2": {
+    "id": "basic2",
+    "x": 483,
+    "y": 395,
+    "width": 50.4,
+    "height": 90,
+    "css": {
+      "outline": "1px solid black"
+    },
+    "layer": -2
+  },
+  "pawn1": {
+    "id": "pawn1",
+    "x": 483,
+    "y": 395,
+    "width": 50.4,
+    "height": 90,
+    "z": 9733,
+    "color": "#1f5ca6",
+    "css": "border-radius: 40% 40% 50% 50%/ 80% 80% 10% 10%; ",
+    "image": "i/game-pieces/3D/Pawn-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "black",
+    "borderWidth": 1
+  },
+  "checker1": {
+    "id": "checker1",
+    "x": 655,
+    "y": 402,
+    "width": 75,
+    "height": 75,
+    "z": 9735,
+    "activeFace": 1,
+    "classes": "chip",
+    "color": "#ff0000",
+    "faces": [
+      {
+        "image": "i/game-pieces/2D/Checkers-2D.svg",
+        "crowned": false
+      },
+      {
+        "image": "i/game-pieces/2D/Crowned-Checkers-2D.svg",
+        "crowned": true
+      }
+    ],
+    "image": "i/game-pieces/2D/Crowned-Checkers-2D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 1,
+    "crowned": true,
+    "secondaryColor": "#ffffff"
+  },
+  "checker3": {
+    "id": "checker3",
+    "x": 431,
+    "y": 402,
+    "width": 75,
+    "height": 75,
+    "z": 9735,
+    "activeFace": 1,
+    "classes": "chip",
+    "color": "orange",
+    "faces": [
+      {
+        "image": "i/game-pieces/2D/Checkers-2D.svg",
+        "crowned": false
+      },
+      {
+        "image": "i/game-pieces/2D/Crowned-Checkers-2D.svg",
+        "crowned": true
+      }
+    ],
+    "image": "i/game-pieces/2D/Crowned-Checkers-2D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 1,
+    "crowned": true,
+    "secondaryColor": "#ffffff",
+    "parent": "title",
+    "fixedParent": true
+  },
+  "checker2": {
+    "id": "checker2",
+    "x": 343,
+    "y": 402,
+    "width": 75,
+    "height": 75,
+    "z": 9735,
+    "activeFace": 1,
+    "classes": "chip",
+    "color": "green",
+    "faces": [
+      {
+        "image": "i/game-pieces/2D/Checkers-2D.svg",
+        "crowned": false
+      },
+      {
+        "image": "i/game-pieces/2D/Crowned-Checkers-2D.svg",
+        "crowned": true
+      }
+    ],
+    "image": "i/game-pieces/2D/Crowned-Checkers-2D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 1,
+    "crowned": true,
+    "secondaryColor": "#ffffff",
+    "parent": "title"
+  },
+  "holder2": {
+    "type": "holder",
+    "id": "holder2",
+    "x": 1415,
+    "y": 508,
+    "z": 134
+  },
+  "jhutB": {
+    "id": "jhutB",
+    "parent": "holder1",
+    "fixedParent": true,
+    "y": 171.36,
+    "width": 111,
+    "height": 40,
+    "type": "button",
+    "text": "Recall & Shuffle",
+    "movableInEdit": false,
+    "clickRoutine": [
+      {
+        "func": "RECALL",
+        "holder": "${PROPERTY parent}"
+      },
+      {
+        "func": "FLIP",
+        "holder": "${PROPERTY parent}",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "${PROPERTY parent}"
+      }
+    ]
+  },
+  "jhutD": {
+    "type": "deck",
+    "id": "jhutD",
+    "parent": "holder1",
+    "x": 12,
+    "y": 41,
+    "cardTypes": {
+      "T 3J": {
+        "image": "/i/cards-default/3J.svg",
+        "suit": "T",
+        "suitColor": "🃏",
+        "suitAlt": "5J",
+        "rank": "J3",
+        "rankA": "J3",
+        "rankFixed": "J3 T"
+      }
+    },
+    "faceTemplates": [
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 103,
+            "height": 160,
+            "color": "transparent",
+            "value": "/i/cards-default/2B.svg"
+          }
+        ]
+      },
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 103,
+            "height": 160,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "1dhh": {
+    "deck": "jhutD",
+    "type": "card",
+    "cardType": "T 3J",
+    "id": "1dhh",
+    "z": 30,
+    "x": 4,
+    "y": 4,
+    "activeFace": 1,
+    "parent": "holder1"
+  },
+  "holder1": {
+    "type": "holder",
+    "id": "holder1",
+    "x": 1417,
+    "y": 751,
+    "dropTarget": {
+      "type": "card"
+    },
+    "z": 132
+  }
+}

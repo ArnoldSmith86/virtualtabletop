@@ -1,0 +1,2389 @@
+{
+  "2718": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "7Queen",
+    "id": "2718",
+    "z": 8647,
+    "parent": "xnj8"
+  },
+  "_meta": {
+    "version": 6,
+    "info": {
+      "name": "Courting",
+      "image": "/assets/-1730509020_57084",
+      "rules": "",
+      "bgg": "https://boardgamegeek.com/boardgame/196326/love-letter-premium",
+      "year": "2016",
+      "mode": "vs",
+      "time": "20-30",
+      "attribution": "The game room, card design, and game layout are by LawDawg and are released to the Public Domain under CC0.\n\nThe castle background is from https://pixabay.com/photos/castle-room-window-ballroom-pomp-1998435/ and is available under the Pixabay license.\n\nThe characters on the cards are in the Public Domain and are available as follows:\n\nAssassin: https://openclipart.org/detail/271017/shakespeare-characters-murderer-colour\nJester: https://openclipart.org/detail/271097/shakespeare-characters-jester-colour\nGuard: https://openclipart.org/detail/271103/shakespeare-characters-guardsman-colour\nPriest: https://openclipart.org/detail/270991/shakespeare-characters-priest-colour\nCardinal: https://openclipart.org/detail/271019/shakespeare-characters-montecci-colour\nBaron: https://openclipart.org/detail/271154/shakespeare-characters-cornely-colour\nBaroness: https://openclipart.org/detail/270994/shakespeare-characters-olivia-colour\nHandmaid: https://openclipart.org/detail/271004/shakespeare-characters-wet-nurse-colour\nSycophant: https://openclipart.org/detail/271153/shakespeare-characters-courier-colour\nPrince: https://openclipart.org/detail/271163/shakespeare-characters-benvolio-colour\nCount: https://openclipart.org/detail/271108/shakespeare-characters-falstaff-colour\nKing: https://openclipart.org/detail/271158/shakespeare-characters-french-king-colour\nConstable: https://openclipart.org/detail/271054/shakespeare-characters-cassio-colour\nCountess: https://openclipart.org/detail/271099/shakespeare-characters-hero-colour\nQueen: https://openclipart.org/detail/271104/shakespeare-characters-gertrude-colour\nPrincess: https://openclipart.org/detail/271007/shakespeare-characters-princess-colour\nBishop: https://openclipart.org/detail/271057/shakespeare-characters-kent-colour\n\nThe frame on the cards is from https://pixabay.com/illustrations/frame-ornate-gold-vintage-portrait-1210509/ and is available under the Pixabay license.\n\nThe card back design is by LawDawg and is released to the Public Domain under CC0. The images on the card back are from the sources listed above.<div><br></div><div>Library image generated using the Midjourney artificial intelligence image generator, https://www.midjourney.com/home/, using the following prompt: \"romeo and juliet by van gogh --ar 1:1 --v 5.1 \"<br></div>",
+      "similarName": "Love Letter Premium",
+      "description": "Start with one card. Then draw a card and play a card. Use card powers to expose others and knock them out of the game. First player to win designated number of rounds (4-7 based on number of players) wins.",
+      "showName": true,
+      "helpText": "Players take seats. 2-4 players use original deck and 5-8 players use premium deck. Deck sorting and initial card distribution is done automatically based on number of players in seats. For 2 player version, the 3 extra cards are dealt where seat 8 would be. Press play button to start. During play, if another play is allowed to see your hand, press \"Send Peek\" button. The viewing player will press the appropriate \"Start Peek\" then \"Stop Peek\" button. Manually drag card(s) back to your hand. After round is over, manually adjust scores to show affection tokens won. Manually adjust next starting player using \"Turn +1\" button. Press \"Next Round\" button.",
+      "lastUpdate": 1650427506000,
+      "skill": "",
+      "similarImage": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "variantImage": "",
+      "variant": "",
+      "language": "en-US",
+      "players": "2-8",
+      "similarDesigner": "Seiji Kanai, John Zinser"
+    }
+  },
+  "deckHolder": {
+    "type": "holder",
+    "id": "deckHolder",
+    "x": 1400,
+    "y": 660,
+    "z": 26,
+    "dropTarget": {
+      "type": "card"
+    },
+    "width": 195,
+    "height": 295,
+    "css": "background: #ffffff80 ",
+    "dropOffsetX": -5,
+    "dropOffsetY": -12,
+    "movableInEdit": false,
+    "onEnter": {
+      "activeFace": 0
+    },
+    "leaveRoutine": [
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "parent",
+        "value": "deckHolder"
+      },
+      {
+        "func": "COUNT"
+      },
+      {
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "func": "IF",
+            "operand1": "${PROPERTY text OF play}",
+            "operand2": "Next Round",
+            "thenRoutine": [
+              {
+                "func": "SET",
+                "collection": [
+                  "extraCardBtn"
+                ],
+                "property": "y",
+                "value": 740
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "theDeck": {
+    "type": "deck",
+    "id": "theDeck",
+    "x": 4,
+    "y": 4,
+    "cardTypes": {
+      "1Guard": {
+        "image1": "/assets/-1683514974_189077",
+        "value": "1",
+        "rank": 1,
+        "title": "Guard",
+        "power": "Name number other than 1 and name a player. If that player has that card, they are out of the round.",
+        "backColor": "background-color:#C89A69",
+        "backCircle": "background-color:#C89A69; border-radius:100%; border: 2px solid #DCD8BC",
+        "fontPower": "font-size:19px;line-height:1;padding-left:4px;padding-right:4px"
+      },
+      "2Priest": {
+        "image1": "/assets/-732963619_99081",
+        "value": "2",
+        "rank": 2,
+        "title": "Priest",
+        "power": "\nName another player. Look at their hand.",
+        "backColor": "background-color:#b96867",
+        "backCircle": "background-color:#b96867; border-radius:100%; border: 2px solid #DCD8BC",
+        "fontPower": "font-size:19px;line-height:1;padding-left:4px;padding-right:4px"
+      },
+      "3Baron": {
+        "image1": "/assets/583647266_150461",
+        "value": "3",
+        "rank": 3,
+        "title": "Baron",
+        "power": "Name another player and secretly compare hands. The player with the lower value is out of the round.",
+        "backColor": "background-color:#A28DA0",
+        "backCircle": "background-color:#A28DA0; border-radius:100%; border: 2px solid #DCD8BC",
+        "fontPower": "font-size:19px;line-height:1;padding-left:4px;padding-right:4px"
+      },
+      "4Handmaid": {
+        "image1": "/assets/698345149_159533",
+        "value": "4",
+        "rank": 4,
+        "title": "Handmaid",
+        "power": "\nUntil your next turn, ignore all effects from other players cards.",
+        "backColor": "background-color:#B1CAE8",
+        "backCircle": "background-color:#B1CAE8; border-radius:100%; border: 2px solid #DCD8BC",
+        "fontPower": "font-size:19px;line-height:1;padding-left:4px;padding-right:4px"
+      },
+      "5Prince": {
+        "image1": "/assets/-1916542595_195599",
+        "value": "5",
+        "rank": 5,
+        "title": "Prince",
+        "power": "Name any player (including yourself) to discard hand and draw a new card.",
+        "backColor": "background-color:#DCC697",
+        "backCircle": "background-color:#DCC697; border-radius:100%; border: 2px solid #DCD8BC",
+        "fontPower": "font-size:19px;line-height:1;padding-left:4px;padding-right:4px"
+      },
+      "6King": {
+        "image1": "/assets/-461686331_151277",
+        "value": "6",
+        "rank": 6,
+        "title": "King",
+        "power": "\nTrade hands with another player of your choice.",
+        "backColor": "background-color:#8E9A80",
+        "backCircle": "background-color:#8E9A80; border-radius:100%; border: 2px solid #DCD8BC",
+        "fontPower": "font-size:19px;line-height:1;padding-left:4px;padding-right:4px"
+      },
+      "7Countess": {
+        "image1": "/assets/1911155881_167527",
+        "value": "7",
+        "rank": 7,
+        "title": "Countess",
+        "power": "If you have this card and the King or Prince in your hand, you must discard this card.",
+        "backColor": "background-color:#8293b1",
+        "backCircle": "background-color:#8293b1; border-radius:100%; border: 2px solid #DCD8BC",
+        "fontPower": "font-size:19px;line-height:1;padding-left:4px;padding-right:4px"
+      },
+      "8Princess": {
+        "image1": "/assets/-827734234_181857",
+        "value": "8",
+        "rank": 10,
+        "title": "Princess",
+        "power": "\nIf you discard this card, you are out of the round.",
+        "backColor": "background-color:#D1CCBC",
+        "backCircle": "background-color:#D1CCBC; border-radius:100%; border: 2px solid #DCD8BC",
+        "fontPower": "font-size:19px;line-height:1;padding-left:4px;padding-right:4px"
+      },
+      "0Assassin": {
+        "image1": "/assets/-1367925887_91741",
+        "value": "0",
+        "rank": 0,
+        "title": "Assassin",
+        "power": "If you have this card in hand when another player with a Guard chooses you, they are knocked out of the round and not you. Discard this card and draw a new one.",
+        "backColor": "background-color:#BDB7A5",
+        "backCircle": "background-color:#BDB7A5; border-radius:100%; border: 2px solid #DCD8BC",
+        "fontPower": "font-size:16px;line-height:1;padding-left:4px;padding-right:4px"
+      },
+      "0Jester": {
+        "image2": "/assets/-431687552_174067",
+        "value": "0",
+        "rank": 0,
+        "title": "Jester",
+        "power": "\nName another player. If they win this round, you gain an affection token.",
+        "backColor": "background-color:#786270",
+        "backCircle": "background-color:#786270; border-radius:100%; border: 2px solid #DCD8BC",
+        "fontPower": "font-size:19px;line-height:1;padding-left:4px;padding-right:4px"
+      },
+      "2Cardinal": {
+        "image1": "/assets/-1775283646_156269",
+        "value": "2",
+        "rank": 2,
+        "title": "Cardinal",
+        "power": "Name any two players (including yourself) to trade hands. You look at one of their hands.",
+        "backColor": "background-color:#b96867",
+        "backCircle": "background-color:#b96867; border-radius:100%; border: 2px solid #DCD8BC",
+        "fontPower": "font-size:19px;line-height:1;padding-left:4px;padding-right:4px"
+      },
+      "3Baroness": {
+        "image1": "/assets/945361807_125939",
+        "value": "3",
+        "rank": 3,
+        "title": "Baroness",
+        "power": "\nName one or two other players. Look at their hands.",
+        "backColor": "background-color:#A28DA0",
+        "backCircle": "background-color:#A28DA0; border-radius:100%; border: 2px solid #DCD8BC",
+        "fontPower": "font-size:19px;line-height:1;padding-left:4px;padding-right:4px"
+      },
+      "4Sycophant": {
+        "image2": "/assets/-1124580468_166903",
+        "value": "4",
+        "rank": 4,
+        "title": "Sycophant",
+        "power": "Name any player (including yourself). If the next card played requires one or more players to be chosen, they must be one of them.",
+        "backColor": "background-color:#B1CAE8",
+        "backCircle": "background-color:#B1CAE8; border-radius:100%; border: 2px solid #DCD8BC",
+        "fontPower": "font-size:17px;line-height:1;padding-left:4px;padding-right:4px"
+      },
+      "5Count": {
+        "image1": "/assets/1930953698_221357",
+        "value": "5",
+        "rank": 5,
+        "title": "Count",
+        "power": "If this card is in your discard pile at end of round, add 1 to the number of the card in your hand. Resolve ties normally.",
+        "backColor": "background-color:#DCC697",
+        "backCircle": "background-color:#DCC697; border-radius:100%; border: 2px solid #DCD8BC",
+        "fontPower": "font-size:17px;line-height:1;padding-left:4px;padding-right:4px"
+      },
+      "6Constable": {
+        "image1": "/assets/427428369_138029",
+        "value": "6",
+        "rank": 6,
+        "title": "Constable",
+        "power": "If this card is in your discard pile when you are knocked out of the round, gain an affection token.",
+        "backColor": "background-color:#8E9A80",
+        "backCircle": "background-color:#8E9A80; border-radius:100%; border: 2px solid #DCD8BC",
+        "fontPower": "font-size:19px;line-height:1;padding-left:4px;padding-right:4px"
+      },
+      "7Queen": {
+        "image2": "/assets/-936484481_190419",
+        "value": "7",
+        "rank": 7,
+        "title": "Queen",
+        "power": "Name another player and secretly compare hands. The player with the higher value is out of the round.",
+        "backColor": "background-color:#8293b1",
+        "backCircle": "background-color:#8293b1; border-radius:100%; border: 2px solid #DCD8BC",
+        "fontPower": "font-size:19px;line-height:1;padding-left:4px;padding-right:4px"
+      },
+      "9Bishop": {
+        "image1": "/assets/1353021301_118225",
+        "value": "9",
+        "rank": 9,
+        "title": "Bishop",
+        "power": "Name number other than 1 and name another player. If they have that number, gain an affection token. They may discard hand and draw new card. Princess beats Bishop at end of round.",
+        "backColor": "background-color:#5A787A",
+        "backCircle": "background-color:#5A787A; border-radius:100%; border: 2px solid #DCD8BC",
+        "fontPower": "font-size:14px;line-height:1;padding-left:4px;padding-right:4px"
+      }
+    },
+    "faceTemplates": [
+      {
+        "border": false,
+        "radius": 8,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 206,
+            "height": 320,
+            "color": "transparent",
+            "value": "/assets/1568766201_104155"
+          }
+        ]
+      },
+      {
+        "border": 1,
+        "radius": 8,
+        "objects": [
+          {
+            "type": "text",
+            "x": 0,
+            "y": 55,
+            "width": 206,
+            "height": 265,
+            "dynamicProperties": {
+              "css": "backColor"
+            }
+          },
+          {
+            "type": "text",
+            "x": 0,
+            "y": 0,
+            "width": 206,
+            "height": 55,
+            "css": "background-color:#ce9831"
+          },
+          {
+            "type": "image",
+            "x": -15,
+            "y": 0,
+            "width": 235,
+            "height": 420,
+            "color": "transparent",
+            "value": "/assets/-894681604_1425253"
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 70,
+            "width": 206,
+            "height": 320,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image1"
+            }
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 30,
+            "width": 206,
+            "height": 320,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image2"
+            }
+          },
+          {
+            "type": "text",
+            "x": 0,
+            "y": 220,
+            "width": 206,
+            "height": 101,
+            "css": "background-image:radial-gradient(#DCD8BC,wheat); border-radius:8px; border: 4px solid #ce9831"
+          },
+          {
+            "type": "text",
+            "x": 1,
+            "y": 1,
+            "width": 38,
+            "height": 38,
+            "dynamicProperties": {
+              "css": "backCircle"
+            }
+          },
+          {
+            "type": "text",
+            "x": 65,
+            "y": 0,
+            "width": 140,
+            "height": 40,
+            "css": "background-image:radial-gradient(#DCD8BC,wheat); border-radius:8px"
+          },
+          {
+            "type": "text",
+            "x": 12,
+            "y": -3,
+            "width": 206,
+            "height": 320,
+            "color": "black",
+            "css": "font-size:32px",
+            "dynamicProperties": {
+              "value": "value"
+            }
+          },
+          {
+            "type": "text",
+            "x": 70,
+            "y": -3,
+            "width": 206,
+            "height": 320,
+            "color": "black",
+            "css": "font-size:30px",
+            "dynamicProperties": {
+              "value": "title"
+            }
+          },
+          {
+            "type": "text",
+            "x": 1,
+            "y": 225,
+            "width": 206,
+            "height": 320,
+            "color": "black",
+            "dynamicProperties": {
+              "value": "power",
+              "css": "fontPower"
+            }
+          }
+        ]
+      }
+    ],
+    "z": 1,
+    "parent": "deckHolder",
+    "width": 150,
+    "height": 150,
+    "cardDefaults": {
+      "scale": 0.9,
+      "width": 206,
+      "height": 320,
+      "css": {
+        "default": {
+          "font-family": "elmessiri"
+        },
+        "@font-face": {
+          "font-family": "elmessiri",
+          "src": "url(/assets/-1069075561_86240)"
+        }
+      }
+    }
+  },
+  "seat1": {
+    "type": "seat",
+    "id": "seat1",
+    "x": 25,
+    "y": 10,
+    "z": 2,
+    "movableInEdit": false,
+    "css": {
+      "default": {
+        "font-family": "elmessiri"
+      }
+    },
+    "hideWhenUnused": true
+  },
+  "seat8": {
+    "type": "seat",
+    "id": "seat8",
+    "x": 1415,
+    "y": 1100,
+    "z": 3,
+    "index": 2,
+    "css": {
+      "default": {
+        "font-family": "elmessiri"
+      }
+    },
+    "movableInEdit": false,
+    "hideWhenUnused": true
+  },
+  "seat2": {
+    "type": "seat",
+    "id": "seat2",
+    "x": 223.57142857142856,
+    "y": 10,
+    "z": 2,
+    "movableInEdit": false,
+    "css": {
+      "default": {
+        "font-family": "elmessiri"
+      }
+    },
+    "index": 2,
+    "hideWhenUnused": true
+  },
+  "seat3": {
+    "type": "seat",
+    "id": "seat3",
+    "x": 422.1428571428571,
+    "y": 10,
+    "z": 2,
+    "movableInEdit": false,
+    "css": {
+      "default": {
+        "font-family": "elmessiri"
+      }
+    },
+    "index": 3,
+    "hideWhenUnused": true
+  },
+  "seat4": {
+    "type": "seat",
+    "id": "seat4",
+    "x": 620.7142857142857,
+    "y": 10,
+    "z": 2,
+    "movableInEdit": false,
+    "css": {
+      "default": {
+        "font-family": "elmessiri"
+      }
+    },
+    "index": 4,
+    "hideWhenUnused": true
+  },
+  "seat5": {
+    "type": "seat",
+    "id": "seat5",
+    "x": 819.2857142857142,
+    "y": 10,
+    "z": 2,
+    "movableInEdit": false,
+    "css": {
+      "default": {
+        "font-family": "elmessiri"
+      }
+    },
+    "index": 5,
+    "hideWhenUnused": true
+  },
+  "seat6": {
+    "type": "seat",
+    "id": "seat6",
+    "x": 1017.8571428571428,
+    "y": 10,
+    "z": 2,
+    "movableInEdit": false,
+    "css": {
+      "default": {
+        "font-family": "elmessiri"
+      }
+    },
+    "index": 6,
+    "turn": true,
+    "hideWhenUnused": true
+  },
+  "seat7": {
+    "type": "seat",
+    "id": "seat7",
+    "x": 1216.4285714285713,
+    "y": 10,
+    "z": 2,
+    "movableInEdit": false,
+    "css": {
+      "default": {
+        "font-family": "elmessiri"
+      }
+    },
+    "index": 7,
+    "hideWhenUnused": true
+  },
+  "rb9hD": {
+    "id": "rb9hD",
+    "fixedParent": true,
+    "x": -38,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "-",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 1
+      }
+    ],
+    "parent": "score1"
+  },
+  "rb9hU": {
+    "id": "rb9hU",
+    "fixedParent": true,
+    "x": 68,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "+",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 1
+      }
+    ],
+    "parent": "score1"
+  },
+  "score1": {
+    "type": "label",
+    "id": "score1",
+    "parent": "seat1",
+    "x": 40,
+    "y": 55,
+    "width": 65,
+    "height": 40,
+    "z": 1,
+    "movableInEdit": false,
+    "editable": true,
+    "text": 0,
+    "css": {
+      "default": {
+        "font-family": "elmessiri",
+        "font-size": "30px",
+        "color": "black"
+      }
+    }
+  },
+  "score2": {
+    "type": "label",
+    "id": "score2",
+    "parent": "seat2",
+    "x": 40,
+    "y": 55,
+    "width": 65,
+    "height": 40,
+    "z": 1,
+    "movableInEdit": false,
+    "editable": true,
+    "text": 0,
+    "css": {
+      "default": {
+        "font-family": "elmessiri",
+        "font-size": "30px",
+        "color": "black"
+      }
+    }
+  },
+  "rb10hD": {
+    "id": "rb10hD",
+    "fixedParent": true,
+    "x": -38,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "-",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 1
+      }
+    ],
+    "parent": "score2"
+  },
+  "rb10hU": {
+    "id": "rb10hU",
+    "fixedParent": true,
+    "x": 68,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "+",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 1
+      }
+    ],
+    "parent": "score2"
+  },
+  "score3": {
+    "type": "label",
+    "id": "score3",
+    "parent": "seat3",
+    "x": 40,
+    "y": 55,
+    "width": 65,
+    "height": 40,
+    "z": 1,
+    "movableInEdit": false,
+    "editable": true,
+    "text": 0,
+    "css": {
+      "default": {
+        "font-family": "elmessiri",
+        "font-size": "30px",
+        "color": "black"
+      }
+    }
+  },
+  "rb11hD": {
+    "id": "rb11hD",
+    "fixedParent": true,
+    "x": -38,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "-",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 1
+      }
+    ],
+    "parent": "score3"
+  },
+  "rb11hU": {
+    "id": "rb11hU",
+    "fixedParent": true,
+    "x": 68,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "+",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 1
+      }
+    ],
+    "parent": "score3"
+  },
+  "score4": {
+    "type": "label",
+    "id": "score4",
+    "parent": "seat4",
+    "x": 40,
+    "y": 55,
+    "width": 65,
+    "height": 40,
+    "z": 1,
+    "movableInEdit": false,
+    "editable": true,
+    "text": 0,
+    "css": {
+      "default": {
+        "font-family": "elmessiri",
+        "font-size": "30px",
+        "color": "black"
+      }
+    }
+  },
+  "rb12hD": {
+    "id": "rb12hD",
+    "fixedParent": true,
+    "x": -38,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "-",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 1
+      }
+    ],
+    "parent": "score4"
+  },
+  "rb12hU": {
+    "id": "rb12hU",
+    "fixedParent": true,
+    "x": 68,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "+",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 1
+      }
+    ],
+    "parent": "score4"
+  },
+  "score5": {
+    "type": "label",
+    "id": "score5",
+    "parent": "seat5",
+    "x": 40,
+    "y": 55,
+    "width": 65,
+    "height": 40,
+    "z": 1,
+    "movableInEdit": false,
+    "editable": true,
+    "text": 0,
+    "css": {
+      "default": {
+        "font-family": "elmessiri",
+        "font-size": "30px",
+        "color": "black"
+      }
+    }
+  },
+  "rb13hD": {
+    "id": "rb13hD",
+    "fixedParent": true,
+    "x": -38,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "-",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 1
+      }
+    ],
+    "parent": "score5"
+  },
+  "rb13hU": {
+    "id": "rb13hU",
+    "fixedParent": true,
+    "x": 68,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "+",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 1
+      }
+    ],
+    "parent": "score5"
+  },
+  "score6": {
+    "type": "label",
+    "id": "score6",
+    "parent": "seat6",
+    "x": 40,
+    "y": 55,
+    "width": 65,
+    "height": 40,
+    "z": 1,
+    "movableInEdit": false,
+    "editable": true,
+    "text": 0,
+    "css": {
+      "default": {
+        "font-family": "elmessiri",
+        "font-size": "30px",
+        "color": "black"
+      }
+    }
+  },
+  "rb14hD": {
+    "id": "rb14hD",
+    "fixedParent": true,
+    "x": -38,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "-",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 1
+      }
+    ],
+    "parent": "score6"
+  },
+  "rb14hU": {
+    "id": "rb14hU",
+    "fixedParent": true,
+    "x": 68,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "+",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 1
+      }
+    ],
+    "parent": "score6"
+  },
+  "score7": {
+    "type": "label",
+    "id": "score7",
+    "parent": "seat7",
+    "x": 40,
+    "y": 55,
+    "width": 65,
+    "height": 40,
+    "z": 1,
+    "movableInEdit": false,
+    "editable": true,
+    "text": 0,
+    "css": {
+      "default": {
+        "font-family": "elmessiri",
+        "font-size": "30px",
+        "color": "black"
+      }
+    }
+  },
+  "rb15hD": {
+    "id": "rb15hD",
+    "fixedParent": true,
+    "x": -38,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "-",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 1
+      }
+    ],
+    "parent": "score7"
+  },
+  "rb15hU": {
+    "id": "rb15hU",
+    "fixedParent": true,
+    "x": 68,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "+",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 1
+      }
+    ],
+    "parent": "score7"
+  },
+  "score8": {
+    "type": "label",
+    "id": "score8",
+    "parent": "seat8",
+    "x": 40,
+    "y": 55,
+    "width": 65,
+    "height": 40,
+    "z": 1,
+    "movableInEdit": false,
+    "editable": true,
+    "text": 0,
+    "css": {
+      "default": {
+        "font-family": "elmessiri",
+        "font-size": "30px",
+        "color": "black"
+      }
+    }
+  },
+  "rb16hD": {
+    "id": "rb16hD",
+    "fixedParent": true,
+    "x": -38,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "-",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 1
+      }
+    ],
+    "parent": "score8"
+  },
+  "rb16hU": {
+    "id": "rb16hU",
+    "fixedParent": true,
+    "x": 68,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "+",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 1
+      }
+    ],
+    "parent": "score8"
+  },
+  "used1": {
+    "type": "holder",
+    "id": "used1",
+    "x": 5,
+    "y": 132,
+    "width": 195,
+    "height": 495,
+    "z": 10,
+    "dropOffsetX": -5,
+    "dropOffsetY": -12,
+    "movableInEdit": false,
+    "stackOffsetY": 40,
+    "onEnter": {
+      "activeFace": 1
+    },
+    "css": "background: #ffffffaa",
+    "linkedToSeat": "seat1"
+  },
+  "used8": {
+    "type": "holder",
+    "id": "used8",
+    "x": 1399.9999999999998,
+    "y": 132,
+    "width": 195,
+    "height": 495,
+    "z": 10,
+    "dropOffsetX": -5,
+    "dropOffsetY": -12,
+    "movableInEdit": false,
+    "onEnter": {
+      "activeFace": 1
+    },
+    "stackOffsetY": 40,
+    "css": "background: #ffffffaa",
+    "linkedToSeat": "seat8"
+  },
+  "used2": {
+    "type": "holder",
+    "id": "used2",
+    "x": 204.28571428571428,
+    "y": 132,
+    "width": 195,
+    "height": 495,
+    "z": 10,
+    "dropOffsetX": -5,
+    "dropOffsetY": -12,
+    "movableInEdit": false,
+    "onEnter": {
+      "activeFace": 1
+    },
+    "stackOffsetY": 40,
+    "css": "background: #ffffffaa",
+    "linkedToSeat": "seat2"
+  },
+  "used3": {
+    "type": "holder",
+    "id": "used3",
+    "x": 403.57142857142856,
+    "y": 132,
+    "width": 195,
+    "height": 495,
+    "z": 10,
+    "dropOffsetX": -5,
+    "dropOffsetY": -12,
+    "movableInEdit": false,
+    "onEnter": {
+      "activeFace": 1
+    },
+    "stackOffsetY": 40,
+    "css": "background: #ffffffaa",
+    "linkedToSeat": "seat3"
+  },
+  "used4": {
+    "type": "holder",
+    "id": "used4",
+    "x": 602.8571428571429,
+    "y": 132,
+    "width": 195,
+    "height": 495,
+    "z": 10,
+    "dropOffsetX": -5,
+    "dropOffsetY": -12,
+    "movableInEdit": false,
+    "onEnter": {
+      "activeFace": 1
+    },
+    "stackOffsetY": 40,
+    "css": "background: #ffffffaa",
+    "linkedToSeat": "seat4"
+  },
+  "used5": {
+    "type": "holder",
+    "id": "used5",
+    "x": 802.1428571428571,
+    "y": 132,
+    "width": 195,
+    "height": 495,
+    "z": 10,
+    "dropOffsetX": -5,
+    "dropOffsetY": -12,
+    "movableInEdit": false,
+    "onEnter": {
+      "activeFace": 1
+    },
+    "stackOffsetY": 40,
+    "css": "background: #ffffffaa",
+    "linkedToSeat": "seat5"
+  },
+  "used6": {
+    "type": "holder",
+    "id": "used6",
+    "x": 1001.4285714285713,
+    "y": 132,
+    "width": 195,
+    "height": 495,
+    "z": 10,
+    "dropOffsetX": -5,
+    "dropOffsetY": -12,
+    "movableInEdit": false,
+    "onEnter": {
+      "activeFace": 1
+    },
+    "stackOffsetY": 40,
+    "css": "background: #ffffffaa",
+    "linkedToSeat": "seat6"
+  },
+  "used7": {
+    "type": "holder",
+    "id": "used7",
+    "x": 1200.7142857142856,
+    "y": 132,
+    "width": 195,
+    "height": 495,
+    "z": 10,
+    "dropOffsetX": -5,
+    "dropOffsetY": -12,
+    "movableInEdit": false,
+    "onEnter": {
+      "activeFace": 1
+    },
+    "stackOffsetY": 40,
+    "css": "background: #ffffffaa",
+    "linkedToSeat": "seat7"
+  },
+  "peekBtn1": {
+    "type": "button",
+    "id": "peekBtn1",
+    "x": 355,
+    "width": 50,
+    "height": 50,
+    "z": 6,
+    "text": "Start Peek",
+    "clickRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY text}",
+        "operand2": "Start Peek",
+        "thenRoutine": [
+          {
+            "func": "SELECT",
+            "type": "card",
+            "property": "parent",
+            "value": "${PROPERTY parent}"
+          },
+          {
+            "func": "SET",
+            "property": "owner",
+            "value": "${playerName}"
+          },
+          {
+            "func": "FLIP"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "text",
+            "value": "Stop Peek"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "labelPeek1"
+            ],
+            "property": "text",
+            "value": "${playerName}"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SELECT",
+            "type": "card",
+            "property": "parent",
+            "value": "${PROPERTY parent}"
+          },
+          {
+            "func": "SET",
+            "property": "owner",
+            "value": null
+          },
+          {
+            "func": "FLIP"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "text",
+            "value": "Start Peek"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "labelPeek1"
+            ],
+            "property": "text",
+            "value": null
+          }
+        ]
+      }
+    ],
+    "movableInEdit": false,
+    "parent": "peekH1",
+    "y": -20,
+    "layer": 4,
+    "css": {
+      "default": {
+        "font-family": "elmessiri",
+        "line-height": 1
+      }
+    },
+    "scale": 0
+  },
+  "peekH1": {
+    "type": "holder",
+    "id": "peekH1",
+    "y": 658,
+    "width": 384,
+    "height": 295,
+    "z": 23,
+    "dropOffsetX": -5,
+    "dropOffsetY": -12,
+    "onEnter": {
+      "activeFace": 0
+    },
+    "stackOffsetX": 187,
+    "enterRoutine": [
+      {
+        "func": "SET",
+        "collection": [
+          "peekBtn1"
+        ],
+        "property": "scale",
+        "value": 1
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "parent",
+        "value": "peekH1"
+      },
+      {
+        "func": "COUNT"
+      },
+      {
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "peekBtn1"
+            ],
+            "property": "scale",
+            "value": 0
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "labelOwner1"
+            ],
+            "property": "text",
+            "value": null
+          }
+        ]
+      }
+    ],
+    "dropLimit": 0,
+    "css": "background: #ffffff80 ",
+    "onLeave": {
+      "activeFace": 0
+    },
+    "x": 20
+  },
+  "peekH2": {
+    "type": "holder",
+    "id": "peekH2",
+    "x": 430,
+    "y": 660,
+    "width": 384,
+    "height": 295,
+    "z": 19,
+    "dropOffsetX": -5,
+    "dropOffsetY": -12,
+    "onEnter": {
+      "activeFace": 0
+    },
+    "stackOffsetX": 187,
+    "enterRoutine": [
+      {
+        "func": "SET",
+        "collection": [
+          "peekBtn2"
+        ],
+        "property": "scale",
+        "value": 1
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "parent",
+        "value": "peekH2"
+      },
+      {
+        "func": "COUNT"
+      },
+      {
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "peekBtn2"
+            ],
+            "property": "scale",
+            "value": 0
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "labelOwner2"
+            ],
+            "property": "text",
+            "value": null
+          }
+        ]
+      }
+    ],
+    "dropLimit": 0,
+    "css": "background: #ffffff80 ",
+    "onLeave": {
+      "activeFace": 0
+    }
+  },
+  "peekBtn2": {
+    "type": "button",
+    "id": "peekBtn2",
+    "x": 355,
+    "width": 50,
+    "height": 50,
+    "z": 6,
+    "text": "Start Peek",
+    "clickRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY text}",
+        "operand2": "Start Peek",
+        "thenRoutine": [
+          {
+            "func": "SELECT",
+            "type": "card",
+            "property": "parent",
+            "value": "${PROPERTY parent}"
+          },
+          {
+            "func": "SET",
+            "property": "owner",
+            "value": "${playerName}"
+          },
+          {
+            "func": "FLIP"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "text",
+            "value": "Stop Peek"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "labelPeek2"
+            ],
+            "property": "text",
+            "value": "${playerName}"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SELECT",
+            "type": "card",
+            "property": "parent",
+            "value": "${PROPERTY parent}"
+          },
+          {
+            "func": "SET",
+            "property": "owner",
+            "value": null
+          },
+          {
+            "func": "FLIP"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "text",
+            "value": "Start Peek"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "labelPeek2"
+            ],
+            "property": "text",
+            "value": null
+          }
+        ]
+      }
+    ],
+    "movableInEdit": false,
+    "parent": "peekH2",
+    "y": -20,
+    "layer": 4,
+    "css": {
+      "default": {
+        "font-family": "elmessiri",
+        "line-height": 1
+      }
+    },
+    "scale": 0
+  },
+  "hand": {
+    "type": "holder",
+    "id": "hand",
+    "x": 950,
+    "y": 660,
+    "width": 384,
+    "height": 295,
+    "z": 19,
+    "dropOffsetX": -5,
+    "dropOffsetY": -12,
+    "onEnter": {
+      "activeFace": 1
+    },
+    "stackOffsetX": 187,
+    "childrenPerOwner": true,
+    "css": "background: #ffffff80 "
+  },
+  "label1": {
+    "id": "label1",
+    "parent": "peekH1",
+    "x": 5,
+    "y": -30,
+    "width": 130,
+    "z": 1,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "default": {
+        "font-family": "elmessiri",
+        "font-size": "25px"
+      }
+    },
+    "text": "Cards from:",
+    "height": 30
+  },
+  "label2": {
+    "id": "label2",
+    "parent": "peekH2",
+    "x": 5,
+    "y": -30,
+    "width": 130,
+    "z": 1,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "default": {
+        "font-family": "elmessiri",
+        "font-size": "25px"
+      }
+    },
+    "text": "Cards from:",
+    "height": 30
+  },
+  "label3": {
+    "id": "label3",
+    "parent": "peekH1",
+    "x": 5,
+    "y": 290,
+    "z": 1,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "default": {
+        "font-family": "elmessiri",
+        "font-size": "25px"
+      }
+    },
+    "text": "Peeking:",
+    "height": 30
+  },
+  "label4": {
+    "id": "label4",
+    "parent": "peekH2",
+    "x": 5,
+    "y": 290,
+    "z": 1,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "default": {
+        "font-family": "elmessiri",
+        "font-size": "25px"
+      }
+    },
+    "text": "Peeking:",
+    "height": 30
+  },
+  "labelOwner1": {
+    "id": "labelOwner1",
+    "parent": "peekH1",
+    "x": 140,
+    "y": -30,
+    "width": 130,
+    "height": 30,
+    "z": 1,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "default": {
+        "font-family": "elmessiri",
+        "font-size": "25px"
+      }
+    }
+  },
+  "labelOwner2": {
+    "id": "labelOwner2",
+    "parent": "peekH2",
+    "x": 140,
+    "y": -30,
+    "width": 130,
+    "height": 30,
+    "z": 1,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "default": {
+        "font-family": "elmessiri",
+        "font-size": "25px"
+      }
+    }
+  },
+  "labelPeek1": {
+    "id": "labelPeek1",
+    "parent": "peekH1",
+    "x": 105,
+    "y": 290,
+    "height": 30,
+    "z": 1,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "default": {
+        "font-family": "elmessiri",
+        "font-size": "25px"
+      }
+    },
+    "LawDawg": "Stop Peek"
+  },
+  "labelPeek2": {
+    "id": "labelPeek2",
+    "parent": "peekH2",
+    "x": 105,
+    "y": 290,
+    "height": 30,
+    "z": 1,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "default": {
+        "font-family": "elmessiri",
+        "font-size": "25px"
+      }
+    }
+  },
+  "sendPeek": {
+    "type": "button",
+    "id": "sendPeek",
+    "parent": "hand",
+    "x": 355,
+    "y": -20,
+    "width": 50,
+    "height": 50,
+    "layer": 4,
+    "z": 6,
+    "movableInEdit": false,
+    "css": {
+      "default": {
+        "font-family": "elmessiri",
+        "line-height": 1
+      }
+    },
+    "text": "Send Peek",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "parent",
+        "relation": "!=",
+        "value": null
+      },
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "parent",
+        "value": "hand"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "owner",
+        "value": "${playerName}",
+        "collection": "owned"
+      },
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "parent",
+        "value": "peekH1",
+        "collection": "peek1"
+      },
+      {
+        "func": "COUNT",
+        "collection": "peek1",
+        "variable": "peek1"
+      },
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "parent",
+        "value": "peekH2",
+        "collection": "peek2"
+      },
+      {
+        "func": "COUNT",
+        "collection": "peek2",
+        "variable": "peek2"
+      },
+      {
+        "func": "IF",
+        "operand1": "${peek2}",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "owned",
+            "property": "parent",
+            "value": "peekH2"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "labelOwner2"
+            ],
+            "property": "text",
+            "value": "${playerName}"
+          },
+          {
+            "func": "SET",
+            "collection": "owned",
+            "property": "owner",
+            "value": null
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "IF",
+            "operand1": "${peek1}",
+            "operand2": 0,
+            "thenRoutine": [
+              {
+                "func": "SET",
+                "collection": "owned",
+                "property": "parent",
+                "value": "peekH1"
+              },
+              {
+                "func": "SET",
+                "collection": [
+                  "labelOwner1"
+                ],
+                "property": "text",
+                "value": "${playerName}"
+              },
+              {
+                "func": "SET",
+                "collection": "owned",
+                "property": "owner",
+                "value": null
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "wm1l": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "1Guard",
+    "id": "wm1l",
+    "z": 8649,
+    "parent": "xnj8"
+  },
+  "4yt0": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "1Guard",
+    "id": "4yt0",
+    "z": 8651,
+    "parent": "xnj8"
+  },
+  "ch9e": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "1Guard",
+    "id": "ch9e",
+    "z": 8653,
+    "parent": "xnj8"
+  },
+  "axpy": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "1Guard",
+    "id": "axpy",
+    "z": 8655,
+    "parent": "xnj8"
+  },
+  "91tt": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "1Guard",
+    "id": "91tt",
+    "z": 8657,
+    "parent": "xnj8"
+  },
+  "l8vb": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "1Guard",
+    "id": "l8vb",
+    "z": 8659,
+    "parent": "xnj8"
+  },
+  "1rzj": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "1Guard",
+    "id": "1rzj",
+    "z": 8661,
+    "parent": "xnj8"
+  },
+  "936z": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "1Guard",
+    "id": "936z",
+    "z": 8663,
+    "parent": "xnj8"
+  },
+  "okay": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "2Priest",
+    "id": "okay",
+    "z": 8665,
+    "parent": "xnj8"
+  },
+  "8nkc": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "2Priest",
+    "id": "8nkc",
+    "z": 8667,
+    "parent": "xnj8"
+  },
+  "20q3": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "3Baron",
+    "id": "20q3",
+    "z": 8669,
+    "parent": "xnj8"
+  },
+  "siu8": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "3Baron",
+    "id": "siu8",
+    "z": 8671,
+    "parent": "xnj8"
+  },
+  "i336": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "4Handmaid",
+    "id": "i336",
+    "z": 8673,
+    "parent": "xnj8"
+  },
+  "f4hf": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "4Handmaid",
+    "id": "f4hf",
+    "z": 8675,
+    "parent": "xnj8"
+  },
+  "a0x3": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "5Prince",
+    "id": "a0x3",
+    "z": 8677,
+    "parent": "xnj8"
+  },
+  "l293": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "5Prince",
+    "id": "l293",
+    "z": 8679,
+    "parent": "xnj8"
+  },
+  "9ojd": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "6King",
+    "id": "9ojd",
+    "z": 8681,
+    "parent": "xnj8"
+  },
+  "ygod": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "7Countess",
+    "id": "ygod",
+    "z": 8683,
+    "parent": "xnj8"
+  },
+  "3bn6": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "8Princess",
+    "id": "3bn6",
+    "z": 8685,
+    "parent": "xnj8"
+  },
+  "j7mx": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "0Assassin",
+    "id": "j7mx",
+    "z": 8687,
+    "parent": "xnj8"
+  },
+  "5mqs": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "0Jester",
+    "id": "5mqs",
+    "z": 8689,
+    "parent": "xnj8"
+  },
+  "ujv2": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "2Cardinal",
+    "id": "ujv2",
+    "z": 8691,
+    "parent": "xnj8"
+  },
+  "7mab": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "2Cardinal",
+    "id": "7mab",
+    "z": 8693,
+    "parent": "xnj8"
+  },
+  "lndc": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "3Baroness",
+    "id": "lndc",
+    "z": 8695,
+    "parent": "xnj8"
+  },
+  "vgf2": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "3Baroness",
+    "id": "vgf2",
+    "z": 8697,
+    "parent": "xnj8"
+  },
+  "q7e3": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "4Sycophant",
+    "id": "q7e3",
+    "z": 8699,
+    "parent": "xnj8"
+  },
+  "rr5l": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "4Sycophant",
+    "id": "rr5l",
+    "z": 8701,
+    "parent": "xnj8"
+  },
+  "jvnu": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "5Count",
+    "id": "jvnu",
+    "z": 8703,
+    "parent": "xnj8"
+  },
+  "9pcu": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "5Count",
+    "id": "9pcu",
+    "z": 8705,
+    "parent": "xnj8"
+  },
+  "8xxa": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "6Constable",
+    "id": "8xxa",
+    "z": 8707,
+    "parent": "xnj8"
+  },
+  "wx1x": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "9Bishop",
+    "id": "wx1x",
+    "z": 8709,
+    "parent": "xnj8"
+  },
+  "offBoard": {
+    "type": "holder",
+    "id": "offBoard",
+    "x": 820,
+    "y": 1045,
+    "z": 28
+  },
+  "play": {
+    "type": "button",
+    "id": "play",
+    "x": 1465,
+    "y": 958,
+    "width": 100,
+    "height": 40,
+    "layer": 4,
+    "z": 8,
+    "movableInEdit": false,
+    "css": {
+      "default": {
+        "font-family": "elmessiri"
+      }
+    },
+    "text": "Play",
+    "clickRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY text}",
+        "operand2": "Play",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "text",
+            "value": "Next Round"
+          },
+          {
+            "func": "CALL",
+            "routine": "setupRoutine"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "INPUT",
+            "fields": [
+              {
+                "type": "title",
+                "text": "Starting next round ..."
+              },
+              {
+                "type": "subtitle",
+                "text": "You are about to recall the cards and start the next round. Are you sure?  You should already have adjusted the scores to reflect the player(s) that won affection tokens. Don't forget to use the 'Turn +1' button to manually adjust the turn indicator to the player who starts the next round."
+              }
+            ],
+            "confirmButtonText": "Continue"
+          },
+          {
+            "func": "CALL",
+            "routine": "setupRoutine"
+          }
+        ]
+      }
+    ],
+    "originalRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY playerCount OF restart}",
+        "operand2": 5,
+        "relation": "<",
+        "thenRoutine": [
+          {
+            "func": "SELECT",
+            "type": "card",
+            "property": "cardType",
+            "relation": "in",
+            "value": [
+              "0Assassin",
+              "0Jester",
+              "2Cardinal",
+              "3Baroness",
+              "4Sycophant",
+              "5Count",
+              "6Constable",
+              "7Queen",
+              "9Bishop"
+            ]
+          },
+          {
+            "func": "SET",
+            "property": "parent",
+            "value": "offBoard"
+          },
+          {
+            "func": "SELECT",
+            "type": "card",
+            "property": "cardType",
+            "value": "1Guard",
+            "max": 3
+          },
+          {
+            "func": "SET",
+            "property": "parent",
+            "value": "offBoard"
+          }
+        ]
+      }
+    ],
+    "setupRoutine": [
+      {
+        "func": "RECALL",
+        "holder": "deckHolder"
+      },
+      {
+        "func": "FLIP",
+        "holder": "deckHolder",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "deckHolder"
+      },
+      {
+        "func": "CALL",
+        "routine": "originalRoutine"
+      },
+      {
+        "func": "MOVE",
+        "from": "deckHolder",
+        "to": "offBoard",
+        "count": 1
+      },
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY playerCount OF restart}",
+        "operand2": 2,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "used8"
+            ],
+            "property": "linkedToSeat",
+            "value": null
+          },
+          {
+            "func": "MOVE",
+            "from": "deckHolder",
+            "to": "used8",
+            "count": 3
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "used8"
+            ],
+            "property": "linkedToSeat",
+            "value": "seat8"
+          }
+        ]
+      },
+      {
+        "func": "MOVE",
+        "from": "deckHolder",
+        "to": [
+          "seat1",
+          "seat2",
+          "seat3",
+          "seat4",
+          "seat5",
+          "seat6",
+          "seat7",
+          "seat8"
+        ],
+        "count": 1
+      },
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY text}",
+        "operand2": "Play",
+        "thenRoutine": [
+          {
+            "func": "TURN",
+            "turnCycle": "random"
+          }
+        ]
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "extraCardBtn"
+        ],
+        "property": "y",
+        "value": 1200
+      }
+    ]
+  },
+  "restart": {
+    "type": "button",
+    "id": "restart",
+    "x": 850,
+    "y": 950,
+    "width": 50,
+    "height": 50,
+    "layer": 4,
+    "z": 9,
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": {
+      "default": {
+        "font-family": "elmessiri",
+        "font-size": "40px"
+      }
+    },
+    "text": "restart",
+    "playerCount": 0,
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "fields": [
+          {
+            "type": "title",
+            "text": "Resetting game ..."
+          },
+          {
+            "type": "subtitle",
+            "text": "You are about to reset the game. Are you sure?"
+          }
+        ],
+        "confirmButtonText": "Yes"
+      },
+      {
+        "func": "RECALL",
+        "holder": "deckHolder"
+      },
+      {
+        "func": "MOVE",
+        "from": "deckHolder",
+        "to": "offBoard",
+        "count": 0
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "play"
+        ],
+        "property": "text",
+        "value": "Play"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "score1",
+          "score2",
+          "score3",
+          "score4",
+          "score5",
+          "score6",
+          "score7",
+          "score8"
+        ],
+        "property": "text",
+        "value": 0
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "extraCardBtn"
+        ],
+        "property": "y",
+        "value": 1200
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "peekBtn1",
+          "peekBtn2"
+        ],
+        "property": "text",
+        "value": "Start Peek"
+      }
+    ],
+    "playerCountChangeRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY playerCount}",
+        "relation": ">",
+        "operand2": 2,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "seat8"
+            ],
+            "property": "y",
+            "value": 10
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "seat8"
+            ],
+            "property": "y",
+            "value": 1100
+          }
+        ]
+      }
+    ],
+    "playerGlobalUpdateRoutine": [
+      {
+        "func": "SELECT",
+        "type": "seat",
+        "property": "player",
+        "relation": "!=",
+        "value": ""
+      },
+      {
+        "func": "COUNT"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "playerCount",
+        "value": "${COUNT}"
+      }
+    ]
+  },
+  "turn": {
+    "type": "button",
+    "id": "turn",
+    "x": 1100,
+    "y": 958,
+    "height": 40,
+    "layer": 4,
+    "z": 8,
+    "movableInEdit": false,
+    "css": {
+      "default": {
+        "font-family": "elmessiri"
+      }
+    },
+    "text": "Turn +1",
+    "clickRoutine": [
+      {
+        "func": "TURN"
+      }
+    ]
+  },
+  "extraCardBtn": {
+    "type": "button",
+    "id": "extraCardBtn",
+    "x": 1400,
+    "y": 1200,
+    "width": 200,
+    "height": 140,
+    "borderRadius": 20,
+    "layer": 4,
+    "z": 8,
+    "css": {
+      "default": {
+        "font-family": "elmessiri",
+        "line-height": 1
+      }
+    },
+    "text": "If needed due to action of Assassin or Prince, press this button to retrieve extra card removed at start. Otherwise, score round, adjust turn, and press 'Next Round' button below.",
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "offBoard",
+        "to": "deckHolder",
+        "count": 1
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "y",
+        "value": 1200
+      }
+    ]
+  },
+  "background": {
+    "id": "background",
+    "x": -50,
+    "width": 1700,
+    "height": 1100,
+    "layer": -4,
+    "movable": false,
+    "css": "opacity:0.5",
+    "image": "/assets/-1952981227_526056"
+  },
+  "xnj8": {
+    "type": "pile",
+    "parent": "offBoard",
+    "x": 4,
+    "y": 4,
+    "width": 206,
+    "height": 320,
+    "id": "xnj8"
+  }
+}

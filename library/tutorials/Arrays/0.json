@@ -1,0 +1,241 @@
+{
+  "title": {
+    "id": "title",
+    "x": 400,
+    "y": -2,
+    "width": 800,
+    "height": 60,
+    "z": 74,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "font-size: 60px;text-align:center",
+    "text": "Arrays: Overview"
+  },
+  "button2": {
+    "type": "button",
+    "id": "button2",
+    "x": 416,
+    "y": 402,
+    "z": 22839,
+    "clickRoutine": [
+      "// First SELECT every widget in the room",
+      {
+        "func": "SELECT",
+        "property": "id",
+        "relation": "!=",
+        "value": null
+      },
+      "// Then from that DEFAULT collection, GET the x value of every widget and store it as an array.",
+      {
+        "func": "GET",
+        "property": "x",
+        "aggregation": "array",
+        "variable": "allX"
+      },
+      "// Finally, store the array as a custom widget property using SET.",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "xArray",
+        "value": "${allX}"
+      }
+    ],
+    "text": "Create & SET"
+  },
+  "overview": {
+    "id": "overview",
+    "x": 108,
+    "y": 80,
+    "width": 1400,
+    "height": 150,
+    "layer": -3,
+    "z": 129,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "font-size: 25px; ",
+    "html": "Arrays are fundamental tools used to handle groups of values efficiently. An array is essentially a list where each element is stored in a specific order and accessed using an index. Think of an array like a row of boxes, where each box can hold a different value and can be accessed by its position, known as an index. The first position is always index 0, the second is 1, and so on. The row of boxes can hold any type of data, including strings, numbers, boolean values, or even other arrays. Arrays are dynamic so their contents can be set or modified during routines using dynamic expressions or functions.\n\nArrays enable automation that would be cumbersome to implement manually. For example, instead of writing out separate operations for every number in a series, you can store the values in an array and loop through them. Arrays can be sorted, counted, have number values totaled, and have many other operations performed on them. Arrays are also used with the predefined collections <b>activeColors</b>, <b>activePlayers</b>, and <b>activeSeats</b>."
+  },
+  "button3": {
+    "type": "button",
+    "id": "button3",
+    "x": 743,
+    "y": 402,
+    "z": 22840,
+    "clickRoutine": [
+      "// First create a variable from the property in the previous button.",
+      "var sortedArray = ${PROPERTY xArray OF button2}",
+      "// Then use the array sort operation.",
+      "var sortedArray = numericSort ${sortedArray}",
+      "// Finally, store the array as a custom widget property using SET.",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "sortedArray",
+        "value": "${sortedArray}"
+      }
+    ],
+    "text": "Sort"
+  },
+  "button4": {
+    "type": "button",
+    "id": "button4",
+    "x": 1062,
+    "y": 402,
+    "z": 22840,
+    "clickRoutine": [
+      "// First create a variable from the property in the previous button.",
+      "var sortedArray = ${PROPERTY sortedArray OF button3}",
+      "// Then use either method to get the value",
+      "var methodA = ${sortedArray.5}",
+      "var methodB = ${sortedArray} getIndex 5"
+    ],
+    "text": "Index"
+  },
+  "button5": {
+    "type": "button",
+    "id": "button5",
+    "x": 1386,
+    "y": 402,
+    "z": 11,
+    "clickRoutine": [
+      "// First create a variable from the property in the button 3.",
+      "var sortedArray = ${PROPERTY sortedArray OF button3}",
+      "// Then create an empty array to use as a shell for putting the new values.",
+      "var arrayPlus100 = []",
+      "// Use a FOREACH and loopRoutine that works with each value of the array",
+      {
+        "func": "FOREACH",
+        "in": "${sortedArray}",
+        "loopRoutine": [
+          "// For each of the index positions in the `sortedArray`, there is a predefined variable of value which is the value of the data at that position. The dynamic expression below uses that value and adds 100 to it.",
+          "var thisValue = ${value} + 100",
+          "// Then next dynamic expression begins with the empty array of `arrayPlus100` and then pushes the calcualted value into it on the first iteration of the loopRoutine. On the next iteration, `arrayPlus100` already has the 0 index filled, so it pushes the next value into the array, and so on until all values have been processed.",
+          "var arrayPlus100 = push ${thisValue}"
+        ]
+      },
+      "// Finally, store the array as a custom widget property using SET. Compare the array on this widget with the one on button 3 and you will see that each value has been increased by 100.",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "finalArray",
+        "value": "${arrayPlus100}"
+      }
+    ],
+    "text": "Add & Create"
+  },
+  "text1": {
+    "id": "text1",
+    "x": 4,
+    "y": 552,
+    "width": 300,
+    "z": 185,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "22px"
+    },
+    "html": "Arrays are usable during routines. In some instances, you may want to hard code the array as a widget property when the data is static and will not change. For example, the button above has the first several prime numbers in an array. The <b>clickRoutine</b> simply creates a variable from that array that could then be used for anything in the routine."
+  },
+  "button1": {
+    "type": "button",
+    "id": "button1",
+    "x": 95,
+    "y": 402,
+    "z": 22841,
+    "clickRoutine": [
+      "// Click and look at debug report.",
+      "var primeArray = ${PROPERTY primeArray}"
+    ],
+    "text": "Hard Coded",
+    "primeArray": [
+      2,
+      3,
+      5,
+      7,
+      11,
+      13,
+      17,
+      19,
+      23
+    ]
+  },
+  "text2": {
+    "id": "text2",
+    "x": 325,
+    "y": 552,
+    "width": 300,
+    "z": 121,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "22px"
+    },
+    "html": "More commonly, arrays will be created dynamically from data in the game. Again, that can be used during the execution of that routine, but it can also be <b>SET</b> as a property on a widget so that it accessible later. Look at the JSON of the button above before you click it. There is no array stored on there. Then click the button and look how the routine created an array of widget <b>x</b> value to store as the array content in the property `xArray`."
+  },
+  "text3": {
+    "id": "text3",
+    "x": 651,
+    "y": 552,
+    "width": 300,
+    "z": 9732,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "22px"
+    },
+    "html": "Once an array is created, you can use the array operations to evaluate and change it. Most of the other variants of this tutorial demonstrate all the array operations features. For now, consider the idArray from the previous button. Note how the array values are not sorted. The button above sorts the array data and stores it as a new property on itself.<br/><br/>Note that you must have already pressed the previous button for this to work."
+  },
+  "text4": {
+    "id": "text4",
+    "x": 964,
+    "y": 552,
+    "width": 300,
+    "z": 9732,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "22px"
+    },
+    "html": "Once we have the sorted array, we might need to, for example, find the value of a particular index. Let's assume we need to look at the sixth value; that will be index 5. Then there are a couple of methods demonstrated in the button above for how to get that value.<br/><br/>Note that you must have already pressed the previous two buttons for this to work."
+  },
+  "text5": {
+    "id": "text5",
+    "x": 1294,
+    "y": 552,
+    "width": 300,
+    "z": 9732,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "22px"
+    },
+    "html": "As a final example in this overview, let's create a new array by using a <b>loopRoutine</b> to add 100 to each value in the array we have been working with. Make sure you have pressed all the previous buttons in order and then click the button above look at the JSON output.<br/><br/>This just scratches the surface of all the things possible with arrays. Look at the other variants for more detail or see the <a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Computations#array-operations'>wiki</a>."
+  },
+  "_meta": {
+    "version": 17,
+    "info": {
+      "name": "Arrays",
+      "image": "/assets/-2001287493_6748",
+      "rules": "",
+      "bgg": "",
+      "year": "2021",
+      "mode": "Tutorial",
+      "time": "",
+      "attribution": "",
+      "showName": false,
+      "lastUpdate": 1747540416862,
+      "skill": "",
+      "description": "",
+      "similarImage": "",
+      "similarName": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": "",
+      "similarDesigner": "",
+      "variantImage": "",
+      "variant": "Overview",
+      "language": "en-US",
+      "players": "1"
+    }
+  }
+}

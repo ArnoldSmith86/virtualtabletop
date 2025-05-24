@@ -1,0 +1,52 @@
+{
+  "_meta": {
+    "version": 5,
+    "info": {
+      "name": "Symbols",
+      "image": "/assets/-281528316_196763",
+      "rules": "",
+      "bgg": "",
+      "year": "2021",
+      "mode": "Demo",
+      "time": "0",
+      "attribution": "See https://github.com/ArnoldSmith86/virtualtabletop/wiki/Fonts for usage instructions.",
+      "showName": false,
+      "lastUpdate": 1679628974609,
+      "skill": "",
+      "description": "",
+      "variantImage": "",
+      "variant": "Dice and Cards",
+      "language": "en-US",
+      "players": "",
+      "similarImage": "",
+      "similarName": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": ""
+    }
+  },
+  "icons": {
+    "id": "icons",
+    "x": 9,
+    "width": 1570,
+    "height": 900,
+    "z": 73,
+    "classes": "symbols",
+    "css": "font-size: 66px;color: #1f5ca6;line-height:120px",
+    "text": "die_face_1  die_face_2  die_face_3  die_face_4  die_face_5  die_face_6  die_face_7  die_face_8  die_face_9  die  die_add  die_remove  rotate_card_down_ccw    rotate_card_down_cw    rotate_card_left_ccw    rotate_card_left_cw    rotate_card_right_ccw    rotate_card_right_cw    rotate_card_up_ccw    rotate_card_up_cw\ncard_horizontal  deck  deck_add  deck_remove  card  cards  card_add  card_remove  card_equal  card_not_equal  card_!  card_hand  card_clubs  card_diamonds  card_hearts  card_spades  card_0  card_1  card_2  card_3  card_4  card_5  card_6  card_7  card_8  card_9  card_10  card_10plus  card_A  card_B  card_C  card_D  card_E  card_F  card_G  card_H  card_I  card_J  card_K  card_L  card_M  card_N  card_O  card_P  card_Q  card_R  card_S  card_T  card_U  card_V  card_W  card_X  card_Y  card_Z",
+    "movable": false,
+    "movableInEdit": false
+  },
+  "text": {
+    "id": "text",
+    "x": 10,
+    "y": 50,
+    "width": 1570,
+    "height": 900,
+    "z": 74,
+    "css": "font-size: 15px;color: black;line-height:120px",
+    "text": "die_face_1             die_face_2                die_face_3                   die_face_4                 die_face_5                 die_face_6               die_face_7                die_face_8                 die_face_9                       die                          die_add                    die_remove\nrotate_card_down_ccw    rotate_card_down_cw           rotate_card_left_ccw              rotate_card_left_cw                        rotate_card_right_ccw             rotate_card_right_cw               rotate_card_up_ccw                    rotate_card_up_cw\ncard_horizontal            deck                       deck_add               deck_remove                   card                           cards                       card_add                card_remove             card_equal              card_not_equal                 card_!                    card_hand\ncard_clubs            card_diamonds          card_hearts              card_spades                  card_0                       card_1                       card_2                        card_3                       card_4                        card_5                        card_6                        card_7\ncard_8                          card_9                      card_10                    card_10plus                card_A                       card_B                       card_C                        card_D                       card_E                        card_F                       card_G                        card_H\ncard_I                           card_J                       card_K                        card_L                       card_M                       card_N                      card_O                         card_P                      card_Q                       card_R                        card_S                        card_T\ncard_U                          card_V                       card_W                     card_X                        card_Y                       card_Z",
+    "movable": false,
+    "movableInEdit": false
+  }
+}

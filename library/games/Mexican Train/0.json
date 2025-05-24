@@ -1,0 +1,6816 @@
+{
+  "_meta": {
+    "version": 6,
+    "info": {
+      "name": "Mexican Train",
+      "image": "/assets/-1880120601_28557",
+      "rules": "https://www.mexicantrainrulesandstrategies.com/mexican_train_rules.pdf",
+      "bgg": "https://boardgamegeek.com/boardgame/11634/mexican-train",
+      "year": "1994",
+      "mode": "vs",
+      "time": "30",
+      "attribution": "The game layout and game piece design is by LawDawg and is released to the public domain as CC0.\n\nThe following graphics items are available for use under the Pixabay license:\n \n - Train token from https://publicdomainvectors.org/en/free-clipart/Vector-illustration-of-locomotive/4823.html\n\n - Background image from https://pixabay.com/photos/railway-rails-track-train-2439189/<div><br></div><div>Library image generated using the Midjourney artificial intelligence image generator, https://www.midjourney.com/home/, using the following prompt: \"train tracks receding into horizon pencil sketch by leonardo da vinci --ar 1:1 --v 5.1\"<br></div>",
+      "similarName": "Mexican Train",
+      "description": "Use double 6, 9, 12, or 15 dominoes depending on number of players. Starting from a common domino, play a domino that matches a previous end of the train. Play on own train, other players trains when available, or on a common Mexican train. Lowest points after desiganted number of rounds wins.",
+      "showName": true,
+      "helpText": "Players sit in seats. Press settings button (gear icon) to choose domino set to use and timer options. Press the widget button in the middle of the room to move the chosen starting double domino to the board. This will cause a random player to be chosen to begin. Players move desired number of starting dominoes into hand. After play, press the play/skip button above the timer to advance turn to next player. At end of round, record scores. Press play button to begin next round.",
+      "lastUpdate": 1650427506000,
+      "skill": "",
+      "variantImage": "",
+      "variant": "",
+      "language": "",
+      "players": "2-8",
+      "similarImage": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "similarDesigner": "Roy Parsons, Katie Parsons"
+    }
+  },
+  "hand": {
+    "id": "hand",
+    "x": 250,
+    "y": 890,
+    "z": 1,
+    "type": "holder",
+    "onEnter": {
+      "activeFace": 1
+    },
+    "onLeave": {
+      "activeFace": 1
+    },
+    "dropOffsetX": 10,
+    "dropOffsetY": 14,
+    "stackOffsetX": 40,
+    "inheritChildZ": true,
+    "childrenPerOwner": true,
+    "width": 1300,
+    "height": 112,
+    "movableInEdit": false,
+    "css": "background-color: #ffffff80 "
+  },
+  "boneyard": {
+    "type": "holder",
+    "id": "boneyard",
+    "x": 42,
+    "y": 902,
+    "width": 40,
+    "height": 80,
+    "z": 23099,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "onEnter": {
+      "activeFace": 0,
+      "rotation": 0,
+      "customState": 3
+    }
+  },
+  "theDeck": {
+    "type": "deck",
+    "id": "theDeck",
+    "parent": "boneyard",
+    "x": 4,
+    "y": 4,
+    "z": 11835,
+    "cardDefaults": {
+      "clickRoutine": [
+        "var a = ${PROPERTY customState} + 1",
+        "var b = ${a} % 4",
+        "var rot = ${b} * 90",
+        {
+          "func": "SET",
+          "collection": "thisButton",
+          "property": "customState",
+          "value": "${b}"
+        },
+        {
+          "func": "SET",
+          "collection": "thisButton",
+          "property": "rotation",
+          "value": "${rot}"
+        },
+        {
+          "func": "SET",
+          "collection": "thisButton",
+          "property": "activeFace",
+          "value": 1
+        }
+      ],
+      "width": 40,
+      "height": 80,
+      "overlap": false
+    },
+    "cardTypes": {
+      "0-0": {
+        "top": "",
+        "bottom": "",
+        "set": "C6"
+      },
+      "0-1": {
+        "top": "",
+        "bottom": "/assets/1341384710_218",
+        "set": "C6"
+      },
+      "0-2": {
+        "top": "",
+        "bottom": "/assets/-2142259388_313",
+        "set": "C6"
+      },
+      "0-3": {
+        "top": "",
+        "bottom": "/assets/-508431710_397",
+        "set": "C6"
+      },
+      "0-4": {
+        "top": "",
+        "bottom": "/assets/1109054420_477",
+        "set": "C6"
+      },
+      "0-5": {
+        "top": "",
+        "bottom": "/assets/2009741688_561",
+        "set": "C6"
+      },
+      "0-6": {
+        "top": "",
+        "bottom": "/assets/-234714863_644",
+        "set": "C6"
+      },
+      "0-7": {
+        "top": "",
+        "bottom": "/assets/1411340202_728",
+        "set": "C9"
+      },
+      "0-8": {
+        "top": "",
+        "bottom": "/assets/-1680122584_809",
+        "set": "C9"
+      },
+      "0-9": {
+        "top": "",
+        "bottom": "/assets/-842670760_893",
+        "set": "C9"
+      },
+      "0-10": {
+        "top": "",
+        "bottom": "/assets/247709237_2263",
+        "set": "C12"
+      },
+      "0-11": {
+        "top": "",
+        "bottom": "/assets/1040634397_2463",
+        "set": "C12"
+      },
+      "0-12": {
+        "top": "",
+        "bottom": "/assets/1401403195_2635",
+        "set": "C12"
+      },
+      "0-13": {
+        "top": "",
+        "bottom": "/assets/825614025_2863",
+        "rotate": 180,
+        "set": "C15"
+      },
+      "0-14": {
+        "top": "",
+        "bottom": "/assets/1768245532_3061",
+        "rotate": 180,
+        "set": "C15"
+      },
+      "0-15": {
+        "top": "",
+        "bottom": "/assets/-338027885_3260",
+        "rotate": 180,
+        "set": "C15"
+      },
+      "1-1": {
+        "top": "/assets/1341384710_218",
+        "bottom": "/assets/1341384710_218",
+        "set": "C6"
+      },
+      "1-2": {
+        "top": "/assets/1341384710_218",
+        "bottom": "/assets/-2142259388_313",
+        "set": "C6"
+      },
+      "1-3": {
+        "top": "/assets/1341384710_218",
+        "bottom": "/assets/-508431710_397",
+        "set": "C6"
+      },
+      "1-4": {
+        "top": "/assets/1341384710_218",
+        "bottom": "/assets/1109054420_477",
+        "set": "C6"
+      },
+      "1-5": {
+        "top": "/assets/1341384710_218",
+        "bottom": "/assets/2009741688_561",
+        "set": "C6"
+      },
+      "1-6": {
+        "top": "/assets/1341384710_218",
+        "bottom": "/assets/-234714863_644",
+        "set": "C6"
+      },
+      "1-7": {
+        "top": "/assets/1341384710_218",
+        "bottom": "/assets/1411340202_728",
+        "set": "C9"
+      },
+      "1-8": {
+        "top": "/assets/1341384710_218",
+        "bottom": "/assets/-1680122584_809",
+        "set": "C9"
+      },
+      "1-9": {
+        "top": "/assets/1341384710_218",
+        "bottom": "/assets/-842670760_893",
+        "set": "C9"
+      },
+      "1-10": {
+        "top": "/assets/1341384710_218",
+        "bottom": "/assets/247709237_2263",
+        "set": "C12"
+      },
+      "1-11": {
+        "top": "/assets/1341384710_218",
+        "bottom": "/assets/1040634397_2463",
+        "set": "C12"
+      },
+      "1-12": {
+        "top": "/assets/1341384710_218",
+        "bottom": "/assets/1401403195_2635",
+        "set": "C12"
+      },
+      "1-13": {
+        "top": "/assets/1341384710_218",
+        "bottom": "/assets/825614025_2863",
+        "rotate": 180,
+        "set": "C15"
+      },
+      "1-14": {
+        "top": "/assets/1341384710_218",
+        "bottom": "/assets/1768245532_3061",
+        "rotate": 180,
+        "set": "C15"
+      },
+      "1-15": {
+        "top": "/assets/1341384710_218",
+        "bottom": "/assets/-338027885_3260",
+        "rotate": 180,
+        "set": "C15"
+      },
+      "2-2": {
+        "top": "/assets/-2142259388_313",
+        "bottom": "/assets/-2142259388_313",
+        "set": "C6"
+      },
+      "2-3": {
+        "top": "/assets/-2142259388_313",
+        "bottom": "/assets/-508431710_397",
+        "set": "C6"
+      },
+      "2-4": {
+        "top": "/assets/-2142259388_313",
+        "bottom": "/assets/1109054420_477",
+        "set": "C6"
+      },
+      "2-5": {
+        "top": "/assets/-2142259388_313",
+        "bottom": "/assets/2009741688_561",
+        "set": "C6"
+      },
+      "2-6": {
+        "top": "/assets/-2142259388_313",
+        "bottom": "/assets/-234714863_644",
+        "set": "C6"
+      },
+      "2-7": {
+        "top": "/assets/-2142259388_313",
+        "bottom": "/assets/1411340202_728",
+        "set": "C9"
+      },
+      "2-8": {
+        "top": "/assets/-2142259388_313",
+        "bottom": "/assets/-1680122584_809",
+        "set": "C9"
+      },
+      "2-9": {
+        "top": "/assets/-2142259388_313",
+        "bottom": "/assets/-842670760_893",
+        "set": "C9"
+      },
+      "2-10": {
+        "top": "/assets/-2142259388_313",
+        "bottom": "/assets/247709237_2263",
+        "set": "C12"
+      },
+      "2-11": {
+        "top": "/assets/-2142259388_313",
+        "bottom": "/assets/1040634397_2463",
+        "set": "C12"
+      },
+      "2-12": {
+        "top": "/assets/-2142259388_313",
+        "bottom": "/assets/1401403195_2635",
+        "set": "C12"
+      },
+      "2-13": {
+        "top": "/assets/-2142259388_313",
+        "bottom": "/assets/825614025_2863",
+        "rotate": 180,
+        "set": "C15"
+      },
+      "2-14": {
+        "top": "/assets/-2142259388_313",
+        "bottom": "/assets/1768245532_3061",
+        "rotate": 180,
+        "set": "C15"
+      },
+      "2-15": {
+        "top": "/assets/-2142259388_313",
+        "bottom": "/assets/-338027885_3260",
+        "rotate": 180,
+        "set": "C15"
+      },
+      "3-3": {
+        "top": "/assets/-508431710_397",
+        "bottom": "/assets/-508431710_397",
+        "set": "C6"
+      },
+      "3-4": {
+        "top": "/assets/-508431710_397",
+        "bottom": "/assets/1109054420_477",
+        "set": "C6"
+      },
+      "3-5": {
+        "top": "/assets/-508431710_397",
+        "bottom": "/assets/2009741688_561",
+        "set": "C6"
+      },
+      "3-6": {
+        "top": "/assets/-508431710_397",
+        "bottom": "/assets/-234714863_644",
+        "set": "C6"
+      },
+      "3-7": {
+        "top": "/assets/-508431710_397",
+        "bottom": "/assets/1411340202_728",
+        "set": "C9"
+      },
+      "3-8": {
+        "top": "/assets/-508431710_397",
+        "bottom": "/assets/-1680122584_809",
+        "set": "C9"
+      },
+      "3-9": {
+        "top": "/assets/-508431710_397",
+        "bottom": "/assets/-842670760_893",
+        "set": "C9"
+      },
+      "3-10": {
+        "top": "/assets/-508431710_397",
+        "bottom": "/assets/247709237_2263",
+        "set": "C12"
+      },
+      "3-11": {
+        "top": "/assets/-508431710_397",
+        "bottom": "/assets/1040634397_2463",
+        "set": "C12"
+      },
+      "3-12": {
+        "top": "/assets/-508431710_397",
+        "bottom": "/assets/1401403195_2635",
+        "set": "C12"
+      },
+      "3-13": {
+        "top": "/assets/-508431710_397",
+        "bottom": "/assets/825614025_2863",
+        "rotate": 180,
+        "set": "C15"
+      },
+      "3-14": {
+        "top": "/assets/-508431710_397",
+        "bottom": "/assets/1768245532_3061",
+        "rotate": 180,
+        "set": "C15"
+      },
+      "3-15": {
+        "top": "/assets/-508431710_397",
+        "bottom": "/assets/-338027885_3260",
+        "rotate": 180,
+        "set": "C15"
+      },
+      "4-4": {
+        "top": "/assets/1109054420_477",
+        "bottom": "/assets/1109054420_477",
+        "set": "C6"
+      },
+      "4-5": {
+        "top": "/assets/1109054420_477",
+        "bottom": "/assets/2009741688_561",
+        "set": "C6"
+      },
+      "4-6": {
+        "top": "/assets/1109054420_477",
+        "bottom": "/assets/-234714863_644",
+        "set": "C6"
+      },
+      "4-7": {
+        "top": "/assets/1109054420_477",
+        "bottom": "/assets/1411340202_728",
+        "set": "C9"
+      },
+      "4-8": {
+        "top": "/assets/1109054420_477",
+        "bottom": "/assets/-1680122584_809",
+        "set": "C9"
+      },
+      "4-9": {
+        "top": "/assets/1109054420_477",
+        "bottom": "/assets/-842670760_893",
+        "set": "C9"
+      },
+      "4-10": {
+        "top": "/assets/1109054420_477",
+        "bottom": "/assets/247709237_2263",
+        "set": "C12"
+      },
+      "4-11": {
+        "top": "/assets/1109054420_477",
+        "bottom": "/assets/1040634397_2463",
+        "set": "C12"
+      },
+      "4-12": {
+        "top": "/assets/1109054420_477",
+        "bottom": "/assets/1401403195_2635",
+        "set": "C12"
+      },
+      "4-13": {
+        "top": "/assets/1109054420_477",
+        "bottom": "/assets/825614025_2863",
+        "rotate": 180,
+        "set": "C15"
+      },
+      "4-14": {
+        "top": "/assets/1109054420_477",
+        "bottom": "/assets/1768245532_3061",
+        "rotate": 180,
+        "set": "C15"
+      },
+      "4-15": {
+        "top": "/assets/1109054420_477",
+        "bottom": "/assets/-338027885_3260",
+        "rotate": 180,
+        "set": "C15"
+      },
+      "5-5": {
+        "top": "/assets/2009741688_561",
+        "bottom": "/assets/2009741688_561",
+        "set": "C6"
+      },
+      "5-6": {
+        "top": "/assets/2009741688_561",
+        "bottom": "/assets/-234714863_644",
+        "set": "C6"
+      },
+      "5-7": {
+        "top": "/assets/2009741688_561",
+        "bottom": "/assets/1411340202_728",
+        "set": "C9"
+      },
+      "5-8": {
+        "top": "/assets/2009741688_561",
+        "bottom": "/assets/-1680122584_809",
+        "set": "C9"
+      },
+      "5-9": {
+        "top": "/assets/2009741688_561",
+        "bottom": "/assets/-842670760_893",
+        "set": "C9"
+      },
+      "5-10": {
+        "top": "/assets/2009741688_561",
+        "bottom": "/assets/247709237_2263",
+        "set": "C12"
+      },
+      "5-11": {
+        "top": "/assets/2009741688_561",
+        "bottom": "/assets/1040634397_2463",
+        "set": "C12"
+      },
+      "5-12": {
+        "top": "/assets/2009741688_561",
+        "bottom": "/assets/1401403195_2635",
+        "set": "C12"
+      },
+      "5-13": {
+        "top": "/assets/2009741688_561",
+        "bottom": "/assets/825614025_2863",
+        "rotate": 180,
+        "set": "C15"
+      },
+      "5-14": {
+        "top": "/assets/2009741688_561",
+        "bottom": "/assets/1768245532_3061",
+        "rotate": 180,
+        "set": "C15"
+      },
+      "5-15": {
+        "top": "/assets/2009741688_561",
+        "bottom": "/assets/-338027885_3260",
+        "rotate": 180,
+        "set": "C15"
+      },
+      "6-6": {
+        "top": "/assets/-234714863_644",
+        "bottom": "/assets/-234714863_644",
+        "set": "C6"
+      },
+      "6-7": {
+        "top": "/assets/-234714863_644",
+        "bottom": "/assets/1411340202_728",
+        "set": "C9"
+      },
+      "6-8": {
+        "top": "/assets/-234714863_644",
+        "bottom": "/assets/-1680122584_809",
+        "set": "C9"
+      },
+      "6-9": {
+        "top": "/assets/-234714863_644",
+        "bottom": "/assets/-842670760_893",
+        "set": "C9"
+      },
+      "6-10": {
+        "top": "/assets/-234714863_644",
+        "bottom": "/assets/247709237_2263",
+        "set": "C12"
+      },
+      "6-11": {
+        "top": "/assets/-234714863_644",
+        "bottom": "/assets/1040634397_2463",
+        "set": "C12"
+      },
+      "6-12": {
+        "top": "/assets/-234714863_644",
+        "bottom": "/assets/1401403195_2635",
+        "set": "C12"
+      },
+      "6-13": {
+        "top": "/assets/-234714863_644",
+        "bottom": "/assets/825614025_2863",
+        "rotate": 180,
+        "set": "C15"
+      },
+      "6-14": {
+        "top": "/assets/-234714863_644",
+        "bottom": "/assets/1768245532_3061",
+        "rotate": 180,
+        "set": "C15"
+      },
+      "6-15": {
+        "top": "/assets/-234714863_644",
+        "bottom": "/assets/-338027885_3260",
+        "rotate": 180,
+        "set": "C15"
+      },
+      "7-7": {
+        "top": "/assets/1411340202_728",
+        "bottom": "/assets/1411340202_728",
+        "set": "C9"
+      },
+      "7-8": {
+        "top": "/assets/1411340202_728",
+        "bottom": "/assets/-1680122584_809",
+        "set": "C9"
+      },
+      "7-9": {
+        "top": "/assets/1411340202_728",
+        "bottom": "/assets/-842670760_893",
+        "set": "C9"
+      },
+      "7-10": {
+        "top": "/assets/1411340202_728",
+        "bottom": "/assets/247709237_2263",
+        "set": "C12"
+      },
+      "7-11": {
+        "top": "/assets/1411340202_728",
+        "bottom": "/assets/1040634397_2463",
+        "set": "C12"
+      },
+      "7-12": {
+        "top": "/assets/1411340202_728",
+        "bottom": "/assets/1401403195_2635",
+        "set": "C12"
+      },
+      "7-13": {
+        "top": "/assets/1411340202_728",
+        "bottom": "/assets/825614025_2863",
+        "rotate": 180,
+        "set": "C15"
+      },
+      "7-14": {
+        "top": "/assets/1411340202_728",
+        "bottom": "/assets/1768245532_3061",
+        "rotate": 180,
+        "set": "C15"
+      },
+      "7-15": {
+        "top": "/assets/1411340202_728",
+        "bottom": "/assets/-338027885_3260",
+        "rotate": 180,
+        "set": "C15"
+      },
+      "8-8": {
+        "top": "/assets/-1680122584_809",
+        "bottom": "/assets/-1680122584_809",
+        "set": "C9"
+      },
+      "8-9": {
+        "top": "/assets/-1680122584_809",
+        "bottom": "/assets/-842670760_893",
+        "set": "C9"
+      },
+      "8-10": {
+        "top": "/assets/-1680122584_809",
+        "bottom": "/assets/247709237_2263",
+        "set": "C12"
+      },
+      "8-11": {
+        "top": "/assets/-1680122584_809",
+        "bottom": "/assets/1040634397_2463",
+        "set": "C12"
+      },
+      "8-12": {
+        "top": "/assets/-1680122584_809",
+        "bottom": "/assets/1401403195_2635",
+        "set": "C12"
+      },
+      "8-13": {
+        "top": "/assets/-1680122584_809",
+        "bottom": "/assets/825614025_2863",
+        "rotate": 180,
+        "set": "C15"
+      },
+      "8-14": {
+        "top": "/assets/-1680122584_809",
+        "bottom": "/assets/1768245532_3061",
+        "rotate": 180,
+        "set": "C15"
+      },
+      "8-15": {
+        "top": "/assets/-1680122584_809",
+        "bottom": "/assets/-338027885_3260",
+        "rotate": 180,
+        "set": "C15"
+      },
+      "9-9": {
+        "top": "/assets/-842670760_893",
+        "bottom": "/assets/-842670760_893",
+        "set": "C9"
+      },
+      "9-10": {
+        "top": "/assets/-842670760_893",
+        "bottom": "/assets/247709237_2263",
+        "set": "C12"
+      },
+      "9-11": {
+        "top": "/assets/-842670760_893",
+        "bottom": "/assets/1040634397_2463",
+        "set": "C12"
+      },
+      "9-12": {
+        "top": "/assets/-842670760_893",
+        "bottom": "/assets/1401403195_2635",
+        "set": "C12"
+      },
+      "9-13": {
+        "top": "/assets/-842670760_893",
+        "bottom": "/assets/825614025_2863",
+        "rotate": 180,
+        "set": "C15"
+      },
+      "9-14": {
+        "top": "/assets/-842670760_893",
+        "bottom": "/assets/1768245532_3061",
+        "rotate": 180,
+        "set": "C15"
+      },
+      "9-15": {
+        "top": "/assets/-842670760_893",
+        "bottom": "/assets/-338027885_3260",
+        "rotate": 180,
+        "set": "C15"
+      },
+      "10-10": {
+        "top": "/assets/247709237_2263",
+        "bottom": "/assets/247709237_2263",
+        "set": "C12"
+      },
+      "10-11": {
+        "top": "/assets/247709237_2263",
+        "bottom": "/assets/1040634397_2463",
+        "set": "C12"
+      },
+      "10-12": {
+        "top": "/assets/247709237_2263",
+        "bottom": "/assets/1401403195_2635",
+        "set": "C12"
+      },
+      "10-13": {
+        "top": "/assets/247709237_2263",
+        "bottom": "/assets/825614025_2863",
+        "rotate": 180,
+        "set": "C15"
+      },
+      "10-14": {
+        "top": "/assets/247709237_2263",
+        "bottom": "/assets/1768245532_3061",
+        "rotate": 180,
+        "set": "C15"
+      },
+      "10-15": {
+        "top": "/assets/247709237_2263",
+        "bottom": "/assets/-338027885_3260",
+        "rotate": 180,
+        "set": "C15"
+      },
+      "11-11": {
+        "top": "/assets/1040634397_2463",
+        "bottom": "/assets/1040634397_2463",
+        "set": "C12"
+      },
+      "11-12": {
+        "top": "/assets/1040634397_2463",
+        "bottom": "/assets/1401403195_2635",
+        "set": "C12"
+      },
+      "11-13": {
+        "top": "/assets/1040634397_2463",
+        "bottom": "/assets/825614025_2863",
+        "rotate": 180,
+        "set": "C15"
+      },
+      "11-14": {
+        "top": "/assets/1040634397_2463",
+        "bottom": "/assets/1768245532_3061",
+        "rotate": 180,
+        "set": "C15"
+      },
+      "11-15": {
+        "top": "/assets/1040634397_2463",
+        "bottom": "/assets/-338027885_3260",
+        "rotate": 180,
+        "set": "C15"
+      },
+      "12-12": {
+        "top": "/assets/1401403195_2635",
+        "bottom": "/assets/1401403195_2635",
+        "set": "C12"
+      },
+      "12-13": {
+        "top": "/assets/1401403195_2635",
+        "bottom": "/assets/825614025_2863",
+        "rotate": 180,
+        "set": "C15"
+      },
+      "12-14": {
+        "top": "/assets/1401403195_2635",
+        "bottom": "/assets/1768245532_3061",
+        "rotate": 180,
+        "set": "C15"
+      },
+      "12-15": {
+        "top": "/assets/1401403195_2635",
+        "bottom": "/assets/-338027885_3260",
+        "rotate": 180,
+        "set": "C15"
+      },
+      "13-13": {
+        "top": "/assets/825614025_2863",
+        "bottom": "/assets/825614025_2863",
+        "rotate": 180,
+        "set": "C15"
+      },
+      "13-14": {
+        "top": "/assets/825614025_2863",
+        "bottom": "/assets/1768245532_3061",
+        "rotate": 180,
+        "set": "C15"
+      },
+      "13-15": {
+        "top": "/assets/825614025_2863",
+        "bottom": "/assets/-338027885_3260",
+        "rotate": 180,
+        "set": "C15"
+      },
+      "14-14": {
+        "top": "/assets/1768245532_3061",
+        "bottom": "/assets/1768245532_3061",
+        "rotate": 180,
+        "set": "C15"
+      },
+      "14-15": {
+        "top": "/assets/1768245532_3061",
+        "bottom": "/assets/-338027885_3260",
+        "rotate": 180,
+        "set": "C15"
+      },
+      "15-15": {
+        "top": "/assets/-338027885_3260",
+        "bottom": "/assets/-338027885_3260",
+        "rotate": 180,
+        "set": "C15"
+      }
+    },
+    "faceTemplates": [
+      {
+        "border": 1,
+        "radius": 8,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "value": "",
+            "color": "beige",
+            "width": 50,
+            "height": 100
+          }
+        ]
+      },
+      {
+        "border": 1,
+        "radius": 8,
+        "objects": [
+          {
+            "type": "text",
+            "css": "background:white",
+            "x": 0,
+            "y": 0,
+            "height": 80,
+            "width": 40,
+            "dynamicProperties": {
+              "value": "back"
+            }
+          },
+          {
+            "type": "text",
+            "css": "border-width:1px;border-color:#000000;border-style:solid hidden hidden hidden",
+            "x": 0,
+            "y": 39.5,
+            "width": 40,
+            "height": 0,
+            "color": "black"
+          },
+          {
+            "type": "image",
+            "x": 1,
+            "y": 1,
+            "color": "transparent",
+            "width": 38,
+            "height": 38,
+            "dynamicProperties": {
+              "value": "top"
+            }
+          },
+          {
+            "type": "image",
+            "x": 1,
+            "y": 41,
+            "color": "transparent",
+            "width": 38,
+            "height": 38,
+            "dynamicProperties": {
+              "value": "bottom",
+              "rotation": "rotate"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "holder0": {
+    "type": "holder",
+    "id": "holder0",
+    "x": 840,
+    "y": 405,
+    "width": 40,
+    "height": 80,
+    "z": 1,
+    "movableInEdit": false,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "rotation": 90,
+    "onEnter": {
+      "activeFace": 1
+    },
+    "css": "background-color: #ffffff80 "
+  },
+  "holder1-1": {
+    "type": "holder",
+    "id": "holder1-1",
+    "x": 939,
+    "y": 405,
+    "inheritFrom": "holder0",
+    "linkedToSeat": "seat1"
+  },
+  "holder1-2": {
+    "type": "holder",
+    "id": "holder1-2",
+    "x": 1028,
+    "y": 405,
+    "inheritFrom": "holder1-1"
+  },
+  "holder1-3": {
+    "type": "holder",
+    "id": "holder1-3",
+    "x": 1115,
+    "y": 405,
+    "inheritFrom": "holder1-1"
+  },
+  "holder1-4": {
+    "type": "holder",
+    "id": "holder1-4",
+    "x": 1205,
+    "y": 405,
+    "inheritFrom": "holder1-1"
+  },
+  "holder1-5": {
+    "type": "holder",
+    "id": "holder1-5",
+    "x": 1294,
+    "y": 405,
+    "inheritFrom": "holder1-1"
+  },
+  "holder1-6": {
+    "type": "holder",
+    "id": "holder1-6",
+    "x": 1382,
+    "y": 405,
+    "inheritFrom": "holder1-1"
+  },
+  "holder1-7": {
+    "type": "holder",
+    "id": "holder1-7",
+    "x": 1450,
+    "y": 425,
+    "inheritFrom": "holder1-1",
+    "rotation": 0
+  },
+  "holder1-8": {
+    "type": "holder",
+    "id": "holder1-8",
+    "x": 1430,
+    "y": 493,
+    "inheritFrom": "holder1-1"
+  },
+  "holder1-9": {
+    "type": "holder",
+    "id": "holder1-9",
+    "x": 1340,
+    "y": 493,
+    "width": 40,
+    "inheritFrom": "holder1-1"
+  },
+  "holder1-10": {
+    "type": "holder",
+    "id": "holder1-10",
+    "x": 1251,
+    "y": 493,
+    "width": 40,
+    "height": 80,
+    "inheritFrom": "holder1-1"
+  },
+  "holder1-11": {
+    "type": "holder",
+    "id": "holder1-11",
+    "x": 1184,
+    "y": 514,
+    "inheritFrom": "holder1-1",
+    "rotation": 0
+  },
+  "holder1-12": {
+    "type": "holder",
+    "id": "holder1-12",
+    "x": 1203,
+    "y": 583,
+    "width": 40,
+    "height": 80,
+    "inheritFrom": "holder1-1"
+  },
+  "holder1-13": {
+    "type": "holder",
+    "id": "holder1-13",
+    "x": 1293,
+    "y": 582,
+    "width": 40,
+    "height": 80,
+    "inheritFrom": "holder1-1"
+  },
+  "seat1": {
+    "type": "seat",
+    "id": "seat1",
+    "x": 1278,
+    "y": 369,
+    "movableInEdit": false,
+    "colorChangeRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY player}",
+        "relation": "!=",
+        "operand2": "",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "train1"
+            ],
+            "property": "trainColor",
+            "value": "${PROPERTY color}"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "train1"
+            ],
+            "property": "trainColor",
+            "value": "white"
+          }
+        ]
+      }
+    ],
+    "turn": true,
+    "hideWhenUnused": true
+  },
+  "holder2-1": {
+    "type": "holder",
+    "id": "holder2-1",
+    "x": 909,
+    "y": 474,
+    "linkedToSeat": "seat2",
+    "inheritFrom": "holder0",
+    "rotation": -45
+  },
+  "holder2-2": {
+    "type": "holder",
+    "id": "holder2-2",
+    "x": 971,
+    "y": 536,
+    "inheritFrom": "holder2-1"
+  },
+  "holder2-3": {
+    "type": "holder",
+    "id": "holder2-3",
+    "x": 1034,
+    "y": 598,
+    "inheritFrom": "holder2-1"
+  },
+  "holder2-4": {
+    "type": "holder",
+    "id": "holder2-4",
+    "x": 1097,
+    "y": 661,
+    "inheritFrom": "holder2-1"
+  },
+  "holder2-5": {
+    "type": "holder",
+    "id": "holder2-5",
+    "x": 1160,
+    "y": 723,
+    "inheritFrom": "holder2-1"
+  },
+  "holder2-6": {
+    "type": "holder",
+    "id": "holder2-6",
+    "x": 1223,
+    "y": 785,
+    "inheritFrom": "holder2-1"
+  },
+  "holder2-7": {
+    "type": "holder",
+    "id": "holder2-7",
+    "x": 1311,
+    "y": 812,
+    "inheritFrom": "holder2-1",
+    "rotation": 90
+  },
+  "holder2-8": {
+    "type": "holder",
+    "id": "holder2-8",
+    "x": 1401,
+    "y": 812,
+    "inheritFrom": "holder2-1",
+    "rotation": 90
+  },
+  "holder2-9": {
+    "type": "holder",
+    "id": "holder2-9",
+    "x": 1490,
+    "y": 812,
+    "inheritFrom": "holder2-1",
+    "rotation": 90
+  },
+  "holder2-10": {
+    "type": "holder",
+    "id": "holder2-10",
+    "x": 1509,
+    "y": 749,
+    "inheritFrom": "holder2-1",
+    "rotation": 0
+  },
+  "holder2-11": {
+    "type": "holder",
+    "id": "holder2-11",
+    "x": 1441,
+    "y": 728,
+    "inheritFrom": "holder2-1",
+    "rotation": 90
+  },
+  "holder2-12": {
+    "type": "holder",
+    "id": "holder2-12",
+    "x": 1354,
+    "y": 728,
+    "inheritFrom": "holder2-1",
+    "rotation": 90
+  },
+  "holder2-13": {
+    "type": "holder",
+    "id": "holder2-13",
+    "x": 1267,
+    "y": 728,
+    "inheritFrom": "holder2-1",
+    "rotation": 90
+  },
+  "holder3-1": {
+    "type": "holder",
+    "id": "holder3-1",
+    "x": 840,
+    "y": 499,
+    "linkedToSeat": "seat3",
+    "inheritFrom": "holder0",
+    "rotation": 0
+  },
+  "holder3-2": {
+    "type": "holder",
+    "id": "holder3-2",
+    "x": 840,
+    "y": 587,
+    "inheritFrom": "holder3-1"
+  },
+  "holder3-3": {
+    "type": "holder",
+    "id": "holder3-3",
+    "x": 840,
+    "y": 675,
+    "inheritFrom": "holder3-1"
+  },
+  "holder3-4": {
+    "type": "holder",
+    "id": "holder3-4",
+    "x": 821,
+    "y": 744,
+    "inheritFrom": "holder3-1",
+    "rotation": 90
+  },
+  "holder3-5": {
+    "type": "holder",
+    "id": "holder3-5",
+    "x": 731,
+    "y": 746,
+    "inheritFrom": "holder3-1",
+    "rotation": 90
+  },
+  "holder3-6": {
+    "type": "holder",
+    "id": "holder3-6",
+    "x": 642,
+    "y": 746,
+    "inheritFrom": "holder3-1",
+    "rotation": 90
+  },
+  "holder3-7": {
+    "type": "holder",
+    "id": "holder3-7",
+    "x": 573,
+    "y": 782,
+    "inheritFrom": "holder3-1"
+  },
+  "holder3-8": {
+    "type": "holder",
+    "id": "holder3-8",
+    "x": 642,
+    "y": 812,
+    "inheritFrom": "holder3-1",
+    "rotation": 90
+  },
+  "holder3-9": {
+    "type": "holder",
+    "id": "holder3-9",
+    "x": 731,
+    "y": 812,
+    "inheritFrom": "holder3-1",
+    "rotation": 90
+  },
+  "holder3-10": {
+    "type": "holder",
+    "id": "holder3-10",
+    "x": 821,
+    "y": 812,
+    "inheritFrom": "holder3-1",
+    "rotation": 90
+  },
+  "holder3-11": {
+    "type": "holder",
+    "id": "holder3-11",
+    "x": 910,
+    "y": 812,
+    "inheritFrom": "holder3-1",
+    "rotation": 90
+  },
+  "holder3-12": {
+    "type": "holder",
+    "id": "holder3-12",
+    "x": 999,
+    "y": 812,
+    "inheritFrom": "holder3-1",
+    "rotation": 90
+  },
+  "holder3-13": {
+    "type": "holder",
+    "id": "holder3-13",
+    "x": 1089,
+    "y": 812,
+    "inheritFrom": "holder3-1",
+    "rotation": 90
+  },
+  "holder4-1": {
+    "type": "holder",
+    "id": "holder4-1",
+    "x": 770,
+    "y": 474,
+    "linkedToSeat": "seat4",
+    "inheritFrom": "holder0",
+    "rotation": 45
+  },
+  "holder4-2": {
+    "type": "holder",
+    "id": "holder4-2",
+    "x": 707,
+    "y": 536,
+    "inheritFrom": "holder4-1"
+  },
+  "holder4-3": {
+    "type": "holder",
+    "id": "holder4-3",
+    "x": 643,
+    "y": 598,
+    "inheritFrom": "holder4-1"
+  },
+  "holder4-4": {
+    "type": "holder",
+    "id": "holder4-4",
+    "x": 580,
+    "y": 660,
+    "inheritFrom": "holder4-1"
+  },
+  "holder4-5": {
+    "type": "holder",
+    "id": "holder4-5",
+    "x": 517,
+    "y": 722,
+    "inheritFrom": "holder4-1"
+  },
+  "holder4-6": {
+    "type": "holder",
+    "id": "holder4-6",
+    "x": 454,
+    "y": 785,
+    "inheritFrom": "holder4-1"
+  },
+  "holder4-7": {
+    "type": "holder",
+    "id": "holder4-7",
+    "x": 361,
+    "y": 812,
+    "inheritFrom": "holder4-1",
+    "rotation": 90
+  },
+  "holder4-8": {
+    "type": "holder",
+    "id": "holder4-8",
+    "x": 272,
+    "y": 812,
+    "inheritFrom": "holder4-1",
+    "rotation": 90
+  },
+  "holder4-9": {
+    "type": "holder",
+    "id": "holder4-9",
+    "x": 182,
+    "y": 812,
+    "inheritFrom": "holder4-1",
+    "rotation": 90
+  },
+  "holder4-10": {
+    "type": "holder",
+    "id": "holder4-10",
+    "x": 161,
+    "y": 749,
+    "inheritFrom": "holder4-1",
+    "rotation": 0
+  },
+  "holder4-11": {
+    "type": "holder",
+    "id": "holder4-11",
+    "x": 229,
+    "y": 728,
+    "inheritFrom": "holder4-1",
+    "rotation": 90
+  },
+  "holder4-12": {
+    "type": "holder",
+    "id": "holder4-12",
+    "x": 318,
+    "y": 728,
+    "inheritFrom": "holder4-1",
+    "rotation": 90
+  },
+  "holder4-13": {
+    "type": "holder",
+    "id": "holder4-13",
+    "x": 405,
+    "y": 728,
+    "inheritFrom": "holder4-1",
+    "rotation": 90
+  },
+  "holder5-1": {
+    "type": "holder",
+    "id": "holder5-1",
+    "x": 739,
+    "y": 405,
+    "linkedToSeat": "seat5",
+    "inheritFrom": "holder0"
+  },
+  "holder5-2": {
+    "type": "holder",
+    "id": "holder5-2",
+    "x": 650,
+    "y": 405,
+    "inheritFrom": "holder5-1"
+  },
+  "holder5-3": {
+    "type": "holder",
+    "id": "holder5-3",
+    "x": 561,
+    "y": 405,
+    "inheritFrom": "holder5-1"
+  },
+  "holder5-4": {
+    "type": "holder",
+    "id": "holder5-4",
+    "x": 472,
+    "y": 405,
+    "inheritFrom": "holder5-1"
+  },
+  "holder5-5": {
+    "type": "holder",
+    "id": "holder5-5",
+    "x": 383,
+    "y": 405,
+    "inheritFrom": "holder5-1"
+  },
+  "holder5-6": {
+    "type": "holder",
+    "id": "holder5-6",
+    "x": 293,
+    "y": 405,
+    "inheritFrom": "holder5-1"
+  },
+  "holder5-7": {
+    "type": "holder",
+    "id": "holder5-7",
+    "x": 224,
+    "y": 425,
+    "inheritFrom": "holder5-1",
+    "rotation": 0
+  },
+  "holder5-8": {
+    "type": "holder",
+    "id": "holder5-8",
+    "x": 243,
+    "y": 493,
+    "inheritFrom": "holder5-1"
+  },
+  "holder5-9": {
+    "type": "holder",
+    "id": "holder5-9",
+    "x": 333,
+    "y": 493,
+    "inheritFrom": "holder5-1"
+  },
+  "holder5-10": {
+    "type": "holder",
+    "id": "holder5-10",
+    "x": 423,
+    "y": 493,
+    "inheritFrom": "holder5-1"
+  },
+  "holder5-11": {
+    "type": "holder",
+    "id": "holder5-11",
+    "x": 493,
+    "y": 514,
+    "inheritFrom": "holder5-1",
+    "rotation": 0
+  },
+  "holder5-12": {
+    "type": "holder",
+    "id": "holder5-12",
+    "x": 473.21,
+    "y": 582,
+    "inheritFrom": "holder5-1"
+  },
+  "holder5-13": {
+    "type": "holder",
+    "id": "holder5-13",
+    "x": 383.56,
+    "y": 582,
+    "inheritFrom": "holder5-1"
+  },
+  "holder6-1": {
+    "type": "holder",
+    "id": "holder6-1",
+    "x": 770,
+    "y": 334,
+    "width": 40,
+    "linkedToSeat": "seat6",
+    "inheritFrom": "holder0",
+    "rotation": -45
+  },
+  "holder6-2": {
+    "type": "holder",
+    "id": "holder6-2",
+    "x": 707,
+    "y": 271,
+    "inheritFrom": "holder6-1"
+  },
+  "holder6-3": {
+    "type": "holder",
+    "id": "holder6-3",
+    "x": 643,
+    "y": 208,
+    "inheritFrom": "holder6-1"
+  },
+  "holder6-4": {
+    "type": "holder",
+    "id": "holder6-4",
+    "x": 580,
+    "y": 145,
+    "inheritFrom": "holder6-1"
+  },
+  "holder6-5": {
+    "type": "holder",
+    "id": "holder6-5",
+    "x": 517,
+    "y": 83,
+    "inheritFrom": "holder6-1"
+  },
+  "holder6-6": {
+    "type": "holder",
+    "id": "holder6-6",
+    "x": 454,
+    "y": 20,
+    "inheritFrom": "holder6-1"
+  },
+  "holder6-7": {
+    "type": "holder",
+    "id": "holder6-7",
+    "x": 366.01,
+    "y": -10,
+    "inheritFrom": "holder6-1",
+    "rotation": 90
+  },
+  "holder6-8": {
+    "type": "holder",
+    "id": "holder6-8",
+    "x": 276.51,
+    "y": -10,
+    "inheritFrom": "holder6-1",
+    "rotation": 90
+  },
+  "holder6-9": {
+    "type": "holder",
+    "id": "holder6-9",
+    "x": 187.01,
+    "y": -10,
+    "inheritFrom": "holder6-1",
+    "rotation": 90
+  },
+  "holder6-10": {
+    "type": "holder",
+    "id": "holder6-10",
+    "x": 166,
+    "y": 56,
+    "inheritFrom": "holder6-1",
+    "rotation": 0
+  },
+  "holder6-11": {
+    "type": "holder",
+    "id": "holder6-11",
+    "x": 187,
+    "y": 126,
+    "inheritFrom": "holder6-1",
+    "rotation": 90
+  },
+  "holder6-12": {
+    "type": "holder",
+    "id": "holder6-12",
+    "x": 276,
+    "y": 126,
+    "inheritFrom": "holder6-1",
+    "rotation": 90
+  },
+  "holder6-13": {
+    "type": "holder",
+    "id": "holder6-13",
+    "x": 366,
+    "y": 126,
+    "inheritFrom": "holder6-1",
+    "rotation": 90
+  },
+  "holder7-1": {
+    "type": "holder",
+    "id": "holder7-1",
+    "x": 840,
+    "y": 305,
+    "linkedToSeat": "seat7",
+    "inheritFrom": "holder0",
+    "rotation": 0
+  },
+  "holder7-2": {
+    "type": "holder",
+    "id": "holder7-2",
+    "x": 840,
+    "y": 216,
+    "inheritFrom": "holder7-1"
+  },
+  "holder7-3": {
+    "type": "holder",
+    "id": "holder7-3",
+    "x": 840,
+    "y": 127,
+    "inheritFrom": "holder7-1"
+  },
+  "holder7-4": {
+    "type": "holder",
+    "id": "holder7-4",
+    "x": 858,
+    "y": 58,
+    "inheritFrom": "holder7-1",
+    "rotation": 90
+  },
+  "holder7-5": {
+    "type": "holder",
+    "id": "holder7-5",
+    "x": 947,
+    "y": 58,
+    "inheritFrom": "holder7-1",
+    "rotation": 90
+  },
+  "holder7-6": {
+    "type": "holder",
+    "id": "holder7-6",
+    "x": 1037,
+    "y": 58,
+    "inheritFrom": "holder7-1",
+    "rotation": 90
+  },
+  "holder7-7": {
+    "type": "holder",
+    "id": "holder7-7",
+    "x": 1106,
+    "y": 25,
+    "inheritFrom": "holder7-1"
+  },
+  "holder7-8": {
+    "type": "holder",
+    "id": "holder7-8",
+    "x": 1037,
+    "y": -10,
+    "inheritFrom": "holder7-1",
+    "rotation": 90
+  },
+  "holder7-9": {
+    "type": "holder",
+    "id": "holder7-9",
+    "x": 947.99,
+    "y": -10,
+    "inheritFrom": "holder7-1",
+    "rotation": 90
+  },
+  "holder7-10": {
+    "type": "holder",
+    "id": "holder7-10",
+    "x": 858.83,
+    "y": -10,
+    "inheritFrom": "holder7-1",
+    "rotation": 90
+  },
+  "holder7-11": {
+    "type": "holder",
+    "id": "holder7-11",
+    "x": 769.75,
+    "y": -10,
+    "inheritFrom": "holder7-1",
+    "rotation": 90
+  },
+  "holder7-12": {
+    "type": "holder",
+    "id": "holder7-12",
+    "x": 680.28,
+    "y": -10,
+    "inheritFrom": "holder7-1",
+    "rotation": 90
+  },
+  "holder7-13": {
+    "type": "holder",
+    "id": "holder7-13",
+    "x": 591.62,
+    "y": -10,
+    "inheritFrom": "holder7-1",
+    "rotation": 90
+  },
+  "holder8-1": {
+    "type": "holder",
+    "id": "holder8-1",
+    "x": 909,
+    "y": 335,
+    "width": 40,
+    "linkedToSeat": "seat8",
+    "inheritFrom": "holder0",
+    "rotation": 45
+  },
+  "holder8-2": {
+    "type": "holder",
+    "id": "holder8-2",
+    "x": 971,
+    "y": 272,
+    "inheritFrom": "holder8-1"
+  },
+  "holder8-3": {
+    "type": "holder",
+    "id": "holder8-3",
+    "x": 1034,
+    "y": 209,
+    "inheritFrom": "holder8-1"
+  },
+  "holder8-4": {
+    "type": "holder",
+    "id": "holder8-4",
+    "x": 1097,
+    "y": 146,
+    "inheritFrom": "holder8-1"
+  },
+  "holder8-5": {
+    "type": "holder",
+    "id": "holder8-5",
+    "x": 1160,
+    "y": 83,
+    "inheritFrom": "holder8-1"
+  },
+  "holder8-6": {
+    "type": "holder",
+    "id": "holder8-6",
+    "x": 1223,
+    "y": 20,
+    "inheritFrom": "holder8-1"
+  },
+  "holder8-7": {
+    "type": "holder",
+    "id": "holder8-7",
+    "x": 1314.76,
+    "y": -10,
+    "inheritFrom": "holder8-1",
+    "rotation": 90
+  },
+  "holder8-8": {
+    "type": "holder",
+    "id": "holder8-8",
+    "x": 1403,
+    "y": -10,
+    "inheritFrom": "holder8-1",
+    "rotation": 90
+  },
+  "holder8-9": {
+    "type": "holder",
+    "id": "holder8-9",
+    "x": 1491,
+    "y": -10,
+    "inheritFrom": "holder8-1",
+    "rotation": 90
+  },
+  "holder8-10": {
+    "type": "holder",
+    "id": "holder8-10",
+    "x": 1512,
+    "y": 56,
+    "inheritFrom": "holder8-1",
+    "rotation": 0
+  },
+  "holder8-11": {
+    "type": "holder",
+    "id": "holder8-11",
+    "x": 1491,
+    "y": 126,
+    "inheritFrom": "holder8-1",
+    "rotation": 90
+  },
+  "holder8-12": {
+    "type": "holder",
+    "id": "holder8-12",
+    "x": 1402,
+    "y": 126,
+    "inheritFrom": "holder8-1",
+    "rotation": 90
+  },
+  "holder8-13": {
+    "type": "holder",
+    "id": "holder8-13",
+    "x": 1314,
+    "y": 126,
+    "inheritFrom": "holder8-1",
+    "rotation": 90
+  },
+  "holderMT1": {
+    "type": "holder",
+    "id": "holderMT1",
+    "x": 76,
+    "y": 54,
+    "width": 40,
+    "height": 80,
+    "z": 23079,
+    "inheritChildZ": true,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "movableInEdit": false,
+    "css": "background-color: #ffffff80 "
+  },
+  "holderMT2": {
+    "type": "holder",
+    "id": "holderMT2",
+    "x": 76,
+    "y": 143,
+    "inheritFrom": "holderMT1"
+  },
+  "holderMT3": {
+    "type": "holder",
+    "id": "holderMT3",
+    "x": 76,
+    "y": 231,
+    "inheritFrom": "holderMT1"
+  },
+  "holderMT4": {
+    "type": "holder",
+    "id": "holderMT4",
+    "x": 76,
+    "y": 320,
+    "inheritFrom": "holderMT1"
+  },
+  "holderMT5": {
+    "type": "holder",
+    "id": "holderMT5",
+    "x": 76,
+    "y": 408,
+    "inheritFrom": "holderMT1"
+  },
+  "holderMT6": {
+    "type": "holder",
+    "id": "holderMT6",
+    "x": 76,
+    "y": 496,
+    "inheritFrom": "holderMT1"
+  },
+  "holderMT7": {
+    "type": "holder",
+    "id": "holderMT7",
+    "x": 76,
+    "y": 585,
+    "inheritFrom": "holderMT1"
+  },
+  "holderMT8": {
+    "type": "holder",
+    "id": "holderMT8",
+    "x": 76,
+    "y": 673,
+    "inheritFrom": "holderMT1"
+  },
+  "holderMT9": {
+    "type": "holder",
+    "id": "holderMT9",
+    "x": 76,
+    "y": 762,
+    "inheritFrom": "holderMT1"
+  },
+  "holderMT10": {
+    "type": "holder",
+    "id": "holderMT10",
+    "x": 30,
+    "y": 806,
+    "inheritFrom": "holderMT1",
+    "rotation": -45
+  },
+  "holderMT11": {
+    "type": "holder",
+    "id": "holderMT11",
+    "x": 18,
+    "y": 718,
+    "inheritFrom": "holderMT1"
+  },
+  "holderMT12": {
+    "type": "holder",
+    "id": "holderMT12",
+    "x": 18,
+    "y": 629,
+    "inheritFrom": "holderMT1"
+  },
+  "holderMT13": {
+    "type": "holder",
+    "id": "holderMT13",
+    "x": 18,
+    "y": 541,
+    "inheritFrom": "holderMT1"
+  },
+  "holderMT14": {
+    "type": "holder",
+    "id": "holderMT14",
+    "x": 18,
+    "y": 452,
+    "inheritFrom": "holderMT1"
+  },
+  "holderMT15": {
+    "type": "holder",
+    "id": "holderMT15",
+    "x": 18,
+    "y": 364,
+    "inheritFrom": "holderMT1"
+  },
+  "holderMT16": {
+    "type": "holder",
+    "id": "holderMT16",
+    "x": 18,
+    "y": 275,
+    "inheritFrom": "holderMT1"
+  },
+  "holderMT17": {
+    "type": "holder",
+    "id": "holderMT17",
+    "x": 18,
+    "y": 187,
+    "inheritFrom": "holderMT1"
+  },
+  "holderMT18": {
+    "type": "holder",
+    "id": "holderMT18",
+    "x": 18,
+    "y": 98,
+    "inheritFrom": "holderMT1"
+  },
+  "holderMT19": {
+    "type": "holder",
+    "id": "holderMT19",
+    "x": 18,
+    "y": 10,
+    "inheritFrom": "holderMT1"
+  },
+  "seat2": {
+    "type": "seat",
+    "id": "seat2",
+    "x": 1249,
+    "y": 690,
+    "z": 23032,
+    "index": 2,
+    "movableInEdit": false,
+    "colorChangeRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY player}",
+        "relation": "!=",
+        "operand2": "",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "train2"
+            ],
+            "property": "trainColor",
+            "value": "${PROPERTY color}"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "train2"
+            ],
+            "property": "trainColor",
+            "value": "white"
+          }
+        ]
+      }
+    ],
+    "hideWhenUnused": true
+  },
+  "seat3": {
+    "type": "seat",
+    "id": "seat3",
+    "x": 896,
+    "y": 771,
+    "z": 23046,
+    "index": 3,
+    "colorChangeRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY player}",
+        "relation": "!=",
+        "operand2": "",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "train3"
+            ],
+            "property": "trainColor",
+            "value": "${PROPERTY color}"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "train3"
+            ],
+            "property": "trainColor",
+            "value": "white"
+          }
+        ]
+      }
+    ],
+    "movableInEdit": false,
+    "hideWhenUnused": true
+  },
+  "seat4": {
+    "type": "seat",
+    "id": "seat4",
+    "x": 296,
+    "z": 23031,
+    "index": 4,
+    "y": 690,
+    "movableInEdit": false,
+    "colorChangeRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY player}",
+        "relation": "!=",
+        "operand2": "",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "train4"
+            ],
+            "property": "trainColor",
+            "value": "${PROPERTY color}"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "train4"
+            ],
+            "property": "trainColor",
+            "value": "white"
+          }
+        ]
+      }
+    ],
+    "hideWhenUnused": true
+  },
+  "seat5": {
+    "type": "seat",
+    "id": "seat5",
+    "x": 276,
+    "z": 23033,
+    "index": 5,
+    "y": 369,
+    "movableInEdit": false,
+    "colorChangeRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY player}",
+        "relation": "!=",
+        "operand2": "",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "train5"
+            ],
+            "property": "trainColor",
+            "value": "${PROPERTY color}"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "train5"
+            ],
+            "property": "trainColor",
+            "value": "white"
+          }
+        ]
+      }
+    ],
+    "hideWhenUnused": true
+  },
+  "seat6": {
+    "type": "seat",
+    "id": "seat6",
+    "x": 259,
+    "z": 23034,
+    "index": 6,
+    "y": 90,
+    "movableInEdit": false,
+    "colorChangeRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY player}",
+        "relation": "!=",
+        "operand2": "",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "train6"
+            ],
+            "property": "trainColor",
+            "value": "${PROPERTY color}"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "train6"
+            ],
+            "property": "trainColor",
+            "value": "white"
+          }
+        ]
+      }
+    ],
+    "hideWhenUnused": true
+  },
+  "seat7": {
+    "type": "seat",
+    "id": "seat7",
+    "x": 661,
+    "z": 23035,
+    "index": 7,
+    "y": 54,
+    "movableInEdit": false,
+    "colorChangeRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY player}",
+        "relation": "!=",
+        "operand2": "",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "train7"
+            ],
+            "property": "trainColor",
+            "value": "${PROPERTY color}"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "train7"
+            ],
+            "property": "trainColor",
+            "value": "white"
+          }
+        ]
+      }
+    ],
+    "hideWhenUnused": true
+  },
+  "seat8": {
+    "type": "seat",
+    "id": "seat8",
+    "x": 1297,
+    "z": 23036,
+    "index": 8,
+    "y": 90,
+    "movableInEdit": false,
+    "colorChangeRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY player}",
+        "relation": "!=",
+        "operand2": "",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "train8"
+            ],
+            "property": "trainColor",
+            "value": "${PROPERTY color}"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "train8"
+            ],
+            "property": "trainColor",
+            "value": "white"
+          }
+        ]
+      }
+    ],
+    "hideWhenUnused": true
+  },
+  "train1": {
+    "id": "train1",
+    "x": 1445,
+    "y": 369,
+    "width": 50,
+    "height": 50,
+    "z": 26,
+    "image": "/assets/1589254921_44073",
+    "svgReplaces": {
+      "currentColor": "trainColor"
+    },
+    "trainColor": "white",
+    "linkedToSeat": "seat1",
+    "resetProperties": {
+      "x": 1445,
+      "y": 369
+    }
+  },
+  "train2": {
+    "id": "train2",
+    "x": 1419,
+    "y": 692,
+    "width": 50,
+    "height": 50,
+    "z": 18,
+    "image": "/assets/1589254921_44073",
+    "svgReplaces": {
+      "currentColor": "trainColor"
+    },
+    "trainColor": "white",
+    "linkedToSeat": "seat2",
+    "resetProperties": {
+      "x": 1419,
+      "y": 692
+    }
+  },
+  "train3": {
+    "id": "train3",
+    "x": 1072,
+    "y": 771,
+    "width": 50,
+    "height": 50,
+    "z": 19,
+    "image": "/assets/1589254921_44073",
+    "svgReplaces": {
+      "currentColor": "trainColor"
+    },
+    "trainColor": "white",
+    "linkedToSeat": "seat3",
+    "resetProperties": {
+      "x": 1072,
+      "y": 771
+    }
+  },
+  "train4": {
+    "id": "train4",
+    "x": 238,
+    "y": 689,
+    "width": 50,
+    "height": 50,
+    "z": 20,
+    "image": "/assets/1589254921_44073",
+    "svgReplaces": {
+      "currentColor": "trainColor"
+    },
+    "trainColor": "white",
+    "linkedToSeat": "seat4",
+    "resetProperties": {
+      "x": 238,
+      "y": 689
+    }
+  },
+  "train5": {
+    "id": "train5",
+    "x": 220,
+    "y": 366,
+    "width": 50,
+    "height": 50,
+    "z": 21,
+    "image": "/assets/1589254921_44073",
+    "svgReplaces": {
+      "currentColor": "trainColor"
+    },
+    "trainColor": "white",
+    "linkedToSeat": "seat5",
+    "resetProperties": {
+      "x": 220,
+      "y": 366
+    }
+  },
+  "train6": {
+    "id": "train6",
+    "x": 427,
+    "y": 90,
+    "width": 50,
+    "height": 50,
+    "z": 22,
+    "image": "/assets/1589254921_44073",
+    "svgReplaces": {
+      "currentColor": "trainColor"
+    },
+    "trainColor": "white",
+    "linkedToSeat": "seat6",
+    "resetProperties": {
+      "x": 427,
+      "y": 90
+    }
+  },
+  "train7": {
+    "id": "train7",
+    "x": 602,
+    "y": 57,
+    "width": 50,
+    "height": 50,
+    "z": 23,
+    "image": "/assets/1589254921_44073",
+    "svgReplaces": {
+      "currentColor": "trainColor"
+    },
+    "trainColor": "white",
+    "linkedToSeat": "seat7",
+    "resetProperties": {
+      "x": 602,
+      "y": 57
+    }
+  },
+  "train8": {
+    "id": "train8",
+    "x": 1242,
+    "y": 92,
+    "width": 50,
+    "height": 50,
+    "z": 24,
+    "image": "/assets/1589254921_44073",
+    "svgReplaces": {
+      "currentColor": "trainColor"
+    },
+    "trainColor": "white",
+    "linkedToSeat": "seat8",
+    "resetProperties": {
+      "x": 1242,
+      "y": 92
+    }
+  },
+  "plus1": {
+    "type": "button",
+    "id": "plus1",
+    "x": 179,
+    "y": 922,
+    "width": 50,
+    "height": 50,
+    "z": 23039,
+    "text": "+1",
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "boneyard",
+        "to": "hand",
+        "count": 1
+      }
+    ],
+    "css": "font-size: 28px; ",
+    "movableInEdit": false
+  },
+  "plus2": {
+    "type": "button",
+    "id": "plus2",
+    "x": 109,
+    "y": 922,
+    "width": 50,
+    "height": 50,
+    "z": 23039,
+    "text": "+5",
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "boneyard",
+        "to": "hand",
+        "count": 5
+      }
+    ],
+    "css": "font-size: 28px; ",
+    "movableInEdit": false
+  },
+  "ne6n": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "0-0",
+    "id": "ne6n",
+    "z": 58283,
+    "parent": "dh62",
+    "customState": 3
+  },
+  "z3u6": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "0-1",
+    "id": "z3u6",
+    "z": 58247,
+    "parent": "dh62",
+    "customState": 3
+  },
+  "tbqh": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "0-2",
+    "id": "tbqh",
+    "z": 58266,
+    "parent": "dh62",
+    "customState": 3
+  },
+  "7wof": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "0-3",
+    "id": "7wof",
+    "z": 58331,
+    "parent": "dh62",
+    "customState": 3
+  },
+  "s6fv": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "0-4",
+    "id": "s6fv",
+    "z": 58269,
+    "parent": "dh62",
+    "customState": 3
+  },
+  "ggzt": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "0-5",
+    "id": "ggzt",
+    "z": 58309,
+    "parent": "dh62",
+    "customState": 3
+  },
+  "12ft": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "0-6",
+    "id": "12ft",
+    "z": 58329,
+    "parent": "dh62",
+    "customState": 3
+  },
+  "1swq": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "0-7",
+    "id": "1swq",
+    "z": 58325,
+    "parent": "dh62",
+    "customState": 3
+  },
+  "rt6p": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "0-8",
+    "id": "rt6p",
+    "z": 58261,
+    "parent": "dh62",
+    "customState": 3
+  },
+  "26qo": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "0-9",
+    "id": "26qo",
+    "z": 58268,
+    "parent": "dh62",
+    "customState": 3
+  },
+  "d8kz": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "0-10",
+    "id": "d8kz",
+    "z": 58278,
+    "parent": "dh62",
+    "customState": 3
+  },
+  "jm7p": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "0-11",
+    "id": "jm7p",
+    "z": 58293,
+    "parent": "dh62",
+    "customState": 3
+  },
+  "i03v": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "0-12",
+    "id": "i03v",
+    "z": 58322,
+    "parent": "dh62",
+    "customState": 3
+  },
+  "o42z": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "0-13",
+    "id": "o42z",
+    "z": 57723,
+    "parent": "w9wm",
+    "customState": 3
+  },
+  "ot73": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "0-14",
+    "id": "ot73",
+    "z": 57725,
+    "parent": "w9wm",
+    "customState": 3
+  },
+  "6ors": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "0-15",
+    "id": "6ors",
+    "z": 57727,
+    "parent": "w9wm",
+    "customState": 3
+  },
+  "vaic": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "1-1",
+    "id": "vaic",
+    "z": 58257,
+    "parent": "dh62",
+    "customState": 3
+  },
+  "vi8g": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "1-2",
+    "id": "vi8g",
+    "z": 58263,
+    "parent": "dh62",
+    "customState": 3
+  },
+  "0sw9": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "1-3",
+    "id": "0sw9",
+    "z": 58297,
+    "parent": "dh62",
+    "customState": 3
+  },
+  "0j2d": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "1-4",
+    "id": "0j2d",
+    "z": 58314,
+    "parent": "dh62",
+    "customState": 3
+  },
+  "g8ag": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "1-5",
+    "id": "g8ag",
+    "z": 58308,
+    "parent": "dh62",
+    "customState": 3
+  },
+  "edem": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "1-6",
+    "id": "edem",
+    "z": 58255,
+    "parent": "dh62",
+    "customState": 3
+  },
+  "le2x": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "1-7",
+    "id": "le2x",
+    "z": 58252,
+    "parent": "dh62",
+    "customState": 3
+  },
+  "etjd": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "1-8",
+    "id": "etjd",
+    "z": 58264,
+    "parent": "dh62",
+    "customState": 3
+  },
+  "eg5u": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "1-9",
+    "id": "eg5u",
+    "z": 58274,
+    "parent": "dh62",
+    "customState": 3
+  },
+  "kmid": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "1-10",
+    "id": "kmid",
+    "z": 58299,
+    "parent": "dh62",
+    "customState": 3
+  },
+  "nycx": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "1-11",
+    "id": "nycx",
+    "z": 58328,
+    "parent": "dh62",
+    "customState": 3
+  },
+  "mj3m": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "1-12",
+    "id": "mj3m",
+    "z": 58304,
+    "parent": "dh62",
+    "customState": 3
+  },
+  "iws1": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "1-13",
+    "id": "iws1",
+    "z": 57729,
+    "parent": "w9wm",
+    "customState": 3
+  },
+  "ht2l": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "1-14",
+    "id": "ht2l",
+    "z": 57731,
+    "parent": "w9wm",
+    "customState": 3
+  },
+  "rs0s": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "1-15",
+    "id": "rs0s",
+    "z": 57733,
+    "parent": "w9wm",
+    "customState": 3
+  },
+  "ani2": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "2-2",
+    "id": "ani2",
+    "z": 58321,
+    "parent": "dh62",
+    "customState": 3
+  },
+  "tvpt": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "2-3",
+    "id": "tvpt",
+    "z": 58324,
+    "parent": "dh62",
+    "customState": 3
+  },
+  "yqyd": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "2-4",
+    "id": "yqyd",
+    "z": 58254,
+    "parent": "dh62",
+    "customState": 3
+  },
+  "r8gs": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "2-5",
+    "id": "r8gs",
+    "z": 58298,
+    "parent": "dh62",
+    "customState": 3
+  },
+  "e9v6": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "2-6",
+    "id": "e9v6",
+    "z": 58295,
+    "parent": "dh62",
+    "customState": 3
+  },
+  "dicy": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "2-7",
+    "id": "dicy",
+    "z": 58272,
+    "parent": "dh62",
+    "customState": 3
+  },
+  "clwy": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "2-8",
+    "id": "clwy",
+    "z": 58312,
+    "parent": "dh62",
+    "customState": 3
+  },
+  "szq3": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "2-9",
+    "id": "szq3",
+    "z": 58303,
+    "parent": "dh62",
+    "customState": 3
+  },
+  "8r44": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "2-10",
+    "id": "8r44",
+    "z": 58285,
+    "parent": "dh62",
+    "customState": 3
+  },
+  "epys": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "2-11",
+    "id": "epys",
+    "z": 58276,
+    "parent": "dh62",
+    "customState": 3
+  },
+  "fnh6": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "2-12",
+    "id": "fnh6",
+    "z": 58281,
+    "parent": "dh62",
+    "customState": 3
+  },
+  "6hqv": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "2-13",
+    "id": "6hqv",
+    "z": 57735,
+    "parent": "w9wm",
+    "customState": 3
+  },
+  "35ql": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "2-14",
+    "id": "35ql",
+    "z": 57737,
+    "parent": "w9wm",
+    "customState": 3
+  },
+  "998c": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "2-15",
+    "id": "998c",
+    "z": 57739,
+    "parent": "w9wm",
+    "customState": 3
+  },
+  "k7y7": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "3-3",
+    "id": "k7y7",
+    "z": 58311,
+    "parent": "dh62",
+    "customState": 3
+  },
+  "ob3v": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "3-4",
+    "id": "ob3v",
+    "z": 58327,
+    "parent": "dh62",
+    "customState": 3
+  },
+  "djwm": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "3-5",
+    "id": "djwm",
+    "z": 58253,
+    "parent": "dh62",
+    "customState": 3
+  },
+  "rmoy": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "3-6",
+    "id": "rmoy",
+    "z": 58290,
+    "parent": "dh62",
+    "customState": 3
+  },
+  "u53u": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "3-7",
+    "id": "u53u",
+    "z": 58319,
+    "parent": "dh62",
+    "customState": 3
+  },
+  "7d87": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "3-8",
+    "id": "7d87",
+    "z": 58265,
+    "parent": "dh62",
+    "customState": 3
+  },
+  "wmbx": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "3-9",
+    "id": "wmbx",
+    "z": 58243,
+    "parent": "dh62",
+    "customState": 3
+  },
+  "g26g": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "3-10",
+    "id": "g26g",
+    "z": 58287,
+    "customState": 3,
+    "parent": "dh62"
+  },
+  "qdx1": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "3-11",
+    "id": "qdx1",
+    "z": 58256,
+    "parent": "dh62",
+    "customState": 3
+  },
+  "6u06": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "3-12",
+    "id": "6u06",
+    "z": 58280,
+    "parent": "dh62",
+    "customState": 3
+  },
+  "6w25": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "3-13",
+    "id": "6w25",
+    "z": 57741,
+    "parent": "w9wm",
+    "customState": 3
+  },
+  "zmep": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "3-14",
+    "id": "zmep",
+    "z": 57743,
+    "parent": "w9wm",
+    "customState": 3
+  },
+  "7cbh": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "3-15",
+    "id": "7cbh",
+    "z": 57745,
+    "parent": "w9wm",
+    "customState": 3
+  },
+  "fwz0": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "4-4",
+    "id": "fwz0",
+    "z": 58250,
+    "parent": "dh62",
+    "customState": 3
+  },
+  "nrcj": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "4-5",
+    "id": "nrcj",
+    "z": 58332,
+    "parent": "dh62",
+    "customState": 3
+  },
+  "cbcs": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "4-6",
+    "id": "cbcs",
+    "z": 58286,
+    "parent": "dh62",
+    "customState": 3
+  },
+  "usy4": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "4-7",
+    "id": "usy4",
+    "z": 58259,
+    "parent": "dh62",
+    "customState": 3
+  },
+  "tfu0": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "4-8",
+    "id": "tfu0",
+    "z": 58313,
+    "parent": "dh62",
+    "customState": 3
+  },
+  "9ubz": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "4-9",
+    "id": "9ubz",
+    "z": 58300,
+    "customState": 3,
+    "parent": "dh62"
+  },
+  "8kae": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "4-10",
+    "id": "8kae",
+    "z": 58320,
+    "customState": 3,
+    "parent": "dh62"
+  },
+  "oozo": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "4-11",
+    "id": "oozo",
+    "z": 58323,
+    "parent": "dh62",
+    "customState": 3
+  },
+  "ql4c": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "4-12",
+    "id": "ql4c",
+    "z": 58244,
+    "parent": "dh62",
+    "customState": 3
+  },
+  "rng1": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "4-13",
+    "id": "rng1",
+    "z": 57747,
+    "parent": "w9wm",
+    "customState": 3
+  },
+  "f2kq": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "4-14",
+    "id": "f2kq",
+    "z": 57749,
+    "parent": "w9wm",
+    "customState": 3
+  },
+  "jx8a": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "4-15",
+    "id": "jx8a",
+    "z": 57751,
+    "parent": "w9wm",
+    "customState": 3
+  },
+  "zfkr": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "5-5",
+    "id": "zfkr",
+    "z": 58292,
+    "parent": "dh62",
+    "customState": 3
+  },
+  "4bs3": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "5-6",
+    "id": "4bs3",
+    "z": 58316,
+    "parent": "dh62",
+    "customState": 3
+  },
+  "aacw": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "5-7",
+    "id": "aacw",
+    "z": 58260,
+    "parent": "dh62",
+    "customState": 3
+  },
+  "9hdm": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "5-8",
+    "id": "9hdm",
+    "z": 58317,
+    "parent": "dh62",
+    "customState": 3
+  },
+  "3mz3": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "5-9",
+    "id": "3mz3",
+    "z": 58288,
+    "parent": "dh62",
+    "customState": 3
+  },
+  "kqwg": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "5-10",
+    "id": "kqwg",
+    "z": 58271,
+    "parent": "dh62",
+    "customState": 3
+  },
+  "o72w": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "5-11",
+    "id": "o72w",
+    "z": 58289,
+    "parent": "dh62",
+    "customState": 3
+  },
+  "2rlr": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "5-12",
+    "id": "2rlr",
+    "z": 58245,
+    "parent": "dh62",
+    "customState": 3
+  },
+  "mw05": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "5-13",
+    "id": "mw05",
+    "z": 57753,
+    "parent": "w9wm",
+    "customState": 3
+  },
+  "jmz9": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "5-14",
+    "id": "jmz9",
+    "z": 57755,
+    "parent": "w9wm",
+    "customState": 3
+  },
+  "hw8n": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "5-15",
+    "id": "hw8n",
+    "z": 57757,
+    "parent": "w9wm",
+    "customState": 3
+  },
+  "g66i": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "6-6",
+    "id": "g66i",
+    "z": 58307,
+    "parent": "dh62",
+    "customState": 3
+  },
+  "7gej": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "6-7",
+    "id": "7gej",
+    "z": 58273,
+    "parent": "dh62",
+    "customState": 3
+  },
+  "efwk": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "6-8",
+    "id": "efwk",
+    "z": 58262,
+    "parent": "dh62",
+    "customState": 3
+  },
+  "i9fv": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "6-9",
+    "id": "i9fv",
+    "z": 58246,
+    "parent": "dh62",
+    "customState": 3
+  },
+  "1j64": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "6-10",
+    "id": "1j64",
+    "z": 58277,
+    "parent": "dh62",
+    "customState": 3
+  },
+  "o3cf": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "6-11",
+    "id": "o3cf",
+    "z": 58330,
+    "parent": "dh62",
+    "customState": 3
+  },
+  "vw0a": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "6-12",
+    "id": "vw0a",
+    "z": 58258,
+    "parent": "dh62",
+    "customState": 3
+  },
+  "8cy6": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "6-13",
+    "id": "8cy6",
+    "z": 57759,
+    "parent": "w9wm",
+    "customState": 3
+  },
+  "paw5": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "6-14",
+    "id": "paw5",
+    "z": 57761,
+    "parent": "w9wm",
+    "customState": 3
+  },
+  "f6j1": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "6-15",
+    "id": "f6j1",
+    "z": 57763,
+    "parent": "w9wm",
+    "customState": 3
+  },
+  "k63h": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "7-7",
+    "id": "k63h",
+    "z": 58306,
+    "customState": 3,
+    "parent": "dh62"
+  },
+  "5yeo": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "7-8",
+    "id": "5yeo",
+    "z": 58305,
+    "parent": "dh62",
+    "customState": 3
+  },
+  "xx11": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "7-9",
+    "id": "xx11",
+    "z": 58333,
+    "parent": "dh62",
+    "customState": 3
+  },
+  "3n8c": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "7-10",
+    "id": "3n8c",
+    "z": 58326,
+    "parent": "dh62",
+    "customState": 3
+  },
+  "rwkn": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "7-11",
+    "id": "rwkn",
+    "z": 58301,
+    "parent": "dh62",
+    "customState": 3
+  },
+  "g4fb": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "7-12",
+    "id": "g4fb",
+    "z": 58302,
+    "parent": "dh62",
+    "customState": 3
+  },
+  "xryr": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "7-13",
+    "id": "xryr",
+    "z": 57765,
+    "parent": "w9wm",
+    "customState": 3
+  },
+  "gt9u": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "7-14",
+    "id": "gt9u",
+    "z": 57767,
+    "parent": "w9wm",
+    "customState": 3
+  },
+  "ifuq": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "7-15",
+    "id": "ifuq",
+    "z": 57769,
+    "parent": "w9wm",
+    "customState": 3
+  },
+  "qfct": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "8-8",
+    "id": "qfct",
+    "z": 58275,
+    "parent": "dh62",
+    "customState": 3
+  },
+  "qxd2": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "8-9",
+    "id": "qxd2",
+    "z": 58249,
+    "parent": "dh62",
+    "customState": 3
+  },
+  "ev42": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "8-10",
+    "id": "ev42",
+    "z": 58294,
+    "parent": "dh62",
+    "customState": 3
+  },
+  "sy90": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "8-11",
+    "id": "sy90",
+    "z": 58279,
+    "parent": "dh62",
+    "customState": 3
+  },
+  "okv3": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "8-12",
+    "id": "okv3",
+    "z": 58318,
+    "parent": "dh62",
+    "customState": 3
+  },
+  "tsgg": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "8-13",
+    "id": "tsgg",
+    "z": 57771,
+    "parent": "w9wm",
+    "customState": 3
+  },
+  "3l7s": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "8-14",
+    "id": "3l7s",
+    "z": 57773,
+    "parent": "w9wm",
+    "customState": 3
+  },
+  "92vf": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "8-15",
+    "id": "92vf",
+    "z": 57775,
+    "parent": "w9wm",
+    "customState": 3
+  },
+  "jutm": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "9-9",
+    "id": "jutm",
+    "z": 58251,
+    "customState": 3,
+    "parent": "dh62"
+  },
+  "s7sh": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "9-10",
+    "id": "s7sh",
+    "z": 58267,
+    "parent": "dh62",
+    "customState": 3
+  },
+  "mr8f": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "9-11",
+    "id": "mr8f",
+    "z": 58248,
+    "parent": "dh62",
+    "customState": 3
+  },
+  "w8s6": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "9-12",
+    "id": "w8s6",
+    "z": 58296,
+    "parent": "dh62",
+    "customState": 3
+  },
+  "6lfe": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "9-13",
+    "id": "6lfe",
+    "z": 57777,
+    "parent": "w9wm",
+    "customState": 3
+  },
+  "d4ju": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "9-14",
+    "id": "d4ju",
+    "z": 57779,
+    "parent": "w9wm",
+    "customState": 3
+  },
+  "31hh": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "9-15",
+    "id": "31hh",
+    "z": 57781,
+    "parent": "w9wm",
+    "customState": 3
+  },
+  "97ea": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "10-10",
+    "id": "97ea",
+    "z": 58291,
+    "customState": 3,
+    "parent": "dh62"
+  },
+  "lmkr": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "10-11",
+    "id": "lmkr",
+    "z": 58315,
+    "parent": "dh62",
+    "customState": 3
+  },
+  "2wc1": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "10-12",
+    "id": "2wc1",
+    "z": 58282,
+    "parent": "dh62",
+    "customState": 3
+  },
+  "z2hg": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "10-13",
+    "id": "z2hg",
+    "z": 57783,
+    "parent": "w9wm",
+    "customState": 3
+  },
+  "x5o2": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "10-14",
+    "id": "x5o2",
+    "z": 57785,
+    "parent": "w9wm",
+    "customState": 3
+  },
+  "pmzl": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "10-15",
+    "id": "pmzl",
+    "z": 57787,
+    "parent": "w9wm",
+    "customState": 3
+  },
+  "oise": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "11-11",
+    "id": "oise",
+    "z": 58310,
+    "parent": "dh62",
+    "customState": 3
+  },
+  "5hnv": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "11-12",
+    "id": "5hnv",
+    "z": 58270,
+    "parent": "dh62",
+    "customState": 3
+  },
+  "6ft1": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "11-13",
+    "id": "6ft1",
+    "z": 57789,
+    "parent": "w9wm",
+    "customState": 3
+  },
+  "as7j": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "11-14",
+    "id": "as7j",
+    "z": 57791,
+    "parent": "w9wm",
+    "customState": 3
+  },
+  "glre": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "11-15",
+    "id": "glre",
+    "z": 57793,
+    "parent": "w9wm",
+    "customState": 3
+  },
+  "014b": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "12-12",
+    "id": "014b",
+    "z": 58284,
+    "parent": "dh62",
+    "customState": 3
+  },
+  "xi0o": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "12-13",
+    "id": "xi0o",
+    "z": 57795,
+    "parent": "w9wm",
+    "customState": 3
+  },
+  "uff1": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "12-14",
+    "id": "uff1",
+    "z": 57797,
+    "parent": "w9wm",
+    "customState": 3
+  },
+  "0dzf": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "12-15",
+    "id": "0dzf",
+    "z": 57799,
+    "parent": "w9wm",
+    "customState": 3
+  },
+  "mpfv": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "13-13",
+    "id": "mpfv",
+    "z": 57801,
+    "parent": "w9wm",
+    "customState": 3
+  },
+  "scrf": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "13-14",
+    "id": "scrf",
+    "z": 57803,
+    "parent": "w9wm",
+    "customState": 3
+  },
+  "ygd2": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "13-15",
+    "id": "ygd2",
+    "z": 57805,
+    "parent": "w9wm",
+    "customState": 3
+  },
+  "3ztm": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "14-14",
+    "id": "3ztm",
+    "z": 57807,
+    "parent": "w9wm",
+    "customState": 3
+  },
+  "lumy": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "14-15",
+    "id": "lumy",
+    "z": 57809,
+    "parent": "w9wm",
+    "customState": 3
+  },
+  "flny": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "15-15",
+    "id": "flny",
+    "z": 57811,
+    "parent": "w9wm",
+    "customState": 3
+  },
+  "g222": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "0-0B",
+    "id": "g222",
+    "z": 54281,
+    "parent": "lj1i",
+    "customState": 3
+  },
+  "sby6": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "0-1B",
+    "id": "sby6",
+    "z": 54283,
+    "parent": "lj1i",
+    "customState": 3
+  },
+  "17hn": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "0-2B",
+    "id": "17hn",
+    "z": 54285,
+    "parent": "lj1i",
+    "customState": 3
+  },
+  "6eh0": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "0-3B",
+    "id": "6eh0",
+    "z": 54287,
+    "parent": "lj1i",
+    "customState": 3
+  },
+  "p3ja": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "0-4B",
+    "id": "p3ja",
+    "z": 54289,
+    "parent": "lj1i",
+    "customState": 3
+  },
+  "k8gc": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "0-5B",
+    "id": "k8gc",
+    "z": 54291,
+    "parent": "lj1i",
+    "customState": 3
+  },
+  "1iy5": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "0-6B",
+    "id": "1iy5",
+    "z": 54293,
+    "parent": "lj1i",
+    "customState": 3
+  },
+  "so1a": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "1-1B",
+    "id": "so1a",
+    "z": 54295,
+    "parent": "lj1i",
+    "customState": 3
+  },
+  "k999": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "1-2B",
+    "id": "k999",
+    "z": 54297,
+    "parent": "lj1i",
+    "customState": 3
+  },
+  "j99p": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "1-3B",
+    "id": "j99p",
+    "z": 54299,
+    "parent": "lj1i",
+    "customState": 3
+  },
+  "omtr": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "1-4B",
+    "id": "omtr",
+    "z": 54301,
+    "parent": "lj1i",
+    "customState": 3
+  },
+  "5bau": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "1-5B",
+    "id": "5bau",
+    "z": 54303,
+    "parent": "lj1i",
+    "customState": 3
+  },
+  "1c2q": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "1-6B",
+    "id": "1c2q",
+    "z": 54305,
+    "parent": "lj1i",
+    "customState": 3
+  },
+  "2xn6": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "2-2B",
+    "id": "2xn6",
+    "z": 54307,
+    "parent": "lj1i",
+    "customState": 3
+  },
+  "7k3o": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "2-3B",
+    "id": "7k3o",
+    "z": 54309,
+    "parent": "lj1i",
+    "customState": 3
+  },
+  "xyty": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "2-4B",
+    "id": "xyty",
+    "z": 54311,
+    "parent": "lj1i",
+    "customState": 3
+  },
+  "loe9": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "2-5B",
+    "id": "loe9",
+    "z": 54313,
+    "parent": "lj1i",
+    "customState": 3
+  },
+  "hvot": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "2-6B",
+    "id": "hvot",
+    "z": 54315,
+    "parent": "lj1i",
+    "customState": 3
+  },
+  "p0eb": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "3-3B",
+    "id": "p0eb",
+    "z": 54317,
+    "parent": "lj1i",
+    "customState": 3
+  },
+  "f8es": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "3-4B",
+    "id": "f8es",
+    "z": 54319,
+    "parent": "lj1i",
+    "customState": 3
+  },
+  "8kuy": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "3-5B",
+    "id": "8kuy",
+    "z": 54321,
+    "parent": "lj1i",
+    "customState": 3
+  },
+  "t28t": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "3-6B",
+    "id": "t28t",
+    "z": 54323,
+    "parent": "lj1i",
+    "customState": 3
+  },
+  "614k": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "4-4B",
+    "id": "614k",
+    "z": 54325,
+    "parent": "lj1i",
+    "customState": 3
+  },
+  "u6k3": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "4-5B",
+    "id": "u6k3",
+    "z": 54327,
+    "parent": "lj1i",
+    "customState": 3
+  },
+  "kak5": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "4-6B",
+    "id": "kak5",
+    "z": 54329,
+    "parent": "lj1i",
+    "customState": 3
+  },
+  "d4b3": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "5-5B",
+    "id": "d4b3",
+    "z": 54331,
+    "parent": "lj1i",
+    "customState": 3
+  },
+  "x9th": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "5-6B",
+    "id": "x9th",
+    "z": 54333,
+    "parent": "lj1i",
+    "customState": 3
+  },
+  "nvkz": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "6-6B",
+    "id": "nvkz",
+    "z": 54335,
+    "parent": "lj1i",
+    "customState": 3
+  },
+  "round": {
+    "type": "button",
+    "id": "round",
+    "x": 1525,
+    "z": 23059,
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "header": "Starting next hand...",
+        "fields": [
+          {
+            "type": "text",
+            "text": "Do you want to start the next hand?"
+          }
+        ],
+        "confirmButtonText": "Yes",
+        "cancelButtonText": "No",
+        "cancelButtonIcon": "close_circle",
+        "confirmButtonIcon": "play_arrow"
+      },
+      {
+        "func": "CALL",
+        "widget": "settings",
+        "routine": "chooseSetRoutine"
+      },
+      {
+        "func": "CALL",
+        "widget": "restart",
+        "routine": "resetTrainsRoutine"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "pickDouble"
+        ],
+        "property": "y",
+        "value": 406
+      }
+    ],
+    "classes": "symbols",
+    "text": "play_arrow",
+    "css": "font-size: 50px; ",
+    "width": 50,
+    "height": 50,
+    "movableInEdit": false,
+    "y": 560
+  },
+  "settings": {
+    "type": "button",
+    "id": "settings",
+    "x": 1525,
+    "y": 630,
+    "width": 50,
+    "height": 50,
+    "z": 23058,
+    "classes": "material-icons",
+    "css": "font-size: 35px; line-height:1.2",
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "header": "Game settings:",
+        "fields": [
+          {
+            "type": "select",
+            "label": "Which set do you want to play with?",
+            "variable": "set",
+            "value": "${PROPERTY set}",
+            "options": [
+              {
+                "value": "C6",
+                "text": "Color double 6"
+              },
+              {
+                "value": "C9",
+                "text": "Color double 9"
+              },
+              {
+                "value": "C12",
+                "text": "Color double 12"
+              },
+              {
+                "value": "C15",
+                "text": "Color double 15"
+              }
+            ]
+          },
+          {
+            "type": "number",
+            "label": "Number of seconds for timer (0 to hide)",
+            "value": "${PROPERTY seconds}",
+            "variable": "seconds",
+            "min": 0,
+            "max": 120
+          }
+        ],
+        "confirmButtonText": "Confirm",
+        "cancelButtonText": "Cancel",
+        "cancelButtonIcon": "close_circle",
+        "confirmButtonIcon": "play_arrow"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "set",
+        "value": "${set}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "seconds",
+        "value": "${seconds}"
+      },
+      {
+        "func": "CALL",
+        "routine": "chooseSetRoutine"
+      },
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY seconds}",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "timerBar"
+            ],
+            "property": "y",
+            "value": 1200
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "timerBar"
+            ],
+            "property": "y",
+            "value": 280
+          },
+          "var milliseconds = ${PROPERTY seconds} * 1000",
+          {
+            "func": "SET",
+            "collection": [
+              "theTimer"
+            ],
+            "property": "start",
+            "value": "${milliseconds}"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "theTimer"
+            ],
+            "property": "milliseconds",
+            "value": "${milliseconds}"
+          },
+          {
+            "func": "TIMER",
+            "timer": "theTimer",
+            "mode": "reset"
+          }
+        ]
+      }
+    ],
+    "text": "settings",
+    "chooseSetRoutine": [
+      {
+        "func": "RECALL",
+        "holder": "boneyard"
+      },
+      {
+        "func": "MOVE",
+        "from": "boneyard",
+        "to": "offBoard1",
+        "count": 0
+      },
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY set}",
+        "operand2": "C6",
+        "thenRoutine": [
+          {
+            "func": "SELECT",
+            "type": "card",
+            "property": "set",
+            "value": "C6"
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY set}",
+        "operand2": "C9",
+        "thenRoutine": [
+          {
+            "func": "SELECT",
+            "type": "card",
+            "property": "set",
+            "value": "C6"
+          },
+          {
+            "func": "SELECT",
+            "type": "card",
+            "mode": "add",
+            "property": "set",
+            "value": "C9"
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY set}",
+        "operand2": "C12",
+        "thenRoutine": [
+          {
+            "func": "SELECT",
+            "type": "card",
+            "property": "set",
+            "value": "C6"
+          },
+          {
+            "func": "SELECT",
+            "type": "card",
+            "mode": "add",
+            "property": "set",
+            "value": "C9"
+          },
+          {
+            "func": "SELECT",
+            "type": "card",
+            "mode": "add",
+            "property": "set",
+            "value": "C12"
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY set}",
+        "operand2": "C15",
+        "thenRoutine": [
+          {
+            "func": "SELECT",
+            "type": "card",
+            "property": "set",
+            "value": "C6"
+          },
+          {
+            "func": "SELECT",
+            "type": "card",
+            "mode": "add",
+            "property": "set",
+            "value": "C9"
+          },
+          {
+            "func": "SELECT",
+            "type": "card",
+            "mode": "add",
+            "property": "set",
+            "value": "C12"
+          },
+          {
+            "func": "SELECT",
+            "type": "card",
+            "mode": "add",
+            "property": "set",
+            "value": "C15"
+          }
+        ]
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "offBoard2"
+      },
+      {
+        "func": "MOVE",
+        "from": "offBoard2",
+        "to": "boneyard",
+        "count": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "boneyard"
+      }
+    ],
+    "set": "C12",
+    "seconds": "30",
+    "movableInEdit": false
+  },
+  "theDeck1": {
+    "type": "deck",
+    "id": "theDeck1",
+    "x": 4,
+    "y": 4,
+    "z": 11835,
+    "cardDefaults": {
+      "clickRoutine": [
+        "var a = ${PROPERTY customState} + 1",
+        "var b = ${a} % 4",
+        "var rot = ${b} * 90",
+        {
+          "func": "SET",
+          "collection": "thisButton",
+          "property": "customState",
+          "value": "${b}"
+        },
+        {
+          "func": "SET",
+          "collection": "thisButton",
+          "property": "rotation",
+          "value": "${rot}"
+        },
+        {
+          "func": "SET",
+          "collection": "thisButton",
+          "property": "activeFace",
+          "value": 1
+        }
+      ],
+      "width": 40,
+      "height": 80,
+      "overlap": false
+    },
+    "cardTypes": {
+      "0-0": {
+        "top": "",
+        "bottom": "",
+        "set": "C6"
+      },
+      "0-1": {
+        "top": "",
+        "bottom": "/assets/1341384710_218",
+        "set": "C6"
+      },
+      "0-2": {
+        "top": "",
+        "bottom": "/assets/-2142259388_313",
+        "set": "C6"
+      },
+      "0-3": {
+        "top": "",
+        "bottom": "/assets/-508431710_397",
+        "set": "C6"
+      },
+      "0-4": {
+        "top": "",
+        "bottom": "/assets/1109054420_477",
+        "set": "C6"
+      },
+      "0-5": {
+        "top": "",
+        "bottom": "/assets/2009741688_561",
+        "set": "C6"
+      },
+      "0-6": {
+        "top": "",
+        "bottom": "/assets/-234714863_644",
+        "set": "C6"
+      },
+      "0-7": {
+        "top": "",
+        "bottom": "/assets/1411340202_728",
+        "set": "C9"
+      },
+      "0-8": {
+        "top": "",
+        "bottom": "/assets/-1680122584_809",
+        "set": "C9"
+      },
+      "0-9": {
+        "top": "",
+        "bottom": "/assets/-842670760_893",
+        "set": "C9"
+      },
+      "0-10": {
+        "top": "",
+        "bottom": "/assets/247709237_2263",
+        "set": "C12"
+      },
+      "0-11": {
+        "top": "",
+        "bottom": "/assets/1040634397_2463",
+        "set": "C12"
+      },
+      "0-12": {
+        "top": "",
+        "bottom": "/assets/1401403195_2635",
+        "set": "C12"
+      },
+      "0-13": {
+        "top": "",
+        "bottom": "/assets/825614025_2863",
+        "rotate": 180,
+        "set": "C15"
+      },
+      "0-14": {
+        "top": "",
+        "bottom": "/assets/1768245532_3061",
+        "rotate": 180,
+        "set": "C15"
+      },
+      "0-15": {
+        "top": "",
+        "bottom": "/assets/-338027885_3260",
+        "rotate": 180,
+        "set": "C15"
+      },
+      "1-1": {
+        "top": "/assets/1341384710_218",
+        "bottom": "/assets/1341384710_218",
+        "set": "C6"
+      },
+      "1-2": {
+        "top": "/assets/1341384710_218",
+        "bottom": "/assets/-2142259388_313",
+        "set": "C6"
+      },
+      "1-3": {
+        "top": "/assets/1341384710_218",
+        "bottom": "/assets/-508431710_397",
+        "set": "C6"
+      },
+      "1-4": {
+        "top": "/assets/1341384710_218",
+        "bottom": "/assets/1109054420_477",
+        "set": "C6"
+      },
+      "1-5": {
+        "top": "/assets/1341384710_218",
+        "bottom": "/assets/2009741688_561",
+        "set": "C6"
+      },
+      "1-6": {
+        "top": "/assets/1341384710_218",
+        "bottom": "/assets/-234714863_644",
+        "set": "C6"
+      },
+      "1-7": {
+        "top": "/assets/1341384710_218",
+        "bottom": "/assets/1411340202_728",
+        "set": "C9"
+      },
+      "1-8": {
+        "top": "/assets/1341384710_218",
+        "bottom": "/assets/-1680122584_809",
+        "set": "C9"
+      },
+      "1-9": {
+        "top": "/assets/1341384710_218",
+        "bottom": "/assets/-842670760_893",
+        "set": "C9"
+      },
+      "1-10": {
+        "top": "/assets/1341384710_218",
+        "bottom": "/assets/247709237_2263",
+        "set": "C12"
+      },
+      "1-11": {
+        "top": "/assets/1341384710_218",
+        "bottom": "/assets/1040634397_2463",
+        "set": "C12"
+      },
+      "1-12": {
+        "top": "/assets/1341384710_218",
+        "bottom": "/assets/1401403195_2635",
+        "set": "C12"
+      },
+      "1-13": {
+        "top": "/assets/1341384710_218",
+        "bottom": "/assets/825614025_2863",
+        "rotate": 180,
+        "set": "C15"
+      },
+      "1-14": {
+        "top": "/assets/1341384710_218",
+        "bottom": "/assets/1768245532_3061",
+        "rotate": 180,
+        "set": "C15"
+      },
+      "1-15": {
+        "top": "/assets/1341384710_218",
+        "bottom": "/assets/-338027885_3260",
+        "rotate": 180,
+        "set": "C15"
+      },
+      "2-2": {
+        "top": "/assets/-2142259388_313",
+        "bottom": "/assets/-2142259388_313",
+        "set": "C6"
+      },
+      "2-3": {
+        "top": "/assets/-2142259388_313",
+        "bottom": "/assets/-508431710_397",
+        "set": "C6"
+      },
+      "2-4": {
+        "top": "/assets/-2142259388_313",
+        "bottom": "/assets/1109054420_477",
+        "set": "C6"
+      },
+      "2-5": {
+        "top": "/assets/-2142259388_313",
+        "bottom": "/assets/2009741688_561",
+        "set": "C6"
+      },
+      "2-6": {
+        "top": "/assets/-2142259388_313",
+        "bottom": "/assets/-234714863_644",
+        "set": "C6"
+      },
+      "2-7": {
+        "top": "/assets/-2142259388_313",
+        "bottom": "/assets/1411340202_728",
+        "set": "C9"
+      },
+      "2-8": {
+        "top": "/assets/-2142259388_313",
+        "bottom": "/assets/-1680122584_809",
+        "set": "C9"
+      },
+      "2-9": {
+        "top": "/assets/-2142259388_313",
+        "bottom": "/assets/-842670760_893",
+        "set": "C9"
+      },
+      "2-10": {
+        "top": "/assets/-2142259388_313",
+        "bottom": "/assets/247709237_2263",
+        "set": "C12"
+      },
+      "2-11": {
+        "top": "/assets/-2142259388_313",
+        "bottom": "/assets/1040634397_2463",
+        "set": "C12"
+      },
+      "2-12": {
+        "top": "/assets/-2142259388_313",
+        "bottom": "/assets/1401403195_2635",
+        "set": "C12"
+      },
+      "2-13": {
+        "top": "/assets/-2142259388_313",
+        "bottom": "/assets/825614025_2863",
+        "rotate": 180,
+        "set": "C15"
+      },
+      "2-14": {
+        "top": "/assets/-2142259388_313",
+        "bottom": "/assets/1768245532_3061",
+        "rotate": 180,
+        "set": "C15"
+      },
+      "2-15": {
+        "top": "/assets/-2142259388_313",
+        "bottom": "/assets/-338027885_3260",
+        "rotate": 180,
+        "set": "C15"
+      },
+      "3-3": {
+        "top": "/assets/-508431710_397",
+        "bottom": "/assets/-508431710_397",
+        "set": "C6"
+      },
+      "3-4": {
+        "top": "/assets/-508431710_397",
+        "bottom": "/assets/1109054420_477",
+        "set": "C6"
+      },
+      "3-5": {
+        "top": "/assets/-508431710_397",
+        "bottom": "/assets/2009741688_561",
+        "set": "C6"
+      },
+      "3-6": {
+        "top": "/assets/-508431710_397",
+        "bottom": "/assets/-234714863_644",
+        "set": "C6"
+      },
+      "3-7": {
+        "top": "/assets/-508431710_397",
+        "bottom": "/assets/1411340202_728",
+        "set": "C9"
+      },
+      "3-8": {
+        "top": "/assets/-508431710_397",
+        "bottom": "/assets/-1680122584_809",
+        "set": "C9"
+      },
+      "3-9": {
+        "top": "/assets/-508431710_397",
+        "bottom": "/assets/-842670760_893",
+        "set": "C9"
+      },
+      "3-10": {
+        "top": "/assets/-508431710_397",
+        "bottom": "/assets/247709237_2263",
+        "set": "C12"
+      },
+      "3-11": {
+        "top": "/assets/-508431710_397",
+        "bottom": "/assets/1040634397_2463",
+        "set": "C12"
+      },
+      "3-12": {
+        "top": "/assets/-508431710_397",
+        "bottom": "/assets/1401403195_2635",
+        "set": "C12"
+      },
+      "3-13": {
+        "top": "/assets/-508431710_397",
+        "bottom": "/assets/825614025_2863",
+        "rotate": 180,
+        "set": "C15"
+      },
+      "3-14": {
+        "top": "/assets/-508431710_397",
+        "bottom": "/assets/1768245532_3061",
+        "rotate": 180,
+        "set": "C15"
+      },
+      "3-15": {
+        "top": "/assets/-508431710_397",
+        "bottom": "/assets/-338027885_3260",
+        "rotate": 180,
+        "set": "C15"
+      },
+      "4-4": {
+        "top": "/assets/1109054420_477",
+        "bottom": "/assets/1109054420_477",
+        "set": "C6"
+      },
+      "4-5": {
+        "top": "/assets/1109054420_477",
+        "bottom": "/assets/2009741688_561",
+        "set": "C6"
+      },
+      "4-6": {
+        "top": "/assets/1109054420_477",
+        "bottom": "/assets/-234714863_644",
+        "set": "C6"
+      },
+      "4-7": {
+        "top": "/assets/1109054420_477",
+        "bottom": "/assets/1411340202_728",
+        "set": "C9"
+      },
+      "4-8": {
+        "top": "/assets/1109054420_477",
+        "bottom": "/assets/-1680122584_809",
+        "set": "C9"
+      },
+      "4-9": {
+        "top": "/assets/1109054420_477",
+        "bottom": "/assets/-842670760_893",
+        "set": "C9"
+      },
+      "4-10": {
+        "top": "/assets/1109054420_477",
+        "bottom": "/assets/247709237_2263",
+        "set": "C12"
+      },
+      "4-11": {
+        "top": "/assets/1109054420_477",
+        "bottom": "/assets/1040634397_2463",
+        "set": "C12"
+      },
+      "4-12": {
+        "top": "/assets/1109054420_477",
+        "bottom": "/assets/1401403195_2635",
+        "set": "C12"
+      },
+      "4-13": {
+        "top": "/assets/1109054420_477",
+        "bottom": "/assets/825614025_2863",
+        "rotate": 180,
+        "set": "C15"
+      },
+      "4-14": {
+        "top": "/assets/1109054420_477",
+        "bottom": "/assets/1768245532_3061",
+        "rotate": 180,
+        "set": "C15"
+      },
+      "4-15": {
+        "top": "/assets/1109054420_477",
+        "bottom": "/assets/-338027885_3260",
+        "rotate": 180,
+        "set": "C15"
+      },
+      "5-5": {
+        "top": "/assets/2009741688_561",
+        "bottom": "/assets/2009741688_561",
+        "set": "C6"
+      },
+      "5-6": {
+        "top": "/assets/2009741688_561",
+        "bottom": "/assets/-234714863_644",
+        "set": "C6"
+      },
+      "5-7": {
+        "top": "/assets/2009741688_561",
+        "bottom": "/assets/1411340202_728",
+        "set": "C9"
+      },
+      "5-8": {
+        "top": "/assets/2009741688_561",
+        "bottom": "/assets/-1680122584_809",
+        "set": "C9"
+      },
+      "5-9": {
+        "top": "/assets/2009741688_561",
+        "bottom": "/assets/-842670760_893",
+        "set": "C9"
+      },
+      "5-10": {
+        "top": "/assets/2009741688_561",
+        "bottom": "/assets/247709237_2263",
+        "set": "C12"
+      },
+      "5-11": {
+        "top": "/assets/2009741688_561",
+        "bottom": "/assets/1040634397_2463",
+        "set": "C12"
+      },
+      "5-12": {
+        "top": "/assets/2009741688_561",
+        "bottom": "/assets/1401403195_2635",
+        "set": "C12"
+      },
+      "5-13": {
+        "top": "/assets/2009741688_561",
+        "bottom": "/assets/825614025_2863",
+        "rotate": 180,
+        "set": "C15"
+      },
+      "5-14": {
+        "top": "/assets/2009741688_561",
+        "bottom": "/assets/1768245532_3061",
+        "rotate": 180,
+        "set": "C15"
+      },
+      "5-15": {
+        "top": "/assets/2009741688_561",
+        "bottom": "/assets/-338027885_3260",
+        "rotate": 180,
+        "set": "C15"
+      },
+      "6-6": {
+        "top": "/assets/-234714863_644",
+        "bottom": "/assets/-234714863_644",
+        "set": "C6"
+      },
+      "6-7": {
+        "top": "/assets/-234714863_644",
+        "bottom": "/assets/1411340202_728",
+        "set": "C9"
+      },
+      "6-8": {
+        "top": "/assets/-234714863_644",
+        "bottom": "/assets/-1680122584_809",
+        "set": "C9"
+      },
+      "6-9": {
+        "top": "/assets/-234714863_644",
+        "bottom": "/assets/-842670760_893",
+        "set": "C9"
+      },
+      "6-10": {
+        "top": "/assets/-234714863_644",
+        "bottom": "/assets/247709237_2263",
+        "set": "C12"
+      },
+      "6-11": {
+        "top": "/assets/-234714863_644",
+        "bottom": "/assets/1040634397_2463",
+        "set": "C12"
+      },
+      "6-12": {
+        "top": "/assets/-234714863_644",
+        "bottom": "/assets/1401403195_2635",
+        "set": "C12"
+      },
+      "6-13": {
+        "top": "/assets/-234714863_644",
+        "bottom": "/assets/825614025_2863",
+        "rotate": 180,
+        "set": "C15"
+      },
+      "6-14": {
+        "top": "/assets/-234714863_644",
+        "bottom": "/assets/1768245532_3061",
+        "rotate": 180,
+        "set": "C15"
+      },
+      "6-15": {
+        "top": "/assets/-234714863_644",
+        "bottom": "/assets/-338027885_3260",
+        "rotate": 180,
+        "set": "C15"
+      },
+      "7-7": {
+        "top": "/assets/1411340202_728",
+        "bottom": "/assets/1411340202_728",
+        "set": "C9"
+      },
+      "7-8": {
+        "top": "/assets/1411340202_728",
+        "bottom": "/assets/-1680122584_809",
+        "set": "C9"
+      },
+      "7-9": {
+        "top": "/assets/1411340202_728",
+        "bottom": "/assets/-842670760_893",
+        "set": "C9"
+      },
+      "7-10": {
+        "top": "/assets/1411340202_728",
+        "bottom": "/assets/247709237_2263",
+        "set": "C12"
+      },
+      "7-11": {
+        "top": "/assets/1411340202_728",
+        "bottom": "/assets/1040634397_2463",
+        "set": "C12"
+      },
+      "7-12": {
+        "top": "/assets/1411340202_728",
+        "bottom": "/assets/1401403195_2635",
+        "set": "C12"
+      },
+      "7-13": {
+        "top": "/assets/1411340202_728",
+        "bottom": "/assets/825614025_2863",
+        "rotate": 180,
+        "set": "C15"
+      },
+      "7-14": {
+        "top": "/assets/1411340202_728",
+        "bottom": "/assets/1768245532_3061",
+        "rotate": 180,
+        "set": "C15"
+      },
+      "7-15": {
+        "top": "/assets/1411340202_728",
+        "bottom": "/assets/-338027885_3260",
+        "rotate": 180,
+        "set": "C15"
+      },
+      "8-8": {
+        "top": "/assets/-1680122584_809",
+        "bottom": "/assets/-1680122584_809",
+        "set": "C9"
+      },
+      "8-9": {
+        "top": "/assets/-1680122584_809",
+        "bottom": "/assets/-842670760_893",
+        "set": "C9"
+      },
+      "8-10": {
+        "top": "/assets/-1680122584_809",
+        "bottom": "/assets/247709237_2263",
+        "set": "C12"
+      },
+      "8-11": {
+        "top": "/assets/-1680122584_809",
+        "bottom": "/assets/1040634397_2463",
+        "set": "C12"
+      },
+      "8-12": {
+        "top": "/assets/-1680122584_809",
+        "bottom": "/assets/1401403195_2635",
+        "set": "C12"
+      },
+      "8-13": {
+        "top": "/assets/-1680122584_809",
+        "bottom": "/assets/825614025_2863",
+        "rotate": 180,
+        "set": "C15"
+      },
+      "8-14": {
+        "top": "/assets/-1680122584_809",
+        "bottom": "/assets/1768245532_3061",
+        "rotate": 180,
+        "set": "C15"
+      },
+      "8-15": {
+        "top": "/assets/-1680122584_809",
+        "bottom": "/assets/-338027885_3260",
+        "rotate": 180,
+        "set": "C15"
+      },
+      "9-9": {
+        "top": "/assets/-842670760_893",
+        "bottom": "/assets/-842670760_893",
+        "set": "C9"
+      },
+      "9-10": {
+        "top": "/assets/-842670760_893",
+        "bottom": "/assets/247709237_2263",
+        "set": "C12"
+      },
+      "9-11": {
+        "top": "/assets/-842670760_893",
+        "bottom": "/assets/1040634397_2463",
+        "set": "C12"
+      },
+      "9-12": {
+        "top": "/assets/-842670760_893",
+        "bottom": "/assets/1401403195_2635",
+        "set": "C12"
+      },
+      "9-13": {
+        "top": "/assets/-842670760_893",
+        "bottom": "/assets/825614025_2863",
+        "rotate": 180,
+        "set": "C15"
+      },
+      "9-14": {
+        "top": "/assets/-842670760_893",
+        "bottom": "/assets/1768245532_3061",
+        "rotate": 180,
+        "set": "C15"
+      },
+      "9-15": {
+        "top": "/assets/-842670760_893",
+        "bottom": "/assets/-338027885_3260",
+        "rotate": 180,
+        "set": "C15"
+      },
+      "10-10": {
+        "top": "/assets/247709237_2263",
+        "bottom": "/assets/247709237_2263",
+        "set": "C12"
+      },
+      "10-11": {
+        "top": "/assets/247709237_2263",
+        "bottom": "/assets/1040634397_2463",
+        "set": "C12"
+      },
+      "10-12": {
+        "top": "/assets/247709237_2263",
+        "bottom": "/assets/1401403195_2635",
+        "set": "C12"
+      },
+      "10-13": {
+        "top": "/assets/247709237_2263",
+        "bottom": "/assets/825614025_2863",
+        "rotate": 180,
+        "set": "C15"
+      },
+      "10-14": {
+        "top": "/assets/247709237_2263",
+        "bottom": "/assets/1768245532_3061",
+        "rotate": 180,
+        "set": "C15"
+      },
+      "10-15": {
+        "top": "/assets/247709237_2263",
+        "bottom": "/assets/-338027885_3260",
+        "rotate": 180,
+        "set": "C15"
+      },
+      "11-11": {
+        "top": "/assets/1040634397_2463",
+        "bottom": "/assets/1040634397_2463",
+        "set": "C12"
+      },
+      "11-12": {
+        "top": "/assets/1040634397_2463",
+        "bottom": "/assets/1401403195_2635",
+        "set": "C12"
+      },
+      "11-13": {
+        "top": "/assets/1040634397_2463",
+        "bottom": "/assets/825614025_2863",
+        "rotate": 180,
+        "set": "C15"
+      },
+      "11-14": {
+        "top": "/assets/1040634397_2463",
+        "bottom": "/assets/1768245532_3061",
+        "rotate": 180,
+        "set": "C15"
+      },
+      "11-15": {
+        "top": "/assets/1040634397_2463",
+        "bottom": "/assets/-338027885_3260",
+        "rotate": 180,
+        "set": "C15"
+      },
+      "12-12": {
+        "top": "/assets/1401403195_2635",
+        "bottom": "/assets/1401403195_2635",
+        "set": "C12"
+      },
+      "12-13": {
+        "top": "/assets/1401403195_2635",
+        "bottom": "/assets/825614025_2863",
+        "rotate": 180,
+        "set": "C15"
+      },
+      "12-14": {
+        "top": "/assets/1401403195_2635",
+        "bottom": "/assets/1768245532_3061",
+        "rotate": 180,
+        "set": "C15"
+      },
+      "12-15": {
+        "top": "/assets/1401403195_2635",
+        "bottom": "/assets/-338027885_3260",
+        "rotate": 180,
+        "set": "C15"
+      },
+      "13-13": {
+        "top": "/assets/825614025_2863",
+        "bottom": "/assets/825614025_2863",
+        "rotate": 180,
+        "set": "C15"
+      },
+      "13-14": {
+        "top": "/assets/825614025_2863",
+        "bottom": "/assets/1768245532_3061",
+        "rotate": 180,
+        "set": "C15"
+      },
+      "13-15": {
+        "top": "/assets/825614025_2863",
+        "bottom": "/assets/-338027885_3260",
+        "rotate": 180,
+        "set": "C15"
+      },
+      "14-14": {
+        "top": "/assets/1768245532_3061",
+        "bottom": "/assets/1768245532_3061",
+        "rotate": 180,
+        "set": "C15"
+      },
+      "14-15": {
+        "top": "/assets/1768245532_3061",
+        "bottom": "/assets/-338027885_3260",
+        "rotate": 180,
+        "set": "C15"
+      },
+      "15-15": {
+        "top": "/assets/-338027885_3260",
+        "bottom": "/assets/-338027885_3260",
+        "rotate": 180,
+        "set": "C15"
+      },
+      "0-0B": {
+        "top": "",
+        "bottom": "",
+        "set": "B6"
+      },
+      "0-1B": {
+        "top": "",
+        "bottom": "/i/icons/die_face_1.svg",
+        "set": "B6"
+      },
+      "0-2B": {
+        "top": "",
+        "bottom": "/i/icons/die_face_2.svg",
+        "set": "B6"
+      },
+      "0-3B": {
+        "top": "",
+        "bottom": "/i/icons/die_face_3.svg",
+        "set": "B6"
+      },
+      "0-4B": {
+        "top": "",
+        "bottom": "/i/icons/die_face_4.svg",
+        "set": "B6"
+      },
+      "0-5B": {
+        "top": "",
+        "bottom": "/i/icons/die_face_5.svg",
+        "set": "B6"
+      },
+      "0-6B": {
+        "top": "",
+        "bottom": "/i/icons/die_face_6.svg",
+        "set": "B6"
+      },
+      "1-1B": {
+        "top": "/i/icons/die_face_1.svg",
+        "bottom": "/i/icons/die_face_1.svg",
+        "set": "B6"
+      },
+      "1-2B": {
+        "top": "/i/icons/die_face_1.svg",
+        "bottom": "/i/icons/die_face_2.svg",
+        "set": "B6"
+      },
+      "1-3B": {
+        "top": "/i/icons/die_face_1.svg",
+        "bottom": "/i/icons/die_face_3.svg",
+        "set": "B6"
+      },
+      "1-4B": {
+        "top": "/i/icons/die_face_1.svg",
+        "bottom": "/i/icons/die_face_4.svg",
+        "set": "B6"
+      },
+      "1-5B": {
+        "top": "/i/icons/die_face_1.svg",
+        "bottom": "/i/icons/die_face_5.svg",
+        "set": "B6"
+      },
+      "1-6B": {
+        "top": "/i/icons/die_face_1.svg",
+        "bottom": "/i/icons/die_face_6.svg",
+        "set": "B6"
+      },
+      "2-2B": {
+        "top": "/i/icons/die_face_2.svg",
+        "bottom": "/i/icons/die_face_2.svg",
+        "set": "B6"
+      },
+      "2-3B": {
+        "top": "/i/icons/die_face_2.svg",
+        "bottom": "/i/icons/die_face_3.svg",
+        "set": "B6"
+      },
+      "2-4B": {
+        "top": "/i/icons/die_face_2.svg",
+        "bottom": "/i/icons/die_face_4.svg",
+        "set": "B6"
+      },
+      "2-5B": {
+        "top": "/i/icons/die_face_2.svg",
+        "bottom": "/i/icons/die_face_5.svg",
+        "set": "B6"
+      },
+      "2-6B": {
+        "top": "/i/icons/die_face_2.svg",
+        "bottom": "/i/icons/die_face_6.svg",
+        "set": "B6"
+      },
+      "3-3B": {
+        "top": "/i/icons/die_face_3.svg",
+        "bottom": "/i/icons/die_face_3.svg",
+        "set": "B6"
+      },
+      "3-4B": {
+        "top": "/i/icons/die_face_2.svg",
+        "bottom": "/i/icons/die_face_4.svg",
+        "set": "B6"
+      },
+      "3-5B": {
+        "top": "/i/icons/die_face_3.svg",
+        "bottom": "/i/icons/die_face_5.svg",
+        "set": "B6"
+      },
+      "3-6B": {
+        "top": "/i/icons/die_face_3.svg",
+        "bottom": "/i/icons/die_face_6.svg",
+        "set": "B6"
+      },
+      "4-4B": {
+        "top": "/i/icons/die_face_4.svg",
+        "bottom": "/i/icons/die_face_4.svg",
+        "set": "B6"
+      },
+      "4-5B": {
+        "top": "/i/icons/die_face_4.svg",
+        "bottom": "/i/icons/die_face_5.svg",
+        "set": "B6"
+      },
+      "4-6B": {
+        "top": "/i/icons/die_face_4.svg",
+        "bottom": "/i/icons/die_face_6.svg",
+        "set": "B6"
+      },
+      "5-5B": {
+        "top": "/i/icons/die_face_5.svg",
+        "bottom": "/i/icons/die_face_5.svg",
+        "set": "B6"
+      },
+      "5-6B": {
+        "top": "/i/icons/die_face_5.svg",
+        "bottom": "/i/icons/die_face_6.svg",
+        "set": "B6"
+      },
+      "6-6B": {
+        "top": "/i/icons/die_face_6.svg",
+        "bottom": "/i/icons/die_face_6.svg",
+        "set": "B6"
+      }
+    },
+    "faceTemplates": [
+      {
+        "border": 1,
+        "radius": 8,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "value": "",
+            "color": "beige",
+            "width": 50,
+            "height": 100
+          }
+        ]
+      },
+      {
+        "border": 1,
+        "radius": 8,
+        "objects": [
+          {
+            "type": "text",
+            "css": "background:white",
+            "x": 0,
+            "y": 0,
+            "height": 80,
+            "width": 40,
+            "dynamicProperties": {
+              "value": "back"
+            }
+          },
+          {
+            "type": "text",
+            "css": "border-width:1px;border-color:#000000;border-style:solid hidden hidden hidden",
+            "x": 0,
+            "y": 39.5,
+            "width": 40,
+            "height": 0,
+            "color": "black"
+          },
+          {
+            "type": "image",
+            "x": 1,
+            "y": 1,
+            "color": "transparent",
+            "width": 38,
+            "height": 38,
+            "dynamicProperties": {
+              "value": "top"
+            }
+          },
+          {
+            "type": "image",
+            "x": 1,
+            "y": 41,
+            "color": "transparent",
+            "width": 38,
+            "height": 38,
+            "dynamicProperties": {
+              "value": "bottom",
+              "rotation": "rotate"
+            }
+          }
+        ]
+      }
+    ],
+    "parent": "offBoard1"
+  },
+  "offBoard1": {
+    "type": "holder",
+    "id": "offBoard1",
+    "x": 46,
+    "y": 1040,
+    "width": 40,
+    "height": 80,
+    "z": 23100,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "onEnter": {
+      "activeFace": 0,
+      "rotation": 0,
+      "customState": 3
+    }
+  },
+  "offBoard2": {
+    "type": "holder",
+    "id": "offBoard2",
+    "x": 119,
+    "y": 1044,
+    "width": 40,
+    "height": 80,
+    "z": 23101,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "onEnter": {
+      "activeFace": 0,
+      "rotation": 0,
+      "customState": 3
+    }
+  },
+  "theDeck2": {
+    "type": "deck",
+    "id": "theDeck2",
+    "x": 4,
+    "y": 4,
+    "z": 11835,
+    "cardDefaults": {
+      "clickRoutine": [
+        "var a = ${PROPERTY customState} + 1",
+        "var b = ${a} % 4",
+        "var rot = ${b} * 90",
+        {
+          "func": "SET",
+          "collection": "thisButton",
+          "property": "customState",
+          "value": "${b}"
+        },
+        {
+          "func": "SET",
+          "collection": "thisButton",
+          "property": "rotation",
+          "value": "${rot}"
+        },
+        {
+          "func": "SET",
+          "collection": "thisButton",
+          "property": "activeFace",
+          "value": 1
+        }
+      ],
+      "width": 40,
+      "height": 80,
+      "overlap": false
+    },
+    "cardTypes": {
+      "0-0": {
+        "top": "",
+        "bottom": "",
+        "set": "C6"
+      },
+      "0-1": {
+        "top": "",
+        "bottom": "/assets/1341384710_218",
+        "set": "C6"
+      },
+      "0-2": {
+        "top": "",
+        "bottom": "/assets/-2142259388_313",
+        "set": "C6"
+      },
+      "0-3": {
+        "top": "",
+        "bottom": "/assets/-508431710_397",
+        "set": "C6"
+      },
+      "0-4": {
+        "top": "",
+        "bottom": "/assets/1109054420_477",
+        "set": "C6"
+      },
+      "0-5": {
+        "top": "",
+        "bottom": "/assets/2009741688_561",
+        "set": "C6"
+      },
+      "0-6": {
+        "top": "",
+        "bottom": "/assets/-234714863_644",
+        "set": "C6"
+      },
+      "0-7": {
+        "top": "",
+        "bottom": "/assets/1411340202_728",
+        "set": "C9"
+      },
+      "0-8": {
+        "top": "",
+        "bottom": "/assets/-1680122584_809",
+        "set": "C9"
+      },
+      "0-9": {
+        "top": "",
+        "bottom": "/assets/-842670760_893",
+        "set": "C9"
+      },
+      "0-10": {
+        "top": "",
+        "bottom": "/assets/247709237_2263",
+        "set": "C12"
+      },
+      "0-11": {
+        "top": "",
+        "bottom": "/assets/1040634397_2463",
+        "set": "C12"
+      },
+      "0-12": {
+        "top": "",
+        "bottom": "/assets/1401403195_2635",
+        "set": "C12"
+      },
+      "0-13": {
+        "top": "",
+        "bottom": "/assets/825614025_2863",
+        "rotate": 180,
+        "set": "C15"
+      },
+      "0-14": {
+        "top": "",
+        "bottom": "/assets/1768245532_3061",
+        "rotate": 180,
+        "set": "C15"
+      },
+      "0-15": {
+        "top": "",
+        "bottom": "/assets/-338027885_3260",
+        "rotate": 180,
+        "set": "C15"
+      },
+      "1-1": {
+        "top": "/assets/1341384710_218",
+        "bottom": "/assets/1341384710_218",
+        "set": "C6"
+      },
+      "1-2": {
+        "top": "/assets/1341384710_218",
+        "bottom": "/assets/-2142259388_313",
+        "set": "C6"
+      },
+      "1-3": {
+        "top": "/assets/1341384710_218",
+        "bottom": "/assets/-508431710_397",
+        "set": "C6"
+      },
+      "1-4": {
+        "top": "/assets/1341384710_218",
+        "bottom": "/assets/1109054420_477",
+        "set": "C6"
+      },
+      "1-5": {
+        "top": "/assets/1341384710_218",
+        "bottom": "/assets/2009741688_561",
+        "set": "C6"
+      },
+      "1-6": {
+        "top": "/assets/1341384710_218",
+        "bottom": "/assets/-234714863_644",
+        "set": "C6"
+      },
+      "1-7": {
+        "top": "/assets/1341384710_218",
+        "bottom": "/assets/1411340202_728",
+        "set": "C9"
+      },
+      "1-8": {
+        "top": "/assets/1341384710_218",
+        "bottom": "/assets/-1680122584_809",
+        "set": "C9"
+      },
+      "1-9": {
+        "top": "/assets/1341384710_218",
+        "bottom": "/assets/-842670760_893",
+        "set": "C9"
+      },
+      "1-10": {
+        "top": "/assets/1341384710_218",
+        "bottom": "/assets/247709237_2263",
+        "set": "C12"
+      },
+      "1-11": {
+        "top": "/assets/1341384710_218",
+        "bottom": "/assets/1040634397_2463",
+        "set": "C12"
+      },
+      "1-12": {
+        "top": "/assets/1341384710_218",
+        "bottom": "/assets/1401403195_2635",
+        "set": "C12"
+      },
+      "1-13": {
+        "top": "/assets/1341384710_218",
+        "bottom": "/assets/825614025_2863",
+        "rotate": 180,
+        "set": "C15"
+      },
+      "1-14": {
+        "top": "/assets/1341384710_218",
+        "bottom": "/assets/1768245532_3061",
+        "rotate": 180,
+        "set": "C15"
+      },
+      "1-15": {
+        "top": "/assets/1341384710_218",
+        "bottom": "/assets/-338027885_3260",
+        "rotate": 180,
+        "set": "C15"
+      },
+      "2-2": {
+        "top": "/assets/-2142259388_313",
+        "bottom": "/assets/-2142259388_313",
+        "set": "C6"
+      },
+      "2-3": {
+        "top": "/assets/-2142259388_313",
+        "bottom": "/assets/-508431710_397",
+        "set": "C6"
+      },
+      "2-4": {
+        "top": "/assets/-2142259388_313",
+        "bottom": "/assets/1109054420_477",
+        "set": "C6"
+      },
+      "2-5": {
+        "top": "/assets/-2142259388_313",
+        "bottom": "/assets/2009741688_561",
+        "set": "C6"
+      },
+      "2-6": {
+        "top": "/assets/-2142259388_313",
+        "bottom": "/assets/-234714863_644",
+        "set": "C6"
+      },
+      "2-7": {
+        "top": "/assets/-2142259388_313",
+        "bottom": "/assets/1411340202_728",
+        "set": "C9"
+      },
+      "2-8": {
+        "top": "/assets/-2142259388_313",
+        "bottom": "/assets/-1680122584_809",
+        "set": "C9"
+      },
+      "2-9": {
+        "top": "/assets/-2142259388_313",
+        "bottom": "/assets/-842670760_893",
+        "set": "C9"
+      },
+      "2-10": {
+        "top": "/assets/-2142259388_313",
+        "bottom": "/assets/247709237_2263",
+        "set": "C12"
+      },
+      "2-11": {
+        "top": "/assets/-2142259388_313",
+        "bottom": "/assets/1040634397_2463",
+        "set": "C12"
+      },
+      "2-12": {
+        "top": "/assets/-2142259388_313",
+        "bottom": "/assets/1401403195_2635",
+        "set": "C12"
+      },
+      "2-13": {
+        "top": "/assets/-2142259388_313",
+        "bottom": "/assets/825614025_2863",
+        "rotate": 180,
+        "set": "C15"
+      },
+      "2-14": {
+        "top": "/assets/-2142259388_313",
+        "bottom": "/assets/1768245532_3061",
+        "rotate": 180,
+        "set": "C15"
+      },
+      "2-15": {
+        "top": "/assets/-2142259388_313",
+        "bottom": "/assets/-338027885_3260",
+        "rotate": 180,
+        "set": "C15"
+      },
+      "3-3": {
+        "top": "/assets/-508431710_397",
+        "bottom": "/assets/-508431710_397",
+        "set": "C6"
+      },
+      "3-4": {
+        "top": "/assets/-508431710_397",
+        "bottom": "/assets/1109054420_477",
+        "set": "C6"
+      },
+      "3-5": {
+        "top": "/assets/-508431710_397",
+        "bottom": "/assets/2009741688_561",
+        "set": "C6"
+      },
+      "3-6": {
+        "top": "/assets/-508431710_397",
+        "bottom": "/assets/-234714863_644",
+        "set": "C6"
+      },
+      "3-7": {
+        "top": "/assets/-508431710_397",
+        "bottom": "/assets/1411340202_728",
+        "set": "C9"
+      },
+      "3-8": {
+        "top": "/assets/-508431710_397",
+        "bottom": "/assets/-1680122584_809",
+        "set": "C9"
+      },
+      "3-9": {
+        "top": "/assets/-508431710_397",
+        "bottom": "/assets/-842670760_893",
+        "set": "C9"
+      },
+      "3-10": {
+        "top": "/assets/-508431710_397",
+        "bottom": "/assets/247709237_2263",
+        "set": "C12"
+      },
+      "3-11": {
+        "top": "/assets/-508431710_397",
+        "bottom": "/assets/1040634397_2463",
+        "set": "C12"
+      },
+      "3-12": {
+        "top": "/assets/-508431710_397",
+        "bottom": "/assets/1401403195_2635",
+        "set": "C12"
+      },
+      "3-13": {
+        "top": "/assets/-508431710_397",
+        "bottom": "/assets/825614025_2863",
+        "rotate": 180,
+        "set": "C15"
+      },
+      "3-14": {
+        "top": "/assets/-508431710_397",
+        "bottom": "/assets/1768245532_3061",
+        "rotate": 180,
+        "set": "C15"
+      },
+      "3-15": {
+        "top": "/assets/-508431710_397",
+        "bottom": "/assets/-338027885_3260",
+        "rotate": 180,
+        "set": "C15"
+      },
+      "4-4": {
+        "top": "/assets/1109054420_477",
+        "bottom": "/assets/1109054420_477",
+        "set": "C6"
+      },
+      "4-5": {
+        "top": "/assets/1109054420_477",
+        "bottom": "/assets/2009741688_561",
+        "set": "C6"
+      },
+      "4-6": {
+        "top": "/assets/1109054420_477",
+        "bottom": "/assets/-234714863_644",
+        "set": "C6"
+      },
+      "4-7": {
+        "top": "/assets/1109054420_477",
+        "bottom": "/assets/1411340202_728",
+        "set": "C9"
+      },
+      "4-8": {
+        "top": "/assets/1109054420_477",
+        "bottom": "/assets/-1680122584_809",
+        "set": "C9"
+      },
+      "4-9": {
+        "top": "/assets/1109054420_477",
+        "bottom": "/assets/-842670760_893",
+        "set": "C9"
+      },
+      "4-10": {
+        "top": "/assets/1109054420_477",
+        "bottom": "/assets/247709237_2263",
+        "set": "C12"
+      },
+      "4-11": {
+        "top": "/assets/1109054420_477",
+        "bottom": "/assets/1040634397_2463",
+        "set": "C12"
+      },
+      "4-12": {
+        "top": "/assets/1109054420_477",
+        "bottom": "/assets/1401403195_2635",
+        "set": "C12"
+      },
+      "4-13": {
+        "top": "/assets/1109054420_477",
+        "bottom": "/assets/825614025_2863",
+        "rotate": 180,
+        "set": "C15"
+      },
+      "4-14": {
+        "top": "/assets/1109054420_477",
+        "bottom": "/assets/1768245532_3061",
+        "rotate": 180,
+        "set": "C15"
+      },
+      "4-15": {
+        "top": "/assets/1109054420_477",
+        "bottom": "/assets/-338027885_3260",
+        "rotate": 180,
+        "set": "C15"
+      },
+      "5-5": {
+        "top": "/assets/2009741688_561",
+        "bottom": "/assets/2009741688_561",
+        "set": "C6"
+      },
+      "5-6": {
+        "top": "/assets/2009741688_561",
+        "bottom": "/assets/-234714863_644",
+        "set": "C6"
+      },
+      "5-7": {
+        "top": "/assets/2009741688_561",
+        "bottom": "/assets/1411340202_728",
+        "set": "C9"
+      },
+      "5-8": {
+        "top": "/assets/2009741688_561",
+        "bottom": "/assets/-1680122584_809",
+        "set": "C9"
+      },
+      "5-9": {
+        "top": "/assets/2009741688_561",
+        "bottom": "/assets/-842670760_893",
+        "set": "C9"
+      },
+      "5-10": {
+        "top": "/assets/2009741688_561",
+        "bottom": "/assets/247709237_2263",
+        "set": "C12"
+      },
+      "5-11": {
+        "top": "/assets/2009741688_561",
+        "bottom": "/assets/1040634397_2463",
+        "set": "C12"
+      },
+      "5-12": {
+        "top": "/assets/2009741688_561",
+        "bottom": "/assets/1401403195_2635",
+        "set": "C12"
+      },
+      "5-13": {
+        "top": "/assets/2009741688_561",
+        "bottom": "/assets/825614025_2863",
+        "rotate": 180,
+        "set": "C15"
+      },
+      "5-14": {
+        "top": "/assets/2009741688_561",
+        "bottom": "/assets/1768245532_3061",
+        "rotate": 180,
+        "set": "C15"
+      },
+      "5-15": {
+        "top": "/assets/2009741688_561",
+        "bottom": "/assets/-338027885_3260",
+        "rotate": 180,
+        "set": "C15"
+      },
+      "6-6": {
+        "top": "/assets/-234714863_644",
+        "bottom": "/assets/-234714863_644",
+        "set": "C6"
+      },
+      "6-7": {
+        "top": "/assets/-234714863_644",
+        "bottom": "/assets/1411340202_728",
+        "set": "C9"
+      },
+      "6-8": {
+        "top": "/assets/-234714863_644",
+        "bottom": "/assets/-1680122584_809",
+        "set": "C9"
+      },
+      "6-9": {
+        "top": "/assets/-234714863_644",
+        "bottom": "/assets/-842670760_893",
+        "set": "C9"
+      },
+      "6-10": {
+        "top": "/assets/-234714863_644",
+        "bottom": "/assets/247709237_2263",
+        "set": "C12"
+      },
+      "6-11": {
+        "top": "/assets/-234714863_644",
+        "bottom": "/assets/1040634397_2463",
+        "set": "C12"
+      },
+      "6-12": {
+        "top": "/assets/-234714863_644",
+        "bottom": "/assets/1401403195_2635",
+        "set": "C12"
+      },
+      "6-13": {
+        "top": "/assets/-234714863_644",
+        "bottom": "/assets/825614025_2863",
+        "rotate": 180,
+        "set": "C15"
+      },
+      "6-14": {
+        "top": "/assets/-234714863_644",
+        "bottom": "/assets/1768245532_3061",
+        "rotate": 180,
+        "set": "C15"
+      },
+      "6-15": {
+        "top": "/assets/-234714863_644",
+        "bottom": "/assets/-338027885_3260",
+        "rotate": 180,
+        "set": "C15"
+      },
+      "7-7": {
+        "top": "/assets/1411340202_728",
+        "bottom": "/assets/1411340202_728",
+        "set": "C9"
+      },
+      "7-8": {
+        "top": "/assets/1411340202_728",
+        "bottom": "/assets/-1680122584_809",
+        "set": "C9"
+      },
+      "7-9": {
+        "top": "/assets/1411340202_728",
+        "bottom": "/assets/-842670760_893",
+        "set": "C9"
+      },
+      "7-10": {
+        "top": "/assets/1411340202_728",
+        "bottom": "/assets/247709237_2263",
+        "set": "C12"
+      },
+      "7-11": {
+        "top": "/assets/1411340202_728",
+        "bottom": "/assets/1040634397_2463",
+        "set": "C12"
+      },
+      "7-12": {
+        "top": "/assets/1411340202_728",
+        "bottom": "/assets/1401403195_2635",
+        "set": "C12"
+      },
+      "7-13": {
+        "top": "/assets/1411340202_728",
+        "bottom": "/assets/825614025_2863",
+        "rotate": 180,
+        "set": "C15"
+      },
+      "7-14": {
+        "top": "/assets/1411340202_728",
+        "bottom": "/assets/1768245532_3061",
+        "rotate": 180,
+        "set": "C15"
+      },
+      "7-15": {
+        "top": "/assets/1411340202_728",
+        "bottom": "/assets/-338027885_3260",
+        "rotate": 180,
+        "set": "C15"
+      },
+      "8-8": {
+        "top": "/assets/-1680122584_809",
+        "bottom": "/assets/-1680122584_809",
+        "set": "C9"
+      },
+      "8-9": {
+        "top": "/assets/-1680122584_809",
+        "bottom": "/assets/-842670760_893",
+        "set": "C9"
+      },
+      "8-10": {
+        "top": "/assets/-1680122584_809",
+        "bottom": "/assets/247709237_2263",
+        "set": "C12"
+      },
+      "8-11": {
+        "top": "/assets/-1680122584_809",
+        "bottom": "/assets/1040634397_2463",
+        "set": "C12"
+      },
+      "8-12": {
+        "top": "/assets/-1680122584_809",
+        "bottom": "/assets/1401403195_2635",
+        "set": "C12"
+      },
+      "8-13": {
+        "top": "/assets/-1680122584_809",
+        "bottom": "/assets/825614025_2863",
+        "rotate": 180,
+        "set": "C15"
+      },
+      "8-14": {
+        "top": "/assets/-1680122584_809",
+        "bottom": "/assets/1768245532_3061",
+        "rotate": 180,
+        "set": "C15"
+      },
+      "8-15": {
+        "top": "/assets/-1680122584_809",
+        "bottom": "/assets/-338027885_3260",
+        "rotate": 180,
+        "set": "C15"
+      },
+      "9-9": {
+        "top": "/assets/-842670760_893",
+        "bottom": "/assets/-842670760_893",
+        "set": "C9"
+      },
+      "9-10": {
+        "top": "/assets/-842670760_893",
+        "bottom": "/assets/247709237_2263",
+        "set": "C12"
+      },
+      "9-11": {
+        "top": "/assets/-842670760_893",
+        "bottom": "/assets/1040634397_2463",
+        "set": "C12"
+      },
+      "9-12": {
+        "top": "/assets/-842670760_893",
+        "bottom": "/assets/1401403195_2635",
+        "set": "C12"
+      },
+      "9-13": {
+        "top": "/assets/-842670760_893",
+        "bottom": "/assets/825614025_2863",
+        "rotate": 180,
+        "set": "C15"
+      },
+      "9-14": {
+        "top": "/assets/-842670760_893",
+        "bottom": "/assets/1768245532_3061",
+        "rotate": 180,
+        "set": "C15"
+      },
+      "9-15": {
+        "top": "/assets/-842670760_893",
+        "bottom": "/assets/-338027885_3260",
+        "rotate": 180,
+        "set": "C15"
+      },
+      "10-10": {
+        "top": "/assets/247709237_2263",
+        "bottom": "/assets/247709237_2263",
+        "set": "C12"
+      },
+      "10-11": {
+        "top": "/assets/247709237_2263",
+        "bottom": "/assets/1040634397_2463",
+        "set": "C12"
+      },
+      "10-12": {
+        "top": "/assets/247709237_2263",
+        "bottom": "/assets/1401403195_2635",
+        "set": "C12"
+      },
+      "10-13": {
+        "top": "/assets/247709237_2263",
+        "bottom": "/assets/825614025_2863",
+        "rotate": 180,
+        "set": "C15"
+      },
+      "10-14": {
+        "top": "/assets/247709237_2263",
+        "bottom": "/assets/1768245532_3061",
+        "rotate": 180,
+        "set": "C15"
+      },
+      "10-15": {
+        "top": "/assets/247709237_2263",
+        "bottom": "/assets/-338027885_3260",
+        "rotate": 180,
+        "set": "C15"
+      },
+      "11-11": {
+        "top": "/assets/1040634397_2463",
+        "bottom": "/assets/1040634397_2463",
+        "set": "C12"
+      },
+      "11-12": {
+        "top": "/assets/1040634397_2463",
+        "bottom": "/assets/1401403195_2635",
+        "set": "C12"
+      },
+      "11-13": {
+        "top": "/assets/1040634397_2463",
+        "bottom": "/assets/825614025_2863",
+        "rotate": 180,
+        "set": "C15"
+      },
+      "11-14": {
+        "top": "/assets/1040634397_2463",
+        "bottom": "/assets/1768245532_3061",
+        "rotate": 180,
+        "set": "C15"
+      },
+      "11-15": {
+        "top": "/assets/1040634397_2463",
+        "bottom": "/assets/-338027885_3260",
+        "rotate": 180,
+        "set": "C15"
+      },
+      "12-12": {
+        "top": "/assets/1401403195_2635",
+        "bottom": "/assets/1401403195_2635",
+        "set": "C12"
+      },
+      "12-13": {
+        "top": "/assets/1401403195_2635",
+        "bottom": "/assets/825614025_2863",
+        "rotate": 180,
+        "set": "C15"
+      },
+      "12-14": {
+        "top": "/assets/1401403195_2635",
+        "bottom": "/assets/1768245532_3061",
+        "rotate": 180,
+        "set": "C15"
+      },
+      "12-15": {
+        "top": "/assets/1401403195_2635",
+        "bottom": "/assets/-338027885_3260",
+        "rotate": 180,
+        "set": "C15"
+      },
+      "13-13": {
+        "top": "/assets/825614025_2863",
+        "bottom": "/assets/825614025_2863",
+        "rotate": 180,
+        "set": "C15"
+      },
+      "13-14": {
+        "top": "/assets/825614025_2863",
+        "bottom": "/assets/1768245532_3061",
+        "rotate": 180,
+        "set": "C15"
+      },
+      "13-15": {
+        "top": "/assets/825614025_2863",
+        "bottom": "/assets/-338027885_3260",
+        "rotate": 180,
+        "set": "C15"
+      },
+      "14-14": {
+        "top": "/assets/1768245532_3061",
+        "bottom": "/assets/1768245532_3061",
+        "rotate": 180,
+        "set": "C15"
+      },
+      "14-15": {
+        "top": "/assets/1768245532_3061",
+        "bottom": "/assets/-338027885_3260",
+        "rotate": 180,
+        "set": "C15"
+      },
+      "15-15": {
+        "top": "/assets/-338027885_3260",
+        "bottom": "/assets/-338027885_3260",
+        "rotate": 180,
+        "set": "C15"
+      },
+      "0-0B": {
+        "top": "",
+        "bottom": "",
+        "set": "B6"
+      },
+      "0-1B": {
+        "top": "",
+        "bottom": "/i/icons/die_face_1.svg",
+        "set": "B6"
+      },
+      "0-2B": {
+        "top": "",
+        "bottom": "/i/icons/die_face_2.svg",
+        "set": "B6"
+      },
+      "0-3B": {
+        "top": "",
+        "bottom": "/i/icons/die_face_3.svg",
+        "set": "B6"
+      },
+      "0-4B": {
+        "top": "",
+        "bottom": "/i/icons/die_face_4.svg",
+        "set": "B6"
+      },
+      "0-5B": {
+        "top": "",
+        "bottom": "/i/icons/die_face_5.svg",
+        "set": "B6"
+      },
+      "0-6B": {
+        "top": "",
+        "bottom": "/i/icons/die_face_6.svg",
+        "set": "B6"
+      },
+      "1-1B": {
+        "top": "/i/icons/die_face_1.svg",
+        "bottom": "/i/icons/die_face_1.svg",
+        "set": "B6"
+      },
+      "1-2B": {
+        "top": "/i/icons/die_face_1.svg",
+        "bottom": "/i/icons/die_face_2.svg",
+        "set": "B6"
+      },
+      "1-3B": {
+        "top": "/i/icons/die_face_1.svg",
+        "bottom": "/i/icons/die_face_3.svg",
+        "set": "B6"
+      },
+      "1-4B": {
+        "top": "/i/icons/die_face_1.svg",
+        "bottom": "/i/icons/die_face_4.svg",
+        "set": "B6"
+      },
+      "1-5B": {
+        "top": "/i/icons/die_face_1.svg",
+        "bottom": "/i/icons/die_face_5.svg",
+        "set": "B6"
+      },
+      "1-6B": {
+        "top": "/i/icons/die_face_1.svg",
+        "bottom": "/i/icons/die_face_6.svg",
+        "set": "B6"
+      },
+      "2-2B": {
+        "top": "/i/icons/die_face_2.svg",
+        "bottom": "/i/icons/die_face_2.svg",
+        "set": "B6"
+      },
+      "2-3B": {
+        "top": "/i/icons/die_face_2.svg",
+        "bottom": "/i/icons/die_face_3.svg",
+        "set": "B6"
+      },
+      "2-4B": {
+        "top": "/i/icons/die_face_2.svg",
+        "bottom": "/i/icons/die_face_4.svg",
+        "set": "B6"
+      },
+      "2-5B": {
+        "top": "/i/icons/die_face_2.svg",
+        "bottom": "/i/icons/die_face_5.svg",
+        "set": "B6"
+      },
+      "2-6B": {
+        "top": "/i/icons/die_face_2.svg",
+        "bottom": "/i/icons/die_face_6.svg",
+        "set": "B6"
+      },
+      "3-3B": {
+        "top": "/i/icons/die_face_3.svg",
+        "bottom": "/i/icons/die_face_3.svg",
+        "set": "B6"
+      },
+      "3-4B": {
+        "top": "/i/icons/die_face_2.svg",
+        "bottom": "/i/icons/die_face_4.svg",
+        "set": "B6"
+      },
+      "3-5B": {
+        "top": "/i/icons/die_face_3.svg",
+        "bottom": "/i/icons/die_face_5.svg",
+        "set": "B6"
+      },
+      "3-6B": {
+        "top": "/i/icons/die_face_3.svg",
+        "bottom": "/i/icons/die_face_6.svg",
+        "set": "B6"
+      },
+      "4-4B": {
+        "top": "/i/icons/die_face_4.svg",
+        "bottom": "/i/icons/die_face_4.svg",
+        "set": "B6"
+      },
+      "4-5B": {
+        "top": "/i/icons/die_face_4.svg",
+        "bottom": "/i/icons/die_face_5.svg",
+        "set": "B6"
+      },
+      "4-6B": {
+        "top": "/i/icons/die_face_4.svg",
+        "bottom": "/i/icons/die_face_6.svg",
+        "set": "B6"
+      },
+      "5-5B": {
+        "top": "/i/icons/die_face_5.svg",
+        "bottom": "/i/icons/die_face_5.svg",
+        "set": "B6"
+      },
+      "5-6B": {
+        "top": "/i/icons/die_face_5.svg",
+        "bottom": "/i/icons/die_face_6.svg",
+        "set": "B6"
+      },
+      "6-6B": {
+        "top": "/i/icons/die_face_6.svg",
+        "bottom": "/i/icons/die_face_6.svg",
+        "set": "B6"
+      }
+    },
+    "faceTemplates": [
+      {
+        "border": 1,
+        "radius": 8,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "value": "",
+            "color": "beige",
+            "width": 50,
+            "height": 100
+          }
+        ]
+      },
+      {
+        "border": 1,
+        "radius": 8,
+        "objects": [
+          {
+            "type": "text",
+            "css": "background:white",
+            "x": 0,
+            "y": 0,
+            "height": 80,
+            "width": 40,
+            "dynamicProperties": {
+              "value": "back"
+            }
+          },
+          {
+            "type": "text",
+            "css": "border-width:1px;border-color:#000000;border-style:solid hidden hidden hidden",
+            "x": 0,
+            "y": 39.5,
+            "width": 40,
+            "height": 0,
+            "color": "black"
+          },
+          {
+            "type": "image",
+            "x": 1,
+            "y": 1,
+            "color": "transparent",
+            "width": 38,
+            "height": 38,
+            "dynamicProperties": {
+              "value": "top"
+            }
+          },
+          {
+            "type": "image",
+            "x": 1,
+            "y": 41,
+            "color": "transparent",
+            "width": 38,
+            "height": 38,
+            "dynamicProperties": {
+              "value": "bottom",
+              "rotation": "rotate"
+            }
+          }
+        ]
+      }
+    ],
+    "parent": "offBoard2"
+  },
+  "gogjD": {
+    "id": "gogjD",
+    "fixedParent": true,
+    "x": -38,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "-",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 1
+      }
+    ],
+    "parent": "score1"
+  },
+  "gogjU": {
+    "id": "gogjU",
+    "fixedParent": true,
+    "x": 68,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "+",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 1
+      }
+    ],
+    "parent": "score1"
+  },
+  "score1": {
+    "type": "label",
+    "id": "score1",
+    "x": 1326,
+    "y": 326,
+    "width": 65,
+    "height": 40,
+    "scale": 0.7,
+    "z": 23014,
+    "css": "font-size: 30px;",
+    "editable": true,
+    "text": 0,
+    "movableInEdit": false,
+    "linkedToSeat": "seat1"
+  },
+  "score2": {
+    "type": "label",
+    "id": "score2",
+    "x": 1298,
+    "y": 653,
+    "width": 65,
+    "height": 40,
+    "scale": 0.7,
+    "z": 23015,
+    "css": "font-size: 30px;",
+    "editable": true,
+    "text": 0,
+    "movableInEdit": false,
+    "linkedToSeat": "seat2"
+  },
+  "gogjD1": {
+    "id": "gogjD1",
+    "fixedParent": true,
+    "x": -38,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "-",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 1
+      }
+    ],
+    "parent": "score2"
+  },
+  "gogjU1": {
+    "id": "gogjU1",
+    "fixedParent": true,
+    "x": 68,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "+",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 1
+      }
+    ],
+    "parent": "score2"
+  },
+  "score3": {
+    "type": "label",
+    "id": "score3",
+    "x": 942,
+    "y": 734,
+    "width": 65,
+    "height": 40,
+    "scale": 0.7,
+    "z": 23023,
+    "css": "font-size: 30px;",
+    "editable": true,
+    "text": 0,
+    "movableInEdit": false,
+    "linkedToSeat": "seat3"
+  },
+  "gogjD2": {
+    "id": "gogjD2",
+    "fixedParent": true,
+    "x": -38,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "-",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 1
+      }
+    ],
+    "parent": "score3"
+  },
+  "gogjU2": {
+    "id": "gogjU2",
+    "fixedParent": true,
+    "x": 68,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "+",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 1
+      }
+    ],
+    "parent": "score3"
+  },
+  "score4": {
+    "type": "label",
+    "id": "score4",
+    "x": 347,
+    "y": 651,
+    "width": 65,
+    "height": 40,
+    "scale": 0.7,
+    "z": 23018,
+    "css": "font-size: 30px;",
+    "editable": true,
+    "text": 0,
+    "movableInEdit": false,
+    "linkedToSeat": "seat4"
+  },
+  "gogjD3": {
+    "id": "gogjD3",
+    "fixedParent": true,
+    "x": -38,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "-",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 1
+      }
+    ],
+    "parent": "score4"
+  },
+  "gogjU3": {
+    "id": "gogjU3",
+    "fixedParent": true,
+    "x": 68,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "+",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 1
+      }
+    ],
+    "parent": "score4"
+  },
+  "score5": {
+    "type": "label",
+    "id": "score5",
+    "x": 325,
+    "y": 328,
+    "width": 65,
+    "height": 40,
+    "scale": 0.7,
+    "z": 23019,
+    "css": "font-size: 30px;",
+    "editable": true,
+    "text": 0,
+    "movableInEdit": false,
+    "linkedToSeat": "seat5"
+  },
+  "gogjD4": {
+    "id": "gogjD4",
+    "fixedParent": true,
+    "x": -38,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "-",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 1
+      }
+    ],
+    "parent": "score5"
+  },
+  "gogjU4": {
+    "id": "gogjU4",
+    "fixedParent": true,
+    "x": 68,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "+",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 1
+      }
+    ],
+    "parent": "score5"
+  },
+  "score6": {
+    "type": "label",
+    "id": "score6",
+    "x": 313,
+    "y": 49,
+    "width": 65,
+    "height": 40,
+    "scale": 0.7,
+    "z": 23020,
+    "css": "font-size: 30px;",
+    "editable": true,
+    "text": 0,
+    "movableInEdit": false,
+    "linkedToSeat": "seat6"
+  },
+  "gogjD5": {
+    "id": "gogjD5",
+    "fixedParent": true,
+    "x": -38,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "-",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 1
+      }
+    ],
+    "parent": "score6"
+  },
+  "gogjU5": {
+    "id": "gogjU5",
+    "fixedParent": true,
+    "x": 68,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "+",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 1
+      }
+    ],
+    "parent": "score6"
+  },
+  "score7": {
+    "type": "label",
+    "id": "score7",
+    "x": 707,
+    "y": 110,
+    "width": 65,
+    "height": 40,
+    "scale": 0.7,
+    "z": 23021,
+    "css": "font-size: 30px;",
+    "editable": true,
+    "text": 0,
+    "linkedToSeat": "seat7"
+  },
+  "gogjD6": {
+    "id": "gogjD6",
+    "fixedParent": true,
+    "x": -38,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "-",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 1
+      }
+    ],
+    "parent": "score7"
+  },
+  "gogjU6": {
+    "id": "gogjU6",
+    "fixedParent": true,
+    "x": 68,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "+",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 1
+      }
+    ],
+    "parent": "score7"
+  },
+  "score8": {
+    "type": "label",
+    "id": "score8",
+    "x": 1339,
+    "y": 53,
+    "width": 65,
+    "height": 40,
+    "scale": 0.7,
+    "z": 23022,
+    "css": "font-size: 30px;",
+    "editable": true,
+    "text": 0,
+    "movableInEdit": false,
+    "linkedToSeat": "seat8"
+  },
+  "gogjD7": {
+    "id": "gogjD7",
+    "fixedParent": true,
+    "x": -38,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "-",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 1
+      }
+    ],
+    "parent": "score8"
+  },
+  "gogjU7": {
+    "id": "gogjU7",
+    "fixedParent": true,
+    "x": 68,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "+",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 1
+      }
+    ],
+    "parent": "score8"
+  },
+  "restart": {
+    "type": "button",
+    "id": "restart",
+    "x": 1525,
+    "y": 230,
+    "width": 50,
+    "height": 50,
+    "z": 23060,
+    "classes": "symbols",
+    "css": "font-size: 40px; ",
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "header": "Resetting game...",
+        "fields": [
+          {
+            "type": "text",
+            "text": "Do you want to reset the game, including the scores?"
+          }
+        ],
+        "confirmButtonText": "Yes",
+        "cancelButtonText": "No",
+        "cancelButtonIcon": "close_circle",
+        "confirmButtonIcon": "play_arrow"
+      },
+      {
+        "func": "CALL",
+        "widget": "settings",
+        "routine": "chooseSetRoutine"
+      },
+      {
+        "func": "CALL",
+        "routine": "resetTrainsRoutine"
+      },
+      {
+        "func": "FOREACH",
+        "in": "${PROPERTY scoreArray}",
+        "loopRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "${value}"
+            ],
+            "property": "text",
+            "value": 0
+          }
+        ]
+      }
+    ],
+    "text": "restart",
+    "scoreArray": [
+      "score1",
+      "score2",
+      "score3",
+      "score4",
+      "score5",
+      "score6",
+      "score7",
+      "score8"
+    ],
+    "resetTrainsRoutine": [
+      {
+        "func": "SELECT",
+        "property": "resetProperties",
+        "relation": "!=",
+        "value": null
+      },
+      {
+        "func": "FOREACH",
+        "loopRoutine": [
+          {
+            "func": "FOREACH",
+            "in": "${PROPERTY resetProperties OF $widgetID}",
+            "loopRoutine": [
+              {
+                "func": "SET",
+                "property": "${key}",
+                "value": "${value}"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "movableInEdit": false
+  },
+  "timerBar": {
+    "id": "timerBar",
+    "x": 256,
+    "y": 280,
+    "width": 200,
+    "height": 25,
+    "z": 916,
+    "movable": false,
+    "css": "border-radius: 10px; border: 2px solid black; background-image: linear-gradient(to right, red, 0%, grey -100%)",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "theTimer"
+      },
+      {
+        "func": "CLICK"
+      }
+    ],
+    "movableInEdit": false
+  },
+  "theTimer": {
+    "type": "timer",
+    "id": "theTimer",
+    "parent": "timerBar",
+    "y": -3,
+    "z": 876,
+    "movableInEdit": false,
+    "countdown": true,
+    "css": "color:white",
+    "precision": 100,
+    "millisecondsChangeRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "timerBar"
+      },
+      "var bar = ${PROPERTY milliseconds} / ${PROPERTY start}",
+      "var bar = ${bar} * 100",
+      "var bar = ${bar}/ ${PROPERTY width OF timerBar}",
+      {
+        "func": "SET",
+        "property": "css",
+        "value": "border-radius: 10px; border: 2px solid black; background-image: linear-gradient(to right, red, ${bar}%, grey -100%)"
+      },
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY milliseconds}",
+        "relation": "<=",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "func": "TIMER",
+            "timer": "theTimer",
+            "mode": "pause"
+          }
+        ]
+      }
+    ],
+    "x": 50,
+    "start": 30000
+  },
+  "6gvo": {
+    "type": "button",
+    "clickRoutine": [
+      {
+        "func": "TURN"
+      },
+      {
+        "func": "TIMER",
+        "timer": "theTimer",
+        "mode": "reset"
+      },
+      {
+        "func": "TIMER",
+        "timer": "theTimer",
+        "mode": "start"
+      }
+    ],
+    "x": 335,
+    "y": 211,
+    "z": 23057,
+    "id": "6gvo",
+    "classes": "symbols",
+    "width": 50,
+    "height": 50,
+    "css": "font-size: 40px; ",
+    "text": "skip_next",
+    "movableInEdit": false
+  },
+  "pickDouble": {
+    "type": "button",
+    "id": "pickDouble",
+    "x": 820,
+    "y": 406,
+    "z": 23063,
+    "css": "font-size: 70px; ",
+    "clickRoutine": [
+      "var newDouble = ${PROPERTY double} - 1",
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY set OF settings}",
+        "operand2": "C6",
+        "thenRoutine": [
+          "var max = 6"
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY set OF settings}",
+        "operand2": "C9",
+        "thenRoutine": [
+          "var max = 9"
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY set OF settings}",
+        "operand2": "C12",
+        "thenRoutine": [
+          "var max = 12"
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY set OF settings}",
+        "operand2": "C15",
+        "thenRoutine": [
+          "var max = 15"
+        ]
+      },
+      {
+        "func": "INPUT",
+        "header": "Choose starting double...",
+        "fields": [
+          {
+            "type": "number",
+            "label": "Start with what double domino?",
+            "min": 0,
+            "max": "${max}",
+            "variable": "double",
+            "value": "${newDouble}"
+          }
+        ],
+        "confirmButtonText": "Confirm",
+        "cancelButtonText": "Cancel",
+        "cancelButtonIcon": "close_circle",
+        "confirmButtonIcon": "play_arrow"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "double",
+        "value": "${double}"
+      },
+      "var type = ${double} + '-'",
+      "var type = ${type} + ${double}",
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "cardType",
+        "value": "${type}"
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "holder0"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "y",
+        "value": 1200
+      },
+      {
+        "func": "TURN",
+        "turnCycle": "random"
+      }
+    ],
+    "classes": "symbols",
+    "text": "widget",
+    "movableInEdit": false,
+    "double": "13"
+  },
+  "background": {
+    "id": "background",
+    "x": -70,
+    "width": 1850,
+    "height": 1200,
+    "layer": -4,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "opacity:0.2",
+    "image": "/assets/-553840909_491918"
+  },
+  "w9wm": {
+    "type": "pile",
+    "parent": "offBoard1",
+    "x": 0,
+    "y": 0,
+    "width": 40,
+    "height": 80,
+    "id": "w9wm"
+  },
+  "dh62": {
+    "type": "pile",
+    "parent": "boneyard",
+    "x": 0,
+    "y": 0,
+    "width": 40,
+    "height": 80,
+    "id": "dh62"
+  }
+}

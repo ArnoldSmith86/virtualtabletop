@@ -1,0 +1,2771 @@
+{
+  "_meta": {
+    "version": 16,
+    "info": {
+      "name": "Celtic Knots",
+      "image": "/assets/-914371772_133916",
+      "rules": "https://boardgamegeek.com/filepage/40893/unofficial-english-rule",
+      "bgg": "https://boardgamegeek.com/boardgame/41003/keltis-der-weg-der-steine-mitbringspiel",
+      "year": "2009",
+      "mode": "vs",
+      "time": "20",
+      "attribution": "<div>The game layout, game pieces, and game design are by anewcar and are released to the Public Domain under CC0.<br></div><div><br></div>The background pattern and card back pattern were created at&nbsp;https://heropatterns.com/ (Aztec) under Creative Commons License.&nbsp;",
+      "lastUpdate": 1728182011814,
+      "showName": true,
+      "skill": "",
+      "description": "Push your luck to collect cards in ascending or descending sequence. Be careful you don't leave something your opponents need on the table and don't forget to collect stars too!",
+      "similarImage": "",
+      "similarName": "Keltis Der Weg der Steine",
+      "similarDesigner": "Reiner Knizia",
+      "similarAwards": "",
+      "ruleText": "Players take it in turns to either draw a tile and keep/discard it or take a discarded tile. Players build up collections of tiles in each colour.&nbsp;<div><br></div><div>The first tile in a colour can be any value. The second tile of a colour can also be any value but if it is lower than the first tile taken of that colour,&nbsp; then all future tiles taken of that colour must following a descending sequence. And if the second tile is higher than the first, then all future tiles of that colour must follow an ascending sequence.&nbsp;<div><br></div><div>Some special tiles have small symbols on the right. These are explained in the table below.&nbsp;</div><div><br></div><div>Players take turns until the draw pile is empty. They then score points for their collections based on the following:&nbsp;</div></div><div><br></div><div><a href=\"/assets/364247184_26850\"><img src=\"/assets/364247184_26850\" class=\"richtextAsset\"></a></div>",
+      "helpText": "Select the number of players using the 2/3/4 buttons in the top left.&nbsp;<div><br></div><div>When it is your turn, do one of the following:&nbsp;</div><div>1. Click on \"Draw\" to draw a tile and a new tile will be drawn into the holder next to the button. (Only the player whose turn it is can click on the \"Draw\" button). Then click on the tile to keep it or click on \"Discard\" to put it on the table.&nbsp;</div><div>2. Click on a tile on the table to take it.&nbsp;</div><div><br></div><div>Scores are calculated automatically and displayed in the little grey boxes in your player area. If they don't look right, click on the grey box to force a recalculation.&nbsp;</div><div><br></div><div>You can also drag tiles into your player area. If they do not follow the ascending/descending rules or are put in the wrong colour holder, the holder will be highlighted.&nbsp;</div><div><br></div><div>Faded tiles in middle are tiles that are not valid for any players.&nbsp;</div><div><br></div><div>Click on the \"T\" button in the top left to change the player turn.&nbsp;</div><div><br></div><div>Click on the \"?\" button in the top left to show the scoring aid.&nbsp;</div><div><br></div><div><a href=\"/assets/-2038187094_806879\"><img src=\"/assets/-2038187094_806879\" class=\"richtextAsset\"></a></div>",
+      "variantImage": "",
+      "variant": "",
+      "language": "en-GB",
+      "players": "2-4"
+    }
+  },
+  "v71e": {
+    "type": "deck",
+    "id": "v71e",
+    "cardTypes": {
+      "0 of one": {
+        "suit": "one",
+        "suitRank": 0,
+        "rank": 0,
+        "color": "#f0e442"
+      },
+      "1 of one": {
+        "suit": "one",
+        "suitRank": 0,
+        "rank": 1,
+        "color": "#f0e442",
+        "special": "✱"
+      },
+      "2 of one": {
+        "suit": "one",
+        "suitRank": 0,
+        "rank": 2,
+        "color": "#f0e442",
+        "special": "✚"
+      },
+      "3 of one": {
+        "suit": "one",
+        "suitRank": 0,
+        "rank": 3,
+        "color": "#f0e442"
+      },
+      "4 of one": {
+        "suit": "one",
+        "suitRank": 0,
+        "rank": 4,
+        "color": "#f0e442",
+        "special": "✱"
+      },
+      "5 of one": {
+        "suit": "one",
+        "suitRank": 0,
+        "rank": 5,
+        "color": "#f0e442",
+        "special": "1"
+      },
+      "6 of one": {
+        "suit": "one",
+        "suitRank": 0,
+        "rank": 6,
+        "color": "#f0e442"
+      },
+      "7 of one": {
+        "suit": "one",
+        "suitRank": 0,
+        "rank": 7,
+        "color": "#f0e442",
+        "special": "3"
+      },
+      "8 of one": {
+        "suit": "one",
+        "suitRank": 0,
+        "rank": 8,
+        "color": "#f0e442"
+      },
+      "9 of one": {
+        "suit": "one",
+        "suitRank": 0,
+        "rank": 9,
+        "color": "#f0e442",
+        "special": "✚"
+      },
+      "10 of one": {
+        "suit": "one",
+        "suitRank": 0,
+        "rank": 10,
+        "color": "#f0e442"
+      },
+      "0 of two": {
+        "suit": "two",
+        "suitRank": 1,
+        "rank": 0,
+        "color": "#56b4e9"
+      },
+      "1 of two": {
+        "suit": "two",
+        "suitRank": 1,
+        "rank": 1,
+        "color": "#56b4e9",
+        "special": "1"
+      },
+      "2 of two": {
+        "suit": "two",
+        "suitRank": 1,
+        "rank": 2,
+        "color": "#56b4e9"
+      },
+      "3 of two": {
+        "suit": "two",
+        "suitRank": 1,
+        "rank": 3,
+        "color": "#56b4e9",
+        "special": "✚"
+      },
+      "4 of two": {
+        "suit": "two",
+        "suitRank": 1,
+        "rank": 4,
+        "color": "#56b4e9",
+        "special": "✚"
+      },
+      "5 of two": {
+        "suit": "two",
+        "suitRank": 1,
+        "rank": 5,
+        "color": "#56b4e9",
+        "special": "3"
+      },
+      "6 of two": {
+        "suit": "two",
+        "suitRank": 1,
+        "rank": 6,
+        "color": "#56b4e9",
+        "special": "✱"
+      },
+      "7 of two": {
+        "suit": "two",
+        "suitRank": 1,
+        "rank": 7,
+        "color": "#56b4e9"
+      },
+      "8 of two": {
+        "suit": "two",
+        "suitRank": 1,
+        "rank": 8,
+        "color": "#56b4e9"
+      },
+      "9 of two": {
+        "suit": "two",
+        "suitRank": 1,
+        "rank": 9,
+        "color": "#56b4e9",
+        "special": "✱"
+      },
+      "10 of two": {
+        "suit": "two",
+        "suitRank": 1,
+        "rank": 10,
+        "color": "#56b4e9"
+      },
+      "0 of three": {
+        "suit": "three",
+        "suitRank": 2,
+        "rank": 0,
+        "color": "#d55e00"
+      },
+      "1 of three": {
+        "suit": "three",
+        "suitRank": 2,
+        "rank": 1,
+        "color": "#d55e00"
+      },
+      "2 of three": {
+        "suit": "three",
+        "suitRank": 2,
+        "rank": 2,
+        "color": "#d55e00",
+        "special": "3"
+      },
+      "3 of three": {
+        "suit": "three",
+        "suitRank": 2,
+        "rank": 3,
+        "color": "#d55e00"
+      },
+      "4 of three": {
+        "suit": "three",
+        "suitRank": 2,
+        "rank": 4,
+        "color": "#d55e00",
+        "special": "✱"
+      },
+      "5 of three": {
+        "suit": "three",
+        "suitRank": 2,
+        "rank": 5,
+        "color": "#d55e00",
+        "special": "✚"
+      },
+      "6 of three": {
+        "suit": "three",
+        "suitRank": 2,
+        "rank": 6,
+        "color": "#d55e00",
+        "special": "1"
+      },
+      "7 of three": {
+        "suit": "three",
+        "suitRank": 2,
+        "rank": 7,
+        "color": "#d55e00",
+        "special": "✱"
+      },
+      "8 of three": {
+        "suit": "three",
+        "suitRank": 2,
+        "rank": 8,
+        "color": "#d55e00",
+        "special": "✚"
+      },
+      "9 of three": {
+        "suit": "three",
+        "suitRank": 2,
+        "rank": 9,
+        "color": "#d55e00"
+      },
+      "10 of three": {
+        "suit": "three",
+        "suitRank": 2,
+        "rank": 10,
+        "color": "#d55e00"
+      },
+      "0 of four": {
+        "suit": "four",
+        "suitRank": 3,
+        "rank": 0,
+        "color": "#009e73"
+      },
+      "1 of four": {
+        "suit": "four",
+        "suitRank": 3,
+        "rank": 1,
+        "color": "#009e73",
+        "special": "✚"
+      },
+      "2 of four": {
+        "suit": "four",
+        "suitRank": 3,
+        "rank": 2,
+        "color": "#009e73"
+      },
+      "3 of four": {
+        "suit": "four",
+        "suitRank": 3,
+        "rank": 3,
+        "color": "#009e73",
+        "special": "3"
+      },
+      "4 of four": {
+        "suit": "four",
+        "suitRank": 3,
+        "rank": 4,
+        "color": "#009e73",
+        "special": "1"
+      },
+      "5 of four": {
+        "suit": "four",
+        "suitRank": 3,
+        "rank": 5,
+        "color": "#009e73"
+      },
+      "6 of four": {
+        "suit": "four",
+        "suitRank": 3,
+        "rank": 6,
+        "color": "#009e73",
+        "special": "✱"
+      },
+      "7 of four": {
+        "suit": "four",
+        "suitRank": 3,
+        "rank": 7,
+        "color": "#009e73",
+        "special": "✚"
+      },
+      "8 of four": {
+        "suit": "four",
+        "suitRank": 3,
+        "rank": 8,
+        "color": "#009e73",
+        "special": "✱"
+      },
+      "9 of four": {
+        "suit": "four",
+        "suitRank": 3,
+        "rank": 9,
+        "color": "#009e73"
+      },
+      "10 of four": {
+        "suit": "four",
+        "suitRank": 3,
+        "rank": 10,
+        "color": "#009e73"
+      },
+      "0 of five": {
+        "suit": "five",
+        "suitRank": 4,
+        "rank": 0,
+        "color": "#cc97a7"
+      },
+      "1 of five": {
+        "suit": "five",
+        "suitRank": 4,
+        "rank": 1,
+        "color": "#cc97a7"
+      },
+      "2 of five": {
+        "suit": "five",
+        "suitRank": 4,
+        "rank": 2,
+        "color": "#cc97a7",
+        "special": "✱"
+      },
+      "3 of five": {
+        "suit": "five",
+        "suitRank": 4,
+        "rank": 3,
+        "color": "#cc97a7",
+        "special": "✱"
+      },
+      "4 of five": {
+        "suit": "five",
+        "suitRank": 4,
+        "rank": 4,
+        "color": "#cc97a7"
+      },
+      "5 of five": {
+        "suit": "five",
+        "suitRank": 4,
+        "rank": 5,
+        "color": "#cc97a7",
+        "special": "✚"
+      },
+      "6 of five": {
+        "suit": "five",
+        "suitRank": 4,
+        "rank": 6,
+        "color": "#cc97a7",
+        "special": "✚"
+      },
+      "7 of five": {
+        "suit": "five",
+        "suitRank": 4,
+        "rank": 7,
+        "color": "#cc97a7"
+      },
+      "8 of five": {
+        "suit": "five",
+        "suitRank": 4,
+        "rank": 8,
+        "color": "#cc97a7",
+        "special": "3"
+      },
+      "9 of five": {
+        "suit": "five",
+        "suitRank": 4,
+        "rank": 9,
+        "color": "#cc97a7",
+        "special": "1"
+      },
+      "10 of five": {
+        "suit": "five",
+        "suitRank": 4,
+        "rank": 10,
+        "color": "#cc97a7"
+      }
+    },
+    "cardDefaults": {
+      "width": 80,
+      "height": 80,
+      "css": {
+        ".last": {
+          "border": "4px solid purple",
+          "border-radius": "13px",
+          "margin-left": "-2px",
+          "margin-top": "-2px"
+        }
+      },
+      "clickRoutine": [
+        {
+          "func": "IF",
+          "operand1": "${PROPERTY activeFace}",
+          "operand2": 1,
+          "thenRoutine": [
+            "var discard = ${PROPERTY scale OF sl2b} == 0",
+            "var drawn = ${PROPERTY parent} == '0luq'",
+            "var discard = ${PROPERTY parent} == 'lyf7'",
+            "var validDraw = ${discard} || ${drawn}",
+            "var inHolder = !${drawn} && !${discard}",
+            {
+              "func": "IF",
+              "condition": "${inHolder}",
+              "thenRoutine": [
+                {
+                  "func": "IF",
+                  "operand1": "${PROPERTY parent}",
+                  "relation": "!=",
+                  "operand2": "",
+                  "thenRoutine": [
+                    "var parent = ${PROPERTY parent}",
+                    {
+                      "func": "CALL",
+                      "widget": "useful",
+                      "routine": "discardCardRoutine",
+                      "arguments": {
+                        "cardId": "${PROPERTY id}"
+                      }
+                    },
+                    {
+                      "func": "SORT",
+                      "holder": "${parent}",
+                      "key": "x"
+                    },
+                    {
+                      "func": "CALL",
+                      "widget": "useful",
+                      "routine": "udpdateScoresRoutine",
+                      "arguments": {
+                        "seat": "${seatID.4}"
+                      }
+                    }
+                  ]
+                }
+              ],
+              "elseRoutine": [
+                {
+                  "func": "IF",
+                  "condition": "${validDraw}",
+                  "thenRoutine": [
+                    {
+                      "func": "SELECT",
+                      "type": "card",
+                      "property": "classes",
+                      "value": "last"
+                    },
+                    {
+                      "func": "SET",
+                      "property": "classes",
+                      "value": ""
+                    },
+                    {
+                      "func": "SET",
+                      "collection": [
+                        "thisButton"
+                      ],
+                      "property": "classes",
+                      "value": "last"
+                    },
+                    "var suit = ${PROPERTY suit}",
+                    "var seat = ${seatID.4}",
+                    "var holder = ${suit} + '_'",
+                    "var holder = ${holder} + ${seat}",
+                    {
+                      "func": "MOVE",
+                      "collection": [
+                        "thisButton"
+                      ],
+                      "to": "${holder}"
+                    },
+                    {
+                      "func": "SET",
+                      "property": "scale",
+                      "value": 0,
+                      "collection": [
+                        "sl2b"
+                      ]
+                    },
+                    {
+                      "func": "SET",
+                      "property": "scale",
+                      "value": 1,
+                      "collection": [
+                        "sl1b"
+                      ]
+                    },
+                    {
+                      "func": "CALL",
+                      "widget": "useful",
+                      "routine": "udpdateScoresRoutine",
+                      "arguments": {
+                        "seat": "${seatID.4}"
+                      }
+                    },
+                    {
+                      "func": "IF",
+                      "operand1": "${PROPERTY special}",
+                      "operand2": "✚",
+                      "elseRoutine": [
+                        {
+                          "func": "CALL",
+                          "widget": "useful",
+                          "routine": "turnRoutine"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "faceTemplates": [
+      {
+        "radius": 8,
+        "objects": [
+          {
+            "type": "text",
+            "width": 80,
+            "height": 80,
+            "css": "background: repeating-linear-gradient( 45deg,#0000 calc(-650%/13) calc(50%/13),purple 0 calc(100%/13), #0000 0 calc(150%/13),purple 0 calc(200%/13), #0000 0 calc(250%/13),purple 0 calc(300%/13)),repeating-linear-gradient( 45deg,#0000 calc(-650%/13) calc(50%/13),purple 0 calc(100%/13), #0000 0 calc(150%/13),purple 0 calc(200%/13), #0000 0 calc(250%/13),purple 0 calc(300%/13)) 20px 20px, repeating-linear-gradient(-45deg,#0000 calc(-650%/13) calc(50%/13),purple 0 calc(100%/13), #0000 0 calc(150%/13),purple 0 calc(200%/13), #0000 0 calc(250%/13),purple 0 calc(300%/13)),repeating-linear-gradient(-45deg,#0000 calc(-650%/13) calc(50%/13),purple 0 calc(100%/13), #0000 0 calc(150%/13),purple 0 calc(200%/13), #0000 0 calc(250%/13),purple 0 calc(300%/13)) 20px 20px #c6c6c6; background-size: 40px 40px;"
+          }
+        ]
+      },
+      {
+        "radius": 8,
+        "properties": {
+          "enlarge": 3
+        },
+        "objects": [
+          {
+            "type": "image",
+            "width": 80,
+            "height": 80,
+            "dynamicProperties": {
+              "color": "color"
+            }
+          },
+          {
+            "type": "image",
+            "x": 50,
+            "y": 25,
+            "width": 30,
+            "height": 30,
+            "dynamicProperties": {
+              "color": "white"
+            }
+          },
+          {
+            "type": "image",
+            "x": 15,
+            "y": 15,
+            "width": 50,
+            "height": 50,
+            "color": "white"
+          },
+          {
+            "type": "text",
+            "x": 62,
+            "y": 27,
+            "fontSize": 20,
+            "width": 15,
+            "height": 80,
+            "css": "text-align: right; font-weight: bold;",
+            "dynamicProperties": {
+              "value": "special"
+            }
+          },
+          {
+            "type": "text",
+            "y": 20,
+            "x": 15,
+            "css": "font-weight: bold",
+            "fontSize": 35,
+            "textAlign": "center",
+            "width": 50,
+            "dynamicProperties": {
+              "value": "rank"
+            }
+          }
+        ]
+      },
+      {
+        "radius": 8,
+        "properties": {
+          "css": "opacity: 0.3"
+        },
+        "objects": [
+          {
+            "type": "image",
+            "width": 80,
+            "height": 80,
+            "dynamicProperties": {
+              "color": "color"
+            }
+          },
+          {
+            "type": "image",
+            "x": 50,
+            "y": 25,
+            "width": 30,
+            "height": 30,
+            "dynamicProperties": {
+              "color": "white"
+            }
+          },
+          {
+            "type": "image",
+            "x": 15,
+            "y": 15,
+            "width": 50,
+            "height": 50,
+            "color": "white"
+          },
+          {
+            "type": "text",
+            "x": 62,
+            "y": 27,
+            "fontSize": 20,
+            "width": 15,
+            "height": 80,
+            "css": "text-align: right; font-weight: bold;",
+            "dynamicProperties": {
+              "value": "special"
+            }
+          },
+          {
+            "type": "text",
+            "y": 20,
+            "x": 15,
+            "css": "font-weight: bold",
+            "fontSize": 35,
+            "textAlign": "center",
+            "width": 50,
+            "dynamicProperties": {
+              "value": "rank"
+            }
+          }
+        ]
+      }
+    ],
+    "z": 28372,
+    "y": 1,
+    "parent": "rksv"
+  },
+  "rksv": {
+    "type": "holder",
+    "id": "rksv",
+    "x": 1478,
+    "y": 28,
+    "z": 71,
+    "width": 88,
+    "height": 88,
+    "dropTarget": {
+      "deck": "v71e"
+    },
+    "movableInEdit": false,
+    "classes": "transparent"
+  },
+  "rksvB": {
+    "id": "rksvB",
+    "fixedParent": true,
+    "width": 111,
+    "height": 40,
+    "type": "button",
+    "text": "Recall",
+    "movableInEdit": false,
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "classes",
+        "value": "last"
+      },
+      {
+        "func": "SET",
+        "property": "classes",
+        "value": ""
+      },
+      {
+        "func": "RECALL",
+        "holder": "${PROPERTY parent}"
+      },
+      {
+        "func": "FLIP",
+        "holder": "${PROPERTY parent}",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "${PROPERTY parent}"
+      },
+      {
+        "func": "CALL",
+        "widget": "useful",
+        "routine": "propertiesRoutine",
+        "arguments": {
+          "properties": "resetProperties"
+        }
+      }
+    ],
+    "y": 100,
+    "css": "background-color: purple; border: 2px solid purple;opacity:0.7",
+    "parent": "rksv",
+    "x": -8
+  },
+  "sl1b": {
+    "type": "button",
+    "text": "Draw",
+    "clickRoutine": [
+      "var turn = ${PROPERTY turn OF $seatID}",
+      {
+        "func": "IF",
+        "condition": "${turn}",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "jtti"
+            ],
+            "property": "classes",
+            "value": "gothic_font transition top"
+          },
+          {
+            "func": "SELECT",
+            "type": "card",
+            "property": "classes",
+            "value": "last"
+          },
+          {
+            "func": "SET",
+            "property": "classes",
+            "value": ""
+          },
+          {
+            "func": "SELECT",
+            "type": "card",
+            "property": "parent",
+            "value": "0luq"
+          },
+          {
+            "func": "COUNT",
+            "variable": "drawn"
+          },
+          {
+            "func": "IF",
+            "operand1": "${drawn}",
+            "operand2": 0,
+            "thenRoutine": [
+              {
+                "func": "MOVE",
+                "from": "rksv",
+                "to": "0luq",
+                "count": 1
+              },
+              {
+                "func": "FLIP",
+                "holder": "0luq",
+                "face": 1
+              },
+              {
+                "func": "SELECT",
+                "type": "card",
+                "property": "parent",
+                "value": "0luq"
+              },
+              {
+                "func": "COUNT",
+                "variable": "drawn"
+              },
+              {
+                "func": "IF",
+                "operand1": "${drawn}",
+                "relation": "!=",
+                "operand2": 0,
+                "thenRoutine": [
+                  {
+                    "func": "GET",
+                    "property": "id"
+                  },
+                  {
+                    "func": "CALL",
+                    "widget": "useful",
+                    "routine": "validateCardRoutine",
+                    "arguments": {
+                      "card": "${id}"
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "func": "SET",
+            "property": "scale",
+            "value": 0,
+            "collection": [
+              "thisButton"
+            ]
+          },
+          {
+            "func": "SET",
+            "property": "scale",
+            "value": 1,
+            "collection": [
+              "sl2b"
+            ]
+          }
+        ]
+      }
+    ],
+    "x": 125,
+    "z": 86,
+    "id": "sl1b",
+    "resetProperties": {
+      "scale": 1
+    },
+    "css": "background-color: green; border: 2px solid green;",
+    "parent": "37af",
+    "y": 15,
+    "movableInEdit": false
+  },
+  "0luq": {
+    "type": "holder",
+    "z": 34,
+    "id": "0luq",
+    "width": 87,
+    "height": 87,
+    "dropTarget": {
+      "deck": "v71e"
+    },
+    "x": "20",
+    "css": "background-color:darkgrey",
+    "parent": "37af",
+    "enterRoutine": [
+      {
+        "func": "SET",
+        "property": "scale",
+        "value": 1,
+        "collection": [
+          "sl2b"
+        ]
+      },
+      {
+        "func": "SET",
+        "property": "scale",
+        "value": 0,
+        "collection": [
+          "sl1b"
+        ]
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "SET",
+        "property": "scale",
+        "value": 0,
+        "collection": [
+          "sl2b"
+        ]
+      },
+      {
+        "func": "SET",
+        "property": "scale",
+        "value": 1,
+        "collection": [
+          "sl1b"
+        ]
+      }
+    ],
+    "y": 13
+  },
+  "sl2b": {
+    "type": "button",
+    "text": "Discard",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "parent",
+        "value": "0luq",
+        "collection": "drawn"
+      },
+      {
+        "func": "GET",
+        "collection": "drawn",
+        "property": "id",
+        "variable": "drawnId"
+      },
+      {
+        "func": "IF",
+        "operand1": "${drawnId}",
+        "relation": "!=",
+        "operand2": "",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "${drawnId}"
+            ],
+            "property": "classes",
+            "value": "last"
+          },
+          {
+            "func": "CALL",
+            "widget": "useful",
+            "routine": "discardCardRoutine",
+            "arguments": {
+              "cardId": "${drawnId}"
+            }
+          },
+          {
+            "func": "CALL",
+            "widget": "useful",
+            "routine": "turnRoutine"
+          }
+        ]
+      },
+      {
+        "func": "SET",
+        "property": "scale",
+        "value": 0,
+        "collection": [
+          "thisButton"
+        ]
+      },
+      {
+        "func": "SET",
+        "property": "scale",
+        "value": 1,
+        "collection": [
+          "sl1b"
+        ]
+      }
+    ],
+    "x": 125,
+    "y": 15,
+    "z": 88,
+    "id": "sl2b",
+    "css": "background-color: red; border: 2px solid red;",
+    "rows": {
+      "one": 93,
+      "two": 177,
+      "three": 261,
+      "four": 345,
+      "five": 429
+    },
+    "parent": "37af",
+    "discardX": 1,
+    "resetProperties": {
+      "scale": 0
+    },
+    "movableInEdit": false,
+    "scale": 0
+  },
+  "useful": {
+    "id": "useful",
+    "x": 312,
+    "y": -125,
+    "z": 3,
+    "css": {
+      "default": {
+        "display": "flex",
+        "align-items": "center",
+        "justify-content": "center",
+        "background-color": "green"
+      }
+    },
+    "text": "useful",
+    "suits_": [
+      "one_",
+      "two_",
+      "three_",
+      "four_",
+      "five_"
+    ],
+    "scoresCards": {
+      "0": 0,
+      "1": -4,
+      "2": -3,
+      "3": 2,
+      "4": 3,
+      "5": 6,
+      "6": 10,
+      "7": 10,
+      "8": 10,
+      "9": 10,
+      "10": 10
+    },
+    "scoresStars": {
+      "0": -4,
+      "1": -3,
+      "2": 2,
+      "3": 3,
+      "4": 6,
+      "5": 10,
+      "6": 10,
+      "7": 10,
+      "8": 10,
+      "9": 10,
+      "10": 10
+    },
+    "udpdateScoresRoutine": [
+      "var score = 0",
+      "var stars = 0",
+      "var suits = ${PROPERTY suits_}",
+      {
+        "func": "FOREACH",
+        "in": "${suits}",
+        "loopRoutine": [
+          "var holder = ${value} + ${seat}",
+          {
+            "func": "SELECT",
+            "type": "card",
+            "property": "parent",
+            "value": "${holder}",
+            "collection": "collectedCards"
+          },
+          {
+            "func": "COUNT",
+            "collection": "collectedCards",
+            "variable": "cardsOfSuit"
+          },
+          "var scoresCards = ${PROPERTY scoresCards}",
+          "var score = ${score} + ${scoresCards.$cardsOfSuit}",
+          {
+            "func": "FOREACH",
+            "collection": "collectedCards",
+            "loopRoutine": [
+              "var special = ${PROPERTY special OF $widgetID}",
+              {
+                "func": "IF",
+                "operand1": "${special}",
+                "operand2": "1",
+                "thenRoutine": [
+                  "var score = ${score} + 1"
+                ]
+              },
+              {
+                "func": "IF",
+                "operand1": "${special}",
+                "operand2": "3",
+                "thenRoutine": [
+                  "var score = ${score} + 3"
+                ]
+              },
+              {
+                "func": "IF",
+                "operand1": "${special}",
+                "operand2": "✱",
+                "thenRoutine": [
+                  "var stars = ${stars} + 1"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "var scoresStars = ${PROPERTY scoresStars}",
+      "var score = ${score} + ${scoresStars.$stars}",
+      "var scoreLabel = 'score_' + ${seat}",
+      {
+        "func": "SET",
+        "property": "text",
+        "value": "${score}",
+        "collection": [
+          "${scoreLabel}"
+        ]
+      }
+    ],
+    "propertiesRoutine": [
+      {
+        "func": "SELECT",
+        "property": "${properties}",
+        "relation": "!=",
+        "value": null
+      },
+      {
+        "func": "FOREACH",
+        "loopRoutine": [
+          {
+            "func": "FOREACH",
+            "in": "${PROPERTY $properties OF $widgetID}",
+            "loopRoutine": [
+              {
+                "func": "SET",
+                "property": "${key}",
+                "value": "${value}"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "validateHoldersRoutine": [
+      "var first = true",
+      "var direction = -1",
+      "var last = 0",
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "parent",
+        "value": "${holder}",
+        "collection": "holderCards",
+        "sortBy": "x"
+      },
+      {
+        "func": "COUNT",
+        "collection": "holderCards",
+        "variable": "holderCardsCount"
+      },
+      {
+        "func": "SELECT",
+        "type": "card",
+        "source": "holderCards",
+        "property": "suit",
+        "value": "${PROPERTY suit OF $holder}",
+        "collection": "correctSuit"
+      },
+      {
+        "func": "COUNT",
+        "collection": "correctSuit",
+        "variable": "correctSuitCount"
+      },
+      {
+        "func": "IF",
+        "operand1": "${holderCardsCount}",
+        "operand2": "${correctSuitCount}",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "property": "classes",
+            "value": "",
+            "collection": [
+              "${holder}"
+            ]
+          },
+          {
+            "func": "IF",
+            "operand1": "${holderCardsCount}",
+            "relation": ">",
+            "operand2": "2",
+            "thenRoutine": [
+              {
+                "func": "FOREACH",
+                "collection": "holderCards",
+                "loopRoutine": [
+                  {
+                    "func": "IF",
+                    "condition": "${first}",
+                    "thenRoutine": [
+                      "var last = ${PROPERTY rank OF $widgetID}",
+                      "var first = false"
+                    ],
+                    "elseRoutine": [
+                      {
+                        "func": "IF",
+                        "operand1": "${direction}",
+                        "operand2": -1,
+                        "thenRoutine": [
+                          {
+                            "func": "IF",
+                            "operand1": "${last}",
+                            "relation": ">",
+                            "operand2": "${PROPERTY rank OF $widgetID}",
+                            "thenRoutine": [
+                              "var direction = 'D'"
+                            ],
+                            "elseRoutine": [
+                              "var direction = 'U'"
+                            ]
+                          }
+                        ],
+                        "elseRoutine": [
+                          {
+                            "func": "IF",
+                            "operand1": "${direction}",
+                            "operand2": "U",
+                            "thenRoutine": [
+                              {
+                                "func": "IF",
+                                "operand1": "${last}",
+                                "relation": ">",
+                                "operand2": "${PROPERTY rank OF $widgetID}",
+                                "thenRoutine": [
+                                  {
+                                    "func": "SET",
+                                    "property": "classes",
+                                    "value": "error",
+                                    "collection": [
+                                      "${holder}"
+                                    ]
+                                  }
+                                ]
+                              }
+                            ],
+                            "elseRoutine": [
+                              {
+                                "func": "IF",
+                                "operand1": "${last}",
+                                "relation": "<",
+                                "operand2": "${PROPERTY rank OF $widgetID}",
+                                "thenRoutine": [
+                                  {
+                                    "func": "SET",
+                                    "property": "classes",
+                                    "value": "error",
+                                    "collection": [
+                                      "${holder}"
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      "var last = ${PROPERTY rank OF $widgetID}"
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "property": "classes",
+            "value": "error",
+            "collection": [
+              "${holder}"
+            ]
+          }
+        ]
+      }
+    ],
+    "seats": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "discardCardRoutine": [
+      "var rank = ${PROPERTY rank OF $cardId}",
+      "var x = ${rank} * 88",
+      "var suitRank = ${PROPERTY suitRank OF $cardId}",
+      "var y = ${suitRank} * 88",
+      {
+        "func": "SET",
+        "collection": [
+          "${cardId}"
+        ],
+        "property": "parent",
+        "value": "lyf7"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "${cardId}"
+        ],
+        "property": "x",
+        "value": "${x}"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "${cardId}"
+        ],
+        "property": "y",
+        "value": "${y}"
+      }
+    ],
+    "validateCardRoutine": [
+      "var suit = ${PROPERTY suit OF $card}",
+      "var seats = ${PROPERTY seats}",
+      "var valid = false",
+      {
+        "func": "FOREACH",
+        "in": "${seats}",
+        "loopRoutine": [
+          "var holder = ${suit} + '_'",
+          "var holder = ${holder} + ${value}",
+          {
+            "func": "IF",
+            "operand1": "${PROPERTY classes OF $holder}",
+            "operand2": "",
+            "thenRoutine": [
+              {
+                "func": "SELECT",
+                "type": "card",
+                "property": "parent",
+                "value": "${holder}",
+                "collection": "holderCards",
+                "sortBy": "x"
+              },
+              {
+                "func": "SELECT",
+                "type": "card",
+                "property": "parent",
+                "value": "${holder}",
+                "collection": "holderCards",
+                "sortBy": "x"
+              },
+              {
+                "func": "COUNT",
+                "collection": "holderCards",
+                "variable": "holderCardsCount"
+              },
+              {
+                "func": "IF",
+                "operand1": "${holderCardsCount}",
+                "relation": ">",
+                "operand2": "1",
+                "thenRoutine": [
+                  "var first = true",
+                  "var direction = -1",
+                  "var last = 0",
+                  {
+                    "func": "FOREACH",
+                    "collection": "holderCards",
+                    "loopRoutine": [
+                      {
+                        "func": "IF",
+                        "condition": "${first}",
+                        "thenRoutine": [
+                          "var last = ${PROPERTY rank OF $widgetID}",
+                          "var first = false"
+                        ],
+                        "elseRoutine": [
+                          {
+                            "func": "IF",
+                            "operand1": "${direction}",
+                            "operand2": -1,
+                            "thenRoutine": [
+                              {
+                                "func": "IF",
+                                "operand1": "${last}",
+                                "relation": ">",
+                                "operand2": "${PROPERTY rank OF $widgetID}",
+                                "thenRoutine": [
+                                  "var direction = 'D'"
+                                ],
+                                "elseRoutine": [
+                                  "var direction = 'U'"
+                                ]
+                              }
+                            ]
+                          },
+                          "var last = ${PROPERTY rank OF $widgetID}"
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "func": "IF",
+                    "operand1": "${direction}",
+                    "operand2": "U",
+                    "thenRoutine": [
+                      {
+                        "func": "IF",
+                        "operand1": "${last}",
+                        "relation": "<",
+                        "operand2": "${PROPERTY rank OF $card}",
+                        "thenRoutine": [
+                          "var valid = true"
+                        ]
+                      }
+                    ],
+                    "elseRoutine": [
+                      {
+                        "func": "IF",
+                        "operand1": "${last}",
+                        "relation": ">",
+                        "operand2": "${PROPERTY rank OF $card}",
+                        "thenRoutine": [
+                          "var valid = true"
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                "elseRoutine": [
+                  "var valid = true"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "condition": "${valid}",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "${card}"
+            ],
+            "property": "activeFace",
+            "value": 1
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "${card}"
+            ],
+            "property": "activeFace",
+            "value": 2
+          }
+        ]
+      }
+    ],
+    "validateDiscardsRoutine": [
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "parent",
+        "value": "lyf7",
+        "collection": "discards"
+      },
+      {
+        "func": "FOREACH",
+        "collection": "discards",
+        "loopRoutine": [
+          {
+            "func": "CALL",
+            "routine": "validateCardRoutine",
+            "arguments": {
+              "card": "${widgetID}"
+            }
+          }
+        ]
+      }
+    ],
+    "turnRoutine": [
+      "var turn = ${PROPERTY turn OF $seatID}",
+      {
+        "func": "IF",
+        "condition": "${turn}",
+        "thenRoutine": [
+          {
+            "func": "TURN",
+            "turnCycle": "forward"
+          }
+        ]
+      }
+    ]
+  },
+  "seat1": {
+    "type": "seat",
+    "id": "seat1",
+    "x": 17,
+    "y": 629,
+    "z": 5,
+    "2playerProperties": {
+      "turn": true
+    },
+    "3playerProperties": {
+      "turn": true
+    },
+    "4playerProperties": {
+      "turn": true
+    },
+    "turn": true
+  },
+  "seat2": {
+    "type": "seat",
+    "id": "seat2",
+    "x": 543,
+    "y": 634,
+    "z": 91,
+    "css": {
+      ".hide": {
+        "display": "none"
+      }
+    },
+    "2playerProperties": {
+      "classes": "hide",
+      "turn": false
+    },
+    "3playerProperties": {
+      "classes": "",
+      "turn": false
+    },
+    "4playerProperties": {
+      "classes": "",
+      "turn": false
+    },
+    "index": 2,
+    "classes": "hide"
+  },
+  "seat3": {
+    "type": "seat",
+    "id": "seat3",
+    "x": 1067,
+    "y": 631,
+    "z": 59,
+    "2playerProperties": {
+      "turn": false
+    },
+    "3playerProperties": {
+      "turn": false
+    },
+    "4playerProperties": {
+      "turn": false
+    },
+    "index": 3
+  },
+  "seat4": {
+    "type": "seat",
+    "id": "seat4",
+    "x": 1074,
+    "y": 224,
+    "z": 54,
+    "css": {
+      ".hide": {
+        "display": "none"
+      }
+    },
+    "3playerProperties": {
+      "classes": "hide",
+      "turn": false
+    },
+    "4playerProperties": {
+      "classes": "",
+      "turn": false
+    },
+    "2playerProperties": {
+      "classes": "hide",
+      "turn": false
+    },
+    "index": 4,
+    "classes": "hide"
+  },
+  "one_1": {
+    "type": "holder",
+    "id": "one_1",
+    "x": -148,
+    "y": 673,
+    "width": 836,
+    "height": 90,
+    "scale": 0.6,
+    "z": 63,
+    "dropTarget": [
+      {
+        "deck": "v71e"
+      }
+    ],
+    "stackOffsetX": 83,
+    "stackOffset": 83,
+    "css": {
+      "default": {
+        "border": "3px solid ${PROPERTY color}"
+      },
+      ".error": {
+        "background-color": "pink"
+      }
+    },
+    "enterRoutine": [
+      {
+        "func": "CALL",
+        "routine": "contentschangedRoutine"
+      }
+    ],
+    "suit": "one",
+    "leaveRoutine": [
+      {
+        "func": "CALL",
+        "routine": "contentschangedRoutine"
+      }
+    ],
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "widget": "useful",
+        "routine": "validateHoldersRoutine",
+        "arguments": {
+          "holder": "${PROPERTY id}"
+        }
+      },
+      {
+        "func": "CALL",
+        "widget": "useful",
+        "routine": "udpdateScoresRoutine",
+        "argument": {
+          "seat": "${seatID.4}"
+        }
+      }
+    ],
+    "color": "#f0e442",
+    "onEnter": {
+      "activeFace": 1
+    },
+    "contentschangedRoutine": [
+      {
+        "func": "CALL",
+        "widget": "useful",
+        "routine": "validateHoldersRoutine",
+        "arguments": {
+          "holder": "${PROPERTY id}"
+        }
+      },
+      {
+        "func": "CALL",
+        "widget": "useful",
+        "routine": "udpdateScoresRoutine",
+        "argument": {
+          "seat": "${seatID.4}"
+        }
+      },
+      {
+        "func": "CALL",
+        "widget": "useful",
+        "routine": "validateDiscardsRoutine"
+      }
+    ]
+  },
+  "two_1": {
+    "type": "holder",
+    "id": "two_1",
+    "x": -148,
+    "y": 731,
+    "suit": "two",
+    "inheritFrom": "one_1",
+    "color": "#56b4e9",
+    "z": 67,
+    "classes": ""
+  },
+  "three_1": {
+    "type": "holder",
+    "id": "three_1",
+    "x": -150,
+    "y": 791,
+    "suit": "three",
+    "inheritFrom": "one_1",
+    "color": "#d55e00",
+    "z": 65,
+    "classes": ""
+  },
+  "four_1": {
+    "type": "holder",
+    "id": "four_1",
+    "x": -150,
+    "y": 852,
+    "suit": "four",
+    "inheritFrom": "one_1",
+    "color": "#009e73",
+    "classes": ""
+  },
+  "five_1": {
+    "type": "holder",
+    "id": "five_1",
+    "x": -150,
+    "y": 911,
+    "suit": "five",
+    "inheritFrom": "one_1",
+    "color": "#cc97a7",
+    "classes": ""
+  },
+  "one_2": {
+    "type": "holder",
+    "id": "one_2",
+    "x": 375,
+    "y": 674,
+    "suit": "one",
+    "inheritFrom": {
+      "one_1": [
+        "!css"
+      ],
+      "one_4": [
+        "css",
+        "4playerProperties"
+      ]
+    },
+    "color": "#f0e442",
+    "classes": "hide",
+    "2playerProperties": {
+      "classes": "hide"
+    },
+    "3playerProperties": {
+      "classes": ""
+    },
+    "4playerProperties": {
+      "classes": ""
+    }
+  },
+  "one_3": {
+    "type": "holder",
+    "id": "one_3",
+    "x": 899,
+    "y": 673,
+    "suit": "one",
+    "inheritFrom": "one_1",
+    "color": "#f0e442",
+    "classes": ""
+  },
+  "one_4": {
+    "type": "holder",
+    "id": "one_4",
+    "x": 907,
+    "y": 262,
+    "suit": "one",
+    "inheritFrom": "one_1",
+    "color": "#f0e442",
+    "classes": "hide",
+    "css": {
+      "default": {
+        "border": "3px solid ${PROPERTY color}"
+      },
+      ".error": {
+        "background-color": "pink"
+      },
+      ".hide": {
+        "display": "none"
+      }
+    },
+    "3playerProperties": {
+      "classes": "hide"
+    },
+    "4playerProperties": {
+      "classes": ""
+    },
+    "2playerProperties": {
+      "classes": "hide"
+    }
+  },
+  "two_2": {
+    "type": "holder",
+    "id": "two_2",
+    "x": 373,
+    "y": 734,
+    "suit": "two",
+    "inheritFrom": "one_2",
+    "color": "#56b4e9",
+    "classes": "hide"
+  },
+  "two_4": {
+    "type": "holder",
+    "id": "two_4",
+    "x": 909,
+    "y": 321,
+    "suit": "two",
+    "inheritFrom": {
+      "one_1": [
+        "!css",
+        "!2playerProperties",
+        "!3playerProperties",
+        "!4playerProperties"
+      ],
+      "one_4": [
+        "css",
+        "2playerProperties",
+        "3playerProperties",
+        "4playerProperties"
+      ]
+    },
+    "color": "#56b4e9",
+    "classes": "hide"
+  },
+  "three_2": {
+    "type": "holder",
+    "id": "three_2",
+    "x": 373,
+    "y": 793,
+    "suit": "three",
+    "inheritFrom": "one_2",
+    "color": "#d55e00",
+    "classes": "hide"
+  },
+  "two_3": {
+    "type": "holder",
+    "id": "two_3",
+    "x": 899,
+    "y": 732,
+    "suit": "two",
+    "inheritFrom": "one_1",
+    "color": "#56b4e9",
+    "classes": ""
+  },
+  "three_3": {
+    "type": "holder",
+    "id": "three_3",
+    "x": 899,
+    "y": 793,
+    "suit": "three",
+    "inheritFrom": "one_1",
+    "color": "#d55e00",
+    "classes": ""
+  },
+  "three_4": {
+    "type": "holder",
+    "id": "three_4",
+    "x": 907,
+    "y": 381,
+    "suit": "three",
+    "inheritFrom": {
+      "one_1": [
+        "!css",
+        "!2playerProperties",
+        "!3playerProperties",
+        "!4playerProperties"
+      ],
+      "one_4": [
+        "css",
+        "2playerProperties",
+        "3playerProperties",
+        "4playerProperties"
+      ]
+    },
+    "color": "#d55e00",
+    "classes": "hide",
+    "z": 68
+  },
+  "four_2": {
+    "type": "holder",
+    "id": "four_2",
+    "x": 373,
+    "y": 852,
+    "suit": "four",
+    "inheritFrom": "one_2",
+    "color": "#009e73",
+    "classes": "hide"
+  },
+  "four_3": {
+    "type": "holder",
+    "id": "four_3",
+    "x": 901,
+    "y": 853,
+    "suit": "four",
+    "inheritFrom": "one_1",
+    "color": "#009e73",
+    "classes": ""
+  },
+  "four_4": {
+    "type": "holder",
+    "id": "four_4",
+    "x": 907,
+    "y": 440,
+    "suit": "four",
+    "inheritFrom": {
+      "one_1": [
+        "!css",
+        "!2playerProperties",
+        "!3playerProperties",
+        "!4playerProperties"
+      ],
+      "one_4": [
+        "css",
+        "2playerProperties",
+        "3playerProperties",
+        "4playerProperties"
+      ]
+    },
+    "color": "#009e73",
+    "classes": "hide"
+  },
+  "five_2": {
+    "type": "holder",
+    "id": "five_2",
+    "x": 373,
+    "y": 914,
+    "suit": "five",
+    "inheritFrom": "one_2",
+    "color": "#cc97a7",
+    "classes": "hide"
+  },
+  "five_3": {
+    "type": "holder",
+    "id": "five_3",
+    "x": 899,
+    "y": 912,
+    "suit": "five",
+    "inheritFrom": "one_1",
+    "color": "#cc97a7",
+    "classes": ""
+  },
+  "five_4": {
+    "type": "holder",
+    "id": "five_4",
+    "x": 907,
+    "y": 499,
+    "suit": "five",
+    "inheritFrom": {
+      "one_1": [
+        "!css",
+        "!2playerProperties",
+        "!3playerProperties",
+        "!4playerProperties"
+      ],
+      "one_4": [
+        "css",
+        "2playerProperties",
+        "3playerProperties",
+        "4playerProperties"
+      ]
+    },
+    "color": "#cc97a7",
+    "classes": "hide"
+  },
+  "score_3": {
+    "id": "score_3",
+    "x": 1519,
+    "y": 639,
+    "z": 10,
+    "height": 40,
+    "css": {
+      "default": {
+        "display": "flex",
+        "align-items": "center",
+        "justify-content": "center",
+        "background-color": "lightgrey",
+        "border-radius": "5px"
+      }
+    },
+    "width": 40,
+    "text": "-4",
+    "resetProperties": {
+      "text": "-4"
+    },
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "widget": "useful",
+        "routine": "udpdateScoresRoutine",
+        "arguments": {
+          "seat": "${seatID.4}"
+        }
+      }
+    ]
+  },
+  "score_4": {
+    "id": "score_4",
+    "x": 1523,
+    "y": 223,
+    "z": 11,
+    "height": 40,
+    "css": {
+      "default": {
+        "display": "flex",
+        "align-items": "center",
+        "justify-content": "center",
+        "background-color": "lightgrey",
+        "border-radius": "5px"
+      },
+      ".hide": {
+        "display": "none"
+      }
+    },
+    "width": 40,
+    "text": "-4",
+    "resetProperties": {
+      "text": "-4"
+    },
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "widget": "useful",
+        "routine": "udpdateScoresRoutine",
+        "arguments": {
+          "seat": "${seatID.4}"
+        }
+      }
+    ],
+    "3playerProperties": {
+      "classes": "hide"
+    },
+    "4playerProperties": {
+      "classes": ""
+    },
+    "2playerProperties": {
+      "classes": "hide"
+    },
+    "classes": "hide"
+  },
+  "score_1": {
+    "id": "score_1",
+    "x": 466,
+    "y": 634,
+    "width": 40,
+    "height": 40,
+    "z": 12,
+    "css": {
+      "default": {
+        "display": "flex",
+        "align-items": "center",
+        "justify-content": "center",
+        "background-color": "lightgrey",
+        "border-radius": "5px"
+      }
+    },
+    "text": "-4",
+    "resetProperties": {
+      "text": "-4"
+    },
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "widget": "useful",
+        "routine": "udpdateScoresRoutine",
+        "arguments": {
+          "seat": "${seatID.4}"
+        }
+      }
+    ]
+  },
+  "score_2": {
+    "id": "score_2",
+    "x": 987,
+    "y": 640,
+    "width": 40,
+    "height": 40,
+    "z": 14,
+    "css": {
+      "default": {
+        "display": "flex",
+        "align-items": "center",
+        "justify-content": "center",
+        "background-color": "lightgrey",
+        "border-radius": "5px"
+      },
+      ".hide": {
+        "display": "none"
+      }
+    },
+    "text": "-4",
+    "resetProperties": {
+      "text": "-4"
+    },
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "widget": "useful",
+        "routine": "udpdateScoresRoutine",
+        "arguments": {
+          "seat": "${seatID.4}"
+        }
+      }
+    ],
+    "2playerProperties": {
+      "classes": "hide"
+    },
+    "3playerProperties": {
+      "classes": ""
+    },
+    "4playerProperties": {
+      "classes": ""
+    },
+    "classes": "hide"
+  },
+  "uhkc": {
+    "deck": "v71e",
+    "type": "card",
+    "cardType": "0 of one",
+    "id": "uhkc",
+    "z": 65262,
+    "parent": "otqt"
+  },
+  "4u0a": {
+    "deck": "v71e",
+    "type": "card",
+    "cardType": "1 of one",
+    "id": "4u0a",
+    "z": 65230,
+    "parent": "otqt"
+  },
+  "v97c": {
+    "deck": "v71e",
+    "type": "card",
+    "cardType": "2 of one",
+    "id": "v97c",
+    "z": 65268,
+    "parent": "otqt"
+  },
+  "tttn": {
+    "deck": "v71e",
+    "type": "card",
+    "cardType": "3 of one",
+    "id": "tttn",
+    "z": 65221,
+    "parent": "otqt"
+  },
+  "okrc": {
+    "deck": "v71e",
+    "type": "card",
+    "cardType": "4 of one",
+    "id": "okrc",
+    "z": 65243,
+    "parent": "otqt"
+  },
+  "9r68": {
+    "deck": "v71e",
+    "type": "card",
+    "cardType": "5 of one",
+    "id": "9r68",
+    "z": 65264,
+    "parent": "otqt"
+  },
+  "8mda": {
+    "deck": "v71e",
+    "type": "card",
+    "cardType": "6 of one",
+    "id": "8mda",
+    "z": 65233,
+    "parent": "otqt"
+  },
+  "sqnn": {
+    "deck": "v71e",
+    "type": "card",
+    "cardType": "7 of one",
+    "id": "sqnn",
+    "z": 65237,
+    "parent": "otqt"
+  },
+  "kt7s": {
+    "deck": "v71e",
+    "type": "card",
+    "cardType": "8 of one",
+    "id": "kt7s",
+    "z": 65251,
+    "parent": "otqt"
+  },
+  "6kzl": {
+    "deck": "v71e",
+    "type": "card",
+    "cardType": "9 of one",
+    "id": "6kzl",
+    "z": 65235,
+    "parent": "otqt"
+  },
+  "rxiz": {
+    "deck": "v71e",
+    "type": "card",
+    "cardType": "10 of one",
+    "id": "rxiz",
+    "z": 65258,
+    "parent": "otqt"
+  },
+  "h4vo": {
+    "deck": "v71e",
+    "type": "card",
+    "cardType": "0 of two",
+    "id": "h4vo",
+    "z": 65245,
+    "parent": "otqt"
+  },
+  "2lre": {
+    "deck": "v71e",
+    "type": "card",
+    "cardType": "1 of two",
+    "id": "2lre",
+    "z": 65217,
+    "parent": "otqt"
+  },
+  "oacb": {
+    "deck": "v71e",
+    "type": "card",
+    "cardType": "2 of two",
+    "id": "oacb",
+    "z": 65226,
+    "parent": "otqt"
+  },
+  "03ea": {
+    "deck": "v71e",
+    "type": "card",
+    "cardType": "3 of two",
+    "id": "03ea",
+    "z": 65248,
+    "parent": "otqt"
+  },
+  "amv6": {
+    "deck": "v71e",
+    "type": "card",
+    "cardType": "4 of two",
+    "id": "amv6",
+    "z": 65223,
+    "parent": "otqt"
+  },
+  "9kat": {
+    "deck": "v71e",
+    "type": "card",
+    "cardType": "5 of two",
+    "id": "9kat",
+    "z": 65271,
+    "parent": "otqt"
+  },
+  "g7us": {
+    "deck": "v71e",
+    "type": "card",
+    "cardType": "6 of two",
+    "id": "g7us",
+    "z": 65229,
+    "parent": "otqt"
+  },
+  "qgn5": {
+    "deck": "v71e",
+    "type": "card",
+    "cardType": "7 of two",
+    "id": "qgn5",
+    "z": 65254,
+    "parent": "otqt"
+  },
+  "oytv": {
+    "deck": "v71e",
+    "type": "card",
+    "cardType": "8 of two",
+    "id": "oytv",
+    "z": 65267,
+    "parent": "otqt"
+  },
+  "nw03": {
+    "deck": "v71e",
+    "type": "card",
+    "cardType": "9 of two",
+    "id": "nw03",
+    "z": 65250,
+    "parent": "otqt"
+  },
+  "z88b": {
+    "deck": "v71e",
+    "type": "card",
+    "cardType": "10 of two",
+    "id": "z88b",
+    "z": 65234,
+    "parent": "otqt"
+  },
+  "1mq0": {
+    "deck": "v71e",
+    "type": "card",
+    "cardType": "0 of three",
+    "id": "1mq0",
+    "z": 65218,
+    "parent": "otqt"
+  },
+  "n9hx": {
+    "deck": "v71e",
+    "type": "card",
+    "cardType": "1 of three",
+    "id": "n9hx",
+    "z": 65252,
+    "parent": "otqt"
+  },
+  "xvxl": {
+    "deck": "v71e",
+    "type": "card",
+    "cardType": "2 of three",
+    "id": "xvxl",
+    "z": 65220,
+    "parent": "otqt"
+  },
+  "nked": {
+    "deck": "v71e",
+    "type": "card",
+    "cardType": "3 of three",
+    "id": "nked",
+    "z": 65249,
+    "parent": "otqt"
+  },
+  "dvca": {
+    "deck": "v71e",
+    "type": "card",
+    "cardType": "4 of three",
+    "id": "dvca",
+    "z": 65227,
+    "parent": "otqt"
+  },
+  "urx3": {
+    "deck": "v71e",
+    "type": "card",
+    "cardType": "5 of three",
+    "id": "urx3",
+    "z": 65242,
+    "parent": "otqt"
+  },
+  "0zyp": {
+    "deck": "v71e",
+    "type": "card",
+    "cardType": "6 of three",
+    "id": "0zyp",
+    "z": 65239,
+    "parent": "otqt"
+  },
+  "36oy": {
+    "deck": "v71e",
+    "type": "card",
+    "cardType": "7 of three",
+    "id": "36oy",
+    "z": 65270,
+    "parent": "otqt"
+  },
+  "gylt": {
+    "deck": "v71e",
+    "type": "card",
+    "cardType": "8 of three",
+    "id": "gylt",
+    "z": 65231,
+    "parent": "otqt"
+  },
+  "rlu8": {
+    "deck": "v71e",
+    "type": "card",
+    "cardType": "9 of three",
+    "id": "rlu8",
+    "z": 65240,
+    "parent": "otqt"
+  },
+  "d5cn": {
+    "deck": "v71e",
+    "type": "card",
+    "cardType": "10 of three",
+    "id": "d5cn",
+    "z": 65219,
+    "parent": "otqt"
+  },
+  "idtz": {
+    "deck": "v71e",
+    "type": "card",
+    "cardType": "0 of four",
+    "id": "idtz",
+    "z": 65247,
+    "parent": "otqt"
+  },
+  "hhwn": {
+    "deck": "v71e",
+    "type": "card",
+    "cardType": "1 of four",
+    "id": "hhwn",
+    "z": 65238,
+    "parent": "otqt"
+  },
+  "p70e": {
+    "deck": "v71e",
+    "type": "card",
+    "cardType": "2 of four",
+    "id": "p70e",
+    "z": 65266,
+    "parent": "otqt"
+  },
+  "k9ih": {
+    "deck": "v71e",
+    "type": "card",
+    "cardType": "3 of four",
+    "id": "k9ih",
+    "z": 65255,
+    "parent": "otqt"
+  },
+  "k5wk": {
+    "deck": "v71e",
+    "type": "card",
+    "cardType": "4 of four",
+    "id": "k5wk",
+    "z": 65253,
+    "parent": "otqt"
+  },
+  "udxw": {
+    "deck": "v71e",
+    "type": "card",
+    "cardType": "5 of four",
+    "id": "udxw",
+    "z": 65263,
+    "parent": "otqt"
+  },
+  "4bxf": {
+    "deck": "v71e",
+    "type": "card",
+    "cardType": "6 of four",
+    "id": "4bxf",
+    "z": 65260,
+    "parent": "otqt"
+  },
+  "2aab": {
+    "deck": "v71e",
+    "type": "card",
+    "cardType": "7 of four",
+    "id": "2aab",
+    "z": 65246,
+    "parent": "otqt"
+  },
+  "xz2o": {
+    "deck": "v71e",
+    "type": "card",
+    "cardType": "8 of four",
+    "id": "xz2o",
+    "z": 65228,
+    "parent": "otqt"
+  },
+  "pwm7": {
+    "deck": "v71e",
+    "type": "card",
+    "cardType": "9 of four",
+    "id": "pwm7",
+    "z": 65259,
+    "direction": "U",
+    "parent": "otqt"
+  },
+  "x9r6": {
+    "deck": "v71e",
+    "type": "card",
+    "cardType": "10 of four",
+    "id": "x9r6",
+    "z": 65261,
+    "parent": "otqt"
+  },
+  "z55o": {
+    "deck": "v71e",
+    "type": "card",
+    "cardType": "0 of five",
+    "id": "z55o",
+    "z": 65232,
+    "parent": "otqt"
+  },
+  "eotj": {
+    "deck": "v71e",
+    "type": "card",
+    "cardType": "1 of five",
+    "id": "eotj",
+    "z": 65225,
+    "parent": "otqt"
+  },
+  "00ah": {
+    "deck": "v71e",
+    "type": "card",
+    "cardType": "2 of five",
+    "id": "00ah",
+    "z": 65241,
+    "parent": "otqt"
+  },
+  "0j2u": {
+    "deck": "v71e",
+    "type": "card",
+    "cardType": "3 of five",
+    "id": "0j2u",
+    "z": 65236,
+    "parent": "otqt"
+  },
+  "72k0": {
+    "deck": "v71e",
+    "type": "card",
+    "cardType": "4 of five",
+    "id": "72k0",
+    "z": 65224,
+    "parent": "otqt"
+  },
+  "c0cb": {
+    "deck": "v71e",
+    "type": "card",
+    "cardType": "5 of five",
+    "id": "c0cb",
+    "z": 65244,
+    "parent": "otqt"
+  },
+  "vgdo": {
+    "deck": "v71e",
+    "type": "card",
+    "cardType": "6 of five",
+    "id": "vgdo",
+    "z": 65269,
+    "parent": "otqt"
+  },
+  "yw8l": {
+    "deck": "v71e",
+    "type": "card",
+    "cardType": "7 of five",
+    "id": "yw8l",
+    "z": 65222,
+    "parent": "otqt"
+  },
+  "pad7": {
+    "deck": "v71e",
+    "type": "card",
+    "cardType": "8 of five",
+    "id": "pad7",
+    "z": 65265,
+    "parent": "otqt"
+  },
+  "kfly": {
+    "deck": "v71e",
+    "type": "card",
+    "cardType": "9 of five",
+    "id": "kfly",
+    "z": 65256,
+    "parent": "otqt"
+  },
+  "vzmz": {
+    "deck": "v71e",
+    "type": "card",
+    "cardType": "10 of five",
+    "id": "vzmz",
+    "z": 65257,
+    "parent": "otqt"
+  },
+  "sl3b": {
+    "type": "button",
+    "text": "3",
+    "x": 60,
+    "z": 92,
+    "id": "sl3b",
+    "y": 10,
+    "properties": "3playerProperties",
+    "inheritFrom": "sl5b"
+  },
+  "lyf7": {
+    "id": "lyf7",
+    "x": "305",
+    "y": "131",
+    "z": 46,
+    "css": "background-color: #fff0; border: none;",
+    "3playerProperties": {
+      "x": "93",
+      "y": "131"
+    },
+    "4playerProperties": {
+      "x": "63",
+      "y": "131"
+    },
+    "preventPiles": true,
+    "type": "holder",
+    "width": 960,
+    "height": 435,
+    "movableInEdit": false,
+    "enterRoutine": [
+      {
+        "func": "GET",
+        "collection": "child",
+        "property": "id",
+        "variable": "childId"
+      },
+      {
+        "func": "CALL",
+        "widget": "useful",
+        "routine": "discardCardRoutine",
+        "arguments": {
+          "cardId": "${childId}"
+        }
+      },
+      {
+        "func": "CALL",
+        "widget": "useful",
+        "routine": "validateDiscardsRoutine"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "CALL",
+        "widget": "useful",
+        "routine": "validateDiscardsRoutine"
+      }
+    ],
+    "2playerProperties": {
+      "x": "305",
+      "y": "131"
+    }
+  },
+  "37af": {
+    "type": "holder",
+    "x": "706",
+    "y": "626",
+    "z": 55,
+    "id": "37af",
+    "3playerProperties": {
+      "x": "1144",
+      "y": "333"
+    },
+    "4playerProperties": {
+      "x": "1200",
+      "y": "58"
+    },
+    "css": "background-color: #fff; border: none;",
+    "width": 220,
+    "height": 110,
+    "movableInEdit": false,
+    "2playerProperties": {
+      "x": "706",
+      "y": "626"
+    }
+  },
+  "sl4b": {
+    "type": "button",
+    "text": "4",
+    "x": 110,
+    "id": "sl4b",
+    "y": 10,
+    "properties": "4playerProperties",
+    "inheritFrom": "sl5b",
+    "z": 93
+  },
+  "sl5b": {
+    "type": "button",
+    "text": "2",
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "widget": "useful",
+        "routine": "propertiesRoutine",
+        "arguments": {
+          "properties": "${PROPERTY properties}"
+        }
+      }
+    ],
+    "x": 10,
+    "z": 58,
+    "id": "sl5b",
+    "css": "background-color: purple; border: 2px solid purple; overflow: hidden;opacity:0.7",
+    "height": 40,
+    "y": 10,
+    "width": 40,
+    "properties": "2playerProperties",
+    "movableInEdit": false
+  },
+  "jtti": {
+    "id": "jtti",
+    "height": 50,
+    "z": 4,
+    "text": "Celtic Knots",
+    "css": {
+      ".transition": {
+        "transition": "font-size 2s, margin-top 2s"
+      },
+      ".top": {
+        "font-size": "40px",
+        "margin-top": "10px"
+      },
+      "default": {
+        "opacity": 0.7,
+        "font-size": "170px",
+        "text-align": "center",
+        "color": "purple",
+        "font-weight": "bold",
+        "margin-top": "200px"
+      }
+    },
+    "classes": "gothic_font transition",
+    "layer": -9,
+    "4playerProperties": {
+      "classes": "gothic_font transition top"
+    },
+    "3playerProperties": {
+      "classes": "gothic_font transition top"
+    },
+    "2playerProperties": {
+      "classes": "gothic_font transition top"
+    },
+    "width": 1600
+  },
+  "sl6b": {
+    "type": "button",
+    "text": "?",
+    "x": 210,
+    "id": "sl6b",
+    "y": 10,
+    "inheritFrom": {
+      "sl5b": [
+        "css",
+        "width",
+        "height"
+      ]
+    },
+    "layer": 2
+  },
+  "sl7b": {
+    "id": "sl7b",
+    "parent": "sl6b",
+    "width": 650,
+    "height": 410,
+    "z": 1,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "default": {
+        "width": "10px",
+        "height": "10px",
+        "color": "purple"
+      },
+      " h3": {
+        "text-align": "left",
+        "font-size": "25px",
+        "color": "purple",
+        "border-bottom": "1px solid purple",
+        "margin": "15px 0px 0px 0px"
+      },
+      " .scoring-aid": {
+        "display": "none"
+      },
+      " table": {
+        "border-spacing": "0px",
+        "width": "100%"
+      },
+      " td": {
+        "border": "1px solid black",
+        "padding": "2px"
+      },
+      " th": {
+        "border": "1px solid black",
+        "padding": "2px"
+      },
+      "#enlarged": {
+        "background": "white",
+        "border": "5px solid purple",
+        "padding": "20px",
+        "visibility": "visible",
+        "top": 100,
+        "left": 0,
+        "margin-top": "30px",
+        "color": "black"
+      },
+      "#enlarged > .scoring-aid": {
+        "display": "block"
+      }
+    },
+    "enlarge": 1,
+    "html": "<div style='margin-top: 20px;'>Click <strong>Draw</strong> to draw a card. Click card to move to holder or <strong>Discard</strong> to move to table. Click <strong>T</strong> to change turn.</div> <h3>Scoring</h3> <table class='score'> <tr> <th>Cards of colour</th> <th>0</th> <th>1</th> <th>2</th> <th>3</th> <th>4</th> <th>5</th> <th>6+</th> </tr> <tr> <th>Points</th> <td align='center'>0</td> <td align='center'><font style='color: red'>-4</font></td> <td align='center'><font style='color: red'>-3</font></td> <td align='center'>2</td> <td align='center'>3</td> <td align='center'>6</td> <td align='center'>10</td> </tr> </table> <table class='score'> <tr> <th>Total ✱ collected</th> <th>0</th> <th>1</th> <th>2</th> <th>3</th> <th>4</th> <th>5+</th> </tr> <tr> <th>Points</th> <td align='center'><font style='color: red'>-4</font></td> <td align='center'><font style='color: red'>-3</font></td> <td align='center'>2</td> <td align='center'>3</td> <td align='center'>6</td> <td align='center'>10</td> </tr> </table> <table class='score'> <tr> <th>Special</th> <th>Bonus</th> </tr> <tr> <td align='center'>1</td> <td align='center'>1 points</td> </tr> <tr> <td align='center'>3</td> <td align='center'>3 points</td> </tr> <tr> <td align='center'>✚</td> <td align='center'>Take another tile</td> </tr> </table> "
+  },
+  "im5d": {
+    "id": "im5d",
+    "width": 1600,
+    "height": 1000,
+    "layer": -10,
+    "movableInEdit": false,
+    "css": " opacity: 0.4; background: repeating-linear-gradient( 45deg,#0000 calc(-650%/13) calc(50%/13),#fefefe 0 calc(100%/13), #0000 0 calc(150%/13),#fefefe 0 calc(200%/13), #0000 0 calc(250%/13),#fefefe 0 calc(300%/13)),repeating-linear-gradient( 45deg,#0000 calc(-650%/13) calc(50%/13),#fefefe 0 calc(100%/13), #0000 0 calc(150%/13),#fefefe 0 calc(200%/13), #0000 0 calc(250%/13),#fefefe 0 calc(300%/13)) 20px 20px, repeating-linear-gradient(-45deg,#0000 calc(-650%/13) calc(50%/13),#fefefe 0 calc(100%/13), #0000 0 calc(150%/13),#fefefe 0 calc(200%/13), #0000 0 calc(250%/13),#fefefe 0 calc(300%/13)),repeating-linear-gradient(-45deg,#0000 calc(-650%/13) calc(50%/13),#fefefe 0 calc(100%/13), #0000 0 calc(150%/13),#fefefe 0 calc(200%/13), #0000 0 calc(250%/13),#fefefe 0 calc(300%/13)) 20px 20px #c6c6c6; background-size: 40px 40px;",
+    "movable": false
+  },
+  "sl8b": {
+    "type": "button",
+    "x": 160,
+    "id": "sl8b",
+    "y": 10,
+    "z": 93,
+    "inheritFrom": {
+      "sl5b": [
+        "css",
+        "width",
+        "height"
+      ]
+    },
+    "text": "T",
+    "clickRoutine": [
+      {
+        "func": "TURN",
+        "turnCycle": "forward"
+      }
+    ]
+  },
+  "otqt": {
+    "type": "pile",
+    "parent": "rksv",
+    "x": 4,
+    "y": 4,
+    "width": 80,
+    "height": 80,
+    "id": "otqt"
+  }
+}

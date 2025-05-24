@@ -1,4 +1,4 @@
-export const VERSION = 7;
+export const VERSION = 18;
 
 export default function FileUpdater(state) {
   const v = state._meta.version;
@@ -7,35 +7,102 @@ export default function FileUpdater(state) {
   if(v > VERSION)
     throw Error(`File version ${v} is newer than the supported version ${VERSION}.`);
 
+  const globalProperties = computeGlobalProperties(state, v);
+
   for(const id in state)
-    updateProperties(state[id], v);
+    updateProperties(state[id], v, globalProperties);
 
   state._meta.version = VERSION;
   return state;
 }
 
-function updateProperties(properties, v) {
+function computeGlobalProperties(state, v) {
+  let globalProperties = {};
+  if (globalProperties.v12DropShadowAllowed = v < 10) {
+    for (const id in state) {
+      const properties = state[id];
+      if (properties.type == 'card' || properties.type == 'deck' || properties.type == 'pile') {
+        globalProperties.v12DropShadowAllowed = globalProperties.v12DropShadowAllowed &&
+            !hasPropertyCondition(properties, (properties) => {
+              return properties.parentChangeRoutine || properties.changeRoutine;
+            });
+      }
+      globalProperties.v12DropShadowAllowed = globalProperties.v12DropShadowAllowed &&
+          !hasPropertyCondition(properties, (properties) => {
+            return properties.parentGlobalUpdateRoutine || properties.globalUpdateRoutine;
+          });
+      if (!globalProperties.v12DropShadowAllowed)
+        break;
+    }
+  }
+  return globalProperties;
+}
+
+function hasPropertyCondition(properties, condition) {
+  if (properties == null || typeof properties != 'object')
+    return false;
+  if (condition(properties))
+    return true;
+  if (properties.type) {
+    for (const property of ['onPileCreation', 'onEnter', 'onLeave'])
+      if (hasPropertyCondition(properties[property], condition))
+        return true;
+    if (typeof properties.faces == 'object')
+      for (const face in properties.faces)
+        if (hasPropertyCondition(properties.faces[face], condition))
+          return true;
+    if (properties.type == 'deck') {
+      if (hasPropertyCondition(properties.cardDefaults, condition))
+        return true;
+      if (typeof properties.cardTypes == 'object')
+        for(const cardType in properties.cardTypes)
+          if (hasPropertyCondition(properties.cardTypes[cardType], condition))
+            return true;
+      if(typeof properties.faceTemplates == 'object')
+        for(const face in properties.faceTemplates)
+          if (typeof properties.faceTemplates[face] == 'object' &&
+              hasPropertyCondition(properties.faceTemplates[face].properties, condition))
+            return true;
+    }
+  }
+  return false;
+}
+
+function updateProperties(properties, v, globalProperties) {
   if(typeof properties != 'object')
     return;
 
-  if(!properties.type)
-    updateProperties(properties.faces, v);
+  if(!properties.type) {
+    if (typeof properties.faces == 'object') {
+      for (let face in properties.faces) {
+        updateProperties(properties.faces[face], v, globalProperties);
+      }
+    }
+  }
   if(properties.type == 'deck')
-    updateProperties(properties.cardDefaults, v);
+    updateProperties(properties.cardDefaults, v, globalProperties);
   if(properties.type == 'deck' && typeof properties.cardTypes == 'object')
     for(const cardType in properties.cardTypes)
-      updateProperties(properties.cardTypes[cardType], v);
+      updateProperties(properties.cardTypes[cardType], v, globalProperties);
 
   for(const property in properties)
     if(property.match(/Routine$/))
-      updateRoutine(properties[property], v);
+      updateRoutine(properties[property], v, globalProperties);
 
   v<4 && v4ModifyDropTargetEmptyArray(properties);
   v<5 && v5DynamicFaceProperties(properties);
   v<6 && v6cssPieces(properties);
+  v<7 && v7HolderClickable(properties);
+  v<8 && v8HoverInheritVisibleForSeat(properties);
+  v<10 && v10GridOffset(properties);
+  v<12 && globalProperties.v12DropShadowAllowed && v12HandDropShadow(properties);
+  v<13 && v13EnlargeTinyLabels(properties);
+  v<14 && v14HidePlayerCursors(properties);
+  v<15 && v15SkipTurnProperty(properties);
+  v<17 && v17MaterialSymbols(properties);
 }
 
-function updateRoutine(routine, v, nested = false, status = {hasMode:false, needsMode:false}) {
+function updateRoutine(routine, v, globalProperties, nested = false, status = {hasMode:false, needsMode:false}) {
   if(!Array.isArray(routine))
     return;
   const reMode = /^mode:/;
@@ -49,23 +116,27 @@ function updateRoutine(routine, v, nested = false, status = {hasMode:false, need
       status.needsMode = true;
     const hasModeLocal = status.hasMode;
     if(operation.func == 'CLONE') {
-      updateProperties(operation.properties, v);
+      updateProperties(operation.properties, v, globalProperties);
     }
     if(operation.func == 'FOREACH') {
-      updateRoutine(operation.loopRoutine, v, true, status);
+      updateRoutine(operation.loopRoutine, v, globalProperties, true, status);
       status.hasMode = hasModeLocal;
     }
     if(operation.func == 'IF') {
-      updateRoutine(operation.thenRoutine, v, true, status);
+      updateRoutine(operation.thenRoutine, v, globalProperties, true, status);
       status.hasMode = hasModeLocal;
-      updateRoutine(operation.elseRoutine, v, true, status);
+      updateRoutine(operation.elseRoutine, v, globalProperties, true, status);
       status.hasMode = hasModeLocal;
     }
   }
 
   v<2 && v2UpdateSelectDefault(routine);
   v<3 && v3RemoveComputeAndRandomAndApplyVariables(routine);
-  v<7 && v7RoutineModeSwitch(routine, 'strToNum defaultOne', nested, status);
+  v<9 && v9NumericStringSort(routine);
+  v<11 && v11OwnerMOVEXY(routine);
+  v<15 && v15SkipTurnRoutine(routine);
+  v<16 && v16UpdateCountParameter(routine);
+  v<18 && v18RoutineModeSwitch(routine, 'strToNum defaultOne', nested, status);
 }
 
 function v2UpdateSelectDefault(routine) {
@@ -332,7 +403,118 @@ function v6cssPieces(properties) {
   }
 }
 
-function v7RoutineModeSwitch(routine, modeSwitch, nested, status) {
+function v7HolderClickable(properties) {
+  if (properties.clickRoutine && !properties.clickable && properties.type=='holder'){
+    properties.clickable=false;
+  }
+}
+
+function v8HoverInheritVisibleForSeat(properties) {
+  if (properties.onlyVisibleForSeat)
+    properties.hoverInheritVisibleForSeat = false;
+}
+
+function v9NumericStringSort(routine) {
+  for(const key in routine)
+    if(typeof routine[key] === 'string')
+      routine[key] = routine[key].replace('numericSort', 'numericStringSort');
+}
+
+function v10GridOffset(properties) {
+  const grid = properties.grid;
+  if (!grid || typeof grid != 'object')
+    return;
+  for (let i in grid) {
+    if (!grid[i] || typeof grid[i] != 'object')
+      continue;
+    const xAdjustment = -grid[i].x*0.5;
+    const yAdjustment = -grid[i].y*0.5;
+    grid[i].offsetX = (grid[i].offsetX || 0) + xAdjustment;
+    grid[i].offsetY = (grid[i].offsetY || 0) + yAdjustment;
+    if (typeof grid[i].minX == 'number')
+      grid[i].minX += xAdjustment;
+    if (typeof grid[i].maxX == 'number')
+      grid[i].maxX += xAdjustment;
+    if (typeof grid[i].minY == 'number')
+      grid[i].minY += yAdjustment;
+    if (typeof grid[i].maxY == 'number')
+      grid[i].maxY += yAdjustment;
+  }
+}
+
+function v11OwnerMOVEXY(routine) {
+  for(const operation of routine)
+    if(operation.func == 'MOVEXY' && operation.resetOwner === undefined)
+      operation.resetOwner = false;
+}
+
+function v12HandDropShadow(properties) {
+  if (properties.type == 'holder' && properties.childrenPerOwner && !properties.enterRoutine && !properties.leaveRoutine && !properties.changeRoutine) {
+    properties.dropShadow = true;
+  }
+}
+
+function v13EnlargeTinyLabels(properties) {
+  if(properties.type == 'label') {
+    const match = JSON.stringify(properties.css || '').match(/font-size"?:"? *([0-9]+) *px/);
+    const fontSize = match ? +match[1] : 16;
+    if((properties.height || 20) < fontSize + 2)
+      properties.height = fontSize + 2;
+  }
+}
+
+function v14HidePlayerCursors(properties) {
+  if(properties.type == 'holder' && properties.childrenPerOwner)
+    properties.hidePlayerCursors = true;
+}
+
+// There are 2 functions for v15 for skipTurn
+function v15SkipTurnProperty(properties) {
+  if(properties.skipTurn !== undefined) {
+    properties.skipTurnFileUpdater = properties.skipTurn;
+    delete properties.skipTurn;
+  }
+}
+function v15SkipTurnRoutine(routine) {
+  for(const key in routine)
+    routine[key] = JSON.parse(JSON.stringify(routine[key]).replace(/\bskipTurn\b/g, 'skipTurnFileUpdater'));
+}
+
+function v16UpdateCountParameter(routine) {
+  for(const key in routine) {
+    if(routine[key] && [ 'FLIP', 'MOVE', 'MOVEXY', 'ROTATE' ].indexOf(routine[key].func) != -1) {
+      if(typeof routine[key].count != 'undefined' && (key != 'MOVE' || !routine[key].fillTo || String(routine[key].fillTo).includes('$'))) {
+        if(!routine[key].count) {
+          routine[key].count = 'all';
+        } else if(typeof routine[key].count == 'string' && routine[key].count.includes('$')) {
+          routine[key] = {
+            note: `This was added by the automatic file migration because the behavior of ${routine[key].func} with count=0 changed.`,
+            func: 'IF',
+            condition: routine[key].count,
+            thenRoutine: [
+              {...routine[key]}
+            ],
+            elseRoutine: [
+              Object.assign({}, routine[key], { count: 'all' })
+            ]
+          };
+        }
+      }
+    }
+  }
+}
+
+function v17MaterialSymbols(properties) {
+  for (const key in properties) {
+    if (typeof properties[key] === 'object' && properties[key] !== null) {
+      v17MaterialSymbols(properties[key]);
+    } else if (typeof properties[key] === 'string') {
+      properties[key] = properties[key].replace(/\b(material-icons(?:-(outlined|round|sharp|twotone))?)\b/g, "material-symbols");
+    }
+  }
+}
+
+function v18RoutineModeSwitch(routine, modeSwitch, nested, status) {
   const re = /^mode:/;
   for(let i = 0; i < routine.length; i++) {
     if(typeof routine[i] == 'string' && re.test(routine[i]))

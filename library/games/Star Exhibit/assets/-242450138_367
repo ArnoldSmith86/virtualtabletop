@@ -1,0 +1,17 @@
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    height="70"
+    width="50"
+    viewbox="0 0 50 70"
+>
+    <polygon
+        points="5,35 5,70 25,57 45,70 45,35"
+        style="fill:#91a3b0;stroke:#000000;stroke-width:0.5px"
+    />
+    <circle
+        cx="25"
+        cy="25"
+        r="24.75"
+        style="fill:#91a3b0;stroke:#000000;stroke-width:0.5px"
+    />
+</svg>

@@ -1,0 +1,624 @@
+{
+  "_meta": {
+    "version": 6,
+    "info": {
+      "name": "Alleys",
+      "image": "/assets/-114896304_53734",
+      "rules": "",
+      "bgg": "https://boardgamegeek.com/boardgame/624/quoridor",
+      "year": "1997",
+      "mode": "vs",
+      "time": "15",
+      "attribution": "The game layout, wood pieces, and library image were created by LawDawg and are released to the Public Domain under the CC0 license.<div><br></div><div>Library image generated using the Midjourney artificial intelligence image generator, https://www.midjourney.com/home/, using the following prompt: \"blue maze orthogonal lines overhead view oil on canvas --ar 1:1 --v 5.1\"<br></div>",
+      "similarName": "Quoridor",
+      "description": "Build walls to create corridors to move token and to block opponent. First to cross to other side of board wins.",
+      "showName": true,
+      "lastUpdate": 1659321088000,
+      "skill": "",
+      "variantImage": "",
+      "variant": "",
+      "language": "",
+      "players": "2-4",
+      "similarImage": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": "",
+      "similarDesigner": "Mirko Marchesi"
+    }
+  },
+  "wood01": {
+    "id": "wood01",
+    "x": 50,
+    "width": 50,
+    "height": 200,
+    "z": 971,
+    "grid": [
+      {
+        "x": 100,
+        "y": 100,
+        "minX": 400,
+        "maxX": 1200,
+        "minY": 30,
+        "maxY": 800,
+        "offsetX": -23
+      }
+    ],
+    "image": "/assets/1936133178_13239",
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": "transition: linear 0.15s"
+      },
+      {
+        "func": "GET",
+        "collection": "thisButton",
+        "property": "rotation",
+        "variable": "rotation"
+      },
+      {
+        "func": "IF",
+        "operand1": "${rotation}",
+        "operand2": 90,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "rotation",
+            "value": 0
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "rotation",
+            "value": 90
+          }
+        ]
+      }
+    ],
+    "xChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "yChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "resetProperties": {
+      "x": 50,
+      "y": 150,
+      "rotation": 0
+    },
+    "y": 150
+  },
+  "wood02": {
+    "id": "wood02",
+    "x": 100,
+    "y": 150,
+    "resetProperties": {
+      "x": 100,
+      "y": 150,
+      "rotation": 0
+    },
+    "inheritFrom": "wood01",
+    "rotation": 0,
+    "z": 954
+  },
+  "wood03": {
+    "id": "wood03",
+    "x": 150,
+    "y": 150,
+    "resetProperties": {
+      "x": 150,
+      "y": 150,
+      "rotation": 0
+    },
+    "inheritFrom": "wood01",
+    "z": 953,
+    "rotation": 0
+  },
+  "wood04": {
+    "id": "wood04",
+    "x": 200,
+    "y": 150,
+    "resetProperties": {
+      "x": 200,
+      "y": 150,
+      "rotation": 0
+    },
+    "inheritFrom": "wood01",
+    "z": 952,
+    "rotation": 0
+  },
+  "wood06": {
+    "id": "wood06",
+    "x": 1300,
+    "y": 150,
+    "inheritFrom": "wood01",
+    "resetProperties": {
+      "x": 1300,
+      "y": 150,
+      "rotation": 0
+    },
+    "z": 956,
+    "rotation": 0
+  },
+  "wood07": {
+    "id": "wood07",
+    "x": 1350,
+    "y": 150,
+    "inheritFrom": "wood01",
+    "resetProperties": {
+      "x": 1350,
+      "y": 150,
+      "rotation": 0
+    },
+    "z": 957,
+    "rotation": 0
+  },
+  "wood08": {
+    "id": "wood08",
+    "x": 1400,
+    "y": 150,
+    "inheritFrom": "wood01",
+    "resetProperties": {
+      "x": 1400,
+      "y": 150,
+      "rotation": 0
+    },
+    "z": 962,
+    "rotation": 0
+  },
+  "wood09": {
+    "id": "wood09",
+    "x": 1450,
+    "y": 150,
+    "inheritFrom": "wood01",
+    "resetProperties": {
+      "x": 1450,
+      "y": 150,
+      "rotation": 0
+    },
+    "z": 963,
+    "rotation": 0
+  },
+  "wood10": {
+    "id": "wood10",
+    "x": 1500,
+    "y": 150,
+    "inheritFrom": "wood01",
+    "resetProperties": {
+      "x": 1500,
+      "y": 150,
+      "rotation": 0
+    },
+    "z": 965,
+    "rotation": 0
+  },
+  "wood11": {
+    "id": "wood11",
+    "x": 50,
+    "y": 650,
+    "inheritFrom": "wood01",
+    "resetProperties": {
+      "x": 50,
+      "y": 650,
+      "rotation": 0
+    },
+    "rotation": 0,
+    "z": 950
+  },
+  "wood12": {
+    "id": "wood12",
+    "x": 100,
+    "y": 650,
+    "resetProperties": {
+      "x": 100,
+      "y": 650,
+      "rotation": 0
+    },
+    "inheritFrom": "wood01",
+    "rotation": 0,
+    "z": 949
+  },
+  "wood13": {
+    "id": "wood13",
+    "x": 150,
+    "y": 650,
+    "inheritFrom": "wood01",
+    "resetProperties": {
+      "x": 150,
+      "y": 650,
+      "rotation": 0
+    },
+    "rotation": 0,
+    "z": 947
+  },
+  "wood14": {
+    "id": "wood14",
+    "x": 200,
+    "y": 650,
+    "inheritFrom": "wood01",
+    "resetProperties": {
+      "x": 200,
+      "y": 650,
+      "rotation": 0
+    },
+    "rotation": 0,
+    "z": 948
+  },
+  "wood15": {
+    "id": "wood15",
+    "x": 250,
+    "y": 650,
+    "inheritFrom": "wood01",
+    "resetProperties": {
+      "x": 250,
+      "y": 650,
+      "rotation": 0
+    },
+    "rotation": 0,
+    "z": 946
+  },
+  "wood16": {
+    "id": "wood16",
+    "x": 1300,
+    "y": 650,
+    "inheritFrom": "wood01",
+    "resetProperties": {
+      "x": 1300,
+      "y": 650,
+      "rotation": 0
+    },
+    "rotation": 0,
+    "z": 932
+  },
+  "wood17": {
+    "id": "wood17",
+    "x": 1350,
+    "y": 650,
+    "inheritFrom": "wood01",
+    "resetProperties": {
+      "x": 1350,
+      "y": 650,
+      "rotation": 0
+    },
+    "rotation": 0,
+    "z": 933
+  },
+  "wood18": {
+    "id": "wood18",
+    "x": 1400,
+    "y": 650,
+    "inheritFrom": "wood01",
+    "resetProperties": {
+      "x": 1400,
+      "y": 650,
+      "rotation": 0
+    },
+    "rotation": 0,
+    "z": 934
+  },
+  "wood19": {
+    "id": "wood19",
+    "x": 1450,
+    "y": 650,
+    "inheritFrom": "wood01",
+    "resetProperties": {
+      "x": 1450,
+      "y": 650,
+      "rotation": 0
+    },
+    "rotation": 0,
+    "z": 935
+  },
+  "wood20": {
+    "id": "wood20",
+    "x": 1500,
+    "y": 650,
+    "inheritFrom": "wood01",
+    "resetProperties": {
+      "x": 1500,
+      "y": 650,
+      "rotation": 0
+    },
+    "rotation": 0,
+    "z": 936
+  },
+  "wood05": {
+    "id": "wood05",
+    "x": 250,
+    "y": 150,
+    "resetProperties": {
+      "x": 250,
+      "y": 150,
+      "rotation": 0
+    },
+    "inheritFrom": "wood01",
+    "z": 951,
+    "rotation": 0
+  },
+  "seat1": {
+    "type": "seat",
+    "id": "seat1",
+    "x": 95,
+    "y": 95,
+    "z": 4,
+    "hideWhenUnused": true
+  },
+  "pawn1": {
+    "id": "pawn1",
+    "x": 25,
+    "y": 17,
+    "width": 50,
+    "height": 75,
+    "z": 979,
+    "movable": true,
+    "movableInEdit": true,
+    "classes": "classicPiece",
+    "inheritFrom": {
+      "seat1": "color",
+      "restart": "grid"
+    },
+    "resetProperties": {
+      "x": 25,
+      "y": 17
+    }
+  },
+  "pawn2": {
+    "inheritFrom": {
+      "seat1": "color",
+      "restart": "grid"
+    },
+    "id": "pawn2",
+    "x": 75,
+    "y": 17,
+    "resetProperties": {
+      "x": 75,
+      "y": 17
+    },
+    "z": 980,
+    "width": 50,
+    "height": 75,
+    "movable": true,
+    "movableInEdit": true,
+    "classes": "classicPiece"
+  },
+  "seat2": {
+    "type": "seat",
+    "id": "seat2",
+    "x": 1350,
+    "y": 95,
+    "z": 7,
+    "index": 2,
+    "hideWhenUnused": true,
+    "color": "#999998"
+  },
+  "seat3": {
+    "type": "seat",
+    "id": "seat3",
+    "x": 95,
+    "y": 845,
+    "z": 6,
+    "index": 3,
+    "hideWhenUnused": true,
+    "color": "#999998"
+  },
+  "seat4": {
+    "type": "seat",
+    "id": "seat4",
+    "x": 1350,
+    "y": 845,
+    "z": 5,
+    "index": 4,
+    "hideWhenUnused": true,
+    "turn": true,
+    "color": "#999998"
+  },
+  "next": {
+    "type": "button",
+    "id": "next",
+    "x": 30,
+    "y": 450,
+    "z": 2097,
+    "clickRoutine": [
+      {
+        "func": "TURN",
+        "turnCycle": "forward"
+      }
+    ],
+    "text": "Next Player"
+  },
+  "background": {
+    "id": "background",
+    "width": 1600,
+    "height": 1000,
+    "layer": -4,
+    "movable": false,
+    "movableInEdit": false,
+    "image": "/assets/1012790218_108586"
+  },
+  "restart": {
+    "type": "button",
+    "id": "restart",
+    "x": 1530,
+    "y": 475,
+    "width": 50,
+    "height": 50,
+    "z": 2098,
+    "classes": "symbols",
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "header": "Resetting board...",
+        "fields": [
+          {
+            "type": "text",
+            "text": "Do you want to reset the board?"
+          }
+        ]
+      },
+      {
+        "func": "SELECT",
+        "property": "resetProperties",
+        "relation": "!=",
+        "value": null
+      },
+      {
+        "func": "FOREACH",
+        "loopRoutine": [
+          {
+            "func": "FOREACH",
+            "in": "${PROPERTY resetProperties OF $widgetID}",
+            "loopRoutine": [
+              {
+                "func": "SET",
+                "property": "${key}",
+                "value": "${value}"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "css": "font-size: 40px; ",
+    "grid": [
+      {
+        "x": 100,
+        "y": 100,
+        "minX": 325,
+        "maxX": 1225,
+        "minY": 25,
+        "maxY": 875,
+        "offsetX": 25,
+        "offsetY": 7
+      }
+    ],
+    "text": "restart"
+  },
+  "pawn3": {
+    "id": "pawn3",
+    "x": 1470,
+    "y": 17,
+    "width": 50,
+    "height": 75,
+    "z": 979,
+    "movable": true,
+    "movableInEdit": true,
+    "classes": "classicPiece",
+    "inheritFrom": {
+      "seat2": "color",
+      "restart": "grid"
+    },
+    "resetProperties": {
+      "x": 1470,
+      "y": 17
+    }
+  },
+  "pawn4": {
+    "id": "pawn4",
+    "x": 1520,
+    "y": 17,
+    "width": 50,
+    "height": 75,
+    "z": 979,
+    "movable": true,
+    "movableInEdit": true,
+    "classes": "classicPiece",
+    "inheritFrom": {
+      "seat2": "color",
+      "restart": "grid"
+    },
+    "resetProperties": {
+      "x": 1520,
+      "y": 17
+    }
+  },
+  "pawn5": {
+    "id": "pawn5",
+    "x": 25,
+    "y": 900,
+    "width": 50,
+    "height": 75,
+    "z": 981,
+    "movable": true,
+    "movableInEdit": true,
+    "classes": "classicPiece",
+    "inheritFrom": {
+      "seat3": "color",
+      "restart": "grid"
+    },
+    "resetProperties": {
+      "x": 25,
+      "y": 900
+    }
+  },
+  "pawn6": {
+    "id": "pawn6",
+    "x": 75,
+    "y": 900,
+    "width": 50,
+    "height": 75,
+    "z": 981,
+    "movable": true,
+    "movableInEdit": true,
+    "classes": "classicPiece",
+    "inheritFrom": {
+      "seat3": "color",
+      "restart": "grid"
+    },
+    "resetProperties": {
+      "x": 75,
+      "y": 900
+    }
+  },
+  "pawn7": {
+    "id": "pawn7",
+    "x": 1470,
+    "y": 900,
+    "width": 50,
+    "height": 75,
+    "z": 981,
+    "movable": true,
+    "movableInEdit": true,
+    "classes": "classicPiece",
+    "inheritFrom": {
+      "seat4": "color",
+      "restart": "grid"
+    },
+    "resetProperties": {
+      "x": 1470,
+      "y": 900
+    }
+  },
+  "pawn8": {
+    "id": "pawn8",
+    "x": 1520,
+    "y": 900,
+    "width": 50,
+    "height": 75,
+    "z": 981,
+    "movable": true,
+    "movableInEdit": true,
+    "classes": "classicPiece",
+    "inheritFrom": {
+      "seat4": "color",
+      "restart": "grid"
+    },
+    "resetProperties": {
+      "x": 1520,
+      "y": 900
+    }
+  }
+}

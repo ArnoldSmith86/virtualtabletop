@@ -262,7 +262,7 @@ const compute_ops = [
     name: 'random',
     desc: 'returns a decimal number in the range 0 to less than 1',
     sample: 'var a = random',
-    call: function(v) { return v = Math.random() },
+    call: function(v) { return v = rand() },
     hash: 'a41526e7d6ab47d459c67c38585b4088'
   },
   {
@@ -560,6 +560,20 @@ const compute_ops = [
     hash: 'ef62a82b006b417c0bb6b970aa24c215'
   },
   {
+    name: 'jsonParse',
+    desc: 'parses a JSON string',
+    sample: 'var a = jsonParse ${x}',
+    call: function(v, x, y, z) { return v = JSON.parse(x) },
+    hash: '3e11e14212173cd56ec8b69f83576631'
+  },
+  {
+    name: 'jsonStringify',
+    desc: 'turns any type of variable into a JSON string',
+    sample: 'var a = jsonStringify ${x}',
+    call: function(v, x, y, z) { return v = JSON.stringify(x) },
+    hash: '35f5463c508a58eeaff4deccc25a33c7'
+  },
+  {
     name: 'getIndex',
     desc: 'returns index y of a string or array x',
     sample: 'var a = ${x.$y}\nvar a = ${x} getIndex ${y}',
@@ -624,10 +638,31 @@ const compute_ops = [
   },
   {
     name: 'numericSort',
-    desc: 'sorts the elements in array x numerically, and returns the resulting array',
+    desc: 'sorts the number elements in array x numerically, and returns the resulting array',
+    sample: 'var a = ${x} numericSort',
+    call: function(v, x) { return v = x.sort((a, b) => a - b)},
+    hash: '1a6e301d6510998fa27abeb75bcf0371'
+  },
+  {
+    name: 'numericStringSort',
+    desc: 'sorts the string and number elements in array x numerically, and returns the resulting array',
     sample: 'var a = ${x} numericSort',
     call: function(v, x) { return v = x.sort((a, b) => a.toString().localeCompare(b, 'en', {numeric: true, ignorePunctuation: true})) },
-    hash: '6feb4307bc8a5437d8ffcc2b0b06c0d6'
+    hash: '080058deb4a93b597eef9b5db479ba31'
+  },
+  {
+    name: 'shuffle',
+    desc: 'shuffles the elements in array (or string) x, and returns the resulting array (or string)',
+    sample: 'var a = shuffle ${x}',
+    call: function(v, x) { return v = shuffleArray(x) },
+    hash: '0f1f81e18571c2b22e227c988a37b189'
+  },
+  {
+    name: 'sum',
+    desc: 'calculates the sum of the elements of an array',
+    sample: 'var a = sum ${x}',
+    call: function(v, x) { return v = x.reduce((partialSum, a) => partialSum + a, 0) },
+    hash: '5d35252c8e9878db26ba1f5f0cc2093a'
   },
   {
     name: 'join',
@@ -675,15 +710,64 @@ const compute_ops = [
     name: 'randInt',
     desc: 'returns a random integer inbetween (and including) two numbers',
     sample: 'var a = randInt ${x} ${y}',
-    call: function(v, x, y) { return v = Math.floor((Math.random() * (y - x + 1)) + x) },
-    hash: '72787b6f5fe702d456bde0048cfacd47'
+    call: function(v, x, y) { return v = Math.floor((rand() * (y - x + 1)) + x) },
+    hash: '9b07533fb8ae4903272900ea6fbb94d8'
   },
   {
     name: 'randRange',
     desc: 'returns a random integer inbetween two numbers but excluding the endpoint, optionally in z increments (defaults to 1)',
     sample: 'var a = randRange ${x} ${y} ${z}',
-    call: function(v, x, y, z) { return v = Math.round(Math.floor((Math.random() * (y - x) / (z || 1))) * (z || 1) + x) },
-    hash: '0c3de5a5df7cae6794d1794be2d12e04'
+    call: function(v, x, y, z) { return v = Math.round(Math.floor((rand() * (y - x) / (z || 1))) * (z || 1) + x) },
+    hash: '5a75b342f9b9a0c11c2a8d0b6ea9e37d'
+  },
+  {
+    name: 'colorContrast',
+    desc: 'converts x color in any format that the browser can interpret to another color in the same hue but with different luminance, with optional y direction and intensity (-1 to 1, defaults to 1)',
+    sample: 'var a = colorContrast ${x} ${y}',
+    call: function(v, x, y) { return v = contrastAnyColor(x, y); },
+    hash: '83181e89c7f0245a49644ce864625481'
+  },
+  {
+    name: 'colorToHex',
+    desc: 'converts x color in any format that the browser can interpret to hex',
+    sample: 'var a = colorToHex ${x}',
+    call: function(v, x) { return v = toHex(x); },
+    hash: '2eff46ec1af852a29fa4c14dcf685c00'
+  },
+  {
+    name: 'colorToRGB',
+    desc: 'converts x color in any format that the browser can interpret to RGB in format rgb(0,9,210)',
+    sample: 'var a = colorToRGB ${x}',
+    call: function(v, x) { return v = toRGBString(x); },
+    hash: 'faa247cc277b7e9ad645e55a51e47195'
+  },
+  {
+    name: 'colorContrastRatio',
+    desc: 'compares x and y colors in any format that the broswer can interpret to obtain the contrast ratio in range 1-21',
+    sample: 'var a = colorContrastRatio ${x} ${y}',
+    call: function(v, x, y) { return v = calcContrast(x, y); },
+    hash: 'f0c87b733f49b7af419698cdf6ed1137'
+  },
+  {
+    name: 'colorLuminance',
+    desc: 'accepts x color in any format the browser can interpret and returns the luminance value in range 0 to 1',
+    sample: 'var a = colorLuminance ${x}',
+    call: function(v, x) { return v = calcLuminance(x); },
+    hash: 'f4284956510e3fe59c2babed665b544d'
+  },
+  {
+    name: 'colorCreateHue',
+    desc: 'returns a semi-random hex color using linear interpolation which will be as visually distinct as possible from active player colors, or optionally from [x] array of colors',
+    sample: 'var a = colorCreateHue',
+    call: function(v, x) { return v = randomHue(x); },
+    hash: '29a04e79e53168e3680ee1483a451f4e'
+  },
+  {
+    name: 'fetch',
+    desc: 'downloads a given URL and returns its content as a string',
+    sample: 'var a = fetch ${x}',
+    call: async function(v, x, y) { return v = await ((typeof y === 'object' && y !== null) ? await fetch(x, y) : await fetch(x)).text() },
+    hash: 'e1aebce1c5225dc5f624f3ccb3ff104d'
   }
 ];
 

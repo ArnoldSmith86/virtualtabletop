@@ -1,0 +1,2169 @@
+{
+  "hand": {
+    "type": "holder",
+    "onEnter": {
+      "activeFace": 1
+    },
+    "dropOffsetX": 10,
+    "dropOffsetY": 14,
+    "stackOffsetX": 40,
+    "childrenPerOwner": true,
+    "x": 420,
+    "y": 820,
+    "width": 761,
+    "height": 180,
+    "id": "hand",
+    "z": 40,
+    "leaveRoutine": [
+      {
+        "func": "GET",
+        "collection": "child",
+        "property": "oldOwner",
+        "variable": "oldOwner"
+      },
+      {
+        "func": "SELECT",
+        "type": "seat",
+        "property": "player",
+        "value": "${oldOwner}"
+      },
+      {
+        "func": "GET",
+        "property": "index",
+        "variable": "seatIndex"
+      },
+      {
+        "func": "SET",
+        "collection": "child",
+        "property": "seatIndex",
+        "value": "${seatIndex}"
+      }
+    ]
+  },
+  "a7vuD": {
+    "type": "deck",
+    "id": "a7vuD",
+    "x": 12,
+    "y": 41,
+    "cardTypes": {
+      "T 1J": {
+        "image": "/i/cards-default/1J.svg",
+        "suit": "T",
+        "suitColor": "🃏",
+        "suitAlt": "5J",
+        "rank": "J1",
+        "rankA": "J1",
+        "rankFixed": "J1 T"
+      },
+      "T 2J": {
+        "image": "/i/cards-default/2J.svg",
+        "suit": "T",
+        "suitColor": "🃏",
+        "suitAlt": "5J",
+        "rank": "J2",
+        "rankA": "J2",
+        "rankFixed": "J2 T"
+      },
+      "C 5A": {
+        "image": "/i/cards-default/AC.svg",
+        "suit": "C",
+        "suitColor": "♣",
+        "suitAlt": "1♣",
+        "rank": "01",
+        "rankA": "5A",
+        "rankFixed": "01 C"
+      },
+      "C 02": {
+        "image": "/i/cards-default/2C.svg",
+        "suit": "C",
+        "suitColor": "♣",
+        "suitAlt": "1♣",
+        "rank": "02",
+        "rankA": "02",
+        "rankFixed": "02 C"
+      },
+      "C 03": {
+        "image": "/i/cards-default/3C.svg",
+        "suit": "C",
+        "suitColor": "♣",
+        "suitAlt": "1♣",
+        "rank": "03",
+        "rankA": "03",
+        "rankFixed": "03 C"
+      },
+      "C 04": {
+        "image": "/i/cards-default/4C.svg",
+        "suit": "C",
+        "suitColor": "♣",
+        "suitAlt": "1♣",
+        "rank": "04",
+        "rankA": "04",
+        "rankFixed": "04 C"
+      },
+      "C 05": {
+        "image": "/i/cards-default/5C.svg",
+        "suit": "C",
+        "suitColor": "♣",
+        "suitAlt": "1♣",
+        "rank": "05",
+        "rankA": "05",
+        "rankFixed": "05 C"
+      },
+      "C 06": {
+        "image": "/i/cards-default/6C.svg",
+        "suit": "C",
+        "suitColor": "♣",
+        "suitAlt": "1♣",
+        "rank": "06",
+        "rankA": "06",
+        "rankFixed": "06 C"
+      },
+      "C 07": {
+        "image": "/i/cards-default/7C.svg",
+        "suit": "C",
+        "suitColor": "♣",
+        "suitAlt": "1♣",
+        "rank": "07",
+        "rankA": "07",
+        "rankFixed": "07 C"
+      },
+      "C 08": {
+        "image": "/i/cards-default/8C.svg",
+        "suit": "C",
+        "suitColor": "♣",
+        "suitAlt": "1♣",
+        "rank": "08",
+        "rankA": "08",
+        "rankFixed": "08 C"
+      },
+      "C 09": {
+        "image": "/i/cards-default/9C.svg",
+        "suit": "C",
+        "suitColor": "♣",
+        "suitAlt": "1♣",
+        "rank": "09",
+        "rankA": "09",
+        "rankFixed": "09 C"
+      },
+      "C 10": {
+        "image": "/i/cards-default/TC.svg",
+        "suit": "C",
+        "suitColor": "♣",
+        "suitAlt": "1♣",
+        "rank": "10",
+        "rankA": "10",
+        "rankFixed": "10 C"
+      },
+      "C 2J": {
+        "image": "/i/cards-default/JC.svg",
+        "suit": "C",
+        "suitColor": "♣",
+        "suitAlt": "1♣",
+        "rank": "2J",
+        "rankA": "2J",
+        "rankFixed": "2J C"
+      },
+      "C 3Q": {
+        "image": "/i/cards-default/QC.svg",
+        "suit": "C",
+        "suitColor": "♣",
+        "suitAlt": "1♣",
+        "rank": "3Q",
+        "rankA": "3Q",
+        "rankFixed": "3Q C"
+      },
+      "C 4K": {
+        "image": "/i/cards-default/KC.svg",
+        "suit": "C",
+        "suitColor": "♣",
+        "suitAlt": "1♣",
+        "rank": "4K",
+        "rankA": "4K",
+        "rankFixed": "4K C"
+      },
+      "D 5A": {
+        "image": "/i/cards-default/AD.svg",
+        "suit": "D",
+        "suitColor": "♦",
+        "suitAlt": "4♦",
+        "rank": "01",
+        "rankA": "5A",
+        "rankFixed": "01 D"
+      },
+      "D 02": {
+        "image": "/i/cards-default/2D.svg",
+        "suit": "D",
+        "suitColor": "♦",
+        "suitAlt": "4♦",
+        "rank": "02",
+        "rankA": "02",
+        "rankFixed": "02 D"
+      },
+      "D 03": {
+        "image": "/i/cards-default/3D.svg",
+        "suit": "D",
+        "suitColor": "♦",
+        "suitAlt": "4♦",
+        "rank": "03",
+        "rankA": "03",
+        "rankFixed": "03 D"
+      },
+      "D 04": {
+        "image": "/i/cards-default/4D.svg",
+        "suit": "D",
+        "suitColor": "♦",
+        "suitAlt": "4♦",
+        "rank": "04",
+        "rankA": "04",
+        "rankFixed": "04 D"
+      },
+      "D 05": {
+        "image": "/i/cards-default/5D.svg",
+        "suit": "D",
+        "suitColor": "♦",
+        "suitAlt": "4♦",
+        "rank": "05",
+        "rankA": "05",
+        "rankFixed": "05 D"
+      },
+      "D 06": {
+        "image": "/i/cards-default/6D.svg",
+        "suit": "D",
+        "suitColor": "♦",
+        "suitAlt": "4♦",
+        "rank": "06",
+        "rankA": "06",
+        "rankFixed": "06 D"
+      },
+      "D 07": {
+        "image": "/i/cards-default/7D.svg",
+        "suit": "D",
+        "suitColor": "♦",
+        "suitAlt": "4♦",
+        "rank": "07",
+        "rankA": "07",
+        "rankFixed": "07 D"
+      },
+      "D 08": {
+        "image": "/i/cards-default/8D.svg",
+        "suit": "D",
+        "suitColor": "♦",
+        "suitAlt": "4♦",
+        "rank": "08",
+        "rankA": "08",
+        "rankFixed": "08 D"
+      },
+      "D 09": {
+        "image": "/i/cards-default/9D.svg",
+        "suit": "D",
+        "suitColor": "♦",
+        "suitAlt": "4♦",
+        "rank": "09",
+        "rankA": "09",
+        "rankFixed": "09 D"
+      },
+      "D 10": {
+        "image": "/i/cards-default/TD.svg",
+        "suit": "D",
+        "suitColor": "♦",
+        "suitAlt": "4♦",
+        "rank": "10",
+        "rankA": "10",
+        "rankFixed": "10 D"
+      },
+      "D 2J": {
+        "image": "/i/cards-default/JD.svg",
+        "suit": "D",
+        "suitColor": "♦",
+        "suitAlt": "4♦",
+        "rank": "2J",
+        "rankA": "2J",
+        "rankFixed": "2J D"
+      },
+      "D 3Q": {
+        "image": "/i/cards-default/QD.svg",
+        "suit": "D",
+        "suitColor": "♦",
+        "suitAlt": "4♦",
+        "rank": "3Q",
+        "rankA": "3Q",
+        "rankFixed": "3Q D"
+      },
+      "D 4K": {
+        "image": "/i/cards-default/KD.svg",
+        "suit": "D",
+        "suitColor": "♦",
+        "suitAlt": "4♦",
+        "rank": "4K",
+        "rankA": "4K",
+        "rankFixed": "4K D"
+      },
+      "H 5A": {
+        "image": "/i/cards-default/AH.svg",
+        "suit": "H",
+        "suitColor": "♥",
+        "suitAlt": "2♥",
+        "rank": "01",
+        "rankA": "5A",
+        "rankFixed": "01 H"
+      },
+      "H 02": {
+        "image": "/i/cards-default/2H.svg",
+        "suit": "H",
+        "suitColor": "♥",
+        "suitAlt": "2♥",
+        "rank": "02",
+        "rankA": "02",
+        "rankFixed": "02 H"
+      },
+      "H 03": {
+        "image": "/i/cards-default/3H.svg",
+        "suit": "H",
+        "suitColor": "♥",
+        "suitAlt": "2♥",
+        "rank": "03",
+        "rankA": "03",
+        "rankFixed": "03 H"
+      },
+      "H 04": {
+        "image": "/i/cards-default/4H.svg",
+        "suit": "H",
+        "suitColor": "♥",
+        "suitAlt": "2♥",
+        "rank": "04",
+        "rankA": "04",
+        "rankFixed": "04 H"
+      },
+      "H 05": {
+        "image": "/i/cards-default/5H.svg",
+        "suit": "H",
+        "suitColor": "♥",
+        "suitAlt": "2♥",
+        "rank": "05",
+        "rankA": "05",
+        "rankFixed": "05 H"
+      },
+      "H 06": {
+        "image": "/i/cards-default/6H.svg",
+        "suit": "H",
+        "suitColor": "♥",
+        "suitAlt": "2♥",
+        "rank": "06",
+        "rankA": "06",
+        "rankFixed": "06 H"
+      },
+      "H 07": {
+        "image": "/i/cards-default/7H.svg",
+        "suit": "H",
+        "suitColor": "♥",
+        "suitAlt": "2♥",
+        "rank": "07",
+        "rankA": "07",
+        "rankFixed": "07 H"
+      },
+      "H 08": {
+        "image": "/i/cards-default/8H.svg",
+        "suit": "H",
+        "suitColor": "♥",
+        "suitAlt": "2♥",
+        "rank": "08",
+        "rankA": "08",
+        "rankFixed": "08 H"
+      },
+      "H 09": {
+        "image": "/i/cards-default/9H.svg",
+        "suit": "H",
+        "suitColor": "♥",
+        "suitAlt": "2♥",
+        "rank": "09",
+        "rankA": "09",
+        "rankFixed": "09 H"
+      },
+      "H 10": {
+        "image": "/i/cards-default/TH.svg",
+        "suit": "H",
+        "suitColor": "♥",
+        "suitAlt": "2♥",
+        "rank": "10",
+        "rankA": "10",
+        "rankFixed": "10 H"
+      },
+      "H 2J": {
+        "image": "/i/cards-default/JH.svg",
+        "suit": "H",
+        "suitColor": "♥",
+        "suitAlt": "2♥",
+        "rank": "2J",
+        "rankA": "2J",
+        "rankFixed": "2J H"
+      },
+      "H 3Q": {
+        "image": "/i/cards-default/QH.svg",
+        "suit": "H",
+        "suitColor": "♥",
+        "suitAlt": "2♥",
+        "rank": "3Q",
+        "rankA": "3Q",
+        "rankFixed": "3Q H"
+      },
+      "H 4K": {
+        "image": "/i/cards-default/KH.svg",
+        "suit": "H",
+        "suitColor": "♥",
+        "suitAlt": "2♥",
+        "rank": "4K",
+        "rankA": "4K",
+        "rankFixed": "4K H"
+      },
+      "S 5A": {
+        "image": "/i/cards-default/AS.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "01",
+        "rankA": "5A",
+        "rankFixed": "01 S"
+      },
+      "S 02": {
+        "image": "/i/cards-default/2S.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "02",
+        "rankA": "02",
+        "rankFixed": "02 S"
+      },
+      "S 03": {
+        "image": "/i/cards-default/3S.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "03",
+        "rankA": "03",
+        "rankFixed": "03 S"
+      },
+      "S 04": {
+        "image": "/i/cards-default/4S.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "04",
+        "rankA": "04",
+        "rankFixed": "04 S"
+      },
+      "S 05": {
+        "image": "/i/cards-default/5S.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "05",
+        "rankA": "05",
+        "rankFixed": "05 S"
+      },
+      "S 06": {
+        "image": "/i/cards-default/6S.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "06",
+        "rankA": "06",
+        "rankFixed": "06 S"
+      },
+      "S 07": {
+        "image": "/i/cards-default/7S.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "07",
+        "rankA": "07",
+        "rankFixed": "07 S"
+      },
+      "S 08": {
+        "image": "/i/cards-default/8S.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "08",
+        "rankA": "08",
+        "rankFixed": "08 S"
+      },
+      "S 09": {
+        "image": "/i/cards-default/9S.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "09",
+        "rankA": "09",
+        "rankFixed": "09 S"
+      },
+      "S 10": {
+        "image": "/i/cards-default/TS.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "10",
+        "rankA": "10",
+        "rankFixed": "10 S"
+      },
+      "S 2J": {
+        "image": "/i/cards-default/JS.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "2J",
+        "rankA": "2J",
+        "rankFixed": "2J S"
+      },
+      "S 3Q": {
+        "image": "/i/cards-default/QS.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "3Q",
+        "rankA": "3Q",
+        "rankFixed": "3Q S"
+      },
+      "S 4K": {
+        "image": "/i/cards-default/KS.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "4K",
+        "rankA": "4K",
+        "rankFixed": "4K S"
+      }
+    },
+    "faceTemplates": [
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 103,
+            "height": 160,
+            "color": "transparent",
+            "value": "/i/cards-default/2B.svg"
+          }
+        ]
+      },
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 103,
+            "height": 160,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image"
+            }
+          }
+        ]
+      }
+    ],
+    "parent": "draw",
+    "cardDefaults": {
+      "parentChangeRoutine": [
+        {
+          "func": "IF",
+          "operand1": "${PROPERTY owner}",
+          "operand2": null,
+          "relation": "!=",
+          "thenRoutine": [
+            {
+              "func": "SET",
+              "collection": "thisButton",
+              "property": "oldOwner",
+              "value": "${PROPERTY owner}"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "a7vu_2_C": {
+    "id": "a7vu_2_C",
+    "deck": "a7vuD",
+    "type": "card",
+    "cardType": "C 02",
+    "z": 29979,
+    "parent": "60cs"
+  },
+  "a7vu_3_C": {
+    "id": "a7vu_3_C",
+    "deck": "a7vuD",
+    "type": "card",
+    "cardType": "C 03",
+    "z": 30003,
+    "parent": "60cs"
+  },
+  "a7vu_4_C": {
+    "id": "a7vu_4_C",
+    "deck": "a7vuD",
+    "type": "card",
+    "cardType": "C 04",
+    "z": 29968,
+    "parent": "60cs"
+  },
+  "a7vu_5_C": {
+    "id": "a7vu_5_C",
+    "deck": "a7vuD",
+    "type": "card",
+    "cardType": "C 05",
+    "z": 29994,
+    "parent": "60cs"
+  },
+  "a7vu_6_C": {
+    "id": "a7vu_6_C",
+    "deck": "a7vuD",
+    "type": "card",
+    "cardType": "C 06",
+    "z": 29967,
+    "parent": "60cs"
+  },
+  "a7vu_7_C": {
+    "id": "a7vu_7_C",
+    "deck": "a7vuD",
+    "type": "card",
+    "cardType": "C 07",
+    "z": 29974,
+    "parent": "60cs"
+  },
+  "a7vu_8_C": {
+    "id": "a7vu_8_C",
+    "deck": "a7vuD",
+    "type": "card",
+    "cardType": "C 08",
+    "z": 30006,
+    "parent": "60cs"
+  },
+  "a7vu_9_C": {
+    "id": "a7vu_9_C",
+    "deck": "a7vuD",
+    "type": "card",
+    "cardType": "C 09",
+    "z": 30012,
+    "parent": "60cs"
+  },
+  "a7vu_T_C": {
+    "id": "a7vu_T_C",
+    "deck": "a7vuD",
+    "type": "card",
+    "cardType": "C 10",
+    "z": 29977,
+    "parent": "60cs"
+  },
+  "a7vu_J_C": {
+    "id": "a7vu_J_C",
+    "deck": "a7vuD",
+    "type": "card",
+    "cardType": "C 2J",
+    "z": 29980,
+    "parent": "60cs"
+  },
+  "a7vu_Q_C": {
+    "id": "a7vu_Q_C",
+    "deck": "a7vuD",
+    "type": "card",
+    "cardType": "C 3Q",
+    "z": 29970,
+    "parent": "60cs"
+  },
+  "a7vu_K_C": {
+    "id": "a7vu_K_C",
+    "deck": "a7vuD",
+    "type": "card",
+    "cardType": "C 4K",
+    "z": 30007,
+    "parent": "60cs"
+  },
+  "a7vu_2_D": {
+    "id": "a7vu_2_D",
+    "deck": "a7vuD",
+    "type": "card",
+    "cardType": "D 02",
+    "z": 30013,
+    "parent": "60cs"
+  },
+  "a7vu_3_D": {
+    "id": "a7vu_3_D",
+    "deck": "a7vuD",
+    "type": "card",
+    "cardType": "D 03",
+    "z": 30014,
+    "parent": "60cs"
+  },
+  "a7vu_4_D": {
+    "id": "a7vu_4_D",
+    "deck": "a7vuD",
+    "type": "card",
+    "cardType": "D 04",
+    "z": 29973,
+    "parent": "60cs"
+  },
+  "a7vu_5_D": {
+    "id": "a7vu_5_D",
+    "deck": "a7vuD",
+    "type": "card",
+    "cardType": "D 05",
+    "z": 29993,
+    "parent": "60cs"
+  },
+  "a7vu_6_D": {
+    "id": "a7vu_6_D",
+    "deck": "a7vuD",
+    "type": "card",
+    "cardType": "D 06",
+    "z": 29984,
+    "parent": "60cs"
+  },
+  "a7vu_7_D": {
+    "id": "a7vu_7_D",
+    "deck": "a7vuD",
+    "type": "card",
+    "cardType": "D 07",
+    "z": 29999,
+    "parent": "60cs"
+  },
+  "a7vu_8_D": {
+    "id": "a7vu_8_D",
+    "deck": "a7vuD",
+    "type": "card",
+    "cardType": "D 08",
+    "z": 29971,
+    "parent": "60cs"
+  },
+  "a7vu_9_D": {
+    "id": "a7vu_9_D",
+    "deck": "a7vuD",
+    "type": "card",
+    "cardType": "D 09",
+    "z": 30008,
+    "parent": "60cs"
+  },
+  "a7vu_T_D": {
+    "id": "a7vu_T_D",
+    "deck": "a7vuD",
+    "type": "card",
+    "cardType": "D 10",
+    "z": 29988,
+    "parent": "60cs"
+  },
+  "a7vu_J_D": {
+    "id": "a7vu_J_D",
+    "deck": "a7vuD",
+    "type": "card",
+    "cardType": "D 2J",
+    "z": 29972,
+    "parent": "60cs"
+  },
+  "a7vu_Q_D": {
+    "id": "a7vu_Q_D",
+    "deck": "a7vuD",
+    "type": "card",
+    "cardType": "D 3Q",
+    "z": 30002,
+    "parent": "60cs"
+  },
+  "a7vu_K_D": {
+    "id": "a7vu_K_D",
+    "deck": "a7vuD",
+    "type": "card",
+    "cardType": "D 4K",
+    "z": 29982,
+    "parent": "60cs"
+  },
+  "a7vu_2_H": {
+    "id": "a7vu_2_H",
+    "deck": "a7vuD",
+    "type": "card",
+    "cardType": "H 02",
+    "z": 29981,
+    "parent": "60cs"
+  },
+  "a7vu_3_H": {
+    "id": "a7vu_3_H",
+    "deck": "a7vuD",
+    "type": "card",
+    "cardType": "H 03",
+    "z": 29995,
+    "parent": "60cs"
+  },
+  "a7vu_4_H": {
+    "id": "a7vu_4_H",
+    "deck": "a7vuD",
+    "type": "card",
+    "cardType": "H 04",
+    "z": 29976,
+    "parent": "60cs"
+  },
+  "a7vu_5_H": {
+    "id": "a7vu_5_H",
+    "deck": "a7vuD",
+    "type": "card",
+    "cardType": "H 05",
+    "z": 30000,
+    "parent": "60cs"
+  },
+  "a7vu_6_H": {
+    "id": "a7vu_6_H",
+    "deck": "a7vuD",
+    "type": "card",
+    "cardType": "H 06",
+    "z": 29996,
+    "parent": "60cs"
+  },
+  "a7vu_7_H": {
+    "id": "a7vu_7_H",
+    "deck": "a7vuD",
+    "type": "card",
+    "cardType": "H 07",
+    "z": 29969,
+    "parent": "60cs"
+  },
+  "a7vu_8_H": {
+    "id": "a7vu_8_H",
+    "deck": "a7vuD",
+    "type": "card",
+    "cardType": "H 08",
+    "z": 29966,
+    "parent": "60cs"
+  },
+  "a7vu_9_H": {
+    "id": "a7vu_9_H",
+    "deck": "a7vuD",
+    "type": "card",
+    "cardType": "H 09",
+    "z": 29997,
+    "parent": "60cs"
+  },
+  "a7vu_T_H": {
+    "id": "a7vu_T_H",
+    "deck": "a7vuD",
+    "type": "card",
+    "cardType": "H 10",
+    "z": 29990,
+    "parent": "60cs"
+  },
+  "a7vu_J_H": {
+    "id": "a7vu_J_H",
+    "deck": "a7vuD",
+    "type": "card",
+    "cardType": "H 2J",
+    "z": 29987,
+    "parent": "60cs"
+  },
+  "a7vu_Q_H": {
+    "id": "a7vu_Q_H",
+    "deck": "a7vuD",
+    "type": "card",
+    "cardType": "H 3Q",
+    "z": 29998,
+    "parent": "60cs"
+  },
+  "a7vu_K_H": {
+    "id": "a7vu_K_H",
+    "deck": "a7vuD",
+    "type": "card",
+    "cardType": "H 4K",
+    "z": 29991,
+    "parent": "60cs"
+  },
+  "a7vu_2_S": {
+    "id": "a7vu_2_S",
+    "deck": "a7vuD",
+    "type": "card",
+    "cardType": "S 02",
+    "z": 29983,
+    "parent": "60cs"
+  },
+  "a7vu_3_S": {
+    "id": "a7vu_3_S",
+    "deck": "a7vuD",
+    "type": "card",
+    "cardType": "S 03",
+    "z": 29986,
+    "parent": "60cs"
+  },
+  "a7vu_4_S": {
+    "id": "a7vu_4_S",
+    "deck": "a7vuD",
+    "type": "card",
+    "cardType": "S 04",
+    "z": 29975,
+    "parent": "60cs"
+  },
+  "a7vu_5_S": {
+    "id": "a7vu_5_S",
+    "deck": "a7vuD",
+    "type": "card",
+    "cardType": "S 05",
+    "z": 30001,
+    "parent": "60cs"
+  },
+  "a7vu_6_S": {
+    "id": "a7vu_6_S",
+    "deck": "a7vuD",
+    "type": "card",
+    "cardType": "S 06",
+    "z": 30017,
+    "parent": "60cs"
+  },
+  "a7vu_7_S": {
+    "id": "a7vu_7_S",
+    "deck": "a7vuD",
+    "type": "card",
+    "cardType": "S 07",
+    "z": 30004,
+    "parent": "60cs"
+  },
+  "a7vu_8_S": {
+    "id": "a7vu_8_S",
+    "deck": "a7vuD",
+    "type": "card",
+    "cardType": "S 08",
+    "z": 30011,
+    "parent": "60cs"
+  },
+  "a7vu_9_S": {
+    "id": "a7vu_9_S",
+    "deck": "a7vuD",
+    "type": "card",
+    "cardType": "S 09",
+    "z": 29989,
+    "parent": "60cs"
+  },
+  "a7vu_T_S": {
+    "id": "a7vu_T_S",
+    "deck": "a7vuD",
+    "type": "card",
+    "cardType": "S 10",
+    "z": 29978,
+    "parent": "60cs"
+  },
+  "a7vu_J_S": {
+    "id": "a7vu_J_S",
+    "deck": "a7vuD",
+    "type": "card",
+    "cardType": "S 2J",
+    "z": 29992,
+    "parent": "60cs"
+  },
+  "a7vu_Q_S": {
+    "id": "a7vu_Q_S",
+    "deck": "a7vuD",
+    "type": "card",
+    "cardType": "S 3Q",
+    "z": 30009,
+    "parent": "60cs"
+  },
+  "a7vu_K_S": {
+    "id": "a7vu_K_S",
+    "deck": "a7vuD",
+    "type": "card",
+    "cardType": "S 4K",
+    "z": 30015,
+    "parent": "60cs"
+  },
+  "72dnD": {
+    "id": "72dnD",
+    "fixedParent": true,
+    "x": -38,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "-",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 1
+      }
+    ],
+    "parent": "bids2"
+  },
+  "72dnU": {
+    "id": "72dnU",
+    "fixedParent": true,
+    "x": 68,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "+",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 1
+      }
+    ],
+    "parent": "bids2"
+  },
+  "y1p4": {
+    "type": "label",
+    "text": 0,
+    "id": "y1p4",
+    "x": 138,
+    "y": 251,
+    "width": 65,
+    "height": 40,
+    "css": "font-size: 30px;",
+    "editable": true,
+    "z": 13
+  },
+  "y1p4D": {
+    "id": "y1p4D",
+    "parent": "y1p4",
+    "fixedParent": true,
+    "x": -38,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "-",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 1
+      }
+    ]
+  },
+  "y1p4U": {
+    "id": "y1p4U",
+    "parent": "y1p4",
+    "fixedParent": true,
+    "x": 68,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "+",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 1
+      }
+    ]
+  },
+  "y1p5": {
+    "type": "label",
+    "text": 0,
+    "id": "y1p5",
+    "x": 138,
+    "y": 511,
+    "width": 65,
+    "height": 40,
+    "css": "font-size: 30px;",
+    "editable": true,
+    "z": 24
+  },
+  "y1p5D": {
+    "id": "y1p5D",
+    "parent": "y1p5",
+    "fixedParent": true,
+    "x": -38,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "-",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 1
+      }
+    ]
+  },
+  "y1p5U": {
+    "id": "y1p5U",
+    "parent": "y1p5",
+    "fixedParent": true,
+    "x": 68,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "+",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 1
+      }
+    ]
+  },
+  "hv30": {
+    "id": "hv30",
+    "z": 26760,
+    "x": 385,
+    "y": 340,
+    "movable": false,
+    "height": 30,
+    "css": "text-align: center;font-size: 25px; ",
+    "width": 140,
+    "layer": 0,
+    "text": "Bid"
+  },
+  "hv32": {
+    "inheritFrom": "hv30",
+    "id": "hv32",
+    "x": 100.5,
+    "y": 483,
+    "z": 30,
+    "text": "Score"
+  },
+  "hv33": {
+    "inheritFrom": "hv32",
+    "id": "hv33",
+    "x": 101,
+    "y": 223,
+    "z": 28211
+  },
+  "akuh": {
+    "text": "Spades",
+    "id": "akuh",
+    "css": "font-size: 80px; text-align:center",
+    "z": 32,
+    "x": 500,
+    "movable": false,
+    "width": 600,
+    "layer": 0,
+    "y": -10
+  },
+  "y1p6": {
+    "type": "label",
+    "text": 0,
+    "id": "y1p6",
+    "x": 138,
+    "y": 411,
+    "width": 65,
+    "height": 40,
+    "css": "font-size: 30px;",
+    "editable": true,
+    "z": 20
+  },
+  "y1p6D": {
+    "id": "y1p6D",
+    "parent": "y1p6",
+    "fixedParent": true,
+    "x": -38,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "-",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 1
+      }
+    ]
+  },
+  "y1p6U": {
+    "id": "y1p6U",
+    "parent": "y1p6",
+    "fixedParent": true,
+    "x": 68,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "+",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 1
+      }
+    ]
+  },
+  "hv34": {
+    "inheritFrom": "hv30",
+    "id": "hv34",
+    "x": 100.5,
+    "y": 383,
+    "z": 30,
+    "text": "Bags"
+  },
+  "y1p7": {
+    "type": "label",
+    "text": 0,
+    "id": "y1p7",
+    "x": 138,
+    "y": 151,
+    "width": 65,
+    "height": 40,
+    "css": "font-size: 30px;",
+    "editable": true,
+    "z": 25
+  },
+  "y1p7D": {
+    "id": "y1p7D",
+    "parent": "y1p7",
+    "fixedParent": true,
+    "x": -38,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "-",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 1
+      }
+    ]
+  },
+  "y1p7U": {
+    "id": "y1p7U",
+    "parent": "y1p7",
+    "fixedParent": true,
+    "x": 68,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "+",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 1
+      }
+    ]
+  },
+  "hv35": {
+    "inheritFrom": "hv34",
+    "id": "hv35",
+    "x": 100.5,
+    "y": 123,
+    "z": 28209
+  },
+  "_meta": {
+    "version": 6,
+    "info": {
+      "name": "Spades",
+      "image": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' height='512' width='512'%3E%3Cpath d='M459 307.7c0 62.6-54 91.3-91.3 91.3a145 145 0 0 1-91.8-34.3c2.5 51 14.5 87.4 68.7 116H167.6c54-28.6 66.2-65 68.7-116-18.7 15.4-50.2 34.3-91.8 34.3C107 399 53 370.3 53 307.7c0-114.5 80.6-83.3 203-276.5 122.3 193.2 203 162 203 276.5z'/%3E%3C/svg%3E",
+      "rules": "https://en.wikipedia.org/wiki/Spades_(card_game)",
+      "bgg": "https://boardgamegeek.com/boardgame/592/spades",
+      "year": "1938",
+      "mode": "vs; teams",
+      "time": "60",
+      "players": "3",
+      "language": "en-US",
+      "variant": "",
+      "attribution": "Board layout by ArnoldSmith86 and released to public domain (CC0).\n\nLibrary icon by Skoll under CC BY 3.0: https://game-icons.net/1x1/skoll/spades.html\n\n--\n\nBoard layout by LawDawg and released to public domain (CC0).\n\nLibrary icon by Skoll under CC BY 3.0: https://game-icons.net/1x1/skoll/spades.html\n\n--\n\nBoard layout by LawDawg and released to public domain (CC0).\n\nLibrary icon by Skoll under CC BY 3.0: https://game-icons.net/1x1/skoll/spades.html",
+      "similarName": "Spades",
+      "description": "Classic trick-taking card game using spades as trumps. Bid anticipated number of tricks and score based on how well players do. First to agreed-upon point total wins.",
+      "showName": true,
+      "lastUpdate": 1647130548000
+    }
+  },
+  "e398": {
+    "type": "button",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "hand"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "owner",
+        "value": "${playerName}"
+      },
+      {
+        "func": "SORT",
+        "collection": "DEFAULT",
+        "key": "cardType",
+        "reverse": false
+      }
+    ],
+    "x": 1197,
+    "y": 870,
+    "z": 28,
+    "id": "e398",
+    "text": "Sort"
+  },
+  "seat1": {
+    "type": "seat",
+    "id": "seat1",
+    "x": 717,
+    "y": 750,
+    "z": 37,
+    "clickRoutine": [
+      "var playerPrefix = substr ${playerName} 0 5",
+      {
+        "func": "IF",
+        "operand1": "${playerPrefix}",
+        "operand2": "Guest",
+        "thenRoutine": [
+          {
+            "func": "INPUT",
+            "header": "Who are you?",
+            "fields": [
+              {
+                "type": "string",
+                "label": "Name",
+                "variable": "playerName",
+                "value": "${playerName}"
+              },
+              {
+                "type": "color",
+                "label": "Color",
+                "variable": "playerColor",
+                "value": "${playerColor}"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "CLICK",
+        "collection": "thisButton",
+        "mode": "ignoreClickRoutine"
+      }
+    ],
+    "movableInEdit": false
+  },
+  "seat2": {
+    "type": "seat",
+    "id": "seat2",
+    "index": 2,
+    "x": 372,
+    "y": 431,
+    "z": 35,
+    "clickRoutine": [
+      "var playerPrefix = substr ${playerName} 0 5",
+      {
+        "func": "IF",
+        "operand1": "${playerPrefix}",
+        "operand2": "Guest",
+        "thenRoutine": [
+          {
+            "func": "INPUT",
+            "header": "Who are you?",
+            "fields": [
+              {
+                "type": "string",
+                "label": "Name",
+                "variable": "playerName",
+                "value": "${playerName}"
+              },
+              {
+                "type": "color",
+                "label": "Color",
+                "variable": "playerColor",
+                "value": "${playerColor}"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "CLICK",
+        "collection": "thisButton",
+        "mode": "ignoreClickRoutine"
+      }
+    ],
+    "movableInEdit": false
+  },
+  "tricks2": {
+    "type": "holder",
+    "id": "tricks2",
+    "x": 552,
+    "y": 372,
+    "z": 31,
+    "width": 111,
+    "height": 168,
+    "inheritFrom": "tricks1",
+    "trickCountNum": "trickCount2"
+  },
+  "tricks1": {
+    "type": "holder",
+    "id": "tricks1",
+    "x": 744,
+    "y": 560,
+    "z": 34,
+    "movableInEdit": false,
+    "dropTarget": {
+      "taken": true
+    },
+    "enterRoutine": [
+      {
+        "func": "CALL",
+        "widget": "reset",
+        "routine": "countRoutine",
+        "arguments": {
+          "tricksNum": "${PROPERTY id}",
+          "trickCountNum": "${PROPERTY trickCountNum}"
+        }
+      }
+    ],
+    "onEnter": {
+      "activeFace": 0
+    },
+    "preventPiles": true,
+    "trickCountNum": "trickCount1",
+    "leaveRoutine": [
+      {
+        "func": "CALL",
+        "widget": "reset",
+        "routine": "countRoutine",
+        "arguments": {
+          "tricksNum": "${PROPERTY id}",
+          "trickCountNum": "${PROPERTY trickCountNum}"
+        }
+      }
+    ]
+  },
+  "tricks3": {
+    "type": "holder",
+    "id": "tricks3",
+    "x": 744,
+    "y": 184,
+    "z": 32,
+    "width": 111,
+    "height": 168,
+    "inheritFrom": "tricks1",
+    "trickCountNum": "trickCount3"
+  },
+  "seat3": {
+    "type": "seat",
+    "id": "seat3",
+    "index": 3,
+    "x": 717,
+    "y": 112,
+    "z": 39,
+    "clickRoutine": [
+      "var playerPrefix = substr ${playerName} 0 5",
+      {
+        "func": "IF",
+        "operand1": "${playerPrefix}",
+        "operand2": "Guest",
+        "thenRoutine": [
+          {
+            "func": "INPUT",
+            "header": "Who are you?",
+            "fields": [
+              {
+                "type": "string",
+                "label": "Name",
+                "variable": "playerName",
+                "value": "${playerName}"
+              },
+              {
+                "type": "color",
+                "label": "Color",
+                "variable": "playerColor",
+                "value": "${playerColor}"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "CLICK",
+        "collection": "thisButton",
+        "mode": "ignoreClickRoutine"
+      }
+    ],
+    "movableInEdit": false,
+    "turn": true
+  },
+  "take": {
+    "type": "button",
+    "id": "take",
+    "y": 420,
+    "layer": 2,
+    "z": 33,
+    "movableInEdit": false,
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "x",
+        "value": -100
+      },
+      {
+        "func": "SELECT",
+        "type": "seat",
+        "property": "player",
+        "value": "${playerName}"
+      },
+      {
+        "func": "GET",
+        "property": "index",
+        "variable": "playerIndex"
+      },
+      "var tricks = 'tricks' + ${playerIndex}",
+      {
+        "func": "MOVE",
+        "from": "drop",
+        "to": "${tricks}",
+        "count": 0
+      },
+      {
+        "func": "SET",
+        "property": "turn",
+        "value": true
+      }
+    ],
+    "text": "Take",
+    "x": -100
+  },
+  "drop": {
+    "type": "holder",
+    "id": "drop",
+    "x": 699,
+    "y": 372,
+    "width": 201,
+    "z": 30,
+    "movableInEdit": false,
+    "enterRoutine": [
+      {
+        "func": "SELECT",
+        "property": "_ancestor",
+        "value": "drop"
+      },
+      {
+        "func": "COUNT"
+      },
+      {
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "operand2": 1,
+        "thenRoutine": [
+          {
+            "func": "GET",
+            "collection": "child",
+            "property": "seatIndex",
+            "variable": "seatIndex"
+          },
+          {
+            "func": "TURN",
+            "turn": "${seatIndex}",
+            "turnCycle": "position"
+          },
+          {
+            "func": "TURN"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "TURN"
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "operand2": 3,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "take"
+            ],
+            "property": "x",
+            "value": 885
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "seat1",
+              "seat2",
+              "seat3",
+              "seat4"
+            ],
+            "property": "turn",
+            "value": false
+          }
+        ]
+      }
+    ],
+    "onEnter": {
+      "activeFace": 1
+    },
+    "stackOffsetX": 40
+  },
+  "draw": {
+    "type": "holder",
+    "id": "draw",
+    "x": 1450,
+    "y": 23,
+    "z": 37,
+    "dropTarget": {
+      "type": "card"
+    },
+    "enterRoutine": [
+      {
+        "func": "SET",
+        "collection": "child",
+        "property": "taken",
+        "value": null
+      },
+      {
+        "func": "SET",
+        "collection": "child",
+        "property": "seatIndex",
+        "value": null
+      },
+      {
+        "func": "SET",
+        "collection": "child",
+        "property": "oldOwner",
+        "value": null
+      }
+    ]
+  },
+  "hv36": {
+    "id": "hv36",
+    "z": 26762,
+    "x": 367,
+    "y": 492,
+    "movable": false,
+    "height": 30,
+    "css": "text-align: right;font-size: 25px; ",
+    "layer": 0,
+    "text": "Tricks won:",
+    "width": 130
+  },
+  "trickCount2": {
+    "id": "trickCount2",
+    "x": 494,
+    "y": 492,
+    "width": 40,
+    "height": 30,
+    "layer": 0,
+    "z": 26763,
+    "movable": false,
+    "css": "text-align: center;font-size: 25px; ",
+    "text": 0
+  },
+  "bids2": {
+    "type": "label",
+    "id": "bids2",
+    "x": 422,
+    "y": 378,
+    "width": 65,
+    "height": 40,
+    "z": 16,
+    "css": "font-size: 30px;",
+    "editable": true,
+    "text": 0
+  },
+  "74dnD": {
+    "id": "74dnD",
+    "fixedParent": true,
+    "x": -38,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "-",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 1
+      }
+    ],
+    "parent": "bids1"
+  },
+  "74dnU": {
+    "id": "74dnU",
+    "fixedParent": true,
+    "x": 68,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "+",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 1
+      }
+    ],
+    "parent": "bids1"
+  },
+  "bids1": {
+    "type": "label",
+    "id": "bids1",
+    "x": 595,
+    "y": 756,
+    "width": 65,
+    "height": 40,
+    "z": 18,
+    "css": "font-size: 30px;",
+    "editable": true,
+    "text": 0
+  },
+  "hv39": {
+    "id": "hv39",
+    "z": 28208,
+    "x": 560,
+    "y": 716,
+    "movable": false,
+    "height": 30,
+    "css": "text-align: center;font-size: 25px; ",
+    "width": 140,
+    "layer": 0,
+    "text": "Bid"
+  },
+  "hv40": {
+    "id": "hv40",
+    "z": 26767,
+    "x": 887,
+    "y": 762,
+    "movable": false,
+    "height": 30,
+    "css": "text-align: right;font-size: 25px; ",
+    "layer": 0,
+    "text": "Tricks won:",
+    "width": 130
+  },
+  "trickCount1": {
+    "id": "trickCount1",
+    "x": 1014,
+    "y": 762,
+    "width": 40,
+    "height": 30,
+    "layer": 0,
+    "z": 26768,
+    "movable": false,
+    "css": "text-align: center;font-size: 25px; ",
+    "text": 0
+  },
+  "bids3": {
+    "type": "label",
+    "id": "bids3",
+    "x": 595,
+    "y": 120,
+    "width": 65,
+    "height": 40,
+    "z": 17,
+    "css": "font-size: 30px;",
+    "editable": true,
+    "text": 0
+  },
+  "75dnD": {
+    "id": "75dnD",
+    "fixedParent": true,
+    "x": -38,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "-",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 1
+      }
+    ],
+    "parent": "bids3"
+  },
+  "75dnU": {
+    "id": "75dnU",
+    "fixedParent": true,
+    "x": 68,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "+",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 1
+      }
+    ],
+    "parent": "bids3"
+  },
+  "hv41": {
+    "id": "hv41",
+    "z": 26764,
+    "x": 560,
+    "movable": false,
+    "height": 30,
+    "css": "text-align: center;font-size: 25px; ",
+    "width": 140,
+    "layer": 0,
+    "text": "Bid",
+    "y": 80
+  },
+  "hv42": {
+    "id": "hv42",
+    "z": 26767,
+    "x": 887,
+    "y": 122,
+    "movable": false,
+    "height": 30,
+    "css": "text-align: right;font-size: 25px; ",
+    "layer": 0,
+    "text": "Tricks won:",
+    "width": 130
+  },
+  "trickCount3": {
+    "id": "trickCount3",
+    "x": 1014,
+    "y": 122,
+    "width": 40,
+    "height": 30,
+    "layer": 0,
+    "z": 26768,
+    "movable": false,
+    "css": "text-align: center;font-size: 25px; ",
+    "text": 0
+  },
+  "reset": {
+    "type": "button",
+    "id": "reset",
+    "x": 1364,
+    "y": 70,
+    "z": 42,
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "fields": [
+          {
+            "type": "title",
+            "text": "Start next hand ..."
+          },
+          {
+            "type": "text",
+            "text": "Do you want to start the next hand?"
+          }
+        ],
+        "confirmButtonText": "Yes",
+        "cancelButtonText": "No"
+      },
+      {
+        "func": "RECALL",
+        "holder": "draw"
+      },
+      {
+        "func": "FLIP",
+        "holder": "draw",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "draw"
+      },
+      {
+        "func": "MOVE",
+        "from": "draw",
+        "to": [
+          "seat1",
+          "seat2",
+          "seat3"
+        ],
+        "count": 17
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "bids1",
+          "bids2",
+          "bids3"
+        ],
+        "property": "text",
+        "value": 0
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "seat1",
+          "seat2",
+          "seat3"
+        ],
+        "property": "turn",
+        "value": false
+      }
+    ],
+    "countRoutine": [
+      {
+        "func": "SET",
+        "collection": "child",
+        "property": "taken",
+        "value": true
+      },
+      {
+        "func": "SELECT",
+        "property": "_ancestor",
+        "value": "${tricksNum}"
+      },
+      {
+        "func": "COUNT"
+      },
+      "var tricks = ${COUNT} / 3",
+      "var tricks = ${tricks} toFixed 2",
+      {
+        "func": "LABEL",
+        "label": "${trickCountNum}",
+        "mode": "set",
+        "value": "${tricks}"
+      }
+    ],
+    "text": "Next Hand"
+  },
+  "north": {
+    "id": "north",
+    "x": 100.5,
+    "width": 140,
+    "height": 30,
+    "z": 34,
+    "css": "font-size: 25px; text-align:center;border: 1px solid black; ",
+    "playerGlobalUpdateRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "text",
+        "value": "${PROPERTY player OF seat3}"
+      }
+    ],
+    "y": 76,
+    "movableInEdit": false
+  },
+  "south": {
+    "id": "south",
+    "y": 612,
+    "width": 140,
+    "height": 30,
+    "z": 33,
+    "css": "font-size: 25px; text-align:center;border: 1px solid black; ",
+    "playerGlobalUpdateRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "text",
+        "value": "${PROPERTY player OF seat1}"
+      }
+    ],
+    "x": 100.5
+  },
+  "west": {
+    "id": "west",
+    "x": 100.5,
+    "y": 336,
+    "width": 140,
+    "height": 30,
+    "z": 32,
+    "css": "font-size: 25px; text-align:center;border: 1px solid black; ",
+    "playerGlobalUpdateRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "text",
+        "value": "${PROPERTY player OF seat2}"
+      }
+    ]
+  },
+  "zrp8_A_C": {
+    "type": "card",
+    "id": "zrp8_A_C",
+    "deck": "a7vuD",
+    "cardType": "C 5A",
+    "z": 29985,
+    "parent": "60cs"
+  },
+  "egaz_A_D": {
+    "type": "card",
+    "id": "egaz_A_D",
+    "deck": "a7vuD",
+    "cardType": "D 5A",
+    "z": 30010,
+    "parent": "60cs"
+  },
+  "6quy_A_H": {
+    "type": "card",
+    "id": "6quy_A_H",
+    "deck": "a7vuD",
+    "cardType": "H 5A",
+    "z": 30005,
+    "parent": "60cs"
+  },
+  "aok3_A_S": {
+    "type": "card",
+    "id": "aok3_A_S",
+    "deck": "a7vuD",
+    "cardType": "S 5A",
+    "z": 30016,
+    "parent": "60cs"
+  },
+  "hv37": {
+    "inheritFrom": "hv34",
+    "id": "hv37",
+    "x": 100.5,
+    "y": 659,
+    "z": 28209
+  },
+  "y1p8": {
+    "type": "label",
+    "text": 0,
+    "id": "y1p8",
+    "x": 138,
+    "y": 687,
+    "width": 65,
+    "height": 40,
+    "css": "font-size: 30px;",
+    "editable": true,
+    "z": 23
+  },
+  "y1p8D": {
+    "id": "y1p8D",
+    "parent": "y1p8",
+    "fixedParent": true,
+    "x": -38,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "-",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 1
+      }
+    ]
+  },
+  "y1p8U": {
+    "id": "y1p8U",
+    "parent": "y1p8",
+    "fixedParent": true,
+    "x": 68,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "+",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 1
+      }
+    ]
+  },
+  "hv43": {
+    "inheritFrom": "hv32",
+    "id": "hv43",
+    "x": 101,
+    "y": 759,
+    "z": 28211
+  },
+  "y1p9": {
+    "type": "label",
+    "text": 0,
+    "id": "y1p9",
+    "x": 138,
+    "y": 787,
+    "width": 65,
+    "height": 40,
+    "css": "font-size: 30px;",
+    "editable": true,
+    "z": 13
+  },
+  "y1p9D": {
+    "id": "y1p9D",
+    "parent": "y1p9",
+    "fixedParent": true,
+    "x": -38,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "-",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 1
+      }
+    ]
+  },
+  "y1p9U": {
+    "id": "y1p9U",
+    "parent": "y1p9",
+    "fixedParent": true,
+    "x": 68,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "+",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 1
+      }
+    ]
+  },
+  "60cs": {
+    "type": "pile",
+    "parent": "draw",
+    "x": 4,
+    "y": 4,
+    "width": 103,
+    "height": 160,
+    "id": "60cs"
+  }
+}

@@ -1,0 +1,2003 @@
+{
+  "_meta": {
+    "version": 15,
+    "info": {
+      "name": "Alakazap!",
+      "image": "/assets/156649161_111898",
+      "rules": "",
+      "bgg": "https://boardgamegeek.com/boardgame/394889",
+      "year": "2023",
+      "mode": "vs",
+      "time": "20",
+      "attribution": "<div>Game layout and scripting by Andy Pymont, released to the public domain by CC0.</div><div><br></div><div>The library image was generated with the Stable Diffusion WebUI, using the Realistic Vision V6.0 B1 checkpoint under a CreativeML Open RAIL++-M license, with the prompt \"a female wizard zaps a male wizard's fireball spell, cartoon\". The card back is a resized, grayscale edit of the same image.<br></div><div><br></div><div>The symbols for the four elemental suits are from https://game-icons.net and are used under the CC BY 3.0 license:</div><div><br></div><div>Lorc</div><div>• Air: https://game-icons.net/1x1/lorc/air-zigzag.html<br></div><div>• Earth: https://game-icons.net/1x1/lorc/tree-branch.html<br></div><div>• Fire: https://game-icons.net/1x1/lorc/small-fire.html<br></div><div>• Water: https://game-icons.net/1x1/lorc/big-wave.html<br></div>",
+      "lastUpdate": 1725484980000,
+      "showName": true,
+      "skill": "",
+      "description": "Can you master the magic of the four elements, or will you be zapped by your opponents?",
+      "variantImage": "",
+      "variant": "",
+      "language": "en-GB",
+      "players": "3-6",
+      "similarImage": "",
+      "similarName": "Cabanga",
+      "similarDesigner": "Michael Modler",
+      "similarAwards": "2023 Meeples Choice Award Nominee",
+      "ruleText": "<div><b>Deck Composition &amp; Setup</b><br></div><div>The deck contains the numbers 1-18 in each of four elemental suits: Air, Earth, Fire, and Water. There are also eight starter cards which are randomly dealt to columns corresponding to the four suits, two cards per column.</div><div><br></div><div><b>Playing the Game</b><br></div><div>On your turn, play one card from your hand into the column matching its elemental suit, covering one of the numbers already there (either one of the eight starting numbers, or a card played on a previous turn).</div><div><br></div><div>At any point between your card play and the next player playing a card, one or more opponents may shout \"Alakazap!\" to zap your magic spell, playing from their hand any card which is between (but not equal to) the two numbers now present in that element's column. For example if you played Fire 4 and the other card in the Fire column is an 8, then players may zap using the Fire 5, Fire 6, and Fire 7 cards.</div><div><br></div><div>The player draws penalty cards based on the result of their play:<br></div><div>1. Draw one penalty card if you played the same elemental suit as the previous player;</div><div>2. Draw one penalty card for each card an opponent has used to zap (you draw new cards from the deck, rather than drawing the cards used to zap themselves).</div><div>If the deck runs out, shuffle the discarded cards (previously used to zap) to form a new draw pile.</div><div><br></div><div>After any penalty card draws are resolved, before the next player plays a card, if <b>any</b> player has no cards in hand, the round immediately ends.</div><div><br></div><div><b>Scoring</b></div><div>Each player scores points equal to the numbers in the red circle on the cards remaining in their hand.</div><div><br></div><div>After scoring the hand, if any player has 18 or more points, the game ends.</div><div><br></div><div>The player with the lowest score wins.<br></div>",
+      "helpText": "Have all players take a seat and press the New Game button.\n<div><br></div><div>The Draw button next to the draw pile can be used to draw one card to your hand, when you play the same element as the previous player or are zapped.<br></div><div>\n</div><div>When the active player plays a card into one of the spaces on the table, the turn indicator will move to the next player. However, the player that just played can still be zapped by other players until the next player plays their card - shout \"Alakazap!\" and play the cards to the Alakazap pile. Once the player who played has drawn their penalty cards, they can press the Discard button to discard the entire Alakazap pile, or it will be automatically discarded by the next card play.</div><div><br></div><div>After a card play, a red arrow will be visible above the elemental suit just played, to help players track when a player may have to take a penalty card for making a matching play.<br></div><div><br></div><div>At the conclusion of each round of play, press the End Round button. This will score the cards remaining in players' hands automatically, and will deal a new hand to all seated players.<br></div>"
+    }
+  },
+  "seat-p1": {
+    "type": "seat",
+    "id": "seat-p1",
+    "css": {
+      "default": {
+        "border": "5px solid #999999",
+        "box-shadow": "0 2px 5px #00000066",
+        "box-sizing": "border-box",
+        "color": "#000000",
+        "font-size": "30px"
+      },
+      ".seated": {
+        "background": "${PROPERTY color}",
+        "border": "5px solid #000000",
+        "color": "${PROPERTY foreground}"
+      },
+      ".seated.turn": {
+        "border": "5px dotted ${PROPERTY foreground}"
+      }
+    },
+    "foreground": "#000000",
+    "clickRoutine": [
+      {
+        "func": "CLICK",
+        "collection": "thisButton",
+        "mode": "ignoreClickRoutine"
+      },
+      "var foreground = colorContrast ${PROPERTY color}",
+      {
+        "func": "SET",
+        "collection": [
+          "${PROPERTY id}"
+        ],
+        "property": "foreground",
+        "value": "${foreground}"
+      }
+    ],
+    "y": 4,
+    "x": 12,
+    "width": 255,
+    "height": 50,
+    "hideWhenUnused": true,
+    "z": 1,
+    "score": [],
+    "getTotalScoreRoutine": [
+      "var result = 0",
+      {
+        "func": "FOREACH",
+        "in": "${PROPERTY score}",
+        "loopRoutine": [
+          "var result = ${result} + ${value}"
+        ]
+      }
+    ]
+  },
+  "seat-p2": {
+    "type": "seat",
+    "id": "seat-p2",
+    "index": 2,
+    "inheritFrom": {
+      "seat-p1": [
+        "y",
+        "height",
+        "width",
+        "hideWhenUnused",
+        "css",
+        "clickRoutine",
+        "getTotalScoreRoutine"
+      ]
+    },
+    "x": 275,
+    "foreground": "#000000",
+    "color": "#999999",
+    "turn": false,
+    "score": []
+  },
+  "seat-p3": {
+    "type": "seat",
+    "id": "seat-p3",
+    "index": 3,
+    "inheritFrom": {
+      "seat-p1": [
+        "y",
+        "height",
+        "width",
+        "hideWhenUnused",
+        "css",
+        "clickRoutine",
+        "getTotalScoreRoutine"
+      ]
+    },
+    "x": 540,
+    "foreground": "#000000",
+    "turn": false,
+    "color": "#999999",
+    "score": []
+  },
+  "seat-p4": {
+    "type": "seat",
+    "id": "seat-p4",
+    "index": 4,
+    "inheritFrom": {
+      "seat-p1": [
+        "y",
+        "height",
+        "width",
+        "hideWhenUnused",
+        "css",
+        "clickRoutine",
+        "getTotalScoreRoutine"
+      ]
+    },
+    "x": 805,
+    "foreground": "#000000",
+    "turn": false,
+    "score": []
+  },
+  "seat-p5": {
+    "type": "seat",
+    "id": "seat-p5",
+    "index": 5,
+    "inheritFrom": {
+      "seat-p1": [
+        "y",
+        "height",
+        "width",
+        "hideWhenUnused",
+        "css",
+        "clickRoutine",
+        "getTotalScoreRoutine"
+      ]
+    },
+    "x": 1070,
+    "foreground": "#000000",
+    "turn": false,
+    "score": []
+  },
+  "seat-p6": {
+    "type": "seat",
+    "id": "seat-p6",
+    "index": 6,
+    "inheritFrom": {
+      "seat-p1": [
+        "y",
+        "height",
+        "width",
+        "hideWhenUnused",
+        "css",
+        "clickRoutine",
+        "getTotalScoreRoutine"
+      ]
+    },
+    "x": 1335,
+    "foreground": "#000000",
+    "turn": false,
+    "score": []
+  },
+  "scoreboard": {
+    "type": "scoreboard",
+    "id": "scoreboard",
+    "width": 350,
+    "height": 610,
+    "x": 1245,
+    "y": 150,
+    "movable": false,
+    "verticalHeader": true,
+    "css": {
+      ".scoreboard td": {
+        "text-align": "center",
+        "font-size": "22px"
+      }
+    }
+  },
+  "holder-draw": {
+    "type": "holder",
+    "id": "holder-draw",
+    "x": 30,
+    "y": 200,
+    "width": 100,
+    "height": 160,
+    "onEnter": {
+      "activeFace": 1
+    },
+    "css": {
+      "border-color": "#888888",
+      "border-width": "2px"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0
+  },
+  "holder-discard": {
+    "type": "holder",
+    "id": "holder-discard",
+    "inheritFrom": "holder-draw",
+    "onEnter": {
+      "activeFace": 0
+    },
+    "y": 500
+  },
+  "label-draw": {
+    "type": "label",
+    "id": "label-draw",
+    "parent": "holder-draw",
+    "text": "DECK",
+    "y": -20,
+    "css": {
+      "color": "black"
+    }
+  },
+  "label-discard": {
+    "type": "label",
+    "id": "label-discard",
+    "inheritFrom": "label-draw",
+    "text": "DISCARD",
+    "parent": "holder-discard"
+  },
+  "hand": {
+    "type": "holder",
+    "id": "hand",
+    "x": 230,
+    "y": 830,
+    "width": 1020,
+    "height": 160,
+    "css": {
+      "border-color": "#888888",
+      "border-width": "2px"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "stackOffsetX": 60,
+    "onEnter": {
+      "activeFace": 0
+    },
+    "childrenPerOwner": true
+  },
+  "deck": {
+    "type": "deck",
+    "id": "deck",
+    "parent": "holder-draw",
+    "width": 100,
+    "height": 160,
+    "movable": false,
+    "movableInEdit": false,
+    "fixedParent": true,
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 100,
+            "height": 160,
+            "dynamicProperties": {
+              "color": "color"
+            }
+          },
+          {
+            "type": "text",
+            "x": 0,
+            "y": 0,
+            "width": 55,
+            "height": 60,
+            "css": {
+              "font-size": "44px",
+              "line-height": "60px",
+              "text-align": "center"
+            },
+            "dynamicProperties": {
+              "value": "value"
+            }
+          },
+          {
+            "type": "image",
+            "x": 25,
+            "y": 50,
+            "width": 60,
+            "height": 60,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image"
+            }
+          },
+          {
+            "type": "image",
+            "x": 10,
+            "y": 120,
+            "width": 30,
+            "height": 30,
+            "color": "red",
+            "css": {
+              "border-radius": "15px"
+            }
+          },
+          {
+            "type": "text",
+            "x": 10,
+            "y": 120,
+            "width": 30,
+            "height": 30,
+            "css": {
+              "color": "white",
+              "font-size": "20px",
+              "text-align": "center",
+              "line-height": "30px"
+            },
+            "dynamicProperties": {
+              "value": "score"
+            }
+          }
+        ],
+        "radius": 8,
+        "border": 2
+      },
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "transparent",
+            "width": 100,
+            "height": 160,
+            "value": "/assets/194746530_3346"
+          }
+        ],
+        "radius": 8,
+        "border": 2
+      }
+    ],
+    "cardDefaults": {
+      "width": 100,
+      "height": 160,
+      "enlarge": 1.5,
+      "onPileCreation": {
+        "handleCSS": {
+          "background": "black",
+          "color": "white"
+        }
+      },
+      "value": 1,
+      "score": 1
+    },
+    "cardTypes": {
+      "air": {
+        "color": "#ecf0f1",
+        "image": "/i/game-icons.net/lorc/air-zigzag.svg"
+      },
+      "earth": {
+        "color": "#a9dfbf",
+        "image": "/i/game-icons.net/lorc/tree-branch.svg"
+      },
+      "fire": {
+        "color": "#f39c12",
+        "image": "/i/game-icons.net/lorc/small-fire.svg"
+      },
+      "water": {
+        "color": "#3498db",
+        "image": "/i/game-icons.net/lorc/big-wave.svg"
+      }
+    }
+  },
+  "button-end-turn": {
+    "type": "button",
+    "id": "button-end-turn",
+    "inheritFrom": "button-new-game",
+    "x": 10,
+    "text": "Cycle Turn",
+    "clickRoutine": [
+      {
+        "func": "TURN",
+        "turnCycle": "forward"
+      }
+    ],
+    "y": 940
+  },
+  "button-new-game": {
+    "type": "button",
+    "id": "button-new-game",
+    "y": 820,
+    "width": 120,
+    "height": 40,
+    "text": "New Game",
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "confirmButtonText": "Yes",
+        "cancelButtonText": "No",
+        "fields": [
+          {
+            "type": "text",
+            "text": "Are you sure you want to start a new game?"
+          }
+        ],
+        "header": "Start a new game?"
+      },
+      {
+        "func": "FOREACH",
+        "range": 6,
+        "loopRoutine": [
+          "var emptyScore = from '0'",
+          {
+            "func": "SET",
+            "collection": [
+              "seat-p${value}"
+            ],
+            "property": "score",
+            "value": "${emptyScore}"
+          }
+        ]
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "button-end-round"
+        ],
+        "property": "round",
+        "value": 1
+      },
+      {
+        "func": "TURN",
+        "turnCycle": "random"
+      },
+      {
+        "func": "CALL",
+        "widget": "button-end-round",
+        "routine": "dealCardsRoutine"
+      }
+    ],
+    "z": 3,
+    "x": 10
+  },
+  "hand-counter-p1": {
+    "id": "hand-counter-p1",
+    "parent": "seat-p1",
+    "fixedParent": true,
+    "x": 107.5,
+    "y": 50,
+    "width": 40,
+    "height": 40,
+    "borderRadius": 20,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "css": {
+      "font-size": "24px",
+      "display": "flex",
+      "align-items": "center",
+      "justify-content": "center",
+      "color": "#000000",
+      "background": "#ffffff",
+      "border": "2px solid #000000"
+    },
+    "text": 0,
+    "type": "basic",
+    "ownerGlobalUpdateRoutine": [
+      "var parent = ${PROPERTY parent}",
+      "var COUNT = 0",
+      {
+        "func": "COUNT",
+        "holder": "hand",
+        "owner": "${PROPERTY player OF $parent}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "text",
+        "value": "${COUNT}"
+      }
+    ],
+    "playerGlobalUpdateRoutine": [
+      {
+        "func": "CALL",
+        "routine": "ownerGlobalUpdateRoutine",
+        "widget": "${PROPERTY id}"
+      }
+    ]
+  },
+  "hand-counter-p2": {
+    "type": "basic",
+    "id": "hand-counter-p2",
+    "parent": "seat-p2",
+    "inheritFrom": "hand-counter-p1",
+    "text": 0
+  },
+  "hand-counter-p3": {
+    "type": "basic",
+    "id": "hand-counter-p3",
+    "parent": "seat-p3",
+    "inheritFrom": "hand-counter-p1",
+    "text": 0
+  },
+  "hand-counter-p4": {
+    "type": "basic",
+    "id": "hand-counter-p4",
+    "parent": "seat-p4",
+    "inheritFrom": "hand-counter-p1",
+    "text": 0
+  },
+  "hand-counter-p5": {
+    "type": "basic",
+    "id": "hand-counter-p5",
+    "parent": "seat-p5",
+    "inheritFrom": "hand-counter-p1",
+    "text": 0
+  },
+  "hand-counter-p6": {
+    "type": "basic",
+    "id": "hand-counter-p6",
+    "parent": "seat-p6",
+    "inheritFrom": "hand-counter-p1",
+    "text": 0
+  },
+  "button-end-round": {
+    "type": "button",
+    "id": "button-end-round",
+    "text": "End Round",
+    "inheritFrom": "button-new-game",
+    "y": 880,
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "routine": "checkForEmptyHandRoutine",
+        "variable": "isAnEmptyHand"
+      },
+      {
+        "func": "IF",
+        "operand1": "${isAnEmptyHand}",
+        "operand2": false,
+        "thenRoutine": [
+          {
+            "func": "INPUT",
+            "confirmButtonText": "Yes",
+            "cancelButtonText": "No",
+            "fields": [
+              {
+                "type": "text",
+                "text": "All players still have cards in hand. Are you sure you want to start a new round?"
+              }
+            ],
+            "header": "End the round early?"
+          },
+          "var isAnEmptyHand = true"
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${isAnEmptyHand}",
+        "operand2": true,
+        "thenRoutine": [
+          {
+            "func": "CALL",
+            "routine": "scoreHandCardsRoutine"
+          },
+          "var round = ${PROPERTY round} + 1",
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "round",
+            "value": "${round}"
+          },
+          {
+            "func": "CALL",
+            "routine": "dealCardsRoutine"
+          }
+        ]
+      }
+    ],
+    "dealCardsRoutine": [
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "deck",
+        "value": "deck-markers"
+      },
+      {
+        "func": "FLIP",
+        "face": 0
+      },
+      {
+        "func": "RECALL",
+        "holder": "holder-starters"
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "holder-starters"
+      },
+      {
+        "func": "FOREACH",
+        "in": [
+          "holder-air-1",
+          "holder-air-2",
+          "holder-earth-1",
+          "holder-earth-2",
+          "holder-fire-1",
+          "holder-fire-2",
+          "holder-water-1",
+          "holder-water-2"
+        ],
+        "loopRoutine": [
+          {
+            "func": "MOVE",
+            "from": "holder-starters",
+            "to": "${value}",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "func": "RECALL",
+        "holder": "holder-draw"
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "holder-draw"
+      },
+      {
+        "func": "SELECT",
+        "type": "seat",
+        "property": "player",
+        "relation": "!=",
+        "value": "",
+        "collection": "players"
+      },
+      {
+        "func": "FOREACH",
+        "collection": "players",
+        "loopRoutine": [
+          {
+            "func": "MOVE",
+            "from": "holder-draw",
+            "to": "${widgetID}",
+            "count": 8
+          }
+        ]
+      },
+      {
+        "func": "SORT",
+        "holder": "hand",
+        "key": [
+          "cardType",
+          "value"
+        ]
+      }
+    ],
+    "checkForEmptyHandRoutine": [
+      "var fewestCardsInHand = 99",
+      "var result = false",
+      {
+        "func": "SELECT",
+        "type": "seat",
+        "property": "player",
+        "relation": "!=",
+        "value": "",
+        "collection": "players"
+      },
+      {
+        "func": "FOREACH",
+        "collection": "players",
+        "loopRoutine": [
+          "var index = ${PROPERTY index OF $widgetID}",
+          "var handCounter = 'hand-counter-p' + ${index}",
+          "var handCount = ${PROPERTY text OF $handCounter}",
+          "var fewestCardsInHand = min ${handCount} ${fewestCardsInHand}"
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${fewestCardsInHand}",
+        "operand2": 0,
+        "thenRoutine": [
+          "var result = true"
+        ]
+      }
+    ],
+    "z": 2,
+    "x": 10,
+    "scoreHandCardsRoutine": [
+      {
+        "func": "SELECT",
+        "type": "seat",
+        "property": "player",
+        "relation": "!=",
+        "value": "",
+        "collection": "players"
+      },
+      {
+        "func": "FOREACH",
+        "collection": "players",
+        "loopRoutine": [
+          {
+            "func": "SELECT",
+            "type": "card",
+            "property": "owner",
+            "value": "${PROPERTY player OF $widgetID}"
+          },
+          {
+            "func": "GET",
+            "property": "score",
+            "aggregation": "sum"
+          },
+          {
+            "func": "SCORE",
+            "seats": "${widgetID}",
+            "round": "${PROPERTY round}",
+            "value": "${score}"
+          }
+        ]
+      }
+    ],
+    "round": 1
+  },
+  "card-water-01": {
+    "type": "card",
+    "id": "card-water-01",
+    "deck": "deck",
+    "cardType": "water",
+    "z": 731,
+    "parent": "pile-draw",
+    "activeFace": 1
+  },
+  "card-air-01": {
+    "type": "card",
+    "id": "card-air-01",
+    "deck": "deck",
+    "cardType": "air",
+    "z": 726,
+    "parent": "pile-draw",
+    "activeFace": 1
+  },
+  "card-earth-01": {
+    "type": "card",
+    "id": "card-earth-01",
+    "deck": "deck",
+    "cardType": "earth",
+    "z": 694,
+    "parent": "pile-draw",
+    "activeFace": 1
+  },
+  "card-fire-01": {
+    "type": "card",
+    "id": "card-fire-01",
+    "deck": "deck",
+    "cardType": "fire",
+    "z": 750,
+    "parent": "pile-draw",
+    "activeFace": 1
+  },
+  "button-draw-card": {
+    "type": "button",
+    "id": "button-draw-card",
+    "inheritFrom": "button-new-game",
+    "movable": false,
+    "movableInEdit": true,
+    "parent": "holder-draw",
+    "y": 175,
+    "x": -10,
+    "text": "Draw",
+    "clickRoutine": [
+      {
+        "func": "COUNT",
+        "holder": "holder-draw"
+      },
+      {
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "func": "MOVE",
+            "from": "holder-discard",
+            "to": "holder-draw",
+            "count": 0
+          },
+          {
+            "func": "SHUFFLE",
+            "holder": "holder-draw"
+          }
+        ]
+      },
+      {
+        "func": "MOVE",
+        "from": "holder-draw",
+        "to": "hand",
+        "count": 1
+      }
+    ]
+  },
+  "card-earth-10": {
+    "type": "card",
+    "id": "card-earth-10",
+    "deck": "deck",
+    "cardType": "earth",
+    "z": 732,
+    "value": 10,
+    "score": 3,
+    "parent": "pile-draw",
+    "activeFace": 1
+  },
+  "card-earth-11": {
+    "type": "card",
+    "id": "card-earth-11",
+    "deck": "deck",
+    "cardType": "earth",
+    "z": 735,
+    "value": 11,
+    "score": 3,
+    "parent": "pile-draw",
+    "activeFace": 1
+  },
+  "card-earth-12": {
+    "type": "card",
+    "id": "card-earth-12",
+    "deck": "deck",
+    "cardType": "earth",
+    "z": 755,
+    "value": 12,
+    "score": 3,
+    "parent": "pile-draw",
+    "activeFace": 1
+  },
+  "card-earth-13": {
+    "type": "card",
+    "id": "card-earth-13",
+    "deck": "deck",
+    "cardType": "earth",
+    "z": 700,
+    "value": 13,
+    "score": 2,
+    "parent": "pile-draw",
+    "activeFace": 1
+  },
+  "card-earth-14": {
+    "type": "card",
+    "id": "card-earth-14",
+    "deck": "deck",
+    "cardType": "earth",
+    "z": 511,
+    "value": 14,
+    "score": 2,
+    "parent": "pile-draw",
+    "activeFace": 1
+  },
+  "card-earth-15": {
+    "type": "card",
+    "id": "card-earth-15",
+    "deck": "deck",
+    "cardType": "earth",
+    "z": 690,
+    "value": 15,
+    "score": 2,
+    "parent": "pile-draw",
+    "activeFace": 1
+  },
+  "card-earth-16": {
+    "type": "card",
+    "id": "card-earth-16",
+    "deck": "deck",
+    "cardType": "earth",
+    "z": 742,
+    "value": 16,
+    "parent": "pile-draw",
+    "activeFace": 1
+  },
+  "card-earth-17": {
+    "type": "card",
+    "id": "card-earth-17",
+    "deck": "deck",
+    "cardType": "earth",
+    "z": 745,
+    "value": 17,
+    "parent": "pile-draw",
+    "activeFace": 1
+  },
+  "card-earth-18": {
+    "type": "card",
+    "id": "card-earth-18",
+    "deck": "deck",
+    "cardType": "earth",
+    "z": 702,
+    "value": 18,
+    "parent": "pile-draw",
+    "activeFace": 1
+  },
+  "card-earth-02": {
+    "type": "card",
+    "id": "card-earth-02",
+    "deck": "deck",
+    "cardType": "earth",
+    "z": 247,
+    "value": 2,
+    "parent": "pile-draw",
+    "activeFace": 1
+  },
+  "card-earth-03": {
+    "type": "card",
+    "id": "card-earth-03",
+    "deck": "deck",
+    "cardType": "earth",
+    "z": 698,
+    "value": 3,
+    "parent": "pile-draw",
+    "activeFace": 1
+  },
+  "card-earth-04": {
+    "type": "card",
+    "id": "card-earth-04",
+    "deck": "deck",
+    "cardType": "earth",
+    "z": 535,
+    "value": 4,
+    "score": 2,
+    "parent": "pile-draw",
+    "activeFace": 1
+  },
+  "card-earth-05": {
+    "type": "card",
+    "id": "card-earth-05",
+    "deck": "deck",
+    "cardType": "earth",
+    "z": 743,
+    "value": 5,
+    "score": 2,
+    "parent": "pile-draw",
+    "activeFace": 1
+  },
+  "card-earth-06": {
+    "type": "card",
+    "id": "card-earth-06",
+    "deck": "deck",
+    "cardType": "earth",
+    "z": 256,
+    "value": 6,
+    "score": 2,
+    "parent": "pile-draw",
+    "activeFace": 1
+  },
+  "card-earth-07": {
+    "type": "card",
+    "id": "card-earth-07",
+    "deck": "deck",
+    "cardType": "earth",
+    "z": 687,
+    "value": 7,
+    "score": 3,
+    "parent": "pile-draw",
+    "activeFace": 1
+  },
+  "card-earth-08": {
+    "type": "card",
+    "id": "card-earth-08",
+    "deck": "deck",
+    "cardType": "earth",
+    "z": 707,
+    "value": 8,
+    "score": 3,
+    "parent": "pile-draw",
+    "activeFace": 1
+  },
+  "card-earth-09": {
+    "type": "card",
+    "id": "card-earth-09",
+    "deck": "deck",
+    "cardType": "earth",
+    "z": 752,
+    "value": 9,
+    "score": 3,
+    "parent": "pile-draw",
+    "activeFace": 1
+  },
+  "card-fire-10": {
+    "type": "card",
+    "id": "card-fire-10",
+    "deck": "deck",
+    "cardType": "fire",
+    "z": 717,
+    "value": 10,
+    "score": 3,
+    "parent": "pile-draw",
+    "activeFace": 1
+  },
+  "card-fire-11": {
+    "type": "card",
+    "id": "card-fire-11",
+    "deck": "deck",
+    "cardType": "fire",
+    "z": 401,
+    "value": 11,
+    "score": 3,
+    "parent": "pile-draw",
+    "activeFace": 1
+  },
+  "card-fire-12": {
+    "type": "card",
+    "id": "card-fire-12",
+    "deck": "deck",
+    "cardType": "fire",
+    "z": 416,
+    "value": 12,
+    "score": 3,
+    "parent": "pile-draw",
+    "activeFace": 1
+  },
+  "card-fire-13": {
+    "type": "card",
+    "id": "card-fire-13",
+    "deck": "deck",
+    "cardType": "fire",
+    "z": 541,
+    "value": 13,
+    "score": 2,
+    "parent": "pile-draw",
+    "activeFace": 1
+  },
+  "card-fire-14": {
+    "type": "card",
+    "id": "card-fire-14",
+    "deck": "deck",
+    "cardType": "fire",
+    "z": 751,
+    "value": 14,
+    "score": 2,
+    "parent": "pile-draw",
+    "activeFace": 1
+  },
+  "card-fire-15": {
+    "type": "card",
+    "id": "card-fire-15",
+    "deck": "deck",
+    "cardType": "fire",
+    "z": 675,
+    "value": 15,
+    "score": 2,
+    "parent": "pile-draw",
+    "activeFace": 1
+  },
+  "card-fire-16": {
+    "type": "card",
+    "id": "card-fire-16",
+    "deck": "deck",
+    "cardType": "fire",
+    "z": 681,
+    "value": 16,
+    "parent": "pile-draw",
+    "activeFace": 1
+  },
+  "card-fire-17": {
+    "type": "card",
+    "id": "card-fire-17",
+    "deck": "deck",
+    "cardType": "fire",
+    "z": 826,
+    "value": 17,
+    "parent": "pile-draw",
+    "activeFace": 1
+  },
+  "card-fire-18": {
+    "type": "card",
+    "id": "card-fire-18",
+    "deck": "deck",
+    "cardType": "fire",
+    "z": 823,
+    "value": 18,
+    "parent": "pile-draw",
+    "activeFace": 1
+  },
+  "card-water-10": {
+    "type": "card",
+    "id": "card-water-10",
+    "deck": "deck",
+    "cardType": "water",
+    "z": 740,
+    "value": 10,
+    "score": 3,
+    "parent": "pile-draw",
+    "activeFace": 1
+  },
+  "card-water-11": {
+    "type": "card",
+    "id": "card-water-11",
+    "deck": "deck",
+    "cardType": "water",
+    "z": 701,
+    "value": 11,
+    "score": 3,
+    "parent": "pile-draw",
+    "activeFace": 1
+  },
+  "card-water-12": {
+    "type": "card",
+    "id": "card-water-12",
+    "deck": "deck",
+    "cardType": "water",
+    "z": 703,
+    "value": 12,
+    "score": 3,
+    "parent": "pile-draw",
+    "activeFace": 1
+  },
+  "card-water-13": {
+    "type": "card",
+    "id": "card-water-13",
+    "deck": "deck",
+    "cardType": "water",
+    "z": 706,
+    "value": 13,
+    "score": 2,
+    "parent": "pile-draw",
+    "activeFace": 1
+  },
+  "card-water-14": {
+    "type": "card",
+    "id": "card-water-14",
+    "deck": "deck",
+    "cardType": "water",
+    "z": 747,
+    "value": 14,
+    "score": 2,
+    "parent": "pile-draw",
+    "activeFace": 1
+  },
+  "card-water-15": {
+    "type": "card",
+    "id": "card-water-15",
+    "deck": "deck",
+    "cardType": "water",
+    "z": 712,
+    "value": 15,
+    "score": 2,
+    "parent": "pile-draw",
+    "activeFace": 1
+  },
+  "card-water-16": {
+    "type": "card",
+    "id": "card-water-16",
+    "deck": "deck",
+    "cardType": "water",
+    "z": 677,
+    "value": 16,
+    "parent": "pile-draw",
+    "activeFace": 1
+  },
+  "card-water-17": {
+    "type": "card",
+    "id": "card-water-17",
+    "deck": "deck",
+    "cardType": "water",
+    "z": 720,
+    "value": 17,
+    "parent": "pile-draw",
+    "activeFace": 1
+  },
+  "card-water-18": {
+    "type": "card",
+    "id": "card-water-18",
+    "deck": "deck",
+    "cardType": "water",
+    "z": 493,
+    "value": 18,
+    "parent": "pile-draw",
+    "activeFace": 1
+  },
+  "card-air-10": {
+    "type": "card",
+    "id": "card-air-10",
+    "deck": "deck",
+    "cardType": "air",
+    "z": 749,
+    "value": 10,
+    "score": 3,
+    "parent": "pile-draw",
+    "activeFace": 1
+  },
+  "card-air-11": {
+    "type": "card",
+    "id": "card-air-11",
+    "deck": "deck",
+    "cardType": "air",
+    "z": 699,
+    "value": 11,
+    "score": 3,
+    "parent": "pile-draw",
+    "activeFace": 1
+  },
+  "card-air-12": {
+    "type": "card",
+    "id": "card-air-12",
+    "deck": "deck",
+    "cardType": "air",
+    "z": 741,
+    "value": 12,
+    "score": 3,
+    "parent": "pile-draw",
+    "activeFace": 1
+  },
+  "card-air-13": {
+    "type": "card",
+    "id": "card-air-13",
+    "deck": "deck",
+    "cardType": "air",
+    "z": 549,
+    "value": 13,
+    "score": 2,
+    "parent": "pile-draw",
+    "activeFace": 1
+  },
+  "card-air-14": {
+    "type": "card",
+    "id": "card-air-14",
+    "deck": "deck",
+    "cardType": "air",
+    "z": 546,
+    "value": 14,
+    "score": 2,
+    "parent": "pile-draw",
+    "activeFace": 1
+  },
+  "card-air-15": {
+    "type": "card",
+    "id": "card-air-15",
+    "deck": "deck",
+    "cardType": "air",
+    "z": 746,
+    "value": 15,
+    "score": 2,
+    "parent": "pile-draw",
+    "activeFace": 1
+  },
+  "card-air-16": {
+    "type": "card",
+    "id": "card-air-16",
+    "deck": "deck",
+    "cardType": "air",
+    "z": 498,
+    "value": 16,
+    "parent": "pile-draw",
+    "activeFace": 1
+  },
+  "card-air-17": {
+    "type": "card",
+    "id": "card-air-17",
+    "deck": "deck",
+    "cardType": "air",
+    "z": 490,
+    "value": 17,
+    "parent": "pile-draw",
+    "activeFace": 1
+  },
+  "card-air-18": {
+    "type": "card",
+    "id": "card-air-18",
+    "deck": "deck",
+    "cardType": "air",
+    "z": 739,
+    "value": 18,
+    "parent": "pile-draw",
+    "activeFace": 1
+  },
+  "card-air-02": {
+    "type": "card",
+    "id": "card-air-02",
+    "deck": "deck",
+    "cardType": "air",
+    "z": 715,
+    "value": 2,
+    "parent": "pile-draw",
+    "activeFace": 1
+  },
+  "card-air-03": {
+    "type": "card",
+    "id": "card-air-03",
+    "deck": "deck",
+    "cardType": "air",
+    "z": 295,
+    "value": 3,
+    "parent": "pile-draw",
+    "activeFace": 1
+  },
+  "card-air-04": {
+    "type": "card",
+    "id": "card-air-04",
+    "deck": "deck",
+    "cardType": "air",
+    "z": 531,
+    "value": 4,
+    "score": 2,
+    "hoverParent": "holder-draw",
+    "parent": "pile-draw",
+    "activeFace": 1
+  },
+  "card-air-05": {
+    "type": "card",
+    "id": "card-air-05",
+    "deck": "deck",
+    "cardType": "air",
+    "z": 334,
+    "value": 5,
+    "score": 2,
+    "parent": "pile-draw",
+    "activeFace": 1
+  },
+  "card-air-06": {
+    "type": "card",
+    "id": "card-air-06",
+    "deck": "deck",
+    "cardType": "air",
+    "z": 680,
+    "value": 6,
+    "score": 2,
+    "parent": "pile-draw",
+    "activeFace": 1
+  },
+  "card-air-07": {
+    "type": "card",
+    "id": "card-air-07",
+    "deck": "deck",
+    "cardType": "air",
+    "z": 505,
+    "value": 7,
+    "score": 3,
+    "parent": "pile-draw",
+    "activeFace": 1
+  },
+  "card-air-08": {
+    "type": "card",
+    "id": "card-air-08",
+    "deck": "deck",
+    "cardType": "air",
+    "z": 733,
+    "value": 8,
+    "score": 3,
+    "parent": "pile-draw",
+    "activeFace": 1
+  },
+  "card-air-09": {
+    "type": "card",
+    "id": "card-air-09",
+    "deck": "deck",
+    "cardType": "air",
+    "z": 704,
+    "value": 9,
+    "score": 3,
+    "parent": "pile-draw",
+    "activeFace": 1
+  },
+  "card-fire-02": {
+    "type": "card",
+    "id": "card-fire-02",
+    "deck": "deck",
+    "cardType": "fire",
+    "z": 542,
+    "value": 2,
+    "parent": "pile-draw",
+    "activeFace": 1
+  },
+  "card-fire-03": {
+    "type": "card",
+    "id": "card-fire-03",
+    "deck": "deck",
+    "cardType": "fire",
+    "z": 728,
+    "value": 3,
+    "parent": "pile-draw",
+    "activeFace": 1
+  },
+  "card-fire-04": {
+    "type": "card",
+    "id": "card-fire-04",
+    "deck": "deck",
+    "cardType": "fire",
+    "z": 724,
+    "value": 4,
+    "score": 2,
+    "parent": "pile-draw",
+    "activeFace": 1
+  },
+  "card-fire-05": {
+    "type": "card",
+    "id": "card-fire-05",
+    "deck": "deck",
+    "cardType": "fire",
+    "z": 754,
+    "value": 5,
+    "score": 2,
+    "parent": "pile-draw",
+    "activeFace": 1
+  },
+  "card-fire-06": {
+    "type": "card",
+    "id": "card-fire-06",
+    "deck": "deck",
+    "cardType": "fire",
+    "z": 695,
+    "value": 6,
+    "score": 2,
+    "parent": "pile-draw",
+    "activeFace": 1
+  },
+  "card-fire-07": {
+    "type": "card",
+    "id": "card-fire-07",
+    "deck": "deck",
+    "cardType": "fire",
+    "z": 716,
+    "value": 7,
+    "score": 3,
+    "parent": "pile-draw",
+    "activeFace": 1
+  },
+  "card-fire-08": {
+    "type": "card",
+    "id": "card-fire-08",
+    "deck": "deck",
+    "cardType": "fire",
+    "z": 708,
+    "value": 8,
+    "score": 3,
+    "parent": "pile-draw",
+    "activeFace": 1
+  },
+  "card-fire-09": {
+    "type": "card",
+    "id": "card-fire-09",
+    "deck": "deck",
+    "cardType": "fire",
+    "z": 753,
+    "value": 9,
+    "score": 3,
+    "parent": "pile-draw",
+    "activeFace": 1
+  },
+  "card-water-02": {
+    "type": "card",
+    "id": "card-water-02",
+    "deck": "deck",
+    "cardType": "water",
+    "z": 685,
+    "value": 2,
+    "parent": "pile-draw",
+    "activeFace": 1
+  },
+  "card-water-03": {
+    "type": "card",
+    "id": "card-water-03",
+    "deck": "deck",
+    "cardType": "water",
+    "z": 748,
+    "value": 3,
+    "parent": "pile-draw",
+    "activeFace": 1
+  },
+  "card-water-04": {
+    "type": "card",
+    "id": "card-water-04",
+    "deck": "deck",
+    "cardType": "water",
+    "z": 316,
+    "value": 4,
+    "score": 2,
+    "parent": "pile-draw",
+    "activeFace": 1
+  },
+  "card-water-05": {
+    "type": "card",
+    "id": "card-water-05",
+    "deck": "deck",
+    "cardType": "water",
+    "z": 718,
+    "value": 5,
+    "score": 2,
+    "parent": "pile-draw",
+    "activeFace": 1
+  },
+  "card-water-06": {
+    "type": "card",
+    "id": "card-water-06",
+    "deck": "deck",
+    "cardType": "water",
+    "z": 343,
+    "value": 6,
+    "score": 2,
+    "parent": "pile-draw",
+    "activeFace": 1
+  },
+  "card-water-07": {
+    "type": "card",
+    "id": "card-water-07",
+    "deck": "deck",
+    "cardType": "water",
+    "z": 710,
+    "value": 7,
+    "score": 3,
+    "parent": "pile-draw",
+    "activeFace": 1
+  },
+  "card-water-08": {
+    "type": "card",
+    "id": "card-water-08",
+    "deck": "deck",
+    "cardType": "water",
+    "z": 697,
+    "value": 8,
+    "score": 3,
+    "parent": "pile-draw",
+    "activeFace": 1
+  },
+  "card-water-09": {
+    "type": "card",
+    "id": "card-water-09",
+    "deck": "deck",
+    "cardType": "water",
+    "z": 678,
+    "value": 9,
+    "score": 3,
+    "parent": "pile-draw",
+    "activeFace": 1
+  },
+  "deck-markers": {
+    "type": "deck",
+    "id": "deck-markers",
+    "width": 100,
+    "height": 160,
+    "movable": false,
+    "movableInEdit": false,
+    "cardDefaults": {
+      "width": 100,
+      "height": 160,
+      "movable": false,
+      "clickRoutine": []
+    },
+    "cardTypes": {
+      "air": {
+        "color": "#ecf0f1",
+        "image": "/i/game-icons.net/lorc/air-zigzag.svg"
+      },
+      "earth": {
+        "color": "#a9dfbf",
+        "image": "/i/game-icons.net/lorc/tree-branch.svg"
+      },
+      "fire": {
+        "color": "#f39c12",
+        "image": "/i/game-icons.net/lorc/small-fire.svg"
+      },
+      "water": {
+        "color": "#3498db",
+        "image": "/i/game-icons.net/lorc/big-wave.svg"
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 100,
+            "height": 160,
+            "dynamicProperties": {
+              "color": "color"
+            }
+          },
+          {
+            "type": "image",
+            "x": 10,
+            "y": 40,
+            "width": 80,
+            "height": 80,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image"
+            }
+          }
+        ],
+        "radius": 8,
+        "border": 2
+      },
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 100,
+            "height": 160,
+            "dynamicProperties": {
+              "color": "color"
+            }
+          },
+          {
+            "type": "image",
+            "x": 10,
+            "y": 40,
+            "width": 80,
+            "height": 80,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image"
+            }
+          },
+          {
+            "type": "image",
+            "x": 25,
+            "y": 0,
+            "width": 50,
+            "height": 50,
+            "color": "transparent",
+            "value": "/i/noto-emoji/emoji_u1f53b.svg"
+          }
+        ],
+        "radius": 8,
+        "border": 2
+      }
+    ],
+    "x": -150
+  },
+  "holder-air-1": {
+    "type": "holder",
+    "id": "holder-air-1",
+    "y": 200,
+    "inheritFrom": "holder-draw",
+    "onEnter": {
+      "activeFace": 0
+    },
+    "x": 400,
+    "dropTarget": {
+      "cardType": "air"
+    },
+    "preventPiles": true,
+    "enterRoutine": [
+      {
+        "func": "GET",
+        "collection": "child",
+        "property": "deck"
+      },
+      {
+        "func": "IF",
+        "operand1": "${deck}",
+        "operand2": "deck",
+        "thenRoutine": [
+          {
+            "func": "SELECT",
+            "type": "seat",
+            "property": "turn",
+            "value": true
+          },
+          {
+            "func": "GET",
+            "property": "player"
+          },
+          {
+            "func": "IF",
+            "operand1": "${player}",
+            "operand2": "${playerName}",
+            "thenRoutine": [
+              {
+                "func": "GET",
+                "collection": "child",
+                "property": "cardType"
+              },
+              {
+                "func": "SELECT",
+                "type": "card",
+                "property": "deck",
+                "value": "deck-markers"
+              },
+              {
+                "func": "FLIP",
+                "face": 0
+              },
+              {
+                "func": "SELECT",
+                "source": "DEFAULT",
+                "property": "cardType",
+                "value": "${cardType}"
+              },
+              {
+                "func": "FLIP",
+                "face": 1
+              },
+              {
+                "func": "MOVE",
+                "from": "holder-zap",
+                "to": "holder-discard",
+                "count": 0
+              },
+              {
+                "func": "TURN",
+                "turnCycle": "forward"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "holder-air-2": {
+    "type": "holder",
+    "id": "holder-air-2",
+    "y": 550,
+    "inheritFrom": "holder-air-1",
+    "x": 400
+  },
+  "holder-earth-1": {
+    "type": "holder",
+    "id": "holder-earth-1",
+    "x": 600,
+    "y": 200,
+    "dropTarget": {
+      "cardType": "earth"
+    },
+    "inheritFrom": "holder-air-1"
+  },
+  "holder-earth-2": {
+    "type": "holder",
+    "id": "holder-earth-2",
+    "x": 600,
+    "y": 550,
+    "dropTarget": {
+      "cardType": "earth"
+    },
+    "inheritFrom": "holder-air-1"
+  },
+  "holder-fire-1": {
+    "type": "holder",
+    "id": "holder-fire-1",
+    "x": 800,
+    "y": 200,
+    "dropTarget": {
+      "cardType": "fire"
+    },
+    "inheritFrom": "holder-air-1"
+  },
+  "holder-fire-2": {
+    "type": "holder",
+    "id": "holder-fire-2",
+    "x": 800,
+    "y": 550,
+    "dropTarget": {
+      "cardType": "fire"
+    },
+    "inheritFrom": "holder-air-1"
+  },
+  "holder-water-1": {
+    "type": "holder",
+    "id": "holder-water-1",
+    "x": 1000,
+    "y": 200,
+    "dropTarget": {
+      "cardType": "water"
+    },
+    "inheritFrom": "holder-air-1"
+  },
+  "holder-water-2": {
+    "type": "holder",
+    "id": "holder-water-2",
+    "x": 1000,
+    "y": 550,
+    "dropTarget": {
+      "cardType": "water"
+    },
+    "inheritFrom": "holder-air-1"
+  },
+  "holder-starters": {
+    "type": "holder",
+    "id": "holder-starters",
+    "x": -150,
+    "y": 200,
+    "inheritFrom": "holder-draw",
+    "preventPiles": true
+  },
+  "deck-starters": {
+    "type": "deck",
+    "id": "deck-starters",
+    "width": 100,
+    "height": 160,
+    "fixedParent": true,
+    "parent": "holder-starters",
+    "cardTypes": {
+      "starter": {}
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "color": "#fcf3cf",
+            "x": 0,
+            "y": 0,
+            "width": 100,
+            "height": 160
+          },
+          {
+            "type": "text",
+            "x": 0,
+            "y": 50,
+            "width": 100,
+            "height": 60,
+            "css": {
+              "font-size": "44px",
+              "line-height": "60px",
+              "text-align": "center"
+            },
+            "dynamicProperties": {
+              "value": "value"
+            }
+          }
+        ],
+        "radius": 8,
+        "border": 2
+      }
+    ],
+    "cardDefaults": {
+      "width": 100,
+      "height": 160,
+      "value": 1,
+      "movable": false
+    }
+  },
+  "card-starter-01": {
+    "type": "card",
+    "id": "card-starter-01",
+    "deck": "deck-starters",
+    "cardType": "starter",
+    "z": 802,
+    "parent": "holder-starters"
+  },
+  "card-starter-03": {
+    "type": "card",
+    "id": "card-starter-03",
+    "deck": "deck-starters",
+    "cardType": "starter",
+    "z": 800,
+    "value": 3,
+    "parent": "holder-starters"
+  },
+  "card-starter-05": {
+    "type": "card",
+    "id": "card-starter-05",
+    "deck": "deck-starters",
+    "cardType": "starter",
+    "z": 796,
+    "value": 5,
+    "parent": "holder-starters"
+  },
+  "card-starter-07": {
+    "type": "card",
+    "id": "card-starter-07",
+    "deck": "deck-starters",
+    "cardType": "starter",
+    "z": 798,
+    "value": 7,
+    "parent": "holder-starters"
+  },
+  "card-starter-12": {
+    "type": "card",
+    "id": "card-starter-12",
+    "deck": "deck-starters",
+    "cardType": "starter",
+    "z": 794,
+    "value": 12,
+    "parent": "holder-starters"
+  },
+  "card-starter-14": {
+    "type": "card",
+    "id": "card-starter-14",
+    "deck": "deck-starters",
+    "cardType": "starter",
+    "z": 792,
+    "value": 14,
+    "parent": "holder-starters"
+  },
+  "card-starter-16": {
+    "type": "card",
+    "id": "card-starter-16",
+    "deck": "deck-starters",
+    "cardType": "starter",
+    "z": 804,
+    "value": 16,
+    "parent": "holder-starters"
+  },
+  "card-starter-18": {
+    "type": "card",
+    "id": "card-starter-18",
+    "deck": "deck-starters",
+    "cardType": "starter",
+    "z": 806,
+    "value": 18,
+    "parent": "holder-starters"
+  },
+  "pile-draw": {
+    "type": "pile",
+    "id": "pile-draw",
+    "x": 0,
+    "y": 0,
+    "width": 100,
+    "height": 160,
+    "handleCSS": {
+      "background": "black",
+      "color": "white"
+    },
+    "z": 818,
+    "parent": "holder-draw"
+  },
+  "marker-air": {
+    "type": "card",
+    "id": "marker-air",
+    "deck": "deck-markers",
+    "cardType": "air",
+    "x": 400,
+    "y": 375,
+    "z": 583
+  },
+  "marker-earth": {
+    "type": "card",
+    "id": "marker-earth",
+    "deck": "deck-markers",
+    "cardType": "earth",
+    "x": 600,
+    "y": 375,
+    "z": 588
+  },
+  "marker-fire": {
+    "type": "card",
+    "id": "marker-fire",
+    "deck": "deck-markers",
+    "cardType": "fire",
+    "x": 800,
+    "y": 375,
+    "z": 589
+  },
+  "marker-water": {
+    "type": "card",
+    "id": "marker-water",
+    "deck": "deck-markers",
+    "cardType": "water",
+    "x": 1000,
+    "y": 375
+  },
+  "label-discard1": {
+    "type": "label",
+    "id": "label-discard1",
+    "inheritFrom": "label-draw",
+    "text": "ALAKAZAP!",
+    "parent": "holder-zap"
+  },
+  "holder-zap": {
+    "type": "holder",
+    "id": "holder-zap",
+    "x": 180,
+    "y": 500,
+    "inheritFrom": "holder-draw",
+    "onEnter": {
+      "activeFace": 0
+    }
+  },
+  "button-discard": {
+    "type": "button",
+    "id": "button-discard",
+    "parent": "holder-zap",
+    "x": -10,
+    "y": 175,
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": "button-new-game",
+    "text": "Discard",
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "holder-zap",
+        "to": "holder-discard",
+        "count": 0
+      }
+    ]
+  }
+}
