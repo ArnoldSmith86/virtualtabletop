@@ -80,7 +80,7 @@ publicLibraryButtons('Functions - SORT',   1, '062e43d545dc0648d770981585d2f894'
   'ingw', 'k131', 'cnfu', 'i6yz', 'z394', '0v3h', '1h8o', 'v5ra', 'ingw-copy001', 'k131-copy001', 'cnfu-copy001',
   'i6yz-copy001', 'z394-copy001', '0v3h-copy001'
 ]);
-publicLibraryButtons('Master Button',      0, 'eb19dffdb38641d5556e5fdb2c47c62b', [
+publicLibraryButtons('Master Button',      0, '6f2739b68dcf50ec84426218fbfa6774', [
   'masterbutton', 'redbutton', 'orangebutton', 'yellowbutton', 'greenbutton', 'bluebutton', 'indigobutton',
   'violetbutton', 'fae4', 'vbx5'
 ]);

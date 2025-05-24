@@ -1,4 +1,4 @@
-export const VERSION = 17;
+export const VERSION = 18;
 
 export default function FileUpdater(state) {
   const v = state._meta.version;
@@ -102,20 +102,31 @@ function updateProperties(properties, v, globalProperties) {
   v<17 && v17MaterialSymbols(properties);
 }
 
-function updateRoutine(routine, v, globalProperties) {
+function updateRoutine(routine, v, globalProperties, nested = false, status = {hasMode:false, needsMode:false}) {
   if(!Array.isArray(routine))
     return;
-
+  const reMode = /^mode:/;
+  const reVar = /^var /;
   for(const operation of routine) {
+    if(typeof operation == 'string' && reMode.test(operation))
+      status.hasMode = true;
+    if(!status.hasMode && typeof operation == 'string' && reVar.test(operation))
+      status.needsMode = true;
+    if(!status.hasMode && operation.func == 'COMPUTE')
+      status.needsMode = true;
+    const hasModeLocal = status.hasMode;
     if(operation.func == 'CLONE') {
       updateProperties(operation.properties, v, globalProperties);
     }
     if(operation.func == 'FOREACH') {
-      updateRoutine(operation.loopRoutine, v, globalProperties);
+      updateRoutine(operation.loopRoutine, v, globalProperties, true, status);
+      status.hasMode = hasModeLocal;
     }
     if(operation.func == 'IF') {
-      updateRoutine(operation.thenRoutine, v, globalProperties);
-      updateRoutine(operation.elseRoutine, v, globalProperties);
+      updateRoutine(operation.thenRoutine, v, globalProperties, true, status);
+      status.hasMode = hasModeLocal;
+      updateRoutine(operation.elseRoutine, v, globalProperties, true, status);
+      status.hasMode = hasModeLocal;
     }
   }
 
@@ -125,6 +136,7 @@ function updateRoutine(routine, v, globalProperties) {
   v<11 && v11OwnerMOVEXY(routine);
   v<15 && v15SkipTurnRoutine(routine);
   v<16 && v16UpdateCountParameter(routine);
+  v<18 && v18RoutineModeSwitch(routine, 'strToNum defaultOne', nested, status);
 }
 
 function v2UpdateSelectDefault(routine) {
@@ -500,4 +512,14 @@ function v17MaterialSymbols(properties) {
       properties[key] = properties[key].replace(/\b(material-icons(?:-(outlined|round|sharp|twotone))?)\b/g, "material-symbols");
     }
   }
+}
+
+function v18RoutineModeSwitch(routine, modeSwitch, nested, status) {
+  const re = /^mode:/;
+  for(let i = 0; i < routine.length; i++) {
+    if(typeof routine[i] == 'string' && re.test(routine[i]))
+      routine[i] += ' ' + modeSwitch;
+  }
+  if(!nested && status.needsMode)
+    routine.unshift('mode: ' + modeSwitch);
 }
