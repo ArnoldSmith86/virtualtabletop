@@ -564,8 +564,6 @@ export default class Room {
       let target = `games/${match[2]}`;
       if(match[1] == 'Tutorial')
         target = `tutorials/${match[2]}`;
-      if(match[1] == 'Assets')
-        target = `assets/${match[2]}`;
       return decodeURI(target);
     }
 
