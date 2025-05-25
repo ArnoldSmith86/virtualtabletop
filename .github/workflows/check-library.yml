@@ -20,7 +20,7 @@ jobs:
           found_error=false
           fixed_any=false
           while IFS= read -r file; do
-            if [[ "$file" =~ library/.*/assets/ ]]; then
+            if [[ "$file" =~ library/.*/assets/ ]] && [[ -f "$file" ]]; then
               expected=$(python3 -c "import sys,os,zlib; f=sys.argv[1]; d=open(f,'rb').read(); c=zlib.crc32(d); s=os.path.getsize(f); print(f'{c-0x100000000 if c>0x7fffffff else c}_{s}')" "$file")
               if [[ "$(basename "$file")" == "$expected" ]]; then
                 echo "✅ $file"
