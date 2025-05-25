@@ -412,7 +412,7 @@ MinifyHTML().then(function(result) {
     res.send(`/assets${filename}`);
   });
 
-  router.put('/addState/:room/:id/:type/:name/:addAsVariant?', bodyParser.raw({ limit: '500mb' }), async function(req, res, next) {
+  async function handleAddState(req, res, next) {
     if(!validateInput(res, next, [ req.params.id, req.params.addAsVariant ])) return;
     ensureRoomIsLoaded(req.params.room).then(function(isLoaded) {
       if(isLoaded) {
@@ -421,7 +421,10 @@ MinifyHTML().then(function(result) {
         }).catch(next);
       }
     }).catch(next);
-  });
+  }
+
+  router.put('/addState/:room/:id/:type/:name/:addAsVariant', bodyParser.raw({ limit: '500mb' }), handleAddState);
+  router.put('/addState/:room/:id/:type/:name', bodyParser.raw({ limit: '500mb' }), handleAddState);
 
   router.get('/saveCurrentState/:room/:mode/:name', async function(req, res, next) {
     if(!validateInput(res, next, [ req.params.mode ])) return;
