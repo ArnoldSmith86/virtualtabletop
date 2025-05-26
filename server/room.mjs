@@ -225,7 +225,7 @@ export default class Room {
     const filenameSuffix = tempID || String(+new Date()) + Math.random().toString(36).substring(3, 7);
 
     let states = { VTT: [ {...this.state} ] };
-    states.VTT[0]._meta = { version: states.VTT[0]._meta.version };
+    states.VTT[0]._meta = { version: states.VTT[0]._meta.version, gameSettings: states.VTT[0]._meta.gameSettings };
     if(fileContent)
       states = await FileLoader.readStatesFromBuffer(fileContent)
 
@@ -869,7 +869,8 @@ export default class Room {
     const newState = {...this.state};
     newState._meta = {
       version: this.state._meta.version,
-      info: metadata
+      info: metadata,
+      gameSettings: this.state._meta.gameSettings
     };
     if(!this.state._meta.states[stateID]) {
       this.state._meta.states[stateID] = Object.assign({}, metadata);
@@ -893,7 +894,7 @@ export default class Room {
     if(updateCurrentSave) {
       const stateID = this.state._meta.activeState.saveStateID;
       const newContent = {...this.state};
-      newContent._meta = { version: this.state._meta.version };
+      newContent._meta = { version: this.state._meta.version, gameSettings: this.state._meta.gameSettings };
       this.state._meta.states[stateID].saveDate = +new Date();
       fs.writeFileSync(this.variantFilename(stateID, 0), JSON.stringify(newContent));
       return this.sendMetaUpdate();
@@ -988,10 +989,14 @@ export default class Room {
 
     this.trace('setState', { state });
     const meta = this.state._meta;
+    let gameSettings = meta.gameSettings || { legacyModes: {} };
     this.state = state;
-    if(this.state._meta)
+    if(this.state._meta) {
       this.state = FileUpdater(this.state);
+      gameSettings = (this.state._meta || {}).gameSettings || { legacyModes: {} };
+    }
     this.state._meta = meta;
+    this.state._meta.gameSettings = gameSettings;
 
     if(delayForGameStartRoutine) {
       for(const [ id, w ] of Object.entries(state)) {
@@ -1161,6 +1166,8 @@ export default class Room {
       version: copy._meta.version,
       info: JSON.parse(JSON.stringify(this.state._meta.states[stateID].variants[variantID]))
     };
+    if(state._meta.gameSettings)
+      copy._meta.gameSettings = JSON.parse(JSON.stringify(state._meta.gameSettings));
 
     this.unsetMetadataForWritingFile(copy._meta.info);
 
