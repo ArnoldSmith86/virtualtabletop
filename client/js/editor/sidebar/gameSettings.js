@@ -17,11 +17,11 @@ class GameSettingsModule extends SidebarModule {
     target.append(document.createElement('br'));
   }
 
-  onMetaReceived(meta) {
+  onMetaReceivedWhileActive(meta) {
     this.renderModule(this.moduleDOM);
   }
 
-  onStateReceived(state) {
+  onStateReceivedWhileActive(state) {
     this.renderModule(this.moduleDOM);
   }
 
