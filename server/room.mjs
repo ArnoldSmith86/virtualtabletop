@@ -935,6 +935,11 @@ export default class Room {
     this.broadcast('meta', { meta: this.state._meta, activePlayers: this.players.map(p=>p.name) });
   }
 
+  setGameSettings(player, gameSettings) {
+    this.state._meta.gameSettings = gameSettings;
+    this.sendMetaUpdate();
+  }
+
   async setRedirect(player, target) {
     try {
       let targetServer = Config.get('betaServers')[target] || Config.get('legacyServers')[target];
