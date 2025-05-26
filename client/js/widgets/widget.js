@@ -955,7 +955,7 @@ export class Widget extends StateManaged {
           };
           const getValue = async function(input) {
             const toNum = s=>typeof s == 'string' && legacyMode('convertNumericVarParametersToNumbers') && s.match(/^[-+]?[0-9]+(\.[0-9]+)?$/) ? +s : s;
-            const dv = legacyMode('useOneAsDefaultForVarParameters') ? 1 : null;
+            const dv = legacyMode('useOneAsDefaultForVarParameters') ? 1 : undefined;
             if(match[14] && match[9] !== undefined)
               return await compute(match[13] ? variables[match[14]] : match[14], input, toNum(getParam(9, dv)), toNum(getParam(15, dv)), toNum(getParam(19, dv)));
             else if(match[14])
