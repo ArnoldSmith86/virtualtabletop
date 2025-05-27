@@ -233,6 +233,15 @@ MinifyHTML().then(function(result) {
     }
   });
 
+  router.put('/setLegacyMode/:room/:name/:value', function(req, res, next) {
+    ensureRoomIsLoaded(req.params.room).then(function(isLoaded) {
+      if(isLoaded) {
+        activeRooms.get(req.params.room).setLegacyMode(req.params.name, req.params.value);
+        res.send('OK');
+      }
+    }).catch(next);
+  });
+
   router.options('/api/addShareToRoom/:room/:share', allowCORS);
   router.get('/api/addShareToRoom/:room/:share', function(req, res, next) {
     res.setHeader('Access-Control-Allow-Origin', '*');

@@ -940,6 +940,15 @@ export default class Room {
     this.sendMetaUpdate();
   }
 
+  setLegacyMode(name, value) {
+    if(!this.state._meta.gameSettings)
+      this.state._meta.gameSettings = {};
+    if(!this.state._meta.gameSettings.legacyModes)
+      this.state._meta.gameSettings.legacyModes = {};
+    this.state._meta.gameSettings.legacyModes[name] = value === 'true';
+    this.sendMetaUpdate();
+  }
+
   async setRedirect(player, target) {
     try {
       let targetServer = Config.get('betaServers')[target] || Config.get('legacyServers')[target];
