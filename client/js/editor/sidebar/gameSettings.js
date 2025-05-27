@@ -3,18 +3,70 @@ class GameSettingsModule extends SidebarModule {
     super('settings', 'Game Settings', 'Settings like legacy modes for the current game.');
   }
 
-  addCheckbox(text, name, target) {
+  addCheckbox(text, name, description, target) {
+    const tile = document.createElement('div');
+    tile.className = 'settings-tile';
+    tile.style.cssText = `
+      border: 1px solid var(--modalBorderColor);
+      border-radius: 4px;
+      padding: 12px;
+      margin: 8px 0;
+      background: var(--backgroundColor);
+      color: var(--textColor);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      margin: 20px;
+    `;
+
+    const header = document.createElement('div');
+    header.style.cssText = `
+      display: flex;
+      align-items: center;
+      margin-bottom: 8px;
+    `;
+
     const checkbox = document.createElement('input');
     checkbox.type = 'checkbox';
     checkbox.name = name;
     checkbox.id = name;
     checkbox.checked = legacyMode(name);
-    checkbox.addEventListener('change', e=>{
-      legacyMode(name, e.target.checked);
+    checkbox.style.marginRight = '8px';
+
+    const label = document.createElement('label');
+    label.htmlFor = name;
+    label.textContent = text;
+    label.style.fontWeight = 'bold';
+
+    header.append(checkbox, label);
+    tile.append(header);
+
+    const desc = document.createElement('div');
+    desc.innerHTML = description;
+    desc.style.fontSize = '0.9em';
+    desc.style.color = 'var(--textColor)';
+    
+    // Prevent link clicks from toggling the checkbox
+    desc.querySelectorAll('a').forEach(link => {
+      link.style.pointerEvents = 'auto';
     });
-    target.append(checkbox);
-    target.append(document.createTextNode(text));
-    target.append(document.createElement('br'));
+
+    tile.append(desc);
+
+    const handleToggle = (e) => {
+      if (e.target.tagName === 'A') return;
+      const newState = !checkbox.checked;
+      legacyMode(name, newState);
+      checkbox.checked = newState;
+      tile.style.background = newState ? 'var(--backgroundHighlightColor1)' : 'var(--backgroundColor)';
+    };
+
+    tile.addEventListener('click', handleToggle);
+    checkbox.addEventListener('change', handleToggle);
+
+    // Set initial state
+    tile.style.background = checkbox.checked ? 'var(--backgroundHighlightColor1)' : 'var(--backgroundColor)';
+
+    target.append(tile);
   }
 
   onMetaReceivedWhileActive(meta) {
@@ -30,7 +82,44 @@ class GameSettingsModule extends SidebarModule {
     this.addHeader('Game Settings');
 
     this.addSubHeader('Legacy Modes');
-    this.addCheckbox('Convert numeric var parameters to numbers', 'convertNumericVarParametersToNumbers', target);
-    this.addCheckbox('Use one as default for var parameters', 'useOneAsDefaultForVarParameters', target);
+    const p1 = document.createElement('p');
+    p1.textContent = 'We try our best not to break existing games, but some bugs can only be fixed by changing game behavior.';
+    target.append(p1);
+
+    const p2 = document.createElement('p');
+    p2.textContent = 'For those occasions, we have introduced legacy modes. When active, these settings will change certain things about VTT to former - usually buggy - behavior.';
+    target.append(p2);
+
+    const p3 = document.createElement('p');
+    p3.textContent = 'It is highly recommended to test your game with all of these settings disabled to avoid obscure bugs.';
+    target.append(p3);
+
+    this.addCheckbox('Convert numeric var parameters to numbers', 'convertNumericVarParametersToNumbers', `
+      Whenever you use a string in a var expression that consisted of only digits, it was converted to a number.
+      <br><br>
+      A common pitfall was storing a widget <code>id</code> in an array and later trying to <code>SELECT</code> it using the stored <code>id</code>.<br>
+      Because <code>id</code>s are randomly generated alphanumeric strings, this would fail for some unlucky widgets that received an all numeric <code>id</code>.
+      <br><br>
+      <b>Example:</b>
+      <br>
+      <code>var a = []</code>
+      <br>
+      <code>var a = push '1'</code>
+      <br><br>
+      This used to result in <code>[1]</code> instead of <code>['1']</code>.
+      <br><br>
+      See <a href="https://github.com/ArnoldSmith86/virtualtabletop/pull/2581">pull request #2581</a> for technical details.
+      `, target);
+    this.addCheckbox('Use one as default for var parameters', 'useOneAsDefaultForVarParameters', `
+      When you called a function in a var expression, every parameter you did not provide was set to <code>1</code>.
+      <br><br>
+      <b>Example:</b>
+      <br>
+      <code>var a = +</code>
+      <br><br>
+      This used to result in <code>2</code>. Now it throws an error and sets the var to <code>0</code>.
+      <br><br>
+      See <a href="https://github.com/ArnoldSmith86/virtualtabletop/pull/2581">pull request #2581</a> for technical details.
+      `, target);
   }
 }
