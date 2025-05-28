@@ -64,7 +64,7 @@ export function contrastAnyColor(inputColor, intensity) {
   let [r, g, b] = toRGBArray(hex);
   const luminance = calcLuminance(hex);
 
-  if (legacyMode && !legacyMode('useOneAsDefaultForVarParameters') && (typeof intensity != 'number' || intensity < -1 || intensity > 1)) intensity = 1;
+  if (typeof legacyMode === 'function' && !legacyMode('useOneAsDefaultForVarParameters') && (typeof intensity != 'number' || intensity < -1 || intensity > 1)) intensity = 1;
 
   if (luminance > 0.1791) intensity = -intensity;
   if (intensity == 1)
@@ -81,7 +81,7 @@ export function randomHue(startingColors) {
 
   let hue = 0;
   const hues = [];
-  if (startingColors == 1 || (legacyMode && !legacyMode('useOneAsDefaultForVarParameters') && !Array.isArray(startingColors))) {
+  if (startingColors == 1 || (typeof legacyMode === 'function' && !legacyMode('useOneAsDefaultForVarParameters') && !Array.isArray(startingColors))) {
     startingColors = activeColors;
   }
   for(const player in startingColors) {
