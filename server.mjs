@@ -208,8 +208,10 @@ MinifyHTML().then(function(result) {
       if(isLoaded) {
         res.setHeader('Access-Control-Allow-Origin', '*');
         res.setHeader('Content-Type', 'application/json');
-        const state = {...activeRooms.get(req.params.room).state};
+        const roomState = activeRooms.get(req.params.room).state;
+        const state = {...roomState};
         delete state._meta;
+        state._meta = { version: roomState._meta.version, gameSettings: roomState._meta.gameSettings };
         res.send(JSON.stringify(state, null, '  '));
       } else {
         res.status(404).send('Invalid room.');
