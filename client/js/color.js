@@ -78,7 +78,7 @@ export function randomHue(startingColors) {
 
   let hue = 0;
   const hues = [];
-  if (startingColors == 1) {
+  if (startingColors == 1 || (!legacyMode('useOneAsDefaultForVarParameters') && !Array.isArray(startingColors))) {
     startingColors = activeColors;
   }
   for(const player in startingColors) {
