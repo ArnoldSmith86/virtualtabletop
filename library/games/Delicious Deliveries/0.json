@@ -10,7 +10,7 @@
       "mode": "vs",
       "time": "60",
       "attribution": "Game layout and scripting by Andy Pymont, released to the public domain under CC0.\n\nLibrary image is a photograph by George Hodan: https://www.publicdomainpictures.net/en/view-image.php?image=498782 which is CC0 / public domain.\n\nTile graphics are from https://game-icons.net/ and https://thenounproject.com/ and are used under the CC BY 3.0 license:\n\nDelapouite\n• City buildings https://game-icons.net/1x1/delapouite/modern-city.html\n• Delivery truck https://game-icons.net/1x1/delapouite/truck.html\n• Donut https://game-icons.net/1x1/delapouite/donut.html\n• Fish https://game-icons.net/1x1/delapouite/double-fish.html\n• Meeple https://game-icons.net/1x1/delapouite/meeple.html\n• Sandwich https://game-icons.net/1x1/delapouite/sandwich.html\n\nUmer Younas\n• Bank Note https://thenounproject.com/icon/bank-note-3947508",
-      "lastUpdate": 1748466778147,
+      "lastUpdate": 1748467583413,
       "id": "blr8",
       "showName": true,
       "skill": "",
@@ -744,17 +744,16 @@
     "clickRoutine": [
       {
         "func": "IF",
-        "operand1": "${PROPERTY y OF scoreboard}",
-        "relation": ">=",
-        "operand2": 0,
+        "operand1": "${PROPERTY display OF scoreboard}",
+        "operand2": true,
         "thenRoutine": [
           {
             "func": "SET",
             "collection": [
               "scoreboard"
             ],
-            "property": "y",
-            "value": -1000
+            "property": "display",
+            "value": false
           }
         ],
         "elseRoutine": [
@@ -786,8 +785,8 @@
             "collection": [
               "scoreboard"
             ],
-            "property": "y",
-            "value": 10
+            "property": "display",
+            "value": true
           }
         ]
       }
@@ -5714,10 +5713,11 @@
     "type": "scoreboard",
     "id": "scoreboard",
     "x": 10,
-    "y": -1000,
+    "y": 10,
     "width": 480,
     "height": 980,
     "layer": 2,
+    "display": false,
     "css": {
       ".scoreboard td": {
         "text-align": "center",
