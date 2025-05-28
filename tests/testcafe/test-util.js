@@ -48,7 +48,7 @@ export async function setLegacyMode(name, value) {
 }
 
 export async function getState() {
-  const response = await fetch(`${server}/state/testcafe-testing`);
+  const response = await fetch(`${server}/state/testcafe-testing/false`);
   return await response.text();
 }
 

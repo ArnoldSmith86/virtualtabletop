@@ -203,7 +203,7 @@ MinifyHTML().then(function(result) {
 
   router.options('/state/:room', allowCORS);
 
-  router.get('/state/:room', function(req, res, next) {
+  async function handleGetState(req, res, next, includeMeta) {
     ensureRoomIsLoaded(req.params.room).then(function(isLoaded) {
       if(isLoaded) {
         res.setHeader('Access-Control-Allow-Origin', '*');
@@ -211,12 +211,21 @@ MinifyHTML().then(function(result) {
         const roomState = activeRooms.get(req.params.room).state;
         const state = {...roomState};
         delete state._meta;
-        state._meta = { version: roomState._meta.version, gameSettings: roomState._meta.gameSettings };
+        if(includeMeta)
+          state._meta = { version: roomState._meta.version, gameSettings: roomState._meta.gameSettings };
         res.send(JSON.stringify(state, null, '  '));
       } else {
         res.status(404).send('Invalid room.');
       }
     }).catch(next);
+  }
+
+  router.get('/state/:room', function(req, res, next) {
+    handleGetState(req, res, next, true);
+  });
+
+  router.get('/state/:room/false', function(req, res, next) {
+    handleGetState(req, res, next, false);
   });
 
   router.put('/state/:room', bodyParser.json({ limit: '10mb' }), function(req, res, next) {
