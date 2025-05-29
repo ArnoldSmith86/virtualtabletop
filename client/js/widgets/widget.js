@@ -438,7 +438,7 @@ export class Widget extends StateManaged {
     if(this.get('enlarge'))
       className += ' enlarge';
 
-    if(!this.get('display'))
+    if(!this.get('display') && this.get('type') != 'seat') // seats already have a display property that does something else
       className += ' hidden';
 
     if(this.isHighlighted)
@@ -1585,7 +1585,7 @@ export class Widget extends StateManaged {
       }
 
       if(a.func == 'RECALL') {
-        setDefaults(a, { owned: true, inHolder: true, excludeCollection: null });
+        setDefaults(a, { owned: true, inHolder: true, excludeCollection: null, byDistance: false });
 
         let excludeCollection = null;
         if(a.excludeCollection) {
@@ -1608,6 +1608,22 @@ export class Widget extends StateManaged {
                   cards = cards.filter(c=>!c.get('_ancestor'));
                 if(a.excludeCollection && excludeCollection)
                   cards = cards.filter(c=>!excludeCollection.includes(c));
+                
+                if(a.byDistance === true){
+                  cards.sort((c1, c2) => {
+                    const dx1 = deck.get('_centerAbsoluteX') - c1.get('_centerAbsoluteX');
+                    const dy1 = deck.get('_centerAbsoluteY') - c1.get('_centerAbsoluteY');
+                    const d1 = dx1 * dx1 + dy1 * dy1;                    
+                    const dx2 = deck.get('_centerAbsoluteX') - c2.get('_centerAbsoluteX');
+                    const dy2 = deck.get('_centerAbsoluteY') - c2.get('_centerAbsoluteY');
+                    const d2 = dx2 * dx2 + dy2 * dy2;
+                    
+                    if(d1 !== d2)
+                      return d1 - d2;
+                    return c1.get('z') - c2.get('z');
+                  });
+                }
+                
                 for(const c of cards) {
                   if(c.get('_ancestor') == holder && !c.get('owner'))
                     await c.bringToFront();
@@ -1627,9 +1643,15 @@ export class Widget extends StateManaged {
 
       if (a.func == 'RESET') {
         setDefaults(a, { property: 'resetProperties' });      
-        for(const widget of widgets.values())
-          for(const [ key, value ] of Object.entries(widget.get(a.property) || {}))
-            await widget.set(key, value);
+        for(const widget of widgets.values()) {
+          for(const [ key, value ] of Object.entries(widget.get(a.property) || {})) {
+            if((key == 'parent' || key == 'deck') && value !== null && !widgets.has(value)) {
+              problems.push(`Tried setting ${key} on widget ${widget.id} to ${value} which doesn't exist.`);
+            } else {
+              await widget.set(key, value);
+            }
+          }
+        }
         if (jeRoutineLogging) {
           jeLoggingRoutineOperationSummary(`Reset properties for widgets with property '${a.property}'`);
         }
@@ -1813,12 +1835,12 @@ export class Widget extends StateManaged {
       }
 
       if(a.func == 'SHUFFLE') {
-        setDefaults(a, { collection: 'DEFAULT' });
+        setDefaults(a, { collection: 'DEFAULT', mode: 'true random', modeValue: 1 });
         let collection;
         if(a.holder !== undefined) {
           if(this.isValidID(a.holder, problems)) {
             await w(a.holder, async holder=>{
-              await shuffleWidgets(holder.children());
+              await shuffleWidgets(holder.children(), a.mode, a.modeValue, true);
               if(typeof holder.updateAfterShuffle == 'function')
                 await holder.updateAfterShuffle();
             });
@@ -1827,7 +1849,7 @@ export class Widget extends StateManaged {
           }
         } else if(collection = getCollection(a.collection)) {
           if(collections[collection].length) {
-            await shuffleWidgets(collections[collection]);
+            await shuffleWidgets(collections[collection], a.mode, a.modeValue);
           } else {
             problems.push(`Collection ${a.collection} is empty.`);
           }

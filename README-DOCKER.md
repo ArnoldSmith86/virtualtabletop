@@ -6,6 +6,12 @@ Like the production site, the docker image is automatically updated for every co
 
 
 
+# Tags
+
+If you don't want to use the included public library of virtualtabletop, you use the tag `without-public-library`, which makes the image a lot smaller.
+
+
+
 # Examples
 
 Run a local-only server on http://localhost:8272 with all default config:
