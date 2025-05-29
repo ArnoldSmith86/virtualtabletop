@@ -1513,7 +1513,7 @@ export class Widget extends StateManaged {
                   }
                   await c.bringToFront();
                   if(targetHand.get('type') == 'holder')
-                      await targetHand.updateAfterShuffle(); // this arranges the cards in the new owner's hand
+                    await targetHand.updateAfterShuffle(); // this arranges the cards in the new owner's hand
                   ++moved;
                 } else {
                   problems.push(`Seat ${target.id} declares 'hand: ${target.get('hand')}' which does not exist.`);
@@ -1548,7 +1548,8 @@ export class Widget extends StateManaged {
             await w(a.to, async target=>{
               for(const c of collections[collection].slice(offset, offset+count))
                 offset += await applyMove(c.get('parent') && widgets.has(c.get('parent')) ? widgets.get(c.get('parent')) : null, target, c);
-              await target.updateAfterShuffle();
+              if(target.get('type') == 'holder')
+                await target.updateAfterShuffle();
             });
           }
           if(jeRoutineLogging) {
