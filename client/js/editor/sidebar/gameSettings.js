@@ -87,18 +87,17 @@ class GameSettingsModule extends SidebarModule {
     target.append(p1);
 
     const p2 = document.createElement('p');
-    p2.textContent = 'For those occasions, we have introduced legacy modes. When active, these settings will change certain things about VTT to former - usually buggy - behavior.';
+    p2.textContent = 'For those occasions, we have introduced legacy modes. When active, each setting below will change certain things about VTT to former - usually buggy - behavior.';
     target.append(p2);
 
     const p3 = document.createElement('p');
-    p3.textContent = 'It is highly recommended to test your game with all of these settings disabled to avoid obscure bugs.';
+    p3.textContent = 'We highly recommended you build and test your games with all of these settings disabled (boxes unchecked) to avoid obscure bugs. If you are working on a game and these settings are checked, review the VTT wiki documentation before making changes to routines.';
     target.append(p3);
 
     this.addCheckbox('Convert numeric var parameters to numbers', 'convertNumericVarParametersToNumbers', `
-      Whenever you use a string in a var expression that consisted of only digits, it was converted to a number.
+      <b>Problem</b>: Whenever you used a string in a var expression that consisted of only digits, it was converted to a number.
       <br><br>
-      A common pitfall was storing a widget <code>id</code> in an array and later trying to <code>SELECT</code> it using the stored <code>id</code>.<br>
-      Because <code>id</code>s are randomly generated alphanumeric strings, this would fail for some unlucky widgets that received an all numeric <code>id</code>.
+      A common pitfall was storing a widget <code>id</code> in an array and later trying to <code>SELECT</code> it using the stored <code>id</code>. Because <code>id</code>s are randomly generated alphanumeric strings, this would fail for some unlucky widgets that received an all numeric <code>id</code>.
       <br><br>
       <b>Example:</b>
       <br>
@@ -106,20 +105,22 @@ class GameSettingsModule extends SidebarModule {
       <br>
       <code>var a = push '1'</code>
       <br><br>
-      This used to result in <code>[1]</code> instead of <code>['1']</code>.
+      <b>Old result</b>: <code>[1]</code><br>
+      <b>New result</b>: <code>['1']</code>
       <br><br>
-      See <a href="https://github.com/ArnoldSmith86/virtualtabletop/pull/2581">pull request #2581</a> for technical details.
+      See <a href="https://github.com/ArnoldSmith86/virtualtabletop/pull/2581">pull request #2581</a> for technical details. Also see the <a href="https://github.com/ArnoldSmith86/virtualtabletop/wiki/Legacy-Mode">Legacy Mode wiki</a> page.
       `, target);
-    this.addCheckbox('Use one as default for var parameters', 'useOneAsDefaultForVarParameters', `
-      When you called a function in a var expression, every parameter you did not provide was set to <code>1</code>.
+    this.addCheckbox('Use 1 as default for var parameters', 'useOneAsDefaultForVarParameters', `
+      <b>Problem</b>: When you called a function in a var expression, every parameter not provided was set to <code>1</code>.
       <br><br>
       <b>Example:</b>
       <br>
       <code>var a = +</code>
       <br><br>
-      This used to result in <code>2</code>. Now it throws an error and sets the var to <code>0</code>.
+      <b>Old result</b>: <code>2</code><br>
+      <b>New result</b>: <code>0</code> and an error message
       <br><br>
-      See <a href="https://github.com/ArnoldSmith86/virtualtabletop/pull/2581">pull request #2581</a> for technical details.
+      See <a href="https://github.com/ArnoldSmith86/virtualtabletop/pull/2581">pull request #2581</a> for technical details. Also see the <a href="https://github.com/ArnoldSmith86/virtualtabletop/wiki/Legacy-Mode">Legacy Mode wiki</a> page.
       `, target);
   }
 }
