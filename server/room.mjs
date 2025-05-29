@@ -268,7 +268,7 @@ export default class Room {
         state = await FileLoader.readVariantFromLink(v.link);
       else
         state = JSON.parse(fs.readFileSync(this.variantFilename(stateID, vID)));
-      state._meta = { version: state._meta.version, info: { ...s } };
+      state._meta = { version: state._meta.version, info: { ...s }, gameSettings: state._meta.gameSettings };
       Object.assign(state._meta.info, state._meta.info.variants[vID]);
       this.unsetMetadataForWritingFile(state._meta.info);
 
