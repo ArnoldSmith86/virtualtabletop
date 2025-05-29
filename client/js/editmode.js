@@ -393,81 +393,21 @@ function populateAddWidgetOverlay() {
   addWidgetToAddWidgetOverlay(new Holder('add-holder'), {
     type: 'holder',
     x,
-    y: 150
+    y: 188
   });
 
-  addCompositeWidgetToAddWidgetOverlay(generateCardDeckWidgets('add-empty-deck', x, 340, false), async function() {
+  addCompositeWidgetToAddWidgetOverlay(generateCardDeckWidgets('add-empty-deck', x, 376, false), async function() {
     const id = generateUniqueWidgetID();
-    for(const w of generateCardDeckWidgets(id, x, 340, false))
+    for(const w of generateCardDeckWidgets(id, x, 376, false))
       await addWidgetLocal(w);
     return id
   });
-  addCompositeWidgetToAddWidgetOverlay(generateCardDeckWidgets('add-deck', x, 570, true), async function() {
+  addCompositeWidgetToAddWidgetOverlay(generateCardDeckWidgets('add-deck', x, 604, true), async function() {
     const id = generateUniqueWidgetID();
-    for(const w of generateCardDeckWidgets(id, x, 570, true))
+    for(const w of generateCardDeckWidgets(id, x, 604, true))
       await addWidgetLocal(w);
     return id
   });
-
-/* Don't add old-style game pieces; replaced by svg
-  // Populate the game panel pieces. The real piece choosing happens in popups.
-  addPieceToAddWidgetOverlay( new BasicWidget('add-pin0'), {
-    classes: 'pinPiece',
-    color: VTTblue,
-    width: 35.85,
-    height: 43.83,
-    x: 380,
-    y: 80
-  });
-  addPieceToAddWidgetOverlay( new BasicWidget('add-checkers0'), {
-    faces: [
-      { classes: "checkersPiece"         },
-      { classes: "checkersPiece crowned" }
-    ],
-    color: VTTblue,
-    width: 73.5,
-    height: 73.5,
-    x: 380 + 60,
-    y: 80 + Math.round((43.83 - 73.5)/2)
-  });
-  addPieceToAddWidgetOverlay( new BasicWidget('add-classic0'), {
-    classes: 'classicPiece',
-    color: VTTblue,
-    width: 56,
-    height: 84,
-    x: 380 + 150,
-    y: 80 + Math.round((43.83 - 84)/2)
-  });
-*/
-
-/* Don't add the unicode symbols
-  // Next the unicode symbols
-  const centerStyle = 'color:black;display:flex;justify-content:center;align-items:center;text-align:center;';
-  addWidgetToAddWidgetOverlay(new BasicWidget('add-unicodeS'), {
-    text: '🐻',
-    css: 'font-size:25px;'+centerStyle,
-    width: 25,
-    height: 25,
-    x: 380,
-    y: 175
-  });
-
-  addWidgetToAddWidgetOverlay(new BasicWidget('add-unicodeM'), {
-    text: '🔥',
-    css: 'font-size:50px;'+centerStyle,
-    width: 50,
-    height: 50,
-    x: 440,
-    y: 175
-  });
-
-  addWidgetToAddWidgetOverlay(new BasicWidget('add-unicodeL'), {
-    text: '♞',
-    css: 'font-size:100px;'+centerStyle,
-    x: 500,
-    y: 150
-  });
-*/
 
   //Add svg game pieces
   // First row
@@ -1485,6 +1425,13 @@ export function initializeEditMode(currentMetaData) {
     if(!widgets.has('hand'))
       hand.id = 'hand';
     overlayDone(await addWidgetLocal(hand));
+  });
+
+  on('#addZoomy', 'click', async function() {
+    const id = await addWidgetLocal({
+      type: 'zoomy'
+    })
+    overlayDone(id);
   });
 
   on('#addCanvas', 'click', async function() {
