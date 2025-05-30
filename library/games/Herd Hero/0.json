@@ -1,0 +1,5831 @@
+{
+  "_meta": {
+    "version": 17,
+    "info": {
+      "name": "Herd Hero",
+      "image": "/assets/1965005044_27092",
+      "rules": "https://boardgamegeek.com/filepage/100036/english-rules-linko-international-version-of-ablux",
+      "bgg": "https://boardgamegeek.com/boardgame/153065/linko",
+      "year": "2014",
+      "mode": "",
+      "time": "",
+      "attribution": "Game layout, library image, and scripting by Robin Harn, released to the Public Domain under CC0.\n\nThe following graphics are from https://game-icons.net and are used under CC BY 3.0:\n* Card Play https://game-icons.net/1x1/quoting/card-play.html\n* Trash Can https://game-icons.net/1x1/delapouite/trash-can.html\n* Card Joker https://game-icons.net/1x1/delapouite/card-joker.html\n* Cat https://game-icons.net/1x1/lorc/cat.html\n* Mite https://game-icons.net/1x1/carl-olsen/mite-alt.html\n* Sea Turtle https://game-icons.net/1x1/delapouite/sea-turtle.html\n* Chicken https://game-icons.net/1x1/delapouite/chicken.html\n* Koala https://game-icons.net/1x1/delapouite/koala.html\n* Kangaroo https://game-icons.net/1x1/delapouite/kangaroo.html\n* Squid https://game-icons.net/1x1/lorc/squid.html\n* Elephant https://game-icons.net/1x1/delapouite/elephant.html\n* Donkey https://game-icons.net/1x1/skoll/donkey.html\n* Dolphin https://game-icons.net/1x1/delapouite/dolphin.html\n* Parrot https://game-icons.net/1x1/lorc/parrot-head.html\n* Swan https://game-icons.net/1x1/lorc/swan.html\n* Fox https://game-icons.net/1x1/caro-asercion/fox.html\n* Cross Mark https://game-icons.net/1x1/lorc/cross-mark.html\n\nThe following graphics are from Google Noto Color Emoji and are used under the SIL Open Font License: https://fonts.google.com/noto/specimen/Noto+Color+Emoji\n* Left Arrow https://emojipedia.org/google/16.0/left-arrow\n* Right Arrow https://emojipedia.org/google/16.0/right-arrow",
+      "importerTime": 1747841946886,
+      "lastUpdate": 1748628496092,
+      "importer": "PCIO",
+      "showName": true,
+      "skill": "",
+      "description": "Deploy herds of animals, steal herds from opponents, and upgrade your hand strategically from the market to become the best wrangler in town!",
+      "similarImage": "",
+      "similarName": "Linko",
+      "similarDesigner": "Michael Kiesling, Wolfgang Kramer",
+      "similarAwards": "2018 Juego del Año Recommended\n2015 Origins Awards Best Card Game Nominee\n2014 Spiel der Spiele Game of the Year Winner\n2014 Meeples Choice Award Nominee\n2014 International Gamers Award - General Strategy: Multi-player Nominee\n2014 Golden Geek Best Card Game Nominee\n2014 Fairplay À la carte Winner\n2014 Essener Feder Best Written Rules Winner",
+      "ruleText": "(see rules overview link)",
+      "helpText": "<div>* To deploy a herd of animals, drag cards from your hand into the next available empty row under your name. A new available empty row will then appear under it for future turns.</div><div><br></div><div>* To steal a herd of animals from an opponent, or to take back a herd of animals into your hand, click on the hand icon next to that row of cards on the board.</div><div><br></div><div>* To trash a herd of animals before replacing them via the market, click on the trash icon next to that row of cards on the board.</div><div><br></div><div>* In the rare instance you're able to deploy more than seven herds of animals, you will have to manually track them instead of dragging them into a new row (this implementation only displays up to seven rows due to space constraints).</div>",
+      "variantImage": "",
+      "variant": "",
+      "language": "en-US",
+      "players": "2-5"
+    }
+  },
+  "hand": {
+    "id": "hand",
+    "x": 270,
+    "y": 616,
+    "z": 5270,
+    "type": "holder",
+    "onEnter": {
+      "activeFace": "1"
+    },
+    "onLeave": {
+      "css": ""
+    },
+    "stackOffsetX": 40,
+    "inheritChildZ": true,
+    "childrenPerOwner": true,
+    "width": 1000,
+    "height": 150,
+    "dropShadow": true,
+    "hidePlayerCursors": true,
+    "css": {}
+  },
+  "holder-market-1": {
+    "type": "holder",
+    "id": "holder-market-1",
+    "x": 269,
+    "y": 799,
+    "height": 150,
+    "z": 5312,
+    "inheritChildZ": true,
+    "dropLimit": 1,
+    "onEnter": {
+      "activeFace": 1
+    }
+  },
+  "holder-market-2": {
+    "type": "holder",
+    "id": "holder-market-2",
+    "x": 387,
+    "y": 799,
+    "inheritFrom": "holder-market-1",
+    "z": 5303
+  },
+  "holder-market-3": {
+    "type": "holder",
+    "id": "holder-market-3",
+    "x": 505,
+    "y": 799,
+    "inheritFrom": "holder-market-1",
+    "z": 5304
+  },
+  "holder-market-4": {
+    "type": "holder",
+    "id": "holder-market-4",
+    "x": 622,
+    "y": 799,
+    "inheritFrom": "holder-market-1",
+    "z": 5305
+  },
+  "holder-market-5": {
+    "type": "holder",
+    "id": "holder-market-5",
+    "x": 740,
+    "y": 799,
+    "inheritFrom": "holder-market-1",
+    "z": 5306
+  },
+  "holder-market-6": {
+    "type": "holder",
+    "id": "holder-market-6",
+    "x": 858,
+    "y": 799,
+    "inheritFrom": "holder-market-1",
+    "z": 5322
+  },
+  "holder-discard": {
+    "type": "holder",
+    "id": "holder-discard",
+    "x": 1460,
+    "y": 616,
+    "z": 5370,
+    "preventPiles": true,
+    "height": 150
+  },
+  "holder-deck": {
+    "type": "holder",
+    "id": "holder-deck",
+    "x": 1154,
+    "y": 800,
+    "z": 5348,
+    "onEnter": {
+      "activeFace": 0
+    },
+    "onLeave": {
+      "activeFace": 1
+    },
+    "height": 150
+  },
+  "fsf4D": {
+    "id": "fsf4D",
+    "parent": "label-p1",
+    "fixedParent": true,
+    "x": -38,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": "font-size: 28px",
+    "text": "remove",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 1
+      }
+    ]
+  },
+  "fsf4U": {
+    "id": "fsf4U",
+    "parent": "label-p1",
+    "fixedParent": true,
+    "x": 68,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": "font-size: 28px",
+    "text": "add",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 1
+      }
+    ]
+  },
+  "label-p1": {
+    "type": "label",
+    "id": "label-p1",
+    "x": 50,
+    "y": 43,
+    "width": 65,
+    "height": 40,
+    "z": 11964,
+    "css": "font-size: 30px; font-weight:bold",
+    "editable": true,
+    "text": 0,
+    "parent": "seat-p1"
+  },
+  "seat-p1": {
+    "type": "seat",
+    "id": "seat-p1",
+    "x": 161,
+    "y": 15,
+    "width": 160,
+    "height": 35,
+    "z": 12079,
+    "css": {
+      "default": {
+        "border": "5px solid #999999",
+        "box-shadow": "0 2px 5px #00000066",
+        "color": "#000000",
+        "font-size": "30px"
+      },
+      ".seated": {
+        "background": "${PROPERTY color}",
+        "border": "5px solid #000000",
+        "color": "${PROPERTY foreground}"
+      },
+      ".seated.turn": {
+        "border": "5px dotted ${PROPERTY foreground}"
+      }
+    },
+    "clickRoutine": [
+      {
+        "func": "CLICK",
+        "collection": "thisButton",
+        "mode": "ignoreClickRoutine"
+      },
+      {
+        "func": "SELECT",
+        "property": "deck",
+        "value": "deck-discs"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "playerIndex",
+        "value": "${PROPERTY index}"
+      },
+      {
+        "func": "SET",
+        "property": "background",
+        "value": "${PROPERTY color}"
+      },
+      "var foreground = colorContrast ${PROPERTY color}",
+      {
+        "func": "SET",
+        "property": "color",
+        "value": "${foreground}"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "${PROPERTY id}"
+        ],
+        "property": "foreground",
+        "value": "${foreground}"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "button-endturn-p1"
+      },
+      {
+        "func": "SET",
+        "property": "css",
+        "value": "color:${PROPERTY foreground};font-size:18px;font-weight:900;border-radius:10px;background-color:${PROPERTY color}"
+      },
+      {
+        "func": "FOREACH",
+        "range": 7,
+        "loopRoutine": [
+          {
+            "func": "SELECT",
+            "property": "id",
+            "value": "holder-p1-l$value}"
+          },
+          {
+            "func": "SET",
+            "property": "css",
+            "value": "background:${PROPERTY foreground}"
+          }
+        ]
+      }
+    ],
+    "foreground": "#000000",
+    "hideWhenUnused": true
+  },
+  "button-refill": {
+    "type": "button",
+    "id": "button-refill",
+    "x": 1019,
+    "y": 812,
+    "width": 90,
+    "height": 50,
+    "z": 12018,
+    "css": {
+      "font-weight": "bold",
+      "border-radius": "10px"
+    },
+    "text": "Refill Market",
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "to": [
+          "holder-market-1",
+          "holder-market-2",
+          "holder-market-3",
+          "holder-market-4",
+          "holder-market-5",
+          "holder-market-6"
+        ],
+        "fillTo": 1,
+        "from": "holder-deck",
+        "face": 1
+      }
+    ]
+  },
+  "button-draw": {
+    "type": "button",
+    "id": "button-draw",
+    "x": -136,
+    "y": 80,
+    "width": 90,
+    "height": 50,
+    "z": 12085,
+    "css": {
+      "font-weight": "bold",
+      "border-radius": "10px"
+    },
+    "text": "Draw\nCard",
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "to": [
+          "hand"
+        ],
+        "count": 1,
+        "from": "holder-deck",
+        "face": 1
+      }
+    ],
+    "parent": "holder-deck"
+  },
+  "label-deck": {
+    "type": "label",
+    "id": "label-deck",
+    "parent": "holder-deck",
+    "x": -11,
+    "y": -40,
+    "width": 133,
+    "height": 40,
+    "movableInEdit": false,
+    "text": "Deck",
+    "twoRowBottomAlign": true
+  },
+  "image-draw": {
+    "id": "image-draw",
+    "x": 90,
+    "y": 7,
+    "width": 30,
+    "height": 30,
+    "z": 17,
+    "image": "/i/noto-emoji/emoji_u27a1.svg",
+    "movable": false,
+    "parent": "button-draw"
+  },
+  "image-refill": {
+    "id": "image-refill",
+    "x": -38,
+    "y": 7,
+    "width": 30,
+    "height": 30,
+    "z": 19,
+    "image": "/i/noto-emoji/emoji_u2b05.svg",
+    "movable": false,
+    "parent": "button-refill"
+  },
+  "label-market": {
+    "type": "label",
+    "id": "label-market",
+    "x": 551,
+    "width": 133,
+    "height": 40,
+    "twoRowBottomAlign": true,
+    "text": "Market",
+    "z": 11959,
+    "y": 757
+  },
+  "label-hand": {
+    "type": "label",
+    "id": "label-hand",
+    "width": 133,
+    "height": 40,
+    "z": 11966,
+    "text": "Your Hand",
+    "twoRowBottomAlign": true,
+    "x": 720,
+    "y": 574
+  },
+  "label-discard": {
+    "type": "label",
+    "id": "label-discard",
+    "parent": "holder-discard",
+    "x": -11,
+    "y": -40,
+    "width": 133,
+    "height": 40,
+    "movableInEdit": false,
+    "text": "Discard",
+    "twoRowBottomAlign": true
+  },
+  "button-trash-p1-l1": {
+    "type": "button",
+    "id": "button-trash-p1-l1",
+    "x": -110,
+    "width": 50,
+    "height": 50,
+    "z": 12069,
+    "color": "white",
+    "css": {
+      "font-weight": "bold",
+      "border-radius": "5px"
+    },
+    "image": "/i/game-icons.net/delapouite/trash-can.svg",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "holder-p1-l1",
+        "to": "holder-discard",
+        "count": "all"
+      }
+    ],
+    "parent": "holder-p1-l1",
+    "y": 6
+  },
+  "holder-p1-l1": {
+    "type": "holder",
+    "id": "holder-p1-l1",
+    "x": -40,
+    "y": 67,
+    "width": 250,
+    "height": 110,
+    "stackOffsetX": 30,
+    "parent": "seat-p1",
+    "enterRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "holder-p1-l2"
+      },
+      {
+        "func": "SET",
+        "property": "display",
+        "value": true
+      }
+    ],
+    "scale": 0.7,
+    "z": 1,
+    "leaveRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "holder-p1-l2"
+      },
+      {
+        "func": "SET",
+        "property": "display",
+        "value": false
+      }
+    ]
+  },
+  "button-snatch-p1-l1": {
+    "type": "button",
+    "id": "button-snatch-p1-l1",
+    "x": -55,
+    "y": 6,
+    "width": 50,
+    "height": 50,
+    "z": 12040,
+    "color": "white",
+    "css": {
+      "font-weight": "bold",
+      "border-radius": "5px"
+    },
+    "image": "/i/game-icons.net/quoting/card-play.svg",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "clickRoutine": [
+      {
+        "note": "Active player moves all cards in this holder to their hand",
+        "func": "MOVE",
+        "from": "holder-p1-l1",
+        "to": "hand",
+        "count": "all"
+      }
+    ],
+    "parent": "holder-p1-l1"
+  },
+  "holder-p1-l2": {
+    "type": "holder",
+    "id": "holder-p1-l2",
+    "x": -40,
+    "y": 131,
+    "parent": "seat-p1",
+    "enterRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "holder-p1-l3"
+      },
+      {
+        "func": "SET",
+        "property": "display",
+        "value": true
+      }
+    ],
+    "width": 250,
+    "height": 110,
+    "scale": 0.7,
+    "stackOffsetX": 30,
+    "z": 2,
+    "leaveRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "holder-p1-l3"
+      },
+      {
+        "func": "SET",
+        "property": "display",
+        "value": false
+      }
+    ],
+    "display": false
+  },
+  "button-trash-p1-l2": {
+    "type": "button",
+    "id": "button-trash-p1-l2",
+    "x": -110,
+    "width": 50,
+    "height": 50,
+    "z": 12068,
+    "color": "white",
+    "css": {
+      "font-weight": "bold",
+      "border-radius": "5px"
+    },
+    "image": "/i/game-icons.net/delapouite/trash-can.svg",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "holder-p1-l2",
+        "to": "holder-discard",
+        "count": "all"
+      }
+    ],
+    "parent": "holder-p1-l2",
+    "y": 6
+  },
+  "button-snatch-p1-l2": {
+    "type": "button",
+    "id": "button-snatch-p1-l2",
+    "x": -55,
+    "y": 6,
+    "width": 50,
+    "height": 50,
+    "z": 12040,
+    "color": "white",
+    "css": {
+      "font-weight": "bold",
+      "border-radius": "5px"
+    },
+    "image": "/i/game-icons.net/quoting/card-play.svg",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "clickRoutine": [
+      {
+        "note": "Active player moves all cards in this holder to their hand",
+        "func": "MOVE",
+        "from": "holder-p1-l2",
+        "to": "hand",
+        "count": "all"
+      }
+    ],
+    "parent": "holder-p1-l2"
+  },
+  "holder-p1-l3": {
+    "type": "holder",
+    "id": "holder-p1-l3",
+    "x": -40,
+    "y": 195,
+    "parent": "seat-p1",
+    "enterRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "holder-p1-l4"
+      },
+      {
+        "func": "SET",
+        "property": "display",
+        "value": true
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "holder-p1-l4"
+      },
+      {
+        "func": "SET",
+        "property": "display",
+        "value": false
+      }
+    ],
+    "width": 250,
+    "height": 110,
+    "scale": 0.7,
+    "stackOffsetX": 30,
+    "z": 3,
+    "display": false
+  },
+  "holder-p1-l4": {
+    "type": "holder",
+    "id": "holder-p1-l4",
+    "y": 259,
+    "parent": "seat-p1",
+    "enterRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "holder-p1-l5"
+      },
+      {
+        "func": "SET",
+        "property": "display",
+        "value": true
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "holder-p1-l5"
+      },
+      {
+        "func": "SET",
+        "property": "display",
+        "value": false
+      }
+    ],
+    "width": 250,
+    "height": 110,
+    "scale": 0.7,
+    "stackOffsetX": 30,
+    "x": -40,
+    "z": 4,
+    "display": false
+  },
+  "holder-p1-l5": {
+    "type": "holder",
+    "id": "holder-p1-l5",
+    "x": -40,
+    "y": 323,
+    "parent": "seat-p1",
+    "enterRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "holder-p1-l6"
+      },
+      {
+        "func": "SET",
+        "property": "display",
+        "value": true
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "holder-p1-l6"
+      },
+      {
+        "func": "SET",
+        "property": "display",
+        "value": false
+      }
+    ],
+    "width": 250,
+    "height": 110,
+    "scale": 0.7,
+    "stackOffsetX": 30,
+    "z": 5,
+    "display": false
+  },
+  "holder-p1-l6": {
+    "type": "holder",
+    "id": "holder-p1-l6",
+    "x": -40,
+    "y": 387,
+    "parent": "seat-p1",
+    "width": 250,
+    "height": 110,
+    "scale": 0.7,
+    "stackOffsetX": 30,
+    "z": 6,
+    "enterRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "holder-p1-l7"
+      },
+      {
+        "func": "SET",
+        "property": "display",
+        "value": true
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "holder-p1-l7"
+      },
+      {
+        "func": "SET",
+        "property": "display",
+        "value": false
+      }
+    ],
+    "display": false
+  },
+  "button-snatch-p1-l3": {
+    "type": "button",
+    "id": "button-snatch-p1-l3",
+    "parent": "holder-p1-l3",
+    "x": -55,
+    "y": 6,
+    "width": 50,
+    "height": 50,
+    "z": 12040,
+    "color": "white",
+    "css": {
+      "font-weight": "bold",
+      "border-radius": "5px"
+    },
+    "image": "/i/game-icons.net/quoting/card-play.svg",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "clickRoutine": [
+      {
+        "note": "Active player moves all cards in this holder to their hand",
+        "func": "MOVE",
+        "from": "holder-p1-l3",
+        "to": "hand",
+        "count": "all"
+      }
+    ]
+  },
+  "button-snatch-p1-l4": {
+    "type": "button",
+    "id": "button-snatch-p1-l4",
+    "parent": "holder-p1-l4",
+    "x": -55,
+    "y": 6,
+    "width": 50,
+    "height": 50,
+    "z": 12040,
+    "color": "white",
+    "css": {
+      "font-weight": "bold",
+      "border-radius": "5px"
+    },
+    "image": "/i/game-icons.net/quoting/card-play.svg",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "clickRoutine": [
+      {
+        "note": "Active player moves all cards in this holder to their hand",
+        "func": "MOVE",
+        "from": "holder-p1-l4",
+        "to": "hand",
+        "count": "all"
+      }
+    ]
+  },
+  "button-snatch-p1-l5": {
+    "type": "button",
+    "id": "button-snatch-p1-l5",
+    "parent": "holder-p1-l5",
+    "x": -55,
+    "y": 6,
+    "width": 50,
+    "height": 50,
+    "z": 12040,
+    "color": "white",
+    "css": {
+      "font-weight": "bold",
+      "border-radius": "5px"
+    },
+    "image": "/i/game-icons.net/quoting/card-play.svg",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "clickRoutine": [
+      {
+        "note": "Active player moves all cards in this holder to their hand",
+        "func": "MOVE",
+        "from": "holder-p1-l5",
+        "to": "hand",
+        "count": "all"
+      }
+    ]
+  },
+  "button-snatch-p1-l6": {
+    "type": "button",
+    "id": "button-snatch-p1-l6",
+    "parent": "holder-p1-l6",
+    "x": -55,
+    "y": 6,
+    "width": 50,
+    "height": 50,
+    "z": 12040,
+    "color": "white",
+    "css": {
+      "font-weight": "bold",
+      "border-radius": "5px"
+    },
+    "image": "/i/game-icons.net/quoting/card-play.svg",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "clickRoutine": [
+      {
+        "note": "Active player moves all cards in this holder to their hand",
+        "func": "MOVE",
+        "from": "holder-p1-l6",
+        "to": "hand",
+        "count": "all"
+      }
+    ]
+  },
+  "button-trash-p1-l4": {
+    "type": "button",
+    "id": "button-trash-p1-l4",
+    "parent": "holder-p1-l4",
+    "x": -109,
+    "y": 6,
+    "width": 50,
+    "height": 50,
+    "z": 12042,
+    "color": "white",
+    "css": {
+      "font-weight": "bold",
+      "border-radius": "5px"
+    },
+    "image": "/i/game-icons.net/delapouite/trash-can.svg",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "holder-p1-l4",
+        "to": "holder-discard",
+        "count": "all"
+      }
+    ]
+  },
+  "button-trash-p1-l3": {
+    "type": "button",
+    "id": "button-trash-p1-l3",
+    "parent": "holder-p1-l3",
+    "x": -110,
+    "y": 6,
+    "width": 50,
+    "height": 50,
+    "z": 12112,
+    "color": "white",
+    "css": {
+      "font-weight": "bold",
+      "border-radius": "5px"
+    },
+    "image": "/i/game-icons.net/delapouite/trash-can.svg",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "holder-p1-l3",
+        "to": "holder-discard",
+        "count": "all"
+      }
+    ]
+  },
+  "button-trash-p1-l5": {
+    "type": "button",
+    "id": "button-trash-p1-l5",
+    "parent": "holder-p1-l5",
+    "x": -109,
+    "y": 6,
+    "width": 50,
+    "height": 50,
+    "z": 12042,
+    "color": "white",
+    "css": {
+      "font-weight": "bold",
+      "border-radius": "5px"
+    },
+    "image": "/i/game-icons.net/delapouite/trash-can.svg",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "holder-p1-l5",
+        "to": "holder-discard",
+        "count": "all"
+      }
+    ]
+  },
+  "deck-cards": {
+    "type": "deck",
+    "id": "deck-cards",
+    "parent": "holder-deck",
+    "x": 4,
+    "y": 4,
+    "z": 12593,
+    "cardDefaults": {
+      "classes": "transition",
+      "ignoreOnLeave": true,
+      "width": 100,
+      "height": 140,
+      "cssText1": "font-weight:bold",
+      "cssText2": "font-weight:bold",
+      "onPileCreation": {
+        "handleCSS": {
+          "border": "2px solid black",
+          "font-size": "24px",
+          "color": "white",
+          "font-weight": "bold",
+          "text-align": "center",
+          "line-height": "32px",
+          "background-color": "gray",
+          "text-shadow": "2px 2px 3px black",
+          "background-image": "url('/i/game-icons.net/lorc/poker-hand.svg')"
+        },
+        "handleSize": "auto",
+        "handleOffset": 15,
+        "handlePosition": "top right"
+      }
+    },
+    "cardTypes": {
+      "1-cat": {
+        "image": "/i/game-icons.net/lorc/cat.svg",
+        "color": "plum",
+        "text1": "1",
+        "text2": "1",
+        "sortingOrder": 1
+      },
+      "2-mite": {
+        "image": "/i/game-icons.net/carl-olsen/mite-alt.svg",
+        "color": "crimson",
+        "text1": "2",
+        "text2": "2",
+        "sortingOrder": 2
+      },
+      "3-turtle": {
+        "image": "/i/game-icons.net/delapouite/sea-turtle.svg",
+        "color": "forestgreen",
+        "text1": "3",
+        "text2": "3",
+        "sortingOrder": 3
+      },
+      "4-chicken": {
+        "image": "/i/game-icons.net/delapouite/chicken.svg",
+        "color": "hotpink",
+        "text1": "4",
+        "text2": "4",
+        "sortingOrder": 4
+      },
+      "5-koala": {
+        "image": "/i/game-icons.net/delapouite/koala.svg",
+        "color": "darkblue",
+        "text1": "5",
+        "text2": "5",
+        "sortingOrder": 5
+      },
+      "6-kangaroo": {
+        "image": "/i/game-icons.net/delapouite/kangaroo.svg",
+        "color": "brown",
+        "text1": "6",
+        "text2": "6",
+        "sortingOrder": 6
+      },
+      "7-squid": {
+        "image": "/i/game-icons.net/lorc/squid.svg",
+        "color": "mediumpurple",
+        "text1": "7",
+        "text2": "7",
+        "sortingOrder": 7
+      },
+      "8-elephant": {
+        "image": "/i/game-icons.net/delapouite/elephant.svg",
+        "color": "gray",
+        "text1": "8",
+        "text2": "8",
+        "sortingOrder": 8
+      },
+      "9-donkey": {
+        "image": "/i/game-icons.net/skoll/donkey.svg",
+        "color": "saddlebrown",
+        "text1": "9",
+        "text2": "9",
+        "sortingOrder": 9
+      },
+      "10-dolphin": {
+        "image": "/i/game-icons.net/delapouite/dolphin.svg",
+        "color": "lightskyblue",
+        "text1": "10",
+        "text2": "10",
+        "sortingOrder": 10
+      },
+      "11-parrot": {
+        "image": "/i/game-icons.net/lorc/parrot-head.svg",
+        "color": "gold",
+        "text1": "11",
+        "text2": "11",
+        "sortingOrder": 11
+      },
+      "12-swan": {
+        "image": "/i/game-icons.net/lorc/swan.svg",
+        "color": "lightgreen",
+        "text1": "12",
+        "text2": "12",
+        "sortingOrder": 12
+      },
+      "13-fox": {
+        "image": "/i/game-icons.net/caro-asercion/fox.svg",
+        "color": "darkorange",
+        "text1": "13",
+        "text2": "13",
+        "sortingOrder": 13
+      },
+      "14-x": {
+        "image": "/i/game-icons.net/lorc/cross-mark.svg",
+        "color": "black",
+        "text1": "X",
+        "text2": "X",
+        "sortingOrder": 14
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "width": 100,
+            "height": 140,
+            "type": "image",
+            "color": "white",
+            "value": ""
+          },
+          {
+            "type": "image",
+            "x": -32,
+            "y": -20,
+            "value": "/i/game-icons.net/delapouite/card-joker.svg",
+            "width": 165,
+            "height": 180
+          }
+        ],
+        "border": 1,
+        "radius": 8
+      },
+      {
+        "objects": [
+          {
+            "width": 100,
+            "height": 140,
+            "type": "image",
+            "color": "white",
+            "value": ""
+          },
+          {
+            "type": "image",
+            "x": 5,
+            "y": 7,
+            "width": 90,
+            "height": 130,
+            "svgReplaces": {
+              "#000": "color"
+            },
+            "dynamicProperties": {
+              "value": "image"
+            }
+          },
+          {
+            "type": "text",
+            "x": 3,
+            "y": 2,
+            "fontSize": "24",
+            "textAlign": "left",
+            "textFont": null,
+            "fontweight": "bold",
+            "width": 100,
+            "dynamicProperties": {
+              "value": "text1",
+              "css": "cssText1"
+            }
+          },
+          {
+            "type": "text",
+            "x": -4,
+            "y": 110,
+            "fontSize": "24",
+            "textAlign": "right",
+            "textFont": null,
+            "width": 100,
+            "dynamicProperties": {
+              "value": "text2",
+              "css": "cssText2"
+            }
+          }
+        ],
+        "border": 1,
+        "radius": 8
+      }
+    ],
+    "hoverParent": "holder-deck"
+  },
+  "button-reset": {
+    "type": "button",
+    "id": "button-reset",
+    "x": 1470,
+    "y": 812,
+    "width": 90,
+    "height": 50,
+    "z": 12109,
+    "css": {
+      "font-weight": "bold",
+      "border-radius": "10px"
+    },
+    "text": "Reset Game",
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "header": "Reset Game",
+        "fields": [
+          {
+            "type": "text",
+            "text": "You're about to reset the game. Are you sure?"
+          }
+        ]
+      },
+      {
+        "func": "CALL",
+        "routine": "gameStartRoutine"
+      }
+    ],
+    "gameStartRoutine": [
+      {
+        "func": "RESET",
+        "property": "button-resetReset"
+      },
+      {
+        "func": "RECALL",
+        "property": "holder-deck"
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "holder-deck"
+      },
+      {
+        "func": "CALL",
+        "return": true,
+        "routine": "RecallRoutine",
+        "widget": "button-recall"
+      },
+      {
+        "note": "Get player count",
+        "func": "COUNT",
+        "collection": "activeSeats"
+      },
+      {
+        "func": "FOREACH",
+        "collection": "activeSeats",
+        "loopRoutine": [
+          {
+            "note": "Deal each player a hand of 13 cards",
+            "func": "MOVE",
+            "from": "holder-deck",
+            "to": "${widgetID}",
+            "count": 13
+          }
+        ]
+      },
+      {
+        "func": "SORT",
+        "holder": [
+          "hand"
+        ],
+        "key": "sortingOrder",
+        "reverse": true
+      },
+      {
+        "note": "Fill the market",
+        "func": "MOVE",
+        "to": [
+          "holder-market-1",
+          "holder-market-2",
+          "holder-market-3",
+          "holder-market-4",
+          "holder-market-5",
+          "holder-market-6"
+        ],
+        "fillTo": 1,
+        "from": "holder-deck",
+        "face": 1
+      },
+      {
+        "note": "Select a random start player",
+        "func": "TURN",
+        "turnCycle": "random"
+      },
+      {
+        "note": "Set each player's point total to 0",
+        "func": "FOREACH",
+        "range": 5,
+        "loopRoutine": [
+          {
+            "func": "SELECT",
+            "property": "playerIndex",
+            "value": "${value}"
+          },
+          {
+            "func": "SELECT",
+            "property": "id",
+            "value": "label-p${value}"
+          },
+          {
+            "func": "SET",
+            "property": "text",
+            "relation": "=",
+            "value": 0
+          }
+        ]
+      }
+    ]
+  },
+  "button-recall": {
+    "type": "button",
+    "id": "button-recall",
+    "parent": "holder-deck",
+    "fixedParent": true,
+    "y": 200,
+    "width": 110,
+    "height": 30,
+    "movableInEdit": false,
+    "text": "Recall",
+    "RecallRoutine": [
+      {
+        "func": "RECALL",
+        "holder": "${PROPERTY parent}"
+      },
+      {
+        "func": "FLIP",
+        "holder": "${PROPERTY parent}",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "${PROPERTY parent}"
+      }
+    ],
+    "css": {
+      "font-weight": "bold",
+      "border-radius": "10px"
+    }
+  },
+  "button-code": {
+    "type": "button",
+    "id": "button-code",
+    "x": 995,
+    "y": 1012,
+    "width": 90,
+    "height": 50,
+    "z": 12075,
+    "css": {
+      "_, .transition": {
+        "transition": "transform 500ms"
+      },
+      "_, .transition.dragging": {
+        "transition": "none"
+      }
+    },
+    "text": "Code",
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "to": [
+          "holder-market-1",
+          "holder-market-2",
+          "holder-market-3",
+          "holder-market-4",
+          "holder-market-5",
+          "holder-market-6"
+        ],
+        "fillTo": 1,
+        "from": "holder-deck",
+        "face": 1
+      }
+    ]
+  },
+  "handsize-p1": {
+    "id": "handsize-p1",
+    "parent": "seat-p1",
+    "fixedParent": true,
+    "x": 150,
+    "y": -15,
+    "width": 35,
+    "height": 35,
+    "borderRadius": 100,
+    "z": 124,
+    "movable": false,
+    "clickable": false,
+    "css": {
+      "border": "2px solid black",
+      "font-size": "24px",
+      "color": "white",
+      "font-weight": "bold",
+      "text-align": "center",
+      "line-height": "34px",
+      "background-color": "gray",
+      "text-shadow": "2px 2px 3px black",
+      "background-image": "url('/i/game-icons.net/lorc/poker-hand.svg')"
+    },
+    "hoverParent": "seat-p1",
+    "text": 0,
+    "ownerGlobalUpdateRoutine": [
+      "var parent = ${PROPERTY parent}",
+      "var COUNT = 0",
+      {
+        "func": "SELECT",
+        "property": "_ancestor",
+        "value": "${PROPERTY hand OF $parent}"
+      },
+      {
+        "func": "COUNT",
+        "owner": "${PROPERTY player OF $parent}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "text",
+        "value": "${COUNT}"
+      }
+    ],
+    "playerGlobalUpdateRoutine": [
+      {
+        "func": "CALL",
+        "routine": "ownerGlobalUpdateRoutine",
+        "widget": "${PROPERTY id}"
+      }
+    ]
+  },
+  "holder-p1-l7": {
+    "type": "holder",
+    "id": "holder-p1-l7",
+    "x": -40,
+    "y": 451,
+    "parent": "seat-p1",
+    "width": 250,
+    "height": 110,
+    "scale": 0.7,
+    "stackOffsetX": 30,
+    "z": 7,
+    "enterRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "holder-p1-l8"
+      },
+      {
+        "func": "SET",
+        "property": "display",
+        "value": true
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "holder-p1-l8"
+      },
+      {
+        "func": "SET",
+        "property": "display",
+        "value": false
+      }
+    ],
+    "display": false
+  },
+  "button-snatch-p1-l7": {
+    "type": "button",
+    "id": "button-snatch-p1-l7",
+    "parent": "holder-p1-l7",
+    "x": -55,
+    "y": 6,
+    "width": 50,
+    "height": 50,
+    "z": 12040,
+    "color": "white",
+    "css": {
+      "font-weight": "bold",
+      "border-radius": "5px"
+    },
+    "image": "/i/game-icons.net/quoting/card-play.svg",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "clickRoutine": [
+      {
+        "note": "Active player moves all cards in this holder to their hand",
+        "func": "MOVE",
+        "from": "holder-p1-l6",
+        "to": "hand",
+        "count": "all"
+      }
+    ]
+  },
+  "button-trash-p1-l6": {
+    "type": "button",
+    "id": "button-trash-p1-l6",
+    "parent": "holder-p1-l6",
+    "x": -109,
+    "y": 6,
+    "width": 50,
+    "height": 50,
+    "z": 12042,
+    "color": "white",
+    "css": {
+      "font-weight": "bold",
+      "border-radius": "5px"
+    },
+    "image": "/i/game-icons.net/delapouite/trash-can.svg",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "holder-p1-l6",
+        "to": "holder-discard",
+        "count": "all"
+      }
+    ]
+  },
+  "button-trash-p1-l7": {
+    "type": "button",
+    "id": "button-trash-p1-l7",
+    "parent": "holder-p1-l7",
+    "x": -109,
+    "y": 6,
+    "width": 50,
+    "height": 50,
+    "z": 12042,
+    "color": "white",
+    "css": {
+      "font-weight": "bold",
+      "border-radius": "5px"
+    },
+    "image": "/i/game-icons.net/delapouite/trash-can.svg",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "holder-p1-l7",
+        "to": "holder-discard",
+        "count": "all"
+      }
+    ]
+  },
+  "seat-p2": {
+    "type": "seat",
+    "id": "seat-p2",
+    "x": 446,
+    "y": 15,
+    "width": 160,
+    "height": 35,
+    "z": 12077,
+    "css": {
+      "default": {
+        "border": "5px solid #999999",
+        "box-shadow": "0 2px 5px #00000066",
+        "color": "#000000",
+        "font-size": "30px"
+      },
+      ".seated": {
+        "background": "${PROPERTY color}",
+        "border": "5px solid #000000",
+        "color": "${PROPERTY foreground}"
+      },
+      ".seated.turn": {
+        "border": "5px dotted ${PROPERTY foreground}"
+      }
+    },
+    "foreground": "#000000",
+    "clickRoutine": [
+      {
+        "func": "CLICK",
+        "collection": "thisButton",
+        "mode": "ignoreClickRoutine"
+      },
+      {
+        "func": "SELECT",
+        "property": "deck",
+        "value": "deck-discs"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "playerIndex",
+        "value": "${PROPERTY index}"
+      },
+      {
+        "func": "SET",
+        "property": "background",
+        "value": "${PROPERTY color}"
+      },
+      "var foreground = colorContrast ${PROPERTY color}",
+      {
+        "func": "SET",
+        "property": "color",
+        "value": "${foreground}"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "${PROPERTY id}"
+        ],
+        "property": "foreground",
+        "value": "${foreground}"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "button-endturn-p2"
+      },
+      {
+        "func": "SET",
+        "property": "css",
+        "value": "color:${PROPERTY foreground};font-size:18px;font-weight:900;border-radius:10px;background-color:${PROPERTY color}"
+      }
+    ],
+    "index": 2,
+    "hideWhenUnused": true
+  },
+  "label-p2": {
+    "type": "label",
+    "id": "label-p2",
+    "x": 50,
+    "y": 43,
+    "width": 65,
+    "height": 40,
+    "z": 11964,
+    "css": "font-size: 30px; font-weight:bold",
+    "editable": true,
+    "text": 0,
+    "parent": "seat-p2"
+  },
+  "fsf5D": {
+    "id": "fsf5D",
+    "parent": "label-p2",
+    "fixedParent": true,
+    "x": -38,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": "font-size: 28px",
+    "text": "remove",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 1
+      }
+    ]
+  },
+  "fsf5U": {
+    "id": "fsf5U",
+    "parent": "label-p2",
+    "fixedParent": true,
+    "x": 68,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": "font-size: 28px",
+    "text": "add",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 1
+      }
+    ]
+  },
+  "handsize-p2": {
+    "id": "handsize-p2",
+    "parent": "seat-p2",
+    "fixedParent": true,
+    "x": 150,
+    "y": -15,
+    "width": 35,
+    "height": 35,
+    "borderRadius": 100,
+    "z": 120,
+    "movable": false,
+    "clickable": false,
+    "css": {
+      "border": "2px solid black",
+      "font-size": "24px",
+      "color": "white",
+      "font-weight": "bold",
+      "text-align": "center",
+      "line-height": "34px",
+      "background-color": "gray",
+      "text-shadow": "2px 2px 3px black",
+      "background-image": "url('/i/game-icons.net/lorc/poker-hand.svg')"
+    },
+    "hoverParent": "seat-p1",
+    "text": 0,
+    "ownerGlobalUpdateRoutine": [
+      "var parent = ${PROPERTY parent}",
+      "var COUNT = 0",
+      {
+        "func": "SELECT",
+        "property": "_ancestor",
+        "value": "${PROPERTY hand OF $parent}"
+      },
+      {
+        "func": "COUNT",
+        "owner": "${PROPERTY player OF $parent}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "text",
+        "value": "${COUNT}"
+      }
+    ],
+    "playerGlobalUpdateRoutine": [
+      {
+        "func": "CALL",
+        "routine": "ownerGlobalUpdateRoutine",
+        "widget": "${PROPERTY id}"
+      }
+    ]
+  },
+  "holder-p2-l1": {
+    "type": "holder",
+    "id": "holder-p2-l1",
+    "parent": "seat-p2",
+    "x": -40,
+    "y": 67,
+    "width": 250,
+    "height": 110,
+    "scale": 0.7,
+    "stackOffsetX": 30,
+    "enterRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "holder-p2-l2"
+      },
+      {
+        "func": "SET",
+        "property": "display",
+        "value": true
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "holder-p2-l2"
+      },
+      {
+        "func": "SET",
+        "property": "display",
+        "value": false
+      }
+    ],
+    "z": 1
+  },
+  "holder-p2-l2": {
+    "type": "holder",
+    "id": "holder-p2-l2",
+    "parent": "seat-p2",
+    "x": -40,
+    "y": 131,
+    "width": 250,
+    "height": 110,
+    "scale": 0.7,
+    "stackOffsetX": 30,
+    "enterRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "holder-p2-l3"
+      },
+      {
+        "func": "SET",
+        "property": "display",
+        "value": true
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "holder-p2-l3"
+      },
+      {
+        "func": "SET",
+        "property": "display",
+        "value": false
+      }
+    ],
+    "z": 2,
+    "display": false
+  },
+  "holder-p2-l7": {
+    "type": "holder",
+    "id": "holder-p2-l7",
+    "parent": "seat-p2",
+    "x": -40,
+    "y": 451,
+    "width": 250,
+    "height": 110,
+    "scale": 0.7,
+    "z": 7,
+    "stackOffsetX": 30,
+    "enterRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "holder-p2-l8"
+      },
+      {
+        "func": "SET",
+        "property": "display",
+        "value": true
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "holder-p2-l8"
+      },
+      {
+        "func": "SET",
+        "property": "display",
+        "value": false
+      }
+    ],
+    "display": false
+  },
+  "holder-p2-l6": {
+    "type": "holder",
+    "id": "holder-p2-l6",
+    "parent": "seat-p2",
+    "x": -40,
+    "y": 387,
+    "width": 250,
+    "height": 110,
+    "scale": 0.7,
+    "z": 6,
+    "stackOffsetX": 30,
+    "enterRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "holder-p2-l7"
+      },
+      {
+        "func": "SET",
+        "property": "display",
+        "value": true
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "holder-p2-l7"
+      },
+      {
+        "func": "SET",
+        "property": "display",
+        "value": false
+      }
+    ],
+    "display": false
+  },
+  "holder-p2-l5": {
+    "type": "holder",
+    "id": "holder-p2-l5",
+    "parent": "seat-p2",
+    "x": -40,
+    "y": 323,
+    "width": 250,
+    "height": 110,
+    "scale": 0.7,
+    "stackOffsetX": 30,
+    "enterRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "holder-p2-l6"
+      },
+      {
+        "func": "SET",
+        "property": "display",
+        "value": true
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "holder-p2-l6"
+      },
+      {
+        "func": "SET",
+        "property": "display",
+        "value": false
+      }
+    ],
+    "z": 5,
+    "display": false
+  },
+  "holder-p2-l4": {
+    "type": "holder",
+    "id": "holder-p2-l4",
+    "parent": "seat-p2",
+    "x": -40,
+    "y": 259,
+    "width": 250,
+    "height": 110,
+    "scale": 0.7,
+    "stackOffsetX": 30,
+    "enterRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "holder-p2-l5"
+      },
+      {
+        "func": "SET",
+        "property": "display",
+        "value": true
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "holder-p2-l5"
+      },
+      {
+        "func": "SET",
+        "property": "display",
+        "value": false
+      }
+    ],
+    "z": 4,
+    "display": false
+  },
+  "holder-p2-l3": {
+    "type": "holder",
+    "id": "holder-p2-l3",
+    "parent": "seat-p2",
+    "x": -40,
+    "y": 195,
+    "width": 250,
+    "height": 110,
+    "scale": 0.7,
+    "stackOffsetX": 30,
+    "enterRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "holder-p2-l4"
+      },
+      {
+        "func": "SET",
+        "property": "display",
+        "value": true
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "holder-p2-l4"
+      },
+      {
+        "func": "SET",
+        "property": "display",
+        "value": false
+      }
+    ],
+    "z": 3,
+    "display": false
+  },
+  "seat-p3": {
+    "type": "seat",
+    "id": "seat-p3",
+    "x": 731,
+    "y": 15,
+    "width": 160,
+    "height": 35,
+    "z": 12077,
+    "css": {
+      "default": {
+        "border": "5px solid #999999",
+        "box-shadow": "0 2px 5px #00000066",
+        "color": "#000000",
+        "font-size": "30px"
+      },
+      ".seated": {
+        "background": "${PROPERTY color}",
+        "border": "5px solid #000000",
+        "color": "${PROPERTY foreground}"
+      },
+      ".seated.turn": {
+        "border": "5px dotted ${PROPERTY foreground}"
+      }
+    },
+    "foreground": "#000000",
+    "clickRoutine": [
+      {
+        "func": "CLICK",
+        "collection": "thisButton",
+        "mode": "ignoreClickRoutine"
+      },
+      {
+        "func": "SELECT",
+        "property": "deck",
+        "value": "deck-discs"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "playerIndex",
+        "value": "${PROPERTY index}"
+      },
+      {
+        "func": "SET",
+        "property": "background",
+        "value": "${PROPERTY color}"
+      },
+      "var foreground = colorContrast ${PROPERTY color}",
+      {
+        "func": "SET",
+        "property": "color",
+        "value": "${foreground}"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "${PROPERTY id}"
+        ],
+        "property": "foreground",
+        "value": "${foreground}"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "button-endturn-p3"
+      },
+      {
+        "func": "SET",
+        "property": "css",
+        "value": "color:${PROPERTY foreground};font-size:18px;font-weight:900;border-radius:10px;background-color:${PROPERTY color}"
+      }
+    ],
+    "index": 3,
+    "hideWhenUnused": true
+  },
+  "label-p3": {
+    "type": "label",
+    "id": "label-p3",
+    "x": 50,
+    "y": 43,
+    "width": 65,
+    "height": 40,
+    "z": 11964,
+    "css": "font-size: 30px; font-weight:bold",
+    "editable": true,
+    "text": 0,
+    "parent": "seat-p3"
+  },
+  "fsf6D": {
+    "id": "fsf6D",
+    "parent": "label-p3",
+    "fixedParent": true,
+    "x": -38,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": "font-size: 28px",
+    "text": "remove",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 1
+      }
+    ]
+  },
+  "fsf6U": {
+    "id": "fsf6U",
+    "parent": "label-p3",
+    "fixedParent": true,
+    "x": 68,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": "font-size: 28px",
+    "text": "add",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 1
+      }
+    ]
+  },
+  "handsize-p3": {
+    "id": "handsize-p3",
+    "parent": "seat-p3",
+    "fixedParent": true,
+    "x": 150,
+    "y": -15,
+    "width": 35,
+    "height": 35,
+    "borderRadius": 100,
+    "z": 120,
+    "movable": false,
+    "clickable": false,
+    "css": {
+      "border": "2px solid black",
+      "font-size": "24px",
+      "color": "white",
+      "font-weight": "bold",
+      "text-align": "center",
+      "line-height": "34px",
+      "background-color": "gray",
+      "text-shadow": "2px 2px 3px black",
+      "background-image": "url('/i/game-icons.net/lorc/poker-hand.svg')"
+    },
+    "hoverParent": "seat-p1",
+    "text": 0,
+    "ownerGlobalUpdateRoutine": [
+      "var parent = ${PROPERTY parent}",
+      "var COUNT = 0",
+      {
+        "func": "SELECT",
+        "property": "_ancestor",
+        "value": "${PROPERTY hand OF $parent}"
+      },
+      {
+        "func": "COUNT",
+        "owner": "${PROPERTY player OF $parent}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "text",
+        "value": "${COUNT}"
+      }
+    ],
+    "playerGlobalUpdateRoutine": [
+      {
+        "func": "CALL",
+        "routine": "ownerGlobalUpdateRoutine",
+        "widget": "${PROPERTY id}"
+      }
+    ]
+  },
+  "seat-p4": {
+    "type": "seat",
+    "id": "seat-p4",
+    "x": 1016,
+    "y": 15,
+    "width": 160,
+    "height": 35,
+    "z": 12077,
+    "css": {
+      "default": {
+        "border": "5px solid #999999",
+        "box-shadow": "0 2px 5px #00000066",
+        "color": "#000000",
+        "font-size": "30px"
+      },
+      ".seated": {
+        "background": "${PROPERTY color}",
+        "border": "5px solid #000000",
+        "color": "${PROPERTY foreground}"
+      },
+      ".seated.turn": {
+        "border": "5px dotted ${PROPERTY foreground}"
+      }
+    },
+    "foreground": "#000000",
+    "clickRoutine": [
+      {
+        "func": "CLICK",
+        "collection": "thisButton",
+        "mode": "ignoreClickRoutine"
+      },
+      {
+        "func": "SELECT",
+        "property": "deck",
+        "value": "deck-discs"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "playerIndex",
+        "value": "${PROPERTY index}"
+      },
+      {
+        "func": "SET",
+        "property": "background",
+        "value": "${PROPERTY color}"
+      },
+      "var foreground = colorContrast ${PROPERTY color}",
+      {
+        "func": "SET",
+        "property": "color",
+        "value": "${foreground}"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "${PROPERTY id}"
+        ],
+        "property": "foreground",
+        "value": "${foreground}"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "button-endturn-p4"
+      },
+      {
+        "func": "SET",
+        "property": "css",
+        "value": "color:${PROPERTY foreground};font-size:18px;font-weight:900;border-radius:10px;background-color:${PROPERTY color}"
+      }
+    ],
+    "index": 4,
+    "hideWhenUnused": true
+  },
+  "label-p4": {
+    "type": "label",
+    "id": "label-p4",
+    "x": 50,
+    "y": 43,
+    "width": 65,
+    "height": 40,
+    "z": 11964,
+    "css": "font-size: 30px; font-weight:bold",
+    "editable": true,
+    "text": 0,
+    "parent": "seat-p4"
+  },
+  "fsf7D": {
+    "id": "fsf7D",
+    "parent": "label-p4",
+    "fixedParent": true,
+    "x": -38,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": "font-size: 28px",
+    "text": "remove",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 1
+      }
+    ]
+  },
+  "fsf7U": {
+    "id": "fsf7U",
+    "parent": "label-p4",
+    "fixedParent": true,
+    "x": 68,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": "font-size: 28px",
+    "text": "add",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 1
+      }
+    ]
+  },
+  "handsize-p4": {
+    "id": "handsize-p4",
+    "parent": "seat-p4",
+    "fixedParent": true,
+    "x": 150,
+    "y": -15,
+    "width": 35,
+    "height": 35,
+    "borderRadius": 100,
+    "z": 120,
+    "movable": false,
+    "clickable": false,
+    "css": {
+      "border": "2px solid black",
+      "font-size": "24px",
+      "color": "white",
+      "font-weight": "bold",
+      "text-align": "center",
+      "line-height": "34px",
+      "background-color": "gray",
+      "text-shadow": "2px 2px 3px black",
+      "background-image": "url('/i/game-icons.net/lorc/poker-hand.svg')"
+    },
+    "hoverParent": "seat-p1",
+    "text": 0,
+    "ownerGlobalUpdateRoutine": [
+      "var parent = ${PROPERTY parent}",
+      "var COUNT = 0",
+      {
+        "func": "SELECT",
+        "property": "_ancestor",
+        "value": "${PROPERTY hand OF $parent}"
+      },
+      {
+        "func": "COUNT",
+        "owner": "${PROPERTY player OF $parent}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "text",
+        "value": "${COUNT}"
+      }
+    ],
+    "playerGlobalUpdateRoutine": [
+      {
+        "func": "CALL",
+        "routine": "ownerGlobalUpdateRoutine",
+        "widget": "${PROPERTY id}"
+      }
+    ]
+  },
+  "seat-p5": {
+    "type": "seat",
+    "id": "seat-p5",
+    "x": 1301,
+    "y": 15,
+    "width": 160,
+    "height": 35,
+    "z": 12086,
+    "css": {
+      "default": {
+        "border": "5px solid #999999",
+        "box-shadow": "0 2px 5px #00000066",
+        "color": "#000000",
+        "font-size": "30px"
+      },
+      ".seated": {
+        "background": "${PROPERTY color}",
+        "border": "5px solid #000000",
+        "color": "${PROPERTY foreground}"
+      },
+      ".seated.turn": {
+        "border": "5px dotted ${PROPERTY foreground}"
+      }
+    },
+    "clickRoutine": [
+      {
+        "func": "CLICK",
+        "collection": "thisButton",
+        "mode": "ignoreClickRoutine"
+      },
+      {
+        "func": "SELECT",
+        "property": "deck",
+        "value": "deck-discs"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "playerIndex",
+        "value": "${PROPERTY index}"
+      },
+      {
+        "func": "SET",
+        "property": "background",
+        "value": "${PROPERTY color}"
+      },
+      "var foreground = colorContrast ${PROPERTY color}",
+      {
+        "func": "SET",
+        "property": "color",
+        "value": "${foreground}"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "${PROPERTY id}"
+        ],
+        "property": "foreground",
+        "value": "${foreground}"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "button-endturn-p5"
+      },
+      {
+        "func": "SET",
+        "property": "css",
+        "value": "color:${PROPERTY foreground};font-size:18px;font-weight:900;border-radius:10px;background-color:${PROPERTY color}"
+      }
+    ],
+    "index": 5,
+    "foreground": "#000000",
+    "turn": true,
+    "hideWhenUnused": true
+  },
+  "label-p5": {
+    "type": "label",
+    "id": "label-p5",
+    "x": 50,
+    "y": 43,
+    "width": 65,
+    "height": 40,
+    "z": 11964,
+    "css": "font-size: 30px; font-weight:bold",
+    "editable": true,
+    "text": 0,
+    "parent": "seat-p5"
+  },
+  "fsf8D": {
+    "id": "fsf8D",
+    "parent": "label-p5",
+    "fixedParent": true,
+    "x": -38,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": "font-size: 28px",
+    "text": "remove",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 1
+      }
+    ]
+  },
+  "fsf8U": {
+    "id": "fsf8U",
+    "parent": "label-p5",
+    "fixedParent": true,
+    "x": 68,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": "font-size: 28px",
+    "text": "add",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 1
+      }
+    ]
+  },
+  "handsize-p5": {
+    "id": "handsize-p5",
+    "parent": "seat-p5",
+    "fixedParent": true,
+    "x": 150,
+    "y": -15,
+    "width": 35,
+    "height": 35,
+    "borderRadius": 100,
+    "z": 120,
+    "movable": false,
+    "clickable": false,
+    "css": {
+      "border": "2px solid black",
+      "font-size": "24px",
+      "color": "white",
+      "font-weight": "bold",
+      "text-align": "center",
+      "line-height": "34px",
+      "background-color": "gray",
+      "text-shadow": "2px 2px 3px black",
+      "background-image": "url('/i/game-icons.net/lorc/poker-hand.svg')"
+    },
+    "hoverParent": "seat-p1",
+    "text": 0,
+    "ownerGlobalUpdateRoutine": [
+      "var parent = ${PROPERTY parent}",
+      "var COUNT = 0",
+      {
+        "func": "SELECT",
+        "property": "_ancestor",
+        "value": "${PROPERTY hand OF $parent}"
+      },
+      {
+        "func": "COUNT",
+        "owner": "${PROPERTY player OF $parent}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "text",
+        "value": "${COUNT}"
+      }
+    ],
+    "playerGlobalUpdateRoutine": [
+      {
+        "func": "CALL",
+        "routine": "ownerGlobalUpdateRoutine",
+        "widget": "${PROPERTY id}"
+      }
+    ]
+  },
+  "holder-p3-l1": {
+    "type": "holder",
+    "id": "holder-p3-l1",
+    "parent": "seat-p3",
+    "x": -40,
+    "y": 67,
+    "width": 250,
+    "height": 110,
+    "scale": 0.7,
+    "z": 1,
+    "stackOffsetX": 30,
+    "enterRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "holder-p3-l2"
+      },
+      {
+        "func": "SET",
+        "property": "display",
+        "value": true
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "holder-p3-l2"
+      },
+      {
+        "func": "SET",
+        "property": "display",
+        "value": false
+      }
+    ]
+  },
+  "holder-p3-l2": {
+    "type": "holder",
+    "id": "holder-p3-l2",
+    "parent": "seat-p3",
+    "x": -40,
+    "y": 131,
+    "width": 250,
+    "height": 110,
+    "scale": 0.7,
+    "z": 2,
+    "stackOffsetX": 30,
+    "enterRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "holder-p3-l3"
+      },
+      {
+        "func": "SET",
+        "property": "display",
+        "value": true
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "holder-p3-l3"
+      },
+      {
+        "func": "SET",
+        "property": "display",
+        "value": false
+      }
+    ],
+    "display": false
+  },
+  "holder-p3-l3": {
+    "type": "holder",
+    "id": "holder-p3-l3",
+    "parent": "seat-p3",
+    "x": -40,
+    "y": 195,
+    "width": 250,
+    "height": 110,
+    "scale": 0.7,
+    "z": 3,
+    "stackOffsetX": 30,
+    "enterRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "holder-p3-l4"
+      },
+      {
+        "func": "SET",
+        "property": "display",
+        "value": true
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "holder-p3-l4"
+      },
+      {
+        "func": "SET",
+        "property": "display",
+        "value": false
+      }
+    ],
+    "display": false
+  },
+  "holder-p3-l4": {
+    "type": "holder",
+    "id": "holder-p3-l4",
+    "parent": "seat-p3",
+    "x": -40,
+    "y": 259,
+    "width": 250,
+    "height": 110,
+    "scale": 0.7,
+    "z": 4,
+    "stackOffsetX": 30,
+    "enterRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "holder-p3-l5"
+      },
+      {
+        "func": "SET",
+        "property": "display",
+        "value": true
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "holder-p3-l5"
+      },
+      {
+        "func": "SET",
+        "property": "display",
+        "value": false
+      }
+    ],
+    "display": false
+  },
+  "holder-p3-l5": {
+    "type": "holder",
+    "id": "holder-p3-l5",
+    "parent": "seat-p3",
+    "x": -40,
+    "y": 323,
+    "width": 250,
+    "height": 110,
+    "scale": 0.7,
+    "z": 5,
+    "stackOffsetX": 30,
+    "enterRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "holder-p3-l6"
+      },
+      {
+        "func": "SET",
+        "property": "display",
+        "value": true
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "holder-p3-l6"
+      },
+      {
+        "func": "SET",
+        "property": "display",
+        "value": false
+      }
+    ],
+    "display": false
+  },
+  "holder-p3-l6": {
+    "type": "holder",
+    "id": "holder-p3-l6",
+    "parent": "seat-p3",
+    "x": -40,
+    "y": 387,
+    "width": 250,
+    "height": 110,
+    "scale": 0.7,
+    "z": 6,
+    "stackOffsetX": 30,
+    "enterRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "holder-p3-l7"
+      },
+      {
+        "func": "SET",
+        "property": "display",
+        "value": true
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "holder-p3-l7"
+      },
+      {
+        "func": "SET",
+        "property": "display",
+        "value": false
+      }
+    ],
+    "display": false
+  },
+  "holder-p3-l7": {
+    "type": "holder",
+    "id": "holder-p3-l7",
+    "parent": "seat-p3",
+    "x": -40,
+    "y": 451,
+    "width": 250,
+    "height": 110,
+    "scale": 0.7,
+    "z": 7,
+    "stackOffsetX": 30,
+    "enterRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "holder-p3-l8"
+      },
+      {
+        "func": "SET",
+        "property": "display",
+        "value": true
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "holder-p3-l8"
+      },
+      {
+        "func": "SET",
+        "property": "display",
+        "value": false
+      }
+    ],
+    "display": false
+  },
+  "holder-p4-l1": {
+    "type": "holder",
+    "id": "holder-p4-l1",
+    "parent": "seat-p4",
+    "x": -40,
+    "y": 67,
+    "width": 250,
+    "height": 110,
+    "scale": 0.7,
+    "z": 1,
+    "stackOffsetX": 30,
+    "enterRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "holder-p4-l2"
+      },
+      {
+        "func": "SET",
+        "property": "display",
+        "value": true
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "holder-p4-l2"
+      },
+      {
+        "func": "SET",
+        "property": "display",
+        "value": false
+      }
+    ]
+  },
+  "holder-p4-l2": {
+    "type": "holder",
+    "id": "holder-p4-l2",
+    "parent": "seat-p4",
+    "x": -40,
+    "y": 131,
+    "width": 250,
+    "height": 110,
+    "scale": 0.7,
+    "z": 2,
+    "stackOffsetX": 30,
+    "enterRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "holder-p4-l3"
+      },
+      {
+        "func": "SET",
+        "property": "display",
+        "value": true
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "holder-p4-l3"
+      },
+      {
+        "func": "SET",
+        "property": "display",
+        "value": false
+      }
+    ],
+    "display": false
+  },
+  "holder-p4-l3": {
+    "type": "holder",
+    "id": "holder-p4-l3",
+    "parent": "seat-p4",
+    "x": -40,
+    "y": 195,
+    "width": 250,
+    "height": 110,
+    "scale": 0.7,
+    "z": 3,
+    "stackOffsetX": 30,
+    "enterRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "holder-p4-l4"
+      },
+      {
+        "func": "SET",
+        "property": "display",
+        "value": true
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "holder-p4-l4"
+      },
+      {
+        "func": "SET",
+        "property": "display",
+        "value": false
+      }
+    ],
+    "display": false
+  },
+  "holder-p4-l4": {
+    "type": "holder",
+    "id": "holder-p4-l4",
+    "parent": "seat-p4",
+    "x": -40,
+    "y": 259,
+    "width": 250,
+    "height": 110,
+    "scale": 0.7,
+    "z": 4,
+    "stackOffsetX": 30,
+    "enterRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "holder-p4-l5"
+      },
+      {
+        "func": "SET",
+        "property": "display",
+        "value": true
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "holder-p4-l5"
+      },
+      {
+        "func": "SET",
+        "property": "display",
+        "value": false
+      }
+    ],
+    "display": false
+  },
+  "holder-p4-l5": {
+    "type": "holder",
+    "id": "holder-p4-l5",
+    "parent": "seat-p4",
+    "x": -40,
+    "y": 323,
+    "width": 250,
+    "height": 110,
+    "scale": 0.7,
+    "z": 5,
+    "stackOffsetX": 30,
+    "enterRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "holder-p4-l6"
+      },
+      {
+        "func": "SET",
+        "property": "display",
+        "value": true
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "holder-p4-l6"
+      },
+      {
+        "func": "SET",
+        "property": "display",
+        "value": false
+      }
+    ],
+    "display": false
+  },
+  "holder-p4-l6": {
+    "type": "holder",
+    "id": "holder-p4-l6",
+    "parent": "seat-p4",
+    "x": -40,
+    "y": 387,
+    "width": 250,
+    "height": 110,
+    "scale": 0.7,
+    "z": 6,
+    "stackOffsetX": 30,
+    "enterRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "holder-p4-l7"
+      },
+      {
+        "func": "SET",
+        "property": "display",
+        "value": true
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "holder-p4-l7"
+      },
+      {
+        "func": "SET",
+        "property": "display",
+        "value": false
+      }
+    ],
+    "display": false
+  },
+  "holder-p4-l7": {
+    "type": "holder",
+    "id": "holder-p4-l7",
+    "parent": "seat-p4",
+    "x": -40,
+    "y": 451,
+    "width": 250,
+    "height": 110,
+    "scale": 0.7,
+    "z": 7,
+    "stackOffsetX": 30,
+    "enterRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "holder-p4-l8"
+      },
+      {
+        "func": "SET",
+        "property": "display",
+        "value": true
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "holder-p4-l8"
+      },
+      {
+        "func": "SET",
+        "property": "display",
+        "value": false
+      }
+    ],
+    "display": false
+  },
+  "holder-p5-l1": {
+    "type": "holder",
+    "id": "holder-p5-l1",
+    "parent": "seat-p5",
+    "x": -40,
+    "y": 67,
+    "width": 250,
+    "height": 110,
+    "scale": 0.7,
+    "z": 1,
+    "stackOffsetX": 30,
+    "enterRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "holder-p5-l2"
+      },
+      {
+        "func": "SET",
+        "property": "display",
+        "value": true
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "holder-p5-l2"
+      },
+      {
+        "func": "SET",
+        "property": "display",
+        "value": false
+      }
+    ]
+  },
+  "holder-p5-l2": {
+    "type": "holder",
+    "id": "holder-p5-l2",
+    "parent": "seat-p5",
+    "x": -40,
+    "y": 131,
+    "width": 250,
+    "height": 110,
+    "scale": 0.7,
+    "z": 2,
+    "stackOffsetX": 30,
+    "enterRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "holder-p5-l3"
+      },
+      {
+        "func": "SET",
+        "property": "display",
+        "value": true
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "holder-p5-l3"
+      },
+      {
+        "func": "SET",
+        "property": "display",
+        "value": false
+      }
+    ],
+    "display": false
+  },
+  "holder-p5-l3": {
+    "type": "holder",
+    "id": "holder-p5-l3",
+    "parent": "seat-p5",
+    "x": -40,
+    "y": 195,
+    "width": 250,
+    "height": 110,
+    "scale": 0.7,
+    "z": 3,
+    "stackOffsetX": 30,
+    "enterRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "holder-p5-l4"
+      },
+      {
+        "func": "SET",
+        "property": "display",
+        "value": true
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "holder-p5-l4"
+      },
+      {
+        "func": "SET",
+        "property": "display",
+        "value": false
+      }
+    ],
+    "display": false
+  },
+  "holder-p5-l4": {
+    "type": "holder",
+    "id": "holder-p5-l4",
+    "parent": "seat-p5",
+    "x": -40,
+    "y": 259,
+    "width": 250,
+    "height": 110,
+    "scale": 0.7,
+    "z": 4,
+    "stackOffsetX": 30,
+    "enterRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "holder-p5-l5"
+      },
+      {
+        "func": "SET",
+        "property": "display",
+        "value": true
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "holder-p5-l5"
+      },
+      {
+        "func": "SET",
+        "property": "display",
+        "value": false
+      }
+    ],
+    "display": false
+  },
+  "holder-p5-l5": {
+    "type": "holder",
+    "id": "holder-p5-l5",
+    "parent": "seat-p5",
+    "x": -40,
+    "y": 323,
+    "width": 250,
+    "height": 110,
+    "scale": 0.7,
+    "z": 5,
+    "stackOffsetX": 30,
+    "enterRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "holder-p5-l6"
+      },
+      {
+        "func": "SET",
+        "property": "display",
+        "value": true
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "holder-p5-l6"
+      },
+      {
+        "func": "SET",
+        "property": "display",
+        "value": false
+      }
+    ],
+    "display": false
+  },
+  "holder-p5-l6": {
+    "type": "holder",
+    "id": "holder-p5-l6",
+    "parent": "seat-p5",
+    "x": -40,
+    "y": 387,
+    "width": 250,
+    "height": 110,
+    "scale": 0.7,
+    "z": 6,
+    "stackOffsetX": 30,
+    "enterRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "holder-p5-l7"
+      },
+      {
+        "func": "SET",
+        "property": "display",
+        "value": true
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "holder-p5-l7"
+      },
+      {
+        "func": "SET",
+        "property": "display",
+        "value": false
+      }
+    ],
+    "display": false
+  },
+  "holder-p5-l7": {
+    "type": "holder",
+    "id": "holder-p5-l7",
+    "parent": "seat-p5",
+    "x": -40,
+    "y": 451,
+    "width": 250,
+    "height": 110,
+    "scale": 0.7,
+    "z": 7,
+    "stackOffsetX": 30,
+    "enterRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "holder-p5-l8"
+      },
+      {
+        "func": "SET",
+        "property": "display",
+        "value": true
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "holder-p5-l8"
+      },
+      {
+        "func": "SET",
+        "property": "display",
+        "value": false
+      }
+    ],
+    "display": false
+  },
+  "button-trash-p2-l1": {
+    "type": "button",
+    "id": "button-trash-p2-l1",
+    "parent": "holder-p2-l1",
+    "x": -110,
+    "y": 6,
+    "width": 50,
+    "height": 50,
+    "z": 12069,
+    "color": "white",
+    "css": {
+      "font-weight": "bold",
+      "border-radius": "5px"
+    },
+    "image": "/i/game-icons.net/delapouite/trash-can.svg",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "holder-p2-l1",
+        "to": "holder-discard",
+        "count": "all"
+      }
+    ]
+  },
+  "button-trash-p2-l2": {
+    "type": "button",
+    "id": "button-trash-p2-l2",
+    "parent": "holder-p2-l2",
+    "x": -110,
+    "y": 6,
+    "width": 50,
+    "height": 50,
+    "z": 12068,
+    "color": "white",
+    "css": {
+      "font-weight": "bold",
+      "border-radius": "5px"
+    },
+    "image": "/i/game-icons.net/delapouite/trash-can.svg",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "holder-p2-l2",
+        "to": "holder-discard",
+        "count": "all"
+      }
+    ]
+  },
+  "button-snatch-p2-l1": {
+    "type": "button",
+    "id": "button-snatch-p2-l1",
+    "parent": "holder-p2-l1",
+    "x": -55,
+    "y": 6,
+    "width": 50,
+    "height": 50,
+    "z": 12040,
+    "color": "white",
+    "css": {
+      "font-weight": "bold",
+      "border-radius": "5px"
+    },
+    "image": "/i/game-icons.net/quoting/card-play.svg",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "clickRoutine": [
+      {
+        "note": "Active player moves all cards in this holder to their hand",
+        "func": "MOVE",
+        "from": "holder-p2-l1",
+        "to": "hand",
+        "count": "all"
+      }
+    ]
+  },
+  "button-snatch-p2-l2": {
+    "type": "button",
+    "id": "button-snatch-p2-l2",
+    "parent": "holder-p2-l2",
+    "x": -55,
+    "y": 6,
+    "width": 50,
+    "height": 50,
+    "z": 12040,
+    "color": "white",
+    "css": {
+      "font-weight": "bold",
+      "border-radius": "5px"
+    },
+    "image": "/i/game-icons.net/quoting/card-play.svg",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "clickRoutine": [
+      {
+        "note": "Active player moves all cards in this holder to their hand",
+        "func": "MOVE",
+        "from": "holder-p2-l2",
+        "to": "hand",
+        "count": "all"
+      }
+    ]
+  },
+  "button-trash-p2-l3": {
+    "type": "button",
+    "id": "button-trash-p2-l3",
+    "parent": "holder-p2-l3",
+    "x": -109,
+    "y": 6,
+    "width": 50,
+    "height": 50,
+    "z": 12042,
+    "color": "white",
+    "css": {
+      "font-weight": "bold",
+      "border-radius": "5px"
+    },
+    "image": "/i/game-icons.net/delapouite/trash-can.svg",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "holder-p2-l3",
+        "to": "holder-discard",
+        "count": "all"
+      }
+    ]
+  },
+  "button-snatch-p2-l3": {
+    "type": "button",
+    "id": "button-snatch-p2-l3",
+    "parent": "holder-p2-l3",
+    "x": -55,
+    "y": 6,
+    "width": 50,
+    "height": 50,
+    "z": 12040,
+    "color": "white",
+    "css": {
+      "font-weight": "bold",
+      "border-radius": "5px"
+    },
+    "image": "/i/game-icons.net/quoting/card-play.svg",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "clickRoutine": [
+      {
+        "note": "Active player moves all cards in this holder to their hand",
+        "func": "MOVE",
+        "from": "holder-p2-l3",
+        "to": "hand",
+        "count": "all"
+      }
+    ]
+  },
+  "button-snatch-p2-l4": {
+    "type": "button",
+    "id": "button-snatch-p2-l4",
+    "parent": "holder-p2-l4",
+    "x": -55,
+    "y": 6,
+    "width": 50,
+    "height": 50,
+    "z": 12040,
+    "color": "white",
+    "css": {
+      "font-weight": "bold",
+      "border-radius": "5px"
+    },
+    "image": "/i/game-icons.net/quoting/card-play.svg",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "clickRoutine": [
+      {
+        "note": "Active player moves all cards in this holder to their hand",
+        "func": "MOVE",
+        "from": "holder-p2-l4",
+        "to": "hand",
+        "count": "all"
+      }
+    ]
+  },
+  "button-trash-p2-l4": {
+    "type": "button",
+    "id": "button-trash-p2-l4",
+    "parent": "holder-p2-l4",
+    "x": -109,
+    "y": 6,
+    "width": 50,
+    "height": 50,
+    "z": 12042,
+    "color": "white",
+    "css": {
+      "font-weight": "bold",
+      "border-radius": "5px"
+    },
+    "image": "/i/game-icons.net/delapouite/trash-can.svg",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "holder-p2-l4",
+        "to": "holder-discard",
+        "count": "all"
+      }
+    ]
+  },
+  "button-trash-p2-l5": {
+    "type": "button",
+    "id": "button-trash-p2-l5",
+    "parent": "holder-p2-l5",
+    "x": -109,
+    "y": 6,
+    "width": 50,
+    "height": 50,
+    "z": 12042,
+    "color": "white",
+    "css": {
+      "font-weight": "bold",
+      "border-radius": "5px"
+    },
+    "image": "/i/game-icons.net/delapouite/trash-can.svg",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "holder-p2-l5",
+        "to": "holder-discard",
+        "count": "all"
+      }
+    ]
+  },
+  "button-snatch-p2-l5": {
+    "type": "button",
+    "id": "button-snatch-p2-l5",
+    "parent": "holder-p2-l5",
+    "x": -55,
+    "y": 6,
+    "width": 50,
+    "height": 50,
+    "z": 12040,
+    "color": "white",
+    "css": {
+      "font-weight": "bold",
+      "border-radius": "5px"
+    },
+    "image": "/i/game-icons.net/quoting/card-play.svg",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "clickRoutine": [
+      {
+        "note": "Active player moves all cards in this holder to their hand",
+        "func": "MOVE",
+        "from": "holder-p2-l5",
+        "to": "hand",
+        "count": "all"
+      }
+    ]
+  },
+  "button-snatch-p2-l6": {
+    "type": "button",
+    "id": "button-snatch-p2-l6",
+    "parent": "holder-p2-l6",
+    "x": -55,
+    "y": 6,
+    "width": 50,
+    "height": 50,
+    "z": 12040,
+    "color": "white",
+    "css": {
+      "font-weight": "bold",
+      "border-radius": "5px"
+    },
+    "image": "/i/game-icons.net/quoting/card-play.svg",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "clickRoutine": [
+      {
+        "note": "Active player moves all cards in this holder to their hand",
+        "func": "MOVE",
+        "from": "holder-p2-l6",
+        "to": "hand",
+        "count": "all"
+      }
+    ]
+  },
+  "button-trash-p2-l6": {
+    "type": "button",
+    "id": "button-trash-p2-l6",
+    "parent": "holder-p2-l6",
+    "x": -109,
+    "y": 6,
+    "width": 50,
+    "height": 50,
+    "z": 12042,
+    "color": "white",
+    "css": {
+      "font-weight": "bold",
+      "border-radius": "5px"
+    },
+    "image": "/i/game-icons.net/delapouite/trash-can.svg",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "holder-p2-l6",
+        "to": "holder-discard",
+        "count": "all"
+      }
+    ]
+  },
+  "button-snatch-p2-l7": {
+    "type": "button",
+    "id": "button-snatch-p2-l7",
+    "parent": "holder-p2-l7",
+    "x": -55,
+    "y": 6,
+    "width": 50,
+    "height": 50,
+    "z": 12040,
+    "color": "white",
+    "css": {
+      "font-weight": "bold",
+      "border-radius": "5px"
+    },
+    "image": "/i/game-icons.net/quoting/card-play.svg",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "clickRoutine": [
+      {
+        "note": "Active player moves all cards in this holder to their hand",
+        "func": "MOVE",
+        "from": "holder-p2-l7",
+        "to": "hand",
+        "count": "all"
+      }
+    ]
+  },
+  "button-trash-p2-l7": {
+    "type": "button",
+    "id": "button-trash-p2-l7",
+    "parent": "holder-p2-l7",
+    "x": -109,
+    "y": 6,
+    "width": 50,
+    "height": 50,
+    "z": 12042,
+    "color": "white",
+    "css": {
+      "font-weight": "bold",
+      "border-radius": "5px"
+    },
+    "image": "/i/game-icons.net/delapouite/trash-can.svg",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "holder-p2-l7",
+        "to": "holder-discard",
+        "count": "all"
+      }
+    ]
+  },
+  "button-trash-p3-l1": {
+    "type": "button",
+    "id": "button-trash-p3-l1",
+    "parent": "holder-p3-l1",
+    "x": -110,
+    "y": 6,
+    "width": 50,
+    "height": 50,
+    "z": 12069,
+    "color": "white",
+    "css": {
+      "font-weight": "bold",
+      "border-radius": "5px"
+    },
+    "image": "/i/game-icons.net/delapouite/trash-can.svg",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "holder-p3-l1",
+        "to": "holder-discard",
+        "count": "all"
+      }
+    ]
+  },
+  "button-snatch-p3-l1": {
+    "type": "button",
+    "id": "button-snatch-p3-l1",
+    "parent": "holder-p3-l1",
+    "x": -55,
+    "y": 6,
+    "width": 50,
+    "height": 50,
+    "z": 12040,
+    "color": "white",
+    "css": {
+      "font-weight": "bold",
+      "border-radius": "5px"
+    },
+    "image": "/i/game-icons.net/quoting/card-play.svg",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "clickRoutine": [
+      {
+        "note": "Active player moves all cards in this holder to their hand",
+        "func": "MOVE",
+        "from": "holder-p3-l1",
+        "to": "hand",
+        "count": "all"
+      }
+    ]
+  },
+  "button-snatch-p3-l2": {
+    "type": "button",
+    "id": "button-snatch-p3-l2",
+    "parent": "holder-p3-l2",
+    "x": -55,
+    "y": 6,
+    "width": 50,
+    "height": 50,
+    "z": 12040,
+    "color": "white",
+    "css": {
+      "font-weight": "bold",
+      "border-radius": "5px"
+    },
+    "image": "/i/game-icons.net/quoting/card-play.svg",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "clickRoutine": [
+      {
+        "note": "Active player moves all cards in this holder to their hand",
+        "func": "MOVE",
+        "from": "holder-p3-l2",
+        "to": "hand",
+        "count": "all"
+      }
+    ]
+  },
+  "button-trash-p3-l2": {
+    "type": "button",
+    "id": "button-trash-p3-l2",
+    "parent": "holder-p3-l2",
+    "x": -110,
+    "y": 6,
+    "width": 50,
+    "height": 50,
+    "z": 12068,
+    "color": "white",
+    "css": {
+      "font-weight": "bold",
+      "border-radius": "5px"
+    },
+    "image": "/i/game-icons.net/delapouite/trash-can.svg",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "holder-p3-l2",
+        "to": "holder-discard",
+        "count": "all"
+      }
+    ]
+  },
+  "button-trash-p3-l3": {
+    "type": "button",
+    "id": "button-trash-p3-l3",
+    "parent": "holder-p3-l3",
+    "x": -109,
+    "y": 6,
+    "width": 50,
+    "height": 50,
+    "z": 12042,
+    "color": "white",
+    "css": {
+      "font-weight": "bold",
+      "border-radius": "5px"
+    },
+    "image": "/i/game-icons.net/delapouite/trash-can.svg",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "holder-p3-l3",
+        "to": "holder-discard",
+        "count": "all"
+      }
+    ]
+  },
+  "button-snatch-p3-l3": {
+    "type": "button",
+    "id": "button-snatch-p3-l3",
+    "parent": "holder-p3-l3",
+    "x": -56,
+    "y": 6,
+    "width": 50,
+    "height": 50,
+    "z": 12087,
+    "color": "white",
+    "css": {
+      "font-weight": "bold",
+      "border-radius": "5px"
+    },
+    "image": "/i/game-icons.net/quoting/card-play.svg",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "clickRoutine": [
+      {
+        "note": "Active player moves all cards in this holder to their hand",
+        "func": "MOVE",
+        "from": "holder-p3-l3",
+        "to": "hand",
+        "count": "all"
+      }
+    ]
+  },
+  "button-snatch-p3-l4": {
+    "type": "button",
+    "id": "button-snatch-p3-l4",
+    "parent": "holder-p3-l4",
+    "x": -55,
+    "y": 6,
+    "width": 50,
+    "height": 50,
+    "z": 12040,
+    "color": "white",
+    "css": {
+      "font-weight": "bold",
+      "border-radius": "5px"
+    },
+    "image": "/i/game-icons.net/quoting/card-play.svg",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "clickRoutine": [
+      {
+        "note": "Active player moves all cards in this holder to their hand",
+        "func": "MOVE",
+        "from": "holder-p3-l4",
+        "to": "hand",
+        "count": "all"
+      }
+    ]
+  },
+  "button-trash-p3-l4": {
+    "type": "button",
+    "id": "button-trash-p3-l4",
+    "parent": "holder-p3-l4",
+    "x": -109,
+    "y": 6,
+    "width": 50,
+    "height": 50,
+    "z": 12042,
+    "color": "white",
+    "css": {
+      "font-weight": "bold",
+      "border-radius": "5px"
+    },
+    "image": "/i/game-icons.net/delapouite/trash-can.svg",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "holder-p3-l4",
+        "to": "holder-discard",
+        "count": "all"
+      }
+    ]
+  },
+  "button-snatch-p3-l5": {
+    "type": "button",
+    "id": "button-snatch-p3-l5",
+    "parent": "holder-p3-l5",
+    "x": -55,
+    "y": 6,
+    "width": 50,
+    "height": 50,
+    "z": 12040,
+    "color": "white",
+    "css": {
+      "font-weight": "bold",
+      "border-radius": "5px"
+    },
+    "image": "/i/game-icons.net/quoting/card-play.svg",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "clickRoutine": [
+      {
+        "note": "Active player moves all cards in this holder to their hand",
+        "func": "MOVE",
+        "from": "holder-p3-l5",
+        "to": "hand",
+        "count": "all"
+      }
+    ]
+  },
+  "button-trash-p3-l5": {
+    "type": "button",
+    "id": "button-trash-p3-l5",
+    "parent": "holder-p3-l5",
+    "x": -109,
+    "y": 6,
+    "width": 50,
+    "height": 50,
+    "z": 12042,
+    "color": "white",
+    "css": {
+      "font-weight": "bold",
+      "border-radius": "5px"
+    },
+    "image": "/i/game-icons.net/delapouite/trash-can.svg",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "holder-p3-l5",
+        "to": "holder-discard",
+        "count": "all"
+      }
+    ]
+  },
+  "button-snatch-p3-l6": {
+    "type": "button",
+    "id": "button-snatch-p3-l6",
+    "parent": "holder-p3-l6",
+    "x": -55,
+    "y": 6,
+    "width": 50,
+    "height": 50,
+    "z": 12040,
+    "color": "white",
+    "css": {
+      "font-weight": "bold",
+      "border-radius": "5px"
+    },
+    "image": "/i/game-icons.net/quoting/card-play.svg",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "clickRoutine": [
+      {
+        "note": "Active player moves all cards in this holder to their hand",
+        "func": "MOVE",
+        "from": "holder-p3-l6",
+        "to": "hand",
+        "count": "all"
+      }
+    ]
+  },
+  "button-trash-p3-l6": {
+    "type": "button",
+    "id": "button-trash-p3-l6",
+    "parent": "holder-p3-l6",
+    "x": -109,
+    "y": 6,
+    "width": 50,
+    "height": 50,
+    "z": 12042,
+    "color": "white",
+    "css": {
+      "font-weight": "bold",
+      "border-radius": "5px"
+    },
+    "image": "/i/game-icons.net/delapouite/trash-can.svg",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "holder-p3-l6",
+        "to": "holder-discard",
+        "count": "all"
+      }
+    ]
+  },
+  "button-snatch-p3-l7": {
+    "type": "button",
+    "id": "button-snatch-p3-l7",
+    "parent": "holder-p3-l7",
+    "x": -55,
+    "y": 6,
+    "width": 50,
+    "height": 50,
+    "z": 12040,
+    "color": "white",
+    "css": {
+      "font-weight": "bold",
+      "border-radius": "5px"
+    },
+    "image": "/i/game-icons.net/quoting/card-play.svg",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "clickRoutine": [
+      {
+        "note": "Active player moves all cards in this holder to their hand",
+        "func": "MOVE",
+        "from": "holder-p3-l7",
+        "to": "hand",
+        "count": "all"
+      }
+    ]
+  },
+  "button-trash-p3-l7": {
+    "type": "button",
+    "id": "button-trash-p3-l7",
+    "parent": "holder-p3-l7",
+    "x": -109,
+    "y": 6,
+    "width": 50,
+    "height": 50,
+    "z": 12042,
+    "color": "white",
+    "css": {
+      "font-weight": "bold",
+      "border-radius": "5px"
+    },
+    "image": "/i/game-icons.net/delapouite/trash-can.svg",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "holder-p3-l7",
+        "to": "holder-discard",
+        "count": "all"
+      }
+    ]
+  },
+  "button-trash-p4-l1": {
+    "type": "button",
+    "id": "button-trash-p4-l1",
+    "parent": "holder-p4-l1",
+    "x": -110,
+    "y": 6,
+    "width": 50,
+    "height": 50,
+    "z": 12069,
+    "color": "white",
+    "css": {
+      "font-weight": "bold",
+      "border-radius": "5px"
+    },
+    "image": "/i/game-icons.net/delapouite/trash-can.svg",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "holder-p4-l1",
+        "to": "holder-discard",
+        "count": "all"
+      }
+    ]
+  },
+  "button-snatch-p4-l1": {
+    "type": "button",
+    "id": "button-snatch-p4-l1",
+    "parent": "holder-p4-l1",
+    "x": -55,
+    "y": 6,
+    "width": 50,
+    "height": 50,
+    "z": 12040,
+    "color": "white",
+    "css": {
+      "font-weight": "bold",
+      "border-radius": "5px"
+    },
+    "image": "/i/game-icons.net/quoting/card-play.svg",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "clickRoutine": [
+      {
+        "note": "Active player moves all cards in this holder to their hand",
+        "func": "MOVE",
+        "from": "holder-p4-l1",
+        "to": "hand",
+        "count": "all"
+      }
+    ]
+  },
+  "button-snatch-p4-l2": {
+    "type": "button",
+    "id": "button-snatch-p4-l2",
+    "parent": "holder-p4-l2",
+    "x": -55,
+    "y": 6,
+    "width": 50,
+    "height": 50,
+    "z": 12040,
+    "color": "white",
+    "css": {
+      "font-weight": "bold",
+      "border-radius": "5px"
+    },
+    "image": "/i/game-icons.net/quoting/card-play.svg",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "clickRoutine": [
+      {
+        "note": "Active player moves all cards in this holder to their hand",
+        "func": "MOVE",
+        "from": "holder-p4-l2",
+        "to": "hand",
+        "count": "all"
+      }
+    ]
+  },
+  "button-trash-p4-l2": {
+    "type": "button",
+    "id": "button-trash-p4-l2",
+    "parent": "holder-p4-l2",
+    "x": -110,
+    "y": 6,
+    "width": 50,
+    "height": 50,
+    "z": 12068,
+    "color": "white",
+    "css": {
+      "font-weight": "bold",
+      "border-radius": "5px"
+    },
+    "image": "/i/game-icons.net/delapouite/trash-can.svg",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "holder-p4-l2",
+        "to": "holder-discard",
+        "count": "all"
+      }
+    ]
+  },
+  "button-snatch-p4-l3": {
+    "type": "button",
+    "id": "button-snatch-p4-l3",
+    "parent": "holder-p4-l3",
+    "x": -55,
+    "y": 6,
+    "width": 50,
+    "height": 50,
+    "z": 12040,
+    "color": "white",
+    "css": {
+      "font-weight": "bold",
+      "border-radius": "5px"
+    },
+    "image": "/i/game-icons.net/quoting/card-play.svg",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "clickRoutine": [
+      {
+        "note": "Active player moves all cards in this holder to their hand",
+        "func": "MOVE",
+        "from": "holder-p4-l3",
+        "to": "hand",
+        "count": "all"
+      }
+    ]
+  },
+  "button-trash-p4-l3": {
+    "type": "button",
+    "id": "button-trash-p4-l3",
+    "parent": "holder-p4-l3",
+    "x": -109,
+    "y": 6,
+    "width": 50,
+    "height": 50,
+    "z": 12042,
+    "color": "white",
+    "css": {
+      "font-weight": "bold",
+      "border-radius": "5px"
+    },
+    "image": "/i/game-icons.net/delapouite/trash-can.svg",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "holder-p4-l3",
+        "to": "holder-discard",
+        "count": "all"
+      }
+    ]
+  },
+  "button-snatch-p4-l4": {
+    "type": "button",
+    "id": "button-snatch-p4-l4",
+    "parent": "holder-p4-l4",
+    "x": -55,
+    "y": 6,
+    "width": 50,
+    "height": 50,
+    "z": 12040,
+    "color": "white",
+    "css": {
+      "font-weight": "bold",
+      "border-radius": "5px"
+    },
+    "image": "/i/game-icons.net/quoting/card-play.svg",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "clickRoutine": [
+      {
+        "note": "Active player moves all cards in this holder to their hand",
+        "func": "MOVE",
+        "from": "holder-p4-l4",
+        "to": "hand",
+        "count": "all"
+      }
+    ]
+  },
+  "button-trash-p4-l4": {
+    "type": "button",
+    "id": "button-trash-p4-l4",
+    "parent": "holder-p4-l4",
+    "x": -109,
+    "y": 6,
+    "width": 50,
+    "height": 50,
+    "z": 12042,
+    "color": "white",
+    "css": {
+      "font-weight": "bold",
+      "border-radius": "5px"
+    },
+    "image": "/i/game-icons.net/delapouite/trash-can.svg",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "holder-p4-l4",
+        "to": "holder-discard",
+        "count": "all"
+      }
+    ]
+  },
+  "button-snatch-p4-l5": {
+    "type": "button",
+    "id": "button-snatch-p4-l5",
+    "parent": "holder-p4-l5",
+    "x": -55,
+    "y": 6,
+    "width": 50,
+    "height": 50,
+    "z": 12040,
+    "color": "white",
+    "css": {
+      "font-weight": "bold",
+      "border-radius": "5px"
+    },
+    "image": "/i/game-icons.net/quoting/card-play.svg",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "clickRoutine": [
+      {
+        "note": "Active player moves all cards in this holder to their hand",
+        "func": "MOVE",
+        "from": "holder-p4-l5",
+        "to": "hand",
+        "count": "all"
+      }
+    ]
+  },
+  "button-trash-p4-l5": {
+    "type": "button",
+    "id": "button-trash-p4-l5",
+    "parent": "holder-p4-l5",
+    "x": -109,
+    "y": 6,
+    "width": 50,
+    "height": 50,
+    "z": 12042,
+    "color": "white",
+    "css": {
+      "font-weight": "bold",
+      "border-radius": "5px"
+    },
+    "image": "/i/game-icons.net/delapouite/trash-can.svg",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "holder-p4-l5",
+        "to": "holder-discard",
+        "count": "all"
+      }
+    ]
+  },
+  "button-snatch-p4-l6": {
+    "type": "button",
+    "id": "button-snatch-p4-l6",
+    "parent": "holder-p4-l6",
+    "x": -55,
+    "y": 6,
+    "width": 50,
+    "height": 50,
+    "z": 12040,
+    "color": "white",
+    "css": {
+      "font-weight": "bold",
+      "border-radius": "5px"
+    },
+    "image": "/i/game-icons.net/quoting/card-play.svg",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "clickRoutine": [
+      {
+        "note": "Active player moves all cards in this holder to their hand",
+        "func": "MOVE",
+        "from": "holder-p4-l6",
+        "to": "hand",
+        "count": "all"
+      }
+    ]
+  },
+  "button-trash-p4-l6": {
+    "type": "button",
+    "id": "button-trash-p4-l6",
+    "parent": "holder-p4-l6",
+    "x": -109,
+    "y": 6,
+    "width": 50,
+    "height": 50,
+    "z": 12042,
+    "color": "white",
+    "css": {
+      "font-weight": "bold",
+      "border-radius": "5px"
+    },
+    "image": "/i/game-icons.net/delapouite/trash-can.svg",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "holder-p4-l6",
+        "to": "holder-discard",
+        "count": "all"
+      }
+    ]
+  },
+  "button-snatch-p4-l7": {
+    "type": "button",
+    "id": "button-snatch-p4-l7",
+    "parent": "holder-p4-l7",
+    "x": -55,
+    "y": 6,
+    "width": 50,
+    "height": 50,
+    "z": 12040,
+    "color": "white",
+    "css": {
+      "font-weight": "bold",
+      "border-radius": "5px"
+    },
+    "image": "/i/game-icons.net/quoting/card-play.svg",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "clickRoutine": [
+      {
+        "note": "Active player moves all cards in this holder to their hand",
+        "func": "MOVE",
+        "from": "holder-p4-l7",
+        "to": "hand",
+        "count": "all"
+      }
+    ]
+  },
+  "button-trash-p4-l7": {
+    "type": "button",
+    "id": "button-trash-p4-l7",
+    "parent": "holder-p4-l7",
+    "x": -109,
+    "y": 6,
+    "width": 50,
+    "height": 50,
+    "z": 12042,
+    "color": "white",
+    "css": {
+      "font-weight": "bold",
+      "border-radius": "5px"
+    },
+    "image": "/i/game-icons.net/delapouite/trash-can.svg",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "holder-p4-l7",
+        "to": "holder-discard",
+        "count": "all"
+      }
+    ]
+  },
+  "button-snatch-p5-l1": {
+    "type": "button",
+    "id": "button-snatch-p5-l1",
+    "parent": "holder-p5-l1",
+    "x": -55,
+    "y": 6,
+    "width": 50,
+    "height": 50,
+    "z": 12040,
+    "color": "white",
+    "css": {
+      "font-weight": "bold",
+      "border-radius": "5px"
+    },
+    "image": "/i/game-icons.net/quoting/card-play.svg",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "clickRoutine": [
+      {
+        "note": "Active player moves all cards in this holder to their hand",
+        "func": "MOVE",
+        "from": "holder-p5-l1",
+        "to": "hand",
+        "count": "all"
+      }
+    ]
+  },
+  "button-trash-p5-l1": {
+    "type": "button",
+    "id": "button-trash-p5-l1",
+    "parent": "holder-p5-l1",
+    "x": -110,
+    "y": 6,
+    "width": 50,
+    "height": 50,
+    "z": 12069,
+    "color": "white",
+    "css": {
+      "font-weight": "bold",
+      "border-radius": "5px"
+    },
+    "image": "/i/game-icons.net/delapouite/trash-can.svg",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "holder-p5-l1",
+        "to": "holder-discard",
+        "count": "all"
+      }
+    ]
+  },
+  "button-snatch-p5-l2": {
+    "type": "button",
+    "id": "button-snatch-p5-l2",
+    "parent": "holder-p5-l2",
+    "x": -55,
+    "y": 6,
+    "width": 50,
+    "height": 50,
+    "z": 12040,
+    "color": "white",
+    "css": {
+      "font-weight": "bold",
+      "border-radius": "5px"
+    },
+    "image": "/i/game-icons.net/quoting/card-play.svg",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "clickRoutine": [
+      {
+        "note": "Active player moves all cards in this holder to their hand",
+        "func": "MOVE",
+        "from": "holder-p5-l2",
+        "to": "hand",
+        "count": "all"
+      }
+    ]
+  },
+  "button-trash-p5-l2": {
+    "type": "button",
+    "id": "button-trash-p5-l2",
+    "parent": "holder-p5-l2",
+    "x": -110,
+    "y": 6,
+    "width": 50,
+    "height": 50,
+    "z": 12068,
+    "color": "white",
+    "css": {
+      "font-weight": "bold",
+      "border-radius": "5px"
+    },
+    "image": "/i/game-icons.net/delapouite/trash-can.svg",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "holder-p5-l2",
+        "to": "holder-discard",
+        "count": "all"
+      }
+    ]
+  },
+  "button-snatch-p5-l3": {
+    "type": "button",
+    "id": "button-snatch-p5-l3",
+    "parent": "holder-p5-l3",
+    "x": -55,
+    "y": 6,
+    "width": 50,
+    "height": 50,
+    "z": 12040,
+    "color": "white",
+    "css": {
+      "font-weight": "bold",
+      "border-radius": "5px"
+    },
+    "image": "/i/game-icons.net/quoting/card-play.svg",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "clickRoutine": [
+      {
+        "note": "Active player moves all cards in this holder to their hand",
+        "func": "MOVE",
+        "from": "holder-p5-l3",
+        "to": "hand",
+        "count": "all"
+      }
+    ]
+  },
+  "button-trash-p5-l3": {
+    "type": "button",
+    "id": "button-trash-p5-l3",
+    "parent": "holder-p5-l3",
+    "x": -109,
+    "y": 6,
+    "width": 50,
+    "height": 50,
+    "z": 12042,
+    "color": "white",
+    "css": {
+      "font-weight": "bold",
+      "border-radius": "5px"
+    },
+    "image": "/i/game-icons.net/delapouite/trash-can.svg",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "holder-p5-l3",
+        "to": "holder-discard",
+        "count": "all"
+      }
+    ]
+  },
+  "button-snatch-p5-l4": {
+    "type": "button",
+    "id": "button-snatch-p5-l4",
+    "parent": "holder-p5-l4",
+    "x": -55,
+    "y": 6,
+    "width": 50,
+    "height": 50,
+    "z": 12040,
+    "color": "white",
+    "css": {
+      "font-weight": "bold",
+      "border-radius": "5px"
+    },
+    "image": "/i/game-icons.net/quoting/card-play.svg",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "clickRoutine": [
+      {
+        "note": "Active player moves all cards in this holder to their hand",
+        "func": "MOVE",
+        "from": "holder-p5-l4",
+        "to": "hand",
+        "count": "all"
+      }
+    ]
+  },
+  "button-trash-p5-l4": {
+    "type": "button",
+    "id": "button-trash-p5-l4",
+    "parent": "holder-p5-l4",
+    "x": -109,
+    "y": 6,
+    "width": 50,
+    "height": 50,
+    "z": 12042,
+    "color": "white",
+    "css": {
+      "font-weight": "bold",
+      "border-radius": "5px"
+    },
+    "image": "/i/game-icons.net/delapouite/trash-can.svg",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "holder-p5-l4",
+        "to": "holder-discard",
+        "count": "all"
+      }
+    ]
+  },
+  "button-snatch-p5-l5": {
+    "type": "button",
+    "id": "button-snatch-p5-l5",
+    "parent": "holder-p5-l5",
+    "x": -55,
+    "y": 6,
+    "width": 50,
+    "height": 50,
+    "z": 12040,
+    "color": "white",
+    "css": {
+      "font-weight": "bold",
+      "border-radius": "5px"
+    },
+    "image": "/i/game-icons.net/quoting/card-play.svg",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "clickRoutine": [
+      {
+        "note": "Active player moves all cards in this holder to their hand",
+        "func": "MOVE",
+        "from": "holder-p5-l5",
+        "to": "hand",
+        "count": "all"
+      }
+    ]
+  },
+  "button-trash-p5-l5": {
+    "type": "button",
+    "id": "button-trash-p5-l5",
+    "parent": "holder-p5-l5",
+    "x": -109,
+    "y": 6,
+    "width": 50,
+    "height": 50,
+    "z": 12042,
+    "color": "white",
+    "css": {
+      "font-weight": "bold",
+      "border-radius": "5px"
+    },
+    "image": "/i/game-icons.net/delapouite/trash-can.svg",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "holder-p5-l5",
+        "to": "holder-discard",
+        "count": "all"
+      }
+    ]
+  },
+  "button-snatch-p5-l6": {
+    "type": "button",
+    "id": "button-snatch-p5-l6",
+    "parent": "holder-p5-l6",
+    "x": -55,
+    "y": 6,
+    "width": 50,
+    "height": 50,
+    "z": 12040,
+    "color": "white",
+    "css": {
+      "font-weight": "bold",
+      "border-radius": "5px"
+    },
+    "image": "/i/game-icons.net/quoting/card-play.svg",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "clickRoutine": [
+      {
+        "note": "Active player moves all cards in this holder to their hand",
+        "func": "MOVE",
+        "from": "holder-p5-l6",
+        "to": "hand",
+        "count": "all"
+      }
+    ]
+  },
+  "button-trash-p5-l6": {
+    "type": "button",
+    "id": "button-trash-p5-l6",
+    "parent": "holder-p5-l6",
+    "x": -109,
+    "y": 6,
+    "width": 50,
+    "height": 50,
+    "z": 12042,
+    "color": "white",
+    "css": {
+      "font-weight": "bold",
+      "border-radius": "5px"
+    },
+    "image": "/i/game-icons.net/delapouite/trash-can.svg",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "holder-p5-l6",
+        "to": "holder-discard",
+        "count": "all"
+      }
+    ]
+  },
+  "button-snatch-p5-l7": {
+    "type": "button",
+    "id": "button-snatch-p5-l7",
+    "parent": "holder-p5-l7",
+    "x": -55,
+    "y": 6,
+    "width": 50,
+    "height": 50,
+    "z": 12040,
+    "color": "white",
+    "css": {
+      "font-weight": "bold",
+      "border-radius": "5px"
+    },
+    "image": "/i/game-icons.net/quoting/card-play.svg",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "clickRoutine": [
+      {
+        "note": "Active player moves all cards in this holder to their hand",
+        "func": "MOVE",
+        "from": "holder-p5-l7",
+        "to": "hand",
+        "count": "all"
+      }
+    ]
+  },
+  "button-trash-p5-l7": {
+    "type": "button",
+    "id": "button-trash-p5-l7",
+    "parent": "holder-p5-l7",
+    "x": -109,
+    "y": 6,
+    "width": 50,
+    "height": 50,
+    "z": 12042,
+    "color": "white",
+    "css": {
+      "font-weight": "bold",
+      "border-radius": "5px"
+    },
+    "image": "/i/game-icons.net/delapouite/trash-can.svg",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "holder-p5-l7",
+        "to": "holder-discard",
+        "count": "all"
+      }
+    ]
+  },
+  "1_turn_holder": {
+    "type": "holder",
+    "id": "1_turn_holder",
+    "x": 78,
+    "z": 5369,
+    "css": {
+      "default": {
+        "background-color": "transparent",
+        "border": "0px solid black",
+        "border-radius": "5px",
+        "display": "flex",
+        "text-align": "center",
+        "font-size": "11px",
+        "align-items": "center"
+      }
+    },
+    "width": 80,
+    "height": 60,
+    "y": 11
+  },
+  "button-endturn-p1": {
+    "type": "button",
+    "id": "button-endturn-p1",
+    "x": -82,
+    "y": -8,
+    "width": 70,
+    "height": 50,
+    "z": 12111,
+    "css": "color:#000000;font-size:18px;font-weight:900;border-radius:10px;background-color:#999999",
+    "text": "End Turn",
+    "clickRoutine": [
+      {
+        "func": "TURN",
+        "turnCycle": "forward"
+      }
+    ],
+    "parent": "seat-p1"
+  },
+  "button-endturn-p4": {
+    "type": "button",
+    "id": "button-endturn-p4",
+    "x": -79,
+    "y": -8,
+    "width": 70,
+    "height": 50,
+    "z": 12104,
+    "css": "color:#000000;font-size:18px;font-weight:900;border-radius:10px;background-color:#999999",
+    "text": "End Turn",
+    "clickRoutine": [
+      {
+        "func": "TURN",
+        "turnCycle": "forward"
+      }
+    ],
+    "parent": "seat-p4"
+  },
+  "button-endturn-p2": {
+    "type": "button",
+    "id": "button-endturn-p2",
+    "x": -79,
+    "width": 70,
+    "height": 50,
+    "z": 12105,
+    "css": "color:#000000;font-size:18px;font-weight:900;border-radius:10px;background-color:#999999",
+    "text": "End Turn",
+    "clickRoutine": [
+      {
+        "func": "TURN",
+        "turnCycle": "forward"
+      }
+    ],
+    "parent": "seat-p2",
+    "y": -8
+  },
+  "button-endturn-p3": {
+    "type": "button",
+    "id": "button-endturn-p3",
+    "x": -79,
+    "width": 70,
+    "height": 50,
+    "z": 12105,
+    "css": "color:#000000;font-size:18px;font-weight:900;border-radius:10px;background-color:#999999",
+    "text": "End Turn",
+    "clickRoutine": [
+      {
+        "func": "TURN",
+        "turnCycle": "forward"
+      }
+    ],
+    "parent": "seat-p3",
+    "y": -8
+  },
+  "button-endturn-p5": {
+    "type": "button",
+    "id": "button-endturn-p5",
+    "x": -79,
+    "width": 70,
+    "height": 50,
+    "z": 12105,
+    "css": "color:#000000;font-size:18px;font-weight:900;border-radius:10px;background-color:#999999",
+    "text": "End Turn",
+    "clickRoutine": [
+      {
+        "func": "TURN",
+        "turnCycle": "forward"
+      }
+    ],
+    "parent": "seat-p5",
+    "y": -8
+  },
+  "gilk": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "1-cat",
+    "id": "gilk",
+    "z": 38648,
+    "parent": "a80a"
+  },
+  "illn": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "1-cat",
+    "id": "illn",
+    "z": 38625,
+    "parent": "a80a"
+  },
+  "a80a": {
+    "type": "pile",
+    "width": 100,
+    "height": 140,
+    "handleCSS": {
+      "border": "2px solid black",
+      "font-size": "24px",
+      "color": "white",
+      "font-weight": "bold",
+      "text-align": "center",
+      "line-height": "32px",
+      "background-color": "gray",
+      "text-shadow": "2px 2px 3px black",
+      "background-image": "url('/i/game-icons.net/lorc/poker-hand.svg')"
+    },
+    "handleSize": "auto",
+    "handleOffset": 15,
+    "handlePosition": "top right",
+    "id": "a80a",
+    "z": 36736,
+    "parent": "holder-deck"
+  },
+  "9o5u": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "1-cat",
+    "id": "9o5u",
+    "z": 38663,
+    "parent": "a80a"
+  },
+  "zkd6": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "1-cat",
+    "id": "zkd6",
+    "z": 38664,
+    "parent": "a80a"
+  },
+  "vn4g": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "1-cat",
+    "id": "vn4g",
+    "z": 38629,
+    "parent": "a80a"
+  },
+  "1ny8": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "1-cat",
+    "id": "1ny8",
+    "z": 38620,
+    "parent": "a80a"
+  },
+  "srfh": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "1-cat",
+    "id": "srfh",
+    "z": 38632,
+    "parent": "a80a"
+  },
+  "tlh1": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "1-cat",
+    "id": "tlh1",
+    "z": 38584,
+    "parent": "a80a"
+  },
+  "j62m": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "2-mite",
+    "id": "j62m",
+    "z": 38578,
+    "parent": "a80a"
+  },
+  "t7tj": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "2-mite",
+    "id": "t7tj",
+    "z": 38586,
+    "parent": "a80a"
+  },
+  "xkay": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "2-mite",
+    "id": "xkay",
+    "z": 38634,
+    "parent": "a80a",
+    "x": null,
+    "y": null
+  },
+  "2yn8": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "2-mite",
+    "id": "2yn8",
+    "z": 38686,
+    "parent": "holder-market-2",
+    "activeFace": 1,
+    "x": 4,
+    "y": 4
+  },
+  "ge0m": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "2-mite",
+    "id": "ge0m",
+    "z": 38593,
+    "parent": "a80a"
+  },
+  "fcc3": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "2-mite",
+    "id": "fcc3",
+    "z": 38631,
+    "parent": "a80a"
+  },
+  "yz37": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "2-mite",
+    "id": "yz37",
+    "z": 38592,
+    "parent": "a80a"
+  },
+  "bjy4": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "2-mite",
+    "id": "bjy4",
+    "z": 38594,
+    "parent": "a80a"
+  },
+  "hlps": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "3-turtle",
+    "id": "hlps",
+    "z": 38619,
+    "parent": "a80a"
+  },
+  "3ypa": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "3-turtle",
+    "id": "3ypa",
+    "z": 38611,
+    "parent": "a80a"
+  },
+  "883a": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "3-turtle",
+    "id": "883a",
+    "z": 38615,
+    "parent": "a80a",
+    "x": null,
+    "y": null
+  },
+  "6jwn": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "3-turtle",
+    "id": "6jwn",
+    "z": 38640,
+    "parent": "a80a"
+  },
+  "h1dt": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "3-turtle",
+    "id": "h1dt",
+    "z": 38643,
+    "parent": "a80a"
+  },
+  "p31m": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "3-turtle",
+    "id": "p31m",
+    "z": 38617,
+    "parent": "a80a"
+  },
+  "9aaq": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "3-turtle",
+    "id": "9aaq",
+    "z": 38672,
+    "parent": "a80a"
+  },
+  "q9br": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "3-turtle",
+    "id": "q9br",
+    "z": 38604,
+    "parent": "a80a"
+  },
+  "fa2x": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "4-chicken",
+    "id": "fa2x",
+    "z": 38678,
+    "parent": "a80a"
+  },
+  "id95": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "4-chicken",
+    "id": "id95",
+    "z": 38637,
+    "parent": "a80a"
+  },
+  "30ra": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "4-chicken",
+    "id": "30ra",
+    "z": 38689,
+    "parent": "holder-market-5",
+    "activeFace": 1,
+    "x": 4,
+    "y": 4
+  },
+  "af81": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "4-chicken",
+    "id": "af81",
+    "z": 38667,
+    "parent": "a80a"
+  },
+  "hsfv": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "4-chicken",
+    "id": "hsfv",
+    "z": 38626,
+    "parent": "a80a"
+  },
+  "i430": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "4-chicken",
+    "id": "i430",
+    "z": 38610,
+    "parent": "a80a"
+  },
+  "1gfj": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "4-chicken",
+    "id": "1gfj",
+    "z": 38649,
+    "parent": "a80a"
+  },
+  "6kkj": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "4-chicken",
+    "id": "6kkj",
+    "z": 38598,
+    "parent": "a80a"
+  },
+  "kp04": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "8-elephant",
+    "id": "kp04",
+    "z": 38627,
+    "parent": "a80a"
+  },
+  "jzzu": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "8-elephant",
+    "id": "jzzu",
+    "z": 38657,
+    "parent": "a80a"
+  },
+  "0g6a": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "8-elephant",
+    "id": "0g6a",
+    "z": 38588,
+    "parent": "a80a"
+  },
+  "oyga": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "8-elephant",
+    "id": "oyga",
+    "z": 38605,
+    "parent": "a80a"
+  },
+  "nyc4": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "8-elephant",
+    "id": "nyc4",
+    "z": 38655,
+    "parent": "a80a",
+    "x": null,
+    "y": null
+  },
+  "cojf": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "8-elephant",
+    "id": "cojf",
+    "z": 38577,
+    "parent": "a80a"
+  },
+  "euqs": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "8-elephant",
+    "id": "euqs",
+    "z": 38624,
+    "parent": "a80a"
+  },
+  "7m1t": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "8-elephant",
+    "id": "7m1t",
+    "z": 38676,
+    "parent": "a80a"
+  },
+  "tup5": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "7-squid",
+    "id": "tup5",
+    "z": 38602,
+    "parent": "a80a"
+  },
+  "x8zv": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "7-squid",
+    "id": "x8zv",
+    "z": 38603,
+    "parent": "a80a"
+  },
+  "h813": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "7-squid",
+    "id": "h813",
+    "z": 38670,
+    "parent": "a80a"
+  },
+  "a7pp": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "7-squid",
+    "id": "a7pp",
+    "z": 38600,
+    "parent": "a80a"
+  },
+  "30o3": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "7-squid",
+    "id": "30o3",
+    "z": 38639,
+    "parent": "a80a"
+  },
+  "yyao": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "7-squid",
+    "id": "yyao",
+    "z": 38633,
+    "parent": "a80a",
+    "x": null,
+    "y": null
+  },
+  "r68s": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "7-squid",
+    "id": "r68s",
+    "z": 38630,
+    "parent": "a80a"
+  },
+  "cy10": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "7-squid",
+    "id": "cy10",
+    "z": 38621,
+    "parent": "a80a"
+  },
+  "3kxr": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "6-kangaroo",
+    "id": "3kxr",
+    "z": 38673,
+    "parent": "a80a"
+  },
+  "4a8i": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "6-kangaroo",
+    "id": "4a8i",
+    "z": 38654,
+    "parent": "a80a"
+  },
+  "ikct": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "6-kangaroo",
+    "id": "ikct",
+    "z": 38576,
+    "parent": "a80a"
+  },
+  "hdco": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "6-kangaroo",
+    "id": "hdco",
+    "z": 38674,
+    "parent": "a80a"
+  },
+  "8r00": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "6-kangaroo",
+    "id": "8r00",
+    "z": 38671,
+    "parent": "a80a"
+  },
+  "1fqf": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "6-kangaroo",
+    "id": "1fqf",
+    "z": 38675,
+    "parent": "a80a"
+  },
+  "argn": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "6-kangaroo",
+    "id": "argn",
+    "z": 38608,
+    "parent": "a80a"
+  },
+  "idzp": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "6-kangaroo",
+    "id": "idzp",
+    "z": 38645,
+    "parent": "a80a"
+  },
+  "4gs5": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "5-koala",
+    "id": "4gs5",
+    "z": 38660,
+    "parent": "a80a"
+  },
+  "xyso": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "5-koala",
+    "id": "xyso",
+    "z": 38616,
+    "parent": "a80a"
+  },
+  "grwj": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "5-koala",
+    "id": "grwj",
+    "z": 38601,
+    "parent": "a80a"
+  },
+  "8xhw": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "5-koala",
+    "id": "8xhw",
+    "z": 38591,
+    "parent": "a80a"
+  },
+  "q2nu": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "5-koala",
+    "id": "q2nu",
+    "z": 38661,
+    "parent": "a80a"
+  },
+  "v9vw": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "5-koala",
+    "id": "v9vw",
+    "z": 38656,
+    "parent": "a80a",
+    "x": null,
+    "y": null
+  },
+  "mjx5": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "5-koala",
+    "id": "mjx5",
+    "z": 38641,
+    "parent": "a80a"
+  },
+  "tfad": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "5-koala",
+    "id": "tfad",
+    "z": 38596,
+    "parent": "a80a"
+  },
+  "8qle": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "9-donkey",
+    "id": "8qle",
+    "z": 38658,
+    "parent": "a80a"
+  },
+  "382b": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "9-donkey",
+    "id": "382b",
+    "z": 38646,
+    "parent": "a80a"
+  },
+  "ilyp": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "9-donkey",
+    "id": "ilyp",
+    "z": 38642,
+    "parent": "a80a"
+  },
+  "1lwf": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "9-donkey",
+    "id": "1lwf",
+    "z": 38685,
+    "parent": "holder-market-1",
+    "activeFace": 1,
+    "x": 4,
+    "y": 4
+  },
+  "dz0t": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "9-donkey",
+    "id": "dz0t",
+    "z": 38669,
+    "parent": "a80a"
+  },
+  "gpoz": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "9-donkey",
+    "id": "gpoz",
+    "z": 38647,
+    "parent": "a80a"
+  },
+  "rjd1": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "9-donkey",
+    "id": "rjd1",
+    "z": 38609,
+    "parent": "a80a"
+  },
+  "4u7d": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "9-donkey",
+    "id": "4u7d",
+    "z": 38636,
+    "parent": "a80a"
+  },
+  "qnn5": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "10-dolphin",
+    "id": "qnn5",
+    "z": 38628,
+    "parent": "a80a"
+  },
+  "25jg": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "10-dolphin",
+    "id": "25jg",
+    "z": 38606,
+    "parent": "a80a"
+  },
+  "e5d5": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "10-dolphin",
+    "id": "e5d5",
+    "z": 38590,
+    "parent": "a80a"
+  },
+  "12oc": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "10-dolphin",
+    "id": "12oc",
+    "z": 38659,
+    "parent": "a80a"
+  },
+  "8wqj": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "10-dolphin",
+    "id": "8wqj",
+    "z": 38618,
+    "parent": "a80a"
+  },
+  "0wsk": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "10-dolphin",
+    "id": "0wsk",
+    "z": 38595,
+    "parent": "a80a"
+  },
+  "m587": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "10-dolphin",
+    "id": "m587",
+    "z": 38668,
+    "parent": "a80a"
+  },
+  "jqfm": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "10-dolphin",
+    "id": "jqfm",
+    "z": 38589,
+    "parent": "a80a"
+  },
+  "vw3o": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "11-parrot",
+    "id": "vw3o",
+    "z": 38650,
+    "parent": "a80a"
+  },
+  "6wad": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "11-parrot",
+    "id": "6wad",
+    "z": 38585,
+    "parent": "a80a"
+  },
+  "dv22": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "11-parrot",
+    "id": "dv22",
+    "z": 38677,
+    "parent": "a80a"
+  },
+  "6xbx": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "11-parrot",
+    "id": "6xbx",
+    "z": 38688,
+    "parent": "holder-market-4",
+    "activeFace": 1,
+    "x": 4,
+    "y": 4
+  },
+  "3jly": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "11-parrot",
+    "id": "3jly",
+    "z": 38662,
+    "parent": "a80a"
+  },
+  "ita6": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "11-parrot",
+    "id": "ita6",
+    "z": 38635,
+    "parent": "a80a"
+  },
+  "wsoz": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "11-parrot",
+    "id": "wsoz",
+    "z": 38644,
+    "parent": "a80a"
+  },
+  "xqeo": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "11-parrot",
+    "id": "xqeo",
+    "z": 38651,
+    "parent": "a80a"
+  },
+  "4k4m": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "12-swan",
+    "id": "4k4m",
+    "z": 38612,
+    "parent": "a80a"
+  },
+  "6ssu": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "12-swan",
+    "id": "6ssu",
+    "z": 38579,
+    "parent": "a80a"
+  },
+  "n6nd": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "12-swan",
+    "id": "n6nd",
+    "z": 38582,
+    "parent": "a80a"
+  },
+  "tjo5": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "12-swan",
+    "id": "tjo5",
+    "z": 38581,
+    "parent": "a80a"
+  },
+  "r2qk": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "12-swan",
+    "id": "r2qk",
+    "z": 38623,
+    "parent": "a80a"
+  },
+  "ddhh": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "12-swan",
+    "id": "ddhh",
+    "z": 38652,
+    "parent": "a80a"
+  },
+  "ttwr": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "12-swan",
+    "id": "ttwr",
+    "z": 38607,
+    "parent": "a80a"
+  },
+  "0u7h": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "12-swan",
+    "id": "0u7h",
+    "z": 38665,
+    "parent": "a80a"
+  },
+  "v16o": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "14-x",
+    "id": "v16o",
+    "z": 38587,
+    "parent": "a80a"
+  },
+  "684q": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "14-x",
+    "id": "684q",
+    "z": 38690,
+    "parent": "holder-market-6",
+    "activeFace": 1,
+    "x": 4,
+    "y": 4
+  },
+  "jx78": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "14-x",
+    "id": "jx78",
+    "z": 38622,
+    "parent": "a80a"
+  },
+  "42cr": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "14-x",
+    "id": "42cr",
+    "z": 38583,
+    "parent": "a80a"
+  },
+  "fvu2": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "14-x",
+    "id": "fvu2",
+    "z": 38580,
+    "parent": "a80a",
+    "x": null,
+    "y": null
+  },
+  "ea3a": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "13-fox",
+    "id": "ea3a",
+    "z": 38614,
+    "parent": "a80a"
+  },
+  "h6b8": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "13-fox",
+    "id": "h6b8",
+    "z": 38687,
+    "parent": "holder-market-3",
+    "activeFace": 1,
+    "x": 4,
+    "y": 4
+  },
+  "9u5x": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "13-fox",
+    "id": "9u5x",
+    "z": 38638,
+    "parent": "a80a"
+  },
+  "20v8": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "13-fox",
+    "id": "20v8",
+    "z": 38597,
+    "parent": "a80a"
+  },
+  "llui": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "13-fox",
+    "id": "llui",
+    "z": 38653,
+    "parent": "a80a"
+  },
+  "54fb": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "13-fox",
+    "id": "54fb",
+    "z": 38599,
+    "parent": "a80a",
+    "x": null,
+    "y": null
+  },
+  "cxd8": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "13-fox",
+    "id": "cxd8",
+    "z": 38613,
+    "parent": "a80a"
+  },
+  "zmsj": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "13-fox",
+    "id": "zmsj",
+    "z": 38666,
+    "parent": "a80a"
+  }
+}
