@@ -1493,6 +1493,10 @@ export class Widget extends StateManaged {
             await applyFlip();
             await c.bringToFront();
             ++moved;
+          } else if(c == target) {
+            problems.push(`Skipping move of ${c.id} to itself.`);
+          } else if(target.isDescendantOf(c)) {
+            problems.push(`Skipping move of ${c.id} to its descendant ${target.id}.`);
           } else if(!a.fillTo || target.children().length < a.fillTo) {
             c.movedByButton = true;
             if(target.get('type') == 'seat') {
@@ -1510,7 +1514,7 @@ export class Widget extends StateManaged {
                   }
                   await c.bringToFront();
                   if(targetHand.get('type') == 'holder')
-                      await targetHand.updateAfterShuffle(); // this arranges the cards in the new owner's hand
+                    await targetHand.updateAfterShuffle(); // this arranges the cards in the new owner's hand
                   ++moved;
                 } else {
                   problems.push(`Seat ${target.id} declares 'hand: ${target.get('hand')}' which does not exist.`);
@@ -1545,7 +1549,8 @@ export class Widget extends StateManaged {
             await w(a.to, async target=>{
               for(const c of collections[collection].slice(offset, offset+count))
                 offset += await applyMove(c.get('parent') && widgets.has(c.get('parent')) ? widgets.get(c.get('parent')) : null, target, c);
-              await target.updateAfterShuffle();
+              if(target.get('type') == 'holder')
+                await target.updateAfterShuffle();
             });
           }
           if(jeRoutineLogging) {
@@ -2188,6 +2193,16 @@ export class Widget extends StateManaged {
     if (thisParent && widgets.has(thisParent))
       seatVisibility = widgets.get(thisParent).inheritSeatVisibility(seatVisibility);
     return seatVisibility;
+  }
+
+  isDescendantOf(widget) {
+    if (this.get('parent') == widget.get('id')) {
+      return true;
+    }
+    if (widgets.has(this.get('parent'))) {
+      return widgets.get(this.get('parent')).isDescendantOf(widget);
+    }
+    return false;
   }
 
   isValidID(id, problems) {
