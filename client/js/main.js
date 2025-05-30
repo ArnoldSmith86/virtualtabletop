@@ -470,7 +470,7 @@ async function loadEditMode() {
       toHex, contrastAnyColor,
       asArray, compute_ops,
       eventCoords,
-      legacyMode
+      legacyMode, getEnabledLegacyModes
     });
     $('body').classList.add('loadingEditMode');
     const editmode = await import('./edit.js');

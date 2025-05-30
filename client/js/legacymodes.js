@@ -11,6 +11,12 @@ export function legacyMode(name, value) {
   return currentGameSettings.legacyModes[name] || false;
 }
 
+export function getEnabledLegacyModes() {
+  return Object.entries(currentGameSettings.legacyModes || {})
+    .filter(([_, enabled]) => enabled)
+    .map(([name]) => name);
+}
+
 onLoad(function() {
   onMessage('state', args=>{
     currentGameSettings = args._meta.gameSettings || {};

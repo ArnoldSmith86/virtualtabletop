@@ -69,12 +69,27 @@ class GameSettingsModule extends SidebarModule {
     target.append(tile);
   }
 
+  onMetaReceived(meta) {
+    this.updateBadge();
+  }
+
+  onStateReceived(state) {
+    this.updateBadge();
+  }
+
   onMetaReceivedWhileActive(meta) {
     this.renderModule(this.moduleDOM);
+    this.updateBadge();
   }
 
   onStateReceivedWhileActive(state) {
     this.renderModule(this.moduleDOM);
+    this.updateBadge();
+  }
+
+  renderButton(target) {
+    super.renderButton(target);
+    this.updateBadge();
   }
 
   renderModule(target) {
@@ -122,5 +137,10 @@ class GameSettingsModule extends SidebarModule {
       <br><br>
       See <a href="https://github.com/ArnoldSmith86/virtualtabletop/pull/2581">pull request #2581</a> for technical details. Also see the <a href="https://github.com/ArnoldSmith86/virtualtabletop/wiki/Legacy-Mode">Legacy Mode wiki</a> page.
       `, target);
+  }
+
+  updateBadge() {
+    const count = getEnabledLegacyModes().length;
+    this.buttonDOM.dataset.badge = count || '';
   }
 }
