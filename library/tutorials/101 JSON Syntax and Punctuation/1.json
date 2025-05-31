@@ -7,23 +7,23 @@
       "rules": "",
       "bgg": "",
       "year": "",
-      "mode": "",
+      "mode": "Tutorial",
       "time": "",
       "attribution": "",
-      "lastUpdate": 1748640693277,
+      "lastUpdate": 1748716673890,
       "showName": false,
       "skill": "",
       "description": "",
-      "variantImage": "",
-      "variant": "Parenthesis, Brackets, Spaces",
-      "language": "",
-      "players": "",
       "similarImage": "",
       "similarName": "",
       "similarDesigner": "",
       "similarAwards": "",
       "ruleText": "",
-      "helpText": ""
+      "helpText": "",
+      "variantImage": "",
+      "variant": "Parentheses, Brackets, Spaces",
+      "language": "en-US",
+      "players": "1"
     }
   },
   "title": {
@@ -35,7 +35,7 @@
     "movable": false,
     "movableInEdit": false,
     "css": "font-size: 60px;text-align:center",
-    "text": "Parenthesis, Brackets, and Spaces",
+    "text": "Parentheses, Brackets, and Spaces",
     "width": 1000
   },
   "button2": {
@@ -46,7 +46,7 @@
     "z": 22839,
     "clickRoutine": [
       "// In this widget, exampleArray is a property in the form of an array because its value begins and ends with square brackets and the data is in the array format VTT expects.",
-      "// This clickRoutine and every kind of routine look and act like arrays and therefore open and close with square brackets.",
+      "// This clickRoutine, like every other kind of routine, looks and acts like an array, and therefore opens and closes with square brackets.",
       "// Within the clickRoutine, various functions use square brackets as demonstrated below. In this first SELECT, both of the checkers will be put into the collection 'checkers'",
       {
         "func": "SELECT",
@@ -63,7 +63,7 @@
         "aggregation": "array",
         "variable": "xArray1"
       },
-      "// An alternative way to do the same thing is to use square brackets to create an anonymous unnamed collection. Think of this as directly specifying the ids of the widget to cut out the step of making a collection. In the GET below, in place of using a collection, the ids of the checker widgets are simply listed between square brackets in the collection parameter. If you click the button and use the Debug feature (on the right) you can see the result is the same as the combination of SELECT and GET above.",
+      "// An alternative way to do the same thing is to use square brackets to create an anonymous unnamed collection. Think of this as directly specifying the ids of the widgets to cut out the step of making a collection. In the GET below, in place of using a collection name, the ids of the checker widgets are simply listed between square brackets in the collection parameter. If you click the button and use the Debug feature (on the right) you can see the result is the same as the combination of SELECT and GET above.",
       {
         "func": "GET",
         "collection": [
@@ -96,7 +96,7 @@
     "movable": false,
     "movableInEdit": false,
     "css": "font-size: 25px; ",
-    "html": "VTT uses parenthical marks (sometimes called round brackets), square brackets, and curly brackets in specific ways. Spacing between certain JSON elements is also important. Look at the text and example buttons below."
+    "html": "VTT uses parenthetical marks (sometimes called round brackets), square brackets, and curly brackets in specific ways. Spacing between certain JSON elements is also important. Look at the text and example buttons below."
   },
   "button3": {
     "type": "button",
@@ -106,7 +106,7 @@
     "z": 22840,
     "clickRoutine": [
       "// The css property above is an object and so is the exampleObject property. They both start and end with curly brackets and have key-value pairs written in the way that VTT expects.",
-      "// Curly brackes are also used around variable names as in the examples below. In the first example, the variable is jsut the name of another variable within the same routine. In the second example, the variable is referencing the value of a property (id) on this widget. And the third example is referencing the value of a property (y) on another widget (holder1).",
+      "// Curly brackets are also used around variable names as in the examples below. In the first example, the variable is just the name of another variable within the same routine. In the second example, the variable is referencing the value of a property (id) on this widget. And the third example is referencing the value of a property (y) on another widget (holder1).",
       "var sum = 7 + 3",
       "var example1 = ${sum} * 2",
       "var example2 = ${PROPERTY id}",
@@ -167,7 +167,7 @@
     "css": {
       "font-size": "22px"
     },
-    "html": "<b><span style='color:red'>( ) </span></b> Use parenthesis inside complex or nested mathematical operations. Examples are in the button above."
+    "html": "<b><span style='color:red'>( ) </span></b> Use parentheses inside complex or nested mathematical operations to clarify the order of operations (from the innermost to the outermost). Examples are in the button above."
   },
   "button1": {
     "type": "button",
@@ -176,11 +176,11 @@
     "y": 402,
     "z": 22841,
     "clickRoutine": [
-      "// No parenthesis are needed in the first example",
+      "// No parentheses are needed in the first example",
       "var example1 = 7 + 3",
-      "// In this second example, because of the way math operations are processed, the result is the same with or without the parenthesis, but they help add clarity about what is happening.",
+      "// In this second example, because of the way math operations are processed, the result is the same with or without the parentheses, but they help add clarity about what is happening.",
       "var example2 = 1 + 2 + (3 * 5)",
-      "// In this third example, without the parenthesis, the value would be different.",
+      "// In this third example, without the parentheses, the value would be different.",
       "var example3 = (((15 + 19) * (8 - 2)) / (9 + 1)) ** 2"
     ],
     "text": "( )",
@@ -242,7 +242,7 @@
       }
     ],
     "clickRoutine": [
-      "// Look at the dropTarget property above. dropTargets are a way to limit which types of widgets a holder will accept. This dropTarget is an array consisting of objects. The dropTarget is an array because it begins and ends with square brackets. Inside the square brackets are two arrays each with one key-value pair that tells VTT what kind of widgets can be dropped into this holder. By default, a dropTarget property is actually a single object, but in this case it has been converted to an array of objects. In this example, it will allow cards to be dropped into the holder or a widget that has the property crowned: true."
+      "// Look at the dropTarget property above. dropTargets are a way to limit which types of widgets a holder will accept. This dropTarget is an array consisting of objects. The dropTarget is an array because it begins and ends with square brackets. Inside the square brackets are two objects each with one key-value pair that tells VTT what kind of widgets can be dropped into this holder. By default, a dropTarget property is actually a single object, but in this case it has been converted to an array of objects. In this example, it will allow cards to be dropped into the holder or a widget that has the property crowned: true."
     ],
     "alignChildren": false
   },

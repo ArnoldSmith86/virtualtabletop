@@ -7,23 +7,23 @@
       "rules": "",
       "bgg": "",
       "year": "",
-      "mode": "",
+      "mode": "Tutorial",
       "time": "",
       "attribution": "",
-      "lastUpdate": 1748640693274,
+      "lastUpdate": 1748716673882,
       "showName": false,
       "skill": "",
       "description": "",
-      "variantImage": "",
-      "variant": "Quotes, Colons, Commas",
-      "language": "",
-      "players": "",
       "similarImage": "",
       "similarName": "",
       "similarDesigner": "",
       "similarAwards": "",
       "ruleText": "",
-      "helpText": ""
+      "helpText": "",
+      "variantImage": "",
+      "variant": "Quotes, Colons, Commas",
+      "language": "en-US",
+      "players": "1"
     }
   },
   "title": {
@@ -46,7 +46,7 @@
     "z": 22839,
     "clickRoutine": [
       "var example1 = 10",
-      "// In this widget, look how each of the properties in yellow and orange is enclosed in double quotes. The value of the property when it is a string is also enclosed in quotes. So in this widget, the type, the id, and the text all have string values and therefore quotes. The properties with numbers (x, y, width, height, and z) do not use quotes. Also the properties that use boolean (true/false) values also do not use quotes (moveable and movableInEdit).",
+      "// In this widget, look how each of the properties in yellow and orange is enclosed in double quotes. The value of the property when it is a string is also enclosed in quotes. So in this widget, the type, the id, and the text all have string values and therefore quotes. The properties with numbers (x, y, width, height, and z) do not use quotes. Properties that use boolean (true/false) values also do not use quotes (movable and movableInEdit).",
       "// Some properties use square brackets (like arrays and routines) or curly brackets (like objects). Quotation marks are used as in the exampleArray and exampleObject above. The css property is also an object.",
       "// Variable expressions, like the example1 declaration above, start and end with double quotes."
     ],
@@ -92,7 +92,7 @@
     "movable": false,
     "movableInEdit": false,
     "css": "font-size: 25px; ",
-    "html": "VTT uses JavaScript Object Notation (JSON) to create games. Game developers interact with VTT by creating widgets that consist of JSON expressed as various properties of widgets. The syntax for using JSON is very strict and a misplaced punctuation mark can make a widget invalid (in which case it will revert to its last previously valid state when using Edit Mode). Review this tutorial to understand that syntax and to know which punctuation marrks to use and where. \n\nIf you use the buttons in the Edit Mode to add and delete properties and their values, then this is mostly automated. However, at some point in game development, you will start cutting and pasting or just directly typing. Inevitably you will start to see red text in the Editor indicating some syntax problem. Keep the principles in this tutorial in mind when trying to find the problem. Also remember that the Editor will try to identify the line number of the problem for you."
+    "html": "VTT uses JavaScript Object Notation (JSON) to create games. Game developers interact with VTT by creating widgets that consist of JSON expressed as various properties of widgets. The syntax for using JSON is very strict and a misplaced punctuation mark can make a widget invalid (in which case it will revert to its last previously valid state when using Edit Mode). Review this tutorial to understand that syntax and to know which punctuation marks to use and where. \n\nIf you use the buttons in the Edit Mode to add and delete properties and their values, then this is mostly automated. However, at some point in game development, you will start cutting and pasting or just directly typing. Inevitably you will start to see red text in the Editor indicating some syntax problem. Keep the principles in this tutorial in mind when trying to find the problem. Also remember that the Editor will try to identify the line number of the problem for you."
   },
   "button3": {
     "type": "button",
@@ -162,7 +162,7 @@
     "css": {
       "font-size": "22px"
     },
-    "html": "Look at the JSON of the button above in Edit Mode. The properties appear between the first and last curly brackets. You never need to worry about the opening and closing bracket unless you accidentally delete one and then you have to add it back.\n\nNote the order: quotations marks, colon, then more quotation marks or brackets. All VTT JSON has this structure and every entry is a property."
+    "html": "Look at the JSON of the button above in Edit Mode. The properties appear between the first and last curly brackets. You never need to worry about the opening and closing bracket unless you accidentally delete one and then you have to add it back.\n\nNote the order: quotation marks, colon, then more quotation marks or brackets. All VTT JSON has this structure and every entry is a property."
   },
   "button1": {
     "type": "button",
@@ -210,7 +210,7 @@
     "css": {
       "font-size": "22px"
     },
-    "html": "<b><span style='color:red'>: </span></b>Use a colon to separate the property and value in a property or the key and its value in an object."
+    "html": "<b><span style='color:red'>: </span></b>Use a colon to separate the property name and its value in a property or the key and its value in an object."
   },
   "text5": {
     "id": "text5",
