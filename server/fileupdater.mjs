@@ -1,4 +1,4 @@
-export const VERSION = 17;
+export const VERSION = 18;
 
 export default function FileUpdater(state) {
   const v = state._meta.version;
@@ -9,6 +9,7 @@ export default function FileUpdater(state) {
 
   const globalProperties = computeGlobalProperties(state, v);
 
+  updateMeta(state._meta, v, state);
   for(const id in state)
     updateProperties(state[id], v, globalProperties);
 
@@ -66,6 +67,10 @@ function hasPropertyCondition(properties, condition) {
     }
   }
   return false;
+}
+
+function updateMeta(meta, v, state) {
+  v<18 && v18RoutineLegacyModes(meta, state);
 }
 
 function updateProperties(properties, v, globalProperties) {
@@ -499,5 +504,26 @@ function v17MaterialSymbols(properties) {
     } else if (typeof properties[key] === 'string') {
       properties[key] = properties[key].replace(/\b(material-icons(?:-(outlined|round|sharp|twotone))?)\b/g, "material-symbols");
     }
+  }
+}
+
+function v18RoutineLegacyModes(meta, state) {
+  meta.gameSettings = { legacyModes: {} };
+
+  let hasRoutine = false;
+  for(const id in state) {
+    for(const key in state[id]) {
+      if(key.match(/Routine$/)) {
+        hasRoutine = true;
+        break;
+      }
+    }
+    if(hasRoutine)
+      break;
+  }
+
+  if(hasRoutine) {
+    meta.gameSettings.legacyModes.convertNumericVarParametersToNumbers = true;
+    meta.gameSettings.legacyModes.useOneAsDefaultForVarParameters = true;
   }
 }
