@@ -10,7 +10,7 @@
       "mode": "Tutorial",
       "time": "",
       "attribution": "",
-      "lastUpdate": 1748717738278,
+      "lastUpdate": 1748740680068,
       "showName": false,
       "skill": "",
       "description": "",
@@ -167,7 +167,7 @@
     "css": {
       "font-size": "22px"
     },
-    "html": "<b><span style='color:red'>( ) </span></b> Use parentheses inside complex or nested mathematical operations to clarify the order of operations (from the innermost to the outermost). Examples are in the button above."
+    "html": "<b><span style='color:red'>( ) </span></b> Use parentheses inside complex or nested mathematical operations to clarify the order of operations (from the innermost to the outermost). Examples are in the button above.\n\nYou can only use parentheses for these basic math operations: <b>+, -, *, /, **</b>. You cannot nest other <b>var</b> operations."
   },
   "button1": {
     "type": "button",
@@ -181,7 +181,12 @@
       "// In this second example, because of the way math operations are processed, the result is the same with or without the parentheses, but they help add clarity about what is happening.",
       "var example2 = 1 + 2 + (3 * 5)",
       "// In this third example, without the parentheses, the value would be different.",
-      "var example3 = (((15 + 19) * (8 - 2)) / (9 + 1)) ** 2"
+      "var example3 = (((15 + 19) * (8 - 2)) / (9 + 1)) ** 2",
+      "// Note that the example below which ties to get the absolute value will NOT work because it uses an operation other than basic math.",
+      "var example4 = abs (7 * -4)",
+      "// To make that example work, you need to break it up into two steps like this:",
+      "var example5 = 7 * -4",
+      "var example5 = abs ${example5}"
     ],
     "text": "( )",
     "css": {
@@ -306,5 +311,39 @@
     "borderColor": "#000000",
     "borderWidth": 1,
     "secondaryColor": "#ffffff"
+  },
+  "button5": {
+    "type": "button",
+    "id": "button5",
+    "z": 11,
+    "clickRoutine": [
+      "// Note the use of commas after property values, within arrays, and within objects."
+    ],
+    "exampleArray": [
+      "string1",
+      "string2",
+      "string3"
+    ],
+    "exampleObject": {
+      "key1": "value1",
+      "key2": "value2"
+    },
+    "x": 1385,
+    "y": 400,
+    "text": ";",
+    "css": "border-radius: 100px;box-shadow: 7px 7px 5px grey;font-size: 30px;"
+  },
+  "text5": {
+    "id": "text5",
+    "width": 300,
+    "z": 9732,
+    "movable": false,
+    "movableInEdit": false,
+    "html": "<b><span style='color:red'>; </span></b> Use a semi-colon in the older, deprecated version of css. By default, VTT now uses css in the object form as you can see on the other buttons. Some older examples of css are in string form as in the example in the button above. Use a semi-colon between each css property.",
+    "x": 1294,
+    "y": 552,
+    "css": {
+      "font-size": "22px"
+    }
   }
 }
