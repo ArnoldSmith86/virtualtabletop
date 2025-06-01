@@ -10,7 +10,7 @@
       "mode": "Tutorial",
       "time": "",
       "attribution": "",
-      "lastUpdate": 1748740943043,
+      "lastUpdate": 1748741042665,
       "showName": false,
       "skill": "",
       "description": "",
@@ -148,7 +148,13 @@
     "y": 402,
     "z": 11,
     "clickRoutine": [
-      "// Note the use of commas after property values, within arrays, and within objects."
+      "// Note the use of commas after property values, within arrays, within objects, and after function parameters.",
+      {
+        "func": "SELECT",
+        "property": "id",
+        "relation": "!=",
+        "value": null
+      }
     ],
     "exampleArray": [
       "string1",
