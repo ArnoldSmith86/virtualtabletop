@@ -91,9 +91,9 @@ http {
 
 # Custom public library
 
-When hosting a public server, you may want to use a custom public library. The games are in the `library/games` directory and are basically extracted vtt files (which in turn are just zip files with a different extension). If you want to manage your own library, you can start a server like this:
+When hosting a public server, you may want to use a custom public library. The games are in the `library/games` directory and are basically extracted vtt files (which in turn are just zip files with a different extension). If you want to manage your own library, you can start a server like this (replace `/srv/vtt-games` by the directory of your games):
 
-`docker run -e ALLOWPUBLICLIBRARYEDITS=1 -v /srv/vtt-games:/app/library/games -p 8272:8272 arnoldsmith86/virtualtabletop`
+`docker run -e ALLOWPUBLICLIBRARYEDITS=1 -v /srv/vtt-games:/app/library/games -p 8272:8272 arnoldsmith86/virtualtabletop:without-public-library`
 
 `ALLOWPUBLICLIBRARYEDITS=1` enables you to edit the library from within the app itself. Note though that this allows _anyone_ to edit the library, so you might want to restart the server without this option enabled when you're happy with your library. An option would be to use a local server to manage the library and copy over the games directory to your public server.
 
