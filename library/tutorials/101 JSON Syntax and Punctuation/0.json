@@ -10,7 +10,7 @@
       "mode": "Tutorial",
       "time": "",
       "attribution": "",
-      "lastUpdate": 1748740680066,
+      "lastUpdate": 1748740943043,
       "showName": false,
       "skill": "",
       "description": "",
@@ -236,6 +236,6 @@
     "css": {
       "font-size": "22px"
     },
-    "html": "<b><span style='color:red'>, </span></b> Use a comma\n\n(1) after each property value, except for the last one\n\n(2) after each value in an array except for the last one\n\n(3) after each key-value pair in an object except for the last one\n\nMissing or added commas are the most common form of syntax errors you will see in Edit Mode."
+    "html": "<b><span style='color:red'>, </span></b> Use a comma\n\n(1) after each property value, except for the last one\n\n(2) after each value in an array except for the last one\n\n(3) after each key-value pair in an object except the last one\n\n(4) after each parameter in a function except the last one\n\nCommas cause the most syntax errors in Edit Mode."
   }
 }
