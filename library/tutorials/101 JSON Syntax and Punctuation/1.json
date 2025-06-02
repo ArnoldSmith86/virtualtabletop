@@ -1,0 +1,349 @@
+{
+  "_meta": {
+    "version": 17,
+    "info": {
+      "name": "101 JSON Syntax and Punctuation",
+      "image": "/assets/1758267651_6442",
+      "rules": "",
+      "bgg": "",
+      "year": "",
+      "mode": "Tutorial",
+      "time": "",
+      "attribution": "",
+      "lastUpdate": 1748741042667,
+      "showName": false,
+      "skill": "",
+      "description": "",
+      "similarImage": "",
+      "similarName": "",
+      "similarDesigner": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": "",
+      "variantImage": "",
+      "variant": "Parentheses, Brackets, Spaces",
+      "language": "en-US",
+      "players": "1"
+    }
+  },
+  "title": {
+    "id": "title",
+    "x": 300,
+    "y": -2,
+    "height": 60,
+    "z": 74,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "font-size: 60px;text-align:center",
+    "text": "Parentheses, Brackets, and Spaces",
+    "width": 1000
+  },
+  "button2": {
+    "type": "button",
+    "id": "button2",
+    "x": 416,
+    "y": 402,
+    "z": 22839,
+    "clickRoutine": [
+      "// In this widget, exampleArray is a property in the form of an array because its value begins and ends with square brackets and the data is in the array format VTT expects.",
+      "// This clickRoutine, like every other kind of routine, looks and acts like an array, and therefore opens and closes with square brackets.",
+      "// Within the clickRoutine, various functions use square brackets as demonstrated below. In this first SELECT, both of the checkers will be put into the collection 'checkers'",
+      {
+        "func": "SELECT",
+        "property": "crowned",
+        "relation": "!=",
+        "value": null,
+        "collection": "checkers"
+      },
+      "// Next, this GET will make an array of the x values of the widgets in the checkers collection.",
+      {
+        "func": "GET",
+        "collection": "checkers",
+        "property": "x",
+        "aggregation": "array",
+        "variable": "xArray1"
+      },
+      "// An alternative way to do the same thing is to use square brackets to create an anonymous unnamed collection. Think of this as directly specifying the ids of the widgets to cut out the step of making a collection. In the GET below, in place of using a collection name, the ids of the checker widgets are simply listed between square brackets in the collection parameter. If you click the button and use the Debug feature (on the right) you can see the result is the same as the combination of SELECT and GET above.",
+      {
+        "func": "GET",
+        "collection": [
+          "checker1",
+          "checker2"
+        ],
+        "property": "x",
+        "aggregation": "array",
+        "variable": "xArray2"
+      }
+    ],
+    "text": "[ ]",
+    "exampleArray": [
+      "string1",
+      "string2",
+      "string3"
+    ],
+    "css": {
+      "font-size": "50px"
+    }
+  },
+  "overview": {
+    "id": "overview",
+    "x": 108,
+    "y": 80,
+    "width": 1400,
+    "height": 150,
+    "layer": -3,
+    "z": 129,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "font-size: 25px; ",
+    "html": "VTT uses parenthetical marks (sometimes called round brackets), square brackets, and curly brackets in specific ways. Spacing between certain JSON elements is also important. Look at the text and example buttons below."
+  },
+  "button3": {
+    "type": "button",
+    "id": "button3",
+    "x": 743,
+    "y": 402,
+    "z": 22840,
+    "clickRoutine": [
+      "// The css property above is an object and so is the exampleObject property. They both start and end with curly brackets and have key-value pairs written in the way that VTT expects.",
+      "// Curly brackets are also used around variable names as in the examples below. In the first example, the variable is just the name of another variable within the same routine. In the second example, the variable is referencing the value of a property (id) on this widget. And the third example is referencing the value of a property (y) on another widget (holder1).",
+      "var sum = 7 + 3",
+      "var example1 = ${sum} * 2",
+      "var example2 = ${PROPERTY id}",
+      "var example3 = ${PROPERTY y OF holder1}",
+      "// Curly brackets are also used around functions within routines. There are 3 functions below (with important parameters left out so these are essentially nonsense) so you can see how that looks. Variable expressions can be included between the functions like example4 below.",
+      {
+        "func": "SELECT"
+      },
+      "var example4 = 1 + 1",
+      {
+        "func": "GET"
+      },
+      {
+        "func": "RESET"
+      }
+    ],
+    "text": "{ }",
+    "css": {
+      "font-size": "50px"
+    },
+    "exampleOjbect": {
+      "key1": "value1",
+      "key2": "value2"
+    }
+  },
+  "button4": {
+    "type": "button",
+    "id": "button4",
+    "x": 1062,
+    "y": 402,
+    "z": 22840,
+    "clickRoutine": [
+      "// Compare this clickRoutine with the one in the button3 to the left. There are no spaces in these math statements. That will not be corrected for you, but also it does not affect the result.",
+      "var sum = 7+3",
+      "var example1 = ${sum}*2",
+      "// Now look at the example below which uses an array operation to get the value at index position 3. In this example, that will be 7 as you can see in the Debug output.",
+      "var exampleArray1 = ${PROPERTY oddArray} getIndex 3",
+      "// However, without the correct spacing, the variable expression fails and gives an error.",
+      "var exampleArray2 = ${PROPERTY oddArray}getIndex 3"
+    ],
+    "text": "Spaces",
+    "oddArray": [
+      1,
+      3,
+      5,
+      7,
+      9
+    ]
+  },
+  "text1": {
+    "id": "text1",
+    "x": 4,
+    "y": 552,
+    "width": 300,
+    "z": 185,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "22px"
+    },
+    "html": "<b><span style='color:red'>( ) </span></b> Use parentheses inside complex or nested mathematical operations to clarify the order of operations (from the innermost to the outermost). Examples are in the button above.\n\nYou can only use parentheses for these basic math operations: <b>+, -, *, /, **</b>. You cannot nest other <b>var</b> operations."
+  },
+  "button1": {
+    "type": "button",
+    "id": "button1",
+    "x": 95,
+    "y": 402,
+    "z": 22841,
+    "clickRoutine": [
+      "// No parentheses are needed in the first example",
+      "var example1 = 7 + 3",
+      "// In this second example, because of the way math operations are processed, the result is the same with or without the parentheses, but they help add clarity about what is happening.",
+      "var example2 = 1 + 2 + (3 * 5)",
+      "// In this third example, without the parentheses, the value would be different.",
+      "var example3 = (((15 + 19) * (8 - 2)) / (9 + 1)) ** 2",
+      "// Note that the example below which ties to get the absolute value will NOT work because it uses an operation other than basic math.",
+      "var example4 = abs (7 * -4)",
+      "// To make that example work, you need to break it up into two steps like this:",
+      "var example5 = 7 * -4",
+      "var example5 = abs ${example5}"
+    ],
+    "text": "( )",
+    "css": {
+      "font-size": "50px"
+    }
+  },
+  "text2": {
+    "id": "text2",
+    "x": 325,
+    "y": 552,
+    "width": 300,
+    "z": 121,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "22px"
+    },
+    "html": "<b><span style='color:red'>[ ] </span></b> Use square brackets:\n\n(1) for arrays\n\n(2) for property values that are arrays or act like arrays\n\n(3) in functions as an anonymous unnamed collection\n\nLook at the examples in the button and holder above."
+  },
+  "text3": {
+    "id": "text3",
+    "x": 651,
+    "y": 552,
+    "width": 300,
+    "z": 9732,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "22px"
+    },
+    "html": "<b><span style='color:red'>{ }</span></b> Use curly brackets:\n\n(1) for objects\n\n(2) for property values that are objects or act like arrays\n\n(3) in functions and variable expressions with $ to represent a variable\n\n(4) surrounding functions in routines\n\nLook at the examples in the button above."
+  },
+  "text4": {
+    "id": "text4",
+    "x": 964,
+    "y": 552,
+    "width": 300,
+    "z": 9732,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "22px"
+    },
+    "html": "Like the punctuation marks, spacing also matters. Use the examples throughout this tutorial to get an idea of the spacing rules.\n\nSometimes, the spacing issue will be corrected for you. For example, in the JSON of this widget, delete the space between 'id' and 'text4'. Then click on the widget again.\n\nOther times, the spacing issue will not be corrected and may cause an error. See the button."
+  },
+  "holder1": {
+    "type": "holder",
+    "id": "holder1",
+    "x": 402,
+    "y": 222,
+    "z": 130,
+    "dropTarget": [
+      {
+        "type": "card"
+      },
+      {
+        "crowned": true
+      }
+    ],
+    "clickRoutine": [
+      "// Look at the dropTarget property above. dropTargets are a way to limit which types of widgets a holder will accept. This dropTarget is an array consisting of objects. The dropTarget is an array because it begins and ends with square brackets. Inside the square brackets are two objects each with one key-value pair that tells VTT what kind of widgets can be dropped into this holder. By default, a dropTarget property is actually a single object, but in this case it has been converted to an array of objects. In this example, it will allow cards to be dropped into the holder or a widget that has the property crowned: true."
+    ],
+    "alignChildren": false
+  },
+  "checker1": {
+    "id": "checker1",
+    "x": 309,
+    "y": 275,
+    "width": 75,
+    "height": 75,
+    "z": 9736,
+    "activeFace": 1,
+    "classes": "chip",
+    "color": "green",
+    "faces": [
+      {
+        "image": "i/game-pieces/2D/Checkers-2D.svg",
+        "crowned": false
+      },
+      {
+        "image": "i/game-pieces/2D/Crowned-Checkers-2D.svg",
+        "crowned": true
+      }
+    ],
+    "image": "i/game-pieces/2D/Crowned-Checkers-2D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 1,
+    "secondaryColor": "#ffffff"
+  },
+  "checker2": {
+    "id": "checker2",
+    "x": 530,
+    "y": 275,
+    "width": 75,
+    "height": 75,
+    "z": 9738,
+    "classes": "chip",
+    "color": "green",
+    "faces": [
+      {
+        "image": "i/game-pieces/2D/Checkers-2D.svg",
+        "crowned": false
+      },
+      {
+        "image": "i/game-pieces/2D/Crowned-Checkers-2D.svg",
+        "crowned": true
+      }
+    ],
+    "image": "i/game-pieces/2D/Crowned-Checkers-2D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 1,
+    "secondaryColor": "#ffffff"
+  },
+  "button5": {
+    "type": "button",
+    "id": "button5",
+    "z": 11,
+    "clickRoutine": [
+      "// Note the use of commas after property values, within arrays, and within objects."
+    ],
+    "exampleArray": [
+      "string1",
+      "string2",
+      "string3"
+    ],
+    "exampleObject": {
+      "key1": "value1",
+      "key2": "value2"
+    },
+    "x": 1385,
+    "y": 400,
+    "text": ";",
+    "css": "border-radius: 100px;box-shadow: 7px 7px 5px grey;font-size: 30px;"
+  },
+  "text5": {
+    "id": "text5",
+    "width": 300,
+    "z": 9732,
+    "movable": false,
+    "movableInEdit": false,
+    "html": "<b><span style='color:red'>; </span></b> Use a semi-colon in the older, deprecated version of css. By default, VTT now uses css in the object form as you can see on the other buttons. Some older examples of css are in string form as in the example in the button above. Use a semi-colon between each css property.",
+    "x": 1294,
+    "y": 552,
+    "css": {
+      "font-size": "22px"
+    }
+  }
+}
