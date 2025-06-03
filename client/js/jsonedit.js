@@ -1666,8 +1666,8 @@ async function jeApplyChangesMulti() {
         }
       }
     }
-    jeDeltaIsOurs = false;
     batchEnd();
+    jeDeltaIsOurs = false;
   }
 }
 
@@ -2030,6 +2030,7 @@ function jeSVGColors() {
 
 function jeUpdateMulti() {
   const selectedWidgets = jeMultiSelectedWidgets();
+  const cursorState = jeCursorStateGet();
   jeCenterSelection();
   const keys = [ 'x', 'y', 'width', 'height', 'parent', 'z', 'layer' ];
   for(const usedKey in jeStateNow || [])
@@ -2043,6 +2044,7 @@ function jeUpdateMulti() {
       jeStateNow[key] = Object.values(jeStateNow[key])[0];
   }
   jeSet(jeStateBefore = JSON.stringify(jeStateNow, null, '  '));
+  jeCursorStateSet(cursorState);
 }
 
 function jeColorize() {
