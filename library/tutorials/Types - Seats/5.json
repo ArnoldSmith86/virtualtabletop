@@ -1,0 +1,1672 @@
+{
+  "_meta": {
+    "version": 4,
+    "info": {
+      "name": "Types - Seats",
+      "image": "/assets/-65508335_6985",
+      "rules": "",
+      "bgg": "",
+      "year": "2021",
+      "mode": "Tutorial",
+      "time": "",
+      "attribution": "",
+      "showName": false,
+      "lastUpdate": 1748966400084,
+      "skill": "",
+      "description": "",
+      "similarImage": "",
+      "similarName": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": "",
+      "similarDesigner": "",
+      "variantImage": "",
+      "variant": "Board Demo",
+      "language": "en-US",
+      "players": "1"
+    }
+  },
+  "bsbm": {
+    "type": "holder",
+    "id": "bsbm",
+    "x": 1464.5,
+    "y": 18,
+    "dropTarget": {
+      "type": "card"
+    },
+    "z": 35295
+  },
+  "bsbmB": {
+    "id": "bsbmB",
+    "parent": "bsbm",
+    "fixedParent": true,
+    "y": 171.36,
+    "width": 111,
+    "height": 40,
+    "type": "button",
+    "text": "Recall & Shuffle",
+    "movableInEdit": false,
+    "clickRoutine": [
+      {
+        "func": "RECALL",
+        "holder": "${PROPERTY parent}"
+      },
+      {
+        "func": "FLIP",
+        "holder": "${PROPERTY parent}",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "${PROPERTY parent}"
+      }
+    ]
+  },
+  "bsbmP": {
+    "type": "pile",
+    "id": "bsbmP",
+    "parent": "bsbm",
+    "width": 103,
+    "height": 160
+  },
+  "bsbmD": {
+    "type": "deck",
+    "id": "bsbmD",
+    "parent": "bsbm",
+    "x": 12,
+    "y": 41,
+    "cardTypes": {
+      "T 1J": {
+        "image": "/i/cards-default/1J.svg",
+        "suit": "T",
+        "suitColor": "🃏",
+        "suitAlt": "5J",
+        "rank": "J1",
+        "rankA": "J1",
+        "rankFixed": "J1 T"
+      },
+      "T 2J": {
+        "image": "/i/cards-default/2J.svg",
+        "suit": "T",
+        "suitColor": "🃏",
+        "suitAlt": "5J",
+        "rank": "J2",
+        "rankA": "J2",
+        "rankFixed": "J2 T"
+      },
+      "C 01": {
+        "image": "/i/cards-default/AC.svg",
+        "suit": "C",
+        "suitColor": "♣",
+        "suitAlt": "1♣",
+        "rank": "01",
+        "rankA": "5A",
+        "rankFixed": "01 C"
+      },
+      "C 02": {
+        "image": "/i/cards-default/2C.svg",
+        "suit": "C",
+        "suitColor": "♣",
+        "suitAlt": "1♣",
+        "rank": "02",
+        "rankA": "02",
+        "rankFixed": "02 C"
+      },
+      "C 03": {
+        "image": "/i/cards-default/3C.svg",
+        "suit": "C",
+        "suitColor": "♣",
+        "suitAlt": "1♣",
+        "rank": "03",
+        "rankA": "03",
+        "rankFixed": "03 C"
+      },
+      "C 04": {
+        "image": "/i/cards-default/4C.svg",
+        "suit": "C",
+        "suitColor": "♣",
+        "suitAlt": "1♣",
+        "rank": "04",
+        "rankA": "04",
+        "rankFixed": "04 C"
+      },
+      "C 05": {
+        "image": "/i/cards-default/5C.svg",
+        "suit": "C",
+        "suitColor": "♣",
+        "suitAlt": "1♣",
+        "rank": "05",
+        "rankA": "05",
+        "rankFixed": "05 C"
+      },
+      "C 06": {
+        "image": "/i/cards-default/6C.svg",
+        "suit": "C",
+        "suitColor": "♣",
+        "suitAlt": "1♣",
+        "rank": "06",
+        "rankA": "06",
+        "rankFixed": "06 C"
+      },
+      "C 07": {
+        "image": "/i/cards-default/7C.svg",
+        "suit": "C",
+        "suitColor": "♣",
+        "suitAlt": "1♣",
+        "rank": "07",
+        "rankA": "07",
+        "rankFixed": "07 C"
+      },
+      "C 08": {
+        "image": "/i/cards-default/8C.svg",
+        "suit": "C",
+        "suitColor": "♣",
+        "suitAlt": "1♣",
+        "rank": "08",
+        "rankA": "08",
+        "rankFixed": "08 C"
+      },
+      "C 09": {
+        "image": "/i/cards-default/9C.svg",
+        "suit": "C",
+        "suitColor": "♣",
+        "suitAlt": "1♣",
+        "rank": "09",
+        "rankA": "09",
+        "rankFixed": "09 C"
+      },
+      "C 10": {
+        "image": "/i/cards-default/TC.svg",
+        "suit": "C",
+        "suitColor": "♣",
+        "suitAlt": "1♣",
+        "rank": "10",
+        "rankA": "10",
+        "rankFixed": "10 C"
+      },
+      "C 2J": {
+        "image": "/i/cards-default/JC.svg",
+        "suit": "C",
+        "suitColor": "♣",
+        "suitAlt": "1♣",
+        "rank": "2J",
+        "rankA": "2J",
+        "rankFixed": "2J C"
+      },
+      "C 3Q": {
+        "image": "/i/cards-default/QC.svg",
+        "suit": "C",
+        "suitColor": "♣",
+        "suitAlt": "1♣",
+        "rank": "3Q",
+        "rankA": "3Q",
+        "rankFixed": "3Q C"
+      },
+      "C 4K": {
+        "image": "/i/cards-default/KC.svg",
+        "suit": "C",
+        "suitColor": "♣",
+        "suitAlt": "1♣",
+        "rank": "4K",
+        "rankA": "4K",
+        "rankFixed": "4K C"
+      },
+      "D 01": {
+        "image": "/i/cards-default/AD.svg",
+        "suit": "D",
+        "suitColor": "♦",
+        "suitAlt": "4♦",
+        "rank": "01",
+        "rankA": "5A",
+        "rankFixed": "01 D"
+      },
+      "D 02": {
+        "image": "/i/cards-default/2D.svg",
+        "suit": "D",
+        "suitColor": "♦",
+        "suitAlt": "4♦",
+        "rank": "02",
+        "rankA": "02",
+        "rankFixed": "02 D"
+      },
+      "D 03": {
+        "image": "/i/cards-default/3D.svg",
+        "suit": "D",
+        "suitColor": "♦",
+        "suitAlt": "4♦",
+        "rank": "03",
+        "rankA": "03",
+        "rankFixed": "03 D"
+      },
+      "D 04": {
+        "image": "/i/cards-default/4D.svg",
+        "suit": "D",
+        "suitColor": "♦",
+        "suitAlt": "4♦",
+        "rank": "04",
+        "rankA": "04",
+        "rankFixed": "04 D"
+      },
+      "D 05": {
+        "image": "/i/cards-default/5D.svg",
+        "suit": "D",
+        "suitColor": "♦",
+        "suitAlt": "4♦",
+        "rank": "05",
+        "rankA": "05",
+        "rankFixed": "05 D"
+      },
+      "D 06": {
+        "image": "/i/cards-default/6D.svg",
+        "suit": "D",
+        "suitColor": "♦",
+        "suitAlt": "4♦",
+        "rank": "06",
+        "rankA": "06",
+        "rankFixed": "06 D"
+      },
+      "D 07": {
+        "image": "/i/cards-default/7D.svg",
+        "suit": "D",
+        "suitColor": "♦",
+        "suitAlt": "4♦",
+        "rank": "07",
+        "rankA": "07",
+        "rankFixed": "07 D"
+      },
+      "D 08": {
+        "image": "/i/cards-default/8D.svg",
+        "suit": "D",
+        "suitColor": "♦",
+        "suitAlt": "4♦",
+        "rank": "08",
+        "rankA": "08",
+        "rankFixed": "08 D"
+      },
+      "D 09": {
+        "image": "/i/cards-default/9D.svg",
+        "suit": "D",
+        "suitColor": "♦",
+        "suitAlt": "4♦",
+        "rank": "09",
+        "rankA": "09",
+        "rankFixed": "09 D"
+      },
+      "D 10": {
+        "image": "/i/cards-default/TD.svg",
+        "suit": "D",
+        "suitColor": "♦",
+        "suitAlt": "4♦",
+        "rank": "10",
+        "rankA": "10",
+        "rankFixed": "10 D"
+      },
+      "D 2J": {
+        "image": "/i/cards-default/JD.svg",
+        "suit": "D",
+        "suitColor": "♦",
+        "suitAlt": "4♦",
+        "rank": "2J",
+        "rankA": "2J",
+        "rankFixed": "2J D"
+      },
+      "D 3Q": {
+        "image": "/i/cards-default/QD.svg",
+        "suit": "D",
+        "suitColor": "♦",
+        "suitAlt": "4♦",
+        "rank": "3Q",
+        "rankA": "3Q",
+        "rankFixed": "3Q D"
+      },
+      "D 4K": {
+        "image": "/i/cards-default/KD.svg",
+        "suit": "D",
+        "suitColor": "♦",
+        "suitAlt": "4♦",
+        "rank": "4K",
+        "rankA": "4K",
+        "rankFixed": "4K D"
+      },
+      "H 01": {
+        "image": "/i/cards-default/AH.svg",
+        "suit": "H",
+        "suitColor": "♥",
+        "suitAlt": "2♥",
+        "rank": "01",
+        "rankA": "5A",
+        "rankFixed": "01 H"
+      },
+      "H 02": {
+        "image": "/i/cards-default/2H.svg",
+        "suit": "H",
+        "suitColor": "♥",
+        "suitAlt": "2♥",
+        "rank": "02",
+        "rankA": "02",
+        "rankFixed": "02 H"
+      },
+      "H 03": {
+        "image": "/i/cards-default/3H.svg",
+        "suit": "H",
+        "suitColor": "♥",
+        "suitAlt": "2♥",
+        "rank": "03",
+        "rankA": "03",
+        "rankFixed": "03 H"
+      },
+      "H 04": {
+        "image": "/i/cards-default/4H.svg",
+        "suit": "H",
+        "suitColor": "♥",
+        "suitAlt": "2♥",
+        "rank": "04",
+        "rankA": "04",
+        "rankFixed": "04 H"
+      },
+      "H 05": {
+        "image": "/i/cards-default/5H.svg",
+        "suit": "H",
+        "suitColor": "♥",
+        "suitAlt": "2♥",
+        "rank": "05",
+        "rankA": "05",
+        "rankFixed": "05 H"
+      },
+      "H 06": {
+        "image": "/i/cards-default/6H.svg",
+        "suit": "H",
+        "suitColor": "♥",
+        "suitAlt": "2♥",
+        "rank": "06",
+        "rankA": "06",
+        "rankFixed": "06 H"
+      },
+      "H 07": {
+        "image": "/i/cards-default/7H.svg",
+        "suit": "H",
+        "suitColor": "♥",
+        "suitAlt": "2♥",
+        "rank": "07",
+        "rankA": "07",
+        "rankFixed": "07 H"
+      },
+      "H 08": {
+        "image": "/i/cards-default/8H.svg",
+        "suit": "H",
+        "suitColor": "♥",
+        "suitAlt": "2♥",
+        "rank": "08",
+        "rankA": "08",
+        "rankFixed": "08 H"
+      },
+      "H 09": {
+        "image": "/i/cards-default/9H.svg",
+        "suit": "H",
+        "suitColor": "♥",
+        "suitAlt": "2♥",
+        "rank": "09",
+        "rankA": "09",
+        "rankFixed": "09 H"
+      },
+      "H 10": {
+        "image": "/i/cards-default/TH.svg",
+        "suit": "H",
+        "suitColor": "♥",
+        "suitAlt": "2♥",
+        "rank": "10",
+        "rankA": "10",
+        "rankFixed": "10 H"
+      },
+      "H 2J": {
+        "image": "/i/cards-default/JH.svg",
+        "suit": "H",
+        "suitColor": "♥",
+        "suitAlt": "2♥",
+        "rank": "2J",
+        "rankA": "2J",
+        "rankFixed": "2J H"
+      },
+      "H 3Q": {
+        "image": "/i/cards-default/QH.svg",
+        "suit": "H",
+        "suitColor": "♥",
+        "suitAlt": "2♥",
+        "rank": "3Q",
+        "rankA": "3Q",
+        "rankFixed": "3Q H"
+      },
+      "H 4K": {
+        "image": "/i/cards-default/KH.svg",
+        "suit": "H",
+        "suitColor": "♥",
+        "suitAlt": "2♥",
+        "rank": "4K",
+        "rankA": "4K",
+        "rankFixed": "4K H"
+      },
+      "S 01": {
+        "image": "/i/cards-default/AS.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "01",
+        "rankA": "5A",
+        "rankFixed": "01 S"
+      },
+      "S 02": {
+        "image": "/i/cards-default/2S.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "02",
+        "rankA": "02",
+        "rankFixed": "02 S"
+      },
+      "S 03": {
+        "image": "/i/cards-default/3S.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "03",
+        "rankA": "03",
+        "rankFixed": "03 S"
+      },
+      "S 04": {
+        "image": "/i/cards-default/4S.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "04",
+        "rankA": "04",
+        "rankFixed": "04 S"
+      },
+      "S 05": {
+        "image": "/i/cards-default/5S.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "05",
+        "rankA": "05",
+        "rankFixed": "05 S"
+      },
+      "S 06": {
+        "image": "/i/cards-default/6S.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "06",
+        "rankA": "06",
+        "rankFixed": "06 S"
+      },
+      "S 07": {
+        "image": "/i/cards-default/7S.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "07",
+        "rankA": "07",
+        "rankFixed": "07 S"
+      },
+      "S 08": {
+        "image": "/i/cards-default/8S.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "08",
+        "rankA": "08",
+        "rankFixed": "08 S"
+      },
+      "S 09": {
+        "image": "/i/cards-default/9S.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "09",
+        "rankA": "09",
+        "rankFixed": "09 S"
+      },
+      "S 10": {
+        "image": "/i/cards-default/TS.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "10",
+        "rankA": "10",
+        "rankFixed": "10 S"
+      },
+      "S 2J": {
+        "image": "/i/cards-default/JS.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "2J",
+        "rankA": "2J",
+        "rankFixed": "2J S"
+      },
+      "S 3Q": {
+        "image": "/i/cards-default/QS.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "3Q",
+        "rankA": "3Q",
+        "rankFixed": "3Q S"
+      },
+      "S 4K": {
+        "image": "/i/cards-default/KS.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "4K",
+        "rankA": "4K",
+        "rankFixed": "4K S"
+      }
+    },
+    "faceTemplates": [
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 103,
+            "height": 160,
+            "valueType": "static",
+            "value": "/i/cards-default/2B.svg",
+            "color": "transparent"
+          }
+        ]
+      },
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 103,
+            "height": 160,
+            "valueType": "dynamic",
+            "value": "image",
+            "color": "transparent"
+          }
+        ]
+      }
+    ]
+  },
+  "bsbm_A_C": {
+    "id": "bsbm_A_C",
+    "deck": "bsbmD",
+    "type": "card",
+    "cardType": "C 01",
+    "z": 4181,
+    "parent": "bsbmP"
+  },
+  "bsbm_2_C": {
+    "id": "bsbm_2_C",
+    "parent": "bsbmP",
+    "deck": "bsbmD",
+    "type": "card",
+    "cardType": "C 02",
+    "z": 6146
+  },
+  "bsbm_3_C": {
+    "id": "bsbm_3_C",
+    "parent": "bsbmP",
+    "deck": "bsbmD",
+    "type": "card",
+    "cardType": "C 03",
+    "z": 1836
+  },
+  "bsbm_4_C": {
+    "id": "bsbm_4_C",
+    "deck": "bsbmD",
+    "type": "card",
+    "cardType": "C 04",
+    "z": 9842,
+    "x": 45.5,
+    "y": 197,
+    "parent": "boardHolder1",
+    "activeFace": 1
+  },
+  "bsbm_5_C": {
+    "id": "bsbm_5_C",
+    "parent": "bsbmP",
+    "deck": "bsbmD",
+    "type": "card",
+    "cardType": "C 05",
+    "z": 220
+  },
+  "bsbm_6_C": {
+    "id": "bsbm_6_C",
+    "parent": "bsbmP",
+    "deck": "bsbmD",
+    "type": "card",
+    "cardType": "C 06",
+    "z": 1797
+  },
+  "bsbm_7_C": {
+    "id": "bsbm_7_C",
+    "deck": "bsbmD",
+    "type": "card",
+    "cardType": "C 07",
+    "z": 3593,
+    "parent": "bsbmP"
+  },
+  "bsbm_8_C": {
+    "id": "bsbm_8_C",
+    "deck": "bsbmD",
+    "type": "card",
+    "cardType": "C 08",
+    "z": 9275,
+    "parent": "bsbmP"
+  },
+  "bsbm_9_C": {
+    "id": "bsbm_9_C",
+    "deck": "bsbmD",
+    "type": "card",
+    "cardType": "C 09",
+    "z": 6089,
+    "parent": "bsbmP"
+  },
+  "bsbm_T_C": {
+    "id": "bsbm_T_C",
+    "parent": "bsbmP",
+    "deck": "bsbmD",
+    "type": "card",
+    "cardType": "C 10",
+    "z": 3982
+  },
+  "bsbm_J_C": {
+    "id": "bsbm_J_C",
+    "deck": "bsbmD",
+    "type": "card",
+    "cardType": "C 2J",
+    "z": 2031,
+    "parent": "bsbmP"
+  },
+  "bsbm_Q_C": {
+    "id": "bsbm_Q_C",
+    "parent": "bsbmP",
+    "deck": "bsbmD",
+    "type": "card",
+    "cardType": "C 3Q",
+    "z": 1380
+  },
+  "bsbm_K_C": {
+    "id": "bsbm_K_C",
+    "deck": "bsbmD",
+    "type": "card",
+    "cardType": "C 4K",
+    "z": 8218,
+    "parent": "bsbmP"
+  },
+  "bsbm_A_D": {
+    "id": "bsbm_A_D",
+    "deck": "bsbmD",
+    "type": "card",
+    "cardType": "D 01",
+    "z": 9844,
+    "x": 19.5,
+    "y": 17,
+    "parent": "boardHolder2",
+    "activeFace": 1
+  },
+  "bsbm_2_D": {
+    "id": "bsbm_2_D",
+    "parent": "bsbmP",
+    "deck": "bsbmD",
+    "type": "card",
+    "cardType": "D 02",
+    "z": 2169
+  },
+  "bsbm_3_D": {
+    "id": "bsbm_3_D",
+    "parent": "bsbmP",
+    "deck": "bsbmD",
+    "type": "card",
+    "cardType": "D 03",
+    "z": 685
+  },
+  "bsbm_4_D": {
+    "id": "bsbm_4_D",
+    "parent": "bsbmP",
+    "deck": "bsbmD",
+    "type": "card",
+    "cardType": "D 04",
+    "z": 7750
+  },
+  "bsbm_5_D": {
+    "id": "bsbm_5_D",
+    "parent": "bsbmP",
+    "deck": "bsbmD",
+    "type": "card",
+    "cardType": "D 05",
+    "z": 2421
+  },
+  "bsbm_6_D": {
+    "id": "bsbm_6_D",
+    "parent": "bsbmP",
+    "deck": "bsbmD",
+    "type": "card",
+    "cardType": "D 06",
+    "z": 6248
+  },
+  "bsbm_7_D": {
+    "id": "bsbm_7_D",
+    "parent": "bsbmP",
+    "deck": "bsbmD",
+    "type": "card",
+    "cardType": "D 07",
+    "z": 5259
+  },
+  "bsbm_8_D": {
+    "id": "bsbm_8_D",
+    "deck": "bsbmD",
+    "type": "card",
+    "cardType": "D 08",
+    "z": 2690,
+    "parent": "bsbmP"
+  },
+  "bsbm_9_D": {
+    "id": "bsbm_9_D",
+    "parent": "bsbmP",
+    "deck": "bsbmD",
+    "type": "card",
+    "cardType": "D 09",
+    "z": 3945
+  },
+  "bsbm_T_D": {
+    "id": "bsbm_T_D",
+    "parent": "bsbmP",
+    "deck": "bsbmD",
+    "type": "card",
+    "cardType": "D 10",
+    "z": 6993
+  },
+  "bsbm_J_D": {
+    "id": "bsbm_J_D",
+    "deck": "bsbmD",
+    "type": "card",
+    "cardType": "D 2J",
+    "z": 9846,
+    "x": 30.5,
+    "y": 207,
+    "parent": "boardHolder2",
+    "activeFace": 1
+  },
+  "bsbm_Q_D": {
+    "id": "bsbm_Q_D",
+    "parent": "bsbmP",
+    "deck": "bsbmD",
+    "type": "card",
+    "cardType": "D 3Q",
+    "z": 8261
+  },
+  "bsbm_K_D": {
+    "id": "bsbm_K_D",
+    "parent": "bsbmP",
+    "deck": "bsbmD",
+    "type": "card",
+    "cardType": "D 4K",
+    "z": 3105
+  },
+  "bsbm_A_H": {
+    "id": "bsbm_A_H",
+    "parent": "bsbmP",
+    "deck": "bsbmD",
+    "type": "card",
+    "cardType": "H 01",
+    "z": 7009
+  },
+  "bsbm_2_H": {
+    "id": "bsbm_2_H",
+    "parent": "bsbmP",
+    "deck": "bsbmD",
+    "type": "card",
+    "cardType": "H 02",
+    "z": 91
+  },
+  "bsbm_3_H": {
+    "id": "bsbm_3_H",
+    "parent": "bsbmP",
+    "deck": "bsbmD",
+    "type": "card",
+    "cardType": "H 03",
+    "z": 8893
+  },
+  "bsbm_4_H": {
+    "id": "bsbm_4_H",
+    "parent": "bsbmP",
+    "deck": "bsbmD",
+    "type": "card",
+    "cardType": "H 04",
+    "z": 8409
+  },
+  "bsbm_5_H": {
+    "id": "bsbm_5_H",
+    "deck": "bsbmD",
+    "type": "card",
+    "cardType": "H 05",
+    "z": 626,
+    "parent": "bsbmP"
+  },
+  "bsbm_6_H": {
+    "id": "bsbm_6_H",
+    "parent": "bsbmP",
+    "deck": "bsbmD",
+    "type": "card",
+    "cardType": "H 06",
+    "z": 9105
+  },
+  "bsbm_7_H": {
+    "id": "bsbm_7_H",
+    "deck": "bsbmD",
+    "type": "card",
+    "cardType": "H 07",
+    "z": 9854,
+    "x": 52.5,
+    "y": 110,
+    "activeFace": 1,
+    "parent": "boardHolder4"
+  },
+  "bsbm_8_H": {
+    "id": "bsbm_8_H",
+    "parent": "bsbmP",
+    "deck": "bsbmD",
+    "type": "card",
+    "cardType": "H 08",
+    "z": 2819
+  },
+  "bsbm_9_H": {
+    "id": "bsbm_9_H",
+    "parent": "bsbmP",
+    "deck": "bsbmD",
+    "type": "card",
+    "cardType": "H 09",
+    "z": 1336
+  },
+  "bsbm_T_H": {
+    "id": "bsbm_T_H",
+    "deck": "bsbmD",
+    "type": "card",
+    "cardType": "H 10",
+    "z": 9838,
+    "x": 25.5,
+    "y": 18,
+    "parent": "boardHolder1",
+    "activeFace": 1
+  },
+  "bsbm_J_H": {
+    "id": "bsbm_J_H",
+    "parent": "bsbmP",
+    "deck": "bsbmD",
+    "type": "card",
+    "cardType": "H 2J",
+    "z": 2618
+  },
+  "bsbm_Q_H": {
+    "id": "bsbm_Q_H",
+    "parent": "bsbmP",
+    "deck": "bsbmD",
+    "type": "card",
+    "cardType": "H 3Q",
+    "z": 3634
+  },
+  "bsbm_K_H": {
+    "id": "bsbm_K_H",
+    "parent": "bsbmP",
+    "deck": "bsbmD",
+    "type": "card",
+    "cardType": "H 4K",
+    "z": 5261
+  },
+  "bsbm_A_S": {
+    "id": "bsbm_A_S",
+    "parent": "bsbmP",
+    "deck": "bsbmD",
+    "type": "card",
+    "cardType": "S 01",
+    "z": 5033
+  },
+  "bsbm_2_S": {
+    "id": "bsbm_2_S",
+    "parent": "bsbmP",
+    "deck": "bsbmD",
+    "type": "card",
+    "cardType": "S 02",
+    "z": 2339
+  },
+  "bsbm_3_S": {
+    "id": "bsbm_3_S",
+    "parent": "bsbmP",
+    "deck": "bsbmD",
+    "type": "card",
+    "cardType": "S 03",
+    "z": 7624
+  },
+  "bsbm_4_S": {
+    "id": "bsbm_4_S",
+    "parent": "bsbmP",
+    "deck": "bsbmD",
+    "type": "card",
+    "cardType": "S 04",
+    "z": 8214
+  },
+  "bsbm_5_S": {
+    "id": "bsbm_5_S",
+    "parent": "bsbmP",
+    "deck": "bsbmD",
+    "type": "card",
+    "cardType": "S 05",
+    "z": 165
+  },
+  "bsbm_6_S": {
+    "id": "bsbm_6_S",
+    "deck": "bsbmD",
+    "type": "card",
+    "cardType": "S 06",
+    "z": 1847,
+    "parent": "bsbmP"
+  },
+  "bsbm_7_S": {
+    "id": "bsbm_7_S",
+    "deck": "bsbmD",
+    "type": "card",
+    "cardType": "S 07",
+    "z": 4688,
+    "parent": "bsbmP"
+  },
+  "bsbm_8_S": {
+    "id": "bsbm_8_S",
+    "deck": "bsbmD",
+    "type": "card",
+    "cardType": "S 08",
+    "z": 1873,
+    "parent": "bsbmP"
+  },
+  "bsbm_9_S": {
+    "id": "bsbm_9_S",
+    "deck": "bsbmD",
+    "type": "card",
+    "cardType": "S 09",
+    "z": 9850,
+    "x": 39.5,
+    "y": 224,
+    "parent": "boardHolder3",
+    "activeFace": 1
+  },
+  "bsbm_T_S": {
+    "id": "bsbm_T_S",
+    "deck": "bsbmD",
+    "type": "card",
+    "cardType": "S 10",
+    "z": 6598,
+    "parent": "bsbmP"
+  },
+  "bsbm_J_S": {
+    "id": "bsbm_J_S",
+    "deck": "bsbmD",
+    "type": "card",
+    "cardType": "S 2J",
+    "z": 1470,
+    "parent": "bsbmP"
+  },
+  "bsbm_Q_S2": {
+    "id": "bsbm_Q_S2",
+    "deck": "bsbmD",
+    "type": "card",
+    "cardType": "S 3Q",
+    "z": 276,
+    "parent": "bsbmP"
+  },
+  "bsbm_K_S3": {
+    "id": "bsbm_K_S3",
+    "deck": "bsbmD",
+    "type": "card",
+    "cardType": "S 4K",
+    "z": 6182,
+    "parent": "bsbmP"
+  },
+  "viewBlueBoard": {
+    "type": "button",
+    "id": "viewBlueBoard",
+    "x": 144,
+    "y": 85,
+    "z": 76432,
+    "clickRoutine": [
+      {
+        "note": "Determine which seat the player pressing the button is assigned to and get that seat's id.",
+        "func": "SELECT",
+        "property": "player",
+        "value": "${playerName}"
+      },
+      {
+        "note": "The id needs to be collected in an array format and in a string format for two different operations, so there are two GETs",
+        "func": "GET",
+        "property": "id",
+        "variable": "thisSeatID",
+        "aggregation": "array"
+      },
+      {
+        "func": "GET",
+        "property": "id",
+        "variable": "seatVisCheck",
+        "aggregation": "first"
+      },
+      "var thisSeatArray = ${PROPERTY onlyVisibleForSeat OF boardHolder1} //Put the current seats that can view the board into an array",
+      "var checkArray = ${seatVisCheck} in ${thisSeatArray} //Check to see if the player pressing the button is already in the visibility array.",
+      {
+        "func": "IF",
+        "operand1": "${checkArray}",
+        "operand2": true,
+        "thenRoutine": [
+          {
+            "note": "If the player can currently see the board, do nothing.  Otherwise, run the elseRoutine."
+          }
+        ],
+        "elseRoutine": [
+          {
+            "note": "Create a new array so 'thisSeatArray' is not changed by subsequent operations. Add the seat of the player pressing the button to the new array."
+          },
+          "var myArray = ${PROPERTY onlyVisibleForSeat OF boardHolder1}",
+          "var myArray = ${myArray} concatArray ${thisSeatID}",
+          {
+            "note": "Put the new myArray with the seat of this player into the onlyVisibileForSeat property of the board.",
+            "func": "SELECT",
+            "property": "id",
+            "value": "boardHolder1"
+          },
+          {
+            "func": "SET",
+            "property": "onlyVisibleForSeat",
+            "value": "${myArray}"
+          },
+          {
+            "note": "Put the visibility settings for the other 3 seats into individual arrays."
+          },
+          "var pArray2 = ${PROPERTY onlyVisibleForSeat OF boardHolder2}",
+          "var pArray3 = ${PROPERTY onlyVisibleForSeat OF boardHolder3}",
+          "var pArray4 = ${PROPERTY onlyVisibleForSeat OF boardHolder4}",
+          {
+            "note": "The blank arrays are needed in the FOREACH functions in the CALL.  Arrays need to be initially created outside a FOREACH, even if it is just a blank array."
+          },
+          "var newArray2 = []",
+          "var newArray3 = []",
+          "var newArray4 = []",
+          {
+            "note": "Call routines to remove the player pressing the button from the other 3 boards so the player can only see one board at a time."
+          },
+          {
+            "func": "CALL",
+            "widget": "calls",
+            "routine": "checkSeat2Routine"
+          },
+          {
+            "func": "CALL",
+            "widget": "calls",
+            "routine": "checkSeat3Routine"
+          },
+          {
+            "func": "CALL",
+            "widget": "calls",
+            "routine": "checkSeat4Routine"
+          }
+        ]
+      }
+    ],
+    "text": "View\nRed"
+  },
+  "seat1": {
+    "type": "seat",
+    "id": "seat1",
+    "x": 111,
+    "y": 175,
+    "z": 76423,
+    "color": "#e84242",
+    "colorEmpty": "#e84242",
+    "hideWhenUnused": true,
+    "hand": "boardHolder1",
+    "css": "border-color: #e84242",
+    "movableInEdit": false
+  },
+  "seat2": {
+    "type": "seat",
+    "id": "seat2",
+    "index": 2,
+    "x": 525,
+    "y": 175,
+    "z": 76422,
+    "colorEmpty": "#e0cb0b",
+    "css": "border-color: #e0cb0b",
+    "hand": "boardHolder2",
+    "hideWhenUnused": true,
+    "movableInEdit": false,
+    "color": "#e0cb0b"
+  },
+  "seat3": {
+    "type": "seat",
+    "id": "seat3",
+    "index": 2,
+    "x": 881,
+    "y": 175,
+    "z": 76402,
+    "colorEmpty": "#4c5fea",
+    "css": "border-color: #4c5fea",
+    "hideWhenUnused": true,
+    "hand": "boardHolder3",
+    "movableInEdit": false,
+    "color": "#4c5fea"
+  },
+  "seat4": {
+    "type": "seat",
+    "id": "seat4",
+    "index": 2,
+    "x": 1225,
+    "y": 175,
+    "z": 76403,
+    "colorEmpty": "#23ca5b",
+    "css": "border-color: #23ca5b",
+    "hand": "boardHolder4",
+    "hideWhenUnused": true,
+    "movableInEdit": false,
+    "color": "#23ca5b"
+  },
+  "boardHolder1": {
+    "type": "holder",
+    "id": "boardHolder1",
+    "x": 87,
+    "y": 235,
+    "width": 200,
+    "height": 400,
+    "z": 35296,
+    "inheritChildZ": true,
+    "alignChildren": false,
+    "dropOffsetX": 10,
+    "dropOffsetY": 14,
+    "onlyVisibleForSeat": [
+      "seat1"
+    ],
+    "stackOffsetX": 40,
+    "css": "background-color: #e8424240"
+  },
+  "boardHolder2": {
+    "type": "holder",
+    "id": "boardHolder2",
+    "x": 504,
+    "y": 235,
+    "width": 200,
+    "height": 400,
+    "z": 35301,
+    "inheritChildZ": true,
+    "alignChildren": false,
+    "dropOffsetX": 10,
+    "dropOffsetY": 14,
+    "onlyVisibleForSeat": [
+      "seat2"
+    ],
+    "stackOffsetX": 40,
+    "css": "background-color: #e0cb0b40"
+  },
+  "boardHolder3": {
+    "type": "holder",
+    "id": "boardHolder3",
+    "x": 866,
+    "y": 235,
+    "width": 200,
+    "height": 400,
+    "z": 35302,
+    "inheritChildZ": true,
+    "alignChildren": false,
+    "dropOffsetX": 10,
+    "dropOffsetY": 14,
+    "stackOffsetX": 40,
+    "onlyVisibleForSeat": [
+      "seat3"
+    ],
+    "css": "background-color: #4c5fea40"
+  },
+  "boardHolder4": {
+    "type": "holder",
+    "id": "boardHolder4",
+    "x": 1209,
+    "y": 235,
+    "width": 200,
+    "height": 400,
+    "z": 35300,
+    "inheritChildZ": true,
+    "alignChildren": false,
+    "dropOffsetX": 10,
+    "dropOffsetY": 14,
+    "stackOffsetX": 40,
+    "onlyVisibleForSeat": [
+      "seat4"
+    ],
+    "css": "background-color: #23ca5b40"
+  },
+  "viewGreenBoard": {
+    "type": "button",
+    "id": "viewGreenBoard",
+    "x": 570,
+    "y": 87,
+    "z": 76424,
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "player",
+        "value": "${playerName}"
+      },
+      {
+        "func": "GET",
+        "property": "id",
+        "variable": "thisSeatID",
+        "aggregation": "array"
+      },
+      {
+        "func": "GET",
+        "property": "id",
+        "variable": "seatVisCheck",
+        "aggregation": "first"
+      },
+      "var thisSeatArray = ${PROPERTY onlyVisibleForSeat OF boardHolder2}",
+      "var checkArray = ${seatVisCheck} in ${thisSeatArray}",
+      {
+        "func": "IF",
+        "operand1": "${checkArray}",
+        "operand2": true,
+        "thenRoutine": [],
+        "elseRoutine": [
+          "var myArray = ${PROPERTY onlyVisibleForSeat OF boardHolder2}",
+          "var myArray = ${myArray} concatArray ${thisSeatID}",
+          {
+            "func": "SELECT",
+            "property": "id",
+            "value": "boardHolder2"
+          },
+          {
+            "func": "SET",
+            "property": "onlyVisibleForSeat",
+            "value": "${myArray}"
+          },
+          "var pArray1 = ${PROPERTY onlyVisibleForSeat OF boardHolder1}",
+          "var pArray3 = ${PROPERTY onlyVisibleForSeat OF boardHolder3}",
+          "var pArray4 = ${PROPERTY onlyVisibleForSeat OF boardHolder4}",
+          "var newArray1 = []",
+          "var newArray3 = []",
+          "var newArray4 = []",
+          {
+            "func": "CALL",
+            "widget": "calls",
+            "routine": "checkSeat1Routine"
+          },
+          {
+            "func": "CALL",
+            "widget": "calls",
+            "routine": "checkSeat3Routine"
+          },
+          {
+            "func": "CALL",
+            "widget": "calls",
+            "routine": "checkSeat4Routine"
+          }
+        ]
+      }
+    ],
+    "text": "View Yellow"
+  },
+  "viewYellowBoard": {
+    "type": "button",
+    "id": "viewYellowBoard",
+    "x": 923,
+    "y": 83,
+    "z": 76428,
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "player",
+        "value": "${playerName}"
+      },
+      {
+        "func": "GET",
+        "property": "id",
+        "variable": "thisSeatID",
+        "aggregation": "array"
+      },
+      {
+        "func": "GET",
+        "property": "id",
+        "variable": "seatVisCheck",
+        "aggregation": "first"
+      },
+      "var thisSeatArray = ${PROPERTY onlyVisibleForSeat OF boardHolder3}",
+      "var checkArray = ${seatVisCheck} in ${thisSeatArray}",
+      {
+        "func": "IF",
+        "operand1": "${checkArray}",
+        "operand2": true,
+        "thenRoutine": [],
+        "elseRoutine": [
+          "var myArray = ${PROPERTY onlyVisibleForSeat OF boardHolder3}",
+          "var myArray = ${myArray} concatArray ${thisSeatID}",
+          {
+            "func": "SELECT",
+            "property": "id",
+            "value": "boardHolder3"
+          },
+          {
+            "func": "SET",
+            "property": "onlyVisibleForSeat",
+            "value": "${myArray}"
+          },
+          "var pArray1 = ${PROPERTY onlyVisibleForSeat OF boardHolder1}",
+          "var pArray2 = ${PROPERTY onlyVisibleForSeat OF boardHolder2}",
+          "var pArray4 = ${PROPERTY onlyVisibleForSeat OF boardHolder4}",
+          "var newArray1 = []",
+          "var newArray2 = []",
+          "var newArray4 = []",
+          {
+            "func": "CALL",
+            "widget": "calls",
+            "routine": "checkSeat1Routine"
+          },
+          {
+            "func": "CALL",
+            "widget": "calls",
+            "routine": "checkSeat2Routine"
+          },
+          {
+            "func": "CALL",
+            "widget": "calls",
+            "routine": "checkSeat4Routine"
+          }
+        ]
+      }
+    ],
+    "text": "View\nBlue"
+  },
+  "viewPurpleBoard": {
+    "type": "button",
+    "id": "viewPurpleBoard",
+    "x": 1267,
+    "y": 84,
+    "z": 76430,
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "player",
+        "value": "${playerName}"
+      },
+      {
+        "func": "GET",
+        "property": "id",
+        "variable": "thisSeatID",
+        "aggregation": "array"
+      },
+      {
+        "func": "GET",
+        "property": "id",
+        "variable": "seatVisCheck",
+        "aggregation": "first"
+      },
+      "var thisSeatArray = ${PROPERTY onlyVisibleForSeat OF boardHolder4}",
+      "var checkArray = ${seatVisCheck} in ${thisSeatArray}",
+      {
+        "func": "IF",
+        "operand1": "${checkArray}",
+        "operand2": true,
+        "thenRoutine": [],
+        "elseRoutine": [
+          "var myArray = ${PROPERTY onlyVisibleForSeat OF boardHolder4}",
+          "var myArray = ${myArray} concatArray ${thisSeatID}",
+          {
+            "func": "SELECT",
+            "property": "id",
+            "value": "boardHolder4"
+          },
+          {
+            "func": "SET",
+            "property": "onlyVisibleForSeat",
+            "value": "${myArray}"
+          },
+          "var pArray1 = ${PROPERTY onlyVisibleForSeat OF boardHolder1}",
+          "var pArray2 = ${PROPERTY onlyVisibleForSeat OF boardHolder2}",
+          "var pArray3 = ${PROPERTY onlyVisibleForSeat OF boardHolder3}",
+          "var newArray1 = []",
+          "var newArray2 = []",
+          "var newArray3 = []",
+          {
+            "func": "CALL",
+            "widget": "calls",
+            "routine": "checkSeat1Routine"
+          },
+          {
+            "func": "CALL",
+            "widget": "calls",
+            "routine": "checkSeat2Routine"
+          },
+          {
+            "func": "CALL",
+            "widget": "calls",
+            "routine": "checkSeat3Routine"
+          }
+        ]
+      }
+    ],
+    "text": "View Green"
+  },
+  "calls": {
+    "type": "button",
+    "id": "calls",
+    "x": 1487,
+    "y": 551,
+    "z": 76431,
+    "checkSeat1Routine": [
+      {
+        "note": "There is a separate routine for each board. The button for board 1 calls 2, 3, and 4.  The button for board 2 calls 1, 3, and 4.  Etc."
+      },
+      {
+        "note": "Create a loop that runs through each of the 4 seats.",
+        "func": "FOREACH",
+        "in": [
+          "seat1",
+          "seat2",
+          "seat3",
+          "seat4"
+        ],
+        "loopRoutine": [
+          {
+            "note": "Get the value of each item in the array for this board's visibility property."
+          },
+          "var tempSeatID1 = ${pArray1.$key}",
+          {
+            "func": "IF",
+            "operand1": "${tempSeatID1}",
+            "operand2": null,
+            "thenRoutine": [
+              {
+                "note": "If that position in the array is empty/null, then do nothing, otherwise run the elseRoutine"
+              }
+            ],
+            "elseRoutine": [
+              {
+                "func": "IF",
+                "operand1": "${tempSeatID1}",
+                "operand2": "${thisSeatID}",
+                "thenRoutine": [
+                  {
+                    "note": "If the player pressing the button appears in the visibility array, then do nothing. What this really means is that the player's name will not be added to the new array being built in the elseRoutine"
+                  }
+                ],
+                "elseRoutine": [
+                  {
+                    "note": "If the player pressing the button is not in the visibility array, then we want to keep that other player in the visibility array, so assign that player a position in the array."
+                  },
+                  "var newArray1.$key = ${tempSeatID1}"
+                ]
+              },
+              {
+                "note": "Set the array of players -- minus the player pressing the button -- back into the visibility property for this board.",
+                "func": "SELECT",
+                "property": "id",
+                "value": "boardHolder1"
+              },
+              {
+                "func": "SET",
+                "property": "onlyVisibleForSeat",
+                "value": "${newArray1}"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "checkSeat2Routine": [
+      {
+        "func": "FOREACH",
+        "in": [
+          "seat1",
+          "seat2",
+          "seat3",
+          "seat4"
+        ],
+        "loopRoutine": [
+          "var tempSeatID2 = ${pArray2.$key}",
+          {
+            "func": "IF",
+            "operand1": "${tempSeatID2}",
+            "operand2": null,
+            "thenRoutine": [],
+            "elseRoutine": [
+              {
+                "func": "IF",
+                "operand1": "${tempSeatID2}",
+                "operand2": "${thisSeatID}",
+                "thenRoutine": [],
+                "elseRoutine": [
+                  "var newArray2.$key = ${tempSeatID2}"
+                ]
+              },
+              {
+                "func": "SELECT",
+                "property": "id",
+                "value": "boardHolder2"
+              },
+              {
+                "func": "SET",
+                "property": "onlyVisibleForSeat",
+                "value": "${newArray2}"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "checkSeat3Routine": [
+      {
+        "func": "FOREACH",
+        "in": [
+          "seat1",
+          "seat2",
+          "seat3",
+          "seat4"
+        ],
+        "loopRoutine": [
+          "var tempSeatID3 = ${pArray3.$key}",
+          {
+            "func": "IF",
+            "operand1": "${tempSeatID3}",
+            "operand2": null,
+            "thenRoutine": [],
+            "elseRoutine": [
+              {
+                "func": "IF",
+                "operand1": "${tempSeatID3}",
+                "operand2": "${thisSeatID}",
+                "thenRoutine": [],
+                "elseRoutine": [
+                  "var newArray3.$key = ${tempSeatID3}"
+                ]
+              },
+              {
+                "func": "SELECT",
+                "property": "id",
+                "value": "boardHolder3"
+              },
+              {
+                "func": "SET",
+                "property": "onlyVisibleForSeat",
+                "value": "${newArray3}"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "checkSeat4Routine": [
+      {
+        "func": "FOREACH",
+        "in": [
+          "seat1",
+          "seat2",
+          "seat3",
+          "seat4"
+        ],
+        "loopRoutine": [
+          "var tempSeatID4 = ${pArray4.$key}",
+          {
+            "func": "IF",
+            "operand1": "${tempSeatID4}",
+            "operand2": null,
+            "thenRoutine": [],
+            "elseRoutine": [
+              {
+                "func": "IF",
+                "operand1": "${tempSeatID4}",
+                "operand2": "${thisSeatID}",
+                "thenRoutine": [],
+                "elseRoutine": [
+                  "var newArray4.$key = ${tempSeatID4}"
+                ]
+              },
+              {
+                "func": "SELECT",
+                "property": "id",
+                "value": "boardHolder4"
+              },
+              {
+                "func": "SET",
+                "property": "onlyVisibleForSeat",
+                "value": "${newArray4}"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "text": "CALLs"
+  },
+  "5fac": {
+    "id": "5fac",
+    "x": 75,
+    "y": 637,
+    "width": 1400,
+    "height": 600,
+    "z": 90,
+    "movable": false,
+    "css": "font-size: 25px; ",
+    "text": "Open this room in separate browser windows (one using incognito/private mode) or on separate devices to see how sitting in a seat changes the apperance. Each colored seat has a colored holder associated with it. You automatically see the holder when you sit in the seat.\n\nWhen you click on one of the view buttoms above the seats, the view switches so you see the holder below the button.  The purpose of this demo is to simulate how a room could be built where each player has a full size game board and by clicking a button, players can peek at another player's board to see what that player has done.  There are some comments in 'View Red' button and in the first of the call routines to describe what is happening in the JSON. You could optionally also make an invisible cover appear over the holder to prevent peeking players from making changes to another player's board."
+  },
+  "v8t0": {
+    "id": "v8t0",
+    "x": 518,
+    "y": 2,
+    "width": 600,
+    "z": 95,
+    "css": "font-size: 60px",
+    "text": "Seats: Board Demo"
+  }
+}

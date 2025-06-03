@@ -1,0 +1,456 @@
+{
+  "8fr3": {
+    "type": "label",
+    "text": "JSON Operations",
+    "css": "font-size: 60px",
+    "height": 80,
+    "width": 1000,
+    "x": 280,
+    "z": 26392,
+    "id": "8fr3",
+    "y": 1
+  },
+  "_meta": {
+    "version": 14,
+    "info": {
+      "name": "Operations - JSON",
+      "image": "/assets/2065554226_6111",
+      "rules": "",
+      "bgg": "",
+      "year": "",
+      "mode": "Tutorial",
+      "time": "",
+      "attribution": "",
+      "lastUpdate": 1748966353233,
+      "showName": false,
+      "skill": "",
+      "description": "",
+      "similarImage": "",
+      "similarName": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": "",
+      "similarDesigner": "",
+      "variantImage": "",
+      "variant": "Basic",
+      "language": "en-US",
+      "players": "1"
+    }
+  },
+  "string": {
+    "id": "string",
+    "x": 281,
+    "y": 103,
+    "width": 1000,
+    "z": 10,
+    "css": "font-size: 20px; ",
+    "text": "These are functions (like the ones used for arrays, strings, math, and color) that can be used to process information in routines. These functions work with JSON. `fetch` is used to retrieve data (usually in JSON format) from an external URL. `jsonParse` is used to turn the data into useful JSON. `jsonStringify` turns a variable into a JSON string which can be parsed."
+  },
+  "lr6y": {
+    "id": "lr6y",
+    "x": 700,
+    "y": 627,
+    "z": 8,
+    "css": "font-size: 30px; text-align:center",
+    "text": "Output",
+    "height": 50,
+    "movable": false
+  },
+  "outputBox": {
+    "type": "label",
+    "id": "outputBox",
+    "x": 350,
+    "y": 670,
+    "width": 800,
+    "height": 200,
+    "z": 26446,
+    "css": {
+      "border": "2px dashed black",
+      "font-size": "20px",
+      "color": "black",
+      "text-align": "left"
+    },
+    "editable": true
+  },
+  "bm4j": {
+    "id": "bm4j",
+    "x": 39,
+    "y": 354,
+    "width": 270,
+    "z": 10018,
+    "movable": false,
+    "text": "This `fetch` operation retrieves data from an external website. The data is in json format. It is stored into a variable and then pasted into the output box below. The data has fields (such as id, name, email, etc) and values associated with each field.",
+    "height": 250,
+    "css": {
+      "font-size": "20px"
+    }
+  },
+  "jsonButton1": {
+    "type": "button",
+    "id": "jsonButton1",
+    "x": 120,
+    "y": 250,
+    "z": 273,
+    "text": "fetch",
+    "url": "https://jsonplaceholder.typicode.com/users",
+    "clickRoutine": [
+      "var json = fetch ${PROPERTY url} //Returns the JSON from the specified URL. This is a sample url made available on that website for testing operations such as this.",
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "outputBox"
+      },
+      {
+        "func": "SET",
+        "property": "text",
+        "value": "${json}"
+      }
+    ]
+  },
+  "jsonButton2": {
+    "type": "button",
+    "id": "jsonButton2",
+    "x": 540,
+    "y": 250,
+    "z": 273,
+    "clickRoutine": [
+      "var json = fetch ${PROPERTY url OF jsonButton1}",
+      "var parsed = jsonParse ${json} //This converts the data retrieved from the url into useable JSON.",
+      {
+        "func": "FOREACH",
+        "in": "${parsed}",
+        "loopRoutine": [
+          "var name = ${value.name}",
+          "var cardNum = ${key} + 1",
+          "var cardNum = ${cardNum} + '' //This converts the numerical value of key to a string in order to match the cardType.",
+          {
+            "func": "SELECT",
+            "type": "card",
+            "property": "cardType",
+            "value": "${cardNum}"
+          },
+          {
+            "func": "SET",
+            "property": "name",
+            "value": "${name}"
+          }
+        ]
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "outputBox"
+      },
+      {
+        "func": "SET",
+        "property": "text",
+        "value": "${parsed}"
+      }
+    ],
+    "text": "jsonParse"
+  },
+  "bm5j": {
+    "id": "bm5j",
+    "x": 399,
+    "y": 354,
+    "width": 370,
+    "z": 10018,
+    "movable": false,
+    "text": "This `jsonParse` operation takes the data from the same website used in the `fetch` and converts it into a JSON format usable by VTT. In the output box below, you will see [object Object] repeated. But open the Editor and view the text property and you will see how the data was formatted. The button also processes the data through a FOREACH loop to add the name to the cards below.",
+    "height": 250,
+    "css": {
+      "font-size": "20px"
+    }
+  },
+  "gd33B": {
+    "id": "gd33B",
+    "parent": "demoDeckHolder",
+    "fixedParent": true,
+    "y": 171.36,
+    "width": 111,
+    "height": 40,
+    "type": "button",
+    "text": "Recall & Shuffle",
+    "movableInEdit": false,
+    "clickRoutine": [
+      {
+        "func": "RECALL",
+        "holder": "${PROPERTY parent}"
+      },
+      {
+        "func": "FLIP",
+        "holder": "${PROPERTY parent}",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "${PROPERTY parent}"
+      }
+    ]
+  },
+  "demoDeckHolder": {
+    "type": "holder",
+    "id": "demoDeckHolder",
+    "x": 1478,
+    "y": 785,
+    "dropTarget": {
+      "type": "card"
+    }
+  },
+  "demoDeck": {
+    "type": "deck",
+    "id": "demoDeck",
+    "parent": "demoDeckHolder",
+    "x": 12,
+    "y": 41,
+    "cardDefaults": {
+      "width": 100,
+      "height": 100,
+      "logoColor": "#1f5ca6",
+      "shapeColor": "#ffffff80",
+      "css": {
+        "default": {
+          "font-size": "14px",
+          "word-wrap": "break-word"
+        }
+      }
+    },
+    "cardTypes": {
+      "1": {
+        "shade": "blue",
+        "cardNum": 1
+      },
+      "2": {
+        "shade": "blue",
+        "cardNum": 2
+      },
+      "3": {
+        "shade": "orange",
+        "cardNum": 3
+      },
+      "4": {
+        "shade": "orange",
+        "cardNum": 4
+      },
+      "5": {
+        "shade": "red",
+        "cardNum": 5
+      },
+      "6": {
+        "shade": "red",
+        "cardNum": 6
+      },
+      "7": {
+        "shade": "purple",
+        "cardNum": 7
+      },
+      "8": {
+        "shade": "purple",
+        "cardNum": 8
+      },
+      "9": {
+        "shade": "green",
+        "cardNum": 9
+      },
+      "10": {
+        "shade": "green",
+        "cardNum": 10
+      }
+    },
+    "faceTemplates": [
+      {
+        "border": 1,
+        "radius": 8,
+        "objects": [
+          {
+            "type": "image",
+            "width": 100,
+            "height": 100,
+            "color": "white",
+            "value": "/i/icons/vtt_logo.svg",
+            "svgReplaces": {
+              "currentColor": "logoColor"
+            }
+          }
+        ]
+      },
+      {
+        "border": 1,
+        "radius": 8,
+        "objects": [
+          {
+            "type": "image",
+            "width": 100,
+            "height": 100,
+            "svgReplaces": {
+              "currentColor": "shapeColor"
+            },
+            "dynamicProperties": {
+              "color": "shade",
+              "value": "shape"
+            }
+          },
+          {
+            "type": "text",
+            "y": 0,
+            "color": "white",
+            "textAlign": "center",
+            "width": 100,
+            "fontSize": 25,
+            "dynamicProperties": {
+              "value": "cardNum"
+            }
+          },
+          {
+            "type": "text",
+            "y": 30,
+            "color": "white",
+            "textAlign": "center",
+            "width": 100,
+            "dynamicProperties": {
+              "value": "name"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "76vp": {
+    "deck": "demoDeck",
+    "type": "card",
+    "cardType": "1",
+    "id": "76vp",
+    "z": 34,
+    "x": 158,
+    "y": 889,
+    "activeFace": 1,
+    "name": ""
+  },
+  "jmgp": {
+    "deck": "demoDeck",
+    "type": "card",
+    "cardType": "2",
+    "id": "jmgp",
+    "z": 35,
+    "activeFace": 1,
+    "x": 279,
+    "y": 889
+  },
+  "mgc3": {
+    "deck": "demoDeck",
+    "type": "card",
+    "cardType": "3",
+    "id": "mgc3",
+    "z": 36,
+    "x": 400,
+    "y": 889,
+    "activeFace": 1
+  },
+  "7yj8": {
+    "deck": "demoDeck",
+    "type": "card",
+    "cardType": "4",
+    "id": "7yj8",
+    "z": 37,
+    "x": 520,
+    "y": 889,
+    "activeFace": 1
+  },
+  "nfj4": {
+    "deck": "demoDeck",
+    "type": "card",
+    "cardType": "5",
+    "id": "nfj4",
+    "z": 38,
+    "activeFace": 1,
+    "x": 641,
+    "y": 889
+  },
+  "h05t": {
+    "deck": "demoDeck",
+    "type": "card",
+    "cardType": "6",
+    "id": "h05t",
+    "z": 39,
+    "activeFace": 1,
+    "x": 762,
+    "y": 889
+  },
+  "92yh": {
+    "deck": "demoDeck",
+    "type": "card",
+    "cardType": "7",
+    "id": "92yh",
+    "z": 40,
+    "activeFace": 1,
+    "x": 883,
+    "y": 889
+  },
+  "mqfj": {
+    "deck": "demoDeck",
+    "type": "card",
+    "cardType": "8",
+    "id": "mqfj",
+    "z": 41,
+    "activeFace": 1,
+    "x": 1003,
+    "y": 889
+  },
+  "pokr": {
+    "deck": "demoDeck",
+    "type": "card",
+    "cardType": "9",
+    "id": "pokr",
+    "z": 42,
+    "activeFace": 1,
+    "x": 1124,
+    "y": 889
+  },
+  "z4q4": {
+    "deck": "demoDeck",
+    "type": "card",
+    "cardType": "10",
+    "id": "z4q4",
+    "z": 43,
+    "activeFace": 1,
+    "x": 1245,
+    "y": 889
+  },
+  "jsonButton3": {
+    "type": "button",
+    "id": "jsonButton3",
+    "x": 1030,
+    "y": 250,
+    "z": 273,
+    "clickRoutine": [
+      "var json = fetch ${PROPERTY url OF jsonButton1}",
+      "var parsed = jsonParse ${json}",
+      "var encoded = jsonStringify ${parsed} //This converts the data back into JSON format.",
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "outputBox"
+      },
+      {
+        "func": "SET",
+        "property": "text",
+        "value": "${encoded}"
+      }
+    ],
+    "text": "jsonStringify",
+    "width": 100
+  },
+  "bm6j": {
+    "id": "bm6j",
+    "x": 899,
+    "y": 354,
+    "width": 370,
+    "z": 10018,
+    "movable": false,
+    "text": "This `jsonStringify` operation takes the data previously used in the `jsonParse` operation and re-encodes it back into JSON.",
+    "height": 250,
+    "css": {
+      "font-size": "20px"
+    }
+  }
+}

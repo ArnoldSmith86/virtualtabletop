@@ -1,0 +1,417 @@
+{
+  "8fr3": {
+    "type": "label",
+    "text": "JSON Operations:\nMaster Score Example",
+    "css": {
+      "font-size": "60px",
+      "color": "black"
+    },
+    "height": 160,
+    "width": 1000,
+    "x": 280,
+    "z": 26392,
+    "id": "8fr3",
+    "y": 1
+  },
+  "string": {
+    "id": "string",
+    "x": 176,
+    "y": 157,
+    "z": 11,
+    "css": "font-size: 20px; ",
+    "html": "This example uses 'fetch' and 'jsonParse' to get the JSON from another page at: <a href='https://virtualtabletop.io/TutorialExampleScore'>https://virtualtabletop.io/TutorialExampleScore</a>. Open that page in another tab by clicking on the link. You should reload that room from its saved state.\n\nImagine that page is a game with very simple rules. Whoever has the most cards in their holder wins. On that other page, you can move cards around and see the card count change at the bottom of the holder. When ready, press the Update Scores button below. It will retrieve the scores for the current players (Jane and Steve) and update their scores on the master scoreboard shown in this room. This would keep a record of all plays of the game. To add yourself as new player, just sit in one of the seats in both rooms and click the Update Scores button.",
+    "width": 1200,
+    "height": 150,
+    "movable": false
+  },
+  "jsonButton2": {
+    "type": "button",
+    "id": "jsonButton2",
+    "x": 1267,
+    "y": 523,
+    "z": 273,
+    "clickRoutine": [
+      "var json = fetch 'https://virtualtabletop.io/state/TutorialExampleScore'",
+      "var parsed = jsonParse ${json} ",
+      "var countP1 = ${parsed.countP1}",
+      "var countP1 = ${countP1.text}",
+      "var countP2 = ${parsed.countP2}",
+      "var countP2 = ${countP2.text}",
+      "var player1 = ${parsed.seat1}",
+      "var player1 = ${player1.player}",
+      "var player2 = ${parsed.seat2}",
+      "var player2 = ${player2.player}",
+      {
+        "func": "SCORE",
+        "seats": [
+          "seat1",
+          "seat2",
+          "seat3",
+          "seat4",
+          "seat5",
+          "seat6",
+          "seat7",
+          "seat8",
+          "seat9",
+          "seat10",
+          "seat11",
+          "seat12",
+          "seat13"
+        ],
+        "value": 0
+      },
+      "var roundCount = ${PROPERTY score OF seat1}",
+      "var roundCount = length ${roundCount}",
+      {
+        "func": "SELECT",
+        "property": "player",
+        "value": "${player1}"
+      },
+      {
+        "func": "GET",
+        "property": "id"
+      },
+      {
+        "func": "SCORE",
+        "mode": "set",
+        "seats": "${id}",
+        "value": "${countP1}",
+        "round": "${roundCount}"
+      },
+      {
+        "func": "SELECT",
+        "property": "player",
+        "value": "${player2}"
+      },
+      {
+        "func": "GET",
+        "property": "id"
+      },
+      {
+        "func": "SCORE",
+        "mode": "set",
+        "seats": "${id}",
+        "value": "${countP2}",
+        "round": "${roundCount}"
+      }
+    ],
+    "text": "Update Scores"
+  },
+  "seat1": {
+    "type": "seat",
+    "id": "seat1",
+    "x": 1400,
+    "y": 20,
+    "z": 23,
+    "hideWhenUnused": true,
+    "color": "#4520d9",
+    "player": "John",
+    "score": [
+      7,
+      3,
+      0,
+      0,
+      0,
+      0,
+      7,
+      0,
+      7
+    ]
+  },
+  "seat2": {
+    "type": "seat",
+    "id": "seat2",
+    "x": 1400,
+    "z": 24,
+    "index": 2,
+    "hideWhenUnused": true,
+    "color": "#ea70d9",
+    "player": "Jane",
+    "score": [
+      6,
+      11,
+      0,
+      0,
+      0,
+      9,
+      7,
+      0,
+      7
+    ],
+    "y": 90
+  },
+  "wf7e": {
+    "type": "scoreboard",
+    "x": 319,
+    "y": 377,
+    "id": "wf7e",
+    "width": 900,
+    "height": 400,
+    "z": 277,
+    "showTotals": false,
+    "movable": false
+  },
+  "seat3": {
+    "type": "seat",
+    "id": "seat3",
+    "x": 1400,
+    "z": 24,
+    "index": 3,
+    "hideWhenUnused": true,
+    "color": "#1ca311",
+    "score": [
+      0,
+      0,
+      0,
+      0,
+      6,
+      0,
+      7,
+      0,
+      7
+    ],
+    "y": 160,
+    "player": "Fred"
+  },
+  "seat4": {
+    "type": "seat",
+    "id": "seat4",
+    "x": 1400,
+    "z": 24,
+    "index": 4,
+    "hideWhenUnused": true,
+    "color": "#d52d41",
+    "player": "Sally",
+    "score": [
+      0,
+      0,
+      2,
+      0,
+      0,
+      0,
+      7,
+      0,
+      7
+    ],
+    "y": 231
+  },
+  "seat5": {
+    "type": "seat",
+    "id": "seat5",
+    "x": 1400,
+    "z": 24,
+    "index": 5,
+    "hideWhenUnused": true,
+    "color": "#ff9900",
+    "player": "Steve",
+    "score": [
+      0,
+      0,
+      0,
+      5,
+      0,
+      5,
+      2,
+      2,
+      2
+    ],
+    "y": 301
+  },
+  "seat6": {
+    "type": "seat",
+    "id": "seat6",
+    "x": 1400,
+    "z": 24,
+    "index": 6,
+    "hideWhenUnused": true,
+    "color": "#de575f",
+    "player": "Denise",
+    "score": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      8,
+      7,
+      0,
+      7
+    ],
+    "y": 372
+  },
+  "seat7": {
+    "type": "seat",
+    "id": "seat7",
+    "x": 1400,
+    "z": 24,
+    "index": 7,
+    "hideWhenUnused": true,
+    "color": "#808000",
+    "score": [
+      0,
+      0,
+      0,
+      4,
+      0,
+      0,
+      7,
+      0,
+      7
+    ],
+    "y": 442,
+    "player": "Ted"
+  },
+  "seat8": {
+    "type": "seat",
+    "id": "seat8",
+    "x": 1400,
+    "z": 24,
+    "index": 8,
+    "hideWhenUnused": true,
+    "color": "#feff66",
+    "score": [
+      0,
+      0,
+      0,
+      0,
+      7,
+      0,
+      7,
+      0,
+      7
+    ],
+    "y": 513,
+    "player": "Michelle"
+  },
+  "seat9": {
+    "type": "seat",
+    "id": "seat9",
+    "x": 1400,
+    "z": 24,
+    "index": 9,
+    "hideWhenUnused": true,
+    "color": "#800000",
+    "score": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      1,
+      7,
+      0,
+      7
+    ],
+    "y": 584,
+    "player": "Alex"
+  },
+  "seat10": {
+    "type": "seat",
+    "id": "seat10",
+    "x": 1400,
+    "z": 24,
+    "index": 10,
+    "hideWhenUnused": true,
+    "y": 654,
+    "score": [
+      0,
+      0,
+      9,
+      0,
+      0,
+      0,
+      7,
+      0,
+      7
+    ],
+    "player": "Tiffany",
+    "color": "teal"
+  },
+  "seat11": {
+    "type": "seat",
+    "id": "seat11",
+    "x": 1400,
+    "z": 24,
+    "index": 11,
+    "hideWhenUnused": true,
+    "score": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      7,
+      7,
+      7
+    ],
+    "y": 720
+  },
+  "seat12": {
+    "type": "seat",
+    "id": "seat12",
+    "x": 1400,
+    "z": 25,
+    "index": 12,
+    "hideWhenUnused": true,
+    "score": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      7,
+      0,
+      7
+    ],
+    "y": 786
+  },
+  "seat13": {
+    "type": "seat",
+    "id": "seat13",
+    "x": 1400,
+    "z": 26,
+    "index": 13,
+    "hideWhenUnused": true,
+    "score": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      7,
+      0,
+      7
+    ],
+    "y": 853
+  },
+  "_meta": {
+    "version": 14,
+    "info": {
+      "name": "Operations - JSON",
+      "image": "/assets/2065554226_6111",
+      "rules": "",
+      "bgg": "",
+      "year": "",
+      "mode": "Tutorial",
+      "time": "",
+      "attribution": "",
+      "lastUpdate": 1748966353234,
+      "showName": false,
+      "skill": "",
+      "description": "",
+      "similarImage": "",
+      "similarName": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": "",
+      "similarDesigner": "",
+      "variantImage": "",
+      "variant": "Master Score Example",
+      "language": "en-US",
+      "players": "1"
+    }
+  }
+}

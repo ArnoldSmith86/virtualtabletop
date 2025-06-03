@@ -1,0 +1,348 @@
+{
+  "seat1": {
+    "type": "seat",
+    "id": "seat1",
+    "x": 104,
+    "y": 159,
+    "turn": true
+  },
+  "seat2": {
+    "type": "seat",
+    "id": "seat2",
+    "x": 512,
+    "y": 159,
+    "z": 24,
+    "index": 2
+  },
+  "_meta": {
+    "version": 16,
+    "info": {
+      "name": "Types - Seats",
+      "image": "/assets/-65508335_6985",
+      "rules": "",
+      "bgg": "",
+      "year": "2021",
+      "mode": "Tutorial",
+      "time": "",
+      "attribution": "",
+      "showName": false,
+      "lastUpdate": 1748966400083,
+      "skill": "",
+      "description": "",
+      "similarImage": "",
+      "similarName": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": "",
+      "similarDesigner": "",
+      "variantImage": "",
+      "variant": "Routines",
+      "language": "en-US",
+      "players": "1"
+    }
+  },
+  "overview": {
+    "id": "overview",
+    "text": "For this tutorial, you can use a single browser window and should 'sit' in different seats to see how things change. VTT provides several pre-defined variables and collections using seats that are available in all routines. Click buttons and see the output in the text box above the button.",
+    "width": 1400,
+    "css": {
+      "font-size": "22px"
+    },
+    "x": 107,
+    "y": 78,
+    "movable": false,
+    "height": 60
+  },
+  "header": {
+    "id": "header",
+    "y": 4,
+    "width": 1600,
+    "height": 70,
+    "z": 72,
+    "css": {
+      "font-size": "60px",
+      "text-align": "center"
+    },
+    "text": "Seats: Routines"
+  },
+  "subHeader1": {
+    "id": "subHeader1",
+    "y": 229,
+    "width": 400,
+    "height": 70,
+    "z": 72,
+    "css": {
+      "font-size": "40px",
+      "text-align": "center"
+    },
+    "text": "Variables",
+    "x": 572
+  },
+  "varButton1": {
+    "type": "button",
+    "id": "varButton1",
+    "x": 146,
+    "y": 358,
+    "layer": 1,
+    "z": 126,
+    "text": "seatID",
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": [
+          "varLabel1"
+        ],
+        "property": "text",
+        "value": "${seatID}"
+      }
+    ]
+  },
+  "varButton2": {
+    "type": "button",
+    "id": "varButton2",
+    "x": 554,
+    "y": 358,
+    "layer": 1,
+    "z": 128,
+    "text": "seatIndex",
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": [
+          "varLabel2"
+        ],
+        "property": "text",
+        "value": "${seatIndex}"
+      }
+    ]
+  },
+  "varLabel1": {
+    "id": "varLabel1",
+    "x": 109,
+    "y": 287,
+    "width": 150,
+    "height": 50,
+    "css": {
+      "background": "white",
+      "display": "flex",
+      "justify-content": "center",
+      "align-items": "center",
+      "border": "2px solid black"
+    },
+    "movable": false,
+    "z": 23
+  },
+  "varLabel2": {
+    "id": "varLabel2",
+    "x": 517,
+    "y": 287,
+    "width": 150,
+    "height": 50,
+    "css": {
+      "background": "white",
+      "display": "flex",
+      "justify-content": "center",
+      "align-items": "center",
+      "border": "2px solid black"
+    },
+    "movable": false
+  },
+  "varInfo1": {
+    "id": "varInfo1",
+    "x": 64,
+    "y": 453,
+    "width": 250,
+    "height": 150,
+    "movable": false,
+    "text": "This is set to the 'id' of the first (by index number) seat the player pressing the button is in. It is 'null' if the player is not in a seat. Sit in 0, 1, and multiple seats and press the button to see the text on the button reflect the 'id'.",
+    "z": 127
+  },
+  "varInfo2": {
+    "id": "varInfo2",
+    "x": 463,
+    "y": 453,
+    "width": 250,
+    "height": 150,
+    "movable": false,
+    "text": "This works the same as 'seatID' except that it is the index value of the seat. While the index value can be something other than a number, several functions of VTT, including 'TURN' and 'SCORE' except the index to be a whole number.",
+    "z": 127
+  },
+  "subHeader2": {
+    "id": "subHeader2",
+    "y": 603,
+    "width": 400,
+    "height": 70,
+    "z": 72,
+    "css": {
+      "font-size": "40px",
+      "text-align": "center"
+    },
+    "text": "Collections",
+    "x": 572
+  },
+  "collLabel1": {
+    "id": "collLabel1",
+    "x": 109,
+    "y": 661,
+    "width": 150,
+    "height": 50,
+    "z": 23,
+    "movable": false,
+    "css": {
+      "background": "white",
+      "display": "flex",
+      "justify-content": "center",
+      "align-items": "center",
+      "border": "2px solid black"
+    }
+  },
+  "collInfo1": {
+    "id": "collInfo1",
+    "x": 64,
+    "y": 827,
+    "width": 250,
+    "height": 150,
+    "z": 127,
+    "movable": false,
+    "text": "This works the same as 'seatID' except that it is a collection instead of a variable. To show the result, this button GETs the 'id' values of all the seats the active player is in."
+  },
+  "collButton1": {
+    "type": "button",
+    "id": "collButton1",
+    "x": 126,
+    "y": 732,
+    "layer": 1,
+    "z": 131,
+    "text": "playerSeats",
+    "clickRoutine": [
+      {
+        "func": "GET",
+        "collection": "activeSeats",
+        "property": "id",
+        "aggregation": "array"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "collLabel1"
+        ],
+        "property": "text",
+        "value": "${id}"
+      }
+    ],
+    "width": 120
+  },
+  "collButton4": {
+    "type": "button",
+    "id": "collButton4",
+    "x": 897,
+    "y": 732,
+    "width": 120,
+    "layer": 1,
+    "z": 129,
+    "clickRoutine": [
+      {
+        "func": "GET",
+        "collection": "activeSeats",
+        "property": "id",
+        "aggregation": "array"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "collLabel2"
+        ],
+        "property": "text",
+        "value": "${id}"
+      }
+    ],
+    "text": "activeSeats"
+  },
+  "seat4": {
+    "type": "seat",
+    "id": "seat4",
+    "x": 1225,
+    "y": 159,
+    "z": 26,
+    "index": 4
+  },
+  "seat3": {
+    "type": "seat",
+    "id": "seat3",
+    "x": 875,
+    "y": 159,
+    "z": 25,
+    "index": 3
+  },
+  "varLabel3": {
+    "id": "varLabel3",
+    "x": 879,
+    "y": 287,
+    "width": 150,
+    "height": 50,
+    "movable": false,
+    "css": {
+      "background": "white",
+      "display": "flex",
+      "justify-content": "center",
+      "align-items": "center",
+      "border": "2px solid black"
+    }
+  },
+  "varButton3": {
+    "type": "button",
+    "id": "varButton3",
+    "x": 916,
+    "y": 358,
+    "layer": 1,
+    "z": 128,
+    "text": "activeSeats",
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": [
+          "varLabel3"
+        ],
+        "property": "text",
+        "value": "${activeSeats}"
+      }
+    ]
+  },
+  "varInfo3": {
+    "id": "varInfo3",
+    "x": 834,
+    "y": 453,
+    "width": 250,
+    "height": 150,
+    "z": 127,
+    "movable": false,
+    "text": "This is an array of the 'id's of all the seats in the room that have seated players. The value is null if there are no seats with players."
+  },
+  "collLabel2": {
+    "id": "collLabel2",
+    "x": 880,
+    "y": 661,
+    "width": 150,
+    "height": 50,
+    "z": 126,
+    "movable": false,
+    "css": {
+      "background": "white",
+      "display": "flex",
+      "justify-content": "center",
+      "align-items": "center",
+      "border": "2px solid black"
+    },
+    "text": []
+  },
+  "collInfo2": {
+    "id": "collInfo2",
+    "x": 828,
+    "y": 827,
+    "width": 250,
+    "height": 150,
+    "z": 127,
+    "movable": false,
+    "text": "This works the same as the 'activeSeats' variable except that it is a collection. To show the result, this button GETs the 'id' values of all the seats occupied by any player."
+  }
+}
