@@ -134,7 +134,7 @@
     "version": 3,
     "info": {
       "name": "Appearance - Hexagons",
-      "image": "/assets/-2133266205_8127",
+      "image": "/assets/-1295483297_6051",
       "rules": "",
       "bgg": "",
       "year": "2021",
@@ -142,19 +142,19 @@
       "time": "0",
       "attribution": "\nCalculator for hexagons: https://hexagoncalculator.apphb.com/\n\nGood reference guide:\nhttps://www.redblobgames.com/grids/hexagons/\n\n--\n\n\nGood reference guide:\nhttps://www.redblobgames.com/grids/hexagons/#size-and-spacing",
       "showName": false,
-      "lastUpdate": 1748965965331,
+      "lastUpdate": 1748969743598,
       "skill": "",
       "description": "",
-      "variantImage": "",
-      "variant": "Demo",
-      "language": "en-US",
-      "players": "1",
       "similarImage": "",
       "similarName": "",
       "similarDesigner": "",
       "similarAwards": "",
       "ruleText": "",
-      "helpText": ""
+      "helpText": "",
+      "variantImage": "",
+      "variant": "Demo",
+      "language": "en-US",
+      "players": "1"
     }
   },
   "34s0": {

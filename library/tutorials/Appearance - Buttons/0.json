@@ -3,7 +3,7 @@
     "version": 3,
     "info": {
       "name": "Appearance - Buttons",
-      "image": "/assets/-446929059_7871",
+      "image": "/assets/1269488990_5742",
       "rules": "",
       "bgg": "",
       "year": "2020",
@@ -11,19 +11,19 @@
       "time": "0",
       "attribution": "The images used in this tutorial were created by LawDawg and are released to the Public Domain under CC0.",
       "showName": false,
-      "lastUpdate": 1748965931817,
+      "lastUpdate": 1748969576717,
       "skill": "",
       "description": "",
-      "variantImage": "",
-      "variant": "Introduction",
-      "language": "en-US",
-      "players": "2-4",
       "similarImage": "",
       "similarName": "",
       "similarDesigner": "",
       "similarAwards": "",
       "ruleText": "",
-      "helpText": ""
+      "helpText": "",
+      "variantImage": "",
+      "variant": "Introduction",
+      "language": "en-US",
+      "players": "2-4"
     }
   },
   "axmt": {

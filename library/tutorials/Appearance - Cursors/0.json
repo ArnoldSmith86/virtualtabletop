@@ -3,14 +3,14 @@
     "version": 11,
     "info": {
       "name": "Appearance - Cursors",
-      "image": "/assets/1440534355_4658",
+      "image": "/assets/-885186994_5927",
       "rules": "",
       "bgg": "",
       "year": "",
       "mode": "",
       "time": "",
       "attribution": "",
-      "lastUpdate": 1748965952516,
+      "lastUpdate": 1748969505593,
       "showName": false,
       "skill": "",
       "description": "",
@@ -19,11 +19,11 @@
       "similarAwards": "",
       "ruleText": "For more information:&nbsp;\nhttps://developer.mozilla.org/en-US/docs/Web/CSS/cursor",
       "helpText": "",
+      "similarDesigner": "",
       "variantImage": "",
       "variant": "Default browser cursors",
       "language": "",
-      "players": "",
-      "similarDesigner": ""
+      "players": ""
     }
   },
   "cursorCSS": {
