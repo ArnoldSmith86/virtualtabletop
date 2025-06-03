@@ -23,7 +23,7 @@
     "version": 3,
     "info": {
       "name": "Xtras - Menus",
-      "image": "/assets/237729133_4324",
+      "image": "/assets/1434016883_4096",
       "rules": "",
       "bgg": "",
       "year": "2021",
@@ -31,19 +31,19 @@
       "time": "",
       "attribution": "",
       "showName": false,
-      "lastUpdate": 1748965890012,
+      "lastUpdate": 1748980338455,
       "skill": "",
       "description": "",
-      "variantImage": "",
-      "variant": "Basic",
-      "language": "en-US",
-      "players": "1",
       "similarImage": "",
       "similarName": "",
       "similarDesigner": "",
       "similarAwards": "",
       "ruleText": "",
-      "helpText": ""
+      "helpText": "",
+      "variantImage": "",
+      "variant": "Basic",
+      "language": "en-US",
+      "players": "1"
     }
   },
   "openMenu": {

@@ -113,7 +113,7 @@
     "version": 3,
     "info": {
       "name": "Xtras - State Dependent Routines",
-      "image": "/assets/696185748_9332",
+      "image": "/assets/-893124503_8183",
       "rules": "",
       "bgg": "",
       "year": "2021",
@@ -121,19 +121,19 @@
       "time": "",
       "attribution": "",
       "showName": false,
-      "lastUpdate": 1748965900382,
+      "lastUpdate": 1748980351042,
       "skill": "",
       "description": "",
-      "variantImage": "",
-      "variant": "Example: Self Locking Button",
-      "language": "en-US",
-      "players": "2-4",
       "similarImage": "",
       "similarName": "",
       "similarDesigner": "",
       "similarAwards": "",
       "ruleText": "",
-      "helpText": ""
+      "helpText": "",
+      "variantImage": "",
+      "variant": "Example: Self Locking Button",
+      "language": "en-US",
+      "players": "2-4"
     }
   }
 }

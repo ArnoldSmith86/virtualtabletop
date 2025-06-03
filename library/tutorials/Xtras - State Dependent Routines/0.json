@@ -635,7 +635,7 @@
     "version": 3,
     "info": {
       "name": "Xtras - State Dependent Routines",
-      "image": "/assets/696185748_9332",
+      "image": "/assets/-893124503_8183",
       "rules": "",
       "bgg": "",
       "year": "2021",
@@ -643,19 +643,19 @@
       "time": "",
       "attribution": "",
       "showName": false,
-      "lastUpdate": 1748965900376,
+      "lastUpdate": 1748980351039,
       "skill": "",
       "description": "",
-      "variantImage": "",
-      "variant": "Custom states",
-      "language": "en-US",
-      "players": "1",
       "similarImage": "",
       "similarName": "",
       "similarDesigner": "",
       "similarAwards": "",
       "ruleText": "",
-      "helpText": ""
+      "helpText": "",
+      "variantImage": "",
+      "variant": "Custom states",
+      "language": "en-US",
+      "players": "1"
     }
   }
 }

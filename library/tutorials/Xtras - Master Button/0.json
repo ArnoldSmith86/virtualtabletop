@@ -1179,7 +1179,7 @@
     "version": 1,
     "info": {
       "name": "Xtras - Master Button",
-      "image": "/assets/-55287503_6307",
+      "image": "/assets/-1660014686_5596",
       "rules": "",
       "bgg": "",
       "year": "2021",
@@ -1187,19 +1187,19 @@
       "time": "0",
       "attribution": "",
       "showName": false,
-      "lastUpdate": 1748965880910,
+      "lastUpdate": 1748980226980,
       "skill": "",
       "description": "",
-      "variantImage": "",
-      "variant": "",
-      "language": "en-US",
-      "players": "1",
       "similarImage": "",
       "similarName": "",
       "similarDesigner": "",
       "similarAwards": "",
       "ruleText": "",
-      "helpText": ""
+      "helpText": "",
+      "variantImage": "",
+      "variant": "",
+      "language": "en-US",
+      "players": "1"
     }
   },
   "5eeo": {
