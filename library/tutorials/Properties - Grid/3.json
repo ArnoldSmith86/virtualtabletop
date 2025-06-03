@@ -287,7 +287,7 @@
     "version": 2,
     "info": {
       "name": "Properties - Grid",
-      "image": "/assets/549373438_3864",
+      "image": "/assets/1477521147_4825",
       "rules": "",
       "bgg": "",
       "year": "2020",
@@ -295,7 +295,7 @@
       "time": "0",
       "attribution": "Good reference guide:\nhttps://www.redblobgames.com/grids/hexagons/#size-and-spacing\n\nAlso see the separate tutorial about hexagons.",
       "showName": false,
-      "lastUpdate": 1748966175245,
+      "lastUpdate": 1748977718402,
       "skill": "",
       "description": "",
       "similarImage": "",
@@ -303,11 +303,11 @@
       "similarAwards": "",
       "ruleText": "",
       "helpText": "",
+      "similarDesigner": "",
       "variantImage": "",
       "variant": "Hexagonal Grid",
       "language": "en-US",
-      "players": "1",
-      "similarDesigner": ""
+      "players": "1"
     }
   },
   "34s0": {

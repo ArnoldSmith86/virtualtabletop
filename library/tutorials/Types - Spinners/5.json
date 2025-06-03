@@ -625,7 +625,7 @@
     "version": 1,
     "info": {
       "name": "Types - Spinners",
-      "image": "/assets/67913234_20364",
+      "image": "/assets/-681011897_11101",
       "rules": "",
       "bgg": "",
       "year": "2021",
@@ -633,7 +633,7 @@
       "time": "0",
       "attribution": "Background color CSS: https://www.w3schools.com/cssref/pr_background-color.asp\nFont color CSS: https://www.w3schools.com/cssref/pr_text_color.asp\nBorder color CSS: https://www.w3schools.com/cssref/pr_border-color.asp",
       "showName": false,
-      "lastUpdate": 1748966103000,
+      "lastUpdate": 1748979985730,
       "skill": "",
       "description": "",
       "similarImage": "",
@@ -641,11 +641,11 @@
       "similarAwards": "",
       "ruleText": "",
       "helpText": "",
+      "similarDesigner": "",
       "variantImage": "",
       "variant": "Automations",
       "language": "en-US",
-      "players": "1",
-      "similarDesigner": ""
+      "players": "1"
     }
   }
 }

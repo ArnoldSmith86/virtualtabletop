@@ -168,7 +168,7 @@
     "version": 4,
     "info": {
       "name": "Types - Holders (Hands)",
-      "image": "/assets/23648332_5292",
+      "image": "/assets/1423503036_6679",
       "rules": "",
       "bgg": "",
       "year": "2020",
@@ -176,19 +176,19 @@
       "time": "0",
       "attribution": "",
       "showName": false,
-      "lastUpdate": 1748966056270,
+      "lastUpdate": 1748979772961,
       "skill": "",
       "description": "",
-      "variantImage": "",
-      "variant": "Seats",
-      "language": "en-US",
-      "players": "1",
       "similarImage": "",
       "similarName": "",
       "similarDesigner": "",
       "similarAwards": "",
       "ruleText": "",
-      "helpText": ""
+      "helpText": "",
+      "variantImage": "",
+      "variant": "Seats",
+      "language": "en-US",
+      "players": "1"
     }
   },
   "qaui": {
