@@ -1214,18 +1214,27 @@
     "version": 3,
     "info": {
       "name": "Functions - IF",
-      "image": "/assets/-271812498_4612",
+      "image": "/assets/213050391_3096",
       "rules": "",
       "bgg": "",
       "year": "2021",
       "mode": "Tutorial",
       "time": "0",
-      "players": "1",
-      "language": "en-US",
-      "variant": "Overview",
       "attribution": "",
       "showName": false,
-      "lastUpdate": 1622743126000
+      "lastUpdate": 1748974114412,
+      "skill": "",
+      "description": "",
+      "variantImage": "",
+      "variant": "Overview",
+      "language": "en-US",
+      "players": "1",
+      "similarImage": "",
+      "similarName": "",
+      "similarDesigner": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": ""
     }
   },
   "4gwy": {
