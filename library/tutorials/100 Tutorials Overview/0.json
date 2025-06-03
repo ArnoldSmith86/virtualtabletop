@@ -10,7 +10,7 @@
       "mode": "Tutorial",
       "time": "",
       "attribution": "",
-      "lastUpdate": 1748972366850,
+      "lastUpdate": 1748980688077,
       "showName": false,
       "skill": "",
       "description": "",
@@ -75,7 +75,7 @@
     "css": {
       "font-size": "22px"
     },
-    "html": "Each <a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Functions'>VTT Function</a> has its own tutorial. They follow a naming convention like `Functions - AUDIO`, etc so they appear more or less in the middle of the list. Their library image icons are a circle to represent that functions are usually activated by clicking on a button. The only function that does not follow this pattern is TURN, which is part of the Seats tutorial."
+    "html": "Each <a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Functions'>VTT Function</a> has its own tutorial. Their library image icons are a circle to represent that functions are usually activated by clicking on a button. The only function tutorial that does not follow this pattern is TURN, which is part of the Seats tutorial."
   },
   "text3": {
     "id": "text3",
@@ -88,7 +88,7 @@
     "css": {
       "font-size": "22px"
     },
-    "html": "Other tutorials broadly fall into these categories.<p><u>Widget types</u>: Canvas, Decks, Dice, Holders, Piles, Scoreboard, Seats, Spinners, and Timer<p><u>Widget properties</u>: CSS, Dragging, Enlarge, Grids, HTML, inheritFrom, and svgReplaces<p><u>Routines & operations</u>: Arrays, Color, Comparisons, JSON Operations, Math, Routines, and Strings<p><u>Changing appearances</u>: Button Appearance, CSS, Cursor, and Hexagonal Cards<p><u>Miscellaneous</u>: Hands, Icons, Master Button, Menus, and State Dependent Routines"
+    "html": "Other tutorials broadly fall into these categories:\n\nAppearance\n\nOperations and Routines\n\nProperties\n\nTypes\n\nXtras"
   },
   "subTitle1": {
     "id": "subTitle1",
