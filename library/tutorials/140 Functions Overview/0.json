@@ -35,7 +35,7 @@
     "css": {
       "font-size": "22px"
     },
-    "html": "Look at the JSON of the button above in Edit Mode. Each type of routine is presented there with a brief comment about how to trigger the routine. The button itself actually does nothing. It just contains routines with comments. Routines are listed in alphabetical order in the list of widget properties. See the <a href='https://virtualtabletop.io/tutorial/routines'>Routines tutorial</a> for more. Special purpose routines that are part of FOREACH and IF functions are not covered here.",
+    "html": "Look at the JSON of the button above in Edit Mode. Each type of routine is presented there with a brief comment about how to trigger the routine. The button itself actually does nothing. It just contains routines with comments. Routines are listed in alphabetical order in the list of widget properties. See the <a href='https://virtualtabletop.io/tutorial/operations-routines'>Routines tutorial</a> for more. Special purpose routines that are part of FOREACH and IF functions are not covered here.",
     "height": 445
   },
   "text2": {
@@ -105,7 +105,7 @@
       "mode": "Tutorial",
       "time": "",
       "attribution": "",
-      "lastUpdate": 1749051148901,
+      "lastUpdate": 1749054237187,
       "showName": false,
       "skill": "",
       "description": "",

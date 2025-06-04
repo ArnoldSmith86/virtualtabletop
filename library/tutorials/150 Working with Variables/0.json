@@ -10,7 +10,7 @@
       "mode": "Tutorial",
       "time": "",
       "attribution": "",
-      "lastUpdate": 1749051136951,
+      "lastUpdate": 1749054187330,
       "showName": false,
       "skill": "",
       "description": "",
@@ -228,7 +228,7 @@
     "css": {
       "font-size": "22px"
     },
-    "html": "Math functions do basic things like adding, subtracting, multiplying and dividing. They also include trigonometric functions, absolute values, max/min, etc. Comparison operations include concepts such as greater than, less than, and not equal to as well as logical (AND, OR, NOT) comparisons. Comparisons give either a true or false value. More at <a href='https://virtualtabletop.io/tutorial/math'>Math tutorial</a> (<a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Computations#mathematical-functions-and-constants'>wiki</a>) and <a href='https://virtualtabletop.io/tutorial/comparisons'>Comparisons tutorial</a> (<a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Computations#comparison-operations'>wiki</a>). A few examples are in the button above."
+    "html": "Math functions do basic things like adding, subtracting, multiplying and dividing. They also include trigonometric functions, absolute values, max/min, etc. Comparison operations include concepts such as greater than, less than, and not equal to as well as logical (AND, OR, NOT) comparisons. Comparisons give either a true or false value. More at <a href='https://virtualtabletop.io/tutorial/operations-math'>Math tutorial</a> (<a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Computations#mathematical-functions-and-constants'>wiki</a>) and <a href='https://virtualtabletop.io/tutorial/operations-comparisons'>Comparisons tutorial</a> (<a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Computations#comparison-operations'>wiki</a>). A few examples are in the button above."
   },
   "text3": {
     "id": "text3",
@@ -254,7 +254,7 @@
     "css": {
       "font-size": "22px"
     },
-    "html": "Array operations can create, read, and modify arrays. These same operations also work on strings. More at <a href='https://virtualtabletop.io/tutorial/arrays'>Arrays tutorial</a> (<a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Computations#array-operations'>wiki</a>). A few examples are in the button above.\n\nObjects work similarly to arrays, but are more complicated and outside the scope of the tutorial. See the <a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Dynamic-Expressions#complex-objects'>Complex Objects wiki</a>) for examples."
+    "html": "Array operations can create, read, and modify arrays. These same operations also work on strings. More at <a href='https://virtualtabletop.io/tutorial/operations-arrays'>Arrays tutorial</a> (<a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Computations#array-operations'>wiki</a>). A few examples are in the button above.\n\nObjects work similarly to arrays, but are more complicated and outside the scope of the tutorial. See the <a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Dynamic-Expressions#complex-objects'>Complex Objects wiki</a>) for examples."
   },
   "text5": {
     "id": "text5",
@@ -267,6 +267,6 @@
     "css": {
       "font-size": "22px"
     },
-    "html": "Color operations are useful for converting color formats or creating colors that contrast with each other to ensure text is readable. For example, seats do this automatically. The JSON operations are useful for working with JSON data in another room or outside of VTT entirely. More at <a href='https://virtualtabletop.io/tutorial/color'>Color tutorial</a> (<a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Computations#color-operations'>wiki</a>) and <a href='https://virtualtabletop.io/tutorial/json-operations'>JSON Operations tutorial</a> (<a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Computations#json-operations'>wiki</a>). A few examples are in the button above."
+    "html": "Color operations are useful for converting color formats or creating colors that contrast with each other to ensure text is readable. For example, seats do this automatically. The JSON operations are useful for working with JSON data in another room or outside of VTT entirely. More at <a href='https://virtualtabletop.io/tutorial/operations-color'>Color tutorial</a> (<a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Computations#color-operations'>wiki</a>) and <a href='https://virtualtabletop.io/tutorial/operations-json'>JSON Operations tutorial</a> (<a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Computations#json-operations'>wiki</a>). A few examples are in the button above."
   }
 }

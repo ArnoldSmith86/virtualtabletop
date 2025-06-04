@@ -74,7 +74,7 @@
     "css": {
       "font-size": "22px"
     },
-    "html": "The basic widget above was created like the one to the left. After adding it, an image property was added that is an image of one of the thousands of images available in VTT. See the <a href='https://virtualtabletop.io/tutorial/icons-symbols-and-emojis'>Icons tutorial</a> for more. This widget also has a simple <b>clickRoutine</b> that will change the color of the symbol to your player color when you click on it. See the <a href='https://virtualtabletop.io/tutorial/routines'>Routines tutorial</a> for more."
+    "html": "The basic widget above was created like the one to the left. After adding it, an image property was added that is an image of one of the thousands of images available in VTT. See the <a href='http://localhost:8272/tutorial/appearance-icons-symbols-and-emojis'>Icons tutorial</a> for more. This widget also has a simple <b>clickRoutine</b> that will change the color of the symbol to your player color when you click on it. See the <a href='https://virtualtabletop.io/tutorial/operations - routines'>Routines tutorial</a> for more."
   },
   "text5": {
     "id": "text5",
@@ -100,7 +100,7 @@
       "mode": "Tutorial",
       "time": "",
       "attribution": "",
-      "lastUpdate": 1749051076445,
+      "lastUpdate": 1749053679653,
       "showName": false,
       "skill": "",
       "description": "",
