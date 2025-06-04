@@ -22,7 +22,7 @@
     "movable": false,
     "movableInEdit": false,
     "css": "font-size: 25px; ",
-    "html": "This variant of the tutorial covers several of the most frequently used widget types. You can learn more in other tutorials (and the wiki): <a href='https://virtualtabletop.io/tutorial/button-appearance'>Buttons</a> (<a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Widgets#button'>wiki</a>), <a href='https://virtualtabletop.io/tutorial/decks'>Cards & Decks</a> (<a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Cards-and-Decks'>wiki</a>), <a href='https://virtualtabletop.io/tutorial/holders'>Holders</a> (<a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Widgets#holder'>wiki</a>), Labels (<a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Widgets#label'>wiki</a>), and <a href='https://virtualtabletop.io/tutorial/seats'>Seats</a> (<a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Widgets#seat'>wiki</a>)."
+    "html": "This variant of the tutorial covers several of the most frequently used widget types. You can learn more in other tutorials (and the wiki): <a href='https://virtualtabletop.io/tutorial/appearance-button'>Buttons</a> (<a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Widgets#button'>wiki</a>), <a href='https://virtualtabletop.io/tutorial/types-decks'>Cards & Decks</a> (<a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Cards-and-Decks'>wiki</a>), <a href='https://virtualtabletop.io/tutorial/types-holders'>Holders</a> (<a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Widgets#holder'>wiki</a>), Labels (<a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Widgets#label'>wiki</a>), and <a href='https://virtualtabletop.io/tutorial/types-seats'>Seats</a> (<a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Widgets#seat'>wiki</a>)."
   },
   "text1": {
     "id": "text1",
@@ -35,7 +35,7 @@
     "css": {
       "font-size": "22px"
     },
-    "html": "Buttons are the most common way players interact with a room to trigger automation. The default button is above. It has <b>type: button</b>. The <b>clickRoutine</b> (<a href='https://virtualtabletop.io/tutorial/routines'>tutorial</a>) is present, but is empty."
+    "html": "Buttons are the most common way players interact with a room to trigger automation. The default button is above. It has <b>type: button</b>. The <b>clickRoutine</b> (<a href='https://virtualtabletop.io/tutorial/operations-routines'>tutorial</a>) is present, but is empty."
   },
   "text2": {
     "id": "text2",
@@ -48,7 +48,7 @@
     "css": {
       "font-size": "22px"
     },
-    "html": "The default deck is above. Players do not interact with and cannot even see a deck widget. Decks are used to define what cards look like and act like. Cards are the only widget type that form piles.\n\n<a href='https://virtualtabletop.io/tutorial/piles'>Piles</a> (<a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Widgets#pile'>wiki</a>) are their own widget type, but typically they are automatically managed by the VTT engine. Players can click on the pile handle to get a few limited options or they can click and drag the entire pile as a group."
+    "html": "The default deck is above. Players do not interact with and cannot even see a deck widget. Decks are used to define what cards look like and act like. Cards are the only widget type that form piles.\n\n<a href='https://virtualtabletop.io/tutorial/types-piles'>Piles</a> (<a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Widgets#pile'>wiki</a>) are their own widget type, but typically they are automatically managed by the VTT engine. Players can click on the pile handle to get a few limited options or they can click and drag the entire pile as a group."
   },
   "text3": {
     "id": "text3",
@@ -93,14 +93,14 @@
     "version": 17,
     "info": {
       "name": "110 Widget Types",
-      "image": "/assets/415539053_3992",
+      "image": "/assets/-1812256112_6351",
       "rules": "",
       "bgg": "",
       "year": "",
       "mode": "Tutorial",
       "time": "",
       "attribution": "",
-      "lastUpdate": 1743096712988,
+      "lastUpdate": 1749053679655,
       "showName": false,
       "skill": "",
       "description": "",

@@ -1,0 +1,191 @@
+{
+  "_meta": {
+    "version": 17,
+    "info": {
+      "name": "Properties - svgReplaces",
+      "image": "/assets/-1110037130_7179",
+      "rules": "",
+      "bgg": "",
+      "year": "",
+      "mode": "Tutorial",
+      "time": "",
+      "attribution": "",
+      "lastUpdate": 1748991723175,
+      "showName": false,
+      "skill": "",
+      "description": "",
+      "similarImage": "",
+      "similarName": "",
+      "similarDesigner": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": "",
+      "variantImage": "",
+      "variant": "Advanced",
+      "language": "en-US",
+      "players": "1"
+    }
+  },
+  "header": {
+    "id": "header",
+    "x": 200,
+    "y": -2,
+    "height": 60,
+    "z": 74,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "font-size: 60px;text-align:center",
+    "text": "svgReplaces: Advanced",
+    "width": 1200
+  },
+  "mainText": {
+    "id": "mainText",
+    "x": 100,
+    "y": 100,
+    "width": 1405,
+    "height": 150,
+    "layer": -3,
+    "z": 124,
+    "css": "font-size: 25px; ",
+    "movable": false,
+    "html": "In addition to replacing color, it is possible to add in other SVG attributes. The examples in this room use the game-icons.net images that are available within VTT. They have a consistent formatting that makes this technique possible. If you are not using those icons, you would need to understand the structure of the SVG you intend to modify."
+  },
+  "button1Text": {
+    "id": "button1Text",
+    "x": 60,
+    "y": 494,
+    "width": 300,
+    "z": 185,
+    "movable": false,
+    "html": "This example takes a simple SVG that has a fill but no stroke, and adds the stroke for a different effect. In the case of the bricks, the stroke (the area around each brick) is set to a thick, dark red stroke that is slightly opaque. The fire is similar with a thick, gold stroke added around the orange fire.",
+    "css": {
+      "font-size": "22px"
+    }
+  },
+  "button2Text": {
+    "id": "button2Text",
+    "x": 410,
+    "y": 494,
+    "width": 300,
+    "z": 121,
+    "movable": false,
+    "html": "This example changes the ring from its default black to white and adds a blue rectangle background that fills the SVG shape. The basic widget above also has a <b>borderRadius: 8</b> property set to gently round the edges of the rectangle.\n\nThis works by closing the original path with <b>\"/></b>. Then it adds the rectangle and applies the blue fill color. Finally, it restarts the main shape as <b>path fill='white'</b>",
+    "css": {
+      "font-size": "22px"
+    }
+  },
+  "button3Text": {
+    "id": "button3Text",
+    "x": 760,
+    "y": 494,
+    "width": 300,
+    "z": 9732,
+    "movable": false,
+    "html": "The image above and on the left does the same thing as the blue and white diamond, but it makes a circle instead of a rectangle.\n\nThe image on the right uses the square background like in the ring, but sets the <b>borderRadius</b> to 100. That is a good technique for making a basic widget a circle, but notice how in this case it slightly cuts off the edges of the shape.",
+    "css": {
+      "font-size": "22px"
+    }
+  },
+  "button4Text": {
+    "id": "button4Text",
+    "x": 1110,
+    "y": 494,
+    "width": 300,
+    "z": 9732,
+    "movable": false,
+    "html": "You can even make more complicated shapes. But there are also other ways to achieve the same effect. The example on the left is a single widget and adds a hexagon background in the same way as the rectangle and circle were added before.\n\nThe image on the right is two SVGs. The tower is the child of the hexagon which is a separate SVG file using <b>svgReplaces</b>.\n\nYou could also build something like this using cards, as demonstrated in the next variant.",
+    "css": {
+      "font-size": "20px"
+    }
+  },
+  "example1": {
+    "id": "example1",
+    "x": 70,
+    "y": 311,
+    "image": "/i/game-icons.net/delapouite/brick-wall.svg",
+    "svgReplaces": {
+      "#000": "customCSS"
+    },
+    "movable": false,
+    "customCSS": "red\" stroke-width=\"15\" stroke-opacity=\"0.8\" stroke=\"darkred"
+  },
+  "example2": {
+    "id": "example2",
+    "x": 252,
+    "y": 311,
+    "image": "/i/game-icons.net/carl-olsen/flame.svg",
+    "svgReplaces": {
+      "#000": "newCSS"
+    },
+    "movable": false,
+    "newCSS": "orange\" stroke-width=\"25\" stroke=\"gold"
+  },
+  "example": {
+    "id": "example",
+    "x": 512,
+    "y": 311,
+    "borderRadius": 8,
+    "movable": false,
+    "image": "/i/game-icons.net/skoll/big-diamond-ring.svg",
+    "svgReplaces": {
+      "#000": "customCSS"
+    },
+    "customCSS": "\"/><rect x=\"0\" y=\"0\" width=\"100%\" height=\"100%\" fill=\"blue\"/><path fill=\"white"
+  },
+  "example3": {
+    "id": "example3",
+    "x": 780,
+    "y": 311,
+    "borderRadius": 8,
+    "movable": false,
+    "image": "/i/game-icons.net/lorc/ringed-planet.svg",
+    "svgReplaces": {
+      "#000": "customCSS"
+    },
+    "customCSS": "\"/><circle cx=\"50%\" cy=\"50%\" r=\"50%\" fill=\"black\"/><path fill=\"#008B8B"
+  },
+  "example4": {
+    "id": "example4",
+    "x": 937,
+    "y": 311,
+    "borderRadius": 100,
+    "movable": false,
+    "image": "/i/game-icons.net/lorc/ringed-planet.svg",
+    "svgReplaces": {
+      "#000": "customCSS"
+    },
+    "customCSS": "\"/><rect x=\"0\" y=\"0\" width=\"100%\" height=\"100%\" fill=\"black\"/><path fill=\"#008B8B",
+    "z": 1
+  },
+  "example5": {
+    "id": "example5",
+    "x": 1113,
+    "y": 311,
+    "borderRadius": 100,
+    "movable": false,
+    "image": "/i/game-icons.net/delapouite/watchtower.svg",
+    "svgReplaces": {
+      "#000": "customCSS"
+    },
+    "customCSS": "\"/><polygon points=\"128,43 384,43 512,256 384,469 128,469 0,256\" fill=\"silver\"/><path fill=\"",
+    "z": 1
+  },
+  "example6Child": {
+    "id": "example6Child",
+    "parent": "example6Parent",
+    "movable": false,
+    "image": "/i/game-icons.net/delapouite/watchtower.svg"
+  },
+  "example6Parent": {
+    "id": "example6Parent",
+    "x": 1268,
+    "y": 311,
+    "z": 9733,
+    "movable": false,
+    "image": "/assets/1758756791_381",
+    "svgReplaces": {
+      "fillColor": "newColor"
+    },
+    "newColor": "silver"
+  }
+}

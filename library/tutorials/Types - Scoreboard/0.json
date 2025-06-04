@@ -1,0 +1,565 @@
+{
+  "_meta": {
+    "version": 12,
+    "info": {
+      "name": "Types - Scoreboard",
+      "image": "/assets/-269793996_5981",
+      "rules": "",
+      "bgg": "",
+      "year": "2022",
+      "mode": "Tutorial",
+      "time": "",
+      "attribution": "",
+      "showName": false,
+      "skill": "",
+      "description": "",
+      "similarImage": "",
+      "similarName": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": "",
+      "lastUpdate": 1748992108988,
+      "similarDesigner": "",
+      "variantImage": "",
+      "variant": "Basic",
+      "language": "en-US",
+      "players": "1"
+    }
+  },
+  "seat1": {
+    "type": "seat",
+    "id": "seat1",
+    "z": 6,
+    "scale": 0.5,
+    "x": -37,
+    "y": 10,
+    "color": "red",
+    "score": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "bids": [
+      3,
+      4
+    ],
+    "movableInEdit": false,
+    "player": "Player 1"
+  },
+  "seat3": {
+    "type": "seat",
+    "id": "seat3",
+    "z": 2,
+    "scale": 0.5,
+    "x": -37,
+    "y": 103,
+    "index": 3,
+    "color": "yellow",
+    "player": "Player 3",
+    "score": [
+      1,
+      3,
+      5,
+      11
+    ],
+    "movableInEdit": false,
+    "bids": [
+      2,
+      2
+    ]
+  },
+  "seat5": {
+    "type": "seat",
+    "id": "seat5",
+    "z": 2,
+    "scale": 0.5,
+    "x": -37,
+    "y": 203,
+    "index": 5,
+    "color": "blue",
+    "player": "Player 5",
+    "movableInEdit": false,
+    "bids": [
+      5,
+      2
+    ],
+    "score": [
+      "x"
+    ]
+  },
+  "seat2": {
+    "type": "seat",
+    "id": "seat2",
+    "index": 2,
+    "x": -37,
+    "y": 53,
+    "scale": 0.5,
+    "z": 2,
+    "color": "orange",
+    "player": "Player 2",
+    "score": [
+      0,
+      -2,
+      1,
+      -3.5,
+      4,
+      1
+    ],
+    "movableInEdit": false,
+    "bids": [
+      0,
+      5
+    ]
+  },
+  "seat4": {
+    "type": "seat",
+    "id": "seat4",
+    "index": 4,
+    "x": -37,
+    "y": 153,
+    "scale": 0.5,
+    "z": 2,
+    "color": "green",
+    "player": "Player 4",
+    "score": [
+      1,
+      2,
+      "",
+      "Foo",
+      4,
+      1
+    ],
+    "movableInEdit": false,
+    "bids": [
+      4,
+      1
+    ]
+  },
+  "comment1": {
+    "id": "comment1",
+    "x": 100,
+    "y": 485,
+    "width": 300,
+    "z": 10075,
+    "movable": false,
+    "text": "This is the default scoreboard widget with no changes made to any of the default properties. This scoreboard is also moveable so you can drag it around the room, but the others are not.",
+    "layer": -2
+  },
+  "overview": {
+    "id": "overview",
+    "x": 108,
+    "y": 114,
+    "width": 1400,
+    "height": 150,
+    "layer": -3,
+    "z": 125,
+    "css": "font-size: 25px; ",
+    "text": "Scoreboard uses a property in seats to display numerical information in table form and total those numbers. Working in conjunction with routines and the SCORE function (shown in a different tutorial), the property on the seat can be updated and cause real-time changes to the scoreboard data. This room shows most of the options available when using scoreboards. The seats along the left side are pre-filled with player and score information to populate the data on the scoreboards in this room. Use the JSON Editor (ctrl-J) to look in the seats and scoreboards to see how missing or non-numeric data is handled.",
+    "movable": false,
+    "movableInEdit": false
+  },
+  "header": {
+    "id": "header",
+    "x": 400,
+    "y": -2,
+    "width": 800,
+    "height": 60,
+    "z": 74,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "font-size: 60px;text-align:center",
+    "text": "Scoreboard: Basic"
+  },
+  "comment2": {
+    "id": "comment2",
+    "x": 425,
+    "y": 485,
+    "width": 300,
+    "z": 10076,
+    "movable": false,
+    "text": "This scoreboard has 'showTotals' set to false so it does not show the sum of all the data for each player. It also sets 'showPlayerColors' to false to change the appearance of the header row.",
+    "layer": -2
+  },
+  "scoreboard1": {
+    "type": "scoreboard",
+    "id": "scoreboard1",
+    "x": 100,
+    "y": 275,
+    "z": 11,
+    "movableInEdit": false
+  },
+  "scoreboard2": {
+    "type": "scoreboard",
+    "id": "scoreboard2",
+    "x": 425,
+    "y": 275,
+    "z": 5,
+    "movableInEdit": false,
+    "movable": false,
+    "showTotals": false,
+    "showPlayerColors": false,
+    "clickable": false
+  },
+  "scoreboard3": {
+    "type": "scoreboard",
+    "id": "scoreboard3",
+    "x": 750,
+    "y": 275,
+    "z": 5,
+    "movableInEdit": false,
+    "movable": false,
+    "showAllSeats": true,
+    "autosizeColumns": false,
+    "clickable": false
+  },
+  "comment3": {
+    "id": "comment3",
+    "x": 750,
+    "y": 485,
+    "width": 300,
+    "z": 10076,
+    "movable": false,
+    "text": "This scoreboard has 'showAllSeats' set to true. It shows Player 6 data (header is '-') even though that seat is not occupied. It also has 'autosizeColumns' set to false so you scroll across to see all player data.",
+    "layer": -2
+  },
+  "seat6": {
+    "type": "seat",
+    "id": "seat6",
+    "index": 6,
+    "x": -37,
+    "y": 253,
+    "scale": 0.5,
+    "z": 2,
+    "score": [
+      1,
+      1,
+      1,
+      2,
+      2,
+      3
+    ],
+    "movableInEdit": false,
+    "bids": []
+  },
+  "scoreboard4": {
+    "type": "scoreboard",
+    "id": "scoreboard4",
+    "x": 1075,
+    "y": 275,
+    "z": 5,
+    "movableInEdit": false,
+    "movable": false,
+    "playersInColumns": false,
+    "width": 500
+  },
+  "comment4": {
+    "id": "comment4",
+    "x": 1075,
+    "y": 485,
+    "width": 525,
+    "z": 10076,
+    "movable": false,
+    "text": "This scoreboard has 'playersInColumns' set to false. It swaps rows and columns in the display. You can also click on this scoreboard to enter data. This is the default but it has been disabled on the other scoreboards in the room. When clicking, use the pop-up menu to select the player, round, and score, and the information will be added to the scoreboard.",
+    "layer": -2
+  },
+  "scoreboard5": {
+    "type": "scoreboard",
+    "id": "scoreboard5",
+    "x": 100,
+    "y": 600,
+    "z": 4,
+    "movableInEdit": false,
+    "movable": false,
+    "rounds": [
+      "Phase 1",
+      "Phase 3",
+      "What's Phase 2?",
+      "Bonus",
+      "Extra Bonus",
+      "Super Bonus",
+      "Not Used Yet"
+    ],
+    "showAllRounds": true,
+    "autosizeColumns": false,
+    "clickable": false
+  },
+  "comment5": {
+    "id": "comment5",
+    "x": 100,
+    "y": 810,
+    "width": 300,
+    "z": 10075,
+    "movable": false,
+    "text": "This scoreboard uses the 'rounds' property to name the rounds. The default is sequential whole numbers starting at 1, but you can specifiy anything, including text. It also sets the 'showAllRounds' property to true. Since there is only data for 6 rounds in each seat, the 7th round ('Not Used Yet') is displayed, but shows blank. If left false, the widget would only show 6 rows of data. ",
+    "layer": -2
+  },
+  "scoreboard6": {
+    "type": "scoreboard",
+    "id": "scoreboard6",
+    "x": 425,
+    "y": 600,
+    "z": 4,
+    "movableInEdit": false,
+    "movable": false,
+    "scoreProperty": "bids",
+    "roundLabel": "Bids",
+    "autosizeColumns": false,
+    "editPaneTitle": "Enter Bids"
+  },
+  "comment6": {
+    "id": "comment6",
+    "x": 425,
+    "y": 810,
+    "width": 300,
+    "z": 10075,
+    "movable": false,
+    "text": "This scoreboard uses 'scoreProperty' property to pull different data from the seat. The default is 'score'. This example uses 'bids'. It also changes the text in the first cell from 'Round' to 'Bids' using the `roundLabel' property. The 'editPaneTitle' property was also changed, which shows up when you click to change the score.",
+    "layer": -2
+  },
+  "scoreboard7": {
+    "type": "scoreboard",
+    "id": "scoreboard7",
+    "x": 750,
+    "y": 600,
+    "z": 4,
+    "movableInEdit": false,
+    "movable": false,
+    "seats": [
+      "seat2",
+      "seat3",
+      "seat4"
+    ],
+    "currentRound": 3,
+    "clickable": false
+  },
+  "scoreboard8": {
+    "type": "scoreboard",
+    "id": "scoreboard8",
+    "x": 1075,
+    "y": 600,
+    "z": 4,
+    "movableInEdit": false,
+    "movable": false,
+    "sortAscending": false,
+    "sortField": "total",
+    "clickable": false,
+    "verticalHeader": true
+  },
+  "comment7": {
+    "id": "comment7",
+    "x": 750,
+    "y": 810,
+    "width": 300,
+    "z": 10075,
+    "movable": false,
+    "text": "This scoreboard sets the 'seats' property to only display data for seats 2, 3, and 4. it also sets the 'currentRound' property to 3.",
+    "layer": -2
+  },
+  "comment8": {
+    "id": "comment8",
+    "x": 1075,
+    "y": 810,
+    "width": 300,
+    "z": 10075,
+    "movable": false,
+    "text": "This scoreboard sets the 'sortField' property to 'total' and 'sortAscending' to false. This will sort the columns by highest to lowest score. 'sortField' defaults to show alphabetical player names, but can be any property of the seat or 'total'. It also displayes the header line vertically or rotated using 'verticalHeader'",
+    "layer": -2
+  },
+  "highlight1": {
+    "id": "highlight1",
+    "x": 570,
+    "y": 485,
+    "width": 90,
+    "height": 20,
+    "z": 79,
+    "movable": false,
+    "css": {
+      "background": "#f668b580"
+    },
+    "layer": -2
+  },
+  "highlight2": {
+    "id": "highlight2",
+    "x": 424,
+    "y": 541,
+    "width": 135,
+    "height": 20,
+    "z": 80,
+    "movable": false,
+    "css": {
+      "background": "#f668b580"
+    },
+    "layer": -2
+  },
+  "highlight3": {
+    "id": "highlight3",
+    "x": 895,
+    "y": 484,
+    "width": 105,
+    "height": 20,
+    "z": 81,
+    "movable": false,
+    "css": {
+      "background": "#f668b580"
+    },
+    "layer": -2
+  },
+  "highlight4": {
+    "id": "highlight4",
+    "x": 1223,
+    "y": 485,
+    "width": 135,
+    "height": 20,
+    "z": 99,
+    "movable": false,
+    "css": {
+      "background": "#f668b580"
+    },
+    "layer": -2
+  },
+  "highlight5": {
+    "id": "highlight5",
+    "x": 281,
+    "y": 811,
+    "width": 60,
+    "height": 20,
+    "z": 83,
+    "movable": false,
+    "css": {
+      "background": "#f668b580"
+    },
+    "layer": -2
+  },
+  "highlight6": {
+    "id": "highlight6",
+    "x": 581,
+    "y": 810,
+    "width": 110,
+    "height": 20,
+    "z": 84,
+    "movable": false,
+    "css": {
+      "background": "#f668b580"
+    },
+    "layer": -2
+  },
+  "highlight7": {
+    "id": "highlight7",
+    "x": 424,
+    "y": 904,
+    "width": 90,
+    "height": 20,
+    "z": 86,
+    "movable": false,
+    "css": {
+      "background": "#f668b580"
+    },
+    "layer": -2
+  },
+  "highlight8": {
+    "id": "highlight8",
+    "x": 924,
+    "y": 809,
+    "width": 50,
+    "height": 20,
+    "z": 87,
+    "movable": false,
+    "css": {
+      "background": "#f668b580"
+    },
+    "layer": -2
+  },
+  "highlight10": {
+    "id": "highlight10",
+    "x": 1230,
+    "y": 827,
+    "width": 110,
+    "height": 20,
+    "z": 90,
+    "movable": false,
+    "css": {
+      "background": "#f668b580"
+    },
+    "layer": -2
+  },
+  "highlight13": {
+    "id": "highlight13",
+    "x": 243,
+    "y": 886,
+    "width": 120,
+    "height": 20,
+    "z": 96,
+    "movable": false,
+    "css": {
+      "background": "#f668b580"
+    },
+    "layer": -2
+  },
+  "highlight14": {
+    "id": "highlight14",
+    "x": 844,
+    "y": 847,
+    "height": 20,
+    "z": 98,
+    "movable": false,
+    "css": {
+      "background": "#f668b580"
+    },
+    "width": 105,
+    "layer": -2
+  },
+  "highlight15": {
+    "id": "highlight15",
+    "x": 813,
+    "y": 541,
+    "width": 135,
+    "height": 20,
+    "z": 102,
+    "movable": false,
+    "css": {
+      "background": "#f668b580"
+    },
+    "layer": -2
+  },
+  "highlight11": {
+    "id": "highlight11",
+    "x": 1255,
+    "y": 807,
+    "width": 65,
+    "height": 20,
+    "z": 90,
+    "movable": false,
+    "css": {
+      "background": "#f668b580"
+    },
+    "layer": -2
+  },
+  "highlight9": {
+    "id": "highlight9",
+    "x": 615,
+    "y": 904,
+    "height": 20,
+    "z": 86,
+    "movable": false,
+    "css": {
+      "background": "#f668b580"
+    },
+    "layer": -2
+  },
+  "highlight12": {
+    "id": "highlight12",
+    "x": 1075,
+    "y": 959,
+    "width": 110,
+    "height": 20,
+    "z": 90,
+    "movable": false,
+    "css": {
+      "background": "#f668b580"
+    },
+    "layer": -2
+  }
+}

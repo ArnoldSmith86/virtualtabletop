@@ -867,15 +867,14 @@
     "version": 8,
     "info": {
       "name": "Functions - FOREACH",
-      "image": "/assets/1547784624_7497",
+      "image": "/assets/1609984672_4134",
       "rules": "",
       "bgg": "",
       "year": "2021",
       "mode": "Tutorial",
       "time": "0",
       "attribution": "",
-      "lastUpdate": 1672720105428,
-      "id": "b309",
+      "lastUpdate": 1749068073070,
       "showName": false,
       "skill": "",
       "description": "",
@@ -884,10 +883,11 @@
       "similarAwards": "",
       "ruleText": "",
       "helpText": "",
-      "players": "1",
-      "language": "en-US",
+      "similarDesigner": "",
+      "variantImage": "",
       "variant": "",
-      "variantImage": ""
+      "language": "en-US",
+      "players": "1"
     }
   },
   "936y": {

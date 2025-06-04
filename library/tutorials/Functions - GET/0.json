@@ -1367,7 +1367,7 @@
     "version": 4,
     "info": {
       "name": "Functions - GET",
-      "image": "/assets/-1585389795_5145",
+      "image": "/assets/-276645508_3430",
       "rules": "",
       "bgg": "",
       "year": "2020",
@@ -1375,18 +1375,19 @@
       "time": "",
       "attribution": "",
       "showName": false,
-      "lastUpdate": 1678151966701,
+      "lastUpdate": 1749068322035,
       "skill": "",
       "description": "",
-      "variantImage": "",
-      "variant": "Basics",
-      "language": "en-US",
-      "players": "1",
       "similarImage": "",
       "similarName": "",
       "similarAwards": "",
       "ruleText": "",
-      "helpText": ""
+      "helpText": "",
+      "similarDesigner": "",
+      "variantImage": "",
+      "variant": "Basics",
+      "language": "en-US",
+      "players": "1"
     }
   },
   "wlxk": {

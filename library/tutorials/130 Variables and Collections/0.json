@@ -147,7 +147,7 @@
     "css": {
       "font-size": "22px"
     },
-    "html": "Arrays are very useful in building games and variables can store that data. An array can also be an array of other arrays. Arrays have an index number (it is implied, not directly written into the array) that starts at 0. Read more at <a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Dynamic-Expressions#variable-declarations'>Variable declarations wiki</a> and <a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Computations#array-operations'>Array Operations wiki</a>. Also, there is an entire <a href='https://virtualtabletop.io/tutorial/arrays'>arrays tutorial</a>."
+    "html": "Arrays are very useful in building games and variables can store that data. An array can also be an array of other arrays. Arrays have an index number (it is implied, not directly written into the array) that starts at 0. Read more at <a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Dynamic-Expressions#variable-declarations'>Variable declarations wiki</a> and <a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Computations#array-operations'>Array Operations wiki</a>. Also, there is an entire <a href='https://virtualtabletop.io/tutorial/operations-arrays'>arrays tutorial</a>."
   },
   "text5": {
     "id": "text5",
@@ -160,20 +160,20 @@
     "css": {
       "font-size": "22px"
     },
-    "html": "Objects are also useful, but a little more complex than arrays. Objects are key-value pairs. While an array has an index, an object has a key expressed as a string and the value linked to that key can be any type of data, including arrays and other objects. Read more at <a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Dynamic-Expressions#variable-declarations'>Variable declarations wiki</a> and <a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Dynamic-Expressions#complex-objects'>Complex Objects wiki</a>. CSS is one of the most common uses for objects and there is a <a href='https://virtualtabletop.io/tutorial/css'>CSS tutorial</a>."
+    "html": "Objects are also useful, but a little more complex than arrays. Objects are key-value pairs. While an array has an index, an object has a key expressed as a string and the value linked to that key can be any type of data, including arrays and other objects. Read more at <a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Dynamic-Expressions#variable-declarations'>Variable declarations wiki</a> and <a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Dynamic-Expressions#complex-objects'>Complex Objects wiki</a>. CSS is one of the most common uses for objects and there is a <a href='https://virtualtabletop.io/tutorial/appearance-css'>CSS tutorial</a>."
   },
   "_meta": {
     "version": 17,
     "info": {
       "name": "130 Variables and Collections",
-      "image": "/assets/975182181_6987",
+      "image": "/assets/565198158_9346",
       "rules": "",
       "bgg": "",
       "year": "",
       "mode": "Tutorial",
       "time": "",
       "attribution": "",
-      "lastUpdate": 1742958109675,
+      "lastUpdate": 1749054058278,
       "showName": false,
       "skill": "",
       "description": "",

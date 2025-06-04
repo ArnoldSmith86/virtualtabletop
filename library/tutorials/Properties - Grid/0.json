@@ -1,0 +1,567 @@
+{
+  "gridline1": {
+    "id": "gridline1",
+    "x": 99,
+    "width": 2,
+    "height": 1000,
+    "css": "background: black;"
+  },
+  "gridline2": {
+    "id": "gridline2",
+    "height": 2,
+    "css": "background: black;",
+    "y": 99,
+    "width": 1600
+  },
+  "gridline3": {
+    "id": "gridline3",
+    "x": 199,
+    "width": 2,
+    "height": 1000,
+    "css": "background: black;"
+  },
+  "gridline4": {
+    "id": "gridline4",
+    "x": 299,
+    "width": 2,
+    "height": 1000,
+    "css": "background: black;"
+  },
+  "gridline5": {
+    "id": "gridline5",
+    "x": 399,
+    "width": 2,
+    "height": 1000,
+    "css": "background: black;"
+  },
+  "gridline6": {
+    "id": "gridline6",
+    "x": 499,
+    "width": 2,
+    "height": 1000,
+    "css": "background: black;"
+  },
+  "gridline7": {
+    "id": "gridline7",
+    "x": 599,
+    "width": 2,
+    "height": 1000,
+    "css": "background: black;"
+  },
+  "gridline8": {
+    "id": "gridline8",
+    "x": 699,
+    "width": 2,
+    "height": 1000,
+    "css": "background: black;"
+  },
+  "gridline9": {
+    "id": "gridline9",
+    "x": 799,
+    "width": 2,
+    "height": 1000,
+    "css": "background: black;"
+  },
+  "gridline10": {
+    "id": "gridline10",
+    "x": 899,
+    "width": 2,
+    "height": 1000,
+    "css": "background: black;"
+  },
+  "gridline11": {
+    "id": "gridline11",
+    "x": 999,
+    "width": 2,
+    "height": 1000,
+    "css": "background: black;"
+  },
+  "gridline12": {
+    "id": "gridline12",
+    "x": 1099,
+    "width": 2,
+    "height": 1000,
+    "css": "background: black;"
+  },
+  "gridline13": {
+    "id": "gridline13",
+    "x": 1199,
+    "width": 2,
+    "height": 1000,
+    "css": "background: black;"
+  },
+  "gridline14": {
+    "id": "gridline14",
+    "x": 1299,
+    "width": 2,
+    "height": 1000,
+    "css": "background: black;"
+  },
+  "gridline15": {
+    "id": "gridline15",
+    "x": 1399,
+    "width": 2,
+    "height": 1000,
+    "css": "background: black;"
+  },
+  "gridline16": {
+    "id": "gridline16",
+    "x": 1499,
+    "width": 2,
+    "height": 1000,
+    "css": "background: black;"
+  },
+  "gridline17": {
+    "id": "gridline17",
+    "height": 2,
+    "css": "background: black;",
+    "y": 199,
+    "width": 1600
+  },
+  "gridline18": {
+    "id": "gridline18",
+    "height": 2,
+    "css": "background: black;",
+    "y": 299,
+    "width": 1600
+  },
+  "gridline19": {
+    "id": "gridline19",
+    "height": 2,
+    "css": "background: black;",
+    "y": 399,
+    "width": 1600
+  },
+  "gridline20": {
+    "id": "gridline20",
+    "height": 2,
+    "css": "background: black;",
+    "y": 499,
+    "width": 1600
+  },
+  "gridline21": {
+    "id": "gridline21",
+    "height": 2,
+    "css": "background: black;",
+    "y": 599,
+    "width": 1600
+  },
+  "gridline22": {
+    "id": "gridline22",
+    "height": 2,
+    "css": "background: black;",
+    "y": 699,
+    "width": 1600
+  },
+  "gridline23": {
+    "id": "gridline23",
+    "height": 2,
+    "css": "background: black;",
+    "y": 799,
+    "width": 1600
+  },
+  "gridline24": {
+    "id": "gridline24",
+    "height": 2,
+    "css": "background: black;",
+    "y": 899,
+    "width": 1600
+  },
+  "_meta": {
+    "version": 10,
+    "info": {
+      "name": "Properties - Grid",
+      "image": "/assets/1094524990_4827",
+      "rules": "",
+      "bgg": "",
+      "year": "2020",
+      "mode": "Tutorial",
+      "time": "0",
+      "attribution": "Good reference guide:\nhttps://www.redblobgames.com/grids/hexagons/#size-and-spacing\n\nAlso see the separate tutorial about hexagons.",
+      "showName": false,
+      "lastUpdate": 1748991686620,
+      "skill": "",
+      "description": "",
+      "similarImage": "",
+      "similarName": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": "",
+      "similarDesigner": "",
+      "variantImage": "",
+      "variant": "Alignment",
+      "language": "en-US",
+      "players": "1"
+    }
+  },
+  "checker1": {
+    "id": "checker1",
+    "z": 26462,
+    "classes": "chip",
+    "color": "blue",
+    "faces": [
+      {
+        "image": "i/game-pieces/2D/Checkers-2D.svg",
+        "crowned": false
+      },
+      {
+        "image": "i/game-pieces/2D/Crowned-Checkers-2D.svg",
+        "crowned": true
+      }
+    ],
+    "grid": [
+      {
+        "x": 100,
+        "y": 100
+      }
+    ],
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 1,
+    "secondaryColor": "#ffffff",
+    "dragLimit": {
+      "minX": 0,
+      "minY": 0,
+      "maxX": 1500,
+      "maxY": 900
+    }
+  },
+  "comment1": {
+    "id": "comment1",
+    "x": 200,
+    "width": 296,
+    "z": 173,
+    "css": {
+      "background": "white",
+      "border": "2px solid blue",
+      "font-size": "14px"
+    },
+    "text": "The blue checker uses the default alignment in the top-left corner and moves on a 100x100 grid and is centered between the grid lines. It also uses dragLimits to prevent losing the checker off the visible screen.",
+    "movable": false,
+    "height": 90,
+    "y": 3
+  },
+  "comment2": {
+    "id": "comment2",
+    "x": 200,
+    "y": 167,
+    "width": 296,
+    "z": 172,
+    "css": {
+      "background": "white",
+      "border": "2px solid red",
+      "font-size": "14px"
+    },
+    "text": "The red checker uses an alignment of 0.5 and 0.5 to center the checker on a grid line.",
+    "height": 50,
+    "movable": false
+  },
+  "checker2": {
+    "id": "checker2",
+    "y": 150,
+    "z": 26460,
+    "classes": "chip",
+    "color": "red",
+    "faces": [
+      {
+        "image": "i/game-pieces/2D/Checkers-2D.svg",
+        "crowned": false
+      },
+      {
+        "image": "i/game-pieces/2D/Crowned-Checkers-2D.svg",
+        "crowned": true
+      }
+    ],
+    "grid": [
+      {
+        "x": 100,
+        "y": 100,
+        "alignX": 0.5,
+        "alignY": 0.5
+      }
+    ],
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 1,
+    "secondaryColor": "#ffffff",
+    "x": 50
+  },
+  "comment3": {
+    "id": "comment3",
+    "x": 200,
+    "y": 370,
+    "width": 296,
+    "z": 171,
+    "css": {
+      "background": "white",
+      "border": "2px solid green",
+      "font-size": "14px"
+    },
+    "text": "The green checker uses offsets of 50 pixels to do the same thing the red checker does using a different method.",
+    "height": 50,
+    "movable": false
+  },
+  "checker3": {
+    "id": "checker3",
+    "y": 350,
+    "z": 176,
+    "classes": "chip",
+    "color": "green",
+    "faces": [
+      {
+        "image": "i/game-pieces/2D/Checkers-2D.svg",
+        "crowned": false
+      },
+      {
+        "image": "i/game-pieces/2D/Crowned-Checkers-2D.svg",
+        "crowned": true
+      }
+    ],
+    "grid": [
+      {
+        "x": 100,
+        "y": 100,
+        "offsetX": 50,
+        "offsetY": 50
+      }
+    ],
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 1,
+    "secondaryColor": "#ffffff",
+    "x": 50
+  },
+  "comment4": {
+    "id": "comment4",
+    "x": 200,
+    "y": 520,
+    "width": 296,
+    "z": 171,
+    "css": {
+      "background": "white",
+      "border": "2px solid orange",
+      "font-size": "14px"
+    },
+    "text": "The orange pawn uses an alignment of 0.5 and 0.9 to center the base on a grid line.",
+    "height": 50,
+    "movable": false
+  },
+  "comment5": {
+    "id": "comment5",
+    "x": 200,
+    "width": 296,
+    "z": 171,
+    "css": {
+      "background": "white",
+      "border": "2px solid purple",
+      "font-size": "14px"
+    },
+    "text": "The small crowned checker changes color and has multiple grid elements to move its position between each of the corners of the grid square. This uses the default alignment.",
+    "height": 70,
+    "movable": false,
+    "y": 710
+  },
+  "comment6": {
+    "id": "comment6",
+    "x": 200,
+    "width": 296,
+    "z": 171,
+    "css": {
+      "background": "white",
+      "border": "2px solid purple",
+      "font-size": "14px"
+    },
+    "text": "The small uncrowned checker uses alignment. It is blue on a corner. Red on horizontal lines, green on vertical lines, and orange in the middle.",
+    "height": 70,
+    "movable": false,
+    "y": 865
+  },
+  "pawn1": {
+    "id": "pawn1",
+    "x": 74.8,
+    "y": 519,
+    "width": 50.4,
+    "height": 90,
+    "z": 26461,
+    "color": "orange",
+    "css": "border-radius: 40% 40% 50% 50%/ 80% 80% 10% 10%; ",
+    "grid": [
+      {
+        "x": 100,
+        "y": 100,
+        "alignX": 0.5,
+        "alignY": 0.9
+      }
+    ],
+    "image": "i/game-pieces/3D/Pawn-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "black",
+    "borderWidth": 1
+  },
+  "checker4": {
+    "id": "checker4",
+    "x": 100,
+    "y": 700,
+    "width": 40,
+    "height": 40,
+    "z": 26452,
+    "activeFace": 1,
+    "classes": "chip",
+    "color": "blue",
+    "faces": [
+      {
+        "image": "i/game-pieces/2D/Checkers-2D.svg",
+        "crowned": false
+      },
+      {
+        "image": "i/game-pieces/2D/Crowned-Checkers-2D.svg",
+        "crowned": true
+      }
+    ],
+    "grid": [
+      {
+        "x": 100,
+        "y": 100,
+        "color": "blue"
+      },
+      {
+        "x": 100,
+        "y": 100,
+        "color": "red",
+        "offsetX": 60
+      },
+      {
+        "x": 100,
+        "y": 100,
+        "color": "green",
+        "offsetY": 60
+      },
+      {
+        "x": 100,
+        "y": 100,
+        "color": "orange",
+        "offsetX": 60,
+        "offsetY": 60
+      }
+    ],
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 1,
+    "secondaryColor": "#ffffff"
+  },
+  "checker5": {
+    "id": "checker5",
+    "x": 80,
+    "y": 880,
+    "width": 40,
+    "height": 40,
+    "z": 26453,
+    "classes": "chip",
+    "color": "blue",
+    "faces": [
+      {
+        "image": "i/game-pieces/2D/Checkers-2D.svg",
+        "crowned": false
+      },
+      {
+        "image": "i/game-pieces/2D/Crowned-Checkers-2D.svg",
+        "crowned": true
+      }
+    ],
+    "grid": [
+      {
+        "x": 100,
+        "y": 100,
+        "color": "blue",
+        "alignX": 0.5,
+        "alignY": 0.5
+      },
+      {
+        "x": 50,
+        "y": 100,
+        "color": "red",
+        "alignX": 0.5,
+        "alignY": 0.5
+      },
+      {
+        "x": 100,
+        "y": 50,
+        "color": "green",
+        "alignX": 0.5,
+        "alignY": 0.5
+      },
+      {
+        "x": 50,
+        "y": 50,
+        "color": "orange",
+        "alignX": 0.5,
+        "alignY": 0.5
+      }
+    ],
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 1,
+    "secondaryColor": "#ffffff"
+  },
+  "8fr3": {
+    "type": "label",
+    "id": "8fr3",
+    "x": 600,
+    "width": 400,
+    "height": 170,
+    "z": 26450,
+    "text": "Grid:\nAlignment",
+    "css": {
+      "background": "gray",
+      "color": "white",
+      "font-size": "60px"
+    },
+    "layer": 1
+  },
+  "8fr4": {
+    "type": "label",
+    "id": "8fr4",
+    "x": 600,
+    "width": 400,
+    "height": 170,
+    "z": 26450,
+    "text": "The background in this room are a bunch of grid lines in a 100x100 pattern used to demonstrate the alignment features of grids. Widgets with grids can use alignX, alignY, offsetX, and offsetY to customize their position on the screen.",
+    "css": {
+      "background": "gray",
+      "color": "white",
+      "font-size": "22px",
+      "text-align": "left"
+    },
+    "y": 200,
+    "layer": 1
+  }
+}
