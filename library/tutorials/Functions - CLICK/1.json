@@ -365,7 +365,7 @@
     "version": 3,
     "info": {
       "name": "Functions - CLICK",
-      "image": "/assets/-1255092080_3739",
+      "image": "/assets/-1155107578_3739",
       "rules": "",
       "bgg": "",
       "year": "2020",
@@ -373,19 +373,19 @@
       "time": "",
       "attribution": "",
       "showName": false,
-      "lastUpdate": 1748973795364,
+      "lastUpdate": 1749068021664,
       "skill": "",
       "description": "",
-      "variantImage": "",
-      "variant": "Modes",
-      "language": "en-US",
-      "players": "1",
       "similarImage": "",
       "similarName": "",
       "similarDesigner": "",
       "similarAwards": "",
       "ruleText": "",
-      "helpText": ""
+      "helpText": "",
+      "variantImage": "",
+      "variant": "Modes",
+      "language": "en-US",
+      "players": "1"
     }
   }
 }

@@ -1592,7 +1592,7 @@
     "version": 3,
     "info": {
       "name": "Functions - IF",
-      "image": "/assets/213050391_3096",
+      "image": "/assets/243082235_3096",
       "rules": "",
       "bgg": "",
       "year": "2021",
@@ -1600,19 +1600,19 @@
       "time": "0",
       "attribution": "",
       "showName": false,
-      "lastUpdate": 1748974114415,
+      "lastUpdate": 1749068335039,
       "skill": "",
       "description": "",
-      "variantImage": "",
-      "variant": "Used Buttons",
-      "language": "en-US",
-      "players": "1",
       "similarImage": "",
       "similarName": "",
       "similarDesigner": "",
       "similarAwards": "",
       "ruleText": "",
-      "helpText": ""
+      "helpText": "",
+      "variantImage": "",
+      "variant": "Used Buttons",
+      "language": "en-US",
+      "players": "1"
     }
   },
   "8fr3": {
