@@ -46,6 +46,7 @@ export default async function minifyHTML() {
     'client/js/domhelpers.js',
     'client/js/connection.js',
     'client/js/serverstate.js',
+    'client/js/legacymodes.js',
     'client/js/geometry.js',
     'client/js/compute.js',
     'client/js/mousehandling.js',
@@ -121,6 +122,7 @@ export default async function minifyHTML() {
     'client/js/editor/sidebar/json.js',
     'client/js/editor/sidebar/assets.js',
     'client/js/editor/sidebar/toolbox.js',
+    'client/js/editor/sidebar/gameSettings.js',
 
     'client/js/editmode.js',
     'client/js/jsonedit.js',
