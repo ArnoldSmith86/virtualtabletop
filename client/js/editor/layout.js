@@ -1,5 +1,7 @@
 let toolbarButtons = null;
 let dragToolbarButtons = null;
+let editSidebarModules = null;
+let auxiliarySidebarModules = null;
 let sidebarModules = null;
 
 let fullToolbarWidth = 0;
@@ -63,15 +65,20 @@ function initializeEditor(currentMetaData) {
     new MoveDragButton()
   ]);
 
-  renderSidebar(sidebarModules = [
+  renderSidebar(editSidebarModules = [
     new PropertiesModule(),
-    new UndoModule(),
     new JsonModule(),
+    new AssetsModule()
+  ], 'Edit');
+
+  renderSidebar(auxiliarySidebarModules = [
+    new UndoModule(),
     new TreeModule(),
     new DebugModule(),
-    new AssetsModule(),
     new ToolboxModule()
-  ]);
+  ], 'Auxiliary');
+
+  sidebarModules = [ ...editSidebarModules, ...auxiliarySidebarModules ];
 
   onMessage('meta', metaReceived);
   metaReceived(currentMetaData);
@@ -80,7 +87,7 @@ function initializeEditor(currentMetaData) {
 }
 
 function metaReceived(data) {
-  for(const module of sidebarModules)
+  for(const module of editSidebarModules)
     module.onMetaReceived(data);
   for(const button of toolbarButtons)
     button.onMetaReceived(data);
@@ -88,7 +95,7 @@ function metaReceived(data) {
 
 export function openEditor() {
   setJEroutineLogging(jeRoutineLogging = true);
-  for(const module of sidebarModules)
+  for(const module of editSidebarModules)
     module.onEditorOpen();
   for(const button of toolbarButtons)
     button.onEditorOpen();
@@ -97,7 +104,7 @@ export function openEditor() {
 function closeEditor() {
   setJEroutineLogging(jeRoutineLogging = false);
 
-  for(const module of sidebarModules)
+  for(const module of editSidebarModules)
     module.onEditorClose();
   for(const button of toolbarButtons)
     button.onEditorClose();
@@ -116,12 +123,12 @@ function renderDragToolbar(buttons) {
     button.render($('#editorDragToolbar'));
 }
 
-function renderSidebar(modules) {
+function renderSidebar(modules, className) {
   const state = JSON.parse(localStorage.getItem('editorState') || '{"modules":{}}').modules;
   for(const module of modules) {
-    module.renderButton($('#editorSidebar'));
-    if(state[module.title] && state[module.title] != 'editorModuleInOverlay' && $(`#${state[module.title]}`))
-      module.openInTarget($(`#${state[module.title]}`));
+    module.renderButton($(`#editor${className}Sidebar`));
+    if(state[module.title] && state[module.title] != 'editorModuleInOverlay' && $(`#editor${className}Module`))
+      module.openInTarget($(`#editor${className}Module`));
   }
 
   editorModulesResizer();
@@ -133,11 +140,11 @@ function editorModulesResizer() {
   let mouseReference;
   let resizerReference;
   let percentage = editorState.modulesWidth || 50;
-  $('#editorModules').style.setProperty('--modulesWidth', percentage + '%');
+  $('#editorSidebar').style.setProperty('--modulesWidth', percentage + '%');
 
   function resize(e) {
     percentage = (1 - e.x / window.innerWidth) * 100;
-    $('#editorModules').style.setProperty('--modulesWidth', percentage + '%');
+    $('#editorSidebar').style.setProperty('--modulesWidth', percentage + '%');
     setScale();
   }
 
@@ -169,7 +176,7 @@ function hint(html) {
 export function getAvailableRoomRectangle() {
   return {
     top: window.innerWidth/window.innerHeight > 1 || window.innerWidth < 700 ? $('#editorToolbar').getBoundingClientRect().bottom : window.innerHeight/2,
-    right: (window.innerWidth/window.innerHeight > 1 && ($('#editor.moduleActive') || $('body.draggingEditorSidebarModule')) ? $('#editorModules') : $('#editorSidebar')).offsetLeft,
+    right: (window.innerWidth/window.innerHeight > 1 && ($('#editor.moduleActive') || $('body.draggingEditorSidebarModule')) ? $('#editorSidebar') : $('#editorSidebar')).offsetLeft,
     left: 0,
     bottom: window.innerHeight
   };

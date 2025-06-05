@@ -18,14 +18,7 @@ class SidebarModule {
   }
 
   click(e) {
-    let target = e.ctrlKey ? $('#editorModuleBottomLeft') : $('#editorModuleTopLeft');
-    if(e.button == 2)
-      target = e.ctrlKey ? $('#editorModuleBottomRight') : $('#editorModuleTopRight');
-
-    if(e.shiftKey)
-      target = $('#editorModuleInOverlay');
-
-    this.openInTarget(target);
+    this.openInTarget(this.buttonDOM.parentElement.id == 'editorEditSidebar' ? $('#editorEditModule') : $('#editorAuxiliaryModule'));
     e.preventDefault();
   }
 
@@ -126,7 +119,7 @@ class SidebarModule {
       this.saveToLocalStorage(null);
     } else {
       if(target.dataset.currentlyLoaded && target.dataset.currentlyLoaded != this.icon)
-        $(`#editorSidebar button.active[icon="${target.dataset.currentlyLoaded}"]`).click();
+        $(`.sidebarButtons button.active[icon="${target.dataset.currentlyLoaded}"]`).click();
 
       this.moduleDOM = target;
       this.moduleDOM.dataset.currentlyLoaded = this.icon;
