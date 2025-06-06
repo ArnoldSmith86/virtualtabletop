@@ -110,7 +110,7 @@ class Card extends Widget {
 
       if(Array.isArray(face.objects)) {
         for(const original of face.objects) {
-          const objectDiv = document.createElement(original.type == 'html' ? 'iframe' : 'div');
+          const objectDiv = document.createElement(original.type == 'html' ? 'iframe' : (original.type == 'label' ? 'textarea' : 'div'));
           objectDiv.classList.add('cardFaceObject');
 
           const setValue = _=>{
@@ -167,7 +167,29 @@ class Card extends Widget {
                   `<html><head><link rel="stylesheet" href="fonts.css"><style>html,body {height: 100%; margin: 0;} html {font-size: 14px; font-family: 'Roboto', sans-serif;} body {overflow: hidden;}${extraStyles}` +
                   `</style></head><body class="${object.classes || ""}">${content}</body></html>`;
               objectDiv.srcdoc = html;
-            } else {
+            } else if (object.type == 'label') {
+            if (!object.id) {
+              object.id = `label${object.x || 0}${object.y || 0}`;
+            }
+            const key = object.id;
+            const savedLabels = this.get('labels') || {};
+            object.value = savedLabels[key] !== undefined ? savedLabels[key] : object.value;
+            objectDiv.value = object.value || "";
+            objectDiv.style.resize = 'none';
+            objectDiv.style.overflow = 'auto';
+            objectDiv.style.background = 'none' || 'white';
+            let saveTimeout;
+            objectDiv.addEventListener('input', e => {
+              const newValue = e.target.value;
+              object.value = newValue;
+              clearTimeout(saveTimeout);
+              saveTimeout = setTimeout(() => {
+                const labels = { ...(this.get('labels') || {}) };
+                labels[key] = newValue;
+                this.set('labels', labels);
+              }, 300);
+            });
+            } else { 
               objectDiv.textContent = object.value;
               objectDiv.style.color = object.color;
             }
