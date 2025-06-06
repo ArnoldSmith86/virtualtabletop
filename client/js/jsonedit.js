@@ -1140,7 +1140,7 @@ function jeAddCommands() {
   jeAddRoutineOperationCommands('LABEL', { value: 0, mode: 'set', label: null, collection: 'DEFAULT' });
   jeAddRoutineOperationCommands('MOVE', { count: 1, face: null, from: null, to: null, fillTo: null, collection: 'DEFAULT' });
   jeAddRoutineOperationCommands('MOVEXY', { count: 1, face: null, from: null, x: 0, y: 0, snapToGrid: true, resetOwner: true });
-  jeAddRoutineOperationCommands('RECALL', { owned: true, inHolder: true, holder: null, excludeCollection: null, byDistance: false });
+  jeAddRoutineOperationCommands('RECALL', { owned: true, inHolder: true, holder: null, excludeCollection: null, byDistance: false, eraseLabel: false });
   jeAddRoutineOperationCommands('RESET', { property: 'resetProperties' });
   jeAddRoutineOperationCommands('ROTATE', { count: 1, angle: 90, mode: 'add', holder: null, collection: 'DEFAULT' });
   jeAddRoutineOperationCommands('SCORE', { mode: 'set', property: 'score', seats: null, round: null, value: null });
