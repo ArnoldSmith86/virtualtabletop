@@ -762,6 +762,23 @@ const jeCommands = [
       jeSetAndSelect('text');
     }
   },
+   {
+    id: 'je_labelTemplate',
+    name: 'label template',
+    context: '^deck ↦ faceTemplates ↦ [0-9]+ ↦ objects',
+    call: async function() {
+      jeStateNow.faceTemplates[+jeContext[2]].objects.push({
+        type: 'label',
+        labelName: '###SELECT ME###',
+        x: 15,
+        y: 15,
+        width: 73,
+        height: 130,
+        fontSize: 20
+      });
+      jeSetAndSelect('label1');
+    }
+  },
   {
     id: 'je_inputField',
     name: 'add field',

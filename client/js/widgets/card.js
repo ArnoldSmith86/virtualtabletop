@@ -171,10 +171,10 @@ class Card extends Widget {
                   `</style></head><body class="${object.classes || ""}">${content}</body></html>`;
               objectDiv.srcdoc = html;
             } else if (object.type == 'label') {
-              if (!original.id) {
-                original.id = `label${labelIndex++}`;
+              if (!original.labelName) {
+                original.labelName = `label${labelIndex++}`;
               }
-              const key = object.id;
+              const key = object.labelName;
               const savedLabels = this.get('labels') || {};
               object.value = savedLabels[key] !== undefined ? savedLabels[key] : object.value;
               objectDiv.value = object.value || '';
