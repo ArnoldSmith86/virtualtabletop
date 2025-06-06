@@ -176,9 +176,14 @@ class Card extends Widget {
               }
               const key = object.labelName;
               const savedLabels = this.get('labels') || {};
-              object.value = savedLabels[key] !== undefined ? savedLabels[key] : object.value;
+
+              if (savedLabels[key] !== undefined) {
+                object.value = savedLabels[key];
+              }
+
               objectDiv.value = object.value || '';
               objectDiv.classList.add('label');
+              objectDiv.setAttribute('spellcheck', 'false');
 
               const isEditable = this.get('editable') !== false;
               if (isEditable) {
@@ -191,27 +196,17 @@ class Card extends Widget {
                 objectDiv.style.pointerEvents = 'none';
               }
 
-              objectDiv.setAttribute('spellcheck', 'false');
-
-              objectDiv.oninput = async e => {
+              const updateLabel = async e => {
                 if (!this.get('editable')) return;
                 const newValue = e.target.value;
                 object.value = newValue;
-                clearTimeout(objectDiv._saveTimeout);
-                objectDiv._saveTimeout = setTimeout(async () => {
-                  const labels = { ...(this.get('labels') || {}) };
-                  labels[key] = newValue;
-                  await this.set('labels', labels);
-                }, 300);
-              };
-
-              objectDiv.onblur = async e => {
-                if (!this.get('editable')) return;
-                const newValue = e.target.value;
                 const labels = { ...(this.get('labels') || {}) };
                 labels[key] = newValue;
                 await this.set('labels', labels);
               };
+
+              objectDiv.oninput = updateLabel;
+              objectDiv.onblur = updateLabel;
             } else {
               objectDiv.textContent = object.value;
               objectDiv.style.color = object.color;
