@@ -193,24 +193,24 @@ class Card extends Widget {
 
               objectDiv.setAttribute('spellcheck', 'false');
 
-              objectDiv.oninput = e => {
+              objectDiv.oninput = async e => {
                 if (!this.get('editable')) return;
                 const newValue = e.target.value;
                 object.value = newValue;
                 clearTimeout(objectDiv._saveTimeout);
-                objectDiv._saveTimeout = setTimeout(() => {
+                objectDiv._saveTimeout = setTimeout(async () => {
                   const labels = { ...(this.get('labels') || {}) };
                   labels[key] = newValue;
-                  this.set('labels', labels);
+                  await this.set('labels', labels);
                 }, 300);
               };
 
-              objectDiv.onblur = e => {
+              objectDiv.onblur = async e => {
                 if (!this.get('editable')) return;
                 const newValue = e.target.value;
                 const labels = { ...(this.get('labels') || {}) };
                 labels[key] = newValue;
-                this.set('labels', labels);
+                await this.set('labels', labels);
               };
             } else {
               objectDiv.textContent = object.value;
