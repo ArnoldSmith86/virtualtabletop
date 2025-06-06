@@ -23,3 +23,22 @@
   background-position: center center;
   box-sizing: border-box;
 }
+
+.card .cardFaceObject.label {
+  display: block;
+  border: none;
+  background: none;
+  padding: 0;
+  margin: 0;
+  color: inherit;
+  text-align: inherit;
+  font: inherit;
+  width: 100%;
+  resize: none;
+  text-transform: inherit;
+  scrollbar-width: thin;
+}
+
+.card .cardFaceObject.label:read-only {
+  pointer-events: none;
+}

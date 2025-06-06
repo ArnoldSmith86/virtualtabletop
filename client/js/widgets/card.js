@@ -12,6 +12,8 @@ class Card extends Widget {
 
       deck: null,
       cardType: null,
+      editable: true,
+      labels: null,
       onPileCreation: {}
     });
 
@@ -98,6 +100,7 @@ class Card extends Widget {
   createFaces(faceTemplates) {
     this.dynamicProperties = {};
     for(const face of faceTemplates) {
+      let labelIndex = 1;
       const faceDiv = document.createElement('div');
 
       faceDiv.classList.add('cardFace');
@@ -168,28 +171,48 @@ class Card extends Widget {
                   `</style></head><body class="${object.classes || ""}">${content}</body></html>`;
               objectDiv.srcdoc = html;
             } else if (object.type == 'label') {
-            if (!object.id) {
-              object.id = `label${object.x || 0}${object.y || 0}`;
-            }
-            const key = object.id;
-            const savedLabels = this.get('labels') || {};
-            object.value = savedLabels[key] !== undefined ? savedLabels[key] : object.value;
-            objectDiv.value = object.value || "";
-            objectDiv.style.resize = 'none';
-            objectDiv.style.overflow = 'auto';
-            objectDiv.style.background = 'none' || 'white';
-            let saveTimeout;
-            objectDiv.addEventListener('input', e => {
-              const newValue = e.target.value;
-              object.value = newValue;
-              clearTimeout(saveTimeout);
-              saveTimeout = setTimeout(() => {
+              if (!original.id) {
+                original.id = `label${labelIndex++}`;
+              }
+              const key = object.id;
+              const savedLabels = this.get('labels') || {};
+              object.value = savedLabels[key] !== undefined ? savedLabels[key] : object.value;
+              objectDiv.value = object.value || '';
+              objectDiv.classList.add('label');
+
+              const isEditable = this.get('editable') !== false;
+              if (isEditable) {
+                objectDiv.removeAttribute('readonly');
+                objectDiv.removeAttribute('tabindex');
+                objectDiv.style.pointerEvents = 'auto';
+              } else {
+                objectDiv.setAttribute('readonly', true);
+                objectDiv.setAttribute('tabindex', -1);
+                objectDiv.style.pointerEvents = 'none';
+              }
+
+              objectDiv.setAttribute('spellcheck', 'false');
+
+              objectDiv.oninput = e => {
+                if (!this.get('editable')) return;
+                const newValue = e.target.value;
+                object.value = newValue;
+                clearTimeout(objectDiv._saveTimeout);
+                objectDiv._saveTimeout = setTimeout(() => {
+                  const labels = { ...(this.get('labels') || {}) };
+                  labels[key] = newValue;
+                  this.set('labels', labels);
+                }, 300);
+              };
+
+              objectDiv.onblur = e => {
+                if (!this.get('editable')) return;
+                const newValue = e.target.value;
                 const labels = { ...(this.get('labels') || {}) };
                 labels[key] = newValue;
                 this.set('labels', labels);
-              }, 300);
-            });
-            } else { 
+              };
+            } else {
               objectDiv.textContent = object.value;
               objectDiv.style.color = object.color;
             }
@@ -205,6 +228,8 @@ class Card extends Widget {
             for(const dp of Object.keys(original.dynamicProperties))
               if(original[dp] === undefined)
                 properties.add(original.dynamicProperties[dp]);
+          properties.add('editable');
+          properties.add('labels');
           for(const p of properties) {
             if(!this.dynamicProperties[p])
               this.dynamicProperties[p] = [];
