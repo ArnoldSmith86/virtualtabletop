@@ -5797,7 +5797,8 @@
     },
     "z": 80258,
     "customFaceCount": 6,
-    "deckSuitsColor": ""
+    "deckSuitsColor": "",
+    "layer": -1
   },
   "scoreButton": {
     "type": "button",
@@ -22645,7 +22646,7 @@
       }
     ],
     "movableInEdit": false,
-    "versionNumber": "1",
+    "versionNumber": "0",
     "scale": 0
   },
   "cloneButton": {
@@ -28187,7 +28188,7 @@
       ],
       [
         "deckType",
-        0
+        5
       ],
       [
         "hideCards",
@@ -39759,7 +39760,7 @@
     "width": 110,
     "height": 20,
     "borderRadius": 4,
-    "z": 4,
+    "z": 3,
     "movable": false,
     "movableInEdit": false,
     "css": {
@@ -39956,7 +39957,7 @@
     ],
     "teamButton": 9,
     "html": "Contract Type",
-    "x": 336
+    "x": 224
   },
   "teamsAndContracts": {
     "type": "holder",
@@ -40135,12 +40136,12 @@
       "teamButton2": "!parent"
     },
     "id": "teamButton3",
-    "x": 224,
+    "x": 336,
     "y": 0,
     "text": "Seperate",
     "bgColor": "#ffffff",
     "teamButton": 3,
-    "z": 3,
+    "z": 4,
     "parent": "teamsAndContractsOff"
   },
   "teamList3": {
@@ -40302,7 +40303,7 @@
       "mode": "vs",
       "time": "5-60",
       "attribution": "The room and most game elements and mechanics are by LawDawg96 and are released into the Public Domain under CC0.<div><br></div><div>Additional contributions to game pre-sets and player aids&nbsp;<span style=\"color: var(--overlayFontColor);\">released into the Public Domain under CC0&nbsp;</span><span style=\"color: var(--overlayFontColor);\">by anewcar, jade-alarm, jkandell, and Shobu.</span></div><div><div><br></div><div>Player Aids:</div><div><div><ul><li>Doppelkopf by jkandell</li><li>Königrufen by jkandell<br></li><li>Felõs by Shobu</li><li>Israeli Whist by jkandell</li><li>Color Whist by jkandell</li></ul><div>Decks and Cards</div></div></div><div><ul><li>Crow</li><ul><li>Card design by LawDawg96 and released to the Public Domain under CC0.</li><li>Ally/friend icon used in Auction pre-set by Random Panda and available under CC BY 3.0 at https://thenounproject.com/icon/friend-96006/</li></ul></ul><div><div>Items (CC BY 3.0):</div><div><ul><li>Caro Asercion</li><ul><li>Fox, https://game-icons.net/1x1/caro-asercion/fox.html</li></ul><li>Delapouite</li><ul><li>Barrel,&nbsp;https://game-icons.net/1x1/delapouite/barrel.html</li><li>Lovers, https://game-icons.net/1x1/delapouite/lovers.html</li></ul><li>Lorc</li><ul><li>Screw, https://game-icons.net/1x1/lorc/screw.html</li></ul></ul></div></div></div></div>",
-      "lastUpdate": 1749339732863,
+      "lastUpdate": 1749340105670,
       "showName": true,
       "skill": "",
       "description": "This room can be used to play many types of card games. It is especially suited for trick taking and point-trick types of games.  It is highly customizable with many games available with pre-set configurations.\n\nv2.0.1",
@@ -43428,5 +43429,17 @@
     "html": "<h3>Basics (4-player)</h3><p><strong>Black Suits:</strong> K, Q, C, J, 10, 9, 8, 7        <strong><span style='color:red'>Red Suits:</span></strong><span style='color:red'> K, Q, C, J, 1, 2, 3, 4      </span> <strong>     Trumps:</strong> Skis, XXI, XX, … II, I<strong><br>Points:</strong> K (4 1&frasl;3 pts), Q (3 1&frasl;3 pts), C (2 1&frasl;3 pts), J (1 1&frasl;3 pts), Skis/XXI/I (4 1&frasl;3 pts), other cards (1&frasl;3 pt).</p><h3>Gameplay</h3><p><strong>I. CONTRACT SELECTION</strong><br>Forehand speaks first and <strong>must wait</strong><br>Players whose first turn to speak was earlier have <strong>seniority</strong> in the bidding, and can equal the bids of junior players by holding. A junior player has to bid higher than a senior player or pass. A player who has passed cannot bid again during the auction. The winner of the bidding can play the bid contract or convert to a higher one.<br><br>Klop is played if everybody has passed (each player will score separately). A Klop is also played if a player is dealt no trump cards (he must ask for a new deal, and a game of compulsory klop is played)<br><br><strong>II. CALL A PARTNER</strong><br> If the contract is one in which declarer gets a partner, the declarer names a suit. The holder of the king of that suit becomes declarer's partner but does not tell anyone who they are. You also play alone if the called king happens to be in the talon (If the king called by the declarer happens to be in the talon, then the declarer can win the remainder of the talon (the part not taken) by picking up the part of the talon that contains the called king and winning a trick with that king.<br><br><strong>III. TALON EXCHANGE</strong><br> <strong>After the contract selection is made</strong>, the Talon is exposed for these positive contracts: <br>Three / Solo Three (declarer takes 3 cards in a row), Two / Solo Two (takes 2 in a column), One / Solo One(takes any single card). <br>Declarer's discarded cards go to his captured trick pile (Kings, Skis,XXI,I may never be discarded).<br>Other exposed cards go to the defenders captured pile.<br><br>If the contract is Solo Three, Solo Two or Solo one, the declarer can, after exchanging cards with the talon, increase the contract to <strong>All Tricks / No-trump</strong>. This is the normal way in which this contract arises - it cannot be bid directly with the talon. <br><br><strong>IV. ANNOUNCEMENTS</strong><br>After a contract of Three /  Solo Three, Two / Solo Two, One / Solo One (but not for Solo Without) has been chosen and the talon exchanged, each player (beginning with the declarer) can pass or make one or more announcements on behalf of their side. <br>Both members of the defender's team will win or lose the same amount (except the penalty for lost XXI, which applies only to the player who lost it).<br><br><strong>V. DOUBLING</strong><br>Contract and bonuses can be doubled (independently) by defenders (up to x16 if declarer side also double). IT's illegal to double an announcement unless the player doubling knows for certain that they are on the opposite team from the announcer.<br><br><strong>VI. THE PLAY </strong><br><strong>Beggar, Solo Without,Open Beggar, All-Tricks:</strong> declarer plays first.<br> <strong>Other contracts:</strong> Forehand plays first.<br><br><strong>Positive contracts</strong> (Three,Solo Three, Two, Solo Two, One, Solo One, Solo Without, All-Tricks): <br>Must follow suit, must trump.<br>In a positive contract, the declarer's side wins if at the end of the play they have at least 35 2&frasl;3 of the available 70 points. Difference is calculated from 35 pts. <br><br><strong>Negative contracts</strong> (Beggar, Open Beggar & Klop):<br> 1. You must beat the highest card on the table if possible (must trump still apply). 2. You are not allowed to play the pagat unless it's the only card you can play. 3. There's no LostXXI penalty.</strong><br>Beggar: Declarer must take no tricks.<br>Klop: trick winner takes a face-down card from the talon. Individually score captured points as negative. A player who loses (takes more than 35 2 2&frasl;3 pts) scores -70. Any player who wins (taking no tricks) scores +70. If any player wins or loses, then only the winners and losers score.<br></p><h3>Notes</h3><p><strong>Pagat (I) Ultimo:</strong> Only the holder of the pagat (I) can announce this, the pagat actually has to win the trick - if not, the bonus is lost even if the trick is won by the partner of the person playing the pagat. If this bonus is not announced, but you play the pagat to the last trick, you are deemed to be attempting to score the bonus. If the bonus is announced, the side making the announcement is obliged to keep the card for as long as they can.<br><br><strong>King Ultimo</strong>: win the called king in the last trick (only the called player can announce this). Either partner can win the last trick with the called king in it.<br><br><strong>Lost XXI Rule:</strong> The penalty for captured XXI still applies if the XXI is found in the talon when it is exposed and the declarer chooses not take the part of the talon which includes it. In Solo Without, the declarer does not suffer any penalty if the XXI is in the talon. </p>",
     "width": 1490,
     "display": false
+  },
+  "playerAid30b": {
+    "id": "playerAid30b",
+    "parent": "playerAid30",
+    "x": -813,
+    "y": -213,
+    "width": 745,
+    "height": 730,
+    "z": 80503,
+    "movable": false,
+    "enlarge": 0,
+    "image": "/assets/-2196274_31743"
   }
 }
