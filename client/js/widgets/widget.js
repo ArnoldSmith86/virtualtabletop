@@ -1627,7 +1627,11 @@ export class Widget extends StateManaged {
                 
                 for(const c of cards) {
                   if (a.eraseLabel) {
-                    c.set('labels', null);
+                    const labels = { ...(c.get('labels') || {}) };
+                    for (const key in labels) {
+                      labels[key] = '';
+                    }
+                    await c.set('labels', labels);
                   }
                   if(c.get('_ancestor') == holder && !c.get('owner'))
                     await c.bringToFront();
