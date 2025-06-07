@@ -186,6 +186,7 @@ class Card extends Widget {
               objectDiv.readOnly = !isEditable;
               objectDiv.tabIndex = isEditable ? 0 : -1;
               objectDiv.style.pointerEvents = isEditable ? 'auto' : 'none';
+              objectDiv.style.color = object.color || 'black';
               
               // Auto-resize font to fit content
               const autoResizeFont = () => {
