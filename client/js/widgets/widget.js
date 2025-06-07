@@ -1586,7 +1586,7 @@ export class Widget extends StateManaged {
       }
 
       if(a.func == 'RECALL') {
-        setDefaults(a, { owned: true, inHolder: true, excludeCollection: null, byDistance: false, eraseLabel: false });
+        setDefaults(a, { owned: true, inHolder: true, excludeCollection: null, byDistance: false, eraseLabel: true });
 
         let excludeCollection = null;
         if(a.excludeCollection) {
