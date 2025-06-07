@@ -26,7 +26,7 @@
 
 .card .cardFaceObject.label {
   display: block;
-  border: none;
+  border: 1px dotted #ccc;
   background: none;
   padding: 0;
   margin: 0;
@@ -36,7 +36,7 @@
   width: 100%;
   resize: none;
   text-transform: inherit;
-  scrollbar-width: thin;
+  overflow: hidden;
 }
 
 .card .cardFaceObject.label:read-only {

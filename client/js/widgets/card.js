@@ -174,7 +174,7 @@ class Card extends Widget {
               if (!original.labelName) {
                 original.labelName = `label${labelIndex++}`;
               }
- 
+
               const key = object.labelName;
               const savedLabels = this.get('labels') || {};
               
@@ -187,12 +187,25 @@ class Card extends Widget {
               objectDiv.tabIndex = isEditable ? 0 : -1;
               objectDiv.style.pointerEvents = isEditable ? 'auto' : 'none';
               
+              // Auto-resize font to fit content
+              const autoResizeFont = () => {
+                let fontSize = object.fontSize || 16;
+                objectDiv.style.fontSize = fontSize + 'px';
+                
+                while ((objectDiv.scrollHeight > objectDiv.clientHeight || objectDiv.scrollWidth > objectDiv.clientWidth) && fontSize > 12) {
+                  fontSize -= 0.5;
+                  objectDiv.style.fontSize = fontSize + 'px';
+                }
+              };
+              setTimeout(autoResizeFont, 0);
+              
               if (isEditable) {
                 const updateLabel = async e => {
                   const newValue = e.target.value;
                   const labels = { ...(this.get('labels') || {}) };
                   labels[key] = newValue;
                   await this.set('labels', labels);
+                  autoResizeFont();
                 };
                 
                 objectDiv.addEventListener('input', updateLabel);
