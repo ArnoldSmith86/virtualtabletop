@@ -174,39 +174,30 @@ class Card extends Widget {
               if (!original.labelName) {
                 original.labelName = `label${labelIndex++}`;
               }
+ 
               const key = object.labelName;
               const savedLabels = this.get('labels') || {};
-
-              if (savedLabels[key] !== undefined) {
-                object.value = savedLabels[key];
-              }
-
-              objectDiv.value = object.value || '';
+              
+              objectDiv.value = savedLabels[key] !== undefined ? savedLabels[key] : (object.value || '');
               objectDiv.classList.add('label');
               objectDiv.setAttribute('spellcheck', 'false');
-
+              
               const isEditable = this.get('editable') !== false;
+              objectDiv.readOnly = !isEditable;
+              objectDiv.tabIndex = isEditable ? 0 : -1;
+              objectDiv.style.pointerEvents = isEditable ? 'auto' : 'none';
+              
               if (isEditable) {
-                objectDiv.removeAttribute('readonly');
-                objectDiv.removeAttribute('tabindex');
-                objectDiv.style.pointerEvents = 'auto';
-              } else {
-                objectDiv.setAttribute('readonly', true);
-                objectDiv.setAttribute('tabindex', -1);
-                objectDiv.style.pointerEvents = 'none';
+                const updateLabel = async e => {
+                  const newValue = e.target.value;
+                  const labels = { ...(this.get('labels') || {}) };
+                  labels[key] = newValue;
+                  await this.set('labels', labels);
+                };
+                
+                objectDiv.addEventListener('input', updateLabel);
+                objectDiv.addEventListener('blur', updateLabel);
               }
-
-              const updateLabel = async e => {
-                if (!this.get('editable')) return;
-                const newValue = e.target.value;
-                object.value = newValue;
-                const labels = { ...(this.get('labels') || {}) };
-                labels[key] = newValue;
-                await this.set('labels', labels);
-              };
-
-              objectDiv.oninput = updateLabel;
-              objectDiv.onblur = updateLabel;
             } else {
               objectDiv.textContent = object.value;
               objectDiv.style.color = object.color;
