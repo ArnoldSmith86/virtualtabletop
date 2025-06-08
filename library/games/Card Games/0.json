@@ -8532,10 +8532,10 @@
     ],
     "roundLabel": "",
     "y": 650,
+    "scale": 0,
     "rounds": [
       "Card Points"
-    ],
-    "scale": 0
+    ]
   },
   "seat1": {
     "type": "seat",
@@ -11772,7 +11772,7 @@
     "id": "scoreboard3",
     "y": 86,
     "width": 175,
-    "height": 430,
+    "height": 480,
     "movable": false,
     "movableInEdit": false,
     "autosizeColumns": false,
@@ -11810,7 +11810,8 @@
       "S",
       "G",
       "J1",
-      "J2"
+      "J2",
+      "Match"
     ],
     "showAllRounds": true,
     "scoreProperty": "scoreCoiffeur",
@@ -11969,7 +11970,7 @@
         ]
       }
     ],
-    "x": 270,
+    "x": 240,
     "seats": [
       "seat1",
       "seat2",
@@ -12054,7 +12055,8 @@
       10
     ],
     "x": 60,
-    "text": "Convert"
+    "text": "Convert",
+    "scale": 0
   },
   "3pScoreCoiffeurButton": {
     "type": "button",
@@ -12347,8 +12349,7 @@
       "seat7"
     ],
     "x": 60,
-    "text": "Convert",
-    "scale": 0
+    "text": "Convert"
   },
   "showHandButton": {
     "type": "button",
@@ -40905,7 +40906,7 @@
       "mode": "vs",
       "time": "5-60",
       "attribution": "The room and most game elements and mechanics are by LawDawg96 and are released into the Public Domain under CC0.<div><br></div><div>Additional contributions to game pre-sets and player aids&nbsp;<span style=\"color: var(--overlayFontColor);\">released into the Public Domain under CC0&nbsp;</span><span style=\"color: var(--overlayFontColor);\">by anewcar, jade-alarm, jkandell, and Shobu.</span></div><div><div><br></div><div>Player Aids:</div><div><div><ul><li>Doppelkopf by jkandell</li><li>Königrufen by jkandell<br></li><li>Felõs by Shobu</li><li>Israeli Whist by jkandell</li><li>Color Whist by jkandell</li></ul><div>Decks and Cards</div></div></div><div><ul><li>Crow</li><ul><li>Card design by LawDawg96 and released to the Public Domain under CC0.</li><li>Ally/friend icon used in Auction pre-set by Random Panda and available under CC BY 3.0 at https://thenounproject.com/icon/friend-96006/</li></ul></ul><div><div>Items (CC BY 3.0):</div><div><ul><li>Caro Asercion</li><ul><li>Fox, https://game-icons.net/1x1/caro-asercion/fox.html</li></ul><li>Delapouite</li><ul><li>Barrel,&nbsp;https://game-icons.net/1x1/delapouite/barrel.html</li><li>Lovers, https://game-icons.net/1x1/delapouite/lovers.html</li></ul><li>Lorc</li><ul><li>Screw, https://game-icons.net/1x1/lorc/screw.html</li></ul></ul></div></div></div></div>",
-      "lastUpdate": 1749349861042,
+      "lastUpdate": 1749350070800,
       "showName": true,
       "skill": "",
       "description": "This room can be used to play many types of card games. It is especially suited for trick taking and point-trick types of games.  It is highly customizable with many games available with pre-set configurations.\n\nv2.0.1",
@@ -44673,7 +44674,7 @@
     "displayArray": [
       [
         "playerAidButton",
-        1
+        0
       ],
       [
         "transferScoreButton",
@@ -44810,7 +44811,7 @@
     "displayArray": [
       [
         "playerAidButton",
-        1
+        0
       ],
       [
         "transferScoreButton",
@@ -45045,5 +45046,490 @@
     "parent": "seat6",
     "scale": 0,
     "dropLimit": 0
+  },
+  "gameID54": {
+    "id": "gameID54",
+    "x": 177,
+    "z": 80605,
+    "movable": false,
+    "css": {
+      "background": "blue",
+      "color": "white",
+      "font-size": "26px"
+    },
+    "text": "Wallachen",
+    "displayArray": [
+      [
+        "playerAidButton",
+        0
+      ],
+      [
+        "scoreButton",
+        0
+      ],
+      [
+        "trump",
+        1
+      ],
+      [
+        "bidWinner",
+        0
+      ],
+      [
+        "transferScoreButton",
+        0
+      ]
+    ],
+    "gameID": true,
+    "hintText": "\"\"",
+    "messageArray": [
+      {
+        "value": "Default",
+        "text": "Click here to choose message"
+      },
+      {
+        "value": "Pass",
+        "text": "Pass"
+      },
+      {
+        "value": "6",
+        "text": "6"
+      },
+      {
+        "value": "7",
+        "text": "7"
+      },
+      {
+        "value": "8",
+        "text": "8"
+      },
+      {
+        "value": "9",
+        "text": "9"
+      },
+      {
+        "value": "Bettel",
+        "text": "Bettel"
+      },
+      {
+        "value": "Mord",
+        "text": "Mord"
+      }
+    ],
+    "nextTrump": 0,
+    "settingsArray": [
+      [
+        "centerShow",
+        false
+      ],
+      [
+        "showBidHistory",
+        true
+      ],
+      [
+        "showBidSuit",
+        false
+      ],
+      [
+        "showBidValue",
+        false
+      ]
+    ],
+    "settingsDecksArray": [
+      [
+        "cardCount",
+        10
+      ],
+      [
+        "hideCards",
+        6
+      ],
+      [
+        "seatCount",
+        3
+      ],
+      [
+        "tempScore",
+        false
+      ]
+    ],
+    "sort1": "sortDefault",
+    "sort2": "suit",
+    "calcBidRoutine": [
+      "var bidValues = '0,3,0,1,2' split ','",
+      "var result = 0",
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "_ancestor",
+        "value": "holder${thisSeatIndex}",
+        "collection": "bidCards"
+      },
+      {
+        "func": "FOREACH",
+        "range": [
+          4
+        ],
+        "loopRoutine": [
+          {
+            "func": "SELECT",
+            "source": "bidCards",
+            "property": "suit",
+            "value": "${value}"
+          },
+          {
+            "func": "COUNT"
+          },
+          "var suitTotal = ${COUNT} * ${bidValues.$value}",
+          "var result = ${result} + ${suitTotal}"
+        ]
+      }
+    ],
+    "playEnterRoutine": [
+      {
+        "func": "GET",
+        "collection": "child",
+        "property": "dropShadowOwner"
+      },
+      {
+        "func": "IF",
+        "operand1": "${dropShadowOwner}",
+        "operand2": null,
+        "thenRoutine": [
+          {
+            "func": "CALL",
+            "routine": "calcBidRoutine"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "99Bid${thisSeatIndex}"
+            ],
+            "property": "text",
+            "value": "${result}"
+          }
+        ]
+      }
+    ],
+    "playLeaveRoutine": [
+      {
+        "func": "GET",
+        "collection": "child",
+        "property": "dropShadowOwner"
+      },
+      {
+        "func": "IF",
+        "operand1": "${dropShadowOwner}",
+        "relation": "!=",
+        "operand2": null,
+        "thenRoutine": [
+          {
+            "func": "CALL",
+            "routine": "calcBidRoutine"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "99Bid${thisSeatIndex}"
+            ],
+            "property": "text",
+            "value": "${result}"
+          }
+        ]
+      }
+    ],
+    "preSetExceptionsRoutine": [
+      {
+        "func": "SET",
+        "collection": [
+          "takeSpecial"
+        ],
+        "property": "scale",
+        "value": 1
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "scoreSpecial"
+        ],
+        "property": "scale",
+        "value": 1
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "nextTrump",
+        "value": 0
+      }
+    ],
+    "scoreSpecialRoutine": [
+      "var bidValues = '0,3,0,1,2' split ','",
+      "var nextTrumpArray = '2,3,4,1' split ','",
+      "var contractValues = '0,30,20,10' split ','",
+      "var bidArray = []",
+      "var winnerArray = []",
+      "var allWinners = 0",
+      "// Calculate what each player bid.",
+      {
+        "func": "FOREACH",
+        "in": [
+          "holder1",
+          "holder3",
+          "holder7"
+        ],
+        "loopRoutine": [
+          "var bidTotal = 0",
+          {
+            "func": "SELECT",
+            "type": "card",
+            "property": "_ancestor",
+            "value": "${value}",
+            "collection": "bidCards"
+          },
+          {
+            "func": "FOREACH",
+            "range": [
+              4
+            ],
+            "loopRoutine": [
+              {
+                "func": "SELECT",
+                "source": "bidCards",
+                "property": "suit",
+                "value": "${value}"
+              },
+              {
+                "func": "COUNT"
+              },
+              "var suitTotal = ${COUNT} * ${bidValues.$value}",
+              "var bidTotal = ${bidTotal} + ${suitTotal}"
+            ]
+          },
+          "var bidArray = push ${bidTotal}"
+        ]
+      },
+      "// Calculate which and how many players made bid.",
+      {
+        "func": "FOREACH",
+        "in": [
+          1,
+          3,
+          7
+        ],
+        "loopRoutine": [
+          "var tricksTotal = ${PROPERTY _totals OF trickCount}",
+          {
+            "func": "IF",
+            "operand1": "${tricksTotal.$value}",
+            "operand2": "${bidArray.$key}",
+            "thenRoutine": [
+              "var allWinners = ${allWinners} + 1",
+              "var thisHolder = 'holder' + ${value}",
+              "var winnerArray = push ${thisHolder}"
+            ],
+            "elseRoutine": [
+              "var winnerArray = push 'null'"
+            ]
+          }
+        ]
+      },
+      "// Calculate which player, if any, tried for extra points through a bid declaration or hand reveal",
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "parent",
+        "relation": "in",
+        "value": [
+          "holder1",
+          "holder3",
+          "holder7"
+        ]
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "activeFace",
+        "value": 1
+      },
+      {
+        "func": "GET",
+        "property": "_ancestor",
+        "variable": "declared"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "${declared}"
+      },
+      {
+        "func": "GET",
+        "property": "parent"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "${parent}"
+      },
+      {
+        "func": "GET",
+        "property": "index"
+      },
+      "var showHolder = 'showHolder' + ${index}",
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY scale OF $showHolder}",
+        "relation": ">",
+        "operand2": 0,
+        "thenRoutine": [
+          "var revealed = ${declared}"
+        ]
+      },
+      "// Calculate if player that declared or revealed got enough tricks",
+      "var declaredWon = ${declared} in ${winnerArray}",
+      "// Calculate and enter score",
+      {
+        "func": "FOREACH",
+        "in": [
+          1,
+          3,
+          7
+        ],
+        "loopRoutine": [
+          "var thisHolder = 'holder' + ${value}",
+          "var didWin = ${thisHolder} in ${winnerArray}",
+          "var points = 0",
+          "// Add 1 point for each trick captured no matter what",
+          "var points = ${tricksTotal.$value}",
+          "// Add 10, 20, or 30 points depending on whether 3, 2, or 1 players met their goal",
+          {
+            "func": "IF",
+            "condition": "${didWin}",
+            "thenRoutine": [
+              "var thisContractValue = ${contractValues.$allWinners}",
+              "var points = ${points} + ${thisContractValue}"
+            ]
+          },
+          "// If the person declaring or revealing won their bid, then give that player 30 points for declaring or 60 points for revealing",
+          {
+            "func": "IF",
+            "condition": "${declaredWon}",
+            "thenRoutine": [
+              {
+                "func": "IF",
+                "operand1": "${declared}",
+                "operand2": "${thisHolder}",
+                "thenRoutine": [
+                  "var points = ${points} + 30",
+                  {
+                    "func": "IF",
+                    "operand1": "${revealed}",
+                    "relation": "!=",
+                    "operand2": null,
+                    "thenRoutine": [
+                      "var points = ${points} + 30"
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          "// If the person declaring or revealing did not win their bid, then give the other players 30 points for declaring or 60 points for revealing",
+          {
+            "func": "IF",
+            "condition": "${declaredWon}",
+            "elseRoutine": [
+              {
+                "func": "IF",
+                "operand1": "${declared}",
+                "relation": "!=",
+                "operand2": null,
+                "thenRoutine": [
+                  {
+                    "func": "IF",
+                    "operand1": "${declared}",
+                    "relation": "!=",
+                    "operand2": "${thisHolder}",
+                    "thenRoutine": [
+                      "var points = ${points} + 30",
+                      {
+                        "func": "IF",
+                        "operand1": "${revealed}",
+                        "relation": "!=",
+                        "operand2": null,
+                        "thenRoutine": [
+                          "var points = ${points} + 30"
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "func": "SCORE",
+            "mode": "set",
+            "round": "${PROPERTY currentRound OF scoreboard}",
+            "seats": "seat${value}",
+            "value": "${points}"
+          }
+        ]
+      },
+      "\\ Set trump for next round",
+      "var nextTrump = ${nextTrumpArray.$allWinners}",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "nextTrump",
+        "value": "${nextTrump}"
+      }
+    ],
+    "takeSpecialRoutine": [
+      {
+        "func": "MOVE",
+        "from": "centerHolder",
+        "to": "backHolder${seatIndex}",
+        "count": 999,
+        "face": 0
+      },
+      {
+        "func": "SELECT",
+        "type": "seat",
+        "property": "id",
+        "relation": "!=",
+        "value": null
+      },
+      {
+        "func": "SET",
+        "property": "turn",
+        "value": false
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "seat${seatIndex}"
+        ],
+        "property": "turn",
+        "value": true
+      },
+      {
+        "func": "SCORE",
+        "mode": "inc",
+        "value": 1,
+        "property": "tricks",
+        "seats": "${seatID}",
+        "round": 1
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "tricksCount"
+        ],
+        "property": "text",
+        "relation": "+",
+        "value": 1
+      }
+    ],
+    "y": -312
   }
 }
