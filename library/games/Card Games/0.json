@@ -7690,6 +7690,9 @@
       ],
       [
         "tarotDeck"
+      ],
+      [
+        "deckLaMenche"
       ]
     ],
     "hideCardsArray": [
@@ -13596,6 +13599,10 @@
       [
         "scoreButton",
         0
+      ],
+      [
+        "scoreboard",
+        1
       ],
       [
         "transferScoreButton",
@@ -40912,7 +40919,7 @@
       "mode": "vs",
       "time": "5-60",
       "attribution": "The room and most game elements and mechanics are by LawDawg96 and are released into the Public Domain under CC0.<div><br></div><div>Additional contributions to game pre-sets and player aids&nbsp;<span style=\"color: var(--overlayFontColor);\">released into the Public Domain under CC0&nbsp;</span><span style=\"color: var(--overlayFontColor);\">by anewcar, jade-alarm, jkandell, and Shobu.</span></div><div><div><br></div><div>Player Aids:</div><div><div><ul><li>Doppelkopf by jkandell</li><li>Königrufen by jkandell<br></li><li>Felõs by Shobu</li><li>Israeli Whist by jkandell</li><li>Color Whist by jkandell</li></ul><div>Decks and Cards</div></div></div><div><ul><li>Crow</li><ul><li>Card design by LawDawg96 and released to the Public Domain under CC0.</li><li>Ally/friend icon used in Auction pre-set by Random Panda and available under CC BY 3.0 at https://thenounproject.com/icon/friend-96006/</li></ul></ul><div><div>Items (CC BY 3.0):</div><div><ul><li>Caro Asercion</li><ul><li>Fox, https://game-icons.net/1x1/caro-asercion/fox.html</li></ul><li>Delapouite</li><ul><li>Barrel,&nbsp;https://game-icons.net/1x1/delapouite/barrel.html</li><li>Lovers, https://game-icons.net/1x1/delapouite/lovers.html</li></ul><li>Lorc</li><ul><li>Screw, https://game-icons.net/1x1/lorc/screw.html</li></ul></ul></div></div></div></div>",
-      "lastUpdate": 1749350448231,
+      "lastUpdate": 1749351207499,
       "showName": true,
       "skill": "",
       "description": "This room can be used to play many types of card games. It is especially suited for trick taking and point-trick types of games.  It is highly customizable with many games available with pre-set configurations.\n\nv2.0.1",
@@ -46232,5 +46239,1193 @@
         ]
       }
     ]
+  },
+  "gameID57": {
+    "id": "gameID57",
+    "x": 1567,
+    "y": -567,
+    "z": 80613,
+    "movable": false,
+    "css": {
+      "background": "blue",
+      "color": "white",
+      "font-size": "26px"
+    },
+    "text": "La Mèn'che",
+    "displayArray": [
+      [
+        "playerAidButton",
+        1
+      ],
+      [
+        "transferScoreButton",
+        0
+      ],
+      [
+        "scoreboard",
+        0
+      ]
+    ],
+    "gameID": true,
+    "hintText": "\"Set teams, once known, using the Declarer and Opponent buttons at the top of the screen.\"",
+    "roundsTemp": [
+      "Card Points"
+    ],
+    "scoreSystem": {
+      "1": {
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "J": 1,
+        "Q": 2,
+        "K": 3,
+        "A": 4
+      },
+      "2": {
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "J": 1,
+        "K": 3,
+        "A": 4,
+        "Q": 2
+      },
+      "3": {
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "J": 1,
+        "Q": 2,
+        "K": 3,
+        "A": 4
+      },
+      "4": {
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "10": 0,
+        "J": 1,
+        "K": 3,
+        "A": 4,
+        "Q": 2
+      }
+    },
+    "settingsArray": [
+      [
+        "showTricks",
+        false
+      ],
+      [
+        "showBidValue",
+        false
+      ],
+      [
+        "showBidHistory",
+        false
+      ],
+      [
+        "showBidSuit",
+        false
+      ]
+    ],
+    "settingsDecksArray": [
+      [
+        "deckType",
+        8
+      ],
+      [
+        "cardCount",
+        4
+      ],
+      [
+        "hideCards",
+        0
+      ],
+      [
+        "seatCount",
+        4
+      ],
+      [
+        "teamScore",
+        true
+      ],
+      [
+        "tempScore",
+        true
+      ]
+    ],
+    "showTempScoreTotals": true,
+    "sort1": "sortDefault",
+    "sort2": "order",
+    "transferButtonReturn": false,
+    "scoreExceptionsRoutine": [
+      "var result = ${points}",
+      "var scores = ${PROPERTY scoreSystem}",
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "_ancestor",
+        "value": "backHolder${value}",
+        "collection": "capturedCards"
+      },
+      {
+        "func": "FOREACH",
+        "collection": "capturedCards",
+        "loopRoutine": [
+          "var suit = ${PROPERTY suit OF $widgetID}",
+          "var suitScores = ${scores.$suit}",
+          "var rank = ${PROPERTY rank OF $widgetID}",
+          "var rankScore = ${suitScores.$rank}",
+          "var result = ${result} + ${rankScore}"
+        ]
+      }
+    ]
+  },
+  "playerAid57": {
+    "id": "playerAid57",
+    "x": 115,
+    "y": -126,
+    "width": 1,
+    "height": 1,
+    "layer": 14,
+    "movable": false,
+    "movableInEdit": false,
+    "onlyVisibleForSeat": [],
+    "playerAid": true
+  },
+  "playerAid57a": {
+    "id": "playerAid57a",
+    "parent": "playerAid57",
+    "fixedParent": true,
+    "x": 187,
+    "y": 175,
+    "width": 1000,
+    "height": 780,
+    "borderRadius": 4,
+    "z": 80631,
+    "css": {
+      "default": {
+        "background": "white",
+        "border": "5px solid blue"
+      },
+      " h3": {
+        "text-align": "center",
+        "font-size": "25px",
+        "color": "blue",
+        "border-bottom": "1px solid blue",
+        "margin": "0px"
+      }
+    },
+    "html": "<h3>Setup</h3><br>A/ Deal 4 cards to each player B/ Forehand selects trump C/ Remaining cards are dealt D/ Players announce their Triumph cards (except 7<font size=5 >&#9827;</font>), E/ Forehand leads first trick.<br><h3>Deck</h3><br>                       Standard                         Triumph<br>x, 8<font size=5 >&#9824;</font>, 9<font size=5 >&#9824;</font>, 10<font size=5 >&#9824;</font>, J<font size=5 >&#9824;</font>, Q<font size=5 >&#9824;</font>, K<font size=5 >&#9824;</font>, A<font size=5 >&#9824;</font><br>7<font size=5 >&#9830;</font>, 8<font size=5 >&#9830;</font>, 9<font size=5 >&#9830;</font>, 10<font size=5 >&#9830;</font>, J<font size=5 >&#9830;</font>, x, K<font size=5 >&#9830;</font>, A<font size=5 >&#9830;</font>,            Q<font size=5 >&#9830;</font><br>7<font size=5 >&#9829;</font>, 8<font size=5 >&#9829;</font>, 9<font size=5 >&#9829;</font>, 10<font size=5 >&#9829;</font>, J<font size=5 >&#9829;</font>, x, K<font size=5 >&#9829;</font>, A<font size=5 >&#9829;</font>,        Q<font size=5 >&#9829;</font><br>x, 8<font size=5 >&#9827;</font>, 9<font size=5 >&#9827;</font>, 10<font size=5 >&#9827;</font>, J<font size=5 >&#9827;</font>, x, K<font size=5 >&#9827;</font>, A<font size=5 >&#9827;</font>,          7<font size=5 >&#9827;</font>, Q<font size=5 >&#9827;</font><br>                                                                   Joker<br><br>Points: A (4pts), K (3pts), Q (2pts), J (1pt)<br><br><h3>Hierarchy</h3><p>Triumph (Q<font size=5 >&#9827;</font>> Q<font size=5 >&#9829;</font>> Q<font size=5 >&#9830;</font>> Joker> 7<font size=5 >&#9827;</font>) > Trump suit > Non-Trump suit<br><h3>Trick Play</h3><strong><br>If able to follow led suit: must either follow led suit, play a Trump or play a Triumph. <br>If unable to follow led suit: may play anything.</strong><br><br>Triumphs belong to their own suit, and are no part of the trump suit :<br>- if a Trumph is led : must follow its suit, play a Trump or play another Triumph<br>- A player must play a Triumph if it's his last card of the led suit (he can still play a Trump or another Triumph)<br><br>The Joker is suitless. If a joker is led to a trick, the second card will set the trick suit.<br><br><h3>Scoring</h3><br>Team which scores 21pts or more gives a token to the other team. If score is a draw, the pot is kept for the next hand, which will worth double. First team with 0 token wins the game"
+  },
+  "deckLaMenche": {
+    "type": "deck",
+    "id": "deckLaMenche",
+    "parent": "deckHolder",
+    "x": 4,
+    "y": 4,
+    "width": 86,
+    "height": 86,
+    "movable": true,
+    "movableInEdit": true,
+    "cardTypes": {
+      "T 1J": {
+        "image": "/i/cards-default/1J.svg",
+        "suitImage": "/i/noto-emoji/emoji_u1f0cf.svg",
+        "rankImage": "/i/noto-emoji/emoji_u1f0cf.svg",
+        "suit": 0,
+        "rankJoker": 1,
+        "suitColor": "🃏",
+        "suitAlt": "5J",
+        "rank": "",
+        "rankA": "J1",
+        "rankFixed": "J1 T",
+        "sortDefault": 1,
+        "order": 1,
+        "valueColor": "gold",
+        "dotMark": "..\n"
+      },
+      "C 01": {
+        "rank": "8",
+        "suitImage": "i/icons/clubs.svg",
+        "suit-P11": "i/icons/clubs.svg",
+        "suit-P13": "i/icons/clubs.svg",
+        "suit-P22": "i/icons/clubs.svg",
+        "suit-P31": "i/icons/clubs.svg",
+        "suit-P33": "i/icons/clubs.svg",
+        "suit-P42": "i/icons/clubs.svg",
+        "suit-P51": "i/icons/clubs.svg",
+        "suit-P53": "i/icons/clubs.svg",
+        "redOrBlack": "black",
+        "suit": 1,
+        "order": 9,
+        "sortDefault": 9
+      },
+      "C 02": {
+        "rank": "9",
+        "suitImage": "i/icons/clubs.svg",
+        "suit-P11": "i/icons/clubs.svg",
+        "suit-P13": "i/icons/clubs.svg",
+        "suit-P32": "i/icons/clubs.svg",
+        "suit-P51": "i/icons/clubs.svg",
+        "suit-P53": "i/icons/clubs.svg",
+        "suit-S21": "i/icons/clubs.svg",
+        "suit-S23": "i/icons/clubs.svg",
+        "suit-S31": "i/icons/clubs.svg",
+        "suit-S33": "i/icons/clubs.svg",
+        "redOrBlack": "black",
+        "suit": 1,
+        "order": 8,
+        "sortDefault": 8
+      },
+      "C 03": {
+        "rank": "10",
+        "suitImage": "i/icons/clubs.svg",
+        "suit-P11": "i/icons/clubs.svg",
+        "suit-P13": "i/icons/clubs.svg",
+        "suit-P51": "i/icons/clubs.svg",
+        "suit-P53": "i/icons/clubs.svg",
+        "suit-S12": "i/icons/clubs.svg",
+        "suit-S21": "i/icons/clubs.svg",
+        "suit-S23": "i/icons/clubs.svg",
+        "suit-S31": "i/icons/clubs.svg",
+        "suit-S33": "i/icons/clubs.svg",
+        "suit-S42": "i/icons/clubs.svg",
+        "redOrBlack": "black",
+        "suit": 1,
+        "order": 7,
+        "sortDefault": 7
+      },
+      "C 04": {
+        "rank": "J",
+        "rankImage": "/assets/-1936516067_36132",
+        "suitImage": "i/icons/clubs.svg",
+        "redOrBlack": "black",
+        "suit": 1,
+        "order": 6,
+        "sortDefault": 6
+      },
+      "C 05": {
+        "rank": "K",
+        "suitImage": "i/icons/clubs.svg",
+        "rankImage": "/assets/-604240792_36033",
+        "redOrBlack": "black",
+        "suit": 1,
+        "order": 5,
+        "sortDefault": 5
+      },
+      "C 06": {
+        "rank": "A",
+        "suitImage": "i/icons/clubs.svg",
+        "rankImage": "i/icons/clubs.svg",
+        "redOrBlack": "black",
+        "suit": 1,
+        "order": 4,
+        "sortDefault": 4
+      },
+      "C 07": {
+        "rank": "7",
+        "suitImage": "i/icons/clubs.svg",
+        "suit-P11": "i/icons/clubs.svg",
+        "suit-P13": "i/icons/clubs.svg",
+        "suit-P22": "i/icons/clubs.svg",
+        "suit-P31": "i/icons/clubs.svg",
+        "suit-P33": "i/icons/clubs.svg",
+        "suit-P51": "i/icons/clubs.svg",
+        "suit-P53": "i/icons/clubs.svg",
+        "redOrBlack": "black",
+        "suit": 1,
+        "order": 3,
+        "sortDefault": 3,
+        "valueColor": "gold",
+        "dotMark": "."
+      },
+      "C 08": {
+        "rank": "Q",
+        "suitImage": "i/icons/clubs.svg",
+        "rankImage": "/assets/-359721987_40577",
+        "redOrBlack": "black",
+        "suit": 1,
+        "order": 2,
+        "sortDefault": 2,
+        "valueColor": "gold",
+        "dotMark": "..\n.\n.."
+      },
+      "D 01": {
+        "rank": "7",
+        "suitImage": "i/icons/diamonds.svg",
+        "suitColor": "#e50932",
+        "suit-P11": "i/icons/diamonds.svg",
+        "suit-P13": "i/icons/diamonds.svg",
+        "suit-P22": "i/icons/diamonds.svg",
+        "suit-P31": "i/icons/diamonds.svg",
+        "suit-P33": "i/icons/diamonds.svg",
+        "suit-P51": "i/icons/diamonds.svg",
+        "suit-P53": "i/icons/diamonds.svg",
+        "redOrBlack": "red",
+        "suit": 2,
+        "order": 25,
+        "sortDefault": 25
+      },
+      "D 02": {
+        "rank": "8",
+        "suitImage": "i/icons/diamonds.svg",
+        "suitColor": "#e50932",
+        "suit-P11": "i/icons/diamonds.svg",
+        "suit-P13": "i/icons/diamonds.svg",
+        "suit-P22": "i/icons/diamonds.svg",
+        "suit-P31": "i/icons/diamonds.svg",
+        "suit-P33": "i/icons/diamonds.svg",
+        "suit-P42": "i/icons/diamonds.svg",
+        "suit-P51": "i/icons/diamonds.svg",
+        "suit-P53": "i/icons/diamonds.svg",
+        "redOrBlack": "red",
+        "suit": 2,
+        "order": 24,
+        "sortDefault": 24
+      },
+      "D 03": {
+        "rank": "9",
+        "suitImage": "i/icons/diamonds.svg",
+        "suitColor": "#e50932",
+        "suit-P11": "i/icons/diamonds.svg",
+        "suit-P13": "i/icons/diamonds.svg",
+        "suit-P32": "i/icons/diamonds.svg",
+        "suit-P51": "i/icons/diamonds.svg",
+        "suit-P53": "i/icons/diamonds.svg",
+        "suit-S21": "i/icons/diamonds.svg",
+        "suit-S23": "i/icons/diamonds.svg",
+        "suit-S31": "i/icons/diamonds.svg",
+        "suit-S33": "i/icons/diamonds.svg",
+        "redOrBlack": "red",
+        "suit": 2,
+        "order": 23,
+        "sortDefault": 23
+      },
+      "D 04": {
+        "rank": "10",
+        "suitImage": "i/icons/diamonds.svg",
+        "suitColor": "#e50932",
+        "suit-P11": "i/icons/diamonds.svg",
+        "suit-P13": "i/icons/diamonds.svg",
+        "suit-P51": "i/icons/diamonds.svg",
+        "suit-P53": "i/icons/diamonds.svg",
+        "suit-S12": "i/icons/diamonds.svg",
+        "suit-S21": "i/icons/diamonds.svg",
+        "suit-S23": "i/icons/diamonds.svg",
+        "suit-S31": "i/icons/diamonds.svg",
+        "suit-S33": "i/icons/diamonds.svg",
+        "suit-S42": "i/icons/diamonds.svg",
+        "redOrBlack": "red",
+        "suit": 2,
+        "order": 22,
+        "sortDefault": 22
+      },
+      "D 05": {
+        "rank": "J",
+        "suitImage": "i/icons/diamonds.svg",
+        "rankImage": "/assets/-696466837_31225",
+        "suitColor": "#e50932",
+        "redOrBlack": "red",
+        "suit": 2,
+        "order": 21,
+        "sortDefault": 21
+      },
+      "D 06": {
+        "rank": "K",
+        "suitImage": "i/icons/diamonds.svg",
+        "rankImage": "/assets/-862690059_30988",
+        "suitColor": "#e50932",
+        "redOrBlack": "red",
+        "suit": 2,
+        "order": 20,
+        "sortDefault": 20
+      },
+      "D 07": {
+        "rank": "A",
+        "suitImage": "i/icons/diamonds.svg",
+        "rankImage": "i/icons/diamonds.svg",
+        "suitColor": "#e50932",
+        "redOrBlack": "red",
+        "suit": 2,
+        "order": 19,
+        "sortDefault": 19
+      },
+      "D 08": {
+        "rank": "Q",
+        "suitImage": "i/icons/diamonds.svg",
+        "rankImage": "/assets/-132931377_41422",
+        "suitColor": "#e50932",
+        "redOrBlack": "red",
+        "suit": 2,
+        "order": 18,
+        "sortDefault": 18,
+        "valueColor": "gold",
+        "dotMark": "..\n."
+      },
+      "S 01": {
+        "rank": "8",
+        "suitImage": "i/icons/spades.svg",
+        "suit-P11": "i/icons/spades.svg",
+        "suit-P13": "i/icons/spades.svg",
+        "suit-P22": "i/icons/spades.svg",
+        "suit-P31": "i/icons/spades.svg",
+        "suit-P33": "i/icons/spades.svg",
+        "suit-P42": "i/icons/spades.svg",
+        "suit-P51": "i/icons/spades.svg",
+        "suit-P53": "i/icons/spades.svg",
+        "redOrBlack": "black",
+        "suit": 3,
+        "order": 32,
+        "sortDefault": 32
+      },
+      "S 02": {
+        "rank": "9",
+        "suitImage": "i/icons/spades.svg",
+        "suit-P11": "i/icons/spades.svg",
+        "suit-P13": "i/icons/spades.svg",
+        "suit-P32": "i/icons/spades.svg",
+        "suit-P51": "i/icons/spades.svg",
+        "suit-P53": "i/icons/spades.svg",
+        "suit-S21": "i/icons/spades.svg",
+        "suit-S23": "i/icons/spades.svg",
+        "suit-S31": "i/icons/spades.svg",
+        "suit-S33": "i/icons/spades.svg",
+        "redOrBlack": "black",
+        "suit": 3,
+        "order": 31,
+        "sortDefault": 31
+      },
+      "S 03": {
+        "rank": "10",
+        "suitImage": "i/icons/spades.svg",
+        "suit-P11": "i/icons/spades.svg",
+        "suit-P13": "i/icons/spades.svg",
+        "suit-P51": "i/icons/spades.svg",
+        "suit-P53": "i/icons/spades.svg",
+        "suit-S12": "i/icons/spades.svg",
+        "suit-S21": "i/icons/spades.svg",
+        "suit-S23": "i/icons/spades.svg",
+        "suit-S31": "i/icons/spades.svg",
+        "suit-S33": "i/icons/spades.svg",
+        "suit-S42": "i/icons/spades.svg",
+        "redOrBlack": "black",
+        "suit": 3,
+        "order": 30,
+        "sortDefault": 30
+      },
+      "S 04": {
+        "rank": "J",
+        "rankImage": "/assets/2115758924_42014",
+        "suitImage": "i/icons/spades.svg",
+        "redOrBlack": "black",
+        "suit": 3,
+        "order": 29,
+        "sortDefault": 29
+      },
+      "S 05": {
+        "rank": "Q",
+        "rankImage": "/assets/1085111785_36695",
+        "suitImage": "i/icons/spades.svg",
+        "redOrBlack": "black",
+        "suit": 3,
+        "order": 28,
+        "sortDefault": 28
+      },
+      "S 06": {
+        "rank": "K",
+        "rankImage": "/assets/-1882019559_61400",
+        "suitImage": "i/icons/spades.svg",
+        "redOrBlack": "black",
+        "suit": 3,
+        "order": 27,
+        "sortDefault": 27
+      },
+      "S 07": {
+        "rank": "A",
+        "rankImage": "i/icons/spades.svg",
+        "suitImage": "i/icons/spades.svg",
+        "redOrBlack": "black",
+        "suit": 3,
+        "order": 26,
+        "sortDefault": 26
+      },
+      "H 01": {
+        "rank": "7",
+        "suitImage": "i/icons/hearts.svg",
+        "suitColor": "#e50932",
+        "suit-P11": "i/icons/hearts.svg",
+        "suit-P13": "i/icons/hearts.svg",
+        "suit-P22": "i/icons/hearts.svg",
+        "suit-P31": "i/icons/hearts.svg",
+        "suit-P33": "i/icons/hearts.svg",
+        "suit-P51": "i/icons/hearts.svg",
+        "suit-P53": "i/icons/hearts.svg",
+        "redOrBlack": "red",
+        "suit": 4,
+        "order": 17,
+        "sortDefault": 17
+      },
+      "H 02": {
+        "rank": "8",
+        "suitImage": "i/icons/hearts.svg",
+        "suitColor": "#e50932",
+        "suit-P11": "i/icons/hearts.svg",
+        "suit-P13": "i/icons/hearts.svg",
+        "suit-P22": "i/icons/hearts.svg",
+        "suit-P31": "i/icons/hearts.svg",
+        "suit-P33": "i/icons/hearts.svg",
+        "suit-P42": "i/icons/hearts.svg",
+        "suit-P51": "i/icons/hearts.svg",
+        "suit-P53": "i/icons/hearts.svg",
+        "redOrBlack": "red",
+        "suit": 4,
+        "order": 16,
+        "sortDefault": 16
+      },
+      "H 03": {
+        "rank": "9",
+        "suitImage": "i/icons/hearts.svg",
+        "suitColor": "#e50932",
+        "suit-P11": "i/icons/hearts.svg",
+        "suit-P13": "i/icons/hearts.svg",
+        "suit-P32": "i/icons/hearts.svg",
+        "suit-P51": "i/icons/hearts.svg",
+        "suit-P53": "i/icons/hearts.svg",
+        "suit-S21": "i/icons/hearts.svg",
+        "suit-S23": "i/icons/hearts.svg",
+        "suit-S31": "i/icons/hearts.svg",
+        "suit-S33": "i/icons/hearts.svg",
+        "redOrBlack": "red",
+        "suit": 4,
+        "order": 15,
+        "sortDefault": 15
+      },
+      "H 04": {
+        "rank": "10",
+        "suitImage": "i/icons/hearts.svg",
+        "suitColor": "#e50932",
+        "suit-P11": "i/icons/hearts.svg",
+        "suit-P13": "i/icons/hearts.svg",
+        "suit-P51": "i/icons/hearts.svg",
+        "suit-P53": "i/icons/hearts.svg",
+        "suit-S12": "i/icons/hearts.svg",
+        "suit-S21": "i/icons/hearts.svg",
+        "suit-S23": "i/icons/hearts.svg",
+        "suit-S31": "i/icons/hearts.svg",
+        "suit-S33": "i/icons/hearts.svg",
+        "suit-S42": "i/icons/hearts.svg",
+        "redOrBlack": "red",
+        "suit": 4,
+        "order": 14,
+        "sortDefault": 14
+      },
+      "H 05": {
+        "rank": "J",
+        "suitImage": "i/icons/hearts.svg",
+        "rankImage": "/assets/-560751544_37381",
+        "suitColor": "#e50932",
+        "redOrBlack": "red",
+        "suit": 4,
+        "order": 13,
+        "sortDefault": 13
+      },
+      "H 06": {
+        "rank": "K",
+        "suitImage": "i/icons/hearts.svg",
+        "rankImage": "/assets/-511606639_49182",
+        "suitColor": "#e50932",
+        "redOrBlack": "red",
+        "suit": 4,
+        "order": 12,
+        "sortDefault": 12
+      },
+      "H 07": {
+        "rank": "A",
+        "suitImage": "i/icons/hearts.svg",
+        "rankImage": "i/icons/hearts.svg",
+        "suitColor": "#e50932",
+        "redOrBlack": "red",
+        "suit": 4,
+        "order": 11,
+        "sortDefault": 11
+      },
+      "H 08": {
+        "rank": "Q",
+        "suitImage": "i/icons/hearts.svg",
+        "rankImage": "/assets/-1553973424_45799",
+        "suitColor": "#e50932",
+        "redOrBlack": "red",
+        "suit": 4,
+        "order": 10,
+        "sortDefault": 10,
+        "valueColor": "gold",
+        "dotMark": "..\n.."
+      }
+    },
+    "faceTemplates": [
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 103,
+            "height": 160,
+            "color": "transparent",
+            "value": "/i/cards-default/2B.svg"
+          }
+        ]
+      },
+      {
+        "border": 1,
+        "radius": 6,
+        "objects": [
+          {
+            "type": "image",
+            "width": 103,
+            "height": 160,
+            "color": "white"
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 103,
+            "height": 160,
+            "dynamicProperties": {
+              "color": "valueColor"
+            }
+          },
+          {
+            "type": "image",
+            "x": 25,
+            "y": 25,
+            "width": 53,
+            "height": 110,
+            "color": "white",
+            "dynamicProperties": {
+              "value": "rankImage"
+            },
+            "svgReplaces": {
+              "currentColor": "suitColor"
+            },
+            "css": {
+              "background-size": "100% 100%"
+            }
+          },
+          {
+            "type": "text",
+            "x": 1,
+            "y": 40,
+            "fontSize": 40,
+            "textAlign": "center",
+            "width": 25,
+            "dynamicProperties": {
+              "value": "dotMark",
+              "color": "suitColor"
+            },
+            "css": {
+              "line-height": "10px"
+            }
+          },
+          {
+            "type": "text",
+            "x": 77,
+            "y": 100,
+            "fontSize": 40,
+            "textAlign": "center",
+            "width": 25,
+            "dynamicProperties": {
+              "value": "dotMark",
+              "color": "suitColor"
+            },
+            "rotation": 180,
+            "css": {
+              "line-height": "10px"
+            }
+          },
+          {
+            "type": "text",
+            "x": -3,
+            "y": -2,
+            "fontSize": 30,
+            "textAlign": "center",
+            "width": 25,
+            "dynamicProperties": {
+              "value": "rank",
+              "color": "suitColor"
+            },
+            "css": {
+              "letter-spacing": "-6px"
+            }
+          },
+          {
+            "type": "text",
+            "x": -3,
+            "y": 25,
+            "fontSize": 30,
+            "textAlign": "center",
+            "width": 25,
+            "dynamicProperties": {
+              "value": "deck2Mark",
+              "color": "suitColor"
+            },
+            "css": {
+              "letter-spacing": "-6px"
+            }
+          },
+          {
+            "type": "text",
+            "x": 81,
+            "y": 127,
+            "fontSize": 30,
+            "textAlign": "center",
+            "width": 25,
+            "dynamicProperties": {
+              "value": "rank",
+              "color": "suitColor"
+            },
+            "rotation": 180,
+            "css": {
+              "letter-spacing": "-6px"
+            }
+          },
+          {
+            "type": "text",
+            "x": 81,
+            "y": 100,
+            "fontSize": 30,
+            "textAlign": "center",
+            "width": 25,
+            "dynamicProperties": {
+              "value": "deck2Mark",
+              "color": "suitColor"
+            },
+            "rotation": 180,
+            "css": {
+              "letter-spacing": "-6px"
+            }
+          },
+          {
+            "type": "image",
+            "x": 1,
+            "y": 28,
+            "width": 23,
+            "height": 23,
+            "color": "transparent",
+            "svgReplaces": {
+              "currentColor": "suitColor"
+            },
+            "dynamicProperties": {
+              "value": "suitImage"
+            }
+          },
+          {
+            "type": "image",
+            "x": 79,
+            "y": 110,
+            "width": 23,
+            "height": 23,
+            "color": "transparent",
+            "svgReplaces": {
+              "currentColor": "suitColor"
+            },
+            "dynamicProperties": {
+              "value": "suitImage"
+            },
+            "rotation": 180
+          },
+          {
+            "type": "image",
+            "x": 25,
+            "y": 25,
+            "width": 16,
+            "height": 16,
+            "color": "transparent",
+            "svgReplaces": {
+              "currentColor": "suitColor"
+            },
+            "dynamicProperties": {
+              "value": "suit-P11"
+            }
+          },
+          {
+            "type": "image",
+            "x": 43.5,
+            "y": 25,
+            "width": 16,
+            "height": 16,
+            "color": "transparent",
+            "svgReplaces": {
+              "currentColor": "suitColor"
+            },
+            "dynamicProperties": {
+              "value": "suit-P12"
+            }
+          },
+          {
+            "type": "image",
+            "x": 62,
+            "y": 25,
+            "width": 16,
+            "height": 16,
+            "color": "transparent",
+            "svgReplaces": {
+              "currentColor": "suitColor"
+            },
+            "dynamicProperties": {
+              "value": "suit-P13"
+            }
+          },
+          {
+            "type": "image",
+            "x": 25,
+            "y": 48.5,
+            "width": 16,
+            "height": 16,
+            "color": "transparent",
+            "svgReplaces": {
+              "currentColor": "suitColor"
+            },
+            "dynamicProperties": {
+              "value": "suit-P21"
+            }
+          },
+          {
+            "type": "image",
+            "x": 43.5,
+            "y": 48.5,
+            "width": 16,
+            "height": 16,
+            "color": "transparent",
+            "svgReplaces": {
+              "currentColor": "suitColor"
+            },
+            "dynamicProperties": {
+              "value": "suit-P22"
+            }
+          },
+          {
+            "type": "image",
+            "x": 62,
+            "y": 48.5,
+            "width": 16,
+            "height": 16,
+            "color": "transparent",
+            "svgReplaces": {
+              "currentColor": "suitColor"
+            },
+            "dynamicProperties": {
+              "value": "suit-P23"
+            }
+          },
+          {
+            "type": "image",
+            "x": 25,
+            "y": 72,
+            "width": 16,
+            "height": 16,
+            "color": "transparent",
+            "svgReplaces": {
+              "currentColor": "suitColor"
+            },
+            "dynamicProperties": {
+              "value": "suit-P31"
+            }
+          },
+          {
+            "type": "image",
+            "x": 43.5,
+            "y": 72,
+            "width": 16,
+            "height": 16,
+            "color": "transparent",
+            "svgReplaces": {
+              "currentColor": "suitColor"
+            },
+            "dynamicProperties": {
+              "value": "suit-P32"
+            }
+          },
+          {
+            "type": "image",
+            "x": 62,
+            "y": 72,
+            "width": 16,
+            "height": 16,
+            "color": "transparent",
+            "svgReplaces": {
+              "currentColor": "suitColor"
+            },
+            "dynamicProperties": {
+              "value": "suit-P33"
+            }
+          },
+          {
+            "type": "image",
+            "x": 25,
+            "y": 95.5,
+            "width": 16,
+            "height": 16,
+            "color": "transparent",
+            "svgReplaces": {
+              "currentColor": "suitColor"
+            },
+            "dynamicProperties": {
+              "value": "suit-P41"
+            }
+          },
+          {
+            "type": "image",
+            "x": 43.5,
+            "y": 95.5,
+            "width": 16,
+            "height": 16,
+            "color": "transparent",
+            "svgReplaces": {
+              "currentColor": "suitColor"
+            },
+            "dynamicProperties": {
+              "value": "suit-P42"
+            }
+          },
+          {
+            "type": "image",
+            "x": 62,
+            "y": 95.5,
+            "width": 16,
+            "height": 16,
+            "color": "transparent",
+            "svgReplaces": {
+              "currentColor": "suitColor"
+            },
+            "dynamicProperties": {
+              "value": "suit-P43"
+            }
+          },
+          {
+            "type": "image",
+            "x": 25,
+            "y": 119,
+            "width": 16,
+            "height": 16,
+            "color": "transparent",
+            "svgReplaces": {
+              "currentColor": "suitColor"
+            },
+            "dynamicProperties": {
+              "value": "suit-P51"
+            }
+          },
+          {
+            "type": "image",
+            "x": 43.5,
+            "y": 119,
+            "width": 16,
+            "height": 16,
+            "color": "transparent",
+            "svgReplaces": {
+              "currentColor": "suitColor"
+            },
+            "dynamicProperties": {
+              "value": "suit-P52"
+            }
+          },
+          {
+            "type": "image",
+            "x": 62,
+            "y": 119,
+            "width": 16,
+            "height": 16,
+            "color": "transparent",
+            "svgReplaces": {
+              "currentColor": "suitColor"
+            },
+            "dynamicProperties": {
+              "value": "suit-P53"
+            }
+          },
+          {
+            "type": "image",
+            "x": 25,
+            "y": 40.6,
+            "width": 16,
+            "height": 16,
+            "color": "transparent",
+            "svgReplaces": {
+              "currentColor": "suitColor"
+            },
+            "dynamicProperties": {
+              "value": "suit-S11"
+            }
+          },
+          {
+            "type": "image",
+            "x": 43.5,
+            "y": 40.6,
+            "width": 16,
+            "height": 16,
+            "color": "transparent",
+            "svgReplaces": {
+              "currentColor": "suitColor"
+            },
+            "dynamicProperties": {
+              "value": "suit-S12"
+            }
+          },
+          {
+            "type": "image",
+            "x": 62,
+            "y": 40.6,
+            "width": 16,
+            "height": 16,
+            "color": "transparent",
+            "svgReplaces": {
+              "currentColor": "suitColor"
+            },
+            "dynamicProperties": {
+              "value": "suit-S13"
+            }
+          },
+          {
+            "type": "image",
+            "x": 25,
+            "y": 56.3,
+            "width": 16,
+            "height": 16,
+            "color": "transparent",
+            "svgReplaces": {
+              "currentColor": "suitColor"
+            },
+            "dynamicProperties": {
+              "value": "suit-S21"
+            }
+          },
+          {
+            "type": "image",
+            "x": 43.5,
+            "y": 56.3,
+            "width": 16,
+            "height": 16,
+            "color": "transparent",
+            "svgReplaces": {
+              "currentColor": "suitColor"
+            },
+            "dynamicProperties": {
+              "value": "suit-S22"
+            }
+          },
+          {
+            "type": "image",
+            "x": 62,
+            "y": 56.3,
+            "width": 16,
+            "height": 16,
+            "color": "transparent",
+            "svgReplaces": {
+              "currentColor": "suitColor"
+            },
+            "dynamicProperties": {
+              "value": "suit-S23"
+            }
+          },
+          {
+            "type": "image",
+            "x": 25,
+            "y": 87.7,
+            "width": 16,
+            "height": 16,
+            "color": "transparent",
+            "svgReplaces": {
+              "currentColor": "suitColor"
+            },
+            "dynamicProperties": {
+              "value": "suit-S31"
+            }
+          },
+          {
+            "type": "image",
+            "x": 43.5,
+            "y": 87.7,
+            "width": 16,
+            "height": 16,
+            "color": "transparent",
+            "svgReplaces": {
+              "currentColor": "suitColor"
+            },
+            "dynamicProperties": {
+              "value": "suit-S32"
+            }
+          },
+          {
+            "type": "image",
+            "x": 62,
+            "y": 87.7,
+            "width": 16,
+            "height": 16,
+            "color": "transparent",
+            "svgReplaces": {
+              "currentColor": "suitColor"
+            },
+            "dynamicProperties": {
+              "value": "suit-S33"
+            }
+          },
+          {
+            "type": "image",
+            "x": 25,
+            "y": 103.3,
+            "width": 16,
+            "height": 16,
+            "color": "transparent",
+            "svgReplaces": {
+              "currentColor": "suitColor"
+            },
+            "dynamicProperties": {
+              "value": "suit-S41"
+            }
+          },
+          {
+            "type": "image",
+            "x": 43.5,
+            "y": 103.3,
+            "width": 16,
+            "height": 16,
+            "color": "transparent",
+            "svgReplaces": {
+              "currentColor": "suitColor"
+            },
+            "dynamicProperties": {
+              "value": "suit-S42"
+            }
+          },
+          {
+            "type": "image",
+            "x": 62,
+            "y": 103.3,
+            "width": 16,
+            "height": 16,
+            "color": "transparent",
+            "svgReplaces": {
+              "currentColor": "suitColor"
+            },
+            "dynamicProperties": {
+              "value": "suit-S43"
+            }
+          }
+        ]
+      }
+    ],
+    "inheritFrom": {
+      "deck1": [
+        "cardDefaults"
+      ]
+    },
+    "deckType": 8,
+    "staged": false
   }
 }
