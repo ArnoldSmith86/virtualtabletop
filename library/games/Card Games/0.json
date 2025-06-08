@@ -5795,7 +5795,7 @@
       "x": 780,
       "y": 370
     },
-    "z": 80258,
+    "z": 81016,
     "customFaceCount": 6,
     "deckSuitsColor": "",
     "layer": -1
@@ -14010,11 +14010,7 @@
     "sort2": "suit",
     "text": "Schieber Jass",
     "roundsTemp": [
-      "Card Points",
-      "Weis",
-      "Stock",
-      "All Tricks",
-      "Multiplier"
+      "Card Points"
     ],
     "settingsArray": [
       [
@@ -14116,7 +14112,7 @@
       ]
     ],
     "gameID": true,
-    "hintText": "\"Declare contract using bid widgets or Message button. \\a\\a When appropriate, record Weis and Stock in the small scoreboard using the scrollbar to highlight the row and press the red/green +/- buttons.\\a\\a After round ends, press Add Card Points button. Five points are automatically added to winner of last trick. The All Tricks bonus is calculated automatically. The multiplier is calculated automatically based on the Activity Log.\\a\\a Press Transfer Score button. Sum of scores is multiplied by the contract multiplier and transferred to the main scoreboard.\\a\\a End of game scoring when both teams are nearing the final score must be determined manually. If using the Add Card Points button to assist, remember that 5 points are always added to the last player pressing the Take button, if if that is not the last trick of the round.\"",
+    "hintText": "\"Declare contract using bid widgets or Message button. \\a\\a When appropriate, record Weis and Stock in the small scoreboard using the scrollbar to highlight the row and press the red/green +/- buttons.\\a\\a After round ends, press Add Card Points button. Five points are automatically added to winner of last trick. The All Tricks bonus is calculated automatically. The multiplier is calculated automatically based on the Activity Log.\\a\\a Press Transfer Score button. Sum of scores is multiplied by the contract multiplier and transferred to the main scoreboard.\\a\\a End of game scoring when both teams are nearing the final score must be determined manually. If using the Add Card Points button to assist, remember that 5 points are always added to the last player pressing the Take button, if if that is not the last trick of the round.\\a\\aFor tournament, 12hands, no weiss/stock, no match\"",
     "trumpIndicator": true,
     "sortExceptionsRoutine": [
       "var trump = ${PROPERTY trump OF trump}",
@@ -14220,7 +14216,7 @@
         "func": "IF",
         "condition": "${red}",
         "thenRoutine": [
-          "var multiplier = 2"
+          "var multiplier = 1"
         ]
       },
       {
@@ -14228,7 +14224,7 @@
         "operand1": "${contract}",
         "operand2": "Obenabe",
         "thenRoutine": [
-          "var multiplier = 3"
+          "var multiplier = 1"
         ]
       },
       {
@@ -14236,7 +14232,7 @@
         "operand1": "${contract}",
         "operand2": "Undenufe",
         "thenRoutine": [
-          "var multiplier = 4"
+          "var multiplier = 1"
         ]
       },
       {
@@ -14244,7 +14240,7 @@
         "operand1": "${contract}",
         "operand2": "Slalom",
         "thenRoutine": [
-          "var multiplier = 4"
+          "var multiplier = 1"
         ]
       },
       {
@@ -14330,27 +14326,27 @@
       "Diamonds": [
         "Diamonds <img src='/i/noto-emoji/emoji_u2666.svg' height=18/>",
         "#fcf2c7",
-        "x2"
+        "x1"
       ],
       "Hearts": [
         "Hearts <img src='/i/noto-emoji/emoji_u2665.svg' height=18/>",
         "#fcf2c7",
-        "x2"
+        "x1"
       ],
       "Obenabe": [
         "Obenabe",
         "#e3e9fc",
-        "No trumps\\ax3"
+        "No trumps\\ax1"
       ],
       "Undenufe": [
         "Undenufe",
         "#e3e9fc",
-        "No trumps\\aRank inverted\\ax4"
+        "No trumps\\aRank inverted\\ax1"
       ],
       "Slalom": [
         "Slalom",
         "#e3e9fc",
-        "No trumps\\a Alternate O & U rank\\ax4"
+        "No trumps\\a Alternate O & U rank\\ax1"
       ]
     },
     "contractChoiceRoutine": [
@@ -14451,6 +14447,468 @@
             ]
           }
         ]
+      }
+    ],
+    "version1": {
+      "contractArray": {
+        "Spades": [
+          "Spades <img src='/i/noto-emoji/emoji_u2660.svg' height=18 />",
+          "#e3f0d6",
+          "x1"
+        ],
+        "Clubs": [
+          "Clubs <img src='/i/noto-emoji/emoji_u2663.svg' height=18/>",
+          "#e3f0d6",
+          "x1"
+        ],
+        "Diamonds": [
+          "Diamonds <img src='/i/noto-emoji/emoji_u2666.svg' height=18/>",
+          "#fcf2c7",
+          "x2"
+        ],
+        "Hearts": [
+          "Hearts <img src='/i/noto-emoji/emoji_u2665.svg' height=18/>",
+          "#fcf2c7",
+          "x2"
+        ],
+        "Obenabe": [
+          "Obenabe",
+          "#e3e9fc",
+          "No trumps\\ax3"
+        ],
+        "Undenufe": [
+          "Undenufe",
+          "#e3e9fc",
+          "No trumps\\aRank inverted\\ax4"
+        ],
+        "Slalom": [
+          "Slalom",
+          "#e3e9fc",
+          "No trumps\\a Alternate O & U rank\\ax4"
+        ]
+      },
+      "roundsTemp": [
+        "Card Points",
+        "Weis",
+        "Stock",
+        "All Tricks",
+        "Multiplier"
+      ],
+      "contractChoiceRoutine": [
+        "var contractType = ${PROPERTY auctionType OF contractType}",
+        "var isIn = ${contractType} in ${PROPERTY noTrumpBids}",
+        {
+          "func": "IF",
+          "condition": "${isIn}",
+          "thenRoutine": [
+            {
+              "func": "SET",
+              "collection": [
+                "trump"
+              ],
+              "property": "customFace",
+              "value": 5
+            }
+          ],
+          "elseRoutine": [
+            {
+              "func": "IF",
+              "operand1": "${contractType}",
+              "operand2": "Spades",
+              "thenRoutine": [
+                {
+                  "func": "SET",
+                  "collection": [
+                    "trump"
+                  ],
+                  "property": "customFace",
+                  "value": 3
+                }
+              ]
+            },
+            {
+              "func": "IF",
+              "operand1": "${contractType}",
+              "operand2": "Clubs",
+              "thenRoutine": [
+                {
+                  "func": "SET",
+                  "collection": [
+                    "trump"
+                  ],
+                  "property": "customFace",
+                  "value": 1
+                }
+              ]
+            },
+            {
+              "func": "IF",
+              "operand1": "${contractType}",
+              "operand2": "Diamonds",
+              "thenRoutine": [
+                {
+                  "func": "SET",
+                  "collection": [
+                    "trump"
+                  ],
+                  "property": "customFace",
+                  "value": 2
+                }
+              ]
+            },
+            {
+              "func": "IF",
+              "operand1": "${contractType}",
+              "operand2": "Hearts",
+              "thenRoutine": [
+                {
+                  "func": "SET",
+                  "collection": [
+                    "trump"
+                  ],
+                  "property": "customFace",
+                  "value": 4
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "scoreExceptionsRoutine": [
+        "// Add 5 points to player taking last trick",
+        "var result = ${points}",
+        "var last = ${PROPERTY lastPressedBy OF takeButton}",
+        {
+          "func": "IF",
+          "operand1": "${value}",
+          "operand2": "${last}",
+          "thenRoutine": [
+            "var result = ${result} + 5"
+          ]
+        },
+        "// Add 100 points to team that takes all 9 tricks",
+        "var tricksS = parseFloat ${PROPERTY tricks OF seat1}",
+        "var tricksW = parseFloat ${PROPERTY tricks OF seat3}",
+        "var tricksN = parseFloat ${PROPERTY tricks OF seat5}",
+        "var tricksE = parseFloat ${PROPERTY tricks OF seat5}",
+        "var allNS = ${tricksS} + ${tricksN}",
+        "var allEW = ${tricksE} + ${tricksW}",
+        "var allNS = ${allNS} == 9",
+        "var allEW = ${allEW} == 9",
+        {
+          "func": "IF",
+          "condition": "${allNS}",
+          "thenRoutine": [
+            {
+              "func": "SCORE",
+              "mode": "set",
+              "property": "tempScore",
+              "round": 4,
+              "seats": "seat1",
+              "value": "100"
+            }
+          ],
+          "elseRoutine": [
+            {
+              "func": "IF",
+              "condition": "${allEW}",
+              "thenRoutine": [
+                {
+                  "func": "SCORE",
+                  "mode": "set",
+                  "property": "tempScore",
+                  "round": 4,
+                  "seats": "seat3",
+                  "value": "100"
+                }
+              ]
+            }
+          ]
+        },
+        "\\ Show contract multiplier",
+        "var multiplier = 1",
+        "var contract = ${PROPERTY auctionType OF contractType}",
+        "var hearts = ${contract} == 'Hearts'",
+        "var diamonds = ${contract} == 'Diamonds'",
+        "var red = ${hearts} || ${diamonds}",
+        {
+          "func": "IF",
+          "condition": "${red}",
+          "thenRoutine": [
+            "var multiplier = 2"
+          ]
+        },
+        {
+          "func": "IF",
+          "operand1": "${contract}",
+          "operand2": "Obenabe",
+          "thenRoutine": [
+            "var multiplier = 3"
+          ]
+        },
+        {
+          "func": "IF",
+          "operand1": "${contract}",
+          "operand2": "Undenufe",
+          "thenRoutine": [
+            "var multiplier = 4"
+          ]
+        },
+        {
+          "func": "IF",
+          "operand1": "${contract}",
+          "operand2": "Slalom",
+          "thenRoutine": [
+            "var multiplier = 4"
+          ]
+        },
+        {
+          "func": "SCORE",
+          "mode": "set",
+          "property": "tempScore",
+          "round": 5,
+          "seats": [
+            "seat1",
+            "seat3"
+          ],
+          "value": "${multiplier}"
+        }
+      ]
+    },
+    "version2": {
+      "contractArray": {
+        "Spades": [
+          "Spades <img src='/i/noto-emoji/emoji_u2660.svg' height=18 />",
+          "#e3f0d6",
+          "x1"
+        ],
+        "Clubs": [
+          "Clubs <img src='/i/noto-emoji/emoji_u2663.svg' height=18/>",
+          "#e3f0d6",
+          "x1"
+        ],
+        "Diamonds": [
+          "Diamonds <img src='/i/noto-emoji/emoji_u2666.svg' height=18/>",
+          "#fcf2c7",
+          "x1"
+        ],
+        "Hearts": [
+          "Hearts <img src='/i/noto-emoji/emoji_u2665.svg' height=18/>",
+          "#fcf2c7",
+          "x1"
+        ],
+        "Obenabe": [
+          "Obenabe",
+          "#e3e9fc",
+          "No trumps\\ax1"
+        ],
+        "Undenufe": [
+          "Undenufe",
+          "#e3e9fc",
+          "No trumps\\aRank inverted\\ax1"
+        ],
+        "Slalom": [
+          "Slalom",
+          "#e3e9fc",
+          "No trumps\\a Alternate O & U rank\\ax1"
+        ]
+      },
+      "roundsTemp": [
+        "Card Points"
+      ],
+      "contractChoiceRoutine": [
+        "var contractType = ${PROPERTY auctionType OF contractType}",
+        "var isIn = ${contractType} in ${PROPERTY noTrumpBids}",
+        {
+          "func": "IF",
+          "condition": "${isIn}",
+          "thenRoutine": [
+            {
+              "func": "SET",
+              "collection": [
+                "trump"
+              ],
+              "property": "customFace",
+              "value": 5
+            }
+          ],
+          "elseRoutine": [
+            {
+              "func": "IF",
+              "operand1": "${contractType}",
+              "operand2": "Spades",
+              "thenRoutine": [
+                {
+                  "func": "SET",
+                  "collection": [
+                    "trump"
+                  ],
+                  "property": "customFace",
+                  "value": 3
+                }
+              ]
+            },
+            {
+              "func": "IF",
+              "operand1": "${contractType}",
+              "operand2": "Clubs",
+              "thenRoutine": [
+                {
+                  "func": "SET",
+                  "collection": [
+                    "trump"
+                  ],
+                  "property": "customFace",
+                  "value": 1
+                }
+              ]
+            },
+            {
+              "func": "IF",
+              "operand1": "${contractType}",
+              "operand2": "Diamonds",
+              "thenRoutine": [
+                {
+                  "func": "SET",
+                  "collection": [
+                    "trump"
+                  ],
+                  "property": "customFace",
+                  "value": 2
+                }
+              ]
+            },
+            {
+              "func": "IF",
+              "operand1": "${contractType}",
+              "operand2": "Hearts",
+              "thenRoutine": [
+                {
+                  "func": "SET",
+                  "collection": [
+                    "trump"
+                  ],
+                  "property": "customFace",
+                  "value": 4
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "scoreExceptionsRoutine": [
+        "// Add 5 points to player taking last trick",
+        "var result = ${points}",
+        "var last = ${PROPERTY lastPressedBy OF takeButton}",
+        {
+          "func": "IF",
+          "operand1": "${value}",
+          "operand2": "${last}",
+          "thenRoutine": [
+            "var result = ${result} + 5"
+          ]
+        },
+        "// Add 100 points to team that takes all 9 tricks",
+        "var tricksS = parseFloat ${PROPERTY tricks OF seat1}",
+        "var tricksW = parseFloat ${PROPERTY tricks OF seat3}",
+        "var tricksN = parseFloat ${PROPERTY tricks OF seat5}",
+        "var tricksE = parseFloat ${PROPERTY tricks OF seat5}",
+        "var allNS = ${tricksS} + ${tricksN}",
+        "var allEW = ${tricksE} + ${tricksW}",
+        "var allNS = ${allNS} == 9",
+        "var allEW = ${allEW} == 9",
+        {
+          "func": "IF",
+          "condition": "${allNS}",
+          "thenRoutine": [
+            {
+              "func": "SCORE",
+              "mode": "set",
+              "property": "tempScore",
+              "round": 4,
+              "seats": "seat1",
+              "value": "100"
+            }
+          ],
+          "elseRoutine": [
+            {
+              "func": "IF",
+              "condition": "${allEW}",
+              "thenRoutine": [
+                {
+                  "func": "SCORE",
+                  "mode": "set",
+                  "property": "tempScore",
+                  "round": 4,
+                  "seats": "seat3",
+                  "value": "100"
+                }
+              ]
+            }
+          ]
+        },
+        "\\ Show contract multiplier",
+        "var multiplier = 1",
+        "var contract = ${PROPERTY auctionType OF contractType}",
+        "var hearts = ${contract} == 'Hearts'",
+        "var diamonds = ${contract} == 'Diamonds'",
+        "var red = ${hearts} || ${diamonds}",
+        {
+          "func": "IF",
+          "condition": "${red}",
+          "thenRoutine": [
+            "var multiplier = 1"
+          ]
+        },
+        {
+          "func": "IF",
+          "operand1": "${contract}",
+          "operand2": "Obenabe",
+          "thenRoutine": [
+            "var multiplier = 1"
+          ]
+        },
+        {
+          "func": "IF",
+          "operand1": "${contract}",
+          "operand2": "Undenufe",
+          "thenRoutine": [
+            "var multiplier = 1"
+          ]
+        },
+        {
+          "func": "IF",
+          "operand1": "${contract}",
+          "operand2": "Slalom",
+          "thenRoutine": [
+            "var multiplier = 1"
+          ]
+        },
+        {
+          "func": "SCORE",
+          "mode": "set",
+          "property": "tempScore",
+          "round": 5,
+          "seats": [
+            "seat1",
+            "seat3"
+          ],
+          "value": "${multiplier}"
+        }
+      ]
+    },
+    "versionArray": [
+      {
+        "value": "0",
+        "text": "Click here to choose version"
+      },
+      {
+        "value": "1",
+        "text": "Regular"
+      },
+      {
+        "value": "2",
+        "text": "Tournament"
       }
     ]
   },
@@ -22646,7 +23104,7 @@
       }
     ],
     "movableInEdit": false,
-    "versionNumber": "0",
+    "versionNumber": "2",
     "scale": 0
   },
   "cloneButton": {
@@ -39760,7 +40218,7 @@
     "width": 110,
     "height": 20,
     "borderRadius": 4,
-    "z": 3,
+    "z": 4,
     "movable": false,
     "movableInEdit": false,
     "css": {
@@ -39957,7 +40415,7 @@
     ],
     "teamButton": 9,
     "html": "Contract Type",
-    "x": 224
+    "x": 336
   },
   "teamsAndContracts": {
     "type": "holder",
@@ -40136,12 +40594,12 @@
       "teamButton2": "!parent"
     },
     "id": "teamButton3",
-    "x": 336,
+    "x": 224,
     "y": 0,
     "text": "Seperate",
     "bgColor": "#ffffff",
     "teamButton": 3,
-    "z": 4,
+    "z": 3,
     "parent": "teamsAndContractsOff"
   },
   "teamList3": {
@@ -40303,7 +40761,7 @@
       "mode": "vs",
       "time": "5-60",
       "attribution": "The room and most game elements and mechanics are by LawDawg96 and are released into the Public Domain under CC0.<div><br></div><div>Additional contributions to game pre-sets and player aids&nbsp;<span style=\"color: var(--overlayFontColor);\">released into the Public Domain under CC0&nbsp;</span><span style=\"color: var(--overlayFontColor);\">by anewcar, jade-alarm, jkandell, and Shobu.</span></div><div><div><br></div><div>Player Aids:</div><div><div><ul><li>Doppelkopf by jkandell</li><li>Königrufen by jkandell<br></li><li>Felõs by Shobu</li><li>Israeli Whist by jkandell</li><li>Color Whist by jkandell</li></ul><div>Decks and Cards</div></div></div><div><ul><li>Crow</li><ul><li>Card design by LawDawg96 and released to the Public Domain under CC0.</li><li>Ally/friend icon used in Auction pre-set by Random Panda and available under CC BY 3.0 at https://thenounproject.com/icon/friend-96006/</li></ul></ul><div><div>Items (CC BY 3.0):</div><div><ul><li>Caro Asercion</li><ul><li>Fox, https://game-icons.net/1x1/caro-asercion/fox.html</li></ul><li>Delapouite</li><ul><li>Barrel,&nbsp;https://game-icons.net/1x1/delapouite/barrel.html</li><li>Lovers, https://game-icons.net/1x1/delapouite/lovers.html</li></ul><li>Lorc</li><ul><li>Screw, https://game-icons.net/1x1/lorc/screw.html</li></ul></ul></div></div></div></div>",
-      "lastUpdate": 1749340105670,
+      "lastUpdate": 1749341989328,
       "showName": true,
       "skill": "",
       "description": "This room can be used to play many types of card games. It is especially suited for trick taking and point-trick types of games.  It is highly customizable with many games available with pre-set configurations.\n\nv2.0.1",
