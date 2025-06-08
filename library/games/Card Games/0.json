@@ -40272,7 +40272,7 @@
     "width": 110,
     "height": 20,
     "borderRadius": 4,
-    "z": 4,
+    "z": 3,
     "movable": false,
     "movableInEdit": false,
     "css": {
@@ -40469,7 +40469,7 @@
     ],
     "teamButton": 9,
     "html": "Contract Type",
-    "x": 336
+    "x": 224
   },
   "teamsAndContracts": {
     "type": "holder",
@@ -40648,12 +40648,12 @@
       "teamButton2": "!parent"
     },
     "id": "teamButton3",
-    "x": 224,
+    "x": 336,
     "y": 0,
     "text": "Seperate",
     "bgColor": "#ffffff",
     "teamButton": 3,
-    "z": 3,
+    "z": 4,
     "parent": "teamsAndContractsOff"
   },
   "teamList3": {
@@ -40815,7 +40815,7 @@
       "mode": "vs",
       "time": "5-60",
       "attribution": "The room and most game elements and mechanics are by LawDawg96 and are released into the Public Domain under CC0.<div><br></div><div>Additional contributions to game pre-sets and player aids&nbsp;<span style=\"color: var(--overlayFontColor);\">released into the Public Domain under CC0&nbsp;</span><span style=\"color: var(--overlayFontColor);\">by anewcar, jade-alarm, jkandell, and Shobu.</span></div><div><div><br></div><div>Player Aids:</div><div><div><ul><li>Doppelkopf by jkandell</li><li>Königrufen by jkandell<br></li><li>Felõs by Shobu</li><li>Israeli Whist by jkandell</li><li>Color Whist by jkandell</li></ul><div>Decks and Cards</div></div></div><div><ul><li>Crow</li><ul><li>Card design by LawDawg96 and released to the Public Domain under CC0.</li><li>Ally/friend icon used in Auction pre-set by Random Panda and available under CC BY 3.0 at https://thenounproject.com/icon/friend-96006/</li></ul></ul><div><div>Items (CC BY 3.0):</div><div><ul><li>Caro Asercion</li><ul><li>Fox, https://game-icons.net/1x1/caro-asercion/fox.html</li></ul><li>Delapouite</li><ul><li>Barrel,&nbsp;https://game-icons.net/1x1/delapouite/barrel.html</li><li>Lovers, https://game-icons.net/1x1/delapouite/lovers.html</li></ul><li>Lorc</li><ul><li>Screw, https://game-icons.net/1x1/lorc/screw.html</li></ul></ul></div></div></div></div>",
-      "lastUpdate": 1749347456190,
+      "lastUpdate": 1749347971179,
       "showName": true,
       "skill": "",
       "description": "This room can be used to play many types of card games. It is especially suited for trick taking and point-trick types of games.  It is highly customizable with many games available with pre-set configurations.\n\nv2.0.1",
@@ -44126,5 +44126,209 @@
     "movable": false,
     "image": "/assets/81054462_33075",
     "scale": 0
+  },
+  "gameID49": {
+    "id": "gameID49",
+    "x": -88,
+    "y": -312,
+    "movable": false,
+    "css": {
+      "background": "blue",
+      "color": "white",
+      "font-size": "26px"
+    },
+    "text": "Schafkopf Palatinate (3P)",
+    "displayArray": [
+      [
+        "playerAidButton",
+        1
+      ],
+      [
+        "transferScoreButton",
+        0
+      ]
+    ],
+    "gameID": true,
+    "hintText": "\"Bid using square white bid widget and Message button.\\a\\a Set teams, once known, using the Declarer and Opponent buttons at the top of the screen.\\a\\a After round is over, press Add Card Points button.\"",
+    "messageArray": [
+      {
+        "value": "Default",
+        "text": "Click here to choose message"
+      },
+      {
+        "value": "Simple (1)",
+        "text": "Simple (1)"
+      },
+      {
+        "value": "Solo (2)",
+        "text": "Solo (2) "
+      },
+      {
+        "value": "Heart Solo (3)",
+        "text": "Heart Solo (3)"
+      },
+      {
+        "value": "Solo Tout (4)",
+        "text": "Solo Tout (4)"
+      },
+      {
+        "value": "Solo Tout Heart (6)",
+        "text": "Solo Tout Heart (6)"
+      },
+      {
+        "value": "Top Three Trumps",
+        "text": "Top Three Trumps (+1 ..)"
+      },
+      {
+        "value": "Surrender",
+        "text": "Surrender"
+      },
+      {
+        "value": "Refuse Surrender",
+        "text": "Refuse Surrender (must score Schneider)"
+      },
+      {
+        "value": "Double",
+        "text": "Double"
+      }
+    ],
+    "roundsTemp": [
+      "Card Points"
+    ],
+    "scoreSystem": [
+      [
+        0,
+        11,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        10,
+        2,
+        3,
+        4
+      ],
+      [],
+      [],
+      []
+    ],
+    "settingsArray": [
+      [
+        "capturedHolder",
+        false
+      ],
+      [
+        "showTricks",
+        false
+      ],
+      [
+        "showBidValue",
+        true
+      ],
+      [
+        "showBidSuit",
+        false
+      ]
+    ],
+    "settingsDecksArray": [
+      [
+        "cardCount",
+        10
+      ],
+      [
+        "hideCards",
+        6
+      ],
+      [
+        "seatCount",
+        3
+      ],
+      [
+        "tempScore",
+        true
+      ],
+      [
+        "variableScore",
+        2
+      ]
+    ],
+    "sort1": "sortSchafkopf",
+    "transferButtonReturn": false,
+    "transferExceptionsRoutine": [
+      {
+        "func": "INPUT",
+        "fields": [
+          {
+            "type": "title",
+            "text": "Transferring score ..."
+          },
+          {
+            "type": "subtitle",
+            "text": "This will transfer the score in the temporary scoreboard to the main one. The Card Points row is only displayed as an aid to assist in determining if players made their contract. The value of the Card Points row will be subtracted when transferring the score. The Card Points row should automatically show the same for each player on the same 'team' for this round. However, other row values must be entered separately for each player."
+          }
+        ],
+        "confirmButtonText": "Yes",
+        "cancelButtonText": "No"
+      },
+      {
+        "func": "FOREACH",
+        "in": "${PROPERTY _totals OF tempScoreboard}",
+        "loopRoutine": [
+          "var seat = 'seat' + ${key}",
+          "var cardPoints = ${PROPERTY tempScore OF $seat}",
+          "var cardPoints = ${cardPoints.0}",
+          "var value = ${value} - ${cardPoints}",
+          {
+            "func": "SCORE",
+            "mode": "set",
+            "property": "score",
+            "round": "${PROPERTY currentRound OF scoreboard}",
+            "seats": "${seat}",
+            "value": "${value}"
+          }
+        ]
+      }
+    ]
+  },
+  "playerAid49": {
+    "id": "playerAid49",
+    "x": 115,
+    "y": -126,
+    "width": 1,
+    "height": 1,
+    "layer": 14,
+    "movable": false,
+    "movableInEdit": false,
+    "onlyVisibleForSeat": [],
+    "playerAid": true
+  },
+  "playerAid49a": {
+    "id": "playerAid49a",
+    "parent": "playerAid49",
+    "fixedParent": true,
+    "x": 212,
+    "y": 219,
+    "width": 900,
+    "height": 150,
+    "borderRadius": 4,
+    "z": 80604,
+    "css": {
+      "default": {
+        "background": "white",
+        "border": "5px solid blue"
+      },
+      " h3": {
+        "text-align": "center",
+        "font-size": "25px",
+        "color": "blue",
+        "border-bottom": "1px solid blue",
+        "margin": "0px"
+      }
+    },
+    "html": "<h3>Suits</h3><p>Rank/points: A(11), 10(10), K(4), Q(3), J(2), 9, 8, 7<p>Trump suit: Q<font size=5 >&#9827;</font>, Q<font size=5 >&#9824;</font>, Q<font size=5 >&#9829;</font>, Q<font size=5 >&#9830;</font>, J<font size=5 >&#9827;</font>, J<font size=5 >&#9824;</font>, J<font size=5 >&#9829;</font>, J<font size=5 >&#9830;</font>, (any suit)A, 10, K, 9, 8, 7"
   }
 }
