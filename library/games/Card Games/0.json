@@ -23194,7 +23194,7 @@
       }
     ],
     "movableInEdit": false,
-    "versionNumber": "1",
+    "versionNumber": "0",
     "scale": 0
   },
   "cloneButton": {
@@ -40905,7 +40905,7 @@
       "mode": "vs",
       "time": "5-60",
       "attribution": "The room and most game elements and mechanics are by LawDawg96 and are released into the Public Domain under CC0.<div><br></div><div>Additional contributions to game pre-sets and player aids&nbsp;<span style=\"color: var(--overlayFontColor);\">released into the Public Domain under CC0&nbsp;</span><span style=\"color: var(--overlayFontColor);\">by anewcar, jade-alarm, jkandell, and Shobu.</span></div><div><div><br></div><div>Player Aids:</div><div><div><ul><li>Doppelkopf by jkandell</li><li>Königrufen by jkandell<br></li><li>Felõs by Shobu</li><li>Israeli Whist by jkandell</li><li>Color Whist by jkandell</li></ul><div>Decks and Cards</div></div></div><div><ul><li>Crow</li><ul><li>Card design by LawDawg96 and released to the Public Domain under CC0.</li><li>Ally/friend icon used in Auction pre-set by Random Panda and available under CC BY 3.0 at https://thenounproject.com/icon/friend-96006/</li></ul></ul><div><div>Items (CC BY 3.0):</div><div><ul><li>Caro Asercion</li><ul><li>Fox, https://game-icons.net/1x1/caro-asercion/fox.html</li></ul><li>Delapouite</li><ul><li>Barrel,&nbsp;https://game-icons.net/1x1/delapouite/barrel.html</li><li>Lovers, https://game-icons.net/1x1/delapouite/lovers.html</li></ul><li>Lorc</li><ul><li>Screw, https://game-icons.net/1x1/lorc/screw.html</li></ul></ul></div></div></div></div>",
-      "lastUpdate": 1749348919262,
+      "lastUpdate": 1749349295490,
       "showName": true,
       "skill": "",
       "description": "This room can be used to play many types of card games. It is especially suited for trick taking and point-trick types of games.  It is highly customizable with many games available with pre-set configurations.\n\nv2.0.1",
@@ -44782,6 +44782,133 @@
         ],
         "property": "scale",
         "value": 0
+      }
+    ]
+  },
+  "gameID53": {
+    "id": "gameID53",
+    "x": 1966,
+    "y": 1235,
+    "z": 80643,
+    "movable": false,
+    "css": {
+      "background": "blue",
+      "color": "white",
+      "font-size": "26px"
+    },
+    "text": "Bavarian Tarock (Haferltarock)",
+    "0deckSuitsColor": [
+      "",
+      "",
+      "#e50932",
+      "",
+      "#e50932",
+      "",
+      ""
+    ],
+    "customFaceCount": 7,
+    "displayArray": [
+      [
+        "playerAidButton",
+        1
+      ],
+      [
+        "transferScoreButton",
+        0
+      ]
+    ],
+    "gameID": true,
+    "hintText": "\"Set teams, once known, using the Declarer and Opponent buttons at the top of the screen.\"",
+    "messageArray": [
+      {
+        "value": "Default",
+        "text": "Click here to choose message"
+      },
+      {
+        "value": "Pass",
+        "text": "Pass"
+      },
+      {
+        "value": "Talon",
+        "text": "Talon"
+      },
+      {
+        "value": "No Talon",
+        "text": "No Talon"
+      }
+    ],
+    "roundsTemp": [
+      "Card Points"
+    ],
+    "scoreSystem": [
+      [
+        0,
+        11,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        10,
+        2,
+        3,
+        4
+      ],
+      [],
+      [],
+      []
+    ],
+    "settingsArray": [
+      [
+        "showTricks",
+        false
+      ],
+      [
+        "showBidValue",
+        true
+      ],
+      [
+        "showBidSuit",
+        false
+      ]
+    ],
+    "settingsDecksArray": [
+      [
+        "cardCount",
+        11
+      ],
+      [
+        "hideCards",
+        4
+      ],
+      [
+        "seatCount",
+        3
+      ],
+      [
+        "tempScore",
+        true
+      ],
+      [
+        "variableScore",
+        2
+      ]
+    ],
+    "showTempScoreTotals": true,
+    "sort1": "sortAceTen",
+    "sort2": "suit",
+    "transferButtonReturn": false,
+    "dealRoutine": [
+      {
+        "func": "SET",
+        "collection": [
+          "roundSlider"
+        ],
+        "property": "y",
+        "value": 137
       }
     ]
   }
