@@ -8532,10 +8532,10 @@
     ],
     "roundLabel": "",
     "y": 650,
-    "scale": 0,
     "rounds": [
       "Card Points"
-    ]
+    ],
+    "scale": 0
   },
   "seat1": {
     "type": "seat",
@@ -34979,7 +34979,10 @@
       "gameID49 - Schafkopf Palatinate (3P)",
       "gameID50 - Botifarra",
       "gameID51 - Bauerntarock",
-      "gameID52 - Dobbm"
+      "gameID52 - Dobbm",
+      "gameID53 - Bavarian Tarock (Haferltarock)",
+      "gameID54 - Wallachen",
+      "gameID55 - Sheepshead"
     ],
     "GamesByName": [
       "1000 - gameID14",
@@ -34988,6 +34991,7 @@
       "Agony Aunt - gameID33",
       "Auctions (Similar to Bids) - gameID35",
       "Bauerntarock - gameID51",
+      "Bavarian Tarock (Haferltarock) - gameID53",
       "Bid Whist - gameID43",
       "Botifarra - gameID50",
       "Bouncers - gameID28",
@@ -35026,6 +35030,7 @@
       "Schafkopf Palatinate (3P) - gameID49",
       "Schieber Jass - gameID1",
       "Secret Agent - gameID34",
+      "Sheepshead - gameID55",
       "Sidi Barrani Jass - gameID7",
       "Skat - gameID30",
       "Slovenian Tarok - gameID40",
@@ -35034,7 +35039,8 @@
       "Tracktrick - gameID19",
       "Truco - gameID23",
       "Tute Subastado - gameID37",
-      "Ulti - gameID48"
+      "Ulti - gameID48",
+      "Wallachen - gameID54"
     ],
     "clickRoutine": [
       "var textArray = []",
@@ -40906,7 +40912,7 @@
       "mode": "vs",
       "time": "5-60",
       "attribution": "The room and most game elements and mechanics are by LawDawg96 and are released into the Public Domain under CC0.<div><br></div><div>Additional contributions to game pre-sets and player aids&nbsp;<span style=\"color: var(--overlayFontColor);\">released into the Public Domain under CC0&nbsp;</span><span style=\"color: var(--overlayFontColor);\">by anewcar, jade-alarm, jkandell, and Shobu.</span></div><div><div><br></div><div>Player Aids:</div><div><div><ul><li>Doppelkopf by jkandell</li><li>Königrufen by jkandell<br></li><li>Felõs by Shobu</li><li>Israeli Whist by jkandell</li><li>Color Whist by jkandell</li></ul><div>Decks and Cards</div></div></div><div><ul><li>Crow</li><ul><li>Card design by LawDawg96 and released to the Public Domain under CC0.</li><li>Ally/friend icon used in Auction pre-set by Random Panda and available under CC BY 3.0 at https://thenounproject.com/icon/friend-96006/</li></ul></ul><div><div>Items (CC BY 3.0):</div><div><ul><li>Caro Asercion</li><ul><li>Fox, https://game-icons.net/1x1/caro-asercion/fox.html</li></ul><li>Delapouite</li><ul><li>Barrel,&nbsp;https://game-icons.net/1x1/delapouite/barrel.html</li><li>Lovers, https://game-icons.net/1x1/delapouite/lovers.html</li></ul><li>Lorc</li><ul><li>Screw, https://game-icons.net/1x1/lorc/screw.html</li></ul></ul></div></div></div></div>",
-      "lastUpdate": 1749350070800,
+      "lastUpdate": 1749350257708,
       "showName": true,
       "skill": "",
       "description": "This room can be used to play many types of card games. It is especially suited for trick taking and point-trick types of games.  It is highly customizable with many games available with pre-set configurations.\n\nv2.0.1",
@@ -45531,5 +45537,254 @@
       }
     ],
     "y": -312
+  },
+  "gameID55": {
+    "id": "gameID55",
+    "x": 310,
+    "y": -312,
+    "z": 80609,
+    "movable": false,
+    "css": {
+      "background": "blue",
+      "color": "white",
+      "font-size": "26px"
+    },
+    "text": "Sheepshead",
+    "capturedArray": [],
+    "displayArray": [
+      [
+        "playerAidButton",
+        1
+      ],
+      [
+        "transferScoreButton",
+        0
+      ]
+    ],
+    "gameID": true,
+    "hintText": "\"Bid using square white bid widget and Message button.\\a\\a Set teams, once known, using the Declarer and Opponent buttons at the top of the screen.\\a\\a After round is over, press Add Card Points button. The Card Points row is only displayed as an aid to assist in determining if players made their contract. The Card Points row should automatically show the same for each player on the same 'team' for this round. \\a\\a When ready to enter final score on main scoreboard, do so using the red/green +/- buttons.\"",
+    "roundsTemp": [
+      "Card Points"
+    ],
+    "scoreSystem": [
+      [
+        0,
+        11,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        10,
+        2,
+        3,
+        4
+      ],
+      [],
+      [],
+      []
+    ],
+    "settingsArray": [
+      [
+        "capturedHolder",
+        false
+      ],
+      [
+        "showTricks",
+        false
+      ],
+      [
+        "showBidValue",
+        false
+      ],
+      [
+        "showBidHistory",
+        false
+      ],
+      [
+        "showBidSuit",
+        true
+      ]
+    ],
+    "settingsDecksArray": [
+      [
+        "cardCount",
+        6
+      ],
+      [
+        "hideCards",
+        6
+      ],
+      [
+        "seatCount",
+        5
+      ],
+      [
+        "tempScore",
+        true
+      ],
+      [
+        "variableScore",
+        2
+      ],
+      [
+        "contractType",
+        false
+      ]
+    ],
+    "sort1": "sortSheepshead",
+    "transferButtonReturn": false,
+    "preSetExceptionsRoutine": [
+      {
+        "func": "SET",
+        "collection": [
+          "trump"
+        ],
+        "property": "scale",
+        "value": 0
+      }
+    ],
+    "sortPreExceptionsRoutine": [
+      "var auctionType = ${PROPERTY auctionType OF contractType}",
+      "var noQueens = ${PROPERTY noQueensArray} includes ${auctionType}",
+      {
+        "func": "IF",
+        "condition": "${noQueens}",
+        "thenRoutine": [
+          {
+            "func": "SELECT",
+            "type": "card",
+            "property": "cardType",
+            "value": "C 3Q"
+          },
+          {
+            "func": "SET",
+            "property": "sortSchafkopf",
+            "value": 15.5
+          },
+          {
+            "func": "SELECT",
+            "type": "card",
+            "property": "cardType",
+            "value": "S 3Q"
+          },
+          {
+            "func": "SET",
+            "property": "sortSchafkopf",
+            "value": 3.5
+          },
+          {
+            "func": "SELECT",
+            "type": "card",
+            "property": "cardType",
+            "value": "H 3Q"
+          },
+          {
+            "func": "SET",
+            "property": "sortSchafkopf",
+            "value": 21.5
+          },
+          {
+            "func": "SELECT",
+            "type": "card",
+            "property": "cardType",
+            "value": "D 3Q"
+          },
+          {
+            "func": "SET",
+            "property": "sortSchafkopf",
+            "value": 9.5
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SELECT",
+            "type": "card",
+            "property": "rank",
+            "value": "Q"
+          },
+          {
+            "func": "SET",
+            "property": "sortSchafkopf",
+            "value": null
+          }
+        ]
+      }
+    ],
+    "transferExceptionsRoutine": [
+      {
+        "func": "INPUT",
+        "fields": [
+          {
+            "type": "title",
+            "text": "Transferring score ..."
+          },
+          {
+            "type": "subtitle",
+            "text": "This will transfer the score in the temporary scoreboard to the main one. The Card Points row is only displayed as an aid to assist in determining if players made their contract. The value of the Card Points row will be subtracted when transferring the score. The Card Points row should automatically show the same for each player on the same 'team' for this round."
+          }
+        ],
+        "confirmButtonText": "Yes",
+        "cancelButtonText": "No"
+      },
+      {
+        "func": "FOREACH",
+        "in": "${PROPERTY _totals OF tempScoreboard}",
+        "loopRoutine": [
+          "var seat = 'seat' + ${key}",
+          "var cardPoints = ${PROPERTY tempScore OF $seat}",
+          "var cardPoints = ${cardPoints.0}",
+          "var value = ${value} - ${cardPoints}",
+          {
+            "func": "SCORE",
+            "mode": "set",
+            "property": "score",
+            "round": "${PROPERTY currentRound OF scoreboard}",
+            "seats": "${seat}",
+            "value": "${value}"
+          }
+        ]
+      }
+    ]
+  },
+  "playerAid55": {
+    "id": "playerAid55",
+    "x": 115,
+    "y": -126,
+    "width": 1,
+    "height": 1,
+    "layer": 14,
+    "movable": false,
+    "movableInEdit": false,
+    "onlyVisibleForSeat": [],
+    "playerAid": true
+  },
+  "playerAid55a": {
+    "id": "playerAid55a",
+    "parent": "playerAid55",
+    "fixedParent": true,
+    "x": 212,
+    "y": 219,
+    "width": 900,
+    "height": 150,
+    "borderRadius": 4,
+    "z": 80604,
+    "css": {
+      "default": {
+        "background": "white",
+        "border": "5px solid blue"
+      },
+      " h3": {
+        "text-align": "center",
+        "font-size": "25px",
+        "color": "blue",
+        "border-bottom": "1px solid blue",
+        "margin": "0px"
+      }
+    },
+    "html": "<h3>Suits</h3><p>Rank/points: A(11), 10(10), K(4), Q(3), J(2), 9, 8, 7<p>Trump suit: Q<font size=5 >&#9827;</font>, Q<font size=5 >&#9824;</font>, Q<font size=5 >&#9829;</font>, Q<font size=5 >&#9830;</font>, J<font size=5 >&#9827;</font>, J<font size=5 >&#9824;</font>, J<font size=5 >&#9829;</font>, J<font size=5 >&#9830;</font>, A<font size=5 >&#9830;</font>, 10<font size=5 >&#9830;</font>, 9<font size=5 >&#9830;</font>, 8<font size=5 >&#9830;</font>, 7<font size=5 >&#9830;</font><br>Non-Trump suits: A, 10, K, 9, 8, 7"
   }
 }
