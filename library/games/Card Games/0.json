@@ -13645,6 +13645,10 @@
         0
       ],
       [
+        "tarokBonusTable1",
+        0
+      ],
+      [
         "passCardsButton",
         0
       ],
@@ -13666,6 +13670,10 @@
       ],
       [
         "secretAgentLabel",
+        0
+      ],
+      [
+        "ultiBidTable",
         0
       ]
     ],
@@ -34876,14 +34884,15 @@
       "gameID37 - Tute Subastado",
       "gameID38 - Felsõs",
       "gameID39 - Schafkopf (3P)",
-      "gameID40 - Slovenian Tarok (3P)",
+      "gameID40 - Slovenian Tarok",
       "gameID41 - Chwech",
       "gameID42 - Knaves",
       "gameID43 - Bid Whist",
       "gameID44 - Papayou",
       "gameID45 - Schafkopf (4P)",
       "gameID46 - Color Whist",
-      "gameID47 - Cross Purposes (4P)"
+      "gameID47 - Cross Purposes (4P)",
+      "gameID48 - Ulti"
     ],
     "GamesByName": [
       "1000 - gameID14",
@@ -34928,12 +34937,13 @@
       "Secret Agent - gameID34",
       "Sidi Barrani Jass - gameID7",
       "Skat - gameID30",
-      "Slovenian Tarok (3P) - gameID40",
+      "Slovenian Tarok - gameID40",
       "Spades - gameID17",
       "State (Similar to Ohio) - gameID22",
       "Tracktrick - gameID19",
       "Truco - gameID23",
-      "Tute Subastado - gameID37"
+      "Tute Subastado - gameID37",
+      "Ulti - gameID48"
     ],
     "clickRoutine": [
       "var textArray = []",
@@ -35595,11 +35605,11 @@
         1
       ],
       [
-        "tarokBonusTable",
+        "tarokBonusTable1",
         1
       ],
       [
-        "tarokBonusTable1",
+        "tarokBonusTable",
         0
       ]
     ],
@@ -35610,12 +35620,36 @@
         "text": "Click here to choose message"
       },
       {
+        "value": "Called King: Spades",
+        "text": "Called King: Spades"
+      },
+      {
+        "value": "Called King: Clubs",
+        "text": "Called King: Clubs"
+      },
+      {
+        "value": "Called King: Hearts",
+        "text": "Called King: Hearts"
+      },
+      {
+        "value": "Called King: Diamonds",
+        "text": "Called King: Diamonds"
+      },
+      {
         "value": "Pass",
         "text": "Pass"
       },
       {
+        "value": "Wait",
+        "text": "Wait (Forehand only)"
+      },
+      {
+        "value": "Klop (Minus Points taken or +/-70)",
+        "text": "Klop (Minus Points taken or +/-70) (Forehand only)"
+      },
+      {
         "value": "Three (10+ Diff)",
-        "text": "Three (10+ Diff)"
+        "text": "Three (10+ Diff) (Forehand only)"
       },
       {
         "value": "Two (20+ Diff)",
@@ -35626,6 +35660,18 @@
         "text": "One (30+ Diff)"
       },
       {
+        "value": "Solo Three (40+ Diff)",
+        "text": "Solo Three (40+ Diff)"
+      },
+      {
+        "value": "Solo Two (50+ Diff)",
+        "text": "Solo Two (50+ Diff)"
+      },
+      {
+        "value": "Solo One (60+ Diff)",
+        "text": "Solo One (60+ Diff)"
+      },
+      {
         "value": "Beggar (70)",
         "text": "Beggar (70)"
       },
@@ -35634,8 +35680,16 @@
         "text": "Solo Without (80)"
       },
       {
-        "value": "Klop",
-        "text": "Klop (Minus Points taken or +/-70)"
+        "value": "Open Beggar (90)",
+        "text": "Open Beggar (90)"
+      },
+      {
+        "value": "Solo Without / Win all tricks / No-trump (125)",
+        "text": "Solo Without / Win all tricks / No-trump (125)"
+      },
+      {
+        "value": "Solo Without / Win all tricks (500)",
+        "text": "Solo Without / Win all tricks (500)"
       }
     ],
     "roundsTemp": [
@@ -35684,7 +35738,7 @@
       ],
       [
         "seatCount",
-        3
+        4
       ],
       [
         "tempScore",
@@ -40761,7 +40815,7 @@
       "mode": "vs",
       "time": "5-60",
       "attribution": "The room and most game elements and mechanics are by LawDawg96 and are released into the Public Domain under CC0.<div><br></div><div>Additional contributions to game pre-sets and player aids&nbsp;<span style=\"color: var(--overlayFontColor);\">released into the Public Domain under CC0&nbsp;</span><span style=\"color: var(--overlayFontColor);\">by anewcar, jade-alarm, jkandell, and Shobu.</span></div><div><div><br></div><div>Player Aids:</div><div><div><ul><li>Doppelkopf by jkandell</li><li>Königrufen by jkandell<br></li><li>Felõs by Shobu</li><li>Israeli Whist by jkandell</li><li>Color Whist by jkandell</li></ul><div>Decks and Cards</div></div></div><div><ul><li>Crow</li><ul><li>Card design by LawDawg96 and released to the Public Domain under CC0.</li><li>Ally/friend icon used in Auction pre-set by Random Panda and available under CC BY 3.0 at https://thenounproject.com/icon/friend-96006/</li></ul></ul><div><div>Items (CC BY 3.0):</div><div><ul><li>Caro Asercion</li><ul><li>Fox, https://game-icons.net/1x1/caro-asercion/fox.html</li></ul><li>Delapouite</li><ul><li>Barrel,&nbsp;https://game-icons.net/1x1/delapouite/barrel.html</li><li>Lovers, https://game-icons.net/1x1/delapouite/lovers.html</li></ul><li>Lorc</li><ul><li>Screw, https://game-icons.net/1x1/lorc/screw.html</li></ul></ul></div></div></div></div>",
-      "lastUpdate": 1749341989328,
+      "lastUpdate": 1749347456190,
       "showName": true,
       "skill": "",
       "description": "This room can be used to play many types of card games. It is especially suited for trick taking and point-trick types of games.  It is highly customizable with many games available with pre-set configurations.\n\nv2.0.1",
@@ -43899,5 +43953,178 @@
     "movable": false,
     "enlarge": 0,
     "image": "/assets/-2196274_31743"
+  },
+  "gameID48": {
+    "id": "gameID48",
+    "x": -221,
+    "y": -312,
+    "z": 80610,
+    "css": {
+      "background": "blue",
+      "color": "white",
+      "font-size": "26px"
+    },
+    "text": "Ulti",
+    "displayArray": [
+      [
+        "transferScoreButton",
+        0
+      ],
+      [
+        "playerAidButton",
+        1
+      ],
+      [
+        "ultiBidTable",
+        1
+      ]
+    ],
+    "gameID": true,
+    "hintText": "\"Use Items button during play to take out widgets as needed to indicate various game conditions.\\a\\a After round is over, press Add Card Points button. To score bonus points in the small scoreboard, move the scrollbar to highlight the row and press the green/red +/- buttons.\\a\\a When score on the temporary scoreboard is correct, move scrollbar all the way to the top and then the green/red +/- buttons will work on the main scoreboard.\"",
+    "roundsTemp": [
+      "Card Points",
+      "Marriage"
+    ],
+    "scoreSystem": [
+      [
+        0,
+        10,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        10,
+        0,
+        0,
+        0
+      ],
+      [],
+      [],
+      []
+    ],
+    "settingsArray": [
+      [
+        "showBidValue",
+        false
+      ],
+      [
+        "showTricks",
+        false
+      ],
+      [
+        "showBidSuit",
+        false
+      ],
+      [
+        "showBidHistory",
+        false
+      ]
+    ],
+    "settingsDecksArray": [
+      [
+        "cardCount",
+        10
+      ],
+      [
+        "hideCards",
+        6
+      ],
+      [
+        "seatCount",
+        3
+      ],
+      [
+        "tempScore",
+        true
+      ]
+    ],
+    "sort1": "sortAceTen",
+    "sort2": "suit",
+    "dealRoutine": [
+      {
+        "func": "MOVE",
+        "from": "deckHolder",
+        "to": "hand",
+        "count": 2
+      },
+      {
+        "func": "CALL",
+        "widget": "routines",
+        "routine": "autoSortRoutine"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "roundSlider"
+        ],
+        "property": "y",
+        "value": 140
+      }
+    ],
+    "scoreExceptionsRoutine": [
+      "var result = ${points}",
+      "var last = ${PROPERTY lastPressedBy OF takeButton}",
+      {
+        "func": "IF",
+        "operand1": "${value}",
+        "operand2": "${last}",
+        "thenRoutine": [
+          "var result = ${result} + 10"
+        ]
+      }
+    ]
+  },
+  "playerAid48": {
+    "id": "playerAid48",
+    "x": 115,
+    "y": -126,
+    "width": 1,
+    "height": 1,
+    "layer": 14,
+    "movable": false,
+    "movableInEdit": false,
+    "onlyVisibleForSeat": [],
+    "playerAid": true
+  },
+  "playerAid48a": {
+    "id": "playerAid48a",
+    "parent": "playerAid48",
+    "fixedParent": true,
+    "x": 71,
+    "y": 189,
+    "width": 1230,
+    "height": 760,
+    "borderRadius": 4,
+    "z": 80611,
+    "css": {
+      "default": {
+        "background": "white",
+        "border": "5px solid blue"
+      },
+      " h3": {
+        "text-align": "center",
+        "font-size": "25px",
+        "color": "blue",
+        "border-bottom": "1px solid blue",
+        "margin": "0px"
+      }
+    },
+    "html": "<h3>Auction</h3><br>The first player must name a contract and discard any two cards into the talon. If another player wants to bid: they pick up the talon, discard any two cards to form a new talon, then announce a contract with a higher value than the previous one. <br>Some contracts can be combined. Hearts is a preferential suit, contracts and bonuses are worth double in it.<br>The auction goes around until three consecutives passes, it means that players can overbid themselves. Last one bidding becomes the declarer, the other two are the defenders.<h3>The Play</h3><br>Declarer leads to the first trick, after naming trumps if applicable.<br><strong>Players must follow suit, must beat the highest card in the trick if they can, and play trumps if they’re void of the led suit.</strong><br>Players can announce marriages (KQ) values (without naming their suit) when playing their card to the first trick (Examples: I have a 20. I have a 40 and a 20. I have two 20s).<br>A defender can announce Kontra on any element of the contract before playing their first card. Re-kontra (by the declarer) and higher kontra levels are announced at the end of the first trick.<br><br><h3>Contracts</h3><br>No-trump contracts are standalone contracts, and there are no point values in cards or the last trick.<br><br>- Surrender : declarer can give up, with just a simple Pass contract, before the first trick and lose a doubled game.<br>- Simple :  Win more points (trick + marriages) than the opponents combined<br>- Ulti :  Win the last trick with the 7 of trumps<br><br>- 20-100 :  Win 100 points with only one 20 meld (and no 40 meld).<br>- 40-100 : Win 100 points with the 40 meld (and no 20 meld).<br><br>- 4 Aces : Win all four Aces.<br><br>- Nullo : Lose all tricks. No-trumps.<br>- Slam : Win all tricks. Can be trumps or no-trumps.<br><br>- Open Nullo : Lose all tricks, everyone plays with open cards after first trick.<br>- Open Slam : Win all tricks, everyone plays with open cards after first trick.<h3>Bonuses</h3><br>Silent bonuses are not announced, but can be achieved by any side.<br>Losing an Ulti, must be paid out even if it’s silent, and has an extra penalty that equals its base value (2,4 or 8 points). This penalty is not affected by Kontra levels.<br>"
+  },
+  "ultiBidTable": {
+    "id": "ultiBidTable",
+    "x": 1243,
+    "y": 269,
+    "width": 350,
+    "height": 550,
+    "layer": -1,
+    "z": 81018,
+    "movable": false,
+    "image": "/assets/81054462_33075",
+    "scale": 0
   }
 }
