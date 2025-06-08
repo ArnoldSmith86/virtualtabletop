@@ -40905,7 +40905,7 @@
       "mode": "vs",
       "time": "5-60",
       "attribution": "The room and most game elements and mechanics are by LawDawg96 and are released into the Public Domain under CC0.<div><br></div><div>Additional contributions to game pre-sets and player aids&nbsp;<span style=\"color: var(--overlayFontColor);\">released into the Public Domain under CC0&nbsp;</span><span style=\"color: var(--overlayFontColor);\">by anewcar, jade-alarm, jkandell, and Shobu.</span></div><div><div><br></div><div>Player Aids:</div><div><div><ul><li>Doppelkopf by jkandell</li><li>Königrufen by jkandell<br></li><li>Felõs by Shobu</li><li>Israeli Whist by jkandell</li><li>Color Whist by jkandell</li></ul><div>Decks and Cards</div></div></div><div><ul><li>Crow</li><ul><li>Card design by LawDawg96 and released to the Public Domain under CC0.</li><li>Ally/friend icon used in Auction pre-set by Random Panda and available under CC BY 3.0 at https://thenounproject.com/icon/friend-96006/</li></ul></ul><div><div>Items (CC BY 3.0):</div><div><ul><li>Caro Asercion</li><ul><li>Fox, https://game-icons.net/1x1/caro-asercion/fox.html</li></ul><li>Delapouite</li><ul><li>Barrel,&nbsp;https://game-icons.net/1x1/delapouite/barrel.html</li><li>Lovers, https://game-icons.net/1x1/delapouite/lovers.html</li></ul><li>Lorc</li><ul><li>Screw, https://game-icons.net/1x1/lorc/screw.html</li></ul></ul></div></div></div></div>",
-      "lastUpdate": 1749349295490,
+      "lastUpdate": 1749349861042,
       "showName": true,
       "skill": "",
       "description": "This room can be used to play many types of card games. It is especially suited for trick taking and point-trick types of games.  It is highly customizable with many games available with pre-set configurations.\n\nv2.0.1",
@@ -44911,5 +44911,139 @@
         "value": 137
       }
     ]
+  },
+  "seat6": {
+    "id": "seat6",
+    "x": 1010,
+    "y": 160,
+    "type": "seat",
+    "inheritFrom": {
+      "seat1": [
+        "!player",
+        "!color",
+        "!textColor",
+        "!mainColor",
+        "!sortDirection"
+      ]
+    },
+    "index": 6,
+    "scale": 0,
+    "score": [],
+    "tricks": 0,
+    "turn": false,
+    "tempScore": [],
+    "scoreCoiffeur": [
+      " ",
+      " ",
+      " ",
+      " ",
+      " ",
+      " ",
+      " ",
+      " ",
+      " ",
+      " ",
+      " "
+    ],
+    "showing": false,
+    "player": "",
+    "mainColor": "#ffffff",
+    "textColor": "#000000",
+    "glowColor": "#000000",
+    "color": "#999999"
+  },
+  "bidValue6": {
+    "inheritFrom": {
+      "bidValue1": "*"
+    },
+    "id": "bidValue6",
+    "parent": "seat6",
+    "text": "",
+    "image": "",
+    "deckSuitsColor": "",
+    "deckSuitsUni": "",
+    "deckSuits": ""
+  },
+  "bidSuit6": {
+    "inheritFrom": {
+      "bidSuit1": "*"
+    },
+    "id": "bidSuit6",
+    "parent": "seat6",
+    "text": "",
+    "deckSuitsColor": "",
+    "deckSuitsUni": "",
+    "deckSuits": "",
+    "chooser": "",
+    "image": ""
+  },
+  "holder6": {
+    "inheritFrom": {
+      "holder1": "*"
+    },
+    "type": "holder",
+    "id": "holder6",
+    "parent": "seat6",
+    "x": -135,
+    "y": -45,
+    "onEnter": {
+      "activeFace": 1
+    },
+    "dropLimit": 0
+  },
+  "backHolder6": {
+    "inheritFrom": {
+      "backHolder1": "*"
+    },
+    "type": "holder",
+    "id": "backHolder6",
+    "x": -120,
+    "y": -60,
+    "parent": "seat6",
+    "dropLimit": 0
+  },
+  "count6": {
+    "id": "count6",
+    "parent": "seat6",
+    "inheritFrom": {
+      "count1": "*"
+    },
+    "text": 0,
+    "backColor": "#e4e4e4",
+    "textColor": "#6d6d6d"
+  },
+  "showHolder6": {
+    "inheritFrom": {
+      "showHolder1": "*"
+    },
+    "type": "holder",
+    "id": "showHolder6",
+    "x": -225,
+    "y": -70,
+    "parent": "seat6",
+    "scale": 0
+  },
+  "teamGroup6": {
+    "inheritFrom": {
+      "teamGroup1": "*"
+    },
+    "id": "teamGroup6",
+    "parent": "seat6",
+    "activeFace": 0,
+    "scale": 0,
+    "index": 6,
+    "text": "A"
+  },
+  "capturedHolder6": {
+    "inheritFrom": {
+      "capturedHolder1": "*"
+    },
+    "type": "holder",
+    "id": "capturedHolder6",
+    "x": -383,
+    "y": 5,
+    "parent": "seat6",
+    "scale": 0,
+    "dropLimit": 0
   }
 }
