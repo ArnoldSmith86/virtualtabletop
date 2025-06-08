@@ -34974,7 +34974,11 @@
       "gameID45 - Schafkopf (4P)",
       "gameID46 - Color Whist",
       "gameID47 - Cross Purposes (4P)",
-      "gameID48 - Ulti"
+      "gameID48 - Ulti",
+      "gameID49 - Schafkopf Palatinate (3P)",
+      "gameID50 - Botifarra",
+      "gameID51 - Bauerntarock",
+      "gameID52 - Dobbm"
     ],
     "GamesByName": [
       "1000 - gameID14",
@@ -34982,7 +34986,9 @@
       "99 - gameID26",
       "Agony Aunt - gameID33",
       "Auctions (Similar to Bids) - gameID35",
+      "Bauerntarock - gameID51",
       "Bid Whist - gameID43",
+      "Botifarra - gameID50",
       "Bouncers - gameID28",
       "Chwech - gameID41",
       "Coiffeur Jass (3P) - gameID6",
@@ -34996,6 +35002,7 @@
       "Czech Taroky - gameID5",
       "Default - gameID0",
       "Differenzler Jass - gameID4",
+      "Dobbm - gameID52",
       "Doppelkopf - gameID9",
       "Felsõs - gameID38",
       "French Tarot - gameID32",
@@ -35015,6 +35022,7 @@
       "Pitch Pawnee 10 Point - gameID3",
       "Schafkopf (3P) - gameID39",
       "Schafkopf (4P) - gameID45",
+      "Schafkopf Palatinate (3P) - gameID49",
       "Schieber Jass - gameID1",
       "Secret Agent - gameID34",
       "Sidi Barrani Jass - gameID7",
@@ -40897,7 +40905,7 @@
       "mode": "vs",
       "time": "5-60",
       "attribution": "The room and most game elements and mechanics are by LawDawg96 and are released into the Public Domain under CC0.<div><br></div><div>Additional contributions to game pre-sets and player aids&nbsp;<span style=\"color: var(--overlayFontColor);\">released into the Public Domain under CC0&nbsp;</span><span style=\"color: var(--overlayFontColor);\">by anewcar, jade-alarm, jkandell, and Shobu.</span></div><div><div><br></div><div>Player Aids:</div><div><div><ul><li>Doppelkopf by jkandell</li><li>Königrufen by jkandell<br></li><li>Felõs by Shobu</li><li>Israeli Whist by jkandell</li><li>Color Whist by jkandell</li></ul><div>Decks and Cards</div></div></div><div><ul><li>Crow</li><ul><li>Card design by LawDawg96 and released to the Public Domain under CC0.</li><li>Ally/friend icon used in Auction pre-set by Random Panda and available under CC BY 3.0 at https://thenounproject.com/icon/friend-96006/</li></ul></ul><div><div>Items (CC BY 3.0):</div><div><ul><li>Caro Asercion</li><ul><li>Fox, https://game-icons.net/1x1/caro-asercion/fox.html</li></ul><li>Delapouite</li><ul><li>Barrel,&nbsp;https://game-icons.net/1x1/delapouite/barrel.html</li><li>Lovers, https://game-icons.net/1x1/delapouite/lovers.html</li></ul><li>Lorc</li><ul><li>Screw, https://game-icons.net/1x1/lorc/screw.html</li></ul></ul></div></div></div></div>",
-      "lastUpdate": 1749348771894,
+      "lastUpdate": 1749348919262,
       "showName": true,
       "skill": "",
       "description": "This room can be used to play many types of card games. It is especially suited for trick taking and point-trick types of games.  It is highly customizable with many games available with pre-set configurations.\n\nv2.0.1",
@@ -44605,6 +44613,143 @@
       [
         "seatCount",
         3
+      ],
+      [
+        "tempScore",
+        true
+      ],
+      [
+        "variableScore",
+        2
+      ]
+    ],
+    "showTempScoreTotals": true,
+    "sort1": "sortAceTen",
+    "sort2": "suit",
+    "transferButtonReturn": false,
+    "dealRoutine": [
+      {
+        "func": "SET",
+        "collection": [
+          "roundSlider"
+        ],
+        "property": "y",
+        "value": 137
+      }
+    ],
+    "preSetExceptionsRoutine": [
+      {
+        "func": "SET",
+        "collection": [
+          "trump"
+        ],
+        "property": "scale",
+        "value": 0
+      }
+    ]
+  },
+  "gameID52": {
+    "id": "gameID52",
+    "x": 1833,
+    "y": 1235,
+    "z": 80630,
+    "movable": false,
+    "css": {
+      "background": "blue",
+      "color": "white",
+      "font-size": "26px"
+    },
+    "text": "Dobbm",
+    "0deckSuitsColor": [
+      "",
+      "",
+      "#e50932",
+      "",
+      "#e50932",
+      "",
+      ""
+    ],
+    "customFaceCount": 7,
+    "displayArray": [
+      [
+        "playerAidButton",
+        1
+      ],
+      [
+        "transferScoreButton",
+        0
+      ]
+    ],
+    "gameID": true,
+    "hintText": "\"Set teams, once known, using the Declarer and Opponent buttons at the top of the screen.\"",
+    "messageArray": [
+      {
+        "value": "Default",
+        "text": "Click here to choose message"
+      },
+      {
+        "value": "Pass",
+        "text": "Pass"
+      },
+      {
+        "value": "Talon",
+        "text": "Talon"
+      },
+      {
+        "value": "Solo",
+        "text": "Solo"
+      }
+    ],
+    "roundsTemp": [
+      "Card Points"
+    ],
+    "scoreSystem": [
+      [
+        0,
+        11,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        10,
+        2,
+        3,
+        4
+      ],
+      [],
+      [],
+      []
+    ],
+    "settingsArray": [
+      [
+        "showTricks",
+        false
+      ],
+      [
+        "showBidValue",
+        false
+      ],
+      [
+        "showBidSuit",
+        false
+      ]
+    ],
+    "settingsDecksArray": [
+      [
+        "cardCount",
+        8
+      ],
+      [
+        "hideCards",
+        4
+      ],
+      [
+        "seatCount",
+        4
       ],
       [
         "tempScore",
