@@ -1,0 +1,247 @@
+{
+  "_meta": {
+    "version": 17,
+    "info": {
+      "name": "101 JSON Syntax and Punctuation",
+      "image": "/assets/1758267651_6442",
+      "rules": "",
+      "bgg": "",
+      "year": "",
+      "mode": "Tutorial",
+      "time": "",
+      "attribution": "",
+      "lastUpdate": 1748741042665,
+      "showName": false,
+      "skill": "",
+      "description": "",
+      "similarImage": "",
+      "similarName": "",
+      "similarDesigner": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": "",
+      "variantImage": "",
+      "variant": "Quotes, Colons, Commas",
+      "language": "en-US",
+      "players": "1"
+    }
+  },
+  "title": {
+    "id": "title",
+    "x": 400,
+    "y": -2,
+    "width": 800,
+    "height": 60,
+    "z": 74,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "font-size: 60px;text-align:center",
+    "text": "Quotes, Colons, and Commas"
+  },
+  "button2": {
+    "type": "button",
+    "id": "button2",
+    "x": 416,
+    "y": 402,
+    "z": 22839,
+    "clickRoutine": [
+      "var example1 = 10",
+      "// In this widget, look how each of the properties in yellow and orange is enclosed in double quotes. The value of the property when it is a string is also enclosed in quotes. So in this widget, the type, the id, and the text all have string values and therefore quotes. The properties with numbers (x, y, width, height, and z) do not use quotes. Properties that use boolean (true/false) values also do not use quotes (movable and movableInEdit).",
+      "// Some properties use square brackets (like arrays and routines) or curly brackets (like objects). Quotation marks are used as in the exampleArray and exampleObject above. The css property is also an object.",
+      "// Variable expressions, like the example1 declaration above, start and end with double quotes.",
+      "// Functions follow the same basic structure. Put 'func' as well as any parameter names on the left of the colon in double quotes. Strings after the colon also get quotes.",
+      {
+        "func": "SELECT",
+        "property": "id",
+        "relation": "!=",
+        "value": null
+      }
+    ],
+    "text": "\" \"",
+    "exampleArray": [
+      "string1",
+      "string2",
+      "string3",
+      [
+        "an array",
+        "inside an array"
+      ],
+      {
+        "an object": "inside an array"
+      }
+    ],
+    "exampleObject": {
+      "key1": "string value 1",
+      "key2": "string value 2",
+      "key3": 9,
+      "key4": false,
+      "key5": [
+        "an array",
+        "inside an object"
+      ],
+      "key6": {
+        "subKey6a": "an object",
+        "subKey6b": "inside another object"
+      }
+    },
+    "css": {
+      "font-size": "50px"
+    }
+  },
+  "overview": {
+    "id": "overview",
+    "x": 108,
+    "y": 80,
+    "width": 1400,
+    "height": 150,
+    "layer": -3,
+    "z": 129,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "font-size: 25px; ",
+    "html": "VTT uses JavaScript Object Notation (JSON) to create games. Game developers interact with VTT by creating widgets that consist of JSON expressed as various properties of widgets. The syntax for using JSON is very strict and a misplaced punctuation mark can make a widget invalid (in which case it will revert to its last previously valid state when using Edit Mode). Review this tutorial to understand that syntax and to know which punctuation marks to use and where. \n\nIf you use the buttons in the Edit Mode to add and delete properties and their values, then this is mostly automated. However, at some point in game development, you will start cutting and pasting or just directly typing. Inevitably you will start to see red text in the Editor indicating some syntax problem. Keep the principles in this tutorial in mind when trying to find the problem. Also remember that the Editor will try to identify the line number of the problem for you."
+  },
+  "button3": {
+    "type": "button",
+    "id": "button3",
+    "x": 743,
+    "y": 402,
+    "z": 22840,
+    "clickRoutine": [
+      "var example1 = 'hello'",
+      "var example2 = 'greetings ' concat 'everyone' ",
+      "// You can also use single quotes inside of comments like 'see what I did'. You may do this since you cannot add double quotes inside double quotes without using a slash which can look strange: \" This is inside double quotes which are themselves inside double quotes\""
+    ],
+    "text": "' '",
+    "css": {
+      "font-size": "50px"
+    }
+  },
+  "button4": {
+    "type": "button",
+    "id": "button4",
+    "x": 1062,
+    "y": 402,
+    "z": 22840,
+    "clickRoutine": [
+      "// Look at the properties and object above as well as the function below and note how the colon is used.",
+      {
+        "func": "SELECT",
+        "property": "id",
+        "relation": "!=",
+        "value": null
+      }
+    ],
+    "exampleObject": {
+      "key1": "value1",
+      "key2": "value2"
+    },
+    "css": {
+      "font-size": "50px"
+    },
+    "text": ":"
+  },
+  "button5": {
+    "type": "button",
+    "id": "button5",
+    "x": 1386,
+    "y": 402,
+    "z": 11,
+    "clickRoutine": [
+      "// Note the use of commas after property values, within arrays, within objects, and after function parameters.",
+      {
+        "func": "SELECT",
+        "property": "id",
+        "relation": "!=",
+        "value": null
+      }
+    ],
+    "exampleArray": [
+      "string1",
+      "string2",
+      "string3"
+    ],
+    "exampleObject": {
+      "key1": "value1",
+      "key2": "value2"
+    },
+    "css": {
+      "font-size": "50px"
+    },
+    "text": ","
+  },
+  "text1": {
+    "id": "text1",
+    "x": 4,
+    "y": 552,
+    "width": 300,
+    "z": 185,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "22px"
+    },
+    "html": "Look at the JSON of the button above in Edit Mode. The properties appear between the first and last curly brackets. You never need to worry about the opening and closing bracket unless you accidentally delete one and then you have to add it back.\n\nNote the order: quotation marks, colon, then more quotation marks or brackets. All VTT JSON has this structure and every entry is a property."
+  },
+  "button1": {
+    "type": "button",
+    "id": "button1",
+    "x": 95,
+    "y": 402,
+    "z": 22841,
+    "clickRoutine": [],
+    "text": "Syntax"
+  },
+  "text2": {
+    "id": "text2",
+    "x": 325,
+    "y": 552,
+    "width": 300,
+    "z": 121,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "22px"
+    },
+    "html": "<b><span style='color:red'>\" \" </span></b> Use double quotes:\n(1) around the property name (left side of colon) and sometimes the property value (right side of the colon)\n(2) for string values inside of arrays\n(3) for the key and sometimes value inside of objects\n(4) around the beginning and end of variable expressions starting with <b>var</b>\n(5) in function parameters\n\nQuotes inside of quotes requires \\ and may not work."
+  },
+  "text3": {
+    "id": "text3",
+    "x": 651,
+    "y": 552,
+    "width": 300,
+    "z": 9732,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "22px"
+    },
+    "html": "<b><span style='color:red'>' ' </span></b> Use single quotes inside variable expressions starting with <b>var.</b> Look at the button above for examples."
+  },
+  "text4": {
+    "id": "text4",
+    "x": 964,
+    "y": 552,
+    "width": 300,
+    "z": 9732,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "22px"
+    },
+    "html": "<b><span style='color:red'>: </span></b>Use a colon to\n\n(1) separate the property name and its value in a property\n\n(2) separate the key and its value in an object\n\n(3) separate a parameter name and its value in a function"
+  },
+  "text5": {
+    "id": "text5",
+    "x": 1294,
+    "y": 552,
+    "width": 300,
+    "z": 9732,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "22px"
+    },
+    "html": "<b><span style='color:red'>, </span></b> Use a comma\n\n(1) after each property value, except for the last one\n\n(2) after each value in an array except for the last one\n\n(3) after each key-value pair in an object except the last one\n\n(4) after each parameter in a function except the last one\n\nCommas cause the most syntax errors in Edit Mode."
+  }
+}
