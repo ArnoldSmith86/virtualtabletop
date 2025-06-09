@@ -510,19 +510,7 @@ function v17MaterialSymbols(properties) {
 function v18RoutineLegacyModes(meta, state) {
   meta.gameSettings = { legacyModes: {} };
 
-  let hasRoutine = false;
-  for(const id in state) {
-    for(const key in state[id]) {
-      if(key.match(/Routine$/)) {
-        hasRoutine = true;
-        break;
-      }
-    }
-    if(hasRoutine)
-      break;
-  }
-
-  if(hasRoutine) {
+  if(JSON.stringify(state).match(/"var |COMPUTE/)) {
     meta.gameSettings.legacyModes.convertNumericVarParametersToNumbers = true;
     meta.gameSettings.legacyModes.useOneAsDefaultForVarParameters = true;
   }
