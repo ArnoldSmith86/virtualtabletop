@@ -1,0 +1,222 @@
+{
+  "_meta": {
+    "version": 9,
+    "info": {
+      "name": "Types - Deck",
+      "image": "/assets/-1566725886_4080",
+      "rules": "",
+      "bgg": "",
+      "year": "2022",
+      "mode": "Tutorial",
+      "time": "",
+      "attribution": "The example cards in this room come from various public library games.  Attribution for the images in each deck follows.\n\n\nShape sorter deck:\n\nImages released under CC BY 3.0:\nhttps://game-icons.net/1x1/delapouite/plain-square.html (by Delapouite)\nhttps://game-icons.net/1x1/delapouite/plain-circle.html (by Delapouite)\nhttps://game-icons.net/1x1/delapouite/seven-pointed-star.html (by Delapouite)\nhttps://game-icons.net/1x1/darkzaitzev/star-shuriken.html (by DarkZaitzev)\nhttps://game-icons.net/1x1/skoll/divided-square.html (by Skoll)\nhttps://game-icons.net/1x1/sbed/health-normal.html (by sbed)\n\nTutti Frutti deck:\n\nThe fruit images are CC BY 3.0 from Game Developer Studio available at https://opengameart.org/content/fruit-icons-redo.\n\nThe yogurt, spoon, and ice cream images are CC0 and available at:\n - https://publicdomainvectors.org/en/free-clipart/Vector-illustration-of-yogurt-cup/24664.html\n - https://publicdomainvectors.org/en/free-clipart/Metallic-spoon/50510.html\n - https://publicdomainvectors.org/en/free-clipart/Color-vector-image-of-three-ice-cream-scoops-in-a-cone/5813.html\n\nCard back created at https://pattern.monster/leaves-9/ under MIT License available at https://github.com/catchspider2002/svelte-svg-patterns.\n\nLost Temples deck:\n\nThe jungle image used on the tiles is available under the Pexels License and is available at:\n\nhttps://www.pexels.com/photo/lush-palm-trees-growing-in-tropical-forest-4669542/\n\nThe various icons are available under CC BY 3.0 as follows:\n\n  -  By lorc): https://game-icons.net/1x1/lorc/cut-diamond.html\n\n  -  By faithtoken (gold ore): https://game-icons.net/1x1/faithtoken/ore.html",
+      "showName": false,
+      "lastUpdate": 1748992056737,
+      "skill": "",
+      "description": "",
+      "similarImage": "",
+      "similarName": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": "",
+      "similarDesigner": "",
+      "variantImage": "",
+      "variant": "HTML",
+      "language": "en-US",
+      "players": "1"
+    }
+  },
+  "8fr3": {
+    "id": "8fr3",
+    "x": 400,
+    "y": -2,
+    "width": 800,
+    "height": 60,
+    "z": 74,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "font-size: 60px;text-align:center",
+    "text": "Decks: HTML"
+  },
+  "406b": {
+    "id": "406b",
+    "x": 108,
+    "y": 114,
+    "width": 1400,
+    "height": 150,
+    "layer": -3,
+    "z": 127,
+    "css": "font-size: 25px; ",
+    "text": "Decks 'faceTemplates' and 'cardTypes' also work with HTML. You can use styled text, embedded images, and most other things allowed in html."
+  },
+  "pwezB": {
+    "id": "pwezB",
+    "parent": "example1",
+    "fixedParent": true,
+    "y": 171.36,
+    "width": 111,
+    "height": 40,
+    "type": "button",
+    "text": "Recall & Shuffle",
+    "movableInEdit": false,
+    "clickRoutine": [
+      {
+        "func": "RECALL",
+        "holder": "${PROPERTY parent}"
+      },
+      {
+        "func": "FLIP",
+        "holder": "${PROPERTY parent}",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "${PROPERTY parent}"
+      }
+    ]
+  },
+  "example1": {
+    "type": "holder",
+    "id": "example1",
+    "x": 106,
+    "y": 357,
+    "z": 129,
+    "dropTarget": {
+      "type": "card"
+    }
+  },
+  "deck1": {
+    "type": "deck",
+    "id": "deck1",
+    "parent": "example1",
+    "x": 5,
+    "y": 7,
+    "z": 1,
+    "cardDefaults": {
+      "titlesize": "24px",
+      "enlarge": 3
+    },
+    "cardTypes": {
+      "c1": {
+        "title": "Title",
+        "content": "This is the <b>content</b> section.<br>Gives <img src=\"i/icons/village_3d.svg\" width=\"25px\" height=\"25px\">",
+        "modifier": "+4",
+        "bgcolor": "#ccf"
+      },
+      "c2": {
+        "title": "Multi-line title",
+        "content": "This card auto reflows for the larger title",
+        "modifier": "-1",
+        "bgcolor": "#ccf"
+      },
+      "c3": {
+        "title": "Effect",
+        "content": "<table><tr><td>😕</td><td>confusion</td></tr><tr><td>😆</td><td>joy</td></tr></table><p>This card has no modifier</p>",
+        "bgcolor": "#fcc"
+      },
+      "c5": {
+        "title": "Font-size",
+        "content": "<p style='font-size: 10pt'>10pt</p>"
+      }
+    },
+    "css": {
+      "_,.html": {
+        "border-radius": "5px",
+        "border": "2px solid rgba(0, 0, 0, 0.4)"
+      }
+    },
+    "faceTemplates": [
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 103,
+            "height": 160,
+            "color": "black",
+            "value": "/i/cards-default/2B.svg"
+          }
+        ]
+      },
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "html",
+            "css": {
+              "body": {
+                "background": "white",
+                "display": "flex",
+                "flex-direction": "column"
+              },
+              ".flex": {
+                "flex": 1
+              },
+              ".title": {
+                "font-size": "22px",
+                "background": "${PROPERTY bgcolor}"
+              },
+              "body > div": {
+                "padding": "8px"
+              },
+              ".test": {
+                "color": "red"
+              }
+            },
+            "x": 0,
+            "y": 0,
+            "width": 103,
+            "height": 160,
+            "classes": "html",
+            "color": "black",
+            "value": "<div class=\"title\"> ${PROPERTY title}</div><div class=\"flex\">${PROPERTY content}</div>"
+          }
+        ]
+      }
+    ]
+  },
+  "qdtp": {
+    "deck": "deck1",
+    "type": "card",
+    "cardType": "c1",
+    "id": "qdtp",
+    "z": 19,
+    "x": 672,
+    "y": 365,
+    "activeFace": 1
+  },
+  "qr59": {
+    "deck": "deck1",
+    "type": "card",
+    "cardType": "c2",
+    "id": "qr59",
+    "z": 18,
+    "x": 550,
+    "y": 365,
+    "activeFace": 1
+  },
+  "c2md": {
+    "deck": "deck1",
+    "type": "card",
+    "cardType": "c3",
+    "id": "c2md",
+    "z": 17,
+    "x": 428,
+    "y": 365,
+    "activeFace": 1
+  },
+  "tzot": {
+    "deck": "deck1",
+    "type": "card",
+    "cardType": "c5",
+    "id": "tzot",
+    "z": 11,
+    "x": 306,
+    "y": 365,
+    "activeFace": 1
+  }
+}
