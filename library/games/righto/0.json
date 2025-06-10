@@ -10,20 +10,20 @@
       "mode": "coop",
       "time": "5-15",
       "attribution": "<div>The implementation and assets, including the library image, were created by Mitchell Stolycia.</div><div><br></div><div>Everything is released to the public domain under CC0.</div>",
-      "lastUpdate": 1748451776498,
+      "lastUpdate": 1749403434751,
       "showName": false,
       "skill": "",
-      "description": "- righto definition:\nan informal, british exclamation used to express agreement.\n- synonyms:\nindeed · all right · okey dokey\n- example:\n\"we think these cards are in the correct order.\"\n\"righto.\"",
+      "description": "- righto definition:\nan informal, british exclamation used to express agreement\n- synonyms:\nindeed · all right · okey dokey\n- example:\n\"we think these cards are in the correct order\"\n\"righto, let's flip 'em\"",
       "similarImage": "",
       "similarName": "ito",
       "similarDesigner": "326",
       "similarAwards": "",
-      "ruleText": "<div><ol><li>All players will be dealt a card between 1 and 100.</li><li>A category is chosen between the players, for example \"least to most famous celebrity, with 100 being the most famous\".</li><li>Write a clue on your card in line with the number on your card.</li><ul><li>You cannot include numbers, values or quantities in your clue.</li></ul><li>Players then play their cards number side up in any order. There is no turn order.</li><ul><li>Cards can only be played directly to the left, right or in between previously played cards, clue side up (number side down).</li></ul><li>During and after playing cards, feel free to rearrange any cards. Openly discuss where you think any cards should be, and come to a joint agreement. You can and should talk about your own cards as well as others'.</li><li>Once the table has agreed, flip the cards over to their numbered side.</li><li>If the cards are in ascending order, you collectively win as a table. Otherwise, play another round.</li></ol><div>Think you know your way around <i>righto</i>? For a more difficult game, deal more cards to each player with the&nbsp;<i>Deal an extra card&nbsp;</i>button.</div></div>",
-      "helpText": "<div>Once all players have sat down by clicking on a seat, press <i>New round</i> to start a new round.</div><div><br></div><div>Feeling extra confident? Righto, play with extra cards in hand by clicking the <i>Deal an extra card</i> button.</div><div><br></div><div><b>To play a card:</b></div><div><ol><li>Click&nbsp;<i>Write clue card</i>&nbsp;to write your answer on your cards.</li><li>Drag your card to an open slot on the table.</li><li>If playing with multiple cards per player, repeat steps 1 and 2 for each card.</li><ul><li>Note: All cards in your hand will get written on every time <i>Write clue card</i> is used, so play your cards one at a time.</li></ul></ol><b>To rearrange cards:</b></div><blockquote><div>Click on the appropriate ⇆ button.</div></blockquote><div>Category cards are not used in this implementation. Come up with your own!</div>",
-      "variantImage": "",
-      "variant": "righto",
+      "ruleText": "<div><ol><li>All players will be dealt a card between 1 and 100.</li><li>A category is chosen between the players. For example: \"Celebrities: least famous to most famous\", with 100 being the most famous.</li><li>Write a clue on your card in line with the number on your card.</li><ul><li>You cannot include numbers, values or quantities in your clue.</li></ul><li>Players then play their cards number side up in any order. There is no turn order.</li><ul><li>Cards can only be played directly to the left, right or in between previously played cards, clue side up (number side down).</li></ul><li>During and after playing cards, feel free to rearrange any cards. Openly discuss where you think any cards should be, and come to a joint agreement. You can and should talk about your own cards as well as others'.</li><li>Once the table has agreed, flip the cards over to their numbered side.</li><li>If the cards are in ascending order, you collectively win as a table. Otherwise, play another round.</li></ol><div>Think you know your way around <i>righto</i>? For a more difficult game, deal more cards to each player with the&nbsp;<i>Deal an extra card&nbsp;</i>button.</div></div>",
+      "helpText": "<div>Once all players have sat down by clicking on a seat, press <i>New round</i> to start a new round.</div><div><br></div><div>Feeling extra confident? Righto, play with extra cards in hand by clicking the <i>Deal an extra card</i> button.</div><div><br></div><div><b>Choosing a category:</b></div><div><ul><li>Click on <i>Click to change category</i> and write your category.</li><ul><li>Using \"<b>to</b>\" or a&nbsp;<b>forward slash </b>\"<b>/</b>\" will split your category and overwrite the \"0\" and \"101\" scale.</li><li>Using a <b>colon </b>\"<b>:</b>\" to precede your scale within a category will format the scale similarly.</li><ul><li><i>Example: \"The Beatles: Worst to Best\", will result in the \"0\" and \"101\" being overwritten with \"0 Worst\" and \"101 Best\" respectively.</i></li></ul><li>The ends of the scale can also be manually changed by clicking on them.</li></ul><li>Category cards are not used in this implementation. Come up with your own!</li></ul></div><div><b>To play a card:</b></div><div><ol><li>Click&nbsp;<i>Write clue card</i>&nbsp;to write your answer on your cards.</li><li>Drag your card to an open slot on the table.</li><li>If playing with multiple cards per player, repeat steps 1 and 2 for each card.</li><ul><li>Note: All cards in your hand will get written on every time <i>Write clue card</i> is used, so play your cards one at a time.</li></ul></ol><b>To rearrange cards:</b></div><blockquote><div>Click on the appropriate ⇆ button.</div></blockquote><div><b>Flipping cards:</b></div><blockquote><div>Click on the lock button in the top right to allow the flipping of cards when clicking on them.</div></blockquote><blockquote><div><ul><li>Red/locked will prevent cards from flipping.</li><li>Green/unlocked will allow cards to be flipped.</li></ul></div></blockquote>",
+      "players": "2-18",
       "language": "en-GB",
-      "players": "2-18"
+      "variant": "righto",
+      "variantImage": "/assets/2106222269_65368"
     }
   },
   "deckHolderB": {
@@ -99,6 +99,48 @@
         "func": "SET",
         "property": "x",
         "value": 724
+      },
+      "var x = 0",
+      {
+        "func": "FOREACH",
+        "range": 3,
+        "loopRoutine": [
+          {
+            "func": "SELECT",
+            "property": "id",
+            "value": "l${x}"
+          },
+          {
+            "func": "GET",
+            "property": "pText"
+          },
+          {
+            "func": "SET",
+            "property": "text",
+            "value": "${pText}"
+          },
+          "var x = ${x} + 1"
+        ]
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "lock"
+      },
+      {
+        "func": "SET",
+        "property": "bgColor",
+        "value": "red"
+      },
+      {
+        "func": "SET",
+        "property": "text",
+        "value": "🔒"
+      },
+      {
+        "func": "SET",
+        "property": "moveCard",
+        "value": false
       }
     ],
     "x": 188,
@@ -200,42 +242,17 @@
     },
     "dropLimit": 1
   },
-  "cuv9": {
-    "type": "label",
-    "text": "0",
-    "css": "font-size: 30px",
-    "height": 42,
-    "width": 30,
-    "y": 176,
-    "z": 1,
-    "id": "cuv9",
-    "x": 89,
-    "dropLimit": 1
-  },
   "cuv10": {
-    "type": "label",
-    "text": "⤾",
-    "css": "font-size: 100px",
-    "height": 119,
-    "y": 225,
+    "y": 233,
     "z": 1,
     "id": "cuv10",
-    "x": 1475,
-    "rotation": -30,
-    "width": 87,
-    "dropLimit": 1
-  },
-  "cuv11": {
-    "type": "label",
-    "text": "101",
-    "css": "font-size: 30px",
-    "height": 40,
-    "width": 67,
-    "y": 554,
-    "z": 1,
-    "id": "cuv11",
-    "x": 1477,
-    "dropLimit": 1
+    "x": 1464,
+    "rotation": -45,
+    "dropLimit": 1,
+    "image": "/assets/-892459953_1780",
+    "layer": -10,
+    "movable": false,
+    "movableInEdit": false
   },
   "seat1": {
     "type": "seat",
@@ -408,7 +425,30 @@
       "width": 160,
       "height": 100,
       "color": "lightgrey",
-      "borderRadius": 7
+      "borderRadius": 7,
+      "clickRoutine": [
+        {
+          "func": "SELECT",
+          "property": "id",
+          "value": "lock"
+        },
+        {
+          "func": "GET",
+          "property": "moveCard"
+        },
+        {
+          "func": "IF",
+          "operand1": "${moveCard}",
+          "relation": "==",
+          "operand2": true,
+          "thenRoutine": [
+            {
+              "func": "FLIP",
+              "collection": "thisButton"
+            }
+          ]
+        }
+      ]
     },
     "cardTypes": {
       "1": {
@@ -727,8 +767,8 @@
           {
             "type": "text",
             "x": 0,
-            "y": 39,
-            "fontSize": 22,
+            "y": 2,
+            "fontSize": 20,
             "textAlign": "center",
             "verticleAlign": "center",
             "width": 160,
@@ -772,16 +812,16 @@
     "type": "card",
     "cardType": "1",
     "id": "ojmw",
-    "z": 14309,
-    "parent": "85xe",
-    "dropLimit": 1
+    "z": 22436,
+    "dropLimit": 1,
+    "parent": "85xe"
   },
   "mttj": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "2",
     "id": "mttj",
-    "z": 14341,
+    "z": 22389,
     "dropLimit": 1,
     "parent": "85xe"
   },
@@ -790,7 +830,7 @@
     "type": "card",
     "cardType": "3",
     "id": "lur3",
-    "z": 14347,
+    "z": 22384,
     "parent": "85xe",
     "dropLimit": 1
   },
@@ -799,7 +839,7 @@
     "type": "card",
     "cardType": "4",
     "id": "97oi",
-    "z": 14321,
+    "z": 22409,
     "dropLimit": 1,
     "parent": "85xe"
   },
@@ -808,7 +848,7 @@
     "type": "card",
     "cardType": "5",
     "id": "5s9w",
-    "z": 14329,
+    "z": 22432,
     "dropLimit": 1,
     "parent": "85xe"
   },
@@ -817,7 +857,7 @@
     "type": "card",
     "cardType": "6",
     "id": "nvmv",
-    "z": 14373,
+    "z": 22438,
     "parent": "85xe",
     "dropLimit": 1
   },
@@ -826,16 +866,16 @@
     "type": "card",
     "cardType": "7",
     "id": "h48l",
-    "z": 14318,
-    "parent": "85xe",
-    "dropLimit": 1
+    "z": 22437,
+    "dropLimit": 1,
+    "parent": "85xe"
   },
   "htjr": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "8",
     "id": "htjr",
-    "z": 14384,
+    "z": 22383,
     "parent": "85xe",
     "dropLimit": 1
   },
@@ -844,7 +884,7 @@
     "type": "card",
     "cardType": "9",
     "id": "dfs1",
-    "z": 14363,
+    "z": 22421,
     "parent": "85xe",
     "dropLimit": 1
   },
@@ -853,7 +893,7 @@
     "type": "card",
     "cardType": "10",
     "id": "je6w",
-    "z": 14352,
+    "z": 22397,
     "dropLimit": 1,
     "parent": "85xe"
   },
@@ -862,16 +902,16 @@
     "type": "card",
     "cardType": "11",
     "id": "m6kx",
-    "z": 14312,
-    "parent": "85xe",
-    "dropLimit": 1
+    "z": 22387,
+    "dropLimit": 1,
+    "parent": "85xe"
   },
   "cr4a": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "12",
     "id": "cr4a",
-    "z": 14315,
+    "z": 22375,
     "parent": "85xe",
     "dropLimit": 1
   },
@@ -880,7 +920,7 @@
     "type": "card",
     "cardType": "13",
     "id": "mwoh",
-    "z": 14337,
+    "z": 22400,
     "dropLimit": 1,
     "parent": "85xe"
   },
@@ -889,16 +929,16 @@
     "type": "card",
     "cardType": "14",
     "id": "x1js",
-    "z": 14336,
-    "parent": "85xe",
-    "dropLimit": 1
+    "z": 22408,
+    "dropLimit": 1,
+    "parent": "85xe"
   },
   "ix6i": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "15",
     "id": "ix6i",
-    "z": 14383,
+    "z": 22380,
     "parent": "85xe",
     "dropLimit": 1
   },
@@ -907,7 +947,7 @@
     "type": "card",
     "cardType": "16",
     "id": "ba6q",
-    "z": 14351,
+    "z": 22446,
     "parent": "85xe",
     "dropLimit": 1
   },
@@ -916,7 +956,7 @@
     "type": "card",
     "cardType": "17",
     "id": "dkqi",
-    "z": 14319,
+    "z": 22405,
     "parent": "85xe",
     "dropLimit": 1
   },
@@ -925,7 +965,7 @@
     "type": "card",
     "cardType": "18",
     "id": "fcgp",
-    "z": 14339,
+    "z": 22395,
     "parent": "85xe",
     "dropLimit": 1
   },
@@ -934,7 +974,7 @@
     "type": "card",
     "cardType": "19",
     "id": "agly",
-    "z": 14289,
+    "z": 22391,
     "parent": "85xe",
     "dropLimit": 1
   },
@@ -943,7 +983,7 @@
     "type": "card",
     "cardType": "20",
     "id": "3g7p",
-    "z": 14294,
+    "z": 22453,
     "dropLimit": 1,
     "parent": "85xe"
   },
@@ -952,16 +992,16 @@
     "type": "card",
     "cardType": "21",
     "id": "o20k",
-    "z": 14342,
-    "parent": "85xe",
-    "dropLimit": 1
+    "z": 22379,
+    "dropLimit": 1,
+    "parent": "85xe"
   },
   "97k5": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "22",
     "id": "97k5",
-    "z": 14333,
+    "z": 22390,
     "dropLimit": 1,
     "parent": "85xe"
   },
@@ -970,7 +1010,7 @@
     "type": "card",
     "cardType": "23",
     "id": "0v0m",
-    "z": 14293,
+    "z": 22434,
     "parent": "85xe",
     "dropLimit": 1
   },
@@ -979,7 +1019,7 @@
     "type": "card",
     "cardType": "24",
     "id": "ios4",
-    "z": 14305,
+    "z": 22386,
     "parent": "85xe",
     "dropLimit": 1
   },
@@ -988,7 +1028,7 @@
     "type": "card",
     "cardType": "25",
     "id": "jqtz",
-    "z": 14330,
+    "z": 22441,
     "parent": "85xe",
     "dropLimit": 1
   },
@@ -997,7 +1037,7 @@
     "type": "card",
     "cardType": "26",
     "id": "zr0v",
-    "z": 14379,
+    "z": 22450,
     "dropLimit": 1,
     "parent": "85xe"
   },
@@ -1006,7 +1046,7 @@
     "type": "card",
     "cardType": "27",
     "id": "0ogj",
-    "z": 14350,
+    "z": 22415,
     "parent": "85xe",
     "dropLimit": 1
   },
@@ -1015,7 +1055,7 @@
     "type": "card",
     "cardType": "28",
     "id": "8co2",
-    "z": 14311,
+    "z": 22385,
     "parent": "85xe",
     "dropLimit": 1
   },
@@ -1024,7 +1064,7 @@
     "type": "card",
     "cardType": "29",
     "id": "c2c7",
-    "z": 14349,
+    "z": 22378,
     "dropLimit": 1,
     "parent": "85xe"
   },
@@ -1033,7 +1073,7 @@
     "type": "card",
     "cardType": "30",
     "id": "p8rz",
-    "z": 14296,
+    "z": 22457,
     "dropLimit": 1,
     "parent": "85xe"
   },
@@ -1042,7 +1082,7 @@
     "type": "card",
     "cardType": "31",
     "id": "apkr",
-    "z": 14286,
+    "z": 22428,
     "parent": "85xe",
     "dropLimit": 1
   },
@@ -1051,7 +1091,7 @@
     "type": "card",
     "cardType": "32",
     "id": "d2wf",
-    "z": 14290,
+    "z": 22454,
     "parent": "85xe",
     "dropLimit": 1
   },
@@ -1060,7 +1100,7 @@
     "type": "card",
     "cardType": "33",
     "id": "3e5j",
-    "z": 14287,
+    "z": 22427,
     "dropLimit": 1,
     "parent": "85xe"
   },
@@ -1069,7 +1109,7 @@
     "type": "card",
     "cardType": "34",
     "id": "45wi",
-    "z": 14377,
+    "z": 22364,
     "parent": "85xe",
     "dropLimit": 1
   },
@@ -1078,7 +1118,7 @@
     "type": "card",
     "cardType": "35",
     "id": "nrs4",
-    "z": 14357,
+    "z": 22388,
     "parent": "85xe",
     "dropLimit": 1
   },
@@ -1087,7 +1127,7 @@
     "type": "card",
     "cardType": "36",
     "id": "wufg",
-    "z": 14303,
+    "z": 22440,
     "dropLimit": 1,
     "parent": "85xe"
   },
@@ -1096,7 +1136,7 @@
     "type": "card",
     "cardType": "37",
     "id": "nkq7",
-    "z": 14369,
+    "z": 22443,
     "parent": "85xe",
     "dropLimit": 1
   },
@@ -1105,7 +1145,7 @@
     "type": "card",
     "cardType": "38",
     "id": "qngc",
-    "z": 14385,
+    "z": 22417,
     "dropLimit": 1,
     "parent": "85xe"
   },
@@ -1114,16 +1154,16 @@
     "type": "card",
     "cardType": "39",
     "id": "pyse",
-    "z": 14298,
-    "parent": "85xe",
-    "dropLimit": 1
+    "z": 22433,
+    "dropLimit": 1,
+    "parent": "85xe"
   },
   "vynl": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "40",
     "id": "vynl",
-    "z": 14358,
+    "z": 22373,
     "dropLimit": 1,
     "parent": "85xe"
   },
@@ -1132,16 +1172,16 @@
     "type": "card",
     "cardType": "41",
     "id": "ggsc",
-    "z": 14306,
-    "parent": "85xe",
-    "dropLimit": 1
+    "z": 22425,
+    "dropLimit": 1,
+    "parent": "85xe"
   },
   "hhwc": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "42",
     "id": "hhwc",
-    "z": 14302,
+    "z": 22392,
     "dropLimit": 1,
     "parent": "85xe"
   },
@@ -1150,7 +1190,7 @@
     "type": "card",
     "cardType": "43",
     "id": "mndb",
-    "z": 14338,
+    "z": 22451,
     "parent": "85xe",
     "dropLimit": 1
   },
@@ -1159,7 +1199,7 @@
     "type": "card",
     "cardType": "44",
     "id": "wxmq",
-    "z": 14348,
+    "z": 22369,
     "parent": "85xe",
     "dropLimit": 1
   },
@@ -1168,7 +1208,7 @@
     "type": "card",
     "cardType": "45",
     "id": "176y",
-    "z": 14297,
+    "z": 22416,
     "dropLimit": 1,
     "parent": "85xe"
   },
@@ -1177,7 +1217,7 @@
     "type": "card",
     "cardType": "46",
     "id": "lmix",
-    "z": 14288,
+    "z": 22442,
     "parent": "85xe",
     "dropLimit": 1
   },
@@ -1186,7 +1226,7 @@
     "type": "card",
     "cardType": "47",
     "id": "bv3a",
-    "z": 14361,
+    "z": 22381,
     "dropLimit": 1,
     "parent": "85xe"
   },
@@ -1195,7 +1235,7 @@
     "type": "card",
     "cardType": "48",
     "id": "c1wy",
-    "z": 14344,
+    "z": 22423,
     "parent": "85xe",
     "dropLimit": 1
   },
@@ -1204,7 +1244,7 @@
     "type": "card",
     "cardType": "49",
     "id": "2sa7",
-    "z": 14378,
+    "z": 22376,
     "parent": "85xe",
     "dropLimit": 1
   },
@@ -1213,7 +1253,7 @@
     "type": "card",
     "cardType": "50",
     "id": "mi0q",
-    "z": 14364,
+    "z": 22367,
     "parent": "85xe",
     "dropLimit": 1
   },
@@ -1222,7 +1262,7 @@
     "type": "card",
     "cardType": "51",
     "id": "02ak",
-    "z": 14326,
+    "z": 22455,
     "dropLimit": 1,
     "parent": "85xe"
   },
@@ -1231,7 +1271,7 @@
     "type": "card",
     "cardType": "52",
     "id": "1un2",
-    "z": 14360,
+    "z": 22429,
     "parent": "85xe",
     "dropLimit": 1
   },
@@ -1240,7 +1280,7 @@
     "type": "card",
     "cardType": "53",
     "id": "vuo0",
-    "z": 14345,
+    "z": 22363,
     "parent": "85xe",
     "dropLimit": 1
   },
@@ -1249,7 +1289,7 @@
     "type": "card",
     "cardType": "54",
     "id": "jv6j",
-    "z": 14322,
+    "z": 22439,
     "parent": "85xe",
     "dropLimit": 1
   },
@@ -1258,7 +1298,7 @@
     "type": "card",
     "cardType": "55",
     "id": "0awn",
-    "z": 14334,
+    "z": 22431,
     "parent": "85xe",
     "dropLimit": 1
   },
@@ -1267,7 +1307,7 @@
     "type": "card",
     "cardType": "56",
     "id": "tihq",
-    "z": 14368,
+    "z": 22402,
     "parent": "85xe",
     "dropLimit": 1
   },
@@ -1276,7 +1316,7 @@
     "type": "card",
     "cardType": "57",
     "id": "3m4o",
-    "z": 14304,
+    "z": 22459,
     "parent": "85xe",
     "dropLimit": 1
   },
@@ -1285,7 +1325,7 @@
     "type": "card",
     "cardType": "58",
     "id": "uhem",
-    "z": 14380,
+    "z": 22399,
     "parent": "85xe",
     "dropLimit": 1
   },
@@ -1294,7 +1334,7 @@
     "type": "card",
     "cardType": "59",
     "id": "kj4f",
-    "z": 14328,
+    "z": 22403,
     "parent": "85xe",
     "dropLimit": 1
   },
@@ -1303,7 +1343,7 @@
     "type": "card",
     "cardType": "60",
     "id": "j2mg",
-    "z": 14356,
+    "z": 22418,
     "parent": "85xe",
     "dropLimit": 1
   },
@@ -1312,7 +1352,7 @@
     "type": "card",
     "cardType": "61",
     "id": "p8pl",
-    "z": 14355,
+    "z": 22420,
     "dropLimit": 1,
     "parent": "85xe"
   },
@@ -1321,7 +1361,7 @@
     "type": "card",
     "cardType": "62",
     "id": "oyqz",
-    "z": 14362,
+    "z": 22396,
     "parent": "85xe",
     "dropLimit": 1
   },
@@ -1330,7 +1370,7 @@
     "type": "card",
     "cardType": "63",
     "id": "hi4a",
-    "z": 14324,
+    "z": 22365,
     "parent": "85xe",
     "dropLimit": 1
   },
@@ -1339,7 +1379,7 @@
     "type": "card",
     "cardType": "64",
     "id": "6fse",
-    "z": 14340,
+    "z": 22448,
     "parent": "85xe",
     "dropLimit": 1
   },
@@ -1348,7 +1388,7 @@
     "type": "card",
     "cardType": "65",
     "id": "rkhu",
-    "z": 14300,
+    "z": 22412,
     "parent": "85xe",
     "dropLimit": 1
   },
@@ -1357,7 +1397,7 @@
     "type": "card",
     "cardType": "66",
     "id": "ptfd",
-    "z": 14376,
+    "z": 22424,
     "dropLimit": 1,
     "parent": "85xe"
   },
@@ -1366,7 +1406,7 @@
     "type": "card",
     "cardType": "67",
     "id": "49sa",
-    "z": 14365,
+    "z": 22422,
     "dropLimit": 1,
     "parent": "85xe"
   },
@@ -1375,7 +1415,7 @@
     "type": "card",
     "cardType": "68",
     "id": "faeb",
-    "z": 14295,
+    "z": 22404,
     "parent": "85xe",
     "dropLimit": 1
   },
@@ -1384,7 +1424,7 @@
     "type": "card",
     "cardType": "69",
     "id": "q08f",
-    "z": 14325,
+    "z": 22414,
     "dropLimit": 1,
     "parent": "85xe"
   },
@@ -1393,7 +1433,7 @@
     "type": "card",
     "cardType": "70",
     "id": "98ro",
-    "z": 14346,
+    "z": 22371,
     "parent": "85xe",
     "dropLimit": 1
   },
@@ -1402,16 +1442,16 @@
     "type": "card",
     "cardType": "71",
     "id": "hea1",
-    "z": 14375,
-    "parent": "85xe",
-    "dropLimit": 1
+    "z": 22398,
+    "dropLimit": 1,
+    "parent": "85xe"
   },
   "h0nv": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "72",
     "id": "h0nv",
-    "z": 14374,
+    "z": 22370,
     "parent": "85xe",
     "dropLimit": 1
   },
@@ -1420,16 +1460,17 @@
     "type": "card",
     "cardType": "73",
     "id": "ujjp",
-    "z": 14371,
-    "parent": "85xe",
-    "dropLimit": 1
+    "z": 22444,
+    "dropLimit": 1,
+    "hoverParent": "deckHolder",
+    "parent": "85xe"
   },
   "ogve": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "74",
     "id": "ogve",
-    "z": 14327,
+    "z": 22461,
     "dropLimit": 1,
     "parent": "85xe"
   },
@@ -1438,7 +1479,7 @@
     "type": "card",
     "cardType": "75",
     "id": "cvz0",
-    "z": 14320,
+    "z": 22393,
     "dropLimit": 1,
     "parent": "85xe"
   },
@@ -1447,7 +1488,7 @@
     "type": "card",
     "cardType": "76",
     "id": "8gdb",
-    "z": 14343,
+    "z": 22460,
     "parent": "85xe",
     "dropLimit": 1
   },
@@ -1456,25 +1497,25 @@
     "type": "card",
     "cardType": "77",
     "id": "hviy",
-    "z": 14359,
-    "parent": "85xe",
-    "dropLimit": 1
+    "z": 22401,
+    "dropLimit": 1,
+    "parent": "85xe"
   },
   "w5y6": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "78",
     "id": "w5y6",
-    "z": 14381,
-    "parent": "85xe",
-    "dropLimit": 1
+    "z": 22456,
+    "dropLimit": 1,
+    "parent": "85xe"
   },
   "bf7m": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "79",
     "id": "bf7m",
-    "z": 14292,
+    "z": 22447,
     "parent": "85xe",
     "dropLimit": 1
   },
@@ -1483,7 +1524,7 @@
     "type": "card",
     "cardType": "80",
     "id": "8wu2",
-    "z": 14291,
+    "z": 22406,
     "parent": "85xe",
     "dropLimit": 1
   },
@@ -1492,7 +1533,7 @@
     "type": "card",
     "cardType": "81",
     "id": "1itv",
-    "z": 14354,
+    "z": 22452,
     "parent": "85xe",
     "dropLimit": 1
   },
@@ -1501,7 +1542,7 @@
     "type": "card",
     "cardType": "82",
     "id": "mg2a",
-    "z": 14316,
+    "z": 22407,
     "parent": "85xe",
     "dropLimit": 1
   },
@@ -1510,7 +1551,7 @@
     "type": "card",
     "cardType": "83",
     "id": "jq34",
-    "z": 14299,
+    "z": 22377,
     "dropLimit": 1,
     "parent": "85xe"
   },
@@ -1519,7 +1560,7 @@
     "type": "card",
     "cardType": "84",
     "id": "pf9n",
-    "z": 14301,
+    "z": 22411,
     "parent": "85xe",
     "dropLimit": 1
   },
@@ -1528,7 +1569,7 @@
     "type": "card",
     "cardType": "85",
     "id": "k44v",
-    "z": 14372,
+    "z": 22410,
     "parent": "85xe",
     "dropLimit": 1
   },
@@ -1537,7 +1578,7 @@
     "type": "card",
     "cardType": "86",
     "id": "hd8f",
-    "z": 14317,
+    "z": 22430,
     "parent": "85xe",
     "dropLimit": 1
   },
@@ -1546,7 +1587,7 @@
     "type": "card",
     "cardType": "87",
     "id": "i173",
-    "z": 14323,
+    "z": 22394,
     "dropLimit": 1,
     "parent": "85xe"
   },
@@ -1555,7 +1596,7 @@
     "type": "card",
     "cardType": "88",
     "id": "gxdr",
-    "z": 14310,
+    "z": 22374,
     "dropLimit": 1,
     "parent": "85xe"
   },
@@ -1564,7 +1605,7 @@
     "type": "card",
     "cardType": "89",
     "id": "m6ze",
-    "z": 14353,
+    "z": 22458,
     "parent": "85xe",
     "dropLimit": 1
   },
@@ -1573,7 +1614,7 @@
     "type": "card",
     "cardType": "90",
     "id": "ax9k",
-    "z": 14367,
+    "z": 22368,
     "parent": "85xe",
     "dropLimit": 1
   },
@@ -1582,7 +1623,7 @@
     "type": "card",
     "cardType": "91",
     "id": "djyg",
-    "z": 14382,
+    "z": 22462,
     "parent": "85xe",
     "dropLimit": 1
   },
@@ -1591,7 +1632,7 @@
     "type": "card",
     "cardType": "92",
     "id": "63yy",
-    "z": 14308,
+    "z": 22445,
     "dropLimit": 1,
     "parent": "85xe"
   },
@@ -1600,7 +1641,7 @@
     "type": "card",
     "cardType": "93",
     "id": "82rx",
-    "z": 14313,
+    "z": 22413,
     "dropLimit": 1,
     "parent": "85xe"
   },
@@ -1609,7 +1650,7 @@
     "type": "card",
     "cardType": "94",
     "id": "vh9j",
-    "z": 14332,
+    "z": 22426,
     "parent": "85xe",
     "dropLimit": 1
   },
@@ -1618,7 +1659,7 @@
     "type": "card",
     "cardType": "95",
     "id": "3rk7",
-    "z": 14331,
+    "z": 22372,
     "parent": "85xe",
     "dropLimit": 1
   },
@@ -1627,7 +1668,7 @@
     "type": "card",
     "cardType": "96",
     "id": "1dl4",
-    "z": 14335,
+    "z": 22449,
     "dropLimit": 1,
     "parent": "85xe"
   },
@@ -1636,7 +1677,7 @@
     "type": "card",
     "cardType": "97",
     "id": "im65",
-    "z": 14366,
+    "z": 22435,
     "parent": "85xe",
     "dropLimit": 1
   },
@@ -1645,7 +1686,7 @@
     "type": "card",
     "cardType": "98",
     "id": "2n49",
-    "z": 14314,
+    "z": 22382,
     "dropLimit": 1,
     "parent": "85xe"
   },
@@ -1654,7 +1695,7 @@
     "type": "card",
     "cardType": "99",
     "id": "ak1v",
-    "z": 14307,
+    "z": 22366,
     "dropLimit": 1,
     "parent": "85xe"
   },
@@ -1663,7 +1704,7 @@
     "type": "card",
     "cardType": "100",
     "id": "qeyb",
-    "z": 14370,
+    "z": 22419,
     "dropLimit": 1,
     "parent": "85xe"
   },
@@ -1784,7 +1825,7 @@
     "type": "holder",
     "id": "h7",
     "x": 1300,
-    "y": 329,
+    "y": 304,
     "width": 168,
     "height": 111,
     "dropTarget": {
@@ -1796,7 +1837,7 @@
     "type": "holder",
     "id": "h8",
     "x": 1069,
-    "y": 329,
+    "y": 314,
     "width": 168,
     "height": 111,
     "dropTarget": {
@@ -1808,7 +1849,7 @@
     "type": "holder",
     "id": "h9",
     "x": 838,
-    "y": 329,
+    "y": 324,
     "width": 168,
     "height": 111,
     "dropTarget": {
@@ -1820,7 +1861,7 @@
     "type": "holder",
     "id": "h10",
     "x": 608,
-    "y": 329,
+    "y": 334,
     "width": 168,
     "height": 111,
     "dropTarget": {
@@ -1832,7 +1873,7 @@
     "type": "holder",
     "id": "h11",
     "x": 377,
-    "y": 329,
+    "y": 344,
     "width": 168,
     "height": 111,
     "dropTarget": {
@@ -1844,7 +1885,7 @@
     "type": "holder",
     "id": "h12",
     "x": 146,
-    "y": 329,
+    "y": 354,
     "width": 168,
     "height": 111,
     "dropTarget": {
@@ -1951,13 +1992,10 @@
     "id": "background",
     "width": 1600,
     "height": 1000,
-    "layer": -10,
+    "layer": -20,
     "z": 94,
     "movable": false,
     "movableInEdit": false,
-    "css": {
-      "background": ""
-    },
     "dropLimit": 1
   },
   "h13": {
@@ -2033,17 +2071,16 @@
     "dropLimit": 1
   },
   "cuv12": {
-    "type": "label",
-    "text": "⤿",
-    "css": "font-size: 100px",
-    "height": 119,
-    "y": 411,
+    "y": 444,
     "z": 1,
     "id": "cuv12",
-    "x": 58,
-    "rotation": 30,
-    "width": 87,
-    "dropLimit": 1
+    "x": 41,
+    "dropLimit": 1,
+    "image": "/assets/-1202276114_1786",
+    "rotation": 45,
+    "layer": -10,
+    "movable": false,
+    "movableInEdit": false
   },
   "seat13": {
     "type": "seat",
@@ -2172,7 +2209,7 @@
     "type": "button",
     "id": "swap6",
     "x": 1451,
-    "y": 272,
+    "y": 259,
     "width": 40,
     "height": 40,
     "z": 2,
@@ -2190,7 +2227,7 @@
     "type": "button",
     "id": "swap7",
     "x": 1248,
-    "y": 340,
+    "y": 315,
     "width": 40,
     "height": 40,
     "z": 2,
@@ -2207,7 +2244,7 @@
     "type": "button",
     "id": "swap8",
     "x": 1016,
-    "y": 340,
+    "y": 325,
     "width": 40,
     "height": 40,
     "z": 2,
@@ -2224,7 +2261,7 @@
     "type": "button",
     "id": "swap9",
     "x": 784,
-    "y": 340,
+    "y": 335,
     "width": 40,
     "height": 40,
     "z": 2,
@@ -2241,7 +2278,7 @@
     "type": "button",
     "id": "swap10",
     "x": 556,
-    "y": 340,
+    "y": 345,
     "width": 40,
     "height": 40,
     "z": 2,
@@ -2258,7 +2295,7 @@
     "type": "button",
     "id": "swap11",
     "x": 325,
-    "y": 340,
+    "y": 355,
     "width": 40,
     "height": 40,
     "z": 2,
@@ -2274,8 +2311,8 @@
   "swap12": {
     "type": "button",
     "id": "swap12",
-    "x": 119,
-    "y": 458,
+    "x": 115,
+    "y": 470,
     "width": 40,
     "height": 40,
     "z": 2,
@@ -2459,5 +2496,1157 @@
     "z": 4,
     "id": "o2ga",
     "dropLimit": 1
+  },
+  "l0": {
+    "type": "basic",
+    "id": "l0",
+    "x": 460,
+    "y": 29,
+    "width": 1000,
+    "height": 80,
+    "css": {
+      "justify-content": "center",
+      "align-items": "center",
+      "text-align": "center",
+      "display": "flex",
+      "font-size": "30px"
+    },
+    "text": "Click to change category",
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "fields": [
+          {
+            "type": "string"
+          }
+        ]
+      },
+      {
+        "func": "SELECT",
+        "source": "thisButton"
+      },
+      {
+        "func": "SET",
+        "property": "text",
+        "value": "${undefined}"
+      },
+      "var cat = ${undefined}",
+      "var include = ${cat} includes ' to '",
+      {
+        "func": "IF",
+        "operand1": "${include}",
+        "relation": "==",
+        "operand2": false,
+        "thenRoutine": [
+          "var include = ${cat} includes '/'"
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${include}",
+        "relation": "==",
+        "operand2": true,
+        "thenRoutine": [
+          "var include = ${cat} includes ':'",
+          {
+            "func": "IF",
+            "operand1": "${include}",
+            "relation": "==",
+            "operand2": true,
+            "thenRoutine": [
+              "var cat = ${cat} replace ': ' ':'",
+              "var cat = ${cat} split ':'",
+              "var cat = pop ${cat}",
+              "var cat =  ${cat} replace ' to ' ',' ",
+              "var cat =  ${cat} replace '/' ',' ",
+              "var cat = ${cat} split ','",
+              "var cat1 = shift ${cat}",
+              "var cat2 = pop ${cat}"
+            ],
+            "elseRoutine": [
+              "var cat =  ${cat} replace ' to ' ',' ",
+              "var cat =  ${cat} replace '/' ',' ",
+              "var cat = ${cat} split ','",
+              "var cat1 = shift ${cat}",
+              "var cat2 = pop ${cat}"
+            ]
+          },
+          {
+            "func": "SELECT",
+            "property": "id",
+            "value": "l1"
+          },
+          {
+            "func": "SET",
+            "property": "text",
+            "value": "0\n${cat1}"
+          },
+          {
+            "func": "SELECT",
+            "property": "id",
+            "value": "l2"
+          },
+          {
+            "func": "SET",
+            "property": "text",
+            "value": "101\n${cat2}"
+          }
+        ]
+      }
+    ],
+    "movable": false,
+    "pText": "Click to change category",
+    "layer": -10
+  },
+  "l1": {
+    "type": "basic",
+    "id": "l1",
+    "x": 19,
+    "y": 142,
+    "width": 125,
+    "height": 111,
+    "z": 2,
+    "css": {
+      "justify-content": "center",
+      "align-items": "center",
+      "text-align": "center",
+      "display": "flex",
+      "font-size": "20px"
+    },
+    "dropLimit": 1,
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "fields": [
+          {
+            "type": "string"
+          }
+        ]
+      },
+      {
+        "func": "SELECT",
+        "source": "thisButton"
+      },
+      {
+        "func": "SET",
+        "property": "text",
+        "value": "0\n${undefined}"
+      }
+    ],
+    "movable": false,
+    "pText": "0",
+    "text": "0",
+    "layer": -10
+  },
+  "l2": {
+    "type": "basic",
+    "id": "l2",
+    "x": 1470,
+    "y": 515,
+    "width": 125,
+    "height": 111,
+    "z": 1,
+    "css": {
+      "justify-content": "center",
+      "align-items": "center",
+      "text-align": "center",
+      "display": "flex",
+      "font-size": "20px"
+    },
+    "dropLimit": 1,
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "fields": [
+          {
+            "type": "string"
+          }
+        ]
+      },
+      {
+        "func": "SELECT",
+        "source": "thisButton"
+      },
+      {
+        "func": "SET",
+        "property": "text",
+        "value": "101\n${undefined}"
+      }
+    ],
+    "movable": false,
+    "pText": "101",
+    "text": "101",
+    "layer": -10
+  },
+  "lock": {
+    "id": "lock",
+    "x": 1516,
+    "text": "🔒",
+    "css": {
+      "justify-content": "center",
+      "align-items": "top",
+      "text-align": "center",
+      "display": "flex",
+      "font-size": "50px",
+      "background": "${PROPERTY bgColor}",
+      "border": "5px solid black"
+    },
+    "bgColor": "red",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "lock"
+      },
+      {
+        "func": "GET",
+        "property": "bgColor"
+      },
+      {
+        "func": "GET",
+        "property": "moveCard"
+      },
+      {
+        "func": "IF",
+        "operand1": "${bgColor}",
+        "relation": "==",
+        "operand2": "lightgreen",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "bgColor",
+            "value": "red"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "text",
+            "value": "🔒"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "moveCard",
+            "value": false
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${bgColor}",
+        "relation": "==",
+        "operand2": "red",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "bgColor",
+            "value": "lightgreen"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "text",
+            "value": "🔓"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "moveCard",
+            "value": true
+          }
+        ]
+      }
+    ],
+    "z": 7,
+    "movable": false,
+    "moveCard": false,
+    "width": 74,
+    "height": 74,
+    "layer": -10,
+    "movableInEdit": false
+  },
+  "seatH1": {
+    "id": "seatH1",
+    "parent": "seat1",
+    "fixedParent": true,
+    "x": -20,
+    "y": -20,
+    "width": 30,
+    "height": 30,
+    "borderRadius": 100,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "css": {
+      "font-size": "18px",
+      "display": "flex",
+      "align-items": "center",
+      "justify-content": "center",
+      "color": "#6d6d6d",
+      "background": "#e4e4e4",
+      "border": "2px solid #999999"
+    },
+    "text": 0,
+    "ownerGlobalUpdateRoutine": [
+      "var parent = ${PROPERTY parent}",
+      "var COUNT = 0",
+      {
+        "func": "SELECT",
+        "property": "_ancestor",
+        "value": "${PROPERTY hand OF $parent}"
+      },
+      {
+        "func": "COUNT",
+        "owner": "${PROPERTY player OF $parent}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "text",
+        "value": "${COUNT}"
+      }
+    ],
+    "playerGlobalUpdateRoutine": [
+      {
+        "func": "CALL",
+        "routine": "ownerGlobalUpdateRoutine",
+        "widget": "${PROPERTY id}"
+      }
+    ]
+  },
+  "seatH2": {
+    "id": "seatH2",
+    "parent": "seat2",
+    "fixedParent": true,
+    "x": -20,
+    "y": -20,
+    "width": 30,
+    "height": 30,
+    "borderRadius": 100,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "css": {
+      "font-size": "18px",
+      "display": "flex",
+      "align-items": "center",
+      "justify-content": "center",
+      "color": "#6d6d6d",
+      "background": "#e4e4e4",
+      "border": "2px solid #999999"
+    },
+    "text": 0,
+    "ownerGlobalUpdateRoutine": [
+      "var parent = ${PROPERTY parent}",
+      "var COUNT = 0",
+      {
+        "func": "SELECT",
+        "property": "_ancestor",
+        "value": "${PROPERTY hand OF $parent}"
+      },
+      {
+        "func": "COUNT",
+        "owner": "${PROPERTY player OF $parent}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "text",
+        "value": "${COUNT}"
+      }
+    ],
+    "playerGlobalUpdateRoutine": [
+      {
+        "func": "CALL",
+        "routine": "ownerGlobalUpdateRoutine",
+        "widget": "${PROPERTY id}"
+      }
+    ]
+  },
+  "seatH3": {
+    "id": "seatH3",
+    "parent": "seat3",
+    "fixedParent": true,
+    "x": -20,
+    "y": -20,
+    "width": 30,
+    "height": 30,
+    "borderRadius": 100,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "css": {
+      "font-size": "18px",
+      "display": "flex",
+      "align-items": "center",
+      "justify-content": "center",
+      "color": "#6d6d6d",
+      "background": "#e4e4e4",
+      "border": "2px solid #999999"
+    },
+    "text": 0,
+    "ownerGlobalUpdateRoutine": [
+      "var parent = ${PROPERTY parent}",
+      "var COUNT = 0",
+      {
+        "func": "SELECT",
+        "property": "_ancestor",
+        "value": "${PROPERTY hand OF $parent}"
+      },
+      {
+        "func": "COUNT",
+        "owner": "${PROPERTY player OF $parent}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "text",
+        "value": "${COUNT}"
+      }
+    ],
+    "playerGlobalUpdateRoutine": [
+      {
+        "func": "CALL",
+        "routine": "ownerGlobalUpdateRoutine",
+        "widget": "${PROPERTY id}"
+      }
+    ]
+  },
+  "seatH4": {
+    "id": "seatH4",
+    "parent": "seat4",
+    "fixedParent": true,
+    "x": -20,
+    "y": -20,
+    "width": 30,
+    "height": 30,
+    "borderRadius": 100,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "css": {
+      "font-size": "18px",
+      "display": "flex",
+      "align-items": "center",
+      "justify-content": "center",
+      "color": "#6d6d6d",
+      "background": "#e4e4e4",
+      "border": "2px solid #999999"
+    },
+    "text": 0,
+    "ownerGlobalUpdateRoutine": [
+      "var parent = ${PROPERTY parent}",
+      "var COUNT = 0",
+      {
+        "func": "SELECT",
+        "property": "_ancestor",
+        "value": "${PROPERTY hand OF $parent}"
+      },
+      {
+        "func": "COUNT",
+        "owner": "${PROPERTY player OF $parent}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "text",
+        "value": "${COUNT}"
+      }
+    ],
+    "playerGlobalUpdateRoutine": [
+      {
+        "func": "CALL",
+        "routine": "ownerGlobalUpdateRoutine",
+        "widget": "${PROPERTY id}"
+      }
+    ]
+  },
+  "seatH5": {
+    "id": "seatH5",
+    "parent": "seat5",
+    "fixedParent": true,
+    "x": -20,
+    "y": -20,
+    "width": 30,
+    "height": 30,
+    "borderRadius": 100,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "css": {
+      "font-size": "18px",
+      "display": "flex",
+      "align-items": "center",
+      "justify-content": "center",
+      "color": "#6d6d6d",
+      "background": "#e4e4e4",
+      "border": "2px solid #999999"
+    },
+    "text": 0,
+    "ownerGlobalUpdateRoutine": [
+      "var parent = ${PROPERTY parent}",
+      "var COUNT = 0",
+      {
+        "func": "SELECT",
+        "property": "_ancestor",
+        "value": "${PROPERTY hand OF $parent}"
+      },
+      {
+        "func": "COUNT",
+        "owner": "${PROPERTY player OF $parent}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "text",
+        "value": "${COUNT}"
+      }
+    ],
+    "playerGlobalUpdateRoutine": [
+      {
+        "func": "CALL",
+        "routine": "ownerGlobalUpdateRoutine",
+        "widget": "${PROPERTY id}"
+      }
+    ]
+  },
+  "seatH6": {
+    "id": "seatH6",
+    "parent": "seat6",
+    "fixedParent": true,
+    "x": -20,
+    "y": -20,
+    "width": 30,
+    "height": 30,
+    "borderRadius": 100,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "css": {
+      "font-size": "18px",
+      "display": "flex",
+      "align-items": "center",
+      "justify-content": "center",
+      "color": "#6d6d6d",
+      "background": "#e4e4e4",
+      "border": "2px solid #999999"
+    },
+    "text": 0,
+    "ownerGlobalUpdateRoutine": [
+      "var parent = ${PROPERTY parent}",
+      "var COUNT = 0",
+      {
+        "func": "SELECT",
+        "property": "_ancestor",
+        "value": "${PROPERTY hand OF $parent}"
+      },
+      {
+        "func": "COUNT",
+        "owner": "${PROPERTY player OF $parent}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "text",
+        "value": "${COUNT}"
+      }
+    ],
+    "playerGlobalUpdateRoutine": [
+      {
+        "func": "CALL",
+        "routine": "ownerGlobalUpdateRoutine",
+        "widget": "${PROPERTY id}"
+      }
+    ]
+  },
+  "seatH7": {
+    "id": "seatH7",
+    "parent": "seat7",
+    "fixedParent": true,
+    "x": -20,
+    "y": -20,
+    "width": 30,
+    "height": 30,
+    "borderRadius": 100,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "css": {
+      "font-size": "18px",
+      "display": "flex",
+      "align-items": "center",
+      "justify-content": "center",
+      "color": "#6d6d6d",
+      "background": "#e4e4e4",
+      "border": "2px solid #999999"
+    },
+    "text": 0,
+    "ownerGlobalUpdateRoutine": [
+      "var parent = ${PROPERTY parent}",
+      "var COUNT = 0",
+      {
+        "func": "SELECT",
+        "property": "_ancestor",
+        "value": "${PROPERTY hand OF $parent}"
+      },
+      {
+        "func": "COUNT",
+        "owner": "${PROPERTY player OF $parent}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "text",
+        "value": "${COUNT}"
+      }
+    ],
+    "playerGlobalUpdateRoutine": [
+      {
+        "func": "CALL",
+        "routine": "ownerGlobalUpdateRoutine",
+        "widget": "${PROPERTY id}"
+      }
+    ]
+  },
+  "seatH8": {
+    "id": "seatH8",
+    "parent": "seat8",
+    "fixedParent": true,
+    "x": -20,
+    "y": -20,
+    "width": 30,
+    "height": 30,
+    "borderRadius": 100,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "css": {
+      "font-size": "18px",
+      "display": "flex",
+      "align-items": "center",
+      "justify-content": "center",
+      "color": "#6d6d6d",
+      "background": "#e4e4e4",
+      "border": "2px solid #999999"
+    },
+    "text": 0,
+    "ownerGlobalUpdateRoutine": [
+      "var parent = ${PROPERTY parent}",
+      "var COUNT = 0",
+      {
+        "func": "SELECT",
+        "property": "_ancestor",
+        "value": "${PROPERTY hand OF $parent}"
+      },
+      {
+        "func": "COUNT",
+        "owner": "${PROPERTY player OF $parent}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "text",
+        "value": "${COUNT}"
+      }
+    ],
+    "playerGlobalUpdateRoutine": [
+      {
+        "func": "CALL",
+        "routine": "ownerGlobalUpdateRoutine",
+        "widget": "${PROPERTY id}"
+      }
+    ]
+  },
+  "seatH9": {
+    "id": "seatH9",
+    "parent": "seat9",
+    "fixedParent": true,
+    "x": -20,
+    "y": -20,
+    "width": 30,
+    "height": 30,
+    "borderRadius": 100,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "css": {
+      "font-size": "18px",
+      "display": "flex",
+      "align-items": "center",
+      "justify-content": "center",
+      "color": "#6d6d6d",
+      "background": "#e4e4e4",
+      "border": "2px solid #999999"
+    },
+    "text": 0,
+    "ownerGlobalUpdateRoutine": [
+      "var parent = ${PROPERTY parent}",
+      "var COUNT = 0",
+      {
+        "func": "SELECT",
+        "property": "_ancestor",
+        "value": "${PROPERTY hand OF $parent}"
+      },
+      {
+        "func": "COUNT",
+        "owner": "${PROPERTY player OF $parent}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "text",
+        "value": "${COUNT}"
+      }
+    ],
+    "playerGlobalUpdateRoutine": [
+      {
+        "func": "CALL",
+        "routine": "ownerGlobalUpdateRoutine",
+        "widget": "${PROPERTY id}"
+      }
+    ]
+  },
+  "seatH10": {
+    "id": "seatH10",
+    "parent": "seat10",
+    "fixedParent": true,
+    "x": -20,
+    "y": -20,
+    "width": 30,
+    "height": 30,
+    "borderRadius": 100,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "css": {
+      "font-size": "18px",
+      "display": "flex",
+      "align-items": "center",
+      "justify-content": "center",
+      "color": "#6d6d6d",
+      "background": "#e4e4e4",
+      "border": "2px solid #999999"
+    },
+    "text": 0,
+    "ownerGlobalUpdateRoutine": [
+      "var parent = ${PROPERTY parent}",
+      "var COUNT = 0",
+      {
+        "func": "SELECT",
+        "property": "_ancestor",
+        "value": "${PROPERTY hand OF $parent}"
+      },
+      {
+        "func": "COUNT",
+        "owner": "${PROPERTY player OF $parent}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "text",
+        "value": "${COUNT}"
+      }
+    ],
+    "playerGlobalUpdateRoutine": [
+      {
+        "func": "CALL",
+        "routine": "ownerGlobalUpdateRoutine",
+        "widget": "${PROPERTY id}"
+      }
+    ]
+  },
+  "seatH11": {
+    "id": "seatH11",
+    "parent": "seat11",
+    "fixedParent": true,
+    "x": -20,
+    "y": -20,
+    "width": 30,
+    "height": 30,
+    "borderRadius": 100,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "css": {
+      "font-size": "18px",
+      "display": "flex",
+      "align-items": "center",
+      "justify-content": "center",
+      "color": "#6d6d6d",
+      "background": "#e4e4e4",
+      "border": "2px solid #999999"
+    },
+    "text": 0,
+    "ownerGlobalUpdateRoutine": [
+      "var parent = ${PROPERTY parent}",
+      "var COUNT = 0",
+      {
+        "func": "SELECT",
+        "property": "_ancestor",
+        "value": "${PROPERTY hand OF $parent}"
+      },
+      {
+        "func": "COUNT",
+        "owner": "${PROPERTY player OF $parent}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "text",
+        "value": "${COUNT}"
+      }
+    ],
+    "playerGlobalUpdateRoutine": [
+      {
+        "func": "CALL",
+        "routine": "ownerGlobalUpdateRoutine",
+        "widget": "${PROPERTY id}"
+      }
+    ]
+  },
+  "seatH12": {
+    "id": "seatH12",
+    "parent": "seat12",
+    "fixedParent": true,
+    "x": -20,
+    "y": -20,
+    "width": 30,
+    "height": 30,
+    "borderRadius": 100,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "css": {
+      "font-size": "18px",
+      "display": "flex",
+      "align-items": "center",
+      "justify-content": "center",
+      "color": "#6d6d6d",
+      "background": "#e4e4e4",
+      "border": "2px solid #999999"
+    },
+    "text": 0,
+    "ownerGlobalUpdateRoutine": [
+      "var parent = ${PROPERTY parent}",
+      "var COUNT = 0",
+      {
+        "func": "SELECT",
+        "property": "_ancestor",
+        "value": "${PROPERTY hand OF $parent}"
+      },
+      {
+        "func": "COUNT",
+        "owner": "${PROPERTY player OF $parent}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "text",
+        "value": "${COUNT}"
+      }
+    ],
+    "playerGlobalUpdateRoutine": [
+      {
+        "func": "CALL",
+        "routine": "ownerGlobalUpdateRoutine",
+        "widget": "${PROPERTY id}"
+      }
+    ]
+  },
+  "seatH13": {
+    "id": "seatH13",
+    "parent": "seat13",
+    "fixedParent": true,
+    "x": -20,
+    "y": -20,
+    "width": 30,
+    "height": 30,
+    "borderRadius": 100,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "css": {
+      "font-size": "18px",
+      "display": "flex",
+      "align-items": "center",
+      "justify-content": "center",
+      "color": "#6d6d6d",
+      "background": "#e4e4e4",
+      "border": "2px solid #999999"
+    },
+    "text": 0,
+    "ownerGlobalUpdateRoutine": [
+      "var parent = ${PROPERTY parent}",
+      "var COUNT = 0",
+      {
+        "func": "SELECT",
+        "property": "_ancestor",
+        "value": "${PROPERTY hand OF $parent}"
+      },
+      {
+        "func": "COUNT",
+        "owner": "${PROPERTY player OF $parent}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "text",
+        "value": "${COUNT}"
+      }
+    ],
+    "playerGlobalUpdateRoutine": [
+      {
+        "func": "CALL",
+        "routine": "ownerGlobalUpdateRoutine",
+        "widget": "${PROPERTY id}"
+      }
+    ]
+  },
+  "seatH14": {
+    "id": "seatH14",
+    "parent": "seat14",
+    "fixedParent": true,
+    "x": -20,
+    "y": -20,
+    "width": 30,
+    "height": 30,
+    "borderRadius": 100,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "css": {
+      "font-size": "18px",
+      "display": "flex",
+      "align-items": "center",
+      "justify-content": "center",
+      "color": "#6d6d6d",
+      "background": "#e4e4e4",
+      "border": "2px solid #999999"
+    },
+    "text": 0,
+    "ownerGlobalUpdateRoutine": [
+      "var parent = ${PROPERTY parent}",
+      "var COUNT = 0",
+      {
+        "func": "SELECT",
+        "property": "_ancestor",
+        "value": "${PROPERTY hand OF $parent}"
+      },
+      {
+        "func": "COUNT",
+        "owner": "${PROPERTY player OF $parent}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "text",
+        "value": "${COUNT}"
+      }
+    ],
+    "playerGlobalUpdateRoutine": [
+      {
+        "func": "CALL",
+        "routine": "ownerGlobalUpdateRoutine",
+        "widget": "${PROPERTY id}"
+      }
+    ]
+  },
+  "seatH15": {
+    "id": "seatH15",
+    "parent": "seat15",
+    "fixedParent": true,
+    "x": -20,
+    "y": -20,
+    "width": 30,
+    "height": 30,
+    "borderRadius": 100,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "css": {
+      "font-size": "18px",
+      "display": "flex",
+      "align-items": "center",
+      "justify-content": "center",
+      "color": "#6d6d6d",
+      "background": "#e4e4e4",
+      "border": "2px solid #999999"
+    },
+    "text": 0,
+    "ownerGlobalUpdateRoutine": [
+      "var parent = ${PROPERTY parent}",
+      "var COUNT = 0",
+      {
+        "func": "SELECT",
+        "property": "_ancestor",
+        "value": "${PROPERTY hand OF $parent}"
+      },
+      {
+        "func": "COUNT",
+        "owner": "${PROPERTY player OF $parent}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "text",
+        "value": "${COUNT}"
+      }
+    ],
+    "playerGlobalUpdateRoutine": [
+      {
+        "func": "CALL",
+        "routine": "ownerGlobalUpdateRoutine",
+        "widget": "${PROPERTY id}"
+      }
+    ]
+  },
+  "seatH16": {
+    "id": "seatH16",
+    "parent": "seat16",
+    "fixedParent": true,
+    "x": -20,
+    "y": -20,
+    "width": 30,
+    "height": 30,
+    "borderRadius": 100,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "css": {
+      "font-size": "18px",
+      "display": "flex",
+      "align-items": "center",
+      "justify-content": "center",
+      "color": "#6d6d6d",
+      "background": "#e4e4e4",
+      "border": "2px solid #999999"
+    },
+    "text": 0,
+    "ownerGlobalUpdateRoutine": [
+      "var parent = ${PROPERTY parent}",
+      "var COUNT = 0",
+      {
+        "func": "SELECT",
+        "property": "_ancestor",
+        "value": "${PROPERTY hand OF $parent}"
+      },
+      {
+        "func": "COUNT",
+        "owner": "${PROPERTY player OF $parent}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "text",
+        "value": "${COUNT}"
+      }
+    ],
+    "playerGlobalUpdateRoutine": [
+      {
+        "func": "CALL",
+        "routine": "ownerGlobalUpdateRoutine",
+        "widget": "${PROPERTY id}"
+      }
+    ]
+  },
+  "seatH17": {
+    "id": "seatH17",
+    "parent": "seat17",
+    "fixedParent": true,
+    "x": -20,
+    "y": -20,
+    "width": 30,
+    "height": 30,
+    "borderRadius": 100,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "css": {
+      "font-size": "18px",
+      "display": "flex",
+      "align-items": "center",
+      "justify-content": "center",
+      "color": "#6d6d6d",
+      "background": "#e4e4e4",
+      "border": "2px solid #999999"
+    },
+    "text": 0,
+    "ownerGlobalUpdateRoutine": [
+      "var parent = ${PROPERTY parent}",
+      "var COUNT = 0",
+      {
+        "func": "SELECT",
+        "property": "_ancestor",
+        "value": "${PROPERTY hand OF $parent}"
+      },
+      {
+        "func": "COUNT",
+        "owner": "${PROPERTY player OF $parent}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "text",
+        "value": "${COUNT}"
+      }
+    ],
+    "playerGlobalUpdateRoutine": [
+      {
+        "func": "CALL",
+        "routine": "ownerGlobalUpdateRoutine",
+        "widget": "${PROPERTY id}"
+      }
+    ]
+  },
+  "seatH18": {
+    "id": "seatH18",
+    "parent": "seat18",
+    "fixedParent": true,
+    "x": -20,
+    "y": -20,
+    "width": 30,
+    "height": 30,
+    "borderRadius": 100,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "css": {
+      "font-size": "18px",
+      "display": "flex",
+      "align-items": "center",
+      "justify-content": "center",
+      "color": "#6d6d6d",
+      "background": "#e4e4e4",
+      "border": "2px solid #999999"
+    },
+    "text": 0,
+    "ownerGlobalUpdateRoutine": [
+      "var parent = ${PROPERTY parent}",
+      "var COUNT = 0",
+      {
+        "func": "SELECT",
+        "property": "_ancestor",
+        "value": "${PROPERTY hand OF $parent}"
+      },
+      {
+        "func": "COUNT",
+        "owner": "${PROPERTY player OF $parent}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "text",
+        "value": "${COUNT}"
+      }
+    ],
+    "playerGlobalUpdateRoutine": [
+      {
+        "func": "CALL",
+        "routine": "ownerGlobalUpdateRoutine",
+        "widget": "${PROPERTY id}"
+      }
+    ]
   }
 }
