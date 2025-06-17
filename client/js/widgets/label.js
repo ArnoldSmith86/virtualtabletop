@@ -17,14 +17,59 @@ export class Label extends Widget {
 
       text: '',
       editable: false,
-      twoRowBottomAlign: false
+      twoRowBottomAlign: false,
+      regex: null,
+      regexHint: null
     });
 
     this.domElement.appendChild(this.input);
-    this.input.addEventListener('keyup', e=>{
-      if(this.get('editable') && e.target.value !== this.get('text'))
-        this.setText(e.target.value)
+    this.input.addEventListener('input', e => {
+      if (!this.get('editable')) return;
+      
+      const newValue = e.target.value;
+      const regex = this.get('regex');
+      
+      if (regex && newValue) {
+        try {
+          const isValid = this.createRegexPattern(regex).test(newValue);
+          this.input.classList.toggle('invalid', !isValid);
+          this.toggleValidationError(!isValid, 
+            !isValid ? (this.get('regexHint') || `Invalid input`) : ''
+          );
+        } catch(e) {
+        }
+      } else {
+        this.input.classList.remove('invalid');
+        this.toggleValidationError(false);
+      }
+      if (newValue !== this.get('text')) {
+        this.setText(newValue);
+      }
     });
+  }
+
+  createRegexPattern(regex) {
+    if (!regex.startsWith('/')) return new RegExp(regex);
+    
+    const lastSlash = regex.lastIndexOf('/');
+    if (lastSlash <= 0) return new RegExp(regex);
+    
+    const pattern = regex.slice(1, lastSlash);
+    const flags = regex.slice(lastSlash + 1);
+    return new RegExp(pattern, flags);
+  }
+
+    toggleValidationError(show, message = '') {
+    const existing = this.domElement.querySelector('.validation-error');
+    if (existing) existing.remove();
+    
+    if (show) {
+      const errorDiv = document.createElement('div');
+      errorDiv.className = 'validation-error';
+      errorDiv.textContent = message;
+      this.domElement.style.position = 'relative';
+      this.domElement.appendChild(errorDiv);
+    }
   }
 
   applyDeltaToDOM(delta) {
