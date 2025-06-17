@@ -27,23 +27,27 @@ export class Label extends Widget {
       if (!this.get('editable')) return;
       
       const newValue = e.target.value;
-      const regex = this.get('regex');
+      this.validateInput(newValue);
       
-      if (regex && newValue) {
-        try {
-          const isValid = this.createRegexPattern(regex).test(newValue);
-          this.input.classList.toggle('invalid', !isValid);
-          this.toggleValidationError(!isValid, 
-            !isValid ? (this.get('regexHint') || `Invalid input`) : ''
-          );
-        } catch(e) {
-        }
-      } else {
-        this.input.classList.remove('invalid');
-        this.toggleValidationError(false);
-      }
       if (newValue !== this.get('text')) {
-        this.setText(newValue);
+        this.set('text', newValue);
+      }
+    });
+    
+    this.input.addEventListener('blur', e => {
+      let value = e.target.value;
+      if (value && value.match(/^[-+]?[0-9]*\.?[0-9]*$/)) {
+        const num = parseFloat(value);
+        if (isNaN(num)) {
+        } else if (num === 0) {
+          value = '0';
+        } else {
+          value = num.toString();
+        }
+      }
+      e.target.value = value;
+      if (value !== this.get('text')) {
+        this.set('text', value);
       }
     });
   }
@@ -112,5 +116,67 @@ export class Label extends Widget {
     if(delta.spellCheck !== undefined)
       this.input.setAttribute('spellcheck', this.get('spellCheck') === true);
 
+  }
+
+  async setText(text, mode) {
+    const finalText = this.processTextMode(text, mode);
+    await this.set('text', finalText);
+    this.updateInputValue(finalText);
+  }
+
+  processTextMode(text, mode) {
+    if (mode == 'inc' || mode == 'dec') {
+      const currentValue = parseFloat(this.get('text')) || 0;
+      const changeValue = parseFloat(text) || 0;
+      return currentValue + (mode == 'dec' ? -changeValue : changeValue);
+    }    
+    if (mode == 'append') {
+      return this.get('text') + text;
+    }    
+    if (Array.isArray(text)) {
+      return text.join(', ');
+    }    
+    return this.formatNumericText(text);
+  }
+
+  formatNumericText(text) {
+    if (typeof text === 'string' && text.match(/^[-+]?[0-9]*\.?[0-9]+$/)) {
+      return parseFloat(text).toString();
+    }
+    return text;
+  }
+
+  updateInputValue(value) {
+    if (document.activeElement !== this.input) {
+      this.input.value = value;
+      return;
+    }
+    
+    const currentNumeric = parseFloat(this.input.value);
+    const newNumeric = parseFloat(value);    
+    const shouldUpdate = isNaN(currentNumeric) !== isNaN(newNumeric) || 
+      (!isNaN(currentNumeric) && !isNaN(newNumeric) && currentNumeric !== newNumeric);    
+    if (shouldUpdate) {
+      this.input.value = value;
+    }
+  }
+
+  validateInput(value) {
+    const regex = this.get('regex');    
+    if (!regex || !value) {
+      this.input.classList.remove('invalid');
+      this.toggleValidationError(false);
+      return;
+    }    
+    try {
+      const isValid = this.createRegexPattern(regex).test(value);
+      this.input.classList.toggle('invalid', !isValid);
+      this.toggleValidationError(!isValid, 
+        !isValid ? (this.get('regexHint') || 'Invalid input') : ''
+      );
+    } catch(e) {
+      this.input.classList.add('invalid');
+      this.toggleValidationError(true, 'Invalid regex pattern');
+    }
   }
 }
