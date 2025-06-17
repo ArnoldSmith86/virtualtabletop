@@ -41,3 +41,17 @@
   margin-top: 2px;
 }
 
+.widget.label > textarea.invalid:hover::after {
+  content: attr(title);
+  position: absolute;
+  background: #ff4444;
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  z-index: 1000;
+  top: 100%;
+  left: 0;
+  white-space: nowrap;
+}
+

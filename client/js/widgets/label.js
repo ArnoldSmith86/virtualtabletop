@@ -64,17 +64,14 @@ export class Label extends Widget {
   }
 
     toggleValidationError(show, message = '') {
-    const existing = this.domElement.querySelector('.validation-error');
-    if (existing) existing.remove();
-    
-    if (show) {
-      const errorDiv = document.createElement('div');
-      errorDiv.className = 'validation-error';
-      errorDiv.textContent = message;
-      this.domElement.style.position = 'relative';
-      this.domElement.appendChild(errorDiv);
-    }
+  if (show) {
+    this.input.setAttribute('title', message);
+    this.input.classList.add('invalid');
+  } else {
+    this.input.removeAttribute('title');
+    this.input.classList.remove('invalid');
   }
+}
 
   applyDeltaToDOM(delta) {
     super.applyDeltaToDOM(delta);
