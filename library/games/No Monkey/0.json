@@ -1,0 +1,4971 @@
+{
+  "_meta": {
+    "version": 17,
+    "info": {
+      "name": "No Monkey",
+      "image": "/assets/877300828_15826",
+      "rules": "https://boardgamegeek.com/filepage/232216/hit-english-rulebook-unofficial",
+      "bgg": "https://boardgamegeek.com/boardgame/339214/fruit-fight",
+      "year": "2021",
+      "mode": "vs",
+      "time": "15",
+      "attribution": "Library image \"Devolution\" is original work by Mitchell Stolycia available for use under CC BY 4.0.<div>\n<div>Original game layout inspired by Robin Harn's Herd Hero mod, released to the Public Domain under CC0.</div><div><br></div><div>Additional scripting and modifications by DexDouglas and Mitchell Stolycia released to the Public Domain under CC0.</div><div><br></div><div>The following graphics are from https://game-icons.net and are used under CC BY 3.0:\n* Card Play https://game-icons.net/1x1/quoting/card-play.html\n* Trash Can https://game-icons.net/1x1/delapouite/trash-can.html\n* Card Joker https://game-icons.net/1x1/delapouite/card-joker.html\n* Cat https://game-icons.net/1x1/lorc/cat.html\n* Mite https://game-icons.net/1x1/carl-olsen/mite-alt.html\n* Sea Turtle https://game-icons.net/1x1/delapouite/sea-turtle.html\n* Chicken https://game-icons.net/1x1/delapouite/chicken.html\n* Koala https://game-icons.net/1x1/delapouite/koala.html\n* Kangaroo https://game-icons.net/1x1/delapouite/kangaroo.html\n* Squid https://game-icons.net/1x1/lorc/squid.html\n* Elephant https://game-icons.net/1x1/delapouite/elephant.html\n* Donkey https://game-icons.net/1x1/skoll/donkey.html\n* Dolphin https://game-icons.net/1x1/delapouite/dolphin.html<br></div></div>",
+      "lastUpdate": 1750258994275,
+      "showName": true,
+      "skill": "Low",
+      "description": "No Monkey is a push-your-luck card game that encourages you to draw cards and steal from your opponents with no remorse. If you ever draw a card that matches one already in your hand, you bust and toss all the cards away, giving no one the chance to score them.",
+      "similarImage": "",
+      "similarName": "No Mercy",
+      "similarDesigner": "Reiner Knizia",
+      "similarAwards": "2023 Gra Roku Best Party Game Winner",
+      "ruleText": "<span style=\"white-space-collapse: collapse;\">No Monkey is a push-your-luck card game that encourages you to draw cards and steal from your opponents with no remorse.&nbsp;</span><div><span style=\"white-space-collapse: collapse;\"><br></span><div><span style=\"white-space-collapse: collapse;\">On your turn, if you have any cards face up in front of you, you will bank those cards by hitting the treasure chest icon to the left of your name. If you don't have any cards, you have two options, draw a card, or end your turn. If you have no cards drawn, you should draw a card.&nbsp;</span></div><div><span style=\"white-space-collapse: collapse;\"><br></span></div><div><span style=\"white-space-collapse: collapse;\">If your newly drawn card matches a card that is face up in front of any other player, you can choose to steal their collected card(s) and add it to the cards you are collecting this turn by hitting the \"yoink\" button to the left of that card. If you do this, you must steal that value of card from all of the players who have it.</span></div><div><span style=\"white-space-collapse: collapse;\"><br>If you draw a card that matches any of the cards you have collected that turn, you might bust. If your newly drawn card brings you to 3 cards or less, nothing happens, even if you have matches in those first 3 cards. If you draw a card and you now have 4 cards or more and any of them match the newly drawn card, you end your turn and bust. All cards move to to the discard. <b>NOTE: stealing a card does not cause you to bust. You can only bust by drawing a card.</b></span></div><div><span style=\"white-space-collapse: collapse;\"><b><br></b></span></div><div><span style=\"white-space-collapse: collapse;\">When the last card is drawn, stealing can still occur, and then the player whose turn it is collects their cards for that turn. Everyone else will move all their cards to their face down score pile by hitting the treasure chest icon. Then hit the \"End Game Score\" button to tally the cards in each players score pile. Highest score wins, tied players share the victory.&nbsp;</span></div></div>",
+      "helpText": "Click to sit at one of the seats. When everyone is seated, push \"New Game\" and the game will select a start player. Click \"Draw Cards\" to draw one card at a time from the deck into the holder. When you are satisfied with your cards, you can click \"End Turn &amp; Collect\" to sort the cards into holders under your name. If you bust on your turn, hit \"End Turn &amp; Bust\" to send the cards to the discard holder.<div><br><div>If you draw a card that someone else has in their holder, you can steal it from them by pressing the blue button to the left of their cards underneath their name. This will move those cards into the central holder. If you steal a card type, you must click each button to steal them from each player.&nbsp;</div><div><br></div><div>If it comes back to your turn and you still have cards in your holders under your name, you must collect them by pressing the \"Treasure Box\" button to the left of your name. This will move the cards to a score pile holder to the right of your name. You can check to see how many cards are in each players score pile by the small number in the bottom right of that pile.&nbsp;</div><div><br></div><div>At the end of the game, press the \"End Game Score\" button to calculate the cards in each players pile. The score will be displayed under your name. Highest score wins. Tied players share the victory.&nbsp;</div></div>",
+      "variantImage": "",
+      "variant": "No Monkey",
+      "language": "en-US",
+      "players": "2-5"
+    }
+  },
+  "holder-discard": {
+    "type": "holder",
+    "id": "holder-discard",
+    "x": 1456,
+    "y": 808,
+    "z": 5370,
+    "preventPiles": true,
+    "height": 150
+  },
+  "label-p1": {
+    "type": "label",
+    "id": "label-p1",
+    "y": 43,
+    "width": 65,
+    "height": 40,
+    "z": 11964,
+    "css": "font-size: 30px; font-weight:bold",
+    "editable": true,
+    "text": 0,
+    "parent": "seat-p1",
+    "x": 50
+  },
+  "seat-p1": {
+    "type": "seat",
+    "id": "seat-p1",
+    "x": 85,
+    "y": 19,
+    "width": 160,
+    "height": 35,
+    "z": 12079,
+    "css": {
+      "default": {
+        "border": "5px solid #999999",
+        "box-shadow": "0 2px 5px #00000066",
+        "color": "#000000",
+        "font-size": "30px"
+      },
+      ".seated": {
+        "background": "${PROPERTY color}",
+        "border": "5px solid #000000",
+        "color": "${PROPERTY foreground}"
+      },
+      ".seated.turn": {
+        "border": "5px dotted ${PROPERTY foreground}"
+      }
+    },
+    "clickRoutine": [
+      {
+        "func": "CLICK",
+        "collection": "thisButton",
+        "mode": "ignoreClickRoutine"
+      },
+      {
+        "func": "SELECT",
+        "property": "deck",
+        "value": "deck-discs"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "playerIndex",
+        "value": "${PROPERTY index}"
+      },
+      {
+        "func": "SET",
+        "property": "background",
+        "value": "${PROPERTY color}"
+      },
+      "var foreground = colorContrast ${PROPERTY color}",
+      {
+        "func": "SET",
+        "property": "color",
+        "value": "${foreground}"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "${PROPERTY id}"
+        ],
+        "property": "foreground",
+        "value": "${foreground}"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "button-endturn-p1"
+      },
+      {
+        "func": "SET",
+        "property": "css",
+        "value": "color:${PROPERTY foreground};font-size:18px;font-weight:900;border-radius:10px;background-color:${PROPERTY color}"
+      },
+      {
+        "func": "FOREACH",
+        "range": 7,
+        "loopRoutine": [
+          {
+            "func": "SELECT",
+            "property": "id",
+            "value": "holder-p1-l$value}"
+          },
+          {
+            "func": "SET",
+            "property": "css",
+            "value": "background:${PROPERTY foreground}"
+          }
+        ]
+      }
+    ],
+    "foreground": "#000000",
+    "hand": "holder-p1-l1",
+    "hideWhenUnused": true,
+    "linkedToSeat": "seat-p1",
+    "turn": true,
+    "turnChangeRoutine": [
+      {
+        "func": "IF",
+        "condition": "${PROPERTY turn}",
+        "thenRoutine": [
+          {
+            "func": "CLICK",
+            "collection": [
+              "collect-cards-p${PROPERTY index}"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "button-draw": {
+    "type": "button",
+    "id": "button-draw",
+    "x": 1091,
+    "width": 90,
+    "height": 70,
+    "z": 12085,
+    "css": {
+      "font-weight": "bold",
+      "border-radius": "10px"
+    },
+    "text": "Draw\nCard",
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "to": [
+          "holder-market-1"
+        ],
+        "count": 1,
+        "from": "holder-deck",
+        "face": 1
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "reset"
+        ],
+        "property": "display",
+        "value": true
+      }
+    ],
+    "y": 850
+  },
+  "label-discard": {
+    "type": "label",
+    "id": "label-discard",
+    "parent": "holder-discard",
+    "x": -13,
+    "y": -46,
+    "width": 133,
+    "height": 40,
+    "movableInEdit": false,
+    "text": "Discard",
+    "twoRowBottomAlign": true,
+    "css": "color:black;font-size:16pt"
+  },
+  "button-snatch-p1-l1": {
+    "type": "button",
+    "id": "button-snatch-p1-l1",
+    "x": -61,
+    "y": 17,
+    "width": 50,
+    "height": 50,
+    "z": 12040,
+    "color": "white",
+    "css": {
+      "font-weight": "bold",
+      "border-radius": "5px"
+    },
+    "image": "/i/game-icons.net/quoting/card-play.svg",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "clickRoutine": [
+      {
+        "note": "Active player moves all cards in this holder to their hand",
+        "func": "MOVE",
+        "from": "holder-p1-l1",
+        "to": "holder-market-1",
+        "count": "all"
+      }
+    ],
+    "parent": "holder-p1-l1",
+    "display": false
+  },
+  "holder-p1-l2": {
+    "type": "holder",
+    "id": "holder-p1-l2",
+    "x": -76,
+    "y": 132,
+    "parent": "seat-p1",
+    "width": 350,
+    "height": 110,
+    "scale": 0.7,
+    "stackOffsetX": 30,
+    "z": 2,
+    "onEnter": {
+      "activeFace": 1
+    },
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": "holder-p1-l1",
+    "display": true
+  },
+  "button-snatch-p1-l2": {
+    "type": "button",
+    "id": "button-snatch-p1-l2",
+    "x": -62,
+    "y": 17,
+    "width": 50,
+    "height": 50,
+    "z": 12040,
+    "color": "white",
+    "css": {
+      "font-weight": "bold",
+      "border-radius": "5px"
+    },
+    "image": "/i/game-icons.net/quoting/card-play.svg",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "clickRoutine": [
+      {
+        "note": "Active player moves all cards in this holder to their hand",
+        "func": "MOVE",
+        "from": "holder-p1-l2",
+        "to": "holder-market-1",
+        "count": "all"
+      }
+    ],
+    "parent": "holder-p1-l2",
+    "display": false
+  },
+  "holder-p1-l3": {
+    "type": "holder",
+    "id": "holder-p1-l3",
+    "x": -76,
+    "y": 196,
+    "parent": "seat-p1",
+    "width": 350,
+    "height": 110,
+    "scale": 0.7,
+    "stackOffsetX": 30,
+    "z": 3,
+    "onEnter": {
+      "activeFace": 1
+    },
+    "inheritFrom": "holder-p1-l1",
+    "display": true
+  },
+  "holder-p1-l4": {
+    "type": "holder",
+    "id": "holder-p1-l4",
+    "y": 256,
+    "parent": "seat-p1",
+    "width": 350,
+    "height": 110,
+    "scale": 0.7,
+    "stackOffsetX": 30,
+    "z": 4,
+    "x": -76,
+    "onEnter": {
+      "activeFace": 1
+    },
+    "inheritFrom": "holder-p1-l1",
+    "display": true
+  },
+  "holder-p1-l5": {
+    "type": "holder",
+    "id": "holder-p1-l5",
+    "x": -76,
+    "y": 324,
+    "parent": "seat-p1",
+    "width": 350,
+    "height": 110,
+    "scale": 0.7,
+    "stackOffsetX": 30,
+    "z": 5,
+    "onEnter": {
+      "activeFace": 1
+    },
+    "inheritFrom": "holder-p1-l1",
+    "display": true
+  },
+  "holder-p1-l6": {
+    "type": "holder",
+    "id": "holder-p1-l6",
+    "x": -76,
+    "y": 388,
+    "parent": "seat-p1",
+    "width": 350,
+    "height": 110,
+    "scale": 0.7,
+    "stackOffsetX": 30,
+    "z": 6,
+    "onEnter": {
+      "activeFace": 1
+    },
+    "inheritFrom": "holder-p1-l1",
+    "display": true
+  },
+  "button-snatch-p1-l3": {
+    "type": "button",
+    "id": "button-snatch-p1-l3",
+    "parent": "holder-p1-l3",
+    "x": -62,
+    "y": 19,
+    "width": 50,
+    "height": 50,
+    "z": 12040,
+    "color": "white",
+    "css": {
+      "font-weight": "bold",
+      "border-radius": "5px"
+    },
+    "image": "/i/game-icons.net/quoting/card-play.svg",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "clickRoutine": [
+      {
+        "note": "Active player moves all cards in this holder to their hand",
+        "func": "MOVE",
+        "from": "holder-p1-l3",
+        "to": "holder-market-1",
+        "count": "all"
+      }
+    ],
+    "display": false
+  },
+  "button-snatch-p1-l4": {
+    "type": "button",
+    "id": "button-snatch-p1-l4",
+    "parent": "holder-p1-l4",
+    "x": -62,
+    "y": 26,
+    "width": 50,
+    "height": 50,
+    "z": 12040,
+    "color": "white",
+    "css": {
+      "font-weight": "bold",
+      "border-radius": "5px"
+    },
+    "image": "/i/game-icons.net/quoting/card-play.svg",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "clickRoutine": [
+      {
+        "note": "Active player moves all cards in this holder to their hand",
+        "func": "MOVE",
+        "from": "holder-p1-l4",
+        "to": "holder-market-1",
+        "count": "all"
+      }
+    ],
+    "display": false
+  },
+  "button-snatch-p1-l5": {
+    "type": "button",
+    "id": "button-snatch-p1-l5",
+    "parent": "holder-p1-l5",
+    "x": -62,
+    "y": 23,
+    "width": 50,
+    "height": 50,
+    "z": 12040,
+    "color": "white",
+    "css": {
+      "font-weight": "bold",
+      "border-radius": "5px"
+    },
+    "image": "/i/game-icons.net/quoting/card-play.svg",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "clickRoutine": [
+      {
+        "note": "Active player moves all cards in this holder to their hand",
+        "func": "MOVE",
+        "from": "holder-p1-l5",
+        "to": "holder-market-1",
+        "count": "all"
+      }
+    ],
+    "display": false
+  },
+  "button-snatch-p1-l6": {
+    "type": "button",
+    "id": "button-snatch-p1-l6",
+    "parent": "holder-p1-l6",
+    "x": -62,
+    "y": 26,
+    "width": 50,
+    "height": 50,
+    "z": 12040,
+    "color": "white",
+    "css": {
+      "font-weight": "bold",
+      "border-radius": "5px"
+    },
+    "image": "/i/game-icons.net/quoting/card-play.svg",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "clickRoutine": [
+      {
+        "note": "Active player moves all cards in this holder to their hand",
+        "func": "MOVE",
+        "from": "holder-p1-l6",
+        "to": "holder-market-1",
+        "count": "all"
+      }
+    ],
+    "display": false
+  },
+  "deck-cards": {
+    "type": "deck",
+    "id": "deck-cards",
+    "z": 13050,
+    "cardDefaults": {
+      "classes": "transition",
+      "ignoreOnLeave": true,
+      "width": 100,
+      "height": 140,
+      "cssText1": "font-weight:bold",
+      "cssText2": "font-weight:bold",
+      "onPileCreation": {
+        "handleCSS": {
+          "border": "2px solid black",
+          "font-size": "24px",
+          "color": "white",
+          "font-weight": "bold",
+          "text-align": "center",
+          "line-height": "32px",
+          "background-color": "gray",
+          "text-shadow": "2px 2px 3px black",
+          "background-image": "url('/i/game-icons.net/lorc/poker-hand.svg')"
+        },
+        "handleSize": "auto",
+        "handleOffset": 15,
+        "handlePosition": "top right"
+      }
+    },
+    "cardTypes": {
+      "1": {
+        "image": "/i/game-icons.net/lorc/cat.svg",
+        "color": "plum",
+        "text1": "1",
+        "text2": "1",
+        "points": "1",
+        "sortingOrder": 1
+      },
+      "2": {
+        "image": "/i/game-icons.net/carl-olsen/mite-alt.svg",
+        "color": "crimson",
+        "text1": "2",
+        "text2": "2",
+        "points": "2",
+        "sortingOrder": 2
+      },
+      "3": {
+        "image": "/i/game-icons.net/delapouite/sea-turtle.svg",
+        "color": "forestgreen",
+        "text1": "3",
+        "text2": "3",
+        "points": "3",
+        "sortingOrder": 3
+      },
+      "4": {
+        "image": "/i/game-icons.net/delapouite/chicken.svg",
+        "color": "hotpink",
+        "text1": "4",
+        "text2": "4",
+        "points": "4",
+        "sortingOrder": 4
+      },
+      "5": {
+        "image": "/i/game-icons.net/delapouite/koala.svg",
+        "color": "darkblue",
+        "text1": "5",
+        "text2": "5",
+        "points": "5",
+        "sortingOrder": 5
+      },
+      "6": {
+        "image": "/i/game-icons.net/delapouite/kangaroo.svg",
+        "color": "brown",
+        "text1": "6",
+        "text2": "6",
+        "points": "6",
+        "sortingOrder": 6
+      },
+      "7": {
+        "image": "/i/game-icons.net/lorc/squid.svg",
+        "color": "mediumpurple",
+        "text1": "7",
+        "text2": "7",
+        "points": "7",
+        "sortingOrder": 7
+      },
+      "8": {
+        "image": "/i/game-icons.net/delapouite/elephant.svg",
+        "color": "gray",
+        "text1": "8",
+        "text2": "8",
+        "points": "8",
+        "sortingOrder": 8
+      },
+      "9": {
+        "image": "/i/game-icons.net/skoll/donkey.svg",
+        "color": "saddlebrown",
+        "text1": "9",
+        "text2": "9",
+        "points": "9",
+        "sortingOrder": 9
+      },
+      "10": {
+        "image": "/i/game-icons.net/delapouite/dolphin.svg",
+        "color": "lightskyblue",
+        "text1": "10",
+        "text2": "10",
+        "points": "10",
+        "sortingOrder": 10
+      },
+      "11": {
+        "image": "/i/game-icons.net/lorc/parrot-head.svg",
+        "color": "gold",
+        "text1": "11",
+        "text2": "11",
+        "points": "11",
+        "sortingOrder": 11
+      },
+      "12": {
+        "image": "/i/game-icons.net/lorc/swan.svg",
+        "color": "lightgreen",
+        "text1": "12",
+        "text2": "12",
+        "points": "12",
+        "sortingOrder": 12
+      },
+      "13": {
+        "image": "/i/game-icons.net/caro-asercion/fox.svg",
+        "color": "darkorange",
+        "text1": "13",
+        "text2": "13",
+        "points": "13",
+        "sortingOrder": 13
+      },
+      "14": {
+        "image": "/i/game-icons.net/lorc/cross-mark.svg",
+        "color": "black",
+        "text1": "X",
+        "text2": "X",
+        "sortingOrder": 14
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "width": 100,
+            "height": 140,
+            "type": "image",
+            "color": "white",
+            "value": ""
+          },
+          {
+            "type": "image",
+            "x": -32,
+            "y": -20,
+            "value": "/i/game-icons.net/delapouite/card-joker.svg",
+            "width": 165,
+            "height": 180
+          }
+        ],
+        "border": 1,
+        "radius": 8
+      },
+      {
+        "objects": [
+          {
+            "width": 100,
+            "height": 140,
+            "type": "image",
+            "color": "white",
+            "value": ""
+          },
+          {
+            "type": "image",
+            "x": 5,
+            "y": 7,
+            "width": 90,
+            "height": 130,
+            "svgReplaces": {
+              "#000": "color"
+            },
+            "dynamicProperties": {
+              "value": "image"
+            }
+          },
+          {
+            "type": "text",
+            "x": 3,
+            "y": 2,
+            "fontSize": "24",
+            "textAlign": "left",
+            "textFont": null,
+            "fontweight": "bold",
+            "width": 100,
+            "dynamicProperties": {
+              "value": "text1",
+              "css": "cssText1"
+            }
+          },
+          {
+            "type": "text",
+            "x": -4,
+            "y": 110,
+            "fontSize": "24",
+            "textAlign": "right",
+            "textFont": null,
+            "width": 100,
+            "dynamicProperties": {
+              "value": "text2",
+              "css": "cssText2"
+            }
+          }
+        ],
+        "border": 1,
+        "radius": 8
+      }
+    ],
+    "x": 4,
+    "y": 4,
+    "activeFace": 1,
+    "parent": "holder-deck"
+  },
+  "button-recall": {
+    "type": "button",
+    "id": "button-recall",
+    "fixedParent": true,
+    "y": 1057,
+    "width": 110,
+    "height": 30,
+    "movableInEdit": false,
+    "text": "Recall",
+    "css": {
+      "font-weight": "bold",
+      "border-radius": "10px"
+    },
+    "x": 213,
+    "clickRoutine": [
+      {
+        "func": "RECALL",
+        "holder": "${PROPERTY parent}"
+      },
+      {
+        "func": "FLIP",
+        "holder": "${PROPERTY parent}",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "${PROPERTY parent}"
+      }
+    ]
+  },
+  "button-code": {
+    "type": "button",
+    "id": "button-code",
+    "x": 995,
+    "y": 1012,
+    "width": 90,
+    "height": 50,
+    "z": 12075,
+    "css": {
+      "_, .transition": {
+        "transition": "transform 500ms"
+      },
+      "_, .transition.dragging": {
+        "transition": "none"
+      }
+    },
+    "text": "Code",
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "to": [
+          "holder-market-1",
+          "holder-market-2",
+          "holder-market-3",
+          "holder-market-4",
+          "holder-market-5",
+          "holder-market-6"
+        ],
+        "fillTo": 1,
+        "from": "holder-deck",
+        "face": 1
+      }
+    ]
+  },
+  "holder-p1-l7": {
+    "type": "holder",
+    "id": "holder-p1-l7",
+    "x": -76,
+    "y": 452,
+    "parent": "seat-p1",
+    "width": 350,
+    "height": 110,
+    "scale": 0.7,
+    "stackOffsetX": 30,
+    "z": 7,
+    "onEnter": {
+      "activeFace": 1
+    },
+    "inheritFrom": "holder-p1-l1",
+    "display": true
+  },
+  "button-snatch-p1-l7": {
+    "type": "button",
+    "id": "button-snatch-p1-l7",
+    "parent": "holder-p1-l7",
+    "x": -62,
+    "y": 28,
+    "width": 50,
+    "height": 50,
+    "z": 12040,
+    "color": "white",
+    "css": {
+      "font-weight": "bold",
+      "border-radius": "5px"
+    },
+    "image": "/i/game-icons.net/quoting/card-play.svg",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "clickRoutine": [
+      {
+        "note": "Active player moves all cards in this holder to their hand",
+        "func": "MOVE",
+        "from": "holder-p1-l7",
+        "to": "holder-market-1",
+        "count": "all"
+      }
+    ],
+    "display": false
+  },
+  "seat-p3": {
+    "type": "seat",
+    "id": "seat-p3",
+    "x": 694,
+    "y": 25,
+    "width": 160,
+    "height": 35,
+    "z": 12077,
+    "css": {
+      "default": {
+        "border": "5px solid #999999",
+        "box-shadow": "0 2px 5px #00000066",
+        "color": "#000000",
+        "font-size": "30px"
+      },
+      ".seated": {
+        "background": "${PROPERTY color}",
+        "border": "5px solid #000000",
+        "color": "${PROPERTY foreground}"
+      },
+      ".seated.turn": {
+        "border": "5px dotted ${PROPERTY foreground}"
+      }
+    },
+    "foreground": "#000000",
+    "clickRoutine": [
+      {
+        "func": "CLICK",
+        "collection": "thisButton",
+        "mode": "ignoreClickRoutine"
+      },
+      {
+        "func": "SELECT",
+        "property": "deck",
+        "value": "deck-discs"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "playerIndex",
+        "value": "${PROPERTY index}"
+      },
+      {
+        "func": "SET",
+        "property": "background",
+        "value": "${PROPERTY color}"
+      },
+      "var foreground = colorContrast ${PROPERTY color}",
+      {
+        "func": "SET",
+        "property": "color",
+        "value": "${foreground}"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "${PROPERTY id}"
+        ],
+        "property": "foreground",
+        "value": "${foreground}"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "button-endturn-p3"
+      },
+      {
+        "func": "SET",
+        "property": "css",
+        "value": "color:${PROPERTY foreground};font-size:18px;font-weight:900;border-radius:10px;background-color:${PROPERTY color}"
+      }
+    ],
+    "index": 3,
+    "hand": "holder-p1-l1",
+    "hideWhenUnused": true,
+    "linkedToSeat": "seat-p3",
+    "turnChangeRoutine": [
+      {
+        "func": "IF",
+        "condition": "${PROPERTY turn}",
+        "thenRoutine": [
+          {
+            "func": "CLICK",
+            "collection": [
+              "collect-cards-p${PROPERTY index}"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "label-p3": {
+    "type": "label",
+    "id": "label-p3",
+    "x": 50,
+    "y": 43,
+    "width": 65,
+    "height": 40,
+    "z": 11964,
+    "css": "font-size: 30px; font-weight:bold",
+    "editable": true,
+    "text": 0,
+    "parent": "seat-p3"
+  },
+  "seat-p4": {
+    "type": "seat",
+    "id": "seat-p4",
+    "x": 1006,
+    "y": 25,
+    "width": 160,
+    "height": 35,
+    "z": 12077,
+    "css": {
+      "default": {
+        "border": "5px solid #999999",
+        "box-shadow": "0 2px 5px #00000066",
+        "color": "#000000",
+        "font-size": "30px"
+      },
+      ".seated": {
+        "background": "${PROPERTY color}",
+        "border": "5px solid #000000",
+        "color": "${PROPERTY foreground}"
+      },
+      ".seated.turn": {
+        "border": "5px dotted ${PROPERTY foreground}"
+      }
+    },
+    "foreground": "#000000",
+    "clickRoutine": [
+      {
+        "func": "CLICK",
+        "collection": "thisButton",
+        "mode": "ignoreClickRoutine"
+      },
+      {
+        "func": "SELECT",
+        "property": "deck",
+        "value": "deck-discs"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "playerIndex",
+        "value": "${PROPERTY index}"
+      },
+      {
+        "func": "SET",
+        "property": "background",
+        "value": "${PROPERTY color}"
+      },
+      "var foreground = colorContrast ${PROPERTY color}",
+      {
+        "func": "SET",
+        "property": "color",
+        "value": "${foreground}"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "${PROPERTY id}"
+        ],
+        "property": "foreground",
+        "value": "${foreground}"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "button-endturn-p4"
+      },
+      {
+        "func": "SET",
+        "property": "css",
+        "value": "color:${PROPERTY foreground};font-size:18px;font-weight:900;border-radius:10px;background-color:${PROPERTY color}"
+      }
+    ],
+    "index": 4,
+    "hand": "holder-p1-l1",
+    "hideWhenUnused": true,
+    "linkedToSeat": "seat-p4",
+    "turnChangeRoutine": [
+      {
+        "func": "IF",
+        "condition": "${PROPERTY turn}",
+        "thenRoutine": [
+          {
+            "func": "CLICK",
+            "collection": [
+              "collect-cards-p${PROPERTY index}"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "label-p4": {
+    "type": "label",
+    "id": "label-p4",
+    "x": 50,
+    "y": 43,
+    "width": 65,
+    "height": 40,
+    "z": 11964,
+    "css": "font-size: 30px; font-weight:bold",
+    "editable": true,
+    "text": 0,
+    "parent": "seat-p4"
+  },
+  "seat-p5": {
+    "type": "seat",
+    "id": "seat-p5",
+    "x": 1324,
+    "y": 21,
+    "width": 160,
+    "height": 35,
+    "z": 12086,
+    "css": {
+      "default": {
+        "border": "5px solid #999999",
+        "box-shadow": "0 2px 5px #00000066",
+        "color": "#000000",
+        "font-size": "30px"
+      },
+      ".seated": {
+        "background": "${PROPERTY color}",
+        "border": "5px solid #000000",
+        "color": "${PROPERTY foreground}"
+      },
+      ".seated.turn": {
+        "border": "5px dotted ${PROPERTY foreground}"
+      }
+    },
+    "clickRoutine": [
+      {
+        "func": "CLICK",
+        "collection": "thisButton",
+        "mode": "ignoreClickRoutine"
+      },
+      {
+        "func": "SELECT",
+        "property": "deck",
+        "value": "deck-discs"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "playerIndex",
+        "value": "${PROPERTY index}"
+      },
+      {
+        "func": "SET",
+        "property": "background",
+        "value": "${PROPERTY color}"
+      },
+      "var foreground = colorContrast ${PROPERTY color}",
+      {
+        "func": "SET",
+        "property": "color",
+        "value": "${foreground}"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "${PROPERTY id}"
+        ],
+        "property": "foreground",
+        "value": "${foreground}"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "button-endturn-p5"
+      },
+      {
+        "func": "SET",
+        "property": "css",
+        "value": "color:${PROPERTY foreground};font-size:18px;font-weight:900;border-radius:10px;background-color:${PROPERTY color}"
+      }
+    ],
+    "index": 5,
+    "foreground": "#000000",
+    "hand": "holder-p1-l1",
+    "hideWhenUnused": true,
+    "linkedToSeat": "seat-p5",
+    "turnChangeRoutine": [
+      {
+        "func": "IF",
+        "condition": "${PROPERTY turn}",
+        "thenRoutine": [
+          {
+            "func": "CLICK",
+            "collection": [
+              "collect-cards-p${PROPERTY index}"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "label-p5": {
+    "type": "label",
+    "id": "label-p5",
+    "x": 1382,
+    "y": 75,
+    "width": 65,
+    "height": 40,
+    "z": 11964,
+    "css": "font-size: 30px; font-weight:bold",
+    "editable": true,
+    "text": 0,
+    "linkedToSeat": "seat-p5"
+  },
+  "holder-p3-l2": {
+    "type": "holder",
+    "id": "holder-p3-l2",
+    "parent": "seat-p3",
+    "x": -73,
+    "y": 127,
+    "width": 350,
+    "height": 110,
+    "scale": 0.7,
+    "z": 2,
+    "stackOffsetX": 30,
+    "onEnter": {
+      "activeFace": 1
+    },
+    "inheritFrom": "holder-p1-l1",
+    "display": true
+  },
+  "holder-p3-l3": {
+    "type": "holder",
+    "id": "holder-p3-l3",
+    "parent": "seat-p3",
+    "x": -73,
+    "y": 191,
+    "width": 350,
+    "height": 110,
+    "scale": 0.7,
+    "z": 3,
+    "stackOffsetX": 30,
+    "onEnter": {
+      "activeFace": 1
+    },
+    "inheritFrom": "holder-p1-l1",
+    "display": true
+  },
+  "holder-p3-l4": {
+    "type": "holder",
+    "id": "holder-p3-l4",
+    "parent": "seat-p3",
+    "x": -73,
+    "y": 255,
+    "width": 350,
+    "height": 110,
+    "scale": 0.7,
+    "z": 4,
+    "stackOffsetX": 30,
+    "onEnter": {
+      "activeFace": 1
+    },
+    "inheritFrom": "holder-p1-l1",
+    "display": true
+  },
+  "holder-p3-l5": {
+    "type": "holder",
+    "id": "holder-p3-l5",
+    "parent": "seat-p3",
+    "x": -73,
+    "y": 319,
+    "width": 350,
+    "height": 110,
+    "scale": 0.7,
+    "z": 5,
+    "stackOffsetX": 30,
+    "onEnter": {
+      "activeFace": 1
+    },
+    "inheritFrom": "holder-p1-l1",
+    "display": true
+  },
+  "holder-p3-l6": {
+    "type": "holder",
+    "id": "holder-p3-l6",
+    "parent": "seat-p3",
+    "x": -73,
+    "y": 383,
+    "width": 350,
+    "height": 110,
+    "scale": 0.7,
+    "z": 6,
+    "stackOffsetX": 30,
+    "onEnter": {
+      "activeFace": 1
+    },
+    "inheritFrom": "holder-p1-l1",
+    "display": true
+  },
+  "holder-p3-l7": {
+    "type": "holder",
+    "id": "holder-p3-l7",
+    "parent": "seat-p3",
+    "x": -73,
+    "y": 447,
+    "width": 350,
+    "height": 110,
+    "scale": 0.7,
+    "z": 7,
+    "stackOffsetX": 30,
+    "onEnter": {
+      "activeFace": 1
+    },
+    "inheritFrom": "holder-p1-l1",
+    "display": true
+  },
+  "holder-p4-l1": {
+    "type": "holder",
+    "id": "holder-p4-l1",
+    "parent": "seat-p4",
+    "x": -77,
+    "y": 65,
+    "width": 350,
+    "height": 110,
+    "scale": 0.7,
+    "z": 1,
+    "stackOffsetX": 30,
+    "onEnter": {
+      "activeFace": 1
+    },
+    "inheritFrom": "holder-p1-l1",
+    "display": true
+  },
+  "holder-p4-l2": {
+    "type": "holder",
+    "id": "holder-p4-l2",
+    "parent": "seat-p4",
+    "x": -77,
+    "y": 129,
+    "width": 350,
+    "height": 110,
+    "scale": 0.7,
+    "z": 2,
+    "stackOffsetX": 30,
+    "onEnter": {
+      "activeFace": 1
+    },
+    "inheritFrom": "holder-p1-l1",
+    "display": true
+  },
+  "holder-p4-l3": {
+    "type": "holder",
+    "id": "holder-p4-l3",
+    "parent": "seat-p4",
+    "x": -77,
+    "y": 193,
+    "width": 350,
+    "height": 110,
+    "scale": 0.7,
+    "z": 3,
+    "stackOffsetX": 30,
+    "onEnter": {
+      "activeFace": 1
+    },
+    "inheritFrom": "holder-p1-l1",
+    "display": true
+  },
+  "holder-p4-l4": {
+    "type": "holder",
+    "id": "holder-p4-l4",
+    "parent": "seat-p4",
+    "x": -77,
+    "y": 257,
+    "width": 350,
+    "height": 110,
+    "scale": 0.7,
+    "z": 4,
+    "stackOffsetX": 30,
+    "onEnter": {
+      "activeFace": 1
+    },
+    "inheritFrom": "holder-p1-l1",
+    "display": true
+  },
+  "holder-p4-l5": {
+    "type": "holder",
+    "id": "holder-p4-l5",
+    "parent": "seat-p4",
+    "x": -77,
+    "y": 321,
+    "width": 350,
+    "height": 110,
+    "scale": 0.7,
+    "z": 5,
+    "stackOffsetX": 30,
+    "onEnter": {
+      "activeFace": 1
+    },
+    "inheritFrom": "holder-p1-l1",
+    "display": true
+  },
+  "holder-p4-l6": {
+    "type": "holder",
+    "id": "holder-p4-l6",
+    "parent": "seat-p4",
+    "x": -77,
+    "y": 385,
+    "width": 350,
+    "height": 110,
+    "scale": 0.7,
+    "z": 6,
+    "stackOffsetX": 30,
+    "onEnter": {
+      "activeFace": 1
+    },
+    "inheritFrom": "holder-p1-l1",
+    "display": true
+  },
+  "holder-p4-l7": {
+    "type": "holder",
+    "id": "holder-p4-l7",
+    "parent": "seat-p4",
+    "x": -77,
+    "y": 449,
+    "width": 350,
+    "height": 110,
+    "scale": 0.7,
+    "z": 7,
+    "stackOffsetX": 30,
+    "onEnter": {
+      "activeFace": 1
+    },
+    "inheritFrom": "holder-p1-l1",
+    "display": true
+  },
+  "holder-p5-l1": {
+    "type": "holder",
+    "id": "holder-p5-l1",
+    "parent": "seat-p5",
+    "x": -70,
+    "y": 76,
+    "width": 350,
+    "height": 110,
+    "scale": 0.7,
+    "z": 1,
+    "stackOffsetX": 30,
+    "onEnter": {
+      "activeFace": 1
+    },
+    "inheritFrom": "holder-p1-l1",
+    "display": true
+  },
+  "holder-p5-l2": {
+    "type": "holder",
+    "id": "holder-p5-l2",
+    "parent": "seat-p5",
+    "x": -70,
+    "y": 140,
+    "width": 350,
+    "height": 110,
+    "scale": 0.7,
+    "z": 2,
+    "stackOffsetX": 30,
+    "onEnter": {
+      "activeFace": 1
+    },
+    "inheritFrom": "holder-p1-l1",
+    "display": true
+  },
+  "holder-p5-l3": {
+    "type": "holder",
+    "id": "holder-p5-l3",
+    "parent": "seat-p5",
+    "x": -70,
+    "y": 204,
+    "width": 350,
+    "height": 110,
+    "scale": 0.7,
+    "z": 3,
+    "stackOffsetX": 30,
+    "onEnter": {
+      "activeFace": 1
+    },
+    "inheritFrom": "holder-p1-l1",
+    "display": true
+  },
+  "holder-p5-l4": {
+    "type": "holder",
+    "id": "holder-p5-l4",
+    "parent": "seat-p5",
+    "x": -70,
+    "y": 268,
+    "width": 350,
+    "height": 110,
+    "scale": 0.7,
+    "z": 4,
+    "stackOffsetX": 30,
+    "onEnter": {
+      "activeFace": 1
+    },
+    "inheritFrom": "holder-p1-l1",
+    "display": true
+  },
+  "holder-p5-l5": {
+    "type": "holder",
+    "id": "holder-p5-l5",
+    "parent": "seat-p5",
+    "x": -70,
+    "y": 332,
+    "width": 350,
+    "height": 110,
+    "scale": 0.7,
+    "z": 5,
+    "stackOffsetX": 30,
+    "onEnter": {
+      "activeFace": 1
+    },
+    "inheritFrom": "holder-p1-l1",
+    "display": true
+  },
+  "holder-p5-l6": {
+    "type": "holder",
+    "id": "holder-p5-l6",
+    "parent": "seat-p5",
+    "x": -70,
+    "y": 396,
+    "width": 350,
+    "height": 110,
+    "scale": 0.7,
+    "z": 6,
+    "stackOffsetX": 30,
+    "onEnter": {
+      "activeFace": 1
+    },
+    "inheritFrom": "holder-p1-l1",
+    "display": true
+  },
+  "holder-p5-l7": {
+    "type": "holder",
+    "id": "holder-p5-l7",
+    "parent": "seat-p5",
+    "x": -70,
+    "y": 460,
+    "width": 350,
+    "height": 110,
+    "scale": 0.7,
+    "z": 7,
+    "stackOffsetX": 30,
+    "onEnter": {
+      "activeFace": 1
+    },
+    "inheritFrom": "holder-p1-l1",
+    "display": true
+  },
+  "button-snatch-p3-l1": {
+    "type": "button",
+    "id": "button-snatch-p3-l1",
+    "parent": "holder-p3-l1",
+    "x": -55,
+    "y": 15,
+    "width": 50,
+    "height": 50,
+    "z": 12040,
+    "color": "white",
+    "css": {
+      "font-weight": "bold",
+      "border-radius": "5px"
+    },
+    "image": "/i/game-icons.net/quoting/card-play.svg",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "clickRoutine": [
+      {
+        "note": "Active player moves all cards in this holder to their hand",
+        "func": "MOVE",
+        "from": "holder-p3-l1",
+        "to": "holder-market-1",
+        "count": "all"
+      }
+    ],
+    "display": false
+  },
+  "button-snatch-p3-l2": {
+    "type": "button",
+    "id": "button-snatch-p3-l2",
+    "parent": "holder-p3-l2",
+    "x": -55,
+    "y": 16,
+    "width": 50,
+    "height": 50,
+    "z": 12040,
+    "color": "white",
+    "css": {
+      "font-weight": "bold",
+      "border-radius": "5px"
+    },
+    "image": "/i/game-icons.net/quoting/card-play.svg",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "clickRoutine": [
+      {
+        "note": "Active player moves all cards in this holder to their hand",
+        "func": "MOVE",
+        "from": "holder-p3-l2",
+        "to": "holder-market-1",
+        "count": "all"
+      }
+    ],
+    "display": false
+  },
+  "button-snatch-p3-l3": {
+    "type": "button",
+    "id": "button-snatch-p3-l3",
+    "parent": "holder-p3-l3",
+    "x": -56,
+    "y": 18,
+    "width": 50,
+    "height": 50,
+    "z": 12087,
+    "color": "white",
+    "css": {
+      "font-weight": "bold",
+      "border-radius": "5px"
+    },
+    "image": "/i/game-icons.net/quoting/card-play.svg",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "clickRoutine": [
+      {
+        "note": "Active player moves all cards in this holder to their hand",
+        "func": "MOVE",
+        "from": "holder-p3-l3",
+        "to": "holder-market-1",
+        "count": "all"
+      }
+    ],
+    "display": false
+  },
+  "button-snatch-p3-l4": {
+    "type": "button",
+    "id": "button-snatch-p3-l4",
+    "parent": "holder-p3-l4",
+    "x": -55,
+    "y": 19,
+    "width": 50,
+    "height": 50,
+    "z": 12040,
+    "color": "white",
+    "css": {
+      "font-weight": "bold",
+      "border-radius": "5px"
+    },
+    "image": "/i/game-icons.net/quoting/card-play.svg",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "clickRoutine": [
+      {
+        "note": "Active player moves all cards in this holder to their hand",
+        "func": "MOVE",
+        "from": "holder-p3-l4",
+        "to": "holder-market-1",
+        "count": "all"
+      }
+    ],
+    "display": false
+  },
+  "button-snatch-p3-l5": {
+    "type": "button",
+    "id": "button-snatch-p3-l5",
+    "parent": "holder-p3-l5",
+    "x": -55,
+    "y": 21,
+    "width": 50,
+    "height": 50,
+    "z": 12040,
+    "color": "white",
+    "css": {
+      "font-weight": "bold",
+      "border-radius": "5px"
+    },
+    "image": "/i/game-icons.net/quoting/card-play.svg",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "clickRoutine": [
+      {
+        "note": "Active player moves all cards in this holder to their hand",
+        "func": "MOVE",
+        "from": "holder-p3-l5",
+        "to": "holder-market-1",
+        "count": "all"
+      }
+    ],
+    "display": false
+  },
+  "button-snatch-p3-l6": {
+    "type": "button",
+    "id": "button-snatch-p3-l6",
+    "parent": "holder-p3-l6",
+    "x": -55,
+    "y": 23,
+    "width": 50,
+    "height": 50,
+    "z": 12040,
+    "color": "white",
+    "css": {
+      "font-weight": "bold",
+      "border-radius": "5px"
+    },
+    "image": "/i/game-icons.net/quoting/card-play.svg",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "clickRoutine": [
+      {
+        "note": "Active player moves all cards in this holder to their hand",
+        "func": "MOVE",
+        "from": "holder-p3-l6",
+        "to": "holder-market-1",
+        "count": "all"
+      }
+    ],
+    "display": false
+  },
+  "button-snatch-p3-l7": {
+    "type": "button",
+    "id": "button-snatch-p3-l7",
+    "parent": "holder-p3-l7",
+    "x": -55,
+    "y": 25,
+    "width": 50,
+    "height": 50,
+    "z": 12040,
+    "color": "white",
+    "css": {
+      "font-weight": "bold",
+      "border-radius": "5px"
+    },
+    "image": "/i/game-icons.net/quoting/card-play.svg",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "clickRoutine": [
+      {
+        "note": "Active player moves all cards in this holder to their hand",
+        "func": "MOVE",
+        "from": "holder-p3-l7",
+        "to": "holder-market-1",
+        "count": "all"
+      }
+    ],
+    "display": false
+  },
+  "button-snatch-p4-l1": {
+    "type": "button",
+    "id": "button-snatch-p4-l1",
+    "parent": "holder-p4-l1",
+    "x": -55,
+    "y": 13,
+    "width": 50,
+    "height": 50,
+    "z": 12040,
+    "color": "white",
+    "css": {
+      "font-weight": "bold",
+      "border-radius": "5px"
+    },
+    "image": "/i/game-icons.net/quoting/card-play.svg",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "clickRoutine": [
+      {
+        "note": "Active player moves all cards in this holder to their hand",
+        "func": "MOVE",
+        "from": "holder-p4-l1",
+        "to": "holder-market-1",
+        "count": "all"
+      }
+    ],
+    "display": false
+  },
+  "button-snatch-p4-l2": {
+    "type": "button",
+    "id": "button-snatch-p4-l2",
+    "parent": "holder-p4-l2",
+    "x": -55,
+    "y": 14,
+    "width": 50,
+    "height": 50,
+    "z": 12040,
+    "color": "white",
+    "css": {
+      "font-weight": "bold",
+      "border-radius": "5px"
+    },
+    "image": "/i/game-icons.net/quoting/card-play.svg",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "clickRoutine": [
+      {
+        "note": "Active player moves all cards in this holder to their hand",
+        "func": "MOVE",
+        "from": "holder-p4-l2",
+        "to": "holder-market-1",
+        "count": "all"
+      }
+    ],
+    "display": false
+  },
+  "button-snatch-p4-l3": {
+    "type": "button",
+    "id": "button-snatch-p4-l3",
+    "parent": "holder-p4-l3",
+    "x": -55,
+    "y": 15,
+    "width": 50,
+    "height": 50,
+    "z": 12040,
+    "color": "white",
+    "css": {
+      "font-weight": "bold",
+      "border-radius": "5px"
+    },
+    "image": "/i/game-icons.net/quoting/card-play.svg",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "clickRoutine": [
+      {
+        "note": "Active player moves all cards in this holder to their hand",
+        "func": "MOVE",
+        "from": "holder-p4-l3",
+        "to": "holder-market-1",
+        "count": "all"
+      }
+    ],
+    "display": false
+  },
+  "button-snatch-p4-l4": {
+    "type": "button",
+    "id": "button-snatch-p4-l4",
+    "parent": "holder-p4-l4",
+    "x": -55,
+    "y": 17,
+    "width": 50,
+    "height": 50,
+    "z": 12040,
+    "color": "white",
+    "css": {
+      "font-weight": "bold",
+      "border-radius": "5px"
+    },
+    "image": "/i/game-icons.net/quoting/card-play.svg",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "clickRoutine": [
+      {
+        "note": "Active player moves all cards in this holder to their hand",
+        "func": "MOVE",
+        "from": "holder-p4-l4",
+        "to": "holder-market-1",
+        "count": "all"
+      }
+    ],
+    "display": false
+  },
+  "button-snatch-p4-l5": {
+    "type": "button",
+    "id": "button-snatch-p4-l5",
+    "parent": "holder-p4-l5",
+    "x": -55,
+    "y": 19,
+    "width": 50,
+    "height": 50,
+    "z": 12040,
+    "color": "white",
+    "css": {
+      "font-weight": "bold",
+      "border-radius": "5px"
+    },
+    "image": "/i/game-icons.net/quoting/card-play.svg",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "clickRoutine": [
+      {
+        "note": "Active player moves all cards in this holder to their hand",
+        "func": "MOVE",
+        "from": "holder-p4-l5",
+        "to": "holder-market-1",
+        "count": "all"
+      }
+    ],
+    "display": false
+  },
+  "button-snatch-p4-l6": {
+    "type": "button",
+    "id": "button-snatch-p4-l6",
+    "parent": "holder-p4-l6",
+    "x": -55,
+    "y": 21,
+    "width": 50,
+    "height": 50,
+    "z": 12040,
+    "color": "white",
+    "css": {
+      "font-weight": "bold",
+      "border-radius": "5px"
+    },
+    "image": "/i/game-icons.net/quoting/card-play.svg",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "clickRoutine": [
+      {
+        "note": "Active player moves all cards in this holder to their hand",
+        "func": "MOVE",
+        "from": "holder-p4-l6",
+        "to": "holder-market-1",
+        "count": "all"
+      }
+    ],
+    "display": false
+  },
+  "button-snatch-p4-l7": {
+    "type": "button",
+    "id": "button-snatch-p4-l7",
+    "parent": "holder-p4-l7",
+    "x": -55,
+    "y": 23,
+    "width": 50,
+    "height": 50,
+    "z": 12040,
+    "color": "white",
+    "css": {
+      "font-weight": "bold",
+      "border-radius": "5px"
+    },
+    "image": "/i/game-icons.net/quoting/card-play.svg",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "clickRoutine": [
+      {
+        "note": "Active player moves all cards in this holder to their hand",
+        "func": "MOVE",
+        "from": "holder-p4-l7",
+        "to": "holder-market-1",
+        "count": "all"
+      }
+    ],
+    "display": false
+  },
+  "button-snatch-p5-l1": {
+    "type": "button",
+    "id": "button-snatch-p5-l1",
+    "parent": "holder-p5-l1",
+    "x": -55,
+    "y": 3,
+    "width": 50,
+    "height": 50,
+    "z": 12040,
+    "color": "white",
+    "css": {
+      "font-weight": "bold",
+      "border-radius": "5px"
+    },
+    "image": "/i/game-icons.net/quoting/card-play.svg",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "clickRoutine": [
+      {
+        "note": "Active player moves all cards in this holder to their hand",
+        "func": "MOVE",
+        "from": "holder-p5-l1",
+        "to": "holder-market-1",
+        "count": "all"
+      }
+    ],
+    "display": false
+  },
+  "button-snatch-p5-l2": {
+    "type": "button",
+    "id": "button-snatch-p5-l2",
+    "parent": "holder-p5-l2",
+    "x": -55,
+    "y": 4,
+    "width": 50,
+    "height": 50,
+    "z": 12040,
+    "color": "white",
+    "css": {
+      "font-weight": "bold",
+      "border-radius": "5px"
+    },
+    "image": "/i/game-icons.net/quoting/card-play.svg",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "clickRoutine": [
+      {
+        "note": "Active player moves all cards in this holder to their hand",
+        "func": "MOVE",
+        "from": "holder-p5-l2",
+        "to": "holder-market-1",
+        "count": "all"
+      }
+    ],
+    "display": false
+  },
+  "button-snatch-p5-l3": {
+    "type": "button",
+    "id": "button-snatch-p5-l3",
+    "parent": "holder-p5-l3",
+    "x": -55,
+    "y": 6,
+    "width": 50,
+    "height": 50,
+    "z": 12040,
+    "color": "white",
+    "css": {
+      "font-weight": "bold",
+      "border-radius": "5px"
+    },
+    "image": "/i/game-icons.net/quoting/card-play.svg",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "clickRoutine": [
+      {
+        "note": "Active player moves all cards in this holder to their hand",
+        "func": "MOVE",
+        "from": "holder-p5-l3",
+        "to": "holder-market-1",
+        "count": "all"
+      }
+    ],
+    "display": false
+  },
+  "1_turn_holder": {
+    "type": "holder",
+    "id": "1_turn_holder",
+    "x": 78,
+    "z": 5369,
+    "css": {
+      "default": {
+        "background-color": "transparent",
+        "border": "0px solid black",
+        "border-radius": "5px",
+        "display": "flex",
+        "text-align": "center",
+        "font-size": "11px",
+        "align-items": "center"
+      }
+    },
+    "width": 80,
+    "height": 60,
+    "y": 11
+  },
+  "hsfv": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "4-chicken",
+    "id": "hsfv",
+    "z": 1,
+    "parent": "holder-p1-l3",
+    "activeFace": 1,
+    "x": 4,
+    "y": 4
+  },
+  "jzzu": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "8-elephant",
+    "id": "jzzu",
+    "z": 1,
+    "parent": "holder-p1-l5",
+    "activeFace": 1,
+    "x": 4,
+    "y": 4
+  },
+  "grwj": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "5-koala",
+    "id": "grwj",
+    "z": 1,
+    "parent": "holder-p1-l4",
+    "activeFace": 1,
+    "x": 4,
+    "y": 4
+  },
+  "v9vw": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "5-koala",
+    "id": "v9vw",
+    "z": 1,
+    "parent": "holder-p1-l1",
+    "activeFace": 1,
+    "x": 4,
+    "y": 4
+  },
+  "holder-market-1": {
+    "type": "holder",
+    "id": "holder-market-1",
+    "x": 175,
+    "y": 816,
+    "width": 900,
+    "height": 150,
+    "z": 5312,
+    "inheritChildZ": true,
+    "onEnter": {
+      "activeFace": 1,
+      "scale": 1
+    },
+    "stackOffsetX": 40
+  },
+  "bustDiscard": {
+    "type": "button",
+    "id": "bustDiscard",
+    "parent": "holder-market-1",
+    "x": 571,
+    "y": -55,
+    "width": 160,
+    "height": 50,
+    "z": 12085,
+    "color": "white",
+    "css": {
+      "--wcMain": "red",
+      "--wcMainOH": "darkred",
+      "--wcBorder": "darkred",
+      "--wcBorderOH": "red",
+      "border-radius": "10px"
+    },
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "holder-market-1",
+        "to": "holder-discard",
+        "count": "all"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "tidyB"
+      },
+      {
+        "func": "CLICK"
+      },
+      {
+        "func": "TURN",
+        "turnCycle": "forward"
+      }
+    ],
+    "text": "End Turn & Bust"
+  },
+  "collect": {
+    "type": "button",
+    "id": "collect",
+    "x": 379,
+    "y": 761,
+    "z": 12085,
+    "css": {
+      "--wcMain": "green",
+      "--wcMainOH": "darkgreen",
+      "--wcBorder": "darkgreen",
+      "--wcBorderOH": "green",
+      "border-radius": "10px"
+    },
+    "text": "End Turn & Collect",
+    "height": 50,
+    "width": 160,
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "type": "seat",
+        "property": "turn",
+        "relation": "==",
+        "value": true
+      },
+      {
+        "func": "GET",
+        "collection": "DEFAULT",
+        "property": "index",
+        "variable": "index"
+      },
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "holder-market-1"
+      },
+      {
+        "func": "COUNT"
+      },
+      "var cardCount = ${COUNT}",
+      "var x = 0",
+      {
+        "func": "FOREACH",
+        "range": 10,
+        "loopRoutine": [
+          "var x = ${x} + 1",
+          {
+            "func": "FOREACH",
+            "range": "${cardCount}",
+            "loopRoutine": [
+              "var cardType = null",
+              {
+                "func": "SELECT",
+                "property": "parent",
+                "value": "holder-p${index}-l${x}"
+              },
+              {
+                "func": "SELECT",
+                "property": "type",
+                "source": "DEFAULT",
+                "value": "card"
+              },
+              {
+                "func": "GET",
+                "property": "cardType"
+              },
+              "var cardType = ${cardType}",
+              {
+                "func": "IF",
+                "operand1": "${cardType}",
+                "relation": "==",
+                "operand2": null,
+                "thenRoutine": [
+                  {
+                    "func": "CALL",
+                    "routine": "yesNullRoutine"
+                  }
+                ],
+                "elseRoutine": [
+                  {
+                    "func": "CALL",
+                    "routine": "noNullRoutine"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "tidyB"
+      },
+      {
+        "func": "CLICK"
+      },
+      {
+        "func": "TURN",
+        "turnCycle": "forward"
+      }
+    ],
+    "noNullRoutine": [
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "holder-market-1"
+      },
+      {
+        "func": "SELECT",
+        "property": "cardType",
+        "value": "${cardType}",
+        "source": "DEFAULT"
+      },
+      {
+        "func": "COUNT"
+      },
+      {
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "relation": ">",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "func": "MOVE",
+            "to": "holder-p${index}-l${x}",
+            "collection": "DEFAULT"
+          }
+        ]
+      }
+    ],
+    "yesNullRoutine": [
+      "var y = 1",
+      {
+        "func": "MOVE",
+        "from": "holder-market-1",
+        "to": "holder-p${index}-l${x}",
+        "count": 1
+      }
+    ]
+  },
+  "holder-p3-l1": {
+    "type": "holder",
+    "id": "holder-p3-l1",
+    "parent": "seat-p3",
+    "x": -73,
+    "y": 63,
+    "width": 350,
+    "height": 110,
+    "scale": 0.7,
+    "z": 1,
+    "stackOffsetX": 30,
+    "onEnter": {
+      "activeFace": 1
+    },
+    "inheritFrom": "holder-p1-l1",
+    "display": true
+  },
+  "holder-p1-l1": {
+    "type": "holder",
+    "id": "holder-p1-l1",
+    "parent": "seat-p1",
+    "x": -76,
+    "y": 68,
+    "width": 350,
+    "height": 110,
+    "scale": 0.7,
+    "z": 1,
+    "stackOffsetX": 30,
+    "enterRoutine": [
+      {
+        "func": "SELECT",
+        "property": "_ancestor",
+        "value": "${PROPERTY id}",
+        "type": "button"
+      },
+      {
+        "func": "SET",
+        "property": "display",
+        "value": true
+      }
+    ],
+    "onEnter": {
+      "activeFace": 1
+    },
+    "leaveRoutine": [
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "_ancestor",
+        "value": "${PROPERTY id}"
+      },
+      {
+        "func": "COUNT"
+      },
+      {
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "relation": "==",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "func": "SELECT",
+            "property": "_ancestor",
+            "value": "${PROPERTY id}",
+            "type": "button"
+          },
+          {
+            "func": "SET",
+            "property": "display",
+            "value": false
+          }
+        ]
+      }
+    ],
+    "css": {
+      "background": "transparent",
+      "border": "transparent"
+    }
+  },
+  "score-p1": {
+    "type": "holder",
+    "id": "score-p1",
+    "width": 100,
+    "height": 140,
+    "z": 5371,
+    "onEnter": {
+      "activeFace": 0
+    },
+    "y": -40,
+    "scale": 0.5,
+    "parent": "seat-p1",
+    "x": 146
+  },
+  "collect-cards-p1": {
+    "type": "button",
+    "id": "collect-cards-p1",
+    "x": -70,
+    "width": 60,
+    "height": 50,
+    "z": 12040,
+    "color": "white",
+    "css": {
+      "font-weight": "bold",
+      "border-radius": "5px"
+    },
+    "image": "/i/game-icons.net/skoll/open-chest.svg",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "clickRoutine": [
+      {
+        "note": "Active player moves all cards in this holder to their score pile",
+        "func": "MOVE",
+        "from": [
+          "holder-p1-l1",
+          "holder-p1-l2",
+          "holder-p1-l3",
+          "holder-p1-l4",
+          "holder-p1-l5",
+          "holder-p1-l6",
+          "holder-p1-l7",
+          "holder-p1-l8",
+          "holder-p1-l9"
+        ],
+        "to": "score-p1",
+        "count": "all"
+      }
+    ],
+    "parent": "seat-p1",
+    "y": -2
+  },
+  "score-p3": {
+    "type": "holder",
+    "id": "score-p3",
+    "x": 149,
+    "width": 100,
+    "height": 140,
+    "z": 5371,
+    "onEnter": {
+      "activeFace": 0
+    },
+    "scale": 0.5,
+    "parent": "seat-p3",
+    "y": -46
+  },
+  "collect-cards-p3": {
+    "type": "button",
+    "id": "collect-cards-p3",
+    "parent": "seat-p3",
+    "y": -8,
+    "width": 60,
+    "height": 50,
+    "z": 12040,
+    "color": "white",
+    "css": {
+      "font-weight": "bold",
+      "border-radius": "5px"
+    },
+    "image": "/i/game-icons.net/skoll/open-chest.svg",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "clickRoutine": [
+      {
+        "note": "Active player moves all cards in this holder to their score pile",
+        "func": "MOVE",
+        "from": [
+          "holder-p3-l1",
+          "holder-p3-l2",
+          "holder-p3-l3",
+          "holder-p3-l4",
+          "holder-p3-l5",
+          "holder-p3-l6",
+          "holder-p3-l7",
+          "holder-p3-l8",
+          "holder-p3-l9"
+        ],
+        "to": "score-p3",
+        "count": "all"
+      }
+    ],
+    "x": -71
+  },
+  "score-p4": {
+    "type": "holder",
+    "id": "score-p4",
+    "width": 100,
+    "height": 140,
+    "z": 5371,
+    "onEnter": {
+      "activeFace": 0
+    },
+    "scale": 0.5,
+    "y": -46,
+    "parent": "seat-p4",
+    "x": 145
+  },
+  "collect-cards-p4": {
+    "type": "button",
+    "id": "collect-cards-p4",
+    "parent": "seat-p4",
+    "width": 60,
+    "height": 50,
+    "z": 12040,
+    "color": "white",
+    "css": {
+      "font-weight": "bold",
+      "border-radius": "5px"
+    },
+    "image": "/i/game-icons.net/skoll/open-chest.svg",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "clickRoutine": [
+      {
+        "note": "Active player moves all cards in this holder to their score pile",
+        "func": "MOVE",
+        "from": [
+          "holder-p4-l1",
+          "holder-p4-l2",
+          "holder-p4-l3",
+          "holder-p4-l4",
+          "holder-p4-l5",
+          "holder-p4-l6",
+          "holder-p4-l7",
+          "holder-p4-l8",
+          "holder-p4-l9"
+        ],
+        "to": "score-p4",
+        "count": "all"
+      }
+    ],
+    "x": -76,
+    "y": -8
+  },
+  "score-p5": {
+    "type": "holder",
+    "id": "score-p5",
+    "x": 152,
+    "width": 100,
+    "height": 140,
+    "z": 5371,
+    "onEnter": {
+      "activeFace": 0
+    },
+    "scale": 0.5,
+    "parent": "seat-p5",
+    "y": -42
+  },
+  "collect-cards-p5": {
+    "type": "button",
+    "id": "collect-cards-p5",
+    "parent": "seat-p5",
+    "width": 60,
+    "height": 50,
+    "z": 12040,
+    "color": "white",
+    "css": {
+      "font-weight": "bold",
+      "border-radius": "5px"
+    },
+    "image": "/i/game-icons.net/skoll/open-chest.svg",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "clickRoutine": [
+      {
+        "note": "Active player moves all cards in this holder to their score pile",
+        "func": "MOVE",
+        "from": [
+          "holder-p5-l1",
+          "holder-p5-l2",
+          "holder-p5-l3",
+          "holder-p5-l4",
+          "holder-p5-l5",
+          "holder-p5-l6",
+          "holder-p5-l7",
+          "holder-p5-l8",
+          "holder-p5-l9"
+        ],
+        "to": "score-p5",
+        "count": "all"
+      }
+    ],
+    "x": -74,
+    "y": -4
+  },
+  "button-snatch-p2-l2": {
+    "type": "button",
+    "id": "button-snatch-p2-l2",
+    "parent": "holder-p2-l2",
+    "x": -58,
+    "y": 18,
+    "width": 50,
+    "height": 50,
+    "z": 12040,
+    "color": "white",
+    "css": {
+      "font-weight": "bold",
+      "border-radius": "5px"
+    },
+    "image": "/i/game-icons.net/quoting/card-play.svg",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "clickRoutine": [
+      {
+        "note": "Active player moves all cards in this holder to their hand",
+        "func": "MOVE",
+        "from": "holder-p2-l2",
+        "to": "holder-market-1",
+        "count": "all"
+      }
+    ],
+    "display": false
+  },
+  "holder-p2-l2": {
+    "type": "holder",
+    "id": "holder-p2-l2",
+    "parent": "seat-p2",
+    "x": -82,
+    "y": 130,
+    "width": 350,
+    "height": 110,
+    "scale": 0.7,
+    "stackOffsetX": 30,
+    "z": 2,
+    "onEnter": {
+      "activeFace": 1
+    },
+    "inheritFrom": "holder-p1-l1",
+    "display": true
+  },
+  "button-snatch-p2-l7": {
+    "type": "button",
+    "id": "button-snatch-p2-l7",
+    "parent": "holder-p2-l7",
+    "x": -58,
+    "y": 28,
+    "width": 50,
+    "height": 50,
+    "z": 12040,
+    "color": "white",
+    "css": {
+      "font-weight": "bold",
+      "border-radius": "5px"
+    },
+    "image": "/i/game-icons.net/quoting/card-play.svg",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "clickRoutine": [
+      {
+        "note": "Active player moves all cards in this holder to their hand",
+        "func": "MOVE",
+        "from": "holder-p2-l7",
+        "to": "holder-market-1",
+        "count": "all"
+      }
+    ],
+    "display": false
+  },
+  "holder-p2-l7": {
+    "type": "holder",
+    "id": "holder-p2-l7",
+    "parent": "seat-p2",
+    "x": -82,
+    "y": 450,
+    "width": 350,
+    "height": 110,
+    "scale": 0.7,
+    "z": 7,
+    "stackOffsetX": 30,
+    "onEnter": {
+      "activeFace": 1
+    },
+    "inheritFrom": "holder-p1-l1",
+    "display": true
+  },
+  "button-snatch-p2-l6": {
+    "type": "button",
+    "id": "button-snatch-p2-l6",
+    "parent": "holder-p2-l6",
+    "x": -58,
+    "y": 26,
+    "width": 50,
+    "height": 50,
+    "z": 12040,
+    "color": "white",
+    "css": {
+      "font-weight": "bold",
+      "border-radius": "5px"
+    },
+    "image": "/i/game-icons.net/quoting/card-play.svg",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "clickRoutine": [
+      {
+        "note": "Active player moves all cards in this holder to their hand",
+        "func": "MOVE",
+        "from": "holder-p2-l6",
+        "to": "holder-market-1",
+        "count": "all"
+      }
+    ],
+    "display": false
+  },
+  "holder-p2-l6": {
+    "type": "holder",
+    "id": "holder-p2-l6",
+    "parent": "seat-p2",
+    "x": -82,
+    "y": 386,
+    "width": 350,
+    "height": 110,
+    "scale": 0.7,
+    "z": 6,
+    "stackOffsetX": 30,
+    "onEnter": {
+      "activeFace": 1
+    },
+    "inheritFrom": "holder-p1-l1",
+    "display": true
+  },
+  "button-snatch-p2-l5": {
+    "type": "button",
+    "id": "button-snatch-p2-l5",
+    "parent": "holder-p2-l5",
+    "x": -58,
+    "y": 24,
+    "width": 50,
+    "height": 50,
+    "z": 12040,
+    "color": "white",
+    "css": {
+      "font-weight": "bold",
+      "border-radius": "5px"
+    },
+    "image": "/i/game-icons.net/quoting/card-play.svg",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "clickRoutine": [
+      {
+        "note": "Active player moves all cards in this holder to their hand",
+        "func": "MOVE",
+        "from": "holder-p2-l5",
+        "to": "holder-market-1",
+        "count": "all"
+      }
+    ],
+    "display": false
+  },
+  "holder-p2-l5": {
+    "type": "holder",
+    "id": "holder-p2-l5",
+    "parent": "seat-p2",
+    "x": -82,
+    "y": 322,
+    "width": 350,
+    "height": 110,
+    "scale": 0.7,
+    "stackOffsetX": 30,
+    "z": 5,
+    "onEnter": {
+      "activeFace": 1
+    },
+    "inheritFrom": "holder-p1-l1",
+    "display": true
+  },
+  "button-snatch-p2-l4": {
+    "type": "button",
+    "id": "button-snatch-p2-l4",
+    "parent": "holder-p2-l4",
+    "x": -58,
+    "y": 22,
+    "width": 50,
+    "height": 50,
+    "z": 12040,
+    "color": "white",
+    "css": {
+      "font-weight": "bold",
+      "border-radius": "5px"
+    },
+    "image": "/i/game-icons.net/quoting/card-play.svg",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "clickRoutine": [
+      {
+        "note": "Active player moves all cards in this holder to their hand",
+        "func": "MOVE",
+        "from": "holder-p2-l4",
+        "to": "holder-market-1",
+        "count": "all"
+      }
+    ],
+    "display": false
+  },
+  "holder-p2-l4": {
+    "type": "holder",
+    "id": "holder-p2-l4",
+    "parent": "seat-p2",
+    "x": -82,
+    "y": 258,
+    "width": 350,
+    "height": 110,
+    "scale": 0.7,
+    "stackOffsetX": 30,
+    "z": 4,
+    "onEnter": {
+      "activeFace": 1
+    },
+    "inheritFrom": "holder-p1-l1",
+    "display": true
+  },
+  "button-snatch-p2-l3": {
+    "type": "button",
+    "id": "button-snatch-p2-l3",
+    "parent": "holder-p2-l3",
+    "x": -58,
+    "y": 20,
+    "width": 50,
+    "height": 50,
+    "z": 12040,
+    "color": "white",
+    "css": {
+      "font-weight": "bold",
+      "border-radius": "5px"
+    },
+    "image": "/i/game-icons.net/quoting/card-play.svg",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "clickRoutine": [
+      {
+        "note": "Active player moves all cards in this holder to their hand",
+        "func": "MOVE",
+        "from": "holder-p2-l3",
+        "to": "holder-market-1",
+        "count": "all"
+      }
+    ],
+    "display": false
+  },
+  "holder-p2-l3": {
+    "type": "holder",
+    "id": "holder-p2-l3",
+    "parent": "seat-p2",
+    "x": -82,
+    "y": 194,
+    "width": 350,
+    "height": 110,
+    "scale": 0.7,
+    "stackOffsetX": 30,
+    "z": 3,
+    "onEnter": {
+      "activeFace": 1
+    },
+    "inheritFrom": "holder-p1-l1",
+    "display": true
+  },
+  "button-snatch-p2-l1": {
+    "type": "button",
+    "id": "button-snatch-p2-l1",
+    "parent": "holder-p2-l1",
+    "x": -58,
+    "y": 16,
+    "width": 50,
+    "height": 50,
+    "z": 12040,
+    "color": "white",
+    "css": {
+      "font-weight": "bold",
+      "border-radius": "5px"
+    },
+    "image": "/i/game-icons.net/quoting/card-play.svg",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "clickRoutine": [
+      {
+        "note": "Active player moves all cards in this holder to their hand",
+        "func": "MOVE",
+        "from": "holder-p2-l1",
+        "to": "holder-market-1",
+        "count": "all"
+      }
+    ],
+    "display": false
+  },
+  "holder-p2-l1": {
+    "type": "holder",
+    "id": "holder-p2-l1",
+    "parent": "seat-p2",
+    "x": -82,
+    "y": 66,
+    "width": 350,
+    "height": 110,
+    "scale": 0.7,
+    "z": 1,
+    "stackOffsetX": 30,
+    "onEnter": {
+      "activeFace": 1
+    },
+    "inheritFrom": "holder-p1-l1",
+    "display": true
+  },
+  "score-p2": {
+    "type": "holder",
+    "id": "score-p2",
+    "x": 141,
+    "width": 100,
+    "height": 140,
+    "z": 5371,
+    "onEnter": {
+      "activeFace": 0
+    },
+    "y": -42,
+    "scale": 0.5,
+    "parent": "seat-p2"
+  },
+  "collect-cards-p2": {
+    "type": "button",
+    "id": "collect-cards-p2",
+    "parent": "seat-p2",
+    "y": -4,
+    "width": 60,
+    "height": 50,
+    "z": 12040,
+    "color": "white",
+    "css": {
+      "font-weight": "bold",
+      "border-radius": "5px"
+    },
+    "image": "/i/game-icons.net/skoll/open-chest.svg",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "clickRoutine": [
+      {
+        "note": "Active player moves all cards in this holder to their score pile",
+        "func": "MOVE",
+        "from": [
+          "holder-p2-l1",
+          "holder-p2-l2",
+          "holder-p2-l3",
+          "holder-p2-l4",
+          "holder-p2-l5",
+          "holder-p2-l6",
+          "holder-p2-l7",
+          "holder-p2-l8",
+          "holder-p2-l9"
+        ],
+        "to": "score-p2",
+        "count": "all"
+      }
+    ],
+    "x": -75
+  },
+  "seat-p2": {
+    "type": "seat",
+    "id": "seat-p2",
+    "index": 2,
+    "x": 397,
+    "y": 22,
+    "width": 160,
+    "height": 35,
+    "z": 12077,
+    "css": {
+      "default": {
+        "border": "5px solid #999999",
+        "box-shadow": "0 2px 5px #00000066",
+        "color": "#000000",
+        "font-size": "30px"
+      },
+      ".seated": {
+        "background": "${PROPERTY color}",
+        "border": "5px solid #000000",
+        "color": "${PROPERTY foreground}"
+      },
+      ".seated.turn": {
+        "border": "5px dotted ${PROPERTY foreground}"
+      }
+    },
+    "hand": "holder-p1-l1",
+    "foreground": "#000000",
+    "clickRoutine": [
+      {
+        "func": "CLICK",
+        "collection": "thisButton",
+        "mode": "ignoreClickRoutine"
+      },
+      {
+        "func": "SELECT",
+        "property": "deck",
+        "value": "deck-discs"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "playerIndex",
+        "value": "${PROPERTY index}"
+      },
+      {
+        "func": "SET",
+        "property": "background",
+        "value": "${PROPERTY color}"
+      },
+      "var foreground = colorContrast ${PROPERTY color}",
+      {
+        "func": "SET",
+        "property": "color",
+        "value": "${foreground}"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "${PROPERTY id}"
+        ],
+        "property": "foreground",
+        "value": "${foreground}"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "button-endturn-p3"
+      },
+      {
+        "func": "SET",
+        "property": "css",
+        "value": "color:${PROPERTY foreground};font-size:18px;font-weight:900;border-radius:10px;background-color:${PROPERTY color}"
+      }
+    ],
+    "hideWhenUnused": true,
+    "linkedToSeat": "seat-p2",
+    "turnChangeRoutine": [
+      {
+        "func": "IF",
+        "condition": "${PROPERTY turn}",
+        "thenRoutine": [
+          {
+            "func": "CLICK",
+            "collection": [
+              "collect-cards-p${PROPERTY index}"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "holder-p1-l8": {
+    "type": "holder",
+    "id": "holder-p1-l8",
+    "x": -76,
+    "y": 521,
+    "parent": "seat-p1",
+    "width": 350,
+    "height": 110,
+    "scale": 0.7,
+    "stackOffsetX": 30,
+    "z": 7,
+    "onEnter": {
+      "activeFace": 1
+    },
+    "inheritFrom": "holder-p1-l1",
+    "display": true
+  },
+  "button-snatch-p1-l8": {
+    "type": "button",
+    "id": "button-snatch-p1-l8",
+    "parent": "holder-p1-l8",
+    "x": -62,
+    "y": 25,
+    "width": 50,
+    "height": 50,
+    "z": 12040,
+    "color": "white",
+    "css": {
+      "font-weight": "bold",
+      "border-radius": "5px"
+    },
+    "image": "/i/game-icons.net/quoting/card-play.svg",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "clickRoutine": [
+      {
+        "note": "Active player moves all cards in this holder to their hand",
+        "func": "MOVE",
+        "from": "holder-p1-l8",
+        "to": "holder-market-1",
+        "count": "all"
+      }
+    ],
+    "display": false
+  },
+  "holder-p1-l9": {
+    "type": "holder",
+    "id": "holder-p1-l9",
+    "x": -76,
+    "y": 596,
+    "parent": "seat-p1",
+    "width": 350,
+    "height": 110,
+    "scale": 0.7,
+    "stackOffsetX": 30,
+    "z": 7,
+    "onEnter": {
+      "activeFace": 1
+    },
+    "inheritFrom": "holder-p1-l1",
+    "display": true
+  },
+  "button-snatch-p1-l9": {
+    "type": "button",
+    "id": "button-snatch-p1-l9",
+    "parent": "holder-p1-l9",
+    "x": -62,
+    "y": 16,
+    "width": 50,
+    "height": 50,
+    "z": 12040,
+    "color": "white",
+    "css": {
+      "font-weight": "bold",
+      "border-radius": "5px"
+    },
+    "image": "/i/game-icons.net/quoting/card-play.svg",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "clickRoutine": [
+      {
+        "note": "Active player moves all cards in this holder to their hand",
+        "func": "MOVE",
+        "from": "holder-p1-l9",
+        "to": "holder-market-1",
+        "count": "all"
+      }
+    ],
+    "display": false
+  },
+  "holder-p2-l8": {
+    "type": "holder",
+    "id": "holder-p2-l8",
+    "parent": "seat-p2",
+    "x": -82,
+    "y": 519,
+    "width": 350,
+    "height": 110,
+    "scale": 0.7,
+    "z": 7,
+    "stackOffsetX": 30,
+    "onEnter": {
+      "activeFace": 1
+    },
+    "inheritFrom": "holder-p1-l1",
+    "display": true
+  },
+  "button-snatch-p2-l8": {
+    "type": "button",
+    "id": "button-snatch-p2-l8",
+    "parent": "holder-p2-l8",
+    "x": -58,
+    "y": 25,
+    "width": 50,
+    "height": 50,
+    "z": 12040,
+    "color": "white",
+    "css": {
+      "font-weight": "bold",
+      "border-radius": "5px"
+    },
+    "image": "/i/game-icons.net/quoting/card-play.svg",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "clickRoutine": [
+      {
+        "note": "Active player moves all cards in this holder to their hand",
+        "func": "MOVE",
+        "from": "holder-p2-l8",
+        "to": "holder-market-1",
+        "count": "all"
+      }
+    ],
+    "display": false
+  },
+  "holder-p2-l9": {
+    "type": "holder",
+    "id": "holder-p2-l9",
+    "parent": "seat-p2",
+    "x": -82,
+    "y": 594,
+    "width": 350,
+    "height": 110,
+    "scale": 0.7,
+    "z": 7,
+    "stackOffsetX": 30,
+    "onEnter": {
+      "activeFace": 1
+    },
+    "inheritFrom": "holder-p1-l1",
+    "display": true
+  },
+  "button-snatch-p2-l9": {
+    "type": "button",
+    "id": "button-snatch-p2-l9",
+    "parent": "holder-p2-l9",
+    "x": -58,
+    "y": 14,
+    "width": 50,
+    "height": 50,
+    "z": 12040,
+    "color": "white",
+    "css": {
+      "font-weight": "bold",
+      "border-radius": "5px"
+    },
+    "image": "/i/game-icons.net/quoting/card-play.svg",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "clickRoutine": [
+      {
+        "note": "Active player moves all cards in this holder to their hand",
+        "func": "MOVE",
+        "from": "holder-p2-l9",
+        "to": "holder-market-1",
+        "count": "all"
+      }
+    ],
+    "display": false
+  },
+  "holder-p3-l8": {
+    "type": "holder",
+    "id": "holder-p3-l8",
+    "parent": "seat-p3",
+    "x": -73,
+    "y": 515,
+    "width": 350,
+    "height": 110,
+    "scale": 0.7,
+    "z": 7,
+    "stackOffsetX": 30,
+    "onEnter": {
+      "activeFace": 1
+    },
+    "inheritFrom": "holder-p1-l1",
+    "display": true
+  },
+  "button-snatch-p3-l8": {
+    "type": "button",
+    "id": "button-snatch-p3-l8",
+    "parent": "holder-p3-l8",
+    "x": -55,
+    "y": 23,
+    "width": 50,
+    "height": 50,
+    "z": 12040,
+    "color": "white",
+    "css": {
+      "font-weight": "bold",
+      "border-radius": "5px"
+    },
+    "image": "/i/game-icons.net/quoting/card-play.svg",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "clickRoutine": [
+      {
+        "note": "Active player moves all cards in this holder to their hand",
+        "func": "MOVE",
+        "from": "holder-p3-l8",
+        "to": "holder-market-1",
+        "count": "all"
+      }
+    ],
+    "display": false
+  },
+  "holder-p3-l9": {
+    "type": "holder",
+    "id": "holder-p3-l9",
+    "parent": "seat-p3",
+    "x": -73,
+    "y": 590,
+    "width": 350,
+    "height": 110,
+    "scale": 0.7,
+    "z": 7,
+    "stackOffsetX": 30,
+    "onEnter": {
+      "activeFace": 1
+    },
+    "inheritFrom": "holder-p1-l1",
+    "display": true
+  },
+  "button-snatch-p3-l9": {
+    "type": "button",
+    "id": "button-snatch-p3-l9",
+    "parent": "holder-p3-l9",
+    "x": -55,
+    "y": 15,
+    "width": 50,
+    "height": 50,
+    "z": 12040,
+    "color": "white",
+    "css": {
+      "font-weight": "bold",
+      "border-radius": "5px"
+    },
+    "image": "/i/game-icons.net/quoting/card-play.svg",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "clickRoutine": [
+      {
+        "note": "Active player moves all cards in this holder to their hand",
+        "func": "MOVE",
+        "from": "holder-p3-l9",
+        "to": "holder-market-1",
+        "count": "all"
+      }
+    ],
+    "display": false
+  },
+  "holder-p4-l8": {
+    "type": "holder",
+    "id": "holder-p4-l8",
+    "parent": "seat-p4",
+    "x": -77,
+    "y": 515,
+    "width": 350,
+    "height": 110,
+    "scale": 0.7,
+    "z": 7,
+    "stackOffsetX": 30,
+    "onEnter": {
+      "activeFace": 1
+    },
+    "inheritFrom": "holder-p1-l1",
+    "display": true
+  },
+  "button-snatch-p4-l8": {
+    "type": "button",
+    "id": "button-snatch-p4-l8",
+    "parent": "holder-p4-l8",
+    "x": -55,
+    "y": 23,
+    "width": 50,
+    "height": 50,
+    "z": 12040,
+    "color": "white",
+    "css": {
+      "font-weight": "bold",
+      "border-radius": "5px"
+    },
+    "image": "/i/game-icons.net/quoting/card-play.svg",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "clickRoutine": [
+      {
+        "note": "Active player moves all cards in this holder to their hand",
+        "func": "MOVE",
+        "from": "holder-p4-l8",
+        "to": "holder-market-1",
+        "count": "all"
+      }
+    ],
+    "display": false
+  },
+  "holder-p4-l9": {
+    "type": "holder",
+    "id": "holder-p4-l9",
+    "parent": "seat-p4",
+    "x": -77,
+    "y": 590,
+    "width": 350,
+    "height": 110,
+    "scale": 0.7,
+    "z": 7,
+    "stackOffsetX": 30,
+    "onEnter": {
+      "activeFace": 1
+    },
+    "inheritFrom": "holder-p1-l1",
+    "display": true
+  },
+  "button-snatch-p4-l9": {
+    "type": "button",
+    "id": "button-snatch-p4-l9",
+    "parent": "holder-p4-l9",
+    "x": -55,
+    "y": 15,
+    "width": 50,
+    "height": 50,
+    "z": 12040,
+    "color": "white",
+    "css": {
+      "font-weight": "bold",
+      "border-radius": "5px"
+    },
+    "image": "/i/game-icons.net/quoting/card-play.svg",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "clickRoutine": [
+      {
+        "note": "Active player moves all cards in this holder to their hand",
+        "func": "MOVE",
+        "from": "holder-p4-l9",
+        "to": "holder-market-1",
+        "count": "all"
+      }
+    ],
+    "display": false
+  },
+  "holder-p5-l8": {
+    "type": "holder",
+    "id": "holder-p5-l8",
+    "parent": "seat-p5",
+    "x": -70,
+    "y": 524,
+    "width": 350,
+    "height": 110,
+    "scale": 0.7,
+    "z": 7,
+    "stackOffsetX": 30,
+    "onEnter": {
+      "activeFace": 1
+    },
+    "inheritFrom": "holder-p1-l1",
+    "display": true
+  },
+  "holder-p5-l9": {
+    "type": "holder",
+    "id": "holder-p5-l9",
+    "parent": "seat-p5",
+    "x": -70,
+    "y": 599,
+    "width": 350,
+    "height": 110,
+    "scale": 0.7,
+    "z": 7,
+    "stackOffsetX": 30,
+    "onEnter": {
+      "activeFace": 1
+    },
+    "inheritFrom": "holder-p1-l1",
+    "display": true
+  },
+  "label-p2": {
+    "type": "label",
+    "id": "label-p2",
+    "y": 45,
+    "width": 65,
+    "height": 40,
+    "z": 11964,
+    "css": "font-size: 30px; font-weight:bold",
+    "editable": true,
+    "text": 0,
+    "parent": "seat-p2",
+    "x": 51
+  },
+  "newGame": {
+    "type": "button",
+    "id": "newGame",
+    "x": 605,
+    "y": 731,
+    "z": 12088,
+    "text": "New Game",
+    "clickRoutine": [
+      {
+        "func": "TURN",
+        "turnCycle": "random"
+      },
+      {
+        "func": "INPUT",
+        "header": "Ready to start?",
+        "fields": [
+          {
+            "type": "text",
+            "text": "Is everyone seated?"
+          }
+        ]
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "reset"
+        ],
+        "property": "display",
+        "value": true
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "newGame"
+        ],
+        "property": "display",
+        "value": false
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "collect"
+        ],
+        "property": "display",
+        "value": true
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "bustDiscard"
+        ],
+        "property": "display",
+        "value": true
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "calculateScore"
+        ],
+        "property": "display",
+        "value": true
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "button-draw"
+        ],
+        "property": "display",
+        "value": true
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "holder-deck"
+        ],
+        "property": "display",
+        "value": true
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "deckReminder"
+        ],
+        "property": "display",
+        "value": true
+      }
+    ],
+    "display": false
+  },
+  "calculateScore": {
+    "type": "button",
+    "id": "calculateScore",
+    "x": 49,
+    "y": 820,
+    "width": 90,
+    "height": 70,
+    "z": 284,
+    "css": {
+      "font-weight": "bold",
+      "border-radius": "10px"
+    },
+    "text": "End game score",
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "header": "Calculate score",
+        "fields": [
+          {
+            "type": "text",
+            "text": "You're about to end the game and show the score. Are you sure?"
+          }
+        ]
+      },
+      {
+        "func": "FOREACH",
+        "range": [
+          5
+        ],
+        "loopRoutine": [
+          {
+            "func": "SELECT",
+            "type": "card",
+            "property": "parent",
+            "value": "score-p${value}"
+          },
+          {
+            "func": "GET",
+            "property": "points",
+            "aggregation": "sum"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "label-p${value}"
+            ],
+            "property": "text",
+            "value": "${points}"
+          }
+        ]
+      }
+    ]
+  },
+  "deckReminder": {
+    "type": "label",
+    "id": "deckReminder",
+    "x": 128,
+    "y": 726,
+    "z": 11965,
+    "text": "90-card deck containing eleven cards each numbered 1-5 and seven cards each numbered 6-10",
+    "css": "color:black;font-size:16pt",
+    "width": 1000
+  },
+  "rvx9": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "2",
+    "id": "rvx9",
+    "z": 12694,
+    "parent": "4w69",
+    "x": null,
+    "y": null
+  },
+  "button-snatch-p5-l4": {
+    "type": "button",
+    "id": "button-snatch-p5-l4",
+    "parent": "holder-p5-l4",
+    "x": -55,
+    "y": 8,
+    "width": 50,
+    "height": 50,
+    "z": 12040,
+    "color": "white",
+    "css": {
+      "font-weight": "bold",
+      "border-radius": "5px"
+    },
+    "image": "/i/game-icons.net/quoting/card-play.svg",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "clickRoutine": [
+      {
+        "note": "Active player moves all cards in this holder to their hand",
+        "func": "MOVE",
+        "from": "holder-p5-l4",
+        "to": "holder-market-1",
+        "count": "all"
+      }
+    ],
+    "display": false
+  },
+  "button-snatch-p5-l5": {
+    "type": "button",
+    "id": "button-snatch-p5-l5",
+    "parent": "holder-p5-l5",
+    "x": -55,
+    "y": 9,
+    "width": 50,
+    "height": 50,
+    "z": 12040,
+    "color": "white",
+    "css": {
+      "font-weight": "bold",
+      "border-radius": "5px"
+    },
+    "image": "/i/game-icons.net/quoting/card-play.svg",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "clickRoutine": [
+      {
+        "note": "Active player moves all cards in this holder to their hand",
+        "func": "MOVE",
+        "from": "holder-p5-l5",
+        "to": "holder-market-1",
+        "count": "all"
+      }
+    ],
+    "display": false
+  },
+  "button-snatch-p5-l6": {
+    "type": "button",
+    "id": "button-snatch-p5-l6",
+    "parent": "holder-p5-l6",
+    "x": -55,
+    "y": 11,
+    "width": 50,
+    "height": 50,
+    "z": 12040,
+    "color": "white",
+    "css": {
+      "font-weight": "bold",
+      "border-radius": "5px"
+    },
+    "image": "/i/game-icons.net/quoting/card-play.svg",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "clickRoutine": [
+      {
+        "note": "Active player moves all cards in this holder to their hand",
+        "func": "MOVE",
+        "from": "holder-p5-l6",
+        "to": "holder-market-1",
+        "count": "all"
+      }
+    ],
+    "display": false
+  },
+  "button-snatch-p5-l7": {
+    "type": "button",
+    "id": "button-snatch-p5-l7",
+    "parent": "holder-p5-l7",
+    "x": -55,
+    "y": 12,
+    "width": 50,
+    "height": 50,
+    "z": 12040,
+    "color": "white",
+    "css": {
+      "font-weight": "bold",
+      "border-radius": "5px"
+    },
+    "image": "/i/game-icons.net/quoting/card-play.svg",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "clickRoutine": [
+      {
+        "note": "Active player moves all cards in this holder to their hand",
+        "func": "MOVE",
+        "from": "holder-p5-l7",
+        "to": "holder-market-1",
+        "count": "all"
+      }
+    ],
+    "display": false
+  },
+  "button-snatch-p5-l8": {
+    "type": "button",
+    "id": "button-snatch-p5-l8",
+    "parent": "holder-p5-l8",
+    "x": -55,
+    "y": 15,
+    "width": 50,
+    "height": 50,
+    "z": 12040,
+    "color": "white",
+    "css": {
+      "font-weight": "bold",
+      "border-radius": "5px"
+    },
+    "image": "/i/game-icons.net/quoting/card-play.svg",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "clickRoutine": [
+      {
+        "note": "Active player moves all cards in this holder to their hand",
+        "func": "MOVE",
+        "from": "holder-p5-l8",
+        "to": "holder-market-1",
+        "count": "all"
+      }
+    ],
+    "display": false
+  },
+  "reset": {
+    "type": "button",
+    "id": "reset",
+    "parent": "holder-deck",
+    "x": -1152,
+    "y": 89,
+    "width": 90,
+    "height": 50,
+    "css": {
+      "font-weight": "bold",
+      "border-radius": "10px"
+    },
+    "text": "Reset Game",
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "header": "Reset Game",
+        "fields": [
+          {
+            "type": "text",
+            "text": "You're about to reset the game. Are you sure?"
+          }
+        ]
+      },
+      {
+        "func": "RESET",
+        "property": "button-resetReset"
+      },
+      {
+        "func": "RECALL",
+        "property": "holder-deck"
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "holder-deck"
+      },
+      {
+        "func": "CALL",
+        "return": true,
+        "routine": "RecallRoutine",
+        "widget": "button-recall"
+      },
+      {
+        "func": "RECALL",
+        "holder": "${PROPERTY parent}"
+      },
+      {
+        "func": "FLIP",
+        "holder": "${PROPERTY parent}",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "${PROPERTY parent}"
+      },
+      {
+        "note": "Select a random start player",
+        "func": "TURN",
+        "turnCycle": "random"
+      },
+      {
+        "note": "Set each player's point total to 0",
+        "func": "FOREACH",
+        "range": 5,
+        "loopRoutine": [
+          {
+            "func": "SELECT",
+            "property": "playerIndex",
+            "value": "${value}"
+          },
+          {
+            "func": "SELECT",
+            "property": "id",
+            "value": "label-p${value}"
+          },
+          {
+            "func": "SET",
+            "property": "text",
+            "relation": "=",
+            "value": 0
+          }
+        ]
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "newGame"
+        ],
+        "property": "display",
+        "value": true
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "reset"
+        ],
+        "property": "display",
+        "value": false
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "collect"
+        ],
+        "property": "display",
+        "value": false
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "bustDiscard"
+        ],
+        "property": "display",
+        "value": false
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "calculateScore"
+        ],
+        "property": "display",
+        "value": false
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "button-draw"
+        ],
+        "property": "display",
+        "value": false
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "holder-deck"
+        ],
+        "property": "display",
+        "value": false
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "deckReminder"
+        ],
+        "property": "display",
+        "value": false
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "displayB"
+      },
+      {
+        "func": "CLICK"
+      }
+    ]
+  },
+  "holder-deck": {
+    "type": "holder",
+    "id": "holder-deck",
+    "x": 1201,
+    "y": 816,
+    "z": 5348,
+    "onEnter": {
+      "activeFace": 0
+    },
+    "onLeave": {
+      "activeFace": 1
+    },
+    "height": 150,
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": [
+          "reset"
+        ],
+        "property": "display",
+        "value": false
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "newGame"
+        ],
+        "property": "display",
+        "value": false
+      }
+    ]
+  },
+  "mf77": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "1",
+    "id": "mf77",
+    "parent": "ah6m",
+    "z": 18651
+  },
+  "8vfv": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "1",
+    "id": "8vfv",
+    "z": 18648,
+    "parent": "ah6m"
+  },
+  "2enh": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "1",
+    "id": "2enh",
+    "z": 18596,
+    "parent": "ah6m"
+  },
+  "qvxg": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "1",
+    "id": "qvxg",
+    "z": 18611,
+    "parent": "ah6m"
+  },
+  "iz3i": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "1",
+    "id": "iz3i",
+    "z": 18592,
+    "parent": "ah6m"
+  },
+  "ay9l": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "1",
+    "id": "ay9l",
+    "z": 18660,
+    "parent": "ah6m"
+  },
+  "0nth": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "1",
+    "id": "0nth",
+    "z": 18585,
+    "parent": "ah6m"
+  },
+  "pgj3": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "1",
+    "id": "pgj3",
+    "z": 18601,
+    "parent": "ah6m"
+  },
+  "7gof": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "1",
+    "id": "7gof",
+    "z": 18613,
+    "parent": "ah6m"
+  },
+  "qsuo": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "1",
+    "id": "qsuo",
+    "z": 18584,
+    "parent": "ah6m"
+  },
+  "2xd6": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "1",
+    "id": "2xd6",
+    "z": 18600,
+    "parent": "ah6m"
+  },
+  "sks7": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "2",
+    "id": "sks7",
+    "z": 18621,
+    "parent": "ah6m"
+  },
+  "9tox": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "2",
+    "id": "9tox",
+    "z": 18617,
+    "parent": "ah6m"
+  },
+  "u6ru": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "2",
+    "id": "u6ru",
+    "z": 18581,
+    "parent": "ah6m"
+  },
+  "3n87": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "2",
+    "id": "3n87",
+    "z": 18641,
+    "parent": "ah6m"
+  },
+  "u3yk": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "2",
+    "id": "u3yk",
+    "z": 18598,
+    "parent": "ah6m"
+  },
+  "jw9b": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "2",
+    "id": "jw9b",
+    "z": 18618,
+    "parent": "ah6m"
+  },
+  "xo11": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "2",
+    "id": "xo11",
+    "z": 18604,
+    "parent": "ah6m"
+  },
+  "nrx7": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "2",
+    "id": "nrx7",
+    "z": 18609,
+    "parent": "ah6m"
+  },
+  "a9qj": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "2",
+    "id": "a9qj",
+    "z": 18589,
+    "parent": "ah6m"
+  },
+  "j0xk": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "2",
+    "id": "j0xk",
+    "z": 18607,
+    "parent": "ah6m"
+  },
+  "juop": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "2",
+    "id": "juop",
+    "z": 18645,
+    "parent": "ah6m"
+  },
+  "l08h": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "3",
+    "id": "l08h",
+    "z": 18635,
+    "parent": "ah6m"
+  },
+  "y4l0": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "3",
+    "id": "y4l0",
+    "z": 18655,
+    "parent": "ah6m"
+  },
+  "j4zb": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "3",
+    "id": "j4zb",
+    "z": 18644,
+    "parent": "ah6m"
+  },
+  "n5uz": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "3",
+    "id": "n5uz",
+    "z": 18646,
+    "parent": "ah6m"
+  },
+  "77xd": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "3",
+    "id": "77xd",
+    "z": 18575,
+    "parent": "ah6m"
+  },
+  "vi62": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "3",
+    "id": "vi62",
+    "z": 18608,
+    "parent": "ah6m"
+  },
+  "ohtf": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "3",
+    "id": "ohtf",
+    "z": 18606,
+    "parent": "ah6m"
+  },
+  "rw00": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "3",
+    "id": "rw00",
+    "z": 18615,
+    "parent": "ah6m"
+  },
+  "f4nl": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "3",
+    "id": "f4nl",
+    "z": 18647,
+    "parent": "ah6m"
+  },
+  "2q3e": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "3",
+    "id": "2q3e",
+    "z": 18597,
+    "parent": "ah6m"
+  },
+  "214a": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "3",
+    "id": "214a",
+    "z": 18610,
+    "parent": "ah6m"
+  },
+  "wxnt": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "4",
+    "id": "wxnt",
+    "z": 18633,
+    "parent": "ah6m"
+  },
+  "nuy3": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "4",
+    "id": "nuy3",
+    "z": 18605,
+    "parent": "ah6m"
+  },
+  "j8h5": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "4",
+    "id": "j8h5",
+    "z": 18591,
+    "parent": "ah6m"
+  },
+  "wf6y": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "4",
+    "id": "wf6y",
+    "z": 18649,
+    "parent": "ah6m"
+  },
+  "2qu5": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "4",
+    "id": "2qu5",
+    "z": 18614,
+    "parent": "ah6m"
+  },
+  "grpc": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "4",
+    "id": "grpc",
+    "z": 18659,
+    "parent": "ah6m"
+  },
+  "7a1k": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "4",
+    "id": "7a1k",
+    "z": 18579,
+    "parent": "ah6m"
+  },
+  "vqbu": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "4",
+    "id": "vqbu",
+    "z": 18619,
+    "parent": "ah6m"
+  },
+  "3mc4": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "4",
+    "id": "3mc4",
+    "z": 18593,
+    "parent": "ah6m"
+  },
+  "gb77": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "4",
+    "id": "gb77",
+    "z": 18578,
+    "parent": "ah6m"
+  },
+  "9ih1": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "4",
+    "id": "9ih1",
+    "z": 18616,
+    "parent": "ah6m"
+  },
+  "ybb0": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "5",
+    "id": "ybb0",
+    "z": 18642,
+    "parent": "ah6m"
+  },
+  "knbm": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "5",
+    "id": "knbm",
+    "z": 18623,
+    "parent": "ah6m"
+  },
+  "ndl0": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "5",
+    "id": "ndl0",
+    "z": 18643,
+    "parent": "ah6m"
+  },
+  "oisd": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "5",
+    "id": "oisd",
+    "z": 18654,
+    "parent": "ah6m"
+  },
+  "mx2k": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "5",
+    "id": "mx2k",
+    "z": 18627,
+    "parent": "ah6m"
+  },
+  "96jp": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "5",
+    "id": "96jp",
+    "z": 18580,
+    "parent": "ah6m"
+  },
+  "l5dz": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "5",
+    "id": "l5dz",
+    "z": 18603,
+    "parent": "ah6m"
+  },
+  "yijp": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "5",
+    "id": "yijp",
+    "z": 18629,
+    "parent": "ah6m"
+  },
+  "9yjd": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "5",
+    "id": "9yjd",
+    "z": 18636,
+    "parent": "ah6m"
+  },
+  "uaw4": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "5",
+    "id": "uaw4",
+    "z": 18587,
+    "parent": "ah6m"
+  },
+  "0art": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "5",
+    "id": "0art",
+    "z": 18626,
+    "parent": "ah6m"
+  },
+  "78iz": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "6",
+    "id": "78iz",
+    "z": 18637,
+    "parent": "ah6m"
+  },
+  "up78": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "6",
+    "id": "up78",
+    "z": 18632,
+    "parent": "ah6m"
+  },
+  "m0b9": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "6",
+    "id": "m0b9",
+    "z": 18599,
+    "parent": "ah6m"
+  },
+  "tcvx": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "6",
+    "id": "tcvx",
+    "z": 18602,
+    "parent": "ah6m"
+  },
+  "tedy": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "6",
+    "id": "tedy",
+    "z": 18625,
+    "parent": "ah6m"
+  },
+  "b3lk": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "6",
+    "id": "b3lk",
+    "z": 18590,
+    "parent": "ah6m"
+  },
+  "6qan": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "6",
+    "id": "6qan",
+    "z": 18657,
+    "parent": "ah6m"
+  },
+  "7npe": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "7",
+    "id": "7npe",
+    "z": 18573,
+    "parent": "ah6m"
+  },
+  "nm4j": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "7",
+    "id": "nm4j",
+    "z": 18650,
+    "parent": "ah6m"
+  },
+  "x4vs": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "7",
+    "id": "x4vs",
+    "z": 18583,
+    "parent": "ah6m"
+  },
+  "t0fz": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "7",
+    "id": "t0fz",
+    "z": 18652,
+    "parent": "ah6m"
+  },
+  "00dm": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "7",
+    "id": "00dm",
+    "z": 18653,
+    "parent": "ah6m"
+  },
+  "fx06": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "7",
+    "id": "fx06",
+    "z": 18658,
+    "parent": "ah6m"
+  },
+  "ghlc": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "7",
+    "id": "ghlc",
+    "z": 18588,
+    "parent": "ah6m"
+  },
+  "96fm": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "8",
+    "id": "96fm",
+    "z": 18634,
+    "parent": "ah6m"
+  },
+  "eahe": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "8",
+    "id": "eahe",
+    "z": 18639,
+    "parent": "ah6m"
+  },
+  "c8fw": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "8",
+    "id": "c8fw",
+    "z": 18661,
+    "parent": "ah6m"
+  },
+  "nvvw": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "8",
+    "id": "nvvw",
+    "z": 18586,
+    "parent": "ah6m"
+  },
+  "fhne": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "8",
+    "id": "fhne",
+    "z": 18631,
+    "parent": "ah6m"
+  },
+  "wk1r": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "8",
+    "id": "wk1r",
+    "z": 18572,
+    "parent": "ah6m"
+  },
+  "ohjc": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "8",
+    "id": "ohjc",
+    "z": 18577,
+    "parent": "ah6m"
+  },
+  "ws1q": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "9",
+    "id": "ws1q",
+    "z": 18620,
+    "parent": "ah6m"
+  },
+  "z37x": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "9",
+    "id": "z37x",
+    "z": 18638,
+    "parent": "ah6m"
+  },
+  "q1ww": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "9",
+    "id": "q1ww",
+    "z": 18656,
+    "parent": "ah6m"
+  },
+  "op8u": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "9",
+    "id": "op8u",
+    "z": 18576,
+    "parent": "ah6m"
+  },
+  "ig9z": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "9",
+    "id": "ig9z",
+    "z": 18582,
+    "parent": "ah6m"
+  },
+  "wuqe": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "9",
+    "id": "wuqe",
+    "z": 18595,
+    "parent": "ah6m"
+  },
+  "upoz": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "9",
+    "id": "upoz",
+    "z": 18640,
+    "parent": "ah6m"
+  },
+  "goe6": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "10",
+    "id": "goe6",
+    "z": 18624,
+    "parent": "ah6m"
+  },
+  "ptyh": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "10",
+    "id": "ptyh",
+    "z": 18612,
+    "parent": "ah6m"
+  },
+  "9qzc": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "10",
+    "id": "9qzc",
+    "z": 18594,
+    "parent": "ah6m"
+  },
+  "ueek": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "10",
+    "id": "ueek",
+    "z": 18622,
+    "parent": "ah6m"
+  },
+  "oy6w": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "10",
+    "id": "oy6w",
+    "z": 18574,
+    "parent": "ah6m"
+  },
+  "4e2h": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "10",
+    "id": "4e2h",
+    "z": 18628,
+    "parent": "ah6m"
+  },
+  "34sm": {
+    "deck": "deck-cards",
+    "type": "card",
+    "cardType": "10",
+    "id": "34sm",
+    "z": 18630,
+    "parent": "ah6m"
+  },
+  "button-snatch-p5-l9": {
+    "type": "button",
+    "id": "button-snatch-p5-l9",
+    "parent": "holder-p5-l9",
+    "x": -55,
+    "y": 13,
+    "width": 50,
+    "height": 50,
+    "z": 12040,
+    "color": "white",
+    "css": {
+      "font-weight": "bold",
+      "border-radius": "5px"
+    },
+    "image": "/i/game-icons.net/quoting/card-play.svg",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "clickRoutine": [
+      {
+        "note": "Active player moves all cards in this holder to their hand",
+        "func": "MOVE",
+        "from": "holder-p5-l8",
+        "to": "holder-market-1",
+        "count": "all"
+      }
+    ],
+    "display": false
+  },
+  "displayB": {
+    "type": "button",
+    "id": "displayB",
+    "x": 718,
+    "y": 1099,
+    "z": 12089,
+    "text": "display",
+    "clickRoutine": [
+      "var x = 1",
+      {
+        "func": "FOREACH",
+        "range": 5,
+        "loopRoutine": [
+          {
+            "func": "FOREACH",
+            "range": 9,
+            "loopRoutine": [
+              {
+                "func": "SELECT",
+                "property": "id",
+                "value": "button-snatch-p${x}-l${value}"
+              },
+              {
+                "func": "SET",
+                "property": "display",
+                "value": false
+              },
+              "value = ${value} + 1"
+            ]
+          },
+          "var x = ${x} + 1"
+        ]
+      }
+    ]
+  },
+  "tidyB": {
+    "type": "button",
+    "id": "tidyB",
+    "x": 1065,
+    "y": 1219,
+    "z": 12090,
+    "text": "TIDY",
+    "clickRoutine": [
+      "var index = 0",
+      {
+        "func": "FOREACH",
+        "range": 5,
+        "loopRoutine": [
+          "var a = -1",
+          "var b = 0",
+          "var c = 1",
+          "var d = 2",
+          "var e = 3",
+          "var f = 4",
+          "var g = 5",
+          "var h = 6",
+          "var i = 7",
+          "var index = ${index} + 1",
+          {
+            "func": "FOREACH",
+            "range": 8,
+            "loopRoutine": [
+              "var a = ${a} + 1",
+              "var b = ${b} + 1",
+              "var c = ${c} + 1",
+              "var d = ${d} + 1",
+              "var e = ${e} + 1",
+              "var f = ${f} + 1",
+              "var g = ${g} + 1",
+              "var h = ${h} + 1",
+              "var i = ${i} + 1",
+              {
+                "func": "SELECT",
+                "property": "parent",
+                "value": "holder-p${index}-l${a}"
+              },
+              {
+                "func": "SELECT",
+                "property": "type",
+                "value": "card",
+                "source": "DEFAULT"
+              },
+              {
+                "func": "COUNT"
+              },
+              {
+                "func": "IF",
+                "operand1": "${COUNT}",
+                "relation": "==",
+                "operand2": 0,
+                "thenRoutine": [
+                  {
+                    "func": "MOVE",
+                    "from": "holder-p${index}-l${i}",
+                    "to": "holder-p${index}-l${a}",
+                    "count": "all"
+                  }
+                ]
+              },
+              {
+                "func": "SELECT",
+                "property": "parent",
+                "value": "holder-p${index}-l${a}"
+              },
+              {
+                "func": "SELECT",
+                "property": "type",
+                "value": "card",
+                "source": "DEFAULT"
+              },
+              {
+                "func": "COUNT"
+              },
+              {
+                "func": "IF",
+                "operand1": "${COUNT}",
+                "relation": "==",
+                "operand2": 0,
+                "thenRoutine": [
+                  {
+                    "func": "MOVE",
+                    "from": "holder-p${index}-l${h}",
+                    "to": "holder-p${index}-l${a}",
+                    "count": "all"
+                  }
+                ]
+              },
+              {
+                "func": "SELECT",
+                "property": "parent",
+                "value": "holder-p${index}-l${a}"
+              },
+              {
+                "func": "SELECT",
+                "property": "type",
+                "value": "card",
+                "source": "DEFAULT"
+              },
+              {
+                "func": "COUNT"
+              },
+              {
+                "func": "IF",
+                "operand1": "${COUNT}",
+                "relation": "==",
+                "operand2": 0,
+                "thenRoutine": [
+                  {
+                    "func": "MOVE",
+                    "from": "holder-p${index}-l${g}",
+                    "to": "holder-p${index}-l${a}",
+                    "count": "all"
+                  }
+                ]
+              },
+              {
+                "func": "SELECT",
+                "property": "parent",
+                "value": "holder-p${index}-l${a}"
+              },
+              {
+                "func": "SELECT",
+                "property": "type",
+                "value": "card",
+                "source": "DEFAULT"
+              },
+              {
+                "func": "COUNT"
+              },
+              {
+                "func": "IF",
+                "operand1": "${COUNT}",
+                "relation": "==",
+                "operand2": 0,
+                "thenRoutine": [
+                  {
+                    "func": "MOVE",
+                    "from": "holder-p${index}-l${f}",
+                    "to": "holder-p${index}-l${a}",
+                    "count": "all"
+                  }
+                ]
+              },
+              {
+                "func": "SELECT",
+                "property": "parent",
+                "value": "holder-p${index}-l${a}"
+              },
+              {
+                "func": "SELECT",
+                "property": "type",
+                "value": "card",
+                "source": "DEFAULT"
+              },
+              {
+                "func": "COUNT"
+              },
+              {
+                "func": "IF",
+                "operand1": "${COUNT}",
+                "relation": "==",
+                "operand2": 0,
+                "thenRoutine": [
+                  {
+                    "func": "MOVE",
+                    "from": "holder-p${index}-l${e}",
+                    "to": "holder-p${index}-l${a}",
+                    "count": "all"
+                  }
+                ]
+              },
+              {
+                "func": "SELECT",
+                "property": "parent",
+                "value": "holder-p${index}-l${a}"
+              },
+              {
+                "func": "SELECT",
+                "property": "type",
+                "value": "card",
+                "source": "DEFAULT"
+              },
+              {
+                "func": "COUNT"
+              },
+              {
+                "func": "IF",
+                "operand1": "${COUNT}",
+                "relation": "==",
+                "operand2": 0,
+                "thenRoutine": [
+                  {
+                    "func": "MOVE",
+                    "from": "holder-p${index}-l${d}",
+                    "to": "holder-p${index}-l${a}",
+                    "count": "all"
+                  }
+                ]
+              },
+              {
+                "func": "SELECT",
+                "property": "parent",
+                "value": "holder-p${index}-l${a}"
+              },
+              {
+                "func": "SELECT",
+                "property": "type",
+                "value": "card",
+                "source": "DEFAULT"
+              },
+              {
+                "func": "COUNT"
+              },
+              {
+                "func": "IF",
+                "operand1": "${COUNT}",
+                "relation": "==",
+                "operand2": 0,
+                "thenRoutine": [
+                  {
+                    "func": "MOVE",
+                    "from": "holder-p${index}-l${c}",
+                    "to": "holder-p${index}-l${a}",
+                    "count": "all"
+                  }
+                ]
+              },
+              {
+                "func": "SELECT",
+                "property": "parent",
+                "value": "holder-p${index}-l${a}"
+              },
+              {
+                "func": "SELECT",
+                "property": "type",
+                "value": "card",
+                "source": "DEFAULT"
+              },
+              {
+                "func": "COUNT"
+              },
+              {
+                "func": "IF",
+                "operand1": "${COUNT}",
+                "relation": "==",
+                "operand2": 0,
+                "thenRoutine": [
+                  {
+                    "func": "MOVE",
+                    "from": "holder-p${index}-l${b}",
+                    "to": "holder-p${index}-l${a}",
+                    "count": "all"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "ah6m": {
+    "type": "pile",
+    "parent": "holder-deck",
+    "x": 4,
+    "y": 4,
+    "width": 100,
+    "height": 140,
+    "handleCSS": {
+      "border": "2px solid black",
+      "font-size": "24px",
+      "color": "white",
+      "font-weight": "bold",
+      "text-align": "center",
+      "line-height": "32px",
+      "background-color": "gray",
+      "text-shadow": "2px 2px 3px black",
+      "background-image": "url('/i/game-icons.net/lorc/poker-hand.svg')"
+    },
+    "handleSize": "auto",
+    "handleOffset": 15,
+    "handlePosition": "top right",
+    "id": "ah6m"
+  },
+  "displayB1": {
+    "type": "button",
+    "id": "displayB1",
+    "x": 730,
+    "y": 1254,
+    "z": 12089,
+    "text": "displayFix",
+    "clickRoutine": [
+      "var x = 1",
+      {
+        "func": "FOREACH",
+        "range": 5,
+        "loopRoutine": [
+          {
+            "func": "FOREACH",
+            "range": 9,
+            "loopRoutine": [
+              {
+                "func": "SELECT",
+                "property": "id",
+                "value": "holder-p${x}-l${value}"
+              },
+              {
+                "func": "SET",
+                "property": "display",
+                "value": true
+              },
+              "value = ${value} + 1"
+            ]
+          },
+          "var x = ${x} + 1"
+        ]
+      }
+    ]
+  }
+}
