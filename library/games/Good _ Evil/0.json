@@ -1,0 +1,4034 @@
+{
+  "_meta": {
+    "version": 17,
+    "info": {
+      "name": "Good & Evil",
+      "image": "/assets/-1022173850_28435",
+      "rules": "https://boardgamegeek.com/filepage/2474/ghostspdf",
+      "bgg": "https://boardgamegeek.com/boardgame/2290/good-and-bad-ghosts",
+      "year": "1980",
+      "mode": "vs",
+      "time": "10",
+      "attribution": "Game layout by Mark W, with additional coding by Shobu and LawDawg. Released to the Public Domain under CC0.\n\nThe following images are from https://game-icons.net and under CC BY 3.0:\n* https://game-icons.net/1x1/delapouite/djinn.html\n* https://game-icons.net/1x1/lorc/ghost.html\n\nBackground and library image are from https://pixabay.com/illustrations/halloween-ghost-pumpkin-bat-skull-5596921/ and are available for use under the Pixabay License.",
+      "importerTime": 1749414176262,
+      "lastUpdate": 1750295830224,
+      "importer": "PCIO",
+      "showName": true,
+      "skill": "easy",
+      "description": "A tactical confrontation full of bluffing. Will your spirits be the smartest?",
+      "similarImage": "",
+      "similarName": "Good & Bad Ghosts",
+      "similarDesigner": "Alex Randolph",
+      "similarAwards": "",
+      "ruleText": "<div><b style=\"color: var(--overlayFontColor);\">Starting formation</b><br></div><div>Left/right players place their pieces in a 2x4 vertical formation, located between their respective star cells.</div><div><br></div><div><b>Move</b></div><div>On their turn, a player can move one of their pieces onto:</div><div>- an empty orthogonally adjacent cell&nbsp;</div><div>- an&nbsp;<span style=\"color: var(--overlayFontColor);\">orthogonally adjacent cell containing an opponent's piece</span></div><div><br></div><div><div><div><b>Goal<br></b></div><div>A player can win by:</div><div>- escaping from an opponent's star cell with a <b>blue</b> piece</div><div>- <b>capturing 4 blue pieces</b> from the opponent</div><div>- having <b>their 4 red pieces captured</b> by the opponent</div></div></div>",
+      "helpText": "- Left &amp; right players take seats and drag their pieces from their stock into a starting formation of their choice<div>-&nbsp;<span style=\"color: var(--overlayFontColor);\">Each player has their own holder for tracking captured pieces</span><div>-&nbsp;<span style=\"color: var(--overlayFontColor);\">Piece's colors (red/blue) are not visible by opponent except when moved into capture or exit holders</span></div></div><div>- To automatically capture an opponent's piece, drag and drop your piece onto the targeted cell</div><div><br></div><div>To restart a match, click on the \"Clean up\" button which will recall and shuffle pieces</div>",
+      "variantImage": "",
+      "variant": "",
+      "language": "en-US",
+      "players": "2"
+    }
+  },
+  "9d8ee440-5726-4600-b154-202580589485": {
+    "id": "9d8ee440-5726-4600-b154-202580589485",
+    "x": -1,
+    "y": -1,
+    "z": 2,
+    "type": "deck",
+    "parent": "d7de8e30-b8c0-4160-bbc7-f76679fe3fcc",
+    "cardTypes": {
+      "black": {
+        "label": "Black",
+        "image": "/i/game-pieces/2D/Crowned-Checkers-2D.svg",
+        "image-back": "/i/game-pieces/2D/Checkers-2D.svg",
+        "imageColor": "#666565",
+        "image-backColor": "#666565",
+        "sortingOrder": 1
+      },
+      "white": {
+        "label": "White",
+        "image": "/i/game-pieces/2D/Crowned-Checkers-2D.svg",
+        "image-back": "/i/game-pieces/2D/Checkers-2D.svg",
+        "imageColor": "#dae0df",
+        "image-backColor": "#dae0df",
+        "sortingOrder": 2
+      },
+      "red": {
+        "label": "Red",
+        "image": "/assets/449014298_1669",
+        "image-back": "/i/game-pieces/2D/Checkers-2D.svg",
+        "imageColor": "#ed1b43",
+        "image-backColor": "#ed1b43",
+        "sortingOrder": 3
+      },
+      "orange": {
+        "label": "Orange",
+        "image": "/i/game-pieces/2D/Crowned-Checkers-2D.svg",
+        "image-back": "/i/game-pieces/2D/Checkers-2D.svg",
+        "imageColor": "#ff7b23",
+        "image-backColor": "#ff7b23",
+        "sortingOrder": 4
+      },
+      "peach": {
+        "label": "Peach",
+        "image": "/i/game-pieces/2D/Crowned-Checkers-2D.svg",
+        "image-back": "/i/game-pieces/2D/Checkers-2D.svg",
+        "imageColor": "#f2948c",
+        "image-backColor": "#f2948c",
+        "sortingOrder": 5
+      },
+      "yellow": {
+        "label": "Yellow",
+        "image": "/i/game-pieces/2D/Crowned-Checkers-2D.svg",
+        "image-back": "/i/game-pieces/2D/Checkers-2D.svg",
+        "imageColor": "#ffce00",
+        "image-backColor": "#ffce00",
+        "sortingOrder": 6
+      },
+      "green": {
+        "label": "Green",
+        "image": "/i/game-pieces/2D/Crowned-Checkers-2D.svg",
+        "image-back": "/i/game-pieces/2D/Checkers-2D.svg",
+        "imageColor": "#69d83a",
+        "image-backColor": "#69d83a",
+        "sortingOrder": 7
+      },
+      "teal": {
+        "label": "Teal",
+        "image": "/i/game-pieces/2D/Crowned-Checkers-2D.svg",
+        "image-back": "/i/game-pieces/2D/Checkers-2D.svg",
+        "imageColor": "#2fd1cd",
+        "image-backColor": "#2fd1cd",
+        "sortingOrder": 8
+      },
+      "blue": {
+        "label": "Blue",
+        "image": "/assets/-2015642710_2119",
+        "image-back": "/i/game-pieces/2D/Checkers-2D.svg",
+        "imageColor": "#5894f4",
+        "image-backColor": "#5894f4",
+        "sortingOrder": 9
+      },
+      "purple": {
+        "label": "Purple",
+        "image": "/i/game-pieces/2D/Crowned-Checkers-2D.svg",
+        "image-back": "/i/game-pieces/2D/Checkers-2D.svg",
+        "imageColor": "#9458f4",
+        "image-backColor": "#9458f4",
+        "sortingOrder": 10
+      },
+      "pink": {
+        "label": "Pink",
+        "image": "/i/game-pieces/2D/Crowned-Checkers-2D.svg",
+        "image-back": "/i/game-pieces/2D/Checkers-2D.svg",
+        "imageColor": "#ff69b3",
+        "image-backColor": "#ff69b3",
+        "sortingOrder": 11
+      },
+      "brown": {
+        "label": "Brown",
+        "image": "/i/game-pieces/2D/Crowned-Checkers-2D.svg",
+        "image-back": "/i/game-pieces/2D/Checkers-2D.svg",
+        "imageColor": "#a8570e",
+        "image-backColor": "#a8570e",
+        "sortingOrder": 12
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "width": 72,
+            "height": 72,
+            "type": "image",
+            "color": "transparent",
+            "value": ""
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "transparent",
+            "value": "https://playingcards.io/img/pieces/checkers/white.svg",
+            "width": 72,
+            "height": 72
+          }
+        ],
+        "border": false,
+        "radius": false
+      },
+      {
+        "objects": [
+          {
+            "width": 72,
+            "height": 72,
+            "type": "image",
+            "color": "transparent",
+            "value": ""
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "transparent",
+            "width": 72,
+            "height": 72,
+            "svgReplaces": {
+              "#primaryColor": "imageColor",
+              "#labelColor": "imageLabelColor"
+            },
+            "dynamicProperties": {
+              "value": "image"
+            }
+          }
+        ],
+        "border": false,
+        "radius": false
+      }
+    ],
+    "cardDefaults": {
+      "width": 72,
+      "height": 72,
+      "draggingChangeRoutine": [
+        {
+          "func": "SET",
+          "collection": "thisButton",
+          "property": "activeFace",
+          "value": 0
+        }
+      ]
+    }
+  },
+  "90e10ce5-b875-432f-bbfe-5c7a3a50f63f": {
+    "id": "90e10ce5-b875-432f-bbfe-5c7a3a50f63f",
+    "z": 3567,
+    "type": "card",
+    "deck": "9d8ee440-5726-4600-b154-202580589485",
+    "cardType": "red",
+    "player": "P1",
+    "clickable": false,
+    "parent": "m7cg"
+  },
+  "0af38e72-4cb1-47a6-98ea-1f5c0bb8a73b": {
+    "id": "0af38e72-4cb1-47a6-98ea-1f5c0bb8a73b",
+    "z": 3571,
+    "type": "card",
+    "deck": "9d8ee440-5726-4600-b154-202580589485",
+    "cardType": "red",
+    "player": "P1",
+    "clickable": false,
+    "parent": "m7cg"
+  },
+  "75aea1e5-a3b7-4b53-b1d8-7422d646c950": {
+    "id": "75aea1e5-a3b7-4b53-b1d8-7422d646c950",
+    "z": 3586,
+    "type": "card",
+    "deck": "9d8ee440-5726-4600-b154-202580589485",
+    "cardType": "red",
+    "player": "P1",
+    "clickable": false,
+    "parent": "m7cg"
+  },
+  "e47fa3eb-1fd7-4940-92d5-54ae78ff51bb": {
+    "id": "e47fa3eb-1fd7-4940-92d5-54ae78ff51bb",
+    "z": 3572,
+    "type": "card",
+    "deck": "9d8ee440-5726-4600-b154-202580589485",
+    "cardType": "blue",
+    "player": "P1",
+    "clickable": false,
+    "parent": "m7cg"
+  },
+  "668daac1-9c6e-4f5b-a151-75b4dd0c6d19": {
+    "id": "668daac1-9c6e-4f5b-a151-75b4dd0c6d19",
+    "z": 3568,
+    "type": "card",
+    "deck": "9d8ee440-5726-4600-b154-202580589485",
+    "cardType": "blue",
+    "player": "P1",
+    "clickable": false,
+    "parent": "m7cg"
+  },
+  "b15ee252-3418-49b1-9ddd-cb616eccdd1b": {
+    "id": "b15ee252-3418-49b1-9ddd-cb616eccdd1b",
+    "z": 3570,
+    "type": "card",
+    "deck": "9d8ee440-5726-4600-b154-202580589485",
+    "cardType": "blue",
+    "player": "P1",
+    "clickable": false,
+    "parent": "m7cg"
+  },
+  "d7de8e30-b8c0-4160-bbc7-f76679fe3fcc": {
+    "id": "d7de8e30-b8c0-4160-bbc7-f76679fe3fcc",
+    "x": 143,
+    "y": 576,
+    "z": 17,
+    "type": "holder",
+    "width": 84,
+    "height": 84,
+    "dropTarget": [
+      {
+        "deck": "9d8ee440-5726-4600-b154-202580589485"
+      }
+    ],
+    "dropOffsetX": 6,
+    "dropOffsetY": 6,
+    "inheritChildZ": true,
+    "css": {
+      "background": "#ffffff60"
+    }
+  },
+  "22072704-ad80-4066-a447-5497623d70db": {
+    "id": "22072704-ad80-4066-a447-5497623d70db",
+    "x": -1,
+    "y": -1,
+    "z": 18,
+    "type": "deck",
+    "parent": "d588dfa5-430a-40dc-9002-7fd3cdefcf37",
+    "cardTypes": {
+      "black": {
+        "label": "Black",
+        "image": "/i/game-pieces/2D/Crowned-Checkers-2D.svg",
+        "image-back": "/i/game-pieces/2D/Checkers-2D.svg",
+        "imageColor": "#666565",
+        "image-backColor": "#666565",
+        "sortingOrder": 1
+      },
+      "white": {
+        "label": "White",
+        "image": "/i/game-pieces/2D/Crowned-Checkers-2D.svg",
+        "image-back": "/i/game-pieces/2D/Checkers-2D.svg",
+        "imageColor": "#dae0df",
+        "image-backColor": "#dae0df",
+        "sortingOrder": 2
+      },
+      "red": {
+        "label": "Red",
+        "image": "/assets/449014298_1669",
+        "image-back": "/assets/449014298_1669",
+        "imageColor": "#ed1b43",
+        "image-backColor": "#ed1b43",
+        "sortingOrder": 3
+      },
+      "orange": {
+        "label": "Orange",
+        "image": "/i/game-pieces/2D/Crowned-Checkers-2D.svg",
+        "image-back": "/i/game-pieces/2D/Checkers-2D.svg",
+        "imageColor": "#ff7b23",
+        "image-backColor": "#ff7b23",
+        "sortingOrder": 4
+      },
+      "peach": {
+        "label": "Peach",
+        "image": "/i/game-pieces/2D/Crowned-Checkers-2D.svg",
+        "image-back": "/i/game-pieces/2D/Checkers-2D.svg",
+        "imageColor": "#f2948c",
+        "image-backColor": "#f2948c",
+        "sortingOrder": 5
+      },
+      "yellow": {
+        "label": "Yellow",
+        "image": "/i/game-pieces/2D/Crowned-Checkers-2D.svg",
+        "image-back": "/i/game-pieces/2D/Checkers-2D.svg",
+        "imageColor": "#ffce00",
+        "image-backColor": "#ffce00",
+        "sortingOrder": 6
+      },
+      "green": {
+        "label": "Green",
+        "image": "/i/game-pieces/2D/Crowned-Checkers-2D.svg",
+        "image-back": "/i/game-pieces/2D/Checkers-2D.svg",
+        "imageColor": "#69d83a",
+        "image-backColor": "#69d83a",
+        "sortingOrder": 7
+      },
+      "teal": {
+        "label": "Teal",
+        "image": "/i/game-pieces/2D/Crowned-Checkers-2D.svg",
+        "image-back": "/i/game-pieces/2D/Checkers-2D.svg",
+        "imageColor": "#2fd1cd",
+        "image-backColor": "#2fd1cd",
+        "sortingOrder": 8
+      },
+      "blue": {
+        "label": "Blue",
+        "image": "/assets/-2015642710_2119",
+        "image-back": "/i/game-pieces/2D/Checkers-2D.svg",
+        "imageColor": "#5894f4",
+        "image-backColor": "#5894f4",
+        "sortingOrder": 9
+      },
+      "purple": {
+        "label": "Purple",
+        "image": "/i/game-pieces/2D/Crowned-Checkers-2D.svg",
+        "image-back": "/i/game-pieces/2D/Checkers-2D.svg",
+        "imageColor": "#9458f4",
+        "image-backColor": "#9458f4",
+        "sortingOrder": 10
+      },
+      "pink": {
+        "label": "Pink",
+        "image": "/i/game-pieces/2D/Crowned-Checkers-2D.svg",
+        "image-back": "/i/game-pieces/2D/Checkers-2D.svg",
+        "imageColor": "#ff69b3",
+        "image-backColor": "#ff69b3",
+        "sortingOrder": 11
+      },
+      "brown": {
+        "label": "Brown",
+        "image": "/i/game-pieces/2D/Crowned-Checkers-2D.svg",
+        "image-back": "/i/game-pieces/2D/Checkers-2D.svg",
+        "imageColor": "#a8570e",
+        "image-backColor": "#a8570e",
+        "sortingOrder": 12
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "width": 72,
+            "height": 72,
+            "type": "image",
+            "color": "transparent",
+            "value": ""
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "transparent",
+            "value": "https://playingcards.io/img/pieces/checkers/black.svg",
+            "width": 72,
+            "height": 72
+          }
+        ],
+        "border": false,
+        "radius": false
+      },
+      {
+        "objects": [
+          {
+            "width": 72,
+            "height": 72,
+            "type": "image",
+            "color": "transparent",
+            "value": ""
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "transparent",
+            "width": 72,
+            "height": 72,
+            "svgReplaces": {
+              "#primaryColor": "imageColor",
+              "#labelColor": "imageLabelColor"
+            },
+            "dynamicProperties": {
+              "value": "image"
+            }
+          }
+        ],
+        "border": false,
+        "radius": false
+      }
+    ],
+    "cardDefaults": {
+      "width": 72,
+      "height": 72,
+      "draggingChangeRoutine": [
+        {
+          "func": "SET",
+          "collection": "thisButton",
+          "property": "activeFace",
+          "value": 0
+        }
+      ]
+    }
+  },
+  "62765c86-066c-473f-aed3-1f7cb3454fd7": {
+    "id": "62765c86-066c-473f-aed3-1f7cb3454fd7",
+    "z": 3580,
+    "type": "card",
+    "deck": "22072704-ad80-4066-a447-5497623d70db",
+    "cardType": "red",
+    "player": "P2",
+    "clickable": false,
+    "parent": "oyi5"
+  },
+  "5ab5480c-daae-4444-8fa7-5335fe363b64": {
+    "id": "5ab5480c-daae-4444-8fa7-5335fe363b64",
+    "z": 3578,
+    "type": "card",
+    "deck": "22072704-ad80-4066-a447-5497623d70db",
+    "cardType": "red",
+    "player": "P2",
+    "clickable": false,
+    "parent": "oyi5"
+  },
+  "5b6b2d65-c911-4a73-9ee0-8a1d35c53040": {
+    "id": "5b6b2d65-c911-4a73-9ee0-8a1d35c53040",
+    "z": 3574,
+    "type": "card",
+    "deck": "22072704-ad80-4066-a447-5497623d70db",
+    "cardType": "red",
+    "player": "P2",
+    "clickable": false,
+    "parent": "oyi5"
+  },
+  "b4f4a4b3-c619-4411-8f80-af095fb60ae8": {
+    "id": "b4f4a4b3-c619-4411-8f80-af095fb60ae8",
+    "z": 3581,
+    "type": "card",
+    "deck": "22072704-ad80-4066-a447-5497623d70db",
+    "cardType": "red",
+    "player": "P2",
+    "clickable": false,
+    "parent": "oyi5"
+  },
+  "ce3f5e74-2c20-4577-9601-1f596e391e56": {
+    "id": "ce3f5e74-2c20-4577-9601-1f596e391e56",
+    "z": 3577,
+    "type": "card",
+    "deck": "22072704-ad80-4066-a447-5497623d70db",
+    "cardType": "blue",
+    "player": "P2",
+    "clickable": false,
+    "parent": "oyi5"
+  },
+  "7df90dc7-23ce-418e-b256-5ae257a70c51": {
+    "id": "7df90dc7-23ce-418e-b256-5ae257a70c51",
+    "z": 3579,
+    "type": "card",
+    "deck": "22072704-ad80-4066-a447-5497623d70db",
+    "cardType": "blue",
+    "player": "P2",
+    "clickable": false,
+    "parent": "oyi5"
+  },
+  "d588dfa5-430a-40dc-9002-7fd3cdefcf37": {
+    "id": "d588dfa5-430a-40dc-9002-7fd3cdefcf37",
+    "x": 1378,
+    "y": 576,
+    "z": 44,
+    "type": "holder",
+    "width": 84,
+    "height": 84,
+    "dropTarget": [
+      {
+        "deck": "22072704-ad80-4066-a447-5497623d70db"
+      }
+    ],
+    "dropOffsetX": 6,
+    "dropOffsetY": 6,
+    "inheritChildZ": true,
+    "css": {
+      "background": "#ffffff60"
+    }
+  },
+  "6487465e-fc50-413d-b709-cb6262fbac39": {
+    "id": "6487465e-fc50-413d-b709-cb6262fbac39",
+    "x": 24.1,
+    "y": 895,
+    "z": 88,
+    "type": "button",
+    "text": "Cleanup",
+    "clickRoutine": [
+      {
+        "func": "RECALL",
+        "holder": [
+          "d7de8e30-b8c0-4160-bbc7-f76679fe3fcc",
+          "d588dfa5-430a-40dc-9002-7fd3cdefcf37"
+        ]
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": [
+          "d7de8e30-b8c0-4160-bbc7-f76679fe3fcc",
+          "d588dfa5-430a-40dc-9002-7fd3cdefcf37"
+        ]
+      },
+      {
+        "func": "FLIP",
+        "holder": [
+          "d7de8e30-b8c0-4160-bbc7-f76679fe3fcc",
+          "d588dfa5-430a-40dc-9002-7fd3cdefcf37"
+        ],
+        "face": 0
+      }
+    ]
+  },
+  "holder1": {
+    "type": "holder",
+    "id": "holder1",
+    "x": 469,
+    "y": 124,
+    "height": 110,
+    "z": 72,
+    "showInactiveFaceToSeat": "P2",
+    "enterRoutine": [
+      {
+        "func": "COUNT",
+        "holder": "${PROPERTY id}"
+      },
+      {
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "relation": ">",
+        "operand2": 1,
+        "thenRoutine": [
+          {
+            "func": "SELECT",
+            "property": "parent",
+            "value": "${PROPERTY id}"
+          },
+          {
+            "func": "SELECT",
+            "source": "DEFAULT",
+            "property": "player",
+            "value": "${PROPERTY showInactiveFaceToSeat}"
+          },
+          {
+            "func": "IF",
+            "operand1": "P${seatIndex}",
+            "relation": "!=",
+            "operand2": "${PROPERTY showInactiveFaceToSeat}",
+            "thenRoutine": [
+              {
+                "func": "MOVE",
+                "to": "capture${PROPERTY showInactiveFaceToSeat}"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "parent",
+        "value": "${PROPERTY id}"
+      },
+      {
+        "func": "GET",
+        "property": "player",
+        "value": "player"
+      },
+      {
+        "func": "IF",
+        "operand1": "${player}",
+        "operand2": "P1",
+        "relation": "==",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "thisButton"
+            ],
+            "property": "showInactiveFaceToSeat",
+            "value": "P1"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "thisButton"
+            ],
+            "property": "showInactiveFaceToSeat",
+            "value": "P2"
+          }
+        ]
+      }
+    ],
+    "alignChildren": false,
+    "width": 110,
+    "classes": "transparent",
+    "css": {
+      "background": "transparent",
+      "border": "transparent"
+    }
+  },
+  "P1": {
+    "type": "seat",
+    "id": "P1",
+    "x": 103,
+    "y": 686
+  },
+  "P2": {
+    "type": "seat",
+    "id": "P2",
+    "x": 1342,
+    "y": 686,
+    "index": 2
+  },
+  "dkbb": {
+    "deck": "9d8ee440-5726-4600-b154-202580589485",
+    "type": "card",
+    "cardType": "blue",
+    "id": "dkbb",
+    "z": 3566,
+    "player": "P1",
+    "clickable": false,
+    "parent": "m7cg"
+  },
+  "exit": {
+    "type": "holder",
+    "id": "exit",
+    "x": 367,
+    "y": 690,
+    "width": 84,
+    "height": 84,
+    "z": 74,
+    "css": {
+      "background": "#ffffff60"
+    },
+    "dropTarget": [
+      {
+        "deck": "9d8ee440-5726-4600-b154-202580589485"
+      },
+      {
+        "deck": "22072704-ad80-4066-a447-5497623d70db"
+      }
+    ],
+    "onEnter": {
+      "activeFace": 1
+    },
+    "stackOffsetY": 43
+  },
+  "exit1": {
+    "type": "holder",
+    "id": "exit1",
+    "x": 1148,
+    "y": 690,
+    "width": 84,
+    "height": 84,
+    "z": 74,
+    "css": {
+      "background": "#ffffff60"
+    },
+    "dropTarget": [
+      {
+        "deck": "9d8ee440-5726-4600-b154-202580589485"
+      },
+      {
+        "deck": "22072704-ad80-4066-a447-5497623d70db"
+      }
+    ],
+    "onEnter": {
+      "activeFace": 1
+    },
+    "stackOffsetY": 43
+  },
+  "exit2": {
+    "type": "holder",
+    "id": "exit2",
+    "x": 1148,
+    "y": 138,
+    "width": 84,
+    "height": 84,
+    "z": 74,
+    "css": {
+      "background": "#ffffff60"
+    },
+    "dropTarget": [
+      {
+        "deck": "9d8ee440-5726-4600-b154-202580589485"
+      },
+      {
+        "deck": "22072704-ad80-4066-a447-5497623d70db"
+      }
+    ],
+    "onEnter": {
+      "activeFace": 1
+    },
+    "stackOffsetY": 43
+  },
+  "exit3": {
+    "type": "holder",
+    "id": "exit3",
+    "x": 367,
+    "y": 138,
+    "width": 84,
+    "height": 84,
+    "z": 75,
+    "css": {
+      "background": "#ffffff60"
+    },
+    "dropTarget": [
+      {
+        "deck": "9d8ee440-5726-4600-b154-202580589485"
+      },
+      {
+        "deck": "22072704-ad80-4066-a447-5497623d70db"
+      }
+    ],
+    "onEnter": {
+      "activeFace": 1
+    },
+    "stackOffsetY": 43
+  },
+  "amli": {
+    "image": "/assets/-1326228415_2043",
+    "id": "amli"
+  },
+  "7cb1f903-f06b-43c9-8b71-e3aaa2e5f07c": {
+    "id": "7cb1f903-f06b-43c9-8b71-e3aaa2e5f07c",
+    "z": 9958,
+    "image": "/assets/-1661445519_37546",
+    "movable": false,
+    "layer": -4,
+    "width": 1600,
+    "height": 1000,
+    "css": {
+      "background": "#ffffff60"
+    }
+  },
+  "holder2": {
+    "type": "holder",
+    "id": "holder2",
+    "x": 579,
+    "y": 124,
+    "height": 110,
+    "z": 72,
+    "showInactiveFaceToSeat": "P2",
+    "enterRoutine": [
+      {
+        "func": "COUNT",
+        "holder": "${PROPERTY id}"
+      },
+      {
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "relation": ">",
+        "operand2": 1,
+        "thenRoutine": [
+          {
+            "func": "SELECT",
+            "property": "parent",
+            "value": "${PROPERTY id}"
+          },
+          {
+            "func": "SELECT",
+            "source": "DEFAULT",
+            "property": "player",
+            "value": "${PROPERTY showInactiveFaceToSeat}"
+          },
+          {
+            "func": "IF",
+            "operand1": "P${seatIndex}",
+            "relation": "!=",
+            "operand2": "${PROPERTY showInactiveFaceToSeat}",
+            "thenRoutine": [
+              {
+                "func": "MOVE",
+                "to": "capture${PROPERTY showInactiveFaceToSeat}"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "parent",
+        "value": "${PROPERTY id}"
+      },
+      {
+        "func": "GET",
+        "property": "player",
+        "value": "player"
+      },
+      {
+        "func": "IF",
+        "operand1": "${player}",
+        "operand2": "P1",
+        "relation": "==",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "thisButton"
+            ],
+            "property": "showInactiveFaceToSeat",
+            "value": "P1"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "thisButton"
+            ],
+            "property": "showInactiveFaceToSeat",
+            "value": "P2"
+          }
+        ]
+      }
+    ],
+    "alignChildren": false,
+    "width": 110,
+    "classes": "transparent",
+    "css": {
+      "background": "transparent",
+      "border": "transparent"
+    }
+  },
+  "holder3": {
+    "type": "holder",
+    "id": "holder3",
+    "x": 689,
+    "y": 124,
+    "height": 110,
+    "z": 72,
+    "showInactiveFaceToSeat": "P2",
+    "enterRoutine": [
+      {
+        "func": "COUNT",
+        "holder": "${PROPERTY id}"
+      },
+      {
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "relation": ">",
+        "operand2": 1,
+        "thenRoutine": [
+          {
+            "func": "SELECT",
+            "property": "parent",
+            "value": "${PROPERTY id}"
+          },
+          {
+            "func": "SELECT",
+            "source": "DEFAULT",
+            "property": "player",
+            "value": "${PROPERTY showInactiveFaceToSeat}"
+          },
+          {
+            "func": "IF",
+            "operand1": "P${seatIndex}",
+            "relation": "!=",
+            "operand2": "${PROPERTY showInactiveFaceToSeat}",
+            "thenRoutine": [
+              {
+                "func": "MOVE",
+                "to": "capture${PROPERTY showInactiveFaceToSeat}"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "parent",
+        "value": "${PROPERTY id}"
+      },
+      {
+        "func": "GET",
+        "property": "player",
+        "value": "player"
+      },
+      {
+        "func": "IF",
+        "operand1": "${player}",
+        "operand2": "P1",
+        "relation": "==",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "thisButton"
+            ],
+            "property": "showInactiveFaceToSeat",
+            "value": "P1"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "thisButton"
+            ],
+            "property": "showInactiveFaceToSeat",
+            "value": "P2"
+          }
+        ]
+      }
+    ],
+    "alignChildren": false,
+    "width": 110,
+    "classes": "transparent",
+    "css": {
+      "background": "transparent",
+      "border": "transparent"
+    }
+  },
+  "holder4": {
+    "type": "holder",
+    "id": "holder4",
+    "x": 799,
+    "y": 124,
+    "height": 110,
+    "z": 72,
+    "showInactiveFaceToSeat": "P1",
+    "enterRoutine": [
+      {
+        "func": "COUNT",
+        "holder": "${PROPERTY id}"
+      },
+      {
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "relation": ">",
+        "operand2": 1,
+        "thenRoutine": [
+          {
+            "func": "SELECT",
+            "property": "parent",
+            "value": "${PROPERTY id}"
+          },
+          {
+            "func": "SELECT",
+            "source": "DEFAULT",
+            "property": "player",
+            "value": "${PROPERTY showInactiveFaceToSeat}"
+          },
+          {
+            "func": "IF",
+            "operand1": "P${seatIndex}",
+            "relation": "!=",
+            "operand2": "${PROPERTY showInactiveFaceToSeat}",
+            "thenRoutine": [
+              {
+                "func": "MOVE",
+                "to": "capture${PROPERTY showInactiveFaceToSeat}"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "parent",
+        "value": "${PROPERTY id}"
+      },
+      {
+        "func": "GET",
+        "property": "player",
+        "value": "player"
+      },
+      {
+        "func": "IF",
+        "operand1": "${player}",
+        "operand2": "P1",
+        "relation": "==",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "thisButton"
+            ],
+            "property": "showInactiveFaceToSeat",
+            "value": "P1"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "thisButton"
+            ],
+            "property": "showInactiveFaceToSeat",
+            "value": "P2"
+          }
+        ]
+      }
+    ],
+    "alignChildren": false,
+    "width": 110,
+    "classes": "transparent",
+    "css": {
+      "background": "transparent",
+      "border": "transparent"
+    }
+  },
+  "holder5": {
+    "type": "holder",
+    "id": "holder5",
+    "x": 909,
+    "y": 124,
+    "height": 110,
+    "z": 72,
+    "showInactiveFaceToSeat": "P2",
+    "enterRoutine": [
+      {
+        "func": "COUNT",
+        "holder": "${PROPERTY id}"
+      },
+      {
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "relation": ">",
+        "operand2": 1,
+        "thenRoutine": [
+          {
+            "func": "SELECT",
+            "property": "parent",
+            "value": "${PROPERTY id}"
+          },
+          {
+            "func": "SELECT",
+            "source": "DEFAULT",
+            "property": "player",
+            "value": "${PROPERTY showInactiveFaceToSeat}"
+          },
+          {
+            "func": "IF",
+            "operand1": "P${seatIndex}",
+            "relation": "!=",
+            "operand2": "${PROPERTY showInactiveFaceToSeat}",
+            "thenRoutine": [
+              {
+                "func": "MOVE",
+                "to": "capture${PROPERTY showInactiveFaceToSeat}"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "parent",
+        "value": "${PROPERTY id}"
+      },
+      {
+        "func": "GET",
+        "property": "player",
+        "value": "player"
+      },
+      {
+        "func": "IF",
+        "operand1": "${player}",
+        "operand2": "P1",
+        "relation": "==",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "thisButton"
+            ],
+            "property": "showInactiveFaceToSeat",
+            "value": "P1"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "thisButton"
+            ],
+            "property": "showInactiveFaceToSeat",
+            "value": "P2"
+          }
+        ]
+      }
+    ],
+    "alignChildren": false,
+    "width": 110,
+    "classes": "transparent",
+    "css": {
+      "background": "transparent",
+      "border": "transparent"
+    }
+  },
+  "holder6": {
+    "type": "holder",
+    "id": "holder6",
+    "x": 1019,
+    "y": 124,
+    "height": 110,
+    "z": 72,
+    "showInactiveFaceToSeat": "P1",
+    "enterRoutine": [
+      {
+        "func": "COUNT",
+        "holder": "${PROPERTY id}"
+      },
+      {
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "relation": ">",
+        "operand2": 1,
+        "thenRoutine": [
+          {
+            "func": "SELECT",
+            "property": "parent",
+            "value": "${PROPERTY id}"
+          },
+          {
+            "func": "SELECT",
+            "source": "DEFAULT",
+            "property": "player",
+            "value": "${PROPERTY showInactiveFaceToSeat}"
+          },
+          {
+            "func": "IF",
+            "operand1": "P${seatIndex}",
+            "relation": "!=",
+            "operand2": "${PROPERTY showInactiveFaceToSeat}",
+            "thenRoutine": [
+              {
+                "func": "MOVE",
+                "to": "capture${PROPERTY showInactiveFaceToSeat}"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "parent",
+        "value": "${PROPERTY id}"
+      },
+      {
+        "func": "GET",
+        "property": "player",
+        "value": "player"
+      },
+      {
+        "func": "IF",
+        "operand1": "${player}",
+        "operand2": "P1",
+        "relation": "==",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "thisButton"
+            ],
+            "property": "showInactiveFaceToSeat",
+            "value": "P1"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "thisButton"
+            ],
+            "property": "showInactiveFaceToSeat",
+            "value": "P2"
+          }
+        ]
+      }
+    ],
+    "alignChildren": false,
+    "width": 110,
+    "classes": "transparent",
+    "css": {
+      "background": "transparent",
+      "border": "transparent"
+    }
+  },
+  "holder7": {
+    "type": "holder",
+    "id": "holder7",
+    "x": 469,
+    "y": 234,
+    "height": 110,
+    "z": 72,
+    "showInactiveFaceToSeat": "P2",
+    "enterRoutine": [
+      {
+        "func": "COUNT",
+        "holder": "${PROPERTY id}"
+      },
+      {
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "relation": ">",
+        "operand2": 1,
+        "thenRoutine": [
+          {
+            "func": "SELECT",
+            "property": "parent",
+            "value": "${PROPERTY id}"
+          },
+          {
+            "func": "SELECT",
+            "source": "DEFAULT",
+            "property": "player",
+            "value": "${PROPERTY showInactiveFaceToSeat}"
+          },
+          {
+            "func": "IF",
+            "operand1": "P${seatIndex}",
+            "relation": "!=",
+            "operand2": "${PROPERTY showInactiveFaceToSeat}",
+            "thenRoutine": [
+              {
+                "func": "MOVE",
+                "to": "capture${PROPERTY showInactiveFaceToSeat}"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "parent",
+        "value": "${PROPERTY id}"
+      },
+      {
+        "func": "GET",
+        "property": "player",
+        "value": "player"
+      },
+      {
+        "func": "IF",
+        "operand1": "${player}",
+        "operand2": "P1",
+        "relation": "==",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "thisButton"
+            ],
+            "property": "showInactiveFaceToSeat",
+            "value": "P1"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "thisButton"
+            ],
+            "property": "showInactiveFaceToSeat",
+            "value": "P2"
+          }
+        ]
+      }
+    ],
+    "alignChildren": false,
+    "width": 110,
+    "classes": "transparent",
+    "css": {
+      "background": "transparent",
+      "border": "transparent"
+    }
+  },
+  "holder8": {
+    "type": "holder",
+    "id": "holder8",
+    "x": 579,
+    "y": 234,
+    "height": 110,
+    "z": 72,
+    "showInactiveFaceToSeat": "P2",
+    "enterRoutine": [
+      {
+        "func": "COUNT",
+        "holder": "${PROPERTY id}"
+      },
+      {
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "relation": ">",
+        "operand2": 1,
+        "thenRoutine": [
+          {
+            "func": "SELECT",
+            "property": "parent",
+            "value": "${PROPERTY id}"
+          },
+          {
+            "func": "SELECT",
+            "source": "DEFAULT",
+            "property": "player",
+            "value": "${PROPERTY showInactiveFaceToSeat}"
+          },
+          {
+            "func": "IF",
+            "operand1": "P${seatIndex}",
+            "relation": "!=",
+            "operand2": "${PROPERTY showInactiveFaceToSeat}",
+            "thenRoutine": [
+              {
+                "func": "MOVE",
+                "to": "capture${PROPERTY showInactiveFaceToSeat}"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "parent",
+        "value": "${PROPERTY id}"
+      },
+      {
+        "func": "GET",
+        "property": "player",
+        "value": "player"
+      },
+      {
+        "func": "IF",
+        "operand1": "${player}",
+        "operand2": "P1",
+        "relation": "==",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "thisButton"
+            ],
+            "property": "showInactiveFaceToSeat",
+            "value": "P1"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "thisButton"
+            ],
+            "property": "showInactiveFaceToSeat",
+            "value": "P2"
+          }
+        ]
+      }
+    ],
+    "alignChildren": false,
+    "width": 110,
+    "classes": "transparent",
+    "css": {
+      "background": "transparent",
+      "border": "transparent"
+    }
+  },
+  "holder9": {
+    "type": "holder",
+    "id": "holder9",
+    "x": 689,
+    "y": 234,
+    "height": 110,
+    "z": 72,
+    "showInactiveFaceToSeat": "P1",
+    "enterRoutine": [
+      {
+        "func": "COUNT",
+        "holder": "${PROPERTY id}"
+      },
+      {
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "relation": ">",
+        "operand2": 1,
+        "thenRoutine": [
+          {
+            "func": "SELECT",
+            "property": "parent",
+            "value": "${PROPERTY id}"
+          },
+          {
+            "func": "SELECT",
+            "source": "DEFAULT",
+            "property": "player",
+            "value": "${PROPERTY showInactiveFaceToSeat}"
+          },
+          {
+            "func": "IF",
+            "operand1": "P${seatIndex}",
+            "relation": "!=",
+            "operand2": "${PROPERTY showInactiveFaceToSeat}",
+            "thenRoutine": [
+              {
+                "func": "MOVE",
+                "to": "capture${PROPERTY showInactiveFaceToSeat}"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "parent",
+        "value": "${PROPERTY id}"
+      },
+      {
+        "func": "GET",
+        "property": "player",
+        "value": "player"
+      },
+      {
+        "func": "IF",
+        "operand1": "${player}",
+        "operand2": "P1",
+        "relation": "==",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "thisButton"
+            ],
+            "property": "showInactiveFaceToSeat",
+            "value": "P1"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "thisButton"
+            ],
+            "property": "showInactiveFaceToSeat",
+            "value": "P2"
+          }
+        ]
+      }
+    ],
+    "alignChildren": false,
+    "width": 110,
+    "classes": "transparent",
+    "css": {
+      "background": "transparent",
+      "border": "transparent"
+    }
+  },
+  "holder10": {
+    "type": "holder",
+    "id": "holder10",
+    "x": 799,
+    "y": 234,
+    "height": 110,
+    "z": 72,
+    "showInactiveFaceToSeat": "P2",
+    "enterRoutine": [
+      {
+        "func": "COUNT",
+        "holder": "${PROPERTY id}"
+      },
+      {
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "relation": ">",
+        "operand2": 1,
+        "thenRoutine": [
+          {
+            "func": "SELECT",
+            "property": "parent",
+            "value": "${PROPERTY id}"
+          },
+          {
+            "func": "SELECT",
+            "source": "DEFAULT",
+            "property": "player",
+            "value": "${PROPERTY showInactiveFaceToSeat}"
+          },
+          {
+            "func": "IF",
+            "operand1": "P${seatIndex}",
+            "relation": "!=",
+            "operand2": "${PROPERTY showInactiveFaceToSeat}",
+            "thenRoutine": [
+              {
+                "func": "MOVE",
+                "to": "capture${PROPERTY showInactiveFaceToSeat}"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "parent",
+        "value": "${PROPERTY id}"
+      },
+      {
+        "func": "GET",
+        "property": "player",
+        "value": "player"
+      },
+      {
+        "func": "IF",
+        "operand1": "${player}",
+        "operand2": "P1",
+        "relation": "==",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "thisButton"
+            ],
+            "property": "showInactiveFaceToSeat",
+            "value": "P1"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "thisButton"
+            ],
+            "property": "showInactiveFaceToSeat",
+            "value": "P2"
+          }
+        ]
+      }
+    ],
+    "alignChildren": false,
+    "width": 110,
+    "classes": "transparent",
+    "css": {
+      "background": "transparent",
+      "border": "transparent"
+    }
+  },
+  "holder11": {
+    "type": "holder",
+    "id": "holder11",
+    "x": 909,
+    "y": 234,
+    "height": 110,
+    "z": 72,
+    "showInactiveFaceToSeat": "P2",
+    "enterRoutine": [
+      {
+        "func": "COUNT",
+        "holder": "${PROPERTY id}"
+      },
+      {
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "relation": ">",
+        "operand2": 1,
+        "thenRoutine": [
+          {
+            "func": "SELECT",
+            "property": "parent",
+            "value": "${PROPERTY id}"
+          },
+          {
+            "func": "SELECT",
+            "source": "DEFAULT",
+            "property": "player",
+            "value": "${PROPERTY showInactiveFaceToSeat}"
+          },
+          {
+            "func": "IF",
+            "operand1": "P${seatIndex}",
+            "relation": "!=",
+            "operand2": "${PROPERTY showInactiveFaceToSeat}",
+            "thenRoutine": [
+              {
+                "func": "MOVE",
+                "to": "capture${PROPERTY showInactiveFaceToSeat}"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "parent",
+        "value": "${PROPERTY id}"
+      },
+      {
+        "func": "GET",
+        "property": "player",
+        "value": "player"
+      },
+      {
+        "func": "IF",
+        "operand1": "${player}",
+        "operand2": "P1",
+        "relation": "==",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "thisButton"
+            ],
+            "property": "showInactiveFaceToSeat",
+            "value": "P1"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "thisButton"
+            ],
+            "property": "showInactiveFaceToSeat",
+            "value": "P2"
+          }
+        ]
+      }
+    ],
+    "alignChildren": false,
+    "width": 110,
+    "classes": "transparent",
+    "css": {
+      "background": "transparent",
+      "border": "transparent"
+    }
+  },
+  "holder12": {
+    "type": "holder",
+    "id": "holder12",
+    "x": 1019,
+    "y": 234,
+    "height": 110,
+    "z": 72,
+    "showInactiveFaceToSeat": "P2",
+    "enterRoutine": [
+      {
+        "func": "COUNT",
+        "holder": "${PROPERTY id}"
+      },
+      {
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "relation": ">",
+        "operand2": 1,
+        "thenRoutine": [
+          {
+            "func": "SELECT",
+            "property": "parent",
+            "value": "${PROPERTY id}"
+          },
+          {
+            "func": "SELECT",
+            "source": "DEFAULT",
+            "property": "player",
+            "value": "${PROPERTY showInactiveFaceToSeat}"
+          },
+          {
+            "func": "IF",
+            "operand1": "P${seatIndex}",
+            "relation": "!=",
+            "operand2": "${PROPERTY showInactiveFaceToSeat}",
+            "thenRoutine": [
+              {
+                "func": "MOVE",
+                "to": "capture${PROPERTY showInactiveFaceToSeat}"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "parent",
+        "value": "${PROPERTY id}"
+      },
+      {
+        "func": "GET",
+        "property": "player",
+        "value": "player"
+      },
+      {
+        "func": "IF",
+        "operand1": "${player}",
+        "operand2": "P1",
+        "relation": "==",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "thisButton"
+            ],
+            "property": "showInactiveFaceToSeat",
+            "value": "P1"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "thisButton"
+            ],
+            "property": "showInactiveFaceToSeat",
+            "value": "P2"
+          }
+        ]
+      }
+    ],
+    "alignChildren": false,
+    "width": 110,
+    "classes": "transparent",
+    "css": {
+      "background": "transparent",
+      "border": "transparent"
+    }
+  },
+  "holder13": {
+    "type": "holder",
+    "id": "holder13",
+    "x": 469,
+    "y": 344,
+    "height": 110,
+    "z": 72,
+    "showInactiveFaceToSeat": "P1",
+    "enterRoutine": [
+      {
+        "func": "COUNT",
+        "holder": "${PROPERTY id}"
+      },
+      {
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "relation": ">",
+        "operand2": 1,
+        "thenRoutine": [
+          {
+            "func": "SELECT",
+            "property": "parent",
+            "value": "${PROPERTY id}"
+          },
+          {
+            "func": "SELECT",
+            "source": "DEFAULT",
+            "property": "player",
+            "value": "${PROPERTY showInactiveFaceToSeat}"
+          },
+          {
+            "func": "IF",
+            "operand1": "P${seatIndex}",
+            "relation": "!=",
+            "operand2": "${PROPERTY showInactiveFaceToSeat}",
+            "thenRoutine": [
+              {
+                "func": "MOVE",
+                "to": "capture${PROPERTY showInactiveFaceToSeat}"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "parent",
+        "value": "${PROPERTY id}"
+      },
+      {
+        "func": "GET",
+        "property": "player",
+        "value": "player"
+      },
+      {
+        "func": "IF",
+        "operand1": "${player}",
+        "operand2": "P1",
+        "relation": "==",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "thisButton"
+            ],
+            "property": "showInactiveFaceToSeat",
+            "value": "P1"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "thisButton"
+            ],
+            "property": "showInactiveFaceToSeat",
+            "value": "P2"
+          }
+        ]
+      }
+    ],
+    "alignChildren": false,
+    "width": 110,
+    "classes": "transparent",
+    "css": {
+      "background": "transparent",
+      "border": "transparent"
+    }
+  },
+  "holder14": {
+    "type": "holder",
+    "id": "holder14",
+    "x": 579,
+    "y": 344,
+    "height": 110,
+    "z": 72,
+    "showInactiveFaceToSeat": "P1",
+    "enterRoutine": [
+      {
+        "func": "COUNT",
+        "holder": "${PROPERTY id}"
+      },
+      {
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "relation": ">",
+        "operand2": 1,
+        "thenRoutine": [
+          {
+            "func": "SELECT",
+            "property": "parent",
+            "value": "${PROPERTY id}"
+          },
+          {
+            "func": "SELECT",
+            "source": "DEFAULT",
+            "property": "player",
+            "value": "${PROPERTY showInactiveFaceToSeat}"
+          },
+          {
+            "func": "IF",
+            "operand1": "P${seatIndex}",
+            "relation": "!=",
+            "operand2": "${PROPERTY showInactiveFaceToSeat}",
+            "thenRoutine": [
+              {
+                "func": "MOVE",
+                "to": "capture${PROPERTY showInactiveFaceToSeat}"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "parent",
+        "value": "${PROPERTY id}"
+      },
+      {
+        "func": "GET",
+        "property": "player",
+        "value": "player"
+      },
+      {
+        "func": "IF",
+        "operand1": "${player}",
+        "operand2": "P1",
+        "relation": "==",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "thisButton"
+            ],
+            "property": "showInactiveFaceToSeat",
+            "value": "P1"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "thisButton"
+            ],
+            "property": "showInactiveFaceToSeat",
+            "value": "P2"
+          }
+        ]
+      }
+    ],
+    "alignChildren": false,
+    "width": 110,
+    "classes": "transparent",
+    "css": {
+      "background": "transparent",
+      "border": "transparent"
+    }
+  },
+  "holder15": {
+    "type": "holder",
+    "id": "holder15",
+    "x": 689,
+    "y": 344,
+    "height": 110,
+    "z": 72,
+    "showInactiveFaceToSeat": "P1",
+    "enterRoutine": [
+      {
+        "func": "COUNT",
+        "holder": "${PROPERTY id}"
+      },
+      {
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "relation": ">",
+        "operand2": 1,
+        "thenRoutine": [
+          {
+            "func": "SELECT",
+            "property": "parent",
+            "value": "${PROPERTY id}"
+          },
+          {
+            "func": "SELECT",
+            "source": "DEFAULT",
+            "property": "player",
+            "value": "${PROPERTY showInactiveFaceToSeat}"
+          },
+          {
+            "func": "IF",
+            "operand1": "P${seatIndex}",
+            "relation": "!=",
+            "operand2": "${PROPERTY showInactiveFaceToSeat}",
+            "thenRoutine": [
+              {
+                "func": "MOVE",
+                "to": "capture${PROPERTY showInactiveFaceToSeat}"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "parent",
+        "value": "${PROPERTY id}"
+      },
+      {
+        "func": "GET",
+        "property": "player",
+        "value": "player"
+      },
+      {
+        "func": "IF",
+        "operand1": "${player}",
+        "operand2": "P1",
+        "relation": "==",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "thisButton"
+            ],
+            "property": "showInactiveFaceToSeat",
+            "value": "P1"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "thisButton"
+            ],
+            "property": "showInactiveFaceToSeat",
+            "value": "P2"
+          }
+        ]
+      }
+    ],
+    "alignChildren": false,
+    "width": 110,
+    "classes": "transparent",
+    "css": {
+      "background": "transparent",
+      "border": "transparent"
+    }
+  },
+  "holder16": {
+    "type": "holder",
+    "id": "holder16",
+    "x": 799,
+    "y": 344,
+    "height": 110,
+    "z": 72,
+    "showInactiveFaceToSeat": "P2",
+    "enterRoutine": [
+      {
+        "func": "COUNT",
+        "holder": "${PROPERTY id}"
+      },
+      {
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "relation": ">",
+        "operand2": 1,
+        "thenRoutine": [
+          {
+            "func": "SELECT",
+            "property": "parent",
+            "value": "${PROPERTY id}"
+          },
+          {
+            "func": "SELECT",
+            "source": "DEFAULT",
+            "property": "player",
+            "value": "${PROPERTY showInactiveFaceToSeat}"
+          },
+          {
+            "func": "IF",
+            "operand1": "P${seatIndex}",
+            "relation": "!=",
+            "operand2": "${PROPERTY showInactiveFaceToSeat}",
+            "thenRoutine": [
+              {
+                "func": "MOVE",
+                "to": "capture${PROPERTY showInactiveFaceToSeat}"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "parent",
+        "value": "${PROPERTY id}"
+      },
+      {
+        "func": "GET",
+        "property": "player",
+        "value": "player"
+      },
+      {
+        "func": "IF",
+        "operand1": "${player}",
+        "operand2": "P1",
+        "relation": "==",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "thisButton"
+            ],
+            "property": "showInactiveFaceToSeat",
+            "value": "P1"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "thisButton"
+            ],
+            "property": "showInactiveFaceToSeat",
+            "value": "P2"
+          }
+        ]
+      }
+    ],
+    "alignChildren": false,
+    "width": 110,
+    "classes": "transparent",
+    "css": {
+      "background": "transparent",
+      "border": "transparent"
+    }
+  },
+  "holder17": {
+    "type": "holder",
+    "id": "holder17",
+    "x": 909,
+    "y": 344,
+    "height": 110,
+    "z": 72,
+    "showInactiveFaceToSeat": "P2",
+    "enterRoutine": [
+      {
+        "func": "COUNT",
+        "holder": "${PROPERTY id}"
+      },
+      {
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "relation": ">",
+        "operand2": 1,
+        "thenRoutine": [
+          {
+            "func": "SELECT",
+            "property": "parent",
+            "value": "${PROPERTY id}"
+          },
+          {
+            "func": "SELECT",
+            "source": "DEFAULT",
+            "property": "player",
+            "value": "${PROPERTY showInactiveFaceToSeat}"
+          },
+          {
+            "func": "IF",
+            "operand1": "P${seatIndex}",
+            "relation": "!=",
+            "operand2": "${PROPERTY showInactiveFaceToSeat}",
+            "thenRoutine": [
+              {
+                "func": "MOVE",
+                "to": "capture${PROPERTY showInactiveFaceToSeat}"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "parent",
+        "value": "${PROPERTY id}"
+      },
+      {
+        "func": "GET",
+        "property": "player",
+        "value": "player"
+      },
+      {
+        "func": "IF",
+        "operand1": "${player}",
+        "operand2": "P1",
+        "relation": "==",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "thisButton"
+            ],
+            "property": "showInactiveFaceToSeat",
+            "value": "P1"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "thisButton"
+            ],
+            "property": "showInactiveFaceToSeat",
+            "value": "P2"
+          }
+        ]
+      }
+    ],
+    "alignChildren": false,
+    "width": 110,
+    "classes": "transparent",
+    "css": {
+      "background": "transparent",
+      "border": "transparent"
+    }
+  },
+  "holder18": {
+    "type": "holder",
+    "id": "holder18",
+    "x": 1019,
+    "y": 344,
+    "height": 110,
+    "z": 72,
+    "showInactiveFaceToSeat": "P2",
+    "enterRoutine": [
+      {
+        "func": "COUNT",
+        "holder": "${PROPERTY id}"
+      },
+      {
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "relation": ">",
+        "operand2": 1,
+        "thenRoutine": [
+          {
+            "func": "SELECT",
+            "property": "parent",
+            "value": "${PROPERTY id}"
+          },
+          {
+            "func": "SELECT",
+            "source": "DEFAULT",
+            "property": "player",
+            "value": "${PROPERTY showInactiveFaceToSeat}"
+          },
+          {
+            "func": "IF",
+            "operand1": "P${seatIndex}",
+            "relation": "!=",
+            "operand2": "${PROPERTY showInactiveFaceToSeat}",
+            "thenRoutine": [
+              {
+                "func": "MOVE",
+                "to": "capture${PROPERTY showInactiveFaceToSeat}"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "parent",
+        "value": "${PROPERTY id}"
+      },
+      {
+        "func": "GET",
+        "property": "player",
+        "value": "player"
+      },
+      {
+        "func": "IF",
+        "operand1": "${player}",
+        "operand2": "P1",
+        "relation": "==",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "thisButton"
+            ],
+            "property": "showInactiveFaceToSeat",
+            "value": "P1"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "thisButton"
+            ],
+            "property": "showInactiveFaceToSeat",
+            "value": "P2"
+          }
+        ]
+      }
+    ],
+    "alignChildren": false,
+    "width": 110,
+    "classes": "transparent",
+    "css": {
+      "background": "transparent",
+      "border": "transparent"
+    }
+  },
+  "holder19": {
+    "type": "holder",
+    "id": "holder19",
+    "x": 469,
+    "y": 454,
+    "height": 110,
+    "z": 72,
+    "showInactiveFaceToSeat": "P1",
+    "enterRoutine": [
+      {
+        "func": "COUNT",
+        "holder": "${PROPERTY id}"
+      },
+      {
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "relation": ">",
+        "operand2": 1,
+        "thenRoutine": [
+          {
+            "func": "SELECT",
+            "property": "parent",
+            "value": "${PROPERTY id}"
+          },
+          {
+            "func": "SELECT",
+            "source": "DEFAULT",
+            "property": "player",
+            "value": "${PROPERTY showInactiveFaceToSeat}"
+          },
+          {
+            "func": "IF",
+            "operand1": "P${seatIndex}",
+            "relation": "!=",
+            "operand2": "${PROPERTY showInactiveFaceToSeat}",
+            "thenRoutine": [
+              {
+                "func": "MOVE",
+                "to": "capture${PROPERTY showInactiveFaceToSeat}"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "parent",
+        "value": "${PROPERTY id}"
+      },
+      {
+        "func": "GET",
+        "property": "player",
+        "value": "player"
+      },
+      {
+        "func": "IF",
+        "operand1": "${player}",
+        "operand2": "P1",
+        "relation": "==",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "thisButton"
+            ],
+            "property": "showInactiveFaceToSeat",
+            "value": "P1"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "thisButton"
+            ],
+            "property": "showInactiveFaceToSeat",
+            "value": "P2"
+          }
+        ]
+      }
+    ],
+    "alignChildren": false,
+    "width": 110,
+    "classes": "transparent",
+    "css": {
+      "background": "transparent",
+      "border": "transparent"
+    }
+  },
+  "holder20": {
+    "type": "holder",
+    "id": "holder20",
+    "x": 579,
+    "y": 454,
+    "height": 110,
+    "z": 72,
+    "showInactiveFaceToSeat": "P2",
+    "enterRoutine": [
+      {
+        "func": "COUNT",
+        "holder": "${PROPERTY id}"
+      },
+      {
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "relation": ">",
+        "operand2": 1,
+        "thenRoutine": [
+          {
+            "func": "SELECT",
+            "property": "parent",
+            "value": "${PROPERTY id}"
+          },
+          {
+            "func": "SELECT",
+            "source": "DEFAULT",
+            "property": "player",
+            "value": "${PROPERTY showInactiveFaceToSeat}"
+          },
+          {
+            "func": "IF",
+            "operand1": "P${seatIndex}",
+            "relation": "!=",
+            "operand2": "${PROPERTY showInactiveFaceToSeat}",
+            "thenRoutine": [
+              {
+                "func": "MOVE",
+                "to": "capture${PROPERTY showInactiveFaceToSeat}"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "parent",
+        "value": "${PROPERTY id}"
+      },
+      {
+        "func": "GET",
+        "property": "player",
+        "value": "player"
+      },
+      {
+        "func": "IF",
+        "operand1": "${player}",
+        "operand2": "P1",
+        "relation": "==",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "thisButton"
+            ],
+            "property": "showInactiveFaceToSeat",
+            "value": "P1"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "thisButton"
+            ],
+            "property": "showInactiveFaceToSeat",
+            "value": "P2"
+          }
+        ]
+      }
+    ],
+    "alignChildren": false,
+    "width": 110,
+    "classes": "transparent",
+    "css": {
+      "background": "transparent",
+      "border": "transparent"
+    }
+  },
+  "holder21": {
+    "type": "holder",
+    "id": "holder21",
+    "x": 689,
+    "y": 454,
+    "height": 110,
+    "z": 72,
+    "showInactiveFaceToSeat": "P2",
+    "enterRoutine": [
+      {
+        "func": "COUNT",
+        "holder": "${PROPERTY id}"
+      },
+      {
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "relation": ">",
+        "operand2": 1,
+        "thenRoutine": [
+          {
+            "func": "SELECT",
+            "property": "parent",
+            "value": "${PROPERTY id}"
+          },
+          {
+            "func": "SELECT",
+            "source": "DEFAULT",
+            "property": "player",
+            "value": "${PROPERTY showInactiveFaceToSeat}"
+          },
+          {
+            "func": "IF",
+            "operand1": "P${seatIndex}",
+            "relation": "!=",
+            "operand2": "${PROPERTY showInactiveFaceToSeat}",
+            "thenRoutine": [
+              {
+                "func": "MOVE",
+                "to": "capture${PROPERTY showInactiveFaceToSeat}"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "parent",
+        "value": "${PROPERTY id}"
+      },
+      {
+        "func": "GET",
+        "property": "player",
+        "value": "player"
+      },
+      {
+        "func": "IF",
+        "operand1": "${player}",
+        "operand2": "P1",
+        "relation": "==",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "thisButton"
+            ],
+            "property": "showInactiveFaceToSeat",
+            "value": "P1"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "thisButton"
+            ],
+            "property": "showInactiveFaceToSeat",
+            "value": "P2"
+          }
+        ]
+      }
+    ],
+    "alignChildren": false,
+    "width": 110,
+    "classes": "transparent",
+    "css": {
+      "background": "transparent",
+      "border": "transparent"
+    }
+  },
+  "holder22": {
+    "type": "holder",
+    "id": "holder22",
+    "x": 799,
+    "y": 454,
+    "height": 110,
+    "z": 72,
+    "showInactiveFaceToSeat": "P2",
+    "enterRoutine": [
+      {
+        "func": "COUNT",
+        "holder": "${PROPERTY id}"
+      },
+      {
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "relation": ">",
+        "operand2": 1,
+        "thenRoutine": [
+          {
+            "func": "SELECT",
+            "property": "parent",
+            "value": "${PROPERTY id}"
+          },
+          {
+            "func": "SELECT",
+            "source": "DEFAULT",
+            "property": "player",
+            "value": "${PROPERTY showInactiveFaceToSeat}"
+          },
+          {
+            "func": "IF",
+            "operand1": "P${seatIndex}",
+            "relation": "!=",
+            "operand2": "${PROPERTY showInactiveFaceToSeat}",
+            "thenRoutine": [
+              {
+                "func": "MOVE",
+                "to": "capture${PROPERTY showInactiveFaceToSeat}"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "parent",
+        "value": "${PROPERTY id}"
+      },
+      {
+        "func": "GET",
+        "property": "player",
+        "value": "player"
+      },
+      {
+        "func": "IF",
+        "operand1": "${player}",
+        "operand2": "P1",
+        "relation": "==",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "thisButton"
+            ],
+            "property": "showInactiveFaceToSeat",
+            "value": "P1"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "thisButton"
+            ],
+            "property": "showInactiveFaceToSeat",
+            "value": "P2"
+          }
+        ]
+      }
+    ],
+    "alignChildren": false,
+    "width": 110,
+    "classes": "transparent",
+    "css": {
+      "background": "transparent",
+      "border": "transparent"
+    }
+  },
+  "holder23": {
+    "type": "holder",
+    "id": "holder23",
+    "x": 909,
+    "y": 454,
+    "height": 110,
+    "z": 72,
+    "showInactiveFaceToSeat": "P2",
+    "enterRoutine": [
+      {
+        "func": "COUNT",
+        "holder": "${PROPERTY id}"
+      },
+      {
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "relation": ">",
+        "operand2": 1,
+        "thenRoutine": [
+          {
+            "func": "SELECT",
+            "property": "parent",
+            "value": "${PROPERTY id}"
+          },
+          {
+            "func": "SELECT",
+            "source": "DEFAULT",
+            "property": "player",
+            "value": "${PROPERTY showInactiveFaceToSeat}"
+          },
+          {
+            "func": "IF",
+            "operand1": "P${seatIndex}",
+            "relation": "!=",
+            "operand2": "${PROPERTY showInactiveFaceToSeat}",
+            "thenRoutine": [
+              {
+                "func": "MOVE",
+                "to": "capture${PROPERTY showInactiveFaceToSeat}"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "parent",
+        "value": "${PROPERTY id}"
+      },
+      {
+        "func": "GET",
+        "property": "player",
+        "value": "player"
+      },
+      {
+        "func": "IF",
+        "operand1": "${player}",
+        "operand2": "P1",
+        "relation": "==",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "thisButton"
+            ],
+            "property": "showInactiveFaceToSeat",
+            "value": "P1"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "thisButton"
+            ],
+            "property": "showInactiveFaceToSeat",
+            "value": "P2"
+          }
+        ]
+      }
+    ],
+    "alignChildren": false,
+    "width": 110,
+    "classes": "transparent",
+    "css": {
+      "background": "transparent",
+      "border": "transparent"
+    }
+  },
+  "holder24": {
+    "type": "holder",
+    "id": "holder24",
+    "x": 1019,
+    "y": 454,
+    "height": 110,
+    "z": 72,
+    "showInactiveFaceToSeat": "P1",
+    "enterRoutine": [
+      {
+        "func": "COUNT",
+        "holder": "${PROPERTY id}"
+      },
+      {
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "relation": ">",
+        "operand2": 1,
+        "thenRoutine": [
+          {
+            "func": "SELECT",
+            "property": "parent",
+            "value": "${PROPERTY id}"
+          },
+          {
+            "func": "SELECT",
+            "source": "DEFAULT",
+            "property": "player",
+            "value": "${PROPERTY showInactiveFaceToSeat}"
+          },
+          {
+            "func": "IF",
+            "operand1": "P${seatIndex}",
+            "relation": "!=",
+            "operand2": "${PROPERTY showInactiveFaceToSeat}",
+            "thenRoutine": [
+              {
+                "func": "MOVE",
+                "to": "capture${PROPERTY showInactiveFaceToSeat}"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "parent",
+        "value": "${PROPERTY id}"
+      },
+      {
+        "func": "GET",
+        "property": "player",
+        "value": "player"
+      },
+      {
+        "func": "IF",
+        "operand1": "${player}",
+        "operand2": "P1",
+        "relation": "==",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "thisButton"
+            ],
+            "property": "showInactiveFaceToSeat",
+            "value": "P1"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "thisButton"
+            ],
+            "property": "showInactiveFaceToSeat",
+            "value": "P2"
+          }
+        ]
+      }
+    ],
+    "alignChildren": false,
+    "width": 110,
+    "classes": "transparent",
+    "css": {
+      "background": "transparent",
+      "border": "transparent"
+    }
+  },
+  "holder25": {
+    "type": "holder",
+    "id": "holder25",
+    "x": 469,
+    "y": 564,
+    "height": 110,
+    "z": 72,
+    "showInactiveFaceToSeat": "P1",
+    "enterRoutine": [
+      {
+        "func": "COUNT",
+        "holder": "${PROPERTY id}"
+      },
+      {
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "relation": ">",
+        "operand2": 1,
+        "thenRoutine": [
+          {
+            "func": "SELECT",
+            "property": "parent",
+            "value": "${PROPERTY id}"
+          },
+          {
+            "func": "SELECT",
+            "source": "DEFAULT",
+            "property": "player",
+            "value": "${PROPERTY showInactiveFaceToSeat}"
+          },
+          {
+            "func": "IF",
+            "operand1": "P${seatIndex}",
+            "relation": "!=",
+            "operand2": "${PROPERTY showInactiveFaceToSeat}",
+            "thenRoutine": [
+              {
+                "func": "MOVE",
+                "to": "capture${PROPERTY showInactiveFaceToSeat}"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "parent",
+        "value": "${PROPERTY id}"
+      },
+      {
+        "func": "GET",
+        "property": "player",
+        "value": "player"
+      },
+      {
+        "func": "IF",
+        "operand1": "${player}",
+        "operand2": "P1",
+        "relation": "==",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "thisButton"
+            ],
+            "property": "showInactiveFaceToSeat",
+            "value": "P1"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "thisButton"
+            ],
+            "property": "showInactiveFaceToSeat",
+            "value": "P2"
+          }
+        ]
+      }
+    ],
+    "alignChildren": false,
+    "width": 110,
+    "classes": "transparent",
+    "css": {
+      "background": "transparent",
+      "border": "transparent"
+    }
+  },
+  "holder26": {
+    "type": "holder",
+    "id": "holder26",
+    "x": 579,
+    "y": 564,
+    "height": 110,
+    "z": 72,
+    "showInactiveFaceToSeat": "P1",
+    "enterRoutine": [
+      {
+        "func": "COUNT",
+        "holder": "${PROPERTY id}"
+      },
+      {
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "relation": ">",
+        "operand2": 1,
+        "thenRoutine": [
+          {
+            "func": "SELECT",
+            "property": "parent",
+            "value": "${PROPERTY id}"
+          },
+          {
+            "func": "SELECT",
+            "source": "DEFAULT",
+            "property": "player",
+            "value": "${PROPERTY showInactiveFaceToSeat}"
+          },
+          {
+            "func": "IF",
+            "operand1": "P${seatIndex}",
+            "relation": "!=",
+            "operand2": "${PROPERTY showInactiveFaceToSeat}",
+            "thenRoutine": [
+              {
+                "func": "MOVE",
+                "to": "capture${PROPERTY showInactiveFaceToSeat}"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "parent",
+        "value": "${PROPERTY id}"
+      },
+      {
+        "func": "GET",
+        "property": "player",
+        "value": "player"
+      },
+      {
+        "func": "IF",
+        "operand1": "${player}",
+        "operand2": "P1",
+        "relation": "==",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "thisButton"
+            ],
+            "property": "showInactiveFaceToSeat",
+            "value": "P1"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "thisButton"
+            ],
+            "property": "showInactiveFaceToSeat",
+            "value": "P2"
+          }
+        ]
+      }
+    ],
+    "alignChildren": false,
+    "width": 110,
+    "classes": "transparent",
+    "css": {
+      "background": "transparent",
+      "border": "transparent"
+    }
+  },
+  "holder27": {
+    "type": "holder",
+    "id": "holder27",
+    "x": 689,
+    "y": 564,
+    "height": 110,
+    "z": 72,
+    "showInactiveFaceToSeat": "P2",
+    "enterRoutine": [
+      {
+        "func": "COUNT",
+        "holder": "${PROPERTY id}"
+      },
+      {
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "relation": ">",
+        "operand2": 1,
+        "thenRoutine": [
+          {
+            "func": "SELECT",
+            "property": "parent",
+            "value": "${PROPERTY id}"
+          },
+          {
+            "func": "SELECT",
+            "source": "DEFAULT",
+            "property": "player",
+            "value": "${PROPERTY showInactiveFaceToSeat}"
+          },
+          {
+            "func": "IF",
+            "operand1": "P${seatIndex}",
+            "relation": "!=",
+            "operand2": "${PROPERTY showInactiveFaceToSeat}",
+            "thenRoutine": [
+              {
+                "func": "MOVE",
+                "to": "capture${PROPERTY showInactiveFaceToSeat}"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "parent",
+        "value": "${PROPERTY id}"
+      },
+      {
+        "func": "GET",
+        "property": "player",
+        "value": "player"
+      },
+      {
+        "func": "IF",
+        "operand1": "${player}",
+        "operand2": "P1",
+        "relation": "==",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "thisButton"
+            ],
+            "property": "showInactiveFaceToSeat",
+            "value": "P1"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "thisButton"
+            ],
+            "property": "showInactiveFaceToSeat",
+            "value": "P2"
+          }
+        ]
+      }
+    ],
+    "alignChildren": false,
+    "width": 110,
+    "classes": "transparent",
+    "css": {
+      "background": "transparent",
+      "border": "transparent"
+    }
+  },
+  "holder28": {
+    "type": "holder",
+    "id": "holder28",
+    "x": 799,
+    "y": 564,
+    "height": 110,
+    "z": 72,
+    "showInactiveFaceToSeat": "P2",
+    "enterRoutine": [
+      {
+        "func": "COUNT",
+        "holder": "${PROPERTY id}"
+      },
+      {
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "relation": ">",
+        "operand2": 1,
+        "thenRoutine": [
+          {
+            "func": "SELECT",
+            "property": "parent",
+            "value": "${PROPERTY id}"
+          },
+          {
+            "func": "SELECT",
+            "source": "DEFAULT",
+            "property": "player",
+            "value": "${PROPERTY showInactiveFaceToSeat}"
+          },
+          {
+            "func": "IF",
+            "operand1": "P${seatIndex}",
+            "relation": "!=",
+            "operand2": "${PROPERTY showInactiveFaceToSeat}",
+            "thenRoutine": [
+              {
+                "func": "MOVE",
+                "to": "capture${PROPERTY showInactiveFaceToSeat}"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "parent",
+        "value": "${PROPERTY id}"
+      },
+      {
+        "func": "GET",
+        "property": "player",
+        "value": "player"
+      },
+      {
+        "func": "IF",
+        "operand1": "${player}",
+        "operand2": "P1",
+        "relation": "==",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "thisButton"
+            ],
+            "property": "showInactiveFaceToSeat",
+            "value": "P1"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "thisButton"
+            ],
+            "property": "showInactiveFaceToSeat",
+            "value": "P2"
+          }
+        ]
+      }
+    ],
+    "alignChildren": false,
+    "width": 110,
+    "classes": "transparent",
+    "css": {
+      "background": "transparent",
+      "border": "transparent"
+    }
+  },
+  "holder29": {
+    "type": "holder",
+    "id": "holder29",
+    "x": 909,
+    "y": 564,
+    "height": 110,
+    "z": 72,
+    "showInactiveFaceToSeat": "P2",
+    "enterRoutine": [
+      {
+        "func": "COUNT",
+        "holder": "${PROPERTY id}"
+      },
+      {
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "relation": ">",
+        "operand2": 1,
+        "thenRoutine": [
+          {
+            "func": "SELECT",
+            "property": "parent",
+            "value": "${PROPERTY id}"
+          },
+          {
+            "func": "SELECT",
+            "source": "DEFAULT",
+            "property": "player",
+            "value": "${PROPERTY showInactiveFaceToSeat}"
+          },
+          {
+            "func": "IF",
+            "operand1": "P${seatIndex}",
+            "relation": "!=",
+            "operand2": "${PROPERTY showInactiveFaceToSeat}",
+            "thenRoutine": [
+              {
+                "func": "MOVE",
+                "to": "capture${PROPERTY showInactiveFaceToSeat}"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "parent",
+        "value": "${PROPERTY id}"
+      },
+      {
+        "func": "GET",
+        "property": "player",
+        "value": "player"
+      },
+      {
+        "func": "IF",
+        "operand1": "${player}",
+        "operand2": "P1",
+        "relation": "==",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "thisButton"
+            ],
+            "property": "showInactiveFaceToSeat",
+            "value": "P1"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "thisButton"
+            ],
+            "property": "showInactiveFaceToSeat",
+            "value": "P2"
+          }
+        ]
+      }
+    ],
+    "alignChildren": false,
+    "width": 110,
+    "classes": "transparent",
+    "css": {
+      "background": "transparent",
+      "border": "transparent"
+    }
+  },
+  "holder30": {
+    "type": "holder",
+    "id": "holder30",
+    "x": 1019,
+    "y": 564,
+    "height": 110,
+    "z": 72,
+    "showInactiveFaceToSeat": "P1",
+    "enterRoutine": [
+      {
+        "func": "COUNT",
+        "holder": "${PROPERTY id}"
+      },
+      {
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "relation": ">",
+        "operand2": 1,
+        "thenRoutine": [
+          {
+            "func": "SELECT",
+            "property": "parent",
+            "value": "${PROPERTY id}"
+          },
+          {
+            "func": "SELECT",
+            "source": "DEFAULT",
+            "property": "player",
+            "value": "${PROPERTY showInactiveFaceToSeat}"
+          },
+          {
+            "func": "IF",
+            "operand1": "P${seatIndex}",
+            "relation": "!=",
+            "operand2": "${PROPERTY showInactiveFaceToSeat}",
+            "thenRoutine": [
+              {
+                "func": "MOVE",
+                "to": "capture${PROPERTY showInactiveFaceToSeat}"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "parent",
+        "value": "${PROPERTY id}"
+      },
+      {
+        "func": "GET",
+        "property": "player",
+        "value": "player"
+      },
+      {
+        "func": "IF",
+        "operand1": "${player}",
+        "operand2": "P1",
+        "relation": "==",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "thisButton"
+            ],
+            "property": "showInactiveFaceToSeat",
+            "value": "P1"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "thisButton"
+            ],
+            "property": "showInactiveFaceToSeat",
+            "value": "P2"
+          }
+        ]
+      }
+    ],
+    "alignChildren": false,
+    "width": 110,
+    "classes": "transparent",
+    "css": {
+      "background": "transparent",
+      "border": "transparent"
+    }
+  },
+  "holder31": {
+    "type": "holder",
+    "id": "holder31",
+    "x": 469,
+    "y": 674,
+    "height": 110,
+    "z": 72,
+    "showInactiveFaceToSeat": "P1",
+    "enterRoutine": [
+      {
+        "func": "COUNT",
+        "holder": "${PROPERTY id}"
+      },
+      {
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "relation": ">",
+        "operand2": 1,
+        "thenRoutine": [
+          {
+            "func": "SELECT",
+            "property": "parent",
+            "value": "${PROPERTY id}"
+          },
+          {
+            "func": "SELECT",
+            "source": "DEFAULT",
+            "property": "player",
+            "value": "${PROPERTY showInactiveFaceToSeat}"
+          },
+          {
+            "func": "IF",
+            "operand1": "P${seatIndex}",
+            "relation": "!=",
+            "operand2": "${PROPERTY showInactiveFaceToSeat}",
+            "thenRoutine": [
+              {
+                "func": "MOVE",
+                "to": "capture${PROPERTY showInactiveFaceToSeat}"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "parent",
+        "value": "${PROPERTY id}"
+      },
+      {
+        "func": "GET",
+        "property": "player",
+        "value": "player"
+      },
+      {
+        "func": "IF",
+        "operand1": "${player}",
+        "operand2": "P1",
+        "relation": "==",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "thisButton"
+            ],
+            "property": "showInactiveFaceToSeat",
+            "value": "P1"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "thisButton"
+            ],
+            "property": "showInactiveFaceToSeat",
+            "value": "P2"
+          }
+        ]
+      }
+    ],
+    "alignChildren": false,
+    "width": 110,
+    "classes": "transparent",
+    "css": {
+      "background": "transparent",
+      "border": "transparent"
+    }
+  },
+  "holder32": {
+    "type": "holder",
+    "id": "holder32",
+    "x": 579,
+    "y": 674,
+    "height": 110,
+    "z": 72,
+    "showInactiveFaceToSeat": "P1",
+    "enterRoutine": [
+      {
+        "func": "COUNT",
+        "holder": "${PROPERTY id}"
+      },
+      {
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "relation": ">",
+        "operand2": 1,
+        "thenRoutine": [
+          {
+            "func": "SELECT",
+            "property": "parent",
+            "value": "${PROPERTY id}"
+          },
+          {
+            "func": "SELECT",
+            "source": "DEFAULT",
+            "property": "player",
+            "value": "${PROPERTY showInactiveFaceToSeat}"
+          },
+          {
+            "func": "IF",
+            "operand1": "P${seatIndex}",
+            "relation": "!=",
+            "operand2": "${PROPERTY showInactiveFaceToSeat}",
+            "thenRoutine": [
+              {
+                "func": "MOVE",
+                "to": "capture${PROPERTY showInactiveFaceToSeat}"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "parent",
+        "value": "${PROPERTY id}"
+      },
+      {
+        "func": "GET",
+        "property": "player",
+        "value": "player"
+      },
+      {
+        "func": "IF",
+        "operand1": "${player}",
+        "operand2": "P1",
+        "relation": "==",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "thisButton"
+            ],
+            "property": "showInactiveFaceToSeat",
+            "value": "P1"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "thisButton"
+            ],
+            "property": "showInactiveFaceToSeat",
+            "value": "P2"
+          }
+        ]
+      }
+    ],
+    "alignChildren": false,
+    "width": 110,
+    "classes": "transparent",
+    "css": {
+      "background": "transparent",
+      "border": "transparent"
+    }
+  },
+  "holder33": {
+    "type": "holder",
+    "id": "holder33",
+    "x": 689,
+    "y": 674,
+    "height": 110,
+    "z": 72,
+    "showInactiveFaceToSeat": "P1",
+    "enterRoutine": [
+      {
+        "func": "COUNT",
+        "holder": "${PROPERTY id}"
+      },
+      {
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "relation": ">",
+        "operand2": 1,
+        "thenRoutine": [
+          {
+            "func": "SELECT",
+            "property": "parent",
+            "value": "${PROPERTY id}"
+          },
+          {
+            "func": "SELECT",
+            "source": "DEFAULT",
+            "property": "player",
+            "value": "${PROPERTY showInactiveFaceToSeat}"
+          },
+          {
+            "func": "IF",
+            "operand1": "P${seatIndex}",
+            "relation": "!=",
+            "operand2": "${PROPERTY showInactiveFaceToSeat}",
+            "thenRoutine": [
+              {
+                "func": "MOVE",
+                "to": "capture${PROPERTY showInactiveFaceToSeat}"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "parent",
+        "value": "${PROPERTY id}"
+      },
+      {
+        "func": "GET",
+        "property": "player",
+        "value": "player"
+      },
+      {
+        "func": "IF",
+        "operand1": "${player}",
+        "operand2": "P1",
+        "relation": "==",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "thisButton"
+            ],
+            "property": "showInactiveFaceToSeat",
+            "value": "P1"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "thisButton"
+            ],
+            "property": "showInactiveFaceToSeat",
+            "value": "P2"
+          }
+        ]
+      }
+    ],
+    "alignChildren": false,
+    "width": 110,
+    "classes": "transparent",
+    "css": {
+      "background": "transparent",
+      "border": "transparent"
+    }
+  },
+  "holder34": {
+    "type": "holder",
+    "id": "holder34",
+    "x": 799,
+    "y": 674,
+    "height": 110,
+    "z": 72,
+    "showInactiveFaceToSeat": "P1",
+    "enterRoutine": [
+      {
+        "func": "COUNT",
+        "holder": "${PROPERTY id}"
+      },
+      {
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "relation": ">",
+        "operand2": 1,
+        "thenRoutine": [
+          {
+            "func": "SELECT",
+            "property": "parent",
+            "value": "${PROPERTY id}"
+          },
+          {
+            "func": "SELECT",
+            "source": "DEFAULT",
+            "property": "player",
+            "value": "${PROPERTY showInactiveFaceToSeat}"
+          },
+          {
+            "func": "IF",
+            "operand1": "P${seatIndex}",
+            "relation": "!=",
+            "operand2": "${PROPERTY showInactiveFaceToSeat}",
+            "thenRoutine": [
+              {
+                "func": "MOVE",
+                "to": "capture${PROPERTY showInactiveFaceToSeat}"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "parent",
+        "value": "${PROPERTY id}"
+      },
+      {
+        "func": "GET",
+        "property": "player",
+        "value": "player"
+      },
+      {
+        "func": "IF",
+        "operand1": "${player}",
+        "operand2": "P1",
+        "relation": "==",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "thisButton"
+            ],
+            "property": "showInactiveFaceToSeat",
+            "value": "P1"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "thisButton"
+            ],
+            "property": "showInactiveFaceToSeat",
+            "value": "P2"
+          }
+        ]
+      }
+    ],
+    "alignChildren": false,
+    "width": 110,
+    "classes": "transparent",
+    "css": {
+      "background": "transparent",
+      "border": "transparent"
+    }
+  },
+  "holder35": {
+    "type": "holder",
+    "id": "holder35",
+    "x": 909,
+    "y": 674,
+    "height": 110,
+    "z": 72,
+    "showInactiveFaceToSeat": "P2",
+    "enterRoutine": [
+      {
+        "func": "COUNT",
+        "holder": "${PROPERTY id}"
+      },
+      {
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "relation": ">",
+        "operand2": 1,
+        "thenRoutine": [
+          {
+            "func": "SELECT",
+            "property": "parent",
+            "value": "${PROPERTY id}"
+          },
+          {
+            "func": "SELECT",
+            "source": "DEFAULT",
+            "property": "player",
+            "value": "${PROPERTY showInactiveFaceToSeat}"
+          },
+          {
+            "func": "IF",
+            "operand1": "P${seatIndex}",
+            "relation": "!=",
+            "operand2": "${PROPERTY showInactiveFaceToSeat}",
+            "thenRoutine": [
+              {
+                "func": "MOVE",
+                "to": "capture${PROPERTY showInactiveFaceToSeat}"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "parent",
+        "value": "${PROPERTY id}"
+      },
+      {
+        "func": "GET",
+        "property": "player",
+        "value": "player"
+      },
+      {
+        "func": "IF",
+        "operand1": "${player}",
+        "operand2": "P1",
+        "relation": "==",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "thisButton"
+            ],
+            "property": "showInactiveFaceToSeat",
+            "value": "P1"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "thisButton"
+            ],
+            "property": "showInactiveFaceToSeat",
+            "value": "P2"
+          }
+        ]
+      }
+    ],
+    "alignChildren": false,
+    "width": 110,
+    "classes": "transparent",
+    "css": {
+      "background": "transparent",
+      "border": "transparent"
+    }
+  },
+  "holder36": {
+    "type": "holder",
+    "id": "holder36",
+    "x": 1019,
+    "y": 674,
+    "height": 110,
+    "z": 72,
+    "showInactiveFaceToSeat": "P1",
+    "enterRoutine": [
+      {
+        "func": "COUNT",
+        "holder": "${PROPERTY id}"
+      },
+      {
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "relation": ">",
+        "operand2": 1,
+        "thenRoutine": [
+          {
+            "func": "SELECT",
+            "property": "parent",
+            "value": "${PROPERTY id}"
+          },
+          {
+            "func": "SELECT",
+            "source": "DEFAULT",
+            "property": "player",
+            "value": "${PROPERTY showInactiveFaceToSeat}"
+          },
+          {
+            "func": "IF",
+            "operand1": "P${seatIndex}",
+            "relation": "!=",
+            "operand2": "${PROPERTY showInactiveFaceToSeat}",
+            "thenRoutine": [
+              {
+                "func": "MOVE",
+                "to": "capture${PROPERTY showInactiveFaceToSeat}"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "parent",
+        "value": "${PROPERTY id}"
+      },
+      {
+        "func": "GET",
+        "property": "player",
+        "value": "player"
+      },
+      {
+        "func": "IF",
+        "operand1": "${player}",
+        "operand2": "P1",
+        "relation": "==",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "thisButton"
+            ],
+            "property": "showInactiveFaceToSeat",
+            "value": "P1"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "thisButton"
+            ],
+            "property": "showInactiveFaceToSeat",
+            "value": "P2"
+          }
+        ]
+      }
+    ],
+    "alignChildren": false,
+    "width": 110,
+    "classes": "transparent",
+    "css": {
+      "background": "transparent",
+      "border": "transparent"
+    }
+  },
+  "captureP2": {
+    "type": "holder",
+    "id": "captureP2",
+    "x": 143,
+    "y": 156,
+    "width": 84,
+    "height": 386.8,
+    "z": 49,
+    "css": {
+      "background": "#ffffff60"
+    },
+    "dropTarget": [
+      {
+        "deck": "9d8ee440-5726-4600-b154-202580589485"
+      },
+      {
+        "deck": "22072704-ad80-4066-a447-5497623d70db"
+      }
+    ],
+    "onEnter": {
+      "activeFace": 1
+    },
+    "stackOffsetY": 43
+  },
+  "captureP1": {
+    "type": "holder",
+    "id": "captureP1",
+    "x": 1378,
+    "y": 156,
+    "width": 84,
+    "height": 386.8,
+    "z": 66,
+    "css": {
+      "background": "#ffffff60"
+    },
+    "dropTarget": [
+      {
+        "deck": "9d8ee440-5726-4600-b154-202580589485"
+      },
+      {
+        "deck": "22072704-ad80-4066-a447-5497623d70db"
+      }
+    ],
+    "onEnter": {
+      "activeFace": 1
+    },
+    "stackOffsetY": 43
+  },
+  "90e10ce5-b875-432f-bbfe-5c7a3a50f64f": {
+    "id": "90e10ce5-b875-432f-bbfe-5c7a3a50f64f",
+    "z": 3569,
+    "type": "card",
+    "deck": "9d8ee440-5726-4600-b154-202580589485",
+    "cardType": "red",
+    "player": "P1",
+    "clickable": false,
+    "parent": "m7cg"
+  },
+  "7df90dc7-23ce-418e-b256-5ae257a70c52": {
+    "id": "7df90dc7-23ce-418e-b256-5ae257a70c52",
+    "z": 3576,
+    "type": "card",
+    "deck": "22072704-ad80-4066-a447-5497623d70db",
+    "cardType": "blue",
+    "player": "P2",
+    "clickable": false,
+    "parent": "oyi5"
+  },
+  "7df90dc7-23ce-418e-b256-5ae257a70c53": {
+    "id": "7df90dc7-23ce-418e-b256-5ae257a70c53",
+    "z": 3575,
+    "type": "card",
+    "deck": "22072704-ad80-4066-a447-5497623d70db",
+    "cardType": "blue",
+    "player": "P2",
+    "clickable": false,
+    "parent": "oyi5"
+  },
+  "m7cg": {
+    "type": "pile",
+    "parent": "d7de8e30-b8c0-4160-bbc7-f76679fe3fcc",
+    "x": 6,
+    "y": 6,
+    "width": 72,
+    "height": 72,
+    "id": "m7cg"
+  },
+  "oyi5": {
+    "type": "pile",
+    "parent": "d588dfa5-430a-40dc-9002-7fd3cdefcf37",
+    "x": 6,
+    "y": 6,
+    "width": 72,
+    "height": 72,
+    "id": "oyi5"
+  }
+}
