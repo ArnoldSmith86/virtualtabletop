@@ -11,7 +11,7 @@
       "time": "10",
       "attribution": "Game layout by Mark W, with additional coding by Shobu and LawDawg. Released to the Public Domain under CC0.\n\nThe following images are from https://game-icons.net and under CC BY 3.0:\n* https://game-icons.net/1x1/delapouite/djinn.html\n* https://game-icons.net/1x1/lorc/ghost.html\n\nBackground and library image are from https://pixabay.com/illustrations/halloween-ghost-pumpkin-bat-skull-5596921/ and are available for use under the Pixabay License.",
       "importerTime": 1749414176262,
-      "lastUpdate": 1750295830224,
+      "lastUpdate": 1750372718052,
       "importer": "PCIO",
       "showName": true,
       "skill": "easy",
@@ -36,23 +36,11 @@
     "type": "deck",
     "parent": "d7de8e30-b8c0-4160-bbc7-f76679fe3fcc",
     "cardTypes": {
-      "black": {
-        "label": "Black",
-        "image": "/i/game-pieces/2D/Crowned-Checkers-2D.svg",
-        "image-back": "/i/game-pieces/2D/Checkers-2D.svg",
-        "imageColor": "#666565",
-        "image-backColor": "#666565",
-        "sortingOrder": 1
-      },
-      "white": {
-        "label": "White",
-        "image": "/i/game-pieces/2D/Crowned-Checkers-2D.svg",
-        "image-back": "/i/game-pieces/2D/Checkers-2D.svg",
-        "imageColor": "#dae0df",
-        "image-backColor": "#dae0df",
-        "sortingOrder": 2
-      },
       "red": {
+        "chipColor": "#b3bfbf",
+        "labelColor": "#d1d3d3",
+        "borderColor": "#000000",
+        "borderWidth": "3",
         "label": "Red",
         "image": "/assets/449014298_1669",
         "image-back": "/i/game-pieces/2D/Checkers-2D.svg",
@@ -60,97 +48,38 @@
         "image-backColor": "#ed1b43",
         "sortingOrder": 3
       },
-      "orange": {
-        "label": "Orange",
-        "image": "/i/game-pieces/2D/Crowned-Checkers-2D.svg",
-        "image-back": "/i/game-pieces/2D/Checkers-2D.svg",
-        "imageColor": "#ff7b23",
-        "image-backColor": "#ff7b23",
-        "sortingOrder": 4
-      },
-      "peach": {
-        "label": "Peach",
-        "image": "/i/game-pieces/2D/Crowned-Checkers-2D.svg",
-        "image-back": "/i/game-pieces/2D/Checkers-2D.svg",
-        "imageColor": "#f2948c",
-        "image-backColor": "#f2948c",
-        "sortingOrder": 5
-      },
-      "yellow": {
-        "label": "Yellow",
-        "image": "/i/game-pieces/2D/Crowned-Checkers-2D.svg",
-        "image-back": "/i/game-pieces/2D/Checkers-2D.svg",
-        "imageColor": "#ffce00",
-        "image-backColor": "#ffce00",
-        "sortingOrder": 6
-      },
-      "green": {
-        "label": "Green",
-        "image": "/i/game-pieces/2D/Crowned-Checkers-2D.svg",
-        "image-back": "/i/game-pieces/2D/Checkers-2D.svg",
-        "imageColor": "#69d83a",
-        "image-backColor": "#69d83a",
-        "sortingOrder": 7
-      },
-      "teal": {
-        "label": "Teal",
-        "image": "/i/game-pieces/2D/Crowned-Checkers-2D.svg",
-        "image-back": "/i/game-pieces/2D/Checkers-2D.svg",
-        "imageColor": "#2fd1cd",
-        "image-backColor": "#2fd1cd",
-        "sortingOrder": 8
-      },
       "blue": {
+        "chipColor": "#b3bfbf",
+        "labelColor": "#d1d3d3",
+        "borderColor": "#000000",
+        "borderWidth": "3",
         "label": "Blue",
         "image": "/assets/-2015642710_2119",
         "image-back": "/i/game-pieces/2D/Checkers-2D.svg",
         "imageColor": "#5894f4",
         "image-backColor": "#5894f4",
         "sortingOrder": 9
-      },
-      "purple": {
-        "label": "Purple",
-        "image": "/i/game-pieces/2D/Crowned-Checkers-2D.svg",
-        "image-back": "/i/game-pieces/2D/Checkers-2D.svg",
-        "imageColor": "#9458f4",
-        "image-backColor": "#9458f4",
-        "sortingOrder": 10
-      },
-      "pink": {
-        "label": "Pink",
-        "image": "/i/game-pieces/2D/Crowned-Checkers-2D.svg",
-        "image-back": "/i/game-pieces/2D/Checkers-2D.svg",
-        "imageColor": "#ff69b3",
-        "image-backColor": "#ff69b3",
-        "sortingOrder": 11
-      },
-      "brown": {
-        "label": "Brown",
-        "image": "/i/game-pieces/2D/Crowned-Checkers-2D.svg",
-        "image-back": "/i/game-pieces/2D/Checkers-2D.svg",
-        "imageColor": "#a8570e",
-        "image-backColor": "#a8570e",
-        "sortingOrder": 12
       }
     },
     "faceTemplates": [
       {
         "objects": [
           {
-            "width": 72,
-            "height": 72,
-            "type": "image",
-            "color": "transparent",
-            "value": ""
-          },
-          {
             "type": "image",
             "x": 0,
             "y": 0,
             "color": "transparent",
-            "value": "https://playingcards.io/img/pieces/checkers/white.svg",
+            "value": "i/game-pieces/2D/Poker-2D.svg",
             "width": 72,
-            "height": 72
+            "height": 72,
+            "svgReplaces": {
+              "#accentColor1": "chipColor",
+              "#accentColor2": "chipColor",
+              "#borderColor": "borderColor",
+              "#borderWidth": "borderWidth",
+              "#labelColor": "labelColor",
+              "#primaryColor": "chipColor"
+            }
           }
         ],
         "border": false,
@@ -200,63 +129,63 @@
   },
   "90e10ce5-b875-432f-bbfe-5c7a3a50f63f": {
     "id": "90e10ce5-b875-432f-bbfe-5c7a3a50f63f",
-    "z": 3567,
+    "z": 3734,
     "type": "card",
     "deck": "9d8ee440-5726-4600-b154-202580589485",
     "cardType": "red",
     "player": "P1",
     "clickable": false,
-    "parent": "m7cg"
+    "parent": "0dbp"
   },
   "0af38e72-4cb1-47a6-98ea-1f5c0bb8a73b": {
     "id": "0af38e72-4cb1-47a6-98ea-1f5c0bb8a73b",
-    "z": 3571,
+    "z": 3733,
     "type": "card",
     "deck": "9d8ee440-5726-4600-b154-202580589485",
     "cardType": "red",
     "player": "P1",
     "clickable": false,
-    "parent": "m7cg"
+    "parent": "0dbp"
   },
   "75aea1e5-a3b7-4b53-b1d8-7422d646c950": {
     "id": "75aea1e5-a3b7-4b53-b1d8-7422d646c950",
-    "z": 3586,
+    "z": 3729,
     "type": "card",
     "deck": "9d8ee440-5726-4600-b154-202580589485",
     "cardType": "red",
     "player": "P1",
     "clickable": false,
-    "parent": "m7cg"
+    "parent": "0dbp"
   },
   "e47fa3eb-1fd7-4940-92d5-54ae78ff51bb": {
     "id": "e47fa3eb-1fd7-4940-92d5-54ae78ff51bb",
-    "z": 3572,
+    "z": 3730,
     "type": "card",
     "deck": "9d8ee440-5726-4600-b154-202580589485",
     "cardType": "blue",
     "player": "P1",
     "clickable": false,
-    "parent": "m7cg"
+    "parent": "0dbp"
   },
   "668daac1-9c6e-4f5b-a151-75b4dd0c6d19": {
     "id": "668daac1-9c6e-4f5b-a151-75b4dd0c6d19",
-    "z": 3568,
+    "z": 3728,
     "type": "card",
     "deck": "9d8ee440-5726-4600-b154-202580589485",
     "cardType": "blue",
     "player": "P1",
     "clickable": false,
-    "parent": "m7cg"
+    "parent": "0dbp"
   },
   "b15ee252-3418-49b1-9ddd-cb616eccdd1b": {
     "id": "b15ee252-3418-49b1-9ddd-cb616eccdd1b",
-    "z": 3570,
+    "z": 3727,
     "type": "card",
     "deck": "9d8ee440-5726-4600-b154-202580589485",
     "cardType": "blue",
     "player": "P1",
     "clickable": false,
-    "parent": "m7cg"
+    "parent": "0dbp"
   },
   "d7de8e30-b8c0-4160-bbc7-f76679fe3fcc": {
     "id": "d7de8e30-b8c0-4160-bbc7-f76679fe3fcc",
@@ -286,23 +215,11 @@
     "type": "deck",
     "parent": "d588dfa5-430a-40dc-9002-7fd3cdefcf37",
     "cardTypes": {
-      "black": {
-        "label": "Black",
-        "image": "/i/game-pieces/2D/Crowned-Checkers-2D.svg",
-        "image-back": "/i/game-pieces/2D/Checkers-2D.svg",
-        "imageColor": "#666565",
-        "image-backColor": "#666565",
-        "sortingOrder": 1
-      },
-      "white": {
-        "label": "White",
-        "image": "/i/game-pieces/2D/Crowned-Checkers-2D.svg",
-        "image-back": "/i/game-pieces/2D/Checkers-2D.svg",
-        "imageColor": "#dae0df",
-        "image-backColor": "#dae0df",
-        "sortingOrder": 2
-      },
       "red": {
+        "chipColor": "#666565",
+        "labelColor": "#828282",
+        "borderColor": "#000000",
+        "borderWidth": "3",
         "label": "Red",
         "image": "/assets/449014298_1669",
         "image-back": "/assets/449014298_1669",
@@ -310,97 +227,38 @@
         "image-backColor": "#ed1b43",
         "sortingOrder": 3
       },
-      "orange": {
-        "label": "Orange",
-        "image": "/i/game-pieces/2D/Crowned-Checkers-2D.svg",
-        "image-back": "/i/game-pieces/2D/Checkers-2D.svg",
-        "imageColor": "#ff7b23",
-        "image-backColor": "#ff7b23",
-        "sortingOrder": 4
-      },
-      "peach": {
-        "label": "Peach",
-        "image": "/i/game-pieces/2D/Crowned-Checkers-2D.svg",
-        "image-back": "/i/game-pieces/2D/Checkers-2D.svg",
-        "imageColor": "#f2948c",
-        "image-backColor": "#f2948c",
-        "sortingOrder": 5
-      },
-      "yellow": {
-        "label": "Yellow",
-        "image": "/i/game-pieces/2D/Crowned-Checkers-2D.svg",
-        "image-back": "/i/game-pieces/2D/Checkers-2D.svg",
-        "imageColor": "#ffce00",
-        "image-backColor": "#ffce00",
-        "sortingOrder": 6
-      },
-      "green": {
-        "label": "Green",
-        "image": "/i/game-pieces/2D/Crowned-Checkers-2D.svg",
-        "image-back": "/i/game-pieces/2D/Checkers-2D.svg",
-        "imageColor": "#69d83a",
-        "image-backColor": "#69d83a",
-        "sortingOrder": 7
-      },
-      "teal": {
-        "label": "Teal",
-        "image": "/i/game-pieces/2D/Crowned-Checkers-2D.svg",
-        "image-back": "/i/game-pieces/2D/Checkers-2D.svg",
-        "imageColor": "#2fd1cd",
-        "image-backColor": "#2fd1cd",
-        "sortingOrder": 8
-      },
       "blue": {
+        "chipColor": "#666565",
+        "labelColor": "#828282",
+        "borderColor": "#000000",
+        "borderWidth": "3",
         "label": "Blue",
         "image": "/assets/-2015642710_2119",
         "image-back": "/i/game-pieces/2D/Checkers-2D.svg",
         "imageColor": "#5894f4",
         "image-backColor": "#5894f4",
         "sortingOrder": 9
-      },
-      "purple": {
-        "label": "Purple",
-        "image": "/i/game-pieces/2D/Crowned-Checkers-2D.svg",
-        "image-back": "/i/game-pieces/2D/Checkers-2D.svg",
-        "imageColor": "#9458f4",
-        "image-backColor": "#9458f4",
-        "sortingOrder": 10
-      },
-      "pink": {
-        "label": "Pink",
-        "image": "/i/game-pieces/2D/Crowned-Checkers-2D.svg",
-        "image-back": "/i/game-pieces/2D/Checkers-2D.svg",
-        "imageColor": "#ff69b3",
-        "image-backColor": "#ff69b3",
-        "sortingOrder": 11
-      },
-      "brown": {
-        "label": "Brown",
-        "image": "/i/game-pieces/2D/Crowned-Checkers-2D.svg",
-        "image-back": "/i/game-pieces/2D/Checkers-2D.svg",
-        "imageColor": "#a8570e",
-        "image-backColor": "#a8570e",
-        "sortingOrder": 12
       }
     },
     "faceTemplates": [
       {
         "objects": [
           {
-            "width": 72,
-            "height": 72,
-            "type": "image",
-            "color": "transparent",
-            "value": ""
-          },
-          {
             "type": "image",
             "x": 0,
             "y": 0,
             "color": "transparent",
-            "value": "https://playingcards.io/img/pieces/checkers/black.svg",
+            "value": "i/game-pieces/2D/Poker-2D.svg",
             "width": 72,
-            "height": 72
+            "height": 72,
+            "svgReplaces": {
+              "#accentColor1": "chipColor",
+              "#accentColor2": "chipColor",
+              "#borderColor": "borderColor",
+              "#borderWidth": "borderWidth",
+              "#labelColor": "labelColor",
+              "#primaryColor": "chipColor"
+            }
           }
         ],
         "border": false,
@@ -450,63 +308,63 @@
   },
   "62765c86-066c-473f-aed3-1f7cb3454fd7": {
     "id": "62765c86-066c-473f-aed3-1f7cb3454fd7",
-    "z": 3580,
+    "z": 3738,
     "type": "card",
     "deck": "22072704-ad80-4066-a447-5497623d70db",
     "cardType": "red",
     "player": "P2",
     "clickable": false,
-    "parent": "oyi5"
+    "parent": "ynqv"
   },
   "5ab5480c-daae-4444-8fa7-5335fe363b64": {
     "id": "5ab5480c-daae-4444-8fa7-5335fe363b64",
-    "z": 3578,
+    "z": 3741,
     "type": "card",
     "deck": "22072704-ad80-4066-a447-5497623d70db",
     "cardType": "red",
     "player": "P2",
     "clickable": false,
-    "parent": "oyi5"
+    "parent": "ynqv"
   },
   "5b6b2d65-c911-4a73-9ee0-8a1d35c53040": {
     "id": "5b6b2d65-c911-4a73-9ee0-8a1d35c53040",
-    "z": 3574,
+    "z": 3742,
     "type": "card",
     "deck": "22072704-ad80-4066-a447-5497623d70db",
     "cardType": "red",
     "player": "P2",
     "clickable": false,
-    "parent": "oyi5"
+    "parent": "ynqv"
   },
   "b4f4a4b3-c619-4411-8f80-af095fb60ae8": {
     "id": "b4f4a4b3-c619-4411-8f80-af095fb60ae8",
-    "z": 3581,
+    "z": 3740,
     "type": "card",
     "deck": "22072704-ad80-4066-a447-5497623d70db",
     "cardType": "red",
     "player": "P2",
     "clickable": false,
-    "parent": "oyi5"
+    "parent": "ynqv"
   },
   "ce3f5e74-2c20-4577-9601-1f596e391e56": {
     "id": "ce3f5e74-2c20-4577-9601-1f596e391e56",
-    "z": 3577,
+    "z": 3739,
     "type": "card",
     "deck": "22072704-ad80-4066-a447-5497623d70db",
     "cardType": "blue",
     "player": "P2",
     "clickable": false,
-    "parent": "oyi5"
+    "parent": "ynqv"
   },
   "7df90dc7-23ce-418e-b256-5ae257a70c51": {
     "id": "7df90dc7-23ce-418e-b256-5ae257a70c51",
-    "z": 3579,
+    "z": 3736,
     "type": "card",
     "deck": "22072704-ad80-4066-a447-5497623d70db",
     "cardType": "blue",
     "player": "P2",
     "clickable": false,
-    "parent": "oyi5"
+    "parent": "ynqv"
   },
   "d588dfa5-430a-40dc-9002-7fd3cdefcf37": {
     "id": "d588dfa5-430a-40dc-9002-7fd3cdefcf37",
@@ -654,24 +512,26 @@
     "type": "seat",
     "id": "P1",
     "x": 103,
-    "y": 686
+    "y": 686,
+    "hideWhenUnused": true
   },
   "P2": {
     "type": "seat",
     "id": "P2",
     "x": 1342,
     "y": 686,
-    "index": 2
+    "index": 2,
+    "hideWhenUnused": true
   },
   "dkbb": {
     "deck": "9d8ee440-5726-4600-b154-202580589485",
     "type": "card",
     "cardType": "blue",
     "id": "dkbb",
-    "z": 3566,
+    "z": 3731,
     "player": "P1",
     "clickable": false,
-    "parent": "m7cg"
+    "parent": "0dbp"
   },
   "exit": {
     "type": "holder",
@@ -2412,7 +2272,7 @@
     "y": 454,
     "height": 110,
     "z": 72,
-    "showInactiveFaceToSeat": "P2",
+    "showInactiveFaceToSeat": "P1",
     "enterRoutine": [
       {
         "func": "COUNT",
@@ -2772,7 +2632,7 @@
     "y": 454,
     "height": 110,
     "z": 72,
-    "showInactiveFaceToSeat": "P1",
+    "showInactiveFaceToSeat": "P2",
     "enterRoutine": [
       {
         "func": "COUNT",
@@ -3985,50 +3845,50 @@
   },
   "90e10ce5-b875-432f-bbfe-5c7a3a50f64f": {
     "id": "90e10ce5-b875-432f-bbfe-5c7a3a50f64f",
-    "z": 3569,
+    "z": 3732,
     "type": "card",
     "deck": "9d8ee440-5726-4600-b154-202580589485",
     "cardType": "red",
     "player": "P1",
     "clickable": false,
-    "parent": "m7cg"
+    "parent": "0dbp"
   },
   "7df90dc7-23ce-418e-b256-5ae257a70c52": {
     "id": "7df90dc7-23ce-418e-b256-5ae257a70c52",
-    "z": 3576,
+    "z": 3735,
     "type": "card",
     "deck": "22072704-ad80-4066-a447-5497623d70db",
     "cardType": "blue",
     "player": "P2",
     "clickable": false,
-    "parent": "oyi5"
+    "parent": "ynqv"
   },
   "7df90dc7-23ce-418e-b256-5ae257a70c53": {
     "id": "7df90dc7-23ce-418e-b256-5ae257a70c53",
-    "z": 3575,
+    "z": 3737,
     "type": "card",
     "deck": "22072704-ad80-4066-a447-5497623d70db",
     "cardType": "blue",
     "player": "P2",
     "clickable": false,
-    "parent": "oyi5"
+    "parent": "ynqv"
   },
-  "m7cg": {
+  "0dbp": {
     "type": "pile",
     "parent": "d7de8e30-b8c0-4160-bbc7-f76679fe3fcc",
     "x": 6,
     "y": 6,
     "width": 72,
     "height": 72,
-    "id": "m7cg"
+    "id": "0dbp"
   },
-  "oyi5": {
+  "ynqv": {
     "type": "pile",
     "parent": "d588dfa5-430a-40dc-9002-7fd3cdefcf37",
     "x": 6,
     "y": 6,
     "width": 72,
     "height": 72,
-    "id": "oyi5"
+    "id": "ynqv"
   }
 }
