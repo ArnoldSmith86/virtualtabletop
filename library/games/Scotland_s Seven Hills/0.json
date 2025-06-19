@@ -921,9 +921,7 @@
       },
       {
         "func": "SORT",
-        "collection": [
-          "hand"
-        ],
+        "holder": "hand",
         "key": "rank"
       }
     ]
@@ -1746,9 +1744,7 @@
       },
       {
         "func": "SORT",
-        "collection": [
-          "hand"
-        ],
+        "holder": "hand",
         "key": "rank"
       }
     ],
