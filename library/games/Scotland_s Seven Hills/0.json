@@ -10,7 +10,7 @@
       "mode": "vs",
       "time": "15",
       "attribution": "<div>Library image is \"Glenfinnan Site\" from Wikimedia Commons by J. Drevet licensed under CC BY-SA 3.0</div><div>https://commons.wikimedia.org/wiki/File:Glenfinnan_Site.jpg</div><div><br></div><div>Wood grain background by RyanPro available under the Pixabay license from https://pixabay.com/photos/trees-wood-yellow-wood-oak-1915247/</div><div><br><div>Game layout and scripting by dexdouglas, released to the Public Domain under CC0.</div></div><br>",
-      "lastUpdate": 1750342341230,
+      "lastUpdate": 1750347172408,
       "showName": true,
       "skill": "low",
       "description": "Scotland's Seven Hills is a precursor to Scotland Hills. You're still trying to claim columns but this time each column is worth a set amount of points. Most points after 2 rounds is the winner.",
@@ -201,7 +201,8 @@
         "value": ""
       }
     ],
-    "index": 2
+    "index": 2,
+    "turn": true
   },
   "border1": {
     "type": "holder",
@@ -1103,72 +1104,72 @@
     "id": "rt2s 1 of hearts",
     "deck": "redDeck1",
     "cardType": "1 of hearts",
-    "z": 63376,
-    "parent": "edwn"
+    "z": 63479,
+    "parent": "c04x"
   },
   "rt2s 2 of hearts": {
     "type": "card",
     "id": "rt2s 2 of hearts",
     "deck": "redDeck1",
     "cardType": "2 of hearts",
-    "z": 63378,
-    "parent": "edwn"
+    "z": 63481,
+    "parent": "c04x"
   },
   "rt2s 3 of hearts": {
     "type": "card",
     "id": "rt2s 3 of hearts",
     "deck": "redDeck1",
     "cardType": "3 of hearts",
-    "z": 63380,
-    "parent": "edwn"
+    "z": 63483,
+    "parent": "c04x"
   },
   "rt2s 4 of hearts": {
     "type": "card",
     "id": "rt2s 4 of hearts",
     "deck": "redDeck1",
     "cardType": "4 of hearts",
-    "z": 63382,
-    "parent": "edwn"
+    "z": 63485,
+    "parent": "c04x"
   },
   "rt2s 5 of hearts": {
     "type": "card",
     "id": "rt2s 5 of hearts",
     "deck": "redDeck1",
     "cardType": "5 of hearts",
-    "z": 63384,
-    "parent": "edwn"
+    "z": 63487,
+    "parent": "c04x"
   },
   "rt2s 6 of hearts": {
     "type": "card",
     "id": "rt2s 6 of hearts",
     "deck": "redDeck1",
     "cardType": "6 of hearts",
-    "z": 63386,
-    "parent": "edwn"
+    "z": 63489,
+    "parent": "c04x"
   },
   "rt2s 7 of hearts": {
     "type": "card",
     "id": "rt2s 7 of hearts",
     "deck": "redDeck1",
     "cardType": "7 of hearts",
-    "z": 63388,
-    "parent": "edwn"
+    "z": 63491,
+    "parent": "c04x"
   },
   "rt2s 8 of hearts": {
     "type": "card",
     "id": "rt2s 8 of hearts",
     "deck": "redDeck1",
     "cardType": "8 of hearts",
-    "z": 63390,
-    "parent": "edwn"
+    "z": 63493,
+    "parent": "c04x"
   },
   "rt2s 9 of hearts": {
     "type": "card",
     "id": "rt2s 9 of hearts",
     "deck": "redDeck1",
     "cardType": "9 of hearts",
-    "z": 63392,
-    "parent": "edwn"
+    "z": 63495,
+    "parent": "c04x"
   },
   "redDeck1": {
     "type": "deck",
@@ -1475,7 +1476,7 @@
     "id": "enqa 1 of spades",
     "deck": "enqa",
     "cardType": "1 of spades",
-    "z": 63399,
+    "z": 63502,
     "parent": "n60y"
   },
   "enqa 2 of spades": {
@@ -1483,7 +1484,7 @@
     "id": "enqa 2 of spades",
     "deck": "enqa",
     "cardType": "2 of spades",
-    "z": 63401,
+    "z": 63503,
     "parent": "n60y"
   },
   "enqa 3 of spades": {
@@ -1491,7 +1492,7 @@
     "id": "enqa 3 of spades",
     "deck": "enqa",
     "cardType": "3 of spades",
-    "z": 63403,
+    "z": 63504,
     "parent": "n60y"
   },
   "enqa 4 of spades": {
@@ -1499,7 +1500,7 @@
     "id": "enqa 4 of spades",
     "deck": "enqa",
     "cardType": "4 of spades",
-    "z": 63405,
+    "z": 63505,
     "parent": "n60y"
   },
   "enqa 5 of spades": {
@@ -1507,7 +1508,7 @@
     "id": "enqa 5 of spades",
     "deck": "enqa",
     "cardType": "5 of spades",
-    "z": 63407,
+    "z": 63506,
     "parent": "n60y"
   },
   "enqa 6 of spades": {
@@ -1515,7 +1516,7 @@
     "id": "enqa 6 of spades",
     "deck": "enqa",
     "cardType": "6 of spades",
-    "z": 63409,
+    "z": 63507,
     "parent": "n60y"
   },
   "enqa 7 of spades": {
@@ -1523,7 +1524,7 @@
     "id": "enqa 7 of spades",
     "deck": "enqa",
     "cardType": "7 of spades",
-    "z": 63411,
+    "z": 63508,
     "parent": "n60y"
   },
   "enqa 8 of spades": {
@@ -1531,7 +1532,7 @@
     "id": "enqa 8 of spades",
     "deck": "enqa",
     "cardType": "8 of spades",
-    "z": 63413,
+    "z": 63509,
     "parent": "n60y"
   },
   "enqa 9 of spades": {
@@ -1539,7 +1540,7 @@
     "id": "enqa 9 of spades",
     "deck": "enqa",
     "cardType": "9 of spades",
-    "z": 63415,
+    "z": 63510,
     "parent": "n60y"
   },
   "ub4fB": {
@@ -1607,39 +1608,38 @@
         "relation": "!=",
         "value": ""
       }
-    ],
-    "turn": true
+    ]
   },
   "pq8u": {
     "deck": "redDeck1",
     "type": "card",
     "cardType": "10 of hearts",
     "id": "pq8u",
-    "z": 63394,
-    "parent": "edwn"
+    "z": 63497,
+    "parent": "c04x"
   },
   "n1z2": {
     "deck": "redDeck1",
     "type": "card",
     "cardType": "12 of hearts",
     "id": "n1z2",
-    "z": 63396,
-    "parent": "edwn"
+    "z": 63499,
+    "parent": "c04x"
   },
   "5wsc": {
     "deck": "redDeck1",
     "type": "card",
     "cardType": "0 of hearts",
     "id": "5wsc",
-    "z": 63398,
-    "parent": "edwn"
+    "z": 63501,
+    "parent": "c04x"
   },
   "pmes": {
     "deck": "enqa",
     "type": "card",
     "cardType": "12 of spades",
     "id": "pmes",
-    "z": 63417,
+    "z": 63511,
     "parent": "n60y"
   },
   "rtd5": {
@@ -1647,7 +1647,7 @@
     "type": "card",
     "cardType": "10 of spades",
     "id": "rtd5",
-    "z": 63419,
+    "z": 63512,
     "parent": "n60y"
   },
   "xu0n": {
@@ -1655,7 +1655,7 @@
     "type": "card",
     "cardType": "0 of spades",
     "id": "xu0n",
-    "z": 63421,
+    "z": 63513,
     "parent": "n60y"
   },
   "nextRound": {
@@ -1766,7 +1766,9 @@
       "default": {
         "background": "#ffffff80"
       }
-    }
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0
   },
   "ux75": {
     "type": "label",
@@ -1801,15 +1803,6 @@
     "editable": true,
     "text": 0
   },
-  "edwn": {
-    "type": "pile",
-    "parent": "redDeckHolder1",
-    "x": 4,
-    "y": 4,
-    "width": 80,
-    "height": 80,
-    "id": "edwn"
-  },
   "n60y": {
     "type": "pile",
     "parent": "blueDeckHolder1",
@@ -1818,5 +1811,14 @@
     "width": 80,
     "height": 80,
     "id": "n60y"
+  },
+  "c04x": {
+    "type": "pile",
+    "parent": "redDeckHolder1",
+    "x": 4,
+    "y": 4,
+    "width": 80,
+    "height": 80,
+    "id": "c04x"
   }
 }
