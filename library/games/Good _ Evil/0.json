@@ -19,7 +19,7 @@
       "similarImage": "",
       "similarName": "Good & Bad Ghosts",
       "similarDesigner": "Alex Randolph",
-      "similarAwards": "",
+      "similarAwards": "1986 Årets Spel Best Family Game Winner\n1982 Spiel des Jahres Recommended",
       "ruleText": "<div><b style=\"color: var(--overlayFontColor);\">Starting formation</b><br></div><div>Left/right players place their pieces in a 2x4 vertical formation, located between their respective star cells.</div><div><br></div><div><b>Move</b></div><div>On their turn, a player can move one of their pieces onto:</div><div>- an empty orthogonally adjacent cell&nbsp;</div><div>- an&nbsp;<span style=\"color: var(--overlayFontColor);\">orthogonally adjacent cell containing an opponent's piece</span></div><div><br></div><div><div><div><b>Goal<br></b></div><div>A player can win by:</div><div>- escaping from an opponent's star cell with a <b>blue</b> piece</div><div>- <b>capturing 4 blue pieces</b> from the opponent</div><div>- having <b>their 4 red pieces captured</b> by the opponent</div></div></div>",
       "helpText": "- Left &amp; right players take seats and drag their pieces from their stock into a starting formation of their choice<div>-&nbsp;<span style=\"color: var(--overlayFontColor);\">Each player has their own holder for tracking captured pieces</span><div>-&nbsp;<span style=\"color: var(--overlayFontColor);\">Piece's colors (red/blue) are not visible by opponent except when moved into capture or exit holders</span></div></div><div>- To automatically capture an opponent's piece, drag and drop your piece onto the targeted cell</div><div><br></div><div>To restart a match, click on the \"Clean up\" button which will recall and shuffle pieces</div>",
       "variantImage": "",
