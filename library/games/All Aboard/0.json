@@ -10172,7 +10172,6 @@
     "layer": -4,
     "z": 1,
     "movable": false,
-    "image": "/assets/-1452915434_798a",
     "css": "background:radial-gradient(circle, #444 0%, #222 100%) !important"
   },
   "Board Image": {
