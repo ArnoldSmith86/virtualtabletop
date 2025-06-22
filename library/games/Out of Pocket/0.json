@@ -323,7 +323,7 @@
         "thenRoutine": [
           {
             "func": "AUDIO",
-            "source": "/assets/188841650_414076",
+            "source": "/assets/99174140_16753",
             "volume": 1,
             "player": "${PROPERTY player}"
           }
@@ -6220,8 +6220,8 @@
       "year": "2015",
       "mode": "vs",
       "time": "60",
-      "attribution": "<div>Implementation and art by Mitchell Stolycia.</div><div><br></div><div>All artwork, including the library image and wheels, is released under CC BY 4.0. Everything else is released under CC0.</div><div><br></div><div>Thank you to mousewax for scripting contributions and assistance.</div>",
-      "lastUpdate": 1750268739596,
+      "attribution": "<div>Implementation and art by Mitchell Stolycia.</div><div><br></div><div>All artwork, including the library image and wheels, is released under CC BY 4.0. Everything else is released under CC0.</div><div><br></div><div>Thank you to mousewax for scripting contributions and assistance.</div><div><br></div><div>The audio file Ponderous.ogg by akx is used to alert the active player of their turn and is available under CC0 at https://github.com/akx/Notifications/.</div>",
+      "lastUpdate": 1750596237495,
       "showName": true,
       "skill": "",
       "description": "Stave off becoming bakrupt in a race against time.",
