@@ -10,7 +10,7 @@
       "mode": "vs",
       "time": "15",
       "attribution": "Library image \"Devolution\" is original work by Mitchell Stolycia available for use under CC BY 4.0.<div>\n<div>Original game layout inspired by Robin Harn's Herd Hero mod, released to the Public Domain under CC0.</div><div><br></div><div>Additional scripting and modifications by DexDouglas and Mitchell Stolycia released to the Public Domain under CC0.</div><div><br></div><div>The following graphics are from https://game-icons.net and are used under CC BY 3.0:\n* Card Play https://game-icons.net/1x1/quoting/card-play.html\n* Trash Can https://game-icons.net/1x1/delapouite/trash-can.html\n* Card Joker https://game-icons.net/1x1/delapouite/card-joker.html\n* Cat https://game-icons.net/1x1/lorc/cat.html\n* Mite https://game-icons.net/1x1/carl-olsen/mite-alt.html\n* Sea Turtle https://game-icons.net/1x1/delapouite/sea-turtle.html\n* Chicken https://game-icons.net/1x1/delapouite/chicken.html\n* Koala https://game-icons.net/1x1/delapouite/koala.html\n* Kangaroo https://game-icons.net/1x1/delapouite/kangaroo.html\n* Squid https://game-icons.net/1x1/lorc/squid.html\n* Elephant https://game-icons.net/1x1/delapouite/elephant.html\n* Donkey https://game-icons.net/1x1/skoll/donkey.html\n* Dolphin https://game-icons.net/1x1/delapouite/dolphin.html<br></div></div>",
-      "lastUpdate": 1750263648565,
+      "lastUpdate": 1750719205095,
       "showName": true,
       "skill": "Low",
       "description": "No Monkey is a push-your-luck card game that encourages you to draw cards and steal from your opponents with no remorse. If you ever draw a card that matches one already in your hand, you bust and toss all the cards away, giving no one the chance to score them.",
@@ -18,8 +18,8 @@
       "similarName": "No Mercy",
       "similarDesigner": "Reiner Knizia",
       "similarAwards": "2023 Gra Roku Best Party Game Winner",
-      "ruleText": "<span style=\"white-space-collapse: collapse;\">No Monkey is a push-your-luck card game that encourages you to draw cards and steal from your opponents with no remorse.&nbsp;</span><div><span style=\"white-space-collapse: collapse;\"><br></span><div><span style=\"white-space-collapse: collapse;\">On your turn, if you have any cards face up in front of you, you will bank those cards by hitting the treasure chest icon to the left of your name. If you don't have any cards, you have two options, draw a card, or end your turn. If you have no cards drawn, you should draw a card.&nbsp;</span></div><div><span style=\"white-space-collapse: collapse;\"><br></span></div><div><span style=\"white-space-collapse: collapse;\">If your newly drawn card matches a card that is face up in front of any other player, you can choose to steal their collected card(s) and add it to the cards you are collecting this turn by hitting the \"yoink\" button to the left of that card. If you do this, you must steal that value of card from all of the players who have it.</span></div><div><span style=\"white-space-collapse: collapse;\"><br>If you draw a card that matches any of the cards you have collected that turn, you might bust. If your newly drawn card brings you to 3 cards or less, nothing happens, even if you have matches in those first 3 cards. If you draw a card and you now have 4 cards or more and any of them match the newly drawn card, you end your turn and bust. All cards move to to the discard. <b>NOTE: stealing a card does not cause you to bust. You can only bust by drawing a card.</b></span></div><div><span style=\"white-space-collapse: collapse;\"><b><br></b></span></div><div><span style=\"white-space-collapse: collapse;\">When the last card is drawn, stealing can still occur, and then the player whose turn it is collects their cards for that turn. Everyone else will move all their cards to their face down score pile by hitting the treasure chest icon. Then hit the \"End Game Score\" button to tally the cards in each players score pile. Highest score wins, tied players share the victory.&nbsp;</span></div></div>",
-      "helpText": "Click to sit at one of the seats. When everyone is seated, push \"New Game\" and the game will select a start player. Click \"Draw Cards\" to draw one card at a time from the deck into the holder. When you are satisfied with your cards, you can click \"End Turn &amp; Collect\" to sort the cards into holders under your name. If you bust on your turn, hit \"End Turn &amp; Bust\" to send the cards to the discard holder.<div><br><div>If you draw a card that someone else has in their holder, you can steal it from them by pressing the blue button to the left of their cards underneath their name. This will move those cards into the central holder. If you steal a card type, you must click each button to steal them from each player.&nbsp;</div><div><br></div><div>If it comes back to your turn and you still have cards in your holders under your name, you must collect them by pressing the \"Treasure Box\" button to the left of your name. This will move the cards to a score pile holder to the right of your name. You can check to see how many cards are in each players score pile by the small number in the bottom right of that pile.&nbsp;</div><div><br></div><div>At the end of the game, press the \"End Game Score\" button to calculate the cards in each players pile. The score will be displayed under your name. Highest score wins. Tied players share the victory.&nbsp;</div></div>",
+      "ruleText": "<span style=\"white-space-collapse: collapse;\">No Monkey is a push-your-luck card game that encourages you to draw cards and steal from your opponents with no remorse.&nbsp;</span><div><span style=\"white-space-collapse: collapse;\"><br></span><div><span style=\"white-space-collapse: collapse;\">At the start of your turn, if you have any cards face up in front of you, you will bank those cards. If you don't have any cards, you have two options, draw a card, or end your turn. If you have no cards drawn, you should draw a card.&nbsp;</span></div><div><span style=\"white-space-collapse: collapse;\"><br></span></div><div><span style=\"white-space-collapse: collapse;\">If your newly drawn card matches a card that is face up in front of any other player, you can choose to steal their collected card(s) and add it to the cards you are collecting this turn by hitting the \"yoink\" button to the left of that card. If you do this, you must steal that value of card from all of the players who have it.</span></div><div><span style=\"white-space-collapse: collapse;\"><br>If you draw a card that matches any of the cards you have collected that turn, you might bust. If your newly drawn card brings you to 3 cards or less, nothing happens, even if you have matches in those first 3 cards. If you draw a card and you now have 4 cards or more and any of them match the newly drawn card, you end your turn and bust. All cards move to to the discard. <b>NOTE: stealing a card does not cause you to bust. You can only bust by drawing a card.</b></span></div><div><span style=\"white-space-collapse: collapse;\"><b><br></b></span></div><div><span style=\"white-space-collapse: collapse;\">When the last card is drawn, stealing can still occur, and then the player whose turn it is collects their cards for that turn. Everyone else will move all their cards to their face down score pile by hitting the treasure chest icon. Then hit the \"End Game Score\" button to tally the cards in each players score pile. Highest score wins, tied players share the victory.&nbsp;</span></div></div>",
+      "helpText": "Click to sit at one of the seats. When everyone is seated, push \"New Game\" and the game will select a start player. Click \"Draw Cards\" to draw one card at a time from the deck into the holder. When you are satisfied with your cards, you can click \"End Turn &amp; Collect\" to sort the cards into holders under your name. If you bust on your turn, hit \"End Turn &amp; Bust\" to send the cards to the discard holder.<div><br><div>If you draw a card that someone else has in their holder, you can steal it from them by pressing the blue button to the left of their cards underneath their name. This will move those cards into the central holder. If you steal a card type, you must click each button to steal them from each player.&nbsp;</div><div><br></div><div>If it comes back to your turn and you still have cards in your holders under your name, you will automatically collect those cards. This will move the cards to a score pile holder to the right of your name. You can check to see how many cards are in each players score pile by the small number in the bottom right of that pile.&nbsp;</div><div><br></div><div>When the deck runs out, press the \"End Game Score\" button to automatically move any remaining cards to the piles and calculate the cards in each pile. The score will be displayed under your name. Highest score wins. Tied players share the victory.&nbsp;</div></div>",
       "variantImage": "",
       "variant": "No Monkey",
       "language": "en-US",
@@ -139,7 +139,6 @@
     "hand": "holder-p1-l1",
     "hideWhenUnused": true,
     "linkedToSeat": "seat-p1",
-    "turn": true,
     "turnChangeRoutine": [
       {
         "func": "IF",
@@ -2329,7 +2328,7 @@
       }
     ],
     "parent": "seat-p1",
-    "y": -2
+    "y": -100
   },
   "score-p3": {
     "type": "holder",
@@ -2349,7 +2348,7 @@
     "type": "button",
     "id": "collect-cards-p3",
     "parent": "seat-p3",
-    "y": -8,
+    "y": -100,
     "width": 60,
     "height": 50,
     "z": 12040,
@@ -2433,7 +2432,7 @@
       }
     ],
     "x": -76,
-    "y": -8
+    "y": -100
   },
   "score-p5": {
     "type": "holder",
@@ -2485,7 +2484,7 @@
       }
     ],
     "x": -74,
-    "y": -4
+    "y": -100
   },
   "button-snatch-p2-l2": {
     "type": "button",
@@ -2827,7 +2826,7 @@
     "type": "button",
     "id": "collect-cards-p2",
     "parent": "seat-p2",
-    "y": -4,
+    "y": -100,
     "width": 60,
     "height": 50,
     "z": 12040,
@@ -2950,7 +2949,8 @@
           }
         ]
       }
-    ]
+    ],
+    "turn": true
   },
   "holder-p1-l8": {
     "type": "holder",
@@ -3503,6 +3503,12 @@
             ],
             "property": "text",
             "value": "${points}"
+          },
+          {
+            "func": "CLICK",
+            "collection": [
+              "collect-cards-p${value}"
+            ]
           }
         ]
       }
@@ -3872,14 +3878,14 @@
     "cardType": "1",
     "id": "mf77",
     "parent": "ah6m",
-    "z": 18893
+    "z": 19233
   },
   "8vfv": {
     "deck": "deck-cards",
     "type": "card",
     "cardType": "1",
     "id": "8vfv",
-    "z": 18931,
+    "z": 19222,
     "parent": "ah6m"
   },
   "2enh": {
@@ -3887,7 +3893,7 @@
     "type": "card",
     "cardType": "1",
     "id": "2enh",
-    "z": 18921,
+    "z": 19203,
     "parent": "ah6m"
   },
   "qvxg": {
@@ -3895,7 +3901,7 @@
     "type": "card",
     "cardType": "1",
     "id": "qvxg",
-    "z": 18904,
+    "z": 19154,
     "parent": "ah6m"
   },
   "iz3i": {
@@ -3903,7 +3909,7 @@
     "type": "card",
     "cardType": "1",
     "id": "iz3i",
-    "z": 18856,
+    "z": 19217,
     "parent": "ah6m"
   },
   "ay9l": {
@@ -3911,7 +3917,7 @@
     "type": "card",
     "cardType": "1",
     "id": "ay9l",
-    "z": 18922,
+    "z": 19186,
     "parent": "ah6m"
   },
   "0nth": {
@@ -3919,7 +3925,7 @@
     "type": "card",
     "cardType": "1",
     "id": "0nth",
-    "z": 18868,
+    "z": 19200,
     "parent": "ah6m"
   },
   "pgj3": {
@@ -3927,7 +3933,7 @@
     "type": "card",
     "cardType": "1",
     "id": "pgj3",
-    "z": 18862,
+    "z": 19158,
     "parent": "ah6m"
   },
   "7gof": {
@@ -3935,7 +3941,7 @@
     "type": "card",
     "cardType": "1",
     "id": "7gof",
-    "z": 18909,
+    "z": 19210,
     "parent": "ah6m"
   },
   "qsuo": {
@@ -3943,7 +3949,7 @@
     "type": "card",
     "cardType": "1",
     "id": "qsuo",
-    "z": 18884,
+    "z": 19193,
     "parent": "ah6m"
   },
   "2xd6": {
@@ -3951,7 +3957,7 @@
     "type": "card",
     "cardType": "1",
     "id": "2xd6",
-    "z": 18869,
+    "z": 19211,
     "parent": "ah6m"
   },
   "sks7": {
@@ -3959,7 +3965,7 @@
     "type": "card",
     "cardType": "2",
     "id": "sks7",
-    "z": 18894,
+    "z": 19213,
     "parent": "ah6m"
   },
   "9tox": {
@@ -3967,7 +3973,7 @@
     "type": "card",
     "cardType": "2",
     "id": "9tox",
-    "z": 18895,
+    "z": 19205,
     "parent": "ah6m"
   },
   "u6ru": {
@@ -3975,7 +3981,7 @@
     "type": "card",
     "cardType": "2",
     "id": "u6ru",
-    "z": 18877,
+    "z": 19234,
     "parent": "ah6m"
   },
   "3n87": {
@@ -3983,7 +3989,7 @@
     "type": "card",
     "cardType": "2",
     "id": "3n87",
-    "z": 18872,
+    "z": 19215,
     "parent": "ah6m"
   },
   "u3yk": {
@@ -3991,7 +3997,7 @@
     "type": "card",
     "cardType": "2",
     "id": "u3yk",
-    "z": 18917,
+    "z": 19206,
     "parent": "ah6m"
   },
   "jw9b": {
@@ -3999,7 +4005,7 @@
     "type": "card",
     "cardType": "2",
     "id": "jw9b",
-    "z": 18906,
+    "z": 19236,
     "parent": "ah6m"
   },
   "xo11": {
@@ -4007,7 +4013,7 @@
     "type": "card",
     "cardType": "2",
     "id": "xo11",
-    "z": 18878,
+    "z": 19208,
     "parent": "ah6m"
   },
   "nrx7": {
@@ -4015,7 +4021,7 @@
     "type": "card",
     "cardType": "2",
     "id": "nrx7",
-    "z": 18898,
+    "z": 19225,
     "parent": "ah6m"
   },
   "a9qj": {
@@ -4023,7 +4029,7 @@
     "type": "card",
     "cardType": "2",
     "id": "a9qj",
-    "z": 18845,
+    "z": 19180,
     "parent": "ah6m"
   },
   "j0xk": {
@@ -4031,7 +4037,7 @@
     "type": "card",
     "cardType": "2",
     "id": "j0xk",
-    "z": 18885,
+    "z": 19182,
     "parent": "ah6m"
   },
   "juop": {
@@ -4039,7 +4045,7 @@
     "type": "card",
     "cardType": "2",
     "id": "juop",
-    "z": 18859,
+    "z": 19156,
     "parent": "ah6m"
   },
   "l08h": {
@@ -4047,7 +4053,7 @@
     "type": "card",
     "cardType": "3",
     "id": "l08h",
-    "z": 18844,
+    "z": 19196,
     "parent": "ah6m"
   },
   "y4l0": {
@@ -4055,7 +4061,7 @@
     "type": "card",
     "cardType": "3",
     "id": "y4l0",
-    "z": 18929,
+    "z": 19166,
     "parent": "ah6m"
   },
   "j4zb": {
@@ -4063,7 +4069,7 @@
     "type": "card",
     "cardType": "3",
     "id": "j4zb",
-    "z": 18867,
+    "z": 19167,
     "parent": "ah6m"
   },
   "n5uz": {
@@ -4071,7 +4077,7 @@
     "type": "card",
     "cardType": "3",
     "id": "n5uz",
-    "z": 18870,
+    "z": 19155,
     "parent": "ah6m"
   },
   "77xd": {
@@ -4079,7 +4085,7 @@
     "type": "card",
     "cardType": "3",
     "id": "77xd",
-    "z": 18886,
+    "z": 19201,
     "parent": "ah6m"
   },
   "vi62": {
@@ -4087,7 +4093,7 @@
     "type": "card",
     "cardType": "3",
     "id": "vi62",
-    "z": 18846,
+    "z": 19170,
     "parent": "ah6m"
   },
   "ohtf": {
@@ -4095,7 +4101,7 @@
     "type": "card",
     "cardType": "3",
     "id": "ohtf",
-    "z": 18905,
+    "z": 19152,
     "parent": "ah6m"
   },
   "rw00": {
@@ -4103,7 +4109,7 @@
     "type": "card",
     "cardType": "3",
     "id": "rw00",
-    "z": 18888,
+    "z": 19224,
     "parent": "ah6m"
   },
   "f4nl": {
@@ -4111,7 +4117,7 @@
     "type": "card",
     "cardType": "3",
     "id": "f4nl",
-    "z": 18855,
+    "z": 19169,
     "parent": "ah6m"
   },
   "2q3e": {
@@ -4119,7 +4125,7 @@
     "type": "card",
     "cardType": "3",
     "id": "2q3e",
-    "z": 18876,
+    "z": 19221,
     "parent": "ah6m"
   },
   "214a": {
@@ -4127,7 +4133,7 @@
     "type": "card",
     "cardType": "3",
     "id": "214a",
-    "z": 18920,
+    "z": 19220,
     "parent": "ah6m"
   },
   "wxnt": {
@@ -4135,7 +4141,7 @@
     "type": "card",
     "cardType": "4",
     "id": "wxnt",
-    "z": 18879,
+    "z": 19228,
     "parent": "ah6m"
   },
   "nuy3": {
@@ -4143,7 +4149,7 @@
     "type": "card",
     "cardType": "4",
     "id": "nuy3",
-    "z": 18919,
+    "z": 19191,
     "parent": "ah6m"
   },
   "j8h5": {
@@ -4151,7 +4157,7 @@
     "type": "card",
     "cardType": "4",
     "id": "j8h5",
-    "z": 18887,
+    "z": 19192,
     "parent": "ah6m"
   },
   "wf6y": {
@@ -4159,7 +4165,7 @@
     "type": "card",
     "cardType": "4",
     "id": "wf6y",
-    "z": 18899,
+    "z": 19232,
     "parent": "ah6m"
   },
   "2qu5": {
@@ -4167,7 +4173,7 @@
     "type": "card",
     "cardType": "4",
     "id": "2qu5",
-    "z": 18861,
+    "z": 19239,
     "parent": "ah6m"
   },
   "grpc": {
@@ -4175,7 +4181,7 @@
     "type": "card",
     "cardType": "4",
     "id": "grpc",
-    "z": 18874,
+    "z": 19195,
     "parent": "ah6m"
   },
   "7a1k": {
@@ -4183,7 +4189,7 @@
     "type": "card",
     "cardType": "4",
     "id": "7a1k",
-    "z": 18901,
+    "z": 19178,
     "parent": "ah6m"
   },
   "vqbu": {
@@ -4191,7 +4197,7 @@
     "type": "card",
     "cardType": "4",
     "id": "vqbu",
-    "z": 18897,
+    "z": 19187,
     "parent": "ah6m"
   },
   "3mc4": {
@@ -4199,7 +4205,7 @@
     "type": "card",
     "cardType": "4",
     "id": "3mc4",
-    "z": 18912,
+    "z": 19171,
     "parent": "ah6m"
   },
   "gb77": {
@@ -4207,7 +4213,7 @@
     "type": "card",
     "cardType": "4",
     "id": "gb77",
-    "z": 18927,
+    "z": 19237,
     "parent": "ah6m"
   },
   "9ih1": {
@@ -4215,7 +4221,7 @@
     "type": "card",
     "cardType": "4",
     "id": "9ih1",
-    "z": 18914,
+    "z": 19161,
     "parent": "ah6m"
   },
   "ybb0": {
@@ -4223,7 +4229,7 @@
     "type": "card",
     "cardType": "5",
     "id": "ybb0",
-    "z": 18926,
+    "z": 19218,
     "parent": "ah6m"
   },
   "knbm": {
@@ -4231,7 +4237,7 @@
     "type": "card",
     "cardType": "5",
     "id": "knbm",
-    "z": 18880,
+    "z": 19153,
     "parent": "ah6m"
   },
   "ndl0": {
@@ -4239,7 +4245,7 @@
     "type": "card",
     "cardType": "5",
     "id": "ndl0",
-    "z": 18918,
+    "z": 19183,
     "parent": "ah6m"
   },
   "oisd": {
@@ -4247,7 +4253,7 @@
     "type": "card",
     "cardType": "5",
     "id": "oisd",
-    "z": 18849,
+    "z": 19202,
     "parent": "ah6m"
   },
   "mx2k": {
@@ -4255,7 +4261,7 @@
     "type": "card",
     "cardType": "5",
     "id": "mx2k",
-    "z": 18842,
+    "z": 19241,
     "parent": "ah6m"
   },
   "96jp": {
@@ -4263,7 +4269,7 @@
     "type": "card",
     "cardType": "5",
     "id": "96jp",
-    "z": 18924,
+    "z": 19177,
     "parent": "ah6m"
   },
   "l5dz": {
@@ -4271,7 +4277,7 @@
     "type": "card",
     "cardType": "5",
     "id": "l5dz",
-    "z": 18896,
+    "z": 19157,
     "parent": "ah6m"
   },
   "yijp": {
@@ -4279,7 +4285,7 @@
     "type": "card",
     "cardType": "5",
     "id": "yijp",
-    "z": 18860,
+    "z": 19164,
     "parent": "ah6m"
   },
   "9yjd": {
@@ -4287,7 +4293,7 @@
     "type": "card",
     "cardType": "5",
     "id": "9yjd",
-    "z": 18903,
+    "z": 19235,
     "parent": "ah6m"
   },
   "uaw4": {
@@ -4295,7 +4301,7 @@
     "type": "card",
     "cardType": "5",
     "id": "uaw4",
-    "z": 18890,
+    "z": 19238,
     "parent": "ah6m"
   },
   "0art": {
@@ -4303,7 +4309,7 @@
     "type": "card",
     "cardType": "5",
     "id": "0art",
-    "z": 18875,
+    "z": 19160,
     "parent": "ah6m"
   },
   "78iz": {
@@ -4311,7 +4317,7 @@
     "type": "card",
     "cardType": "6",
     "id": "78iz",
-    "z": 18866,
+    "z": 19197,
     "parent": "ah6m"
   },
   "up78": {
@@ -4319,7 +4325,7 @@
     "type": "card",
     "cardType": "6",
     "id": "up78",
-    "z": 18871,
+    "z": 19230,
     "parent": "ah6m"
   },
   "m0b9": {
@@ -4327,7 +4333,7 @@
     "type": "card",
     "cardType": "6",
     "id": "m0b9",
-    "z": 18913,
+    "z": 19199,
     "parent": "ah6m"
   },
   "tcvx": {
@@ -4335,7 +4341,7 @@
     "type": "card",
     "cardType": "6",
     "id": "tcvx",
-    "z": 18892,
+    "z": 19214,
     "parent": "ah6m"
   },
   "tedy": {
@@ -4343,7 +4349,7 @@
     "type": "card",
     "cardType": "6",
     "id": "tedy",
-    "z": 18853,
+    "z": 19194,
     "parent": "ah6m"
   },
   "b3lk": {
@@ -4351,7 +4357,7 @@
     "type": "card",
     "cardType": "6",
     "id": "b3lk",
-    "z": 18907,
+    "z": 19231,
     "parent": "ah6m"
   },
   "6qan": {
@@ -4359,7 +4365,7 @@
     "type": "card",
     "cardType": "6",
     "id": "6qan",
-    "z": 18883,
+    "z": 19181,
     "parent": "ah6m"
   },
   "7npe": {
@@ -4367,7 +4373,7 @@
     "type": "card",
     "cardType": "7",
     "id": "7npe",
-    "z": 18889,
+    "z": 19159,
     "parent": "ah6m"
   },
   "nm4j": {
@@ -4375,7 +4381,7 @@
     "type": "card",
     "cardType": "7",
     "id": "nm4j",
-    "z": 18925,
+    "z": 19223,
     "parent": "ah6m"
   },
   "x4vs": {
@@ -4383,7 +4389,7 @@
     "type": "card",
     "cardType": "7",
     "id": "x4vs",
-    "z": 18858,
+    "z": 19227,
     "parent": "ah6m"
   },
   "t0fz": {
@@ -4391,7 +4397,7 @@
     "type": "card",
     "cardType": "7",
     "id": "t0fz",
-    "z": 18900,
+    "z": 19189,
     "parent": "ah6m"
   },
   "00dm": {
@@ -4399,7 +4405,7 @@
     "type": "card",
     "cardType": "7",
     "id": "00dm",
-    "z": 18915,
+    "z": 19179,
     "parent": "ah6m"
   },
   "fx06": {
@@ -4407,7 +4413,7 @@
     "type": "card",
     "cardType": "7",
     "id": "fx06",
-    "z": 18851,
+    "z": 19172,
     "parent": "ah6m"
   },
   "ghlc": {
@@ -4415,7 +4421,7 @@
     "type": "card",
     "cardType": "7",
     "id": "ghlc",
-    "z": 18902,
+    "z": 19198,
     "parent": "ah6m"
   },
   "96fm": {
@@ -4423,7 +4429,7 @@
     "type": "card",
     "cardType": "8",
     "id": "96fm",
-    "z": 18928,
+    "z": 19174,
     "parent": "ah6m"
   },
   "eahe": {
@@ -4431,7 +4437,7 @@
     "type": "card",
     "cardType": "8",
     "id": "eahe",
-    "z": 18930,
+    "z": 19168,
     "parent": "ah6m"
   },
   "c8fw": {
@@ -4439,7 +4445,7 @@
     "type": "card",
     "cardType": "8",
     "id": "c8fw",
-    "z": 18911,
+    "z": 19219,
     "parent": "ah6m"
   },
   "nvvw": {
@@ -4447,7 +4453,7 @@
     "type": "card",
     "cardType": "8",
     "id": "nvvw",
-    "z": 18848,
+    "z": 19173,
     "parent": "ah6m"
   },
   "fhne": {
@@ -4455,7 +4461,7 @@
     "type": "card",
     "cardType": "8",
     "id": "fhne",
-    "z": 18881,
+    "z": 19226,
     "parent": "ah6m"
   },
   "wk1r": {
@@ -4463,7 +4469,7 @@
     "type": "card",
     "cardType": "8",
     "id": "wk1r",
-    "z": 18882,
+    "z": 19207,
     "parent": "ah6m"
   },
   "ohjc": {
@@ -4471,7 +4477,7 @@
     "type": "card",
     "cardType": "8",
     "id": "ohjc",
-    "z": 18865,
+    "z": 19163,
     "parent": "ah6m"
   },
   "ws1q": {
@@ -4479,7 +4485,7 @@
     "type": "card",
     "cardType": "9",
     "id": "ws1q",
-    "z": 18908,
+    "z": 19212,
     "parent": "ah6m"
   },
   "z37x": {
@@ -4487,7 +4493,7 @@
     "type": "card",
     "cardType": "9",
     "id": "z37x",
-    "z": 18873,
+    "z": 19204,
     "parent": "ah6m"
   },
   "q1ww": {
@@ -4495,7 +4501,7 @@
     "type": "card",
     "cardType": "9",
     "id": "q1ww",
-    "z": 18910,
+    "z": 19229,
     "parent": "ah6m"
   },
   "op8u": {
@@ -4503,7 +4509,7 @@
     "type": "card",
     "cardType": "9",
     "id": "op8u",
-    "z": 18843,
+    "z": 19209,
     "parent": "ah6m"
   },
   "ig9z": {
@@ -4511,7 +4517,7 @@
     "type": "card",
     "cardType": "9",
     "id": "ig9z",
-    "z": 18891,
+    "z": 19190,
     "parent": "ah6m"
   },
   "wuqe": {
@@ -4519,7 +4525,7 @@
     "type": "card",
     "cardType": "9",
     "id": "wuqe",
-    "z": 18863,
+    "z": 19240,
     "parent": "ah6m"
   },
   "upoz": {
@@ -4527,7 +4533,7 @@
     "type": "card",
     "cardType": "9",
     "id": "upoz",
-    "z": 18916,
+    "z": 19176,
     "parent": "ah6m"
   },
   "goe6": {
@@ -4535,7 +4541,7 @@
     "type": "card",
     "cardType": "10",
     "id": "goe6",
-    "z": 18850,
+    "z": 19165,
     "parent": "ah6m"
   },
   "ptyh": {
@@ -4543,7 +4549,7 @@
     "type": "card",
     "cardType": "10",
     "id": "ptyh",
-    "z": 18852,
+    "z": 19162,
     "parent": "ah6m"
   },
   "9qzc": {
@@ -4551,7 +4557,7 @@
     "type": "card",
     "cardType": "10",
     "id": "9qzc",
-    "z": 18923,
+    "z": 19188,
     "parent": "ah6m"
   },
   "ueek": {
@@ -4559,7 +4565,7 @@
     "type": "card",
     "cardType": "10",
     "id": "ueek",
-    "z": 18854,
+    "z": 19184,
     "parent": "ah6m"
   },
   "oy6w": {
@@ -4567,7 +4573,7 @@
     "type": "card",
     "cardType": "10",
     "id": "oy6w",
-    "z": 18847,
+    "z": 19185,
     "parent": "ah6m"
   },
   "4e2h": {
@@ -4575,7 +4581,7 @@
     "type": "card",
     "cardType": "10",
     "id": "4e2h",
-    "z": 18857,
+    "z": 19216,
     "parent": "ah6m"
   },
   "34sm": {
@@ -4583,7 +4589,7 @@
     "type": "card",
     "cardType": "10",
     "id": "34sm",
-    "z": 18864,
+    "z": 19175,
     "parent": "ah6m"
   },
   "button-snatch-p5-l9": {
