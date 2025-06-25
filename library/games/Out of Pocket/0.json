@@ -4775,7 +4775,7 @@
       {
         "func": "SELECT",
         "property": "id",
-        "value": "t1"
+        "value": "${PROPERTY parent}"
       },
       {
         "func": "GET",
@@ -4790,6 +4790,19 @@
         "property": "thing"
       },
       {
+        "func": "GET",
+        "property": "onlyVisibleForSeat"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "${onlyVisibleForSeat}"
+      },
+      {
+        "func": "GET",
+        "property": "index"
+      },
+      {
         "func": "SELECT",
         "property": "id",
         "value": "${thing}"
@@ -4800,14 +4813,30 @@
       },
       {
         "func": "SELECT",
-        "property": "id",
+        "property": "parent",
         "value": "${holderid}"
       },
       {
+        "func": "SELECT",
+        "property": "cardType",
+        "value": "${cardType}",
+        "source": "DEFAULT"
+      },
+      {
         "func": "MOVE",
-        "from": "${holderid}",
-        "to": "h1",
+        "to": "h${index}",
         "count": 1
+      },
+      {
+        "func": "LABEL",
+        "label": "label${index}",
+        "mode": "dec",
+        "value": "${bid}"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "${holderid}"
       },
       {
         "func": "GET",
@@ -4815,31 +4844,26 @@
       },
       {
         "func": "SELECT",
-        "property": "parent",
+        "property": "id",
         "value": "${linkedToSeat}"
       },
       {
-        "func": "SELECT",
-        "property": "type",
-        "source": "DEFAULT",
-        "value": "label"
-      },
-      {
         "func": "GET",
-        "property": "id"
+        "property": "index"
       },
       {
         "func": "LABEL",
         "mode": "inc",
-        "collection": "DEFAULT",
-        "label": "${id}",
+        "label": "label${index}",
         "value": "${bid}"
       },
       {
-        "func": "LABEL",
-        "label": "label1",
-        "mode": "dec",
-        "value": "${bid}"
+        "func": "SELECT",
+        "property": "id",
+        "value": "endTurn"
+      },
+      {
+        "func": "CLICK"
       }
     ],
     "parent": "t1",
@@ -4866,7 +4890,7 @@
       {
         "func": "SELECT",
         "property": "id",
-        "value": "t1"
+        "value": "${PROPERTY parent}"
       },
       {
         "func": "GET",
@@ -4881,6 +4905,19 @@
         "property": "thing"
       },
       {
+        "func": "GET",
+        "property": "onlyVisibleForSeat"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "${onlyVisibleForSeat}"
+      },
+      {
+        "func": "GET",
+        "property": "index"
+      },
+      {
         "func": "SELECT",
         "property": "id",
         "value": "${thing}"
@@ -4891,7 +4928,7 @@
       },
       {
         "func": "LABEL",
-        "label": "label1",
+        "label": "label${index}",
         "mode": "inc",
         "value": "${bid}"
       },
@@ -4920,6 +4957,14 @@
         "property": "text",
         "value": "${bid}",
         "relation": "-"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "endTurn"
+      },
+      {
+        "func": "CLICK"
       }
     ],
     "parent": "t1",
@@ -4944,79 +4989,9 @@
       }
     },
     "text": "Reject & Pay",
-    "clickRoutine": [
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "t2"
-      },
-      {
-        "func": "GET",
-        "property": "holderid"
-      },
-      {
-        "func": "GET",
-        "property": "bid"
-      },
-      {
-        "func": "GET",
-        "property": "thing"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "${thing}"
-      },
-      {
-        "func": "GET",
-        "property": "cardType"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "${holderid}"
-      },
-      {
-        "func": "MOVE",
-        "from": "${holderid}",
-        "to": "h2",
-        "count": 1
-      },
-      {
-        "func": "GET",
-        "property": "linkedToSeat"
-      },
-      {
-        "func": "SELECT",
-        "property": "parent",
-        "value": "${linkedToSeat}"
-      },
-      {
-        "func": "SELECT",
-        "property": "type",
-        "source": "DEFAULT",
-        "value": "label"
-      },
-      {
-        "func": "GET",
-        "property": "id"
-      },
-      {
-        "func": "LABEL",
-        "mode": "inc",
-        "collection": "DEFAULT",
-        "label": "${id}",
-        "value": "${bid}"
-      },
-      {
-        "func": "LABEL",
-        "label": "label2",
-        "mode": "dec",
-        "value": "${bid}"
-      }
-    ],
     "parent": "t2",
-    "display": false
+    "display": false,
+    "inheritFrom": "reject1"
   },
   "accept2": {
     "type": "button",
@@ -5035,69 +5010,10 @@
       }
     },
     "text": "Accept",
-    "clickRoutine": [
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "t2"
-      },
-      {
-        "func": "GET",
-        "property": "holderid"
-      },
-      {
-        "func": "GET",
-        "property": "bid"
-      },
-      {
-        "func": "GET",
-        "property": "thing"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "${thing}"
-      },
-      {
-        "func": "MOVE",
-        "to": "${holderid}"
-      },
-      {
-        "func": "LABEL",
-        "label": "label2",
-        "mode": "inc",
-        "value": "${bid}"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "${holderid}"
-      },
-      {
-        "func": "GET",
-        "property": "linkedToSeat"
-      },
-      {
-        "func": "SELECT",
-        "property": "parent",
-        "value": "${linkedToSeat}"
-      },
-      {
-        "func": "SELECT",
-        "property": "type",
-        "source": "DEFAULT",
-        "value": "label"
-      },
-      {
-        "func": "SET",
-        "property": "text",
-        "value": "${bid}",
-        "relation": "-"
-      }
-    ],
     "parent": "t2",
     "x": -14,
-    "display": false
+    "display": false,
+    "inheritFrom": "accept1"
   },
   "reject3": {
     "type": "button",
@@ -5117,79 +5033,9 @@
       }
     },
     "text": "Reject & Pay",
-    "clickRoutine": [
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "t3"
-      },
-      {
-        "func": "GET",
-        "property": "holderid"
-      },
-      {
-        "func": "GET",
-        "property": "bid"
-      },
-      {
-        "func": "GET",
-        "property": "thing"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "${thing}"
-      },
-      {
-        "func": "GET",
-        "property": "cardType"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "${holderid}"
-      },
-      {
-        "func": "MOVE",
-        "from": "${holderid}",
-        "to": "h3",
-        "count": 1
-      },
-      {
-        "func": "GET",
-        "property": "linkedToSeat"
-      },
-      {
-        "func": "SELECT",
-        "property": "parent",
-        "value": "${linkedToSeat}"
-      },
-      {
-        "func": "SELECT",
-        "property": "type",
-        "source": "DEFAULT",
-        "value": "label"
-      },
-      {
-        "func": "GET",
-        "property": "id"
-      },
-      {
-        "func": "LABEL",
-        "mode": "inc",
-        "collection": "DEFAULT",
-        "label": "${id}",
-        "value": "${bid}"
-      },
-      {
-        "func": "LABEL",
-        "label": "label3",
-        "mode": "dec",
-        "value": "${bid}"
-      }
-    ],
     "parent": "t3",
-    "display": false
+    "display": false,
+    "inheritFrom": "reject1"
   },
   "accept3": {
     "type": "button",
@@ -5208,69 +5054,10 @@
       }
     },
     "text": "Accept",
-    "clickRoutine": [
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "t3"
-      },
-      {
-        "func": "GET",
-        "property": "holderid"
-      },
-      {
-        "func": "GET",
-        "property": "bid"
-      },
-      {
-        "func": "GET",
-        "property": "thing"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "${thing}"
-      },
-      {
-        "func": "MOVE",
-        "to": "${holderid}"
-      },
-      {
-        "func": "LABEL",
-        "label": "label3",
-        "mode": "inc",
-        "value": "${bid}"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "${holderid}"
-      },
-      {
-        "func": "GET",
-        "property": "linkedToSeat"
-      },
-      {
-        "func": "SELECT",
-        "property": "parent",
-        "value": "${linkedToSeat}"
-      },
-      {
-        "func": "SELECT",
-        "property": "type",
-        "source": "DEFAULT",
-        "value": "label"
-      },
-      {
-        "func": "SET",
-        "property": "text",
-        "value": "${bid}",
-        "relation": "-"
-      }
-    ],
     "parent": "t3",
     "x": -14,
-    "display": false
+    "display": false,
+    "inheritFrom": "accept1"
   },
   "reject4": {
     "type": "button",
@@ -5290,79 +5077,9 @@
       }
     },
     "text": "Reject & Pay",
-    "clickRoutine": [
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "t4"
-      },
-      {
-        "func": "GET",
-        "property": "holderid"
-      },
-      {
-        "func": "GET",
-        "property": "bid"
-      },
-      {
-        "func": "GET",
-        "property": "thing"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "${thing}"
-      },
-      {
-        "func": "GET",
-        "property": "cardType"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "${holderid}"
-      },
-      {
-        "func": "MOVE",
-        "from": "${holderid}",
-        "to": "h4",
-        "count": 1
-      },
-      {
-        "func": "GET",
-        "property": "linkedToSeat"
-      },
-      {
-        "func": "SELECT",
-        "property": "parent",
-        "value": "${linkedToSeat}"
-      },
-      {
-        "func": "SELECT",
-        "property": "type",
-        "source": "DEFAULT",
-        "value": "label"
-      },
-      {
-        "func": "GET",
-        "property": "id"
-      },
-      {
-        "func": "LABEL",
-        "mode": "inc",
-        "collection": "DEFAULT",
-        "label": "${id}",
-        "value": "${bid}"
-      },
-      {
-        "func": "LABEL",
-        "label": "label4",
-        "mode": "dec",
-        "value": "${bid}"
-      }
-    ],
     "parent": "t4",
-    "display": false
+    "display": false,
+    "inheritFrom": "reject1"
   },
   "accept4": {
     "type": "button",
@@ -5381,69 +5098,10 @@
       }
     },
     "text": "Accept",
-    "clickRoutine": [
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "t4"
-      },
-      {
-        "func": "GET",
-        "property": "holderid"
-      },
-      {
-        "func": "GET",
-        "property": "bid"
-      },
-      {
-        "func": "GET",
-        "property": "thing"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "${thing}"
-      },
-      {
-        "func": "MOVE",
-        "to": "${holderid}"
-      },
-      {
-        "func": "LABEL",
-        "label": "label4",
-        "mode": "inc",
-        "value": "${bid}"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "${holderid}"
-      },
-      {
-        "func": "GET",
-        "property": "linkedToSeat"
-      },
-      {
-        "func": "SELECT",
-        "property": "parent",
-        "value": "${linkedToSeat}"
-      },
-      {
-        "func": "SELECT",
-        "property": "type",
-        "source": "DEFAULT",
-        "value": "label"
-      },
-      {
-        "func": "SET",
-        "property": "text",
-        "value": "${bid}",
-        "relation": "-"
-      }
-    ],
     "parent": "t4",
     "x": -14,
-    "display": false
+    "display": false,
+    "inheritFrom": "accept1"
   },
   "reject5": {
     "type": "button",
@@ -5463,79 +5121,9 @@
       }
     },
     "text": "Reject & Pay",
-    "clickRoutine": [
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "t5"
-      },
-      {
-        "func": "GET",
-        "property": "holderid"
-      },
-      {
-        "func": "GET",
-        "property": "bid"
-      },
-      {
-        "func": "GET",
-        "property": "thing"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "${thing}"
-      },
-      {
-        "func": "GET",
-        "property": "cardType"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "${holderid}"
-      },
-      {
-        "func": "MOVE",
-        "from": "${holderid}",
-        "to": "h5",
-        "count": 1
-      },
-      {
-        "func": "GET",
-        "property": "linkedToSeat"
-      },
-      {
-        "func": "SELECT",
-        "property": "parent",
-        "value": "${linkedToSeat}"
-      },
-      {
-        "func": "SELECT",
-        "property": "type",
-        "source": "DEFAULT",
-        "value": "label"
-      },
-      {
-        "func": "GET",
-        "property": "id"
-      },
-      {
-        "func": "LABEL",
-        "mode": "inc",
-        "collection": "DEFAULT",
-        "label": "${id}",
-        "value": "${bid}"
-      },
-      {
-        "func": "LABEL",
-        "label": "label5",
-        "mode": "dec",
-        "value": "${bid}"
-      }
-    ],
     "parent": "t5",
-    "display": false
+    "display": false,
+    "inheritFrom": "reject1"
   },
   "accept5": {
     "type": "button",
@@ -5554,69 +5142,10 @@
       }
     },
     "text": "Accept",
-    "clickRoutine": [
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "t5"
-      },
-      {
-        "func": "GET",
-        "property": "holderid"
-      },
-      {
-        "func": "GET",
-        "property": "bid"
-      },
-      {
-        "func": "GET",
-        "property": "thing"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "${thing}"
-      },
-      {
-        "func": "MOVE",
-        "to": "${holderid}"
-      },
-      {
-        "func": "LABEL",
-        "label": "label5",
-        "mode": "inc",
-        "value": "${bid}"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "${holderid}"
-      },
-      {
-        "func": "GET",
-        "property": "linkedToSeat"
-      },
-      {
-        "func": "SELECT",
-        "property": "parent",
-        "value": "${linkedToSeat}"
-      },
-      {
-        "func": "SELECT",
-        "property": "type",
-        "source": "DEFAULT",
-        "value": "label"
-      },
-      {
-        "func": "SET",
-        "property": "text",
-        "value": "${bid}",
-        "relation": "-"
-      }
-    ],
     "parent": "t5",
     "x": -14,
-    "display": false
+    "display": false,
+    "inheritFrom": "accept1"
   },
   "krgr": {
     "deck": "companyDeck",
@@ -6221,7 +5750,7 @@
       "mode": "vs",
       "time": "60",
       "attribution": "<div>Implementation and art by Mitchell Stolycia.</div><div><br></div><div>All artwork, including the library image and wheels, is released under CC BY 4.0. Everything else is released under CC0.</div><div><br></div><div>Thank you to mousewax for scripting contributions and assistance.</div><div><br></div><div>The audio file Ponderous.ogg by akx is used to alert the active player of their turn and is available under CC0 at https://github.com/akx/Notifications/.</div>",
-      "lastUpdate": 1750596237495,
+      "lastUpdate": 1750889090757,
       "showName": true,
       "skill": "",
       "description": "Stave off becoming bakrupt in a race against time.",
