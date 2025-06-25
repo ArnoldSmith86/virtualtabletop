@@ -87,7 +87,17 @@ function updatePlayerCountDisplay() {
 }
 
 onLoad(function() {
-  onMessage('meta', args=>fillPlayerList(args.meta.players, args.activePlayers));
+  onMessage('meta', args => {
+  fillPlayerList(args.meta.players, args.activePlayers);
+  for (let player of editPlayerArray) {
+    if (!args.activePlayers.includes(player)) {
+      toServer("edit", {
+        playerName: player,
+        edit: false
+      })
+    }
+  }
+});
   onMessage('mouse', function(args) {
     if(args.player != playerName && playerCursors[args.player]) {
       clearTimeout(playerCursorsTimeout[args.player]);
@@ -124,7 +134,13 @@ onLoad(function() {
     localStorage.setItem('playerName', playerName);
     for(const [ id, widget ] of widgets)
       widget.updateOwner();
-  });
+    if(editPlayerArray.includes(oldName)) { 
+      editPlayerArray.push(playerName);
+    const index = editPlayerArray.indexOf(oldName);
+    if(index !== -1)
+      editPlayerArray.splice(index, 1);
+  }
+});
 
   // share URL when clicking button
   shareButton($('#playersShareButton'), _=>location.href);
