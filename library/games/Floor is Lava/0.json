@@ -43,7 +43,7 @@
       "mode": "solo",
       "time": "15",
       "attribution": "<div>Card design, game layout, coding, and library image by LawDawg. Released to the Public Domain under CC0.</div><div><br></div><div>The lava background image is by Arcturnian and is available under the Pixabay License at:&nbsp;https://pixabay.com/illustrations/lava-cracked-background-fire-656827/</div><div><br></div><div>The fan icon is the Google Material Symbol \"Mode Fan\" available as attributed in the About button.</div><div><br></div><div>The volcano icon is by lorc and the furniture icons are by delapouite available under CC BY 3.0 from game-icons.net as attributed in the About button.</div>",
-      "lastUpdate": 1750900761057,
+      "lastUpdate": 1750944627643,
       "showName": true,
       "skill": "",
       "description": "Escape the lava room by matching furniture icons on your cards before the volcano blows.",
@@ -51,12 +51,12 @@
       "similarName": "Hermit",
       "similarDesigner": "Amelie Le-Roche",
       "similarAwards": "",
-      "ruleText": "<div><b>Setup</b>\n\nClick the reset button to automatically distribute the cards and tokens.\n\n<b>Gameplay</b>\n\nRepeat each of the following steps in order until you reach the door or you activate a lose condition:\n\n<i>1. Draw a Card</i></div><div>\nCheck the playing area:</div><div><ul><li>If 0-1 red volcano icons are visible, draw cards until your hand has 2.</li><li>If 2 or more volcanoes are showing, keep only 1 card in your hand.</li><li>If the deck runs out, draw the leftmost card (behind the meeple) instead. To turn this card over, drag it into your hand. If there are no cards available, you lose.</li></ul></div><div></div><div></div><div><i>2. Play a Card</i></div><div>\nPlay 1 card from your hand into the play area, overlapping and matching the icons, to try to recreate the next lava card’s furniture pattern. Cards must touch existing cards and can overlap not at all, partially, or completely.</div><div><br></div><div>Click a card to rotate it 90 degrees clockwise. Click and drag anywhere on the screen away from a card to move the play area around as needed.\n\n<i>3. Move the Meeple</i></div><div>\nIf the pattern on the next card has been successfully recreated using at least one icon from the card you played this turn, move the meeple forward onto the next card to the right. Patterns may be mirrored (horizontally or vertically), but the icon order must match. If you have not recreated the pattern, then the meeple stays in place.\n\nTo jump onto the exit door, one of the icons in the pattern must be white. If you get the meeple on the exit door, you win.</div><div><br></div><div><i>4. Move the Door</i>\n\nAfter playing a card, the door moves one card to the right, pushing the exit farther away, unless you were able to move this turn and completed either of the following conditions:</div><div><ul><li>If you lined up 2 matching furniture icons, including one on the card just played, the door does not move.</li><li>If you lined up 2 blue fan icons, the lava is cooled and the exit door moves one card to the left closer to your meeple. If the door and the meeple are on adjacent cards, the door does not move.</li></ul><b>End Game</b>\n\nYou win immediately when the meeple moves onto the exit door.\n\nYou lose if the volcano icon moves past the last lava tile or you run out of cards to draw.</div><div><br></div><div><b>Variations</b></div><div><b><br></b></div><div>Add either or both of these rules to increase the difficulty:</div><div><ul><li>Start with the door on the 8th card instead of the 6th.</li><li>To use the exit door, two of the icons in the pattern must be white.</li></ul></div>",
+      "ruleText": "<div><b>Setup</b>\n\nClick the reset button to automatically distribute the cards and tokens.\n\n<b>Gameplay</b>\n\nRepeat each of the following steps in order until you reach the door or you activate a lose condition:\n\n<i>1. Draw a Card</i></div><div>\nCheck the playing area:</div><div><ul><li>If 0-1 red volcano icons are visible, draw cards until your hand has 2.</li><li>If 2 or more volcanoes are showing, keep only 1 card in your hand.</li><li>If the deck runs out, draw the leftmost card (behind the meeple) instead. To turn this card over, drag it into your hand. If there are no cards available, you lose.</li></ul></div><div></div><div></div><div><i>2. Play a Card</i></div><div>\nPlay 1 card from your hand into the play area, overlapping and matching the icons, to try to recreate the next lava card’s furniture pattern. Cards must touch existing cards and can overlap not at all, partially, or completely.</div><div><br></div><div>Click a card to rotate it 90 degrees clockwise. Click and drag anywhere on the screen away from a card to move the play area around as needed.\n\n<i>3. Move the Meeple</i></div><div>\nIf the pattern on the next card has been successfully recreated using at least one icon from the card you played this turn, move the meeple forward onto the next card to the right. Patterns may be mirrored (horizontally or vertically), but the icon order must match. If you have not recreated the pattern, then the meeple stays in place.\n\nTo jump onto the exit door, one of the icons in the pattern must be white. If you get the meeple on the exit door, you win.</div><div><br></div><div><i>4. Move the Door</i>\n\nAfter playing a card, the door moves one card to the right, pushing the exit farther away, unless you were able to move this turn and completed either of the following conditions:</div><div><ul><li>If you lined up 2 matching furniture icons, including one on the card just played, the door does not move.</li><li>If you lined up 2 blue fan icons, the lava is cooled and the exit door moves one card to the left closer to your meeple. If the door and the meeple are on adjacent cards, the door does not move.</li></ul><b>End Game</b>\n\nYou win immediately when the meeple moves onto the exit door.\n\nYou lose if the door icon moves past the last card or you run out of cards to draw.</div><div><br></div><div><b>Variations</b></div><div><b><br></b></div><div>Add either or both of these rules to increase the difficulty:</div><div><ul><li>Start with the door on the 8th card instead of the 6th.</li><li>To use the exit door, two of the icons in the pattern must be white.</li></ul></div>",
       "helpText": "",
-      "players": "1",
-      "language": "",
+      "variantImage": "",
       "variant": "",
-      "variantImage": ""
+      "language": "",
+      "players": "1"
     }
   },
   "deckHolder": {
@@ -816,7 +816,8 @@
     "dropTarget": {
       "shift": true
     },
-    "movable": true
+    "movable": true,
+    "preventPiles": true
   },
   "hand": {
     "type": "holder",
