@@ -292,96 +292,96 @@
     "type": "card",
     "cardType": "1",
     "id": "40w3",
-    "z": 9150,
-    "parent": "xvch"
+    "z": 9889,
+    "parent": "3tt3"
   },
   "zv9v": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "2",
     "id": "zv9v",
-    "z": 9153,
-    "parent": "xvch"
+    "z": 9899,
+    "parent": "3tt3"
   },
   "6ngl": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "3",
     "id": "6ngl",
-    "z": 9143,
-    "parent": "xvch"
+    "z": 9920,
+    "parent": "3tt3"
   },
   "a9eq": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "4",
     "id": "a9eq",
-    "z": 9157,
-    "parent": "xvch"
+    "z": 9921,
+    "parent": "3tt3"
   },
   "rlmf": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "5",
     "id": "rlmf",
-    "z": 9142,
-    "parent": "xvch"
+    "z": 9897,
+    "parent": "3tt3"
   },
   "9hbj": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "6",
     "id": "9hbj",
-    "z": 9156,
-    "parent": "xvch"
+    "z": 9919,
+    "parent": "3tt3"
   },
   "c10n": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "7",
     "id": "c10n",
-    "z": 9164,
-    "parent": "xvch"
+    "z": 9901,
+    "parent": "3tt3"
   },
   "jpmi": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "8",
     "id": "jpmi",
-    "z": 9140,
-    "parent": "xvch"
+    "z": 9917,
+    "parent": "3tt3"
   },
   "xbn5": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "9",
     "id": "xbn5",
-    "z": 9148,
-    "parent": "xvch"
+    "z": 9910,
+    "parent": "3tt3"
   },
   "zdeg": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "10",
     "id": "zdeg",
-    "z": 9161,
-    "parent": "xvch"
+    "z": 9913,
+    "parent": "3tt3"
   },
   "vvk3": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "11",
     "id": "vvk3",
-    "z": 9139,
-    "parent": "xvch"
+    "z": 9922,
+    "parent": "3tt3"
   },
   "0jgz": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "12",
     "id": "0jgz",
-    "z": 9147,
-    "parent": "xvch"
+    "z": 9924,
+    "parent": "3tt3"
   },
   "background": {
     "id": "background",
@@ -772,192 +772,192 @@
     "type": "card",
     "cardType": "1",
     "id": "ug6j",
-    "z": 9162,
-    "parent": "xvch"
+    "z": 9894,
+    "parent": "3tt3"
   },
   "f9sn": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "2",
     "id": "f9sn",
-    "z": 9163,
-    "parent": "xvch"
+    "z": 9918,
+    "parent": "3tt3"
   },
   "h0se": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "3",
     "id": "h0se",
-    "z": 9154,
-    "parent": "xvch"
+    "z": 9911,
+    "parent": "3tt3"
   },
   "38cy": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "4",
     "id": "38cy",
-    "z": 9171,
-    "parent": "xvch"
+    "z": 9902,
+    "parent": "3tt3"
   },
   "amgn": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "5",
     "id": "amgn",
-    "z": 9145,
-    "parent": "xvch"
+    "z": 9906,
+    "parent": "3tt3"
   },
   "xkqa": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "6",
     "id": "xkqa",
-    "z": 9146,
-    "parent": "xvch"
+    "z": 9904,
+    "parent": "3tt3"
   },
   "ehap": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "7",
     "id": "ehap",
-    "z": 9170,
-    "parent": "xvch"
+    "z": 9916,
+    "parent": "3tt3"
   },
   "q77r": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "8",
     "id": "q77r",
-    "z": 9138,
-    "parent": "xvch"
+    "z": 9914,
+    "parent": "3tt3"
   },
   "zz9b": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "9",
     "id": "zz9b",
-    "z": 9159,
-    "parent": "xvch"
+    "z": 9903,
+    "parent": "3tt3"
   },
   "7zs4": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "10",
     "id": "7zs4",
-    "z": 9173,
-    "parent": "xvch"
+    "z": 9908,
+    "parent": "3tt3"
   },
   "7hwl": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "11",
     "id": "7hwl",
-    "z": 9172,
-    "parent": "xvch"
+    "z": 9909,
+    "parent": "3tt3"
   },
   "o8pq": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "12",
     "id": "o8pq",
-    "z": 9158,
-    "parent": "xvch"
+    "z": 9907,
+    "parent": "3tt3"
   },
   "nwu3": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "1",
     "id": "nwu3",
-    "z": 9152,
-    "parent": "xvch"
+    "z": 9898,
+    "parent": "3tt3"
   },
   "mexi": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "2",
     "id": "mexi",
-    "z": 9165,
-    "parent": "xvch"
+    "z": 9912,
+    "parent": "3tt3"
   },
   "vnud": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "3",
     "id": "vnud",
-    "z": 9155,
-    "parent": "xvch"
+    "z": 9893,
+    "parent": "3tt3"
   },
   "ozhf": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "4",
     "id": "ozhf",
-    "z": 9167,
-    "parent": "xvch"
+    "z": 9905,
+    "parent": "3tt3"
   },
   "br25": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "5",
     "id": "br25",
-    "z": 9141,
-    "parent": "xvch"
+    "z": 9923,
+    "parent": "3tt3"
   },
   "zg2t": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "6",
     "id": "zg2t",
-    "z": 9151,
-    "parent": "xvch"
+    "z": 9900,
+    "parent": "3tt3"
   },
   "dm24": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "7",
     "id": "dm24",
-    "z": 9144,
-    "parent": "xvch"
+    "z": 9892,
+    "parent": "3tt3"
   },
   "9srd": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "8",
     "id": "9srd",
-    "z": 9168,
-    "parent": "xvch"
+    "z": 9891,
+    "parent": "3tt3"
   },
   "qnxb": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "9",
     "id": "qnxb",
-    "z": 9166,
-    "parent": "xvch"
+    "z": 9890,
+    "parent": "3tt3"
   },
   "si04": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "10",
     "id": "si04",
-    "z": 9169,
-    "parent": "xvch"
+    "z": 9915,
+    "parent": "3tt3"
   },
   "43n0": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "11",
     "id": "43n0",
-    "z": 9160,
-    "parent": "xvch"
+    "z": 9896,
+    "parent": "3tt3"
   },
   "g45m": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "12",
     "id": "g45m",
-    "z": 9149,
-    "parent": "xvch"
+    "z": 9895,
+    "parent": "3tt3"
   },
   "seat1": {
     "type": "seat",
@@ -1061,8 +1061,7 @@
           }
         ]
       }
-    ],
-    "turn": true
+    ]
   },
   "seat4": {
     "type": "seat",
@@ -1167,7 +1166,8 @@
           }
         ]
       }
-    ]
+    ],
+    "turn": true
   },
   "seat1C": {
     "id": "seat1C",
@@ -1683,9 +1683,9 @@
   "capture1-1": {
     "type": "holder",
     "id": "capture1-1",
-    "x": -60,
-    "width": 45,
-    "height": 45,
+    "x": -50,
+    "width": 40,
+    "height": 40,
     "z": 4,
     "css": {
       "overflow": "hidden"
@@ -1729,8 +1729,8 @@
     },
     "type": "holder",
     "id": "capture1-2",
-    "x": -60,
-    "y": 75,
+    "x": -50,
+    "y": 40,
     "capture": 2
   },
   "capture1-3": {
@@ -1739,8 +1739,9 @@
     },
     "type": "holder",
     "id": "capture1-3",
-    "x": -60,
-    "y": 151
+    "x": -50,
+    "y": 80,
+    "capture": 3
   },
   "holder2": {
     "inheritFrom": {
@@ -1912,15 +1913,6 @@
       "capture1-3": "*"
     }
   },
-  "xvch": {
-    "type": "pile",
-    "parent": "deckHolder",
-    "x": 4,
-    "y": 4,
-    "width": 103,
-    "height": 160,
-    "id": "xvch"
-  },
   "_meta": {
     "version": 17,
     "info": {
@@ -1932,7 +1924,7 @@
       "mode": "vs",
       "time": "15",
       "attribution": "<div>Room and card layout, coding, and library image by LawDawg. Released to the Public Domain under CC0.</div><div><br></div><div>Wood grain background by RyanPro available under the Pixabay license from https://pixabay.com/photos/trees-wood-yellow-wood-oak-1915247/</div>",
-      "lastUpdate": 1751001603964,
+      "lastUpdate": 1751053188513,
       "showName": true,
       "skill": "",
       "description": "Be the first to collect three sets of three matching cards to win in this memory and deduction card game.",
@@ -1942,10 +1934,119 @@
       "similarAwards": "2024 UK Games Expo Best Card Game (General) Judges Award Winner\n2024 Spiel des Jahres Recommended\n2024 MinD-Spielepreis Short Game Nominee\n2024 Guldbrikken Best Family Game Nominee\n2024 Gra Roku Best Party Game Nominee\n2024 As d'Or - Jeu de l'Année Winner\n2023 Swiss Gamers Award Family Nominee",
       "ruleText": "<div><b>Setup</b></div><div><br></div>Players sit in seats. Click the Restart button to begin. Cards will automatically be dealt to players and to the board based on the number of players. Cards are sorted in the hand from lowest to highest. A random player is selected to start.<div><br></div><div><b>Gameplay</b><br><div><br></div><div>During a turn a player can either:</div><div>&nbsp;- Flip over one card at a time on the board by clicking on it</div><div>&nbsp;- Or have any player (including the player whose turn it is) show their lowest or highest card. When a player is asked to show a card, drag it from the hand to the holder above the seat.</div><div><br></div><div>The player keeps revealing cards until either the card does not match, or when the player has revealed all three matching cards.</div><div><br></div><div>When the turn is over, the player presses the End Turn button to the right of the seat. If the player got a successful match of 3 cards, the cards will be collected and displayed in a small area to the left of the player's holder. If the player did not get a match, the cards on the board are flipped face down and the cards from players' hands are returned to those players. The turn indicator then advances to the next player.</div><div><br></div><div><b>End of game</b></div><div><br></div><div>Play continues clockwise (left to right in the room) until one player collects three 7s or collects three sets of three.</div><div><br></div><div><b>Variations</b></div><div><br></div><div>1. In the advanced mode, a player wins by collecting three 7s or by collection two connected sets of three. The possible connections are listed at the bottom left and right corners of the card. For example, on the 1 card, the player wins if they collect all three 1s and either all three 6s or all three 8s.</div></div><div><br></div><div>2. In team play, players form two (4 players) or three (6 players) teams of two. After the cards are dealt, players may simultaneously and secretly swap one card with their teammate. Each time a team wins a set of three, the other team(s) can swap a single card again. Partners share their sets of three cards. The same win conditions apply: collect the 7s, collect three sets of three, or if playing the advanced variant, collect two connected sets of three.</div>",
       "helpText": "",
-      "players": "3-6",
-      "language": "",
+      "variantImage": "",
       "variant": "",
-      "variantImage": ""
+      "language": "",
+      "players": "3-6"
     }
+  },
+  "capture1-4": {
+    "inheritFrom": {
+      "capture1-1": "*"
+    },
+    "type": "holder",
+    "id": "capture1-4",
+    "x": -50,
+    "y": 120,
+    "capture": 4
+  },
+  "capture2-4": {
+    "type": "holder",
+    "id": "capture2-4",
+    "parent": "holder2",
+    "inheritFrom": {
+      "capture1-4": "*"
+    }
+  },
+  "capture3-4": {
+    "type": "holder",
+    "id": "capture3-4",
+    "parent": "holder3",
+    "inheritFrom": {
+      "capture1-4": "*"
+    }
+  },
+  "capture4-4": {
+    "type": "holder",
+    "id": "capture4-4",
+    "parent": "holder4",
+    "inheritFrom": {
+      "capture1-4": "*"
+    }
+  },
+  "capture5-4": {
+    "type": "holder",
+    "id": "capture5-4",
+    "parent": "holder5",
+    "inheritFrom": {
+      "capture1-4": "*"
+    }
+  },
+  "capture6-4": {
+    "type": "holder",
+    "id": "capture6-4",
+    "parent": "holder6",
+    "inheritFrom": {
+      "capture1-4": "*"
+    }
+  },
+  "capture1-5": {
+    "inheritFrom": {
+      "capture1-1": "*"
+    },
+    "type": "holder",
+    "id": "capture1-5",
+    "x": -50,
+    "y": 160,
+    "capture": 5
+  },
+  "capture2-5": {
+    "type": "holder",
+    "id": "capture2-5",
+    "parent": "holder2",
+    "inheritFrom": {
+      "capture1-5": "*"
+    }
+  },
+  "capture3-5": {
+    "type": "holder",
+    "id": "capture3-5",
+    "parent": "holder3",
+    "inheritFrom": {
+      "capture1-5": "*"
+    }
+  },
+  "capture4-5": {
+    "type": "holder",
+    "id": "capture4-5",
+    "parent": "holder4",
+    "inheritFrom": {
+      "capture1-5": "*"
+    }
+  },
+  "capture5-5": {
+    "type": "holder",
+    "id": "capture5-5",
+    "parent": "holder5",
+    "inheritFrom": {
+      "capture1-5": "*"
+    }
+  },
+  "capture6-5": {
+    "type": "holder",
+    "id": "capture6-5",
+    "parent": "holder6",
+    "inheritFrom": {
+      "capture1-5": "*"
+    }
+  },
+  "3tt3": {
+    "type": "pile",
+    "parent": "deckHolder",
+    "x": 4,
+    "y": 4,
+    "width": 103,
+    "height": 160,
+    "id": "3tt3"
   }
 }
