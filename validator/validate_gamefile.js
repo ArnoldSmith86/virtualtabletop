@@ -1,0 +1,752 @@
+const validators = {
+    asset: v=>String(v).match(/^\/assets\/-?[0-9]+_[0-9]+$|^\/i\/|^http/) || 'asset expected (format: /assets/1_1, /i/icon.png or http://example.com/image.png)',
+    routineProperty: v=>String(v).match(/.Routine$/) || 'routine name expected (format: myRoutine)',
+    idArray: (v,p)=>asArray(v).every(id=>p.widgets[id]) || `widgets ${asArray(v).filter(id=>!p.widgets[id]).join(', ')} not found`,
+    id: (v,p)=>p.widgets[v] || `widget '${v}' not found`,
+    number: v=>typeof v === 'number' || 'number expected',
+    object: v=>typeof v === 'object' && v !== null || 'object expected',
+    boolean: v=>typeof v === 'boolean' || 'boolean expected',
+    string: v=>typeof v === 'string' || 'string expected',
+    inCollection: (v,p)=>{
+        if(p.validCollections[v])
+            return true;
+        if(typeof v === 'string' && p.widgets[v])
+            return `Collection '${v}' not found but it is a widget ID. Did you mean ['${v}'] as an anonymous collection?`;
+        if(typeof v === 'string')
+            return `Collection '${v}' is undefined.`;
+        if(Array.isArray(v) && v.every(id=>p.widgets[id]))
+            return true;
+        if(Array.isArray(v) && v.length === 1 && p.validCollections[v[0]])
+            return `Widget '${v[0]}' does not exist but it is a valid collection. Did you mean '${v[0]}' (without brackets)?`;
+        return false;
+    },
+    routine: (v,p)=>{
+        const context = { widgetId: p.widgetId, widgets: p.widgets, validVariables: p.validVariables || { activeColors: 1, mouseCoords: 1, seatIndex: 1, seatID: 1, activeSeats: 1, playerName: 1, playerColor: 1, activePlayers: 1, thisID: 1}, validCollections: p.validCollections || { playerSeats: 1, activeSeats: 1, thisButton: 1 } };
+        const errors = validateRoutine(v,context);
+        if(errors.length > 0)
+            return errors.join(', ');
+        return true;
+    },
+    positiveNumber: v=>typeof v === 'number' && v >= 0 || 'positive number expected',
+    property: (v,p)=>Object.values(WIDGET_PROPERTIES).some(props=>Object.keys(props).includes(v)) || Object.values(p.widgets).some(w=>w[v] !== undefined) || `property '${v}' not found`,
+    vttSymbol: v=>v === null || typeof v === 'string', // TODO: replace with actual VTT symbol name check if available
+    countOrAll: v=>v === 'all' || typeof v === 'number' || 'number or "all" expected',
+    any: v=>true
+}
+
+// Common properties for all widgets
+const COMMON_PROPERTIES = {
+    id: 'string',
+    type: 'string',
+    display: 'boolean',
+    x: 'number',
+    y: 'number',
+    z: 'number',
+    width: 'number',
+    height: 'number',
+    layer: 'number',
+    borderRadius: 'any',
+    rotation: 'number',
+    scale: 'number',
+    dragLimit: 'any',
+    classes: 'string',
+    css: 'any',
+    movable: 'boolean',
+    movableInEdit: 'boolean',
+    clickable: 'boolean',
+    clickSound: 'any',
+    grid: 'any',
+    enlarge: 'any',
+    overlap: 'any',
+    ignoreOnLeave: 'any',
+    parent: 'id',
+    fixedParent: 'boolean',
+    inheritFrom: 'any',
+    owner: v=>typeof v === 'string' || Array.isArray(v) || 'string or array of strings expected',
+    dragging: 'string',
+    dropOffsetX: 'number',
+    dropOffsetY: 'number',
+    dropShadowOwner: 'string',
+    dropShadowWidget: 'id',
+    dropTarget: 'id',
+    dropLimit: 'number',
+    inheritChildZ: 'boolean',
+    hoverTarget: 'id',
+    hoverParent: 'id',
+    hidePlayerCursors: 'boolean',
+    linkedToSeat: 'id',
+    onlyVisibleForSeat: 'id',
+    hoverInheritVisibleForSeat: 'boolean',
+    clickRoutine: 'routine',
+    changeRoutine: 'routine',
+    enterRoutine: getRoutineValidator({}, {'child': 1}),
+    leaveRoutine: 'routine',
+    globalUpdateRoutine: 'routine',
+    gameStartRoutine: 'routine',
+    hotkey: 'string',
+    animatePropertyChange: 'any',
+    resetProperties: 'object',
+    clonedFrom: 'string'
+};
+
+const WIDGET_PROPERTIES = {
+    BasicWidget: {
+        ...COMMON_PROPERTIES,
+        faces: 'any', faceCycle: 'any', activeFace: 'any', image: 'any', color: 'any', svgReplaces: 'any', text: 'any', html: 'any'
+    },
+    Canvas: {
+        ...COMMON_PROPERTIES,
+        artist: 'any', resolution: 'any', activeColor: 'any', colorMap: 'any'
+    },
+    Card: {
+        ...COMMON_PROPERTIES,
+        faceCycle: 'any', activeFace: 'any', deck: 'any', cardType: 'string', onPileCreation: 'object'
+    },
+    Dice: {
+        ...COMMON_PROPERTIES,
+        classes: 'any', clickable: 'boolean', movable: 'boolean', layer: 'any', borderRadius: 'any', color: 'any', pipColor: 'any', borderColor: 'any', faces: v=>Array.isArray(v) || 'faces must be an array', activeFace: 'any', rollCount: 'any', rollTime: 'any', swapTime: 'any', image: 'any', imageScale: 'any', text: 'any', pips: 'any', svgReplaces: 'any', faceCSS: 'any', pipSymbols: 'any', shape3d: 'any'
+    },
+    Holder: {
+        ...COMMON_PROPERTIES,
+        movable: 'boolean', layer: 'number', dropTarget: 'any', dropOffsetX: 'number', dropOffsetY: 'number', dropShadow: 'any', alignChildren: 'any', preventPiles: 'any', childrenPerOwner: 'any', showInactiveFaceToSeat: 'any', onEnter: 'object', onLeave: 'object', stackOffsetX: 'number', stackOffsetY: 'number', borderRadius: 'any'
+    },
+    Label: {
+        ...COMMON_PROPERTIES,
+        height: 'number', movable: 'boolean', layer: 'any', clickable: 'boolean', spellCheck: 'any', tabIndex: 'any', placeholderText: 'any', text: 'any', editable: 'any', twoRowBottomAlign: 'any'
+    },
+    Pile: {
+        ...COMMON_PROPERTIES,
+        typeClasses: 'any', x: 'number', y: 'number', alignChildren: 'any', inheritChildZ: 'any', text: 'any', pileSnapRange: 'any', handleCSS: 'any', handleSize: 'any', handleOffset: 'any', handlePosition: 'any'
+    },
+    Scoreboard: {
+        ...COMMON_PROPERTIES,
+        movable: 'boolean', layer: 'any', playersInColumns: 'any', rounds: 'any', roundLabel: 'any', totalsLabel: 'any', scoreProperty: 'any', firstColWidth: 'any', verticalHeader: 'any', seats: 'any', showAllRounds: 'any', showAllSeats: 'any', showPlayerColors: 'any', showTotals: 'any', sortField: 'any', sortAscending: 'any', currentRound: 'any', autosizeColumns: 'any', borderRadius: 'any', editPaneTitle: 'any'
+    },
+    Seat: {
+        ...COMMON_PROPERTIES,
+        typeClasses: 'any', movable: 'boolean', index: 'any', turn: 'any', skipTurn: 'any', player: 'any', display: 'any', displayEmpty: 'any', hideTurn: 'any', hideWhenUnused: 'any', hand: 'any', color: 'any', colorEmpty: 'any', layer: 'any', borderRadius: 'any'
+    },
+    Spinner: {
+        ...COMMON_PROPERTIES,
+        options: 'any', value: 'any', angle: 'any', backgroundCSS: 'any', spinnerCSS: 'any', valueCSS: 'any', textColor: 'any', lineColor: 'any', borderRadius: 'any'
+    },
+    Timer: {
+        ...COMMON_PROPERTIES,
+        layer: 'any', movable: 'boolean', milliseconds: 'any', precision: 'any', paused: 'any', alert: 'any', countdown: 'any', start: 'any', end: 'any'
+    },
+    Button: {
+        ...COMMON_PROPERTIES,
+        layer: 'any', movable: 'boolean', image: 'any', color: 'any', svgReplaces: 'any', backgroundColor: 'any', borderColor: 'any', textColor: 'any', backgroundColorOH: 'any', borderColorOH: 'any', textColorOH: 'any', text: 'any', borderRadius: 'any'
+    },
+    Deck: {
+        ...COMMON_PROPERTIES,
+        clickable: 'boolean', cardDefaults: 'any', cardTypes: 'any', borderRadius: 'any',
+        faceTemplates: v=>{
+            if(!Array.isArray(v))
+                return 'faceTemplates must be an array of face definitions, each containing an array of objects';
+            for(const [faceIndex, face] of v.entries()) {
+                if(typeof face !== 'object' || face === null)
+                    return `faceTemplate ${faceIndex} must be an object`;
+                
+                // Check for $ in face-level properties
+                for(const [key, value] of Object.entries(face)) {
+                    const dollarCheck = checkForDollarSign(value, `faceTemplate ${faceIndex}.${key}`);
+                    if(dollarCheck) return dollarCheck;
+                }
+                
+                // Check for unused face-level properties
+                const validFaceProps = ['css', 'classes', 'border', 'radius', 'objects', 'type', 'properties'];
+                const unusedFaceProps = Object.keys(face).filter(k => !validFaceProps.includes(k));
+                if(unusedFaceProps.length > 0) {
+                    return `faceTemplate ${faceIndex} has unused properties: ${unusedFaceProps.join(', ')}. Valid face properties: ${validFaceProps.join(', ')}`;
+                }
+                
+                // Check objects array if present
+                if(Array.isArray(face.objects)) {
+                    for(const [objIndex, obj] of face.objects.entries()) {
+                        if(typeof obj !== 'object' || obj === null)
+                            return `faceTemplate ${faceIndex} object ${objIndex} must be an object`;
+                        
+                        // Check for $ in object properties
+                        for(const [key, value] of Object.entries(obj)) {
+                            const dollarCheck = checkForDollarSign(value, `faceTemplate ${faceIndex} object ${objIndex}.${key}`);
+                            if(dollarCheck) return dollarCheck;
+                        }
+                        
+                        // Check for properties defined both directly and through dynamicProperties
+                        if(obj.dynamicProperties && typeof obj.dynamicProperties === 'object') {
+                            const directProps = Object.keys(obj);
+                            const dynamicProps = Object.keys(obj.dynamicProperties);
+                            const conflictingProps = dynamicProps.filter(prop => directProps.includes(prop));
+                            if(conflictingProps.length > 0) {
+                                return `faceTemplate ${faceIndex} object ${objIndex} has properties defined both directly and through dynamicProperties: ${conflictingProps.join(', ')}. The static value will be used instead of the dynamic one.`;
+                            }
+                        }
+                        
+                        const validObjProps = ['type', 'x', 'y', 'width', 'height', 'fontSize', 'textAlign', 'rotation', 'display', 'classes', 'css', 'dynamicProperties', 'svgReplaces', 'value', 'color'];
+                        const unusedObjProps = Object.keys(obj).filter(k => !validObjProps.includes(k));
+                        if(unusedObjProps.length > 0) {
+                            return `faceTemplate ${faceIndex} object ${objIndex} has unused properties: ${unusedObjProps.join(', ')}. Valid object properties: ${validObjProps.join(', ')}`;
+                        }
+                    }
+                }
+            }
+            return true;
+        }
+    }
+};
+
+// Map lowercase type to canonical type name
+const TYPE_MAP = {};
+for (const type of Object.keys(WIDGET_PROPERTIES)) {
+    TYPE_MAP[type.toLowerCase()] = type;
+}
+
+const ALLOWED_LANGUAGES = [
+    'cy-GB', 'de-DE', 'el-GR', 'en-GB', 'en-US', 'es', 'es-ES', 'fr-FR',
+    'he-IL', 'it-IT', 'pt-BR', 'uk-UA', 'zh-CN', ''
+];
+
+function asArray(value) {
+    if (Array.isArray(value)) return value;
+    if (value === null || value === undefined) return [];
+    return [value];
+}
+
+function unescape(str) {
+    if(typeof str != 'string')
+      return str;
+    return str.replace(/\\u([0-9a-fA-F]{4})/g, function(m, c) {
+      return String.fromCharCode(parseInt(c, 16));
+    });
+}
+
+function getWidgetType(widget) {
+    const t = widget.type;
+    if (!t) {
+        return "BasicWidget";
+    }
+    return TYPE_MAP[t.toLowerCase()] || "BasicWidget";
+}
+
+function parseStringOperation(a) {
+    const identifier = '(?:[a-zA-Z0-9_-]|\\\\u[0-9a-fA-F]{4})+';
+    const string     = `'((?:[ !#-&(-[\\]-~]|\\\\u[0-9a-fA-F]{4})*)'`;
+    const number     = '(-?(?:0|[1-9][0-9]*)(?:\\.[0-9]+)?)';
+    const variable   = `(\\$\\{[^}]+\\})`;
+    const parameter  = `(null|true|false|\\[\\]|\\{\\}|${number}|${variable}|${string})`;
+
+    const left       = `var (\\$)?(${identifier})(?:\\.(\\$)?(${identifier}))?`;
+    const operation  = `${identifier}|[=+*/%<!>&|-]{1,3}`;
+
+    const regex      = `^${left} += +(?:${parameter}|(?:${parameter} +)?(🧮)?(${operation})(?: +${parameter})?(?: +${parameter})?(?: +${parameter})?)(?: *|(?: +//.*))?`;
+
+    const match = a.match(new RegExp(regex + '\x24')); // the minifier doesn't like a "$" here
+
+    if(match)
+        return match;
+
+    const withoutVars = a.replace(new RegExp(variable, 'g'), '').replace(/false|null/g, 0).replace(/true/g, 1);
+    const mathExpression = withoutVars.match(new RegExp(`^${left} += +([() 0-9.&|!*/+-]+)(?: +//.*)?`+'\x24'));
+    return mathExpression;
+}
+
+function parsePropertySyntax(string) {
+    const identifierWithSpace = '(?:[a-zA-Z0-9 _-]|\\\\u[0-9a-fA-F]{4})+';
+    const property            = `PROPERTY (\\$)?(${identifierWithSpace}?)(?: OF (\\$)?(${identifierWithSpace}))?`;
+    const match               = string.match(new RegExp(`^\\$\\{(?:${property})\\}` + '\x24'));
+
+    return match;
+}
+
+function validateRoutine(routine, context) {
+    const errors = [];
+
+    if (!Array.isArray(routine)) {
+        errors.push(`Widget '${context.widgetId}': routine must be an array`);
+        return errors;
+    }
+    
+    for (let i = 0; i < routine.length; i++) {
+        const operation = routine[i];
+        
+        if (typeof operation === 'string') {
+            if(operation.startsWith('//'))
+                continue;
+
+            const match = parseStringOperation(operation);
+            if(match) {
+                if(match[1] === undefined)
+                    context.validVariables[unescape(match[2])] = 1;
+            } else {
+                errors.push(`Widget '${context.widgetId}': routine operation ${i} is not a valid string operation: ${operation}`);
+            }
+            continue;
+        }
+        
+        if (typeof operation !== 'object' || operation === null) {
+            errors.push(`Widget '${context.widgetId}': routine operation ${i} must be an object or string`);
+            continue;
+        }
+        
+        if (!operation.func) {
+            errors.push(`Widget '${context.widgetId}': routine operation ${i} missing 'func' property`);
+            continue;
+        }
+        
+        // Validate operation properties based on func type
+        const func = operation.func;
+        const knownProps = operationProps[func];
+
+        if(!knownProps) {
+            errors.push(`Widget '${context.widgetId}': routine operation ${i} (${func}) has unknown function (valid functions: ${Object.keys(operationProps).join(', ')})`);
+            continue;
+        }
+        
+        for (const prop of Object.keys(operation)) {
+            if (prop === 'func') continue;
+            
+            // Handle both Set and object-based property definitions
+            const isKnown = knownProps instanceof Set ? knownProps.has(prop) : knownProps[prop] !== undefined;
+            let propMatch, varMatch;
+            
+            if (!isKnown) {
+                errors.push(`Widget '${context.widgetId}': routine operation ${i} (${func}) has unknown property '${prop}' (valid properties: ${Object.keys(knownProps).join(', ')})`);
+            } else if (knownProps instanceof Set) {
+                // No validation for Set-based properties
+                continue;
+            } else if (propMatch = parsePropertySyntax(String(operation[prop]))) {
+                if(propMatch[1] && !context.validVariables[propMatch[2]])
+                    errors.push(`Widget '${context.widgetId}': routine operation ${i} (${func}) uses undefined variable '${propMatch[2]}' in '${operation[prop]}'`);
+                else if(propMatch[3] && !context.validVariables[propMatch[4]])
+                    errors.push(`Widget '${context.widgetId}': routine operation ${i} (${func}) uses undefined variable '${propMatch[4]}' in '${operation[prop]}'`);
+                else if(!propMatch[3] && propMatch[4] && !context.widgets[propMatch[4]])
+                    errors.push(`Widget '${context.widgetId}': routine operation ${i} (${func}) uses invalid widget '${propMatch[4]}' in '${operation[prop]}'`);
+                else
+                    continue;
+            } else if (varMatch = String(operation[prop]).match(/^\$\{([^.}]+)(?:\.[^.}]+)?\}$/)) {
+                if(context.validVariables[varMatch[1]])
+                    continue;
+                errors.push(`Widget '${context.widgetId}': routine operation ${i} (${func}) uses undefined variable '${varMatch[1]}'`);
+                continue;
+            } else if(String(operation[prop]).match(/\$\{([^.}]+)(?:\.[^.}]+)?\}/)) {
+                continue;
+            } else {
+                const validator = validators[knownProps[prop]] || knownProps[prop];
+                if (validator) {
+                    const result = validator(operation[prop], context);
+                    if (typeof result === 'string') {
+                        errors.push(`Widget '${context.widgetId}': routine operation ${i} (${func}) has invalid property '${prop}': ${result}`);
+                    } else if (!result) {
+                        errors.push(`Widget '${context.widgetId}': routine operation ${i} (${func}) has invalid property '${prop}'`);
+                    }
+                }
+            }
+        }
+
+        // variable tracking
+        if(func === 'COUNT')
+            context.validVariables[operation.variable || 'COUNT'] = 1;
+        if(func === 'GET')
+            context.validVariables[operation.variable || operation.property || 'id'] = 1;
+        if(func === 'INPUT' && Array.isArray(operation.fields))
+            for(const field of operation.fields)
+                if(typeof field.variable === 'string')
+                    context.validVariables[field.variable] = 1;
+        if(func === 'VAR' && typeof operation.variables === 'object' && operation.variables !== null)
+            for(const key of Object.keys(operation.variables))
+                context.validVariables[key] = 1;
+    }
+    
+    return errors;
+}
+
+function getEnumValidator(values) {
+    return v=>values.includes(v) || `'${v}' is not in the allowed list of values: ${values.join(', ')}`;
+}
+
+function getRoutineValidator(variables, collections) {
+    return (v, context) => {
+        context = JSON.parse(JSON.stringify(context));
+        context.validVariables = Object.assign({}, context.validVariables, variables);
+        context.validCollections = Object.assign({}, context.validCollections, collections);
+        const errors = validateRoutine(v, context);
+        if(errors.length > 0)
+            return errors.join(', ');
+        return true;
+    }
+}
+
+function getWidgetTypeValidator(types, canBeArray = false) {
+    return (v, context) => {
+        if(!canBeArray && Array.isArray(v))
+            return 'should not be an array';
+        for(const id of asArray(v)) {
+            if(!context.widgets[id])
+                return `'${id}' is not a widget`;
+            if(!types.includes(context.widgets[id].type))
+                return `'${id}' is not a valid widget type (found ${context.widgets[id].type} - valid types: ${types.join(', ')})`;
+        }
+        return true;
+    }
+}
+
+function checkForDollarSign(value, path) {
+    if (typeof value === 'string' && value.includes('$')) {
+        return `Property '${path}' contains '$' - use dynamicProperties to map widget property names to face object properties instead`;
+    }
+    if (typeof value === 'object' && value !== null) {
+        for (const [key, val] of Object.entries(value)) {
+            const result = checkForDollarSign(val, `${path}.${key}`);
+            if (result) return result;
+        }
+    }
+    return null;
+}
+
+const operationProps = {
+    'AUDIO': {
+        'source':    'asset',
+        'maxVolume': v => typeof v === 'number' && v >= 0 && v <= 1,
+        'length':    v => v === null || (typeof v === 'number' && v >= 0),
+        'player':    v => v === null || typeof v === 'string' || (Array.isArray(v) && v.every(x => typeof x === 'string')),
+        'count':     v => v === 'loop' || (typeof v === 'number' && v >= 0),
+        'silence':   'boolean'
+    },
+    'CALL': { 
+        'routine':   'routineProperty', 
+        'widget':    'idArray', 
+        'variable':  'string',
+        'return':    'boolean',
+        'arguments': 'object'
+    },
+    'CANVAS': { 
+        'canvas':     'idArray', 
+        'collection': 'inCollection', 
+        'color':      v=>typeof v === 'string' && /^#[0-9A-Fa-f]{3,8}$/.test(v) || 'color expected (format: #RGB, #RGBA, #RRGGBB or #RRGGBBAA)',
+        'mode':       getEnumValidator(['set', 'inc', 'dec', 'change', 'reset', 'setPixel']),
+        'value':      'positiveNumber',
+        'x':          'positiveNumber',
+        'y':          'positiveNumber'
+    },
+    'CLICK': { 
+        'collection': 'inCollection', 
+        'count':      'positiveNumber',
+        'mode':       getEnumValidator(['respect', 'ignoreClickable', 'ignoreClickRoutine', 'ignoreAll'])
+    },
+    'CLONE': { 
+        'source':     'inCollection', 
+        'count':      'positiveNumber',
+        'xOffset':    'number',
+        'yOffset':    'number',
+        'properties': 'object',
+        'recursive':  'boolean',
+        'collection': 'string'
+    },
+    'COUNT': { 
+        'collection': 'inCollection', 
+        'holder':     'idArray',
+        'owner':      'string',
+        'variable':   'string'
+    },
+    'DELETE': { 
+        'collection': 'inCollection'
+    },
+    'FLIP': { 
+        'holder':     'idArray', 
+        'collection': 'inCollection', 
+        'count':      'countOrAll',
+        'face':       'number',
+        'faceCycle':  getEnumValidator(['forward', 'backward', 'random'])
+    },
+    'FOREACH': {
+        'collection': 'inCollection',
+        'in': v=>typeof v === 'string' || Array.isArray(v) || (typeof v === 'object' && v !== null),
+        'range': v=>Array.isArray(v) ? (v.length >= 1 && v.length <= 3 && v.every(x=>typeof x === 'number' || typeof x === 'string')) : (typeof v === 'number' || typeof v === 'string'),
+        'loopRoutine': getRoutineValidator({'value': 1, 'key': 1}, {})
+    },
+    'GET': {
+        'collection':  'inCollection',
+        'property':    'property',
+        'variable':    'string',
+        'aggregation': v=>v === null || ['first', 'last', 'sum', 'average', 'median', 'min', 'max', 'array'].includes(v) || `aggregation must be one of: first, last, sum, average, median, min, max, array`,
+        'skipMissing': 'boolean'
+    },
+    'IF': {
+        'condition':   'any',
+        'relation':    getEnumValidator(['<','<=','==','!=','>=','>']),
+        'operand1':    'any',
+        'operand2':    'any',
+        'thenRoutine': 'routine',
+        'elseRoutine': 'routine'
+    },
+    'INPUT': {
+        'cancelButtonIcon': 'vttSymbol',
+        'cancelButtonText': v=>v === null || typeof v === 'string',
+        'confirmButtonIcon': 'vttSymbol',
+        'confirmButtonText': v=>v === null || typeof v === 'string',
+        'header': v=>typeof v === 'string',
+        'fields': v=>Array.isArray(v) || 'fields must be an array'
+    },
+    'LABEL': {
+        'label': 'idArray',
+        'collection': 'inCollection',
+        'mode': getEnumValidator(['set','inc','dec','append']),
+        'value': v=>typeof v === 'string' || typeof v === 'number' || v === undefined
+    },
+    'MOVE': {
+        'from': getWidgetTypeValidator(['holder', 'seat'], true),
+        'collection': 'inCollection',
+        'to': getWidgetTypeValidator(['holder', 'seat'], true),
+        'count': 'countOrAll',
+        'fillTo': 'number',
+        'face': 'positiveNumber'
+    },
+    'MOVEXY': {
+        'from': 'idArray',
+        'count': 'countOrAll',
+        'x': 'number',
+        'y': 'number',
+        'resetOwner': 'boolean',
+        'z': 'number',
+        'face': 'positiveNumber'
+    },
+    'RECALL': {
+        'excludeCollection': 'inCollection',
+        'holder': 'idArray',
+        'inHolder': 'boolean',
+        'owned': 'boolean',
+        'byDistance': 'boolean'
+    },
+    'RESET': {
+        'property': 'string'
+    },
+    'ROTATE': {
+        'holder': 'idArray',
+        'collection': 'inCollection',
+        'angle': 'number',
+        'count': 'countOrAll',
+        'mode': getEnumValidator(['set','add']),
+    },
+    'SCORE': {
+        'mode': getEnumValidator(['set','inc','dec']),
+        'property': 'string',
+        'seats': 'idArray',
+        'round': v=>v === null || (typeof v === 'number' && Number.isInteger(v)),
+        'value': v=>v === null || typeof v === 'number'
+    },
+    'SELECT': {
+        'source': v=>v === 'all' || typeof v === 'string',
+        'type': 'string',
+        'property': 'string',
+        'relation': getEnumValidator(['<','<=','==','===','!=','>=','>','in']),
+        'value': 'any',
+        'max': 'number',
+        'collection': 'string',
+        'mode': getEnumValidator(['set','add','remove','intersect']),
+        'sortBy': 'any',
+        'random': 'boolean'
+    },
+    'SET': {
+        'collection': 'inCollection',
+        'property': 'string',
+        'relation': 'string',
+        'value': 'any'
+    },
+    'SHUFFLE': {
+        'holder': 'idArray',
+        'collection': 'inCollection',
+        'mode': getEnumValidator(['overhand','reverse','riffle','seeded','true random']),
+        'modeValue': 'number'
+    },
+    'SORT': {
+        'holder': 'idArray',
+        'collection': 'inCollection',
+        'key': 'any',
+        'reverse': 'boolean',
+        'locales': 'any',
+        'options': 'any',
+        'rearrange': 'boolean'
+    },
+    'SWAPHANDS': {
+        'interval': v=>typeof v === 'number' && Number.isInteger(v),
+        'direction': getEnumValidator(['forward','backward','random']),
+        'source': 'inCollection'
+    },
+    'TIMER': {
+        'timer': 'string',
+        'collection': 'inCollection',
+        'mode': getEnumValidator(['set','inc','dec','pause','start','toggle','reset']),
+        'value': v=>typeof v === 'number' || typeof v === 'string',
+        'seconds': 'number'
+    },
+    'TURN': {
+        'turn': v=>typeof v === 'number' || v === 'first' || v === 'last',
+        'turnCycle': getEnumValidator(['forward','backward','random','position','seat']),
+        'source': 'inCollection',
+        'collection': 'string'
+    },
+    'VAR': {
+        'variables': 'object'
+    }
+};
+
+function customWidgetChecks(widget, widgets, results) {
+    if(widget.type === 'deck') {
+        for(const prop of ['width', 'height', 'movable', 'layer', 'clickable']) {
+            if(widget[prop] !== undefined) {
+                results.errors.push(`Deck '${widget.id}' uses its '${prop}' property - you probably want to use 'cardDefaults.${prop}' instead`);
+            }
+        }
+        if(widget.cardTypes === undefined) {
+            results.errors.push(`Deck '${widget.id}' has no cardTypes`);
+        } else if(typeof widget.cardTypes === 'object' && widget.cardTypes !== null) {
+            for(const cardType of Object.keys(widget.cardTypes)) {
+                if(!Object.values(widgets).some(w=>w.cardType === cardType)) {
+                    results.errors.push(`Deck '${widget.id}' has unused cardType '${cardType}' - add card widgets with this cardType`);
+                }
+            }
+        }
+        if(widget.faceTemplates === undefined) {
+            results.errors.push(`Deck '${widget.id}' has no faceTemplates - cards will be blank and transparent`);
+        }
+    }
+
+    if(widget.type === 'pile') {
+        if(!Object.values(widgets).some(w=>w.parent === widget.id)) {
+            results.errors.push(`Pile '${widget.id}' has no children - a pile is meant to be a handle for a set of cards or other children (did you mean to use a holder?)`);
+        }
+    }
+}
+
+function validateGameFile(data, checkMeta) {
+    const results = {
+        errors: [],
+        infos: []
+    };
+    
+    // Basic structure validation
+    if (typeof data !== 'object' || data === null) {
+        results.errors.push('Game file must be a JSON object');
+        return results;
+    }
+    
+    // Check for _meta
+    if (checkMeta && !data._meta) {
+        results.errors.push('Missing required _meta object');
+        return results;
+    }
+    
+    // Validate _meta structure
+    if (checkMeta && (typeof data._meta !== 'object' || data._meta === null)) {
+        results.errors.push('_meta must be an object');
+        return results;
+    }
+    
+    // Check for required version
+    if (checkMeta && typeof data._meta.version !== 'number') {
+        results.errors.push('_meta.version is required and must be a number');
+    }
+    
+    // Validate _meta.info if present
+    if (checkMeta && data._meta.info !== undefined) {
+        if (typeof data._meta.info !== 'object' || data._meta.info === null) {
+            results.errors.push('_meta.info must be an object');
+        } else {
+            // Validate info properties - include all properties from the schema
+            const infoProps = [
+                'name', 'image', 'rules', 'bgg', 'year', 'mode', 'time', 'attribution', 
+                'lastUpdate', 'language', 'showName', 'skill', 'description', 'similarImage', 
+                'similarName', 'similarDesigner', 'similarAwards', 'ruleText', 'helpText', 
+                'players', 'variant', 'variantImage'
+            ];
+            for (const prop of Object.keys(data._meta.info)) {
+                if (!infoProps.includes(prop)) {
+                    results.infos.push(`_meta.info has unknown property '${prop}'`);
+                }
+            }
+        }
+    }
+    
+    // BGG URL validation
+    const bgg = data._meta?.info?.bgg;
+    if (checkMeta && bgg && !/^https?:\/\/(www\.)?boardgamegeek\.com\//.test(bgg)) {
+        results.infos.push(`_meta.info.bgg does not look like a BoardGameGeek URL: ${bgg}`);
+    }
+    
+    // Widget validation
+    for (const [key, widget] of Object.entries(data)) {
+        if (key === "_meta" || typeof widget !== 'object' || widget === null) {
+            continue;
+        }
+        
+        customWidgetChecks(widget, data, results);
+
+        // Basic widget validation
+        if (!widget.id) {
+            results.errors.push(`Widget '${key}' missing required 'id' property`);
+            continue;
+        }
+        
+        if (widget.id !== key) {
+            results.errors.push(`Widget '${key}' id must be the same as the key in the game file`);
+            continue;
+        }
+        
+        if (typeof widget.id !== 'string') {
+            results.errors.push(`Widget '${key}' id must be a string`);
+            continue;
+        }
+        
+        const wtype = getWidgetType(widget);
+        const known = WIDGET_PROPERTIES[wtype];
+        
+        // Check for unrecognized properties
+        for (const prop of Object.keys(widget)) {
+            // For Card, cardType and deck are required, everything else optional
+            if (wtype === "Card" && (prop === "cardType" || prop === "deck")) {
+                continue;
+            }
+            if (!(prop in known)) {
+                results.infos.push(`Widget '${key}' of type '${wtype}' has unrecognized property '${prop}'`);
+            } else {
+                // Validate property value if a validator is defined
+                let validator = known[prop];
+                if (typeof validator === 'string' && validators[validator]) {
+                    validator = validators[validator];
+                }
+                if (typeof validator === 'function') {
+                    const result = validator(widget[prop], {widgetId: key, widgets: data});
+                    if (typeof result === 'string') {
+                        results.errors.push(`Widget '${key}' property '${prop}': ${result}`);
+                    } else if (!result) {
+                        results.errors.push(`Widget '${key}' property '${prop}' is invalid`);
+                    }
+                }
+            }
+        }
+        
+        // Routine validation for properties ending with 'Routine'
+        for (const [propName, propValue] of Object.entries(widget)) {
+            if (propName.endsWith('Routine') && !known[propName] && Array.isArray(propValue)) {
+                const context = { widgetId: key, widgets: data, validVariables: { activeColors: 1, mouseCoords: 1, seatIndex: 1, seatID: 1, activeSeats: 1, playerName: 1, playerColor: 1, activePlayers: 1, thisID: 1}, validCollections: { playerSeats: 1, activeSeats: 1, thisButton: 1 } };
+                const routineErrors = validateRoutine(propValue, context);
+                results.errors.push(...routineErrors);
+            }
+        }
+    }
+    
+    // Language validation
+    const info = data._meta?.info;
+    const language = info?.language || '';
+    if (checkMeta && language && !ALLOWED_LANGUAGES.includes(language)) {
+        results.infos.push(`_meta.info.language '${language}' is not in the allowed list: ${ALLOWED_LANGUAGES.join(', ')}`);
+    }
+    
+    return results;
+}
+
+// Export for use in other modules
+if (typeof module !== 'undefined' && module.exports) {
+    module.exports = { validateGameFile, getWidgetType, validateRoutine };
+} 
