@@ -179,6 +179,7 @@ class DebugModule extends SidebarModule {
     } else {
       $('.staticErrors .success', this.moduleDOM).style.display = 'none';
       $('.staticErrors .validation-table', this.moduleDOM).style.display = 'block';
+      $('.staticErrors .validation-table tbody', this.moduleDOM).innerHTML = '';
       for (const problem of problems) {
         const row = document.createElement('tr');
         row.innerHTML = `
