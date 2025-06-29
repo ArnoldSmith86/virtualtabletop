@@ -2538,9 +2538,10 @@ export class Widget extends StateManaged {
     if(this.isLimbo == isLimbo)
       return;
     if(isLimbo) {
-      const topTransform = getElementTransformRelativeTo(this.domElement, $('#topSurface')) || 'none';
+      const topTransform = getElementTransformRelativeTo(this.domElement, $('#topSurface'));
       $('#topSurface').appendChild(this.domElement);
-      this.domElement.style.transform = topTransform;
+      if(topTransform)
+        this.domElement.style.transform = topTransform;
     }
     this.domElement.classList.toggle('limbo', isLimbo);
     this.isLimbo = isLimbo;
