@@ -24,23 +24,18 @@ if (!filePath) {
 //try {
     const data = JSON.parse(fs.readFileSync(filePath, 'utf8'));
     
-    const results = validateGameFile(data, true);
+    const problems = validateGameFile(data, true);
     
-    // Print info messages
-    for (const info of results.infos) {
-        console.log(`Info: ${info}`);
-    }
-    
-    if (results.errors.length === 0) {
+    if (problems.length === 0) {
         console.log('Valid!');
     } else {
         console.log('Invalid!');
-        for (const error of results.errors) {
-            console.log(`- ${error}`);
+        for (const problem of problems) {
+            console.log(`${problem.widget}[${problem.property.join('.')}]: ${problem.message}`);
         }
     }
     
-    process.exit(results.errors.length === 0 ? 0 : 1);
+    process.exit(problems.length === 0 ? 0 : 1);
     
 //} catch (error) {
 //    console.error(`Error: ${error.message}`);

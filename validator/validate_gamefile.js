@@ -1,6 +1,6 @@
 const validators = {
-    asset: v=>String(v).match(/^\/assets\/-?[0-9]+_[0-9]+$|^\/i\/|^http/) || 'asset expected (format: /assets/1_1, /i/icon.png or http://example.com/image.png)',
-    routineProperty: v=>String(v).match(/.Routine$/) || 'routine name expected (format: myRoutine)',
+    asset: v=>!!String(v).match(/^\/assets\/-?[0-9]+_[0-9]+$|^\/i\/|^http/) || 'asset expected (format: /assets/1_1, /i/icon.png or http://example.com/image.png)',
+    routineProperty: v=>!!String(v).match(/.Routine$/) || 'routine name expected (format: myRoutine)',
     idArray: (v,p)=>asArray(v).every(id=>p.widgets[id]) || `widgets ${asArray(v).filter(id=>!p.widgets[id]).join(', ')} not found`,
     id: (v,p)=>p.widgets[v] || `widget '${v}' not found`,
     number: v=>typeof v === 'number' || 'number expected',
@@ -20,12 +20,9 @@ const validators = {
             return `Widget '${v[0]}' does not exist but it is a valid collection. Did you mean '${v[0]}' (without brackets)?`;
         return false;
     },
-    routine: (v,p)=>{
+    routine: (v,p,propertyPath=[])=>{
         const context = { widgetId: p.widgetId, widgets: p.widgets, validVariables: p.validVariables || { activeColors: 1, mouseCoords: 1, seatIndex: 1, seatID: 1, activeSeats: 1, playerName: 1, playerColor: 1, activePlayers: 1, thisID: 1}, validCollections: p.validCollections || { playerSeats: 1, activeSeats: 1, thisButton: 1 } };
-        const errors = validateRoutine(v,context);
-        if(errors.length > 0)
-            return errors.join(', ');
-        return true;
+        return validateRoutine(v,context,propertyPath);
     },
     positiveNumber: v=>typeof v === 'number' && v >= 0 || 'positive number expected',
     property: (v,p)=>Object.values(WIDGET_PROPERTIES).some(props=>Object.keys(props).includes(v)) || Object.values(p.widgets).some(w=>w[v] !== undefined) || `property '${v}' not found`,
@@ -259,16 +256,21 @@ function parsePropertySyntax(string) {
     return match;
 }
 
-function validateRoutine(routine, context) {
-    const errors = [];
+function validateRoutine(routine, context, propertyPath = []) {
+    const problems = [];
 
     if (!Array.isArray(routine)) {
-        errors.push(`Widget '${context.widgetId}': routine must be an array`);
-        return errors;
+        problems.push({
+            widget: context.widgetId,
+            property: propertyPath,
+            message: 'routine must be an array'
+        });
+        return problems;
     }
     
     for (let i = 0; i < routine.length; i++) {
         const operation = routine[i];
+        const operationPath = [...propertyPath, i];
         
         if (typeof operation === 'string') {
             if(operation.startsWith('//'))
@@ -279,18 +281,30 @@ function validateRoutine(routine, context) {
                 if(match[1] === undefined)
                     context.validVariables[unescape(match[2])] = 1;
             } else {
-                errors.push(`Widget '${context.widgetId}': routine operation ${i} is not a valid string operation: ${operation}`);
+                problems.push({
+                    widget: context.widgetId,
+                    property: operationPath,
+                    message: `not a valid string operation: ${operation}`
+                });
             }
             continue;
         }
         
         if (typeof operation !== 'object' || operation === null) {
-            errors.push(`Widget '${context.widgetId}': routine operation ${i} must be an object or string`);
+            problems.push({
+                widget: context.widgetId,
+                property: operationPath,
+                message: 'routine operations must be an object or string'
+            });
             continue;
         }
         
         if (!operation.func) {
-            errors.push(`Widget '${context.widgetId}': routine operation ${i} missing 'func' property`);
+            problems.push({
+                widget: context.widgetId,
+                property: operationPath,
+                message: 'missing func property'
+            });
             continue;
         }
         
@@ -299,46 +313,83 @@ function validateRoutine(routine, context) {
         const knownProps = operationProps[func];
 
         if(!knownProps) {
-            errors.push(`Widget '${context.widgetId}': routine operation ${i} (${func}) has unknown function (valid functions: ${Object.keys(operationProps).join(', ')})`);
+            problems.push({
+                widget: context.widgetId,
+                property: operationPath,
+                message: `${func} is not a valid function (valid functions: ${Object.keys(operationProps).join(', ')})`
+            });
             continue;
         }
         
         for (const prop of Object.keys(operation)) {
-            if (prop === 'func') continue;
+            if (prop === 'func' || prop === 'note') continue;
+            
+            const propPath = [...operationPath, prop];
             
             // Handle both Set and object-based property definitions
             const isKnown = knownProps instanceof Set ? knownProps.has(prop) : knownProps[prop] !== undefined;
             let propMatch, varMatch;
             
             if (!isKnown) {
-                errors.push(`Widget '${context.widgetId}': routine operation ${i} (${func}) has unknown property '${prop}' (valid properties: ${Object.keys(knownProps).join(', ')})`);
+                problems.push({
+                    widget: context.widgetId,
+                    property: propPath,
+                    message: `${func} has unknown property '${prop}' (valid properties: ${Object.keys(knownProps).join(', ')})`
+                });
             } else if (knownProps instanceof Set) {
                 // No validation for Set-based properties
                 continue;
             } else if (propMatch = parsePropertySyntax(String(operation[prop]))) {
                 if(propMatch[1] && !context.validVariables[propMatch[2]])
-                    errors.push(`Widget '${context.widgetId}': routine operation ${i} (${func}) uses undefined variable '${propMatch[2]}' in '${operation[prop]}'`);
+                    problems.push({
+                        widget: context.widgetId,
+                        property: propPath,
+                        message: `${func} uses undefined variable '${propMatch[2]}'`
+                    });
                 else if(propMatch[3] && !context.validVariables[propMatch[4]])
-                    errors.push(`Widget '${context.widgetId}': routine operation ${i} (${func}) uses undefined variable '${propMatch[4]}' in '${operation[prop]}'`);
+                    problems.push({
+                        widget: context.widgetId,
+                        property: propPath,
+                        message: `${func} uses undefined variable '${propMatch[4]}'`
+                    });
                 else if(!propMatch[3] && propMatch[4] && !context.widgets[propMatch[4]])
-                    errors.push(`Widget '${context.widgetId}': routine operation ${i} (${func}) uses invalid widget '${propMatch[4]}' in '${operation[prop]}'`);
+                    problems.push({
+                        widget: context.widgetId,
+                        property: propPath,
+                        message: `${func} uses invalid widget '${propMatch[4]}'`
+                    });
                 else
                     continue;
             } else if (varMatch = String(operation[prop]).match(/^\$\{([^.}]+)(?:\.[^.}]+)?\}$/)) {
                 if(context.validVariables[varMatch[1]])
                     continue;
-                errors.push(`Widget '${context.widgetId}': routine operation ${i} (${func}) uses undefined variable '${varMatch[1]}'`);
+                problems.push({
+                    widget: context.widgetId,
+                    property: propPath,
+                    message: `${func} uses undefined variable '${varMatch[1]}'`
+                });
                 continue;
             } else if(String(operation[prop]).match(/\$\{([^.}]+)(?:\.[^.}]+)?\}/)) {
                 continue;
             } else {
                 const validator = validators[knownProps[prop]] || knownProps[prop];
                 if (validator) {
-                    const result = validator(operation[prop], context);
-                    if (typeof result === 'string') {
-                        errors.push(`Widget '${context.widgetId}': routine operation ${i} (${func}) has invalid property '${prop}': ${result}`);
+                    const result = validator(operation[prop], context, propPath);
+                    if (Array.isArray(result)) {
+                        // Validator returned an array of problems
+                        problems.push(...result);
+                    } else if (typeof result === 'string') {
+                        problems.push({
+                            widget: context.widgetId,
+                            property: propPath,
+                            message: result
+                        });
                     } else if (!result) {
-                        errors.push(`Widget '${context.widgetId}': routine operation ${i} (${func}) has invalid property '${prop}'`);
+                        problems.push({
+                            widget: context.widgetId,
+                            property: propPath,
+                            message: 'Property is invalid'
+                        });
                     }
                 }
             }
@@ -358,7 +409,7 @@ function validateRoutine(routine, context) {
                 context.validVariables[key] = 1;
     }
     
-    return errors;
+    return problems;
 }
 
 function getEnumValidator(values) {
@@ -366,13 +417,13 @@ function getEnumValidator(values) {
 }
 
 function getRoutineValidator(variables, collections) {
-    return (v, context) => {
+    return (v, context, propertyPath = []) => {
         context = JSON.parse(JSON.stringify(context));
         context.validVariables = Object.assign({}, context.validVariables, variables);
         context.validCollections = Object.assign({}, context.validCollections, collections);
-        const errors = validateRoutine(v, context);
-        if(errors.length > 0)
-            return errors.join(', ');
+        const problems = validateRoutine(v, context, propertyPath);
+        if(problems.length > 0)
+            return problems;
         return true;
     }
 }
@@ -591,67 +642,104 @@ const operationProps = {
     }
 };
 
-function customWidgetChecks(widget, widgets, results) {
+function customWidgetChecks(widget, widgets, problems) {
     if(widget.type === 'deck') {
         for(const prop of ['width', 'height', 'movable', 'layer', 'clickable']) {
             if(widget[prop] !== undefined) {
-                results.errors.push(`Deck '${widget.id}' uses its '${prop}' property - you probably want to use 'cardDefaults.${prop}' instead`);
+                problems.push({
+                    widget: widget.id,
+                    property: [prop],
+                    message: `Deck uses its '${prop}' property - you probably want to use 'cardDefaults.${prop}' instead`
+                });
             }
         }
         if(widget.cardTypes === undefined) {
-            results.errors.push(`Deck '${widget.id}' has no cardTypes`);
+            problems.push({
+                widget: widget.id,
+                property: ['cardTypes'],
+                message: 'Deck has no cardTypes'
+            });
         } else if(typeof widget.cardTypes === 'object' && widget.cardTypes !== null) {
             for(const cardType of Object.keys(widget.cardTypes)) {
                 if(!Object.values(widgets).some(w=>w.cardType === cardType)) {
-                    results.errors.push(`Deck '${widget.id}' has unused cardType '${cardType}' - add card widgets with this cardType`);
+                    problems.push({
+                        widget: widget.id,
+                        property: ['cardTypes', cardType],
+                        message: `Deck has unused cardType '${cardType}' - add card widgets with this cardType`
+                    });
                 }
             }
         }
         if(widget.faceTemplates === undefined) {
-            results.errors.push(`Deck '${widget.id}' has no faceTemplates - cards will be blank and transparent`);
+            problems.push({
+                widget: widget.id,
+                property: ['faceTemplates'],
+                message: 'Deck has no faceTemplates - cards will be blank and transparent'
+            });
         }
     }
 
     if(widget.type === 'pile') {
         if(!Object.values(widgets).some(w=>w.parent === widget.id)) {
-            results.errors.push(`Pile '${widget.id}' has no children - a pile is meant to be a handle for a set of cards or other children (did you mean to use a holder?)`);
+            problems.push({
+                widget: widget.id,
+                property: ['parent'],
+                message: 'Pile has no children - a pile is meant to be a handle for a set of cards or other children (did you mean to use a holder?)'
+            });
         }
     }
 }
 
 function validateGameFile(data, checkMeta) {
-    const results = {
-        errors: [],
-        infos: []
-    };
+    const problems = [];
     
     // Basic structure validation
     if (typeof data !== 'object' || data === null) {
-        results.errors.push('Game file must be a JSON object');
-        return results;
+        problems.push({
+            widget: '',
+            property: [],
+            message: 'Game file must be a JSON object'
+        });
+        return problems;
     }
     
     // Check for _meta
     if (checkMeta && !data._meta) {
-        results.errors.push('Missing required _meta object');
-        return results;
+        problems.push({
+            widget: '',
+            property: ['_meta'],
+            message: 'Missing required _meta object'
+        });
+        return problems;
     }
     
     // Validate _meta structure
     if (checkMeta && (typeof data._meta !== 'object' || data._meta === null)) {
-        results.errors.push('_meta must be an object');
-        return results;
+        problems.push({
+            widget: '',
+            property: ['_meta'],
+            message: '_meta must be an object'
+        });
+        return problems;
     }
     
     // Check for required version
     if (checkMeta && typeof data._meta.version !== 'number') {
-        results.errors.push('_meta.version is required and must be a number');
+        problems.push({
+            widget: '',
+            property: ['_meta', 'version'],
+            message: '_meta.version is required and must be a number'
+        });
     }
     
     // Validate _meta.info if present
     if (checkMeta && data._meta.info !== undefined) {
         if (typeof data._meta.info !== 'object' || data._meta.info === null) {
-            results.errors.push('_meta.info must be an object');
+            problems.push({
+                widget: '',
+                property: ['_meta', 'info'],
+                message: '_meta.info must be an object'
+            });
         } else {
             // Validate info properties - include all properties from the schema
             const infoProps = [
@@ -662,7 +750,11 @@ function validateGameFile(data, checkMeta) {
             ];
             for (const prop of Object.keys(data._meta.info)) {
                 if (!infoProps.includes(prop)) {
-                    results.infos.push(`_meta.info has unknown property '${prop}'`);
+                    problems.push({
+                        widget: '',
+                        property: ['_meta', 'info', prop],
+                        message: `_meta.info has unknown property '${prop}'`
+                    });
                 }
             }
         }
@@ -671,7 +763,11 @@ function validateGameFile(data, checkMeta) {
     // BGG URL validation
     const bgg = data._meta?.info?.bgg;
     if (checkMeta && bgg && !/^https?:\/\/(www\.)?boardgamegeek\.com\//.test(bgg)) {
-        results.infos.push(`_meta.info.bgg does not look like a BoardGameGeek URL: ${bgg}`);
+        problems.push({
+            widget: '',
+            property: ['_meta', 'info', 'bgg'],
+            message: `_meta.info.bgg does not look like a BoardGameGeek URL: ${bgg}`
+        });
     }
     
     // Widget validation
@@ -680,21 +776,33 @@ function validateGameFile(data, checkMeta) {
             continue;
         }
         
-        customWidgetChecks(widget, data, results);
+        customWidgetChecks(widget, data, problems);
 
         // Basic widget validation
         if (!widget.id) {
-            results.errors.push(`Widget '${key}' missing required 'id' property`);
+            problems.push({
+                widget: key,
+                property: ['id'],
+                message: 'Widget missing required id property'
+            });
             continue;
         }
         
         if (widget.id !== key) {
-            results.errors.push(`Widget '${key}' id must be the same as the key in the game file`);
+            problems.push({
+                widget: key,
+                property: ['id'],
+                message: 'Widget id must be the same as the key in the game file'
+            });
             continue;
         }
         
         if (typeof widget.id !== 'string') {
-            results.errors.push(`Widget '${key}' id must be a string`);
+            problems.push({
+                widget: key,
+                property: ['id'],
+                message: 'Widget id must be a string'
+            });
             continue;
         }
         
@@ -708,7 +816,11 @@ function validateGameFile(data, checkMeta) {
                 continue;
             }
             if (!(prop in known)) {
-                results.infos.push(`Widget '${key}' of type '${wtype}' has unrecognized property '${prop}'`);
+                problems.push({
+                    widget: key,
+                    property: [prop],
+                    message: 'unrecognized property'
+                });
             } else {
                 // Validate property value if a validator is defined
                 let validator = known[prop];
@@ -716,11 +828,22 @@ function validateGameFile(data, checkMeta) {
                     validator = validators[validator];
                 }
                 if (typeof validator === 'function') {
-                    const result = validator(widget[prop], {widgetId: key, widgets: data});
-                    if (typeof result === 'string') {
-                        results.errors.push(`Widget '${key}' property '${prop}': ${result}`);
+                    const result = validator(widget[prop], {widgetId: key, widgets: data}, [prop]);
+                    if (Array.isArray(result)) {
+                        // Validator returned an array of problems
+                        problems.push(...result);
+                    } else if (typeof result === 'string') {
+                        problems.push({
+                            widget: key,
+                            property: [prop],
+                            message: result
+                        });
                     } else if (!result) {
-                        results.errors.push(`Widget '${key}' property '${prop}' is invalid`);
+                        problems.push({
+                            widget: key,
+                            property: [prop],
+                            message: 'Property is invalid'
+                        });
                     }
                 }
             }
@@ -730,8 +853,8 @@ function validateGameFile(data, checkMeta) {
         for (const [propName, propValue] of Object.entries(widget)) {
             if (propName.endsWith('Routine') && !known[propName] && Array.isArray(propValue)) {
                 const context = { widgetId: key, widgets: data, validVariables: { activeColors: 1, mouseCoords: 1, seatIndex: 1, seatID: 1, activeSeats: 1, playerName: 1, playerColor: 1, activePlayers: 1, thisID: 1}, validCollections: { playerSeats: 1, activeSeats: 1, thisButton: 1 } };
-                const routineErrors = validateRoutine(propValue, context);
-                results.errors.push(...routineErrors);
+                const routineProblems = validateRoutine(propValue, context, [propName]);
+                problems.push(...routineProblems);
             }
         }
     }
@@ -740,10 +863,14 @@ function validateGameFile(data, checkMeta) {
     const info = data._meta?.info;
     const language = info?.language || '';
     if (checkMeta && language && !ALLOWED_LANGUAGES.includes(language)) {
-        results.infos.push(`_meta.info.language '${language}' is not in the allowed list: ${ALLOWED_LANGUAGES.join(', ')}`);
+        problems.push({
+            widget: '',
+            property: ['_meta', 'info', 'language'],
+            message: `'${language}' is not in the allowed list: ${ALLOWED_LANGUAGES.join(', ')}`
+        });
     }
     
-    return results;
+    return problems;
 }
 
 // Export for use in other modules

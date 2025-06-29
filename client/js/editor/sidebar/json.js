@@ -114,15 +114,48 @@ class DebugModule extends SidebarModule {
     jeLoggingFilterLog($('#jeLogFilter').value);
   }
 
+  button_validationProblem(problem) {
+    setSelection([widgets.get(problem.widget)]);
+    const property = [...problem.property];
+    const lastProperty = property.pop();
+    let currentParent = jeStateNow;
+    for(const prop of property) {
+      currentParent = currentParent[prop];
+    }
+
+    const currentValue = currentParent[lastProperty];
+    currentParent[lastProperty] = '###SELECT ME###';
+    jeSetAndSelect(currentValue);
+  }
+
   onClose() {
     $('#jsonEditor').append($('#jeLog'));
   }
 
+  onDeltaReceivedWhileActive(delta) {
+    this.updateValidation();
+  }
+
   onStateReceivedWhileActive() {
     this.button_clearButton();
+    this.updateValidation();
   }
 
   renderModule(target) {
+    div(target, 'staticErrors', `
+      <div class="success">No validation problems found!</div>
+      <table class="validation-table">
+        <thead>
+          <tr>
+            <th>Widget</th>
+            <th>Property</th>
+            <th>Message</th>
+          </tr>
+        </thead>
+        <tbody>
+        </tbody>
+      </table>
+    `);
     div(target, 'buttonBar', `
       <input type=text id=jeLogFilter placeholder="Filter log...">
       <input type=checkbox id=autoClearLog checked><label for=autoClearLog> Clear after each interaction</label>
@@ -133,5 +166,29 @@ class DebugModule extends SidebarModule {
     on('#jeLogFilter', 'input', e=>this.button_filter());
     on('#autoClearLog', 'change', e=>this.button_clearCheckbox());
     on('#clearLogButton', 'click', e=>this.button_clearButton());
+    this.updateValidation();
+  }
+
+  updateValidation() {
+    const state = Object.fromEntries(widgets.entries().map(([id, w])=>[id, w.unalteredState]));
+    const problems = validateGameFile(state, false);
+    
+    if (problems.length === 0) {
+      $('.staticErrors .success', this.moduleDOM).style.display = 'block';
+      $('.staticErrors .validation-table', this.moduleDOM).style.display = 'none';
+    } else {
+      $('.staticErrors .success', this.moduleDOM).style.display = 'none';
+      $('.staticErrors .validation-table', this.moduleDOM).style.display = 'block';
+      for (const problem of problems) {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>${problem.widget || '-'}</td>
+          <td>${problem.property && problem.property.length > 0 ? problem.property.join('.') : '-'}</td>
+          <td>${problem.message}</td>
+        `;
+        $('.staticErrors .validation-table tbody', this.moduleDOM).appendChild(row);
+        row.addEventListener('click', e=>this.button_validationProblem(problem));
+      }
+    }
   }
 }
