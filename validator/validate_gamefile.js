@@ -7,21 +7,31 @@ const validators = {
     object: v=>typeof v === 'object' && v !== null || 'object expected',
     boolean: v=>typeof v === 'boolean' || 'boolean expected',
     string: v=>typeof v === 'string' || 'string expected',
-    inCollection: (v,p)=>{
+    inCollection: (v,p,propertyPath)=>{
+        const problems = [];
         if(p.validCollections[v])
             return true;
         if(typeof v === 'string' && p.widgets[v])
             return `Collection '${v}' not found but it is a widget ID. Did you mean ['${v}'] as an anonymous collection?`;
         if(typeof v === 'string')
             return `Collection '${v}' is undefined.`;
-        if(Array.isArray(v) && v.every(id=>p.widgets[id]))
-            return true;
+        if(Array.isArray(v)) {
+            for(const [key, id] of v.entries()) {
+                if(!p.widgets[id]) {
+                    problems.push({
+                        widget: p.widgetId,
+                        property: [...propertyPath, key],
+                        message: `Widget "${id}" not found`
+                    });
+                }
+            }
+        }
         if(Array.isArray(v) && v.length === 1 && p.validCollections[v[0]])
             return `Widget '${v[0]}' does not exist but it is a valid collection. Did you mean '${v[0]}' (without brackets)?`;
-        return false;
+        return problems;
     },
     routine: (v,p,propertyPath=[])=>{
-        const context = { widgetId: p.widgetId, widgets: p.widgets, validVariables: p.validVariables || { activeColors: 1, mouseCoords: 1, seatIndex: 1, seatID: 1, activeSeats: 1, playerName: 1, playerColor: 1, activePlayers: 1, thisID: 1}, validCollections: p.validCollections || { playerSeats: 1, activeSeats: 1, thisButton: 1 } };
+        const context = { widgetId: p.widgetId, widgets: p.widgets, validVariables: p.validVariables || SUPER_GLOBALS.variables, validCollections: p.validCollections || SUPER_GLOBALS.collections };
         return validateRoutine(v,context,propertyPath);
     },
     positiveNumber: v=>typeof v === 'number' && v >= 0 || 'positive number expected',
@@ -77,7 +87,7 @@ const COMMON_PROPERTIES = {
     clickRoutine: 'routine',
     changeRoutine: 'routine',
     enterRoutine: getRoutineValidator({}, {'child': 1}),
-    leaveRoutine: 'routine',
+    leaveRoutine: getRoutineValidator({}, {'child': 1}),
     globalUpdateRoutine: 'routine',
     gameStartRoutine: 'routine',
     hotkey: 'string',
@@ -138,36 +148,52 @@ const WIDGET_PROPERTIES = {
     Deck: {
         ...COMMON_PROPERTIES,
         clickable: 'boolean', cardDefaults: 'any', cardTypes: 'any', borderRadius: 'any',
-        faceTemplates: v=>{
+        faceTemplates: (v,p,propertyPath=[])=>{
+            const problems = [];
             if(!Array.isArray(v))
                 return 'faceTemplates must be an array of face definitions, each containing an array of objects';
             for(const [faceIndex, face] of v.entries()) {
-                if(typeof face !== 'object' || face === null)
-                    return `faceTemplate ${faceIndex} must be an object`;
+                if(typeof face !== 'object' || face === null) {
+                    problems.push({
+                        widget: p.widgetId,
+                        property: [...propertyPath, faceIndex],
+                        message: 'must be an object'
+                    });
+                    continue;
+                }
                 
                 // Check for $ in face-level properties
                 for(const [key, value] of Object.entries(face)) {
-                    const dollarCheck = checkForDollarSign(value, `faceTemplate ${faceIndex}.${key}`);
-                    if(dollarCheck) return dollarCheck;
+                    problems.push(...checkForDollarSign(value, [...propertyPath, faceIndex, key]));
                 }
                 
                 // Check for unused face-level properties
                 const validFaceProps = ['css', 'classes', 'border', 'radius', 'objects', 'type', 'properties'];
-                const unusedFaceProps = Object.keys(face).filter(k => !validFaceProps.includes(k));
-                if(unusedFaceProps.length > 0) {
-                    return `faceTemplate ${faceIndex} has unused properties: ${unusedFaceProps.join(', ')}. Valid face properties: ${validFaceProps.join(', ')}`;
+                for(const prop of Object.keys(face)) {
+                    if(!validFaceProps.includes(prop)) {
+                        problems.push({
+                            widget: p.widgetId,
+                            property: [...propertyPath, faceIndex, prop],
+                            message: `invalid property. Valid face properties: ${validFaceProps.join(', ')}`
+                        });
+                    }
                 }
                 
                 // Check objects array if present
                 if(Array.isArray(face.objects)) {
                     for(const [objIndex, obj] of face.objects.entries()) {
-                        if(typeof obj !== 'object' || obj === null)
-                            return `faceTemplate ${faceIndex} object ${objIndex} must be an object`;
+                        if(typeof obj !== 'object' || obj === null) {
+                            problems.push({
+                                widget: p.widgetId,
+                                property: [...propertyPath, faceIndex, 'objects', objIndex],
+                                message: 'must be an object'
+                            });
+                            continue;
+                        }
                         
                         // Check for $ in object properties
                         for(const [key, value] of Object.entries(obj)) {
-                            const dollarCheck = checkForDollarSign(value, `faceTemplate ${faceIndex} object ${objIndex}.${key}`);
-                            if(dollarCheck) return dollarCheck;
+                            problems.push(...checkForDollarSign(value, [...propertyPath, faceIndex, 'objects', objIndex, key]));
                         }
                         
                         // Check for properties defined both directly and through dynamicProperties
@@ -176,21 +202,35 @@ const WIDGET_PROPERTIES = {
                             const dynamicProps = Object.keys(obj.dynamicProperties);
                             const conflictingProps = dynamicProps.filter(prop => directProps.includes(prop));
                             if(conflictingProps.length > 0) {
-                                return `faceTemplate ${faceIndex} object ${objIndex} has properties defined both directly and through dynamicProperties: ${conflictingProps.join(', ')}. The static value will be used instead of the dynamic one.`;
+                                problems.push({
+                                    widget: p.widgetId,
+                                    property: [...propertyPath, faceIndex, 'objects', objIndex],
+                                    message: `has properties defined both directly and through dynamicProperties: ${conflictingProps.join(', ')}. The static value will be used instead of the dynamic one.`
+                                });
                             }
                         }
                         
                         const validObjProps = ['type', 'x', 'y', 'width', 'height', 'fontSize', 'textAlign', 'rotation', 'display', 'classes', 'css', 'dynamicProperties', 'svgReplaces', 'value', 'color'];
-                        const unusedObjProps = Object.keys(obj).filter(k => !validObjProps.includes(k));
-                        if(unusedObjProps.length > 0) {
-                            return `faceTemplate ${faceIndex} object ${objIndex} has unused properties: ${unusedObjProps.join(', ')}. Valid object properties: ${validObjProps.join(', ')}`;
+                        for(const prop of Object.keys(obj)) {
+                            if(!validObjProps.includes(prop)) {
+                                problems.push({
+                                    widget: p.widgetId,
+                                    property: [...propertyPath, faceIndex, 'objects', objIndex, prop],
+                                    message: `invalid property. Valid object properties: ${validObjProps.join(', ')}`
+                                });
+                            }
                         }
                     }
                 }
             }
-            return true;
+            return problems;
         }
     }
+};
+
+const SUPER_GLOBALS = {
+    variables: { activeColors: 1, mouseCoords: 1, seatIndex: 1, seatID: 1, activeSeats: 1, playerName: 1, playerColor: 1, activePlayers: 1, thisID: 1},
+    collections: { playerSeats: 1, activeSeats: 1, thisButton: 1 }
 };
 
 // Map lowercase type to canonical type name
@@ -270,6 +310,7 @@ function validateRoutine(routine, context, propertyPath = []) {
     
     for (let i = 0; i < routine.length; i++) {
         const operation = routine[i];
+        context.operation = operation;
         const operationPath = [...propertyPath, i];
         
         if (typeof operation === 'string') {
@@ -388,7 +429,7 @@ function validateRoutine(routine, context, propertyPath = []) {
                         problems.push({
                             widget: context.widgetId,
                             property: propPath,
-                            message: 'Property is invalid'
+                            message: `Property is invalid ${JSON.stringify(result)}`
                         });
                     }
                 }
@@ -419,8 +460,8 @@ function getEnumValidator(values) {
 function getRoutineValidator(variables, collections) {
     return (v, context, propertyPath = []) => {
         context = JSON.parse(JSON.stringify(context));
-        context.validVariables = Object.assign({}, context.validVariables, variables);
-        context.validCollections = Object.assign({}, context.validCollections, collections);
+        context.validVariables = Object.assign({}, SUPER_GLOBALS.variables, variables);
+        context.validCollections = Object.assign({}, SUPER_GLOBALS.collections, collections);
         const problems = validateRoutine(v, context, propertyPath);
         if(problems.length > 0)
             return problems;
@@ -442,17 +483,21 @@ function getWidgetTypeValidator(types, canBeArray = false) {
     }
 }
 
-function checkForDollarSign(value, path) {
+function checkForDollarSign(value, propertyPath = []) {
+    const problems = [];
     if (typeof value === 'string' && value.includes('$')) {
-        return `Property '${path}' contains '$' - use dynamicProperties to map widget property names to face object properties instead`;
+        problems.push({
+            widget: p.widgetId,
+            property: propertyPath,
+            message: `contains '$' - use dynamicProperties to map widget property names to face object properties instead`
+        });
     }
     if (typeof value === 'object' && value !== null) {
         for (const [key, val] of Object.entries(value)) {
-            const result = checkForDollarSign(val, `${path}.${key}`);
-            if (result) return result;
+            problems.push(...checkForDollarSign(val, [...propertyPath, key]));
         }
     }
-    return null;
+    return problems;
 }
 
 const operationProps = {
@@ -514,7 +559,22 @@ const operationProps = {
         'collection': 'inCollection',
         'in': v=>typeof v === 'string' || Array.isArray(v) || (typeof v === 'object' && v !== null),
         'range': v=>Array.isArray(v) ? (v.length >= 1 && v.length <= 3 && v.every(x=>typeof x === 'number' || typeof x === 'string')) : (typeof v === 'number' || typeof v === 'string'),
-        'loopRoutine': getRoutineValidator({'value': 1, 'key': 1}, {})
+        'loopRoutine': (v, context, propertyPath) => {
+            let variables = {};
+            let collections = {};
+            if(context.operation.in)
+                variables = {value: 1, key: 1};
+            else if(context.operation.range)
+                variables = {value: 1};
+            else {
+                variables = {widgetID: 1};
+                collections = {DEFAULT: 1};
+            }
+            const problems = getRoutineValidator(variables, collections)(v, context, propertyPath);
+            if(problems.length > 0)
+                return problems;
+            return true;
+        }
     },
     'GET': {
         'collection':  'inCollection',
@@ -812,10 +872,7 @@ function validateGameFile(data, checkMeta) {
         // Check for unrecognized properties
         for (const prop of Object.keys(widget)) {
             // For Card, cardType and deck are required, everything else optional
-            if (wtype === "Card" && (prop === "cardType" || prop === "deck")) {
-                continue;
-            }
-            if (!(prop in known)) {
+            if (!(prop in known) && !prop.match(/.(GlobalUpdateRoutine|ChangeRoutine)$/)) {
                 problems.push({
                     widget: key,
                     property: [prop],
@@ -842,7 +899,7 @@ function validateGameFile(data, checkMeta) {
                         problems.push({
                             widget: key,
                             property: [prop],
-                            message: 'Property is invalid'
+                            message: `Property is invalid ${JSON.stringify(result)}`
                         });
                     }
                 }
@@ -852,7 +909,7 @@ function validateGameFile(data, checkMeta) {
         // Routine validation for properties ending with 'Routine'
         for (const [propName, propValue] of Object.entries(widget)) {
             if (propName.endsWith('Routine') && !known[propName] && Array.isArray(propValue)) {
-                const context = { widgetId: key, widgets: data, validVariables: { activeColors: 1, mouseCoords: 1, seatIndex: 1, seatID: 1, activeSeats: 1, playerName: 1, playerColor: 1, activePlayers: 1, thisID: 1}, validCollections: { playerSeats: 1, activeSeats: 1, thisButton: 1 } };
+                const context = { widgetId: key, widgets: data, validVariables: SUPER_GLOBALS.variables, validCollections: SUPER_GLOBALS.collections };
                 const routineProblems = validateRoutine(propValue, context, [propName]);
                 problems.push(...routineProblems);
             }
