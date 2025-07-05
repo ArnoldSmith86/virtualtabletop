@@ -2437,14 +2437,6 @@
     "scoreCube": true,
     "parent": "scoreHolder8"
   },
-  "ib98 2.png 1": {
-    "type": "card",
-    "id": "ib98 2.png 1",
-    "deck": "cubeDeck",
-    "cardType": "2.png",
-    "z": 961,
-    "parent": "njc2"
-  },
   "ib98 2.png 2": {
     "type": "card",
     "id": "ib98 2.png 2",
