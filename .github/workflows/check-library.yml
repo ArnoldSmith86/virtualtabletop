@@ -86,12 +86,13 @@ jobs:
       - name: Comment on PR with validation issues
         if: steps.validate.outputs.validation_output != ''
         uses: actions/github-script@v6
+        env:
+          VALIDATION_OUTPUT: ${{ steps.validate.outputs.validation_output }}
         with:
           script: |
-            const validationOutput = JSON.parse('${{ toJSON(steps.validate.outputs.validation_output) }}');
             github.rest.issues.createComment({
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: '## Game File Validation Issues\n\n' + validationOutput
+              body: '## Game File Validation Issues\n\n' + process.env.VALIDATION_OUTPUT
             });
