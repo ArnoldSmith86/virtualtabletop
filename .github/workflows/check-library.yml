@@ -88,9 +88,10 @@ jobs:
         uses: actions/github-script@v6
         with:
           script: |
+            const validationOutput = `${{ steps.validate.outputs.validation_output }}`;
             github.rest.issues.createComment({
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: '## Game File Validation Issues\n\n' + '${{ steps.validate.outputs.validation_output }}'
+              body: '## Game File Validation Issues\n\n' + validationOutput
             })
