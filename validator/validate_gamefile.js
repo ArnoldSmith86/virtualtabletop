@@ -31,7 +31,7 @@ const validators = {
         return problems;
     },
     routine: (v,p,propertyPath=[])=>{
-        const context = Object.assign({}, p, { validVariables: p.validVariables || SUPER_GLOBALS.variables, validCollections: p.validCollections || SUPER_GLOBALS.collections });
+        const context = Object.assign({}, p, { validVariables: p.validVariables || {...SUPER_GLOBALS.variables}, validCollections: p.validCollections || {...SUPER_GLOBALS.collections} });
         return validateRoutine(v,context,propertyPath);
     },
     positiveNumber: v=>typeof v === 'number' && v >= 0 || 'positive number expected',
@@ -411,7 +411,7 @@ function validateRoutine(routine, context, propertyPath = []) {
                     message: `${func} uses undefined variable '${varMatch[1]}'`
                 });
                 continue;
-            } else if(String(operation[prop]).match(/\$\{([^.}]+)(?:\.[^.}]+)?\}/)) {
+            } else if(typeof operation[prop] === 'string' && operation[prop].match(/\$\{([^.}]+)(?:\.[^.}]+)?\}/)) {
                 continue;
             } else {
                 const validator = validators[knownProps[prop]] || knownProps[prop];
@@ -460,11 +460,12 @@ function getEnumValidator(values) {
     return v=>values.includes(v) || `'${v}' is not in the allowed list of values: ${values.join(', ')}`;
 }
 
-function getRoutineValidator(variables, collections) {
+function getRoutineValidator(variables, collections, isolateContext = true) {
     return (v, context, propertyPath = []) => {
-        context = JSON.parse(JSON.stringify(context));
-        context.validVariables = Object.assign({}, SUPER_GLOBALS.variables, variables);
-        context.validCollections = Object.assign({}, SUPER_GLOBALS.collections, collections);
+        if(isolateContext)
+            context = JSON.parse(JSON.stringify(context));
+        context.validVariables = Object.assign(context.validVariables || {}, SUPER_GLOBALS.variables, variables);
+        context.validCollections = Object.assign(context.validCollections || {}, SUPER_GLOBALS.collections, collections);
         const problems = validateRoutine(v, context, propertyPath);
         if(problems.length > 0)
             return problems;
@@ -573,7 +574,7 @@ const operationProps = {
                 variables = {widgetID: 1};
                 collections = {DEFAULT: 1};
             }
-            return getRoutineValidator(variables, collections)(v, context, propertyPath);
+            return getRoutineValidator(variables, collections, false)(v, context, propertyPath);
         }
     },
     'GET': {
@@ -588,8 +589,8 @@ const operationProps = {
         'relation':    getEnumValidator(['<','<=','==','!=','>=','>']),
         'operand1':    'any',
         'operand2':    'any',
-        'thenRoutine': 'routine',
-        'elseRoutine': 'routine'
+        'thenRoutine': getRoutineValidator({}, {}, false),
+        'elseRoutine': getRoutineValidator({}, {}, false)
     },
     'INPUT': {
         'cancelButtonIcon': 'vttSymbol',
@@ -999,7 +1000,7 @@ function validateGameFile(data, checkMeta) {
         // Routine validation for properties ending with 'Routine'
         for (const [propName, propValue] of Object.entries(widget)) {
             if (propName.endsWith('Routine') && !known[propName] && Array.isArray(propValue)) {
-                const context = { widgetId: key, widgets: data, validVariables: SUPER_GLOBALS.variables, validCollections: SUPER_GLOBALS.collections, customProperties };
+                const context = { widgetId: key, widgets: data, validVariables: {...SUPER_GLOBALS.variables}, validCollections: {...SUPER_GLOBALS.collections}, customProperties };
                 const routineProblems = validateRoutine(propValue, context, [propName]);
                 problems.push(...routineProblems);
             }
