@@ -60,12 +60,10 @@ jobs:
       - name: Run validator on changed game files
         id: validate
         run: |
-          cd validator
           validation_output=""
           found_issues=false
           
           while IFS= read -r file; do
-            echo "Checking $file..."
             if [[ "$file" =~ library/games/.*\.json$ ]] && [[ -f "$file" ]]; then
               echo "Validating $file..."
               if output=$(node validator/validate_gamefile.js "$file" 2>&1); then
@@ -79,11 +77,6 @@ jobs:
             fi
           done < <(git diff --name-only ${{ github.event.pull_request.base.sha }} ${{ github.sha }})
           
-          if [ "$found_issues" = true ]; then
-            echo "validation_output<<EOF" >> $GITHUB_OUTPUT
-            echo "$validation_output" >> $GITHUB_OUTPUT
-            echo "EOF" >> $GITHUB_OUTPUT
-          fi
 
       - name: Comment on PR with validation issues
         if: steps.validate.outputs.validation_output != ''
