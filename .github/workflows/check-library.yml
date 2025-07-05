@@ -77,6 +77,11 @@ jobs:
             fi
           done < <(git diff --name-only ${{ github.event.pull_request.base.sha }} ${{ github.sha }})
           
+          if [ "$found_issues" = true ]; then
+            echo "validation_output<<EOF" >> $GITHUB_OUTPUT
+            echo -e "$validation_output" >> $GITHUB_OUTPUT
+            echo "EOF" >> $GITHUB_OUTPUT
+          fi
 
       - name: Comment on PR with validation issues
         if: steps.validate.outputs.validation_output != ''
