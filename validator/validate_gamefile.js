@@ -31,11 +31,11 @@ const validators = {
         return problems;
     },
     routine: (v,p,propertyPath=[])=>{
-        const context = { widgetId: p.widgetId, widgets: p.widgets, validVariables: p.validVariables || SUPER_GLOBALS.variables, validCollections: p.validCollections || SUPER_GLOBALS.collections };
+        const context = Object.assign({}, p, { validVariables: p.validVariables || SUPER_GLOBALS.variables, validCollections: p.validCollections || SUPER_GLOBALS.collections });
         return validateRoutine(v,context,propertyPath);
     },
     positiveNumber: v=>typeof v === 'number' && v >= 0 || 'positive number expected',
-    property: (v,p)=>Object.values(WIDGET_PROPERTIES).some(props=>Object.keys(props).includes(v)) || Object.values(p.widgets).some(w=>w[v] !== undefined) || `property '${v}' not found`,
+    property: (v,p)=>Object.values(WIDGET_PROPERTIES).some(props=>Object.keys(props).includes(v)) || Object.values(p.widgets).some(w=>w[v] !== undefined) || p.customProperties.includes(v) || `property '${v}' not found`,
     vttSymbol: v=>v === null || typeof v === 'string', // TODO: replace with actual VTT symbol name check if available
     countOrAll: v=>v === 'all' || typeof v === 'number' || 'number or "all" expected',
     any: v=>true
@@ -93,7 +93,8 @@ const COMMON_PROPERTIES = {
     hotkey: 'string',
     animatePropertyChange: 'any',
     resetProperties: 'object',
-    clonedFrom: 'string'
+    clonedFrom: 'string',
+    editorGroup: 'boolean'
 };
 
 const WIDGET_PROPERTIES = {
@@ -123,7 +124,7 @@ const WIDGET_PROPERTIES = {
     },
     Pile: {
         ...COMMON_PROPERTIES,
-        typeClasses: 'any', x: 'number', y: 'number', alignChildren: 'any', inheritChildZ: 'any', text: 'any', pileSnapRange: 'any', handleCSS: 'any', handleSize: 'any', handleOffset: 'any', handlePosition: 'any'
+        typeClasses: 'any', x: 'number', y: 'number', alignChildren: 'any', inheritChildZ: 'any', text: 'any', pileSnapRange: 'any', handleCSS: 'any', handleSize: 'any', handleOffset: 'any', handlePosition: 'string'
     },
     Scoreboard: {
         ...COMMON_PROPERTIES,
@@ -363,7 +364,7 @@ function validateRoutine(routine, context, propertyPath = []) {
         }
         
         for (const prop of Object.keys(operation)) {
-            if (prop === 'func' || prop === 'note') continue;
+            if (prop === 'func' || prop === 'note' || prop === 'Note') continue;
             
             const propPath = [...operationPath, prop];
             
@@ -445,6 +446,8 @@ function validateRoutine(routine, context, propertyPath = []) {
             for(const field of operation.fields)
                 if(typeof field.variable === 'string')
                     context.validVariables[field.variable] = 1;
+        if(func === 'SELECT')
+            context.validCollections[operation.collection || 'DEFAULT'] = 1;
         if(func === 'VAR' && typeof operation.variables === 'object' && operation.variables !== null)
             for(const key of Object.keys(operation.variables))
                 context.validVariables[key] = 1;
@@ -718,7 +721,13 @@ function customWidgetChecks(widget, widgets, problems) {
             });
         } else if(typeof widget.cardTypes === 'object' && widget.cardTypes !== null) {
             for(const cardType of Object.keys(widget.cardTypes)) {
-                if(!Object.values(widgets).some(w=>w.cardType === cardType)) {
+                if(typeof widget.cardTypes[cardType] !== 'object' || widget.cardTypes[cardType] === null) {
+                    problems.push({
+                        widget: widget.id,
+                        property: ['cardTypes', cardType],
+                        message: `cardType must be an object`
+                    });
+                } else if(!Object.values(widgets).some(w=>w.cardType === cardType)) {
                     problems.push({
                         widget: widget.id,
                         property: ['cardTypes', cardType],
@@ -753,11 +762,10 @@ function getCustomPropertyUsage(data) {
     // Helper function to extract property names from ${PROPERTY xxx} syntax
     function extractPropertyFromSyntax(value) {
         if (typeof value === 'string') {
-            const regex = /\$\{(PROPERTY )([^ ]+)\}/g;
+            const regex = /\$\{(PROPERTY )([^ }]+)/g;
             let match;
             while ((match = regex.exec(value)) !== null) {
                 if (match && match[2]) {
-                    console.log(value, match[2]);
                     customProperties.add(match[2]);
                 }
             }
@@ -765,7 +773,7 @@ function getCustomPropertyUsage(data) {
     }
     
     // Helper function to recursively scan objects for property usage
-    function scanForProperties(obj, path = []) {
+    function scanForProperties(obj) {
         if (typeof obj === 'string') {
             return extractPropertyFromSyntax(obj);
         }   
@@ -775,14 +783,12 @@ function getCustomPropertyUsage(data) {
         
         if (Array.isArray(obj)) {
             obj.forEach((item, index) => {
-                scanForProperties(item, [...path, index]);
+                scanForProperties(item);
             });
             return;
         }
         
         for (const [key, value] of Object.entries(obj)) {
-            const currentPath = [...path, key];
-            
             // Check for ${PROPERTY xxx} syntax
             extractPropertyFromSyntax(value);
             
@@ -821,7 +827,7 @@ function getCustomPropertyUsage(data) {
             }
             
             // Recursively scan nested objects
-            scanForProperties(value, currentPath);
+            scanForProperties(value);
         }
     }
     
@@ -833,16 +839,9 @@ function getCustomPropertyUsage(data) {
         
         // Scan widget properties
         scanForProperties(widget);
-        
-        // Scan routines
-        for (const [propName, propValue] of Object.entries(widget)) {
-            if (propName.endsWith('Routine') && Array.isArray(propValue)) {
-                scanForProperties(propValue);
-            }
-        }
     }
     
-    return customProperties;
+    return [...customProperties];
 }
 
 function validateGameFile(data, checkMeta) {
@@ -850,7 +849,6 @@ function validateGameFile(data, checkMeta) {
     
     // Get all custom properties used in the game file
     const customProperties = getCustomPropertyUsage(data);
-    console.log(customProperties);
     
     // Basic structure validation
     if (typeof data !== 'object' || data === null) {
@@ -973,7 +971,7 @@ function validateGameFile(data, checkMeta) {
             // For Card, cardType and deck are required, everything else optional
             if (!(prop in known) && !prop.match(/.(GlobalUpdateRoutine|ChangeRoutine)$/)) {
                 // Only warn if this property is not used anywhere in the game file
-                if (!customProperties.has(prop)) {
+                if (!customProperties.includes(prop)) {
                     problems.push({
                         widget: key,
                         property: [prop],
@@ -987,7 +985,7 @@ function validateGameFile(data, checkMeta) {
                     validator = validators[validator];
                 }
                 if (typeof validator === 'function') {
-                    const result = validator(widget[prop], {widgetId: key, widgets: data}, [prop]);
+                    const result = validator(widget[prop], {widgetId: key, widgets: data, customProperties}, [prop]);
                     if (Array.isArray(result)) {
                         // Validator returned an array of problems
                         problems.push(...result);
@@ -1011,7 +1009,7 @@ function validateGameFile(data, checkMeta) {
         // Routine validation for properties ending with 'Routine'
         for (const [propName, propValue] of Object.entries(widget)) {
             if (propName.endsWith('Routine') && !known[propName] && Array.isArray(propValue)) {
-                const context = { widgetId: key, widgets: data, validVariables: SUPER_GLOBALS.variables, validCollections: SUPER_GLOBALS.collections };
+                const context = { widgetId: key, widgets: data, validVariables: SUPER_GLOBALS.variables, validCollections: SUPER_GLOBALS.collections, customProperties };
                 const routineProblems = validateRoutine(propValue, context, [propName]);
                 problems.push(...routineProblems);
             }
