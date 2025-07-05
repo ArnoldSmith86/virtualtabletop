@@ -65,9 +65,10 @@ jobs:
           found_issues=false
           
           while IFS= read -r file; do
+            echo "Checking $file..."
             if [[ "$file" =~ library/games/.*\.json$ ]] && [[ -f "$file" ]]; then
               echo "Validating $file..."
-              if output=$(npm run validate "$file" 2>&1); then
+              if output=$(node validator/validate_gamefile.js "$file" 2>&1); then
                 echo "✅ $file - No issues found"
               else
                 echo "❌ $file - Issues found:"
