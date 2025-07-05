@@ -11,7 +11,7 @@
     "version": 6,
     "info": {
       "name": "Road Race",
-      "image": "/assets/-1007832093_74980",
+      "image": "/assets/-1452953963_16036",
       "rules": "",
       "bgg": "https://boardgamegeek.com/boardgame/590/mille-bornes",
       "year": "1954",
@@ -118,7 +118,7 @@
             "width": 103,
             "height": 160,
             "color": "transparent",
-            "value": "/assets/-1007832093_74980"
+            "value": "/assets/-1452953963_16036"
           },
           {
             "type": "text",
@@ -484,7 +484,7 @@
             "width": 103,
             "height": 160,
             "color": "transparent",
-            "value": "/assets/-1007832093_74980"
+            "value": "/assets/-1452953963_16036"
           },
           {
             "type": "text",
