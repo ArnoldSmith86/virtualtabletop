@@ -570,17 +570,14 @@ const operationProps = {
                 variables = {widgetID: 1};
                 collections = {DEFAULT: 1};
             }
-            const problems = getRoutineValidator(variables, collections)(v, context, propertyPath);
-            if(problems.length > 0)
-                return problems;
-            return true;
+            return getRoutineValidator(variables, collections)(v, context, propertyPath);
         }
     },
     'GET': {
         'collection':  'inCollection',
         'property':    'property',
         'variable':    'string',
-        'aggregation': v=>v === null || ['first', 'last', 'sum', 'average', 'median', 'min', 'max', 'array'].includes(v) || `aggregation must be one of: first, last, sum, average, median, min, max, array`,
+        'aggregation': getEnumValidator(['first', 'last', 'sum', 'average', 'median', 'min', 'max', 'array']),
         'skipMissing': 'boolean'
     },
     'IF': {
@@ -750,8 +747,110 @@ function customWidgetChecks(widget, widgets, problems) {
     }
 }
 
+function getCustomPropertyUsage(data) {
+    const customProperties = new Set();
+    
+    // Helper function to extract property names from ${PROPERTY xxx} syntax
+    function extractPropertyFromSyntax(value) {
+        if (typeof value === 'string') {
+            const regex = /\$\{(PROPERTY )([^ ]+)\}/g;
+            let match;
+            while ((match = regex.exec(value)) !== null) {
+                if (match && match[2]) {
+                    console.log(value, match[2]);
+                    customProperties.add(match[2]);
+                }
+            }
+        }
+    }
+    
+    // Helper function to recursively scan objects for property usage
+    function scanForProperties(obj, path = []) {
+        if (typeof obj === 'string') {
+            return extractPropertyFromSyntax(obj);
+        }   
+        if (typeof obj !== 'object' || obj === null) {
+            return;
+        }
+        
+        if (Array.isArray(obj)) {
+            obj.forEach((item, index) => {
+                scanForProperties(item, [...path, index]);
+            });
+            return;
+        }
+        
+        for (const [key, value] of Object.entries(obj)) {
+            const currentPath = [...path, key];
+            
+            // Check for ${PROPERTY xxx} syntax
+            extractPropertyFromSyntax(value);
+            
+            // Check for dynamicProperties
+            if (key === 'dynamicProperties' && typeof value === 'object' && value !== null) {
+                for (const propName of Object.keys(value)) {
+                    customProperties.add(propName);
+                }
+            }
+            
+            // Check for svgReplaces
+            if (key === 'svgReplaces' && typeof value === 'object' && value !== null) {
+                for (const propName of Object.values(value)) {
+                    customProperties.add(propName);
+                }
+            }
+            
+            // Check for specific operation types that use properties
+            if (obj.func) {
+                const func = obj.func;
+                if (func === 'CALL' && key === 'routine' && typeof value === 'string') {
+                    customProperties.add(value);
+                } else if (func === 'GET' && key === 'property' && typeof value === 'string') {
+                    customProperties.add(value);
+                } else if (func === 'RESET' && key === 'property' && typeof value === 'string') {
+                    customProperties.add(value);
+                } else if (func === 'SELECT' && key === 'property' && typeof value === 'string') {
+                    customProperties.add(value);
+                } else if (func === 'SCORE' && key === 'property' && typeof value === 'string') {
+                    customProperties.add(value);
+                } else if (func === 'SORT' && key === 'key' && typeof value === 'string') {
+                    customProperties.add(value);
+                } else if (func === 'SET' && key === 'property' && typeof value === 'string') {
+                    customProperties.add(value);
+                }
+            }
+            
+            // Recursively scan nested objects
+            scanForProperties(value, currentPath);
+        }
+    }
+    
+    // Scan all widgets
+    for (const [key, widget] of Object.entries(data)) {
+        if (key === "_meta" || typeof widget !== 'object' || widget === null) {
+            continue;
+        }
+        
+        // Scan widget properties
+        scanForProperties(widget);
+        
+        // Scan routines
+        for (const [propName, propValue] of Object.entries(widget)) {
+            if (propName.endsWith('Routine') && Array.isArray(propValue)) {
+                scanForProperties(propValue);
+            }
+        }
+    }
+    
+    return customProperties;
+}
+
 function validateGameFile(data, checkMeta) {
     const problems = [];
+    
+    // Get all custom properties used in the game file
+    const customProperties = getCustomPropertyUsage(data);
+    console.log(customProperties);
     
     // Basic structure validation
     if (typeof data !== 'object' || data === null) {
@@ -873,11 +972,14 @@ function validateGameFile(data, checkMeta) {
         for (const prop of Object.keys(widget)) {
             // For Card, cardType and deck are required, everything else optional
             if (!(prop in known) && !prop.match(/.(GlobalUpdateRoutine|ChangeRoutine)$/)) {
-                problems.push({
-                    widget: key,
-                    property: [prop],
-                    message: 'unrecognized property'
-                });
+                // Only warn if this property is not used anywhere in the game file
+                if (!customProperties.has(prop)) {
+                    problems.push({
+                        widget: key,
+                        property: [prop],
+                        message: 'unrecognized (and seemingly unused) property'
+                    });
+                }
             } else {
                 // Validate property value if a validator is defined
                 let validator = known[prop];
@@ -932,5 +1034,5 @@ function validateGameFile(data, checkMeta) {
 
 // Export for use in other modules
 if (typeof module !== 'undefined' && module.exports) {
-    module.exports = { validateGameFile, getWidgetType, validateRoutine };
+    module.exports = { validateGameFile, getWidgetType, validateRoutine, getCustomPropertyUsage };
 } 
