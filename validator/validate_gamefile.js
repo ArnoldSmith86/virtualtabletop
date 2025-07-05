@@ -917,16 +917,6 @@ function validateGameFile(data, checkMeta) {
         }
     }
     
-    // BGG URL validation
-    const bgg = data._meta?.info?.bgg;
-    if (checkMeta && bgg && !/^https?:\/\/(www\.)?boardgamegeek\.com\//.test(bgg)) {
-        problems.push({
-            widget: '',
-            property: ['_meta', 'info', 'bgg'],
-            message: `_meta.info.bgg does not look like a BoardGameGeek URL: ${bgg}`
-        });
-    }
-    
     // Widget validation
     for (const [key, widget] of Object.entries(data)) {
         if (key === "_meta" || typeof widget !== 'object' || widget === null) {
@@ -1017,13 +1007,23 @@ function validateGameFile(data, checkMeta) {
     }
     
     // Language validation
-    const info = data._meta?.info;
-    const language = info?.language || '';
+    const info = (data._meta || {}).info || {};
+    const language = info.language || '';
     if (checkMeta && language && !ALLOWED_LANGUAGES.includes(language)) {
         problems.push({
             widget: '',
             property: ['_meta', 'info', 'language'],
             message: `'${language}' is not in the allowed list: ${ALLOWED_LANGUAGES.join(', ')}`
+        });
+    }
+    
+    // BGG URL validation
+    const bgg = info.bgg;
+    if (checkMeta && bgg && !/^https?:\/\/(www\.)?boardgamegeek\.com\//.test(bgg)) {
+        problems.push({
+            widget: '',
+            property: ['_meta', 'info', 'bgg'],
+            message: `_meta.info.bgg does not look like a BoardGameGeek URL: ${bgg}`
         });
     }
     
