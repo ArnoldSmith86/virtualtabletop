@@ -51,3 +51,47 @@ jobs:
             echo "Found files with inconsistent naming patterns"
             exit 1
           fi
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Run validator on changed game files
+        id: validate
+        run: |
+          cd validator
+          validation_output=""
+          found_issues=false
+          
+          while IFS= read -r file; do
+            if [[ "$file" =~ library/games/.*\.json$ ]] && [[ -f "$file" ]]; then
+              echo "Validating $file..."
+              if output=$(npm run validate "$file" 2>&1); then
+                echo "✅ $file - No issues found"
+              else
+                echo "❌ $file - Issues found:"
+                echo "$output"
+                validation_output+="### Issues in \`$file\`\n\`\`\`\n$output\n\`\`\`\n\n"
+                found_issues=true
+              fi
+            fi
+          done < <(git diff --name-only ${{ github.event.pull_request.base.sha }} ${{ github.sha }})
+          
+          if [ "$found_issues" = true ]; then
+            echo "validation_output<<EOF" >> $GITHUB_OUTPUT
+            echo "$validation_output" >> $GITHUB_OUTPUT
+            echo "EOF" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Comment on PR with validation issues
+        if: steps.validate.outputs.validation_output != ''
+        uses: actions/github-script@v6
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: '## Game File Validation Issues\n\n' + '${{ steps.validate.outputs.validation_output }}'
+            })
