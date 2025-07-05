@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 
-const fs = require('fs');
-const path = require('path');
-const { validateGameFile } = require('./validate_gamefile.js');
+import fs from 'fs';
+import path from 'path';
+import { validateGameFile } from './validate_gamefile.js';
 
 // Parse command line arguments
 const args = process.argv.slice(2);

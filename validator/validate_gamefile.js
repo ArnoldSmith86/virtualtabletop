@@ -1030,7 +1030,5 @@ function validateGameFile(data, checkMeta) {
     return problems;
 }
 
-// Export for use in other modules
-if (typeof module !== 'undefined' && module.exports) {
-    module.exports = { validateGameFile, getWidgetType, validateRoutine, getCustomPropertyUsage };
-} 
+// ES6 export for use in ES modules
+export { validateGameFile, getWidgetType, validateRoutine, getCustomPropertyUsage }; 
