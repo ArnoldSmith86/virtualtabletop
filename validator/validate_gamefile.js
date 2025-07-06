@@ -456,10 +456,14 @@ function validateRoutine(routine, context, propertyPath = []) {
             context.validVariables[operation.variable || 'COUNT'] = 1;
         if(func === 'GET')
             context.validVariables[operation.variable || operation.property || 'id'] = 1;
-        if(func === 'INPUT' && Array.isArray(operation.fields))
-            for(const field of operation.fields)
+        if(func === 'INPUT' && Array.isArray(operation.fields)) {
+            for(const field of operation.fields) {
                 if(typeof field.variable === 'string')
                     context.validVariables[field.variable] = 1;
+                if(typeof field.collection === 'string')
+                    context.validCollections[field.collection] = 1;
+            }
+        }
         if(func === 'SELECT')
             context.validCollections[operation.collection || 'DEFAULT'] = 1;
         if(func === 'VAR' && typeof operation.variables === 'object' && operation.variables !== null)
