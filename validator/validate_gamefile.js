@@ -438,6 +438,19 @@ function validateRoutine(routine, context, propertyPath = []) {
         }
 
         // variable tracking
+        if(func === 'CALL' && operation.routine && (!Array.isArray(context.recursionCheck) || !context.recursionCheck.includes(operation.routine))) {
+            const recursionCheck = JSON.parse(JSON.stringify(context.recursionCheck || []));
+            recursionCheck.push(operation.routine);
+            context.calledCustomRoutines.push(operation.routine);
+            const newContext = Object.assign({}, JSON.parse(JSON.stringify(context)), {recursionCheck, calledCustomRoutines: context.calledCustomRoutines});
+            if(typeof operation.arguments === 'object' && operation.arguments !== null)
+                for(const key of Object.keys(operation.arguments))
+                    if(typeof operation.arguments[key] === 'string')
+                        newContext.validVariables[operation.arguments[key]] = 1;
+            for(const widget of Object.values(context.widgets))
+                if(Array.isArray(widget[operation.routine]))
+                    validateRoutine(widget[operation.routine], Object.assign(newContext, {widgetId: widget.id}), [operation.routine]);
+        }
         if(func === 'COUNT')
             context.validVariables[operation.variable || 'COUNT'] = 1;
         if(func === 'GET')
@@ -462,8 +475,10 @@ function getEnumValidator(values) {
 
 function getRoutineValidator(variables, collections, isolateContext = true) {
     return (v, context, propertyPath = []) => {
-        if(isolateContext)
-            context = JSON.parse(JSON.stringify(context));
+        if(isolateContext) {
+            context.validVariables = JSON.parse(JSON.stringify(context.validVariables || {}));
+            context.validCollections = JSON.parse(JSON.stringify(context.validCollections || {}));
+        }
         context.validVariables = Object.assign(context.validVariables || {}, SUPER_GLOBALS.variables, variables);
         context.validCollections = Object.assign(context.validCollections || {}, SUPER_GLOBALS.collections, collections);
         const problems = validateRoutine(v, context, propertyPath);
@@ -850,6 +865,7 @@ function validateGameFile(data, checkMeta) {
     
     // Get all custom properties used in the game file
     const customProperties = getCustomPropertyUsage(data);
+    const calledCustomRoutines = [];
     
     // Basic structure validation
     if (typeof data !== 'object' || data === null) {
@@ -960,7 +976,7 @@ function validateGameFile(data, checkMeta) {
         // Check for unrecognized properties
         for (const prop of Object.keys(widget)) {
             // For Card, cardType and deck are required, everything else optional
-            if (!(prop in known) && !prop.match(/.(GlobalUpdateRoutine|ChangeRoutine)$/)) {
+            if (!(prop in known) && !prop.match(/^((.+G|g)lobalUpdateRoutine|(.+C|c)hangeRoutine)$/)) {
                 // Only warn if this property is not used anywhere in the game file
                 if (!customProperties.includes(prop)) {
                     problems.push({
@@ -975,8 +991,17 @@ function validateGameFile(data, checkMeta) {
                 if (typeof validator === 'string' && validators[validator]) {
                     validator = validators[validator];
                 }
+                if(prop.match(/^.+ChangeRoutine$/))
+                    validator = getRoutineValidator({oldValue: 1, value: 1}, {}, false);
+                if(prop == 'changeRoutine')
+                    validator = getRoutineValidator({property: 1, oldValue: 1, value: 1}, {}, false);
+                if(prop.match(/^.+GlobalUpdateRoutine$/))
+                    validator = getRoutineValidator({widgetID: 1, oldValue: 1, value: 1}, {widget: 1}, false);
+                if(prop == 'globalUpdateRoutine')
+                    validator = getRoutineValidator({widgetID: 1, property: 1, oldValue: 1, value: 1}, {widget: 1}, false);
+
                 if (typeof validator === 'function') {
-                    const result = validator(widget[prop], {widgetId: key, widgets: data, customProperties}, [prop]);
+                    const result = validator(widget[prop], {widgetId: key, widgets: data, customProperties, calledCustomRoutines}, [prop]);
                     if (Array.isArray(result)) {
                         // Validator returned an array of problems
                         problems.push(...result);
@@ -995,18 +1020,27 @@ function validateGameFile(data, checkMeta) {
                     }
                 }
             }
-        }
-        
+        }        
+    }
+    
+    for (const [key, widget] of Object.entries(data)) {
+        const wtype = getWidgetType(widget);
+        const known = WIDGET_PROPERTIES[wtype];
         // Routine validation for properties ending with 'Routine'
         for (const [propName, propValue] of Object.entries(widget)) {
-            if (propName.endsWith('Routine') && !known[propName] && Array.isArray(propValue)) {
-                const context = { widgetId: key, widgets: data, validVariables: {...SUPER_GLOBALS.variables}, validCollections: {...SUPER_GLOBALS.collections}, customProperties };
+            if (propName.endsWith('Routine') && !known[propName] && Array.isArray(propValue) && !calledCustomRoutines.includes(propName) && !propName.match(/^((.+G|g)lobalUpdateRoutine|(.+C|c)hangeRoutine)$/)) {
+                const context = { widgetId: key, widgets: data, validVariables: {...SUPER_GLOBALS.variables}, validCollections: {...SUPER_GLOBALS.collections}, customProperties, calledCustomRoutines };
                 const routineProblems = validateRoutine(propValue, context, [propName]);
+                problems.push({
+                    widget: key,
+                    property: [propName],
+                    message: 'Routine is not being called'
+                });
                 problems.push(...routineProblems);
             }
         }
     }
-    
+
     // Language validation
     const info = (data._meta || {}).info || {};
     const language = info.language || '';
