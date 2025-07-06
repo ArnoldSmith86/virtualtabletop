@@ -1114,17 +1114,17 @@ function validateGameFile(data, checkMeta) {
                 property: ['_meta', 'info', 'image'],
                 message: 'is missing'
             });
-        } else if (/^\/(asset|i)/.test(info.image)) {
+        } else if (!/^\/(asset|i)/.test(info.image)) {
             problems.push({
                 widget: '',
                 property: ['_meta', 'info', 'image'],
-                message: 'is not an internal asset'
+                message: 'is not an internal asset: ' + info.image
             });
-        } else if (info.image.match(/[0-9]+$/)[0] > 10000) {
+        } else if (info.image.match(/[0-9]+$/)[0] > 50000) {
             problems.push({
                 widget: '',
                 property: ['_meta', 'info', 'image'],
-                message: 'image is bigger than 10000'
+                message: 'image is bigger than 50000'
             });
         }
     }
