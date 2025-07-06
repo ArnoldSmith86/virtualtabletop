@@ -813,6 +813,27 @@ function getCustomPropertyUsage(data) {
             // Check for ${PROPERTY xxx} syntax
             extractPropertyFromSyntax(value);
             
+            // Check for dropTarget objects - extract property names used as keys
+            if (key === 'dropTarget') {
+                if (typeof value === 'object' && value !== null) {
+                    if (Array.isArray(value)) {
+                        // Handle array of dropTarget objects
+                        for (const dropTargetObj of value) {
+                            if (typeof dropTargetObj === 'object' && dropTargetObj !== null) {
+                                for (const dropTargetKey of Object.keys(dropTargetObj)) {
+                                    customProperties.add(dropTargetKey);
+                                }
+                            }
+                        }
+                    } else {
+                        // Handle single dropTarget object
+                        for (const dropTargetKey of Object.keys(value)) {
+                            customProperties.add(dropTargetKey);
+                        }
+                    }
+                }
+            }
+            
             // Check for dynamicProperties
             if (key === 'dynamicProperties' && typeof value === 'object' && value !== null) {
                 for (const propName of Object.keys(value)) {
