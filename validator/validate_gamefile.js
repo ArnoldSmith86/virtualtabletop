@@ -112,7 +112,7 @@ const WIDGET_PROPERTIES = {
     },
     Dice: {
         ...COMMON_PROPERTIES,
-        classes: 'any', clickable: 'boolean', movable: 'boolean', layer: 'any', borderRadius: 'any', color: 'any', pipColor: 'any', borderColor: 'any', faces: v=>Array.isArray(v) || 'faces must be an array', activeFace: 'any', rollCount: 'any', rollTime: 'any', swapTime: 'any', image: 'any', imageScale: 'any', text: 'any', pips: 'any', svgReplaces: 'any', faceCSS: 'any', pipSymbols: 'any', shape3d: 'any'
+        classes: 'any', clickable: 'boolean', movable: 'boolean', layer: 'any', borderRadius: 'any', color: 'any', pipColor: 'any', borderColor: 'any', faces: v=>Array.isArray(v) || typeof v === 'string' || 'faces must be an array or string', activeFace: 'any', rollCount: 'any', rollTime: 'any', swapTime: 'any', image: 'any', imageScale: 'any', text: 'any', pips: 'any', svgReplaces: 'any', faceCSS: 'any', pipSymbols: 'any', shape3d: 'any'
     },
     Holder: {
         ...COMMON_PROPERTIES,
