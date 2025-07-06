@@ -854,6 +854,20 @@ function getCustomPropertyUsage(data) {
                 }
             }
             
+            if (key === 'faceTemplates' && Array.isArray(value)) {
+                for (const faceTemplate of value) {
+                    if (typeof faceTemplate === 'object' && faceTemplate !== null && typeof faceTemplate.objects === 'object' && faceTemplate.objects !== null) {
+                        for (const o of Object.values(faceTemplate.objects)) {
+                            if (typeof o === 'object' && o !== null && typeof o.dynamicProperties === 'object' && o.dynamicProperties !== null) {
+                                for (const propName of Object.values(o.dynamicProperties)) {
+                                    customProperties.add(propName);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            
             // Check for specific operation types that use properties
             if (obj.func) {
                 const func = obj.func;
