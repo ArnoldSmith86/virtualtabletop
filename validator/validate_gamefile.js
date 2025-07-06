@@ -75,7 +75,7 @@ const COMMON_PROPERTIES = {
     dropOffsetY: 'number',
     dropShadowOwner: 'string',
     dropShadowWidget: 'id',
-    dropTarget: 'id',
+    dropTarget: 'any',
     dropLimit: 'number',
     inheritChildZ: 'boolean',
     hoverTarget: 'id',
