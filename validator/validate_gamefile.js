@@ -312,7 +312,7 @@ function validateRoutine(routine, context, propertyPath = []) {
     for (let i = 0; i < routine.length; i++) {
         const operation = routine[i];
 
-        if(typeof operation === 'object' && operation !== null && Object.keys(operation).length === 1 && ['Note', 'note', 'Comment', 'comment'].includes(Object.keys(operation)[0])) {
+        if(typeof operation === 'object' && operation !== null && Object.keys(operation).length === 1 && Object.keys(operation)[0].match(/^(note|comment)$/i)) {
             continue;
         }
 
@@ -369,7 +369,7 @@ function validateRoutine(routine, context, propertyPath = []) {
         }
         
         for (const prop of Object.keys(operation)) {
-            if (['Note', 'note', 'Comment', 'comment', 'func'].includes(prop)) continue;
+            if (['func'].includes(prop) || prop.match(/^(note|comment)/i) || prop.startsWith('//')) continue;
             
             const propPath = [...operationPath, prop];
             
