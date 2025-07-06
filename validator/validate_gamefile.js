@@ -465,8 +465,8 @@ function validateRoutine(routine, context, propertyPath = []) {
             for(const field of operation.fields) {
                 if(typeof field.variable === 'string')
                     context.validVariables[field.variable] = 1;
-                if(typeof field.collection === 'string')
-                    context.validCollections[field.collection] = 1;
+                if(field.type === 'choose')
+                    context.validCollections[field.collection || 'DEFAULT'] = 1;
             }
         }
         if(func === 'SELECT')
@@ -1087,27 +1087,47 @@ function validateGameFile(data, checkMeta) {
         }
     }
 
-    // Language validation
-    const info = (data._meta || {}).info || {};
-    const language = info.language || '';
-    if (checkMeta && language && !ALLOWED_LANGUAGES.includes(language)) {
-        problems.push({
-            widget: '',
-            property: ['_meta', 'info', 'language'],
-            message: `'${language}' is not in the allowed list: ${ALLOWED_LANGUAGES.join(', ')}`
-        });
-    }
+    if(checkMeta) {
+        // Language validation
+        const info = (data._meta || {}).info || {};
+        const language = info.language || '';
+        if (language && !ALLOWED_LANGUAGES.includes(language)) {
+            problems.push({
+                widget: '',
+                property: ['_meta', 'info', 'language'],
+                message: `'${language}' is not in the allowed list: ${ALLOWED_LANGUAGES.join(', ')}`
+            });
+        }
+        
+        // BGG URL validation
+        if (!/^https?:\/\/(www\.)?boardgamegeek\.com\//.test(info.bgg)) {
+            problems.push({
+                widget: '',
+                property: ['_meta', 'info', 'bgg'],
+                message: 'does not look like a BoardGameGeek URL'
+            });
+        }
     
-    // BGG URL validation
-    const bgg = info.bgg;
-    if (checkMeta && bgg && !/^https?:\/\/(www\.)?boardgamegeek\.com\//.test(bgg)) {
-        problems.push({
-            widget: '',
-            property: ['_meta', 'info', 'bgg'],
-            message: `_meta.info.bgg does not look like a BoardGameGeek URL: ${bgg}`
-        });
+        if (!info.image) {
+            problems.push({
+                widget: '',
+                property: ['_meta', 'info', 'image'],
+                message: 'is missing'
+            });
+        } else if (/^\/(asset|i)/.test(info.image)) {
+            problems.push({
+                widget: '',
+                property: ['_meta', 'info', 'image'],
+                message: 'is not an internal asset'
+            });
+        } else if (info.image.match(/[0-9]+$/)[0] > 10000) {
+            problems.push({
+                widget: '',
+                property: ['_meta', 'info', 'image'],
+                message: 'image is bigger than 10000'
+            });
+        }
     }
-    
     return problems;
 }
 
