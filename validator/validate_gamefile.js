@@ -311,6 +311,11 @@ function validateRoutine(routine, context, propertyPath = []) {
     
     for (let i = 0; i < routine.length; i++) {
         const operation = routine[i];
+
+        if(typeof operation === 'object' && operation !== null && Object.keys(operation).length === 1 && ['Note', 'note', 'Comment', 'comment'].includes(Object.keys(operation)[0])) {
+            continue;
+        }
+
         context.operation = operation;
         const operationPath = [...propertyPath, i];
         
@@ -364,7 +369,7 @@ function validateRoutine(routine, context, propertyPath = []) {
         }
         
         for (const prop of Object.keys(operation)) {
-            if (prop === 'func' || prop === 'note' || prop === 'Note') continue;
+            if (['Note', 'note', 'Comment', 'comment', 'func'].includes(prop)) continue;
             
             const propPath = [...operationPath, prop];
             
