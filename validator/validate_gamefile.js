@@ -1,8 +1,8 @@
 const validators = {
     asset: v=>!!String(v).match(/^\/assets\/-?[0-9]+_[0-9]+$|^\/i\/|^http/) || 'asset expected (format: /assets/1_1, /i/icon.png or http://example.com/image.png)',
     routineProperty: v=>!!String(v).match(/.Routine$/) || 'routine name expected (format: myRoutine)',
-    idArray: (v,p)=>asArray(v).every(id=>p.widgets[id] || id.includes('$')) || `widgets ${asArray(v).filter(id=>!p.widgets[id] && !id.includes('$')).join(', ')} not found`,
-    id: (v,p)=>p.widgets[v] || v.includes('$') || `widget '${v}' not found`,
+    idArray: (v,p)=>asArray(v).every(id=>p.widgets[id] || String(id).includes('$')) || `widgets ${asArray(v).filter(id=>!p.widgets[id] && !String(id).includes('$')).join(', ')} not found`,
+    id: (v,p)=>p.widgets[v] || String(v).includes('$') || `widget '${v}' not found`,
     number: v=>typeof v === 'number' || 'number expected',
     object: v=>typeof v === 'object' && v !== null || 'object expected',
     boolean: v=>typeof v === 'boolean' || 'boolean expected',
@@ -17,7 +17,7 @@ const validators = {
             return `Collection '${v}' is undefined.`;
         if(Array.isArray(v)) {
             for(const [key, id] of v.entries()) {
-                if(!id.includes('$') && !p.widgets[id]) {
+                if(!String(id).includes('$') && !p.widgets[id]) {
                     problems.push({
                         widget: p.widgetId,
                         property: [...propertyPath, key],
