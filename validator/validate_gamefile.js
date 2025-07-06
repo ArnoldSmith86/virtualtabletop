@@ -646,7 +646,8 @@ const operationProps = {
         'y': 'number',
         'resetOwner': 'boolean',
         'z': 'number',
-        'face': 'positiveNumber'
+        'face': 'positiveNumber',
+        'snapToGrid': 'boolean'
     },
     'RECALL': {
         'excludeCollection': 'inCollection',
