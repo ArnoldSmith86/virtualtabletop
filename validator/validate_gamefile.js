@@ -17,7 +17,7 @@ const validators = {
             return `Collection '${v}' is undefined.`;
         if(Array.isArray(v)) {
             for(const [key, id] of v.entries()) {
-                if(!p.widgets[id]) {
+                if(!id.includes('$') && !p.widgets[id]) {
                     problems.push({
                         widget: p.widgetId,
                         property: [...propertyPath, key],
@@ -450,6 +450,7 @@ function validateRoutine(routine, context, propertyPath = []) {
             for(const widget of Object.values(context.widgets))
                 if(Array.isArray(widget[operation.routine]))
                     validateRoutine(widget[operation.routine], Object.assign(newContext, {widgetId: widget.id}), [operation.routine]);
+            context.validVariables[operation.variable || 'result'] = 1;
         }
         if(func === 'COUNT')
             context.validVariables[operation.variable || 'COUNT'] = 1;
