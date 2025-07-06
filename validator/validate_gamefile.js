@@ -623,7 +623,8 @@ const operationProps = {
         'confirmButtonIcon': 'vttSymbol',
         'confirmButtonText': v=>v === null || typeof v === 'string',
         'header': v=>typeof v === 'string',
-        'fields': v=>Array.isArray(v) || 'fields must be an array'
+        'fields': v=>Array.isArray(v) || 'fields must be an array',
+        'css': v=>typeof v === 'string',
     },
     'LABEL': {
         'label': 'idArray',
@@ -645,7 +646,6 @@ const operationProps = {
         'x': 'number',
         'y': 'number',
         'resetOwner': 'boolean',
-        'z': 'number',
         'face': 'positiveNumber',
         'snapToGrid': 'boolean'
     },
@@ -719,7 +719,7 @@ const operationProps = {
         'seconds': 'number'
     },
     'TURN': {
-        'turn': v=>typeof v === 'number' || v === 'first' || v === 'last',
+        'turn': v=>typeof v === 'number' && Number.isInteger(v) || v === 'first' || v === 'last',
         'turnCycle': getEnumValidator(['forward','backward','random','position','seat']),
         'source': 'inCollection',
         'collection': 'string'
