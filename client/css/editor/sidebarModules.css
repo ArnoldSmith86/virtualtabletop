@@ -250,7 +250,7 @@
 }
 
 .pest_control.editorModule .validation-time {
-  color: var(--textDimColor1);
+  color: var(--textColor);
   font-size: 12px;
   font-style: italic;
 }

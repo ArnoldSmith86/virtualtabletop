@@ -162,7 +162,7 @@ class DebugModule extends SidebarModule {
 
     div(target, 'staticErrors', `
       <div class="validation-controls" style="margin-top: 10px; display: none;">
-        <button id="runValidationButton" class="ui-button">Run Validation</button>
+        <button id="runValidationButton" icon=data_check>Run Validation</button>
         <span class="validation-time"></span>
       </div>
       <div class="success">No validation problems found!</div>
@@ -180,6 +180,7 @@ class DebugModule extends SidebarModule {
     `);
 
     on('#runValidationButton', 'click', e=>this.button_runValidation());
+    this.lastValidationTime = 0;
     this.updateValidation();
   }
 
