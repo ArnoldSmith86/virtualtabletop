@@ -355,6 +355,39 @@ function validateRoutine(routine, context, propertyPath = []) {
             continue;
         }
         
+        const requiredInputCollections = {
+            CANVAS: [ 'canvas' ],
+            COUNT: [],
+            CLICK: [],
+            COUNT: [ 'holder' ],
+            DELETE: [],
+            FLIP: [ 'holder' ],
+            FOREACH: [ 'in', 'range' ],
+            GET: [],
+            LABEL: [ 'label'],
+            MOVE: [ 'from' ],
+            MOVEXY: [ 'from' ],
+            ROTATE: [ 'holder' ],
+            SET: [],
+            SHUFFLE: [ 'holder' ],
+            SORT: [ 'holder' ],
+            TIMER: [ 'timer' ]
+        }
+        if (requiredInputCollections[operation.func] && !operation.collection && !context.validCollections.DEFAULT && !requiredInputCollections[operation.func].some(prop => operation[prop])) {
+            problems.push({
+                widget: context.widgetId,
+                property: operationPath,
+                message: 'no input given and collection DEFAULT is undefined'
+            });
+        }
+        if (operation.func == 'CLONE' && !operation.source && !context.validCollections.DEFAULT) {
+            problems.push({
+                widget: context.widgetId,
+                property: operationPath,
+                message: 'no source given and collection DEFAULT is undefined'
+            });
+        }
+
         // Validate operation properties based on func type
         const func = operation.func;
         const knownProps = operationProps[func];
