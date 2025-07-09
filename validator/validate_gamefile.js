@@ -108,7 +108,7 @@ const WIDGET_PROPERTIES = {
     },
     Card: {
         ...COMMON_PROPERTIES,
-        faceCycle: 'any', activeFace: 'any', deck: 'any', cardType: 'string', onPileCreation: 'object'
+        faceCycle: 'any', activeFace: 'any', deck: 'id', cardType: 'string', onPileCreation: 'object'
     },
     Dice: {
         ...COMMON_PROPERTIES,
@@ -476,7 +476,7 @@ function validateRoutine(routine, context, propertyPath = []) {
         }
 
         // variable tracking
-        if(func === 'CALL' && operation.routine && (!Array.isArray(context.recursionCheck) || !context.recursionCheck.includes(operation.routine))) {
+        if(func === 'CALL' && operation.routine && !context.calledCustomRoutines.includes(operation.routine) && (!Array.isArray(context.recursionCheck) || !context.recursionCheck.includes(operation.routine))) {
             const recursionCheck = JSON.parse(JSON.stringify(context.recursionCheck || []));
             recursionCheck.push(operation.routine);
             context.calledCustomRoutines.push(operation.routine);
@@ -488,8 +488,11 @@ function validateRoutine(routine, context, propertyPath = []) {
             for(const widget of Object.values(context.widgets))
                 if(Array.isArray(widget[operation.routine]))
                     validateRoutine(widget[operation.routine], Object.assign(newContext, {widgetId: widget.id}), [operation.routine]);
-            context.validVariables[operation.variable || 'result'] = 1;
         }
+        if(func === 'CALL')
+            context.validVariables[operation.variable || 'result'] = 1;
+        if(func === 'CLONE')
+            context.validCollections[operation.collection || 'DEFAULT'] = 1;
         if(func === 'COUNT')
             context.validVariables[operation.variable || 'COUNT'] = 1;
         if(func === 'GET')
@@ -965,7 +968,7 @@ function validateGameFile(data, checkMeta) {
         });
         return problems;
     }
-    
+
     // Validate _meta structure
     if (checkMeta && (typeof data._meta !== 'object' || data._meta === null)) {
         problems.push({
@@ -983,8 +986,18 @@ function validateGameFile(data, checkMeta) {
             property: ['_meta', 'version'],
             message: '_meta.version is required and must be a number'
         });
+        return problems;
     }
-    
+        
+    if(checkMeta && data._meta.version < 5) {
+        problems.push({
+            widget: '',
+            property: ['_meta', 'version'],
+            message: 'version is too old - please update game first'
+        });
+        return problems;
+    }
+
     // Validate _meta.info if present
     if (checkMeta && data._meta.info !== undefined) {
         if (typeof data._meta.info !== 'object' || data._meta.info === null) {
@@ -999,7 +1012,7 @@ function validateGameFile(data, checkMeta) {
                 'name', 'image', 'rules', 'bgg', 'year', 'mode', 'time', 'attribution', 
                 'lastUpdate', 'language', 'showName', 'skill', 'description', 'similarImage', 
                 'similarName', 'similarDesigner', 'similarAwards', 'ruleText', 'helpText', 
-                'players', 'variant', 'variantImage'
+                'players', 'variant', 'variantImage', 'importer', 'importerTime'
             ];
             for (const prop of Object.keys(data._meta.info)) {
                 if (!infoProps.includes(prop)) {
@@ -1054,7 +1067,9 @@ function validateGameFile(data, checkMeta) {
         
         // Check for unrecognized properties
         for (const prop of Object.keys(widget)) {
-            // For Card, cardType and deck are required, everything else optional
+            if(wtype == 'Canvas' && prop.match(/^c[0-9]+$/))
+                continue;
+
             if (!(prop in known) && !prop.match(/^((.+G|g)lobalUpdateRoutine|(.+C|c)hangeRoutine)$/)) {
                 // Only warn if this property is not used anywhere in the game file
                 if (!customProperties.includes(prop)) {
@@ -1123,13 +1138,15 @@ function validateGameFile(data, checkMeta) {
     if(checkMeta) {
         // Language validation
         const info = (data._meta || {}).info || {};
-        const language = info.language || '';
-        if (language && !ALLOWED_LANGUAGES.includes(language)) {
-            problems.push({
-                widget: '',
-                property: ['_meta', 'info', 'language'],
-                message: `'${language}' is not in the allowed list: ${ALLOWED_LANGUAGES.join(', ')}`
-            });
+        const languages = (info.language || '').split(',').map(l=>l.trim());
+        for(const language of languages) {
+            if (!ALLOWED_LANGUAGES.includes(language)) {
+                problems.push({
+                    widget: '',
+                    property: ['_meta', 'info', 'language'],
+                    message: `'${language}' is not in the allowed list: ${ALLOWED_LANGUAGES.join(', ')}`
+                });
+            }
         }
         
         // BGG URL validation
@@ -1157,7 +1174,7 @@ function validateGameFile(data, checkMeta) {
             problems.push({
                 widget: '',
                 property: ['_meta', 'info', 'image'],
-                message: 'image is bigger than 50000'
+                message: 'image is bigger than 50000 - a good target is 600x600 @ WebP 60% quality'
             });
         }
     }

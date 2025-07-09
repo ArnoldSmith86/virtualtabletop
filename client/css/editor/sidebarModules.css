@@ -171,8 +171,6 @@
   border-collapse: collapse;
   margin-top: 10px;
   font-size: 12px;
-  max-height: 300px;
-  overflow-y: auto;
 }
 
 .pest_control.editorModule .validation-table th {
@@ -227,6 +225,34 @@
   border: 1px solid #c3e6cb;
   border-radius: 4px;
   margin: 10px 0;
+}
+
+.pest_control.editorModule .validation-controls {
+  background-color: var(--backgroundHighlightColor1);
+  border: 1px solid var(--textColor);
+  border-radius: 4px;
+  padding: 10px;
+  margin-top: 10px;
+}
+
+.pest_control.editorModule .validation-controls button {
+  margin-right: 10px;
+  padding: 5px 10px;
+  background-color: var(--VTTblue);
+  color: white;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.pest_control.editorModule .validation-controls button:hover {
+  background-color: var(--VTTblueDark);
+}
+
+.pest_control.editorModule .validation-time {
+  color: var(--textDimColor1);
+  font-size: 12px;
+  font-style: italic;
 }
 
 /* undo */
