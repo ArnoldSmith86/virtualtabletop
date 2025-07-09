@@ -1,16 +1,16 @@
 {
   "_meta": {
-    "version": 16,
+    "version": 17,
     "info": {
       "name": "Flipz",
-      "image": "/assets/596157591_209642",
+      "image": "/assets/-1591118898_29004",
       "rules": "",
       "bgg": "https://boardgamegeek.com/boardgame/420087/flip-7",
       "year": "2024",
       "mode": "vs",
       "time": "20",
       "attribution": "Game design, layout, and library image by LawDawg96.&nbsp; Released to the Public Domain under CC0.<div><br></div><div>Wood grain background by RyanPro available under the Pixabay license from https://pixabay.com/photos/trees-wood-yellow-wood-oak-1915247/</div><div><br></div><div>Card back created at https://pattern.monster/leaves-9/ under MIT License available at https://github.com/catchspider2002/svelte-svg-patterns.</div>",
-      "lastUpdate": 1735003355089,
+      "lastUpdate": 1742158994451,
       "showName": true,
       "skill": "",
       "description": "Push your luck with this game and take as many cards as you dare in a race to 200 points. Or stop taking cards to lock in your points and see what happens with the other players.",
@@ -19,11 +19,11 @@
       "similarDesigner": "Eric Olsen",
       "similarAwards": "",
       "ruleText": "",
-      "helpText": "Players take seats. Click restart button in upper right to start a new game and randomly select a player to start.<div><br></div><div>There is no dealer. Each player is responsible for taking their own cards. Press the +1 button to add a card to your collection. The +1 button only works if it is your turn and you are still active in the round. Cards are sorted by value in the large holder and action cards and bonus point cards are automatically moved to the smaller holder.</div><div><br></div><div>Active players have a green meeple displayed by their seat and inactive players have a red lock. A player is inactive if the player busts, the player decides to stop taking cards that round, or if a freeze card is used on the player. Click the meeple or the lock to change status. If the player busts, the status will automatically change.</div><div><br></div><div>The turn indicator will generally be correct, but when action cards are available, the turn indicator will probably be off. If a player is given the action card to get 3 cards, that player should drag cards one at a time and drop them into the holder by the player's seat. Use the turn button (small black and white button below the scoreboard) to advance the turn to the next player.</div><div><br></div><div>If a player has a second chance card and needs to use it, both the second chance card and the card that should be discarded are raised slightly as an indicator.</div><div><br></div><div>If the deck runs out of cards, a small black and white button appears where the deck was. Click it to move and shuffle the discarded cards back into the deck holder.</div><div><br></div><div>Once every player is inactive, a score button appears in the bottom center. Click it to automatically update the scoreboard and reset the board for the next round. The scoreboard can also be manually updated by clicking on it.</div>",
-      "players": "3-8",
-      "language": "",
+      "helpText": "Players take seats. Click restart button in upper right to start a new game and randomly select a player to start.<div><br></div><div>There is no dealer. Each player is responsible for taking their own cards. Press the +1 button to add a card to your collection. The +1 button only works if it is your turn and you are still active in the round. Cards are sorted by value in the large holder and action cards and bonus point cards are automatically moved to the smaller holder.</div><div><br></div><div>Active players have a green meeple displayed by their seat and inactive players have a red lock. A player is inactive if the player busts, the player decides to stop taking cards that round, or if a freeze card is used on the player. Click the meeple or the lock to change status. If the player busts, the status will automatically change.</div><div><br></div><div><span style=\"color: var(--overlayFontColor);\">The turn indicator will generally be correct, but when action cards are available, the turn indicator may get out of synch.</span></div><div><span style=\"color: var(--overlayFontColor);\"><br></span></div><div><span style=\"color: var(--overlayFontColor);\">Action Cards:</span></div><div><ul><li><span style=\"color: var(--overlayFontColor);\">If a player gets the flip 3 action card, that player should drag cards one at a time and drop them into the holder by their seat. After all 3 cards are taken, if the player has not busted, then resolve any new action cards the player received. When finished, use the turn button (small black and white button below the scoreboard) to advance the turn to the next player.</span></li><li>If a player has a second chance card and needs to use it, both the second chance card and the card that should be discarded are automatically raised slightly as an indicator.</li><li>If a player draws the freeze action card, that player will see a pop up on the screen and must choose one of the players to give the card to. Due to limitations in the VTT code, other players will not have a visual indication that the player is making a choice, but will see the freeze card moved to the frozen player.</li></ul></div><div>If the deck runs out of cards, a small black and white button appears where the deck was. Click it to move and shuffle the discarded cards back into the deck holder.</div><div><br></div><div>Once every player is inactive, a score button appears in the bottom center. Click it to automatically update the scoreboard and reset the board for the next round. The scoreboard can also be manually updated by clicking on it.</div>",
+      "variantImage": "",
       "variant": "",
-      "variantImage": ""
+      "language": "",
+      "players": "3-8"
     }
   },
   "deckHolder": {
@@ -213,7 +213,6 @@
       },
       "freeze": {
         "bonus": true,
-        "action": true,
         "image1": "/i/game-icons.net/delapouite/plain-padlock.svg",
         "image2": "/i/game-icons.net/lorc/lightning-trio.svg",
         "image3": "/i/game-icons.net/lorc/lightning-trio.svg",
@@ -328,7 +327,7 @@
     "type": "card",
     "cardType": "0",
     "id": "0us5",
-    "z": 41798,
+    "z": 45484,
     "parent": "yfah"
   },
   "dqtn": {
@@ -336,7 +335,7 @@
     "type": "card",
     "cardType": "1",
     "id": "dqtn",
-    "z": 41839,
+    "z": 45459,
     "parent": "yfah"
   },
   "3b7b": {
@@ -344,7 +343,7 @@
     "type": "card",
     "cardType": "2",
     "id": "3b7b",
-    "z": 41832,
+    "z": 45474,
     "parent": "yfah"
   },
   "tz02": {
@@ -352,7 +351,7 @@
     "type": "card",
     "cardType": "3",
     "id": "tz02",
-    "z": 41816,
+    "z": 45442,
     "parent": "yfah"
   },
   "crny": {
@@ -360,7 +359,7 @@
     "type": "card",
     "cardType": "5",
     "id": "crny",
-    "z": 41776,
+    "z": 45501,
     "parent": "yfah"
   },
   "81mw": {
@@ -368,7 +367,7 @@
     "type": "card",
     "cardType": "6",
     "id": "81mw",
-    "z": 41828,
+    "z": 45512,
     "parent": "yfah"
   },
   "pvz9": {
@@ -376,7 +375,7 @@
     "type": "card",
     "cardType": "7",
     "id": "pvz9",
-    "z": 41807,
+    "z": 45507,
     "parent": "yfah"
   },
   "f7xh": {
@@ -384,7 +383,7 @@
     "type": "card",
     "cardType": "8",
     "id": "f7xh",
-    "z": 41824,
+    "z": 45505,
     "parent": "yfah"
   },
   "4p9i": {
@@ -392,7 +391,7 @@
     "type": "card",
     "cardType": "9",
     "id": "4p9i",
-    "z": 41817,
+    "z": 45514,
     "parent": "yfah"
   },
   "etpi": {
@@ -400,7 +399,7 @@
     "type": "card",
     "cardType": "10",
     "id": "etpi",
-    "z": 41841,
+    "z": 45509,
     "parent": "yfah"
   },
   "nhxa": {
@@ -408,7 +407,7 @@
     "type": "card",
     "cardType": "11",
     "id": "nhxa",
-    "z": 41788,
+    "z": 45488,
     "parent": "yfah"
   },
   "12to": {
@@ -416,7 +415,7 @@
     "type": "card",
     "cardType": "12",
     "id": "12to",
-    "z": 41856,
+    "z": 45473,
     "parent": "yfah"
   },
   "w244": {
@@ -424,7 +423,7 @@
     "type": "card",
     "cardType": "x2",
     "id": "w244",
-    "z": 41780,
+    "z": 45521,
     "parent": "yfah"
   },
   "fk9q": {
@@ -432,7 +431,7 @@
     "type": "card",
     "cardType": "+2",
     "id": "fk9q",
-    "z": 41779,
+    "z": 45449,
     "parent": "yfah"
   },
   "bvmq": {
@@ -440,7 +439,7 @@
     "type": "card",
     "cardType": "+4",
     "id": "bvmq",
-    "z": 41809,
+    "z": 45479,
     "parent": "yfah"
   },
   "jc0s": {
@@ -448,7 +447,7 @@
     "type": "card",
     "cardType": "+6",
     "id": "jc0s",
-    "z": 41801,
+    "z": 45523,
     "parent": "yfah"
   },
   "7ufx": {
@@ -456,7 +455,7 @@
     "type": "card",
     "cardType": "+8",
     "id": "7ufx",
-    "z": 41837,
+    "z": 45466,
     "parent": "yfah"
   },
   "mv12": {
@@ -464,7 +463,7 @@
     "type": "card",
     "cardType": "+10",
     "id": "mv12",
-    "z": 41864,
+    "z": 45476,
     "parent": "yfah"
   },
   "g8pp": {
@@ -472,7 +471,7 @@
     "type": "card",
     "cardType": "freeze",
     "id": "g8pp",
-    "z": 41815,
+    "z": 45444,
     "parent": "yfah"
   },
   "i1cj": {
@@ -480,7 +479,7 @@
     "type": "card",
     "cardType": "flip",
     "id": "i1cj",
-    "z": 41869,
+    "z": 45513,
     "parent": "yfah"
   },
   "shue": {
@@ -488,7 +487,7 @@
     "type": "card",
     "cardType": "second",
     "id": "shue",
-    "z": 41785,
+    "z": 45510,
     "parent": "yfah"
   },
   "xte6": {
@@ -496,7 +495,7 @@
     "type": "card",
     "cardType": "12",
     "id": "xte6",
-    "z": 41813,
+    "z": 45465,
     "parent": "yfah"
   },
   "1ghu": {
@@ -504,7 +503,7 @@
     "type": "card",
     "cardType": "12",
     "id": "1ghu",
-    "z": 41867,
+    "z": 45527,
     "parent": "yfah"
   },
   "td33": {
@@ -512,7 +511,7 @@
     "type": "card",
     "cardType": "12",
     "id": "td33",
-    "z": 41810,
+    "z": 45480,
     "parent": "yfah"
   },
   "3mhe": {
@@ -520,7 +519,7 @@
     "type": "card",
     "cardType": "12",
     "id": "3mhe",
-    "z": 41805,
+    "z": 45506,
     "parent": "yfah"
   },
   "d7kx": {
@@ -528,7 +527,7 @@
     "type": "card",
     "cardType": "12",
     "id": "d7kx",
-    "z": 41848,
+    "z": 45460,
     "parent": "yfah"
   },
   "5zx5": {
@@ -536,7 +535,7 @@
     "type": "card",
     "cardType": "12",
     "id": "5zx5",
-    "z": 41811,
+    "z": 45438,
     "parent": "yfah"
   },
   "hzmz": {
@@ -544,7 +543,7 @@
     "type": "card",
     "cardType": "12",
     "id": "hzmz",
-    "z": 41818,
+    "z": 45445,
     "parent": "yfah"
   },
   "52n2": {
@@ -552,7 +551,7 @@
     "type": "card",
     "cardType": "12",
     "id": "52n2",
-    "z": 41806,
+    "z": 45436,
     "parent": "yfah"
   },
   "k4zf": {
@@ -560,7 +559,7 @@
     "type": "card",
     "cardType": "12",
     "id": "k4zf",
-    "z": 41840,
+    "z": 45491,
     "parent": "yfah"
   },
   "qahy": {
@@ -568,7 +567,7 @@
     "type": "card",
     "cardType": "12",
     "id": "qahy",
-    "z": 41786,
+    "z": 45526,
     "parent": "yfah"
   },
   "n31l": {
@@ -576,7 +575,7 @@
     "type": "card",
     "cardType": "12",
     "id": "n31l",
-    "z": 41804,
+    "z": 45450,
     "parent": "yfah"
   },
   "rlg1": {
@@ -584,7 +583,7 @@
     "type": "card",
     "cardType": "11",
     "id": "rlg1",
-    "z": 41842,
+    "z": 45498,
     "parent": "yfah"
   },
   "p30y": {
@@ -592,7 +591,7 @@
     "type": "card",
     "cardType": "11",
     "id": "p30y",
-    "z": 41833,
+    "z": 45502,
     "parent": "yfah"
   },
   "syd1": {
@@ -600,7 +599,7 @@
     "type": "card",
     "cardType": "11",
     "id": "syd1",
-    "z": 41830,
+    "z": 45500,
     "parent": "yfah"
   },
   "ttwe": {
@@ -608,7 +607,7 @@
     "type": "card",
     "cardType": "11",
     "id": "ttwe",
-    "z": 41794,
+    "z": 45515,
     "parent": "yfah"
   },
   "aars": {
@@ -616,7 +615,7 @@
     "type": "card",
     "cardType": "11",
     "id": "aars",
-    "z": 41799,
+    "z": 45482,
     "parent": "yfah"
   },
   "htqf": {
@@ -624,7 +623,7 @@
     "type": "card",
     "cardType": "11",
     "id": "htqf",
-    "z": 41790,
+    "z": 45472,
     "parent": "yfah"
   },
   "wdnj": {
@@ -632,7 +631,7 @@
     "type": "card",
     "cardType": "11",
     "id": "wdnj",
-    "z": 41783,
+    "z": 45464,
     "parent": "yfah"
   },
   "2t3o": {
@@ -640,7 +639,7 @@
     "type": "card",
     "cardType": "11",
     "id": "2t3o",
-    "z": 41860,
+    "z": 45489,
     "parent": "yfah"
   },
   "aocm": {
@@ -648,7 +647,7 @@
     "type": "card",
     "cardType": "11",
     "id": "aocm",
-    "z": 41796,
+    "z": 45524,
     "parent": "yfah"
   },
   "d6ud": {
@@ -656,7 +655,7 @@
     "type": "card",
     "cardType": "11",
     "id": "d6ud",
-    "z": 41795,
+    "z": 45453,
     "parent": "yfah"
   },
   "uyxy": {
@@ -664,7 +663,7 @@
     "type": "card",
     "cardType": "10",
     "id": "uyxy",
-    "z": 41857,
+    "z": 45451,
     "parent": "yfah"
   },
   "vezh": {
@@ -672,7 +671,7 @@
     "type": "card",
     "cardType": "10",
     "id": "vezh",
-    "z": 41849,
+    "z": 45437,
     "parent": "yfah"
   },
   "tf2j": {
@@ -680,7 +679,7 @@
     "type": "card",
     "cardType": "10",
     "id": "tf2j",
-    "z": 41826,
+    "z": 45522,
     "parent": "yfah"
   },
   "l8ct": {
@@ -688,7 +687,7 @@
     "type": "card",
     "cardType": "10",
     "id": "l8ct",
-    "z": 41855,
+    "z": 45494,
     "parent": "yfah"
   },
   "ykbk": {
@@ -696,7 +695,7 @@
     "type": "card",
     "cardType": "10",
     "id": "ykbk",
-    "z": 41829,
+    "z": 45504,
     "parent": "yfah"
   },
   "uwte": {
@@ -704,7 +703,7 @@
     "type": "card",
     "cardType": "10",
     "id": "uwte",
-    "z": 41789,
+    "z": 45462,
     "parent": "yfah"
   },
   "9kvv": {
@@ -712,7 +711,7 @@
     "type": "card",
     "cardType": "10",
     "id": "9kvv",
-    "z": 41836,
+    "z": 45486,
     "parent": "yfah"
   },
   "0et7": {
@@ -720,7 +719,7 @@
     "type": "card",
     "cardType": "10",
     "id": "0et7",
-    "z": 41844,
+    "z": 45475,
     "parent": "yfah"
   },
   "sn8z": {
@@ -728,7 +727,7 @@
     "type": "card",
     "cardType": "10",
     "id": "sn8z",
-    "z": 41831,
+    "z": 45448,
     "parent": "yfah"
   },
   "cxe4": {
@@ -736,7 +735,7 @@
     "type": "card",
     "cardType": "9",
     "id": "cxe4",
-    "z": 41791,
+    "z": 45434,
     "parent": "yfah"
   },
   "bphl": {
@@ -744,7 +743,7 @@
     "type": "card",
     "cardType": "9",
     "id": "bphl",
-    "z": 41851,
+    "z": 45519,
     "parent": "yfah"
   },
   "rltc": {
@@ -752,7 +751,7 @@
     "type": "card",
     "cardType": "9",
     "id": "rltc",
-    "z": 41827,
+    "z": 45463,
     "parent": "yfah"
   },
   "awjc": {
@@ -760,7 +759,7 @@
     "type": "card",
     "cardType": "9",
     "id": "awjc",
-    "z": 41835,
+    "z": 45493,
     "parent": "yfah"
   },
   "ih6y": {
@@ -768,7 +767,7 @@
     "type": "card",
     "cardType": "9",
     "id": "ih6y",
-    "z": 41858,
+    "z": 45525,
     "parent": "yfah"
   },
   "j0f9": {
@@ -776,7 +775,7 @@
     "type": "card",
     "cardType": "9",
     "id": "j0f9",
-    "z": 41863,
+    "z": 45490,
     "parent": "yfah"
   },
   "pwn2": {
@@ -784,7 +783,7 @@
     "type": "card",
     "cardType": "9",
     "id": "pwn2",
-    "z": 41797,
+    "z": 45441,
     "parent": "yfah"
   },
   "w1hs": {
@@ -792,7 +791,7 @@
     "type": "card",
     "cardType": "9",
     "id": "w1hs",
-    "z": 41800,
+    "z": 45457,
     "parent": "yfah"
   },
   "t455": {
@@ -800,7 +799,7 @@
     "type": "card",
     "cardType": "8",
     "id": "t455",
-    "z": 41825,
+    "z": 45508,
     "parent": "yfah"
   },
   "5v89": {
@@ -808,7 +807,7 @@
     "type": "card",
     "cardType": "8",
     "id": "5v89",
-    "z": 41812,
+    "z": 45440,
     "parent": "yfah"
   },
   "qrs4": {
@@ -816,7 +815,7 @@
     "type": "card",
     "cardType": "8",
     "id": "qrs4",
-    "z": 41781,
+    "z": 45446,
     "parent": "yfah"
   },
   "h7xq": {
@@ -824,7 +823,7 @@
     "type": "card",
     "cardType": "8",
     "id": "h7xq",
-    "z": 41845,
+    "z": 45487,
     "parent": "yfah"
   },
   "63ui": {
@@ -832,7 +831,7 @@
     "type": "card",
     "cardType": "8",
     "id": "63ui",
-    "z": 41854,
+    "z": 45454,
     "parent": "yfah"
   },
   "3yx7": {
@@ -840,7 +839,7 @@
     "type": "card",
     "cardType": "8",
     "id": "3yx7",
-    "z": 41846,
+    "z": 45511,
     "parent": "yfah"
   },
   "5k72": {
@@ -848,7 +847,7 @@
     "type": "card",
     "cardType": "8",
     "id": "5k72",
-    "z": 41782,
+    "z": 45458,
     "parent": "yfah"
   },
   "pwxr": {
@@ -856,7 +855,7 @@
     "type": "card",
     "cardType": "7",
     "id": "pwxr",
-    "z": 41838,
+    "z": 45470,
     "parent": "yfah"
   },
   "jj1d": {
@@ -864,7 +863,7 @@
     "type": "card",
     "cardType": "7",
     "id": "jj1d",
-    "z": 41866,
+    "z": 45467,
     "parent": "yfah"
   },
   "47o6": {
@@ -872,7 +871,7 @@
     "type": "card",
     "cardType": "7",
     "id": "47o6",
-    "z": 41784,
+    "z": 45461,
     "parent": "yfah"
   },
   "a5x4": {
@@ -880,7 +879,7 @@
     "type": "card",
     "cardType": "7",
     "id": "a5x4",
-    "z": 41834,
+    "z": 45485,
     "parent": "yfah"
   },
   "7tvm": {
@@ -888,7 +887,7 @@
     "type": "card",
     "cardType": "7",
     "id": "7tvm",
-    "z": 41823,
+    "z": 45435,
     "parent": "yfah"
   },
   "jtc0": {
@@ -896,7 +895,7 @@
     "type": "card",
     "cardType": "7",
     "id": "jtc0",
-    "z": 41808,
+    "z": 45496,
     "parent": "yfah"
   },
   "gcfe": {
@@ -904,7 +903,7 @@
     "type": "card",
     "cardType": "6",
     "id": "gcfe",
-    "z": 41850,
+    "z": 45468,
     "parent": "yfah"
   },
   "opgk": {
@@ -912,7 +911,7 @@
     "type": "card",
     "cardType": "6",
     "id": "opgk",
-    "z": 41814,
+    "z": 45518,
     "parent": "yfah"
   },
   "u8cc": {
@@ -920,7 +919,7 @@
     "type": "card",
     "cardType": "6",
     "id": "u8cc",
-    "z": 41819,
+    "z": 45469,
     "parent": "yfah"
   },
   "jl9k": {
@@ -928,7 +927,7 @@
     "type": "card",
     "cardType": "6",
     "id": "jl9k",
-    "z": 41859,
+    "z": 45516,
     "parent": "yfah"
   },
   "l8w6": {
@@ -936,7 +935,7 @@
     "type": "card",
     "cardType": "6",
     "id": "l8w6",
-    "z": 41803,
+    "z": 45503,
     "parent": "yfah"
   },
   "nadu": {
@@ -944,7 +943,7 @@
     "type": "card",
     "cardType": "5",
     "id": "nadu",
-    "z": 41862,
+    "z": 45481,
     "parent": "yfah"
   },
   "dwrp": {
@@ -952,7 +951,7 @@
     "type": "card",
     "cardType": "5",
     "id": "dwrp",
-    "z": 41787,
+    "z": 45456,
     "parent": "yfah"
   },
   "grtt": {
@@ -960,7 +959,7 @@
     "type": "card",
     "cardType": "5",
     "id": "grtt",
-    "z": 41792,
+    "z": 45495,
     "parent": "yfah"
   },
   "f49w": {
@@ -968,7 +967,7 @@
     "type": "card",
     "cardType": "5",
     "id": "f49w",
-    "z": 41777,
+    "z": 45478,
     "parent": "yfah"
   },
   "mi9b": {
@@ -976,7 +975,7 @@
     "type": "card",
     "cardType": "4",
     "id": "mi9b",
-    "z": 41865,
+    "z": 45497,
     "parent": "yfah"
   },
   "up5p": {
@@ -984,7 +983,7 @@
     "type": "card",
     "cardType": "4",
     "id": "up5p",
-    "z": 41802,
+    "z": 45477,
     "parent": "yfah"
   },
   "q3f9": {
@@ -992,7 +991,7 @@
     "type": "card",
     "cardType": "4",
     "id": "q3f9",
-    "z": 41822,
+    "z": 45447,
     "parent": "yfah"
   },
   "eg9h": {
@@ -1000,7 +999,7 @@
     "type": "card",
     "cardType": "4",
     "id": "eg9h",
-    "z": 41868,
+    "z": 45452,
     "parent": "yfah"
   },
   "ipch": {
@@ -1008,7 +1007,7 @@
     "type": "card",
     "cardType": "3",
     "id": "ipch",
-    "z": 41793,
+    "z": 45439,
     "parent": "yfah"
   },
   "arte": {
@@ -1016,7 +1015,7 @@
     "type": "card",
     "cardType": "3",
     "id": "arte",
-    "z": 41843,
+    "z": 45455,
     "parent": "yfah"
   },
   "xspk": {
@@ -1024,7 +1023,7 @@
     "type": "card",
     "cardType": "2",
     "id": "xspk",
-    "z": 41820,
+    "z": 45483,
     "parent": "yfah"
   },
   "duc9": {
@@ -1032,7 +1031,7 @@
     "type": "card",
     "cardType": "freeze",
     "id": "duc9",
-    "z": 41821,
+    "z": 45471,
     "parent": "yfah"
   },
   "bgsn": {
@@ -1040,7 +1039,7 @@
     "type": "card",
     "cardType": "freeze",
     "id": "bgsn",
-    "z": 41861,
+    "z": 45520,
     "parent": "yfah"
   },
   "shxf": {
@@ -1048,7 +1047,7 @@
     "type": "card",
     "cardType": "flip",
     "id": "shxf",
-    "z": 41853,
+    "z": 45499,
     "parent": "yfah"
   },
   "uq0z": {
@@ -1056,7 +1055,7 @@
     "type": "card",
     "cardType": "flip",
     "id": "uq0z",
-    "z": 41778,
+    "z": 45492,
     "parent": "yfah"
   },
   "b7n9": {
@@ -1064,7 +1063,7 @@
     "type": "card",
     "cardType": "second",
     "id": "b7n9",
-    "z": 41847,
+    "z": 45517,
     "parent": "yfah"
   },
   "9j3u": {
@@ -1072,14 +1071,15 @@
     "type": "card",
     "cardType": "second",
     "id": "9j3u",
-    "z": 41852,
+    "z": 45443,
     "parent": "yfah"
   },
   "seat1": {
     "type": "seat",
     "id": "seat1",
     "parent": "area1",
-    "score": 0
+    "score": 0,
+    "turn": true
   },
   "holder1": {
     "type": "holder",
@@ -1093,6 +1093,25 @@
     },
     "stackOffsetX": 35,
     "enterRoutine": [
+      {
+        "func": "SET",
+        "collection": [
+          "takeButton"
+        ],
+        "property": "action",
+        "value": false
+      },
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "_ancestor",
+        "value": "holderBonus${PROPERTY pID}"
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "value": 4
+      },
       {
         "func": "GET",
         "property": "bonus",
@@ -1224,13 +1243,19 @@
             ]
           },
           {
-            "func": "SET",
-            "collection": [
-              "score${PROPERTY pID}"
-            ],
-            "property": "text",
-            "relation": "+",
-            "value": "${PROPERTY points OF $widgetID}"
+            "func": "IF",
+            "condition": "${PROPERTY points OF $widgetID}",
+            "thenRoutine": [
+              {
+                "func": "SET",
+                "collection": [
+                  "score${PROPERTY pID}"
+                ],
+                "property": "text",
+                "relation": "+",
+                "value": "${PROPERTY points OF $widgetID}"
+              }
+            ]
           }
         ]
       },
@@ -1282,6 +1307,14 @@
                     "property": "y",
                     "relation": "-",
                     "value": 20
+                  },
+                  {
+                    "func": "SET",
+                    "collection": [
+                      "takeButton"
+                    ],
+                    "property": "action",
+                    "value": true
                   }
                 ],
                 "elseRoutine": [
@@ -1300,15 +1333,6 @@
                     ],
                     "property": "activeFace",
                     "value": 1
-                  },
-                  "// This SET is causing an error",
-                  {
-                    "func": "xSET",
-                    "collection": [
-                      "seat${PROPERTY pID}"
-                    ],
-                    "property": "skipTurn",
-                    "value": true
                   },
                   {
                     "func": "CALL",
@@ -1337,8 +1361,40 @@
     "stackOffsetX": 35,
     "enterRoutine": [
       {
-        "func": "CALL",
-        "routine": "offSetRoutine"
+        "func": "IF",
+        "operand1": "${PROPERTY enable}",
+        "relation": "!=",
+        "operand2": false,
+        "thenRoutine": [
+          {
+            "func": "CALL",
+            "routine": "offSetRoutine"
+          },
+          {
+            "func": "GET",
+            "collection": "child",
+            "property": "cardType"
+          },
+          {
+            "func": "SELECT",
+            "source": "activeSeats",
+            "property": "skipTurn",
+            "relation": "!=",
+            "value": true,
+            "collection": "stillActive"
+          },
+          {
+            "func": "IF",
+            "operand1": "${cardType}",
+            "operand2": "freeze",
+            "thenRoutine": [
+              {
+                "func": "CALL",
+                "routine": "freezeCardRoutine"
+              }
+            ]
+          }
+        ]
       }
     ],
     "leaveRoutine": [
@@ -1392,6 +1448,11 @@
         "property": "action"
       },
       {
+        "func": "GET",
+        "collection": "child",
+        "property": "cardType"
+      },
+      {
         "func": "IF",
         "condition": "${action}",
         "thenRoutine": [
@@ -1401,6 +1462,24 @@
             "property": "y",
             "relation": "-",
             "value": 20
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "takeButton"
+            ],
+            "property": "action",
+            "value": true
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "takeButton"
+            ],
+            "property": "action",
+            "value": false
           }
         ]
       }
@@ -1411,7 +1490,61 @@
     },
     "onEnter": {
       "activeFace": 1
-    }
+    },
+    "enable": true,
+    "freezeCardRoutine": [
+      {
+        "func": "INPUT",
+        "fields": [
+          {
+            "type": "title",
+            "text": "Choose one player to freeze"
+          },
+          {
+            "type": "choose",
+            "source": "stillActive",
+            "min": 1,
+            "max": 1,
+            "collection": "freezePlayer"
+          }
+        ],
+        "cancelButtonIcon": null,
+        "cancelButtonText": null
+      },
+      {
+        "func": "GET",
+        "collection": "freezePlayer",
+        "property": "index",
+        "variable": "pID"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "holderBonus${pID}"
+        ],
+        "property": "enable",
+        "value": false
+      },
+      {
+        "func": "MOVE",
+        "collection": "child",
+        "to": "holderBonus${pID}"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "holderBonus${pID}"
+        ],
+        "property": "enable",
+        "value": true
+      },
+      {
+        "func": "CLICK",
+        "collection": [
+          "status${pID}"
+        ]
+      }
+    ]
   },
   "area1": {
     "id": "area1",
@@ -1640,9 +1773,22 @@
                 "to": "holder${seatIndex}"
               },
               {
-                "func": "CLICK",
-                "collection": [
-                  "turnButton"
+                "func": "IF",
+                "condition": "${PROPERTY action}",
+                "thenRoutine": [
+                  {
+                    "func": "TURN",
+                    "turnCycle": "seat",
+                    "turn": "${seatID}"
+                  }
+                ],
+                "elseRoutine": [
+                  {
+                    "func": "CLICK",
+                    "collection": [
+                      "turnButton"
+                    ]
+                  }
                 ]
               }
             ]
@@ -1672,7 +1818,8 @@
         "display": "block"
       }
     },
-    "color": "white"
+    "color": "white",
+    "action": true
   },
   "vedq": {
     "type": "scoreboard",
@@ -1932,7 +2079,8 @@
     "type": "holder",
     "id": "holder2",
     "parent": "area2",
-    "pID": 2
+    "pID": 2,
+    "stackOffsetX": 35
   },
   "holderBonus2": {
     "inheritFrom": {
@@ -1940,7 +2088,9 @@
     },
     "type": "holder",
     "id": "holderBonus2",
-    "parent": "area2"
+    "parent": "area2",
+    "stackOffsetX": 35,
+    "enable": true
   },
   "status2": {
     "inheritFrom": {
@@ -1993,7 +2143,8 @@
     "type": "holder",
     "id": "holderBonus3",
     "parent": "area3",
-    "stackOffsetX": 35
+    "stackOffsetX": 35,
+    "enable": true
   },
   "status3": {
     "inheritFrom": {
@@ -2045,7 +2196,8 @@
     "type": "holder",
     "id": "holderBonus4",
     "parent": "area4",
-    "stackOffsetX": 35
+    "stackOffsetX": 35,
+    "enable": true
   },
   "status4": {
     "inheritFrom": {
@@ -2098,7 +2250,8 @@
     "type": "holder",
     "id": "holderBonus5",
     "parent": "area5",
-    "stackOffsetX": 35
+    "stackOffsetX": 35,
+    "enable": true
   },
   "status5": {
     "inheritFrom": {
@@ -2150,7 +2303,8 @@
     "type": "holder",
     "id": "holderBonus6",
     "parent": "area6",
-    "stackOffsetX": 35
+    "stackOffsetX": 35,
+    "enable": true
   },
   "status6": {
     "inheritFrom": {
@@ -2202,7 +2356,8 @@
     "type": "holder",
     "id": "holderBonus7",
     "parent": "area7",
-    "stackOffsetX": 35
+    "stackOffsetX": 35,
+    "enable": true
   },
   "status7": {
     "inheritFrom": {
@@ -2254,7 +2409,8 @@
     "type": "holder",
     "id": "holderBonus8",
     "parent": "area8",
-    "stackOffsetX": 35
+    "stackOffsetX": 35,
+    "enable": true
   },
   "status8": {
     "inheritFrom": {
@@ -2552,6 +2708,14 @@
             ],
             "property": "activeFace",
             "value": 0
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "holderBonus${value}"
+            ],
+            "property": "enable",
+            "value": true
           }
         ]
       },
@@ -2585,7 +2749,7 @@
         "value": "${index}"
       }
     ],
-    "turnIndex": 5,
+    "turnIndex": 1,
     "gameStartRoutine": [
       {
         "func": "SHUFFLE",

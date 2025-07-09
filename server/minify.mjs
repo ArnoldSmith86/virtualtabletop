@@ -127,7 +127,9 @@ export default async function minifyHTML() {
 
     'client/js/editmode.js',
     'client/js/jsonedit.js',
-    'client/js/traceviewer.js'
+    'client/js/traceviewer.js',
+
+    'validator/validate_gamefile.js'
   ]);
 
   const editorHTML = await minify({

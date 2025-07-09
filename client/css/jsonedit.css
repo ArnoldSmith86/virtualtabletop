@@ -105,6 +105,10 @@
 #jeText {
   padding-left: calc(var(--linenumbers-digits) * 8px + 2px);
 }
+#jeText::selection {
+  background-color: var(--backgroundHighlightColor1);
+  color: var(--textColor);
+}
 
 /**** End of line number styles ****/
 
@@ -163,6 +167,17 @@ body.lightsOff .jeTreeExpander::before, body.lightsOff .jeTreeExpander-down::bef
 /* Show the nested list when the user clicks on the caret/arrow (with JavaScript) */
 .jeNestedTree.active, .jeNestedTree.filterChildIncluded, .jeLogNested.active {
   display: block;
+}
+
+.jeLogFilterMatch {
+  font-weight: bold;
+}
+
+.jeLogFilterNoMatch {
+  opacity: 0.5;
+}
+.jeLogFilterNoMatch:hover {
+  opacity: 1;
 }
 
 #jeText {
@@ -491,7 +506,7 @@ body.jsonEdit #toolbar {
 }
 
 [id=jeTopButtons] button.material {
-  font-family: 'Material Icons';
+  font-family: 'Material Symbols';
 }
 
 #jeTopButtons button:disabled {

@@ -39,6 +39,10 @@ function images2emojis(dom) {
   dom.innerHTML = dom.innerHTML.replace(regexpUnicodeModified, (m,g)=>g);
 }
 
+function replaceMaterialIcons(html) {
+  return html.replace(/\b(material-icons(?:-(outlined|round|sharp|twotone))?)\b/g, "material-symbols");
+}
+
 function toNotoMonochrome(emoji) {
   return emoji
     .replace(/[\u{1f3fb}-\u{1f3ff}]/ug, '') // remove skin tone modifiers (they are not supported by Noto Emoji)
@@ -64,21 +68,25 @@ export async function loadSymbolPicker() {
       if(category == 'Emoji - Flags')
         continue;
       list += `<h2 class="${category.match(/Material|VTT|Emoji/)?'fontCategory':'imageCategory'}">${category}</h2>`;
-      for(const [ symbol, keywords ] of Object.entries(symbols)) {
+      for(let [ symbol, keywords ] of Object.entries(symbols)) {
         if(symbol.includes('/')) {
           const gameIconsIndex = keywords.shift();
           // increase resource limits in /etc/ImageMagick-6/policy.xml to 8GiB and then: montage -background none assets/game-icons.net/*/*.svg -geometry 48x48+0+0 -tile 60x assets/game-icons.net/overview.png
           list += `<i class="gameicons" title="game-icons.net: ${symbol}" data-type="game-icons" data-symbol="${symbol}" data-keywords="${symbol.split('/')[1]},${keywords.join().toLowerCase()}" style="--x:${gameIconsIndex%60};--y:${Math.floor(gameIconsIndex/60)};--url:url('i/game-icons.net/${symbol}.svg')"></i>`;
         } else {
+          const hasNoFillVariant = symbol.match(/ \(FILL\+NOFILL\)$/);
+          symbol = symbol.replace(/ \(FILL\+NOFILL\)$/, '');
           let className = 'emoji-monochrome';
           if(symbol[0] == '[')
             className = 'symbols';
           else if(symbol.match(/^[a-z0-9_]+$/))
-            className = 'material-icons';
+            className = 'material-symbols';
           if(className != 'emoji-monochrome' || !skipForNotoMonochrome(symbol)) {
             const symbolToReturn = className == 'emoji-monochrome' ? `(${symbol})` : symbol;
             list += `<i class="${className}" title="${className}: ${symbol}" data-type="${className}" data-symbol="${symbolToReturn}" data-keywords="${symbol},${keywords.join().toLowerCase()}" style="--url:url('i/noto-emoji/emoji_u${emojiToFilename(symbol)}.svg')">${toNotoMonochrome(symbol)}</i>`;
           }
+          if(className == 'material-symbols' && hasNoFillVariant)
+            list += `<i class="material-symbols-nofill" title="material-symbols-nofill: ${symbol}" data-type="material-symbols-nofill" data-symbol="${symbol}" data-keywords="${symbol},${keywords.join().toLowerCase()}">${symbol}</i>`;
         }
       }
     }
@@ -157,6 +165,9 @@ export function addRichtextControls(dom) {
   loadSymbolPicker();
 
   $('[icon=format_size]', controls).onclick = function() {
+    const selection = window.getSelection();
+    if (!selection.rangeCount)
+      return;
     const parent = window.getSelection().getRangeAt(0).startContainer.parentNode.closest('h4');
     if(parent)
       parent.replaceWith(...parent.children);
@@ -165,6 +176,9 @@ export function addRichtextControls(dom) {
     dom.focus();
   };
   $('[icon=palette]', controls).onclick = function() {
+    const selection = window.getSelection();
+    if (!selection.rangeCount)
+      return;
     const range = window.getSelection().getRangeAt(0);
     document.execCommand('forecolor', false, '#000000');
     const input = document.createElement('input');
@@ -201,6 +215,9 @@ export function addRichtextControls(dom) {
     }
   };
   $('[icon=add_reaction]', controls).onclick = async function() {
+    const selection = window.getSelection();
+    if (!selection.rangeCount)
+      return;
     const range = window.getSelection().getRangeAt(0);
 
     showStatesOverlay('symbolPickerOverlay');

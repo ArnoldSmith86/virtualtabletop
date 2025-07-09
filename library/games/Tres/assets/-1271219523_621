@@ -1,0 +1,22 @@
+<svg width="103" height="160" viewBox="0 0 103 160" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="textGradient" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#fff" />
+      <stop offset="50%" stop-color="#ccc" />
+      <stop offset="100%" stop-color="#222" />
+    </linearGradient>
+  </defs>
+
+  <rect width="103" height="160" fill="black" />
+
+  <text
+    x="50%"
+    y="50%"
+    dominant-baseline="middle"
+    text-anchor="middle"
+    font-family="Arial Black, Impact, sans-serif"
+    font-size="40"
+    fill="url(#textGradient)">
+    Tres
+  </text>
+</svg>

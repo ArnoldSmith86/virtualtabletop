@@ -1,20 +1,29 @@
 {
   "_meta": {
-    "version": 6,
+    "version": 17,
     "info": {
       "name": "Functions - SELECT",
-      "image": "/assets/-1377217046_5932",
+      "image": "/assets/-1435875928_3945",
       "rules": "",
       "bgg": "",
       "year": "2020",
       "mode": "Tutorial",
       "time": "0",
-      "players": "1",
-      "language": "en-US",
-      "variant": "Basics",
       "attribution": "",
       "showName": false,
-      "lastUpdate": 1640816495000
+      "lastUpdate": 1749068720944,
+      "skill": "",
+      "description": "",
+      "similarImage": "",
+      "similarName": "",
+      "similarDesigner": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": "",
+      "variantImage": "",
+      "variant": "Basics",
+      "language": "en-US",
+      "players": "1"
     }
   },
   "8fr3": {
@@ -64,7 +73,7 @@
     "y": 700,
     "z": 9732,
     "width": 300,
-    "text": "This button is the same as the previous one ('Property') except that it sets the 'max' parameter to 1. The default value is 999999, so the maximum number of widgets selected by default is essentially unlimited. By setting max to 1, only 1 widget will be in the collection. Widgets are generally selected and gathered into collections in the order they appear in the JSON tree listing (while ignoring order created by being child widgets). In this room, that is the top middle spinner.",
+    "text": "This button is the same as the previous one ('Property') except that it sets the 'max' parameter to 1. The default value is 999999. By setting max to 2, only 2 widgets will be in the collection. Widgets are selected in the order they appear in the JSON tree listing (while ignoring order created by being child widgets). In this room, those are the top middle and right spinners.\n\nBy setting random to true in the right button, the collection of 2 will be randomly selected from all widgts with y = 300 (2 of the top 3 spinners).",
     "movable": false
   },
   "jkmt": {
@@ -111,14 +120,14 @@
         "func": "SELECT",
         "property": "y",
         "value": 300,
-        "max": 1
+        "max": 2
       },
       {
         "func": "CLICK"
       }
     ],
-    "x": 900,
-    "y": 550,
+    "x": 843,
+    "y": 548,
     "z": 12,
     "id": "jkmt2",
     "text": "Max"
@@ -1234,5 +1243,25 @@
     "id": "gns9",
     "x": 605,
     "movable": false
+  },
+  "jkmt4": {
+    "type": "button",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "y",
+        "value": 300,
+        "max": 2,
+        "random": true
+      },
+      {
+        "func": "CLICK"
+      }
+    ],
+    "x": 977,
+    "y": 548,
+    "z": 12,
+    "id": "jkmt4",
+    "text": "Random"
   }
 }

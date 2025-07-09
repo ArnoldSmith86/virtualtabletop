@@ -16635,17 +16635,17 @@
     "movable": false
   },
   "_meta": {
-    "version": 16,
+    "version": 17,
     "info": {
       "name": "A Night on' Town",
-      "image": "/assets/1189078585_140034",
+      "image": "/assets/525366391_14924",
       "rules": "https://boardgamegeek.com/filepage/123738/orongo-english-rules-pdf",
       "bgg": "https://boardgamegeek.com/boardgame/165556/orongo",
       "year": "",
       "mode": "vs",
       "time": "40",
       "attribution": "<div>The blind bidding mechanism was originally created by Andy Pymont in the Delicious Deliveries module. The mechanism has been appropriately adapted to work with this game.<br></div><div><br></div><div><span class=\"x4k7w5x x1h91t0o x1h9r5lt x1jfb8zj xv2umb2 x1beo9mf xaigb6o x12ejxvf x3igimt xarpa2k xedcshv x1lytzrv x1t2pt76 x7ja8zs x1qrby5j\"><span dir=\"auto\" class=\"xevjqck x14xiqua x10nbalq x1fum7jp xeuugli x1fj9vlw x13faqbe x1vvkbs xy43q4e x16heey3 x1s8qawx xerbpqq x1lliihq x1s928wv xhkezso x1gmr53x x1cpjm7i x1fgarty x1943h6x xp54x8z x1txs4ay\">Implementation, layout, and library image by Mitchell Stolycia and released to the Public Domain under CC0.</span></span></div><div><br></div><div>Icons were gathered from flaticon.com or iconarchive.com as listed below. Flaticon images are available for use under the Flaticon license.<br></div><div><br></div><div>Stadium: https://www.flaticon.com/free-icon/football-field_177406 Stadium icons created by Vignesh Oviyan - Flaticon<br></div><div><br></div><div>Football: https://www.iconarchive.com/show/ios7-icons-by-icons8/Sports-Football-icon.html. Licensed by icons8.com.</div><div><br></div><div>Movie: https://www.flaticon.com/free-icon/movies_411406 Clapperboard icons created by Freepik - Flaticon<br></div><div><br></div><div>Popcorn: https://www.flaticon.com/free-icon/popcorn_738096 Popcorn icons created by Freepik - Flaticon</div><div><br></div><div>Beer: https://www.flaticon.com/free-icon/beer_761856 Beer icons created by Good Ware - Flaticon</div><div><br></div><div>Shop: https://www.flaticon.com/free-icon/shopping-bag_711895 Bag icons created by Kiranshastry - Flaticon</div><div><br></div><div>Happy: https://www.flaticon.com/free-icon/happiness_158420 Emoji icons created by Freepik - Flaticon</div><div><br></div><div>All other icons were custom made by Mitchell Stolycia and are released to the Public Domain under CC0.<br></div>",
-      "lastUpdate": 1729170428944,
+      "lastUpdate": 1743680972350,
       "showName": true,
       "skill": "",
       "description": "Who can become the happiest chap? Venture to your local town in order to engage in enthralling activities and show up your mates. During the game, players bid pound coins for a chance to go out for a couple drinks, go on a shopping spree, see a movie with some popcorn, or even have a game of kickabout at the local football grounds.",
@@ -16654,10 +16654,11 @@
       "similarDesigner": "Reiner Knizia",
       "similarAwards": "",
       "ruleText": "",
-      "helpText": "<div>At the start of the game, the player who most recently ate popcorn takes\n the pig next to their player seat. During the game, it is placed next \nto the player most recently won an auction.</div><div><br></div><div><b>The pink rings</b> next to the draw button are used to mark the locations you have visited. Click on them to change them to your seat colour.</div><div><br></div><div>Use the hand at the centre bottom of the screen to store your pound coins.</div><div><br></div><div><b>Auctions</b>:<br>Press the Start Auction button to hide all players' bidding coins from each other. You can click on your bidding coin above your&nbsp; seat to change your bid - when you submit a bid your ready marker next&nbsp; to your seat will be updated to show you are ready. You can toggle it back by clicking on it if you need to rethink your bid.<br><br>Once all players have bid, the current player can press End Auction to reveal totals. The auction winner should then pay their bid to the holder above the Start Auction button.</div><br><div><b>Set-up and references</b> are available in-game. In order to place a happy face, the following combinations of locations need to have been visited:<br></div><div>Stadium + football + costal hex<br></div><div>Movie + popcorn + costal hex<br></div><div>Beer + beer + costal hex<br></div><div>Shop + costal hex</div>",
+      "helpText": "<div>At the start of the game, the player who most recently ate popcorn takes\n the pig next to their player seat. During the game, it is placed next \nto the player who most recently won an auction.</div><div><br></div><div><b>To win the game</b>, a player must place all of their personal happy faces (located in holders nearby their seat) onto coastal hexes of the board, followed by the neutral happy face at the top of the play area.</div><div><br></div><div><b>The pink rings</b> are used to mark the locations you have visited. Click on them to change them to your seat colour.</div><div><br></div><div>Use the holder at the centre bottom of the screen (just below the pink rings) to store your <b>personal pound coins</b>. These coins are dealt automatically per player at setup and are not shared.</div><div><br></div><div><b>To setup </b>the game, make sure all players are seated by clicked on a seat, then click the <i>Setup </i>button.</div><div><br></div><div><b>Auctions</b>:<br><blockquote>Press the <i>Start Auction</i> button to hide all players' bidding coins from each other. You can click on your bidding coin above your seat to change your bid - when you submit a bid your ready marker next to your seat will be updated to show you are ready. You can toggle it back by clicking on it if you need to rethink your bid.<br></blockquote><blockquote>Once all players have bid, the current player can press<i> End Auction</i> to reveal totals. The auction winner should then pay their bid to the holder above the <i>Start Auction</i> button.</blockquote></div><div><b>References</b> are available in-game.&nbsp;</div><div><br></div><div>In order to <b>place a happy face</b> on a coastal hex, the following combinations of locations need to have been visited:</div><div><br></div><div>Stadium + football + coastal hex<br></div><div>Movie + popcorn + coastal hex<br></div><div>Beer + beer + coastal hex<br></div><div>Shop + coastal hex</div>",
       "players": "2-4",
       "language": "en-GB",
-      "variant": "A Night on' Town"
+      "variant": "A Night on' Town",
+      "variantImage": ""
     }
   },
   "22y3": {
@@ -16740,5 +16741,19 @@
     "handlePosition": "top right",
     "handleOffset": 30,
     "id": "hu63"
+  },
+  "071l": {
+    "type": "label",
+    "text": "Personal coins",
+    "x": 958,
+    "y": 776,
+    "z": 1,
+    "id": "071l",
+    "css": {
+      "color": "black",
+      "font-size": "20px"
+    },
+    "width": 139,
+    "height": 27
   }
 }

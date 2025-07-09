@@ -1,22 +1,4 @@
 {
-  "_meta": {
-    "version": 6,
-    "info": {
-      "name": "Functions - SELECT",
-      "image": "/assets/-1377217046_5932",
-      "rules": "",
-      "bgg": "",
-      "year": "2020",
-      "mode": "Tutorial",
-      "time": "0",
-      "players": "1",
-      "language": "en-US",
-      "variant": "Relation",
-      "attribution": "",
-      "showName": false,
-      "lastUpdate": 1640816495000
-    }
-  },
   "8fr3": {
     "id": "8fr3",
     "y": -2,
@@ -1236,5 +1218,32 @@
     "id": "czb8",
     "z": 10955,
     "parent": "7ykk"
+  },
+  "_meta": {
+    "version": 17,
+    "info": {
+      "name": "Functions - SELECT",
+      "image": "/assets/-1435875928_3945",
+      "rules": "",
+      "bgg": "",
+      "year": "2020",
+      "mode": "Tutorial",
+      "time": "0",
+      "attribution": "",
+      "showName": false,
+      "lastUpdate": 1749068720947,
+      "skill": "",
+      "description": "",
+      "similarImage": "",
+      "similarName": "",
+      "similarDesigner": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": "",
+      "variantImage": "",
+      "variant": "Relation",
+      "language": "en-US",
+      "players": "1"
+    }
   }
 }

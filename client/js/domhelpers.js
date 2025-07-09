@@ -6,6 +6,13 @@ export function $a(selector, parent) {
   return (parent || document).querySelectorAll(selector);
 }
 
+// returns the first matching direct child of the parent
+export function $c(selector, parent) {
+  return Array.from(parent.children).find(
+    el => el.matches(selector)
+  );
+}
+
 export function div(parent, className, html) {
   const div = document.createElement('div');
   if(className)
@@ -375,7 +382,7 @@ export function applyValuesToDOM(parent, obj) {
     if(obj[dom.dataset.field]) {
       dom.classList.remove('hidden');
       if(dom.dataset.html)
-        dom.innerHTML = DOMPurify.sanitize(mapAssetURLs(obj[dom.dataset.field]), { USE_PROFILES: { html: true } });
+        dom.innerHTML = DOMPurify.sanitize(replaceMaterialIcons(mapAssetURLs(obj[dom.dataset.field])), { USE_PROFILES: { html: true } });
       else
         dom[dom.dataset.target || 'innerText'] = obj[dom.dataset.field];
       if(dom.dataset.target == 'src')

@@ -3,7 +3,7 @@
     "version": 14,
     "info": {
       "name": "Sunshine and Rainbows",
-      "image": "/assets/966441630_289522",
+      "image": "/assets/1428556496_54170",
       "showName": true,
       "time": "30",
       "mode": "vs",
@@ -492,79 +492,79 @@
       "11": {
         "color": "#c4c3d0",
         "value": 11,
-        "weather": "https://virtualtabletop.io/i/noto-emoji/emoji_u1f327.svg",
+        "weather": "/i/noto-emoji/emoji_u1f327.svg",
         "score": 2
       },
       "12": {
         "color": "#c4c3d0",
         "value": 12,
-        "weather": "https://virtualtabletop.io/i/noto-emoji/emoji_u1f327.svg",
+        "weather": "/i/noto-emoji/emoji_u1f327.svg",
         "score": 2
       },
       "13": {
         "color": "#c4c3d0",
         "value": 13,
-        "weather": "https://virtualtabletop.io/i/noto-emoji/emoji_u1f327.svg",
+        "weather": "/i/noto-emoji/emoji_u1f327.svg",
         "score": 2
       },
       "14": {
         "color": "#c4c3d0",
         "value": 14,
-        "weather": "https://virtualtabletop.io/i/noto-emoji/emoji_u1f327.svg",
+        "weather": "/i/noto-emoji/emoji_u1f327.svg",
         "score": 2
       },
       "15": {
         "color": "#c4c3d0",
         "value": 15,
-        "weather": "https://virtualtabletop.io/i/noto-emoji/emoji_u1f327.svg",
+        "weather": "/i/noto-emoji/emoji_u1f327.svg",
         "score": 3
       },
       "01": {
         "color": "#b2ffff",
         "value": 1,
-        "weather": "https://virtualtabletop.io/i/noto-emoji/emoji_u2600.svg",
+        "weather": "/i/noto-emoji/emoji_u2600.svg",
         "score": 3
       },
       "02": {
         "color": "#b2ffff",
         "value": 2,
-        "weather": "https://virtualtabletop.io/i/noto-emoji/emoji_u2600.svg",
+        "weather": "/i/noto-emoji/emoji_u2600.svg",
         "score": 1
       },
       "03": {
         "color": "#b2ffff",
         "value": 3,
-        "weather": "https://virtualtabletop.io/i/noto-emoji/emoji_u2600.svg",
+        "weather": "/i/noto-emoji/emoji_u2600.svg",
         "score": 1
       },
       "04": {
         "color": "#b2ffff",
         "value": 4,
-        "weather": "https://virtualtabletop.io/i/noto-emoji/emoji_u2600.svg",
+        "weather": "/i/noto-emoji/emoji_u2600.svg",
         "score": 1
       },
       "05": {
         "color": "#b2ffff",
         "value": 5,
-        "weather": "https://virtualtabletop.io/i/noto-emoji/emoji_u2600.svg",
+        "weather": "/i/noto-emoji/emoji_u2600.svg",
         "score": 1
       },
       "07": {
         "color": "#80daeb",
         "value": 7,
-        "weather": "https://virtualtabletop.io/i/noto-emoji/emoji_u26c5.svg",
+        "weather": "/i/noto-emoji/emoji_u26c5.svg",
         "score": 1
       },
       "08": {
         "color": "#80daeb",
         "value": 8,
-        "weather": "https://virtualtabletop.io/i/noto-emoji/emoji_u1f308.svg",
+        "weather": "/i/noto-emoji/emoji_u1f308.svg",
         "score": 5
       },
       "09": {
         "color": "#80daeb",
         "value": 9,
-        "weather": "https://virtualtabletop.io/i/noto-emoji/emoji_u26c5.svg",
+        "weather": "/i/noto-emoji/emoji_u26c5.svg",
         "score": 1
       }
     }

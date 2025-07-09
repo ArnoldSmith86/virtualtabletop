@@ -396,7 +396,7 @@ export default class Room {
   getPublicLibraryGames() {
     if(!Room.publicLibrary) {
       Room.publicLibrary = {};
-      for(const subLibrary of [ 'Games', 'Tutorials', 'Assets' ]) {
+      for(const subLibrary of [ 'Games', 'Tutorials' ]) {
         for(const dir of fs.readdirSync(Config.directory('library') + '/' + subLibrary.toLowerCase())) {
           const gameDir = Config.directory('library') + '/' + subLibrary.toLowerCase() + '/' + dir;
           if(fs.lstatSync(gameDir).isDirectory()) {
@@ -564,8 +564,6 @@ export default class Room {
       let target = `games/${match[2]}`;
       if(match[1] == 'Tutorial')
         target = `tutorials/${match[2]}`;
-      if(match[1] == 'Assets')
-        target = `assets/${match[2]}`;
       return decodeURI(target);
     }
 

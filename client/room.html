@@ -96,18 +96,18 @@
     <div id="statesOverlay" class="overlay">
       <div id="stateFilters">
         <span id="filterByTextWrapper" data-priority="1">
-          <i class="material-icons">search</i>
+          <i class="material-symbols">search</i>
           <input id="filterByText" name="filterByText" placeholder="Search" />
-          <i class="material-icons" id="clearSearch">close</i>
+          <i class="material-symbols" id="clearSearch">close</i>
         </span>
         <span id="filterByTypeWrapper" data-priority="6">
-          <i class="material-icons">casino</i>
+          <i class="material-symbols">casino</i>
           <select id="filterByType"><option>Any</option>
-            <option selected>Games</option><option>Tutorials</option><option>Assets</option>
+            <option selected>Games</option><option>Tutorials</option>
           </select>
         </span>
         <span id="filterByPlayersWrapper" data-priority="2">
-          <i class="material-icons">person</i>
+          <i class="material-symbols">person</i>
           <select id="filterByPlayers"><option>Any</option>
             <option>1</option><option>2</option><option>3</option><option>4</option><option>5</option>
             <option>6</option><option>7</option><option>8</option><option>9</option><option>10</option>
@@ -116,21 +116,21 @@
           </select>
         </span>
         <span id="filterByDurationWrapper" data-priority="7">
-          <i class="material-icons">schedule</i>
+          <i class="material-symbols">schedule</i>
           <select id="filterByDuration"><option>Any</option>
             <option value="0-30">&lt;= 30 min</option><option value="31-60">30-60 min</option><option value="61-999">&gt; 60 min</option>
           </select>
         </span>
         <span id="filterByLanguageWrapper" data-priority="5">
-          <i class="material-icons">language</i>
+          <i class="material-symbols">language</i>
           <select id="filterByLanguage"></select>
         </span>
         <span id="filterByModeWrapper" data-priority="4">
-          <i class="material-icons">groups</i>
+          <i class="material-symbols">groups</i>
           <select id="filterByMode"></select>
         </span>
         <span id="librarySortWrapper" data-priority="3">
-          <i class="material-icons">sort_by_alpha</i>
+          <i class="material-symbols">sort_by_alpha</i>
           <select id="librarySort"><option value="name">by Name</option><option value="similarName">by Similar Name</option><option value="stars">by Stars</option><option value="timePlayed">by Popularity</option><option value="lastUpdate">by Last Updated</option><option value="year">by Year</option></select>
         </span>
         <div id="filterOverflow"><button icon="more_horiz"></button><div></div></div>
@@ -144,7 +144,7 @@
         <template id="template-stateslist-entry" type="text/template">
           <img>
           <button icon="star_rate" class="star"></button>
-          <i class="material-icons linked">link</i>
+          <i class="material-symbols linked">link</i>
           <div class="details">
             <h3>Name</h3>
             <h4>Similar Name</h4>
@@ -252,7 +252,7 @@
           <img data-field="image" data-target="src" class="uneditable">
           <button icon="star_rate" class="star"></button>
           <span data-field="stars" class="uneditable">0</span>
-          <i class="material-icons">link</i>
+          <i class="material-symbols">link</i>
           <div class="onlyForEdit">
             <button icon="image" data-field="image" data-target="value" data-forceshow="true">Change</button>
           </div>
@@ -260,9 +260,9 @@
         <div class="details">
           <h1 data-field="name"></h1>
           <div class="onlyForEdit"><input type="checkbox" id="showName" data-field="showName" data-target="checked"> <label for="showName">Overlay name</label></div>
-          <div data-showfor="time"><i class="material-icons">schedule</i> Time: <span data-field="time"></span> minutes</div>
-          <div data-showfor="mode"><i class="material-icons">groups</i> Mode: <span data-field="mode"></span></div>
-          <div data-showfor="skill"><i class="material-icons">psychology</i> Skill: <span data-field="skill"></span></div>
+          <div data-showfor="time"><i class="material-symbols">schedule</i> Time: <span data-field="time"></span> minutes</div>
+          <div data-showfor="mode"><i class="material-symbols">groups</i> Mode: <span data-field="mode"></span></div>
+          <div data-showfor="skill"><i class="material-symbols">psychology</i> Skill: <span data-field="skill"></span></div>
           <p data-field="description" data-placeholder="&lt;empty game description&gt;"></p>
         </div>
       </div>
@@ -274,8 +274,8 @@
           </div>
         </div>
         <div class="variant-name" data-field="variant" data-forceshow="true"></div>
-        <div class="language-info" data-showfor="language"><i class="material-icons">language</i><span data-field="language"></span></div>
-        <div class="player-number-info" data-showfor="players"><i class="material-icons">person</i><span data-field="players"></span></div>
+        <div class="language-info" data-showfor="language"><i class="material-symbols">language</i><span data-field="language"></span></div>
+        <div class="player-number-info" data-showfor="players"><i class="material-symbols">person</i><span data-field="players"></span></div>
         <button icon="play_arrow" class="hideForEdit">Play</button>
         <button icon="edit" class="onlyForEdit">Edit</button>
         <div class="variantEdit">
@@ -298,13 +298,13 @@
         </div>
         <div class="details">
           <h1 data-showfor="similarName">Similar to: <span data-field="similarName"></span><span data-showfor="year"> (<span data-field="year"></span>)</span></h1>
-          <div data-showfor="similarDesigner"><i class="material-icons">person</i> Designer: <span data-field="similarDesigner"></span></div>
-          <div data-showfor="similarAwards" class="hideForEdit"><i class="material-icons">emoji_events</i> <span data-field="similarAwards"></span></div>
-          <div class="onlyForEdit"><i class="material-icons">emoji_events</i> Awards: <span data-field="similarAwards"></span></div>
-          <div data-showfor="bgg" class="hideForEdit"><i class="material-icons">info</i> <a data-field="bgg" data-target="href">Game details on <nobr><i class="material-icons intext">launch</i> <span id="similarDetailsDomain"></span></nobr></a></div>
-          <div class="onlyForEdit"><i class="material-icons">info</i> Game details link: <span data-field="bgg"></span></div>
-          <div data-showfor="rules" class="hideForEdit"><i class="material-icons">auto_stories</i> <a data-field="rules" data-target="href">Rules overview on <nobr><i class="material-icons intext">launch</i> <span id="similarRulesDomain"></span></nobr></a></div>
-          <div class="onlyForEdit"><i class="material-icons">auto_stories</i> Rules overview link: <span data-field="rules"></span></div>
+          <div data-showfor="similarDesigner"><i class="material-symbols">person</i> Designer: <span data-field="similarDesigner"></span></div>
+          <div data-showfor="similarAwards" class="hideForEdit"><i class="material-symbols">emoji_events</i> <span data-field="similarAwards"></span></div>
+          <div class="onlyForEdit"><i class="material-symbols">emoji_events</i> Awards: <span data-field="similarAwards"></span></div>
+          <div data-showfor="bgg" class="hideForEdit"><i class="material-symbols">info</i> <a data-field="bgg" data-target="href">Game details on <nobr><i class="material-symbols intext">launch</i> <span id="similarDetailsDomain"></span></nobr></a></div>
+          <div class="onlyForEdit"><i class="material-symbols">info</i> Game details link: <span data-field="bgg"></span></div>
+          <div data-showfor="rules" class="hideForEdit"><i class="material-symbols">auto_stories</i> <a data-field="rules" data-target="href">Rules overview on <nobr><i class="material-symbols intext">launch</i> <span id="similarRulesDomain"></span></nobr></a></div>
+          <div class="onlyForEdit"><i class="material-symbols">auto_stories</i> Rules overview link: <span data-field="rules"></span></div>
         </div>
       </div>
       <div id="prevState" class="roomState hideForEdit">
@@ -313,7 +313,7 @@
           <h3>Previous</h3>
           <h4>Similar to Previous</h4>
         </div>
-        <button class="prettyButton prev"><i class="material-icons">arrow_back</i></button>
+        <button class="prettyButton prev"><i class="material-symbols">arrow_back</i></button>
       </div>
       <div id="nextState" class="roomState hideForEdit">
         <img>
@@ -321,7 +321,7 @@
           <h3>Next</h3>
           <h4>Similar to Next</h4>
         </div>
-        <button class="prettyButton next"><i class="material-icons">arrow_forward</i></button>
+        <button class="prettyButton next"><i class="material-symbols">arrow_forward</i></button>
       </div>
       <div id="helpTexts" data-showfor="ruleText|helpText|attribution">
         <h3 data-showfor="ruleText">How to play the game</h3>
@@ -397,14 +397,14 @@
           <img data-field="image" data-target="src" class="uneditable">
           <button icon="star_rate" class="star"></button>
           <span data-field="stars" class="uneditable">0</span>
-          <i class="material-icons">link</i>
+          <i class="material-symbols">link</i>
         </div>
         <div class="details">
           <h1 data-field="name"></h1>
           <h2 data-showfor="similarName">Similar to: <span data-field="similarName"></span><span data-showfor="year"> (<span data-field="year"></span>)</span></h2>
-          <div data-showfor="time"><i class="material-icons">schedule</i> Time: <span data-field="time"></span> minutes</div>
-          <div data-showfor="mode"><i class="material-icons">groups</i> Mode: <span data-field="mode"></span></div>
-          <div data-showfor="skill"><i class="material-icons">psychology</i> Skill: <span data-field="skill"></span></div>
+          <div data-showfor="time"><i class="material-symbols">schedule</i> Time: <span data-field="time"></span> minutes</div>
+          <div data-showfor="mode"><i class="material-symbols">groups</i> Mode: <span data-field="mode"></span></div>
+          <div data-showfor="skill"><i class="material-symbols">psychology</i> Skill: <span data-field="skill"></span></div>
           <p data-field="description" data-placeholder="&lt;empty game description&gt;"></p>
         </div>
       </div>
@@ -459,7 +459,9 @@
         <p>Great care has been made to attribute the sources where appropriate. If you feel your work has been taken or used without your consent, please contact us on Discord and immediate action will be taken to remove any infringing works.</p>
         <p>All graphics used on this site were either created by members of the VTT community and are released into the public domain, sourced from works in the public domain, or made available for public use through Creative Commons or other similar licenses.</p>
         <p>Games and Assets available in the public library contain copyright attribution information in the variant notes section of each game. The default card deck was created by Adrian Kennard and released under CC0 Public Domain license at <a href="https://www.me.uk/cards/" class="external">https://www.me.uk/cards/</a>. The solid color card suits (clubs, diamonds, hearts, spades) in the VTT Symbols and image assets were made by Skoll and are available under CC BY 3.0 from  <a href="https://game-icons.net/" class="external">https://game-icons.net/</a>.</p>
-        <p>The game pieces and VTT Symbols were created by Brandon Lewis (@mousewax) for VTT and are released under the CC0 license. Other icons from <a href="https://game-icons.net/" class="external">Game-icons.net</a> are available under CC BY 3.0 from all of the various artists contributing to the Game-icons.net project and include: Delapouite, Lorc, Skoll, Viscious Speed, Caro Asercion, sbed, Simon (aussiesim), DarkZaitzev, Cathelineau, Quoting, Faithtoken, Lord Berandas, Willdabeast, PriorBlue, Carl Olsen, Lucas, Felbrigg, Pierre Leducq, Guard13007, rihlsul, Kier Heyl, John Redman, Various artists, Zajkonur, GeneralAce135, Zeromancer, Andy Meneely, HeavenlyDog, Pepijn Poolman, starseeker, catsu, SpencerDub, sparker, Irongamer, and John Colburn.</p> 
+        <p>The game pieces and VTT Symbols were created by Brandon Lewis (@mousewax) for VTT and are released under the CC0 license.</pp>
+        <p>Other icons from <a href="https://game-icons.net/" class="external">Game-icons.net</a> are available under CC BY 3.0 from all of the various artists contributing to the Game-icons.net project and include: Delapouite, Lorc, Skoll, Viscious Speed, Caro Asercion, sbed, Simon (aussiesim), DarkZaitzev, Cathelineau, Quoting, Faithtoken, Lord Berandas, Willdabeast, PriorBlue, Carl Olsen, Lucas, Felbrigg, Pierre Leducq, Guard13007, rihlsul, Kier Heyl, John Redman, Various artists, Zajkonur, GeneralAce135, Zeromancer, Andy Meneely, HeavenlyDog, Pepijn Poolman, starseeker, catsu, SpencerDub, sparker, Irongamer, and John Colburn.</p> 
+        <p>Google <a href="https://fonts.google.com/icons" class="external">Material Symbols</a> are available under the <a href="https://www.apache.org/licenses/LICENSE-2.0.html" class="external">Apache License Version 2.0</a>.</p>
         <p>All public library tutorials are released into the public domain under CC0.</p>
         <p>Detailed information about the various Creative Commons licenses referred to by abbreviations in variant notes can be found on the <a href="https://creativecommons.org/about/cclicenses/">Creative Commons webpage</a> or at the following links:</p>
         <ul>

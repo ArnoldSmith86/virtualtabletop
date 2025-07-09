@@ -40,7 +40,7 @@
   border: 3px solid var(--VTTblue);
 }
 .editorModule .widgetSelectionButton.selected::after {
-  font-family: 'Material Icons';
+  font-family: 'Material Symbols';
   line-height: 1.25em;
   text-align: center;
   height: 1.25em;
@@ -163,6 +163,98 @@
   vertical-align: top;
 }
 
+/* validation */
+
+
+.pest_control.editorModule .validation-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+  font-size: 12px;
+}
+
+.pest_control.editorModule .validation-table th {
+  background-color: var(--VTTblue);
+  color: white;
+  padding: 6px 8px;
+  text-align: left;
+  font-weight: bold;
+  border: 1px solid var(--textColor);
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.pest_control.editorModule .validation-table td {
+  padding: 6px 8px;
+  border: 1px solid var(--textColor);
+  vertical-align: top;
+  word-break: break-word;
+  max-width: 200px;
+}
+
+.pest_control.editorModule .validation-table td:nth-child(1) {
+  max-width: 150px;
+  font-weight: bold;
+}
+
+.pest_control.editorModule .validation-table td:nth-child(2) {
+  max-width: 200px;
+  font-family: monospace;
+  font-size: 11px;
+}
+
+.pest_control.editorModule .validation-table td:nth-child(3) {
+  max-width: 300px;
+}
+
+.pest_control.editorModule .validation-table tbody tr:nth-child(even) {
+  background-color: var(--backgroundHighlightColor1);
+}
+
+.pest_control.editorModule .validation-table tbody tr:hover {
+  background-color: var(--backgroundHighlightColor2);
+  cursor: pointer;
+}
+
+.pest_control.editorModule .success {
+  color: #28a745;
+  font-weight: bold;
+  padding: 10px;
+  background-color: #d4edda;
+  border: 1px solid #c3e6cb;
+  border-radius: 4px;
+  margin: 10px 0;
+}
+
+.pest_control.editorModule .validation-controls {
+  background-color: var(--backgroundHighlightColor1);
+  border: 1px solid var(--textColor);
+  border-radius: 4px;
+  padding: 10px;
+  margin-top: 10px;
+}
+
+.pest_control.editorModule .validation-controls button {
+  margin-right: 10px;
+  padding: 5px 10px;
+  background-color: var(--VTTblue);
+  color: white;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.pest_control.editorModule .validation-controls button:hover {
+  background-color: var(--VTTblueDark);
+}
+
+.pest_control.editorModule .validation-time {
+  color: var(--textDimColor1);
+  font-size: 12px;
+  font-style: italic;
+}
+
 /* undo */
 
 .undo.editorModule > .undoEntry {
@@ -194,7 +286,7 @@
 }
 
 .image.editorModule .externalLink::after {
-  font-family: "Material Icons";
+  font-family: "Material Symbols";
   font-size: 40px;
   position: absolute;
   top: 5px;

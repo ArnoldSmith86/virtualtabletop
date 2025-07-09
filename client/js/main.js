@@ -238,14 +238,95 @@ function getRoomRectangle() {
   return roomRectangle;
 }
 
-export async function shuffleWidgets(collection) {
-  // Fisher–Yates shuffle
+export async function shuffleWidgets(collection, mode = "true random", modeValue = 1, reverseForNonRandom = false) {
   const len = collection.length;
   let indexes = [...Array(len).keys()];
-  for (let i = len-1; i > 0; i--) {
-    let j = Math.floor(rand() * (i+1));
-    [indexes[i], indexes[j]] = [indexes[j], indexes[i]];
+  if (reverseForNonRandom)
+    indexes = indexes.reverse();
+
+  let randFunc = (typeof rand === "function") ? rand : Math.random;
+  
+  const fisherYates = () => {
+    for (let i = len-1; i > 0; i--) {
+      let j = Math.floor(rand() * (i+1));
+      [indexes[i], indexes[j]] = [indexes[j], indexes[i]];
+    }
+  };
+
+  let fisherYatesSeeded = null;
+  if (mode === "seeded") {
+    let seed = modeValue;
+    const seededRand = function() {
+      const x = Math.sin(seed++) * 10000;
+      return Math.round((x - Math.floor(x))*1000000)/1000000;
+    };
+
+    fisherYatesSeeded = () => {
+      for (let i = len-1; i > 0; i--) {
+        let j = Math.floor(seededRand() * (i+1));
+        [indexes[i], indexes[j]] = [indexes[j], indexes[i]];
+      }
+    };
   }
+  
+  const riffleShuffle = () => {
+    const mid = Math.floor(len * (0.45 + randFunc() * 0.1));
+    let left = indexes.slice(0, mid);
+    let right = indexes.slice(mid);
+    const riffled = [];
+    while (left.length || right.length) {
+      if (left.length && (!right.length || randFunc() < 0.5))
+        riffled.push(left.shift());
+      if (right.length && (!left.length || randFunc() >= 0.5))
+        riffled.push(right.shift());
+    }
+    indexes = riffled;
+  };
+  
+  const overhandShuffle = () => {
+    let newIndexes = [];
+    let i = 0;
+    while (i < indexes.length) {
+      let maxPacketSize = Math.max(1, Math.floor(len * 0.4));
+      let packetSize = Math.floor(randFunc() * maxPacketSize) + 1;
+      let packet = indexes.slice(i, i + packetSize);
+      newIndexes.push(packet);
+      i += packetSize;
+    }
+    newIndexes.reverse();
+    indexes = newIndexes.flat();
+  };
+  
+  const reverseMode = () => {
+    indexes.reverse();
+  };
+  
+  let iterations = (mode === "riffle" || mode === "overhand") ? modeValue : 1;
+  for (let i = 0; i < iterations; i++) {
+    switch (mode) {
+      case "true random":
+        if (reverseForNonRandom)
+          indexes = indexes.reverse();
+        fisherYates();
+        break;
+      case "seeded":
+        fisherYatesSeeded();
+        break;
+      case "riffle":
+        riffleShuffle();
+        break;
+      case "overhand":
+        overhandShuffle();
+        break;
+      case "reverse":
+        reverseMode();
+        break;
+      default:
+        fisherYates();
+        break;
+    }
+  }
+
   for (let i of indexes) {
     await collection[i].bringToFront();
   }
@@ -400,7 +481,7 @@ async function loadEditMode() {
   if(edit === null) {
     edit = false;
     Object.assign(window, {
-      $, $a, div, progressButton, loadImage, on, onMessage, showOverlay, sleep, rand, shuffleArray,
+      $, $a, $c, div, progressButton, loadImage, on, onMessage, showOverlay, sleep, rand, shuffleArray,
       setJEenabled, setJEroutineLogging, setZoomAndOffset, toggleEditMode, getEdit,
       toServer, batchStart, batchEnd, setDeltaCause, sendPropertyUpdate, getUndoProtocol, setUndoProtocol, sendRawDelta, getDelta,
       addWidgetLocal, updateWidgetId, removeWidgetLocal,

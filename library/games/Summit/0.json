@@ -1,0 +1,1019 @@
+{
+  "_meta": {
+    "version": 17,
+    "info": {
+      "name": "Summit",
+      "image": "/assets/-1082810390_3162",
+      "rules": "https://boardgamegeek.com/filepage/236694/pyramido-diy-game-board-and-rules",
+      "bgg": "https://boardgamegeek.com/boardgame/7777/pyramido",
+      "year": "1991",
+      "mode": "vs",
+      "time": "20",
+      "attribution": "Room layout and design by Shobu. Released to the Public Domain under CC0.\n\nThe following assets are by Delapouite, available from https://game-icons.net under CC BY 3.0:\n\nDelapouite :\nhttps://game-icons.net/1x1/delapouite/ram-profile.html\n\nBackground image generated using the Pollinations artificial intelligence image generator, https://pollinations.ai/, using the following prompt:\n\"mountain landscape ,  ink drawing, minimalist, zen, black and white\"\n\nLibrary image generated using the Pollinations artificial intelligence image generator, https://pollinations.ai/, using the following prompt:\n\"one goat on a mountain top ,  ink drawing, minimalist, zen, black and white\"",
+      "lastUpdate": 1742959083892,
+      "showName": true,
+      "skill": "medium",
+      "description": "Climb to the top and be the Greatest Of All Time!",
+      "similarImage": "",
+      "similarName": "Pyramido",
+      "similarDesigner": "Reiner Knizia",
+      "similarAwards": "",
+      "ruleText": "<b>Gameplay</b>\n\nPlayers take turns making one of three possible moves:&nbsp;&nbsp;<div><br></div><div>- Place a goat: Put a goat in one of the free available spaces on the first row of the mountain&nbsp;</div><div>- Climb up: Move a goat to the next row of the mountain, but only if both spaces below it are occupied by a goat of either color. The goat will then be supported by only one goat at the base level.&nbsp;</div><div>- Fall down: If a goat is no longer supported by a goat below it, it must fall down to the next lower level. <b>This is a mandatory move that takes up the entire turn</b>. If multiple goats are unsupported, the player chooses which one to drop.\n\n<b>Game End</b>\n\nThe game ends in one of two ways:&nbsp;&nbsp;</div><div>-&nbsp;<span style=\"color: var(--overlayFontColor);\">Reaching the top: At the start of his turn, a player has two goats at the top of the pyramid</span></div><div>- No moves left: A player cannot make a move and loses the game.\n<div><br></div></div>",
+      "helpText": "- Players take seats\n- On their turn, players place a piece from their pile on first row OR move a piece up to a contiguous superior cell<div><br></div>",
+      "variantImage": "",
+      "variant": "",
+      "language": "en-GB",
+      "players": "2"
+    }
+  },
+  "seat1": {
+    "type": "seat",
+    "id": "seat1",
+    "z": 35000,
+    "y": 99,
+    "x": 91,
+    "color": "black",
+    "permanentPlayerColor": "black",
+    "colorChangeRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY color}",
+        "relation": "!=",
+        "operand2": "${PROPERTY permanentPlayerColor}",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "property": "color",
+            "value": "${PROPERTY permanentPlayerColor}",
+            "collection": "thisButton"
+          }
+        ]
+      }
+    ],
+    "css": {
+      "background": "#ffffff60"
+    }
+  },
+  "seat2": {
+    "type": "seat",
+    "id": "seat2",
+    "z": 34990,
+    "y": 99,
+    "index": 2,
+    "x": 1336,
+    "permanentPlayerColor": "white",
+    "color": "white",
+    "width": 150,
+    "height": 40,
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": {
+      "seat1": [
+        "colorChangeRoutine"
+      ]
+    },
+    "css": {
+      "background": "#ffffff60"
+    }
+  },
+  "mva17": {
+    "type": "holder",
+    "id": "mva17",
+    "x": 1371,
+    "y": 183,
+    "dropTarget": {
+      "type": "card"
+    },
+    "z": 50239,
+    "width": 100,
+    "height": 100,
+    "css": {
+      "background": "#ffffff60"
+    },
+    "dropOffsetY": 10
+  },
+  "mva18": {
+    "type": "holder",
+    "id": "mva18",
+    "x": 128,
+    "y": 181,
+    "dropTarget": {
+      "type": "card"
+    },
+    "z": 50235,
+    "width": 100,
+    "height": 100,
+    "css": {
+      "background": "#ffffff60"
+    },
+    "dropOffsetY": 10
+  },
+  "house-white": {
+    "type": "deck",
+    "id": "house-white",
+    "x": 4,
+    "y": 4,
+    "z": 24195,
+    "cardDefaults": {
+      "newColor": "white",
+      "primaryColor": "blue",
+      "borderColor": "black",
+      "borderWidth": 1,
+      "pilesWith": {
+        "type": "card"
+      },
+      "width": 80,
+      "height": 80,
+      "onPileCreation": {
+        "handlePosition": "middle right",
+        "handleOffset": 25,
+        "handleCSS": "box-shadow:0 1px 1px black;background:white;z-index: -1;border-radius:5px;padding:0 0.25rem 0 0.25rem;font-weight:900;font-size:1rem;height:22px;width:25px;margin-top:4px"
+      }
+    },
+    "cardTypes": {
+      "house": {}
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "transparent",
+            "value": "/i/game-icons.net/delapouite/ram-profile.svg",
+            "width": 80,
+            "height": 80,
+            "svgReplaces": {
+              "#000": "newColor"
+            },
+            "css": {
+              "transform": "scaleX(-1)"
+            }
+          }
+        ]
+      }
+    ],
+    "parent": "mva17"
+  },
+  "house-black": {
+    "type": "deck",
+    "id": "house-black",
+    "z": 17948,
+    "cardDefaults": {
+      "primaryColor": "red",
+      "borderColor": "black",
+      "borderWidth": 1,
+      "pilesWith": {
+        "type": "card"
+      },
+      "width": 80,
+      "height": 80,
+      "onPileCreation": {
+        "handlePosition": "middle right",
+        "handleOffset": 25,
+        "handleCSS": "box-shadow:0 1px 1px black;background:white;z-index: -1;border-radius:5px;padding:0 0.25rem 0 0.25rem;font-weight:900;font-size:1rem;height:22px;width:25px;margin-top:4px;"
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "transparent",
+            "value": "/i/game-icons.net/delapouite/ram-profile.svg",
+            "width": 80,
+            "height": 80,
+            "svgReplaces": {
+              "#primaryColor": "primaryColor",
+              "#borderColor": "borderColor",
+              "#borderWidth": "borderWidth"
+            }
+          }
+        ]
+      }
+    ],
+    "cardTypes": {
+      "house": {}
+    },
+    "x": 4,
+    "y": 4,
+    "parent": "mva18",
+    "width": 80,
+    "height": 80
+  },
+  "duas1": {
+    "deck": "house-black",
+    "type": "card",
+    "cardType": "house",
+    "id": "duas1",
+    "z": 24822,
+    "parent": "as8z"
+  },
+  "4cgx": {
+    "deck": "house-black",
+    "type": "card",
+    "cardType": "house",
+    "id": "4cgx",
+    "z": 24823,
+    "parent": "as8z"
+  },
+  "y78g": {
+    "deck": "house-black",
+    "type": "card",
+    "cardType": "house",
+    "id": "y78g",
+    "z": 24824,
+    "parent": "as8z"
+  },
+  "xdjx1": {
+    "deck": "house-black",
+    "type": "card",
+    "cardType": "house",
+    "id": "xdjx1",
+    "z": 24825,
+    "parent": "as8z"
+  },
+  "yc45": {
+    "deck": "house-black",
+    "type": "card",
+    "cardType": "house",
+    "id": "yc45",
+    "z": 24826,
+    "parent": "as8z"
+  },
+  "1h8": {
+    "deck": "house-black",
+    "type": "card",
+    "cardType": "house",
+    "id": "1h8",
+    "z": 24827,
+    "parent": "as8z"
+  },
+  "vhz7": {
+    "deck": "house-black",
+    "type": "card",
+    "cardType": "house",
+    "id": "vhz7",
+    "z": 24828,
+    "parent": "as8z"
+  },
+  "i2mo": {
+    "deck": "house-black",
+    "type": "card",
+    "cardType": "house",
+    "id": "i2mo",
+    "z": 24829,
+    "parent": "as8z"
+  },
+  "x80b": {
+    "deck": "house-black",
+    "type": "card",
+    "cardType": "house",
+    "id": "x80b",
+    "z": 24830,
+    "parent": "as8z"
+  },
+  "zzzi1": {
+    "deck": "house-black",
+    "type": "card",
+    "cardType": "house",
+    "id": "zzzi1",
+    "z": 24832,
+    "parent": "as8z"
+  },
+  "bsgf1": {
+    "deck": "house-black",
+    "type": "card",
+    "cardType": "house",
+    "id": "bsgf1",
+    "z": 24834,
+    "parent": "as8z"
+  },
+  "93qp": {
+    "deck": "house-black",
+    "type": "card",
+    "cardType": "house",
+    "id": "93qp",
+    "z": 24836,
+    "parent": "as8z"
+  },
+  "8bb3": {
+    "deck": "house-white",
+    "type": "card",
+    "cardType": "house",
+    "id": "8bb3",
+    "z": 24837,
+    "parent": "7osz"
+  },
+  "nhl10": {
+    "deck": "house-white",
+    "type": "card",
+    "cardType": "house",
+    "id": "nhl10",
+    "z": 24838,
+    "parent": "7osz"
+  },
+  "zplb1": {
+    "deck": "house-white",
+    "type": "card",
+    "cardType": "house",
+    "id": "zplb1",
+    "z": 24839,
+    "parent": "7osz"
+  },
+  "p5aa": {
+    "deck": "house-white",
+    "type": "card",
+    "cardType": "house",
+    "id": "p5aa",
+    "z": 24840,
+    "parent": "7osz"
+  },
+  "d0m8": {
+    "deck": "house-white",
+    "type": "card",
+    "cardType": "house",
+    "id": "d0m8",
+    "z": 24841,
+    "parent": "7osz"
+  },
+  "xleb1": {
+    "deck": "house-white",
+    "type": "card",
+    "cardType": "house",
+    "id": "xleb1",
+    "z": 24842,
+    "parent": "7osz"
+  },
+  "ge6h": {
+    "deck": "house-white",
+    "type": "card",
+    "cardType": "house",
+    "id": "ge6h",
+    "z": 24843,
+    "parent": "7osz"
+  },
+  "tmee1": {
+    "deck": "house-white",
+    "type": "card",
+    "cardType": "house",
+    "id": "tmee1",
+    "z": 24844,
+    "parent": "7osz"
+  },
+  "df19": {
+    "deck": "house-white",
+    "type": "card",
+    "cardType": "house",
+    "id": "df19",
+    "z": 24845,
+    "parent": "7osz"
+  },
+  "6w7y": {
+    "deck": "house-white",
+    "type": "card",
+    "cardType": "house",
+    "id": "6w7y",
+    "z": 24846,
+    "parent": "7osz"
+  },
+  "x43f": {
+    "deck": "house-white",
+    "type": "card",
+    "cardType": "house",
+    "id": "x43f",
+    "z": 24847,
+    "parent": "7osz"
+  },
+  "4qcs": {
+    "deck": "house-white",
+    "type": "card",
+    "cardType": "house",
+    "id": "4qcs",
+    "z": 24849,
+    "parent": "7osz"
+  },
+  "grid73": {
+    "type": "holder",
+    "id": "grid73",
+    "x": 398,
+    "y": 683,
+    "width": 100,
+    "height": 120,
+    "z": 50243,
+    "css": {
+      "background": "#ffffff60"
+    },
+    "dropTarget": {
+      "type": "card"
+    },
+    "dropOffsetX": 13,
+    "dropOffsetY": 16,
+    "borderRadius": "90px 90px 90px 90px"
+  },
+  "reset": {
+    "type": "button",
+    "id": "reset",
+    "height": 40,
+    "z": 35005,
+    "clickRoutine": [
+      {
+        "func": "RECALL",
+        "holder": "mva18"
+      },
+      {
+        "func": "RECALL",
+        "holder": "mva17"
+      },
+      {
+        "func": "LABEL",
+        "label": "ir6k",
+        "value": 0
+      },
+      {
+        "func": "LABEL",
+        "label": "ir7k",
+        "value": 3
+      }
+    ],
+    "text": "RESET",
+    "x": 1505,
+    "y": 945,
+    "css": "font-size: 18px; background-color:black; border-color:black",
+    "scale": 0.7
+  },
+  "grid74": {
+    "type": "holder",
+    "id": "grid74",
+    "x": 498,
+    "y": 683,
+    "width": 100,
+    "height": 120,
+    "z": 50243,
+    "css": {
+      "background": "#ffffff60"
+    },
+    "dropTarget": {
+      "type": "card"
+    },
+    "dropOffsetX": 13,
+    "dropOffsetY": 16,
+    "borderRadius": "90px 90px 90px 90px"
+  },
+  "grid75": {
+    "type": "holder",
+    "id": "grid75",
+    "x": 598,
+    "y": 683,
+    "width": 100,
+    "height": 120,
+    "z": 50243,
+    "css": {
+      "background": "#ffffff60"
+    },
+    "dropTarget": {
+      "type": "card"
+    },
+    "dropOffsetX": 13,
+    "dropOffsetY": 16,
+    "borderRadius": "90px 90px 90px 90px"
+  },
+  "grid76": {
+    "type": "holder",
+    "id": "grid76",
+    "x": 698,
+    "y": 683,
+    "width": 100,
+    "height": 120,
+    "z": 50243,
+    "css": {
+      "background": "#ffffff60"
+    },
+    "dropTarget": {
+      "type": "card"
+    },
+    "dropOffsetX": 13,
+    "dropOffsetY": 16,
+    "borderRadius": "90px 90px 90px 90px"
+  },
+  "grid77": {
+    "type": "holder",
+    "id": "grid77",
+    "x": 798,
+    "y": 683,
+    "width": 100,
+    "height": 120,
+    "z": 50243,
+    "css": {
+      "background": "#ffffff60"
+    },
+    "dropTarget": {
+      "type": "card"
+    },
+    "dropOffsetX": 13,
+    "dropOffsetY": 16,
+    "borderRadius": "90px 90px 90px 90px"
+  },
+  "grid78": {
+    "type": "holder",
+    "id": "grid78",
+    "x": 898,
+    "y": 683,
+    "width": 100,
+    "height": 120,
+    "z": 50243,
+    "css": {
+      "background": "#ffffff60"
+    },
+    "dropTarget": {
+      "type": "card"
+    },
+    "dropOffsetX": 13,
+    "dropOffsetY": 16,
+    "borderRadius": "90px 90px 90px 90px"
+  },
+  "grid79": {
+    "type": "holder",
+    "id": "grid79",
+    "x": 998,
+    "y": 683,
+    "width": 100,
+    "height": 120,
+    "z": 50243,
+    "css": {
+      "background": "#ffffff60"
+    },
+    "dropTarget": {
+      "type": "card"
+    },
+    "dropOffsetX": 13,
+    "dropOffsetY": 16,
+    "borderRadius": "90px 90px 90px 90px"
+  },
+  "grid80": {
+    "type": "holder",
+    "id": "grid80",
+    "x": 1098,
+    "y": 683,
+    "width": 100,
+    "height": 120,
+    "z": 50243,
+    "css": {
+      "background": "#ffffff60"
+    },
+    "dropTarget": {
+      "type": "card"
+    },
+    "dropOffsetX": 13,
+    "dropOffsetY": 16,
+    "borderRadius": "90px 90px 90px 90px"
+  },
+  "grid82": {
+    "type": "holder",
+    "id": "grid82",
+    "x": 448,
+    "y": 571,
+    "width": 100,
+    "height": 120,
+    "z": 50243,
+    "css": {
+      "background": "#ffffff60"
+    },
+    "dropTarget": {
+      "type": "card"
+    },
+    "dropOffsetX": 13,
+    "dropOffsetY": 16,
+    "borderRadius": "90px 90px 90px 90px"
+  },
+  "grid83": {
+    "type": "holder",
+    "id": "grid83",
+    "x": 548,
+    "y": 571,
+    "width": 100,
+    "height": 120,
+    "z": 50243,
+    "css": {
+      "background": "#ffffff60"
+    },
+    "dropTarget": {
+      "type": "card"
+    },
+    "dropOffsetX": 13,
+    "dropOffsetY": 16,
+    "borderRadius": "90px 90px 90px 90px"
+  },
+  "grid84": {
+    "type": "holder",
+    "id": "grid84",
+    "x": 648,
+    "y": 571,
+    "width": 100,
+    "height": 120,
+    "z": 50243,
+    "css": {
+      "background": "#ffffff60"
+    },
+    "dropTarget": {
+      "type": "card"
+    },
+    "dropOffsetX": 13,
+    "dropOffsetY": 16,
+    "borderRadius": "90px 90px 90px 90px"
+  },
+  "grid85": {
+    "type": "holder",
+    "id": "grid85",
+    "x": 748,
+    "y": 571,
+    "width": 100,
+    "height": 120,
+    "z": 50243,
+    "css": {
+      "background": "#ffffff60"
+    },
+    "dropTarget": {
+      "type": "card"
+    },
+    "dropOffsetX": 13,
+    "dropOffsetY": 16,
+    "borderRadius": "90px 90px 90px 90px"
+  },
+  "grid86": {
+    "type": "holder",
+    "id": "grid86",
+    "x": 848,
+    "y": 571,
+    "width": 100,
+    "height": 120,
+    "z": 50243,
+    "css": {
+      "background": "#ffffff60"
+    },
+    "dropTarget": {
+      "type": "card"
+    },
+    "dropOffsetX": 13,
+    "dropOffsetY": 16,
+    "borderRadius": "90px 90px 90px 90px"
+  },
+  "grid87": {
+    "type": "holder",
+    "id": "grid87",
+    "x": 948,
+    "y": 571,
+    "width": 100,
+    "height": 120,
+    "z": 50243,
+    "css": {
+      "background": "#ffffff60"
+    },
+    "dropTarget": {
+      "type": "card"
+    },
+    "dropOffsetX": 13,
+    "dropOffsetY": 16,
+    "borderRadius": "90px 90px 90px 90px"
+  },
+  "grid88": {
+    "type": "holder",
+    "id": "grid88",
+    "x": 1048,
+    "y": 571,
+    "width": 100,
+    "height": 120,
+    "z": 50243,
+    "css": {
+      "background": "#ffffff60"
+    },
+    "dropTarget": {
+      "type": "card"
+    },
+    "dropOffsetX": 13,
+    "dropOffsetY": 16,
+    "borderRadius": "90px 90px 90px 90px"
+  },
+  "grid90": {
+    "type": "holder",
+    "id": "grid90",
+    "x": 498,
+    "y": 459,
+    "width": 100,
+    "height": 120,
+    "z": 50243,
+    "css": {
+      "background": "#ffffff60"
+    },
+    "dropTarget": {
+      "type": "card"
+    },
+    "dropOffsetX": 13,
+    "dropOffsetY": 16,
+    "borderRadius": "90px 90px 90px 90px"
+  },
+  "grid91": {
+    "type": "holder",
+    "id": "grid91",
+    "x": 598,
+    "y": 459,
+    "width": 100,
+    "height": 120,
+    "z": 50243,
+    "css": {
+      "background": "#ffffff60"
+    },
+    "dropTarget": {
+      "type": "card"
+    },
+    "dropOffsetX": 13,
+    "dropOffsetY": 16,
+    "borderRadius": "90px 90px 90px 90px"
+  },
+  "grid92": {
+    "type": "holder",
+    "id": "grid92",
+    "x": 698,
+    "y": 459,
+    "width": 100,
+    "height": 120,
+    "z": 50243,
+    "css": {
+      "background": "#ffffff60"
+    },
+    "dropTarget": {
+      "type": "card"
+    },
+    "dropOffsetX": 13,
+    "dropOffsetY": 16,
+    "borderRadius": "90px 90px 90px 90px"
+  },
+  "grid93": {
+    "type": "holder",
+    "id": "grid93",
+    "x": 798,
+    "y": 459,
+    "width": 100,
+    "height": 120,
+    "z": 50243,
+    "css": {
+      "background": "#ffffff60"
+    },
+    "dropTarget": {
+      "type": "card"
+    },
+    "dropOffsetX": 13,
+    "dropOffsetY": 16,
+    "borderRadius": "90px 90px 90px 90px"
+  },
+  "grid94": {
+    "type": "holder",
+    "id": "grid94",
+    "x": 898,
+    "y": 459,
+    "width": 100,
+    "height": 120,
+    "z": 50243,
+    "css": {
+      "background": "#ffffff60"
+    },
+    "dropTarget": {
+      "type": "card"
+    },
+    "dropOffsetX": 13,
+    "dropOffsetY": 16,
+    "borderRadius": "90px 90px 90px 90px"
+  },
+  "grid95": {
+    "type": "holder",
+    "id": "grid95",
+    "x": 998,
+    "y": 459,
+    "width": 100,
+    "height": 120,
+    "z": 50243,
+    "css": {
+      "background": "#ffffff60"
+    },
+    "dropTarget": {
+      "type": "card"
+    },
+    "dropOffsetX": 13,
+    "dropOffsetY": 16,
+    "borderRadius": "90px 90px 90px 90px"
+  },
+  "grid98": {
+    "type": "holder",
+    "id": "grid98",
+    "x": 551,
+    "y": 347,
+    "width": 100,
+    "height": 120,
+    "z": 50243,
+    "css": {
+      "background": "#ffffff60"
+    },
+    "dropTarget": {
+      "type": "card"
+    },
+    "dropOffsetX": 13,
+    "dropOffsetY": 16,
+    "borderRadius": "90px 90px 90px 90px"
+  },
+  "grid99": {
+    "type": "holder",
+    "id": "grid99",
+    "x": 651,
+    "y": 347,
+    "width": 100,
+    "height": 120,
+    "z": 50243,
+    "css": {
+      "background": "#ffffff60"
+    },
+    "dropTarget": {
+      "type": "card"
+    },
+    "dropOffsetX": 13,
+    "dropOffsetY": 16,
+    "borderRadius": "90px 90px 90px 90px"
+  },
+  "grid100": {
+    "type": "holder",
+    "id": "grid100",
+    "x": 751,
+    "y": 347,
+    "width": 100,
+    "height": 120,
+    "z": 50243,
+    "css": {
+      "background": "#ffffff60"
+    },
+    "dropTarget": {
+      "type": "card"
+    },
+    "dropOffsetX": 13,
+    "dropOffsetY": 16,
+    "borderRadius": "90px 90px 90px 90px"
+  },
+  "grid101": {
+    "type": "holder",
+    "id": "grid101",
+    "x": 851,
+    "y": 347,
+    "width": 100,
+    "height": 120,
+    "z": 50243,
+    "css": {
+      "background": "#ffffff60"
+    },
+    "dropTarget": {
+      "type": "card"
+    },
+    "dropOffsetX": 13,
+    "dropOffsetY": 16,
+    "borderRadius": "90px 90px 90px 90px"
+  },
+  "grid102": {
+    "type": "holder",
+    "id": "grid102",
+    "x": 951,
+    "y": 347,
+    "width": 100,
+    "height": 120,
+    "z": 50243,
+    "css": {
+      "background": "#ffffff60"
+    },
+    "dropTarget": {
+      "type": "card"
+    },
+    "dropOffsetX": 13,
+    "dropOffsetY": 16,
+    "borderRadius": "90px 90px 90px 90px"
+  },
+  "grid107": {
+    "type": "holder",
+    "id": "grid107",
+    "x": 598,
+    "y": 235,
+    "width": 100,
+    "height": 120,
+    "z": 50243,
+    "css": {
+      "background": "#ffffff60"
+    },
+    "dropTarget": {
+      "type": "card"
+    },
+    "dropOffsetX": 13,
+    "dropOffsetY": 16,
+    "borderRadius": "90px 90px 90px 90px"
+  },
+  "grid108": {
+    "type": "holder",
+    "id": "grid108",
+    "x": 698,
+    "y": 235,
+    "width": 100,
+    "height": 120,
+    "z": 50243,
+    "css": {
+      "background": "#ffffff60"
+    },
+    "dropTarget": {
+      "type": "card"
+    },
+    "dropOffsetX": 13,
+    "dropOffsetY": 16,
+    "borderRadius": "90px 90px 90px 90px"
+  },
+  "grid109": {
+    "type": "holder",
+    "id": "grid109",
+    "x": 798,
+    "y": 235,
+    "width": 100,
+    "height": 120,
+    "z": 50243,
+    "css": {
+      "background": "#ffffff60"
+    },
+    "dropTarget": {
+      "type": "card"
+    },
+    "dropOffsetX": 13,
+    "dropOffsetY": 16,
+    "borderRadius": "90px 90px 90px 90px"
+  },
+  "grid110": {
+    "type": "holder",
+    "id": "grid110",
+    "x": 898,
+    "y": 235,
+    "width": 100,
+    "height": 120,
+    "z": 50243,
+    "css": {
+      "background": "#ffffff60"
+    },
+    "dropTarget": {
+      "type": "card"
+    },
+    "dropOffsetX": 13,
+    "dropOffsetY": 16,
+    "borderRadius": "90px 90px 90px 90px"
+  },
+  "e2z2": {
+    "id": "e2z2",
+    "width": 1600,
+    "height": 1000,
+    "layer": -4,
+    "movable": false,
+    "css": {
+      "background-size": "cover"
+    },
+    "image": "/assets/1029691001_31162"
+  },
+  "j11kz": {
+    "id": "j11kz",
+    "width": 1600,
+    "height": 1000,
+    "layer": -4,
+    "z": 5,
+    "movable": false,
+    "movableInEdit": false,
+    "color": "#000000",
+    "css": {
+      "background": "#00000080",
+      "background-size": "cover"
+    }
+  },
+  "7osz": {
+    "type": "pile",
+    "width": 80,
+    "height": 80,
+    "handlePosition": "middle right",
+    "handleOffset": 25,
+    "handleCSS": "box-shadow:0 1px 1px black;background:white;z-index: -1;border-radius:5px;padding:0 0.25rem 0 0.25rem;font-weight:900;font-size:1rem;height:22px;width:25px;margin-top:4px",
+    "id": "7osz",
+    "z": 24764,
+    "y": 10,
+    "parent": "mva17"
+  },
+  "as8z": {
+    "type": "pile",
+    "parent": "mva18",
+    "y": 10,
+    "width": 80,
+    "height": 80,
+    "handlePosition": "middle right",
+    "handleOffset": 25,
+    "handleCSS": "box-shadow:0 1px 1px black;background:white;z-index: -1;border-radius:5px;padding:0 0.25rem 0 0.25rem;font-weight:900;font-size:1rem;height:22px;width:25px;margin-top:4px;",
+    "id": "as8z",
+    "z": 24766
+  }
+}

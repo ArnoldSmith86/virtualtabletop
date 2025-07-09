@@ -1,0 +1,138 @@
+{
+  "_meta": {
+    "version": 17,
+    "info": {
+      "name": "100 Tutorials Overview",
+      "image": "/assets/428365547_7210",
+      "rules": "",
+      "bgg": "",
+      "year": "",
+      "mode": "Tutorial",
+      "time": "",
+      "attribution": "",
+      "lastUpdate": 1749051046015,
+      "showName": false,
+      "skill": "",
+      "description": "",
+      "similarImage": "",
+      "similarName": "",
+      "similarDesigner": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": "",
+      "variantImage": "",
+      "variant": "",
+      "language": "en-US",
+      "players": "1"
+    }
+  },
+  "title": {
+    "id": "title",
+    "x": 400,
+    "y": -2,
+    "width": 800,
+    "height": 60,
+    "z": 74,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "font-size: 60px;text-align:center",
+    "text": "Tutorials Overview"
+  },
+  "overview": {
+    "id": "overview",
+    "x": 108,
+    "y": 80,
+    "width": 1400,
+    "height": 150,
+    "layer": -3,
+    "z": 129,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "font-size: 25px; ",
+    "html": "All the functions, many key properties, some widget types, and other important aspects of how to create and modify games in VTT are demonstrated in the tutorials. You can access them through various links on <a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Tutorials'>the wiki</a>, by clicking the graduation cap icon at the top of the Edit Mode toolbar, or by using the game shelf and changing the type (the dice icon) from Games to Tutorials. Tutorials are listed alphabetically by name and have a library image that tries to represent what the tutorial is about or the category it falls under. To get the most out of the tutorials, follow the suggestions in each tutorial about what buttons to click, etc. Be sure to use Edit Mode by clicking on the Edit Mode button (the wrench and hammer icon that will either be on the left or bottom of the screen) or by using the ctrl-j keyboard shortcut. When in Edit Mode, look at the JSON by making sure the curly brackets icon on the far right is highlighted. And after a routine executes, look at the debug output by clicking on the bug icon on the far right. An overview of major types of tutorials follows."
+  },
+  "text1": {
+    "id": "text1",
+    "x": 4,
+    "y": 480,
+    "width": 450,
+    "z": 185,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "22px"
+    },
+    "html": "At the beginning of the tutorials are a few that cover basic but important concepts in using JSON to create games on VTT. You should look at all of these first and in order. They are numbered for reference.\n\n100 Tutorials Overview\n101 JSON Syntax and Punctuation\n110 Widget Types\n120 Widget Properties Overview\n121 Fundamental Widget Properties\n130 Variables and Collections\n131 Working with Variables\n140 Functions Overview"
+  },
+  "text2": {
+    "id": "text2",
+    "x": 573,
+    "y": 480,
+    "width": 450,
+    "z": 121,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "22px"
+    },
+    "html": "Each <a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Functions'>VTT Function</a> has its own tutorial. Their library image icons are a circle to represent that functions are usually activated by clicking on a button. The only function tutorial that does not follow this pattern is TURN, which is part of the Seats tutorial."
+  },
+  "text3": {
+    "id": "text3",
+    "x": 1151,
+    "y": 480,
+    "width": 450,
+    "z": 9732,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "22px"
+    },
+    "html": "Other tutorials broadly fall into these categories:\n\nAppearance\n\nOperations and Routines\n\nProperties\n\nTypes\n\nXtras"
+  },
+  "subTitle1": {
+    "id": "subTitle1",
+    "text": "Foundations",
+    "css": {
+      "font-size": "60px",
+      "text-align": "center"
+    },
+    "height": 70,
+    "width": 450,
+    "movable": false,
+    "movableInEdit": false,
+    "parent": "text1",
+    "y": -80,
+    "fixedParent": true
+  },
+  "subTitle2": {
+    "id": "subTitle2",
+    "text": "Functions",
+    "css": {
+      "font-size": "60px",
+      "text-align": "center"
+    },
+    "height": 70,
+    "width": 450,
+    "movable": false,
+    "movableInEdit": false,
+    "parent": "text2",
+    "y": -80,
+    "fixedParent": true
+  },
+  "subTitle3": {
+    "id": "subTitle3",
+    "text": "Other",
+    "css": {
+      "font-size": "60px",
+      "text-align": "center"
+    },
+    "height": 70,
+    "width": 450,
+    "movable": false,
+    "movableInEdit": false,
+    "parent": "text3",
+    "y": -80,
+    "fixedParent": true
+  }
+}

@@ -1,16 +1,16 @@
 {
   "_meta": {
-    "version": 14,
+    "version": 17,
     "info": {
       "name": "Delicious Deliveries",
-      "image": "/assets/957305411_260972",
+      "image": "/assets/-192126573_36678",
       "rules": "",
       "bgg": "https://boardgamegeek.com/boardgame/1017/fresh-fish",
       "year": "1997",
       "mode": "vs",
       "time": "60",
-      "attribution": "Game layout and scripting by Andy Pymont, released to the public domain under CC0.\n\nLibrary image generated using the Midjourney artificial intelligence image generator, https://www.midjourney.com/home/, using the following prompt: \"a modern day marketplace selling fish and boardgames, delivery truck in the background, cartoon\".\n\nTile graphics are from https://game-icons.net/ and https://thenounproject.com/ and are used under the CC BY 3.0 license:\n\nDelapouite\n• City buildings https://game-icons.net/1x1/delapouite/modern-city.html\n• Delivery truck https://game-icons.net/1x1/delapouite/truck.html\n• Donut https://game-icons.net/1x1/delapouite/donut.html\n• Fish https://game-icons.net/1x1/delapouite/double-fish.html\n• Meeple https://game-icons.net/1x1/delapouite/meeple.html\n• Sandwich https://game-icons.net/1x1/delapouite/sandwich.html\n\nUmer Younas\n• Bank Note https://thenounproject.com/icon/bank-note-3947508",
-      "lastUpdate": 1698495567192,
+      "attribution": "Game layout and scripting by Andy Pymont, released to the public domain under CC0.\n\nLibrary image is a photograph by George Hodan: https://www.publicdomainpictures.net/en/view-image.php?image=498782 which is CC0 / public domain.\n\nTile graphics are from https://game-icons.net/ and https://thenounproject.com/ and are used under the CC BY 3.0 license:\n\nDelapouite\n• City buildings https://game-icons.net/1x1/delapouite/modern-city.html\n• Delivery truck https://game-icons.net/1x1/delapouite/truck.html\n• Donut https://game-icons.net/1x1/delapouite/donut.html\n• Fish https://game-icons.net/1x1/delapouite/double-fish.html\n• Meeple https://game-icons.net/1x1/delapouite/meeple.html\n• Sandwich https://game-icons.net/1x1/delapouite/sandwich.html\n\nUmer Younas\n• Bank Note https://thenounproject.com/icon/bank-note-3947508",
+      "lastUpdate": 1748467583413,
       "id": "blr8",
       "showName": true,
       "skill": "",
@@ -547,18 +547,17 @@
             "operand1": "${PROPERTY players OF $value}",
             "operand2": "${playerCount}",
             "thenRoutine": [
-              "var board = ${value}",
               {
                 "func": "SET",
-                "property": "y",
-                "value": "${PROPERTY activeY OF $value}"
+                "property": "display",
+                "value": true
               }
             ],
             "elseRoutine": [
               {
                 "func": "SET",
-                "property": "y",
-                "value": -1000
+                "property": "display",
+                "value": false
               }
             ]
           }
@@ -745,17 +744,16 @@
     "clickRoutine": [
       {
         "func": "IF",
-        "operand1": "${PROPERTY y OF scoreboard}",
-        "relation": ">=",
-        "operand2": 0,
+        "operand1": "${PROPERTY display OF scoreboard}",
+        "operand2": true,
         "thenRoutine": [
           {
             "func": "SET",
             "collection": [
               "scoreboard"
             ],
-            "property": "y",
-            "value": -1000
+            "property": "display",
+            "value": false
           }
         ],
         "elseRoutine": [
@@ -787,8 +785,8 @@
             "collection": [
               "scoreboard"
             ],
-            "property": "y",
-            "value": 10
+            "property": "display",
+            "value": true
           }
         ]
       }
@@ -1153,7 +1151,6 @@
     },
     "movable": false,
     "players": 5,
-    "activeY": 25,
     "corners": [
       "space-5p-a1",
       "space-5p-a10",
@@ -2087,7 +2084,7 @@
   "board-4p": {
     "id": "board-4p",
     "x": 672.5,
-    "y": -1000,
+    "y": 72.5,
     "layer": -4,
     "width": 855,
     "height": 855,
@@ -2097,8 +2094,8 @@
       ]
     },
     "movable": false,
+    "display": false,
     "players": 4,
-    "activeY": 72.5,
     "corners": [
       "space-4p-a1",
       "space-4p-a9",
@@ -2191,18 +2188,7 @@
     "id": "space-4p-a1",
     "type": "holder",
     "parent": "board-4p",
-    "width": 95,
-    "height": 95,
-    "css": {
-      "border-color": "black",
-      "border-radius": "0px",
-      "border-style": "solid",
-      "border-width": "1px",
-      "background-color": "transparent"
-    },
-    "dropOffsetX": 0,
-    "dropOffsetY": 0,
-    "dropLimit": 1
+    "inheritFrom": "space-5p-a1"
   },
   "space-4p-a2": {
     "id": "space-4p-a2",
@@ -2831,7 +2817,7 @@
   "board-3p": {
     "id": "board-3p",
     "x": 720,
-    "y": -1000,
+    "y": 120,
     "layer": -4,
     "width": 760,
     "height": 760,
@@ -2841,8 +2827,8 @@
       ]
     },
     "movable": false,
+    "display": false,
     "players": 3,
-    "activeY": 120,
     "corners": [
       "space-3p-a1",
       "space-3p-a8",
@@ -2935,18 +2921,7 @@
     "id": "space-3p-a1",
     "type": "holder",
     "parent": "board-3p",
-    "width": 95,
-    "height": 95,
-    "css": {
-      "border-color": "black",
-      "border-radius": "0px",
-      "border-style": "solid",
-      "border-width": "1px",
-      "background-color": "transparent"
-    },
-    "dropOffsetX": 0,
-    "dropOffsetY": 0,
-    "dropLimit": 1
+    "inheritFrom": "space-5p-a1"
   },
   "space-3p-a2": {
     "id": "space-3p-a2",
@@ -3441,7 +3416,7 @@
   "board-2p": {
     "id": "board-2p",
     "x": 767.5,
-    "y": -1000,
+    "y": 167.5,
     "layer": -4,
     "width": 665,
     "height": 665,
@@ -3451,8 +3426,8 @@
       ]
     },
     "movable": false,
+    "display": false,
     "players": 2,
-    "activeY": 167.5,
     "corners": [
       "space-2p-a1",
       "space-2p-a7",
@@ -3517,18 +3492,7 @@
     "id": "space-2p-a1",
     "type": "holder",
     "parent": "board-2p",
-    "width": 95,
-    "height": 95,
-    "css": {
-      "border-color": "black",
-      "border-radius": "0px",
-      "border-style": "solid",
-      "border-width": "1px",
-      "background-color": "transparent"
-    },
-    "dropOffsetX": 0,
-    "dropOffsetY": 0,
-    "dropLimit": 1
+    "inheritFrom": "space-5p-a1"
   },
   "space-2p-a2": {
     "id": "space-2p-a2",
@@ -5275,17 +5239,14 @@
         "value": 1
       }
     ],
-    "readyMarker": "ready-p1",
-    "onlyVisibleForSeat": "seat-p1"
+    "readyMarker": "ready-p1"
   },
   "bid-p2": {
     "id": "bid-p2",
     "parent": "area-p2",
     "inheritFrom": "bid-p1",
     "text": 0,
-    "readyMarker": "ready-p2",
-    "onlyVisibleToSeat": "seat-p2",
-    "onlyVisibleForSeat": "seat-p2"
+    "readyMarker": "ready-p2"
   },
   "cash-p7-label": {
     "type": "label",
@@ -5299,9 +5260,7 @@
     "parent": "area-p3",
     "inheritFrom": "bid-p1",
     "text": 0,
-    "readyMarker": "ready-p3",
-    "onlyVisibleToSeat": "seat-p3",
-    "onlyVisibleForSeat": "seat-p3"
+    "readyMarker": "ready-p3"
   },
   "cash-p8-label": {
     "type": "label",
@@ -5315,9 +5274,7 @@
     "parent": "area-p4",
     "inheritFrom": "bid-p1",
     "text": 0,
-    "readyMarker": "ready-p4",
-    "onlyVisibleToSeat": "seat-p4",
-    "onlyVisibleForSeat": "seat-p4"
+    "readyMarker": "ready-p4"
   },
   "cash-p9-label": {
     "type": "label",
@@ -5331,9 +5288,7 @@
     "parent": "area-p5",
     "inheritFrom": "bid-p1",
     "text": 0,
-    "readyMarker": "ready-p5",
-    "onlyVisibleToSeat": "seat-p5",
-    "onlyVisibleForSeat": "seat-p5"
+    "readyMarker": "ready-p5"
   },
   "cash-p10-label": {
     "type": "label",
@@ -5345,6 +5300,7 @@
   "ready-p1": {
     "type": "basic",
     "id": "ready-p1",
+    "parent": "area-p1",
     "faces": [
       {
         "css": {
@@ -5560,7 +5516,7 @@
         ]
       }
     ],
-    "text": "End Auction",
+    "text": "Start Auction",
     "css": {
       "font-size": "14px"
     }
@@ -5757,10 +5713,11 @@
     "type": "scoreboard",
     "id": "scoreboard",
     "x": 10,
-    "y": -1000,
+    "y": 10,
     "width": 480,
-    "height": 600,
+    "height": 980,
     "layer": 2,
+    "display": false,
     "css": {
       ".scoreboard td": {
         "text-align": "center",
