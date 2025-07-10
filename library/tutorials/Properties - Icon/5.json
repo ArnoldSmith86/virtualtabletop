@@ -2,15 +2,15 @@
   "_meta": {
     "version": 17,
     "info": {
-      "name": "Appearance - Icons, Symbols, and Emojis",
-      "image": "/assets/350792502_9939",
+      "name": "Properties - Icon",
+      "image": "/assets/1481362664_5448",
       "rules": "",
       "bgg": "",
       "year": "",
       "mode": "Tutorial",
       "time": "0",
       "attribution": "",
-      "lastUpdate": 1749052222746,
+      "lastUpdate": 1752115985159,
       "showName": false,
       "skill": "",
       "description": "",
@@ -35,7 +35,7 @@
     "movable": false,
     "movableInEdit": false,
     "css": "font-size: 60px;text-align:center",
-    "text": "Icons, Symbols, and Emojis: CSS Demo",
+    "text": "Icons: CSS Demo",
     "width": 1200
   },
   "mainText": {
@@ -48,7 +48,7 @@
     "z": 124,
     "css": "font-size: 25px; ",
     "movable": false,
-    "html": "In this tutorial, you can see the effects of selected css changes on icons, symbols, and emojis. Choose the css you want to manipulate using the black and white rectangle in the bottom right. Then adjust sliders to see the kinds of effects you can create. When combining different color-changing effects (such as sepia and grayscale) the order in which the css properties are listed influences the appearance; that is not simulated here. To reset a specific value to its default, click on the slider button. To reset all the defaults for that property, click on an icon."
+    "html": "In this tutorial, you can see the effects of selected css changes on icons. Depending on the icon type, the css changes may not make a difference. Choose the css you want to manipulate using the black and white rectangle in the bottom right. Then adjust sliders to see the effects you can create. When combining different color-changing effects (such as sepia and grayscale) the order in which the css properties are listed influences the appearance; that is not simulated here. To reset a specific value to its default, click on the slider button. To reset the defaults for that property on all 4 icon examples, click on any icon."
   },
   "background": {
     "id": "background",
@@ -80,7 +80,6 @@
       "background": "${PROPERTY background}",
       "filter": "drop-shadow(${PROPERTY filter-drop-shadowX}px ${PROPERTY filter-drop-shadowY}px ${PROPERTY filter-drop-shadowBlur}px ${PROPERTY filter-drop-shadowColor}) brightness(${PROPERTY filter-brightness}) contrast(${PROPERTY filter-contrast}) blur(${PROPERTY filter-blur}px) grayscale(${PROPERTY filter-grayscale}) hue-rotate(${PROPERTY filter-hue-rotate}deg) invert(${PROPERTY filter-invert}) saturate(${PROPERTY filter-saturate}) sepia(${PROPERTY filter-sepia})"
     },
-    "image": "/i/game-icons.net/delapouite/paint-bucket.svg",
     "demo": true,
     "box-shadowColor": "#000000",
     "clickRoutine": [
@@ -264,7 +263,11 @@
     "filter-invert": 0,
     "filter-sepia": 0,
     "filter-saturate": 1,
-    "filter-hue-rotate": 0
+    "filter-hue-rotate": 0,
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "icon": "delapouite/paint-bucket"
   },
   "demo2": {
     "id": "demo2",
@@ -274,8 +277,6 @@
     "height": 200,
     "z": 10098,
     "movable": false,
-    "classes": "material-symbols",
-    "text": "directions_bus",
     "demo": true,
     "movableInEdit": true,
     "inheritFrom": {
@@ -304,7 +305,8 @@
     "filter-invert": 0,
     "filter-sepia": 0,
     "filter-saturate": 1,
-    "filter-hue-rotate": 0
+    "filter-hue-rotate": 0,
+    "icon": "directions_bus"
   },
   "demo3": {
     "id": "demo3",
@@ -315,7 +317,6 @@
     "z": 10098,
     "movable": false,
     "classes": "emoji-monochrome",
-    "text": "🎃",
     "demo": true,
     "box-shadowColor": "#000000",
     "inheritFrom": {
@@ -342,7 +343,8 @@
     "filter-invert": 0,
     "filter-sepia": 0,
     "filter-saturate": 1,
-    "filter-hue-rotate": 0
+    "filter-hue-rotate": 0,
+    "icon": "(🎃)"
   },
   "demo4": {
     "id": "demo4",
@@ -352,7 +354,6 @@
     "height": 200,
     "z": 10097,
     "movable": false,
-    "image": "/i/noto-emoji/emoji_u1f419.svg",
     "demo": true,
     "box-shadowColor": "#000000",
     "movableInEdit": true,
@@ -380,7 +381,8 @@
     "filter-invert": 0,
     "filter-sepia": 0,
     "filter-saturate": 1,
-    "filter-hue-rotate": 0
+    "filter-hue-rotate": 0,
+    "icon": "🐙"
   },
   "chooseButton": {
     "type": "button",
@@ -1591,7 +1593,7 @@
     "id": "changeIconLabel",
     "x": 1257,
     "y": 505,
-    "text": "To change to a different icon, open one in the JSON Editor. Place the cursor either over the text or image property and click the blue and white button that appears in the upper right corner to 'pick an asset'.",
+    "text": "To change to a different icon, open one in the JSON Editor. Place the cursor either over the icon property and click the blue and white button that appears in the upper right corner to 'pick an icon from the symbol picker'.",
     "width": 300,
     "movable": false
   },

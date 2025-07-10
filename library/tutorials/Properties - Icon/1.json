@@ -1,16 +1,16 @@
 {
   "_meta": {
-    "version": 16,
+    "version": 17,
     "info": {
-      "name": "Icons and Emojis",
-      "image": "/assets/-1890494129_6762",
+      "name": "Properties - Icon",
+      "image": "/assets/1481362664_5448",
       "rules": "",
       "bgg": "",
       "year": "",
       "mode": "Tutorial",
-      "time": "",
+      "time": "0",
       "attribution": "",
-      "lastUpdate": 1737074336659,
+      "lastUpdate": 1752115985150,
       "showName": false,
       "skill": "",
       "description": "",
@@ -49,42 +49,6 @@
     },
     "text": "This is a Material Symbol an a basic widget.",
     "x": 323
-  },
-  "notes3": {
-    "id": "notes3",
-    "x": 908,
-    "y": 425,
-    "width": 250,
-    "z": 446,
-    "movable": false,
-    "css": {
-      "font-size": "19px"
-    },
-    "text": "The faceTemplate and cardType of these cards use a dynamic property value to create the images, which are icons from the game-icons.net collection."
-  },
-  "notes4": {
-    "id": "notes4",
-    "x": 1200,
-    "y": 425,
-    "width": 350,
-    "z": 447,
-    "movable": false,
-    "css": {
-      "font-size": "19px"
-    },
-    "text": "If you add both text and an icon, VTT will automatically adjust icon spacing and sizing to accomodate both. There are some limitations on modifying the layout using css if using both text and icons."
-  },
-  "notes9": {
-    "id": "notes9",
-    "y": 425,
-    "width": 250,
-    "z": 445,
-    "movable": false,
-    "css": {
-      "font-size": "19px"
-    },
-    "text": "This is a die with pips on the first four faces and emojis on the last two.",
-    "x": 615
   },
   "example1": {
     "type": "button",
@@ -235,30 +199,6 @@
     "icon": "[library]",
     "text": "New\nFolder"
   },
-  "notes5": {
-    "id": "notes5",
-    "y": 812,
-    "width": 250,
-    "z": 441,
-    "movable": false,
-    "css": {
-      "font-size": "19px"
-    },
-    "text": "Add multiple icons by making the icon property an array.",
-    "x": 30
-  },
-  "notes6": {
-    "id": "notes6",
-    "y": 813,
-    "width": 250,
-    "z": 444,
-    "movable": false,
-    "css": {
-      "font-size": "19px"
-    },
-    "text": "Text and multiple icons also works the same way.",
-    "x": 323
-  },
   "example8": {
     "type": "button",
     "id": "example8",
@@ -314,5 +254,65 @@
       "color": "black"
     },
     "text": "Several widget types have an 'icon' property: buttons, dice, and basic widgets. Card faceTemplate objects also accept a type 'icon'. Icons (other than for cards) can be selected by using the blue and white buttons in the JSON Editor to either choose from an included VTT icon or to upload a custom image. The VTT icon sets include icons custom made for VTT, icons from the game-icons.net website, Google Material Symbols, and emojis. "
+  },
+  "notes7": {
+    "id": "notes7",
+    "x": 323,
+    "y": 813,
+    "width": 250,
+    "z": 444,
+    "movable": false,
+    "css": {
+      "font-size": "19px"
+    },
+    "text": "Text and multiple icons also works the same way."
+  },
+  "notes6": {
+    "id": "notes6",
+    "x": 30,
+    "y": 812,
+    "width": 250,
+    "z": 441,
+    "movable": false,
+    "css": {
+      "font-size": "19px"
+    },
+    "text": "Add multiple icons by making the icon property an array."
+  },
+  "notes5": {
+    "id": "notes5",
+    "x": 1200,
+    "y": 425,
+    "width": 350,
+    "z": 447,
+    "movable": false,
+    "css": {
+      "font-size": "19px"
+    },
+    "text": "If you add both text and an icon, VTT will automatically adjust icon spacing and sizing to accomodate both. There are some limitations on modifying the layout using css if using both text and icons."
+  },
+  "notes4": {
+    "id": "notes4",
+    "x": 908,
+    "y": 425,
+    "width": 250,
+    "z": 446,
+    "movable": false,
+    "css": {
+      "font-size": "19px"
+    },
+    "text": "The faceTemplate and cardType of these cards use a dynamic property value to create the images, which are icons from the game-icons.net collection."
+  },
+  "notes3": {
+    "id": "notes3",
+    "x": 615,
+    "y": 425,
+    "width": 250,
+    "z": 445,
+    "movable": false,
+    "css": {
+      "font-size": "19px"
+    },
+    "text": "This is a die with pips on the first four faces and emojis on the last two."
   }
 }

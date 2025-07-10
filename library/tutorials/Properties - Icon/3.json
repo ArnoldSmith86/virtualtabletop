@@ -1,16 +1,16 @@
 {
   "_meta": {
-    "version": 16,
+    "version": 17,
     "info": {
-      "name": "Icons and Emojis",
-      "image": "/assets/-1890494129_6762",
+      "name": "Properties - Icon",
+      "image": "/assets/1481362664_5448",
       "rules": "",
       "bgg": "",
       "year": "",
       "mode": "Tutorial",
-      "time": "",
+      "time": "0",
       "attribution": "",
-      "lastUpdate": 1737074336661,
+      "lastUpdate": 1752115985153,
       "showName": false,
       "skill": "",
       "description": "",
@@ -35,8 +35,8 @@
     "css": {
       "font-size": "19px"
     },
-    "text": "This is the same as the first example in the Icons: Colors tutorial except that the scale of the icon is set to 2.",
-    "x": 30
+    "text": "This is the same as the first example in the Colors variant of this tutorial except that the scale of the icon is set to 2.",
+    "x": 196
   },
   "notes2": {
     "id": "notes2",
@@ -47,12 +47,12 @@
     "css": {
       "font-size": "19px"
     },
-    "text": "This is the same as the second example in the Icons: Colors tutorial except that the wrench is rotated 45 degrees.",
-    "x": 323
+    "text": "This is the same as the second example in the Colors variant of this tutorial except that the wrench is rotated 45 degrees.",
+    "x": 489
   },
   "notes3": {
     "id": "notes3",
-    "x": 908,
+    "x": 1074,
     "y": 425,
     "width": 250,
     "z": 446,
@@ -72,11 +72,11 @@
       "font-size": "19px"
     },
     "text": "Use offsetX and offsetY to adjust where on the widget the icons appear. Depending on how many you have and the scale, you will have to adjust the numbers to find what works.",
-    "x": 615
+    "x": 781
   },
   "example1": {
     "id": "example1",
-    "x": 103,
+    "x": 269,
     "y": 318,
     "z": 448,
     "icon": {
@@ -89,7 +89,7 @@
   },
   "example2": {
     "id": "example2",
-    "x": 386,
+    "x": 552,
     "y": 319,
     "z": 311,
     "movable": false,
@@ -132,7 +132,7 @@
   },
   "example4": {
     "id": "example4",
-    "x": 960,
+    "x": 1126,
     "y": 310,
     "z": 449,
     "movable": false,
@@ -168,7 +168,7 @@
   },
   "example3": {
     "id": "example3",
-    "x": 671,
+    "x": 837,
     "y": 307,
     "borderRadius": 8,
     "z": 449,
