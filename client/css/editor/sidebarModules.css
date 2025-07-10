@@ -235,20 +235,6 @@
   margin-top: 10px;
 }
 
-.pest_control.editorModule .validation-controls button {
-  margin-right: 10px;
-  padding: 5px 10px;
-  background-color: var(--VTTblue);
-  color: white;
-  border: none;
-  border-radius: 3px;
-  cursor: pointer;
-}
-
-.pest_control.editorModule .validation-controls button:hover {
-  background-color: var(--VTTblueDark);
-}
-
 .pest_control.editorModule .validation-time {
   color: var(--textColor);
   font-size: 12px;
