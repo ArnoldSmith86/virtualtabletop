@@ -190,7 +190,7 @@ class DebugModule extends SidebarModule {
       return;
     }
 
-    const state = Object.fromEntries(widgets.entries().map(([id, w])=>[id, w.unalteredState]));
+    const state = Object.fromEntries([...widgets].map(([id, w])=>[id, w.unalteredState]));
     
     // Hide manual validation controls
     const controls = $('.validation-controls', this.moduleDOM);
