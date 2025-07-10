@@ -63,6 +63,10 @@
   max-height: var(--targetSize);
 }
 
+.autoIconAlignMaterialIconsNoFill {
+  font-family: "Material Symbols NoFill";
+}
+
 .autoIconAlignSymbols {
   font-family: "VTT-Symbols";
 }

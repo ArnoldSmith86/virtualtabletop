@@ -333,7 +333,7 @@ const jeCommands = [
       if(a) {
         jeStateNow.classes = a.type;
         jeStateNow.text = '###SELECT ME###';
-        jeSetAndSelect(a.type == 'emoji-monochrome' ? a.symbol.substr(1, a.symbol.length-2) : a.symbol);
+        jeSetAndSelect(a.type == 'emoji-monochrome' ? a.symbol.substr(1, a.symbol.length-2) : a.symbol.replace(/_NOFILL$/, ''));
         await jeApplyChanges();
       }
     },

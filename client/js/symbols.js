@@ -86,7 +86,7 @@ export async function loadSymbolPicker() {
             list += `<i class="${className}" title="${className}: ${symbol}" data-type="${className}" data-symbol="${symbolToReturn}" data-keywords="${symbol},${keywords.join().toLowerCase()}" style="--url:url('i/noto-emoji/emoji_u${emojiToFilename(symbol)}.svg')">${toNotoMonochrome(symbol)}</i>`;
           }
           if(className == 'material-symbols' && hasNoFillVariant)
-            list += `<i class="material-symbols-nofill" title="material-symbols-nofill: ${symbol}" data-type="material-symbols-nofill" data-symbol="${symbol}" data-keywords="${symbol},${keywords.join().toLowerCase()}">${symbol}</i>`;
+            list += `<i class="material-symbols-nofill" title="material-symbols-nofill: ${symbol}" data-type="material-symbols-nofill" data-symbol="${symbol}_NOFILL" data-keywords="${symbol},${keywords.join().toLowerCase()}">${symbol}</i>`;
         }
       }
     }
@@ -263,6 +263,8 @@ function getIconDetails(icon) {
     return { image: `/i/game-icons.net/${icon}.svg`, text: ' ', class: 'autoIconAlignImage autoIconAlignGameIcons', colorReplace: '#000' };
   if(icon.match(/^\[/))
     return { image: ' ', text: icon, class: 'autoIconAlignFont autoIconAlignSymbols' };
+  if(icon.match(/^[a-z0-9].*_NOFILL$/))
+    return { image: ' ', text: icon.replace(/_NOFILL$/, ''), class: 'autoIconAlignFont autoIconAlignMaterialIconsNoFill' };
   if(icon.match(/^[a-z0-9]/))
     return { image: ' ', text: icon, class: 'autoIconAlignFont autoIconAlignMaterialIcons' };
   if(icon.match(/^\((.+)\)$/))
