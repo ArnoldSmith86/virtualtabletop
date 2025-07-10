@@ -72,10 +72,11 @@
 }
 
 .symbolWrapper > div.autoIconAlignNotoEmojiMonochrome {
-  font-family: "Noto Emoji";
-  font-size: calc(var(--targetSize) / 1.27);
   position: relative;
-  top: 12%;
+  font-family: "Noto Emoji";
+  font-size: calc(var(--targetSize) /  1.150);
+  top:       calc(var(--targetSize) *  0.075);
+  left:      calc(var(--targetSize) * -0.055);
 }
 
 .autoIconAlignCustomAsset {
