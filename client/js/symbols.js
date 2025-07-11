@@ -390,7 +390,7 @@ function generateSymbolsDiv(target, width, height, symbols, text, defaultScale, 
       strokeWidth: asArray(symbol.strokeWidth || 0),
       hoverColor: symbol.hoverColor || symbol.color || defaultHoverColor || defaultColor,
       hoverStrokeColor: asArray(symbol.hoverStrokeColor || symbol.strokeColor || "transparent"),
-      hoverStrokeWidth: asArray(symbol.hoverStrokeWidth !== null ? symbol.hoverStrokeWidth : symbol.strokeWidth || 0)
+      hoverStrokeWidth: asArray(symbol.hoverStrokeWidth !== null && symbol.hoverStrokeWidth !== undefined ? symbol.hoverStrokeWidth : symbol.strokeWidth || 0)
     };
 
     const details = getIconDetails(symbol.name);
