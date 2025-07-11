@@ -2149,9 +2149,28 @@ export class Widget extends StateManaged {
     }
   }
 
-  getWithPropertyReplacements(property) {
+  getWithPropertyReplacements(property, valueOverride) {
     const properties = new Set();
-    let result = this.cssReplaceProperties(this.get(property), properties);
+
+    const processProperty = (prop) => {
+      if (typeof prop === 'string') {
+        // Apply cssReplaceProperties if the property is a string
+        return this.cssReplaceProperties(prop, properties);
+      } else if (typeof prop === 'object' && prop !== null) {
+        // Recursively apply processProperty to each value if it's an object
+        const result = Array.isArray(prop) ? [] : {};
+        for (const key in prop) {
+          if (prop.hasOwnProperty(key)) {
+            result[key] = processProperty(prop[key]);
+          }
+        }
+        return result;
+      }
+      // If the property is neither a string nor an object, return it as is
+      return prop;
+    };
+
+    const result = processProperty(valueOverride !== undefined ? valueOverride : this.get(property));
     this.propertiesUsedInProperty[property] = Array.from(properties);
     return result;
   }

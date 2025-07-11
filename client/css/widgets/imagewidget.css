@@ -1,0 +1,85 @@
+.symbolOuterWrapper, .symbolWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  flex-wrap: wrap;
+  width: var(--width);
+  height: var(--height);
+  position: relative;
+  font-size: 0;
+}
+
+.symbolOuterWrapper.withText.textRight {
+  flex-direction: row;
+}
+
+.symbolWrapper > div {
+  --targetSize: calc(var(--scale) * min(calc(var(--width) / var(--count)), calc(var(--height) / var(--count))));
+  min-width: var(--targetSize);
+  max-width: var(--targetSize);
+  font-size: var(--targetSize);
+  color: var(--color);
+  transform: translate(var(--offsetX), var(--offsetY)) rotate(var(--rotation));
+  background-image: var(--image);
+  -webkit-text-stroke: var(--strokeWidth) var(--strokeColor);
+}
+.widget:hover > .symbolOuterWrapper > .symbolWrapper > div, .dice:hover > .diceFaces > .diceFace > .symbolOuterWrapper > .symbolWrapper > div, .card:hover > .cardFace > .cardFaceObject > .symbolOuterWrapper > .symbolWrapper > div {
+  background-image: var(--hoverImage);
+  color: var(--hoverColor);
+  -webkit-text-stroke: var(--hoverStrokeWidth) var(--hoverStrokeColor);
+}
+
+.symbolOuterWrapper > .symbolText {
+  flex-grow: 1;
+  font-size: 20px;
+  color: var(--color);
+}
+
+.symbolOuterWrapper.withText.textRight > .symbolText {
+  text-align: left;
+  padding-left: 10px;
+}
+.symbolOuterWrapper.withText.textBottom > .symbolText {
+  text-align: center;
+}
+
+.widget:hover > .symbolOuterWrapper > .symbolText, .dice:hover > .diceFaces > .diceFace > .symbolOuterWrapper > .symbolText, .card:hover > .cardFace > .cardFaceObject > .symbolOuterWrapper > .symbolText {
+  color: var(--hoverColor);
+}
+
+.autoIconAlignImage {
+  background-repeat: no-repeat;
+  background-position: center;
+  min-height: var(--targetSize);
+  max-height: var(--targetSize);
+}
+
+.autoIconAlignFont {
+  font-family: "Material Symbols";
+  font-weight: normal;
+  line-height: 1;
+  min-height: var(--targetSize);
+  max-height: var(--targetSize);
+}
+
+.autoIconAlignMaterialIconsNoFill {
+  font-family: "Material Symbols NoFill";
+}
+
+.autoIconAlignSymbols {
+  font-family: "VTT-Symbols";
+}
+
+.symbolWrapper > div.autoIconAlignNotoEmojiMonochrome {
+  position: relative;
+  font-family: "Noto Emoji";
+  font-size: calc(var(--targetSize) /  1.150);
+  top:       calc(var(--targetSize) *  0.075);
+  left:      calc(var(--targetSize) * -0.055);
+  transform-origin: 55% 45%;
+}
+
+.autoIconAlignCustomAsset {
+  background-size: contain;
+}

@@ -425,6 +425,22 @@ async function _uploadAsset(file) {
     return response.text();
 }
 
+function splitSVG(svg) {
+  let x = 0, y = 0, first = 1;
+  return svg.replace(/([Mm])([^a-zA-Z]+)/g, (m, a, b) => {
+    let [X, Y] = b.match(/[+-]?(\d*\.\d+|\d+)([eE][+-]?\d+)?/g);
+    if(a == 'M') {
+      x = +X;
+      y = +Y;
+    } else {
+      x += +X;
+      y += +Y;
+      m = `M${x.toFixed(2)} ${y.toFixed(2)}`;
+    }
+    return first ? (first = 0, m) : `"/><path fill="#000" d="${m}`;
+  });
+}
+
 const svgCache = {};
 function getSVG(url, replaces, callback) {
   if(typeof svgCache[url] == 'string') {
@@ -433,8 +449,16 @@ function getSVG(url, replaces, callback) {
       return svgCache[cacheKey];
 
     let svg = svgCache[url];
-    for(const replace in replaces)
-      svg = svg.split(replace).join(replaces[replace]);
+    if(replaces && Object.values(replaces).filter(v=>Array.isArray(v)).length)
+      svg = splitSVG(svg);
+    for(const replace in replaces) {
+      if(Array.isArray(replaces[replace])) {
+        for(const r of asArray(replaces[replace]))
+          svg = svg.replace(replace, r);
+      } else {
+        svg = svg.split(replace).join(replaces[replace]);
+      }
+    }
     svgCache[cacheKey] = 'data:image/svg+xml,'+encodeURIComponent(svg);
     return svgCache[cacheKey];
   }
@@ -444,12 +468,12 @@ function getSVG(url, replaces, callback) {
     fetch(mapAssetURLs(url)).then(r=>r.text()).then(t=>{
       const callbacks = svgCache[url];
       svgCache[url] = t;
-      for(const c of callbacks)
-        c();
+      for(const [ c, r ] of callbacks)
+        c(getSVG(url, r, _=>{}));
     });
   }
 
-  svgCache[url].push(callback);
+  svgCache[url].push([ callback, replaces ]);
   return '';
 }
 

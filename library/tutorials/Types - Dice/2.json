@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "version": 14,
+    "version": 16,
     "info": {
       "name": "Types - Dice",
       "image": "/assets/-194319686_4913",
@@ -395,7 +395,7 @@
     "movable": false,
     "movableInEdit": false,
     "css": "font-size: 22px; ",
-    "text": "This dice shows how to use 'imageScale' on each face. In this case, the imageScale is tailored to each face."
+    "text": "The left die shows how to use 'imageScale' on each face. In this case, the imageScale is tailored to each face. The right die uses the icon property to do the same thing."
   },
   "dice6text": {
     "id": "dice6text",
@@ -500,7 +500,7 @@
   "dice10": {
     "type": "dice",
     "id": "dice10",
-    "x": 1437,
+    "x": 1407,
     "y": 300,
     "z": 221,
     "activeFace": 1,
@@ -524,5 +524,42 @@
     "pipSymbols": false,
     "rollCount": 11,
     "shape3d": true
+  },
+  "dice11": {
+    "type": "dice",
+    "id": "dice11",
+    "x": 1487,
+    "y": 300,
+    "z": 221,
+    "faces": [
+      {
+        "icon": {
+          "name": "[pawn]",
+          "scale": 0.7
+        }
+      },
+      {
+        "icon": {
+          "name": "[hex_grid_horizontal]",
+          "scale": 0.6
+        }
+      },
+      {
+        "icon": {
+          "name": "[auto_awesome]",
+          "scale": 0.6
+        }
+      },
+      {
+        "icon": {
+          "name": "[link]",
+          "scale": 0.8
+        }
+      }
+    ],
+    "pipSymbols": false,
+    "rollCount": 11,
+    "shape3d": true,
+    "activeFace": 3
   }
 }

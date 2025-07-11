@@ -87,5 +87,5 @@ publicLibraryButtons('Xtras - Master Button',      0, 'eb19dffdb38641d5556e5fdb2
 publicLibraryButtons('Functions - SCORE', 0, '88c8ef94e7d34f69bf8d0844acce2dfc', [ 'button2', 'button2', 'button7', 'button15', 'seat9', 'scorePlus', 'button17']);
 publicLibraryButtons('Types - Scoreboard', 2, '458a8e4b7232bc38e151be7e4c7705bf', [ 'button1', 'button2', 'button3', 'button4']);
 
-publicLibraryButtons('Types - Dice', 0, '930cccc3d082ef55679b8108b1d5047e', [ 'dice3', 'dice4', 'dice5',]);
+publicLibraryButtons('Types - Dice', 0, 'c2baa316f0f7e04f64af7701cd41b0a9', [ 'dice3', 'dice4', 'dice5',]);
 publicLibraryButtons('Types - Dice', 3, '9765144109f8962db823161e4bf1d2d8', [ 'dice2', 'dice1', 'button2', 'dice4']);

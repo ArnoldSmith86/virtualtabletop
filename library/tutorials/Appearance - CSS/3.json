@@ -10,33 +10,6 @@
     "activeFace": 1,
     "parent": "thvy"
   },
-  "_meta": {
-    "version": 6,
-    "info": {
-      "name": "Appearance - CSS",
-      "image": "/assets/1323294024_5493",
-      "rules": "",
-      "bgg": "",
-      "year": "2022",
-      "mode": "Tutorial",
-      "time": "",
-      "attribution": "",
-      "showName": false,
-      "lastUpdate": 1749052185065,
-      "skill": "",
-      "description": "",
-      "similarImage": "",
-      "similarName": "",
-      "similarAwards": "",
-      "ruleText": "",
-      "helpText": "",
-      "similarDesigner": "",
-      "variantImage": "",
-      "variant": "Cards",
-      "language": "en-US",
-      "players": "1"
-    }
-  },
   "8fr3": {
     "id": "8fr3",
     "y": -2,
@@ -712,5 +685,32 @@
     "parent": "m2iu",
     "x": 4,
     "y": 4
+  },
+  "_meta": {
+    "version": 17,
+    "info": {
+      "name": "Appearance - CSS",
+      "image": "/assets/1323294024_5493",
+      "rules": "",
+      "bgg": "",
+      "year": "2022",
+      "mode": "Tutorial",
+      "time": "",
+      "attribution": "",
+      "showName": false,
+      "lastUpdate": 1752119024602,
+      "skill": "",
+      "description": "",
+      "similarImage": "",
+      "similarName": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": "",
+      "similarDesigner": "",
+      "variantImage": "",
+      "variant": "Cards",
+      "language": "en-US",
+      "players": "1"
+    }
   }
 }

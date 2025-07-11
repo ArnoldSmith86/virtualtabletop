@@ -100,7 +100,7 @@ const COMMON_PROPERTIES = {
 const WIDGET_PROPERTIES = {
     BasicWidget: {
         ...COMMON_PROPERTIES,
-        faces: 'any', faceCycle: 'any', activeFace: 'any', image: 'any', color: 'any', svgReplaces: 'any', text: 'any', html: 'any'
+        faces: 'any', faceCycle: 'any', activeFace: 'any', image: 'any', color: 'any', svgReplaces: 'any', text: 'any', html: 'any', icon: 'any'
     },
     Canvas: {
         ...COMMON_PROPERTIES,
@@ -144,7 +144,7 @@ const WIDGET_PROPERTIES = {
     },
     Button: {
         ...COMMON_PROPERTIES,
-        layer: 'any', movable: 'boolean', image: 'any', color: 'any', svgReplaces: 'any', backgroundColor: 'any', borderColor: 'any', textColor: 'any', backgroundColorOH: 'any', borderColorOH: 'any', textColorOH: 'any', text: 'any', borderRadius: 'any'
+        layer: 'any', movable: 'boolean', image: 'any', color: 'any', svgReplaces: 'any', backgroundColor: 'any', borderColor: 'any', textColor: 'any', backgroundColorOH: 'any', borderColorOH: 'any', textColorOH: 'any', text: 'any', borderRadius: 'any', icon: 'any'
     },
     Deck: {
         ...COMMON_PROPERTIES,

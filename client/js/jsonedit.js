@@ -326,20 +326,135 @@ const jeCommands = [
   },
   {
     id: 'je_symbolPickerText',
-    name: 'pick an asset from the symbol picker',
+    name: 'pick a symbol from the symbol picker',
     context: '^(button|basic) ↦ text$',
     call: async function() {
       const a = await pickSymbol('fonts');
       if(a) {
         jeStateNow.classes = a.type;
-        jeStateNow.text = a.symbol;
-        jeSetAndSelect();
+        jeStateNow.text = '###SELECT ME###';
+        jeSetAndSelect(a.type == 'emoji-monochrome' ? a.symbol.substr(1, a.symbol.length-2) : a.symbol.replace(/_NOFILL$/, ''));
         await jeApplyChanges();
       }
     },
     show: function() {
       return [ 'symbols', 'material-symbols', 'material-symbols-nofill', 'emoji-monochrome' ].indexOf(jeStateNow.classes) != -1;
     }
+  },
+  {
+    id: 'je_symbolPickerIcon',
+    name: 'pick an icon from the symbol picker',
+    context: '^.* ↦ icon( ↦ [0-9]+)?',
+    call: async function() {
+      const a = await pickSymbol();
+      if(a) {
+        const current = jeGetValueAt('icon');
+        if(Array.isArray(current)) {
+          const index = jeGetKeyAfter('icon') || 0;
+          if(typeof current[index] == 'object' && current[index] !== null)
+            current[index].name = '###SELECT ME###';
+          else
+            current[index] = '###SELECT ME###';
+          jeSetAndSelect(a.symbol);
+          await jeApplyChanges();
+        } else if(typeof current == 'object' && current !== null) {
+          current.name = '###SELECT ME###';
+          await jeSetValueAt('icon', current, a.symbol);
+        } else {
+          await jeSetValueAt('icon', a.symbol);
+        }
+      }
+    }
+  },
+  {
+    id: 'je_symbolPickerIconDeck',
+    name: 'pick an icon from the symbol picker',
+    context: '^deck ↦ faceTemplates ↦ [0-9]+ ↦ objects ↦ [0-9]+',
+    call: async function() {
+      const a = await pickSymbol();
+      if(a) {
+        jeGetValueAt('objects')[jeGetKeyAfter('objects')].value = '###SELECT ME###';
+        jeSetAndSelect(a.symbol);
+        await jeApplyChanges();
+      }
+    },
+    show: _=>jeGetValueAt('objects')[jeGetKeyAfter('objects')].type == 'icon'
+  },
+  {
+    id: 'je_symbolPickerCustom',
+    name: 'upload a custom icon asset',
+    context: '^.* ↦ icon( ↦ [0-9]+)?',
+    call: async function() {
+      const a = await uploadAsset();
+      if(a) {
+        const current = jeGetValueAt('icon');
+        if(Array.isArray(current)) {
+          const index = jeGetKeyAfter('icon') || 0;
+          if(typeof current[index] == 'object' && current[index] !== null)
+            current[index].name = '###SELECT ME###';
+          else
+            current[index] = '###SELECT ME###';
+          jeSetAndSelect(a);
+          await jeApplyChanges();
+        } else if(typeof current == 'object' && current !== null) {
+          current.name = '###SELECT ME###';
+          await jeSetValueAt('icon', current, a);
+        } else {
+          await jeSetValueAt('icon', a);
+        }
+      }
+    }
+  },
+  {
+    id: 'je_iconToArray',
+    name: 'add another icon',
+    context: '^.* ↦ icon',
+    call: async function() {
+      const a = await pickSymbol();
+      if(a) {
+        const current = jeGetValueAt('icon');
+        if(Array.isArray(current)) {
+          current.push('###SELECT ME###');
+          await jeSetValueAt('icon', current, a.symbol);
+        } else {
+          await jeSetValueAt('icon', [ current, '###SELECT ME###' ], a.symbol);
+        }
+      }
+    },
+    show: _=>jeGetValueAt('icon') !== null
+  },
+  {
+    id: 'je_iconToObject',
+    name: 'show advanced options',
+    context: '^.* ↦ icon( ↦ [0-9]+)?',
+    call: async function() {
+      const newValue = { name: '###SELECT ME###', scale: 1, offsetX: 0, offsetY: 0, rotation: 0, color: '', strokeColor: '', strokeWidth: 0, hoverColor: '', hoverStrokeColor: '', hoverStrokeWidth: null };
+      if(Array.isArray(jeGetValueAt('icon'))) {
+        const current = jeGetValueAt('icon');
+        const name = current[jeGetKeyAfter('icon')];
+        current[jeGetKeyAfter('icon')] = newValue;
+        await jeSetValueAt('icon', current, name);
+      } else {
+        await jeSetValueAt('icon', newValue, jeGetValueAt('icon'));
+      }
+    },
+    show: _=>typeof jeGetValueAt('icon') == 'string' || Array.isArray(jeGetValueAt('icon')) && typeof jeGetValueAt('icon')[jeGetKeyAfter('icon')] == 'string'
+  },
+  {
+    id: 'je_iconToString',
+    name: 'use default options',
+    context: '^.* ↦ icon( ↦ [0-9]+)?',
+    call: async function() {
+      const current = jeGetValueAt('icon');
+      if(Array.isArray(current)) {
+        const name = current[jeGetKeyAfter('icon')].name;
+        current[jeGetKeyAfter('icon')] = '###SELECT ME###';
+        await jeSetValueAt('icon', current, name);
+      } else {
+        await jeSetValueAt('icon', current.name);
+      }
+    },
+    show: _=>!Array.isArray(jeGetValueAt('icon')) && typeof jeGetValueAt('icon') == 'object' && jeGetValueAt('icon') !== null || Array.isArray(jeGetValueAt('icon')) && typeof jeGetValueAt('icon')[jeGetKeyAfter('icon')] == 'object'
   },
   {
     id: 'je_uploadAudio',
@@ -678,6 +793,41 @@ const jeCommands = [
         }
       });
       jeSetAndSelect('image');
+    }
+  },
+  {
+    id: 'je_iconTemplate',
+    name: 'icon template',
+    context: '^deck ↦ faceTemplates ↦ [0-9]+ ↦ objects',
+    call: async function() {
+      jeStateNow.faceTemplates[+jeContext[2]].objects.push({
+        type: 'icon',
+        value: '###SELECT ME###',
+        x: 0,
+        y: 0,
+        size: 50,
+        rotation: 0,
+        color: '',
+        strokeColor: '',
+        strokeWidth: 0
+      });
+      jeSetAndSelect('favorite');
+    }
+  },
+  {
+    id: 'je_htmlTemplate',
+    name: 'html template',
+    context: '^deck ↦ faceTemplates ↦ [0-9]+ ↦ objects',
+    call: async function() {
+      jeStateNow.faceTemplates[+jeContext[2]].objects.push({
+        type: 'html',
+        x: 0,
+        y: 0,
+        value: '###SELECT ME###',
+        width: jeStateNow.cardDefaults && jeStateNow.cardDefaults.width  || 103,
+        height: jeStateNow.cardDefaults && jeStateNow.cardDefaults.height || 160
+      });
+      jeSetAndSelect('<h1>hello</h1>world');
     }
   },
   {
@@ -2288,10 +2438,10 @@ function jeGetContext() {
   // go through all the lines up until the cursor and use the indentation to figure out the context
   let keys = [ jeStateNow && jeStateNow.type || 'basic' ];
   for(const line of v.split('\n').slice(0, v.substr(0, s).split('\n').length)) {
-    const m = line.match(/^( +)(["{])([^"]*)/);
+    const m = line.match(/^( +)(["{ftn0-9-])([^"]*)/);
     if(m) {
       const depth = m[1].length/2;
-      keys[depth] = m[2]=='{' || line.match(/^ +"[^"]*",?$/) ? (keys[depth] === undefined ? -1 : keys[depth]) + 1 : m[3];
+      keys[depth] = m[2]=='{' || line.match(/^ +("[^"]*"|false|true|null|-?[0-9]+\.?[0-9]*),?$/) ? (keys[depth] === undefined ? -1 : keys[depth]) + 1 : m[3];
       keys = keys.slice(0, depth+1);
     }
     const mClose = line.match(/^( *)[\]}]/);
@@ -2368,6 +2518,42 @@ function jeInsert(context, key, value) {
     let pointer = jeGetValue(context);
     pointer[key] = '###SELECT ME###';
     jeSetAndSelect(value);
+  }
+}
+
+function jeGetValueAt(key) {
+  let pointer = jeStateNow;
+  for(const k of jeContext.slice(1)) {
+    pointer = pointer[k];
+    if(key == k)
+      return pointer;
+  }
+}
+
+async function jeSetValueAt(key, value, selectValue) {
+  let pointer = jeStateNow;
+  for(const k of jeContext.slice(1)) {
+    if(key == k)
+      break;
+    pointer = pointer[k];
+  }
+  if(selectValue !== undefined) {
+    pointer[key] = value;
+    jeSetAndSelect(selectValue);
+  } else {
+    pointer[key] = '###SELECT ME###';
+    jeSetAndSelect(value);
+  }
+  await jeApplyChanges();
+}
+
+function jeGetKeyAfter(key) {
+  let found = false;
+  for(const k of jeContext) {
+    if(found)
+      return k;
+    if(key == k)
+      found = true;
   }
 }
 
@@ -2696,10 +2882,11 @@ function jeSetAndSelect(replaceBy, insideString) {
 
   // Replace the entire quoted string if the ###SELECT ME### is not inside a string, otherwise
   // just replace ###SELECT ME###
+  const replaceByJSON = JSON.stringify(replaceBy, null, '    ');
   if(insideString || dollar)
-    jsonString = jsonString.replace(/###SELECT ME###/, JSON.stringify(replaceBy).substr(1, JSON.stringify(replaceBy).length-2));
+    jsonString = jsonString.replace(/###SELECT ME###/, replaceByJSON.substr(1, replaceByJSON.length-2));
   else
-    jsonString = jsonString.replace(/"###SELECT ME###"/, JSON.stringify(replaceBy));
+    jsonString = jsonString.replace(/"###SELECT ME###"/, replaceByJSON);
 
   let insertedLength = jsonString.length - length; // Length of inserted string.
 

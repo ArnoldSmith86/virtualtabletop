@@ -2,15 +2,15 @@
   "_meta": {
     "version": 17,
     "info": {
-      "name": "Appearance - Icons, Symbols, and Emojis",
-      "image": "/assets/350792502_9939",
+      "name": "Properties - Icon",
+      "image": "/assets/1481362664_5448",
       "rules": "",
       "bgg": "",
       "year": "",
       "mode": "Tutorial",
       "time": "0",
       "attribution": "",
-      "lastUpdate": 1749052222743,
+      "lastUpdate": 1752115985154,
       "showName": false,
       "skill": "",
       "description": "",
@@ -35,7 +35,7 @@
     "movable": false,
     "movableInEdit": false,
     "css": "font-size: 60px;text-align:center",
-    "text": "Icons, Symbols, and Emojis: CSS",
+    "text": "Icons: CSS",
     "width": 1000
   },
   "mainText": {
@@ -48,7 +48,7 @@
     "z": 124,
     "css": "font-size: 25px; ",
     "movable": false,
-    "html": "The items below are expressed in VTT as either a `text` property or an `image` property. See the <a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Fonts-and-Symbols'>Fonts and Symbols wiki page</a> for additional information about which items can be text, which images, and which can be either. In each group, the top left item has limited css applied. The top right item uses a varierty of different drop-shadow techniques. The lower left image demonstrates borderRadius (a special VTT property) and box-shadow. The bottom right image is clickable and uses a transition to show the difference between filter attributes (from left to right): blur, brightness, contrast, saturation."
+    "html": "Each group of items below represent the different types of icons in VTT. Depending on the type of icon, using the advanced icon parameters, you can change some aspects of the icons. CSS offers additional flexibility. In each group, the top left item has no css applied. The top right item uses a varierty of different drop-shadow techniques. The lower left image demonstrates borderRadius (a special VTT property) and box-shadow. The bottom right image is clickable and uses a transition to show the difference between filter attributes (from left to right): blur, brightness, contrast, saturation."
   },
   "button1Text": {
     "id": "button1Text",
@@ -57,7 +57,7 @@
     "width": 300,
     "z": 185,
     "movable": false,
-    "text": "The paint buckets are from game-icons.net and are expressed in the image property. Open the JSON Editor and select one. Put the cursor on the image property and a button appears at the top of the row of buttons allowing you to choose another image.\n\nThe top right paint bucket has this `filter` css: `drop-shadow(0 0 5px gold)`. The first value is the horizontal offset in pixels. It can be negative. The second value is the vertical offset in pixels and it can also be negative. The third value is the amount of blur (in pixels) for the shadow. The last value is the shadow color. "
+    "text": "The top right paint bucket has this `filter` css: `drop-shadow(0 0 5px gold)`. The first value is the horizontal offset in pixels. It can be negative. The second value is the vertical offset in pixels and it can also be negative. The third value is the amount of blur (in pixels) for the shadow. The last value is the shadow color. "
   },
   "button2Text": {
     "id": "button2Text",
@@ -66,7 +66,7 @@
     "width": 300,
     "z": 121,
     "movable": false,
-    "text": "The buses are part of the material symbols font and are expressed in the text property. To see some font options, put the cursor on the classes property in a widget above. Then put the cursor on the text value and you will get a button to change to one of the many symbols available. Some css appears on all of these widgets for basic formatting: font-size (self-explanatory); display, justify-content, align-items (used to center the image inside the widget); color (self-explanatory).\n\nThe bottom left bus has this `box-shadow` css: `5px 5px 10px 2px #4c556a`. The values are for the horizontal and vertical spread and color."
+    "text": "The bottom left bus has this `box-shadow` css: `5px 5px 10px 2px #4c556a`. The values are for the horizontal and vertical spread and color."
   },
   "button3Text": {
     "id": "button3Text",
@@ -75,7 +75,7 @@
     "width": 300,
     "z": 9732,
     "movable": false,
-    "text": "The pumpkins are part of the (monocolor) emoji font that is expressed through the classes and text properties like the buses. They have the same css as the buses to size, center, and color the pumpkins.\n\nThe bottom left pumpkin combines box-shadow and drop-shadow."
+    "text": "The pumpkins are part of the monocolor emoji set.\n\nThe bottom left pumpkin combines box-shadow and drop-shadow."
   },
   "background": {
     "id": "background",
@@ -97,16 +97,16 @@
     "css": {
       "filter": "drop-shadow(0 0 5px gold)"
     },
-    "image": "/i/game-icons.net/delapouite/paint-bucket.svg",
-    "movable": false
+    "movable": false,
+    "icon": "delapouite/paint-bucket"
   },
   "example1": {
     "id": "example1",
     "x": 100,
     "y": 292,
     "z": 10097,
-    "image": "/i/game-icons.net/delapouite/paint-bucket.svg",
-    "movable": false
+    "movable": false,
+    "icon": "delapouite/paint-bucket"
   },
   "example3": {
     "id": "example3",
@@ -116,8 +116,8 @@
     "css": {
       "box-shadow": "0 0 10px 2px #4c556a"
     },
-    "image": "/i/game-icons.net/delapouite/paint-bucket.svg",
-    "movable": false
+    "movable": false,
+    "icon": "delapouite/paint-bucket"
   },
   "example4": {
     "id": "example4",
@@ -128,7 +128,6 @@
       "filter": "blur(${PROPERTY blur}px)",
       "transition": "linear 0.5s"
     },
-    "image": "/i/game-icons.net/delapouite/paint-bucket.svg",
     "movable": false,
     "clickRoutine": [
       {
@@ -153,7 +152,8 @@
         ]
       }
     ],
-    "blur": 5
+    "blur": 5,
+    "icon": "delapouite/paint-bucket"
   },
   "example5": {
     "id": "example5",
@@ -161,16 +161,13 @@
     "y": 292,
     "z": 10098,
     "css": {
-      "font-size": "90px",
-      "display": "flex",
-      "justify-content": "center",
-      "align-items": "center",
-      "color": "#2d5da8",
       "filter": "drop-shadow(-7px 0 6px #2d5da8bb)"
     },
     "movable": false,
-    "classes": "material-symbols",
-    "text": "directions_bus"
+    "icon": {
+      "name": "directions_bus",
+      "color": "#2d5da8"
+    }
   },
   "example6": {
     "id": "example6",
@@ -178,13 +175,8 @@
     "y": 292,
     "z": 10097,
     "movable": false,
-    "classes": "material-symbols",
-    "text": "directions_bus",
-    "css": {
-      "font-size": "90px",
-      "display": "flex",
-      "justify-content": "center",
-      "align-items": "center",
+    "icon": {
+      "name": "directions_bus",
       "color": "#2d5da8"
     }
   },
@@ -194,17 +186,14 @@
     "y": 416,
     "z": 10100,
     "css": {
-      "font-size": "90px",
-      "display": "flex",
-      "justify-content": "center",
-      "align-items": "center",
-      "color": "#2d5da8",
       "box-shadow": "5px 5px 10px 2px #4c556a"
     },
     "borderRadius": 8,
     "movable": false,
-    "classes": "material-symbols",
-    "text": "directions_bus"
+    "icon": {
+      "name": "directions_bus",
+      "color": "#2d5da8"
+    }
   },
   "example8": {
     "id": "example8",
@@ -212,11 +201,6 @@
     "y": 416,
     "z": 10099,
     "css": {
-      "font-size": "90px",
-      "display": "flex",
-      "justify-content": "center",
-      "align-items": "center",
-      "color": "#2d5da8",
       "filter": "brightness(${PROPERTY brightness})",
       "transition": "linear 0.5s"
     },
@@ -244,9 +228,11 @@
         ]
       }
     ],
-    "classes": "material-symbols",
-    "text": "directions_bus",
-    "brightness": 0.5
+    "brightness": 0.5,
+    "icon": {
+      "name": "directions_bus",
+      "color": "#2d5da8"
+    }
   },
   "example9": {
     "id": "example9",
@@ -254,16 +240,13 @@
     "y": 292,
     "z": 10098,
     "css": {
-      "font-size": "90px",
-      "display": "flex",
-      "justify-content": "center",
-      "align-items": "center",
-      "color": "#e4651c",
       "filter": "drop-shadow(2px 2px 2px #000000)"
     },
     "movable": false,
-    "text": "🎃",
-    "classes": "emoji-monochrome"
+    "icon": {
+      "name": "(🎃)",
+      "color": "#e4651c"
+    }
   },
   "example10": {
     "id": "example10",
@@ -271,13 +254,8 @@
     "y": 292,
     "z": 10097,
     "movable": false,
-    "classes": "emoji-monochrome",
-    "text": "🎃",
-    "css": {
-      "font-size": "90px",
-      "display": "flex",
-      "justify-content": "center",
-      "align-items": "center",
+    "icon": {
+      "name": "(🎃)",
       "color": "#e4651c"
     }
   },
@@ -287,18 +265,15 @@
     "y": 416,
     "z": 10100,
     "css": {
-      "font-size": "90px",
-      "display": "flex",
-      "justify-content": "center",
-      "align-items": "center",
-      "color": "#e4651c",
       "box-shadow": "3px 3px 3px 9px #606060",
       "filter": "drop-shadow(10px 5px 9px #0000)"
     },
     "borderRadius": 20,
     "movable": false,
-    "text": "🎃",
-    "classes": "emoji-monochrome"
+    "icon": {
+      "name": "(🎃)",
+      "color": "#e4651c"
+    }
   },
   "example12": {
     "id": "example12",
@@ -306,11 +281,6 @@
     "y": 416,
     "z": 10099,
     "css": {
-      "font-size": "90px",
-      "display": "flex",
-      "justify-content": "center",
-      "align-items": "center",
-      "color": "#e4651c",
       "filter": "contrast(${PROPERTY contrast})",
       "transition": "linear 0.5s"
     },
@@ -338,9 +308,11 @@
         ]
       }
     ],
-    "classes": "emoji-monochrome",
-    "text": "🎃",
-    "contrast": 0.5
+    "contrast": 0.5,
+    "icon": {
+      "name": "(🎃)",
+      "color": "#e4651c"
+    }
   },
   "button4Text": {
     "id": "button4Text",
@@ -349,7 +321,7 @@
     "width": 300,
     "z": 9732,
     "movable": false,
-    "text": "The octopuses are part of the colored emoji font that is expressed through the image property. Recoloring images like the octopuses and paint buckets requires either using `svgReplaces` or css filter properties, both of which are demonstrated in the other variants of this tutorial."
+    "text": "The octopuses are part of the colored emoji set. Recoloring images like the octopuses and paint buckets requires either using `svgReplaces` or css filter properties, both of which are demonstrated in the css demo variant of this tutorial."
   },
   "example13": {
     "id": "example13",
@@ -357,15 +329,10 @@
     "y": 292,
     "z": 10098,
     "css": {
-      "font-size": "90px",
-      "display": "flex",
-      "justify-content": "center",
-      "align-items": "center",
-      "color": "#e4651c",
       "filter": "drop-shadow(0 0 20px #ffffff)"
     },
     "movable": false,
-    "image": "/i/noto-emoji/emoji_u1f419.svg"
+    "icon": "🐙"
   },
   "example14": {
     "id": "example14",
@@ -373,7 +340,7 @@
     "y": 292,
     "z": 10097,
     "movable": false,
-    "image": "/i/noto-emoji/emoji_u1f419.svg"
+    "icon": "🐙"
   },
   "example15": {
     "id": "example15",
@@ -381,16 +348,11 @@
     "y": 416,
     "z": 10100,
     "css": {
-      "font-size": "90px",
-      "display": "flex",
-      "justify-content": "center",
-      "align-items": "center",
-      "color": "#e4651c",
       "box-shadow": "3px 3px 7px 7px #4c556a"
     },
     "borderRadius": 100,
     "movable": false,
-    "image": "/i/noto-emoji/emoji_u1f419.svg"
+    "icon": "🐙"
   },
   "example16": {
     "id": "example16",
@@ -398,11 +360,6 @@
     "y": 416,
     "z": 10099,
     "css": {
-      "font-size": "90px",
-      "display": "flex",
-      "justify-content": "center",
-      "align-items": "center",
-      "color": "#e4651c",
       "filter": "saturate(${PROPERTY saturate})",
       "transition": "linear 0.5s"
     },
@@ -430,7 +387,7 @@
         ]
       }
     ],
-    "image": "/i/noto-emoji/emoji_u1f419.svg",
-    "saturate": 0.5
+    "saturate": 0.5,
+    "icon": "🐙"
   }
 }

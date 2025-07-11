@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "version": 12,
+    "version": 16,
     "info": {
       "name": "Types - Dice",
       "image": "/assets/-194319686_4913",
@@ -134,10 +134,10 @@
   },
   "dice4text": {
     "id": "dice4text",
-    "x": 1100,
-    "y": 400,
+    "x": 750,
+    "y": 725,
     "width": 300,
-    "z": 185,
+    "z": 188,
     "movable": false,
     "movableInEdit": false,
     "css": "font-size: 22px; ",
@@ -146,9 +146,9 @@
   "dice4": {
     "type": "dice",
     "id": "dice4",
-    "x": 1220,
-    "y": 300,
-    "z": 188,
+    "x": 870,
+    "y": 650,
+    "z": 185,
     "faces": [
       {
         "image": "i/icons/poker_chip.svg",
@@ -243,5 +243,65 @@
     "movableInEdit": false,
     "css": "font-size: 22px; ",
     "text": "This dice uses the 'image' property to set a background that is used on all the faces. Using the object form of 'faces', you could also change the image per face."
+  },
+  "dice7text": {
+    "id": "dice7text",
+    "x": 1139,
+    "y": 725,
+    "width": 300,
+    "z": 188,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "font-size: 22px; ",
+    "text": "Faces can also use the icon property. For more examples of using icons, see the Icon & Emojis tutorial."
+  },
+  "dice7": {
+    "type": "dice",
+    "id": "dice7",
+    "x": 1259,
+    "y": 650,
+    "z": 185,
+    "faces": [
+      {
+        "icon": {
+          "name": "[poker_chip]",
+          "color": "${PROPERTY color1}"
+        }
+      },
+      {
+        "icon": {
+          "name": "[pawn]",
+          "color": "${PROPERTY color2}"
+        }
+      },
+      {
+        "icon": {
+          "name": "[color]",
+          "color": "${PROPERTY color3}"
+        }
+      },
+      {
+        "icon": {
+          "name": "[hex_grid_horizontal]",
+          "color": "${PROPERTY color1}"
+        }
+      },
+      {
+        "icon": {
+          "name": "[auto_awesome]",
+          "color": "${PROPERTY color2}"
+        }
+      },
+      {
+        "icon": {
+          "name": "[link]",
+          "color": "${PROPERTY color3}"
+        }
+      }
+    ],
+    "color1": "red",
+    "color2": "green",
+    "color3": "blue",
+    "activeFace": 5
   }
 }
