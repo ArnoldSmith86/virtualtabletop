@@ -93,23 +93,9 @@ class ImageWidget extends Widget {
   }
 
   updateIcon() {
-    if (this.symbolWrapper)
+    if(this.symbolWrapper)
       this.symbolWrapper.remove();
-    if (this.textWrapper)
-      this.textWrapper.remove();
-
-    const isHolder = this.get('type') === 'holder';
-    const hasIcon = this.get('icon');
-    const hasText = this.get('text');
-
-    if (hasIcon)
+    if(this.get('icon'))
       this.symbolWrapper = generateSymbolsDiv(this.domElement, this.get('width'), this.get('height'), this.getWithPropertyReplacements('icon'), this.get('text'), this.getDefaultIconScale(), this.getDefaultIconColor(), this.getDefaultIconHoverColor());
-    else if (isHolder && hasText) {
-      this.textWrapper = document.createElement('div');
-      this.textWrapper.className = 'holderTextOnly';
-      this.textWrapper.textContent = this.get('text');
-      this.domElement.appendChild(this.textWrapper);      
-      setTextAndAdjustFontSize(this.textWrapper, this.get('text'), this.get('width'), this.get('height'));
-    }
   }
 }

@@ -187,4 +187,19 @@ class Holder extends ImageWidget {
       }));
     }
   }
+
+    updateIcon() {
+    if (this.get('text') && !this.get('icon')) {
+      if (this.symbolWrapper) this.symbolWrapper.remove();
+      if (this.textWrapper) this.textWrapper.remove();
+      this.textWrapper = document.createElement('div');
+      this.textWrapper.className = 'holderTextOnly';
+      this.textWrapper.textContent = this.get('text');
+      this.domElement.appendChild(this.textWrapper);
+      
+      setTextAndAdjustFontSize(this.textWrapper, this.get('text'), this.get('width'), this.get('height'));
+    } else {
+      super.updateIcon();
+    }
+  }
 }
