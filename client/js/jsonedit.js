@@ -316,6 +316,14 @@ const jeCommands = [
     id: 'je_symbolPickerAsset',
     name: 'pick an asset from the symbol picker',
     context: '.*"(/assets/[0-9_-]+|/i/[^"]+)"|^.* ↦ image$|^deck ↦ faceTemplates ↦ [0-9]+ ↦ objects ↦ [0-9]+ ↦ value$',
+    show: function() {
+      const current = jeGetValueAt('objects');
+      if(Array.isArray(current)) {
+        const index = jeGetKeyAfter('objects') || 0;
+        return typeof current[index] == 'object' && current[index] !== null && current[index].type == 'image';
+      }
+      return true;
+    },
     call: async function() {
       const a = await pickSymbol('images');
       if(a) {
