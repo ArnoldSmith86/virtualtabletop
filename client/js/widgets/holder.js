@@ -1,4 +1,4 @@
-class Holder extends Widget {
+class Holder extends ImageWidget {
   constructor(object, surface) {
     super(object, surface);
 

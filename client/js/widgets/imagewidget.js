@@ -12,8 +12,11 @@ class ImageWidget extends Widget {
 
   applyDeltaToDOM(delta) {
     super.applyDeltaToDOM(delta);
-    if(delta.text !== undefined || delta.icon !== undefined)
-      setText(this.domElement, this.get('icon') ? '' : this.get('text'));
+    if(delta.text !== undefined || delta.icon !== undefined) {
+      if(this.get('type') !== 'holder') {
+        setText(this.domElement, this.get('icon') ? '' : this.get('text'));
+      }
+    }
 
     if(delta.icon !== undefined || delta.text !== undefined || delta.width !== undefined || delta.height !== undefined || delta.textColor !== undefined || this.getWithPropertyReplacements_checkDelta('icon', delta))
       this.updateIcon();
@@ -90,9 +93,23 @@ class ImageWidget extends Widget {
   }
 
   updateIcon() {
-    if(this.symbolWrapper)
+    if (this.symbolWrapper)
       this.symbolWrapper.remove();
-    if(this.get('icon'))
+    if (this.textWrapper)
+      this.textWrapper.remove();
+
+    const isHolder = this.get('type') === 'holder';
+    const hasIcon = this.get('icon');
+    const hasText = this.get('text');
+
+    if (hasIcon)
       this.symbolWrapper = generateSymbolsDiv(this.domElement, this.get('width'), this.get('height'), this.getWithPropertyReplacements('icon'), this.get('text'), this.getDefaultIconScale(), this.getDefaultIconColor(), this.getDefaultIconHoverColor());
+    else if (isHolder && hasText) {
+      this.textWrapper = document.createElement('div');
+      this.textWrapper.className = 'holderTextOnly';
+      this.textWrapper.textContent = this.get('text');
+      this.domElement.appendChild(this.textWrapper);      
+      setTextAndAdjustFontSize(this.textWrapper, this.get('text'), this.get('width'), this.get('height'));
+    }
   }
 }
