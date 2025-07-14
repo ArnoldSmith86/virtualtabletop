@@ -136,6 +136,7 @@ class DebugModule extends SidebarModule {
   }
 
   onClose() {
+    setJEroutineLogging(jeRoutineLogging = false);
     $('#jsonEditor').append($('#jeLog'));
   }
 
@@ -159,6 +160,8 @@ class DebugModule extends SidebarModule {
     on('#jeLogFilter', 'input', e=>this.button_filter());
     on('#autoClearLog', 'change', e=>this.button_clearCheckbox());
     on('#clearLogButton', 'click', e=>this.button_clearButton());
+
+    setJEroutineLogging(jeRoutineLogging = true);
 
     div(target, 'staticErrors', `
       <div class="validation-controls" style="margin-top: 10px; display: none;">
