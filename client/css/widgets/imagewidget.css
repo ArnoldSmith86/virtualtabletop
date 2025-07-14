@@ -83,3 +83,20 @@
 .autoIconAlignCustomAsset {
   background-size: contain;
 }
+
+.widget.holder > .holderTextOnly {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: var(--color);
+  overflow: hidden;
+  word-break: normal;
+  white-space: normal;
+  line-height: 1.1;
+}
