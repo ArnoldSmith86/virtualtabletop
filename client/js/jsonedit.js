@@ -2068,6 +2068,7 @@ function jeSelectSetMulti(widgets) {
   jeWidget = null;
   jeMode = 'multi';
   jeUpdateMulti();
+  jeGetContext();
 }
 
 function jeMultiSelectedWidgets() {
