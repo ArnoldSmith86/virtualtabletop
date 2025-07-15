@@ -2532,7 +2532,8 @@ function jeInsert(context, key, value) {
 function jeGetValueAt(key) {
   let pointer = jeStateNow;
   for(const k of jeContext.slice(1)) {
-    pointer = pointer[k];
+    if(typeof pointer[k] != 'undefined')
+      pointer = pointer[k];
     if(key == k)
       return pointer;
   }
@@ -2543,7 +2544,8 @@ async function jeSetValueAt(key, value, selectValue) {
   for(const k of jeContext.slice(1)) {
     if(key == k)
       break;
-    pointer = pointer[k];
+    if(typeof pointer[k] != 'undefined')
+      pointer = pointer[k];
   }
   if(selectValue !== undefined) {
     pointer[key] = value;
