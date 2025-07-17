@@ -1433,26 +1433,6 @@
     ],
     "borderRadius": 5
   },
-  "5h1j": {
-    "deck": "6p",
-    "type": "card",
-    "cardType": "Picture03.png",
-    "id": "5h1j",
-    "z": 31119,
-    "parent": "37p0",
-    "x": null,
-    "y": null
-  },
-  "lv0w": {
-    "deck": "6p",
-    "type": "card",
-    "cardType": "Picture06.png",
-    "id": "lv0w",
-    "z": 31140,
-    "parent": "9n63",
-    "x": null,
-    "y": null
-  },
   "nrtb": {
     "type": "label",
     "text": "Combiner",
@@ -1483,16 +1463,6 @@
     "css": "font-size: 30px;",
     "editable": true,
     "text": 0
-  },
-  "3586 EthnosCover.png": {
-    "type": "card",
-    "id": "3586 EthnosCover.png",
-    "deck": "3586",
-    "cardType": "EthnosCover.png",
-    "x": 211,
-    "y": 224,
-    "activeFace": 1,
-    "z": 38404
   },
   "cardDeck": {
     "type": "deck",
@@ -3108,16 +3078,6 @@
     "y": 17,
     "activeFace": 1,
     "z": 38956
-  },
-  "fut0 From now we float.png": {
-    "type": "card",
-    "id": "fut0 From now we float.png",
-    "deck": "poundDec",
-    "cardType": "From now we float.png",
-    "x": 442,
-    "y": 26,
-    "activeFace": 1,
-    "z": 38967
   },
   "poundDeck": {
     "type": "deck",
