@@ -5188,7 +5188,6 @@
       "cardType": "none"
     },
     "image": "/assets/1450298960_901171",
-    "radius": 0,
     "rotation": -5
   },
   "fnlg": {
@@ -11382,24 +11381,6 @@
     "rotation": 0,
     "parent": "Player 1 - Ships"
   },
-  "[object Object]": {
-    "id": {
-      "Player 1 - Ship B": "Player 1 - Ship B",
-      "Player 2 - Ship B": "Player 2 - Ship C",
-      "Player 3 - Ship B": "Player 3 - Ship B",
-      "Player 4 - Ship B": "Player 4 - Ship B",
-      "Player 5 - Ship B": "Player 5 - Ship B",
-      "Player 6 - Ship B": "Player 6 - Ship B",
-      "Player 7 - Ship B": "Player 7 - Ship B",
-      "Player 8 - Ship B": "Player 8 - Ship B",
-      "Player 9 - Ship B": "Player 9 - Ship B",
-      "Player 10 - Ship B": "Player 10 - Ship B",
-      "Player 11 - Ship B": "Player 11 - Ship B",
-      "Player 12 - Ship B": "Player 12 - Ship B",
-      "Player 13 - Ship B": "Player 13 - Ship B",
-      "Player 14 - Ship B": "Player 14 - Ship B"
-    }
-  },
   "Player 1 - Ship B": {
     "id": "Player 1 - Ship B",
     "x": 10,
@@ -11881,9 +11862,7 @@
     "cardType": "vp.svg",
     "id": "8b6f",
     "z": 3379,
-    "parent": "86qa",
-    "x": null,
-    "y": null
+    "parent": "86qa"
   },
   "udmg": {
     "deck": "VP Deck",
@@ -11891,9 +11870,7 @@
     "cardType": "vp.svg",
     "id": "udmg",
     "z": 3380,
-    "parent": "86qa",
-    "x": null,
-    "y": null
+    "parent": "86qa"
   },
   "m4zd": {
     "deck": "VP Deck",
@@ -11901,9 +11878,7 @@
     "cardType": "vp.svg",
     "id": "m4zd",
     "z": 3381,
-    "parent": "86qa",
-    "x": null,
-    "y": null
+    "parent": "86qa"
   },
   "ovoz": {
     "deck": "VP Deck",
@@ -11911,9 +11886,7 @@
     "cardType": "vp.svg",
     "id": "ovoz",
     "z": 3382,
-    "parent": "86qa",
-    "x": null,
-    "y": null
+    "parent": "86qa"
   },
   "rf9v": {
     "deck": "VP Deck",
@@ -11921,9 +11894,7 @@
     "cardType": "vp.svg",
     "id": "rf9v",
     "z": 3383,
-    "parent": "86qa",
-    "x": null,
-    "y": null
+    "parent": "86qa"
   },
   "yxoa": {
     "deck": "VP Deck",
@@ -11931,9 +11902,7 @@
     "cardType": "vp.svg",
     "id": "yxoa",
     "z": 3384,
-    "parent": "86qa",
-    "x": null,
-    "y": null
+    "parent": "86qa"
   },
   "ghdl": {
     "deck": "VP Deck",
@@ -11941,9 +11910,7 @@
     "cardType": "vp.svg",
     "id": "ghdl",
     "z": 3385,
-    "parent": "86qa",
-    "x": null,
-    "y": null
+    "parent": "86qa"
   },
   "bk99": {
     "deck": "VP Deck",
@@ -11959,9 +11926,7 @@
     "cardType": "vp.svg",
     "id": "mmjz",
     "z": 3387,
-    "parent": "86qa",
-    "x": null,
-    "y": null
+    "parent": "86qa"
   },
   "zhn5": {
     "deck": "VP Deck",
@@ -11969,9 +11934,7 @@
     "cardType": "vp.svg",
     "id": "zhn5",
     "z": 3388,
-    "parent": "86qa",
-    "x": null,
-    "y": null
+    "parent": "86qa"
   },
   "vorr": {
     "deck": "VP Deck",
@@ -11979,9 +11942,7 @@
     "cardType": "vp.svg",
     "id": "vorr",
     "z": 3389,
-    "parent": "86qa",
-    "x": null,
-    "y": null
+    "parent": "86qa"
   },
   "0mg8": {
     "deck": "VP Deck",
@@ -11989,9 +11950,7 @@
     "cardType": "vp.svg",
     "id": "0mg8",
     "z": 3390,
-    "parent": "86qa",
-    "x": null,
-    "y": null
+    "parent": "86qa"
   },
   "namn": {
     "deck": "VP Deck",
@@ -11999,9 +11958,7 @@
     "cardType": "vp.svg",
     "id": "namn",
     "z": 3391,
-    "parent": "86qa",
-    "x": null,
-    "y": null
+    "parent": "86qa"
   },
   "d8l1": {
     "deck": "VP Deck",
@@ -12009,9 +11966,7 @@
     "cardType": "vp.svg",
     "id": "d8l1",
     "z": 3392,
-    "parent": "86qa",
-    "x": null,
-    "y": null
+    "parent": "86qa"
   },
   "0i9g": {
     "deck": "VP Deck",
@@ -12019,9 +11974,7 @@
     "cardType": "vp.svg",
     "id": "0i9g",
     "z": 3393,
-    "parent": "86qa",
-    "x": null,
-    "y": null
+    "parent": "86qa"
   },
   "4kt0": {
     "deck": "VP Deck",
@@ -12029,9 +11982,7 @@
     "cardType": "vp.svg",
     "id": "4kt0",
     "z": 3394,
-    "parent": "86qa",
-    "x": null,
-    "y": null
+    "parent": "86qa"
   },
   "dqzl": {
     "deck": "VP Deck",
@@ -12039,9 +11990,7 @@
     "cardType": "vp.svg",
     "id": "dqzl",
     "z": 3395,
-    "parent": "86qa",
-    "x": null,
-    "y": null
+    "parent": "86qa"
   },
   "x4i2": {
     "deck": "VP Deck",
@@ -12049,9 +11998,7 @@
     "cardType": "vp.svg",
     "id": "x4i2",
     "z": 3396,
-    "parent": "86qa",
-    "x": null,
-    "y": null
+    "parent": "86qa"
   },
   "71gk": {
     "deck": "VP Deck",
@@ -12059,9 +12006,7 @@
     "cardType": "vp.svg",
     "id": "71gk",
     "z": 3397,
-    "parent": "86qa",
-    "x": null,
-    "y": null
+    "parent": "86qa"
   },
   "jzkq": {
     "deck": "VP Deck",
@@ -12069,9 +12014,7 @@
     "cardType": "vp.svg",
     "id": "jzkq",
     "z": 3398,
-    "parent": "86qa",
-    "x": null,
-    "y": null
+    "parent": "86qa"
   },
   "qyuv": {
     "deck": "VP Deck",
@@ -12079,9 +12022,7 @@
     "cardType": "vp.svg",
     "id": "qyuv",
     "z": 3399,
-    "parent": "86qa",
-    "x": null,
-    "y": null
+    "parent": "86qa"
   },
   "hgcr": {
     "deck": "VP Deck",
@@ -12089,9 +12030,7 @@
     "cardType": "vp.svg",
     "id": "hgcr",
     "z": 3400,
-    "parent": "86qa",
-    "x": null,
-    "y": null
+    "parent": "86qa"
   },
   "yero": {
     "deck": "VP Deck",
@@ -12099,9 +12038,7 @@
     "cardType": "vp.svg",
     "id": "yero",
     "z": 3401,
-    "parent": "86qa",
-    "x": null,
-    "y": null
+    "parent": "86qa"
   },
   "6sn4": {
     "deck": "VP Deck",
@@ -12109,9 +12046,7 @@
     "cardType": "vp.svg",
     "id": "6sn4",
     "z": 3402,
-    "parent": "86qa",
-    "x": null,
-    "y": null
+    "parent": "86qa"
   },
   "mfvy": {
     "deck": "VP Deck",
@@ -12119,9 +12054,7 @@
     "cardType": "vp.svg",
     "id": "mfvy",
     "z": 3403,
-    "parent": "86qa",
-    "x": null,
-    "y": null
+    "parent": "86qa"
   },
   "c5jy": {
     "deck": "VP Deck",
@@ -12129,9 +12062,7 @@
     "cardType": "vp.svg",
     "id": "c5jy",
     "z": 3404,
-    "parent": "86qa",
-    "x": null,
-    "y": null
+    "parent": "86qa"
   },
   "e9x9": {
     "deck": "VP Deck",
@@ -12139,9 +12070,7 @@
     "cardType": "vp.svg",
     "id": "e9x9",
     "z": 3405,
-    "parent": "86qa",
-    "x": null,
-    "y": null
+    "parent": "86qa"
   },
   "bwpb": {
     "deck": "VP Deck",
@@ -12149,9 +12078,7 @@
     "cardType": "vp.svg",
     "id": "bwpb",
     "z": 3406,
-    "parent": "86qa",
-    "x": null,
-    "y": null
+    "parent": "86qa"
   },
   "dcal": {
     "deck": "VP Deck",
@@ -12159,9 +12086,7 @@
     "cardType": "vp.svg",
     "id": "dcal",
     "z": 3407,
-    "parent": "86qa",
-    "x": null,
-    "y": null
+    "parent": "86qa"
   },
   "yipg": {
     "deck": "VP Deck",
@@ -12169,9 +12094,7 @@
     "cardType": "vp.svg",
     "id": "yipg",
     "z": 3408,
-    "parent": "86qa",
-    "x": null,
-    "y": null
+    "parent": "86qa"
   },
   "ce2o": {
     "deck": "VP Deck",
@@ -12179,9 +12102,7 @@
     "cardType": "vp.svg",
     "id": "ce2o",
     "z": 3409,
-    "parent": "86qa",
-    "x": null,
-    "y": null
+    "parent": "86qa"
   },
   "xeo7": {
     "deck": "VP Deck",
@@ -12189,9 +12110,7 @@
     "cardType": "vp.svg",
     "id": "xeo7",
     "z": 3410,
-    "parent": "86qa",
-    "x": null,
-    "y": null
+    "parent": "86qa"
   },
   "ne4a": {
     "deck": "VP Deck",
@@ -12199,9 +12118,7 @@
     "cardType": "vp.svg",
     "id": "ne4a",
     "z": 3411,
-    "parent": "86qa",
-    "x": null,
-    "y": null
+    "parent": "86qa"
   },
   "w956": {
     "deck": "VP Deck",
@@ -12209,9 +12126,7 @@
     "cardType": "vp.svg",
     "id": "w956",
     "z": 3412,
-    "parent": "86qa",
-    "x": null,
-    "y": null
+    "parent": "86qa"
   },
   "6s95": {
     "deck": "VP Deck",
@@ -12219,9 +12134,7 @@
     "cardType": "vp.svg",
     "id": "6s95",
     "z": 3413,
-    "parent": "86qa",
-    "x": null,
-    "y": null
+    "parent": "86qa"
   },
   "f74f": {
     "deck": "VP Deck",
@@ -12229,9 +12142,7 @@
     "cardType": "vp.svg",
     "id": "f74f",
     "z": 3414,
-    "parent": "86qa",
-    "x": null,
-    "y": null
+    "parent": "86qa"
   },
   "5t1i": {
     "deck": "VP Deck",
@@ -12239,9 +12150,7 @@
     "cardType": "vp.svg",
     "id": "5t1i",
     "z": 3415,
-    "parent": "86qa",
-    "x": null,
-    "y": null
+    "parent": "86qa"
   },
   "3o2l": {
     "deck": "VP Deck",
@@ -12249,9 +12158,7 @@
     "cardType": "vp.svg",
     "id": "3o2l",
     "z": 3416,
-    "parent": "86qa",
-    "x": null,
-    "y": null
+    "parent": "86qa"
   },
   "x2ji": {
     "deck": "VP Deck",
@@ -12259,9 +12166,7 @@
     "cardType": "vp.svg",
     "id": "x2ji",
     "z": 3417,
-    "parent": "86qa",
-    "x": null,
-    "y": null
+    "parent": "86qa"
   },
   "wu7b": {
     "deck": "VP Deck",
@@ -12269,9 +12174,7 @@
     "cardType": "vp.svg",
     "id": "wu7b",
     "z": 3418,
-    "parent": "86qa",
-    "x": null,
-    "y": null
+    "parent": "86qa"
   },
   "fbuv": {
     "deck": "VP Deck",
@@ -12279,9 +12182,7 @@
     "cardType": "vp.svg",
     "id": "fbuv",
     "z": 3419,
-    "parent": "86qa",
-    "x": null,
-    "y": null
+    "parent": "86qa"
   },
   "j4fq": {
     "deck": "VP Deck",
@@ -12289,9 +12190,7 @@
     "cardType": "vp.svg",
     "id": "j4fq",
     "z": 3420,
-    "parent": "86qa",
-    "x": null,
-    "y": null
+    "parent": "86qa"
   },
   "gc4i": {
     "deck": "VP Deck",
@@ -12299,9 +12198,7 @@
     "cardType": "vp.svg",
     "id": "gc4i",
     "z": 3421,
-    "parent": "86qa",
-    "x": null,
-    "y": null
+    "parent": "86qa"
   },
   "bn4v": {
     "deck": "VP Deck",
@@ -12309,9 +12206,7 @@
     "cardType": "vp.svg",
     "id": "bn4v",
     "z": 3422,
-    "parent": "86qa",
-    "x": null,
-    "y": null
+    "parent": "86qa"
   },
   "pu9a": {
     "deck": "VP Deck",
@@ -12319,9 +12214,7 @@
     "cardType": "vp.svg",
     "id": "pu9a",
     "z": 3423,
-    "parent": "86qa",
-    "x": null,
-    "y": null
+    "parent": "86qa"
   },
   "4p8i": {
     "deck": "VP Deck",
@@ -12329,9 +12222,7 @@
     "cardType": "vp.svg",
     "id": "4p8i",
     "z": 3424,
-    "parent": "86qa",
-    "x": null,
-    "y": null
+    "parent": "86qa"
   },
   "5fhd": {
     "deck": "VP Deck",
@@ -12339,9 +12230,7 @@
     "cardType": "vp.svg",
     "id": "5fhd",
     "z": 3425,
-    "parent": "86qa",
-    "x": null,
-    "y": null
+    "parent": "86qa"
   },
   "ngd3": {
     "deck": "VP Deck",
@@ -12349,9 +12238,7 @@
     "cardType": "vp.svg",
     "id": "ngd3",
     "z": 3426,
-    "parent": "86qa",
-    "x": null,
-    "y": null
+    "parent": "86qa"
   },
   "kb44": {
     "deck": "VP Deck",
@@ -12359,9 +12246,7 @@
     "cardType": "vp.svg",
     "id": "kb44",
     "z": 3427,
-    "parent": "86qa",
-    "x": null,
-    "y": null
+    "parent": "86qa"
   },
   "mck3": {
     "deck": "VP Deck",
@@ -12369,9 +12254,7 @@
     "cardType": "vp.svg",
     "id": "mck3",
     "z": 3428,
-    "parent": "86qa",
-    "x": null,
-    "y": null
+    "parent": "86qa"
   },
   "z5uq": {
     "deck": "VP Deck",
@@ -12379,9 +12262,7 @@
     "cardType": "vp.svg",
     "id": "z5uq",
     "z": 3429,
-    "parent": "86qa",
-    "x": null,
-    "y": null
+    "parent": "86qa"
   },
   "jxpc": {
     "deck": "VP Deck",
@@ -12389,9 +12270,7 @@
     "cardType": "vp.svg",
     "id": "jxpc",
     "z": 3430,
-    "parent": "86qa",
-    "x": null,
-    "y": null
+    "parent": "86qa"
   },
   "phl6": {
     "deck": "VP Deck",
@@ -12399,9 +12278,7 @@
     "cardType": "vp.svg",
     "id": "phl6",
     "z": 3431,
-    "parent": "86qa",
-    "x": null,
-    "y": null
+    "parent": "86qa"
   },
   "ak2h": {
     "deck": "VP Deck",
@@ -12409,9 +12286,7 @@
     "cardType": "vp.svg",
     "id": "ak2h",
     "z": 3432,
-    "parent": "86qa",
-    "x": null,
-    "y": null
+    "parent": "86qa"
   },
   "mtcv": {
     "deck": "VP Deck",
@@ -12419,9 +12294,7 @@
     "cardType": "vp.svg",
     "id": "mtcv",
     "z": 3433,
-    "parent": "86qa",
-    "x": null,
-    "y": null
+    "parent": "86qa"
   },
   "zjqs": {
     "deck": "VP Deck",
@@ -12429,9 +12302,7 @@
     "cardType": "vp.svg",
     "id": "zjqs",
     "z": 3434,
-    "parent": "86qa",
-    "x": null,
-    "y": null
+    "parent": "86qa"
   },
   "v5rl": {
     "deck": "VP Deck",
@@ -12439,9 +12310,7 @@
     "cardType": "vp.svg",
     "id": "v5rl",
     "z": 3435,
-    "parent": "86qa",
-    "x": null,
-    "y": null
+    "parent": "86qa"
   },
   "wpvx": {
     "deck": "VP Deck",
@@ -12449,9 +12318,7 @@
     "cardType": "vp.svg",
     "id": "wpvx",
     "z": 3436,
-    "parent": "86qa",
-    "x": null,
-    "y": null
+    "parent": "86qa"
   },
   "8pgo": {
     "deck": "VP Deck",
@@ -12459,9 +12326,7 @@
     "cardType": "vp.svg",
     "id": "8pgo",
     "z": 3437,
-    "parent": "86qa",
-    "x": null,
-    "y": null
+    "parent": "86qa"
   },
   "1ten": {
     "deck": "VP Deck",
@@ -12469,9 +12334,7 @@
     "cardType": "vp.svg",
     "id": "1ten",
     "z": 3438,
-    "parent": "86qa",
-    "x": null,
-    "y": null
+    "parent": "86qa"
   },
   "gm80": {
     "deck": "VP Deck",
@@ -12479,9 +12342,7 @@
     "cardType": "vp.svg",
     "id": "gm80",
     "z": 3439,
-    "parent": "86qa",
-    "x": null,
-    "y": null
+    "parent": "86qa"
   },
   "wboy": {
     "deck": "VP Deck",
@@ -12489,9 +12350,7 @@
     "cardType": "vp.svg",
     "id": "wboy",
     "z": 3440,
-    "parent": "86qa",
-    "x": null,
-    "y": null
+    "parent": "86qa"
   },
   "vwwi": {
     "deck": "VP Deck",
@@ -12499,9 +12358,7 @@
     "cardType": "vp.svg",
     "id": "vwwi",
     "z": 3441,
-    "parent": "86qa",
-    "x": null,
-    "y": null
+    "parent": "86qa"
   },
   "9g9v": {
     "deck": "VP Deck",
@@ -12509,9 +12366,7 @@
     "cardType": "vp.svg",
     "id": "9g9v",
     "z": 3442,
-    "parent": "86qa",
-    "x": null,
-    "y": null
+    "parent": "86qa"
   },
   "p5h0": {
     "deck": "VP Deck",
@@ -12519,9 +12374,7 @@
     "cardType": "vp.svg",
     "id": "p5h0",
     "z": 3443,
-    "parent": "86qa",
-    "x": null,
-    "y": null
+    "parent": "86qa"
   },
   "rmcz": {
     "deck": "VP Deck",
@@ -12529,9 +12382,7 @@
     "cardType": "vp.svg",
     "id": "rmcz",
     "z": 3444,
-    "parent": "86qa",
-    "x": null,
-    "y": null
+    "parent": "86qa"
   },
   "afcr": {
     "deck": "VP Deck",
@@ -12539,9 +12390,7 @@
     "cardType": "vp.svg",
     "id": "afcr",
     "z": 3445,
-    "parent": "86qa",
-    "x": null,
-    "y": null
+    "parent": "86qa"
   },
   "y5he": {
     "deck": "VP Deck",
@@ -12549,9 +12398,7 @@
     "cardType": "vp.svg",
     "id": "y5he",
     "z": 3446,
-    "parent": "86qa",
-    "x": null,
-    "y": null
+    "parent": "86qa"
   },
   "5xj7": {
     "deck": "VP Deck",
@@ -12559,9 +12406,7 @@
     "cardType": "vp.svg",
     "id": "5xj7",
     "z": 3447,
-    "parent": "86qa",
-    "x": null,
-    "y": null
+    "parent": "86qa"
   },
   "7wp5": {
     "deck": "VP Deck",
@@ -12569,9 +12414,7 @@
     "cardType": "vp.svg",
     "id": "7wp5",
     "z": 3448,
-    "parent": "86qa",
-    "x": null,
-    "y": null
+    "parent": "86qa"
   },
   "y95y": {
     "deck": "VP Deck",
@@ -12579,9 +12422,7 @@
     "cardType": "vp.svg",
     "id": "y95y",
     "z": 3449,
-    "parent": "86qa",
-    "x": null,
-    "y": null
+    "parent": "86qa"
   },
   "yq3r": {
     "deck": "VP Deck",
@@ -12589,9 +12430,7 @@
     "cardType": "vp.svg",
     "id": "yq3r",
     "z": 3450,
-    "parent": "86qa",
-    "x": null,
-    "y": null
+    "parent": "86qa"
   },
   "wdvr": {
     "deck": "VP Deck",
@@ -12599,9 +12438,7 @@
     "cardType": "vp.svg",
     "id": "wdvr",
     "z": 3451,
-    "parent": "86qa",
-    "x": null,
-    "y": null
+    "parent": "86qa"
   },
   "323n": {
     "deck": "VP Deck",
@@ -12609,9 +12446,7 @@
     "cardType": "vp.svg",
     "id": "323n",
     "z": 3452,
-    "parent": "86qa",
-    "x": null,
-    "y": null
+    "parent": "86qa"
   },
   "1eub": {
     "deck": "VP Deck",
@@ -12619,9 +12454,7 @@
     "cardType": "vp.svg",
     "id": "1eub",
     "z": 3453,
-    "parent": "86qa",
-    "x": null,
-    "y": null
+    "parent": "86qa"
   },
   "urxh": {
     "deck": "VP Deck",
@@ -12629,9 +12462,7 @@
     "cardType": "vp.svg",
     "id": "urxh",
     "z": 3454,
-    "parent": "86qa",
-    "x": null,
-    "y": null
+    "parent": "86qa"
   },
   "k3oa": {
     "deck": "VP Deck",
@@ -12639,9 +12470,7 @@
     "cardType": "vp.svg",
     "id": "k3oa",
     "z": 3455,
-    "parent": "86qa",
-    "x": null,
-    "y": null
+    "parent": "86qa"
   },
   "no58": {
     "deck": "VP Deck",
@@ -12649,9 +12478,7 @@
     "cardType": "vp.svg",
     "id": "no58",
     "z": 3456,
-    "parent": "86qa",
-    "x": null,
-    "y": null
+    "parent": "86qa"
   },
   "h84u": {
     "deck": "VP Deck",
@@ -12659,9 +12486,7 @@
     "cardType": "vp.svg",
     "id": "h84u",
     "z": 3457,
-    "parent": "86qa",
-    "x": null,
-    "y": null
+    "parent": "86qa"
   },
   "95xh": {
     "deck": "VP Deck",
@@ -12669,9 +12494,7 @@
     "cardType": "vp.svg",
     "id": "95xh",
     "z": 3458,
-    "parent": "86qa",
-    "x": null,
-    "y": null
+    "parent": "86qa"
   },
   "ueix": {
     "deck": "VP Deck",
@@ -12679,9 +12502,7 @@
     "cardType": "vp.svg",
     "id": "ueix",
     "z": 3459,
-    "parent": "86qa",
-    "x": null,
-    "y": null
+    "parent": "86qa"
   },
   "dmz3": {
     "deck": "VP Deck",
@@ -12689,9 +12510,7 @@
     "cardType": "vp.svg",
     "id": "dmz3",
     "z": 3460,
-    "parent": "86qa",
-    "x": null,
-    "y": null
+    "parent": "86qa"
   },
   "ewr1": {
     "deck": "VP Deck",
@@ -12699,9 +12518,7 @@
     "cardType": "vp.svg",
     "id": "ewr1",
     "z": 3461,
-    "parent": "86qa",
-    "x": null,
-    "y": null
+    "parent": "86qa"
   },
   "55cb": {
     "deck": "VP Deck",
@@ -12709,9 +12526,7 @@
     "cardType": "vp.svg",
     "id": "55cb",
     "z": 3462,
-    "parent": "86qa",
-    "x": null,
-    "y": null
+    "parent": "86qa"
   },
   "6dr3": {
     "deck": "VP Deck",
