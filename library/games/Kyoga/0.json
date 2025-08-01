@@ -580,7 +580,7 @@
       "time": "20",
       "attribution": "<div>Game layout, library image, and scripting by Robin Harn, released to the Public Domain under CC0.</div><div>\nDesert landscape background is from http://www.freepik.com and used under the Freepik license: https://www.freepik.com/free-vector/desert-landscape-with-sparse-vegetation_412809546.htm</div><div><br></div><div>The following graphics are from https://game-icons.net and are used under CC BY 3.0:\n</div>* Card Play https://game-icons.net/1x1/quoting/card-play.html\n<div>* Card Joker https://game-icons.net/1x1/delapouite/card-joker.html</div><div>* Water Recycling https://game-icons.net/1x1/delapouite/water-recycling.html</div>\nAll animal graphics, and the following graphics, are from Google Noto Color Emoji and are used under the SIL Open Font License: https://fonts.google.com/noto/specimen/Noto+Color+Emoji\n* Left Arrow https://emojipedia.org/google/16.0/left-arrow\n* Right Arrow https://emojipedia.org/google/16.0/right-arrow",
       "importerTime": 1747841946886,
-      "lastUpdate": 1754006514873,
+      "lastUpdate": 1754083474511,
       "importer": "PCIO",
       "showName": true,
       "skill": "",
@@ -602,7 +602,7 @@
     "type": "card",
     "cardType": "6-crocodile",
     "id": "j4bh",
-    "z": 52611,
+    "z": 52880,
     "parent": "tnzc"
   },
   "nzss": {
@@ -610,7 +610,7 @@
     "type": "card",
     "cardType": "6-crocodile",
     "id": "nzss",
-    "z": 52578,
+    "z": 52877,
     "parent": "tnzc"
   },
   "pp6r": {
@@ -618,7 +618,7 @@
     "type": "card",
     "cardType": "6-crocodile",
     "id": "pp6r",
-    "z": 52568,
+    "z": 52848,
     "parent": "tnzc"
   },
   "holder-1": {
@@ -714,7 +714,7 @@
     "type": "card",
     "cardType": "5-gorilla",
     "id": "zk0y",
-    "z": 52605,
+    "z": 52876,
     "parent": "tnzc"
   },
   "vvc9": {
@@ -722,15 +722,18 @@
     "type": "card",
     "cardType": "5-gorilla",
     "id": "vvc9",
-    "z": 52595,
-    "parent": "tnzc"
+    "z": 52892,
+    "parent": "holder-market-1",
+    "activeFace": 1,
+    "x": 4,
+    "y": 4
   },
   "ys0a": {
     "deck": "deck-cards",
     "type": "card",
     "cardType": "5-gorilla",
     "id": "ys0a",
-    "z": 52596,
+    "z": 52872,
     "parent": "tnzc"
   },
   "holder-6": {
@@ -777,7 +780,7 @@
     "type": "card",
     "cardType": "6-crocodile",
     "id": "n8rh",
-    "z": 52614,
+    "z": 52865,
     "parent": "tnzc"
   },
   "atd6": {
@@ -785,7 +788,7 @@
     "type": "card",
     "cardType": "6-crocodile",
     "id": "atd6",
-    "z": 52567,
+    "z": 52828,
     "parent": "tnzc"
   },
   "image-water": {
@@ -1060,7 +1063,7 @@
     "type": "card",
     "cardType": "1-mouse",
     "id": "egfj",
-    "z": 52613,
+    "z": 52864,
     "parent": "tnzc"
   },
   "w8v0": {
@@ -1068,7 +1071,7 @@
     "type": "card",
     "cardType": "1-mouse",
     "id": "w8v0",
-    "z": 52589,
+    "z": 52833,
     "parent": "tnzc"
   },
   "56p4": {
@@ -1076,18 +1079,15 @@
     "type": "card",
     "cardType": "1-mouse",
     "id": "56p4",
-    "z": 52631,
-    "parent": "holder-market-2",
-    "activeFace": 1,
-    "x": 4,
-    "y": 4
+    "z": 52870,
+    "parent": "tnzc"
   },
   "63do": {
     "deck": "deck-cards",
     "type": "card",
     "cardType": "1-mouse",
     "id": "63do",
-    "z": 52607,
+    "z": 52859,
     "parent": "tnzc"
   },
   "frpz": {
@@ -1095,7 +1095,7 @@
     "type": "card",
     "cardType": "1-mouse",
     "id": "frpz",
-    "z": 52587,
+    "z": 52852,
     "parent": "tnzc"
   },
   "vy1h": {
@@ -1103,7 +1103,7 @@
     "type": "card",
     "cardType": "1-mouse",
     "id": "vy1h",
-    "z": 52570,
+    "z": 52881,
     "parent": "tnzc"
   },
   "fgkh": {
@@ -1111,7 +1111,7 @@
     "type": "card",
     "cardType": "1-mouse",
     "id": "fgkh",
-    "z": 52603,
+    "z": 52886,
     "parent": "tnzc"
   },
   "14x6": {
@@ -1119,7 +1119,7 @@
     "type": "card",
     "cardType": "1-mouse",
     "id": "14x6",
-    "z": 52577,
+    "z": 52842,
     "parent": "tnzc"
   },
   "n36j": {
@@ -1127,7 +1127,7 @@
     "type": "card",
     "cardType": "2-hedgehog",
     "id": "n36j",
-    "z": 52581,
+    "z": 52884,
     "parent": "tnzc"
   },
   "rigl": {
@@ -1135,7 +1135,7 @@
     "type": "card",
     "cardType": "2-hedgehog",
     "id": "rigl",
-    "z": 52620,
+    "z": 52871,
     "parent": "tnzc"
   },
   "agmj": {
@@ -1143,7 +1143,7 @@
     "type": "card",
     "cardType": "2-hedgehog",
     "id": "agmj",
-    "z": 52572,
+    "z": 52841,
     "parent": "tnzc"
   },
   "7kqh": {
@@ -1151,7 +1151,7 @@
     "type": "card",
     "cardType": "2-hedgehog",
     "id": "7kqh",
-    "z": 52590,
+    "z": 52874,
     "parent": "tnzc"
   },
   "qs9i": {
@@ -1159,7 +1159,7 @@
     "type": "card",
     "cardType": "2-hedgehog",
     "id": "qs9i",
-    "z": 52599,
+    "z": 52843,
     "parent": "tnzc"
   },
   "9k02": {
@@ -1167,7 +1167,7 @@
     "type": "card",
     "cardType": "2-hedgehog",
     "id": "9k02",
-    "z": 52586,
+    "z": 52887,
     "parent": "tnzc"
   },
   "xxsu": {
@@ -1175,7 +1175,7 @@
     "type": "card",
     "cardType": "2-hedgehog",
     "id": "xxsu",
-    "z": 52626,
+    "z": 52861,
     "parent": "tnzc"
   },
   "zs7n": {
@@ -1183,7 +1183,7 @@
     "type": "card",
     "cardType": "2-hedgehog",
     "id": "zs7n",
-    "z": 52588,
+    "z": 52832,
     "parent": "tnzc"
   },
   "mtn3": {
@@ -1191,7 +1191,7 @@
     "type": "card",
     "cardType": "3-zebra",
     "id": "mtn3",
-    "z": 52602,
+    "z": 52888,
     "parent": "tnzc"
   },
   "df5w": {
@@ -1199,15 +1199,18 @@
     "type": "card",
     "cardType": "3-zebra",
     "id": "df5w",
-    "z": 52575,
-    "parent": "tnzc"
+    "z": 52893,
+    "parent": "holder-market-2",
+    "activeFace": 1,
+    "x": 4,
+    "y": 4
   },
   "e5nc": {
     "deck": "deck-cards",
     "type": "card",
     "cardType": "3-zebra",
     "id": "e5nc",
-    "z": 52597,
+    "z": 52882,
     "parent": "tnzc"
   },
   "kipi": {
@@ -1215,7 +1218,7 @@
     "type": "card",
     "cardType": "3-zebra",
     "id": "kipi",
-    "z": 52624,
+    "z": 52885,
     "parent": "tnzc"
   },
   "tcvc": {
@@ -1223,7 +1226,7 @@
     "type": "card",
     "cardType": "3-zebra",
     "id": "tcvc",
-    "z": 52566,
+    "z": 52849,
     "parent": "tnzc"
   },
   "alld": {
@@ -1231,7 +1234,7 @@
     "type": "card",
     "cardType": "3-zebra",
     "id": "alld",
-    "z": 52606,
+    "z": 52834,
     "parent": "tnzc"
   },
   "rg9d": {
@@ -1239,7 +1242,7 @@
     "type": "card",
     "cardType": "3-zebra",
     "id": "rg9d",
-    "z": 52600,
+    "z": 52844,
     "parent": "tnzc"
   },
   "of26": {
@@ -1247,7 +1250,7 @@
     "type": "card",
     "cardType": "3-zebra",
     "id": "of26",
-    "z": 52583,
+    "z": 52850,
     "parent": "tnzc"
   },
   "s5kf": {
@@ -1255,7 +1258,7 @@
     "type": "card",
     "cardType": "4-giraffe",
     "id": "s5kf",
-    "z": 52573,
+    "z": 52863,
     "parent": "tnzc"
   },
   "feih": {
@@ -1263,7 +1266,7 @@
     "type": "card",
     "cardType": "4-giraffe",
     "id": "feih",
-    "z": 52582,
+    "z": 52853,
     "parent": "tnzc"
   },
   "nvwk": {
@@ -1271,7 +1274,7 @@
     "type": "card",
     "cardType": "4-giraffe",
     "id": "nvwk",
-    "z": 52571,
+    "z": 52883,
     "parent": "tnzc"
   },
   "3pj1": {
@@ -1279,7 +1282,7 @@
     "type": "card",
     "cardType": "4-giraffe",
     "id": "3pj1",
-    "z": 52608,
+    "z": 52879,
     "parent": "tnzc"
   },
   "bi9t": {
@@ -1287,7 +1290,7 @@
     "type": "card",
     "cardType": "4-giraffe",
     "id": "bi9t",
-    "z": 52604,
+    "z": 52869,
     "parent": "tnzc"
   },
   "igrs": {
@@ -1295,7 +1298,7 @@
     "type": "card",
     "cardType": "4-giraffe",
     "id": "igrs",
-    "z": 52591,
+    "z": 52866,
     "parent": "tnzc"
   },
   "umrp": {
@@ -1303,7 +1306,7 @@
     "type": "card",
     "cardType": "4-giraffe",
     "id": "umrp",
-    "z": 52584,
+    "z": 52851,
     "parent": "tnzc"
   },
   "wwz6": {
@@ -1311,7 +1314,7 @@
     "type": "card",
     "cardType": "4-giraffe",
     "id": "wwz6",
-    "z": 52574,
+    "z": 52873,
     "parent": "tnzc"
   },
   "9gm8": {
@@ -1319,7 +1322,7 @@
     "type": "card",
     "cardType": "5-gorilla",
     "id": "9gm8",
-    "z": 52593,
+    "z": 52875,
     "parent": "tnzc"
   },
   "ph9z": {
@@ -1327,7 +1330,7 @@
     "type": "card",
     "cardType": "5-gorilla",
     "id": "ph9z",
-    "z": 52612,
+    "z": 52862,
     "parent": "tnzc"
   },
   "ashb": {
@@ -1335,7 +1338,7 @@
     "type": "card",
     "cardType": "5-gorilla",
     "id": "ashb",
-    "z": 52622,
+    "z": 52858,
     "parent": "tnzc"
   },
   "2e43": {
@@ -1343,7 +1346,7 @@
     "type": "card",
     "cardType": "5-gorilla",
     "id": "2e43",
-    "z": 52617,
+    "z": 52846,
     "parent": "tnzc"
   },
   "kya9": {
@@ -1351,18 +1354,15 @@
     "type": "card",
     "cardType": "5-gorilla",
     "id": "kya9",
-    "z": 52630,
-    "parent": "holder-market-1",
-    "activeFace": 1,
-    "x": 4,
-    "y": 4
+    "z": 52856,
+    "parent": "tnzc"
   },
   "7upu": {
     "deck": "deck-cards",
     "type": "card",
     "cardType": "6-crocodile",
     "id": "7upu",
-    "z": 52569,
+    "z": 52840,
     "parent": "tnzc"
   },
   "o59v": {
@@ -1370,7 +1370,7 @@
     "type": "card",
     "cardType": "6-crocodile",
     "id": "o59v",
-    "z": 52623,
+    "z": 52839,
     "parent": "tnzc"
   },
   "ujmo": {
@@ -1378,7 +1378,7 @@
     "type": "card",
     "cardType": "6-crocodile",
     "id": "ujmo",
-    "z": 52618,
+    "z": 52830,
     "parent": "tnzc"
   },
   "hm2w": {
@@ -1386,7 +1386,7 @@
     "type": "card",
     "cardType": "7-hippo",
     "id": "hm2w",
-    "z": 52598,
+    "z": 52835,
     "parent": "tnzc"
   },
   "7epr": {
@@ -1394,7 +1394,7 @@
     "type": "card",
     "cardType": "7-hippo",
     "id": "7epr",
-    "z": 52615,
+    "z": 52847,
     "parent": "tnzc"
   },
   "t1lk": {
@@ -1402,7 +1402,7 @@
     "type": "card",
     "cardType": "7-hippo",
     "id": "t1lk",
-    "z": 52592,
+    "z": 52860,
     "parent": "tnzc"
   },
   "zhz1": {
@@ -1410,7 +1410,7 @@
     "type": "card",
     "cardType": "7-hippo",
     "id": "zhz1",
-    "z": 52576,
+    "z": 52868,
     "parent": "tnzc"
   },
   "z3gv": {
@@ -1418,7 +1418,7 @@
     "type": "card",
     "cardType": "7-hippo",
     "id": "z3gv",
-    "z": 52619,
+    "z": 52838,
     "parent": "tnzc"
   },
   "lkn4": {
@@ -1426,7 +1426,7 @@
     "type": "card",
     "cardType": "7-hippo",
     "id": "lkn4",
-    "z": 52625,
+    "z": 52837,
     "parent": "tnzc"
   },
   "akhf": {
@@ -1434,15 +1434,18 @@
     "type": "card",
     "cardType": "7-hippo",
     "id": "akhf",
-    "z": 52579,
-    "parent": "tnzc"
+    "z": 52894,
+    "parent": "holder-market-3",
+    "activeFace": 1,
+    "x": 4,
+    "y": 4
   },
   "oaqi": {
     "deck": "deck-cards",
     "type": "card",
     "cardType": "7-hippo",
     "id": "oaqi",
-    "z": 52601,
+    "z": 52878,
     "parent": "tnzc"
   },
   "eu1p": {
@@ -1450,7 +1453,7 @@
     "type": "card",
     "cardType": "8-elephant",
     "id": "eu1p",
-    "z": 52621,
+    "z": 52867,
     "parent": "tnzc"
   },
   "dlgu": {
@@ -1458,18 +1461,15 @@
     "type": "card",
     "cardType": "8-elephant",
     "id": "dlgu",
-    "z": 52632,
-    "parent": "holder-market-3",
-    "activeFace": 1,
-    "x": 4,
-    "y": 4
+    "z": 52854,
+    "parent": "tnzc"
   },
   "fzgg": {
     "deck": "deck-cards",
     "type": "card",
     "cardType": "8-elephant",
     "id": "fzgg",
-    "z": 52609,
+    "z": 52831,
     "parent": "tnzc"
   },
   "il2c": {
@@ -1477,7 +1477,7 @@
     "type": "card",
     "cardType": "8-elephant",
     "id": "il2c",
-    "z": 52594,
+    "z": 52845,
     "parent": "tnzc"
   },
   "8nvt": {
@@ -1485,7 +1485,7 @@
     "type": "card",
     "cardType": "8-elephant",
     "id": "8nvt",
-    "z": 52616,
+    "z": 52855,
     "parent": "tnzc"
   },
   "63jy": {
@@ -1493,7 +1493,7 @@
     "type": "card",
     "cardType": "8-elephant",
     "id": "63jy",
-    "z": 52610,
+    "z": 52829,
     "parent": "tnzc"
   },
   "owsn": {
@@ -1501,7 +1501,7 @@
     "type": "card",
     "cardType": "8-elephant",
     "id": "owsn",
-    "z": 52580,
+    "z": 52857,
     "parent": "tnzc"
   },
   "a6e8": {
@@ -1509,7 +1509,7 @@
     "type": "card",
     "cardType": "8-elephant",
     "id": "a6e8",
-    "z": 52585,
+    "z": 52836,
     "parent": "tnzc"
   },
   "image-background": {
@@ -1524,7 +1524,7 @@
     "css": {
       "opacity": "0.3"
     },
-    "image": "/assets/-1869375100_3597612"
+    "image": "/assets/-1060759989_210826"
   },
   "label-scoretext-p1": {
     "id": "label-scoretext-p1",
