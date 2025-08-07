@@ -10,7 +10,7 @@
       "mode": "vs",
       "time": "60",
       "attribution": "<div>Game layout and implementation by Mitchell Stolycia.</div><div><br></div><div>@star.frey created the art assets for the library image, snails, mucus tracks, and tardigrades.&nbsp;These are available for use under CC BY 4.0.</div><div>Find her at <b>instagram.com/star.frey</b></div><div><br></div><div>All other assets, such as the art of all three game boards, the seven different foods, the rocks, and the Easter egg were created by Mitchell Stolycia, and are available for use under CC BY 4.0.</div>",
-      "lastUpdate": 1754581280759,
+      "lastUpdate": 1754582236577,
       "showName": true,
       "skill": "",
       "description": "The year is 2025, and even micro-animals like tardigrades are struggling to survive in this economy. As a result, countless of these creatures have turned to snail trafficking (nine of them, to be exact).\n\nWith no money and limited resources, snails now have no choice but to race for the little food that remains in this back garden, which is uncannily similar to the shape of England. They have been taught by the tardigrades to be ruthless and merciless upon the sight of other snailkind, in order to survive in this ungodly world.",
@@ -12657,7 +12657,8 @@
     },
     "inheritFrom": "hex1",
     "text": "a",
-    "parent": "board1"
+    "parent": "board1",
+    "movable": false
   },
   "hexb1": {
     "type": "holder",
@@ -17103,7 +17104,8 @@
     "borderColor": "#A6A6A6",
     "borderWidth": 2,
     "hexType": "point",
-    "y": -174
+    "y": -174,
+    "movable": false
   },
   "hex801": {
     "id": "hex801",
