@@ -10,7 +10,7 @@
       "mode": "vs",
       "time": "60",
       "attribution": "<div>Game layout and implementation by Mitchell Stolycia.</div><div><br></div><div>@star.frey created the art assets for the library image, snails, mucus tracks, and tardigrades.&nbsp;These are available for use under CC BY 4.0.</div><div>Find her at <b>instagram.com/star.frey</b></div><div><br></div><div>All other assets, such as the art of all three game boards, the seven different foods, the rocks, and the Easter egg were created by Mitchell Stolycia, and are available for use under CC BY 4.0.</div>",
-      "lastUpdate": 1754519154485,
+      "lastUpdate": 1754581280759,
       "showName": true,
       "skill": "",
       "description": "The year is 2025, and even micro-animals like tardigrades are struggling to survive in this economy. As a result, countless of these creatures have turned to snail trafficking (nine of them, to be exact).\n\nWith no money and limited resources, snails now have no choice but to race for the little food that remains in this back garden, which is uncannily similar to the shape of England. They have been taught by the tardigrades to be ruthless and merciless upon the sight of other snailkind, in order to survive in this ungodly world.",
@@ -20,10 +20,10 @@
       "similarAwards": "2000 International Gamers Awards - General Strategy; Multi-player Nominee\n1999 Meeples Choice Award Nominee",
       "ruleText": "",
       "helpText": "<div><b>To start the game:</b></div><div><ol><li>All players must sit down by clicking on a seat.</li><li>Click <i>Setup</i> in the top left corner of the screen.</li><li>Fed up of the rubbish English weather? Choose to play on the China or Eastern USA map. Though the feeding areas are slightly different, no rules are added, removed or altered with these maps.</li></ol><b>Scoring:</b></div><blockquote><div>Use the labels by the player seats and the -/+ buttons to decrease/increase your score throughout the game.</div><div><br></div><div><b>For scoring aids</b>,<b> </b>hover your cursor over the relevant scoring type in the <i>Scoring references</i> area of the screen, whether that be when a snail reaches a grey numbered hex,&nbsp;a white flower hex, a snail dies, or for end game scoring.</div></blockquote><div><b>Hex board and tiles:</b></div><div><ul><li><b>Before moving a snail </b>orient it in your desired direction.</li><ul><li><b>To rotate a snail</b> anti-clockwise/clockwise, click the left/right hand side of the snail.</li></ul></ul></div><div><ul><li><b>After a snail moves</b> the active player will automatically gain one share in that snail. This automation only occurs once per snail per turn, as the same snail may not move twice in one turn. Furthermore, a mucus trail tile will also appear behind the snail.</li><li><b>Mucus trail tiles: </b><br></li><ul><li>The mucus trails will do their best to automatically match the direction a snail moves in, but they're not too smart (or even sentient). Luckily, you are! So feel free to correct their mistakes as below:</li><ul><li>The most common mistake is that a curved snail trail will get dealt to the board with an incorrect rotation. Most of the time, clicking the <i><b>anti-clockwise twice</b></i> button will correct this, otherwise:</li><li>To flip between straight and curved, click on the left hand side of the tile.</li><li>To rotate (clockwise), click on the right hand side of the tile.</li></ul><li><b>There are no connector tiles. When a snail dies</b> and two mucus trails join to become one simply remove the (now dead) snail from the board, putting its carcass elsewhere on the table for display. Then, manually draw a mucus trail tile from the draw pile to put in its place. Finally, click on the name of the snail on the snail shares board (bottom left board). An <i>X</i> will appear as a reminder that the snail is removed from play.</li></ul></ul><b>Feeding area (top left board):</b></div><div><ul><li><b>To purchase food</b>, the active player clicks on the circle they would like to commit to. The colour will change to the active player's colour. If clicked again it will revert to neutral.</li><li><b>To mark a grey numbered hex as scored</b>, click on the square on the left hand side of the table before the corresponding hex number. This will turn the square black. Only grey numbered hexes with black squares next to their number on the food board will score at the end of the game.</li></ul><div><b>Snail shares (bottom left board):</b></div><div><ul><li><b>To decrease/increase your number of shares</b>, click on the left/right hand side of the share square you wish to modify. This will adjust the number of shares by one (1).</li><li><b>When a snail dies or becomes isolated</b>,<b> </b>click on the name of the snail. An <i>X</i> will appear as a reminder that the snail is removed from play. This snail will no longer reward shares for moving.</li></ul><b>Placing a rock on the hex board:</b></div><blockquote><div>Move a rock of your colour from the holder nearby your seat to your desired hex. It will slot in nicely.</div><div>The rocks face different directions to make them easier to distinguish for people with colour blindness.</div></blockquote><div><b>Claiming a tardigrade:</b></div><blockquote><div>You can only claim a tardigrade when you move a snail to another player's rock.</div><div>To claim, move one of the nine tardigrades from its holder to anywhere nearby your seat.</div></blockquote><div><b>Vetoing</b></div><blockquote><div>Vetoing is played out manually, as if playing the board game.</div><div><br></div><div>If a snail changes direction due to a veto, a mucus trail hex may have to be manually adjusted.</div></blockquote><blockquote><div><ul><li>To flip between straight and curved, click on the left hand side of the tile.</li><li>To rotate (clockwise), click on the right hand side of the tile.</li></ul></div></blockquote></div>",
-      "players": "2-4",
-      "language": "en-GB",
+      "variantImage": "",
       "variant": "Snail trafficking",
-      "variantImage": "/assets/1373285518_20050"
+      "language": "en-GB",
+      "players": "2-4"
     }
   },
   "ipss": {
@@ -7792,9 +7792,10 @@
     "width": 0,
     "height": 0,
     "classes": "basic",
-    "image": "/assets/0_0",
+    "image": "/assets/-141300700_22783",
     "z": 10075,
-    "id": "9rep"
+    "id": "9rep",
+    "layer": 15
   },
   "geds x.png": {
     "type": "card",
