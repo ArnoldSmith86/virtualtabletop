@@ -1,7 +1,7 @@
 import { $, removeFromDOM, asArray, escapeID, mapAssetURLs } from '../domhelpers.js';
 import { StateManaged } from '../statemanaged.js';
 import { playerName, playerColor, activePlayers, activeColors, mouseCoords } from '../overlays/players.js';
-import { batchStart, batchEnd, widgetFilter, widgets } from '../serverstate.js';
+import { batchStart, batchEnd, widgetFilter, widgets, sendDelta } from '../serverstate.js';
 import { showOverlay, shuffleWidgets, sortWidgets } from '../main.js';
 import { tracingEnabled } from '../tracing.js';
 import { toHex } from '../color.js';
@@ -892,7 +892,8 @@ export class Widget extends StateManaged {
 
     const routine = this.get(property) !== null ? this.get(property) : property;
 
-    for(const original of routine) {
+    for(let index = 0; index < routine.length; ++index) {
+      const original = routine[index];
       var problems = [];
       let a = JSON.parse(JSON.stringify(original));
       if(typeof a == 'object')
@@ -1417,6 +1418,17 @@ export class Widget extends StateManaged {
       }
 
       if(a.func == 'INPUT') {
+        setDefaults(a, { player: playerName });
+        if(a.player && a.player !== playerName) {
+          const remainingRoutine = routine.slice(index);
+          const collectionIDs = {};
+          for(const c in collections)
+            collectionIDs[c] = collections[c].map(w=>w.get('id'));
+          sendDelta();
+          toServer('delegateRoutine', { player: a.player, widgetID: this.get('id'), routine: remainingRoutine, variables, collections: collectionIDs });
+          abortRoutine = true;
+          break;
+        }
         try {
           const result = await this.showInputOverlay(a, widgets, variables, collections, getCollection, problems);
           Object.assign(variables, result.variables);
