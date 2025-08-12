@@ -1,5 +1,6 @@
 let usedTouch = false;
 let mouseTarget = null;
+let mouseIsDragging = false;
 const mouseStatus = {};
 
 function eventCoords(name, e) {
@@ -62,15 +63,11 @@ async function inputHandler(name, e) {
   if(target && target.id) {
     let widget = widgets.get(unescapeID(target.id.slice(2)));
     batchStart();
-    if(!edit && (!jeEnabled || !e.ctrlKey) && widget.passthroughMouse) {
-      if(name == 'mousedown' || name == 'touchstart') {
-        await widget.mouseRaw('down', coords);
-      } else if (name == 'mouseup' || name == 'touchend' || name == 'touchcancel') {
-        await widget.mouseRaw('up', coords);
-      } else if (name == 'mousemove' || name == 'touchmove') {
-        await widget.mouseRaw('move', coords);
-      }
-    } else if(name == 'mousedown' || name == 'touchstart') {
+    if(e.button == 2) {
+      if(name == 'mouseup')
+        await widget.click();
+    } else if(name == 'mouseup' && !mouseIsDragging && e.button == 0) {
+      mouseIsDragging = true;
       mouseStatus[target.id] = {
         status: 'initial',
         start: new Date(),
@@ -92,27 +89,16 @@ async function inputHandler(name, e) {
       if (movable) {
         ms.localAnchor = ms.moveTarget.coordLocalFromCoordClient({x: coords.clientX, y: coords.clientY});
       }
-    } else if(name == 'mouseup' || (name == 'touchend' || name == 'touchcancel') && mouseStatus[target.id]) {
+    } else if(name == 'mouseup' && mouseIsDragging && e.button == 0) {
       const ms = mouseStatus[target.id];
-      const timeSinceStart = +new Date() - ms.start;
-      const pixelsMoved = ms.coords ? Math.abs(ms.coords.x - ms.downCoords.x) + Math.abs(ms.coords.y - ms.downCoords.y) : 0;
-      if(ms.status != 'initial' && ms.moveTarget) {
+      if(ms.status != 'initial' && ms.moveTarget && mouseIsDragging) {
         setDeltaCause(`${playerName} dragged ${widget.id}`);
         await ms.moveTarget.moveEnd(coords, ms.localAnchor);
-      }
-      if(ms.status == 'initial' || timeSinceStart < 250 && pixelsMoved < 10) {
-        if(edit && !isMiddleMouseButton)
-          await editClick(widget, e.button);
-        else if(jeEnabled && !isMiddleMouseButton)
-          await jeClick(widget, e);
-        else if(!target.classList.contains('longtouch')) {
-          setDeltaCause(`${playerName} clicked ${widget.id}`);
-          await widget.click();
-        } else
-          widget.domElement.classList.remove('longtouch');
+        mouseIsDragging = false;
       }
       delete mouseStatus[target.id];
-    } else if(name == 'mousemove' || name == 'touchmove' && mouseStatus[target.id]) {
+      mouseTarget = null;
+    } else if(name == 'mousemove' && mouseIsDragging && mouseStatus[target.id]) {
       setDeltaCause(`${playerName} dragged ${widget.id}`);
       if(mouseStatus[target.id].status == 'initial') {
         mouseStatus[target.id].status = 'moving';
@@ -127,9 +113,6 @@ async function inputHandler(name, e) {
     }
     batchEnd();
   }
-
-  if(name == 'mouseup')
-    mouseTarget = null;
 
   clientPointer.style.top = `${coords.clientY}px`;
   clientPointer.style.left = `${coords.clientX}px`;
