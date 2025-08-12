@@ -86,6 +86,11 @@ test('Create game using edit mode', async t => {
     .typeText('#INPUT_\\;sides', '12', { replace: true })
     .click('#buttonInputGo')
     .rightClick('#w_bldn')
-    .click('#w_bldn');
-  await compareState(t, 'a8da89943cf6f6fbc9b77ddaab41dc06');
+    .click('#w_bldn')
+    .pressKey('esc')
+    .click('#editButton')
+    .click('#editorToolbar > div > [icon=add]')
+    .click('#addZoomy')
+    .rightClick('#w_7eyy')
+  await compareState(t, '0ac06c9925eb0f6dee767bd605843825');
 });
