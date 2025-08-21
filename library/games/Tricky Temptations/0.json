@@ -6389,34 +6389,31 @@
     "layer": -1,
     "z": 12714,
     "movable": false,
-    "image": "/assets/445464681_3064"
+    "color": "#3f3f3f",
+    "icon": "lorc/skull-crossed-bones"
   },
   "dead-p2": {
     "id": "dead-p2",
     "parent": "holder-p2",
     "y": -700,
-    "image": "/assets/445464681_3064",
     "inheritFrom": "dead-p1"
   },
   "dead-p3": {
     "id": "dead-p3",
     "parent": "holder-p3",
     "y": -700,
-    "image": "/assets/445464681_3064",
     "inheritFrom": "dead-p1"
   },
   "dead-p4": {
     "id": "dead-p4",
     "parent": "holder-p4",
     "y": -700,
-    "image": "/assets/445464681_3064",
     "inheritFrom": "dead-p1"
   },
   "dead-p5": {
     "id": "dead-p5",
     "parent": "holder-p5",
     "y": -700,
-    "image": "/assets/445464681_3064",
     "inheritFrom": "dead-p1"
   },
   "button-dead-p1": {
