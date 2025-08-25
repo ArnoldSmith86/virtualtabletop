@@ -23,3 +23,18 @@
   background-position: center center;
   box-sizing: border-box;
 }
+
+.card .cardFaceObject.label {
+  display: block;
+  border: 1px dotted #ccc;
+  background: none;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  resize: none;
+  overflow: hidden;
+}
+
+.card .cardFaceObject.label:read-only {
+  pointer-events: none;
+}
