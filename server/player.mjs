@@ -54,6 +54,8 @@ export default class Player {
         this.trace('client', args);
       if(func == 'unlinkState')
         await this.room.unlinkState(this, args);
+      if(func == 'delegateRoutine')
+        this.room.delegateRoutine(this, args);
     } catch(e) {
       if(e instanceof Logging.UserError) {
         this.send('error', `${e.code} - ${e.message}`);
