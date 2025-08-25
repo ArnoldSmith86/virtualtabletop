@@ -169,28 +169,6 @@
       }
     ]
   },
-  "13sgD": {
-    "id": "13sgD",
-    "parent": "label-p1",
-    "fixedParent": true,
-    "x": -38,
-    "width": 32,
-    "height": 32,
-    "type": "button",
-    "movableInEdit": false,
-    "classes": "symbols",
-    "css": "font-size: 28px",
-    "text": "remove",
-    "clickRoutine": [
-      {
-        "func": "LABEL",
-        "label": "${PROPERTY parent}",
-        "mode": "dec",
-        "value": 1
-      }
-    ],
-    "y": 1
-  },
   "button-reset": {
     "type": "button",
     "id": "button-reset",
@@ -548,7 +526,7 @@
     "version": 17,
     "info": {
       "name": "Silent Spectre",
-      "image": "/assets/2110123162_79827",
+      "image": "/assets/1916892750_16010",
       "rules": "https://boardgamegeek.com/filepage/302981/official-english-rules",
       "bgg": "https://boardgamegeek.com/boardgame/447384/meister-makatsu",
       "year": "2025",
@@ -572,66 +550,6 @@
       "language": "en-US",
       "players": "2-6"
     }
-  },
-  "fswk": {
-    "deck": "deck-5p",
-    "type": "card",
-    "cardType": "purple-1",
-    "id": "fswk",
-    "z": 50797,
-    "parent": "owzm",
-    "x": null,
-    "y": null
-  },
-  "5mqd": {
-    "deck": "deck-5p",
-    "type": "card",
-    "cardType": "purple-4",
-    "id": "5mqd",
-    "z": 50822,
-    "parent": "h9xn",
-    "x": null,
-    "y": null
-  },
-  "zbc6": {
-    "deck": "deck-4p",
-    "type": "card",
-    "cardType": "purple-1",
-    "id": "zbc6",
-    "z": 51165,
-    "parent": "93bx",
-    "x": null,
-    "y": null
-  },
-  "h9m2": {
-    "deck": "deck-4p",
-    "type": "card",
-    "cardType": "purple-4",
-    "id": "h9m2",
-    "z": 51190,
-    "parent": "gzmj",
-    "x": null,
-    "y": null
-  },
-  "p28m": {
-    "deck": "deck-3p",
-    "type": "card",
-    "cardType": "purple-1",
-    "id": "p28m",
-    "z": 51483,
-    "parent": "w93m",
-    "x": null,
-    "y": null
-  },
-  "o9t2": {
-    "deck": "deck-3p",
-    "type": "card",
-    "cardType": "purple-4",
-    "id": "o9t2",
-    "z": 51508,
-    "parent": "n16y",
-    "x": null,
-    "y": null
   },
   "deck-p1": {
     "type": "deck",
