@@ -2055,67 +2055,70 @@
     "id": "Ship Template",
     "x": 1158.6279441635002,
     "y": 395,
-    "width": 60,
-    "height": 48,
-    "rotation": 210,
+    "width": 32,
+    "height": 37,
     "color": "pink",
     "grid": [
       {
-        "offsetX": -96.025403787,
-        "offsetY": 26,
+        "offsetX": -82.025403787,
+        "offsetY": 31.5,
         "y": 300,
         "x": 173.20508075700002,
-        "rotation": 90,
+        "image": "/assets/1197315170_2269",
         "minX": 250
       },
       {
-        "offsetX": -9.422863408499992,
-        "offsetY": 176,
+        "offsetX": 4.5771365915000075,
+        "offsetY": 181.5,
         "y": 300,
         "x": 173.20508075700002,
-        "rotation": 90,
+        "image": "/assets/1197315170_2269",
         "minX": 250
       },
       {
-        "offsetX": 33.87840678075001,
-        "offsetY": -49,
+        "offsetX": 47.87840678075001,
+        "offsetY": -43.5,
         "y": 300,
         "x": 173.20508075700002,
-        "rotation": 30,
+        "image": "/assets/1197315170_2269",
         "minX": 250
       },
       {
-        "offsetX": -52.72413359775,
-        "offsetY": 101,
+        "offsetX": -38.72413359775,
+        "offsetY": 106.5,
         "y": 300,
         "x": 173.20508075700002,
-        "rotation": 30,
+        "image": "/assets/1197315170_2269",
         "minX": 250
       },
       {
-        "offsetX": -52.72413359775,
-        "offsetY": -49,
+        "offsetX": -38.72413359775,
+        "offsetY": -43.5,
         "y": 300,
         "x": 173.20508075700002,
-        "rotation": 150,
+        "image": "/assets/1124390045_2175",
         "minX": 250
       },
       {
-        "offsetX": 33.87840678075001,
-        "offsetY": 101,
+        "offsetX": 47.87840678075001,
+        "offsetY": 106.5,
         "y": 300,
         "x": 173.20508075700002,
-        "rotation": 150,
+        "image": "/assets/1124390045_2175",
         "minX": 250
       }
     ],
     "home": "Ships",
-    "image": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 83.612 59.997'%3E%3Cpath d='M0 44S12 59 44 59s38-15 38-15l-34-1V33h20S63.0.9 46.0.144 28 33 28 33v10z' fill='currentColor' stroke='grey' stroke-width='2'/%3E%3C/svg%3E",
     "svgReplaces": {
-      "currentColor": "color"
+      "#primaryColor": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
     },
     "layer": 2,
-    "parent": "Switch Board"
+    "parent": "Switch Board",
+    "borderColor": "black",
+    "borderWidth": 3,
+    "image": "/assets/1197315170_2269"
   },
   "Wall Template": {
     "id": "Wall Template",
@@ -2188,20 +2191,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "Settlement Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 1": [
         "color",
         "player"
+      ],
+      "Settlement Template": [
+        "!parent"
       ]
     },
     "z": 3,
@@ -2227,20 +2222,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "City Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 1": [
         "color",
         "player"
+      ],
+      "City Template": [
+        "!parent"
       ]
     },
     "z": 2,
@@ -2253,20 +2240,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "Road Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 1": [
         "color",
         "player"
+      ],
+      "Road Template": [
+        "!parent"
       ]
     },
     "z": 1,
@@ -2331,20 +2310,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "Road Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 1": [
         "color",
         "player"
+      ],
+      "Road Template": [
+        "!parent"
       ]
     },
     "z": 6,
@@ -2358,20 +2329,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "Road Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 1": [
         "color",
         "player"
+      ],
+      "Road Template": [
+        "!parent"
       ]
     },
     "z": 2,
@@ -2385,20 +2348,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "Road Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 1": [
         "color",
         "player"
+      ],
+      "Road Template": [
+        "!parent"
       ]
     },
     "z": 7,
@@ -2411,20 +2366,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "Road Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 1": [
         "color",
         "player"
+      ],
+      "Road Template": [
+        "!parent"
       ]
     },
     "z": 8,
@@ -2437,20 +2384,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "Road Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 1": [
         "color",
         "player"
+      ],
+      "Road Template": [
+        "!parent"
       ]
     },
     "z": 9,
@@ -2463,20 +2402,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "Road Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 1": [
         "color",
         "player"
+      ],
+      "Road Template": [
+        "!parent"
       ]
     },
     "z": 13,
@@ -2490,20 +2421,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "Road Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 1": [
         "color",
         "player"
+      ],
+      "Road Template": [
+        "!parent"
       ]
     },
     "z": 10,
@@ -2516,20 +2439,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "Road Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 1": [
         "color",
         "player"
+      ],
+      "Road Template": [
+        "!parent"
       ]
     },
     "z": 11,
@@ -2542,20 +2457,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "Road Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 1": [
         "color",
         "player"
+      ],
+      "Road Template": [
+        "!parent"
       ]
     },
     "z": 5,
@@ -2569,20 +2476,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "Road Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 1": [
         "color",
         "player"
+      ],
+      "Road Template": [
+        "!parent"
       ]
     },
     "z": 12,
@@ -2595,20 +2494,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "Road Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 1": [
         "color",
         "player"
+      ],
+      "Road Template": [
+        "!parent"
       ]
     },
     "z": 14,
@@ -2622,20 +2513,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "Road Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 1": [
         "color",
         "player"
+      ],
+      "Road Template": [
+        "!parent"
       ]
     },
     "z": 4,
@@ -2649,20 +2532,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "Road Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 1": [
         "color",
         "player"
+      ],
+      "Road Template": [
+        "!parent"
       ]
     },
     "z": 3,
@@ -2676,20 +2551,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "Road Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 1": [
         "color",
         "player"
+      ],
+      "Road Template": [
+        "!parent"
       ]
     },
     "z": 15,
@@ -2703,20 +2570,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "Settlement Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 1": [
         "color",
         "player"
+      ],
+      "Settlement Template": [
+        "!parent"
       ]
     },
     "z": 2,
@@ -2729,20 +2588,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "Settlement Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 1": [
         "color",
         "player"
+      ],
+      "Settlement Template": [
+        "!parent"
       ]
     },
     "z": 1,
@@ -2755,20 +2606,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "Settlement Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 1": [
         "color",
         "player"
+      ],
+      "Settlement Template": [
+        "!parent"
       ]
     },
     "z": 4,
@@ -2781,20 +2624,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "City Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 1": [
         "color",
         "player"
+      ],
+      "City Template": [
+        "!parent"
       ]
     },
     "z": 1,
@@ -2807,20 +2642,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "City Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 1": [
         "color",
         "player"
+      ],
+      "City Template": [
+        "!parent"
       ]
     },
     "z": 3,
@@ -2833,20 +2660,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "City Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 1": [
         "color",
         "player"
+      ],
+      "City Template": [
+        "!parent"
       ]
     },
     "z": 4,
@@ -2893,20 +2712,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "Settlement Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 2": [
         "color",
         "player"
+      ],
+      "Settlement Template": [
+        "!parent"
       ]
     },
     "z": 2,
@@ -2919,20 +2730,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "Settlement Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 2": [
         "color",
         "player"
+      ],
+      "Settlement Template": [
+        "!parent"
       ]
     },
     "z": 4,
@@ -2945,20 +2748,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "Settlement Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 2": [
         "color",
         "player"
+      ],
+      "Settlement Template": [
+        "!parent"
       ]
     },
     "z": 3,
@@ -2971,20 +2766,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "Settlement Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 2": [
         "color",
         "player"
+      ],
+      "Settlement Template": [
+        "!parent"
       ]
     },
     "z": 1,
@@ -3003,20 +2790,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "City Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 2": [
         "color",
         "player"
+      ],
+      "City Template": [
+        "!parent"
       ]
     },
     "parent": "Player 2 - Cities",
@@ -3029,20 +2808,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "City Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 2": [
         "color",
         "player"
+      ],
+      "City Template": [
+        "!parent"
       ]
     },
     "z": 4,
@@ -3056,20 +2827,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "City Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 2": [
         "color",
         "player"
+      ],
+      "City Template": [
+        "!parent"
       ]
     },
     "z": 3,
@@ -3082,20 +2845,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "City Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 2": [
         "color",
         "player"
+      ],
+      "City Template": [
+        "!parent"
       ]
     },
     "parent": "Player 2 - Cities",
@@ -3114,20 +2869,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "Road Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 2": [
         "color",
         "player"
+      ],
+      "Road Template": [
+        "!parent"
       ]
     },
     "z": 8,
@@ -3141,20 +2888,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "Road Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 2": [
         "color",
         "player"
+      ],
+      "Road Template": [
+        "!parent"
       ]
     },
     "z": 12,
@@ -3168,20 +2907,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "Road Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 2": [
         "color",
         "player"
+      ],
+      "Road Template": [
+        "!parent"
       ]
     },
     "z": 15,
@@ -3196,20 +2927,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "Road Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 2": [
         "color",
         "player"
+      ],
+      "Road Template": [
+        "!parent"
       ]
     },
     "z": 2,
@@ -3223,20 +2946,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "Road Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 2": [
         "color",
         "player"
+      ],
+      "Road Template": [
+        "!parent"
       ]
     },
     "z": 3,
@@ -3250,20 +2965,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "Road Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 2": [
         "color",
         "player"
+      ],
+      "Road Template": [
+        "!parent"
       ]
     },
     "z": 10,
@@ -3277,20 +2984,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "Road Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 2": [
         "color",
         "player"
+      ],
+      "Road Template": [
+        "!parent"
       ]
     },
     "z": 13,
@@ -3304,20 +3003,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "Road Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 2": [
         "color",
         "player"
+      ],
+      "Road Template": [
+        "!parent"
       ]
     },
     "z": 14,
@@ -3331,20 +3022,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "Road Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 2": [
         "color",
         "player"
+      ],
+      "Road Template": [
+        "!parent"
       ]
     },
     "z": 9,
@@ -3358,20 +3041,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "Road Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 2": [
         "color",
         "player"
+      ],
+      "Road Template": [
+        "!parent"
       ]
     },
     "parent": "Player 2 - Roads",
@@ -3384,20 +3059,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "Road Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 2": [
         "color",
         "player"
+      ],
+      "Road Template": [
+        "!parent"
       ]
     },
     "z": 1,
@@ -3411,20 +3078,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "Road Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 2": [
         "color",
         "player"
+      ],
+      "Road Template": [
+        "!parent"
       ]
     },
     "parent": "Player 2 - Roads",
@@ -3437,20 +3096,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "Road Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 2": [
         "color",
         "player"
+      ],
+      "Road Template": [
+        "!parent"
       ]
     },
     "z": 11,
@@ -3464,20 +3115,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "Road Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 2": [
         "color",
         "player"
+      ],
+      "Road Template": [
+        "!parent"
       ]
     },
     "parent": "Player 2 - Roads",
@@ -3490,20 +3133,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "Road Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 2": [
         "color",
         "player"
+      ],
+      "Road Template": [
+        "!parent"
       ]
     },
     "z": 4,
@@ -3570,20 +3205,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "Settlement Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 3": [
         "color",
         "player"
+      ],
+      "Settlement Template": [
+        "!parent"
       ]
     },
     "z": 1,
@@ -3596,20 +3223,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "Settlement Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 3": [
         "color",
         "player"
+      ],
+      "Settlement Template": [
+        "!parent"
       ]
     },
     "z": 2,
@@ -3622,20 +3241,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "Settlement Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 3": [
         "color",
         "player"
+      ],
+      "Settlement Template": [
+        "!parent"
       ]
     },
     "z": 3,
@@ -3648,20 +3259,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "Settlement Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 3": [
         "color",
         "player"
+      ],
+      "Settlement Template": [
+        "!parent"
       ]
     },
     "z": 4,
@@ -3680,20 +3283,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "City Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 3": [
         "color",
         "player"
+      ],
+      "City Template": [
+        "!parent"
       ]
     },
     "z": 3,
@@ -3706,20 +3301,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "City Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 3": [
         "color",
         "player"
+      ],
+      "City Template": [
+        "!parent"
       ]
     },
     "z": 1,
@@ -3732,20 +3319,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "City Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 3": [
         "color",
         "player"
+      ],
+      "City Template": [
+        "!parent"
       ]
     },
     "z": 2,
@@ -3758,20 +3337,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "City Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 3": [
         "color",
         "player"
+      ],
+      "City Template": [
+        "!parent"
       ]
     },
     "z": 4,
@@ -3791,20 +3362,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "Road Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 3": [
         "color",
         "player"
+      ],
+      "Road Template": [
+        "!parent"
       ]
     },
     "parent": "Player 3 - Roads",
@@ -3817,20 +3380,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "Road Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 3": [
         "color",
         "player"
+      ],
+      "Road Template": [
+        "!parent"
       ]
     },
     "parent": "Player 3 - Roads",
@@ -3843,20 +3398,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "Road Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 3": [
         "color",
         "player"
+      ],
+      "Road Template": [
+        "!parent"
       ]
     },
     "parent": "Player 3 - Roads",
@@ -3869,20 +3416,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "Road Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 3": [
         "color",
         "player"
+      ],
+      "Road Template": [
+        "!parent"
       ]
     },
     "z": 15,
@@ -3896,20 +3435,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "Road Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 3": [
         "color",
         "player"
+      ],
+      "Road Template": [
+        "!parent"
       ]
     },
     "z": 14,
@@ -3923,20 +3454,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "Road Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 3": [
         "color",
         "player"
+      ],
+      "Road Template": [
+        "!parent"
       ]
     },
     "z": 6,
@@ -3950,20 +3473,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "Road Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 3": [
         "color",
         "player"
+      ],
+      "Road Template": [
+        "!parent"
       ]
     },
     "z": 11,
@@ -3977,20 +3492,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "Road Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 3": [
         "color",
         "player"
+      ],
+      "Road Template": [
+        "!parent"
       ]
     },
     "z": 10,
@@ -4004,20 +3511,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "Road Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 3": [
         "color",
         "player"
+      ],
+      "Road Template": [
+        "!parent"
       ]
     },
     "z": 13,
@@ -4031,20 +3530,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "Road Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 3": [
         "color",
         "player"
+      ],
+      "Road Template": [
+        "!parent"
       ]
     },
     "z": 8,
@@ -4058,20 +3549,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "Road Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 3": [
         "color",
         "player"
+      ],
+      "Road Template": [
+        "!parent"
       ]
     },
     "z": 7,
@@ -4085,20 +3568,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "Road Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 3": [
         "color",
         "player"
+      ],
+      "Road Template": [
+        "!parent"
       ]
     },
     "z": 12,
@@ -4112,20 +3587,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "Road Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 3": [
         "color",
         "player"
+      ],
+      "Road Template": [
+        "!parent"
       ]
     },
     "parent": "Player 3 - Roads",
@@ -4138,20 +3605,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "Road Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 3": [
         "color",
         "player"
+      ],
+      "Road Template": [
+        "!parent"
       ]
     },
     "z": 9,
@@ -4165,20 +3624,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "Road Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 3": [
         "color",
         "player"
+      ],
+      "Road Template": [
+        "!parent"
       ]
     },
     "z": 1,
@@ -4245,20 +3696,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "Settlement Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 4": [
         "color",
         "player"
+      ],
+      "Settlement Template": [
+        "!parent"
       ]
     },
     "z": 2,
@@ -4271,20 +3714,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "Settlement Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 4": [
         "color",
         "player"
+      ],
+      "Settlement Template": [
+        "!parent"
       ]
     },
     "z": 3,
@@ -4297,20 +3732,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "Settlement Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 4": [
         "color",
         "player"
+      ],
+      "Settlement Template": [
+        "!parent"
       ]
     },
     "z": 4,
@@ -4323,20 +3750,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "Settlement Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 4": [
         "color",
         "player"
+      ],
+      "Settlement Template": [
+        "!parent"
       ]
     },
     "z": 5,
@@ -4355,20 +3774,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "City Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 4": [
         "color",
         "player"
+      ],
+      "City Template": [
+        "!parent"
       ]
     },
     "parent": "Player 4 - Cities",
@@ -4381,20 +3792,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "City Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 4": [
         "color",
         "player"
+      ],
+      "City Template": [
+        "!parent"
       ]
     },
     "z": 1,
@@ -4407,20 +3810,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "City Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 4": [
         "color",
         "player"
+      ],
+      "City Template": [
+        "!parent"
       ]
     },
     "z": 4,
@@ -4433,20 +3828,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "City Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 4": [
         "color",
         "player"
+      ],
+      "City Template": [
+        "!parent"
       ]
     },
     "z": 3,
@@ -4465,20 +3852,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "Road Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 4": [
         "color",
         "player"
+      ],
+      "Road Template": [
+        "!parent"
       ]
     },
     "z": 15,
@@ -4493,20 +3872,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "Road Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 4": [
         "color",
         "player"
+      ],
+      "Road Template": [
+        "!parent"
       ]
     },
     "parent": "Player 4 - Roads",
@@ -4519,20 +3890,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "Road Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 4": [
         "color",
         "player"
+      ],
+      "Road Template": [
+        "!parent"
       ]
     },
     "parent": "Player 4 - Roads",
@@ -4545,20 +3908,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "Road Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 4": [
         "color",
         "player"
+      ],
+      "Road Template": [
+        "!parent"
       ]
     },
     "parent": "Player 4 - Roads",
@@ -4571,20 +3926,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "Road Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 4": [
         "color",
         "player"
+      ],
+      "Road Template": [
+        "!parent"
       ]
     },
     "z": 4,
@@ -4598,20 +3945,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "Road Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 4": [
         "color",
         "player"
+      ],
+      "Road Template": [
+        "!parent"
       ]
     },
     "parent": "Player 4 - Roads",
@@ -4624,20 +3963,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "Road Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 4": [
         "color",
         "player"
+      ],
+      "Road Template": [
+        "!parent"
       ]
     },
     "z": 3,
@@ -4651,20 +3982,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "Road Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 4": [
         "color",
         "player"
+      ],
+      "Road Template": [
+        "!parent"
       ]
     },
     "z": 2,
@@ -4678,20 +4001,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "Road Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 4": [
         "color",
         "player"
+      ],
+      "Road Template": [
+        "!parent"
       ]
     },
     "z": 12,
@@ -4705,20 +4020,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "Road Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 4": [
         "color",
         "player"
+      ],
+      "Road Template": [
+        "!parent"
       ]
     },
     "z": 11,
@@ -4732,20 +4039,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "Road Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 4": [
         "color",
         "player"
+      ],
+      "Road Template": [
+        "!parent"
       ]
     },
     "z": 1,
@@ -4759,20 +4058,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "Road Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 4": [
         "color",
         "player"
+      ],
+      "Road Template": [
+        "!parent"
       ]
     },
     "z": 14,
@@ -4786,20 +4077,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "Road Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 4": [
         "color",
         "player"
+      ],
+      "Road Template": [
+        "!parent"
       ]
     },
     "parent": "Player 4 - Roads",
@@ -4812,20 +4095,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "Road Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 4": [
         "color",
         "player"
+      ],
+      "Road Template": [
+        "!parent"
       ]
     },
     "z": 13,
@@ -4839,20 +4114,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "Road Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 4": [
         "color",
         "player"
+      ],
+      "Road Template": [
+        "!parent"
       ]
     },
     "z": 5,
@@ -4876,7 +4143,7 @@
       ]
     },
     "color": "#999999",
-    "turn": true
+    "turn": false
   },
   "Robber": {
     "id": "Robber",
@@ -4928,26 +4195,18 @@
   },
   "Player 1 - Settlement E": {
     "id": "Player 1 - Settlement E",
-    "x": 16,
-    "y": 40,
+    "x": 0,
+    "y": 0,
     "rotation": 0,
-    "z": 5,
+    "z": 1,
     "activeFace": 0,
     "inheritFrom": {
-      "Settlement Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 1": [
         "color",
         "player"
+      ],
+      "Settlement Template": [
+        "!parent"
       ]
     },
     "parent": "Player 1 - Settlements"
@@ -4960,20 +4219,12 @@
     "z": 5,
     "activeFace": 0,
     "inheritFrom": {
-      "Settlement Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 2": [
         "color",
         "player"
+      ],
+      "Settlement Template": [
+        "!parent"
       ]
     },
     "parent": "Player 2 - Settlements"
@@ -4986,20 +4237,12 @@
     "z": 5,
     "activeFace": 0,
     "inheritFrom": {
-      "Settlement Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 3": [
         "color",
         "player"
+      ],
+      "Settlement Template": [
+        "!parent"
       ]
     },
     "parent": "Player 3 - Settlements"
@@ -5012,20 +4255,12 @@
     "z": 1,
     "activeFace": 0,
     "inheritFrom": {
-      "Settlement Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 4": [
         "color",
         "player"
+      ],
+      "Settlement Template": [
+        "!parent"
       ]
     },
     "parent": "Player 4 - Settlements"
@@ -5919,7 +5154,7 @@
             "offsetY": "${junctionOffsetY2}",
             "y": "${GRIDHEIGHT}",
             "x": "${WIDTH}",
-            "rotation": 90,
+            "image": "/assets/1197315170_2269",
             "minX": 250
           },
           {
@@ -5927,7 +5162,7 @@
             "offsetY": "${junctionOffsetY4}",
             "y": "${GRIDHEIGHT}",
             "x": "${WIDTH}",
-            "rotation": 90,
+            "image": "/assets/1197315170_2269",
             "minX": 250
           },
           {
@@ -5935,7 +5170,7 @@
             "offsetY": "${junctionOffsetY1}",
             "y": "${GRIDHEIGHT}",
             "x": "${WIDTH}",
-            "rotation": 30,
+            "image": "/assets/1197315170_2269",
             "minX": 250
           },
           {
@@ -5943,7 +5178,7 @@
             "offsetY": "${junctionOffsetY3}",
             "y": "${GRIDHEIGHT}",
             "x": "${WIDTH}",
-            "rotation": 30,
+            "image": "/assets/1197315170_2269",
             "minX": 250
           },
           {
@@ -5951,7 +5186,7 @@
             "offsetY": "${junctionOffsetY1}",
             "y": "${GRIDHEIGHT}",
             "x": "${WIDTH}",
-            "rotation": 150,
+            "image": "/assets/1124390045_2175",
             "minX": 250
           },
           {
@@ -5959,7 +5194,7 @@
             "offsetY": "${junctionOffsetY3}",
             "y": "${GRIDHEIGHT}",
             "x": "${WIDTH}",
-            "rotation": 150,
+            "image": "/assets/1124390045_2175",
             "minX": 250
           }
         ]
@@ -6787,20 +6022,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "Settlement Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 5": [
         "color",
         "player"
+      ],
+      "Settlement Template": [
+        "!parent"
       ]
     },
     "z": 3,
@@ -6813,20 +6040,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "Settlement Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 5": [
         "color",
         "player"
+      ],
+      "Settlement Template": [
+        "!parent"
       ]
     },
     "z": 2,
@@ -6839,20 +6058,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "Settlement Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 5": [
         "color",
         "player"
+      ],
+      "Settlement Template": [
+        "!parent"
       ]
     },
     "z": 1,
@@ -6865,20 +6076,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "Settlement Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 5": [
         "color",
         "player"
+      ],
+      "Settlement Template": [
+        "!parent"
       ]
     },
     "z": 4,
@@ -6892,20 +6095,12 @@
     "z": 5,
     "activeFace": 0,
     "inheritFrom": {
-      "Settlement Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 5": [
         "color",
         "player"
+      ],
+      "Settlement Template": [
+        "!parent"
       ]
     },
     "parent": "Player 5 - Settlements"
@@ -6923,20 +6118,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "City Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 5": [
         "color",
         "player"
+      ],
+      "City Template": [
+        "!parent"
       ]
     },
     "z": 3,
@@ -6949,20 +6136,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "City Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 5": [
         "color",
         "player"
+      ],
+      "City Template": [
+        "!parent"
       ]
     },
     "z": 2,
@@ -6975,20 +6154,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "City Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 5": [
         "color",
         "player"
+      ],
+      "City Template": [
+        "!parent"
       ]
     },
     "z": 1,
@@ -7001,20 +6172,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "City Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 5": [
         "color",
         "player"
+      ],
+      "City Template": [
+        "!parent"
       ]
     },
     "z": 4,
@@ -7033,20 +6196,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "Road Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 5": [
         "color",
         "player"
+      ],
+      "Road Template": [
+        "!parent"
       ]
     },
     "z": 14,
@@ -7060,20 +6215,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "Road Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 5": [
         "color",
         "player"
+      ],
+      "Road Template": [
+        "!parent"
       ]
     },
     "parent": "Player 5 - Roads",
@@ -7087,20 +6234,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "Road Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 5": [
         "color",
         "player"
+      ],
+      "Road Template": [
+        "!parent"
       ]
     },
     "z": 15,
@@ -7114,20 +6253,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "Road Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 5": [
         "color",
         "player"
+      ],
+      "Road Template": [
+        "!parent"
       ]
     },
     "parent": "Player 5 - Roads",
@@ -7141,20 +6272,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "Road Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 5": [
         "color",
         "player"
+      ],
+      "Road Template": [
+        "!parent"
       ]
     },
     "parent": "Player 5 - Roads",
@@ -7168,20 +6291,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "Road Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 5": [
         "color",
         "player"
+      ],
+      "Road Template": [
+        "!parent"
       ]
     },
     "parent": "Player 5 - Roads",
@@ -7195,20 +6310,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "Road Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 5": [
         "color",
         "player"
+      ],
+      "Road Template": [
+        "!parent"
       ]
     },
     "z": 2,
@@ -7222,20 +6329,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "Road Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 5": [
         "color",
         "player"
+      ],
+      "Road Template": [
+        "!parent"
       ]
     },
     "z": 1,
@@ -7249,20 +6348,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "Road Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 5": [
         "color",
         "player"
+      ],
+      "Road Template": [
+        "!parent"
       ]
     },
     "z": 4,
@@ -7276,20 +6367,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "Road Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 5": [
         "color",
         "player"
+      ],
+      "Road Template": [
+        "!parent"
       ]
     },
     "z": 9,
@@ -7303,20 +6386,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "Road Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 5": [
         "color",
         "player"
+      ],
+      "Road Template": [
+        "!parent"
       ]
     },
     "z": 12,
@@ -7330,20 +6405,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "Road Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 5": [
         "color",
         "player"
+      ],
+      "Road Template": [
+        "!parent"
       ]
     },
     "z": 10,
@@ -7357,20 +6424,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "Road Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 5": [
         "color",
         "player"
+      ],
+      "Road Template": [
+        "!parent"
       ]
     },
     "z": 13,
@@ -7384,20 +6443,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "Road Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 5": [
         "color",
         "player"
+      ],
+      "Road Template": [
+        "!parent"
       ]
     },
     "z": 3,
@@ -7411,20 +6462,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "Road Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 5": [
         "color",
         "player"
+      ],
+      "Road Template": [
+        "!parent"
       ]
     },
     "z": 11,
@@ -7513,20 +6556,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "Settlement Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 6": [
         "color",
         "player"
+      ],
+      "Settlement Template": [
+        "!parent"
       ]
     },
     "z": 5,
@@ -7539,20 +6574,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "Settlement Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 6": [
         "color",
         "player"
+      ],
+      "Settlement Template": [
+        "!parent"
       ]
     },
     "z": 4,
@@ -7565,20 +6592,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "Settlement Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 6": [
         "color",
         "player"
+      ],
+      "Settlement Template": [
+        "!parent"
       ]
     },
     "z": 3,
@@ -7591,20 +6610,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "Settlement Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 6": [
         "color",
         "player"
+      ],
+      "Settlement Template": [
+        "!parent"
       ]
     },
     "z": 2,
@@ -7618,20 +6629,12 @@
     "z": 1,
     "activeFace": 0,
     "inheritFrom": {
-      "Settlement Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 6": [
         "color",
         "player"
+      ],
+      "Settlement Template": [
+        "!parent"
       ]
     },
     "parent": "Player 6 - Settlements"
@@ -7649,20 +6652,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "City Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 6": [
         "color",
         "player"
+      ],
+      "City Template": [
+        "!parent"
       ]
     },
     "z": 4,
@@ -7675,20 +6670,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "City Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 6": [
         "color",
         "player"
+      ],
+      "City Template": [
+        "!parent"
       ]
     },
     "z": 3,
@@ -7701,20 +6688,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "City Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 6": [
         "color",
         "player"
+      ],
+      "City Template": [
+        "!parent"
       ]
     },
     "z": 2,
@@ -7727,20 +6706,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "City Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 6": [
         "color",
         "player"
+      ],
+      "City Template": [
+        "!parent"
       ]
     },
     "z": 1,
@@ -7760,20 +6731,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "Road Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 6": [
         "color",
         "player"
+      ],
+      "Road Template": [
+        "!parent"
       ]
     },
     "parent": "Player 6 - Roads",
@@ -7787,20 +6750,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "Road Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 6": [
         "color",
         "player"
+      ],
+      "Road Template": [
+        "!parent"
       ]
     },
     "parent": "Player 6 - Roads",
@@ -7814,20 +6769,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "Road Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 6": [
         "color",
         "player"
+      ],
+      "Road Template": [
+        "!parent"
       ]
     },
     "parent": "Player 6 - Roads",
@@ -7841,20 +6788,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "Road Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 6": [
         "color",
         "player"
+      ],
+      "Road Template": [
+        "!parent"
       ]
     },
     "z": 4,
@@ -7869,20 +6808,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "Road Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 6": [
         "color",
         "player"
+      ],
+      "Road Template": [
+        "!parent"
       ]
     },
     "z": 5,
@@ -7896,20 +6827,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "Road Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 6": [
         "color",
         "player"
+      ],
+      "Road Template": [
+        "!parent"
       ]
     },
     "z": 6,
@@ -7923,20 +6846,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "Road Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 6": [
         "color",
         "player"
+      ],
+      "Road Template": [
+        "!parent"
       ]
     },
     "z": 7,
@@ -7950,20 +6865,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "Road Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 6": [
         "color",
         "player"
+      ],
+      "Road Template": [
+        "!parent"
       ]
     },
     "z": 8,
@@ -7977,20 +6884,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "Road Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 6": [
         "color",
         "player"
+      ],
+      "Road Template": [
+        "!parent"
       ]
     },
     "z": 9,
@@ -8004,20 +6903,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "Road Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 6": [
         "color",
         "player"
+      ],
+      "Road Template": [
+        "!parent"
       ]
     },
     "z": 10,
@@ -8031,20 +6922,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "Road Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 6": [
         "color",
         "player"
+      ],
+      "Road Template": [
+        "!parent"
       ]
     },
     "z": 11,
@@ -8058,20 +6941,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "Road Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 6": [
         "color",
         "player"
+      ],
+      "Road Template": [
+        "!parent"
       ]
     },
     "z": 12,
@@ -8085,20 +6960,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "Road Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 6": [
         "color",
         "player"
+      ],
+      "Road Template": [
+        "!parent"
       ]
     },
     "parent": "Player 6 - Roads",
@@ -8112,20 +6979,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "Road Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 6": [
         "color",
         "player"
+      ],
+      "Road Template": [
+        "!parent"
       ]
     },
     "z": 14,
@@ -8139,20 +6998,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "Road Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 6": [
         "color",
         "player"
+      ],
+      "Road Template": [
+        "!parent"
       ]
     },
     "z": 15,
@@ -8241,20 +7092,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "Settlement Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 7": [
         "color",
         "player"
+      ],
+      "Settlement Template": [
+        "!parent"
       ]
     },
     "z": 2,
@@ -8267,20 +7110,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "Settlement Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 7": [
         "color",
         "player"
+      ],
+      "Settlement Template": [
+        "!parent"
       ]
     },
     "z": 1,
@@ -8293,20 +7128,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "Settlement Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 7": [
         "color",
         "player"
+      ],
+      "Settlement Template": [
+        "!parent"
       ]
     },
     "z": 5,
@@ -8319,20 +7146,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "Settlement Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 7": [
         "color",
         "player"
+      ],
+      "Settlement Template": [
+        "!parent"
       ]
     },
     "z": 4,
@@ -8346,20 +7165,12 @@
     "z": 3,
     "activeFace": 0,
     "inheritFrom": {
-      "Settlement Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 7": [
         "color",
         "player"
+      ],
+      "Settlement Template": [
+        "!parent"
       ]
     },
     "parent": "Player 7 - Settlements"
@@ -8377,20 +7188,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "City Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 7": [
         "color",
         "player"
+      ],
+      "City Template": [
+        "!parent"
       ]
     },
     "parent": "Player 7 - Cities",
@@ -8403,20 +7206,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "City Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 7": [
         "color",
         "player"
+      ],
+      "City Template": [
+        "!parent"
       ]
     },
     "z": 3,
@@ -8429,20 +7224,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "City Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 7": [
         "color",
         "player"
+      ],
+      "City Template": [
+        "!parent"
       ]
     },
     "z": 2,
@@ -8455,20 +7242,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "City Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 7": [
         "color",
         "player"
+      ],
+      "City Template": [
+        "!parent"
       ]
     },
     "parent": "Player 7 - Cities",
@@ -8487,20 +7266,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "Road Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 7": [
         "color",
         "player"
+      ],
+      "Road Template": [
+        "!parent"
       ]
     },
     "z": 1,
@@ -8514,20 +7285,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "Road Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 7": [
         "color",
         "player"
+      ],
+      "Road Template": [
+        "!parent"
       ]
     },
     "z": 2,
@@ -8541,20 +7304,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "Road Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 7": [
         "color",
         "player"
+      ],
+      "Road Template": [
+        "!parent"
       ]
     },
     "z": 3,
@@ -8568,20 +7323,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "Road Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 7": [
         "color",
         "player"
+      ],
+      "Road Template": [
+        "!parent"
       ]
     },
     "z": 4,
@@ -8595,20 +7342,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "Road Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 7": [
         "color",
         "player"
+      ],
+      "Road Template": [
+        "!parent"
       ]
     },
     "z": 5,
@@ -8622,20 +7361,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "Road Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 7": [
         "color",
         "player"
+      ],
+      "Road Template": [
+        "!parent"
       ]
     },
     "z": 6,
@@ -8649,20 +7380,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "Road Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 7": [
         "color",
         "player"
+      ],
+      "Road Template": [
+        "!parent"
       ]
     },
     "z": 7,
@@ -8676,20 +7399,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "Road Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 7": [
         "color",
         "player"
+      ],
+      "Road Template": [
+        "!parent"
       ]
     },
     "z": 8,
@@ -8703,20 +7418,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "Road Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 7": [
         "color",
         "player"
+      ],
+      "Road Template": [
+        "!parent"
       ]
     },
     "z": 9,
@@ -8730,20 +7437,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "Road Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 7": [
         "color",
         "player"
+      ],
+      "Road Template": [
+        "!parent"
       ]
     },
     "parent": "Player 7 - Roads",
@@ -8757,20 +7456,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "Road Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 7": [
         "color",
         "player"
+      ],
+      "Road Template": [
+        "!parent"
       ]
     },
     "z": 11,
@@ -8784,20 +7475,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "Road Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 7": [
         "color",
         "player"
+      ],
+      "Road Template": [
+        "!parent"
       ]
     },
     "z": 12,
@@ -8811,20 +7494,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "Road Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 7": [
         "color",
         "player"
+      ],
+      "Road Template": [
+        "!parent"
       ]
     },
     "z": 13,
@@ -8838,20 +7513,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "Road Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 7": [
         "color",
         "player"
+      ],
+      "Road Template": [
+        "!parent"
       ]
     },
     "z": 14,
@@ -8865,20 +7532,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "Road Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 7": [
         "color",
         "player"
+      ],
+      "Road Template": [
+        "!parent"
       ]
     },
     "z": 15,
@@ -9008,20 +7667,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "Settlement Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 8": [
         "color",
         "player"
+      ],
+      "Settlement Template": [
+        "!parent"
       ]
     },
     "z": 1,
@@ -9034,20 +7685,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "Settlement Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 8": [
         "color",
         "player"
+      ],
+      "Settlement Template": [
+        "!parent"
       ]
     },
     "z": 5,
@@ -9060,20 +7703,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "Settlement Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 8": [
         "color",
         "player"
+      ],
+      "Settlement Template": [
+        "!parent"
       ]
     },
     "z": 4,
@@ -9086,20 +7721,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "Settlement Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 8": [
         "color",
         "player"
+      ],
+      "Settlement Template": [
+        "!parent"
       ]
     },
     "z": 3,
@@ -9113,20 +7740,12 @@
     "z": 2,
     "activeFace": 0,
     "inheritFrom": {
-      "Settlement Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 8": [
         "color",
         "player"
+      ],
+      "Settlement Template": [
+        "!parent"
       ]
     },
     "hoverParent": "Player 1 - Settlements",
@@ -9152,20 +7771,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "City Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 8": [
         "color",
         "player"
+      ],
+      "City Template": [
+        "!parent"
       ]
     },
     "z": 4,
@@ -9178,20 +7789,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "City Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 8": [
         "color",
         "player"
+      ],
+      "City Template": [
+        "!parent"
       ]
     },
     "z": 3,
@@ -9204,20 +7807,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "City Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 8": [
         "color",
         "player"
+      ],
+      "City Template": [
+        "!parent"
       ]
     },
     "z": 2,
@@ -9230,20 +7825,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "City Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 8": [
         "color",
         "player"
+      ],
+      "City Template": [
+        "!parent"
       ]
     },
     "z": 1,
@@ -9277,20 +7864,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "Road Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 8": [
         "color",
         "player"
+      ],
+      "Road Template": [
+        "!parent"
       ]
     },
     "z": 1,
@@ -9304,20 +7883,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "Road Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 8": [
         "color",
         "player"
+      ],
+      "Road Template": [
+        "!parent"
       ]
     },
     "z": 2,
@@ -9331,20 +7902,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "Road Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 8": [
         "color",
         "player"
+      ],
+      "Road Template": [
+        "!parent"
       ]
     },
     "z": 3,
@@ -9358,20 +7921,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "Road Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 8": [
         "color",
         "player"
+      ],
+      "Road Template": [
+        "!parent"
       ]
     },
     "z": 4,
@@ -9385,20 +7940,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "Road Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 8": [
         "color",
         "player"
+      ],
+      "Road Template": [
+        "!parent"
       ]
     },
     "z": 5,
@@ -9412,20 +7959,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "Road Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 8": [
         "color",
         "player"
+      ],
+      "Road Template": [
+        "!parent"
       ]
     },
     "z": 6,
@@ -9439,20 +7978,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "Road Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 8": [
         "color",
         "player"
+      ],
+      "Road Template": [
+        "!parent"
       ]
     },
     "z": 7,
@@ -9466,20 +7997,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "Road Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 8": [
         "color",
         "player"
+      ],
+      "Road Template": [
+        "!parent"
       ]
     },
     "z": 8,
@@ -9493,20 +8016,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "Road Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 8": [
         "color",
         "player"
+      ],
+      "Road Template": [
+        "!parent"
       ]
     },
     "z": 9,
@@ -9520,20 +8035,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "Road Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 8": [
         "color",
         "player"
+      ],
+      "Road Template": [
+        "!parent"
       ]
     },
     "z": 10,
@@ -9547,20 +8054,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "Road Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 8": [
         "color",
         "player"
+      ],
+      "Road Template": [
+        "!parent"
       ]
     },
     "z": 11,
@@ -9574,20 +8073,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "Road Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 8": [
         "color",
         "player"
+      ],
+      "Road Template": [
+        "!parent"
       ]
     },
     "z": 12,
@@ -9601,20 +8092,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "Road Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 8": [
         "color",
         "player"
+      ],
+      "Road Template": [
+        "!parent"
       ]
     },
     "z": 13,
@@ -9628,20 +8111,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "Road Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 8": [
         "color",
         "player"
+      ],
+      "Road Template": [
+        "!parent"
       ]
     },
     "z": 14,
@@ -9655,20 +8130,12 @@
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
-      "Road Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 8": [
         "color",
         "player"
+      ],
+      "Road Template": [
+        "!parent"
       ]
     },
     "z": 15,
@@ -11360,20 +9827,12 @@
     "z": 8,
     "activeFace": 0,
     "inheritFrom": {
-      "Ship Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 1": [
         "color",
         "player"
+      ],
+      "Ship Template": [
+        "!parent"
       ]
     },
     "x": 14,
@@ -11389,20 +9848,12 @@
     "z": 6,
     "activeFace": 0,
     "inheritFrom": {
-      "Ship Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 1": [
         "color",
         "player"
+      ],
+      "Ship Template": [
+        "!parent"
       ]
     },
     "parent": "Player 1 - Ships"
@@ -11415,20 +9866,12 @@
     "z": 5,
     "activeFace": 0,
     "inheritFrom": {
-      "Ship Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 1": [
         "color",
         "player"
+      ],
+      "Ship Template": [
+        "!parent"
       ]
     },
     "parent": "Player 1 - Ships"
@@ -11441,20 +9884,12 @@
     "z": 1,
     "activeFace": 0,
     "inheritFrom": {
-      "Ship Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 1": [
         "color",
         "player"
+      ],
+      "Ship Template": [
+        "!parent"
       ]
     },
     "parent": "Player 1 - Ships"
@@ -11467,20 +9902,12 @@
     "z": 7,
     "activeFace": 0,
     "inheritFrom": {
-      "Ship Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 1": [
         "color",
         "player"
+      ],
+      "Ship Template": [
+        "!parent"
       ]
     },
     "parent": "Player 1 - Ships"
@@ -11493,20 +9920,12 @@
     "z": 9,
     "activeFace": 0,
     "inheritFrom": {
-      "Ship Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 1": [
         "color",
         "player"
+      ],
+      "Ship Template": [
+        "!parent"
       ]
     },
     "parent": "Player 1 - Ships"
@@ -11519,20 +9938,12 @@
     "z": 10,
     "activeFace": 0,
     "inheritFrom": {
-      "Ship Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 1": [
         "color",
         "player"
+      ],
+      "Ship Template": [
+        "!parent"
       ]
     },
     "parent": "Player 1 - Ships"
@@ -11545,20 +9956,12 @@
     "z": 11,
     "activeFace": 0,
     "inheritFrom": {
-      "Ship Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 1": [
         "color",
         "player"
+      ],
+      "Ship Template": [
+        "!parent"
       ]
     },
     "parent": "Player 1 - Ships"
@@ -11571,20 +9974,12 @@
     "z": 12,
     "activeFace": 0,
     "inheritFrom": {
-      "Ship Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 1": [
         "color",
         "player"
+      ],
+      "Ship Template": [
+        "!parent"
       ]
     },
     "parent": "Player 1 - Ships"
@@ -11597,20 +9992,12 @@
     "z": 13,
     "activeFace": 0,
     "inheritFrom": {
-      "Ship Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 1": [
         "color",
         "player"
+      ],
+      "Ship Template": [
+        "!parent"
       ]
     },
     "parent": "Player 1 - Ships"
@@ -11623,48 +10010,36 @@
     "z": 14,
     "activeFace": 0,
     "inheritFrom": {
-      "Ship Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 1": [
         "color",
         "player"
+      ],
+      "Ship Template": [
+        "!parent"
       ]
     },
+    "note": "vertical",
+    "image": "/assets/1124390045_2175",
     "parent": "Player 1 - Ships"
   },
   "Player 1 - Ship L": {
     "id": "Player 1 - Ship L",
     "x": 28,
     "y": 28,
-    "rotation": 0,
     "z": 15,
     "activeFace": 0,
     "inheritFrom": {
-      "Ship Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 1": [
         "color",
         "player"
+      ],
+      "Ship Template": [
+        "!parent"
       ]
     },
+    "image": "/assets/1124390045_2175",
+    "note": "vertical",
+    "rotation": 0,
     "parent": "Player 1 - Ships"
   },
   "Player 1 - Ship M": {
@@ -11675,20 +10050,12 @@
     "z": 2,
     "activeFace": 0,
     "inheritFrom": {
-      "Ship Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 1": [
         "color",
         "player"
+      ],
+      "Ship Template": [
+        "!parent"
       ]
     },
     "parent": "Player 1 - Ships"
@@ -11701,20 +10068,12 @@
     "z": 3,
     "activeFace": 0,
     "inheritFrom": {
-      "Ship Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 1": [
         "color",
         "player"
+      ],
+      "Ship Template": [
+        "!parent"
       ]
     },
     "parent": "Player 1 - Ships"
@@ -11727,20 +10086,12 @@
     "z": 4,
     "activeFace": 0,
     "inheritFrom": {
-      "Ship Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 1": [
         "color",
         "player"
+      ],
+      "Ship Template": [
+        "!parent"
       ]
     },
     "parent": "Player 1 - Ships"
@@ -11749,25 +10100,25 @@
     "id": "Pirate",
     "x": 1270,
     "y": 20,
-    "width": 60,
-    "height": 48,
+    "width": 32,
+    "height": 37,
     "layer": 2,
     "color": "black",
     "grid": [
       {
-        "offsetX": -9.422863408499992,
-        "offsetY": 26,
+        "offsetX": 4.5771365915000075,
+        "offsetY": 31.5,
         "y": 300,
         "x": 173.20508075700002
       },
       {
-        "offsetX": -96.025403787,
-        "offsetY": 176,
+        "offsetX": -82.025403787,
+        "offsetY": 181.5,
         "y": 300,
         "x": 173.20508075700002
       }
     ],
-    "image": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 83.612 59.997'%3E%3Cpath d='M0 44S12 59 44 59s38-15 38-15l-34-1V33h20S63.0.9 46.0.144 28 33 28 33v10z' fill='currentColor' stroke='grey' stroke-width='2'/%3E%3C/svg%3E",
+    "image": "/assets/1124390045_2175",
     "inheritFrom": {
       "Ship Template": [
         "!parent",
@@ -11791,7 +10142,7 @@
       "time": "60",
       "showName": true,
       "attribution": "<div>Board layout by ArnoldSmith86 and mousewax. Released to public domain under CC0.</div><div><br></div><div>Library image generated by Midjourney using prompt \"catan, water color painting\".</div><div><br></div><div>All other images by mousewax, released to public domain under CC0.</div><div><br></div><div>Description texts generated by ChatGPT and modified by ArnoldSmith86.</div>",
-      "lastUpdate": 1753481325270,
+      "lastUpdate": 1756712216645,
       "skill": "",
       "description": "Roll the dice to determine your harvest, engage in resource trading, and expand your colony to gain victory points. The player with the most victory points wins.",
       "similarImage": "",
@@ -12590,20 +10941,12 @@
     "z": 13,
     "activeFace": 0,
     "inheritFrom": {
-      "Ship Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 2": [
         "color",
         "player"
+      ],
+      "Ship Template": [
+        "!parent"
       ]
     },
     "x": 24,
@@ -12616,20 +10959,12 @@
     "z": 1,
     "activeFace": 0,
     "inheritFrom": {
-      "Ship Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 3": [
         "color",
         "player"
+      ],
+      "Ship Template": [
+        "!parent"
       ]
     },
     "x": 0,
@@ -12642,20 +10977,12 @@
     "z": 1,
     "activeFace": 0,
     "inheritFrom": {
-      "Ship Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 4": [
         "color",
         "player"
+      ],
+      "Ship Template": [
+        "!parent"
       ]
     },
     "x": 0,
@@ -12668,20 +10995,12 @@
     "z": 2,
     "activeFace": 0,
     "inheritFrom": {
-      "Ship Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 5": [
         "color",
         "player"
+      ],
+      "Ship Template": [
+        "!parent"
       ]
     },
     "x": 2,
@@ -12694,20 +11013,12 @@
     "z": 1,
     "activeFace": 0,
     "inheritFrom": {
-      "Ship Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 6": [
         "color",
         "player"
+      ],
+      "Ship Template": [
+        "!parent"
       ]
     },
     "x": 0,
@@ -12720,20 +11031,12 @@
     "z": 1,
     "activeFace": 0,
     "inheritFrom": {
-      "Ship Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 7": [
         "color",
         "player"
+      ],
+      "Ship Template": [
+        "!parent"
       ]
     },
     "x": 0,
@@ -12746,20 +11049,12 @@
     "z": 2,
     "activeFace": 0,
     "inheritFrom": {
-      "Ship Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 8": [
         "color",
         "player"
+      ],
+      "Ship Template": [
+        "!parent"
       ]
     },
     "x": 2,
@@ -12775,20 +11070,12 @@
     "z": 12,
     "activeFace": 0,
     "inheritFrom": {
-      "Ship Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 2": [
         "color",
         "player"
+      ],
+      "Ship Template": [
+        "!parent"
       ]
     },
     "parent": "Player 2 - Ships"
@@ -12801,20 +11088,12 @@
     "z": 2,
     "activeFace": 0,
     "inheritFrom": {
-      "Ship Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 3": [
         "color",
         "player"
+      ],
+      "Ship Template": [
+        "!parent"
       ]
     },
     "parent": "Player 3 - Ships"
@@ -12827,20 +11106,12 @@
     "z": 2,
     "activeFace": 0,
     "inheritFrom": {
-      "Ship Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 4": [
         "color",
         "player"
+      ],
+      "Ship Template": [
+        "!parent"
       ]
     },
     "parent": "Player 4 - Ships"
@@ -12853,20 +11124,12 @@
     "z": 3,
     "activeFace": 0,
     "inheritFrom": {
-      "Ship Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 5": [
         "color",
         "player"
+      ],
+      "Ship Template": [
+        "!parent"
       ]
     },
     "parent": "Player 5 - Ships"
@@ -12879,20 +11142,12 @@
     "z": 2,
     "activeFace": 0,
     "inheritFrom": {
-      "Ship Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 6": [
         "color",
         "player"
+      ],
+      "Ship Template": [
+        "!parent"
       ]
     },
     "parent": "Player 6 - Ships"
@@ -12905,20 +11160,12 @@
     "z": 2,
     "activeFace": 0,
     "inheritFrom": {
-      "Ship Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 7": [
         "color",
         "player"
+      ],
+      "Ship Template": [
+        "!parent"
       ]
     },
     "parent": "Player 7 - Ships"
@@ -12931,20 +11178,12 @@
     "z": 3,
     "activeFace": 0,
     "inheritFrom": {
-      "Ship Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 8": [
         "color",
         "player"
+      ],
+      "Ship Template": [
+        "!parent"
       ]
     },
     "parent": "Player 8 - Ships"
@@ -12957,20 +11196,12 @@
     "z": 11,
     "activeFace": 0,
     "inheritFrom": {
-      "Ship Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 2": [
         "color",
         "player"
+      ],
+      "Ship Template": [
+        "!parent"
       ]
     },
     "parent": "Player 2 - Ships"
@@ -12983,20 +11214,12 @@
     "z": 3,
     "activeFace": 0,
     "inheritFrom": {
-      "Ship Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 3": [
         "color",
         "player"
+      ],
+      "Ship Template": [
+        "!parent"
       ]
     },
     "parent": "Player 3 - Ships"
@@ -13009,20 +11232,12 @@
     "z": 3,
     "activeFace": 0,
     "inheritFrom": {
-      "Ship Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 4": [
         "color",
         "player"
+      ],
+      "Ship Template": [
+        "!parent"
       ]
     },
     "parent": "Player 4 - Ships"
@@ -13035,20 +11250,12 @@
     "z": 4,
     "activeFace": 0,
     "inheritFrom": {
-      "Ship Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 5": [
         "color",
         "player"
+      ],
+      "Ship Template": [
+        "!parent"
       ]
     },
     "parent": "Player 5 - Ships"
@@ -13061,20 +11268,12 @@
     "z": 3,
     "activeFace": 0,
     "inheritFrom": {
-      "Ship Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 6": [
         "color",
         "player"
+      ],
+      "Ship Template": [
+        "!parent"
       ]
     },
     "parent": "Player 6 - Ships"
@@ -13087,20 +11286,12 @@
     "z": 3,
     "activeFace": 0,
     "inheritFrom": {
-      "Ship Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 7": [
         "color",
         "player"
+      ],
+      "Ship Template": [
+        "!parent"
       ]
     },
     "parent": "Player 7 - Ships"
@@ -13113,20 +11304,12 @@
     "z": 4,
     "activeFace": 0,
     "inheritFrom": {
-      "Ship Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 8": [
         "color",
         "player"
+      ],
+      "Ship Template": [
+        "!parent"
       ]
     },
     "parent": "Player 8 - Ships"
@@ -13139,20 +11322,12 @@
     "z": 10,
     "activeFace": 0,
     "inheritFrom": {
-      "Ship Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 2": [
         "color",
         "player"
+      ],
+      "Ship Template": [
+        "!parent"
       ]
     },
     "parent": "Player 2 - Ships"
@@ -13165,20 +11340,12 @@
     "z": 4,
     "activeFace": 0,
     "inheritFrom": {
-      "Ship Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 3": [
         "color",
         "player"
+      ],
+      "Ship Template": [
+        "!parent"
       ]
     },
     "parent": "Player 3 - Ships"
@@ -13191,20 +11358,12 @@
     "z": 4,
     "activeFace": 0,
     "inheritFrom": {
-      "Ship Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 4": [
         "color",
         "player"
+      ],
+      "Ship Template": [
+        "!parent"
       ]
     },
     "parent": "Player 4 - Ships"
@@ -13217,20 +11376,12 @@
     "z": 5,
     "activeFace": 0,
     "inheritFrom": {
-      "Ship Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 5": [
         "color",
         "player"
+      ],
+      "Ship Template": [
+        "!parent"
       ]
     },
     "parent": "Player 5 - Ships"
@@ -13243,20 +11394,12 @@
     "z": 4,
     "activeFace": 0,
     "inheritFrom": {
-      "Ship Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 6": [
         "color",
         "player"
+      ],
+      "Ship Template": [
+        "!parent"
       ]
     },
     "parent": "Player 6 - Ships"
@@ -13269,20 +11412,12 @@
     "z": 4,
     "activeFace": 0,
     "inheritFrom": {
-      "Ship Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 7": [
         "color",
         "player"
+      ],
+      "Ship Template": [
+        "!parent"
       ]
     },
     "parent": "Player 7 - Ships"
@@ -13295,20 +11430,12 @@
     "z": 5,
     "activeFace": 0,
     "inheritFrom": {
-      "Ship Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 8": [
         "color",
         "player"
+      ],
+      "Ship Template": [
+        "!parent"
       ]
     },
     "parent": "Player 8 - Ships"
@@ -13321,20 +11448,12 @@
     "z": 9,
     "activeFace": 0,
     "inheritFrom": {
-      "Ship Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 2": [
         "color",
         "player"
+      ],
+      "Ship Template": [
+        "!parent"
       ]
     },
     "parent": "Player 2 - Ships"
@@ -13347,20 +11466,12 @@
     "z": 5,
     "activeFace": 0,
     "inheritFrom": {
-      "Ship Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 3": [
         "color",
         "player"
+      ],
+      "Ship Template": [
+        "!parent"
       ]
     },
     "parent": "Player 3 - Ships"
@@ -13373,20 +11484,12 @@
     "z": 5,
     "activeFace": 0,
     "inheritFrom": {
-      "Ship Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 4": [
         "color",
         "player"
+      ],
+      "Ship Template": [
+        "!parent"
       ]
     },
     "parent": "Player 4 - Ships"
@@ -13399,20 +11502,12 @@
     "z": 6,
     "activeFace": 0,
     "inheritFrom": {
-      "Ship Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 5": [
         "color",
         "player"
+      ],
+      "Ship Template": [
+        "!parent"
       ]
     },
     "parent": "Player 5 - Ships"
@@ -13425,20 +11520,12 @@
     "z": 5,
     "activeFace": 0,
     "inheritFrom": {
-      "Ship Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 6": [
         "color",
         "player"
+      ],
+      "Ship Template": [
+        "!parent"
       ]
     },
     "parent": "Player 6 - Ships"
@@ -13451,20 +11538,12 @@
     "z": 5,
     "activeFace": 0,
     "inheritFrom": {
-      "Ship Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 7": [
         "color",
         "player"
+      ],
+      "Ship Template": [
+        "!parent"
       ]
     },
     "parent": "Player 7 - Ships"
@@ -13477,20 +11556,12 @@
     "z": 6,
     "activeFace": 0,
     "inheritFrom": {
-      "Ship Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 8": [
         "color",
         "player"
+      ],
+      "Ship Template": [
+        "!parent"
       ]
     },
     "parent": "Player 8 - Ships"
@@ -13503,20 +11574,12 @@
     "z": 8,
     "activeFace": 0,
     "inheritFrom": {
-      "Ship Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 2": [
         "color",
         "player"
+      ],
+      "Ship Template": [
+        "!parent"
       ]
     },
     "parent": "Player 2 - Ships"
@@ -13529,20 +11592,12 @@
     "z": 6,
     "activeFace": 0,
     "inheritFrom": {
-      "Ship Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 3": [
         "color",
         "player"
+      ],
+      "Ship Template": [
+        "!parent"
       ]
     },
     "parent": "Player 3 - Ships"
@@ -13555,20 +11610,12 @@
     "z": 6,
     "activeFace": 0,
     "inheritFrom": {
-      "Ship Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 4": [
         "color",
         "player"
+      ],
+      "Ship Template": [
+        "!parent"
       ]
     },
     "parent": "Player 4 - Ships"
@@ -13581,20 +11628,12 @@
     "z": 7,
     "activeFace": 0,
     "inheritFrom": {
-      "Ship Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 5": [
         "color",
         "player"
+      ],
+      "Ship Template": [
+        "!parent"
       ]
     },
     "parent": "Player 5 - Ships"
@@ -13607,20 +11646,12 @@
     "z": 6,
     "activeFace": 0,
     "inheritFrom": {
-      "Ship Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 6": [
         "color",
         "player"
+      ],
+      "Ship Template": [
+        "!parent"
       ]
     },
     "parent": "Player 6 - Ships"
@@ -13633,20 +11664,12 @@
     "z": 6,
     "activeFace": 0,
     "inheritFrom": {
-      "Ship Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 7": [
         "color",
         "player"
+      ],
+      "Ship Template": [
+        "!parent"
       ]
     },
     "parent": "Player 7 - Ships"
@@ -13659,20 +11682,12 @@
     "z": 7,
     "activeFace": 0,
     "inheritFrom": {
-      "Ship Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 8": [
         "color",
         "player"
+      ],
+      "Ship Template": [
+        "!parent"
       ]
     },
     "parent": "Player 8 - Ships"
@@ -13685,20 +11700,12 @@
     "z": 7,
     "activeFace": 0,
     "inheritFrom": {
-      "Ship Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 2": [
         "color",
         "player"
+      ],
+      "Ship Template": [
+        "!parent"
       ]
     },
     "parent": "Player 2 - Ships"
@@ -13711,20 +11718,12 @@
     "z": 7,
     "activeFace": 0,
     "inheritFrom": {
-      "Ship Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 3": [
         "color",
         "player"
+      ],
+      "Ship Template": [
+        "!parent"
       ]
     },
     "parent": "Player 3 - Ships"
@@ -13737,20 +11736,12 @@
     "z": 7,
     "activeFace": 0,
     "inheritFrom": {
-      "Ship Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 4": [
         "color",
         "player"
+      ],
+      "Ship Template": [
+        "!parent"
       ]
     },
     "parent": "Player 4 - Ships"
@@ -13763,20 +11754,12 @@
     "z": 8,
     "activeFace": 0,
     "inheritFrom": {
-      "Ship Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 5": [
         "color",
         "player"
+      ],
+      "Ship Template": [
+        "!parent"
       ]
     },
     "parent": "Player 5 - Ships"
@@ -13789,20 +11772,12 @@
     "z": 7,
     "activeFace": 0,
     "inheritFrom": {
-      "Ship Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 6": [
         "color",
         "player"
+      ],
+      "Ship Template": [
+        "!parent"
       ]
     },
     "parent": "Player 6 - Ships"
@@ -13815,20 +11790,12 @@
     "z": 7,
     "activeFace": 0,
     "inheritFrom": {
-      "Ship Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 7": [
         "color",
         "player"
+      ],
+      "Ship Template": [
+        "!parent"
       ]
     },
     "parent": "Player 7 - Ships"
@@ -13841,20 +11808,12 @@
     "z": 8,
     "activeFace": 0,
     "inheritFrom": {
-      "Ship Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 8": [
         "color",
         "player"
+      ],
+      "Ship Template": [
+        "!parent"
       ]
     },
     "parent": "Player 8 - Ships"
@@ -13867,20 +11826,12 @@
     "z": 6,
     "activeFace": 0,
     "inheritFrom": {
-      "Ship Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 2": [
         "color",
         "player"
+      ],
+      "Ship Template": [
+        "!parent"
       ]
     },
     "parent": "Player 2 - Ships"
@@ -13893,20 +11844,12 @@
     "z": 8,
     "activeFace": 0,
     "inheritFrom": {
-      "Ship Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 3": [
         "color",
         "player"
+      ],
+      "Ship Template": [
+        "!parent"
       ]
     },
     "parent": "Player 3 - Ships"
@@ -13919,20 +11862,12 @@
     "z": 8,
     "activeFace": 0,
     "inheritFrom": {
-      "Ship Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 4": [
         "color",
         "player"
+      ],
+      "Ship Template": [
+        "!parent"
       ]
     },
     "parent": "Player 4 - Ships"
@@ -13945,20 +11880,12 @@
     "z": 9,
     "activeFace": 0,
     "inheritFrom": {
-      "Ship Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 5": [
         "color",
         "player"
+      ],
+      "Ship Template": [
+        "!parent"
       ]
     },
     "parent": "Player 5 - Ships"
@@ -13971,20 +11898,12 @@
     "z": 8,
     "activeFace": 0,
     "inheritFrom": {
-      "Ship Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 6": [
         "color",
         "player"
+      ],
+      "Ship Template": [
+        "!parent"
       ]
     },
     "parent": "Player 6 - Ships"
@@ -13997,20 +11916,12 @@
     "z": 8,
     "activeFace": 0,
     "inheritFrom": {
-      "Ship Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 7": [
         "color",
         "player"
+      ],
+      "Ship Template": [
+        "!parent"
       ]
     },
     "parent": "Player 7 - Ships"
@@ -14023,20 +11934,12 @@
     "z": 9,
     "activeFace": 0,
     "inheritFrom": {
-      "Ship Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 8": [
         "color",
         "player"
+      ],
+      "Ship Template": [
+        "!parent"
       ]
     },
     "parent": "Player 8 - Ships"
@@ -14049,20 +11952,12 @@
     "z": 5,
     "activeFace": 0,
     "inheritFrom": {
-      "Ship Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 2": [
         "color",
         "player"
+      ],
+      "Ship Template": [
+        "!parent"
       ]
     },
     "parent": "Player 2 - Ships"
@@ -14075,20 +11970,12 @@
     "z": 9,
     "activeFace": 0,
     "inheritFrom": {
-      "Ship Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 3": [
         "color",
         "player"
+      ],
+      "Ship Template": [
+        "!parent"
       ]
     },
     "parent": "Player 3 - Ships"
@@ -14101,20 +11988,12 @@
     "z": 9,
     "activeFace": 0,
     "inheritFrom": {
-      "Ship Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 4": [
         "color",
         "player"
+      ],
+      "Ship Template": [
+        "!parent"
       ]
     },
     "parent": "Player 4 - Ships"
@@ -14127,20 +12006,12 @@
     "z": 10,
     "activeFace": 0,
     "inheritFrom": {
-      "Ship Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 5": [
         "color",
         "player"
+      ],
+      "Ship Template": [
+        "!parent"
       ]
     },
     "parent": "Player 5 - Ships"
@@ -14153,20 +12024,12 @@
     "z": 9,
     "activeFace": 0,
     "inheritFrom": {
-      "Ship Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 6": [
         "color",
         "player"
+      ],
+      "Ship Template": [
+        "!parent"
       ]
     },
     "parent": "Player 6 - Ships"
@@ -14179,20 +12042,12 @@
     "z": 9,
     "activeFace": 0,
     "inheritFrom": {
-      "Ship Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 7": [
         "color",
         "player"
+      ],
+      "Ship Template": [
+        "!parent"
       ]
     },
     "parent": "Player 7 - Ships"
@@ -14205,20 +12060,12 @@
     "z": 10,
     "activeFace": 0,
     "inheritFrom": {
-      "Ship Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 8": [
         "color",
         "player"
+      ],
+      "Ship Template": [
+        "!parent"
       ]
     },
     "parent": "Player 8 - Ships"
@@ -14231,20 +12078,12 @@
     "z": 4,
     "activeFace": 0,
     "inheritFrom": {
-      "Ship Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 2": [
         "color",
         "player"
+      ],
+      "Ship Template": [
+        "!parent"
       ]
     },
     "parent": "Player 2 - Ships"
@@ -14257,20 +12096,12 @@
     "z": 10,
     "activeFace": 0,
     "inheritFrom": {
-      "Ship Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 3": [
         "color",
         "player"
+      ],
+      "Ship Template": [
+        "!parent"
       ]
     },
     "parent": "Player 3 - Ships"
@@ -14283,20 +12114,12 @@
     "z": 10,
     "activeFace": 0,
     "inheritFrom": {
-      "Ship Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 4": [
         "color",
         "player"
+      ],
+      "Ship Template": [
+        "!parent"
       ]
     },
     "parent": "Player 4 - Ships"
@@ -14309,20 +12132,12 @@
     "z": 11,
     "activeFace": 0,
     "inheritFrom": {
-      "Ship Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 5": [
         "color",
         "player"
+      ],
+      "Ship Template": [
+        "!parent"
       ]
     },
     "parent": "Player 5 - Ships"
@@ -14335,20 +12150,12 @@
     "z": 10,
     "activeFace": 0,
     "inheritFrom": {
-      "Ship Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 6": [
         "color",
         "player"
+      ],
+      "Ship Template": [
+        "!parent"
       ]
     },
     "parent": "Player 6 - Ships"
@@ -14361,20 +12168,12 @@
     "z": 10,
     "activeFace": 0,
     "inheritFrom": {
-      "Ship Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 7": [
         "color",
         "player"
+      ],
+      "Ship Template": [
+        "!parent"
       ]
     },
     "parent": "Player 7 - Ships"
@@ -14387,20 +12186,12 @@
     "z": 11,
     "activeFace": 0,
     "inheritFrom": {
-      "Ship Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 8": [
         "color",
         "player"
+      ],
+      "Ship Template": [
+        "!parent"
       ]
     },
     "parent": "Player 8 - Ships"
@@ -14413,20 +12204,12 @@
     "z": 3,
     "activeFace": 0,
     "inheritFrom": {
-      "Ship Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 2": [
         "color",
         "player"
+      ],
+      "Ship Template": [
+        "!parent"
       ]
     },
     "parent": "Player 2 - Ships"
@@ -14439,20 +12222,12 @@
     "z": 11,
     "activeFace": 0,
     "inheritFrom": {
-      "Ship Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 3": [
         "color",
         "player"
+      ],
+      "Ship Template": [
+        "!parent"
       ]
     },
     "parent": "Player 3 - Ships"
@@ -14465,20 +12240,12 @@
     "z": 11,
     "activeFace": 0,
     "inheritFrom": {
-      "Ship Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 4": [
         "color",
         "player"
+      ],
+      "Ship Template": [
+        "!parent"
       ]
     },
     "parent": "Player 4 - Ships"
@@ -14491,20 +12258,12 @@
     "z": 12,
     "activeFace": 0,
     "inheritFrom": {
-      "Ship Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 5": [
         "color",
         "player"
+      ],
+      "Ship Template": [
+        "!parent"
       ]
     },
     "parent": "Player 5 - Ships"
@@ -14517,20 +12276,12 @@
     "z": 11,
     "activeFace": 0,
     "inheritFrom": {
-      "Ship Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 6": [
         "color",
         "player"
+      ],
+      "Ship Template": [
+        "!parent"
       ]
     },
     "parent": "Player 6 - Ships"
@@ -14543,20 +12294,12 @@
     "z": 11,
     "activeFace": 0,
     "inheritFrom": {
-      "Ship Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 7": [
         "color",
         "player"
+      ],
+      "Ship Template": [
+        "!parent"
       ]
     },
     "parent": "Player 7 - Ships"
@@ -14569,20 +12312,12 @@
     "z": 12,
     "activeFace": 0,
     "inheritFrom": {
-      "Ship Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 8": [
         "color",
         "player"
+      ],
+      "Ship Template": [
+        "!parent"
       ]
     },
     "parent": "Player 8 - Ships"
@@ -14595,20 +12330,12 @@
     "z": 2,
     "activeFace": 0,
     "inheritFrom": {
-      "Ship Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 2": [
         "color",
         "player"
+      ],
+      "Ship Template": [
+        "!parent"
       ]
     },
     "parent": "Player 2 - Ships"
@@ -14621,20 +12348,12 @@
     "z": 12,
     "activeFace": 0,
     "inheritFrom": {
-      "Ship Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 3": [
         "color",
         "player"
+      ],
+      "Ship Template": [
+        "!parent"
       ]
     },
     "parent": "Player 3 - Ships"
@@ -14647,20 +12366,12 @@
     "z": 12,
     "activeFace": 0,
     "inheritFrom": {
-      "Ship Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 4": [
         "color",
         "player"
+      ],
+      "Ship Template": [
+        "!parent"
       ]
     },
     "parent": "Player 4 - Ships"
@@ -14673,20 +12384,12 @@
     "z": 13,
     "activeFace": 0,
     "inheritFrom": {
-      "Ship Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 5": [
         "color",
         "player"
+      ],
+      "Ship Template": [
+        "!parent"
       ]
     },
     "parent": "Player 5 - Ships"
@@ -14699,20 +12402,12 @@
     "z": 12,
     "activeFace": 0,
     "inheritFrom": {
-      "Ship Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 6": [
         "color",
         "player"
+      ],
+      "Ship Template": [
+        "!parent"
       ]
     },
     "parent": "Player 6 - Ships"
@@ -14725,20 +12420,12 @@
     "z": 12,
     "activeFace": 0,
     "inheritFrom": {
-      "Ship Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 7": [
         "color",
         "player"
+      ],
+      "Ship Template": [
+        "!parent"
       ]
     },
     "parent": "Player 7 - Ships"
@@ -14751,20 +12438,12 @@
     "z": 13,
     "activeFace": 0,
     "inheritFrom": {
-      "Ship Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 8": [
         "color",
         "player"
+      ],
+      "Ship Template": [
+        "!parent"
       ]
     },
     "parent": "Player 8 - Ships"
@@ -14777,20 +12456,12 @@
     "z": 1,
     "activeFace": 0,
     "inheritFrom": {
-      "Ship Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 2": [
         "color",
         "player"
+      ],
+      "Ship Template": [
+        "!parent"
       ]
     },
     "parent": "Player 2 - Ships"
@@ -14803,20 +12474,12 @@
     "z": 13,
     "activeFace": 0,
     "inheritFrom": {
-      "Ship Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 3": [
         "color",
         "player"
+      ],
+      "Ship Template": [
+        "!parent"
       ]
     },
     "parent": "Player 3 - Ships"
@@ -14829,20 +12492,12 @@
     "z": 13,
     "activeFace": 0,
     "inheritFrom": {
-      "Ship Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 4": [
         "color",
         "player"
+      ],
+      "Ship Template": [
+        "!parent"
       ]
     },
     "parent": "Player 4 - Ships"
@@ -14855,20 +12510,12 @@
     "z": 1,
     "activeFace": 0,
     "inheritFrom": {
-      "Ship Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 5": [
         "color",
         "player"
+      ],
+      "Ship Template": [
+        "!parent"
       ]
     },
     "parent": "Player 5 - Ships"
@@ -14881,20 +12528,12 @@
     "z": 13,
     "activeFace": 0,
     "inheritFrom": {
-      "Ship Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 6": [
         "color",
         "player"
+      ],
+      "Ship Template": [
+        "!parent"
       ]
     },
     "parent": "Player 6 - Ships"
@@ -14907,20 +12546,12 @@
     "z": 13,
     "activeFace": 0,
     "inheritFrom": {
-      "Ship Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 7": [
         "color",
         "player"
+      ],
+      "Ship Template": [
+        "!parent"
       ]
     },
     "parent": "Player 7 - Ships"
@@ -14933,20 +12564,12 @@
     "z": 1,
     "activeFace": 0,
     "inheritFrom": {
-      "Ship Template": [
-        "faces",
-        "image",
-        "svgReplaces",
-        "width",
-        "height",
-        "home",
-        "shift",
-        "grid",
-        "layer"
-      ],
       "Player 8": [
         "color",
         "player"
+      ],
+      "Ship Template": [
+        "!parent"
       ]
     },
     "parent": "Player 8 - Ships"
