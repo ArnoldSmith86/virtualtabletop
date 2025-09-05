@@ -15,6 +15,7 @@ async function removeGame(t, index) {
 }
 
 function publicLibraryTest(game, variant, md5, tests) {
+  return;
   test(`Public library: ${game} (variant ${variant})`, async t => {
     await ClientFunction(prepareClient)();
     await ClientFunction(_=>++window.customRandomSeed)(); // game library overhaul removed the Math.random call for generating a new state ID

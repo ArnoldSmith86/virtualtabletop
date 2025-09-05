@@ -72,6 +72,7 @@ export async function compareState(t, md5) {
 
   if(!process.env.REFERENCE && fs.existsSync(refFile))
     console.log(diffString(JSON.parse(fs.readFileSync(refFile)), JSON.parse(state)));
+  console.log(state);
 
   await t.expect(hash).eql(md5);
 }
