@@ -2186,8 +2186,8 @@
   },
   "Player 1 - Settlement A": {
     "id": "Player 1 - Settlement A",
-    "x": 8,
-    "y": 20,
+    "x": 12,
+    "y": 30,
     "rotation": 0,
     "activeFace": 0,
     "inheritFrom": {
@@ -2199,7 +2199,7 @@
         "!parent"
       ]
     },
-    "z": 3,
+    "z": 4,
     "parent": "Player 1 - Settlements"
   },
   "Player 1 - Cities": {
@@ -2565,6 +2565,24 @@
   },
   "Player 1 - Settlement B": {
     "id": "Player 1 - Settlement B",
+    "x": 8,
+    "y": 20,
+    "rotation": 0,
+    "activeFace": 0,
+    "inheritFrom": {
+      "Player 1": [
+        "color",
+        "player"
+      ],
+      "Settlement Template": [
+        "!parent"
+      ]
+    },
+    "z": 3,
+    "parent": "Player 1 - Settlements"
+  },
+  "Player 1 - Settlement C": {
+    "id": "Player 1 - Settlement C",
     "x": 4,
     "y": 10,
     "rotation": 0,
@@ -2581,8 +2599,8 @@
     "z": 2,
     "parent": "Player 1 - Settlements"
   },
-  "Player 1 - Settlement C": {
-    "id": "Player 1 - Settlement C",
+  "Player 1 - Settlement D": {
+    "id": "Player 1 - Settlement D",
     "x": 0,
     "y": 0,
     "rotation": 0,
@@ -2597,24 +2615,6 @@
       ]
     },
     "z": 1,
-    "parent": "Player 1 - Settlements"
-  },
-  "Player 1 - Settlement D": {
-    "id": "Player 1 - Settlement D",
-    "x": 12,
-    "y": 30,
-    "rotation": 0,
-    "activeFace": 0,
-    "inheritFrom": {
-      "Player 1": [
-        "color",
-        "player"
-      ],
-      "Settlement Template": [
-        "!parent"
-      ]
-    },
-    "z": 4,
     "parent": "Player 1 - Settlements"
   },
   "Player 1 - City B": {
@@ -4195,10 +4195,10 @@
   },
   "Player 1 - Settlement E": {
     "id": "Player 1 - Settlement E",
-    "x": 0,
-    "y": 0,
+    "x": 16,
+    "y": 40,
     "rotation": 0,
-    "z": 1,
+    "z": 5,
     "activeFace": 0,
     "inheritFrom": {
       "Player 1": [
