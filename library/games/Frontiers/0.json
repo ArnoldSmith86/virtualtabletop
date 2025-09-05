@@ -9809,20 +9809,17 @@
     "type": "holder",
     "id": "Player 1 - Ships",
     "parent": "Player 1",
-    "x": 104,
-    "y": -27,
-    "width": 13,
-    "height": 92,
-    "rotation": 1,
+    "x": 126,
+    "y": -7,
+    "width": 30,
+    "height": 70,
+    "rotation": -32,
     "dropTarget": {
       "home": "Ships"
     },
     "inheritFrom": "Player 1 - Settlements",
-    "onEnter": {
-      "rotation": 0
-    },
-    "stackOffsetX": 2,
-    "stackOffsetY": 2,
+    "stackOffsetX": 0,
+    "stackOffsetY": 3,
     "expansion": 1,
     "display": false
   },
@@ -9839,15 +9836,15 @@
         "!parent"
       ]
     },
-    "x": 14,
-    "y": 14,
+    "x": 0,
+    "y": 21,
     "rotation": 0,
     "parent": "Player 1 - Ships"
   },
   "Player 1 - Ship B": {
     "id": "Player 1 - Ship B",
-    "x": 10,
-    "y": 10,
+    "x": 0,
+    "y": 15,
     "rotation": 0,
     "z": 6,
     "activeFace": 0,
@@ -9864,8 +9861,8 @@
   },
   "Player 1 - Ship C": {
     "id": "Player 1 - Ship C",
-    "x": 8,
-    "y": 8,
+    "x": 0,
+    "y": 12,
     "rotation": 0,
     "z": 5,
     "activeFace": 0,
@@ -9900,8 +9897,8 @@
   },
   "Player 1 - Ship E": {
     "id": "Player 1 - Ship E",
-    "x": 12,
-    "y": 12,
+    "x": 0,
+    "y": 18,
     "rotation": 0,
     "z": 7,
     "activeFace": 0,
@@ -9918,8 +9915,8 @@
   },
   "Player 1 - Ship F": {
     "id": "Player 1 - Ship F",
-    "x": 16,
-    "y": 16,
+    "x": 0,
+    "y": 24,
     "rotation": 0,
     "z": 9,
     "activeFace": 0,
@@ -9936,8 +9933,8 @@
   },
   "Player 1 - Ship G": {
     "id": "Player 1 - Ship G",
-    "x": 18,
-    "y": 18,
+    "x": 0,
+    "y": 27,
     "rotation": 0,
     "z": 10,
     "activeFace": 0,
@@ -9954,8 +9951,8 @@
   },
   "Player 1 - Ship H": {
     "id": "Player 1 - Ship H",
-    "x": 20,
-    "y": 20,
+    "x": 0,
+    "y": 30,
     "rotation": 0,
     "z": 11,
     "activeFace": 0,
@@ -9972,8 +9969,8 @@
   },
   "Player 1 - Ship I": {
     "id": "Player 1 - Ship I",
-    "x": 22,
-    "y": 22,
+    "x": 0,
+    "y": 33,
     "rotation": 0,
     "z": 12,
     "activeFace": 0,
@@ -9990,11 +9987,10 @@
   },
   "Player 1 - Ship J": {
     "id": "Player 1 - Ship J",
-    "x": 24,
-    "y": 24,
+    "x": 0,
+    "y": 36,
     "rotation": 0,
     "z": 13,
-    "activeFace": 0,
     "inheritFrom": {
       "Player 1": [
         "color",
@@ -10008,11 +10004,10 @@
   },
   "Player 1 - Ship K": {
     "id": "Player 1 - Ship K",
-    "x": 26,
-    "y": 26,
+    "x": 0,
+    "y": 39,
     "rotation": 0,
     "z": 14,
-    "activeFace": 0,
     "inheritFrom": {
       "Player 1": [
         "color",
@@ -10022,16 +10017,13 @@
         "!parent"
       ]
     },
-    "note": "vertical",
-    "image": "/assets/1124390045_2175",
     "parent": "Player 1 - Ships"
   },
   "Player 1 - Ship L": {
     "id": "Player 1 - Ship L",
-    "x": 28,
-    "y": 28,
+    "x": 0,
+    "y": 42,
     "z": 15,
-    "activeFace": 0,
     "inheritFrom": {
       "Player 1": [
         "color",
@@ -10041,15 +10033,13 @@
         "!parent"
       ]
     },
-    "image": "/assets/1124390045_2175",
-    "note": "vertical",
     "rotation": 0,
     "parent": "Player 1 - Ships"
   },
   "Player 1 - Ship M": {
     "id": "Player 1 - Ship M",
-    "x": 2,
-    "y": 2,
+    "x": 0,
+    "y": 3,
     "rotation": 0,
     "z": 2,
     "activeFace": 0,
@@ -10066,8 +10056,8 @@
   },
   "Player 1 - Ship N": {
     "id": "Player 1 - Ship N",
-    "x": 4,
-    "y": 4,
+    "x": 0,
+    "y": 6,
     "rotation": 0,
     "z": 3,
     "activeFace": 0,
@@ -10084,8 +10074,8 @@
   },
   "Player 1 - Ship O": {
     "id": "Player 1 - Ship O",
-    "x": 6,
-    "y": 6,
+    "x": 0,
+    "y": 9,
     "rotation": 0,
     "z": 4,
     "activeFace": 0,
@@ -10953,8 +10943,8 @@
         "!parent"
       ]
     },
-    "x": 24,
-    "y": 24,
+    "x": 0,
+    "y": 36,
     "rotation": 0,
     "parent": "Player 2 - Ships"
   },
@@ -11007,14 +10997,14 @@
         "!parent"
       ]
     },
-    "x": 2,
-    "y": 2,
+    "x": 0,
+    "y": 3,
     "rotation": 0,
     "parent": "Player 5 - Ships"
   },
   "Player 6 - Ship A": {
     "id": "Player 6 - Ship A",
-    "z": 1,
+    "z": 2,
     "activeFace": 0,
     "inheritFrom": {
       "Player 6": [
@@ -11026,13 +11016,13 @@
       ]
     },
     "x": 0,
-    "y": 0,
+    "y": 3,
     "rotation": 0,
     "parent": "Player 6 - Ships"
   },
   "Player 7 - Ship A": {
     "id": "Player 7 - Ship A",
-    "z": 1,
+    "z": 2,
     "activeFace": 0,
     "inheritFrom": {
       "Player 7": [
@@ -11044,13 +11034,13 @@
       ]
     },
     "x": 0,
-    "y": 0,
+    "y": 3,
     "rotation": 0,
     "parent": "Player 7 - Ships"
   },
   "Player 8 - Ship A": {
     "id": "Player 8 - Ship A",
-    "z": 2,
+    "z": 3,
     "activeFace": 0,
     "inheritFrom": {
       "Player 8": [
@@ -11061,15 +11051,15 @@
         "!parent"
       ]
     },
-    "x": 2,
-    "y": 2,
+    "x": 0,
+    "y": 6,
     "rotation": 0,
     "parent": "Player 8 - Ships"
   },
   "Player 2 - Ship B": {
     "id": "Player 2 - Ship B",
-    "x": 22,
-    "y": 22,
+    "x": 0,
+    "y": 33,
     "rotation": 0,
     "z": 12,
     "activeFace": 0,
@@ -11086,8 +11076,8 @@
   },
   "Player 3 - Ship B": {
     "id": "Player 3 - Ship B",
-    "x": 2,
-    "y": 2,
+    "x": 0,
+    "y": 3,
     "rotation": 0,
     "z": 2,
     "activeFace": 0,
@@ -11104,8 +11094,8 @@
   },
   "Player 4 - Ship B": {
     "id": "Player 4 - Ship B",
-    "x": 2,
-    "y": 2,
+    "x": 0,
+    "y": 3,
     "rotation": 0,
     "z": 2,
     "activeFace": 0,
@@ -11122,8 +11112,8 @@
   },
   "Player 5 - Ship B": {
     "id": "Player 5 - Ship B",
-    "x": 4,
-    "y": 4,
+    "x": 0,
+    "y": 6,
     "rotation": 0,
     "z": 3,
     "activeFace": 0,
@@ -11140,10 +11130,10 @@
   },
   "Player 6 - Ship B": {
     "id": "Player 6 - Ship B",
-    "x": 2,
-    "y": 2,
+    "x": 0,
+    "y": 6,
     "rotation": 0,
-    "z": 2,
+    "z": 3,
     "activeFace": 0,
     "inheritFrom": {
       "Player 6": [
@@ -11158,10 +11148,10 @@
   },
   "Player 7 - Ship B": {
     "id": "Player 7 - Ship B",
-    "x": 2,
-    "y": 2,
+    "x": 0,
+    "y": 6,
     "rotation": 0,
-    "z": 2,
+    "z": 3,
     "activeFace": 0,
     "inheritFrom": {
       "Player 7": [
@@ -11176,10 +11166,10 @@
   },
   "Player 8 - Ship B": {
     "id": "Player 8 - Ship B",
-    "x": 4,
-    "y": 4,
+    "x": 0,
+    "y": 9,
     "rotation": 0,
-    "z": 3,
+    "z": 4,
     "activeFace": 0,
     "inheritFrom": {
       "Player 8": [
@@ -11194,8 +11184,8 @@
   },
   "Player 2 - Ship C": {
     "id": "Player 2 - Ship C",
-    "x": 20,
-    "y": 20,
+    "x": 0,
+    "y": 30,
     "rotation": 0,
     "z": 11,
     "activeFace": 0,
@@ -11212,8 +11202,8 @@
   },
   "Player 3 - Ship C": {
     "id": "Player 3 - Ship C",
-    "x": 4,
-    "y": 4,
+    "x": 0,
+    "y": 6,
     "rotation": 0,
     "z": 3,
     "activeFace": 0,
@@ -11230,8 +11220,8 @@
   },
   "Player 4 - Ship C": {
     "id": "Player 4 - Ship C",
-    "x": 4,
-    "y": 4,
+    "x": 0,
+    "y": 6,
     "rotation": 0,
     "z": 3,
     "activeFace": 0,
@@ -11248,8 +11238,8 @@
   },
   "Player 5 - Ship C": {
     "id": "Player 5 - Ship C",
-    "x": 6,
-    "y": 6,
+    "x": 0,
+    "y": 9,
     "rotation": 0,
     "z": 4,
     "activeFace": 0,
@@ -11266,10 +11256,10 @@
   },
   "Player 6 - Ship C": {
     "id": "Player 6 - Ship C",
-    "x": 4,
-    "y": 4,
+    "x": 0,
+    "y": 9,
     "rotation": 0,
-    "z": 3,
+    "z": 4,
     "activeFace": 0,
     "inheritFrom": {
       "Player 6": [
@@ -11284,10 +11274,10 @@
   },
   "Player 7 - Ship C": {
     "id": "Player 7 - Ship C",
-    "x": 4,
-    "y": 4,
+    "x": 0,
+    "y": 9,
     "rotation": 0,
-    "z": 3,
+    "z": 4,
     "activeFace": 0,
     "inheritFrom": {
       "Player 7": [
@@ -11302,10 +11292,10 @@
   },
   "Player 8 - Ship C": {
     "id": "Player 8 - Ship C",
-    "x": 6,
-    "y": 6,
+    "x": 0,
+    "y": 12,
     "rotation": 0,
-    "z": 4,
+    "z": 5,
     "activeFace": 0,
     "inheritFrom": {
       "Player 8": [
@@ -11320,8 +11310,8 @@
   },
   "Player 2 - Ship E": {
     "id": "Player 2 - Ship E",
-    "x": 18,
-    "y": 18,
+    "x": 0,
+    "y": 27,
     "rotation": 0,
     "z": 10,
     "activeFace": 0,
@@ -11338,8 +11328,8 @@
   },
   "Player 3 - Ship E": {
     "id": "Player 3 - Ship E",
-    "x": 6,
-    "y": 6,
+    "x": 0,
+    "y": 9,
     "rotation": 0,
     "z": 4,
     "activeFace": 0,
@@ -11356,8 +11346,8 @@
   },
   "Player 4 - Ship E": {
     "id": "Player 4 - Ship E",
-    "x": 6,
-    "y": 6,
+    "x": 0,
+    "y": 9,
     "rotation": 0,
     "z": 4,
     "activeFace": 0,
@@ -11374,8 +11364,8 @@
   },
   "Player 5 - Ship E": {
     "id": "Player 5 - Ship E",
-    "x": 8,
-    "y": 8,
+    "x": 0,
+    "y": 12,
     "rotation": 0,
     "z": 5,
     "activeFace": 0,
@@ -11392,10 +11382,10 @@
   },
   "Player 6 - Ship E": {
     "id": "Player 6 - Ship E",
-    "x": 6,
-    "y": 6,
+    "x": 0,
+    "y": 12,
     "rotation": 0,
-    "z": 4,
+    "z": 5,
     "activeFace": 0,
     "inheritFrom": {
       "Player 6": [
@@ -11410,10 +11400,10 @@
   },
   "Player 7 - Ship E": {
     "id": "Player 7 - Ship E",
-    "x": 6,
-    "y": 6,
+    "x": 0,
+    "y": 12,
     "rotation": 0,
-    "z": 4,
+    "z": 5,
     "activeFace": 0,
     "inheritFrom": {
       "Player 7": [
@@ -11428,10 +11418,10 @@
   },
   "Player 8 - Ship E": {
     "id": "Player 8 - Ship E",
-    "x": 8,
-    "y": 8,
+    "x": 0,
+    "y": 15,
     "rotation": 0,
-    "z": 5,
+    "z": 6,
     "activeFace": 0,
     "inheritFrom": {
       "Player 8": [
@@ -11446,8 +11436,8 @@
   },
   "Player 2 - Ship F": {
     "id": "Player 2 - Ship F",
-    "x": 16,
-    "y": 16,
+    "x": 0,
+    "y": 24,
     "rotation": 0,
     "z": 9,
     "activeFace": 0,
@@ -11464,8 +11454,8 @@
   },
   "Player 3 - Ship F": {
     "id": "Player 3 - Ship F",
-    "x": 8,
-    "y": 8,
+    "x": 0,
+    "y": 12,
     "rotation": 0,
     "z": 5,
     "activeFace": 0,
@@ -11482,8 +11472,8 @@
   },
   "Player 4 - Ship F": {
     "id": "Player 4 - Ship F",
-    "x": 8,
-    "y": 8,
+    "x": 0,
+    "y": 12,
     "rotation": 0,
     "z": 5,
     "activeFace": 0,
@@ -11500,8 +11490,8 @@
   },
   "Player 5 - Ship F": {
     "id": "Player 5 - Ship F",
-    "x": 10,
-    "y": 10,
+    "x": 0,
+    "y": 15,
     "rotation": 0,
     "z": 6,
     "activeFace": 0,
@@ -11518,10 +11508,10 @@
   },
   "Player 6 - Ship F": {
     "id": "Player 6 - Ship F",
-    "x": 8,
-    "y": 8,
+    "x": 0,
+    "y": 15,
     "rotation": 0,
-    "z": 5,
+    "z": 6,
     "activeFace": 0,
     "inheritFrom": {
       "Player 6": [
@@ -11536,10 +11526,10 @@
   },
   "Player 7 - Ship F": {
     "id": "Player 7 - Ship F",
-    "x": 8,
-    "y": 8,
+    "x": 0,
+    "y": 15,
     "rotation": 0,
-    "z": 5,
+    "z": 6,
     "activeFace": 0,
     "inheritFrom": {
       "Player 7": [
@@ -11554,10 +11544,10 @@
   },
   "Player 8 - Ship F": {
     "id": "Player 8 - Ship F",
-    "x": 10,
-    "y": 10,
+    "x": 0,
+    "y": 18,
     "rotation": 0,
-    "z": 6,
+    "z": 7,
     "activeFace": 0,
     "inheritFrom": {
       "Player 8": [
@@ -11572,8 +11562,8 @@
   },
   "Player 2 - Ship G": {
     "id": "Player 2 - Ship G",
-    "x": 14,
-    "y": 14,
+    "x": 0,
+    "y": 21,
     "rotation": 0,
     "z": 8,
     "activeFace": 0,
@@ -11590,8 +11580,8 @@
   },
   "Player 3 - Ship G": {
     "id": "Player 3 - Ship G",
-    "x": 10,
-    "y": 10,
+    "x": 0,
+    "y": 15,
     "rotation": 0,
     "z": 6,
     "activeFace": 0,
@@ -11608,8 +11598,8 @@
   },
   "Player 4 - Ship G": {
     "id": "Player 4 - Ship G",
-    "x": 10,
-    "y": 10,
+    "x": 0,
+    "y": 15,
     "rotation": 0,
     "z": 6,
     "activeFace": 0,
@@ -11626,8 +11616,8 @@
   },
   "Player 5 - Ship G": {
     "id": "Player 5 - Ship G",
-    "x": 12,
-    "y": 12,
+    "x": 0,
+    "y": 18,
     "rotation": 0,
     "z": 7,
     "activeFace": 0,
@@ -11644,10 +11634,10 @@
   },
   "Player 6 - Ship G": {
     "id": "Player 6 - Ship G",
-    "x": 10,
-    "y": 10,
+    "x": 0,
+    "y": 18,
     "rotation": 0,
-    "z": 6,
+    "z": 7,
     "activeFace": 0,
     "inheritFrom": {
       "Player 6": [
@@ -11662,10 +11652,10 @@
   },
   "Player 7 - Ship G": {
     "id": "Player 7 - Ship G",
-    "x": 10,
-    "y": 10,
+    "x": 0,
+    "y": 18,
     "rotation": 0,
-    "z": 6,
+    "z": 7,
     "activeFace": 0,
     "inheritFrom": {
       "Player 7": [
@@ -11680,10 +11670,10 @@
   },
   "Player 8 - Ship G": {
     "id": "Player 8 - Ship G",
-    "x": 12,
-    "y": 12,
+    "x": 0,
+    "y": 21,
     "rotation": 0,
-    "z": 7,
+    "z": 8,
     "activeFace": 0,
     "inheritFrom": {
       "Player 8": [
@@ -11698,8 +11688,8 @@
   },
   "Player 2 - Ship H": {
     "id": "Player 2 - Ship H",
-    "x": 12,
-    "y": 12,
+    "x": 0,
+    "y": 18,
     "rotation": 0,
     "z": 7,
     "activeFace": 0,
@@ -11716,8 +11706,8 @@
   },
   "Player 3 - Ship H": {
     "id": "Player 3 - Ship H",
-    "x": 12,
-    "y": 12,
+    "x": 0,
+    "y": 18,
     "rotation": 0,
     "z": 7,
     "activeFace": 0,
@@ -11734,8 +11724,8 @@
   },
   "Player 4 - Ship H": {
     "id": "Player 4 - Ship H",
-    "x": 12,
-    "y": 12,
+    "x": 0,
+    "y": 18,
     "rotation": 0,
     "z": 7,
     "activeFace": 0,
@@ -11752,8 +11742,8 @@
   },
   "Player 5 - Ship H": {
     "id": "Player 5 - Ship H",
-    "x": 14,
-    "y": 14,
+    "x": 0,
+    "y": 21,
     "rotation": 0,
     "z": 8,
     "activeFace": 0,
@@ -11770,10 +11760,10 @@
   },
   "Player 6 - Ship H": {
     "id": "Player 6 - Ship H",
-    "x": 12,
-    "y": 12,
+    "x": 0,
+    "y": 21,
     "rotation": 0,
-    "z": 7,
+    "z": 8,
     "activeFace": 0,
     "inheritFrom": {
       "Player 6": [
@@ -11788,10 +11778,10 @@
   },
   "Player 7 - Ship H": {
     "id": "Player 7 - Ship H",
-    "x": 12,
-    "y": 12,
+    "x": 0,
+    "y": 21,
     "rotation": 0,
-    "z": 7,
+    "z": 8,
     "activeFace": 0,
     "inheritFrom": {
       "Player 7": [
@@ -11806,10 +11796,10 @@
   },
   "Player 8 - Ship H": {
     "id": "Player 8 - Ship H",
-    "x": 14,
-    "y": 14,
+    "x": 0,
+    "y": 24,
     "rotation": 0,
-    "z": 8,
+    "z": 9,
     "activeFace": 0,
     "inheritFrom": {
       "Player 8": [
@@ -11824,8 +11814,8 @@
   },
   "Player 2 - Ship I": {
     "id": "Player 2 - Ship I",
-    "x": 10,
-    "y": 10,
+    "x": 0,
+    "y": 15,
     "rotation": 0,
     "z": 6,
     "activeFace": 0,
@@ -11842,8 +11832,8 @@
   },
   "Player 3 - Ship I": {
     "id": "Player 3 - Ship I",
-    "x": 14,
-    "y": 14,
+    "x": 0,
+    "y": 21,
     "rotation": 0,
     "z": 8,
     "activeFace": 0,
@@ -11860,8 +11850,8 @@
   },
   "Player 4 - Ship I": {
     "id": "Player 4 - Ship I",
-    "x": 14,
-    "y": 14,
+    "x": 0,
+    "y": 21,
     "rotation": 0,
     "z": 8,
     "activeFace": 0,
@@ -11878,8 +11868,8 @@
   },
   "Player 5 - Ship I": {
     "id": "Player 5 - Ship I",
-    "x": 16,
-    "y": 16,
+    "x": 0,
+    "y": 24,
     "rotation": 0,
     "z": 9,
     "activeFace": 0,
@@ -11896,10 +11886,10 @@
   },
   "Player 6 - Ship I": {
     "id": "Player 6 - Ship I",
-    "x": 14,
-    "y": 14,
+    "x": 0,
+    "y": 24,
     "rotation": 0,
-    "z": 8,
+    "z": 9,
     "activeFace": 0,
     "inheritFrom": {
       "Player 6": [
@@ -11914,10 +11904,10 @@
   },
   "Player 7 - Ship I": {
     "id": "Player 7 - Ship I",
-    "x": 14,
-    "y": 14,
+    "x": 0,
+    "y": 24,
     "rotation": 0,
-    "z": 8,
+    "z": 9,
     "activeFace": 0,
     "inheritFrom": {
       "Player 7": [
@@ -11932,10 +11922,10 @@
   },
   "Player 8 - Ship I": {
     "id": "Player 8 - Ship I",
-    "x": 16,
-    "y": 16,
+    "x": 0,
+    "y": 27,
     "rotation": 0,
-    "z": 9,
+    "z": 10,
     "activeFace": 0,
     "inheritFrom": {
       "Player 8": [
@@ -11950,8 +11940,8 @@
   },
   "Player 2 - Ship J": {
     "id": "Player 2 - Ship J",
-    "x": 8,
-    "y": 8,
+    "x": 0,
+    "y": 12,
     "rotation": 0,
     "z": 5,
     "activeFace": 0,
@@ -11968,8 +11958,8 @@
   },
   "Player 3 - Ship J": {
     "id": "Player 3 - Ship J",
-    "x": 16,
-    "y": 16,
+    "x": 0,
+    "y": 24,
     "rotation": 0,
     "z": 9,
     "activeFace": 0,
@@ -11986,8 +11976,8 @@
   },
   "Player 4 - Ship J": {
     "id": "Player 4 - Ship J",
-    "x": 16,
-    "y": 16,
+    "x": 0,
+    "y": 24,
     "rotation": 0,
     "z": 9,
     "activeFace": 0,
@@ -12004,8 +11994,8 @@
   },
   "Player 5 - Ship J": {
     "id": "Player 5 - Ship J",
-    "x": 18,
-    "y": 18,
+    "x": 0,
+    "y": 27,
     "rotation": 0,
     "z": 10,
     "activeFace": 0,
@@ -12022,10 +12012,10 @@
   },
   "Player 6 - Ship J": {
     "id": "Player 6 - Ship J",
-    "x": 16,
-    "y": 16,
+    "x": 0,
+    "y": 27,
     "rotation": 0,
-    "z": 9,
+    "z": 10,
     "activeFace": 0,
     "inheritFrom": {
       "Player 6": [
@@ -12040,10 +12030,10 @@
   },
   "Player 7 - Ship J": {
     "id": "Player 7 - Ship J",
-    "x": 16,
-    "y": 16,
+    "x": 0,
+    "y": 27,
     "rotation": 0,
-    "z": 9,
+    "z": 10,
     "activeFace": 0,
     "inheritFrom": {
       "Player 7": [
@@ -12058,10 +12048,10 @@
   },
   "Player 8 - Ship J": {
     "id": "Player 8 - Ship J",
-    "x": 18,
-    "y": 18,
+    "x": 0,
+    "y": 30,
     "rotation": 0,
-    "z": 10,
+    "z": 11,
     "activeFace": 0,
     "inheritFrom": {
       "Player 8": [
@@ -12076,8 +12066,8 @@
   },
   "Player 2 - Ship K": {
     "id": "Player 2 - Ship K",
-    "x": 6,
-    "y": 6,
+    "x": 0,
+    "y": 9,
     "rotation": 0,
     "z": 4,
     "activeFace": 0,
@@ -12094,8 +12084,8 @@
   },
   "Player 3 - Ship K": {
     "id": "Player 3 - Ship K",
-    "x": 18,
-    "y": 18,
+    "x": 0,
+    "y": 27,
     "rotation": 0,
     "z": 10,
     "activeFace": 0,
@@ -12112,8 +12102,8 @@
   },
   "Player 4 - Ship K": {
     "id": "Player 4 - Ship K",
-    "x": 18,
-    "y": 18,
+    "x": 0,
+    "y": 27,
     "rotation": 0,
     "z": 10,
     "activeFace": 0,
@@ -12130,8 +12120,8 @@
   },
   "Player 5 - Ship K": {
     "id": "Player 5 - Ship K",
-    "x": 20,
-    "y": 20,
+    "x": 0,
+    "y": 30,
     "rotation": 0,
     "z": 11,
     "activeFace": 0,
@@ -12148,10 +12138,10 @@
   },
   "Player 6 - Ship K": {
     "id": "Player 6 - Ship K",
-    "x": 18,
-    "y": 18,
+    "x": 0,
+    "y": 30,
     "rotation": 0,
-    "z": 10,
+    "z": 11,
     "activeFace": 0,
     "inheritFrom": {
       "Player 6": [
@@ -12166,10 +12156,10 @@
   },
   "Player 7 - Ship K": {
     "id": "Player 7 - Ship K",
-    "x": 18,
-    "y": 18,
+    "x": 0,
+    "y": 30,
     "rotation": 0,
-    "z": 10,
+    "z": 11,
     "activeFace": 0,
     "inheritFrom": {
       "Player 7": [
@@ -12184,10 +12174,10 @@
   },
   "Player 8 - Ship K": {
     "id": "Player 8 - Ship K",
-    "x": 20,
-    "y": 20,
+    "x": 0,
+    "y": 33,
     "rotation": 0,
-    "z": 11,
+    "z": 12,
     "activeFace": 0,
     "inheritFrom": {
       "Player 8": [
@@ -12202,8 +12192,8 @@
   },
   "Player 2 - Ship L": {
     "id": "Player 2 - Ship L",
-    "x": 4,
-    "y": 4,
+    "x": 0,
+    "y": 6,
     "rotation": 0,
     "z": 3,
     "activeFace": 0,
@@ -12220,8 +12210,8 @@
   },
   "Player 3 - Ship L": {
     "id": "Player 3 - Ship L",
-    "x": 20,
-    "y": 20,
+    "x": 0,
+    "y": 30,
     "rotation": 0,
     "z": 11,
     "activeFace": 0,
@@ -12238,8 +12228,8 @@
   },
   "Player 4 - Ship L": {
     "id": "Player 4 - Ship L",
-    "x": 20,
-    "y": 20,
+    "x": 0,
+    "y": 30,
     "rotation": 0,
     "z": 11,
     "activeFace": 0,
@@ -12256,8 +12246,8 @@
   },
   "Player 5 - Ship L": {
     "id": "Player 5 - Ship L",
-    "x": 22,
-    "y": 22,
+    "x": 0,
+    "y": 33,
     "rotation": 0,
     "z": 12,
     "activeFace": 0,
@@ -12274,10 +12264,10 @@
   },
   "Player 6 - Ship L": {
     "id": "Player 6 - Ship L",
-    "x": 20,
-    "y": 20,
+    "x": 0,
+    "y": 33,
     "rotation": 0,
-    "z": 11,
+    "z": 12,
     "activeFace": 0,
     "inheritFrom": {
       "Player 6": [
@@ -12292,10 +12282,10 @@
   },
   "Player 7 - Ship L": {
     "id": "Player 7 - Ship L",
-    "x": 20,
-    "y": 20,
+    "x": 0,
+    "y": 33,
     "rotation": 0,
-    "z": 11,
+    "z": 12,
     "activeFace": 0,
     "inheritFrom": {
       "Player 7": [
@@ -12310,10 +12300,10 @@
   },
   "Player 8 - Ship L": {
     "id": "Player 8 - Ship L",
-    "x": 22,
-    "y": 22,
+    "x": 0,
+    "y": 36,
     "rotation": 0,
-    "z": 12,
+    "z": 13,
     "activeFace": 0,
     "inheritFrom": {
       "Player 8": [
@@ -12328,8 +12318,8 @@
   },
   "Player 2 - Ship N": {
     "id": "Player 2 - Ship N",
-    "x": 2,
-    "y": 2,
+    "x": 0,
+    "y": 3,
     "rotation": 0,
     "z": 2,
     "activeFace": 0,
@@ -12346,8 +12336,8 @@
   },
   "Player 3 - Ship N": {
     "id": "Player 3 - Ship N",
-    "x": 22,
-    "y": 22,
+    "x": 0,
+    "y": 33,
     "rotation": 0,
     "z": 12,
     "activeFace": 0,
@@ -12364,8 +12354,8 @@
   },
   "Player 4 - Ship N": {
     "id": "Player 4 - Ship N",
-    "x": 22,
-    "y": 22,
+    "x": 0,
+    "y": 33,
     "rotation": 0,
     "z": 12,
     "activeFace": 0,
@@ -12382,8 +12372,8 @@
   },
   "Player 5 - Ship N": {
     "id": "Player 5 - Ship N",
-    "x": 24,
-    "y": 24,
+    "x": 0,
+    "y": 36,
     "rotation": 0,
     "z": 13,
     "activeFace": 0,
@@ -12400,10 +12390,10 @@
   },
   "Player 6 - Ship N": {
     "id": "Player 6 - Ship N",
-    "x": 22,
-    "y": 22,
+    "x": 0,
+    "y": 36,
     "rotation": 0,
-    "z": 12,
+    "z": 13,
     "activeFace": 0,
     "inheritFrom": {
       "Player 6": [
@@ -12418,10 +12408,10 @@
   },
   "Player 7 - Ship N": {
     "id": "Player 7 - Ship N",
-    "x": 22,
-    "y": 22,
+    "x": 0,
+    "y": 36,
     "rotation": 0,
-    "z": 12,
+    "z": 13,
     "activeFace": 0,
     "inheritFrom": {
       "Player 7": [
@@ -12436,11 +12426,10 @@
   },
   "Player 8 - Ship N": {
     "id": "Player 8 - Ship N",
-    "x": 24,
-    "y": 24,
+    "x": 0,
+    "y": 0,
     "rotation": 0,
-    "z": 13,
-    "activeFace": 0,
+    "z": 1,
     "inheritFrom": {
       "Player 8": [
         "color",
@@ -12472,8 +12461,8 @@
   },
   "Player 3 - Ship O": {
     "id": "Player 3 - Ship O",
-    "x": 24,
-    "y": 24,
+    "x": 0,
+    "y": 36,
     "rotation": 0,
     "z": 13,
     "activeFace": 0,
@@ -12490,8 +12479,8 @@
   },
   "Player 4 - Ship O": {
     "id": "Player 4 - Ship O",
-    "x": 24,
-    "y": 24,
+    "x": 0,
+    "y": 36,
     "rotation": 0,
     "z": 13,
     "activeFace": 0,
@@ -12526,10 +12515,10 @@
   },
   "Player 6 - Ship O": {
     "id": "Player 6 - Ship O",
-    "x": 24,
-    "y": 24,
+    "x": 0,
+    "y": 0,
     "rotation": 0,
-    "z": 13,
+    "z": 1,
     "activeFace": 0,
     "inheritFrom": {
       "Player 6": [
@@ -12544,10 +12533,10 @@
   },
   "Player 7 - Ship O": {
     "id": "Player 7 - Ship O",
-    "x": 24,
-    "y": 24,
+    "x": 0,
+    "y": 0,
     "rotation": 0,
-    "z": 13,
+    "z": 1,
     "activeFace": 0,
     "inheritFrom": {
       "Player 7": [
@@ -12558,14 +12547,15 @@
         "!parent"
       ]
     },
+    "image": "/assets/1197315170_2269",
     "parent": "Player 7 - Ships"
   },
   "Player 8 - Ship O": {
     "id": "Player 8 - Ship O",
     "x": 0,
-    "y": 0,
+    "y": 3,
     "rotation": 0,
-    "z": 1,
+    "z": 2,
     "activeFace": 0,
     "inheritFrom": {
       "Player 8": [
