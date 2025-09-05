@@ -8352,7 +8352,9 @@
           "collection": "thisButton",
           "angle": 60
         }
-      ]
+      ],
+      "movable": false,
+      "clickable": false
     },
     "cardTypes": {
       "C": {
