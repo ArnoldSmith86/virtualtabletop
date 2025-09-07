@@ -54,7 +54,7 @@ export async function compareState(t, md5) {
     state = await getState();
     hash = crypto.createHash('md5').update(state).digest('hex');
 
-    // hardcoded hash difference because of https://discord.com/channels/770758631146782780/770758631146782783/1413609310860345536 - can hopefully be removed if Chrome changes this back
+    // hardcoded hash difference because of https://github.com/ArnoldSmith86/virtualtabletop/pull/2668 - can hopefully be removed if Chrome changes this back
     if(hash == md5 || hash == 'aa8d738dfc1eb7886540315e78e42aae' && md5 == '1a6e301d6510998fa27abeb75bcf0371') {
       if(!fs.existsSync(refFile))
         fs.writeFileSync(refFile, state);
