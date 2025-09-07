@@ -1195,52 +1195,52 @@
                 "text": "Even more random board for 5/6 players"
               },
               {
-                "value": "Heading For New Shores 3P Map",
-                "text": "Heading For New Shores Seafarers board for 3 players"
+                "value": "Uncharted Waters 3P Map",
+                "text": "Uncharted Waters board for 3 players"
               },
               {
-                "value": "Heading For New Shores 4P Map",
-                "text": "Heading For New Shores Seafarers board for 4 players"
+                "value": "Uncharted Waters 4P Map",
+                "text": "Uncharted Waters board for 4 players"
               },
               {
-                "value": "Heading For New Shores 5P Map",
-                "text": "Heading For New Shores Seafarers board for 5/6 players"
+                "value": "Uncharted Waters 5P Map",
+                "text": "Uncharted Waters board for 5/6 players"
               },
               {
-                "value": "Four Islands 3P Map",
-                "text": "The Four Islands Seafarers board for 3 players"
+                "value": "Four Isles 3P Map",
+                "text": "Four Isles board for 3 players"
               },
               {
-                "value": "Four Islands 4P Map",
-                "text": "The Four Islands Seafarers board for 4 players"
+                "value": "Four Isles 4P Map",
+                "text": "Four Isles board for 4 players"
               },
               {
-                "value": "The Six Islands 5P Map",
-                "text": "The Six Islands Seafarers board for 5/6 players"
+                "value": "Six Isles 5P Map",
+                "text": "Six Isles board for 5/6 players"
               },
               {
-                "value": "The Fog Island 3P Map",
-                "text": "The Fog Island Seafarers board for 3 players"
+                "value": "Foggy Isle 3P Map",
+                "text": "Foggy Isle board for 3 players"
               },
               {
-                "value": "The Fog Island 4P Map",
-                "text": "The Fog Island Seafarers board for 4 players"
+                "value": "Foggy Isle 4P Map",
+                "text": "Foggy Isle board for 4 players"
               },
               {
-                "value": "The Fog Island 5P Map",
-                "text": "The Fog Island Seafarers board for 5/6 players"
+                "value": "Foggy Isle 5P Map",
+                "text": "Foggy Isle board for 5/6 players"
               },
               {
-                "value": "Through The Desert 3P Map",
-                "text": "Through The Desert Seafarers board for 3 players"
+                "value": "Desert Crossing 3P Map",
+                "text": "Desert Crossing board for 3 players"
               },
               {
-                "value": "Through The Desert 4P Map",
-                "text": "Through The Desert Seafarers board for 4 players"
+                "value": "Desert Crossing 4P Map",
+                "text": "Desert Crossing board for 4 players"
               },
               {
-                "value": "Through The Desert 5P Map",
-                "text": "Through The Desert Seafarers board for 5/6 players"
+                "value": "Desert Crossing 5P Map",
+                "text": "Desert Crossing board for 5/6 players"
               }
             ],
             "variable": "board"
@@ -8822,9 +8822,9 @@
     "y": 334,
     "z": 132
   },
-  "Four Islands 3P Map": {
+  "Four Isles 3P Map": {
     "type": "button",
-    "id": "Four Islands 3P Map",
+    "id": "Four Isles 3P Map",
     "parent": "Switch Board",
     "x": 1088,
     "y": 550,
@@ -8833,7 +8833,7 @@
     "movable": false,
     "movableInEdit": true,
     "inheritFrom": "Base Map Button New",
-    "text": "Four\nIslands\n3P",
+    "text": "Four\nIsles\n3P",
     "levelChips": [
       "             ",
       "       43    ",
@@ -8894,9 +8894,9 @@
     ],
     "levelX": 0
   },
-  "The Fog Island 3P Map": {
+  "Foggy Isle 3P Map": {
     "type": "button",
-    "id": "The Fog Island 3P Map",
+    "id": "Foggy Isle 3P Map",
     "parent": "Switch Board",
     "x": 1168,
     "y": 550,
@@ -8971,9 +8971,9 @@
     ],
     "levelX": 0
   },
-  "The Fog Island 4P Map": {
+  "Foggy Isle 4P Map": {
     "type": "button",
-    "id": "The Fog Island 4P Map",
+    "id": "Foggy Isle 4P Map",
     "parent": "Switch Board",
     "x": 1168,
     "y": 630,
@@ -9081,9 +9081,9 @@
     "layer": 4,
     "z": 66662
   },
-  "Four Islands 4P Map": {
+  "Four Isles 4P Map": {
     "type": "button",
-    "id": "Four Islands 4P Map",
+    "id": "Four Isles 4P Map",
     "parent": "Switch Board",
     "x": 1088,
     "y": 630,
@@ -9092,7 +9092,7 @@
     "movable": false,
     "movableInEdit": true,
     "inheritFrom": "Base Map Button New",
-    "text": "Four\nIslands\n4P",
+    "text": "Four\nIsles\n4P",
     "levelChips": [
       "             ",
       "     8 9B    ",
@@ -9153,9 +9153,9 @@
     ],
     "levelX": 0
   },
-  "The Fog Island 5P Map": {
+  "Foggy Isle 5P Map": {
     "type": "button",
-    "id": "The Fog Island 5P Map",
+    "id": "Foggy Isle 5P Map",
     "parent": "Switch Board",
     "x": 1168,
     "y": 710,
@@ -9246,9 +9246,9 @@
     ],
     "levelY": -70
   },
-  "Heading For New Shores 3P Map": {
+  "Uncharted Waters 3P Map": {
     "type": "button",
-    "id": "Heading For New Shores 3P Map",
+    "id": "Uncharted Waters 3P Map",
     "parent": "Switch Board",
     "x": 1008,
     "y": 550,
@@ -9257,7 +9257,7 @@
     "movable": false,
     "movableInEdit": true,
     "inheritFrom": "Base Map Button New",
-    "text": "New\nShores\n3P",
+    "text": "Uncharted\nWaters\n3P",
     "levelChips": [
       "              ",
       "      C5      ",
@@ -9319,9 +9319,9 @@
     "levelX": -80,
     "levelY": -80
   },
-  "Heading For New Shores 4P Map": {
+  "Uncharted Waters 4P Map": {
     "type": "button",
-    "id": "Heading For New Shores 4P Map",
+    "id": "Uncharted Waters 4P Map",
     "parent": "Switch Board",
     "x": 1008,
     "y": 630,
@@ -9330,7 +9330,7 @@
     "movable": false,
     "movableInEdit": true,
     "inheritFrom": "Base Map Button New",
-    "text": "New\nShores\n4P",
+    "text": "Uncharted\nWaters\n4P",
     "levelChips": [
       "             ",
       "     8B 4    ",
@@ -9394,9 +9394,9 @@
     "levelY": -80,
     "levelX": -20
   },
-  "Heading For New Shores 5P Map": {
+  "Uncharted Waters 5P Map": {
     "type": "button",
-    "id": "Heading For New Shores 5P Map",
+    "id": "Uncharted Waters 5P Map",
     "parent": "Switch Board",
     "x": 1008,
     "y": 710,
@@ -9405,7 +9405,7 @@
     "movable": false,
     "movableInEdit": true,
     "inheritFrom": "Base Map Button New",
-    "text": "New\nShores\n5P",
+    "text": "Uncharted\nWaters\n5P",
     "levelChips": [
       "                ",
       "                ",
@@ -9481,9 +9481,9 @@
     ],
     "levelX": -50
   },
-  "The Six Islands 5P Map": {
+  "Six Isles 5P Map": {
     "type": "button",
-    "id": "The Six Islands 5P Map",
+    "id": "Six Isles 5P Map",
     "parent": "Switch Board",
     "x": 1088,
     "y": 710,
@@ -9492,7 +9492,7 @@
     "movable": false,
     "movableInEdit": true,
     "inheritFrom": "Base Map Button New",
-    "text": "Six\nIslands\n5P",
+    "text": "Six\nIsles\n5P",
     "levelChips": [
       "                ",
       "                ",
@@ -9564,9 +9564,9 @@
       1
     ]
   },
-  "Through The Desert 3P Map": {
+  "Desert Crossing 3P Map": {
     "type": "button",
-    "id": "Through The Desert 3P Map",
+    "id": "Desert Crossing 3P Map",
     "parent": "Switch Board",
     "x": 1248,
     "y": 550,
@@ -9576,7 +9576,7 @@
     "movable": false,
     "movableInEdit": true,
     "inheritFrom": "Base Map Button New",
-    "text": "Through\nDesert\n3P",
+    "text": "Desert\nCrossing\n3P",
     "levelChips": [
       "             ",
       "     4  8    ",
@@ -9640,9 +9640,9 @@
     "levelX": 0,
     "levelY": -80
   },
-  "Through The Desert 4P Map": {
+  "Desert Crossing 4P Map": {
     "type": "button",
-    "id": "Through The Desert 4P Map",
+    "id": "Desert Crossing 4P Map",
     "parent": "Switch Board",
     "x": 1248,
     "y": 630,
@@ -9652,7 +9652,7 @@
     "movable": false,
     "movableInEdit": true,
     "inheritFrom": "Base Map Button New",
-    "text": "Through\nDesert\n4P",
+    "text": "Desert\nCrossing\n4P",
     "levelChips": [
       "              ",
       "     A 5 9    ",
@@ -9716,9 +9716,9 @@
     ],
     "levelY": -80
   },
-  "Through The Desert 5P Map": {
+  "Desert Crossing 5P Map": {
     "type": "button",
-    "id": "Through The Desert 5P Map",
+    "id": "Desert Crossing 5P Map",
     "parent": "Switch Board",
     "x": 1248,
     "y": 710,
@@ -9728,7 +9728,7 @@
     "movable": false,
     "movableInEdit": true,
     "inheritFrom": "Base Map Button New",
-    "text": "Through\nDesert\n5P",
+    "text": "Desert\nCrossing\n5P",
     "levelChips": [
       "                  ",
       "                  ",
