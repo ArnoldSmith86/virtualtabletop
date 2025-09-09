@@ -1,4 +1,4 @@
-class Holder extends Widget {
+class Holder extends ImageWidget {
   constructor(object, surface) {
     super(object, surface);
 
@@ -185,6 +185,21 @@ class Holder extends Widget {
       await this.rearrangeChildren(children.filter(c=>!c.get('owner') || c.get('owner')===owner).sort((a, b)=>{
         return a.get('z') - b.get('z');
       }));
+    }
+  }
+
+    updateIcon() {
+    if (this.get('text') && !this.get('icon')) {
+      if (this.symbolWrapper) this.symbolWrapper.remove();
+      if (this.textWrapper) this.textWrapper.remove();
+      this.textWrapper = document.createElement('div');
+      this.textWrapper.className = 'holderTextOnly';
+      this.textWrapper.textContent = this.get('text');
+      this.domElement.appendChild(this.textWrapper);
+      
+      setTextAndAdjustFontSize(this.textWrapper, this.get('text'), this.get('width'), this.get('height'));
+    } else {
+      super.updateIcon();
     }
   }
 }
