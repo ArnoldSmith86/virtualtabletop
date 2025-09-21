@@ -185,6 +185,7 @@ async function compress(htmlFile, cssFiles, jsFiles) {
   let htmlString = fs.readFileSync(path.resolve() + '/' + htmlFile, {encoding:'utf8'});
   htmlString = htmlString.replace(/\ \/\*\*\*\ TITLE\ \*\*\*\/\ /g, _=>Config.get('serverName'));
   htmlString = htmlString.replace(/\ \/\*\*\*\ EXTERNAL_URL\ \*\*\*\/\ /g, _=>Config.get('externalURL'));
+  htmlString = htmlString.replace(/\ \/\*\*\*\ URL_PREFIX\ \*\*\*\/\ /g, _=>Config.get('urlPrefix'));
 
   const css = await compressCSS(cssFiles);
   htmlString = htmlString.replace(/\ \/\*\*\*\ CSS\ \*\*\*\/\ /, _=>css).replace(/\ \/\/\*\*\*\ CONFIG\ \*\*\*\/\/\ /, _=>`const config = ${JSON.stringify(Config.getClientConfig())};`);

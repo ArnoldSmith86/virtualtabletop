@@ -318,7 +318,7 @@ function loadGameFromURLproperties(states) {
   if(widgets.size || !urlProperties.load)
     return;
 
-  const match = String(urlProperties.load).match(`^${regexEscape(config.externalURL)}/library/(.*?)(#VTT/([0-9]+)(\\.json)?)?$`);
+  const match = String(urlProperties.load).match(`^${regexEscape(getBaseURL())}/library/(.*?)(#VTT/([0-9]+)(\\.json)?)?$`);
   if(match) {
     let targetStateID = 'PL:games:' + match[1].substr(0, match[1].length-4);
     if(match[1].match(/^Tutorial%20-%20/))
@@ -1064,14 +1064,17 @@ async function shareLink(state) {
 
   if(state.publicLibrary) {
     const type = state.publicLibrary.match(/tutorials/) ? 'tutorial' : 'game';
-    url = `${config.externalURL}/${type}/${name}`;
+    url = `${getBaseURL()}/${type}/${name}`;
   } else {
     url = state.link;
     if(!url) {
       url = await fetch(`share/${roomID}/${state.id}`);
       url = `${location.origin}${await url.text()}/${name}`;
-    } else if(url.startsWith(`${config.externalURL}/s/`)) {
-      url = `${config.externalURL}/game/${url.substr(config.externalURL.length + 3, 8)}/${name}`;
+    } else {
+      const baseURL = getBaseURL();
+      if(url.startsWith(`${baseURL}/s/`)) {
+        url = `${baseURL}/game/${url.substr(baseURL.length + 3, 8)}/${name}`;
+      }
     }
   }
 
