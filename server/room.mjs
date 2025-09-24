@@ -837,6 +837,13 @@ export default class Room {
     this.sendMetaUpdate();
   }
 
+  delegateRoutine(player, args) {
+    const target = this.players.find(p=>p.name === args.player);
+    if(!target)
+      return;
+    target.send('delegateRoutine', { widgetID: args.widgetID, routine: args.routine, variables: args.variables, collections: args.collections });
+  }
+
   roomFilename() {
     return Config.directory('save') + '/rooms/' + this.id + '.json';
   }
