@@ -400,6 +400,7 @@ function fillStatesList(states, starred, activeState, returnServer, activePlayer
 
   const emptyLibrary = $('#emptyLibrary');
   const emptyLibraryByFilter = $('#emptyLibraryByFilter');
+  const lockRoomButton = $('#lockRoom');
   const saveButton = $('#saveState');
   const updateSaveButton = $('#updateSaveState');
   const addButton = $('#addState');
@@ -558,10 +559,10 @@ function fillStatesList(states, starred, activeState, returnServer, activePlayer
 
   if(!$('.roomState', categories['In-Progress Games'])) {
     categories['In-Progress Games'].classList.add('empty');
-    for(const button of [ updateSaveButton, saveButton ])
+    for(const button of [ updateSaveButton, saveButton, lockRoomButton ])
       $('.buttons', categories['Game Shelf']).appendChild(button);
   } else {
-    for(const button of [ updateSaveButton, saveButton ])
+    for(const button of [ updateSaveButton, saveButton, lockRoomButton ])
       $('.buttons', categories['In-Progress Games']).appendChild(button);
   }
 
@@ -1114,9 +1115,15 @@ onLoad(function() {
       alert('Please enter a link.');
   });
 
+  on('#lockRoom', 'click', function() {
+    toServer('lockRoom');
+  });
+
   window.addEventListener('resize', function() {
-    setSidebar();
-    updateFilterOverflow();
+    if(!document.body.classList.contains('locked')) {
+      setSidebar();
+      updateFilterOverflow();
+    }
   });
   document.addEventListener('dragover', function(e) {
     if($('#statesOverlay').style.display == 'flex' && e.dataTransfer.types.includes('Files')) {

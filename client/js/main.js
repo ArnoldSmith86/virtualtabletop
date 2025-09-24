@@ -504,7 +504,7 @@ async function loadEditMode() {
 }
 
 window.addEventListener('keydown', async function(e) {
-  if(e.ctrlKey && e.key == 'j') {
+  if(e.ctrlKey && e.key == 'j' && $('#editButton')) {
     e.preventDefault();
     if(edit) {
       $('#editorToolbar button[icon=close]').click();
