@@ -123,6 +123,14 @@ body.edit:not(.dragToolbarDragging) .widget.selectedInEditPreview.pile .handle {
   box-shadow: 0px 0px 0px 5px red;
 }
 
+body.edit:not(.dragToolbarDragging) .widget.customSelectedInEdit:not(.pile) {
+  box-shadow: 0px 0px 0px 5px orange;
+}
+
+body.edit:not(.dragToolbarDragging) .widget.customSelectedInEdit.pile .handle {
+  box-shadow: 0px 0px 0px 5px orange;
+}
+
 .hintUI {
   position: relative;
 }
