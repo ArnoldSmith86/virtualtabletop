@@ -592,27 +592,40 @@ onLoad(function() {
       $('body').classList.add('lightsOff');
   });
 
-  // Zoom 2x functionality
-  let zoom2xActive = false;
-  let zoom2xMouseHandler = null;
-  let originalScale = 1;
+  // Zoom functionality - cycles through 1x, 1.5x, 2x
+  let currentZoomLevel = 1;
+  const zoomLevels = [1, 1.5, 2];
+  let zoomMouseHandler = null;
 
   on('#zoom2xButton', 'click', function(e){
-    zoom2xActive = !zoom2xActive;
+    // Cycle to next zoom level
+    const currentIndex = zoomLevels.indexOf(currentZoomLevel);
+    const nextIndex = (currentIndex + 1) % zoomLevels.length;
+    currentZoomLevel = zoomLevels[nextIndex];
     
-    if(zoom2xActive) {
-      $('body').classList.add('zoom2x');
-      originalScale = scale;
-      enableZoom2xPanning(e);
-    } else {
+    // Update button text to show current zoom
+    const button = $('#zoom2xButton');
+    const tooltip = button.querySelector('.tooltip');
+    tooltip.textContent = `${currentZoomLevel}x Zoom`;
+    
+    if(currentZoomLevel === 1) {
+      // Normal zoom - disable panning
       $('body').classList.remove('zoom2x');
-      disableZoom2xPanning();
-      setScale();
+      disableZoomPanning();
+      document.documentElement.style.setProperty('--roomZoom', 1);
+      document.documentElement.style.setProperty('--roomPanX', '0px');
+      document.documentElement.style.setProperty('--roomPanY', '0px');
+      zoomScale = 1;
+      roomRectangle = $('#room').getBoundingClientRect();
+    } else {
+      // Zoomed mode - enable panning
+      $('body').classList.add('zoom2x');
+      enableZoomPanning(e);
     }
   });
 
-  function enableZoom2xPanning(e) {
-    zoom2xMouseHandler = function(e) {
+  function enableZoomPanning(e) {
+    zoomMouseHandler = function(e) {
       if (!$('body').classList.contains('zoom2x')) return;
       
       const roomRect = $('#roomArea').getBoundingClientRect();
@@ -632,34 +645,30 @@ onLoad(function() {
       const finalPercentX = Math.max(0, Math.min(1, clampedPercentX));
       const finalPercentY = Math.max(0, Math.min(1, clampedPercentY));
       
-      // Calculate pan offset - when zoomed 2x, we can pan up to 50% of the room size
-      const maxPanX = 1600 * 0.5; // Half the room width
-      const maxPanY = 1000 * 0.5; // Half the room height
+      // Calculate pan offset - when zoomed, we can pan up to (zoom-1)/zoom of the room size
+      const maxPanX = 1600 * (currentZoomLevel - 1) / currentZoomLevel;
+      const maxPanY = 1000 * (currentZoomLevel - 1) / currentZoomLevel;
       
       const panX = finalPercentX * maxPanX;
       const panY = finalPercentY * maxPanY;
       
-      // Apply 2x zoom with panning
-      document.documentElement.style.setProperty('--roomZoom', 2);
+      // Apply zoom with panning
+      document.documentElement.style.setProperty('--roomZoom', currentZoomLevel);
       document.documentElement.style.setProperty('--roomPanX', -panX + 'px');
       document.documentElement.style.setProperty('--roomPanY', -panY + 'px');
       roomRectangle = $('#room').getBoundingClientRect();
     };
     
-    document.addEventListener('mousemove', zoom2xMouseHandler);
-    zoomScale = 2;
-    zoom2xMouseHandler(e);
+    document.addEventListener('mousemove', zoomMouseHandler);
+    zoomScale = currentZoomLevel;
+    zoomMouseHandler(e);
   }
 
-  function disableZoom2xPanning() {
-    if (zoom2xMouseHandler) {
-      document.removeEventListener('mousemove', zoom2xMouseHandler);
-      zoom2xMouseHandler = null;
-      zoomScale = 1;
+  function disableZoomPanning() {
+    if (zoomMouseHandler) {
+      document.removeEventListener('mousemove', zoomMouseHandler);
+      zoomMouseHandler = null;
     }
-    document.documentElement.style.setProperty('--roomZoom', 1);
-    document.documentElement.style.setProperty('--roomPanX', '0px');
-    document.documentElement.style.setProperty('--roomPanY', '0px');
   }
 
   on('#optionsButton', 'click', function(){
