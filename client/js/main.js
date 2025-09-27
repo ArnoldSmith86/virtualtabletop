@@ -617,11 +617,25 @@ onLoad(function() {
       const mouseX = e.clientX - roomRect.left;
       const mouseY = e.clientY - roomRect.top;
       
-      // Calculate pan offset based on mouse position
-      // Mouse at top-left (0,0) should show top-left of room
-      // Mouse at bottom-right should show bottom-right of room
-      const panX = (mouseX / roomRect.width) * 1600 * 0.5; // 0.5 because we're showing 2x zoom
-      const panY = (mouseY / roomRect.height) * 1000 * 0.5;
+      // Calculate mouse position as percentage of room area (0 to 1)
+      const mousePercentX = Math.max(0, Math.min(1, mouseX / roomRect.width));
+      const mousePercentY = Math.max(0, Math.min(1, mouseY / roomRect.height));
+      
+      // Apply 20% edge buffer - mouse needs to be within 20% of edges to reach them
+      const edgeBuffer = 0.2;
+      const clampedPercentX = (mousePercentX - edgeBuffer) / (1 - 2 * edgeBuffer);
+      const clampedPercentY = (mousePercentY - edgeBuffer) / (1 - 2 * edgeBuffer);
+      
+      // Clamp to valid range
+      const finalPercentX = Math.max(0, Math.min(1, clampedPercentX));
+      const finalPercentY = Math.max(0, Math.min(1, clampedPercentY));
+      
+      // Calculate pan offset - when zoomed 2x, we can pan up to 50% of the room size
+      const maxPanX = 1600 * 0.5; // Half the room width
+      const maxPanY = 1000 * 0.5; // Half the room height
+      
+      const panX = finalPercentX * maxPanX;
+      const panY = finalPercentY * maxPanY;
       
       // Apply 2x zoom with panning
       document.documentElement.style.setProperty('--roomZoom', 2);
