@@ -590,6 +590,59 @@ onLoad(function() {
       $('body').classList.add('lightsOff');
   });
 
+  // Zoom 2x functionality
+  let zoom2xActive = false;
+  let zoom2xMouseHandler = null;
+  let originalScale = 1;
+
+  on('#zoom2xButton', 'click', function(e){
+    zoom2xActive = !zoom2xActive;
+    
+    if(zoom2xActive) {
+      $('body').classList.add('zoom2x');
+      originalScale = scale;
+      enableZoom2xPanning(e);
+    } else {
+      $('body').classList.remove('zoom2x');
+      disableZoom2xPanning();
+      setScale();
+    }
+  });
+
+  function enableZoom2xPanning(e) {
+    zoom2xMouseHandler = function(e) {
+      if (!$('body').classList.contains('zoom2x')) return;
+      
+      const roomRect = $('#roomArea').getBoundingClientRect();
+      const mouseX = e.clientX - roomRect.left;
+      const mouseY = e.clientY - roomRect.top;
+      
+      // Calculate pan offset based on mouse position
+      // Mouse at top-left (0,0) should show top-left of room
+      // Mouse at bottom-right should show bottom-right of room
+      const panX = (mouseX / roomRect.width) * 1600 * 0.5; // 0.5 because we're showing 2x zoom
+      const panY = (mouseY / roomRect.height) * 1000 * 0.5;
+      
+      // Apply 2x zoom with panning
+      document.documentElement.style.setProperty('--roomZoom', 2);
+      document.documentElement.style.setProperty('--roomPanX', -panX + 'px');
+      document.documentElement.style.setProperty('--roomPanY', -panY + 'px');
+    };
+    
+    document.addEventListener('mousemove', zoom2xMouseHandler);
+    zoom2xMouseHandler(e);
+  }
+
+  function disableZoom2xPanning() {
+    if (zoom2xMouseHandler) {
+      document.removeEventListener('mousemove', zoom2xMouseHandler);
+      zoom2xMouseHandler = null;
+    }
+    document.documentElement.style.setProperty('--roomZoom', 1);
+    document.documentElement.style.setProperty('--roomPanX', '0px');
+    document.documentElement.style.setProperty('--roomPanY', '0px');
+  }
+
   on('#optionsButton', 'click', function(){
     if(optionsHidden) {
       $('#options').classList.remove('hidden');

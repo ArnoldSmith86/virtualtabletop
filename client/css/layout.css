@@ -23,6 +23,9 @@
   --positiveInput: #009502;
   --negativeInput: #950000;
   --neutralInput: #1f5ca6;
+  --roomZoom: 1;
+  --roomPanX: 0px;
+  --roomPanY: 0px;
 }
 
 body {
@@ -473,6 +476,10 @@ body.aspectTooGood.hiddenToolbar {
       content: '[volume_up]';
     }
 
+    #zoom2xButton::before {
+      content: '[zoom_in]';
+    }
+
     html:not(:fullscreen) #fullscreenButton::before {
       content: '[enter_fullscreen]';
     }
@@ -746,6 +753,15 @@ div[icon] .buttons {
 
 #room {
   transform: scale(var(--scale));
+  transform-origin: left top;
+}
+
+body.zoom2x #roomArea {
+  overflow: hidden;
+}
+
+body.zoom2x #room {
+  transform: scale(calc(var(--scale) * var(--roomZoom))) translate(var(--roomPanX), var(--roomPanY));
   transform-origin: left top;
 }
 
