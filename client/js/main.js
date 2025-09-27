@@ -3,6 +3,8 @@ import { startWebSocket, toServer } from './connection.js';
 
 
 export let scale = 1;
+let zoomScale = 1;
+
 let roomRectangle;
 let overlayActive = false;
 let optionsHidden = true;
@@ -641,9 +643,11 @@ onLoad(function() {
       document.documentElement.style.setProperty('--roomZoom', 2);
       document.documentElement.style.setProperty('--roomPanX', -panX + 'px');
       document.documentElement.style.setProperty('--roomPanY', -panY + 'px');
+      roomRectangle = $('#room').getBoundingClientRect();
     };
     
     document.addEventListener('mousemove', zoom2xMouseHandler);
+    zoomScale = 2;
     zoom2xMouseHandler(e);
   }
 
@@ -651,6 +655,7 @@ onLoad(function() {
     if (zoom2xMouseHandler) {
       document.removeEventListener('mousemove', zoom2xMouseHandler);
       zoom2xMouseHandler = null;
+      zoomScale = 1;
     }
     document.documentElement.style.setProperty('--roomZoom', 1);
     document.documentElement.style.setProperty('--roomPanX', '0px');
