@@ -773,7 +773,6 @@ div[icon] .buttons {
   width: var(--roomWidth);
   height: var(--roomHeight);
   background: var(--roomColor);
-  touch-action: none;
   overflow: hidden;
 }
 
@@ -785,9 +784,12 @@ div[icon] .buttons {
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center center;
-  touch-action: none;
   user-select: none;
   -moz-user-select: none;
+}
+
+.widget.movable {
+  touch-action: none;
 }
 
 .widget.foreign {
