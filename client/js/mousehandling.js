@@ -10,8 +10,8 @@ function eventCoords(name, e) {
     coords = e.targetTouches[0];
   else
     coords = e;
-  let x = (coords.clientX - roomRectangle.left) / scale;
-  let y = (coords.clientY - roomRectangle.top) / scale;
+  let x = (coords.clientX - roomRectangle.left) / scale / zoomScale;
+  let y = (coords.clientY - roomRectangle.top) / scale / zoomScale;
   if (!edit || zoom == 1) {
     x = Math.max(0, Math.min(1600, x));
     y = Math.max(0, Math.min(1000, y));

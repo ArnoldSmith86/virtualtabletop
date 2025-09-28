@@ -3,6 +3,8 @@ import { startWebSocket, toServer } from './connection.js';
 
 
 export let scale = 1;
+let zoomScale = 1;
+
 let roomRectangle;
 let overlayActive = false;
 let optionsHidden = true;
@@ -589,6 +591,85 @@ onLoad(function() {
     else
       $('body').classList.add('lightsOff');
   });
+
+  // Zoom functionality - cycles through 1x, 1.5x, 2x
+  let currentZoomLevel = 1;
+  const zoomLevels = [1, 1.5, 2];
+  let zoomMouseHandler = null;
+
+  on('#zoom2xButton', 'click', function(e){
+    // Cycle to next zoom level
+    const currentIndex = zoomLevels.indexOf(currentZoomLevel);
+    const nextIndex = (currentIndex + 1) % zoomLevels.length;
+    currentZoomLevel = zoomLevels[nextIndex];
+    
+    // Update button text to show current zoom
+    const button = $('#zoom2xButton');
+    const tooltip = button.querySelector('.tooltip');
+    tooltip.textContent = `${currentZoomLevel}x Zoom`;
+    
+    if(currentZoomLevel === 1) {
+      // Normal zoom - disable panning
+      $('body').classList.remove('zoom2x');
+      disableZoomPanning();
+      document.documentElement.style.setProperty('--roomZoom', 1);
+      document.documentElement.style.setProperty('--roomPanX', '0px');
+      document.documentElement.style.setProperty('--roomPanY', '0px');
+      zoomScale = 1;
+      roomRectangle = $('#room').getBoundingClientRect();
+    } else {
+      // Zoomed mode - enable panning
+      $('body').classList.add('zoom2x');
+      enableZoomPanning(e);
+    }
+  });
+
+  function enableZoomPanning(e) {
+    zoomMouseHandler = function(e) {
+      if (!$('body').classList.contains('zoom2x')) return;
+      
+      const roomRect = $('#roomArea').getBoundingClientRect();
+      const mouseX = e.clientX - roomRect.left;
+      const mouseY = e.clientY - roomRect.top;
+      
+      // Calculate mouse position as percentage of room area (0 to 1)
+      const mousePercentX = Math.max(0, Math.min(1, mouseX / roomRect.width));
+      const mousePercentY = Math.max(0, Math.min(1, mouseY / roomRect.height));
+      
+      // Apply 20% edge buffer - mouse needs to be within 20% of edges to reach them
+      const edgeBuffer = 0.2;
+      const clampedPercentX = (mousePercentX - edgeBuffer) / (1 - 2 * edgeBuffer);
+      const clampedPercentY = (mousePercentY - edgeBuffer) / (1 - 2 * edgeBuffer);
+      
+      // Clamp to valid range
+      const finalPercentX = Math.max(0, Math.min(1, clampedPercentX));
+      const finalPercentY = Math.max(0, Math.min(1, clampedPercentY));
+      
+      // Calculate pan offset - when zoomed, we can pan up to (zoom-1)/zoom of the room size
+      const maxPanX = 1600 * (currentZoomLevel - 1) / currentZoomLevel;
+      const maxPanY = 1000 * (currentZoomLevel - 1) / currentZoomLevel;
+      
+      const panX = finalPercentX * maxPanX;
+      const panY = finalPercentY * maxPanY;
+      
+      // Apply zoom with panning
+      document.documentElement.style.setProperty('--roomZoom', currentZoomLevel);
+      document.documentElement.style.setProperty('--roomPanX', -panX + 'px');
+      document.documentElement.style.setProperty('--roomPanY', -panY + 'px');
+      roomRectangle = $('#room').getBoundingClientRect();
+    };
+    
+    document.addEventListener('mousemove', zoomMouseHandler);
+    zoomScale = currentZoomLevel;
+    zoomMouseHandler(e);
+  }
+
+  function disableZoomPanning() {
+    if (zoomMouseHandler) {
+      document.removeEventListener('mousemove', zoomMouseHandler);
+      zoomMouseHandler = null;
+    }
+  }
 
   on('#optionsButton', 'click', function(){
     if(optionsHidden) {
