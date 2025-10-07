@@ -10,7 +10,7 @@
       "mode": "vs",
       "time": "40-60",
       "attribution": "Implementation, assets and scripting are by Mitchell Stolycia and are released via CC BY 4.0.",
-      "lastUpdate": 1759783080157,
+      "lastUpdate": 1759834809565,
       "showName": true,
       "skill": "",
       "description": "Eight contestants enter the house. Over the course of five weeks, the least popular are publicly voted out until only three remain.\n\nThis... is Ad Populum.",
@@ -981,7 +981,7 @@
         "deckWidth": "10",
         "deckHeight": "2",
         "color": "#e6194B",
-        "ab": "Choose a player and card type. They must give you one of them cards"
+        "ab": "Choose a player and card type. They must give you a card of that type"
       },
       "champion.jpg 0,6": {
         "image": "/assets/-917259657_13288",
@@ -2323,7 +2323,7 @@
         "deckWidth": "10",
         "deckHeight": "2",
         "color": "#e6194B",
-        "ab": "Choose a player and card type. They must give you one of them cards"
+        "ab": "Choose a player and card type. They must give you a card of that type"
       },
       "champion.jpg 0,6": {
         "image": "/assets/-917259657_13288",
@@ -2690,7 +2690,7 @@
         "deckWidth": "10",
         "deckHeight": "2",
         "color": "#e6194B",
-        "ab": "Choose a player and card type. They must give you one of them cards"
+        "ab": "Choose a player and card type. They must give you a card of that type"
       },
       "champion.jpg 0,6": {
         "image": "/assets/-917259657_13288",
@@ -2944,7 +2944,7 @@
         "deckWidth": "10",
         "deckHeight": "2",
         "color": "#e6194B",
-        "ab": "Choose a player and card type. They must give you one of them cards"
+        "ab": "Choose a player and card type. They must give you a card of that type"
       },
       "champion.jpg 0,6": {
         "image": "/assets/-917259657_13288",
@@ -3198,7 +3198,7 @@
         "deckWidth": "10",
         "deckHeight": "2",
         "color": "#e6194B",
-        "ab": "Choose a player and card type. They must give you one of them cards"
+        "ab": "Choose a player and card type. They must give you a card of that type"
       },
       "champion.jpg 0,6": {
         "image": "/assets/-917259657_13288",
@@ -3452,7 +3452,7 @@
         "deckWidth": "10",
         "deckHeight": "2",
         "color": "#e6194B",
-        "ab": "Choose a player and card type. They must give you one of them cards"
+        "ab": "Choose a player and card type. They must give you a card of that type"
       },
       "champion.jpg 0,6": {
         "image": "/assets/-917259657_13288",
@@ -3706,7 +3706,7 @@
         "deckWidth": "10",
         "deckHeight": "2",
         "color": "#e6194B",
-        "ab": "Choose a player and card type. They must give you one of them cards"
+        "ab": "Choose a player and card type. They must give you a card of that type"
       },
       "champion.jpg 0,6": {
         "image": "/assets/-917259657_13288",
@@ -3960,7 +3960,7 @@
         "deckWidth": "10",
         "deckHeight": "2",
         "color": "#e6194B",
-        "ab": "Choose a player and card type. They must give you one of them cards"
+        "ab": "Choose a player and card type. They must give you a card of that type"
       },
       "champion.jpg 0,6": {
         "image": "/assets/-917259657_13288",
@@ -4214,7 +4214,7 @@
         "deckWidth": "10",
         "deckHeight": "2",
         "color": "#e6194B",
-        "ab": "Choose a player and card type. They must give you one of them cards"
+        "ab": "Choose a player and card type. They must give you a card of that type"
       },
       "champion.jpg 0,6": {
         "image": "/assets/-917259657_13288",
@@ -4468,7 +4468,7 @@
         "deckWidth": "10",
         "deckHeight": "2",
         "color": "#e6194B",
-        "ab": "Choose a player and card type. They must give you one of them cards"
+        "ab": "Choose a player and card type. They must give you a card of that type"
       },
       "champion.jpg 0,6": {
         "image": "/assets/-917259657_13288",
@@ -4722,7 +4722,7 @@
         "deckWidth": "10",
         "deckHeight": "2",
         "color": "#e6194B",
-        "ab": "Choose a player and card type. They must give you one of them cards"
+        "ab": "Choose a player and card type. They must give you a card of that type"
       },
       "champion.jpg 0,6": {
         "image": "/assets/-917259657_13288",
@@ -4976,7 +4976,7 @@
         "deckWidth": "10",
         "deckHeight": "2",
         "color": "#e6194B",
-        "ab": "Choose a player and card type. They must give you one of them cards"
+        "ab": "Choose a player and card type. They must give you a card of that type"
       },
       "champion.jpg 0,6": {
         "image": "/assets/-917259657_13288",
