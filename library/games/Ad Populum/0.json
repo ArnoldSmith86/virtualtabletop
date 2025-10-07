@@ -1,0 +1,7677 @@
+{
+  "_meta": {
+    "version": 17,
+    "info": {
+      "name": "Ad Populum",
+      "image": "/assets/-884620048_5504",
+      "rules": "",
+      "bgg": "https://boardgamegeek.com/boardgame/329450",
+      "year": "2021",
+      "mode": "vs",
+      "time": "40-60",
+      "attribution": "Implementation, assets and scripting are by Mitchell Stolycia and are released via CC BY 4.0.",
+      "lastUpdate": 1759834809565,
+      "showName": true,
+      "skill": "",
+      "description": "Eight contestants enter the house. Over the course of five weeks, the least popular are publicly voted out until only three remain.\n\nThis... is Ad Populum.",
+      "similarImage": "",
+      "similarName": "Equinox",
+      "similarDesigner": "Reiner Knizia",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": "<div>Players (you!) will always be referred to as \"players\".</div><div><br></div><div>Cards representing the contestants in the house and the ghost which \nhaunts it are referred to as \"people\" or a \"person\".</div><div><br></div><div><b>Setup</b></div><div><ol><li>Take your seats.</li><li>Press the <i>Setup</i> button.</li><li>Choose the type of setup you would like.</li><ul><li>If a custom setup of person cards is desired, drag the cards you would like to the eight red-bordered holders before clicking setup.</li></ul><li>Any cards not used will still be present and visible, in case you want to setup again.</li></ol></div><div><b>Your turn</b></div><blockquote><div>To play, drag cards from your hand (bottom right) to the board.</div><div><br></div><div>Bets are placed by dragging the five betting chips from next to your seat to the play area.</div><div><br></div><div>To make a secret bet, drag a card onto the table and place a betting chip on top of it.</div></blockquote><div><b>End turn</b></div><blockquote><div>End your turn by clicking&nbsp;<i>End turn</i>. This will refill your hand to eight cards automatically.</div></blockquote><div><b>Scoring</b></div><blockquote><div>Scoring only occurs at the end of the game. Do this manually by using the counters by your seats.</div></blockquote><div><b>Misc.</b></div><blockquote><div>The red X cards are used to represent a person who has been voted off the show (has the least popularity at the end of a round).</div><div><br></div><div>The&nbsp;<b><i>Draw 3 cards </i></b>person ability has to be executed manually by dragging three cards from the deck to your hand.</div></blockquote>",
+      "players": "2-5",
+      "language": "en-GB",
+      "variant": "Ad Populum",
+      "variantImage": "/assets/-884620048_5504"
+    }
+  },
+  "2xwe 5.jpg": {
+    "type": "card",
+    "id": "2xwe 5.jpg",
+    "deck": "roundDeck",
+    "cardType": "5.jpg",
+    "z": 71397,
+    "parent": "grid9"
+  },
+  "2xwe 0.jpg": {
+    "type": "card",
+    "id": "2xwe 0.jpg",
+    "deck": "roundDeck",
+    "cardType": "0.jpg",
+    "activeFace": 1,
+    "z": 71407,
+    "parent": "grid22"
+  },
+  "2xwe 1.jpg": {
+    "type": "card",
+    "id": "2xwe 1.jpg",
+    "deck": "roundDeck",
+    "cardType": "1.jpg",
+    "activeFace": 1,
+    "z": 71405,
+    "parent": "grid21"
+  },
+  "2xwe 2.jpg": {
+    "type": "card",
+    "id": "2xwe 2.jpg",
+    "deck": "roundDeck",
+    "cardType": "2.jpg",
+    "activeFace": 1,
+    "z": 71403,
+    "parent": "grid20"
+  },
+  "2xwe 3.jpg": {
+    "type": "card",
+    "id": "2xwe 3.jpg",
+    "deck": "roundDeck",
+    "cardType": "3.jpg",
+    "activeFace": 1,
+    "z": 71401,
+    "parent": "grid19"
+  },
+  "2xwe 4.jpg": {
+    "type": "card",
+    "id": "2xwe 4.jpg",
+    "deck": "roundDeck",
+    "cardType": "4.jpg",
+    "z": 71399,
+    "parent": "grid18"
+  },
+  "roundDeck": {
+    "type": "deck",
+    "id": "roundDeck",
+    "x": 50,
+    "y": 290,
+    "cardDefaults": {
+      "width": 87,
+      "height": 150,
+      "borderRadius": 8,
+      "movable": false
+    },
+    "cardTypes": {
+      "5.jpg": {
+        "text": "5 VP"
+      },
+      "0.jpg": {
+        "text": "0 VP",
+        "week": "Week 5"
+      },
+      "1.jpg": {
+        "text": "1 VP",
+        "week": "Week 4"
+      },
+      "2.jpg": {
+        "text": "2 VP",
+        "week": "Week 3"
+      },
+      "3.jpg": {
+        "text": "3 VP",
+        "week": "Week 2"
+      },
+      "4.jpg": {
+        "text": "4 VP",
+        "week": "Week 1"
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "color": "grey",
+            "dynamicProperties": {
+              "value": "image",
+              "height": "height",
+              "width": "width"
+            }
+          },
+          {
+            "type": "text",
+            "x": 0,
+            "y": 60,
+            "fontSize": 30,
+            "textAlign": "center",
+            "width": 87,
+            "dynamicProperties": {
+              "value": "text"
+            }
+          },
+          {
+            "type": "text",
+            "x": 0,
+            "y": 10,
+            "fontSize": 24,
+            "textAlign": "center",
+            "width": 87,
+            "dynamicProperties": {
+              "value": "week"
+            }
+          }
+        ]
+      }
+    ],
+    "z": 44
+  },
+  "grid0": {
+    "type": "holder",
+    "id": "grid0",
+    "y": 419,
+    "width": 87,
+    "height": 150,
+    "z": 6,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "movableInEdit": false,
+    "dropTarget": {
+      "type": "card"
+    },
+    "x": 49,
+    "onEnter": {
+      "activeFace": 1
+    }
+  },
+  "grid9": {
+    "type": "holder",
+    "id": "grid9",
+    "x": 169,
+    "y": 28,
+    "z": 7,
+    "inheritFrom": "grid0",
+    "movable": false,
+    "movableInEdit": true,
+    "width": 87,
+    "height": 150
+  },
+  "grid18": {
+    "type": "holder",
+    "id": "grid18",
+    "x": 169,
+    "y": 188,
+    "z": 6,
+    "inheritFrom": "grid0",
+    "movable": false,
+    "movableInEdit": true,
+    "width": 87,
+    "height": 150
+  },
+  "grid19": {
+    "type": "holder",
+    "id": "grid19",
+    "x": 169,
+    "y": 348,
+    "z": 6,
+    "inheritFrom": "grid0",
+    "movable": false,
+    "movableInEdit": true,
+    "width": 87,
+    "height": 150
+  },
+  "grid20": {
+    "type": "holder",
+    "id": "grid20",
+    "x": 169,
+    "y": 506,
+    "z": 6,
+    "inheritFrom": "grid0",
+    "movable": false,
+    "movableInEdit": true,
+    "width": 87,
+    "height": 150
+  },
+  "grid21": {
+    "type": "holder",
+    "id": "grid21",
+    "x": 169,
+    "y": 666,
+    "z": 6,
+    "inheritFrom": "grid0",
+    "movable": false,
+    "movableInEdit": true,
+    "width": 87,
+    "height": 150
+  },
+  "grid22": {
+    "type": "holder",
+    "id": "grid22",
+    "x": 169,
+    "y": 825,
+    "z": 6,
+    "inheritFrom": "grid0",
+    "movable": false,
+    "movableInEdit": true,
+    "width": 87,
+    "height": 150
+  },
+  "grid23": {
+    "type": "holder",
+    "id": "grid23",
+    "x": 259,
+    "y": 188,
+    "z": 6,
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": "grid0",
+    "width": 87,
+    "height": 150
+  },
+  "grid24": {
+    "type": "holder",
+    "id": "grid24",
+    "x": 259,
+    "y": 348,
+    "z": 6,
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": "grid0",
+    "width": 87,
+    "height": 150
+  },
+  "grid25": {
+    "type": "holder",
+    "id": "grid25",
+    "x": 259,
+    "y": 506,
+    "z": 6,
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": "grid0",
+    "width": 87,
+    "height": 150
+  },
+  "grid26": {
+    "type": "holder",
+    "id": "grid26",
+    "x": 259,
+    "y": 666,
+    "z": 6,
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": "grid0",
+    "width": 87,
+    "height": 150
+  },
+  "grid27": {
+    "type": "holder",
+    "id": "grid27",
+    "x": 259,
+    "y": 825,
+    "z": 6,
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": "grid0",
+    "width": 87,
+    "height": 150
+  },
+  "grid28": {
+    "type": "holder",
+    "id": "grid28",
+    "x": 348,
+    "y": 188,
+    "z": 6,
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": "grid0",
+    "width": 87,
+    "height": 150
+  },
+  "grid29": {
+    "type": "holder",
+    "id": "grid29",
+    "x": 348,
+    "y": 348,
+    "z": 6,
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": "grid0",
+    "width": 87,
+    "height": 150
+  },
+  "grid30": {
+    "type": "holder",
+    "id": "grid30",
+    "x": 348,
+    "y": 506,
+    "z": 6,
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": "grid0",
+    "width": 87,
+    "height": 150
+  },
+  "grid31": {
+    "type": "holder",
+    "id": "grid31",
+    "x": 348,
+    "y": 666,
+    "z": 6,
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": "grid0",
+    "width": 87,
+    "height": 150
+  },
+  "grid32": {
+    "type": "holder",
+    "id": "grid32",
+    "x": 348,
+    "y": 825,
+    "z": 6,
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": "grid0",
+    "width": 87,
+    "height": 150
+  },
+  "grid33": {
+    "type": "holder",
+    "id": "grid33",
+    "x": 438,
+    "y": 188,
+    "z": 6,
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": "grid0",
+    "width": 87,
+    "height": 150
+  },
+  "grid34": {
+    "type": "holder",
+    "id": "grid34",
+    "x": 438,
+    "y": 348,
+    "z": 6,
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": "grid0",
+    "width": 87,
+    "height": 150
+  },
+  "grid35": {
+    "type": "holder",
+    "id": "grid35",
+    "x": 438,
+    "y": 506,
+    "z": 6,
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": "grid0",
+    "width": 87,
+    "height": 150
+  },
+  "grid36": {
+    "type": "holder",
+    "id": "grid36",
+    "x": 438,
+    "y": 666,
+    "z": 6,
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": "grid0",
+    "width": 87,
+    "height": 150
+  },
+  "grid37": {
+    "type": "holder",
+    "id": "grid37",
+    "x": 438,
+    "y": 825,
+    "z": 6,
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": "grid0",
+    "width": 87,
+    "height": 150
+  },
+  "grid38": {
+    "type": "holder",
+    "id": "grid38",
+    "x": 527,
+    "y": 188,
+    "z": 6,
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": "grid0",
+    "width": 87,
+    "height": 150
+  },
+  "grid39": {
+    "type": "holder",
+    "id": "grid39",
+    "x": 528,
+    "y": 348,
+    "z": 6,
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": "grid0",
+    "width": 87,
+    "height": 150
+  },
+  "grid40": {
+    "type": "holder",
+    "id": "grid40",
+    "x": 528,
+    "y": 506,
+    "z": 6,
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": "grid0",
+    "width": 87,
+    "height": 150
+  },
+  "grid41": {
+    "type": "holder",
+    "id": "grid41",
+    "x": 527,
+    "y": 666,
+    "z": 6,
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": "grid0",
+    "width": 87,
+    "height": 150
+  },
+  "grid42": {
+    "type": "holder",
+    "id": "grid42",
+    "x": 527,
+    "y": 825,
+    "z": 6,
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": "grid0",
+    "width": 87,
+    "height": 150
+  },
+  "grid43": {
+    "type": "holder",
+    "id": "grid43",
+    "x": 617,
+    "y": 188,
+    "z": 6,
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": "grid0",
+    "width": 87,
+    "height": 150
+  },
+  "grid44": {
+    "type": "holder",
+    "id": "grid44",
+    "x": 617,
+    "y": 348,
+    "z": 6,
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": "grid0",
+    "width": 87,
+    "height": 150
+  },
+  "grid45": {
+    "type": "holder",
+    "id": "grid45",
+    "x": 617,
+    "y": 506,
+    "z": 6,
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": "grid0",
+    "width": 87,
+    "height": 150
+  },
+  "grid46": {
+    "type": "holder",
+    "id": "grid46",
+    "x": 617,
+    "y": 666,
+    "z": 6,
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": "grid0",
+    "width": 87,
+    "height": 150
+  },
+  "grid47": {
+    "type": "holder",
+    "id": "grid47",
+    "x": 617,
+    "y": 825,
+    "z": 6,
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": "grid0",
+    "width": 87,
+    "height": 150
+  },
+  "grid48": {
+    "type": "holder",
+    "id": "grid48",
+    "x": 707,
+    "y": 188,
+    "z": 6,
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": "grid0",
+    "width": 87,
+    "height": 150
+  },
+  "grid49": {
+    "type": "holder",
+    "id": "grid49",
+    "x": 707,
+    "y": 348,
+    "z": 6,
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": "grid0",
+    "width": 87,
+    "height": 150
+  },
+  "grid50": {
+    "type": "holder",
+    "id": "grid50",
+    "x": 707,
+    "y": 506,
+    "z": 6,
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": "grid0",
+    "width": 87,
+    "height": 150
+  },
+  "grid51": {
+    "type": "holder",
+    "id": "grid51",
+    "x": 707,
+    "y": 666,
+    "z": 6,
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": "grid0",
+    "width": 87,
+    "height": 150
+  },
+  "grid52": {
+    "type": "holder",
+    "id": "grid52",
+    "x": 707,
+    "y": 825,
+    "z": 6,
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": "grid0",
+    "width": 87,
+    "height": 150
+  },
+  "grid53": {
+    "type": "holder",
+    "id": "grid53",
+    "x": 796,
+    "y": 188,
+    "z": 6,
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": "grid0",
+    "width": 87,
+    "height": 150
+  },
+  "grid54": {
+    "type": "holder",
+    "id": "grid54",
+    "x": 796,
+    "y": 348,
+    "z": 6,
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": "grid0",
+    "width": 87,
+    "height": 150
+  },
+  "grid55": {
+    "type": "holder",
+    "id": "grid55",
+    "x": 796,
+    "y": 506,
+    "z": 6,
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": "grid0",
+    "width": 87,
+    "height": 150
+  },
+  "grid56": {
+    "type": "holder",
+    "id": "grid56",
+    "x": 796,
+    "y": 666,
+    "z": 6,
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": "grid0",
+    "width": 87,
+    "height": 150
+  },
+  "grid57": {
+    "type": "holder",
+    "id": "grid57",
+    "x": 796,
+    "y": 825,
+    "z": 6,
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": "grid0",
+    "width": 87,
+    "height": 150
+  },
+  "grid58": {
+    "type": "holder",
+    "id": "grid58",
+    "x": 886,
+    "y": 188,
+    "z": 6,
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": "grid0",
+    "width": 87,
+    "height": 150
+  },
+  "grid59": {
+    "type": "holder",
+    "id": "grid59",
+    "x": 886,
+    "y": 348,
+    "z": 6,
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": "grid0",
+    "width": 87,
+    "height": 150
+  },
+  "grid60": {
+    "type": "holder",
+    "id": "grid60",
+    "x": 886,
+    "y": 506,
+    "z": 6,
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": "grid0",
+    "width": 87,
+    "height": 150
+  },
+  "grid61": {
+    "type": "holder",
+    "id": "grid61",
+    "x": 886,
+    "y": 666,
+    "z": 6,
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": "grid0",
+    "width": 87,
+    "height": 150
+  },
+  "grid62": {
+    "type": "holder",
+    "id": "grid62",
+    "x": 886,
+    "y": 825,
+    "z": 6,
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": "grid0",
+    "width": 87,
+    "height": 150
+  },
+  "mmfy dead.jpg 1": {
+    "type": "card",
+    "id": "mmfy dead.jpg 1",
+    "deck": "deadDeck",
+    "cardType": "dead.jpg",
+    "z": 74124,
+    "parent": "mpq3",
+    "activeFace": 1
+  },
+  "mmfy dead.jpg 2": {
+    "type": "card",
+    "id": "mmfy dead.jpg 2",
+    "deck": "deadDeck",
+    "cardType": "dead.jpg",
+    "z": 74126,
+    "parent": "mpq3",
+    "activeFace": 1
+  },
+  "mmfy dead.jpg 3": {
+    "type": "card",
+    "id": "mmfy dead.jpg 3",
+    "deck": "deadDeck",
+    "cardType": "dead.jpg",
+    "z": 74128,
+    "parent": "mpq3",
+    "activeFace": 1
+  },
+  "mmfy dead.jpg 4": {
+    "type": "card",
+    "id": "mmfy dead.jpg 4",
+    "deck": "deadDeck",
+    "cardType": "dead.jpg",
+    "z": 74130,
+    "parent": "mpq3",
+    "activeFace": 1
+  },
+  "mmfy dead.jpg 5": {
+    "type": "card",
+    "id": "mmfy dead.jpg 5",
+    "deck": "deadDeck",
+    "cardType": "dead.jpg",
+    "z": 74132,
+    "parent": "mpq3",
+    "activeFace": 1
+  },
+  "mmfy dead.jpg 6": {
+    "type": "card",
+    "id": "mmfy dead.jpg 6",
+    "deck": "deadDeck",
+    "cardType": "dead.jpg",
+    "z": 74134,
+    "parent": "mpq3",
+    "activeFace": 1
+  },
+  "mmfy dead.jpg 7": {
+    "type": "card",
+    "id": "mmfy dead.jpg 7",
+    "deck": "deadDeck",
+    "cardType": "dead.jpg",
+    "z": 74136,
+    "parent": "mpq3",
+    "activeFace": 1
+  },
+  "mmfy dead.jpg 8": {
+    "type": "card",
+    "id": "mmfy dead.jpg 8",
+    "deck": "deadDeck",
+    "cardType": "dead.jpg",
+    "z": 74138,
+    "parent": "mpq3",
+    "activeFace": 1
+  },
+  "mmfy dead.jpg 9": {
+    "type": "card",
+    "id": "mmfy dead.jpg 9",
+    "deck": "deadDeck",
+    "cardType": "dead.jpg",
+    "z": 74140,
+    "parent": "mpq3",
+    "activeFace": 1
+  },
+  "mmfy dead.jpg 10": {
+    "type": "card",
+    "id": "mmfy dead.jpg 10",
+    "deck": "deadDeck",
+    "cardType": "dead.jpg",
+    "z": 74276,
+    "activeFace": 1,
+    "parent": "mpq3"
+  },
+  "deadDeck": {
+    "type": "deck",
+    "id": "deadDeck",
+    "cardDefaults": {
+      "width": 87,
+      "borderRadius": 8,
+      "height": 150
+    },
+    "cardTypes": {
+      "dead.jpg": {
+        "text": "x"
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "color": "red",
+            "dynamicProperties": {
+              "value": "image",
+              "height": "height",
+              "width": "width"
+            }
+          },
+          {
+            "type": "text",
+            "x": 0,
+            "y": 10,
+            "fontSize": 100,
+            "textAlign": "center",
+            "width": 87,
+            "dynamicProperties": {
+              "value": "text"
+            },
+            "css": {
+              "color": "black"
+            }
+          }
+        ],
+        "border": 2,
+        "radius": 8
+      }
+    ],
+    "z": 171,
+    "parent": "deadHolder"
+  },
+  "deadHolder": {
+    "type": "holder",
+    "id": "deadHolder",
+    "x": 1063,
+    "y": 28,
+    "z": 6,
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": "grid0",
+    "preventPiles": false
+  },
+  "deadHolderB": {
+    "type": "button",
+    "id": "deadHolderB",
+    "parent": "deadHolder",
+    "fixedParent": true,
+    "width": 111,
+    "height": 40,
+    "movableInEdit": false,
+    "text": "Recall",
+    "clickRoutine": [
+      {
+        "func": "RECALL",
+        "holder": "${PROPERTY parent}"
+      }
+    ],
+    "x": 97,
+    "y": -80
+  },
+  "6hq1": {
+    "deck": "deadDeck",
+    "type": "card",
+    "cardType": "dead.jpg",
+    "id": "6hq1",
+    "z": 74122,
+    "parent": "mpq3",
+    "activeFace": 1
+  },
+  "grid0B": {
+    "type": "button",
+    "id": "grid0B",
+    "parent": "grid0",
+    "fixedParent": true,
+    "y": 52,
+    "width": 111,
+    "height": 40,
+    "movableInEdit": false,
+    "text": "Recall & Shuffle",
+    "clickRoutine": [
+      {
+        "func": "RECALL",
+        "holder": "${PROPERTY parent}"
+      },
+      {
+        "func": "FLIP",
+        "holder": "${PROPERTY parent}",
+        "face": 1
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "${PROPERTY parent}"
+      }
+    ],
+    "x": -329
+  },
+  "p7xd": {
+    "id": "p7xd",
+    "type": "deck",
+    "cardTypes": {
+      "champion.jpg 0,0": {
+        "image": "/assets/1979195317_12950",
+        "offsetX": 0,
+        "offsetY": 0,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#4363d8",
+        "ab": "In phase 3, you can discard people still in play "
+      },
+      "champion.jpg 0,1": {
+        "image": "/assets/-630829019_12242",
+        "offsetX": 1,
+        "offsetY": 0,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#469990",
+        "ab": "Discard a visible person from this row (different column)"
+      },
+      "champion.jpg 0,2": {
+        "image": "/assets/-59558038_11274",
+        "offsetX": 2,
+        "offsetY": 0,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#ffe119",
+        "ab": "Add one of these cards from a previous row to your hand"
+      },
+      "champion.jpg 0,3": {
+        "image": "/assets/-1891256305_11412",
+        "offsetX": 3,
+        "offsetY": 0,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#f032e6",
+        "ab": "Activate an elimated person's ability"
+      },
+      "champion.jpg 0,4": {
+        "image": "/assets/-1533710025_12234",
+        "offsetX": 4,
+        "offsetY": 0,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#a9a9a9",
+        "ab": "Take 3 cards from someone and keep 1"
+      },
+      "champion.jpg 0,5": {
+        "image": "/assets/841996417_13136",
+        "offsetX": 5,
+        "offsetY": 0,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#e6194B",
+        "ab": "Choose a player and card type. They must give you a card of that type"
+      },
+      "champion.jpg 0,6": {
+        "image": "/assets/-917259657_13288",
+        "offsetX": 6,
+        "offsetY": 0,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#aaffc3",
+        "ab": "Swap two visible cards in a person's column"
+      },
+      "champion.jpg 0,7": {
+        "image": "/assets/1526318788_12556",
+        "offsetX": 7,
+        "offsetY": 0,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#9A6324",
+        "ab": "Retrieve a bet"
+      },
+      "champion.jpg 0,8": {
+        "image": "/assets/-1747297889_10750",
+        "offsetX": 8,
+        "offsetY": 0,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#fabed4",
+        "ab": "Retrieve any visible ghost"
+      },
+      "champion.jpg 0,9": {
+        "image": "/assets/-2101966489_12080",
+        "offsetX": 9,
+        "offsetY": 0,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#800000",
+        "ab": "Place a bet on any person in any row (not the 5 VP row)"
+      },
+      "champion.jpg 1,0": {
+        "image": "/assets/-1740667798_12944",
+        "offsetX": 0,
+        "offsetY": 1,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#42d4f4",
+        "ab": "Draw 3 cards"
+      },
+      "champion.jpg 1,1": {
+        "image": "/assets/-646821924_13012",
+        "offsetX": 1,
+        "offsetY": 1,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#fffac8",
+        "ab": "Place half of another player's hand face down on the table"
+      },
+      "champion.jpg 1,2": {
+        "image": "/assets/1109249148_13728",
+        "offsetX": 2,
+        "offsetY": 1,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#f58231",
+        "ab": "Play a second card (only once per turn)"
+      },
+      "champion.jpg 1,3": {
+        "image": "/assets/-505936859_10456",
+        "offsetX": 3,
+        "offsetY": 1,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#dcbeff",
+        "ab": "Score 0.5 more points"
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "white",
+            "width": 87,
+            "height": 150
+          },
+          {
+            "type": "image",
+            "x": 27,
+            "y": 0,
+            "width": 60,
+            "height": 80,
+            "dynamicProperties": {
+              "color": "color"
+            }
+          },
+          {
+            "type": "image",
+            "color": "transparent",
+            "height": 80,
+            "width": 60,
+            "x": 27,
+            "dynamicProperties": {
+              "value": "image"
+            }
+          },
+          {
+            "type": "text",
+            "x": 0,
+            "y": 8,
+            "fontSize": 22,
+            "textAlign": "center",
+            "width": 27,
+            "dynamicProperties": {
+              "value": "text"
+            }
+          },
+          {
+            "type": "text",
+            "x": 4,
+            "y": 81,
+            "fontSize": 11,
+            "textAlign": "center",
+            "width": 79,
+            "dynamicProperties": {
+              "value": "ab"
+            }
+          }
+        ],
+        "border": 2,
+        "radius": 8
+      }
+    ],
+    "cardDefaults": {
+      "width": 87,
+      "borderRadius": 8,
+      "height": 150,
+      "enlarge": 3,
+      "css": {
+        "--offsetX": "${PROPERTY offsetX}",
+        "--offsetY": "${PROPERTY offsetY}",
+        "--deckWidth": "${PROPERTY deckWidth}",
+        "--deckHeight": "${PROPERTY deckHeight}",
+        "--width": "${PROPERTY width}",
+        "--height": "${PROPERTY height}"
+      }
+    },
+    "z": 310,
+    "parent": "grid0"
+  },
+  "p7xd champion.jpg 0,0": {
+    "type": "card",
+    "id": "p7xd champion.jpg 0,0",
+    "deck": "p7xd",
+    "cardType": "champion.jpg 0,0",
+    "z": 79327,
+    "activeFace": 1,
+    "parent": "jkpi"
+  },
+  "p7xd champion.jpg 0,1": {
+    "type": "card",
+    "id": "p7xd champion.jpg 0,1",
+    "deck": "p7xd",
+    "cardType": "champion.jpg 0,1",
+    "z": 79329,
+    "activeFace": 1,
+    "parent": "jkpi"
+  },
+  "p7xd champion.jpg 0,2": {
+    "type": "card",
+    "id": "p7xd champion.jpg 0,2",
+    "deck": "p7xd",
+    "cardType": "champion.jpg 0,2",
+    "z": 79335,
+    "activeFace": 1,
+    "parent": "jkpi"
+  },
+  "p7xd champion.jpg 0,3": {
+    "type": "card",
+    "id": "p7xd champion.jpg 0,3",
+    "deck": "p7xd",
+    "cardType": "champion.jpg 0,3",
+    "z": 79332,
+    "activeFace": 1,
+    "parent": "jkpi"
+  },
+  "p7xd champion.jpg 0,4": {
+    "type": "card",
+    "id": "p7xd champion.jpg 0,4",
+    "deck": "p7xd",
+    "cardType": "champion.jpg 0,4",
+    "z": 79334,
+    "activeFace": 1,
+    "parent": "jkpi"
+  },
+  "p7xd champion.jpg 0,5": {
+    "type": "card",
+    "id": "p7xd champion.jpg 0,5",
+    "deck": "p7xd",
+    "cardType": "champion.jpg 0,5",
+    "z": 79322,
+    "activeFace": 1,
+    "parent": "jkpi"
+  },
+  "p7xd champion.jpg 0,6": {
+    "type": "card",
+    "id": "p7xd champion.jpg 0,6",
+    "deck": "p7xd",
+    "cardType": "champion.jpg 0,6",
+    "z": 79323,
+    "activeFace": 1,
+    "parent": "jkpi"
+  },
+  "p7xd champion.jpg 0,7": {
+    "type": "card",
+    "id": "p7xd champion.jpg 0,7",
+    "deck": "p7xd",
+    "cardType": "champion.jpg 0,7",
+    "z": 79333,
+    "activeFace": 1,
+    "parent": "jkpi"
+  },
+  "p7xd champion.jpg 0,8": {
+    "type": "card",
+    "id": "p7xd champion.jpg 0,8",
+    "deck": "p7xd",
+    "cardType": "champion.jpg 0,8",
+    "z": 79331,
+    "activeFace": 1,
+    "parent": "jkpi"
+  },
+  "p7xd champion.jpg 0,9": {
+    "type": "card",
+    "id": "p7xd champion.jpg 0,9",
+    "deck": "p7xd",
+    "cardType": "champion.jpg 0,9",
+    "z": 79326,
+    "activeFace": 1,
+    "parent": "jkpi"
+  },
+  "p7xd champion.jpg 1,0": {
+    "type": "card",
+    "id": "p7xd champion.jpg 1,0",
+    "deck": "p7xd",
+    "cardType": "champion.jpg 1,0",
+    "z": 79328,
+    "activeFace": 1,
+    "parent": "jkpi"
+  },
+  "p7xd champion.jpg 1,1": {
+    "type": "card",
+    "id": "p7xd champion.jpg 1,1",
+    "deck": "p7xd",
+    "cardType": "champion.jpg 1,1",
+    "z": 79330,
+    "activeFace": 1,
+    "parent": "jkpi"
+  },
+  "p7xd champion.jpg 1,2": {
+    "type": "card",
+    "id": "p7xd champion.jpg 1,2",
+    "deck": "p7xd",
+    "cardType": "champion.jpg 1,2",
+    "z": 79325,
+    "activeFace": 1,
+    "parent": "jkpi"
+  },
+  "p7xd champion.jpg 1,3": {
+    "type": "card",
+    "id": "p7xd champion.jpg 1,3",
+    "deck": "p7xd",
+    "cardType": "champion.jpg 1,3",
+    "z": 79324,
+    "activeFace": 1,
+    "parent": "jkpi"
+  },
+  "81k4B": {
+    "id": "81k4B",
+    "parent": "playHolder",
+    "fixedParent": true,
+    "y": 67,
+    "width": 111,
+    "height": 40,
+    "type": "button",
+    "text": "Recall & Shuffle",
+    "movableInEdit": false,
+    "clickRoutine": [
+      {
+        "func": "RECALL",
+        "holder": "${PROPERTY parent}"
+      },
+      {
+        "func": "FLIP",
+        "holder": "${PROPERTY parent}",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "${PROPERTY parent}"
+      }
+    ],
+    "x": -223
+  },
+  "playHolder": {
+    "type": "holder",
+    "id": "playHolder",
+    "x": 49,
+    "y": 115,
+    "width": 87,
+    "height": 150,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "type": "card"
+    }
+  },
+  "hand": {
+    "type": "holder",
+    "onEnter": {
+      "activeFace": 1
+    },
+    "onLeave": {
+      "activeFace": 0
+    },
+    "dropOffsetX": 10,
+    "dropOffsetY": 5,
+    "stackOffsetX": 71,
+    "childrenPerOwner": true,
+    "hidePlayerCursors": true,
+    "x": 982,
+    "y": 815,
+    "width": 605,
+    "height": 160,
+    "id": "hand",
+    "z": 12,
+    "cardWidth": 87,
+    "enterRoutine": [
+      {
+        "func": "CALL",
+        "routine": "offSetRoutine"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "CALL",
+        "routine": "offSetRoutine"
+      }
+    ],
+    "offSetRoutine": [
+      "var normalOffset = ${PROPERTY stackOffsetX}",
+      "var owners = []",
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "${PROPERTY id}"
+      },
+      {
+        "func": "GET",
+        "property": "owner",
+        "aggregation": "array",
+        "variable": "ownersArray"
+      },
+      {
+        "func": "FOREACH",
+        "in": "${ownersArray}",
+        "loopRoutine": [
+          "var firstIndex = ${ownersArray} indexOf ${value}",
+          {
+            "func": "IF",
+            "operand1": "${key}",
+            "relation": "==",
+            "operand2": "${firstIndex}",
+            "thenRoutine": [
+              "var owners = push ${value}"
+            ]
+          }
+        ]
+      },
+      {
+        "func": "FOREACH",
+        "in": "${owners}",
+        "loopRoutine": [
+          {
+            "func": "SELECT",
+            "source": "DEFAULT",
+            "property": "owner",
+            "value": "${value}",
+            "collection": "ownedCards",
+            "sortBy": {
+              "key": "z"
+            }
+          },
+          {
+            "func": "GET",
+            "source": "ownedCards",
+            "property": "width",
+            "variable": "cardWidth"
+          },
+          {
+            "func": "COUNT",
+            "collection": "ownedCards"
+          },
+          "var modCount = ${COUNT} - 1",
+          "var available = ${PROPERTY width} - ${cardWidth}",
+          "var dropOffset = ${PROPERTY dropOffsetX} * 2",
+          "var available = ${available} - ${dropOffset}",
+          "var perCard = ${available} / ${modCount}",
+          "var offset = ${perCard} min ${normalOffset}",
+          "var newX = ${PROPERTY dropOffsetX}",
+          {
+            "func": "FOREACH",
+            "collection": "ownedCards",
+            "loopRoutine": [
+              {
+                "func": "SET",
+                "collection": "DEFAULT",
+                "property": "x",
+                "value": "${newX}"
+              },
+              "var newX = ${newX} + ${offset}"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "endTurn": {
+    "type": "button",
+    "id": "endTurn",
+    "x": 1067,
+    "y": 620,
+    "z": 7,
+    "text": "End turn",
+    "clickRoutine": [
+      {
+        "note": "Get the active player seat 1/2",
+        "func": "SELECT",
+        "property": "turn",
+        "value": true
+      },
+      {
+        "note": "Get the active player seat 2/2",
+        "func": "GET",
+        "property": "id",
+        "variable": "seat"
+      },
+      {
+        "func": "SELECT",
+        "collection": "DEFAULT"
+      },
+      {
+        "func": "MOVE",
+        "from": "playHolder",
+        "to": "${seat}",
+        "fillTo": 8
+      },
+      {
+        "func": "SORT",
+        "holder": "hand",
+        "key": "cardType"
+      },
+      {
+        "func": "CALL",
+        "widget": "hand",
+        "routine": "offSetRoutine"
+      },
+      {
+        "func": "TURN",
+        "turnCycle": "forward"
+      }
+    ]
+  },
+  "seat1": {
+    "type": "seat",
+    "id": "seat1",
+    "x": 1423,
+    "y": 40,
+    "movableInEdit": false,
+    "color": "#84E291",
+    "colorEmpty": "#84E291",
+    "css": "border-color: #84E291",
+    "hideWhenUnused": true
+  },
+  "seat2": {
+    "type": "seat",
+    "id": "seat2",
+    "index": 2,
+    "x": 1423,
+    "y": 206,
+    "color": "#E59EDD",
+    "colorEmpty": "#E59EDD",
+    "css": "border-color: #E59EDD",
+    "hideWhenUnused": true,
+    "z": 8
+  },
+  "seat3": {
+    "type": "seat",
+    "id": "seat3",
+    "index": 3,
+    "x": 1423,
+    "y": 372,
+    "color": "grey",
+    "colorEmpty": "grey",
+    "css": "border-color: grey",
+    "hideWhenUnused": true
+  },
+  "seat4": {
+    "type": "seat",
+    "id": "seat4",
+    "index": 4,
+    "x": 1423,
+    "y": 538,
+    "color": "brown",
+    "colorEmpty": "brown",
+    "css": "border-color: brown",
+    "hideWhenUnused": true,
+    "z": 9,
+    "turn": true
+  },
+  "seat5": {
+    "type": "seat",
+    "id": "seat5",
+    "index": 5,
+    "x": 1423,
+    "y": 704,
+    "color": "yellow",
+    "colorEmpty": "yellow",
+    "css": "border-color: yellow",
+    "hideWhenUnused": true,
+    "z": 9
+  },
+  "discard": {
+    "type": "holder",
+    "id": "discard",
+    "x": 1058,
+    "y": 271,
+    "width": 97,
+    "height": 160,
+    "dropOffsetX": 5,
+    "dropOffsetY": 5,
+    "dropTarget": {
+      "type": "card"
+    },
+    "onEnter": {
+      "activeFace": 1
+    }
+  },
+  "discardL": {
+    "type": "label",
+    "id": "discardL",
+    "z": 1,
+    "text": "Discard",
+    "width": 97,
+    "parent": "discard",
+    "y": 160,
+    "css": {
+      "color": "black"
+    }
+  },
+  "stone6": {
+    "id": "stone6",
+    "y": 266,
+    "width": 40,
+    "height": 40,
+    "z": 16,
+    "classes": "pokerChip",
+    "color": "#E59EDD",
+    "image": "i/game-pieces/2D/Poker-2D.svg",
+    "svgReplaces": {
+      "#accentColor1": "color",
+      "#accentColor2": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth",
+      "#labelColor": "labelColor",
+      "#primaryColor": "color"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 2,
+    "labelColor": "#00000022",
+    "linkedToSeat": "seat2",
+    "x": 1435
+  },
+  "stone11": {
+    "id": "stone11",
+    "width": 40,
+    "height": 40,
+    "z": 19,
+    "classes": "pokerChip",
+    "color": "grey",
+    "image": "i/game-pieces/2D/Poker-2D.svg",
+    "svgReplaces": {
+      "#accentColor1": "color",
+      "#accentColor2": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth",
+      "#labelColor": "labelColor",
+      "#primaryColor": "color"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 2,
+    "labelColor": "#00000022",
+    "linkedToSeat": "seat3",
+    "x": 1435,
+    "y": 432
+  },
+  "stone16": {
+    "id": "stone16",
+    "width": 40,
+    "height": 40,
+    "z": 24,
+    "classes": "pokerChip",
+    "color": "brown",
+    "image": "i/game-pieces/2D/Poker-2D.svg",
+    "svgReplaces": {
+      "#accentColor1": "color",
+      "#accentColor2": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth",
+      "#labelColor": "labelColor",
+      "#primaryColor": "color"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 2,
+    "labelColor": "#00000022",
+    "linkedToSeat": "seat4",
+    "x": 1435,
+    "y": 598
+  },
+  "stone21": {
+    "id": "stone21",
+    "width": 40,
+    "height": 40,
+    "z": 29,
+    "classes": "pokerChip",
+    "color": "yellow",
+    "image": "i/game-pieces/2D/Poker-2D.svg",
+    "svgReplaces": {
+      "#accentColor1": "color",
+      "#accentColor2": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth",
+      "#labelColor": "labelColor",
+      "#primaryColor": "color"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 2,
+    "labelColor": "#00000022",
+    "linkedToSeat": "seat5",
+    "x": 1435,
+    "y": 764
+  },
+  "background": {
+    "id": "background",
+    "width": 1600,
+    "height": 1000,
+    "layer": -4,
+    "z": 94,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "background-image": "linear-gradient(315deg, #e3efe8 0%, #96a7cf 74%)"
+    }
+  },
+  "stone7": {
+    "id": "stone7",
+    "y": 266,
+    "width": 40,
+    "height": 40,
+    "z": 15,
+    "classes": "pokerChip",
+    "color": "#E59EDD",
+    "image": "i/game-pieces/2D/Poker-2D.svg",
+    "svgReplaces": {
+      "#accentColor1": "color",
+      "#accentColor2": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth",
+      "#labelColor": "labelColor",
+      "#primaryColor": "color"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 2,
+    "labelColor": "#00000022",
+    "linkedToSeat": "seat2",
+    "x": 1475
+  },
+  "stone8": {
+    "id": "stone8",
+    "y": 266,
+    "width": 40,
+    "height": 40,
+    "z": 18,
+    "classes": "pokerChip",
+    "color": "#E59EDD",
+    "image": "i/game-pieces/2D/Poker-2D.svg",
+    "svgReplaces": {
+      "#accentColor1": "color",
+      "#accentColor2": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth",
+      "#labelColor": "labelColor",
+      "#primaryColor": "color"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 2,
+    "labelColor": "#00000022",
+    "linkedToSeat": "seat2",
+    "x": 1515
+  },
+  "stone9": {
+    "id": "stone9",
+    "y": 266,
+    "width": 40,
+    "height": 40,
+    "z": 17,
+    "classes": "pokerChip",
+    "color": "#E59EDD",
+    "image": "i/game-pieces/2D/Poker-2D.svg",
+    "svgReplaces": {
+      "#accentColor1": "color",
+      "#accentColor2": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth",
+      "#labelColor": "labelColor",
+      "#primaryColor": "color"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 2,
+    "labelColor": "#00000022",
+    "linkedToSeat": "seat2",
+    "x": 1555
+  },
+  "stone10": {
+    "id": "stone10",
+    "y": 266,
+    "width": 40,
+    "height": 40,
+    "z": 14,
+    "classes": "pokerChip",
+    "color": "#E59EDD",
+    "image": "i/game-pieces/2D/Poker-2D.svg",
+    "svgReplaces": {
+      "#accentColor1": "color",
+      "#accentColor2": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth",
+      "#labelColor": "labelColor",
+      "#primaryColor": "color"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 2,
+    "labelColor": "#00000022",
+    "linkedToSeat": "seat2",
+    "x": 1395
+  },
+  "stone12": {
+    "id": "stone12",
+    "width": 40,
+    "height": 40,
+    "z": 20,
+    "classes": "pokerChip",
+    "color": "grey",
+    "image": "i/game-pieces/2D/Poker-2D.svg",
+    "svgReplaces": {
+      "#accentColor1": "color",
+      "#accentColor2": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth",
+      "#labelColor": "labelColor",
+      "#primaryColor": "color"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 2,
+    "labelColor": "#00000022",
+    "linkedToSeat": "seat3",
+    "x": 1475,
+    "y": 432
+  },
+  "stone13": {
+    "id": "stone13",
+    "width": 40,
+    "height": 40,
+    "z": 21,
+    "classes": "pokerChip",
+    "color": "grey",
+    "image": "i/game-pieces/2D/Poker-2D.svg",
+    "svgReplaces": {
+      "#accentColor1": "color",
+      "#accentColor2": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth",
+      "#labelColor": "labelColor",
+      "#primaryColor": "color"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 2,
+    "labelColor": "#00000022",
+    "linkedToSeat": "seat3",
+    "x": 1515,
+    "y": 432
+  },
+  "stone14": {
+    "id": "stone14",
+    "width": 40,
+    "height": 40,
+    "z": 22,
+    "classes": "pokerChip",
+    "color": "grey",
+    "image": "i/game-pieces/2D/Poker-2D.svg",
+    "svgReplaces": {
+      "#accentColor1": "color",
+      "#accentColor2": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth",
+      "#labelColor": "labelColor",
+      "#primaryColor": "color"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 2,
+    "labelColor": "#00000022",
+    "linkedToSeat": "seat3",
+    "x": 1555,
+    "y": 432
+  },
+  "stone15": {
+    "id": "stone15",
+    "width": 40,
+    "height": 40,
+    "z": 23,
+    "classes": "pokerChip",
+    "color": "grey",
+    "image": "i/game-pieces/2D/Poker-2D.svg",
+    "svgReplaces": {
+      "#accentColor1": "color",
+      "#accentColor2": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth",
+      "#labelColor": "labelColor",
+      "#primaryColor": "color"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 2,
+    "labelColor": "#00000022",
+    "linkedToSeat": "seat3",
+    "x": 1395,
+    "y": 432
+  },
+  "stone17": {
+    "id": "stone17",
+    "width": 40,
+    "height": 40,
+    "z": 25,
+    "classes": "pokerChip",
+    "color": "brown",
+    "image": "i/game-pieces/2D/Poker-2D.svg",
+    "svgReplaces": {
+      "#accentColor1": "color",
+      "#accentColor2": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth",
+      "#labelColor": "labelColor",
+      "#primaryColor": "color"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 2,
+    "labelColor": "#00000022",
+    "linkedToSeat": "seat4",
+    "x": 1475,
+    "y": 598
+  },
+  "stone18": {
+    "id": "stone18",
+    "width": 40,
+    "height": 40,
+    "z": 26,
+    "classes": "pokerChip",
+    "color": "brown",
+    "image": "i/game-pieces/2D/Poker-2D.svg",
+    "svgReplaces": {
+      "#accentColor1": "color",
+      "#accentColor2": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth",
+      "#labelColor": "labelColor",
+      "#primaryColor": "color"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 2,
+    "labelColor": "#00000022",
+    "linkedToSeat": "seat4",
+    "x": 1515,
+    "y": 598
+  },
+  "stone19": {
+    "id": "stone19",
+    "width": 40,
+    "height": 40,
+    "z": 28,
+    "classes": "pokerChip",
+    "color": "brown",
+    "image": "i/game-pieces/2D/Poker-2D.svg",
+    "svgReplaces": {
+      "#accentColor1": "color",
+      "#accentColor2": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth",
+      "#labelColor": "labelColor",
+      "#primaryColor": "color"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 2,
+    "labelColor": "#00000022",
+    "linkedToSeat": "seat4",
+    "x": 1555,
+    "y": 598
+  },
+  "stone20": {
+    "id": "stone20",
+    "width": 40,
+    "height": 40,
+    "z": 27,
+    "classes": "pokerChip",
+    "color": "brown",
+    "image": "i/game-pieces/2D/Poker-2D.svg",
+    "svgReplaces": {
+      "#accentColor1": "color",
+      "#accentColor2": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth",
+      "#labelColor": "labelColor",
+      "#primaryColor": "color"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 2,
+    "labelColor": "#00000022",
+    "linkedToSeat": "seat4",
+    "x": 1395,
+    "y": 598
+  },
+  "stone22": {
+    "id": "stone22",
+    "width": 40,
+    "height": 40,
+    "z": 30,
+    "classes": "pokerChip",
+    "color": "yellow",
+    "image": "i/game-pieces/2D/Poker-2D.svg",
+    "svgReplaces": {
+      "#accentColor1": "color",
+      "#accentColor2": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth",
+      "#labelColor": "labelColor",
+      "#primaryColor": "color"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 2,
+    "labelColor": "#00000022",
+    "linkedToSeat": "seat5",
+    "x": 1475,
+    "y": 764
+  },
+  "stone23": {
+    "id": "stone23",
+    "width": 40,
+    "height": 40,
+    "z": 31,
+    "classes": "pokerChip",
+    "color": "yellow",
+    "image": "i/game-pieces/2D/Poker-2D.svg",
+    "svgReplaces": {
+      "#accentColor1": "color",
+      "#accentColor2": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth",
+      "#labelColor": "labelColor",
+      "#primaryColor": "color"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 2,
+    "labelColor": "#00000022",
+    "linkedToSeat": "seat5",
+    "x": 1515,
+    "y": 764
+  },
+  "stone24": {
+    "id": "stone24",
+    "width": 40,
+    "height": 40,
+    "z": 32,
+    "classes": "pokerChip",
+    "color": "yellow",
+    "image": "i/game-pieces/2D/Poker-2D.svg",
+    "svgReplaces": {
+      "#accentColor1": "color",
+      "#accentColor2": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth",
+      "#labelColor": "labelColor",
+      "#primaryColor": "color"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 2,
+    "labelColor": "#00000022",
+    "linkedToSeat": "seat5",
+    "x": 1395,
+    "y": 764
+  },
+  "stone25": {
+    "id": "stone25",
+    "width": 40,
+    "height": 40,
+    "z": 33,
+    "classes": "pokerChip",
+    "color": "yellow",
+    "image": "i/game-pieces/2D/Poker-2D.svg",
+    "svgReplaces": {
+      "#accentColor1": "color",
+      "#accentColor2": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth",
+      "#labelColor": "labelColor",
+      "#primaryColor": "color"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 2,
+    "labelColor": "#00000022",
+    "linkedToSeat": "seat5",
+    "x": 1555,
+    "y": 764
+  },
+  "stone1": {
+    "id": "stone1",
+    "y": 100,
+    "width": 40,
+    "height": 40,
+    "z": 2,
+    "classes": "pokerChip",
+    "color": "#84E291",
+    "image": "i/game-pieces/2D/Poker-2D.svg",
+    "linkedToSeat": "seat1",
+    "svgReplaces": {
+      "#accentColor1": "color",
+      "#accentColor2": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth",
+      "#labelColor": "labelColor",
+      "#primaryColor": "color"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 2,
+    "labelColor": "#00000022",
+    "x": 1435
+  },
+  "stone2": {
+    "id": "stone2",
+    "x": 1475,
+    "y": 100,
+    "width": 40,
+    "height": 40,
+    "z": 3,
+    "classes": "pokerChip",
+    "color": "#84E291",
+    "image": "i/game-pieces/2D/Poker-2D.svg",
+    "linkedToSeat": "seat1",
+    "svgReplaces": {
+      "#accentColor1": "color",
+      "#accentColor2": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth",
+      "#labelColor": "labelColor",
+      "#primaryColor": "color"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 2,
+    "labelColor": "#00000022"
+  },
+  "stone3": {
+    "id": "stone3",
+    "x": 1515,
+    "y": 100,
+    "width": 40,
+    "height": 40,
+    "z": 4,
+    "classes": "pokerChip",
+    "color": "#84E291",
+    "image": "i/game-pieces/2D/Poker-2D.svg",
+    "linkedToSeat": "seat1",
+    "svgReplaces": {
+      "#accentColor1": "color",
+      "#accentColor2": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth",
+      "#labelColor": "labelColor",
+      "#primaryColor": "color"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 2,
+    "labelColor": "#00000022"
+  },
+  "stone4": {
+    "id": "stone4",
+    "y": 100,
+    "width": 40,
+    "height": 40,
+    "z": 7,
+    "classes": "pokerChip",
+    "color": "#84E291",
+    "image": "i/game-pieces/2D/Poker-2D.svg",
+    "linkedToSeat": "seat1",
+    "svgReplaces": {
+      "#accentColor1": "color",
+      "#accentColor2": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth",
+      "#labelColor": "labelColor",
+      "#primaryColor": "color"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 2,
+    "labelColor": "#00000022",
+    "x": 1555
+  },
+  "stone5": {
+    "id": "stone5",
+    "x": 1395,
+    "y": 100,
+    "width": 40,
+    "height": 40,
+    "z": 5,
+    "classes": "pokerChip",
+    "color": "#84E291",
+    "image": "i/game-pieces/2D/Poker-2D.svg",
+    "linkedToSeat": "seat1",
+    "svgReplaces": {
+      "#accentColor1": "color",
+      "#accentColor2": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth",
+      "#labelColor": "labelColor",
+      "#primaryColor": "color"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 2,
+    "labelColor": "#00000022"
+  },
+  "grid1": {
+    "type": "holder",
+    "id": "grid1",
+    "x": 259,
+    "y": 28,
+    "z": 6,
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": "grid0",
+    "width": 87,
+    "height": 150,
+    "css": {
+      "border": "1px solid red"
+    }
+  },
+  "grid3": {
+    "type": "holder",
+    "id": "grid3",
+    "x": 438,
+    "y": 28,
+    "z": 6,
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": "grid1",
+    "width": 87,
+    "height": 150
+  },
+  "grid4": {
+    "type": "holder",
+    "id": "grid4",
+    "x": 527,
+    "y": 28,
+    "z": 6,
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": "grid1",
+    "width": 87,
+    "height": 150
+  },
+  "grid5": {
+    "type": "holder",
+    "id": "grid5",
+    "x": 617,
+    "y": 28,
+    "z": 6,
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": "grid1",
+    "width": 87,
+    "height": 150
+  },
+  "grid6": {
+    "type": "holder",
+    "id": "grid6",
+    "x": 707,
+    "y": 28,
+    "z": 6,
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": "grid1",
+    "width": 87,
+    "height": 150
+  },
+  "grid7": {
+    "type": "holder",
+    "id": "grid7",
+    "x": 796,
+    "y": 28,
+    "z": 6,
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": "grid1",
+    "width": 87,
+    "height": 150
+  },
+  "grid8": {
+    "type": "holder",
+    "id": "grid8",
+    "x": 886,
+    "y": 28,
+    "z": 6,
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": "grid1",
+    "width": 87,
+    "height": 150
+  },
+  "playHolderL": {
+    "type": "label",
+    "id": "playHolderL",
+    "parent": "playHolder",
+    "y": 150,
+    "width": 87,
+    "z": 1,
+    "text": "Draw deck",
+    "css": {
+      "color": "black"
+    }
+  },
+  "grid2": {
+    "type": "holder",
+    "id": "grid2",
+    "x": 348,
+    "y": 28,
+    "width": 87,
+    "height": 150,
+    "z": 6,
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": "grid1"
+  },
+  "mpq3": {
+    "type": "pile",
+    "x": 0,
+    "y": 0,
+    "width": 87,
+    "height": 150,
+    "id": "mpq3",
+    "z": 74232,
+    "parent": "deadHolder"
+  },
+  "1deck": {
+    "type": "deck",
+    "id": "1deck",
+    "x": 4,
+    "y": 4,
+    "z": 74394,
+    "cardDefaults": {
+      "width": 87,
+      "borderRadius": 8,
+      "height": 150,
+      "enlarge": 3,
+      "fs": 22,
+      "num": 1,
+      "css": {
+        "--offsetX": "${PROPERTY offsetX}",
+        "--offsetY": "${PROPERTY offsetY}",
+        "--deckWidth": "${PROPERTY deckWidth}",
+        "--deckHeight": "${PROPERTY deckHeight}",
+        "--width": "${PROPERTY width}",
+        "--height": "${PROPERTY height}"
+      }
+    },
+    "cardTypes": {
+      "champion.jpg 0,0": {
+        "image": "/assets/1979195317_12950",
+        "offsetX": 0,
+        "offsetY": 0,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#4363d8",
+        "ab": "In phase 3, you can discard people still in play "
+      },
+      "champion.jpg 0,1": {
+        "image": "/assets/-630829019_12242",
+        "offsetX": 1,
+        "offsetY": 0,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#469990",
+        "ab": "Discard a visible person from this row (different column)"
+      },
+      "champion.jpg 0,2": {
+        "image": "/assets/-59558038_11274",
+        "offsetX": 2,
+        "offsetY": 0,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#ffe119",
+        "ab": "Add one of these cards from a previous row to your hand"
+      },
+      "champion.jpg 0,3": {
+        "image": "/assets/-1891256305_11412",
+        "offsetX": 3,
+        "offsetY": 0,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#f032e6",
+        "ab": "Activate an elimated person's ability"
+      },
+      "champion.jpg 0,4": {
+        "image": "/assets/-1533710025_12234",
+        "offsetX": 4,
+        "offsetY": 0,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#a9a9a9",
+        "ab": "Take 3 cards from someone and keep 1"
+      },
+      "champion.jpg 0,5": {
+        "image": "/assets/841996417_13136",
+        "offsetX": 5,
+        "offsetY": 0,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#e6194B",
+        "ab": "Choose a player and card type. They must give you a card of that type"
+      },
+      "champion.jpg 0,6": {
+        "image": "/assets/-917259657_13288",
+        "offsetX": 6,
+        "offsetY": 0,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#aaffc3",
+        "ab": "Swap two visible cards in a person's column"
+      },
+      "champion.jpg 0,7": {
+        "image": "/assets/1526318788_12556",
+        "offsetX": 7,
+        "offsetY": 0,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#9A6324",
+        "ab": "Retrieve a bet"
+      },
+      "champion.jpg 0,8": {
+        "image": "/assets/-1747297889_10750",
+        "offsetX": 8,
+        "offsetY": 0,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#fabed4",
+        "ab": "Retrieve any visible ghost"
+      },
+      "champion.jpg 0,9": {
+        "image": "/assets/-2101966489_12080",
+        "offsetX": 9,
+        "offsetY": 0,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#800000",
+        "ab": "Place a bet on any person in any row (not the 5 VP row)"
+      },
+      "champion.jpg 1,0": {
+        "image": "/assets/-1740667798_12944",
+        "offsetX": 0,
+        "offsetY": 1,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#42d4f4",
+        "ab": "Draw 3 cards"
+      },
+      "champion.jpg 1,1": {
+        "image": "/assets/-646821924_13012",
+        "offsetX": 1,
+        "offsetY": 1,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#fffac8",
+        "ab": "Place half of another player's hand face down on the table"
+      },
+      "champion.jpg 1,2": {
+        "image": "/assets/1109249148_13728",
+        "offsetX": 2,
+        "offsetY": 1,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#f58231",
+        "ab": "Play a second card (only once per turn)"
+      },
+      "champion.jpg 1,3": {
+        "image": "/assets/-505936859_10456",
+        "offsetX": 3,
+        "offsetY": 1,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#dcbeff",
+        "ab": "Score 0.5 more points",
+        "num": 1.5,
+        "fs": 15
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "orange",
+            "width": 87,
+            "height": 150
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 50,
+            "color": "coral",
+            "width": 87,
+            "height": 50,
+            "css": {
+              "border": "2px solid black"
+            }
+          },
+          {
+            "type": "text",
+            "x": 0,
+            "y": 50,
+            "fontSize": 20,
+            "textAlign": "center",
+            "width": 87,
+            "height": 50,
+            "value": "Deck",
+            "css": {
+              "justify-content": "center",
+              "align-items": "center",
+              "text-align": "center",
+              "display": "flex",
+              "font-size": "30px"
+            }
+          }
+        ],
+        "border": 2,
+        "radius": 8
+      },
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "white",
+            "width": 87,
+            "height": 150
+          },
+          {
+            "type": "image",
+            "x": 27,
+            "y": 0,
+            "width": 60,
+            "height": 80,
+            "dynamicProperties": {
+              "color": "color"
+            }
+          },
+          {
+            "type": "image",
+            "color": "transparent",
+            "height": 80,
+            "width": 60,
+            "x": 27,
+            "dynamicProperties": {
+              "value": "image"
+            }
+          },
+          {
+            "type": "text",
+            "x": 0,
+            "y": 8,
+            "textAlign": "center",
+            "width": 27,
+            "dynamicProperties": {
+              "value": "num",
+              "fontSize": "fs"
+            }
+          },
+          {
+            "type": "text",
+            "x": 4,
+            "y": 81,
+            "fontSize": 11,
+            "textAlign": "center",
+            "width": 79,
+            "dynamicProperties": {
+              "value": "ab"
+            }
+          }
+        ],
+        "border": 2,
+        "radius": 8
+      }
+    ],
+    "hoverParent": "rckx1",
+    "parent": "rckx1"
+  },
+  "4ane": {
+    "deck": "1deck",
+    "type": "card",
+    "cardType": "champion.jpg 0,0",
+    "id": "4ane",
+    "z": 77680,
+    "parent": "txqv"
+  },
+  "tkk9": {
+    "deck": "1deck",
+    "type": "card",
+    "cardType": "champion.jpg 0,1",
+    "id": "tkk9",
+    "z": 77681,
+    "parent": "txqv"
+  },
+  "e265": {
+    "deck": "1deck",
+    "type": "card",
+    "cardType": "champion.jpg 0,2",
+    "id": "e265",
+    "z": 77682,
+    "parent": "txqv"
+  },
+  "3rk1": {
+    "deck": "1deck",
+    "type": "card",
+    "cardType": "champion.jpg 0,5",
+    "id": "3rk1",
+    "z": 77683,
+    "parent": "txqv"
+  },
+  "uggi": {
+    "deck": "1deck",
+    "type": "card",
+    "cardType": "champion.jpg 0,4",
+    "id": "uggi",
+    "z": 77684,
+    "parent": "txqv"
+  },
+  "oiwl": {
+    "deck": "1deck",
+    "type": "card",
+    "cardType": "champion.jpg 0,3",
+    "id": "oiwl",
+    "z": 77685,
+    "parent": "txqv"
+  },
+  "0c5u": {
+    "deck": "1deck",
+    "type": "card",
+    "cardType": "champion.jpg 0,6",
+    "id": "0c5u",
+    "z": 77686,
+    "parent": "txqv"
+  },
+  "k0c5": {
+    "deck": "1deck",
+    "type": "card",
+    "cardType": "champion.jpg 0,7",
+    "id": "k0c5",
+    "z": 77687,
+    "parent": "txqv"
+  },
+  "lzd8": {
+    "deck": "1deck",
+    "type": "card",
+    "cardType": "champion.jpg 0,8",
+    "id": "lzd8",
+    "z": 77688,
+    "parent": "txqv"
+  },
+  "f7k9": {
+    "deck": "1deck",
+    "type": "card",
+    "cardType": "champion.jpg 1,1",
+    "id": "f7k9",
+    "z": 77689,
+    "parent": "txqv"
+  },
+  "qg1b": {
+    "deck": "1deck",
+    "type": "card",
+    "cardType": "champion.jpg 1,0",
+    "id": "qg1b",
+    "z": 77690,
+    "parent": "txqv"
+  },
+  "vya5": {
+    "deck": "1deck",
+    "type": "card",
+    "cardType": "champion.jpg 0,9",
+    "id": "vya5",
+    "z": 77691,
+    "parent": "txqv"
+  },
+  "e3ec": {
+    "deck": "1deck",
+    "type": "card",
+    "cardType": "champion.jpg 1,2",
+    "id": "e3ec",
+    "z": 77692,
+    "parent": "txqv"
+  },
+  "2th0": {
+    "deck": "1deck",
+    "type": "card",
+    "cardType": "champion.jpg 1,3",
+    "id": "2th0",
+    "z": 77693,
+    "parent": "txqv"
+  },
+  "2deck": {
+    "type": "deck",
+    "id": "2deck",
+    "x": 4,
+    "y": 4,
+    "z": 74776,
+    "cardDefaults": {
+      "width": 87,
+      "borderRadius": 8,
+      "height": 150,
+      "enlarge": 3,
+      "fs": 22,
+      "num": 2,
+      "css": {
+        "--offsetX": "${PROPERTY offsetX}",
+        "--offsetY": "${PROPERTY offsetY}",
+        "--deckWidth": "${PROPERTY deckWidth}",
+        "--deckHeight": "${PROPERTY deckHeight}",
+        "--width": "${PROPERTY width}",
+        "--height": "${PROPERTY height}"
+      }
+    },
+    "cardTypes": {
+      "champion.jpg 0,0": {
+        "image": "/assets/1979195317_12950",
+        "offsetX": 0,
+        "offsetY": 0,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#4363d8",
+        "ab": "In phase 3, you can discard people still in play "
+      },
+      "champion.jpg 0,1": {
+        "image": "/assets/-630829019_12242",
+        "offsetX": 1,
+        "offsetY": 0,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#469990",
+        "ab": "Discard a visible person from this row (different column)"
+      },
+      "champion.jpg 0,2": {
+        "image": "/assets/-59558038_11274",
+        "offsetX": 2,
+        "offsetY": 0,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#ffe119",
+        "ab": "Add one of these cards from a previous row to your hand"
+      },
+      "champion.jpg 0,3": {
+        "image": "/assets/-1891256305_11412",
+        "offsetX": 3,
+        "offsetY": 0,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#f032e6",
+        "ab": "Activate an elimated person's ability"
+      },
+      "champion.jpg 0,4": {
+        "image": "/assets/-1533710025_12234",
+        "offsetX": 4,
+        "offsetY": 0,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#a9a9a9",
+        "ab": "Take 3 cards from someone and keep 1"
+      },
+      "champion.jpg 0,5": {
+        "image": "/assets/841996417_13136",
+        "offsetX": 5,
+        "offsetY": 0,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#e6194B",
+        "ab": "Choose a player and card type. They must give you a card of that type"
+      },
+      "champion.jpg 0,6": {
+        "image": "/assets/-917259657_13288",
+        "offsetX": 6,
+        "offsetY": 0,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#aaffc3",
+        "ab": "Swap two visible cards in a person's column"
+      },
+      "champion.jpg 0,7": {
+        "image": "/assets/1526318788_12556",
+        "offsetX": 7,
+        "offsetY": 0,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#9A6324",
+        "ab": "Retrieve a bet"
+      },
+      "champion.jpg 0,8": {
+        "image": "/assets/-1747297889_10750",
+        "offsetX": 8,
+        "offsetY": 0,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#fabed4",
+        "ab": "Retrieve any visible ghost"
+      },
+      "champion.jpg 0,9": {
+        "image": "/assets/-2101966489_12080",
+        "offsetX": 9,
+        "offsetY": 0,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#800000",
+        "ab": "Place a bet on any person in any row (not the 5 VP row)"
+      },
+      "champion.jpg 1,0": {
+        "image": "/assets/-1740667798_12944",
+        "offsetX": 0,
+        "offsetY": 1,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#42d4f4",
+        "ab": "Draw 3 cards"
+      },
+      "champion.jpg 1,1": {
+        "image": "/assets/-646821924_13012",
+        "offsetX": 1,
+        "offsetY": 1,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#fffac8",
+        "ab": "Place half of another player's hand face down on the table"
+      },
+      "champion.jpg 1,2": {
+        "image": "/assets/1109249148_13728",
+        "offsetX": 2,
+        "offsetY": 1,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#f58231",
+        "ab": "Play a second card (only once per turn)"
+      },
+      "champion.jpg 1,3": {
+        "image": "/assets/-505936859_10456",
+        "offsetX": 3,
+        "offsetY": 1,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#dcbeff",
+        "ab": "Score 0.5 more points",
+        "num": 2.5,
+        "fs": 15
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "orange",
+            "width": 87,
+            "height": 150
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 50,
+            "color": "coral",
+            "width": 87,
+            "height": 50,
+            "css": {
+              "border": "2px solid black"
+            }
+          },
+          {
+            "type": "text",
+            "x": 0,
+            "y": 50,
+            "fontSize": 20,
+            "textAlign": "center",
+            "width": 87,
+            "height": 50,
+            "value": "Deck",
+            "css": {
+              "justify-content": "center",
+              "align-items": "center",
+              "text-align": "center",
+              "display": "flex",
+              "font-size": "30px"
+            }
+          }
+        ],
+        "border": 2,
+        "radius": 8
+      },
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "white",
+            "width": 87,
+            "height": 150
+          },
+          {
+            "type": "image",
+            "x": 27,
+            "y": 0,
+            "width": 60,
+            "height": 80,
+            "dynamicProperties": {
+              "color": "color"
+            }
+          },
+          {
+            "type": "image",
+            "color": "transparent",
+            "height": 80,
+            "width": 60,
+            "x": 27,
+            "dynamicProperties": {
+              "value": "image"
+            }
+          },
+          {
+            "type": "text",
+            "x": 0,
+            "y": 8,
+            "textAlign": "center",
+            "width": 27,
+            "dynamicProperties": {
+              "value": "num",
+              "fontSize": "fs"
+            }
+          },
+          {
+            "type": "text",
+            "x": 4,
+            "y": 81,
+            "fontSize": 11,
+            "textAlign": "center",
+            "width": 79,
+            "dynamicProperties": {
+              "value": "ab"
+            }
+          }
+        ],
+        "border": 2,
+        "radius": 8
+      }
+    ],
+    "parent": "rckx2"
+  },
+  "3deck": {
+    "type": "deck",
+    "id": "3deck",
+    "x": 4,
+    "y": 4,
+    "z": 74793,
+    "cardDefaults": {
+      "width": 87,
+      "borderRadius": 8,
+      "height": 150,
+      "enlarge": 3,
+      "fs": 22,
+      "num": 3,
+      "css": {
+        "--offsetX": "${PROPERTY offsetX}",
+        "--offsetY": "${PROPERTY offsetY}",
+        "--deckWidth": "${PROPERTY deckWidth}",
+        "--deckHeight": "${PROPERTY deckHeight}",
+        "--width": "${PROPERTY width}",
+        "--height": "${PROPERTY height}"
+      }
+    },
+    "cardTypes": {
+      "champion.jpg 0,0": {
+        "image": "/assets/1979195317_12950",
+        "offsetX": 0,
+        "offsetY": 0,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#4363d8",
+        "ab": "In phase 3, you can discard people still in play "
+      },
+      "champion.jpg 0,1": {
+        "image": "/assets/-630829019_12242",
+        "offsetX": 1,
+        "offsetY": 0,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#469990",
+        "ab": "Discard a visible person from this row (different column)"
+      },
+      "champion.jpg 0,2": {
+        "image": "/assets/-59558038_11274",
+        "offsetX": 2,
+        "offsetY": 0,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#ffe119",
+        "ab": "Add one of these cards from a previous row to your hand"
+      },
+      "champion.jpg 0,3": {
+        "image": "/assets/-1891256305_11412",
+        "offsetX": 3,
+        "offsetY": 0,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#f032e6",
+        "ab": "Activate an elimated person's ability"
+      },
+      "champion.jpg 0,4": {
+        "image": "/assets/-1533710025_12234",
+        "offsetX": 4,
+        "offsetY": 0,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#a9a9a9",
+        "ab": "Take 3 cards from someone and keep 1"
+      },
+      "champion.jpg 0,5": {
+        "image": "/assets/841996417_13136",
+        "offsetX": 5,
+        "offsetY": 0,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#e6194B",
+        "ab": "Choose a player and card type. They must give you a card of that type"
+      },
+      "champion.jpg 0,6": {
+        "image": "/assets/-917259657_13288",
+        "offsetX": 6,
+        "offsetY": 0,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#aaffc3",
+        "ab": "Swap two visible cards in a person's column"
+      },
+      "champion.jpg 0,7": {
+        "image": "/assets/1526318788_12556",
+        "offsetX": 7,
+        "offsetY": 0,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#9A6324",
+        "ab": "Retrieve a bet"
+      },
+      "champion.jpg 0,8": {
+        "image": "/assets/-1747297889_10750",
+        "offsetX": 8,
+        "offsetY": 0,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#fabed4",
+        "ab": "Retrieve any visible ghost"
+      },
+      "champion.jpg 0,9": {
+        "image": "/assets/-2101966489_12080",
+        "offsetX": 9,
+        "offsetY": 0,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#800000",
+        "ab": "Place a bet on any person in any row (not the 5 VP row)"
+      },
+      "champion.jpg 1,0": {
+        "image": "/assets/-1740667798_12944",
+        "offsetX": 0,
+        "offsetY": 1,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#42d4f4",
+        "ab": "Draw 3 cards"
+      },
+      "champion.jpg 1,1": {
+        "image": "/assets/-646821924_13012",
+        "offsetX": 1,
+        "offsetY": 1,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#fffac8",
+        "ab": "Place half of another player's hand face down on the table"
+      },
+      "champion.jpg 1,2": {
+        "image": "/assets/1109249148_13728",
+        "offsetX": 2,
+        "offsetY": 1,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#f58231",
+        "ab": "Play a second card (only once per turn)"
+      },
+      "champion.jpg 1,3": {
+        "image": "/assets/-505936859_10456",
+        "offsetX": 3,
+        "offsetY": 1,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#dcbeff",
+        "ab": "Score 0.5 more points",
+        "num": 3.5,
+        "fs": 15
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "orange",
+            "width": 87,
+            "height": 150
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 50,
+            "color": "coral",
+            "width": 87,
+            "height": 50,
+            "css": {
+              "border": "2px solid black"
+            }
+          },
+          {
+            "type": "text",
+            "x": 0,
+            "y": 50,
+            "fontSize": 20,
+            "textAlign": "center",
+            "width": 87,
+            "height": 50,
+            "value": "Deck",
+            "css": {
+              "justify-content": "center",
+              "align-items": "center",
+              "text-align": "center",
+              "display": "flex",
+              "font-size": "30px"
+            }
+          }
+        ],
+        "border": 2,
+        "radius": 8
+      },
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "white",
+            "width": 87,
+            "height": 150
+          },
+          {
+            "type": "image",
+            "x": 27,
+            "y": 0,
+            "width": 60,
+            "height": 80,
+            "dynamicProperties": {
+              "color": "color"
+            }
+          },
+          {
+            "type": "image",
+            "color": "transparent",
+            "height": 80,
+            "width": 60,
+            "x": 27,
+            "dynamicProperties": {
+              "value": "image"
+            }
+          },
+          {
+            "type": "text",
+            "x": 0,
+            "y": 8,
+            "textAlign": "center",
+            "width": 27,
+            "dynamicProperties": {
+              "value": "num",
+              "fontSize": "fs"
+            }
+          },
+          {
+            "type": "text",
+            "x": 4,
+            "y": 81,
+            "fontSize": 11,
+            "textAlign": "center",
+            "width": 79,
+            "dynamicProperties": {
+              "value": "ab"
+            }
+          }
+        ],
+        "border": 2,
+        "radius": 8
+      }
+    ],
+    "parent": "rckx3"
+  },
+  "4deck": {
+    "type": "deck",
+    "id": "4deck",
+    "x": 4,
+    "y": 4,
+    "z": 74810,
+    "cardDefaults": {
+      "width": 87,
+      "borderRadius": 8,
+      "height": 150,
+      "enlarge": 3,
+      "fs": 22,
+      "num": 4,
+      "css": {
+        "--offsetX": "${PROPERTY offsetX}",
+        "--offsetY": "${PROPERTY offsetY}",
+        "--deckWidth": "${PROPERTY deckWidth}",
+        "--deckHeight": "${PROPERTY deckHeight}",
+        "--width": "${PROPERTY width}",
+        "--height": "${PROPERTY height}"
+      }
+    },
+    "cardTypes": {
+      "champion.jpg 0,0": {
+        "image": "/assets/1979195317_12950",
+        "offsetX": 0,
+        "offsetY": 0,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#4363d8",
+        "ab": "In phase 3, you can discard people still in play "
+      },
+      "champion.jpg 0,1": {
+        "image": "/assets/-630829019_12242",
+        "offsetX": 1,
+        "offsetY": 0,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#469990",
+        "ab": "Discard a visible person from this row (different column)"
+      },
+      "champion.jpg 0,2": {
+        "image": "/assets/-59558038_11274",
+        "offsetX": 2,
+        "offsetY": 0,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#ffe119",
+        "ab": "Add one of these cards from a previous row to your hand"
+      },
+      "champion.jpg 0,3": {
+        "image": "/assets/-1891256305_11412",
+        "offsetX": 3,
+        "offsetY": 0,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#f032e6",
+        "ab": "Activate an elimated person's ability"
+      },
+      "champion.jpg 0,4": {
+        "image": "/assets/-1533710025_12234",
+        "offsetX": 4,
+        "offsetY": 0,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#a9a9a9",
+        "ab": "Take 3 cards from someone and keep 1"
+      },
+      "champion.jpg 0,5": {
+        "image": "/assets/841996417_13136",
+        "offsetX": 5,
+        "offsetY": 0,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#e6194B",
+        "ab": "Choose a player and card type. They must give you a card of that type"
+      },
+      "champion.jpg 0,6": {
+        "image": "/assets/-917259657_13288",
+        "offsetX": 6,
+        "offsetY": 0,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#aaffc3",
+        "ab": "Swap two visible cards in a person's column"
+      },
+      "champion.jpg 0,7": {
+        "image": "/assets/1526318788_12556",
+        "offsetX": 7,
+        "offsetY": 0,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#9A6324",
+        "ab": "Retrieve a bet"
+      },
+      "champion.jpg 0,8": {
+        "image": "/assets/-1747297889_10750",
+        "offsetX": 8,
+        "offsetY": 0,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#fabed4",
+        "ab": "Retrieve any visible ghost"
+      },
+      "champion.jpg 0,9": {
+        "image": "/assets/-2101966489_12080",
+        "offsetX": 9,
+        "offsetY": 0,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#800000",
+        "ab": "Place a bet on any person in any row (not the 5 VP row)"
+      },
+      "champion.jpg 1,0": {
+        "image": "/assets/-1740667798_12944",
+        "offsetX": 0,
+        "offsetY": 1,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#42d4f4",
+        "ab": "Draw 3 cards"
+      },
+      "champion.jpg 1,1": {
+        "image": "/assets/-646821924_13012",
+        "offsetX": 1,
+        "offsetY": 1,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#fffac8",
+        "ab": "Place half of another player's hand face down on the table"
+      },
+      "champion.jpg 1,2": {
+        "image": "/assets/1109249148_13728",
+        "offsetX": 2,
+        "offsetY": 1,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#f58231",
+        "ab": "Play a second card (only once per turn)"
+      },
+      "champion.jpg 1,3": {
+        "image": "/assets/-505936859_10456",
+        "offsetX": 3,
+        "offsetY": 1,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#dcbeff",
+        "ab": "Score 0.5 more points",
+        "num": 4.5,
+        "fs": 15
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "orange",
+            "width": 87,
+            "height": 150
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 50,
+            "color": "coral",
+            "width": 87,
+            "height": 50,
+            "css": {
+              "border": "2px solid black"
+            }
+          },
+          {
+            "type": "text",
+            "x": 0,
+            "y": 50,
+            "fontSize": 20,
+            "textAlign": "center",
+            "width": 87,
+            "height": 50,
+            "value": "Deck",
+            "css": {
+              "justify-content": "center",
+              "align-items": "center",
+              "text-align": "center",
+              "display": "flex",
+              "font-size": "30px"
+            }
+          }
+        ],
+        "border": 2,
+        "radius": 8
+      },
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "white",
+            "width": 87,
+            "height": 150
+          },
+          {
+            "type": "image",
+            "x": 27,
+            "y": 0,
+            "width": 60,
+            "height": 80,
+            "dynamicProperties": {
+              "color": "color"
+            }
+          },
+          {
+            "type": "image",
+            "color": "transparent",
+            "height": 80,
+            "width": 60,
+            "x": 27,
+            "dynamicProperties": {
+              "value": "image"
+            }
+          },
+          {
+            "type": "text",
+            "x": 0,
+            "y": 8,
+            "textAlign": "center",
+            "width": 27,
+            "dynamicProperties": {
+              "value": "num",
+              "fontSize": "fs"
+            }
+          },
+          {
+            "type": "text",
+            "x": 4,
+            "y": 81,
+            "fontSize": 11,
+            "textAlign": "center",
+            "width": 79,
+            "dynamicProperties": {
+              "value": "ab"
+            }
+          }
+        ],
+        "border": 2,
+        "radius": 8
+      }
+    ],
+    "parent": "rckx4"
+  },
+  "5deck": {
+    "type": "deck",
+    "id": "5deck",
+    "x": 4,
+    "y": 4,
+    "z": 74902,
+    "cardDefaults": {
+      "width": 87,
+      "borderRadius": 8,
+      "height": 150,
+      "enlarge": 3,
+      "fs": 22,
+      "num": 5,
+      "css": {
+        "--offsetX": "${PROPERTY offsetX}",
+        "--offsetY": "${PROPERTY offsetY}",
+        "--deckWidth": "${PROPERTY deckWidth}",
+        "--deckHeight": "${PROPERTY deckHeight}",
+        "--width": "${PROPERTY width}",
+        "--height": "${PROPERTY height}"
+      }
+    },
+    "cardTypes": {
+      "champion.jpg 0,0": {
+        "image": "/assets/1979195317_12950",
+        "offsetX": 0,
+        "offsetY": 0,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#4363d8",
+        "ab": "In phase 3, you can discard people still in play "
+      },
+      "champion.jpg 0,1": {
+        "image": "/assets/-630829019_12242",
+        "offsetX": 1,
+        "offsetY": 0,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#469990",
+        "ab": "Discard a visible person from this row (different column)"
+      },
+      "champion.jpg 0,2": {
+        "image": "/assets/-59558038_11274",
+        "offsetX": 2,
+        "offsetY": 0,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#ffe119",
+        "ab": "Add one of these cards from a previous row to your hand"
+      },
+      "champion.jpg 0,3": {
+        "image": "/assets/-1891256305_11412",
+        "offsetX": 3,
+        "offsetY": 0,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#f032e6",
+        "ab": "Activate an elimated person's ability"
+      },
+      "champion.jpg 0,4": {
+        "image": "/assets/-1533710025_12234",
+        "offsetX": 4,
+        "offsetY": 0,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#a9a9a9",
+        "ab": "Take 3 cards from someone and keep 1"
+      },
+      "champion.jpg 0,5": {
+        "image": "/assets/841996417_13136",
+        "offsetX": 5,
+        "offsetY": 0,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#e6194B",
+        "ab": "Choose a player and card type. They must give you a card of that type"
+      },
+      "champion.jpg 0,6": {
+        "image": "/assets/-917259657_13288",
+        "offsetX": 6,
+        "offsetY": 0,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#aaffc3",
+        "ab": "Swap two visible cards in a person's column"
+      },
+      "champion.jpg 0,7": {
+        "image": "/assets/1526318788_12556",
+        "offsetX": 7,
+        "offsetY": 0,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#9A6324",
+        "ab": "Retrieve a bet"
+      },
+      "champion.jpg 0,8": {
+        "image": "/assets/-1747297889_10750",
+        "offsetX": 8,
+        "offsetY": 0,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#fabed4",
+        "ab": "Retrieve any visible ghost"
+      },
+      "champion.jpg 0,9": {
+        "image": "/assets/-2101966489_12080",
+        "offsetX": 9,
+        "offsetY": 0,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#800000",
+        "ab": "Place a bet on any person in any row (not the 5 VP row)"
+      },
+      "champion.jpg 1,0": {
+        "image": "/assets/-1740667798_12944",
+        "offsetX": 0,
+        "offsetY": 1,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#42d4f4",
+        "ab": "Draw 3 cards"
+      },
+      "champion.jpg 1,1": {
+        "image": "/assets/-646821924_13012",
+        "offsetX": 1,
+        "offsetY": 1,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#fffac8",
+        "ab": "Place half of another player's hand face down on the table"
+      },
+      "champion.jpg 1,2": {
+        "image": "/assets/1109249148_13728",
+        "offsetX": 2,
+        "offsetY": 1,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#f58231",
+        "ab": "Play a second card (only once per turn)"
+      },
+      "champion.jpg 1,3": {
+        "image": "/assets/-505936859_10456",
+        "offsetX": 3,
+        "offsetY": 1,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#dcbeff",
+        "ab": "Score 0.5 more points",
+        "num": 5.5,
+        "fs": 15
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "orange",
+            "width": 87,
+            "height": 150
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 50,
+            "color": "coral",
+            "width": 87,
+            "height": 50,
+            "css": {
+              "border": "2px solid black"
+            }
+          },
+          {
+            "type": "text",
+            "x": 0,
+            "y": 50,
+            "fontSize": 20,
+            "textAlign": "center",
+            "width": 87,
+            "height": 50,
+            "value": "Deck",
+            "css": {
+              "justify-content": "center",
+              "align-items": "center",
+              "text-align": "center",
+              "display": "flex",
+              "font-size": "30px"
+            }
+          }
+        ],
+        "border": 2,
+        "radius": 8
+      },
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "white",
+            "width": 87,
+            "height": 150
+          },
+          {
+            "type": "image",
+            "x": 27,
+            "y": 0,
+            "width": 60,
+            "height": 80,
+            "dynamicProperties": {
+              "color": "color"
+            }
+          },
+          {
+            "type": "image",
+            "color": "transparent",
+            "height": 80,
+            "width": 60,
+            "x": 27,
+            "dynamicProperties": {
+              "value": "image"
+            }
+          },
+          {
+            "type": "text",
+            "x": 0,
+            "y": 8,
+            "textAlign": "center",
+            "width": 27,
+            "dynamicProperties": {
+              "value": "num",
+              "fontSize": "fs"
+            }
+          },
+          {
+            "type": "text",
+            "x": 4,
+            "y": 81,
+            "fontSize": 11,
+            "textAlign": "center",
+            "width": 79,
+            "dynamicProperties": {
+              "value": "ab"
+            }
+          }
+        ],
+        "border": 2,
+        "radius": 8
+      }
+    ],
+    "parent": "rckx5"
+  },
+  "6deck": {
+    "type": "deck",
+    "id": "6deck",
+    "x": 4,
+    "y": 4,
+    "z": 74912,
+    "cardDefaults": {
+      "width": 87,
+      "borderRadius": 8,
+      "height": 150,
+      "enlarge": 3,
+      "fs": 22,
+      "num": 6,
+      "css": {
+        "--offsetX": "${PROPERTY offsetX}",
+        "--offsetY": "${PROPERTY offsetY}",
+        "--deckWidth": "${PROPERTY deckWidth}",
+        "--deckHeight": "${PROPERTY deckHeight}",
+        "--width": "${PROPERTY width}",
+        "--height": "${PROPERTY height}"
+      }
+    },
+    "cardTypes": {
+      "champion.jpg 0,0": {
+        "image": "/assets/1979195317_12950",
+        "offsetX": 0,
+        "offsetY": 0,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#4363d8",
+        "ab": "In phase 3, you can discard people still in play "
+      },
+      "champion.jpg 0,1": {
+        "image": "/assets/-630829019_12242",
+        "offsetX": 1,
+        "offsetY": 0,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#469990",
+        "ab": "Discard a visible person from this row (different column)"
+      },
+      "champion.jpg 0,2": {
+        "image": "/assets/-59558038_11274",
+        "offsetX": 2,
+        "offsetY": 0,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#ffe119",
+        "ab": "Add one of these cards from a previous row to your hand"
+      },
+      "champion.jpg 0,3": {
+        "image": "/assets/-1891256305_11412",
+        "offsetX": 3,
+        "offsetY": 0,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#f032e6",
+        "ab": "Activate an elimated person's ability"
+      },
+      "champion.jpg 0,4": {
+        "image": "/assets/-1533710025_12234",
+        "offsetX": 4,
+        "offsetY": 0,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#a9a9a9",
+        "ab": "Take 3 cards from someone and keep 1"
+      },
+      "champion.jpg 0,5": {
+        "image": "/assets/841996417_13136",
+        "offsetX": 5,
+        "offsetY": 0,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#e6194B",
+        "ab": "Choose a player and card type. They must give you a card of that type"
+      },
+      "champion.jpg 0,6": {
+        "image": "/assets/-917259657_13288",
+        "offsetX": 6,
+        "offsetY": 0,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#aaffc3",
+        "ab": "Swap two visible cards in a person's column"
+      },
+      "champion.jpg 0,7": {
+        "image": "/assets/1526318788_12556",
+        "offsetX": 7,
+        "offsetY": 0,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#9A6324",
+        "ab": "Retrieve a bet"
+      },
+      "champion.jpg 0,8": {
+        "image": "/assets/-1747297889_10750",
+        "offsetX": 8,
+        "offsetY": 0,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#fabed4",
+        "ab": "Retrieve any visible ghost"
+      },
+      "champion.jpg 0,9": {
+        "image": "/assets/-2101966489_12080",
+        "offsetX": 9,
+        "offsetY": 0,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#800000",
+        "ab": "Place a bet on any person in any row (not the 5 VP row)"
+      },
+      "champion.jpg 1,0": {
+        "image": "/assets/-1740667798_12944",
+        "offsetX": 0,
+        "offsetY": 1,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#42d4f4",
+        "ab": "Draw 3 cards"
+      },
+      "champion.jpg 1,1": {
+        "image": "/assets/-646821924_13012",
+        "offsetX": 1,
+        "offsetY": 1,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#fffac8",
+        "ab": "Place half of another player's hand face down on the table"
+      },
+      "champion.jpg 1,2": {
+        "image": "/assets/1109249148_13728",
+        "offsetX": 2,
+        "offsetY": 1,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#f58231",
+        "ab": "Play a second card (only once per turn)"
+      },
+      "champion.jpg 1,3": {
+        "image": "/assets/-505936859_10456",
+        "offsetX": 3,
+        "offsetY": 1,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#dcbeff",
+        "ab": "Score 0.5 more points",
+        "num": 6.5,
+        "fs": 15
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "orange",
+            "width": 87,
+            "height": 150
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 50,
+            "color": "coral",
+            "width": 87,
+            "height": 50,
+            "css": {
+              "border": "2px solid black"
+            }
+          },
+          {
+            "type": "text",
+            "x": 0,
+            "y": 50,
+            "fontSize": 20,
+            "textAlign": "center",
+            "width": 87,
+            "height": 50,
+            "value": "Deck",
+            "css": {
+              "justify-content": "center",
+              "align-items": "center",
+              "text-align": "center",
+              "display": "flex",
+              "font-size": "30px"
+            }
+          }
+        ],
+        "border": 2,
+        "radius": 8
+      },
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "white",
+            "width": 87,
+            "height": 150
+          },
+          {
+            "type": "image",
+            "x": 27,
+            "y": 0,
+            "width": 60,
+            "height": 80,
+            "dynamicProperties": {
+              "color": "color"
+            }
+          },
+          {
+            "type": "image",
+            "color": "transparent",
+            "height": 80,
+            "width": 60,
+            "x": 27,
+            "dynamicProperties": {
+              "value": "image"
+            }
+          },
+          {
+            "type": "text",
+            "x": 0,
+            "y": 8,
+            "textAlign": "center",
+            "width": 27,
+            "dynamicProperties": {
+              "value": "num",
+              "fontSize": "fs"
+            }
+          },
+          {
+            "type": "text",
+            "x": 4,
+            "y": 81,
+            "fontSize": 11,
+            "textAlign": "center",
+            "width": 79,
+            "dynamicProperties": {
+              "value": "ab"
+            }
+          }
+        ],
+        "border": 2,
+        "radius": 8
+      }
+    ],
+    "parent": "rckx6"
+  },
+  "7deck": {
+    "type": "deck",
+    "id": "7deck",
+    "x": 4,
+    "y": 4,
+    "z": 74910,
+    "cardDefaults": {
+      "width": 87,
+      "borderRadius": 8,
+      "height": 150,
+      "enlarge": 3,
+      "fs": 22,
+      "num": 7,
+      "css": {
+        "--offsetX": "${PROPERTY offsetX}",
+        "--offsetY": "${PROPERTY offsetY}",
+        "--deckWidth": "${PROPERTY deckWidth}",
+        "--deckHeight": "${PROPERTY deckHeight}",
+        "--width": "${PROPERTY width}",
+        "--height": "${PROPERTY height}"
+      }
+    },
+    "cardTypes": {
+      "champion.jpg 0,0": {
+        "image": "/assets/1979195317_12950",
+        "offsetX": 0,
+        "offsetY": 0,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#4363d8",
+        "ab": "In phase 3, you can discard people still in play "
+      },
+      "champion.jpg 0,1": {
+        "image": "/assets/-630829019_12242",
+        "offsetX": 1,
+        "offsetY": 0,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#469990",
+        "ab": "Discard a visible person from this row (different column)"
+      },
+      "champion.jpg 0,2": {
+        "image": "/assets/-59558038_11274",
+        "offsetX": 2,
+        "offsetY": 0,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#ffe119",
+        "ab": "Add one of these cards from a previous row to your hand"
+      },
+      "champion.jpg 0,3": {
+        "image": "/assets/-1891256305_11412",
+        "offsetX": 3,
+        "offsetY": 0,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#f032e6",
+        "ab": "Activate an elimated person's ability"
+      },
+      "champion.jpg 0,4": {
+        "image": "/assets/-1533710025_12234",
+        "offsetX": 4,
+        "offsetY": 0,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#a9a9a9",
+        "ab": "Take 3 cards from someone and keep 1"
+      },
+      "champion.jpg 0,5": {
+        "image": "/assets/841996417_13136",
+        "offsetX": 5,
+        "offsetY": 0,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#e6194B",
+        "ab": "Choose a player and card type. They must give you a card of that type"
+      },
+      "champion.jpg 0,6": {
+        "image": "/assets/-917259657_13288",
+        "offsetX": 6,
+        "offsetY": 0,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#aaffc3",
+        "ab": "Swap two visible cards in a person's column"
+      },
+      "champion.jpg 0,7": {
+        "image": "/assets/1526318788_12556",
+        "offsetX": 7,
+        "offsetY": 0,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#9A6324",
+        "ab": "Retrieve a bet"
+      },
+      "champion.jpg 0,8": {
+        "image": "/assets/-1747297889_10750",
+        "offsetX": 8,
+        "offsetY": 0,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#fabed4",
+        "ab": "Retrieve any visible ghost"
+      },
+      "champion.jpg 0,9": {
+        "image": "/assets/-2101966489_12080",
+        "offsetX": 9,
+        "offsetY": 0,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#800000",
+        "ab": "Place a bet on any person in any row (not the 5 VP row)"
+      },
+      "champion.jpg 1,0": {
+        "image": "/assets/-1740667798_12944",
+        "offsetX": 0,
+        "offsetY": 1,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#42d4f4",
+        "ab": "Draw 3 cards"
+      },
+      "champion.jpg 1,1": {
+        "image": "/assets/-646821924_13012",
+        "offsetX": 1,
+        "offsetY": 1,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#fffac8",
+        "ab": "Place half of another player's hand face down on the table"
+      },
+      "champion.jpg 1,2": {
+        "image": "/assets/1109249148_13728",
+        "offsetX": 2,
+        "offsetY": 1,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#f58231",
+        "ab": "Play a second card (only once per turn)"
+      },
+      "champion.jpg 1,3": {
+        "image": "/assets/-505936859_10456",
+        "offsetX": 3,
+        "offsetY": 1,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#dcbeff",
+        "ab": "Score 0.5 more points",
+        "num": 7.5,
+        "fs": 15
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "orange",
+            "width": 87,
+            "height": 150
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 50,
+            "color": "coral",
+            "width": 87,
+            "height": 50,
+            "css": {
+              "border": "2px solid black"
+            }
+          },
+          {
+            "type": "text",
+            "x": 0,
+            "y": 50,
+            "fontSize": 20,
+            "textAlign": "center",
+            "width": 87,
+            "height": 50,
+            "value": "Deck",
+            "css": {
+              "justify-content": "center",
+              "align-items": "center",
+              "text-align": "center",
+              "display": "flex",
+              "font-size": "30px"
+            }
+          }
+        ],
+        "border": 2,
+        "radius": 8
+      },
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "white",
+            "width": 87,
+            "height": 150
+          },
+          {
+            "type": "image",
+            "x": 27,
+            "y": 0,
+            "width": 60,
+            "height": 80,
+            "dynamicProperties": {
+              "color": "color"
+            }
+          },
+          {
+            "type": "image",
+            "color": "transparent",
+            "height": 80,
+            "width": 60,
+            "x": 27,
+            "dynamicProperties": {
+              "value": "image"
+            }
+          },
+          {
+            "type": "text",
+            "x": 0,
+            "y": 8,
+            "textAlign": "center",
+            "width": 27,
+            "dynamicProperties": {
+              "value": "num",
+              "fontSize": "fs"
+            }
+          },
+          {
+            "type": "text",
+            "x": 4,
+            "y": 81,
+            "fontSize": 11,
+            "textAlign": "center",
+            "width": 79,
+            "dynamicProperties": {
+              "value": "ab"
+            }
+          }
+        ],
+        "border": 2,
+        "radius": 8
+      }
+    ],
+    "parent": "rckx7"
+  },
+  "8deck": {
+    "type": "deck",
+    "id": "8deck",
+    "x": 4,
+    "y": 4,
+    "z": 74908,
+    "cardDefaults": {
+      "width": 87,
+      "borderRadius": 8,
+      "height": 150,
+      "enlarge": 3,
+      "fs": 22,
+      "num": 8,
+      "css": {
+        "--offsetX": "${PROPERTY offsetX}",
+        "--offsetY": "${PROPERTY offsetY}",
+        "--deckWidth": "${PROPERTY deckWidth}",
+        "--deckHeight": "${PROPERTY deckHeight}",
+        "--width": "${PROPERTY width}",
+        "--height": "${PROPERTY height}"
+      }
+    },
+    "cardTypes": {
+      "champion.jpg 0,0": {
+        "image": "/assets/1979195317_12950",
+        "offsetX": 0,
+        "offsetY": 0,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#4363d8",
+        "ab": "In phase 3, you can discard people still in play "
+      },
+      "champion.jpg 0,1": {
+        "image": "/assets/-630829019_12242",
+        "offsetX": 1,
+        "offsetY": 0,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#469990",
+        "ab": "Discard a visible person from this row (different column)"
+      },
+      "champion.jpg 0,2": {
+        "image": "/assets/-59558038_11274",
+        "offsetX": 2,
+        "offsetY": 0,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#ffe119",
+        "ab": "Add one of these cards from a previous row to your hand"
+      },
+      "champion.jpg 0,3": {
+        "image": "/assets/-1891256305_11412",
+        "offsetX": 3,
+        "offsetY": 0,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#f032e6",
+        "ab": "Activate an elimated person's ability"
+      },
+      "champion.jpg 0,4": {
+        "image": "/assets/-1533710025_12234",
+        "offsetX": 4,
+        "offsetY": 0,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#a9a9a9",
+        "ab": "Take 3 cards from someone and keep 1"
+      },
+      "champion.jpg 0,5": {
+        "image": "/assets/841996417_13136",
+        "offsetX": 5,
+        "offsetY": 0,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#e6194B",
+        "ab": "Choose a player and card type. They must give you a card of that type"
+      },
+      "champion.jpg 0,6": {
+        "image": "/assets/-917259657_13288",
+        "offsetX": 6,
+        "offsetY": 0,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#aaffc3",
+        "ab": "Swap two visible cards in a person's column"
+      },
+      "champion.jpg 0,7": {
+        "image": "/assets/1526318788_12556",
+        "offsetX": 7,
+        "offsetY": 0,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#9A6324",
+        "ab": "Retrieve a bet"
+      },
+      "champion.jpg 0,8": {
+        "image": "/assets/-1747297889_10750",
+        "offsetX": 8,
+        "offsetY": 0,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#fabed4",
+        "ab": "Retrieve any visible ghost"
+      },
+      "champion.jpg 0,9": {
+        "image": "/assets/-2101966489_12080",
+        "offsetX": 9,
+        "offsetY": 0,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#800000",
+        "ab": "Place a bet on any person in any row (not the 5 VP row)"
+      },
+      "champion.jpg 1,0": {
+        "image": "/assets/-1740667798_12944",
+        "offsetX": 0,
+        "offsetY": 1,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#42d4f4",
+        "ab": "Draw 3 cards"
+      },
+      "champion.jpg 1,1": {
+        "image": "/assets/-646821924_13012",
+        "offsetX": 1,
+        "offsetY": 1,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#fffac8",
+        "ab": "Place half of another player's hand face down on the table"
+      },
+      "champion.jpg 1,2": {
+        "image": "/assets/1109249148_13728",
+        "offsetX": 2,
+        "offsetY": 1,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#f58231",
+        "ab": "Play a second card (only once per turn)"
+      },
+      "champion.jpg 1,3": {
+        "image": "/assets/-505936859_10456",
+        "offsetX": 3,
+        "offsetY": 1,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#dcbeff",
+        "ab": "Score 0.5 more points",
+        "num": 8.5,
+        "fs": 15
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "orange",
+            "width": 87,
+            "height": 150
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 50,
+            "color": "coral",
+            "width": 87,
+            "height": 50,
+            "css": {
+              "border": "2px solid black"
+            }
+          },
+          {
+            "type": "text",
+            "x": 0,
+            "y": 50,
+            "fontSize": 20,
+            "textAlign": "center",
+            "width": 87,
+            "height": 50,
+            "value": "Deck",
+            "css": {
+              "justify-content": "center",
+              "align-items": "center",
+              "text-align": "center",
+              "display": "flex",
+              "font-size": "30px"
+            }
+          }
+        ],
+        "border": 2,
+        "radius": 8
+      },
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "white",
+            "width": 87,
+            "height": 150
+          },
+          {
+            "type": "image",
+            "x": 27,
+            "y": 0,
+            "width": 60,
+            "height": 80,
+            "dynamicProperties": {
+              "color": "color"
+            }
+          },
+          {
+            "type": "image",
+            "color": "transparent",
+            "height": 80,
+            "width": 60,
+            "x": 27,
+            "dynamicProperties": {
+              "value": "image"
+            }
+          },
+          {
+            "type": "text",
+            "x": 0,
+            "y": 8,
+            "textAlign": "center",
+            "width": 27,
+            "dynamicProperties": {
+              "value": "num",
+              "fontSize": "fs"
+            }
+          },
+          {
+            "type": "text",
+            "x": 4,
+            "y": 81,
+            "fontSize": 11,
+            "textAlign": "center",
+            "width": 79,
+            "dynamicProperties": {
+              "value": "ab"
+            }
+          }
+        ],
+        "border": 2,
+        "radius": 8
+      }
+    ],
+    "parent": "rckx8"
+  },
+  "9deck": {
+    "type": "deck",
+    "id": "9deck",
+    "x": 4,
+    "y": 4,
+    "z": 74906,
+    "cardDefaults": {
+      "width": 87,
+      "borderRadius": 8,
+      "height": 150,
+      "enlarge": 3,
+      "fs": 22,
+      "num": 9,
+      "css": {
+        "--offsetX": "${PROPERTY offsetX}",
+        "--offsetY": "${PROPERTY offsetY}",
+        "--deckWidth": "${PROPERTY deckWidth}",
+        "--deckHeight": "${PROPERTY deckHeight}",
+        "--width": "${PROPERTY width}",
+        "--height": "${PROPERTY height}"
+      }
+    },
+    "cardTypes": {
+      "champion.jpg 0,0": {
+        "image": "/assets/1979195317_12950",
+        "offsetX": 0,
+        "offsetY": 0,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#4363d8",
+        "ab": "In phase 3, you can discard people still in play "
+      },
+      "champion.jpg 0,1": {
+        "image": "/assets/-630829019_12242",
+        "offsetX": 1,
+        "offsetY": 0,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#469990",
+        "ab": "Discard a visible person from this row (different column)"
+      },
+      "champion.jpg 0,2": {
+        "image": "/assets/-59558038_11274",
+        "offsetX": 2,
+        "offsetY": 0,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#ffe119",
+        "ab": "Add one of these cards from a previous row to your hand"
+      },
+      "champion.jpg 0,3": {
+        "image": "/assets/-1891256305_11412",
+        "offsetX": 3,
+        "offsetY": 0,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#f032e6",
+        "ab": "Activate an elimated person's ability"
+      },
+      "champion.jpg 0,4": {
+        "image": "/assets/-1533710025_12234",
+        "offsetX": 4,
+        "offsetY": 0,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#a9a9a9",
+        "ab": "Take 3 cards from someone and keep 1"
+      },
+      "champion.jpg 0,5": {
+        "image": "/assets/841996417_13136",
+        "offsetX": 5,
+        "offsetY": 0,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#e6194B",
+        "ab": "Choose a player and card type. They must give you a card of that type"
+      },
+      "champion.jpg 0,6": {
+        "image": "/assets/-917259657_13288",
+        "offsetX": 6,
+        "offsetY": 0,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#aaffc3",
+        "ab": "Swap two visible cards in a person's column"
+      },
+      "champion.jpg 0,7": {
+        "image": "/assets/1526318788_12556",
+        "offsetX": 7,
+        "offsetY": 0,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#9A6324",
+        "ab": "Retrieve a bet"
+      },
+      "champion.jpg 0,8": {
+        "image": "/assets/-1747297889_10750",
+        "offsetX": 8,
+        "offsetY": 0,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#fabed4",
+        "ab": "Retrieve any visible ghost"
+      },
+      "champion.jpg 0,9": {
+        "image": "/assets/-2101966489_12080",
+        "offsetX": 9,
+        "offsetY": 0,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#800000",
+        "ab": "Place a bet on any person in any row (not the 5 VP row)"
+      },
+      "champion.jpg 1,0": {
+        "image": "/assets/-1740667798_12944",
+        "offsetX": 0,
+        "offsetY": 1,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#42d4f4",
+        "ab": "Draw 3 cards"
+      },
+      "champion.jpg 1,1": {
+        "image": "/assets/-646821924_13012",
+        "offsetX": 1,
+        "offsetY": 1,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#fffac8",
+        "ab": "Place half of another player's hand face down on the table"
+      },
+      "champion.jpg 1,2": {
+        "image": "/assets/1109249148_13728",
+        "offsetX": 2,
+        "offsetY": 1,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#f58231",
+        "ab": "Play a second card (only once per turn)"
+      },
+      "champion.jpg 1,3": {
+        "image": "/assets/-505936859_10456",
+        "offsetX": 3,
+        "offsetY": 1,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#dcbeff",
+        "ab": "Score 0.5 more points",
+        "num": 9.5,
+        "fs": 15
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "orange",
+            "width": 87,
+            "height": 150
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 50,
+            "color": "coral",
+            "width": 87,
+            "height": 50,
+            "css": {
+              "border": "2px solid black"
+            }
+          },
+          {
+            "type": "text",
+            "x": 0,
+            "y": 50,
+            "fontSize": 20,
+            "textAlign": "center",
+            "width": 87,
+            "height": 50,
+            "value": "Deck",
+            "css": {
+              "justify-content": "center",
+              "align-items": "center",
+              "text-align": "center",
+              "display": "flex",
+              "font-size": "30px"
+            }
+          }
+        ],
+        "border": 2,
+        "radius": 8
+      },
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "white",
+            "width": 87,
+            "height": 150
+          },
+          {
+            "type": "image",
+            "x": 27,
+            "y": 0,
+            "width": 60,
+            "height": 80,
+            "dynamicProperties": {
+              "color": "color"
+            }
+          },
+          {
+            "type": "image",
+            "color": "transparent",
+            "height": 80,
+            "width": 60,
+            "x": 27,
+            "dynamicProperties": {
+              "value": "image"
+            }
+          },
+          {
+            "type": "text",
+            "x": 0,
+            "y": 8,
+            "textAlign": "center",
+            "width": 27,
+            "dynamicProperties": {
+              "value": "num",
+              "fontSize": "fs"
+            }
+          },
+          {
+            "type": "text",
+            "x": 4,
+            "y": 81,
+            "fontSize": 11,
+            "textAlign": "center",
+            "width": 79,
+            "dynamicProperties": {
+              "value": "ab"
+            }
+          }
+        ],
+        "border": 2,
+        "radius": 8
+      }
+    ],
+    "parent": "rckx9"
+  },
+  "10deck": {
+    "type": "deck",
+    "id": "10deck",
+    "x": 4,
+    "y": 4,
+    "z": 74904,
+    "cardDefaults": {
+      "width": 87,
+      "borderRadius": 8,
+      "height": 150,
+      "enlarge": 3,
+      "fs": 22,
+      "num": 10,
+      "css": {
+        "--offsetX": "${PROPERTY offsetX}",
+        "--offsetY": "${PROPERTY offsetY}",
+        "--deckWidth": "${PROPERTY deckWidth}",
+        "--deckHeight": "${PROPERTY deckHeight}",
+        "--width": "${PROPERTY width}",
+        "--height": "${PROPERTY height}"
+      }
+    },
+    "cardTypes": {
+      "champion.jpg 0,0": {
+        "image": "/assets/1979195317_12950",
+        "offsetX": 0,
+        "offsetY": 0,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#4363d8",
+        "ab": "In phase 3, you can discard people still in play "
+      },
+      "champion.jpg 0,1": {
+        "image": "/assets/-630829019_12242",
+        "offsetX": 1,
+        "offsetY": 0,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#469990",
+        "ab": "Discard a visible person from this row (different column)"
+      },
+      "champion.jpg 0,2": {
+        "image": "/assets/-59558038_11274",
+        "offsetX": 2,
+        "offsetY": 0,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#ffe119",
+        "ab": "Add one of these cards from a previous row to your hand"
+      },
+      "champion.jpg 0,3": {
+        "image": "/assets/-1891256305_11412",
+        "offsetX": 3,
+        "offsetY": 0,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#f032e6",
+        "ab": "Activate an elimated person's ability"
+      },
+      "champion.jpg 0,4": {
+        "image": "/assets/-1533710025_12234",
+        "offsetX": 4,
+        "offsetY": 0,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#a9a9a9",
+        "ab": "Take 3 cards from someone and keep 1"
+      },
+      "champion.jpg 0,5": {
+        "image": "/assets/841996417_13136",
+        "offsetX": 5,
+        "offsetY": 0,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#e6194B",
+        "ab": "Choose a player and card type. They must give you a card of that type"
+      },
+      "champion.jpg 0,6": {
+        "image": "/assets/-917259657_13288",
+        "offsetX": 6,
+        "offsetY": 0,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#aaffc3",
+        "ab": "Swap two visible cards in a person's column"
+      },
+      "champion.jpg 0,7": {
+        "image": "/assets/1526318788_12556",
+        "offsetX": 7,
+        "offsetY": 0,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#9A6324",
+        "ab": "Retrieve a bet"
+      },
+      "champion.jpg 0,8": {
+        "image": "/assets/-1747297889_10750",
+        "offsetX": 8,
+        "offsetY": 0,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#fabed4",
+        "ab": "Retrieve any visible ghost"
+      },
+      "champion.jpg 0,9": {
+        "image": "/assets/-2101966489_12080",
+        "offsetX": 9,
+        "offsetY": 0,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#800000",
+        "ab": "Place a bet on any person in any row (not the 5 VP row)"
+      },
+      "champion.jpg 1,0": {
+        "image": "/assets/-1740667798_12944",
+        "offsetX": 0,
+        "offsetY": 1,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#42d4f4",
+        "ab": "Draw 3 cards"
+      },
+      "champion.jpg 1,1": {
+        "image": "/assets/-646821924_13012",
+        "offsetX": 1,
+        "offsetY": 1,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#fffac8",
+        "ab": "Place half of another player's hand face down on the table"
+      },
+      "champion.jpg 1,2": {
+        "image": "/assets/1109249148_13728",
+        "offsetX": 2,
+        "offsetY": 1,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#f58231",
+        "ab": "Play a second card (only once per turn)"
+      },
+      "champion.jpg 1,3": {
+        "image": "/assets/-505936859_10456",
+        "offsetX": 3,
+        "offsetY": 1,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#dcbeff",
+        "ab": "Score 0.5 more points",
+        "num": 10.5,
+        "fs": 15
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "orange",
+            "width": 87,
+            "height": 150
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 50,
+            "color": "coral",
+            "width": 87,
+            "height": 50,
+            "css": {
+              "border": "2px solid black"
+            }
+          },
+          {
+            "type": "text",
+            "x": 0,
+            "y": 50,
+            "fontSize": 20,
+            "textAlign": "center",
+            "width": 87,
+            "height": 50,
+            "value": "Deck",
+            "css": {
+              "justify-content": "center",
+              "align-items": "center",
+              "text-align": "center",
+              "display": "flex",
+              "font-size": "30px"
+            }
+          }
+        ],
+        "border": 2,
+        "radius": 8
+      },
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "white",
+            "width": 87,
+            "height": 150
+          },
+          {
+            "type": "image",
+            "x": 27,
+            "y": 0,
+            "width": 60,
+            "height": 80,
+            "dynamicProperties": {
+              "color": "color"
+            }
+          },
+          {
+            "type": "image",
+            "color": "transparent",
+            "height": 80,
+            "width": 60,
+            "x": 27,
+            "dynamicProperties": {
+              "value": "image"
+            }
+          },
+          {
+            "type": "text",
+            "x": 0,
+            "y": 8,
+            "textAlign": "center",
+            "width": 27,
+            "dynamicProperties": {
+              "value": "num",
+              "fontSize": "fs"
+            }
+          },
+          {
+            "type": "text",
+            "x": 4,
+            "y": 81,
+            "fontSize": 11,
+            "textAlign": "center",
+            "width": 79,
+            "dynamicProperties": {
+              "value": "ab"
+            }
+          }
+        ],
+        "border": 2,
+        "radius": 8
+      }
+    ],
+    "parent": "rckx10"
+  },
+  "0deck": {
+    "type": "deck",
+    "id": "0deck",
+    "x": 4,
+    "y": 4,
+    "z": 77533,
+    "cardDefaults": {
+      "width": 87,
+      "borderRadius": 8,
+      "height": 150,
+      "enlarge": 3,
+      "fs": 22,
+      "num": 0,
+      "css": {
+        "--offsetX": "${PROPERTY offsetX}",
+        "--offsetY": "${PROPERTY offsetY}",
+        "--deckWidth": "${PROPERTY deckWidth}",
+        "--deckHeight": "${PROPERTY deckHeight}",
+        "--width": "${PROPERTY width}",
+        "--height": "${PROPERTY height}"
+      }
+    },
+    "cardTypes": {
+      "champion.jpg 0,0": {
+        "image": "/assets/1979195317_12950",
+        "offsetX": 0,
+        "offsetY": 0,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#4363d8",
+        "ab": "In phase 3, you can discard people still in play "
+      },
+      "champion.jpg 0,1": {
+        "image": "/assets/-630829019_12242",
+        "offsetX": 1,
+        "offsetY": 0,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#469990",
+        "ab": "Discard a visible person from this row (different column)"
+      },
+      "champion.jpg 0,2": {
+        "image": "/assets/-59558038_11274",
+        "offsetX": 2,
+        "offsetY": 0,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#ffe119",
+        "ab": "Add one of these cards from a previous row to your hand"
+      },
+      "champion.jpg 0,3": {
+        "image": "/assets/-1891256305_11412",
+        "offsetX": 3,
+        "offsetY": 0,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#f032e6",
+        "ab": "Activate an elimated person's ability"
+      },
+      "champion.jpg 0,4": {
+        "image": "/assets/-1533710025_12234",
+        "offsetX": 4,
+        "offsetY": 0,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#a9a9a9",
+        "ab": "Take 3 cards from someone and keep 1"
+      },
+      "champion.jpg 0,5": {
+        "image": "/assets/841996417_13136",
+        "offsetX": 5,
+        "offsetY": 0,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#e6194B",
+        "ab": "Choose a player and card type. They must give you a card of that type"
+      },
+      "champion.jpg 0,6": {
+        "image": "/assets/-917259657_13288",
+        "offsetX": 6,
+        "offsetY": 0,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#aaffc3",
+        "ab": "Swap two visible cards in a person's column"
+      },
+      "champion.jpg 0,7": {
+        "image": "/assets/1526318788_12556",
+        "offsetX": 7,
+        "offsetY": 0,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#9A6324",
+        "ab": "Retrieve a bet"
+      },
+      "champion.jpg 0,8": {
+        "image": "/assets/-1747297889_10750",
+        "offsetX": 8,
+        "offsetY": 0,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#fabed4",
+        "ab": "Retrieve any visible ghost"
+      },
+      "champion.jpg 0,9": {
+        "image": "/assets/-2101966489_12080",
+        "offsetX": 9,
+        "offsetY": 0,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#800000",
+        "ab": "Place a bet on any person in any row (not the 5 VP row)"
+      },
+      "champion.jpg 1,0": {
+        "image": "/assets/-1740667798_12944",
+        "offsetX": 0,
+        "offsetY": 1,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#42d4f4",
+        "ab": "Draw 3 cards"
+      },
+      "champion.jpg 1,1": {
+        "image": "/assets/-646821924_13012",
+        "offsetX": 1,
+        "offsetY": 1,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#fffac8",
+        "ab": "Place half of another player's hand face down on the table"
+      },
+      "champion.jpg 1,2": {
+        "image": "/assets/1109249148_13728",
+        "offsetX": 2,
+        "offsetY": 1,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#f58231",
+        "ab": "Play a second card (only once per turn)"
+      },
+      "champion.jpg 1,3": {
+        "image": "/assets/-505936859_10456",
+        "offsetX": 3,
+        "offsetY": 1,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "color": "#dcbeff",
+        "ab": "Score 0.5 more points",
+        "num": 0.5,
+        "fs": 15
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "orange",
+            "width": 87,
+            "height": 150
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 50,
+            "color": "coral",
+            "width": 87,
+            "height": 50,
+            "css": {
+              "border": "2px solid black"
+            }
+          },
+          {
+            "type": "text",
+            "x": 0,
+            "y": 50,
+            "fontSize": 20,
+            "textAlign": "center",
+            "width": 87,
+            "height": 50,
+            "value": "Deck",
+            "css": {
+              "justify-content": "center",
+              "align-items": "center",
+              "text-align": "center",
+              "display": "flex",
+              "font-size": "30px"
+            }
+          }
+        ],
+        "border": 2,
+        "radius": 8
+      },
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "white",
+            "width": 87,
+            "height": 150
+          },
+          {
+            "type": "image",
+            "x": 27,
+            "y": 0,
+            "width": 60,
+            "height": 80,
+            "dynamicProperties": {
+              "color": "color"
+            }
+          },
+          {
+            "type": "image",
+            "color": "transparent",
+            "height": 80,
+            "width": 60,
+            "x": 27,
+            "dynamicProperties": {
+              "value": "image"
+            }
+          },
+          {
+            "type": "text",
+            "x": 0,
+            "y": 8,
+            "textAlign": "center",
+            "width": 27,
+            "dynamicProperties": {
+              "value": "num",
+              "fontSize": "fs"
+            }
+          },
+          {
+            "type": "text",
+            "x": 4,
+            "y": 81,
+            "fontSize": 11,
+            "textAlign": "center",
+            "width": 79,
+            "dynamicProperties": {
+              "value": "ab"
+            }
+          }
+        ],
+        "border": 2,
+        "radius": 8
+      }
+    ],
+    "parent": "rckx"
+  },
+  "rckx": {
+    "type": "holder",
+    "x": 807,
+    "y": -625,
+    "z": 14,
+    "id": "rckx"
+  },
+  "rckx1": {
+    "type": "holder",
+    "x": 918,
+    "y": -625,
+    "z": 14,
+    "id": "rckx1"
+  },
+  "rckx2": {
+    "type": "holder",
+    "x": 1029,
+    "y": -625,
+    "z": 14,
+    "id": "rckx2"
+  },
+  "rckx3": {
+    "type": "holder",
+    "x": 1140,
+    "y": -625,
+    "z": 14,
+    "id": "rckx3"
+  },
+  "rckx4": {
+    "type": "holder",
+    "x": 1251,
+    "y": -625,
+    "z": 14,
+    "id": "rckx4"
+  },
+  "rckx5": {
+    "type": "holder",
+    "x": 1362,
+    "y": -625,
+    "z": 14,
+    "id": "rckx5"
+  },
+  "rckx6": {
+    "type": "holder",
+    "x": 807,
+    "y": -457,
+    "z": 14,
+    "id": "rckx6"
+  },
+  "rckx7": {
+    "type": "holder",
+    "x": 918,
+    "y": -457,
+    "z": 14,
+    "id": "rckx7"
+  },
+  "rckx8": {
+    "type": "holder",
+    "x": 1029,
+    "y": -457,
+    "z": 14,
+    "id": "rckx8"
+  },
+  "rckx9": {
+    "type": "holder",
+    "x": 1140,
+    "y": -457,
+    "z": 14,
+    "id": "rckx9"
+  },
+  "rckx10": {
+    "type": "holder",
+    "x": 1251,
+    "y": -457,
+    "z": 14,
+    "id": "rckx10"
+  },
+  "0lnt": {
+    "deck": "0deck",
+    "type": "card",
+    "cardType": "champion.jpg 0,0",
+    "id": "0lnt",
+    "z": 77666,
+    "parent": "1iex"
+  },
+  "ws91": {
+    "deck": "0deck",
+    "type": "card",
+    "cardType": "champion.jpg 0,1",
+    "id": "ws91",
+    "parent": "1iex",
+    "z": 77667
+  },
+  "tg7r": {
+    "deck": "0deck",
+    "type": "card",
+    "cardType": "champion.jpg 0,2",
+    "id": "tg7r",
+    "z": 77668,
+    "parent": "1iex"
+  },
+  "emqk": {
+    "deck": "0deck",
+    "type": "card",
+    "cardType": "champion.jpg 0,3",
+    "id": "emqk",
+    "z": 77669,
+    "parent": "1iex"
+  },
+  "fdbo": {
+    "deck": "0deck",
+    "type": "card",
+    "cardType": "champion.jpg 0,4",
+    "id": "fdbo",
+    "z": 77670,
+    "parent": "1iex"
+  },
+  "42xo": {
+    "deck": "0deck",
+    "type": "card",
+    "cardType": "champion.jpg 0,5",
+    "id": "42xo",
+    "z": 77671,
+    "parent": "1iex"
+  },
+  "wwzs": {
+    "deck": "0deck",
+    "type": "card",
+    "cardType": "champion.jpg 0,6",
+    "id": "wwzs",
+    "z": 77672,
+    "parent": "1iex"
+  },
+  "kmad": {
+    "deck": "0deck",
+    "type": "card",
+    "cardType": "champion.jpg 0,7",
+    "id": "kmad",
+    "z": 77673,
+    "parent": "1iex"
+  },
+  "2fdt": {
+    "deck": "0deck",
+    "type": "card",
+    "cardType": "champion.jpg 0,8",
+    "id": "2fdt",
+    "z": 77674,
+    "parent": "1iex"
+  },
+  "7rvc": {
+    "deck": "0deck",
+    "type": "card",
+    "cardType": "champion.jpg 0,9",
+    "id": "7rvc",
+    "z": 77675,
+    "parent": "1iex"
+  },
+  "4fxr": {
+    "deck": "0deck",
+    "type": "card",
+    "cardType": "champion.jpg 1,0",
+    "id": "4fxr",
+    "z": 77676,
+    "parent": "1iex"
+  },
+  "zwto": {
+    "deck": "0deck",
+    "type": "card",
+    "cardType": "champion.jpg 1,1",
+    "id": "zwto",
+    "z": 77677,
+    "parent": "1iex"
+  },
+  "jtub": {
+    "deck": "0deck",
+    "type": "card",
+    "cardType": "champion.jpg 1,2",
+    "id": "jtub",
+    "z": 77678,
+    "parent": "1iex"
+  },
+  "j3bb": {
+    "deck": "0deck",
+    "type": "card",
+    "cardType": "champion.jpg 1,3",
+    "id": "j3bb",
+    "z": 77679,
+    "parent": "1iex"
+  },
+  "6zvx": {
+    "deck": "2deck",
+    "type": "card",
+    "cardType": "champion.jpg 0,0",
+    "id": "6zvx",
+    "z": 77694,
+    "parent": "x048"
+  },
+  "3zgx": {
+    "deck": "2deck",
+    "type": "card",
+    "cardType": "champion.jpg 0,1",
+    "id": "3zgx",
+    "z": 77695,
+    "parent": "x048"
+  },
+  "07s8": {
+    "deck": "2deck",
+    "type": "card",
+    "cardType": "champion.jpg 0,2",
+    "id": "07s8",
+    "z": 77696,
+    "parent": "x048"
+  },
+  "98si": {
+    "deck": "2deck",
+    "type": "card",
+    "cardType": "champion.jpg 0,3",
+    "id": "98si",
+    "z": 77697,
+    "parent": "x048"
+  },
+  "l562": {
+    "deck": "2deck",
+    "type": "card",
+    "cardType": "champion.jpg 0,4",
+    "id": "l562",
+    "z": 77698,
+    "parent": "x048"
+  },
+  "qw6y": {
+    "deck": "2deck",
+    "type": "card",
+    "cardType": "champion.jpg 0,5",
+    "id": "qw6y",
+    "z": 77699,
+    "parent": "x048"
+  },
+  "ytgo": {
+    "deck": "2deck",
+    "type": "card",
+    "cardType": "champion.jpg 0,6",
+    "id": "ytgo",
+    "z": 77700,
+    "parent": "x048"
+  },
+  "i39a": {
+    "deck": "2deck",
+    "type": "card",
+    "cardType": "champion.jpg 0,7",
+    "id": "i39a",
+    "z": 77701,
+    "parent": "x048"
+  },
+  "wsr2": {
+    "deck": "2deck",
+    "type": "card",
+    "cardType": "champion.jpg 0,8",
+    "id": "wsr2",
+    "z": 77702,
+    "parent": "x048"
+  },
+  "r7by": {
+    "deck": "2deck",
+    "type": "card",
+    "cardType": "champion.jpg 0,9",
+    "id": "r7by",
+    "z": 77703,
+    "parent": "x048"
+  },
+  "rcpd": {
+    "deck": "2deck",
+    "type": "card",
+    "cardType": "champion.jpg 1,0",
+    "id": "rcpd",
+    "z": 77704,
+    "parent": "x048"
+  },
+  "l75n": {
+    "deck": "2deck",
+    "type": "card",
+    "cardType": "champion.jpg 1,1",
+    "id": "l75n",
+    "z": 77705,
+    "parent": "x048"
+  },
+  "umxk": {
+    "deck": "2deck",
+    "type": "card",
+    "cardType": "champion.jpg 1,2",
+    "id": "umxk",
+    "z": 77706,
+    "parent": "x048"
+  },
+  "eobu": {
+    "deck": "2deck",
+    "type": "card",
+    "cardType": "champion.jpg 1,3",
+    "id": "eobu",
+    "z": 77707,
+    "parent": "x048"
+  },
+  "wewg": {
+    "deck": "3deck",
+    "type": "card",
+    "cardType": "champion.jpg 0,0",
+    "id": "wewg",
+    "z": 77708,
+    "parent": "6beh"
+  },
+  "6hum": {
+    "deck": "3deck",
+    "type": "card",
+    "cardType": "champion.jpg 0,1",
+    "id": "6hum",
+    "z": 77709,
+    "parent": "6beh"
+  },
+  "7brl": {
+    "deck": "3deck",
+    "type": "card",
+    "cardType": "champion.jpg 0,2",
+    "id": "7brl",
+    "z": 77710,
+    "parent": "6beh"
+  },
+  "xe00": {
+    "deck": "3deck",
+    "type": "card",
+    "cardType": "champion.jpg 0,3",
+    "id": "xe00",
+    "z": 77711,
+    "parent": "6beh"
+  },
+  "99k0": {
+    "deck": "3deck",
+    "type": "card",
+    "cardType": "champion.jpg 0,4",
+    "id": "99k0",
+    "z": 77712,
+    "parent": "6beh"
+  },
+  "djzu": {
+    "deck": "3deck",
+    "type": "card",
+    "cardType": "champion.jpg 0,5",
+    "id": "djzu",
+    "z": 77713,
+    "parent": "6beh"
+  },
+  "gk97": {
+    "deck": "3deck",
+    "type": "card",
+    "cardType": "champion.jpg 0,6",
+    "id": "gk97",
+    "z": 77714,
+    "parent": "6beh"
+  },
+  "4nr6": {
+    "deck": "3deck",
+    "type": "card",
+    "cardType": "champion.jpg 0,7",
+    "id": "4nr6",
+    "z": 77715,
+    "parent": "6beh"
+  },
+  "dcwy": {
+    "deck": "3deck",
+    "type": "card",
+    "cardType": "champion.jpg 0,8",
+    "id": "dcwy",
+    "z": 77716,
+    "parent": "6beh"
+  },
+  "ia2w": {
+    "deck": "3deck",
+    "type": "card",
+    "cardType": "champion.jpg 0,9",
+    "id": "ia2w",
+    "z": 77717,
+    "parent": "6beh"
+  },
+  "h1lw": {
+    "deck": "3deck",
+    "type": "card",
+    "cardType": "champion.jpg 1,0",
+    "id": "h1lw",
+    "z": 77718,
+    "parent": "6beh"
+  },
+  "dubm": {
+    "deck": "3deck",
+    "type": "card",
+    "cardType": "champion.jpg 1,1",
+    "id": "dubm",
+    "z": 77719,
+    "parent": "6beh"
+  },
+  "zzh5": {
+    "deck": "3deck",
+    "type": "card",
+    "cardType": "champion.jpg 1,2",
+    "id": "zzh5",
+    "z": 77720,
+    "parent": "6beh"
+  },
+  "65su": {
+    "deck": "3deck",
+    "type": "card",
+    "cardType": "champion.jpg 1,3",
+    "id": "65su",
+    "z": 77721,
+    "parent": "6beh"
+  },
+  "5jdf": {
+    "deck": "4deck",
+    "type": "card",
+    "cardType": "champion.jpg 0,0",
+    "id": "5jdf",
+    "z": 77722,
+    "parent": "lgim"
+  },
+  "k9fa": {
+    "deck": "4deck",
+    "type": "card",
+    "cardType": "champion.jpg 0,1",
+    "id": "k9fa",
+    "z": 77723,
+    "parent": "lgim"
+  },
+  "6j1w": {
+    "deck": "4deck",
+    "type": "card",
+    "cardType": "champion.jpg 0,2",
+    "id": "6j1w",
+    "z": 77724,
+    "parent": "lgim"
+  },
+  "4q1i": {
+    "deck": "4deck",
+    "type": "card",
+    "cardType": "champion.jpg 0,3",
+    "id": "4q1i",
+    "z": 77725,
+    "parent": "lgim"
+  },
+  "9lpl": {
+    "deck": "4deck",
+    "type": "card",
+    "cardType": "champion.jpg 0,4",
+    "id": "9lpl",
+    "z": 77726,
+    "parent": "lgim"
+  },
+  "9db1": {
+    "deck": "4deck",
+    "type": "card",
+    "cardType": "champion.jpg 0,5",
+    "id": "9db1",
+    "z": 77727,
+    "parent": "lgim"
+  },
+  "qra6": {
+    "deck": "4deck",
+    "type": "card",
+    "cardType": "champion.jpg 0,6",
+    "id": "qra6",
+    "z": 77728,
+    "parent": "lgim"
+  },
+  "gafc": {
+    "deck": "4deck",
+    "type": "card",
+    "cardType": "champion.jpg 0,7",
+    "id": "gafc",
+    "z": 77729,
+    "parent": "lgim"
+  },
+  "w7z0": {
+    "deck": "4deck",
+    "type": "card",
+    "cardType": "champion.jpg 0,8",
+    "id": "w7z0",
+    "z": 77730,
+    "parent": "lgim"
+  },
+  "j88y": {
+    "deck": "4deck",
+    "type": "card",
+    "cardType": "champion.jpg 0,9",
+    "id": "j88y",
+    "z": 77731,
+    "parent": "lgim"
+  },
+  "hely": {
+    "deck": "4deck",
+    "type": "card",
+    "cardType": "champion.jpg 1,0",
+    "id": "hely",
+    "z": 77732,
+    "parent": "lgim"
+  },
+  "5cl4": {
+    "deck": "4deck",
+    "type": "card",
+    "cardType": "champion.jpg 1,1",
+    "id": "5cl4",
+    "z": 77733,
+    "parent": "lgim"
+  },
+  "rhp3": {
+    "deck": "4deck",
+    "type": "card",
+    "cardType": "champion.jpg 1,2",
+    "id": "rhp3",
+    "z": 77734,
+    "parent": "lgim"
+  },
+  "15fj": {
+    "deck": "4deck",
+    "type": "card",
+    "cardType": "champion.jpg 1,3",
+    "id": "15fj",
+    "z": 77735,
+    "parent": "lgim"
+  },
+  "sjuk": {
+    "deck": "5deck",
+    "type": "card",
+    "cardType": "champion.jpg 0,0",
+    "id": "sjuk",
+    "z": 77736,
+    "parent": "53r5"
+  },
+  "r7oe": {
+    "deck": "5deck",
+    "type": "card",
+    "cardType": "champion.jpg 0,1",
+    "id": "r7oe",
+    "z": 77737,
+    "parent": "53r5"
+  },
+  "4ezh": {
+    "deck": "5deck",
+    "type": "card",
+    "cardType": "champion.jpg 0,2",
+    "id": "4ezh",
+    "z": 77738,
+    "parent": "53r5"
+  },
+  "gv47": {
+    "deck": "5deck",
+    "type": "card",
+    "cardType": "champion.jpg 0,3",
+    "id": "gv47",
+    "z": 77739,
+    "parent": "53r5"
+  },
+  "z2tq": {
+    "deck": "5deck",
+    "type": "card",
+    "cardType": "champion.jpg 0,4",
+    "id": "z2tq",
+    "z": 77740,
+    "parent": "53r5"
+  },
+  "msd5": {
+    "deck": "5deck",
+    "type": "card",
+    "cardType": "champion.jpg 0,5",
+    "id": "msd5",
+    "z": 77741,
+    "parent": "53r5"
+  },
+  "hu8e": {
+    "deck": "5deck",
+    "type": "card",
+    "cardType": "champion.jpg 0,6",
+    "id": "hu8e",
+    "z": 77742,
+    "parent": "53r5"
+  },
+  "obiv": {
+    "deck": "5deck",
+    "type": "card",
+    "cardType": "champion.jpg 0,7",
+    "id": "obiv",
+    "z": 77743,
+    "parent": "53r5"
+  },
+  "ldyu": {
+    "deck": "5deck",
+    "type": "card",
+    "cardType": "champion.jpg 0,8",
+    "id": "ldyu",
+    "z": 77744,
+    "parent": "53r5"
+  },
+  "mnlj": {
+    "deck": "5deck",
+    "type": "card",
+    "cardType": "champion.jpg 0,9",
+    "id": "mnlj",
+    "z": 77745,
+    "parent": "53r5"
+  },
+  "545y": {
+    "deck": "5deck",
+    "type": "card",
+    "cardType": "champion.jpg 1,0",
+    "id": "545y",
+    "z": 77746,
+    "parent": "53r5"
+  },
+  "wvul": {
+    "deck": "5deck",
+    "type": "card",
+    "cardType": "champion.jpg 1,1",
+    "id": "wvul",
+    "z": 77747,
+    "parent": "53r5"
+  },
+  "ua6v": {
+    "deck": "5deck",
+    "type": "card",
+    "cardType": "champion.jpg 1,2",
+    "id": "ua6v",
+    "z": 77748,
+    "parent": "53r5"
+  },
+  "esj8": {
+    "deck": "5deck",
+    "type": "card",
+    "cardType": "champion.jpg 1,3",
+    "id": "esj8",
+    "z": 77749,
+    "parent": "53r5"
+  },
+  "i07i": {
+    "deck": "6deck",
+    "type": "card",
+    "cardType": "champion.jpg 0,0",
+    "id": "i07i",
+    "z": 77750,
+    "parent": "nba1"
+  },
+  "819n": {
+    "deck": "6deck",
+    "type": "card",
+    "cardType": "champion.jpg 0,1",
+    "id": "819n",
+    "z": 77751,
+    "parent": "nba1"
+  },
+  "2ian": {
+    "deck": "6deck",
+    "type": "card",
+    "cardType": "champion.jpg 0,2",
+    "id": "2ian",
+    "z": 77752,
+    "parent": "nba1"
+  },
+  "8vta": {
+    "deck": "6deck",
+    "type": "card",
+    "cardType": "champion.jpg 0,3",
+    "id": "8vta",
+    "z": 77753,
+    "parent": "nba1"
+  },
+  "evay": {
+    "deck": "6deck",
+    "type": "card",
+    "cardType": "champion.jpg 0,4",
+    "id": "evay",
+    "z": 77754,
+    "parent": "nba1"
+  },
+  "mva1": {
+    "deck": "6deck",
+    "type": "card",
+    "cardType": "champion.jpg 0,5",
+    "id": "mva1",
+    "z": 77755,
+    "parent": "nba1"
+  },
+  "vi89": {
+    "deck": "6deck",
+    "type": "card",
+    "cardType": "champion.jpg 0,6",
+    "id": "vi89",
+    "z": 77756,
+    "parent": "nba1"
+  },
+  "r3x8": {
+    "deck": "6deck",
+    "type": "card",
+    "cardType": "champion.jpg 0,7",
+    "id": "r3x8",
+    "z": 77757,
+    "parent": "nba1"
+  },
+  "wedi": {
+    "deck": "6deck",
+    "type": "card",
+    "cardType": "champion.jpg 0,8",
+    "id": "wedi",
+    "z": 77758,
+    "parent": "nba1"
+  },
+  "z0db": {
+    "deck": "6deck",
+    "type": "card",
+    "cardType": "champion.jpg 0,9",
+    "id": "z0db",
+    "z": 77759,
+    "parent": "nba1"
+  },
+  "50pd": {
+    "deck": "6deck",
+    "type": "card",
+    "cardType": "champion.jpg 1,0",
+    "id": "50pd",
+    "z": 77760,
+    "parent": "nba1"
+  },
+  "780v": {
+    "deck": "6deck",
+    "type": "card",
+    "cardType": "champion.jpg 1,1",
+    "id": "780v",
+    "z": 77761,
+    "parent": "nba1"
+  },
+  "hhb0": {
+    "deck": "6deck",
+    "type": "card",
+    "cardType": "champion.jpg 1,2",
+    "id": "hhb0",
+    "z": 77762,
+    "parent": "nba1"
+  },
+  "lwq0": {
+    "deck": "6deck",
+    "type": "card",
+    "cardType": "champion.jpg 1,3",
+    "id": "lwq0",
+    "z": 77763,
+    "parent": "nba1"
+  },
+  "fz26": {
+    "deck": "7deck",
+    "type": "card",
+    "cardType": "champion.jpg 0,0",
+    "id": "fz26",
+    "z": 77764,
+    "parent": "hloj"
+  },
+  "rw2b": {
+    "deck": "7deck",
+    "type": "card",
+    "cardType": "champion.jpg 0,1",
+    "id": "rw2b",
+    "z": 77765,
+    "parent": "hloj"
+  },
+  "c3i7": {
+    "deck": "7deck",
+    "type": "card",
+    "cardType": "champion.jpg 0,2",
+    "id": "c3i7",
+    "z": 77766,
+    "parent": "hloj"
+  },
+  "tdcc": {
+    "deck": "7deck",
+    "type": "card",
+    "cardType": "champion.jpg 0,3",
+    "id": "tdcc",
+    "z": 77767,
+    "parent": "hloj"
+  },
+  "sln8": {
+    "deck": "7deck",
+    "type": "card",
+    "cardType": "champion.jpg 0,4",
+    "id": "sln8",
+    "z": 77768,
+    "parent": "hloj"
+  },
+  "rqic": {
+    "deck": "7deck",
+    "type": "card",
+    "cardType": "champion.jpg 0,5",
+    "id": "rqic",
+    "z": 77769,
+    "parent": "hloj"
+  },
+  "dk4f": {
+    "deck": "7deck",
+    "type": "card",
+    "cardType": "champion.jpg 0,6",
+    "id": "dk4f",
+    "z": 77770,
+    "parent": "hloj"
+  },
+  "gdm6": {
+    "deck": "7deck",
+    "type": "card",
+    "cardType": "champion.jpg 0,7",
+    "id": "gdm6",
+    "z": 77771,
+    "parent": "hloj"
+  },
+  "lrhh": {
+    "deck": "7deck",
+    "type": "card",
+    "cardType": "champion.jpg 0,8",
+    "id": "lrhh",
+    "z": 77772,
+    "parent": "hloj"
+  },
+  "tb2x": {
+    "deck": "7deck",
+    "type": "card",
+    "cardType": "champion.jpg 0,9",
+    "id": "tb2x",
+    "z": 77773,
+    "parent": "hloj"
+  },
+  "9hg0": {
+    "deck": "7deck",
+    "type": "card",
+    "cardType": "champion.jpg 1,0",
+    "id": "9hg0",
+    "z": 77774,
+    "parent": "hloj"
+  },
+  "zwqw": {
+    "deck": "7deck",
+    "type": "card",
+    "cardType": "champion.jpg 1,1",
+    "id": "zwqw",
+    "z": 77775,
+    "parent": "hloj"
+  },
+  "wjcb": {
+    "deck": "7deck",
+    "type": "card",
+    "cardType": "champion.jpg 1,2",
+    "id": "wjcb",
+    "z": 77776,
+    "parent": "hloj"
+  },
+  "dapw": {
+    "deck": "7deck",
+    "type": "card",
+    "cardType": "champion.jpg 1,3",
+    "id": "dapw",
+    "z": 77777,
+    "parent": "hloj"
+  },
+  "oeti": {
+    "deck": "8deck",
+    "type": "card",
+    "cardType": "champion.jpg 0,0",
+    "id": "oeti",
+    "z": 77778,
+    "parent": "76br"
+  },
+  "fltf": {
+    "deck": "8deck",
+    "type": "card",
+    "cardType": "champion.jpg 0,1",
+    "id": "fltf",
+    "z": 77779,
+    "parent": "76br"
+  },
+  "ndf9": {
+    "deck": "8deck",
+    "type": "card",
+    "cardType": "champion.jpg 0,2",
+    "id": "ndf9",
+    "z": 77780,
+    "parent": "76br"
+  },
+  "hp3n": {
+    "deck": "8deck",
+    "type": "card",
+    "cardType": "champion.jpg 0,3",
+    "id": "hp3n",
+    "z": 77781,
+    "parent": "76br"
+  },
+  "06pf": {
+    "deck": "8deck",
+    "type": "card",
+    "cardType": "champion.jpg 0,4",
+    "id": "06pf",
+    "z": 77782,
+    "parent": "76br"
+  },
+  "xp7h": {
+    "deck": "8deck",
+    "type": "card",
+    "cardType": "champion.jpg 0,5",
+    "id": "xp7h",
+    "z": 77783,
+    "parent": "76br"
+  },
+  "l6d9": {
+    "deck": "8deck",
+    "type": "card",
+    "cardType": "champion.jpg 0,6",
+    "id": "l6d9",
+    "z": 77784,
+    "parent": "76br"
+  },
+  "l56g": {
+    "deck": "8deck",
+    "type": "card",
+    "cardType": "champion.jpg 0,7",
+    "id": "l56g",
+    "z": 77785,
+    "parent": "76br"
+  },
+  "cbhs": {
+    "deck": "8deck",
+    "type": "card",
+    "cardType": "champion.jpg 0,8",
+    "id": "cbhs",
+    "z": 77786,
+    "parent": "76br"
+  },
+  "aih9": {
+    "deck": "8deck",
+    "type": "card",
+    "cardType": "champion.jpg 0,9",
+    "id": "aih9",
+    "z": 77787,
+    "parent": "76br"
+  },
+  "sofa": {
+    "deck": "8deck",
+    "type": "card",
+    "cardType": "champion.jpg 1,0",
+    "id": "sofa",
+    "z": 77788,
+    "parent": "76br"
+  },
+  "sr3u": {
+    "deck": "8deck",
+    "type": "card",
+    "cardType": "champion.jpg 1,1",
+    "id": "sr3u",
+    "z": 77789,
+    "parent": "76br"
+  },
+  "p30o": {
+    "deck": "8deck",
+    "type": "card",
+    "cardType": "champion.jpg 1,2",
+    "id": "p30o",
+    "z": 77790,
+    "parent": "76br"
+  },
+  "19w0": {
+    "deck": "8deck",
+    "type": "card",
+    "cardType": "champion.jpg 1,3",
+    "id": "19w0",
+    "z": 77792,
+    "parent": "76br"
+  },
+  "pb6o": {
+    "deck": "9deck",
+    "type": "card",
+    "cardType": "champion.jpg 0,0",
+    "id": "pb6o",
+    "z": 77793,
+    "parent": "t0en"
+  },
+  "y2xs": {
+    "deck": "9deck",
+    "type": "card",
+    "cardType": "champion.jpg 0,1",
+    "id": "y2xs",
+    "z": 77794,
+    "parent": "t0en"
+  },
+  "jvtg": {
+    "deck": "9deck",
+    "type": "card",
+    "cardType": "champion.jpg 0,2",
+    "id": "jvtg",
+    "z": 77795,
+    "parent": "t0en"
+  },
+  "jooa": {
+    "deck": "9deck",
+    "type": "card",
+    "cardType": "champion.jpg 0,3",
+    "id": "jooa",
+    "z": 77796,
+    "parent": "t0en"
+  },
+  "i09k": {
+    "deck": "9deck",
+    "type": "card",
+    "cardType": "champion.jpg 0,4",
+    "id": "i09k",
+    "z": 77797,
+    "parent": "t0en"
+  },
+  "gluo": {
+    "deck": "9deck",
+    "type": "card",
+    "cardType": "champion.jpg 0,5",
+    "id": "gluo",
+    "z": 77798,
+    "parent": "t0en"
+  },
+  "1kb6": {
+    "deck": "9deck",
+    "type": "card",
+    "cardType": "champion.jpg 0,6",
+    "id": "1kb6",
+    "z": 77799,
+    "parent": "t0en"
+  },
+  "hoir": {
+    "deck": "9deck",
+    "type": "card",
+    "cardType": "champion.jpg 0,7",
+    "id": "hoir",
+    "z": 77800,
+    "parent": "t0en"
+  },
+  "poyy": {
+    "deck": "9deck",
+    "type": "card",
+    "cardType": "champion.jpg 0,8",
+    "id": "poyy",
+    "z": 77801,
+    "parent": "t0en"
+  },
+  "mff2": {
+    "deck": "9deck",
+    "type": "card",
+    "cardType": "champion.jpg 0,9",
+    "id": "mff2",
+    "z": 77802,
+    "parent": "t0en"
+  },
+  "gag2": {
+    "deck": "9deck",
+    "type": "card",
+    "cardType": "champion.jpg 1,0",
+    "id": "gag2",
+    "z": 77803,
+    "parent": "t0en"
+  },
+  "ymp6": {
+    "deck": "9deck",
+    "type": "card",
+    "cardType": "champion.jpg 1,1",
+    "id": "ymp6",
+    "z": 77804,
+    "parent": "t0en"
+  },
+  "ukc9": {
+    "deck": "9deck",
+    "type": "card",
+    "cardType": "champion.jpg 1,2",
+    "id": "ukc9",
+    "z": 77805,
+    "parent": "t0en"
+  },
+  "0891": {
+    "deck": "9deck",
+    "type": "card",
+    "cardType": "champion.jpg 1,3",
+    "id": "0891",
+    "z": 77806,
+    "parent": "t0en"
+  },
+  "3w5z": {
+    "deck": "10deck",
+    "type": "card",
+    "cardType": "champion.jpg 0,0",
+    "id": "3w5z",
+    "z": 77807,
+    "parent": "q6lf"
+  },
+  "6x4d": {
+    "deck": "10deck",
+    "type": "card",
+    "cardType": "champion.jpg 0,1",
+    "id": "6x4d",
+    "z": 77808,
+    "parent": "q6lf"
+  },
+  "iu64": {
+    "deck": "10deck",
+    "type": "card",
+    "cardType": "champion.jpg 0,2",
+    "id": "iu64",
+    "z": 77809,
+    "parent": "q6lf"
+  },
+  "ggzl": {
+    "deck": "10deck",
+    "type": "card",
+    "cardType": "champion.jpg 0,3",
+    "id": "ggzl",
+    "z": 77810,
+    "parent": "q6lf"
+  },
+  "oplk": {
+    "deck": "10deck",
+    "type": "card",
+    "cardType": "champion.jpg 0,4",
+    "id": "oplk",
+    "z": 77811,
+    "parent": "q6lf"
+  },
+  "ay8a": {
+    "deck": "10deck",
+    "type": "card",
+    "cardType": "champion.jpg 0,5",
+    "id": "ay8a",
+    "z": 77812,
+    "parent": "q6lf"
+  },
+  "o4af": {
+    "deck": "10deck",
+    "type": "card",
+    "cardType": "champion.jpg 0,6",
+    "id": "o4af",
+    "z": 77813,
+    "parent": "q6lf"
+  },
+  "pu16": {
+    "deck": "10deck",
+    "type": "card",
+    "cardType": "champion.jpg 0,7",
+    "id": "pu16",
+    "z": 77814,
+    "parent": "q6lf"
+  },
+  "f2s9": {
+    "deck": "10deck",
+    "type": "card",
+    "cardType": "champion.jpg 0,8",
+    "id": "f2s9",
+    "z": 77815,
+    "parent": "q6lf"
+  },
+  "ecpv": {
+    "deck": "10deck",
+    "type": "card",
+    "cardType": "champion.jpg 0,9",
+    "id": "ecpv",
+    "z": 77816,
+    "parent": "q6lf"
+  },
+  "jya6": {
+    "deck": "10deck",
+    "type": "card",
+    "cardType": "champion.jpg 1,0",
+    "id": "jya6",
+    "z": 77817,
+    "parent": "q6lf"
+  },
+  "3epd": {
+    "deck": "10deck",
+    "type": "card",
+    "cardType": "champion.jpg 1,1",
+    "id": "3epd",
+    "z": 77818,
+    "parent": "q6lf"
+  },
+  "yzg0": {
+    "deck": "10deck",
+    "type": "card",
+    "cardType": "champion.jpg 1,2",
+    "id": "yzg0",
+    "z": 77819,
+    "parent": "q6lf"
+  },
+  "ql6m": {
+    "deck": "10deck",
+    "type": "card",
+    "cardType": "champion.jpg 1,3",
+    "id": "ql6m",
+    "z": 77820,
+    "parent": "q6lf"
+  },
+  "v3xk": {
+    "type": "button",
+    "text": "RECALL CARDS",
+    "clickRoutine": [
+      {
+        "func": "RECALL",
+        "holder": "rckx"
+      },
+      {
+        "func": "FLIP",
+        "holder": "rckx",
+        "face": 0
+      },
+      "var n = 1",
+      {
+        "func": "FOREACH",
+        "range": 10,
+        "loopRoutine": [
+          {
+            "func": "RECALL",
+            "holder": "rckx${n}"
+          },
+          {
+            "func": "FLIP",
+            "holder": "rckx${n}",
+            "face": 0
+          },
+          "var n = ${n} + 1"
+        ]
+      }
+    ],
+    "x": 1385,
+    "y": -400,
+    "z": 10,
+    "id": "v3xk"
+  },
+  "txqv": {
+    "type": "pile",
+    "parent": "rckx1",
+    "x": 4,
+    "y": 4,
+    "width": 87,
+    "height": 150,
+    "id": "txqv"
+  },
+  "x048": {
+    "type": "pile",
+    "parent": "rckx2",
+    "x": 4,
+    "y": 4,
+    "width": 87,
+    "height": 150,
+    "id": "x048"
+  },
+  "nba1": {
+    "type": "pile",
+    "parent": "rckx6",
+    "x": 4,
+    "y": 4,
+    "width": 87,
+    "height": 150,
+    "id": "nba1"
+  },
+  "hloj": {
+    "type": "pile",
+    "parent": "rckx7",
+    "x": 4,
+    "y": 4,
+    "width": 87,
+    "height": 150,
+    "id": "hloj"
+  },
+  "76br": {
+    "type": "pile",
+    "parent": "rckx8",
+    "x": 4,
+    "y": 4,
+    "width": 87,
+    "height": 150,
+    "id": "76br"
+  },
+  "t0en": {
+    "type": "pile",
+    "width": 87,
+    "height": 150,
+    "id": "t0en",
+    "z": 75875,
+    "hoverParent": "rckx9",
+    "parent": "rckx9"
+  },
+  "6beh": {
+    "type": "pile",
+    "parent": "rckx3",
+    "x": 4,
+    "y": 4,
+    "width": 87,
+    "height": 150,
+    "id": "6beh"
+  },
+  "lgim": {
+    "type": "pile",
+    "parent": "rckx4",
+    "x": 4,
+    "y": 4,
+    "width": 87,
+    "height": 150,
+    "id": "lgim"
+  },
+  "53r5": {
+    "type": "pile",
+    "parent": "rckx5",
+    "x": 4,
+    "y": 4,
+    "width": 87,
+    "height": 150,
+    "id": "53r5"
+  },
+  "q6lf": {
+    "type": "pile",
+    "parent": "rckx10",
+    "x": 4,
+    "y": 4,
+    "width": 87,
+    "height": 150,
+    "id": "q6lf"
+  },
+  "1iex": {
+    "type": "pile",
+    "parent": "rckx",
+    "x": 4,
+    "y": 4,
+    "width": 87,
+    "height": 150,
+    "id": "1iex"
+  },
+  "x9d7B": {
+    "id": "x9d7B",
+    "parent": "ghostHolder",
+    "fixedParent": true,
+    "y": 171.36,
+    "width": 111,
+    "height": 40,
+    "type": "button",
+    "text": "Recall & Shuffle",
+    "movableInEdit": false,
+    "clickRoutine": [
+      {
+        "func": "RECALL",
+        "holder": "${PROPERTY parent}"
+      },
+      {
+        "func": "FLIP",
+        "holder": "${PROPERTY parent}",
+        "face": 1
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "${PROPERTY parent}"
+      }
+    ]
+  },
+  "ghostHolder": {
+    "type": "holder",
+    "id": "ghostHolder",
+    "x": 1866,
+    "y": -534,
+    "dropTarget": {
+      "type": "card"
+    }
+  },
+  "11deck": {
+    "type": "deck",
+    "id": "11deck",
+    "x": 4,
+    "y": 4,
+    "z": 77649,
+    "cardDefaults": {
+      "width": 87,
+      "borderRadius": 8,
+      "height": 150,
+      "enlarge": 3,
+      "fs": 22,
+      "css": {
+        "--offsetX": "${PROPERTY offsetX}",
+        "--offsetY": "${PROPERTY offsetY}",
+        "--deckWidth": "${PROPERTY deckWidth}",
+        "--deckHeight": "${PROPERTY deckHeight}",
+        "--width": "${PROPERTY width}",
+        "--height": "${PROPERTY height}"
+      }
+    },
+    "cardTypes": {
+      "g0": {
+        "offsetX": 0,
+        "offsetY": 0,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "num": 0
+      },
+      "g1": {
+        "offsetX": 1,
+        "offsetY": 0,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "num": 1
+      },
+      "g2": {
+        "offsetX": 2,
+        "offsetY": 0,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "num": 2
+      },
+      "g3": {
+        "offsetX": 3,
+        "offsetY": 0,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "num": 3
+      },
+      "g4": {
+        "offsetX": 4,
+        "offsetY": 0,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "num": 4
+      },
+      "g5": {
+        "offsetX": 5,
+        "offsetY": 0,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "num": 5
+      },
+      "g6": {
+        "offsetX": 6,
+        "offsetY": 0,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "num": 6
+      },
+      "g7": {
+        "offsetX": 7,
+        "offsetY": 0,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "num": 7
+      },
+      "g8": {
+        "offsetX": 8,
+        "offsetY": 0,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "num": 8
+      },
+      "g9": {
+        "offsetX": 9,
+        "offsetY": 0,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "num": 9
+      },
+      "g10": {
+        "offsetX": 0,
+        "offsetY": 1,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "num": 10
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "orange",
+            "width": 87,
+            "height": 150
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 50,
+            "color": "coral",
+            "width": 87,
+            "height": 50,
+            "css": {
+              "border": "2px solid black"
+            }
+          },
+          {
+            "type": "text",
+            "x": 0,
+            "y": 50,
+            "fontSize": 20,
+            "textAlign": "center",
+            "width": 87,
+            "height": 50,
+            "value": "Deck",
+            "css": {
+              "justify-content": "center",
+              "align-items": "center",
+              "text-align": "center",
+              "display": "flex",
+              "font-size": "30px"
+            }
+          }
+        ],
+        "border": 2,
+        "radius": 8
+      },
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "white",
+            "width": 87,
+            "height": 150
+          },
+          {
+            "type": "image",
+            "x": 27,
+            "y": 0,
+            "width": 60,
+            "height": 80,
+            "color": "black"
+          },
+          {
+            "type": "image",
+            "color": "transparent",
+            "height": 80,
+            "width": 60,
+            "x": 27,
+            "value": "/assets/-644068205_8344"
+          },
+          {
+            "type": "text",
+            "x": 0,
+            "y": 8,
+            "textAlign": "center",
+            "width": 27,
+            "dynamicProperties": {
+              "value": "num",
+              "fontSize": "fs"
+            }
+          },
+          {
+            "type": "text",
+            "x": 4,
+            "y": 81,
+            "fontSize": 11,
+            "textAlign": "center",
+            "width": 79,
+            "value": "Play anywhere without ability. Next card here also has no ability"
+          }
+        ],
+        "border": 2,
+        "radius": 8
+      }
+    ],
+    "parent": "ghostHolder"
+  },
+  "z8xs": {
+    "deck": "11deck",
+    "type": "card",
+    "cardType": "g0",
+    "id": "z8xs",
+    "z": 77646,
+    "parent": "c0u2",
+    "activeFace": 1
+  },
+  "gvbk": {
+    "deck": "11deck",
+    "type": "card",
+    "cardType": "g1",
+    "id": "gvbk",
+    "parent": "c0u2",
+    "z": 77640,
+    "activeFace": 1
+  },
+  "9epf": {
+    "deck": "11deck",
+    "type": "card",
+    "cardType": "g2",
+    "id": "9epf",
+    "z": 77645,
+    "parent": "c0u2",
+    "activeFace": 1
+  },
+  "7pij": {
+    "deck": "11deck",
+    "type": "card",
+    "cardType": "g3",
+    "id": "7pij",
+    "z": 77642,
+    "parent": "c0u2",
+    "activeFace": 1
+  },
+  "2wxu": {
+    "deck": "11deck",
+    "type": "card",
+    "cardType": "g4",
+    "id": "2wxu",
+    "z": 77643,
+    "parent": "c0u2",
+    "activeFace": 1
+  },
+  "21y3": {
+    "deck": "11deck",
+    "type": "card",
+    "cardType": "g5",
+    "id": "21y3",
+    "z": 77637,
+    "parent": "c0u2",
+    "activeFace": 1
+  },
+  "4w6t": {
+    "deck": "11deck",
+    "type": "card",
+    "cardType": "g6",
+    "id": "4w6t",
+    "z": 77641,
+    "parent": "c0u2",
+    "activeFace": 1
+  },
+  "d4kl": {
+    "deck": "11deck",
+    "type": "card",
+    "cardType": "g7",
+    "id": "d4kl",
+    "z": 77639,
+    "parent": "c0u2",
+    "activeFace": 1
+  },
+  "wn7a": {
+    "deck": "11deck",
+    "type": "card",
+    "cardType": "g8",
+    "id": "wn7a",
+    "z": 77644,
+    "parent": "c0u2",
+    "activeFace": 1
+  },
+  "ep1p": {
+    "deck": "11deck",
+    "type": "card",
+    "cardType": "g9",
+    "id": "ep1p",
+    "z": 77638,
+    "parent": "c0u2",
+    "activeFace": 1
+  },
+  "shkq": {
+    "deck": "11deck",
+    "type": "card",
+    "cardType": "g10",
+    "id": "shkq",
+    "z": 77636,
+    "parent": "c0u2",
+    "activeFace": 1
+  },
+  "c0u2": {
+    "type": "pile",
+    "width": 87,
+    "height": 150,
+    "id": "c0u2",
+    "z": 77647,
+    "x": 2086,
+    "y": -589
+  },
+  "glpz": {
+    "type": "holder",
+    "id": "glpz",
+    "x": 1906,
+    "y": -209,
+    "dropTarget": {
+      "type": "card"
+    }
+  },
+  "glpzB": {
+    "id": "glpzB",
+    "parent": "glpz",
+    "fixedParent": true,
+    "y": 171.36,
+    "width": 111,
+    "height": 40,
+    "type": "button",
+    "text": "Recall & Shuffle",
+    "movableInEdit": false,
+    "clickRoutine": [
+      {
+        "func": "RECALL",
+        "holder": "${PROPERTY parent}"
+      },
+      {
+        "func": "FLIP",
+        "holder": "${PROPERTY parent}",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "${PROPERTY parent}"
+      }
+    ]
+  },
+  "dogDeck": {
+    "type": "deck",
+    "id": "dogDeck",
+    "x": 4,
+    "y": 4,
+    "z": 77653,
+    "cardDefaults": {
+      "width": 87,
+      "borderRadius": 8,
+      "height": 150,
+      "enlarge": 3,
+      "fs": 22,
+      "css": {
+        "--offsetX": "${PROPERTY offsetX}",
+        "--offsetY": "${PROPERTY offsetY}",
+        "--deckWidth": "${PROPERTY deckWidth}",
+        "--deckHeight": "${PROPERTY deckHeight}",
+        "--width": "${PROPERTY width}",
+        "--height": "${PROPERTY height}"
+      }
+    },
+    "cardTypes": {
+      "dog": {
+        "offsetX": 0,
+        "offsetY": 0,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "ab": "Retrieve a visible card to your hand. Discard this card",
+        "image": "/assets/-1886764119_14764"
+      },
+      "spade": {
+        "offsetX": 1,
+        "offsetY": 0,
+        "deckWidth": "10",
+        "deckHeight": "2",
+        "ab": "Secret bets on a named person must be revealed. Discard this",
+        "image": "/assets/637918859_12502"
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "orange",
+            "width": 87,
+            "height": 150
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 50,
+            "color": "coral",
+            "width": 87,
+            "height": 50,
+            "css": {
+              "border": "2px solid black"
+            }
+          },
+          {
+            "type": "text",
+            "x": 0,
+            "y": 50,
+            "fontSize": 20,
+            "textAlign": "center",
+            "width": 87,
+            "height": 50,
+            "value": "Deck",
+            "css": {
+              "justify-content": "center",
+              "align-items": "center",
+              "text-align": "center",
+              "display": "flex",
+              "font-size": "30px"
+            }
+          }
+        ],
+        "border": 2,
+        "radius": 8
+      },
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "white",
+            "width": 87,
+            "height": 150
+          },
+          {
+            "type": "image",
+            "x": 27,
+            "y": 0,
+            "width": 60,
+            "height": 80,
+            "color": "white"
+          },
+          {
+            "type": "image",
+            "color": "transparent",
+            "height": 80,
+            "width": 60,
+            "x": 27,
+            "dynamicProperties": {
+              "value": "image"
+            }
+          },
+          {
+            "type": "text",
+            "x": 0,
+            "y": 8,
+            "textAlign": "center",
+            "width": 27,
+            "dynamicProperties": {
+              "value": "num",
+              "fontSize": "fs"
+            }
+          },
+          {
+            "type": "text",
+            "x": 4,
+            "y": 81,
+            "fontSize": 11,
+            "textAlign": "center",
+            "width": 79,
+            "dynamicProperties": {
+              "value": "ab"
+            }
+          }
+        ],
+        "border": 2,
+        "radius": 8
+      }
+    ],
+    "parent": "glpz"
+  },
+  "5x0f": {
+    "deck": "dogDeck",
+    "type": "card",
+    "cardType": "dog",
+    "id": "5x0f",
+    "parent": "cag7",
+    "z": 77663
+  },
+  "w4w3": {
+    "deck": "dogDeck",
+    "type": "card",
+    "cardType": "dog",
+    "id": "w4w3",
+    "z": 77662,
+    "parent": "cag7"
+  },
+  "bneu": {
+    "deck": "dogDeck",
+    "type": "card",
+    "cardType": "spade",
+    "id": "bneu",
+    "z": 77664,
+    "parent": "cag7"
+  },
+  "cag7": {
+    "type": "pile",
+    "parent": "glpz",
+    "x": 4,
+    "y": 4,
+    "width": 87,
+    "height": 150,
+    "id": "cag7"
+  },
+  "setup": {
+    "type": "button",
+    "id": "setup",
+    "x": 13,
+    "y": 9,
+    "z": 5,
+    "movableInEdit": false,
+    "css": {
+      "default": {
+        "background-color": "#84E291",
+        "border-color": "#595959",
+        "color": "black"
+      },
+      ":hover": {
+        "background-color": "#595959",
+        "border-color": "#84E291"
+      }
+    },
+    "text": "Setup",
+    "clickRoutine": [
+      {
+        "note": "Check that the user really wants to set up a fresh game",
+        "func": "INPUT",
+        "header": "Set up a new game?",
+        "confirmButtonText": "Yes",
+        "cancelButtonText": "No",
+        "fields": [
+          {
+            "type": "subtitle",
+            "text": "Are you sure you want to erase any progress and start a new game?"
+          }
+        ]
+      },
+      {
+        "func": "INPUT",
+        "fields": [
+          {
+            "type": "select",
+            "options": [
+              {
+                "value": "1",
+                "text": "Random"
+              },
+              {
+                "value": "2",
+                "text": "Custom"
+              }
+            ],
+            "variable": "select"
+          }
+        ],
+        "header": "Would you like random people cards or to choose your self?"
+      },
+      {
+        "func": "IF",
+        "operand1": "${select}",
+        "relation": "==",
+        "operand2": 2,
+        "thenRoutine": [
+          {
+            "note": "Check that the user has laid out cards",
+            "func": "INPUT",
+            "header": "Have you laid out the people cards?",
+            "confirmButtonText": "Done",
+            "cancelButtonText": "Cancel",
+            "fields": [
+              {
+                "type": "subtitle",
+                "text": "Make sure the people cards of your choice have been laid out in the eight red-bordered holders at the top of the play area before continuing. Place the remaining six cards back in the holder"
+              }
+            ]
+          },
+          {
+            "func": "CLICK",
+            "collection": [
+              "setup2"
+            ]
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "CALL",
+            "routine": "autoRoutine"
+          },
+          {
+            "func": "CLICK",
+            "collection": [
+              "setup2"
+            ]
+          }
+        ]
+      }
+    ],
+    "autoRoutine": [
+      {
+        "func": "RECALL",
+        "holder": "grid0"
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "grid0"
+      },
+      "var x = 1",
+      {
+        "func": "FOREACH",
+        "range": 8,
+        "loopRoutine": [
+          {
+            "func": "MOVE",
+            "from": "grid0",
+            "to": "grid${x}",
+            "count": 1
+          },
+          "var x = ${x} + 1"
+        ]
+      }
+    ]
+  },
+  "5ytv": {
+    "type": "label",
+    "text": 0,
+    "id": "5ytv",
+    "x": 1474,
+    "width": 65,
+    "height": 40,
+    "css": {
+      "font-size": "30px",
+      "color": "black"
+    },
+    "editable": true,
+    "y": 2,
+    "linkedToSeat": "seat1"
+  },
+  "5ytvD": {
+    "id": "5ytvD",
+    "parent": "5ytv",
+    "fixedParent": true,
+    "x": -38,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": {
+      "default": {
+        "font-size": "28px",
+        "color": "black",
+        "background": "#84E291",
+        "border": "3px solid black"
+      },
+      ":hover": {
+        "background": "#72C37D"
+      }
+    },
+    "text": "remove",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 1
+      }
+    ]
+  },
+  "5ytvU": {
+    "id": "5ytvU",
+    "parent": "5ytv",
+    "fixedParent": true,
+    "x": 68,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": {
+      "default": {
+        "font-size": "28px",
+        "color": "black",
+        "background": "#84E291",
+        "border": "3px solid black"
+      },
+      ":hover": {
+        "background": "#72C37D"
+      }
+    },
+    "text": "add",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 1
+      }
+    ]
+  },
+  "6ytv": {
+    "type": "label",
+    "text": 0,
+    "id": "6ytv",
+    "x": 1474,
+    "width": 65,
+    "height": 40,
+    "css": {
+      "font-size": "30px",
+      "color": "black"
+    },
+    "editable": true,
+    "y": 167,
+    "linkedToSeat": "seat2"
+  },
+  "6ytvD": {
+    "id": "6ytvD",
+    "parent": "6ytv",
+    "fixedParent": true,
+    "x": -38,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": {
+      "default": {
+        "font-size": "28px",
+        "color": "black",
+        "background": "#E59EDD",
+        "border": "3px solid black"
+      },
+      ":hover": {
+        "background": "#C689BF"
+      }
+    },
+    "text": "remove",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 1
+      }
+    ]
+  },
+  "6ytvU": {
+    "id": "6ytvU",
+    "parent": "6ytv",
+    "fixedParent": true,
+    "x": 68,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "add",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 1
+      }
+    ],
+    "inheritFrom": "6ytvD"
+  },
+  "7ytv": {
+    "type": "label",
+    "text": 0,
+    "id": "7ytv",
+    "x": 1474,
+    "width": 65,
+    "height": 40,
+    "css": {
+      "font-size": "30px",
+      "color": "black"
+    },
+    "editable": true,
+    "y": 333,
+    "linkedToSeat": "seat3"
+  },
+  "7ytvD": {
+    "id": "7ytvD",
+    "parent": "7ytv",
+    "fixedParent": true,
+    "x": -38,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": {
+      "default": {
+        "font-size": "28px",
+        "color": "black",
+        "background": "grey",
+        "border": "3px solid black"
+      },
+      ":hover": {
+        "background": "#6F6F6F"
+      }
+    },
+    "text": "remove",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 1
+      }
+    ]
+  },
+  "7ytvU": {
+    "id": "7ytvU",
+    "parent": "7ytv",
+    "fixedParent": true,
+    "x": 68,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": {
+      "default": {
+        "font-size": "28px",
+        "color": "black",
+        "background": "grey",
+        "border": "3px solid black"
+      },
+      ":hover": {
+        "background": "#6F6F6F"
+      }
+    },
+    "text": "add",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 1
+      }
+    ]
+  },
+  "8ytv": {
+    "type": "label",
+    "text": 0,
+    "id": "8ytv",
+    "x": 1474,
+    "width": 65,
+    "height": 40,
+    "css": {
+      "font-size": "30px",
+      "color": "black"
+    },
+    "editable": true,
+    "y": 499,
+    "linkedToSeat": "seat4"
+  },
+  "8ytvD": {
+    "id": "8ytvD",
+    "parent": "8ytv",
+    "fixedParent": true,
+    "x": -38,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": {
+      "default": {
+        "font-size": "28px",
+        "color": "black",
+        "background": "brown",
+        "border": "3px solid black"
+      },
+      ":hover": {
+        "background": "#8F2424"
+      }
+    },
+    "text": "remove",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 1
+      }
+    ]
+  },
+  "8ytvU": {
+    "id": "8ytvU",
+    "parent": "8ytv",
+    "fixedParent": true,
+    "x": 68,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "classes": "symbols",
+    "text": "add",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 1
+      }
+    ],
+    "inheritFrom": "8ytvD"
+  },
+  "9ytv": {
+    "type": "label",
+    "text": 0,
+    "id": "9ytv",
+    "x": 1474,
+    "width": 65,
+    "height": 40,
+    "css": {
+      "font-size": "30px",
+      "color": "black"
+    },
+    "editable": true,
+    "y": 664,
+    "linkedToSeat": "seat5"
+  },
+  "9ytvD": {
+    "id": "9ytvD",
+    "parent": "9ytv",
+    "fixedParent": true,
+    "x": -38,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": {
+      "default": {
+        "font-size": "28px",
+        "color": "black",
+        "background": "yellow",
+        "border": "3px solid black"
+      },
+      ":hover": {
+        "background": "#DDDD00"
+      }
+    },
+    "text": "remove",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 1
+      }
+    ]
+  },
+  "9ytvU": {
+    "id": "9ytvU",
+    "parent": "9ytv",
+    "fixedParent": true,
+    "x": 68,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "classes": "symbols",
+    "text": "add",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 1
+      }
+    ],
+    "inheritFrom": "9ytvD"
+  },
+  "setup2": {
+    "type": "button",
+    "id": "setup2",
+    "x": 196,
+    "y": -163,
+    "z": 11,
+    "text": "setup2",
+    "clickRoutine": [
+      {
+        "func": "RECALL",
+        "holder": "deadDeck"
+      },
+      {
+        "func": "RECALL",
+        "holder": "glpz"
+      },
+      {
+        "func": "CLICK",
+        "collection": [
+          "v3xk"
+        ]
+      },
+      {
+        "func": "CLICK",
+        "collection": [
+          "x9d7B"
+        ]
+      },
+      "var x = 1",
+      {
+        "func": "FOREACH",
+        "range": 8,
+        "loopRoutine": [
+          {
+            "func": "SELECT",
+            "property": "parent",
+            "value": "grid${x}"
+          },
+          {
+            "func": "GET",
+            "property": "cardType"
+          },
+          {
+            "func": "VAR",
+            "variables": {
+              "a": "${cardType}"
+            }
+          },
+          {
+            "func": "CALL",
+            "routine": "animalRoutine"
+          },
+          "var x = ${x} + 1"
+        ]
+      },
+      {
+        "func": "MOVE",
+        "from": "glpz",
+        "to": "playHolder",
+        "count": "all",
+        "face": 0
+      },
+      {
+        "func": "MOVE",
+        "from": "ghostHolder",
+        "to": "playHolder",
+        "count": "all",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "playHolder"
+      },
+      {
+        "note": "move each seat into the DEFAULT collection",
+        "func": "SELECT",
+        "type": "seat",
+        "property": "player",
+        "relation": "!=",
+        "value": ""
+      },
+      {
+        "note": "count the number of seats",
+        "func": "COUNT"
+      },
+      {
+        "note": "for each widget (seat) in the default collection...",
+        "func": "FOREACH",
+        "collection": "DEFAULT",
+        "loopRoutine": [
+          {
+            "func": "MOVE",
+            "from": "playHolder",
+            "to": "${widgetID}",
+            "fillTo": 8
+          },
+          {
+            "func": "SORT",
+            "holder": "hand",
+            "key": "cardType"
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "relation": "<",
+        "operand2": 2,
+        "thenRoutine": [
+          {
+            "func": "INPUT",
+            "header": "You need at least two players to play this game.",
+            "fields": [
+              {
+                "type": "subtitle",
+                "text": "The game may function incorrectly if you choose to continue."
+              }
+            ],
+            "confirmButtonText": "I'll risk it!",
+            "cancelButtonText": "Let me fetch some friends."
+          }
+        ]
+      },
+      {
+        "func": "TURN",
+        "turnCycle": "random"
+      }
+    ],
+    "animalRoutine": [
+      {
+        "func": "SELECT",
+        "source": "all",
+        "property": "cardType",
+        "value": "${a}"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "deck",
+        "value": "p7xd",
+        "relation": "!="
+      },
+      {
+        "func": "MOVE",
+        "to": "playHolder",
+        "face": 0,
+        "count": "all"
+      }
+    ]
+  },
+  "jkpi": {
+    "type": "pile",
+    "parent": "grid0",
+    "x": 0,
+    "y": 0,
+    "width": 87,
+    "height": 150,
+    "id": "jkpi"
+  }
+}
