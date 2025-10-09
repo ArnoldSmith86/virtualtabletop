@@ -10,7 +10,7 @@
       "mode": "vs",
       "time": "40-60",
       "attribution": "Implementation, assets and scripting are by Mitchell Stolycia and are released via CC BY 4.0.",
-      "lastUpdate": 1759834809565,
+      "lastUpdate": 1759973110770,
       "showName": true,
       "skill": "",
       "description": "Eight contestants enter the house. Over the course of five weeks, the least popular are publicly voted out until only three remain.\n\nThis... is Ad Populum.",
@@ -20,10 +20,10 @@
       "similarAwards": "",
       "ruleText": "",
       "helpText": "<div>Players (you!) will always be referred to as \"players\".</div><div><br></div><div>Cards representing the contestants in the house and the ghost which \nhaunts it are referred to as \"people\" or a \"person\".</div><div><br></div><div><b>Setup</b></div><div><ol><li>Take your seats.</li><li>Press the <i>Setup</i> button.</li><li>Choose the type of setup you would like.</li><ul><li>If a custom setup of person cards is desired, drag the cards you would like to the eight red-bordered holders before clicking setup.</li></ul><li>Any cards not used will still be present and visible, in case you want to setup again.</li></ol></div><div><b>Your turn</b></div><blockquote><div>To play, drag cards from your hand (bottom right) to the board.</div><div><br></div><div>Bets are placed by dragging the five betting chips from next to your seat to the play area.</div><div><br></div><div>To make a secret bet, drag a card onto the table and place a betting chip on top of it.</div></blockquote><div><b>End turn</b></div><blockquote><div>End your turn by clicking&nbsp;<i>End turn</i>. This will refill your hand to eight cards automatically.</div></blockquote><div><b>Scoring</b></div><blockquote><div>Scoring only occurs at the end of the game. Do this manually by using the counters by your seats.</div></blockquote><div><b>Misc.</b></div><blockquote><div>The red X cards are used to represent a person who has been voted off the show (has the least popularity at the end of a round).</div><div><br></div><div>The&nbsp;<b><i>Draw 3 cards </i></b>person ability has to be executed manually by dragging three cards from the deck to your hand.</div></blockquote>",
-      "players": "2-5",
-      "language": "en-GB",
+      "variantImage": "",
       "variant": "Ad Populum",
-      "variantImage": "/assets/-884620048_5504"
+      "language": "en-GB",
+      "players": "2-5"
     }
   },
   "2xwe 5.jpg": {
@@ -169,7 +169,8 @@
     "x": 49,
     "onEnter": {
       "activeFace": 1
-    }
+    },
+    "preventPiles": true
   },
   "grid9": {
     "type": "holder",
@@ -1136,126 +1137,126 @@
     "id": "p7xd champion.jpg 0,0",
     "deck": "p7xd",
     "cardType": "champion.jpg 0,0",
-    "z": 79327,
+    "z": 79343,
     "activeFace": 1,
-    "parent": "jkpi"
+    "parent": "grid0"
   },
   "p7xd champion.jpg 0,1": {
     "type": "card",
     "id": "p7xd champion.jpg 0,1",
     "deck": "p7xd",
     "cardType": "champion.jpg 0,1",
-    "z": 79329,
+    "z": 79345,
     "activeFace": 1,
-    "parent": "jkpi"
+    "parent": "grid0"
   },
   "p7xd champion.jpg 0,2": {
     "type": "card",
     "id": "p7xd champion.jpg 0,2",
     "deck": "p7xd",
     "cardType": "champion.jpg 0,2",
-    "z": 79335,
+    "z": 79351,
     "activeFace": 1,
-    "parent": "jkpi"
+    "parent": "grid0"
   },
   "p7xd champion.jpg 0,3": {
     "type": "card",
     "id": "p7xd champion.jpg 0,3",
     "deck": "p7xd",
     "cardType": "champion.jpg 0,3",
-    "z": 79332,
+    "z": 79348,
     "activeFace": 1,
-    "parent": "jkpi"
+    "parent": "grid0"
   },
   "p7xd champion.jpg 0,4": {
     "type": "card",
     "id": "p7xd champion.jpg 0,4",
     "deck": "p7xd",
     "cardType": "champion.jpg 0,4",
-    "z": 79334,
+    "z": 79350,
     "activeFace": 1,
-    "parent": "jkpi"
+    "parent": "grid0"
   },
   "p7xd champion.jpg 0,5": {
     "type": "card",
     "id": "p7xd champion.jpg 0,5",
     "deck": "p7xd",
     "cardType": "champion.jpg 0,5",
-    "z": 79322,
+    "z": 79338,
     "activeFace": 1,
-    "parent": "jkpi"
+    "parent": "grid0"
   },
   "p7xd champion.jpg 0,6": {
     "type": "card",
     "id": "p7xd champion.jpg 0,6",
     "deck": "p7xd",
     "cardType": "champion.jpg 0,6",
-    "z": 79323,
+    "z": 79339,
     "activeFace": 1,
-    "parent": "jkpi"
+    "parent": "grid0"
   },
   "p7xd champion.jpg 0,7": {
     "type": "card",
     "id": "p7xd champion.jpg 0,7",
     "deck": "p7xd",
     "cardType": "champion.jpg 0,7",
-    "z": 79333,
+    "z": 79349,
     "activeFace": 1,
-    "parent": "jkpi"
+    "parent": "grid0"
   },
   "p7xd champion.jpg 0,8": {
     "type": "card",
     "id": "p7xd champion.jpg 0,8",
     "deck": "p7xd",
     "cardType": "champion.jpg 0,8",
-    "z": 79331,
+    "z": 79347,
     "activeFace": 1,
-    "parent": "jkpi"
+    "parent": "grid0"
   },
   "p7xd champion.jpg 0,9": {
     "type": "card",
     "id": "p7xd champion.jpg 0,9",
     "deck": "p7xd",
     "cardType": "champion.jpg 0,9",
-    "z": 79326,
+    "z": 79342,
     "activeFace": 1,
-    "parent": "jkpi"
+    "parent": "grid0"
   },
   "p7xd champion.jpg 1,0": {
     "type": "card",
     "id": "p7xd champion.jpg 1,0",
     "deck": "p7xd",
     "cardType": "champion.jpg 1,0",
-    "z": 79328,
+    "z": 79344,
     "activeFace": 1,
-    "parent": "jkpi"
+    "parent": "grid0"
   },
   "p7xd champion.jpg 1,1": {
     "type": "card",
     "id": "p7xd champion.jpg 1,1",
     "deck": "p7xd",
     "cardType": "champion.jpg 1,1",
-    "z": 79330,
+    "z": 79346,
     "activeFace": 1,
-    "parent": "jkpi"
+    "parent": "grid0"
   },
   "p7xd champion.jpg 1,2": {
     "type": "card",
     "id": "p7xd champion.jpg 1,2",
     "deck": "p7xd",
     "cardType": "champion.jpg 1,2",
-    "z": 79325,
+    "z": 79341,
     "activeFace": 1,
-    "parent": "jkpi"
+    "parent": "grid0"
   },
   "p7xd champion.jpg 1,3": {
     "type": "card",
     "id": "p7xd champion.jpg 1,3",
     "deck": "p7xd",
     "cardType": "champion.jpg 1,3",
-    "z": 79324,
+    "z": 79340,
     "activeFace": 1,
-    "parent": "jkpi"
+    "parent": "grid0"
   },
   "81k4B": {
     "id": "81k4B",
@@ -7664,14 +7665,5 @@
         "count": "all"
       }
     ]
-  },
-  "jkpi": {
-    "type": "pile",
-    "parent": "grid0",
-    "x": 0,
-    "y": 0,
-    "width": 87,
-    "height": 150,
-    "id": "jkpi"
   }
 }
