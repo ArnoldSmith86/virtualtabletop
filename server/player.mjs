@@ -32,6 +32,8 @@ export default class Player {
         this.waitingForStateConfirmation = false;
       if(func == 'delta')
         this.receiveDelta(args);
+      if(func == 'edit')
+        this.room.edit(args);
       if(func == 'editState')
         await this.room.editState(this, args.id, args.meta, args.variantInput, args.variantOperationQueue);
       if(func == 'loadState')

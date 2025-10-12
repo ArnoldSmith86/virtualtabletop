@@ -15,6 +15,8 @@ let jeRoutineLogging = false;
 
 let urlProperties = {};
 
+let editPlayerArray = [];
+
 let maxZ = {};
 export const dropTargets = new Map();
 
@@ -526,6 +528,11 @@ async function toggleEditMode() {
   else
     $('body').classList.add('edit');
   edit = !edit;
+  toServer('edit', {
+    playerName: getPlayerDetails().playerName,
+    edit: !!edit
+});
+
   if(edit)
     openEditor();
   showOverlay();
@@ -663,6 +670,31 @@ onLoad(function() {
     document.title = `${document.location.pathname.split('/').pop()} - ${tabSuffix}`;
     $('#playerInviteURL').innerText = location.href;
   });
+
+onMessage('edit', function(args) {
+  if(args.edit) {
+    if(!editPlayerArray.includes(args.player))
+      editPlayerArray.push(args.player);
+  } else {
+    const index = editPlayerArray.indexOf(args.player);
+    if(index !== -1)
+      editPlayerArray.splice(index, 1);
+  }
+  const editButton = $('#editButton');
+  const tooltip = $('.tooltip', editButton);
+  if(editPlayerArray.length > 0) {
+    [editButton, tooltip].forEach(element => element.classList.add('editorOpen'));
+  } else {
+    [editButton, tooltip].forEach(element => element.classList.remove('editorOpen'));
+    if(edit){
+      toServer('edit', {
+        playerName: getPlayerDetails().playerName,
+        edit: !!edit
+      });
+    }
+  }
+})
+
 });
 
 function getEdit() {
