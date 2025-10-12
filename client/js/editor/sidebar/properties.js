@@ -719,7 +719,7 @@ class PropertiesModule extends SidebarModule {
           activeFace: 1
         });
         x += cardWidth;
-        if(x+cardWidth > 1600) {
+        if(x+cardWidth > 1778) {
           y += 1;
           x = 0;
         }
