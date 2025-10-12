@@ -12,8 +12,11 @@ class ImageWidget extends Widget {
 
   applyDeltaToDOM(delta) {
     super.applyDeltaToDOM(delta);
-    if(delta.text !== undefined || delta.icon !== undefined)
-      setText(this.domElement, this.get('icon') ? '' : this.get('text'));
+    if(delta.text !== undefined || delta.icon !== undefined) {
+      if(this.get('type') !== 'holder') {
+        setText(this.domElement, this.get('icon') ? '' : this.get('text'));
+      }
+    }
 
     if(delta.icon !== undefined || delta.text !== undefined || delta.width !== undefined || delta.height !== undefined || delta.textColor !== undefined || this.getWithPropertyReplacements_checkDelta('icon', delta))
       this.updateIcon();
