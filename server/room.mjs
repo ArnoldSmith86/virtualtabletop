@@ -28,6 +28,9 @@ export default class Room {
   }
 
   addPlayer(player) {
+    if(this.locked)
+      throw new Logging.UserError(403, 'Room is locked.');
+
     Logging.log(`adding player ${player.name} to room ${this.id}`);
     clearTimeout(this.unloadTimeout);
     this.players.push(player);
@@ -525,6 +528,11 @@ export default class Room {
       this.state._meta.activeState = { stateID, variantID };
 
     this.sendMetaUpdate();
+  }
+
+  lockRoom(player) {
+    this.locked = true;
+    this.broadcast('lockRoom', true);
   }
 
   migrateBrokenSaveWithoutVersion() {
