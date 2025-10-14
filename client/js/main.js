@@ -636,6 +636,7 @@ onLoad(function() {
     const finalPanY = Math.max(roomAreaRect.height - newRoomRect.height, Math.min(0, panY));
     document.documentElement.style.setProperty('--roomPanX', finalPanX + 'px');
     document.documentElement.style.setProperty('--roomPanY', finalPanY + 'px');
+    roomRectangle = $('#room').getBoundingClientRect();
   });
 
 
@@ -693,6 +694,7 @@ onLoad(function() {
       
       document.documentElement.style.setProperty('--roomPanX', clampedPanX + 'px');
       document.documentElement.style.setProperty('--roomPanY', clampedPanY + 'px');
+      roomRectangle = $('#room').getBoundingClientRect();
     }
   });
 
