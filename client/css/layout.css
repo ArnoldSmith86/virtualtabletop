@@ -765,6 +765,10 @@ body.zoom2x #room {
   transform-origin: left top;
 }
 
+body.zoom2x .movable.widget {
+  cursor: default;
+}
+
 body.panning {
   cursor: grabbing;
 }

@@ -660,7 +660,7 @@ onLoad(function() {
     if(currentZoomLevel > 1 && !isDraggingPan) {
       // Check if clicking on a draggable widget
       let target = e.target;
-      while(target && (!target.id || target.id.slice(0,2) != 'w_' || !widgets.has(unescapeID(target.id.slice(2))))) {
+      while(target && (!target.id || target.id.slice(0,2) != 'w_' || !target.classList.contains('movable') || !widgets.has(unescapeID(target.id.slice(2))))) {
         target = target.parentNode;
       }
       
