@@ -765,6 +765,18 @@ body.zoom2x #room {
   transform-origin: left top;
 }
 
+body.panning {
+  cursor: grabbing;
+}
+
+body.zoom2x #roomArea {
+  cursor: grab;
+}
+
+body.panning #roomArea {
+  cursor: grabbing;
+}
+
 ::-webkit-scrollbar {
   width: 10px;
   height: 10px;
