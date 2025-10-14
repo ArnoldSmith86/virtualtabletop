@@ -761,7 +761,7 @@ body.zoom2x #roomArea {
 }
 
 body.zoom2x #room {
-  transform: scale(calc(var(--scale) * var(--roomZoom))) translate(var(--roomPanX), var(--roomPanY));
+  transform: translate(var(--roomPanX), var(--roomPanY)) scale(calc(var(--scale) * var(--roomZoom))) ;
   transform-origin: left top;
 }
 

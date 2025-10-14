@@ -609,40 +609,35 @@ onLoad(function() {
     setZoomLevel(mainZoomLevels[nextIndex]);
   });
 
-  // Scroll wheel zoom with zoom-to-cursor
+  // Scroll wheel zoom with zoom-to-cursor (relative to #room)
   on('#roomArea', 'wheel', function(e){
     e.preventDefault();
-    
-    const roomRect = $('#roomArea').getBoundingClientRect();
-    const mouseX = e.clientX - roomRect.left;
-    const mouseY = e.clientY - roomRect.top;
-    
-    // Calculate the point under cursor in room coordinates (accounting for current pan)
-    const currentPanX = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--roomPanX')) || 0;
-    const currentPanY = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--roomPanY')) || 0;
-    
-    // Convert mouse position to room coordinates
-    const cursorRoomX = (mouseX / zoomScale / scale); // - (currentPanX / scale);
-    const cursorRoomY = (mouseY / zoomScale / scale); // - (currentPanY / scale);
-    
-    // Determine zoom direction and amount
+
+    // Calculate relative (0-1) cursor location inside topSurface
+    const roomRect = $('#topSurface').getBoundingClientRect();
+    const relX = (e.clientX - roomRect.left) / roomRect.width;
+    const relY = (e.clientY - roomRect.top) / roomRect.height;
+
+    // Set new zoom level
     const delta = e.deltaY > 0 ? 0.85 : 1.15;
-    const newZoomLevel = Math.max(1, Math.min(10, currentZoomLevel * delta));
-    
-    // Round to nearest 0.1 for cleaner values
-    const roundedZoom = Math.round(newZoomLevel * 10) / 10;
-    
-    if(roundedZoom !== currentZoomLevel) {
-      // Calculate where the cursor point should be after zoom
-      const zoomFactor = roundedZoom / currentZoomLevel;
-      
-      // Calculate new pan to maintain cursor position
-      const newPanX = currentPanX + (cursorRoomX * scale * (1 - zoomFactor));
-      const newPanY = currentPanY + (cursorRoomY * scale * (1 - zoomFactor));
-      
-      setZoomLevel(roundedZoom, newPanX, newPanY);
-    }
+    const newZoomLevel = Math.max(1, Math.min(10, Math.round(currentZoomLevel * delta * 10) / 10));
+    if(newZoomLevel === currentZoomLevel) return;
+    setZoomLevel(newZoomLevel);
+
+    const newRoomRect = $('#topSurface').getBoundingClientRect();
+    const roomAreaRect = $('#roomArea').getBoundingClientRect();
+
+    // Figure out how much we need to pan so the target lands under current mouse
+    const panX = (e.clientX - relX * newRoomRect.width - roomAreaRect.left);
+    const panY = (e.clientY - relY * newRoomRect.height - roomAreaRect.top);
+
+    // Clamp pan to allowed range based on room size and area size
+    const finalPanX = Math.max(roomAreaRect.width - newRoomRect.width, Math.min(0, panX));
+    const finalPanY = Math.max(roomAreaRect.height - newRoomRect.height, Math.min(0, panY));
+    document.documentElement.style.setProperty('--roomPanX', finalPanX + 'px');
+    document.documentElement.style.setProperty('--roomPanY', finalPanY + 'px');
   });
+
 
   // Page up/down zoom
   on('body', 'keydown', function(e){
@@ -713,7 +708,7 @@ onLoad(function() {
     }
   });
 
-  function setZoomLevel(zoomLevel, panX = null, panY = null) {
+  function setZoomLevel(zoomLevel) {
     currentZoomLevel = zoomLevel;
     
     // Update button text to show current zoom
@@ -732,19 +727,6 @@ onLoad(function() {
       // Zoomed mode - enable panning
       $('body').classList.add('zoom2x');
       document.documentElement.style.setProperty('--roomZoom', currentZoomLevel);
-      
-      // Set pan position if provided, otherwise keep current
-      if(panX !== null && panY !== null) {
-        // Clamp pan to valid range
-        const maxPanX = 1600 * (currentZoomLevel - 1) / currentZoomLevel;
-        const maxPanY = 1000 * (currentZoomLevel - 1) / currentZoomLevel;
-        
-        const clampedPanX = Math.max(-maxPanX, Math.min(0, panX));
-        const clampedPanY = Math.max(-maxPanY, Math.min(0, panY));
-        
-        document.documentElement.style.setProperty('--roomPanX', clampedPanX + 'px');
-        document.documentElement.style.setProperty('--roomPanY', clampedPanY + 'px');
-      }
       
       zoomScale = currentZoomLevel;
     }
