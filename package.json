@@ -53,7 +53,7 @@
     "@node-minify/uglify-es": "^9.0.1",
     "bson": "^6.10.3",
     "crc-32": "^1.2.2",
-    "dompurify": "^3.2.5",
+    "dompurify": "^3.3.0",
     "express": "^5.1.0",
     "jszip": "^3.10.1",
     "node-fetch": "^2.7.0",
