@@ -680,28 +680,30 @@ onLoad(function() {
       const deltaX = e.clientX - dragStartX;
       const deltaY = e.clientY - dragStartY;
       
-      // Convert screen delta to room coordinate delta
-      const roomDeltaX = deltaX / scale;
-      const roomDeltaY = deltaY / scale;
-      
       // Apply delta to pan position
-      const newPanX = panStartX + roomDeltaX;
-      const newPanY = panStartY + roomDeltaY;
+      const newPanX = panStartX + deltaX;
+      const newPanY = panStartY + deltaY;
       
       // Clamp pan to valid range
-      const maxPanX = 1600 * (currentZoomLevel - 1) / currentZoomLevel;
-      const maxPanY = 1000 * (currentZoomLevel - 1) / currentZoomLevel;
+      const maxPanX = 1600 * scale * currentZoomLevel - 1600 * scale;
+      const maxPanY = 1000 * scale * currentZoomLevel - 1000 * scale;
       
       const clampedPanX = Math.max(-maxPanX, Math.min(0, newPanX));
       const clampedPanY = Math.max(-maxPanY, Math.min(0, newPanY));
       
       document.documentElement.style.setProperty('--roomPanX', clampedPanX + 'px');
       document.documentElement.style.setProperty('--roomPanY', clampedPanY + 'px');
-      roomRectangle = $('#room').getBoundingClientRect();
     }
   });
 
   on('body', 'mouseup', function(e){
+    if(isDraggingPan) {
+      isDraggingPan = false;
+      $('body').classList.remove('panning');
+    }
+  });
+
+  on('body', 'mouseleave', function(e){
     if(isDraggingPan) {
       isDraggingPan = false;
       $('body').classList.remove('panning');
