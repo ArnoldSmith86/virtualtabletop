@@ -18,7 +18,7 @@
       "mode": "vs",
       "time": "45",
       "attribution": "Room design and layout by LawDawg96 and released to the Public Domain under CC0.<div><br></div><div>Library image and card back&nbsp;<span style=\"color: var(--overlayFontColor);\">was generated using the Midjourney artificial intelligence image generator, https://www.midjourney.com/home/, using the following prompt: \"city park in the spring, cartoon style of Phineas and Ferb --ar 5:8\".</span></div><div><span style=\"color: var(--overlayFontColor);\"><br></span></div><div>Characters on the Person cards were generated in ChatGPT 4,&nbsp;https://chat.openai.com/, using a prompt similar to \"Create 20-year-old female cartoon character portrait head and shoulders, style of Phineas and Ferb, amber-colored clothing, holding a book, on a solid white background\".</div><div><br></div><div>Images on the Place cards were generated using Midjourney using a prompt similar to: \"sprit sheet of park benches on a solid white background, overhead view\".</div><div><br></div><div>Icons on the Weapons cards are available under the Flaticon License:</div><div><ul><li>Walking stick by Freepik: https://www.flaticon.com/free-icon/walking-stick_2852384</li><li>Pruning shears by Freepik: https://www.flaticon.com/free-icon/shears_809147</li><li>Baseball bat by Freepik: https://www.flaticon.com/free-icon/baseball-bat_1784991</li><li>Skateboard by Freepik: https://www.flaticon.com/free-icon/skateboard_1048312</li><li>Dog leash by Freepik: https://www.flaticon.com/free-icon/leash_3375483</li><li>Chain by Freepik: https://www.flaticon.com/free-icon/chain_2944058</li></ul><div>The grass field background and wave texture used on the board are available under the Pixabay License:</div></div><div><ul><li>Grass field by Pexels, https://pixabay.com/photos/field-grass-green-lawn-texture-1851064/</li><li>Waves by Lukas, https://pixabay.com/photos/sea-background-water-surface-2055969/</li></ul><div>The envelope for card piles is by mousewax and is in the public domain under CC0.</div></div>",
-      "lastUpdate": 1760414444439,
+      "lastUpdate": 1760414923315,
       "showName": true,
       "skill": "",
       "description": "Move around locations in a city park to solve a murder by using deduction. If you figure out whodunit, the location, and the weapon, you win.",
@@ -2832,7 +2832,6 @@
     "borderColor": "black",
     "borderWidth": 1,
     "pawn": true,
-    "pawnStart": 1,
     "parent": "pawnStart1"
   },
   "pawn2": {
@@ -3182,11 +3181,9 @@
       }
     },
     "hideWhenUnused": true,
-    "colorContrast": "#000000",
     "glowColor": "#4d4d4d",
     "mainColor": "#ee8715",
     "outlineColor": "#000000bb",
-    "textColor": "#ffffff",
     "textShadowBlur": 2,
     "textShadowDistance": 2,
     "clickRoutine": [
