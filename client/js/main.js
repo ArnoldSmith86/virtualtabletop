@@ -611,6 +611,8 @@ onLoad(function() {
 
   // Scroll wheel zoom with zoom-to-cursor (relative to #room)
   on('#roomArea', 'wheel', function(e){
+    if(overlayActive)
+      return; // allow normal wheel behavior when an overlay is active
     e.preventDefault();
 
     // Calculate relative (0-1) cursor location inside topSurface
