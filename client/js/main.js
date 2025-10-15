@@ -657,8 +657,10 @@ onLoad(function() {
     }
   });
 
-  // Drag to pan functionality
+  // Drag to pan functionality (left mouse only)
   on('#roomArea', 'mousedown', function(e){
+    if(e.button !== 0)
+      return;
     if(currentZoomLevel > 1 && !isDraggingPan) {
       // Check if clicking on a draggable widget
       let target = e.target;
@@ -675,6 +677,48 @@ onLoad(function() {
         panStartY = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--roomPanY')) || 0;
         $('body').classList.add('panning');
       }
+    }
+  });
+
+  // Middle-click toggle zoom (anchor under cursor)
+  on('#roomArea', 'mousedown', function(e){
+    if(e.button !== 1)
+      return;
+    if(overlayActive)
+      return;
+    e.preventDefault();
+    e.stopPropagation();
+    if(e.stopImmediatePropagation) e.stopImmediatePropagation();
+
+    // Compute relative cursor location inside topSurface
+    const roomRect = $('#topSurface').getBoundingClientRect();
+    const relX = (e.clientX - roomRect.left) / roomRect.width;
+    const relY = (e.clientY - roomRect.top) / roomRect.height;
+
+    // Decide target zoom: toggle 1x <-> 2x
+    const targetZoom = currentZoomLevel === 1 ? 2 : 1;
+    if(targetZoom === currentZoomLevel)
+      return;
+    setZoomLevel(targetZoom);
+
+    // Adjust pan to keep cursor anchored
+    const newRoomRect = $('#topSurface').getBoundingClientRect();
+    const roomAreaRect = $('#roomArea').getBoundingClientRect();
+    const panX = (e.clientX - relX * newRoomRect.width - roomAreaRect.left);
+    const panY = (e.clientY - relY * newRoomRect.height - roomAreaRect.top);
+    const finalPanX = Math.max(roomAreaRect.width - newRoomRect.width, Math.min(0, panX));
+    const finalPanY = Math.max(roomAreaRect.height - newRoomRect.height, Math.min(0, panY));
+    document.documentElement.style.setProperty('--roomPanX', finalPanX + 'px');
+    document.documentElement.style.setProperty('--roomPanY', finalPanY + 'px');
+    roomRectangle = $('#room').getBoundingClientRect();
+  });
+
+  // Swallow middle-button mouseup to avoid widget interactions
+  on('#roomArea', 'mouseup', function(e){
+    if(e.button === 1) {
+      e.preventDefault();
+      e.stopPropagation();
+      if(e.stopImmediatePropagation) e.stopImmediatePropagation();
     }
   });
 
