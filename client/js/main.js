@@ -705,6 +705,110 @@ onLoad(function() {
     }
   });
 
+  // Touch: one-finger pan and pinch-to-zoom
+  let touchState = {
+    active: false,
+    isPanning: false,
+    startX: 0,
+    startY: 0,
+    panStartX: 0,
+    panStartY: 0,
+    // pinch
+    isPinching: false,
+    startDist: 0,
+    startZoom: 1,
+    anchorRelX: 0.5,
+    anchorRelY: 0.5
+  };
+
+  on('#roomArea', 'touchstart', function(e){
+    if(e.touches.length == 1) {
+      // Start panning only when zoomed and not on draggable widget
+      if(currentZoomLevel > 1) {
+        let target = e.target;
+        while(target && (!target.id || target.id.slice(0,2) != 'w_' || !target.classList.contains('movable') || !widgets.has(unescapeID(target.id.slice(2)))))
+          target = target.parentNode;
+        if(!target || !target.id) {
+          touchState.isPanning = true;
+          touchState.startX = e.touches[0].clientX;
+          touchState.startY = e.touches[0].clientY;
+          touchState.panStartX = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--roomPanX')) || 0;
+          touchState.panStartY = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--roomPanY')) || 0;
+          $('body').classList.add('panning');
+        }
+      }
+    } else if(e.touches.length == 2) {
+      // Pinch start
+      touchState.isPanning = false;
+      touchState.isPinching = true;
+      touchState.startZoom = currentZoomLevel;
+      const dx = e.touches[0].clientX - e.touches[1].clientX;
+      const dy = e.touches[0].clientY - e.touches[1].clientY;
+      touchState.startDist = Math.hypot(dx, dy);
+      // Anchor: midpoint relative to room
+      const roomRect = $('#topSurface').getBoundingClientRect();
+      const midX = (e.touches[0].clientX + e.touches[1].clientX)/2;
+      const midY = (e.touches[0].clientY + e.touches[1].clientY)/2;
+      touchState.anchorRelX = (midX - roomRect.left) / roomRect.width;
+      touchState.anchorRelY = (midY - roomRect.top) / roomRect.height;
+    }
+  });
+
+  on('#roomArea', 'touchmove', function(e){
+    if(touchState.isPanning && e.touches.length == 1) {
+      e.preventDefault();
+      const deltaX = e.touches[0].clientX - touchState.startX;
+      const deltaY = e.touches[0].clientY - touchState.startY;
+
+      const newPanX = touchState.panStartX + deltaX;
+      const newPanY = touchState.panStartY + deltaY;
+
+      const roomRect = $('#topSurface').getBoundingClientRect();
+      const areaRect = $('#roomArea').getBoundingClientRect();
+      const maxPanX = areaRect.width - roomRect.width;
+      const maxPanY = areaRect.height - roomRect.height;
+
+      const clampedPanX = Math.max(maxPanX, Math.min(0, newPanX));
+      const clampedPanY = Math.max(maxPanY, Math.min(0, newPanY));
+
+      document.documentElement.style.setProperty('--roomPanX', clampedPanX + 'px');
+      document.documentElement.style.setProperty('--roomPanY', clampedPanY + 'px');
+      roomRectangle = $('#room').getBoundingClientRect();
+    } else if(touchState.isPinching && e.touches.length == 2) {
+      e.preventDefault();
+      const dx = e.touches[0].clientX - e.touches[1].clientX;
+      const dy = e.touches[0].clientY - e.touches[1].clientY;
+      const dist = Math.hypot(dx, dy);
+      if(touchState.startDist <= 0)
+        return;
+      let newZoom = Math.max(1, Math.min(10, Math.round((touchState.startZoom * (dist / touchState.startDist)) * 10) / 10));
+      if(newZoom === currentZoomLevel)
+        return;
+      setZoomLevel(newZoom);
+
+      // Maintain anchor under midpoint
+      const newRoomRect = $('#topSurface').getBoundingClientRect();
+      const areaRect = $('#roomArea').getBoundingClientRect();
+      const midX = (e.touches[0].clientX + e.touches[1].clientX)/2;
+      const midY = (e.touches[0].clientY + e.touches[1].clientY)/2;
+      const panX = (midX - touchState.anchorRelX * newRoomRect.width - areaRect.left);
+      const panY = (midY - touchState.anchorRelY * newRoomRect.height - areaRect.top);
+      const finalPanX = Math.max(areaRect.width - newRoomRect.width, Math.min(0, panX));
+      const finalPanY = Math.max(areaRect.height - newRoomRect.height, Math.min(0, panY));
+      document.documentElement.style.setProperty('--roomPanX', finalPanX + 'px');
+      document.documentElement.style.setProperty('--roomPanY', finalPanY + 'px');
+      roomRectangle = $('#room').getBoundingClientRect();
+    }
+  });
+
+  on('#roomArea', 'touchend', function(e){
+    if(e.touches.length == 0) {
+      touchState.isPanning = false;
+      touchState.isPinching = false;
+      $('body').classList.remove('panning');
+    }
+  });
+
   on('body', 'mouseleave', function(e){
     if(isDraggingPan) {
       isDraggingPan = false;
