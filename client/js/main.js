@@ -4,6 +4,7 @@ import { startWebSocket, toServer } from './connection.js';
 
 export let scale = 1;
 let zoomScale = 1;
+let currentZoomLevel = 1;
 
 let roomRectangle;
 let overlayActive = false;
@@ -528,6 +529,19 @@ async function toggleEditMode() {
   else
     $('body').classList.add('edit');
   edit = !edit;
+  // Reset zoom when toggling edit mode
+  currentZoomLevel = 1;
+  document.documentElement.style.setProperty('--roomZoom', 1);
+  document.documentElement.style.setProperty('--roomPanX', '0px');
+  document.documentElement.style.setProperty('--roomPanY', '0px');
+  $('body').classList.remove('zoom2x');
+  zoomScale = 1;
+  const button = $('#zoom2xButton');
+  if(button) {
+    const tooltip = button.querySelector('.tooltip');
+    if(tooltip)
+      tooltip.textContent = `1x Zoom`;
+  }
   if(edit)
     openEditor();
   showOverlay();
@@ -593,7 +607,6 @@ onLoad(function() {
   });
 
   // Zoom functionality with scroll wheel and drag-to-pan
-  let currentZoomLevel = 1;
   const zoomLevels = [1, 1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 1.7, 1.8, 1.9, 2];
   let isDraggingPan = false;
   let dragStartX = 0;
