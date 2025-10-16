@@ -636,7 +636,25 @@ onLoad(function() {
     const mainZoomLevels = [1, 1.5, 2];
     const currentIndex = mainZoomLevels.indexOf(currentZoomLevel);
     const nextIndex = (currentIndex + 1) % mainZoomLevels.length;
-    setZoomLevel(mainZoomLevels[nextIndex]);
+    const targetZoom = mainZoomLevels[nextIndex];
+
+    // If going back to 1x, just reset
+    if(targetZoom === 1) {
+      resetZoomAndPan();
+      return;
+    }
+
+    // Zoom to center of visible room area
+    setZoomLevel(targetZoom);
+    const newRoomRect = $('#topSurface').getBoundingClientRect();
+    const roomAreaRect = $('#roomArea').getBoundingClientRect();
+    const centerPanX = (roomAreaRect.width - newRoomRect.width) / 2;
+    const centerPanY = (roomAreaRect.height - newRoomRect.height) / 2;
+    const clampedPanX = Math.max(roomAreaRect.width - newRoomRect.width, Math.min(0, centerPanX));
+    const clampedPanY = Math.max(roomAreaRect.height - newRoomRect.height, Math.min(0, centerPanY));
+    document.documentElement.style.setProperty('--roomPanX', clampedPanX + 'px');
+    document.documentElement.style.setProperty('--roomPanY', clampedPanY + 'px');
+    roomRectangle = $('#room').getBoundingClientRect();
   });
 
   // Scroll wheel zoom with zoom-to-cursor (relative to #room)
