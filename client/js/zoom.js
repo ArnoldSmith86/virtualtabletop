@@ -13,9 +13,50 @@ function setZoomLevel(zoomLevel) {
 
 function resetZoomAndPan() {
   setZoomLevel(1);
-  document.documentElement.style.setProperty('--roomPanX', '0px');
-  document.documentElement.style.setProperty('--roomPanY', '0px');
+  setPan(0, 0);
   $('body').classList.remove('panning');
+}
+
+function setPan(x, y) {
+  // Clamp pan to valid range
+  const maxPanX = 1600 * scale * zoomScale - 1600 * scale;
+  const maxPanY = 1000 * scale * zoomScale - 1000 * scale;
+  const clampedPanX = Math.max(-maxPanX, Math.min(0, x));
+  const clampedPanY = Math.max(-maxPanY, Math.min(0, y));
+
+  document.documentElement.style.setProperty('--roomPanX', clampedPanX + 'px');
+  document.documentElement.style.setProperty('--roomPanY', clampedPanY + 'px');
+  roomRectangle = $('#room').getBoundingClientRect();
+}
+
+// set zoom level and pan so that the given point in the viewport remains at the same position on the screen
+function setZoomAroundPoint(newZoomLevel, viewportPixelX, viewportPixelY) {
+  // Calculate relative (0-1) location of point inside topSurface
+  const roomRect = $('#topSurface').getBoundingClientRect();
+  const relX = (viewportPixelX - roomRect.left) / roomRect.width;
+  const relY = (viewportPixelY - roomRect.top) / roomRect.height;
+
+  // Set new zoom level
+  if(newZoomLevel === zoomScale) return;
+  setZoomLevel(newZoomLevel);
+
+  const newRoomRect = $('#topSurface').getBoundingClientRect();
+  const roomAreaRect = $('#roomArea').getBoundingClientRect();
+
+  // Figure out how much we need to pan so the target lands under current mouse
+  const panX = (viewportPixelX - relX * newRoomRect.width - roomAreaRect.left);
+  const panY = (viewportPixelY - relY * newRoomRect.height - roomAreaRect.top);
+
+  // Clamp pan to allowed range based on room size and area size
+  setPan(panX, panY);
+}
+
+// set zoom level and pan so that the center of the visible room area remains at the same position on the screen
+function setZoomAroundCenter(newZoomLevel) {
+  const roomAreaRect = $('#roomArea').getBoundingClientRect();
+  const centerX = roomAreaRect.left + roomAreaRect.width / 2;
+  const centerY = roomAreaRect.top + roomAreaRect.height / 2;
+  setZoomAroundPoint(newZoomLevel, centerX, centerY);
 }
 
 onLoad(function() {
@@ -40,17 +81,7 @@ onLoad(function() {
       return;
     }
 
-    // Zoom to center of visible room area
-    setZoomLevel(targetZoom);
-    const newRoomRect = $('#topSurface').getBoundingClientRect();
-    const roomAreaRect = $('#roomArea').getBoundingClientRect();
-    const centerPanX = (roomAreaRect.width - newRoomRect.width) / 2;
-    const centerPanY = (roomAreaRect.height - newRoomRect.height) / 2;
-    const clampedPanX = Math.max(roomAreaRect.width - newRoomRect.width, Math.min(0, centerPanX));
-    const clampedPanY = Math.max(roomAreaRect.height - newRoomRect.height, Math.min(0, centerPanY));
-    document.documentElement.style.setProperty('--roomPanX', clampedPanX + 'px');
-    document.documentElement.style.setProperty('--roomPanY', clampedPanY + 'px');
-    roomRectangle = $('#room').getBoundingClientRect();
+    setZoomAroundCenter(targetZoom);
   });
 
   // Scroll wheel zoom with zoom-to-cursor (relative to #room)
@@ -59,45 +90,18 @@ onLoad(function() {
       return; // allow normal wheel behavior when an overlay is active
     e.preventDefault();
 
-    // Calculate relative (0-1) cursor location inside topSurface
-    const roomRect = $('#topSurface').getBoundingClientRect();
-    const relX = (e.clientX - roomRect.left) / roomRect.width;
-    const relY = (e.clientY - roomRect.top) / roomRect.height;
-
-    // Set new zoom level
     const delta = e.deltaY > 0 ? 0.85 : 1.15;
     const newZoomLevel = Math.max(1, Math.min(10, Math.round(zoomScale * delta * 10) / 10));
-    if(newZoomLevel === zoomScale) return;
-    setZoomLevel(newZoomLevel);
-
-    const newRoomRect = $('#topSurface').getBoundingClientRect();
-    const roomAreaRect = $('#roomArea').getBoundingClientRect();
-
-    // Figure out how much we need to pan so the target lands under current mouse
-    const panX = (e.clientX - relX * newRoomRect.width - roomAreaRect.left);
-    const panY = (e.clientY - relY * newRoomRect.height - roomAreaRect.top);
-
-    // Clamp pan to allowed range based on room size and area size
-    const finalPanX = Math.max(roomAreaRect.width - newRoomRect.width, Math.min(0, panX));
-    const finalPanY = Math.max(roomAreaRect.height - newRoomRect.height, Math.min(0, panY));
-    document.documentElement.style.setProperty('--roomPanX', finalPanX + 'px');
-    document.documentElement.style.setProperty('--roomPanY', finalPanY + 'px');
-    roomRectangle = $('#room').getBoundingClientRect();
+    setZoomAroundPoint(newZoomLevel, e.clientX, e.clientY);
   });
-
 
   // Page up/down zoom
   on('body', 'keydown', function(e){
-    if(e.key === 'PageUp') {
+    if(!overlayActive && !edit && (e.key === 'PageUp' || e.key === 'PageDown')) {
       e.preventDefault();
       const currentIndex = zoomLevels.indexOf(zoomScale);
-      const newIndex = Math.min(zoomLevels.length - 1, currentIndex + 1);
-      setZoomLevel(zoomLevels[newIndex]);
-    } else if(e.key === 'PageDown') {
-      e.preventDefault();
-      const currentIndex = zoomLevels.indexOf(zoomScale);
-      const newIndex = Math.max(0, currentIndex - 1);
-      setZoomLevel(zoomLevels[newIndex]);
+      const newIndex = e.key === 'PageUp' ? Math.min(zoomLevels.length - 1, currentIndex + 1) : Math.max(0, currentIndex - 1);
+      setZoomAroundCenter(zoomLevels[newIndex]);
     }
   });
 
@@ -128,44 +132,19 @@ onLoad(function() {
 
   // Middle-click toggle zoom (anchor under cursor)
   on('#roomArea', 'mousedown', function(e){
-    if(e.button !== 1)
+    if(e.button !== 1 || edit || overlayActive)
       return;
-    if(edit)
-      return; // disable middle-click zoom in edit mode
-    if(overlayActive)
-      return;
+
     e.preventDefault();
     e.stopPropagation();
     if(e.stopImmediatePropagation) e.stopImmediatePropagation();
 
-    // Compute relative cursor location inside topSurface
-    const roomRect = $('#topSurface').getBoundingClientRect();
-    const relX = (e.clientX - roomRect.left) / roomRect.width;
-    const relY = (e.clientY - roomRect.top) / roomRect.height;
-
-    // Decide target zoom: toggle 1x <-> 2x
-    const targetZoom = zoomScale === 1 ? 2 : 1;
-    if(targetZoom === zoomScale)
-      return;
-    setZoomLevel(targetZoom);
-
-    // Adjust pan to keep cursor anchored
-    const newRoomRect = $('#topSurface').getBoundingClientRect();
-    const roomAreaRect = $('#roomArea').getBoundingClientRect();
-    const panX = (e.clientX - relX * newRoomRect.width - roomAreaRect.left);
-    const panY = (e.clientY - relY * newRoomRect.height - roomAreaRect.top);
-    const finalPanX = Math.max(roomAreaRect.width - newRoomRect.width, Math.min(0, panX));
-    const finalPanY = Math.max(roomAreaRect.height - newRoomRect.height, Math.min(0, panY));
-    document.documentElement.style.setProperty('--roomPanX', finalPanX + 'px');
-    document.documentElement.style.setProperty('--roomPanY', finalPanY + 'px');
-    roomRectangle = $('#room').getBoundingClientRect();
+    setZoomAroundPoint(zoomScale === 1 ? 2 : 1, e.clientX, e.clientY);
   });
 
   // Swallow middle-button mouseup to avoid widget interactions
   on('#roomArea', 'mouseup', function(e){
-    if(e.button === 1) {
-      if(edit)
-        return; // nothing to swallow in edit mode
+    if(e.button === 1 && !edit && !overlayActive) {
       e.preventDefault();
       e.stopPropagation();
       if(e.stopImmediatePropagation) e.stopImmediatePropagation();
@@ -173,25 +152,8 @@ onLoad(function() {
   });
 
   on('body', 'mousemove', function(e){
-    if(isDraggingPan) {
-      const deltaX = e.clientX - dragStartX;
-      const deltaY = e.clientY - dragStartY;
-      
-      // Apply delta to pan position
-      const newPanX = panStartX + deltaX;
-      const newPanY = panStartY + deltaY;
-      
-      // Clamp pan to valid range
-      const maxPanX = 1600 * scale * zoomScale - 1600 * scale;
-      const maxPanY = 1000 * scale * zoomScale - 1000 * scale;
-      
-      const clampedPanX = Math.max(-maxPanX, Math.min(0, newPanX));
-      const clampedPanY = Math.max(-maxPanY, Math.min(0, newPanY));
-      
-      document.documentElement.style.setProperty('--roomPanX', clampedPanX + 'px');
-      document.documentElement.style.setProperty('--roomPanY', clampedPanY + 'px');
-      roomRectangle = $('#room').getBoundingClientRect();
-    }
+    if(isDraggingPan)
+      setPan(panStartX + (e.clientX - dragStartX), panStartY + (e.clientY - dragStartY));
   });
 
   on('body', 'mouseup', function(e){
@@ -203,7 +165,6 @@ onLoad(function() {
 
   // Touch: one-finger pan and pinch-to-zoom
   let touchState = {
-    active: false,
     isPanning: false,
     startX: 0,
     startY: 0,
@@ -280,50 +241,16 @@ onLoad(function() {
       if(touchOnMovable(e.touches[0]))
         return;
       e.preventDefault();
-      const deltaX = e.touches[0].clientX - touchState.startX;
-      const deltaY = e.touches[0].clientY - touchState.startY;
-
-      const newPanX = touchState.panStartX + deltaX;
-      const newPanY = touchState.panStartY + deltaY;
-
-      const roomRect = $('#topSurface').getBoundingClientRect();
-      const areaRect = $('#roomArea').getBoundingClientRect();
-      const maxPanX = areaRect.width - roomRect.width;
-      const maxPanY = areaRect.height - roomRect.height;
-
-      const clampedPanX = Math.max(maxPanX, Math.min(0, newPanX));
-      const clampedPanY = Math.max(maxPanY, Math.min(0, newPanY));
-
-      document.documentElement.style.setProperty('--roomPanX', clampedPanX + 'px');
-      document.documentElement.style.setProperty('--roomPanY', clampedPanY + 'px');
-      roomRectangle = $('#room').getBoundingClientRect();
+      setPan(touchState.panStartX + (e.touches[0].clientX - touchState.startX), touchState.panStartY + (e.touches[0].clientY - touchState.startY));
     } else if(touchState.isPinching && e.touches.length == 2) {
       // Cancel pinch if any finger is on a movable widget
       if(touchOnMovable(e.touches[0]) || touchOnMovable(e.touches[1]))
         return;
       e.preventDefault();
-      const dx = e.touches[0].clientX - e.touches[1].clientX;
-      const dy = e.touches[0].clientY - e.touches[1].clientY;
-      const dist = Math.hypot(dx, dy);
+      const dist = Math.hypot((e.touches[0].clientX - e.touches[1].clientX), (e.touches[0].clientY - e.touches[1].clientY));
       if(touchState.startDist <= 0)
         return;
-      let newZoom = Math.max(1, Math.min(10, Math.round((touchState.startZoom * (dist / touchState.startDist)) * 10) / 10));
-      if(newZoom === zoomScale)
-        return;
-      setZoomLevel(newZoom);
-
-      // Maintain anchor under midpoint
-      const newRoomRect = $('#topSurface').getBoundingClientRect();
-      const areaRect = $('#roomArea').getBoundingClientRect();
-      const midX = (e.touches[0].clientX + e.touches[1].clientX)/2;
-      const midY = (e.touches[0].clientY + e.touches[1].clientY)/2;
-      const panX = (midX - touchState.anchorRelX * newRoomRect.width - areaRect.left);
-      const panY = (midY - touchState.anchorRelY * newRoomRect.height - areaRect.top);
-      const finalPanX = Math.max(areaRect.width - newRoomRect.width, Math.min(0, panX));
-      const finalPanY = Math.max(areaRect.height - newRoomRect.height, Math.min(0, panY));
-      document.documentElement.style.setProperty('--roomPanX', finalPanX + 'px');
-      document.documentElement.style.setProperty('--roomPanY', finalPanY + 'px');
-      roomRectangle = $('#room').getBoundingClientRect();
+      setZoomAroundPoint(Math.max(1, Math.min(10, Math.round((touchState.startZoom * (dist / touchState.startDist)) * 10) / 10)), (e.touches[0].clientX + e.touches[1].clientX)/2, (e.touches[0].clientY + e.touches[1].clientY)/2);
     }
   });
 
