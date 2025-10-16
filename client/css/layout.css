@@ -546,56 +546,56 @@ body.aspectTooGood.hiddenToolbar {
       }
     }
 
-    @media (max-width: 460px) {
-      body.aspectTooGood #addButton {
-        display: none;
-      }
-    }
-
     @media (max-height: 230px) {
-      body:not(.horizontalToolbar) #addButton {
-        display: none;
-      }
-    }
-
-    @media (max-height: 200px) {
       body:not(.horizontalToolbar) #aboutButton {
         display: none;
       }
     }
 
-    @media (max-width: 410px) {
+    @media (max-width: 460px) {
       body.aspectTooGood #aboutButton {
         display: none;
       }
     }
 
-    @media (max-width: 360px) {
+    @media (max-width: 410px) {
       body.aspectTooGood #editButton {
         display: none;
       }
     }
 
-    @media (max-height: 170px) {
+    @media (max-height: 190px) {
       body:not(.horizontalToolbar) #editButton {
         display: none;
       }
     }
 
-    @media (max-height: 140px) {
+    @media (max-height: 160px) {
       body:not(.horizontalToolbar) #playersButton {
         display: none;
       }
     }
 
-    @media (max-width: 300px) {
+    @media (max-height: 120px) {
+      body:not(.horizontalToolbar) #zoom2xButton {
+        display: none;
+      }
+    }
+
+    @media (max-width: 350px) {
       body.aspectTooGood #playersButton {
         display: none;
       }
     }
 
-    @media (max-width: 250px) {
+    @media (max-width: 295px) {
       body.aspectTooGood #hideToolbarButton {
+        display: none;
+      }
+    }
+
+    @media (max-width: 250px) {
+      body.aspectTooGood #zoom2xButton {
         display: none;
       }
     }
@@ -607,25 +607,25 @@ body.aspectTooGood.hiddenToolbar {
     }
 
     @media (max-width: 320px) {
-      body.horizontalToolbar #addButton {
-        display: none;
-      }
-    }
-
-    @media (max-width: 300px) {
       body.horizontalToolbar #aboutButton {
         display: none;
       }
     }
 
-    @media (max-width: 245px) {
+    @media (max-width: 260px) {
       body.horizontalToolbar #editButton {
         display: none;
       }
     }
 
-    @media (max-width: 190px) {
+    @media (max-width: 220px) {
       body.horizontalToolbar #playersButton {
+        display: none;
+      }
+    }
+
+    @media (max-width: 160px) {
+      body.horizontalToolbar #zoom2xButton {
         display: none;
       }
     }
