@@ -765,10 +765,6 @@ body.zoom2x #room {
   transform-origin: left top;
 }
 
-body.zoom2x .movable.widget {
-  cursor: default;
-}
-
 body.panning {
   cursor: grabbing;
 }
@@ -779,6 +775,10 @@ body.zoom2x #roomArea {
 
 body.panning #roomArea {
   cursor: grabbing;
+}
+
+body.zoom2x .movable.widget, body.zoom2x.edit #roomArea {
+  cursor: default;
 }
 
 ::-webkit-scrollbar {

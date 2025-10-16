@@ -709,6 +709,8 @@ onLoad(function() {
   on('#roomArea', 'mousedown', function(e){
     if(e.button !== 0)
       return;
+    if(edit)
+      return; // disable panning in edit mode
     if(currentZoomLevel > 1 && !isDraggingPan) {
       // Check if clicking on a draggable widget
       let target = e.target;
@@ -732,6 +734,8 @@ onLoad(function() {
   on('#roomArea', 'mousedown', function(e){
     if(e.button !== 1)
       return;
+    if(edit)
+      return; // disable middle-click zoom in edit mode
     if(overlayActive)
       return;
     e.preventDefault();
@@ -764,6 +768,8 @@ onLoad(function() {
   // Swallow middle-button mouseup to avoid widget interactions
   on('#roomArea', 'mouseup', function(e){
     if(e.button === 1) {
+      if(edit)
+        return; // nothing to swallow in edit mode
       e.preventDefault();
       e.stopPropagation();
       if(e.stopImmediatePropagation) e.stopImmediatePropagation();
@@ -833,6 +839,8 @@ onLoad(function() {
   on('#roomArea', 'touchstart', function(e){
     if(overlayActive)
       return;
+    if(edit)
+      return; // disable touch pan/zoom in edit mode
     if(e.touches.length == 1) {
       // Start panning only when zoomed and not on draggable widget
       if(currentZoomLevel > 1) {
@@ -869,6 +877,8 @@ onLoad(function() {
   on('#roomArea', 'touchmove', function(e){
     if(overlayActive)
       return;
+    if(edit)
+      return; // disable touch pan/zoom in edit mode
     if(touchState.isPanning && e.touches.length == 1) {
       // Stop panning if finger moved onto a movable widget
       if(touchOnMovable(e.touches[0]))
