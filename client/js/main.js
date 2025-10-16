@@ -548,6 +548,23 @@ async function toggleEditMode() {
   setScale();
 }
 
+function resetZoomAndPan() {
+  currentZoomLevel = 1;
+  document.documentElement.style.setProperty('--roomZoom', 1);
+  document.documentElement.style.setProperty('--roomPanX', '0px');
+  document.documentElement.style.setProperty('--roomPanY', '0px');
+  $('body').classList.remove('zoom2x');
+  $('body').classList.remove('panning');
+  zoomScale = 1;
+  const button = $('#zoom2xButton');
+  if(button) {
+    const tooltip = button.querySelector('.tooltip');
+    if(tooltip)
+      tooltip.textContent = `1x Zoom`;
+  }
+  roomRectangle = $('#room').getBoundingClientRect();
+}
+
 onLoad(function() {
   on('#pileOverlay', 'click', e=>e.target.id=='pileOverlay'&&showOverlay());
 
