@@ -1,46 +1,21 @@
 let zoomScale = 1;
-let currentZoomLevel = 1;
 
 function setZoomLevel(zoomLevel) {
-  currentZoomLevel = zoomLevel;
+  zoomScale = zoomLevel;
   
-  // Update button text to show current zoom
-  const button = $('#zoom2xButton');
-  const tooltip = button.querySelector('.tooltip');
-  tooltip.textContent = `${currentZoomLevel}x Zoom`;
-  
-  if(currentZoomLevel === 1) {
-    // Normal zoom - disable panning
-    $('body').classList.remove('zoom2x');
-    document.documentElement.style.setProperty('--roomZoom', 1);
-    document.documentElement.style.setProperty('--roomPanX', '0px');
-    document.documentElement.style.setProperty('--roomPanY', '0px');
-    zoomScale = 1;
-  } else {
-    // Zoomed mode - enable panning
-    $('body').classList.add('zoom2x');
-    document.documentElement.style.setProperty('--roomZoom', currentZoomLevel);
-    
-    zoomScale = currentZoomLevel;
-  }
+  $('#zoom2xButton .tooltip').textContent = `${zoomScale}x Zoom`;
+
+  // Zoomed mode - enable panning
+  $('body').classList.toggle('zoom2x', zoomScale > 1);
+  document.documentElement.style.setProperty('--roomZoom', zoomScale);
   roomRectangle = $('#room').getBoundingClientRect();
 }
 
 function resetZoomAndPan() {
-  currentZoomLevel = 1;
-  document.documentElement.style.setProperty('--roomZoom', 1);
+  setZoomLevel(1);
   document.documentElement.style.setProperty('--roomPanX', '0px');
   document.documentElement.style.setProperty('--roomPanY', '0px');
-  $('body').classList.remove('zoom2x');
   $('body').classList.remove('panning');
-  zoomScale = 1;
-  const button = $('#zoom2xButton');
-  if(button) {
-    const tooltip = button.querySelector('.tooltip');
-    if(tooltip)
-      tooltip.textContent = `1x Zoom`;
-  }
-  roomRectangle = $('#room').getBoundingClientRect();
 }
 
 onLoad(function() {
@@ -55,7 +30,7 @@ onLoad(function() {
   // Button click cycles through zoom levels (only main levels)
   on('#zoom2xButton', 'click', function(e){
     const mainZoomLevels = [1, 1.5, 2];
-    const currentIndex = mainZoomLevels.indexOf(currentZoomLevel);
+    const currentIndex = mainZoomLevels.indexOf(zoomScale);
     const nextIndex = (currentIndex + 1) % mainZoomLevels.length;
     const targetZoom = mainZoomLevels[nextIndex];
 
@@ -91,8 +66,8 @@ onLoad(function() {
 
     // Set new zoom level
     const delta = e.deltaY > 0 ? 0.85 : 1.15;
-    const newZoomLevel = Math.max(1, Math.min(10, Math.round(currentZoomLevel * delta * 10) / 10));
-    if(newZoomLevel === currentZoomLevel) return;
+    const newZoomLevel = Math.max(1, Math.min(10, Math.round(zoomScale * delta * 10) / 10));
+    if(newZoomLevel === zoomScale) return;
     setZoomLevel(newZoomLevel);
 
     const newRoomRect = $('#topSurface').getBoundingClientRect();
@@ -115,12 +90,12 @@ onLoad(function() {
   on('body', 'keydown', function(e){
     if(e.key === 'PageUp') {
       e.preventDefault();
-      const currentIndex = zoomLevels.indexOf(currentZoomLevel);
+      const currentIndex = zoomLevels.indexOf(zoomScale);
       const newIndex = Math.min(zoomLevels.length - 1, currentIndex + 1);
       setZoomLevel(zoomLevels[newIndex]);
     } else if(e.key === 'PageDown') {
       e.preventDefault();
-      const currentIndex = zoomLevels.indexOf(currentZoomLevel);
+      const currentIndex = zoomLevels.indexOf(zoomScale);
       const newIndex = Math.max(0, currentIndex - 1);
       setZoomLevel(zoomLevels[newIndex]);
     }
@@ -132,7 +107,7 @@ onLoad(function() {
       return;
     if(edit)
       return; // disable panning in edit mode
-    if(currentZoomLevel > 1 && !isDraggingPan) {
+    if(zoomScale > 1 && !isDraggingPan) {
       // Check if clicking on a draggable widget
       let target = e.target;
       while(target && (!target.id || target.id.slice(0,2) != 'w_' || !target.classList.contains('movable') || !widgets.has(unescapeID(target.id.slice(2))))) {
@@ -169,8 +144,8 @@ onLoad(function() {
     const relY = (e.clientY - roomRect.top) / roomRect.height;
 
     // Decide target zoom: toggle 1x <-> 2x
-    const targetZoom = currentZoomLevel === 1 ? 2 : 1;
-    if(targetZoom === currentZoomLevel)
+    const targetZoom = zoomScale === 1 ? 2 : 1;
+    if(targetZoom === zoomScale)
       return;
     setZoomLevel(targetZoom);
 
@@ -207,8 +182,8 @@ onLoad(function() {
       const newPanY = panStartY + deltaY;
       
       // Clamp pan to valid range
-      const maxPanX = 1600 * scale * currentZoomLevel - 1600 * scale;
-      const maxPanY = 1000 * scale * currentZoomLevel - 1000 * scale;
+      const maxPanX = 1600 * scale * zoomScale - 1600 * scale;
+      const maxPanY = 1000 * scale * zoomScale - 1000 * scale;
       
       const clampedPanX = Math.max(-maxPanX, Math.min(0, newPanX));
       const clampedPanY = Math.max(-maxPanY, Math.min(0, newPanY));
@@ -264,7 +239,7 @@ onLoad(function() {
       return; // disable touch pan/zoom in edit mode
     if(e.touches.length == 1) {
       // Start panning only when zoomed and not on draggable widget
-      if(currentZoomLevel > 1) {
+      if(zoomScale > 1) {
         // Block if finger is on a movable widget
         if(!touchOnMovable(e.touches[0])) {
           touchState.isPanning = true;
@@ -282,7 +257,7 @@ onLoad(function() {
         return;
       touchState.isPanning = false;
       touchState.isPinching = true;
-      touchState.startZoom = currentZoomLevel;
+      touchState.startZoom = zoomScale;
       const dx = e.touches[0].clientX - e.touches[1].clientX;
       const dy = e.touches[0].clientY - e.touches[1].clientY;
       touchState.startDist = Math.hypot(dx, dy);
@@ -333,7 +308,7 @@ onLoad(function() {
       if(touchState.startDist <= 0)
         return;
       let newZoom = Math.max(1, Math.min(10, Math.round((touchState.startZoom * (dist / touchState.startDist)) * 10) / 10));
-      if(newZoom === currentZoomLevel)
+      if(newZoom === zoomScale)
         return;
       setZoomLevel(newZoom);
 
