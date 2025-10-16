@@ -780,16 +780,29 @@ onLoad(function() {
     anchorRelY: 0.5
   };
 
+  function elementIsMovableWidget(el) {
+    while(el) {
+      if(el.id && el.id.slice(0,2) == 'w_' && el.classList && el.classList.contains('movable'))
+        if(widgets.has(unescapeID(el.id.slice(2))))
+          return true;
+      el = el.parentNode;
+    }
+    return false;
+  }
+
+  function touchOnMovable(touch) {
+    const el = document.elementFromPoint(touch.clientX, touch.clientY);
+    return elementIsMovableWidget(el);
+  }
+
   on('#roomArea', 'touchstart', function(e){
     if(overlayActive)
       return;
     if(e.touches.length == 1) {
       // Start panning only when zoomed and not on draggable widget
       if(currentZoomLevel > 1) {
-        let target = e.target;
-        while(target && (!target.id || target.id.slice(0,2) != 'w_' || !target.classList.contains('movable') || !widgets.has(unescapeID(target.id.slice(2)))))
-          target = target.parentNode;
-        if(!target || !target.id) {
+        // Block if finger is on a movable widget
+        if(!touchOnMovable(e.touches[0])) {
           touchState.isPanning = true;
           touchState.startX = e.touches[0].clientX;
           touchState.startY = e.touches[0].clientY;
@@ -800,6 +813,9 @@ onLoad(function() {
       }
     } else if(e.touches.length == 2) {
       // Pinch start
+      // If any finger is on a movable widget, do not pinch-zoom
+      if(touchOnMovable(e.touches[0]) || touchOnMovable(e.touches[1]))
+        return;
       touchState.isPanning = false;
       touchState.isPinching = true;
       touchState.startZoom = currentZoomLevel;
@@ -819,6 +835,9 @@ onLoad(function() {
     if(overlayActive)
       return;
     if(touchState.isPanning && e.touches.length == 1) {
+      // Stop panning if finger moved onto a movable widget
+      if(touchOnMovable(e.touches[0]))
+        return;
       e.preventDefault();
       const deltaX = e.touches[0].clientX - touchState.startX;
       const deltaY = e.touches[0].clientY - touchState.startY;
@@ -838,6 +857,9 @@ onLoad(function() {
       document.documentElement.style.setProperty('--roomPanY', clampedPanY + 'px');
       roomRectangle = $('#room').getBoundingClientRect();
     } else if(touchState.isPinching && e.touches.length == 2) {
+      // Cancel pinch if any finger is on a movable widget
+      if(touchOnMovable(e.touches[0]) || touchOnMovable(e.touches[1]))
+        return;
       e.preventDefault();
       const dx = e.touches[0].clientX - e.touches[1].clientX;
       const dy = e.touches[0].clientY - e.touches[1].clientY;
