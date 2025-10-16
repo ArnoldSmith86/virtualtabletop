@@ -781,6 +781,8 @@ onLoad(function() {
   };
 
   on('#roomArea', 'touchstart', function(e){
+    if(overlayActive)
+      return;
     if(e.touches.length == 1) {
       // Start panning only when zoomed and not on draggable widget
       if(currentZoomLevel > 1) {
@@ -814,6 +816,8 @@ onLoad(function() {
   });
 
   on('#roomArea', 'touchmove', function(e){
+    if(overlayActive)
+      return;
     if(touchState.isPanning && e.touches.length == 1) {
       e.preventDefault();
       const deltaX = e.touches[0].clientX - touchState.startX;
