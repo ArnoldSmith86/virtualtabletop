@@ -102,7 +102,10 @@ class GridButton extends PersistentToolbarToggleButton {
       $('#gridOverlay > .modal').appendChild(document.createElement('div').appendChild(cancelButton));
     } else {
       $('body').classList.remove('gridLines', 'gridLines33', 'gridLines25', 'gridLines20');
-      document.querySelector('#gridOverlay').style.display = 'none';  
+      const gridOverlay = document.querySelector('#gridOverlay');
+      if (gridOverlay && gridOverlay.style.display !== 'none') {
+        showOverlay('gridOverlay');
+      }  
     }
   }
 }
