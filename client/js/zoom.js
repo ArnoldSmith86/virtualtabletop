@@ -7,7 +7,7 @@ function setZoomLevel(zoomLevel) {
 
   // Zoomed mode - enable panning
   $('body').classList.toggle('zoom2x', zoomScale > 1);
-  document.documentElement.style.setProperty('--roomZoom', zoomScale);
+  document.documentElement.style.setProperty('--zoom', zoomScale);
   roomRectangle = $('#room').getBoundingClientRect();
 }
 

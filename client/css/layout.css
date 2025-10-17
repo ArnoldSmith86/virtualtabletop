@@ -23,6 +23,7 @@
   --positiveInput: #009502;
   --negativeInput: #950000;
   --neutralInput: #1f5ca6;
+  --zoom: 1;
   --roomZoom: 1;
   --roomPanX: 0px;
   --roomPanY: 0px;
@@ -761,7 +762,7 @@ body.zoom2x #roomArea {
 }
 
 body.zoom2x #room {
-  transform: translate(var(--roomPanX), var(--roomPanY)) scale(calc(var(--scale) * var(--roomZoom))) ;
+  transform: translate(var(--roomPanX), var(--roomPanY)) scale(calc(var(--scale) * var(--zoom))) ;
   transform-origin: left top;
 }
 
