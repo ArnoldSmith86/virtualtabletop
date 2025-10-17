@@ -123,16 +123,13 @@ onLoad(function() {
 
   // Drag to pan functionality (left mouse only)
   on('#roomArea', 'mousedown', function(e){
-    if(e.button === 0 && !edit && !overlayActive && zoomScale > 1 && !isDraggingPan) {
-      // Only start panning if not clicking on a widget
-      if(!elementIsMovableWidget(e.target)) {
-        isDraggingPan = true;
-        dragStartX = e.clientX;
-        dragStartY = e.clientY;
-        panStartX = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--roomPanX')) || 0;
-        panStartY = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--roomPanY')) || 0;
-        $('body').classList.add('panning');
-      }
+    if(e.button === 0 && !edit && !overlayActive && zoomScale > 1 && !isDraggingPan && !elementIsMovableWidget(e.target)) {
+      isDraggingPan = true;
+      dragStartX = e.clientX;
+      dragStartY = e.clientY;
+      panStartX = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--roomPanX')) || 0;
+      panStartY = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--roomPanY')) || 0;
+      $('body').classList.add('panning');
     }
   });
 
@@ -190,28 +187,16 @@ onLoad(function() {
   }
 
   on('#roomArea', 'touchstart', function(e){
-    if(overlayActive)
-      return;
-    if(edit)
-      return; // disable touch pan/zoom in edit mode
-    if(e.touches.length == 1) {
-      // Start panning only when zoomed and not on draggable widget
-      if(zoomScale > 1) {
-        // Block if finger is on a movable widget
-        if(!touchOnMovable(e.touches[0])) {
-          touchState.isPanning = true;
-          touchState.startX = e.touches[0].clientX;
-          touchState.startY = e.touches[0].clientY;
-          touchState.panStartX = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--roomPanX')) || 0;
-          touchState.panStartY = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--roomPanY')) || 0;
-          $('body').classList.add('panning');
-        }
-      }
-    } else if(e.touches.length == 2) {
-      // Pinch start
-      // If any finger is on a movable widget, do not pinch-zoom
-      if(touchOnMovable(e.touches[0]) || touchOnMovable(e.touches[1]))
-        return;
+    // Start panning only when zoomed and not on draggable widget
+    // Block if finger is on a movable widget
+    if(!edit && !overlayActive && zoomScale > 1 && e.touches.length == 1 && !touchOnMovable(e.touches[0])) {
+      touchState.isPanning = true;
+      touchState.startX = e.touches[0].clientX;
+      touchState.startY = e.touches[0].clientY;
+      touchState.panStartX = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--roomPanX')) || 0;
+      touchState.panStartY = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--roomPanY')) || 0;
+      $('body').classList.add('panning');
+    } else if(!overlayActive && e.touches.length == 2 && !touchOnMovable(e.touches[0]) && !touchOnMovable(e.touches[1])) {
       touchState.isPanning = false;
       touchState.isPinching = true;
       touchState.startZoom = zoomScale;
@@ -228,20 +213,10 @@ onLoad(function() {
   });
 
   on('#roomArea', 'touchmove', function(e){
-    if(overlayActive)
-      return;
-    if(edit)
-      return; // disable touch pan/zoom in edit mode
-    if(touchState.isPanning && e.touches.length == 1) {
-      // Stop panning if finger moved onto a movable widget
-      if(touchOnMovable(e.touches[0]))
-        return;
+    if(touchState.isPanning && e.touches.length == 1 && !touchOnMovable(e.touches[0])) {
       e.preventDefault();
       setPan(touchState.panStartX + (e.touches[0].clientX - touchState.startX), touchState.panStartY + (e.touches[0].clientY - touchState.startY));
-    } else if(touchState.isPinching && e.touches.length == 2) {
-      // Cancel pinch if any finger is on a movable widget
-      if(touchOnMovable(e.touches[0]) || touchOnMovable(e.touches[1]))
-        return;
+    } else if(touchState.isPinching && e.touches.length == 2 && !touchOnMovable(e.touches[0]) && !touchOnMovable(e.touches[1])) {
       e.preventDefault();
       const dist = Math.hypot((e.touches[0].clientX - e.touches[1].clientX), (e.touches[0].clientY - e.touches[1].clientY));
       if(touchState.startDist <= 0)
