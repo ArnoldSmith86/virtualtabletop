@@ -76,6 +76,8 @@ onLoad(function() {
   let dragStartY = 0;
   let panStartX = 0;
   let panStartY = 0;
+  let lastWheelZoomTime = 0;
+  const minWheelZoomInterval = 40; // milliseconds between zoom events
 
   // Button click cycles through zoom levels (only main levels)
   on('#zoom2xButton', 'click', function(e){
@@ -98,6 +100,11 @@ onLoad(function() {
     if(overlayActive)
       return; // allow normal wheel behavior when an overlay is active
     e.preventDefault();
+
+    const now = Date.now();
+    if(now - lastWheelZoomTime < minWheelZoomInterval)
+      return; // throttle zoom events to prevent excessive zoom speed
+    lastWheelZoomTime = now;
 
     const delta = e.deltaY > 0 ? 0.85 : 1.15;
     const newZoomLevel = Math.max(1, Math.min(10, Math.round(zoomScale * delta * 10) / 10));
