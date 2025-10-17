@@ -29,6 +29,15 @@ function setPan(x, y) {
   roomRectangle = $('#room').getBoundingClientRect();
 }
 
+function elementIsMovableWidget(el) {
+  while(el) {
+    if(el.id && el.id.slice(0,2) == 'w_' && el.classList && (el.classList.contains('movable') || el.classList.contains('canvas')) && widgets.has(unescapeID(el.id.slice(2))))
+      return true;
+    el = el.parentNode;
+  }
+  return false;
+}
+
 // set zoom level and pan so that the given point in the viewport remains at the same position on the screen
 function setZoomAroundPoint(newZoomLevel, viewportPixelX, viewportPixelY) {
   // Calculate relative (0-1) location of point inside topSurface
@@ -107,19 +116,9 @@ onLoad(function() {
 
   // Drag to pan functionality (left mouse only)
   on('#roomArea', 'mousedown', function(e){
-    if(e.button !== 0)
-      return;
-    if(edit)
-      return; // disable panning in edit mode
-    if(zoomScale > 1 && !isDraggingPan) {
-      // Check if clicking on a draggable widget
-      let target = e.target;
-      while(target && (!target.id || target.id.slice(0,2) != 'w_' || !target.classList.contains('movable') || !widgets.has(unescapeID(target.id.slice(2))))) {
-        target = target.parentNode;
-      }
-      
+    if(e.button === 0 && !edit && !overlayActive && zoomScale > 1 && !isDraggingPan) {
       // Only start panning if not clicking on a widget
-      if(!target || !target.id) {
+      if(!elementIsMovableWidget(e.target)) {
         isDraggingPan = true;
         dragStartX = e.clientX;
         dragStartY = e.clientY;
@@ -177,16 +176,6 @@ onLoad(function() {
     anchorRelX: 0.5,
     anchorRelY: 0.5
   };
-
-  function elementIsMovableWidget(el) {
-    while(el) {
-      if(el.id && el.id.slice(0,2) == 'w_' && el.classList && el.classList.contains('movable'))
-        if(widgets.has(unescapeID(el.id.slice(2))))
-          return true;
-      el = el.parentNode;
-    }
-    return false;
-  }
 
   function touchOnMovable(touch) {
     const el = document.elementFromPoint(touch.clientX, touch.clientY);
