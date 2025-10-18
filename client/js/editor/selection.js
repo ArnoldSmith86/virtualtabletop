@@ -10,6 +10,9 @@ let draggingDragButton = null;
 let widgetRectangles = null;
 
 export function editInputHandler(name, e) {
+  if(e.touches && e.touches.length == 2)
+    hideSelectionRectangle();
+
   const isRightMouseButton = name.startsWith('mouse') && (e.button == 2 || e.buttons == 2);
   if(isRightMouseButton) {
     $('#editorToolbar [icon=highlight_alt]').classList.toggle('active', !selectionModeActive);
