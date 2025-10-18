@@ -10,7 +10,7 @@
       "mode": "vs",
       "time": "40-60",
       "attribution": "Implementation, assets and scripting are by Mitchell Stolycia and are released via CC BY 4.0.",
-      "lastUpdate": 1759973110770,
+      "lastUpdate": 1760639226214,
       "showName": true,
       "skill": "",
       "description": "Eight contestants enter the house. Over the course of five weeks, the least popular are publicly voted out until only three remain.\n\nThis... is Ad Populum.",
@@ -19,11 +19,11 @@
       "similarDesigner": "Reiner Knizia",
       "similarAwards": "",
       "ruleText": "",
-      "helpText": "<div>Players (you!) will always be referred to as \"players\".</div><div><br></div><div>Cards representing the contestants in the house and the ghost which \nhaunts it are referred to as \"people\" or a \"person\".</div><div><br></div><div><b>Setup</b></div><div><ol><li>Take your seats.</li><li>Press the <i>Setup</i> button.</li><li>Choose the type of setup you would like.</li><ul><li>If a custom setup of person cards is desired, drag the cards you would like to the eight red-bordered holders before clicking setup.</li></ul><li>Any cards not used will still be present and visible, in case you want to setup again.</li></ol></div><div><b>Your turn</b></div><blockquote><div>To play, drag cards from your hand (bottom right) to the board.</div><div><br></div><div>Bets are placed by dragging the five betting chips from next to your seat to the play area.</div><div><br></div><div>To make a secret bet, drag a card onto the table and place a betting chip on top of it.</div></blockquote><div><b>End turn</b></div><blockquote><div>End your turn by clicking&nbsp;<i>End turn</i>. This will refill your hand to eight cards automatically.</div></blockquote><div><b>Scoring</b></div><blockquote><div>Scoring only occurs at the end of the game. Do this manually by using the counters by your seats.</div></blockquote><div><b>Misc.</b></div><blockquote><div>The red X cards are used to represent a person who has been voted off the show (has the least popularity at the end of a round).</div><div><br></div><div>The&nbsp;<b><i>Draw 3 cards </i></b>person ability has to be executed manually by dragging three cards from the deck to your hand.</div></blockquote>",
-      "variantImage": "",
-      "variant": "Ad Populum",
+      "helpText": "<div>Players (you!) will always be referred to as \"players\".</div><div><br></div><div>Cards representing the contestants in the house and the ghost which \nhaunts it are referred to as \"people\" or a \"person\".</div><div><br></div><div><b>Setup</b></div><div><ol><li>Take your seats.</li><li>Press the <i>Setup</i> button.</li><li>Choose the type of setup you would like.</li><ul><li>If a custom setup of person cards is desired, drag the cards you would like to the eight red-bordered holders before clicking setup. Any of these holders left empty will be filled with a random person.</li></ul><li>Any cards not used will still be present and visible, in case you want to setup again.</li></ol></div><div><b>Your turn</b></div><blockquote><div>To play, drag cards from your hand (bottom right) to the board.</div><div><br></div><div>Bets are placed by dragging the five betting chips from next to your seat to the play area.</div><div><br></div><div>To make a secret bet, drag a card onto the table and place a betting chip on top of it.</div></blockquote><div><b>End turn</b></div><blockquote><div>End your turn by clicking&nbsp;<i>End turn</i>. This will refill your hand to eight cards automatically.</div></blockquote><div><b>Scoring</b></div><blockquote><div>Scoring only occurs at the end of the game. Do this manually by using the counters by your seats.</div></blockquote><div><b>Red X cards</b></div><blockquote><div>The red X cards are used to represent a person who has been voted off the show (has the least popularity at the end of a round).</div></blockquote><div><b>Complex person abilities</b></div><blockquote><div>Some of the person abilities are complicated to&nbsp;manually perform in VTT.&nbsp;For this reason, an <i>Ability </i>button will appear when playing with any of the following three people: <b>cyan; grey; and pale yellow.</b></div><div><br></div><div>Only click the&nbsp;<i>Ability&nbsp;</i>button on your turn.</div><div>An input menu will pop up. Follow the instructions accordingly.</div><div><br></div><div>The <b>pale yellow person</b> has a designated holder. When used, half of the selected player's hand will be randomly dealt to this holder. The player who lost these cards should manually draw them before ending their turn.</div><div>Should this ability be used again before the player can retrieve their cards, remove the existing pile from the holder to free up space.</div></blockquote>",
+      "players": "2-5",
       "language": "en-GB",
-      "players": "2-5"
+      "variant": "Ad Populum",
+      "variantImage": "/assets/-884620048_5504"
     }
   },
   "2xwe 5.jpg": {
@@ -31,8 +31,9 @@
     "id": "2xwe 5.jpg",
     "deck": "roundDeck",
     "cardType": "5.jpg",
-    "z": 71397,
-    "parent": "grid9"
+    "z": 16,
+    "parent": "grid9",
+    "dropLimit": 1
   },
   "2xwe 0.jpg": {
     "type": "card",
@@ -40,7 +41,7 @@
     "deck": "roundDeck",
     "cardType": "0.jpg",
     "activeFace": 1,
-    "z": 71407,
+    "z": 21,
     "parent": "grid22"
   },
   "2xwe 1.jpg": {
@@ -49,7 +50,7 @@
     "deck": "roundDeck",
     "cardType": "1.jpg",
     "activeFace": 1,
-    "z": 71405,
+    "z": 20,
     "parent": "grid21"
   },
   "2xwe 2.jpg": {
@@ -58,7 +59,7 @@
     "deck": "roundDeck",
     "cardType": "2.jpg",
     "activeFace": 1,
-    "z": 71403,
+    "z": 19,
     "parent": "grid20"
   },
   "2xwe 3.jpg": {
@@ -67,7 +68,7 @@
     "deck": "roundDeck",
     "cardType": "3.jpg",
     "activeFace": 1,
-    "z": 71401,
+    "z": 18,
     "parent": "grid19"
   },
   "2xwe 4.jpg": {
@@ -75,7 +76,7 @@
     "id": "2xwe 4.jpg",
     "deck": "roundDeck",
     "cardType": "4.jpg",
-    "z": 71399,
+    "z": 17,
     "parent": "grid18"
   },
   "roundDeck": {
@@ -151,7 +152,7 @@
         ]
       }
     ],
-    "z": 44
+    "z": 13
   },
   "grid0": {
     "type": "holder",
@@ -182,7 +183,9 @@
     "movable": false,
     "movableInEdit": true,
     "width": 87,
-    "height": 150
+    "height": 150,
+    "dropLimit": 1,
+    "preventPiles": true
   },
   "grid18": {
     "type": "holder",
@@ -194,7 +197,9 @@
     "movable": false,
     "movableInEdit": true,
     "width": 87,
-    "height": 150
+    "height": 150,
+    "dropLimit": 1,
+    "preventPiles": true
   },
   "grid19": {
     "type": "holder",
@@ -206,7 +211,9 @@
     "movable": false,
     "movableInEdit": true,
     "width": 87,
-    "height": 150
+    "height": 150,
+    "dropLimit": 1,
+    "preventPiles": true
   },
   "grid20": {
     "type": "holder",
@@ -218,7 +225,9 @@
     "movable": false,
     "movableInEdit": true,
     "width": 87,
-    "height": 150
+    "height": 150,
+    "dropLimit": 1,
+    "preventPiles": true
   },
   "grid21": {
     "type": "holder",
@@ -230,7 +239,9 @@
     "movable": false,
     "movableInEdit": true,
     "width": 87,
-    "height": 150
+    "height": 150,
+    "dropLimit": 1,
+    "preventPiles": true
   },
   "grid22": {
     "type": "holder",
@@ -242,7 +253,9 @@
     "movable": false,
     "movableInEdit": true,
     "width": 87,
-    "height": 150
+    "height": 150,
+    "dropLimit": 1,
+    "preventPiles": true
   },
   "grid23": {
     "type": "holder",
@@ -254,7 +267,8 @@
     "movableInEdit": true,
     "inheritFrom": "grid0",
     "width": 87,
-    "height": 150
+    "height": 150,
+    "preventPiles": true
   },
   "grid24": {
     "type": "holder",
@@ -266,7 +280,8 @@
     "movableInEdit": true,
     "inheritFrom": "grid0",
     "width": 87,
-    "height": 150
+    "height": 150,
+    "preventPiles": true
   },
   "grid25": {
     "type": "holder",
@@ -278,7 +293,8 @@
     "movableInEdit": true,
     "inheritFrom": "grid0",
     "width": 87,
-    "height": 150
+    "height": 150,
+    "preventPiles": true
   },
   "grid26": {
     "type": "holder",
@@ -290,7 +306,8 @@
     "movableInEdit": true,
     "inheritFrom": "grid0",
     "width": 87,
-    "height": 150
+    "height": 150,
+    "preventPiles": true
   },
   "grid27": {
     "type": "holder",
@@ -302,7 +319,8 @@
     "movableInEdit": true,
     "inheritFrom": "grid0",
     "width": 87,
-    "height": 150
+    "height": 150,
+    "preventPiles": true
   },
   "grid28": {
     "type": "holder",
@@ -314,7 +332,8 @@
     "movableInEdit": true,
     "inheritFrom": "grid0",
     "width": 87,
-    "height": 150
+    "height": 150,
+    "preventPiles": true
   },
   "grid29": {
     "type": "holder",
@@ -326,7 +345,8 @@
     "movableInEdit": true,
     "inheritFrom": "grid0",
     "width": 87,
-    "height": 150
+    "height": 150,
+    "preventPiles": true
   },
   "grid30": {
     "type": "holder",
@@ -338,7 +358,8 @@
     "movableInEdit": true,
     "inheritFrom": "grid0",
     "width": 87,
-    "height": 150
+    "height": 150,
+    "preventPiles": true
   },
   "grid31": {
     "type": "holder",
@@ -350,7 +371,8 @@
     "movableInEdit": true,
     "inheritFrom": "grid0",
     "width": 87,
-    "height": 150
+    "height": 150,
+    "preventPiles": true
   },
   "grid32": {
     "type": "holder",
@@ -362,7 +384,8 @@
     "movableInEdit": true,
     "inheritFrom": "grid0",
     "width": 87,
-    "height": 150
+    "height": 150,
+    "preventPiles": true
   },
   "grid33": {
     "type": "holder",
@@ -374,7 +397,8 @@
     "movableInEdit": true,
     "inheritFrom": "grid0",
     "width": 87,
-    "height": 150
+    "height": 150,
+    "preventPiles": true
   },
   "grid34": {
     "type": "holder",
@@ -386,7 +410,8 @@
     "movableInEdit": true,
     "inheritFrom": "grid0",
     "width": 87,
-    "height": 150
+    "height": 150,
+    "preventPiles": true
   },
   "grid35": {
     "type": "holder",
@@ -398,7 +423,8 @@
     "movableInEdit": true,
     "inheritFrom": "grid0",
     "width": 87,
-    "height": 150
+    "height": 150,
+    "preventPiles": true
   },
   "grid36": {
     "type": "holder",
@@ -410,7 +436,8 @@
     "movableInEdit": true,
     "inheritFrom": "grid0",
     "width": 87,
-    "height": 150
+    "height": 150,
+    "preventPiles": true
   },
   "grid37": {
     "type": "holder",
@@ -422,7 +449,8 @@
     "movableInEdit": true,
     "inheritFrom": "grid0",
     "width": 87,
-    "height": 150
+    "height": 150,
+    "preventPiles": true
   },
   "grid38": {
     "type": "holder",
@@ -434,7 +462,8 @@
     "movableInEdit": true,
     "inheritFrom": "grid0",
     "width": 87,
-    "height": 150
+    "height": 150,
+    "preventPiles": true
   },
   "grid39": {
     "type": "holder",
@@ -446,7 +475,8 @@
     "movableInEdit": true,
     "inheritFrom": "grid0",
     "width": 87,
-    "height": 150
+    "height": 150,
+    "preventPiles": true
   },
   "grid40": {
     "type": "holder",
@@ -458,7 +488,8 @@
     "movableInEdit": true,
     "inheritFrom": "grid0",
     "width": 87,
-    "height": 150
+    "height": 150,
+    "preventPiles": true
   },
   "grid41": {
     "type": "holder",
@@ -470,7 +501,8 @@
     "movableInEdit": true,
     "inheritFrom": "grid0",
     "width": 87,
-    "height": 150
+    "height": 150,
+    "preventPiles": true
   },
   "grid42": {
     "type": "holder",
@@ -482,7 +514,8 @@
     "movableInEdit": true,
     "inheritFrom": "grid0",
     "width": 87,
-    "height": 150
+    "height": 150,
+    "preventPiles": true
   },
   "grid43": {
     "type": "holder",
@@ -494,7 +527,8 @@
     "movableInEdit": true,
     "inheritFrom": "grid0",
     "width": 87,
-    "height": 150
+    "height": 150,
+    "preventPiles": true
   },
   "grid44": {
     "type": "holder",
@@ -506,7 +540,8 @@
     "movableInEdit": true,
     "inheritFrom": "grid0",
     "width": 87,
-    "height": 150
+    "height": 150,
+    "preventPiles": true
   },
   "grid45": {
     "type": "holder",
@@ -518,7 +553,8 @@
     "movableInEdit": true,
     "inheritFrom": "grid0",
     "width": 87,
-    "height": 150
+    "height": 150,
+    "preventPiles": true
   },
   "grid46": {
     "type": "holder",
@@ -530,7 +566,8 @@
     "movableInEdit": true,
     "inheritFrom": "grid0",
     "width": 87,
-    "height": 150
+    "height": 150,
+    "preventPiles": true
   },
   "grid47": {
     "type": "holder",
@@ -542,7 +579,8 @@
     "movableInEdit": true,
     "inheritFrom": "grid0",
     "width": 87,
-    "height": 150
+    "height": 150,
+    "preventPiles": true
   },
   "grid48": {
     "type": "holder",
@@ -554,7 +592,8 @@
     "movableInEdit": true,
     "inheritFrom": "grid0",
     "width": 87,
-    "height": 150
+    "height": 150,
+    "preventPiles": true
   },
   "grid49": {
     "type": "holder",
@@ -566,7 +605,8 @@
     "movableInEdit": true,
     "inheritFrom": "grid0",
     "width": 87,
-    "height": 150
+    "height": 150,
+    "preventPiles": true
   },
   "grid50": {
     "type": "holder",
@@ -578,7 +618,8 @@
     "movableInEdit": true,
     "inheritFrom": "grid0",
     "width": 87,
-    "height": 150
+    "height": 150,
+    "preventPiles": true
   },
   "grid51": {
     "type": "holder",
@@ -590,7 +631,8 @@
     "movableInEdit": true,
     "inheritFrom": "grid0",
     "width": 87,
-    "height": 150
+    "height": 150,
+    "preventPiles": true
   },
   "grid52": {
     "type": "holder",
@@ -602,7 +644,8 @@
     "movableInEdit": true,
     "inheritFrom": "grid0",
     "width": 87,
-    "height": 150
+    "height": 150,
+    "preventPiles": true
   },
   "grid53": {
     "type": "holder",
@@ -614,7 +657,8 @@
     "movableInEdit": true,
     "inheritFrom": "grid0",
     "width": 87,
-    "height": 150
+    "height": 150,
+    "preventPiles": true
   },
   "grid54": {
     "type": "holder",
@@ -626,7 +670,8 @@
     "movableInEdit": true,
     "inheritFrom": "grid0",
     "width": 87,
-    "height": 150
+    "height": 150,
+    "preventPiles": true
   },
   "grid55": {
     "type": "holder",
@@ -638,7 +683,8 @@
     "movableInEdit": true,
     "inheritFrom": "grid0",
     "width": 87,
-    "height": 150
+    "height": 150,
+    "preventPiles": true
   },
   "grid56": {
     "type": "holder",
@@ -650,7 +696,8 @@
     "movableInEdit": true,
     "inheritFrom": "grid0",
     "width": 87,
-    "height": 150
+    "height": 150,
+    "preventPiles": true
   },
   "grid57": {
     "type": "holder",
@@ -662,7 +709,8 @@
     "movableInEdit": true,
     "inheritFrom": "grid0",
     "width": 87,
-    "height": 150
+    "height": 150,
+    "preventPiles": true
   },
   "grid58": {
     "type": "holder",
@@ -674,7 +722,8 @@
     "movableInEdit": true,
     "inheritFrom": "grid0",
     "width": 87,
-    "height": 150
+    "height": 150,
+    "preventPiles": true
   },
   "grid59": {
     "type": "holder",
@@ -686,7 +735,8 @@
     "movableInEdit": true,
     "inheritFrom": "grid0",
     "width": 87,
-    "height": 150
+    "height": 150,
+    "preventPiles": true
   },
   "grid60": {
     "type": "holder",
@@ -698,7 +748,8 @@
     "movableInEdit": true,
     "inheritFrom": "grid0",
     "width": 87,
-    "height": 150
+    "height": 150,
+    "preventPiles": true
   },
   "grid61": {
     "type": "holder",
@@ -710,7 +761,8 @@
     "movableInEdit": true,
     "inheritFrom": "grid0",
     "width": 87,
-    "height": 150
+    "height": 150,
+    "preventPiles": true
   },
   "grid62": {
     "type": "holder",
@@ -722,14 +774,15 @@
     "movableInEdit": true,
     "inheritFrom": "grid0",
     "width": 87,
-    "height": 150
+    "height": 150,
+    "preventPiles": true
   },
   "mmfy dead.jpg 1": {
     "type": "card",
     "id": "mmfy dead.jpg 1",
     "deck": "deadDeck",
     "cardType": "dead.jpg",
-    "z": 74124,
+    "z": 5932,
     "parent": "mpq3",
     "activeFace": 1
   },
@@ -738,7 +791,7 @@
     "id": "mmfy dead.jpg 2",
     "deck": "deadDeck",
     "cardType": "dead.jpg",
-    "z": 74126,
+    "z": 5933,
     "parent": "mpq3",
     "activeFace": 1
   },
@@ -747,7 +800,7 @@
     "id": "mmfy dead.jpg 3",
     "deck": "deadDeck",
     "cardType": "dead.jpg",
-    "z": 74128,
+    "z": 5934,
     "parent": "mpq3",
     "activeFace": 1
   },
@@ -756,7 +809,7 @@
     "id": "mmfy dead.jpg 4",
     "deck": "deadDeck",
     "cardType": "dead.jpg",
-    "z": 74130,
+    "z": 5935,
     "parent": "mpq3",
     "activeFace": 1
   },
@@ -765,7 +818,7 @@
     "id": "mmfy dead.jpg 5",
     "deck": "deadDeck",
     "cardType": "dead.jpg",
-    "z": 74132,
+    "z": 5936,
     "parent": "mpq3",
     "activeFace": 1
   },
@@ -774,7 +827,7 @@
     "id": "mmfy dead.jpg 6",
     "deck": "deadDeck",
     "cardType": "dead.jpg",
-    "z": 74134,
+    "z": 5937,
     "parent": "mpq3",
     "activeFace": 1
   },
@@ -783,7 +836,7 @@
     "id": "mmfy dead.jpg 7",
     "deck": "deadDeck",
     "cardType": "dead.jpg",
-    "z": 74136,
+    "z": 5938,
     "parent": "mpq3",
     "activeFace": 1
   },
@@ -792,7 +845,7 @@
     "id": "mmfy dead.jpg 8",
     "deck": "deadDeck",
     "cardType": "dead.jpg",
-    "z": 74138,
+    "z": 5939,
     "parent": "mpq3",
     "activeFace": 1
   },
@@ -801,7 +854,7 @@
     "id": "mmfy dead.jpg 9",
     "deck": "deadDeck",
     "cardType": "dead.jpg",
-    "z": 74140,
+    "z": 5940,
     "parent": "mpq3",
     "activeFace": 1
   },
@@ -810,7 +863,7 @@
     "id": "mmfy dead.jpg 10",
     "deck": "deadDeck",
     "cardType": "dead.jpg",
-    "z": 74276,
+    "z": 5941,
     "activeFace": 1,
     "parent": "mpq3"
   },
@@ -858,7 +911,7 @@
         "radius": 8
       }
     ],
-    "z": 171,
+    "z": 14,
     "parent": "deadHolder"
   },
   "deadHolder": {
@@ -895,7 +948,7 @@
     "type": "card",
     "cardType": "dead.jpg",
     "id": "6hq1",
-    "z": 74122,
+    "z": 5942,
     "parent": "mpq3",
     "activeFace": 1
   },
@@ -1129,7 +1182,7 @@
         "--height": "${PROPERTY height}"
       }
     },
-    "z": 310,
+    "z": 15,
     "parent": "grid0"
   },
   "p7xd champion.jpg 0,0": {
@@ -1137,7 +1190,7 @@
     "id": "p7xd champion.jpg 0,0",
     "deck": "p7xd",
     "cardType": "champion.jpg 0,0",
-    "z": 79343,
+    "z": 6626,
     "activeFace": 1,
     "parent": "grid0"
   },
@@ -1146,7 +1199,7 @@
     "id": "p7xd champion.jpg 0,1",
     "deck": "p7xd",
     "cardType": "champion.jpg 0,1",
-    "z": 79345,
+    "z": 6627,
     "activeFace": 1,
     "parent": "grid0"
   },
@@ -1155,7 +1208,7 @@
     "id": "p7xd champion.jpg 0,2",
     "deck": "p7xd",
     "cardType": "champion.jpg 0,2",
-    "z": 79351,
+    "z": 6637,
     "activeFace": 1,
     "parent": "grid0"
   },
@@ -1164,7 +1217,7 @@
     "id": "p7xd champion.jpg 0,3",
     "deck": "p7xd",
     "cardType": "champion.jpg 0,3",
-    "z": 79348,
+    "z": 6634,
     "activeFace": 1,
     "parent": "grid0"
   },
@@ -1173,7 +1226,7 @@
     "id": "p7xd champion.jpg 0,4",
     "deck": "p7xd",
     "cardType": "champion.jpg 0,4",
-    "z": 79350,
+    "z": 6628,
     "activeFace": 1,
     "parent": "grid0"
   },
@@ -1182,7 +1235,7 @@
     "id": "p7xd champion.jpg 0,5",
     "deck": "p7xd",
     "cardType": "champion.jpg 0,5",
-    "z": 79338,
+    "z": 6625,
     "activeFace": 1,
     "parent": "grid0"
   },
@@ -1191,7 +1244,7 @@
     "id": "p7xd champion.jpg 0,6",
     "deck": "p7xd",
     "cardType": "champion.jpg 0,6",
-    "z": 79339,
+    "z": 6633,
     "activeFace": 1,
     "parent": "grid0"
   },
@@ -1200,7 +1253,7 @@
     "id": "p7xd champion.jpg 0,7",
     "deck": "p7xd",
     "cardType": "champion.jpg 0,7",
-    "z": 79349,
+    "z": 6629,
     "activeFace": 1,
     "parent": "grid0"
   },
@@ -1209,7 +1262,7 @@
     "id": "p7xd champion.jpg 0,8",
     "deck": "p7xd",
     "cardType": "champion.jpg 0,8",
-    "z": 79347,
+    "z": 6632,
     "activeFace": 1,
     "parent": "grid0"
   },
@@ -1218,7 +1271,7 @@
     "id": "p7xd champion.jpg 0,9",
     "deck": "p7xd",
     "cardType": "champion.jpg 0,9",
-    "z": 79342,
+    "z": 6624,
     "activeFace": 1,
     "parent": "grid0"
   },
@@ -1227,7 +1280,7 @@
     "id": "p7xd champion.jpg 1,0",
     "deck": "p7xd",
     "cardType": "champion.jpg 1,0",
-    "z": 79344,
+    "z": 6636,
     "activeFace": 1,
     "parent": "grid0"
   },
@@ -1236,7 +1289,7 @@
     "id": "p7xd champion.jpg 1,1",
     "deck": "p7xd",
     "cardType": "champion.jpg 1,1",
-    "z": 79346,
+    "z": 6630,
     "activeFace": 1,
     "parent": "grid0"
   },
@@ -1245,7 +1298,7 @@
     "id": "p7xd champion.jpg 1,2",
     "deck": "p7xd",
     "cardType": "champion.jpg 1,2",
-    "z": 79341,
+    "z": 6635,
     "activeFace": 1,
     "parent": "grid0"
   },
@@ -1254,7 +1307,7 @@
     "id": "p7xd champion.jpg 1,3",
     "deck": "p7xd",
     "cardType": "champion.jpg 1,3",
-    "z": 79340,
+    "z": 6631,
     "activeFace": 1,
     "parent": "grid0"
   },
@@ -1411,8 +1464,8 @@
   "endTurn": {
     "type": "button",
     "id": "endTurn",
-    "x": 1067,
-    "y": 620,
+    "x": 1184,
+    "y": 312,
     "z": 7,
     "text": "End turn",
     "clickRoutine": [
@@ -1452,7 +1505,21 @@
         "func": "TURN",
         "turnCycle": "forward"
       }
-    ]
+    ],
+    "css": {
+      "default": {
+        "font-size": "20px",
+        "color": "black",
+        "background": "pink",
+        "border-color": "black",
+        "clip-path": "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)"
+      },
+      ":hover": {
+        "background": "hotpink",
+        "border-color": "#00000099"
+      }
+    },
+    "borderRadius": 5
   },
   "seat1": {
     "type": "seat",
@@ -1498,8 +1565,7 @@
     "colorEmpty": "brown",
     "css": "border-color: brown",
     "hideWhenUnused": true,
-    "z": 9,
-    "turn": true
+    "z": 9
   },
   "seat5": {
     "type": "seat",
@@ -2141,7 +2207,9 @@
     "height": 150,
     "css": {
       "border": "1px solid red"
-    }
+    },
+    "dropLimit": 1,
+    "preventPiles": true
   },
   "grid3": {
     "type": "holder",
@@ -2153,7 +2221,8 @@
     "movableInEdit": true,
     "inheritFrom": "grid1",
     "width": 87,
-    "height": 150
+    "height": 150,
+    "dropLimit": 1
   },
   "grid4": {
     "type": "holder",
@@ -2165,7 +2234,8 @@
     "movableInEdit": true,
     "inheritFrom": "grid1",
     "width": 87,
-    "height": 150
+    "height": 150,
+    "dropLimit": 1
   },
   "grid5": {
     "type": "holder",
@@ -2177,7 +2247,8 @@
     "movableInEdit": true,
     "inheritFrom": "grid1",
     "width": 87,
-    "height": 150
+    "height": 150,
+    "dropLimit": 1
   },
   "grid6": {
     "type": "holder",
@@ -2189,7 +2260,8 @@
     "movableInEdit": true,
     "inheritFrom": "grid1",
     "width": 87,
-    "height": 150
+    "height": 150,
+    "dropLimit": 1
   },
   "grid7": {
     "type": "holder",
@@ -2201,7 +2273,8 @@
     "movableInEdit": true,
     "inheritFrom": "grid1",
     "width": 87,
-    "height": 150
+    "height": 150,
+    "dropLimit": 1
   },
   "grid8": {
     "type": "holder",
@@ -2213,7 +2286,8 @@
     "movableInEdit": true,
     "inheritFrom": "grid1",
     "width": 87,
-    "height": 150
+    "height": 150,
+    "dropLimit": 1
   },
   "playHolderL": {
     "type": "label",
@@ -2237,7 +2311,8 @@
     "z": 6,
     "movable": false,
     "movableInEdit": true,
-    "inheritFrom": "grid1"
+    "inheritFrom": "grid1",
+    "dropLimit": 1
   },
   "mpq3": {
     "type": "pile",
@@ -2246,7 +2321,7 @@
     "width": 87,
     "height": 150,
     "id": "mpq3",
-    "z": 74232,
+    "z": 22,
     "parent": "deadHolder"
   },
   "1deck": {
@@ -2254,7 +2329,7 @@
     "id": "1deck",
     "x": 4,
     "y": 4,
-    "z": 74394,
+    "z": 23,
     "cardDefaults": {
       "width": 87,
       "borderRadius": 8,
@@ -2509,7 +2584,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,0",
     "id": "4ane",
-    "z": 77680,
+    "z": 5966,
     "parent": "txqv"
   },
   "tkk9": {
@@ -2517,7 +2592,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,1",
     "id": "tkk9",
-    "z": 77681,
+    "z": 5968,
     "parent": "txqv"
   },
   "e265": {
@@ -2525,7 +2600,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,2",
     "id": "e265",
-    "z": 77682,
+    "z": 5970,
     "parent": "txqv"
   },
   "3rk1": {
@@ -2533,7 +2608,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,5",
     "id": "3rk1",
-    "z": 77683,
+    "z": 5971,
     "parent": "txqv"
   },
   "uggi": {
@@ -2541,7 +2616,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,4",
     "id": "uggi",
-    "z": 77684,
+    "z": 5973,
     "parent": "txqv"
   },
   "oiwl": {
@@ -2549,7 +2624,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,3",
     "id": "oiwl",
-    "z": 77685,
+    "z": 5974,
     "parent": "txqv"
   },
   "0c5u": {
@@ -2557,7 +2632,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,6",
     "id": "0c5u",
-    "z": 77686,
+    "z": 5976,
     "parent": "txqv"
   },
   "k0c5": {
@@ -2565,7 +2640,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,7",
     "id": "k0c5",
-    "z": 77687,
+    "z": 5978,
     "parent": "txqv"
   },
   "lzd8": {
@@ -2573,7 +2648,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,8",
     "id": "lzd8",
-    "z": 77688,
+    "z": 5979,
     "parent": "txqv"
   },
   "f7k9": {
@@ -2581,7 +2656,7 @@
     "type": "card",
     "cardType": "champion.jpg 1,1",
     "id": "f7k9",
-    "z": 77689,
+    "z": 5980,
     "parent": "txqv"
   },
   "qg1b": {
@@ -2589,7 +2664,7 @@
     "type": "card",
     "cardType": "champion.jpg 1,0",
     "id": "qg1b",
-    "z": 77690,
+    "z": 5982,
     "parent": "txqv"
   },
   "vya5": {
@@ -2597,7 +2672,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,9",
     "id": "vya5",
-    "z": 77691,
+    "z": 5983,
     "parent": "txqv"
   },
   "e3ec": {
@@ -2605,7 +2680,7 @@
     "type": "card",
     "cardType": "champion.jpg 1,2",
     "id": "e3ec",
-    "z": 77692,
+    "z": 5985,
     "parent": "txqv"
   },
   "2th0": {
@@ -2613,7 +2688,7 @@
     "type": "card",
     "cardType": "champion.jpg 1,3",
     "id": "2th0",
-    "z": 77693,
+    "z": 5986,
     "parent": "txqv"
   },
   "2deck": {
@@ -2621,7 +2696,7 @@
     "id": "2deck",
     "x": 4,
     "y": 4,
-    "z": 74776,
+    "z": 24,
     "cardDefaults": {
       "width": 87,
       "borderRadius": 8,
@@ -2875,7 +2950,7 @@
     "id": "3deck",
     "x": 4,
     "y": 4,
-    "z": 74793,
+    "z": 25,
     "cardDefaults": {
       "width": 87,
       "borderRadius": 8,
@@ -3129,7 +3204,7 @@
     "id": "4deck",
     "x": 4,
     "y": 4,
-    "z": 74810,
+    "z": 26,
     "cardDefaults": {
       "width": 87,
       "borderRadius": 8,
@@ -3383,7 +3458,7 @@
     "id": "5deck",
     "x": 4,
     "y": 4,
-    "z": 74902,
+    "z": 27,
     "cardDefaults": {
       "width": 87,
       "borderRadius": 8,
@@ -3637,7 +3712,7 @@
     "id": "6deck",
     "x": 4,
     "y": 4,
-    "z": 74912,
+    "z": 32,
     "cardDefaults": {
       "width": 87,
       "borderRadius": 8,
@@ -3891,7 +3966,7 @@
     "id": "7deck",
     "x": 4,
     "y": 4,
-    "z": 74910,
+    "z": 31,
     "cardDefaults": {
       "width": 87,
       "borderRadius": 8,
@@ -4145,7 +4220,7 @@
     "id": "8deck",
     "x": 4,
     "y": 4,
-    "z": 74908,
+    "z": 30,
     "cardDefaults": {
       "width": 87,
       "borderRadius": 8,
@@ -4399,7 +4474,7 @@
     "id": "9deck",
     "x": 4,
     "y": 4,
-    "z": 74906,
+    "z": 29,
     "cardDefaults": {
       "width": 87,
       "borderRadius": 8,
@@ -4653,7 +4728,7 @@
     "id": "10deck",
     "x": 4,
     "y": 4,
-    "z": 74904,
+    "z": 28,
     "cardDefaults": {
       "width": 87,
       "borderRadius": 8,
@@ -4907,7 +4982,7 @@
     "id": "0deck",
     "x": 4,
     "y": 4,
-    "z": 77533,
+    "z": 34,
     "cardDefaults": {
       "width": 87,
       "borderRadius": 8,
@@ -5238,7 +5313,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,0",
     "id": "0lnt",
-    "z": 77666,
+    "z": 5944,
     "parent": "1iex"
   },
   "ws91": {
@@ -5246,15 +5321,15 @@
     "type": "card",
     "cardType": "champion.jpg 0,1",
     "id": "ws91",
-    "parent": "1iex",
-    "z": 77667
+    "z": 5946,
+    "parent": "1iex"
   },
   "tg7r": {
     "deck": "0deck",
     "type": "card",
     "cardType": "champion.jpg 0,2",
     "id": "tg7r",
-    "z": 77668,
+    "z": 5948,
     "parent": "1iex"
   },
   "emqk": {
@@ -5262,7 +5337,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,3",
     "id": "emqk",
-    "z": 77669,
+    "z": 5949,
     "parent": "1iex"
   },
   "fdbo": {
@@ -5270,7 +5345,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,4",
     "id": "fdbo",
-    "z": 77670,
+    "z": 5951,
     "parent": "1iex"
   },
   "42xo": {
@@ -5278,7 +5353,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,5",
     "id": "42xo",
-    "z": 77671,
+    "z": 5952,
     "parent": "1iex"
   },
   "wwzs": {
@@ -5286,7 +5361,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,6",
     "id": "wwzs",
-    "z": 77672,
+    "z": 5954,
     "parent": "1iex"
   },
   "kmad": {
@@ -5294,7 +5369,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,7",
     "id": "kmad",
-    "z": 77673,
+    "z": 5956,
     "parent": "1iex"
   },
   "2fdt": {
@@ -5302,7 +5377,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,8",
     "id": "2fdt",
-    "z": 77674,
+    "z": 5957,
     "parent": "1iex"
   },
   "7rvc": {
@@ -5310,7 +5385,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,9",
     "id": "7rvc",
-    "z": 77675,
+    "z": 5958,
     "parent": "1iex"
   },
   "4fxr": {
@@ -5318,7 +5393,7 @@
     "type": "card",
     "cardType": "champion.jpg 1,0",
     "id": "4fxr",
-    "z": 77676,
+    "z": 5960,
     "parent": "1iex"
   },
   "zwto": {
@@ -5326,7 +5401,7 @@
     "type": "card",
     "cardType": "champion.jpg 1,1",
     "id": "zwto",
-    "z": 77677,
+    "z": 5961,
     "parent": "1iex"
   },
   "jtub": {
@@ -5334,7 +5409,7 @@
     "type": "card",
     "cardType": "champion.jpg 1,2",
     "id": "jtub",
-    "z": 77678,
+    "z": 5963,
     "parent": "1iex"
   },
   "j3bb": {
@@ -5342,7 +5417,7 @@
     "type": "card",
     "cardType": "champion.jpg 1,3",
     "id": "j3bb",
-    "z": 77679,
+    "z": 5964,
     "parent": "1iex"
   },
   "6zvx": {
@@ -5350,7 +5425,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,0",
     "id": "6zvx",
-    "z": 77694,
+    "z": 5988,
     "parent": "x048"
   },
   "3zgx": {
@@ -5358,7 +5433,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,1",
     "id": "3zgx",
-    "z": 77695,
+    "z": 5990,
     "parent": "x048"
   },
   "07s8": {
@@ -5366,7 +5441,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,2",
     "id": "07s8",
-    "z": 77696,
+    "z": 5992,
     "parent": "x048"
   },
   "98si": {
@@ -5374,7 +5449,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,3",
     "id": "98si",
-    "z": 77697,
+    "z": 5993,
     "parent": "x048"
   },
   "l562": {
@@ -5382,7 +5457,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,4",
     "id": "l562",
-    "z": 77698,
+    "z": 5995,
     "parent": "x048"
   },
   "qw6y": {
@@ -5390,7 +5465,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,5",
     "id": "qw6y",
-    "z": 77699,
+    "z": 5996,
     "parent": "x048"
   },
   "ytgo": {
@@ -5398,7 +5473,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,6",
     "id": "ytgo",
-    "z": 77700,
+    "z": 5998,
     "parent": "x048"
   },
   "i39a": {
@@ -5406,7 +5481,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,7",
     "id": "i39a",
-    "z": 77701,
+    "z": 6000,
     "parent": "x048"
   },
   "wsr2": {
@@ -5414,7 +5489,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,8",
     "id": "wsr2",
-    "z": 77702,
+    "z": 6001,
     "parent": "x048"
   },
   "r7by": {
@@ -5422,7 +5497,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,9",
     "id": "r7by",
-    "z": 77703,
+    "z": 6002,
     "parent": "x048"
   },
   "rcpd": {
@@ -5430,7 +5505,7 @@
     "type": "card",
     "cardType": "champion.jpg 1,0",
     "id": "rcpd",
-    "z": 77704,
+    "z": 6004,
     "parent": "x048"
   },
   "l75n": {
@@ -5438,7 +5513,7 @@
     "type": "card",
     "cardType": "champion.jpg 1,1",
     "id": "l75n",
-    "z": 77705,
+    "z": 6005,
     "parent": "x048"
   },
   "umxk": {
@@ -5446,7 +5521,7 @@
     "type": "card",
     "cardType": "champion.jpg 1,2",
     "id": "umxk",
-    "z": 77706,
+    "z": 6007,
     "parent": "x048"
   },
   "eobu": {
@@ -5454,7 +5529,7 @@
     "type": "card",
     "cardType": "champion.jpg 1,3",
     "id": "eobu",
-    "z": 77707,
+    "z": 6008,
     "parent": "x048"
   },
   "wewg": {
@@ -5462,7 +5537,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,0",
     "id": "wewg",
-    "z": 77708,
+    "z": 6010,
     "parent": "6beh"
   },
   "6hum": {
@@ -5470,7 +5545,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,1",
     "id": "6hum",
-    "z": 77709,
+    "z": 6012,
     "parent": "6beh"
   },
   "7brl": {
@@ -5478,7 +5553,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,2",
     "id": "7brl",
-    "z": 77710,
+    "z": 6014,
     "parent": "6beh"
   },
   "xe00": {
@@ -5486,7 +5561,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,3",
     "id": "xe00",
-    "z": 77711,
+    "z": 6015,
     "parent": "6beh"
   },
   "99k0": {
@@ -5494,7 +5569,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,4",
     "id": "99k0",
-    "z": 77712,
+    "z": 6017,
     "parent": "6beh"
   },
   "djzu": {
@@ -5502,7 +5577,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,5",
     "id": "djzu",
-    "z": 77713,
+    "z": 6018,
     "parent": "6beh"
   },
   "gk97": {
@@ -5510,7 +5585,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,6",
     "id": "gk97",
-    "z": 77714,
+    "z": 6020,
     "parent": "6beh"
   },
   "4nr6": {
@@ -5518,7 +5593,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,7",
     "id": "4nr6",
-    "z": 77715,
+    "z": 6022,
     "parent": "6beh"
   },
   "dcwy": {
@@ -5526,7 +5601,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,8",
     "id": "dcwy",
-    "z": 77716,
+    "z": 6023,
     "parent": "6beh"
   },
   "ia2w": {
@@ -5534,7 +5609,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,9",
     "id": "ia2w",
-    "z": 77717,
+    "z": 6024,
     "parent": "6beh"
   },
   "h1lw": {
@@ -5542,7 +5617,7 @@
     "type": "card",
     "cardType": "champion.jpg 1,0",
     "id": "h1lw",
-    "z": 77718,
+    "z": 6026,
     "parent": "6beh"
   },
   "dubm": {
@@ -5550,7 +5625,7 @@
     "type": "card",
     "cardType": "champion.jpg 1,1",
     "id": "dubm",
-    "z": 77719,
+    "z": 6027,
     "parent": "6beh"
   },
   "zzh5": {
@@ -5558,7 +5633,7 @@
     "type": "card",
     "cardType": "champion.jpg 1,2",
     "id": "zzh5",
-    "z": 77720,
+    "z": 6029,
     "parent": "6beh"
   },
   "65su": {
@@ -5566,7 +5641,7 @@
     "type": "card",
     "cardType": "champion.jpg 1,3",
     "id": "65su",
-    "z": 77721,
+    "z": 6030,
     "parent": "6beh"
   },
   "5jdf": {
@@ -5574,7 +5649,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,0",
     "id": "5jdf",
-    "z": 77722,
+    "z": 6032,
     "parent": "lgim"
   },
   "k9fa": {
@@ -5582,7 +5657,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,1",
     "id": "k9fa",
-    "z": 77723,
+    "z": 6034,
     "parent": "lgim"
   },
   "6j1w": {
@@ -5590,7 +5665,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,2",
     "id": "6j1w",
-    "z": 77724,
+    "z": 6036,
     "parent": "lgim"
   },
   "4q1i": {
@@ -5598,7 +5673,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,3",
     "id": "4q1i",
-    "z": 77725,
+    "z": 6037,
     "parent": "lgim"
   },
   "9lpl": {
@@ -5606,7 +5681,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,4",
     "id": "9lpl",
-    "z": 77726,
+    "z": 6039,
     "parent": "lgim"
   },
   "9db1": {
@@ -5614,7 +5689,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,5",
     "id": "9db1",
-    "z": 77727,
+    "z": 6040,
     "parent": "lgim"
   },
   "qra6": {
@@ -5622,7 +5697,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,6",
     "id": "qra6",
-    "z": 77728,
+    "z": 6042,
     "parent": "lgim"
   },
   "gafc": {
@@ -5630,7 +5705,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,7",
     "id": "gafc",
-    "z": 77729,
+    "z": 6044,
     "parent": "lgim"
   },
   "w7z0": {
@@ -5638,7 +5713,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,8",
     "id": "w7z0",
-    "z": 77730,
+    "z": 6045,
     "parent": "lgim"
   },
   "j88y": {
@@ -5646,7 +5721,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,9",
     "id": "j88y",
-    "z": 77731,
+    "z": 6046,
     "parent": "lgim"
   },
   "hely": {
@@ -5654,7 +5729,7 @@
     "type": "card",
     "cardType": "champion.jpg 1,0",
     "id": "hely",
-    "z": 77732,
+    "z": 6048,
     "parent": "lgim"
   },
   "5cl4": {
@@ -5662,7 +5737,7 @@
     "type": "card",
     "cardType": "champion.jpg 1,1",
     "id": "5cl4",
-    "z": 77733,
+    "z": 6049,
     "parent": "lgim"
   },
   "rhp3": {
@@ -5670,7 +5745,7 @@
     "type": "card",
     "cardType": "champion.jpg 1,2",
     "id": "rhp3",
-    "z": 77734,
+    "z": 6051,
     "parent": "lgim"
   },
   "15fj": {
@@ -5678,7 +5753,7 @@
     "type": "card",
     "cardType": "champion.jpg 1,3",
     "id": "15fj",
-    "z": 77735,
+    "z": 6052,
     "parent": "lgim"
   },
   "sjuk": {
@@ -5686,7 +5761,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,0",
     "id": "sjuk",
-    "z": 77736,
+    "z": 6054,
     "parent": "53r5"
   },
   "r7oe": {
@@ -5694,7 +5769,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,1",
     "id": "r7oe",
-    "z": 77737,
+    "z": 6056,
     "parent": "53r5"
   },
   "4ezh": {
@@ -5702,7 +5777,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,2",
     "id": "4ezh",
-    "z": 77738,
+    "z": 6058,
     "parent": "53r5"
   },
   "gv47": {
@@ -5710,7 +5785,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,3",
     "id": "gv47",
-    "z": 77739,
+    "z": 6059,
     "parent": "53r5"
   },
   "z2tq": {
@@ -5718,7 +5793,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,4",
     "id": "z2tq",
-    "z": 77740,
+    "z": 6061,
     "parent": "53r5"
   },
   "msd5": {
@@ -5726,7 +5801,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,5",
     "id": "msd5",
-    "z": 77741,
+    "z": 6062,
     "parent": "53r5"
   },
   "hu8e": {
@@ -5734,7 +5809,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,6",
     "id": "hu8e",
-    "z": 77742,
+    "z": 6064,
     "parent": "53r5"
   },
   "obiv": {
@@ -5742,7 +5817,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,7",
     "id": "obiv",
-    "z": 77743,
+    "z": 6066,
     "parent": "53r5"
   },
   "ldyu": {
@@ -5750,7 +5825,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,8",
     "id": "ldyu",
-    "z": 77744,
+    "z": 6067,
     "parent": "53r5"
   },
   "mnlj": {
@@ -5758,7 +5833,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,9",
     "id": "mnlj",
-    "z": 77745,
+    "z": 6068,
     "parent": "53r5"
   },
   "545y": {
@@ -5766,7 +5841,7 @@
     "type": "card",
     "cardType": "champion.jpg 1,0",
     "id": "545y",
-    "z": 77746,
+    "z": 6070,
     "parent": "53r5"
   },
   "wvul": {
@@ -5774,7 +5849,7 @@
     "type": "card",
     "cardType": "champion.jpg 1,1",
     "id": "wvul",
-    "z": 77747,
+    "z": 6071,
     "parent": "53r5"
   },
   "ua6v": {
@@ -5782,7 +5857,7 @@
     "type": "card",
     "cardType": "champion.jpg 1,2",
     "id": "ua6v",
-    "z": 77748,
+    "z": 6073,
     "parent": "53r5"
   },
   "esj8": {
@@ -5790,7 +5865,7 @@
     "type": "card",
     "cardType": "champion.jpg 1,3",
     "id": "esj8",
-    "z": 77749,
+    "z": 6074,
     "parent": "53r5"
   },
   "i07i": {
@@ -5798,7 +5873,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,0",
     "id": "i07i",
-    "z": 77750,
+    "z": 6076,
     "parent": "nba1"
   },
   "819n": {
@@ -5806,7 +5881,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,1",
     "id": "819n",
-    "z": 77751,
+    "z": 6078,
     "parent": "nba1"
   },
   "2ian": {
@@ -5814,7 +5889,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,2",
     "id": "2ian",
-    "z": 77752,
+    "z": 6080,
     "parent": "nba1"
   },
   "8vta": {
@@ -5822,7 +5897,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,3",
     "id": "8vta",
-    "z": 77753,
+    "z": 6081,
     "parent": "nba1"
   },
   "evay": {
@@ -5830,7 +5905,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,4",
     "id": "evay",
-    "z": 77754,
+    "z": 6083,
     "parent": "nba1"
   },
   "mva1": {
@@ -5838,7 +5913,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,5",
     "id": "mva1",
-    "z": 77755,
+    "z": 6084,
     "parent": "nba1"
   },
   "vi89": {
@@ -5846,7 +5921,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,6",
     "id": "vi89",
-    "z": 77756,
+    "z": 6086,
     "parent": "nba1"
   },
   "r3x8": {
@@ -5854,7 +5929,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,7",
     "id": "r3x8",
-    "z": 77757,
+    "z": 6088,
     "parent": "nba1"
   },
   "wedi": {
@@ -5862,7 +5937,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,8",
     "id": "wedi",
-    "z": 77758,
+    "z": 6089,
     "parent": "nba1"
   },
   "z0db": {
@@ -5870,7 +5945,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,9",
     "id": "z0db",
-    "z": 77759,
+    "z": 6090,
     "parent": "nba1"
   },
   "50pd": {
@@ -5878,7 +5953,7 @@
     "type": "card",
     "cardType": "champion.jpg 1,0",
     "id": "50pd",
-    "z": 77760,
+    "z": 6092,
     "parent": "nba1"
   },
   "780v": {
@@ -5886,7 +5961,7 @@
     "type": "card",
     "cardType": "champion.jpg 1,1",
     "id": "780v",
-    "z": 77761,
+    "z": 6093,
     "parent": "nba1"
   },
   "hhb0": {
@@ -5894,7 +5969,7 @@
     "type": "card",
     "cardType": "champion.jpg 1,2",
     "id": "hhb0",
-    "z": 77762,
+    "z": 6095,
     "parent": "nba1"
   },
   "lwq0": {
@@ -5902,7 +5977,7 @@
     "type": "card",
     "cardType": "champion.jpg 1,3",
     "id": "lwq0",
-    "z": 77763,
+    "z": 6096,
     "parent": "nba1"
   },
   "fz26": {
@@ -5910,7 +5985,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,0",
     "id": "fz26",
-    "z": 77764,
+    "z": 6098,
     "parent": "hloj"
   },
   "rw2b": {
@@ -5918,7 +5993,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,1",
     "id": "rw2b",
-    "z": 77765,
+    "z": 6100,
     "parent": "hloj"
   },
   "c3i7": {
@@ -5926,7 +6001,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,2",
     "id": "c3i7",
-    "z": 77766,
+    "z": 6102,
     "parent": "hloj"
   },
   "tdcc": {
@@ -5934,7 +6009,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,3",
     "id": "tdcc",
-    "z": 77767,
+    "z": 6103,
     "parent": "hloj"
   },
   "sln8": {
@@ -5942,7 +6017,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,4",
     "id": "sln8",
-    "z": 77768,
+    "z": 6105,
     "parent": "hloj"
   },
   "rqic": {
@@ -5950,7 +6025,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,5",
     "id": "rqic",
-    "z": 77769,
+    "z": 6106,
     "parent": "hloj"
   },
   "dk4f": {
@@ -5958,7 +6033,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,6",
     "id": "dk4f",
-    "z": 77770,
+    "z": 6108,
     "parent": "hloj"
   },
   "gdm6": {
@@ -5966,7 +6041,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,7",
     "id": "gdm6",
-    "z": 77771,
+    "z": 6110,
     "parent": "hloj"
   },
   "lrhh": {
@@ -5974,7 +6049,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,8",
     "id": "lrhh",
-    "z": 77772,
+    "z": 6111,
     "parent": "hloj"
   },
   "tb2x": {
@@ -5982,7 +6057,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,9",
     "id": "tb2x",
-    "z": 77773,
+    "z": 6112,
     "parent": "hloj"
   },
   "9hg0": {
@@ -5990,7 +6065,7 @@
     "type": "card",
     "cardType": "champion.jpg 1,0",
     "id": "9hg0",
-    "z": 77774,
+    "z": 6114,
     "parent": "hloj"
   },
   "zwqw": {
@@ -5998,7 +6073,7 @@
     "type": "card",
     "cardType": "champion.jpg 1,1",
     "id": "zwqw",
-    "z": 77775,
+    "z": 6115,
     "parent": "hloj"
   },
   "wjcb": {
@@ -6006,7 +6081,7 @@
     "type": "card",
     "cardType": "champion.jpg 1,2",
     "id": "wjcb",
-    "z": 77776,
+    "z": 6117,
     "parent": "hloj"
   },
   "dapw": {
@@ -6014,7 +6089,7 @@
     "type": "card",
     "cardType": "champion.jpg 1,3",
     "id": "dapw",
-    "z": 77777,
+    "z": 6118,
     "parent": "hloj"
   },
   "oeti": {
@@ -6022,7 +6097,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,0",
     "id": "oeti",
-    "z": 77778,
+    "z": 6120,
     "parent": "76br"
   },
   "fltf": {
@@ -6030,7 +6105,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,1",
     "id": "fltf",
-    "z": 77779,
+    "z": 6122,
     "parent": "76br"
   },
   "ndf9": {
@@ -6038,7 +6113,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,2",
     "id": "ndf9",
-    "z": 77780,
+    "z": 6124,
     "parent": "76br"
   },
   "hp3n": {
@@ -6046,7 +6121,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,3",
     "id": "hp3n",
-    "z": 77781,
+    "z": 6125,
     "parent": "76br"
   },
   "06pf": {
@@ -6054,7 +6129,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,4",
     "id": "06pf",
-    "z": 77782,
+    "z": 6127,
     "parent": "76br"
   },
   "xp7h": {
@@ -6062,7 +6137,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,5",
     "id": "xp7h",
-    "z": 77783,
+    "z": 6128,
     "parent": "76br"
   },
   "l6d9": {
@@ -6070,7 +6145,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,6",
     "id": "l6d9",
-    "z": 77784,
+    "z": 6130,
     "parent": "76br"
   },
   "l56g": {
@@ -6078,7 +6153,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,7",
     "id": "l56g",
-    "z": 77785,
+    "z": 6132,
     "parent": "76br"
   },
   "cbhs": {
@@ -6086,7 +6161,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,8",
     "id": "cbhs",
-    "z": 77786,
+    "z": 6133,
     "parent": "76br"
   },
   "aih9": {
@@ -6094,7 +6169,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,9",
     "id": "aih9",
-    "z": 77787,
+    "z": 6134,
     "parent": "76br"
   },
   "sofa": {
@@ -6102,7 +6177,7 @@
     "type": "card",
     "cardType": "champion.jpg 1,0",
     "id": "sofa",
-    "z": 77788,
+    "z": 6136,
     "parent": "76br"
   },
   "sr3u": {
@@ -6110,7 +6185,7 @@
     "type": "card",
     "cardType": "champion.jpg 1,1",
     "id": "sr3u",
-    "z": 77789,
+    "z": 6137,
     "parent": "76br"
   },
   "p30o": {
@@ -6118,7 +6193,7 @@
     "type": "card",
     "cardType": "champion.jpg 1,2",
     "id": "p30o",
-    "z": 77790,
+    "z": 6139,
     "parent": "76br"
   },
   "19w0": {
@@ -6126,7 +6201,7 @@
     "type": "card",
     "cardType": "champion.jpg 1,3",
     "id": "19w0",
-    "z": 77792,
+    "z": 6140,
     "parent": "76br"
   },
   "pb6o": {
@@ -6134,7 +6209,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,0",
     "id": "pb6o",
-    "z": 77793,
+    "z": 6142,
     "parent": "t0en"
   },
   "y2xs": {
@@ -6142,7 +6217,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,1",
     "id": "y2xs",
-    "z": 77794,
+    "z": 6144,
     "parent": "t0en"
   },
   "jvtg": {
@@ -6150,7 +6225,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,2",
     "id": "jvtg",
-    "z": 77795,
+    "z": 6146,
     "parent": "t0en"
   },
   "jooa": {
@@ -6158,7 +6233,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,3",
     "id": "jooa",
-    "z": 77796,
+    "z": 6147,
     "parent": "t0en"
   },
   "i09k": {
@@ -6166,7 +6241,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,4",
     "id": "i09k",
-    "z": 77797,
+    "z": 6149,
     "parent": "t0en"
   },
   "gluo": {
@@ -6174,7 +6249,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,5",
     "id": "gluo",
-    "z": 77798,
+    "z": 6150,
     "parent": "t0en"
   },
   "1kb6": {
@@ -6182,7 +6257,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,6",
     "id": "1kb6",
-    "z": 77799,
+    "z": 6152,
     "parent": "t0en"
   },
   "hoir": {
@@ -6190,7 +6265,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,7",
     "id": "hoir",
-    "z": 77800,
+    "z": 6154,
     "parent": "t0en"
   },
   "poyy": {
@@ -6198,7 +6273,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,8",
     "id": "poyy",
-    "z": 77801,
+    "z": 6155,
     "parent": "t0en"
   },
   "mff2": {
@@ -6206,7 +6281,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,9",
     "id": "mff2",
-    "z": 77802,
+    "z": 6156,
     "parent": "t0en"
   },
   "gag2": {
@@ -6214,7 +6289,7 @@
     "type": "card",
     "cardType": "champion.jpg 1,0",
     "id": "gag2",
-    "z": 77803,
+    "z": 6158,
     "parent": "t0en"
   },
   "ymp6": {
@@ -6222,7 +6297,7 @@
     "type": "card",
     "cardType": "champion.jpg 1,1",
     "id": "ymp6",
-    "z": 77804,
+    "z": 6159,
     "parent": "t0en"
   },
   "ukc9": {
@@ -6230,7 +6305,7 @@
     "type": "card",
     "cardType": "champion.jpg 1,2",
     "id": "ukc9",
-    "z": 77805,
+    "z": 6161,
     "parent": "t0en"
   },
   "0891": {
@@ -6238,7 +6313,7 @@
     "type": "card",
     "cardType": "champion.jpg 1,3",
     "id": "0891",
-    "z": 77806,
+    "z": 6162,
     "parent": "t0en"
   },
   "3w5z": {
@@ -6246,7 +6321,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,0",
     "id": "3w5z",
-    "z": 77807,
+    "z": 6164,
     "parent": "q6lf"
   },
   "6x4d": {
@@ -6254,7 +6329,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,1",
     "id": "6x4d",
-    "z": 77808,
+    "z": 6166,
     "parent": "q6lf"
   },
   "iu64": {
@@ -6262,7 +6337,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,2",
     "id": "iu64",
-    "z": 77809,
+    "z": 6168,
     "parent": "q6lf"
   },
   "ggzl": {
@@ -6270,7 +6345,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,3",
     "id": "ggzl",
-    "z": 77810,
+    "z": 6169,
     "parent": "q6lf"
   },
   "oplk": {
@@ -6278,7 +6353,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,4",
     "id": "oplk",
-    "z": 77811,
+    "z": 6171,
     "parent": "q6lf"
   },
   "ay8a": {
@@ -6286,7 +6361,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,5",
     "id": "ay8a",
-    "z": 77812,
+    "z": 6172,
     "parent": "q6lf"
   },
   "o4af": {
@@ -6294,7 +6369,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,6",
     "id": "o4af",
-    "z": 77813,
+    "z": 6174,
     "parent": "q6lf"
   },
   "pu16": {
@@ -6302,7 +6377,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,7",
     "id": "pu16",
-    "z": 77814,
+    "z": 6176,
     "parent": "q6lf"
   },
   "f2s9": {
@@ -6310,7 +6385,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,8",
     "id": "f2s9",
-    "z": 77815,
+    "z": 6177,
     "parent": "q6lf"
   },
   "ecpv": {
@@ -6318,7 +6393,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,9",
     "id": "ecpv",
-    "z": 77816,
+    "z": 6178,
     "parent": "q6lf"
   },
   "jya6": {
@@ -6326,7 +6401,7 @@
     "type": "card",
     "cardType": "champion.jpg 1,0",
     "id": "jya6",
-    "z": 77817,
+    "z": 6180,
     "parent": "q6lf"
   },
   "3epd": {
@@ -6334,7 +6409,7 @@
     "type": "card",
     "cardType": "champion.jpg 1,1",
     "id": "3epd",
-    "z": 77818,
+    "z": 6181,
     "parent": "q6lf"
   },
   "yzg0": {
@@ -6342,7 +6417,7 @@
     "type": "card",
     "cardType": "champion.jpg 1,2",
     "id": "yzg0",
-    "z": 77819,
+    "z": 6183,
     "parent": "q6lf"
   },
   "ql6m": {
@@ -6350,7 +6425,7 @@
     "type": "card",
     "cardType": "champion.jpg 1,3",
     "id": "ql6m",
-    "z": 77820,
+    "z": 6184,
     "parent": "q6lf"
   },
   "v3xk": {
@@ -6439,7 +6514,7 @@
     "width": 87,
     "height": 150,
     "id": "t0en",
-    "z": 75875,
+    "z": 33,
     "hoverParent": "rckx9",
     "parent": "rckx9"
   },
@@ -6528,7 +6603,7 @@
     "id": "11deck",
     "x": 4,
     "y": 4,
-    "z": 77649,
+    "z": 35,
     "cardDefaults": {
       "width": 87,
       "borderRadius": 8,
@@ -6724,8 +6799,8 @@
     "type": "card",
     "cardType": "g0",
     "id": "z8xs",
-    "z": 77646,
-    "parent": "c0u2",
+    "z": 6214,
+    "parent": "w0wj",
     "activeFace": 1
   },
   "gvbk": {
@@ -6733,17 +6808,17 @@
     "type": "card",
     "cardType": "g1",
     "id": "gvbk",
-    "parent": "c0u2",
-    "z": 77640,
-    "activeFace": 1
+    "z": 6211,
+    "activeFace": 1,
+    "parent": "w0wj"
   },
   "9epf": {
     "deck": "11deck",
     "type": "card",
     "cardType": "g2",
     "id": "9epf",
-    "z": 77645,
-    "parent": "c0u2",
+    "z": 6215,
+    "parent": "w0wj",
     "activeFace": 1
   },
   "7pij": {
@@ -6751,8 +6826,8 @@
     "type": "card",
     "cardType": "g3",
     "id": "7pij",
-    "z": 77642,
-    "parent": "c0u2",
+    "z": 6213,
+    "parent": "w0wj",
     "activeFace": 1
   },
   "2wxu": {
@@ -6760,8 +6835,8 @@
     "type": "card",
     "cardType": "g4",
     "id": "2wxu",
-    "z": 77643,
-    "parent": "c0u2",
+    "z": 6212,
+    "parent": "w0wj",
     "activeFace": 1
   },
   "21y3": {
@@ -6769,17 +6844,17 @@
     "type": "card",
     "cardType": "g5",
     "id": "21y3",
-    "z": 77637,
-    "parent": "c0u2",
-    "activeFace": 1
+    "z": 6210,
+    "activeFace": 1,
+    "parent": "w0wj"
   },
   "4w6t": {
     "deck": "11deck",
     "type": "card",
     "cardType": "g6",
     "id": "4w6t",
-    "z": 77641,
-    "parent": "c0u2",
+    "z": 6216,
+    "parent": "w0wj",
     "activeFace": 1
   },
   "d4kl": {
@@ -6787,45 +6862,36 @@
     "type": "card",
     "cardType": "g7",
     "id": "d4kl",
-    "z": 77639,
-    "parent": "c0u2",
-    "activeFace": 1
+    "z": 6206,
+    "activeFace": 1,
+    "parent": "w0wj"
   },
   "wn7a": {
     "deck": "11deck",
     "type": "card",
     "cardType": "g8",
     "id": "wn7a",
-    "z": 77644,
-    "parent": "c0u2",
-    "activeFace": 1
+    "z": 6209,
+    "activeFace": 1,
+    "parent": "w0wj"
   },
   "ep1p": {
     "deck": "11deck",
     "type": "card",
     "cardType": "g9",
     "id": "ep1p",
-    "z": 77638,
-    "parent": "c0u2",
-    "activeFace": 1
+    "z": 6208,
+    "activeFace": 1,
+    "parent": "w0wj"
   },
   "shkq": {
     "deck": "11deck",
     "type": "card",
     "cardType": "g10",
     "id": "shkq",
-    "z": 77636,
-    "parent": "c0u2",
+    "z": 6207,
+    "parent": "w0wj",
     "activeFace": 1
-  },
-  "c0u2": {
-    "type": "pile",
-    "width": 87,
-    "height": 150,
-    "id": "c0u2",
-    "z": 77647,
-    "x": 2086,
-    "y": -589
   },
   "glpz": {
     "type": "holder",
@@ -6867,7 +6933,7 @@
     "id": "dogDeck",
     "x": 4,
     "y": 4,
-    "z": 77653,
+    "z": 36,
     "cardDefaults": {
       "width": 87,
       "borderRadius": 8,
@@ -7006,33 +7072,24 @@
     "type": "card",
     "cardType": "dog",
     "id": "5x0f",
-    "parent": "cag7",
-    "z": 77663
+    "z": 6224,
+    "parent": "5zvf"
   },
   "w4w3": {
     "deck": "dogDeck",
     "type": "card",
     "cardType": "dog",
     "id": "w4w3",
-    "z": 77662,
-    "parent": "cag7"
+    "z": 6223,
+    "parent": "5zvf"
   },
   "bneu": {
     "deck": "dogDeck",
     "type": "card",
     "cardType": "spade",
     "id": "bneu",
-    "z": 77664,
-    "parent": "cag7"
-  },
-  "cag7": {
-    "type": "pile",
-    "parent": "glpz",
-    "x": 4,
-    "y": 4,
-    "width": 87,
-    "height": 150,
-    "id": "cag7"
+    "z": 6222,
+    "parent": "5zvf"
   },
   "setup": {
     "type": "button",
@@ -7102,7 +7159,7 @@
             "fields": [
               {
                 "type": "subtitle",
-                "text": "Make sure the people cards of your choice have been laid out in the eight red-bordered holders at the top of the play area before continuing. Place the remaining six cards back in the holder"
+                "text": "Make sure the people cards of your choice have been laid out in the eight red-bordered holders at the top of the play area before continuing. Any left empty will be filled by random people."
               }
             ]
           },
@@ -7519,11 +7576,77 @@
   "setup2": {
     "type": "button",
     "id": "setup2",
-    "x": 196,
-    "y": -163,
-    "z": 11,
+    "x": 193,
+    "y": -166,
+    "z": 15,
     "text": "setup2",
     "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "deck",
+        "value": "p7xd"
+      },
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "relation": "!=",
+        "value": "grid1",
+        "source": "DEFAULT"
+      },
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "relation": "!=",
+        "value": "grid2",
+        "source": "DEFAULT"
+      },
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "relation": "!=",
+        "value": "grid3",
+        "source": "DEFAULT"
+      },
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "relation": "!=",
+        "value": "grid4",
+        "source": "DEFAULT"
+      },
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "relation": "!=",
+        "value": "grid5",
+        "source": "DEFAULT"
+      },
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "relation": "!=",
+        "value": "grid6",
+        "source": "DEFAULT"
+      },
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "relation": "!=",
+        "value": "grid7",
+        "source": "DEFAULT"
+      },
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "relation": "!=",
+        "value": "grid8",
+        "source": "DEFAULT"
+      },
+      {
+        "func": "MOVE",
+        "to": "grid0",
+        "count": "all"
+      },
       {
         "func": "RECALL",
         "holder": "deadDeck"
@@ -7544,6 +7667,27 @@
           "x9d7B"
         ]
       },
+      {
+        "func": "SET",
+        "property": "text",
+        "value": 0,
+        "collection": [
+          "5ytv",
+          "6ytv",
+          "7ytv",
+          "8ytv",
+          "9ytv"
+        ]
+      },
+      {
+        "func": "SET",
+        "property": "display",
+        "value": false,
+        "collection": [
+          "maHolder",
+          "ability"
+        ]
+      },
       "var x = 1",
       {
         "func": "FOREACH",
@@ -7555,8 +7699,42 @@
             "value": "grid${x}"
           },
           {
+            "func": "COUNT"
+          },
+          {
+            "func": "IF",
+            "operand1": "${COUNT}",
+            "relation": "==",
+            "operand2": 0,
+            "thenRoutine": [
+              {
+                "func": "SHUFFLE",
+                "holder": "grid0"
+              },
+              {
+                "func": "MOVE",
+                "from": "grid0",
+                "to": "grid${x}",
+                "count": 1
+              },
+              {
+                "func": "SELECT",
+                "property": "parent",
+                "value": "grid${x}"
+              }
+            ]
+          },
+          {
             "func": "GET",
             "property": "cardType"
+          },
+          {
+            "func": "SET",
+            "property": "card${x}",
+            "collection": [
+              "ability"
+            ],
+            "value": "${cardType}"
           },
           {
             "func": "VAR",
@@ -7565,8 +7743,23 @@
             }
           },
           {
-            "func": "CALL",
-            "routine": "animalRoutine"
+            "func": "SELECT",
+            "source": "all",
+            "property": "cardType",
+            "value": "${a}"
+          },
+          {
+            "func": "SELECT",
+            "source": "DEFAULT",
+            "property": "deck",
+            "value": "p7xd",
+            "relation": "!="
+          },
+          {
+            "func": "MOVE",
+            "to": "playHolder",
+            "face": 0,
+            "count": "all"
           },
           "var x = ${x} + 1"
         ]
@@ -7642,28 +7835,734 @@
       {
         "func": "TURN",
         "turnCycle": "random"
-      }
-    ],
-    "animalRoutine": [
-      {
-        "func": "SELECT",
-        "source": "all",
-        "property": "cardType",
-        "value": "${a}"
       },
       {
-        "func": "SELECT",
-        "source": "DEFAULT",
-        "property": "deck",
-        "value": "p7xd",
-        "relation": "!="
-      },
-      {
-        "func": "MOVE",
-        "to": "playHolder",
-        "face": 0,
-        "count": "all"
+        "func": "CLICK",
+        "collection": [
+          "arrayB"
+        ]
       }
     ]
+  },
+  "ability": {
+    "type": "button",
+    "id": "ability",
+    "x": 1067,
+    "y": 485,
+    "z": 12,
+    "text": "Ability",
+    "clickRoutine": [
+      {
+        "func": "GET",
+        "property": "newCard1",
+        "collection": "thisButton"
+      },
+      {
+        "func": "GET",
+        "property": "newCard2",
+        "collection": "thisButton"
+      },
+      {
+        "func": "GET",
+        "property": "newCard3",
+        "collection": "thisButton"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": [
+          "p7xd ${newCard1}",
+          "p7xd ${newCard2}",
+          "p7xd ${newCard3}"
+        ],
+        "relation": "in",
+        "sortBy": {
+          "key": "_absoluteX",
+          "reverse": false
+        }
+      },
+      {
+        "func": "INPUT",
+        "fields": [
+          {
+            "type": "subtitle",
+            "text": "This button only works for these complicated abilities:"
+          },
+          {
+            "type": "choose",
+            "variable": "chosenCard"
+          }
+        ],
+        "header": "Which ability would you like to activate?"
+      },
+      {
+        "func": "IF",
+        "operand1": "${chosenCard}",
+        "relation": "==",
+        "operand2": "p7xd champion.jpg 1,0",
+        "thenRoutine": [
+          {
+            "func": "MOVE",
+            "from": "playHolder",
+            "to": "hand",
+            "count": 3
+          }
+        ]
+      },
+      "var del = ${activeSeats} indexOf ${seatID}",
+      "var nonActivePlayers = ${activeSeats}",
+      "var nonActivePlayers = remove ${del}",
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "${nonActivePlayers}",
+        "collection": "nonActivePlayers",
+        "relation": "in"
+      },
+      {
+        "func": "IF",
+        "operand1": "${chosenCard}",
+        "relation": "==",
+        "operand2": "p7xd champion.jpg 0,4",
+        "thenRoutine": [
+          {
+            "func": "INPUT",
+            "header": "Choose a player to enact this ability on.",
+            "fields": [
+              {
+                "type": "choose",
+                "source": "nonActivePlayers",
+                "variable": "playerEnact"
+              }
+            ]
+          },
+          {
+            "func": "SELECT",
+            "property": "type",
+            "value": "card"
+          },
+          {
+            "func": "MOVE",
+            "to": "lesHolder",
+            "face": 0,
+            "from": "${playerEnact}",
+            "count": "all"
+          },
+          {
+            "func": "SHUFFLE",
+            "holder": "lesHolder"
+          },
+          {
+            "func": "MOVE",
+            "from": "lesHolder",
+            "to": "${playerEnact}",
+            "count": "all"
+          },
+          {
+            "func": "MOVE",
+            "to": "lesHolder",
+            "face": 1,
+            "from": "${playerEnact}",
+            "count": 3
+          },
+          {
+            "func": "INPUT",
+            "header": "Choose a card to keep",
+            "fields": [
+              {
+                "type": "choose",
+                "holder": "lesHolder",
+                "variable": "keep"
+              }
+            ]
+          },
+          {
+            "func": "SELECT",
+            "property": "id",
+            "value": "${keep}"
+          },
+          {
+            "func": "MOVE",
+            "to": "hand"
+          },
+          {
+            "func": "MOVE",
+            "from": "lesHolder",
+            "to": "${playerEnact}",
+            "count": "all"
+          },
+          {
+            "func": "SORT",
+            "holder": "${playerEnact}",
+            "key": "cardType"
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${chosenCard}",
+        "relation": "==",
+        "operand2": "p7xd champion.jpg 1,1",
+        "thenRoutine": [
+          {
+            "func": "INPUT",
+            "header": "Choose a player to enact this ability on.",
+            "fields": [
+              {
+                "type": "choose",
+                "source": "nonActivePlayers",
+                "variable": "playerEnact"
+              }
+            ]
+          },
+          {
+            "func": "SELECT",
+            "property": "type",
+            "value": "card"
+          },
+          {
+            "func": "MOVE",
+            "to": "maHolder",
+            "face": 0,
+            "from": "${playerEnact}",
+            "count": "all"
+          },
+          {
+            "func": "SHUFFLE",
+            "holder": "maHolder"
+          },
+          {
+            "func": "COUNT",
+            "holder": "maHolder"
+          },
+          "var og = ${COUNT} / 2",
+          "var og = ${og} floor",
+          {
+            "func": "MOVE",
+            "from": "maHolder",
+            "to": "${playerEnact}",
+            "count": "${og}"
+          }
+        ]
+      }
+    ],
+    "display": false
+  },
+  "arrayB": {
+    "type": "button",
+    "id": "arrayB",
+    "x": 350,
+    "z": 12,
+    "text": "Array",
+    "clickRoutine": [
+      "var x = 1",
+      {
+        "func": "FOREACH",
+        "range": 8,
+        "loopRoutine": [
+          {
+            "func": "GET",
+            "property": "card${x}",
+            "collection": [
+              "ability"
+            ]
+          },
+          "var x = ${x} + 1"
+        ]
+      },
+      {
+        "func": "VAR",
+        "variables": {
+          "cardArray": [
+            "${card1}",
+            "${card2}",
+            "${card3}",
+            "${card4}",
+            "${card5}",
+            "${card6}",
+            "${card7}",
+            "${card8}"
+          ]
+        }
+      },
+      "var str = 'champion.jpg 0,4'",
+      "var cardCheck = ${cardArray} includes ${str}",
+      {
+        "func": "IF",
+        "operand1": "${cardCheck}",
+        "operand2": true,
+        "relation": "==",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "property": "display",
+            "value": true,
+            "collection": [
+              "ability"
+            ]
+          }
+        ]
+      },
+      "var str = 'champion.jpg 1,1'",
+      "var cardCheck = ${cardArray} includes ${str}",
+      {
+        "func": "IF",
+        "operand1": "${cardCheck}",
+        "operand2": true,
+        "relation": "==",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "property": "display",
+            "value": true,
+            "collection": [
+              "maHolder",
+              "ability"
+            ]
+          }
+        ]
+      },
+      "var str = 'champion.jpg 1,0'",
+      "var cardCheck = ${cardArray} includes ${str}",
+      {
+        "func": "IF",
+        "operand1": "${cardCheck}",
+        "operand2": true,
+        "relation": "==",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "property": "display",
+            "value": true,
+            "collection": [
+              "ability"
+            ]
+          }
+        ]
+      },
+      "var x = 0",
+      {
+        "func": "FOREACH",
+        "range": 4,
+        "loopRoutine": [
+          "var str = 'champion.jpg 0,' + ${x}",
+          "var cardCheck = ${cardArray} includes ${str}",
+          {
+            "func": "IF",
+            "operand1": "${cardCheck}",
+            "operand2": true,
+            "relation": "==",
+            "thenRoutine": [
+              "var del = ${cardArray} indexOf ${str}",
+              "var cardArray = remove ${del}"
+            ]
+          },
+          "var x = ${x} + 1"
+        ]
+      },
+      "var x = 5",
+      {
+        "func": "FOREACH",
+        "range": 5,
+        "loopRoutine": [
+          "var str = 'champion.jpg 0,' + ${x}",
+          "var cardCheck = ${cardArray} includes ${str}",
+          {
+            "func": "IF",
+            "operand1": "${cardCheck}",
+            "operand2": true,
+            "relation": "==",
+            "thenRoutine": [
+              "var del = ${cardArray} indexOf ${str}",
+              "var cardArray = remove ${del}"
+            ]
+          },
+          "var x = ${x} + 1"
+        ]
+      },
+      "var x = 2",
+      {
+        "func": "FOREACH",
+        "range": 2,
+        "loopRoutine": [
+          "var str = 'champion.jpg 1,' + ${x}",
+          "var cardCheck = ${cardArray} includes ${str}",
+          {
+            "func": "IF",
+            "operand1": "${cardCheck}",
+            "operand2": true,
+            "relation": "==",
+            "thenRoutine": [
+              "var del = ${cardArray} indexOf ${str}",
+              "var cardArray = remove ${del}"
+            ]
+          },
+          "var x = ${x} + 1"
+        ]
+      },
+      "var length = ${cardArray} length",
+      {
+        "func": "IF",
+        "operand1": "${length}",
+        "relation": ">",
+        "operand2": 0,
+        "thenRoutine": [
+          "var newCard1 = ${cardArray} shift",
+          {
+            "func": "IF",
+            "operand1": "${length}",
+            "relation": ">",
+            "operand2": 1,
+            "thenRoutine": [
+              "var newCard2 = ${cardArray} shift",
+              {
+                "func": "IF",
+                "operand1": "${length}",
+                "relation": ">",
+                "operand2": 2,
+                "thenRoutine": [
+                  "var newCard3 = ${cardArray} shift"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "SET",
+        "property": "newCard1",
+        "collection": [
+          "arrayB",
+          "ability"
+        ],
+        "value": "${newCard1}"
+      },
+      {
+        "func": "SET",
+        "property": "newCard2",
+        "collection": [
+          "arrayB",
+          "ability"
+        ],
+        "value": "${newCard2}"
+      },
+      {
+        "func": "SET",
+        "property": "newCard3",
+        "collection": [
+          "arrayB",
+          "ability"
+        ],
+        "value": "${newCard3}"
+      }
+    ],
+    "y": -164
+  },
+  "lesHolder": {
+    "type": "holder",
+    "id": "lesHolder",
+    "x": 1812,
+    "y": 277,
+    "width": 97,
+    "height": 160,
+    "z": 15,
+    "css": {
+      "default": {
+        "background-image": "url('/assets/-1533710025_12234')",
+        "background-size": "50px",
+        "background-repeat": "no-repeat",
+        "justify-content": "center",
+        "align-items": "center",
+        "display": "flex",
+        "background-position": "center"
+      }
+    },
+    "onEnter": {
+      "activeFace": 1
+    }
+  },
+  "maHolder": {
+    "type": "holder",
+    "id": "maHolder",
+    "x": 1058,
+    "y": 607,
+    "width": 97,
+    "height": 160,
+    "z": 15,
+    "css": {
+      "default": {
+        "background-image": "url('/assets/-646821924_13012')",
+        "background-size": "50px",
+        "background-repeat": "no-repeat",
+        "justify-content": "center",
+        "align-items": "center",
+        "display": "flex",
+        "background-position": "center"
+      }
+    },
+    "display": false
+  },
+  "seat1Counter": {
+    "id": "seat1Counter",
+    "parent": "seat1",
+    "fixedParent": true,
+    "x": -20,
+    "y": -20,
+    "width": 30,
+    "height": 30,
+    "borderRadius": 100,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "css": {
+      "font-size": "18px",
+      "display": "flex",
+      "align-items": "center",
+      "justify-content": "center",
+      "color": "#6d6d6d",
+      "background": "#e4e4e4",
+      "border": "2px solid #999999"
+    },
+    "text": 0,
+    "ownerGlobalUpdateRoutine": [
+      "var parent = ${PROPERTY parent}",
+      "var COUNT = 0",
+      {
+        "func": "SELECT",
+        "property": "_ancestor",
+        "value": "${PROPERTY hand OF $parent}"
+      },
+      {
+        "func": "COUNT",
+        "owner": "${PROPERTY player OF $parent}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "text",
+        "value": "${COUNT}"
+      }
+    ],
+    "playerGlobalUpdateRoutine": [
+      {
+        "func": "CALL",
+        "routine": "ownerGlobalUpdateRoutine",
+        "widget": "${PROPERTY id}"
+      }
+    ]
+  },
+  "seat2Counter": {
+    "id": "seat2Counter",
+    "parent": "seat2",
+    "fixedParent": true,
+    "x": -20,
+    "y": -20,
+    "width": 30,
+    "height": 30,
+    "borderRadius": 100,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "css": {
+      "font-size": "18px",
+      "display": "flex",
+      "align-items": "center",
+      "justify-content": "center",
+      "color": "#6d6d6d",
+      "background": "#e4e4e4",
+      "border": "2px solid #999999"
+    },
+    "text": 0,
+    "ownerGlobalUpdateRoutine": [
+      "var parent = ${PROPERTY parent}",
+      "var COUNT = 0",
+      {
+        "func": "SELECT",
+        "property": "_ancestor",
+        "value": "${PROPERTY hand OF $parent}"
+      },
+      {
+        "func": "COUNT",
+        "owner": "${PROPERTY player OF $parent}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "text",
+        "value": "${COUNT}"
+      }
+    ],
+    "playerGlobalUpdateRoutine": [
+      {
+        "func": "CALL",
+        "routine": "ownerGlobalUpdateRoutine",
+        "widget": "${PROPERTY id}"
+      }
+    ]
+  },
+  "seat3Counter": {
+    "id": "seat3Counter",
+    "parent": "seat3",
+    "fixedParent": true,
+    "x": -20,
+    "y": -20,
+    "width": 30,
+    "height": 30,
+    "borderRadius": 100,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "css": {
+      "font-size": "18px",
+      "display": "flex",
+      "align-items": "center",
+      "justify-content": "center",
+      "color": "#6d6d6d",
+      "background": "#e4e4e4",
+      "border": "2px solid #999999"
+    },
+    "text": 0,
+    "ownerGlobalUpdateRoutine": [
+      "var parent = ${PROPERTY parent}",
+      "var COUNT = 0",
+      {
+        "func": "SELECT",
+        "property": "_ancestor",
+        "value": "${PROPERTY hand OF $parent}"
+      },
+      {
+        "func": "COUNT",
+        "owner": "${PROPERTY player OF $parent}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "text",
+        "value": "${COUNT}"
+      }
+    ],
+    "playerGlobalUpdateRoutine": [
+      {
+        "func": "CALL",
+        "routine": "ownerGlobalUpdateRoutine",
+        "widget": "${PROPERTY id}"
+      }
+    ]
+  },
+  "seat4Counter": {
+    "id": "seat4Counter",
+    "parent": "seat4",
+    "fixedParent": true,
+    "x": -20,
+    "y": -20,
+    "width": 30,
+    "height": 30,
+    "borderRadius": 100,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "css": {
+      "font-size": "18px",
+      "display": "flex",
+      "align-items": "center",
+      "justify-content": "center",
+      "color": "#6d6d6d",
+      "background": "#e4e4e4",
+      "border": "2px solid #999999"
+    },
+    "text": 0,
+    "ownerGlobalUpdateRoutine": [
+      "var parent = ${PROPERTY parent}",
+      "var COUNT = 0",
+      {
+        "func": "SELECT",
+        "property": "_ancestor",
+        "value": "${PROPERTY hand OF $parent}"
+      },
+      {
+        "func": "COUNT",
+        "owner": "${PROPERTY player OF $parent}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "text",
+        "value": "${COUNT}"
+      }
+    ],
+    "playerGlobalUpdateRoutine": [
+      {
+        "func": "CALL",
+        "routine": "ownerGlobalUpdateRoutine",
+        "widget": "${PROPERTY id}"
+      }
+    ]
+  },
+  "seat5Counter": {
+    "id": "seat5Counter",
+    "parent": "seat5",
+    "fixedParent": true,
+    "x": -20,
+    "y": -20,
+    "width": 30,
+    "height": 30,
+    "borderRadius": 100,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "css": {
+      "font-size": "18px",
+      "display": "flex",
+      "align-items": "center",
+      "justify-content": "center",
+      "color": "#6d6d6d",
+      "background": "#e4e4e4",
+      "border": "2px solid #999999"
+    },
+    "text": 0,
+    "ownerGlobalUpdateRoutine": [
+      "var parent = ${PROPERTY parent}",
+      "var COUNT = 0",
+      {
+        "func": "SELECT",
+        "property": "_ancestor",
+        "value": "${PROPERTY hand OF $parent}"
+      },
+      {
+        "func": "COUNT",
+        "owner": "${PROPERTY player OF $parent}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "text",
+        "value": "${COUNT}"
+      }
+    ],
+    "playerGlobalUpdateRoutine": [
+      {
+        "func": "CALL",
+        "routine": "ownerGlobalUpdateRoutine",
+        "widget": "${PROPERTY id}"
+      }
+    ]
+  },
+  "w0wj": {
+    "type": "pile",
+    "parent": "ghostHolder",
+    "x": 4,
+    "y": 4,
+    "width": 87,
+    "height": 150,
+    "id": "w0wj"
+  },
+  "5zvf": {
+    "type": "pile",
+    "parent": "glpz",
+    "x": 4,
+    "y": 4,
+    "width": 87,
+    "height": 150,
+    "id": "5zvf"
   }
 }
