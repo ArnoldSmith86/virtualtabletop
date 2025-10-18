@@ -1,6 +1,5 @@
 import fs from 'fs';
 import path from 'path';
-import fetch from 'node-fetch';
 import crypto from 'crypto';
 
 import { diffString, diff } from 'json-diff';
