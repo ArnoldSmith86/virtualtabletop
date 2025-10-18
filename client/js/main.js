@@ -229,7 +229,7 @@ function setScale() {
   if(edit)
     scaleHasChanged(scale);
   if(globalThis.refreshIgnoreZoomWidgets)
-  globalThis.refreshIgnoreZoomWidgets();
+    globalThis.refreshIgnoreZoomWidgets();
 }
 
 function getScale() {
