@@ -9,6 +9,8 @@ function setZoomLevel(zoomLevel) {
   $('body').classList.toggle('zoom2x', zoomScale > 1);
   document.documentElement.style.setProperty('--zoom', zoomScale);
   roomRectangle = $('#room').getBoundingClientRect();
+  if(globalThis.refreshIgnoreZoomWidgets)
+    globalThis.refreshIgnoreZoomWidgets();
 }
 
 function resetZoomAndPan() {
@@ -27,6 +29,8 @@ function setPan(x, y) {
   document.documentElement.style.setProperty('--roomPanX', clampedPanX + 'px');
   document.documentElement.style.setProperty('--roomPanY', clampedPanY + 'px');
   roomRectangle = $('#room').getBoundingClientRect();
+  if(globalThis.refreshIgnoreZoomWidgets)
+    globalThis.refreshIgnoreZoomWidgets();
 }
 
 function elementIsMovableWidget(el) {
