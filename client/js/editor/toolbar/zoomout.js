@@ -6,5 +6,6 @@ class ZoomOutButton extends ToolbarToggleButton {
   toggle(state) {
     $('body').classList.toggle('zoomedOut', state);
     setZoomAndOffset(state ? 0.5 : 1, 0, 0);
+    resetZoomAndPan();
   }
 }
