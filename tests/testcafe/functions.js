@@ -152,10 +152,10 @@ test('Dynamic expressions', async t => {
     .click('#editButton')
     .click('#editorToolbar > div > [icon=add]')
     .click('#addBasicWidget')
-    .click(Selector('button').withAttribute('icon', 'data_object'))
+    .click('button[icon="data_object"]')
     .typeText('#jeText', button, { replace: true, paste: true })
+    .click('button[icon="pest_control"]')
     .rightClick('#w_jyo6')
-    .click(Selector('button').withAttribute('icon', 'pest_control'))
   const log = await Selector('#jeLog').textContent
   for (let i=0; i<ops.length; i++) {
     const logContains = log.includes('"'+ops[i][1]+'": '+ops[i][2]);

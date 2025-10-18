@@ -1,6 +1,4 @@
-import { Widget } from './widget';
-
-class BasicWidget extends Widget {
+class BasicWidget extends ImageWidget {
   constructor(id) {
     super(id);
 
@@ -11,11 +9,8 @@ class BasicWidget extends Widget {
       faceCycle: 'forward',
       activeFace: 0,
 
-      image: '',
       color: 'black',
-      svgReplaces: {},
       layer: 1,
-      text: '',
       html: null
     });
   }
@@ -41,37 +36,20 @@ class BasicWidget extends Widget {
         this.previouslyActiveFace = face;
       }
     }
-    if(delta.html !== undefined || delta.text !== undefined || this.getWithPropertyReplacements_checkDelta('html', delta)) {
+    if(delta.html !== undefined || delta.text !== undefined || delta.icon !== undefined || this.getWithPropertyReplacements_checkDelta('html', delta)) {
       const childNodes = [...this.domElement.childNodes];
       this.domElement.innerHTML = '';
       if(this.get('html') === null) {
-        setText(this.domElement, this.get('text'));
+        setText(this.domElement, this.get('icon') ? '' : this.get('text'));
       } else {
         this.domElement.innerHTML = DOMPurify.sanitize(mapAssetURLs(this.getWithPropertyReplacements('html')), { USE_PROFILES: { html: true } });
       }
       for(const child of childNodes)
-        if(String(child.className).match(/widget/))
+        if(String(child.className).match(/widget|symbolOuterWrapper/))
           this.domElement.appendChild(child);
-  }
-
-    for(const property of Object.values(this.get('svgReplaces') || {}))
-      if(delta[property] !== undefined)
-        this.domElement.style.cssText = mapAssetURLs(this.css());
-  }
-
-  classes(includeTemporary=true) {
-    let className = super.classes(includeTemporary);
-
-    if(this.get('image'))
-      className += ' hasImage';
-
-    return className;
-  }
-
-  classesProperties() {
-    const p = super.classesProperties();
-    p.push('image');
-    return p;
+    }
+    if(delta.color !== undefined)
+      this.updateIcon();
   }
 
   async click(mode='respect') {
@@ -84,15 +62,13 @@ class BasicWidget extends Widget {
 
     if(this.get('color'))
       css += '; --color:' + this.get('color');
-    if(this.get('image'))
-      css += '; background-image: url("' + this.getImage() + '")';
 
     return css;
   }
 
   cssProperties() {
     const p = super.cssProperties();
-    p.push('image', 'color', 'svgReplaces');
+    p.push('color');
     return p;
   }
 
@@ -122,17 +98,11 @@ class BasicWidget extends Widget {
     return super.get(property);
   }
 
-  getFaceCount() {
-    return this.faces().length || 1;
+  getDefaultIconColor() {
+    return this.get('color');
   }
 
-  getImage() {
-    if(!Object.keys(this.get('svgReplaces') || {}).length)
-      return this.get('image');
-
-    const replaces = {};
-    for(const key in this.get('svgReplaces'))
-      replaces[key] = this.get(this.get('svgReplaces')[key]);
-    return getSVG(this.get('image'), replaces, _=>this.domElement.style.cssText = this.css());
+  getFaceCount() {
+    return this.faces().length || 1;
   }
 }

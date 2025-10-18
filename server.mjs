@@ -7,7 +7,6 @@ import bodyParser from 'body-parser';
 import http from 'http';
 import CRC32 from 'crc-32';
 import fetch from 'node-fetch';
-import crawlers from 'crawler-user-agents' assert { type: 'json' };;
 
 import WebSocket  from './server/websocket.mjs';
 import Player     from './server/player.mjs';
@@ -16,6 +15,9 @@ import MinifyHTML from './server/minify.mjs';
 import Logging    from './server/logging.mjs';
 import Config     from './server/config.mjs';
 import Statistics from './server/statistics.mjs';
+
+let crawlers = [];
+try { crawlers = JSON.parse(fs.readFileSync('node_modules/crawler-user-agents/crawler-user-agents.json', 'utf8')); } catch {}
 
 const app = express();
 const server = http.Server(app);
@@ -331,6 +333,9 @@ MinifyHTML().then(function(result) {
   });
 
   function createBotPattern(crawlers) {
+    if(crawlers.length == 0)
+      return new RegExp('^$');
+
     // Join all the patterns using the | operator
     const combinedPattern = crawlers.filter(c => c.pattern!='HeadlessChrome').map(c => c.pattern).join('|');
 

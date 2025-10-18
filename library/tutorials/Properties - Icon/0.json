@@ -1,0 +1,184 @@
+{
+  "_meta": {
+    "version": 17,
+    "info": {
+      "name": "Properties - Icon",
+      "image": "/assets/1481362664_5448",
+      "rules": "",
+      "bgg": "",
+      "year": "",
+      "mode": "Tutorial",
+      "time": "0",
+      "attribution": "",
+      "lastUpdate": 1752115985149,
+      "showName": false,
+      "skill": "",
+      "description": "",
+      "similarImage": "",
+      "similarName": "",
+      "similarDesigner": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": "",
+      "variantImage": "",
+      "variant": "Overview",
+      "language": "en-US",
+      "players": "1"
+    }
+  },
+  "notes1": {
+    "id": "notes1",
+    "y": 424,
+    "width": 250,
+    "z": 441,
+    "movable": false,
+    "css": {
+      "font-size": "19px"
+    },
+    "text": "This basic widget uses the 'icon' property.",
+    "x": 353
+  },
+  "notes2": {
+    "id": "notes2",
+    "y": 425,
+    "width": 250,
+    "z": 444,
+    "movable": false,
+    "css": {
+      "font-size": "19px"
+    },
+    "text": "This basic widget uses the image property to do the same thing.",
+    "x": 646
+  },
+  "example1": {
+    "id": "example1",
+    "x": 417,
+    "y": 319,
+    "z": 440,
+    "icon": "delapouite/wireframe-globe",
+    "clickRoutine": [],
+    "movable": false
+  },
+  "example2": {
+    "id": "example2",
+    "x": 709,
+    "y": 319,
+    "z": 311,
+    "movable": false,
+    "image": "/i/game-icons.net/delapouite/wireframe-globe.svg"
+  },
+  "header": {
+    "type": "label",
+    "id": "header",
+    "x": 290,
+    "y": 1,
+    "width": 1000,
+    "height": 80,
+    "z": 26392,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "60px",
+      "color": "black"
+    },
+    "text": "Icons: Overview"
+  },
+  "overview": {
+    "id": "overview",
+    "x": 279,
+    "y": 84,
+    "width": 1000,
+    "z": 373,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "25px",
+      "color": "black"
+    },
+    "text": "Icons can be added through the 'icon' property on certain widgets. Those widgets also support using the 'image' property and, depending on the type of icon, the 'text' property. While the text and image properties are perfect for adding text and images, the preferred method of adding icons is through the icon property. However, there may be instances when you are combining text and images or multiple images where using both methods make sense. The examples below demonstrate both methods."
+  },
+  "example3": {
+    "id": "example3",
+    "x": 1001,
+    "y": 319,
+    "z": 311,
+    "movable": false,
+    "image": "/i/noto-emoji/emoji_u1f30e.svg",
+    "icon": "delapouite/wireframe-globe"
+  },
+  "notes31": {
+    "id": "notes31",
+    "x": 938,
+    "y": 425,
+    "width": 250,
+    "z": 445,
+    "movable": false,
+    "css": {
+      "font-size": "19px"
+    },
+    "text": "This basic widget uses both methods to overlay the same icon over a background image, which is also available as an icon."
+  },
+  "notes3": {
+    "id": "notes3",
+    "y": 705,
+    "width": 250,
+    "z": 441,
+    "movable": false,
+    "css": {
+      "font-size": "19px"
+    },
+    "text": "This basic uses the dog emoji as a text property. Generally, this should NOT be done.",
+    "x": 353
+  },
+  "notes4": {
+    "id": "notes4",
+    "y": 706,
+    "width": 250,
+    "z": 444,
+    "movable": false,
+    "css": {
+      "font-size": "19px"
+    },
+    "text": "This basic widget uses the same emoji, but as an icon.",
+    "x": 646
+  },
+  "example4": {
+    "id": "example4",
+    "x": 399,
+    "y": 574,
+    "z": 440,
+    "clickRoutine": [],
+    "movable": false,
+    "text": "🐶",
+    "css": {
+      "font-size": "100px"
+    }
+  },
+  "example5": {
+    "id": "example5",
+    "x": 709,
+    "y": 600,
+    "z": 311,
+    "movable": false,
+    "icon": "🐶"
+  },
+  "example6": {
+    "id": "example6",
+    "x": 1001,
+    "y": 600,
+    "z": 311,
+    "movable": false,
+    "icon": "(🐶)"
+  },
+  "notes32": {
+    "id": "notes32",
+    "x": 938,
+    "y": 706,
+    "width": 250,
+    "z": 445,
+    "movable": false,
+    "css": {
+      "font-size": "19px"
+    },
+    "text": "This basic widget uses the same emoji, but with parentheses around it to create a monocolor image. If you use the icon picker in the Edit Mode, the parentheses will automatically be added if you choose the monocolor emoji."
+  }
+}

@@ -22,7 +22,7 @@
     "movable": false,
     "movableInEdit": false,
     "css": "font-size: 25px; ",
-    "html": "This variant of the tutorial covers the remaining widget types not previously discussed. You can learn more in other tutorials (and the wiki): <a href='https://virtualtabletop.io/tutorial/canvas'>Canvas</a> (<a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Widgets#canvas'>wiki</a>), <a href='https://virtualtabletop.io/tutorial/dice'>Dice</a> (<a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Widgets#dice'>wiki</a>), <a href='https://virtualtabletop.io/tutorial/scoreboard'>Scoreboards (<a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Widgets#scoreboard'>wiki</a>), <a href='https://virtualtabletop.io/tutorial/spinners'>Spinners</a> (<a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Widgets#label'>wiki</a>), and <a href='https://virtualtabletop.io/tutorial/timer'>Timers</a> (<a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Widgets#timer'>wiki</a>). Each of these types of widgets, except for dice, are available under the Interactive section of the add widget overlay."
+    "html": "This variant of the tutorial covers the remaining widget types not previously discussed. You can learn more in other tutorials (and the wiki): <a href='https://virtualtabletop.io/tutorial/types-canvas'>Canvas</a> (<a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Widgets#canvas'>wiki</a>), <a href='https://virtualtabletop.io/tutorial/types-dice'>Dice</a> (<a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Widgets#dice'>wiki</a>), <a href='https://virtualtabletop.io/tutorial/types-scoreboard'>Scoreboards (<a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Widgets#scoreboard'>wiki</a>), <a href='https://virtualtabletop.io/tutorial/types-spinners'>Spinners</a> (<a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Widgets#label'>wiki</a>), and <a href='https://virtualtabletop.io/tutorial/types-timer'>Timers</a> (<a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Widgets#timer'>wiki</a>). Each of these types of widgets, except for dice, are available under the Interactive section of the add widget overlay."
   },
   "text1": {
     "id": "text1",
@@ -93,14 +93,14 @@
     "version": 17,
     "info": {
       "name": "110 Widget Types",
-      "image": "/assets/415539053_3992",
+      "image": "/assets/-1812256112_6351",
       "rules": "",
       "bgg": "",
       "year": "",
       "mode": "Tutorial",
       "time": "",
       "attribution": "",
-      "lastUpdate": 1743096712990,
+      "lastUpdate": 1749053679656,
       "showName": false,
       "skill": "",
       "description": "",

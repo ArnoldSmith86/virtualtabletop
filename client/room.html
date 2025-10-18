@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <title> /*** TITLE ***/ </title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
-  <base target="_blank" href=" /*** EXTERNAL_URL ***/ /">
+  <base target="_blank" href=" /*** URL_PREFIX ***/ /">
   <link rel="icon" sizes="any" href="i/branding/favicon-32.png"/>
   <link rel="icon" type="image/svg+xml" href="i/branding/favicon.svg"/>
   <link rel="apple-touch-icon" sizes="180x180" href="i/branding/ios-icon.png">
@@ -34,6 +34,7 @@
     <div id="optionsAnchor"><div id="options" class="hidden"><button id="muteButton" class="toolbarButton"></button><input id="volume" type="range" min="0" max="100" value="30"></div></div>
     <button id="optionsButton" class="toolbarButton"><span class="tooltip">Sound</span></button>
     <button id="lightsButton" class="toolbarButton"><span class="tooltip">Lights</span></button>
+    <button id="zoom2xButton" class="toolbarButton"><span class="tooltip">1x Zoom</span></button>
     <button id="fullscreenButton" class="toolbarButton"><span class="tooltip">Fullscreen</span></button>
     <button id="hideToolbarButton" class="toolbarButton"><span class="tooltip">Hide Toolbar</span></button>
   </div>
@@ -419,7 +420,7 @@
             <li>On the next page, click PLAY.</li>
             <li>Invite your friends on the Players tab.</li>
           </ol>
-          <b>Room URL:</b> <span> /*** EXTERNAL_URL ***/ /<input id="welcomeJoinRoom" tabindex="1"></span><br>
+          <b>Room URL:</b> <span></span><span id="roomURLDisplay"></span><input id="welcomeJoinRoom" tabindex="1"></span><br>
           <b>Player name:</b> <input id="welcomePlayerName" tabindex="2">
           <button id="welcomePlayButton" icon="play_arrow">Create room</button>
         </div>
