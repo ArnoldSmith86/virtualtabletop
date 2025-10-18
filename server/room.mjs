@@ -691,6 +691,22 @@ export default class Room {
         player.send('audio', args);
   }
 
+  zoom(args) {
+  const level = Number(args.level);
+  const panX = Number(args.panX);
+  const panY = Number(args.panY);
+  const players = Array.isArray(args.players) ? args.players.map(p=>`${p}`) : [];
+
+  if(!Number.isFinite(level) || !Number.isInteger(level) || level < 1 || level > 10)
+    return;
+  if(!Number.isFinite(panX) || !Number.isFinite(panY))
+    return;
+
+  for(const player of this.players)
+    if(players.length === 0 || players.includes(player.name))
+      player.send('zoom', { level, panX, panY });
+  }
+
   receiveDelta(player, delta) {
     for(const widgetID in delta.s) {
       if(delta.s[widgetID] === null) {
