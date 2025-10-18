@@ -472,6 +472,8 @@ function receiveStateFromServer(args) {
     deferredChildren = {};
   }
 
+  resetZoomAndPan();
+
   if(isLoading) {
     $('#loadingRoomIndicator').remove();
     $('body').classList.remove('loading');
