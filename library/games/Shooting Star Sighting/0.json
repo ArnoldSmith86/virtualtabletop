@@ -1,0 +1,4266 @@
+{
+  "_meta": {
+    "version": 17,
+    "info": {
+      "name": "Shooting Star Sighting",
+      "image": "/assets/-642851480_1947",
+      "rules": "",
+      "bgg": "https://boardgamegeek.com/boardgame/26472/dragon-parade",
+      "year": "2007",
+      "mode": "",
+      "time": "",
+      "attribution": "<div><div>Room layout, custom game pieces and scripting by Nicolas Weiss / PaladinOfCats, under a CCBY 3.0 licence.</div><div>http://paladinofcats.free.fr/vtio.htm<br></div><div><br></div><div>---<br></div><div><br></div>Icons by the following people under a CCBY 3.0 licence.</div><div><br></div><div><b>Delapouite</b></div><div><i>Falling star</i></div><div>https://game-icons.net/1x1/delapouite/falling-star.html</div>",
+      "lastUpdate": 1760672202794,
+      "showName": true,
+      "skill": "",
+      "description": "A small meteor is about to enter our atmosphere. Attempt to determine where and book the best spot for taking pictures of it.",
+      "similarImage": "",
+      "similarName": "Dragon Parade",
+      "similarDesigner": "Reiner Knizia",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": "",
+      "variantImage": "",
+      "variant": "",
+      "language": "en-GB",
+      "players": "3-5"
+    }
+  },
+  "left-1": {
+    "id": "left-1",
+    "x": 835,
+    "width": 110,
+    "height": 110,
+    "layer": -4,
+    "z": 22,
+    "movable": false,
+    "image": "/assets/-268081183_1499",
+    "y": 30
+  },
+  "lp1": {
+    "type": "holder",
+    "id": "lp1",
+    "parent": "left-1",
+    "x": 5,
+    "y": 22.5,
+    "width": 65,
+    "height": 65,
+    "z": 11,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropShadow": true,
+    "dropTarget": {
+      "subtype": "square-boi"
+    },
+    "dropLimit": 1
+  },
+  "ld1": {
+    "type": "holder",
+    "id": "ld1",
+    "x": 70,
+    "z": 12,
+    "parent": "left-1",
+    "width": 35,
+    "height": 100,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropShadow": true,
+    "dropTarget": {
+      "subtype": "long-boi"
+    },
+    "y": 5
+  },
+  "seat-1": {
+    "type": "seat",
+    "id": "seat-1",
+    "width": 200,
+    "height": 36,
+    "css": {
+      ".seated": {
+        "border": "7px solid #ff0000"
+      }
+    },
+    "hideWhenUnused": true,
+    "x": 50,
+    "y": 50
+  },
+  "cube-holder-1": {
+    "type": "holder",
+    "id": "cube-holder-1",
+    "y": 15,
+    "width": 65,
+    "height": 65,
+    "css": {
+      "background-color": "transparent"
+    },
+    "dropShadow": true,
+    "dropTarget": {
+      "suit": "cube-red"
+    },
+    "z": 9,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "parent": "seat-1",
+    "x": 220
+  },
+  "cubes-player-1": {
+    "type": "deck",
+    "id": "cubes-player-1",
+    "width": 65,
+    "height": 65,
+    "cardDefaults": {
+      "subtype": "square-boi",
+      "width": 65,
+      "height": 65,
+      "onPileCreation": {
+        "handleCSS": {
+          "background": "black",
+          "color": "white"
+        },
+        "layer": -1
+      }
+    },
+    "cardTypes": {
+      "cube-red": {
+        "image": "/assets/-3290015_1759",
+        "suit": "cube-red"
+      }
+    },
+    "faceTemplates": [
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 65,
+            "height": 65,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image"
+            }
+          }
+        ]
+      }
+    ],
+    "parent": "cube-holder-1"
+  },
+  "3lxw": {
+    "deck": "cubes-player-1",
+    "type": "card",
+    "cardType": "cube-red",
+    "id": "3lxw",
+    "z": 2480,
+    "parent": "m40j"
+  },
+  "u19d": {
+    "deck": "cubes-player-1",
+    "type": "card",
+    "cardType": "cube-red",
+    "id": "u19d",
+    "z": 2481,
+    "parent": "m40j"
+  },
+  "dho0": {
+    "deck": "cubes-player-1",
+    "type": "card",
+    "cardType": "cube-red",
+    "id": "dho0",
+    "z": 2482,
+    "parent": "m40j"
+  },
+  "score-1": {
+    "type": "label",
+    "id": "score-1",
+    "y": 55,
+    "width": 65,
+    "height": 40,
+    "css": "font-size: 30px;",
+    "editable": true,
+    "text": 0,
+    "parent": "seat-1",
+    "x": 65
+  },
+  "sl-1": {
+    "type": "button",
+    "id": "sl-1",
+    "parent": "score-1",
+    "fixedParent": true,
+    "x": -38,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": "font-size: 28px",
+    "text": "remove",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 1
+      }
+    ]
+  },
+  "sr-1": {
+    "type": "button",
+    "id": "sr-1",
+    "parent": "score-1",
+    "fixedParent": true,
+    "x": 68,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": "font-size: 28px",
+    "text": "add",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 1
+      }
+    ]
+  },
+  "vvts": {
+    "type": "label",
+    "text": "-1",
+    "css": "font-size: 50px",
+    "height": 60,
+    "width": 110,
+    "y": 25,
+    "z": 2,
+    "id": "vvts",
+    "parent": "left-1",
+    "layer": -3
+  },
+  "centre": {
+    "id": "centre",
+    "x": 975,
+    "y": 15,
+    "width": 45,
+    "height": 110,
+    "layer": -4,
+    "z": 18,
+    "movable": false,
+    "image": "/assets/-27475166_1477"
+  },
+  "dfssdf": {
+    "type": "label",
+    "id": "dfssdf",
+    "parent": "centre",
+    "y": 25,
+    "width": 45,
+    "height": 60,
+    "layer": -3,
+    "z": 2,
+    "css": "font-size: 50px",
+    "text": "0"
+  },
+  "left-2": {
+    "id": "left-2",
+    "x": 695,
+    "width": 110,
+    "height": 110,
+    "layer": -4,
+    "z": 29,
+    "movable": false,
+    "image": "/assets/-268081183_1499",
+    "y": 45
+  },
+  "lp2": {
+    "type": "holder",
+    "id": "lp2",
+    "parent": "left-2",
+    "x": 5,
+    "y": 22.5,
+    "width": 65,
+    "height": 65,
+    "z": 11,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropShadow": true,
+    "dropTarget": {
+      "subtype": "square-boi"
+    },
+    "dropLimit": 1
+  },
+  "ld2": {
+    "type": "holder",
+    "id": "ld2",
+    "x": 70,
+    "z": 12,
+    "parent": "left-2",
+    "width": 35,
+    "height": 100,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropShadow": true,
+    "dropTarget": {
+      "subtype": "long-boi"
+    },
+    "y": 5
+  },
+  "vvts1": {
+    "type": "label",
+    "text": "-2",
+    "css": "font-size: 50px",
+    "height": 60,
+    "width": 110,
+    "y": 25,
+    "z": 2,
+    "id": "vvts1",
+    "parent": "left-2",
+    "layer": -3
+  },
+  "left-3": {
+    "id": "left-3",
+    "x": 555,
+    "width": 110,
+    "height": 110,
+    "layer": -4,
+    "z": 30,
+    "movable": false,
+    "image": "/assets/-268081183_1499",
+    "y": 60
+  },
+  "lp3": {
+    "type": "holder",
+    "id": "lp3",
+    "parent": "left-3",
+    "x": 5,
+    "y": 22.5,
+    "width": 65,
+    "height": 65,
+    "z": 11,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropShadow": true,
+    "dropTarget": {
+      "subtype": "square-boi"
+    },
+    "dropLimit": 1
+  },
+  "ld3": {
+    "type": "holder",
+    "id": "ld3",
+    "x": 70,
+    "z": 12,
+    "parent": "left-3",
+    "width": 35,
+    "height": 100,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropShadow": true,
+    "dropTarget": {
+      "subtype": "long-boi"
+    },
+    "y": 5
+  },
+  "vvts2": {
+    "type": "label",
+    "text": "-3",
+    "css": "font-size: 50px",
+    "height": 60,
+    "width": 110,
+    "y": 25,
+    "z": 2,
+    "id": "vvts2",
+    "parent": "left-3",
+    "layer": -3
+  },
+  "left-4": {
+    "id": "left-4",
+    "x": 415,
+    "width": 110,
+    "height": 110,
+    "layer": -4,
+    "z": 31,
+    "movable": false,
+    "image": "/assets/-268081183_1499",
+    "y": 75
+  },
+  "lp4": {
+    "type": "holder",
+    "id": "lp4",
+    "parent": "left-4",
+    "x": 5,
+    "y": 22.5,
+    "width": 65,
+    "height": 65,
+    "z": 11,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropShadow": true,
+    "dropTarget": {
+      "subtype": "square-boi"
+    },
+    "dropLimit": 1
+  },
+  "ld4": {
+    "type": "holder",
+    "id": "ld4",
+    "x": 70,
+    "z": 12,
+    "parent": "left-4",
+    "width": 35,
+    "height": 100,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropShadow": true,
+    "dropTarget": {
+      "subtype": "long-boi"
+    },
+    "y": 5
+  },
+  "vvts3": {
+    "type": "label",
+    "text": "-4",
+    "css": "font-size: 50px",
+    "height": 60,
+    "width": 110,
+    "y": 25,
+    "z": 2,
+    "id": "vvts3",
+    "parent": "left-4",
+    "layer": -3
+  },
+  "left-5": {
+    "id": "left-5",
+    "x": 415,
+    "width": 110,
+    "height": 110,
+    "layer": -4,
+    "z": 32,
+    "movable": false,
+    "image": "/assets/-268081183_1499",
+    "y": 200
+  },
+  "lp5": {
+    "type": "holder",
+    "id": "lp5",
+    "parent": "left-5",
+    "x": 5,
+    "y": 22.5,
+    "width": 65,
+    "height": 65,
+    "z": 11,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropShadow": true,
+    "dropTarget": {
+      "subtype": "square-boi"
+    },
+    "dropLimit": 1
+  },
+  "ld5": {
+    "type": "holder",
+    "id": "ld5",
+    "x": 70,
+    "z": 12,
+    "parent": "left-5",
+    "width": 35,
+    "height": 100,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropShadow": true,
+    "dropTarget": {
+      "subtype": "long-boi"
+    },
+    "y": 5
+  },
+  "vvts4": {
+    "type": "label",
+    "text": "-5",
+    "css": "font-size: 50px",
+    "height": 60,
+    "width": 110,
+    "y": 25,
+    "z": 2,
+    "id": "vvts4",
+    "parent": "left-5",
+    "layer": -3
+  },
+  "left-6": {
+    "id": "left-6",
+    "x": 555,
+    "width": 110,
+    "height": 110,
+    "layer": -4,
+    "z": 33,
+    "movable": false,
+    "image": "/assets/-268081183_1499",
+    "y": 215
+  },
+  "lp6": {
+    "type": "holder",
+    "id": "lp6",
+    "parent": "left-6",
+    "x": 5,
+    "y": 22.5,
+    "width": 65,
+    "height": 65,
+    "z": 11,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropShadow": true,
+    "dropTarget": {
+      "subtype": "square-boi"
+    },
+    "dropLimit": 1
+  },
+  "ld6": {
+    "type": "holder",
+    "id": "ld6",
+    "x": 70,
+    "z": 12,
+    "parent": "left-6",
+    "width": 35,
+    "height": 100,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropShadow": true,
+    "dropTarget": {
+      "subtype": "long-boi"
+    },
+    "y": 5
+  },
+  "vvts5": {
+    "type": "label",
+    "text": "-6",
+    "css": "font-size: 50px",
+    "height": 60,
+    "width": 110,
+    "y": 25,
+    "z": 2,
+    "id": "vvts5",
+    "parent": "left-6",
+    "layer": -3
+  },
+  "left-7": {
+    "id": "left-7",
+    "x": 695,
+    "width": 110,
+    "height": 110,
+    "layer": -4,
+    "z": 34,
+    "movable": false,
+    "image": "/assets/-268081183_1499",
+    "y": 230
+  },
+  "lp7": {
+    "type": "holder",
+    "id": "lp7",
+    "parent": "left-7",
+    "x": 5,
+    "y": 22.5,
+    "width": 65,
+    "height": 65,
+    "z": 11,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropShadow": true,
+    "dropTarget": {
+      "subtype": "square-boi"
+    },
+    "dropLimit": 1
+  },
+  "ld7": {
+    "type": "holder",
+    "id": "ld7",
+    "x": 70,
+    "z": 12,
+    "parent": "left-7",
+    "width": 35,
+    "height": 100,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropShadow": true,
+    "dropTarget": {
+      "subtype": "long-boi"
+    },
+    "y": 5
+  },
+  "vvts6": {
+    "type": "label",
+    "text": "-7",
+    "css": "font-size: 50px",
+    "height": 60,
+    "width": 110,
+    "y": 25,
+    "z": 2,
+    "id": "vvts6",
+    "parent": "left-7",
+    "layer": -3
+  },
+  "left-8": {
+    "id": "left-8",
+    "width": 110,
+    "height": 110,
+    "layer": -4,
+    "z": 36,
+    "movable": false,
+    "image": "/assets/-268081183_1499",
+    "y": 245,
+    "x": 835
+  },
+  "lp8": {
+    "type": "holder",
+    "id": "lp8",
+    "parent": "left-8",
+    "x": 5,
+    "y": 22.5,
+    "width": 65,
+    "height": 65,
+    "z": 11,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropShadow": true,
+    "dropTarget": {
+      "subtype": "square-boi"
+    },
+    "dropLimit": 1
+  },
+  "ld8": {
+    "type": "holder",
+    "id": "ld8",
+    "x": 70,
+    "z": 12,
+    "parent": "left-8",
+    "width": 35,
+    "height": 100,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropShadow": true,
+    "dropTarget": {
+      "subtype": "long-boi"
+    },
+    "y": 5
+  },
+  "vvts7": {
+    "type": "label",
+    "text": "-8",
+    "css": "font-size: 50px",
+    "height": 60,
+    "width": 110,
+    "y": 25,
+    "z": 2,
+    "id": "vvts7",
+    "parent": "left-8",
+    "layer": -3
+  },
+  "left-9": {
+    "id": "left-9",
+    "width": 110,
+    "height": 110,
+    "layer": -4,
+    "z": 39,
+    "movable": false,
+    "image": "/assets/-268081183_1499",
+    "y": 370,
+    "x": 835
+  },
+  "lp9": {
+    "type": "holder",
+    "id": "lp9",
+    "parent": "left-9",
+    "x": 5,
+    "y": 22.5,
+    "width": 65,
+    "height": 65,
+    "z": 11,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropShadow": true,
+    "dropTarget": {
+      "subtype": "square-boi"
+    },
+    "dropLimit": 1
+  },
+  "ld9": {
+    "type": "holder",
+    "id": "ld9",
+    "x": 70,
+    "z": 12,
+    "parent": "left-9",
+    "width": 35,
+    "height": 100,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropShadow": true,
+    "dropTarget": {
+      "subtype": "long-boi"
+    },
+    "y": 5
+  },
+  "vvts8": {
+    "type": "label",
+    "text": "-9",
+    "css": "font-size: 50px",
+    "height": 60,
+    "width": 110,
+    "y": 25,
+    "z": 2,
+    "id": "vvts8",
+    "parent": "left-9",
+    "layer": -3
+  },
+  "left-10": {
+    "id": "left-10",
+    "width": 110,
+    "height": 110,
+    "layer": -4,
+    "z": 43,
+    "movable": false,
+    "image": "/assets/-268081183_1499",
+    "y": 385,
+    "x": 695
+  },
+  "lp10": {
+    "type": "holder",
+    "id": "lp10",
+    "parent": "left-10",
+    "x": 5,
+    "y": 22.5,
+    "width": 65,
+    "height": 65,
+    "z": 11,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropShadow": true,
+    "dropTarget": {
+      "subtype": "square-boi"
+    },
+    "dropLimit": 1
+  },
+  "ld10": {
+    "type": "holder",
+    "id": "ld10",
+    "x": 70,
+    "z": 12,
+    "parent": "left-10",
+    "width": 35,
+    "height": 100,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropShadow": true,
+    "dropTarget": {
+      "subtype": "long-boi"
+    },
+    "y": 5
+  },
+  "vvts9": {
+    "type": "label",
+    "text": "-10",
+    "css": "font-size: 50px",
+    "height": 60,
+    "width": 110,
+    "y": 25,
+    "z": 2,
+    "id": "vvts9",
+    "parent": "left-10",
+    "layer": -3
+  },
+  "left-11": {
+    "id": "left-11",
+    "width": 110,
+    "height": 110,
+    "layer": -4,
+    "z": 44,
+    "movable": false,
+    "image": "/assets/-268081183_1499",
+    "y": 400,
+    "x": 555
+  },
+  "lp11": {
+    "type": "holder",
+    "id": "lp11",
+    "parent": "left-11",
+    "x": 5,
+    "y": 22.5,
+    "width": 65,
+    "height": 65,
+    "z": 11,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropShadow": true,
+    "dropTarget": {
+      "subtype": "square-boi"
+    },
+    "dropLimit": 1
+  },
+  "ld11": {
+    "type": "holder",
+    "id": "ld11",
+    "x": 70,
+    "z": 12,
+    "parent": "left-11",
+    "width": 35,
+    "height": 100,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropShadow": true,
+    "dropTarget": {
+      "subtype": "long-boi"
+    },
+    "y": 5
+  },
+  "vvts10": {
+    "type": "label",
+    "text": "-11",
+    "css": "font-size: 50px",
+    "height": 60,
+    "width": 110,
+    "y": 25,
+    "z": 2,
+    "id": "vvts10",
+    "parent": "left-11",
+    "layer": -3
+  },
+  "left-12": {
+    "id": "left-12",
+    "width": 110,
+    "height": 110,
+    "layer": -4,
+    "z": 45,
+    "movable": false,
+    "image": "/assets/-268081183_1499",
+    "y": 415,
+    "x": 415
+  },
+  "lp12": {
+    "type": "holder",
+    "id": "lp12",
+    "parent": "left-12",
+    "x": 5,
+    "y": 22.5,
+    "width": 65,
+    "height": 65,
+    "z": 11,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropShadow": true,
+    "dropTarget": {
+      "subtype": "square-boi"
+    },
+    "dropLimit": 1
+  },
+  "ld12": {
+    "type": "holder",
+    "id": "ld12",
+    "x": 70,
+    "z": 12,
+    "parent": "left-12",
+    "width": 35,
+    "height": 100,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropShadow": true,
+    "dropTarget": {
+      "subtype": "long-boi"
+    },
+    "y": 5
+  },
+  "vvts11": {
+    "type": "label",
+    "text": "-12",
+    "css": "font-size: 50px",
+    "height": 60,
+    "width": 110,
+    "y": 25,
+    "z": 2,
+    "id": "vvts11",
+    "parent": "left-12",
+    "layer": -3
+  },
+  "left-13": {
+    "id": "left-13",
+    "width": 110,
+    "height": 110,
+    "layer": -4,
+    "z": 42,
+    "movable": false,
+    "image": "/assets/-268081183_1499",
+    "y": 540,
+    "x": 415
+  },
+  "lp13": {
+    "type": "holder",
+    "id": "lp13",
+    "parent": "left-13",
+    "x": 5,
+    "y": 22.5,
+    "width": 65,
+    "height": 65,
+    "z": 11,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropShadow": true,
+    "dropTarget": {
+      "subtype": "square-boi"
+    },
+    "dropLimit": 1
+  },
+  "ld13": {
+    "type": "holder",
+    "id": "ld13",
+    "x": 70,
+    "z": 12,
+    "parent": "left-13",
+    "width": 35,
+    "height": 100,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropShadow": true,
+    "dropTarget": {
+      "subtype": "long-boi"
+    },
+    "y": 5
+  },
+  "vvts12": {
+    "type": "label",
+    "text": "-13",
+    "css": "font-size: 50px",
+    "height": 60,
+    "width": 110,
+    "y": 25,
+    "z": 2,
+    "id": "vvts12",
+    "parent": "left-13",
+    "layer": -3
+  },
+  "left-14": {
+    "id": "left-14",
+    "width": 110,
+    "height": 110,
+    "layer": -4,
+    "z": 41,
+    "movable": false,
+    "image": "/assets/-268081183_1499",
+    "y": 555,
+    "x": 555
+  },
+  "lp14": {
+    "type": "holder",
+    "id": "lp14",
+    "parent": "left-14",
+    "x": 5,
+    "y": 22.5,
+    "width": 65,
+    "height": 65,
+    "z": 11,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropShadow": true,
+    "dropTarget": {
+      "subtype": "square-boi"
+    },
+    "dropLimit": 1
+  },
+  "ld14": {
+    "type": "holder",
+    "id": "ld14",
+    "x": 70,
+    "z": 12,
+    "parent": "left-14",
+    "width": 35,
+    "height": 100,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropShadow": true,
+    "dropTarget": {
+      "subtype": "long-boi"
+    },
+    "y": 5
+  },
+  "vvts13": {
+    "type": "label",
+    "text": "-14",
+    "css": "font-size: 50px",
+    "height": 60,
+    "width": 110,
+    "y": 25,
+    "z": 2,
+    "id": "vvts13",
+    "parent": "left-14",
+    "layer": -3
+  },
+  "left-15": {
+    "id": "left-15",
+    "width": 110,
+    "height": 110,
+    "layer": -4,
+    "z": 40,
+    "movable": false,
+    "image": "/assets/-268081183_1499",
+    "y": 570,
+    "x": 695
+  },
+  "lp15": {
+    "type": "holder",
+    "id": "lp15",
+    "parent": "left-15",
+    "x": 5,
+    "y": 22.5,
+    "width": 65,
+    "height": 65,
+    "z": 11,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropShadow": true,
+    "dropTarget": {
+      "subtype": "square-boi"
+    },
+    "dropLimit": 1
+  },
+  "ld15": {
+    "type": "holder",
+    "id": "ld15",
+    "x": 70,
+    "z": 12,
+    "parent": "left-15",
+    "width": 35,
+    "height": 100,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropShadow": true,
+    "dropTarget": {
+      "subtype": "long-boi"
+    },
+    "y": 5
+  },
+  "vvts14": {
+    "type": "label",
+    "text": "-15",
+    "css": "font-size: 50px",
+    "height": 60,
+    "width": 110,
+    "y": 25,
+    "z": 2,
+    "id": "vvts14",
+    "parent": "left-15",
+    "layer": -3
+  },
+  "left-16": {
+    "id": "left-16",
+    "width": 110,
+    "height": 110,
+    "layer": -4,
+    "z": 38,
+    "movable": false,
+    "image": "/assets/-268081183_1499",
+    "y": 585,
+    "x": 835
+  },
+  "lp16": {
+    "type": "holder",
+    "id": "lp16",
+    "parent": "left-16",
+    "x": 5,
+    "y": 22.5,
+    "width": 65,
+    "height": 65,
+    "z": 11,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropShadow": true,
+    "dropTarget": {
+      "subtype": "square-boi"
+    },
+    "dropLimit": 1
+  },
+  "ld16": {
+    "type": "holder",
+    "id": "ld16",
+    "x": 70,
+    "z": 12,
+    "parent": "left-16",
+    "width": 35,
+    "height": 100,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropShadow": true,
+    "dropTarget": {
+      "subtype": "long-boi"
+    },
+    "y": 5
+  },
+  "vvts15": {
+    "type": "label",
+    "text": "-16",
+    "css": "font-size: 50px",
+    "height": 60,
+    "width": 110,
+    "y": 25,
+    "z": 2,
+    "id": "vvts15",
+    "parent": "left-16",
+    "layer": -3
+  },
+  "left-17": {
+    "id": "left-17",
+    "width": 110,
+    "height": 110,
+    "layer": -4,
+    "z": 49,
+    "movable": false,
+    "image": "/assets/-268081183_1499",
+    "y": 710,
+    "x": 835
+  },
+  "lp17": {
+    "type": "holder",
+    "id": "lp17",
+    "parent": "left-17",
+    "x": 5,
+    "y": 22.5,
+    "width": 65,
+    "height": 65,
+    "z": 11,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropShadow": true,
+    "dropTarget": {
+      "subtype": "square-boi"
+    },
+    "dropLimit": 1
+  },
+  "ld17": {
+    "type": "holder",
+    "id": "ld17",
+    "x": 70,
+    "z": 12,
+    "parent": "left-17",
+    "width": 35,
+    "height": 100,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropShadow": true,
+    "dropTarget": {
+      "subtype": "long-boi"
+    },
+    "y": 5
+  },
+  "vvts16": {
+    "type": "label",
+    "text": "-17",
+    "css": "font-size: 50px",
+    "height": 60,
+    "width": 110,
+    "y": 25,
+    "z": 2,
+    "id": "vvts16",
+    "parent": "left-17",
+    "layer": -3
+  },
+  "left-18": {
+    "id": "left-18",
+    "width": 110,
+    "height": 110,
+    "layer": -4,
+    "z": 47,
+    "movable": false,
+    "image": "/assets/-268081183_1499",
+    "y": 725,
+    "x": 695
+  },
+  "lp18": {
+    "type": "holder",
+    "id": "lp18",
+    "parent": "left-18",
+    "x": 5,
+    "y": 22.5,
+    "width": 65,
+    "height": 65,
+    "z": 11,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropShadow": true,
+    "dropTarget": {
+      "subtype": "square-boi"
+    },
+    "dropLimit": 1
+  },
+  "ld18": {
+    "type": "holder",
+    "id": "ld18",
+    "x": 70,
+    "z": 12,
+    "parent": "left-18",
+    "width": 35,
+    "height": 100,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropShadow": true,
+    "dropTarget": {
+      "subtype": "long-boi"
+    },
+    "y": 5
+  },
+  "vvts17": {
+    "type": "label",
+    "text": "-18",
+    "css": "font-size: 50px",
+    "height": 60,
+    "width": 110,
+    "y": 25,
+    "z": 2,
+    "id": "vvts17",
+    "parent": "left-18",
+    "layer": -3
+  },
+  "left-19": {
+    "id": "left-19",
+    "width": 110,
+    "height": 110,
+    "layer": -4,
+    "z": 48,
+    "movable": false,
+    "image": "/assets/-268081183_1499",
+    "y": 740,
+    "x": 555
+  },
+  "lp19": {
+    "type": "holder",
+    "id": "lp19",
+    "parent": "left-19",
+    "x": 5,
+    "y": 22.5,
+    "width": 65,
+    "height": 65,
+    "z": 11,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropShadow": true,
+    "dropTarget": {
+      "subtype": "square-boi"
+    },
+    "dropLimit": 1
+  },
+  "ld19": {
+    "type": "holder",
+    "id": "ld19",
+    "x": 70,
+    "z": 12,
+    "parent": "left-19",
+    "width": 35,
+    "height": 100,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropShadow": true,
+    "dropTarget": {
+      "subtype": "long-boi"
+    },
+    "y": 5
+  },
+  "vvts18": {
+    "type": "label",
+    "text": "-19",
+    "css": "font-size: 50px",
+    "height": 60,
+    "width": 110,
+    "y": 25,
+    "z": 2,
+    "id": "vvts18",
+    "parent": "left-19",
+    "layer": -3
+  },
+  "ld20": {
+    "type": "holder",
+    "id": "ld20",
+    "parent": "left",
+    "x": 5,
+    "y": 5,
+    "width": 35,
+    "height": 100,
+    "z": 12,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropShadow": true,
+    "dropTarget": {
+      "subtype": "long-boi"
+    }
+  },
+  "left": {
+    "id": "left",
+    "x": 480,
+    "y": 755,
+    "width": 45,
+    "height": 110,
+    "layer": -4,
+    "z": 18,
+    "movable": false,
+    "image": "/assets/-1246222375_1476"
+  },
+  "right": {
+    "id": "right",
+    "x": 1470,
+    "y": 755,
+    "width": 45,
+    "height": 110,
+    "layer": -4,
+    "z": 18,
+    "movable": false,
+    "image": "/assets/1981471417_1474"
+  },
+  "rd20": {
+    "type": "holder",
+    "id": "rd20",
+    "parent": "right",
+    "x": 5,
+    "y": 5,
+    "width": 35,
+    "height": 100,
+    "z": 12,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropShadow": true,
+    "dropTarget": {
+      "subtype": "long-boi"
+    }
+  },
+  "vvts19": {
+    "type": "label",
+    "text": "1",
+    "css": "font-size: 50px",
+    "height": 60,
+    "width": 110,
+    "y": 25,
+    "z": 2,
+    "id": "vvts19",
+    "parent": "right-1",
+    "layer": -3
+  },
+  "right-1": {
+    "id": "right-1",
+    "x": 1050,
+    "y": 30,
+    "width": 110,
+    "height": 110,
+    "layer": -4,
+    "z": 48,
+    "movable": false,
+    "image": "/assets/1524939556_1500"
+  },
+  "rd1": {
+    "type": "holder",
+    "id": "rd1",
+    "parent": "right-1",
+    "x": 5,
+    "y": 5,
+    "width": 35,
+    "height": 100,
+    "z": 13,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropShadow": true,
+    "dropTarget": {
+      "subtype": "long-boi"
+    }
+  },
+  "rpA": {
+    "type": "holder",
+    "id": "rpA",
+    "parent": "right-1",
+    "x": 40,
+    "y": 22.5,
+    "width": 65,
+    "height": 65,
+    "z": 11,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropShadow": true,
+    "dropTarget": {
+      "subtype": "square-boi"
+    }
+  },
+  "right-2": {
+    "id": "right-2",
+    "x": 1190,
+    "y": 45,
+    "width": 110,
+    "height": 110,
+    "layer": -4,
+    "z": 48,
+    "movable": false,
+    "image": "/assets/1524939556_1500"
+  },
+  "vvts20": {
+    "type": "label",
+    "text": "2",
+    "css": "font-size: 50px",
+    "height": 60,
+    "width": 110,
+    "y": 25,
+    "z": 2,
+    "id": "vvts20",
+    "parent": "right-2",
+    "layer": -3
+  },
+  "rd2": {
+    "type": "holder",
+    "id": "rd2",
+    "parent": "right-2",
+    "x": 5,
+    "y": 5,
+    "width": 35,
+    "height": 100,
+    "z": 13,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropShadow": true,
+    "dropTarget": {
+      "subtype": "long-boi"
+    }
+  },
+  "rpA1": {
+    "type": "holder",
+    "id": "rpA1",
+    "parent": "right-2",
+    "x": 40,
+    "y": 22.5,
+    "width": 65,
+    "height": 65,
+    "z": 11,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropShadow": true,
+    "dropTarget": {
+      "subtype": "square-boi"
+    }
+  },
+  "right-3": {
+    "id": "right-3",
+    "x": 1330,
+    "y": 60,
+    "width": 110,
+    "height": 110,
+    "layer": -4,
+    "z": 48,
+    "movable": false,
+    "image": "/assets/1524939556_1500"
+  },
+  "vvts21": {
+    "type": "label",
+    "text": "3",
+    "css": "font-size: 50px",
+    "height": 60,
+    "width": 110,
+    "y": 25,
+    "z": 2,
+    "id": "vvts21",
+    "parent": "right-3",
+    "layer": -3
+  },
+  "rd3": {
+    "type": "holder",
+    "id": "rd3",
+    "parent": "right-3",
+    "x": 5,
+    "y": 5,
+    "width": 35,
+    "height": 100,
+    "z": 13,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropShadow": true,
+    "dropTarget": {
+      "subtype": "long-boi"
+    }
+  },
+  "rpA2": {
+    "type": "holder",
+    "id": "rpA2",
+    "parent": "right-3",
+    "x": 40,
+    "y": 22.5,
+    "width": 65,
+    "height": 65,
+    "z": 11,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropShadow": true,
+    "dropTarget": {
+      "subtype": "square-boi"
+    }
+  },
+  "right-4": {
+    "id": "right-4",
+    "x": 1470,
+    "y": 75,
+    "width": 110,
+    "height": 110,
+    "layer": -4,
+    "z": 50,
+    "movable": false,
+    "image": "/assets/1524939556_1500"
+  },
+  "vvts22": {
+    "type": "label",
+    "text": "4",
+    "css": "font-size: 50px",
+    "height": 60,
+    "width": 110,
+    "y": 25,
+    "z": 2,
+    "id": "vvts22",
+    "parent": "right-4",
+    "layer": -3
+  },
+  "rd4": {
+    "type": "holder",
+    "id": "rd4",
+    "parent": "right-4",
+    "x": 5,
+    "y": 5,
+    "width": 35,
+    "height": 100,
+    "z": 13,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropShadow": true,
+    "dropTarget": {
+      "subtype": "long-boi"
+    }
+  },
+  "rpA3": {
+    "type": "holder",
+    "id": "rpA3",
+    "parent": "right-4",
+    "x": 40,
+    "y": 22.5,
+    "width": 65,
+    "height": 65,
+    "z": 11,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropShadow": true,
+    "dropTarget": {
+      "subtype": "square-boi"
+    }
+  },
+  "right-5": {
+    "id": "right-5",
+    "x": 1470,
+    "width": 110,
+    "height": 110,
+    "layer": -4,
+    "z": 48,
+    "movable": false,
+    "image": "/assets/1524939556_1500",
+    "y": 200
+  },
+  "vvts23": {
+    "type": "label",
+    "text": "5",
+    "css": "font-size: 50px",
+    "height": 60,
+    "width": 110,
+    "y": 25,
+    "z": 2,
+    "id": "vvts23",
+    "parent": "right-5",
+    "layer": -3
+  },
+  "rd5": {
+    "type": "holder",
+    "id": "rd5",
+    "parent": "right-5",
+    "x": 5,
+    "y": 5,
+    "width": 35,
+    "height": 100,
+    "z": 13,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropShadow": true,
+    "dropTarget": {
+      "subtype": "long-boi"
+    }
+  },
+  "rpA4": {
+    "type": "holder",
+    "id": "rpA4",
+    "parent": "right-5",
+    "x": 40,
+    "y": 22.5,
+    "width": 65,
+    "height": 65,
+    "z": 11,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropShadow": true,
+    "dropTarget": {
+      "subtype": "square-boi"
+    }
+  },
+  "right-6": {
+    "id": "right-6",
+    "x": 1330,
+    "y": 215,
+    "width": 110,
+    "height": 110,
+    "layer": -4,
+    "z": 48,
+    "movable": false,
+    "image": "/assets/1524939556_1500"
+  },
+  "vvts24": {
+    "type": "label",
+    "text": "6",
+    "css": "font-size: 50px",
+    "height": 60,
+    "width": 110,
+    "y": 25,
+    "z": 2,
+    "id": "vvts24",
+    "parent": "right-6",
+    "layer": -3
+  },
+  "rd6": {
+    "type": "holder",
+    "id": "rd6",
+    "parent": "right-6",
+    "x": 5,
+    "y": 5,
+    "width": 35,
+    "height": 100,
+    "z": 13,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropShadow": true,
+    "dropTarget": {
+      "subtype": "long-boi"
+    }
+  },
+  "rpA5": {
+    "type": "holder",
+    "id": "rpA5",
+    "parent": "right-6",
+    "x": 40,
+    "y": 22.5,
+    "width": 65,
+    "height": 65,
+    "z": 11,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropShadow": true,
+    "dropTarget": {
+      "subtype": "square-boi"
+    }
+  },
+  "right-7": {
+    "id": "right-7",
+    "x": 1190,
+    "y": 230,
+    "width": 110,
+    "height": 110,
+    "layer": -4,
+    "z": 51,
+    "movable": false,
+    "image": "/assets/1524939556_1500"
+  },
+  "vvts25": {
+    "type": "label",
+    "css": "font-size: 50px",
+    "height": 60,
+    "width": 110,
+    "y": 25,
+    "z": 2,
+    "id": "vvts25",
+    "parent": "right-7",
+    "layer": -3,
+    "text": "7"
+  },
+  "rd7": {
+    "type": "holder",
+    "id": "rd7",
+    "parent": "right-7",
+    "x": 5,
+    "y": 5,
+    "width": 35,
+    "height": 100,
+    "z": 13,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropShadow": true,
+    "dropTarget": {
+      "subtype": "long-boi"
+    }
+  },
+  "rpA6": {
+    "type": "holder",
+    "id": "rpA6",
+    "parent": "right-7",
+    "x": 40,
+    "y": 22.5,
+    "width": 65,
+    "height": 65,
+    "z": 11,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropShadow": true,
+    "dropTarget": {
+      "subtype": "square-boi"
+    }
+  },
+  "right-8": {
+    "id": "right-8",
+    "x": 1050,
+    "y": 245,
+    "width": 110,
+    "height": 110,
+    "layer": -4,
+    "z": 48,
+    "movable": false,
+    "image": "/assets/1524939556_1500"
+  },
+  "vvts26": {
+    "type": "label",
+    "text": "8",
+    "css": "font-size: 50px",
+    "height": 60,
+    "width": 110,
+    "y": 25,
+    "z": 2,
+    "id": "vvts26",
+    "parent": "right-8",
+    "layer": -3
+  },
+  "rd8": {
+    "type": "holder",
+    "id": "rd8",
+    "parent": "right-8",
+    "x": 5,
+    "y": 5,
+    "width": 35,
+    "height": 100,
+    "z": 13,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropShadow": true,
+    "dropTarget": {
+      "subtype": "long-boi"
+    }
+  },
+  "rpA7": {
+    "type": "holder",
+    "id": "rpA7",
+    "parent": "right-8",
+    "x": 40,
+    "y": 22.5,
+    "width": 65,
+    "height": 65,
+    "z": 11,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropShadow": true,
+    "dropTarget": {
+      "subtype": "square-boi"
+    }
+  },
+  "right-9": {
+    "id": "right-9",
+    "x": 1050,
+    "y": 370,
+    "width": 110,
+    "height": 110,
+    "layer": -4,
+    "z": 63,
+    "movable": false,
+    "image": "/assets/1524939556_1500"
+  },
+  "vvts27": {
+    "type": "label",
+    "css": "font-size: 50px",
+    "height": 60,
+    "width": 110,
+    "y": 25,
+    "z": 2,
+    "id": "vvts27",
+    "parent": "right-9",
+    "layer": -3,
+    "text": "9"
+  },
+  "rd9": {
+    "type": "holder",
+    "id": "rd9",
+    "parent": "right-9",
+    "x": 5,
+    "y": 5,
+    "width": 35,
+    "height": 100,
+    "z": 13,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropShadow": true,
+    "dropTarget": {
+      "subtype": "long-boi"
+    }
+  },
+  "rpA8": {
+    "type": "holder",
+    "id": "rpA8",
+    "parent": "right-9",
+    "x": 40,
+    "y": 22.5,
+    "width": 65,
+    "height": 65,
+    "z": 11,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropShadow": true,
+    "dropTarget": {
+      "subtype": "square-boi"
+    }
+  },
+  "right-10": {
+    "id": "right-10",
+    "x": 1190,
+    "y": 385,
+    "width": 110,
+    "height": 110,
+    "layer": -4,
+    "z": 62,
+    "movable": false,
+    "image": "/assets/1524939556_1500"
+  },
+  "vvts28": {
+    "type": "label",
+    "text": "10",
+    "css": "font-size: 50px",
+    "height": 60,
+    "width": 110,
+    "y": 25,
+    "z": 2,
+    "id": "vvts28",
+    "parent": "right-10",
+    "layer": -3
+  },
+  "rd10": {
+    "type": "holder",
+    "id": "rd10",
+    "parent": "right-10",
+    "x": 5,
+    "y": 5,
+    "width": 35,
+    "height": 100,
+    "z": 13,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropShadow": true,
+    "dropTarget": {
+      "subtype": "long-boi"
+    }
+  },
+  "rpA9": {
+    "type": "holder",
+    "id": "rpA9",
+    "parent": "right-10",
+    "x": 40,
+    "y": 22.5,
+    "width": 65,
+    "height": 65,
+    "z": 11,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropShadow": true,
+    "dropTarget": {
+      "subtype": "square-boi"
+    }
+  },
+  "right-11": {
+    "id": "right-11",
+    "x": 1330,
+    "y": 400,
+    "width": 110,
+    "height": 110,
+    "layer": -4,
+    "z": 61,
+    "movable": false,
+    "image": "/assets/1524939556_1500"
+  },
+  "vvts29": {
+    "type": "label",
+    "text": "11",
+    "css": "font-size: 50px",
+    "height": 60,
+    "width": 110,
+    "y": 25,
+    "z": 2,
+    "id": "vvts29",
+    "parent": "right-11",
+    "layer": -3
+  },
+  "rd11": {
+    "type": "holder",
+    "id": "rd11",
+    "parent": "right-11",
+    "x": 5,
+    "y": 5,
+    "width": 35,
+    "height": 100,
+    "z": 13,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropShadow": true,
+    "dropTarget": {
+      "subtype": "long-boi"
+    }
+  },
+  "rpA10": {
+    "type": "holder",
+    "id": "rpA10",
+    "parent": "right-11",
+    "x": 40,
+    "y": 22.5,
+    "width": 65,
+    "height": 65,
+    "z": 11,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropShadow": true,
+    "dropTarget": {
+      "subtype": "square-boi"
+    }
+  },
+  "right-12": {
+    "id": "right-12",
+    "x": 1470,
+    "y": 415,
+    "width": 110,
+    "height": 110,
+    "layer": -4,
+    "z": 60,
+    "movable": false,
+    "image": "/assets/1524939556_1500"
+  },
+  "vvts30": {
+    "type": "label",
+    "text": "12",
+    "css": "font-size: 50px",
+    "height": 60,
+    "width": 110,
+    "y": 25,
+    "z": 2,
+    "id": "vvts30",
+    "parent": "right-12",
+    "layer": -3
+  },
+  "rd12": {
+    "type": "holder",
+    "id": "rd12",
+    "parent": "right-12",
+    "x": 5,
+    "y": 5,
+    "width": 35,
+    "height": 100,
+    "z": 13,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropShadow": true,
+    "dropTarget": {
+      "subtype": "long-boi"
+    }
+  },
+  "rpA11": {
+    "type": "holder",
+    "id": "rpA11",
+    "parent": "right-12",
+    "x": 40,
+    "y": 22.5,
+    "width": 65,
+    "height": 65,
+    "z": 11,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropShadow": true,
+    "dropTarget": {
+      "subtype": "square-boi"
+    }
+  },
+  "right-13": {
+    "id": "right-13",
+    "x": 1050,
+    "y": 585,
+    "width": 110,
+    "height": 110,
+    "layer": -4,
+    "z": 59,
+    "movable": false,
+    "image": "/assets/1524939556_1500"
+  },
+  "vvts31": {
+    "type": "label",
+    "text": "16",
+    "css": "font-size: 50px",
+    "height": 60,
+    "width": 110,
+    "y": 25,
+    "z": 2,
+    "id": "vvts31",
+    "parent": "right-13",
+    "layer": -3
+  },
+  "rd13": {
+    "type": "holder",
+    "id": "rd13",
+    "parent": "right-13",
+    "x": 5,
+    "y": 5,
+    "width": 35,
+    "height": 100,
+    "z": 13,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropShadow": true,
+    "dropTarget": {
+      "subtype": "long-boi"
+    }
+  },
+  "rpA12": {
+    "type": "holder",
+    "id": "rpA12",
+    "parent": "right-13",
+    "x": 40,
+    "y": 22.5,
+    "width": 65,
+    "height": 65,
+    "z": 11,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropShadow": true,
+    "dropTarget": {
+      "subtype": "square-boi"
+    }
+  },
+  "right-14": {
+    "id": "right-14",
+    "x": 1190,
+    "y": 570,
+    "width": 110,
+    "height": 110,
+    "layer": -4,
+    "z": 58,
+    "movable": false,
+    "image": "/assets/1524939556_1500"
+  },
+  "vvts32": {
+    "type": "label",
+    "text": "15",
+    "css": "font-size: 50px",
+    "height": 60,
+    "width": 110,
+    "y": 25,
+    "z": 2,
+    "id": "vvts32",
+    "parent": "right-14",
+    "layer": -3
+  },
+  "rd14": {
+    "type": "holder",
+    "id": "rd14",
+    "parent": "right-14",
+    "x": 5,
+    "y": 5,
+    "width": 35,
+    "height": 100,
+    "z": 13,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropShadow": true,
+    "dropTarget": {
+      "subtype": "long-boi"
+    }
+  },
+  "rpA13": {
+    "type": "holder",
+    "id": "rpA13",
+    "parent": "right-14",
+    "x": 40,
+    "y": 22.5,
+    "width": 65,
+    "height": 65,
+    "z": 11,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropShadow": true,
+    "dropTarget": {
+      "subtype": "square-boi"
+    }
+  },
+  "right-15": {
+    "id": "right-15",
+    "x": 1330,
+    "y": 555,
+    "width": 110,
+    "height": 110,
+    "layer": -4,
+    "z": 57,
+    "movable": false,
+    "image": "/assets/1524939556_1500"
+  },
+  "vvts33": {
+    "type": "label",
+    "text": "14",
+    "css": "font-size: 50px",
+    "height": 60,
+    "width": 110,
+    "y": 25,
+    "z": 2,
+    "id": "vvts33",
+    "parent": "right-15",
+    "layer": -3
+  },
+  "rd15": {
+    "type": "holder",
+    "id": "rd15",
+    "parent": "right-15",
+    "x": 5,
+    "y": 5,
+    "width": 35,
+    "height": 100,
+    "z": 13,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropShadow": true,
+    "dropTarget": {
+      "subtype": "long-boi"
+    }
+  },
+  "rpA14": {
+    "type": "holder",
+    "id": "rpA14",
+    "parent": "right-15",
+    "x": 40,
+    "y": 22.5,
+    "width": 65,
+    "height": 65,
+    "z": 11,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropShadow": true,
+    "dropTarget": {
+      "subtype": "square-boi"
+    }
+  },
+  "right-16": {
+    "id": "right-16",
+    "x": 1470,
+    "y": 540,
+    "width": 110,
+    "height": 110,
+    "layer": -4,
+    "z": 56,
+    "movable": false,
+    "image": "/assets/1524939556_1500"
+  },
+  "vvts34": {
+    "type": "label",
+    "text": "13",
+    "css": "font-size: 50px",
+    "height": 60,
+    "width": 110,
+    "y": 25,
+    "z": 2,
+    "id": "vvts34",
+    "parent": "right-16",
+    "layer": -3
+  },
+  "rd16": {
+    "type": "holder",
+    "id": "rd16",
+    "parent": "right-16",
+    "x": 5,
+    "y": 5,
+    "width": 35,
+    "height": 100,
+    "z": 13,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropShadow": true,
+    "dropTarget": {
+      "subtype": "long-boi"
+    }
+  },
+  "rpA15": {
+    "type": "holder",
+    "id": "rpA15",
+    "parent": "right-16",
+    "x": 40,
+    "y": 22.5,
+    "width": 65,
+    "height": 65,
+    "z": 11,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropShadow": true,
+    "dropTarget": {
+      "subtype": "square-boi"
+    }
+  },
+  "right-17": {
+    "id": "right-17",
+    "x": 1050,
+    "y": 710,
+    "width": 110,
+    "height": 110,
+    "layer": -4,
+    "z": 55,
+    "movable": false,
+    "image": "/assets/1524939556_1500"
+  },
+  "vvts35": {
+    "type": "label",
+    "text": "17",
+    "css": "font-size: 50px",
+    "height": 60,
+    "width": 110,
+    "y": 25,
+    "z": 2,
+    "id": "vvts35",
+    "parent": "right-17",
+    "layer": -3
+  },
+  "rd17": {
+    "type": "holder",
+    "id": "rd17",
+    "parent": "right-17",
+    "x": 5,
+    "y": 5,
+    "width": 35,
+    "height": 100,
+    "z": 13,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropShadow": true,
+    "dropTarget": {
+      "subtype": "long-boi"
+    }
+  },
+  "rpA16": {
+    "type": "holder",
+    "id": "rpA16",
+    "parent": "right-17",
+    "x": 40,
+    "y": 22.5,
+    "width": 65,
+    "height": 65,
+    "z": 11,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropShadow": true,
+    "dropTarget": {
+      "subtype": "square-boi"
+    }
+  },
+  "right-18": {
+    "id": "right-18",
+    "x": 1190,
+    "y": 725,
+    "width": 110,
+    "height": 110,
+    "layer": -4,
+    "z": 54,
+    "movable": false,
+    "image": "/assets/1524939556_1500"
+  },
+  "vvts36": {
+    "type": "label",
+    "text": "18",
+    "css": "font-size: 50px",
+    "height": 60,
+    "width": 110,
+    "y": 25,
+    "z": 2,
+    "id": "vvts36",
+    "parent": "right-18",
+    "layer": -3
+  },
+  "rd18": {
+    "type": "holder",
+    "id": "rd18",
+    "parent": "right-18",
+    "x": 5,
+    "y": 5,
+    "width": 35,
+    "height": 100,
+    "z": 13,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropShadow": true,
+    "dropTarget": {
+      "subtype": "long-boi"
+    }
+  },
+  "rpA17": {
+    "type": "holder",
+    "id": "rpA17",
+    "parent": "right-18",
+    "x": 40,
+    "y": 22.5,
+    "width": 65,
+    "height": 65,
+    "z": 11,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropShadow": true,
+    "dropTarget": {
+      "subtype": "square-boi"
+    }
+  },
+  "right-19": {
+    "id": "right-19",
+    "x": 1330,
+    "y": 740,
+    "width": 110,
+    "height": 110,
+    "layer": -4,
+    "z": 53,
+    "movable": false,
+    "image": "/assets/1524939556_1500"
+  },
+  "vvts37": {
+    "type": "label",
+    "text": "19",
+    "css": "font-size: 50px",
+    "height": 60,
+    "width": 110,
+    "y": 25,
+    "z": 2,
+    "id": "vvts37",
+    "parent": "right-19",
+    "layer": -3
+  },
+  "rd19": {
+    "type": "holder",
+    "id": "rd19",
+    "parent": "right-19",
+    "x": 5,
+    "y": 5,
+    "width": 35,
+    "height": 100,
+    "z": 13,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropShadow": true,
+    "dropTarget": {
+      "subtype": "long-boi"
+    }
+  },
+  "rpA18": {
+    "type": "holder",
+    "id": "rpA18",
+    "parent": "right-19",
+    "x": 40,
+    "y": 22.5,
+    "width": 65,
+    "height": 65,
+    "z": 11,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropLimit": 1,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropShadow": true,
+    "dropTarget": {
+      "subtype": "square-boi"
+    }
+  },
+  "qns1": {
+    "width": 0,
+    "height": 1100,
+    "borderRadius": "5px",
+    "css": {
+      "border": "3px solid #3f1f3f"
+    },
+    "z": -10,
+    "id": "qns1",
+    "x": 995,
+    "layer": -4,
+    "y": -20
+  },
+  "8tzf": {
+    "id": "8tzf",
+    "z": 6,
+    "x": 395,
+    "css": {
+      "background-color": "#ffffdf",
+      "border": "transparent"
+    },
+    "layer": -9,
+    "width": 1220,
+    "height": 880,
+    "movable": false
+  },
+  "hand": {
+    "type": "holder",
+    "onEnter": {
+      "activeFace": 1
+    },
+    "onLeave": {
+      "activeFace": 0
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "childrenPerOwner": true,
+    "dropShadow": true,
+    "hidePlayerCursors": true,
+    "x": 425,
+    "y": 880,
+    "width": 720,
+    "height": 120,
+    "id": "hand",
+    "z": 32,
+    "dropTarget": {
+      "subtype": "caaard"
+    },
+    "stackOffsetX": 120
+  },
+  "m40j": {
+    "type": "pile",
+    "x": 0,
+    "y": 0,
+    "width": 65,
+    "height": 65,
+    "handleCSS": {
+      "background": "black",
+      "color": "white"
+    },
+    "layer": -1,
+    "id": "m40j",
+    "z": 21,
+    "parent": "cube-holder-1"
+  },
+  "ni6j": {
+    "type": "label",
+    "text": "Your hand",
+    "x": 425,
+    "y": 980,
+    "z": 2,
+    "id": "ni6j",
+    "width": 720
+  },
+  "npqv": {
+    "type": "holder",
+    "x": 1245,
+    "y": 880,
+    "z": 22,
+    "id": "npqv",
+    "width": 120,
+    "height": 120,
+    "dropTarget": {
+      "subtype": "caaard"
+    }
+  },
+  "bh1f": {
+    "type": "label",
+    "text": "Discard",
+    "x": 1245,
+    "y": 980,
+    "z": 5,
+    "id": "bh1f",
+    "width": 120
+  },
+  "4rm2D": {
+    "type": "deck",
+    "id": "4rm2D",
+    "parent": "deck-holder",
+    "x": 12,
+    "y": 41,
+    "cardTypes": {
+      "r1": {
+        "image": "/assets/2073188875_2368"
+      },
+      "r2": {
+        "image": "/assets/504673738_2723"
+      },
+      "r3": {
+        "image": "/assets/-629230111_3062"
+      },
+      "r4": {
+        "image": "/assets/-1351154183_2461"
+      },
+      "r5": {
+        "image": "/assets/-942167157_2860"
+      },
+      "r6": {
+        "image": "/assets/740016106_2968"
+      },
+      "r7": {
+        "image": "/assets/1243793481_2363"
+      },
+      "r8": {
+        "image": "/assets/-669974762_3368"
+      },
+      "b1": {
+        "image": "/assets/683312852_2296"
+      },
+      "b2": {
+        "image": "/assets/-1799992195_2655"
+      },
+      "b3": {
+        "image": "/assets/-268661404_2994"
+      },
+      "b4": {
+        "image": "/assets/-1184067666_2390"
+      },
+      "b5": {
+        "image": "/assets/1142198295_2787"
+      },
+      "b6": {
+        "image": "/assets/-1732278823_2895"
+      },
+      "b7": {
+        "image": "/assets/539728063_2291"
+      },
+      "b8": {
+        "image": "/assets/148728445_3297"
+      }
+    },
+    "faceTemplates": [
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 120,
+            "height": 120,
+            "color": "transparent",
+            "value": "/assets/-642851480_1947"
+          }
+        ]
+      },
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 120,
+            "height": 120,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image"
+            }
+          }
+        ]
+      }
+    ],
+    "cardDefaults": {
+      "subtype": "caaard",
+      "width": 120,
+      "height": 120,
+      "onPileCreation": {
+        "handleCSS": {
+          "background": "black",
+          "color": "white"
+        }
+      }
+    }
+  },
+  "9kfu": {
+    "deck": "4rm2D",
+    "type": "card",
+    "cardType": "r1",
+    "id": "9kfu",
+    "z": 2477,
+    "parent": "2h6v"
+  },
+  "dhik": {
+    "deck": "4rm2D",
+    "type": "card",
+    "cardType": "r2",
+    "id": "dhik",
+    "z": 2457,
+    "parent": "2h6v"
+  },
+  "3tfr": {
+    "deck": "4rm2D",
+    "type": "card",
+    "cardType": "r3",
+    "id": "3tfr",
+    "z": 2447,
+    "parent": "2h6v"
+  },
+  "j91e": {
+    "deck": "4rm2D",
+    "type": "card",
+    "cardType": "r4",
+    "id": "j91e",
+    "z": 2475,
+    "parent": "2h6v"
+  },
+  "fnx0": {
+    "deck": "4rm2D",
+    "type": "card",
+    "cardType": "r5",
+    "id": "fnx0",
+    "z": 2454,
+    "parent": "2h6v"
+  },
+  "zhot": {
+    "deck": "4rm2D",
+    "type": "card",
+    "cardType": "r6",
+    "id": "zhot",
+    "z": 2476,
+    "parent": "2h6v"
+  },
+  "l3a1": {
+    "deck": "4rm2D",
+    "type": "card",
+    "cardType": "r7",
+    "id": "l3a1",
+    "z": 2465,
+    "parent": "2h6v"
+  },
+  "q8uc": {
+    "deck": "4rm2D",
+    "type": "card",
+    "cardType": "r8",
+    "id": "q8uc",
+    "z": 2459,
+    "parent": "2h6v"
+  },
+  "hi0t": {
+    "deck": "4rm2D",
+    "type": "card",
+    "cardType": "b1",
+    "id": "hi0t",
+    "z": 2445,
+    "parent": "2h6v"
+  },
+  "5czo": {
+    "deck": "4rm2D",
+    "type": "card",
+    "cardType": "b2",
+    "id": "5czo",
+    "z": 2474,
+    "parent": "2h6v"
+  },
+  "bo1g": {
+    "deck": "4rm2D",
+    "type": "card",
+    "cardType": "b3",
+    "id": "bo1g",
+    "z": 2466,
+    "parent": "2h6v"
+  },
+  "0y0s": {
+    "deck": "4rm2D",
+    "type": "card",
+    "cardType": "b4",
+    "id": "0y0s",
+    "z": 2471,
+    "parent": "2h6v"
+  },
+  "vwf1": {
+    "deck": "4rm2D",
+    "type": "card",
+    "cardType": "b5",
+    "id": "vwf1",
+    "z": 2451,
+    "parent": "2h6v"
+  },
+  "0ht2": {
+    "deck": "4rm2D",
+    "type": "card",
+    "cardType": "b6",
+    "id": "0ht2",
+    "z": 2456,
+    "parent": "2h6v"
+  },
+  "mman": {
+    "deck": "4rm2D",
+    "type": "card",
+    "cardType": "b7",
+    "id": "mman",
+    "z": 2448,
+    "parent": "2h6v"
+  },
+  "86iv": {
+    "deck": "4rm2D",
+    "type": "card",
+    "cardType": "b8",
+    "id": "86iv",
+    "z": 2455,
+    "parent": "2h6v"
+  },
+  "hltu": {
+    "deck": "4rm2D",
+    "type": "card",
+    "cardType": "r2",
+    "id": "hltu",
+    "z": 2468,
+    "parent": "2h6v"
+  },
+  "t7lh": {
+    "deck": "4rm2D",
+    "type": "card",
+    "cardType": "r3",
+    "id": "t7lh",
+    "z": 2470,
+    "parent": "2h6v"
+  },
+  "b1nw": {
+    "deck": "4rm2D",
+    "type": "card",
+    "cardType": "r3",
+    "id": "b1nw",
+    "z": 2452,
+    "parent": "2h6v"
+  },
+  "1fmc": {
+    "deck": "4rm2D",
+    "type": "card",
+    "cardType": "r4",
+    "id": "1fmc",
+    "z": 2472,
+    "parent": "2h6v"
+  },
+  "hvvm": {
+    "deck": "4rm2D",
+    "type": "card",
+    "cardType": "r4",
+    "id": "hvvm",
+    "z": 2462,
+    "parent": "2h6v"
+  },
+  "ytg2": {
+    "deck": "4rm2D",
+    "type": "card",
+    "cardType": "r5",
+    "id": "ytg2",
+    "z": 2461,
+    "parent": "2h6v"
+  },
+  "ewr1": {
+    "deck": "4rm2D",
+    "type": "card",
+    "cardType": "r5",
+    "id": "ewr1",
+    "z": 2458,
+    "parent": "2h6v"
+  },
+  "psei": {
+    "deck": "4rm2D",
+    "type": "card",
+    "cardType": "r6",
+    "id": "psei",
+    "z": 2463,
+    "parent": "2h6v"
+  },
+  "lj7u": {
+    "deck": "4rm2D",
+    "type": "card",
+    "cardType": "r6",
+    "id": "lj7u",
+    "z": 2467,
+    "parent": "2h6v"
+  },
+  "mxok": {
+    "deck": "4rm2D",
+    "type": "card",
+    "cardType": "r7",
+    "id": "mxok",
+    "z": 2479,
+    "parent": "2h6v"
+  },
+  "9iji": {
+    "deck": "4rm2D",
+    "type": "card",
+    "cardType": "b2",
+    "id": "9iji",
+    "z": 2444,
+    "parent": "2h6v"
+  },
+  "prwz": {
+    "deck": "4rm2D",
+    "type": "card",
+    "cardType": "b7",
+    "id": "prwz",
+    "z": 2450,
+    "parent": "2h6v"
+  },
+  "yqo1": {
+    "deck": "4rm2D",
+    "type": "card",
+    "cardType": "b3",
+    "id": "yqo1",
+    "z": 2446,
+    "parent": "2h6v"
+  },
+  "6h3f": {
+    "deck": "4rm2D",
+    "type": "card",
+    "cardType": "b3",
+    "id": "6h3f",
+    "z": 2449,
+    "parent": "2h6v"
+  },
+  "hp1f": {
+    "deck": "4rm2D",
+    "type": "card",
+    "cardType": "b4",
+    "id": "hp1f",
+    "z": 2464,
+    "parent": "2h6v"
+  },
+  "0uqi": {
+    "deck": "4rm2D",
+    "type": "card",
+    "cardType": "b4",
+    "id": "0uqi",
+    "z": 2460,
+    "parent": "2h6v"
+  },
+  "1uix": {
+    "deck": "4rm2D",
+    "type": "card",
+    "cardType": "b5",
+    "id": "1uix",
+    "z": 2473,
+    "parent": "2h6v"
+  },
+  "9t52": {
+    "deck": "4rm2D",
+    "type": "card",
+    "cardType": "b5",
+    "id": "9t52",
+    "z": 2478,
+    "parent": "2h6v"
+  },
+  "m6gn": {
+    "deck": "4rm2D",
+    "type": "card",
+    "cardType": "b6",
+    "id": "m6gn",
+    "z": 2469,
+    "parent": "2h6v"
+  },
+  "12ri": {
+    "deck": "4rm2D",
+    "type": "card",
+    "cardType": "b6",
+    "id": "12ri",
+    "z": 2453,
+    "parent": "2h6v"
+  },
+  "seat-2": {
+    "type": "seat",
+    "id": "seat-2",
+    "width": 200,
+    "height": 36,
+    "css": {
+      ".seated": {
+        "border": "7px solid #ffff00"
+      }
+    },
+    "hideWhenUnused": true,
+    "x": 50,
+    "y": 252,
+    "index": 2,
+    "z": 13
+  },
+  "cube-holder-2": {
+    "type": "holder",
+    "id": "cube-holder-2",
+    "y": 15,
+    "width": 65,
+    "height": 65,
+    "css": {
+      "background-color": "transparent"
+    },
+    "dropShadow": true,
+    "dropTarget": {
+      "suit": "cube-yellow"
+    },
+    "z": 9,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "parent": "seat-2",
+    "x": 220
+  },
+  "cubes-player-2": {
+    "type": "deck",
+    "id": "cubes-player-2",
+    "width": 65,
+    "height": 65,
+    "cardDefaults": {
+      "subtype": "square-boi",
+      "width": 65,
+      "height": 65,
+      "onPileCreation": {
+        "handleCSS": {
+          "background": "black",
+          "color": "white"
+        },
+        "layer": -1
+      }
+    },
+    "cardTypes": {
+      "cube-yellow": {
+        "image": "/assets/1046884807_1766",
+        "suit": "cube-yellow"
+      }
+    },
+    "faceTemplates": [
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 65,
+            "height": 65,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image"
+            }
+          }
+        ]
+      }
+    ],
+    "parent": "cube-holder-2"
+  },
+  "score-2": {
+    "type": "label",
+    "id": "score-2",
+    "y": 55,
+    "width": 65,
+    "height": 40,
+    "css": "font-size: 30px;",
+    "editable": true,
+    "text": 0,
+    "parent": "seat-2",
+    "x": 65
+  },
+  "sl-2": {
+    "type": "button",
+    "id": "sl-2",
+    "parent": "score-2",
+    "fixedParent": true,
+    "x": -38,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": "font-size: 28px",
+    "text": "remove",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 1
+      }
+    ]
+  },
+  "sr-2": {
+    "type": "button",
+    "id": "sr-2",
+    "parent": "score-2",
+    "fixedParent": true,
+    "x": 68,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": "font-size: 28px",
+    "text": "add",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 1
+      }
+    ]
+  },
+  "seat-3": {
+    "type": "seat",
+    "id": "seat-3",
+    "width": 200,
+    "height": 36,
+    "css": {
+      ".seated": {
+        "border": "7px solid #00ff00"
+      }
+    },
+    "hideWhenUnused": true,
+    "x": 50,
+    "y": 450,
+    "index": 3
+  },
+  "cube-holder-3": {
+    "type": "holder",
+    "id": "cube-holder-3",
+    "y": 15,
+    "width": 65,
+    "height": 65,
+    "css": {
+      "background-color": "transparent"
+    },
+    "dropShadow": true,
+    "dropTarget": {
+      "suit": "cube-green"
+    },
+    "z": 9,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "parent": "seat-3",
+    "x": 220
+  },
+  "cubes-player-3": {
+    "type": "deck",
+    "id": "cubes-player-3",
+    "width": 65,
+    "height": 65,
+    "cardDefaults": {
+      "subtype": "square-boi",
+      "width": 65,
+      "height": 65,
+      "onPileCreation": {
+        "handleCSS": {
+          "background": "black",
+          "color": "white"
+        },
+        "layer": -1
+      }
+    },
+    "cardTypes": {
+      "cube-green": {
+        "image": "/assets/1296776529_1874",
+        "suit": "cube-green"
+      }
+    },
+    "faceTemplates": [
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 65,
+            "height": 65,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image"
+            }
+          }
+        ]
+      }
+    ],
+    "parent": "cube-holder-3"
+  },
+  "score-3": {
+    "type": "label",
+    "id": "score-3",
+    "y": 55,
+    "width": 65,
+    "height": 40,
+    "css": "font-size: 30px;",
+    "editable": true,
+    "text": 0,
+    "parent": "seat-3",
+    "x": 65
+  },
+  "sl-3": {
+    "type": "button",
+    "id": "sl-3",
+    "parent": "score-3",
+    "fixedParent": true,
+    "x": -38,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": "font-size: 28px",
+    "text": "remove",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 1
+      }
+    ]
+  },
+  "sr-3": {
+    "type": "button",
+    "id": "sr-3",
+    "parent": "score-3",
+    "fixedParent": true,
+    "x": 68,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": "font-size: 28px",
+    "text": "add",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 1
+      }
+    ]
+  },
+  "seat-4": {
+    "type": "seat",
+    "id": "seat-4",
+    "width": 200,
+    "height": 36,
+    "css": {
+      ".seated": {
+        "border": "7px solid #0000ff"
+      }
+    },
+    "hideWhenUnused": true,
+    "x": 50,
+    "y": 650,
+    "index": 4
+  },
+  "cube-holder-4": {
+    "type": "holder",
+    "id": "cube-holder-4",
+    "y": 17,
+    "width": 65,
+    "height": 65,
+    "css": {
+      "background-color": "transparent"
+    },
+    "dropShadow": true,
+    "dropTarget": {
+      "suit": "cube-blue"
+    },
+    "z": 26,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "parent": "seat-4",
+    "x": 222
+  },
+  "cubes-player-4": {
+    "type": "deck",
+    "id": "cubes-player-4",
+    "width": 65,
+    "height": 65,
+    "cardDefaults": {
+      "subtype": "square-boi",
+      "width": 65,
+      "height": 65,
+      "onPileCreation": {
+        "handleCSS": {
+          "background": "black",
+          "color": "white"
+        },
+        "layer": -1
+      }
+    },
+    "cardTypes": {
+      "cube-blue": {
+        "image": "/assets/-1487155033_2456",
+        "suit": "cube-blue"
+      }
+    },
+    "faceTemplates": [
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 65,
+            "height": 65,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image"
+            }
+          }
+        ]
+      }
+    ],
+    "parent": "cube-holder-4"
+  },
+  "score-4": {
+    "type": "label",
+    "id": "score-4",
+    "y": 55,
+    "width": 65,
+    "height": 40,
+    "css": "font-size: 30px;",
+    "editable": true,
+    "text": 0,
+    "parent": "seat-4",
+    "x": 65
+  },
+  "sl-4": {
+    "type": "button",
+    "id": "sl-4",
+    "parent": "score-4",
+    "fixedParent": true,
+    "x": -38,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": "font-size: 28px",
+    "text": "remove",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 1
+      }
+    ]
+  },
+  "sr-4": {
+    "type": "button",
+    "id": "sr-4",
+    "parent": "score-4",
+    "fixedParent": true,
+    "x": 68,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": "font-size: 28px",
+    "text": "add",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 1
+      }
+    ]
+  },
+  "seat-5": {
+    "type": "seat",
+    "id": "seat-5",
+    "width": 200,
+    "height": 36,
+    "css": {
+      ".seated": {
+        "border": "7px solid #ff00ff"
+      }
+    },
+    "hideWhenUnused": true,
+    "x": 50,
+    "y": 850,
+    "index": 5
+  },
+  "cube-holder-5": {
+    "type": "holder",
+    "id": "cube-holder-5",
+    "y": 15,
+    "width": 65,
+    "height": 65,
+    "css": {
+      "background-color": "transparent"
+    },
+    "dropShadow": true,
+    "dropTarget": {
+      "suit": "cube-purple"
+    },
+    "z": 9,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "parent": "seat-5",
+    "x": 220
+  },
+  "cubes-player-5": {
+    "type": "deck",
+    "id": "cubes-player-5",
+    "width": 65,
+    "height": 65,
+    "cardDefaults": {
+      "subtype": "square-boi",
+      "width": 65,
+      "height": 65,
+      "onPileCreation": {
+        "handleCSS": {
+          "background": "black",
+          "color": "white"
+        },
+        "layer": -1
+      }
+    },
+    "cardTypes": {
+      "cube-purple": {
+        "image": "/assets/1780506134_2378",
+        "suit": "cube-purple"
+      }
+    },
+    "faceTemplates": [
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 65,
+            "height": 65,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image"
+            }
+          }
+        ]
+      }
+    ],
+    "parent": "cube-holder-5"
+  },
+  "score-5": {
+    "type": "label",
+    "id": "score-5",
+    "y": 55,
+    "width": 65,
+    "height": 40,
+    "css": "font-size: 30px;",
+    "editable": true,
+    "text": 0,
+    "parent": "seat-5",
+    "x": 65
+  },
+  "sl-5": {
+    "type": "button",
+    "id": "sl-5",
+    "parent": "score-5",
+    "fixedParent": true,
+    "x": -38,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": "font-size: 28px",
+    "text": "remove",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 1
+      }
+    ]
+  },
+  "sr-5": {
+    "type": "button",
+    "id": "sr-5",
+    "parent": "score-5",
+    "fixedParent": true,
+    "x": 68,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": "font-size: 28px",
+    "text": "add",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 1
+      }
+    ]
+  },
+  "mctg": {
+    "deck": "cubes-player-2",
+    "type": "card",
+    "cardType": "cube-yellow",
+    "id": "mctg",
+    "z": 2483,
+    "parent": "7hp8"
+  },
+  "co6r": {
+    "deck": "cubes-player-2",
+    "type": "card",
+    "cardType": "cube-yellow",
+    "id": "co6r",
+    "z": 2484,
+    "parent": "7hp8"
+  },
+  "7hp8": {
+    "type": "pile",
+    "parent": "cube-holder-2",
+    "x": 0,
+    "y": 0,
+    "width": 65,
+    "height": 65,
+    "handleCSS": {
+      "background": "black",
+      "color": "white"
+    },
+    "layer": -1,
+    "id": "7hp8"
+  },
+  "j1v5": {
+    "deck": "cubes-player-2",
+    "type": "card",
+    "cardType": "cube-yellow",
+    "id": "j1v5",
+    "z": 2485,
+    "parent": "7hp8"
+  },
+  "dvo0": {
+    "deck": "cubes-player-3",
+    "type": "card",
+    "cardType": "cube-green",
+    "id": "dvo0",
+    "z": 2486,
+    "parent": "eyve"
+  },
+  "uom7": {
+    "deck": "cubes-player-3",
+    "type": "card",
+    "cardType": "cube-green",
+    "id": "uom7",
+    "z": 2487,
+    "parent": "eyve"
+  },
+  "eyve": {
+    "type": "pile",
+    "parent": "cube-holder-3",
+    "x": 0,
+    "y": 0,
+    "width": 65,
+    "height": 65,
+    "handleCSS": {
+      "background": "black",
+      "color": "white"
+    },
+    "layer": -1,
+    "id": "eyve"
+  },
+  "e3ib": {
+    "deck": "cubes-player-3",
+    "type": "card",
+    "cardType": "cube-green",
+    "id": "e3ib",
+    "z": 2488,
+    "parent": "eyve"
+  },
+  "djfr": {
+    "deck": "cubes-player-4",
+    "type": "card",
+    "cardType": "cube-blue",
+    "id": "djfr",
+    "z": 2489,
+    "parent": "zphm"
+  },
+  "bs5m": {
+    "deck": "cubes-player-4",
+    "type": "card",
+    "cardType": "cube-blue",
+    "id": "bs5m",
+    "z": 2490,
+    "parent": "zphm"
+  },
+  "pztg": {
+    "deck": "cubes-player-4",
+    "type": "card",
+    "cardType": "cube-blue",
+    "id": "pztg",
+    "z": 2491,
+    "parent": "zphm"
+  },
+  "mcsy": {
+    "deck": "cubes-player-5",
+    "type": "card",
+    "cardType": "cube-purple",
+    "id": "mcsy",
+    "z": 2492,
+    "parent": "0iwb"
+  },
+  "mym8": {
+    "deck": "cubes-player-5",
+    "type": "card",
+    "cardType": "cube-purple",
+    "id": "mym8",
+    "z": 2493,
+    "parent": "0iwb"
+  },
+  "5uzy": {
+    "deck": "cubes-player-5",
+    "type": "card",
+    "cardType": "cube-purple",
+    "id": "5uzy",
+    "z": 2494,
+    "parent": "0iwb"
+  },
+  "2h6v": {
+    "type": "pile",
+    "parent": "deck-holder",
+    "x": 0,
+    "y": 0,
+    "width": 120,
+    "height": 120,
+    "handleCSS": {
+      "background": "black",
+      "color": "white"
+    },
+    "id": "2h6v"
+  },
+  "0iwb": {
+    "type": "pile",
+    "parent": "cube-holder-5",
+    "x": 0,
+    "y": 0,
+    "width": 65,
+    "height": 65,
+    "handleCSS": {
+      "background": "black",
+      "color": "white"
+    },
+    "layer": -1,
+    "id": "0iwb"
+  },
+  "seat1-hand-counter": {
+    "id": "seat1-hand-counter",
+    "parent": "seat-1",
+    "fixedParent": true,
+    "x": -20,
+    "y": -20,
+    "width": 30,
+    "height": 30,
+    "borderRadius": 100,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "css": {
+      "font-size": "18px",
+      "display": "flex",
+      "align-items": "center",
+      "justify-content": "center",
+      "color": "#6d6d6d",
+      "background": "#e4e4e4",
+      "border": "2px solid #999999"
+    },
+    "text": 0,
+    "ownerGlobalUpdateRoutine": [
+      "var parent = ${PROPERTY parent}",
+      "var COUNT = 0",
+      {
+        "func": "COUNT",
+        "holder": "${PROPERTY hand OF $parent}",
+        "owner": "${PROPERTY player OF $parent}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "text",
+        "value": "${COUNT}"
+      }
+    ],
+    "playerGlobalUpdateRoutine": [
+      {
+        "func": "CALL",
+        "routine": "ownerGlobalUpdateRoutine",
+        "widget": "${PROPERTY id}"
+      }
+    ]
+  },
+  "seat2-hand-counter": {
+    "id": "seat2-hand-counter",
+    "parent": "seat-2",
+    "fixedParent": true,
+    "x": -20,
+    "y": -20,
+    "width": 30,
+    "height": 30,
+    "borderRadius": 100,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "css": {
+      "font-size": "18px",
+      "display": "flex",
+      "align-items": "center",
+      "justify-content": "center",
+      "color": "#6d6d6d",
+      "background": "#e4e4e4",
+      "border": "2px solid #999999"
+    },
+    "text": 0,
+    "ownerGlobalUpdateRoutine": [
+      "var parent = ${PROPERTY parent}",
+      "var COUNT = 0",
+      {
+        "func": "COUNT",
+        "holder": "${PROPERTY hand OF $parent}",
+        "owner": "${PROPERTY player OF $parent}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "text",
+        "value": "${COUNT}"
+      }
+    ],
+    "playerGlobalUpdateRoutine": [
+      {
+        "func": "CALL",
+        "routine": "ownerGlobalUpdateRoutine",
+        "widget": "${PROPERTY id}"
+      }
+    ]
+  },
+  "seat3-hand-counter": {
+    "id": "seat3-hand-counter",
+    "parent": "seat-3",
+    "fixedParent": true,
+    "x": -20,
+    "y": -20,
+    "width": 30,
+    "height": 30,
+    "borderRadius": 100,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "css": {
+      "font-size": "18px",
+      "display": "flex",
+      "align-items": "center",
+      "justify-content": "center",
+      "color": "#6d6d6d",
+      "background": "#e4e4e4",
+      "border": "2px solid #999999"
+    },
+    "text": 0,
+    "ownerGlobalUpdateRoutine": [
+      "var parent = ${PROPERTY parent}",
+      "var COUNT = 0",
+      {
+        "func": "COUNT",
+        "holder": "${PROPERTY hand OF $parent}",
+        "owner": "${PROPERTY player OF $parent}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "text",
+        "value": "${COUNT}"
+      }
+    ],
+    "playerGlobalUpdateRoutine": [
+      {
+        "func": "CALL",
+        "routine": "ownerGlobalUpdateRoutine",
+        "widget": "${PROPERTY id}"
+      }
+    ]
+  },
+  "seat4-hand-counter": {
+    "id": "seat4-hand-counter",
+    "parent": "seat-4",
+    "fixedParent": true,
+    "x": -20,
+    "y": -20,
+    "width": 30,
+    "height": 30,
+    "borderRadius": 100,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "css": {
+      "font-size": "18px",
+      "display": "flex",
+      "align-items": "center",
+      "justify-content": "center",
+      "color": "#6d6d6d",
+      "background": "#e4e4e4",
+      "border": "2px solid #999999"
+    },
+    "text": 0,
+    "ownerGlobalUpdateRoutine": [
+      "var parent = ${PROPERTY parent}",
+      "var COUNT = 0",
+      {
+        "func": "COUNT",
+        "holder": "${PROPERTY hand OF $parent}",
+        "owner": "${PROPERTY player OF $parent}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "text",
+        "value": "${COUNT}"
+      }
+    ],
+    "playerGlobalUpdateRoutine": [
+      {
+        "func": "CALL",
+        "routine": "ownerGlobalUpdateRoutine",
+        "widget": "${PROPERTY id}"
+      }
+    ]
+  },
+  "seat5-hand-counter": {
+    "id": "seat5-hand-counter",
+    "parent": "seat-5",
+    "fixedParent": true,
+    "x": -20,
+    "y": -20,
+    "width": 30,
+    "height": 30,
+    "borderRadius": 100,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "css": {
+      "font-size": "18px",
+      "display": "flex",
+      "align-items": "center",
+      "justify-content": "center",
+      "color": "#6d6d6d",
+      "background": "#e4e4e4",
+      "border": "2px solid #999999"
+    },
+    "text": 0,
+    "ownerGlobalUpdateRoutine": [
+      "var parent = ${PROPERTY parent}",
+      "var COUNT = 0",
+      {
+        "func": "COUNT",
+        "holder": "${PROPERTY hand OF $parent}",
+        "owner": "${PROPERTY player OF $parent}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "text",
+        "value": "${COUNT}"
+      }
+    ],
+    "playerGlobalUpdateRoutine": [
+      {
+        "func": "CALL",
+        "routine": "ownerGlobalUpdateRoutine",
+        "widget": "${PROPERTY id}"
+      }
+    ]
+  },
+  "newround": {
+    "type": "button",
+    "id": "newround",
+    "fixedParent": true,
+    "x": 1450,
+    "y": 925,
+    "width": 111,
+    "height": 40,
+    "movableInEdit": false,
+    "text": "New round",
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "header": "Set up a new round?",
+        "confirmButtonText": "Yes",
+        "cancelButtonText": "No",
+        "fields": [
+          {
+            "type": "subtitle",
+            "text": "Are you sure that you want to reset the board, shuffle all the cards and deal new hands?"
+          }
+        ]
+      },
+      {
+        "func": "RECALL",
+        "holder": "deck-holder"
+      },
+      {
+        "func": "FLIP",
+        "holder": "deck-holder",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "deck-holder"
+      },
+      {
+        "func": "MOVE",
+        "from": "deck-holder",
+        "to": "seat-1",
+        "count": 6
+      },
+      {
+        "func": "MOVE",
+        "from": "deck-holder",
+        "to": "seat-2",
+        "count": 6
+      },
+      {
+        "func": "MOVE",
+        "from": "deck-holder",
+        "to": "seat-3",
+        "count": 6
+      },
+      {
+        "func": "MOVE",
+        "from": "deck-holder",
+        "to": "seat-4",
+        "count": 6
+      },
+      {
+        "func": "MOVE",
+        "from": "deck-holder",
+        "to": "seat-5",
+        "count": 6
+      },
+      {
+        "func": "RECALL",
+        "holder": "cube-holder-1"
+      },
+      {
+        "func": "RECALL",
+        "holder": "cube-holder-2"
+      },
+      {
+        "func": "RECALL",
+        "holder": "cube-holder-3"
+      },
+      {
+        "func": "RECALL",
+        "holder": "cube-holder-4"
+      },
+      {
+        "func": "RECALL",
+        "holder": "cube-holder-5"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "staaar"
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "md0"
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "value": "0"
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "value": "0"
+      }
+    ]
+  },
+  "deck-holder": {
+    "type": "holder",
+    "id": "deck-holder",
+    "x": 3000,
+    "y": 3000,
+    "width": 120,
+    "height": 120,
+    "z": 31,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "type": "card"
+    }
+  },
+  "zphm": {
+    "type": "pile",
+    "parent": "cube-holder-4",
+    "x": 0,
+    "y": 0,
+    "width": 65,
+    "height": 65,
+    "handleCSS": {
+      "background": "black",
+      "color": "white"
+    },
+    "layer": -1,
+    "id": "zphm"
+  },
+  "staaar": {
+    "id": "staaar",
+    "width": 35,
+    "layer": 3,
+    "z": 831,
+    "image": "/assets/-55052011_1872",
+    "subtype": "long-boi",
+    "parent": "md0"
+  },
+  "md0": {
+    "type": "holder",
+    "id": "md0",
+    "parent": "centre",
+    "x": 5,
+    "y": 5,
+    "width": 35,
+    "height": 100,
+    "z": 12,
+    "css": {
+      "background-color": "transparent",
+      "border": "transparent"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropShadow": true,
+    "dropTarget": {
+      "subtype": "long-boi"
+    }
+  }
+}

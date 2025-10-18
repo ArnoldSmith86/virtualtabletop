@@ -148,6 +148,12 @@ class Card extends Widget {
                 }
               }
               objectDiv.style.backgroundColor = object.color || 'white';
+            } else if(object.type == 'icon') {
+              if(object.value) {
+                if($('.symbolOuterWrapper', objectDiv))
+                  $('.symbolOuterWrapper', objectDiv).remove();
+                generateSymbolsDiv(objectDiv, object.size || object.width, object.size || object.height, typeof object.value == 'object' ? object.value : Object.assign({ name:object.value }, object, { rotation: 0 }), object.text || '', 1, object.color);
+              }
             } else if (object.type == 'html') {
               // Prevent input from going to frame.
               objectDiv.style.pointerEvents = 'none';

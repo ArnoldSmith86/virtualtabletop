@@ -1,0 +1,851 @@
+{
+  "3903": {
+    "type": "button",
+    "clickRoutine": [
+      {
+        "func": "COUNT",
+        "holder": "hand"
+      },
+      {
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "relation": "<",
+        "operand2": 2,
+        "thenRoutine": [
+          {
+            "func": "MOVE",
+            "from": "deckHolder",
+            "to": "hand",
+            "face": 1
+          }
+        ]
+      }
+    ],
+    "x": 133,
+    "y": 898,
+    "z": 2,
+    "id": "3903",
+    "text": "+1",
+    "width": 50,
+    "height": 50,
+    "css": {
+      "font-size": "35px"
+    }
+  },
+  "_meta": {
+    "version": 17,
+    "info": {
+      "name": "Floor is Lava",
+      "image": "/assets/2109023306_19886",
+      "rules": "",
+      "bgg": "https://boardgamegeek.com/boardgame/378402/hermit",
+      "year": "2023",
+      "mode": "solo",
+      "time": "15",
+      "attribution": "<div>Card design, game layout, coding, and library image by LawDawg. Released to the Public Domain under CC0.</div><div><br></div><div>The lava background image is by Arcturnian and is available under the Pixabay License at:&nbsp;https://pixabay.com/illustrations/lava-cracked-background-fire-656827/</div><div><br></div><div>The fan icon is the Google Material Symbol \"Mode Fan\" available as attributed in the About button.</div><div><br></div><div>The volcano icon is by lorc and the furniture icons are by delapouite available under CC BY 3.0 from game-icons.net as attributed in the About button.</div>",
+      "lastUpdate": 1750944842733,
+      "showName": true,
+      "skill": "",
+      "description": "Escape the lava room by matching furniture icons on your cards before the volcano blows.",
+      "similarImage": "",
+      "similarName": "Hermit",
+      "similarDesigner": "Amelie Le-Roche",
+      "similarAwards": "",
+      "ruleText": "<div><b>Setup</b>\n\nClick the reset button to automatically distribute the cards and tokens.\n\n<b>Gameplay</b>\n\nRepeat each of the following steps in order until you reach the door or you activate a lose condition:\n\n<i>1. Draw a Card</i></div><div>\nCheck the playing area:</div><div><ul><li>If 0-1 red volcano icons are visible, draw cards until your hand has 2.</li><li>If 2 or more volcanoes are showing, keep only 1 card in your hand.</li><li>If the deck runs out, draw the leftmost card (behind the meeple) instead. To turn this card over, drag it into your hand. If there are no cards available, you lose.</li></ul></div><div></div><div></div><div><i>2. Play a Card</i></div><div>\nPlay 1 card from your hand into the play area, overlapping and matching the icons, to try to recreate the next lava card’s furniture pattern. Cards must touch existing cards and can overlap not at all, partially, or completely.</div><div><br></div><div>Click a card to rotate it 90 degrees clockwise. Click and drag anywhere on the screen away from a card to move the play area around as needed.\n\n<i>3. Move the Meeple</i></div><div>\nIf the pattern on the next card has been successfully recreated using at least one icon from the card you played this turn, move the meeple forward onto the next card to the right. Patterns may be mirrored (horizontally or vertically), but the icon order must match. If you have not recreated the pattern, then the meeple stays in place.\n\nTo jump onto the exit door, one of the icons in the pattern must be white. If you get the meeple on the exit door, you win.</div><div><br></div><div><i>4. Move the Door</i>\n\nAfter playing a card, the door moves one card to the right, pushing the exit farther away, unless you were able to move this turn <i>and</i> completed either of the following:</div><div><ul><li>If you placed 2 of the same furniture icons adjacent to each other, including one on the card just played, the door does not move.</li><li>If you lined up 2 blue fan icons, the lava is cooled and the exit door moves one card to the left closer to your meeple. If the door and the meeple are on adjacent cards, the door does not move.</li></ul><b>End Game</b>\n\nYou win immediately when the meeple moves onto the exit door.\n\nYou lose if the door icon moves past the last card or you run out of cards to draw.</div><div><br></div><div><b>Variations</b></div><div><b><br></b></div><div>Add either or both of these rules to increase the difficulty:</div><div><ul><li>Start with the door on the 8th card instead of the 6th.</li><li>To use the exit door, two of the icons in the pattern must be white.</li></ul></div>",
+      "helpText": "",
+      "variantImage": "",
+      "variant": "",
+      "language": "",
+      "players": "1"
+    }
+  },
+  "deckHolder": {
+    "type": "holder",
+    "id": "deckHolder",
+    "y": 839,
+    "width": 120,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "type": "card"
+    },
+    "css": {
+      "background-image": "url('')"
+    },
+    "z": 1,
+    "x": 2,
+    "height": 160,
+    "onEnter": {
+      "activeFace": 0,
+      "rotation": 0
+    }
+  },
+  "theDeck": {
+    "type": "deck",
+    "id": "theDeck",
+    "cardDefaults": {
+      "height": 160,
+      "width": 120,
+      "shift": true,
+      "clickRoutine": [
+        {
+          "func": "ROTATE",
+          "collection": "thisButton",
+          "angle": 90
+        }
+      ]
+    },
+    "cardTypes": {
+      "card1": {
+        "front1": "/i/game-icons.net/delapouite/bed.svg",
+        "front2": "/i/game-icons.net/delapouite/wooden-chair.svg",
+        "front3": "/i/game-icons.net/delapouite/sofa.svg",
+        "back1": "/i/game-icons.net/lorc/caldera.svg",
+        "back2": "/i/game-icons.net/delapouite/bed.svg",
+        "back3": "/i/game-icons.net/delapouite/sofa.svg",
+        "back4": "/assets/-1966252861_768",
+        "back5": "/i/game-icons.net/delapouite/desk.svg",
+        "back6": "/i/game-icons.net/delapouite/wooden-chair.svg",
+        "newColor1": "red",
+        "newColor2": "white",
+        "newColor4": "blue"
+      },
+      "card2": {
+        "front1": "/i/game-icons.net/delapouite/desk.svg",
+        "front2": "/i/game-icons.net/delapouite/bed.svg",
+        "front3": "/i/game-icons.net/delapouite/sofa.svg",
+        "back1": "/i/game-icons.net/lorc/caldera.svg",
+        "back2": "/i/game-icons.net/delapouite/wooden-chair.svg",
+        "back3": "/i/game-icons.net/delapouite/desk.svg",
+        "back4": "/assets/-1966252861_768",
+        "back5": "/i/game-icons.net/delapouite/rocking-chair.svg",
+        "back6": "/i/game-icons.net/delapouite/bed.svg",
+        "newColor1": "red",
+        "newColor3": "white",
+        "newColor4": "blue"
+      },
+      "card3": {
+        "front1": "/i/game-icons.net/delapouite/sofa.svg",
+        "front2": "/i/game-icons.net/delapouite/desk.svg",
+        "front3": "/i/game-icons.net/delapouite/wooden-chair.svg",
+        "back1": "/i/game-icons.net/delapouite/desk.svg",
+        "back2": "/i/game-icons.net/lorc/caldera.svg",
+        "back3": "/i/game-icons.net/delapouite/sofa.svg",
+        "back4": "/i/game-icons.net/delapouite/wooden-chair.svg",
+        "back5": "/assets/-1966252861_768",
+        "back6": "/i/game-icons.net/delapouite/rocking-chair.svg",
+        "newColor2": "red",
+        "newColor5": "blue",
+        "newColor6": "white"
+      },
+      "card4": {
+        "front1": "/i/game-icons.net/delapouite/sofa.svg",
+        "front2": "/i/game-icons.net/delapouite/desk.svg",
+        "front3": "/i/game-icons.net/delapouite/rocking-chair.svg",
+        "back1": "/i/game-icons.net/delapouite/bed.svg",
+        "back2": "/i/game-icons.net/delapouite/sofa.svg",
+        "back3": "/i/game-icons.net/delapouite/wooden-chair.svg",
+        "back4": "/i/game-icons.net/lorc/caldera.svg",
+        "back5": "/i/game-icons.net/delapouite/rocking-chair.svg",
+        "back6": "/assets/-1966252861_768",
+        "newColor3": "white",
+        "newColor4": "red",
+        "newColor6": "blue"
+      },
+      "card5": {
+        "front1": "/i/game-icons.net/delapouite/desk.svg",
+        "front2": "/i/game-icons.net/delapouite/wooden-chair.svg",
+        "front3": "/i/game-icons.net/delapouite/bed.svg",
+        "back1": "/assets/-1966252861_768",
+        "back2": "/i/game-icons.net/delapouite/bed.svg",
+        "back4": "/i/game-icons.net/delapouite/wooden-chair.svg",
+        "back5": "/i/game-icons.net/delapouite/sofa.svg",
+        "back6": "/i/game-icons.net/delapouite/desk.svg",
+        "newColor1": "blue",
+        "newColor6": "white"
+      },
+      "card6": {
+        "front1": "/i/game-icons.net/delapouite/wooden-chair.svg",
+        "front2": "/i/game-icons.net/delapouite/sofa.svg",
+        "front3": "/i/game-icons.net/delapouite/desk.svg",
+        "back1": "/i/game-icons.net/delapouite/bed.svg",
+        "back2": "/assets/-1966252861_768",
+        "back3": "/i/game-icons.net/delapouite/rocking-chair.svg",
+        "back4": "/i/game-icons.net/delapouite/desk.svg",
+        "back6": "/i/game-icons.net/delapouite/sofa.svg",
+        "newColor2": "blue",
+        "newColor3": "white"
+      },
+      "card7": {
+        "front1": "/i/game-icons.net/delapouite/bed.svg",
+        "front2": "/i/game-icons.net/delapouite/rocking-chair.svg",
+        "front3": "/i/game-icons.net/delapouite/wooden-chair.svg",
+        "back1": "/i/game-icons.net/delapouite/wooden-chair.svg",
+        "back2": "/i/game-icons.net/delapouite/rocking-chair.svg",
+        "back3": "/i/game-icons.net/delapouite/bed.svg",
+        "back4": "/i/game-icons.net/delapouite/sofa.svg",
+        "back5": "/assets/-1966252861_768",
+        "newColor4": "white",
+        "newColor5": "blue"
+      },
+      "card8": {
+        "front1": "/i/game-icons.net/delapouite/desk.svg",
+        "front2": "/i/game-icons.net/delapouite/rocking-chair.svg",
+        "front3": "/i/game-icons.net/delapouite/sofa.svg",
+        "back1": "/i/game-icons.net/delapouite/rocking-chair.svg",
+        "back2": "/i/game-icons.net/delapouite/sofa.svg",
+        "back3": "/assets/-1966252861_768",
+        "back5": "/i/game-icons.net/delapouite/desk.svg",
+        "back6": "/i/game-icons.net/delapouite/wooden-chair.svg",
+        "newColor2": "white",
+        "newColor3": "blue"
+      },
+      "card9": {
+        "front1": "/i/game-icons.net/delapouite/rocking-chair.svg",
+        "front2": "/i/game-icons.net/delapouite/sofa.svg",
+        "front3": "/i/game-icons.net/delapouite/desk.svg",
+        "back1": "/i/game-icons.net/delapouite/rocking-chair.svg",
+        "back2": "/i/game-icons.net/delapouite/bed.svg",
+        "back3": "/i/game-icons.net/delapouite/sofa.svg",
+        "back4": "/i/game-icons.net/delapouite/wooden-chair.svg",
+        "back5": "/i/game-icons.net/delapouite/desk.svg",
+        "back6": "/i/game-icons.net/lorc/caldera.svg",
+        "newColor5": "white",
+        "newColor6": "red"
+      },
+      "card10": {
+        "front1": "/i/game-icons.net/delapouite/bed.svg",
+        "front2": "/i/game-icons.net/delapouite/wooden-chair.svg",
+        "front3": "/i/game-icons.net/delapouite/sofa.svg",
+        "back1": "/i/game-icons.net/delapouite/desk.svg",
+        "back2": "/i/game-icons.net/delapouite/bed.svg",
+        "back3": "/i/game-icons.net/lorc/caldera.svg",
+        "back4": "/i/game-icons.net/delapouite/sofa.svg",
+        "back5": "/i/game-icons.net/delapouite/wooden-chair.svg",
+        "back6": "/i/game-icons.net/delapouite/rocking-chair.svg",
+        "newColor2": "white",
+        "newColor3": "red"
+      },
+      "card11": {
+        "front1": "/i/game-icons.net/delapouite/rocking-chair.svg",
+        "front2": "/i/game-icons.net/delapouite/wooden-chair.svg",
+        "front3": "/i/game-icons.net/delapouite/bed.svg",
+        "back1": "/i/game-icons.net/delapouite/rocking-chair.svg",
+        "back2": "/i/game-icons.net/delapouite/wooden-chair.svg",
+        "back3": "/i/game-icons.net/delapouite/desk.svg",
+        "back4": "/i/game-icons.net/lorc/caldera.svg",
+        "back5": "/i/game-icons.net/delapouite/bed.svg",
+        "back6": "/i/game-icons.net/delapouite/sofa.svg",
+        "newColor4": "red",
+        "newColor5": "white"
+      },
+      "card12": {
+        "front1": "/i/game-icons.net/delapouite/sofa.svg",
+        "front2": "/i/game-icons.net/delapouite/rocking-chair.svg",
+        "front3": "/i/game-icons.net/delapouite/wooden-chair.svg",
+        "back1": "/i/game-icons.net/delapouite/sofa.svg",
+        "back2": "/i/game-icons.net/lorc/caldera.svg",
+        "back3": "/i/game-icons.net/delapouite/rocking-chair.svg",
+        "back4": "/i/game-icons.net/delapouite/bed.svg",
+        "back5": "/i/game-icons.net/delapouite/wooden-chair.svg",
+        "back6": "/i/game-icons.net/delapouite/desk.svg",
+        "newColor1": "white",
+        "newColor2": "red"
+      },
+      "card13": {
+        "front1": "/i/game-icons.net/delapouite/wooden-chair.svg",
+        "front2": "/i/game-icons.net/delapouite/desk.svg",
+        "front3": "/i/game-icons.net/delapouite/rocking-chair.svg",
+        "back2": "/i/game-icons.net/delapouite/desk.svg",
+        "back3": "/i/game-icons.net/delapouite/bed.svg",
+        "back4": "/i/game-icons.net/delapouite/rocking-chair.svg",
+        "back5": "/i/game-icons.net/delapouite/sofa.svg",
+        "back6": "/i/game-icons.net/delapouite/wooden-chair.svg",
+        "newColor6": "white"
+      },
+      "card14": {
+        "front1": "/i/game-icons.net/delapouite/rocking-chair.svg",
+        "front2": "/i/game-icons.net/delapouite/bed.svg",
+        "front3": "/i/game-icons.net/delapouite/desk.svg",
+        "back1": "/i/game-icons.net/delapouite/rocking-chair.svg",
+        "back2": "/i/game-icons.net/delapouite/sofa.svg",
+        "back3": "/i/game-icons.net/delapouite/desk.svg",
+        "back4": "/i/game-icons.net/delapouite/wooden-chair.svg",
+        "back5": "/i/game-icons.net/delapouite/bed.svg",
+        "newColor4": "white"
+      },
+      "card15": {
+        "front1": "/i/game-icons.net/delapouite/wooden-chair.svg",
+        "front2": "/i/game-icons.net/delapouite/bed.svg",
+        "front3": "/i/game-icons.net/delapouite/rocking-chair.svg",
+        "back1": "/i/game-icons.net/delapouite/sofa.svg",
+        "back2": "/i/game-icons.net/delapouite/wooden-chair.svg",
+        "back3": "/i/game-icons.net/delapouite/desk.svg",
+        "back4": "/i/game-icons.net/delapouite/bed.svg",
+        "back6": "/i/game-icons.net/delapouite/rocking-chair.svg",
+        "newColor1": "white"
+      },
+      "card16": {
+        "front1": "/i/game-icons.net/delapouite/desk.svg",
+        "front2": "/i/game-icons.net/delapouite/sofa.svg",
+        "front3": "/i/game-icons.net/delapouite/bed.svg",
+        "back1": "/i/game-icons.net/delapouite/desk.svg",
+        "back2": "/i/game-icons.net/delapouite/wooden-chair.svg",
+        "back3": "/i/game-icons.net/delapouite/rocking-chair.svg",
+        "back5": "/i/game-icons.net/delapouite/bed.svg",
+        "back6": "/i/game-icons.net/delapouite/sofa.svg",
+        "newColor3": "white"
+      }
+    },
+    "faceTemplates": [
+      {
+        "border": 1,
+        "radius": 8,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 120,
+            "height": 160,
+            "color": "#ffffff"
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 121,
+            "height": 205,
+            "value": "/assets/823378668_151650",
+            "css": {
+              "opacity": 0.2
+            }
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 120,
+            "height": 160,
+            "color": "#ff000030"
+          },
+          {
+            "type": "image",
+            "x": 3,
+            "y": 0,
+            "color": "transparent",
+            "width": 35,
+            "height": 35,
+            "dynamicProperties": {
+              "value": "front1"
+            }
+          },
+          {
+            "type": "image",
+            "x": 43,
+            "y": 0,
+            "color": "transparent",
+            "width": 35,
+            "height": 35,
+            "dynamicProperties": {
+              "value": "front2"
+            }
+          },
+          {
+            "type": "image",
+            "x": 83,
+            "y": 0,
+            "color": "transparent",
+            "width": 35,
+            "height": 35,
+            "dynamicProperties": {
+              "value": "front3"
+            }
+          }
+        ]
+      },
+      {
+        "border": 1,
+        "radius": 8,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 120,
+            "height": 160,
+            "color": "#ffffff"
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 121,
+            "height": 205,
+            "value": "/assets/823378668_151650",
+            "css": {
+              "opacity": 0.2
+            }
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 120,
+            "height": 160,
+            "color": "#ff000030"
+          },
+          {
+            "type": "image",
+            "x": 5,
+            "y": 5,
+            "color": "transparent",
+            "width": 50,
+            "height": 50,
+            "svgReplaces": {
+              "#000": "newColor1"
+            },
+            "dynamicProperties": {
+              "value": "back1"
+            }
+          },
+          {
+            "type": "image",
+            "x": 65,
+            "y": 5,
+            "color": "transparent",
+            "width": 50,
+            "height": 50,
+            "svgReplaces": {
+              "#000": "newColor2"
+            },
+            "dynamicProperties": {
+              "value": "back2"
+            }
+          },
+          {
+            "type": "image",
+            "x": 5,
+            "y": 55,
+            "color": "transparent",
+            "width": 50,
+            "height": 50,
+            "svgReplaces": {
+              "#000": "newColor3"
+            },
+            "dynamicProperties": {
+              "value": "back3"
+            }
+          },
+          {
+            "type": "image",
+            "x": 65,
+            "y": 55,
+            "color": "transparent",
+            "width": 50,
+            "height": 50,
+            "svgReplaces": {
+              "#000": "newColor4"
+            },
+            "dynamicProperties": {
+              "value": "back4"
+            }
+          },
+          {
+            "type": "image",
+            "x": 5,
+            "y": 105,
+            "color": "transparent",
+            "width": 50,
+            "height": 50,
+            "svgReplaces": {
+              "#000": "newColor5"
+            },
+            "dynamicProperties": {
+              "value": "back5"
+            }
+          },
+          {
+            "type": "image",
+            "x": 65,
+            "y": 105,
+            "color": "transparent",
+            "width": 50,
+            "height": 50,
+            "svgReplaces": {
+              "#000": "newColor6"
+            },
+            "dynamicProperties": {
+              "value": "back6"
+            }
+          }
+        ]
+      }
+    ],
+    "z": 142,
+    "hoverParent": "deckHolder",
+    "parent": "deckHolder"
+  },
+  "ddly": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "card1",
+    "id": "ddly",
+    "z": 2558,
+    "parent": "fw0m"
+  },
+  "gt6w": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "card2",
+    "id": "gt6w",
+    "z": 2568,
+    "parent": "fw0m"
+  },
+  "64xk": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "card3",
+    "id": "64xk",
+    "z": 2515,
+    "parent": "fw0m"
+  },
+  "lcrx": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "card4",
+    "id": "lcrx",
+    "z": 2589,
+    "parent": "fw0m"
+  },
+  "1fbr": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "card5",
+    "id": "1fbr",
+    "z": 2514,
+    "parent": "fw0m"
+  },
+  "stz1": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "card6",
+    "id": "stz1",
+    "z": 2580,
+    "parent": "fw0m"
+  },
+  "01mk": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "card7",
+    "id": "01mk",
+    "z": 2565,
+    "parent": "fw0m"
+  },
+  "28lv": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "card8",
+    "id": "28lv",
+    "z": 2545,
+    "parent": "fw0m"
+  },
+  "nw6x": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "card9",
+    "id": "nw6x",
+    "z": 2571,
+    "parent": "fw0m"
+  },
+  "u7xp": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "card10",
+    "id": "u7xp",
+    "z": 2586,
+    "parent": "fw0m"
+  },
+  "3f9v": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "card11",
+    "id": "3f9v",
+    "z": 2516,
+    "parent": "fw0m"
+  },
+  "k5fo": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "card12",
+    "id": "k5fo",
+    "z": 2592,
+    "parent": "fw0m"
+  },
+  "if5t": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "card13",
+    "id": "if5t",
+    "z": 2574,
+    "parent": "fw0m"
+  },
+  "31p8": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "card14",
+    "id": "31p8",
+    "z": 2562,
+    "parent": "fw0m"
+  },
+  "pll8": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "card15",
+    "id": "pll8",
+    "z": 2577,
+    "parent": "fw0m"
+  },
+  "nemz": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "card16",
+    "id": "nemz",
+    "z": 2583,
+    "parent": "fw0m"
+  },
+  "background": {
+    "id": "background",
+    "x": 344,
+    "width": 757,
+    "height": 1280,
+    "layer": -4,
+    "z": 7,
+    "movable": false,
+    "image": "/assets/823378668_151650",
+    "css": {
+      "opacity": 0.05,
+      "scale": 1.35
+    },
+    "y": -95,
+    "rotation": 90
+  },
+  "restart": {
+    "type": "button",
+    "id": "restart",
+    "x": 1550,
+    "y": 1,
+    "width": 50,
+    "height": 50,
+    "z": 1,
+    "classes": "symbols",
+    "color": "white",
+    "css": {
+      "default": {
+        "font-size": "40px",
+        "--wcMain": "black",
+        "--wcBorder": "white",
+        "--wcMainOH": "grey",
+        "--wcBorderOH": "black"
+      },
+      "::after": {
+        "content": "\"Reset\"",
+        "display": "none",
+        "position": "absolute",
+        "margin-top": "71px",
+        "color": "black",
+        "font-size": "14px",
+        "font-family": "Roboto"
+      },
+      ":hover::after": {
+        "display": "block"
+      }
+    },
+    "text": "restart",
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "fields": [
+          {
+            "type": "title",
+            "text": "Restarting ..."
+          },
+          {
+            "type": "subtitle",
+            "text": "Are you sure you want to restart the game?"
+          }
+        ]
+      },
+      {
+        "func": "RECALL",
+        "holder": "deckHolder"
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "deckHolder"
+      },
+      {
+        "func": "FLIP",
+        "holder": "deckHolder",
+        "face": 0
+      },
+      {
+        "func": "SELECT",
+        "property": "deck",
+        "value": "theDeck"
+      },
+      {
+        "func": "SET",
+        "property": "rotation",
+        "value": 0
+      },
+      {
+        "func": "MOVEXY",
+        "from": "deckHolder",
+        "x": 745,
+        "y": 415,
+        "face": 1
+      },
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "x",
+        "value": 745
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "floor"
+      },
+      {
+        "func": "FOREACH",
+        "range": [
+          101,
+          1388,
+          142
+        ],
+        "loopRoutine": [
+          {
+            "func": "MOVEXY",
+            "from": "deckHolder",
+            "x": "${value}",
+            "y": 10
+          }
+        ]
+      },
+      {
+        "func": "RESET"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "floor"
+        ],
+        "property": "x",
+        "value": -500
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "floor"
+        ],
+        "property": "y",
+        "value": -500
+      },
+      {
+        "func": "MOVE",
+        "from": "deckHolder",
+        "to": "hand",
+        "count": 2,
+        "face": 1
+      }
+    ]
+  },
+  "meeple": {
+    "id": "meeple",
+    "y": 883,
+    "width": 75,
+    "height": 75,
+    "z": 19,
+    "color": "#1f5ca6",
+    "css": "border-radius: 100% 100% 25% 25%; ",
+    "image": "i/game-pieces/2D/Meeple-2D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 3,
+    "resetProperties": {
+      "x": 10,
+      "y": 66
+    },
+    "x": 589
+  },
+  "door": {
+    "id": "door",
+    "y": 873,
+    "image": "/i/game-icons.net/delapouite/door.svg",
+    "svgReplaces": {
+      "#000": "newColor"
+    },
+    "newColor": "#8B4513",
+    "z": 17,
+    "resetProperties": {
+      "x": 823,
+      "y": 56
+    },
+    "x": 926
+  },
+  "floor": {
+    "type": "holder",
+    "id": "floor",
+    "x": -500,
+    "y": -500,
+    "width": 2600,
+    "height": 2000,
+    "layer": -4,
+    "z": 160,
+    "movableInEdit": false,
+    "alignChildren": false,
+    "classes": "transparent",
+    "css": {
+      "border": "none"
+    },
+    "dropTarget": {
+      "shift": true
+    },
+    "movable": true,
+    "preventPiles": true
+  },
+  "hand": {
+    "type": "holder",
+    "onEnter": {
+      "activeFace": 1
+    },
+    "dropOffsetX": 0,
+    "dropShadow": true,
+    "hidePlayerCursors": true,
+    "x": 680,
+    "y": 839,
+    "width": 242,
+    "height": 160,
+    "id": "hand",
+    "stackOffsetX": 122,
+    "dropOffsetY": 0,
+    "css": {
+      "background-color": "#ffffff70"
+    }
+  },
+  "fw0m": {
+    "type": "pile",
+    "y": 0,
+    "width": 120,
+    "height": 160,
+    "id": "fw0m",
+    "z": 2554,
+    "x": 0,
+    "parent": "deckHolder"
+  }
+}

@@ -4,21 +4,21 @@
     "type": "card",
     "cardType": "shears",
     "id": "3752",
-    "z": 18089,
-    "parent": "rza2"
+    "z": 18604,
+    "parent": "0scv"
   },
   "_meta": {
-    "version": 15,
+    "version": 17,
     "info": {
       "name": "Whodunit",
-      "image": "/assets/1252576945_341998",
+      "image": "/assets/604806874_29026",
       "rules": "",
       "bgg": "https://boardgamegeek.com/boardgame/1294/clue",
       "year": "1949",
       "mode": "vs",
       "time": "45",
       "attribution": "Room design and layout by LawDawg96 and released to the Public Domain under CC0.<div><br></div><div>Library image and card back&nbsp;<span style=\"color: var(--overlayFontColor);\">was generated using the Midjourney artificial intelligence image generator, https://www.midjourney.com/home/, using the following prompt: \"city park in the spring, cartoon style of Phineas and Ferb --ar 5:8\".</span></div><div><span style=\"color: var(--overlayFontColor);\"><br></span></div><div>Characters on the Person cards were generated in ChatGPT 4,&nbsp;https://chat.openai.com/, using a prompt similar to \"Create 20-year-old female cartoon character portrait head and shoulders, style of Phineas and Ferb, amber-colored clothing, holding a book, on a solid white background\".</div><div><br></div><div>Images on the Place cards were generated using Midjourney using a prompt similar to: \"sprit sheet of park benches on a solid white background, overhead view\".</div><div><br></div><div>Icons on the Weapons cards are available under the Flaticon License:</div><div><ul><li>Walking stick by Freepik: https://www.flaticon.com/free-icon/walking-stick_2852384</li><li>Pruning shears by Freepik: https://www.flaticon.com/free-icon/shears_809147</li><li>Baseball bat by Freepik: https://www.flaticon.com/free-icon/baseball-bat_1784991</li><li>Skateboard by Freepik: https://www.flaticon.com/free-icon/skateboard_1048312</li><li>Dog leash by Freepik: https://www.flaticon.com/free-icon/leash_3375483</li><li>Chain by Freepik: https://www.flaticon.com/free-icon/chain_2944058</li></ul><div>The grass field background and wave texture used on the board are available under the Pixabay License:</div></div><div><ul><li>Grass field by Pexels, https://pixabay.com/photos/field-grass-green-lawn-texture-1851064/</li><li>Waves by Lukas, https://pixabay.com/photos/sea-background-water-surface-2055969/</li></ul><div>The envelope for card piles is by mousewax and is in the public domain under CC0.</div></div>",
-      "lastUpdate": 1710454166502,
+      "lastUpdate": 1760414923315,
       "showName": true,
       "skill": "",
       "description": "Move around locations in a city park to solve a murder by using deduction. If you figure out whodunit, the location, and the weapon, you win.",
@@ -39,72 +39,72 @@
     "type": "card",
     "cardType": "bench",
     "id": "x09q",
-    "z": 18054,
-    "parent": "mn0h"
+    "z": 18649,
+    "parent": "xpra"
   },
   "nd5a": {
     "deck": "placeDeck",
     "type": "card",
     "cardType": "bridge",
     "id": "nd5a",
-    "z": 18055,
-    "parent": "mn0h"
+    "z": 18641,
+    "parent": "xpra"
   },
   "z879": {
     "deck": "placeDeck",
     "type": "card",
     "cardType": "amphitheater",
     "id": "z879",
-    "z": 18057,
-    "parent": "mn0h"
+    "z": 18644,
+    "parent": "xpra"
   },
   "u0ok": {
     "deck": "placeDeck",
     "type": "card",
     "cardType": "fountain",
     "id": "u0ok",
-    "z": 18059,
-    "parent": "mn0h"
+    "z": 18648,
+    "parent": "xpra"
   },
   "ndbc": {
     "deck": "placeDeck",
     "type": "card",
     "cardType": "maze",
     "id": "ndbc",
-    "z": 18058,
-    "parent": "mn0h"
+    "z": 18646,
+    "parent": "xpra"
   },
   "vdyw": {
     "deck": "placeDeck",
     "type": "card",
     "cardType": "meadow",
     "id": "vdyw",
-    "z": 18052,
-    "parent": "mn0h"
+    "z": 18642,
+    "parent": "xpra"
   },
   "oepn": {
     "deck": "placeDeck",
     "type": "card",
     "cardType": "playground",
     "id": "oepn",
-    "z": 18051,
-    "parent": "mn0h"
+    "z": 18647,
+    "parent": "xpra"
   },
   "rk8h": {
     "deck": "placeDeck",
     "type": "card",
     "cardType": "pond",
     "id": "rk8h",
-    "z": 18053,
-    "parent": "mn0h"
+    "z": 18645,
+    "parent": "xpra"
   },
   "8ff2": {
     "deck": "placeDeck",
     "type": "card",
     "cardType": "statue",
     "id": "8ff2",
-    "z": 18056,
-    "parent": "mn0h"
+    "z": 18643,
+    "parent": "xpra"
   },
   "personDeck": {
     "type": "deck",
@@ -510,48 +510,48 @@
     "type": "card",
     "cardType": "amber",
     "id": "itnz",
-    "z": 18072,
-    "parent": "tz7k"
+    "z": 18622,
+    "parent": "xmp4"
   },
   "rt0m": {
     "deck": "personDeck",
     "type": "card",
     "cardType": "black",
     "id": "rt0m",
-    "z": 18071,
-    "parent": "tz7k"
+    "z": 18618,
+    "parent": "xmp4"
   },
   "yw72": {
     "deck": "personDeck",
     "type": "card",
     "cardType": "blue",
     "id": "yw72",
-    "z": 18074,
-    "parent": "tz7k"
+    "z": 18623,
+    "parent": "xmp4"
   },
   "10v0": {
     "deck": "personDeck",
     "type": "card",
     "cardType": "gray",
     "id": "10v0",
-    "z": 18075,
-    "parent": "tz7k"
+    "z": 18619,
+    "parent": "xmp4"
   },
   "zud9": {
     "deck": "personDeck",
     "type": "card",
     "cardType": "pearl",
     "id": "zud9",
-    "z": 18076,
-    "parent": "tz7k"
+    "z": 18621,
+    "parent": "xmp4"
   },
   "85vm": {
     "deck": "personDeck",
     "type": "card",
     "cardType": "rose",
     "id": "85vm",
-    "z": 18073,
-    "parent": "tz7k"
+    "z": 18620,
+    "parent": "xmp4"
   },
   "weaponDeck": {
     "type": "deck",
@@ -741,40 +741,40 @@
     "type": "card",
     "cardType": "bat",
     "id": "n2ew",
-    "z": 18091,
-    "parent": "rza2"
+    "z": 18601,
+    "parent": "0scv"
   },
   "en9x": {
     "deck": "weaponDeck",
     "type": "card",
     "cardType": "chain",
     "id": "en9x",
-    "z": 18093,
-    "parent": "rza2"
+    "z": 18606,
+    "parent": "0scv"
   },
   "70fr": {
     "deck": "weaponDeck",
     "type": "card",
     "cardType": "leash",
     "id": "70fr",
-    "z": 18088,
-    "parent": "rza2"
+    "z": 18602,
+    "parent": "0scv"
   },
   "m11u": {
     "deck": "weaponDeck",
     "type": "card",
     "cardType": "skateboard",
     "id": "m11u",
-    "z": 18092,
-    "parent": "rza2"
+    "z": 18605,
+    "parent": "0scv"
   },
   "4asj": {
     "deck": "weaponDeck",
     "type": "card",
     "cardType": "stick",
     "id": "4asj",
-    "z": 18090,
-    "parent": "rza2"
+    "z": 18603,
+    "parent": "0scv"
   },
   "loepB": {
     "id": "loepB",
@@ -2820,7 +2820,7 @@
     "y": -25,
     "width": 35,
     "height": 63,
-    "z": 628,
+    "z": 691,
     "color": "#ee8715",
     "css": "border-radius: 40% 40% 50% 50%/ 80% 80% 10% 10%; ",
     "image": "i/game-pieces/3D/Pawn-3D.svg",
@@ -2832,61 +2832,60 @@
     "borderColor": "black",
     "borderWidth": 1,
     "pawn": true,
-    "pawnStart": 1,
     "parent": "pawnStart1"
   },
   "pawn2": {
     "inheritFrom": {
-      "pawn1": "*"
+      "pawn1": "!parent"
     },
     "id": "pawn2",
     "x": 1,
     "y": -25,
-    "z": 629,
+    "z": 692,
     "color": "#000000",
     "parent": "pawnStart2"
   },
   "pawn3": {
     "inheritFrom": {
-      "pawn1": "*"
+      "pawn1": "!parent"
     },
     "id": "pawn3",
     "x": 1,
     "y": -25,
-    "z": 630,
+    "z": 693,
     "color": "#5693c0",
     "parent": "pawnStart3"
   },
   "pawn4": {
     "inheritFrom": {
-      "pawn1": "*"
+      "pawn1": "!parent"
     },
     "id": "pawn4",
     "x": 1,
     "y": -25,
-    "z": 631,
+    "z": 694,
     "color": "#8d877f",
     "parent": "pawnStart4"
   },
   "pawn5": {
     "inheritFrom": {
-      "pawn1": "*"
+      "pawn1": "!parent"
     },
     "id": "pawn5",
     "x": 1,
     "y": -25,
-    "z": 632,
+    "z": 695,
     "color": "#df4355",
     "parent": "pawnStart5"
   },
   "pawn6": {
     "inheritFrom": {
-      "pawn1": "*"
+      "pawn1": "!parent"
     },
     "id": "pawn6",
     "x": 1,
     "y": -25,
-    "z": 633,
+    "z": 696,
     "color": "#faf7eb",
     "parent": "pawnStart6"
   },
@@ -3182,11 +3181,9 @@
       }
     },
     "hideWhenUnused": true,
-    "colorContrast": "#000000",
     "glowColor": "#4d4d4d",
     "mainColor": "#ee8715",
     "outlineColor": "#000000bb",
-    "textColor": "#ffffff",
     "textShadowBlur": 2,
     "textShadowDistance": 2,
     "clickRoutine": [
@@ -4595,31 +4592,7 @@
       6
     ]
   },
-  "mn0h": {
-    "type": "pile",
-    "parent": "placeDeckHolder",
-    "x": 4,
-    "y": 4,
-    "width": 103,
-    "height": 160,
-    "handlePosition": "static",
-    "handleOffset": -10,
-    "handleCSS": "background:url(/assets/2124605364_686);background-size:cover;left:-1px;width:105px;top:20px;height:150px;border-radius:0px;color:transparent;",
-    "id": "mn0h"
-  },
-  "tz7k": {
-    "type": "pile",
-    "parent": "personDeckHolder",
-    "x": 4,
-    "y": 4,
-    "width": 103,
-    "height": 160,
-    "handlePosition": "static",
-    "handleOffset": -10,
-    "handleCSS": "background:url(/assets/2124605364_686);background-size:cover;left:-1px;width:105px;top:20px;height:150px;border-radius:0px;color:transparent;",
-    "id": "tz7k"
-  },
-  "rza2": {
+  "0scv": {
     "type": "pile",
     "parent": "weaponDeckHolder",
     "x": 4,
@@ -4629,6 +4602,30 @@
     "handlePosition": "static",
     "handleOffset": -10,
     "handleCSS": "background:url(/assets/2124605364_686);background-size:cover;left:-1px;width:105px;top:20px;height:150px;border-radius:0px;color:transparent;",
-    "id": "rza2"
+    "id": "0scv"
+  },
+  "xmp4": {
+    "type": "pile",
+    "parent": "personDeckHolder",
+    "x": 4,
+    "y": 4,
+    "width": 103,
+    "height": 160,
+    "handlePosition": "static",
+    "handleOffset": -10,
+    "handleCSS": "background:url(/assets/2124605364_686);background-size:cover;left:-1px;width:105px;top:20px;height:150px;border-radius:0px;color:transparent;",
+    "id": "xmp4"
+  },
+  "xpra": {
+    "type": "pile",
+    "parent": "placeDeckHolder",
+    "x": 4,
+    "y": 4,
+    "width": 103,
+    "height": 160,
+    "handlePosition": "static",
+    "handleOffset": -10,
+    "handleCSS": "background:url(/assets/2124605364_686);background-size:cover;left:-1px;width:105px;top:20px;height:150px;border-radius:0px;color:transparent;",
+    "id": "xpra"
   }
 }

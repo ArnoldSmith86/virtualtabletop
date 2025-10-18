@@ -53,7 +53,7 @@ function checkForGameURL_showError(text) {
   div($('#topSurface'), '', `
     <button icon=close>Create an empty room</button>
   `);
-  $('#topSurface button').onclick = _=>location.href = config.externalURL;
+  $('#topSurface button').onclick = _=>location.href = getBaseURL();
 }
 
 async function playButtonClick(updateProgress) {
@@ -110,7 +110,8 @@ async function addSharedGame(shareID) {
 onLoad(function() {
   progressButton($('#welcomePlayButton'), playButtonClick);
 
-  $('#closeLinkDetails').onclick = _=>location.href = config.externalURL;
+  $('#roomURLDisplay').innerHTML = `${getBaseURL()}/`;
+  $('#closeLinkDetails').onclick = _=>location.href = getBaseURL();
 
   // press play button when pressing enter
   for(const button of $a('#welcomeJoinRoom, #welcomePlayerName')) {
