@@ -552,7 +552,7 @@ async function removeWidgetLocal(widgetID, keepChildren) {
   }
 }
 
-function sendDelta() {
+export function sendDelta() {
   if(!batchDepth) {
     if(deltaChanged) {
       receiveDelta(delta);
@@ -581,8 +581,18 @@ export function widgetFilter(callback) {
   return Array.from(widgets.values()).filter(w=>!w.isBeingRemoved).filter(callback);
 }
 
+async function receiveDelegateRoutine(args) {
+  const collections = {};
+  for(const key in (args.collections || {}))
+    collections[key] = (args.collections[key] || []).map(id=>widgets.get(id)).filter(Boolean);
+  const widget = widgets.get(args.widgetID);
+  if(widget)
+    await widget.evaluateRoutine(args.routine, args.variables || {}, collections);
+}
+
 onLoad(function() {
   onMessage('delta', receiveDeltaFromServer);
   onMessage('state', receiveStateFromServer);
+  onMessage('delegateRoutine', receiveDelegateRoutine);
   setScale();
 });
