@@ -3093,8 +3093,14 @@ function jeInitEventListeners() {
   window.addEventListener('mousemove', function(e) {
     if(!jeEnabled)
       return;
-    const x = jeState.mouseX = Math.floor((e.clientX - getRoomRectangle().left) / getScale());
-    const y = jeState.mouseY = Math.floor((e.clientY - getRoomRectangle().top ) / getScale());
+    const surfaceRect = $('#topSurface').getBoundingClientRect();
+    const baseWidth = 1600;
+    const baseHeight = 1000;
+    const scaleX = surfaceRect.width ? baseWidth / surfaceRect.width : 1 / getScale();
+    const scaleY = surfaceRect.height ? baseHeight / surfaceRect.height : 1 / getScale();
+
+    const x = jeState.mouseX = Math.floor((e.clientX - surfaceRect.left) * scaleX);
+    const y = jeState.mouseY = Math.floor((e.clientY - surfaceRect.top ) * scaleY);
 
     if(jeMouseButtonIsDown)
       return;
@@ -3148,7 +3154,7 @@ function jeInitEventListeners() {
 
     $('#jeWidgetLayer1').parentNode.scrollTop = $('#jeWidgetLayer1').offsetTop;
 
-    if((getRoomRectangle().left <= e.clientX && e.clientX <= getRoomRectangle().right && getRoomRectangle().top <= e.clientY && e.clientY <= getRoomRectangle().bottom)) {
+     if((surfaceRect.left <= e.clientX && e.clientX <= surfaceRect.right && surfaceRect.top <= e.clientY && e.clientY <= surfaceRect.bottom)) {
       $('#jeMouseCoords').innerHTML = "Cursor at " + jeState.mouseX + ", " + jeState.mouseY;
     } else {
       $('#jeMouseCoords').innerHTML = ""
