@@ -4,6 +4,9 @@ class GameSettingsModule extends SidebarModule {
   }
 
   addCheckbox(text, name, description, target) {
+    if(legacyMode(name) === undefined)
+      return;
+
     const tile = document.createElement('div');
     tile.className = 'settings-tile';
     tile.style.cssText = `

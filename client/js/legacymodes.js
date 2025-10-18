@@ -8,7 +8,7 @@ export function legacyMode(name, value) {
     currentGameSettings.legacyModes[name] = value;
     toServer('setGameSettings', currentGameSettings);
   }
-  return currentGameSettings.legacyModes[name] || false;
+  return currentGameSettings.legacyModes[name];
 }
 
 export function getEnabledLegacyModes() {
