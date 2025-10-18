@@ -1,6 +1,18 @@
 let zoomScale = 1;
 
-function setZoomLevel(zoomLevel) {
+onMessage('zoom', function({ level, panX, panY }) {
+  const numericLevel = Number(level);
+  const numericPanX = Number(panX);
+  const numericPanY = Number(panY);
+
+  if(!Number.isFinite(numericLevel) || !Number.isFinite(numericPanX) || !Number.isFinite(numericPanY))
+  return;
+
+  setZoomLevel(Math.max(1, Math.min(10, Math.round(numericLevel))));
+  setPan(numericPanX, numericPanY);
+});
+
+export function setZoomLevel(zoomLevel) {
   zoomScale = zoomLevel;
   
   $('#zoom2xButton .tooltip').textContent = `${zoomScale}x Zoom`;
@@ -17,7 +29,7 @@ function resetZoomAndPan() {
   $('body').classList.remove('panning');
 }
 
-function setPan(x, y) {
+export function setPan(x, y) {
   // Clamp pan to valid range
   const maxPanX = 1600 * scale * zoomScale - 1600 * scale;
   const maxPanY = 1000 * scale * zoomScale - 1000 * scale;
@@ -27,6 +39,10 @@ function setPan(x, y) {
   document.documentElement.style.setProperty('--roomPanX', clampedPanX + 'px');
   document.documentElement.style.setProperty('--roomPanY', clampedPanY + 'px');
   roomRectangle = $('#room').getBoundingClientRect();
+}
+
+export function getZoomScale() {
+  return zoomScale;
 }
 
 function elementIsMovableWidget(el) {

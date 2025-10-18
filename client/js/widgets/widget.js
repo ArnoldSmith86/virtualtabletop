@@ -2,10 +2,11 @@ import { $, removeFromDOM, asArray, escapeID, mapAssetURLs } from '../domhelpers
 import { StateManaged } from '../statemanaged.js';
 import { playerName, playerColor, activePlayers, activeColors, mouseCoords } from '../overlays/players.js';
 import { batchStart, batchEnd, widgetFilter, widgets } from '../serverstate.js';
-import { showOverlay, shuffleWidgets, sortWidgets } from '../main.js';
+import { showOverlay, shuffleWidgets, sortWidgets, scale } from '../main.js';
 import { tracingEnabled } from '../tracing.js';
 import { toHex } from '../color.js';
 import { center, distance, overlap, getOffset, getElementTransform, getScreenTransform, getPointOnPlane, dehomogenize, getElementTransformRelativeTo, getTransformOrigin } from '../geometry.js';
+import { setZoomLevel, setPan, getZoomScale } from '../zoom.js';
 
 const readOnlyProperties = new Set([
   '_absoluteRotation',
@@ -2089,6 +2090,51 @@ export class Widget extends StateManaged {
 
         if(jeRoutineLogging) {
           jeLoggingRoutineOperationSummary(`${Object.entries(a.variables||{}).map(e=>`${e[0]}=${JSON.stringify(e[1])}`).join(', ')}`);
+        }
+      }
+
+      if(a.func == 'ZOOM') {
+        setDefaults(a, { level: 1, panX: null, panY: null, player: variables.playerName });
+
+        const targets = asArray(a.player).filter(p=>p !== undefined && p !== null && p !== '');
+        const normalizedTargets = Array.from(new Set(targets.map(p=>`${p}`)));
+        const isTargetedPlayer = !normalizedTargets.length || !playerName || normalizedTargets.includes(playerName);
+
+        const numericLevel = Number(a.level);
+        if (!Number.isInteger(numericLevel) || numericLevel < 1 || numericLevel > 10) {
+          problems.push('ZOOM: level must be an integer between 1 and 10.');
+        } else {
+          const maxPanX = 1600 * scale * numericLevel - 1600 * scale;
+          const maxPanY = 1000 * scale * numericLevel - 1000 * scale;
+          const defaultPanX = -maxPanX / 2;
+          const defaultPanY = -maxPanY / 2;
+
+          const hasPanX = a.panX !== undefined && a.panX !== null;
+          const hasPanY = a.panY !== undefined && a.panY !== null;
+          const resolvedPanX = hasPanX ? Number(a.panX) : defaultPanX;
+          const resolvedPanY = hasPanY ? Number(a.panY) : defaultPanY;
+
+          if(!Number.isFinite(resolvedPanX) || !Number.isFinite(resolvedPanY)) {
+            problems.push('ZOOM: panX and panY must be numbers.');
+          } else {
+            toServer('zoom', {
+              level: numericLevel,
+              panX: resolvedPanX,
+              panY: resolvedPanY,
+              players: normalizedTargets,
+            });
+
+            const targetsLabel = normalizedTargets.length ? normalizedTargets.join(', ') : 'all players';
+
+            if(isTargetedPlayer) {
+              setZoomLevel(numericLevel);
+              setPan(resolvedPanX, resolvedPanY);
+              if(jeRoutineLogging)
+                jeLoggingRoutineOperationSummary(`level=${numericLevel}`, `pan=(${resolvedPanX},${resolvedPanY})`, `targets=${targetsLabel}`);
+            } else if(jeRoutineLogging) {
+              jeLoggingRoutineOperationSummary('Sent ZOOM to other players', `targets=${targetsLabel}`);
+            }
+          }
         }
       }
 
