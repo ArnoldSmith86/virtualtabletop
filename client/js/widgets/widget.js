@@ -6,7 +6,7 @@ import { showOverlay, shuffleWidgets, sortWidgets, scale } from '../main.js';
 import { tracingEnabled } from '../tracing.js';
 import { toHex } from '../color.js';
 import { center, distance, overlap, getOffset, getElementTransform, getScreenTransform, getPointOnPlane, dehomogenize, getElementTransformRelativeTo, getTransformOrigin } from '../geometry.js';
-import { setZoomLevel, setPan, getZoomScale } from '../zoom.js';
+import { setZoomLevel, setPan, } from '../zoom.js';
 
 const readOnlyProperties = new Set([
   '_absoluteRotation',
@@ -2104,23 +2104,50 @@ export class Widget extends StateManaged {
         if (!Number.isInteger(numericLevel) || numericLevel < 1 || numericLevel > 10) {
           problems.push('ZOOM: level must be an integer between 1 and 10.');
         } else {
-          const maxPanX = 1600 * scale * numericLevel - 1600 * scale;
-          const maxPanY = 1000 * scale * numericLevel - 1000 * scale;
-          const defaultPanX = -maxPanX / 2;
-          const defaultPanY = -maxPanY / 2;
+          const boardDimensions = { width: 1600, height: 1000 };
+          const pxPerUnit = scale;
+          const boardPx = {
+            width: boardDimensions.width * pxPerUnit,
+            height: boardDimensions.height * pxPerUnit,
+          };
+          const visibleUnits = {
+            width: boardDimensions.width / numericLevel,
+            height: boardDimensions.height / numericLevel,
+          };
+          const defaultUnits = {
+            left: (boardDimensions.width - visibleUnits.width) / 2,
+            top: (boardDimensions.height - visibleUnits.height) / 2,
+          };
 
-          const hasPanX = a.panX !== undefined && a.panX !== null;
-          const hasPanY = a.panY !== undefined && a.panY !== null;
-          const resolvedPanX = hasPanX ? Number(a.panX) : defaultPanX;
-          const resolvedPanY = hasPanY ? Number(a.panY) : defaultPanY;
+          const targetUnits = {
+            left: a.panX !== undefined && a.panX !== null ? Number(a.panX) : defaultUnits.left,
+            top: a.panY !== undefined && a.panY !== null ? Number(a.panY) : defaultUnits.top,
+          };
 
-          if(!Number.isFinite(resolvedPanX) || !Number.isFinite(resolvedPanY)) {
+          if (!Number.isFinite(targetUnits.left) || !Number.isFinite(targetUnits.top)) {
             problems.push('ZOOM: panX and panY must be numbers.');
           } else {
+            const maxPanPx = {
+              x: boardPx.width * numericLevel - boardPx.width,
+              y: boardPx.height * numericLevel - boardPx.height,
+            };
+            const maxUnits = {
+              left: boardDimensions.width - visibleUnits.width,
+              top: boardDimensions.height - visibleUnits.height,
+            };
+            const clampedUnits = {
+              left: Math.max(0, Math.min(maxUnits.left, targetUnits.left)),
+              top: Math.max(0, Math.min(maxUnits.top, targetUnits.top)),
+            };
+            const resolvedPan = {
+              x: Math.max(-maxPanPx.x, Math.min(0, -clampedUnits.left * pxPerUnit * numericLevel)),
+              y: Math.max(-maxPanPx.y, Math.min(0, -clampedUnits.top * pxPerUnit * numericLevel)),
+            };
+
             toServer('zoom', {
               level: numericLevel,
-              panX: resolvedPanX,
-              panY: resolvedPanY,
+              panX: resolvedPan.x,
+              panY: resolvedPan.y,
               players: normalizedTargets,
             });
 
@@ -2128,9 +2155,14 @@ export class Widget extends StateManaged {
 
             if(isTargetedPlayer) {
               setZoomLevel(numericLevel);
-              setPan(resolvedPanX, resolvedPanY);
+              setPan(resolvedPan.x, resolvedPan.y);
               if(jeRoutineLogging)
-                jeLoggingRoutineOperationSummary(`level=${numericLevel}`, `pan=(${resolvedPanX},${resolvedPanY})`, `targets=${targetsLabel}`);
+                jeLoggingRoutineOperationSummary(
+                  `level=${numericLevel}`,
+                  `topLeft=(${clampedUnits.left.toFixed(2)},${clampedUnits.top.toFixed(2)})`,
+                  `pan=(${resolvedPan.x},${resolvedPan.y})`,
+                  `targets=${targetsLabel}`
+                );
             } else if(jeRoutineLogging) {
               jeLoggingRoutineOperationSummary('Sent ZOOM to other players', `targets=${targetsLabel}`);
             }

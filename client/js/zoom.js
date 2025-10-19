@@ -6,7 +6,7 @@ onMessage('zoom', function({ level, panX, panY }) {
   const numericPanY = Number(panY);
 
   if(!Number.isFinite(numericLevel) || !Number.isFinite(numericPanX) || !Number.isFinite(numericPanY))
-  return;
+    return;
 
   setZoomLevel(Math.max(1, Math.min(10, Math.round(numericLevel))));
   setPan(numericPanX, numericPanY);
