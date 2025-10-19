@@ -83,6 +83,7 @@ export class Widget extends StateManaged {
       hoverInheritVisibleForSeat: true,
 
       clickRoutine: null,
+      doubleClickRoutine: null,
       changeRoutine: null,
       enterRoutine: null,
       leaveRoutine: null,
@@ -100,6 +101,7 @@ export class Widget extends StateManaged {
     this.domElement.addEventListener('mouseleave',  e => this.hideEnlarged(e), false);
     this.domElement.addEventListener("touchstart", e => this.touchstart(), false);
     this.domElement.addEventListener("touchend", e => this.touchend(), false);
+    this.domElement.addEventListener('dblclick', e => this.doubleClick(), false);
 
     this.touchstart = function() {
       if (!this.timer) {
@@ -122,6 +124,7 @@ export class Widget extends StateManaged {
 
     this.animateTimeouts = {};
     this.animateClasses = new Set;
+    this.clickTimeout = null;
   }
 
   absoluteCoord(coord) {
@@ -454,13 +457,30 @@ export class Widget extends StateManaged {
     return [ 'classes', 'display', 'dragging', 'dropShadowOwner', 'hoverTarget', 'linkedToSeat', 'onlyVisibleForSeat', 'owner', 'typeClasses', 'movable', 'enlarge', 'clickable' ];
   }
 
-  async click(mode='respect') {
+  click = async (mode='respect') => {
+    if (this.get('doubleClickRoutine')) {
+      if (this.clickTimeout) {
+        // This is (part of) a double click, so do nothing, let doubleClick handle it.
+        return;
+      }
+      this.clickTimeout = setTimeout(async () => {
+        this.clickTimeout = null;
+        // The timeout fired, so it's a single click.
+        await this.executeClick(mode);
+      }, 200);
+    } else {
+      // No double click routine, so just execute the click immediately.
+      await this.executeClick(mode);
+    }
+  }
+
+  executeClick = async (mode='respect') => {
     if(tracingEnabled)
       sendTraceEvent('click', { id: this.get('id'), mode });
 
     if(!this.get('clickable') && !(mode == 'ignoreClickable' || mode =='ignoreAll'))
       return true;
-    
+
     if(this.get('clickSound')) {
       toServer('audio', {
         audioSource: this.get('clickSound'),
@@ -473,6 +493,26 @@ export class Widget extends StateManaged {
 
     if(Array.isArray(this.get('clickRoutine')) && !(mode == 'ignoreClickRoutine' || mode =='ignoreAll')) {
       await this.evaluateRoutine('clickRoutine', {}, {});
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  doubleClick = async (mode='respect') => {
+    if (this.clickTimeout) {
+      clearTimeout(this.clickTimeout);
+      this.clickTimeout = null;
+    }
+
+    if(tracingEnabled)
+      sendTraceEvent('doubleClick', { id: this.get('id'), mode });
+
+    if(!this.get('clickable') && !(mode == 'ignoreClickable' || mode =='ignoreAll'))
+      return true;
+
+    if(Array.isArray(this.get('doubleClickRoutine')) && !(mode == 'ignoreDoubleClickRoutine' || mode =='ignoreAll')) {
+      await this.evaluateRoutine('doubleClickRoutine', {}, {});
       return true;
     } else {
       return false;
