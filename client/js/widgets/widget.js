@@ -667,9 +667,7 @@ export class Widget extends StateManaged {
     let y = this.get('y');
     let scaleValue = this.get('scale');
 
-    const ignoreZoomEnabled = globalThis.ignoreZoomCompensationEnabled !== false;
-
-    if(this.get('ignoreZoom') && ignoreZoomEnabled) {
+    if(this.get('ignoreZoom')) {
       const computedStyle = getComputedStyle(document.documentElement);
       const zoom = parseFloat(computedStyle.getPropertyValue('--zoom')) || 1;
       const baseScale = parseFloat(computedStyle.getPropertyValue('--scale')) || 1;

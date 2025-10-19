@@ -1,8 +1,5 @@
 let zoomScale = 1;
 
-if(globalThis.ignoreZoomCompensationEnabled === undefined)
-  globalThis.ignoreZoomCompensationEnabled = true;
-
 function setZoomLevel(zoomLevel) {
   zoomScale = zoomLevel;
   
@@ -88,8 +85,6 @@ onLoad(function() {
 
   // Button click cycles through zoom levels (only main levels)
   on('#zoom2xButton', 'click', function(e){
-    globalThis.ignoreZoomCompensationEnabled = false;
-
     const mainZoomLevels = [1, 1.5, 2];
     const currentIndex = mainZoomLevels.indexOf(zoomScale);
     const nextIndex = (currentIndex + 1) % mainZoomLevels.length;
@@ -116,8 +111,6 @@ onLoad(function() {
     lastWheelZoomTime = now;
 
     const delta = e.deltaY > 0 ? 0.85 : 1.15;
-    globalThis.ignoreZoomCompensationEnabled = true;
-
     const newZoomLevel = Math.max(1, Math.min(10, Math.round(zoomScale * delta * 10) / 10));
     setZoomAroundPoint(newZoomLevel, e.clientX, e.clientY);
   });
@@ -126,8 +119,6 @@ onLoad(function() {
   on('body', 'keydown', function(e){
     if(!overlayActive && !edit && (e.key === 'PageUp' || e.key === 'PageDown')) {
       e.preventDefault();
-      globalThis.ignoreZoomCompensationEnabled = true;
-
       const currentIndex = zoomLevels.indexOf(zoomScale);
       const newIndex = e.key === 'PageUp' ? Math.min(zoomLevels.length - 1, currentIndex + 1) : Math.max(0, currentIndex - 1);
       setZoomAroundCenter(zoomLevels[newIndex]);
@@ -154,8 +145,7 @@ onLoad(function() {
     e.preventDefault();
     e.stopPropagation();
     if(e.stopImmediatePropagation) e.stopImmediatePropagation();
-    globalThis.ignoreZoomCompensationEnabled = true;
-    
+
     setZoomAroundPoint(zoomScale === 1 ? 2 : 1, e.clientX, e.clientY);
   });
 
@@ -235,7 +225,6 @@ onLoad(function() {
       const dist = Math.hypot((e.touches[0].clientX - e.touches[1].clientX), (e.touches[0].clientY - e.touches[1].clientY));
       if(touchState.startDist <= 0)
         return;
-      globalThis.ignoreZoomCompensationEnabled = true;
       setZoomAroundPoint(Math.max(1, Math.min(10, Math.round((touchState.startZoom * (dist / touchState.startDist)) * 10) / 10)), (e.touches[0].clientX + e.touches[1].clientX)/2, (e.touches[0].clientY + e.touches[1].clientY)/2);
     }
   });
