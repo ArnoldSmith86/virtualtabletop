@@ -101,7 +101,6 @@ export class Widget extends StateManaged {
     this.domElement.addEventListener('mouseleave',  e => this.hideEnlarged(e), false);
     this.domElement.addEventListener("touchstart", e => this.touchstart(), false);
     this.domElement.addEventListener("touchend", e => this.touchend(), false);
-    this.domElement.addEventListener('dblclick', e => this.doubleClick(), false);
 
     this.touchstart = function() {
       if (!this.timer) {
@@ -125,6 +124,7 @@ export class Widget extends StateManaged {
     this.animateTimeouts = {};
     this.animateClasses = new Set;
     this.clickTimeout = null;
+    this.clickPromiseResolve = null;
   }
 
   absoluteCoord(coord) {
@@ -457,24 +457,38 @@ export class Widget extends StateManaged {
     return [ 'classes', 'display', 'dragging', 'dropShadowOwner', 'hoverTarget', 'linkedToSeat', 'onlyVisibleForSeat', 'owner', 'typeClasses', 'movable', 'enlarge', 'clickable' ];
   }
 
-  click = async (mode='respect') => {
-    if (this.get('doubleClickRoutine')) {
-      if (this.clickTimeout) {
-        // This is (part of) a double click, so do nothing, let doubleClick handle it.
-        return;
+  async click(mode='respect') {
+    if (!this.get('doubleClickRoutine')) {
+      return this.executeClick(mode);
+    }
+
+    if (this.clickTimeout) { // Double click
+      clearTimeout(this.clickTimeout);
+      this.clickTimeout = null;
+
+      if (this.clickPromiseResolve) {
+        this.clickPromiseResolve(true); // Resolve first promise to prevent its action
+        this.clickPromiseResolve = null;
       }
+      
+      return await this.doubleClick(mode);
+    }
+
+    // First click
+    return new Promise(resolve => {
+      this.clickPromiseResolve = resolve;
       this.clickTimeout = setTimeout(async () => {
         this.clickTimeout = null;
-        // The timeout fired, so it's a single click.
-        await this.executeClick(mode);
+        const result = await this.executeClick(mode);
+        if (this.clickPromiseResolve) {
+          this.clickPromiseResolve(result);
+          this.clickPromiseResolve = null;
+        }
       }, 200);
-    } else {
-      // No double click routine, so just execute the click immediately.
-      await this.executeClick(mode);
-    }
+    });
   }
 
-  executeClick = async (mode='respect') => {
+  async executeClick(mode='respect') {
     if(tracingEnabled)
       sendTraceEvent('click', { id: this.get('id'), mode });
 
@@ -499,12 +513,7 @@ export class Widget extends StateManaged {
     }
   }
 
-  doubleClick = async (mode='respect') => {
-    if (this.clickTimeout) {
-      clearTimeout(this.clickTimeout);
-      this.clickTimeout = null;
-    }
-
+  async doubleClick(mode='respect') {
     if(tracingEnabled)
       sendTraceEvent('doubleClick', { id: this.get('id'), mode });
 
