@@ -1,7 +1,7 @@
 import { $, removeFromDOM, asArray, escapeID, mapAssetURLs } from '../domhelpers.js';
 import { StateManaged } from '../statemanaged.js';
 import { playerName, playerColor, activePlayers, activeColors, mouseCoords } from '../overlays/players.js';
-import { batchStart, batchEnd, widgetFilter, widgets } from '../serverstate.js';
+import { batchStart, batchEnd, widgetFilter, widgets, flushDelta } from '../serverstate.js';
 import { showOverlay, shuffleWidgets, sortWidgets } from '../main.js';
 import { tracingEnabled } from '../tracing.js';
 import { toHex } from '../color.js';
@@ -1943,6 +1943,12 @@ export class Widget extends StateManaged {
           jeLoggingRoutineOperationEnd([], variables, collections, false);
           }
         }
+      }
+
+      if(a.func == 'UPDATE') {
+        setDefaults(a, { wait: 0 });
+        flushDelta();
+        await new Promise(resolve => setTimeout(resolve, a.wait));
       }
 
       if(a.func == 'TIMER') {

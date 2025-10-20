@@ -288,6 +288,13 @@ export function batchEnd() {
   sendDelta();
 }
 
+export function flushDelta() {
+  const currentBatchDepth = batchDepth;
+  batchDepth = 0;
+  sendDelta();
+  batchDepth = currentBatchDepth;
+}
+
 function setDeltaCause(cause) {
   if(!delta.c)
     delta.c = cause;
