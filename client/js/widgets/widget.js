@@ -1214,6 +1214,12 @@ export class Widget extends StateManaged {
 
       }
 
+      if(a.func == 'DELAY') {
+        setDefaults(a, { time: 0 });
+        flushDelta();
+        await new Promise(resolve => setTimeout(resolve, a.time));
+      }
+
       if(a.func == 'DELETE') {
         setDefaults(a, { collection: 'DEFAULT' });
         const collection = getCollection(a.collection);
@@ -1943,12 +1949,6 @@ export class Widget extends StateManaged {
           jeLoggingRoutineOperationEnd([], variables, collections, false);
           }
         }
-      }
-
-      if(a.func == 'DELAY') {
-        setDefaults(a, { time: 0 });
-        flushDelta();
-        await new Promise(resolve => setTimeout(resolve, a.time));
       }
 
       if(a.func == 'TIMER') {
