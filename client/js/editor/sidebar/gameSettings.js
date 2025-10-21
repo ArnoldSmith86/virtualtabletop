@@ -55,21 +55,62 @@ class GameSettingsModule extends SidebarModule {
 
     tile.append(desc);
 
+    const removeSection = document.createElement('div');
+    removeSection.style.cssText = `
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px solid var(--modalBorderColor);
+    `;
+    removeSection.style.display = checkbox.checked ? 'none' : 'block';
+
+    const removeText = document.createElement('div');
+    removeText.textContent = 'Once you\'ve confirmed your game works correctly, remove this setting to reduce clutter:';
+    removeText.style.cssText = `
+      font-size: 0.85em;
+      margin-bottom: 8px;
+      color: var(--textColor);
+      opacity: 0.8;
+    `;
+
+    const removeButton = document.createElement('button');
+    removeButton.setAttribute('icon', 'delete');
+    removeButton.className = 'red';
+    removeButton.textContent = 'Remove';
+
+    removeSection.append(removeText, removeButton);
+    tile.append(removeSection);
+
     const handleToggle = (e) => {
       if (e.target.tagName === 'A') return;
       const newState = !checkbox.checked;
       legacyMode(name, newState);
       checkbox.checked = newState;
       tile.style.background = newState ? 'var(--backgroundHighlightColor1)' : 'var(--backgroundColor)';
+      removeSection.style.display = newState ? 'none' : 'block';
+    };
+
+    const handleRemove = (e) => {
+      e.stopPropagation();
+      this.removeLegacyMode(name);
     };
 
     tile.addEventListener('click', handleToggle);
     checkbox.addEventListener('change', handleToggle);
+    removeButton.addEventListener('click', handleRemove);
 
     // Set initial state
     tile.style.background = checkbox.checked ? 'var(--backgroundHighlightColor1)' : 'var(--backgroundColor)';
 
     target.append(tile);
+  }
+
+  removeLegacyMode(name) {
+    const gameSettings = getCurrentGameSettings();
+    if (gameSettings && gameSettings.legacyModes) {
+      delete gameSettings.legacyModes[name];
+      toServer('setGameSettings', gameSettings);
+      this.renderModule(this.moduleDOM);
+    }
   }
 
   onMetaReceived(meta) {

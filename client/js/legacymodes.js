@@ -17,6 +17,10 @@ export function getEnabledLegacyModes() {
     .map(([name]) => name);
 }
 
+export function getCurrentGameSettings() {
+  return currentGameSettings;
+}
+
 onLoad(function() {
   onMessage('state', args=>{
     currentGameSettings = args._meta.gameSettings || {};
