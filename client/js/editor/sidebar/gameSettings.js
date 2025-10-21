@@ -91,7 +91,9 @@ class GameSettingsModule extends SidebarModule {
 
     const handleRemove = (e) => {
       e.stopPropagation();
-      this.removeLegacyMode(name);
+      const confirmMessage = `This can't be undone.\n\nOnly do this if you've confirmed your game works correctly without this setting.`;
+      if(confirm(confirmMessage))
+        this.removeLegacyMode(name);
     };
 
     tile.addEventListener('click', handleToggle);
