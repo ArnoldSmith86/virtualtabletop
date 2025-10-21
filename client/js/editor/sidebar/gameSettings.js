@@ -78,6 +78,7 @@ class GameSettingsModule extends SidebarModule {
 
   onStateReceived(state) {
     this.updateBadge();
+    super.onStateReceived(state);
   }
 
   onMetaReceivedWhileActive(meta) {
