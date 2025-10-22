@@ -122,7 +122,7 @@ async function inputHandler(name, e) {
               setDeltaCause(`${playerName} clicked ${widget.id}`);
               await widget.click();
               batchEnd();
-            }, 200);
+            }, 350);
           }
         } else
           widget.domElement.classList.remove('longtouch');
