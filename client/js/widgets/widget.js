@@ -670,11 +670,12 @@ export class Widget extends StateManaged {
     if(this.get('ignoreZoom')) {
       const computedStyle = getComputedStyle(document.documentElement);
       const zoom = parseFloat(computedStyle.getPropertyValue('--zoom')) || 1;
-      const baseScale = parseFloat(computedStyle.getPropertyValue('--scale')) || 1;
-      const panX = parseFloat(computedStyle.getPropertyValue('--roomPanX')) || 0;
-      const panY = parseFloat(computedStyle.getPropertyValue('--roomPanY')) || 0;
 
-      if(zoom && baseScale) {
+      if(zoom > 1) {
+        const baseScale = parseFloat(computedStyle.getPropertyValue('--scale')) || 1;
+        const panX = parseFloat(computedStyle.getPropertyValue('--roomPanX')) || 0;
+        const panY = parseFloat(computedStyle.getPropertyValue('--roomPanY')) || 0;
+
         const transformOrigin = getTransformOrigin(this.domElement);
         const zoomCompensation = 1 - 1 / zoom;
 
