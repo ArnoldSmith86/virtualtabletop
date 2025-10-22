@@ -8,6 +8,6 @@ export default {
   coverageProvider: "v8",
   projects: ["<rootDir>/client"],
   setupFilesAfterEnv: ['<rootDir>/tests/client/setup.js'],
-  testEnvironment: "jest-environment-jsdom-global",
+  testEnvironment: "jsdom",
   verbose: true
 };
