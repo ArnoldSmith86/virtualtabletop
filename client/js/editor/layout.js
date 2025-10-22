@@ -70,7 +70,8 @@ function initializeEditor(currentMetaData) {
     new TreeModule(),
     new DebugModule(),
     new AssetsModule(),
-    new ToolboxModule()
+    new ToolboxModule(),
+    new GameSettingsModule()
   ]);
 
   onMessage('meta', metaReceived);
