@@ -228,8 +228,7 @@ function setScale() {
   roomRectangle = $('#roomArea').getBoundingClientRect();
   if(edit)
     scaleHasChanged(scale);
-  if(globalThis.refreshIgnoreZoomWidgets)
-    globalThis.refreshIgnoreZoomWidgets();
+  refreshIgnoreZoomWidgets();
 }
 
 function getScale() {

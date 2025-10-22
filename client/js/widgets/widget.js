@@ -2908,13 +2908,3 @@ export class Widget extends StateManaged {
     return getValidDropTargets(this);
   }
 }
-
-export function refreshIgnoreZoomWidgets() {
-  for(const widget of widgetFilter(w => w.get('ignoreZoom'))) {
-    const transform = widget.cssTransform();
-    widget.targetTransform = transform;
-    widget.domElement.style.transform = transform;
-  }
-}
-
-globalThis.refreshIgnoreZoomWidgets = refreshIgnoreZoomWidgets;

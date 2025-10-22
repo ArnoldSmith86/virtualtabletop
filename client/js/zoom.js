@@ -14,8 +14,7 @@ function setZoomLevel(zoomLevel) {
   $('body').classList.toggle('zoom2x', zoomScale > 1);
   document.documentElement.style.setProperty('--zoom', zoomScale);
   roomRectangle = $('#room').getBoundingClientRect();
-  if(globalThis.refreshIgnoreZoomWidgets)
-    globalThis.refreshIgnoreZoomWidgets();
+  refreshIgnoreZoomWidgets();
 }
 
 function resetZoomAndPan() {
@@ -34,8 +33,7 @@ function setPan(x, y) {
   document.documentElement.style.setProperty('--roomPanX', clampedPanX + 'px');
   document.documentElement.style.setProperty('--roomPanY', clampedPanY + 'px');
   roomRectangle = $('#room').getBoundingClientRect();
-  if(globalThis.refreshIgnoreZoomWidgets)
-    globalThis.refreshIgnoreZoomWidgets();
+  refreshIgnoreZoomWidgets();
 }
 
 function elementIsMovableWidget(el) {
@@ -75,6 +73,11 @@ function setZoomAroundCenter(newZoomLevel) {
   const centerX = roomAreaRect.left + roomAreaRect.width / 2;
   const centerY = roomAreaRect.top + roomAreaRect.height / 2;
   setZoomAroundPoint(newZoomLevel, centerX, centerY);
+}
+
+function refreshIgnoreZoomWidgets() {
+  for(const widget of widgetFilter(w => w.get('ignoreZoom')))
+    widget.applyCSS({ ignoreZoom: true });
 }
 
 onLoad(function() {
