@@ -40,8 +40,14 @@ export async function setRoomState(state) {
   });
 }
 
+export async function setLegacyMode(name, value) {
+  await fetch(`${server}/setLegacyMode/testcafe-testing/${name}/${value === true ? 'true' : 'false'}`, {
+    method: 'PUT'
+  });
+}
+
 export async function getState() {
-  const response = await fetch(`${server}/state/testcafe-testing`);
+  const response = await fetch(`${server}/state/testcafe-testing/false`);
   return await response.text();
 }
 

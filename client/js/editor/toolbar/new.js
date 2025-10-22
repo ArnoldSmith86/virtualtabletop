@@ -7,7 +7,7 @@ class NewButton extends ToolbarButton {
     fetch(location.href.replace(/\/[^\/]+$/, a=>`/state${a}`), {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
-      body: '{}'
+      body: '{ "_meta": { "gameSettings": { "legacyModes": { } } } }'
     })
   }
 }
