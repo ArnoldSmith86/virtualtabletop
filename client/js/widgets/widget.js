@@ -123,8 +123,6 @@ export class Widget extends StateManaged {
 
     this.animateTimeouts = {};
     this.animateClasses = new Set;
-    this.clickTimeout = null;
-    this.clickPromiseResolve = null;
   }
 
   absoluteCoord(coord) {
