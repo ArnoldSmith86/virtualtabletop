@@ -11,7 +11,13 @@
     "y": 1
   },
   "_meta": {
-    "version": 13,
+    "version": 18,
+    "gameSettings": {
+      "legacyModes": {
+        "convertNumericVarParametersToNumbers": false,
+        "useOneAsDefaultForVarParameters": false
+      }
+    },
     "info": {
       "name": "Operations - Math",
       "image": "/assets/-762540666_7187",
@@ -44,7 +50,7 @@
     "z": 37,
     "height": 50,
     "css": "font-size: 20px; ",
-    "text": "The basic math functions are performed through dynamic expressions. For example, \"var answer = ${num1} + 7\" will add 7 to the value in the variable 'num1' and put the result in variable 'answer'. These operations work only with numbers, except for addition (which will concatenate strings). For any of the other functions, if the operands contain a string, the result is 0.\n\nTo perform more complicated math using these operations, each of these operands (except for %) can be combined in a nested expression. To see an example of this, look at the JSON in and click on the Nested button below. The value on the left below is 'a' and the one on the right is 'b'. The Nested button implements the following expression: output = ((a + b) / (a - b)) * 2.\n\nThe basic math operations are demonstrated below.  Put the first operand in the first white text box and the second in the other.  Then press a math operation button to see the result.",
+    "text": "The basic math functions are performed through dynamic expressions. For example, \"var answer = ${num1} + 7\" will add 7 to the value in the variable 'num1' and put the result in variable 'answer'. These operations will convert strings to numbers. So \"71\" + \"21\" = 92. If you want to combine those to get 7121 then use 'concat'. \n\nTo perform more complicated math using these operations, each of these operands (except for %) can be combined in a nested expression. To see an example of this, look at the JSON in and click on the Nested button below. The value on the left below is 'a' and the one on the right is 'b'. The Nested button implements the following expression: output = ((a + b) / (a - b)) * 2.\n\nThe basic math operations are demonstrated below.  Put the first operand in the first white text box and the second in the other.  Then press a math operation button to see the result.",
     "width": 1400
   },
   "lr6y": {
