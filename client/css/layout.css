@@ -689,7 +689,7 @@ body.aspectTooGood.hiddenToolbar {
 
     #lockZoomButton::before {
       font-family: "Material Symbols" !important;
-      content: 'lock_open';
+      content: 'lock_open_right';
     }
 
     #lockZoomButton.locked::before {
