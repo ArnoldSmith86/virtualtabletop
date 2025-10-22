@@ -1,0 +1,6094 @@
+{
+  "seat1": {
+    "type": "seat",
+    "id": "seat1",
+    "y": 300,
+    "changeRoutine": [
+      {
+        "func": "SET",
+        "property": "text",
+        "value": "Offer ${PROPERTY player}",
+        "collection": [
+          "b${PROPERTY index}"
+        ]
+      }
+    ],
+    "z": 22,
+    "x": 263,
+    "colorEmpty": "#ffe119",
+    "css": {
+      "default": {
+        "color": "#000000"
+      },
+      ".seated": {
+        "background": "${PROPERTY color}",
+        "border": "5px solid #000000"
+      },
+      ".seated.turn": {
+        "border": "5px dotted #000000"
+      }
+    },
+    "mainColor": "#dddddd",
+    "textColor": "#000000",
+    "clickRoutine": [
+      "var LeaveSeat = false",
+      "var name = ${PROPERTY player}",
+      "var color = ${PROPERTY color}",
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY player}",
+        "relation": "==",
+        "operand2": "",
+        "thenRoutine": [
+          {
+            "func": "INPUT",
+            "header": "Enter your name.",
+            "fields": [
+              {
+                "type": "string",
+                "label": "Your Name:",
+                "variable": "name",
+                "value": "${playerName}"
+              },
+              {
+                "type": "palette",
+                "label": "Color",
+                "colors": [
+                  "#ffffff",
+                  "#f44336",
+                  "#f06292",
+                  "#9c27b0",
+                  "#3f51b5",
+                  "#1976d2",
+                  "#00bcd4",
+                  "#009688",
+                  "#4caf50",
+                  "#8bc34a",
+                  "#cddc39",
+                  "#ffeb3b",
+                  "#ffc107",
+                  "#ff9800",
+                  "#bf360c",
+                  "#795548",
+                  "#607d8b"
+                ],
+                "variable": "playerColor",
+                "value": "${playerColor}"
+              },
+              {
+                "type": "checkbox",
+                "label": "Play a sound when it's my turn",
+                "variable": "PlaySound",
+                "value": "${PROPERTY notificationSound}"
+              },
+              {
+                "type": "checkbox",
+                "label": "Show a popup when it's my turn",
+                "variable": "ShowPopup",
+                "value": "${PROPERTY notificationPopup}"
+              }
+            ]
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "IF",
+            "operand1": "${PROPERTY player}",
+            "relation": "==",
+            "operand2": "${playerName}",
+            "thenRoutine": [
+              {
+                "func": "INPUT",
+                "header": "Enter your name.",
+                "fields": [
+                  {
+                    "type": "string",
+                    "label": "Your Name:",
+                    "variable": "name",
+                    "value": "${playerName}"
+                  },
+                  {
+                    "type": "palette",
+                    "label": "Color",
+                    "colors": [
+                      "#ffffff",
+                      "#f44336",
+                      "#f06292",
+                      "#9c27b0",
+                      "#3f51b5",
+                      "#1976d2",
+                      "#00bcd4",
+                      "#009688",
+                      "#4caf50",
+                      "#8bc34a",
+                      "#cddc39",
+                      "#ffeb3b",
+                      "#ffc107",
+                      "#ff9800",
+                      "#bf360c",
+                      "#795548",
+                      "#607d8b"
+                    ],
+                    "variable": "playerColor",
+                    "value": "${playerColor}"
+                  },
+                  {
+                    "type": "checkbox",
+                    "label": "Play a sound when it's my turn",
+                    "variable": "PlaySound",
+                    "value": "${PROPERTY notificationSound}"
+                  },
+                  {
+                    "type": "checkbox",
+                    "label": "Show a popup when it's my turn",
+                    "variable": "ShowPopup",
+                    "value": "${PROPERTY notificationPopup}"
+                  },
+                  {
+                    "type": "subtitle",
+                    "text": "All done?",
+                    "css": "background-color: var(--VTTblue);color:white;"
+                  },
+                  {
+                    "type": "checkbox",
+                    "label": "Stand up from seat",
+                    "variable": "LeaveSeat",
+                    "value": false
+                  }
+                ]
+              }
+            ],
+            "elseRoutine": [
+              {
+                "func": "INPUT",
+                "header": "Are you sure you want to remove ${PROPERTY player} from this seat?",
+                "cancelButtonText": "Cancel",
+                "confirmButtonText": "Okay",
+                "fields": [
+                  {
+                    "type": "checkbox",
+                    "label": "Remove this player from their seat",
+                    "variable": "LeaveSeat",
+                    "value": false
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "condition": "${LeaveSeat}",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "color",
+            "value": null
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "player",
+            "value": ""
+          }
+        ],
+        "elseRoutine": [
+          "var updatePlayerandColor = false",
+          {
+            "func": "IF",
+            "operand1": "${PROPERTY player}",
+            "relation": "==",
+            "operand2": "${playerName}",
+            "thenRoutine": [
+              "var updatePlayerandColor = true"
+            ]
+          },
+          {
+            "func": "IF",
+            "operand1": "${PROPERTY player}",
+            "relation": "==",
+            "operand2": "",
+            "thenRoutine": [
+              "var updatePlayerandColor = true"
+            ]
+          },
+          {
+            "func": "IF",
+            "condition": "${name}",
+            "elseRoutine": [
+              "var updatePlayerandColor = false"
+            ]
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "notificationSound",
+            "value": "${PlaySound}"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "notificationPopup",
+            "value": "${ShowPopup}"
+          },
+          {
+            "func": "IF",
+            "condition": "${updatePlayerandColor}",
+            "thenRoutine": [
+              {
+                "func": "SET",
+                "collection": "thisButton",
+                "property": "color",
+                "value": "${playerColor}"
+              },
+              {
+                "func": "SET",
+                "collection": "thisButton",
+                "property": "player",
+                "value": "${name}"
+              },
+              "var playerName = ${name}",
+              {
+                "func": "SET",
+                "collection": "thisButton",
+                "property": "mainColor",
+                "value": "${playerColor}"
+              },
+              "var newText = colorContrast ${PROPERTY mainColor}",
+              "var newGlow = colorContrast ${PROPERTY mainColor} 0.3",
+              {
+                "func": "SET",
+                "collection": "thisButton",
+                "property": "textColor",
+                "value": "${newText}"
+              },
+              {
+                "func": "SET",
+                "collection": "thisButton",
+                "property": "glowColor",
+                "value": "${newGlow}"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY player}",
+        "relation": "==",
+        "operand2": "",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "mainColor",
+            "value": "#dddddd"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "textColor",
+            "value": "#000000"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "glowColor",
+            "value": null
+          }
+        ],
+        "elseRoutine": []
+      }
+    ],
+    "notifyPlayerRoutine": [
+      {
+        "func": "IF",
+        "condition": "${PROPERTY notificationPopup}",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "YourTurnPopup"
+            ],
+            "property": "onlyVisibleForSeat",
+            "value": "${PROPERTY id}"
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "condition": "${PROPERTY notificationSound}",
+        "thenRoutine": [
+          {
+            "func": "AUDIO",
+            "source": "/assets/99174140_16753",
+            "volume": 1,
+            "player": "${PROPERTY player}"
+          }
+        ]
+      },
+      {
+        "func": "SET",
+        "property": "turn",
+        "value": true,
+        "collection": [
+          "${PROPERTY id}"
+        ]
+      }
+    ],
+    "turnChangeRoutine": [
+      {
+        "func": "IF",
+        "condition": "${PROPERTY turn}",
+        "thenRoutine": [
+          {
+            "func": "CALL",
+            "routine": "notifyPlayerRoutine"
+          }
+        ]
+      }
+    ],
+    "hideWhenUnused": true
+  },
+  "seat2": {
+    "type": "seat",
+    "id": "seat2",
+    "x": 1429,
+    "y": 304,
+    "index": 2,
+    "inheritFrom": {
+      "seat1": [
+        "!player",
+        "!color"
+      ]
+    },
+    "player": "",
+    "turn": true,
+    "notificationPopup": true,
+    "notificationSound": true,
+    "textColor": "#000000",
+    "hideWhenUnused": true,
+    "z": 24,
+    "mainColor": "#dddddd"
+  },
+  "seat3": {
+    "type": "seat",
+    "id": "seat3",
+    "x": 1429,
+    "y": 900,
+    "index": 3,
+    "inheritFrom": {
+      "seat1": [
+        "!player",
+        "!color"
+      ]
+    },
+    "player": "",
+    "turn": false,
+    "textColor": "#000000",
+    "hideWhenUnused": true,
+    "z": 20,
+    "mainColor": "#dddddd",
+    "notificationSound": true,
+    "notificationPopup": true
+  },
+  "b1": {
+    "type": "button",
+    "id": "b1",
+    "x": 96,
+    "y": 306,
+    "z": 21,
+    "text": "Offer ",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "player",
+        "value": "${playerName}"
+      },
+      {
+        "func": "GET",
+        "property": "id"
+      },
+      {
+        "func": "SELECT",
+        "property": "type",
+        "value": "holder"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "linkedToSeat",
+        "value": "${id}"
+      },
+      {
+        "func": "GET",
+        "property": "id"
+      },
+      "var holderid = ${id}",
+      "var x = 1",
+      {
+        "func": "FOREACH",
+        "range": 5,
+        "loopRoutine": [
+          {
+            "func": "SELECT",
+            "property": "id",
+            "value": "t${x}"
+          },
+          {
+            "func": "SET",
+            "property": "holderid",
+            "value": "${holderid}"
+          },
+          "var x = ${x} + 1"
+        ]
+      },
+      {
+        "func": "INPUT",
+        "fields": [
+          {
+            "type": "choose",
+            "min": 1,
+            "max": 1,
+            "holder": "h1",
+            "variable": "thing"
+          },
+          {
+            "type": "number",
+            "variable": "number",
+            "min": 1
+          }
+        ]
+      },
+      {
+        "func": "GET",
+        "property": "color"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "t1"
+      },
+      {
+        "func": "SET",
+        "property": "bgColor",
+        "value": "${color}"
+      },
+      {
+        "func": "SET",
+        "property": "text",
+        "value": "${number}"
+      },
+      "var x = 1",
+      {
+        "func": "FOREACH",
+        "range": 5,
+        "loopRoutine": [
+          {
+            "func": "SELECT",
+            "property": "id",
+            "value": "t${x}"
+          },
+          {
+            "func": "SET",
+            "property": "bid",
+            "value": "${number}"
+          },
+          {
+            "func": "SET",
+            "property": "thing",
+            "value": "${thing}"
+          },
+          "var x = ${x} + 1"
+        ]
+      },
+      {
+        "func": "SET",
+        "property": "display",
+        "collection": [
+          "t1",
+          "accept1",
+          "reject1"
+        ],
+        "value": true
+      }
+    ],
+    "onlyVisibleForSeat": [
+      "seat2",
+      "seat3",
+      "seat4",
+      "seat5"
+    ],
+    "css": {
+      "default": {
+        "color": "black",
+        "background": "${PROPERTY color}",
+        "border": "3px solid black"
+      },
+      ":hover": {
+        "background": "${PROPERTY color}99"
+      }
+    },
+    "linkedToSeat": "seat1",
+    "inheritFrom": {
+      "seat1": [
+        "color"
+      ]
+    }
+  },
+  "wheel1": {
+    "id": "wheel1",
+    "x": 112,
+    "y": 101,
+    "width": 211,
+    "height": 183,
+    "z": 111,
+    "classes": "transition",
+    "css": {
+      "_, .transition": {
+        "transition": "transform 400ms"
+      },
+      "_, .transition.dragging": {
+        "transition": "none"
+      }
+    },
+    "scale": 0.7,
+    "movable": false,
+    "linkedToSeat": "seat1"
+  },
+  "bearDeck": {
+    "type": "deck",
+    "id": "bearDeck",
+    "x": 4,
+    "y": 4,
+    "z": 604,
+    "cardDefaults": {
+      "width": 160,
+      "height": 120,
+      "scale": 0.7,
+      "css": {}
+    },
+    "cardTypes": {
+      "65": {
+        "income": "+65",
+        "return": "-114",
+        "hex": "3",
+        "percent": "58.46%"
+      },
+      "66": {
+        "income": "+66",
+        "return": "-116",
+        "hex": "3",
+        "percent": "58.59%"
+      },
+      "67": {
+        "income": "+67",
+        "return": "-118",
+        "hex": "3",
+        "percent": "58.71%"
+      },
+      "68": {
+        "income": "+68",
+        "return": "-120",
+        "hex": "3",
+        "percent": "58.82%"
+      },
+      "69": {
+        "income": "+69",
+        "return": "-122",
+        "hex": "3",
+        "percent": "58.94%"
+      },
+      "70": {
+        "income": "+70",
+        "return": "-124",
+        "hex": "3",
+        "percent": "59.05%"
+      },
+      "71": {
+        "income": "+71",
+        "return": "-126",
+        "hex": "3",
+        "percent": "59.15%"
+      },
+      "72": {
+        "income": "+72",
+        "return": "-128",
+        "hex": "3",
+        "percent": "59.26%"
+      },
+      "73": {
+        "income": "+73",
+        "return": "-130",
+        "hex": "3",
+        "percent": "59.36%"
+      },
+      "74": {
+        "income": "+74",
+        "return": "-132",
+        "hex": "3",
+        "percent": "59.46%"
+      },
+      "75": {
+        "income": "+75",
+        "return": "-134",
+        "hex": "3",
+        "percent": "59.56%"
+      },
+      "76": {
+        "income": "+76",
+        "return": "-136",
+        "hex": "3",
+        "percent": "59.65%"
+      },
+      "77": {
+        "income": "+77",
+        "return": "-138",
+        "hex": "3",
+        "percent": "59.74%"
+      },
+      "78": {
+        "income": "+78",
+        "return": "-140",
+        "hex": "3",
+        "percent": "59.83%"
+      },
+      "79": {
+        "income": "+79",
+        "return": "-142",
+        "hex": "3",
+        "percent": "59.92%"
+      },
+      "80": {
+        "income": "+80",
+        "return": "-144",
+        "hex": "3",
+        "percent": "60.00%"
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "orange",
+            "width": 160,
+            "height": 120,
+            "dynamicProperties": {
+              "value": "image"
+            }
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 40,
+            "color": "coral",
+            "width": 160,
+            "height": 40,
+            "dynamicProperties": {
+              "value": "image"
+            }
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 80,
+            "color": "black",
+            "width": 160,
+            "height": 2,
+            "dynamicProperties": {
+              "value": "image"
+            }
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 40,
+            "color": "black",
+            "width": 160,
+            "height": 2,
+            "dynamicProperties": {
+              "value": "image"
+            }
+          },
+          {
+            "type": "text",
+            "x": 0,
+            "y": 38,
+            "fontSize": 40,
+            "textAlign": "center",
+            "width": 160,
+            "value": "FUND"
+          }
+        ],
+        "border": 2,
+        "radius": 6
+      },
+      {
+        "objects": [
+          {
+            "type": "image",
+            "color": "lightsteelblue",
+            "dynamicProperties": {
+              "value": "image",
+              "height": "height",
+              "width": "width"
+            }
+          },
+          {
+            "type": "text",
+            "x": 0,
+            "y": -25,
+            "fontSize": 80,
+            "textAlign": "center",
+            "width": 160,
+            "value": "|",
+            "display": false
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 80,
+            "height": 700,
+            "color": "transparent",
+            "display": true,
+            "css": {
+              "border": "2px solid black"
+            }
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 60,
+            "color": "lightslategrey",
+            "width": 160,
+            "height": 60,
+            "css": {
+              "border": "2px solid black"
+            }
+          },
+          {
+            "type": "text",
+            "x": 0,
+            "y": 10,
+            "fontSize": 35,
+            "textAlign": "center",
+            "width": 80,
+            "color": "green",
+            "dynamicProperties": {
+              "value": "income"
+            }
+          },
+          {
+            "type": "text",
+            "x": 80,
+            "y": 10,
+            "fontSize": 35,
+            "textAlign": "center",
+            "width": 80,
+            "color": "red",
+            "dynamicProperties": {
+              "value": "return"
+            }
+          },
+          {
+            "type": "text",
+            "x": -10,
+            "y": 75,
+            "fontSize": 25,
+            "textAlign": "right",
+            "width": 160,
+            "dynamicProperties": {
+              "value": "percent"
+            }
+          },
+          {
+            "note": "HEX IMAGE",
+            "type": "image",
+            "x": 8,
+            "y": 70,
+            "color": "transparent",
+            "width": 46.18802,
+            "height": 40,
+            "value": "/assets/-144668561_516"
+          },
+          {
+            "type": "text",
+            "x": 8,
+            "y": 70,
+            "fontSize": 35,
+            "textAlign": "center",
+            "width": 46.18802,
+            "dynamicProperties": {
+              "value": "hex"
+            }
+          }
+        ],
+        "border": 2,
+        "radius": 6
+      },
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "lightsteelblue",
+            "width": 160,
+            "height": 120,
+            "dynamicProperties": {
+              "value": "image"
+            }
+          },
+          {
+            "note": "HEX IMAGE",
+            "type": "image",
+            "x": 5,
+            "y": 60,
+            "color": "transparent",
+            "width": 60,
+            "height": 52,
+            "value": "/assets/-144668561_516"
+          },
+          {
+            "type": "text",
+            "x": -5,
+            "y": 56,
+            "fontSize": 50,
+            "textAlign": "center",
+            "width": 80,
+            "height": 60,
+            "dynamicProperties": {
+              "value": "hex"
+            }
+          },
+          {
+            "type": "text",
+            "x": 35,
+            "y": 60,
+            "fontSize": 40,
+            "textAlign": "center",
+            "width": 160,
+            "color": "red",
+            "dynamicProperties": {
+              "value": "return"
+            }
+          },
+          {
+            "type": "text",
+            "x": 0,
+            "y": 8,
+            "fontSize": 40,
+            "textAlign": "center",
+            "width": 160,
+            "color": "green",
+            "dynamicProperties": {
+              "value": "income"
+            }
+          }
+        ],
+        "border": 2,
+        "radius": 6
+      }
+    ],
+    "parent": "bearHolder"
+  },
+  "fundDeck": {
+    "type": "deck",
+    "id": "fundDeck",
+    "x": 4,
+    "y": 4,
+    "z": 1599,
+    "cardDefaults": {
+      "width": 160,
+      "height": 120,
+      "scale": 0.7,
+      "css": {}
+    },
+    "cardTypes": {
+      "10": {
+        "income": "+10",
+        "return": "-9",
+        "hex": "5",
+        "percent": "18.00%"
+      },
+      "11": {
+        "income": "+11",
+        "return": "-10",
+        "hex": "5",
+        "percent": "18.18%"
+      },
+      "12": {
+        "income": "+12",
+        "return": "-11",
+        "hex": "5",
+        "percent": "18.33%"
+      },
+      "13": {
+        "income": "+13",
+        "return": "-10",
+        "hex": "4",
+        "percent": "19.23%"
+      },
+      "14": {
+        "income": "+14",
+        "return": "-11",
+        "hex": "4",
+        "percent": "19.64%"
+      },
+      "15": {
+        "income": "+15",
+        "return": "-12",
+        "hex": "4",
+        "percent": "20.00%"
+      },
+      "16": {
+        "income": "+16",
+        "return": "-13",
+        "hex": "4",
+        "percent": "20.31%"
+      },
+      "17": {
+        "income": "+17",
+        "return": "-11",
+        "hex": "3",
+        "percent": "21.57%"
+      },
+      "18": {
+        "income": "+18",
+        "return": "-12",
+        "hex": "3",
+        "percent": "22.22%"
+      },
+      "19": {
+        "income": "+19",
+        "return": "-13",
+        "hex": "3",
+        "percent": "22.81%"
+      },
+      "20": {
+        "income": "+20",
+        "return": "-14",
+        "hex": "3",
+        "percent": "23.33%"
+      },
+      "21": {
+        "income": "+21",
+        "return": "-26",
+        "hex": "5",
+        "percent": "24.76%"
+      },
+      "22": {
+        "income": "+22",
+        "return": "-28",
+        "hex": "5",
+        "percent": "25.45%"
+      },
+      "23": {
+        "income": "+23",
+        "return": "-30",
+        "hex": "5",
+        "percent": "26.09%"
+      },
+      "24": {
+        "income": "+24",
+        "return": "-32",
+        "hex": "5",
+        "percent": "26.67%"
+      },
+      "25": {
+        "income": "+25",
+        "return": "-27",
+        "hex": "4",
+        "percent": "27.00%"
+      },
+      "26": {
+        "income": "+26",
+        "return": "-29",
+        "hex": "4",
+        "percent": "27.88%"
+      },
+      "27": {
+        "income": "+27",
+        "return": "-31",
+        "hex": "4",
+        "percent": "28.70%"
+      },
+      "28": {
+        "income": "+28",
+        "return": "-33",
+        "hex": "4",
+        "percent": "29.46%"
+      },
+      "29": {
+        "income": "+29",
+        "return": "-26",
+        "hex": "3",
+        "percent": "29.89%"
+      },
+      "30": {
+        "income": "+30",
+        "return": "-27",
+        "hex": "3",
+        "percent": "30.00%"
+      },
+      "31": {
+        "income": "+31",
+        "return": "-28",
+        "hex": "3",
+        "percent": "30.11%"
+      },
+      "32": {
+        "income": "+32",
+        "return": "-29",
+        "hex": "3",
+        "percent": "30.21%"
+      },
+      "33": {
+        "income": "+33",
+        "return": "-57",
+        "hex": "5",
+        "percent": "34.55%"
+      },
+      "34": {
+        "income": "+34",
+        "return": "-59",
+        "hex": "5",
+        "percent": "34.71%"
+      },
+      "35": {
+        "income": "+35",
+        "return": "-61",
+        "hex": "5",
+        "percent": "34.86%"
+      },
+      "36": {
+        "income": "+36",
+        "return": "-63",
+        "hex": "5",
+        "percent": "35.00%"
+      },
+      "37": {
+        "income": "+37",
+        "return": "-53",
+        "hex": "4",
+        "percent": "35.81%"
+      },
+      "38": {
+        "income": "+38",
+        "return": "-55",
+        "hex": "4",
+        "percent": "36.18%"
+      },
+      "39": {
+        "income": "+39",
+        "return": "-57",
+        "hex": "4",
+        "percent": "36.54%"
+      },
+      "40": {
+        "income": "+40",
+        "return": "-59",
+        "hex": "4",
+        "percent": "36.88%"
+      },
+      "41": {
+        "income": "+41",
+        "return": "-46",
+        "hex": "3",
+        "percent": "37.40%"
+      },
+      "42": {
+        "income": "+42",
+        "return": "-48",
+        "hex": "3",
+        "percent": "38.10%"
+      },
+      "43": {
+        "income": "+43",
+        "return": "-50",
+        "hex": "3",
+        "percent": "38.76%"
+      },
+      "44": {
+        "income": "+44",
+        "return": "-52",
+        "hex": "3",
+        "percent": "39.39%"
+      },
+      "45": {
+        "income": "+45",
+        "return": "-102",
+        "hex": "5",
+        "percent": "45.33%"
+      },
+      "46": {
+        "income": "+46",
+        "return": "-105",
+        "hex": "5",
+        "percent": "45.65%"
+      },
+      "47": {
+        "income": "+47",
+        "return": "-108",
+        "hex": "5",
+        "percent": "45.96%"
+      },
+      "48": {
+        "income": "+48",
+        "return": "-111",
+        "hex": "5",
+        "percent": "46.25%"
+      },
+      "49": {
+        "income": "+49",
+        "return": "-91",
+        "hex": "4",
+        "percent": "46.43%"
+      },
+      "50": {
+        "income": "+50",
+        "return": "-93",
+        "hex": "4",
+        "percent": "46.50%"
+      },
+      "51": {
+        "income": "+51",
+        "return": "-95",
+        "hex": "4",
+        "percent": "46.57%"
+      },
+      "52": {
+        "income": "+52",
+        "return": "-98",
+        "hex": "4",
+        "percent": "47.12%"
+      },
+      "53": {
+        "income": "+53",
+        "return": "-75",
+        "hex": "3",
+        "percent": "47.17%"
+      },
+      "54": {
+        "income": "+54",
+        "return": "-77",
+        "hex": "3",
+        "percent": "47.53%"
+      },
+      "55": {
+        "income": "+55",
+        "return": "-79",
+        "hex": "3",
+        "percent": "47.88%"
+      },
+      "56": {
+        "income": "+56",
+        "return": "-81",
+        "hex": "3",
+        "percent": "48.21%"
+      },
+      "57": {
+        "income": "+57",
+        "return": "-162",
+        "hex": "5",
+        "percent": "56.84%"
+      },
+      "58": {
+        "income": "+58",
+        "return": "-165",
+        "hex": "5",
+        "percent": "56.90%"
+      },
+      "59": {
+        "income": "+59",
+        "return": "-168",
+        "hex": "5",
+        "percent": "56.95%"
+      },
+      "60": {
+        "income": "+60",
+        "return": "-171",
+        "hex": "5",
+        "percent": "57.00%"
+      },
+      "61": {
+        "income": "+61",
+        "return": "-140",
+        "hex": "4",
+        "percent": "57.38%"
+      },
+      "62": {
+        "income": "+62",
+        "return": "-143",
+        "hex": "4",
+        "percent": "57.66%"
+      },
+      "63": {
+        "income": "+63",
+        "return": "-146",
+        "hex": "4",
+        "percent": "57.94%"
+      },
+      "64": {
+        "income": "+64",
+        "return": "-149",
+        "hex": "4",
+        "percent": "58.20%"
+      },
+      "09": {
+        "income": "+9",
+        "return": "-8",
+        "hex": "5",
+        "percent": "17.78%"
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "orange",
+            "width": 160,
+            "height": 120,
+            "dynamicProperties": {
+              "value": "image"
+            }
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 40,
+            "color": "coral",
+            "width": 160,
+            "height": 40,
+            "dynamicProperties": {
+              "value": "image"
+            }
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 80,
+            "color": "black",
+            "width": 160,
+            "height": 2,
+            "dynamicProperties": {
+              "value": "image"
+            }
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 40,
+            "color": "black",
+            "width": 160,
+            "height": 2,
+            "dynamicProperties": {
+              "value": "image"
+            }
+          },
+          {
+            "type": "text",
+            "x": 0,
+            "y": 38,
+            "fontSize": 40,
+            "textAlign": "center",
+            "width": 160,
+            "value": "FUND"
+          }
+        ],
+        "border": 2,
+        "radius": 6
+      },
+      {
+        "objects": [
+          {
+            "type": "image",
+            "color": "pink",
+            "dynamicProperties": {
+              "value": "image",
+              "height": "height",
+              "width": "width"
+            }
+          },
+          {
+            "type": "text",
+            "x": 0,
+            "y": -25,
+            "fontSize": 80,
+            "textAlign": "center",
+            "width": 160,
+            "value": "|",
+            "display": false
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 80,
+            "height": 700,
+            "color": "transparent",
+            "display": true,
+            "css": {
+              "border": "2px solid black"
+            }
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 60,
+            "color": "hotpink",
+            "width": 160,
+            "height": 60,
+            "css": {
+              "border": "2px solid black"
+            }
+          },
+          {
+            "type": "text",
+            "x": 0,
+            "y": 10,
+            "fontSize": 35,
+            "textAlign": "center",
+            "width": 80,
+            "color": "green",
+            "dynamicProperties": {
+              "value": "income"
+            }
+          },
+          {
+            "type": "text",
+            "x": 80,
+            "y": 10,
+            "fontSize": 35,
+            "textAlign": "center",
+            "width": 80,
+            "color": "red",
+            "dynamicProperties": {
+              "value": "return"
+            }
+          },
+          {
+            "type": "text",
+            "x": -10,
+            "y": 75,
+            "fontSize": 25,
+            "textAlign": "right",
+            "width": 160,
+            "dynamicProperties": {
+              "value": "percent"
+            }
+          },
+          {
+            "note": "HEX IMAGE",
+            "type": "image",
+            "x": 8,
+            "y": 70,
+            "color": "transparent",
+            "width": 46.18802,
+            "height": 40,
+            "value": "/assets/-144668561_516"
+          },
+          {
+            "type": "text",
+            "x": 8,
+            "y": 70,
+            "fontSize": 35,
+            "textAlign": "center",
+            "width": 46.18802,
+            "dynamicProperties": {
+              "value": "hex"
+            }
+          }
+        ],
+        "border": 2,
+        "radius": 6
+      },
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "pink",
+            "width": 160,
+            "height": 120,
+            "dynamicProperties": {
+              "value": "image"
+            }
+          },
+          {
+            "note": "HEX IMAGE",
+            "type": "image",
+            "x": 5,
+            "y": 60,
+            "color": "transparent",
+            "width": 60,
+            "height": 52,
+            "value": "/assets/-144668561_516"
+          },
+          {
+            "type": "text",
+            "x": -5,
+            "y": 56,
+            "fontSize": 50,
+            "textAlign": "center",
+            "width": 80,
+            "height": 60,
+            "dynamicProperties": {
+              "value": "hex"
+            }
+          },
+          {
+            "type": "text",
+            "x": 35,
+            "y": 60,
+            "fontSize": 40,
+            "textAlign": "center",
+            "width": 160,
+            "color": "red",
+            "dynamicProperties": {
+              "value": "return"
+            }
+          },
+          {
+            "type": "text",
+            "x": 0,
+            "y": 8,
+            "fontSize": 40,
+            "textAlign": "center",
+            "width": 160,
+            "color": "green",
+            "dynamicProperties": {
+              "value": "income"
+            }
+          }
+        ],
+        "border": 2,
+        "radius": 6
+      }
+    ],
+    "parent": "fundHolder"
+  },
+  "bearHolder": {
+    "type": "holder",
+    "id": "bearHolder",
+    "x": 763,
+    "y": -340,
+    "dropTarget": {
+      "type": "card"
+    }
+  },
+  "bearHolderB": {
+    "type": "button",
+    "id": "bearHolderB",
+    "parent": "bearHolder",
+    "fixedParent": true,
+    "y": 171.36,
+    "width": 111,
+    "height": 40,
+    "movableInEdit": false,
+    "text": "Recall & Shuffle",
+    "clickRoutine": [
+      {
+        "func": "RECALL",
+        "holder": "${PROPERTY parent}"
+      },
+      {
+        "func": "FLIP",
+        "holder": "${PROPERTY parent}",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "${PROPERTY parent}"
+      }
+    ],
+    "recall": 1
+  },
+  "fundHolder": {
+    "type": "holder",
+    "id": "fundHolder",
+    "x": 257,
+    "y": -316,
+    "dropTarget": {
+      "type": "card"
+    }
+  },
+  "fundHolderB": {
+    "type": "button",
+    "id": "fundHolderB",
+    "parent": "fundHolder",
+    "fixedParent": true,
+    "y": 171.36,
+    "width": 111,
+    "height": 40,
+    "movableInEdit": false,
+    "text": "Recall & Shuffle",
+    "clickRoutine": [
+      {
+        "func": "RECALL",
+        "holder": "${PROPERTY parent}"
+      },
+      {
+        "func": "FLIP",
+        "holder": "${PROPERTY parent}",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "${PROPERTY parent}"
+      }
+    ],
+    "recall": 1
+  },
+  "3xr4": {
+    "deck": "bearDeck",
+    "type": "card",
+    "cardType": "65",
+    "id": "3xr4",
+    "z": 30974,
+    "css": {
+      "position": null,
+      "order": null
+    },
+    "parent": "39yk"
+  },
+  "eniv": {
+    "deck": "bearDeck",
+    "type": "card",
+    "cardType": "66",
+    "id": "eniv",
+    "z": 30976,
+    "css": {
+      "position": null,
+      "order": null
+    },
+    "parent": "39yk"
+  },
+  "j1oh": {
+    "deck": "bearDeck",
+    "type": "card",
+    "cardType": "67",
+    "id": "j1oh",
+    "z": 30971,
+    "css": {
+      "position": null,
+      "order": null
+    },
+    "parent": "39yk"
+  },
+  "jiyn": {
+    "deck": "bearDeck",
+    "type": "card",
+    "cardType": "68",
+    "id": "jiyn",
+    "z": 30981,
+    "css": {
+      "position": null,
+      "order": null
+    },
+    "parent": "39yk"
+  },
+  "pwrv": {
+    "deck": "bearDeck",
+    "type": "card",
+    "cardType": "70",
+    "id": "pwrv",
+    "z": 30975,
+    "css": {
+      "position": null,
+      "order": null
+    },
+    "parent": "39yk"
+  },
+  "qc0v": {
+    "deck": "bearDeck",
+    "type": "card",
+    "cardType": "71",
+    "id": "qc0v",
+    "z": 30979,
+    "css": {
+      "position": null,
+      "order": null
+    },
+    "parent": "39yk"
+  },
+  "ayyr": {
+    "deck": "bearDeck",
+    "type": "card",
+    "cardType": "72",
+    "id": "ayyr",
+    "z": 30973,
+    "css": {
+      "position": null,
+      "order": null
+    },
+    "parent": "39yk"
+  },
+  "6s2y": {
+    "deck": "bearDeck",
+    "type": "card",
+    "cardType": "73",
+    "id": "6s2y",
+    "z": 30972,
+    "css": {
+      "position": null,
+      "order": null
+    },
+    "parent": "39yk"
+  },
+  "s3tq": {
+    "deck": "bearDeck",
+    "type": "card",
+    "cardType": "74",
+    "id": "s3tq",
+    "z": 30977,
+    "css": {
+      "position": null,
+      "order": null
+    },
+    "parent": "39yk"
+  },
+  "8sv4": {
+    "deck": "bearDeck",
+    "type": "card",
+    "cardType": "75",
+    "id": "8sv4",
+    "z": 30980,
+    "css": {
+      "position": null,
+      "order": null
+    },
+    "parent": "39yk"
+  },
+  "5a5y": {
+    "deck": "bearDeck",
+    "type": "card",
+    "cardType": "76",
+    "id": "5a5y",
+    "z": 30969,
+    "css": {
+      "position": null,
+      "order": null
+    },
+    "parent": "39yk"
+  },
+  "3a14": {
+    "deck": "bearDeck",
+    "type": "card",
+    "cardType": "77",
+    "id": "3a14",
+    "z": 30966,
+    "css": {
+      "position": null,
+      "order": null
+    },
+    "parent": "39yk"
+  },
+  "cag6": {
+    "deck": "bearDeck",
+    "type": "card",
+    "cardType": "78",
+    "id": "cag6",
+    "z": 30967,
+    "css": {
+      "position": null,
+      "order": null
+    },
+    "parent": "39yk"
+  },
+  "sftn": {
+    "deck": "bearDeck",
+    "type": "card",
+    "cardType": "80",
+    "id": "sftn",
+    "z": 30978,
+    "parent": "39yk",
+    "css": {
+      "position": null,
+      "order": null
+    }
+  },
+  "88vm": {
+    "deck": "bearDeck",
+    "type": "card",
+    "cardType": "69",
+    "id": "88vm",
+    "z": 30968,
+    "css": {
+      "position": null,
+      "order": null
+    },
+    "parent": "39yk"
+  },
+  "7ovd": {
+    "deck": "bearDeck",
+    "type": "card",
+    "cardType": "79",
+    "id": "7ovd",
+    "z": 30970,
+    "css": {
+      "position": null,
+      "order": null
+    },
+    "parent": "39yk"
+  },
+  "c6t2": {
+    "deck": "fundDeck",
+    "type": "card",
+    "cardType": "17",
+    "id": "c6t2",
+    "z": 31050,
+    "css": {
+      "position": null,
+      "order": null
+    },
+    "parent": "grra"
+  },
+  "lmz6": {
+    "deck": "fundDeck",
+    "type": "card",
+    "cardType": "20",
+    "id": "lmz6",
+    "z": 31046,
+    "css": {
+      "position": null,
+      "order": null
+    },
+    "parent": "grra"
+  },
+  "1rcx": {
+    "deck": "fundDeck",
+    "type": "card",
+    "cardType": "21",
+    "id": "1rcx",
+    "z": 31081,
+    "css": {
+      "position": null,
+      "order": null
+    },
+    "parent": "grra"
+  },
+  "goi6": {
+    "deck": "fundDeck",
+    "type": "card",
+    "cardType": "22",
+    "id": "goi6",
+    "z": 31084,
+    "css": {
+      "position": null,
+      "order": null
+    },
+    "parent": "grra"
+  },
+  "wi62": {
+    "deck": "fundDeck",
+    "type": "card",
+    "cardType": "23",
+    "id": "wi62",
+    "z": 31077,
+    "css": {
+      "position": null,
+      "order": null
+    },
+    "parent": "grra"
+  },
+  "fezw": {
+    "deck": "fundDeck",
+    "type": "card",
+    "cardType": "24",
+    "id": "fezw",
+    "z": 31083,
+    "css": {
+      "position": null,
+      "order": null
+    },
+    "parent": "grra"
+  },
+  "1enu": {
+    "deck": "fundDeck",
+    "type": "card",
+    "cardType": "25",
+    "id": "1enu",
+    "z": 31068,
+    "css": {
+      "position": null,
+      "order": null
+    },
+    "parent": "grra"
+  },
+  "hwpa": {
+    "deck": "fundDeck",
+    "type": "card",
+    "cardType": "26",
+    "id": "hwpa",
+    "z": 31066,
+    "css": {
+      "position": null,
+      "order": null
+    },
+    "parent": "grra"
+  },
+  "z48e": {
+    "deck": "fundDeck",
+    "type": "card",
+    "cardType": "27",
+    "id": "z48e",
+    "z": 31071,
+    "css": {
+      "position": null,
+      "order": null
+    },
+    "parent": "grra"
+  },
+  "2xkl": {
+    "deck": "fundDeck",
+    "type": "card",
+    "cardType": "28",
+    "id": "2xkl",
+    "z": 31044,
+    "css": {
+      "position": null,
+      "order": null
+    },
+    "parent": "grra"
+  },
+  "1wzg": {
+    "deck": "fundDeck",
+    "type": "card",
+    "cardType": "29",
+    "id": "1wzg",
+    "z": 31065,
+    "css": {
+      "position": null,
+      "order": null
+    },
+    "parent": "grra"
+  },
+  "usa3": {
+    "deck": "fundDeck",
+    "type": "card",
+    "cardType": "30",
+    "id": "usa3",
+    "z": 31062,
+    "css": {
+      "position": null,
+      "order": null
+    },
+    "parent": "grra"
+  },
+  "xn4v": {
+    "deck": "fundDeck",
+    "type": "card",
+    "cardType": "31",
+    "id": "xn4v",
+    "z": 31039,
+    "css": {
+      "position": null,
+      "order": null
+    },
+    "parent": "grra"
+  },
+  "m5zg": {
+    "deck": "fundDeck",
+    "type": "card",
+    "cardType": "32",
+    "id": "m5zg",
+    "z": 31041,
+    "css": {
+      "position": null,
+      "order": null
+    },
+    "parent": "grra"
+  },
+  "q838": {
+    "deck": "fundDeck",
+    "type": "card",
+    "cardType": "33",
+    "id": "q838",
+    "z": 31059,
+    "css": {
+      "position": null,
+      "order": null
+    },
+    "parent": "grra"
+  },
+  "ydlm": {
+    "deck": "fundDeck",
+    "type": "card",
+    "cardType": "34",
+    "id": "ydlm",
+    "z": 31056,
+    "css": {
+      "position": null,
+      "order": null
+    },
+    "parent": "grra"
+  },
+  "ui9i": {
+    "deck": "fundDeck",
+    "type": "card",
+    "cardType": "35",
+    "id": "ui9i",
+    "z": 31042,
+    "css": {
+      "position": null,
+      "order": null
+    },
+    "parent": "grra"
+  },
+  "ml3r": {
+    "deck": "fundDeck",
+    "type": "card",
+    "cardType": "36",
+    "id": "ml3r",
+    "z": 31074,
+    "css": {
+      "position": null,
+      "order": null
+    },
+    "parent": "grra"
+  },
+  "m5u5": {
+    "deck": "fundDeck",
+    "type": "card",
+    "cardType": "37",
+    "id": "m5u5",
+    "z": 31048,
+    "css": {
+      "position": null,
+      "order": null
+    },
+    "parent": "grra"
+  },
+  "qr89": {
+    "deck": "fundDeck",
+    "type": "card",
+    "cardType": "38",
+    "id": "qr89",
+    "z": 31070,
+    "css": {
+      "position": null,
+      "order": null
+    },
+    "parent": "grra"
+  },
+  "iu2u": {
+    "deck": "fundDeck",
+    "type": "card",
+    "cardType": "39",
+    "id": "iu2u",
+    "z": 31092,
+    "css": {
+      "position": null,
+      "order": null
+    },
+    "parent": "grra"
+  },
+  "0vr6": {
+    "deck": "fundDeck",
+    "type": "card",
+    "cardType": "40",
+    "id": "0vr6",
+    "z": 31053,
+    "css": {
+      "position": null,
+      "order": null
+    },
+    "parent": "grra"
+  },
+  "cfcq": {
+    "deck": "fundDeck",
+    "type": "card",
+    "cardType": "41",
+    "id": "cfcq",
+    "z": 31049,
+    "css": {
+      "position": null,
+      "order": null
+    },
+    "parent": "grra"
+  },
+  "ar3q": {
+    "deck": "fundDeck",
+    "type": "card",
+    "cardType": "42",
+    "id": "ar3q",
+    "z": 31075,
+    "css": {
+      "position": null,
+      "order": null
+    },
+    "parent": "grra"
+  },
+  "m5xw": {
+    "deck": "fundDeck",
+    "type": "card",
+    "cardType": "43",
+    "id": "m5xw",
+    "z": 31067,
+    "css": {
+      "position": null,
+      "order": null
+    },
+    "parent": "grra"
+  },
+  "8eu0": {
+    "deck": "fundDeck",
+    "type": "card",
+    "cardType": "44",
+    "id": "8eu0",
+    "z": 31060,
+    "css": {
+      "position": null,
+      "order": null
+    },
+    "parent": "grra"
+  },
+  "cgci": {
+    "deck": "fundDeck",
+    "type": "card",
+    "cardType": "45",
+    "id": "cgci",
+    "z": 31072,
+    "css": {
+      "position": null,
+      "order": null
+    },
+    "parent": "grra"
+  },
+  "73wl": {
+    "deck": "fundDeck",
+    "type": "card",
+    "cardType": "46",
+    "id": "73wl",
+    "z": 31058,
+    "css": {
+      "position": null,
+      "order": null
+    },
+    "parent": "grra"
+  },
+  "4q2n": {
+    "deck": "fundDeck",
+    "type": "card",
+    "cardType": "47",
+    "id": "4q2n",
+    "z": 31078,
+    "css": {
+      "position": null,
+      "order": null
+    },
+    "parent": "grra"
+  },
+  "8ay4": {
+    "deck": "fundDeck",
+    "type": "card",
+    "cardType": "48",
+    "id": "8ay4",
+    "z": 31052,
+    "css": {
+      "position": null,
+      "order": null
+    },
+    "parent": "grra"
+  },
+  "vw63": {
+    "deck": "fundDeck",
+    "type": "card",
+    "cardType": "49",
+    "id": "vw63",
+    "z": 31079,
+    "css": {
+      "position": null,
+      "order": null
+    },
+    "parent": "grra"
+  },
+  "1jx6": {
+    "deck": "fundDeck",
+    "type": "card",
+    "cardType": "50",
+    "id": "1jx6",
+    "z": 31063,
+    "css": {
+      "position": null,
+      "order": null
+    },
+    "parent": "grra"
+  },
+  "7wty": {
+    "deck": "fundDeck",
+    "type": "card",
+    "cardType": "51",
+    "id": "7wty",
+    "z": 31051,
+    "parent": "grra",
+    "css": {
+      "position": null,
+      "order": null
+    }
+  },
+  "029x": {
+    "deck": "fundDeck",
+    "type": "card",
+    "cardType": "52",
+    "id": "029x",
+    "z": 31047,
+    "css": {
+      "position": null,
+      "order": null
+    },
+    "parent": "grra"
+  },
+  "hnc5": {
+    "deck": "fundDeck",
+    "type": "card",
+    "cardType": "53",
+    "id": "hnc5",
+    "z": 31073,
+    "css": {
+      "position": null,
+      "order": null
+    },
+    "parent": "grra"
+  },
+  "wmzu": {
+    "deck": "fundDeck",
+    "type": "card",
+    "cardType": "54",
+    "id": "wmzu",
+    "z": 31076,
+    "css": {
+      "position": null,
+      "order": null
+    },
+    "parent": "grra"
+  },
+  "rhuz": {
+    "deck": "fundDeck",
+    "type": "card",
+    "cardType": "55",
+    "id": "rhuz",
+    "z": 31085,
+    "css": {
+      "position": null,
+      "order": null
+    },
+    "parent": "grra"
+  },
+  "5bju": {
+    "deck": "fundDeck",
+    "type": "card",
+    "cardType": "56",
+    "id": "5bju",
+    "z": 31045,
+    "css": {
+      "position": null,
+      "order": null
+    },
+    "parent": "grra"
+  },
+  "vizf": {
+    "deck": "fundDeck",
+    "type": "card",
+    "cardType": "57",
+    "id": "vizf",
+    "z": 31086,
+    "parent": "grra",
+    "css": {
+      "position": null,
+      "order": null
+    }
+  },
+  "37v2": {
+    "deck": "fundDeck",
+    "type": "card",
+    "cardType": "58",
+    "id": "37v2",
+    "z": 31057,
+    "css": {
+      "position": null,
+      "order": null
+    },
+    "parent": "grra"
+  },
+  "su6u": {
+    "deck": "fundDeck",
+    "type": "card",
+    "cardType": "59",
+    "id": "su6u",
+    "z": 31089,
+    "css": {
+      "position": null,
+      "order": null
+    },
+    "parent": "grra"
+  },
+  "fhtg": {
+    "deck": "fundDeck",
+    "type": "card",
+    "cardType": "60",
+    "id": "fhtg",
+    "z": 31091,
+    "css": {
+      "position": null,
+      "order": null
+    },
+    "parent": "grra"
+  },
+  "bxn9": {
+    "deck": "fundDeck",
+    "type": "card",
+    "cardType": "61",
+    "id": "bxn9",
+    "z": 31088,
+    "css": {
+      "position": null,
+      "order": null
+    },
+    "parent": "grra"
+  },
+  "xs4y": {
+    "deck": "fundDeck",
+    "type": "card",
+    "cardType": "62",
+    "id": "xs4y",
+    "z": 31093,
+    "css": {
+      "position": null,
+      "order": null
+    },
+    "parent": "grra"
+  },
+  "ts4f": {
+    "deck": "fundDeck",
+    "type": "card",
+    "cardType": "63",
+    "id": "ts4f",
+    "z": 31087,
+    "css": {
+      "position": null,
+      "order": null
+    },
+    "parent": "grra"
+  },
+  "qf0w": {
+    "deck": "fundDeck",
+    "type": "card",
+    "cardType": "64",
+    "id": "qf0w",
+    "z": 31090,
+    "css": {
+      "position": null,
+      "order": null
+    },
+    "parent": "grra"
+  },
+  "yx4z": {
+    "deck": "fundDeck",
+    "type": "card",
+    "cardType": "10",
+    "id": "yx4z",
+    "z": 31043,
+    "css": {
+      "position": null,
+      "order": null
+    },
+    "parent": "grra"
+  },
+  "nov4": {
+    "deck": "fundDeck",
+    "type": "card",
+    "cardType": "11",
+    "id": "nov4",
+    "z": 31040,
+    "css": {
+      "position": null,
+      "order": null
+    },
+    "parent": "grra"
+  },
+  "guiv": {
+    "deck": "fundDeck",
+    "type": "card",
+    "cardType": "12",
+    "id": "guiv",
+    "z": 31061,
+    "css": {
+      "position": null,
+      "order": null
+    },
+    "parent": "grra"
+  },
+  "zadt": {
+    "deck": "fundDeck",
+    "type": "card",
+    "cardType": "13",
+    "id": "zadt",
+    "z": 31080,
+    "css": {
+      "position": null,
+      "order": null
+    },
+    "parent": "grra"
+  },
+  "9jbp": {
+    "deck": "fundDeck",
+    "type": "card",
+    "cardType": "14",
+    "id": "9jbp",
+    "z": 31038,
+    "css": {
+      "position": null,
+      "order": null
+    },
+    "parent": "grra"
+  },
+  "avgh": {
+    "deck": "fundDeck",
+    "type": "card",
+    "cardType": "16",
+    "id": "avgh",
+    "z": 31069,
+    "css": {
+      "position": null,
+      "order": null
+    },
+    "parent": "grra"
+  },
+  "rktk": {
+    "deck": "fundDeck",
+    "type": "card",
+    "cardType": "15",
+    "id": "rktk",
+    "z": 31082,
+    "css": {
+      "position": null,
+      "order": null
+    },
+    "parent": "grra"
+  },
+  "4f42": {
+    "deck": "fundDeck",
+    "type": "card",
+    "cardType": "19",
+    "id": "4f42",
+    "z": 31054,
+    "css": {
+      "position": null,
+      "order": null
+    },
+    "parent": "grra"
+  },
+  "kgda": {
+    "deck": "fundDeck",
+    "type": "card",
+    "cardType": "18",
+    "id": "kgda",
+    "z": 31064,
+    "css": {
+      "position": null,
+      "order": null
+    },
+    "parent": "grra"
+  },
+  "wHolder1": {
+    "type": "holder",
+    "id": "wHolder1",
+    "x": 43,
+    "y": -91,
+    "width": 126,
+    "height": 94,
+    "scale": 0.9,
+    "z": 3,
+    "dropOffsetX": -16,
+    "dropOffsetY": -10,
+    "onEnter": {
+      "activeFace": 2
+    },
+    "onLeave": {
+      "activeFace": 1
+    },
+    "stackOffsetY": -45,
+    "css": {
+      "default": {
+        "background": "transparent",
+        "border": "transparent"
+      },
+      ".droptarget": {
+        "border": "calc(5px / var(--scale)) solid #333 !important"
+      }
+    },
+    "parent": "wheel1"
+  },
+  "wHolder2": {
+    "type": "holder",
+    "id": "wHolder2",
+    "x": 160,
+    "y": -22,
+    "rotation": 60,
+    "inheritFrom": "wHolder1",
+    "parent": "wheel1"
+  },
+  "wHolder3": {
+    "type": "holder",
+    "id": "wHolder3",
+    "x": 161,
+    "y": 111,
+    "rotation": 120,
+    "inheritFrom": "wHolder1",
+    "parent": "wheel1"
+  },
+  "wHolder4": {
+    "type": "holder",
+    "id": "wHolder4",
+    "x": 43,
+    "y": 180,
+    "rotation": 180,
+    "inheritFrom": "wHolder1",
+    "parent": "wheel1"
+  },
+  "wHolder5": {
+    "type": "holder",
+    "id": "wHolder5",
+    "x": -76,
+    "y": 110,
+    "rotation": 240,
+    "inheritFrom": "wHolder1",
+    "parent": "wheel1"
+  },
+  "wHolder6": {
+    "type": "holder",
+    "id": "wHolder6",
+    "x": -77,
+    "y": -21,
+    "rotation": 300,
+    "inheritFrom": "wHolder1",
+    "parent": "wheel1"
+  },
+  "wHolder7": {
+    "type": "holder",
+    "id": "wHolder7",
+    "inheritFrom": "wHolder1",
+    "parent": "wheel2"
+  },
+  "wHolder8": {
+    "type": "holder",
+    "id": "wHolder8",
+    "inheritFrom": "wHolder2",
+    "parent": "wheel2"
+  },
+  "wHolder9": {
+    "type": "holder",
+    "id": "wHolder9",
+    "inheritFrom": "wHolder3",
+    "parent": "wheel2"
+  },
+  "wHolder10": {
+    "type": "holder",
+    "id": "wHolder10",
+    "inheritFrom": "wHolder4",
+    "parent": "wheel2"
+  },
+  "wHolder11": {
+    "type": "holder",
+    "id": "wHolder11",
+    "inheritFrom": "wHolder5",
+    "parent": "wheel2"
+  },
+  "wHolder12": {
+    "type": "holder",
+    "id": "wHolder12",
+    "inheritFrom": "wHolder6",
+    "parent": "wheel2"
+  },
+  "wheel3": {
+    "id": "wheel3",
+    "x": 1285,
+    "y": 678,
+    "linkedToSeat": "seat3",
+    "rotation": 0,
+    "inheritFrom": {
+      "wheel1": [
+        "!rotation"
+      ]
+    }
+  },
+  "wHolder13": {
+    "type": "holder",
+    "id": "wHolder13",
+    "inheritFrom": "wHolder1",
+    "parent": "wheel3"
+  },
+  "wHolder14": {
+    "type": "holder",
+    "id": "wHolder14",
+    "inheritFrom": "wHolder2",
+    "parent": "wheel3"
+  },
+  "wHolder15": {
+    "type": "holder",
+    "id": "wHolder15",
+    "inheritFrom": "wHolder3",
+    "parent": "wheel3"
+  },
+  "wHolder16": {
+    "type": "holder",
+    "id": "wHolder16",
+    "inheritFrom": "wHolder4",
+    "parent": "wheel3"
+  },
+  "wHolder17": {
+    "type": "holder",
+    "id": "wHolder17",
+    "inheritFrom": "wHolder5",
+    "parent": "wheel3"
+  },
+  "wHolder18": {
+    "type": "holder",
+    "id": "wHolder18",
+    "inheritFrom": "wHolder6",
+    "parent": "wheel3"
+  },
+  "wheel4": {
+    "id": "wheel4",
+    "x": 698,
+    "y": 678,
+    "width": 211,
+    "height": 183,
+    "z": 103,
+    "classes": "transition",
+    "css": {
+      "_, .transition": {
+        "transition": "transform 400ms"
+      },
+      "_, .transition.dragging": {
+        "transition": "none"
+      }
+    },
+    "svgReplaces": {
+      "#ffffff": "colour"
+    },
+    "colour": "#ffffff",
+    "clickRoutine": [
+      {
+        "func": "GET",
+        "property": "rotation",
+        "collection": "thisButton"
+      },
+      "var a = ${rotation} + 60",
+      {
+        "func": "ROTATE",
+        "angle": "${a}",
+        "collection": "thisButton",
+        "mode": "set"
+      }
+    ],
+    "scale": 0.7,
+    "movable": false,
+    "linkedToSeat": "seat4"
+  },
+  "wHolder19": {
+    "type": "holder",
+    "id": "wHolder19",
+    "inheritFrom": "wHolder1",
+    "parent": "wheel4"
+  },
+  "wHolder20": {
+    "type": "holder",
+    "id": "wHolder20",
+    "inheritFrom": "wHolder2",
+    "parent": "wheel4"
+  },
+  "wHolder21": {
+    "type": "holder",
+    "id": "wHolder21",
+    "inheritFrom": "wHolder3",
+    "parent": "wheel4"
+  },
+  "wHolder22": {
+    "type": "holder",
+    "id": "wHolder22",
+    "inheritFrom": "wHolder4",
+    "parent": "wheel4"
+  },
+  "wHolder23": {
+    "type": "holder",
+    "id": "wHolder23",
+    "inheritFrom": "wHolder5",
+    "parent": "wheel4"
+  },
+  "wHolder24": {
+    "type": "holder",
+    "id": "wHolder24",
+    "inheritFrom": "wHolder6",
+    "parent": "wheel4"
+  },
+  "wheel5": {
+    "id": "wheel5",
+    "x": 112,
+    "y": 678,
+    "linkedToSeat": "seat5",
+    "rotation": 0,
+    "inheritFrom": {
+      "wheel1": [
+        "!rotation"
+      ]
+    }
+  },
+  "wHolder25": {
+    "type": "holder",
+    "id": "wHolder25",
+    "inheritFrom": "wHolder1",
+    "parent": "wheel5"
+  },
+  "wHolder26": {
+    "type": "holder",
+    "id": "wHolder26",
+    "inheritFrom": "wHolder2",
+    "parent": "wheel5"
+  },
+  "wHolder27": {
+    "type": "holder",
+    "id": "wHolder27",
+    "inheritFrom": "wHolder3",
+    "parent": "wheel5"
+  },
+  "wHolder28": {
+    "type": "holder",
+    "id": "wHolder28",
+    "inheritFrom": "wHolder4",
+    "parent": "wheel5"
+  },
+  "wHolder29": {
+    "type": "holder",
+    "id": "wHolder29",
+    "inheritFrom": "wHolder5",
+    "parent": "wheel5"
+  },
+  "wHolder30": {
+    "type": "holder",
+    "id": "wHolder30",
+    "inheritFrom": "wHolder6",
+    "parent": "wheel5"
+  },
+  "seat4": {
+    "type": "seat",
+    "id": "seat4",
+    "x": 853,
+    "y": 900,
+    "index": 4,
+    "mainColor": "#dddddd",
+    "turn": false,
+    "z": 16,
+    "inheritFrom": {
+      "seat1": [
+        "!player",
+        "!color"
+      ]
+    },
+    "player": "",
+    "textColor": "#000000",
+    "hideWhenUnused": true,
+    "notificationSound": true,
+    "notificationPopup": true
+  },
+  "seat5": {
+    "type": "seat",
+    "id": "seat5",
+    "x": 276,
+    "y": 900,
+    "index": 5,
+    "mainColor": "#dddddd",
+    "z": 15,
+    "inheritFrom": {
+      "seat1": [
+        "!player",
+        "!color"
+      ]
+    },
+    "turn": false,
+    "textColor": "#000000",
+    "notificationSound": true,
+    "notificationPopup": true,
+    "player": "",
+    "hideWhenUnused": true
+  },
+  "b2": {
+    "type": "button",
+    "id": "b2",
+    "x": 1268,
+    "y": 306,
+    "z": 22,
+    "text": "Offer ",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "player",
+        "value": "${playerName}"
+      },
+      {
+        "func": "GET",
+        "property": "id"
+      },
+      {
+        "func": "SELECT",
+        "property": "type",
+        "value": "holder"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "linkedToSeat",
+        "value": "${id}"
+      },
+      {
+        "func": "GET",
+        "property": "id"
+      },
+      "var holderid = ${id}",
+      "var x = 1",
+      {
+        "func": "FOREACH",
+        "range": 5,
+        "loopRoutine": [
+          {
+            "func": "SELECT",
+            "property": "id",
+            "value": "t${x}"
+          },
+          {
+            "func": "SET",
+            "property": "holderid",
+            "value": "${holderid}"
+          },
+          "var x = ${x} + 1"
+        ]
+      },
+      {
+        "func": "INPUT",
+        "fields": [
+          {
+            "type": "choose",
+            "min": 1,
+            "max": 1,
+            "holder": "h2",
+            "variable": "thing"
+          },
+          {
+            "type": "number",
+            "variable": "number",
+            "min": 1
+          }
+        ]
+      },
+      {
+        "func": "GET",
+        "property": "color"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "t2"
+      },
+      {
+        "func": "SET",
+        "property": "bgColor",
+        "value": "${color}"
+      },
+      {
+        "func": "SET",
+        "property": "text",
+        "value": "${number}"
+      },
+      "var x = 1",
+      {
+        "func": "FOREACH",
+        "range": 5,
+        "loopRoutine": [
+          {
+            "func": "SELECT",
+            "property": "id",
+            "value": "t${x}"
+          },
+          {
+            "func": "SET",
+            "property": "bid",
+            "value": "${number}"
+          },
+          {
+            "func": "SET",
+            "property": "thing",
+            "value": "${thing}"
+          },
+          {
+            "func": "GET",
+            "property": "linkedToSeat"
+          },
+          {
+            "func": "GET",
+            "property": "id"
+          },
+          "var x = ${x} + 1"
+        ]
+      },
+      {
+        "func": "SET",
+        "property": "display",
+        "collection": [
+          "t2",
+          "accept2",
+          "reject2"
+        ],
+        "value": true
+      }
+    ],
+    "onlyVisibleForSeat": [
+      "seat1",
+      "seat3",
+      "seat4",
+      "seat5"
+    ],
+    "css": {
+      "default": {
+        "color": "black",
+        "background": "${PROPERTY color}",
+        "border": "3px solid black"
+      },
+      ":hover": {
+        "background": "${PROPERTY color}99"
+      }
+    },
+    "linkedToSeat": "seat2",
+    "inheritFrom": {
+      "seat2": [
+        "color"
+      ]
+    }
+  },
+  "b3": {
+    "type": "button",
+    "id": "b3",
+    "x": 1268,
+    "y": 881,
+    "z": 1,
+    "text": "Offer ",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "player",
+        "value": "${playerName}"
+      },
+      {
+        "func": "GET",
+        "property": "id"
+      },
+      {
+        "func": "SELECT",
+        "property": "type",
+        "value": "holder"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "linkedToSeat",
+        "value": "${id}"
+      },
+      {
+        "func": "GET",
+        "property": "id"
+      },
+      "var holderid = ${id}",
+      "var x = 1",
+      {
+        "func": "FOREACH",
+        "range": 5,
+        "loopRoutine": [
+          {
+            "func": "SELECT",
+            "property": "id",
+            "value": "t${x}"
+          },
+          {
+            "func": "SET",
+            "property": "holderid",
+            "value": "${holderid}"
+          },
+          "var x = ${x} + 1"
+        ]
+      },
+      {
+        "func": "INPUT",
+        "fields": [
+          {
+            "type": "choose",
+            "min": 1,
+            "max": 1,
+            "holder": "h3",
+            "variable": "thing"
+          },
+          {
+            "type": "number",
+            "variable": "number",
+            "min": 1
+          }
+        ]
+      },
+      {
+        "func": "GET",
+        "property": "color"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "t3"
+      },
+      {
+        "func": "SET",
+        "property": "bgColor",
+        "value": "${color}"
+      },
+      {
+        "func": "SET",
+        "property": "text",
+        "value": "${number}"
+      },
+      "var x = 1",
+      {
+        "func": "FOREACH",
+        "range": 5,
+        "loopRoutine": [
+          {
+            "func": "SELECT",
+            "property": "id",
+            "value": "t${x}"
+          },
+          {
+            "func": "SET",
+            "property": "bid",
+            "value": "${number}"
+          },
+          {
+            "func": "SET",
+            "property": "thing",
+            "value": "${thing}"
+          },
+          "var x = ${x} + 1"
+        ]
+      },
+      {
+        "func": "SET",
+        "property": "display",
+        "collection": [
+          "t3",
+          "accept3",
+          "reject3"
+        ],
+        "value": true
+      }
+    ],
+    "onlyVisibleForSeat": [
+      "seat2",
+      "seat1",
+      "seat4",
+      "seat5"
+    ],
+    "css": {
+      "default": {
+        "color": "black",
+        "background": "${PROPERTY color}",
+        "border": "3px solid black"
+      },
+      ":hover": {
+        "background": "${PROPERTY color}99"
+      }
+    },
+    "linkedToSeat": "seat3",
+    "inheritFrom": {
+      "seat3": [
+        "color"
+      ]
+    }
+  },
+  "b4": {
+    "type": "button",
+    "id": "b4",
+    "x": 682,
+    "y": 881,
+    "z": 19,
+    "text": "Offer ",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "player",
+        "value": "${playerName}"
+      },
+      {
+        "func": "GET",
+        "property": "id"
+      },
+      {
+        "func": "SELECT",
+        "property": "type",
+        "value": "holder"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "linkedToSeat",
+        "value": "${id}"
+      },
+      {
+        "func": "GET",
+        "property": "id"
+      },
+      "var holderid = ${id}",
+      "var x = 1",
+      {
+        "func": "FOREACH",
+        "range": 5,
+        "loopRoutine": [
+          {
+            "func": "SELECT",
+            "property": "id",
+            "value": "t${x}"
+          },
+          {
+            "func": "SET",
+            "property": "holderid",
+            "value": "${holderid}"
+          },
+          "var x = ${x} + 1"
+        ]
+      },
+      {
+        "func": "INPUT",
+        "fields": [
+          {
+            "type": "choose",
+            "min": 1,
+            "max": 1,
+            "holder": "h4",
+            "variable": "thing"
+          },
+          {
+            "type": "number",
+            "variable": "number",
+            "min": 1
+          }
+        ]
+      },
+      {
+        "func": "GET",
+        "property": "color"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "t4"
+      },
+      {
+        "func": "SET",
+        "property": "bgColor",
+        "value": "${color}"
+      },
+      {
+        "func": "SET",
+        "property": "text",
+        "value": "${number}"
+      },
+      "var x = 1",
+      {
+        "func": "FOREACH",
+        "range": 5,
+        "loopRoutine": [
+          {
+            "func": "SELECT",
+            "property": "id",
+            "value": "t${x}"
+          },
+          {
+            "func": "SET",
+            "property": "bid",
+            "value": "${number}"
+          },
+          {
+            "func": "SET",
+            "property": "thing",
+            "value": "${thing}"
+          },
+          "var x = ${x} + 1"
+        ]
+      },
+      {
+        "func": "SET",
+        "property": "display",
+        "collection": [
+          "t4",
+          "accept4",
+          "reject4"
+        ],
+        "value": true
+      }
+    ],
+    "onlyVisibleForSeat": [
+      "seat2",
+      "seat3",
+      "seat1",
+      "seat5"
+    ],
+    "css": {
+      "default": {
+        "color": "black",
+        "background": "${PROPERTY color}",
+        "border": "3px solid black"
+      },
+      ":hover": {
+        "background": "${PROPERTY color}99"
+      }
+    },
+    "linkedToSeat": "seat4",
+    "inheritFrom": {
+      "seat4": [
+        "color"
+      ]
+    }
+  },
+  "b5": {
+    "type": "button",
+    "id": "b5",
+    "x": 96,
+    "y": 881,
+    "z": 1,
+    "text": "Offer ",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "player",
+        "value": "${playerName}"
+      },
+      {
+        "func": "GET",
+        "property": "id"
+      },
+      {
+        "func": "SELECT",
+        "property": "type",
+        "value": "holder"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "linkedToSeat",
+        "value": "${id}"
+      },
+      {
+        "func": "GET",
+        "property": "id"
+      },
+      "var holderid = ${id}",
+      "var x = 1",
+      {
+        "func": "FOREACH",
+        "range": 5,
+        "loopRoutine": [
+          {
+            "func": "SELECT",
+            "property": "id",
+            "value": "t${x}"
+          },
+          {
+            "func": "SET",
+            "property": "holderid",
+            "value": "${holderid}"
+          },
+          "var x = ${x} + 1"
+        ]
+      },
+      {
+        "func": "INPUT",
+        "fields": [
+          {
+            "type": "choose",
+            "min": 1,
+            "max": 1,
+            "holder": "h5",
+            "variable": "thing"
+          },
+          {
+            "type": "number",
+            "variable": "number",
+            "min": 1
+          }
+        ]
+      },
+      {
+        "func": "GET",
+        "property": "color"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "t5"
+      },
+      {
+        "func": "SET",
+        "property": "bgColor",
+        "value": "${color}"
+      },
+      {
+        "func": "SET",
+        "property": "text",
+        "value": "${number}"
+      },
+      "var x = 1",
+      {
+        "func": "FOREACH",
+        "range": 5,
+        "loopRoutine": [
+          {
+            "func": "SELECT",
+            "property": "id",
+            "value": "t${x}"
+          },
+          {
+            "func": "SET",
+            "property": "bid",
+            "value": "${number}"
+          },
+          {
+            "func": "SET",
+            "property": "thing",
+            "value": "${thing}"
+          },
+          "var x = ${x} + 1"
+        ]
+      },
+      {
+        "func": "SET",
+        "property": "display",
+        "collection": [
+          "t5",
+          "accept5",
+          "reject5"
+        ],
+        "value": true
+      }
+    ],
+    "onlyVisibleForSeat": [
+      "seat2",
+      "seat3",
+      "seat4",
+      "seat1"
+    ],
+    "css": {
+      "default": {
+        "color": "black",
+        "background": "${PROPERTY color}",
+        "border": "3px solid black"
+      },
+      ":hover": {
+        "background": "${PROPERTY color}99"
+      }
+    },
+    "linkedToSeat": "seat5",
+    "inheritFrom": {
+      "seat5": [
+        "color"
+      ]
+    }
+  },
+  "h2a8": {
+    "deck": "fundDeck",
+    "type": "card",
+    "cardType": "09",
+    "id": "h2a8",
+    "z": 31055,
+    "css": {
+      "position": null,
+      "order": null
+    },
+    "parent": "grra"
+  },
+  "nmphD": {
+    "id": "nmphD",
+    "parent": "label1",
+    "fixedParent": true,
+    "x": -38,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": {
+      "default": {
+        "font-size": "28px",
+        "background": "${PROPERTY color}",
+        "color": "black",
+        "border": "4px solid black"
+      },
+      ":hover": {
+        "border": "4px solid dimgrey"
+      }
+    },
+    "text": "remove",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "${PROPERTY parent}"
+      },
+      {
+        "func": "GET",
+        "property": "text"
+      },
+      {
+        "func": "INPUT",
+        "fields": [
+          {
+            "type": "number",
+            "variable": "number",
+            "min": 0
+          }
+        ],
+        "header": "Decrease amount"
+      },
+      {
+        "func": "IF",
+        "operand1": "${number}",
+        "relation": ">",
+        "operand2": "${text}",
+        "thenRoutine": [
+          {
+            "func": "INPUT",
+            "fields": [
+              {
+                "type": "subtitle",
+                "text": "This will end the game"
+              }
+            ],
+            "header": "Are you sure?"
+          }
+        ]
+      },
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": "${number}"
+      }
+    ],
+    "movable": false,
+    "inheritFrom": {
+      "seat1": "color"
+    }
+  },
+  "nmphU": {
+    "id": "nmphU",
+    "parent": "label1",
+    "fixedParent": true,
+    "x": 68,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": {
+      "default": {
+        "font-size": "28px",
+        "background": "${PROPERTY color}",
+        "color": "black",
+        "border": "4px solid black"
+      },
+      ":hover": {
+        "border": "4px solid dimgrey"
+      }
+    },
+    "text": "add",
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "fields": [
+          {
+            "type": "number",
+            "variable": "number",
+            "min": 0
+          }
+        ],
+        "header": "Increase amount"
+      },
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": "${number}"
+      }
+    ],
+    "inheritFrom": {
+      "seat1": "color"
+    }
+  },
+  "label1": {
+    "type": "label",
+    "id": "label1",
+    "parent": "seat1",
+    "x": 42,
+    "y": 50,
+    "width": 65,
+    "height": 40,
+    "css": {
+      "font-size": "30px",
+      "color": "black"
+    },
+    "editable": true,
+    "text": 0,
+    "onlyVisibleForSeat": "seat1"
+  },
+  "label2": {
+    "type": "label",
+    "id": "label2",
+    "parent": "seat2",
+    "x": 42,
+    "y": 50,
+    "width": 65,
+    "height": 40,
+    "css": {
+      "font-size": "30px",
+      "color": "black"
+    },
+    "editable": true,
+    "text": 0,
+    "onlyVisibleForSeat": "seat2"
+  },
+  "nmphD1": {
+    "id": "nmphD1",
+    "parent": "label2",
+    "type": "button",
+    "inheritFrom": {
+      "seat2": "color",
+      "nmphD": "*"
+    }
+  },
+  "nmphU1": {
+    "id": "nmphU1",
+    "parent": "label2",
+    "fixedParent": true,
+    "type": "button",
+    "inheritFrom": {
+      "seat2": "color",
+      "nmphU": "*"
+    }
+  },
+  "label3": {
+    "type": "label",
+    "id": "label3",
+    "parent": "seat3",
+    "x": 42,
+    "y": 50,
+    "width": 65,
+    "height": 40,
+    "css": {
+      "font-size": "30px",
+      "color": "black"
+    },
+    "editable": true,
+    "text": 0,
+    "onlyVisibleForSeat": "seat3"
+  },
+  "nmphD2": {
+    "id": "nmphD2",
+    "parent": "label3",
+    "type": "button",
+    "inheritFrom": {
+      "seat3": "color",
+      "nmphD": "*"
+    }
+  },
+  "nmphU2": {
+    "id": "nmphU2",
+    "parent": "label3",
+    "type": "button",
+    "inheritFrom": {
+      "seat3": "color",
+      "nmphU": "*"
+    }
+  },
+  "label4": {
+    "type": "label",
+    "id": "label4",
+    "parent": "seat4",
+    "x": 42,
+    "y": 50,
+    "width": 65,
+    "height": 40,
+    "css": {
+      "font-size": "30px",
+      "color": "black"
+    },
+    "editable": true,
+    "text": 0,
+    "onlyVisibleForSeat": "seat4"
+  },
+  "nmphD3": {
+    "id": "nmphD3",
+    "parent": "label4",
+    "type": "button",
+    "inheritFrom": {
+      "seat4": "color",
+      "nmphD": "*"
+    }
+  },
+  "nmphU3": {
+    "id": "nmphU3",
+    "parent": "label4",
+    "type": "button",
+    "inheritFrom": {
+      "seat4": "color",
+      "nmphU": "*"
+    }
+  },
+  "label5": {
+    "type": "label",
+    "id": "label5",
+    "parent": "seat5",
+    "x": 42,
+    "y": 50,
+    "width": 65,
+    "height": 40,
+    "css": {
+      "font-size": "30px",
+      "color": "black"
+    },
+    "editable": true,
+    "text": 0,
+    "onlyVisibleForSeat": "seat5",
+    "z": 3
+  },
+  "nmphD4": {
+    "id": "nmphD4",
+    "parent": "label5",
+    "type": "button",
+    "inheritFrom": {
+      "seat5": "color",
+      "nmphD": "*"
+    }
+  },
+  "nmphU4": {
+    "id": "nmphU4",
+    "parent": "label5",
+    "type": "button",
+    "inheritFrom": {
+      "seat5": "color",
+      "nmphU": "*"
+    }
+  },
+  "market": {
+    "type": "holder",
+    "id": "market",
+    "x": 634,
+    "y": 3,
+    "width": 350,
+    "height": 270.2,
+    "z": 2,
+    "css": {
+      "default": {
+        "display": "flex",
+        "flex-wrap": "wrap",
+        "align-content": "top",
+        "justify-content": "left",
+        "padding-left": "${PROPERTY paddingLR}",
+        "padding-right": "${PROPERTY paddingLR}",
+        "padding-top": "${PROPERTY paddingT}",
+        "background": "transparent",
+        "border": "transparent"
+      },
+      " .widget": {
+        "position": "relative",
+        "order": "${PROPERTY z}",
+        "margin-left": "${PROPERTY marginL}",
+        "margin-top": "${PROPERTY marginT}"
+      }
+    },
+    "dropOffsetX": 24,
+    "dropOffsetY": 30,
+    "onEnter": {
+      "activeFace": 1
+    },
+    "preventPiles": true,
+    "marginL": "-44px",
+    "marginT": "-44px",
+    "paddingLR": "0px",
+    "paddingT": "0px",
+    "enterRoutine": [
+      {
+        "func": "COUNT",
+        "holder": "${PROPERTY id}"
+      },
+      {
+        "func": "GET",
+        "collection": "child",
+        "property": "css"
+      },
+      "var css.position = 'relative'",
+      "var css.order = '${PROPERTY z}'",
+      {
+        "func": "SET",
+        "collection": "child",
+        "property": "css",
+        "value": "${css}"
+      },
+      {
+        "func": "SORT",
+        "holder": "${PROPERTY id}",
+        "key": "cardType"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "GET",
+        "collection": "child",
+        "property": "css"
+      },
+      "var css.position = null",
+      "var css.order = null",
+      {
+        "func": "SET",
+        "collection": "child",
+        "property": "css",
+        "value": "${css}"
+      }
+    ],
+    "dropLimit": 9
+  },
+  "vp": {
+    "type": "deck",
+    "id": "vp",
+    "cardDefaults": {
+      "width": 60,
+      "height": 60
+    },
+    "cardTypes": {
+      "1": {
+        "return": "-30",
+        "points": "1 VP"
+      },
+      "2": {
+        "return": "-56",
+        "points": "2 VP"
+      },
+      "3": {
+        "return": "-78",
+        "points": "3 VP"
+      },
+      "4": {
+        "return": "-96",
+        "points": "4 VP"
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "black",
+            "width": 60,
+            "height": 60
+          },
+          {
+            "type": "text",
+            "x": 0,
+            "y": 2,
+            "fontSize": 25,
+            "textAlign": "center",
+            "color": "red",
+            "width": 60,
+            "dynamicProperties": {
+              "value": "return"
+            }
+          },
+          {
+            "type": "text",
+            "x": 0,
+            "y": 30,
+            "fontSize": 25,
+            "textAlign": "center",
+            "color": "white",
+            "width": 60,
+            "dynamicProperties": {
+              "value": "points"
+            }
+          }
+        ],
+        "border": 0,
+        "radius": 6
+      }
+    ],
+    "x": 1072,
+    "y": 3
+  },
+  "os89": {
+    "deck": "vp",
+    "type": "card",
+    "cardType": "1",
+    "id": "os89",
+    "z": 1,
+    "x": 3,
+    "y": 5,
+    "parent": "vpHolder"
+  },
+  "7gem": {
+    "deck": "vp",
+    "type": "card",
+    "cardType": "2",
+    "id": "7gem",
+    "z": 2,
+    "x": 3,
+    "y": 71,
+    "parent": "vpHolder"
+  },
+  "pi8z": {
+    "deck": "vp",
+    "type": "card",
+    "cardType": "3",
+    "id": "pi8z",
+    "z": 3,
+    "activeFace": 1,
+    "y": 137,
+    "x": 3,
+    "parent": "vpHolder"
+  },
+  "t50x": {
+    "deck": "vp",
+    "type": "card",
+    "cardType": "4",
+    "id": "t50x",
+    "z": 4,
+    "activeFace": 1,
+    "x": 3,
+    "y": 203,
+    "parent": "vpHolder"
+  },
+  "vpHolder": {
+    "type": "holder",
+    "id": "vpHolder",
+    "x": 991,
+    "y": 1,
+    "width": 69,
+    "height": 272,
+    "z": 2,
+    "stackOffsetY": 66,
+    "enterRoutine": [
+      {
+        "func": "SORT",
+        "holder": "${PROPERTY id}",
+        "key": "cardType"
+      }
+    ],
+    "dropOffsetY": 5,
+    "dropTarget": {
+      "deck": "vp"
+    },
+    "css": {
+      "background": "transparent",
+      "border": "3px solid black"
+    },
+    "dropOffsetX": 3
+  },
+  "companyDeck": {
+    "type": "deck",
+    "id": "companyDeck",
+    "x": 437,
+    "y": 147,
+    "cardDefaults": {
+      "width": 60,
+      "height": 60,
+      "css": {},
+      "classes": "transition"
+    },
+    "cardTypes": {
+      "b": {
+        "name": "β",
+        "color": "#9A6324"
+      },
+      "c": {
+        "name": "γ",
+        "color": "#fffac8"
+      },
+      "d": {
+        "name": "δ",
+        "color": "#e6194B"
+      },
+      "a": {
+        "name": "α",
+        "color": "#aaffc3"
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 60,
+            "height": 60,
+            "dynamicProperties": {
+              "color": "color"
+            }
+          },
+          {
+            "type": "text",
+            "x": 0,
+            "y": 2,
+            "fontSize": 45,
+            "textAlign": "center",
+            "color": "black",
+            "width": 60,
+            "height": 60,
+            "dynamicProperties": {
+              "value": "name"
+            }
+          }
+        ],
+        "border": 2,
+        "radius": 6
+      }
+    ],
+    "css": {
+      "_, .transition": {
+        "transition": "transform 600ms"
+      },
+      "_, .transition.dragging": {
+        "transition": "none"
+      }
+    }
+  },
+  "aHolder": {
+    "type": "holder",
+    "id": "aHolder",
+    "x": 561,
+    "y": 9,
+    "width": 60,
+    "height": 60,
+    "z": 2,
+    "dropTarget": {
+      "cardType": "a"
+    },
+    "css": {
+      "background": "transparent",
+      "border": "transparent"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "preventPiles": true
+  },
+  "companyB": {
+    "type": "button",
+    "id": "companyB",
+    "x": 558,
+    "z": 3,
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "type",
+        "value": "card"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "cardType",
+        "value": "a"
+      },
+      {
+        "func": "MOVE",
+        "to": "aHolder",
+        "count": "all"
+      },
+      {
+        "func": "SELECT",
+        "property": "type",
+        "value": "card"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "cardType",
+        "value": "b"
+      },
+      {
+        "func": "MOVE",
+        "to": "bHolder",
+        "count": "all"
+      },
+      {
+        "func": "SELECT",
+        "property": "type",
+        "value": "card"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "cardType",
+        "value": "c"
+      },
+      {
+        "func": "MOVE",
+        "to": "cHolder",
+        "count": "all"
+      },
+      {
+        "func": "SELECT",
+        "property": "type",
+        "value": "card"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "cardType",
+        "value": "d"
+      },
+      {
+        "func": "MOVE",
+        "to": "dHolder",
+        "count": "all"
+      }
+    ],
+    "text": "reset company cards",
+    "y": -111,
+    "recall": 1
+  },
+  "gameHolder": {
+    "type": "holder",
+    "id": "gameHolder",
+    "x": 1113,
+    "y": -311,
+    "z": 4
+  },
+  "t1": {
+    "id": "t1",
+    "x": 35,
+    "y": 318,
+    "css": {
+      "background": "${PROPERTY bgColor}",
+      "justify-content": "center",
+      "align-items": "center",
+      "text-align": "center",
+      "display": "flex",
+      "font-size": "30px",
+      "border": "1px solid black"
+    },
+    "onlyVisibleForSeat": "seat1",
+    "width": 50,
+    "height": 50,
+    "movable": false,
+    "bgColor": "#dddddd",
+    "display": false
+  },
+  "t2": {
+    "id": "t2",
+    "x": 1209,
+    "y": 318,
+    "css": {
+      "background": "${PROPERTY bgColor}",
+      "justify-content": "center",
+      "align-items": "center",
+      "text-align": "center",
+      "display": "flex",
+      "font-size": "30px",
+      "border": "1px solid black"
+    },
+    "onlyVisibleForSeat": "seat2",
+    "width": 50,
+    "height": 50,
+    "movable": false,
+    "bgColor": "#dddddd",
+    "display": false
+  },
+  "t3": {
+    "id": "t3",
+    "x": 1209,
+    "y": 895,
+    "css": {
+      "background": "${PROPERTY bgColor}",
+      "justify-content": "center",
+      "align-items": "center",
+      "text-align": "center",
+      "display": "flex",
+      "font-size": "30px",
+      "border": "1px solid black"
+    },
+    "onlyVisibleForSeat": "seat3",
+    "width": 50,
+    "height": 50,
+    "movable": false,
+    "bgColor": "#00bcd4",
+    "display": false
+  },
+  "t4": {
+    "id": "t4",
+    "x": 619,
+    "y": 895,
+    "css": {
+      "background": "${PROPERTY bgColor}",
+      "justify-content": "center",
+      "align-items": "center",
+      "text-align": "center",
+      "display": "flex",
+      "font-size": "30px",
+      "border": "1px solid black"
+    },
+    "onlyVisibleForSeat": "seat4",
+    "width": 50,
+    "height": 50,
+    "movable": false,
+    "bgColor": "#dddddd",
+    "display": false
+  },
+  "t5": {
+    "id": "t5",
+    "x": 33,
+    "y": 895,
+    "css": {
+      "background": "${PROPERTY bgColor}",
+      "justify-content": "center",
+      "align-items": "center",
+      "text-align": "center",
+      "display": "flex",
+      "font-size": "30px",
+      "border": "1px solid black"
+    },
+    "onlyVisibleForSeat": "seat5",
+    "width": 50,
+    "height": 50,
+    "movable": false,
+    "bgColor": "#dddddd",
+    "display": false
+  },
+  "setup": {
+    "type": "button",
+    "id": "setup",
+    "x": 15,
+    "y": 11,
+    "z": 9,
+    "css": {
+      "default": {
+        "background-color": "#84E291",
+        "border-color": "#595959",
+        "color": "black"
+      },
+      ":hover": {
+        "background-color": "#595959",
+        "border-color": "#84E291"
+      }
+    },
+    "text": "Setup",
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "header": "Start new game?",
+        "confirmButtonText": "Yes",
+        "cancelButtonText": "No",
+        "fields": [
+          {
+            "type": "subtitle",
+            "text": "Are you sure you want to erase any progress and start a new game?"
+          }
+        ]
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "reset"
+      },
+      {
+        "func": "CLICK"
+      },
+      {
+        "func": "SORT",
+        "holder": "fundHolder",
+        "key": "cardType",
+        "reverse": true
+      },
+      {
+        "func": "MOVE",
+        "from": "fundHolder",
+        "to": "market",
+        "count": 9
+      },
+      {
+        "func": "MOVE",
+        "from": "fundHolder",
+        "to": "gameHolder",
+        "count": "all"
+      },
+      {
+        "func": "MOVE",
+        "from": "bearHolder",
+        "to": "gameHolder",
+        "count": "all"
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "gameHolder"
+      },
+      {
+        "func": "TURN",
+        "turnCycle": "random"
+      },
+      {
+        "func": "CLICK",
+        "collection": [
+          "phase3"
+        ]
+      }
+    ]
+  },
+  "h1": {
+    "type": "holder",
+    "id": "h1",
+    "x": 472,
+    "y": 280,
+    "z": 5,
+    "width": 329,
+    "css": {
+      "default": {
+        "display": "flex",
+        "flex-wrap": "wrap",
+        "align-content": "top",
+        "justify-content": "left",
+        "padding-left": "${PROPERTY paddingLR}",
+        "padding-right": "${PROPERTY paddingLR}",
+        "padding-top": "${PROPERTY paddingT}",
+        "border": "3px solid ${PROPERTY color}",
+        "background": "transparent"
+      },
+      " .widget": {
+        "position": "relative",
+        "order": "${PROPERTY z}",
+        "margin-left": "${PROPERTY marginL}",
+        "margin-top": "${PROPERTY marginT}"
+      },
+      ".droptarget": {
+        "border": "calc(3px / var(--scale)) solid grey !important"
+      }
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "onEnter": {
+      "activeFace": 1
+    },
+    "preventPiles": true,
+    "marginL": "4px",
+    "marginT": "4px",
+    "paddingLR": "-5px",
+    "paddingT": "-5px",
+    "enterRoutine": [
+      {
+        "func": "COUNT",
+        "holder": "${PROPERTY id}"
+      },
+      {
+        "func": "GET",
+        "collection": "child",
+        "property": "css"
+      },
+      "var css.position = 'relative'",
+      "var css.order = '${PROPERTY z}'",
+      {
+        "func": "SET",
+        "collection": "child",
+        "property": "css",
+        "value": "${css}"
+      },
+      {
+        "func": "SORT",
+        "holder": "${PROPERTY id}",
+        "key": "cardType"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "GET",
+        "collection": "child",
+        "property": "css"
+      },
+      "var css.position = null",
+      "var css.order = null",
+      {
+        "func": "SET",
+        "collection": "child",
+        "property": "css",
+        "value": "${css}"
+      }
+    ],
+    "dropTarget": {
+      "deck": "companyDeck"
+    },
+    "height": 140,
+    "linkedToSeat": "seat1",
+    "inheritFrom": {
+      "seat1": "color"
+    }
+  },
+  "h2": {
+    "type": "holder",
+    "id": "h2",
+    "x": 807,
+    "y": 280,
+    "linkedToSeat": "seat2",
+    "inheritFrom": {
+      "seat2": "color",
+      "h1": "*"
+    }
+  },
+  "h4": {
+    "type": "holder",
+    "id": "h4",
+    "x": 649,
+    "y": 430,
+    "linkedToSeat": "seat4",
+    "inheritFrom": {
+      "seat4": "color",
+      "h1": "*"
+    }
+  },
+  "h5": {
+    "type": "holder",
+    "id": "h5",
+    "x": 314,
+    "y": 430,
+    "linkedToSeat": "seat5",
+    "inheritFrom": {
+      "seat5": "color",
+      "h1": "*"
+    }
+  },
+  "h3": {
+    "type": "holder",
+    "id": "h3",
+    "x": 984,
+    "y": 430,
+    "inheritFrom": {
+      "seat3": "color",
+      "h1": "*"
+    },
+    "linkedToSeat": "seat3"
+  },
+  "background": {
+    "id": "background",
+    "width": 1600,
+    "height": 1000,
+    "layer": -9,
+    "z": 94,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "background-image": "linear-gradient(315deg, #c0cdeb 0%, #96a7cf 50%, #c0cdeb 100%)"
+    }
+  },
+  "fakeHolder": {
+    "type": "holder",
+    "id": "fakeHolder",
+    "x": 556,
+    "y": 1,
+    "width": 69,
+    "height": 272,
+    "z": 2,
+    "css": {
+      "background": "transparent",
+      "border": "3px solid black"
+    },
+    "dropOffsetX": 3,
+    "dropOffsetY": 5,
+    "dropTarget": {
+      "deck": "nada"
+    },
+    "stackOffsetY": 66,
+    "enterRoutine": [
+      {
+        "func": "SORT",
+        "holder": "${PROPERTY id}",
+        "key": "cardType"
+      }
+    ],
+    "layer": -5
+  },
+  "bHolder": {
+    "type": "holder",
+    "id": "bHolder",
+    "x": 561,
+    "y": 75,
+    "width": 60,
+    "height": 60,
+    "z": 2,
+    "css": {
+      "background": "transparent",
+      "border": "transparent"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "cardType": "b"
+    },
+    "preventPiles": true
+  },
+  "cHolder": {
+    "type": "holder",
+    "id": "cHolder",
+    "x": 561,
+    "y": 141,
+    "width": 60,
+    "height": 60,
+    "z": 2,
+    "css": {
+      "background": "transparent",
+      "border": "transparent"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "cardType": "c"
+    },
+    "preventPiles": true
+  },
+  "dHolder": {
+    "type": "holder",
+    "id": "dHolder",
+    "x": 561,
+    "y": 207,
+    "width": 60,
+    "height": 60,
+    "z": 2,
+    "css": {
+      "background": "transparent",
+      "border": "transparent"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "cardType": "d"
+    },
+    "preventPiles": true
+  },
+  "offerB": {
+    "type": "button",
+    "id": "offerB",
+    "x": -132,
+    "y": 315,
+    "z": 4,
+    "text": "reset offer squares",
+    "clickRoutine": [
+      {
+        "func": "FOREACH",
+        "range": 5,
+        "loopRoutine": [
+          {
+            "func": "SELECT",
+            "property": "id",
+            "value": "seat${value}"
+          },
+          {
+            "func": "GET",
+            "property": "mainColor"
+          },
+          {
+            "func": "SELECT",
+            "property": "id",
+            "value": "t${value}"
+          },
+          {
+            "func": "SET",
+            "property": "bgColor",
+            "value": "${mainColor}"
+          },
+          {
+            "func": "SET",
+            "property": "text",
+            "value": null
+          }
+        ]
+      }
+    ],
+    "recall": 1
+  },
+  "reset": {
+    "type": "button",
+    "id": "reset",
+    "x": -141,
+    "z": 10,
+    "text": "RESET",
+    "clickRoutine": [
+      {
+        "func": "FOREACH",
+        "range": 5,
+        "loopRoutine": [
+          {
+            "func": "LABEL",
+            "label": "label${value}",
+            "value": 0
+          },
+          "var value = ${value} + 1"
+        ]
+      },
+      {
+        "func": "SELECT",
+        "property": "recall",
+        "value": 1
+      },
+      {
+        "func": "CLICK"
+      },
+      {
+        "func": "SELECT",
+        "property": "deck",
+        "value": "vp"
+      },
+      {
+        "func": "MOVE",
+        "to": "vpHolder"
+      },
+      "var x = 1",
+      {
+        "func": "FOREACH",
+        "range": 5,
+        "loopRoutine": [
+          {
+            "func": "SELECT",
+            "property": "id",
+            "value": "wheel${x}Spinner"
+          },
+          {
+            "func": "SET",
+            "property": "rotation",
+            "value": 0
+          },
+          {
+            "func": "SET",
+            "property": "display",
+            "collection": [
+              "t${x}",
+              "accept${x}",
+              "reject${x}"
+            ],
+            "value": false
+          },
+          "var x = ${x} + 1"
+        ]
+      }
+    ],
+    "y": 10
+  },
+  "hideSeats": {
+    "type": "button",
+    "id": "hideSeats",
+    "x": 317,
+    "y": 1045,
+    "z": 11,
+    "text": "hide Seats",
+    "clickRoutine": [
+      {
+        "func": "FOREACH",
+        "range": 5,
+        "loopRoutine": [
+          {
+            "func": "SELECT",
+            "property": "id",
+            "value": "seat${value}"
+          },
+          {
+            "func": "GET",
+            "property": "hideWhenUnused"
+          },
+          {
+            "func": "IF",
+            "operand1": "${hideWhenUnused}",
+            "relation": "==",
+            "operand2": true,
+            "thenRoutine": [
+              {
+                "func": "SET",
+                "property": "hideWhenUnused",
+                "value": false
+              }
+            ],
+            "elseRoutine": [
+              {
+                "func": "SET",
+                "property": "hideWhenUnused",
+                "value": true
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "pointsRef": {
+    "id": "pointsRef",
+    "x": 1421,
+    "y": 440,
+    "width": 176,
+    "height": 113,
+    "image": "/assets/-1030216118_3754",
+    "movable": false,
+    "borderRadius": 2
+  },
+  "melj": {
+    "id": "melj",
+    "y": 473,
+    "x": 7,
+    "css": {
+      "default": {
+        "background-image": "url('/assets/1055265702_3097')"
+      },
+      "#enlarged": {
+        "background-image": "url('/assets/1287682066_38588')",
+        "background-size": "contain",
+        "background-repeat": "no-repeat",
+        "background-position": "center",
+        "background-color": "transparent",
+        "left": "calc(var(--roomLeft) + (${PROPERTY x}px + ${PROPERTY width}px / 2 * (5 - ${PROPERTY enlarge})) * var(--scale))",
+        "top": "calc(var(--roomTop) + (${PROPERTY y}px + ${PROPERTY height}px / 3 * (1 - ${PROPERTY enlarge})) * var(--scale))",
+        "right": "unset",
+        "transform-origin": "top left"
+      }
+    },
+    "width": 137,
+    "height": 58,
+    "enlarge": 5,
+    "z": 114,
+    "movable": false
+  },
+  "endTurn": {
+    "type": "button",
+    "id": "endTurn",
+    "x": 1326,
+    "y": 455,
+    "borderRadius": 5,
+    "z": 23,
+    "css": {
+      "default": {
+        "font-size": "18px",
+        "color": "black",
+        "background": "pink",
+        "border-color": "black",
+        "clip-path": "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
+        "border": "5px solid black"
+      },
+      ":hover": {
+        "background": "hotpink"
+      }
+    },
+    "text": "End\nturn",
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "gameHolder",
+        "to": "market",
+        "fillTo": 9
+      },
+      {
+        "func": "TURN",
+        "turnCycle": "forward"
+      },
+      {
+        "func": "MOVE",
+        "from": "gameHolder",
+        "to": "market",
+        "fillTo": 9
+      },
+      "var x = 1",
+      {
+        "func": "FOREACH",
+        "range": 5,
+        "loopRoutine": [
+          {
+            "func": "SET",
+            "property": "holderid",
+            "value": null,
+            "collection": [
+              "t${x}"
+            ]
+          },
+          {
+            "func": "SET",
+            "property": "text",
+            "value": null,
+            "collection": [
+              "t${x}"
+            ]
+          },
+          {
+            "func": "SET",
+            "property": "thing",
+            "value": null,
+            "collection": [
+              "t${x}"
+            ]
+          },
+          {
+            "func": "SET",
+            "property": "bid",
+            "value": null,
+            "collection": [
+              "t${x}"
+            ]
+          },
+          {
+            "func": "GET",
+            "property": "onlyVisibleForSeat",
+            "collection": [
+              "t${x}"
+            ]
+          },
+          {
+            "func": "GET",
+            "property": "color",
+            "collection": [
+              "${onlyVisibleForSeat}"
+            ]
+          },
+          {
+            "func": "SET",
+            "property": "bgColor",
+            "value": "${color}",
+            "collection": [
+              "t${x}"
+            ]
+          },
+          {
+            "func": "SET",
+            "property": "display",
+            "collection": [
+              "t${x}",
+              "accept${x}",
+              "reject${x}"
+            ],
+            "value": false
+          },
+          "var x = ${x} + 1"
+        ]
+      }
+    ]
+  },
+  "phase3": {
+    "type": "button",
+    "id": "phase3",
+    "x": 1073,
+    "z": 11,
+    "css": {
+      "default": {
+        "background-color": "grey",
+        "border-color": "#595959",
+        "color": "black",
+        "font-size": "16px"
+      },
+      ":hover": {
+        "background-color": "#595959",
+        "border-color": "grey"
+      }
+    },
+    "text": "Player 1",
+    "y": 61,
+    "clickRoutine": [
+      {
+        "func": "TURN",
+        "turnCycle": "seat",
+        "turn": "seat${PROPERTY firstPlayer}"
+      },
+      {
+        "func": "TURN",
+        "turnCycle": "forward"
+      },
+      {
+        "func": "SELECT",
+        "property": "turn",
+        "value": true
+      },
+      {
+        "func": "GET",
+        "property": "index"
+      },
+      {
+        "func": "GET",
+        "property": "player"
+      },
+      {
+        "func": "SET",
+        "property": "text",
+        "value": "Player 1:\n${player}",
+        "collection": [
+          "phase3"
+        ]
+      },
+      {
+        "func": "SET",
+        "property": "firstPlayer",
+        "value": "${index}",
+        "collection": [
+          "phase3"
+        ]
+      },
+      {
+        "func": "MOVE",
+        "from": "gameHolder",
+        "to": "market",
+        "fillTo": 9
+      }
+    ],
+    "firstPlayer": 1,
+    "borderRadius": 5
+  },
+  "reject1": {
+    "type": "button",
+    "id": "reject1",
+    "x": 74,
+    "y": 56,
+    "height": 40,
+    "z": 12,
+    "css": {
+      "default": {
+        "background": "red",
+        "border": "3px solid black",
+        "font-size": "16px"
+      },
+      ":hover": {
+        "background": "darkred"
+      }
+    },
+    "text": "Reject & Pay",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "${PROPERTY parent}"
+      },
+      {
+        "func": "GET",
+        "property": "holderid"
+      },
+      {
+        "func": "GET",
+        "property": "bid"
+      },
+      {
+        "func": "GET",
+        "property": "thing"
+      },
+      {
+        "func": "GET",
+        "property": "onlyVisibleForSeat"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "${onlyVisibleForSeat}"
+      },
+      {
+        "func": "GET",
+        "property": "index"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "${thing}"
+      },
+      {
+        "func": "GET",
+        "property": "cardType"
+      },
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "${holderid}"
+      },
+      {
+        "func": "SELECT",
+        "property": "cardType",
+        "value": "${cardType}",
+        "source": "DEFAULT"
+      },
+      {
+        "func": "MOVE",
+        "to": "h${index}",
+        "count": 1
+      },
+      {
+        "func": "LABEL",
+        "label": "label${index}",
+        "mode": "dec",
+        "value": "${bid}"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "${holderid}"
+      },
+      {
+        "func": "GET",
+        "property": "linkedToSeat"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "${linkedToSeat}"
+      },
+      {
+        "func": "GET",
+        "property": "index"
+      },
+      {
+        "func": "LABEL",
+        "mode": "inc",
+        "label": "label${index}",
+        "value": "${bid}"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "endTurn"
+      },
+      {
+        "func": "CLICK"
+      }
+    ],
+    "parent": "t1",
+    "display": false
+  },
+  "accept1": {
+    "type": "button",
+    "id": "accept1",
+    "y": 56,
+    "height": 40,
+    "z": 12,
+    "css": {
+      "default": {
+        "background": "green",
+        "border": "3px solid black",
+        "font-size": "16px"
+      },
+      ":hover": {
+        "background": "lime"
+      }
+    },
+    "text": "Accept",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "${PROPERTY parent}"
+      },
+      {
+        "func": "GET",
+        "property": "holderid"
+      },
+      {
+        "func": "GET",
+        "property": "bid"
+      },
+      {
+        "func": "GET",
+        "property": "thing"
+      },
+      {
+        "func": "GET",
+        "property": "onlyVisibleForSeat"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "${onlyVisibleForSeat}"
+      },
+      {
+        "func": "GET",
+        "property": "index"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "${thing}"
+      },
+      {
+        "func": "MOVE",
+        "to": "${holderid}"
+      },
+      {
+        "func": "LABEL",
+        "label": "label${index}",
+        "mode": "inc",
+        "value": "${bid}"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "${holderid}"
+      },
+      {
+        "func": "GET",
+        "property": "linkedToSeat"
+      },
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "${linkedToSeat}"
+      },
+      {
+        "func": "SELECT",
+        "property": "type",
+        "source": "DEFAULT",
+        "value": "label"
+      },
+      {
+        "func": "SET",
+        "property": "text",
+        "value": "${bid}",
+        "relation": "-"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "endTurn"
+      },
+      {
+        "func": "CLICK"
+      }
+    ],
+    "parent": "t1",
+    "x": -14,
+    "display": false
+  },
+  "reject2": {
+    "type": "button",
+    "id": "reject2",
+    "x": 74,
+    "y": 56,
+    "height": 40,
+    "z": 12,
+    "css": {
+      "default": {
+        "background": "red",
+        "border": "3px solid black",
+        "font-size": "16px"
+      },
+      ":hover": {
+        "background": "darkred"
+      }
+    },
+    "text": "Reject & Pay",
+    "parent": "t2",
+    "display": false,
+    "inheritFrom": "reject1"
+  },
+  "accept2": {
+    "type": "button",
+    "id": "accept2",
+    "y": 56,
+    "height": 40,
+    "z": 12,
+    "css": {
+      "default": {
+        "background": "green",
+        "border": "3px solid black",
+        "font-size": "16px"
+      },
+      ":hover": {
+        "background": "lime"
+      }
+    },
+    "text": "Accept",
+    "parent": "t2",
+    "x": -14,
+    "display": false,
+    "inheritFrom": "accept1"
+  },
+  "reject3": {
+    "type": "button",
+    "id": "reject3",
+    "x": 74,
+    "y": 56,
+    "height": 40,
+    "z": 12,
+    "css": {
+      "default": {
+        "background": "red",
+        "border": "3px solid black",
+        "font-size": "16px"
+      },
+      ":hover": {
+        "background": "darkred"
+      }
+    },
+    "text": "Reject & Pay",
+    "parent": "t3",
+    "display": false,
+    "inheritFrom": "reject1"
+  },
+  "accept3": {
+    "type": "button",
+    "id": "accept3",
+    "y": 56,
+    "height": 40,
+    "z": 12,
+    "css": {
+      "default": {
+        "background": "green",
+        "border": "3px solid black",
+        "font-size": "16px"
+      },
+      ":hover": {
+        "background": "lime"
+      }
+    },
+    "text": "Accept",
+    "parent": "t3",
+    "x": -14,
+    "display": false,
+    "inheritFrom": "accept1"
+  },
+  "reject4": {
+    "type": "button",
+    "id": "reject4",
+    "x": 74,
+    "y": 56,
+    "height": 40,
+    "z": 12,
+    "css": {
+      "default": {
+        "background": "red",
+        "border": "3px solid black",
+        "font-size": "16px"
+      },
+      ":hover": {
+        "background": "darkred"
+      }
+    },
+    "text": "Reject & Pay",
+    "parent": "t4",
+    "display": false,
+    "inheritFrom": "reject1"
+  },
+  "accept4": {
+    "type": "button",
+    "id": "accept4",
+    "y": 56,
+    "height": 40,
+    "z": 12,
+    "css": {
+      "default": {
+        "background": "green",
+        "border": "3px solid black",
+        "font-size": "16px"
+      },
+      ":hover": {
+        "background": "lime"
+      }
+    },
+    "text": "Accept",
+    "parent": "t4",
+    "x": -14,
+    "display": false,
+    "inheritFrom": "accept1"
+  },
+  "reject5": {
+    "type": "button",
+    "id": "reject5",
+    "x": 74,
+    "y": 56,
+    "height": 40,
+    "z": 12,
+    "css": {
+      "default": {
+        "background": "red",
+        "border": "3px solid black",
+        "font-size": "16px"
+      },
+      ":hover": {
+        "background": "darkred"
+      }
+    },
+    "text": "Reject & Pay",
+    "parent": "t5",
+    "display": false,
+    "inheritFrom": "reject1"
+  },
+  "accept5": {
+    "type": "button",
+    "id": "accept5",
+    "y": 56,
+    "height": 40,
+    "z": 12,
+    "css": {
+      "default": {
+        "background": "green",
+        "border": "3px solid black",
+        "font-size": "16px"
+      },
+      ":hover": {
+        "background": "lime"
+      }
+    },
+    "text": "Accept",
+    "parent": "t5",
+    "x": -14,
+    "display": false,
+    "inheritFrom": "accept1"
+  },
+  "krgr": {
+    "deck": "companyDeck",
+    "type": "card",
+    "cardType": "b",
+    "id": "krgr",
+    "z": 31109,
+    "activeFace": 1,
+    "css": {
+      "position": null,
+      "order": null
+    },
+    "parent": "bHolder"
+  },
+  "yh32": {
+    "deck": "companyDeck",
+    "type": "card",
+    "cardType": "c",
+    "id": "yh32",
+    "parent": "cHolder",
+    "z": 31124
+  },
+  "d67u": {
+    "deck": "companyDeck",
+    "type": "card",
+    "cardType": "d",
+    "id": "d67u",
+    "z": 31139,
+    "parent": "dHolder"
+  },
+  "o17z": {
+    "deck": "companyDeck",
+    "type": "card",
+    "cardType": "b",
+    "id": "o17z",
+    "z": 31110,
+    "parent": "bHolder"
+  },
+  "e03k": {
+    "deck": "companyDeck",
+    "type": "card",
+    "cardType": "c",
+    "id": "e03k",
+    "z": 31125,
+    "parent": "cHolder"
+  },
+  "50ki": {
+    "deck": "companyDeck",
+    "type": "card",
+    "cardType": "d",
+    "id": "50ki",
+    "z": 31140,
+    "parent": "dHolder"
+  },
+  "fqxb": {
+    "deck": "companyDeck",
+    "type": "card",
+    "cardType": "a",
+    "id": "fqxb",
+    "z": 31094,
+    "parent": "aHolder"
+  },
+  "5u5f": {
+    "deck": "companyDeck",
+    "type": "card",
+    "cardType": "b",
+    "id": "5u5f",
+    "z": 31111,
+    "parent": "bHolder"
+  },
+  "30bx": {
+    "deck": "companyDeck",
+    "type": "card",
+    "cardType": "c",
+    "id": "30bx",
+    "z": 31126,
+    "parent": "cHolder"
+  },
+  "ih2b": {
+    "deck": "companyDeck",
+    "type": "card",
+    "cardType": "d",
+    "id": "ih2b",
+    "z": 31141,
+    "parent": "dHolder"
+  },
+  "sd37": {
+    "deck": "companyDeck",
+    "type": "card",
+    "cardType": "a",
+    "id": "sd37",
+    "z": 31095,
+    "parent": "aHolder"
+  },
+  "dbhn": {
+    "deck": "companyDeck",
+    "type": "card",
+    "cardType": "b",
+    "id": "dbhn",
+    "z": 31112,
+    "parent": "bHolder"
+  },
+  "5zu5": {
+    "deck": "companyDeck",
+    "type": "card",
+    "cardType": "c",
+    "id": "5zu5",
+    "z": 31127,
+    "parent": "cHolder"
+  },
+  "gi0j": {
+    "deck": "companyDeck",
+    "type": "card",
+    "cardType": "d",
+    "id": "gi0j",
+    "z": 31142,
+    "parent": "dHolder"
+  },
+  "ldfb": {
+    "deck": "companyDeck",
+    "type": "card",
+    "cardType": "a",
+    "id": "ldfb",
+    "z": 31096,
+    "parent": "aHolder"
+  },
+  "7rg3": {
+    "deck": "companyDeck",
+    "type": "card",
+    "cardType": "b",
+    "id": "7rg3",
+    "z": 31113,
+    "parent": "bHolder"
+  },
+  "yqgu": {
+    "deck": "companyDeck",
+    "type": "card",
+    "cardType": "c",
+    "id": "yqgu",
+    "z": 31128,
+    "parent": "cHolder"
+  },
+  "w6lk": {
+    "deck": "companyDeck",
+    "type": "card",
+    "cardType": "d",
+    "id": "w6lk",
+    "z": 31143,
+    "parent": "dHolder"
+  },
+  "82o5": {
+    "deck": "companyDeck",
+    "type": "card",
+    "cardType": "a",
+    "id": "82o5",
+    "z": 31097,
+    "parent": "aHolder"
+  },
+  "j8mn": {
+    "deck": "companyDeck",
+    "type": "card",
+    "cardType": "b",
+    "id": "j8mn",
+    "z": 31114,
+    "parent": "bHolder"
+  },
+  "qwma": {
+    "deck": "companyDeck",
+    "type": "card",
+    "cardType": "c",
+    "id": "qwma",
+    "z": 31129,
+    "parent": "cHolder"
+  },
+  "mkbl": {
+    "deck": "companyDeck",
+    "type": "card",
+    "cardType": "d",
+    "id": "mkbl",
+    "z": 31144,
+    "parent": "dHolder"
+  },
+  "3zwy": {
+    "deck": "companyDeck",
+    "type": "card",
+    "cardType": "a",
+    "id": "3zwy",
+    "z": 31098,
+    "parent": "aHolder"
+  },
+  "38ut": {
+    "deck": "companyDeck",
+    "type": "card",
+    "cardType": "b",
+    "id": "38ut",
+    "z": 31115,
+    "parent": "bHolder"
+  },
+  "xvz7": {
+    "deck": "companyDeck",
+    "type": "card",
+    "cardType": "c",
+    "id": "xvz7",
+    "z": 31130,
+    "parent": "cHolder"
+  },
+  "6vc2": {
+    "deck": "companyDeck",
+    "type": "card",
+    "cardType": "d",
+    "id": "6vc2",
+    "z": 31145,
+    "parent": "dHolder"
+  },
+  "rre5": {
+    "deck": "companyDeck",
+    "type": "card",
+    "cardType": "a",
+    "id": "rre5",
+    "z": 31099,
+    "parent": "aHolder"
+  },
+  "igh6": {
+    "deck": "companyDeck",
+    "type": "card",
+    "cardType": "b",
+    "id": "igh6",
+    "z": 31116,
+    "parent": "bHolder"
+  },
+  "6xu1": {
+    "deck": "companyDeck",
+    "type": "card",
+    "cardType": "c",
+    "id": "6xu1",
+    "z": 31131,
+    "parent": "cHolder"
+  },
+  "spfk": {
+    "deck": "companyDeck",
+    "type": "card",
+    "cardType": "d",
+    "id": "spfk",
+    "z": 31146,
+    "parent": "dHolder"
+  },
+  "5ed6": {
+    "deck": "companyDeck",
+    "type": "card",
+    "cardType": "a",
+    "id": "5ed6",
+    "z": 31100,
+    "parent": "aHolder"
+  },
+  "yoxc": {
+    "deck": "companyDeck",
+    "type": "card",
+    "cardType": "b",
+    "id": "yoxc",
+    "z": 31117,
+    "parent": "bHolder"
+  },
+  "snzf": {
+    "deck": "companyDeck",
+    "type": "card",
+    "cardType": "c",
+    "id": "snzf",
+    "z": 31132,
+    "parent": "cHolder"
+  },
+  "091s": {
+    "deck": "companyDeck",
+    "type": "card",
+    "cardType": "d",
+    "id": "091s",
+    "z": 31147,
+    "parent": "dHolder"
+  },
+  "rw3r": {
+    "deck": "companyDeck",
+    "type": "card",
+    "cardType": "a",
+    "id": "rw3r",
+    "z": 31101,
+    "parent": "aHolder"
+  },
+  "gh6v": {
+    "deck": "companyDeck",
+    "type": "card",
+    "cardType": "b",
+    "id": "gh6v",
+    "z": 31118,
+    "parent": "bHolder"
+  },
+  "za53": {
+    "deck": "companyDeck",
+    "type": "card",
+    "cardType": "c",
+    "id": "za53",
+    "z": 31133,
+    "parent": "cHolder"
+  },
+  "vtej": {
+    "deck": "companyDeck",
+    "type": "card",
+    "cardType": "d",
+    "id": "vtej",
+    "z": 31148,
+    "parent": "dHolder"
+  },
+  "scy7": {
+    "deck": "companyDeck",
+    "type": "card",
+    "cardType": "a",
+    "id": "scy7",
+    "z": 31102,
+    "parent": "aHolder"
+  },
+  "yvx0": {
+    "deck": "companyDeck",
+    "type": "card",
+    "cardType": "b",
+    "id": "yvx0",
+    "z": 31119,
+    "parent": "bHolder"
+  },
+  "rfy6": {
+    "deck": "companyDeck",
+    "type": "card",
+    "cardType": "c",
+    "id": "rfy6",
+    "z": 31134,
+    "parent": "cHolder"
+  },
+  "trs8": {
+    "deck": "companyDeck",
+    "type": "card",
+    "cardType": "d",
+    "id": "trs8",
+    "z": 31149,
+    "parent": "dHolder"
+  },
+  "jpdm": {
+    "deck": "companyDeck",
+    "type": "card",
+    "cardType": "a",
+    "id": "jpdm",
+    "z": 31103,
+    "parent": "aHolder",
+    "activeFace": 1,
+    "css": {
+      "position": null,
+      "order": null
+    }
+  },
+  "fosr": {
+    "deck": "companyDeck",
+    "type": "card",
+    "cardType": "b",
+    "id": "fosr",
+    "z": 31120,
+    "parent": "bHolder",
+    "activeFace": 1,
+    "css": {
+      "position": null,
+      "order": null
+    }
+  },
+  "s6ez": {
+    "deck": "companyDeck",
+    "type": "card",
+    "cardType": "c",
+    "id": "s6ez",
+    "z": 31135,
+    "parent": "cHolder"
+  },
+  "wm1f": {
+    "deck": "companyDeck",
+    "type": "card",
+    "cardType": "d",
+    "id": "wm1f",
+    "z": 31150,
+    "parent": "dHolder",
+    "activeFace": 1,
+    "css": {
+      "position": null,
+      "order": null
+    }
+  },
+  "wxf2": {
+    "deck": "companyDeck",
+    "type": "card",
+    "cardType": "a",
+    "id": "wxf2",
+    "z": 31104,
+    "parent": "aHolder",
+    "activeFace": 1,
+    "css": {
+      "position": null,
+      "order": null
+    }
+  },
+  "uuyu": {
+    "deck": "companyDeck",
+    "type": "card",
+    "cardType": "b",
+    "id": "uuyu",
+    "z": 31121,
+    "activeFace": 1,
+    "css": {
+      "position": null,
+      "order": null
+    },
+    "parent": "bHolder"
+  },
+  "hp2m": {
+    "deck": "companyDeck",
+    "type": "card",
+    "cardType": "c",
+    "id": "hp2m",
+    "z": 31136,
+    "parent": "cHolder",
+    "activeFace": 1,
+    "css": {
+      "position": null,
+      "order": null
+    }
+  },
+  "g42k": {
+    "deck": "companyDeck",
+    "type": "card",
+    "cardType": "d",
+    "id": "g42k",
+    "z": 31151,
+    "activeFace": 1,
+    "css": {
+      "position": null,
+      "order": null
+    },
+    "parent": "dHolder"
+  },
+  "u1xj": {
+    "deck": "companyDeck",
+    "type": "card",
+    "cardType": "a",
+    "id": "u1xj",
+    "z": 31105,
+    "parent": "aHolder",
+    "activeFace": 1,
+    "css": {
+      "position": null,
+      "order": null
+    }
+  },
+  "y8o1": {
+    "deck": "companyDeck",
+    "type": "card",
+    "cardType": "b",
+    "id": "y8o1",
+    "z": 31122,
+    "activeFace": 1,
+    "css": {
+      "position": null,
+      "order": null
+    },
+    "parent": "bHolder"
+  },
+  "jipd": {
+    "deck": "companyDeck",
+    "type": "card",
+    "cardType": "c",
+    "id": "jipd",
+    "z": 31137,
+    "activeFace": 1,
+    "css": {
+      "position": null,
+      "order": null
+    },
+    "parent": "cHolder"
+  },
+  "vshu": {
+    "deck": "companyDeck",
+    "type": "card",
+    "cardType": "d",
+    "id": "vshu",
+    "z": 31152,
+    "css": {
+      "position": null,
+      "order": null
+    },
+    "parent": "dHolder",
+    "activeFace": 1
+  },
+  "nymn": {
+    "deck": "companyDeck",
+    "type": "card",
+    "cardType": "a",
+    "id": "nymn",
+    "z": 31106,
+    "activeFace": 1,
+    "css": {
+      "position": null,
+      "order": null
+    },
+    "parent": "aHolder"
+  },
+  "nhsh": {
+    "deck": "companyDeck",
+    "type": "card",
+    "cardType": "b",
+    "id": "nhsh",
+    "z": 31123,
+    "activeFace": 1,
+    "css": {
+      "position": null,
+      "order": null
+    },
+    "parent": "bHolder"
+  },
+  "830h": {
+    "deck": "companyDeck",
+    "type": "card",
+    "cardType": "c",
+    "id": "830h",
+    "z": 31138,
+    "activeFace": 1,
+    "css": {
+      "position": null,
+      "order": null
+    },
+    "parent": "cHolder"
+  },
+  "sf5v": {
+    "deck": "companyDeck",
+    "type": "card",
+    "cardType": "d",
+    "id": "sf5v",
+    "z": 31153,
+    "activeFace": 1,
+    "css": {
+      "position": null,
+      "order": null
+    },
+    "parent": "dHolder"
+  },
+  "rw99": {
+    "deck": "companyDeck",
+    "type": "card",
+    "cardType": "a",
+    "id": "rw99",
+    "z": 31107,
+    "activeFace": 1,
+    "css": {
+      "position": null,
+      "order": null
+    },
+    "parent": "aHolder"
+  },
+  "47lg": {
+    "deck": "companyDeck",
+    "type": "card",
+    "cardType": "a",
+    "id": "47lg",
+    "z": 31108,
+    "activeFace": 1,
+    "css": {
+      "position": null,
+      "order": null
+    },
+    "parent": "aHolder"
+  },
+  "fixHolders": {
+    "type": "button",
+    "id": "fixHolders",
+    "x": 1720,
+    "y": 810,
+    "z": 13,
+    "text": "FIX HOLDERS",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "component",
+        "value": "spinner",
+        "collection": "spinners"
+      },
+      {
+        "func": "SET",
+        "property": "linkedToHolders",
+        "value": false,
+        "collection": "spinners"
+      }
+    ]
+  },
+  "_meta": {
+    "version": 17,
+    "info": {
+      "name": "Out of Pocket",
+      "image": "/assets/768951143_44302",
+      "rules": "",
+      "bgg": "https://boardgamegeek.com/boardgame/180899",
+      "year": "2015",
+      "mode": "vs",
+      "time": "60",
+      "attribution": "<div>Implementation and art by Mitchell Stolycia.</div><div><br></div><div>All artwork, including the library image and wheels, is released under CC BY 4.0. Everything else is released under CC0.</div><div><br></div><div>Thank you to mousewax for scripting contributions and assistance.</div><div><br></div><div>The audio file Ponderous.ogg by akx is used to alert the active player of their turn and is available under CC0 at https://github.com/akx/Notifications/.</div>",
+      "lastUpdate": 1750891221507,
+      "showName": true,
+      "skill": "",
+      "description": "Stave off becoming bakrupt in a race against time.",
+      "similarImage": "",
+      "similarName": "Ponzi Scheme",
+      "similarDesigner": "Jesse Li",
+      "similarAwards": "2016 Cardboard Republic Daredevil Laurel Nominee\n2015 Meeples Choice Award Nominee",
+      "ruleText": "",
+      "helpText": "<div><b>Setup</b></div><blockquote><div>Make sure everyone is seated by clicking on a seat, then click <i>Setup</i>.</div></blockquote><div><b>References</b></div><blockquote><div>References are available at the centre left and right of the table.</div></blockquote><div><b>Adjusting your available money</b></div><blockquote><div>Adjust your money accordingly using the <i>-</i> and <i>+</i> buttons nearby your seat. Integers greater than 0 should always be used for either button.</div></blockquote><div><b>Company cards</b></div><blockquote><div>These are played into your coloured holder in the centre of the table.</div></blockquote><div><b>Funds</b></div><blockquote><div>Play to the appropriate time slot on your wheel.</div></blockquote><div>Throughout Phase 1 of a round, click <i>End turn</i> after you have taken your company cards, funds, or passed. The next player will now be highlighted to proceed with their action.</div><div><br></div><div><b>Trading</b></div><div><ol><li>On your turn click the&nbsp;<i>Offer [player name]&nbsp;</i>button for who you would like to make a trade with.</li><li>Within the pop-up, click on a company card that both you and the other player owns. Type an amount of money you would like to offer.</li><li>The player receiving the offer will have the square next to their seat change colour and value to represent the offer you have made.</li><li>The receiving player must now click <i>Accept </i>or <i>Reject &amp; pay</i>. In either case, a card and money will be exchanged automatically, and your turn ended.</li></ol><b>Purchasing VPs</b></div><blockquote><div>Take the black VP card you would like in front of you and adjust your money accordingly using the <i>-</i> and <i>+</i> buttons.</div></blockquote><div><b>Phase 3</b></div><blockquote><div>Click the <b><i>Player 1</i> button</b> to set a new first player. The new first player now discards a funds card from the market to the discard pile. The first player's name will be written on the <i>Player 1</i> button for reference.</div></blockquote><div><b>Advancing time</b></div><blockquote><div>Click on your wheel to advance time by one step. If there was a market crash, click your wheel twice.</div><div>Throughout the game, make sure everyone's wheel is pointing in the same direction.</div></blockquote>",
+      "variantImage": "",
+      "variant": "Out of Pocket",
+      "language": "en-GB",
+      "players": "3-5"
+    }
+  },
+  "wheel4Spinner": {
+    "id": "wheel4Spinner",
+    "linkedToSeat": "seat4",
+    "colour": "#ffffff",
+    "parent": "wheel4",
+    "rotation": 0,
+    "linkedToHolders": false,
+    "inheritFrom": {
+      "seat4": [
+        "color"
+      ],
+      "wheel1Spinner": [
+        "!rotation",
+        "!linkedToHolders"
+      ]
+    }
+  },
+  "wheel1Spinner": {
+    "id": "wheel1Spinner",
+    "width": 211,
+    "height": 183,
+    "z": 103,
+    "movable": false,
+    "classes": "transition",
+    "image": "/assets/-1374569375_7549",
+    "svgReplaces": {
+      "#ffffff": "color"
+    },
+    "clickRoutine": [
+      {
+        "func": "IF",
+        "condition": "${PROPERTY linkedToHolders}",
+        "thenRoutine": [
+          {
+            "func": "GET",
+            "property": "rotation",
+            "collection": [
+              "${PROPERTY parent}"
+            ]
+          },
+          "var newRotation = ${rotation} + 60",
+          {
+            "func": "ROTATE",
+            "angle": "${newRotation}",
+            "collection": [
+              "${PROPERTY parent}"
+            ],
+            "mode": "set"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "GET",
+            "property": "rotation",
+            "collection": [
+              "${PROPERTY id}"
+            ]
+          },
+          "var newRotation = ${rotation} + 60",
+          {
+            "func": "ROTATE",
+            "angle": "${newRotation}",
+            "collection": [
+              "${PROPERTY id}"
+            ],
+            "mode": "set"
+          }
+        ]
+      }
+    ],
+    "component": "spinner",
+    "linkedToHolders": false,
+    "parent": "wheel1",
+    "x": 0,
+    "y": 0,
+    "movableInEdit": false,
+    "inheritFrom": {
+      "seat1": [
+        "color"
+      ]
+    },
+    "rotation": 0,
+    "colour": "#ffe119"
+  },
+  "wheel2": {
+    "id": "wheel2",
+    "x": 1285,
+    "y": 101,
+    "z": 112,
+    "linkedToSeat": "seat2",
+    "rotation": 0,
+    "inheritFrom": {
+      "wheel1": [
+        "!rotation"
+      ]
+    }
+  },
+  "wheel2Spinner": {
+    "id": "wheel2Spinner",
+    "parent": "wheel2",
+    "rotation": 0,
+    "inheritFrom": {
+      "seat2": [
+        "color"
+      ],
+      "wheel1Spinner": [
+        "!rotation",
+        "!linkedToHolders"
+      ]
+    },
+    "linkedToSeat": "seat2",
+    "linkedToHolders": false,
+    "colour": "#ffffff"
+  },
+  "wheel3Spinner": {
+    "id": "wheel3Spinner",
+    "parent": "wheel3",
+    "rotation": 0,
+    "inheritFrom": {
+      "seat3": [
+        "color"
+      ],
+      "wheel1Spinner": [
+        "!rotation",
+        "!linkedToHolders"
+      ]
+    },
+    "linkedToSeat": "seat3",
+    "linkedToHolders": false,
+    "colour": "#ffffff"
+  },
+  "wheel5Spinner": {
+    "id": "wheel5Spinner",
+    "parent": "wheel5",
+    "rotation": 0,
+    "inheritFrom": {
+      "seat5": [
+        "color"
+      ],
+      "wheel1Spinner": [
+        "!rotation",
+        "!linkedToHolders"
+      ]
+    },
+    "linkedToSeat": "seat5",
+    "colour": "#f58231",
+    "linkedToHolders": false
+  },
+  "unFixHolders": {
+    "type": "button",
+    "id": "unFixHolders",
+    "x": 1718,
+    "y": 899,
+    "z": 13,
+    "text": "UNFIX HOLDERS",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "component",
+        "value": "spinner",
+        "collection": "spinners"
+      },
+      {
+        "func": "SET",
+        "property": "linkedToHolders",
+        "value": true,
+        "collection": "spinners"
+      }
+    ]
+  },
+  "linkLabels": {
+    "type": "button",
+    "id": "linkLabels",
+    "x": 1279,
+    "y": 1062,
+    "z": 14,
+    "text": "linkLabels",
+    "clickRoutine": [
+      {
+        "func": "FOREACH",
+        "range": 5,
+        "loopRoutine": [
+          {
+            "func": "SELECT",
+            "property": "id",
+            "value": "label${value}"
+          },
+          {
+            "func": "SET",
+            "property": "onlyVisibleForSeat",
+            "value": "seat${value}"
+          },
+          "var value = ${value} + 1"
+        ]
+      }
+    ]
+  },
+  "k53u": {
+    "type": "button",
+    "text": "Refill market",
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "gameHolder",
+        "to": "market",
+        "fillTo": 9
+      }
+    ],
+    "x": 1073,
+    "y": 171,
+    "z": 15,
+    "id": "k53u",
+    "height": 50,
+    "css": {
+      "default": {
+        "background": "white",
+        "border": "3px solid black",
+        "color": "black"
+      },
+      ":hover": {
+        "border": "3px solid black",
+        "background": "lightgrey"
+      }
+    }
+  },
+  "YourTurnPopup": {
+    "id": "YourTurnPopup",
+    "width": 1600,
+    "height": 1000,
+    "borderRadius": 0,
+    "layer": 100,
+    "z": 78788,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "default": {
+        "border-radius": "5px",
+        "background": "#00000044",
+        "font-size": "6em",
+        "font-weight": "900",
+        "text-align": "center",
+        "color": "#ff0000",
+        "line-height": "1",
+        "display": "flex",
+        "flex-direction": "column",
+        "justify-content": "center",
+        "align-items": "center",
+        "align-content": "center"
+      },
+      " > *": {
+        "border": "3px solid black"
+      },
+      " p": {
+        "margin": "0",
+        "padding": "0.25em 0.5em",
+        "background": "white",
+        "border-radius": "30px"
+      },
+      " p span": {
+        "font-weight": "normal",
+        "display": "block",
+        "font-size": "0.6em",
+        "background": "white"
+      }
+    },
+    "html": "<p>IT'S YOUR TURN!<span>Click anywhere to continue</span></p>",
+    "onlyVisibleForSeat": "",
+    "resetProperties": {
+      "onlyVisibleForSeat": ""
+    },
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": [
+          "${PROPERTY id}"
+        ],
+        "property": "onlyVisibleForSeat",
+        "value": ""
+      }
+    ]
+  },
+  "79w7": {
+    "type": "holder",
+    "x": 445,
+    "z": 6,
+    "id": "79w7",
+    "css": {},
+    "width": 126,
+    "height": 94,
+    "scale": 0.63,
+    "y": -11,
+    "dropOffsetX": -17,
+    "dropOffsetY": -12,
+    "preventPiles": true
+  },
+  "39yk": {
+    "type": "pile",
+    "parent": "bearHolder",
+    "x": 4,
+    "y": 4,
+    "width": 160,
+    "height": 120,
+    "id": "39yk"
+  },
+  "grra": {
+    "type": "pile",
+    "parent": "fundHolder",
+    "x": 4,
+    "y": 4,
+    "width": 160,
+    "height": 120,
+    "id": "grra"
+  },
+  "discardL": {
+    "type": "label",
+    "id": "discardL",
+    "x": 474,
+    "y": 65,
+    "width": 70,
+    "z": 4,
+    "css": {
+      "color": "black"
+    },
+    "text": "Discard"
+  }
+}

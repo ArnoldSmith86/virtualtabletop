@@ -1,0 +1,174 @@
+{
+  "_meta": {
+    "version": 12,
+    "info": {
+      "name": "Appearance - CSS",
+      "image": "/assets/1323294024_5493",
+      "rules": "",
+      "bgg": "",
+      "year": "2022",
+      "mode": "Tutorial",
+      "time": "",
+      "attribution": "",
+      "showName": false,
+      "lastUpdate": 1752119024606,
+      "skill": "",
+      "description": "",
+      "similarImage": "",
+      "similarName": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": "",
+      "similarDesigner": "",
+      "variantImage": "",
+      "variant": "animatePropertyChange",
+      "language": "en-US",
+      "players": "1"
+    }
+  },
+  "overview": {
+    "id": "overview",
+    "x": 108,
+    "y": 80,
+    "width": 1400,
+    "height": 150,
+    "layer": -3,
+    "z": 129,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "font-size: 25px; ",
+    "text": "The 'animatePropertyChange' property can be used to set or change css properties for designated periods of time. It sets a class on a widget temporarily (default 1000ms) when a delta contains the property. The default class name is animate_ followed by the property name. There are limitations on this (for example, when players join the room after a css animation has started) so be careful in its use."
+  },
+  "title": {
+    "id": "title",
+    "width": 1600,
+    "height": 70,
+    "z": 70,
+    "css": "font-size: 60px; text-align:center",
+    "text": "CSS: animatePropertyChange",
+    "movable": false,
+    "movableInEdit": false
+  },
+  "dice3text": {
+    "id": "dice3text",
+    "x": 750,
+    "y": 400,
+    "width": 300,
+    "z": 185,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "font-size: 22px; ",
+    "text": "The poker chip above uses two property changes: one on x and one on y. When x changes, the poker chip is highlighted in yellow. When y, changes, it is highlighted in red. Drag the chip to see."
+  },
+  "button1text": {
+    "id": "button1text",
+    "x": 50,
+    "y": 400,
+    "width": 300,
+    "z": 185,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "font-size: 22px; ",
+    "text": "This shows the simple form of 'animatePropertyChange'. When you click the button, it will turn red for 1 second. Until this property was implemented, the only way to do something like this was through use of a timer."
+  },
+  "button2text": {
+    "id": "button2text",
+    "x": 400,
+    "y": 400,
+    "width": 300,
+    "z": 185,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "font-size: 22px; ",
+    "text": "This shows a more complex form of 'animatePropertyChange'. Using this format, you can change how long the change is effective.  In this case, the font size is decreased for 5 seconds after clicking."
+  },
+  "button1": {
+    "type": "button",
+    "id": "button1",
+    "x": 142,
+    "y": 275,
+    "z": 8,
+    "animatePropertyChange": [
+      "clickCount"
+    ],
+    "css": {
+      ".animate_clickCount": {
+        "background": "red"
+      }
+    },
+    "text": "Color Demo",
+    "clickCount": 4,
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "clickCount",
+        "relation": "+",
+        "value": 1
+      }
+    ]
+  },
+  "button2": {
+    "type": "button",
+    "id": "button2",
+    "x": 506,
+    "y": 278,
+    "z": 13,
+    "animatePropertyChange": [
+      {
+        "property": "clickCount",
+        "duration": 5000
+      }
+    ],
+    "css": {
+      ".animate_clickCount": {
+        "font-size": "10px"
+      }
+    },
+    "text": "Font Size Demo",
+    "clickCount": 2,
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "clickCount",
+        "relation": "+",
+        "value": 1
+      }
+    ]
+  },
+  "2khc": {
+    "x": 853,
+    "y": 274,
+    "width": 73,
+    "height": 73,
+    "classes": "pokerChip",
+    "color": "#1f5ca6",
+    "image": "i/game-pieces/2D/Poker-2D.svg",
+    "svgReplaces": {
+      "#accentColor1": "color",
+      "#accentColor2": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth",
+      "#labelColor": "labelColor",
+      "#primaryColor": "color"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 2,
+    "labelColor": "#00000022",
+    "z": 210,
+    "id": "2khc",
+    "css": {
+      ".animate_x": {
+        "box-shadow": "0px 0px 25px yellow"
+      },
+      ".animate_y": {
+        "box-shadow": "0px 0px 25px red"
+      }
+    },
+    "animatePropertyChange": [
+      "x",
+      "y"
+    ]
+  }
+}

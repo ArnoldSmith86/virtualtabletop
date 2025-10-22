@@ -1,0 +1,1258 @@
+{
+  "_meta": {
+    "version": 17,
+    "info": {
+      "name": "121 Fundamental Widget Properties",
+      "image": "/assets/1251448927_9487",
+      "rules": "",
+      "bgg": "",
+      "year": "",
+      "mode": "Tutorial",
+      "time": "",
+      "attribution": "",
+      "lastUpdate": 1749051108626,
+      "showName": false,
+      "skill": "",
+      "description": "",
+      "similarImage": "",
+      "similarName": "",
+      "similarDesigner": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": "",
+      "variantImage": "",
+      "variant": "Width, Height, and Scale",
+      "language": "en-US",
+      "players": "1"
+    }
+  },
+  "title": {
+    "id": "title",
+    "x": 400,
+    "y": -2,
+    "width": 800,
+    "height": 60,
+    "z": 74,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "font-size: 60px;text-align:center",
+    "text": "Width, Height, and Scale"
+  },
+  "overview": {
+    "id": "overview",
+    "x": 108,
+    "y": 80,
+    "width": 1400,
+    "height": 150,
+    "layer": -2,
+    "z": 129,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "font-size: 25px; ",
+    "html": "The <b>width</b> and <b>height</b> properties define the size of the (usually invisible) box that surrounds widgets and thus, the size of the visible part of the widget as well. The unit size is in pixels. When you add a new widget, it gets the default <b>width</b> and <b>height</b> for that widget type so the property is greyed out in the Editor. Like with <b>x,y</b> coordinates, you can change <b>width</b> and <b>height</b> in the Editor or using routines.\n\nThe <b>scale</b> property is a way to change the size the widget appears on the screen. It is useful in some situations to make widgets fit within the space allowed. However, use caution as <b>scale</b> is a CSS transformation of the widget in the browser. This means that things such as <b>x.y</b> coordinates for the widget and its children, as well as rotation and some other properties, may not directly correspond with the properties you see in the Editor. To reduce the size the widget appears use <b>scale</b> values between 0 and 1. To increase the size, use values larger than 1. Fractional values are allowed."
+  },
+  "button3": {
+    "type": "button",
+    "id": "button3",
+    "x": 743,
+    "y": 402,
+    "z": 22840,
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": [
+          "holder"
+        ],
+        "property": "scale",
+        "relation": "+",
+        "value": 0.5
+      }
+    ],
+    "text": "Child's scale"
+  },
+  "text1": {
+    "id": "text1",
+    "x": 4,
+    "y": 552,
+    "width": 300,
+    "z": 185,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "22px"
+    },
+    "html": "The button above is the default <b>width</b> and <b>height</b> for a button. Click it to increase the <b>height</b> by 10 pixels per click. Notice how the the <b>x,y</b> position is the same and the widget gets larger down and to the right. After increasing the <b>height</b> several times, erase the <b>height</b> line in the editor. Notice how it goes back to the default value.",
+    "layer": -2
+  },
+  "button1": {
+    "type": "button",
+    "id": "button1",
+    "x": 95,
+    "y": 402,
+    "z": 22841,
+    "clickRoutine": [
+      "// SET the pre-defined collection `thisButton` (which is the widget the routine is in) to increase height by 10.",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "height",
+        "relation": "+",
+        "value": 10
+      }
+    ],
+    "text": "width & height"
+  },
+  "text2": {
+    "id": "text2",
+    "x": 325,
+    "y": 552,
+    "width": 300,
+    "z": 121,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "22px"
+    },
+    "html": "The buttons above increase and decrease the <b>scale</b> of the meeple by 0.1. Notice how the <b>x,y</b> coords and <b>width/height</b> values stay the same. But the widget grows or shrinks and it looks as if the positional and size values should be different.",
+    "layer": -2
+  },
+  "text3": {
+    "id": "text3",
+    "x": 651,
+    "y": 552,
+    "width": 300,
+    "z": 9732,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "22px"
+    },
+    "html": "The button above increase the <b>scale</b> of the card holder by 0.5 per click. Notice how everything connected with the holder gets larger: cards, button, and pile handle. The cards are not actually children of the holder but of the pile and the pile is a child of the holder. However, <b>scale</b> impacts all levels of children. Drag a card or the pile out of the holder. They return to their normal size because they are no longer parented to the scaled holder.",
+    "layer": -2
+  },
+  "meeple": {
+    "id": "meeple",
+    "x": 442,
+    "y": 842,
+    "width": 56,
+    "height": 56,
+    "z": 9736,
+    "color": "#1f5ca6",
+    "css": "border-radius: 100% 100% 25% 25%; ",
+    "image": "i/game-pieces/2D/Meeple-2D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 3
+  },
+  "button2a": {
+    "type": "button",
+    "id": "button2a",
+    "x": 345,
+    "y": 429,
+    "height": 40,
+    "z": 22842,
+    "text": "scale -",
+    "clickRoutine": [
+      "// This time, instead of using a pre-defined collection, the SET uses an anonymous collection. It acts directly on the widget with the `id` of `meeple` and decreases the scale.",
+      {
+        "func": "SET",
+        "collection": [
+          "meeple"
+        ],
+        "property": "scale",
+        "relation": "-",
+        "value": 0.1
+      }
+    ]
+  },
+  "button2b": {
+    "type": "button",
+    "id": "button2b",
+    "x": 488,
+    "y": 429,
+    "height": 40,
+    "z": 22843,
+    "text": "scale +",
+    "clickRoutine": [
+      "// This time, instead of using a pre-defined collection, the SET uses an anonymous collection. It acts directly on the widget with the `id` of `meeple` and increases the scale.",
+      {
+        "func": "SET",
+        "collection": [
+          "meeple"
+        ],
+        "property": "scale",
+        "relation": "+",
+        "value": 0.1
+      }
+    ]
+  },
+  "vxhnD": {
+    "type": "deck",
+    "id": "vxhnD",
+    "parent": "holder",
+    "x": 12,
+    "y": 41,
+    "cardTypes": {
+      "C 01": {
+        "image": "/i/cards-default/AC.svg",
+        "suit": "C",
+        "suitColor": "♣",
+        "suitAlt": "1♣",
+        "rank": "01",
+        "rankA": "5A",
+        "rankFixed": "01 C"
+      },
+      "C 02": {
+        "image": "/i/cards-default/2C.svg",
+        "suit": "C",
+        "suitColor": "♣",
+        "suitAlt": "1♣",
+        "rank": "02",
+        "rankA": "02",
+        "rankFixed": "02 C"
+      },
+      "C 03": {
+        "image": "/i/cards-default/3C.svg",
+        "suit": "C",
+        "suitColor": "♣",
+        "suitAlt": "1♣",
+        "rank": "03",
+        "rankA": "03",
+        "rankFixed": "03 C"
+      },
+      "C 04": {
+        "image": "/i/cards-default/4C.svg",
+        "suit": "C",
+        "suitColor": "♣",
+        "suitAlt": "1♣",
+        "rank": "04",
+        "rankA": "04",
+        "rankFixed": "04 C"
+      },
+      "C 05": {
+        "image": "/i/cards-default/5C.svg",
+        "suit": "C",
+        "suitColor": "♣",
+        "suitAlt": "1♣",
+        "rank": "05",
+        "rankA": "05",
+        "rankFixed": "05 C"
+      },
+      "C 06": {
+        "image": "/i/cards-default/6C.svg",
+        "suit": "C",
+        "suitColor": "♣",
+        "suitAlt": "1♣",
+        "rank": "06",
+        "rankA": "06",
+        "rankFixed": "06 C"
+      },
+      "C 07": {
+        "image": "/i/cards-default/7C.svg",
+        "suit": "C",
+        "suitColor": "♣",
+        "suitAlt": "1♣",
+        "rank": "07",
+        "rankA": "07",
+        "rankFixed": "07 C"
+      },
+      "C 08": {
+        "image": "/i/cards-default/8C.svg",
+        "suit": "C",
+        "suitColor": "♣",
+        "suitAlt": "1♣",
+        "rank": "08",
+        "rankA": "08",
+        "rankFixed": "08 C"
+      },
+      "C 09": {
+        "image": "/i/cards-default/9C.svg",
+        "suit": "C",
+        "suitColor": "♣",
+        "suitAlt": "1♣",
+        "rank": "09",
+        "rankA": "09",
+        "rankFixed": "09 C"
+      },
+      "C 10": {
+        "image": "/i/cards-default/TC.svg",
+        "suit": "C",
+        "suitColor": "♣",
+        "suitAlt": "1♣",
+        "rank": "10",
+        "rankA": "10",
+        "rankFixed": "10 C"
+      },
+      "C 2J": {
+        "image": "/i/cards-default/JC.svg",
+        "suit": "C",
+        "suitColor": "♣",
+        "suitAlt": "1♣",
+        "rank": "2J",
+        "rankA": "2J",
+        "rankFixed": "2J C"
+      },
+      "C 3Q": {
+        "image": "/i/cards-default/QC.svg",
+        "suit": "C",
+        "suitColor": "♣",
+        "suitAlt": "1♣",
+        "rank": "3Q",
+        "rankA": "3Q",
+        "rankFixed": "3Q C"
+      },
+      "C 4K": {
+        "image": "/i/cards-default/KC.svg",
+        "suit": "C",
+        "suitColor": "♣",
+        "suitAlt": "1♣",
+        "rank": "4K",
+        "rankA": "4K",
+        "rankFixed": "4K C"
+      },
+      "D 01": {
+        "image": "/i/cards-default/AD.svg",
+        "suit": "D",
+        "suitColor": "♦",
+        "suitAlt": "4♦",
+        "rank": "01",
+        "rankA": "5A",
+        "rankFixed": "01 D"
+      },
+      "D 02": {
+        "image": "/i/cards-default/2D.svg",
+        "suit": "D",
+        "suitColor": "♦",
+        "suitAlt": "4♦",
+        "rank": "02",
+        "rankA": "02",
+        "rankFixed": "02 D"
+      },
+      "D 03": {
+        "image": "/i/cards-default/3D.svg",
+        "suit": "D",
+        "suitColor": "♦",
+        "suitAlt": "4♦",
+        "rank": "03",
+        "rankA": "03",
+        "rankFixed": "03 D"
+      },
+      "D 04": {
+        "image": "/i/cards-default/4D.svg",
+        "suit": "D",
+        "suitColor": "♦",
+        "suitAlt": "4♦",
+        "rank": "04",
+        "rankA": "04",
+        "rankFixed": "04 D"
+      },
+      "D 05": {
+        "image": "/i/cards-default/5D.svg",
+        "suit": "D",
+        "suitColor": "♦",
+        "suitAlt": "4♦",
+        "rank": "05",
+        "rankA": "05",
+        "rankFixed": "05 D"
+      },
+      "D 06": {
+        "image": "/i/cards-default/6D.svg",
+        "suit": "D",
+        "suitColor": "♦",
+        "suitAlt": "4♦",
+        "rank": "06",
+        "rankA": "06",
+        "rankFixed": "06 D"
+      },
+      "D 07": {
+        "image": "/i/cards-default/7D.svg",
+        "suit": "D",
+        "suitColor": "♦",
+        "suitAlt": "4♦",
+        "rank": "07",
+        "rankA": "07",
+        "rankFixed": "07 D"
+      },
+      "D 08": {
+        "image": "/i/cards-default/8D.svg",
+        "suit": "D",
+        "suitColor": "♦",
+        "suitAlt": "4♦",
+        "rank": "08",
+        "rankA": "08",
+        "rankFixed": "08 D"
+      },
+      "D 09": {
+        "image": "/i/cards-default/9D.svg",
+        "suit": "D",
+        "suitColor": "♦",
+        "suitAlt": "4♦",
+        "rank": "09",
+        "rankA": "09",
+        "rankFixed": "09 D"
+      },
+      "D 10": {
+        "image": "/i/cards-default/TD.svg",
+        "suit": "D",
+        "suitColor": "♦",
+        "suitAlt": "4♦",
+        "rank": "10",
+        "rankA": "10",
+        "rankFixed": "10 D"
+      },
+      "D 2J": {
+        "image": "/i/cards-default/JD.svg",
+        "suit": "D",
+        "suitColor": "♦",
+        "suitAlt": "4♦",
+        "rank": "2J",
+        "rankA": "2J",
+        "rankFixed": "2J D"
+      },
+      "D 3Q": {
+        "image": "/i/cards-default/QD.svg",
+        "suit": "D",
+        "suitColor": "♦",
+        "suitAlt": "4♦",
+        "rank": "3Q",
+        "rankA": "3Q",
+        "rankFixed": "3Q D"
+      },
+      "D 4K": {
+        "image": "/i/cards-default/KD.svg",
+        "suit": "D",
+        "suitColor": "♦",
+        "suitAlt": "4♦",
+        "rank": "4K",
+        "rankA": "4K",
+        "rankFixed": "4K D"
+      },
+      "H 01": {
+        "image": "/i/cards-default/AH.svg",
+        "suit": "H",
+        "suitColor": "♥",
+        "suitAlt": "2♥",
+        "rank": "01",
+        "rankA": "5A",
+        "rankFixed": "01 H"
+      },
+      "H 02": {
+        "image": "/i/cards-default/2H.svg",
+        "suit": "H",
+        "suitColor": "♥",
+        "suitAlt": "2♥",
+        "rank": "02",
+        "rankA": "02",
+        "rankFixed": "02 H"
+      },
+      "H 03": {
+        "image": "/i/cards-default/3H.svg",
+        "suit": "H",
+        "suitColor": "♥",
+        "suitAlt": "2♥",
+        "rank": "03",
+        "rankA": "03",
+        "rankFixed": "03 H"
+      },
+      "H 04": {
+        "image": "/i/cards-default/4H.svg",
+        "suit": "H",
+        "suitColor": "♥",
+        "suitAlt": "2♥",
+        "rank": "04",
+        "rankA": "04",
+        "rankFixed": "04 H"
+      },
+      "H 05": {
+        "image": "/i/cards-default/5H.svg",
+        "suit": "H",
+        "suitColor": "♥",
+        "suitAlt": "2♥",
+        "rank": "05",
+        "rankA": "05",
+        "rankFixed": "05 H"
+      },
+      "H 06": {
+        "image": "/i/cards-default/6H.svg",
+        "suit": "H",
+        "suitColor": "♥",
+        "suitAlt": "2♥",
+        "rank": "06",
+        "rankA": "06",
+        "rankFixed": "06 H"
+      },
+      "H 07": {
+        "image": "/i/cards-default/7H.svg",
+        "suit": "H",
+        "suitColor": "♥",
+        "suitAlt": "2♥",
+        "rank": "07",
+        "rankA": "07",
+        "rankFixed": "07 H"
+      },
+      "H 08": {
+        "image": "/i/cards-default/8H.svg",
+        "suit": "H",
+        "suitColor": "♥",
+        "suitAlt": "2♥",
+        "rank": "08",
+        "rankA": "08",
+        "rankFixed": "08 H"
+      },
+      "H 09": {
+        "image": "/i/cards-default/9H.svg",
+        "suit": "H",
+        "suitColor": "♥",
+        "suitAlt": "2♥",
+        "rank": "09",
+        "rankA": "09",
+        "rankFixed": "09 H"
+      },
+      "H 10": {
+        "image": "/i/cards-default/TH.svg",
+        "suit": "H",
+        "suitColor": "♥",
+        "suitAlt": "2♥",
+        "rank": "10",
+        "rankA": "10",
+        "rankFixed": "10 H"
+      },
+      "H 2J": {
+        "image": "/i/cards-default/JH.svg",
+        "suit": "H",
+        "suitColor": "♥",
+        "suitAlt": "2♥",
+        "rank": "2J",
+        "rankA": "2J",
+        "rankFixed": "2J H"
+      },
+      "H 3Q": {
+        "image": "/i/cards-default/QH.svg",
+        "suit": "H",
+        "suitColor": "♥",
+        "suitAlt": "2♥",
+        "rank": "3Q",
+        "rankA": "3Q",
+        "rankFixed": "3Q H"
+      },
+      "H 4K": {
+        "image": "/i/cards-default/KH.svg",
+        "suit": "H",
+        "suitColor": "♥",
+        "suitAlt": "2♥",
+        "rank": "4K",
+        "rankA": "4K",
+        "rankFixed": "4K H"
+      },
+      "S 01": {
+        "image": "/i/cards-default/AS.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "01",
+        "rankA": "5A",
+        "rankFixed": "01 S"
+      },
+      "S 02": {
+        "image": "/i/cards-default/2S.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "02",
+        "rankA": "02",
+        "rankFixed": "02 S"
+      },
+      "S 03": {
+        "image": "/i/cards-default/3S.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "03",
+        "rankA": "03",
+        "rankFixed": "03 S"
+      },
+      "S 04": {
+        "image": "/i/cards-default/4S.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "04",
+        "rankA": "04",
+        "rankFixed": "04 S"
+      },
+      "S 05": {
+        "image": "/i/cards-default/5S.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "05",
+        "rankA": "05",
+        "rankFixed": "05 S"
+      },
+      "S 06": {
+        "image": "/i/cards-default/6S.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "06",
+        "rankA": "06",
+        "rankFixed": "06 S"
+      },
+      "S 07": {
+        "image": "/i/cards-default/7S.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "07",
+        "rankA": "07",
+        "rankFixed": "07 S"
+      },
+      "S 08": {
+        "image": "/i/cards-default/8S.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "08",
+        "rankA": "08",
+        "rankFixed": "08 S"
+      },
+      "S 09": {
+        "image": "/i/cards-default/9S.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "09",
+        "rankA": "09",
+        "rankFixed": "09 S"
+      },
+      "S 10": {
+        "image": "/i/cards-default/TS.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "10",
+        "rankA": "10",
+        "rankFixed": "10 S"
+      },
+      "S 2J": {
+        "image": "/i/cards-default/JS.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "2J",
+        "rankA": "2J",
+        "rankFixed": "2J S"
+      },
+      "S 3Q": {
+        "image": "/i/cards-default/QS.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "3Q",
+        "rankA": "3Q",
+        "rankFixed": "3Q S"
+      },
+      "S 4K": {
+        "image": "/i/cards-default/KS.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "4K",
+        "rankA": "4K",
+        "rankFixed": "4K S"
+      }
+    },
+    "faceTemplates": [
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 103,
+            "height": 160,
+            "color": "transparent",
+            "value": "/i/cards-default/2B.svg"
+          }
+        ]
+      },
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 103,
+            "height": 160,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "holder": {
+    "type": "holder",
+    "id": "holder",
+    "x": 1064,
+    "y": 549,
+    "z": 133,
+    "dropTarget": {
+      "type": "card"
+    }
+  },
+  "pt1a": {
+    "deck": "vxhnD",
+    "type": "card",
+    "cardType": "C 01",
+    "id": "pt1a",
+    "z": 283,
+    "parent": "7gtc"
+  },
+  "b5ux": {
+    "deck": "vxhnD",
+    "type": "card",
+    "cardType": "C 02",
+    "id": "b5ux",
+    "z": 285,
+    "parent": "7gtc"
+  },
+  "7gtc": {
+    "type": "pile",
+    "width": 103,
+    "height": 160,
+    "id": "7gtc",
+    "z": 387,
+    "parent": "holder"
+  },
+  "p0m0": {
+    "deck": "vxhnD",
+    "type": "card",
+    "cardType": "C 03",
+    "id": "p0m0",
+    "z": 287,
+    "parent": "7gtc"
+  },
+  "sj6q": {
+    "deck": "vxhnD",
+    "type": "card",
+    "cardType": "C 04",
+    "id": "sj6q",
+    "z": 289,
+    "parent": "7gtc"
+  },
+  "go2o": {
+    "deck": "vxhnD",
+    "type": "card",
+    "cardType": "C 05",
+    "id": "go2o",
+    "z": 291,
+    "parent": "7gtc"
+  },
+  "1ebp": {
+    "deck": "vxhnD",
+    "type": "card",
+    "cardType": "C 06",
+    "id": "1ebp",
+    "z": 293,
+    "parent": "7gtc"
+  },
+  "phrx": {
+    "deck": "vxhnD",
+    "type": "card",
+    "cardType": "C 07",
+    "id": "phrx",
+    "z": 295,
+    "parent": "7gtc"
+  },
+  "jdsu": {
+    "deck": "vxhnD",
+    "type": "card",
+    "cardType": "C 08",
+    "id": "jdsu",
+    "z": 297,
+    "parent": "7gtc"
+  },
+  "b0k4": {
+    "deck": "vxhnD",
+    "type": "card",
+    "cardType": "C 09",
+    "id": "b0k4",
+    "z": 299,
+    "parent": "7gtc"
+  },
+  "20m2": {
+    "deck": "vxhnD",
+    "type": "card",
+    "cardType": "C 10",
+    "id": "20m2",
+    "z": 301,
+    "parent": "7gtc"
+  },
+  "v0qy": {
+    "deck": "vxhnD",
+    "type": "card",
+    "cardType": "C 2J",
+    "id": "v0qy",
+    "z": 303,
+    "parent": "7gtc"
+  },
+  "1x2l": {
+    "deck": "vxhnD",
+    "type": "card",
+    "cardType": "C 3Q",
+    "id": "1x2l",
+    "z": 305,
+    "parent": "7gtc"
+  },
+  "nfye": {
+    "deck": "vxhnD",
+    "type": "card",
+    "cardType": "C 4K",
+    "id": "nfye",
+    "z": 307,
+    "parent": "7gtc"
+  },
+  "9kmh": {
+    "deck": "vxhnD",
+    "type": "card",
+    "cardType": "D 01",
+    "id": "9kmh",
+    "z": 309,
+    "parent": "7gtc"
+  },
+  "pxpg": {
+    "deck": "vxhnD",
+    "type": "card",
+    "cardType": "D 02",
+    "id": "pxpg",
+    "z": 311,
+    "parent": "7gtc"
+  },
+  "40uh": {
+    "deck": "vxhnD",
+    "type": "card",
+    "cardType": "D 03",
+    "id": "40uh",
+    "z": 313,
+    "parent": "7gtc"
+  },
+  "71es": {
+    "deck": "vxhnD",
+    "type": "card",
+    "cardType": "D 04",
+    "id": "71es",
+    "z": 315,
+    "parent": "7gtc"
+  },
+  "9nbh": {
+    "deck": "vxhnD",
+    "type": "card",
+    "cardType": "D 05",
+    "id": "9nbh",
+    "z": 317,
+    "parent": "7gtc"
+  },
+  "4ws9": {
+    "deck": "vxhnD",
+    "type": "card",
+    "cardType": "D 06",
+    "id": "4ws9",
+    "z": 319,
+    "parent": "7gtc"
+  },
+  "70sd": {
+    "deck": "vxhnD",
+    "type": "card",
+    "cardType": "D 07",
+    "id": "70sd",
+    "z": 321,
+    "parent": "7gtc"
+  },
+  "b4vt": {
+    "deck": "vxhnD",
+    "type": "card",
+    "cardType": "D 08",
+    "id": "b4vt",
+    "z": 323,
+    "parent": "7gtc"
+  },
+  "dy75": {
+    "deck": "vxhnD",
+    "type": "card",
+    "cardType": "D 09",
+    "id": "dy75",
+    "z": 325,
+    "parent": "7gtc"
+  },
+  "cwkx": {
+    "deck": "vxhnD",
+    "type": "card",
+    "cardType": "D 10",
+    "id": "cwkx",
+    "z": 327,
+    "parent": "7gtc"
+  },
+  "qdsr": {
+    "deck": "vxhnD",
+    "type": "card",
+    "cardType": "D 2J",
+    "id": "qdsr",
+    "z": 329,
+    "parent": "7gtc"
+  },
+  "f16b": {
+    "deck": "vxhnD",
+    "type": "card",
+    "cardType": "D 3Q",
+    "id": "f16b",
+    "z": 331,
+    "parent": "7gtc"
+  },
+  "hhes": {
+    "deck": "vxhnD",
+    "type": "card",
+    "cardType": "D 4K",
+    "id": "hhes",
+    "z": 333,
+    "parent": "7gtc"
+  },
+  "yo0y": {
+    "deck": "vxhnD",
+    "type": "card",
+    "cardType": "H 01",
+    "id": "yo0y",
+    "z": 335,
+    "parent": "7gtc"
+  },
+  "hi61": {
+    "deck": "vxhnD",
+    "type": "card",
+    "cardType": "H 02",
+    "id": "hi61",
+    "z": 337,
+    "parent": "7gtc"
+  },
+  "rvzo": {
+    "deck": "vxhnD",
+    "type": "card",
+    "cardType": "H 03",
+    "id": "rvzo",
+    "z": 339,
+    "parent": "7gtc"
+  },
+  "fobu": {
+    "deck": "vxhnD",
+    "type": "card",
+    "cardType": "H 04",
+    "id": "fobu",
+    "z": 341,
+    "parent": "7gtc"
+  },
+  "fw23": {
+    "deck": "vxhnD",
+    "type": "card",
+    "cardType": "H 05",
+    "id": "fw23",
+    "z": 343,
+    "parent": "7gtc"
+  },
+  "wpet": {
+    "deck": "vxhnD",
+    "type": "card",
+    "cardType": "H 06",
+    "id": "wpet",
+    "z": 345,
+    "parent": "7gtc"
+  },
+  "cygi": {
+    "deck": "vxhnD",
+    "type": "card",
+    "cardType": "H 07",
+    "id": "cygi",
+    "z": 347,
+    "parent": "7gtc"
+  },
+  "a05n": {
+    "deck": "vxhnD",
+    "type": "card",
+    "cardType": "H 08",
+    "id": "a05n",
+    "z": 349,
+    "parent": "7gtc"
+  },
+  "60nb": {
+    "deck": "vxhnD",
+    "type": "card",
+    "cardType": "H 09",
+    "id": "60nb",
+    "z": 351,
+    "parent": "7gtc"
+  },
+  "vgjd": {
+    "deck": "vxhnD",
+    "type": "card",
+    "cardType": "H 10",
+    "id": "vgjd",
+    "z": 353,
+    "parent": "7gtc"
+  },
+  "irgz": {
+    "deck": "vxhnD",
+    "type": "card",
+    "cardType": "H 2J",
+    "id": "irgz",
+    "z": 355,
+    "parent": "7gtc"
+  },
+  "1uyt": {
+    "deck": "vxhnD",
+    "type": "card",
+    "cardType": "H 3Q",
+    "id": "1uyt",
+    "z": 357,
+    "parent": "7gtc"
+  },
+  "oocg": {
+    "deck": "vxhnD",
+    "type": "card",
+    "cardType": "H 4K",
+    "id": "oocg",
+    "z": 359,
+    "parent": "7gtc"
+  },
+  "vufz": {
+    "deck": "vxhnD",
+    "type": "card",
+    "cardType": "S 01",
+    "id": "vufz",
+    "z": 361,
+    "parent": "7gtc"
+  },
+  "ekpq": {
+    "deck": "vxhnD",
+    "type": "card",
+    "cardType": "S 02",
+    "id": "ekpq",
+    "z": 363,
+    "parent": "7gtc"
+  },
+  "qqhn": {
+    "deck": "vxhnD",
+    "type": "card",
+    "cardType": "S 03",
+    "id": "qqhn",
+    "z": 365,
+    "parent": "7gtc"
+  },
+  "zcmw": {
+    "deck": "vxhnD",
+    "type": "card",
+    "cardType": "S 04",
+    "id": "zcmw",
+    "z": 367,
+    "parent": "7gtc"
+  },
+  "4tm6": {
+    "deck": "vxhnD",
+    "type": "card",
+    "cardType": "S 05",
+    "id": "4tm6",
+    "z": 369,
+    "parent": "7gtc"
+  },
+  "kz4d": {
+    "deck": "vxhnD",
+    "type": "card",
+    "cardType": "S 06",
+    "id": "kz4d",
+    "z": 371,
+    "parent": "7gtc"
+  },
+  "7b3p": {
+    "deck": "vxhnD",
+    "type": "card",
+    "cardType": "S 07",
+    "id": "7b3p",
+    "z": 373,
+    "parent": "7gtc"
+  },
+  "nfsm": {
+    "deck": "vxhnD",
+    "type": "card",
+    "cardType": "S 08",
+    "id": "nfsm",
+    "z": 375,
+    "parent": "7gtc"
+  },
+  "4yce": {
+    "deck": "vxhnD",
+    "type": "card",
+    "cardType": "S 09",
+    "id": "4yce",
+    "z": 377,
+    "parent": "7gtc"
+  },
+  "3dp9": {
+    "deck": "vxhnD",
+    "type": "card",
+    "cardType": "S 10",
+    "id": "3dp9",
+    "z": 379,
+    "parent": "7gtc"
+  },
+  "smt3": {
+    "deck": "vxhnD",
+    "type": "card",
+    "cardType": "S 2J",
+    "id": "smt3",
+    "z": 381,
+    "parent": "7gtc"
+  },
+  "jwpz": {
+    "deck": "vxhnD",
+    "type": "card",
+    "cardType": "S 3Q",
+    "id": "jwpz",
+    "z": 383,
+    "parent": "7gtc"
+  },
+  "c09s": {
+    "deck": "vxhnD",
+    "type": "card",
+    "cardType": "S 4K",
+    "id": "c09s",
+    "z": 385,
+    "parent": "7gtc"
+  },
+  "recallButton": {
+    "type": "button",
+    "id": "recallButton",
+    "parent": "holder",
+    "fixedParent": true,
+    "y": 171.36,
+    "width": 111,
+    "height": 40,
+    "movableInEdit": false,
+    "text": "Recall & Shuffle",
+    "clickRoutine": [
+      {
+        "func": "RECALL",
+        "holder": "${PROPERTY parent}"
+      },
+      {
+        "func": "FLIP",
+        "holder": "${PROPERTY parent}",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "${PROPERTY parent}"
+      }
+    ]
+  },
+  "button5": {
+    "type": "button",
+    "id": "button5",
+    "x": 1394,
+    "y": 402,
+    "layer": 2,
+    "z": 22847,
+    "clickRoutine": [
+      "// Look in the editor to see the x,y local origin values for both pin1 and pin2.",
+      {
+        "func": "GET",
+        "collection": [
+          "pin1"
+        ],
+        "property": "_localOriginAbsoluteX"
+      },
+      {
+        "func": "GET",
+        "collection": [
+          "pin1"
+        ],
+        "property": "_localOriginAbsoluteY"
+      },
+      {
+        "func": "GET",
+        "collection": [
+          "pin2"
+        ],
+        "property": "_localOriginAbsoluteX"
+      },
+      {
+        "func": "GET",
+        "collection": [
+          "pin2"
+        ],
+        "property": "_localOriginAbsoluteY"
+      }
+    ],
+    "text": "_local\nOrigin"
+  },
+  "text5": {
+    "id": "text5",
+    "x": 1294,
+    "y": 552,
+    "width": 300,
+    "height": 445,
+    "z": 9732,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "22px"
+    },
+    "html": "You can use read only properties to find what the apparent/visible <b>x,y</b> coords are. See the button above. Compare pin1 to the larger pin2. They have the same <b>x,y</b> coords and <b>width/height</b>. Only the <b>scale</b> is different."
+  },
+  "pin1": {
+    "id": "pin1",
+    "x": 1412,
+    "y": 837,
+    "width": 35,
+    "height": 40,
+    "z": 9737,
+    "color": "gold",
+    "css": "border-radius: 80% 80% 40% 110%",
+    "image": "/i/game-pieces/3D/Pin-3D.svg",
+    "svgReplaces": {
+      "#borderWidth": "borderWidth",
+      "#borderColor": "borderColor",
+      "#primaryColor": "color"
+    },
+    "borderColor": "black",
+    "borderWidth": "1",
+    "layer": 2,
+    "movable": false
+  },
+  "pin2": {
+    "id": "pin2",
+    "x": 1412,
+    "y": 837,
+    "width": 35,
+    "height": 40,
+    "z": 9737,
+    "color": "purple",
+    "css": "border-radius: 80% 80% 40% 110%",
+    "image": "/i/game-pieces/3D/Pin-3D.svg",
+    "svgReplaces": {
+      "#borderWidth": "borderWidth",
+      "#borderColor": "borderColor",
+      "#primaryColor": "color"
+    },
+    "borderColor": "black",
+    "borderWidth": "1",
+    "scale": 4,
+    "movable": false
+  }
+}

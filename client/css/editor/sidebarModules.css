@@ -1,0 +1,330 @@
+.editorModule h1 {
+  color: var(--VTTblue);
+  text-align: center;
+}
+
+.editorModule h2 {
+  color: white;
+  background: var(--VTTblue);
+  padding: 5px;
+  border-radius: 5px;
+  padding-left: 20px;
+}
+
+.editorModule .buttonBar {
+  text-align: right;
+}
+
+.editorModule .buttonBar button {
+  display: inline-flex;
+}
+
+/* properties */
+
+.editorModule .widgetSelectionButton {
+  height: 150px;
+  width: 150px;
+  margin: 3px;
+  position: relative;
+  display: inline-flex;
+  background: linear-gradient(45deg, rgba(0, 0, 0, 0.0980392) 25%, transparent 25%, transparent 75%, rgba(0, 0, 0, 0.0980392) 75%, rgba(0, 0, 0, 0.0980392) 0), linear-gradient(45deg, rgba(0, 0, 0, 0.0980392) 25%, transparent 25%, transparent 75%, rgba(0, 0, 0, 0.0980392) 75%, rgba(0, 0, 0, 0.0980392) 0), white;
+  background-position: 0px 0, 5px 5px;
+  background-size: 10px 10px, 10px 10px;
+  border-radius: 10px;
+  border: 3px solid #ccc;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+.editorModule .widgetSelectionButton:hover, .editorModule .widgetSelectionButton.selected {
+  border: 3px solid var(--VTTblue);
+}
+.editorModule .widgetSelectionButton.selected::after {
+  font-family: 'Material Symbols';
+  line-height: 1.25em;
+  text-align: center;
+  height: 1.25em;
+  width: 1.25em;
+  background: var(--VTTblue);
+  color: #fff;
+  border-top-right-radius: 40%;
+  border-top-left-radius: 50%;
+  border-bottom-right-radius: 50%;
+  border-bottom-left-radius: 50%;
+  content: 'check';
+  position: absolute;
+  top: -3px;
+  right: -3px;
+}
+.editorModule .widgetSelectionButton .spinner > svg.background {
+  left: 0;
+}
+
+.tune.editorModule .faceTemplateEdit {
+  margin-bottom: 40px;
+}
+
+.tune.editorModule .faceTemplateEdit > div {
+  display: inline-block;
+  vertical-align: top;
+}
+
+.tune.editorModule .faceTemplateProperty {
+  margin-left: 20px;
+}
+
+
+.tune.editorModule .suitProperties {
+  height: 160px;
+}
+
+.tune.editorModule .suitProperties > button.widgetSelectionButton {
+  position: absolute;
+}
+
+.tune.editorModule .suitProperties > div {
+  margin-left: 170px;
+}
+
+.tune.editorModule .suitProperties label {
+  display: inline-block;
+  width: 60px;
+}
+
+
+.tune.editorModule .cardFrontPreview {
+  display: flex;
+  margin-bottom: 10px;
+}
+
+.tune.editorModule .cardFrontPreview > div {
+  flex-grow: 1;
+  text-align: left;
+}
+
+.tune.editorModule .cardFrontPreview img {
+  max-width: 50%;
+}
+
+.tune.editorModule .cardFrontPreview [type=number] {
+  vertical-align: super;
+  width: 50px;
+}
+
+
+.tune.editorModule .cardTypeEdit {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 10px;
+  padding: 10px;
+}
+.tune.editorModule .cardCountDiv {
+  float: left;
+}
+.tune.editorModule .cardCountDiv button {
+  display: inline-flex;
+}
+.tune.editorModule .cardCountDiv input {
+  font-size: 30px;
+  width: 54px;
+  text-align: right;
+}
+.tune.editorModule .renderedWidget {
+  margin: 5px;
+}
+.tune.editorModule .cardCountDivEditing {
+  background: var(--backgroundHighlightColor1);
+  border: 1px solid var(--textColor);
+  border-radius: 5px;
+}
+.tune.editorModule .cardCountDivEditing [icon=create] {
+  display: none;
+}
+.tune.editorModule .cardTypeProperties {
+  padding: 10px;
+}
+.tune.editorModule .cardTypeProperties .buttonBar {
+  margin-top: 10px;
+}
+.tune.editorModule .cardTypeEdit:not(.cardCountDivEditing) .cardTypeProperties {
+  display: none;
+}
+
+
+.genericInput input, .genericInput textarea {
+  width: 200px;
+  min-width: 200px;
+}
+.genericInput textarea {
+  height: 200px;
+}
+.genericInput > * {
+  vertical-align: top;
+}
+
+/* validation */
+
+
+.pest_control.editorModule .validation-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+  font-size: 12px;
+}
+
+.pest_control.editorModule .validation-table th {
+  background-color: var(--VTTblue);
+  color: white;
+  padding: 6px 8px;
+  text-align: left;
+  font-weight: bold;
+  border: 1px solid var(--textColor);
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.pest_control.editorModule .validation-table td {
+  padding: 6px 8px;
+  border: 1px solid var(--textColor);
+  vertical-align: top;
+  word-break: break-word;
+  max-width: 200px;
+}
+
+.pest_control.editorModule .validation-table td:nth-child(1) {
+  max-width: 150px;
+  font-weight: bold;
+}
+
+.pest_control.editorModule .validation-table td:nth-child(2) {
+  max-width: 200px;
+  font-family: monospace;
+  font-size: 11px;
+}
+
+.pest_control.editorModule .validation-table td:nth-child(3) {
+  max-width: 300px;
+}
+
+.pest_control.editorModule .validation-table tbody tr:nth-child(even) {
+  background-color: var(--backgroundHighlightColor1);
+}
+
+.pest_control.editorModule .validation-table tbody tr:hover {
+  background-color: var(--backgroundHighlightColor2);
+  cursor: pointer;
+}
+
+.pest_control.editorModule .success {
+  color: #28a745;
+  font-weight: bold;
+  padding: 10px;
+  background-color: #d4edda;
+  border: 1px solid #c3e6cb;
+  border-radius: 4px;
+  margin: 10px 0;
+}
+
+.pest_control.editorModule .validation-controls {
+  background-color: var(--backgroundHighlightColor1);
+  border: 1px solid var(--textColor);
+  border-radius: 4px;
+  padding: 10px;
+  margin-top: 10px;
+}
+
+.pest_control.editorModule .validation-time {
+  color: var(--textColor);
+  font-size: 12px;
+  font-style: italic;
+}
+
+/* undo */
+
+.undo.editorModule > .undoEntry {
+  padding: 2px;
+  color: var(--textDimColor1);
+  cursor: pointer;
+}
+
+.undo.editorModule > .active.undoEntry {
+  color: var(--textColor);
+  background: var(--backgroundHighlightColor1);
+  cursor: unset;
+}
+
+.undo.editorModule > .active.undoEntry ~ div {
+  color: var(--textColor);
+}
+
+
+/* assets */
+
+.image.editorModule .externalLink {
+  display: flex;
+  position: relative;
+}
+
+.image.editorModule .externalLink:nth-child(2n) {
+  background: var(--backgroundHighlightColor1);
+}
+
+.image.editorModule .externalLink::after {
+  font-family: "Material Symbols";
+  font-size: 40px;
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  text-shadow: 0 0 4px white;
+}
+
+.image.editorModule .externalLink.queued::after {
+  content: "hourglass_empty";
+}
+
+.image.editorModule .externalLink.processing::after {
+  content: "cloud_download";
+}
+
+.image.editorModule .externalLink.done::after {
+  content: "check_circle";
+}
+
+.image.editorModule .externalLink:nth-child(2n) {
+  background: var(--backgroundHighlightColor1);
+}
+
+.image.editorModule .externalLink img {
+  height: 100px;
+  width: 100px;
+  min-width: 100px;
+  object-fit: contain;
+}
+
+.image.editorModule .externalLink span {
+  word-break: break-all;
+  padding: 5px;
+}
+.image.editorModule tr:nth-child(2n) {
+  background: var(--backgroundHighlightColor1);
+}
+.image.editorModule td {
+  padding: 10px;
+}
+.image.editorModule td > img {
+  display: block;
+  width: 100px;
+  background: linear-gradient(45deg, rgba(0, 0, 0, 0.1) 25%, transparent 25%, transparent 75%, rgba(0, 0, 0, 0.1) 75%, rgba(0, 0, 0, 0.1) 0), linear-gradient(45deg, rgba(0, 0, 0, 0.1) 25%, transparent 25%, transparent 75%, rgba(0, 0, 0, 0.1) 75%, rgba(0, 0, 0, 0.1) 0), white;
+  background-position: 0px 0, 5px 5px;
+  background-size: 10px 10px, 10px 10px;
+  margin-bottom: 5px;
+}
+.image.editorModule td > input[type=checkbox] {
+  float: left;
+}
+.image.editorModule td > label {
+  white-space: pre;
+  display: inline-block;
+}

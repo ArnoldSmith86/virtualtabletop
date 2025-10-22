@@ -1,0 +1,1081 @@
+{
+  "_meta": {
+    "version": 6,
+    "info": {
+      "name": "Starship Pyramids",
+      "image": "/assets/-284395395_7454",
+      "rules": "",
+      "bgg": "https://boardgamegeek.com/boardgame/14634/homeworlds",
+      "year": "2001",
+      "mode": "vs",
+      "time": "15-60",
+      "players": "2",
+      "language": "",
+      "variant": "",
+      "attribution": "The game room design and layout, game pieces, and library image are by Nick \"nupa\" Lamicela and are released to the Public Domain under CC0.\n\nThe night sky background is released under CC0 by Petr Kratochvil: https://www.publicdomainpictures.net/en/view-image.php?image=125056&picture=night-sky-background",
+      "similarName": "Homeworlds",
+      "description": "Abstract, free-form strategy game using upright pyramids and pyramids laying on their side. Use different size and color pyramids to represent star systems and starships. Win by destroying opponent's home star or all ships at opponent's home star.",
+      "showName": true,
+      "lastUpdate": 1654391055000,
+      "similarDesigner": "John Cooper"
+    }
+  },
+  "icehouse-bank": {
+    "type": "holder",
+    "id": "icehouse-bank",
+    "z": 13,
+    "dropTarget": {
+      "isIcehousePiece": true
+    },
+    "height": 120,
+    "width": 1580,
+    "dropOffsetX": 10,
+    "y": 10,
+    "x": 10,
+    "enterRoutine": [
+      {
+        "func": "SORT",
+        "holder": "${thisID}",
+        "key": "width"
+      },
+      {
+        "func": "SORT",
+        "holder": "${thisID}",
+        "key": "label"
+      }
+    ],
+    "movableInEdit": false,
+    "onEnter": {
+      "activeFace": 0,
+      "rotation": 0
+    },
+    "dropOffsetY": 10,
+    "stackOffsetX": 40,
+    "css": "background-color:rgba(255,255,255,.25)"
+  },
+  "icehouse-3": {
+    "id": "icehouse-3",
+    "z": 337,
+    "faces": [
+      {
+        "image": "/assets/1520771680_598",
+        "height": 100,
+        "rotation": 0
+      },
+      {
+        "image": "/assets/-706534031_588",
+        "height": 175,
+        "rotation": 90
+      },
+      {
+        "image": "/assets/-706534031_588",
+        "height": 175,
+        "rotation": 270
+      }
+    ],
+    "label": "3",
+    "x": 300,
+    "y": 1000,
+    "activeFace": 0,
+    "width": 100,
+    "height": 100,
+    "image": "/assets/1520771680_598",
+    "inheritFrom": "icehouse-root",
+    "rotation": 0
+  },
+  "icehouse-2": {
+    "id": "icehouse-2",
+    "x": 200,
+    "y": 1000,
+    "z": 336,
+    "faces": [
+      {
+        "image": "/assets/-1464912410_548",
+        "height": 78,
+        "rotation": 0
+      },
+      {
+        "image": "/assets/616714550_542",
+        "height": 138,
+        "rotation": 90
+      },
+      {
+        "image": "/assets/616714550_542",
+        "height": 138,
+        "rotation": 270
+      }
+    ],
+    "label": "2",
+    "width": 78,
+    "height": 78,
+    "image": "/assets/-1464912410_548",
+    "inheritFrom": "icehouse-root",
+    "activeFace": 0,
+    "rotation": 0
+  },
+  "icehouse-1": {
+    "id": "icehouse-1",
+    "x": 100,
+    "y": 1000,
+    "width": 56,
+    "z": 370,
+    "faces": [
+      {
+        "image": "/assets/-1213557083_503",
+        "height": 56,
+        "rotation": 0
+      },
+      {
+        "image": "/assets/1979309443_497",
+        "height": 100,
+        "rotation": 90
+      },
+      {
+        "image": "/assets/1979309443_497",
+        "height": 100,
+        "rotation": 270
+      }
+    ],
+    "label": "1",
+    "activeFace": 0,
+    "height": 56,
+    "image": "/assets/-1213557083_503",
+    "inheritFrom": "icehouse-root",
+    "rotation": 0
+  },
+  "icehouse-root": {
+    "id": "icehouse-root",
+    "y": 1000,
+    "width": 56,
+    "z": 367,
+    "color": "white",
+    "faces": [
+      {
+        "image": "/assets/-1213557083_503",
+        "height": 56
+      },
+      {
+        "image": "/assets/1979309443_497",
+        "height": 100
+      }
+    ],
+    "svgReplaces": {
+      "white": "color",
+      "W": "label"
+    },
+    "isIcehousePiece": true,
+    "label": "/"
+  },
+  "b3-1": {
+    "type": "icehouse-piece",
+    "id": "b3-1",
+    "x": 330,
+    "y": 10,
+    "height": 100,
+    "z": 9,
+    "activeFace": 0,
+    "image": "/assets/1520771680_598",
+    "inheritFrom": {
+      "icehouse-3": [
+        "!color",
+        "!label"
+      ],
+      "icehouse-b": [
+        "color",
+        "label"
+      ]
+    },
+    "rotation": 0,
+    "parent": "icehouse-bank"
+  },
+  "b3-2": {
+    "type": "icehouse-piece",
+    "id": "b3-2",
+    "x": 290,
+    "y": 10,
+    "height": 100,
+    "z": 8,
+    "activeFace": 0,
+    "image": "/assets/1520771680_598",
+    "inheritFrom": {
+      "icehouse-3": [
+        "!color",
+        "!label"
+      ],
+      "icehouse-b": [
+        "color",
+        "label"
+      ]
+    },
+    "rotation": 0,
+    "parent": "icehouse-bank"
+  },
+  "b3-3": {
+    "type": "icehouse-piece",
+    "id": "b3-3",
+    "x": 250,
+    "y": 10,
+    "height": 100,
+    "z": 7,
+    "activeFace": 0,
+    "image": "/assets/1520771680_598",
+    "inheritFrom": {
+      "icehouse-3": [
+        "!color",
+        "!label"
+      ],
+      "icehouse-b": [
+        "color",
+        "label"
+      ]
+    },
+    "rotation": 0,
+    "parent": "icehouse-bank"
+  },
+  "b2-1": {
+    "type": "icehouse-piece",
+    "id": "b2-1",
+    "x": 170,
+    "y": 10,
+    "height": 78,
+    "rotation": 0,
+    "z": 5,
+    "activeFace": 0,
+    "image": "/assets/-1464912410_548",
+    "inheritFrom": {
+      "icehouse-2": [
+        "!color",
+        "!label"
+      ],
+      "icehouse-b": [
+        "color",
+        "label"
+      ]
+    },
+    "parent": "icehouse-bank"
+  },
+  "b2-2": {
+    "type": "icehouse-piece",
+    "id": "b2-2",
+    "x": 210,
+    "y": 10,
+    "height": 78,
+    "rotation": 0,
+    "z": 6,
+    "activeFace": 0,
+    "image": "/assets/-1464912410_548",
+    "inheritFrom": {
+      "icehouse-2": [
+        "!color",
+        "!label"
+      ],
+      "icehouse-b": [
+        "color",
+        "label"
+      ]
+    },
+    "parent": "icehouse-bank"
+  },
+  "b2-3": {
+    "type": "icehouse-piece",
+    "id": "b2-3",
+    "parent": "icehouse-bank",
+    "x": 130,
+    "y": 10,
+    "height": 78,
+    "rotation": 0,
+    "z": 4,
+    "activeFace": 0,
+    "image": "/assets/-1464912410_548",
+    "inheritFrom": {
+      "icehouse-2": [
+        "!color",
+        "!label"
+      ],
+      "icehouse-b": [
+        "color",
+        "label"
+      ]
+    }
+  },
+  "b1-1": {
+    "type": "icehouse-piece",
+    "id": "b1-1",
+    "x": 90,
+    "y": 10,
+    "height": 78,
+    "rotation": 0,
+    "z": 3,
+    "activeFace": 0,
+    "image": "/assets/-1464912410_548",
+    "inheritFrom": {
+      "icehouse-1": [
+        "!color",
+        "!label"
+      ],
+      "icehouse-b": [
+        "color",
+        "label"
+      ]
+    },
+    "parent": "icehouse-bank"
+  },
+  "b1-2": {
+    "type": "icehouse-piece",
+    "id": "b1-2",
+    "x": 10,
+    "y": 10,
+    "height": 56,
+    "rotation": 0,
+    "z": 1,
+    "activeFace": 0,
+    "image": "/assets/-1213557083_503",
+    "inheritFrom": {
+      "icehouse-1": [
+        "!color",
+        "!label"
+      ],
+      "icehouse-b": [
+        "color",
+        "label"
+      ]
+    },
+    "parent": "icehouse-bank"
+  },
+  "b1-3": {
+    "type": "icehouse-piece",
+    "id": "b1-3",
+    "x": 50,
+    "y": 10,
+    "height": 56,
+    "rotation": 0,
+    "z": 2,
+    "activeFace": 0,
+    "image": "/assets/-1213557083_503",
+    "inheritFrom": {
+      "icehouse-1": [
+        "!color",
+        "!label"
+      ],
+      "icehouse-b": [
+        "color",
+        "label"
+      ]
+    },
+    "parent": "icehouse-bank"
+  },
+  "y1-1": {
+    "type": "icehouse-piece",
+    "id": "y1-1",
+    "x": 1170,
+    "y": 10,
+    "height": 56,
+    "rotation": 0,
+    "z": 30,
+    "activeFace": 0,
+    "image": "/assets/-1213557083_503",
+    "inheritFrom": {
+      "icehouse-1": [
+        "!color",
+        "!label"
+      ],
+      "icehouse-y": [
+        "color",
+        "label"
+      ]
+    },
+    "parent": "icehouse-bank"
+  },
+  "y1-2": {
+    "type": "icehouse-piece",
+    "id": "y1-2",
+    "x": 1090,
+    "y": 10,
+    "height": 56,
+    "rotation": 0,
+    "z": 28,
+    "activeFace": 0,
+    "image": "/assets/-1213557083_503",
+    "inheritFrom": {
+      "icehouse-1": [
+        "!color",
+        "!label"
+      ],
+      "icehouse-y": [
+        "color",
+        "label"
+      ]
+    },
+    "parent": "icehouse-bank"
+  },
+  "y1-3": {
+    "type": "icehouse-piece",
+    "id": "y1-3",
+    "x": 1130,
+    "y": 10,
+    "height": 56,
+    "rotation": 0,
+    "z": 29,
+    "activeFace": 0,
+    "image": "/assets/-1213557083_503",
+    "inheritFrom": {
+      "icehouse-1": [
+        "!color",
+        "!label"
+      ],
+      "icehouse-y": [
+        "color",
+        "label"
+      ]
+    },
+    "parent": "icehouse-bank"
+  },
+  "y2-1": {
+    "type": "icehouse-piece",
+    "id": "y2-1",
+    "x": 1210,
+    "y": 10,
+    "height": 56,
+    "rotation": 0,
+    "z": 31,
+    "activeFace": 0,
+    "image": "/assets/-1213557083_503",
+    "inheritFrom": {
+      "icehouse-2": [
+        "!color",
+        "!label"
+      ],
+      "icehouse-y": [
+        "color",
+        "label"
+      ]
+    },
+    "parent": "icehouse-bank"
+  },
+  "y2-2": {
+    "type": "icehouse-piece",
+    "id": "y2-2",
+    "parent": "icehouse-bank",
+    "x": 1250,
+    "y": 10,
+    "height": 78,
+    "rotation": 0,
+    "z": 32,
+    "activeFace": 0,
+    "image": "/assets/-1464912410_548",
+    "inheritFrom": {
+      "icehouse-2": [
+        "!color",
+        "!label"
+      ],
+      "icehouse-y": [
+        "color",
+        "label"
+      ]
+    }
+  },
+  "y2-3": {
+    "type": "icehouse-piece",
+    "id": "y2-3",
+    "parent": "icehouse-bank",
+    "x": 1290,
+    "y": 10,
+    "height": 78,
+    "rotation": 0,
+    "z": 33,
+    "activeFace": 0,
+    "image": "/assets/-1464912410_548",
+    "inheritFrom": {
+      "icehouse-2": [
+        "!color",
+        "!label"
+      ],
+      "icehouse-y": [
+        "color",
+        "label"
+      ]
+    }
+  },
+  "y3-1": {
+    "type": "icehouse-piece",
+    "id": "y3-1",
+    "x": 1330,
+    "y": 10,
+    "height": 100,
+    "rotation": 0,
+    "z": 34,
+    "activeFace": 0,
+    "image": "/assets/1520771680_598",
+    "inheritFrom": {
+      "icehouse-3": [
+        "!color",
+        "!label"
+      ],
+      "icehouse-y": [
+        "color",
+        "label"
+      ]
+    },
+    "parent": "icehouse-bank"
+  },
+  "y3-2": {
+    "type": "icehouse-piece",
+    "id": "y3-2",
+    "x": 1370,
+    "y": 10,
+    "height": 100,
+    "rotation": 0,
+    "z": 35,
+    "activeFace": 0,
+    "image": "/assets/1520771680_598",
+    "inheritFrom": {
+      "icehouse-3": [
+        "!color",
+        "!label"
+      ],
+      "icehouse-y": [
+        "color",
+        "label"
+      ]
+    },
+    "parent": "icehouse-bank"
+  },
+  "y3-3": {
+    "type": "icehouse-piece",
+    "id": "y3-3",
+    "x": 1410,
+    "y": 10,
+    "height": 100,
+    "rotation": 0,
+    "z": 36,
+    "activeFace": 0,
+    "image": "/assets/1520771680_598",
+    "inheritFrom": {
+      "icehouse-3": [
+        "!color",
+        "!label"
+      ],
+      "icehouse-y": [
+        "color",
+        "label"
+      ]
+    },
+    "parent": "icehouse-bank"
+  },
+  "r1-1": {
+    "type": "icehouse-piece",
+    "id": "r1-1",
+    "x": 810,
+    "y": 10,
+    "height": 100,
+    "rotation": 0,
+    "z": 21,
+    "activeFace": 0,
+    "image": "/assets/1520771680_598",
+    "inheritFrom": {
+      "icehouse-1": [
+        "!color",
+        "!label"
+      ],
+      "icehouse-r": [
+        "color",
+        "label"
+      ]
+    },
+    "parent": "icehouse-bank"
+  },
+  "r1-2": {
+    "type": "icehouse-piece",
+    "id": "r1-2",
+    "parent": "icehouse-bank",
+    "x": 730,
+    "y": 10,
+    "height": 56,
+    "rotation": 0,
+    "z": 19,
+    "activeFace": 0,
+    "image": "/assets/-1213557083_503",
+    "inheritFrom": {
+      "icehouse-1": [
+        "!color",
+        "!label"
+      ],
+      "icehouse-r": [
+        "color",
+        "label"
+      ]
+    }
+  },
+  "r1-3": {
+    "type": "icehouse-piece",
+    "id": "r1-3",
+    "parent": "icehouse-bank",
+    "x": 770,
+    "y": 10,
+    "height": 56,
+    "rotation": 0,
+    "z": 20,
+    "activeFace": 0,
+    "image": "/assets/-1213557083_503",
+    "inheritFrom": {
+      "icehouse-1": [
+        "!color",
+        "!label"
+      ],
+      "icehouse-r": [
+        "color",
+        "label"
+      ]
+    }
+  },
+  "r2-1": {
+    "type": "icehouse-piece",
+    "id": "r2-1",
+    "parent": "icehouse-bank",
+    "x": 850,
+    "y": 10,
+    "height": 56,
+    "rotation": 0,
+    "z": 22,
+    "activeFace": 0,
+    "image": "/assets/-1213557083_503",
+    "inheritFrom": {
+      "icehouse-2": [
+        "!color",
+        "!label"
+      ],
+      "icehouse-r": [
+        "color",
+        "label"
+      ]
+    }
+  },
+  "r2-2": {
+    "type": "icehouse-piece",
+    "id": "r2-2",
+    "parent": "icehouse-bank",
+    "x": 890,
+    "y": 10,
+    "height": 78,
+    "rotation": 0,
+    "z": 23,
+    "activeFace": 0,
+    "image": "/assets/-1464912410_548",
+    "inheritFrom": {
+      "icehouse-2": [
+        "!color",
+        "!label"
+      ],
+      "icehouse-r": [
+        "color",
+        "label"
+      ]
+    }
+  },
+  "r2-3": {
+    "type": "icehouse-piece",
+    "id": "r2-3",
+    "parent": "icehouse-bank",
+    "x": 930,
+    "y": 10,
+    "height": 78,
+    "rotation": 0,
+    "z": 24,
+    "activeFace": 0,
+    "image": "/assets/-1464912410_548",
+    "inheritFrom": {
+      "icehouse-2": [
+        "!color",
+        "!label"
+      ],
+      "icehouse-r": [
+        "color",
+        "label"
+      ]
+    }
+  },
+  "r3-1": {
+    "type": "icehouse-piece",
+    "id": "r3-1",
+    "x": 970,
+    "y": 10,
+    "height": 78,
+    "rotation": 0,
+    "z": 25,
+    "activeFace": 0,
+    "image": "/assets/-1464912410_548",
+    "inheritFrom": {
+      "icehouse-3": [
+        "!color",
+        "!label"
+      ],
+      "icehouse-r": [
+        "color",
+        "label"
+      ]
+    },
+    "parent": "icehouse-bank"
+  },
+  "r3-2": {
+    "type": "icehouse-piece",
+    "id": "r3-2",
+    "x": 1010,
+    "y": 10,
+    "height": 100,
+    "rotation": 0,
+    "z": 26,
+    "activeFace": 0,
+    "image": "/assets/1520771680_598",
+    "inheritFrom": {
+      "icehouse-3": [
+        "!color",
+        "!label"
+      ],
+      "icehouse-r": [
+        "color",
+        "label"
+      ]
+    },
+    "parent": "icehouse-bank"
+  },
+  "r3-3": {
+    "type": "icehouse-piece",
+    "id": "r3-3",
+    "x": 1050,
+    "y": 10,
+    "height": 100,
+    "rotation": 0,
+    "z": 27,
+    "activeFace": 0,
+    "image": "/assets/1520771680_598",
+    "inheritFrom": {
+      "icehouse-3": [
+        "!color",
+        "!label"
+      ],
+      "icehouse-r": [
+        "color",
+        "label"
+      ]
+    },
+    "parent": "icehouse-bank"
+  },
+  "g3-1": {
+    "type": "icehouse-piece",
+    "id": "g3-1",
+    "parent": "icehouse-bank",
+    "x": 610,
+    "y": 10,
+    "height": 100,
+    "rotation": 0,
+    "z": 16,
+    "activeFace": 0,
+    "image": "/assets/1520771680_598",
+    "inheritFrom": {
+      "icehouse-3": [
+        "!color",
+        "!label"
+      ],
+      "icehouse-g": [
+        "color",
+        "label"
+      ]
+    }
+  },
+  "g3-2": {
+    "type": "icehouse-piece",
+    "id": "g3-2",
+    "parent": "icehouse-bank",
+    "x": 650,
+    "y": 10,
+    "height": 100,
+    "rotation": 0,
+    "z": 17,
+    "activeFace": 0,
+    "image": "/assets/1520771680_598",
+    "inheritFrom": {
+      "icehouse-3": [
+        "!color",
+        "!label"
+      ],
+      "icehouse-g": [
+        "color",
+        "label"
+      ]
+    }
+  },
+  "g3-3": {
+    "type": "icehouse-piece",
+    "id": "g3-3",
+    "x": 690,
+    "y": 10,
+    "height": 100,
+    "rotation": 0,
+    "z": 18,
+    "activeFace": 0,
+    "image": "/assets/1520771680_598",
+    "inheritFrom": {
+      "icehouse-3": [
+        "!color",
+        "!label"
+      ],
+      "icehouse-g": [
+        "color",
+        "label"
+      ]
+    },
+    "parent": "icehouse-bank"
+  },
+  "g2-1": {
+    "type": "icehouse-piece",
+    "id": "g2-1",
+    "parent": "icehouse-bank",
+    "x": 490,
+    "y": 10,
+    "height": 100,
+    "rotation": 0,
+    "z": 13,
+    "activeFace": 0,
+    "image": "/assets/1520771680_598",
+    "inheritFrom": {
+      "icehouse-2": [
+        "!color",
+        "!label"
+      ],
+      "icehouse-g": [
+        "color",
+        "label"
+      ]
+    }
+  },
+  "g2-2": {
+    "type": "icehouse-piece",
+    "id": "g2-2",
+    "parent": "icehouse-bank",
+    "x": 530,
+    "y": 10,
+    "height": 78,
+    "rotation": 0,
+    "z": 14,
+    "activeFace": 0,
+    "image": "/assets/-1464912410_548",
+    "inheritFrom": {
+      "icehouse-2": [
+        "!color",
+        "!label"
+      ],
+      "icehouse-g": [
+        "color",
+        "label"
+      ]
+    }
+  },
+  "g2-3": {
+    "type": "icehouse-piece",
+    "id": "g2-3",
+    "parent": "icehouse-bank",
+    "x": 570,
+    "y": 10,
+    "height": 78,
+    "rotation": 0,
+    "z": 15,
+    "activeFace": 0,
+    "image": "/assets/-1464912410_548",
+    "inheritFrom": {
+      "icehouse-2": [
+        "!color",
+        "!label"
+      ],
+      "icehouse-g": [
+        "color",
+        "label"
+      ]
+    }
+  },
+  "g1-1": {
+    "type": "icehouse-piece",
+    "id": "g1-1",
+    "x": 450,
+    "y": 10,
+    "height": 78,
+    "rotation": 0,
+    "z": 12,
+    "activeFace": 0,
+    "image": "/assets/-1464912410_548",
+    "inheritFrom": {
+      "icehouse-1": [
+        "!color",
+        "!label"
+      ],
+      "icehouse-g": [
+        "color",
+        "label"
+      ]
+    },
+    "parent": "icehouse-bank"
+  },
+  "g1-2": {
+    "type": "icehouse-piece",
+    "id": "g1-2",
+    "x": 370,
+    "y": 10,
+    "height": 56,
+    "rotation": 0,
+    "z": 10,
+    "activeFace": 0,
+    "image": "/assets/-1213557083_503",
+    "inheritFrom": {
+      "icehouse-1": [
+        "!color",
+        "!label"
+      ],
+      "icehouse-g": [
+        "color",
+        "label"
+      ]
+    },
+    "parent": "icehouse-bank"
+  },
+  "g1-3": {
+    "type": "icehouse-piece",
+    "id": "g1-3",
+    "x": 410,
+    "y": 10,
+    "height": 56,
+    "rotation": 0,
+    "z": 11,
+    "activeFace": 0,
+    "image": "/assets/-1213557083_503",
+    "inheritFrom": {
+      "icehouse-1": [
+        "!color",
+        "!label"
+      ],
+      "icehouse-g": [
+        "color",
+        "label"
+      ]
+    },
+    "parent": "icehouse-bank"
+  },
+  "seat-west": {
+    "type": "seat",
+    "id": "seat-west",
+    "y": 445,
+    "z": 5,
+    "width": 300,
+    "rotation": 90,
+    "x": -120,
+    "movableInEdit": false,
+    "turn": true
+  },
+  "seat-east": {
+    "type": "seat",
+    "id": "seat-east",
+    "x": 1410,
+    "y": 445,
+    "width": 300,
+    "rotation": -90,
+    "z": 5,
+    "movableInEdit": false,
+    "index": 2
+  },
+  "icehouse-b": {
+    "id": "icehouse-b",
+    "x": 400,
+    "y": 1000,
+    "height": 56,
+    "rotation": 0,
+    "z": 353,
+    "activeFace": 0,
+    "color": "royalblue",
+    "image": "/assets/-1213557083_503",
+    "inheritFrom": "icehouse-1",
+    "label": "B"
+  },
+  "icehouse-g": {
+    "id": "icehouse-g",
+    "x": 500,
+    "y": 1000,
+    "height": 56,
+    "rotation": 0,
+    "z": 356,
+    "activeFace": 0,
+    "color": "forestgreen",
+    "image": "/assets/-1213557083_503",
+    "inheritFrom": "icehouse-1",
+    "label": "G"
+  },
+  "icehouse-r": {
+    "id": "icehouse-r",
+    "x": 600,
+    "y": 1000,
+    "height": 56,
+    "rotation": 0,
+    "z": 357,
+    "activeFace": 0,
+    "color": "red",
+    "image": "/assets/-1213557083_503",
+    "inheritFrom": "icehouse-1",
+    "label": "R"
+  },
+  "icehouse-y": {
+    "id": "icehouse-y",
+    "x": 700,
+    "y": 1000,
+    "height": 56,
+    "rotation": 0,
+    "z": 355,
+    "activeFace": 0,
+    "color": "yellow",
+    "image": "/assets/-1213557083_503",
+    "inheritFrom": "icehouse-1",
+    "label": "Y"
+  },
+  "2f5z": {
+    "type": "spinner",
+    "value": " ",
+    "options": [
+      "R",
+      "Y",
+      " ",
+      "G",
+      "B",
+      " "
+    ],
+    "x": 695,
+    "y": 890,
+    "z": 7,
+    "id": "2f5z",
+    "angle": 11844,
+    "movable": false,
+    "width": 100,
+    "height": 100
+  },
+  "rpvl": {
+    "type": "button",
+    "clickRoutine": [
+      {
+        "func": "TURN",
+        "turn": 1,
+        "turnCycle": "forward"
+      }
+    ],
+    "x": 805,
+    "y": 890,
+    "z": 8,
+    "id": "rpvl",
+    "text": "End\nTurn",
+    "width": 100,
+    "height": 100
+  },
+  "ll7n": {
+    "image": "/assets/-274223035_559687",
+    "movable": false,
+    "width": 1600,
+    "height": 1000,
+    "layer": -4,
+    "id": "ll7n",
+    "movableInEdit": false
+  }
+}

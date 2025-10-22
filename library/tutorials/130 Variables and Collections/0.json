@@ -1,0 +1,192 @@
+{
+  "title": {
+    "id": "title",
+    "x": 400,
+    "y": -2,
+    "width": 800,
+    "height": 60,
+    "z": 74,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "font-size: 60px;text-align:center",
+    "text": "Variables: Types"
+  },
+  "button2": {
+    "type": "button",
+    "id": "button2",
+    "x": 416,
+    "y": 402,
+    "z": 22839,
+    "clickRoutine": [
+      "// Numbers are very common variable data types. They show up as purple",
+      "var someName = 2",
+      "var thisName = -5",
+      "var thatName = 0.9",
+      "var abc = 0 //You can use the double slash to add a comment ",
+      "// Strings are also very common. They show up as green",
+      "var string1 = 'Strings go in single quotes'",
+      "// Putting null, true, or false inside of single quotes makes it a string and not a boolean or null value",
+      "var string2 = 'true'",
+      "// Putting a number inside of single quotes also makes it a string",
+      "var notANumber = '100'"
+    ],
+    "text": "Numbers & Strings"
+  },
+  "overview": {
+    "id": "overview",
+    "x": 108,
+    "y": 80,
+    "width": 1400,
+    "height": 150,
+    "layer": -3,
+    "z": 129,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "font-size: 25px; ",
+    "html": "Variables are like containers that are named (almost anything can be a valid name) and used to store data that JSON code references and manipulates. Variable names are case sensitve. Some variables are predefined by the VTT engine and are available in every routine. Most variables are created in a routine by a game designer. Those are only accessible while that particular routine is active and do not persist within the room or game after the routine ends. If you need that data for later, store it on a custom widget property. Variables can hold many types of data including numbers, strings, boolean and null values, arrays, and objects. For each button below, click on it and compare what you see in the JSON with what shows up in the debugger output."
+  },
+  "button3": {
+    "type": "button",
+    "id": "button3",
+    "x": 743,
+    "y": 402,
+    "z": 22840,
+    "clickRoutine": [
+      "// Note the blue text",
+      "var aBoolean = true",
+      "var anotherBoolean = false",
+      "var aSpecialCase = null"
+    ],
+    "text": "Boolean\n& Null"
+  },
+  "button4": {
+    "type": "button",
+    "id": "button4",
+    "x": 1062,
+    "y": 402,
+    "z": 22840,
+    "clickRoutine": [
+      "// For some functions, you need to create a blank array. You do that by just adding square brackets",
+      "var blankArray = []",
+      "// However, you cannot create an array with values using a var expression. The debug report shows a red arrow for an error. See the next variant in this tutorial for more on how to create array and object variables",
+      "var invalidArray = [0,1,2]"
+    ],
+    "text": "Array"
+  },
+  "button5": {
+    "type": "button",
+    "id": "button5",
+    "x": 1386,
+    "y": 402,
+    "z": 11,
+    "clickRoutine": [
+      "// If you need an empty object, create it the same way as an array but use curly brackets",
+      "var emptyObject = {}",
+      "// Like arrays, objects cannot have data input using a var expression"
+    ],
+    "text": "Objects"
+  },
+  "text1": {
+    "id": "text1",
+    "x": 4,
+    "y": 552,
+    "width": 300,
+    "z": 185,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "22px"
+    },
+    "html": "The button above has a click routine with no functions, so it does nothing. But look at the debug output. (Click the white arrows to expand and view more detail). You will see a list of predefined variables. Every routine has these: activeColors, mouseCoords, seatIndex, seatID, activeSeats, playerName, playerColor, activePlayers, and thisID. Read more at <a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Functions#predefined-variables'>Predefined Variables wiki</a>."
+  },
+  "button1": {
+    "type": "button",
+    "id": "button1",
+    "x": 95,
+    "y": 402,
+    "z": 22841,
+    "clickRoutine": [
+      "// Nothing to see here. Click and look at debug report."
+    ],
+    "text": "Pre-defined"
+  },
+  "text2": {
+    "id": "text2",
+    "x": 325,
+    "y": 552,
+    "width": 300,
+    "z": 121,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "22px"
+    },
+    "html": "The button above contains examples of variables expressed as numbers and strings. Read more at <a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Dynamic-Expressions#variable-declarations'>Variable declarations wiki</a>."
+  },
+  "text3": {
+    "id": "text3",
+    "x": 651,
+    "y": 552,
+    "width": 300,
+    "z": 9732,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "22px"
+    },
+    "html": "The button above contains examples of true, false, and null variables. You can see that the value of variables of this type are in blue text. That is one way to be double check that your value is boolean (or null) and not accidentally a string. Read more at <a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Dynamic-Expressions#variable-declarations'>Variable declarations wiki</a>."
+  },
+  "text4": {
+    "id": "text4",
+    "x": 964,
+    "y": 552,
+    "width": 300,
+    "z": 9732,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "22px"
+    },
+    "html": "Arrays are very useful in building games and variables can store that data. An array can also be an array of other arrays. Arrays have an index number (it is implied, not directly written into the array) that starts at 0. Read more at <a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Dynamic-Expressions#variable-declarations'>Variable declarations wiki</a> and <a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Computations#array-operations'>Array Operations wiki</a>. Also, there is an entire <a href='https://virtualtabletop.io/tutorial/operations-arrays'>arrays tutorial</a>."
+  },
+  "text5": {
+    "id": "text5",
+    "x": 1294,
+    "y": 552,
+    "width": 300,
+    "z": 9732,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "22px"
+    },
+    "html": "Objects are also useful, but a little more complex than arrays. Objects are key-value pairs. While an array has an index, an object has a key expressed as a string and the value linked to that key can be any type of data, including arrays and other objects. Read more at <a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Dynamic-Expressions#variable-declarations'>Variable declarations wiki</a> and <a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Dynamic-Expressions#complex-objects'>Complex Objects wiki</a>. CSS is one of the most common uses for objects and there is a <a href='https://virtualtabletop.io/tutorial/appearance-css'>CSS tutorial</a>."
+  },
+  "_meta": {
+    "version": 17,
+    "info": {
+      "name": "130 Variables and Collections",
+      "image": "/assets/565198158_9346",
+      "rules": "",
+      "bgg": "",
+      "year": "",
+      "mode": "Tutorial",
+      "time": "",
+      "attribution": "",
+      "lastUpdate": 1749054058278,
+      "showName": false,
+      "skill": "",
+      "description": "",
+      "similarImage": "",
+      "similarName": "",
+      "similarDesigner": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": "",
+      "variantImage": "",
+      "variant": "Variables: Types",
+      "language": "en-US",
+      "players": "1"
+    }
+  }
+}

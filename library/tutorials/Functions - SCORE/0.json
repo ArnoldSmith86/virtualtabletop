@@ -1,0 +1,1054 @@
+{
+  "_meta": {
+    "version": 9,
+    "info": {
+      "name": "Functions - SCORE",
+      "image": "/assets/-982898800_4351",
+      "rules": "",
+      "bgg": "",
+      "year": "2023",
+      "mode": "Tutorial",
+      "time": "",
+      "attribution": "",
+      "showName": false,
+      "skill": "",
+      "description": "",
+      "similarImage": "",
+      "similarName": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": "",
+      "lastUpdate": 1749068709593,
+      "similarDesigner": "",
+      "variantImage": "",
+      "variant": "",
+      "language": "en-US",
+      "players": "1"
+    }
+  },
+  "seat1": {
+    "type": "seat",
+    "id": "seat1",
+    "z": 1648,
+    "scale": 0.5,
+    "x": -37,
+    "y": 10,
+    "color": "red",
+    "movableInEdit": false,
+    "player": "Player 1",
+    "scoreDemo1": [],
+    "scoreDemo2": [
+      1,
+      2,
+      3
+    ],
+    "scoreDemo3": [
+      1,
+      2,
+      3
+    ]
+  },
+  "seat3": {
+    "type": "seat",
+    "id": "seat3",
+    "z": 1643,
+    "scale": 0.5,
+    "x": -37,
+    "y": 103,
+    "index": 3,
+    "color": "yellow",
+    "player": "Player 3",
+    "movableInEdit": false,
+    "scoreDemo1": [],
+    "scoreDemo2": [
+      1,
+      3,
+      5
+    ]
+  },
+  "seat2": {
+    "type": "seat",
+    "id": "seat2",
+    "index": 2,
+    "x": -37,
+    "y": 53,
+    "scale": 0.5,
+    "z": 1645,
+    "color": "orange",
+    "player": "Player 2",
+    "movableInEdit": false,
+    "scoreDemo1": [],
+    "scoreDemo2": [
+      3
+    ]
+  },
+  "seat4": {
+    "type": "seat",
+    "id": "seat4",
+    "index": 4,
+    "x": -37,
+    "y": 153,
+    "scale": 0.5,
+    "z": 1646,
+    "color": "green",
+    "player": "Player 4",
+    "movableInEdit": false,
+    "scoreDemo1": [],
+    "scoreDemo2": [
+      1,
+      2,
+      5
+    ]
+  },
+  "comment1": {
+    "id": "comment1",
+    "x": 100,
+    "y": 485,
+    "width": 300,
+    "z": 10086,
+    "movable": false,
+    "layer": -2,
+    "text": "This is a demo scoreboard showing how changing the score works in a very simple case where the only data displayed is a total and rounds are not used."
+  },
+  "overview": {
+    "id": "overview",
+    "x": 108,
+    "y": 105,
+    "width": 1400,
+    "height": 150,
+    "layer": -3,
+    "z": 126,
+    "css": "font-size: 22px; ",
+    "text": "SCORE works in conjunction with the scoreboard widget. Clicking on a scoreboard allows manual entry of scores.  SCORE is a function to automate the setting, increasing, or decreasing scores. The function works on individual seats, arrays of seats, and with teams. The buttons in this room work with the label below to change the score by an amount you choose. For the sake of simplicity, the value in the label will be the amount the first player changes.  Each player after that will be changed by an amount equal to the label value plus the player's seat number."
+  },
+  "header": {
+    "id": "header",
+    "y": -2,
+    "width": 810,
+    "height": 60,
+    "z": 74,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "font-size: 60px;text-align:center",
+    "x": 390,
+    "text": "SCORE"
+  },
+  "comment2": {
+    "id": "comment2",
+    "x": 425,
+    "y": 485,
+    "width": 300,
+    "z": 10076,
+    "movable": false,
+    "layer": -2,
+    "text": "These buttons create an array of the current score totals and use a loopRoutine to enter those scores into round 1. Round 1 is the only round ever updated."
+  },
+  "scoreboard1": {
+    "type": "scoreboard",
+    "id": "scoreboard1",
+    "x": 100,
+    "y": 275,
+    "z": 4,
+    "movableInEdit": false,
+    "seats": [
+      "seat1",
+      "seat2",
+      "seat3",
+      "seat4"
+    ],
+    "scoreProperty": "scoreDemo1",
+    "movable": false,
+    "autosizeColumns": false,
+    "playersInColumns": false,
+    "roundLabel": "",
+    "rounds": [
+      "Score"
+    ],
+    "showTotals": false,
+    "showAllRounds": true
+  },
+  "comment3": {
+    "id": "comment3",
+    "x": 750,
+    "y": 485,
+    "width": 300,
+    "z": 10076,
+    "movable": false,
+    "text": "This is a demo scoreboard showing how SCORE works when rounds are used.",
+    "layer": -2
+  },
+  "comment5": {
+    "id": "comment5",
+    "x": 100,
+    "y": 810,
+    "width": 500,
+    "z": 10075,
+    "movable": false,
+    "text": "This is a demo scoreboard showing how SCORE works with teams and rounds. It works substantially the same way as without teams. Individual seat scores properties must still be changed. There is no way to directly change a team as a whole when using rounds (but when just using totals without arrays, just use SET like above). If teams score as a unit, and not as the sum of individual seats, then it would be easiest to choose one seat to represent the team and just change that score. That is what is demonstrated here by using seat 1 and seat 5 and adding a new round with a value based on the label at the top of the screen.",
+    "layer": -2
+  },
+  "seat5": {
+    "type": "seat",
+    "id": "seat5",
+    "index": 5,
+    "x": 1475,
+    "y": 10,
+    "scale": 0.5,
+    "z": 1644,
+    "movableInEdit": false,
+    "color": "blue",
+    "player": "Player 5",
+    "scoreDemo3": [
+      3,
+      3,
+      -1
+    ]
+  },
+  "seat6": {
+    "type": "seat",
+    "id": "seat6",
+    "index": 6,
+    "x": 1475,
+    "y": 53,
+    "scale": 0.5,
+    "z": 1649,
+    "movableInEdit": false,
+    "color": "indigo",
+    "player": "Player 6"
+  },
+  "seat7": {
+    "type": "seat",
+    "id": "seat7",
+    "index": 7,
+    "x": 1475,
+    "y": 96,
+    "scale": 0.5,
+    "z": 1647,
+    "movableInEdit": false,
+    "color": "violet",
+    "player": "Player 7"
+  },
+  "seat8": {
+    "type": "seat",
+    "id": "seat8",
+    "index": 8,
+    "x": 1475,
+    "y": 139,
+    "scale": 0.5,
+    "z": 1650,
+    "movableInEdit": false,
+    "color": "brown",
+    "player": "Player 8"
+  },
+  "button1": {
+    "type": "button",
+    "id": "button1",
+    "x": 450,
+    "y": 275,
+    "z": 1655,
+    "clickRoutine": [
+      "var seat1Score = ${PROPERTY text OF scoreChange}",
+      "var seat2Score = ${PROPERTY text OF scoreChange} + 2",
+      "var seat3Score = ${PROPERTY text OF scoreChange} + 3",
+      "var seat4Score = ${PROPERTY text OF scoreChange} + 4",
+      "var roundScore = []",
+      "var roundScore = push ${seat1Score}",
+      "var roundScore = push ${seat2Score}",
+      "var roundScore = push ${seat3Score}",
+      "var roundScore = push ${seat4Score}",
+      {
+        "func": "FOREACH",
+        "in": "${roundScore}",
+        "loopRoutine": [
+          "var key = ${key} + 1",
+          {
+            "func": "SCORE",
+            "property": "scoreDemo1",
+            "round": 1,
+            "seats": "seat${key}",
+            "value": "${value}",
+            "mode": "set"
+          }
+        ]
+      }
+    ],
+    "width": 60,
+    "height": 60,
+    "text": "Set"
+  },
+  "button2": {
+    "type": "button",
+    "id": "button2",
+    "y": 340,
+    "width": 60,
+    "height": 60,
+    "z": 1652,
+    "clickRoutine": [
+      "var seat1Score = ${PROPERTY text OF scoreChange}",
+      "var seat2Score = ${PROPERTY text OF scoreChange} + 2",
+      "var seat3Score = ${PROPERTY text OF scoreChange} + 3",
+      "var seat4Score = ${PROPERTY text OF scoreChange} + 4",
+      "var roundScore = []",
+      "var roundScore = push ${seat1Score}",
+      "var roundScore = push ${seat2Score}",
+      "var roundScore = push ${seat3Score}",
+      "var roundScore = push ${seat4Score}",
+      {
+        "func": "FOREACH",
+        "in": "${roundScore}",
+        "loopRoutine": [
+          "var key = ${key} + 1",
+          {
+            "func": "SCORE",
+            "property": "scoreDemo1",
+            "round": 1,
+            "seats": "seat${key}",
+            "value": "${value}",
+            "mode": "inc"
+          }
+        ]
+      }
+    ],
+    "x": 450,
+    "text": "Inc"
+  },
+  "button3": {
+    "type": "button",
+    "id": "button3",
+    "y": 405,
+    "width": 60,
+    "height": 60,
+    "z": 1652,
+    "clickRoutine": [
+      "var seat1Score = ${PROPERTY text OF scoreChange}",
+      "var seat2Score = ${PROPERTY text OF scoreChange} + 2",
+      "var seat3Score = ${PROPERTY text OF scoreChange} + 3",
+      "var seat4Score = ${PROPERTY text OF scoreChange} + 4",
+      "var roundScore = []",
+      "var roundScore = push ${seat1Score}",
+      "var roundScore = push ${seat2Score}",
+      "var roundScore = push ${seat3Score}",
+      "var roundScore = push ${seat4Score}",
+      {
+        "func": "FOREACH",
+        "in": "${roundScore}",
+        "loopRoutine": [
+          "var key = ${key} + 1",
+          {
+            "func": "SCORE",
+            "property": "scoreDemo1",
+            "round": 1,
+            "seats": "seat${key}",
+            "value": "${value}",
+            "mode": "dec"
+          }
+        ]
+      }
+    ],
+    "x": 450,
+    "text": "Dec"
+  },
+  "qk64D": {
+    "id": "qk64D",
+    "parent": "scoreChange",
+    "fixedParent": true,
+    "x": -38,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": "font-size: 28px",
+    "text": "remove",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 1
+      }
+    ]
+  },
+  "qk64U": {
+    "id": "qk64U",
+    "parent": "scoreChange",
+    "fixedParent": true,
+    "x": 68,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": "font-size: 28px",
+    "text": "add",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 1
+      }
+    ]
+  },
+  "scoreChange": {
+    "type": "label",
+    "id": "scoreChange",
+    "x": 760,
+    "y": 216,
+    "width": 65,
+    "height": 40,
+    "z": 10087,
+    "css": "font-size: 30px;",
+    "editable": true,
+    "text": 4
+  },
+  "scoreboard3": {
+    "type": "scoreboard",
+    "id": "scoreboard3",
+    "x": 100,
+    "y": 600,
+    "z": 4,
+    "movableInEdit": false,
+    "seats": {
+      "Left Team": [
+        "seat1",
+        "seat2",
+        "seat3",
+        "seat4"
+      ],
+      "Right Team": [
+        "seat5",
+        "seat6",
+        "seat7",
+        "seat8"
+      ]
+    },
+    "scoreProperty": "scoreDemo3",
+    "movable": false
+  },
+  "scoreboard2": {
+    "type": "scoreboard",
+    "id": "scoreboard2",
+    "x": 750,
+    "y": 275,
+    "z": 4,
+    "movableInEdit": false,
+    "scoreProperty": "scoreDemo2",
+    "seats": [
+      "seat1",
+      "seat2",
+      "seat3",
+      "seat4"
+    ],
+    "currentRound": 3,
+    "movable": false
+  },
+  "button7": {
+    "type": "button",
+    "id": "button7",
+    "x": 1100,
+    "y": 275,
+    "z": 1652,
+    "clickRoutine": [
+      {
+        "func": "SCORE",
+        "property": "scoreDemo2",
+        "mode": "set",
+        "seats": "seat1",
+        "round": 3,
+        "value": "${PROPERTY text OF scoreChange}"
+      },
+      "var seat2Score = ${PROPERTY text OF scoreChange} + 2",
+      {
+        "func": "SCORE",
+        "property": "scoreDemo2",
+        "mode": "set",
+        "seats": "seat2",
+        "round": 3,
+        "value": "${seat2Score}"
+      },
+      "var seat3Score = ${PROPERTY text OF scoreChange} + 3",
+      {
+        "func": "SCORE",
+        "property": "scoreDemo2",
+        "mode": "set",
+        "seats": [
+          "seat3"
+        ],
+        "round": 3,
+        "value": "${seat3Score}"
+      },
+      "var seat4Score = ${PROPERTY text OF scoreChange} + 4",
+      {
+        "func": "SCORE",
+        "property": "scoreDemo2",
+        "mode": "set",
+        "seats": [
+          "seat4"
+        ],
+        "round": 3,
+        "value": "${seat4Score}"
+      }
+    ],
+    "width": 60,
+    "height": 60,
+    "text": "Set"
+  },
+  "button8": {
+    "type": "button",
+    "id": "button8",
+    "y": 340,
+    "width": 60,
+    "height": 60,
+    "z": 1652,
+    "text": "Inc",
+    "clickRoutine": [
+      {
+        "func": "SCORE",
+        "property": "scoreDemo2",
+        "mode": "inc",
+        "seats": "seat1",
+        "round": 3,
+        "value": "${PROPERTY text OF scoreChange}"
+      },
+      "var seat2Score = ${PROPERTY text OF scoreChange} + 2",
+      {
+        "func": "SCORE",
+        "property": "scoreDemo2",
+        "mode": "inc",
+        "seats": "seat2",
+        "round": 3,
+        "value": "${seat2Score}"
+      },
+      "var seat3Score = ${PROPERTY text OF scoreChange} + 3",
+      {
+        "func": "SCORE",
+        "property": "scoreDemo2",
+        "mode": "inc",
+        "seats": [
+          "seat3"
+        ],
+        "round": 3,
+        "value": "${seat3Score}"
+      },
+      "var seat4Score = ${PROPERTY text OF scoreChange} + 4",
+      {
+        "func": "SCORE",
+        "property": "scoreDemo2",
+        "mode": "inc",
+        "seats": [
+          "seat4"
+        ],
+        "round": 3,
+        "value": "${seat4Score}"
+      }
+    ],
+    "x": 1100
+  },
+  "button9": {
+    "type": "button",
+    "id": "button9",
+    "y": 405,
+    "width": 60,
+    "height": 60,
+    "z": 1652,
+    "text": "Dec",
+    "clickRoutine": [
+      {
+        "func": "SCORE",
+        "property": "scoreDemo2",
+        "mode": "dec",
+        "seats": "seat1",
+        "round": 3,
+        "value": "${PROPERTY text OF scoreChange}"
+      },
+      "var seat2Score = ${PROPERTY text OF scoreChange} + 2",
+      {
+        "func": "SCORE",
+        "property": "scoreDemo2",
+        "mode": "dec",
+        "seats": "seat2",
+        "round": 3,
+        "value": "${seat2Score}"
+      },
+      "var seat3Score = ${PROPERTY text OF scoreChange} + 3",
+      {
+        "func": "SCORE",
+        "property": "scoreDemo2",
+        "mode": "dec",
+        "seats": [
+          "seat3"
+        ],
+        "round": 3,
+        "value": "${seat3Score}"
+      },
+      "var seat4Score = ${PROPERTY text OF scoreChange} + 4",
+      {
+        "func": "SCORE",
+        "property": "scoreDemo2",
+        "mode": "dec",
+        "seats": [
+          "seat4"
+        ],
+        "round": 3,
+        "value": "${seat4Score}"
+      }
+    ],
+    "x": 1100
+  },
+  "comment4": {
+    "id": "comment4",
+    "x": 1075,
+    "y": 473,
+    "width": 510,
+    "z": 10088,
+    "movable": false,
+    "layer": -2,
+    "text": "The left buttons show how to change the score in the current round (3). Note that Player 2 is behind and does not have a score in rounds 2 or 3. Setting 'round' to a number will fill in zeros in the previously empty rounds. The middle buttons show how to change the score by adding a new round by leaving the 'round' value empty. Player 2 gets a new value in round 2 while the other players get a new value in round 4.  The right button shows how to change the scores in multiple seats at one time.",
+    "css": {
+      "font-size": "15px"
+    }
+  },
+  "button10": {
+    "type": "button",
+    "id": "button10",
+    "y": 275,
+    "z": 1652,
+    "clickRoutine": [
+      {
+        "func": "SCORE",
+        "property": "scoreDemo2",
+        "mode": "set",
+        "seats": "seat1",
+        "value": "${PROPERTY text OF scoreChange}"
+      },
+      "var seat2Score = ${PROPERTY text OF scoreChange} + 2",
+      {
+        "func": "SCORE",
+        "property": "scoreDemo2",
+        "mode": "set",
+        "seats": "seat2",
+        "value": "${seat2Score}"
+      },
+      "var seat3Score = ${PROPERTY text OF scoreChange} + 3",
+      {
+        "func": "SCORE",
+        "property": "scoreDemo2",
+        "mode": "set",
+        "seats": [
+          "seat3"
+        ],
+        "value": "${seat3Score}"
+      },
+      "var seat4Score = ${PROPERTY text OF scoreChange} + 4",
+      {
+        "func": "SCORE",
+        "property": "scoreDemo2",
+        "mode": "set",
+        "seats": [
+          "seat4"
+        ],
+        "value": "${seat4Score}"
+      }
+    ],
+    "width": 60,
+    "height": 60,
+    "text": "Set",
+    "x": 1250
+  },
+  "button11": {
+    "type": "button",
+    "id": "button11",
+    "y": 340,
+    "width": 60,
+    "height": 60,
+    "z": 1652,
+    "text": "Inc",
+    "clickRoutine": [
+      {
+        "func": "SCORE",
+        "property": "scoreDemo2",
+        "mode": "inc",
+        "seats": "seat1",
+        "value": "${PROPERTY text OF scoreChange}"
+      },
+      "var seat2Score = ${PROPERTY text OF scoreChange} + 2",
+      {
+        "func": "SCORE",
+        "property": "scoreDemo2",
+        "mode": "inc",
+        "seats": "seat2",
+        "value": "${seat2Score}"
+      },
+      "var seat3Score = ${PROPERTY text OF scoreChange} + 3",
+      {
+        "func": "SCORE",
+        "property": "scoreDemo2",
+        "mode": "inc",
+        "seats": [
+          "seat3"
+        ],
+        "value": "${seat3Score}"
+      },
+      "var seat4Score = ${PROPERTY text OF scoreChange} + 4",
+      {
+        "func": "SCORE",
+        "property": "scoreDemo2",
+        "mode": "inc",
+        "seats": [
+          "seat4"
+        ],
+        "value": "${seat4Score}"
+      }
+    ],
+    "x": 1250
+  },
+  "button12": {
+    "type": "button",
+    "id": "button12",
+    "y": 405,
+    "width": 60,
+    "height": 60,
+    "z": 1652,
+    "text": "Dec",
+    "clickRoutine": [
+      {
+        "func": "SCORE",
+        "property": "scoreDemo2",
+        "mode": "dec",
+        "seats": "seat1",
+        "value": "${PROPERTY text OF scoreChange}"
+      },
+      "var seat2Score = ${PROPERTY text OF scoreChange} + 2",
+      {
+        "func": "SCORE",
+        "property": "scoreDemo2",
+        "mode": "dec",
+        "seats": "seat2",
+        "value": "${seat2Score}"
+      },
+      "var seat3Score = ${PROPERTY text OF scoreChange} + 3",
+      {
+        "func": "SCORE",
+        "property": "scoreDemo2",
+        "mode": "dec",
+        "seats": [
+          "seat3"
+        ],
+        "value": "${seat3Score}"
+      },
+      "var seat4Score = ${PROPERTY text OF scoreChange} + 4",
+      {
+        "func": "SCORE",
+        "property": "scoreDemo2",
+        "mode": "dec",
+        "seats": [
+          "seat4"
+        ],
+        "value": "${seat4Score}"
+      }
+    ],
+    "x": 1250
+  },
+  "button13": {
+    "type": "button",
+    "id": "button13",
+    "x": 450,
+    "y": 600,
+    "z": 1654,
+    "clickRoutine": [
+      {
+        "func": "SCORE",
+        "property": "scoreDemo3",
+        "mode": "set",
+        "seats": "seat1",
+        "value": "${PROPERTY text OF scoreChange}"
+      },
+      "var seat5Score = ${PROPERTY text OF scoreChange} + 5",
+      {
+        "func": "SCORE",
+        "property": "scoreDemo3",
+        "mode": "set",
+        "seats": "seat5",
+        "value": "${seat5Score}"
+      }
+    ],
+    "width": 60,
+    "height": 60,
+    "text": "Set"
+  },
+  "button14": {
+    "type": "button",
+    "id": "button14",
+    "x": 450,
+    "y": 665,
+    "z": 1654,
+    "clickRoutine": [
+      {
+        "func": "SCORE",
+        "property": "scoreDemo3",
+        "mode": "inc",
+        "seats": "seat1",
+        "value": "${PROPERTY text OF scoreChange}"
+      },
+      "var seat5Score = ${PROPERTY text OF scoreChange} + 5",
+      {
+        "func": "SCORE",
+        "property": "scoreDemo3",
+        "mode": "inc",
+        "seats": "seat5",
+        "value": "${seat5Score}"
+      }
+    ],
+    "width": 60,
+    "height": 60,
+    "text": "Inc"
+  },
+  "button15": {
+    "type": "button",
+    "id": "button15",
+    "x": 450,
+    "y": 730,
+    "z": 1654,
+    "clickRoutine": [
+      {
+        "func": "SCORE",
+        "property": "scoreDemo3",
+        "mode": "dec",
+        "seats": "seat1",
+        "value": "${PROPERTY text OF scoreChange}"
+      },
+      "var seat5Score = ${PROPERTY text OF scoreChange} + 5",
+      {
+        "func": "SCORE",
+        "property": "scoreDemo3",
+        "mode": "dec",
+        "seats": "seat5",
+        "value": "${seat5Score}"
+      }
+    ],
+    "width": 60,
+    "height": 60,
+    "text": "Dec"
+  },
+  "button16": {
+    "type": "button",
+    "id": "button16",
+    "y": 340,
+    "width": 60,
+    "height": 60,
+    "z": 1652,
+    "clickRoutine": [
+      {
+        "func": "SCORE",
+        "property": "scoreDemo2",
+        "mode": "set",
+        "seats": [
+          "seat1",
+          "seat2",
+          "seat3",
+          "seat4"
+        ],
+        "value": 0
+      }
+    ],
+    "x": 1400,
+    "text": "Set"
+  },
+  "seat9": {
+    "type": "seat",
+    "id": "seat9",
+    "index": 9,
+    "x": 1060,
+    "y": 676,
+    "z": 1665,
+    "movableInEdit": false,
+    "score": [
+      5,
+      2,
+      8,
+      0
+    ]
+  },
+  "seat10": {
+    "type": "seat",
+    "id": "seat10",
+    "index": 10,
+    "x": 1060,
+    "y": 746,
+    "z": 1664,
+    "movableInEdit": false,
+    "score": [
+      3,
+      4,
+      6,
+      0
+    ]
+  },
+  "comment6": {
+    "id": "comment6",
+    "y": 805,
+    "width": 800,
+    "z": 10089,
+    "movable": false,
+    "text": "This area shows one way to implement a scoreboard system using rounds. (Players could also just click on the scoreboard to make the same changes). Players update their own scores using the + and - buttons to the left of the scoreboard. To see how this works, sit in one of the seats. The buttons detect which player is pressing the button and update the appropriate round's score.  When all players are finished, the next round button advances the entry to the next round. A reset button resets all the scores.",
+    "layer": -2,
+    "x": 750,
+    "css": {
+      "font-size": "23px"
+    }
+  },
+  "scoreMinus": {
+    "type": "button",
+    "id": "scoreMinus",
+    "x": 710,
+    "y": 765,
+    "width": 35,
+    "height": 35,
+    "z": 1666,
+    "css": {
+      "font-size": "35px"
+    },
+    "text": "-",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "type": "seat",
+        "property": "player",
+        "value": "${playerName}"
+      },
+      {
+        "func": "GET",
+        "property": "id",
+        "variable": "seatID"
+      },
+      {
+        "func": "SCORE",
+        "seats": "${seatID}",
+        "mode": "dec",
+        "round": "${PROPERTY currentRound OF scoreboard4}",
+        "value": 1
+      }
+    ],
+    "movableInEdit": false
+  },
+  "scorePlus": {
+    "type": "button",
+    "id": "scorePlus",
+    "x": 710,
+    "y": 600,
+    "width": 35,
+    "height": 35,
+    "z": 1667,
+    "css": {
+      "font-size": "35px"
+    },
+    "text": "+",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "type": "seat",
+        "property": "player",
+        "value": "${playerName}"
+      },
+      {
+        "func": "GET",
+        "property": "id",
+        "variable": "seatID"
+      },
+      {
+        "func": "SCORE",
+        "seats": "${seatID}",
+        "mode": "inc",
+        "round": "${PROPERTY currentRound OF scoreboard4}",
+        "value": 1
+      }
+    ],
+    "movableInEdit": false
+  },
+  "scoreboard4": {
+    "type": "scoreboard",
+    "id": "scoreboard4",
+    "x": 750,
+    "y": 600,
+    "z": 1662,
+    "movable": false,
+    "movableInEdit": false,
+    "currentRound": 4,
+    "seats": [
+      "seat9",
+      "seat10"
+    ]
+  },
+  "button17": {
+    "type": "button",
+    "id": "button17",
+    "x": 1249,
+    "y": 700,
+    "z": 1671,
+    "text": "Next Round",
+    "clickRoutine": [
+      {
+        "func": "SCORE",
+        "seats": [
+          "seat9",
+          "seat10"
+        ]
+      },
+      "var nextRound = ${PROPERTY currentRound OF scoreboard4} + 1",
+      {
+        "func": "SET",
+        "collection": [
+          "scoreboard4"
+        ],
+        "property": "currentRound",
+        "value": "${nextRound}"
+      }
+    ]
+  },
+  "button18": {
+    "type": "button",
+    "id": "button18",
+    "x": 1342,
+    "y": 700,
+    "z": 1672,
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": [
+          "seat9",
+          "seat10"
+        ],
+        "property": "score",
+        "value": [
+          0
+        ]
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "scoreboard4"
+        ],
+        "property": "currentRound",
+        "value": 1
+      }
+    ],
+    "text": "Reset"
+  },
+  "bd9n": {
+    "id": "bd9n",
+    "z": 75,
+    "x": 700,
+    "width": 900,
+    "height": 410,
+    "css": {
+      "background": "beige"
+    },
+    "movable": false,
+    "movableInEdit": false,
+    "layer": -2,
+    "y": 599
+  }
+}

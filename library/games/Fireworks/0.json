@@ -1,0 +1,1349 @@
+{
+  "5wz5": {
+    "type": "button",
+    "text": "RESET",
+    "clickRoutine": [
+      {
+        "func": "RECALL",
+        "holder": "deck"
+      },
+      {
+        "func": "FLIP",
+        "holder": "deck",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "deck"
+      },
+      {
+        "func": "MOVE",
+        "from": "deck",
+        "to": [
+          "p1Seat",
+          "p2Seat",
+          "p3Seat"
+        ],
+        "count": 5
+      }
+    ],
+    "x": 1512,
+    "y": 8,
+    "z": 10441,
+    "id": "5wz5",
+    "height": 40
+  },
+  "aq3x": {
+    "faces": [
+      {
+        "classes": "checkersPiece"
+      },
+      {
+        "classes": "checkersPiece crowned"
+      }
+    ],
+    "color": "#4c5fea",
+    "width": 73.5,
+    "height": 73.5,
+    "x": 694.75,
+    "y": 135.5,
+    "z": 87,
+    "id": "aq3x",
+    "movable": false
+  },
+  "sk9g": {
+    "faces": [
+      {
+        "classes": "checkersPiece"
+      },
+      {
+        "classes": "checkersPiece crowned"
+      }
+    ],
+    "color": "#4c5fea",
+    "width": 73.5,
+    "height": 73.5,
+    "x": 694.75,
+    "y": 232,
+    "z": 88,
+    "classes": "checkersPiece",
+    "id": "sk9g",
+    "movable": false
+  },
+  "egvh": {
+    "faces": [
+      {
+        "classes": "checkersPiece"
+      },
+      {
+        "classes": "checkersPiece crowned"
+      }
+    ],
+    "color": "#4c5fea",
+    "width": 73.5,
+    "height": 73.5,
+    "x": 694.75,
+    "y": 328.5,
+    "z": 89,
+    "classes": "checkersPiece",
+    "id": "egvh",
+    "movable": false
+  },
+  "p7ko": {
+    "faces": [
+      {
+        "classes": "checkersPiece"
+      },
+      {
+        "classes": "checkersPiece crowned"
+      }
+    ],
+    "color": "#4c5fea",
+    "width": 73.5,
+    "height": 73.5,
+    "x": 694.75,
+    "y": 425,
+    "z": 90,
+    "classes": "checkersPiece",
+    "id": "p7ko",
+    "movable": false
+  },
+  "lthq": {
+    "faces": [
+      {
+        "classes": "checkersPiece"
+      },
+      {
+        "classes": "checkersPiece crowned"
+      }
+    ],
+    "color": "#4c5fea",
+    "width": 73.5,
+    "height": 73.5,
+    "x": 694.75,
+    "y": 521.5,
+    "z": 91,
+    "classes": "checkersPiece crowned",
+    "id": "lthq",
+    "movable": false
+  },
+  "9wuq": {
+    "faces": [
+      {
+        "classes": "checkersPiece"
+      },
+      {
+        "classes": "checkersPiece crowned"
+      }
+    ],
+    "color": "#4c5fea",
+    "width": 73.5,
+    "height": 73.5,
+    "x": 694.75,
+    "y": 618,
+    "z": 92,
+    "classes": "checkersPiece",
+    "id": "9wuq",
+    "movable": false
+  },
+  "1xyj": {
+    "faces": [
+      {
+        "classes": "checkersPiece"
+      },
+      {
+        "classes": "checkersPiece crowned"
+      }
+    ],
+    "color": "#4c5fea",
+    "width": 73.5,
+    "height": 73.5,
+    "x": 694.75,
+    "y": 714.5,
+    "z": 93,
+    "classes": "checkersPiece",
+    "id": "1xyj",
+    "movable": false
+  },
+  "6lwp": {
+    "faces": [
+      {
+        "classes": "checkersPiece"
+      },
+      {
+        "classes": "checkersPiece crowned"
+      }
+    ],
+    "color": "#4c5fea",
+    "width": 73.5,
+    "height": 73.5,
+    "x": 694.75,
+    "y": 811,
+    "z": 94,
+    "classes": "checkersPiece",
+    "id": "6lwp",
+    "movable": false
+  },
+  "cemn": {
+    "faces": [
+      {
+        "classes": "checkersPiece"
+      },
+      {
+        "classes": "checkersPiece crowned"
+      }
+    ],
+    "color": "#e84242",
+    "width": 73.5,
+    "height": 73.5,
+    "x": 1474.25,
+    "y": 135.5,
+    "z": 98,
+    "id": "cemn",
+    "movable": false
+  },
+  "y4gf": {
+    "faces": [
+      {
+        "classes": "checkersPiece"
+      },
+      {
+        "classes": "checkersPiece crowned"
+      }
+    ],
+    "color": "#e84242",
+    "width": 73.5,
+    "height": 73.5,
+    "x": 1474.25,
+    "y": 328.5,
+    "z": 97,
+    "id": "y4gf",
+    "movable": false
+  },
+  "1jkb": {
+    "faces": [
+      {
+        "classes": "checkersPiece"
+      },
+      {
+        "classes": "checkersPiece crowned"
+      }
+    ],
+    "color": "#e84242",
+    "width": 73.5,
+    "height": 73.5,
+    "x": 1474.25,
+    "y": 232,
+    "z": 96,
+    "classes": "checkersPiece",
+    "id": "1jkb",
+    "movable": false
+  },
+  "deck": {
+    "type": "holder",
+    "id": "deck",
+    "x": 1470,
+    "y": 811,
+    "dropTarget": {
+      "type": "card"
+    },
+    "z": 23
+  },
+  "wz8k": {
+    "type": "holder",
+    "x": 1303,
+    "y": 41,
+    "z": 27,
+    "id": "wz8k",
+    "onEnter": {
+      "activeFace": 1
+    },
+    "preventPiles": true
+  },
+  "hxnc": {
+    "type": "holder",
+    "x": 1182,
+    "y": 41,
+    "z": 28,
+    "id": "hxnc",
+    "onEnter": {
+      "activeFace": 1
+    },
+    "preventPiles": true
+  },
+  "nk9t": {
+    "type": "holder",
+    "x": 1062,
+    "y": 41,
+    "z": 29,
+    "id": "nk9t",
+    "onEnter": {
+      "activeFace": 1
+    },
+    "preventPiles": true
+  },
+  "q6fp": {
+    "type": "holder",
+    "x": 942,
+    "y": 41,
+    "z": 30,
+    "id": "q6fp",
+    "onEnter": {
+      "activeFace": 1
+    },
+    "preventPiles": true
+  },
+  "wngl": {
+    "type": "holder",
+    "x": 822,
+    "y": 41,
+    "z": 31,
+    "id": "wngl",
+    "onEnter": {
+      "activeFace": 1
+    },
+    "preventPiles": true
+  },
+  "Fireworks Deck": {
+    "type": "deck",
+    "id": "Fireworks Deck",
+    "x": 4,
+    "y": 4,
+    "z": 10408,
+    "cardTypes": {
+      "Red 1": {
+        "value": "1",
+        "css": "--color: #BB0A21",
+        "image": ""
+      },
+      "Red 2": {
+        "value": "2",
+        "css": "--color: #BB0A21",
+        "image": ""
+      },
+      "Red 3": {
+        "value": "3",
+        "css": "--color: #BB0A21",
+        "image": ""
+      },
+      "Red 4": {
+        "value": "4",
+        "css": "--color: #BB0A21",
+        "image": ""
+      },
+      "Red 5": {
+        "value": "5",
+        "css": "--color: #BB0A21",
+        "image": ""
+      },
+      "Blue 1": {
+        "value": "1",
+        "css": "--color: #91A6FF",
+        "image": ""
+      },
+      "Blue 2": {
+        "value": "2",
+        "css": "--color: #91A6FF",
+        "image": ""
+      },
+      "Blue 3": {
+        "value": "3",
+        "css": "--color: #91A6FF",
+        "image": ""
+      },
+      "Blue 4": {
+        "value": "4",
+        "css": "--color: #91A6FF",
+        "image": ""
+      },
+      "Blue 5": {
+        "value": "5",
+        "css": "--color: #91A6FF",
+        "image": ""
+      },
+      "Green 1": {
+        "value": "1",
+        "css": "--color: #157145",
+        "image": ""
+      },
+      "Green 2": {
+        "value": "2",
+        "css": "--color: #157145",
+        "image": ""
+      },
+      "Green 3": {
+        "value": "3",
+        "css": "--color: #157145",
+        "image": ""
+      },
+      "Green 4": {
+        "value": "4",
+        "css": "--color: #157145",
+        "image": ""
+      },
+      "Green 5": {
+        "value": "5",
+        "css": "--color: #157145",
+        "image": ""
+      },
+      "Orange 1": {
+        "value": "1",
+        "css": "--color: #F17F29",
+        "image": ""
+      },
+      "Orange 2": {
+        "value": "2",
+        "css": "--color: #F17F29",
+        "image": ""
+      },
+      "Orange 3": {
+        "value": "3",
+        "css": "--color: #F17F29",
+        "image": ""
+      },
+      "Orange 4": {
+        "value": "4",
+        "css": "--color: #F17F29",
+        "image": ""
+      },
+      "Orange 5": {
+        "value": "5",
+        "css": "--color: #F17F29",
+        "image": ""
+      },
+      "Pink 1": {
+        "value": "1",
+        "css": "--color: #FEC601",
+        "image": ""
+      },
+      "Pink 2": {
+        "value": "2",
+        "css": "--color: #FEC601",
+        "image": ""
+      },
+      "Pink 3": {
+        "value": "3",
+        "css": "--color: #FEC601",
+        "image": ""
+      },
+      "Pink 4": {
+        "value": "4",
+        "css": "--color: #FEC601",
+        "image": ""
+      },
+      "Pink 5": {
+        "value": "5",
+        "css": "--color: #FEC601",
+        "image": ""
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 103,
+            "height": 160,
+            "value": "/i/cards-default/2B.svg",
+            "color": "transparent"
+          }
+        ]
+      },
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "white",
+            "value": "",
+            "width": 103,
+            "height": 160
+          },
+          {
+            "type": "text",
+            "x": 0,
+            "y": 0,
+            "fontSize": 140,
+            "textAlign": "center",
+            "width": 103,
+            "css": "color: var(--color); ",
+            "dynamicProperties": {
+              "value": "value"
+            }
+          }
+        ]
+      }
+    ],
+    "parent": "deck",
+    "cardDefaults": {}
+  },
+  "4q9l": {
+    "deck": "Fireworks Deck",
+    "type": "card",
+    "cardType": "Red 1",
+    "id": "4q9l",
+    "z": 14429,
+    "parent": "texm"
+  },
+  "qnfb": {
+    "deck": "Fireworks Deck",
+    "type": "card",
+    "cardType": "Red 1",
+    "id": "qnfb",
+    "z": 14434,
+    "parent": "texm"
+  },
+  "texm": {
+    "type": "pile",
+    "parent": "deck",
+    "x": 4,
+    "y": 4,
+    "width": 103,
+    "height": 160,
+    "id": "texm"
+  },
+  "wssr": {
+    "deck": "Fireworks Deck",
+    "type": "card",
+    "cardType": "Red 2",
+    "id": "wssr",
+    "z": 14456,
+    "parent": "texm"
+  },
+  "k302": {
+    "deck": "Fireworks Deck",
+    "type": "card",
+    "cardType": "Red 2",
+    "id": "k302",
+    "z": 14433,
+    "parent": "texm"
+  },
+  "qmsj": {
+    "deck": "Fireworks Deck",
+    "type": "card",
+    "cardType": "Red 3",
+    "id": "qmsj",
+    "z": 14444,
+    "parent": "texm"
+  },
+  "n2ll": {
+    "deck": "Fireworks Deck",
+    "type": "card",
+    "cardType": "Red 3",
+    "id": "n2ll",
+    "z": 14443,
+    "parent": "texm"
+  },
+  "12xl": {
+    "deck": "Fireworks Deck",
+    "type": "card",
+    "cardType": "Red 4",
+    "id": "12xl",
+    "z": 14424,
+    "parent": "texm"
+  },
+  "rvcf": {
+    "deck": "Fireworks Deck",
+    "type": "card",
+    "cardType": "Red 4",
+    "id": "rvcf",
+    "z": 14460,
+    "parent": "texm"
+  },
+  "nr7c": {
+    "deck": "Fireworks Deck",
+    "type": "card",
+    "cardType": "Red 5",
+    "id": "nr7c",
+    "z": 14425,
+    "parent": "texm"
+  },
+  "0snw": {
+    "deck": "Fireworks Deck",
+    "type": "card",
+    "cardType": "Blue 1",
+    "id": "0snw",
+    "z": 14427,
+    "parent": "texm"
+  },
+  "n35k": {
+    "deck": "Fireworks Deck",
+    "type": "card",
+    "cardType": "Blue 1",
+    "id": "n35k",
+    "z": 14430,
+    "parent": "texm"
+  },
+  "iaku": {
+    "deck": "Fireworks Deck",
+    "type": "card",
+    "cardType": "Blue 2",
+    "id": "iaku",
+    "z": 14422,
+    "parent": "texm"
+  },
+  "dp36": {
+    "deck": "Fireworks Deck",
+    "type": "card",
+    "cardType": "Blue 2",
+    "id": "dp36",
+    "z": 14439,
+    "parent": "texm"
+  },
+  "qzyp": {
+    "deck": "Fireworks Deck",
+    "type": "card",
+    "cardType": "Blue 3",
+    "id": "qzyp",
+    "z": 14445,
+    "parent": "texm"
+  },
+  "yjsd": {
+    "deck": "Fireworks Deck",
+    "type": "card",
+    "cardType": "Blue 3",
+    "id": "yjsd",
+    "z": 14449,
+    "parent": "texm"
+  },
+  "wguf": {
+    "deck": "Fireworks Deck",
+    "type": "card",
+    "cardType": "Blue 4",
+    "id": "wguf",
+    "z": 14462,
+    "parent": "texm"
+  },
+  "gw4d": {
+    "deck": "Fireworks Deck",
+    "type": "card",
+    "cardType": "Blue 4",
+    "id": "gw4d",
+    "z": 14448,
+    "parent": "texm"
+  },
+  "zj9f": {
+    "deck": "Fireworks Deck",
+    "type": "card",
+    "cardType": "Blue 5",
+    "id": "zj9f",
+    "z": 14469,
+    "parent": "texm"
+  },
+  "ghgl": {
+    "deck": "Fireworks Deck",
+    "type": "card",
+    "cardType": "Green 1",
+    "id": "ghgl",
+    "z": 14461,
+    "parent": "texm"
+  },
+  "tgh1": {
+    "deck": "Fireworks Deck",
+    "type": "card",
+    "cardType": "Green 1",
+    "id": "tgh1",
+    "z": 14440,
+    "parent": "texm"
+  },
+  "u942": {
+    "deck": "Fireworks Deck",
+    "type": "card",
+    "cardType": "Green 2",
+    "id": "u942",
+    "z": 14437,
+    "parent": "texm"
+  },
+  "n6hh": {
+    "deck": "Fireworks Deck",
+    "type": "card",
+    "cardType": "Green 2",
+    "id": "n6hh",
+    "z": 14470,
+    "parent": "texm"
+  },
+  "fxxl": {
+    "deck": "Fireworks Deck",
+    "type": "card",
+    "cardType": "Green 3",
+    "id": "fxxl",
+    "z": 14435,
+    "parent": "texm"
+  },
+  "p28l": {
+    "deck": "Fireworks Deck",
+    "type": "card",
+    "cardType": "Green 3",
+    "id": "p28l",
+    "z": 14436,
+    "parent": "texm"
+  },
+  "rzcn": {
+    "deck": "Fireworks Deck",
+    "type": "card",
+    "cardType": "Green 4",
+    "id": "rzcn",
+    "z": 14421,
+    "parent": "texm"
+  },
+  "4qst": {
+    "deck": "Fireworks Deck",
+    "type": "card",
+    "cardType": "Green 4",
+    "id": "4qst",
+    "z": 14432,
+    "parent": "texm"
+  },
+  "o22o": {
+    "deck": "Fireworks Deck",
+    "type": "card",
+    "cardType": "Green 5",
+    "id": "o22o",
+    "z": 14447,
+    "parent": "texm"
+  },
+  "5vxd": {
+    "deck": "Fireworks Deck",
+    "type": "card",
+    "cardType": "Orange 1",
+    "id": "5vxd",
+    "z": 14466,
+    "parent": "texm"
+  },
+  "ykxv": {
+    "deck": "Fireworks Deck",
+    "type": "card",
+    "cardType": "Orange 1",
+    "id": "ykxv",
+    "z": 14423,
+    "parent": "texm"
+  },
+  "qqto": {
+    "deck": "Fireworks Deck",
+    "type": "card",
+    "cardType": "Orange 2",
+    "id": "qqto",
+    "z": 14463,
+    "parent": "texm"
+  },
+  "rd4m": {
+    "deck": "Fireworks Deck",
+    "type": "card",
+    "cardType": "Orange 2",
+    "id": "rd4m",
+    "z": 14465,
+    "parent": "texm"
+  },
+  "2k4p": {
+    "deck": "Fireworks Deck",
+    "type": "card",
+    "cardType": "Orange 3",
+    "id": "2k4p",
+    "z": 14468,
+    "parent": "texm"
+  },
+  "fqe0": {
+    "deck": "Fireworks Deck",
+    "type": "card",
+    "cardType": "Orange 3",
+    "id": "fqe0",
+    "z": 14459,
+    "parent": "texm"
+  },
+  "yq9l": {
+    "deck": "Fireworks Deck",
+    "type": "card",
+    "cardType": "Orange 4",
+    "id": "yq9l",
+    "z": 14431,
+    "parent": "texm"
+  },
+  "o5fw": {
+    "deck": "Fireworks Deck",
+    "type": "card",
+    "cardType": "Orange 4",
+    "id": "o5fw",
+    "z": 14452,
+    "parent": "texm"
+  },
+  "u9i6": {
+    "deck": "Fireworks Deck",
+    "type": "card",
+    "cardType": "Orange 5",
+    "id": "u9i6",
+    "z": 14457,
+    "parent": "texm"
+  },
+  "posg": {
+    "deck": "Fireworks Deck",
+    "type": "card",
+    "cardType": "Pink 1",
+    "id": "posg",
+    "z": 14453,
+    "parent": "texm"
+  },
+  "yvsh": {
+    "deck": "Fireworks Deck",
+    "type": "card",
+    "cardType": "Pink 1",
+    "id": "yvsh",
+    "z": 14464,
+    "parent": "texm"
+  },
+  "sum7": {
+    "deck": "Fireworks Deck",
+    "type": "card",
+    "cardType": "Pink 2",
+    "id": "sum7",
+    "z": 14450,
+    "parent": "texm"
+  },
+  "fget": {
+    "deck": "Fireworks Deck",
+    "type": "card",
+    "cardType": "Pink 2",
+    "id": "fget",
+    "z": 14446,
+    "parent": "texm"
+  },
+  "t6yx": {
+    "deck": "Fireworks Deck",
+    "type": "card",
+    "cardType": "Pink 3",
+    "id": "t6yx",
+    "z": 14428,
+    "parent": "texm"
+  },
+  "0pd3": {
+    "deck": "Fireworks Deck",
+    "type": "card",
+    "cardType": "Pink 3",
+    "id": "0pd3",
+    "z": 14454,
+    "parent": "texm"
+  },
+  "sqy4": {
+    "deck": "Fireworks Deck",
+    "type": "card",
+    "cardType": "Pink 4",
+    "id": "sqy4",
+    "z": 14467,
+    "parent": "texm"
+  },
+  "zwse": {
+    "deck": "Fireworks Deck",
+    "type": "card",
+    "cardType": "Pink 4",
+    "id": "zwse",
+    "z": 14441,
+    "parent": "texm"
+  },
+  "f5fe": {
+    "deck": "Fireworks Deck",
+    "type": "card",
+    "cardType": "Pink 5",
+    "id": "f5fe",
+    "z": 14442,
+    "parent": "texm"
+  },
+  "teap": {
+    "deck": "Fireworks Deck",
+    "type": "card",
+    "cardType": "Red 1",
+    "id": "teap",
+    "z": 14458,
+    "parent": "texm"
+  },
+  "tchh": {
+    "deck": "Fireworks Deck",
+    "type": "card",
+    "cardType": "Blue 1",
+    "id": "tchh",
+    "z": 14455,
+    "parent": "texm"
+  },
+  "vrky": {
+    "deck": "Fireworks Deck",
+    "type": "card",
+    "cardType": "Green 1",
+    "id": "vrky",
+    "z": 14426,
+    "parent": "texm"
+  },
+  "1mfl": {
+    "deck": "Fireworks Deck",
+    "type": "card",
+    "cardType": "Orange 1",
+    "id": "1mfl",
+    "z": 14438,
+    "parent": "texm"
+  },
+  "d3u4": {
+    "deck": "Fireworks Deck",
+    "type": "card",
+    "cardType": "Pink 1",
+    "id": "d3u4",
+    "z": 14451,
+    "parent": "texm"
+  },
+  "kbdg": {
+    "type": "holder",
+    "x": 942,
+    "y": -147,
+    "z": 10443,
+    "id": "kbdg",
+    "scale": 0.5,
+    "height": 1500,
+    "stackOffsetY": 170,
+    "onEnter": {
+      "activeFace": 1
+    }
+  },
+  "bpuz": {
+    "faces": [
+      {
+        "classes": "checkersPiece"
+      },
+      {
+        "classes": "checkersPiece crowned"
+      }
+    ],
+    "color": "#e0cb0b",
+    "width": 73.5,
+    "height": 73.5,
+    "y": 86,
+    "z": 1,
+    "id": "bpuz",
+    "layer": 50,
+    "classes": "checkersPiece",
+    "x": 18
+  },
+  "4zek": {
+    "faces": [
+      {
+        "classes": "checkersPiece"
+      },
+      {
+        "classes": "checkersPiece crowned"
+      }
+    ],
+    "color": "#e0cb0b",
+    "width": 73.5,
+    "height": 73.5,
+    "y": 133,
+    "z": 8,
+    "classes": "checkersPiece",
+    "layer": 50,
+    "id": "4zek",
+    "x": 18
+  },
+  "wg3c": {
+    "faces": [
+      {
+        "classes": "checkersPiece"
+      },
+      {
+        "classes": "checkersPiece crowned"
+      }
+    ],
+    "color": "#e0cb0b",
+    "width": 73.5,
+    "height": 73.5,
+    "y": 157,
+    "z": 9,
+    "classes": "checkersPiece",
+    "layer": 50,
+    "id": "wg3c",
+    "x": 18
+  },
+  "tq0t": {
+    "faces": [
+      {
+        "classes": "checkersPiece"
+      },
+      {
+        "classes": "checkersPiece crowned"
+      }
+    ],
+    "color": "#e0cb0b",
+    "width": 73.5,
+    "height": 73.5,
+    "y": 180,
+    "z": 10,
+    "classes": "checkersPiece",
+    "layer": 50,
+    "id": "tq0t",
+    "x": 18
+  },
+  "bpuz-copy001": {
+    "faces": [
+      {
+        "classes": "checkersPiece"
+      },
+      {
+        "classes": "checkersPiece crowned"
+      }
+    ],
+    "color": "#e0cb0b",
+    "width": 73.5,
+    "height": 73.5,
+    "y": 448,
+    "id": "bpuz-copy001",
+    "layer": 50,
+    "classes": "checkersPiece",
+    "z": 1,
+    "x": 18
+  },
+  "4zek-copy001": {
+    "faces": [
+      {
+        "classes": "checkersPiece"
+      },
+      {
+        "classes": "checkersPiece crowned"
+      }
+    ],
+    "color": "#e0cb0b",
+    "width": 73.5,
+    "height": 73.5,
+    "y": 519,
+    "classes": "checkersPiece",
+    "layer": 50,
+    "id": "4zek-copy001",
+    "z": 12,
+    "x": 18
+  },
+  "wg3c-copy001": {
+    "faces": [
+      {
+        "classes": "checkersPiece"
+      },
+      {
+        "classes": "checkersPiece crowned"
+      }
+    ],
+    "color": "#e0cb0b",
+    "width": 73.5,
+    "height": 73.5,
+    "y": 496,
+    "classes": "checkersPiece",
+    "layer": 50,
+    "id": "wg3c-copy001",
+    "z": 3,
+    "x": 18
+  },
+  "tq0t-copy001": {
+    "faces": [
+      {
+        "classes": "checkersPiece"
+      },
+      {
+        "classes": "checkersPiece crowned"
+      }
+    ],
+    "color": "#e0cb0b",
+    "width": 73.5,
+    "height": 73.5,
+    "y": 472,
+    "classes": "checkersPiece",
+    "layer": 50,
+    "id": "tq0t-copy001",
+    "z": 2,
+    "x": 18
+  },
+  "bpuz-copy004": {
+    "faces": [
+      {
+        "classes": "checkersPiece"
+      },
+      {
+        "classes": "checkersPiece crowned"
+      }
+    ],
+    "color": "#e0cb0b",
+    "width": 73.5,
+    "height": 73.5,
+    "y": 811,
+    "id": "bpuz-copy004",
+    "layer": 50,
+    "classes": "checkersPiece",
+    "z": 1,
+    "x": 18
+  },
+  "4zek-copy004": {
+    "faces": [
+      {
+        "classes": "checkersPiece"
+      },
+      {
+        "classes": "checkersPiece crowned"
+      }
+    ],
+    "color": "#e0cb0b",
+    "width": 73.5,
+    "height": 73.5,
+    "y": 881.875,
+    "classes": "checkersPiece",
+    "layer": 50,
+    "id": "4zek-copy004",
+    "z": 14,
+    "x": 18
+  },
+  "wg3c-copy004": {
+    "faces": [
+      {
+        "classes": "checkersPiece"
+      },
+      {
+        "classes": "checkersPiece crowned"
+      }
+    ],
+    "color": "#e0cb0b",
+    "width": 73.5,
+    "height": 73.5,
+    "y": 858.25,
+    "classes": "checkersPiece",
+    "layer": 50,
+    "id": "wg3c-copy004",
+    "z": 3,
+    "x": 18
+  },
+  "tq0t-copy004": {
+    "faces": [
+      {
+        "classes": "checkersPiece"
+      },
+      {
+        "classes": "checkersPiece crowned"
+      }
+    ],
+    "color": "#e0cb0b",
+    "width": 73.5,
+    "height": 73.5,
+    "y": 834.625,
+    "classes": "checkersPiece",
+    "layer": 50,
+    "id": "tq0t-copy004",
+    "z": 2,
+    "x": 18
+  },
+  "p1": {
+    "type": "holder",
+    "id": "p1",
+    "x": 110,
+    "y": 86,
+    "width": 531,
+    "stackOffsetX": 105,
+    "dropShadow": true,
+    "onEnter": {
+      "clickable": false,
+      "activeFace": 1
+    },
+    "onLeave": {
+      "clickable": true,
+      "activeFace": 0
+    },
+    "showInactiveFaceToSeat": "p1Seat"
+  },
+  "p2": {
+    "type": "holder",
+    "id": "p2",
+    "x": 110,
+    "y": 448,
+    "width": 531,
+    "stackOffsetX": 105,
+    "dropShadow": true,
+    "onEnter": {
+      "clickable": false,
+      "activeFace": 1
+    },
+    "onLeave": {
+      "clickable": true,
+      "activeFace": 0
+    },
+    "showInactiveFaceToSeat": "p2Seat"
+  },
+  "p3": {
+    "type": "holder",
+    "id": "p3",
+    "x": 110,
+    "y": 811,
+    "width": 531,
+    "stackOffsetX": 105,
+    "dropShadow": true,
+    "onEnter": {
+      "clickable": false,
+      "activeFace": 1
+    },
+    "onLeave": {
+      "clickable": true,
+      "activeFace": 0
+    },
+    "showInactiveFaceToSeat": "p3Seat"
+  },
+  "g8c2": {
+    "type": "holder",
+    "x": 1062,
+    "y": -147,
+    "z": 10446,
+    "id": "g8c2",
+    "scale": 0.5,
+    "height": 1500,
+    "stackOffsetY": 170,
+    "onEnter": {
+      "activeFace": 1
+    }
+  },
+  "o48b": {
+    "type": "holder",
+    "x": 1182,
+    "y": -147,
+    "z": 10445,
+    "id": "o48b",
+    "scale": 0.5,
+    "height": 1500,
+    "stackOffsetY": 170,
+    "onEnter": {
+      "activeFace": 1
+    }
+  },
+  "hxt5": {
+    "type": "holder",
+    "x": 1303,
+    "y": -147,
+    "z": 10447,
+    "id": "hxt5",
+    "scale": 0.5,
+    "height": 1500,
+    "stackOffsetY": 170,
+    "onEnter": {
+      "activeFace": 1
+    }
+  },
+  "bpqh": {
+    "type": "holder",
+    "x": 822,
+    "y": -147,
+    "z": 10448,
+    "id": "bpqh",
+    "scale": 0.5,
+    "height": 1500,
+    "stackOffsetY": 170,
+    "onEnter": {
+      "activeFace": 1
+    }
+  },
+  "xade": {
+    "faces": [
+      {
+        "classes": "checkersPiece"
+      },
+      {
+        "classes": "checkersPiece crowned"
+      }
+    ],
+    "color": "#e0cb0b",
+    "width": 73.5,
+    "height": 73.5,
+    "y": 109,
+    "z": 7,
+    "id": "xade",
+    "layer": 50,
+    "classes": "checkersPiece",
+    "x": 18
+  },
+  "5op5": {
+    "faces": [
+      {
+        "classes": "checkersPiece"
+      },
+      {
+        "classes": "checkersPiece crowned"
+      }
+    ],
+    "color": "#e0cb0b",
+    "width": 73.5,
+    "height": 73.5,
+    "y": 543,
+    "layer": 50,
+    "classes": "checkersPiece",
+    "z": 13,
+    "id": "5op5",
+    "x": 18
+  },
+  "ycx6": {
+    "faces": [
+      {
+        "classes": "checkersPiece"
+      },
+      {
+        "classes": "checkersPiece crowned"
+      }
+    ],
+    "color": "#e0cb0b",
+    "width": 73.5,
+    "height": 73.5,
+    "y": 905.5,
+    "classes": "checkersPiece",
+    "layer": 50,
+    "z": 15,
+    "id": "ycx6",
+    "x": 18
+  },
+  "_meta": {
+    "version": 13,
+    "info": {
+      "name": "Fireworks",
+      "image": "/assets/222053642_15760",
+      "rules": "",
+      "bgg": "https://boardgamegeek.com/boardgame/98778/hanabi",
+      "year": "2010",
+      "mode": "coop",
+      "time": "25",
+      "attribution": "The layout was created by ArnoldSmith86 and is released to the public domain using CC0. It does not use custom assets.\n\nThe library image is CC0 by Christina Pinckard: https://www.publicdomainpictures.net/en/view-image.php?image=33560&amp;picture=fireworks",
+      "similarName": "Hanabi",
+      "similarAwards": "2015 Årets Spill Best Family Game Nominee\n2014 Nederlandse Spellenprijs Best Family Game Nominee\n2014 MinD-Spieletipp Winner\n2014 Hra roku Nominee\n2014 Guldbrikken Best Adult Game Nominee\n2013 Spiel des Jahres Winner\n2013 Fairplay À la carte Winner\n2012 Juego del Año Finalist",
+      "description": "Cooperative card tile laying game. Work together to complete the pattern before running out of cards and while never looking at your own cards.",
+      "showName": true,
+      "lastUpdate": 1695893233013,
+      "skill": "",
+      "similarImage": "",
+      "ruleText": "",
+      "helpText": "",
+      "variantImage": "",
+      "variant": "",
+      "language": "en-US",
+      "players": "2-3",
+      "similarDesigner": "Antoine Bauza"
+    }
+  },
+  "p1Seat": {
+    "type": "seat",
+    "id": "p1Seat",
+    "x": 294,
+    "z": 10447,
+    "y": 21,
+    "hand": "p1"
+  },
+  "p2Seat": {
+    "type": "seat",
+    "id": "p2Seat",
+    "x": 294,
+    "index": 2,
+    "z": 10445,
+    "y": 383,
+    "hand": "p2"
+  },
+  "p3Seat": {
+    "type": "seat",
+    "id": "p3Seat",
+    "x": 294,
+    "index": 3,
+    "z": 10446,
+    "y": 746,
+    "hand": "p3"
+  }
+}

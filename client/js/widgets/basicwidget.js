@@ -1,53 +1,55 @@
-import { Widget } from './widget';
-
-class BasicWidget extends Widget {
+class BasicWidget extends ImageWidget {
   constructor(id) {
     super(id);
 
     this.addDefaults({
       typeClasses: 'widget basic',
-      clickable: true,
 
       faces: [ {} ],
       faceCycle: 'forward',
       activeFace: 0,
 
-      image: '',
       color: 'black',
-      svgReplaces: {},
       layer: 1,
-      text: ''
+      html: null
     });
   }
 
   applyDeltaToDOM(delta) {
     super.applyDeltaToDOM(delta);
     if(delta.activeFace !== undefined || delta.faces !== undefined) {
-      let face = this.get('faces')[this.get('activeFace')];
-      if(face !== undefined)
-        this.applyDelta(face);
+      if(this.previouslyActiveFace !== undefined) {
+        const undoDelta = {};
+        for(const property in this.previouslyActiveFace)
+          undoDelta[property] = this.state[property] !== undefined ? this.state[property] : null;
+        delete undoDelta.faces;
+        delete undoDelta.activeFace;
+        this.applyDeltaToDOM(undoDelta);
+        delete this.previouslyActiveFace;
+      }
+
+      const face = this.faces()[this.get('activeFace')];
+      if(face && typeof face == 'object') {
+        delete face.faces;
+        delete face.activeFace;
+        this.applyDeltaToDOM(face);
+        this.previouslyActiveFace = face;
+      }
     }
-    if(delta.text !== undefined)
-      setText(this.domElement, delta.text);
-
-    for(const property of Object.values(this.get('svgReplaces') || {}))
-      if(delta[property] !== undefined)
-        this.domElement.style.cssText = this.css();
-  }
-
-  classes() {
-    let className = super.classes();
-
-    if(this.get('image'))
-      className += ' hasImage';
-
-    return className;
-  }
-
-  classesProperties() {
-    const p = super.classesProperties();
-    p.push('image');
-    return p;
+    if(delta.html !== undefined || delta.text !== undefined || delta.icon !== undefined || this.getWithPropertyReplacements_checkDelta('html', delta)) {
+      const childNodes = [...this.domElement.childNodes];
+      this.domElement.innerHTML = '';
+      if(this.get('html') === null) {
+        setText(this.domElement, this.get('icon') ? '' : this.get('text'));
+      } else {
+        this.domElement.innerHTML = DOMPurify.sanitize(mapAssetURLs(this.getWithPropertyReplacements('html')), { USE_PROFILES: { html: true } });
+      }
+      for(const child of childNodes)
+        if(String(child.className).match(/widget|symbolOuterWrapper/))
+          this.domElement.appendChild(child);
+    }
+    if(delta.color !== undefined)
+      this.updateIcon();
   }
 
   async click(mode='respect') {
@@ -60,16 +62,19 @@ class BasicWidget extends Widget {
 
     if(this.get('color'))
       css += '; --color:' + this.get('color');
-    if(this.get('image'))
-      css += '; background-image: url("' + this.getImage() + '")';
 
     return css;
   }
 
   cssProperties() {
     const p = super.cssProperties();
-    p.push('image', 'color', 'svgReplaces');
+    p.push('color');
     return p;
+  }
+
+  faces() {
+    const faces = this.get('faces');
+    return Array.isArray(faces) ? faces : [];
   }
 
   async flip(setFlip, faceCycle) {
@@ -78,28 +83,26 @@ class BasicWidget extends Widget {
     else {
       const fC = (faceCycle !== undefined && faceCycle !== null) ? faceCycle : this.get('faceCycle');
       if (fC == 'backward')
-        await this.set('activeFace', this.get('activeFace') == 0 ? this.get('faces').length-1 : this.get('activeFace') -1);
+        await this.set('activeFace', this.get('activeFace') == 0 ? this.faces().length-1 : this.get('activeFace') -1);
       else
-        await this.set('activeFace', Math.floor(this.get('activeFace') + (fC == 'random' ? Math.random()*99999 : 1)) % this.get('faces').length);
+        await this.set('activeFace', Math.floor(this.get('activeFace') + (fC == 'random' ? rand()*99999 : 1)) % this.faces().length);
     }
   }
 
-  getDefaultValue(property) {
-    if(property == 'faces' || property == 'activeFace' || !this.get('faces') || !this.get('faces')[this.get('activeFace')])
-      return super.getDefaultValue(property);
-    const d = this.get('faces')[this.get('activeFace')][property];
+  get(property) {
+    if(property == 'faces' || property == 'activeFace' || !this.faces()[this.get('activeFace')])
+      return super.get(property);
+    const d = this.faces()[this.get('activeFace')][property];
     if(d !== undefined)
       return d;
-    return super.getDefaultValue(property);
+    return super.get(property);
   }
 
-  getImage() {
-    if(!Object.keys(this.get('svgReplaces')).length)
-      return this.get('image');
+  getDefaultIconColor() {
+    return this.get('color');
+  }
 
-    const replaces = {};
-    for(const key in this.get('svgReplaces'))
-      replaces[key] = this.get(this.get('svgReplaces')[key]);
-    return getSVG(this.get('image'), replaces, _=>this.domElement.style.cssText = this.css());
+  getFaceCount() {
+    return this.faces().length || 1;
   }
 }

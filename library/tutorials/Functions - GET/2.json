@@ -1,0 +1,416 @@
+{
+  "_meta": {
+    "version": 12,
+    "info": {
+      "name": "Functions - GET",
+      "image": "/assets/-276645508_3430",
+      "rules": "",
+      "bgg": "",
+      "year": "2020",
+      "mode": "Tutorial",
+      "time": "",
+      "attribution": "",
+      "showName": false,
+      "lastUpdate": 1749068322039,
+      "skill": "",
+      "description": "",
+      "similarImage": "",
+      "similarName": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": "",
+      "similarDesigner": "",
+      "variantImage": "",
+      "variant": "Sub-Properties",
+      "language": "en-US",
+      "players": "1"
+    }
+  },
+  "title": {
+    "id": "title",
+    "width": 1600,
+    "height": 130,
+    "z": 74,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "font-size: 60px;text-align:center",
+    "text": "Functions: GET\nSub-Properties"
+  },
+  "result1": {
+    "id": "result1",
+    "x": 60,
+    "y": 300,
+    "width": 300,
+    "z": 9736,
+    "text": "Result 1",
+    "movable": false
+  },
+  "explanation": {
+    "id": "explanation",
+    "x": 108,
+    "y": 154,
+    "width": 1400,
+    "height": 150,
+    "layer": -3,
+    "z": 129,
+    "css": "font-size: 25px; ",
+    "text": "In addition to the scalar form of 'GET' it can also be used in array form to get a sub-property of an object in a collection. This could be useful to get a value in css, from a cardType, or cardDefaults for example. Click the buttons below to see how this works."
+  },
+  "label1": {
+    "id": "label1",
+    "x": 60,
+    "y": 700,
+    "width": 300,
+    "z": 185,
+    "movable": false,
+    "text": "The button above is a simple scalar use of 'GET' Press the button to get the text property (this text) from this widget and SET it into the label above."
+  },
+  "label2": {
+    "id": "label2",
+    "x": 410,
+    "y": 700,
+    "width": 300,
+    "z": 121,
+    "movable": false,
+    "text": "This button gets the background color set into the css of the button itself and sets that value into the label above."
+  },
+  "label3": {
+    "id": "label3",
+    "x": 808,
+    "y": 700,
+    "width": 300,
+    "z": 9732,
+    "movable": false,
+    "text": "This button gets the suitAlt value from the cardType 'C 01' in the deck to the right and sets that value into the label above."
+  },
+  "button1": {
+    "type": "button",
+    "id": "button1",
+    "x": 151,
+    "y": 550,
+    "z": 10,
+    "clickRoutine": [
+      {
+        "func": "GET",
+        "collection": [
+          "label1"
+        ],
+        "property": "text"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "result1"
+        ],
+        "property": "text",
+        "value": "${text}"
+      }
+    ],
+    "text": "GET"
+  },
+  "button2": {
+    "type": "button",
+    "id": "button2",
+    "x": 501,
+    "y": 550,
+    "z": 11,
+    "clickRoutine": [
+      {
+        "func": "GET",
+        "collection": "thisButton",
+        "property": [
+          "css",
+          "background"
+        ],
+        "variable": "background"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "result2"
+        ],
+        "property": "text",
+        "value": "${background}"
+      }
+    ],
+    "css": {
+      "background": "#1f5ca6"
+    },
+    "text": "GET"
+  },
+  "button3": {
+    "type": "button",
+    "id": "button3",
+    "x": 900,
+    "y": 550,
+    "z": 11,
+    "clickRoutine": [
+      {
+        "func": "GET",
+        "collection": [
+          "cardDeck"
+        ],
+        "property": [
+          "cardTypes",
+          "C 01",
+          "suitAlt"
+        ],
+        "variable": "sort"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "result3"
+        ],
+        "property": "text",
+        "value": "${sort}"
+      }
+    ],
+    "text": "GET"
+  },
+  "label4": {
+    "id": "label4",
+    "x": 1188,
+    "y": 700,
+    "width": 300,
+    "z": 9732,
+    "movable": false,
+    "text": "This button gets the width value from the cardDefaults in the deck to the left and sets that value into the label above."
+  },
+  "button4": {
+    "type": "button",
+    "id": "button4",
+    "x": 1280,
+    "y": 550,
+    "z": 11,
+    "clickRoutine": [
+      {
+        "func": "GET",
+        "collection": [
+          "cardDeck"
+        ],
+        "property": [
+          "cardDefaults",
+          "width"
+        ],
+        "variable": "width"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "result4"
+        ],
+        "property": "text",
+        "value": "${width}"
+      }
+    ],
+    "text": "GET"
+  },
+  "result2": {
+    "id": "result2",
+    "y": 300,
+    "width": 200,
+    "z": 9736,
+    "text": "Result 2",
+    "movable": false,
+    "height": 20,
+    "x": 510
+  },
+  "result3": {
+    "id": "result3",
+    "y": 300,
+    "width": 200,
+    "z": 9736,
+    "x": 905,
+    "movable": false,
+    "text": "Result 3",
+    "height": 20
+  },
+  "result4": {
+    "id": "result4",
+    "x": 1290,
+    "y": 300,
+    "width": 200,
+    "z": 9737,
+    "movable": false,
+    "height": 20,
+    "text": "Result 4"
+  },
+  "crznB": {
+    "id": "crznB",
+    "parent": "cardHolder",
+    "fixedParent": true,
+    "y": 171.36,
+    "width": 111,
+    "height": 40,
+    "type": "button",
+    "text": "Recall & Shuffle",
+    "movableInEdit": false,
+    "clickRoutine": [
+      {
+        "func": "RECALL",
+        "holder": "${PROPERTY parent}"
+      },
+      {
+        "func": "FLIP",
+        "holder": "${PROPERTY parent}",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "${PROPERTY parent}"
+      }
+    ]
+  },
+  "dgxs": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "T 1J",
+    "id": "dgxs",
+    "z": 11195,
+    "parent": "sxjc"
+  },
+  "okdu": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "T 2J",
+    "id": "okdu",
+    "z": 11194,
+    "parent": "sxjc"
+  },
+  "rjy6": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "T 3J",
+    "id": "rjy6",
+    "z": 11197,
+    "parent": "sxjc"
+  },
+  "fs3i": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "T 4J",
+    "id": "fs3i",
+    "z": 11196,
+    "parent": "sxjc"
+  },
+  "v596": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "C 01",
+    "id": "v596",
+    "z": 11193,
+    "parent": "sxjc"
+  },
+  "cardHolder": {
+    "type": "holder",
+    "id": "cardHolder",
+    "x": 1087,
+    "y": 400,
+    "z": 130,
+    "dropTarget": {
+      "type": "card"
+    }
+  },
+  "cardDeck": {
+    "type": "deck",
+    "id": "cardDeck",
+    "parent": "cardHolder",
+    "x": 12,
+    "y": 41,
+    "cardTypes": {
+      "T 1J": {
+        "image": "/i/cards-default/1J.svg",
+        "suit": "T",
+        "suitColor": "🃏",
+        "suitAlt": "5J",
+        "rank": "J1",
+        "rankA": "J1",
+        "rankFixed": "J1 T"
+      },
+      "T 2J": {
+        "image": "/i/cards-default/2J.svg",
+        "suit": "T",
+        "suitColor": "🃏",
+        "suitAlt": "5J",
+        "rank": "J2",
+        "rankA": "J2",
+        "rankFixed": "J2 T"
+      },
+      "T 3J": {
+        "image": "/i/cards-default/3J.svg",
+        "suit": "T",
+        "suitColor": "🃏",
+        "suitAlt": "5J",
+        "rank": "J3",
+        "rankA": "J3",
+        "rankFixed": "J3 T"
+      },
+      "T 4J": {
+        "image": "/i/cards-default/4J.svg",
+        "suit": "T",
+        "suitColor": "🃏",
+        "suitAlt": "5J",
+        "rank": "J4",
+        "rankA": "J4",
+        "rankFixed": "J4 T"
+      },
+      "C 01": {
+        "image": "/i/cards-default/AC.svg",
+        "suit": "C",
+        "suitColor": "♣",
+        "suitAlt": "1♣",
+        "rank": "01",
+        "rankA": "5A",
+        "rankFixed": "01 C"
+      }
+    },
+    "faceTemplates": [
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 103,
+            "height": 160,
+            "color": "transparent",
+            "value": "/i/cards-default/2B.svg"
+          }
+        ]
+      },
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 103,
+            "height": 160,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image"
+            }
+          }
+        ]
+      }
+    ],
+    "cardDefaults": {
+      "width": 103,
+      "height": 160
+    }
+  },
+  "sxjc": {
+    "type": "pile",
+    "parent": "cardHolder",
+    "x": 4,
+    "y": 4,
+    "width": 103,
+    "height": 160,
+    "id": "sxjc"
+  }
+}

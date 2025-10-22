@@ -1,0 +1,565 @@
+{
+  "_meta": {
+    "version": 16,
+    "info": {
+      "name": "Types - Dice",
+      "image": "/assets/-194319686_4913",
+      "rules": "",
+      "bgg": "",
+      "year": "2021",
+      "mode": "Tutorial",
+      "time": "0",
+      "attribution": "",
+      "showName": false,
+      "lastUpdate": 1748992066909,
+      "skill": "",
+      "description": "",
+      "similarImage": "",
+      "similarName": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": "",
+      "similarDesigner": "",
+      "variantImage": "",
+      "variant": "Appearance",
+      "language": "en-US",
+      "players": "1"
+    }
+  },
+  "overview": {
+    "id": "overview",
+    "x": 108,
+    "y": 80,
+    "width": 1400,
+    "height": 150,
+    "layer": -3,
+    "z": 129,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "font-size: 25px; ",
+    "text": "This room shows some examples of how CSS can be used to customize the appearance of dice. Like several other widget types, dice have theor own set of CSS values that can be changed. You can use the 'css' property to change overall aspects of the dice (but probably should just use 'faceCSS'. Use 'faceCSS' to set css parameters on all faces or on individual faces. And use the specific parameters 'pipColor', 'color', 'borderColor', and 'imageScale' to modify aspects specific to individual faces."
+  },
+  "title": {
+    "id": "title",
+    "width": 1600,
+    "height": 70,
+    "z": 70,
+    "css": "font-size: 60px; text-align:center",
+    "text": "Dice: Appearance",
+    "movable": false,
+    "movableInEdit": false
+  },
+  "dice1text": {
+    "id": "dice1text",
+    "x": 50,
+    "y": 400,
+    "width": 300,
+    "z": 185,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "font-size: 20px; ",
+    "text": "This shows the key difference between css and faceCSS. The background css is blue and that applies to the whole widget, even parts that normally would not be visible. But the background on each face is lightblue because it was set using 'faceCSS'"
+  },
+  "dice2text": {
+    "id": "dice2text",
+    "x": 400,
+    "y": 400,
+    "width": 300,
+    "z": 185,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "font-size: 22px; ",
+    "text": "Using faceCSS, the background color is set to semi-transparent orange, 'backface-visibility' is set to hidden, and the text color is white. You could also set text color by using the 'pipColor' property and not using css."
+  },
+  "dice3": {
+    "type": "dice",
+    "id": "dice3",
+    "x": 750,
+    "y": 300,
+    "z": 199,
+    "rollCount": 23,
+    "faces": [
+      {
+        "value": 1,
+        "color": "red",
+        "pipColor": "white"
+      },
+      {
+        "value": 2,
+        "color": "orange",
+        "pipColor": "white"
+      },
+      {
+        "value": 3,
+        "color": "yellow"
+      },
+      {
+        "value": 4,
+        "color": "green",
+        "pipColor": "white"
+      },
+      {
+        "value": 5,
+        "color": "blue",
+        "pipColor": "white"
+      },
+      {
+        "value": 6,
+        "color": "purple",
+        "pipColor": "white"
+      }
+    ],
+    "shape3d": true
+  },
+  "dice3text": {
+    "id": "dice3text",
+    "x": 750,
+    "y": 400,
+    "width": 300,
+    "z": 185,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "font-size: 22px; ",
+    "text": "These dice all use 'color' and 'pipColor' to change the colors on the faces. The only difference is in the use of 'value' and 'pips' (which both show pips) and text (used to show strings)."
+  },
+  "dice4text": {
+    "id": "dice4text",
+    "x": 1100,
+    "y": 400,
+    "width": 250,
+    "z": 185,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "font-size: 22px; ",
+    "text": "This dice shows how to use 'faceCSS' on each face. In this case, the font size increases on each face."
+  },
+  "dice1": {
+    "type": "dice",
+    "id": "dice1",
+    "x": 160,
+    "y": 300,
+    "z": 195,
+    "activeFace": 2,
+    "css": {
+      "background": "blue"
+    },
+    "faceCSS": {
+      "background": "lightblue"
+    },
+    "faces": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "rollCount": 7,
+    "shape3d": true
+  },
+  "dice2": {
+    "type": "dice",
+    "id": "dice2",
+    "x": 500,
+    "y": 299,
+    "z": 196,
+    "activeFace": 1,
+    "faceCSS": {
+      "background": "#ff800090",
+      "color": "#ffffff",
+      "backface-visibility": "visible"
+    },
+    "faces": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "rollCount": 14,
+    "shape3d": true
+  },
+  "dice6": {
+    "type": "dice",
+    "id": "dice6",
+    "x": 965,
+    "y": 300,
+    "z": 202,
+    "activeFace": 1,
+    "faces": [
+      {
+        "text": 1,
+        "color": "red",
+        "pipColor": "white"
+      },
+      {
+        "text": 2,
+        "color": "orange",
+        "pipColor": "white"
+      },
+      {
+        "text": 3,
+        "color": "yellow"
+      },
+      {
+        "text": 4,
+        "color": "green",
+        "pipColor": "white"
+      },
+      {
+        "text": 5,
+        "color": "blue",
+        "pipColor": "white"
+      },
+      {
+        "text": 6,
+        "color": "purple",
+        "pipColor": "white"
+      }
+    ],
+    "rollCount": 20,
+    "shape3d": true
+  },
+  "dice4": {
+    "type": "dice",
+    "id": "dice4",
+    "x": 860,
+    "y": 300,
+    "z": 203,
+    "faces": [
+      {
+        "pips": 1,
+        "color": "red",
+        "pipColor": "white"
+      },
+      {
+        "pips": 2,
+        "color": "orange",
+        "pipColor": "white"
+      },
+      {
+        "pips": 3,
+        "color": "yellow"
+      },
+      {
+        "pips": 4,
+        "bcolor": "green",
+        "pipColor": "white"
+      },
+      {
+        "pips": 5,
+        "color": "blue",
+        "pipColor": "white"
+      },
+      {
+        "pips": 6,
+        "color": "purple",
+        "pipColor": "white"
+      }
+    ],
+    "shape3d": true,
+    "activeFace": 5,
+    "rollCount": 19
+  },
+  "dice": {
+    "type": "dice",
+    "id": "dice",
+    "x": 1200,
+    "y": 300,
+    "z": 204,
+    "faces": [
+      {
+        "text": 1,
+        "faceCSS": {
+          "font-size": "25px"
+        }
+      },
+      {
+        "text": 2,
+        "faceCSS": {
+          "font-size": "30px"
+        }
+      },
+      {
+        "text": 3,
+        "faceCSS": {
+          "font-size": "35px"
+        }
+      },
+      {
+        "text": 4,
+        "faceCSS": {
+          "font-size": "40px"
+        }
+      },
+      {
+        "text": 5,
+        "faceCSS": {
+          "font-size": "45px"
+        }
+      },
+      {
+        "text": 6,
+        "faceCSS": {
+          "font-size": "50px"
+        }
+      }
+    ],
+    "rollCount": 31,
+    "shape3d": true
+  },
+  "dice7": {
+    "type": "dice",
+    "id": "dice7",
+    "x": 444,
+    "y": 650,
+    "z": 227,
+    "faces": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "pipSymbols": false,
+    "css": {
+      "default": {
+        "font-size": "15px"
+      },
+      " .diceFaces ::after": {
+        "content": "'${PROPERTY dieText}'",
+        "position": "absolute",
+        "color": "black",
+        "text-transform": "uppercase",
+        "line-height": "10px",
+        "height": "10px",
+        "width": "100%",
+        "font-size": "9px",
+        "top": "35px",
+        "letter-spacing": "initial"
+      },
+      " .diceFaces ::before": {
+        "content": "''",
+        "position": "absolute",
+        "color": "black",
+        "text-transform": "uppercase",
+        "line-height": "10px",
+        "height": "17px",
+        "width": "150%",
+        "font-size": "9px",
+        "top": "3px",
+        "left": "0",
+        "background": "url(${PROPERTY dieImage}) center no-repeat"
+      }
+    },
+    "faceCSS": {
+      "font-size": "25px"
+    },
+    "dieText": "Zoom",
+    "dieImage": "i/icons/zoom_out.svg",
+    "activeFace": 2
+  },
+  "dice8": {
+    "type": "dice",
+    "id": "dice8",
+    "x": 157,
+    "y": 641,
+    "z": 207,
+    "activeFace": 9,
+    "faceCSS": {
+      "background": "#222"
+    },
+    "faces": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12
+    ],
+    "pipColor": "green",
+    "pipSymbols": false,
+    "rollCount": 3,
+    "shape3d": true
+  },
+  "dice5text": {
+    "id": "dice5text",
+    "x": 1350,
+    "y": 400,
+    "width": 250,
+    "z": 185,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "font-size: 22px; ",
+    "text": "The left die shows how to use 'imageScale' on each face. In this case, the imageScale is tailored to each face. The right die uses the icon property to do the same thing."
+  },
+  "dice6text": {
+    "id": "dice6text",
+    "x": 50,
+    "y": 725,
+    "width": 300,
+    "z": 185,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "font-size: 22px; ",
+    "text": "'faceCSS' is used on this dice to set the backgroundColor. But you could also use the dice property 'color'. But do not use the css parameter 'backgroundColor'. Also setting the 'pipColor' property to green also changes the border color of each face. "
+  },
+  "dice7text": {
+    "id": "dice7text",
+    "x": 400,
+    "y": 725,
+    "width": 300,
+    "z": 185,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "font-size: 22px; ",
+    "text": "This shows how to use ::before and ::after with css to add text and images to faces in addition to the basic value of a face. The left dice adds the same text and images to every face. The right dice keeps the same text but has different images on each face. "
+  },
+  "dice9": {
+    "type": "dice",
+    "id": "dice9",
+    "x": 544,
+    "y": 650,
+    "z": 227,
+    "faces": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "pipSymbols": false,
+    "css": {
+      "default": {
+        "font-size": "15px"
+      },
+      "note": "** these apply to INDIVIDUAL die faces **",
+      " .diceFaces ::after": {
+        "content": "'${PROPERTY dieText}'",
+        "position": "absolute",
+        "color": "black",
+        "text-transform": "uppercase",
+        "line-height": "10px",
+        "height": "10px",
+        "width": "100%",
+        "font-size": "9px",
+        "top": "35px",
+        "letter-spacing": "initial"
+      },
+      " .diceFaces ::before": {
+        "content": "''",
+        "position": "absolute",
+        "color": "black",
+        "text-transform": "uppercase",
+        "line-height": "10px",
+        "height": "17px",
+        "width": "50%",
+        "font-size": "9px",
+        "top": "3px",
+        "left": "0",
+        "background-position": "center",
+        "background-repeat": "no-repeat"
+      },
+      " .diceFaces .face1::before": {
+        "background-image": "url(${PROPERTY dieImage1})"
+      },
+      " .diceFaces .face2::before": {
+        "background-image": "url(${PROPERTY dieImage2})"
+      },
+      " .diceFaces .face3::before": {
+        "background-image": "url(${PROPERTY dieImage3})"
+      },
+      " .diceFaces .face4::before": {
+        "background-image": "url(${PROPERTY dieImage4})"
+      },
+      " .diceFaces .face5::before": {
+        "background-image": "url(${PROPERTY dieImage5})"
+      },
+      " .diceFaces .face6::before": {
+        "background-image": "url(${PROPERTY dieImage6})"
+      }
+    },
+    "faceCSS": {
+      "font-size": "25px"
+    },
+    "dieText": "Move",
+    "dieImage1": "i/icons/arrow_down.svg",
+    "dieImage2": "i/icons/arrow_up.svg",
+    "shape3d": true,
+    "dieImage3": "i/icons/arrow_left.svg",
+    "dieImage4": "i/icons/arrow_right.svg",
+    "dieImage5": "i/icons/undo.svg",
+    "dieImage6": "i/icons/redo.svg",
+    "rollCount": 13
+  },
+  "dice10": {
+    "type": "dice",
+    "id": "dice10",
+    "x": 1407,
+    "y": 300,
+    "z": 221,
+    "activeFace": 1,
+    "faces": [
+      {
+        "image": "i/icons/pawn.svg",
+        "imageScale": 1.2
+      },
+      {
+        "image": "i/icons/hex_grid_horizontal.svg"
+      },
+      {
+        "image": "i/icons/auto_awesome.svg",
+        "imageScale": 0.8
+      },
+      {
+        "image": "i/icons/link.svg",
+        "imageScale": 1.1
+      }
+    ],
+    "pipSymbols": false,
+    "rollCount": 11,
+    "shape3d": true
+  },
+  "dice11": {
+    "type": "dice",
+    "id": "dice11",
+    "x": 1487,
+    "y": 300,
+    "z": 221,
+    "faces": [
+      {
+        "icon": {
+          "name": "[pawn]",
+          "scale": 0.7
+        }
+      },
+      {
+        "icon": {
+          "name": "[hex_grid_horizontal]",
+          "scale": 0.6
+        }
+      },
+      {
+        "icon": {
+          "name": "[auto_awesome]",
+          "scale": 0.6
+        }
+      },
+      {
+        "icon": {
+          "name": "[link]",
+          "scale": 0.8
+        }
+      }
+    ],
+    "pipSymbols": false,
+    "rollCount": 11,
+    "shape3d": true,
+    "activeFace": 3
+  }
+}

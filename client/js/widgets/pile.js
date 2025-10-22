@@ -1,3 +1,5 @@
+const defaultPileSnapRange = 10;
+
 class Pile extends Widget {
   constructor(id) {
     super(id);
@@ -11,101 +13,226 @@ class Pile extends Widget {
       width: 1,
       height: 1,
       alignChildren: true,
-      inheritChildZ: true
+      inheritChildZ: true,
+
+      text: null,
+      pileSnapRange: defaultPileSnapRange,
+
+      handleCSS: '',
+      handleSize: 'auto',
+      handleOffset: 15,
+      handlePosition: 'top right'
     });
 
     this.domElement.appendChild(this.handle);
-    this.handle.textContent = 0;
+    this.childCount = 0;
+    this.updateText();
   }
 
   applyChildAdd(child) {
     super.applyChildAdd(child);
-    ++this.handle.textContent;
+    ++this.childCount;
+    this.updateText();
   }
 
   applyChildRemove(child) {
     super.applyChildRemove(child);
-    --this.handle.textContent;
+    --this.childCount;
+    this.updateText();
   }
 
   applyDeltaToDOM(delta) {
     super.applyDeltaToDOM(delta);
-    if(this.handle && (delta.width !== undefined || delta.height !== undefined)) {
-      if(this.get('width') < 50 || this.get('height') < 50)
+    if(this.handle && delta.handleCSS !== undefined)
+      this.handle.style = mapAssetURLs(this.cssAsText(this.get('handleCSS'),null,true));
+    if(this.handle && delta.text !== undefined)
+      this.updateText();
+    if(this.handle && (delta.width !== undefined || delta.height !== undefined || delta.handleSize !== undefined)) {
+      if(this.get('handleSize') == 'auto' && (this.get('width') < 50 || this.get('height') < 50))
         this.handle.classList.add('small');
       else
         this.handle.classList.remove('small');
     }
-    for(const e of [ [ 'x', 'right', 1600-this.get('width')-20 ], [ 'y', 'bottom', 20 ] ]) {
-      if(this.handle && (delta[e[0]] !== undefined || delta.parent !== undefined)) {
-        if(this.absoluteCoord(e[0]) < e[2])
-          this.handle.classList.add(e[1]);
-        else
+
+    const threshold = this.get('handleOffset')+5;
+    const handlePosition = String(this.get('handlePosition'));
+    for(const e of [ [ 'x', 'right', 1600-this.get('width'), 'center' ], [ 'y', 'bottom', 1000-this.get('height'), 'middle' ] ]) {
+      if(this.handle && (delta[e[0]] !== undefined || delta.parent !== undefined || delta.handlePosition !== undefined || delta.handleOffset !== undefined)) {
+        if(handlePosition == 'static') {
           this.handle.classList.remove(e[1]);
+          this.handle.classList.remove(e[3]);
+        } else if(handlePosition.match(e[3])) {
+          this.handle.classList.remove(e[1]);
+          this.handle.classList.add(e[3]);
+        } else {
+          this.handle.classList.remove(e[3]);
+          const isRightOrBottom = handlePosition.match(e[1]);
+          if(isRightOrBottom && this.absoluteCoord(e[0]) < e[2]-threshold || !isRightOrBottom && this.absoluteCoord(e[0]) < threshold)
+            this.handle.classList.add(e[1]);
+          else
+            this.handle.classList.remove(e[1]);
+        }
       }
     }
   }
 
   async click(mode='respect') {
-    $('#pileOverlay').innerHTML = `<p>${this.handle.textContent} cards</p><p>Drag the handle with the number to drag the entire pile.</p>`;
+    if(!await super.click(mode)) {
 
-    const flipButton = document.createElement('button');
-    flipButton.textContent = 'Flip pile';
-    let z=1;
-    flipButton.addEventListener('click', async e=>{
-      batchStart();
-      for(const c of this.children()) {
-        await c.set('z', z++);
-        if(c.flip)
-          await c.flip();
-      };
-      showOverlay();
-      batchEnd();
-    });
-    $('#pileOverlay').appendChild(flipButton);
+      const childCount = this.children().length;
+      $('#pileOverlay > .modal').innerHTML = `<div class="inputtitle"><label>${childCount} cards</label></div><div class="inputtext"><label>TIP: Drag the handle with the number to drag the entire pile.</label></div>`;
 
-    const shuffleButton = document.createElement('button');
-    shuffleButton.textContent = 'Shuffle pile';
-    shuffleButton.addEventListener('click', async e=>{
-      batchStart();
-      for(const c of this.children())
-        await c.set('z', Math.floor(Math.random()*10000));
-      showOverlay();
-      batchEnd();
-    });
-    $('#pileOverlay').appendChild(shuffleButton);
 
-    const childCount = this.children().length;
-    const countDiv = document.createElement('div');
-    countDiv.textContent = `/ ${childCount}`;
-    $('#pileOverlay').appendChild(countDiv);
-    const splitInput = document.createElement('input');
-    splitInput.type = 'number';
-    splitInput.value = Math.floor(childCount/2);
-    splitInput.min = 0;
-    splitInput.max = childCount;
-    countDiv.prepend(splitInput);
-    const splitLabel = document.createElement('label');
-    splitLabel.textContent = 'Split: ';
-    countDiv.prepend(splitLabel);
-    const splitButton = document.createElement('button');
-    splitButton.textContent = 'Split pile';
-    splitButton.addEventListener('click', async e=>{
-      batchStart();
-      for(const c of this.children().reverse().slice(childCount-splitInput.value)) {
-        await c.set('parent', null);
-        await c.set('x', this.absoluteCoord('x'));
-        const y = this.absoluteCoord('y');
-        await c.set('y', y < 100 ? y+60 : y-60);
-        await c.updatePiles();
-        await c.bringToFront();
-      };
-      showOverlay();
-      batchEnd();
-    });
-    $('#pileOverlay').appendChild(splitButton);
+      const buttonBar1 = document.createElement('div');
+      buttonBar1.className = 'button-bar';
+      $('#pileOverlay > .modal').appendChild(buttonBar1);
 
-    showOverlay('pileOverlay');
+      const flipButton = document.createElement('button');
+      flipButton.textContent = 'Flip everything over';
+      flipButton.className = 'ui-button';
+      let z=1;
+      flipButton.addEventListener('click', async e=>{
+        batchStart();
+        for(const c of this.children()) {
+          await c.set('z', z++);
+          if(c.flip)
+            await c.flip();
+        };
+        showOverlay();
+        batchEnd();
+      });
+      buttonBar1.appendChild(flipButton);
+
+
+      const buttonBar2 = document.createElement('div');
+      buttonBar2.className = 'button-bar';
+      $('#pileOverlay > .modal').appendChild(buttonBar2);
+
+      const shuffleButton = document.createElement('button');
+      shuffleButton.textContent = 'Shuffle the pile';
+      shuffleButton.className = 'ui-button';
+      shuffleButton.addEventListener('click', async e=>{
+        batchStart();
+        shuffleWidgets(this.children())
+        showOverlay();
+        batchEnd();
+      });
+      buttonBar2.appendChild(shuffleButton);
+
+
+
+      const countDiv = document.createElement('div');
+      countDiv.className = 'countInput';
+
+      $('#pileOverlay > .modal').appendChild(countDiv);
+
+      const splitInput = document.createElement('input');
+      splitInput.type = 'number';
+      splitInput.value = Math.floor(childCount/2);
+      splitInput.min = 1;
+      splitInput.max = childCount - 1;
+      splitInput.addEventListener('input', async e=>{
+        if(splitInput.value > (childCount - 1)){
+          splitInput.value = childCount - 1;
+        }
+        if(splitInput.value < 1){
+          splitInput.value = 1;
+        }
+        denominatorInput.value = childCount - splitInput.value;
+        splitInputSlider.value = childCount - denominatorInput.value;
+      });
+      countDiv.appendChild(splitInput);
+
+      const splitInputSlider = document.createElement('input');
+      splitInputSlider.type = 'range';
+      splitInputSlider.min = 1;
+      splitInputSlider.max = childCount - 1;
+      splitInputSlider.value = Math.floor(childCount/2);
+      splitInputSlider.addEventListener('input', async e=>{
+        splitInput.value = splitInputSlider.value;
+        denominatorInput.value = childCount - splitInput.value;
+      });
+      countDiv.appendChild(splitInputSlider);
+
+      const denominatorInput = document.createElement('input');
+      denominatorInput.value = childCount - splitInput.value;
+      denominatorInput.type = 'number';
+      denominatorInput.min = 1;
+      denominatorInput.max = childCount - 1;
+      denominatorInput.addEventListener('input', async e=>{
+        if(denominatorInput.value > (childCount - 1)){
+          denominatorInput.value = childCount - 1;
+        }
+        if(denominatorInput.value < 1){
+          denominatorInput.value = 1;
+        }
+        splitInput.value = childCount - denominatorInput.value;
+        splitInputSlider.value = childCount - denominatorInput.value;
+      });
+      countDiv.appendChild(denominatorInput);
+
+      const buttonBar3 = document.createElement('div');
+      buttonBar3.className = 'button-bar';
+      $('#pileOverlay > .modal').appendChild(buttonBar3);
+
+      const splitButton = document.createElement('button');
+      splitButton.textContent = 'Split the pile';
+      splitButton.addEventListener('click', async e=>{
+        batchStart();
+        for(const c of this.children().reverse().slice(childCount-splitInput.value)) {
+          await c.set('parent', null);
+          await c.set('x', this.absoluteCoord('x'));
+          const y = this.absoluteCoord('y');
+          await c.set('y', y < 100 ? y+60 : y-60);
+          await c.updatePiles();
+          await c.bringToFront();
+        };
+        showOverlay();
+        batchEnd();
+      });
+      splitButton.className = 'ui-button';
+      buttonBar3.appendChild(splitButton);
+
+
+      const buttonBar4 = document.createElement('div');
+      buttonBar4.className = 'button-bar';
+      $('#pileOverlay > .modal').appendChild(buttonBar4);
+
+      const cancelButton = document.createElement('button');
+      cancelButton.textContent = 'close';
+      cancelButton.addEventListener('click', async e=>{
+        showOverlay('pileOverlay');
+      });
+      cancelButton.className = 'ui-button pilecancelbutton material-symbols';
+      buttonBar4.appendChild(cancelButton);
+
+
+      showOverlay('pileOverlay');
+    }
+  }
+
+  css() {
+    let css = super.css();
+
+    if(this.get('handleSize') == 'auto')
+      css += '; --phSize:40px';
+    else
+      css += '; --phSize:' + this.get('handleSize') + 'px';
+    css += '; --phPosition:-' + this.get('handleOffset') + 'px';
+
+    return css;
+  }
+
+  cssProperties() {
+    const p = super.cssProperties();
+    p.push('handleSize', 'handleOffset');
+    return p;
+  }
+
+  getDefaultValue(property) {
+    if(property == 'onPileCreation' && this.children().length)
+      return this.children()[0].get('onPileCreation');
+    return super.getDefaultValue(property);
   }
 
   async onChildRemove(child) {
@@ -142,7 +269,12 @@ class Pile extends Widget {
     return false;
   }
 
+  updateText() {
+    const text = this.get('text');
+    this.handle.textContent = text === null ? this.childCount : text;
+  }
+
   validDropTargets() {
-    return getValidDropTargets(this.children()[0]);
+    return this.children().length ? getValidDropTargets(this.children()[0]) : [];
   }
 }

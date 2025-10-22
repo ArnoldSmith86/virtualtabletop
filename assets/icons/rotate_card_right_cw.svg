@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+  <g>
+    <path d="M20,19.5v-8a2,2,0,0,0-2-2H6a2,2,0,0,0-2,2v8a2,2,0,0,0,2,2H18A2,2,0,0,0,20,19.5Zm-5-8,3,3v5H9l-3-3v-5Z" fill="currentColor"/>
+    <path d="M5.353,7.98l1.58.52a5.313,5.313,0,0,1,8.48-2.413L13,8.5h6v-6L16.6,4.9A6.988,6.988,0,0,0,5.353,7.98Z" fill="currentColor"/>
+  </g>
+  <rect width="24" height="24" fill="none"/>
+</svg>

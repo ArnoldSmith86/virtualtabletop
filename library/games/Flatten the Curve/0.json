@@ -1,0 +1,7519 @@
+{
+  "1379": {
+    "deck": "greenDeck",
+    "type": "card",
+    "cardType": "Green Marker",
+    "id": "1379",
+    "z": 12777,
+    "parent": "greenHolder"
+  },
+  "_meta": {
+    "version": 13,
+    "info": {
+      "name": "Flatten the Curve",
+      "image": "/assets/-1467921510_33191",
+      "rules": "",
+      "bgg": "https://boardgamegeek.com/boardgame/30549/pandemic",
+      "year": "2008",
+      "mode": "coop",
+      "time": "45",
+      "attribution": "The game layout and game board were done by LawDawg and are released to the Public Domain by CC0.\n\nThe research station was done by mousewax and is released to the Public Domain by CC0.\n\nThe map was made using the tools at https://mapchart.net/world.html and is available under CC BY-SA 4.0.\n\nThe bacteria icons are available under the Vecteezy license from: https://www.vecteezy.com/vector-art/149324-free-bacteria-icon-vector.<div><br></div><div>Library image generated using the Midjourney artificial intelligence image generator, https://www.midjourney.com/home/, using the following prompt: \"pandemic oil on canvas --ar 1:1 --v 5.1\"<br></div>",
+      "similarName": "Pandemic",
+      "description": "Cooperative game where players move around board to eliminate diseases. Players win by curing all four diseases and lose if diseases spread too far or cures take too long.",
+      "showName": true,
+      "helpText": "Players choose seats. Select options using gear icon. Press restart icon to begin (and to automatically set up board if that option is chosen). After play begins, all disease markers are moved by players. To automatically move disease markers of that city color, click on that city holder. To return disease marker to holder, click on marker. Cities only hold 3 markers; manually place other markers nearby. To change outbreak counter, just click on it. If a card needs to be removed from the board, drag it to the trash can holder in the bottom right.",
+      "lastUpdate": 1683312076865,
+      "skill": "",
+      "similarImage": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "variantImage": "",
+      "variant": "",
+      "language": "en-US",
+      "players": "2-4",
+      "similarDesigner": "Matt Leacock"
+    }
+  },
+  "map": {
+    "id": "map",
+    "x": -100,
+    "y": -50,
+    "width": 1800,
+    "height": 1100,
+    "layer": -6,
+    "movable": false,
+    "movableInEdit": false,
+    "image": "/assets/-839842811_165704",
+    "fixedParent": true,
+    "parent": "baseHolder"
+  },
+  "Atlanta": {
+    "type": "holder",
+    "id": "Atlanta",
+    "x": 366,
+    "y": 410,
+    "width": 35,
+    "height": 36,
+    "borderRadius": 5,
+    "z": 5,
+    "css": {
+      "background": "#82c67f",
+      "background-image": "url('/assets/984969820_14118')",
+      "background-size": "contain",
+      "background-repeat": "no-repeat",
+      "background-position": "center",
+      "box-shadow": "${PROPERTY shadow}"
+    },
+    "fixedParent": true,
+    "parent": "baseHolder",
+    "movableInEdit": false,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "stackOffsetY": 12,
+    "dropTarget": {
+      "marker": true
+    },
+    "enterRoutine": [
+      {
+        "func": "CALL",
+        "widget": "settings",
+        "routine": "shadowRoutine",
+        "arguments": {
+          "holder": "${PROPERTY id}"
+        }
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "shadow",
+        "value": "${result}"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "CALL",
+        "widget": "settings",
+        "routine": "shadowRoutine",
+        "arguments": {
+          "holder": "${PROPERTY id}"
+        }
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "shadow",
+        "value": "${result}"
+      }
+    ],
+    "shadow": " ",
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "greenHolder",
+        "to": "${thisID}"
+      }
+    ],
+    "clickable": true
+  },
+  "label1": {
+    "id": "label1",
+    "parent": "Atlanta",
+    "fixedParent": true,
+    "y": 28,
+    "height": 20,
+    "z": 28,
+    "movable": false,
+    "css": {
+      "default": {
+        "font-size": "15px",
+        "text-align": "center",
+        "border": "2px solid ${PROPERTY thisBorder}"
+      },
+      "::before": {
+        "content": "\"${PROPERTY parent}\""
+      }
+    },
+    "width": 50,
+    "x": -35,
+    "cityLabel": true,
+    "thisBorder": "null"
+  },
+  "label2": {
+    "inheritFrom": "label1",
+    "id": "label2",
+    "parent": "Washington",
+    "x": 40,
+    "y": 10,
+    "width": 85,
+    "thisBorder": "null"
+  },
+  "Washington": {
+    "type": "holder",
+    "id": "Washington",
+    "x": 465,
+    "y": 411,
+    "inheritFrom": "Atlanta",
+    "z": 6,
+    "parent": "baseHolder",
+    "shadow": " "
+  },
+  "label3": {
+    "inheritFrom": "label1",
+    "id": "label3",
+    "parent": "New York",
+    "x": 0,
+    "y": -20,
+    "width": 70,
+    "thisBorder": "null"
+  },
+  "New York": {
+    "type": "holder",
+    "id": "New York",
+    "x": 495,
+    "y": 340,
+    "inheritFrom": "Atlanta",
+    "z": 24,
+    "parent": "baseHolder",
+    "shadow": " "
+  },
+  "label4": {
+    "inheritFrom": "label1",
+    "id": "label4",
+    "x": -20,
+    "y": -20,
+    "width": 65,
+    "parent": "Montréal",
+    "thisBorder": "null"
+  },
+  "label5": {
+    "inheritFrom": "label1",
+    "id": "label5",
+    "parent": "San Francisco",
+    "width": 100,
+    "x": -20,
+    "y": -20,
+    "activeFace": 0,
+    "thisBorder": "null"
+  },
+  "San Francisco": {
+    "type": "holder",
+    "id": "San Francisco",
+    "x": 192,
+    "y": 371,
+    "z": 9,
+    "inheritFrom": "Atlanta",
+    "parent": "baseHolder",
+    "shadow": " "
+  },
+  "label6": {
+    "inheritFrom": "label1",
+    "id": "label6",
+    "parent": "London",
+    "x": -10,
+    "y": -20,
+    "width": 55,
+    "thisBorder": "null"
+  },
+  "label7": {
+    "inheritFrom": "label1",
+    "id": "label7",
+    "parent": "Madrid",
+    "x": -50,
+    "thisBorder": "null"
+  },
+  "label8": {
+    "inheritFrom": "label1",
+    "id": "label8",
+    "parent": "Paris",
+    "x": -40,
+    "y": 10,
+    "width": 40,
+    "thisBorder": "null"
+  },
+  "label9": {
+    "inheritFrom": "label1",
+    "id": "label9",
+    "parent": "Essen",
+    "x": -10,
+    "y": -20,
+    "thisBorder": "null"
+  },
+  "label10": {
+    "inheritFrom": "label1",
+    "id": "label10",
+    "parent": "Milan",
+    "x": 25,
+    "y": -15,
+    "width": 40,
+    "thisBorder": "null"
+  },
+  "label11": {
+    "inheritFrom": "label1",
+    "id": "label11",
+    "parent": "St Petersburg",
+    "width": 100,
+    "x": -30,
+    "y": -20,
+    "thisBorder": "null"
+  },
+  "London": {
+    "type": "holder",
+    "id": "London",
+    "x": 714,
+    "y": 272,
+    "z": 17,
+    "inheritFrom": "Atlanta",
+    "parent": "baseHolder",
+    "shadow": " "
+  },
+  "Essen": {
+    "type": "holder",
+    "id": "Essen",
+    "x": 831,
+    "y": 212,
+    "z": 20,
+    "inheritFrom": "Atlanta",
+    "parent": "baseHolder",
+    "shadow": " "
+  },
+  "Madrid": {
+    "type": "holder",
+    "id": "Madrid",
+    "x": 707,
+    "y": 378,
+    "z": 18,
+    "inheritFrom": "Atlanta",
+    "parent": "baseHolder",
+    "shadow": " "
+  },
+  "Paris": {
+    "type": "holder",
+    "id": "Paris",
+    "x": 805,
+    "y": 314,
+    "z": 19,
+    "inheritFrom": "Atlanta",
+    "parent": "baseHolder",
+    "shadow": " "
+  },
+  "Milan": {
+    "type": "holder",
+    "id": "Milan",
+    "x": 895,
+    "y": 303,
+    "z": 22,
+    "inheritFrom": "Atlanta",
+    "parent": "baseHolder",
+    "shadow": " "
+  },
+  "St Petersburg": {
+    "type": "holder",
+    "id": "St Petersburg",
+    "x": 967,
+    "y": 216,
+    "z": 21,
+    "inheritFrom": "Atlanta",
+    "parent": "baseHolder",
+    "shadow": " "
+  },
+  "line1": {
+    "id": "line1",
+    "x": -169,
+    "y": 182,
+    "width": 0,
+    "z": 302,
+    "css": "border: 2px solid #fffff0",
+    "layer": -5,
+    "fixedParent": true,
+    "parent": "baseHolder",
+    "movable": false,
+    "movableInEdit": false
+  },
+  "line2": {
+    "inheritFrom": "line1",
+    "id": "line2",
+    "x": 355,
+    "y": 351,
+    "z": 23,
+    "rotation": -35,
+    "height": 75,
+    "parent": "baseHolder"
+  },
+  "line3": {
+    "inheritFrom": "line1",
+    "id": "line3",
+    "x": 438,
+    "y": 377,
+    "z": 24,
+    "rotation": 90,
+    "parent": "baseHolder"
+  },
+  "line4": {
+    "inheritFrom": "line1",
+    "id": "line4",
+    "x": 495,
+    "y": 354,
+    "z": 35,
+    "height": 80,
+    "rotation": 15,
+    "parent": "baseHolder"
+  },
+  "line5": {
+    "inheritFrom": "line1",
+    "id": "line5",
+    "x": 455,
+    "y": 339,
+    "z": 30,
+    "rotation": -35,
+    "height": 110,
+    "parent": "baseHolder"
+  },
+  "line6": {
+    "inheritFrom": "line1",
+    "id": "line6",
+    "x": 469,
+    "y": 299,
+    "z": 33,
+    "rotation": -80,
+    "parent": "baseHolder"
+  },
+  "line7": {
+    "inheritFrom": "line1",
+    "id": "line7",
+    "x": 380,
+    "y": 293,
+    "z": 37,
+    "rotation": 75,
+    "parent": "baseHolder"
+  },
+  "line8": {
+    "inheritFrom": "line1",
+    "id": "line8",
+    "x": 277,
+    "y": 297,
+    "z": 39,
+    "height": 150,
+    "rotation": 75,
+    "parent": "baseHolder"
+  },
+  "line9": {
+    "inheritFrom": "line1",
+    "id": "line9",
+    "x": 615,
+    "y": 224,
+    "z": 44,
+    "height": 200,
+    "rotation": 72,
+    "parent": "baseHolder"
+  },
+  "line10": {
+    "inheritFrom": "line1",
+    "id": "line10",
+    "x": 726,
+    "y": 282,
+    "z": 45,
+    "rotation": 5,
+    "parent": "baseHolder"
+  },
+  "line11": {
+    "inheritFrom": "line1",
+    "id": "line11",
+    "x": 790,
+    "y": 203,
+    "z": 48,
+    "height": 110,
+    "rotation": 62,
+    "parent": "baseHolder"
+  },
+  "line12": {
+    "inheritFrom": "line1",
+    "id": "line12",
+    "x": 920,
+    "y": 166,
+    "z": 51,
+    "height": 130,
+    "rotation": 92,
+    "parent": "baseHolder"
+  },
+  "line13": {
+    "inheritFrom": "line1",
+    "id": "line13",
+    "x": 775,
+    "y": 301,
+    "z": 54,
+    "height": 120,
+    "rotation": 55,
+    "parent": "baseHolder"
+  },
+  "line14": {
+    "inheritFrom": "line1",
+    "id": "line14",
+    "x": 862,
+    "y": 276,
+    "z": 57,
+    "rotation": 80,
+    "parent": "baseHolder"
+  },
+  "line15": {
+    "inheritFrom": "line1",
+    "id": "line15",
+    "x": 834,
+    "y": 233,
+    "z": 59,
+    "rotation": 15,
+    "parent": "baseHolder"
+  },
+  "line16": {
+    "inheritFrom": "line1",
+    "id": "line16",
+    "x": 878,
+    "y": 224,
+    "z": 61,
+    "rotation": -32,
+    "parent": "baseHolder"
+  },
+  "line17": {
+    "inheritFrom": "line1",
+    "id": "line17",
+    "x": 777,
+    "y": 261,
+    "z": 64,
+    "rotation": 115,
+    "parent": "baseHolder"
+  },
+  "line18": {
+    "inheritFrom": "line1",
+    "id": "line18",
+    "x": 617,
+    "y": 277,
+    "z": 66,
+    "height": 200,
+    "rotation": 100,
+    "parent": "baseHolder"
+  },
+  "line19": {
+    "inheritFrom": "line1",
+    "id": "line19",
+    "x": 401,
+    "y": 416,
+    "z": 76,
+    "rotation": -35,
+    "height": 80,
+    "parent": "baseHolder"
+  },
+  "line20": {
+    "inheritFrom": "line1",
+    "id": "line20",
+    "x": 326,
+    "y": 350,
+    "z": 71,
+    "height": 160,
+    "rotation": 5,
+    "parent": "baseHolder"
+  },
+  "line21": {
+    "inheritFrom": "line1",
+    "id": "line21",
+    "x": 273,
+    "y": 333,
+    "z": 75,
+    "rotation": 45,
+    "height": 180,
+    "parent": "baseHolder"
+  },
+  "line22": {
+    "inheritFrom": "line1",
+    "id": "line22",
+    "x": 100,
+    "y": 291,
+    "z": 256,
+    "height": 200,
+    "rotation": 85,
+    "parent": "baseHolder"
+  },
+  "line23": {
+    "inheritFrom": "line1",
+    "id": "line23",
+    "x": 94,
+    "y": 315,
+    "z": 253,
+    "height": 230,
+    "rotation": 70,
+    "parent": "baseHolder"
+  },
+  "line24": {
+    "inheritFrom": "line1",
+    "id": "line24",
+    "x": 210,
+    "y": 376,
+    "z": 84,
+    "rotation": -5,
+    "parent": "baseHolder"
+  },
+  "line25": {
+    "inheritFrom": "line1",
+    "id": "line25",
+    "x": 268,
+    "y": 448,
+    "z": 87,
+    "height": 120,
+    "rotation": -65,
+    "parent": "baseHolder"
+  },
+  "line26": {
+    "inheritFrom": "line1",
+    "id": "line26",
+    "x": 379,
+    "y": 455,
+    "z": 92,
+    "height": 110,
+    "rotation": 72,
+    "parent": "baseHolder"
+  },
+  "line27": {
+    "inheritFrom": "line1",
+    "id": "line27",
+    "x": 434,
+    "y": 501,
+    "z": 94,
+    "height": 120,
+    "rotation": -5,
+    "parent": "baseHolder"
+  },
+  "line28": {
+    "inheritFrom": "line1",
+    "id": "line28",
+    "x": 386,
+    "y": 507,
+    "z": 98,
+    "height": 150,
+    "rotation": -52,
+    "parent": "baseHolder"
+  },
+  "line29": {
+    "inheritFrom": "line1",
+    "id": "line29",
+    "x": 357,
+    "y": 537,
+    "z": 103,
+    "height": 220,
+    "rotation": -18,
+    "parent": "baseHolder"
+  },
+  "line30": {
+    "inheritFrom": "line1",
+    "id": "line30",
+    "x": 416,
+    "y": 632,
+    "z": 105,
+    "rotation": 20,
+    "height": 110,
+    "parent": "baseHolder"
+  },
+  "line31": {
+    "inheritFrom": "line1",
+    "id": "line31",
+    "x": 399,
+    "y": 757,
+    "z": 106,
+    "rotation": -5,
+    "height": 110,
+    "parent": "baseHolder"
+  },
+  "line32": {
+    "inheritFrom": "line1",
+    "id": "line32",
+    "x": 482,
+    "y": 628,
+    "z": 303,
+    "height": 220,
+    "rotation": -20,
+    "parent": "baseHolder",
+    "activeFace": 1
+  },
+  "line33": {
+    "inheritFrom": "line1",
+    "id": "line33",
+    "x": 522,
+    "y": 582,
+    "z": 113,
+    "rotation": -57,
+    "height": 180,
+    "parent": "baseHolder"
+  },
+  "line34": {
+    "inheritFrom": "line1",
+    "id": "line34",
+    "x": 666,
+    "y": 378,
+    "z": 116,
+    "height": 350,
+    "rotation": 18,
+    "parent": "baseHolder"
+  },
+  "line35": {
+    "inheritFrom": "line1",
+    "id": "line35",
+    "x": 701,
+    "y": 549,
+    "z": 120,
+    "rotation": 52,
+    "height": 210,
+    "parent": "baseHolder"
+  },
+  "line36": {
+    "inheritFrom": "line1",
+    "id": "line36",
+    "x": 98,
+    "y": 417,
+    "z": 123,
+    "height": 270,
+    "rotation": 55,
+    "parent": "baseHolder"
+  },
+  "line37": {
+    "inheritFrom": "line1",
+    "id": "line37",
+    "x": 897,
+    "y": 559,
+    "z": 160,
+    "rotation": 42,
+    "height": 150,
+    "parent": "baseHolder"
+  },
+  "line38": {
+    "inheritFrom": "line1",
+    "id": "line38",
+    "x": 876,
+    "y": 504,
+    "z": 161,
+    "rotation": 85,
+    "height": 150,
+    "parent": "baseHolder"
+  },
+  "line39": {
+    "inheritFrom": "line1",
+    "id": "line39",
+    "x": 819,
+    "y": 580,
+    "z": 131,
+    "height": 120,
+    "rotation": -32,
+    "parent": "baseHolder"
+  },
+  "line40": {
+    "inheritFrom": "line1",
+    "id": "line40",
+    "x": 896,
+    "y": 688,
+    "z": 134,
+    "height": 130,
+    "rotation": -32,
+    "parent": "baseHolder"
+  },
+  "line41": {
+    "inheritFrom": "line1",
+    "id": "line41",
+    "x": 941,
+    "y": 570,
+    "z": 159,
+    "height": 240,
+    "rotation": 5,
+    "parent": "baseHolder"
+  },
+  "line42": {
+    "inheritFrom": "line1",
+    "id": "line42",
+    "x": 937,
+    "y": 486,
+    "z": 162,
+    "height": 100,
+    "rotation": -15,
+    "parent": "baseHolder"
+  },
+  "line43": {
+    "inheritFrom": "line1",
+    "id": "line43",
+    "x": 873,
+    "y": 413,
+    "z": 140,
+    "rotation": -70,
+    "parent": "baseHolder"
+  },
+  "line44": {
+    "inheritFrom": "line1",
+    "id": "line44",
+    "x": 762,
+    "y": 357,
+    "z": 143,
+    "height": 120,
+    "rotation": -62,
+    "parent": "baseHolder"
+  },
+  "line45": {
+    "inheritFrom": "line1",
+    "id": "line45",
+    "x": 823,
+    "y": 340,
+    "z": 145,
+    "height": 110,
+    "rotation": -5,
+    "parent": "baseHolder"
+  },
+  "line46": {
+    "inheritFrom": "line1",
+    "id": "line46",
+    "x": 886,
+    "y": 346,
+    "z": 149,
+    "height": 130,
+    "rotation": 57,
+    "parent": "baseHolder"
+  },
+  "line47": {
+    "inheritFrom": "line1",
+    "id": "line47",
+    "x": 938,
+    "y": 364,
+    "z": 151,
+    "rotation": 12,
+    "parent": "baseHolder"
+  },
+  "line48": {
+    "inheritFrom": "line1",
+    "id": "line48",
+    "x": 966,
+    "y": 397,
+    "z": 153,
+    "height": 110,
+    "rotation": 55,
+    "parent": "baseHolder"
+  },
+  "line49": {
+    "inheritFrom": "line1",
+    "id": "line49",
+    "x": 457,
+    "y": 420,
+    "z": 155,
+    "activeFace": 0,
+    "height": 80,
+    "rotation": 40,
+    "parent": "baseHolder"
+  },
+  "line50": {
+    "inheritFrom": "line1",
+    "id": "line50",
+    "x": 572,
+    "y": 705,
+    "z": 158,
+    "height": 150,
+    "rotation": 32,
+    "parent": "baseHolder"
+  },
+  "line51": {
+    "inheritFrom": "line1",
+    "id": "line51",
+    "x": 929,
+    "y": 317,
+    "z": 164,
+    "height": 60,
+    "rotation": -30,
+    "parent": "baseHolder"
+  },
+  "label12": {
+    "inheritFrom": "label1",
+    "id": "label12",
+    "parent": "Chicago",
+    "x": -10,
+    "y": -20,
+    "width": 60,
+    "thisBorder": "null"
+  },
+  "Chicago": {
+    "type": "holder",
+    "id": "Chicago",
+    "x": 318,
+    "y": 340,
+    "z": 23,
+    "inheritFrom": "Atlanta",
+    "parent": "baseHolder",
+    "shadow": " "
+  },
+  "label13": {
+    "inheritFrom": "label1",
+    "id": "label13",
+    "x": -20,
+    "y": 40,
+    "parent": "Los Angeles",
+    "width": 90,
+    "thisBorder": "null"
+  },
+  "Los Angeles": {
+    "type": "holder",
+    "id": "Los Angeles",
+    "x": 197,
+    "y": 462,
+    "z": 25,
+    "inheritFrom": "Atlanta",
+    "css": {
+      "background": "#fee048",
+      "background-image": "url('/assets/1672964159_5155')",
+      "background-size": "contain",
+      "background-repeat": "no-repeat",
+      "background-position": "center",
+      "box-shadow": "${PROPERTY shadow}"
+    },
+    "parent": "baseHolder",
+    "shadow": " ",
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "yellowHolder",
+        "to": "${thisID}"
+      }
+    ],
+    "clickable": false
+  },
+  "virus1": {
+    "id": "virus1",
+    "z": 943,
+    "image": "/assets/984969820_14118",
+    "css": {
+      "background": "#82c67f",
+      "background-size": "contain",
+      "background-repeat": "no-repeat",
+      "background-position": "center",
+      "border": "2px solid white",
+      "font-size": "50px"
+    },
+    "borderRadius": 100,
+    "width": 50,
+    "height": 50,
+    "clickRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY text}",
+        "operand2": "",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "text",
+            "value": "block"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "text",
+            "value": ""
+          }
+        ]
+      }
+    ],
+    "classes": "material-icons",
+    "x": -2,
+    "y": -2,
+    "parent": "active1"
+  },
+  "virus2": {
+    "id": "virus2",
+    "z": 945,
+    "image": "/assets/1672964159_5155",
+    "width": 50,
+    "css": {
+      "background": "#fee048",
+      "background-size": "contain",
+      "background-repeat": "no-repeat",
+      "background-position": "center",
+      "border": "2px solid white",
+      "font-size": "50px"
+    },
+    "borderRadius": 100,
+    "height": 50,
+    "classes": "material-icons",
+    "clickRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY text}",
+        "operand2": "",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "text",
+            "value": "block"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "text",
+            "value": ""
+          }
+        ]
+      }
+    ],
+    "x": -2,
+    "y": -2,
+    "parent": "active2"
+  },
+  "label14": {
+    "inheritFrom": "label1",
+    "id": "label14",
+    "parent": "Moscow",
+    "x": 20,
+    "y": -20,
+    "width": 60,
+    "thisBorder": "null"
+  },
+  "Moscow": {
+    "type": "holder",
+    "id": "Moscow",
+    "x": 1041,
+    "y": 280,
+    "z": 27,
+    "inheritFrom": "Atlanta",
+    "css": {
+      "background": "#777777",
+      "background-image": "url('/assets/-231269982_10522')",
+      "background-size": "contain",
+      "background-repeat": "no-repeat",
+      "background-position": "center",
+      "box-shadow": "${PROPERTY shadow}"
+    },
+    "parent": "baseHolder",
+    "shadow": " ",
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "blackHolder",
+        "to": "${thisID}"
+      }
+    ],
+    "clickable": false
+  },
+  "virus3": {
+    "id": "virus3",
+    "z": 947,
+    "image": "/assets/-231269982_10522",
+    "css": {
+      "background": "#777777",
+      "background-size": "contain",
+      "background-repeat": "no-repeat",
+      "background-position": "center",
+      "border": "2px solid white",
+      "font-size": "50px"
+    },
+    "borderRadius": 100,
+    "width": 50,
+    "height": 50,
+    "clickRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY text}",
+        "operand2": "",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "text",
+            "value": "block"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "text",
+            "value": ""
+          }
+        ]
+      }
+    ],
+    "classes": "material-icons",
+    "x": -2,
+    "y": -2,
+    "parent": "active3"
+  },
+  "label15": {
+    "inheritFrom": "label1",
+    "id": "label15",
+    "x": -50,
+    "y": 0,
+    "parent": "Beijing",
+    "width": 50,
+    "thisBorder": "null"
+  },
+  "Beijing": {
+    "type": "holder",
+    "id": "Beijing",
+    "x": 1317,
+    "y": 308,
+    "z": 30,
+    "inheritFrom": "Atlanta",
+    "css": {
+      "background": "#e55050",
+      "background-image": "url('/assets/-279361595_4909')",
+      "background-size": "contain",
+      "background-repeat": "no-repeat",
+      "background-position": "center",
+      "box-shadow": "${PROPERTY shadow}"
+    },
+    "parent": "baseHolder",
+    "shadow": " ",
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "redHolder",
+        "to": "${thisID}"
+      }
+    ],
+    "clickable": false
+  },
+  "label16": {
+    "inheritFrom": "label13",
+    "id": "label16",
+    "parent": "Mexico City",
+    "width": 80,
+    "x": -65,
+    "y": 35,
+    "thisBorder": "null"
+  },
+  "label17": {
+    "inheritFrom": "label13",
+    "id": "label17",
+    "parent": "Miami",
+    "activeFace": 0,
+    "x": 40,
+    "y": 10,
+    "width": 50,
+    "thisBorder": "null"
+  },
+  "label18": {
+    "inheritFrom": "label13",
+    "id": "label18",
+    "parent": "Bogota",
+    "x": 40,
+    "y": 10,
+    "width": 50,
+    "thisBorder": "null"
+  },
+  "label19": {
+    "inheritFrom": "label13",
+    "id": "label19",
+    "parent": "Lima",
+    "width": 40,
+    "thisBorder": "null"
+  },
+  "label20": {
+    "inheritFrom": "label13",
+    "id": "label20",
+    "parent": "Santiago",
+    "x": -40,
+    "width": 65,
+    "thisBorder": "null"
+  },
+  "label21": {
+    "inheritFrom": "label13",
+    "id": "label21",
+    "parent": "Buenos Aires",
+    "width": 90,
+    "thisBorder": "null"
+  },
+  "label22": {
+    "inheritFrom": "label13",
+    "id": "label22",
+    "parent": "São Paulo",
+    "width": 70,
+    "x": 20,
+    "thisBorder": "null"
+  },
+  "label23": {
+    "inheritFrom": "label13",
+    "id": "label23",
+    "parent": "Lagos",
+    "width": 45,
+    "x": 0,
+    "y": -20,
+    "thisBorder": "null"
+  },
+  "label24": {
+    "inheritFrom": "label13",
+    "id": "label24",
+    "parent": "Khartoum",
+    "width": 70,
+    "x": 25,
+    "thisBorder": "null"
+  },
+  "label25": {
+    "inheritFrom": "label13",
+    "id": "label25",
+    "parent": "Kinshasa",
+    "width": 65,
+    "x": -40,
+    "thisBorder": "null"
+  },
+  "label26": {
+    "inheritFrom": "label13",
+    "id": "label26",
+    "parent": "Johannesburg",
+    "width": 105,
+    "y": 50,
+    "thisBorder": "null"
+  },
+  "Mexico City": {
+    "type": "holder",
+    "id": "Mexico City",
+    "x": 302,
+    "y": 510,
+    "z": 65,
+    "inheritFrom": "Los Angeles",
+    "parent": "baseHolder",
+    "shadow": " "
+  },
+  "Miami": {
+    "type": "holder",
+    "id": "Miami",
+    "x": 412,
+    "y": 479,
+    "z": 66,
+    "inheritFrom": "Los Angeles",
+    "parent": "baseHolder",
+    "shadow": " "
+  },
+  "Bogota": {
+    "type": "holder",
+    "id": "Bogota",
+    "x": 422,
+    "y": 604,
+    "z": 67,
+    "inheritFrom": "Los Angeles",
+    "parent": "baseHolder",
+    "shadow": " "
+  },
+  "Lima": {
+    "type": "holder",
+    "id": "Lima",
+    "x": 376,
+    "y": 725,
+    "z": 68,
+    "inheritFrom": "Los Angeles",
+    "parent": "baseHolder",
+    "shadow": " "
+  },
+  "Santiago": {
+    "type": "holder",
+    "id": "Santiago",
+    "x": 390,
+    "y": 864,
+    "z": 69,
+    "inheritFrom": "Los Angeles",
+    "parent": "baseHolder",
+    "shadow": " "
+  },
+  "Buenos Aires": {
+    "type": "holder",
+    "id": "Buenos Aires",
+    "x": 509,
+    "y": 832,
+    "z": 70,
+    "inheritFrom": "Los Angeles",
+    "parent": "baseHolder",
+    "shadow": " "
+  },
+  "São Paulo": {
+    "type": "holder",
+    "id": "São Paulo",
+    "x": 593,
+    "y": 706,
+    "z": 35,
+    "inheritFrom": "Los Angeles",
+    "parent": "baseHolder",
+    "shadow": " "
+  },
+  "Lagos": {
+    "type": "holder",
+    "id": "Lagos",
+    "x": 770,
+    "y": 573,
+    "z": 71,
+    "inheritFrom": "Los Angeles",
+    "parent": "baseHolder",
+    "shadow": " "
+  },
+  "Khartoum": {
+    "type": "holder",
+    "id": "Khartoum",
+    "x": 932,
+    "y": 557,
+    "z": 82,
+    "inheritFrom": "Los Angeles",
+    "parent": "baseHolder",
+    "shadow": " "
+  },
+  "Kinshasa": {
+    "type": "holder",
+    "id": "Kinshasa",
+    "x": 836,
+    "y": 664,
+    "z": 32,
+    "inheritFrom": "Los Angeles",
+    "parent": "baseHolder",
+    "shadow": " "
+  },
+  "Johannesburg": {
+    "type": "holder",
+    "id": "Johannesburg",
+    "x": 916,
+    "y": 792,
+    "z": 72,
+    "inheritFrom": "Los Angeles",
+    "parent": "baseHolder",
+    "shadow": " "
+  },
+  "label27": {
+    "inheritFrom": "label14",
+    "id": "label27",
+    "parent": "Cairo",
+    "x": -30,
+    "y": 35,
+    "width": 40,
+    "thisBorder": "null"
+  },
+  "label28": {
+    "inheritFrom": "label14",
+    "id": "label28",
+    "parent": "Algiers",
+    "x": -55,
+    "y": 15,
+    "thisBorder": "null"
+  },
+  "label29": {
+    "inheritFrom": "label14",
+    "id": "label29",
+    "parent": "Istanbul",
+    "x": -60,
+    "y": 0,
+    "width": 60,
+    "thisBorder": "null"
+  },
+  "label30": {
+    "inheritFrom": "label14",
+    "id": "label30",
+    "parent": "Baghdad",
+    "x": -10,
+    "width": 65,
+    "thisBorder": "null"
+  },
+  "label31": {
+    "inheritFrom": "label14",
+    "id": "label31",
+    "parent": "Riyadh",
+    "x": -10,
+    "y": 30,
+    "thisBorder": "null"
+  },
+  "label32": {
+    "inheritFrom": "label14",
+    "id": "label32",
+    "parent": "Karachi",
+    "x": -10,
+    "thisBorder": "null"
+  },
+  "label33": {
+    "inheritFrom": "label14",
+    "id": "label33",
+    "parent": "Mumbai",
+    "x": -10,
+    "y": 40,
+    "thisBorder": "null"
+  },
+  "label34": {
+    "inheritFrom": "label14",
+    "id": "label34",
+    "parent": "Chennai",
+    "x": -25,
+    "y": 35,
+    "thisBorder": "null"
+  },
+  "label35": {
+    "inheritFrom": "label14",
+    "id": "label35",
+    "parent": "Tehran",
+    "width": 50,
+    "thisBorder": "null"
+  },
+  "label36": {
+    "inheritFrom": "label14",
+    "id": "label36",
+    "x": 5,
+    "width": 40,
+    "parent": "Delhi",
+    "thisBorder": "null"
+  },
+  "label37": {
+    "inheritFrom": "label14",
+    "id": "label37",
+    "parent": "Kolkata",
+    "x": -8,
+    "thisBorder": "null"
+  },
+  "Algiers": {
+    "type": "holder",
+    "id": "Algiers",
+    "x": 811,
+    "y": 433,
+    "z": 51,
+    "inheritFrom": "Moscow",
+    "parent": "baseHolder",
+    "shadow": " "
+  },
+  "Cairo": {
+    "type": "holder",
+    "id": "Cairo",
+    "x": 906,
+    "y": 458,
+    "z": 52,
+    "inheritFrom": "Moscow",
+    "parent": "baseHolder",
+    "shadow": " "
+  },
+  "Riyadh": {
+    "type": "holder",
+    "id": "Riyadh",
+    "x": 1009,
+    "y": 511,
+    "z": 73,
+    "inheritFrom": "Moscow",
+    "parent": "baseHolder",
+    "shadow": " "
+  },
+  "Mumbai": {
+    "type": "holder",
+    "id": "Mumbai",
+    "x": 1113,
+    "y": 526,
+    "z": 46,
+    "inheritFrom": "Moscow",
+    "parent": "baseHolder",
+    "shadow": " "
+  },
+  "Chennai": {
+    "type": "holder",
+    "id": "Chennai",
+    "x": 1180,
+    "y": 568,
+    "z": 45,
+    "inheritFrom": "Moscow",
+    "parent": "baseHolder",
+    "shadow": " "
+  },
+  "Kolkata": {
+    "type": "holder",
+    "id": "Kolkata",
+    "x": 1245,
+    "y": 443,
+    "z": 83,
+    "inheritFrom": "Moscow",
+    "parent": "baseHolder",
+    "shadow": " "
+  },
+  "Karachi": {
+    "type": "holder",
+    "id": "Karachi",
+    "x": 1105,
+    "y": 453,
+    "z": 47,
+    "inheritFrom": "Moscow",
+    "parent": "baseHolder",
+    "shadow": " "
+  },
+  "Tehran": {
+    "type": "holder",
+    "id": "Tehran",
+    "x": 1096,
+    "y": 344,
+    "z": 76,
+    "inheritFrom": "Moscow",
+    "parent": "baseHolder",
+    "shadow": " "
+  },
+  "Baghdad": {
+    "type": "holder",
+    "id": "Baghdad",
+    "x": 1000,
+    "y": 403,
+    "z": 77,
+    "inheritFrom": "Moscow",
+    "parent": "baseHolder",
+    "shadow": " "
+  },
+  "Istanbul": {
+    "type": "holder",
+    "id": "Istanbul",
+    "x": 931,
+    "y": 360,
+    "z": 50,
+    "inheritFrom": "Moscow",
+    "parent": "baseHolder",
+    "shadow": " "
+  },
+  "label38": {
+    "inheritFrom": "label15",
+    "id": "label38",
+    "parent": "Seoul",
+    "x": 28,
+    "y": -10,
+    "thisBorder": "null"
+  },
+  "label39": {
+    "inheritFrom": "label15",
+    "id": "label39",
+    "parent": "Shanghai",
+    "x": -60,
+    "y": -15,
+    "width": 65,
+    "thisBorder": "null"
+  },
+  "label40": {
+    "inheritFrom": "label15",
+    "id": "label40",
+    "parent": "Tokyo",
+    "x": 10,
+    "y": -25,
+    "thisBorder": "null"
+  },
+  "label41": {
+    "inheritFrom": "label15",
+    "id": "label41",
+    "parent": "Osaka",
+    "x": 30,
+    "y": 30,
+    "thisBorder": "null"
+  },
+  "label42": {
+    "inheritFrom": "label15",
+    "id": "label42",
+    "parent": "Taipei",
+    "x": 30,
+    "y": 30,
+    "thisBorder": "null"
+  },
+  "label43": {
+    "inheritFrom": "label15",
+    "id": "label43",
+    "parent": "Hong Kong",
+    "x": -32,
+    "y": -40,
+    "height": 35,
+    "thisBorder": "null"
+  },
+  "label44": {
+    "inheritFrom": "label15",
+    "id": "label44",
+    "parent": "Bangkok",
+    "x": -10,
+    "y": -20,
+    "width": 60,
+    "thisBorder": "null"
+  },
+  "label45": {
+    "inheritFrom": "label15",
+    "id": "label45",
+    "parent": "Manila",
+    "x": 40,
+    "y": 20,
+    "thisBorder": "null"
+  },
+  "label46": {
+    "inheritFrom": "label15",
+    "id": "label46",
+    "width": 65,
+    "x": 20,
+    "y": 35,
+    "height": 35,
+    "parent": "Ho Chi Minh",
+    "thisBorder": "null"
+  },
+  "label47": {
+    "inheritFrom": "label15",
+    "id": "label47",
+    "parent": "Jakarta",
+    "x": -20,
+    "y": 40,
+    "width": 55,
+    "thisBorder": "null"
+  },
+  "label48": {
+    "inheritFrom": "label15",
+    "id": "label48",
+    "parent": "Sydney",
+    "x": -10,
+    "y": 40,
+    "thisBorder": "null"
+  },
+  "Seoul": {
+    "type": "holder",
+    "id": "Seoul",
+    "x": 1420,
+    "y": 308,
+    "z": 64,
+    "inheritFrom": "Beijing",
+    "parent": "baseHolder",
+    "shadow": " "
+  },
+  "Shanghai": {
+    "type": "holder",
+    "id": "Shanghai",
+    "x": 1328,
+    "y": 384,
+    "z": 62,
+    "inheritFrom": "Beijing",
+    "parent": "baseHolder",
+    "shadow": " "
+  },
+  "Tokyo": {
+    "type": "holder",
+    "id": "Tokyo",
+    "x": 1491,
+    "y": 368,
+    "z": 78,
+    "inheritFrom": "Beijing",
+    "parent": "baseHolder",
+    "shadow": " "
+  },
+  "Osaka": {
+    "type": "holder",
+    "id": "Osaka",
+    "x": 1494,
+    "y": 439,
+    "z": 60,
+    "inheritFrom": "Beijing",
+    "parent": "baseHolder",
+    "shadow": " "
+  },
+  "Taipei": {
+    "type": "holder",
+    "id": "Taipei",
+    "x": 1415,
+    "y": 465,
+    "z": 59,
+    "inheritFrom": "Beijing",
+    "parent": "baseHolder",
+    "shadow": " "
+  },
+  "Hong Kong": {
+    "type": "holder",
+    "id": "Hong Kong",
+    "x": 1340,
+    "y": 498,
+    "z": 58,
+    "inheritFrom": "Beijing",
+    "parent": "baseHolder",
+    "shadow": " "
+  },
+  "Bangkok": {
+    "type": "holder",
+    "id": "Bangkok",
+    "x": 1263,
+    "y": 533,
+    "z": 57,
+    "inheritFrom": "Beijing",
+    "parent": "baseHolder",
+    "shadow": " "
+  },
+  "Manila": {
+    "type": "holder",
+    "id": "Manila",
+    "x": 1445,
+    "y": 610,
+    "z": 80,
+    "inheritFrom": "Beijing",
+    "parent": "baseHolder",
+    "shadow": " "
+  },
+  "Jakarta": {
+    "type": "holder",
+    "id": "Jakarta",
+    "x": 1280,
+    "y": 681,
+    "z": 81,
+    "inheritFrom": "Beijing",
+    "parent": "baseHolder",
+    "shadow": " "
+  },
+  "Sydney": {
+    "type": "holder",
+    "id": "Sydney",
+    "x": 1508,
+    "y": 819,
+    "z": 79,
+    "inheritFrom": "Beijing",
+    "parent": "baseHolder",
+    "shadow": " "
+  },
+  "line52": {
+    "inheritFrom": "line1",
+    "id": "line52",
+    "x": 1016,
+    "y": 212,
+    "z": 168,
+    "height": 100,
+    "rotation": -50,
+    "parent": "baseHolder"
+  },
+  "line53": {
+    "inheritFrom": "line1",
+    "id": "line53",
+    "x": 966,
+    "y": 235,
+    "z": 172,
+    "rotation": 15,
+    "height": 140,
+    "parent": "baseHolder"
+  },
+  "line54": {
+    "inheritFrom": "line1",
+    "id": "line54",
+    "x": 998,
+    "y": 281,
+    "z": 176,
+    "height": 120,
+    "rotation": 50,
+    "parent": "baseHolder"
+  },
+  "line55": {
+    "inheritFrom": "line1",
+    "id": "line55",
+    "x": 977,
+    "y": 350,
+    "z": 179,
+    "rotation": -55,
+    "height": 90,
+    "parent": "baseHolder"
+  },
+  "line56": {
+    "inheritFrom": "line1",
+    "id": "line56",
+    "x": 1057,
+    "y": 345,
+    "z": 182,
+    "rotation": 55,
+    "parent": "baseHolder"
+  },
+  "line57": {
+    "inheritFrom": "line1",
+    "id": "line57",
+    "x": 1085,
+    "y": 285,
+    "z": 184,
+    "height": 90,
+    "rotation": -40,
+    "parent": "baseHolder"
+  },
+  "line58": {
+    "inheritFrom": "line1",
+    "id": "line58",
+    "x": 978,
+    "y": 447,
+    "height": 120,
+    "z": 186,
+    "rotation": -60,
+    "parent": "baseHolder"
+  },
+  "line59": {
+    "inheritFrom": "line1",
+    "id": "line59",
+    "x": 1017,
+    "y": 418,
+    "z": 188,
+    "height": 110,
+    "rotation": -5,
+    "parent": "baseHolder"
+  },
+  "line60": {
+    "inheritFrom": "line1",
+    "id": "line60",
+    "x": 1066,
+    "y": 392,
+    "rotation": -60,
+    "z": 192,
+    "height": 110,
+    "parent": "baseHolder"
+  },
+  "line61": {
+    "inheritFrom": "line1",
+    "id": "line61",
+    "x": 1084,
+    "y": 434,
+    "z": 195,
+    "height": 120,
+    "rotation": 55,
+    "parent": "baseHolder"
+  },
+  "line62": {
+    "inheritFrom": "line1",
+    "id": "line62",
+    "x": 1160,
+    "y": 344,
+    "z": 304,
+    "rotation": -50,
+    "parent": "baseHolder",
+    "activeFace": 1
+  },
+  "line63": {
+    "inheritFrom": "line1",
+    "id": "line63",
+    "x": 1154,
+    "y": 394,
+    "rotation": 50,
+    "z": 202,
+    "parent": "baseHolder"
+  },
+  "line64": {
+    "inheritFrom": "line1",
+    "id": "line64",
+    "x": 1217,
+    "y": 393,
+    "z": 205,
+    "rotation": -57,
+    "height": 90,
+    "parent": "baseHolder"
+  },
+  "line65": {
+    "inheritFrom": "line1",
+    "id": "line65",
+    "x": 1232,
+    "y": 449,
+    "z": 208,
+    "rotation": 27,
+    "height": 140,
+    "parent": "baseHolder"
+  },
+  "line66": {
+    "inheritFrom": "line1",
+    "id": "line66",
+    "x": 1157,
+    "y": 518,
+    "z": 210,
+    "height": 90,
+    "rotation": -50,
+    "parent": "baseHolder"
+  },
+  "line67": {
+    "inheritFrom": "line1",
+    "id": "line67",
+    "x": 1125,
+    "y": 465,
+    "z": 213,
+    "height": 80,
+    "rotation": -5,
+    "parent": "baseHolder"
+  },
+  "line68": {
+    "inheritFrom": "line1",
+    "id": "line68",
+    "x": 1156,
+    "y": 418,
+    "z": 217,
+    "height": 140,
+    "rotation": 22,
+    "parent": "baseHolder"
+  },
+  "line69": {
+    "inheritFrom": "line1",
+    "id": "line69",
+    "x": 1191,
+    "y": 420,
+    "z": 219,
+    "height": 160,
+    "rotation": -5,
+    "parent": "baseHolder"
+  },
+  "line70": {
+    "inheritFrom": "line1",
+    "id": "line70",
+    "x": 1117,
+    "y": 356,
+    "z": 221,
+    "height": 110,
+    "rotation": -5,
+    "parent": "baseHolder"
+  },
+  "line71": {
+    "inheritFrom": "line1",
+    "id": "line71",
+    "x": 1244,
+    "y": 563,
+    "z": 225,
+    "height": 160,
+    "rotation": -40,
+    "parent": "baseHolder"
+  },
+  "line72": {
+    "inheritFrom": "line1",
+    "id": "line72",
+    "x": 1242,
+    "y": 515,
+    "z": 227,
+    "rotation": 60,
+    "parent": "baseHolder"
+  },
+  "line73": {
+    "inheritFrom": "line1",
+    "id": "line73",
+    "x": 1273,
+    "y": 463,
+    "z": 229,
+    "rotation": -10,
+    "parent": "baseHolder"
+  },
+  "line74": {
+    "inheritFrom": "line1",
+    "id": "line74",
+    "x": 1315,
+    "y": 437,
+    "z": 232,
+    "height": 110,
+    "rotation": -57,
+    "parent": "baseHolder"
+  },
+  "line75": {
+    "inheritFrom": "line1",
+    "id": "line75",
+    "x": 1289,
+    "y": 559,
+    "z": 234,
+    "height": 140,
+    "rotation": -5,
+    "parent": "baseHolder"
+  },
+  "line76": {
+    "inheritFrom": "line1",
+    "id": "line76",
+    "x": 1326,
+    "y": 618,
+    "z": 236,
+    "rotation": 40,
+    "parent": "baseHolder"
+  },
+  "line77": {
+    "inheritFrom": "line1",
+    "id": "line77",
+    "x": 1414,
+    "y": 641,
+    "z": 243,
+    "rotation": -58,
+    "height": 260,
+    "parent": "baseHolder"
+  },
+  "line78": {
+    "inheritFrom": "line1",
+    "id": "line78",
+    "x": 1492,
+    "y": 626,
+    "z": 246,
+    "height": 220,
+    "rotation": -15,
+    "activeFace": 0,
+    "parent": "baseHolder"
+  },
+  "line79": {
+    "inheritFrom": "line1",
+    "id": "line79",
+    "x": 1562,
+    "y": 746,
+    "z": 249,
+    "rotation": 40,
+    "height": 110,
+    "parent": "baseHolder"
+  },
+  "line80": {
+    "inheritFrom": "line1",
+    "id": "line80",
+    "x": 1533,
+    "y": 501,
+    "z": 252,
+    "height": 170,
+    "rotation": 60,
+    "parent": "baseHolder"
+  },
+  "line81": {
+    "inheritFrom": "line1",
+    "id": "line81",
+    "x": 1566,
+    "y": 326,
+    "z": 255,
+    "rotation": 85,
+    "parent": "baseHolder"
+  },
+  "line82": {
+    "inheritFrom": "line1",
+    "id": "line82",
+    "x": 1324,
+    "y": 492,
+    "z": 259,
+    "height": 80,
+    "rotation": 60,
+    "parent": "baseHolder"
+  },
+  "line83": {
+    "inheritFrom": "line1",
+    "id": "line83",
+    "x": 1317,
+    "y": 532,
+    "z": 262,
+    "height": 110,
+    "rotation": -45,
+    "parent": "baseHolder"
+  },
+  "line84": {
+    "inheritFrom": "line1",
+    "id": "line84",
+    "x": 1358,
+    "y": 523,
+    "z": 264,
+    "height": 120,
+    "parent": "baseHolder"
+  },
+  "line85": {
+    "inheritFrom": "line1",
+    "id": "line85",
+    "x": 1415,
+    "y": 580,
+    "z": 266,
+    "rotation": 87,
+    "parent": "baseHolder"
+  },
+  "line86": {
+    "inheritFrom": "line1",
+    "id": "line86",
+    "x": 1402,
+    "y": 491,
+    "z": 269,
+    "height": 140,
+    "rotation": -45,
+    "parent": "baseHolder"
+  },
+  "line87": {
+    "inheritFrom": "line1",
+    "id": "line87",
+    "x": 1451,
+    "y": 493,
+    "z": 272,
+    "height": 140,
+    "rotation": -12,
+    "parent": "baseHolder"
+  },
+  "line88": {
+    "inheritFrom": "line1",
+    "id": "line88",
+    "x": 1350,
+    "y": 408,
+    "z": 274,
+    "height": 110,
+    "rotation": -5,
+    "parent": "baseHolder"
+  },
+  "line89": {
+    "inheritFrom": "line1",
+    "id": "line89",
+    "x": 1389,
+    "y": 386,
+    "z": 278,
+    "height": 110,
+    "rotation": -45,
+    "parent": "baseHolder"
+  },
+  "line90": {
+    "inheritFrom": "line1",
+    "id": "line90",
+    "x": 1476,
+    "y": 419,
+    "z": 280,
+    "height": 90,
+    "rotation": 70,
+    "parent": "baseHolder"
+  },
+  "line91": {
+    "inheritFrom": "line1",
+    "id": "line91",
+    "x": 1508,
+    "y": 389,
+    "z": 283,
+    "height": 70,
+    "rotation": -5,
+    "parent": "baseHolder"
+  },
+  "line92": {
+    "inheritFrom": "line1",
+    "id": "line92",
+    "x": 1420,
+    "y": 308,
+    "z": 286,
+    "height": 170,
+    "rotation": 85,
+    "parent": "baseHolder"
+  },
+  "line93": {
+    "inheritFrom": "line1",
+    "id": "line93",
+    "x": 1389,
+    "y": 296,
+    "z": 289,
+    "height": 130,
+    "rotation": 50,
+    "parent": "baseHolder"
+  },
+  "line94": {
+    "inheritFrom": "line1",
+    "id": "line94",
+    "x": 1466,
+    "y": 294,
+    "z": 292,
+    "height": 110,
+    "rotation": -50,
+    "parent": "baseHolder"
+  },
+  "line95": {
+    "inheritFrom": "line1",
+    "id": "line95",
+    "x": 1383,
+    "y": 271,
+    "activeFace": 0,
+    "z": 294,
+    "height": 110,
+    "rotation": 90,
+    "parent": "baseHolder"
+  },
+  "line96": {
+    "inheritFrom": "line1",
+    "id": "line96",
+    "x": 1339,
+    "y": 327,
+    "z": 296,
+    "height": 90,
+    "rotation": -10,
+    "parent": "baseHolder"
+  },
+  "line97": {
+    "inheritFrom": "line1",
+    "id": "line97",
+    "x": 1392,
+    "y": 449,
+    "z": 299,
+    "rotation": 65,
+    "parent": "baseHolder"
+  },
+  "label49": {
+    "id": "label49",
+    "parent": "line22",
+    "text": "<-- Tokyo",
+    "rotation": -90,
+    "width": 70,
+    "height": 20,
+    "y": 100,
+    "x": -50,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "color: grey"
+  },
+  "label50": {
+    "id": "label50",
+    "text": "<-- Manilla",
+    "x": -60,
+    "y": 100,
+    "width": 90,
+    "height": 20,
+    "rotation": -90,
+    "movable": false,
+    "movableInEdit": false,
+    "parent": "line23",
+    "css": "color: grey"
+  },
+  "label51": {
+    "id": "label51",
+    "text": "<-- Sydney",
+    "x": -60,
+    "y": 100,
+    "width": 90,
+    "height": 20,
+    "rotation": -90,
+    "movable": false,
+    "movableInEdit": false,
+    "parent": "line36",
+    "css": "color: grey"
+  },
+  "label52": {
+    "id": "label52",
+    "text": "    Los      Angeles -->",
+    "width": 110,
+    "height": 20,
+    "rotation": -90,
+    "movable": false,
+    "movableInEdit": false,
+    "parent": "line79",
+    "y": 25,
+    "x": -65,
+    "css": "color: grey"
+  },
+  "label53": {
+    "id": "label53",
+    "text": "    San  -->      Francisco",
+    "width": 110,
+    "height": 20,
+    "rotation": -90,
+    "movable": false,
+    "movableInEdit": false,
+    "parent": "line81",
+    "y": 25,
+    "x": -65,
+    "css": "color: grey"
+  },
+  "label54": {
+    "id": "label54",
+    "text": "    San      Francisco -->",
+    "width": 110,
+    "height": 20,
+    "rotation": -90,
+    "movable": false,
+    "movableInEdit": false,
+    "parent": "line80",
+    "y": 45,
+    "x": -65,
+    "css": "color: grey"
+  },
+  "1maa": {
+    "type": "card",
+    "cardType": "Atlanta",
+    "id": "1maa",
+    "z": 3181,
+    "deck": "playerCards",
+    "parent": "z7np"
+  },
+  "ebvy": {
+    "type": "card",
+    "cardType": "San Francisco",
+    "id": "ebvy",
+    "z": 9921,
+    "deck": "playerCards",
+    "parent": "z7np"
+  },
+  "i6mq": {
+    "type": "card",
+    "cardType": "Chicago",
+    "id": "i6mq",
+    "z": 8831,
+    "deck": "playerCards",
+    "parent": "z7np"
+  },
+  "t6ve": {
+    "type": "card",
+    "cardType": "New York",
+    "id": "t6ve",
+    "z": 4652,
+    "deck": "playerCards",
+    "parent": "z7np"
+  },
+  "btva": {
+    "type": "card",
+    "cardType": "London",
+    "id": "btva",
+    "z": 7935,
+    "deck": "playerCards",
+    "parent": "z7np"
+  },
+  "girv": {
+    "type": "card",
+    "cardType": "Madrid",
+    "id": "girv",
+    "z": 3330,
+    "deck": "playerCards",
+    "parent": "z7np"
+  },
+  "a0ir": {
+    "type": "card",
+    "cardType": "Paris",
+    "id": "a0ir",
+    "z": 6190,
+    "deck": "playerCards",
+    "parent": "z7np"
+  },
+  "h2uf": {
+    "type": "card",
+    "cardType": "Essen",
+    "id": "h2uf",
+    "z": 3093,
+    "deck": "playerCards",
+    "parent": "z7np"
+  },
+  "f0d6": {
+    "type": "card",
+    "cardType": "Milan",
+    "id": "f0d6",
+    "z": 5293,
+    "deck": "playerCards",
+    "parent": "z7np"
+  },
+  "h7b3": {
+    "type": "card",
+    "cardType": "St Petersburg",
+    "id": "h7b3",
+    "z": 1921,
+    "deck": "playerCards",
+    "parent": "z7np"
+  },
+  "baseHolder": {
+    "type": "holder",
+    "id": "baseHolder",
+    "width": 1600,
+    "height": 1000,
+    "layer": -2,
+    "z": 94,
+    "alignChildren": false,
+    "borderRadius": 0,
+    "css": "background: transparent",
+    "movableInEdit": false
+  },
+  "6mau": {
+    "type": "card",
+    "cardType": "Washington",
+    "id": "6mau",
+    "z": 4474,
+    "deck": "playerCards",
+    "parent": "z7np"
+  },
+  "playerCards": {
+    "type": "deck",
+    "id": "playerCards",
+    "cardDefaults": {
+      "layer": 2,
+      "width": 100,
+      "height": 25,
+      "onPileCreation": {
+        "handleOffset": 6
+      }
+    },
+    "cardTypes": {
+      "Atlanta": {
+        "shade": "background: #82c67f",
+        "city": "Atlanta",
+        "type": "green"
+      },
+      "San Francisco": {
+        "shade": "background: #82c67f",
+        "city": "San Francisco",
+        "type": "green"
+      },
+      "Chicago": {
+        "shade": "background: #82c67f",
+        "city": "Chicago",
+        "type": "green"
+      },
+      "Montréal": {
+        "shade": "background: #82c67f",
+        "city": "Montréal",
+        "type": "green"
+      },
+      "New York": {
+        "shade": "background: #82c67f",
+        "city": "New York",
+        "type": "green"
+      },
+      "Washington": {
+        "shade": "background: #82c67f",
+        "city": "Washington",
+        "type": "green"
+      },
+      "London": {
+        "shade": "background: #82c67f",
+        "city": "London",
+        "type": "green"
+      },
+      "Madrid": {
+        "shade": "background: #82c67f",
+        "city": "Madrid",
+        "type": "green"
+      },
+      "Paris": {
+        "shade": "background: #82c67f",
+        "city": "Paris",
+        "type": "green"
+      },
+      "Essen": {
+        "shade": "background: #82c67f",
+        "city": "Essen",
+        "type": "green"
+      },
+      "Milan": {
+        "shade": "background: #82c67f",
+        "city": "Milan",
+        "type": "green"
+      },
+      "St Petersburg": {
+        "shade": "background: #82c67f",
+        "city": "St Petersburg",
+        "type": "green"
+      },
+      "Los Angeles": {
+        "shade": "background: #fee048",
+        "city": "Los Angeles",
+        "type": "yellow"
+      },
+      "Mexico City": {
+        "shade": "background: #fee048",
+        "city": "Mexico City",
+        "type": "yellow"
+      },
+      "Miami": {
+        "shade": "background: #fee048",
+        "city": "Miami",
+        "type": "yellow"
+      },
+      "Bogota": {
+        "shade": "background: #fee048",
+        "city": "Bogota",
+        "type": "yellow"
+      },
+      "Lima": {
+        "shade": "background: #fee048",
+        "city": "Lima",
+        "type": "yellow"
+      },
+      "Santiago": {
+        "shade": "background: #fee048",
+        "city": "Santiago",
+        "type": "yellow"
+      },
+      "Buenos Aires": {
+        "shade": "background: #fee048",
+        "city": "Buenos Aires",
+        "type": "yellow"
+      },
+      "São Paulo": {
+        "shade": "background: #fee048",
+        "city": "São Paulo",
+        "type": "yellow"
+      },
+      "Lagos": {
+        "shade": "background: #fee048",
+        "city": "Lagos",
+        "type": "yellow"
+      },
+      "Khartoum": {
+        "shade": "background: #fee048",
+        "city": "Khartoum",
+        "type": "yellow"
+      },
+      "Kinshasa": {
+        "shade": "background: #fee048",
+        "city": "Kinshasa",
+        "type": "yellow"
+      },
+      "Johannesburg": {
+        "shade": "background: #fee048",
+        "city": "Johannesburg",
+        "type": "yellow"
+      },
+      "Algiers": {
+        "shade": "background: #777777",
+        "city": "Algiers",
+        "type": "black"
+      },
+      "Cairo": {
+        "shade": "background: #777777",
+        "city": "Cairo",
+        "type": "black"
+      },
+      "Istanbul": {
+        "shade": "background: #777777",
+        "city": "Istanbul",
+        "type": "black"
+      },
+      "Moscow": {
+        "shade": "background: #777777",
+        "city": "Moscow",
+        "type": "black"
+      },
+      "Tehran": {
+        "shade": "background: #777777",
+        "city": "Tehran",
+        "type": "black"
+      },
+      "Baghdad": {
+        "shade": "background: #777777",
+        "city": "Baghdad",
+        "type": "black"
+      },
+      "Riyadh": {
+        "shade": "background: #777777",
+        "city": "Riyadh",
+        "type": "black"
+      },
+      "Karachi": {
+        "shade": "background: #777777",
+        "city": "Karachi",
+        "type": "black"
+      },
+      "Delhi": {
+        "shade": "background: #777777",
+        "city": "Delhi",
+        "type": "black"
+      },
+      "Kolkata": {
+        "shade": "background: #777777",
+        "city": "Kolkata",
+        "type": "black"
+      },
+      "Chennai": {
+        "shade": "background: #777777",
+        "city": "Chennai",
+        "type": "black"
+      },
+      "Mumbai": {
+        "shade": "background: #777777",
+        "city": "Mumbai",
+        "type": "black"
+      },
+      "Beijing": {
+        "shade": "background: #e55050",
+        "city": "Beijing",
+        "type": "red"
+      },
+      "Seoul": {
+        "shade": "background: #e55050",
+        "city": "Seoul",
+        "type": "red"
+      },
+      "Tokyo": {
+        "shade": "background: #e55050",
+        "city": "Tokyo",
+        "type": "red"
+      },
+      "Osaka": {
+        "shade": "background: #e55050",
+        "city": "Osaka",
+        "type": "red"
+      },
+      "Taipei": {
+        "shade": "background: #e55050",
+        "city": "Taipei",
+        "type": "red"
+      },
+      "Shanghai": {
+        "shade": "background: #e55050",
+        "city": "Shanghai",
+        "type": "red"
+      },
+      "Hong Kong": {
+        "shade": "background: #e55050",
+        "city": "Hong Kong",
+        "type": "red"
+      },
+      "Bangkok": {
+        "shade": "background: #e55050",
+        "city": "Bangkok",
+        "type": "red"
+      },
+      "Jakarta": {
+        "shade": "background: #e55050",
+        "city": "Jakarta",
+        "type": "red"
+      },
+      "Ho Chi Minh": {
+        "shade": "background: #e55050",
+        "city": "Ho Chi Minh",
+        "type": "red"
+      },
+      "Manila": {
+        "shade": "background: #e55050",
+        "city": "Manila",
+        "type": "red"
+      },
+      "Sydney": {
+        "shade": "background: #e55050",
+        "city": "Sydney",
+        "type": "red"
+      },
+      "Epidemic": {
+        "shade": "background: repeating-linear-gradient(45deg, #077d43, #077d43 5px, #215a3d 5px, #215a3d 10px)",
+        "content": "Epidemic",
+        "type": "epidemic"
+      },
+      "Event 1": {
+        "shade": "background: repeating-linear-gradient(135deg, #3772ce, #3772ce 5px, #152f5f 5px, #152f5f 10px)",
+        "content": "Event 1",
+        "type": "event"
+      },
+      "Event 2": {
+        "shade": "background: repeating-linear-gradient(135deg, #3772ce, #3772ce 5px, #152f5f 5px, #152f5f 10px)",
+        "content": "Event 2",
+        "type": "event"
+      },
+      "Event 3": {
+        "shade": "background: repeating-linear-gradient(135deg, #3772ce, #3772ce 5px, #152f5f 5px, #152f5f 10px)",
+        "content": "Event 3",
+        "type": "event"
+      },
+      "Event 4": {
+        "shade": "background: repeating-linear-gradient(135deg, #3772ce, #3772ce 5px, #152f5f 5px, #152f5f 10px)",
+        "content": "Event 4",
+        "type": "event"
+      },
+      "Event 5": {
+        "shade": "background: repeating-linear-gradient(135deg, #3772ce, #3772ce 5px, #152f5f 5px, #152f5f 10px)",
+        "content": "Event 5",
+        "type": "event"
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "text",
+            "x": 0,
+            "y": 0,
+            "textAlign": "center",
+            "fontSize": "15",
+            "css": "background:#709eb9;line-height:1.8",
+            "value": "PLAYERS",
+            "width": 100,
+            "height": 50
+          }
+        ],
+        "border": 1,
+        "radius": 8
+      },
+      {
+        "objects": [
+          {
+            "type": "text",
+            "x": 0,
+            "y": 0,
+            "width": 100,
+            "height": 25,
+            "color": "transparent",
+            "dynamicProperties": {
+              "css": "shade"
+            }
+          },
+          {
+            "type": "text",
+            "x": 0,
+            "y": 3,
+            "width": 100,
+            "fontSize": "15",
+            "css": "color:black;font-weight:bold",
+            "textAlign": "center",
+            "dynamicProperties": {
+              "value": "city"
+            }
+          },
+          {
+            "type": "text",
+            "x": 0,
+            "y": 3,
+            "width": 100,
+            "fontSize": "15",
+            "css": "color:white;font-weight:bold",
+            "textAlign": "center",
+            "dynamicProperties": {
+              "value": "content"
+            }
+          }
+        ],
+        "border": 1,
+        "radius": 8
+      }
+    ],
+    "parent": "playerCardsHolder",
+    "width": 50,
+    "height": 50,
+    "x": 10
+  },
+  "settings": {
+    "type": "button",
+    "id": "settings",
+    "x": 1550,
+    "y": 950,
+    "width": 50,
+    "height": 50,
+    "z": 2092,
+    "classes": "material-icons",
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "header": "Game settings:",
+        "fields": [
+          {
+            "type": "checkbox",
+            "label": "Automatic setup?",
+            "variable": "setup",
+            "value": "${PROPERTY setup}"
+          },
+          {
+            "type": "checkbox",
+            "label": "Highlight city name when card moves?",
+            "variable": "highlight",
+            "value": "${PROPERTY highlight}"
+          },
+          {
+            "type": "checkbox",
+            "label": "City holder glows when infected?",
+            "variable": "glow",
+            "value": "${PROPERTY glow}"
+          },
+          {
+            "type": "checkbox",
+            "label": "Keep player cards private?",
+            "variable": "private",
+            "value": "${PROPERTY private}"
+          },
+          {
+            "type": "checkbox",
+            "label": "Play with Plans and Specialist roles?",
+            "variable": "allRoles",
+            "value": "${PROPERTY allRoles}"
+          },
+          {
+            "type": "select",
+            "label": "Select level of difficulty (4 = easy, 5 = normal, 6 = hard)?",
+            "options": [
+              {
+                "value": 4,
+                "text": "4 epidemic cards"
+              },
+              {
+                "value": 5,
+                "text": "5 epidemic cards"
+              },
+              {
+                "value": 6,
+                "text": "6 epidemic cards"
+              }
+            ],
+            "variable": "level",
+            "value": 5
+          }
+        ],
+        "confirmButtonText": "Confirm",
+        "cancelButtonText": "Cancel"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "setup",
+        "value": "${setup}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "highlight",
+        "value": "${highlight}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "glow",
+        "value": "${glow}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "private",
+        "value": "${private}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "allRoles",
+        "value": "${allRoles}"
+      },
+      "var level = ${level} parseFloat",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "level",
+        "value": "${level}"
+      },
+      {
+        "func": "CALL",
+        "widget": "restart",
+        "routine": "privateRoutine"
+      },
+      {
+        "func": "CALL",
+        "widget": "restart",
+        "routine": "rolesRoutine"
+      }
+    ],
+    "color": "white",
+    "css": {
+      "font-size": "31px",
+      "--wcMain": "black",
+      "--wcBorder": "white",
+      "--wcMainOH": "grey",
+      "--wcBorderOH": "black",
+      "line-height": "1.3"
+    },
+    "text": "settings",
+    "highlight": true,
+    "allRoles": true,
+    "shadowRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY glow}",
+        "operand2": true,
+        "thenRoutine": [
+          {
+            "func": "COUNT",
+            "holder": "${holder}"
+          },
+          {
+            "func": "IF",
+            "operand1": "${COUNT}",
+            "operand2": 0,
+            "thenRoutine": [
+              "var result = ' '"
+            ]
+          },
+          {
+            "func": "IF",
+            "operand1": "${COUNT}",
+            "operand2": 1,
+            "thenRoutine": [
+              "var result = '0px 0px 15px 7px \\u002357FFFF'"
+            ]
+          },
+          {
+            "func": "IF",
+            "operand1": "${COUNT}",
+            "operand2": 2,
+            "thenRoutine": [
+              "var result = '0px 0px 15px 10px \\u0023a6fd1f'"
+            ]
+          },
+          {
+            "func": "IF",
+            "operand1": "${COUNT}",
+            "operand2": 3,
+            "thenRoutine": [
+              "var result = '0px 0px 15px 13px \\u0023bc00d6'"
+            ]
+          }
+        ]
+      }
+    ],
+    "glow": true,
+    "setup": true,
+    "level": 5,
+    "private": true
+  },
+  "handSeat1": {
+    "type": "holder",
+    "id": "handSeat1",
+    "x": 22,
+    "y": 105,
+    "width": 103,
+    "height": 237,
+    "z": 89,
+    "dropOffsetX": 1,
+    "dropOffsetY": 1,
+    "dropTarget": {
+      "deck": "playerCards"
+    },
+    "stackOffsetY": 26,
+    "onEnter": {
+      "activeFace": 1
+    },
+    "css": "background: #ffffffaa; ",
+    "linkedToSeat": "seat1",
+    "layer": 2,
+    "movableInEdit": false,
+    "childrenPerOwner": "",
+    "onlyVisibleForSeat": "seat1",
+    "hoverInheritVisibleForSeat": false
+  },
+  "playerCardsHolder": {
+    "type": "holder",
+    "id": "playerCardsHolder",
+    "fixedParent": true,
+    "x": 5,
+    "y": 5,
+    "width": 105,
+    "height": 27,
+    "layer": 1,
+    "z": 297,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "deck": "playerCards"
+    },
+    "parent": "playerArea",
+    "movableInEdit": false
+  },
+  "Montréal": {
+    "type": "holder",
+    "id": "Montréal",
+    "parent": "baseHolder",
+    "x": 403,
+    "y": 319,
+    "z": 8,
+    "inheritFrom": "Atlanta",
+    "shadow": " "
+  },
+  "39ud": {
+    "deck": "playerCards",
+    "type": "card",
+    "cardType": "Montréal",
+    "id": "39ud",
+    "z": 54,
+    "parent": "z7np"
+  },
+  "seat1": {
+    "type": "seat",
+    "id": "seat1",
+    "x": 1,
+    "y": 1,
+    "width": 130,
+    "z": 2091,
+    "css": "font-size: 23px; ",
+    "movableInEdit": false,
+    "hideWhenUnused": true
+  },
+  "seat2": {
+    "type": "seat",
+    "id": "seat2",
+    "x": 140,
+    "y": 1,
+    "width": 130,
+    "z": 2091,
+    "css": "font-size: 23px; ",
+    "movableInEdit": false,
+    "index": 2,
+    "hideWhenUnused": true
+  },
+  "seat3": {
+    "type": "seat",
+    "id": "seat3",
+    "x": 1,
+    "y": 939,
+    "width": 130,
+    "z": 2091,
+    "css": "font-size: 23px; ",
+    "movableInEdit": false,
+    "index": 3,
+    "hideWhenUnused": true
+  },
+  "seat4": {
+    "type": "seat",
+    "id": "seat4",
+    "x": 140,
+    "y": 939,
+    "width": 130,
+    "z": 2091,
+    "css": "font-size: 23px; ",
+    "movableInEdit": false,
+    "index": 4,
+    "hideWhenUnused": true
+  },
+  "handSeat2": {
+    "inheritFrom": "handSeat1",
+    "id": "handSeat2",
+    "type": "holder",
+    "x": 160,
+    "y": 105,
+    "linkedToSeat": "seat2",
+    "childrenPerOwner": "",
+    "onlyVisibleForSeat": "seat2",
+    "hoverInheritVisibleForSeat": false
+  },
+  "handSeat3": {
+    "inheritFrom": "handSeat1",
+    "id": "handSeat3",
+    "type": "holder",
+    "x": 22,
+    "y": 650,
+    "linkedToSeat": "seat3",
+    "z": 12336,
+    "childrenPerOwner": "",
+    "onlyVisibleForSeat": "seat3",
+    "hoverInheritVisibleForSeat": false
+  },
+  "handSeat4": {
+    "inheritFrom": "handSeat1",
+    "id": "handSeat4",
+    "type": "holder",
+    "x": 160,
+    "y": 650,
+    "linkedToSeat": "seat4",
+    "childrenPerOwner": "",
+    "onlyVisibleForSeat": "seat4",
+    "hoverInheritVisibleForSeat": false
+  },
+  "roleHolder": {
+    "type": "holder",
+    "id": "roleHolder",
+    "parent": "baseHolder",
+    "fixedParent": true,
+    "x": 343,
+    "y": 2,
+    "width": 130,
+    "height": 50,
+    "layer": 1,
+    "z": 134,
+    "dropOffsetX": 1,
+    "dropOffsetY": 1,
+    "dropTarget": {
+      "type": "card"
+    },
+    "movableInEdit": false
+  },
+  "roles": {
+    "type": "deck",
+    "id": "roles",
+    "parent": "roleHolder",
+    "x": 10,
+    "width": 50,
+    "height": 50,
+    "cardDefaults": {
+      "layer": 2,
+      "width": 130,
+      "height": 50,
+      "enlarge": 4,
+      "onPileCreation": {
+        "handleSize": 20,
+        "handleOffset": 6
+      }
+    },
+    "cardTypes": {
+      "Dispatch": {
+        "shade": "background: #bc4a9b",
+        "role": "Dispatch",
+        "power": "- Move any player to city with another player\n- Move another player as if it were you, using your cards",
+        "pin": 1
+      },
+      "Medical": {
+        "shade": "background: #de6416",
+        "role": "Medical",
+        "power": "- Remove all disease markers of same color when treat disease\n- Remove markers of cured disease from city currently in",
+        "pin": 3
+      },
+      "Operations": {
+        "shade": "background: #78ab23",
+        "role": "Operations",
+        "power": "- Build research station in city currently in without card\n- Move from research station to any city with any city card",
+        "pin": 4
+      },
+      "Plans": {
+        "shade": "background: #50a0b4",
+        "role": "Plans",
+        "power": "\n- Take any discarded event card to reuse one time later (card is not part of player's hand)",
+        "pin": 5
+      },
+      "Research": {
+        "shade": "background: #9a6a43",
+        "role": "Research",
+        "power": "\n- Give or receive any city card when share knowledge",
+        "pin": 6
+      },
+      "Science": {
+        "shade": "background: #b7acb1",
+        "role": "Science",
+        "power": "\n- Use only 4 cards when discover cure",
+        "pin": 7
+      },
+      "Specialist": {
+        "shade": "background: #417463",
+        "role": "Specialist",
+        "power": "\n- Prevent disease marker from being placed in city currently in and all connected cities",
+        "pin": 2
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "text",
+            "x": 0,
+            "y": 0,
+            "textAlign": "center",
+            "fontSize": "20",
+            "css": "background:#7c8b70;line-height:2.4",
+            "value": "ROLES",
+            "width": 130,
+            "height": 50
+          }
+        ],
+        "border": 1,
+        "radius": 8
+      },
+      {
+        "objects": [
+          {
+            "type": "text",
+            "x": 0,
+            "y": 0,
+            "width": 130,
+            "height": 50,
+            "color": "transparent",
+            "dynamicProperties": {
+              "css": "shade"
+            }
+          },
+          {
+            "type": "text",
+            "x": 0,
+            "y": 0,
+            "width": 130,
+            "fontSize": "15",
+            "css": "color:white;font-weight:bold",
+            "textAlign": "center",
+            "dynamicProperties": {
+              "value": "role"
+            }
+          },
+          {
+            "type": "text",
+            "x": 3,
+            "y": 15,
+            "width": 125,
+            "fontSize": "8",
+            "css": "color:black;line-height:1",
+            "dynamicProperties": {
+              "value": "power"
+            }
+          }
+        ],
+        "border": 1,
+        "radius": 8
+      }
+    ]
+  },
+  "gp12": {
+    "deck": "roles",
+    "type": "card",
+    "cardType": "Medical",
+    "id": "gp12",
+    "z": 5566,
+    "seatColor": "#de6416",
+    "parent": "3n8q"
+  },
+  "6wbi": {
+    "deck": "roles",
+    "type": "card",
+    "cardType": "Dispatch",
+    "id": "6wbi",
+    "z": 85,
+    "seatColor": "#bc4a9b",
+    "parent": "3n8q"
+  },
+  "r4y8": {
+    "deck": "roles",
+    "type": "card",
+    "cardType": "Research",
+    "id": "r4y8",
+    "z": 6943,
+    "seatColor": "#9a6a43",
+    "parent": "3n8q"
+  },
+  "dhud": {
+    "deck": "roles",
+    "type": "card",
+    "cardType": "Operations",
+    "id": "dhud",
+    "z": 6139,
+    "seatColor": "#78ab23",
+    "parent": "3n8q"
+  },
+  "c94d": {
+    "deck": "roles",
+    "type": "card",
+    "cardType": "Science",
+    "id": "c94d",
+    "z": 1364,
+    "seatColor": "#b7acb1",
+    "parent": "3n8q"
+  },
+  "p53o": {
+    "deck": "roles",
+    "type": "card",
+    "cardType": "Plans",
+    "id": "p53o",
+    "z": 15673,
+    "seatColor": "#50a0b4",
+    "parent": "3n8q"
+  },
+  "5f5k": {
+    "deck": "playerCards",
+    "type": "card",
+    "cardType": "Los Angeles",
+    "id": "5f5k",
+    "z": 6820,
+    "parent": "z7np"
+  },
+  "jjvx": {
+    "deck": "playerCards",
+    "type": "card",
+    "cardType": "Mexico City",
+    "id": "jjvx",
+    "z": 8359,
+    "parent": "z7np"
+  },
+  "7n6o": {
+    "deck": "playerCards",
+    "type": "card",
+    "cardType": "Miami",
+    "id": "7n6o",
+    "z": 2730,
+    "parent": "z7np"
+  },
+  "7fwj": {
+    "deck": "playerCards",
+    "type": "card",
+    "cardType": "Bogota",
+    "id": "7fwj",
+    "z": 7777,
+    "parent": "z7np"
+  },
+  "qj9q": {
+    "deck": "playerCards",
+    "type": "card",
+    "cardType": "Lima",
+    "id": "qj9q",
+    "z": 8360,
+    "parent": "z7np"
+  },
+  "mf0j": {
+    "deck": "playerCards",
+    "type": "card",
+    "cardType": "Santiago",
+    "id": "mf0j",
+    "z": 4636,
+    "parent": "z7np"
+  },
+  "oals": {
+    "deck": "playerCards",
+    "type": "card",
+    "cardType": "Buenos Aires",
+    "id": "oals",
+    "z": 2466,
+    "parent": "z7np"
+  },
+  "4svc": {
+    "deck": "playerCards",
+    "type": "card",
+    "cardType": "São Paulo",
+    "id": "4svc",
+    "z": 8952,
+    "parent": "z7np"
+  },
+  "n5zf": {
+    "deck": "playerCards",
+    "type": "card",
+    "cardType": "Lagos",
+    "id": "n5zf",
+    "z": 7343,
+    "parent": "z7np"
+  },
+  "mtws": {
+    "deck": "playerCards",
+    "type": "card",
+    "cardType": "Khartoum",
+    "id": "mtws",
+    "z": 8160,
+    "parent": "z7np"
+  },
+  "ys5f": {
+    "deck": "playerCards",
+    "type": "card",
+    "cardType": "Kinshasa",
+    "id": "ys5f",
+    "z": 5443,
+    "parent": "z7np"
+  },
+  "coum": {
+    "deck": "playerCards",
+    "type": "card",
+    "cardType": "Johannesburg",
+    "id": "coum",
+    "z": 971,
+    "parent": "z7np"
+  },
+  "Delhi": {
+    "type": "holder",
+    "id": "Delhi",
+    "parent": "baseHolder",
+    "x": 1170,
+    "y": 399,
+    "z": 75,
+    "inheritFrom": "Moscow",
+    "shadow": " "
+  },
+  "v7l2": {
+    "deck": "playerCards",
+    "type": "card",
+    "cardType": "Algiers",
+    "id": "v7l2",
+    "parent": "z7np",
+    "z": 3845
+  },
+  "e96x": {
+    "deck": "playerCards",
+    "type": "card",
+    "cardType": "Cairo",
+    "id": "e96x",
+    "z": 3093,
+    "parent": "z7np"
+  },
+  "06b4": {
+    "deck": "playerCards",
+    "type": "card",
+    "cardType": "Istanbul",
+    "id": "06b4",
+    "z": 5843,
+    "parent": "z7np"
+  },
+  "cw33": {
+    "deck": "playerCards",
+    "type": "card",
+    "cardType": "Moscow",
+    "id": "cw33",
+    "z": 5394,
+    "parent": "z7np"
+  },
+  "18br": {
+    "deck": "playerCards",
+    "type": "card",
+    "cardType": "Tehran",
+    "id": "18br",
+    "z": 3923,
+    "parent": "z7np"
+  },
+  "paoc": {
+    "deck": "playerCards",
+    "type": "card",
+    "cardType": "Baghdad",
+    "id": "paoc",
+    "z": 4631,
+    "parent": "z7np"
+  },
+  "hnmf": {
+    "deck": "playerCards",
+    "type": "card",
+    "cardType": "Riyadh",
+    "id": "hnmf",
+    "z": 8316,
+    "parent": "z7np"
+  },
+  "a9je": {
+    "deck": "playerCards",
+    "type": "card",
+    "cardType": "Karachi",
+    "id": "a9je",
+    "z": 4596,
+    "parent": "z7np"
+  },
+  "f32q": {
+    "deck": "playerCards",
+    "type": "card",
+    "cardType": "Delhi",
+    "id": "f32q",
+    "z": 1309,
+    "parent": "z7np"
+  },
+  "01qv": {
+    "deck": "playerCards",
+    "type": "card",
+    "cardType": "Kolkata",
+    "id": "01qv",
+    "z": 5804,
+    "parent": "z7np"
+  },
+  "quk6": {
+    "deck": "playerCards",
+    "type": "card",
+    "cardType": "Chennai",
+    "id": "quk6",
+    "z": 9329,
+    "parent": "z7np"
+  },
+  "ob1z": {
+    "deck": "playerCards",
+    "type": "card",
+    "cardType": "Mumbai",
+    "id": "ob1z",
+    "z": 726,
+    "parent": "z7np"
+  },
+  "jszv": {
+    "deck": "playerCards",
+    "type": "card",
+    "cardType": "Beijing",
+    "id": "jszv",
+    "z": 3792,
+    "parent": "z7np"
+  },
+  "06xd": {
+    "deck": "playerCards",
+    "type": "card",
+    "cardType": "Seoul",
+    "id": "06xd",
+    "z": 8466,
+    "parent": "z7np"
+  },
+  "r07y": {
+    "deck": "playerCards",
+    "type": "card",
+    "cardType": "Tokyo",
+    "id": "r07y",
+    "z": 503,
+    "parent": "z7np"
+  },
+  "enrm": {
+    "deck": "playerCards",
+    "type": "card",
+    "cardType": "Osaka",
+    "id": "enrm",
+    "z": 3857,
+    "parent": "z7np"
+  },
+  "ap5g": {
+    "deck": "playerCards",
+    "type": "card",
+    "cardType": "Taipei",
+    "id": "ap5g",
+    "z": 7791,
+    "parent": "z7np"
+  },
+  "fxvn": {
+    "deck": "playerCards",
+    "type": "card",
+    "cardType": "Shanghai",
+    "id": "fxvn",
+    "z": 8339,
+    "parent": "z7np"
+  },
+  "y8op": {
+    "deck": "playerCards",
+    "type": "card",
+    "cardType": "Hong Kong",
+    "id": "y8op",
+    "z": 9078,
+    "parent": "z7np"
+  },
+  "qfa4": {
+    "deck": "playerCards",
+    "type": "card",
+    "cardType": "Bangkok",
+    "id": "qfa4",
+    "z": 3982,
+    "parent": "z7np"
+  },
+  "a61x": {
+    "deck": "playerCards",
+    "type": "card",
+    "cardType": "Jakarta",
+    "id": "a61x",
+    "z": 9608,
+    "parent": "z7np"
+  },
+  "yy3w": {
+    "deck": "playerCards",
+    "type": "card",
+    "cardType": "Manila",
+    "id": "yy3w",
+    "z": 995,
+    "parent": "z7np"
+  },
+  "yhe4": {
+    "deck": "playerCards",
+    "type": "card",
+    "cardType": "Sydney",
+    "id": "yhe4",
+    "z": 2572,
+    "parent": "z7np"
+  },
+  "ui4d": {
+    "deck": "playerCards",
+    "type": "card",
+    "cardType": "Ho Chi Minh",
+    "id": "ui4d",
+    "z": 5395,
+    "parent": "z7np"
+  },
+  "e2rd": {
+    "deck": "playerCards",
+    "type": "card",
+    "cardType": "Epidemic",
+    "id": "e2rd",
+    "z": 1472,
+    "thisBorder": "magenta",
+    "parent": "z7np"
+  },
+  "tkso": {
+    "deck": "playerCards",
+    "type": "card",
+    "cardType": "Epidemic",
+    "id": "tkso",
+    "z": 5126,
+    "thisBorder": "magenta",
+    "parent": "z7np"
+  },
+  "7il4": {
+    "deck": "playerCards",
+    "type": "card",
+    "cardType": "Epidemic",
+    "id": "7il4",
+    "z": 7131,
+    "thisBorder": "magenta",
+    "parent": "z7np"
+  },
+  "xmxi": {
+    "deck": "playerCards",
+    "type": "card",
+    "cardType": "Epidemic",
+    "id": "xmxi",
+    "z": 5909,
+    "thisBorder": "magenta",
+    "parent": "z7np"
+  },
+  "lv8f": {
+    "deck": "playerCards",
+    "type": "card",
+    "cardType": "Epidemic",
+    "id": "lv8f",
+    "z": 8702,
+    "thisBorder": "magenta",
+    "parent": "z7np"
+  },
+  "cocm": {
+    "deck": "playerCards",
+    "type": "card",
+    "cardType": "Epidemic",
+    "id": "cocm",
+    "z": 4917,
+    "thisBorder": "magenta",
+    "parent": "z7np"
+  },
+  "unz0": {
+    "deck": "playerCards",
+    "type": "card",
+    "cardType": "Event 1",
+    "id": "unz0",
+    "z": 6318,
+    "thisBorder": "magenta",
+    "parent": "z7np"
+  },
+  "fuf0": {
+    "deck": "playerCards",
+    "type": "card",
+    "cardType": "Event 2",
+    "id": "fuf0",
+    "z": 1790,
+    "thisBorder": "magenta",
+    "parent": "z7np"
+  },
+  "3umu": {
+    "deck": "playerCards",
+    "type": "card",
+    "cardType": "Event 3",
+    "id": "3umu",
+    "z": 4908,
+    "thisBorder": "magenta",
+    "parent": "z7np"
+  },
+  "api9": {
+    "deck": "playerCards",
+    "type": "card",
+    "cardType": "Event 4",
+    "id": "api9",
+    "z": 6278,
+    "thisBorder": "magenta",
+    "parent": "z7np"
+  },
+  "fgzz": {
+    "deck": "playerCards",
+    "type": "card",
+    "cardType": "Event 5",
+    "id": "fgzz",
+    "z": 6279,
+    "thisBorder": "magenta",
+    "parent": "z7np"
+  },
+  "role1": {
+    "type": "holder",
+    "id": "role1",
+    "x": 7,
+    "y": 54,
+    "width": 130,
+    "height": 50,
+    "z": 93,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "onEnter": {
+      "activeFace": 1
+    },
+    "movableInEdit": false,
+    "linkedToSeat": "seat1",
+    "layer": 1,
+    "dropTarget": {
+      "deck": "roles"
+    },
+    "enterRoutine": [
+      {
+        "func": "GET",
+        "collection": "child",
+        "property": "seatColor",
+        "variable": "seatColor"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "${PROPERTY linkedToSeat}"
+        ],
+        "property": "color",
+        "value": "${seatColor}"
+      }
+    ]
+  },
+  "role2": {
+    "inheritFrom": "role1",
+    "id": "role2",
+    "type": "holder",
+    "x": 147,
+    "y": 54,
+    "linkedToSeat": "seat2"
+  },
+  "role3": {
+    "inheritFrom": "role1",
+    "id": "role3",
+    "type": "holder",
+    "x": 7,
+    "y": 888,
+    "linkedToSeat": "seat3"
+  },
+  "role4": {
+    "inheritFrom": "role1",
+    "id": "role4",
+    "type": "holder",
+    "x": 147,
+    "y": 888,
+    "linkedToSeat": "seat4"
+  },
+  "pin1": {
+    "id": "pin1",
+    "x": 4,
+    "y": 4,
+    "width": 26,
+    "height": 32,
+    "z": 38783,
+    "classes": "pinPiece",
+    "color": "#bc4a9b",
+    "parent": "pinHolder"
+  },
+  "pin2": {
+    "id": "pin2",
+    "x": 4,
+    "y": 4,
+    "width": 26,
+    "height": 32,
+    "z": 38788,
+    "classes": "pinPiece",
+    "color": "#417463",
+    "parent": "pinHolder"
+  },
+  "pin3": {
+    "id": "pin3",
+    "x": 4,
+    "y": 4,
+    "width": 26,
+    "height": 32,
+    "z": 38784,
+    "classes": "pinPiece",
+    "color": "#de6416",
+    "parent": "pinHolder"
+  },
+  "pin4": {
+    "id": "pin4",
+    "x": 4,
+    "y": 4,
+    "width": 26,
+    "height": 32,
+    "z": 38787,
+    "classes": "pinPiece",
+    "color": "#78ab23",
+    "parent": "pinHolder"
+  },
+  "pin5": {
+    "id": "pin5",
+    "x": 4,
+    "y": 4,
+    "width": 26,
+    "height": 32,
+    "z": 38789,
+    "classes": "pinPiece",
+    "color": "#50a0b4",
+    "parent": "pinHolder"
+  },
+  "pin6": {
+    "id": "pin6",
+    "x": 4,
+    "y": 4,
+    "width": 26,
+    "height": 32,
+    "z": 38785,
+    "classes": "pinPiece",
+    "color": "#9a6a43",
+    "parent": "pinHolder"
+  },
+  "pin7": {
+    "id": "pin7",
+    "x": 4,
+    "y": 4,
+    "width": 26,
+    "height": 32,
+    "z": 38786,
+    "classes": "pinPiece",
+    "color": "#b7acb1",
+    "parent": "pinHolder"
+  },
+  "infectionHolder": {
+    "type": "holder",
+    "id": "infectionHolder",
+    "x": 1200,
+    "width": 130,
+    "height": 50,
+    "z": 130,
+    "dropOffsetX": 1,
+    "dropOffsetY": 1,
+    "dropTarget": {
+      "deck": "infections"
+    },
+    "y": 40,
+    "onLeave": {
+      "activeFace": 1
+    },
+    "layer": 1,
+    "css": "background: #ffffff80",
+    "movableInEdit": false
+  },
+  "infections": {
+    "type": "deck",
+    "id": "infections",
+    "parent": "infectionHolder",
+    "x": 10,
+    "width": 50,
+    "height": 50,
+    "cardDefaults": {
+      "layer": 2,
+      "width": 130,
+      "height": 50,
+      "onPileCreation": {
+        "handleSize": 20,
+        "handleOffset": 6
+      },
+      "parentChangeRoutine": [
+        {
+          "func": "IF",
+          "operand1": "${PROPERTY highlight OF settings}",
+          "operand2": true,
+          "thenRoutine": [
+            {
+              "func": "IF",
+              "operand1": "${PROPERTY activeFace}",
+              "operand2": 1,
+              "thenRoutine": [
+                {
+                  "func": "IF",
+                  "operand1": "${PROPERTY parent}",
+                  "operand2": null,
+                  "thenRoutine": [
+                    {
+                      "func": "SELECT",
+                      "property": "cityLabel",
+                      "value": true
+                    },
+                    {
+                      "func": "SELECT",
+                      "property": "parent",
+                      "value": "${PROPERTY city}"
+                    },
+                    {
+                      "func": "SET",
+                      "property": "thisBorder",
+                      "value": "magenta"
+                    }
+                  ],
+                  "elseRoutine": [
+                    {
+                      "func": "SELECT",
+                      "property": "cityLabel",
+                      "value": true
+                    },
+                    {
+                      "func": "SELECT",
+                      "property": "parent",
+                      "value": "${PROPERTY city}"
+                    },
+                    {
+                      "func": "SET",
+                      "property": "thisBorder",
+                      "value": "null"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "cardTypes": {
+      "Atlanta": {
+        "shade": "background-image: linear-gradient(to left,#bfe2be,#82c67f)",
+        "virus": "/assets/984969820_14118",
+        "city": "Atlanta",
+        "cityColor": "green"
+      },
+      "San Francisco": {
+        "shade": "background-image: linear-gradient(to left,#bfe2be,#82c67f)",
+        "virus": "/assets/984969820_14118",
+        "city": "San Francisco",
+        "cityColor": "green"
+      },
+      "Chicago": {
+        "shade": "background-image: linear-gradient(to left,#bfe2be,#82c67f)",
+        "virus": "/assets/984969820_14118",
+        "city": "Chicago",
+        "cityColor": "green"
+      },
+      "Montréal": {
+        "shade": "background-image: linear-gradient(to left,#bfe2be,#82c67f)",
+        "virus": "/assets/984969820_14118",
+        "city": "Montréal",
+        "cityColor": "green"
+      },
+      "New York": {
+        "shade": "background-image: linear-gradient(to left,#bfe2be,#82c67f)",
+        "virus": "/assets/984969820_14118",
+        "city": "New York",
+        "cityColor": "green"
+      },
+      "Washington": {
+        "shade": "background-image: linear-gradient(to left,#bfe2be,#82c67f)",
+        "virus": "/assets/984969820_14118",
+        "city": "Washington",
+        "cityColor": "green"
+      },
+      "London": {
+        "shade": "background-image: linear-gradient(to left,#bfe2be,#82c67f)",
+        "virus": "/assets/984969820_14118",
+        "city": "London",
+        "cityColor": "green"
+      },
+      "Madrid": {
+        "shade": "background-image: linear-gradient(to left,#bfe2be,#82c67f)",
+        "virus": "/assets/984969820_14118",
+        "city": "Madrid",
+        "cityColor": "green"
+      },
+      "Paris": {
+        "shade": "background-image: linear-gradient(to left,#bfe2be,#82c67f)",
+        "virus": "/assets/984969820_14118",
+        "city": "Paris",
+        "cityColor": "green"
+      },
+      "Essen": {
+        "shade": "background-image: linear-gradient(to left,#bfe2be,#82c67f)",
+        "virus": "/assets/984969820_14118",
+        "city": "Essen",
+        "cityColor": "green"
+      },
+      "Milan": {
+        "shade": "background-image: linear-gradient(to left,#bfe2be,#82c67f)",
+        "virus": "/assets/984969820_14118",
+        "city": "Milan",
+        "cityColor": "green"
+      },
+      "St Petersburg": {
+        "shade": "background-image: linear-gradient(to left,#bfe2be,#82c67f)",
+        "virus": "/assets/984969820_14118",
+        "city": "St Petersburg",
+        "cityColor": "green"
+      },
+      "Los Angeles": {
+        "shade": "background-image: linear-gradient(to left,#feefa1,#fee048)",
+        "virus": "/assets/1672964159_5155",
+        "city": "Los Angeles",
+        "cityColor": "yellow"
+      },
+      "Mexico City": {
+        "shade": "background-image: linear-gradient(to left,#feefa1,#fee048)",
+        "virus": "/assets/1672964159_5155",
+        "city": "Mexico City",
+        "cityColor": "yellow"
+      },
+      "Miami": {
+        "shade": "background-image: linear-gradient(to left,#feefa1,#fee048)",
+        "virus": "/assets/1672964159_5155",
+        "city": "Miami",
+        "cityColor": "yellow"
+      },
+      "Bogota": {
+        "shade": "background-image: linear-gradient(to left,#feefa1,#fee048)",
+        "virus": "/assets/1672964159_5155",
+        "city": "Bogota",
+        "cityColor": "yellow"
+      },
+      "Lima": {
+        "shade": "background-image: linear-gradient(to left,#feefa1,#fee048)",
+        "virus": "/assets/1672964159_5155",
+        "city": "Lima",
+        "cityColor": "yellow"
+      },
+      "Santiago": {
+        "shade": "background-image: linear-gradient(to left,#feefa1,#fee048)",
+        "virus": "/assets/1672964159_5155",
+        "city": "Santiago",
+        "cityColor": "yellow"
+      },
+      "Buenos Aires": {
+        "shade": "background-image: linear-gradient(to left,#feefa1,#fee048)",
+        "virus": "/assets/1672964159_5155",
+        "city": "Buenos Aires",
+        "cityColor": "yellow"
+      },
+      "São Paulo": {
+        "shade": "background-image: linear-gradient(to left,#feefa1,#fee048)",
+        "virus": "/assets/1672964159_5155",
+        "city": "São Paulo",
+        "cityColor": "yellow"
+      },
+      "Lagos": {
+        "shade": "background-image: linear-gradient(to left,#feefa1,#fee048)",
+        "virus": "/assets/1672964159_5155",
+        "city": "Lagos",
+        "cityColor": "yellow"
+      },
+      "Khartoum": {
+        "shade": "background-image: linear-gradient(to left,#feefa1,#fee048)",
+        "virus": "/assets/1672964159_5155",
+        "city": "Khartoum",
+        "cityColor": "yellow"
+      },
+      "Kinshasa": {
+        "shade": "background-image: linear-gradient(to left,#feefa1,#fee048)",
+        "virus": "/assets/1672964159_5155",
+        "city": "Kinshasa",
+        "cityColor": "yellow"
+      },
+      "Johannesburg": {
+        "shade": "background-image: linear-gradient(to left,#feefa1,#fee048)",
+        "virus": "/assets/1672964159_5155",
+        "city": "Johannesburg",
+        "cityColor": "yellow"
+      },
+      "Algiers": {
+        "shade": "background-image: linear-gradient(to left,#828282,#555555)",
+        "virus": "/assets/-231269982_10522",
+        "city": "Algiers",
+        "cityColor": "black"
+      },
+      "Cairo": {
+        "shade": "background-image: linear-gradient(to left,#828282,#555555)",
+        "virus": "/assets/-231269982_10522",
+        "city": "Cairo",
+        "cityColor": "black"
+      },
+      "Istanbul": {
+        "shade": "background-image: linear-gradient(to left,#828282,#555555)",
+        "virus": "/assets/-231269982_10522",
+        "city": "Istanbul",
+        "cityColor": "black"
+      },
+      "Moscow": {
+        "shade": "background-image: linear-gradient(to left,#828282,#555555)",
+        "virus": "/assets/-231269982_10522",
+        "city": "Moscow",
+        "cityColor": "black"
+      },
+      "Tehran": {
+        "shade": "background-image: linear-gradient(to left,#828282,#555555)",
+        "virus": "/assets/-231269982_10522",
+        "city": "Tehran",
+        "cityColor": "black"
+      },
+      "Baghdad": {
+        "shade": "background-image: linear-gradient(to left,#828282,#555555)",
+        "virus": "/assets/-231269982_10522",
+        "city": "Baghdad",
+        "cityColor": "black"
+      },
+      "Riyadh": {
+        "shade": "background-image: linear-gradient(to left,#828282,#555555)",
+        "virus": "/assets/-231269982_10522",
+        "city": "Riyadh",
+        "cityColor": "black"
+      },
+      "Karachi": {
+        "shade": "background-image: linear-gradient(to left,#828282,#555555)",
+        "virus": "/assets/-231269982_10522",
+        "city": "Karachi",
+        "cityColor": "black"
+      },
+      "Delhi": {
+        "shade": "background-image: linear-gradient(to left,#828282,#555555)",
+        "virus": "/assets/-231269982_10522",
+        "city": "Delhi",
+        "cityColor": "black"
+      },
+      "Kolkata": {
+        "shade": "background-image: linear-gradient(to left,#828282,#555555)",
+        "virus": "/assets/-231269982_10522",
+        "city": "Kolkata",
+        "cityColor": "black"
+      },
+      "Chennai": {
+        "shade": "background-image: linear-gradient(to left,#828282,#555555)",
+        "virus": "/assets/-231269982_10522",
+        "city": "Chennai",
+        "cityColor": "black"
+      },
+      "Mumbai": {
+        "shade": "background-image: linear-gradient(to left,#828282,#555555)",
+        "virus": "/assets/-231269982_10522",
+        "city": "Mumbai",
+        "cityColor": "black"
+      },
+      "Beijing": {
+        "shade": "background-image: linear-gradient(to left,#f09f9f,#e55050)",
+        "virus": "/assets/-279361595_4909",
+        "city": "Beijing",
+        "cityColor": "red"
+      },
+      "Seoul": {
+        "shade": "background-image: linear-gradient(to left,#f09f9f,#e55050)",
+        "virus": "/assets/-279361595_4909",
+        "city": "Seoul",
+        "cityColor": "red"
+      },
+      "Tokyo": {
+        "shade": "background-image: linear-gradient(to left,#f09f9f,#e55050)",
+        "virus": "/assets/-279361595_4909",
+        "city": "Tokyo",
+        "cityColor": "red"
+      },
+      "Osaka": {
+        "shade": "background-image: linear-gradient(to left,#f09f9f,#e55050)",
+        "virus": "/assets/-279361595_4909",
+        "city": "Osaka",
+        "cityColor": "red"
+      },
+      "Taipei": {
+        "shade": "background-image: linear-gradient(to left,#f09f9f,#e55050)",
+        "virus": "/assets/-279361595_4909",
+        "city": "Taipei",
+        "cityColor": "red"
+      },
+      "Shanghai": {
+        "shade": "background-image: linear-gradient(to left,#f09f9f,#e55050)",
+        "virus": "/assets/-279361595_4909",
+        "city": "Shanghai",
+        "cityColor": "red"
+      },
+      "Hong Kong": {
+        "shade": "background-image: linear-gradient(to left,#f09f9f,#e55050)",
+        "virus": "/assets/-279361595_4909",
+        "city": "Hong Kong",
+        "cityColor": "red"
+      },
+      "Bangkok": {
+        "shade": "background-image: linear-gradient(to left,#f09f9f,#e55050)",
+        "virus": "/assets/-279361595_4909",
+        "city": "Bangkok",
+        "cityColor": "red"
+      },
+      "Jakarta": {
+        "shade": "background-image: linear-gradient(to left,#f09f9f,#e55050)",
+        "virus": "/assets/-279361595_4909",
+        "city": "Jakarta",
+        "cityColor": "red"
+      },
+      "Ho Chi Minh": {
+        "shade": "background-image: linear-gradient(to left,#f09f9f,#e55050)",
+        "virus": "/assets/-279361595_4909",
+        "city": "Ho Chi Minh",
+        "cityColor": "red"
+      },
+      "Manila": {
+        "shade": "background-image: linear-gradient(to left,#f09f9f,#e55050)",
+        "virus": "/assets/-279361595_4909",
+        "city": "Manila",
+        "cityColor": "red"
+      },
+      "Sydney": {
+        "shade": "background-image: linear-gradient(to left,#f09f9f,#e55050)",
+        "virus": "/assets/-279361595_4909",
+        "city": "Sydney",
+        "cityColor": "red"
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "text",
+            "x": 0,
+            "y": 0,
+            "textAlign": "center",
+            "fontSize": "20",
+            "css": "background:#f3d48a;line-height:2.4",
+            "value": "INFECTIONS",
+            "width": 130,
+            "height": 50
+          }
+        ],
+        "border": 1,
+        "radius": 8
+      },
+      {
+        "objects": [
+          {
+            "type": "text",
+            "x": 0,
+            "y": 0,
+            "width": 130,
+            "height": 50,
+            "color": "transparent",
+            "dynamicProperties": {
+              "css": "shade"
+            }
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "css": "background-position:left",
+            "dynamicProperties": {
+              "value": "virus"
+            },
+            "color": "transparent",
+            "width": 45,
+            "height": 45
+          },
+          {
+            "type": "text",
+            "x": 0,
+            "y": 3,
+            "width": 130,
+            "fontSize": "15",
+            "css": "color:black;font-weight:bold;padding-right:5px;line-height:2.7",
+            "textAlign": "right",
+            "dynamicProperties": {
+              "value": "city"
+            }
+          }
+        ],
+        "border": 1,
+        "radius": 8
+      }
+    ]
+  },
+  "s4gp": {
+    "deck": "infections",
+    "type": "card",
+    "cardType": "Atlanta",
+    "id": "s4gp",
+    "z": 3775,
+    "parent": "l3h4"
+  },
+  "yfvt": {
+    "deck": "infections",
+    "type": "card",
+    "cardType": "San Francisco",
+    "id": "yfvt",
+    "z": 4886,
+    "parent": "l3h4"
+  },
+  "cit3": {
+    "deck": "infections",
+    "type": "card",
+    "cardType": "Chicago",
+    "id": "cit3",
+    "z": 7805,
+    "parent": "l3h4"
+  },
+  "h6sn": {
+    "deck": "infections",
+    "type": "card",
+    "cardType": "Montréal",
+    "id": "h6sn",
+    "z": 6283,
+    "parent": "l3h4"
+  },
+  "rq45": {
+    "deck": "infections",
+    "type": "card",
+    "cardType": "New York",
+    "id": "rq45",
+    "z": 6673,
+    "parent": "l3h4"
+  },
+  "nf0x": {
+    "deck": "infections",
+    "type": "card",
+    "cardType": "Washington",
+    "id": "nf0x",
+    "z": 2376,
+    "parent": "l3h4"
+  },
+  "e06d": {
+    "deck": "infections",
+    "type": "card",
+    "cardType": "London",
+    "id": "e06d",
+    "z": 8977,
+    "parent": "l3h4"
+  },
+  "sohb": {
+    "deck": "infections",
+    "type": "card",
+    "cardType": "Madrid",
+    "id": "sohb",
+    "z": 2304,
+    "parent": "l3h4"
+  },
+  "w2tc": {
+    "deck": "infections",
+    "type": "card",
+    "cardType": "Paris",
+    "id": "w2tc",
+    "z": 3663,
+    "parent": "l3h4"
+  },
+  "3m8u": {
+    "deck": "infections",
+    "type": "card",
+    "cardType": "Essen",
+    "id": "3m8u",
+    "z": 4257,
+    "parent": "l3h4"
+  },
+  "llyh": {
+    "deck": "infections",
+    "type": "card",
+    "cardType": "Milan",
+    "id": "llyh",
+    "z": 1534,
+    "parent": "l3h4"
+  },
+  "x5ig": {
+    "deck": "infections",
+    "type": "card",
+    "cardType": "St Petersburg",
+    "id": "x5ig",
+    "z": 4329,
+    "parent": "l3h4"
+  },
+  "jzrq": {
+    "deck": "infections",
+    "type": "card",
+    "cardType": "Los Angeles",
+    "id": "jzrq",
+    "z": 4674,
+    "parent": "l3h4"
+  },
+  "9ew9": {
+    "deck": "infections",
+    "type": "card",
+    "cardType": "Mexico City",
+    "id": "9ew9",
+    "z": 5377,
+    "parent": "l3h4"
+  },
+  "knbp": {
+    "deck": "infections",
+    "type": "card",
+    "cardType": "Miami",
+    "id": "knbp",
+    "z": 5423,
+    "parent": "l3h4"
+  },
+  "so2n": {
+    "deck": "infections",
+    "type": "card",
+    "cardType": "Bogota",
+    "id": "so2n",
+    "z": 1467,
+    "parent": "l3h4"
+  },
+  "c61g": {
+    "deck": "infections",
+    "type": "card",
+    "cardType": "Lima",
+    "id": "c61g",
+    "z": 9052,
+    "parent": "l3h4"
+  },
+  "7v86": {
+    "deck": "infections",
+    "type": "card",
+    "cardType": "Santiago",
+    "id": "7v86",
+    "z": 7776,
+    "parent": "l3h4"
+  },
+  "hx1y": {
+    "deck": "infections",
+    "type": "card",
+    "cardType": "Buenos Aires",
+    "id": "hx1y",
+    "z": 9692,
+    "parent": "l3h4"
+  },
+  "u0hn": {
+    "deck": "infections",
+    "type": "card",
+    "cardType": "São Paulo",
+    "id": "u0hn",
+    "z": 8498,
+    "parent": "l3h4"
+  },
+  "y9sz": {
+    "deck": "infections",
+    "type": "card",
+    "cardType": "Lagos",
+    "id": "y9sz",
+    "z": 7239,
+    "parent": "l3h4"
+  },
+  "x11z": {
+    "deck": "infections",
+    "type": "card",
+    "cardType": "Khartoum",
+    "id": "x11z",
+    "z": 8192,
+    "parent": "l3h4"
+  },
+  "hzvf": {
+    "deck": "infections",
+    "type": "card",
+    "cardType": "Kinshasa",
+    "id": "hzvf",
+    "z": 4773,
+    "parent": "l3h4"
+  },
+  "z61t": {
+    "deck": "infections",
+    "type": "card",
+    "cardType": "Johannesburg",
+    "id": "z61t",
+    "z": 8161,
+    "parent": "l3h4"
+  },
+  "dvgr": {
+    "deck": "infections",
+    "type": "card",
+    "cardType": "Algiers",
+    "id": "dvgr",
+    "z": 6442,
+    "parent": "l3h4"
+  },
+  "7iui": {
+    "deck": "infections",
+    "type": "card",
+    "cardType": "Cairo",
+    "id": "7iui",
+    "z": 500,
+    "parent": "l3h4"
+  },
+  "em8u": {
+    "deck": "infections",
+    "type": "card",
+    "cardType": "Istanbul",
+    "id": "em8u",
+    "z": 2150,
+    "parent": "l3h4"
+  },
+  "3cfm": {
+    "deck": "infections",
+    "type": "card",
+    "cardType": "Moscow",
+    "id": "3cfm",
+    "z": 455,
+    "parent": "l3h4"
+  },
+  "sx13": {
+    "deck": "infections",
+    "type": "card",
+    "cardType": "Tehran",
+    "id": "sx13",
+    "z": 2528,
+    "parent": "l3h4"
+  },
+  "ljv7": {
+    "deck": "infections",
+    "type": "card",
+    "cardType": "Baghdad",
+    "id": "ljv7",
+    "z": 5896,
+    "parent": "l3h4"
+  },
+  "84ky": {
+    "deck": "infections",
+    "type": "card",
+    "cardType": "Riyadh",
+    "id": "84ky",
+    "z": 5989,
+    "parent": "l3h4"
+  },
+  "ibz0": {
+    "deck": "infections",
+    "type": "card",
+    "cardType": "Karachi",
+    "id": "ibz0",
+    "z": 3701,
+    "parent": "l3h4"
+  },
+  "df41": {
+    "deck": "infections",
+    "type": "card",
+    "cardType": "Delhi",
+    "id": "df41",
+    "z": 4263,
+    "parent": "l3h4"
+  },
+  "k443": {
+    "deck": "infections",
+    "type": "card",
+    "cardType": "Kolkata",
+    "id": "k443",
+    "z": 7231,
+    "parent": "l3h4"
+  },
+  "e9au": {
+    "deck": "infections",
+    "type": "card",
+    "cardType": "Chennai",
+    "id": "e9au",
+    "z": 8441,
+    "parent": "l3h4"
+  },
+  "c02a": {
+    "deck": "infections",
+    "type": "card",
+    "cardType": "Mumbai",
+    "id": "c02a",
+    "z": 6759,
+    "parent": "l3h4"
+  },
+  "1ywl": {
+    "deck": "infections",
+    "type": "card",
+    "cardType": "Beijing",
+    "id": "1ywl",
+    "z": 9888,
+    "parent": "l3h4"
+  },
+  "amlz": {
+    "deck": "infections",
+    "type": "card",
+    "cardType": "Seoul",
+    "id": "amlz",
+    "z": 1345,
+    "parent": "l3h4"
+  },
+  "rgo0": {
+    "deck": "infections",
+    "type": "card",
+    "cardType": "Tokyo",
+    "id": "rgo0",
+    "z": 3654,
+    "parent": "l3h4"
+  },
+  "zwsm": {
+    "deck": "infections",
+    "type": "card",
+    "cardType": "Osaka",
+    "id": "zwsm",
+    "z": 6120,
+    "parent": "l3h4"
+  },
+  "jao7": {
+    "deck": "infections",
+    "type": "card",
+    "cardType": "Taipei",
+    "id": "jao7",
+    "z": 5357,
+    "parent": "l3h4"
+  },
+  "axcg": {
+    "deck": "infections",
+    "type": "card",
+    "cardType": "Shanghai",
+    "id": "axcg",
+    "z": 8814,
+    "parent": "l3h4"
+  },
+  "7nxv": {
+    "deck": "infections",
+    "type": "card",
+    "cardType": "Hong Kong",
+    "id": "7nxv",
+    "z": 1842,
+    "parent": "l3h4"
+  },
+  "d6tc": {
+    "deck": "infections",
+    "type": "card",
+    "cardType": "Bangkok",
+    "id": "d6tc",
+    "z": 6745,
+    "parent": "l3h4"
+  },
+  "hog2": {
+    "deck": "infections",
+    "type": "card",
+    "cardType": "Jakarta",
+    "id": "hog2",
+    "z": 1285,
+    "parent": "l3h4"
+  },
+  "u2cp": {
+    "deck": "infections",
+    "type": "card",
+    "cardType": "Ho Chi Minh",
+    "id": "u2cp",
+    "parent": "l3h4",
+    "z": 4043
+  },
+  "cfbg": {
+    "deck": "infections",
+    "type": "card",
+    "cardType": "Manila",
+    "id": "cfbg",
+    "z": 8988,
+    "parent": "l3h4"
+  },
+  "n9j3": {
+    "deck": "infections",
+    "type": "card",
+    "cardType": "Sydney",
+    "id": "n9j3",
+    "z": 9004,
+    "parent": "l3h4"
+  },
+  "greenDeck": {
+    "type": "deck",
+    "id": "greenDeck",
+    "x": 10,
+    "width": 50,
+    "height": 50,
+    "cardDefaults": {
+      "layer": 3,
+      "width": 35,
+      "height": 13,
+      "marker": true,
+      "green": true,
+      "clickRoutine": [
+        {
+          "func": "SET",
+          "collection": "thisButton",
+          "property": "parent",
+          "value": "greenHolder"
+        }
+      ]
+    },
+    "cardTypes": {
+      "Green Marker": {}
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "text",
+            "x": 0,
+            "y": 0,
+            "css": "background:#4a9e46",
+            "width": 35,
+            "height": 13
+          }
+        ],
+        "border": 2,
+        "radius": 2
+      }
+    ],
+    "parent": "greenHolder"
+  },
+  "greenHolder": {
+    "type": "holder",
+    "id": "greenHolder",
+    "fixedParent": true,
+    "x": 5,
+    "y": 5,
+    "width": 35,
+    "height": 13,
+    "layer": 1,
+    "z": 126,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "green": true
+    },
+    "borderRadius": 2,
+    "enterRoutine": [
+      {
+        "func": "CALL",
+        "routine": "countRoutine"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "CALL",
+        "routine": "countRoutine"
+      }
+    ],
+    "countRoutine": [
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "parent",
+        "value": "${thisID}"
+      },
+      {
+        "func": "COUNT"
+      },
+      {
+        "func": "LABEL",
+        "label": "greenCount",
+        "mode": "set",
+        "value": "${COUNT}"
+      }
+    ],
+    "preventPiles": true,
+    "parent": "markerArea"
+  },
+  "k39e": {
+    "deck": "greenDeck",
+    "type": "card",
+    "cardType": "Green Marker",
+    "id": "k39e",
+    "z": 12778,
+    "parent": "greenHolder"
+  },
+  "jn73": {
+    "deck": "greenDeck",
+    "type": "card",
+    "cardType": "Green Marker",
+    "id": "jn73",
+    "z": 12779,
+    "parent": "greenHolder"
+  },
+  "ltk5": {
+    "deck": "greenDeck",
+    "type": "card",
+    "cardType": "Green Marker",
+    "id": "ltk5",
+    "z": 12780,
+    "parent": "greenHolder"
+  },
+  "rgzp": {
+    "deck": "greenDeck",
+    "type": "card",
+    "cardType": "Green Marker",
+    "id": "rgzp",
+    "z": 12781,
+    "parent": "greenHolder"
+  },
+  "3mpy": {
+    "deck": "greenDeck",
+    "type": "card",
+    "cardType": "Green Marker",
+    "id": "3mpy",
+    "z": 12782,
+    "parent": "greenHolder"
+  },
+  "dx2x": {
+    "deck": "greenDeck",
+    "type": "card",
+    "cardType": "Green Marker",
+    "id": "dx2x",
+    "z": 12783,
+    "parent": "greenHolder"
+  },
+  "18he": {
+    "deck": "greenDeck",
+    "type": "card",
+    "cardType": "Green Marker",
+    "id": "18he",
+    "z": 12784,
+    "parent": "greenHolder"
+  },
+  "gn72": {
+    "deck": "greenDeck",
+    "type": "card",
+    "cardType": "Green Marker",
+    "id": "gn72",
+    "z": 12785,
+    "parent": "greenHolder"
+  },
+  "n5aq": {
+    "deck": "greenDeck",
+    "type": "card",
+    "cardType": "Green Marker",
+    "id": "n5aq",
+    "z": 12786,
+    "parent": "greenHolder"
+  },
+  "bgsz": {
+    "deck": "greenDeck",
+    "type": "card",
+    "cardType": "Green Marker",
+    "id": "bgsz",
+    "z": 12787,
+    "parent": "greenHolder"
+  },
+  "1qbs": {
+    "deck": "greenDeck",
+    "type": "card",
+    "cardType": "Green Marker",
+    "id": "1qbs",
+    "z": 12788,
+    "parent": "greenHolder"
+  },
+  "v1yq": {
+    "deck": "greenDeck",
+    "type": "card",
+    "cardType": "Green Marker",
+    "id": "v1yq",
+    "z": 12789,
+    "parent": "greenHolder"
+  },
+  "c2kc": {
+    "deck": "greenDeck",
+    "type": "card",
+    "cardType": "Green Marker",
+    "id": "c2kc",
+    "z": 12790,
+    "parent": "greenHolder",
+    "thisBorder": "null"
+  },
+  "uqij": {
+    "deck": "greenDeck",
+    "type": "card",
+    "cardType": "Green Marker",
+    "id": "uqij",
+    "z": 12791,
+    "parent": "greenHolder",
+    "thisBorder": "null"
+  },
+  "588z": {
+    "deck": "greenDeck",
+    "type": "card",
+    "cardType": "Green Marker",
+    "id": "588z",
+    "z": 12792,
+    "parent": "greenHolder",
+    "thisBorder": "null"
+  },
+  "mhc7": {
+    "deck": "greenDeck",
+    "type": "card",
+    "cardType": "Green Marker",
+    "id": "mhc7",
+    "z": 12793,
+    "parent": "greenHolder",
+    "thisBorder": "null"
+  },
+  "60ry": {
+    "deck": "greenDeck",
+    "type": "card",
+    "cardType": "Green Marker",
+    "id": "60ry",
+    "z": 12794,
+    "parent": "greenHolder",
+    "thisBorder": "null"
+  },
+  "netk": {
+    "deck": "greenDeck",
+    "type": "card",
+    "cardType": "Green Marker",
+    "id": "netk",
+    "z": 12795,
+    "parent": "greenHolder",
+    "thisBorder": "null"
+  },
+  "0lpx": {
+    "deck": "greenDeck",
+    "type": "card",
+    "cardType": "Green Marker",
+    "id": "0lpx",
+    "z": 12796,
+    "parent": "greenHolder",
+    "thisBorder": "null"
+  },
+  "yjxm": {
+    "deck": "greenDeck",
+    "type": "card",
+    "cardType": "Green Marker",
+    "id": "yjxm",
+    "z": 12797,
+    "parent": "greenHolder",
+    "thisBorder": "null"
+  },
+  "r09z": {
+    "deck": "greenDeck",
+    "type": "card",
+    "cardType": "Green Marker",
+    "id": "r09z",
+    "z": 12798,
+    "parent": "greenHolder",
+    "thisBorder": "null"
+  },
+  "yqj4": {
+    "deck": "greenDeck",
+    "type": "card",
+    "cardType": "Green Marker",
+    "id": "yqj4",
+    "z": 12799,
+    "parent": "greenHolder",
+    "thisBorder": "null"
+  },
+  "mt4q": {
+    "deck": "greenDeck",
+    "type": "card",
+    "cardType": "Green Marker",
+    "id": "mt4q",
+    "z": 12800,
+    "thisBorder": "null",
+    "parent": "greenHolder"
+  },
+  "yellowHolder": {
+    "type": "holder",
+    "id": "yellowHolder",
+    "fixedParent": true,
+    "x": 5,
+    "y": 25,
+    "width": 35,
+    "height": 13,
+    "borderRadius": 2,
+    "layer": 1,
+    "z": 124,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "yellow": true
+    },
+    "enterRoutine": [
+      {
+        "func": "CALL",
+        "routine": "countRoutine"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "CALL",
+        "routine": "countRoutine"
+      }
+    ],
+    "countRoutine": [
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "parent",
+        "value": "${thisID}"
+      },
+      {
+        "func": "COUNT"
+      },
+      {
+        "func": "LABEL",
+        "label": "yellowCount",
+        "mode": "set",
+        "value": "${COUNT}"
+      }
+    ],
+    "preventPiles": true,
+    "parent": "markerArea"
+  },
+  "blackHolder": {
+    "type": "holder",
+    "id": "blackHolder",
+    "fixedParent": true,
+    "y": 45,
+    "width": 35,
+    "height": 13,
+    "borderRadius": 2,
+    "layer": 1,
+    "z": 120,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "black": true
+    },
+    "x": 5,
+    "enterRoutine": [
+      {
+        "func": "CALL",
+        "routine": "countRoutine"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "CALL",
+        "routine": "countRoutine"
+      }
+    ],
+    "countRoutine": [
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "parent",
+        "value": "${thisID}"
+      },
+      {
+        "func": "COUNT"
+      },
+      {
+        "func": "LABEL",
+        "label": "blackCount",
+        "mode": "set",
+        "value": "${COUNT}"
+      }
+    ],
+    "preventPiles": true,
+    "parent": "markerArea"
+  },
+  "redHolder": {
+    "type": "holder",
+    "id": "redHolder",
+    "fixedParent": true,
+    "x": 5,
+    "y": 65,
+    "width": 35,
+    "height": 13,
+    "borderRadius": 2,
+    "layer": 1,
+    "z": 119,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "red": true
+    },
+    "enterRoutine": [
+      {
+        "func": "CALL",
+        "routine": "countRoutine"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "CALL",
+        "routine": "countRoutine"
+      }
+    ],
+    "countRoutine": [
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "parent",
+        "value": "${thisID}"
+      },
+      {
+        "func": "COUNT"
+      },
+      {
+        "func": "LABEL",
+        "label": "redCount",
+        "mode": "set",
+        "value": "${COUNT}"
+      }
+    ],
+    "preventPiles": true,
+    "parent": "markerArea"
+  },
+  "yellowDeck": {
+    "type": "deck",
+    "id": "yellowDeck",
+    "parent": "yellowHolder",
+    "x": 10,
+    "width": 50,
+    "height": 50,
+    "cardDefaults": {
+      "layer": 3,
+      "width": 35,
+      "height": 13,
+      "marker": true,
+      "yellow": true,
+      "clickRoutine": [
+        {
+          "func": "SET",
+          "collection": "thisButton",
+          "property": "parent",
+          "value": "yellowHolder"
+        }
+      ]
+    },
+    "cardTypes": {
+      "Yellow Marker": {}
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "text",
+            "x": 0,
+            "y": 0,
+            "css": "background:#e3bd01",
+            "width": 35,
+            "height": 13
+          }
+        ],
+        "border": 2,
+        "radius": 2
+      }
+    ]
+  },
+  "blackDeck": {
+    "type": "deck",
+    "id": "blackDeck",
+    "parent": "blackHolder",
+    "x": 10,
+    "width": 50,
+    "height": 50,
+    "cardDefaults": {
+      "layer": 3,
+      "width": 35,
+      "height": 13,
+      "marker": true,
+      "black": true,
+      "clickRoutine": [
+        {
+          "func": "SET",
+          "collection": "thisButton",
+          "property": "parent",
+          "value": "blackHolder"
+        }
+      ]
+    },
+    "cardTypes": {
+      "Black Marker": {}
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "text",
+            "x": 0,
+            "y": 0,
+            "css": "background:#2c2c2c",
+            "width": 35,
+            "height": 13
+          }
+        ],
+        "border": 2,
+        "radius": 2
+      }
+    ]
+  },
+  "redDeck": {
+    "type": "deck",
+    "id": "redDeck",
+    "parent": "redHolder",
+    "x": 10,
+    "width": 50,
+    "height": 50,
+    "cardDefaults": {
+      "layer": 3,
+      "width": 35,
+      "height": 13,
+      "marker": true,
+      "red": true,
+      "clickRoutine": [
+        {
+          "func": "SET",
+          "collection": "thisButton",
+          "property": "parent",
+          "value": "redHolder"
+        }
+      ]
+    },
+    "cardTypes": {
+      "Red Marker": {}
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "text",
+            "x": 0,
+            "y": 0,
+            "css": "background:#b81b1b",
+            "width": 35,
+            "height": 13
+          }
+        ],
+        "border": 2,
+        "radius": 2
+      }
+    ]
+  },
+  "nurr": {
+    "deck": "yellowDeck",
+    "type": "card",
+    "cardType": "Yellow Marker",
+    "id": "nurr",
+    "z": 12801,
+    "parent": "yellowHolder"
+  },
+  "1r4e": {
+    "deck": "yellowDeck",
+    "type": "card",
+    "cardType": "Yellow Marker",
+    "id": "1r4e",
+    "z": 12802,
+    "parent": "yellowHolder"
+  },
+  "cthz": {
+    "deck": "yellowDeck",
+    "type": "card",
+    "cardType": "Yellow Marker",
+    "id": "cthz",
+    "z": 12803,
+    "parent": "yellowHolder"
+  },
+  "ceq7": {
+    "deck": "yellowDeck",
+    "type": "card",
+    "cardType": "Yellow Marker",
+    "id": "ceq7",
+    "z": 12804,
+    "parent": "yellowHolder"
+  },
+  "gqzj": {
+    "deck": "yellowDeck",
+    "type": "card",
+    "cardType": "Yellow Marker",
+    "id": "gqzj",
+    "z": 12805,
+    "parent": "yellowHolder"
+  },
+  "zi4k": {
+    "deck": "yellowDeck",
+    "type": "card",
+    "cardType": "Yellow Marker",
+    "id": "zi4k",
+    "z": 12806,
+    "parent": "yellowHolder"
+  },
+  "w96o": {
+    "deck": "yellowDeck",
+    "type": "card",
+    "cardType": "Yellow Marker",
+    "id": "w96o",
+    "z": 12807,
+    "parent": "yellowHolder"
+  },
+  "eqeu": {
+    "deck": "yellowDeck",
+    "type": "card",
+    "cardType": "Yellow Marker",
+    "id": "eqeu",
+    "z": 12808,
+    "parent": "yellowHolder"
+  },
+  "0we4": {
+    "deck": "yellowDeck",
+    "type": "card",
+    "cardType": "Yellow Marker",
+    "id": "0we4",
+    "z": 12809,
+    "parent": "yellowHolder"
+  },
+  "sevx": {
+    "deck": "yellowDeck",
+    "type": "card",
+    "cardType": "Yellow Marker",
+    "id": "sevx",
+    "z": 12810,
+    "parent": "yellowHolder"
+  },
+  "9wof": {
+    "deck": "yellowDeck",
+    "type": "card",
+    "cardType": "Yellow Marker",
+    "id": "9wof",
+    "z": 12811,
+    "parent": "yellowHolder"
+  },
+  "595n": {
+    "deck": "yellowDeck",
+    "type": "card",
+    "cardType": "Yellow Marker",
+    "id": "595n",
+    "z": 12812,
+    "parent": "yellowHolder"
+  },
+  "85vi": {
+    "deck": "yellowDeck",
+    "type": "card",
+    "cardType": "Yellow Marker",
+    "id": "85vi",
+    "z": 12813,
+    "parent": "yellowHolder"
+  },
+  "us96": {
+    "deck": "yellowDeck",
+    "type": "card",
+    "cardType": "Yellow Marker",
+    "id": "us96",
+    "z": 12814,
+    "parent": "yellowHolder"
+  },
+  "l6i6": {
+    "deck": "yellowDeck",
+    "type": "card",
+    "cardType": "Yellow Marker",
+    "id": "l6i6",
+    "z": 12815,
+    "parent": "yellowHolder",
+    "thisBorder": "null"
+  },
+  "dy2k": {
+    "deck": "yellowDeck",
+    "type": "card",
+    "cardType": "Yellow Marker",
+    "id": "dy2k",
+    "z": 12816,
+    "parent": "yellowHolder",
+    "thisBorder": "null"
+  },
+  "soja": {
+    "deck": "yellowDeck",
+    "type": "card",
+    "cardType": "Yellow Marker",
+    "id": "soja",
+    "z": 12817,
+    "parent": "yellowHolder",
+    "thisBorder": "null"
+  },
+  "ui91": {
+    "deck": "yellowDeck",
+    "type": "card",
+    "cardType": "Yellow Marker",
+    "id": "ui91",
+    "z": 12818,
+    "parent": "yellowHolder",
+    "thisBorder": "null"
+  },
+  "fkmw": {
+    "deck": "yellowDeck",
+    "type": "card",
+    "cardType": "Yellow Marker",
+    "id": "fkmw",
+    "z": 12819,
+    "parent": "yellowHolder",
+    "thisBorder": "null"
+  },
+  "nwhd": {
+    "deck": "yellowDeck",
+    "type": "card",
+    "cardType": "Yellow Marker",
+    "id": "nwhd",
+    "z": 12820,
+    "parent": "yellowHolder",
+    "thisBorder": "null"
+  },
+  "z7c8": {
+    "deck": "yellowDeck",
+    "type": "card",
+    "cardType": "Yellow Marker",
+    "id": "z7c8",
+    "z": 12821,
+    "parent": "yellowHolder",
+    "thisBorder": "null"
+  },
+  "8ggj": {
+    "deck": "yellowDeck",
+    "type": "card",
+    "cardType": "Yellow Marker",
+    "id": "8ggj",
+    "z": 12822,
+    "thisBorder": "null",
+    "parent": "yellowHolder"
+  },
+  "dgqe": {
+    "deck": "yellowDeck",
+    "type": "card",
+    "cardType": "Yellow Marker",
+    "id": "dgqe",
+    "z": 12823,
+    "thisBorder": "null",
+    "parent": "yellowHolder"
+  },
+  "nw6s": {
+    "deck": "yellowDeck",
+    "type": "card",
+    "cardType": "Yellow Marker",
+    "id": "nw6s",
+    "z": 12824,
+    "thisBorder": "null",
+    "parent": "yellowHolder"
+  },
+  "aoc9": {
+    "deck": "blackDeck",
+    "type": "card",
+    "cardType": "Black Marker",
+    "id": "aoc9",
+    "z": 12825,
+    "parent": "blackHolder"
+  },
+  "f2us": {
+    "deck": "blackDeck",
+    "type": "card",
+    "cardType": "Black Marker",
+    "id": "f2us",
+    "z": 12826,
+    "parent": "blackHolder"
+  },
+  "xztj": {
+    "deck": "blackDeck",
+    "type": "card",
+    "cardType": "Black Marker",
+    "id": "xztj",
+    "z": 12827,
+    "parent": "blackHolder"
+  },
+  "toca": {
+    "deck": "blackDeck",
+    "type": "card",
+    "cardType": "Black Marker",
+    "id": "toca",
+    "z": 12828,
+    "parent": "blackHolder"
+  },
+  "ivx9": {
+    "deck": "blackDeck",
+    "type": "card",
+    "cardType": "Black Marker",
+    "id": "ivx9",
+    "z": 12829,
+    "parent": "blackHolder"
+  },
+  "qvyy": {
+    "deck": "blackDeck",
+    "type": "card",
+    "cardType": "Black Marker",
+    "id": "qvyy",
+    "z": 12830,
+    "parent": "blackHolder"
+  },
+  "d1lh": {
+    "deck": "blackDeck",
+    "type": "card",
+    "cardType": "Black Marker",
+    "id": "d1lh",
+    "z": 12831,
+    "parent": "blackHolder"
+  },
+  "fs4m": {
+    "deck": "blackDeck",
+    "type": "card",
+    "cardType": "Black Marker",
+    "id": "fs4m",
+    "z": 12832,
+    "parent": "blackHolder"
+  },
+  "eps2": {
+    "deck": "blackDeck",
+    "type": "card",
+    "cardType": "Black Marker",
+    "id": "eps2",
+    "z": 12833,
+    "parent": "blackHolder"
+  },
+  "7csg": {
+    "deck": "blackDeck",
+    "type": "card",
+    "cardType": "Black Marker",
+    "id": "7csg",
+    "z": 12834,
+    "parent": "blackHolder"
+  },
+  "3m2v": {
+    "deck": "blackDeck",
+    "type": "card",
+    "cardType": "Black Marker",
+    "id": "3m2v",
+    "z": 12835,
+    "parent": "blackHolder"
+  },
+  "fy4c": {
+    "deck": "blackDeck",
+    "type": "card",
+    "cardType": "Black Marker",
+    "id": "fy4c",
+    "z": 12836,
+    "parent": "blackHolder"
+  },
+  "wsme": {
+    "deck": "blackDeck",
+    "type": "card",
+    "cardType": "Black Marker",
+    "id": "wsme",
+    "z": 12837,
+    "parent": "blackHolder"
+  },
+  "nuaz": {
+    "deck": "blackDeck",
+    "type": "card",
+    "cardType": "Black Marker",
+    "id": "nuaz",
+    "z": 12838,
+    "parent": "blackHolder"
+  },
+  "ptw6": {
+    "deck": "blackDeck",
+    "type": "card",
+    "cardType": "Black Marker",
+    "id": "ptw6",
+    "z": 12839,
+    "parent": "blackHolder"
+  },
+  "o6xb": {
+    "deck": "blackDeck",
+    "type": "card",
+    "cardType": "Black Marker",
+    "id": "o6xb",
+    "z": 12840,
+    "parent": "blackHolder",
+    "thisBorder": "null"
+  },
+  "mgn3": {
+    "deck": "blackDeck",
+    "type": "card",
+    "cardType": "Black Marker",
+    "id": "mgn3",
+    "z": 12841,
+    "parent": "blackHolder",
+    "thisBorder": "null"
+  },
+  "647l": {
+    "deck": "blackDeck",
+    "type": "card",
+    "cardType": "Black Marker",
+    "id": "647l",
+    "z": 12842,
+    "parent": "blackHolder",
+    "thisBorder": "null"
+  },
+  "mcip": {
+    "deck": "blackDeck",
+    "type": "card",
+    "cardType": "Black Marker",
+    "id": "mcip",
+    "z": 12843,
+    "parent": "blackHolder",
+    "thisBorder": "null"
+  },
+  "xumv": {
+    "deck": "blackDeck",
+    "type": "card",
+    "cardType": "Black Marker",
+    "id": "xumv",
+    "z": 12844,
+    "parent": "blackHolder",
+    "thisBorder": "null"
+  },
+  "br1p": {
+    "deck": "blackDeck",
+    "type": "card",
+    "cardType": "Black Marker",
+    "id": "br1p",
+    "z": 12845,
+    "parent": "blackHolder",
+    "thisBorder": "null"
+  },
+  "iz1o": {
+    "deck": "blackDeck",
+    "type": "card",
+    "cardType": "Black Marker",
+    "id": "iz1o",
+    "z": 12846,
+    "parent": "blackHolder",
+    "thisBorder": "null"
+  },
+  "ka04": {
+    "deck": "blackDeck",
+    "type": "card",
+    "cardType": "Black Marker",
+    "id": "ka04",
+    "z": 12847,
+    "parent": "blackHolder",
+    "thisBorder": "null"
+  },
+  "jbjz": {
+    "deck": "blackDeck",
+    "type": "card",
+    "cardType": "Black Marker",
+    "id": "jbjz",
+    "z": 12848,
+    "parent": "blackHolder",
+    "thisBorder": "null"
+  },
+  "fncf": {
+    "deck": "redDeck",
+    "type": "card",
+    "cardType": "Red Marker",
+    "id": "fncf",
+    "z": 12849,
+    "parent": "redHolder"
+  },
+  "uxke": {
+    "deck": "redDeck",
+    "type": "card",
+    "cardType": "Red Marker",
+    "id": "uxke",
+    "z": 12850,
+    "parent": "redHolder"
+  },
+  "khg6": {
+    "deck": "redDeck",
+    "type": "card",
+    "cardType": "Red Marker",
+    "id": "khg6",
+    "z": 12851,
+    "parent": "redHolder"
+  },
+  "m9z6": {
+    "deck": "redDeck",
+    "type": "card",
+    "cardType": "Red Marker",
+    "id": "m9z6",
+    "z": 12852,
+    "parent": "redHolder"
+  },
+  "r15g": {
+    "deck": "redDeck",
+    "type": "card",
+    "cardType": "Red Marker",
+    "id": "r15g",
+    "z": 12853,
+    "parent": "redHolder"
+  },
+  "h1pl": {
+    "deck": "redDeck",
+    "type": "card",
+    "cardType": "Red Marker",
+    "id": "h1pl",
+    "z": 12854,
+    "parent": "redHolder"
+  },
+  "mjqv": {
+    "deck": "redDeck",
+    "type": "card",
+    "cardType": "Red Marker",
+    "id": "mjqv",
+    "z": 12855,
+    "parent": "redHolder"
+  },
+  "el50": {
+    "deck": "redDeck",
+    "type": "card",
+    "cardType": "Red Marker",
+    "id": "el50",
+    "z": 12856,
+    "parent": "redHolder"
+  },
+  "tmi4": {
+    "deck": "redDeck",
+    "type": "card",
+    "cardType": "Red Marker",
+    "id": "tmi4",
+    "z": 12857,
+    "parent": "redHolder"
+  },
+  "8x7e": {
+    "deck": "redDeck",
+    "type": "card",
+    "cardType": "Red Marker",
+    "id": "8x7e",
+    "z": 12858,
+    "parent": "redHolder"
+  },
+  "72sj": {
+    "deck": "redDeck",
+    "type": "card",
+    "cardType": "Red Marker",
+    "id": "72sj",
+    "z": 12859,
+    "parent": "redHolder"
+  },
+  "w6ao": {
+    "deck": "redDeck",
+    "type": "card",
+    "cardType": "Red Marker",
+    "id": "w6ao",
+    "z": 12860,
+    "parent": "redHolder"
+  },
+  "62xg": {
+    "deck": "redDeck",
+    "type": "card",
+    "cardType": "Red Marker",
+    "id": "62xg",
+    "z": 12861,
+    "parent": "redHolder"
+  },
+  "207x": {
+    "deck": "redDeck",
+    "type": "card",
+    "cardType": "Red Marker",
+    "id": "207x",
+    "z": 12862,
+    "parent": "redHolder"
+  },
+  "n823": {
+    "deck": "redDeck",
+    "type": "card",
+    "cardType": "Red Marker",
+    "id": "n823",
+    "z": 12863,
+    "parent": "redHolder",
+    "thisBorder": "null"
+  },
+  "fz9c": {
+    "deck": "redDeck",
+    "type": "card",
+    "cardType": "Red Marker",
+    "id": "fz9c",
+    "z": 12864,
+    "parent": "redHolder",
+    "thisBorder": "null"
+  },
+  "xp11": {
+    "deck": "redDeck",
+    "type": "card",
+    "cardType": "Red Marker",
+    "id": "xp11",
+    "z": 12865,
+    "parent": "redHolder",
+    "thisBorder": "null"
+  },
+  "ah16": {
+    "deck": "redDeck",
+    "type": "card",
+    "cardType": "Red Marker",
+    "id": "ah16",
+    "z": 12866,
+    "parent": "redHolder",
+    "thisBorder": "null"
+  },
+  "jeki": {
+    "deck": "redDeck",
+    "type": "card",
+    "cardType": "Red Marker",
+    "id": "jeki",
+    "z": 12867,
+    "parent": "redHolder",
+    "thisBorder": "null"
+  },
+  "i7ys": {
+    "deck": "redDeck",
+    "type": "card",
+    "cardType": "Red Marker",
+    "id": "i7ys",
+    "z": 12868,
+    "parent": "redHolder",
+    "thisBorder": "null"
+  },
+  "0se9": {
+    "deck": "redDeck",
+    "type": "card",
+    "cardType": "Red Marker",
+    "id": "0se9",
+    "z": 12869,
+    "parent": "redHolder",
+    "thisBorder": "null"
+  },
+  "bk6f": {
+    "deck": "redDeck",
+    "type": "card",
+    "cardType": "Red Marker",
+    "id": "bk6f",
+    "z": 12870,
+    "parent": "redHolder",
+    "thisBorder": "null"
+  },
+  "ocv0": {
+    "deck": "redDeck",
+    "type": "card",
+    "cardType": "Red Marker",
+    "id": "ocv0",
+    "z": 12871,
+    "parent": "redHolder",
+    "thisBorder": "null"
+  },
+  "ruoh": {
+    "deck": "redDeck",
+    "type": "card",
+    "cardType": "Red Marker",
+    "id": "ruoh",
+    "z": 12872,
+    "thisBorder": "null",
+    "parent": "redHolder"
+  },
+  "Ho Chi Minh": {
+    "type": "holder",
+    "id": "Ho Chi Minh",
+    "parent": "baseHolder",
+    "x": 1344,
+    "y": 613,
+    "z": 55,
+    "inheritFrom": "Beijing",
+    "shadow": " "
+  },
+  "restart": {
+    "type": "button",
+    "id": "restart",
+    "width": 50,
+    "height": 50,
+    "z": 56,
+    "movableInEdit": false,
+    "classes": "symbols",
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "fields": [
+          {
+            "type": "title",
+            "text": "Start new game ..."
+          },
+          {
+            "type": "subtitle",
+            "text": "You are about to start a new game.  Are you sure?"
+          }
+        ],
+        "confirmButtonText": "Yes",
+        "cancelButtonText": "No"
+      },
+      {
+        "func": "CALL",
+        "routine": "setupRoutine"
+      }
+    ],
+    "css": "background-size: 80%; --wcMain: black; --wcBorder:white; --wcMainOH: grey; --wcBorderOH: black; font-size:35px;padding-bottom:3px",
+    "text": "restart",
+    "x": 1550,
+    "privateRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY private OF settings}",
+        "operand2": true,
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "handSeat1",
+              "handSeat2",
+              "handSeat3",
+              "handSeat4"
+            ],
+            "property": "childrenPerOwner",
+            "value": null
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "handSeat1",
+              "handSeat2",
+              "handSeat3",
+              "handSeat4"
+            ],
+            "property": "onlyVisibleForSeat",
+            "value": null
+          },
+          {
+            "func": "SELECT",
+            "type": "card",
+            "property": "deck",
+            "value": "playerCards"
+          },
+          {
+            "func": "SET",
+            "property": "owner",
+            "value": null
+          }
+        ],
+        "thenRoutine": [
+          {
+            "func": "FOREACH",
+            "in": [
+              "seat1",
+              "seat2",
+              "seat3",
+              "seat4"
+            ],
+            "loopRoutine": [
+              {
+                "func": "GET",
+                "collection": [
+                  "${value}"
+                ],
+                "property": "index",
+                "variable": "index"
+              },
+              {
+                "func": "GET",
+                "collection": [
+                  "${value}"
+                ],
+                "property": "player",
+                "variable": "player"
+              },
+              "var handSeat = 'handSeat' + ${index}",
+              "var seat = 'seat' + ${index}",
+              {
+                "func": "SET",
+                "collection": [
+                  "${handSeat}"
+                ],
+                "property": "childrenPerOwner",
+                "value": "${player}"
+              },
+              {
+                "func": "SELECT",
+                "type": "card",
+                "property": "parent",
+                "value": "${handSeat}"
+              },
+              {
+                "func": "SET",
+                "property": "owner",
+                "value": "${player}"
+              },
+              {
+                "func": "SET",
+                "collection": [
+                  "${handSeat}"
+                ],
+                "property": "onlyVisibleForSeat",
+                "value": "${seat}"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "cardsRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "research1"
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": null
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "value": 340
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "value": 380
+      },
+      {
+        "func": "SELECT",
+        "property": "cardType",
+        "value": "Epidemic"
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "epidemicHolder"
+      },
+      {
+        "func": "SELECT",
+        "type": "seat",
+        "property": "player",
+        "relation": "!=",
+        "value": ""
+      },
+      {
+        "func": "COUNT"
+      },
+      {
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "operand2": 2,
+        "thenRoutine": [
+          "var startCards = 4"
+        ],
+        "elseRoutine": [
+          {
+            "func": "IF",
+            "operand1": "${COUNT}",
+            "operand2": 3,
+            "thenRoutine": [
+              "var startCards = 3"
+            ],
+            "elseRoutine": [
+              "var startCards = 2"
+            ]
+          }
+        ]
+      },
+      {
+        "func": "GET",
+        "property": "index",
+        "aggregation": "array",
+        "variable": "indexArray"
+      },
+      {
+        "func": "FOREACH",
+        "in": "${indexArray}",
+        "loopRoutine": [
+          "var handSeat = 'handSeat' + ${value}",
+          "var role = 'role' + ${value}",
+          {
+            "func": "MOVE",
+            "from": "playerCardsHolder",
+            "to": "${handSeat}",
+            "count": "${startCards}"
+          },
+          {
+            "func": "MOVE",
+            "from": "roleHolder",
+            "to": "${role}",
+            "count": 1
+          }
+        ]
+      },
+      "var epidemicCount = ${PROPERTY level OF settings}",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "prep",
+        "value": -1
+      },
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "parent",
+        "value": "playerCardsHolder"
+      },
+      {
+        "func": "FOREACH",
+        "collection": "DEFAULT",
+        "loopRoutine": [
+          "var a = ${PROPERTY prep} + 1",
+          "var b = ${a} % ${epidemicCount}",
+          "var prepHolder = 'prep' + ${b}",
+          {
+            "func": "MOVE",
+            "from": "playerCardsHolder",
+            "to": "${prepHolder}"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "prep",
+            "value": "${b}"
+          }
+        ]
+      },
+      {
+        "func": "FOREACH",
+        "in": [
+          "prep0",
+          "prep1",
+          "prep2",
+          "prep3",
+          "prep4",
+          "prep5"
+        ],
+        "loopRoutine": [
+          {
+            "func": "SELECT",
+            "type": "card",
+            "property": "_ancestor",
+            "value": "${value}"
+          },
+          {
+            "func": "COUNT"
+          },
+          {
+            "func": "IF",
+            "operand1": "${COUNT}",
+            "operand2": 0,
+            "relation": ">",
+            "thenRoutine": [
+              {
+                "func": "MOVE",
+                "from": "epidemicHolder",
+                "to": "${value}"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": [
+          "prep0",
+          "prep1",
+          "prep2",
+          "prep3",
+          "prep4",
+          "prep5"
+        ]
+      },
+      {
+        "func": "FOREACH",
+        "in": [
+          "prep5",
+          "prep4",
+          "prep3",
+          "prep2",
+          "prep1",
+          "prep0"
+        ],
+        "loopRoutine": [
+          {
+            "func": "MOVE",
+            "from": "${value}",
+            "to": "playerCardsHolder",
+            "count": 0
+          }
+        ]
+      },
+      {
+        "func": "FOREACH",
+        "in": [
+          1,
+          2,
+          3,
+          4
+        ],
+        "loopRoutine": [
+          "var role = 'role' + ${value}",
+          "var start = 'pinStart' + ${value}",
+          {
+            "func": "SELECT",
+            "type": "card",
+            "property": "parent",
+            "value": "${role}"
+          },
+          {
+            "func": "GET",
+            "property": "pin",
+            "variable": "pinID"
+          },
+          "var pinID = 'pin' + ${pinID}",
+          {
+            "func": "SELECT",
+            "property": "id",
+            "value": "${pinID}"
+          },
+          {
+            "func": "SET",
+            "property": "parent",
+            "value": "${start}"
+          }
+        ]
+      }
+    ],
+    "prep": 0,
+    "infectionRoutine": [
+      {
+        "func": "FOREACH",
+        "in": [
+          3,
+          3,
+          3,
+          2,
+          2,
+          2,
+          1,
+          1,
+          1
+        ],
+        "loopRoutine": [
+          {
+            "func": "MOVE",
+            "from": "infectionHolder",
+            "to": "infectPrep"
+          },
+          {
+            "func": "SELECT",
+            "type": "card",
+            "property": "parent",
+            "value": "infectPrep"
+          },
+          {
+            "func": "GET",
+            "property": "city",
+            "variable": "city"
+          },
+          {
+            "func": "CLICK",
+            "collection": [
+              "${city}"
+            ],
+            "count": "${value}"
+          },
+          {
+            "func": "MOVE",
+            "from": "infectPrep",
+            "to": "infectionDiscard"
+          }
+        ]
+      }
+    ],
+    "rolesRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY allRoles OF settings}",
+        "operand2": true,
+        "relation": "!=",
+        "thenRoutine": [
+          {
+            "func": "SELECT",
+            "property": "cardType",
+            "relation": "in",
+            "value": [
+              "Plans",
+              "Specialist"
+            ]
+          },
+          {
+            "func": "SET",
+            "property": "parent",
+            "value": "roleHolderX"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "pin2",
+              "pin5"
+            ],
+            "property": "parent",
+            "value": "roleHolderX"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SELECT",
+            "property": "cardType",
+            "relation": "in",
+            "value": [
+              "Plans",
+              "Specialist"
+            ]
+          },
+          {
+            "func": "SET",
+            "property": "parent",
+            "value": "roleHolder"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "pin2",
+              "pin5"
+            ],
+            "property": "parent",
+            "value": "pinHolder"
+          }
+        ]
+      }
+    ],
+    "setupRoutine": [
+      {
+        "func": "RECALL",
+        "holder": [
+          "playerCardsHolder",
+          "roleHolder",
+          "infectionHolder",
+          "greenHolder",
+          "yellowHolder",
+          "blackHolder",
+          "redHolder"
+        ]
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": [
+          "playerCardsHolder",
+          "roleHolder",
+          "infectionHolder"
+        ]
+      },
+      {
+        "func": "FLIP",
+        "holder": [
+          "playerCardsHolder",
+          "roleHolder",
+          "infectionHolder"
+        ],
+        "face": 0
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "pin1",
+          "pin2",
+          "pin3",
+          "pin4",
+          "pin5",
+          "pin6",
+          "pin7"
+        ],
+        "property": "parent",
+        "value": "pinHolder"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "outbreakCounter"
+        ],
+        "property": "text",
+        "value": 0
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "infectionToken"
+        ],
+        "property": "parent",
+        "value": "infection1"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "virus1",
+          "virus2",
+          "virus3",
+          "virus4"
+        ],
+        "property": "text",
+        "value": ""
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "virus1"
+        ],
+        "property": "parent",
+        "value": "active1"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "virus2"
+        ],
+        "property": "parent",
+        "value": "active2"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "virus3"
+        ],
+        "property": "parent",
+        "value": "active3"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "virus4"
+        ],
+        "property": "parent",
+        "value": "active4"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "research1",
+          "research2",
+          "research3",
+          "research4",
+          "research5",
+          "research6"
+        ],
+        "property": "parent",
+        "value": "researchHolder"
+      },
+      {
+        "func": "CALL",
+        "routine": "rolesRoutine"
+      },
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY setup OF settings}",
+        "operand2": true,
+        "thenRoutine": [
+          {
+            "func": "CALL",
+            "routine": "cardsRoutine"
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY setup OF settings}",
+        "operand2": true,
+        "thenRoutine": [
+          {
+            "func": "CALL",
+            "routine": "infectionRoutine"
+          }
+        ]
+      },
+      {
+        "func": "CALL",
+        "routine": "privateRoutine"
+      }
+    ]
+  },
+  "pinHolder": {
+    "type": "holder",
+    "id": "pinHolder",
+    "x": 386,
+    "y": 64,
+    "z": 144,
+    "width": 40,
+    "height": 40,
+    "css": "background: #ffffff80; ",
+    "movableInEdit": false,
+    "layer": 1,
+    "dropTarget": {
+      "classes": "pinPiece"
+    }
+  },
+  "greenCount": {
+    "id": "greenCount",
+    "x": 50,
+    "z": 127,
+    "fixedParent": true,
+    "movable": false,
+    "movableInEdit": false,
+    "width": 10,
+    "height": 10,
+    "text": 24,
+    "css": "font-size: 15px; ",
+    "y": 2,
+    "parent": "markerArea"
+  },
+  "yellowCount": {
+    "id": "yellowCount",
+    "fixedParent": true,
+    "x": 50,
+    "y": 22,
+    "width": 10,
+    "height": 10,
+    "z": 127,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "font-size: 15px; ",
+    "text": 24,
+    "parent": "markerArea"
+  },
+  "blackCount": {
+    "id": "blackCount",
+    "fixedParent": true,
+    "x": 50,
+    "y": 42,
+    "width": 10,
+    "height": 10,
+    "z": 127,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "font-size: 15px; ",
+    "text": 24,
+    "parent": "markerArea"
+  },
+  "redCount": {
+    "id": "redCount",
+    "fixedParent": true,
+    "x": 50,
+    "y": 62,
+    "width": 10,
+    "height": 10,
+    "z": 127,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "font-size: 15px; ",
+    "text": 24,
+    "parent": "markerArea"
+  },
+  "infectionDiscard": {
+    "type": "holder",
+    "id": "infectionDiscard",
+    "x": 1349,
+    "y": 41,
+    "width": 130,
+    "height": 50,
+    "z": 132,
+    "dropOffsetX": 1,
+    "dropOffsetY": 1,
+    "dropTarget": {
+      "deck": "infections"
+    },
+    "layer": 1,
+    "css": "background: #ffffff80",
+    "movableInEdit": false
+  },
+  "7cn0": {
+    "type": "button",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "_ancestor",
+        "value": "infectionHolder"
+      },
+      {
+        "func": "GET",
+        "property": "z",
+        "aggregation": "min",
+        "variable": "bottomCardZ"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "z",
+        "value": "${bottomCardZ}"
+      },
+      {
+        "func": "GET",
+        "property": "id",
+        "variable": "bottomCardID"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "${bottomCardID}"
+        ],
+        "property": "parent",
+        "value": "infectionDiscard"
+      }
+    ],
+    "x": 1222,
+    "y": 5,
+    "z": 2096,
+    "id": "7cn0",
+    "css": "font-size: 12px; ",
+    "text": "Deal Bottom Card",
+    "height": 30
+  },
+  "7cn1": {
+    "type": "button",
+    "clickRoutine": [
+      {
+        "func": "FLIP",
+        "holder": "infectionDiscard"
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "infectionDiscard"
+      },
+      {
+        "func": "MOVE",
+        "from": "infectionDiscard",
+        "to": "infectionHolder",
+        "count": 0
+      }
+    ],
+    "x": 1372,
+    "y": 5,
+    "z": 2096,
+    "id": "7cn1",
+    "css": "font-size: 12px; ",
+    "text": "Shuffle & Return",
+    "height": 30
+  },
+  "outbreakCounter": {
+    "id": "outbreakCounter",
+    "width": 40,
+    "height": 40,
+    "z": 129,
+    "movable": false,
+    "movableInEdit": false,
+    "clickRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY text}",
+        "operand2": 7,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "text",
+            "value": "X"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "IF",
+            "operand1": "${PROPERTY text}",
+            "operand2": "X",
+            "thenRoutine": [
+              {
+                "func": "SET",
+                "collection": "thisButton",
+                "property": "text",
+                "value": 0
+              }
+            ],
+            "elseRoutine": [
+              {
+                "func": "LABEL",
+                "label": "${thisID}",
+                "mode": "inc",
+                "value": 1
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "css": {
+      "background": "#dfe4ff",
+      "border-style": "outset",
+      "border-width": "5px",
+      "font-size": "40px",
+      "text-align": "center",
+      "line-height": "0.9"
+    },
+    "text": 0,
+    "fixedParent": true,
+    "parent": "outbreakLabel",
+    "y": 40,
+    "x": 35
+  },
+  "outbreakLabel": {
+    "id": "outbreakLabel",
+    "parent": "baseHolder",
+    "fixedParent": true,
+    "x": 735,
+    "y": 5,
+    "height": 40,
+    "z": 129,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "font-size: 25px; ",
+    "text": "Outbreaks"
+  },
+  "infection1": {
+    "type": "holder",
+    "id": "infection1",
+    "parent": "infectionLabel",
+    "fixedParent": true,
+    "x": -116,
+    "width": 50,
+    "height": 50,
+    "borderRadius": 100,
+    "z": 136,
+    "y": 31,
+    "css": {
+      "default": {
+        "background": "#ffffff80",
+        "text-align": "center",
+        "line-height": "125px"
+      },
+      "::before": {
+        "content": "\"${PROPERTY text}\""
+      }
+    },
+    "text": 2,
+    "movableInEdit": false,
+    "dropTarget": {
+      "id": "infectionToken"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0
+  },
+  "infection2": {
+    "inheritFrom": "infection1",
+    "id": "infection2",
+    "type": "holder",
+    "x": 55,
+    "y": 0,
+    "parent": "infection1",
+    "text": 2
+  },
+  "infection3": {
+    "inheritFrom": "infection2",
+    "id": "infection3",
+    "type": "holder",
+    "x": 110,
+    "y": 0,
+    "parent": "infection1",
+    "text": 2
+  },
+  "infection4": {
+    "inheritFrom": "infection2",
+    "id": "infection4",
+    "type": "holder",
+    "x": 165,
+    "y": 0,
+    "parent": "infection1",
+    "text": 3
+  },
+  "infection5": {
+    "inheritFrom": "infection2",
+    "id": "infection5",
+    "type": "holder",
+    "x": 220,
+    "y": 0,
+    "parent": "infection1",
+    "text": 3
+  },
+  "infection6": {
+    "inheritFrom": "infection2",
+    "id": "infection6",
+    "type": "holder",
+    "x": 275,
+    "y": 0,
+    "parent": "infection1",
+    "text": 4
+  },
+  "infection7": {
+    "inheritFrom": "infection2",
+    "id": "infection7",
+    "type": "holder",
+    "x": 330,
+    "y": 0,
+    "parent": "infection1",
+    "text": 4
+  },
+  "infectionLabel": {
+    "id": "infectionLabel",
+    "parent": "baseHolder",
+    "fixedParent": true,
+    "x": 1258,
+    "y": 103,
+    "width": 160,
+    "height": 40,
+    "z": 136,
+    "movable": false,
+    "css": "font-size: 25px; ",
+    "text": "Infection Rate",
+    "movableInEdit": false
+  },
+  "infectionToken": {
+    "id": "infectionToken",
+    "width": 50,
+    "height": 50,
+    "borderRadius": 100,
+    "z": 391,
+    "classes": "material-icons",
+    "css": "background: plum; font-size:50px ",
+    "text": "new_releases",
+    "parent": "infection1"
+  },
+  "activeLabel": {
+    "id": "activeLabel",
+    "parent": "baseHolder",
+    "fixedParent": true,
+    "y": 956,
+    "height": 40,
+    "z": 215,
+    "movable": false,
+    "css": "font-size: 25px; ",
+    "text": "Active",
+    "movableInEdit": false,
+    "x": 900
+  },
+  "curedLabel": {
+    "id": "curedLabel",
+    "parent": "baseHolder",
+    "fixedParent": true,
+    "y": 900,
+    "height": 40,
+    "z": 216,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "font-size: 25px; ",
+    "text": "Cured",
+    "x": 900
+  },
+  "active1": {
+    "type": "holder",
+    "id": "active1",
+    "parent": "activeLabel",
+    "fixedParent": true,
+    "x": 90,
+    "y": -10,
+    "width": 50,
+    "height": 50,
+    "borderRadius": 100,
+    "z": 140,
+    "css": {
+      "default": {
+        "background": "#82c67f",
+        "text-align": "center",
+        "line-height": "125px"
+      }
+    },
+    "dropOffsetX": -2,
+    "dropOffsetY": -2,
+    "dropTarget": {
+      "id": "virus1"
+    },
+    "movableInEdit": false
+  },
+  "active2": {
+    "type": "holder",
+    "id": "active2",
+    "parent": "activeLabel",
+    "fixedParent": true,
+    "x": 155,
+    "y": -10,
+    "width": 50,
+    "height": 50,
+    "borderRadius": 100,
+    "z": 140,
+    "css": {
+      "default": {
+        "background": "#fee048",
+        "text-align": "center",
+        "line-height": "125px"
+      }
+    },
+    "dropOffsetX": -2,
+    "dropOffsetY": -2,
+    "dropTarget": {
+      "id": "virus2"
+    },
+    "movableInEdit": false
+  },
+  "active3": {
+    "type": "holder",
+    "id": "active3",
+    "parent": "activeLabel",
+    "fixedParent": true,
+    "x": 220,
+    "y": -10,
+    "width": 50,
+    "height": 50,
+    "borderRadius": 100,
+    "z": 140,
+    "css": {
+      "default": {
+        "background": "#777777",
+        "text-align": "center",
+        "line-height": "125px"
+      }
+    },
+    "dropOffsetX": -2,
+    "dropOffsetY": -2,
+    "dropTarget": {
+      "id": "virus3"
+    },
+    "movableInEdit": false
+  },
+  "active4": {
+    "type": "holder",
+    "id": "active4",
+    "parent": "activeLabel",
+    "fixedParent": true,
+    "x": 285,
+    "y": -10,
+    "width": 50,
+    "height": 50,
+    "borderRadius": 100,
+    "z": 141,
+    "css": {
+      "default": {
+        "background": "#e55050",
+        "text-align": "center",
+        "line-height": "125px"
+      }
+    },
+    "dropOffsetX": -2,
+    "dropOffsetY": -2,
+    "dropTarget": {
+      "id": "virus4"
+    },
+    "movableInEdit": false
+  },
+  "virus4": {
+    "id": "virus4",
+    "width": 50,
+    "height": 50,
+    "borderRadius": 100,
+    "z": 949,
+    "classes": "material-icons",
+    "clickRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY text}",
+        "operand2": "",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "text",
+            "value": "block"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "text",
+            "value": ""
+          }
+        ]
+      }
+    ],
+    "css": {
+      "background": "#e55050",
+      "background-size": "contain",
+      "background-repeat": "no-repeat",
+      "background-position": "center",
+      "border": "2px solid white",
+      "font-size": "50px"
+    },
+    "image": "/assets/-279361595_4909",
+    "x": -2,
+    "y": -2,
+    "parent": "active4"
+  },
+  "cured1": {
+    "type": "holder",
+    "id": "cured1",
+    "parent": "curedLabel",
+    "fixedParent": true,
+    "x": 90,
+    "width": 50,
+    "height": 50,
+    "borderRadius": 100,
+    "z": 140,
+    "movableInEdit": false,
+    "css": {
+      "default": {
+        "background": "#82c67f",
+        "text-align": "center",
+        "line-height": "125px"
+      }
+    },
+    "dropOffsetX": -2,
+    "dropOffsetY": -2,
+    "dropTarget": {
+      "id": "virus1"
+    },
+    "y": -10
+  },
+  "cured2": {
+    "type": "holder",
+    "id": "cured2",
+    "parent": "curedLabel",
+    "fixedParent": true,
+    "x": 155,
+    "width": 50,
+    "height": 50,
+    "borderRadius": 100,
+    "z": 140,
+    "movableInEdit": false,
+    "css": {
+      "default": {
+        "background": "#fee048",
+        "text-align": "center",
+        "line-height": "125px"
+      }
+    },
+    "dropOffsetX": -2,
+    "dropOffsetY": -2,
+    "dropTarget": {
+      "id": "virus2"
+    },
+    "y": -10
+  },
+  "cured3": {
+    "type": "holder",
+    "id": "cured3",
+    "parent": "curedLabel",
+    "fixedParent": true,
+    "x": 220,
+    "width": 50,
+    "height": 50,
+    "borderRadius": 100,
+    "z": 140,
+    "movableInEdit": false,
+    "css": {
+      "default": {
+        "background": "#777777",
+        "text-align": "center",
+        "line-height": "125px"
+      }
+    },
+    "dropOffsetX": -2,
+    "dropOffsetY": -2,
+    "dropTarget": {
+      "id": "virus3"
+    },
+    "y": -10
+  },
+  "cured4": {
+    "type": "holder",
+    "id": "cured4",
+    "parent": "curedLabel",
+    "fixedParent": true,
+    "x": 285,
+    "width": 50,
+    "height": 50,
+    "borderRadius": 100,
+    "z": 140,
+    "movableInEdit": false,
+    "css": {
+      "default": {
+        "background": "#e55050",
+        "text-align": "center",
+        "line-height": "125px"
+      }
+    },
+    "dropOffsetX": -2,
+    "dropOffsetY": -2,
+    "dropTarget": {
+      "id": "virus4"
+    },
+    "y": -10
+  },
+  "playerCardsDiscard": {
+    "type": "holder",
+    "id": "playerCardsDiscard",
+    "fixedParent": true,
+    "x": 5,
+    "y": 45,
+    "width": 105,
+    "height": 27,
+    "layer": 1,
+    "z": 297,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "deck": "playerCards"
+    },
+    "css": {
+      "default": {
+        "text-align": "center",
+        "align-items": "center",
+        "line-height": "1.5"
+      },
+      "::before": {
+        "content": "\"Discard\""
+      }
+    },
+    "parent": "playerArea",
+    "movableInEdit": false
+  },
+  "playerArea": {
+    "id": "playerArea",
+    "parent": "baseHolder",
+    "fixedParent": true,
+    "x": 618,
+    "y": 900,
+    "width": 110,
+    "height": 75,
+    "layer": -6,
+    "z": 99,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "background": "#dfe4ff",
+      "border-style": "inset",
+      "border-width": "5px"
+    }
+  },
+  "markerArea": {
+    "id": "markerArea",
+    "parent": "baseHolder",
+    "fixedParent": true,
+    "x": 558,
+    "y": 5,
+    "width": 80,
+    "height": 85,
+    "layer": -6,
+    "z": 99,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "background": "#dfe4ff",
+      "border-style": "inset",
+      "border-width": "5px"
+    }
+  },
+  "infectionArea": {
+    "id": "infectionArea",
+    "parent": "baseHolder",
+    "fixedParent": true,
+    "x": 1125,
+    "width": 400,
+    "height": 210,
+    "layer": -6,
+    "z": 101,
+    "movable": false,
+    "css": {
+      "background": "#dfe4ff",
+      "border-style": "inset",
+      "border-width": "5px"
+    },
+    "y": -1
+  },
+  "7qhk": {
+    "type": "button",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "player",
+        "value": "${playerName}"
+      },
+      {
+        "func": "GET",
+        "property": "index",
+        "variable": "index"
+      },
+      "var handSeat = 'handSeat' + ${index}",
+      {
+        "func": "MOVE",
+        "from": "playerCardsHolder",
+        "to": "${handSeat}",
+        "count": 2
+      }
+    ],
+    "x": 663,
+    "y": 858,
+    "z": 2100,
+    "id": "7qhk",
+    "text": "+2",
+    "width": 40,
+    "height": 40
+  },
+  "eventList": {
+    "id": "eventList",
+    "x": 750,
+    "y": 970,
+    "height": 25,
+    "borderRadius": 8,
+    "z": 384,
+    "movable": false,
+    "css": {
+      "background": "#3772ce",
+      "color": "white",
+      "text-align": "center",
+      "font-weight": "bold",
+      "line-height": "1.5"
+    },
+    "text": "Event List",
+    "enlarge": 2,
+    "movableInEdit": false
+  },
+  "eventDetail": {
+    "id": "eventDetail",
+    "parent": "eventList",
+    "fixedParent": true,
+    "y": 30,
+    "width": 300,
+    "height": 220,
+    "z": 375,
+    "movable": false,
+    "css": "font-weight:normal;background: #3772ce;color:black;text-align:left;padding-left:5px;border:2px solid white",
+    "text": "1. Quiet: Skip next infect cities step and do not flip over cards.\n2. Airlift: Move any 1 pawn to any city.\n3. Forecast: Draw, look at, rearrange, and return top 6 infection cards.\n4. Resilient: Remove any 1 card from infection discard pile from game.\n5. Grant: Add 1 research station to any 1 city without using a city card.",
+    "borderRadius": 8,
+    "movableInEdit": false
+  },
+  "epidemicHolder": {
+    "type": "holder",
+    "id": "epidemicHolder",
+    "x": -63,
+    "y": 1079,
+    "width": 105,
+    "height": 27,
+    "layer": 1,
+    "z": 387,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "deck": "playerCards"
+    }
+  },
+  "researchHolder": {
+    "type": "holder",
+    "id": "researchHolder",
+    "x": 963,
+    "y": 40,
+    "width": 55,
+    "height": 50,
+    "layer": 1,
+    "z": 713,
+    "css": "background: #ffffff80; ",
+    "dropTarget": {
+      "research": true
+    },
+    "countRoutine": [
+      {
+        "func": "SELECT",
+        "property": "research",
+        "value": true
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "parent",
+        "value": "${thisID}"
+      },
+      {
+        "func": "COUNT"
+      },
+      {
+        "func": "LABEL",
+        "label": "researchCount",
+        "mode": "set",
+        "value": "${COUNT}"
+      }
+    ],
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "enterRoutine": [
+      {
+        "func": "CALL",
+        "routine": "countRoutine"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "CALL",
+        "routine": "countRoutine"
+      }
+    ]
+  },
+  "research1": {
+    "id": "research1",
+    "width": 45,
+    "height": 45,
+    "z": 38744,
+    "borderColor": "white",
+    "borderWidth": 3,
+    "color": "red",
+    "image": "/assets/-83262525_1527",
+    "primaryColor": "sienna",
+    "svgReplaces": {
+      "#primaryColor": "primaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth",
+      "#labelColor": "labelColor",
+      "#accentColor1": "accentColor1",
+      "#accentColor2": "accentColor2"
+    },
+    "research": true,
+    "parent": "researchHolder"
+  },
+  "research2": {
+    "inheritFrom": {
+      "research1": [
+        "!parent"
+      ]
+    },
+    "id": "research2",
+    "x": 0,
+    "y": 0,
+    "z": 919,
+    "parent": "researchHolder"
+  },
+  "research3": {
+    "inheritFrom": {
+      "research1": [
+        "!parent"
+      ]
+    },
+    "id": "research3",
+    "x": 0,
+    "y": 0,
+    "z": 38733,
+    "parent": "researchHolder"
+  },
+  "research4": {
+    "inheritFrom": {
+      "research1": [
+        "!parent"
+      ]
+    },
+    "id": "research4",
+    "x": 0,
+    "y": 0,
+    "z": 38732,
+    "parent": "researchHolder"
+  },
+  "research5": {
+    "inheritFrom": {
+      "research1": [
+        "!parent"
+      ]
+    },
+    "id": "research5",
+    "x": 0,
+    "y": 0,
+    "z": 921,
+    "parent": "researchHolder"
+  },
+  "research6": {
+    "inheritFrom": {
+      "research1": [
+        "!parent"
+      ]
+    },
+    "id": "research6",
+    "x": 0,
+    "y": 0,
+    "z": 920,
+    "parent": "researchHolder"
+  },
+  "researchCount": {
+    "id": "researchCount",
+    "parent": "researchHolder",
+    "fixedParent": true,
+    "width": 10,
+    "height": 10,
+    "z": 127,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "font-size: 15px; ",
+    "text": 6,
+    "x": 42
+  },
+  "l3h4": {
+    "type": "pile",
+    "parent": "infectionHolder",
+    "x": 1,
+    "y": 1,
+    "width": 130,
+    "height": 50,
+    "handleSize": 20,
+    "handleOffset": 6,
+    "id": "l3h4"
+  },
+  "prep0": {
+    "type": "holder",
+    "id": "prep0",
+    "x": 79,
+    "y": 1079,
+    "width": 105,
+    "height": 27,
+    "layer": 1,
+    "z": 388,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "deck": "playerCards"
+    }
+  },
+  "prep1": {
+    "type": "holder",
+    "id": "prep1",
+    "x": 79,
+    "y": 1119,
+    "width": 105,
+    "height": 27,
+    "layer": 1,
+    "z": 388,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "deck": "playerCards"
+    }
+  },
+  "prep2": {
+    "type": "holder",
+    "id": "prep2",
+    "x": 79,
+    "y": 1159,
+    "width": 105,
+    "height": 27,
+    "layer": 1,
+    "z": 388,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "deck": "playerCards"
+    }
+  },
+  "prep3": {
+    "type": "holder",
+    "id": "prep3",
+    "x": 79,
+    "y": 1199,
+    "width": 105,
+    "height": 27,
+    "layer": 1,
+    "z": 388,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "deck": "playerCards"
+    }
+  },
+  "prep4": {
+    "type": "holder",
+    "id": "prep4",
+    "x": 79,
+    "y": 1239,
+    "width": 105,
+    "height": 27,
+    "layer": 1,
+    "z": 388,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "deck": "playerCards"
+    }
+  },
+  "prep5": {
+    "type": "holder",
+    "id": "prep5",
+    "x": 79,
+    "y": 1279,
+    "width": 105,
+    "height": 27,
+    "layer": 1,
+    "z": 388,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "deck": "playerCards"
+    }
+  },
+  "pinStart1": {
+    "type": "holder",
+    "id": "pinStart1",
+    "x": -35,
+    "width": 35,
+    "height": 35,
+    "layer": 1,
+    "z": 957,
+    "css": "background: transparent; border:none",
+    "dropTarget": {
+      "no": "no"
+    },
+    "movableInEdit": false,
+    "fixedParent": true,
+    "parent": "Atlanta",
+    "thisBorder": "null"
+  },
+  "pinStart2": {
+    "inheritFrom": "pinStart1",
+    "id": "pinStart2",
+    "type": "holder",
+    "x": 0,
+    "y": -35,
+    "thisBorder": "null"
+  },
+  "pinStart4": {
+    "type": "holder",
+    "id": "pinStart4",
+    "x": 35,
+    "y": 0,
+    "inheritFrom": "pinStart1",
+    "thisBorder": "null"
+  },
+  "pinStart3": {
+    "type": "holder",
+    "id": "pinStart3",
+    "x": 0,
+    "y": 36,
+    "inheritFrom": "pinStart1",
+    "thisBorder": "null"
+  },
+  "infectPrep": {
+    "type": "holder",
+    "id": "infectPrep",
+    "x": 1069,
+    "y": 1103,
+    "width": 130,
+    "height": 50,
+    "layer": 1,
+    "z": 38747,
+    "dropOffsetX": 1,
+    "dropOffsetY": 1,
+    "dropTarget": {
+      "deck": "infections"
+    },
+    "onEnter": {
+      "activeFace": 1
+    }
+  },
+  "eventDetail1": {
+    "id": "eventDetail1",
+    "fixedParent": true,
+    "y": 30,
+    "width": 420,
+    "height": 290,
+    "z": 375,
+    "movable": false,
+    "css": "font-weight:normal;background: #E1E7C1;color:black;text-align:left;padding-left:5px;border:2px solid white;font-size:12px",
+    "text": "1. Do 4 actions\n  a) Move\n     - To a city connected with a line\n     - To city named on card which you discard\n     - To any city if you discard city card you are currently in\n     - From city with research station to another city with research station\n  b) Build\n     - Discard card matching city currently in to build research station\n  c) Treat\n     - Remove 1 disease marker from city currently in (all markers if cured)\n  d) Share\n     - Give or take card matching city currently in with another player in same city\n  e) Cure\n     - In city with research station, discard 5 city cards of same color\n2. Draw 2 player cards\n3. Infect cities",
+    "borderRadius": 8,
+    "parent": "referenceCard",
+    "movableInEdit": false
+  },
+  "referenceCard": {
+    "id": "referenceCard",
+    "x": 1350,
+    "y": 970,
+    "height": 25,
+    "borderRadius": 8,
+    "z": 384,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "background": "#E1E7C1",
+      "color": "black",
+      "text-align": "center",
+      "font-weight": "bold",
+      "line-height": "1.5"
+    },
+    "enlarge": 2,
+    "text": "Reference Card",
+    "width": 130
+  },
+  "hideHolder": {
+    "type": "holder",
+    "id": "hideHolder",
+    "x": 1380,
+    "y": 887,
+    "z": 12341,
+    "css": {
+      "default": {
+        "font-size": "55px",
+        "color": "white",
+        "background": "lightgrey",
+        "text-align": "center",
+        "align-items": "center"
+      },
+      "::before": {
+        "content": "\"${PROPERTY text}\""
+      }
+    },
+    "dropTarget": {},
+    "enterRoutine": [
+      {
+        "func": "INPUT",
+        "fields": [
+          {
+            "type": "title",
+            "text": "Removing object from play ..."
+          },
+          {
+            "type": "subtitle",
+            "text": "Do you want to remove this object from the board?"
+          }
+        ],
+        "confirmButtonText": "Yes",
+        "cancelButtonText": "No"
+      },
+      {
+        "func": "SET",
+        "collection": "child",
+        "property": "y",
+        "value": -1000
+      }
+    ],
+    "layer": 2,
+    "borderRadius": 100,
+    "width": 60,
+    "height": 60,
+    "text": "trash",
+    "classes": "symbols"
+  },
+  "epidemicSteps": {
+    "id": "epidemicSteps",
+    "y": 970,
+    "height": 25,
+    "borderRadius": 8,
+    "z": 384,
+    "movable": false,
+    "css": {
+      "background": "#267d40",
+      "color": "white",
+      "text-align": "center",
+      "font-weight": "bold",
+      "line-height": "1.5"
+    },
+    "enlarge": 2,
+    "text": "Epidemic Steps",
+    "width": 120,
+    "x": 490
+  },
+  "epidemicDetail": {
+    "id": "epidemicDetail",
+    "parent": "epidemicSteps",
+    "fixedParent": true,
+    "x": -200,
+    "y": 30,
+    "width": 300,
+    "height": 220,
+    "borderRadius": 8,
+    "z": 375,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "font-weight:normal;background: #267d40;color:black;text-align:left;padding-left:5px;border:2px solid white",
+    "text": "1. Increase.\n   - Advance infection marker 1 space.\n2. Infect.\n   - Press 'Deal Bottom Card Button.' Add three markers to that city (or start outbreak if city already has any cubes of that color).\n3. Intensify.\n   - Press 'Shuffle and Return' button."
+  },
+  "roleHolderX": {
+    "type": "holder",
+    "id": "roleHolderX",
+    "parent": "baseHolder",
+    "fixedParent": true,
+    "x": -260,
+    "y": 5,
+    "width": 130,
+    "height": 50,
+    "layer": 1,
+    "z": 38750,
+    "dropOffsetX": 1,
+    "dropOffsetY": 1,
+    "dropTarget": {
+      "type": "card"
+    }
+  },
+  "2uay": {
+    "deck": "roles",
+    "type": "card",
+    "cardType": "Specialist",
+    "id": "2uay",
+    "z": 15674,
+    "seatColor": "#417463",
+    "parent": "3n8q"
+  },
+  "z7np": {
+    "type": "pile",
+    "parent": "playerCardsHolder",
+    "x": 0,
+    "y": 0,
+    "width": 100,
+    "height": 25,
+    "handleOffset": 6,
+    "id": "z7np"
+  },
+  "3n8q": {
+    "type": "pile",
+    "parent": "roleHolder",
+    "x": 1,
+    "y": 1,
+    "width": 130,
+    "height": 50,
+    "handleSize": 20,
+    "handleOffset": 6,
+    "id": "3n8q"
+  }
+}

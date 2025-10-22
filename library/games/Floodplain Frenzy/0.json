@@ -1,0 +1,6261 @@
+{
+  "_meta": {
+    "version": 12,
+    "info": {
+      "name": "Floodplain Frenzy",
+      "image": "/assets/970682561_43556",
+      "rules": "",
+      "bgg": "https://boardgamegeek.com/boardgame/266164/babylonia",
+      "year": "2019",
+      "mode": "vs",
+      "time": "60",
+      "attribution": "Game layout and scripting by Andy Pymont, released to the Public Domain under CC0. Tile graphics are from https://game-icons.net/ and https://thenounproject.com/ and are used under the CC BY 3.0 license:\n\nAaron A. Kim:\n- Hand: https://thenounproject.com/icon/hand-123919/\n\nAndy Pymont\n- Ziggurat: originates in this project.\n\nAyub Irawan\n- Scythe: https://thenounproject.com/icon/scythe-4338250/\n\nDelapouite:\n- Amphora: https://game-icons.net/1x1/delapouite/amphora.html/\n\nLorc:\n- Crown: https://game-icons.net/1x1/lorc/queen-crown.html\n\nNorbert Kucsera:\n- Corn: https://thenounproject.com/icon/corn-2144640/\n\nPaul Verhulst:\n- Circle arrow: https://thenounproject.com/icon/circle-arrow-1979672/\n\nSiri Masriatun:\n- Star: https://thenounproject.com/icon/star-5662351/",
+      "lastUpdate": 1699281916000,
+      "showName": true,
+      "description": "Compete for the land and cities between the rivers while commanding mighty ziggurats",
+      "helpText": "Have every player take a seat and then press the Setup button to select the appropriate board for the player count, set up initial city and crop tiles, deal every player a starting hand and randomly select a start player.\n\nWhen you take a seat, your player pieces will be changed to match your player colour set in virtualtabletop. You can stand up, change your colour, and sit down again if you need to update these to e.g. ensure good contrast with other players.\n\nPlayers can use the +1 and +X buttons to add to their score. The +X prompts you for how many points you are scoring and adds them to your existing score.\n\nAfter scoring a crop tile, or if a city is scored and then not collected by a player (because of a tie for a majority of surrounding tiles), you can discard the tile to original draw pile for city & crop tiles on the right hand side of the table, below the Setup button.\n\nStore your collected city tiles and ziggurat tiles in the appropriate holders in your player area. After adding a city, click the Score Cities button to score every player's city tiles. (This will also take into account ziggurat 7 for a player that owns it and has placed it in their ziggurat holder.)\n\nAt the end of your turn, press the End Turn button to re-draw to your hand size and set the next player as active.",
+      "skill": "",
+      "id": "babs",
+      "similarImage": "",
+      "similarName": "Babylonia",
+      "similarAwards": "",
+      "ruleText": "PLAYER DECK:\nEach player has a deck of tiles containing 12 farmers and 6 each of three different suits of nobles, for 30 tiles in total. The default hand size is five tiles.\n\nPLACING TILES:\nOn their turn, a player places either two tiles or three or more face-up farmers. (Exception: During the first turn of the game, the first player may place only one tile and the second player may place only two tiles.)\n\nTiles are placed face-up in unoccupied land spaces, or face-down in unoccupied water spaces. A tile may instead be placed onto a farm tile, claiming and scoring it immediately, but only if the player placing the tile already has a player tile in a hex adjacent to the farm tile. The farm tile showing a grey hex is worth X points, where X is the total number of city tiles collected by all players during the game so far.\n\nWhen a player places next to a red ziggurat, they immediately score X points, where X is the number of ziggurats they now have a tile next to, including the latest placement.\n\nFINISHING YOUR TURN:\nAfter making their two placements, a player scores all cities and ziggurats on the board which have been newly surrounded (counting land spaces only - the water spaces may optionally be occupied but are not required) during their turn, and then draws back up to their hand size of five tiles.\n\nSCORING CITIES:\nWhen a city scores, first each player scores for all noble tiles matching any of the symbols on the city and connected to it through a contiguous chain of their own player tiles. For each such noble, they score 2 points.\n\nNext, check whether one player has more tiles directly surrounding the city than any other. If they do, then this player collects the city tile. At any point when a player collects a city tile, all players immediately score points equal to the number of cities they have collected during the game, including the newly-collected city. If two or more players are tied for the number of tiles directly adjacent to the newly-surrounded city, then the city tile is instead discarded and players do not score for their existing city tiles.\n\nSCORING ZIGGURATS:\nIf one player has more tiles directly adjacent to a newly-surrounded ziggurat than any other player, then they collect one ziggurat tile of their choice from the public display and now benefit from its power.\n\nZIGGURAT POWERS:\n\n1: Immediately gain 10 points.\n2: On any one turn, either this turn or a future one, you may after drawing tiles at the end of their turn decide and declare that they are taking an immediate extra turn following the full standard turn sequence.\n3: Your hand size is now 7 tiles instead of 5 for the remainder of the game.\n4: Instead of the usual placement options on your turn, you may place 1 noble tile of each suit, all face up.\n5: When placing 3 or more farmer tiles as your placement for the turn, you may additionally place 1 noble. All these placements must be face up.\n6: You may place nobles directly onto farm tiles, claiming them and not requiring any already-adjacent tile as is normally the case for claiming them with a farmer.\n7: Any time you score for your collected city tiles, you score 1 extra point for every pair of collected cities.\n8: Unoccupied land spaces on the central land area between the two rivers form part of your chains of connected pieces for noble scoring when a city is scored.\n9: Unoccipied water spaces form part of your chains of connected pieces for noble scoring when a city is scored.\n\nEND OF THE GAME:\nThe game ends at the end of any player's turn where either: (a) they have no pieces remaining (they have all been placed on the board); or (b) there are 0 or 1 cities left on the game board.",
+      "variantImage": "",
+      "variant": "",
+      "language": "en-GB",
+      "players": "2-4",
+      "similarDesigner": "Reiner Knizia"
+    }
+  },
+  "board-4": {
+    "id": "board-4",
+    "layer": -4,
+    "x": 540,
+    "y": 140,
+    "width": 912.309,
+    "height": 729.461,
+    "image": "/assets/1633981340_48692",
+    "movable": false,
+    "tilesRemoved": {},
+    "tileSpaces": [
+      "board-4-space-a6",
+      "board-4-space-a12",
+      "board-4-space-b9",
+      "board-4-space-b21",
+      "board-4-space-c14",
+      "board-4-space-d3",
+      "board-4-space-e10",
+      "board-4-space-e14",
+      "board-4-space-e22",
+      "board-4-space-f7",
+      "board-4-space-f19",
+      "board-4-space-g4",
+      "board-4-space-g12",
+      "board-4-space-h19",
+      "board-4-space-i6",
+      "board-4-space-i16",
+      "board-4-space-i22",
+      "board-4-space-j1",
+      "board-4-space-j9",
+      "board-4-space-k18",
+      "board-4-space-l13",
+      "board-4-space-m2",
+      "board-4-space-m8",
+      "board-4-space-m16",
+      "board-4-space-m22",
+      "board-4-space-n11",
+      "board-4-space-o4",
+      "board-4-space-o14",
+      "board-4-space-o22",
+      "board-4-space-p7",
+      "board-4-space-q12",
+      "board-4-space-q18"
+    ]
+  },
+  "board-4-space-a2": {
+    "id": "board-4-space-a2",
+    "type": "holder",
+    "parent": "board-4",
+    "fixedParent": true,
+    "x": 1,
+    "y": 60.622,
+    "width": 72.309,
+    "height": 62.622,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropLimit": 1,
+    "dropTarget": {
+      "width": 72.309
+    },
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "default": {
+        "background": "transparent",
+        "border-color": "transparent",
+        "clip-path": "polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0 50%)"
+      },
+      ".droptarget": {
+        "background": "#00000050"
+      }
+    }
+  },
+  "board-4-space-a4": {
+    "id": "board-4-space-a4",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "y": 121.244
+  },
+  "board-4-space-a6": {
+    "id": "board-4-space-a6",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "y": 181.866
+  },
+  "board-4-space-a8": {
+    "id": "board-4-space-a8",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "y": 242.488
+  },
+  "board-4-space-a10": {
+    "id": "board-4-space-a10",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "y": 303.11
+  },
+  "board-4-space-a12": {
+    "id": "board-4-space-a12",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "y": 363.732
+  },
+  "board-4-space-a14": {
+    "id": "board-4-space-a14",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "y": 424.354
+  },
+  "board-4-space-a16": {
+    "id": "board-4-space-a16",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "y": 484.976
+  },
+  "board-4-space-a18": {
+    "id": "board-4-space-a18",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "y": 545.598
+  },
+  "board-4-space-a20": {
+    "id": "board-4-space-a20",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "y": 606.22
+  },
+  "board-4-space-b1": {
+    "id": "board-4-space-b1",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "x": 53.5,
+    "y": 30.311
+  },
+  "board-4-space-b5": {
+    "id": "board-4-space-b5",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "x": 53.5,
+    "y": 151.555
+  },
+  "board-4-space-b7": {
+    "id": "board-4-space-b7",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "x": 53.5,
+    "y": 212.177
+  },
+  "board-4-space-b9": {
+    "id": "board-4-space-b9",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "x": 53.5,
+    "y": 272.799
+  },
+  "board-4-space-b11": {
+    "id": "board-4-space-b11",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "x": 53.5,
+    "y": 333.421
+  },
+  "board-4-space-b13": {
+    "id": "board-4-space-b13",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "x": 53.5,
+    "y": 394.043
+  },
+  "board-4-space-b15": {
+    "id": "board-4-space-b15",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "x": 53.5,
+    "y": 454.665
+  },
+  "board-4-space-b17": {
+    "id": "board-4-space-b17",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "x": 53.5,
+    "y": 515.287
+  },
+  "board-4-space-b19": {
+    "id": "board-4-space-b19",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "x": 53.5,
+    "y": 575.909
+  },
+  "board-4-space-b21": {
+    "id": "board-4-space-b21",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "x": 53.5,
+    "y": 636.531
+  },
+  "board-4-space-c2": {
+    "id": "board-4-space-c2",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "x": 106
+  },
+  "board-4-space-c4": {
+    "id": "board-4-space-c4",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "x": 106,
+    "y": 121.244
+  },
+  "board-4-space-c6": {
+    "id": "board-4-space-c6",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "x": 106,
+    "y": 181.866
+  },
+  "board-4-space-c8": {
+    "id": "board-4-space-c8",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "x": 106,
+    "y": 242.488
+  },
+  "board-4-space-c10": {
+    "id": "board-4-space-c10",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "x": 106,
+    "y": 303.11
+  },
+  "board-4-space-c12": {
+    "id": "board-4-space-c12",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "x": 106,
+    "y": 363.732
+  },
+  "board-4-space-c14": {
+    "id": "board-4-space-c14",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "x": 106,
+    "y": 424.354
+  },
+  "board-4-space-c16": {
+    "id": "board-4-space-c16",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "x": 106,
+    "y": 484.976
+  },
+  "board-4-space-c20": {
+    "id": "board-4-space-c20",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "x": 106,
+    "y": 606.22
+  },
+  "board-4-space-c22": {
+    "id": "board-4-space-c22",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "x": 106,
+    "y": 666.44
+  },
+  "board-4-space-d3": {
+    "id": "board-4-space-d3",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "x": 158.5,
+    "y": 90.973
+  },
+  "board-4-space-d5": {
+    "id": "board-4-space-d5",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "x": 158.5,
+    "y": 151.555
+  },
+  "board-4-space-d7": {
+    "id": "board-4-space-d7",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "x": 158.5,
+    "y": 212.177
+  },
+  "board-4-space-d9": {
+    "id": "board-4-space-d9",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "x": 158.5,
+    "y": 272.799
+  },
+  "board-4-space-d11": {
+    "id": "board-4-space-d11",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "x": 158.5,
+    "y": 333.421
+  },
+  "board-4-space-d13": {
+    "id": "board-4-space-d13",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "x": 158.5,
+    "y": 394.043
+  },
+  "board-4-space-d15": {
+    "id": "board-4-space-d15",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "x": 158.5,
+    "y": 454.665
+  },
+  "board-4-space-d17": {
+    "id": "board-4-space-d17",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "x": 158.5,
+    "y": 515.287
+  },
+  "board-4-space-d19": {
+    "id": "board-4-space-d19",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "x": 158.5,
+    "y": 575.909
+  },
+  "board-4-space-d21": {
+    "id": "board-4-space-d21",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "x": 158.5,
+    "y": 636.531
+  },
+  "board-4-space-e2": {
+    "id": "board-4-space-e2",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "x": 211
+  },
+  "board-4-space-e4": {
+    "id": "board-4-space-e4",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "x": 211,
+    "y": 121.244
+  },
+  "board-4-space-e6": {
+    "id": "board-4-space-e6",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "x": 211,
+    "y": 181.866
+  },
+  "board-4-space-e8": {
+    "id": "board-4-space-e8",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "x": 211,
+    "y": 242.488
+  },
+  "board-4-space-e10": {
+    "id": "board-4-space-e10",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "x": 211,
+    "y": 303.11
+  },
+  "board-4-space-e12": {
+    "id": "board-4-space-e12",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "x": 211,
+    "y": 363.732
+  },
+  "board-4-space-e14": {
+    "id": "board-4-space-e14",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "x": 211,
+    "y": 424.354
+  },
+  "board-4-space-e16": {
+    "id": "board-4-space-e16",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "x": 211,
+    "y": 484.976
+  },
+  "board-4-space-e18": {
+    "id": "board-4-space-e18",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "x": 211,
+    "y": 545.598
+  },
+  "board-4-space-e20": {
+    "id": "board-4-space-e20",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "x": 211,
+    "y": 606.22
+  },
+  "board-4-space-e22": {
+    "id": "board-4-space-e22",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "x": 211,
+    "y": 666.44
+  },
+  "board-4-space-f3": {
+    "id": "board-4-space-f3",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "x": 263.5,
+    "y": 90.973
+  },
+  "board-4-space-f5": {
+    "id": "board-4-space-f5",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "x": 263.5,
+    "y": 151.555
+  },
+  "board-4-space-f7": {
+    "id": "board-4-space-f7",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "x": 263.5,
+    "y": 212.177
+  },
+  "board-4-space-f9": {
+    "id": "board-4-space-f9",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "x": 263.5,
+    "y": 272.799
+  },
+  "board-4-space-f11": {
+    "id": "board-4-space-f11",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "x": 263.5,
+    "y": 333.421
+  },
+  "board-4-space-f13": {
+    "id": "board-4-space-f13",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "x": 263.5,
+    "y": 394.043
+  },
+  "board-4-space-f15": {
+    "id": "board-4-space-f15",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "x": 263.5,
+    "y": 454.665
+  },
+  "board-4-space-f17": {
+    "id": "board-4-space-f17",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "x": 263.5,
+    "y": 515.287
+  },
+  "board-4-space-f19": {
+    "id": "board-4-space-f19",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "x": 263.5,
+    "y": 575.909
+  },
+  "board-4-space-f21": {
+    "id": "board-4-space-f21",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "x": 263.5,
+    "y": 636.531
+  },
+  "board-4-space-g2": {
+    "id": "board-4-space-g2",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "x": 316
+  },
+  "board-4-space-g4": {
+    "id": "board-4-space-g4",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "x": 316,
+    "y": 121.244
+  },
+  "board-4-space-g6": {
+    "id": "board-4-space-g6",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "x": 316,
+    "y": 181.866
+  },
+  "board-4-space-g8": {
+    "id": "board-4-space-g8",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "x": 316,
+    "y": 242.488
+  },
+  "board-4-space-g10": {
+    "id": "board-4-space-g10",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "x": 316,
+    "y": 303.11
+  },
+  "board-4-space-g12": {
+    "id": "board-4-space-g12",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "x": 316,
+    "y": 363.732
+  },
+  "board-4-space-g14": {
+    "id": "board-4-space-g14",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "x": 316,
+    "y": 424.354
+  },
+  "board-4-space-g16": {
+    "id": "board-4-space-g16",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "x": 316,
+    "y": 484.976
+  },
+  "board-4-space-g18": {
+    "id": "board-4-space-g18",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "x": 316,
+    "y": 545.598
+  },
+  "board-4-space-g20": {
+    "id": "board-4-space-g20",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "x": 316,
+    "y": 606.22
+  },
+  "board-4-space-g22": {
+    "id": "board-4-space-g22",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "x": 316,
+    "y": 666.44
+  },
+  "board-4-space-h1": {
+    "id": "board-4-space-h1",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "x": 368.5,
+    "y": 30.311
+  },
+  "board-4-space-h3": {
+    "id": "board-4-space-h3",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "x": 368.5,
+    "y": 90.973
+  },
+  "board-4-space-h5": {
+    "id": "board-4-space-h5",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "x": 368.5,
+    "y": 151.555
+  },
+  "board-4-space-h7": {
+    "id": "board-4-space-h7",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "x": 368.5,
+    "y": 212.177
+  },
+  "board-4-space-h9": {
+    "id": "board-4-space-h9",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "x": 368.5,
+    "y": 272.799
+  },
+  "board-4-space-h11": {
+    "id": "board-4-space-h11",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "x": 368.5,
+    "y": 333.421
+  },
+  "board-4-space-h13": {
+    "id": "board-4-space-h13",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "x": 368.5,
+    "y": 394.043
+  },
+  "board-4-space-h15": {
+    "id": "board-4-space-h15",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "x": 368.5,
+    "y": 454.665
+  },
+  "board-4-space-h17": {
+    "id": "board-4-space-h17",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "x": 368.5,
+    "y": 515.287
+  },
+  "board-4-space-h19": {
+    "id": "board-4-space-h19",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "x": 368.5,
+    "y": 575.909
+  },
+  "board-4-space-h21": {
+    "id": "board-4-space-h21",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "x": 368.5,
+    "y": 636.531
+  },
+  "board-4-space-i0": {
+    "id": "board-4-space-i0",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "x": 421,
+    "y": 0
+  },
+  "board-4-space-i2": {
+    "id": "board-4-space-i2",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "x": 421
+  },
+  "board-4-space-i4": {
+    "id": "board-4-space-i4",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "x": 421,
+    "y": 121.244
+  },
+  "board-4-space-i6": {
+    "id": "board-4-space-i6",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "x": 421,
+    "y": 181.866
+  },
+  "board-4-space-i8": {
+    "id": "board-4-space-i8",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "x": 421,
+    "y": 242.488
+  },
+  "board-4-space-i10": {
+    "id": "board-4-space-i10",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "x": 421,
+    "y": 303.11
+  },
+  "board-4-space-i14": {
+    "id": "board-4-space-i14",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "x": 421,
+    "y": 424.354
+  },
+  "board-4-space-i16": {
+    "id": "board-4-space-i16",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "x": 421,
+    "y": 484.976
+  },
+  "board-4-space-i18": {
+    "id": "board-4-space-i18",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "x": 421,
+    "y": 545.598
+  },
+  "board-4-space-i20": {
+    "id": "board-4-space-i20",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "x": 421,
+    "y": 606.22
+  },
+  "board-4-space-i22": {
+    "id": "board-4-space-i22",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "x": 421,
+    "y": 666.44
+  },
+  "board-4-space-j1": {
+    "id": "board-4-space-j1",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "x": 473.5,
+    "y": 30.311
+  },
+  "board-4-space-j3": {
+    "id": "board-4-space-j3",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "x": 473.5,
+    "y": 90.973
+  },
+  "board-4-space-j5": {
+    "id": "board-4-space-j5",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "x": 473.5,
+    "y": 151.555
+  },
+  "board-4-space-j7": {
+    "id": "board-4-space-j7",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "x": 473.5,
+    "y": 212.177
+  },
+  "board-4-space-j9": {
+    "id": "board-4-space-j9",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "x": 473.5,
+    "y": 272.799
+  },
+  "board-4-space-j11": {
+    "id": "board-4-space-j11",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "x": 473.5,
+    "y": 333.421
+  },
+  "board-4-space-j13": {
+    "id": "board-4-space-j13",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "x": 473.5,
+    "y": 394.043
+  },
+  "board-4-space-j15": {
+    "id": "board-4-space-j15",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "x": 473.5,
+    "y": 454.665
+  },
+  "board-4-space-j17": {
+    "id": "board-4-space-j17",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "x": 473.5,
+    "y": 515.287
+  },
+  "board-4-space-j19": {
+    "id": "board-4-space-j19",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "x": 473.5,
+    "y": 575.909
+  },
+  "board-4-space-j21": {
+    "id": "board-4-space-j21",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "x": 473.5,
+    "y": 636.531
+  },
+  "board-4-space-k0": {
+    "id": "board-4-space-k0",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "x": 526,
+    "y": 0
+  },
+  "board-4-space-k2": {
+    "id": "board-4-space-k2",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "x": 526
+  },
+  "board-4-space-k4": {
+    "id": "board-4-space-k4",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "x": 526,
+    "y": 121.244
+  },
+  "board-4-space-k6": {
+    "id": "board-4-space-k6",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "x": 526,
+    "y": 181.866
+  },
+  "board-4-space-k8": {
+    "id": "board-4-space-k8",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "x": 526,
+    "y": 242.488
+  },
+  "board-4-space-k10": {
+    "id": "board-4-space-k10",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "x": 526,
+    "y": 303.11
+  },
+  "board-4-space-k12": {
+    "id": "board-4-space-k12",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "x": 526,
+    "y": 363.732
+  },
+  "board-4-space-k14": {
+    "id": "board-4-space-k14",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "x": 526,
+    "y": 424.354
+  },
+  "board-4-space-k16": {
+    "id": "board-4-space-k16",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "x": 526,
+    "y": 484.976
+  },
+  "board-4-space-k18": {
+    "id": "board-4-space-k18",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "x": 526,
+    "y": 545.598
+  },
+  "board-4-space-k20": {
+    "id": "board-4-space-k20",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "x": 526,
+    "y": 606.22
+  },
+  "board-4-space-k22": {
+    "id": "board-4-space-k22",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "x": 526,
+    "y": 666.44
+  },
+  "board-4-space-l1": {
+    "id": "board-4-space-l1",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "x": 578.5,
+    "y": 30.311
+  },
+  "board-4-space-l3": {
+    "id": "board-4-space-l3",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "x": 578.5,
+    "y": 90.973
+  },
+  "board-4-space-l7": {
+    "id": "board-4-space-l7",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "x": 578.5,
+    "y": 212.177
+  },
+  "board-4-space-l9": {
+    "id": "board-4-space-l9",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "x": 578.5,
+    "y": 272.799
+  },
+  "board-4-space-l11": {
+    "id": "board-4-space-l11",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "x": 578.5,
+    "y": 333.421
+  },
+  "board-4-space-l13": {
+    "id": "board-4-space-l13",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "x": 578.5,
+    "y": 394.043
+  },
+  "board-4-space-l15": {
+    "id": "board-4-space-l15",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "x": 578.5,
+    "y": 454.665
+  },
+  "board-4-space-l17": {
+    "id": "board-4-space-l17",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "x": 578.5,
+    "y": 515.287
+  },
+  "board-4-space-l19": {
+    "id": "board-4-space-l19",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "x": 578.5,
+    "y": 575.909
+  },
+  "board-4-space-l21": {
+    "id": "board-4-space-l21",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "x": 578.5,
+    "y": 636.531
+  },
+  "board-4-space-m2": {
+    "id": "board-4-space-m2",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "x": 631
+  },
+  "board-4-space-m4": {
+    "id": "board-4-space-m4",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "x": 631,
+    "y": 121.244
+  },
+  "board-4-space-m6": {
+    "id": "board-4-space-m6",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "x": 631,
+    "y": 181.866
+  },
+  "board-4-space-m8": {
+    "id": "board-4-space-m8",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "x": 631,
+    "y": 242.488
+  },
+  "board-4-space-m10": {
+    "id": "board-4-space-m10",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "x": 631,
+    "y": 303.11
+  },
+  "board-4-space-m12": {
+    "id": "board-4-space-m12",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "x": 631,
+    "y": 363.732
+  },
+  "board-4-space-m14": {
+    "id": "board-4-space-m14",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "x": 631,
+    "y": 424.354
+  },
+  "board-4-space-m16": {
+    "id": "board-4-space-m16",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "x": 631,
+    "y": 484.976
+  },
+  "board-4-space-m18": {
+    "id": "board-4-space-m18",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "x": 631,
+    "y": 545.598
+  },
+  "board-4-space-m20": {
+    "id": "board-4-space-m20",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "x": 631,
+    "y": 606.22
+  },
+  "board-4-space-m22": {
+    "id": "board-4-space-m22",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "x": 631,
+    "y": 666.44
+  },
+  "board-4-space-n3": {
+    "id": "board-4-space-n3",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "x": 683.5,
+    "y": 90.973
+  },
+  "board-4-space-n5": {
+    "id": "board-4-space-n5",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "x": 683.5,
+    "y": 151.555
+  },
+  "board-4-space-n7": {
+    "id": "board-4-space-n7",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "x": 683.5,
+    "y": 212.177
+  },
+  "board-4-space-n9": {
+    "id": "board-4-space-n9",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "x": 683.5,
+    "y": 272.799
+  },
+  "board-4-space-n11": {
+    "id": "board-4-space-n11",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "x": 683.5,
+    "y": 333.421
+  },
+  "board-4-space-n13": {
+    "id": "board-4-space-n13",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "x": 683.5,
+    "y": 394.043
+  },
+  "board-4-space-n15": {
+    "id": "board-4-space-n15",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "x": 683.5,
+    "y": 454.665
+  },
+  "board-4-space-n17": {
+    "id": "board-4-space-n17",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "x": 683.5,
+    "y": 515.287
+  },
+  "board-4-space-n19": {
+    "id": "board-4-space-n19",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "x": 683.5,
+    "y": 575.909
+  },
+  "board-4-space-n21": {
+    "id": "board-4-space-n21",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "x": 683.5,
+    "y": 636.531
+  },
+  "board-4-space-o4": {
+    "id": "board-4-space-o4",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "x": 736,
+    "y": 121.244
+  },
+  "board-4-space-o6": {
+    "id": "board-4-space-o6",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "x": 736,
+    "y": 181.866
+  },
+  "board-4-space-o8": {
+    "id": "board-4-space-o8",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "x": 736,
+    "y": 242.488
+  },
+  "board-4-space-o10": {
+    "id": "board-4-space-o10",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "x": 736,
+    "y": 303.11
+  },
+  "board-4-space-o12": {
+    "id": "board-4-space-o12",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "x": 736,
+    "y": 363.732
+  },
+  "board-4-space-o14": {
+    "id": "board-4-space-o14",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "x": 736,
+    "y": 424.354
+  },
+  "board-4-space-o16": {
+    "id": "board-4-space-o16",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "x": 736,
+    "y": 484.976
+  },
+  "board-4-space-o20": {
+    "id": "board-4-space-o20",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "x": 736,
+    "y": 606.22
+  },
+  "board-4-space-o22": {
+    "id": "board-4-space-o22",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "x": 736,
+    "y": 666.44
+  },
+  "board-4-space-p7": {
+    "id": "board-4-space-p7",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "x": 788.5,
+    "y": 212.177
+  },
+  "board-4-space-p9": {
+    "id": "board-4-space-p9",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "x": 788.5,
+    "y": 272.799
+  },
+  "board-4-space-p11": {
+    "id": "board-4-space-p11",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "x": 788.5,
+    "y": 333.421
+  },
+  "board-4-space-p13": {
+    "id": "board-4-space-p13",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "x": 788.5,
+    "y": 394.043
+  },
+  "board-4-space-p15": {
+    "id": "board-4-space-p15",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "x": 788.5,
+    "y": 454.665
+  },
+  "board-4-space-p17": {
+    "id": "board-4-space-p17",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "x": 788.5,
+    "y": 515.287
+  },
+  "board-4-space-p19": {
+    "id": "board-4-space-p19",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "x": 788.5,
+    "y": 575.909
+  },
+  "board-4-space-p21": {
+    "id": "board-4-space-p21",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "x": 788.5,
+    "y": 636.531
+  },
+  "board-4-space-q12": {
+    "id": "board-4-space-q12",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "x": 841,
+    "y": 363.732
+  },
+  "board-4-space-q14": {
+    "id": "board-4-space-q14",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "x": 841,
+    "y": 424.354
+  },
+  "board-4-space-q16": {
+    "id": "board-4-space-q16",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "x": 841,
+    "y": 484.976
+  },
+  "board-4-space-q18": {
+    "id": "board-4-space-q18",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "x": 841,
+    "y": 545.598
+  },
+  "board-4-space-q20": {
+    "id": "board-4-space-q20",
+    "type": "holder",
+    "parent": "board-4",
+    "inheritFrom": "board-4-space-a2",
+    "x": 841,
+    "y": 606.22
+  },
+  "board-3": {
+    "id": "board-3",
+    "inheritFrom": "board-4",
+    "y": -1000,
+    "image": "/assets/1478774824_41079",
+    "tilesRemoved": {
+      "tile-city-crown": 1,
+      "tile-city-pot": 1,
+      "tile-city-star": 1,
+      "tile-cropx": 3
+    },
+    "tileSpaces": [
+      "board-3-space-b21",
+      "board-3-space-d3",
+      "board-3-space-e22",
+      "board-3-space-f7",
+      "board-3-space-f19",
+      "board-3-space-g4",
+      "board-3-space-g12",
+      "board-3-space-h19",
+      "board-3-space-i6",
+      "board-3-space-i16",
+      "board-3-space-i22",
+      "board-3-space-j1",
+      "board-3-space-j9",
+      "board-3-space-k18",
+      "board-3-space-l13",
+      "board-3-space-m2",
+      "board-3-space-m8",
+      "board-3-space-m16",
+      "board-3-space-m22",
+      "board-3-space-n11",
+      "board-3-space-o4",
+      "board-3-space-o14",
+      "board-3-space-o22",
+      "board-3-space-p7",
+      "board-3-space-q12",
+      "board-3-space-q18"
+    ]
+  },
+  "board-3-space-a16": {
+    "id": "board-3-space-a16",
+    "type": "holder",
+    "parent": "board-3",
+    "inheritFrom": "board-4-space-a2",
+    "y": 484.976
+  },
+  "board-3-space-a18": {
+    "id": "board-3-space-a18",
+    "type": "holder",
+    "parent": "board-3",
+    "inheritFrom": "board-4-space-a2",
+    "y": 545.598
+  },
+  "board-3-space-a20": {
+    "id": "board-3-space-a20",
+    "type": "holder",
+    "parent": "board-3",
+    "inheritFrom": "board-4-space-a2",
+    "y": 606.22
+  },
+  "board-3-space-b15": {
+    "id": "board-3-space-b15",
+    "type": "holder",
+    "parent": "board-3",
+    "inheritFrom": "board-4-space-a2",
+    "x": 53.5,
+    "y": 454.665
+  },
+  "board-3-space-b17": {
+    "id": "board-3-space-b17",
+    "type": "holder",
+    "parent": "board-3",
+    "inheritFrom": "board-4-space-a2",
+    "x": 53.5,
+    "y": 515.287
+  },
+  "board-3-space-b19": {
+    "id": "board-3-space-b19",
+    "type": "holder",
+    "parent": "board-3",
+    "inheritFrom": "board-4-space-a2",
+    "x": 53.5,
+    "y": 575.909
+  },
+  "board-3-space-b21": {
+    "id": "board-3-space-b21",
+    "type": "holder",
+    "parent": "board-3",
+    "inheritFrom": "board-4-space-a2",
+    "x": 53.5,
+    "y": 636.531
+  },
+  "board-3-space-c2": {
+    "id": "board-3-space-c2",
+    "type": "holder",
+    "parent": "board-3",
+    "inheritFrom": "board-4-space-a2",
+    "x": 106
+  },
+  "board-3-space-c4": {
+    "id": "board-3-space-c4",
+    "type": "holder",
+    "parent": "board-3",
+    "inheritFrom": "board-4-space-a2",
+    "x": 106,
+    "y": 121.244
+  },
+  "board-3-space-c6": {
+    "id": "board-3-space-c6",
+    "type": "holder",
+    "parent": "board-3",
+    "inheritFrom": "board-4-space-a2",
+    "x": 106,
+    "y": 181.866
+  },
+  "board-3-space-c16": {
+    "id": "board-3-space-c16",
+    "type": "holder",
+    "parent": "board-3",
+    "inheritFrom": "board-4-space-a2",
+    "x": 106,
+    "y": 484.976
+  },
+  "board-3-space-c20": {
+    "id": "board-3-space-c20",
+    "type": "holder",
+    "parent": "board-3",
+    "inheritFrom": "board-4-space-a2",
+    "x": 106,
+    "y": 606.22
+  },
+  "board-3-space-c22": {
+    "id": "board-3-space-c22",
+    "type": "holder",
+    "parent": "board-3",
+    "inheritFrom": "board-4-space-a2",
+    "x": 106,
+    "y": 666.44
+  },
+  "board-3-space-d3": {
+    "id": "board-3-space-d3",
+    "type": "holder",
+    "parent": "board-3",
+    "inheritFrom": "board-4-space-a2",
+    "x": 158.5,
+    "y": 90.973
+  },
+  "board-3-space-d5": {
+    "id": "board-3-space-d5",
+    "type": "holder",
+    "parent": "board-3",
+    "inheritFrom": "board-4-space-a2",
+    "x": 158.5,
+    "y": 151.555
+  },
+  "board-3-space-d7": {
+    "id": "board-3-space-d7",
+    "type": "holder",
+    "parent": "board-3",
+    "inheritFrom": "board-4-space-a2",
+    "x": 158.5,
+    "y": 212.177
+  },
+  "board-3-space-d17": {
+    "id": "board-3-space-d17",
+    "type": "holder",
+    "parent": "board-3",
+    "inheritFrom": "board-4-space-a2",
+    "x": 158.5,
+    "y": 515.287
+  },
+  "board-3-space-d19": {
+    "id": "board-3-space-d19",
+    "type": "holder",
+    "parent": "board-3",
+    "inheritFrom": "board-4-space-a2",
+    "x": 158.5,
+    "y": 575.909
+  },
+  "board-3-space-d21": {
+    "id": "board-3-space-d21",
+    "type": "holder",
+    "parent": "board-3",
+    "inheritFrom": "board-4-space-a2",
+    "x": 158.5,
+    "y": 636.531
+  },
+  "board-3-space-e2": {
+    "id": "board-3-space-e2",
+    "type": "holder",
+    "parent": "board-3",
+    "inheritFrom": "board-4-space-a2",
+    "x": 211
+  },
+  "board-3-space-e4": {
+    "id": "board-3-space-e4",
+    "type": "holder",
+    "parent": "board-3",
+    "inheritFrom": "board-4-space-a2",
+    "x": 211,
+    "y": 121.244
+  },
+  "board-3-space-e6": {
+    "id": "board-3-space-e6",
+    "type": "holder",
+    "parent": "board-3",
+    "inheritFrom": "board-4-space-a2",
+    "x": 211,
+    "y": 181.866
+  },
+  "board-3-space-e8": {
+    "id": "board-3-space-e8",
+    "type": "holder",
+    "parent": "board-3",
+    "inheritFrom": "board-4-space-a2",
+    "x": 211,
+    "y": 242.488
+  },
+  "board-3-space-e18": {
+    "id": "board-3-space-e18",
+    "type": "holder",
+    "parent": "board-3",
+    "inheritFrom": "board-4-space-a2",
+    "x": 211,
+    "y": 545.598
+  },
+  "board-3-space-e20": {
+    "id": "board-3-space-e20",
+    "type": "holder",
+    "parent": "board-3",
+    "inheritFrom": "board-4-space-a2",
+    "x": 211,
+    "y": 606.22
+  },
+  "board-3-space-e22": {
+    "id": "board-3-space-e22",
+    "type": "holder",
+    "parent": "board-3",
+    "inheritFrom": "board-4-space-a2",
+    "x": 211,
+    "y": 666.44
+  },
+  "board-3-space-f3": {
+    "id": "board-3-space-f3",
+    "type": "holder",
+    "parent": "board-3",
+    "inheritFrom": "board-4-space-a2",
+    "x": 263.5,
+    "y": 90.973
+  },
+  "board-3-space-f5": {
+    "id": "board-3-space-f5",
+    "type": "holder",
+    "parent": "board-3",
+    "inheritFrom": "board-4-space-a2",
+    "x": 263.5,
+    "y": 151.555
+  },
+  "board-3-space-f7": {
+    "id": "board-3-space-f7",
+    "type": "holder",
+    "parent": "board-3",
+    "inheritFrom": "board-4-space-a2",
+    "x": 263.5,
+    "y": 212.177
+  },
+  "board-3-space-f9": {
+    "id": "board-3-space-f9",
+    "type": "holder",
+    "parent": "board-3",
+    "inheritFrom": "board-4-space-a2",
+    "x": 263.5,
+    "y": 272.799
+  },
+  "board-3-space-f11": {
+    "id": "board-3-space-f11",
+    "type": "holder",
+    "parent": "board-3",
+    "inheritFrom": "board-4-space-a2",
+    "x": 263.5,
+    "y": 333.421
+  },
+  "board-3-space-f13": {
+    "id": "board-3-space-f13",
+    "type": "holder",
+    "parent": "board-3",
+    "inheritFrom": "board-4-space-a2",
+    "x": 263.5,
+    "y": 394.043
+  },
+  "board-3-space-f15": {
+    "id": "board-3-space-f15",
+    "type": "holder",
+    "parent": "board-3",
+    "inheritFrom": "board-4-space-a2",
+    "x": 263.5,
+    "y": 454.665
+  },
+  "board-3-space-f17": {
+    "id": "board-3-space-f17",
+    "type": "holder",
+    "parent": "board-3",
+    "inheritFrom": "board-4-space-a2",
+    "x": 263.5,
+    "y": 515.287
+  },
+  "board-3-space-f19": {
+    "id": "board-3-space-f19",
+    "type": "holder",
+    "parent": "board-3",
+    "inheritFrom": "board-4-space-a2",
+    "x": 263.5,
+    "y": 575.909
+  },
+  "board-3-space-f21": {
+    "id": "board-3-space-f21",
+    "type": "holder",
+    "parent": "board-3",
+    "inheritFrom": "board-4-space-a2",
+    "x": 263.5,
+    "y": 636.531
+  },
+  "board-3-space-g2": {
+    "id": "board-3-space-g2",
+    "type": "holder",
+    "parent": "board-3",
+    "inheritFrom": "board-4-space-a2",
+    "x": 316
+  },
+  "board-3-space-g4": {
+    "id": "board-3-space-g4",
+    "type": "holder",
+    "parent": "board-3",
+    "inheritFrom": "board-4-space-a2",
+    "x": 316,
+    "y": 121.244
+  },
+  "board-3-space-g6": {
+    "id": "board-3-space-g6",
+    "type": "holder",
+    "parent": "board-3",
+    "inheritFrom": "board-4-space-a2",
+    "x": 316,
+    "y": 181.866
+  },
+  "board-3-space-g8": {
+    "id": "board-3-space-g8",
+    "type": "holder",
+    "parent": "board-3",
+    "inheritFrom": "board-4-space-a2",
+    "x": 316,
+    "y": 242.488
+  },
+  "board-3-space-g10": {
+    "id": "board-3-space-g10",
+    "type": "holder",
+    "parent": "board-3",
+    "inheritFrom": "board-4-space-a2",
+    "x": 316,
+    "y": 303.11
+  },
+  "board-3-space-g12": {
+    "id": "board-3-space-g12",
+    "type": "holder",
+    "parent": "board-3",
+    "inheritFrom": "board-4-space-a2",
+    "x": 316,
+    "y": 363.732
+  },
+  "board-3-space-g14": {
+    "id": "board-3-space-g14",
+    "type": "holder",
+    "parent": "board-3",
+    "inheritFrom": "board-4-space-a2",
+    "x": 316,
+    "y": 424.354
+  },
+  "board-3-space-g16": {
+    "id": "board-3-space-g16",
+    "type": "holder",
+    "parent": "board-3",
+    "inheritFrom": "board-4-space-a2",
+    "x": 316,
+    "y": 484.976
+  },
+  "board-3-space-g18": {
+    "id": "board-3-space-g18",
+    "type": "holder",
+    "parent": "board-3",
+    "inheritFrom": "board-4-space-a2",
+    "x": 316,
+    "y": 545.598
+  },
+  "board-3-space-g20": {
+    "id": "board-3-space-g20",
+    "type": "holder",
+    "parent": "board-3",
+    "inheritFrom": "board-4-space-a2",
+    "x": 316,
+    "y": 606.22
+  },
+  "board-3-space-g22": {
+    "id": "board-3-space-g22",
+    "type": "holder",
+    "parent": "board-3",
+    "inheritFrom": "board-4-space-a2",
+    "x": 316,
+    "y": 666.44
+  },
+  "board-3-space-h1": {
+    "id": "board-3-space-h1",
+    "type": "holder",
+    "parent": "board-3",
+    "inheritFrom": "board-4-space-a2",
+    "x": 368.5,
+    "y": 30.311
+  },
+  "board-3-space-h3": {
+    "id": "board-3-space-h3",
+    "type": "holder",
+    "parent": "board-3",
+    "inheritFrom": "board-4-space-a2",
+    "x": 368.5,
+    "y": 90.973
+  },
+  "board-3-space-h5": {
+    "id": "board-3-space-h5",
+    "type": "holder",
+    "parent": "board-3",
+    "inheritFrom": "board-4-space-a2",
+    "x": 368.5,
+    "y": 151.555
+  },
+  "board-3-space-h7": {
+    "id": "board-3-space-h7",
+    "type": "holder",
+    "parent": "board-3",
+    "inheritFrom": "board-4-space-a2",
+    "x": 368.5,
+    "y": 212.177
+  },
+  "board-3-space-h9": {
+    "id": "board-3-space-h9",
+    "type": "holder",
+    "parent": "board-3",
+    "inheritFrom": "board-4-space-a2",
+    "x": 368.5,
+    "y": 272.799
+  },
+  "board-3-space-h11": {
+    "id": "board-3-space-h11",
+    "type": "holder",
+    "parent": "board-3",
+    "inheritFrom": "board-4-space-a2",
+    "x": 368.5,
+    "y": 333.421
+  },
+  "board-3-space-h13": {
+    "id": "board-3-space-h13",
+    "type": "holder",
+    "parent": "board-3",
+    "inheritFrom": "board-4-space-a2",
+    "x": 368.5,
+    "y": 394.043
+  },
+  "board-3-space-h15": {
+    "id": "board-3-space-h15",
+    "type": "holder",
+    "parent": "board-3",
+    "inheritFrom": "board-4-space-a2",
+    "x": 368.5,
+    "y": 454.665
+  },
+  "board-3-space-h17": {
+    "id": "board-3-space-h17",
+    "type": "holder",
+    "parent": "board-3",
+    "inheritFrom": "board-4-space-a2",
+    "x": 368.5,
+    "y": 515.287
+  },
+  "board-3-space-h19": {
+    "id": "board-3-space-h19",
+    "type": "holder",
+    "parent": "board-3",
+    "inheritFrom": "board-4-space-a2",
+    "x": 368.5,
+    "y": 575.909
+  },
+  "board-3-space-h21": {
+    "id": "board-3-space-h21",
+    "type": "holder",
+    "parent": "board-3",
+    "inheritFrom": "board-4-space-a2",
+    "x": 368.5,
+    "y": 636.531
+  },
+  "board-3-space-i0": {
+    "id": "board-3-space-i0",
+    "type": "holder",
+    "parent": "board-3",
+    "inheritFrom": "board-4-space-a2",
+    "x": 421,
+    "y": 0
+  },
+  "board-3-space-i2": {
+    "id": "board-3-space-i2",
+    "type": "holder",
+    "parent": "board-3",
+    "inheritFrom": "board-4-space-a2",
+    "x": 421
+  },
+  "board-3-space-i4": {
+    "id": "board-3-space-i4",
+    "type": "holder",
+    "parent": "board-3",
+    "inheritFrom": "board-4-space-a2",
+    "x": 421,
+    "y": 121.244
+  },
+  "board-3-space-i6": {
+    "id": "board-3-space-i6",
+    "type": "holder",
+    "parent": "board-3",
+    "inheritFrom": "board-4-space-a2",
+    "x": 421,
+    "y": 181.866
+  },
+  "board-3-space-i8": {
+    "id": "board-3-space-i8",
+    "type": "holder",
+    "parent": "board-3",
+    "inheritFrom": "board-4-space-a2",
+    "x": 421,
+    "y": 242.488
+  },
+  "board-3-space-i10": {
+    "id": "board-3-space-i10",
+    "type": "holder",
+    "parent": "board-3",
+    "inheritFrom": "board-4-space-a2",
+    "x": 421,
+    "y": 303.11
+  },
+  "board-3-space-i14": {
+    "id": "board-3-space-i14",
+    "type": "holder",
+    "parent": "board-3",
+    "inheritFrom": "board-4-space-a2",
+    "x": 421,
+    "y": 424.354
+  },
+  "board-3-space-i16": {
+    "id": "board-3-space-i16",
+    "type": "holder",
+    "parent": "board-3",
+    "inheritFrom": "board-4-space-a2",
+    "x": 421,
+    "y": 484.976
+  },
+  "board-3-space-i18": {
+    "id": "board-3-space-i18",
+    "type": "holder",
+    "parent": "board-3",
+    "inheritFrom": "board-4-space-a2",
+    "x": 421,
+    "y": 545.598
+  },
+  "board-3-space-i20": {
+    "id": "board-3-space-i20",
+    "type": "holder",
+    "parent": "board-3",
+    "inheritFrom": "board-4-space-a2",
+    "x": 421,
+    "y": 606.22
+  },
+  "board-3-space-i22": {
+    "id": "board-3-space-i22",
+    "type": "holder",
+    "parent": "board-3",
+    "inheritFrom": "board-4-space-a2",
+    "x": 421,
+    "y": 666.44
+  },
+  "board-3-space-j1": {
+    "id": "board-3-space-j1",
+    "type": "holder",
+    "parent": "board-3",
+    "inheritFrom": "board-4-space-a2",
+    "x": 473.5,
+    "y": 30.311
+  },
+  "board-3-space-j3": {
+    "id": "board-3-space-j3",
+    "type": "holder",
+    "parent": "board-3",
+    "inheritFrom": "board-4-space-a2",
+    "x": 473.5,
+    "y": 90.973
+  },
+  "board-3-space-j5": {
+    "id": "board-3-space-j5",
+    "type": "holder",
+    "parent": "board-3",
+    "inheritFrom": "board-4-space-a2",
+    "x": 473.5,
+    "y": 151.555
+  },
+  "board-3-space-j7": {
+    "id": "board-3-space-j7",
+    "type": "holder",
+    "parent": "board-3",
+    "inheritFrom": "board-4-space-a2",
+    "x": 473.5,
+    "y": 212.177
+  },
+  "board-3-space-j9": {
+    "id": "board-3-space-j9",
+    "type": "holder",
+    "parent": "board-3",
+    "inheritFrom": "board-4-space-a2",
+    "x": 473.5,
+    "y": 272.799
+  },
+  "board-3-space-j11": {
+    "id": "board-3-space-j11",
+    "type": "holder",
+    "parent": "board-3",
+    "inheritFrom": "board-4-space-a2",
+    "x": 473.5,
+    "y": 333.421
+  },
+  "board-3-space-j13": {
+    "id": "board-3-space-j13",
+    "type": "holder",
+    "parent": "board-3",
+    "inheritFrom": "board-4-space-a2",
+    "x": 473.5,
+    "y": 394.043
+  },
+  "board-3-space-j15": {
+    "id": "board-3-space-j15",
+    "type": "holder",
+    "parent": "board-3",
+    "inheritFrom": "board-4-space-a2",
+    "x": 473.5,
+    "y": 454.665
+  },
+  "board-3-space-j17": {
+    "id": "board-3-space-j17",
+    "type": "holder",
+    "parent": "board-3",
+    "inheritFrom": "board-4-space-a2",
+    "x": 473.5,
+    "y": 515.287
+  },
+  "board-3-space-j19": {
+    "id": "board-3-space-j19",
+    "type": "holder",
+    "parent": "board-3",
+    "inheritFrom": "board-4-space-a2",
+    "x": 473.5,
+    "y": 575.909
+  },
+  "board-3-space-j21": {
+    "id": "board-3-space-j21",
+    "type": "holder",
+    "parent": "board-3",
+    "inheritFrom": "board-4-space-a2",
+    "x": 473.5,
+    "y": 636.531
+  },
+  "board-3-space-k0": {
+    "id": "board-3-space-k0",
+    "type": "holder",
+    "parent": "board-3",
+    "inheritFrom": "board-4-space-a2",
+    "x": 526,
+    "y": 0
+  },
+  "board-3-space-k2": {
+    "id": "board-3-space-k2",
+    "type": "holder",
+    "parent": "board-3",
+    "inheritFrom": "board-4-space-a2",
+    "x": 526
+  },
+  "board-3-space-k4": {
+    "id": "board-3-space-k4",
+    "type": "holder",
+    "parent": "board-3",
+    "inheritFrom": "board-4-space-a2",
+    "x": 526,
+    "y": 121.244
+  },
+  "board-3-space-k6": {
+    "id": "board-3-space-k6",
+    "type": "holder",
+    "parent": "board-3",
+    "inheritFrom": "board-4-space-a2",
+    "x": 526,
+    "y": 181.866
+  },
+  "board-3-space-k8": {
+    "id": "board-3-space-k8",
+    "type": "holder",
+    "parent": "board-3",
+    "inheritFrom": "board-4-space-a2",
+    "x": 526,
+    "y": 242.488
+  },
+  "board-3-space-k10": {
+    "id": "board-3-space-k10",
+    "type": "holder",
+    "parent": "board-3",
+    "inheritFrom": "board-4-space-a2",
+    "x": 526,
+    "y": 303.11
+  },
+  "board-3-space-k12": {
+    "id": "board-3-space-k12",
+    "type": "holder",
+    "parent": "board-3",
+    "inheritFrom": "board-4-space-a2",
+    "x": 526,
+    "y": 363.732
+  },
+  "board-3-space-k14": {
+    "id": "board-3-space-k14",
+    "type": "holder",
+    "parent": "board-3",
+    "inheritFrom": "board-4-space-a2",
+    "x": 526,
+    "y": 424.354
+  },
+  "board-3-space-k16": {
+    "id": "board-3-space-k16",
+    "type": "holder",
+    "parent": "board-3",
+    "inheritFrom": "board-4-space-a2",
+    "x": 526,
+    "y": 484.976
+  },
+  "board-3-space-k18": {
+    "id": "board-3-space-k18",
+    "type": "holder",
+    "parent": "board-3",
+    "inheritFrom": "board-4-space-a2",
+    "x": 526,
+    "y": 545.598
+  },
+  "board-3-space-k20": {
+    "id": "board-3-space-k20",
+    "type": "holder",
+    "parent": "board-3",
+    "inheritFrom": "board-4-space-a2",
+    "x": 526,
+    "y": 606.22
+  },
+  "board-3-space-k22": {
+    "id": "board-3-space-k22",
+    "type": "holder",
+    "parent": "board-3",
+    "inheritFrom": "board-4-space-a2",
+    "x": 526,
+    "y": 666.44
+  },
+  "board-3-space-l1": {
+    "id": "board-3-space-l1",
+    "type": "holder",
+    "parent": "board-3",
+    "inheritFrom": "board-4-space-a2",
+    "x": 578.5,
+    "y": 30.311
+  },
+  "board-3-space-l3": {
+    "id": "board-3-space-l3",
+    "type": "holder",
+    "parent": "board-3",
+    "inheritFrom": "board-4-space-a2",
+    "x": 578.5,
+    "y": 90.973
+  },
+  "board-3-space-l7": {
+    "id": "board-3-space-l7",
+    "type": "holder",
+    "parent": "board-3",
+    "inheritFrom": "board-4-space-a2",
+    "x": 578.5,
+    "y": 212.177
+  },
+  "board-3-space-l9": {
+    "id": "board-3-space-l9",
+    "type": "holder",
+    "parent": "board-3",
+    "inheritFrom": "board-4-space-a2",
+    "x": 578.5,
+    "y": 272.799
+  },
+  "board-3-space-l11": {
+    "id": "board-3-space-l11",
+    "type": "holder",
+    "parent": "board-3",
+    "inheritFrom": "board-4-space-a2",
+    "x": 578.5,
+    "y": 333.421
+  },
+  "board-3-space-l13": {
+    "id": "board-3-space-l13",
+    "type": "holder",
+    "parent": "board-3",
+    "inheritFrom": "board-4-space-a2",
+    "x": 578.5,
+    "y": 394.043
+  },
+  "board-3-space-l15": {
+    "id": "board-3-space-l15",
+    "type": "holder",
+    "parent": "board-3",
+    "inheritFrom": "board-4-space-a2",
+    "x": 578.5,
+    "y": 454.665
+  },
+  "board-3-space-l17": {
+    "id": "board-3-space-l17",
+    "type": "holder",
+    "parent": "board-3",
+    "inheritFrom": "board-4-space-a2",
+    "x": 578.5,
+    "y": 515.287
+  },
+  "board-3-space-l19": {
+    "id": "board-3-space-l19",
+    "type": "holder",
+    "parent": "board-3",
+    "inheritFrom": "board-4-space-a2",
+    "x": 578.5,
+    "y": 575.909
+  },
+  "board-3-space-l21": {
+    "id": "board-3-space-l21",
+    "type": "holder",
+    "parent": "board-3",
+    "inheritFrom": "board-4-space-a2",
+    "x": 578.5,
+    "y": 636.531
+  },
+  "board-3-space-m2": {
+    "id": "board-3-space-m2",
+    "type": "holder",
+    "parent": "board-3",
+    "inheritFrom": "board-4-space-a2",
+    "x": 631
+  },
+  "board-3-space-m4": {
+    "id": "board-3-space-m4",
+    "type": "holder",
+    "parent": "board-3",
+    "inheritFrom": "board-4-space-a2",
+    "x": 631,
+    "y": 121.244
+  },
+  "board-3-space-m6": {
+    "id": "board-3-space-m6",
+    "type": "holder",
+    "parent": "board-3",
+    "inheritFrom": "board-4-space-a2",
+    "x": 631,
+    "y": 181.866
+  },
+  "board-3-space-m8": {
+    "id": "board-3-space-m8",
+    "type": "holder",
+    "parent": "board-3",
+    "inheritFrom": "board-4-space-a2",
+    "x": 631,
+    "y": 242.488
+  },
+  "board-3-space-m10": {
+    "id": "board-3-space-m10",
+    "type": "holder",
+    "parent": "board-3",
+    "inheritFrom": "board-4-space-a2",
+    "x": 631,
+    "y": 303.11
+  },
+  "board-3-space-m12": {
+    "id": "board-3-space-m12",
+    "type": "holder",
+    "parent": "board-3",
+    "inheritFrom": "board-4-space-a2",
+    "x": 631,
+    "y": 363.732
+  },
+  "board-3-space-m14": {
+    "id": "board-3-space-m14",
+    "type": "holder",
+    "parent": "board-3",
+    "inheritFrom": "board-4-space-a2",
+    "x": 631,
+    "y": 424.354
+  },
+  "board-3-space-m16": {
+    "id": "board-3-space-m16",
+    "type": "holder",
+    "parent": "board-3",
+    "inheritFrom": "board-4-space-a2",
+    "x": 631,
+    "y": 484.976
+  },
+  "board-3-space-m18": {
+    "id": "board-3-space-m18",
+    "type": "holder",
+    "parent": "board-3",
+    "inheritFrom": "board-4-space-a2",
+    "x": 631,
+    "y": 545.598
+  },
+  "board-3-space-m20": {
+    "id": "board-3-space-m20",
+    "type": "holder",
+    "parent": "board-3",
+    "inheritFrom": "board-4-space-a2",
+    "x": 631,
+    "y": 606.22
+  },
+  "board-3-space-m22": {
+    "id": "board-3-space-m22",
+    "type": "holder",
+    "parent": "board-3",
+    "inheritFrom": "board-4-space-a2",
+    "x": 631,
+    "y": 666.44
+  },
+  "board-3-space-n3": {
+    "id": "board-3-space-n3",
+    "type": "holder",
+    "parent": "board-3",
+    "inheritFrom": "board-4-space-a2",
+    "x": 683.5,
+    "y": 90.973
+  },
+  "board-3-space-n5": {
+    "id": "board-3-space-n5",
+    "type": "holder",
+    "parent": "board-3",
+    "inheritFrom": "board-4-space-a2",
+    "x": 683.5,
+    "y": 151.555
+  },
+  "board-3-space-n7": {
+    "id": "board-3-space-n7",
+    "type": "holder",
+    "parent": "board-3",
+    "inheritFrom": "board-4-space-a2",
+    "x": 683.5,
+    "y": 212.177
+  },
+  "board-3-space-n9": {
+    "id": "board-3-space-n9",
+    "type": "holder",
+    "parent": "board-3",
+    "inheritFrom": "board-4-space-a2",
+    "x": 683.5,
+    "y": 272.799
+  },
+  "board-3-space-n11": {
+    "id": "board-3-space-n11",
+    "type": "holder",
+    "parent": "board-3",
+    "inheritFrom": "board-4-space-a2",
+    "x": 683.5,
+    "y": 333.421
+  },
+  "board-3-space-n13": {
+    "id": "board-3-space-n13",
+    "type": "holder",
+    "parent": "board-3",
+    "inheritFrom": "board-4-space-a2",
+    "x": 683.5,
+    "y": 394.043
+  },
+  "board-3-space-n15": {
+    "id": "board-3-space-n15",
+    "type": "holder",
+    "parent": "board-3",
+    "inheritFrom": "board-4-space-a2",
+    "x": 683.5,
+    "y": 454.665
+  },
+  "board-3-space-n17": {
+    "id": "board-3-space-n17",
+    "type": "holder",
+    "parent": "board-3",
+    "inheritFrom": "board-4-space-a2",
+    "x": 683.5,
+    "y": 515.287
+  },
+  "board-3-space-n19": {
+    "id": "board-3-space-n19",
+    "type": "holder",
+    "parent": "board-3",
+    "inheritFrom": "board-4-space-a2",
+    "x": 683.5,
+    "y": 575.909
+  },
+  "board-3-space-n21": {
+    "id": "board-3-space-n21",
+    "type": "holder",
+    "parent": "board-3",
+    "inheritFrom": "board-4-space-a2",
+    "x": 683.5,
+    "y": 636.531
+  },
+  "board-3-space-o4": {
+    "id": "board-3-space-o4",
+    "type": "holder",
+    "parent": "board-3",
+    "inheritFrom": "board-4-space-a2",
+    "x": 736,
+    "y": 121.244
+  },
+  "board-3-space-o6": {
+    "id": "board-3-space-o6",
+    "type": "holder",
+    "parent": "board-3",
+    "inheritFrom": "board-4-space-a2",
+    "x": 736,
+    "y": 181.866
+  },
+  "board-3-space-o8": {
+    "id": "board-3-space-o8",
+    "type": "holder",
+    "parent": "board-3",
+    "inheritFrom": "board-4-space-a2",
+    "x": 736,
+    "y": 242.488
+  },
+  "board-3-space-o10": {
+    "id": "board-3-space-o10",
+    "type": "holder",
+    "parent": "board-3",
+    "inheritFrom": "board-4-space-a2",
+    "x": 736,
+    "y": 303.11
+  },
+  "board-3-space-o12": {
+    "id": "board-3-space-o12",
+    "type": "holder",
+    "parent": "board-3",
+    "inheritFrom": "board-4-space-a2",
+    "x": 736,
+    "y": 363.732
+  },
+  "board-3-space-o14": {
+    "id": "board-3-space-o14",
+    "type": "holder",
+    "parent": "board-3",
+    "inheritFrom": "board-4-space-a2",
+    "x": 736,
+    "y": 424.354
+  },
+  "board-3-space-o16": {
+    "id": "board-3-space-o16",
+    "type": "holder",
+    "parent": "board-3",
+    "inheritFrom": "board-4-space-a2",
+    "x": 736,
+    "y": 484.976
+  },
+  "board-3-space-o20": {
+    "id": "board-3-space-o20",
+    "type": "holder",
+    "parent": "board-3",
+    "inheritFrom": "board-4-space-a2",
+    "x": 736,
+    "y": 606.22
+  },
+  "board-3-space-o22": {
+    "id": "board-3-space-o22",
+    "type": "holder",
+    "parent": "board-3",
+    "inheritFrom": "board-4-space-a2",
+    "x": 736,
+    "y": 666.44
+  },
+  "board-3-space-p7": {
+    "id": "board-3-space-p7",
+    "type": "holder",
+    "parent": "board-3",
+    "inheritFrom": "board-4-space-a2",
+    "x": 788.5,
+    "y": 212.177
+  },
+  "board-3-space-p9": {
+    "id": "board-3-space-p9",
+    "type": "holder",
+    "parent": "board-3",
+    "inheritFrom": "board-4-space-a2",
+    "x": 788.5,
+    "y": 272.799
+  },
+  "board-3-space-p11": {
+    "id": "board-3-space-p11",
+    "type": "holder",
+    "parent": "board-3",
+    "inheritFrom": "board-4-space-a2",
+    "x": 788.5,
+    "y": 333.421
+  },
+  "board-3-space-p13": {
+    "id": "board-3-space-p13",
+    "type": "holder",
+    "parent": "board-3",
+    "inheritFrom": "board-4-space-a2",
+    "x": 788.5,
+    "y": 394.043
+  },
+  "board-3-space-p15": {
+    "id": "board-3-space-p15",
+    "type": "holder",
+    "parent": "board-3",
+    "inheritFrom": "board-4-space-a2",
+    "x": 788.5,
+    "y": 454.665
+  },
+  "board-3-space-p17": {
+    "id": "board-3-space-p17",
+    "type": "holder",
+    "parent": "board-3",
+    "inheritFrom": "board-4-space-a2",
+    "x": 788.5,
+    "y": 515.287
+  },
+  "board-3-space-p19": {
+    "id": "board-3-space-p19",
+    "type": "holder",
+    "parent": "board-3",
+    "inheritFrom": "board-4-space-a2",
+    "x": 788.5,
+    "y": 575.909
+  },
+  "board-3-space-p21": {
+    "id": "board-3-space-p21",
+    "type": "holder",
+    "parent": "board-3",
+    "inheritFrom": "board-4-space-a2",
+    "x": 788.5,
+    "y": 636.531
+  },
+  "board-3-space-q12": {
+    "id": "board-3-space-q12",
+    "type": "holder",
+    "parent": "board-3",
+    "inheritFrom": "board-4-space-a2",
+    "x": 841,
+    "y": 363.732
+  },
+  "board-3-space-q14": {
+    "id": "board-3-space-q14",
+    "type": "holder",
+    "parent": "board-3",
+    "inheritFrom": "board-4-space-a2",
+    "x": 841,
+    "y": 424.354
+  },
+  "board-3-space-q16": {
+    "id": "board-3-space-q16",
+    "type": "holder",
+    "parent": "board-3",
+    "inheritFrom": "board-4-space-a2",
+    "x": 841,
+    "y": 484.976
+  },
+  "board-3-space-q18": {
+    "id": "board-3-space-q18",
+    "type": "holder",
+    "parent": "board-3",
+    "inheritFrom": "board-4-space-a2",
+    "x": 841,
+    "y": 545.598
+  },
+  "board-3-space-q20": {
+    "id": "board-3-space-q20",
+    "type": "holder",
+    "parent": "board-3",
+    "inheritFrom": "board-4-space-a2",
+    "x": 841,
+    "y": 606.22
+  },
+  "board-2": {
+    "id": "board-2",
+    "inheritFrom": "board-4",
+    "y": -1000,
+    "image": "/assets/-1026740996_30592",
+    "tilesRemoved": {
+      "tile-city-all": 1,
+      "tile-city-crown": 1,
+      "tile-city-pot": 1,
+      "tile-city-star": 1,
+      "tile-city-crown-pot": 1,
+      "tile-city-crown-star": 1,
+      "tile-city-star-pot": 1,
+      "tile-crop5": 1,
+      "tile-crop6": 1,
+      "tile-crop7": 1,
+      "tile-cropx": 4
+    },
+    "tileSpaces": [
+      "board-2-space-a6",
+      "board-2-space-a12",
+      "board-2-space-b9",
+      "board-2-space-b21",
+      "board-2-space-c14",
+      "board-2-space-d3",
+      "board-2-space-e10",
+      "board-2-space-e14",
+      "board-2-space-e22",
+      "board-2-space-f7",
+      "board-2-space-f19",
+      "board-2-space-g4",
+      "board-2-space-g12",
+      "board-2-space-h19",
+      "board-2-space-i6",
+      "board-2-space-i16",
+      "board-2-space-i22",
+      "board-2-space-j9"
+    ]
+  },
+  "board-2-space-a2": {
+    "id": "board-2-space-a2",
+    "type": "holder",
+    "parent": "board-2",
+    "inheritFrom": "board-4-space-a2",
+    "x": 1,
+    "y": 60.622
+  },
+  "board-2-space-a4": {
+    "id": "board-2-space-a4",
+    "type": "holder",
+    "parent": "board-2",
+    "inheritFrom": "board-4-space-a2",
+    "y": 121.244
+  },
+  "board-2-space-a6": {
+    "id": "board-2-space-a6",
+    "type": "holder",
+    "parent": "board-2",
+    "inheritFrom": "board-4-space-a2",
+    "y": 181.866
+  },
+  "board-2-space-a8": {
+    "id": "board-2-space-a8",
+    "type": "holder",
+    "parent": "board-2",
+    "inheritFrom": "board-4-space-a2",
+    "y": 242.488
+  },
+  "board-2-space-a10": {
+    "id": "board-2-space-a10",
+    "type": "holder",
+    "parent": "board-2",
+    "inheritFrom": "board-4-space-a2",
+    "y": 303.11
+  },
+  "board-2-space-a12": {
+    "id": "board-2-space-a12",
+    "type": "holder",
+    "parent": "board-2",
+    "inheritFrom": "board-4-space-a2",
+    "y": 363.732
+  },
+  "board-2-space-a14": {
+    "id": "board-2-space-a14",
+    "type": "holder",
+    "parent": "board-2",
+    "inheritFrom": "board-4-space-a2",
+    "y": 424.354
+  },
+  "board-2-space-a16": {
+    "id": "board-2-space-a16",
+    "type": "holder",
+    "parent": "board-2",
+    "inheritFrom": "board-4-space-a2",
+    "y": 484.976
+  },
+  "board-2-space-a18": {
+    "id": "board-2-space-a18",
+    "type": "holder",
+    "parent": "board-2",
+    "inheritFrom": "board-4-space-a2",
+    "y": 545.598
+  },
+  "board-2-space-a20": {
+    "id": "board-2-space-a20",
+    "type": "holder",
+    "parent": "board-2",
+    "inheritFrom": "board-4-space-a2",
+    "y": 606.22
+  },
+  "board-2-space-b1": {
+    "id": "board-2-space-b1",
+    "type": "holder",
+    "parent": "board-2",
+    "inheritFrom": "board-4-space-a2",
+    "x": 53.5,
+    "y": 30.311
+  },
+  "board-2-space-b5": {
+    "id": "board-2-space-b5",
+    "type": "holder",
+    "parent": "board-2",
+    "inheritFrom": "board-4-space-a2",
+    "x": 53.5,
+    "y": 151.555
+  },
+  "board-2-space-b7": {
+    "id": "board-2-space-b7",
+    "type": "holder",
+    "parent": "board-2",
+    "inheritFrom": "board-4-space-a2",
+    "x": 53.5,
+    "y": 212.177
+  },
+  "board-2-space-b9": {
+    "id": "board-2-space-b9",
+    "type": "holder",
+    "parent": "board-2",
+    "inheritFrom": "board-4-space-a2",
+    "x": 53.5,
+    "y": 272.799
+  },
+  "board-2-space-b11": {
+    "id": "board-2-space-b11",
+    "type": "holder",
+    "parent": "board-2",
+    "inheritFrom": "board-4-space-a2",
+    "x": 53.5,
+    "y": 333.421
+  },
+  "board-2-space-b13": {
+    "id": "board-2-space-b13",
+    "type": "holder",
+    "parent": "board-2",
+    "inheritFrom": "board-4-space-a2",
+    "x": 53.5,
+    "y": 394.043
+  },
+  "board-2-space-b15": {
+    "id": "board-2-space-b15",
+    "type": "holder",
+    "parent": "board-2",
+    "inheritFrom": "board-4-space-a2",
+    "x": 53.5,
+    "y": 454.665
+  },
+  "board-2-space-b17": {
+    "id": "board-2-space-b17",
+    "type": "holder",
+    "parent": "board-2",
+    "inheritFrom": "board-4-space-a2",
+    "x": 53.5,
+    "y": 515.287
+  },
+  "board-2-space-b19": {
+    "id": "board-2-space-b19",
+    "type": "holder",
+    "parent": "board-2",
+    "inheritFrom": "board-4-space-a2",
+    "x": 53.5,
+    "y": 575.909
+  },
+  "board-2-space-b21": {
+    "id": "board-2-space-b21",
+    "type": "holder",
+    "parent": "board-2",
+    "inheritFrom": "board-4-space-a2",
+    "x": 53.5,
+    "y": 636.531
+  },
+  "board-2-space-c2": {
+    "id": "board-2-space-c2",
+    "type": "holder",
+    "parent": "board-2",
+    "inheritFrom": "board-4-space-a2",
+    "x": 106
+  },
+  "board-2-space-c4": {
+    "id": "board-2-space-c4",
+    "type": "holder",
+    "parent": "board-2",
+    "inheritFrom": "board-4-space-a2",
+    "x": 106,
+    "y": 121.244
+  },
+  "board-2-space-c6": {
+    "id": "board-2-space-c6",
+    "type": "holder",
+    "parent": "board-2",
+    "inheritFrom": "board-4-space-a2",
+    "x": 106,
+    "y": 181.866
+  },
+  "board-2-space-c8": {
+    "id": "board-2-space-c8",
+    "type": "holder",
+    "parent": "board-2",
+    "inheritFrom": "board-4-space-a2",
+    "x": 106,
+    "y": 242.488
+  },
+  "board-2-space-c10": {
+    "id": "board-2-space-c10",
+    "type": "holder",
+    "parent": "board-2",
+    "inheritFrom": "board-4-space-a2",
+    "x": 106,
+    "y": 303.11
+  },
+  "board-2-space-c12": {
+    "id": "board-2-space-c12",
+    "type": "holder",
+    "parent": "board-2",
+    "inheritFrom": "board-4-space-a2",
+    "x": 106,
+    "y": 363.732
+  },
+  "board-2-space-c14": {
+    "id": "board-2-space-c14",
+    "type": "holder",
+    "parent": "board-2",
+    "inheritFrom": "board-4-space-a2",
+    "x": 106,
+    "y": 424.354
+  },
+  "board-2-space-c16": {
+    "id": "board-2-space-c16",
+    "type": "holder",
+    "parent": "board-2",
+    "inheritFrom": "board-4-space-a2",
+    "x": 106,
+    "y": 484.976
+  },
+  "board-2-space-c20": {
+    "id": "board-2-space-c20",
+    "type": "holder",
+    "parent": "board-2",
+    "inheritFrom": "board-4-space-a2",
+    "x": 106,
+    "y": 606.22
+  },
+  "board-2-space-c22": {
+    "id": "board-2-space-c22",
+    "type": "holder",
+    "parent": "board-2",
+    "inheritFrom": "board-4-space-a2",
+    "x": 106,
+    "y": 666.44
+  },
+  "board-2-space-d3": {
+    "id": "board-2-space-d3",
+    "type": "holder",
+    "parent": "board-2",
+    "inheritFrom": "board-4-space-a2",
+    "x": 158.5,
+    "y": 90.973
+  },
+  "board-2-space-d5": {
+    "id": "board-2-space-d5",
+    "type": "holder",
+    "parent": "board-2",
+    "inheritFrom": "board-4-space-a2",
+    "x": 158.5,
+    "y": 151.555
+  },
+  "board-2-space-d7": {
+    "id": "board-2-space-d7",
+    "type": "holder",
+    "parent": "board-2",
+    "inheritFrom": "board-4-space-a2",
+    "x": 158.5,
+    "y": 212.177
+  },
+  "board-2-space-d9": {
+    "id": "board-2-space-d9",
+    "type": "holder",
+    "parent": "board-2",
+    "inheritFrom": "board-4-space-a2",
+    "x": 158.5,
+    "y": 272.799
+  },
+  "board-2-space-d11": {
+    "id": "board-2-space-d11",
+    "type": "holder",
+    "parent": "board-2",
+    "inheritFrom": "board-4-space-a2",
+    "x": 158.5,
+    "y": 333.421
+  },
+  "board-2-space-d13": {
+    "id": "board-2-space-d13",
+    "type": "holder",
+    "parent": "board-2",
+    "inheritFrom": "board-4-space-a2",
+    "x": 158.5,
+    "y": 394.043
+  },
+  "board-2-space-d15": {
+    "id": "board-2-space-d15",
+    "type": "holder",
+    "parent": "board-2",
+    "inheritFrom": "board-4-space-a2",
+    "x": 158.5,
+    "y": 454.665
+  },
+  "board-2-space-d17": {
+    "id": "board-2-space-d17",
+    "type": "holder",
+    "parent": "board-2",
+    "inheritFrom": "board-4-space-a2",
+    "x": 158.5,
+    "y": 515.287
+  },
+  "board-2-space-d19": {
+    "id": "board-2-space-d19",
+    "type": "holder",
+    "parent": "board-2",
+    "inheritFrom": "board-4-space-a2",
+    "x": 158.5,
+    "y": 575.909
+  },
+  "board-2-space-d21": {
+    "id": "board-2-space-d21",
+    "type": "holder",
+    "parent": "board-2",
+    "inheritFrom": "board-4-space-a2",
+    "x": 158.5,
+    "y": 636.531
+  },
+  "board-2-space-e2": {
+    "id": "board-2-space-e2",
+    "type": "holder",
+    "parent": "board-2",
+    "inheritFrom": "board-4-space-a2",
+    "x": 211
+  },
+  "board-2-space-e4": {
+    "id": "board-2-space-e4",
+    "type": "holder",
+    "parent": "board-2",
+    "inheritFrom": "board-4-space-a2",
+    "x": 211,
+    "y": 121.244
+  },
+  "board-2-space-e6": {
+    "id": "board-2-space-e6",
+    "type": "holder",
+    "parent": "board-2",
+    "inheritFrom": "board-4-space-a2",
+    "x": 211,
+    "y": 181.866
+  },
+  "board-2-space-e8": {
+    "id": "board-2-space-e8",
+    "type": "holder",
+    "parent": "board-2",
+    "inheritFrom": "board-4-space-a2",
+    "x": 211,
+    "y": 242.488
+  },
+  "board-2-space-e10": {
+    "id": "board-2-space-e10",
+    "type": "holder",
+    "parent": "board-2",
+    "inheritFrom": "board-4-space-a2",
+    "x": 211,
+    "y": 303.11
+  },
+  "board-2-space-e12": {
+    "id": "board-2-space-e12",
+    "type": "holder",
+    "parent": "board-2",
+    "inheritFrom": "board-4-space-a2",
+    "x": 211,
+    "y": 363.732
+  },
+  "board-2-space-e14": {
+    "id": "board-2-space-e14",
+    "type": "holder",
+    "parent": "board-2",
+    "inheritFrom": "board-4-space-a2",
+    "x": 211,
+    "y": 424.354
+  },
+  "board-2-space-e16": {
+    "id": "board-2-space-e16",
+    "type": "holder",
+    "parent": "board-2",
+    "inheritFrom": "board-4-space-a2",
+    "x": 211,
+    "y": 484.976
+  },
+  "board-2-space-e18": {
+    "id": "board-2-space-e18",
+    "type": "holder",
+    "parent": "board-2",
+    "inheritFrom": "board-4-space-a2",
+    "x": 211,
+    "y": 545.598
+  },
+  "board-2-space-e20": {
+    "id": "board-2-space-e20",
+    "type": "holder",
+    "parent": "board-2",
+    "inheritFrom": "board-4-space-a2",
+    "x": 211,
+    "y": 606.22
+  },
+  "board-2-space-e22": {
+    "id": "board-2-space-e22",
+    "type": "holder",
+    "parent": "board-2",
+    "inheritFrom": "board-4-space-a2",
+    "x": 211,
+    "y": 666.44
+  },
+  "board-2-space-f3": {
+    "id": "board-2-space-f3",
+    "type": "holder",
+    "parent": "board-2",
+    "inheritFrom": "board-4-space-a2",
+    "x": 263.5,
+    "y": 90.973
+  },
+  "board-2-space-f5": {
+    "id": "board-2-space-f5",
+    "type": "holder",
+    "parent": "board-2",
+    "inheritFrom": "board-4-space-a2",
+    "x": 263.5,
+    "y": 151.555
+  },
+  "board-2-space-f7": {
+    "id": "board-2-space-f7",
+    "type": "holder",
+    "parent": "board-2",
+    "inheritFrom": "board-4-space-a2",
+    "x": 263.5,
+    "y": 212.177
+  },
+  "board-2-space-f9": {
+    "id": "board-2-space-f9",
+    "type": "holder",
+    "parent": "board-2",
+    "inheritFrom": "board-4-space-a2",
+    "x": 263.5,
+    "y": 272.799
+  },
+  "board-2-space-f11": {
+    "id": "board-2-space-f11",
+    "type": "holder",
+    "parent": "board-2",
+    "inheritFrom": "board-4-space-a2",
+    "x": 263.5,
+    "y": 333.421
+  },
+  "board-2-space-f13": {
+    "id": "board-2-space-f13",
+    "type": "holder",
+    "parent": "board-2",
+    "inheritFrom": "board-4-space-a2",
+    "x": 263.5,
+    "y": 394.043
+  },
+  "board-2-space-f15": {
+    "id": "board-2-space-f15",
+    "type": "holder",
+    "parent": "board-2",
+    "inheritFrom": "board-4-space-a2",
+    "x": 263.5,
+    "y": 454.665
+  },
+  "board-2-space-f17": {
+    "id": "board-2-space-f17",
+    "type": "holder",
+    "parent": "board-2",
+    "inheritFrom": "board-4-space-a2",
+    "x": 263.5,
+    "y": 515.287
+  },
+  "board-2-space-f19": {
+    "id": "board-2-space-f19",
+    "type": "holder",
+    "parent": "board-2",
+    "inheritFrom": "board-4-space-a2",
+    "x": 263.5,
+    "y": 575.909
+  },
+  "board-2-space-f21": {
+    "id": "board-2-space-f21",
+    "type": "holder",
+    "parent": "board-2",
+    "inheritFrom": "board-4-space-a2",
+    "x": 263.5,
+    "y": 636.531
+  },
+  "board-2-space-g2": {
+    "id": "board-2-space-g2",
+    "type": "holder",
+    "parent": "board-2",
+    "inheritFrom": "board-4-space-a2",
+    "x": 316
+  },
+  "board-2-space-g4": {
+    "id": "board-2-space-g4",
+    "type": "holder",
+    "parent": "board-2",
+    "inheritFrom": "board-4-space-a2",
+    "x": 316,
+    "y": 121.244
+  },
+  "board-2-space-g6": {
+    "id": "board-2-space-g6",
+    "type": "holder",
+    "parent": "board-2",
+    "inheritFrom": "board-4-space-a2",
+    "x": 316,
+    "y": 181.866
+  },
+  "board-2-space-g8": {
+    "id": "board-2-space-g8",
+    "type": "holder",
+    "parent": "board-2",
+    "inheritFrom": "board-4-space-a2",
+    "x": 316,
+    "y": 242.488
+  },
+  "board-2-space-g10": {
+    "id": "board-2-space-g10",
+    "type": "holder",
+    "parent": "board-2",
+    "inheritFrom": "board-4-space-a2",
+    "x": 316,
+    "y": 303.11
+  },
+  "board-2-space-g12": {
+    "id": "board-2-space-g12",
+    "type": "holder",
+    "parent": "board-2",
+    "inheritFrom": "board-4-space-a2",
+    "x": 316,
+    "y": 363.732
+  },
+  "board-2-space-g14": {
+    "id": "board-2-space-g14",
+    "type": "holder",
+    "parent": "board-2",
+    "inheritFrom": "board-4-space-a2",
+    "x": 316,
+    "y": 424.354
+  },
+  "board-2-space-g16": {
+    "id": "board-2-space-g16",
+    "type": "holder",
+    "parent": "board-2",
+    "inheritFrom": "board-4-space-a2",
+    "x": 316,
+    "y": 484.976
+  },
+  "board-2-space-g18": {
+    "id": "board-2-space-g18",
+    "type": "holder",
+    "parent": "board-2",
+    "inheritFrom": "board-4-space-a2",
+    "x": 316,
+    "y": 545.598
+  },
+  "board-2-space-g20": {
+    "id": "board-2-space-g20",
+    "type": "holder",
+    "parent": "board-2",
+    "inheritFrom": "board-4-space-a2",
+    "x": 316,
+    "y": 606.22
+  },
+  "board-2-space-g22": {
+    "id": "board-2-space-g22",
+    "type": "holder",
+    "parent": "board-2",
+    "inheritFrom": "board-4-space-a2",
+    "x": 316,
+    "y": 666.44
+  },
+  "board-2-space-h1": {
+    "id": "board-2-space-h1",
+    "type": "holder",
+    "parent": "board-2",
+    "inheritFrom": "board-4-space-a2",
+    "x": 368.5,
+    "y": 30.311
+  },
+  "board-2-space-h3": {
+    "id": "board-2-space-h3",
+    "type": "holder",
+    "parent": "board-2",
+    "inheritFrom": "board-4-space-a2",
+    "x": 368.5,
+    "y": 90.973
+  },
+  "board-2-space-h5": {
+    "id": "board-2-space-h5",
+    "type": "holder",
+    "parent": "board-2",
+    "inheritFrom": "board-4-space-a2",
+    "x": 368.5,
+    "y": 151.555
+  },
+  "board-2-space-h7": {
+    "id": "board-2-space-h7",
+    "type": "holder",
+    "parent": "board-2",
+    "inheritFrom": "board-4-space-a2",
+    "x": 368.5,
+    "y": 212.177
+  },
+  "board-2-space-h9": {
+    "id": "board-2-space-h9",
+    "type": "holder",
+    "parent": "board-2",
+    "inheritFrom": "board-4-space-a2",
+    "x": 368.5,
+    "y": 272.799
+  },
+  "board-2-space-h11": {
+    "id": "board-2-space-h11",
+    "type": "holder",
+    "parent": "board-2",
+    "inheritFrom": "board-4-space-a2",
+    "x": 368.5,
+    "y": 333.421
+  },
+  "board-2-space-h13": {
+    "id": "board-2-space-h13",
+    "type": "holder",
+    "parent": "board-2",
+    "inheritFrom": "board-4-space-a2",
+    "x": 368.5,
+    "y": 394.043
+  },
+  "board-2-space-h15": {
+    "id": "board-2-space-h15",
+    "type": "holder",
+    "parent": "board-2",
+    "inheritFrom": "board-4-space-a2",
+    "x": 368.5,
+    "y": 454.665
+  },
+  "board-2-space-h17": {
+    "id": "board-2-space-h17",
+    "type": "holder",
+    "parent": "board-2",
+    "inheritFrom": "board-4-space-a2",
+    "x": 368.5,
+    "y": 515.287
+  },
+  "board-2-space-h19": {
+    "id": "board-2-space-h19",
+    "type": "holder",
+    "parent": "board-2",
+    "inheritFrom": "board-4-space-a2",
+    "x": 368.5,
+    "y": 575.909
+  },
+  "board-2-space-h21": {
+    "id": "board-2-space-h21",
+    "type": "holder",
+    "parent": "board-2",
+    "inheritFrom": "board-4-space-a2",
+    "x": 368.5,
+    "y": 636.531
+  },
+  "board-2-space-i0": {
+    "id": "board-2-space-i0",
+    "type": "holder",
+    "parent": "board-2",
+    "inheritFrom": "board-4-space-a2",
+    "x": 421,
+    "y": 0
+  },
+  "board-2-space-i2": {
+    "id": "board-2-space-i2",
+    "type": "holder",
+    "parent": "board-2",
+    "inheritFrom": "board-4-space-a2",
+    "x": 421
+  },
+  "board-2-space-i4": {
+    "id": "board-2-space-i4",
+    "type": "holder",
+    "parent": "board-2",
+    "inheritFrom": "board-4-space-a2",
+    "x": 421,
+    "y": 121.244
+  },
+  "board-2-space-i6": {
+    "id": "board-2-space-i6",
+    "type": "holder",
+    "parent": "board-2",
+    "inheritFrom": "board-4-space-a2",
+    "x": 421,
+    "y": 181.866
+  },
+  "board-2-space-i8": {
+    "id": "board-2-space-i8",
+    "type": "holder",
+    "parent": "board-2",
+    "inheritFrom": "board-4-space-a2",
+    "x": 421,
+    "y": 242.488
+  },
+  "board-2-space-i10": {
+    "id": "board-2-space-i10",
+    "type": "holder",
+    "parent": "board-2",
+    "inheritFrom": "board-4-space-a2",
+    "x": 421,
+    "y": 303.11
+  },
+  "board-2-space-i14": {
+    "id": "board-2-space-i14",
+    "type": "holder",
+    "parent": "board-2",
+    "inheritFrom": "board-4-space-a2",
+    "x": 421,
+    "y": 424.354
+  },
+  "board-2-space-i16": {
+    "id": "board-2-space-i16",
+    "type": "holder",
+    "parent": "board-2",
+    "inheritFrom": "board-4-space-a2",
+    "x": 421,
+    "y": 484.976
+  },
+  "board-2-space-i18": {
+    "id": "board-2-space-i18",
+    "type": "holder",
+    "parent": "board-2",
+    "inheritFrom": "board-4-space-a2",
+    "x": 421,
+    "y": 545.598
+  },
+  "board-2-space-i20": {
+    "id": "board-2-space-i20",
+    "type": "holder",
+    "parent": "board-2",
+    "inheritFrom": "board-4-space-a2",
+    "x": 421,
+    "y": 606.22
+  },
+  "board-2-space-i22": {
+    "id": "board-2-space-i22",
+    "type": "holder",
+    "parent": "board-2",
+    "inheritFrom": "board-4-space-a2",
+    "x": 421,
+    "y": 666.44
+  },
+  "board-2-space-j5": {
+    "id": "board-2-space-j5",
+    "type": "holder",
+    "parent": "board-2",
+    "inheritFrom": "board-4-space-a2",
+    "x": 473.5,
+    "y": 151.555
+  },
+  "board-2-space-j7": {
+    "id": "board-2-space-j7",
+    "type": "holder",
+    "parent": "board-2",
+    "inheritFrom": "board-4-space-a2",
+    "x": 473.5,
+    "y": 212.177
+  },
+  "board-2-space-j9": {
+    "id": "board-2-space-j9",
+    "type": "holder",
+    "parent": "board-2",
+    "inheritFrom": "board-4-space-a2",
+    "x": 473.5,
+    "y": 272.799
+  },
+  "board-2-space-j11": {
+    "id": "board-2-space-j11",
+    "type": "holder",
+    "parent": "board-2",
+    "inheritFrom": "board-4-space-a2",
+    "x": 473.5,
+    "y": 333.421
+  },
+  "board-2-space-j13": {
+    "id": "board-2-space-j13",
+    "type": "holder",
+    "parent": "board-2",
+    "inheritFrom": "board-4-space-a2",
+    "x": 473.5,
+    "y": 394.043
+  },
+  "board-2-space-j15": {
+    "id": "board-2-space-j15",
+    "type": "holder",
+    "parent": "board-2",
+    "inheritFrom": "board-4-space-a2",
+    "x": 473.5,
+    "y": 454.665
+  },
+  "board-2-space-j17": {
+    "id": "board-2-space-j17",
+    "type": "holder",
+    "parent": "board-2",
+    "inheritFrom": "board-4-space-a2",
+    "x": 473.5,
+    "y": 515.287
+  },
+  "board-2-space-j19": {
+    "id": "board-2-space-j19",
+    "type": "holder",
+    "parent": "board-2",
+    "inheritFrom": "board-4-space-a2",
+    "x": 473.5,
+    "y": 575.909
+  },
+  "board-2-space-j21": {
+    "id": "board-2-space-j21",
+    "type": "holder",
+    "parent": "board-2",
+    "inheritFrom": "board-4-space-a2",
+    "x": 473.5,
+    "y": 636.531
+  },
+  "board-2-space-k6": {
+    "id": "board-2-space-k6",
+    "type": "holder",
+    "parent": "board-2",
+    "inheritFrom": "board-4-space-a2",
+    "x": 526,
+    "y": 181.866
+  },
+  "board-2-space-k8": {
+    "id": "board-2-space-k8",
+    "type": "holder",
+    "parent": "board-2",
+    "inheritFrom": "board-4-space-a2",
+    "x": 526,
+    "y": 242.488
+  },
+  "board-2-space-k10": {
+    "id": "board-2-space-k10",
+    "type": "holder",
+    "parent": "board-2",
+    "inheritFrom": "board-4-space-a2",
+    "x": 526,
+    "y": 303.11
+  },
+  "board-2-space-k12": {
+    "id": "board-2-space-k12",
+    "type": "holder",
+    "parent": "board-2",
+    "inheritFrom": "board-4-space-a2",
+    "x": 526,
+    "y": 363.732
+  },
+  "board-2-space-k14": {
+    "id": "board-2-space-k14",
+    "type": "holder",
+    "parent": "board-2",
+    "inheritFrom": "board-4-space-a2",
+    "x": 526,
+    "y": 424.354
+  },
+  "board-2-space-k20": {
+    "id": "board-2-space-k20",
+    "type": "holder",
+    "parent": "board-2",
+    "inheritFrom": "board-4-space-a2",
+    "x": 526,
+    "y": 606.22
+  },
+  "board-2-space-k22": {
+    "id": "board-2-space-k22",
+    "type": "holder",
+    "parent": "board-2",
+    "inheritFrom": "board-4-space-a2",
+    "x": 526,
+    "y": 666.44
+  },
+  "hand": {
+    "id": "hand",
+    "type": "holder",
+    "childrenPerOwner": true,
+    "layer": -3,
+    "x": 595,
+    "y": 910,
+    "width": 373,
+    "height": 80,
+    "dropOffsetX": 1,
+    "dropOffsetY": 8.7,
+    "dropTarget": {
+      "deck": "deck-discs"
+    },
+    "stackOffsetX": 50,
+    "stackOffsetY": 0,
+    "onEnter": {
+      "activeFace": 1
+    },
+    "countRoutine": [
+      {
+        "func": "FOREACH",
+        "in": [
+          "seat-p1",
+          "seat-p2",
+          "seat-p3",
+          "seat-p4"
+        ],
+        "loopRoutine": [
+          {
+            "func": "GET",
+            "collection": [
+              "${value}"
+            ],
+            "property": "player",
+            "variable": "pID"
+          },
+          {
+            "func": "SELECT",
+            "property": "parent",
+            "value": "${PROPERTY id}"
+          },
+          {
+            "func": "SELECT",
+            "source": "DEFAULT",
+            "property": "owner",
+            "value": "${pID}"
+          },
+          {
+            "func": "COUNT",
+            "collection": "DEFAULT"
+          },
+          "var playerNo = ${PROPERTY index OF $value}",
+          {
+            "func": "LABEL",
+            "label": "hand-counter-p${playerNo}",
+            "value": "${COUNT}"
+          }
+        ]
+      }
+    ],
+    "enterRoutine": [
+      {
+        "func": "CALL",
+        "routine": "countRoutine"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "CALL",
+        "routine": "countRoutine"
+      }
+    ]
+  },
+  "area-p1": {
+    "id": "area-p1",
+    "layer": -1,
+    "x": 0,
+    "y": 0,
+    "width": 500,
+    "height": 250,
+    "css": {
+      "border-style": "solid",
+      "border-width": "1px"
+    },
+    "movable": false,
+    "linkedToSeat": "seat-p1"
+  },
+  "area-p2": {
+    "id": "area-p2",
+    "inheritFrom": "area-p1",
+    "y": 250,
+    "linkedToSeat": "seat-p2"
+  },
+  "area-p3": {
+    "id": "area-p3",
+    "inheritFrom": "area-p1",
+    "y": 500,
+    "linkedToSeat": "seat-p3"
+  },
+  "area-p4": {
+    "id": "area-p4",
+    "inheritFrom": "area-p1",
+    "y": 750,
+    "linkedToSeat": "seat-p4"
+  },
+  "seat-p1": {
+    "id": "seat-p1",
+    "type": "seat",
+    "parent": "area-p1",
+    "fixedParent": true,
+    "x": 5,
+    "y": 8,
+    "height": 40,
+    "width": 295,
+    "index": 1,
+    "hideWhenUnused": true,
+    "foreground": "#000000",
+    "css": {
+      "default": {
+        "border": "5px solid #999999",
+        "box-shadow": "0 2px 5px #00000066",
+        "color": "#000000",
+        "font-size": "30px"
+      },
+      ".seated": {
+        "background": "${PROPERTY color}",
+        "border": "5px solid #000000",
+        "color": "${PROPERTY foreground}"
+      },
+      ".seated.turn": {
+        "border": "5px dotted ${PROPERTY foreground}"
+      }
+    },
+    "clickRoutine": [
+      {
+        "func": "CLICK",
+        "collection": "thisButton",
+        "mode": "ignoreClickRoutine"
+      },
+      {
+        "func": "SELECT",
+        "property": "deck",
+        "value": "deck-discs"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "playerIndex",
+        "value": "${PROPERTY index}"
+      },
+      {
+        "func": "SET",
+        "property": "background",
+        "value": "${PROPERTY color}"
+      },
+      "var foreground = colorContrast ${PROPERTY color}",
+      {
+        "func": "SET",
+        "property": "color",
+        "value": "${foreground}"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "${PROPERTY id}"
+        ],
+        "property": "foreground",
+        "value": "${foreground}"
+      }
+    ]
+  },
+  "seat-p2": {
+    "id": "seat-p2",
+    "type": "seat",
+    "parent": "area-p2",
+    "fixedParent": true,
+    "index": 2,
+    "foreground": "#000000",
+    "inheritFrom": {
+      "seat-p1": [
+        "x",
+        "y",
+        "height",
+        "width",
+        "css",
+        "hideWhenUnused",
+        "clickRoutine"
+      ]
+    }
+  },
+  "seat-p3": {
+    "id": "seat-p3",
+    "type": "seat",
+    "parent": "area-p3",
+    "fixedParent": true,
+    "index": 3,
+    "foreground": "#000000",
+    "inheritFrom": {
+      "seat-p1": [
+        "x",
+        "y",
+        "height",
+        "width",
+        "css",
+        "hideWhenUnused",
+        "clickRoutine"
+      ]
+    }
+  },
+  "seat-p4": {
+    "id": "seat-p4",
+    "type": "seat",
+    "parent": "area-p4",
+    "fixedParent": true,
+    "index": 4,
+    "foreground": "#000000",
+    "inheritFrom": {
+      "seat-p1": [
+        "x",
+        "y",
+        "height",
+        "width",
+        "css",
+        "hideWhenUnused",
+        "clickRoutine"
+      ]
+    }
+  },
+  "score-p1": {
+    "id": "score-p1",
+    "type": "label",
+    "parent": "area-p1",
+    "fixedParent": true,
+    "x": 350,
+    "y": 30,
+    "width": 65,
+    "height": 35,
+    "css": {
+      "font-size": "30px"
+    },
+    "editable": false,
+    "text": 0
+  },
+  "label-score-p1": {
+    "id": "label-score-p1",
+    "type": "label",
+    "parent": "score-p1",
+    "fixedParent": true,
+    "x": 0,
+    "y": -20,
+    "width": 65,
+    "height": 20,
+    "movable": false,
+    "movableInEdit": false,
+    "editable": false,
+    "css": {
+      "font-size": "20px"
+    },
+    "text": "SCORE"
+  },
+  "button-score-dec-p1": {
+    "id": "button-score-dec-p1",
+    "type": "button",
+    "parent": "score-p1",
+    "fixedParent": true,
+    "x": -38,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "movable": false,
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": {
+      "font-size": "28px"
+    },
+    "text": "remove",
+    "clickRoutine": [
+      "var counter = ${PROPERTY parent}",
+      "var currentScore = ${PROPERTY text OF $counter}",
+      {
+        "func": "IF",
+        "operand1": "${currentScore}",
+        "relation": ">",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "func": "LABEL",
+            "label": "${counter}",
+            "mode": "dec",
+            "value": 1
+          }
+        ]
+      }
+    ]
+  },
+  "button-score-inc-p1": {
+    "id": "button-score-inc-p1",
+    "type": "button",
+    "parent": "score-p1",
+    "fixedParent": true,
+    "x": 68,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "18px"
+    },
+    "text": "+1",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 1
+      }
+    ]
+  },
+  "button-score-inc-x-p1": {
+    "id": "button-score-inc-x-p1",
+    "type": "button",
+    "parent": "score-p1",
+    "inheritFrom": "button-score-inc-p1",
+    "x": 110,
+    "text": "+X",
+    "clickRoutine": [
+      "var score = ${PROPERTY parent}",
+      "var area = ${PROPERTY parent OF $score}",
+      "var seat = ${PROPERTY linkedToSeat OF $area}",
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY player OF $seat}",
+        "operand2": "",
+        "thenRoutine": [
+          "var playerDesc = 'Player ' + ${PROPERTY index OF $seat}"
+        ],
+        "elseRoutine": [
+          "var playerDesc = ${PROPERTY player OF $seat}"
+        ]
+      },
+      {
+        "func": "INPUT",
+        "header": "Enter amount to add to ${playerDesc}'s score",
+        "confirmButtonText": "Add",
+        "cancelButtonText": "Cancel",
+        "fields": [
+          {
+            "type": "number",
+            "variable": "addToScore",
+            "value": ""
+          }
+        ]
+      },
+      "var checkInt = ${addToScore} % 1",
+      {
+        "note": "Sanity check / typo avoidance 1 of 2: only add value if it is an integer",
+        "func": "IF",
+        "operand1": "${checkInt}",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "note": "Sanity check / typo avoidance 2 of 2: only add value if it is a three-digit number",
+            "func": "IF",
+            "operand1": "${addToScore}",
+            "relation": "<",
+            "operand2": 1000,
+            "thenRoutine": [
+              {
+                "func": "IF",
+                "operand1": "${addToScore}",
+                "relation": ">",
+                "operand2": -1000,
+                "thenRoutine": [
+                  {
+                    "func": "LABEL",
+                    "label": "${score}",
+                    "mode": "inc",
+                    "value": "${addToScore}"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "score-p2": {
+    "id": "score-p2",
+    "type": "label",
+    "parent": "area-p2",
+    "inheritFrom": "score-p1",
+    "text": 0
+  },
+  "button-score-dec-p2": {
+    "id": "button-score-dec-p2",
+    "type": "button",
+    "parent": "score-p2",
+    "inheritFrom": "button-score-dec-p1"
+  },
+  "button-score-inc-p2": {
+    "id": "button-score-inc-p2",
+    "type": "button",
+    "parent": "score-p2",
+    "inheritFrom": "button-score-inc-p1"
+  },
+  "button-score-inc-x-p2": {
+    "id": "button-score-inc-x-p2",
+    "type": "button",
+    "parent": "score-p2",
+    "inheritFrom": "button-score-inc-x-p1"
+  },
+  "label-score-p2": {
+    "id": "label-score-p2",
+    "type": "label",
+    "parent": "score-p2",
+    "inheritFrom": "label-score-p1"
+  },
+  "score-p3": {
+    "id": "score-p3",
+    "type": "label",
+    "parent": "area-p3",
+    "inheritFrom": "score-p1",
+    "text": 0
+  },
+  "button-score-dec-p3": {
+    "id": "button-score-dec-p3",
+    "type": "button",
+    "parent": "score-p3",
+    "inheritFrom": "button-score-dec-p1"
+  },
+  "button-score-inc-p3": {
+    "id": "button-score-inc-p3",
+    "type": "button",
+    "parent": "score-p3",
+    "inheritFrom": "button-score-inc-p1"
+  },
+  "button-score-inc-x-p3": {
+    "id": "button-score-inc-x-p3",
+    "type": "button",
+    "parent": "score-p3",
+    "inheritFrom": "button-score-inc-x-p1"
+  },
+  "label-score-p3": {
+    "id": "label-score-p3",
+    "type": "label",
+    "parent": "score-p3",
+    "inheritFrom": "label-score-p1"
+  },
+  "score-p4": {
+    "id": "score-p4",
+    "type": "label",
+    "parent": "area-p4",
+    "inheritFrom": "score-p1",
+    "text": 0
+  },
+  "button-score-dec-p4": {
+    "id": "button-score-dec-p4",
+    "type": "button",
+    "parent": "score-p4",
+    "inheritFrom": "button-score-dec-p1"
+  },
+  "button-score-inc-p4": {
+    "id": "button-score-inc-p4",
+    "type": "button",
+    "parent": "score-p4",
+    "inheritFrom": "button-score-inc-p1"
+  },
+  "button-score-inc-x-p4": {
+    "id": "button-score-inc-x-p4",
+    "type": "button",
+    "parent": "score-p4",
+    "inheritFrom": "button-score-inc-x-p1"
+  },
+  "label-score-p4": {
+    "id": "label-score-p4",
+    "type": "label",
+    "parent": "score-p4",
+    "inheritFrom": "label-score-p1"
+  },
+  "hand-counter-p1": {
+    "id": "hand-counter-p1",
+    "parent": "area-p1",
+    "fixedParent": true,
+    "x": 20,
+    "y": 60,
+    "width": 72.309,
+    "height": 62.622,
+    "movable": false,
+    "movableInEdit": false,
+    "image": "/assets/1603528606_669",
+    "css": {
+      "color": "#000000",
+      "font-size": "30px",
+      "line-height": "85px",
+      "text-indent": "-5px",
+      "text-align": "center"
+    },
+    "text": 0
+  },
+  "hand-counter-p2": {
+    "id": "hand-counter-p2",
+    "parent": "area-p2",
+    "inheritFrom": "hand-counter-p1",
+    "text": 0
+  },
+  "hand-counter-p3": {
+    "id": "hand-counter-p3",
+    "parent": "area-p3",
+    "inheritFrom": "hand-counter-p1",
+    "text": 0
+  },
+  "hand-counter-p4": {
+    "id": "hand-counter-p4",
+    "parent": "area-p4",
+    "inheritFrom": "hand-counter-p1",
+    "text": 0
+  },
+  "holder-discs-p1": {
+    "id": "holder-discs-p1",
+    "type": "holder",
+    "parent": "area-p1",
+    "fixedParent": true,
+    "x": 20,
+    "y": 150,
+    "width": 72.309,
+    "height": 72.309,
+    "movable": false,
+    "movableInEdit": false,
+    "dropOffsetX": 0,
+    "dropOffsetY": 4.84,
+    "dropTarget": {
+      "deck": "deck-discs"
+    },
+    "onEnter": {
+      "activeFace": 0
+    }
+  },
+  "deck-discs": {
+    "id": "deck-discs",
+    "type": "deck",
+    "parent": "holder-discs-p1",
+    "cardTypes": {
+      "disc-crown": {
+        "image": "/assets/647184309_1309"
+      },
+      "disc-farmer": {
+        "image": "/assets/1613144768_1110"
+      },
+      "disc-pot": {
+        "image": "/assets/2012672162_1699"
+      },
+      "disc-star": {
+        "image": "/assets/-166243862_715"
+      }
+    },
+    "faceTemplates": [
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 72.309,
+            "height": 62.622,
+            "value": "/assets/-1112820028_265",
+            "color": "transparent",
+            "svgReplaces": {
+              "#bgcolor": "background",
+              "#fgcolor": "color"
+            }
+          }
+        ]
+      },
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 72.309,
+            "height": 62.622,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image"
+            },
+            "svgReplaces": {
+              "#bgcolor": "background",
+              "#fgcolor": "color"
+            }
+          }
+        ]
+      }
+    ],
+    "cardDefaults": {
+      "background": "gray",
+      "color": "black",
+      "width": 72.309,
+      "height": 62.622,
+      "onPileCreation": {
+        "handleCSS": {
+          "background": "black",
+          "color": "white"
+        },
+        "handlePosition": "top right"
+      }
+    }
+  },
+  "pile-discs-p1": {
+    "id": "pile-discs-p1",
+    "type": "pile",
+    "parent": "holder-discs-p1",
+    "x": 0,
+    "y": 4.84,
+    "width": 72.309,
+    "height": 62.622,
+    "handleCSS": {
+      "background": "black",
+      "color": "white"
+    },
+    "handlePosition": "top right",
+    "movable": false
+  },
+  "disc-farmer-p1-01": {
+    "id": "disc-farmer-p1-01",
+    "parent": "pile-discs-p1",
+    "type": "card",
+    "deck": "deck-discs",
+    "cardType": "disc-farmer",
+    "playerIndex": 1
+  },
+  "disc-farmer-p1-02": {
+    "id": "disc-farmer-p1-02",
+    "parent": "pile-discs-p1",
+    "type": "card",
+    "deck": "deck-discs",
+    "cardType": "disc-farmer",
+    "playerIndex": 1
+  },
+  "disc-farmer-p1-03": {
+    "id": "disc-farmer-p1-03",
+    "parent": "pile-discs-p1",
+    "type": "card",
+    "deck": "deck-discs",
+    "cardType": "disc-farmer",
+    "playerIndex": 1
+  },
+  "disc-farmer-p1-04": {
+    "id": "disc-farmer-p1-04",
+    "parent": "pile-discs-p1",
+    "type": "card",
+    "deck": "deck-discs",
+    "cardType": "disc-farmer",
+    "playerIndex": 1
+  },
+  "disc-farmer-p1-05": {
+    "id": "disc-farmer-p1-05",
+    "parent": "pile-discs-p1",
+    "type": "card",
+    "deck": "deck-discs",
+    "cardType": "disc-farmer",
+    "playerIndex": 1
+  },
+  "disc-farmer-p1-06": {
+    "id": "disc-farmer-p1-06",
+    "parent": "pile-discs-p1",
+    "type": "card",
+    "deck": "deck-discs",
+    "cardType": "disc-farmer",
+    "playerIndex": 1
+  },
+  "disc-farmer-p1-07": {
+    "id": "disc-farmer-p1-07",
+    "parent": "pile-discs-p1",
+    "type": "card",
+    "deck": "deck-discs",
+    "cardType": "disc-farmer",
+    "playerIndex": 1
+  },
+  "disc-farmer-p1-08": {
+    "id": "disc-farmer-p1-08",
+    "parent": "pile-discs-p1",
+    "type": "card",
+    "deck": "deck-discs",
+    "cardType": "disc-farmer",
+    "playerIndex": 1
+  },
+  "disc-farmer-p1-09": {
+    "id": "disc-farmer-p1-09",
+    "parent": "pile-discs-p1",
+    "type": "card",
+    "deck": "deck-discs",
+    "cardType": "disc-farmer",
+    "playerIndex": 1
+  },
+  "disc-farmer-p1-10": {
+    "id": "disc-farmer-p1-10",
+    "parent": "pile-discs-p1",
+    "type": "card",
+    "deck": "deck-discs",
+    "cardType": "disc-farmer",
+    "playerIndex": 1
+  },
+  "disc-farmer-p1-11": {
+    "id": "disc-farmer-p1-11",
+    "parent": "pile-discs-p1",
+    "type": "card",
+    "deck": "deck-discs",
+    "cardType": "disc-farmer",
+    "playerIndex": 1
+  },
+  "disc-farmer-p1-12": {
+    "id": "disc-farmer-p1-12",
+    "parent": "pile-discs-p1",
+    "type": "card",
+    "deck": "deck-discs",
+    "cardType": "disc-farmer",
+    "playerIndex": 1
+  },
+  "disc-crown-p1-1": {
+    "id": "disc-crown-p1-1",
+    "parent": "pile-discs-p1",
+    "type": "card",
+    "deck": "deck-discs",
+    "cardType": "disc-crown",
+    "playerIndex": 1
+  },
+  "disc-crown-p1-2": {
+    "id": "disc-crown-p1-2",
+    "parent": "pile-discs-p1",
+    "type": "card",
+    "deck": "deck-discs",
+    "cardType": "disc-crown",
+    "playerIndex": 1
+  },
+  "disc-crown-p1-3": {
+    "id": "disc-crown-p1-3",
+    "parent": "pile-discs-p1",
+    "type": "card",
+    "deck": "deck-discs",
+    "cardType": "disc-crown",
+    "playerIndex": 1
+  },
+  "disc-crown-p1-4": {
+    "id": "disc-crown-p1-4",
+    "parent": "pile-discs-p1",
+    "type": "card",
+    "deck": "deck-discs",
+    "cardType": "disc-crown",
+    "playerIndex": 1
+  },
+  "disc-crown-p1-5": {
+    "id": "disc-crown-p1-5",
+    "parent": "pile-discs-p1",
+    "type": "card",
+    "deck": "deck-discs",
+    "cardType": "disc-crown",
+    "playerIndex": 1
+  },
+  "disc-crown-p1-6": {
+    "id": "disc-crown-p1-6",
+    "parent": "pile-discs-p1",
+    "type": "card",
+    "deck": "deck-discs",
+    "cardType": "disc-crown",
+    "playerIndex": 1
+  },
+  "disc-pot-p1-1": {
+    "id": "disc-pot-p1-1",
+    "parent": "pile-discs-p1",
+    "type": "card",
+    "deck": "deck-discs",
+    "cardType": "disc-pot",
+    "playerIndex": 1
+  },
+  "disc-pot-p1-2": {
+    "id": "disc-pot-p1-2",
+    "parent": "pile-discs-p1",
+    "type": "card",
+    "deck": "deck-discs",
+    "cardType": "disc-pot",
+    "playerIndex": 1
+  },
+  "disc-pot-p1-3": {
+    "id": "disc-pot-p1-3",
+    "parent": "pile-discs-p1",
+    "type": "card",
+    "deck": "deck-discs",
+    "cardType": "disc-pot",
+    "playerIndex": 1
+  },
+  "disc-pot-p1-4": {
+    "id": "disc-pot-p1-4",
+    "parent": "pile-discs-p1",
+    "type": "card",
+    "deck": "deck-discs",
+    "cardType": "disc-pot",
+    "playerIndex": 1
+  },
+  "disc-pot-p1-5": {
+    "id": "disc-pot-p1-5",
+    "parent": "pile-discs-p1",
+    "type": "card",
+    "deck": "deck-discs",
+    "cardType": "disc-pot",
+    "playerIndex": 1
+  },
+  "disc-pot-p1-6": {
+    "id": "disc-pot-p1-6",
+    "parent": "pile-discs-p1",
+    "type": "card",
+    "deck": "deck-discs",
+    "cardType": "disc-pot",
+    "playerIndex": 1
+  },
+  "disc-star-p1-1": {
+    "id": "disc-star-p1-1",
+    "parent": "pile-discs-p1",
+    "type": "card",
+    "deck": "deck-discs",
+    "cardType": "disc-star",
+    "playerIndex": 1
+  },
+  "disc-star-p1-2": {
+    "id": "disc-star-p1-2",
+    "parent": "pile-discs-p1",
+    "type": "card",
+    "deck": "deck-discs",
+    "cardType": "disc-star",
+    "playerIndex": 1
+  },
+  "disc-star-p1-3": {
+    "id": "disc-star-p1-3",
+    "parent": "pile-discs-p1",
+    "type": "card",
+    "deck": "deck-discs",
+    "cardType": "disc-star",
+    "playerIndex": 1
+  },
+  "disc-star-p1-4": {
+    "id": "disc-star-p1-4",
+    "parent": "pile-discs-p1",
+    "type": "card",
+    "deck": "deck-discs",
+    "cardType": "disc-star",
+    "playerIndex": 1
+  },
+  "disc-star-p1-5": {
+    "id": "disc-star-p1-5",
+    "parent": "pile-discs-p1",
+    "type": "card",
+    "deck": "deck-discs",
+    "cardType": "disc-star",
+    "playerIndex": 1
+  },
+  "disc-star-p1-6": {
+    "id": "disc-star-p1-6",
+    "parent": "pile-discs-p1",
+    "type": "card",
+    "deck": "deck-discs",
+    "cardType": "disc-star",
+    "playerIndex": 1
+  },
+  "holder-discs-p2": {
+    "id": "holder-discs-p2",
+    "type": "holder",
+    "parent": "area-p2",
+    "inheritFrom": "holder-discs-p1"
+  },
+  "pile-discs-p2": {
+    "id": "pile-discs-p2",
+    "type": "pile",
+    "parent": "holder-discs-p2",
+    "x": 0,
+    "y": 4.84,
+    "width": 72.309,
+    "height": 62.622,
+    "handleCSS": {
+      "background": "black",
+      "color": "white"
+    },
+    "handlePosition": "top right",
+    "movable": false
+  },
+  "disc-farmer-p2-01": {
+    "id": "disc-farmer-p2-01",
+    "parent": "pile-discs-p2",
+    "type": "card",
+    "deck": "deck-discs",
+    "cardType": "disc-farmer",
+    "playerIndex": 2
+  },
+  "disc-farmer-p2-02": {
+    "id": "disc-farmer-p2-02",
+    "parent": "pile-discs-p2",
+    "type": "card",
+    "deck": "deck-discs",
+    "cardType": "disc-farmer",
+    "playerIndex": 2
+  },
+  "disc-farmer-p2-03": {
+    "id": "disc-farmer-p2-03",
+    "parent": "pile-discs-p2",
+    "type": "card",
+    "deck": "deck-discs",
+    "cardType": "disc-farmer",
+    "playerIndex": 2
+  },
+  "disc-farmer-p2-04": {
+    "id": "disc-farmer-p2-04",
+    "parent": "pile-discs-p2",
+    "type": "card",
+    "deck": "deck-discs",
+    "cardType": "disc-farmer",
+    "playerIndex": 2
+  },
+  "disc-farmer-p2-05": {
+    "id": "disc-farmer-p2-05",
+    "parent": "pile-discs-p2",
+    "type": "card",
+    "deck": "deck-discs",
+    "cardType": "disc-farmer",
+    "playerIndex": 2
+  },
+  "disc-farmer-p2-06": {
+    "id": "disc-farmer-p2-06",
+    "parent": "pile-discs-p2",
+    "type": "card",
+    "deck": "deck-discs",
+    "cardType": "disc-farmer",
+    "playerIndex": 2
+  },
+  "disc-farmer-p2-07": {
+    "id": "disc-farmer-p2-07",
+    "parent": "pile-discs-p2",
+    "type": "card",
+    "deck": "deck-discs",
+    "cardType": "disc-farmer",
+    "playerIndex": 2
+  },
+  "disc-farmer-p2-08": {
+    "id": "disc-farmer-p2-08",
+    "parent": "pile-discs-p2",
+    "type": "card",
+    "deck": "deck-discs",
+    "cardType": "disc-farmer",
+    "playerIndex": 2
+  },
+  "disc-farmer-p2-09": {
+    "id": "disc-farmer-p2-09",
+    "parent": "pile-discs-p2",
+    "type": "card",
+    "deck": "deck-discs",
+    "cardType": "disc-farmer",
+    "playerIndex": 2
+  },
+  "disc-farmer-p2-10": {
+    "id": "disc-farmer-p2-10",
+    "parent": "pile-discs-p2",
+    "type": "card",
+    "deck": "deck-discs",
+    "cardType": "disc-farmer",
+    "playerIndex": 2
+  },
+  "disc-farmer-p2-11": {
+    "id": "disc-farmer-p2-11",
+    "parent": "pile-discs-p2",
+    "type": "card",
+    "deck": "deck-discs",
+    "cardType": "disc-farmer",
+    "playerIndex": 2
+  },
+  "disc-farmer-p2-12": {
+    "id": "disc-farmer-p2-12",
+    "parent": "pile-discs-p2",
+    "type": "card",
+    "deck": "deck-discs",
+    "cardType": "disc-farmer",
+    "playerIndex": 2
+  },
+  "disc-crown-p2-1": {
+    "id": "disc-crown-p2-1",
+    "parent": "pile-discs-p2",
+    "type": "card",
+    "deck": "deck-discs",
+    "cardType": "disc-crown",
+    "playerIndex": 2
+  },
+  "disc-crown-p2-2": {
+    "id": "disc-crown-p2-2",
+    "parent": "pile-discs-p2",
+    "type": "card",
+    "deck": "deck-discs",
+    "cardType": "disc-crown",
+    "playerIndex": 2
+  },
+  "disc-crown-p2-3": {
+    "id": "disc-crown-p2-3",
+    "parent": "pile-discs-p2",
+    "type": "card",
+    "deck": "deck-discs",
+    "cardType": "disc-crown",
+    "playerIndex": 2
+  },
+  "disc-crown-p2-4": {
+    "id": "disc-crown-p2-4",
+    "parent": "pile-discs-p2",
+    "type": "card",
+    "deck": "deck-discs",
+    "cardType": "disc-crown",
+    "playerIndex": 2
+  },
+  "disc-crown-p2-5": {
+    "id": "disc-crown-p2-5",
+    "parent": "pile-discs-p2",
+    "type": "card",
+    "deck": "deck-discs",
+    "cardType": "disc-crown",
+    "playerIndex": 2
+  },
+  "disc-crown-p2-6": {
+    "id": "disc-crown-p2-6",
+    "parent": "pile-discs-p2",
+    "type": "card",
+    "deck": "deck-discs",
+    "cardType": "disc-crown",
+    "playerIndex": 2
+  },
+  "disc-pot-p2-1": {
+    "id": "disc-pot-p2-1",
+    "parent": "pile-discs-p2",
+    "type": "card",
+    "deck": "deck-discs",
+    "cardType": "disc-pot",
+    "playerIndex": 2
+  },
+  "disc-pot-p2-2": {
+    "id": "disc-pot-p2-2",
+    "parent": "pile-discs-p2",
+    "type": "card",
+    "deck": "deck-discs",
+    "cardType": "disc-pot",
+    "playerIndex": 2
+  },
+  "disc-pot-p2-3": {
+    "id": "disc-pot-p2-3",
+    "parent": "pile-discs-p2",
+    "type": "card",
+    "deck": "deck-discs",
+    "cardType": "disc-pot",
+    "playerIndex": 2
+  },
+  "disc-pot-p2-4": {
+    "id": "disc-pot-p2-4",
+    "parent": "pile-discs-p2",
+    "type": "card",
+    "deck": "deck-discs",
+    "cardType": "disc-pot",
+    "playerIndex": 2
+  },
+  "disc-pot-p2-5": {
+    "id": "disc-pot-p2-5",
+    "parent": "pile-discs-p2",
+    "type": "card",
+    "deck": "deck-discs",
+    "cardType": "disc-pot",
+    "playerIndex": 2
+  },
+  "disc-pot-p2-6": {
+    "id": "disc-pot-p2-6",
+    "parent": "pile-discs-p2",
+    "type": "card",
+    "deck": "deck-discs",
+    "cardType": "disc-pot",
+    "playerIndex": 2
+  },
+  "disc-star-p2-1": {
+    "id": "disc-star-p2-1",
+    "parent": "pile-discs-p2",
+    "type": "card",
+    "deck": "deck-discs",
+    "cardType": "disc-star",
+    "playerIndex": 2
+  },
+  "disc-star-p2-2": {
+    "id": "disc-star-p2-2",
+    "parent": "pile-discs-p2",
+    "type": "card",
+    "deck": "deck-discs",
+    "cardType": "disc-star",
+    "playerIndex": 2
+  },
+  "disc-star-p2-3": {
+    "id": "disc-star-p2-3",
+    "parent": "pile-discs-p2",
+    "type": "card",
+    "deck": "deck-discs",
+    "cardType": "disc-star",
+    "playerIndex": 2
+  },
+  "disc-star-p2-4": {
+    "id": "disc-star-p2-4",
+    "parent": "pile-discs-p2",
+    "type": "card",
+    "deck": "deck-discs",
+    "cardType": "disc-star",
+    "playerIndex": 2
+  },
+  "disc-star-p2-5": {
+    "id": "disc-star-p2-5",
+    "parent": "pile-discs-p2",
+    "type": "card",
+    "deck": "deck-discs",
+    "cardType": "disc-star",
+    "playerIndex": 2
+  },
+  "disc-star-p2-6": {
+    "id": "disc-star-p2-6",
+    "parent": "pile-discs-p2",
+    "type": "card",
+    "deck": "deck-discs",
+    "cardType": "disc-star",
+    "playerIndex": 2
+  },
+  "holder-discs-p3": {
+    "id": "holder-discs-p3",
+    "type": "holder",
+    "parent": "area-p3",
+    "inheritFrom": "holder-discs-p1"
+  },
+  "pile-discs-p3": {
+    "id": "pile-discs-p3",
+    "type": "pile",
+    "parent": "holder-discs-p3",
+    "x": 0,
+    "y": 4.84,
+    "width": 72.309,
+    "height": 62.622,
+    "handleCSS": {
+      "background": "black",
+      "color": "white"
+    },
+    "handlePosition": "top right",
+    "movable": false
+  },
+  "disc-farmer-p3-01": {
+    "id": "disc-farmer-p3-01",
+    "parent": "pile-discs-p3",
+    "type": "card",
+    "deck": "deck-discs",
+    "cardType": "disc-farmer",
+    "playerIndex": 3
+  },
+  "disc-farmer-p3-02": {
+    "id": "disc-farmer-p3-02",
+    "parent": "pile-discs-p3",
+    "type": "card",
+    "deck": "deck-discs",
+    "cardType": "disc-farmer",
+    "playerIndex": 3
+  },
+  "disc-farmer-p3-03": {
+    "id": "disc-farmer-p3-03",
+    "parent": "pile-discs-p3",
+    "type": "card",
+    "deck": "deck-discs",
+    "cardType": "disc-farmer",
+    "playerIndex": 3
+  },
+  "disc-farmer-p3-04": {
+    "id": "disc-farmer-p3-04",
+    "parent": "pile-discs-p3",
+    "type": "card",
+    "deck": "deck-discs",
+    "cardType": "disc-farmer",
+    "playerIndex": 3
+  },
+  "disc-farmer-p3-05": {
+    "id": "disc-farmer-p3-05",
+    "parent": "pile-discs-p3",
+    "type": "card",
+    "deck": "deck-discs",
+    "cardType": "disc-farmer",
+    "playerIndex": 3
+  },
+  "disc-farmer-p3-06": {
+    "id": "disc-farmer-p3-06",
+    "parent": "pile-discs-p3",
+    "type": "card",
+    "deck": "deck-discs",
+    "cardType": "disc-farmer",
+    "playerIndex": 3
+  },
+  "disc-farmer-p3-07": {
+    "id": "disc-farmer-p3-07",
+    "parent": "pile-discs-p3",
+    "type": "card",
+    "deck": "deck-discs",
+    "cardType": "disc-farmer",
+    "playerIndex": 3
+  },
+  "disc-farmer-p3-08": {
+    "id": "disc-farmer-p3-08",
+    "parent": "pile-discs-p3",
+    "type": "card",
+    "deck": "deck-discs",
+    "cardType": "disc-farmer",
+    "playerIndex": 3
+  },
+  "disc-farmer-p3-09": {
+    "id": "disc-farmer-p3-09",
+    "parent": "pile-discs-p3",
+    "type": "card",
+    "deck": "deck-discs",
+    "cardType": "disc-farmer",
+    "playerIndex": 3
+  },
+  "disc-farmer-p3-10": {
+    "id": "disc-farmer-p3-10",
+    "parent": "pile-discs-p3",
+    "type": "card",
+    "deck": "deck-discs",
+    "cardType": "disc-farmer",
+    "playerIndex": 3
+  },
+  "disc-farmer-p3-11": {
+    "id": "disc-farmer-p3-11",
+    "parent": "pile-discs-p3",
+    "type": "card",
+    "deck": "deck-discs",
+    "cardType": "disc-farmer",
+    "playerIndex": 3
+  },
+  "disc-farmer-p3-12": {
+    "id": "disc-farmer-p3-12",
+    "parent": "pile-discs-p3",
+    "type": "card",
+    "deck": "deck-discs",
+    "cardType": "disc-farmer",
+    "playerIndex": 3
+  },
+  "disc-crown-p3-1": {
+    "id": "disc-crown-p3-1",
+    "parent": "pile-discs-p3",
+    "type": "card",
+    "deck": "deck-discs",
+    "cardType": "disc-crown",
+    "playerIndex": 3
+  },
+  "disc-crown-p3-2": {
+    "id": "disc-crown-p3-2",
+    "parent": "pile-discs-p3",
+    "type": "card",
+    "deck": "deck-discs",
+    "cardType": "disc-crown",
+    "playerIndex": 3
+  },
+  "disc-crown-p3-3": {
+    "id": "disc-crown-p3-3",
+    "parent": "pile-discs-p3",
+    "type": "card",
+    "deck": "deck-discs",
+    "cardType": "disc-crown",
+    "playerIndex": 3
+  },
+  "disc-crown-p3-4": {
+    "id": "disc-crown-p3-4",
+    "parent": "pile-discs-p3",
+    "type": "card",
+    "deck": "deck-discs",
+    "cardType": "disc-crown",
+    "playerIndex": 3
+  },
+  "disc-crown-p3-5": {
+    "id": "disc-crown-p3-5",
+    "parent": "pile-discs-p3",
+    "type": "card",
+    "deck": "deck-discs",
+    "cardType": "disc-crown",
+    "playerIndex": 3
+  },
+  "disc-crown-p3-6": {
+    "id": "disc-crown-p3-6",
+    "parent": "pile-discs-p3",
+    "type": "card",
+    "deck": "deck-discs",
+    "cardType": "disc-crown",
+    "playerIndex": 3
+  },
+  "disc-pot-p3-1": {
+    "id": "disc-pot-p3-1",
+    "parent": "pile-discs-p3",
+    "type": "card",
+    "deck": "deck-discs",
+    "cardType": "disc-pot",
+    "playerIndex": 3
+  },
+  "disc-pot-p3-2": {
+    "id": "disc-pot-p3-2",
+    "parent": "pile-discs-p3",
+    "type": "card",
+    "deck": "deck-discs",
+    "cardType": "disc-pot",
+    "playerIndex": 3
+  },
+  "disc-pot-p3-3": {
+    "id": "disc-pot-p3-3",
+    "parent": "pile-discs-p3",
+    "type": "card",
+    "deck": "deck-discs",
+    "cardType": "disc-pot",
+    "playerIndex": 3
+  },
+  "disc-pot-p3-4": {
+    "id": "disc-pot-p3-4",
+    "parent": "pile-discs-p3",
+    "type": "card",
+    "deck": "deck-discs",
+    "cardType": "disc-pot",
+    "playerIndex": 3
+  },
+  "disc-pot-p3-5": {
+    "id": "disc-pot-p3-5",
+    "parent": "pile-discs-p3",
+    "type": "card",
+    "deck": "deck-discs",
+    "cardType": "disc-pot",
+    "playerIndex": 3
+  },
+  "disc-pot-p3-6": {
+    "id": "disc-pot-p3-6",
+    "parent": "pile-discs-p3",
+    "type": "card",
+    "deck": "deck-discs",
+    "cardType": "disc-pot",
+    "playerIndex": 3
+  },
+  "disc-star-p3-1": {
+    "id": "disc-star-p3-1",
+    "parent": "pile-discs-p3",
+    "type": "card",
+    "deck": "deck-discs",
+    "cardType": "disc-star",
+    "playerIndex": 3
+  },
+  "disc-star-p3-2": {
+    "id": "disc-star-p3-2",
+    "parent": "pile-discs-p3",
+    "type": "card",
+    "deck": "deck-discs",
+    "cardType": "disc-star",
+    "playerIndex": 3
+  },
+  "disc-star-p3-3": {
+    "id": "disc-star-p3-3",
+    "parent": "pile-discs-p3",
+    "type": "card",
+    "deck": "deck-discs",
+    "cardType": "disc-star",
+    "playerIndex": 3
+  },
+  "disc-star-p3-4": {
+    "id": "disc-star-p3-4",
+    "parent": "pile-discs-p3",
+    "type": "card",
+    "deck": "deck-discs",
+    "cardType": "disc-star",
+    "playerIndex": 3
+  },
+  "disc-star-p3-5": {
+    "id": "disc-star-p3-5",
+    "parent": "pile-discs-p3",
+    "type": "card",
+    "deck": "deck-discs",
+    "cardType": "disc-star",
+    "playerIndex": 3
+  },
+  "disc-star-p3-6": {
+    "id": "disc-star-p3-6",
+    "parent": "pile-discs-p3",
+    "type": "card",
+    "deck": "deck-discs",
+    "cardType": "disc-star",
+    "playerIndex": 3
+  },
+  "holder-discs-p4": {
+    "id": "holder-discs-p4",
+    "type": "holder",
+    "parent": "area-p4",
+    "inheritFrom": "holder-discs-p1"
+  },
+  "pile-discs-p4": {
+    "id": "pile-discs-p4",
+    "type": "pile",
+    "parent": "holder-discs-p4",
+    "x": 0,
+    "y": 4.84,
+    "width": 72.309,
+    "height": 62.622,
+    "handleCSS": {
+      "background": "black",
+      "color": "white"
+    },
+    "handlePosition": "top right",
+    "movable": false
+  },
+  "disc-farmer-p4-01": {
+    "id": "disc-farmer-p4-01",
+    "parent": "pile-discs-p4",
+    "type": "card",
+    "deck": "deck-discs",
+    "cardType": "disc-farmer",
+    "playerIndex": 4
+  },
+  "disc-farmer-p4-02": {
+    "id": "disc-farmer-p4-02",
+    "parent": "pile-discs-p4",
+    "type": "card",
+    "deck": "deck-discs",
+    "cardType": "disc-farmer",
+    "playerIndex": 4
+  },
+  "disc-farmer-p4-03": {
+    "id": "disc-farmer-p4-03",
+    "parent": "pile-discs-p4",
+    "type": "card",
+    "deck": "deck-discs",
+    "cardType": "disc-farmer",
+    "playerIndex": 4
+  },
+  "disc-farmer-p4-04": {
+    "id": "disc-farmer-p4-04",
+    "parent": "pile-discs-p4",
+    "type": "card",
+    "deck": "deck-discs",
+    "cardType": "disc-farmer",
+    "playerIndex": 4
+  },
+  "disc-farmer-p4-05": {
+    "id": "disc-farmer-p4-05",
+    "parent": "pile-discs-p4",
+    "type": "card",
+    "deck": "deck-discs",
+    "cardType": "disc-farmer",
+    "playerIndex": 4
+  },
+  "disc-farmer-p4-06": {
+    "id": "disc-farmer-p4-06",
+    "parent": "pile-discs-p4",
+    "type": "card",
+    "deck": "deck-discs",
+    "cardType": "disc-farmer",
+    "playerIndex": 4
+  },
+  "disc-farmer-p4-07": {
+    "id": "disc-farmer-p4-07",
+    "parent": "pile-discs-p4",
+    "type": "card",
+    "deck": "deck-discs",
+    "cardType": "disc-farmer",
+    "playerIndex": 4
+  },
+  "disc-farmer-p4-08": {
+    "id": "disc-farmer-p4-08",
+    "parent": "pile-discs-p4",
+    "type": "card",
+    "deck": "deck-discs",
+    "cardType": "disc-farmer",
+    "playerIndex": 4
+  },
+  "disc-farmer-p4-09": {
+    "id": "disc-farmer-p4-09",
+    "parent": "pile-discs-p4",
+    "type": "card",
+    "deck": "deck-discs",
+    "cardType": "disc-farmer",
+    "playerIndex": 4
+  },
+  "disc-farmer-p4-10": {
+    "id": "disc-farmer-p4-10",
+    "parent": "pile-discs-p4",
+    "type": "card",
+    "deck": "deck-discs",
+    "cardType": "disc-farmer",
+    "playerIndex": 4
+  },
+  "disc-farmer-p4-11": {
+    "id": "disc-farmer-p4-11",
+    "parent": "pile-discs-p4",
+    "type": "card",
+    "deck": "deck-discs",
+    "cardType": "disc-farmer",
+    "playerIndex": 4
+  },
+  "disc-farmer-p4-12": {
+    "id": "disc-farmer-p4-12",
+    "parent": "pile-discs-p4",
+    "type": "card",
+    "deck": "deck-discs",
+    "cardType": "disc-farmer",
+    "playerIndex": 4
+  },
+  "disc-crown-p4-1": {
+    "id": "disc-crown-p4-1",
+    "parent": "pile-discs-p4",
+    "type": "card",
+    "deck": "deck-discs",
+    "cardType": "disc-crown",
+    "playerIndex": 4
+  },
+  "disc-crown-p4-2": {
+    "id": "disc-crown-p4-2",
+    "parent": "pile-discs-p4",
+    "type": "card",
+    "deck": "deck-discs",
+    "cardType": "disc-crown",
+    "playerIndex": 4
+  },
+  "disc-crown-p4-3": {
+    "id": "disc-crown-p4-3",
+    "parent": "pile-discs-p4",
+    "type": "card",
+    "deck": "deck-discs",
+    "cardType": "disc-crown",
+    "playerIndex": 4
+  },
+  "disc-crown-p4-4": {
+    "id": "disc-crown-p4-4",
+    "parent": "pile-discs-p4",
+    "type": "card",
+    "deck": "deck-discs",
+    "cardType": "disc-crown",
+    "playerIndex": 4
+  },
+  "disc-crown-p4-5": {
+    "id": "disc-crown-p4-5",
+    "parent": "pile-discs-p4",
+    "type": "card",
+    "deck": "deck-discs",
+    "cardType": "disc-crown",
+    "playerIndex": 4
+  },
+  "disc-crown-p4-6": {
+    "id": "disc-crown-p4-6",
+    "parent": "pile-discs-p4",
+    "type": "card",
+    "deck": "deck-discs",
+    "cardType": "disc-crown",
+    "playerIndex": 4
+  },
+  "disc-pot-p4-1": {
+    "id": "disc-pot-p4-1",
+    "parent": "pile-discs-p4",
+    "type": "card",
+    "deck": "deck-discs",
+    "cardType": "disc-pot",
+    "playerIndex": 4
+  },
+  "disc-pot-p4-2": {
+    "id": "disc-pot-p4-2",
+    "parent": "pile-discs-p4",
+    "type": "card",
+    "deck": "deck-discs",
+    "cardType": "disc-pot",
+    "playerIndex": 4
+  },
+  "disc-pot-p4-3": {
+    "id": "disc-pot-p4-3",
+    "parent": "pile-discs-p4",
+    "type": "card",
+    "deck": "deck-discs",
+    "cardType": "disc-pot",
+    "playerIndex": 4
+  },
+  "disc-pot-p4-4": {
+    "id": "disc-pot-p4-4",
+    "parent": "pile-discs-p4",
+    "type": "card",
+    "deck": "deck-discs",
+    "cardType": "disc-pot",
+    "playerIndex": 4
+  },
+  "disc-pot-p4-5": {
+    "id": "disc-pot-p4-5",
+    "parent": "pile-discs-p4",
+    "type": "card",
+    "deck": "deck-discs",
+    "cardType": "disc-pot",
+    "playerIndex": 4
+  },
+  "disc-pot-p4-6": {
+    "id": "disc-pot-p4-6",
+    "parent": "pile-discs-p4",
+    "type": "card",
+    "deck": "deck-discs",
+    "cardType": "disc-pot",
+    "playerIndex": 4
+  },
+  "disc-star-p4-1": {
+    "id": "disc-star-p4-1",
+    "parent": "pile-discs-p4",
+    "type": "card",
+    "deck": "deck-discs",
+    "cardType": "disc-star",
+    "playerIndex": 4
+  },
+  "disc-star-p4-2": {
+    "id": "disc-star-p4-2",
+    "parent": "pile-discs-p4",
+    "type": "card",
+    "deck": "deck-discs",
+    "cardType": "disc-star",
+    "playerIndex": 4
+  },
+  "disc-star-p4-3": {
+    "id": "disc-star-p4-3",
+    "parent": "pile-discs-p4",
+    "type": "card",
+    "deck": "deck-discs",
+    "cardType": "disc-star",
+    "playerIndex": 4
+  },
+  "disc-star-p4-4": {
+    "id": "disc-star-p4-4",
+    "parent": "pile-discs-p4",
+    "type": "card",
+    "deck": "deck-discs",
+    "cardType": "disc-star",
+    "playerIndex": 4
+  },
+  "disc-star-p4-5": {
+    "id": "disc-star-p4-5",
+    "parent": "pile-discs-p4",
+    "type": "card",
+    "deck": "deck-discs",
+    "cardType": "disc-star",
+    "playerIndex": 4
+  },
+  "disc-star-p4-6": {
+    "id": "disc-star-p4-6",
+    "parent": "pile-discs-p4",
+    "type": "card",
+    "deck": "deck-discs",
+    "cardType": "disc-star",
+    "playerIndex": 4
+  },
+  "holder-cities-p1": {
+    "id": "holder-cities-p1",
+    "type": "holder",
+    "parent": "area-p1",
+    "x": 125,
+    "y": 105,
+    "width": 72.309,
+    "height": 72.309,
+    "dropOffsetX": 0,
+    "dropOffsetY": 4.84,
+    "dropTarget": {
+      "deck": "deck-tiles"
+    }
+  },
+  "holder-cities-label-p1": {
+    "id": "holder-cities-label-p1",
+    "type": "label",
+    "parent": "holder-cities-p1",
+    "fixedParent": true,
+    "x": 0,
+    "y": 72.309,
+    "width": 72.309,
+    "height": 20,
+    "movable": false,
+    "movableInEdit": false,
+    "editable": false,
+    "css": {
+      "font-size": "16px"
+    },
+    "text": "CITIES"
+  },
+  "holder-cities-p2": {
+    "id": "holder-cities-p2",
+    "type": "holder",
+    "parent": "area-p2",
+    "inheritFrom": "holder-cities-p1"
+  },
+  "holder-cities-label-p2": {
+    "id": "holder-cities-label-p2",
+    "type": "label",
+    "parent": "holder-cities-p2",
+    "inheritFrom": "holder-cities-label-p1"
+  },
+  "holder-cities-p3": {
+    "id": "holder-cities-p3",
+    "type": "holder",
+    "parent": "area-p3",
+    "inheritFrom": "holder-cities-p1"
+  },
+  "holder-cities-label-p3": {
+    "id": "holder-cities-label-p3",
+    "type": "label",
+    "parent": "holder-cities-p3",
+    "inheritFrom": "holder-cities-label-p1"
+  },
+  "holder-cities-p4": {
+    "id": "holder-cities-p4",
+    "type": "holder",
+    "parent": "area-p4",
+    "inheritFrom": "holder-cities-p1"
+  },
+  "holder-cities-label-p4": {
+    "id": "holder-cities-label-p4",
+    "type": "label",
+    "parent": "holder-cities-p4",
+    "inheritFrom": "holder-cities-label-p1"
+  },
+  "holder-ziggurats-p1": {
+    "id": "holder-ziggurats-p1",
+    "type": "holder",
+    "parent": "area-p1",
+    "x": 220,
+    "y": 90,
+    "width": 265,
+    "height": 100,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "deck": "deck-ziggurats"
+    },
+    "onEnter": {
+      "activeFace": 1
+    },
+    "stackOffsetX": 35,
+    "stackOffsetY": 0
+  },
+  "holder-ziggurats-label-p1": {
+    "id": "holder-ziggurats-label-p1",
+    "type": "label",
+    "parent": "holder-ziggurats-p1",
+    "fixedParent": true,
+    "x": 0,
+    "y": 100,
+    "width": 265,
+    "height": 20,
+    "movable": false,
+    "movableInEdit": false,
+    "editable": false,
+    "css": {
+      "font-size": "16px"
+    },
+    "text": "ZIGGURAT TILES"
+  },
+  "holder-ziggurats-p2": {
+    "id": "holder-ziggurats-p2",
+    "type": "holder",
+    "parent": "area-p2",
+    "inheritFrom": "holder-ziggurats-p1"
+  },
+  "holder-ziggurats-label-p2": {
+    "id": "holder-ziggurats-label-p2",
+    "type": "label",
+    "parent": "holder-ziggurats-p2",
+    "inheritFrom": "holder-ziggurats-label-p1"
+  },
+  "holder-ziggurats-p3": {
+    "id": "holder-ziggurats-p3",
+    "type": "holder",
+    "parent": "area-p3",
+    "inheritFrom": "holder-ziggurats-p1"
+  },
+  "holder-ziggurats-label-p3": {
+    "id": "holder-ziggurats-label-p3",
+    "type": "label",
+    "parent": "holder-ziggurats-p3",
+    "inheritFrom": "holder-ziggurats-label-p1"
+  },
+  "holder-ziggurats-p4": {
+    "id": "holder-ziggurats-p4",
+    "type": "holder",
+    "parent": "area-p4",
+    "inheritFrom": "holder-ziggurats-p1"
+  },
+  "holder-ziggurats-label-p4": {
+    "id": "holder-ziggurats-label-p4",
+    "type": "label",
+    "parent": "holder-ziggurats-p4",
+    "inheritFrom": "holder-ziggurats-label-p1"
+  },
+  "button-end-turn": {
+    "id": "button-end-turn",
+    "type": "button",
+    "x": 525,
+    "y": 20,
+    "width": 100,
+    "height": 30,
+    "text": "End Turn",
+    "clickRoutine": [
+      {
+        "note": "Get the active player seat 1/2",
+        "func": "SELECT",
+        "property": "turn",
+        "value": true
+      },
+      {
+        "note": "Get the active player seat 2/2",
+        "func": "GET",
+        "property": "id",
+        "variable": "seat"
+      },
+      {
+        "note": "Determine that player's hand size (based on whether they own ziggurat tile 3)",
+        "func": "IF",
+        "operand1": "${PROPERTY parent OF tile-ziggurat3}",
+        "operand2": "holder-ziggurats-p${PROPERTY index OF $seat}",
+        "thenRoutine": [
+          "var handSize = 7"
+        ],
+        "elseRoutine": [
+          "var handSize = 5"
+        ]
+      },
+      {
+        "note": "Count the number of tiles in hand 1/2",
+        "func": "SELECT",
+        "property": "owner",
+        "value": "${PROPERTY player OF $seat}"
+      },
+      {
+        "note": "Count the number of tiles in hand 2/2",
+        "func": "COUNT"
+      },
+      "var quantity = ${handSize} - ${COUNT}",
+      {
+        "note": "Draw extra tiles if not already at hand limit",
+        "func": "IF",
+        "operand1": "${quantity}",
+        "relation": ">",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "func": "MOVE",
+            "from": "holder-discs-p${PROPERTY index OF $seat}",
+            "to": "${seat}",
+            "count": "${quantity}"
+          }
+        ]
+      },
+      {
+        "note": "Move the turn to the next player",
+        "func": "TURN",
+        "turnCycle": "forward"
+      }
+    ]
+  },
+  "button-score-cities": {
+    "id": "button-score-cities",
+    "type": "button",
+    "inheritFrom": "button-end-turn",
+    "y": 60,
+    "text": "Score Cities",
+    "clickRoutine": [
+      {
+        "note": "Loop through the players",
+        "func": "FOREACH",
+        "range": 4,
+        "loopRoutine": [
+          {
+            "note": "Count the number of cities collected by this player",
+            "func": "COUNT",
+            "holder": "holder-cities-p${value}",
+            "variable": "cities"
+          },
+          {
+            "note": "Check if this player owns ziggurat tile 7 and apply the scoring bonus if they do",
+            "func": "IF",
+            "operand1": "${PROPERTY parent OF tile-ziggurat7}",
+            "operand2": "holder-ziggurats-p${value}",
+            "thenRoutine": [
+              "var remainderByTwo = ${cities} % 2",
+              "var bonusCities = ${cities} - ${remainderByTwo}",
+              "var bonus = ${bonusCities} / 2"
+            ],
+            "elseRoutine": [
+              "var bonus = 0"
+            ]
+          },
+          "var cityScore = ${cities} + ${bonus}",
+          {
+            "note": "Add the appropriate amount to this player's score",
+            "func": "LABEL",
+            "label": "score-p${value}",
+            "mode": "inc",
+            "value": "${cityScore}"
+          }
+        ]
+      }
+    ]
+  },
+  "holder-ziggurats": {
+    "id": "holder-ziggurats",
+    "type": "holder",
+    "x": 1490,
+    "y": 10,
+    "width": 100,
+    "height": 100,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "deck": "deck-ziggurats"
+    },
+    "onEnter": {
+      "activeFace": 0
+    }
+  },
+  "deck-ziggurats": {
+    "id": "deck-ziggurats",
+    "type": "deck",
+    "parent": "holder-ziggurats",
+    "cardTypes": {
+      "ziggurat1": {
+        "image": "/assets/-1768176273_3601",
+        "value": 1
+      },
+      "ziggurat2": {
+        "image": "/assets/1127378287_3165",
+        "value": 2
+      },
+      "ziggurat3": {
+        "image": "/assets/-2041928856_3643",
+        "value": 3
+      },
+      "ziggurat4": {
+        "image": "/assets/1728632153_6445",
+        "value": 4
+      },
+      "ziggurat5": {
+        "image": "/assets/-1964111224_8783",
+        "value": 5
+      },
+      "ziggurat6": {
+        "image": "/assets/111462584_8560",
+        "value": 6
+      },
+      "ziggurat7": {
+        "image": "/assets/2032020339_4107",
+        "value": 7
+      },
+      "ziggurat8": {
+        "image": "/assets/-795587431_3863",
+        "value": 8
+      },
+      "ziggurat9": {
+        "image": "/assets/614801465_3691",
+        "value": 9
+      }
+    },
+    "faceTemplates": [
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 100,
+            "height": 100,
+            "value": "/assets/657299737_1280",
+            "color": "transparent"
+          }
+        ]
+      },
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 100,
+            "height": 100,
+            "dynamicProperties": {
+              "value": "image"
+            },
+            "color": "transparent"
+          }
+        ]
+      }
+    ],
+    "cardDefaults": {
+      "height": 100,
+      "width": 100,
+      "onPileCreation": {
+        "handleCSS": {
+          "background": "black",
+          "color": "white"
+        },
+        "handlePosition": "center middle"
+      }
+    }
+  },
+  "pile-ziggurats": {
+    "id": "pile-ziggurats",
+    "type": "pile",
+    "parent": "holder-ziggurats",
+    "x": 0,
+    "y": 0,
+    "width": 100,
+    "height": 100,
+    "handleCSS": {
+      "background": "black",
+      "color": "white"
+    },
+    "handlePosition": "center middle",
+    "movable": false
+  },
+  "holder-ziggurats-active": {
+    "id": "holder-ziggurats-active",
+    "type": "holder",
+    "x": 650,
+    "y": 10,
+    "width": 700,
+    "height": 100,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropLimit": 7,
+    "dropTarget": {
+      "deck": "deck-ziggurats"
+    },
+    "stackOffsetX": 100,
+    "stackOffsetY": 0,
+    "onEnter": {
+      "activeFace": 1
+    }
+  },
+  "tile-ziggurat1": {
+    "id": "tile-ziggurat1",
+    "type": "card",
+    "parent": "pile-ziggurats",
+    "deck": "deck-ziggurats",
+    "cardType": "ziggurat1"
+  },
+  "tile-ziggurat2": {
+    "id": "tile-ziggurat2",
+    "type": "card",
+    "parent": "pile-ziggurats",
+    "deck": "deck-ziggurats",
+    "cardType": "ziggurat2"
+  },
+  "tile-ziggurat3": {
+    "id": "tile-ziggurat3",
+    "type": "card",
+    "parent": "pile-ziggurats",
+    "deck": "deck-ziggurats",
+    "cardType": "ziggurat3"
+  },
+  "tile-ziggurat4": {
+    "id": "tile-ziggurat4",
+    "type": "card",
+    "parent": "pile-ziggurats",
+    "deck": "deck-ziggurats",
+    "cardType": "ziggurat4"
+  },
+  "tile-ziggurat5": {
+    "id": "tile-ziggurat5",
+    "type": "card",
+    "parent": "pile-ziggurats",
+    "deck": "deck-ziggurats",
+    "cardType": "ziggurat5"
+  },
+  "tile-ziggurat6": {
+    "id": "tile-ziggurat6",
+    "type": "card",
+    "parent": "pile-ziggurats",
+    "deck": "deck-ziggurats",
+    "cardType": "ziggurat6"
+  },
+  "tile-ziggurat7": {
+    "id": "tile-ziggurat7",
+    "type": "card",
+    "parent": "pile-ziggurats",
+    "deck": "deck-ziggurats",
+    "cardType": "ziggurat7"
+  },
+  "tile-ziggurat8": {
+    "id": "tile-ziggurat8",
+    "type": "card",
+    "parent": "pile-ziggurats",
+    "deck": "deck-ziggurats",
+    "cardType": "ziggurat8"
+  },
+  "tile-ziggurat9": {
+    "id": "tile-ziggurat9",
+    "type": "card",
+    "parent": "pile-ziggurats",
+    "deck": "deck-ziggurats",
+    "cardType": "ziggurat9"
+  },
+  "button-setup": {
+    "id": "button-setup",
+    "type": "button",
+    "x": 1490,
+    "y": 120,
+    "width": 100,
+    "height": 30,
+    "text": "Setup",
+    "clickRoutine": [
+      {
+        "note": "Ask the user whether to use the standard set of ziggurats or a random set - also gives them the opportunity to cancel the rest of this setup routine if clicked by accident",
+        "func": "INPUT",
+        "header": "Set up a new game",
+        "confirmButtonText": "OK",
+        "cancelButtonText": "Cancel",
+        "fields": [
+          {
+            "label": "Variant setup (7 random ziggurats)",
+            "type": "switch",
+            "variable": "variantSetup"
+          }
+        ]
+      },
+      {
+        "note": "Recall all the ziggurats",
+        "func": "RECALL",
+        "holder": "holder-ziggurats"
+      },
+      {
+        "func": "IF",
+        "operand1": "${variantSetup}",
+        "operand2": "on",
+        "thenRoutine": [
+          {
+            "note": "Variant setup - shuffle the ziggurats",
+            "func": "SHUFFLE",
+            "holder": "holder-ziggurats"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "note": "Standard setup - sort the ziggurats",
+            "func": "SORT",
+            "holder": "holder-ziggurats",
+            "reverse": true
+          }
+        ]
+      },
+      {
+        "note": "Move 7 ziggurats for this game into the ziggurat display",
+        "func": "MOVE",
+        "from": "holder-ziggurats",
+        "to": "holder-ziggurats-active",
+        "count": 7
+      },
+      {
+        "note": "Sort the ziggurat display",
+        "func": "SORT",
+        "holder": "holder-ziggurats-active"
+      },
+      {
+        "note": "Recall the player discs",
+        "func": "RECALL",
+        "holder": "holder-discs-p1"
+      },
+      {
+        "note": "Move each player's discs to their own holder and shuffle",
+        "func": "FOREACH",
+        "range": 4,
+        "loopRoutine": [
+          {
+            "func": "SELECT",
+            "property": "playerIndex",
+            "value": "${value}"
+          },
+          {
+            "func": "SET",
+            "property": "parent",
+            "value": "holder-discs-p${value}"
+          },
+          {
+            "func": "SHUFFLE",
+            "holder": "holder-discs-p${value}"
+          }
+        ]
+      },
+      {
+        "note": "Get player count 1/3 - select player seats",
+        "func": "SELECT",
+        "property": "type",
+        "value": "seat",
+        "collection": "seatedPlayers"
+      },
+      {
+        "note": "Get player count 2/3 - filter out empty seats",
+        "func": "SELECT",
+        "mode": "remove",
+        "source": "seatedPlayers",
+        "property": "player",
+        "value": "",
+        "collection": "seatedPlayers"
+      },
+      {
+        "note": "Get player count 3/3 - count remaining seats",
+        "func": "COUNT",
+        "collection": "seatedPlayers"
+      },
+      {
+        "note": "Move all boards off-screen",
+        "func": "SET",
+        "collection": [
+          "board-2",
+          "board-3",
+          "board-4"
+        ],
+        "property": "y",
+        "value": -1000
+      },
+      {
+        "note": "Select the board to use based on the player count",
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "operand2": 4,
+        "thenRoutine": [
+          {
+            "func": "SELECT",
+            "property": "id",
+            "value": "board-4",
+            "collection": "board"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "IF",
+            "operand1": "${COUNT}",
+            "operand2": 3,
+            "thenRoutine": [
+              {
+                "func": "SELECT",
+                "property": "id",
+                "value": "board-3",
+                "collection": "board"
+              }
+            ],
+            "elseRoutine": [
+              {
+                "func": "SELECT",
+                "property": "id",
+                "value": "board-2",
+                "collection": "board"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "note": "Move the board onto the screen",
+        "func": "SET",
+        "collection": "board",
+        "property": "y",
+        "value": 140
+      },
+      {
+        "note": "Recall the crop and city tiles",
+        "func": "RECALL",
+        "holder": "holder-tiles"
+      },
+      {
+        "note": "Get the list of tiles to remove from the game for the board being used",
+        "func": "GET",
+        "collection": "board",
+        "property": "tilesRemoved"
+      },
+      {
+        "note": "Iterate through the set of tiles to be removed",
+        "func": "FOREACH",
+        "in": "${tilesRemoved}",
+        "loopRoutine": [
+          {
+            "note": "Select all tiles of the type being considered",
+            "func": "SELECT",
+            "property": "cardType",
+            "value": "${key}"
+          },
+          {
+            "note": "Move those tiles to the setup holder",
+            "func": "SET",
+            "property": "parent",
+            "value": "holder-tiles-setup"
+          },
+          {
+            "note": "Move an appropriate number to the removed holder",
+            "func": "MOVE",
+            "from": "holder-tiles-setup",
+            "to": "holder-tiles-removed",
+            "count": "${value}"
+          },
+          {
+            "note": "Move the remainder of the tiles back into the main deck",
+            "func": "MOVE",
+            "from": "holder-tiles-setup",
+            "to": "holder-tiles",
+            "count": 0
+          }
+        ]
+      },
+      {
+        "note": "Shuffle the tiles",
+        "func": "SHUFFLE",
+        "holder": "holder-tiles"
+      },
+      {
+        "note": "Get the list of tile start locations for the board being used",
+        "func": "GET",
+        "collection": "board",
+        "property": "tileSpaces"
+      },
+      {
+        "note": "Deal 1 tile to each of these spaces",
+        "func": "FOREACH",
+        "in": "${tileSpaces}",
+        "loopRoutine": [
+          {
+            "func": "MOVE",
+            "from": "holder-tiles",
+            "to": "${value}"
+          }
+        ]
+      },
+      {
+        "note": "Move the removed tiles back to the draw-pile holder",
+        "func": "MOVE",
+        "from": "holder-tiles-removed",
+        "to": "holder-tiles",
+        "count": 0
+      },
+      {
+        "note": "Reset all scores to zero",
+        "func": "LABEL",
+        "label": [
+          "score-p1",
+          "score-p2",
+          "score-p3",
+          "score-p4"
+        ],
+        "value": 0
+      },
+      {
+        "note": "Draw each seated player a starting hand of 5 tiles",
+        "func": "FOREACH",
+        "collection": "seatedPlayers",
+        "loopRoutine": [
+          {
+            "func": "MOVE",
+            "from": "holder-discs-p${PROPERTY index OF $widgetID}",
+            "to": "${widgetID}",
+            "count": 5
+          }
+        ]
+      },
+      {
+        "note": "Select a random start player",
+        "func": "TURN",
+        "turnCycle": "random"
+      }
+    ]
+  },
+  "holder-tiles": {
+    "id": "holder-tiles",
+    "type": "holder",
+    "x": 1505,
+    "y": 160,
+    "width": 72.309,
+    "height": 72.309,
+    "dropOffsetX": 0,
+    "dropOffsetY": 4.84,
+    "dropTarget": {
+      "deck": "deck-tiles"
+    },
+    "onEnter": {
+      "activeFace": 0
+    },
+    "onLeave": {
+      "activeFace": 1
+    }
+  },
+  "holder-tiles-setup": {
+    "id": "holder-tiles-setup",
+    "type": "holder",
+    "inheritFrom": "holder-tiles",
+    "x": 1700
+  },
+  "holder-tiles-removed": {
+    "id": "holder-tiles-removed",
+    "type": "holder",
+    "inheritFrom": "holder-tiles",
+    "x": 1800
+  },
+  "deck-tiles": {
+    "id": "deck-tiles",
+    "parent": "holder-tiles",
+    "type": "deck",
+    "cardTypes": {
+      "tile-city-all": {
+        "image": "/assets/1891101990_3228"
+      },
+      "tile-city-crown": {
+        "image": "/assets/1401584159_1341"
+      },
+      "tile-city-pot": {
+        "image": "/assets/2079771755_1737"
+      },
+      "tile-city-star": {
+        "image": "/assets/2063433057_762"
+      },
+      "tile-city-crown-pot": {
+        "image": "/assets/3360947_2775"
+      },
+      "tile-city-crown-star": {
+        "image": "/assets/1887279018_1792"
+      },
+      "tile-city-star-pot": {
+        "image": "/assets/687096383_2183"
+      },
+      "tile-crop5": {
+        "image": "/assets/1528307876_3034"
+      },
+      "tile-crop6": {
+        "image": "/assets/-483442871_2867"
+      },
+      "tile-crop7": {
+        "image": "/assets/1919213132_2484"
+      },
+      "tile-cropx": {
+        "image": "/assets/554664859_2567"
+      }
+    },
+    "faceTemplates": [
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 72.309,
+            "height": 62.622,
+            "value": "/assets/-1559496209_527",
+            "color": "transparent"
+          }
+        ]
+      },
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 72.309,
+            "height": 62.622,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image"
+            }
+          }
+        ]
+      }
+    ],
+    "cardDefaults": {
+      "width": 72.309,
+      "height": 62.622,
+      "onPileCreation": {
+        "handleCSS": {
+          "background": "black",
+          "color": "white"
+        }
+      },
+      "clickRoutine": []
+    }
+  },
+  "pile-tiles": {
+    "id": "pile-tiles",
+    "type": "pile",
+    "parent": "holder-tiles",
+    "x": 0,
+    "y": 4.84,
+    "width": 72.309,
+    "height": 62.622,
+    "handleCSS": {
+      "background": "black",
+      "color": "white"
+    },
+    "handlePosition": "center middle",
+    "movable": false
+  },
+  "tile-city-all": {
+    "id": "tile-city-all",
+    "type": "card",
+    "parent": "pile-tiles",
+    "deck": "deck-tiles",
+    "cardType": "tile-city-all"
+  },
+  "tile-city-crown-1": {
+    "id": "tile-city-crown-1",
+    "type": "card",
+    "parent": "pile-tiles",
+    "deck": "deck-tiles",
+    "cardType": "tile-city-crown"
+  },
+  "tile-city-crown-2": {
+    "id": "tile-city-crown-2",
+    "type": "card",
+    "parent": "pile-tiles",
+    "deck": "deck-tiles",
+    "cardType": "tile-city-crown"
+  },
+  "tile-city-crown-3": {
+    "id": "tile-city-crown-3",
+    "type": "card",
+    "parent": "pile-tiles",
+    "deck": "deck-tiles",
+    "cardType": "tile-city-crown"
+  },
+  "tile-city-pot-1": {
+    "id": "tile-city-pot-1",
+    "type": "card",
+    "parent": "pile-tiles",
+    "deck": "deck-tiles",
+    "cardType": "tile-city-pot"
+  },
+  "tile-city-pot-2": {
+    "id": "tile-city-pot-2",
+    "type": "card",
+    "parent": "pile-tiles",
+    "deck": "deck-tiles",
+    "cardType": "tile-city-pot"
+  },
+  "tile-city-pot-3": {
+    "id": "tile-city-pot-3",
+    "type": "card",
+    "parent": "pile-tiles",
+    "deck": "deck-tiles",
+    "cardType": "tile-city-pot"
+  },
+  "tile-city-star-1": {
+    "id": "tile-city-star-1",
+    "type": "card",
+    "parent": "pile-tiles",
+    "deck": "deck-tiles",
+    "cardType": "tile-city-star"
+  },
+  "tile-city-star-2": {
+    "id": "tile-city-star-2",
+    "type": "card",
+    "parent": "pile-tiles",
+    "deck": "deck-tiles",
+    "cardType": "tile-city-star"
+  },
+  "tile-city-star-3": {
+    "id": "tile-city-star-3",
+    "type": "card",
+    "parent": "pile-tiles",
+    "deck": "deck-tiles",
+    "cardType": "tile-city-star"
+  },
+  "tile-city-crown-pot-1": {
+    "id": "tile-city-crown-pot-1",
+    "type": "card",
+    "parent": "pile-tiles",
+    "deck": "deck-tiles",
+    "cardType": "tile-city-crown-pot"
+  },
+  "tile-city-crown-pot-2": {
+    "id": "tile-city-crown-pot-2",
+    "type": "card",
+    "parent": "pile-tiles",
+    "deck": "deck-tiles",
+    "cardType": "tile-city-crown-pot"
+  },
+  "tile-city-crown-pot-3": {
+    "id": "tile-city-crown-pot-3",
+    "type": "card",
+    "parent": "pile-tiles",
+    "deck": "deck-tiles",
+    "cardType": "tile-city-crown-pot"
+  },
+  "tile-city-crown-star-1": {
+    "id": "tile-city-crown-star-1",
+    "type": "card",
+    "parent": "pile-tiles",
+    "deck": "deck-tiles",
+    "cardType": "tile-city-crown-star"
+  },
+  "tile-city-crown-star-2": {
+    "id": "tile-city-crown-star-2",
+    "type": "card",
+    "parent": "pile-tiles",
+    "deck": "deck-tiles",
+    "cardType": "tile-city-crown-star"
+  },
+  "tile-city-crown-star-3": {
+    "id": "tile-city-crown-star-3",
+    "type": "card",
+    "parent": "pile-tiles",
+    "deck": "deck-tiles",
+    "cardType": "tile-city-crown-star"
+  },
+  "tile-city-star-pot-1": {
+    "id": "tile-city-star-pot-1",
+    "type": "card",
+    "parent": "pile-tiles",
+    "deck": "deck-tiles",
+    "cardType": "tile-city-star-pot"
+  },
+  "tile-city-star-pot-2": {
+    "id": "tile-city-star-pot-2",
+    "type": "card",
+    "parent": "pile-tiles",
+    "deck": "deck-tiles",
+    "cardType": "tile-city-star-pot"
+  },
+  "tile-city-star-pot-3": {
+    "id": "tile-city-star-pot-3",
+    "type": "card",
+    "parent": "pile-tiles",
+    "deck": "deck-tiles",
+    "cardType": "tile-city-star-pot"
+  },
+  "tile-crop5-1": {
+    "id": "tile-crop5-1",
+    "type": "card",
+    "parent": "pile-tiles",
+    "deck": "deck-tiles",
+    "cardType": "tile-crop5"
+  },
+  "tile-crop5-2": {
+    "id": "tile-crop5-2",
+    "type": "card",
+    "parent": "pile-tiles",
+    "deck": "deck-tiles",
+    "cardType": "tile-crop5"
+  },
+  "tile-crop6-1": {
+    "id": "tile-crop6-1",
+    "type": "card",
+    "parent": "pile-tiles",
+    "deck": "deck-tiles",
+    "cardType": "tile-crop6"
+  },
+  "tile-crop6-2": {
+    "id": "tile-crop6-2",
+    "type": "card",
+    "parent": "pile-tiles",
+    "deck": "deck-tiles",
+    "cardType": "tile-crop6"
+  },
+  "tile-crop7-1": {
+    "id": "tile-crop7-1",
+    "type": "card",
+    "parent": "pile-tiles",
+    "deck": "deck-tiles",
+    "cardType": "tile-crop7"
+  },
+  "tile-crop7-2": {
+    "id": "tile-crop7-2",
+    "type": "card",
+    "parent": "pile-tiles",
+    "deck": "deck-tiles",
+    "cardType": "tile-crop7"
+  },
+  "tile-cropx-1": {
+    "id": "tile-cropx-1",
+    "type": "card",
+    "parent": "pile-tiles",
+    "deck": "deck-tiles",
+    "cardType": "tile-cropx"
+  },
+  "tile-cropx-2": {
+    "id": "tile-cropx-2",
+    "type": "card",
+    "parent": "pile-tiles",
+    "deck": "deck-tiles",
+    "cardType": "tile-cropx"
+  },
+  "tile-cropx-3": {
+    "id": "tile-cropx-3",
+    "type": "card",
+    "parent": "pile-tiles",
+    "deck": "deck-tiles",
+    "cardType": "tile-cropx"
+  },
+  "tile-cropx-4": {
+    "id": "tile-cropx-4",
+    "type": "card",
+    "parent": "pile-tiles",
+    "deck": "deck-tiles",
+    "cardType": "tile-cropx"
+  },
+  "tile-cropx-5": {
+    "id": "tile-cropx-5",
+    "type": "card",
+    "parent": "pile-tiles",
+    "deck": "deck-tiles",
+    "cardType": "tile-cropx"
+  },
+  "tile-cropx-6": {
+    "id": "tile-cropx-6",
+    "type": "card",
+    "parent": "pile-tiles",
+    "deck": "deck-tiles",
+    "cardType": "tile-cropx"
+  },
+  "tile-cropx-7": {
+    "id": "tile-cropx-7",
+    "type": "card",
+    "parent": "pile-tiles",
+    "deck": "deck-tiles",
+    "cardType": "tile-cropx"
+  }
+}

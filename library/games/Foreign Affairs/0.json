@@ -1,0 +1,2732 @@
+{
+  "7690": {
+    "deck": "Male Tiles",
+    "type": "card",
+    "cardType": "USA",
+    "id": "7690",
+    "parent": "mt6f",
+    "z": 180
+  },
+  "Tables": {
+    "type": "deck",
+    "id": "Tables",
+    "cardTypes": {
+      "Central African Republic": {
+        "flag": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8'%3E%3Cpath fill='%23fff' d='m0 0h12v8H0z'/%3E%3Cpath fill='%23003082' d='m0 0h12v2H0z'/%3E%3Cpath fill='%23ffce00' d='M6 4l6 2v2H0V6zM2 .186l.529 1.628L1.144.808h1.712L1.471 1.814z'/%3E%3Cpath fill='%23289728' d='m0 4h12v2H0z'/%3E%3Cpath fill='%23d21034' d='m5 0h2v8H5z'/%3E%3C/svg%3E",
+        "css": "--color:lightyellow"
+      },
+      "China": {
+        "flag": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' viewBox='0 0 30 20'%3E%3Cdefs%3E%3Cpath id='A' d='M0-1L.588.809-.951-.309H.951L-.588.809z' fill='%23ff0'/%3E%3C/defs%3E%3Cpath fill='%23ee1c25' d='M0 0h30v20H0z'/%3E%3Cuse xlink:href='%23A' transform='matrix(3 0 0 3 5 5)'/%3E%3Cuse xlink:href='%23A' transform='matrix(.920258 .391313 -.391313 .920258 10 2)'/%3E%3Cuse xlink:href='%23A' transform='matrix(.69629 .717761 -.717761 .69629 12 4)'/%3E%3Cuse xlink:href='%23A' transform='matrix(.342916 .939366 -.939366 .342916 12 7)'/%3E%3Cuse xlink:href='%23A' transform='matrix(.935692 .352819 -.352819 .935692 10 9)'/%3E%3C/svg%3E",
+        "css": "--color:pink"
+      },
+      "Cuba": {
+        "flag": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 15' fill='%23fff'%3E%3Cpath fill='%23002a8f' d='m0 0h30v15H0z'/%3E%3Cpath d='m3 3h27v3H9v3h21v3H3z'/%3E%3Cpath fill='%23cb1515' d='M13 7.5L0 15V0z'/%3E%3Cpath d='M4.3 5L2.9 9.5l3.8-2.8H2l3.8 2.8z'/%3E%3C/svg%3E",
+        "css": "--color:orange"
+      },
+      "France": {
+        "flag": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='9' height='6'%3E%3Cpath fill='%23ed2939' d='M0 0h9v6H0z'/%3E%3Cpath fill='%23fff' d='M0 0h6v6H0z'/%3E%3Cpath fill='%23002395' d='M0 0h3v6H0z'/%3E%3C/svg%3E",
+        "css": "--color:white"
+      },
+      "Germany": {
+        "flag": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 5 3'%3E%3Cpath d='M0 0h5v3H0z'/%3E%3Cpath fill='%23d00' d='M0 1h5v2H0z'/%3E%3Cpath fill='%23ffce00' d='M0 2h5v1H0z'/%3E%3C/svg%3E",
+        "css": "--color:purple"
+      },
+      "Great Britain": {
+        "flag": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 25 15'%3E%3Cpath fill='%2300247d' d='M0 0h25v15H0z'/%3E%3Cg stroke='%23fff'%3E%3Cpath d='M0 0l25 15m0-15L0 15' stroke-width='3'/%3E%3Cpath d='M12.5 0v15M0 7.5h25' stroke-width='5'/%3E%3C/g%3E%3Cpath d='M12.5 0v15M0 7.5h25' stroke='%23cf142b' stroke-width='3'/%3E%3C/svg%3E",
+        "css": "--color:lightblue"
+      },
+      "India": {
+        "flag": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' viewBox='0 0 225 150'%3E%3Cpath fill='%23f93' d='M0 0h225v150H0z'/%3E%3Cpath fill='%23fff' d='M0 50h225v50H0z'/%3E%3Cpath fill='%23128807' d='M0 100h225v50H0z'/%3E%3Cg transform='translate(112.5 75)'%3E%3Ccircle r='20' fill='%23008'/%3E%3Ccircle r='17.5' fill='%23fff'/%3E%3Ccircle r='3.5' fill='%23008'/%3E%3Cg id='A'%3E%3Cg id='B'%3E%3Cg id='C'%3E%3Cg fill='%23008' id='D'%3E%3Ccircle r='.9' transform='matrix(.99 .13 -.13 .99 17.35 2.28)'/%3E%3Cpath d='M0 17.5L.6 7 0 2-.6 7 0 17.5z'/%3E%3C/g%3E%3Cuse xlink:href='%23D' transform='rotate(15)'/%3E%3C/g%3E%3Cuse xlink:href='%23C' transform='rotate(30)'/%3E%3C/g%3E%3Cuse xlink:href='%23B' transform='rotate(60)'/%3E%3C/g%3E%3Cuse xlink:href='%23A' transform='rotate(120)'/%3E%3Cuse xlink:href='%23A' transform='rotate(240)'/%3E%3C/g%3E%3C/svg%3E",
+        "css": "--color:#FEE68E"
+      },
+      "Italy": {
+        "flag": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 3 2'%3E%3Cpath fill='%23009246' d='M0 0h1v2H0z'/%3E%3Cpath fill='%23fff' d='M1 0h1v2H1z'/%3E%3Cpath fill='%23ce2b37' d='M2 0h1v2H2z'/%3E%3C/svg%3E",
+        "css": "--color:brown"
+      },
+      "Russia": {
+        "flag": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 9 6'%3E%3Cpath fill='%23fff' d='M0 0h9v3H0z'/%3E%3Cpath fill='%23d52b1e' d='M0 3h9v3H0z'/%3E%3Cpath fill='%230039a6' d='M0 2h9v2H0z'/%3E%3C/svg%3E",
+        "css": "--color:green"
+      },
+      "Spain": {
+        "flag": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' height='500' width='750'%3E%3Cpath fill='%23c60b1e' d='M0 0h750v500H0z'/%3E%3Cpath fill='%23ffc400' d='M0 125h750v250H0z'/%3E%3C/svg%3E",
+        "css": "--color:lightgreen"
+      },
+      "Turkey": {
+        "flag": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 -30 90 60'%3E%3Cpath fill='%23e30a17' d='m0-30h90v60H0z'/%3E%3Cpath fill='%23fff' d='m41 0 13-4-8 11V-7l8 11zm1 8a15 15 0 1 1 0-16 12 12 0 1 0 0 16z'/%3E%3C/svg%3E",
+        "css": "--color:lightblue"
+      },
+      "USA": {
+        "flag": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' viewBox='0 0 7410 3900'%3E%3Cpath fill='%23b22234' d='M0 0h7410v3900H0z'/%3E%3Cpath d='M0,450H7410m0,600H0m0,600H7410m0,600H0m0,600H7410m0,600H0' stroke='%23fff' stroke-width='300'/%3E%3Cpath fill='%233c3b6e' d='M0 0h2964v2100H0z'/%3E%3Cg fill='%23fff'%3E%3Cg id='A'%3E%3Cg id='B'%3E%3Cg id='C'%3E%3Cg id='D'%3E%3Cpath id='E' d='M247 90l70.5 217L133 173H361L176.5 307z'/%3E%3Cuse xlink:href='%23E' y='420'/%3E%3Cuse xlink:href='%23E' y='840'/%3E%3Cuse xlink:href='%23E' y='1260'/%3E%3C/g%3E%3Cuse xlink:href='%23E' y='1680'/%3E%3C/g%3E%3Cuse xlink:href='%23D' x='247' y='210'/%3E%3C/g%3E%3Cuse xlink:href='%23B' x='494'/%3E%3C/g%3E%3Cuse xlink:href='%23A' x='988'/%3E%3Cuse xlink:href='%23B' x='1976'/%3E%3Cuse xlink:href='%23C' x='2470'/%3E%3C/g%3E%3C/svg%3E",
+        "css": "--color:yellow"
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "invalid",
+            "valueType": "static",
+            "value": "",
+            "width": 70,
+            "height": 70,
+            "css": "background: var(--color); border-radius: 100%; border: 2px solid black"
+          },
+          {
+            "type": "image",
+            "x": 10,
+            "y": 10,
+            "color": "transparent",
+            "valueType": "dynamic",
+            "value": "flag",
+            "width": 50,
+            "height": 50
+          }
+        ]
+      }
+    ],
+    "cardDefaults": {
+      "height": 70,
+      "width": 70,
+      "grid": [
+        {
+          "x": 74,
+          "y": 74
+        }
+      ],
+      "movable": false,
+      "fixedParent": true
+    }
+  },
+  "Male Tiles": {
+    "type": "deck",
+    "id": "Male Tiles",
+    "x": 4,
+    "y": 4,
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "black",
+            "valueType": "static",
+            "value": "",
+            "width": 70,
+            "height": 70
+          }
+        ],
+        "radius": 4
+      },
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "invalid",
+            "valueType": "static",
+            "value": "",
+            "width": 70,
+            "height": 70,
+            "css": "background-color: var(--color)"
+          },
+          {
+            "type": "image",
+            "x": 5,
+            "y": -5,
+            "color": "transparent",
+            "valueType": "dynamic",
+            "value": "flag",
+            "width": 60,
+            "height": 60
+          },
+          {
+            "type": "image",
+            "x": 5,
+            "y": 10,
+            "color": "transparent",
+            "valueType": "static",
+            "value": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='638.7' height='604.1' fill='grey'%3E%3Cpath d='M.0 594.7c0-10.6 17.7-102.2 20.7-107.0 1.0-1.7 3.7-12.9 5.9-24.9 5.0-27.9 14.4-58.0 19.9-64.0 2.3-2.5 23.6-8.7 47.3-13.6 72.6-15.1 104.7-26.8 120.5-43.8 7.5-8.1 18.9-16.6 25.3-18.8 10.1-3.5 11.6-5.7 11.6-17.8 0-7.5-2.3-17.1-5.1-21.2s-6.4-15.0-7.9-24.2-5.9-19.9-9.8-23.6-7.0-8.4-7.0-10.4-3.8-8.8-8.4-15.1c-7.2-9.7-8.5-16.4-8.9-45.8-.7-56.6 4.0-82.6 19.9-106.5C246.4 23.5 289.7.1 330.0.0c15.7-.0 22.3 1.7 28.9 7.9 4.9 4.6 16.7 9.3 28.1 11.1 22.6 3.5 43.0 17.9 52.9 37.3 4.9 9.7 6.5 22.1 6.5 51.1.0 21.4 1.6 39.2 3.7 40.5 10.2 6.3.6 49.8-15.3 70.1-6.0 7.6-10.9 16.9-11.0 20.6s-3.4 14.1-7.5 23.1c-13.5 29.8-8.8 59.4 10.4 66.0 3.6 1.2 12.4 9.8 19.6 19.1s17.3 17.8 22.5 19.0 28.3 9.5 51.4 18.6 43.1 16.5 44.5 16.5 9.8 4.6 18.7 10.3c15.9 10.1 24.1 23.6 24.1 40.1 0 4.4 3.4 14.7 7.7 22.8 6.8 13.1 11.5 38.3 21.0 113.3l2.0 15.9H0v-9.4z'/%3E%3C/svg%3E",
+            "width": 60,
+            "height": 60
+          }
+        ],
+        "radius": 4
+      }
+    ],
+    "inheritFrom": "Tables",
+    "cardTypes": {
+      "Central African Republic": {
+        "flag": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8'%3E%3Cpath fill='%23fff' d='m0 0h12v8H0z'/%3E%3Cpath fill='%23003082' d='m0 0h12v2H0z'/%3E%3Cpath fill='%23ffce00' d='M6 4l6 2v2H0V6zM2 .186l.529 1.628L1.144.808h1.712L1.471 1.814z'/%3E%3Cpath fill='%23289728' d='m0 4h12v2H0z'/%3E%3Cpath fill='%23d21034' d='m5 0h2v8H5z'/%3E%3C/svg%3E",
+        "css": "--color:lightyellow"
+      },
+      "China": {
+        "flag": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' viewBox='0 0 30 20'%3E%3Cdefs%3E%3Cpath id='A' d='M0-1L.588.809-.951-.309H.951L-.588.809z' fill='%23ff0'/%3E%3C/defs%3E%3Cpath fill='%23ee1c25' d='M0 0h30v20H0z'/%3E%3Cuse xlink:href='%23A' transform='matrix(3 0 0 3 5 5)'/%3E%3Cuse xlink:href='%23A' transform='matrix(.920258 .391313 -.391313 .920258 10 2)'/%3E%3Cuse xlink:href='%23A' transform='matrix(.69629 .717761 -.717761 .69629 12 4)'/%3E%3Cuse xlink:href='%23A' transform='matrix(.342916 .939366 -.939366 .342916 12 7)'/%3E%3Cuse xlink:href='%23A' transform='matrix(.935692 .352819 -.352819 .935692 10 9)'/%3E%3C/svg%3E",
+        "css": "--color:pink"
+      },
+      "Cuba": {
+        "flag": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 15' fill='%23fff'%3E%3Cpath fill='%23002a8f' d='m0 0h30v15H0z'/%3E%3Cpath d='m3 3h27v3H9v3h21v3H3z'/%3E%3Cpath fill='%23cb1515' d='M13 7.5L0 15V0z'/%3E%3Cpath d='M4.3 5L2.9 9.5l3.8-2.8H2l3.8 2.8z'/%3E%3C/svg%3E",
+        "css": "--color:orange"
+      },
+      "France": {
+        "flag": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='9' height='6'%3E%3Cpath fill='%23ed2939' d='M0 0h9v6H0z'/%3E%3Cpath fill='%23fff' d='M0 0h6v6H0z'/%3E%3Cpath fill='%23002395' d='M0 0h3v6H0z'/%3E%3C/svg%3E",
+        "css": "--color:white"
+      },
+      "Germany": {
+        "flag": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 5 3'%3E%3Cpath d='M0 0h5v3H0z'/%3E%3Cpath fill='%23d00' d='M0 1h5v2H0z'/%3E%3Cpath fill='%23ffce00' d='M0 2h5v1H0z'/%3E%3C/svg%3E",
+        "css": "--color:purple"
+      },
+      "Great Britain": {
+        "flag": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 25 15'%3E%3Cpath fill='%2300247d' d='M0 0h25v15H0z'/%3E%3Cg stroke='%23fff'%3E%3Cpath d='M0 0l25 15m0-15L0 15' stroke-width='3'/%3E%3Cpath d='M12.5 0v15M0 7.5h25' stroke-width='5'/%3E%3C/g%3E%3Cpath d='M12.5 0v15M0 7.5h25' stroke='%23cf142b' stroke-width='3'/%3E%3C/svg%3E",
+        "css": "--color:lightblue"
+      },
+      "India": {
+        "flag": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' viewBox='0 0 225 150'%3E%3Cpath fill='%23f93' d='M0 0h225v150H0z'/%3E%3Cpath fill='%23fff' d='M0 50h225v50H0z'/%3E%3Cpath fill='%23128807' d='M0 100h225v50H0z'/%3E%3Cg transform='translate(112.5 75)'%3E%3Ccircle r='20' fill='%23008'/%3E%3Ccircle r='17.5' fill='%23fff'/%3E%3Ccircle r='3.5' fill='%23008'/%3E%3Cg id='A'%3E%3Cg id='B'%3E%3Cg id='C'%3E%3Cg fill='%23008' id='D'%3E%3Ccircle r='.9' transform='matrix(.99 .13 -.13 .99 17.35 2.28)'/%3E%3Cpath d='M0 17.5L.6 7 0 2-.6 7 0 17.5z'/%3E%3C/g%3E%3Cuse xlink:href='%23D' transform='rotate(15)'/%3E%3C/g%3E%3Cuse xlink:href='%23C' transform='rotate(30)'/%3E%3C/g%3E%3Cuse xlink:href='%23B' transform='rotate(60)'/%3E%3C/g%3E%3Cuse xlink:href='%23A' transform='rotate(120)'/%3E%3Cuse xlink:href='%23A' transform='rotate(240)'/%3E%3C/g%3E%3C/svg%3E",
+        "css": "--color:#FEE68E"
+      },
+      "Italy": {
+        "flag": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 3 2'%3E%3Cpath fill='%23009246' d='M0 0h1v2H0z'/%3E%3Cpath fill='%23fff' d='M1 0h1v2H1z'/%3E%3Cpath fill='%23ce2b37' d='M2 0h1v2H2z'/%3E%3C/svg%3E",
+        "css": "--color:brown"
+      },
+      "Russia": {
+        "flag": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 9 6'%3E%3Cpath fill='%23fff' d='M0 0h9v3H0z'/%3E%3Cpath fill='%23d52b1e' d='M0 3h9v3H0z'/%3E%3Cpath fill='%230039a6' d='M0 2h9v2H0z'/%3E%3C/svg%3E",
+        "css": "--color:green"
+      },
+      "Spain": {
+        "flag": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' height='500' width='750'%3E%3Cpath fill='%23c60b1e' d='M0 0h750v500H0z'/%3E%3Cpath fill='%23ffc400' d='M0 125h750v250H0z'/%3E%3C/svg%3E",
+        "css": "--color:lightgreen"
+      },
+      "Turkey": {
+        "flag": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 -30 90 60'%3E%3Cpath fill='%23e30a17' d='m0-30h90v60H0z'/%3E%3Cpath fill='%23fff' d='m41 0 13-4-8 11V-7l8 11zm1 8a15 15 0 1 1 0-16 12 12 0 1 0 0 16z'/%3E%3C/svg%3E",
+        "css": "--color:lightblue"
+      },
+      "USA": {
+        "flag": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' viewBox='0 0 7410 3900'%3E%3Cpath fill='%23b22234' d='M0 0h7410v3900H0z'/%3E%3Cpath d='M0,450H7410m0,600H0m0,600H7410m0,600H0m0,600H7410m0,600H0' stroke='%23fff' stroke-width='300'/%3E%3Cpath fill='%233c3b6e' d='M0 0h2964v2100H0z'/%3E%3Cg fill='%23fff'%3E%3Cg id='A'%3E%3Cg id='B'%3E%3Cg id='C'%3E%3Cg id='D'%3E%3Cpath id='E' d='M247 90l70.5 217L133 173H361L176.5 307z'/%3E%3Cuse xlink:href='%23E' y='420'/%3E%3Cuse xlink:href='%23E' y='840'/%3E%3Cuse xlink:href='%23E' y='1260'/%3E%3C/g%3E%3Cuse xlink:href='%23E' y='1680'/%3E%3C/g%3E%3Cuse xlink:href='%23D' x='247' y='210'/%3E%3C/g%3E%3Cuse xlink:href='%23B' x='494'/%3E%3C/g%3E%3Cuse xlink:href='%23A' x='988'/%3E%3Cuse xlink:href='%23B' x='1976'/%3E%3Cuse xlink:href='%23C' x='2470'/%3E%3C/g%3E%3C/svg%3E",
+        "css": "--color:yellow"
+      },
+      "Joker": {
+        "flag": "",
+        "css": "--color:white"
+      }
+    },
+    "parent": "Draw",
+    "cardDefaults": {
+      "height": 70,
+      "width": 70
+    }
+  },
+  "Female Tiles": {
+    "type": "deck",
+    "id": "Female Tiles",
+    "x": 4,
+    "y": 4,
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "black",
+            "valueType": "static",
+            "value": "",
+            "width": 70,
+            "height": 70
+          }
+        ],
+        "radius": 4
+      },
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "invalid",
+            "valueType": "static",
+            "value": "",
+            "width": 70,
+            "height": 70,
+            "css": "background-color: var(--color)"
+          },
+          {
+            "type": "image",
+            "x": 5,
+            "y": -5,
+            "color": "transparent",
+            "valueType": "dynamic",
+            "value": "flag",
+            "width": 60,
+            "height": 60
+          },
+          {
+            "type": "image",
+            "x": 5,
+            "y": 10,
+            "color": "transparent",
+            "valueType": "static",
+            "value": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='147' height='150' fill='black'%3E%3Cpath d='M1 144.3c0-6.9 2.4-18.4 4.6-22 3.8-6.1 13.8-14.3 22-18.1 4.5-2.1 8.2-4.2 8.2-4.7s-.8-1.7-1.8-2.7c-1.1-1.1-2.2-4.5-3-9.8-1-6.8-.9-8.7.3-12.3 1.1-3.1 1.2-5.2.6-7.6-.4-1.8-.6-3.5-.3-3.8s.7-4.7.8-9.9c.4-12 5.9-28.8 12.3-37.2 4.2-5.6 14.1-12.7 21-15.1 4.3-1.4 9.5-1.6 10.4-.2.3.5 2.7 1 5.3 1 3.3 0 5.3.5 6.6 1.8 4.4 4.3 13.4 16.2 13.4 17.8 0 .3.8 1.5 1.8 2.7 2.7 3 7.1 11.3 7.1 13.5 0 1 .9 3.6 2 5.8 1.6 3.1 1.8 4.4.9 6.7-.5 1.5-.9 3.9-.8 5.3s-.7 4.5-2 6.9c-2 3.9-2.2 5.2-1.5 11.9.3 4.1 1.1 8.6 1.5 9.8.9 2.4-1.1 7.9-3.4 9.4-1.4.9 1.7 3.3 6.3 4.9 1.9.6 4.5 2 5.8 3s2.9 1.8 3.5 1.8 3.5 1.1 6.3 2.5c6.5 3.2 12.6 10 13.9 15.6 1.8 7.5 3.1 15 3.7 22l.5 6.7H0v-5.9z'/%3E%3C/svg%3E",
+            "width": 60,
+            "height": 60
+          }
+        ],
+        "radius": 4
+      }
+    ],
+    "inheritFrom": "Tables",
+    "cardTypes": {
+      "Central African Republic": {
+        "flag": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8'%3E%3Cpath fill='%23fff' d='m0 0h12v8H0z'/%3E%3Cpath fill='%23003082' d='m0 0h12v2H0z'/%3E%3Cpath fill='%23ffce00' d='M6 4l6 2v2H0V6zM2 .186l.529 1.628L1.144.808h1.712L1.471 1.814z'/%3E%3Cpath fill='%23289728' d='m0 4h12v2H0z'/%3E%3Cpath fill='%23d21034' d='m5 0h2v8H5z'/%3E%3C/svg%3E",
+        "css": "--color:lightyellow"
+      },
+      "China": {
+        "flag": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' viewBox='0 0 30 20'%3E%3Cdefs%3E%3Cpath id='A' d='M0-1L.588.809-.951-.309H.951L-.588.809z' fill='%23ff0'/%3E%3C/defs%3E%3Cpath fill='%23ee1c25' d='M0 0h30v20H0z'/%3E%3Cuse xlink:href='%23A' transform='matrix(3 0 0 3 5 5)'/%3E%3Cuse xlink:href='%23A' transform='matrix(.920258 .391313 -.391313 .920258 10 2)'/%3E%3Cuse xlink:href='%23A' transform='matrix(.69629 .717761 -.717761 .69629 12 4)'/%3E%3Cuse xlink:href='%23A' transform='matrix(.342916 .939366 -.939366 .342916 12 7)'/%3E%3Cuse xlink:href='%23A' transform='matrix(.935692 .352819 -.352819 .935692 10 9)'/%3E%3C/svg%3E",
+        "css": "--color:pink"
+      },
+      "Cuba": {
+        "flag": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 15' fill='%23fff'%3E%3Cpath fill='%23002a8f' d='m0 0h30v15H0z'/%3E%3Cpath d='m3 3h27v3H9v3h21v3H3z'/%3E%3Cpath fill='%23cb1515' d='M13 7.5L0 15V0z'/%3E%3Cpath d='M4.3 5L2.9 9.5l3.8-2.8H2l3.8 2.8z'/%3E%3C/svg%3E",
+        "css": "--color:orange"
+      },
+      "France": {
+        "flag": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='9' height='6'%3E%3Cpath fill='%23ed2939' d='M0 0h9v6H0z'/%3E%3Cpath fill='%23fff' d='M0 0h6v6H0z'/%3E%3Cpath fill='%23002395' d='M0 0h3v6H0z'/%3E%3C/svg%3E",
+        "css": "--color:white"
+      },
+      "Germany": {
+        "flag": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 5 3'%3E%3Cpath d='M0 0h5v3H0z'/%3E%3Cpath fill='%23d00' d='M0 1h5v2H0z'/%3E%3Cpath fill='%23ffce00' d='M0 2h5v1H0z'/%3E%3C/svg%3E",
+        "css": "--color:purple"
+      },
+      "Great Britain": {
+        "flag": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 25 15'%3E%3Cpath fill='%2300247d' d='M0 0h25v15H0z'/%3E%3Cg stroke='%23fff'%3E%3Cpath d='M0 0l25 15m0-15L0 15' stroke-width='3'/%3E%3Cpath d='M12.5 0v15M0 7.5h25' stroke-width='5'/%3E%3C/g%3E%3Cpath d='M12.5 0v15M0 7.5h25' stroke='%23cf142b' stroke-width='3'/%3E%3C/svg%3E",
+        "css": "--color:lightblue"
+      },
+      "India": {
+        "flag": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' viewBox='0 0 225 150'%3E%3Cpath fill='%23f93' d='M0 0h225v150H0z'/%3E%3Cpath fill='%23fff' d='M0 50h225v50H0z'/%3E%3Cpath fill='%23128807' d='M0 100h225v50H0z'/%3E%3Cg transform='translate(112.5 75)'%3E%3Ccircle r='20' fill='%23008'/%3E%3Ccircle r='17.5' fill='%23fff'/%3E%3Ccircle r='3.5' fill='%23008'/%3E%3Cg id='A'%3E%3Cg id='B'%3E%3Cg id='C'%3E%3Cg fill='%23008' id='D'%3E%3Ccircle r='.9' transform='matrix(.99 .13 -.13 .99 17.35 2.28)'/%3E%3Cpath d='M0 17.5L.6 7 0 2-.6 7 0 17.5z'/%3E%3C/g%3E%3Cuse xlink:href='%23D' transform='rotate(15)'/%3E%3C/g%3E%3Cuse xlink:href='%23C' transform='rotate(30)'/%3E%3C/g%3E%3Cuse xlink:href='%23B' transform='rotate(60)'/%3E%3C/g%3E%3Cuse xlink:href='%23A' transform='rotate(120)'/%3E%3Cuse xlink:href='%23A' transform='rotate(240)'/%3E%3C/g%3E%3C/svg%3E",
+        "css": "--color:#FEE68E"
+      },
+      "Italy": {
+        "flag": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 3 2'%3E%3Cpath fill='%23009246' d='M0 0h1v2H0z'/%3E%3Cpath fill='%23fff' d='M1 0h1v2H1z'/%3E%3Cpath fill='%23ce2b37' d='M2 0h1v2H2z'/%3E%3C/svg%3E",
+        "css": "--color:brown"
+      },
+      "Russia": {
+        "flag": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 9 6'%3E%3Cpath fill='%23fff' d='M0 0h9v3H0z'/%3E%3Cpath fill='%23d52b1e' d='M0 3h9v3H0z'/%3E%3Cpath fill='%230039a6' d='M0 2h9v2H0z'/%3E%3C/svg%3E",
+        "css": "--color:green"
+      },
+      "Spain": {
+        "flag": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' height='500' width='750'%3E%3Cpath fill='%23c60b1e' d='M0 0h750v500H0z'/%3E%3Cpath fill='%23ffc400' d='M0 125h750v250H0z'/%3E%3C/svg%3E",
+        "css": "--color:lightgreen"
+      },
+      "Turkey": {
+        "flag": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 -30 90 60'%3E%3Cpath fill='%23e30a17' d='m0-30h90v60H0z'/%3E%3Cpath fill='%23fff' d='m41 0 13-4-8 11V-7l8 11zm1 8a15 15 0 1 1 0-16 12 12 0 1 0 0 16z'/%3E%3C/svg%3E",
+        "css": "--color:lightblue"
+      },
+      "USA": {
+        "flag": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' viewBox='0 0 7410 3900'%3E%3Cpath fill='%23b22234' d='M0 0h7410v3900H0z'/%3E%3Cpath d='M0,450H7410m0,600H0m0,600H7410m0,600H0m0,600H7410m0,600H0' stroke='%23fff' stroke-width='300'/%3E%3Cpath fill='%233c3b6e' d='M0 0h2964v2100H0z'/%3E%3Cg fill='%23fff'%3E%3Cg id='A'%3E%3Cg id='B'%3E%3Cg id='C'%3E%3Cg id='D'%3E%3Cpath id='E' d='M247 90l70.5 217L133 173H361L176.5 307z'/%3E%3Cuse xlink:href='%23E' y='420'/%3E%3Cuse xlink:href='%23E' y='840'/%3E%3Cuse xlink:href='%23E' y='1260'/%3E%3C/g%3E%3Cuse xlink:href='%23E' y='1680'/%3E%3C/g%3E%3Cuse xlink:href='%23D' x='247' y='210'/%3E%3C/g%3E%3Cuse xlink:href='%23B' x='494'/%3E%3C/g%3E%3Cuse xlink:href='%23A' x='988'/%3E%3Cuse xlink:href='%23B' x='1976'/%3E%3Cuse xlink:href='%23C' x='2470'/%3E%3C/g%3E%3C/svg%3E",
+        "css": "--color:yellow"
+      },
+      "Joker": {
+        "flag": "",
+        "css": "--color:white"
+      }
+    },
+    "parent": "Draw",
+    "cardDefaults": {
+      "height": 70,
+      "width": 70
+    }
+  },
+  "ul8c": {
+    "deck": "Female Tiles",
+    "type": "card",
+    "cardType": "Central African Republic",
+    "id": "ul8c",
+    "z": 7144,
+    "parent": "mt6f"
+  },
+  "rz1f": {
+    "deck": "Female Tiles",
+    "type": "card",
+    "cardType": "China",
+    "id": "rz1f",
+    "parent": "mt6f",
+    "z": 5384
+  },
+  "36mz": {
+    "deck": "Female Tiles",
+    "type": "card",
+    "cardType": "Cuba",
+    "id": "36mz",
+    "z": 8995,
+    "parent": "mt6f"
+  },
+  "qriy": {
+    "deck": "Female Tiles",
+    "type": "card",
+    "cardType": "France",
+    "id": "qriy",
+    "parent": "mt6f",
+    "z": 3601
+  },
+  "5r2z": {
+    "deck": "Female Tiles",
+    "type": "card",
+    "cardType": "Germany",
+    "id": "5r2z",
+    "parent": "mt6f",
+    "z": 436
+  },
+  "fhzm": {
+    "deck": "Female Tiles",
+    "type": "card",
+    "cardType": "Great Britain",
+    "id": "fhzm",
+    "parent": "mt6f",
+    "z": 5240
+  },
+  "70jx": {
+    "deck": "Female Tiles",
+    "type": "card",
+    "cardType": "India",
+    "id": "70jx",
+    "z": 8572,
+    "parent": "mt6f"
+  },
+  "0j0j": {
+    "deck": "Female Tiles",
+    "type": "card",
+    "cardType": "Italy",
+    "id": "0j0j",
+    "parent": "mt6f",
+    "z": 5165
+  },
+  "hcr3": {
+    "deck": "Female Tiles",
+    "type": "card",
+    "cardType": "Russia",
+    "id": "hcr3",
+    "parent": "mt6f",
+    "z": 467
+  },
+  "pjk6": {
+    "deck": "Female Tiles",
+    "type": "card",
+    "cardType": "Spain",
+    "id": "pjk6",
+    "parent": "mt6f",
+    "z": 3050
+  },
+  "clh1": {
+    "deck": "Female Tiles",
+    "type": "card",
+    "cardType": "Turkey",
+    "id": "clh1",
+    "parent": "mt6f",
+    "z": 9344
+  },
+  "2rh3": {
+    "deck": "Female Tiles",
+    "type": "card",
+    "cardType": "USA",
+    "id": "2rh3",
+    "parent": "mt6f",
+    "z": 6667
+  },
+  "dojn": {
+    "deck": "Female Tiles",
+    "type": "card",
+    "cardType": "Central African Republic",
+    "id": "dojn",
+    "parent": "mt6f",
+    "z": 9036
+  },
+  "vt9m": {
+    "deck": "Female Tiles",
+    "type": "card",
+    "cardType": "China",
+    "id": "vt9m",
+    "parent": "mt6f",
+    "z": 8381
+  },
+  "fwen": {
+    "deck": "Female Tiles",
+    "type": "card",
+    "cardType": "Cuba",
+    "id": "fwen",
+    "parent": "mt6f",
+    "z": 6739
+  },
+  "a7a3": {
+    "deck": "Female Tiles",
+    "type": "card",
+    "cardType": "France",
+    "id": "a7a3",
+    "parent": "mt6f",
+    "z": 3981
+  },
+  "gtnm": {
+    "deck": "Female Tiles",
+    "type": "card",
+    "cardType": "Germany",
+    "id": "gtnm",
+    "parent": "mt6f",
+    "z": 2656
+  },
+  "wmri": {
+    "deck": "Female Tiles",
+    "type": "card",
+    "cardType": "Great Britain",
+    "id": "wmri",
+    "parent": "mt6f",
+    "z": 7086
+  },
+  "f5zm": {
+    "deck": "Female Tiles",
+    "type": "card",
+    "cardType": "India",
+    "id": "f5zm",
+    "parent": "mt6f",
+    "z": 1031
+  },
+  "r86t": {
+    "deck": "Female Tiles",
+    "type": "card",
+    "cardType": "Italy",
+    "id": "r86t",
+    "parent": "mt6f",
+    "z": 5647
+  },
+  "1r94": {
+    "deck": "Female Tiles",
+    "type": "card",
+    "cardType": "Russia",
+    "id": "1r94",
+    "z": 7980,
+    "parent": "mt6f"
+  },
+  "927f": {
+    "deck": "Female Tiles",
+    "type": "card",
+    "cardType": "Spain",
+    "id": "927f",
+    "parent": "mt6f",
+    "z": 3795
+  },
+  "tt0b": {
+    "deck": "Female Tiles",
+    "type": "card",
+    "cardType": "Turkey",
+    "id": "tt0b",
+    "parent": "mt6f",
+    "z": 4103
+  },
+  "vwlt": {
+    "deck": "Female Tiles",
+    "type": "card",
+    "cardType": "USA",
+    "id": "vwlt",
+    "parent": "mt6f",
+    "z": 1647
+  },
+  "rx6u": {
+    "deck": "Female Tiles",
+    "type": "card",
+    "cardType": "Central African Republic",
+    "id": "rx6u",
+    "parent": "mt6f",
+    "z": 5498
+  },
+  "gw3n": {
+    "deck": "Female Tiles",
+    "type": "card",
+    "cardType": "China",
+    "id": "gw3n",
+    "parent": "mt6f",
+    "z": 5133
+  },
+  "bor3": {
+    "deck": "Female Tiles",
+    "type": "card",
+    "cardType": "Cuba",
+    "id": "bor3",
+    "parent": "mt6f",
+    "z": 3670
+  },
+  "e6mt": {
+    "deck": "Female Tiles",
+    "type": "card",
+    "cardType": "France",
+    "id": "e6mt",
+    "parent": "mt6f",
+    "z": 7401
+  },
+  "y5db": {
+    "deck": "Female Tiles",
+    "type": "card",
+    "cardType": "Germany",
+    "id": "y5db",
+    "parent": "mt6f",
+    "z": 1125
+  },
+  "hra0": {
+    "deck": "Female Tiles",
+    "type": "card",
+    "cardType": "Great Britain",
+    "id": "hra0",
+    "parent": "mt6f",
+    "z": 2085
+  },
+  "0jx9": {
+    "deck": "Female Tiles",
+    "type": "card",
+    "cardType": "India",
+    "id": "0jx9",
+    "parent": "mt6f",
+    "z": 638
+  },
+  "0ayh": {
+    "deck": "Female Tiles",
+    "type": "card",
+    "cardType": "Italy",
+    "id": "0ayh",
+    "parent": "mt6f",
+    "z": 4354
+  },
+  "x56v": {
+    "deck": "Female Tiles",
+    "type": "card",
+    "cardType": "Russia",
+    "id": "x56v",
+    "z": 563,
+    "parent": "mt6f"
+  },
+  "4m7t": {
+    "deck": "Female Tiles",
+    "type": "card",
+    "cardType": "Spain",
+    "id": "4m7t",
+    "z": 158,
+    "parent": "mt6f"
+  },
+  "ueil": {
+    "deck": "Female Tiles",
+    "type": "card",
+    "cardType": "Turkey",
+    "id": "ueil",
+    "parent": "mt6f",
+    "z": 6018
+  },
+  "bm91": {
+    "deck": "Female Tiles",
+    "type": "card",
+    "cardType": "USA",
+    "id": "bm91",
+    "parent": "mt6f",
+    "z": 1123
+  },
+  "fycj": {
+    "deck": "Female Tiles",
+    "type": "card",
+    "cardType": "Central African Republic",
+    "id": "fycj",
+    "parent": "mt6f",
+    "z": 1497
+  },
+  "dxvt": {
+    "deck": "Female Tiles",
+    "type": "card",
+    "cardType": "China",
+    "id": "dxvt",
+    "parent": "mt6f",
+    "z": 155
+  },
+  "2oej": {
+    "deck": "Female Tiles",
+    "type": "card",
+    "cardType": "Cuba",
+    "id": "2oej",
+    "parent": "mt6f",
+    "z": 4188
+  },
+  "9onh": {
+    "deck": "Female Tiles",
+    "type": "card",
+    "cardType": "France",
+    "id": "9onh",
+    "parent": "mt6f",
+    "z": 7581
+  },
+  "96du": {
+    "deck": "Female Tiles",
+    "type": "card",
+    "cardType": "Germany",
+    "id": "96du",
+    "parent": "mt6f",
+    "z": 8615
+  },
+  "pv42": {
+    "deck": "Female Tiles",
+    "type": "card",
+    "cardType": "Great Britain",
+    "id": "pv42",
+    "z": 1773,
+    "parent": "mt6f"
+  },
+  "vxsv": {
+    "deck": "Female Tiles",
+    "type": "card",
+    "cardType": "India",
+    "id": "vxsv",
+    "parent": "mt6f",
+    "z": 3926
+  },
+  "ew6i": {
+    "deck": "Female Tiles",
+    "type": "card",
+    "cardType": "Italy",
+    "id": "ew6i",
+    "parent": "mt6f",
+    "z": 411
+  },
+  "x87w": {
+    "deck": "Female Tiles",
+    "type": "card",
+    "cardType": "Russia",
+    "id": "x87w",
+    "z": 1933,
+    "parent": "mt6f"
+  },
+  "b82o": {
+    "deck": "Female Tiles",
+    "type": "card",
+    "cardType": "Spain",
+    "id": "b82o",
+    "z": 6518,
+    "parent": "mt6f"
+  },
+  "mffv": {
+    "deck": "Female Tiles",
+    "type": "card",
+    "cardType": "Turkey",
+    "id": "mffv",
+    "parent": "mt6f",
+    "z": 9019
+  },
+  "tib2": {
+    "deck": "Female Tiles",
+    "type": "card",
+    "cardType": "USA",
+    "id": "tib2",
+    "parent": "mt6f",
+    "z": 6074
+  },
+  "ifc1": {
+    "deck": "Male Tiles",
+    "type": "card",
+    "cardType": "Central African Republic",
+    "id": "ifc1",
+    "parent": "mt6f",
+    "z": 9331
+  },
+  "rrpn": {
+    "deck": "Male Tiles",
+    "type": "card",
+    "cardType": "China",
+    "id": "rrpn",
+    "parent": "mt6f",
+    "z": 5318
+  },
+  "nizt": {
+    "deck": "Male Tiles",
+    "type": "card",
+    "cardType": "Cuba",
+    "id": "nizt",
+    "parent": "mt6f",
+    "z": 4840
+  },
+  "52yh": {
+    "deck": "Male Tiles",
+    "type": "card",
+    "cardType": "France",
+    "id": "52yh",
+    "parent": "mt6f",
+    "z": 5855
+  },
+  "hr1i": {
+    "deck": "Male Tiles",
+    "type": "card",
+    "cardType": "Germany",
+    "id": "hr1i",
+    "z": 8333,
+    "parent": "mt6f"
+  },
+  "hlrn": {
+    "deck": "Male Tiles",
+    "type": "card",
+    "cardType": "Great Britain",
+    "id": "hlrn",
+    "parent": "mt6f",
+    "z": 1311
+  },
+  "vt25": {
+    "deck": "Male Tiles",
+    "type": "card",
+    "cardType": "India",
+    "id": "vt25",
+    "parent": "mt6f",
+    "z": 751
+  },
+  "8kfw": {
+    "deck": "Male Tiles",
+    "type": "card",
+    "cardType": "Italy",
+    "id": "8kfw",
+    "parent": "mt6f",
+    "z": 7566
+  },
+  "17bk": {
+    "deck": "Male Tiles",
+    "type": "card",
+    "cardType": "Russia",
+    "id": "17bk",
+    "z": 3633,
+    "parent": "mt6f"
+  },
+  "80lc": {
+    "deck": "Male Tiles",
+    "type": "card",
+    "cardType": "Spain",
+    "id": "80lc",
+    "parent": "mt6f",
+    "z": 2183
+  },
+  "dp7b": {
+    "deck": "Male Tiles",
+    "type": "card",
+    "cardType": "Turkey",
+    "id": "dp7b",
+    "parent": "mt6f",
+    "z": 319
+  },
+  "dlhj": {
+    "deck": "Male Tiles",
+    "type": "card",
+    "cardType": "USA",
+    "id": "dlhj",
+    "parent": "mt6f",
+    "z": 6251
+  },
+  "ndcs": {
+    "deck": "Male Tiles",
+    "type": "card",
+    "cardType": "Central African Republic",
+    "id": "ndcs",
+    "parent": "mt6f",
+    "z": 358
+  },
+  "govi": {
+    "deck": "Male Tiles",
+    "type": "card",
+    "cardType": "China",
+    "id": "govi",
+    "parent": "mt6f",
+    "z": 3427
+  },
+  "dpfe": {
+    "deck": "Male Tiles",
+    "type": "card",
+    "cardType": "Cuba",
+    "id": "dpfe",
+    "parent": "mt6f",
+    "z": 6639
+  },
+  "f4vh": {
+    "deck": "Male Tiles",
+    "type": "card",
+    "cardType": "France",
+    "id": "f4vh",
+    "z": 935,
+    "parent": "mt6f"
+  },
+  "ywhu": {
+    "deck": "Male Tiles",
+    "type": "card",
+    "cardType": "Germany",
+    "id": "ywhu",
+    "parent": "mt6f",
+    "z": 4522
+  },
+  "rf8a": {
+    "deck": "Male Tiles",
+    "type": "card",
+    "cardType": "Great Britain",
+    "id": "rf8a",
+    "parent": "mt6f",
+    "z": 784
+  },
+  "in20": {
+    "deck": "Male Tiles",
+    "type": "card",
+    "cardType": "India",
+    "id": "in20",
+    "z": 8823,
+    "parent": "mt6f"
+  },
+  "u9rj": {
+    "deck": "Male Tiles",
+    "type": "card",
+    "cardType": "Italy",
+    "id": "u9rj",
+    "z": 2636,
+    "parent": "mt6f"
+  },
+  "4yet": {
+    "deck": "Male Tiles",
+    "type": "card",
+    "cardType": "Russia",
+    "id": "4yet",
+    "parent": "mt6f",
+    "z": 8509
+  },
+  "p5he": {
+    "deck": "Male Tiles",
+    "type": "card",
+    "cardType": "Spain",
+    "id": "p5he",
+    "z": 1972,
+    "parent": "mt6f"
+  },
+  "pxbg": {
+    "deck": "Male Tiles",
+    "type": "card",
+    "cardType": "Turkey",
+    "id": "pxbg",
+    "parent": "mt6f",
+    "z": 6673
+  },
+  "d9me": {
+    "deck": "Male Tiles",
+    "type": "card",
+    "cardType": "USA",
+    "id": "d9me",
+    "parent": "mt6f",
+    "z": 5510
+  },
+  "2gj6": {
+    "deck": "Male Tiles",
+    "type": "card",
+    "cardType": "Central African Republic",
+    "id": "2gj6",
+    "z": 5637,
+    "parent": "mt6f"
+  },
+  "oylr": {
+    "deck": "Male Tiles",
+    "type": "card",
+    "cardType": "China",
+    "id": "oylr",
+    "parent": "mt6f",
+    "z": 8090
+  },
+  "7sms": {
+    "deck": "Male Tiles",
+    "type": "card",
+    "cardType": "Cuba",
+    "id": "7sms",
+    "parent": "mt6f",
+    "z": 6600
+  },
+  "taxb": {
+    "deck": "Male Tiles",
+    "type": "card",
+    "cardType": "France",
+    "id": "taxb",
+    "parent": "mt6f",
+    "z": 3225
+  },
+  "hnxl": {
+    "deck": "Male Tiles",
+    "type": "card",
+    "cardType": "Germany",
+    "id": "hnxl",
+    "z": 3596,
+    "parent": "mt6f"
+  },
+  "js8a": {
+    "deck": "Male Tiles",
+    "type": "card",
+    "cardType": "Great Britain",
+    "id": "js8a",
+    "parent": "mt6f",
+    "z": 2336
+  },
+  "d5p5": {
+    "deck": "Male Tiles",
+    "type": "card",
+    "cardType": "India",
+    "id": "d5p5",
+    "parent": "mt6f",
+    "z": 4228
+  },
+  "p096": {
+    "deck": "Male Tiles",
+    "type": "card",
+    "cardType": "Italy",
+    "id": "p096",
+    "parent": "mt6f",
+    "z": 6367
+  },
+  "h02d": {
+    "deck": "Male Tiles",
+    "type": "card",
+    "cardType": "Russia",
+    "id": "h02d",
+    "parent": "mt6f",
+    "z": 5436
+  },
+  "zq3p": {
+    "deck": "Male Tiles",
+    "type": "card",
+    "cardType": "Spain",
+    "id": "zq3p",
+    "parent": "mt6f",
+    "z": 7117
+  },
+  "3dyj": {
+    "deck": "Male Tiles",
+    "type": "card",
+    "cardType": "Turkey",
+    "id": "3dyj",
+    "parent": "mt6f",
+    "z": 6500
+  },
+  "imib": {
+    "deck": "Male Tiles",
+    "type": "card",
+    "cardType": "Central African Republic",
+    "id": "imib",
+    "parent": "mt6f",
+    "z": 3760
+  },
+  "k112": {
+    "deck": "Male Tiles",
+    "type": "card",
+    "cardType": "China",
+    "id": "k112",
+    "parent": "mt6f",
+    "z": 1412
+  },
+  "xit3": {
+    "deck": "Male Tiles",
+    "type": "card",
+    "cardType": "Cuba",
+    "id": "xit3",
+    "parent": "mt6f",
+    "z": 3919
+  },
+  "u5t6": {
+    "deck": "Male Tiles",
+    "type": "card",
+    "cardType": "France",
+    "id": "u5t6",
+    "parent": "mt6f",
+    "z": 764
+  },
+  "wdxs": {
+    "deck": "Male Tiles",
+    "type": "card",
+    "cardType": "Germany",
+    "id": "wdxs",
+    "z": 9490,
+    "parent": "mt6f"
+  },
+  "gbnz": {
+    "deck": "Male Tiles",
+    "type": "card",
+    "cardType": "Great Britain",
+    "id": "gbnz",
+    "parent": "mt6f",
+    "z": 9912
+  },
+  "zq2m": {
+    "deck": "Male Tiles",
+    "type": "card",
+    "cardType": "India",
+    "id": "zq2m",
+    "parent": "mt6f",
+    "z": 5951
+  },
+  "tyty": {
+    "deck": "Male Tiles",
+    "type": "card",
+    "cardType": "Italy",
+    "id": "tyty",
+    "z": 7450,
+    "parent": "mt6f"
+  },
+  "mg6q": {
+    "deck": "Male Tiles",
+    "type": "card",
+    "cardType": "Russia",
+    "id": "mg6q",
+    "z": 3307,
+    "parent": "mt6f"
+  },
+  "r6vd": {
+    "deck": "Male Tiles",
+    "type": "card",
+    "cardType": "Spain",
+    "id": "r6vd",
+    "parent": "mt6f",
+    "z": 3296
+  },
+  "8mkb": {
+    "deck": "Male Tiles",
+    "type": "card",
+    "cardType": "Turkey",
+    "id": "8mkb",
+    "parent": "mt6f",
+    "z": 1678
+  },
+  "yqh6": {
+    "deck": "Male Tiles",
+    "type": "card",
+    "cardType": "USA",
+    "id": "yqh6",
+    "parent": "mt6f",
+    "z": 419
+  },
+  "6xs9": {
+    "deck": "Tables",
+    "type": "card",
+    "cardType": "Central African Republic",
+    "id": "6xs9",
+    "x": 78,
+    "y": 226,
+    "parent": "Board"
+  },
+  "0ekq": {
+    "deck": "Tables",
+    "type": "card",
+    "cardType": "China",
+    "id": "0ekq",
+    "x": 522,
+    "y": 78,
+    "parent": "Board"
+  },
+  "4zr3": {
+    "deck": "Tables",
+    "type": "card",
+    "cardType": "Cuba",
+    "id": "4zr3",
+    "x": 78,
+    "y": 374,
+    "parent": "Board"
+  },
+  "va8c": {
+    "deck": "Tables",
+    "type": "card",
+    "cardType": "France",
+    "id": "va8c",
+    "x": 226,
+    "y": 670,
+    "parent": "Board"
+  },
+  "ey8k": {
+    "deck": "Tables",
+    "type": "card",
+    "cardType": "Germany",
+    "id": "ey8k",
+    "x": 226,
+    "y": 818,
+    "parent": "Board"
+  },
+  "4clt": {
+    "deck": "Tables",
+    "type": "card",
+    "cardType": "Great Britain",
+    "id": "4clt",
+    "x": 670,
+    "y": 226,
+    "parent": "Board"
+  },
+  "wfe5": {
+    "deck": "Tables",
+    "type": "card",
+    "cardType": "India",
+    "id": "wfe5",
+    "x": 818,
+    "y": 818,
+    "parent": "Board"
+  },
+  "qeig": {
+    "deck": "Tables",
+    "type": "card",
+    "cardType": "Italy",
+    "id": "qeig",
+    "x": 226,
+    "y": 78,
+    "parent": "Board"
+  },
+  "l68c": {
+    "deck": "Tables",
+    "type": "card",
+    "cardType": "Russia",
+    "id": "l68c",
+    "x": 818,
+    "y": 374,
+    "parent": "Board"
+  },
+  "875o": {
+    "deck": "Tables",
+    "type": "card",
+    "cardType": "Spain",
+    "id": "875o",
+    "x": 818,
+    "y": 78,
+    "parent": "Board"
+  },
+  "wk90": {
+    "deck": "Tables",
+    "type": "card",
+    "cardType": "Turkey",
+    "id": "wk90",
+    "x": 78,
+    "y": 670,
+    "parent": "Board"
+  },
+  "9c09": {
+    "deck": "Tables",
+    "type": "card",
+    "cardType": "USA",
+    "id": "9c09",
+    "x": 670,
+    "y": 818,
+    "parent": "Board"
+  },
+  "llmp": {
+    "deck": "Tables",
+    "type": "card",
+    "cardType": "Central African Republic",
+    "id": "llmp",
+    "x": 78,
+    "y": 78,
+    "parent": "Board"
+  },
+  "yh3s": {
+    "deck": "Tables",
+    "type": "card",
+    "cardType": "China",
+    "id": "yh3s",
+    "x": 670,
+    "y": 78,
+    "parent": "Board"
+  },
+  "m4xo": {
+    "deck": "Tables",
+    "type": "card",
+    "cardType": "Cuba",
+    "id": "m4xo",
+    "x": 78,
+    "y": 522,
+    "parent": "Board"
+  },
+  "jqct": {
+    "deck": "Tables",
+    "type": "card",
+    "cardType": "France",
+    "id": "jqct",
+    "x": 670,
+    "y": 670,
+    "parent": "Board"
+  },
+  "1btz": {
+    "deck": "Tables",
+    "type": "card",
+    "cardType": "Germany",
+    "id": "1btz",
+    "x": 374,
+    "y": 818,
+    "parent": "Board"
+  },
+  "5ud5": {
+    "deck": "Tables",
+    "type": "card",
+    "cardType": "Great Britain",
+    "id": "5ud5",
+    "x": 226,
+    "y": 226,
+    "parent": "Board"
+  },
+  "sbo1": {
+    "deck": "Tables",
+    "type": "card",
+    "cardType": "India",
+    "id": "sbo1",
+    "x": 818,
+    "y": 670,
+    "parent": "Board"
+  },
+  "7izc": {
+    "deck": "Tables",
+    "type": "card",
+    "cardType": "Italy",
+    "id": "7izc",
+    "x": 374,
+    "y": 78,
+    "parent": "Board"
+  },
+  "usp4": {
+    "deck": "Tables",
+    "type": "card",
+    "cardType": "Russia",
+    "id": "usp4",
+    "x": 818,
+    "y": 522,
+    "parent": "Board"
+  },
+  "fuxq": {
+    "deck": "Tables",
+    "type": "card",
+    "cardType": "Spain",
+    "id": "fuxq",
+    "x": 818,
+    "y": 226,
+    "parent": "Board"
+  },
+  "fg3z": {
+    "deck": "Tables",
+    "type": "card",
+    "cardType": "Turkey",
+    "id": "fg3z",
+    "x": 78,
+    "y": 818,
+    "parent": "Board"
+  },
+  "mh4w": {
+    "deck": "Tables",
+    "type": "card",
+    "cardType": "USA",
+    "id": "mh4w",
+    "x": 522,
+    "y": 818,
+    "parent": "Board"
+  },
+  "qdlo": {
+    "deck": "Male Tiles",
+    "type": "card",
+    "cardType": "Joker",
+    "id": "qdlo",
+    "parent": "mt6f",
+    "z": 7643
+  },
+  "omat": {
+    "deck": "Female Tiles",
+    "type": "card",
+    "cardType": "Joker",
+    "id": "omat",
+    "parent": "mt6f",
+    "z": 7857
+  },
+  "Board": {
+    "id": "Board",
+    "y": 17,
+    "x": 617,
+    "css": "background: lightblue; ",
+    "width": 966,
+    "height": 966,
+    "layer": -4,
+    "movable": false
+  },
+  "Chair 1": {
+    "type": "holder",
+    "id": "Chair 1",
+    "x": 78,
+    "y": 4,
+    "width": 70,
+    "height": 70,
+    "classes": "transparent",
+    "css": "background: url(/assets/1152344100_3176) center no-repeat",
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "parent": "Board"
+  },
+  "Draw": {
+    "type": "holder",
+    "id": "Draw",
+    "x": 69,
+    "y": 217,
+    "width": 78,
+    "height": 78,
+    "z": 16
+  },
+  "Chair 2": {
+    "inheritFrom": "Chair 1",
+    "id": "Chair 2",
+    "type": "holder",
+    "x": 226,
+    "y": 4,
+    "parent": "Board"
+  },
+  "Chair 3": {
+    "inheritFrom": "Chair 1",
+    "id": "Chair 3",
+    "type": "holder",
+    "x": 374,
+    "y": 4,
+    "parent": "Board"
+  },
+  "Chair 4": {
+    "inheritFrom": "Chair 1",
+    "id": "Chair 4",
+    "type": "holder",
+    "x": 522,
+    "y": 4,
+    "parent": "Board"
+  },
+  "Chair 5": {
+    "inheritFrom": "Chair 1",
+    "id": "Chair 5",
+    "type": "holder",
+    "x": 670,
+    "y": 4,
+    "parent": "Board"
+  },
+  "Chair 6": {
+    "inheritFrom": "Chair 1",
+    "id": "Chair 6",
+    "type": "holder",
+    "x": 818,
+    "y": 4,
+    "parent": "Board"
+  },
+  "Chair 7": {
+    "inheritFrom": "Chair 1",
+    "id": "Chair 7",
+    "type": "holder",
+    "x": 4,
+    "y": 78,
+    "parent": "Board"
+  },
+  "Chair 8": {
+    "inheritFrom": "Chair 1",
+    "id": "Chair 8",
+    "type": "holder",
+    "x": 152,
+    "y": 78,
+    "parent": "Board"
+  },
+  "Chair 9": {
+    "inheritFrom": "Chair 1",
+    "id": "Chair 9",
+    "type": "holder",
+    "x": 300,
+    "y": 78,
+    "parent": "Board"
+  },
+  "Chair 10": {
+    "inheritFrom": "Chair 1",
+    "id": "Chair 10",
+    "type": "holder",
+    "x": 448,
+    "y": 78,
+    "parent": "Board"
+  },
+  "Chair 11": {
+    "inheritFrom": "Chair 1",
+    "id": "Chair 11",
+    "type": "holder",
+    "x": 596,
+    "y": 78,
+    "parent": "Board"
+  },
+  "Chair 12": {
+    "inheritFrom": "Chair 1",
+    "id": "Chair 12",
+    "type": "holder",
+    "x": 744,
+    "y": 78,
+    "parent": "Board"
+  },
+  "Chair 13": {
+    "inheritFrom": "Chair 1",
+    "id": "Chair 13",
+    "type": "holder",
+    "x": 892,
+    "y": 78,
+    "parent": "Board"
+  },
+  "Chair 14": {
+    "inheritFrom": "Chair 1",
+    "id": "Chair 14",
+    "type": "holder",
+    "x": 78,
+    "y": 152,
+    "parent": "Board"
+  },
+  "Chair 15": {
+    "inheritFrom": "Chair 1",
+    "id": "Chair 15",
+    "type": "holder",
+    "x": 78,
+    "y": 300,
+    "parent": "Board"
+  },
+  "Chair 16": {
+    "inheritFrom": "Chair 1",
+    "id": "Chair 16",
+    "type": "holder",
+    "x": 78,
+    "y": 448,
+    "parent": "Board"
+  },
+  "Chair 17": {
+    "inheritFrom": "Chair 1",
+    "id": "Chair 17",
+    "type": "holder",
+    "x": 78,
+    "y": 596,
+    "parent": "Board"
+  },
+  "Chair 18": {
+    "inheritFrom": "Chair 1",
+    "id": "Chair 18",
+    "type": "holder",
+    "x": 78,
+    "y": 744,
+    "parent": "Board"
+  },
+  "Chair 19": {
+    "inheritFrom": "Chair 1",
+    "id": "Chair 19",
+    "type": "holder",
+    "x": 78,
+    "y": 892,
+    "parent": "Board"
+  },
+  "Chair 20": {
+    "inheritFrom": "Chair 2",
+    "id": "Chair 20",
+    "type": "holder",
+    "x": 226,
+    "y": 152,
+    "parent": "Board"
+  },
+  "Chair 21": {
+    "inheritFrom": "Chair 2",
+    "id": "Chair 21",
+    "type": "holder",
+    "x": 226,
+    "y": 300,
+    "parent": "Board"
+  },
+  "Chair 23": {
+    "inheritFrom": "Chair 2",
+    "id": "Chair 23",
+    "type": "holder",
+    "x": 226,
+    "y": 596,
+    "parent": "Board"
+  },
+  "Chair 24": {
+    "inheritFrom": "Chair 2",
+    "id": "Chair 24",
+    "type": "holder",
+    "x": 226,
+    "y": 744,
+    "parent": "Board"
+  },
+  "Chair 25": {
+    "inheritFrom": "Chair 2",
+    "id": "Chair 25",
+    "type": "holder",
+    "x": 226,
+    "y": 892,
+    "parent": "Board"
+  },
+  "Chair 26": {
+    "inheritFrom": "Chair 3",
+    "id": "Chair 26",
+    "type": "holder",
+    "x": 374,
+    "y": 152,
+    "parent": "Board"
+  },
+  "Chair 30": {
+    "inheritFrom": "Chair 3",
+    "id": "Chair 30",
+    "type": "holder",
+    "x": 374,
+    "y": 744,
+    "parent": "Board"
+  },
+  "Chair 31": {
+    "inheritFrom": "Chair 3",
+    "id": "Chair 31",
+    "type": "holder",
+    "x": 374,
+    "y": 892,
+    "parent": "Board"
+  },
+  "Chair 32": {
+    "inheritFrom": "Chair 4",
+    "id": "Chair 32",
+    "type": "holder",
+    "x": 522,
+    "y": 152,
+    "parent": "Board"
+  },
+  "Chair 36": {
+    "inheritFrom": "Chair 4",
+    "id": "Chair 36",
+    "type": "holder",
+    "x": 522,
+    "y": 744,
+    "parent": "Board"
+  },
+  "Chair 37": {
+    "inheritFrom": "Chair 4",
+    "id": "Chair 37",
+    "type": "holder",
+    "x": 522,
+    "y": 892,
+    "parent": "Board"
+  },
+  "Chair 38": {
+    "inheritFrom": "Chair 5",
+    "id": "Chair 38",
+    "type": "holder",
+    "x": 670,
+    "y": 152,
+    "parent": "Board"
+  },
+  "Chair 39": {
+    "inheritFrom": "Chair 5",
+    "id": "Chair 39",
+    "type": "holder",
+    "x": 670,
+    "y": 300,
+    "parent": "Board"
+  },
+  "Chair 41": {
+    "inheritFrom": "Chair 5",
+    "id": "Chair 41",
+    "type": "holder",
+    "x": 670,
+    "y": 596,
+    "parent": "Board"
+  },
+  "Chair 42": {
+    "inheritFrom": "Chair 5",
+    "id": "Chair 42",
+    "type": "holder",
+    "x": 670,
+    "y": 744,
+    "parent": "Board"
+  },
+  "Chair 43": {
+    "inheritFrom": "Chair 5",
+    "id": "Chair 43",
+    "type": "holder",
+    "x": 670,
+    "y": 892,
+    "parent": "Board"
+  },
+  "Chair 44": {
+    "inheritFrom": "Chair 6",
+    "id": "Chair 44",
+    "type": "holder",
+    "x": 818,
+    "y": 152,
+    "parent": "Board"
+  },
+  "Chair 45": {
+    "inheritFrom": "Chair 6",
+    "id": "Chair 45",
+    "type": "holder",
+    "x": 818,
+    "y": 300,
+    "parent": "Board"
+  },
+  "Chair 46": {
+    "inheritFrom": "Chair 6",
+    "id": "Chair 46",
+    "type": "holder",
+    "x": 818,
+    "y": 448,
+    "parent": "Board"
+  },
+  "Chair 47": {
+    "inheritFrom": "Chair 6",
+    "id": "Chair 47",
+    "type": "holder",
+    "x": 818,
+    "y": 596,
+    "parent": "Board"
+  },
+  "Chair 48": {
+    "inheritFrom": "Chair 6",
+    "id": "Chair 48",
+    "type": "holder",
+    "x": 818,
+    "y": 744,
+    "parent": "Board"
+  },
+  "Chair 49": {
+    "inheritFrom": "Chair 6",
+    "id": "Chair 49",
+    "type": "holder",
+    "x": 818,
+    "y": 892,
+    "parent": "Board"
+  },
+  "Chair 50": {
+    "inheritFrom": "Chair 7",
+    "id": "Chair 50",
+    "type": "holder",
+    "x": 4,
+    "y": 226,
+    "parent": "Board"
+  },
+  "Chair 51": {
+    "inheritFrom": "Chair 7",
+    "id": "Chair 51",
+    "type": "holder",
+    "x": 4,
+    "y": 374,
+    "parent": "Board"
+  },
+  "Chair 52": {
+    "inheritFrom": "Chair 7",
+    "id": "Chair 52",
+    "type": "holder",
+    "x": 4,
+    "y": 522,
+    "parent": "Board"
+  },
+  "Chair 53": {
+    "inheritFrom": "Chair 7",
+    "id": "Chair 53",
+    "type": "holder",
+    "x": 4,
+    "y": 670,
+    "parent": "Board"
+  },
+  "Chair 54": {
+    "inheritFrom": "Chair 7",
+    "id": "Chair 54",
+    "type": "holder",
+    "x": 4,
+    "y": 818,
+    "parent": "Board"
+  },
+  "Chair 56": {
+    "inheritFrom": "Chair 8",
+    "id": "Chair 56",
+    "type": "holder",
+    "x": 152,
+    "y": 226,
+    "parent": "Board"
+  },
+  "Chair 57": {
+    "inheritFrom": "Chair 8",
+    "id": "Chair 57",
+    "type": "holder",
+    "x": 152,
+    "y": 374,
+    "parent": "Board"
+  },
+  "Chair 58": {
+    "inheritFrom": "Chair 8",
+    "id": "Chair 58",
+    "type": "holder",
+    "x": 152,
+    "y": 522,
+    "parent": "Board"
+  },
+  "Chair 59": {
+    "inheritFrom": "Chair 8",
+    "id": "Chair 59",
+    "type": "holder",
+    "x": 152,
+    "y": 670,
+    "parent": "Board"
+  },
+  "Chair 60": {
+    "inheritFrom": "Chair 8",
+    "id": "Chair 60",
+    "type": "holder",
+    "x": 152,
+    "y": 818,
+    "parent": "Board"
+  },
+  "Chair 62": {
+    "inheritFrom": "Chair 9",
+    "id": "Chair 62",
+    "type": "holder",
+    "x": 300,
+    "y": 226,
+    "parent": "Board"
+  },
+  "Chair 65": {
+    "inheritFrom": "Chair 9",
+    "id": "Chair 65",
+    "type": "holder",
+    "x": 300,
+    "y": 670,
+    "parent": "Board"
+  },
+  "Chair 66": {
+    "inheritFrom": "Chair 9",
+    "id": "Chair 66",
+    "type": "holder",
+    "x": 300,
+    "y": 818,
+    "parent": "Board"
+  },
+  "Chair 72": {
+    "inheritFrom": "Chair 10",
+    "id": "Chair 72",
+    "type": "holder",
+    "x": 448,
+    "y": 818,
+    "parent": "Board"
+  },
+  "Chair 74": {
+    "inheritFrom": "Chair 11",
+    "id": "Chair 74",
+    "type": "holder",
+    "x": 596,
+    "y": 226,
+    "parent": "Board"
+  },
+  "Chair 77": {
+    "inheritFrom": "Chair 11",
+    "id": "Chair 77",
+    "type": "holder",
+    "x": 596,
+    "y": 670,
+    "parent": "Board"
+  },
+  "Chair 78": {
+    "inheritFrom": "Chair 11",
+    "id": "Chair 78",
+    "type": "holder",
+    "x": 596,
+    "y": 818,
+    "parent": "Board"
+  },
+  "Chair 80": {
+    "inheritFrom": "Chair 12",
+    "id": "Chair 80",
+    "type": "holder",
+    "x": 744,
+    "y": 226,
+    "parent": "Board"
+  },
+  "Chair 81": {
+    "inheritFrom": "Chair 12",
+    "id": "Chair 81",
+    "type": "holder",
+    "x": 744,
+    "y": 374,
+    "parent": "Board"
+  },
+  "Chair 82": {
+    "inheritFrom": "Chair 12",
+    "id": "Chair 82",
+    "type": "holder",
+    "x": 744,
+    "y": 522,
+    "parent": "Board"
+  },
+  "Chair 83": {
+    "inheritFrom": "Chair 12",
+    "id": "Chair 83",
+    "type": "holder",
+    "x": 744,
+    "y": 670,
+    "parent": "Board"
+  },
+  "Chair 84": {
+    "inheritFrom": "Chair 12",
+    "id": "Chair 84",
+    "type": "holder",
+    "x": 744,
+    "y": 818,
+    "parent": "Board"
+  },
+  "Chair 86": {
+    "inheritFrom": "Chair 13",
+    "id": "Chair 86",
+    "type": "holder",
+    "x": 892,
+    "y": 226,
+    "parent": "Board"
+  },
+  "Chair 87": {
+    "inheritFrom": "Chair 13",
+    "id": "Chair 87",
+    "type": "holder",
+    "x": 892,
+    "y": 374,
+    "parent": "Board"
+  },
+  "Chair 88": {
+    "inheritFrom": "Chair 13",
+    "id": "Chair 88",
+    "type": "holder",
+    "x": 892,
+    "y": 522,
+    "parent": "Board"
+  },
+  "Chair 89": {
+    "inheritFrom": "Chair 13",
+    "id": "Chair 89",
+    "type": "holder",
+    "x": 892,
+    "y": 670,
+    "parent": "Board"
+  },
+  "Chair 90": {
+    "inheritFrom": "Chair 13",
+    "id": "Chair 90",
+    "type": "holder",
+    "x": 892,
+    "y": 818,
+    "parent": "Board"
+  },
+  "Reset": {
+    "type": "button",
+    "id": "Reset",
+    "x": 10,
+    "y": 930,
+    "clickRoutine": [
+      {
+        "func": "RECALL",
+        "holder": "Draw"
+      },
+      {
+        "func": "FLIP",
+        "holder": "Draw",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "Draw"
+      },
+      {
+        "func": "MOVE",
+        "from": "Draw",
+        "to": [
+          "Player 1 - Seat",
+          "Player 2 - Seat",
+          "Player 3 - Seat",
+          "Player 4 - Seat"
+        ],
+        "count": 5
+      },
+      {
+        "func": "TURN",
+        "turnCycle": "random"
+      },
+      {
+        "func": "SELECT",
+        "property": "type",
+        "value": "label"
+      },
+      {
+        "func": "SET",
+        "property": "text",
+        "value": 0
+      }
+    ],
+    "text": "New Game",
+    "z": 9,
+    "height": 60
+  },
+  "Bar 1": {
+    "type": "holder",
+    "id": "Bar 1",
+    "parent": "Board",
+    "x": 304,
+    "y": 304,
+    "width": 70,
+    "height": 70,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "css": "background: url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 -12 24 12'%3E%3Ctext font-family='sans-serif'%3E+1%3C/text%3E%3C/svg%3E%0A\") center no-repeat,white;"
+  },
+  "kaac": {
+    "deck": "Female Tiles",
+    "type": "card",
+    "cardType": "Joker",
+    "id": "kaac",
+    "parent": "mt6f",
+    "z": 88
+  },
+  "as6x": {
+    "deck": "Male Tiles",
+    "type": "card",
+    "cardType": "Joker",
+    "id": "as6x",
+    "parent": "mt6f",
+    "z": 3214
+  },
+  "Bar 2": {
+    "inheritFrom": "Bar 1",
+    "id": "Bar 2",
+    "type": "holder",
+    "x": 376,
+    "y": 304,
+    "parent": "Board",
+    "css": "background: url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 -12 24 12'%3E%3Ctext font-family='sans-serif'%3E+2%3C/text%3E%3C/svg%3E%0A\") center no-repeat,white;"
+  },
+  "Bar 3": {
+    "inheritFrom": "Bar 1",
+    "id": "Bar 3",
+    "type": "holder",
+    "x": 448,
+    "y": 304,
+    "parent": "Board",
+    "css": "background: url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 -12 24 12'%3E%3Ctext font-family='sans-serif'%3E+3%3C/text%3E%3C/svg%3E%0A\") center no-repeat,white;"
+  },
+  "Bar 4": {
+    "inheritFrom": "Bar 1",
+    "id": "Bar 4",
+    "type": "holder",
+    "x": 520,
+    "y": 304,
+    "parent": "Board",
+    "css": "background: url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 -12 24 12'%3E%3Ctext font-family='sans-serif'%3E+4%3C/text%3E%3C/svg%3E%0A\") center no-repeat,white;"
+  },
+  "Bar 5": {
+    "inheritFrom": "Bar 1",
+    "id": "Bar 5",
+    "type": "holder",
+    "x": 592,
+    "y": 304,
+    "parent": "Board",
+    "css": "background: url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 -12 24 12'%3E%3Ctext font-family='sans-serif'%3E+5%3C/text%3E%3C/svg%3E%0A\") center no-repeat,white;"
+  },
+  "Bar 11": {
+    "inheritFrom": "Bar 1",
+    "id": "Bar 11",
+    "type": "holder",
+    "x": 304,
+    "y": 448,
+    "parent": "Board",
+    "css": "background: url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -12 24 12'%3E%3Ctext font-family='sans-serif'%3E-2%3C/text%3E%3C/svg%3E%0A\") center no-repeat,white;"
+  },
+  "Bar 12": {
+    "inheritFrom": "Bar 1",
+    "id": "Bar 12",
+    "type": "holder",
+    "x": 376,
+    "y": 448,
+    "parent": "Board",
+    "css": "background: url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -12 24 12'%3E%3Ctext font-family='sans-serif'%3E-4%3C/text%3E%3C/svg%3E%0A\") center no-repeat,white;"
+  },
+  "Bar 13": {
+    "inheritFrom": "Bar 1",
+    "id": "Bar 13",
+    "type": "holder",
+    "x": 448,
+    "y": 448,
+    "parent": "Board",
+    "css": "background: url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -12 24 12'%3E%3Ctext font-family='sans-serif'%3E-6%3C/text%3E%3C/svg%3E%0A\") center no-repeat,white;"
+  },
+  "Bar 14": {
+    "inheritFrom": "Bar 1",
+    "id": "Bar 14",
+    "type": "holder",
+    "x": 520,
+    "y": 448,
+    "parent": "Board",
+    "css": "background: url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -12 24 12'%3E%3Ctext font-family='sans-serif'%3E-8%3C/text%3E%3C/svg%3E%0A\") center no-repeat,white;"
+  },
+  "Bar 15": {
+    "inheritFrom": "Bar 1",
+    "id": "Bar 15",
+    "type": "holder",
+    "x": 592,
+    "y": 448,
+    "parent": "Board",
+    "css": "background: url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 -12 28 12'%3E%3Ctext font-family='sans-serif'%3E-10%3C/text%3E%3C/svg%3E%0A\") center no-repeat,white;"
+  },
+  "Bar 16": {
+    "inheritFrom": "Bar 12",
+    "id": "Bar 16",
+    "type": "holder",
+    "x": 304,
+    "y": 520,
+    "parent": "Board"
+  },
+  "Bar 17": {
+    "inheritFrom": "Bar 13",
+    "id": "Bar 17",
+    "type": "holder",
+    "x": 376,
+    "y": 520,
+    "parent": "Board"
+  },
+  "Bar 18": {
+    "inheritFrom": "Bar 14",
+    "id": "Bar 18",
+    "type": "holder",
+    "x": 448,
+    "y": 520,
+    "parent": "Board"
+  },
+  "Bar 19": {
+    "inheritFrom": "Bar 15",
+    "id": "Bar 19",
+    "type": "holder",
+    "x": 520,
+    "y": 520,
+    "parent": "Board"
+  },
+  "Bar 20": {
+    "inheritFrom": "Bar 1",
+    "id": "Bar 20",
+    "type": "holder",
+    "x": 592,
+    "y": 520,
+    "parent": "Board",
+    "css": "background: url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 -12 28 12'%3E%3Ctext font-family='sans-serif'%3E-12%3C/text%3E%3C/svg%3E%0A\") center no-repeat,white;"
+  },
+  "Bar 21": {
+    "inheritFrom": "Bar 13",
+    "id": "Bar 21",
+    "type": "holder",
+    "x": 304,
+    "y": 592,
+    "parent": "Board"
+  },
+  "Bar 22": {
+    "inheritFrom": "Bar 14",
+    "id": "Bar 22",
+    "type": "holder",
+    "x": 376,
+    "y": 592,
+    "parent": "Board"
+  },
+  "Bar 23": {
+    "inheritFrom": "Bar 15",
+    "id": "Bar 23",
+    "type": "holder",
+    "x": 448,
+    "y": 592,
+    "parent": "Board"
+  },
+  "Bar 24": {
+    "inheritFrom": "Bar 20",
+    "id": "Bar 24",
+    "type": "holder",
+    "x": 520,
+    "y": 592,
+    "parent": "Board"
+  },
+  "Bar 25": {
+    "inheritFrom": "Bar 1",
+    "id": "Bar 25",
+    "type": "holder",
+    "x": 592,
+    "y": 592,
+    "parent": "Board",
+    "css": "background: url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 -12 28 12'%3E%3Ctext font-family='sans-serif'%3E-14%3C/text%3E%3C/svg%3E%0A\") center no-repeat,white;"
+  },
+  "Title": {
+    "id": "Title",
+    "parent": "Board",
+    "fixedParent": true,
+    "x": 333,
+    "y": 385,
+    "width": 300,
+    "rotation": -7,
+    "css": "font-size: 40px; text-align:center",
+    "text": "Foreign Affairs",
+    "movable": false
+  },
+  "Player 1 - Tiles": {
+    "type": "holder",
+    "id": "Player 1 - Tiles",
+    "y": 70,
+    "inheritFrom": "Draw",
+    "stackOffsetX": 74,
+    "width": 374,
+    "parent": "Player 1",
+    "fixedParent": true,
+    "z": 14,
+    "x": 0,
+    "onEnter": {
+      "activeFace": 1
+    },
+    "linkedToSeat": "Player 1 - Seat"
+  },
+  "Player 1": {
+    "id": "Player 1",
+    "z": 7,
+    "y": 63,
+    "x": 212,
+    "width": 374,
+    "movable": false,
+    "height": 148,
+    "layer": -1
+  },
+  "Player 1 - Seat": {
+    "type": "seat",
+    "id": "Player 1 - Seat",
+    "hideWhenUnused": true,
+    "fixedParent": true,
+    "z": 5,
+    "parent": "Player 1",
+    "width": 200,
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "relation": "in",
+        "value": [
+          "Draw",
+          "Player 1 - Tiles",
+          "Player 2 - Tiles",
+          "Player 3 - Tiles",
+          "Player 4 - Tiles"
+        ],
+        "type": "card"
+      },
+      {
+        "func": "COUNT"
+      },
+      {
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "operand2": 100,
+        "thenRoutine": [
+          "var playerPrefix = substr ${playerName} 0 5",
+          {
+            "func": "IF",
+            "operand1": "${playerPrefix}",
+            "operand2": "Guest",
+            "thenRoutine": [
+              {
+                "func": "INPUT",
+                "header": "Who are you?",
+                "fields": [
+                  {
+                    "type": "string",
+                    "label": "Name",
+                    "variable": "playerName",
+                    "value": "${playerName}"
+                  },
+                  {
+                    "type": "color",
+                    "label": "Color",
+                    "variable": "playerColor",
+                    "value": "${playerColor}"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "func": "CLICK",
+            "collection": "thisButton",
+            "mode": "ignoreClickRoutine"
+          },
+          {
+            "func": "CALL",
+            "widget": "Reset"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "INPUT",
+            "header": "Game in progress",
+            "fields": [
+              {
+                "type": "text",
+                "text": "It looks like the game is currently in progress and sitting down or standing up would reset it. Please use the button 'New Game' before changing the players."
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "hand": "Player 1 - Tiles"
+  },
+  "7yyoD": {
+    "id": "7yyoD",
+    "fixedParent": true,
+    "x": -38,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "-",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 1
+      }
+    ],
+    "parent": "Player 1 - Score"
+  },
+  "7yyoU": {
+    "id": "7yyoU",
+    "fixedParent": true,
+    "x": 68,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "+",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 1
+      }
+    ],
+    "parent": "Player 1 - Score"
+  },
+  "Player 1 - Score": {
+    "type": "label",
+    "id": "Player 1 - Score",
+    "x": 270.5,
+    "y": 9,
+    "width": 65,
+    "height": 40,
+    "z": 3,
+    "css": "font-size: 30px;",
+    "editable": true,
+    "text": 0,
+    "fixedParent": true,
+    "parent": "Player 1",
+    "linkedToSeat": "Player 1 - Seat"
+  },
+  "Player 2": {
+    "id": "Player 2",
+    "z": 8,
+    "y": 303,
+    "x": 216,
+    "width": 374,
+    "movable": false,
+    "height": 148,
+    "layer": -1
+  },
+  "Player 2 - Tiles": {
+    "type": "holder",
+    "id": "Player 2 - Tiles",
+    "y": 70,
+    "inheritFrom": "Draw",
+    "stackOffsetX": 74,
+    "width": 374,
+    "parent": "Player 2",
+    "fixedParent": true,
+    "z": 14,
+    "x": 0,
+    "onEnter": {
+      "activeFace": 1
+    },
+    "linkedToSeat": "Player 2 - Seat"
+  },
+  "Player 2 - Seat": {
+    "type": "seat",
+    "id": "Player 2 - Seat",
+    "parent": "Player 2",
+    "hand": "Player 2 - Tiles",
+    "index": 2,
+    "inheritFrom": {
+      "Player 1 - Seat": [
+        "clickRoutine",
+        "width",
+        "hideWhenUnused"
+      ]
+    },
+    "turn": true,
+    "color": "#999999"
+  },
+  "Player 2 - Score": {
+    "type": "label",
+    "id": "Player 2 - Score",
+    "x": 270.5,
+    "y": 9,
+    "width": 65,
+    "height": 40,
+    "z": 3,
+    "css": "font-size: 30px;",
+    "editable": true,
+    "text": 0,
+    "fixedParent": true,
+    "parent": "Player 2",
+    "linkedToSeat": "Player 2 - Seat"
+  },
+  "8yyoD": {
+    "id": "8yyoD",
+    "fixedParent": true,
+    "x": -38,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "-",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 1
+      }
+    ],
+    "parent": "Player 2 - Score"
+  },
+  "8yyoU": {
+    "id": "8yyoU",
+    "fixedParent": true,
+    "x": 68,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "+",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 1
+      }
+    ],
+    "parent": "Player 2 - Score"
+  },
+  "Player 3": {
+    "id": "Player 3",
+    "z": 8,
+    "y": 543,
+    "x": 216,
+    "width": 374,
+    "movable": false,
+    "height": 148,
+    "layer": -1
+  },
+  "Player 3 - Tiles": {
+    "type": "holder",
+    "id": "Player 3 - Tiles",
+    "y": 70,
+    "inheritFrom": "Draw",
+    "stackOffsetX": 74,
+    "width": 374,
+    "parent": "Player 3",
+    "fixedParent": true,
+    "z": 14,
+    "x": 0,
+    "onEnter": {
+      "activeFace": 1
+    },
+    "linkedToSeat": "Player 3 - Seat"
+  },
+  "Player 3 - Seat": {
+    "type": "seat",
+    "id": "Player 3 - Seat",
+    "parent": "Player 3",
+    "hand": "Player 3 - Tiles",
+    "index": 3,
+    "inheritFrom": {
+      "Player 1 - Seat": [
+        "clickRoutine",
+        "width",
+        "hideWhenUnused"
+      ]
+    },
+    "turn": false,
+    "color": "#999999"
+  },
+  "Player 3 - Score": {
+    "type": "label",
+    "id": "Player 3 - Score",
+    "x": 270.5,
+    "y": 9,
+    "width": 65,
+    "height": 40,
+    "z": 3,
+    "css": "font-size: 30px;",
+    "editable": true,
+    "text": 0,
+    "fixedParent": true,
+    "parent": "Player 3",
+    "linkedToSeat": "Player 3 - Seat"
+  },
+  "9yyoD": {
+    "id": "9yyoD",
+    "fixedParent": true,
+    "x": -38,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "-",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 1
+      }
+    ],
+    "parent": "Player 3 - Score"
+  },
+  "9yyoU": {
+    "id": "9yyoU",
+    "fixedParent": true,
+    "x": 68,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "+",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 1
+      }
+    ],
+    "parent": "Player 3 - Score"
+  },
+  "Player 4": {
+    "id": "Player 4",
+    "z": 9,
+    "y": 783,
+    "x": 216,
+    "width": 374,
+    "movable": false,
+    "height": 148,
+    "layer": -1
+  },
+  "Player 4 - Tiles": {
+    "type": "holder",
+    "id": "Player 4 - Tiles",
+    "y": 70,
+    "inheritFrom": "Draw",
+    "stackOffsetX": 74,
+    "width": 374,
+    "parent": "Player 4",
+    "fixedParent": true,
+    "z": 14,
+    "x": 0,
+    "onEnter": {
+      "activeFace": 1
+    },
+    "linkedToSeat": "Player 4 - Seat"
+  },
+  "Player 4 - Seat": {
+    "type": "seat",
+    "id": "Player 4 - Seat",
+    "parent": "Player 4",
+    "hand": "Player 4 - Tiles",
+    "index": 4,
+    "inheritFrom": {
+      "Player 1 - Seat": [
+        "clickRoutine",
+        "width",
+        "hideWhenUnused"
+      ]
+    },
+    "color": "#999999",
+    "turn": false
+  },
+  "Player 4 - Score": {
+    "type": "label",
+    "id": "Player 4 - Score",
+    "x": 270.5,
+    "y": 9,
+    "width": 65,
+    "height": 40,
+    "z": 3,
+    "css": "font-size: 30px;",
+    "editable": true,
+    "text": 0,
+    "fixedParent": true,
+    "parent": "Player 4",
+    "linkedToSeat": "Player 4 - Seat"
+  },
+  "10yyoD": {
+    "id": "10yyoD",
+    "fixedParent": true,
+    "x": -38,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "-",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 1
+      }
+    ],
+    "parent": "Player 4 - Score"
+  },
+  "10yyoU": {
+    "id": "10yyoU",
+    "fixedParent": true,
+    "x": 68,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "+",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 1
+      }
+    ],
+    "parent": "Player 4 - Score"
+  },
+  "+0": {
+    "type": "button",
+    "id": "+0",
+    "x": 69,
+    "y": 314,
+    "z": 18,
+    "clickRoutine": [
+      {
+        "func": "TURN"
+      }
+    ],
+    "text": "+0",
+    "css": "font-size: 30px; ",
+    "height": 78,
+    "width": 78
+  },
+  "+1": {
+    "type": "button",
+    "id": "+1",
+    "x": 69,
+    "y": 411,
+    "z": 19,
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "turn",
+        "value": true,
+        "type": "seat"
+      },
+      {
+        "func": "GET",
+        "property": "parent"
+      },
+      {
+        "func": "MOVE",
+        "from": "Draw",
+        "to": "${parent} - Tiles",
+        "count": "${PROPERTY cards}"
+      },
+      {
+        "func": "TURN"
+      }
+    ],
+    "text": "+1",
+    "css": "font-size: 30px; ",
+    "cards": 1,
+    "height": 78,
+    "width": 78
+  },
+  "+2": {
+    "inheritFrom": "+1",
+    "id": "+2",
+    "type": "button",
+    "x": 69,
+    "y": 508,
+    "cards": 2,
+    "text": "+2",
+    "z": 20
+  },
+  "Draw Label": {
+    "id": "Draw Label",
+    "parent": "Draw",
+    "text": "Draw",
+    "y": -30,
+    "css": "text-align:center;font-size: 20px",
+    "x": -11,
+    "height": 30,
+    "movable": false
+  },
+  "_meta": {
+    "version": 4,
+    "info": {
+      "name": "Foreign Affairs",
+      "image": "/assets/1440903543_41680",
+      "rules": "",
+      "bgg": "https://boardgamegeek.com/boardgame/214/cafe-international",
+      "year": "1989",
+      "mode": "vs",
+      "time": "45",
+      "attribution": "Board layout by ArnoldSmith86. Released to public domain under CC0.\n\nPublic domain:\nhttps://en.wikipedia.org/wiki/File:Flag_of_the_Central_African_Republic.svg\nhttps://en.wikipedia.org/wiki/File:Flag_of_China.svg\nhttps://en.wikipedia.org/wiki/File:Flag_of_Cuba.svg\nhttps://en.wikipedia.org/wiki/File:Flag_of_France.svg\nhttps://en.wikipedia.org/wiki/File:Flag_of_Germany.svg\nhttps://en.wikipedia.org/wiki/File:Flag_of_Great_Britain.svg\nhttps://en.wikipedia.org/wiki/File:Flag_of_India.svg\nhttps://en.wikipedia.org/wiki/File:Flag_of_Italy.svg\nhttps://en.wikipedia.org/wiki/File:Flag_of_Russia.svg\nhttps://en.wikipedia.org/wiki/File:Flag_of_Spain.svg\nhttps://en.wikipedia.org/wiki/File:Flag_of_Turkey.svg\nhttps://en.wikipedia.org/wiki/File:Flag_of_the_United_States.svg\n\nPixabay license:\nhttps://pixabay.com/vectors/silhouette-of-a-man-male-silhouette-36181/\nhttps://pixabay.com/vectors/female-silhouette-male-silhouette-36177/\n\nhttps://pixabay.com/vectors/chair-furniture-interior-seat-42854/<div><br></div><div>Library image generated using the Midjourney artificial intelligence image generator, https://www.midjourney.com/home/, using the following prompt: \"ballroom with country flags as table centerpiece watercolor painting --ar 1:1 --v 5.1\"<br></div>",
+      "similarName": "Café International",
+      "similarAwards": "1989 Spiel des Jahres Winner",
+      "description": "Place tiles around tables based on country and gender. Earn points for proper seating arrangements and lose points for unused tiles. Highest score wins.",
+      "showName": true,
+      "lastUpdate": 1636735750000,
+      "skill": "",
+      "similarImage": "",
+      "ruleText": "",
+      "helpText": "",
+      "variantImage": "",
+      "variant": "",
+      "language": "en-US",
+      "players": "2-4",
+      "similarDesigner": "Rudi Hoffmann"
+    }
+  },
+  "mt6f": {
+    "type": "pile",
+    "parent": "Draw",
+    "x": 4,
+    "y": 4,
+    "width": 70,
+    "height": 70,
+    "id": "mt6f"
+  },
+  "+3": {
+    "inheritFrom": "+1",
+    "id": "+3",
+    "type": "button",
+    "x": 69,
+    "y": 605,
+    "cards": 3,
+    "text": "+3",
+    "z": 20
+  },
+  "+4": {
+    "inheritFrom": "+1",
+    "id": "+4",
+    "type": "button",
+    "x": 69,
+    "y": 702,
+    "cards": 4,
+    "text": "+4",
+    "z": 20
+  }
+}

@@ -1,0 +1,200 @@
+{
+  "title": {
+    "id": "title",
+    "x": 400,
+    "y": -2,
+    "width": 800,
+    "height": 60,
+    "z": 74,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "font-size: 60px;text-align:center",
+    "text": "Widget Types: Basic Widgets"
+  },
+  "overview": {
+    "id": "overview",
+    "x": 108,
+    "y": 80,
+    "width": 1400,
+    "height": 150,
+    "layer": -3,
+    "z": 129,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "font-size: 25px; ",
+    "html": "Widgets (<a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Widgets'>wiki</a>) are the visual representation of objects you need for playing a game. Each widget type in VTT has its own uses, properties, and purposes. Depending on the widget, players can interact with, move, and change various aspects of widgets. Widgets are most commonly added to a room in Edit Mode by clicking on the + symbol at the top of the screen in the middle of the blue and white icons and then selecting the type of widget to add. Widgets added this way get a random name consisting of 4 alphanumeric characters and are placed in the room in a consistent place and with the default properties associated with that type of widget.\n\nBasic widgets (<a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Widgets#basicwidget'>wiki</a>) are a catch-all category. A widget that is not another type is a basic widget by default. Thus, basic widgets are very common and have a wide variety of uses. In Edit Mode, view the JSON of each of the examples of basic widgets below."
+  },
+  "text1": {
+    "id": "text1",
+    "x": 4,
+    "y": 552,
+    "width": 300,
+    "z": 185,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "22px"
+    },
+    "html": "When adding a widget, the overlay menu that pops up has a variety of traditional Game Pieces. Many of those are basic widgets, like the pawn above. Looking at the JSON, you can usually identify a basic widget because the <b>type</b> property is <u>not</u> displayed. Other widget types will show their <b>type</b> property. You can move the pawn above by clicking and dragging it."
+  },
+  "text2": {
+    "id": "text2",
+    "x": 325,
+    "y": 552,
+    "width": 300,
+    "z": 121,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "22px"
+    },
+    "html": "The checker is another basic widget added from the add widget overlay in Edit Mode. The next tutorial in this series covers widget properties, but the main difference between the pawn and the checker is that something happens when you click on the checker because it has a <b>faces</b> property."
+  },
+  "text3": {
+    "id": "text3",
+    "x": 651,
+    "y": 552,
+    "width": 300,
+    "z": 9732,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "22px"
+    },
+    "html": "In the lower right of the add widget overlay is an area called Custom. Upload Board and Upload Token both allow you to upload an image into a basic widget. The difference is that a board fills the screen and is not movable while a token is smaller and movable (by default). Or you can choose the 3rd option to Add Basic Widget and you get the example above."
+  },
+  "text4": {
+    "id": "text4",
+    "x": 964,
+    "y": 552,
+    "width": 300,
+    "z": 9732,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "22px"
+    },
+    "html": "The basic widget above was created like the one to the left. After adding it, an image property was added that is an image of one of the thousands of images available in VTT. See the <a href='http://localhost:8272/tutorial/appearance-icons-symbols-and-emojis'>Icons tutorial</a> for more. This widget also has a simple <b>clickRoutine</b> that will change the color of the symbol to your player color when you click on it. See the <a href='https://virtualtabletop.io/tutorial/operations - routines'>Routines tutorial</a> for more."
+  },
+  "text5": {
+    "id": "text5",
+    "x": 1294,
+    "y": 552,
+    "width": 300,
+    "z": 9732,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "22px"
+    },
+    "html": "This basic widget is like the previous, but the image is the public library image for this tutorial. Images you upload get a name like the one in the JSON for the widget above. You cannot change that name. It is unique to each image, but also once an image has been uploaded to the VTT servers for one game, it can be used in any game or room."
+  },
+  "_meta": {
+    "version": 17,
+    "info": {
+      "name": "110 Widget Types",
+      "image": "/assets/-1812256112_6351",
+      "rules": "",
+      "bgg": "",
+      "year": "",
+      "mode": "Tutorial",
+      "time": "",
+      "attribution": "",
+      "lastUpdate": 1749053679653,
+      "showName": false,
+      "skill": "",
+      "description": "",
+      "similarImage": "",
+      "similarName": "",
+      "similarDesigner": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": "",
+      "variantImage": "",
+      "variant": "Basic Widgets",
+      "language": "en-US",
+      "players": "1"
+    }
+  },
+  "basic1": {
+    "id": "basic1",
+    "x": 96,
+    "y": 402,
+    "width": 50.4,
+    "height": 90,
+    "z": 9734,
+    "color": "#1f5ca6",
+    "css": "border-radius: 40% 40% 50% 50%/ 80% 80% 10% 10%; ",
+    "image": "i/game-pieces/3D/Pawn-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "black",
+    "borderWidth": 1
+  },
+  "basic2": {
+    "id": "basic2",
+    "x": 417,
+    "y": 411,
+    "width": 75,
+    "height": 75,
+    "z": 9737,
+    "classes": "chip",
+    "color": "#1f5ca6",
+    "faces": [
+      {
+        "image": "i/game-pieces/2D/Checkers-2D.svg",
+        "crowned": false
+      },
+      {
+        "image": "i/game-pieces/2D/Crowned-Checkers-2D.svg",
+        "crowned": true
+      }
+    ],
+    "image": "i/game-pieces/2D/Crowned-Checkers-2D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 1,
+    "crowned": true,
+    "secondaryColor": "#ffffff",
+    "activeFace": 1
+  },
+  "basic3": {
+    "id": "basic3",
+    "x": 738,
+    "y": 435,
+    "text": "Basic widget"
+  },
+  "basic4": {
+    "id": "basic4",
+    "x": 1050,
+    "y": 409,
+    "image": "/i/game-icons.net/delapouite/move.svg",
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "imageColor",
+        "value": "${playerColor}"
+      }
+    ],
+    "svgReplaces": {
+      "#000": "imageColor"
+    },
+    "z": 9739
+  },
+  "basic5": {
+    "id": "basic5",
+    "x": 1365,
+    "y": 409,
+    "image": "/assets/415539053_3992",
+    "z": 9739
+  }
+}

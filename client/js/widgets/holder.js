@@ -12,15 +12,18 @@ class Holder extends Widget {
       dropTarget: { type: 'card' },
       dropOffsetX: 4,
       dropOffsetY: 4,
-      dropLimit: -1,
+      dropShadow: false,
       alignChildren: true,
+      preventPiles: false,
       childrenPerOwner: false,
+      showInactiveFaceToSeat: null,
 
       onEnter: {},
       onLeave: {},
 
       stackOffsetX: 0,
-      stackOffsetY: 0
+      stackOffsetY: 0,
+      borderRadius: 8
     });
   }
 
@@ -38,6 +41,22 @@ class Holder extends Widget {
 
       return compareDropTarget(w, this, true);
     });
+  }
+
+  classes() {
+    let className = super.classes();
+
+    if(this.get('showInactiveFaceToSeat'))
+      if(widgetFilter(w=>asArray(this.get('showInactiveFaceToSeat')).indexOf(w.get('id'))!=-1&&w.get('player')==playerName).length)
+        className += ' showCardBack';
+
+    return className;
+  }
+
+  classesProperties() {
+    const p = super.classesProperties();
+    p.push('showInactiveFaceToSeat');
+    return p;
   }
 
   async dispenseCard(card) {
@@ -65,7 +84,7 @@ class Holder extends Widget {
       return;
 
     if(this.get('childrenPerOwner'))
-      await child.set('owner', playerName);
+      await child.set('owner', child.targetPlayer||playerName);
 
     if(this != child.currentParent) { // FIXME: this isn't exactly pretty
       let toProcess = [ child ];
@@ -85,7 +104,7 @@ class Holder extends Widget {
     if(child.get('type') == 'deck')
       return await super.onChildAddAlign(child, oldParentID);
 
-    if(this.get('alignChildren') && (this.get('stackOffsetX') || this.get('stackOffsetY')) && child.get('type') == 'pile') {
+    if((this.get('preventPiles') || this.get('alignChildren') && (this.get('stackOffsetX') || this.get('stackOffsetY'))) && child.get('type') == 'pile') {
       let i=1;
       this.preventRearrangeDuringPileDrop = true;
       for(const w of child.children().reverse()) {
@@ -93,9 +112,17 @@ class Holder extends Widget {
         await w.set('y', child.get('y') - this.absoluteCoord('y') + i/100);
         await w.set('parent', this.get('id'));
         ++i;
+        if(this.get('preventPiles')) {
+          if(this.get('alignChildren') && !this.get('stackOffsetX') && !this.get('stackOffsetY')) {
+            await w.set('x', this.get('dropOffsetX'));
+            await w.set('y', this.get('dropOffsetY'));
+          }
+          await w.bringToFront();
+        }
       }
       delete this.preventRearrangeDuringPileDrop;
-      await this.receiveCard();
+      if(!this.get('preventPiles'))
+        await this.receiveCard();
       return true;
     }
 
@@ -105,6 +132,13 @@ class Holder extends Widget {
       await this.receiveCard(child, [ this.get('stackOffsetX')*999999, this.get('stackOffsetY')*999999 ]);
     else
       await this.receiveCard(child, [ child.get('x') - this.absoluteCoord('x'), child.get('y') - this.absoluteCoord('y') ]);
+  }
+
+  async onPropertyChange(property, oldValue, newValue) {
+    await super.onPropertyChange(property, oldValue, newValue);
+    if(property == 'dropOffsetX' || property == 'dropOffsetY' || property == 'stackOffsetX' || property == 'stackOffsetY') {
+      await this.updateAfterShuffle();
+    }
   }
 
   async receiveCard(card, pos) {
@@ -139,7 +173,7 @@ class Holder extends Widget {
   }
 
   supportsPiles() {
-    return !this.get('alignChildren') || !this.get('stackOffsetX') && !this.get('stackOffsetY');
+    return !this.get('preventPiles') && (!this.get('alignChildren') || !this.get('stackOffsetX') && !this.get('stackOffsetY'));
   }
 
   async updateAfterShuffle() {

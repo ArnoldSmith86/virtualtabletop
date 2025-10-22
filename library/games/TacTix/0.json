@@ -1,0 +1,2933 @@
+{
+  "_meta": {
+    "version": 15,
+    "info": {
+      "name": "TacTix",
+      "image": "/assets/449080333_3186",
+      "rules": "https://en.wikipedia.org/wiki/TacTix",
+      "bgg": "https://boardgamegeek.com/boardgame/25895/tactix",
+      "year": "1949",
+      "mode": "vs",
+      "time": "5",
+      "attribution": "Game design and layout by LawDawg96.&nbsp; Released to the Public Domain under CC0.",
+      "lastUpdate": 1716480496896,
+      "showName": true,
+      "skill": "",
+      "description": "Do not be the last person to remove a tile from the board in this classic strategy game.",
+      "similarImage": "",
+      "similarName": "",
+      "similarDesigner": "Piet Hein",
+      "similarAwards": "",
+      "ruleText": "Select the format: 4x4 square, 6x6 square, or 5x5 hexagon.<div><br></div><div>Players take turns clicking on one or more adjacent pieces from a row or column. The player that clicks that last piece loses.</div>",
+      "helpText": "",
+      "variantImage": "",
+      "variant": "",
+      "language": "",
+      "players": "2"
+    }
+  },
+  "tile1": {
+    "id": "tile1",
+    "borderRadius": 8,
+    "css": {
+      "background": "${PROPERTY bgColor}",
+      "border": "3px solid ${PROPERTY borderColor}"
+    },
+    "faces": [
+      {
+        "bgColor": "teal",
+        "borderColor": "purple"
+      },
+      {
+        "bgColor": "silver",
+        "borderColor": "gray"
+      }
+    ],
+    "bgColor": "teal",
+    "borderColor": "purple",
+    "parent": "tileBack",
+    "z": 1,
+    "movable": false
+  },
+  "tile2": {
+    "id": "tile2",
+    "bgColor": "teal",
+    "borderColor": "purple",
+    "x": 111,
+    "parent": "tileBack",
+    "z": 1,
+    "inheritFrom": {
+      "tile1": "*"
+    },
+    "activeFace": 0,
+    "scale": 1
+  },
+  "tile3": {
+    "id": "tile3",
+    "bgColor": "teal",
+    "borderColor": "purple",
+    "x": 222,
+    "parent": "tileBack",
+    "z": 1,
+    "y": 0,
+    "width": 100,
+    "height": 100,
+    "inheritFrom": {
+      "tile1": "*"
+    },
+    "movableInEdit": true,
+    "activeFace": 0,
+    "scale": 1
+  },
+  "tile4": {
+    "id": "tile4",
+    "bgColor": "teal",
+    "borderColor": "purple",
+    "x": 333,
+    "parent": "tileBack",
+    "z": 1,
+    "y": 0,
+    "width": 100,
+    "height": 100,
+    "inheritFrom": {
+      "tile1": "*"
+    },
+    "movableInEdit": true,
+    "activeFace": 0,
+    "scale": 1
+  },
+  "tile5": {
+    "id": "tile5",
+    "bgColor": "teal",
+    "borderColor": "purple",
+    "x": 444,
+    "parent": "tileBack",
+    "z": 1,
+    "y": 0,
+    "width": 100,
+    "height": 100,
+    "inheritFrom": {
+      "tile1": "*"
+    },
+    "movableInEdit": true,
+    "activeFace": 0,
+    "scale": 0
+  },
+  "tile6": {
+    "id": "tile6",
+    "bgColor": "teal",
+    "borderColor": "purple",
+    "x": 555,
+    "parent": "tileBack",
+    "z": 1,
+    "y": 0,
+    "width": 100,
+    "height": 100,
+    "inheritFrom": {
+      "tile1": "*"
+    },
+    "movableInEdit": true,
+    "activeFace": 0,
+    "scale": 0
+  },
+  "tile7": {
+    "id": "tile7",
+    "bgColor": "teal",
+    "borderColor": "purple",
+    "y": 111,
+    "parent": "tileBack",
+    "z": 1,
+    "x": 0,
+    "width": 100,
+    "height": 100,
+    "inheritFrom": {
+      "tile1": "*"
+    },
+    "movableInEdit": true,
+    "activeFace": 0,
+    "scale": 1
+  },
+  "tile8": {
+    "id": "tile8",
+    "bgColor": "teal",
+    "borderColor": "purple",
+    "x": 111,
+    "y": 111,
+    "parent": "tileBack",
+    "z": 1,
+    "width": 100,
+    "height": 100,
+    "inheritFrom": {
+      "tile1": "*"
+    },
+    "movableInEdit": true,
+    "activeFace": 0,
+    "scale": 1
+  },
+  "tile9": {
+    "id": "tile9",
+    "bgColor": "teal",
+    "borderColor": "purple",
+    "x": 222,
+    "y": 111,
+    "parent": "tileBack",
+    "z": 1,
+    "width": 100,
+    "height": 100,
+    "inheritFrom": {
+      "tile1": "*"
+    },
+    "movableInEdit": true,
+    "activeFace": 0,
+    "scale": 1
+  },
+  "tile10": {
+    "id": "tile10",
+    "bgColor": "teal",
+    "borderColor": "purple",
+    "x": 333,
+    "y": 111,
+    "parent": "tileBack",
+    "z": 1,
+    "width": 100,
+    "height": 100,
+    "inheritFrom": {
+      "tile1": "*"
+    },
+    "movableInEdit": true,
+    "activeFace": 0,
+    "scale": 1
+  },
+  "tile11": {
+    "id": "tile11",
+    "bgColor": "teal",
+    "borderColor": "purple",
+    "x": 444,
+    "y": 111,
+    "parent": "tileBack",
+    "z": 1,
+    "inheritFrom": {
+      "tile1": "*"
+    },
+    "activeFace": 0,
+    "scale": 0
+  },
+  "tile12": {
+    "id": "tile12",
+    "bgColor": "teal",
+    "borderColor": "purple",
+    "x": 555,
+    "y": 111,
+    "parent": "tileBack",
+    "z": 1,
+    "width": 100,
+    "height": 100,
+    "inheritFrom": {
+      "tile1": "*"
+    },
+    "movableInEdit": true,
+    "activeFace": 0,
+    "scale": 0
+  },
+  "tile13": {
+    "id": "tile13",
+    "bgColor": "teal",
+    "borderColor": "purple",
+    "y": 222,
+    "parent": "tileBack",
+    "z": 1,
+    "x": 0,
+    "width": 100,
+    "height": 100,
+    "movableInEdit": true,
+    "inheritFrom": {
+      "tile1": "*"
+    },
+    "activeFace": 0,
+    "scale": 1
+  },
+  "tile14": {
+    "id": "tile14",
+    "bgColor": "teal",
+    "borderColor": "purple",
+    "x": 111,
+    "y": 222,
+    "parent": "tileBack",
+    "z": 1,
+    "width": 100,
+    "height": 100,
+    "movableInEdit": true,
+    "inheritFrom": {
+      "tile1": "*"
+    },
+    "activeFace": 0,
+    "scale": 1
+  },
+  "tile15": {
+    "id": "tile15",
+    "bgColor": "teal",
+    "borderColor": "purple",
+    "x": 222,
+    "y": 222,
+    "parent": "tileBack",
+    "z": 1,
+    "inheritFrom": {
+      "tile1": "*"
+    },
+    "activeFace": 0,
+    "scale": 1
+  },
+  "tile16": {
+    "id": "tile16",
+    "bgColor": "teal",
+    "borderColor": "purple",
+    "x": 333,
+    "y": 222,
+    "parent": "tileBack",
+    "z": 1,
+    "inheritFrom": {
+      "tile1": "*"
+    },
+    "activeFace": 0,
+    "scale": 1
+  },
+  "tile17": {
+    "id": "tile17",
+    "bgColor": "teal",
+    "borderColor": "purple",
+    "x": 444,
+    "y": 222,
+    "parent": "tileBack",
+    "z": 1,
+    "inheritFrom": {
+      "tile1": "*"
+    },
+    "activeFace": 0,
+    "scale": 0
+  },
+  "tile18": {
+    "id": "tile18",
+    "bgColor": "teal",
+    "borderColor": "purple",
+    "x": 555,
+    "y": 222,
+    "parent": "tileBack",
+    "z": 1,
+    "inheritFrom": {
+      "tile1": "*"
+    },
+    "activeFace": 0,
+    "scale": 0
+  },
+  "tile19": {
+    "id": "tile19",
+    "bgColor": "teal",
+    "borderColor": "purple",
+    "y": 333,
+    "parent": "tileBack",
+    "z": 1,
+    "inheritFrom": {
+      "tile1": "*"
+    },
+    "activeFace": 0,
+    "scale": 1
+  },
+  "tile20": {
+    "id": "tile20",
+    "bgColor": "teal",
+    "borderColor": "purple",
+    "x": 111,
+    "y": 333,
+    "parent": "tileBack",
+    "z": 1,
+    "inheritFrom": {
+      "tile1": "*"
+    },
+    "activeFace": 0,
+    "scale": 1
+  },
+  "tile21": {
+    "id": "tile21",
+    "bgColor": "teal",
+    "borderColor": "purple",
+    "x": 222,
+    "y": 333,
+    "parent": "tileBack",
+    "z": 1,
+    "inheritFrom": {
+      "tile1": "*"
+    },
+    "activeFace": 0,
+    "scale": 1
+  },
+  "tile22": {
+    "id": "tile22",
+    "bgColor": "teal",
+    "borderColor": "purple",
+    "x": 333,
+    "y": 333,
+    "parent": "tileBack",
+    "z": 1,
+    "inheritFrom": {
+      "tile1": "*"
+    },
+    "activeFace": 0,
+    "scale": 1
+  },
+  "tile23": {
+    "id": "tile23",
+    "bgColor": "teal",
+    "borderColor": "purple",
+    "x": 444,
+    "y": 333,
+    "parent": "tileBack",
+    "z": 1,
+    "inheritFrom": {
+      "tile1": "*"
+    },
+    "activeFace": 0,
+    "scale": 0
+  },
+  "tile24": {
+    "id": "tile24",
+    "bgColor": "teal",
+    "borderColor": "purple",
+    "x": 555,
+    "y": 333,
+    "parent": "tileBack",
+    "z": 1,
+    "inheritFrom": {
+      "tile1": "*"
+    },
+    "activeFace": 0,
+    "scale": 0
+  },
+  "tile25": {
+    "id": "tile25",
+    "bgColor": "teal",
+    "borderColor": "purple",
+    "y": 444,
+    "parent": "tileBack",
+    "z": 1,
+    "inheritFrom": {
+      "tile1": "*"
+    },
+    "activeFace": 0,
+    "scale": 0
+  },
+  "tile26": {
+    "id": "tile26",
+    "bgColor": "teal",
+    "borderColor": "purple",
+    "x": 111,
+    "y": 444,
+    "parent": "tileBack",
+    "z": 1,
+    "inheritFrom": {
+      "tile1": "*"
+    },
+    "activeFace": 0,
+    "scale": 0
+  },
+  "tile27": {
+    "id": "tile27",
+    "bgColor": "teal",
+    "borderColor": "purple",
+    "x": 222,
+    "y": 444,
+    "parent": "tileBack",
+    "z": 1,
+    "inheritFrom": {
+      "tile1": "*"
+    },
+    "activeFace": 0,
+    "scale": 0
+  },
+  "tile28": {
+    "id": "tile28",
+    "bgColor": "teal",
+    "borderColor": "purple",
+    "x": 333,
+    "y": 444,
+    "parent": "tileBack",
+    "z": 1,
+    "inheritFrom": {
+      "tile1": "*"
+    },
+    "activeFace": 0,
+    "scale": 0
+  },
+  "tile29": {
+    "id": "tile29",
+    "bgColor": "teal",
+    "borderColor": "purple",
+    "x": 444,
+    "y": 444,
+    "parent": "tileBack",
+    "z": 1,
+    "inheritFrom": {
+      "tile1": "*"
+    },
+    "activeFace": 0,
+    "scale": 0
+  },
+  "tile30": {
+    "id": "tile30",
+    "bgColor": "teal",
+    "borderColor": "purple",
+    "x": 555,
+    "y": 444,
+    "parent": "tileBack",
+    "z": 1,
+    "inheritFrom": {
+      "tile1": "*"
+    },
+    "activeFace": 0,
+    "scale": 0
+  },
+  "tile31": {
+    "id": "tile31",
+    "bgColor": "teal",
+    "borderColor": "purple",
+    "y": 555,
+    "parent": "tileBack",
+    "z": 1,
+    "inheritFrom": {
+      "tile1": "*"
+    },
+    "activeFace": 0,
+    "scale": 0
+  },
+  "tile32": {
+    "id": "tile32",
+    "bgColor": "teal",
+    "borderColor": "purple",
+    "x": 111,
+    "y": 555,
+    "parent": "tileBack",
+    "z": 1,
+    "inheritFrom": {
+      "tile1": "*"
+    },
+    "activeFace": 0,
+    "scale": 0
+  },
+  "tile33": {
+    "id": "tile33",
+    "bgColor": "teal",
+    "borderColor": "purple",
+    "x": 222,
+    "y": 555,
+    "parent": "tileBack",
+    "z": 1,
+    "inheritFrom": {
+      "tile1": "*"
+    },
+    "activeFace": 0,
+    "scale": 0
+  },
+  "tile34": {
+    "id": "tile34",
+    "bgColor": "teal",
+    "borderColor": "purple",
+    "x": 333,
+    "y": 555,
+    "parent": "tileBack",
+    "z": 1,
+    "inheritFrom": {
+      "tile1": "*"
+    },
+    "activeFace": 0,
+    "scale": 0
+  },
+  "tile35": {
+    "id": "tile35",
+    "bgColor": "teal",
+    "borderColor": "purple",
+    "x": 444,
+    "y": 555,
+    "parent": "tileBack",
+    "z": 1,
+    "inheritFrom": {
+      "tile1": "*"
+    },
+    "activeFace": 0,
+    "scale": 0
+  },
+  "tile36": {
+    "id": "tile36",
+    "bgColor": "teal",
+    "borderColor": "purple",
+    "x": 555,
+    "y": 555,
+    "parent": "tileBack",
+    "z": 1,
+    "inheritFrom": {
+      "tile1": "*"
+    },
+    "activeFace": 0,
+    "scale": 0
+  },
+  "tileBack": {
+    "id": "tileBack",
+    "width": 655,
+    "height": 655,
+    "layer": -4,
+    "y": 280,
+    "x": 576,
+    "z": 1,
+    "movable": false
+  },
+  "restart": {
+    "type": "button",
+    "id": "restart",
+    "x": 1550,
+    "y": 1,
+    "width": 50,
+    "height": 50,
+    "z": 1,
+    "classes": "symbols",
+    "color": "white",
+    "text": "restart",
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "fields": [
+          {
+            "type": "title",
+            "text": "Restarting ..."
+          },
+          {
+            "type": "subtitle",
+            "text": "Are you sure you want to restart the game?"
+          }
+        ]
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "relation": "!=",
+        "value": null
+      },
+      {
+        "func": "SET",
+        "property": "activeFace",
+        "value": 0
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "relation": "!=",
+        "value": null
+      },
+      {
+        "func": "SET",
+        "property": "z",
+        "value": 1
+      }
+    ],
+    "css": {
+      "default": {
+        "font-size": "40px",
+        "--wcMain": "black",
+        "--wcBorder": "white",
+        "--wcMainOH": "grey",
+        "--wcBorderOH": "black"
+      },
+      "::after": {
+        "content": "\"Reset\"",
+        "display": "none",
+        "position": "absolute",
+        "margin-top": "71px",
+        "color": "black",
+        "font-size": "14px",
+        "font-family": "Roboto"
+      },
+      ":hover::after": {
+        "display": "block"
+      }
+    },
+    "activeFace": 0
+  },
+  "4x4": {
+    "type": "button",
+    "id": "4x4",
+    "x": 1530,
+    "y": 75,
+    "z": 1,
+    "color": "white",
+    "text": "4x4",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "relation": ">",
+        "value": "tile22"
+      },
+      {
+        "func": "SELECT",
+        "mode": "remove",
+        "property": "id",
+        "value": "tileBack"
+      },
+      {
+        "func": "SELECT",
+        "mode": "remove",
+        "property": "id",
+        "relation": "in",
+        "value": [
+          "tile2",
+          "tile3",
+          "tile4",
+          "tile7",
+          "tile8",
+          "tile9"
+        ]
+      },
+      {
+        "func": "SELECT",
+        "mode": "add",
+        "property": "id",
+        "relation": "in",
+        "value": [
+          "tile11",
+          "tile12",
+          "tile17",
+          "tile18"
+        ]
+      },
+      {
+        "func": "SET",
+        "property": "scale",
+        "value": 0
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "tileBack"
+        ],
+        "property": "scale",
+        "value": 1
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "tileBack"
+        ],
+        "property": "x",
+        "value": 576
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "tileBack"
+        ],
+        "property": "y",
+        "value": 280
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "hexBack"
+        ],
+        "property": "scale",
+        "value": 0
+      }
+    ],
+    "css": {
+      "default": {
+        "font-size": "20px",
+        "--wcMain": "black",
+        "--wcBorder": "transparent",
+        "--wcMainOH": "black",
+        "--wcBorderOH": "transparent"
+      }
+    },
+    "activeFace": 0,
+    "borderRadius": 8,
+    "width": 65,
+    "height": 65
+  },
+  "6x6": {
+    "type": "button",
+    "id": "6x6",
+    "x": 1530,
+    "y": 155,
+    "z": 1,
+    "color": "white",
+    "css": {
+      "default": {
+        "font-size": "20px",
+        "--wcMain": "black",
+        "--wcBorder": "transparent",
+        "--wcMainOH": "black",
+        "--wcBorderOH": "transparent"
+      }
+    },
+    "text": "6x6",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "relation": "!=",
+        "value": null
+      },
+      {
+        "func": "SET",
+        "property": "scale",
+        "value": 1
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "tileBack"
+        ],
+        "property": "scale",
+        "value": 1
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "tileBack"
+        ],
+        "property": "x",
+        "value": 464
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "tileBack"
+        ],
+        "property": "y",
+        "value": 169
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "hexBack"
+        ],
+        "property": "scale",
+        "value": 0
+      }
+    ],
+    "activeFace": 0,
+    "borderRadius": 8,
+    "width": 65,
+    "height": 65
+  },
+  "hexBack": {
+    "id": "hexBack",
+    "x": 381,
+    "y": 23.7,
+    "width": 837,
+    "height": 953,
+    "layer": -3,
+    "movable": false,
+    "z": 1,
+    "scale": 0
+  },
+  "hexA1": {
+    "type": "holder",
+    "id": "hexA1",
+    "x": 0,
+    "y": 649.5,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack",
+    "activeFace": 0,
+    "scale": 1
+  },
+  "hexA2": {
+    "type": "holder",
+    "id": "hexA2",
+    "x": 0,
+    "y": 565.2998046875,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack",
+    "activeFace": 0,
+    "scale": 1
+  },
+  "hexA3": {
+    "type": "holder",
+    "id": "hexA3",
+    "x": 0,
+    "y": 478.2998046875,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack",
+    "activeFace": 0,
+    "scale": 1
+  },
+  "hexA4": {
+    "type": "holder",
+    "id": "hexA4",
+    "x": 0,
+    "y": 391.2998046875,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack",
+    "activeFace": 0,
+    "scale": 1
+  },
+  "hexA5": {
+    "type": "holder",
+    "id": "hexA5",
+    "x": 0,
+    "y": 303.099609375,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack",
+    "activeFace": 0,
+    "scale": 1
+  },
+  "hexA6": {
+    "type": "holder",
+    "id": "hexA6",
+    "x": 0,
+    "y": 216.5,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack",
+    "activeFace": 0,
+    "scale": 1
+  },
+  "hexB1": {
+    "type": "holder",
+    "id": "hexB1",
+    "x": 75,
+    "y": 692.7998046875,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack",
+    "activeFace": 0,
+    "scale": 1
+  },
+  "hexB2": {
+    "type": "holder",
+    "id": "hexB2",
+    "x": 75,
+    "y": 606.2001953125,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack",
+    "activeFace": 0,
+    "scale": 1
+  },
+  "hexB3": {
+    "type": "holder",
+    "id": "hexB3",
+    "x": 75,
+    "y": 519.599609375,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack",
+    "activeFace": 0,
+    "scale": 1
+  },
+  "hexB4": {
+    "type": "holder",
+    "id": "hexB4",
+    "x": 75,
+    "y": 433,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack",
+    "activeFace": 0,
+    "scale": 1
+  },
+  "hexB5": {
+    "type": "holder",
+    "id": "hexB5",
+    "x": 75,
+    "y": 346.400390625,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack",
+    "activeFace": 0,
+    "scale": 1
+  },
+  "hexB6": {
+    "type": "holder",
+    "id": "hexB6",
+    "x": 75,
+    "y": 259.7998046875,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack",
+    "activeFace": 0,
+    "scale": 1
+  },
+  "hexB7": {
+    "type": "holder",
+    "id": "hexB7",
+    "x": 75,
+    "y": 173.2001953125,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack",
+    "activeFace": 0,
+    "scale": 1
+  },
+  "hexC1": {
+    "type": "holder",
+    "id": "hexC1",
+    "x": 150,
+    "y": 736.099609375,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack",
+    "activeFace": 0,
+    "scale": 1
+  },
+  "hexD1": {
+    "type": "holder",
+    "id": "hexD1",
+    "x": 225,
+    "y": 779.400390625,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack",
+    "activeFace": 0,
+    "scale": 1
+  },
+  "hexE1": {
+    "type": "holder",
+    "id": "hexE1",
+    "x": 300,
+    "y": 822.7001953125,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack",
+    "activeFace": 0,
+    "scale": 1
+  },
+  "hexF1": {
+    "type": "holder",
+    "id": "hexF1",
+    "x": 375,
+    "y": 866,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack",
+    "activeFace": 0,
+    "scale": 1
+  },
+  "hexG1": {
+    "type": "holder",
+    "id": "hexG1",
+    "x": 450,
+    "y": 822.7001953125,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack",
+    "activeFace": 0,
+    "scale": 1
+  },
+  "hexH1": {
+    "type": "holder",
+    "id": "hexH1",
+    "x": 525,
+    "y": 779.400390625,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack",
+    "activeFace": 0,
+    "scale": 1
+  },
+  "hexI1": {
+    "type": "holder",
+    "id": "hexI1",
+    "x": 600,
+    "y": 736.099609375,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack",
+    "activeFace": 0,
+    "scale": 1
+  },
+  "hexK1": {
+    "type": "holder",
+    "id": "hexK1",
+    "x": 675,
+    "y": 692.7998046875,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack",
+    "activeFace": 0,
+    "scale": 1
+  },
+  "hexL1": {
+    "type": "holder",
+    "id": "hexL1",
+    "x": 750,
+    "y": 649.5,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack",
+    "activeFace": 0,
+    "scale": 1
+  },
+  "hexC2": {
+    "type": "holder",
+    "id": "hexC2",
+    "x": 150,
+    "y": 649.5,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack",
+    "activeFace": 0,
+    "scale": 1
+  },
+  "hexC3": {
+    "type": "holder",
+    "id": "hexC3",
+    "x": 150,
+    "y": 562.900390625,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack",
+    "activeFace": 0,
+    "scale": 1
+  },
+  "hexC4": {
+    "type": "holder",
+    "id": "hexC4",
+    "x": 150,
+    "y": 476.2998046875,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack",
+    "activeFace": 0,
+    "scale": 1
+  },
+  "hexC5": {
+    "type": "holder",
+    "id": "hexC5",
+    "x": 150,
+    "y": 389.7001953125,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack",
+    "activeFace": 0,
+    "scale": 1
+  },
+  "hexC6": {
+    "type": "holder",
+    "id": "hexC6",
+    "x": 150,
+    "y": 303.099609375,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack",
+    "activeFace": 0,
+    "scale": 1
+  },
+  "hexC7": {
+    "type": "holder",
+    "id": "hexC7",
+    "x": 150,
+    "y": 216.5,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack",
+    "activeFace": 0,
+    "scale": 1
+  },
+  "hexC8": {
+    "type": "holder",
+    "id": "hexC8",
+    "x": 150,
+    "y": 129.900390625,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack",
+    "activeFace": 0,
+    "scale": 1
+  },
+  "hexD2": {
+    "type": "holder",
+    "id": "hexD2",
+    "x": 225,
+    "y": 692.7998046875,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack",
+    "activeFace": 0,
+    "scale": 1
+  },
+  "hexD3": {
+    "type": "holder",
+    "id": "hexD3",
+    "x": 225,
+    "y": 606.2001953125,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack",
+    "activeFace": 0,
+    "scale": 1
+  },
+  "hexD4": {
+    "type": "holder",
+    "id": "hexD4",
+    "x": 225,
+    "y": 519.599609375,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack",
+    "activeFace": 0,
+    "scale": 1
+  },
+  "hexD5": {
+    "type": "holder",
+    "id": "hexD5",
+    "x": 225,
+    "y": 433,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack",
+    "activeFace": 0,
+    "scale": 1
+  },
+  "hexD6": {
+    "type": "holder",
+    "id": "hexD6",
+    "x": 225,
+    "y": 346.400390625,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack",
+    "activeFace": 0,
+    "scale": 1
+  },
+  "hexD7": {
+    "type": "holder",
+    "id": "hexD7",
+    "x": 225,
+    "y": 259.7998046875,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack",
+    "activeFace": 0,
+    "scale": 1
+  },
+  "hexD8": {
+    "type": "holder",
+    "id": "hexD8",
+    "x": 225,
+    "y": 173.2001953125,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack",
+    "activeFace": 0,
+    "scale": 1
+  },
+  "hexD9": {
+    "type": "holder",
+    "id": "hexD9",
+    "x": 225,
+    "y": 86.599609375,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack",
+    "activeFace": 0,
+    "scale": 1
+  },
+  "hexE2": {
+    "type": "holder",
+    "id": "hexE2",
+    "x": 300,
+    "y": 736.099609375,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack",
+    "activeFace": 0,
+    "scale": 1
+  },
+  "hexE3": {
+    "type": "holder",
+    "id": "hexE3",
+    "x": 300,
+    "y": 649.5,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack",
+    "activeFace": 0,
+    "scale": 1
+  },
+  "hexE4": {
+    "type": "holder",
+    "id": "hexE4",
+    "x": 300,
+    "y": 562.900390625,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack",
+    "activeFace": 0,
+    "scale": 1
+  },
+  "hexE5": {
+    "type": "holder",
+    "id": "hexE5",
+    "x": 300,
+    "y": 476.2998046875,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack",
+    "activeFace": 0,
+    "scale": 1
+  },
+  "hexE6": {
+    "type": "holder",
+    "id": "hexE6",
+    "x": 300,
+    "y": 389.7001953125,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack",
+    "activeFace": 0,
+    "scale": 1
+  },
+  "hexE7": {
+    "type": "holder",
+    "id": "hexE7",
+    "x": 300,
+    "y": 303.099609375,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack",
+    "activeFace": 0,
+    "scale": 1
+  },
+  "hexE8": {
+    "type": "holder",
+    "id": "hexE8",
+    "x": 300,
+    "y": 216.5,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack",
+    "activeFace": 0,
+    "scale": 1
+  },
+  "hexE9": {
+    "type": "holder",
+    "id": "hexE9",
+    "x": 300,
+    "y": 129.900390625,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack",
+    "activeFace": 0,
+    "scale": 1
+  },
+  "hexE10": {
+    "type": "holder",
+    "id": "hexE10",
+    "x": 300,
+    "y": 43.2998046875,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack",
+    "activeFace": 0,
+    "scale": 1
+  },
+  "hexF2": {
+    "type": "holder",
+    "id": "hexF2",
+    "x": 375,
+    "y": 779.400390625,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack",
+    "activeFace": 0,
+    "scale": 1
+  },
+  "hexF3": {
+    "type": "holder",
+    "id": "hexF3",
+    "x": 375,
+    "y": 692.7998046875,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack",
+    "activeFace": 0,
+    "scale": 1
+  },
+  "hexF4": {
+    "type": "holder",
+    "id": "hexF4",
+    "x": 375,
+    "y": 606.2001953125,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack",
+    "activeFace": 0,
+    "scale": 1
+  },
+  "hexF5": {
+    "type": "holder",
+    "id": "hexF5",
+    "x": 375,
+    "y": 519.599609375,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack",
+    "activeFace": 0,
+    "scale": 1
+  },
+  "hexF6": {
+    "type": "holder",
+    "id": "hexF6",
+    "x": 375,
+    "y": 433,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack",
+    "activeFace": 0,
+    "scale": 1
+  },
+  "hexF7": {
+    "type": "holder",
+    "id": "hexF7",
+    "x": 375,
+    "y": 346.400390625,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack",
+    "activeFace": 0,
+    "scale": 1
+  },
+  "hexF8": {
+    "type": "holder",
+    "id": "hexF8",
+    "x": 375,
+    "y": 259.7998046875,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack",
+    "activeFace": 0,
+    "scale": 1
+  },
+  "hexF9": {
+    "type": "holder",
+    "id": "hexF9",
+    "x": 375,
+    "y": 173.2001953125,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack",
+    "activeFace": 0,
+    "scale": 1
+  },
+  "hexF10": {
+    "type": "holder",
+    "id": "hexF10",
+    "x": 375,
+    "y": 86.599609375,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack",
+    "activeFace": 0,
+    "scale": 1
+  },
+  "hexF11": {
+    "type": "holder",
+    "id": "hexF11",
+    "x": 375,
+    "y": 0,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack",
+    "activeFace": 0,
+    "scale": 1
+  },
+  "hexG2": {
+    "type": "holder",
+    "id": "hexG2",
+    "x": 450,
+    "y": 736.099609375,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack",
+    "activeFace": 0,
+    "scale": 1
+  },
+  "hexG3": {
+    "type": "holder",
+    "id": "hexG3",
+    "x": 450,
+    "y": 649.5,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack",
+    "activeFace": 0,
+    "scale": 1
+  },
+  "hexG4": {
+    "type": "holder",
+    "id": "hexG4",
+    "x": 450,
+    "y": 562.900390625,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack",
+    "activeFace": 0,
+    "scale": 1
+  },
+  "hexG5": {
+    "type": "holder",
+    "id": "hexG5",
+    "x": 450,
+    "y": 476.2998046875,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack",
+    "activeFace": 0,
+    "scale": 1
+  },
+  "hexG6": {
+    "type": "holder",
+    "id": "hexG6",
+    "x": 450,
+    "y": 389.7001953125,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack",
+    "activeFace": 0,
+    "scale": 1
+  },
+  "hexG7": {
+    "type": "holder",
+    "id": "hexG7",
+    "x": 450,
+    "y": 303.099609375,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack",
+    "activeFace": 0,
+    "scale": 1
+  },
+  "hexG8": {
+    "type": "holder",
+    "id": "hexG8",
+    "x": 450,
+    "y": 216.5,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack",
+    "activeFace": 0,
+    "scale": 1
+  },
+  "hexG9": {
+    "type": "holder",
+    "id": "hexG9",
+    "x": 450,
+    "y": 129.900390625,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack",
+    "activeFace": 0,
+    "scale": 1
+  },
+  "hexG10": {
+    "type": "holder",
+    "id": "hexG10",
+    "x": 450,
+    "y": 43.2998046875,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack",
+    "activeFace": 0,
+    "scale": 1
+  },
+  "hexH2": {
+    "type": "holder",
+    "id": "hexH2",
+    "x": 525,
+    "y": 692.7998046875,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack",
+    "activeFace": 0,
+    "scale": 1
+  },
+  "hexH3": {
+    "type": "holder",
+    "id": "hexH3",
+    "x": 525,
+    "y": 606.2001953125,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack",
+    "activeFace": 0,
+    "scale": 1
+  },
+  "hexH4": {
+    "type": "holder",
+    "id": "hexH4",
+    "x": 525,
+    "y": 519.599609375,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack",
+    "activeFace": 0,
+    "scale": 1
+  },
+  "hexH5": {
+    "type": "holder",
+    "id": "hexH5",
+    "x": 525,
+    "y": 433,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack",
+    "activeFace": 0,
+    "scale": 1
+  },
+  "hexH6": {
+    "type": "holder",
+    "id": "hexH6",
+    "x": 525,
+    "y": 346.400390625,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack",
+    "activeFace": 0,
+    "scale": 1
+  },
+  "hexH7": {
+    "type": "holder",
+    "id": "hexH7",
+    "x": 525,
+    "y": 259.7998046875,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack",
+    "activeFace": 0,
+    "scale": 1
+  },
+  "hexH8": {
+    "type": "holder",
+    "id": "hexH8",
+    "x": 525,
+    "y": 173.2001953125,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack",
+    "activeFace": 0,
+    "scale": 1
+  },
+  "hexH9": {
+    "type": "holder",
+    "id": "hexH9",
+    "x": 525,
+    "y": 86.599609375,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack",
+    "activeFace": 0,
+    "scale": 1
+  },
+  "hexI2": {
+    "type": "holder",
+    "id": "hexI2",
+    "x": 600,
+    "y": 649.5,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack",
+    "activeFace": 0,
+    "scale": 1
+  },
+  "hexI3": {
+    "type": "holder",
+    "id": "hexI3",
+    "x": 600,
+    "y": 562.900390625,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack",
+    "activeFace": 0,
+    "scale": 1
+  },
+  "hexI4": {
+    "type": "holder",
+    "id": "hexI4",
+    "x": 600,
+    "y": 476.2998046875,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack",
+    "activeFace": 0,
+    "scale": 1
+  },
+  "hexI5": {
+    "type": "holder",
+    "id": "hexI5",
+    "x": 600,
+    "y": 389.7001953125,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack",
+    "activeFace": 0,
+    "scale": 1
+  },
+  "hexI6": {
+    "type": "holder",
+    "id": "hexI6",
+    "x": 600,
+    "y": 303.099609375,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack",
+    "activeFace": 0,
+    "scale": 1
+  },
+  "hexI7": {
+    "type": "holder",
+    "id": "hexI7",
+    "x": 600,
+    "y": 216.5,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack",
+    "activeFace": 0,
+    "scale": 1
+  },
+  "hexI8": {
+    "type": "holder",
+    "id": "hexI8",
+    "x": 600,
+    "y": 129.900390625,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack",
+    "activeFace": 0,
+    "scale": 1
+  },
+  "hexK2": {
+    "type": "holder",
+    "id": "hexK2",
+    "x": 675,
+    "y": 606.2001953125,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack",
+    "activeFace": 0,
+    "scale": 1
+  },
+  "hexK3": {
+    "type": "holder",
+    "id": "hexK3",
+    "x": 675,
+    "y": 519.599609375,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack",
+    "activeFace": 0,
+    "scale": 1
+  },
+  "hexK4": {
+    "type": "holder",
+    "id": "hexK4",
+    "x": 675,
+    "y": 433,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack",
+    "activeFace": 0,
+    "scale": 1
+  },
+  "hexK5": {
+    "type": "holder",
+    "id": "hexK5",
+    "x": 675,
+    "y": 346.400390625,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack",
+    "activeFace": 0,
+    "scale": 1
+  },
+  "hexK6": {
+    "type": "holder",
+    "id": "hexK6",
+    "x": 675,
+    "y": 259.7998046875,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack",
+    "activeFace": 0,
+    "scale": 1
+  },
+  "hexK7": {
+    "type": "holder",
+    "id": "hexK7",
+    "x": 675,
+    "y": 173.2001953125,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack",
+    "activeFace": 0,
+    "scale": 1
+  },
+  "hexL2": {
+    "type": "holder",
+    "id": "hexL2",
+    "x": 750,
+    "y": 562.900390625,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack",
+    "activeFace": 0,
+    "scale": 1
+  },
+  "hexL3": {
+    "type": "holder",
+    "id": "hexL3",
+    "x": 750,
+    "y": 476.2998046875,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack",
+    "activeFace": 0,
+    "scale": 1
+  },
+  "hexL4": {
+    "type": "holder",
+    "id": "hexL4",
+    "x": 750,
+    "y": 389.7001953125,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack",
+    "activeFace": 0,
+    "scale": 1
+  },
+  "hexL5": {
+    "type": "holder",
+    "id": "hexL5",
+    "x": 750,
+    "y": 303.099609375,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack",
+    "activeFace": 0,
+    "scale": 1
+  },
+  "hexL6": {
+    "type": "holder",
+    "id": "hexL6",
+    "x": 750,
+    "y": 216.5,
+    "z": 1,
+    "inheritFrom": "hexMaster",
+    "parent": "hexBack",
+    "activeFace": 0,
+    "scale": 1
+  },
+  "hexMaster": {
+    "type": "holder",
+    "id": "hexMaster",
+    "x": 174,
+    "y": -203,
+    "width": 86.6,
+    "height": 86.6,
+    "z": 1,
+    "css": {
+      "border-radius": "100%",
+      "background": "transparent",
+      "border": "none"
+    },
+    "grid": [
+      {
+        "x": 150,
+        "y": 86.6,
+        "offsetX": -68.3,
+        "offsetY": -19.6
+      },
+      {
+        "x": 150,
+        "y": 86.6,
+        "offsetX": 6.7,
+        "offsetY": 23.7
+      }
+    ],
+    "dropTarget": {},
+    "movableInEdit": false,
+    "dropOffsetX": 10,
+    "dropOffsetY": 8,
+    "dropLimit": 2,
+    "activeFace": 0
+  },
+  "hexDeck": {
+    "type": "deck",
+    "id": "hexDeck",
+    "x": 336,
+    "y": -197,
+    "z": 1,
+    "movable": false,
+    "movableInEdit": false,
+    "cardDefaults": {
+      "movable": false,
+      "movableInEdit": false,
+      "width": 100,
+      "height": 100
+    },
+    "cardTypes": {
+      "gray": {
+        "fillColor1": "silver",
+        "strokeColor1": "gray",
+        "fillColor2": "silver",
+        "strokeColor2": "gray",
+        "rotDeg": 30
+      },
+      "color": {
+        "fillColor1": "teal",
+        "strokeColor1": "purple",
+        "fillColor2": "silver",
+        "strokeColor2": "gray",
+        "rotDeg": 30
+      }
+    },
+    "faceTemplates": [
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 100,
+            "height": 100,
+            "color": "transparent",
+            "value": "/assets/1000076354_385",
+            "svgReplaces": {
+              "fillColor": "fillColor1",
+              "strokeColor": "strokeColor1",
+              "rotDeg": "rotDeg"
+            }
+          }
+        ]
+      },
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 100,
+            "height": 100,
+            "color": "transparent",
+            "value": "/assets/1000076354_385",
+            "svgReplaces": {
+              "fillColor": "fillColor2",
+              "strokeColor": "strokeColor2",
+              "rotDeg": "rotDeg"
+            }
+          }
+        ]
+      }
+    ],
+    "activeFace": 0
+  },
+  "6d81": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "gray",
+    "id": "6d81",
+    "z": 1,
+    "x": 10,
+    "y": 8,
+    "parent": "hexG10"
+  },
+  "bf4k": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "gray",
+    "id": "bf4k",
+    "z": 1,
+    "x": 10,
+    "y": 8,
+    "parent": "hexH9"
+  },
+  "e524": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "gray",
+    "id": "e524",
+    "z": 1,
+    "x": 10,
+    "y": 8,
+    "parent": "hexI8"
+  },
+  "i9hl": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "gray",
+    "id": "i9hl",
+    "z": 1,
+    "x": 10,
+    "y": 8,
+    "parent": "hexK7"
+  },
+  "oert": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "gray",
+    "id": "oert",
+    "z": 1,
+    "x": 10,
+    "y": 8,
+    "parent": "hexL6"
+  },
+  "1o8v": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "gray",
+    "id": "1o8v",
+    "z": 1,
+    "x": 10,
+    "y": 8,
+    "parent": "hexL5"
+  },
+  "nroi": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "gray",
+    "id": "nroi",
+    "z": 1,
+    "x": 10,
+    "y": 8,
+    "parent": "hexL4"
+  },
+  "gl4j": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "gray",
+    "id": "gl4j",
+    "z": 1,
+    "x": 10,
+    "y": 8,
+    "parent": "hexL3"
+  },
+  "ld2o": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "gray",
+    "id": "ld2o",
+    "z": 1,
+    "x": 10,
+    "y": 8,
+    "parent": "hexL2"
+  },
+  "uqlj": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "gray",
+    "id": "uqlj",
+    "z": 1,
+    "x": 10,
+    "y": 8,
+    "parent": "hexL1",
+    "scale": 0
+  },
+  "lavo": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "gray",
+    "id": "lavo",
+    "z": 1,
+    "x": 10,
+    "y": 8,
+    "parent": "hexK1"
+  },
+  "yhlq": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "gray",
+    "id": "yhlq",
+    "z": 1,
+    "x": 10,
+    "y": 8,
+    "parent": "hexI1",
+    "scale": 0
+  },
+  "onqx": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "gray",
+    "id": "onqx",
+    "z": 1,
+    "x": 10,
+    "y": 8,
+    "parent": "hexH1"
+  },
+  "fpvf": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "gray",
+    "id": "fpvf",
+    "z": 1,
+    "x": 10,
+    "y": 8,
+    "parent": "hexG1"
+  },
+  "p6u5": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "gray",
+    "id": "p6u5",
+    "z": 1,
+    "x": 10,
+    "y": 8,
+    "parent": "hexF1"
+  },
+  "2t7n": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "gray",
+    "id": "2t7n",
+    "z": 1,
+    "x": 10,
+    "y": 8,
+    "parent": "hexE1"
+  },
+  "c26o": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "gray",
+    "id": "c26o",
+    "z": 1,
+    "x": 10,
+    "y": 8,
+    "parent": "hexD1"
+  },
+  "hhw3": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "gray",
+    "id": "hhw3",
+    "z": 1,
+    "x": 10,
+    "y": 8,
+    "parent": "hexC1"
+  },
+  "3kzu": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "gray",
+    "id": "3kzu",
+    "z": 1,
+    "x": 10,
+    "y": 8,
+    "parent": "hexB1"
+  },
+  "jjz1": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "gray",
+    "id": "jjz1",
+    "z": 1,
+    "x": 10,
+    "y": 8,
+    "parent": "hexA1"
+  },
+  "jmsh": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "gray",
+    "id": "jmsh",
+    "z": 1,
+    "x": 10,
+    "y": 8,
+    "parent": "hexA2"
+  },
+  "qc52": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "gray",
+    "id": "qc52",
+    "z": 1,
+    "x": 10,
+    "y": 8,
+    "parent": "hexA3"
+  },
+  "xvps": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "gray",
+    "id": "xvps",
+    "z": 1,
+    "x": 10,
+    "y": 8,
+    "parent": "hexA4",
+    "scale": 0
+  },
+  "04kq": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "gray",
+    "id": "04kq",
+    "z": 1,
+    "x": 10,
+    "y": 8,
+    "parent": "hexA5"
+  },
+  "s5x3": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "gray",
+    "id": "s5x3",
+    "z": 1,
+    "x": 10,
+    "y": 8,
+    "parent": "hexA6"
+  },
+  "a37w": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "gray",
+    "id": "a37w",
+    "z": 1,
+    "x": 10,
+    "y": 8,
+    "parent": "hexB7"
+  },
+  "ueqj": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "gray",
+    "id": "ueqj",
+    "z": 1,
+    "x": 10,
+    "y": 8,
+    "parent": "hexC8",
+    "scale": 0
+  },
+  "ecz7": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "gray",
+    "id": "ecz7",
+    "z": 1,
+    "x": 10,
+    "y": 8,
+    "parent": "hexF11"
+  },
+  "scwf": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "gray",
+    "id": "scwf",
+    "z": 1,
+    "x": 10,
+    "y": 8,
+    "parent": "hexD9"
+  },
+  "0k8i": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "gray",
+    "id": "0k8i",
+    "z": 1,
+    "x": 10,
+    "y": 8,
+    "parent": "hexE10"
+  },
+  "z963": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "color",
+    "id": "z963",
+    "parent": "hexF7",
+    "x": 10,
+    "y": 8,
+    "z": 1,
+    "scale": 0
+  },
+  "162g": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "color",
+    "id": "162g",
+    "z": 1,
+    "x": 10,
+    "y": 8,
+    "parent": "hexG7"
+  },
+  "nxeq": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "color",
+    "id": "nxeq",
+    "z": 1,
+    "x": 10,
+    "y": 8,
+    "parent": "hexF8"
+  },
+  "ou13": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "color",
+    "id": "ou13",
+    "z": 1,
+    "x": 10,
+    "y": 8,
+    "parent": "hexE7"
+  },
+  "42ot": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "color",
+    "id": "42ot",
+    "z": 1,
+    "x": 10,
+    "y": 8,
+    "parent": "hexD6"
+  },
+  "sszs": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "color",
+    "id": "sszs",
+    "z": 1,
+    "x": 10,
+    "y": 8,
+    "parent": "hexE6"
+  },
+  "9nrw": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "color",
+    "id": "9nrw",
+    "z": 1,
+    "x": 10,
+    "y": 8,
+    "parent": "hexF6"
+  },
+  "7x5z": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "color",
+    "id": "7x5z",
+    "z": 1,
+    "x": 10,
+    "y": 8,
+    "parent": "hexG6"
+  },
+  "8mm5": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "color",
+    "id": "8mm5",
+    "z": 1,
+    "x": 10,
+    "y": 8,
+    "parent": "hexH6"
+  },
+  "2ozo": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "color",
+    "id": "2ozo",
+    "z": 1,
+    "x": 10,
+    "y": 8,
+    "parent": "hexG5"
+  },
+  "id6i": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "color",
+    "id": "id6i",
+    "z": 1,
+    "x": 10,
+    "y": 8,
+    "parent": "hexH5"
+  },
+  "m3a3": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "color",
+    "id": "m3a3",
+    "z": 1,
+    "x": 10,
+    "y": 8,
+    "parent": "hexH4"
+  },
+  "j1kc": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "color",
+    "id": "j1kc",
+    "z": 1,
+    "x": 10,
+    "y": 8,
+    "parent": "hexG4"
+  },
+  "3d5v": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "color",
+    "id": "3d5v",
+    "z": 1,
+    "x": 10,
+    "y": 8,
+    "parent": "hexF5"
+  },
+  "oql0": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "color",
+    "id": "oql0",
+    "z": 1,
+    "x": 10,
+    "y": 8,
+    "parent": "hexF4"
+  },
+  "qt71": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "color",
+    "id": "qt71",
+    "z": 1,
+    "x": 10,
+    "y": 8,
+    "parent": "hexE5"
+  },
+  "klhl": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "color",
+    "id": "klhl",
+    "z": 1,
+    "x": 10,
+    "y": 8,
+    "parent": "hexE4"
+  },
+  "7owm": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "color",
+    "id": "7owm",
+    "z": 1,
+    "x": 10,
+    "y": 8,
+    "parent": "hexD5"
+  },
+  "a20l": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "color",
+    "id": "a20l",
+    "z": 1,
+    "x": 10,
+    "y": 8,
+    "parent": "hexD4"
+  },
+  "m569": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "color",
+    "id": "m569",
+    "z": 1,
+    "x": 10,
+    "y": 8,
+    "parent": "hexD3"
+  },
+  "0ddd": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "color",
+    "id": "0ddd",
+    "z": 1,
+    "x": 10,
+    "y": 8,
+    "parent": "hexE3"
+  },
+  "3xjx": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "color",
+    "id": "3xjx",
+    "z": 1,
+    "x": 10,
+    "y": 8,
+    "parent": "hexF3"
+  },
+  "nbbk": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "color",
+    "id": "nbbk",
+    "z": 1,
+    "x": 10,
+    "y": 8,
+    "parent": "hexG3"
+  },
+  "ciin": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "color",
+    "id": "ciin",
+    "z": 1,
+    "x": 10,
+    "y": 8,
+    "parent": "hexH3"
+  },
+  "knrx": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "color",
+    "id": "knrx",
+    "z": 1,
+    "x": 10,
+    "y": 8,
+    "parent": "hexI3"
+  },
+  "zg90": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "color",
+    "id": "zg90",
+    "z": 1,
+    "x": 10,
+    "y": 8,
+    "parent": "hexI4",
+    "scale": 0
+  },
+  "l2lg": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "color",
+    "id": "l2lg",
+    "z": 1,
+    "x": 10,
+    "y": 8,
+    "parent": "hexI5"
+  },
+  "wqqd": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "color",
+    "id": "wqqd",
+    "z": 1,
+    "x": 10,
+    "y": 8,
+    "parent": "hexI6",
+    "scale": 0
+  },
+  "c4gf": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "color",
+    "id": "c4gf",
+    "z": 1,
+    "x": 10,
+    "y": 8,
+    "parent": "hexH7"
+  },
+  "ek33": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "color",
+    "id": "ek33",
+    "z": 1,
+    "x": 10,
+    "y": 8,
+    "parent": "hexG8"
+  },
+  "0k4u": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "color",
+    "id": "0k4u",
+    "z": 1,
+    "x": 10,
+    "y": 8,
+    "parent": "hexG9"
+  },
+  "5s91": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "color",
+    "id": "5s91",
+    "z": 1,
+    "parent": "hexH8",
+    "x": 10,
+    "y": 8
+  },
+  "73nk": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "color",
+    "id": "73nk",
+    "z": 1,
+    "x": 10,
+    "y": 8,
+    "parent": "hexI7"
+  },
+  "rina": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "color",
+    "id": "rina",
+    "z": 1,
+    "x": 10,
+    "y": 8,
+    "parent": "hexK6"
+  },
+  "j5v0": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "color",
+    "id": "j5v0",
+    "z": 1,
+    "x": 10,
+    "y": 8,
+    "parent": "hexK5"
+  },
+  "mpdl": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "color",
+    "id": "mpdl",
+    "z": 1,
+    "x": 10,
+    "y": 8,
+    "parent": "hexK4"
+  },
+  "6mv3": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "color",
+    "id": "6mv3",
+    "z": 1,
+    "x": 10,
+    "y": 8,
+    "parent": "hexK3"
+  },
+  "6y6v": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "color",
+    "id": "6y6v",
+    "z": 1,
+    "x": 10,
+    "y": 8,
+    "parent": "hexK2"
+  },
+  "tdes": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "color",
+    "id": "tdes",
+    "z": 1,
+    "x": 10,
+    "y": 8,
+    "parent": "hexI2"
+  },
+  "sa4b": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "color",
+    "id": "sa4b",
+    "z": 1,
+    "x": 10,
+    "y": 8,
+    "parent": "hexH2"
+  },
+  "0pt4": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "color",
+    "id": "0pt4",
+    "z": 1,
+    "x": 10,
+    "y": 8,
+    "parent": "hexG2"
+  },
+  "eues": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "color",
+    "id": "eues",
+    "z": 1,
+    "x": 10,
+    "y": 8,
+    "parent": "hexC4"
+  },
+  "6tnm": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "color",
+    "id": "6tnm",
+    "z": 1,
+    "x": 10,
+    "y": 8,
+    "parent": "hexC5"
+  },
+  "yc91": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "color",
+    "id": "yc91",
+    "z": 1,
+    "x": 10,
+    "y": 8,
+    "parent": "hexC6",
+    "scale": 0
+  },
+  "9icl": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "color",
+    "id": "9icl",
+    "z": 1,
+    "x": 10,
+    "y": 8,
+    "parent": "hexE8"
+  },
+  "o28t": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "color",
+    "id": "o28t",
+    "z": 1,
+    "x": 10,
+    "y": 8,
+    "parent": "hexD7"
+  },
+  "fx08": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "color",
+    "id": "fx08",
+    "z": 1,
+    "x": 10,
+    "y": 8,
+    "parent": "hexF9"
+  },
+  "vexg": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "color",
+    "id": "vexg",
+    "z": 1,
+    "x": 10,
+    "y": 8,
+    "parent": "hexE2",
+    "scale": 0
+  },
+  "qpgz": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "color",
+    "id": "qpgz",
+    "z": 1,
+    "x": 10,
+    "y": 8,
+    "parent": "hexF2"
+  },
+  "yyjn": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "color",
+    "id": "yyjn",
+    "z": 1,
+    "x": 10,
+    "y": 8,
+    "parent": "hexD2",
+    "scale": 0
+  },
+  "8h4h": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "color",
+    "id": "8h4h",
+    "z": 1,
+    "x": 10,
+    "y": 8,
+    "parent": "hexC2"
+  },
+  "vow3": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "color",
+    "id": "vow3",
+    "z": 1,
+    "x": 10,
+    "y": 8,
+    "parent": "hexB2",
+    "scale": 0
+  },
+  "rme6": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "color",
+    "id": "rme6",
+    "z": 1,
+    "x": 10,
+    "y": 8,
+    "parent": "hexC3"
+  },
+  "b01w": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "color",
+    "id": "b01w",
+    "z": 1,
+    "x": 10,
+    "y": 8,
+    "parent": "hexB3"
+  },
+  "cl8z": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "color",
+    "id": "cl8z",
+    "z": 1,
+    "x": 10,
+    "y": 8,
+    "parent": "hexB4"
+  },
+  "56o4": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "color",
+    "id": "56o4",
+    "z": 1,
+    "x": 10,
+    "y": 8,
+    "parent": "hexB5"
+  },
+  "j57i": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "color",
+    "id": "j57i",
+    "z": 1,
+    "x": 10,
+    "y": 8,
+    "parent": "hexB6"
+  },
+  "p58y": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "color",
+    "id": "p58y",
+    "z": 1,
+    "x": 10,
+    "y": 8,
+    "parent": "hexC7"
+  },
+  "cbpc": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "color",
+    "id": "cbpc",
+    "z": 1,
+    "x": 10,
+    "y": 8,
+    "parent": "hexD8"
+  },
+  "2s8q": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "color",
+    "id": "2s8q",
+    "z": 1,
+    "x": 10,
+    "y": 8,
+    "parent": "hexE9"
+  },
+  "htiu": {
+    "deck": "hexDeck",
+    "type": "card",
+    "cardType": "color",
+    "id": "htiu",
+    "z": 1,
+    "x": 10,
+    "y": 8,
+    "parent": "hexF10"
+  },
+  "5x5": {
+    "type": "button",
+    "id": "5x5",
+    "x": 1523,
+    "y": 225,
+    "z": 1,
+    "color": "white",
+    "css": {
+      "default": {
+        "font-size": "20px",
+        "--wcMain": "transparent",
+        "--wcBorder": "transparent",
+        "--wcMainOH": "transparent",
+        "--wcBorderOH": "transparent",
+        "background-image": "url('/assets/1758756791_381')",
+        "background-size": "100% 100%"
+      }
+    },
+    "text": "5x5",
+    "activeFace": 0,
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "relation": "!=",
+        "value": null
+      },
+      {
+        "func": "SET",
+        "property": "scale",
+        "value": 1
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "tileBack"
+        ],
+        "property": "x",
+        "value": 464
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "tileBack"
+        ],
+        "property": "y",
+        "value": 169
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "hexBack"
+        ],
+        "property": "scale",
+        "value": 1
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "tileBack"
+        ],
+        "property": "scale",
+        "value": 0
+      }
+    ]
+  },
+  "4mda": {
+    "id": "4mda",
+    "width": 1600,
+    "height": 1000,
+    "css": {
+      "background": "#27808030"
+    },
+    "layer": -5,
+    "movable": false
+  }
+}

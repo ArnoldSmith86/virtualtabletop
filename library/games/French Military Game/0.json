@@ -1,0 +1,349 @@
+{
+  "_meta": {
+    "version": 15,
+    "info": {
+      "name": "French Military Game",
+      "image": "/assets/556562318_30538",
+      "rules": "https://en.wikipedia.org/wiki/Hare_games",
+      "bgg": "https://boardgamegeek.com/boardgame/31271/french-military-game",
+      "year": "1886",
+      "mode": "vs",
+      "time": "5",
+      "attribution": "Game design, layout, and library image by LawDawg96.&nbsp; Released to the Public Domain under CC0.<div><br></div><div>Wood grain background by RyanPro available under the Pixabay license from https://pixabay.com/photos/trees-wood-yellow-wood-oak-1915247/<br></div>",
+      "lastUpdate": 1717021755640,
+      "showName": true,
+      "skill": "",
+      "description": "It is 3 pieces to 1 in this strategy game, also known as Hare and Hounds. The hunters try to keep the prey (single piece) from getting across the board.",
+      "similarImage": "",
+      "similarName": "",
+      "similarDesigner": "",
+      "similarAwards": "",
+      "ruleText": "The hunter player has 3 pieces. The prey player has one.<div><br></div><div>The hunter moves first.&nbsp;&nbsp;<span style=\"color: var(--overlayFontColor);\">All moves are along a line to a vacant intersection. Hunters can only move sideways or forwards, away from the end on which they started. The prey piece can move in any direction.&nbsp; There is no jumping and no capturing.</span></div><div><span style=\"color: var(--overlayFontColor);\"><br></span></div><div><span style=\"color: var(--overlayFontColor);\">The prey wins by passing the hunters and getting to the side of the board the hunters started on.&nbsp; The hunters win by trapping the prey so that it cannot move on its turn.&nbsp; If the hunters do not make a forward move for 10 turns then the stalemate means the prey wins.</span></div>",
+      "helpText": "",
+      "variantImage": "",
+      "variant": "",
+      "language": "",
+      "players": "2"
+    }
+  },
+  "restart": {
+    "type": "button",
+    "id": "restart",
+    "x": 1550,
+    "y": 1,
+    "width": 50,
+    "height": 50,
+    "z": 1,
+    "movable": false,
+    "classes": "symbols",
+    "color": "white",
+    "css": {
+      "default": {
+        "font-size": "40px",
+        "--wcMain": "black",
+        "--wcBorder": "white",
+        "--wcMainOH": "grey",
+        "--wcBorderOH": "black"
+      },
+      "::after": {
+        "content": "\"Reset\"",
+        "display": "none",
+        "position": "absolute",
+        "margin-top": "71px",
+        "color": "black",
+        "font-size": "14px",
+        "font-family": "Roboto"
+      },
+      ":hover::after": {
+        "display": "block"
+      }
+    },
+    "text": "restart",
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "fields": [
+          {
+            "type": "title",
+            "text": "Restarting ..."
+          },
+          {
+            "type": "subtitle",
+            "text": "Are you sure you want to restart the game?"
+          }
+        ]
+      },
+      {
+        "func": "SELECT",
+        "property": "resetProperties",
+        "relation": "!=",
+        "value": null
+      },
+      {
+        "func": "FOREACH",
+        "loopRoutine": [
+          {
+            "func": "FOREACH",
+            "in": "${PROPERTY resetProperties OF $widgetID}",
+            "loopRoutine": [
+              {
+                "func": "SET",
+                "property": "${key}",
+                "value": "${value}"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "relation": "!=",
+        "value": null
+      },
+      {
+        "func": "SET",
+        "property": "z",
+        "value": 1
+      }
+    ]
+  },
+  "board": {
+    "id": "board",
+    "x": 300,
+    "width": 1000,
+    "height": 1000,
+    "movable": false,
+    "image": "/assets/-347036160_721",
+    "z": 1
+  },
+  "holder1": {
+    "type": "holder",
+    "id": "holder1",
+    "parent": "board",
+    "x": 215,
+    "y": 215,
+    "width": 70,
+    "height": 70,
+    "borderRadius": 100,
+    "z": 1,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {},
+    "classes": "transparent",
+    "dropLimit": 1
+  },
+  "holder5": {
+    "inheritFrom": {
+      "holder1": "*"
+    },
+    "type": "holder",
+    "id": "holder5",
+    "x": 465,
+    "y": 215,
+    "z": 1
+  },
+  "holder6": {
+    "inheritFrom": {
+      "holder1": "*"
+    },
+    "type": "holder",
+    "id": "holder6",
+    "x": 715,
+    "y": 215,
+    "z": 1
+  },
+  "holder7": {
+    "inheritFrom": {
+      "holder1": "*"
+    },
+    "type": "holder",
+    "id": "holder7",
+    "x": -10,
+    "y": 464,
+    "z": 1
+  },
+  "holder8": {
+    "inheritFrom": {
+      "holder1": "*"
+    },
+    "type": "holder",
+    "id": "holder8",
+    "x": 215,
+    "y": 464,
+    "z": 1
+  },
+  "holder9": {
+    "inheritFrom": {
+      "holder1": "*"
+    },
+    "type": "holder",
+    "id": "holder9",
+    "x": 465,
+    "y": 464,
+    "z": 1
+  },
+  "holder10": {
+    "inheritFrom": {
+      "holder1": "*"
+    },
+    "type": "holder",
+    "id": "holder10",
+    "x": 715,
+    "y": 464,
+    "z": 1
+  },
+  "holder11": {
+    "inheritFrom": {
+      "holder1": "*"
+    },
+    "type": "holder",
+    "id": "holder11",
+    "x": 945,
+    "y": 464,
+    "z": 1
+  },
+  "holder31": {
+    "inheritFrom": {
+      "holder1": "*"
+    },
+    "type": "holder",
+    "id": "holder31",
+    "x": 215,
+    "y": 715,
+    "z": 1
+  },
+  "holder32": {
+    "inheritFrom": {
+      "holder1": "*"
+    },
+    "type": "holder",
+    "id": "holder32",
+    "x": 465,
+    "y": 715,
+    "z": 1
+  },
+  "holder33": {
+    "inheritFrom": {
+      "holder1": "*"
+    },
+    "type": "holder",
+    "id": "holder33",
+    "x": 715,
+    "y": 715,
+    "z": 1
+  },
+  "background": {
+    "id": "background",
+    "width": 1920,
+    "height": 960,
+    "scale": 1.09,
+    "layer": -4,
+    "z": 1,
+    "movable": false,
+    "css": {
+      "opacity": "0.6"
+    },
+    "image": "/assets/-52589506_548214"
+  },
+  "red2": {
+    "id": "red2",
+    "width": 70,
+    "height": 70,
+    "z": 1,
+    "color": "red",
+    "css": "border-radius: 50%;",
+    "image": "/i/game-pieces/3D/Marble-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#ffffff",
+    "borderWidth": 1,
+    "resetProperties": {
+      "parent": "holder7",
+      "x": 0,
+      "y": 0
+    },
+    "secondaryColor": "#000000",
+    "set": 1,
+    "parent": "holder7"
+  },
+  "red1": {
+    "id": "red1",
+    "width": 70,
+    "height": 70,
+    "z": 1,
+    "color": "red",
+    "css": "border-radius: 50%;",
+    "image": "/i/game-pieces/3D/Marble-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#ffffff",
+    "borderWidth": 1,
+    "resetProperties": {
+      "parent": "holder1",
+      "x": 0,
+      "y": 0
+    },
+    "secondaryColor": "#000000",
+    "set": 1,
+    "parent": "holder1"
+  },
+  "red3": {
+    "id": "red3",
+    "width": 70,
+    "height": 70,
+    "z": 1,
+    "color": "red",
+    "css": "border-radius: 50%;",
+    "image": "/i/game-pieces/3D/Marble-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#ffffff",
+    "borderWidth": 1,
+    "resetProperties": {
+      "parent": "holder31",
+      "x": 0,
+      "y": 0
+    },
+    "secondaryColor": "#000000",
+    "set": 1,
+    "parent": "holder31"
+  },
+  "white1": {
+    "id": "white1",
+    "width": 70,
+    "height": 70,
+    "z": 1,
+    "color": "white",
+    "css": "border-radius: 50%;",
+    "image": "/i/game-pieces/3D/Marble-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#ffffff",
+    "borderWidth": 1,
+    "resetProperties": {
+      "parent": "holder9",
+      "x": 0,
+      "y": 0
+    },
+    "secondaryColor": "#000000",
+    "set": 2,
+    "parent": "holder9"
+  }
+}

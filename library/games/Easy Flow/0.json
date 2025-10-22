@@ -1,0 +1,471 @@
+{
+  "wdh2": {
+    "type": "seat",
+    "x": 476,
+    "y": 17,
+    "id": "wdh2",
+    "z": 35017,
+    "background": "#186acd",
+    "index": 2
+  },
+  "wdh3": {
+    "type": "seat",
+    "x": 929,
+    "y": 17,
+    "id": "wdh3",
+    "z": 35016,
+    "index": 3
+  },
+  "wdh4": {
+    "type": "seat",
+    "x": 76,
+    "id": "wdh4",
+    "z": 35015,
+    "y": 17,
+    "turn": true
+  },
+  "wdh5": {
+    "type": "seat",
+    "x": 1326,
+    "y": 17,
+    "id": "wdh5",
+    "z": 35013,
+    "index": 4
+  },
+  "v5ea": {
+    "type": "button",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "ck9c",
+        "relation": "=="
+      },
+      {
+        "func": "CLICK"
+      }
+    ],
+    "x": 286,
+    "y": 796,
+    "z": 35020,
+    "id": "v5ea",
+    "backgroundColor": "#fff",
+    "width": 100,
+    "height": 100,
+    "image": "/assets/-1622461087_5946",
+    "borderColor": "#3a8f95ff"
+  },
+  "NextPlayerButton": {
+    "type": "button",
+    "id": "NextPlayerButton",
+    "x": 21,
+    "y": 905,
+    "clickRoutine": [
+      "// set random x,y to each dice",
+      {
+        "func": "SELECT",
+        "property": "type",
+        "relation": "==",
+        "value": "dice"
+      },
+      {
+        "func": "FOREACH",
+        "loopRoutine": [
+          "var maxX = ${PROPERTY width OF ck9c} - ${PROPERTY width OF 28zkx}",
+          "var maxY = ${PROPERTY height OF ck9c} - ${PROPERTY height OF 28zkx}",
+          "var x = randInt 0 ${maxX}",
+          "var y = randInt 0 ${maxY}",
+          {
+            "func": "SET",
+            "property": "parent",
+            "value": "ck9c"
+          },
+          {
+            "func": "SET",
+            "property": "x",
+            "value": "${x}"
+          },
+          {
+            "func": "SET",
+            "property": "y",
+            "value": "${y}"
+          }
+        ]
+      },
+      {
+        "func": "TURN"
+      }
+    ],
+    "z": 35006,
+    "image": "/assets/-1388827103_10381",
+    "backgroundColor": "#fff",
+    "borderColor": "#3a8f95ff"
+  },
+  "b92eed53-bf9a-40c5-aa42-e30bd8535ba6": {
+    "id": "b92eed53-bf9a-40c5-aa42-e30bd8535ba6",
+    "x": 4,
+    "y": 4,
+    "z": 26326,
+    "type": "deck",
+    "cardTypes": {
+      "type-ceec75cf-d39a-4cff-a5af-290f079a1a0c": {
+        "label": "blue square.png",
+        "sortingOrder": 1,
+        "text1": " 3 OF A KIND   - ALL EVEN",
+        "image1": "/assets/-945132223_19374"
+      },
+      "type-0d0c5608-5943-4781-b879-29596b6e0d11": {
+        "text1": " 3 OF A KIND   - ALL ODD",
+        "sortingOrder": 2,
+        "image1": "/assets/2037177666_16862"
+      },
+      "type-dae6dc11-d9e3-4db1-b459-e9a760b5a677": {
+        "image1": "/assets/429613357_21061",
+        "text1": "17 OR MORE",
+        "sortingOrder": 3
+      },
+      "type-74d83a07-9543-4525-9258-0ea4f54b654a": {
+        "image1": "/assets/-1514403944_17822",
+        "text1": "13 EXACTLY",
+        "sortingOrder": 4
+      },
+      "type-85fc61ae-79fa-475b-b768-6d519a81e3db": {
+        "image1": "/assets/986498594_13732",
+        "text1": "7 EXACTLY",
+        "sortingOrder": 5
+      },
+      "type-e5fa9bf6-5207-43eb-a289-124f0be69341": {
+        "image1": "/assets/-1718047864_18745",
+        "text1": "3 OR LESS",
+        "sortingOrder": 6
+      },
+      "type-d2cce1f2-b95e-4d72-a084-78f314e9d93f": {
+        "image1": "/assets/-615015036_18910",
+        "text1": "4 OF A KIND",
+        "sortingOrder": 7
+      },
+      "type-3d750924-17de-4f28-9fe1-17113d301454": {
+        "image1": "/assets/-853359874_17468",
+        "text1": "2 PAIRS",
+        "sortingOrder": 8
+      },
+      "type-f06c6164-7f05-46f1-807a-a37e897c94a2": {
+        "image1": "/assets/426473540_19341",
+        "text1": "STRAIGHT",
+        "sortingOrder": 9
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "width": 120,
+            "height": 160,
+            "type": "image",
+            "color": "white",
+            "value": ""
+          },
+          {
+            "type": "text",
+            "x": 7.79116465863454,
+            "y": 0,
+            "fontSize": "58",
+            "textAlign": "center",
+            "textFont": null,
+            "width": 40.401606425702866,
+            "dynamicProperties": {
+              "value": "text2"
+            }
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 120,
+            "height": 160,
+            "dynamicProperties": {
+              "value": "image1"
+            }
+          },
+          {
+            "type": "text",
+            "x": 0,
+            "y": 10,
+            "width": 120,
+            "fontSize": 19,
+            "textAlign": "center",
+            "textFont": "interstate",
+            "color": "#F4E5C8",
+            "dynamicProperties": {
+              "value": "text1"
+            }
+          }
+        ],
+        "border": 1,
+        "radius": 8
+      }
+    ],
+    "cardDefaults": {
+      "width": 120,
+      "height": 160,
+      "overlap": false,
+      "ignoreOnLeave": true
+    },
+    "parent": "4e26b75e-0310-4e32-a967-8c96314d78a1"
+  },
+  "8xk6": {
+    "deck": "b92eed53-bf9a-40c5-aa42-e30bd8535ba6",
+    "type": "card",
+    "cardType": "type-0d0c5608-5943-4781-b879-29596b6e0d11",
+    "id": "8xk6",
+    "z": 1,
+    "x": 4,
+    "y": 4,
+    "parent": "4e26b75e-0310-4e32-a967-8c96314d78a1"
+  },
+  "85sn": {
+    "deck": "b92eed53-bf9a-40c5-aa42-e30bd8535ba6",
+    "type": "card",
+    "cardType": "type-dae6dc11-d9e3-4db1-b459-e9a760b5a677",
+    "id": "85sn",
+    "z": 5,
+    "x": 500,
+    "y": 4,
+    "parent": "4e26b75e-0310-4e32-a967-8c96314d78a1"
+  },
+  "4l26": {
+    "deck": "b92eed53-bf9a-40c5-aa42-e30bd8535ba6",
+    "type": "card",
+    "cardType": "type-74d83a07-9543-4525-9258-0ea4f54b654a",
+    "id": "4l26",
+    "z": 7,
+    "x": 748,
+    "y": 4,
+    "parent": "4e26b75e-0310-4e32-a967-8c96314d78a1"
+  },
+  "5jhi": {
+    "deck": "b92eed53-bf9a-40c5-aa42-e30bd8535ba6",
+    "type": "card",
+    "cardType": "type-85fc61ae-79fa-475b-b768-6d519a81e3db",
+    "id": "5jhi",
+    "z": 6,
+    "x": 624,
+    "y": 4,
+    "parent": "4e26b75e-0310-4e32-a967-8c96314d78a1"
+  },
+  "vukp": {
+    "deck": "b92eed53-bf9a-40c5-aa42-e30bd8535ba6",
+    "type": "card",
+    "cardType": "type-e5fa9bf6-5207-43eb-a289-124f0be69341",
+    "id": "vukp",
+    "z": 3,
+    "x": 252,
+    "y": 4,
+    "parent": "4e26b75e-0310-4e32-a967-8c96314d78a1"
+  },
+  "4e26b75e-0310-4e32-a967-8c96314d78a1": {
+    "id": "4e26b75e-0310-4e32-a967-8c96314d78a1",
+    "x": 240,
+    "y": 464,
+    "z": 26069,
+    "type": "holder",
+    "inheritChildZ": true,
+    "width": 1120,
+    "stackOffsetX": 84,
+    "css": {
+      "background": "#ffffff60"
+    }
+  },
+  "ck9c": {
+    "type": "holder",
+    "x": 450,
+    "y": 696,
+    "z": 26064,
+    "id": "ck9c",
+    "width": 700,
+    "height": 300,
+    "dropTarget": {
+      "type": "dice"
+    },
+    "alignChildren": false,
+    "css": {
+      "background": "#ffffff60"
+    }
+  },
+  "26zkx": {
+    "type": "dice",
+    "x": 171,
+    "faces": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "z": 1914,
+    "id": "26zkx",
+    "rollCount": 412,
+    "movable": "true",
+    "width": 90,
+    "height": 90,
+    "y": 186,
+    "pipSymbols": false,
+    "activeFace": 3,
+    "parent": "ck9c"
+  },
+  "_meta": {
+    "version": 12,
+    "info": {
+      "name": "Easy Flow",
+      "image": "/assets/269123162_22424",
+      "rules": "",
+      "bgg": "https://boardgamegeek.com/boardgame/10672/easy-come-easy-go",
+      "year": "2004",
+      "mode": "vs",
+      "time": "20-30",
+      "attribution": "<div>Board layout by Shobu and ArnoldSmith86. Released to public domain under CC0.</div><div><br></div><div>The background image (and library image) were generated by Midjourney using the prompt \"beach sea cartoon background balloon sail kite surf --ar 16:10\". The kite images on the cards were generated using the prompt \"kite sprite sheet\".<br></div><div><br></div><div>The dice icon is by Delapouite and used under the CC BY 3.0 license: https://game-icons.net/1x1/delapouite/rolling-dices.html</div>",
+      "lastUpdate": 1677687939027,
+      "showName": true,
+      "skill": "",
+      "description": "Roll dice, make combinations, and win a specific number of kites first.",
+      "similarImage": "",
+      "similarName": "Easy Come, Easy Go",
+      "similarAwards": "",
+      "ruleText": "On your turn:\nRoll all four dice. Set aside at least one die. If you have not yet set aside all the dice, roll the remaining die or dice. \nYou must set aside at least one die each time you roll, and once you set aside a die you may not roll it again. \nOnce you've set aside all four dice, you may take one of the cards that the dice result allows you to take, if any, from the center of the table (or from in front of another player) and place it in front of you, keeping it face-up for all to see. Pass the dice to the player on your left.\n\nGoal:\nIf you claim a third kite, then the next two players (or the same player twice in a two-player game) each have one chance to steal one of your combinations. If you still have 3 kites at the start of your turn, you win.\n\nThe Kites:\n\n3 or Less: The total of all four dice is 0, 1, 2, or 3.\n\n7 Exactly: The total of all four dice is exactly 7.\n\n13 Exactly: The total of all four dice is exactly 13.\n\n17 or More: The total of all four dice is 17, 18, 19, or 20.\n\nStraight: The dice show four consecutive numbers. (This includes \"0123\").\n\nTwo Pairs: Two dice of one number and two dice of a different number.\n\nThree of a kind - all even: Three dice of one even number and one die of a different even number. (Note: \"0\" is an even number).\n\nThree of a kind - all odd: Three dice of one odd number and one die of a different odd number.\n\nFour of a kind: Four dice of the same number.",
+      "helpText": "",
+      "variantImage": "",
+      "variant": "",
+      "language": "en-US",
+      "players": "2-4",
+      "similarDesigner": "Reiner Knizia"
+    }
+  },
+  "vl5g": {
+    "deck": "b92eed53-bf9a-40c5-aa42-e30bd8535ba6",
+    "type": "card",
+    "cardType": "type-ceec75cf-d39a-4cff-a5af-290f079a1a0c",
+    "id": "vl5g",
+    "z": 4,
+    "x": 376,
+    "y": 4,
+    "parent": "4e26b75e-0310-4e32-a967-8c96314d78a1"
+  },
+  "rmn1": {
+    "deck": "b92eed53-bf9a-40c5-aa42-e30bd8535ba6",
+    "type": "card",
+    "cardType": "type-d2cce1f2-b95e-4d72-a084-78f314e9d93f",
+    "id": "rmn1",
+    "z": 8,
+    "x": 872,
+    "y": 4,
+    "parent": "4e26b75e-0310-4e32-a967-8c96314d78a1"
+  },
+  "h2hr": {
+    "deck": "b92eed53-bf9a-40c5-aa42-e30bd8535ba6",
+    "type": "card",
+    "cardType": "type-3d750924-17de-4f28-9fe1-17113d301454",
+    "id": "h2hr",
+    "z": 9,
+    "x": 996,
+    "y": 4,
+    "parent": "4e26b75e-0310-4e32-a967-8c96314d78a1"
+  },
+  "cqhe": {
+    "deck": "b92eed53-bf9a-40c5-aa42-e30bd8535ba6",
+    "type": "card",
+    "cardType": "type-f06c6164-7f05-46f1-807a-a37e897c94a2",
+    "id": "cqhe",
+    "z": 2,
+    "x": 128,
+    "y": 4,
+    "parent": "4e26b75e-0310-4e32-a967-8c96314d78a1"
+  },
+  "27zkx": {
+    "type": "dice",
+    "x": 43,
+    "faces": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "z": 1918,
+    "id": "27zkx",
+    "rollCount": 410,
+    "movable": "true",
+    "width": 90,
+    "height": 90,
+    "y": 153,
+    "pipSymbols": false,
+    "parent": "ck9c"
+  },
+  "28zkx": {
+    "type": "dice",
+    "x": 176,
+    "faces": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "z": 1920,
+    "id": "28zkx",
+    "rollCount": 409,
+    "movable": "true",
+    "width": 90,
+    "height": 90,
+    "y": 76,
+    "pipSymbols": false,
+    "activeFace": 4,
+    "parent": "ck9c"
+  },
+  "29zkx": {
+    "type": "dice",
+    "x": 339,
+    "faces": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "z": 1916,
+    "id": "29zkx",
+    "rollCount": 430,
+    "movable": "true",
+    "width": 90,
+    "height": 90,
+    "y": 107,
+    "pipSymbols": false,
+    "activeFace": 4,
+    "parent": "ck9c"
+  },
+  "1pco": {
+    "image": "/assets/-67979964_176680",
+    "movable": false,
+    "width": 1600,
+    "height": 1000,
+    "layer": -4,
+    "id": "1pco",
+    "z": 5,
+    "movableInEdit": false
+  },
+  "2pco": {
+    "movable": false,
+    "width": 1600,
+    "height": 1000,
+    "layer": -4,
+    "id": "2pco",
+    "z": 6,
+    "css": {
+      "background": "#00000080"
+    },
+    "movableInEdit": false
+  }
+}

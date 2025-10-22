@@ -1,3 +1,4 @@
+import Config from './config.mjs';
 import Logging from './logging.mjs';
 
 export default class Player {
@@ -23,14 +24,18 @@ export default class Player {
       this.trace('messageReceived', { func, args });
 
     try {
+      if(func == 'addStateToPublicLibrary')
+        this.room.addStateToPublicLibrary(this, args);
+      if(func == 'audio')
+        this.room.playAudio(args);
       if(func == 'confirm')
         this.waitingForStateConfirmation = false;
       if(func == 'delta')
         this.receiveDelta(args);
       if(func == 'editState')
-        await this.room.editState(this, args.id, args.meta);
+        await this.room.editState(this, args.id, args.meta, args.variantInput, args.variantOperationQueue);
       if(func == 'loadState')
-        await this.room.loadState(this, args.stateID, args.variantID);
+        await this.room.loadState(this, args.stateID, args.variantID, args.linkSourceStateID, args.delayForGameStartRoutine);
       if(func == 'mouse')
         this.room.mouseMove(this, args);
       if(func == 'playerColor')
@@ -39,12 +44,26 @@ export default class Player {
         this.room.removeState(this, args);
       if(func == 'rename')
         this.room.renamePlayer(this, args.oldName, args.newName);
+      if(func == 'saveState')
+        this.room.saveState(this, args.players, args.updateCurrentSave);
+      if(func == 'setGameSettings')
+        this.room.setGameSettings(this, args);
+      if(func == 'setRedirect')
+        this.room.setRedirect(this, args);
+      if(func == 'toggleStateStar')
+        this.room.toggleStateStar(this, args);
       if(func == 'trace')
         this.trace('client', args);
+      if(func == 'unlinkState')
+        await this.room.unlinkState(this, args);
     } catch(e) {
-      Logging.handleWebSocketException(func, args, e);
-      this.send('internal_error', func);
-      this.connection.close();
+      if(e instanceof Logging.UserError) {
+        this.send('error', `${e.code} - ${e.message}`);
+      } else {
+        Logging.handleWebSocketException(func, args, e);
+        this.send('internal_error', func);
+        this.connection.close();
+      }
     }
   }
 
@@ -57,29 +76,41 @@ export default class Player {
     if(delta.id < this.latestDeltaIDbyDifferentPlayer) {
       this.trace('receiveDelta', { status: 'idTooLow', delta, possiblyConflicting: this.possiblyConflictingDeltas });
       for(const conflictDelta of this.possiblyConflictingDeltas) {
-        for(const widgetID in delta.s) {
-          if(conflictDelta.id > delta.id && conflictDelta.s[widgetID] !== undefined) {
-            // widget was deleted in both deltas - no problem
-            if(delta.s[widgetID] === null && conflictDelta.s[widgetID] === null)
-              continue;
-            // widget was deleted in ONE of the deltas -> conflict
-            if(delta.s[widgetID] === null || conflictDelta.s[widgetID] === null) {
-              this.trace('receiveDelta', { status: 'conflict', delta, conflictDelta, widgetID, key: '<deletion>' });
-              this.waitingForStateConfirmation = true;
-              this.room.receiveInvalidDelta(this, delta, widgetID, '<deletion>');
-              return;
-            }
-            for(const key in delta.s[widgetID]) {
-              // a property of the widget was changed in both deltas and not to the same value -> conflict
-              if(conflictDelta.s[widgetID][key] !== undefined && delta.s[widgetID][key] !== conflictDelta.s[widgetID][key]) {
-                this.trace('receiveDelta', { status: 'conflict', delta, conflictDelta, widgetID, key });
-                this.waitingForStateConfirmation = true;
-                this.room.receiveInvalidDelta(this, delta, widgetID, key);
-                return;
+        if(conflictDelta.id > delta.id) {
+          for(const widgetID in delta.s) {
+            if(conflictDelta.s[widgetID] !== undefined) {
+              // widget was deleted in both deltas - no problem
+              if(delta.s[widgetID] === null && conflictDelta.s[widgetID] === null)
+                continue;
+              // widget was deleted in ONE of the deltas -> conflict
+              if(delta.s[widgetID] === null || conflictDelta.s[widgetID] === null)
+                return this.triggerDeltaConflict(delta, conflictDelta, widgetID, '<deletion>');
+              for(const key in delta.s[widgetID]) {
+                // a property of the widget was changed in both deltas and not to the same value -> conflict
+                if(conflictDelta.s[widgetID][key] !== undefined && delta.s[widgetID][key] !== conflictDelta.s[widgetID][key])
+                  return this.triggerDeltaConflict(delta, conflictDelta, widgetID, key);
               }
+            }
+            // a parent or deck of a widget was changed to a widget that was deleted in the other delta -> conflict
+            for(const key of [ 'parent', 'deck' ]) {
+              if(delta.s[widgetID] !== null && delta.s[widgetID][key] && conflictDelta.s[delta.s[widgetID][key]] === null)
+                return this.triggerDeltaConflict(delta, conflictDelta, widgetID, `<${key}Deletion>`);
+              if(delta.s[widgetID] === null)
+                for(const conflictDeltaWidgetID in conflictDelta.s)
+                  if(conflictDelta.s[conflictDeltaWidgetID] !== null && conflictDelta.s[conflictDeltaWidgetID][key] === widgetID)
+                    return this.triggerDeltaConflict(delta, conflictDelta, widgetID, `<${key}Deletion>`);
             }
           }
         }
+      }
+    }
+
+    for(const widgetID in delta.s) {
+      if (!this.room.state[widgetID] && delta.s[widgetID] && !delta.s[widgetID].id) {
+        // tried to modify properties of a missing widget -> client is in bad state
+        this.waitingForStateConfirmation = true;
+        this.room.receiveInvalidDelta(this, delta, widgetID, '<modification>');
+        return;
       }
     }
 
@@ -97,13 +128,22 @@ export default class Player {
       this.possiblyConflictingDeltas.push(args);
       this.latestDeltaIDbyDifferentPlayer = args.id;
     }
-    this.connection.toClient(func, args);
+    if(Config.get('simulateServerLag'))
+      setTimeout(_=>this.connection.toClient(func, args), Config.get('simulateServerLag'));
+    else
+      this.connection.toClient(func, args);
   }
 
   trace(source, payload) {
-    if(this.room.enableTracing || source == 'client' && payload.type == 'enable') {
+    if(this.room.traceIsEnabled() || source == 'client' && payload.type == 'enable') {
       payload.player = this.name;
       this.room.trace(source, payload);
     }
+  }
+
+  triggerDeltaConflict(delta, conflictDelta, widgetID, key) {
+    this.trace('receiveDelta', { status: 'conflict', delta, conflictDelta, widgetID, key });
+    this.waitingForStateConfirmation = true;
+    this.room.receiveInvalidDelta(this, delta, widgetID, key);
   }
 }

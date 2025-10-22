@@ -1,6 +1,9 @@
-#jsonEditor {
+:root {
   --commandPaneWidth: 180px;
   --editorPaneWidth: 320px;
+}
+
+#jsonEditor {
   white-space: pre-line;
   font-family: monospace;
   display: none;
@@ -12,18 +15,18 @@
 
 #jsonEditor.wide {
   --commandPaneWidth: 320px;
-  --editorPaneWidth: 600px;
+  --editorPaneWidth: 602px;
 }
 
-#jsonEditor.notHighEnough #jeWidgetLayers, #jsonEditor.notHighEnough #jeLogWrapper {
+#jsonEditor.notHighEnough #jeWidgetLayers, #jsonEditor.notHighEnough #jeLogWrapper, .jeLogNested {
   display: none;
 }
 
-#jsonEditor > *, .jsonEdit, #jeWidgetLayers > div, #jeLog {
-  background: #08090a;
+#jsonEditor > *, #jeWidgetLayers > div {
+  background: var(--backgroundColor);
 }
 #jsonEditor > * {
-  color: #f8f8f2;
+  color: var(--textColor);
   padding: 5px;
   margin: 0;
   position: fixed;
@@ -32,13 +35,149 @@
   box-sizing: border-box;
 }
 
-#jeText, #jeTextHighlight {
-  white-space: pre-wrap;
-  overflow-y: auto;
+/*** Tree and widget display/edit area ***/
+/**** CSS to set up the grid ****/
+#jeEditArea {
+  --treeHeight: 70%;
+  display: grid;
+  grid-template-columns: 60% 40%;
+  grid-template-rows: min-content 25px var(--treeHeight)  8px auto;
+  row-gap: 0px;
+  top: 0;
   height: 100%;
   width: var(--editorPaneWidth);
   right: var(--commandPaneWidth);
+  border: 1px solid white;
+}
+
+#jeEditHeader {
+  grid-column: 1 / span 1;
+  grid-row: 1 / span 1;
+  border-bottom: 1px solid white;
+}
+
+#jeMouseCoords {
+  margin: 5px;
+}
+
+#jeTree {
+  grid-column: 1 / span 2;
+  grid-row: 3 / span 1;
   overflow-wrap: break-word;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  white-space: pre-wrap;
+  font-family: monospace;
+  user-select: none;
+}
+
+#jeText, #jeTextHighlight {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: calc(var(--commandPaneWidth) + 1px);
+  font-family: monospace;
+  white-space: pre-wrap;
+  overflow-y: auto;
+  overflow-wrap: break-word;
+}
+/**** End of grid layout ****/
+
+/**** line number styles ****/
+
+.jeLineNumber {
+  display: inline-block;
+  /* --linenumbers-digits gets set in jsonedit.js (jeColorize function) depending on the lines of the widget */
+  width: calc(var(--linenumbers-digits) * 8px);
+  text-align: right;
+  padding-right: 2px;
+  color: var(--textDimColor1);
+  vertical-align: top;
+}
+
+.jeLineContent {
+  display: inline-block;
+  width: calc(100% - var(--linenumbers-digits) * 8px - 2px);
+}
+
+#jeText {
+  padding-left: calc(var(--linenumbers-digits) * 8px + 2px);
+}
+#jeText::selection {
+  background-color: var(--backgroundHighlightColor1);
+  color: var(--textColor);
+}
+
+/**** End of line number styles ****/
+
+#jeTree > ul {
+  overflow-y: auto;
+}
+
+#jeTree ul, .jeTreeDisplay, .jeNestedTree {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+
+#jeTree li, .jeNestedTree {
+  margin-left: 10px;
+  padding-left: 0;
+}
+
+.jeInSearchWindow, .jeTreeWidget {
+  cursor: pointer;
+}
+
+#jeTree li.filterNotIncluded:not(.filterChildIncluded) {
+  display: none;
+}
+#jeTree li.filterNotIncluded.filterChildIncluded > span {
+  opacity: 0.2;
+}
+
+/* Style the caret/arrow */
+.jeTreeExpander, .jeTreeExpander-down {
+  user-select: none; /* Prevent text selection */
+}
+
+/* Create the caret/arrow with a unicode, and style it */
+.jeTreeExpander::before, .jeTreeExpander-down::before {
+  content: "\25B6";
+  display: inline-block;
+  margin-right: 6px;
+}
+
+body.lightsOff .jeTreeExpander::before, body.lightsOff .jeTreeExpander-down::before {
+  color: var(--textColor);
+}
+
+/* Rotate the caret/arrow icon when clicked on (using JavaScript) */
+.jeTreeExpander-down::before {
+  content: "\25BC";
+}
+
+/* Hide the nested list */
+.jeNestedTree.nested {
+  display: none;
+}
+
+/* Show the nested list when the user clicks on the caret/arrow (with JavaScript) */
+.jeNestedTree.active, .jeNestedTree.filterChildIncluded, .jeLogNested.active {
+  display: block;
+}
+
+.jeLogFilterMatch {
+  font-weight: bold;
+}
+
+.jeLogFilterNoMatch {
+  opacity: 0.5;
+}
+.jeLogFilterNoMatch:hover {
+  opacity: 1;
 }
 
 #jeText {
@@ -47,11 +186,53 @@
   text-fill-color: transparent;
   outline: none;
 }
+
 #jeText::selection {
-  background-color: #808080;
-  -webkit-text-fill-color: white;
+  background-color: var(--backgroundHighlightColor1);
+  -webkit-text-fill-color: var(--textColor);
 }
 
+/*** CSS to handle search box for tree widget ***/
+#jeTree > div {
+  display: flex;
+  margin-bottom: 10px;
+}
+#jeWidgetSearchBox {
+  min-width: 50px;
+}
+
+#jeSearchTable {
+  overflow-wrap: anywhere;
+}
+
+.jeHighlightRow {
+  background-color: var(--backgroundHighlightColor1);
+}
+
+/**** End tree search CSS ****/
+
+/**** Color formatting for widgets ****/
+
+#jeTextHighlight i, #jeTree i {
+  font-style: normal;
+}
+
+i.key     { color: var(--textHighlightColor1); }
+i.custom  { color: var(--textHighlightColor2); }
+i.extern  { color: var(--textHighlightColor3); }
+.extern   { color: var(--textHighlightColor3); }
+i.string  { color: var(--textHighlightColor4); }
+i.number  { color: var(--textHighlightColor5); }
+i.null    { color: var(--textHighlightColor6); }
+i.default { color: var(--textDimColor1);       }
+i.variable{ color: var(--textHighlightColor7); }
+i.error   { color: var(--textHighlightColor3); font-weight: bold; }
+
+/**** End color formatting ****/
+
+/*** End setup of edit area ***/
+
+/*** CSS to handle search box for compute operations ***/
 #var_results > table {
   table-layout: fixed;
 }
@@ -62,45 +243,116 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
-
-#jsonEditor i {
-  font-style: normal;
-}
-
-i.key     { color: yellow;  }
-i.custom  { color: orange;  }
-i.extern  { color: red;     }
-i.string  { color: #7ed07e; }
-i.number  { color: #dda0dd; }
-i.null    { color: blue;    }
-i.default { color: #606060; }
-i.variable{ color: #40e0d0; }
-i.error   { color: red; font-weight: bold; }
+/*** End compute operations CSS ***/
 
 #jeCommands {
-  white-space: pre-wrap;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
   height: 100%;
   width: var(--commandPaneWidth);
-  right: 0;
-  overflow: auto;
+  display: flex;
+  flex-direction: column;
 }
 
 #jeWidgetLayers {
-  width: 9001px;
-  font-size: 0;
-  padding: 0;
-  background: transparent;
+  background: var(--backgroundColor);
+  position: absolute;
+  top: 10px;
+  bottom: 10px;
+  right: 10px;
+  width: calc(var(--commandPaneWidth) - 34px);
+  border: 2px solid var(--VTTblue);
+  border-radius: 10px;
+  overflow: hidden;
+  padding: 5px;
+  white-space: normal;
+}
+
+#editor:hover #jeWidgetLayers, .editorModule:hover #jeWidgetLayers, body.usedTouch #jeWidgetLayers {
+  display: none;
+}
+
+#jeWidgetLayers > p {
+  font-size: 12px;
+  margin: 0;
 }
 
 #jeWidgetLayers > div {
-  display: inline-block;
+  display: flex;
+  align-items: center;
   padding: 2px;
-  vertical-align: top;
   font-size: 12px;
-  margin-right: 4px;
 }
 
-#jeWidgetLayers > div:empty {
+#jeWidgetLayers > div.hidden {
+  display: none;
+}
+
+#jeWidgetLayers .key {
+  font-size: inherit;
+  line-height: inherit;
+  margin-bottom: 0.4375rem;
+  margin-left: 0.25rem;
+  margin-right: 0.25rem;
+  margin-top: 0.25rem;
+  padding: 0.1rem 0.2rem;
+  box-shadow: 0 0 #d9d9d9, 0 0px #d9d9d9, 0 1px #d9d9d9, 0 2px #d9d9d9, 0 3px #d9d9d9, 0 4px #d9d9d9, 0 5px #d9d9d9, 2px 2.5px 4px #adb5bd, 0 -1px 2.5px #adb5bd;
+  background-color: #fff;
+  border-color: #e6e6e6;
+  color: #343a40;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  border: 1px solid #e6e6e6;
+  border-radius: 0.25rem;
+  display: inline-block;
+  font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-weight: 400;
+  text-align: left;
+  transform: translate3d(0, 0, 5px);
+  transform-style: preserve-3d;
+  transition: all 0.25s cubic-bezier(0.2, 1, 0.2, 1);
+}
+
+#jeWidgetLayers .key::after {
+  border-style: solid;
+  box-sizing: content-box;
+  content: '';
+  display: block;
+  position: absolute;
+  transform-style: preserve-3d;
+  transition: all 0.25s cubic-bezier(0.2, 1, 0.2, 1);
+  border-color: #cccccc;
+  border-radius: 0.5rem;
+  border-width: 0.125rem;
+  bottom: -9px;
+  left: -0.3125rem;
+  right: -0.3125rem;
+  top: -3px;
+  transform: translate3d(0, 0, -3px);
+}
+
+#jeWidgetLayers .keyDetails {
+  margin-left: 4px;
+}
+
+#jeWidgetLayers .id {
+  color: var(--textHighlightColor1);
+  display: inline-block;
+}
+
+#jeWidgetLayers .type {
+  color: var(--textHighlightColor4);
+}
+
+#jeWidgetLayers .details {
+  color: var(--textHighlightColor3);
+  white-space: pre;
+  display: block;
+}
+
+#jeWidgetLayers .details:empty {
   display: none;
 }
 
@@ -108,44 +360,21 @@ body.jsonEdit #jsonEditor {
   display: block;
 }
 
-body.jsonEdit #jeCommands > .jeTopButton {
-  display: inline-block;
-  text-align: center;
+body.jsonEdit #jeTopButtons {
+  margin-bottom: 10px;
 }
 
-body.jsonEdit #jeCommands > .jeTopButton > button {
-  width: 28px;
-  height: 24px;
-  border: 0;
-  display: block;
+body.jsonEdit #jeContextButtons {
+  overflow: hidden auto;
 }
 
-body.jsonEdit #jeCommands > .jeTopButton > span.top {
-  display: none;
+body.jsonEdit #jeContextButtons > button {
+  width: calc(100% - 3px);
+  text-align: left;
 }
 
 body.jsonEdit #toolbar {
   display: none;
-}
-
-body.jsonEdit #roomArea {
-  top: calc((100vh - var(--roomHeight) * var(--scale)) / 2);
-  left: 0;
-}
-
-body.jsonEdit.jeZoomOut #roomArea {
-  top: calc((100vh - var(--roomHeight) * var(--scale)) / 2);
-  left: 12.5%;
-  overflow: visible;
-}
-
-body.jsonEdit.jeZoomOut #topSurface {
-  overflow: visible;
-}
-
-#jeMouseCoords {
-  display: block;
-  right: calc(var(--commandPaneWidth) + 20px);
 }
 
 #jeLogWrapper {
@@ -155,15 +384,7 @@ body.jsonEdit.jeZoomOut #topSurface {
 }
 
 #jeLog {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  display: none;
-  height: 90vh;
-  right: calc(var(--commandPaneWidth) + var(--editorPaneWidth));
-  overflow: auto;
-  box-sizing: border-box;
-  border: 3px solid white;
+  margin-left: -40px;
 }
 
 @media (max-width: 1000px) {
@@ -182,42 +403,35 @@ body.jsonEdit.jeZoomOut #topSurface {
   margin: 0;
 }
 
-#jeLogWrapper:hover #jeLog {
-  display: block;
-}
-
-#jeLogWrapper:hover > h1, .jeLogNested {
-  display: none;
-}
-
-/* Show the nested list when the user clicks on the caret/arrow */
-.jeLogNested.active {
+#jeLog.active {
   display: block;
 }
 
 .jeLog {
   white-space: normal;
+  font-family: monospace;
   font-size: 12px;
-  background: #ffffff10;
   margin-left: 20px;
+  color: var(--textColor);
 }
 
-.jeLogSkipped {
-  color: grey;
+#jeLog > .jeLog > .jeExpander {
+  color: var(--textColor);
+  font-weight: bold;
+}
+#jeLog > .jeLog + .jeLog {
+  margin-top: 20px;
 }
 
-.jeLogSummary {
-  color: lightgreen;
-}
-
-.jeLogResult {
-  color: orange;
-}
+.jeLogSkipped { color: var(--textDimColor1); }
+.jeLogSummary { color: var(--textHighlightColor4); }
+.jeLogResult  { color: var(--textHighlightColor2); }
+.jeLogTime    { color: var(--textDimColor1); }
 
 /* Create the caret/arrow with a unicode, and style it */
 .jeExpander::before {
   content: "\25B6";
-  color: white;
+  color: var(--textColor);
   display: inline-block;
   margin-right: 6px;
 }
@@ -227,10 +441,29 @@ body.jsonEdit.jeZoomOut #topSurface {
   transform: rotate(90deg);
 }
 
-.jeLogHasProblems, .jeLogProblems {
+/* Create the red caret/arrow with a unicode, and style it */
+.jeRedExpander::before {
+  content: "\25B6";
   color: red;
+  display: inline-block;
+  margin-right: 6px;
 }
 
+/* Rotate the red caret/arrow icon when clicked on (using JavaScript) */
+.jeRedExpander-down::before {
+  transform: rotate(90deg);
+}
+
+/* .jeLogHasProblems and .jeLogHasNoProblems control the text color of the first item displayed. */
+.jeLogHasProblems, .jeLogProblems {
+  color: var(--textHighlightColor3);
+}
+
+.jeLogHasNoProblems {
+  color: var(--textColor);
+}
+
+/* .jeLogProblems controls the color and display of the problem text */
 .jeLogProblems {
   display: none;
 }
@@ -242,7 +475,7 @@ body.jsonEdit.jeZoomOut #topSurface {
 .jeLogDetails {
   word-break: break-all;
   margin-left: 20px;
-  color: lightgray;
+  color: var(--textColor);
 }
 
 /* Show the details when the user clicks on the caret/arrow */
@@ -257,4 +490,119 @@ body.jsonEdit.jeZoomOut #topSurface {
 .jeLogOriginal, .jeLogApplied, .jeLogVariables, .jeLogCollections, .jeLogProblems {
   margin-left:20px;
   white-space: pre;
+}
+
+[id=jeTopButtons] button {
+  display: inline-block;
+  text-align: center;
+  width: 28px;
+  height: 28px;
+  font-size: 1.25em;
+  border: 0;
+  text-shadow: 0px 1px 2px rgb(9, 12, 51);
+  color: white;
+  font-family: 'VTT-Symbols';
+  vertical-align: top;
+}
+
+[id=jeTopButtons] button.material {
+  font-family: 'Material Symbols';
+}
+
+#jeTopButtons button:disabled {
+  background: gray;
+  opacity: 0.5;
+}
+
+/* For the zoom, edit, wide, highlight, and debug "on" states */
+[id=jeTopButtons] button.onState {
+  color: yellow
+}
+#je_toggleHighlight.onState {
+  position: relative;
+}
+#je_toggleHighlight.onState::before {
+  position: absolute;
+  height: 22px;
+  width: 17px;
+  content: '';
+  top: 1px;
+  left: 4px;
+  border: 2px solid yellow;
+  border-radius: 20%;
+}
+
+#jeCommands .context{
+  font-weight: bold;
+  margin: 1px;
+  margin-top: 8px;
+}
+
+#jeContextButtons > button > b{
+  text-decoration: underline;
+  color: yellow;
+}
+
+#je_toggleZoom{
+}
+#je_copyState{
+}
+#je_callMacro{
+}
+#je_showWidget{
+}
+#je_reverseFkeys{
+}
+#je_addNewWidget{
+  color: rgb(95, 167, 95);
+}
+#je_removeWidget{
+  color: rgb(255, 73, 73);
+}
+#je_duplicateWidget{
+}
+#je_editMode{
+}
+#je_openParent{
+}
+#je_toggleHighlight{
+}
+#je_toggleDebug{
+}
+
+#jeContextButtons > button::before{
+  margin-right: 4px;
+  font-family: 'VTT-Symbols';
+}
+
+#widget_backgroundColor::before, #widget_backgroundColorOH::before, #widget_borderColor::before, #widget_color::before, #widget_borderColorOH::before, #widget_textColor::before, #widget_textColorOH::before{
+  content: '[color]';
+}
+#widget_owner::before{
+  content: '[player_circle]';
+}
+#widget_classes::before{
+  content: '[tag]';
+}
+#widget_css::before{
+  content: '[style]';
+  }
+#widget_rotation::before{
+  content: '[rotate_right]';
+}
+#widget_grid::before{
+  content: '[grid]';
+}
+#widget_dropOffsetX::before{
+  content: '[height]';
+}
+#widget_dropOffsetY::before{
+  content: '[width]';
+}
+#jeCommands .numberInputRange{
+  display: none;
+}
+
+#jeCommands #jeCommandOptions input[type="number"]{
+  width: 6ch;
 }

@@ -1,0 +1,1328 @@
+{
+  "_meta": {
+    "version": 17,
+    "info": {
+      "name": "Patolli",
+      "image": "/assets/-1154227493_165650",
+      "rules": "https://en.wikipedia.org/wiki/Patolli",
+      "bgg": "https://boardgamegeek.com/boardgame/11691/patolli",
+      "year": "1350",
+      "mode": "vs",
+      "time": "45",
+      "attribution": "Game design and room layout by LawDawg96. Released under CC BY-SA 4.0.<div><br></div><div>Board and beans by&nbsp;Rubýñ, available under CC BY-SA 3.0 at&nbsp;https://en.wikipedia.org/wiki/File:Tablero_de_Patolli.svg.</div><div><br></div><div>Library, coin, and background image by GDJ, available under the Pixabay License at&nbsp;https://pixabay.com/vectors/aztec-calendar-mexico-mexican-time-8015961/.</div><div><br></div><div>Aztec god&nbsp;Macuilxochitl in the Public Domain, available at https://en.wikipedia.org/wiki/Patolli#/media/File:Macuilxochitl_Patolli.png.</div><div><br></div><div>Rules written by ChatGPT and edited by LawDawg96 (based on review of several websites and YouTube videos with different rule variations).</div>",
+      "lastUpdate": 1749407140856,
+      "showName": true,
+      "skill": "",
+      "description": "An ancient Mesoamerican race game. Move pieces around the board based on a roll of marked beans and take all the coins from your opponent.",
+      "similarImage": "",
+      "similarName": "",
+      "similarDesigner": "",
+      "similarAwards": "",
+      "ruleText": "<h3>Objective:</h3> <p>The objective of Patolli is to win all of the coins from your opponent.</p> <h3>Gameplay:</h3> <ol> <li> <p><strong>Rolling the Dice</strong>:</p> <ul> <li>Players use the beans as dice. The marked side represents 1, and the unmarked side represents 0.</li> <li>Players roll all five beans and count the number of marked sides that land face up. This total is the number of spaces a player can move.</li> </ul> </li> <li> <p><strong>Moving Pieces</strong>:</p> <ul> <li>Players enter the board with a roll of one. To make the game move faster, players may start the game with one piece on the board. Players enter the board at the space marked with a circle of the player's marker color.</li> <li>Players move their pieces clockwise around the board, down and then back up each arm of the cross, based on the roll. Only one marker can be moved for each roll.</li> <li>If a player rolls a 5, they advance 10 spaces.</li> <li>If a player rolls a number that would place a marker on a square already occupied by another marker, they cannot move. (See exception for capturing).</li> <li>A player marker that completes a trip around the board must enter the starting/ending space by an exact roll and is then removed from the board.</li> <li>If a player cannot move a marker according to the rules, their turn ends.</li> </ul> </li> <li> <p><strong>Capturing</strong>:</p> <ul> <li>If a player lands on a square occupied by an opponent's marker and the marker is in one of the 4 center gray squares, then the opponent's marker is captured and removed from the board. The opponent's marker must reenter with a roll of 1.</li> </ul> </li> <li> <p><strong>Special Squares</strong>:</p> <ul> <li>The center gray square with a circle the same color as the player's marker is the starting and ending square for that player.</li> <li>The center gray squares are the only place where a capture can take place.</li> <li>If a player lands on one of the gray spaces at the end of the arm of the cross, then that player can take another turn.</li> <li>If a player lands on one of the black triangle spaces, they lose a coin.</li> </ul> </li> <li> <p><strong>Losing Coins</strong>:</p> <ul> <li>A player that rolls a 0 must give a coin to the god of games, Macuilxochitl. The coins moved there are awarded to the player that is first to remove all 6 of their markers from the board.</li> <li>A player that lands on a black triangle space must give a coin to their opponent.</li> <li>A player whose piece is captured must give a coin to their opponent.</li> <li>Each time a player completes the trip around the board and removes a marker from the board, they get a coin from their opponent.</li> </ul> </li> <li> <p><strong>Winning the Game</strong>:</p> <ul> <li>A round ends when one player has removed all 6 of their markers. That player collects any coins given to Macuilxochitl. If the other player still has coins remaining, start another round.</li> <li>A player wins when their opponent has no more coins.</li> </ul> </li> </ol> ",
+      "helpText": "Click the hint button in the lower right to show or hide the hints.<div><br></div><div>Click the area with the beans to roll them.</div><div><br></div><div>Manually move markers and coins based on the rules.<br><div><br></div><div>Click the restart button in the upper right to reset the game.<br></div></div>",
+      "variantImage": "",
+      "variant": "",
+      "language": "",
+      "players": "2"
+    }
+  },
+  "clicker": {
+    "id": "clicker",
+    "width": 290,
+    "height": 190,
+    "z": 1,
+    "movable": false,
+    "movableInEdit": false,
+    "layer": -2,
+    "clickRoutine": [
+      {
+        "func": "FOREACH",
+        "in": [
+          "bean1",
+          "bean2",
+          "bean3",
+          "bean4",
+          "bean5"
+        ],
+        "loopRoutine": [
+          "var randomTransRot = randInt 10 18",
+          "var randomTransRot = ${randomTransRot} / 10",
+          "var randomTransFlip = randInt 15 22",
+          "var randomTransFlip = ${randomTransFlip} / 10",
+          "var randomRot = randInt 0 180",
+          "var randomZ = randInt 1 4",
+          {
+            "func": "CLICK",
+            "collection": [
+              "${value}"
+            ]
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "${value}"
+            ],
+            "property": "rotation",
+            "value": "${randomRot}"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "${value}"
+            ],
+            "property": "z",
+            "value": "${randomZ}"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "${value}"
+            ],
+            "property": "rotTrans",
+            "value": "${randomTransRot}"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "${value}"
+            ],
+            "property": "flipTrans",
+            "value": "${randomTransFlip}"
+          }
+        ]
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "relation": "in",
+        "value": [
+          "bean1",
+          "bean2",
+          "bean3",
+          "bean4",
+          "bean5"
+        ]
+      },
+      "var a = ${PROPERTY state} + 1",
+      "var b = ${a} % 2",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "state",
+        "value": "${b}"
+      },
+      {
+        "func": "IF",
+        "operand1": "${a}",
+        "operand2": 1,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "result1"
+            ],
+            "property": "scale",
+            "value": 1
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "result1"
+            ],
+            "property": "speed",
+            "value": 0.5
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "result2"
+            ],
+            "property": "scale",
+            "value": 0
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "result2"
+            ],
+            "property": "speed",
+            "value": 0
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "result1"
+            ],
+            "property": "scale",
+            "value": 0
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "result1"
+            ],
+            "property": "speed",
+            "value": 0
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "result2"
+            ],
+            "property": "scale",
+            "value": 1
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "result2"
+            ],
+            "property": "speed",
+            "value": 0.5
+          }
+        ]
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "activeFace",
+        "value": 1
+      },
+      {
+        "func": "COUNT"
+      },
+      {
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "result1",
+              "result2"
+            ],
+            "property": "text",
+            "value": "1 coin to Macuilxochitl"
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "operand2": 1,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "result1",
+              "result2"
+            ],
+            "property": "text",
+            "value": "Enter marker or move 1"
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "operand2": 2,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "result1",
+              "result2"
+            ],
+            "property": "text",
+            "value": "Move 2"
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "operand2": 3,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "result1",
+              "result2"
+            ],
+            "property": "text",
+            "value": "Move 3"
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "operand2": 4,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "result1",
+              "result2"
+            ],
+            "property": "text",
+            "value": "Move 4"
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "operand2": 5,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "result1",
+              "result2"
+            ],
+            "property": "text",
+            "value": "Move 10"
+          }
+        ]
+      }
+    ],
+    "css": {
+      "border": "1px solid black",
+      "box-shadow": "2px 2px 15px inset",
+      "opacity": 0.3
+    },
+    "borderRadius": 10,
+    "state": 0,
+    "x": 652,
+    "y": 768
+  },
+  "restart": {
+    "type": "button",
+    "id": "restart",
+    "x": 1550,
+    "y": 1,
+    "width": 50,
+    "height": 50,
+    "z": 1,
+    "classes": "symbols",
+    "css": {
+      "default": {
+        "font-size": "40px",
+        "--wcMain": "black",
+        "--wcBorder": "white",
+        "--wcMainOH": "grey",
+        "--wcBorderOH": "black"
+      },
+      "::after": {
+        "content": "\"Reset\"",
+        "display": "none",
+        "position": "absolute",
+        "margin-top": "71px",
+        "color": "black",
+        "font-size": "14px",
+        "font-family": "Roboto"
+      },
+      ":hover::after": {
+        "display": "block"
+      }
+    },
+    "text": "restart",
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "fields": [
+          {
+            "type": "title",
+            "text": "Restarting ..."
+          },
+          {
+            "type": "subtitle",
+            "text": "Are you sure you want to restart the game?"
+          }
+        ]
+      },
+      {
+        "func": "RESET"
+      },
+      {
+        "func": "RECALL",
+        "holder": "coinHolder1"
+      },
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "cardType",
+        "value": "gold"
+      },
+      {
+        "func": "MOVE",
+        "collection": "DEFAULT",
+        "to": "coinHolder2"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "relation": "!=",
+        "value": null
+      },
+      {
+        "func": "SET",
+        "property": "z",
+        "value": 1
+      }
+    ],
+    "color": "white"
+  },
+  "result1": {
+    "id": "result1",
+    "x": 561,
+    "y": 963,
+    "width": 480,
+    "height": 30,
+    "z": 1,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "transition": "linear ${PROPERTY speed}s",
+      "font-size": "25px",
+      "text-align": "center"
+    },
+    "text": "Click beans to start",
+    "resetProperties": {
+      "text": "Click beans to start",
+      "scale": 1
+    },
+    "speed": 0
+  },
+  "result2": {
+    "id": "result2",
+    "x": 561,
+    "y": 963,
+    "width": 480,
+    "height": 30,
+    "z": 1,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "transition": "linear ${PROPERTY speed}s",
+      "font-size": "25px",
+      "text-align": "center"
+    },
+    "text": "Click beans to start",
+    "resetProperties": {
+      "text": "Click beans to start",
+      "scale": 0
+    },
+    "speed": 0.5,
+    "scale": 0
+  },
+  "bean1": {
+    "type": "dice",
+    "id": "bean1",
+    "x": 665,
+    "y": 807,
+    "width": 100,
+    "height": 100,
+    "borderRadius": 15,
+    "z": 1,
+    "movableInEdit": false,
+    "borderColor": "transparent",
+    "css": {
+      "default": {
+        "transition": "ease ${PROPERTY rotTrans}s",
+        "--edgeColor": "transparent"
+      },
+      ">.diceFaces": {
+        "transition-duration": "${PROPERTY flipTrans}s"
+      }
+    },
+    "faceCSS": {
+      "background-color": "transparent"
+    },
+    "faces": [
+      {
+        "image": "/assets/-1234812135_327",
+        "imageScale": 1.5
+      },
+      {
+        "image": "/assets/-1945347040_489",
+        "imageScale": 1.5
+      }
+    ],
+    "shape3d": "d2-flip",
+    "flipTrans": 1.9,
+    "resetProperties": {
+      "rotation": -90,
+      "activeFace": 0
+    },
+    "rotTrans": 1.4,
+    "rollCount": 124,
+    "rotation": -90,
+    "layer": -3
+  },
+  "bean2": {
+    "type": "dice",
+    "id": "bean2",
+    "x": 730,
+    "y": 843,
+    "width": 100,
+    "height": 100,
+    "borderRadius": 15,
+    "z": 1,
+    "movableInEdit": false,
+    "borderColor": "transparent",
+    "css": {
+      "default": {
+        "transition": "ease ${PROPERTY rotTrans}s",
+        "--edgeColor": "transparent"
+      },
+      ">.diceFaces": {
+        "transition-duration": "${PROPERTY flipTrans}s"
+      }
+    },
+    "faceCSS": {
+      "background-color": "transparent"
+    },
+    "faces": [
+      {
+        "image": "/assets/-1234812135_327",
+        "imageScale": 1.5
+      },
+      {
+        "image": "/assets/-1945347040_489",
+        "imageScale": 1.5
+      }
+    ],
+    "shape3d": "d2-flip",
+    "flipTrans": 1.9,
+    "resetProperties": {
+      "rotation": 45,
+      "activeFace": 0
+    },
+    "rotTrans": 1.4,
+    "rollCount": 124,
+    "layer": -3,
+    "rotation": 45
+  },
+  "bean3": {
+    "type": "dice",
+    "id": "bean3",
+    "x": 749,
+    "y": 763,
+    "width": 100,
+    "height": 100,
+    "borderRadius": 15,
+    "z": 1,
+    "movableInEdit": false,
+    "borderColor": "transparent",
+    "css": {
+      "default": {
+        "transition": "ease ${PROPERTY rotTrans}s",
+        "--edgeColor": "transparent"
+      },
+      ">.diceFaces": {
+        "transition-duration": "${PROPERTY flipTrans}s"
+      }
+    },
+    "faceCSS": {
+      "background-color": "transparent"
+    },
+    "faces": [
+      {
+        "image": "/assets/-1234812135_327",
+        "imageScale": 1.5
+      },
+      {
+        "image": "/assets/-1945347040_489",
+        "imageScale": 1.5
+      }
+    ],
+    "shape3d": "d2-flip",
+    "flipTrans": 2.2,
+    "resetProperties": {
+      "rotation": -45,
+      "activeFace": 0
+    },
+    "rotTrans": 1.8,
+    "rollCount": 124,
+    "rotation": -45,
+    "layer": -3
+  },
+  "bean4": {
+    "type": "dice",
+    "id": "bean4",
+    "x": 790,
+    "y": 869,
+    "width": 100,
+    "height": 100,
+    "borderRadius": 15,
+    "z": 1,
+    "movableInEdit": false,
+    "borderColor": "transparent",
+    "css": {
+      "default": {
+        "transition": "ease ${PROPERTY rotTrans}s",
+        "--edgeColor": "transparent"
+      },
+      ">.diceFaces": {
+        "transition-duration": "${PROPERTY flipTrans}s"
+      }
+    },
+    "faceCSS": {
+      "background-color": "transparent"
+    },
+    "faces": [
+      {
+        "image": "/assets/-1234812135_327",
+        "imageScale": 1.5
+      },
+      {
+        "image": "/assets/-1945347040_489",
+        "imageScale": 1.5
+      }
+    ],
+    "shape3d": "d2-flip",
+    "flipTrans": 1.9,
+    "resetProperties": {
+      "rotation": 0,
+      "activeFace": 0
+    },
+    "rotTrans": 1.4,
+    "rollCount": 124,
+    "layer": -3
+  },
+  "bean5": {
+    "type": "dice",
+    "id": "bean5",
+    "x": 841,
+    "y": 799,
+    "width": 100,
+    "height": 100,
+    "borderRadius": 15,
+    "rotation": 90,
+    "z": 1,
+    "movableInEdit": false,
+    "borderColor": "transparent",
+    "css": {
+      "default": {
+        "transition": "ease ${PROPERTY rotTrans}s",
+        "--edgeColor": "transparent"
+      },
+      ">.diceFaces": {
+        "transition-duration": "${PROPERTY flipTrans}s"
+      }
+    },
+    "faceCSS": {
+      "background-color": "transparent"
+    },
+    "faces": [
+      {
+        "image": "/assets/-1234812135_327",
+        "imageScale": 1.5
+      },
+      {
+        "image": "/assets/-1945347040_489",
+        "imageScale": 1.5
+      }
+    ],
+    "shape3d": "d2-flip",
+    "flipTrans": 2.2,
+    "resetProperties": {
+      "rotation": 90,
+      "activeFace": 0
+    },
+    "rotTrans": 1,
+    "rollCount": 124,
+    "layer": -3
+  },
+  "blue1": {
+    "id": "blue1",
+    "x": 435,
+    "y": 395,
+    "width": 60,
+    "height": 60,
+    "z": 1,
+    "color": "#1973c8",
+    "css": "border-radius: 50%;",
+    "image": "/i/game-pieces/3D/Marble-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#ffffff",
+    "borderWidth": 1,
+    "secondaryColor": "#000000",
+    "resetProperties": {
+      "x": 435,
+      "y": 395
+    }
+  },
+  "blue2": {
+    "id": "blue2",
+    "x": 500,
+    "y": 395,
+    "width": 60,
+    "height": 60,
+    "z": 1,
+    "color": "#1973c8",
+    "css": "border-radius: 50%;",
+    "image": "/i/game-pieces/3D/Marble-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#ffffff",
+    "borderWidth": 1,
+    "secondaryColor": "#000000",
+    "resetProperties": {
+      "x": 500,
+      "y": 395
+    }
+  },
+  "blue3": {
+    "id": "blue3",
+    "x": 435,
+    "y": 470,
+    "width": 60,
+    "height": 60,
+    "z": 1,
+    "color": "#1973c8",
+    "css": "border-radius: 50%;",
+    "image": "/i/game-pieces/3D/Marble-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#ffffff",
+    "borderWidth": 1,
+    "secondaryColor": "#000000",
+    "resetProperties": {
+      "x": 435,
+      "y": 470
+    }
+  },
+  "blue4": {
+    "id": "blue4",
+    "x": 500,
+    "y": 470,
+    "width": 60,
+    "height": 60,
+    "z": 1,
+    "color": "#1973c8",
+    "css": "border-radius: 50%;",
+    "image": "/i/game-pieces/3D/Marble-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#ffffff",
+    "borderWidth": 1,
+    "secondaryColor": "#000000",
+    "resetProperties": {
+      "x": 500,
+      "y": 470
+    }
+  },
+  "blue5": {
+    "id": "blue5",
+    "x": 435,
+    "y": 550,
+    "width": 60,
+    "height": 60,
+    "z": 1,
+    "color": "#1973c8",
+    "css": "border-radius: 50%;",
+    "image": "/i/game-pieces/3D/Marble-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#ffffff",
+    "borderWidth": 1,
+    "secondaryColor": "#000000",
+    "resetProperties": {
+      "x": 435,
+      "y": 550
+    }
+  },
+  "blue6": {
+    "id": "blue6",
+    "x": 500,
+    "y": 550,
+    "width": 60,
+    "height": 60,
+    "z": 1,
+    "color": "#1973c8",
+    "css": "border-radius: 50%;",
+    "image": "/i/game-pieces/3D/Marble-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#ffffff",
+    "borderWidth": 1,
+    "secondaryColor": "#000000",
+    "resetProperties": {
+      "x": 500,
+      "y": 550
+    }
+  },
+  "red1": {
+    "id": "red1",
+    "x": 1050,
+    "y": 395,
+    "width": 60,
+    "height": 60,
+    "z": 1,
+    "color": "#bc3434",
+    "css": "border-radius: 50%;",
+    "image": "/i/game-pieces/3D/Marble-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#ffffff",
+    "borderWidth": 1,
+    "secondaryColor": "#000000",
+    "resetProperties": {
+      "x": 1050,
+      "y": 395
+    }
+  },
+  "red2": {
+    "id": "red2",
+    "x": 1115,
+    "y": 395,
+    "width": 60,
+    "height": 60,
+    "z": 1,
+    "color": "#bc3434",
+    "css": "border-radius: 50%;",
+    "image": "/i/game-pieces/3D/Marble-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#ffffff",
+    "borderWidth": 1,
+    "secondaryColor": "#000000",
+    "resetProperties": {
+      "x": 1115,
+      "y": 395
+    }
+  },
+  "red3": {
+    "id": "red3",
+    "x": 1050,
+    "y": 470,
+    "width": 60,
+    "height": 60,
+    "z": 1,
+    "color": "#bc3434",
+    "css": "border-radius: 50%;",
+    "image": "/i/game-pieces/3D/Marble-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#ffffff",
+    "borderWidth": 1,
+    "secondaryColor": "#000000",
+    "resetProperties": {
+      "x": 1050,
+      "y": 470
+    }
+  },
+  "red4": {
+    "id": "red4",
+    "x": 1115,
+    "y": 470,
+    "width": 60,
+    "height": 60,
+    "z": 1,
+    "color": "#bc3434",
+    "css": "border-radius: 50%;",
+    "image": "/i/game-pieces/3D/Marble-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#ffffff",
+    "borderWidth": 1,
+    "secondaryColor": "#000000",
+    "resetProperties": {
+      "x": 1115,
+      "y": 470
+    }
+  },
+  "red5": {
+    "id": "red5",
+    "x": 1050,
+    "y": 550,
+    "width": 60,
+    "height": 60,
+    "z": 1,
+    "color": "#bc3434",
+    "css": "border-radius: 50%;",
+    "image": "/i/game-pieces/3D/Marble-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#ffffff",
+    "borderWidth": 1,
+    "secondaryColor": "#000000",
+    "resetProperties": {
+      "x": 1050,
+      "y": 550
+    }
+  },
+  "red6": {
+    "id": "red6",
+    "x": 1115,
+    "y": 550,
+    "width": 60,
+    "height": 60,
+    "z": 1,
+    "color": "#bc3434",
+    "css": "border-radius: 50%;",
+    "image": "/i/game-pieces/3D/Marble-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#ffffff",
+    "borderWidth": 1,
+    "secondaryColor": "#000000",
+    "resetProperties": {
+      "x": 1115,
+      "y": 550
+    }
+  },
+  "macuilxochitl": {
+    "id": "macuilxochitl",
+    "x": 700,
+    "y": 10,
+    "width": 200,
+    "height": 200,
+    "movable": false,
+    "image": "/assets/2126386929_17592",
+    "z": 1,
+    "layer": -4
+  },
+  "coinHolder1": {
+    "type": "holder",
+    "id": "coinHolder1",
+    "x": 303,
+    "y": 459,
+    "width": 75,
+    "height": 75,
+    "borderRadius": 100,
+    "z": 1,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "css": {
+      "background": "#c0c0c080",
+      "border": "1px solid black"
+    }
+  },
+  "coinHolder2": {
+    "type": "holder",
+    "id": "coinHolder2",
+    "x": 1212,
+    "y": 459,
+    "width": 75,
+    "height": 75,
+    "borderRadius": 100,
+    "z": 1,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "css": {
+      "background": "#fbd60080",
+      "border": "1px solid black"
+    }
+  },
+  "ayshD": {
+    "type": "deck",
+    "id": "ayshD",
+    "parent": "coinHolder1",
+    "width": 50,
+    "height": 50,
+    "cardDefaults": {
+      "width": 75,
+      "height": 75
+    },
+    "cardTypes": {
+      "silver": {
+        "shade": "silver"
+      },
+      "gold": {
+        "shade": "gold"
+      }
+    },
+    "faceTemplates": [
+      {
+        "border": null,
+        "radius": 100,
+        "objects": [
+          {
+            "type": "image",
+            "width": 75,
+            "height": 75,
+            "dynamicProperties": {
+              "color": "shade"
+            }
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "transparent",
+            "width": 75,
+            "height": 75,
+            "css": {
+              "background-image": "url('/assets/-1154227493_165650')",
+              "background-size": "247%"
+            }
+          }
+        ]
+      }
+    ],
+    "z": 1
+  },
+  "rh7e": {
+    "deck": "ayshD",
+    "type": "card",
+    "cardType": "silver",
+    "id": "rh7e",
+    "z": 1,
+    "parent": "8zqh"
+  },
+  "9aaa": {
+    "deck": "ayshD",
+    "type": "card",
+    "cardType": "silver",
+    "id": "9aaa",
+    "z": 1,
+    "parent": "8zqh"
+  },
+  "88gn": {
+    "deck": "ayshD",
+    "type": "card",
+    "cardType": "silver",
+    "id": "88gn",
+    "z": 1,
+    "parent": "8zqh"
+  },
+  "w28a": {
+    "deck": "ayshD",
+    "type": "card",
+    "cardType": "silver",
+    "id": "w28a",
+    "z": 1,
+    "parent": "8zqh"
+  },
+  "35ss": {
+    "deck": "ayshD",
+    "type": "card",
+    "cardType": "silver",
+    "id": "35ss",
+    "z": 1,
+    "parent": "8zqh"
+  },
+  "mnnc": {
+    "deck": "ayshD",
+    "type": "card",
+    "cardType": "silver",
+    "id": "mnnc",
+    "z": 1,
+    "parent": "8zqh"
+  },
+  "b8e5": {
+    "deck": "ayshD",
+    "type": "card",
+    "cardType": "gold",
+    "id": "b8e5",
+    "z": 1,
+    "parent": "dqk2"
+  },
+  "zqvj": {
+    "deck": "ayshD",
+    "type": "card",
+    "cardType": "gold",
+    "id": "zqvj",
+    "z": 1,
+    "parent": "dqk2"
+  },
+  "udup": {
+    "deck": "ayshD",
+    "type": "card",
+    "cardType": "gold",
+    "id": "udup",
+    "z": 1,
+    "parent": "dqk2"
+  },
+  "9lh2": {
+    "deck": "ayshD",
+    "type": "card",
+    "cardType": "gold",
+    "id": "9lh2",
+    "z": 1,
+    "parent": "dqk2"
+  },
+  "co74": {
+    "deck": "ayshD",
+    "type": "card",
+    "cardType": "gold",
+    "id": "co74",
+    "z": 1,
+    "parent": "dqk2"
+  },
+  "3l8b": {
+    "deck": "ayshD",
+    "type": "card",
+    "cardType": "gold",
+    "id": "3l8b",
+    "z": 1,
+    "parent": "dqk2"
+  },
+  "coinHolder3": {
+    "type": "holder",
+    "id": "coinHolder3",
+    "x": 760,
+    "y": 225,
+    "width": 75,
+    "height": 75,
+    "borderRadius": 100,
+    "z": 1,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "css": {
+      "background": "#c6856080",
+      "border": "1px solid black"
+    }
+  },
+  "8zqh": {
+    "type": "pile",
+    "x": 0,
+    "y": 0,
+    "width": 75,
+    "height": 75,
+    "id": "8zqh",
+    "z": 152,
+    "parent": "coinHolder1"
+  },
+  "blueStart": {
+    "id": "blueStart",
+    "x": 716,
+    "y": 482,
+    "width": 40,
+    "height": 40,
+    "borderRadius": 100,
+    "movable": false,
+    "css": {
+      "background": "#1973c8"
+    },
+    "layer": -2,
+    "z": 1
+  },
+  "legend": {
+    "id": "legend",
+    "x": 10,
+    "y": 10,
+    "width": 300,
+    "height": 335,
+    "borderRadius": 8,
+    "z": 1,
+    "movable": false,
+    "css": {
+      "default": {
+        "background": "white",
+        "border": "2px solid black",
+        "font-size": "18px",
+        "transition": "linear 0.5s"
+      },
+      " h3": {
+        "text-align": "center",
+        "font-size": "25px",
+        "border-bottom": "1px solid black",
+        "margin": "5px 0px 0px 5px"
+      },
+      " table": {
+        "width": "100%"
+      },
+      " td, th": {
+        "padding": "5px"
+      },
+      " th": {
+        "text-align": "left"
+      }
+    },
+    "html": "<h3>Legend</h3><br/><table><tr><th><img src='/i/noto-emoji/emoji_u26ab.svg' height=25/></th><th>Enter with roll of 1.<br/>Leave with exact roll and take 1 coin from opponent.</th></tr><tr><th><img src='/assets/1207197689_10678' height=45/></th><th>Remove opponent's marker from the board and take 1 coin from opponent.</th></tr><tr><th><img src='/assets/-205412757_5762' height=45/></th><th>Give 1 coin to opponent.</th></tr><tr><th><img src='/assets/1625460113_5142' height=45/></th><th>Roll again.</th></tr></table>",
+    "layer": -4
+  },
+  "reminders": {
+    "id": "reminders",
+    "x": 10,
+    "y": 540,
+    "width": 300,
+    "height": 430,
+    "borderRadius": 8,
+    "z": 1,
+    "movable": false,
+    "css": {
+      "default": {
+        "background": "white",
+        "border": "2px solid black",
+        "font-size": "18px",
+        "padding": "5px",
+        "transition": "linear 0.5s"
+      },
+      " h3": {
+        "text-align": "center",
+        "font-size": "25px",
+        "border-bottom": "1px solid black",
+        "margin": "0px 0px 0px 5px"
+      }
+    },
+    "html": "<h3>Reminders</h3><br/>Must move a marker if possible.<br/><br/>Cannot end a move on a space occupied by another marker (except for 4 center squares).<br/><br/>If cannot move a marker, you lose your turn.<br/><br/>If roll 0, give coin to Macuilxochitl. First player to remove all 6 markers wins coins in Macuilxochitl holder.<br/><br/>Round ends when 1 player removes all markers. Game ends when a player is out of coins. It may take multiple rounds to win.",
+    "layer": -4
+  },
+  "tips": {
+    "type": "button",
+    "id": "tips",
+    "x": 1545,
+    "y": 945,
+    "width": 50,
+    "height": 50,
+    "z": 1,
+    "color": "white",
+    "css": {
+      "default": {
+        "font-size": "40px",
+        "--wcMain": "white",
+        "--wcBorder": "black",
+        "--wcMainOH": "grey",
+        "--wcBorderOH": "white",
+        "background-image": "url('/i/game-icons.net/lorc/magnifying-glass.svg')",
+        "background-size": "75%"
+      },
+      "::after": {
+        "content": "\"Tips\"",
+        "display": "none",
+        "position": "absolute",
+        "margin-top": "-71px",
+        "color": "black",
+        "font-size": "14px",
+        "font-family": "Roboto"
+      },
+      ":hover::after": {
+        "display": "block"
+      }
+    },
+    "clickRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY scale OF legend}",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "legend",
+              "reminders"
+            ],
+            "property": "scale",
+            "value": 1
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "legend",
+              "reminders"
+            ],
+            "property": "scale",
+            "value": 0
+          }
+        ]
+      }
+    ]
+  },
+  "dqk2": {
+    "type": "pile",
+    "parent": "coinHolder2",
+    "x": 0,
+    "y": 0,
+    "width": 75,
+    "height": 75,
+    "id": "dqk2"
+  },
+  "board": {
+    "id": "board",
+    "x": 300,
+    "width": 1000,
+    "height": 1000,
+    "layer": -4,
+    "z": 1,
+    "movable": false,
+    "image": "/assets/1464867227_7087"
+  },
+  "background": {
+    "id": "background",
+    "x": -800,
+    "y": -800,
+    "width": 3200,
+    "height": 2000,
+    "layer": -5,
+    "z": 1,
+    "movable": false,
+    "css": {
+      "opacity": 0.05
+    },
+    "image": "/assets/359191340_496836"
+  },
+  "redStart": {
+    "id": "redStart",
+    "x": 845,
+    "y": 482,
+    "width": 40,
+    "height": 40,
+    "borderRadius": 100,
+    "layer": -2,
+    "z": 1,
+    "movable": false,
+    "css": {
+      "background": "#bc3434"
+    }
+  }
+}

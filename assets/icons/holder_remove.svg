@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+  <g>
+    <path d="M20,1a3,3,0,1,0,3,3A3,3,0,0,0,20,1Zm2,3.5H18v-1h4Z" fill="currentColor"/>
+    <g>
+      <rect x="20" y="8" width="2" height="2.5" fill="currentColor"/>
+      <path d="M4,4H5V2H4A2,2,0,0,0,2,4V5H4Z" fill="currentColor"/>
+      <rect x="2" y="13.5" width="2" height="2.5" fill="currentColor"/>
+      <path d="M20,20H19v2h1a2,2,0,0,0,2-2V19H20Z" fill="currentColor"/>
+      <rect x="8" y="20" width="2.5" height="2" fill="currentColor"/>
+      <rect x="2" y="8" width="2" height="2.5" fill="currentColor"/>
+      <path d="M4,20V19H2v1a2,2,0,0,0,2,2H5V20Z" fill="currentColor"/>
+      <rect x="13.5" y="20" width="2.5" height="2" fill="currentColor"/>
+      <rect x="20" y="13.5" width="2" height="2.5" fill="currentColor"/>
+      <rect x="8" y="2" width="2.5" height="2" fill="currentColor"/>
+      <rect x="13.5" y="2" width="2.5" height="2" fill="currentColor"/>
+    </g>
+  </g>
+  <rect width="24" height="24" fill="none"/>
+</svg>

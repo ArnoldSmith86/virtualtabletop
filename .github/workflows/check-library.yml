@@ -1,0 +1,98 @@
+name: Check Library
+
+on:
+  pull_request:
+    paths:
+      - 'library/**'
+
+jobs:
+  check-library:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Check and fix asset file names
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          found_error=false
+          fixed_any=false
+          while IFS= read -r file; do
+            if [[ "$file" =~ library/.*/assets/ ]] && [[ -f "$file" ]]; then
+              expected=$(python3 -c "import sys,os,zlib; f=sys.argv[1]; d=open(f,'rb').read(); c=zlib.crc32(d); s=os.path.getsize(f); print(f'{c-0x100000000 if c>0x7fffffff else c}_{s}')" "$file")
+              if [[ "$(basename "$file")" == "$expected" ]]; then
+                echo "✅ $file"
+              else
+                # Try converting to DOS line endings
+                sed -i 's/$/\r/' "$file"                             # Add DOS line endings
+                if [ "$(tail -c1 "$file" | xxd -p)" = "0d" ]; then   # Remove trailing \r newline that sed added if no \n was present
+                  truncate -s -1 "$file"
+                fi
+                expected=$(python3 -c "import sys,os,zlib; f=sys.argv[1]; d=open(f,'rb').read(); c=zlib.crc32(d); s=os.path.getsize(f); print(f'{c-0x100000000 if c>0x7fffffff else c}_{s}')" "$file")
+                if [[ "$(basename "$file")" == "$expected" ]]; then
+                  echo "✅ $file (auto-fixed)"
+                  git add "$file"
+                  fixed_any=true
+                else
+                  echo "❌ $file (expected: $expected)"
+                  git checkout "$file"
+                  found_error=true
+                fi
+              fi
+            fi
+          done < <(git diff --name-only ${{ github.event.pull_request.base.sha }} ${{ github.sha }})
+          if [ "$fixed_any" = true ]; then
+            git commit -m "fix: convert asset to DOS line endings"
+            git push origin HEAD:${GITHUB_HEAD_REF}
+          fi
+          if [ "$found_error" = true ]; then
+            echo "Found files with inconsistent naming patterns"
+            exit 1
+          fi
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Run validator on changed game files
+        id: validate
+        run: |
+          validation_output=""
+          found_issues=false
+          
+          while IFS= read -r file; do
+            if [[ "$file" =~ library/games/.*\.json$ ]] && [[ -f "$file" ]]; then
+              echo "Validating $file..."
+              if output=$(node validator/validate_gamefile_node.js "$file" 2>&1); then
+                echo "✅ $file - No issues found"
+              else
+                echo "❌ $file - Issues found:"
+                echo "$output"
+                validation_output+="### Issues in \`$file\`\n\`\`\`\n$output\n\`\`\`\n\n"
+                found_issues=true
+              fi
+            fi
+          done < <(git diff --name-only ${{ github.event.pull_request.base.sha }} ${{ github.sha }})
+          
+          if [ "$found_issues" = true ]; then
+            echo "validation_output<<EOF" >> $GITHUB_OUTPUT
+            echo -e "$validation_output" >> $GITHUB_OUTPUT
+            echo "EOF" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Comment on PR with validation issues
+        if: steps.validate.outputs.validation_output != ''
+        uses: actions/github-script@v6
+        env:
+          VALIDATION_OUTPUT: ${{ steps.validate.outputs.validation_output }}
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: '## Game File Validation Issues\n\n' + process.env.VALIDATION_OUTPUT
+            });

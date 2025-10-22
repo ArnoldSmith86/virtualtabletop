@@ -1,0 +1,1783 @@
+{
+  "wdh2": {
+    "type": "seat",
+    "x": 493,
+    "y": 107,
+    "id": "wdh2",
+    "z": 34992,
+    "background": "#186acd",
+    "index": 2
+  },
+  "wdh3": {
+    "type": "seat",
+    "x": 918,
+    "y": 107,
+    "id": "wdh3",
+    "z": 34993,
+    "index": 3
+  },
+  "wdh4": {
+    "type": "seat",
+    "x": 72,
+    "id": "wdh4",
+    "z": 34991,
+    "y": 108,
+    "turn": true
+  },
+  "wdh5": {
+    "type": "seat",
+    "x": 1278,
+    "y": 101,
+    "id": "wdh5",
+    "z": 34994,
+    "index": 4
+  },
+  "v5ea": {
+    "type": "button",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "ck9c",
+        "relation": "=="
+      },
+      {
+        "func": "CLICK"
+      }
+    ],
+    "x": 232,
+    "y": 752,
+    "z": 35007,
+    "id": "v5ea",
+    "backgroundColor": "#e9d0b3",
+    "width": 100,
+    "height": 100,
+    "borderColor": "#808080",
+    "image": "/assets/-1455712950_4475"
+  },
+  "NextPlayerButton": {
+    "type": "button",
+    "id": "NextPlayerButton",
+    "x": 21,
+    "y": 905,
+    "text": "Next\nPlayer",
+    "clickRoutine": [
+      "// set random x,y to each dice",
+      {
+        "func": "SELECT",
+        "property": "type",
+        "relation": "==",
+        "value": "dice"
+      },
+      {
+        "func": "FOREACH",
+        "loopRoutine": [
+          "var maxX = ${PROPERTY width OF ck9c} - ${PROPERTY width OF 26zkx}",
+          "var maxY = ${PROPERTY height OF ck9c} - ${PROPERTY height OF 22zkx}",
+          "var x = randInt 0 ${maxX}",
+          "var y = randInt 0 ${maxY}",
+          {
+            "func": "SET",
+            "property": "parent",
+            "value": "ck9c"
+          },
+          {
+            "func": "SET",
+            "property": "x",
+            "value": "${x}"
+          },
+          {
+            "func": "SET",
+            "property": "y",
+            "value": "${y}"
+          }
+        ]
+      },
+      {
+        "func": "TURN"
+      }
+    ],
+    "z": 35006
+  },
+  "b92eed53-bf9a-40c5-aa42-e30bd8535ba6": {
+    "id": "b92eed53-bf9a-40c5-aa42-e30bd8535ba6",
+    "x": 4,
+    "y": 4,
+    "z": 26240,
+    "type": "deck",
+    "cardTypes": {
+      "type-ceec75cf-d39a-4cff-a5af-290f079a1a0c": {
+        "label": "blue square.png",
+        "sortingOrder": 1
+      },
+      "type-0d0c5608-5943-4781-b879-29596b6e0d11": {
+        "image1": "/assets/1004473835_2846",
+        "text1": "+2",
+        "sortingOrder": 2
+      },
+      "type-dae6dc11-d9e3-4db1-b459-e9a760b5a677": {
+        "image1": "/assets/1004473835_2846",
+        "text1": "+3",
+        "sortingOrder": 3
+      },
+      "type-74d83a07-9543-4525-9258-0ea4f54b654a": {
+        "image1": "/assets/1004473835_2846",
+        "text1": "+4",
+        "sortingOrder": 4
+      },
+      "type-85fc61ae-79fa-475b-b768-6d519a81e3db": {
+        "image1": "/assets/1004473835_2846",
+        "text1": "+5",
+        "sortingOrder": 5
+      },
+      "type-e5fa9bf6-5207-43eb-a289-124f0be69341": {
+        "image1": "/assets/1004473835_2846",
+        "text1": "+6",
+        "sortingOrder": 6
+      },
+      "type-d2cce1f2-b95e-4d72-a084-78f314e9d93f": {
+        "image1": "/assets/1139003759_2969",
+        "text1": "7",
+        "sortingOrder": 7
+      },
+      "type-3d750924-17de-4f28-9fe1-17113d301454": {
+        "image1": "/assets/1139003759_2969",
+        "text1": "8",
+        "sortingOrder": 8
+      },
+      "type-f06c6164-7f05-46f1-807a-a37e897c94a2": {
+        "image1": "/assets/1139003759_2969",
+        "text1": "9",
+        "sortingOrder": 9
+      },
+      "type-3915c5b7-e3f2-494e-8048-8e3e47b62527": {
+        "image1": "/assets/1139003759_2969",
+        "text1": "10",
+        "sortingOrder": 10
+      },
+      "type-98bec708-5902-483f-a2aa-ea4513904b4c": {
+        "image1": "/assets/1139003759_2969",
+        "text1": "11",
+        "sortingOrder": 11
+      },
+      "type-ac2c852d-cbb4-482e-bb84-30f9730bcb79": {
+        "image1": "/assets/1139003759_2969",
+        "text1": "12",
+        "sortingOrder": 12
+      },
+      "type-7a3cd332-c01f-4ff7-9a2e-73f959ce048a": {
+        "image1": "/assets/1139003759_2969",
+        "text1": "13",
+        "sortingOrder": 13
+      },
+      "type-d588b14c-4203-4c74-a87d-5947d1f02861": {
+        "image1": "/assets/1139003759_2969",
+        "text1": "14",
+        "sortingOrder": 14
+      },
+      "type-31d8328a-6032-49c2-a7b6-7867eae846e8": {
+        "image1": "/assets/1139003759_2969",
+        "text1": "15",
+        "sortingOrder": 15
+      },
+      "type-cafa94bc-5162-49b3-9d5d-8d9f9b35de45": {
+        "image1": "/assets/1139003759_2969",
+        "text1": "16",
+        "sortingOrder": 16
+      },
+      "type-d2041b8b-1e2e-4169-84bf-e5a0a56a805b": {
+        "image1": "/assets/1139003759_2969",
+        "text1": "17",
+        "sortingOrder": 17
+      },
+      "type-3d0285ed-0719-4aaf-b044-78f723b589e8": {
+        "image1": "/assets/1139003759_2969",
+        "text1": "18",
+        "sortingOrder": 18
+      },
+      "type-9a360ba3-c78c-4d02-9252-32f575fad660": {
+        "image1": "/assets/1139003759_2969",
+        "text1": "19",
+        "sortingOrder": 19
+      },
+      "type-445cd748-fe91-43f1-8e86-4c87f795d913": {
+        "image1": "/assets/1139003759_2969",
+        "text1": "20",
+        "sortingOrder": 20
+      },
+      "type-0a5a324d-2b91-43d0-882f-4d80fe5d71a0": {
+        "image1": "/assets/-222934316_2947",
+        "label": "green square.png",
+        "text1": "Disc.",
+        "sortingOrder": 21
+      },
+      "type-40aab999-2462-4b76-a794-eb8be6464d46": {
+        "image1": "/assets/-222934316_2947",
+        "text1": "2",
+        "sortingOrder": 22
+      },
+      "type-f34507ba-3670-4bae-9ae7-741c2cd85040": {
+        "image1": "/assets/-222934316_2947",
+        "text1": "3",
+        "sortingOrder": 23
+      },
+      "type-657dd2e7-b9dd-4108-99f9-26106deb5be2": {
+        "image1": "/assets/-222934316_2947",
+        "text1": "4",
+        "sortingOrder": 24
+      },
+      "type-fad993b2-6c3b-4735-8f97-9d6fcd4eb911": {
+        "image1": "/assets/-222934316_2947",
+        "text1": "5",
+        "sortingOrder": 25
+      },
+      "type-21ccd57a-6764-43b4-8ebc-c9603e37d7e3": {
+        "image1": "/assets/-222934316_2947",
+        "text1": "6",
+        "sortingOrder": 26
+      },
+      "type-e43b1e1a-b0fc-4d56-9323-aa450302d842": {
+        "image1": "/assets/-222934316_2947",
+        "text1": "7",
+        "sortingOrder": 27
+      },
+      "type-d7d5a4eb-4b8f-4d82-9064-398f1c2503e7": {
+        "image1": "/assets/-222934316_2947",
+        "text1": "8",
+        "sortingOrder": 28
+      },
+      "type-60521987-974c-4ba1-b1d6-91388908bffa": {
+        "image1": "/assets/-222934316_2947",
+        "text1": "9",
+        "sortingOrder": 29
+      },
+      "type-7bb39cfe-a9a0-4990-bce3-e37636d41fc7": {
+        "image1": "/assets/-222934316_2947",
+        "text1": "10",
+        "sortingOrder": 30
+      },
+      "type-ee806d6b-1b54-44a4-8e24-acc74cd1438e": {
+        "image1": "/assets/-222934316_2947",
+        "text1": "11",
+        "sortingOrder": 31
+      },
+      "type-3a60ced1-49d2-4f8e-8248-4c697233be22": {
+        "image1": "/assets/-222934316_2947",
+        "text1": "12",
+        "sortingOrder": 32
+      },
+      "type-0ec53891-1641-42d5-a78f-a572f246f946": {
+        "image1": "/assets/-222934316_2947",
+        "text1": "13",
+        "sortingOrder": 33
+      },
+      "type-4e4287a3-2456-49a7-aaf6-f4ece7d5c864": {
+        "image1": "/assets/-222934316_2947",
+        "text1": "14",
+        "sortingOrder": 34
+      },
+      "type-e39889e6-fc50-4940-ac6a-ac7f4a5d7139": {
+        "image1": "/assets/-222934316_2947",
+        "text1": "15",
+        "sortingOrder": 35
+      },
+      "type-b0b11184-2997-4d91-a7b1-aed5103d1d61": {
+        "image1": "/assets/-222934316_2947",
+        "text1": "16",
+        "sortingOrder": 36
+      },
+      "type-63a6e57f-c7c6-422d-8495-442b1735f60b": {
+        "image1": "/assets/-222934316_2947",
+        "text1": "17",
+        "sortingOrder": 37
+      },
+      "type-fe699dc9-faa1-49b6-9af0-d73cb5ed21c8": {
+        "image1": "/assets/-222934316_2947",
+        "text1": "18",
+        "sortingOrder": 38
+      },
+      "type-aa322f55-44a8-42fd-b6cd-cfca75692225": {
+        "image1": "/assets/-222934316_2947",
+        "text1": "19",
+        "sortingOrder": 39
+      },
+      "type-ce5a2cf4-ec2a-4b81-99f6-f8ce2d8912c0": {
+        "image1": "/assets/-222934316_2947",
+        "text1": "20",
+        "sortingOrder": 40
+      },
+      "type-003c02fa-ce28-4acb-a4f1-b5c4b3b31760": {
+        "image1": "/assets/-1703909484_2946",
+        "label": "orange square.png",
+        "text1": "-1",
+        "sortingOrder": 41
+      },
+      "type-90dfb5f7-437b-422e-80d1-4d8506055688": {
+        "image1": "/assets/-1703909484_2946",
+        "text1": "2",
+        "sortingOrder": 42
+      },
+      "type-9918701e-2c16-4c48-98fb-98fbe1eda15f": {
+        "image1": "/assets/-1703909484_2946",
+        "text1": "-3",
+        "sortingOrder": 43
+      },
+      "type-3c1764d1-dd60-427e-85e0-c3e16aa4bbbd": {
+        "image1": "/assets/-1703909484_2946",
+        "text1": "4",
+        "sortingOrder": 44
+      },
+      "type-40f3ba8b-9e80-4cfa-9a80-f68a61fe72e7": {
+        "image1": "/assets/-1703909484_2946",
+        "text1": "-5",
+        "sortingOrder": 45
+      },
+      "type-9a730747-6c22-4530-a4a5-b6c992d5ca87": {
+        "image1": "/assets/-1703909484_2946",
+        "text1": "6",
+        "sortingOrder": 46
+      },
+      "type-91660507-68b4-412e-9380-4c858dc48a67": {
+        "image1": "/assets/-1703909484_2946",
+        "text1": "-7",
+        "sortingOrder": 47
+      },
+      "type-05ab0a2e-839a-49e7-98b2-21196fc666f6": {
+        "image1": "/assets/-1703909484_2946",
+        "text1": "8",
+        "sortingOrder": 48
+      },
+      "type-7261d97a-56aa-4ac2-944d-50ad6aa68915": {
+        "image1": "/assets/-1703909484_2946",
+        "text1": "9",
+        "sortingOrder": 49
+      },
+      "type-cfdb3cd1-cec2-41d6-82e9-63ad95bef89c": {
+        "image1": "/assets/-1703909484_2946",
+        "text1": "-10",
+        "sortingOrder": 50
+      },
+      "type-3ea4ae8d-6904-4f73-9259-7a33542677e3": {
+        "image1": "/assets/-1703909484_2946",
+        "text1": "11",
+        "sortingOrder": 51
+      },
+      "type-b373fa13-c3ab-44e5-ba5e-1a62658cc0d2": {
+        "image1": "/assets/-1703909484_2946",
+        "text1": "12",
+        "sortingOrder": 52
+      },
+      "type-745debaa-d714-4cb1-ac2b-019491cf4a3f": {
+        "image1": "/assets/-1703909484_2946",
+        "text1": "13",
+        "sortingOrder": 53
+      },
+      "type-1928cc5a-6ed2-4741-9073-4615fdc4d752": {
+        "image1": "/assets/-1703909484_2946",
+        "text1": "14",
+        "sortingOrder": 54
+      },
+      "type-dcc502bd-24e9-44df-a2ff-21d5ca202bf3": {
+        "image1": "/assets/-1703909484_2946",
+        "text1": "15",
+        "sortingOrder": 55
+      },
+      "type-ff5d1dda-5c08-4c00-a51b-ae1081756c77": {
+        "image1": "/assets/-1703909484_2946",
+        "text1": "16",
+        "sortingOrder": 56
+      },
+      "type-e3c83c8e-331d-49b9-81c7-56f8fb4c85a0": {
+        "image1": "/assets/-1703909484_2946",
+        "text1": "17",
+        "sortingOrder": 57
+      },
+      "type-6936f4e3-bf7c-4fbc-bc4e-7ee347caf9fd": {
+        "image1": "/assets/-1703909484_2946",
+        "text1": "18",
+        "sortingOrder": 58
+      },
+      "type-f36738f4-a08e-4cea-8211-8b4eb98f9007": {
+        "image1": "/assets/-1703909484_2946",
+        "text1": "19",
+        "sortingOrder": 59
+      },
+      "type-b040760a-c744-4a2c-93ce-f3857d253f9e": {
+        "image1": "/assets/-1703909484_2946",
+        "text1": "0/-20",
+        "sortingOrder": 60
+      },
+      "c78feb25-8939-4c75-aab3-9736c76a8db1.png": {
+        "image": "/assets/1004473835_2846",
+        "text1": "+1",
+        "image1": "/assets/1004473835_2846"
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "width": 80,
+            "height": 80,
+            "type": "image",
+            "color": "white",
+            "value": ""
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "#a23b2a",
+            "value": "/i/cards-default/2B.svg",
+            "width": 80,
+            "height": 80
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "value": "/assets/-1937214941_4331",
+            "width": 80,
+            "height": 80
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "value": "/assets/-1480790395_13730",
+            "width": 80,
+            "height": 80
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "value": "/assets/-1847455672_7154",
+            "width": 80,
+            "height": 80
+          },
+          {
+            "type": "image",
+            "x": 1.872909698996655,
+            "y": 5.0836120401337785,
+            "value": "/assets/-71144726_1885",
+            "color": "rgb(255,255,255)",
+            "width": 73.04347826086959,
+            "height": 71.17056856187298
+          }
+        ],
+        "border": 1,
+        "radius": 8
+      },
+      {
+        "objects": [
+          {
+            "width": 80,
+            "height": 80,
+            "type": "image",
+            "color": "white",
+            "value": ""
+          },
+          {
+            "type": "text",
+            "x": 7.79116465863454,
+            "y": 0,
+            "fontSize": "58",
+            "textAlign": "left",
+            "textFont": null,
+            "width": 40.401606425702866,
+            "dynamicProperties": {
+              "value": "text2"
+            }
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 80,
+            "height": 80,
+            "dynamicProperties": {
+              "value": "image1"
+            }
+          },
+          {
+            "type": "text",
+            "x": 4.176706827309237,
+            "y": 0,
+            "fontSize": 25.85393258426966,
+            "textAlign": "left",
+            "textFont": "interstate",
+            "color": "#F5A622",
+            "width": 78.95405906726361,
+            "dynamicProperties": {
+              "value": "text1"
+            }
+          }
+        ],
+        "border": 1,
+        "radius": 8
+      }
+    ],
+    "cardDefaults": {
+      "width": 80,
+      "height": 80,
+      "overlap": false,
+      "ignoreOnLeave": true
+    },
+    "parent": "4e26b75e-0310-4e32-a967-8c96314d78a1"
+  },
+  "v1la": {
+    "deck": "b92eed53-bf9a-40c5-aa42-e30bd8535ba6",
+    "type": "card",
+    "cardType": "type-0d0c5608-5943-4781-b879-29596b6e0d11",
+    "id": "v1la",
+    "z": 11,
+    "activeFace": 1,
+    "parent": "4e26b75e-0310-4e32-a967-8c96314d78a1",
+    "x": 844,
+    "y": 4
+  },
+  "8xk6": {
+    "deck": "b92eed53-bf9a-40c5-aa42-e30bd8535ba6",
+    "type": "card",
+    "cardType": "type-0d0c5608-5943-4781-b879-29596b6e0d11",
+    "id": "8xk6",
+    "z": 6,
+    "activeFace": 1,
+    "x": 424,
+    "y": 4,
+    "parent": "4e26b75e-0310-4e32-a967-8c96314d78a1"
+  },
+  "5va2": {
+    "deck": "b92eed53-bf9a-40c5-aa42-e30bd8535ba6",
+    "type": "card",
+    "cardType": "type-dae6dc11-d9e3-4db1-b459-e9a760b5a677",
+    "id": "5va2",
+    "z": 7,
+    "activeFace": 1,
+    "x": 508,
+    "y": 4,
+    "parent": "4e26b75e-0310-4e32-a967-8c96314d78a1"
+  },
+  "85sn": {
+    "deck": "b92eed53-bf9a-40c5-aa42-e30bd8535ba6",
+    "type": "card",
+    "cardType": "type-dae6dc11-d9e3-4db1-b459-e9a760b5a677",
+    "id": "85sn",
+    "z": 8,
+    "activeFace": 1,
+    "parent": "4e26b75e-0310-4e32-a967-8c96314d78a1",
+    "x": 592,
+    "y": 4
+  },
+  "8g32": {
+    "deck": "b92eed53-bf9a-40c5-aa42-e30bd8535ba6",
+    "type": "card",
+    "cardType": "type-74d83a07-9543-4525-9258-0ea4f54b654a",
+    "id": "8g32",
+    "z": 10,
+    "activeFace": 1,
+    "x": 760,
+    "y": 4,
+    "parent": "4e26b75e-0310-4e32-a967-8c96314d78a1"
+  },
+  "4l26": {
+    "deck": "b92eed53-bf9a-40c5-aa42-e30bd8535ba6",
+    "type": "card",
+    "cardType": "type-74d83a07-9543-4525-9258-0ea4f54b654a",
+    "id": "4l26",
+    "z": 1,
+    "activeFace": 1,
+    "x": 4,
+    "y": 4,
+    "parent": "4e26b75e-0310-4e32-a967-8c96314d78a1"
+  },
+  "ec27": {
+    "deck": "b92eed53-bf9a-40c5-aa42-e30bd8535ba6",
+    "type": "card",
+    "cardType": "type-85fc61ae-79fa-475b-b768-6d519a81e3db",
+    "id": "ec27",
+    "z": 3,
+    "activeFace": 1,
+    "parent": "4e26b75e-0310-4e32-a967-8c96314d78a1",
+    "x": 172,
+    "y": 4
+  },
+  "5jhi": {
+    "deck": "b92eed53-bf9a-40c5-aa42-e30bd8535ba6",
+    "type": "card",
+    "cardType": "type-85fc61ae-79fa-475b-b768-6d519a81e3db",
+    "id": "5jhi",
+    "z": 4,
+    "activeFace": 1,
+    "parent": "4e26b75e-0310-4e32-a967-8c96314d78a1",
+    "x": 256,
+    "y": 4
+  },
+  "9m6p": {
+    "deck": "b92eed53-bf9a-40c5-aa42-e30bd8535ba6",
+    "type": "card",
+    "cardType": "type-e5fa9bf6-5207-43eb-a289-124f0be69341",
+    "id": "9m6p",
+    "z": 2,
+    "activeFace": 1,
+    "parent": "4e26b75e-0310-4e32-a967-8c96314d78a1",
+    "x": 88,
+    "y": 4
+  },
+  "vukp": {
+    "deck": "b92eed53-bf9a-40c5-aa42-e30bd8535ba6",
+    "type": "card",
+    "cardType": "type-e5fa9bf6-5207-43eb-a289-124f0be69341",
+    "id": "vukp",
+    "z": 12,
+    "activeFace": 1,
+    "x": 928,
+    "y": 4,
+    "parent": "4e26b75e-0310-4e32-a967-8c96314d78a1"
+  },
+  "bcaf5a5d-a3d5-4904-842b-60a01b9f2ef6": {
+    "id": "bcaf5a5d-a3d5-4904-842b-60a01b9f2ef6",
+    "x": 88,
+    "y": 473,
+    "z": 35008,
+    "type": "button",
+    "clickRoutine": [
+      {
+        "func": "RECALL",
+        "holder": [
+          "4e26b75e-0310-4e32-a967-8c96314d78a1",
+          "034a2aa1-e81c-4f47-830d-b51c2d54c84e"
+        ]
+      },
+      {
+        "func": "FLIP",
+        "holder": [
+          "4e26b75e-0310-4e32-a967-8c96314d78a1",
+          "034a2aa1-e81c-4f47-830d-b51c2d54c84e"
+        ],
+        "face": 1
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": [
+          "4e26b75e-0310-4e32-a967-8c96314d78a1",
+          "034a2aa1-e81c-4f47-830d-b51c2d54c84e"
+        ]
+      }
+    ],
+    "backgroundColor": "#e9d0b3",
+    "image": "/assets/-1174231538_2500",
+    "width": 80,
+    "height": 80,
+    "borderColor": "#808080"
+  },
+  "626222e2-d811-490b-9a1e-c526005fe0ac": {
+    "id": "626222e2-d811-490b-9a1e-c526005fe0ac",
+    "x": 4,
+    "y": 4,
+    "z": 26241,
+    "type": "deck",
+    "cardTypes": {
+      "type-ceec75cf-d39a-4cff-a5af-290f079a1a0c": {
+        "image1": "/assets/972805184_6298",
+        "label": "orange square.png",
+        "text1": "-1",
+        "sortingOrder": 1
+      },
+      "type-0d0c5608-5943-4781-b879-29596b6e0d11": {
+        "image1": "/assets/972805184_6298",
+        "text1": "-2",
+        "sortingOrder": 2
+      },
+      "type-dae6dc11-d9e3-4db1-b459-e9a760b5a677": {
+        "image1": "/assets/972805184_6298",
+        "text1": "-3",
+        "sortingOrder": 3
+      },
+      "type-74d83a07-9543-4525-9258-0ea4f54b654a": {
+        "image1": "/assets/972805184_6298",
+        "text1": "-4",
+        "sortingOrder": 4
+      },
+      "type-85fc61ae-79fa-475b-b768-6d519a81e3db": {
+        "image1": "/assets/-1703909484_2946",
+        "text1": "-5",
+        "sortingOrder": 5
+      },
+      "type-e5fa9bf6-5207-43eb-a289-124f0be69341": {
+        "image1": "/assets/-1703909484_2946",
+        "text1": "-6",
+        "sortingOrder": 6
+      },
+      "type-d2cce1f2-b95e-4d72-a084-78f314e9d93f": {
+        "image1": "/assets/1139003759_2969",
+        "text1": "7",
+        "sortingOrder": 7
+      },
+      "type-3d750924-17de-4f28-9fe1-17113d301454": {
+        "image1": "/assets/1139003759_2969",
+        "text1": "8",
+        "sortingOrder": 8
+      },
+      "type-f06c6164-7f05-46f1-807a-a37e897c94a2": {
+        "image1": "/assets/1139003759_2969",
+        "text1": "9",
+        "sortingOrder": 9
+      },
+      "type-3915c5b7-e3f2-494e-8048-8e3e47b62527": {
+        "image1": "/assets/1139003759_2969",
+        "text1": "10",
+        "sortingOrder": 10
+      },
+      "type-98bec708-5902-483f-a2aa-ea4513904b4c": {
+        "image1": "/assets/1139003759_2969",
+        "text1": "11",
+        "sortingOrder": 11
+      },
+      "type-ac2c852d-cbb4-482e-bb84-30f9730bcb79": {
+        "image1": "/assets/1139003759_2969",
+        "text1": "12",
+        "sortingOrder": 12
+      },
+      "type-7a3cd332-c01f-4ff7-9a2e-73f959ce048a": {
+        "image1": "/assets/1139003759_2969",
+        "text1": "13",
+        "sortingOrder": 13
+      },
+      "type-d588b14c-4203-4c74-a87d-5947d1f02861": {
+        "image1": "/assets/1139003759_2969",
+        "text1": "14",
+        "sortingOrder": 14
+      },
+      "type-31d8328a-6032-49c2-a7b6-7867eae846e8": {
+        "image1": "/assets/1139003759_2969",
+        "text1": "15",
+        "sortingOrder": 15
+      },
+      "type-cafa94bc-5162-49b3-9d5d-8d9f9b35de45": {
+        "image1": "/assets/1139003759_2969",
+        "text1": "16",
+        "sortingOrder": 16
+      },
+      "type-d2041b8b-1e2e-4169-84bf-e5a0a56a805b": {
+        "image1": "/assets/1139003759_2969",
+        "text1": "17",
+        "sortingOrder": 17
+      },
+      "type-3d0285ed-0719-4aaf-b044-78f723b589e8": {
+        "image1": "/assets/1139003759_2969",
+        "text1": "18",
+        "sortingOrder": 18
+      },
+      "type-9a360ba3-c78c-4d02-9252-32f575fad660": {
+        "image1": "/assets/1139003759_2969",
+        "text1": "19",
+        "sortingOrder": 19
+      },
+      "type-445cd748-fe91-43f1-8e86-4c87f795d913": {
+        "image1": "/assets/1139003759_2969",
+        "text1": "20",
+        "sortingOrder": 20
+      },
+      "type-0a5a324d-2b91-43d0-882f-4d80fe5d71a0": {
+        "image1": "/assets/-222934316_2947",
+        "label": "green square.png",
+        "text1": "Disc.",
+        "sortingOrder": 21
+      },
+      "type-40aab999-2462-4b76-a794-eb8be6464d46": {
+        "image1": "/assets/-222934316_2947",
+        "text1": "2",
+        "sortingOrder": 22
+      },
+      "type-f34507ba-3670-4bae-9ae7-741c2cd85040": {
+        "image1": "/assets/-222934316_2947",
+        "text1": "3",
+        "sortingOrder": 23
+      },
+      "type-657dd2e7-b9dd-4108-99f9-26106deb5be2": {
+        "image1": "/assets/-222934316_2947",
+        "text1": "4",
+        "sortingOrder": 24
+      },
+      "type-fad993b2-6c3b-4735-8f97-9d6fcd4eb911": {
+        "image1": "/assets/-222934316_2947",
+        "text1": "5",
+        "sortingOrder": 25
+      },
+      "type-21ccd57a-6764-43b4-8ebc-c9603e37d7e3": {
+        "image1": "/assets/-222934316_2947",
+        "text1": "6",
+        "sortingOrder": 26
+      },
+      "type-e43b1e1a-b0fc-4d56-9323-aa450302d842": {
+        "image1": "/assets/-222934316_2947",
+        "text1": "7",
+        "sortingOrder": 27
+      },
+      "type-d7d5a4eb-4b8f-4d82-9064-398f1c2503e7": {
+        "image1": "/assets/-222934316_2947",
+        "text1": "8",
+        "sortingOrder": 28
+      },
+      "type-60521987-974c-4ba1-b1d6-91388908bffa": {
+        "image1": "/assets/-222934316_2947",
+        "text1": "9",
+        "sortingOrder": 29
+      },
+      "type-7bb39cfe-a9a0-4990-bce3-e37636d41fc7": {
+        "image1": "/assets/-222934316_2947",
+        "text1": "10",
+        "sortingOrder": 30
+      },
+      "type-ee806d6b-1b54-44a4-8e24-acc74cd1438e": {
+        "image1": "/assets/-222934316_2947",
+        "text1": "11",
+        "sortingOrder": 31
+      },
+      "type-3a60ced1-49d2-4f8e-8248-4c697233be22": {
+        "image1": "/assets/-222934316_2947",
+        "text1": "12",
+        "sortingOrder": 32
+      },
+      "type-0ec53891-1641-42d5-a78f-a572f246f946": {
+        "image1": "/assets/-222934316_2947",
+        "text1": "13",
+        "sortingOrder": 33
+      },
+      "type-4e4287a3-2456-49a7-aaf6-f4ece7d5c864": {
+        "image1": "/assets/-222934316_2947",
+        "text1": "14",
+        "sortingOrder": 34
+      },
+      "type-e39889e6-fc50-4940-ac6a-ac7f4a5d7139": {
+        "image1": "/assets/-222934316_2947",
+        "text1": "15",
+        "sortingOrder": 35
+      },
+      "type-b0b11184-2997-4d91-a7b1-aed5103d1d61": {
+        "image1": "/assets/-222934316_2947",
+        "text1": "16",
+        "sortingOrder": 36
+      },
+      "type-63a6e57f-c7c6-422d-8495-442b1735f60b": {
+        "image1": "/assets/-222934316_2947",
+        "text1": "17",
+        "sortingOrder": 37
+      },
+      "type-fe699dc9-faa1-49b6-9af0-d73cb5ed21c8": {
+        "image1": "/assets/-222934316_2947",
+        "text1": "18",
+        "sortingOrder": 38
+      },
+      "type-aa322f55-44a8-42fd-b6cd-cfca75692225": {
+        "image1": "/assets/-222934316_2947",
+        "text1": "19",
+        "sortingOrder": 39
+      },
+      "type-ce5a2cf4-ec2a-4b81-99f6-f8ce2d8912c0": {
+        "image1": "/assets/-222934316_2947",
+        "text1": "20",
+        "sortingOrder": 40
+      },
+      "type-003c02fa-ce28-4acb-a4f1-b5c4b3b31760": {
+        "image1": "/assets/-1703909484_2946",
+        "label": "orange square.png",
+        "text1": "-1",
+        "sortingOrder": 41
+      },
+      "type-90dfb5f7-437b-422e-80d1-4d8506055688": {
+        "image1": "/assets/-1703909484_2946",
+        "text1": "2",
+        "sortingOrder": 42
+      },
+      "type-9918701e-2c16-4c48-98fb-98fbe1eda15f": {
+        "image1": "/assets/-1703909484_2946",
+        "text1": "-3",
+        "sortingOrder": 43
+      },
+      "type-3c1764d1-dd60-427e-85e0-c3e16aa4bbbd": {
+        "image1": "/assets/-1703909484_2946",
+        "text1": "4",
+        "sortingOrder": 44
+      },
+      "type-40f3ba8b-9e80-4cfa-9a80-f68a61fe72e7": {
+        "image1": "/assets/-1703909484_2946",
+        "text1": "-5",
+        "sortingOrder": 45
+      },
+      "type-9a730747-6c22-4530-a4a5-b6c992d5ca87": {
+        "image1": "/assets/-1703909484_2946",
+        "text1": "6",
+        "sortingOrder": 46
+      },
+      "type-91660507-68b4-412e-9380-4c858dc48a67": {
+        "image1": "/assets/-1703909484_2946",
+        "text1": "-7",
+        "sortingOrder": 47
+      },
+      "type-05ab0a2e-839a-49e7-98b2-21196fc666f6": {
+        "image1": "/assets/-1703909484_2946",
+        "text1": "8",
+        "sortingOrder": 48
+      },
+      "type-7261d97a-56aa-4ac2-944d-50ad6aa68915": {
+        "image1": "/assets/-1703909484_2946",
+        "text1": "9",
+        "sortingOrder": 49
+      },
+      "type-cfdb3cd1-cec2-41d6-82e9-63ad95bef89c": {
+        "image1": "/assets/-1703909484_2946",
+        "text1": "-10",
+        "sortingOrder": 50
+      },
+      "type-3ea4ae8d-6904-4f73-9259-7a33542677e3": {
+        "image1": "/assets/-1703909484_2946",
+        "text1": "11",
+        "sortingOrder": 51
+      },
+      "type-b373fa13-c3ab-44e5-ba5e-1a62658cc0d2": {
+        "image1": "/assets/-1703909484_2946",
+        "text1": "12",
+        "sortingOrder": 52
+      },
+      "type-745debaa-d714-4cb1-ac2b-019491cf4a3f": {
+        "image1": "/assets/-1703909484_2946",
+        "text1": "13",
+        "sortingOrder": 53
+      },
+      "type-1928cc5a-6ed2-4741-9073-4615fdc4d752": {
+        "image1": "/assets/-1703909484_2946",
+        "text1": "14",
+        "sortingOrder": 54
+      },
+      "type-dcc502bd-24e9-44df-a2ff-21d5ca202bf3": {
+        "image1": "/assets/-1703909484_2946",
+        "text1": "15",
+        "sortingOrder": 55
+      },
+      "type-ff5d1dda-5c08-4c00-a51b-ae1081756c77": {
+        "image1": "/assets/-1703909484_2946",
+        "text1": "16",
+        "sortingOrder": 56
+      },
+      "type-e3c83c8e-331d-49b9-81c7-56f8fb4c85a0": {
+        "image1": "/assets/-1703909484_2946",
+        "text1": "17",
+        "sortingOrder": 57
+      },
+      "type-6936f4e3-bf7c-4fbc-bc4e-7ee347caf9fd": {
+        "image1": "/assets/-1703909484_2946",
+        "text1": "18",
+        "sortingOrder": 58
+      },
+      "type-f36738f4-a08e-4cea-8211-8b4eb98f9007": {
+        "image1": "/assets/-1703909484_2946",
+        "text1": "19",
+        "sortingOrder": 59
+      },
+      "type-b040760a-c744-4a2c-93ce-f3857d253f9e": {
+        "image1": "/assets/-1703909484_2946",
+        "text1": "0/-20",
+        "sortingOrder": 60
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "width": 80,
+            "height": 80,
+            "type": "image",
+            "color": "white",
+            "value": ""
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "#a23b2a",
+            "value": "/i/cards-default/2B.svg",
+            "width": 80,
+            "height": 80
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "value": "/assets/-1937214941_4331",
+            "width": 80,
+            "height": 80
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "value": "/assets/-1480790395_13730",
+            "width": 80,
+            "height": 80
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "value": "/assets/-1847455672_7154",
+            "width": 80,
+            "height": 80
+          },
+          {
+            "type": "image",
+            "x": 1.872909698996655,
+            "y": 5.0836120401337785,
+            "value": "/assets/-71144726_1885",
+            "color": "rgb(255,255,255)",
+            "width": 73.04347826086959,
+            "height": 71.17056856187298
+          }
+        ],
+        "border": 1,
+        "radius": 8
+      },
+      {
+        "objects": [
+          {
+            "width": 80,
+            "height": 80,
+            "type": "image",
+            "color": "white",
+            "value": ""
+          },
+          {
+            "type": "text",
+            "x": 7.79116465863454,
+            "y": 0,
+            "fontSize": "58",
+            "textAlign": "left",
+            "textFont": null,
+            "width": 40.401606425702866,
+            "dynamicProperties": {
+              "value": "text2"
+            }
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 80,
+            "height": 80,
+            "dynamicProperties": {
+              "value": "image1"
+            }
+          },
+          {
+            "type": "text",
+            "x": 4.176706827309237,
+            "y": 0,
+            "fontSize": 25.85393258426966,
+            "textAlign": "left",
+            "textFont": "interstate",
+            "color": "#fbf7f7",
+            "width": 78.95405906726361,
+            "dynamicProperties": {
+              "value": "text1"
+            }
+          }
+        ],
+        "border": 1,
+        "radius": 8
+      }
+    ],
+    "cardDefaults": {
+      "width": 80,
+      "height": 80,
+      "overlap": false,
+      "ignoreOnLeave": true
+    },
+    "parent": "034a2aa1-e81c-4f47-830d-b51c2d54c84e"
+  },
+  "0l3a": {
+    "deck": "626222e2-d811-490b-9a1e-c526005fe0ac",
+    "type": "card",
+    "cardType": "type-ceec75cf-d39a-4cff-a5af-290f079a1a0c",
+    "id": "0l3a",
+    "z": 7,
+    "activeFace": 1,
+    "x": 508,
+    "y": 4,
+    "parent": "034a2aa1-e81c-4f47-830d-b51c2d54c84e"
+  },
+  "nl42": {
+    "deck": "626222e2-d811-490b-9a1e-c526005fe0ac",
+    "type": "card",
+    "cardType": "type-ceec75cf-d39a-4cff-a5af-290f079a1a0c",
+    "id": "nl42",
+    "z": 6,
+    "activeFace": 1,
+    "x": 424,
+    "y": 4,
+    "parent": "034a2aa1-e81c-4f47-830d-b51c2d54c84e"
+  },
+  "r1nw": {
+    "deck": "626222e2-d811-490b-9a1e-c526005fe0ac",
+    "type": "card",
+    "cardType": "type-0d0c5608-5943-4781-b879-29596b6e0d11",
+    "id": "r1nw",
+    "z": 3,
+    "activeFace": 1,
+    "x": 172,
+    "y": 4,
+    "parent": "034a2aa1-e81c-4f47-830d-b51c2d54c84e"
+  },
+  "mjqh": {
+    "deck": "626222e2-d811-490b-9a1e-c526005fe0ac",
+    "type": "card",
+    "cardType": "type-0d0c5608-5943-4781-b879-29596b6e0d11",
+    "id": "mjqh",
+    "z": 4,
+    "activeFace": 1,
+    "x": 256,
+    "y": 4,
+    "parent": "034a2aa1-e81c-4f47-830d-b51c2d54c84e"
+  },
+  "fvq2": {
+    "deck": "626222e2-d811-490b-9a1e-c526005fe0ac",
+    "type": "card",
+    "cardType": "type-dae6dc11-d9e3-4db1-b459-e9a760b5a677",
+    "id": "fvq2",
+    "z": 1,
+    "activeFace": 1,
+    "parent": "034a2aa1-e81c-4f47-830d-b51c2d54c84e",
+    "x": 4,
+    "y": 4
+  },
+  "zfip": {
+    "deck": "626222e2-d811-490b-9a1e-c526005fe0ac",
+    "type": "card",
+    "cardType": "type-dae6dc11-d9e3-4db1-b459-e9a760b5a677",
+    "id": "zfip",
+    "z": 10,
+    "activeFace": 1,
+    "parent": "034a2aa1-e81c-4f47-830d-b51c2d54c84e",
+    "x": 760,
+    "y": 4
+  },
+  "63m9": {
+    "deck": "626222e2-d811-490b-9a1e-c526005fe0ac",
+    "type": "card",
+    "cardType": "type-74d83a07-9543-4525-9258-0ea4f54b654a",
+    "id": "63m9",
+    "z": 2,
+    "activeFace": 1,
+    "parent": "034a2aa1-e81c-4f47-830d-b51c2d54c84e",
+    "x": 88,
+    "y": 4
+  },
+  "4e26b75e-0310-4e32-a967-8c96314d78a1": {
+    "id": "4e26b75e-0310-4e32-a967-8c96314d78a1",
+    "x": 219,
+    "y": 406,
+    "z": 26011,
+    "type": "holder",
+    "inheritChildZ": true,
+    "width": 1012,
+    "height": 88,
+    "stackOffsetX": 84,
+    "css": {
+      "background": "#ffffff60"
+    }
+  },
+  "034a2aa1-e81c-4f47-830d-b51c2d54c84e": {
+    "id": "034a2aa1-e81c-4f47-830d-b51c2d54c84e",
+    "x": 220,
+    "y": 534,
+    "z": 26012,
+    "type": "holder",
+    "inheritChildZ": true,
+    "width": 1012,
+    "height": 88,
+    "stackOffsetX": 84,
+    "css": {
+      "background": "#ffffff60"
+    }
+  },
+  "ea9579fc-59ef-4a0d-bd40-7420a5165dc6": {
+    "id": "ea9579fc-59ef-4a0d-bd40-7420a5165dc6",
+    "x": 56,
+    "y": 183,
+    "z": 26014,
+    "type": "holder",
+    "inheritChildZ": true,
+    "width": 88,
+    "height": 88,
+    "css": {
+      "background": "#ffffff60"
+    }
+  },
+  "ea9579fc-59ef-4a0d-bd40-7420a5165dc7": {
+    "id": "ea9579fc-59ef-4a0d-bd40-7420a5165dc7",
+    "x": 158,
+    "y": 182,
+    "z": 26002,
+    "type": "holder",
+    "inheritChildZ": true,
+    "width": 88,
+    "height": 88,
+    "css": {
+      "background": "#ffffff60"
+    }
+  },
+  "ea9579fc-59ef-4a0d-bd40-7420a5165dc8": {
+    "id": "ea9579fc-59ef-4a0d-bd40-7420a5165dc8",
+    "x": 478,
+    "y": 175,
+    "z": 26003,
+    "type": "holder",
+    "inheritChildZ": true,
+    "width": 88,
+    "height": 88,
+    "css": {
+      "background": "#ffffff60"
+    }
+  },
+  "22zkx": {
+    "type": "dice",
+    "faces": [
+      "/assets/-1885701342_26951",
+      "/assets/-1885701342_26951",
+      "/assets/-666805967_41190",
+      "/assets/-666805967_41190",
+      "/assets/834358786_25582",
+      "/assets/1077335079_34072"
+    ],
+    "z": 2023,
+    "id": "22zkx",
+    "rollCount": 414,
+    "movable": "true",
+    "width": 90,
+    "height": 90,
+    "y": 177,
+    "x": 128,
+    "activeFace": 5,
+    "parent": "ck9c",
+    "imageScale": 1
+  },
+  "ea9579fc-59ef-4a0d-bd40-7420a5165dc9": {
+    "id": "ea9579fc-59ef-4a0d-bd40-7420a5165dc9",
+    "x": 583,
+    "y": 175,
+    "z": 26004,
+    "type": "holder",
+    "inheritChildZ": true,
+    "width": 88,
+    "height": 88,
+    "css": {
+      "background": "#ffffff60"
+    }
+  },
+  "ea9579fc-59ef-4a0d-bd40-7420a5165dc10": {
+    "id": "ea9579fc-59ef-4a0d-bd40-7420a5165dc10",
+    "x": 899,
+    "y": 181,
+    "z": 26005,
+    "type": "holder",
+    "inheritChildZ": true,
+    "width": 88,
+    "height": 88,
+    "css": {
+      "background": "#ffffff60"
+    }
+  },
+  "ea9579fc-59ef-4a0d-bd40-7420a5165dc11": {
+    "id": "ea9579fc-59ef-4a0d-bd40-7420a5165dc11",
+    "x": 1007,
+    "y": 182,
+    "z": 26006,
+    "type": "holder",
+    "inheritChildZ": true,
+    "width": 88,
+    "height": 88,
+    "css": {
+      "background": "#ffffff60"
+    }
+  },
+  "ea9579fc-59ef-4a0d-bd40-7420a5165dc12": {
+    "id": "ea9579fc-59ef-4a0d-bd40-7420a5165dc12",
+    "x": 1255,
+    "y": 171,
+    "z": 26007,
+    "type": "holder",
+    "inheritChildZ": true,
+    "width": 88,
+    "height": 88,
+    "css": {
+      "background": "#ffffff60"
+    }
+  },
+  "ea9579fc-59ef-4a0d-bd40-7420a5165dc13": {
+    "id": "ea9579fc-59ef-4a0d-bd40-7420a5165dc13",
+    "x": 1358,
+    "y": 176,
+    "z": 26015,
+    "type": "holder",
+    "inheritChildZ": true,
+    "width": 88,
+    "height": 88,
+    "css": {
+      "background": "#ffffff60"
+    }
+  },
+  "ck9c": {
+    "type": "holder",
+    "x": 375,
+    "y": 680,
+    "z": 26013,
+    "id": "ck9c",
+    "width": 700,
+    "height": 300,
+    "dropTarget": {
+      "type": "dice"
+    },
+    "alignChildren": false,
+    "css": {
+      "background": "#ffffff60"
+    }
+  },
+  "w2q7": {
+    "type": "label",
+    "text": 0,
+    "id": "w2q7",
+    "x": 121,
+    "y": 32,
+    "width": 65,
+    "height": 40,
+    "css": "font-size: 30px; color : white",
+    "editable": true,
+    "z": 1
+  },
+  "w2q7D": {
+    "id": "w2q7D",
+    "parent": "w2q7",
+    "fixedParent": true,
+    "x": -38,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": "font-size: 28px",
+    "text": "remove",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 1
+      }
+    ]
+  },
+  "w2q7U": {
+    "id": "w2q7U",
+    "parent": "w2q7",
+    "fixedParent": true,
+    "x": 68,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": "font-size: 28px",
+    "text": "add",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 1
+      }
+    ]
+  },
+  "w2q8": {
+    "type": "label",
+    "text": "0\n",
+    "id": "w2q8",
+    "x": 549,
+    "y": 33,
+    "width": 65,
+    "height": 40,
+    "css": "font-size: 30px; color : white",
+    "editable": true,
+    "z": 6
+  },
+  "w2q8D": {
+    "id": "w2q8D",
+    "parent": "w2q8",
+    "fixedParent": true,
+    "x": -38,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": "font-size: 28px",
+    "text": "remove",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 1
+      }
+    ]
+  },
+  "w2q8U": {
+    "id": "w2q8U",
+    "parent": "w2q8",
+    "fixedParent": true,
+    "x": 68,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": "font-size: 28px",
+    "text": "add",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 1
+      }
+    ]
+  },
+  "w2q9": {
+    "type": "label",
+    "text": 0,
+    "id": "w2q9",
+    "x": 966,
+    "y": 31,
+    "width": 65,
+    "height": 40,
+    "css": "font-size: 30px; color : white",
+    "editable": true,
+    "z": 4
+  },
+  "w2q9D": {
+    "id": "w2q9D",
+    "parent": "w2q9",
+    "fixedParent": true,
+    "x": -38,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": "font-size: 28px",
+    "text": "remove",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 1
+      }
+    ]
+  },
+  "w2q9U": {
+    "id": "w2q9U",
+    "parent": "w2q9",
+    "fixedParent": true,
+    "x": 68,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": "font-size: 28px",
+    "text": "add",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 1
+      }
+    ]
+  },
+  "w2q10": {
+    "type": "label",
+    "text": 0,
+    "id": "w2q10",
+    "x": 1326,
+    "y": 29,
+    "width": 65,
+    "height": 40,
+    "css": "font-size: 30px; color : white",
+    "editable": true,
+    "z": 5
+  },
+  "w2q10D": {
+    "id": "w2q10D",
+    "parent": "w2q10",
+    "fixedParent": true,
+    "x": -38,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": "font-size: 28px",
+    "text": "remove",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 1
+      }
+    ]
+  },
+  "w2q10U": {
+    "id": "w2q10U",
+    "parent": "w2q10",
+    "fixedParent": true,
+    "x": 68,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": "font-size: 28px",
+    "text": "add",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 1
+      }
+    ]
+  },
+  "23zkx": {
+    "type": "dice",
+    "x": 28,
+    "faces": [
+      "/assets/-1885701342_26951",
+      "/assets/-1885701342_26951",
+      "/assets/-666805967_41190",
+      "/assets/-666805967_41190",
+      "/assets/834358786_25582",
+      "/assets/1077335079_34072"
+    ],
+    "z": 2030,
+    "id": "23zkx",
+    "rollCount": 411,
+    "movable": "true",
+    "width": 90,
+    "height": 90,
+    "activeFace": 3,
+    "y": 119,
+    "parent": "ck9c",
+    "imageScale": 1
+  },
+  "24zkx": {
+    "type": "dice",
+    "x": 519,
+    "faces": [
+      "/assets/-1885701342_26951",
+      "/assets/-1885701342_26951",
+      "/assets/-666805967_41190",
+      "/assets/-666805967_41190",
+      "/assets/834358786_25582",
+      "/assets/1077335079_34072"
+    ],
+    "z": 2018,
+    "id": "24zkx",
+    "rollCount": 410,
+    "movable": "true",
+    "width": 90,
+    "height": 90,
+    "y": 166,
+    "activeFace": 2,
+    "parent": "ck9c",
+    "imageScale": 1
+  },
+  "25zkx": {
+    "type": "dice",
+    "x": 493,
+    "faces": [
+      "/assets/-1885701342_26951",
+      "/assets/-1885701342_26951",
+      "/assets/-666805967_41190",
+      "/assets/-666805967_41190",
+      "/assets/834358786_25582",
+      "/assets/1077335079_34072"
+    ],
+    "z": 2028,
+    "id": "25zkx",
+    "rollCount": 420,
+    "movable": "true",
+    "width": 90,
+    "height": 90,
+    "y": 90,
+    "activeFace": 3,
+    "parent": "ck9c",
+    "imageScale": 1
+  },
+  "26zkx": {
+    "type": "dice",
+    "x": 20,
+    "faces": [
+      "/assets/-1885701342_26951",
+      "/assets/-1885701342_26951",
+      "/assets/-666805967_41190",
+      "/assets/-666805967_41190",
+      "/assets/834358786_25582",
+      "/assets/1077335079_34072"
+    ],
+    "z": 2019,
+    "id": "26zkx",
+    "rollCount": 412,
+    "movable": "true",
+    "width": 90,
+    "height": 90,
+    "y": 76,
+    "activeFace": 5,
+    "parent": "ck9c",
+    "imageScale": 1
+  },
+  "93tx": {
+    "deck": "b92eed53-bf9a-40c5-aa42-e30bd8535ba6",
+    "type": "card",
+    "cardType": "c78feb25-8939-4c75-aab3-9736c76a8db1.png",
+    "id": "93tx",
+    "z": 5,
+    "activeFace": 1,
+    "x": 340,
+    "y": 4,
+    "parent": "4e26b75e-0310-4e32-a967-8c96314d78a1"
+  },
+  "p5fy": {
+    "deck": "b92eed53-bf9a-40c5-aa42-e30bd8535ba6",
+    "type": "card",
+    "cardType": "c78feb25-8939-4c75-aab3-9736c76a8db1.png",
+    "id": "p5fy",
+    "z": 9,
+    "activeFace": 1,
+    "x": 676,
+    "y": 4,
+    "parent": "4e26b75e-0310-4e32-a967-8c96314d78a1"
+  },
+  "j9kz": {
+    "image": "/assets/884518391_186388",
+    "movable": false,
+    "width": 1600,
+    "height": 1000,
+    "layer": -4,
+    "id": "j9kz",
+    "movableInEdit": false
+  },
+  "_meta": {
+    "version": 12,
+    "info": {
+      "name": "Maki Roll",
+      "image": "/assets/1984490619_18687",
+      "rules": "",
+      "bgg": "https://boardgamegeek.com/boardgame/37400/sushizock-im-gockelwok",
+      "year": "2008",
+      "mode": "vs",
+      "time": "20",
+      "attribution": "<div>Board layout by Shobu and ArnoldSmith86. Released to public domain under CC0.</div><div><br></div><div>The background image (and library image) were generated by Midjourney using the prompt \"Sushi shop anime background --ar 16:10 --niji\".<br></div><div><br></div><div>All other graphics are from https://game-icons.net/ and are used under the CC BY 3.0 license:</div><div><br></div><div>Created by Delapouite:</div><div>https://game-icons.net/1x1/delapouite/sushis.html</div><div>https://game-icons.net/1x1/delapouite/chef-toque.html</div><div>https://game-icons.net/1x1/delapouite/chopsticks.html</div><div>https://game-icons.net/1x1/delapouite/rolling-dices.html</div><div><div><br></div><div>Created by Lorc:</div>https://game-icons.net/1x1/lorc/fishbone.html<br></div>",
+      "lastUpdate": 1677688259161,
+      "showName": true,
+      "skill": "",
+      "description": "Roll dice to collect an equal amount of high value sushi and low value fishbones from the conveyor belts.",
+      "similarImage": "",
+      "similarName": "Sushizock im Gockelwok",
+      "similarAwards": "",
+      "similarDesigner": "Reiner Knizia",
+      "ruleText": "<div>To reset for a new game, use the Chef's hat button to recall and shuffle all the tiles onto the conveyor belts.</div><div><br></div><div>During the game, use the button with the two dice in order to roll the dice.</div><br>After each roll, put at least 1 dice outside the box in the middle of the bottom, preventing that dice from being re-rolled. On your second roll, you must place at least 2 dice outside of the box. You can roll no more than 3 times.<br><br>When you are done with all rolls, you must use one of the dice faces to take a tile, either from the conveyor belts in the middle or from another player's pile.<br><ul><li>If you choose fishbones or sushi, you may take the tile in the&nbsp; exact same-numbered space on the related belt. For example, 3 fishbone dice let you take the 3rd fishbone tile and place it in your fishbone pile.</li><li>If you roll 3 of the same chopstick color, you may steal a tile of that color from the top of another player's pile. </li><li>If you roll 4 or 5 chopsticks of the same color, you may steal a tile of that color from anywhere in another player's pile (but cannot look through their pile before choosing).</li><li>If you do not roll sufficient faces to take one of the above actions, you must take the fishbone tile from the belt with the most negative number. If no fishbone tiles are left, instead take the lowest value sushi tile.<br></li></ul>After your turn ends, click the \"Next player\" button to return all the dice to the middle bottom and highlight the next player's name.<br><br>The game ends when all the tiles have been taken from both conveyor belts in the middle.<br><br>If you have equal amounts of tiles in your two piles (sushi and fishbones), or have more fishbones than sushi, keep all these tiles. But, if you have more sushi than fishbones, discard the top tile from your sushi pile until it has the same amount of tiles as your fishbone pile.<br><br>Add together the values on your sushi tiles and subtract the numbers on the fishbone tiles you kept for your final score. Highest score wins.",
+      "helpText": "",
+      "variantImage": "",
+      "variant": "",
+      "language": "",
+      "players": "2-4"
+    }
+  },
+  "fb7f": {
+    "deck": "626222e2-d811-490b-9a1e-c526005fe0ac",
+    "type": "card",
+    "cardType": "type-ceec75cf-d39a-4cff-a5af-290f079a1a0c",
+    "id": "fb7f",
+    "z": 12,
+    "activeFace": 1,
+    "x": 928,
+    "y": 4,
+    "parent": "034a2aa1-e81c-4f47-830d-b51c2d54c84e"
+  },
+  "z1gp": {
+    "deck": "626222e2-d811-490b-9a1e-c526005fe0ac",
+    "type": "card",
+    "cardType": "type-ceec75cf-d39a-4cff-a5af-290f079a1a0c",
+    "id": "z1gp",
+    "z": 9,
+    "activeFace": 1,
+    "x": 676,
+    "y": 4,
+    "parent": "034a2aa1-e81c-4f47-830d-b51c2d54c84e"
+  },
+  "qkpt": {
+    "deck": "626222e2-d811-490b-9a1e-c526005fe0ac",
+    "type": "card",
+    "cardType": "type-ceec75cf-d39a-4cff-a5af-290f079a1a0c",
+    "id": "qkpt",
+    "z": 5,
+    "activeFace": 1,
+    "x": 340,
+    "y": 4,
+    "parent": "034a2aa1-e81c-4f47-830d-b51c2d54c84e"
+  },
+  "5af8": {
+    "deck": "626222e2-d811-490b-9a1e-c526005fe0ac",
+    "type": "card",
+    "cardType": "type-0d0c5608-5943-4781-b879-29596b6e0d11",
+    "id": "5af8",
+    "z": 8,
+    "activeFace": 1,
+    "parent": "034a2aa1-e81c-4f47-830d-b51c2d54c84e",
+    "x": 592,
+    "y": 4
+  },
+  "1jz3": {
+    "deck": "626222e2-d811-490b-9a1e-c526005fe0ac",
+    "type": "card",
+    "cardType": "type-0d0c5608-5943-4781-b879-29596b6e0d11",
+    "id": "1jz3",
+    "z": 11,
+    "activeFace": 1,
+    "x": 844,
+    "y": 4,
+    "parent": "034a2aa1-e81c-4f47-830d-b51c2d54c84e"
+  },
+  "j10kz": {
+    "movable": false,
+    "width": 1600,
+    "height": 1000,
+    "layer": -4,
+    "id": "j10kz",
+    "z": 2,
+    "css": {
+      "background": "#00000040"
+    },
+    "movableInEdit": false
+  }
+}

@@ -1,85 +1,300 @@
 #statesOverlay {
-  padding: 2%;
+  --columns: 10;
+  --size: calc((var(--roomWidth) * var(--scale) - 10px) / var(--columns) - 22px);
+  padding: 0;
 }
 
-#statesOverlay.empty {
-  overflow: auto;
+#stateFilters {
+  justify-content: space-between;
+  display: flex;
+  padding: 10px;
 }
 
-#statesOverlay.empty > h1, #statesOverlay.empty #statesList, #statesOverlay #emptyRoom {
+#stateFilters .material-symbols {
+  line-height: 0.5;
+  position: relative;
+  top: 6px;
+  width: 24px;
+}
+
+#filterByTextWrapper {
+  flex-grow: 1;
+  position: relative;
+  border: 1px solid var(--VTTblue);
+  border-radius: 11px;
+}
+
+#filterByTextWrapper .material-symbols {
+  font-size: 20px;
+  left: -2px;
+}
+
+#stateFilters > span {
+  white-space: nowrap;
+  padding-left: 5px;
+}
+
+#filterByText {
+  background: none;
+  border: none;
+  width: calc(100% - 5px - 20px - 10px - 15px);
+  padding: 2px;
+  position: absolute;
+  left: 20px;
+  top: 0;
+}
+
+#filterByTextWrapper #clearSearch {
+  position: absolute;
+  right: 2px;
+  left: unset;
+  cursor: pointer;
+}
+#filterByText:placeholder-shown ~ #clearSearch {
   display: none;
 }
 
-#statesOverlay.empty #emptyRoom {
-  display: flex;
-  flex-direction: column;
+#stateFilters select {
+  background: none;
+  border: none;
+  border-bottom: 1px solid var(--VTTblue);
+  color: var(--overlayFontColor);
 }
 
-#statesOverlay.empty #emptyRoom > div {
-  display: flex;
-  flex-direction: row;
+#stateFilters select option.noMatch {
+  display: none;
 }
 
-#statesOverlay.empty #emptyRoom > div > div {
-  margin: 40px;
-  text-align: center;
-  width: 100%;
+#stateFilters select, #stateFilters input {
+  margin: 0 5px;
 }
 
-#statesList, #stateEditOverlay {
+#librarySortWrapper {
+  background: var(--roomColor);
+  border-radius: 5px;
+}
+
+#librarySortWrapper select {
+  border: none;
+}
+
+#filterOverflow.empty, #filterOverflow:not(.active) > div {
+  display: none;
+}
+
+#filterOverflow > button {
+  padding: 0;
+  margin: 0;
+  margin-left: 5px;
+}
+
+#filterOverflow > button::before {
+  font-size: 23px;
+  width: 23px;
+}
+
+#filterOverflow > div {
+  position: absolute;
+  right: 10px;
+  margin-top: 5px;
+  z-index: 5;
+  background: #fff;
+  padding: 20px;
+  padding-bottom: 8px;
+  border: 1px solid black;
+  border-radius: 5px;
+}
+
+#filterOverflow span {
+  display: block;
+  margin-bottom: 12px;
+}
+
+#statesList {
   overflow: auto;
 }
 
-.roomState, #addState {
-  color: black;
-  float: left;
-  width: 260px;
-  height: 260px;
-  position: relative;
-  overflow: hidden;
+@media (max-width: 600px), (max-height: 375px) {
+  #statesList { overflow: unset; }
+  #statesOverlay { overflow: auto; }
 }
 
-.roomState > div {
+@media (max-width: 2260px), (max-height: 1412px) { #statesOverlay { --columns: 9; } }
+@media (max-width: 2000px), (max-height: 1250px) { #statesOverlay { --columns: 8; } }
+@media (max-width: 1700px), (max-height: 1062px) { #statesOverlay { --columns: 7; } }
+@media (max-width: 1420px), (max-height:  887px) { #statesOverlay { --columns: 6; } }
+@media (max-width: 1120px), (max-height:  700px) { #statesOverlay { --columns: 5; } }
+@media (max-width:  800px), (max-height:  500px) { #statesOverlay { --columns: 4; } }
+@media (max-width:  680px), (max-height:  425px) { #statesOverlay { --columns: 3; } }
+@media (max-width:  520px), (max-height:  325px) { #statesOverlay { --columns: 2; } }
+
+#statesList .title {
+  border-top: 1px solid black;
+  border-bottom: 1px solid gray;
+  padding: 10px 15px;
+  position: sticky;
+  top: 0;
+  right: 0;
+  background: white;
+  z-index: 1;
+  margin-top: -1px;
+}
+#statesList .list {
+  display: inline-block;
+  padding: 0 0 10px 10px;
+}
+#statesList > div {
+  position: relative;
+}
+#statesList > div.empty {
+  display: none;
+}
+
+#statesList .buttons {
+  position: sticky;
+  top: 10px;
+  float: right;
+  z-index: 3;
+  margin: -60px 10px 0 0;
+}
+#statesList .buttons > button {
+  display: inline-flex;
+  position: relative;
+  top: -2px;
+}
+
+#emptyLibrary, #emptyLibraryByFilter {
+  color: black;
+  height: calc(var(--size) - 80px + 3px);
+  font-style: italic;
+  padding: 40px 100px;
+  margin: 8px;
+}
+
+.roomState {
+  display: none;
+  color: black;
+  float: left;
+  width: var(--size);
+  height: var(--size);
+  position: relative;
+  overflow: hidden;
+
+  box-shadow: 0 2px 10px #00000077;
+  margin: 8px;
+  border-radius: 10px;
+
+  cursor: pointer;
+  user-select: none;
+}
+.roomState.visible {
+  display: block;
+}
+.uploading.roomState {
+  --progress: 0;
+}
+@keyframes uploadingAnimation {
+  from { background-position:  0      0; }
+  to   { background-position: 28.28px 0; }
+}
+.uploading.roomState .details::before, .uploading.variant::before {
+  --stripesColor1: #0004;
+  --stripesColor2: #0006;
+  content: '';
+  position: absolute;
+  width: calc(100% - var(--progress) * 100%);
+  height: 100%;
+  top: 0;
+  left: calc(var(--progress) * 100%);
+  background-image: linear-gradient(135deg, var(--stripesColor1) 25%, var(--stripesColor2) 25%, var(--stripesColor2) 50%, var(--stripesColor1) 50%, var(--stripesColor1) 75%, var(--stripesColor2) 75%, var(--stripesColor2) 100%);
+  background-size: 28.28px 28.28px;
+  animation-name: uploadingAnimation;
+  animation-duration: 2s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  border-left: 2px solid var(--stripesColor2);
+}
+.roomState.activeGame {
+  box-shadow: 6px 6px 10px var(--VTTblue), -6px -6px 10px var(--VTTblue), 6px -6px 10px var(--VTTblue), -6px 6px 10px var(--VTTblue);
+}
+
+.roomState > img {
   position: absolute;
   left: 0;
   bottom: 0;
   right: 0;
   top: 0;
-  padding: 20px;
-  background: rgba(255, 255, 255, 0.5);
 }
 
-#addState div {
+.roomState > .details {
   position: absolute;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  padding: 0;
+  background: #00000061;
+  text-shadow: 0 0 3px #000;
+  color: white;
 }
 
-.roomState a {
-  color: black;
-  font-weight: bolder;
-  text-decoration: none;
-  font-style: normal;
+.roomState h3 {
+  position: relative;
+  font-weight: 700;
+  font-size: 1.5rem;
+  line-height: 1em;
+  margin: 8px 8px 4px 8px;
 }
 
-.roomState .details, #addState .buttons {
+.roomState h4 {
+  position: relative;
+  font-style: italic;
+  font-weight: 700;
+  font-size: .8rem;
+  margin: 4px 8px 8px 8px;
+}
+.roomState h4 img.emoji {
+  transform: skewX(-10deg);
+}
+
+.roomState .star, .roomState > i {
   display: none;
-  overflow: auto;
+  position: absolute;
+  top: 0;
+  background: transparent;
+  font-size: 200%;
+  text-shadow: 1px 1px 2px #444;
 }
 
-.roomState.noImage .details > *, .roomState.noImage img {
-  display: none;
+.roomState .star::before {
+  font-size: 32px;
+  width: 32px;
 }
 
-.roomState.noImage .details, .roomState.noImage .details > em:first-child {
+.roomState > i {
+  color: white;
+  padding: 9px;
+}
+
+div:nth-of-type(2) > .list > .roomState .star {
+  color: gold;
+}
+
+.roomState.publicLibraryGame .star, .roomState.uploading > i.linked, .roomState.savedGame > i.linked, .roomState.linkedGame > i.linked {
   display: block;
 }
 
-#addState .image {
-  font-size: 150px;
-  opacity: 0.7;
+.roomState.hideName:not(.savedGame) .details {
+  display: none;
+}
+.roomState.hideName.savedGame .details h3 {
+  display: none;
+}
+.roomState.hideName.savedGame .details h4 {
+  margin: 8px;
 }
 
-#addState button {
-  width: 160px;
+.roomState.noImage > img {
+  display: none;
 }
 
 .roomState > img {
@@ -88,57 +303,940 @@
   object-fit: cover;
 }
 
-#addState {
-  background: rgba(255, 255, 255, 0.5);
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-}
-
 .roomState em {
   display: block;
   margin-bottom: 20px;
 }
 
-.roomState:hover > div, .roomState:hover .details > *, #addState:hover > div, .roomState > div > a {
-  display: block;
+.details .stats{
+  margin-bottom: 8px;
 }
 
-.roomState:hover > img, #addState:hover .image {
-  filter: blur(5px);
+
+@media (max-width: 600px), (max-height: 375px) {
+  #statesOverlay h2.title {
+    position: unset;
+    margin:  0 !important;
+    padding: 4px !important;
+    clear: both;
+  }
+  #statesOverlay .buttons {
+    position: unset;
+    margin-top: 4px;
+    margin: 4px;
+    padding: 4px;
+    text-align: right;
+    float: unset;
+  }
+  #emptyLibrary, #emptyLibraryByFilter {
+    margin: 10px;
+    padding: 0;
+    height: unset;
+    clear: both;
+  }
+}
+@media (max-width: 320px), (max-height: 200px) {
+  #filterOverflow > div {
+    padding: 2px;
+  }
+  #filterOverflow span {
+    margin-bottom: 2px;
+  }
+  #statesOverlay, .roomState, #emptyLibrary, #emptyLibraryByFilter {
+    margin:  0;
+    padding: 0;
+  }
+  #emptyLibrary, #emptyLibraryByFilter {
+    margin: 4px;
+  }
+  #statesOverlay .list {
+    display: block;
+    padding: 10px;
+  }
+  #statesOverlay .roomState {
+    float: unset;
+    height: 48px;
+    width:  100%;
+    margin-bottom: 4px;
+    box-shadow: unset;
+  }
+  #statesOverlay .roomState h3, #statesOverlay .roomState h4 {
+    margin: 2px 4px;
+  }
+  #statesOverlay .roomState > img {
+    height: 48px;
+    width:  48px;
+  }
+  #statesOverlay .roomState > .details {
+    left: 48px;
+    height: 48px;
+  }
+  .roomState.hideName:not(.savedGame) .details {
+    display: block;
+  }
+  .roomState.savedGame h3 {
+    font-size: 1rem;
+  }
+  .roomState.savedGame h4 {
+    font-size: 0.6rem;
+  }
+  .roomState.savedGame br + br {
+    display: none;
+  }
 }
 
-#stateEditOverlay label {
-  width: 200px;
+
+
+
+/* State details */
+
+#stateDetailsOverlay {
+  padding: 0;
+  color: var(--overlayFontColor);
+}
+
+#stateDetailsOverlay > .buttons.one {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+}
+
+#stateDetailsOverlay > .buttons.two {
+  position: absolute;
+  left: 10px;
+  top: 10px;
+  z-index: 1;
+}
+
+#stateDetailsOverlay > .buttons > button {
+  display: inline-flex;
+}
+
+#stateDetailsOverlay > .buttons > div > button {
+  width: 100%;
+}
+
+#stateDetailsOverlay.uploading > .buttons [icon=save], #stateDetailsOverlay:not(.uploading) > .buttons > [icon=upload] {
+  display: none;
+}
+
+#stateDetailsOverlay {
+  --mainDetailsHeight: 300px;
+  --similarDetailsHeight: 200px;
+  --arrowButtonsSize: 160px;
+}
+#mainDetails, #similarDetails, #variantsList, #helpTexts {
+  position: absolute;
+  width: 60%;
+  top: 10px;
+  left: 20%;
+  height: var(--mainDetailsHeight);
+  box-sizing: border-box;
+  background: var(--roomColor);
+  padding-right: 20px;
+  border-radius: 20px;
+  overflow: auto;
+}
+#stateDetailsOverlay img {
+  object-fit: cover;
+}
+#mainImage, #similarImage {
+  position: fixed;
+  height: var(--mainDetailsHeight);
+  width: var(--mainDetailsHeight);
+}
+#mainImage img, #similarImage img, .variant-image img, #mainImage > div, #similarImage div, .variant-image div {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  border-radius: 20px 0 0 20px;
+}
+#mainImage > div, #similarImage div, .variant-image div {
+  background: #fff8;
+}
+#mainDetails > .details > div:nth-of-type(1) {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+}
+.notEditing .onlyForEdit, .editing .hideForEdit {
+  display: none !important;
+}
+#mainImage > div button, #similarImage div button, .variant-image div button {
+  margin: calc(50% - 17px) auto;
+}
+#mainDetails .details, #similarDetails .details {
+  margin-left: var(--mainDetailsHeight);
+  padding-left: 20px;
+  padding-top: 14px;
+  padding-bottom: 14px;
+}
+#mainDetails h1, #similarDetails h1 {
+  color: var(--VTTblue);
+  text-align: left;
+  margin-top: 0;
+  margin-bottom: 8px;
+}
+#mainDetails .material-symbols, #similarDetails .material-symbols {
+  top: 5px;
+  position: relative;
+}
+#mainDetails .star, #mainDetails #mainImage > i, #mainImage span {
+  position: fixed;
+  font-size: 50px;
+  background: none;
+  text-shadow: 2px 2px 4px #444;
+}
+#mainDetails .star::before {
+  font-size: 50px;
+  width: 50px;
+}
+#mainDetails #mainImage > i {
+  top: unset;
+  color: white;
+  padding: 9px;
+}
+#mainImage .active.star, #mainImage .active.star + span {
+  color: gold;
+}
+#mainImage span {
+  position: absolute;
+  font-size: 16px;
+  top: 51px;
+  width: 62px;
+  text-align: center;
+  color: white;
+  font-weight: bold;
+}
+#mainDetails p, #similarDetails p {
+  margin-top: 8px;
+  margin-bottom: 0;
+}
+
+#similarDetails {
+  top: unset;
+  bottom: 10px;
+  left: 10px;
+  width: calc(50% - 15px);
+  height: var(--similarDetailsHeight);
+}
+#stateDetailsOverlay #similarDetails.hidden, #stateDetailsOverlay #helpTexts.hidden {
+  display: block !important;
+}
+#similarDetails .details {
+  margin-left: var(--similarDetailsHeight);
+}
+#similarDetails > .details > .hideForEdit {
+  position: relative;
+  min-height: 24px;
+}
+#similarDetails > .details > .hideForEdit > i.material-symbols {
+  position: absolute;
+  top: -2px;
+}
+#similarDetails > .details > .hideForEdit > span, #similarDetails > .details > .hideForEdit > a {
+  margin-left: 28px;
   display: inline-block;
 }
-
-#stateEditOverlay textarea {
-  width: 400px;
-  height: 300px;
+#similarDetails > .details > .hideForEdit > a .material-symbols {
+  line-height: 0;
+}
+#similarDetails h1 {
+  font-size: 1.3em;
+}
+#similarImage {
+  height: var(--similarDetailsHeight);
+  width: var(--similarDetailsHeight);
+}
+#similarDetails a {
+  color: var(--overlayFontColor);
+}
+#stateDetailsOverlay.notEditing #similarDetails.noImage {
+  padding-left: 20px;
+}
+#stateDetailsOverlay.notEditing #similarDetails.noImage #similarImage {
+  display: none;
+}
+#stateDetailsOverlay.notEditing #similarDetails.noImage .details {
+  margin-left: 0;
+  padding-left: 0;
 }
 
-#variantsEditList > div {
-  margin-bottom: 30px;
+#prevState, #nextState {
+  --size: var(--arrowButtonsSize);
+  min-height: var(--arrowButtonsSize);
+  position: absolute;
+  top: calc(10px + ( var(--mainDetailsHeight) - var(--arrowButtonsSize) ) / 2);
+  left: calc(( 20% - var(--arrowButtonsSize) ) / 2);
+  margin: 0;
+}
+#nextState {
+  left: unset;
+  right: calc(( 20% - var(--arrowButtonsSize) ) / 2);
+}
+#prevState button, #nextState button {
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  width: calc(100% + 4px);
+  height: calc(100% + 4px);
+  background: #fffa;
+}
+#prevState button i, #nextState button i {
+  color: black;
+  font-size: calc(0.8 * var(--arrowButtonsSize));
+  margin: auto;
 }
 
-#libraryOverlay {
+
+#variantsList {
+  top: calc(var(--mainDetailsHeight) + 20px);
+  bottom: calc(var(--similarDetailsHeight) + 20px);
+  left: 10px;
+  width: calc(50% - 15px);
+  height: unset;
+  padding: 0;
   overflow: auto;
 }
 
-#libraryList td, #libraryList th {
-  padding: 6px;
+.variantsList {
+  padding: 1rem 0.5rem;
 }
-#libraryList .section {
-  background-color: #4a4a4a;
-  opacity: 0.7;
+
+.variant {
+  display: flex;
+  position: relative;
+  flex-flow: row wrap;
+  justify-content: space-between;
+  align-items: center;
+  border-style: dotted;
+  border-color: lightgray;
+  border-width: 1px 0 1px 0;
+  padding: 0.25rem 0.5rem;
 }
-#libraryList .section .section-name {
-  font-size: 1.17em;
-  font-weight: bolder;
-  text-align: center;
+
+.uploading.variant {
+  --progress: 0;
 }
-#libraryList .section .notes {
-  text-align: center;
+
+.uploading.variant > div, .uploading.variant > button {
+  position: relative;
+}
+
+.variant>div {
+  display: flex;
+  align-items: center;
+}
+
+.variant .variantEdit, .variant.editingVariant .variantNoEdit {
+  display: none;
+}
+
+#stateDetailsOverlay.editing .variant.editingVariant .variantEdit {
+  display: flex;
+}
+
+#stateDetailsOverlay.editing .variant.linked .variant-image > .variantEdit, .variant.linked [icon=save] {
+  display: none;
+}
+
+.variant > div.variantEdit {
+  width: 100%;
+  justify-content: right;
+}
+
+.variant .variant-description {
+  width: 100%;
+  font-size: 0.8rem;
+  line-height: 0.8rem!important;
+  padding: 0 0 5px;
+  font-weight: normal;
+}
+
+.variant .variant-description:empty {
+  display: none;
+}
+
+.variant .variant-name {
+  display: unset;
+  flex-grow: 1;
+  width: 1px;
+  word-break: break-all;
+}
+
+.variant .variant-name>div {
+  line-height: 34px;
+}
+
+.variant .variant-image {
+  position: relative;
+  flex-grow: 0;
+  flex-shrink: 0;
+  height: 34px;
+  width: 34px;
+  margin: 1px 5px 1px 0;
+  border-radius: 3px;
+}
+.variant .variant-image img {
+  height: 34px;
+  width: 34px;
+  border-radius: 3px;
+}
+
+.variant i {
+  margin-right: 0.25rem;
+}
+
+.variant .unnamed {
+  color: gray;
+  font-style: italic;
+}
+
+.language-info,
+.player-number-info {
+  justify-content: center;
+  width: auto;
+  flex-grow: 0;
+  flex-shrink: 1;
+  padding: 0 0.75rem;
+  border-left: 1px dotted lightgray;
+  white-space: nowrap;
+  height: 34px;
+}
+
+.player-number-info {
+  min-width: 60px;
+}
+
+#variantsList [icon=add] {
+  margin: 20px auto;
+}
+
+
+#helpTexts {
+  top: calc(var(--mainDetailsHeight) + 20px);
+  bottom: 10px;
+  left: unset;
+  right: 10px;
+  width: calc(50% - 15px);
+  height: unset;
+  padding: 0 20px 20px 20px;
+  overflow: auto;
+  overflow-wrap: break-word;
+  white-space: pre-line;
+}
+
+#helpTexts h3 {
+  color: var(--VTTblue);
+}
+
+#helpTexts h4 {
+  font-size: 18px;
+}
+
+#helpTexts [contenteditable="true"] {
+  padding: 5px;
+}
+
+@media (max-width: 1260px), (max-height: 787px), (min-width: 1421px) and (min-height: 888px) {
+  #stateDetailsOverlay {
+    --mainDetailsHeight: 200px;
+    --similarDetailsHeight: 160px;
+    --arrowButtonsSize: 100px;
+  }
+  #mainDetails .details, #similarDetails .details {
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+  #mainDetails > .details > div + div {
+    display: inline-block;
+    font-size: 14px;
+    margin-right: 10px;
+  }
+  #mainDetails .material-symbols {
+    font-size: 18px;
+    top: 3px;
+  }
+  #nextState .details, #prevState .details {
+    display: none;
+  }
+}
+@media (max-width: 1040px), (max-height: 650px), (min-width: 1421px) and (min-height: 888px) {
+  .variant {
+    padding: .11rem .5rem;
+  }
+}
+@media (max-width: 957px), (max-height: 600px), (max-width: 1000px) and (max-height: 643px), (min-width: 1421px) and (min-height: 888px) {
+  #stateDetailsOverlay {
+    --mainDetailsHeight: 150px;
+    --similarDetailsHeight: 150px;
+  }
+  #mainDetails, #similarDetails, #variantsList, #helpTexts {
+    position: unset;
+    overflow: unset;
+    margin: 20px auto;
+    width: 95%;
+    max-width: 38rem;
+    height: unset;
+    padding: 20px;
+  }
+  #stateDetailsOverlay #similarDetails.hidden, #stateDetailsOverlay #helpTexts.hidden {
+    display: none !important;
+  }
+  #mainDetails {
+    position: relative;
+    top: 0;
+    left: 0;
+    margin-top: 60px;
+  }
+  #mainImage, #similarImage {
+    position: relative;
+    float: left;
+    margin-right: 10px;
+  }
+  #mainImage img, #similarImage img, #mainImage > div, #similarImage div {
+    height: var(--mainDetailsHeight);
+    width: var(--mainDetailsHeight);
+    border-radius: 10px;
+  }
+  #mainDetails > .details > div:nth-of-type(1) {
+    position: absolute;
+    bottom: unset;
+    top: 140px;
+    left: 30px;
+  }
+  #mainDetails .details, #similarDetails .details {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+  #mainDetails .star, #mainDetails #mainImage > i {
+    position: absolute;
+  }
+  #nextState, #prevState {
+    display: none !important;
+  }
+  .variant {
+    padding: .25rem .5rem;
+  }
+  #helpTexts {
+    padding: 0 20px 20px 20px;
+  }
+}
+@media (max-width: 500px), (max-height: 312px) {
+  #stateDetailsOverlay {
+    --mainDetailsHeight: 50px;
+    --similarDetailsHeight: 50px;
+  }
+  #mainDetails, #similarDetails, #variantsList, #helpTexts {
+    padding: 10px;
+    margin: 10px auto;
+  }
+  #mainDetails {
+    margin-top: 60px;
+  }
+  #mainDetails h1, #similarDetails h1 {
+    margin: 8px;
+    min-height: 40px;
+  }
+  #mainDetails .details, #similarDetails .details {
+    margin: unset;
+    padding: unset;
+  }
+  #mainDetails > .details > div:nth-of-type(1) {
+    position: unset;
+  }
+  #mainDetails .star::before, #mainDetails #mainImage > i {
+    font-size: 32px;
+  }
+  #mainImage button, #similarImage button {
+    font-size: 0;
+    padding: 5px;
+  }
+  #mainImage button::before, #similarImage button::before {
+    margin: 0;
+  }
+  #mainImage span {
+    display: none;
+  }
+  #variantsList {
+    padding: 5px 0;
+  }
+  .variantsList {
+    padding: unset;
+  }
+  #variantsList .variant {
+    display: block;
+  }
+  #variantsList .variant-image img {
+    float: left;
+  }
+  .variant > div, #variantsList .play {
+    display: inline-flex;
+  }
+  .variant > .variant-name {
+    display: block;
+    min-height: 40px;
+    width: unset;
+  }
+  .variant > .variantEdit {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  #stateDetailsOverlay.notEditing #similarDetails.noImage {
+    padding-left: 10px;
+  }
+  #helpTexts {
+    padding: 0 10px 10px 10px;
+  }
+  #helpTexts h3 {
+    margin: 10px 0;
+  }
+}
+@media (max-width: 270px), (max-height: 168px) {
+  #stateDetailsOverlay.editing #mainDetails {
+    margin-top: 0;
+  }
+  #stateDetailsOverlay.editing > .buttons {
+    position: unset;
+    margin: 10px;
+  }
+  #stateDetailsOverlay.editing .richtext-controls {
+    position: unset;
+  }
+}
+@media (min-width: 1421px) and (min-height: 888px) { /* sidebar */
+  #statesOverlay.withDetails {
+    padding-right: calc((var(--size) + 22px) * 3);
+  }
+  #statesOverlay.withDetails > #stateDetailsOverlay {
+    display: flex !important;
+    position: absolute;
+    width: calc((var(--size) + 22px) * 3);
+    right: 0;
+    left: unset;
+  }
+  #statesOverlay.withDetails #filterOverflow > div {
+    right: calc((var(--size) + 22px) * 3 + 10px);
+  }
+
+  #stateDetailsOverlay {
+    background: var(--roomColor);
+  }
+  #helpTexts, #mainDetails, #similarDetails, #variantsList {
+    background: white;
+  }
+}
+
+
+#stateDetailsOverlay [contenteditable=true] {
+  background-image: linear-gradient(-45deg, #1112 25%, #0002 25%, #0002 50%, #1112 50%, #1112 75%, #0002 75%, #0002);
+  background-size: 50px 50px;
+  background-repeat: repeat
+}
+
+#stateDetailsOverlay .hidden {
+  display: none !important;
+}
+
+
+
+
+
+/* stateAddOverlay, variantAddOverlay */
+
+#stateAddOverlay, #variantAddOverlay {
+  padding: 0;
+  justify-content: center;
+}
+#stateAddOverlay h1, #variantAddOverlay h1 {
+  margin: 0;
+}
+#stateAddOverlay input, #variantAddOverlay select {
+  width: 100%;
+  box-sizing: border-box;
+}
+#stateAddOverlay > div:not(.titleWithCloseButton), #variantAddOverlay > div:not(.titleWithCloseButton) {
+  display: grid;
+  gap: 20px;
+  padding: 20px;
+  max-width: 850px;
+  margin: 0 auto;
+}
+#stateAddOverlay > .titleWithCloseButton, #variantAddOverlay > .titleWithCloseButton {
+  max-width: 890px;
+}
+#stateAddOverlay > .titleWithCloseButton button, #variantAddOverlay > .titleWithCloseButton button {
+  margin-right: 20px;
+}
+#stateAddOverlay > div > div:nth-of-type(1), #variantAddOverlay > div > div:nth-of-type(1) {
+  grid-column: 1 / span 2;
+}
+@media (max-width: 880px), (max-height: 550px) {
+  #stateAddOverlay, #variantAddOverlay {
+    justify-content: unset;
+  }
+  #stateAddOverlay .titleWithCloseButton, #variantAddOverlay .titleWithCloseButton {
+    margin-top: 20px;
+  }
+}
+@media (max-width: 600px), (max-height: 375px) {
+  #stateAddOverlay, #variantAddOverlay {
+    padding: 0;
+  }
+  #stateAddOverlay > div > div:nth-of-type(1), #variantAddOverlay > div > div:nth-of-type(1) {
+    grid-column: unset;
+  }
+}
+@media (max-width: 300px), (max-height: 187px) {
+  #stateAddOverlay .titleWithCloseButton, #variantAddOverlay .titleWithCloseButton {
+    margin-top: 10px;
+  }
+  #stateAddOverlay h1, #variantAddOverlay h1 {
+    text-align: left;
+    margin: 0 50px 10px 5px;
+  }
+  #stateAddOverlay .titleWithCloseButton button, #variantAddOverlay .titleWithCloseButton button {
+    right: 0;
+    top: 0;
+    margin-right: 10px;
+  }
+  #stateAddOverlay > div:not(.titleWithCloseButton), #variantAddOverlay > div:not(.titleWithCloseButton) {
+    gap: 10px;
+    padding: 0;
+  }
+  #stateAddOverlay > div > div, #variantAddOverlay > div > div {
+    padding: 5px;
+    border-radius: 10px;
+  }
+}
+
+
+
+
+
+/* stateSaveOverlay */
+
+#stateSaveOverlay {
+  justify-content: center;
+}
+
+#stateSaveOverlay .titleWithCloseButton {
+  max-width: 640px;
+}
+
+#stateSaveOverlay h1 {
+  margin-top: 0;
+}
+
+#stateSaveOverlay > button {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+}
+
+#stateSaveOverlay input {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+#stateSaveOverlay > div > div {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+@media (max-width: 500px), (max-height: 312px) {
+  #stateSaveOverlay {
+    justify-content: unset;
+  }
+}
+
+@media (max-width: 300px), (max-height: 187px) {
+  #stateSaveOverlay {
+    padding: 0;
+  }
+  #stateSaveOverlay h1 {
+    text-align: left;
+    margin: 10px 50px 10px 5px;
+  }
+  #stateSaveOverlay .titleWithCloseButton button {
+    right: 10px;
+    top: 10px;
+  }
+  #stateSaveOverlay > div > div {
+    padding: 5px;
+    border-radius: 10px;
+  }
+}
+
+
+
+
+
+/* shareLinkOverlay */
+
+#shareLinkOverlay {
+  justify-content: center;
+}
+
+.titleWithCloseButton {
+  position: relative;
+  margin: 0 auto;
+  width: 100%;
+}
+
+#shareLinkOverlay .titleWithCloseButton {
+  max-width: 640px;
+}
+
+#shareLinkOverlay h1 {
+  margin-top: 0;
+}
+
+.titleWithCloseButton button {
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+#shareLinkOverlay input {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+#shareLinkOverlay > div > div {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+@media (max-width: 800px), (max-height: 500px) {
+  #shareLinkOverlay {
+    justify-content: unset;
+  }
+}
+
+@media (max-width: 400px), (max-height: 250px) {
+  #shareLinkOverlay {
+    padding: 0;
+  }
+  #shareLinkOverlay h1 {
+    position: unset;
+    text-align: left;
+    margin: 10px 50px 10px 5px;
+  }
+  #shareLinkOverlay .titleWithCloseButton button {
+    right: 10px;
+    top: 10px;
+  }
+  #shareLinkOverlay > div > div {
+    padding: 5px;
+    border-radius: 10px;
+  }
+}
+
+
+
+
+
+/* updateImageOverlay */
+
+#updateImageOverlay > h1 {
+  margin-top: 0;
+}
+
+#updateImageOverlay > div:nth-child(2) {
+  display: flex;
+  justify-content: space-evenly;
+  flex-grow: 1;
+}
+
+#updatePreviousImage, #updateCurrentImage {
+  display: inline-flex;
+  background: var(--roomColor);
+  border-radius: 20px;
+  padding: 20px;
+  margin: 20px;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+#updateCurrentImage label {
+  margin: 8px 0 2px;
+  color: black;
+}
+
+#updateImageOverlay h2 {
+  margin-top: 0;
+  height: 40px;
+}
+
+#updateImageOverlay button[icon=upload] {
+  display: inline-flex;
+  float: right;
+  position: relative;
+  top: -3px;
+  left: 4px;
+}
+
+#updateImageOverlay img {
+  width: 100%;
+  flex-basis: 0;
+  min-height: 0;
+  object-fit: contain;
+  flex-grow: 1;
+}
+
+#updateButtonBar {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+
+@media (max-width: 1000px), (max-height: 625px) {
+  #updateImageOverlay {
+    padding: 10px;
+  }
+
+  #updatePreviousImage, #updateCurrentImage {
+    padding: 10px;
+    margin: 10px;
+  }
+
+  #updateImageOverlay h2 {
+    margin-left: 4px;
+  }
+}
+@media (max-width: 800px), (max-height: 500px) {
+  #updateImageOverlay h1 {
+    display: none;
+  }
+}
+@media (max-width: 600px), (max-height: 375px) {
+  #updateImageOverlay > div:nth-child(2) {
+    flex-direction: column;
+  }
+
+  #updatePreviousImage, #updateCurrentImage {
+    width: unset;
+  }
+
+  #updateImageOverlay img {
+    flex-basis: unset;
+    max-height: 400px;
+  }
+}
+@media (max-width: 400px), (max-height: 250px) {
+  #updateButtonBar {
+    flex-direction: column;
+  }
+}
+@media (max-width: 300px), (max-height: 187px) {
+  #updateImageOverlay h2 {
+    height: unset;
+  }
+
+  #updateImageOverlay button[icon=upload] {
+    display: flex;
+    position: unset;
+    float: unset;
+  }
 }
