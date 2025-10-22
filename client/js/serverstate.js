@@ -15,6 +15,7 @@ let deltaChanged = false;
 let deltaID = 0;
 let batchDepth = 0;
 let overlayShownForEmptyRoom = false;
+let lastSentDeltaCause = null;
 
 let triggerGameStartRoutineOnNextStateLoad = false;
 
@@ -289,6 +290,9 @@ export function batchEnd() {
 }
 
 export function flushDelta() {
+  if(deltaChanged && !delta.c)
+    delta.c = lastSentDeltaCause;
+
   const currentBatchDepth = batchDepth;
   batchDepth = 0;
   sendDelta();
@@ -562,6 +566,8 @@ async function removeWidgetLocal(widgetID, keepChildren) {
 function sendDelta() {
   if(!batchDepth) {
     if(deltaChanged) {
+      if(delta.c)
+        lastSentDeltaCause = delta.c;
       receiveDelta(delta);
       delta.id = deltaID;
       toServer('delta', delta);
