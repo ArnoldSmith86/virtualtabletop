@@ -184,6 +184,16 @@ class GameSettingsModule extends SidebarModule {
       <br><br>
       See <a href="https://github.com/ArnoldSmith86/virtualtabletop/pull/2581">pull request #2581</a> for technical details. Also see the <a href="https://github.com/ArnoldSmith86/virtualtabletop/wiki/Legacy-Mode">Legacy Mode wiki</a> page.
       `, target);
+    this.addCheckbox('Use old leaveRoutine behavior', 'useOldLeaveRoutineBehavior', `
+      <b>Problem</b>: When a widget was moved from one parent to another, the leaveRoutine was called based on the child widget's type instead of the parent's type.
+      <br><br>
+      This could cause leaveRoutine to be called twice in certain scenarios, leading to unexpected behavior in games that relied on the old (buggy) behavior.
+      <br><br>
+      <b>Old behavior</b>: Checked <code>this.get('type')</code> (child widget's type)<br>
+      <b>New behavior</b>: Checks <code>oldParent.get('type')</code> (parent widget's type)
+      <br><br>
+      See <a href="https://github.com/ArnoldSmith86/virtualtabletop/pull/614">pull request #614</a> for technical details.
+      `, target);
   }
 
   updateBadge() {
