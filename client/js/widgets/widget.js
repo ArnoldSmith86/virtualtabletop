@@ -1217,9 +1217,9 @@ export class Widget extends StateManaged {
       }
 
       if(a.func == 'DELAY') {
-        setDefaults(a, { time: 0 });
+        setDefaults(a, { milliseconds: 0 });
         flushDelta();
-        await new Promise(resolve => setTimeout(resolve, a.time));
+        await sleep(a.milliseconds);
       }
 
       if(a.func == 'DELETE') {
