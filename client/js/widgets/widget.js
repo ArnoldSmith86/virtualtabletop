@@ -458,37 +458,6 @@ export class Widget extends StateManaged {
   }
 
   async click(mode='respect') {
-    if (!this.get('doubleClickRoutine')) {
-      return this.executeClick(mode);
-    }
-
-    if (this.clickTimeout) { // Double click
-      clearTimeout(this.clickTimeout);
-      this.clickTimeout = null;
-
-      if (this.clickPromiseResolve) {
-        this.clickPromiseResolve(true); // Resolve first promise to prevent its action
-        this.clickPromiseResolve = null;
-      }
-      
-      return await this.doubleClick(mode);
-    }
-
-    // First click
-    return new Promise(resolve => {
-      this.clickPromiseResolve = resolve;
-      this.clickTimeout = setTimeout(async () => {
-        this.clickTimeout = null;
-        const result = await this.executeClick(mode);
-        if (this.clickPromiseResolve) {
-          this.clickPromiseResolve(result);
-          this.clickPromiseResolve = null;
-        }
-      }, 200);
-    });
-  }
-
-  async executeClick(mode='respect') {
     if(tracingEnabled)
       sendTraceEvent('click', { id: this.get('id'), mode });
 
@@ -507,21 +476,6 @@ export class Widget extends StateManaged {
 
     if(Array.isArray(this.get('clickRoutine')) && !(mode == 'ignoreClickRoutine' || mode =='ignoreAll')) {
       await this.evaluateRoutine('clickRoutine', {}, {});
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  async doubleClick(mode='respect') {
-    if(tracingEnabled)
-      sendTraceEvent('doubleClick', { id: this.get('id'), mode });
-
-    if(!this.get('clickable') && !(mode == 'ignoreClickable' || mode =='ignoreAll'))
-      return true;
-
-    if(Array.isArray(this.get('doubleClickRoutine')) && !(mode == 'ignoreDoubleClickRoutine' || mode =='ignoreAll')) {
-      await this.evaluateRoutine('doubleClickRoutine', {}, {});
       return true;
     } else {
       return false;
@@ -738,6 +692,21 @@ export class Widget extends StateManaged {
     corner.x = Math.round(corner.x);
     corner.y = Math.round(corner.y);
     return corner;
+  }
+
+  async doubleClick(mode='respect') {
+    if(tracingEnabled)
+      sendTraceEvent('doubleClick', { id: this.get('id'), mode });
+
+    if(!this.get('clickable') && !(mode == 'ignoreClickable' || mode =='ignoreAll'))
+      return true;
+
+    if(Array.isArray(this.get('doubleClickRoutine')) && !(mode == 'ignoreDoubleClickRoutine' || mode =='ignoreAll')) {
+      await this.evaluateRoutine('doubleClickRoutine', {}, {});
+      return true;
+    } else {
+      return false;
+    }
   }
 
   evaluateInputOverlay(o, resolve, reject, go) {

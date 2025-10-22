@@ -1,5 +1,6 @@
 let usedTouch = false;
 let mouseTarget = null;
+let doubleClickTimeout = null;
 const mouseStatus = {};
 
 function eventCoords(name, e) {
@@ -106,8 +107,23 @@ async function inputHandler(name, e) {
         else if(jeEnabled && !isMiddleMouseButton)
           await jeClick(widget, e);
         else if(!target.classList.contains('longtouch')) {
-          setDeltaCause(`${playerName} clicked ${widget.id}`);
-          await widget.click();
+          if(!widget.get('doubleClickRoutine')) {
+            setDeltaCause(`${playerName} clicked ${widget.id}`);
+            await widget.click();
+          } else if(doubleClickTimeout) {
+            clearTimeout(doubleClickTimeout);
+            doubleClickTimeout = null;
+            setDeltaCause(`${playerName} double clicked ${widget.id}`);
+            await widget.doubleClick();
+          } else {
+            doubleClickTimeout = setTimeout(async () => {
+              doubleClickTimeout = null;
+              batchStart();
+              setDeltaCause(`${playerName} clicked ${widget.id}`);
+              await widget.click();
+              batchEnd();
+            }, 200);
+          }
         } else
           widget.domElement.classList.remove('longtouch');
       }
