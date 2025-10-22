@@ -3094,13 +3094,11 @@ function jeInitEventListeners() {
     if(!jeEnabled)
       return;
     const surfaceRect = $('#topSurface').getBoundingClientRect();
-    const baseWidth = 1600;
-    const baseHeight = 1000;
-    const scaleX = surfaceRect.width ? baseWidth / surfaceRect.width : 1 / getScale();
-    const scaleY = surfaceRect.height ? baseHeight / surfaceRect.height : 1 / getScale();
+    const scaleX = 1600 / surfaceRect.width;
+    const scaleY = 1000 / surfaceRect.height;
 
-    const x = jeState.mouseX = Math.floor((e.clientX - surfaceRect.left) * scaleX);
-    const y = jeState.mouseY = Math.floor((e.clientY - surfaceRect.top ) * scaleY);
+    jeState.mouseX = Math.floor((e.clientX - surfaceRect.left) * scaleX);
+    jeState.mouseY = Math.floor((e.clientY - surfaceRect.top ) * scaleY);
 
     if(jeMouseButtonIsDown)
       return;
@@ -3154,7 +3152,7 @@ function jeInitEventListeners() {
 
     $('#jeWidgetLayer1').parentNode.scrollTop = $('#jeWidgetLayer1').offsetTop;
 
-     if((surfaceRect.left <= e.clientX && e.clientX <= surfaceRect.right && surfaceRect.top <= e.clientY && e.clientY <= surfaceRect.bottom)) {
+    if((surfaceRect.left <= e.clientX && e.clientX <= surfaceRect.right && surfaceRect.top <= e.clientY && e.clientY <= surfaceRect.bottom)) {
       $('#jeMouseCoords').innerHTML = "Cursor at " + jeState.mouseX + ", " + jeState.mouseY;
     } else {
       $('#jeMouseCoords').innerHTML = ""
