@@ -46,6 +46,8 @@ export default class Player {
         this.room.renamePlayer(this, args.oldName, args.newName);
       if(func == 'saveState')
         this.room.saveState(this, args.players, args.updateCurrentSave);
+      if(func == 'setGameSettings')
+        this.room.setGameSettings(this, args);
       if(func == 'setRedirect')
         this.room.setRedirect(this, args);
       if(func == 'toggleStateStar')
