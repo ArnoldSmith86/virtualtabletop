@@ -1,9 +1,14 @@
 let zoomScale = 1;
+let zoomLocked = localStorage.getItem('zoomLocked') === 'true';
 
 function setZoomLevel(zoomLevel) {
   zoomScale = zoomLevel;
   
-  $('#zoom2xButton .tooltip').textContent = `${zoomScale}x Zoom`;
+  $('#zoom2xButton .tooltip').textContent = `${zoomScale.toFixed(1)}x Zoom`;
+
+  // Update slider to match (convert zoom 1-10 to slider 10-100)
+  if($('#zoomSlider'))
+    $('#zoomSlider').value = Math.round(zoomScale * 10);
 
   // Zoomed mode - enable panning
   $('body').classList.toggle('zoom2x', zoomScale > 1);
@@ -78,27 +83,34 @@ onLoad(function() {
   let panStartY = 0;
   let lastWheelZoomTime = 0;
   const minWheelZoomInterval = 40; // milliseconds between zoom events
+  let zoomControlsHidden = true;
 
-  // Button click cycles through zoom levels (only main levels)
+  // Button click toggles zoom controls panel
   on('#zoom2xButton', 'click', function(e){
-    const mainZoomLevels = [1, 1.5, 2];
-    const currentIndex = mainZoomLevels.indexOf(zoomScale);
-    const nextIndex = (currentIndex + 1) % mainZoomLevels.length;
-    const targetZoom = mainZoomLevels[nextIndex];
-
-    // If going back to 1x, just reset
-    if(targetZoom === 1) {
-      resetZoomAndPan();
-      return;
-    }
-
-    setZoomAroundCenter(targetZoom);
+    zoomControlsHidden = !zoomControlsHidden;
+    $('#zoomControls').classList.toggle('hidden', zoomControlsHidden);
   });
+
+  // Slider controls zoom level
+  on('#zoomSlider', 'input', function(e) {
+    setZoomAroundCenter(parseInt(e.target.value) / 10);
+  });
+
+  // Lock button prevents zoom changes
+  on('#lockZoomButton', 'click', function(e) {
+    zoomLocked = !zoomLocked;
+    localStorage.setItem('zoomLocked', zoomLocked);
+    $('#lockZoomButton').classList.toggle('locked', zoomLocked);
+  });
+
+  // Restore locked state from localStorage
+  if(zoomLocked)
+    $('#lockZoomButton').classList.add('locked');
 
   // Scroll wheel zoom with zoom-to-cursor (relative to #room)
   on('#roomArea', 'wheel', function(e){
-    if(overlayActive)
-      return; // allow normal wheel behavior when an overlay is active
+    if(overlayActive || zoomLocked)
+      return; // allow normal wheel behavior when an overlay is active or zoom is locked
     e.preventDefault();
 
     const now = Date.now();
@@ -113,7 +125,7 @@ onLoad(function() {
 
   // Page up/down zoom
   on('body', 'keydown', function(e){
-    if(!overlayActive && !edit && (e.key === 'PageUp' || e.key === 'PageDown')) {
+    if(!overlayActive && !edit && !zoomLocked && (e.key === 'PageUp' || e.key === 'PageDown')) {
       e.preventDefault();
       const currentIndex = zoomLevels.indexOf(zoomScale);
       const newIndex = e.key === 'PageUp' ? Math.min(zoomLevels.length - 1, currentIndex + 1) : Math.max(0, currentIndex - 1);
@@ -135,7 +147,7 @@ onLoad(function() {
 
   // Middle-click toggle zoom (anchor under cursor)
   on('#roomArea', 'mousedown', function(e){
-    if(e.button !== 1 || edit || overlayActive)
+    if(e.button !== 1 || edit || overlayActive || zoomLocked)
       return;
 
     e.preventDefault();
@@ -147,7 +159,7 @@ onLoad(function() {
 
   // Swallow middle-button mouseup to avoid widget interactions
   on('#roomArea', 'mouseup', function(e){
-    if(e.button === 1 && !edit && !overlayActive) {
+    if(e.button === 1 && !edit && !overlayActive && !zoomLocked) {
       e.preventDefault();
       e.stopPropagation();
       if(e.stopImmediatePropagation) e.stopImmediatePropagation();
@@ -196,7 +208,7 @@ onLoad(function() {
       touchState.panStartX = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--roomPanX')) || 0;
       touchState.panStartY = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--roomPanY')) || 0;
       $('body').classList.add('panning');
-    } else if(!overlayActive && e.touches.length == 2 && !touchOnMovable(e.touches[0]) && !touchOnMovable(e.touches[1])) {
+    } else if(!overlayActive && !zoomLocked && e.touches.length == 2 && !touchOnMovable(e.touches[0]) && !touchOnMovable(e.touches[1])) {
       touchState.isPanning = false;
       touchState.isPinching = true;
       touchState.startZoom = zoomScale;
@@ -216,7 +228,7 @@ onLoad(function() {
     if(touchState.isPanning && e.touches.length == 1 && !touchOnMovable(e.touches[0])) {
       e.preventDefault();
       setPan(touchState.panStartX + (e.touches[0].clientX - touchState.startX), touchState.panStartY + (e.touches[0].clientY - touchState.startY));
-    } else if(touchState.isPinching && e.touches.length == 2 && !touchOnMovable(e.touches[0]) && !touchOnMovable(e.touches[1])) {
+    } else if(touchState.isPinching && !zoomLocked && e.touches.length == 2 && !touchOnMovable(e.touches[0]) && !touchOnMovable(e.touches[1])) {
       e.preventDefault();
       const dist = Math.hypot((e.touches[0].clientX - e.touches[1].clientX), (e.touches[0].clientY - e.touches[1].clientY));
       if(touchState.startDist <= 0)
