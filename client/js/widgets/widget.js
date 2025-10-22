@@ -2101,8 +2101,8 @@ export class Widget extends StateManaged {
         const isTargetedPlayer = !normalizedTargets.length || !playerName || normalizedTargets.includes(playerName);
 
         const numericLevel = Number(a.level);
-        if (!Number.isInteger(numericLevel) || numericLevel < 1 || numericLevel > 10) {
-          problems.push('ZOOM: level must be an integer between 1 and 10.');
+        if (!Number.isFinite(numericLevel) || numericLevel < 1 || numericLevel > 10) {
+          problems.push('ZOOM: level must be a number between 1 and 10.');
         } else {
           const boardDimensions = { width: 1600, height: 1000 };
           const pxPerUnit = scale;
