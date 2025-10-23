@@ -190,9 +190,6 @@ class Holder extends Widget {
     const useMultipleRows    = biggestHeight*1.5 < this.get('height') && this.get('stackOffsetY');
 
     if(useMultipleColumns && useMultipleRows) {
-      let yOffset = 4;
-      let z = 1;
-      
       // Calculate optimal number of rows to maximize visible area per card
       const padding = 4;
       const holderWidth = this.get('width');
@@ -223,16 +220,22 @@ class Holder extends Widget {
       }
       
       const rows = bestRows;
+      const cardsPerRow = Math.ceil(children.length / rows);
+      let yOffset = 4;
+      if(biggestHeight*rows + padding*(rows+1) < this.get('height') && this.get('dropOffsetY') == 'center')
+        yOffset = (this.get('height') - biggestHeight*rows - padding*(rows-1)) / 2;
+      if(biggestHeight*rows + padding*(rows+1) < this.get('height') && this.get('dropOffsetY') == 'bottom')
+        yOffset = this.get('height') - biggestHeight*rows - padding*rows;
+      let z = 1;
       for(let i=0; i<rows; i++) {
-        const padding = 4;
         let xOffset = padding;
-        if(totalWidth + padding*(children.length+1) < this.get('width') && this.get('dropOffsetX') == 'center')
-          xOffset = (this.get('width') - totalWidth - padding*(children.length-1)) / 2;
-        if(totalWidth + padding*(children.length+1) < this.get('width') && this.get('dropOffsetX') == 'right')
-          xOffset = this.get('width') - totalWidth - padding*children.length;
-        console.log(i, xOffset, i*Math.ceil(children.length/rows), (i+1)*Math.ceil(children.length/rows));
-        for(const child of children.slice(i*Math.ceil(children.length/rows), (i+1)*Math.ceil(children.length/rows))) {
-          const offsetX = Math.min(child.get('width') + Math.max(4, padding), Math.floor(this.get('width') - child.get('width') - padding*2) / (Math.ceil(children.length/rows) - 1));
+        if(biggestWidth*cardsPerRow + padding*(cardsPerRow+1) < this.get('width') && this.get('dropOffsetX') == 'center')
+          xOffset = (this.get('width') - biggestWidth*cardsPerRow - padding*(cardsPerRow-1)) / 2;
+        if(biggestWidth*cardsPerRow + padding*(cardsPerRow+1) < this.get('width') && this.get('dropOffsetX') == 'right')
+          xOffset = this.get('width') - biggestWidth*cardsPerRow - padding*cardsPerRow;
+        console.log(i, xOffset, i*cardsPerRow, (i+1)*cardsPerRow);
+        for(const child of children.slice(i*cardsPerRow, (i+1)*cardsPerRow)) {
+          const offsetX = Math.min(child.get('width') + Math.max(4, padding), Math.floor(this.get('width') - child.get('width') - padding*2) / (cardsPerRow - 1));
           await child.setPosition(xOffset, yOffset, z++);
           xOffset += offsetX;
         }
