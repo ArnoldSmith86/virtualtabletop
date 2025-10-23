@@ -1,7 +1,7 @@
 import { $, removeFromDOM, asArray, escapeID, mapAssetURLs } from '../domhelpers.js';
 import { StateManaged } from '../statemanaged.js';
 import { playerName, playerColor, activePlayers, activeColors, mouseCoords } from '../overlays/players.js';
-import { batchStart, batchEnd, widgetFilter, widgets } from '../serverstate.js';
+import { batchStart, batchEnd, widgetFilter, widgets, flushDelta } from '../serverstate.js';
 import { showOverlay, shuffleWidgets, sortWidgets } from '../main.js';
 import { tracingEnabled } from '../tracing.js';
 import { toHex } from '../color.js';
@@ -1253,6 +1253,14 @@ export class Widget extends StateManaged {
         if(jeRoutineLogging)
           jeLoggingRoutineOperationSummary( `'${theItem}'`, `${JSON.stringify(variables[a.variable])}`)
 
+      }
+
+      if(a.func == 'DELAY') {
+        setDefaults(a, { milliseconds: 0 });
+        flushDelta();
+        await sleep(a.milliseconds);
+        if(jeRoutineLogging)
+          jeLoggingRoutineOperationSummary(` for ${a.milliseconds} milliseconds`);
       }
 
       if(a.func == 'DELETE') {

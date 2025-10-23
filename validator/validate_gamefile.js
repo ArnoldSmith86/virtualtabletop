@@ -613,6 +613,9 @@ const operationProps = {
         'owner':      'string',
         'variable':   'string'
     },
+    'DELAY': {
+        'milliseconds': 'positiveNumber'
+    },
     'DELETE': { 
         'collection': 'inCollection'
     },
