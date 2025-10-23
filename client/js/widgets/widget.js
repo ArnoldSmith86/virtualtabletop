@@ -1220,6 +1220,8 @@ export class Widget extends StateManaged {
         setDefaults(a, { milliseconds: 0 });
         flushDelta();
         await sleep(a.milliseconds);
+        if(jeRoutineLogging)
+          jeLoggingRoutineOperationSummary(` for ${a.milliseconds} milliseconds`);
       }
 
       if(a.func == 'DELETE') {
