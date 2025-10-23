@@ -383,7 +383,7 @@ body.aspectTooGood.hiddenToolbar {
 
   /* button tooltips */
 
-    .toolbarButton .tooltip, #options {
+    .toolbarButton .tooltip, #options, #zoomControls {
       display: none;
       position: absolute;
       left: 46px;
@@ -667,6 +667,41 @@ body.aspectTooGood.hiddenToolbar {
       right: -32px;
     }
 
+    #zoomAnchor {
+      position: relative;
+    }
+
+    #zoomControls {
+      display: flex;
+      left: calc(var(--toolbarSize) + 4px);
+      top: -2px;
+      padding: 2px;
+      pointer-events: unset;
+    }
+
+    #zoomControls.hidden {
+      display: none;
+    }
+
+    #lockZoomButton {
+      padding: 5px;
+    }
+
+    #lockZoomButton::before {
+      font-family: "Material Symbols" !important;
+      content: 'lock_open_right';
+    }
+
+    #lockZoomButton.locked::before {
+      content: 'lock';
+    }
+
+    body.horizontalToolbar #zoomControls {
+      top: -42px;
+      left: unset;
+      right: -32px;
+    }
+
   /* lights off */
 
     body.lightsOff, body.lightsOff #toolbar {
@@ -778,7 +813,7 @@ body.panning #roomArea {
   cursor: grabbing;
 }
 
-body.zoom2x .movable.widget, body.zoom2x .canvas.widget, body.zoom2x.edit #roomArea {
+body.zoom2x .movable.widget, body.zoom2x .canvas.widget, body.zoom2x.edit #roomArea, body.zoom2x.overlayActive #roomArea {
   cursor: default;
 }
 
