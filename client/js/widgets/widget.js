@@ -84,6 +84,7 @@ export class Widget extends StateManaged {
       hoverInheritVisibleForSeat: true,
 
       clickRoutine: null,
+      doubleClickRoutine: null,
       changeRoutine: null,
       enterRoutine: null,
       leaveRoutine: null,
@@ -461,7 +462,7 @@ export class Widget extends StateManaged {
 
     if(!this.get('clickable') && !(mode == 'ignoreClickable' || mode =='ignoreAll'))
       return true;
-    
+
     if(this.get('clickSound')) {
       toServer('audio', {
         audioSource: this.get('clickSound'),
@@ -712,6 +713,21 @@ export class Widget extends StateManaged {
     corner.x = Math.round(corner.x);
     corner.y = Math.round(corner.y);
     return corner;
+  }
+
+  async doubleClick(mode='respect') {
+    if(tracingEnabled)
+      sendTraceEvent('doubleClick', { id: this.get('id'), mode });
+
+    if(!this.get('clickable') && !(mode == 'ignoreClickable' || mode =='ignoreAll'))
+      return true;
+
+    if(Array.isArray(this.get('doubleClickRoutine')) && !(mode == 'ignoreDoubleClickRoutine' || mode =='ignoreAll')) {
+      await this.evaluateRoutine('doubleClickRoutine', {}, {});
+      return true;
+    } else {
+      return false;
+    }
   }
 
   evaluateInputOverlay(o, resolve, reject, go) {

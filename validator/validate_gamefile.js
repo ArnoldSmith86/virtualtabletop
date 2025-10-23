@@ -86,6 +86,7 @@ const COMMON_PROPERTIES = {
     onlyVisibleForSeat: 'idArray',
     hoverInheritVisibleForSeat: 'boolean',
     clickRoutine: 'routine',
+    doubleClickRoutine: 'routine',
     changeRoutine: 'routine',
     enterRoutine: getRoutineValidator({}, {'child': 1}),
     leaveRoutine: getRoutineValidator({}, {'child': 1}),
