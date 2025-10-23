@@ -1,4 +1,4 @@
-export const VERSION = 18;
+export const VERSION = 19;
 
 export default function FileUpdater(state) {
   const v = state._meta.version;
@@ -71,6 +71,7 @@ function hasPropertyCondition(properties, condition) {
 
 function updateMeta(meta, v, state) {
   v<18 && v18RoutineLegacyModes(meta, state);
+  v<19 && v19LeaveRoutineLegacyMode(meta, state);
 }
 
 function updateProperties(properties, v, globalProperties) {
@@ -514,4 +515,10 @@ function v18RoutineLegacyModes(meta, state) {
     meta.gameSettings.legacyModes.convertNumericVarParametersToNumbers = true;
     meta.gameSettings.legacyModes.useOneAsDefaultForVarParameters = true;
   }
+}
+
+function v19LeaveRoutineLegacyMode(meta, state) {
+  // Enable legacy mode for games that might be affected by the leaveRoutine fix
+  if(JSON.stringify(state).match(/"leaveRoutine"/))
+    meta.gameSettings.legacyModes.useOldLeaveRoutineBehavior = true;
 }
