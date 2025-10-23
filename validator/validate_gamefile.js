@@ -55,6 +55,7 @@ const COMMON_PROPERTIES = {
     borderRadius: 'any',
     rotation: 'number',
     scale: 'number',
+    ignoreZoom: 'boolean',
     dragLimit: 'any',
     classes: 'string',
     css: 'any',
