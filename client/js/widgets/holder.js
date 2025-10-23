@@ -256,6 +256,20 @@ class Holder extends Widget {
         await child.setPosition(xOffset, padding, z++);
         xOffset += offsetX;
       }
+    } else if(useMultipleRows) {
+      const padding = (this.get('width') - biggestWidth) / 2;
+      let z = 1;
+      let yOffset = padding;
+      if(totalHeight + padding*(children.length+1) < this.get('height') && this.get('dropOffsetY') == 'center')
+        yOffset = (this.get('height') - totalHeight - padding*(children.length-1)) / 2;
+      if(totalHeight + padding*(children.length+1) < this.get('height') && this.get('dropOffsetY') == 'bottom')
+        yOffset = this.get('height') - totalHeight - padding*children.length;
+      console.log(yOffset);
+      for(const child of children) {
+        const offsetY = Math.min(child.get('height') + Math.max(4, padding), Math.floor(this.get('height') - child.get('height') - padding*2) / (children.length - 1));
+        await child.setPosition(padding, yOffset, z++);
+        yOffset += offsetY;
+      }
     } else {
       let z = 1;
       for(const child of children)
