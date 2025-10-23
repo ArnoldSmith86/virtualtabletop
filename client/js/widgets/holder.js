@@ -138,16 +138,20 @@ class Holder extends Widget {
     await super.onPropertyChange(property, oldValue, newValue);
     if(property == 'dropOffsetX' || property == 'dropOffsetY' || property == 'stackOffsetX' || property == 'stackOffsetY') {
       await this.updateAfterShuffle();
+    } else if((property == 'width' || property == 'height') && this.usesSmartRearrange()) {
+      await this.updateAfterShuffle();
     }
   }
 
   async receiveCard(card, pos) {
+    const soX = this.get('stackOffsetX');
+    const soY = this.get('stackOffsetY');
     // get children sorted by X or Y position
     // replace coordinates of the received card to its previous coordinates so it gets dropped at the correct position
     const children = this.childrenOwned().sort((a, b)=>{
-      if(this.get('stackOffsetX'))
-        return this.get('stackOffsetX') * ((a == card ? pos[0] : a.get('x')) - (b == card ? pos[0] : b.get('x')));
-      return this.get('stackOffsetY') * ((a == card ? pos[1] : a.get('y')) - (b == card ? pos[1] : b.get('y')));
+      if(soX)
+        return (soX == 'auto' ? 1 : soX) * ((a == card ? pos[0] : a.get('x')) - (b == card ? pos[0] : b.get('x')));
+      return (soY == 'auto' ? 1 : soY) * ((a == card ? pos[1] : a.get('y')) - (b == card ? pos[1] : b.get('y')));
     });
     await this.rearrangeChildren(children, card);
   }
@@ -155,6 +159,9 @@ class Holder extends Widget {
   async rearrangeChildren(children, card) {
     if(this.preventRearrangeDuringPileDrop)
       return;
+
+    if(this.usesSmartRearrange())
+      return await this.rearrangeChildren_smart(children, card);
 
     let xOffset = 0;
     let yOffset = 0;
@@ -172,6 +179,87 @@ class Holder extends Widget {
     }
   }
 
+  async rearrangeChildren_smart(children, card) {
+    const widths = children.map(c=>c.get('width'));
+    const heights = children.map(c=>c.get('height'));
+    const biggestWidth  = Math.max(...widths);
+    const biggestHeight = Math.max(...heights);
+    const totalWidth = widths.reduce((a,b)=>a+b);
+    const totalHeight = heights.reduce((a,b)=>a+b);
+    const useMultipleColumns = biggestWidth *1.5 < this.get('width' ) && this.get('stackOffsetX');
+    const useMultipleRows    = biggestHeight*1.5 < this.get('height') && this.get('stackOffsetY');
+
+    if(useMultipleColumns && useMultipleRows) {
+      let yOffset = 4;
+      let z = 1;
+      
+      // Calculate optimal number of rows to maximize visible area per card
+      const padding = 4;
+      const holderWidth = this.get('width');
+      const holderHeight = this.get('height');
+      const numCards = children.length;
+      
+      let bestRows = 1;
+      let maxVisibleArea = 0;
+      
+      // Try different row counts to find the one that maximizes visible area
+      for(let r = 1; r <= Math.min(numCards, Math.floor((holderHeight - padding*2) / (biggestHeight/2))); r++) {
+        const cardsPerRow = Math.ceil(numCards / r);
+        
+        // Calculate visible width per card for this row configuration
+        const widthOffset = (holderWidth - biggestWidth - padding*2) / Math.max(1, cardsPerRow - 1);
+        const visibleWidth = Math.min(biggestWidth, widthOffset);
+        
+        // Calculate visible height per card for this row configuration
+        const heightOffset = (holderHeight - biggestHeight - padding*2) / Math.max(1, r - 1);
+        const visibleHeight = Math.min(biggestHeight, heightOffset);
+        
+        const visibleArea = visibleWidth * visibleHeight;
+        
+        if(visibleArea > maxVisibleArea) {
+          maxVisibleArea = visibleArea;
+          bestRows = r;
+        }
+      }
+      
+      const rows = bestRows;
+      for(let i=0; i<rows; i++) {
+        const padding = 4;
+        let xOffset = padding;
+        if(totalWidth + padding*(children.length+1) < this.get('width') && this.get('dropOffsetX') == 'center')
+          xOffset = (this.get('width') - totalWidth - padding*(children.length-1)) / 2;
+        if(totalWidth + padding*(children.length+1) < this.get('width') && this.get('dropOffsetX') == 'right')
+          xOffset = this.get('width') - totalWidth - padding*children.length;
+        console.log(i, xOffset, i*Math.ceil(children.length/rows), (i+1)*Math.ceil(children.length/rows));
+        for(const child of children.slice(i*Math.ceil(children.length/rows), (i+1)*Math.ceil(children.length/rows))) {
+          const offsetX = Math.min(child.get('width') + Math.max(4, padding), Math.floor(this.get('width') - child.get('width') - padding*2) / (Math.ceil(children.length/rows) - 1));
+          await child.setPosition(xOffset, yOffset, z++);
+          xOffset += offsetX;
+        }
+        const offsetY = Math.min(biggestHeight + padding, Math.floor(this.get('height') - biggestHeight - padding*2) / (rows - 1));
+        yOffset += offsetY;
+      }
+    } else if(useMultipleColumns) {
+      const padding = (this.get('height') - biggestHeight) / 2;
+      let z = 1;
+      let xOffset = padding;
+      if(totalWidth + padding*(children.length+1) < this.get('width') && this.get('dropOffsetX') == 'center')
+        xOffset = (this.get('width') - totalWidth - padding*(children.length-1)) / 2;
+      if(totalWidth + padding*(children.length+1) < this.get('width') && this.get('dropOffsetX') == 'right')
+        xOffset = this.get('width') - totalWidth - padding*children.length;
+      console.log(xOffset);
+      for(const child of children) {
+        const offsetX = Math.min(child.get('width') + Math.max(4, padding), Math.floor(this.get('width') - child.get('width') - padding*2) / (children.length - 1));
+        await child.setPosition(xOffset, padding, z++);
+        xOffset += offsetX;
+      }
+    } else {
+      let z = 1;
+      for(const child of children)
+        await child.setPosition(0, 0, z++);
+    }
+  }
+
   supportsPiles() {
     return !this.get('preventPiles') && (!this.get('alignChildren') || !this.get('stackOffsetX') && !this.get('stackOffsetY'));
   }
@@ -186,5 +274,9 @@ class Holder extends Widget {
         return a.get('z') - b.get('z');
       }));
     }
+  }
+
+  usesSmartRearrange() {
+    return [ 'left', 'center', 'right' ].includes(this.get('dropOffsetX')) || [ 'top', 'center', 'bottom' ].includes(this.get('dropOffsetY')) || this.get('stackOffsetX') == 'auto' || this.get('stackOffsetY') == 'auto';
   }
 }
