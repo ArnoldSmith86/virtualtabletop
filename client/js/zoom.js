@@ -1,7 +1,31 @@
 let zoomScale = 1;
 let zoomLocked = localStorage.getItem('zoomLocked') === 'true';
+// Session-scoped cache of prompts the user has already confirmed.
+const confirmedZoomPrompts = new Set();
 
-function setZoomLevel(zoomLevel) {
+onMessage('zoom', function({ level, panX, panY, prompt }) {
+  const numericLevel = Number(level);
+  const numericPanX = Number(panX);
+  const numericPanY = Number(panY);
+
+  if(!Number.isFinite(numericLevel) || !Number.isFinite(numericPanX) || !Number.isFinite(numericPanY))
+    return;
+
+  // If a prompt was provided and zoom is locked, ask the user once.
+  // On confirmation, apply the requested zoom/pan; on cancel, do nothing.
+  if(typeof prompt === 'string' && zoomLocked) {
+    if(!confirmedZoomPrompts.has(prompt)) {
+      if(!confirm(prompt))
+        return;
+      confirmedZoomPrompts.add(prompt);
+    }
+  }
+
+  setZoomLevel(Math.max(1, Math.min(10, Math.round(numericLevel))));
+  setPan(numericPanX, numericPanY);
+});
+
+export function setZoomLevel(zoomLevel) {
   zoomScale = zoomLevel;
   
   $('#zoom2xButton .tooltip').textContent = `${zoomScale.toFixed(1)}x Zoom`;
@@ -23,7 +47,7 @@ function resetZoomAndPan() {
   $('body').classList.remove('panning');
 }
 
-function setPan(x, y) {
+export function setPan(x, y) {
   // Clamp pan to valid range
   const maxPanX = 1600 * scale * zoomScale - 1600 * scale;
   const maxPanY = 1000 * scale * zoomScale - 1000 * scale;
@@ -34,6 +58,10 @@ function setPan(x, y) {
   document.documentElement.style.setProperty('--roomPanY', clampedPanY + 'px');
   roomRectangle = $('#room').getBoundingClientRect();
   refreshIgnoreZoomWidgets();
+}
+
+export function getZoomScale() {
+  return zoomScale;
 }
 
 function elementIsMovableWidget(el) {
