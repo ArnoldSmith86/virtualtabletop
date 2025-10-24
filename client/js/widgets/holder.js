@@ -162,23 +162,24 @@ class Holder extends Widget {
   async receiveCard_smart(card, pos) {
     const children = this.childrenOwned();
     
-    // Find the nearest y value from existing children to snap to the correct row
-    const existingYValues = children.filter(c => c !== card).map(c => c.get('y'));
+    // Find the nearest x and y value from existing children to snap to the correct row or column
+    const existingYValues = [...new Set(children.filter(c => c !== card).map(c => c.get('y')))];
+    const existingXValues = [...new Set(children.filter(c => c !== card).map(c => c.get('x')))];
     let snappedY = 0;
+    let snappedX = 0;
     if(card && pos) {
       snappedY = pos[1];
-
-      if(existingYValues.length > 0) {
-        snappedY = existingYValues.reduce((nearest, y) => 
-          Math.abs(y - pos[1]) < Math.abs(nearest - pos[1]) ? y : nearest
-        );
-      }
+      snappedX = pos[0];
+      if(existingXValues.length > 1)
+        snappedY = existingYValues.reduce((nearest, y) => Math.abs(y - pos[1]) < Math.abs(nearest - pos[1]) ? y : nearest);
+      if(existingXValues.length == 1)
+        snappedX = existingXValues.reduce((nearest, x) => Math.abs(x - pos[0]) < Math.abs(nearest - pos[0]) ? x : nearest);
     }
     
     const sortedChildren = children.sort((a, b)=>{
-      const aX = a == card ? pos[0] : a.get('x');
+      const aX = a == card ? snappedX : a.get('x');
       const aY = a == card ? snappedY : a.get('y');
-      const bX = b == card ? pos[0] : b.get('x');
+      const bX = b == card ? snappedX : b.get('x');
       const bY = b == card ? snappedY : b.get('y');
       if(aY == bY)
         return aX - bX;
