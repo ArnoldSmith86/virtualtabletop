@@ -2145,7 +2145,7 @@ export class Widget extends StateManaged {
       }
 
       if(a.func == 'ZOOM') {
-        setDefaults(a, { level: 1, panX: null, panY: null, player: variables.playerName });
+        setDefaults(a, { level: 1, panX: null, panY: null, player: variables.playerName, prompt: "This game wants to override your locked zoom settings and change the view. Do you agree?" });
 
         const targets = asArray(a.player).filter(p=>p !== undefined && p !== null && p !== '');
         const normalizedTargets = Array.from(new Set(targets.map(p=>`${p}`)));
@@ -2200,13 +2200,18 @@ export class Widget extends StateManaged {
               panX: resolvedPan.x,
               panY: resolvedPan.y,
               players: normalizedTargets,
+              prompt: typeof a.prompt === 'string' ? a.prompt : null,
             });
 
             const targetsLabel = normalizedTargets.length ? normalizedTargets.join(', ') : 'all players';
 
             if(isTargetedPlayer) {
-              setZoomLevel(numericLevel);
-              setPan(resolvedPan.x, resolvedPan.y);
+              // If prompt is provided and zoom is locked, defer handling to the server echo
+              const isLocked = localStorage.getItem('zoomLocked') === 'true';
+              if(!(typeof a.prompt === 'string' && isLocked)) {
+                setZoomLevel(numericLevel);
+                setPan(resolvedPan.x, resolvedPan.y);
+              }
               if(jeRoutineLogging)
                 jeLoggingRoutineOperationSummary(
                   `level=${numericLevel}`,

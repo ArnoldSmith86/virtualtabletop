@@ -1,13 +1,25 @@
 let zoomScale = 1;
 let zoomLocked = localStorage.getItem('zoomLocked') === 'true';
+// Session-scoped cache of prompts the user has already confirmed.
+const confirmedZoomPrompts = new Set();
 
-onMessage('zoom', function({ level, panX, panY }) {
+onMessage('zoom', function({ level, panX, panY, prompt }) {
   const numericLevel = Number(level);
   const numericPanX = Number(panX);
   const numericPanY = Number(panY);
 
   if(!Number.isFinite(numericLevel) || !Number.isFinite(numericPanX) || !Number.isFinite(numericPanY))
     return;
+
+  // If a prompt was provided and zoom is locked, ask the user once.
+  // On confirmation, apply the requested zoom/pan; on cancel, do nothing.
+  if(typeof prompt === 'string' && zoomLocked) {
+    if(!confirmedZoomPrompts.has(prompt)) {
+      if(!confirm(prompt))
+        return;
+      confirmedZoomPrompts.add(prompt);
+    }
+  }
 
   setZoomLevel(Math.max(1, Math.min(10, Math.round(numericLevel))));
   setPan(numericPanX, numericPanY);
