@@ -60,7 +60,7 @@
     "css": {
       "font-size": "22px"
     },
-    "html": "The deck to the right has a css transition class on it so that movement shows up in the room. The button gathers up all the cards and then uses a <b>loopRoutine</b> to deal out 7 cards to each player.\n\nTo enhance the visual effect, each holder adds a small random rotation to the card which is removed when the dealing is completed.",
+    "html": "The deck to the right has a css transition class on it so that movement shows up in the room. The button gathers up all the cards and then uses a <b>loopRoutine</b> to deal out 7 cards to each player.\n\nTo enhance the visual effect, each holder has an <b>enterRoutine</b> to add a small random rotation to the card. The rotation is removed when the dealing is completed.",
     "layer": -4,
     "parent": "wse2"
   },
@@ -1739,7 +1739,7 @@
       "mode": "Tutorial",
       "time": "",
       "attribution": "",
-      "lastUpdate": 1761328501043,
+      "lastUpdate": 1761328752554,
       "showName": false,
       "skill": "",
       "description": "",
