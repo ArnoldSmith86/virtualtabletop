@@ -162,6 +162,14 @@ class Holder extends Widget {
   async receiveCard_smart(card, pos) {
     const children = this.childrenOwned();
     
+    if(this.smartPile) {
+      const sortedChildren = children.sort((a, b)=>{
+        return a.get('z') - b.get('z');
+      });
+      await this.rearrangeChildren(sortedChildren, card);
+      return;
+    }
+
     // Find the nearest x and y value from existing children to snap to the correct row or column
     const existingYValues = [...new Set(children.filter(c => c !== card).map(c => c.get('y')))];
     const existingXValues = [...new Set(children.filter(c => c !== card).map(c => c.get('x')))];
@@ -220,6 +228,13 @@ class Holder extends Widget {
     const totalHeight = heights.reduce((a,b)=>a+b, 0);
     const useMultipleColumns = biggestWidth *1.5 < this.get('width' ) && this.get('stackOffsetX');
     const useMultipleRows    = biggestHeight*1.5 < this.get('height') && this.get('stackOffsetY');
+
+    if((useMultipleColumns || useMultipleRows) && this.smartPile) {
+      this.smartPile = false;
+      // dissolve pile
+      for(const child of children)
+        await child.set('parent', this.get('id'));
+    }
 
     if(useMultipleColumns && useMultipleRows) {
       // Calculate optimal number of rows to maximize visible area per card
@@ -302,15 +317,25 @@ class Holder extends Widget {
         await child.setPosition(padding, yOffset, z++);
         yOffset += offsetY;
       }
-    } else {
+    }
+
+    if(!useMultipleColumns && !useMultipleRows && !this.smartPile) {
+      this.smartPile = true;
       let z = 1;
-      for(const child of children)
+      for(const child of children) {
+        //await child.setPosition((this.get('width') - biggestWidth) / 2, (this.get('height') - biggestHeight) / 2, z++);
         await child.setPosition(0, 0, z++);
+        await child.updatePiles();
+      }
     }
   }
 
   supportsPiles() {
-    return !this.get('preventPiles') && (!this.get('alignChildren') || !this.get('stackOffsetX') && !this.get('stackOffsetY'));
+    return !this.get('preventPiles') && (!this.get('alignChildren') || !this.get('stackOffsetX') && !this.get('stackOffsetY') || this.usesSmartRearrange() && this.supportsPiles_smart());
+  }
+
+  supportsPiles_smart() {
+    return this.smartPile;
   }
 
   async updateAfterShuffle() {
