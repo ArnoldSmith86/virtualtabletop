@@ -48,7 +48,7 @@
     "css": {
       "font-size": "22px"
     },
-    "html": "The button above updates the score in increments of 5. This is done a total of 5 times per button click with brief pauses after each increase using DELAY."
+    "html": "This button updates the score in increments of 5. This is done a total of 5 times per button click with brief pauses after each increase using DELAY."
   },
   "text3": {
     "id": "text3",
@@ -61,7 +61,7 @@
     "css": {
       "font-size": "22px"
     },
-    "html": "The button above inserts a DELAY between player INPUT choices. The text in the widget above the button will be updated as the player makes selections. To see the changes, open this room in a different browser or using an incognito window."
+    "html": "This button inserts a DELAY between player INPUT choices. The text in the widget above the button will be updated as the player makes selections. To see the changes, open this room in a different browser or using an incognito window.\n\nThese DELAYs use the default time of 0. The pause is already created by the time the player needs to complete the input. DELAY is used here to force the information to be sent."
   },
   "text4": {
     "id": "text4",
@@ -74,7 +74,7 @@
     "css": {
       "font-size": "22px"
     },
-    "html": "The deck to the right has a css transition class on it so that movement shows up in the room. The button uses a <b>loopRoutine</b> to deal out 10 cards with a short pause after each card.",
+    "html": "The deal button uses a <b>loopRoutine</b> to deal out 10 cards with a short pause after each card. The deck has a css transition class on it so that movement shows up on screen.",
     "layer": -4
   },
   "_meta": {
@@ -91,7 +91,7 @@
       "mode": "Tutorial",
       "time": "",
       "attribution": "",
-      "lastUpdate": 1761263042147,
+      "lastUpdate": 1761315401168,
       "showName": false,
       "skill": "",
       "description": "",
@@ -1448,11 +1448,10 @@
   },
   "dzk1": {
     "type": "pile",
-    "parent": "deckHolder",
-    "x": 4,
-    "y": 4,
     "width": 103,
     "height": 160,
-    "id": "dzk1"
+    "id": "dzk1",
+    "z": 1922,
+    "parent": "deckHolder"
   }
 }
