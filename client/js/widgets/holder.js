@@ -215,8 +215,8 @@ class Holder extends Widget {
     const heights = children.map(c=>c.get('height'));
     const biggestWidth  = Math.max(...widths);
     const biggestHeight = Math.max(...heights);
-    const totalWidth = widths.reduce((a,b)=>a+b);
-    const totalHeight = heights.reduce((a,b)=>a+b);
+    const totalWidth = widths.reduce((a,b)=>a+b, 0);
+    const totalHeight = heights.reduce((a,b)=>a+b, 0);
     const useMultipleColumns = biggestWidth *1.5 < this.get('width' ) && this.get('stackOffsetX');
     const useMultipleRows    = biggestHeight*1.5 < this.get('height') && this.get('stackOffsetY');
 
