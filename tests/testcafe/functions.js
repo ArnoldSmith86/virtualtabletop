@@ -2,7 +2,7 @@ import { Selector, ClientFunction } from 'testcafe';
 
 import { compute_ops } from '../../client/js/compute.js';
 import { escapeID } from '../../client/js/domhelpers.js';
-import { compareState, prepareClient, setName, setRoomState, setupTestEnvironment } from './test-util.js';
+import { compareState, prepareClient, setName, setRoomState, setupTestEnvironment, setLegacyMode } from './test-util.js';
 
 setupTestEnvironment();
 
@@ -17,6 +17,8 @@ test('Compute', async t => {
 
   await ClientFunction(prepareClient)();
   await setName(t);
+  await setLegacyMode('convertNumericVarParametersToNumbers', true);
+  await setLegacyMode('useOneAsDefaultForVarParameters', true);
 
   for(const index in compute_ops) {
     const op = compute_ops[index];

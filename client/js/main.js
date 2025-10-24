@@ -228,6 +228,7 @@ function setScale() {
   roomRectangle = $('#roomArea').getBoundingClientRect();
   if(edit)
     scaleHasChanged(scale);
+  refreshIgnoreZoomWidgets();
 }
 
 function getScale() {
@@ -493,7 +494,8 @@ async function loadEditMode() {
       Widget, BasicWidget, Button, Canvas, Card, Deck, Dice, Holder, Label, Pile, Scoreboard, Seat, Spinner, Timer,
       toHex, contrastAnyColor,
       asArray, compute_ops,
-      eventCoords
+      eventCoords,
+      getCurrentGameSettings, legacyMode, getEnabledLegacyModes
     });
     $('body').classList.add('loadingEditMode');
     const editmode = await import('./edit.js');

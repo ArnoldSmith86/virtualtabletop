@@ -55,6 +55,7 @@ const COMMON_PROPERTIES = {
     borderRadius: 'any',
     rotation: 'number',
     scale: 'number',
+    ignoreZoom: 'boolean',
     dragLimit: 'any',
     classes: 'string',
     css: 'any',
@@ -85,6 +86,7 @@ const COMMON_PROPERTIES = {
     onlyVisibleForSeat: 'idArray',
     hoverInheritVisibleForSeat: 'boolean',
     clickRoutine: 'routine',
+    doubleClickRoutine: 'routine',
     changeRoutine: 'routine',
     enterRoutine: getRoutineValidator({}, {'child': 1}),
     leaveRoutine: getRoutineValidator({}, {'child': 1}),
@@ -610,6 +612,9 @@ const operationProps = {
         'holder':     'idArray',
         'owner':      'string',
         'variable':   'string'
+    },
+    'DELAY': {
+        'milliseconds': 'positiveNumber'
     },
     'DELETE': { 
         'collection': 'inCollection'

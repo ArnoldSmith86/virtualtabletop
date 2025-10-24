@@ -3,6 +3,8 @@ import { StateManaged } from '../statemanaged.js';
 import { playerName, playerColor, activePlayers, activeColors, mouseCoords } from '../overlays/players.js';
 import { batchStart, batchEnd, widgetFilter, widgets } from '../serverstate.js';
 import { showOverlay, shuffleWidgets, sortWidgets, scale } from '../main.js';
+import { batchStart, batchEnd, widgetFilter, widgets, flushDelta } from '../serverstate.js';
+import { showOverlay, shuffleWidgets, sortWidgets } from '../main.js';
 import { tracingEnabled } from '../tracing.js';
 import { toHex } from '../color.js';
 import { center, distance, overlap, getOffset, getElementTransform, getScreenTransform, getPointOnPlane, dehomogenize, getElementTransformRelativeTo, getTransformOrigin } from '../geometry.js';
@@ -48,6 +50,7 @@ export class Widget extends StateManaged {
       borderRadius: null,
       rotation: 0,
       scale: 1,
+      ignoreZoom: false,
       dragLimit: {},
 
       typeClasses: 'widget',
@@ -84,6 +87,7 @@ export class Widget extends StateManaged {
       hoverInheritVisibleForSeat: true,
 
       clickRoutine: null,
+      doubleClickRoutine: null,
       changeRoutine: null,
       enterRoutine: null,
       leaveRoutine: null,
@@ -461,7 +465,7 @@ export class Widget extends StateManaged {
 
     if(!this.get('clickable') && !(mode == 'ignoreClickable' || mode =='ignoreAll'))
       return true;
-    
+
     if(this.get('clickSound')) {
       toServer('audio', {
         audioSource: this.get('clickSound'),
@@ -663,18 +667,40 @@ export class Widget extends StateManaged {
   }
 
   cssTransform() {
-    let transform = `translate(${this.get('x')}px, ${this.get('y')}px)`;
+    let x = this.get('x');
+    let y = this.get('y');
+    let scaleValue = this.get('scale');
+
+    if(this.get('ignoreZoom')) {
+      const computedStyle = getComputedStyle(document.documentElement);
+      const zoom = parseFloat(computedStyle.getPropertyValue('--zoom')) || 1;
+
+      if(zoom > 1) {
+        const baseScale = parseFloat(computedStyle.getPropertyValue('--scale')) || 1;
+        const panX = parseFloat(computedStyle.getPropertyValue('--roomPanX')) || 0;
+        const panY = parseFloat(computedStyle.getPropertyValue('--roomPanY')) || 0;
+
+        const transformOrigin = getTransformOrigin(this.domElement);
+        const zoomCompensation = 1 - 1 / zoom;
+
+        x = x / zoom - panX / (baseScale * zoom) - transformOrigin.x * zoomCompensation;
+        y = y / zoom - panY / (baseScale * zoom) - transformOrigin.y * zoomCompensation;
+        scaleValue = scaleValue / zoom;
+      }
+    }
+
+    let transform = `translate(${x}px, ${y}px)`;
 
     if(this.get('rotation'))
       transform += ` rotate(${this.get('rotation')}deg)`;
-    if(this.get('scale') != 1)
-      transform += ` scale(${this.get('scale')})`;
+    if(scaleValue != 1)
+      transform += ` scale(${scaleValue})`;
 
     return transform;
   }
 
   cssTransformProperties() {
-    return [ 'rotation', 'scale', 'x', 'y' ];
+    return [ 'rotation', 'scale', 'x', 'y', 'ignoreZoom' ];
   }
 
   dragCorner(coordGlobal, localAnchor, parent = null) {
@@ -690,6 +716,21 @@ export class Widget extends StateManaged {
     corner.x = Math.round(corner.x);
     corner.y = Math.round(corner.y);
     return corner;
+  }
+
+  async doubleClick(mode='respect') {
+    if(tracingEnabled)
+      sendTraceEvent('doubleClick', { id: this.get('id'), mode });
+
+    if(!this.get('clickable') && !(mode == 'ignoreClickable' || mode =='ignoreAll'))
+      return true;
+
+    if(Array.isArray(this.get('doubleClickRoutine')) && !(mode == 'ignoreDoubleClickRoutine' || mode =='ignoreAll')) {
+      await this.evaluateRoutine('doubleClickRoutine', {}, {});
+      return true;
+    } else {
+      return false;
+    }
   }
 
   evaluateInputOverlay(o, resolve, reject, go) {
@@ -951,15 +992,17 @@ export class Widget extends StateManaged {
               const result = evaluateVariables(match[offset+2]);
               return result !== undefined ? result : defaultValue;
             } else {
-              return 1;
+              return defaultValue;
             }
           };
           const getValue = async function(input) {
-            const toNum = s=>typeof s == 'string' && s.match(/^[-+]?[0-9]+(\.[0-9]+)?$/) ? +s : s;
+            const op = match[13] ? variables[match[14]] : match[14];
+            const toNum = s=>typeof s == 'string' && (legacyMode('convertNumericVarParametersToNumbers') || op === '+') && s.match(/^[-+]?[0-9]+(\.[0-9]+)?$/) ? +s : s;
+            const dv = legacyMode('useOneAsDefaultForVarParameters') ? 1 : undefined;
             if(match[14] && match[9] !== undefined)
-              return await compute(match[13] ? variables[match[14]] : match[14], input, toNum(getParam(9, 1)), toNum(getParam(15, 1)), toNum(getParam(19, 1)));
+              return await compute(op, input, toNum(getParam(9, dv)), toNum(getParam(15, dv)), toNum(getParam(19, dv)));
             else if(match[14])
-              return await compute(match[13] ? variables[match[14]] : match[14], input, toNum(getParam(15, 1)), toNum(getParam(19, 1)), toNum(getParam(23, 1)));
+              return await compute(op, input, toNum(getParam(15, dv)), toNum(getParam(19, dv)), toNum(getParam(23, dv)));
             else
               return getParam(5, null);
           };
@@ -1213,6 +1256,14 @@ export class Widget extends StateManaged {
         if(jeRoutineLogging)
           jeLoggingRoutineOperationSummary( `'${theItem}'`, `${JSON.stringify(variables[a.variable])}`)
 
+      }
+
+      if(a.func == 'DELAY') {
+        setDefaults(a, { milliseconds: 0 });
+        flushDelta();
+        await sleep(a.milliseconds);
+        if(jeRoutineLogging)
+          jeLoggingRoutineOperationSummary(` for ${a.milliseconds} milliseconds`);
       }
 
       if(a.func == 'DELETE') {

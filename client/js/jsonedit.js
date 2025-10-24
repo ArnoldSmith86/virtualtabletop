@@ -1289,6 +1289,7 @@ function jeAddCommands() {
   jeAddRoutineOperationCommands('CLICK', { collection: 'DEFAULT', count: 1 , mode:'respect' });
   jeAddRoutineOperationCommands('CLONE', { source: 'DEFAULT', collection: 'DEFAULT', xOffset: 0, yOffset: 0, count: 1, recursive: false, properties: null });
   jeAddRoutineOperationCommands('COUNT', { collection: 'DEFAULT', holder: null, variable: 'COUNT', owner: null });
+  jeAddRoutineOperationCommands('DELAY', { milliseconds: 0 });
   jeAddRoutineOperationCommands('DELETE', { collection: 'DEFAULT'});
   jeAddRoutineOperationCommands('FLIP', { count: 'all', face: null, faceCycle: 'forward', holder: null, collection: 'DEFAULT' });
   jeAddRoutineOperationCommands('FOREACH', { loopRoutine: [], in: [], range: [], collection: 'DEFAULT' });
@@ -3094,8 +3095,12 @@ function jeInitEventListeners() {
   window.addEventListener('mousemove', function(e) {
     if(!jeEnabled)
       return;
-    const x = jeState.mouseX = Math.floor((e.clientX - getRoomRectangle().left) / getScale());
-    const y = jeState.mouseY = Math.floor((e.clientY - getRoomRectangle().top ) / getScale());
+    const surfaceRect = $('#topSurface').getBoundingClientRect();
+    const scaleX = 1600 / surfaceRect.width;
+    const scaleY = 1000 / surfaceRect.height;
+
+    jeState.mouseX = Math.floor((e.clientX - surfaceRect.left) * scaleX);
+    jeState.mouseY = Math.floor((e.clientY - surfaceRect.top ) * scaleY);
 
     if(jeMouseButtonIsDown)
       return;
@@ -3149,7 +3154,7 @@ function jeInitEventListeners() {
 
     $('#jeWidgetLayer1').parentNode.scrollTop = $('#jeWidgetLayer1').offsetTop;
 
-    if((getRoomRectangle().left <= e.clientX && e.clientX <= getRoomRectangle().right && getRoomRectangle().top <= e.clientY && e.clientY <= getRoomRectangle().bottom)) {
+    if((surfaceRect.left <= e.clientX && e.clientX <= surfaceRect.right && surfaceRect.top <= e.clientY && e.clientY <= surfaceRect.bottom)) {
       $('#jeMouseCoords').innerHTML = "Cursor at " + jeState.mouseX + ", " + jeState.mouseY;
     } else {
       $('#jeMouseCoords').innerHTML = ""

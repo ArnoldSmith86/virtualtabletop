@@ -84,6 +84,11 @@ class SidebarModule {
   }
 
   onMetaReceived(data) {
+    if(this.moduleDOM)
+      this.onMetaReceivedWhileActive(data);
+  }
+
+  onMetaReceivedWhileActive(meta) {
   }
 
   onSelectionChanged(newSelection, oldSelection) {
