@@ -768,6 +768,13 @@ const operationProps = {
     },
     'VAR': {
         'variables': 'object'
+    },
+    'ZOOM': {
+        'level': 'number',
+        'panX': 'number',
+        'panY': 'number',
+        'player':    v => v === null || typeof v === 'string' || (Array.isArray(v) && v.every(x => typeof x === 'string')),
+        'property': 'string'
     }
 };
 
