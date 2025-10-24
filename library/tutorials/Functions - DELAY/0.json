@@ -26,8 +26,7 @@
   },
   "text1": {
     "id": "text1",
-    "x": 4,
-    "y": 552,
+    "y": 201,
     "width": 300,
     "z": 185,
     "movable": false,
@@ -35,25 +34,12 @@
     "css": {
       "font-size": "22px"
     },
-    "html": "The buttons above both use a FOREACH loop to click each dice in turn from left to right. The left button is the normal way. Although each dice is clicked in sequence using the <b>loopRoutine</b>, the output of clicking the button is that all dice appear to be rolled at the same time. The right button adds a small delay so the dice are actually rolled one at a time. "
-  },
-  "text2": {
-    "id": "text2",
-    "x": 325,
-    "y": 552,
-    "width": 300,
-    "z": 121,
-    "movable": false,
-    "movableInEdit": false,
-    "css": {
-      "font-size": "22px"
-    },
-    "html": "This button updates the score in increments of 5. This is done a total of 5 times per button click with brief pauses after each increase using DELAY."
+    "html": "The buttons both use a FOREACH loop to click each dice in turn from left to right. The left button is the normal way. Although the dice are clicked in sequence using the <b>loopRoutine</b>, the output of clicking the left button is that all dice appear to be rolled at the same time. The right button adds a small delay so the dice are actually rolled one at a time. ",
+    "parent": "2vs1"
   },
   "text3": {
     "id": "text3",
-    "x": 651,
-    "y": 552,
+    "y": 201,
     "width": 300,
     "z": 9732,
     "movable": false,
@@ -61,12 +47,12 @@
     "css": {
       "font-size": "22px"
     },
-    "html": "This button inserts a DELAY between player INPUT choices. The text in the widget above the button will be updated as the player makes selections. To see the changes, open this room in a different browser or using an incognito window.\n\nThese DELAYs use the default time of 0. The pause is already created by the time the player needs to complete the input. DELAY is used here to force the information to be sent."
+    "html": "This button inserts a DELAY between player INPUT choices. The text in the widget above the button will be updated as the player makes selections. To see the changes, open this room in a different browser or using an incognito window.\n\nThese DELAYs use the default time of 0. The pause is already created by the time the player needs to complete the input. DELAY is used here to force the information to be sent.",
+    "parent": "bjw6"
   },
   "text4": {
     "id": "text4",
-    "x": 964,
-    "y": 552,
+    "y": 195,
     "width": 300,
     "z": 9732,
     "movable": false,
@@ -74,44 +60,13 @@
     "css": {
       "font-size": "22px"
     },
-    "html": "The deal button uses a <b>loopRoutine</b> to deal out 10 cards with a short pause after each card. The deck has a css transition class on it so that movement shows up on screen.",
-    "layer": -4
-  },
-  "_meta": {
-    "version": 18,
-    "gameSettings": {
-      "legacyModes": {}
-    },
-    "info": {
-      "name": "Functions - DELAY",
-      "image": "/assets/-892212102_3618",
-      "rules": "",
-      "bgg": "",
-      "year": "",
-      "mode": "Tutorial",
-      "time": "",
-      "attribution": "",
-      "lastUpdate": 1761315401168,
-      "showName": false,
-      "skill": "",
-      "description": "",
-      "similarImage": "",
-      "similarName": "",
-      "similarDesigner": "",
-      "similarAwards": "",
-      "ruleText": "",
-      "helpText": "",
-      "variantImage": "",
-      "variant": "",
-      "language": "en-US",
-      "players": "1"
-    }
+    "html": "The deck to the right has a css transition class on it so that movement shows up in the room. The button gathers up all the cards and then uses a <b>loopRoutine</b> to deal out 7 cards to each player.\n\nTo enhance the visual effect, each holder adds a small random rotation to the card which is removed when the dealing is completed.",
+    "layer": -4,
+    "parent": "wse2"
   },
   "dice1": {
     "type": "dice",
     "id": "dice1",
-    "x": 20,
-    "y": 368,
     "z": 9740,
     "faces": [
       1,
@@ -120,13 +75,14 @@
       4,
       5,
       6
-    ]
+    ],
+    "parent": "fcze",
+    "shape3d": true
   },
   "dice2": {
     "type": "dice",
     "id": "dice2",
-    "x": 78,
-    "y": 368,
+    "x": 58,
     "z": 9740,
     "faces": [
       1,
@@ -135,13 +91,14 @@
       4,
       5,
       6
-    ]
+    ],
+    "parent": "fcze",
+    "shape3d": true
   },
   "dice3": {
     "type": "dice",
     "id": "dice3",
-    "x": 137,
-    "y": 368,
+    "x": 117,
     "z": 9740,
     "faces": [
       1,
@@ -150,13 +107,14 @@
       4,
       5,
       6
-    ]
+    ],
+    "parent": "fcze",
+    "shape3d": true
   },
   "dice4": {
     "type": "dice",
     "id": "dice4",
-    "x": 195,
-    "y": 368,
+    "x": 175,
     "z": 9740,
     "faces": [
       1,
@@ -165,13 +123,13 @@
       4,
       5,
       6
-    ]
+    ],
+    "parent": "fcze",
+    "shape3d": true
   },
   "button1": {
     "type": "button",
     "id": "button1",
-    "x": 37,
-    "y": 458,
     "z": 1,
     "text": "Roll Dice",
     "clickRoutine": [
@@ -189,13 +147,13 @@
           }
         ]
       }
-    ]
+    ],
+    "parent": "r3kz"
   },
   "button2": {
     "type": "button",
     "id": "button2",
-    "x": 156,
-    "y": 458,
+    "x": 119,
     "z": 1,
     "text": "Roll Dice with DELAY",
     "clickRoutine": [
@@ -217,99 +175,12 @@
           }
         ]
       }
-    ]
-  },
-  "button3": {
-    "type": "button",
-    "id": "button3",
-    "x": 415,
-    "y": 458,
-    "z": 1,
-    "text": "Update Score",
-    "clickRoutine": [
-      {
-        "func": "FOREACH",
-        "range": [
-          1,
-          5
-        ],
-        "loopRoutine": [
-          {
-            "func": "SET",
-            "collection": [
-              "score"
-            ],
-            "property": "text",
-            "value": 5,
-            "relation": "+"
-          },
-          {
-            "func": "DELAY",
-            "milliseconds": 600
-          }
-        ]
-      }
-    ]
-  },
-  "scoreU": {
-    "type": "button",
-    "id": "scoreU",
-    "parent": "score",
-    "fixedParent": true,
-    "x": 68,
-    "y": 1,
-    "width": 36,
-    "height": 36,
-    "movableInEdit": false,
-    "classes": "symbols",
-    "css": "font-size: 28px",
-    "text": "add",
-    "clickRoutine": [
-      {
-        "func": "LABEL",
-        "label": "${PROPERTY parent}",
-        "mode": "inc",
-        "value": 1
-      }
-    ]
-  },
-  "scoreD": {
-    "type": "button",
-    "id": "scoreD",
-    "parent": "score",
-    "fixedParent": true,
-    "x": -38,
-    "y": 1,
-    "width": 36,
-    "height": 36,
-    "movableInEdit": false,
-    "classes": "symbols",
-    "css": "font-size: 28px",
-    "text": "remove",
-    "clickRoutine": [
-      {
-        "func": "LABEL",
-        "label": "${PROPERTY parent}",
-        "mode": "dec",
-        "value": 1
-      }
-    ]
-  },
-  "score": {
-    "type": "label",
-    "id": "score",
-    "x": 423,
-    "y": 374,
-    "width": 65,
-    "height": 40,
-    "css": "font-size: 30px;",
-    "editable": true,
-    "text": 0
+    ],
+    "parent": "r3kz"
   },
   "result": {
     "id": "result",
-    "x": 696,
-    "y": 378,
+    "x": 49,
     "z": 9741,
     "movable": false,
     "css": {
@@ -317,13 +188,15 @@
       "border": "1px solid black"
     },
     "width": 200,
-    "height": 50
+    "height": 50,
+    "parent": "bjw6",
+    "y": 21
   },
   "button4": {
     "type": "button",
     "id": "button4",
-    "x": 757,
-    "y": 458,
+    "x": 110,
+    "y": 88,
     "z": 1,
     "text": "Input Answers",
     "clickRoutine": [
@@ -374,6 +247,14 @@
         "value": "${playerName} chose ${color} ..."
       },
       {
+        "func": "SET",
+        "collection": [
+          "result"
+        ],
+        "property": "text",
+        "value": "${playerName} is making another selection"
+      },
+      {
         "func": "DELAY"
       },
       {
@@ -397,7 +278,8 @@
         "property": "text",
         "value": "${playerName} chose ${color} ${number}"
       }
-    ]
+    ],
+    "parent": "bjw6"
   },
   "y4i4D": {
     "type": "deck",
@@ -959,427 +841,431 @@
   },
   "y4i4_A_C": {
     "id": "y4i4_A_C",
-    "parent": "dzk1",
+    "parent": "uj89",
     "deck": "y4i4D",
     "type": "card",
     "cardType": "C 01",
-    "z": 1895
+    "z": 6019
   },
   "y4i4_2_C": {
     "id": "y4i4_2_C",
-    "parent": "dzk1",
+    "parent": "uj89",
     "deck": "y4i4D",
     "type": "card",
     "cardType": "C 02",
-    "z": 1901
+    "z": 6052
   },
   "y4i4_3_C": {
     "id": "y4i4_3_C",
-    "parent": "dzk1",
+    "parent": "uj89",
     "deck": "y4i4D",
     "type": "card",
     "cardType": "C 03",
-    "z": 1918
+    "z": 6027
   },
   "y4i4_4_C": {
     "id": "y4i4_4_C",
-    "parent": "dzk1",
+    "parent": "uj89",
     "deck": "y4i4D",
     "type": "card",
     "cardType": "C 04",
-    "z": 1900
+    "z": 6056
   },
   "y4i4_5_C": {
     "id": "y4i4_5_C",
-    "parent": "dzk1",
+    "parent": "uj89",
     "deck": "y4i4D",
     "type": "card",
     "cardType": "C 05",
-    "z": 1891
+    "z": 6050
   },
   "y4i4_6_C": {
     "id": "y4i4_6_C",
-    "parent": "dzk1",
+    "parent": "uj89",
     "deck": "y4i4D",
     "type": "card",
     "cardType": "C 06",
-    "z": 1916
+    "z": 6041
   },
   "y4i4_7_C": {
     "id": "y4i4_7_C",
-    "parent": "dzk1",
+    "parent": "uj89",
     "deck": "y4i4D",
     "type": "card",
     "cardType": "C 07",
-    "z": 1887
+    "z": 6059
   },
   "y4i4_8_C": {
     "id": "y4i4_8_C",
-    "parent": "dzk1",
+    "parent": "uj89",
     "deck": "y4i4D",
     "type": "card",
     "cardType": "C 08",
-    "z": 1919
+    "z": 6054
   },
   "y4i4_9_C": {
     "id": "y4i4_9_C",
-    "parent": "dzk1",
+    "parent": "uj89",
     "deck": "y4i4D",
     "type": "card",
     "cardType": "C 09",
-    "z": 1912
+    "z": 6024
   },
   "y4i4_T_C": {
     "id": "y4i4_T_C",
-    "parent": "dzk1",
+    "parent": "uj89",
     "deck": "y4i4D",
     "type": "card",
     "cardType": "C 10",
-    "z": 1876
+    "z": 6032
   },
   "y4i4_J_C": {
     "id": "y4i4_J_C",
-    "parent": "dzk1",
+    "parent": "uj89",
     "deck": "y4i4D",
     "type": "card",
     "cardType": "C 2J",
-    "z": 1896
+    "z": 6028
   },
   "y4i4_Q_C": {
     "id": "y4i4_Q_C",
-    "parent": "dzk1",
+    "parent": "uj89",
     "deck": "y4i4D",
     "type": "card",
     "cardType": "C 3Q",
-    "z": 1879
+    "z": 6018
   },
   "y4i4_K_C": {
     "id": "y4i4_K_C",
-    "parent": "dzk1",
+    "parent": "uj89",
     "deck": "y4i4D",
     "type": "card",
     "cardType": "C 4K",
-    "z": 1910
+    "z": 6038
   },
   "y4i4_A_D": {
     "id": "y4i4_A_D",
-    "parent": "dzk1",
+    "parent": "uj89",
     "deck": "y4i4D",
     "type": "card",
     "cardType": "D 01",
-    "z": 1898
+    "z": 6046
   },
   "y4i4_2_D": {
     "id": "y4i4_2_D",
-    "parent": "dzk1",
+    "parent": "uj89",
     "deck": "y4i4D",
     "type": "card",
     "cardType": "D 02",
-    "z": 1894
+    "z": 6034
   },
   "y4i4_3_D": {
     "id": "y4i4_3_D",
-    "parent": "dzk1",
+    "parent": "uj89",
     "deck": "y4i4D",
     "type": "card",
     "cardType": "D 03",
-    "z": 1909
+    "z": 6021
   },
   "y4i4_4_D": {
     "id": "y4i4_4_D",
-    "parent": "dzk1",
+    "parent": "uj89",
     "deck": "y4i4D",
     "type": "card",
     "cardType": "D 04",
-    "z": 1902
+    "z": 6023
   },
   "y4i4_5_D": {
     "id": "y4i4_5_D",
-    "parent": "dzk1",
+    "parent": "uj89",
     "deck": "y4i4D",
     "type": "card",
     "cardType": "D 05",
-    "z": 1915
+    "z": 6055
   },
   "y4i4_6_D": {
     "id": "y4i4_6_D",
-    "parent": "dzk1",
+    "parent": "uj89",
     "deck": "y4i4D",
     "type": "card",
     "cardType": "D 06",
-    "z": 1869
+    "z": 6014
   },
   "y4i4_7_D": {
     "id": "y4i4_7_D",
-    "parent": "dzk1",
+    "parent": "uj89",
     "deck": "y4i4D",
     "type": "card",
     "cardType": "D 07",
-    "z": 1890
+    "z": 6042
   },
   "y4i4_8_D": {
     "id": "y4i4_8_D",
-    "parent": "dzk1",
+    "parent": "uj89",
     "deck": "y4i4D",
     "type": "card",
     "cardType": "D 08",
-    "z": 1873
+    "z": 6017
   },
   "y4i4_9_D": {
     "id": "y4i4_9_D",
-    "parent": "dzk1",
+    "parent": "uj89",
     "deck": "y4i4D",
     "type": "card",
     "cardType": "D 09",
-    "z": 1886
+    "z": 6049
   },
   "y4i4_T_D": {
     "id": "y4i4_T_D",
-    "parent": "dzk1",
+    "parent": "uj89",
     "deck": "y4i4D",
     "type": "card",
     "cardType": "D 10",
-    "z": 1917
+    "z": 6036
   },
   "y4i4_J_D": {
     "id": "y4i4_J_D",
-    "parent": "dzk1",
+    "parent": "uj89",
     "deck": "y4i4D",
     "type": "card",
     "cardType": "D 2J",
-    "z": 1903
+    "z": 6012
   },
   "y4i4_Q_D": {
     "id": "y4i4_Q_D",
-    "parent": "dzk1",
+    "parent": "uj89",
     "deck": "y4i4D",
     "type": "card",
     "cardType": "D 3Q",
-    "z": 1874
+    "z": 6029
   },
   "y4i4_K_D": {
     "id": "y4i4_K_D",
-    "parent": "dzk1",
+    "parent": "uj89",
     "deck": "y4i4D",
     "type": "card",
     "cardType": "D 4K",
-    "z": 1877
+    "z": 6057
   },
   "y4i4_A_H": {
     "id": "y4i4_A_H",
-    "parent": "dzk1",
+    "parent": "uj89",
     "deck": "y4i4D",
     "type": "card",
     "cardType": "H 01",
-    "z": 1875
+    "z": 6062
   },
   "y4i4_2_H": {
     "id": "y4i4_2_H",
-    "parent": "dzk1",
+    "parent": "uj89",
     "deck": "y4i4D",
     "type": "card",
     "cardType": "H 02",
-    "z": 1888
+    "z": 6035
   },
   "y4i4_3_H": {
     "id": "y4i4_3_H",
-    "parent": "dzk1",
+    "parent": "uj89",
     "deck": "y4i4D",
     "type": "card",
     "cardType": "H 03",
-    "z": 1889
+    "z": 6048
   },
   "y4i4_4_H": {
     "id": "y4i4_4_H",
-    "parent": "dzk1",
+    "parent": "uj89",
     "deck": "y4i4D",
     "type": "card",
     "cardType": "H 04",
-    "z": 1870
+    "z": 6037
   },
   "y4i4_5_H": {
     "id": "y4i4_5_H",
-    "parent": "dzk1",
+    "parent": "uj89",
     "deck": "y4i4D",
     "type": "card",
     "cardType": "H 05",
-    "z": 1872
+    "z": 6040
   },
   "y4i4_6_H": {
     "id": "y4i4_6_H",
-    "parent": "dzk1",
+    "parent": "uj89",
     "deck": "y4i4D",
     "type": "card",
     "cardType": "H 06",
-    "z": 1881
+    "z": 6020
   },
   "y4i4_7_H": {
     "id": "y4i4_7_H",
-    "parent": "dzk1",
+    "parent": "uj89",
     "deck": "y4i4D",
     "type": "card",
     "cardType": "H 07",
-    "z": 1883
+    "z": 6044
   },
   "y4i4_8_H": {
     "id": "y4i4_8_H",
-    "parent": "dzk1",
+    "parent": "uj89",
     "deck": "y4i4D",
     "type": "card",
     "cardType": "H 08",
-    "z": 1899
+    "z": 6033
   },
   "y4i4_9_H": {
     "id": "y4i4_9_H",
-    "parent": "dzk1",
+    "parent": "uj89",
     "deck": "y4i4D",
     "type": "card",
     "cardType": "H 09",
-    "z": 1893
+    "z": 6039
   },
   "y4i4_T_H": {
     "id": "y4i4_T_H",
-    "parent": "dzk1",
+    "parent": "uj89",
     "deck": "y4i4D",
     "type": "card",
     "cardType": "H 10",
-    "z": 1871
+    "z": 6013
   },
   "y4i4_J_H": {
     "id": "y4i4_J_H",
-    "parent": "dzk1",
+    "parent": "uj89",
     "deck": "y4i4D",
     "type": "card",
     "cardType": "H 2J",
-    "z": 1913
+    "z": 6011
   },
   "y4i4_Q_H": {
     "id": "y4i4_Q_H",
-    "parent": "dzk1",
+    "parent": "uj89",
     "deck": "y4i4D",
     "type": "card",
     "cardType": "H 3Q",
-    "z": 1908
+    "z": 6015
   },
   "y4i4_K_H": {
     "id": "y4i4_K_H",
-    "parent": "dzk1",
+    "parent": "uj89",
     "deck": "y4i4D",
     "type": "card",
     "cardType": "H 4K",
-    "z": 1906
+    "z": 6051
   },
   "y4i4_A_S": {
     "id": "y4i4_A_S",
-    "parent": "dzk1",
+    "parent": "uj89",
     "deck": "y4i4D",
     "type": "card",
     "cardType": "S 01",
-    "z": 1907
+    "z": 6022
   },
   "y4i4_2_S": {
     "id": "y4i4_2_S",
-    "parent": "dzk1",
+    "parent": "uj89",
     "deck": "y4i4D",
     "type": "card",
     "cardType": "S 02",
-    "z": 1914
+    "z": 6031
   },
   "y4i4_3_S": {
     "id": "y4i4_3_S",
-    "parent": "dzk1",
+    "parent": "uj89",
     "deck": "y4i4D",
     "type": "card",
     "cardType": "S 03",
-    "z": 1884
+    "z": 6026
   },
   "y4i4_4_S": {
     "id": "y4i4_4_S",
-    "parent": "dzk1",
+    "parent": "uj89",
     "deck": "y4i4D",
     "type": "card",
     "cardType": "S 04",
-    "z": 1897
+    "z": 6016
   },
   "y4i4_5_S": {
     "id": "y4i4_5_S",
-    "parent": "dzk1",
+    "parent": "uj89",
     "deck": "y4i4D",
     "type": "card",
     "cardType": "S 05",
-    "z": 1911
+    "z": 6047
   },
   "y4i4_6_S": {
     "id": "y4i4_6_S",
-    "parent": "dzk1",
+    "parent": "uj89",
     "deck": "y4i4D",
     "type": "card",
     "cardType": "S 06",
-    "z": 1905
+    "z": 6030
   },
   "y4i4_7_S": {
     "id": "y4i4_7_S",
-    "parent": "dzk1",
+    "parent": "uj89",
     "deck": "y4i4D",
     "type": "card",
     "cardType": "S 07",
-    "z": 1885
+    "z": 6058
   },
   "y4i4_8_S": {
     "id": "y4i4_8_S",
-    "parent": "dzk1",
+    "parent": "uj89",
     "deck": "y4i4D",
     "type": "card",
     "cardType": "S 08",
-    "z": 1892
+    "z": 6053
   },
   "y4i4_9_S": {
     "id": "y4i4_9_S",
-    "parent": "dzk1",
+    "parent": "uj89",
     "deck": "y4i4D",
     "type": "card",
     "cardType": "S 09",
-    "z": 1904
+    "z": 6045
   },
   "y4i4_T_S": {
     "id": "y4i4_T_S",
-    "parent": "dzk1",
+    "parent": "uj89",
     "deck": "y4i4D",
     "type": "card",
     "cardType": "S 10",
-    "z": 1878
+    "z": 6025
   },
   "y4i4_J_S": {
     "id": "y4i4_J_S",
-    "parent": "dzk1",
+    "parent": "uj89",
     "deck": "y4i4D",
     "type": "card",
     "cardType": "S 2J",
-    "z": 1880
+    "z": 6060
   },
   "y4i4_Q_S": {
     "id": "y4i4_Q_S",
-    "parent": "dzk1",
+    "parent": "uj89",
     "deck": "y4i4D",
     "type": "card",
     "cardType": "S 3Q",
-    "z": 1882
+    "z": 6043
   },
   "y4i4_K_S": {
     "id": "y4i4_K_S",
-    "parent": "dzk1",
+    "parent": "uj89",
     "deck": "y4i4D",
     "type": "card",
     "cardType": "S 4K",
-    "z": 1868
+    "z": 6061
   },
   "deckHolder": {
     "type": "holder",
     "id": "deckHolder",
-    "x": 1378,
-    "y": 628,
+    "x": 430,
+    "y": 195,
     "dropTarget": {
       "type": "card"
+    },
+    "parent": "wse2",
+    "onEnter": {
+      "rotation": 0
     }
   },
   "recall": {
@@ -1411,47 +1297,462 @@
   "button5": {
     "type": "button",
     "id": "button5",
-    "x": 1395,
-    "y": 516,
-    "z": 1,
+    "x": 328,
+    "y": 248,
+    "z": 9734,
+    "clickRoutine": [
+      {
+        "func": "CLICK",
+        "collection": [
+          "recall"
+        ]
+      },
+      {
+        "func": "DELAY",
+        "milliseconds": 500
+      },
+      {
+        "func": "FOREACH",
+        "range": [
+          7
+        ],
+        "loopRoutine": [
+          {
+            "func": "FOREACH",
+            "range": [
+              3
+            ],
+            "loopRoutine": [
+              {
+                "func": "MOVE",
+                "from": "deckHolder",
+                "to": "holder${value}",
+                "face": 1
+              },
+              {
+                "func": "DELAY",
+                "milliseconds": 200
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "DELAY",
+        "milliseconds": 200
+      },
+      {
+        "func": "SELECT",
+        "property": "type",
+        "value": "card"
+      },
+      {
+        "func": "SET",
+        "property": "rotation",
+        "value": 0
+      }
+    ],
+    "text": "Deal",
+    "layer": -4,
+    "movableInEdit": false,
+    "parent": "wse2"
+  },
+  "holder1": {
+    "type": "holder",
+    "id": "holder1",
+    "width": 352,
+    "z": 130,
+    "stackOffsetX": 40,
+    "scale": 0.75,
+    "parent": "wse2",
+    "x": -44,
+    "css": {
+      "::after": {
+        "content": "'Player 1'",
+        "position": "absolute",
+        "font-size": "28px",
+        "top": "-35px"
+      }
+    },
+    "enterRoutine": [
+      "var random = randInt -10 10",
+      {
+        "func": "SET",
+        "property": "rotation",
+        "value": "${random}",
+        "collection": "child"
+      }
+    ]
+  },
+  "holder2": {
+    "type": "holder",
+    "id": "holder2",
+    "x": 242,
+    "width": 352,
+    "z": 130,
+    "stackOffsetX": 40,
+    "scale": 0.75,
+    "onEnter": {
+      "activeFace": 0
+    },
+    "parent": "wse2",
+    "css": {
+      "::after": {
+        "content": "'Player 2'",
+        "position": "absolute",
+        "font-size": "28px",
+        "top": "-35px",
+        "right": 0
+      }
+    },
+    "enterRoutine": [
+      "var random = randInt -10 10",
+      {
+        "func": "SET",
+        "property": "rotation",
+        "value": "${random}",
+        "collection": "child"
+      }
+    ]
+  },
+  "holder3": {
+    "type": "holder",
+    "id": "holder3",
+    "x": 242,
+    "y": 399,
+    "width": 352,
+    "z": 130,
+    "stackOffsetX": 40,
+    "scale": 0.75,
+    "onEnter": {
+      "activeFace": 0
+    },
+    "parent": "wse2",
+    "css": {
+      "::after": {
+        "content": "'Player 3'",
+        "position": "absolute",
+        "font-size": "28px",
+        "bottom": "-35px",
+        "right": 0
+      }
+    },
+    "enterRoutine": [
+      "var random = randInt -10 10",
+      {
+        "func": "SET",
+        "property": "rotation",
+        "value": "${random}",
+        "collection": "child"
+      }
+    ]
+  },
+  "uj89": {
+    "type": "pile",
+    "width": 103,
+    "height": 160,
+    "id": "uj89",
+    "z": 4963,
+    "parent": "deckHolder"
+  },
+  "wse2": {
+    "parent": null,
+    "x": 1030,
+    "y": 372,
+    "width": 550,
+    "height": 616,
+    "layer": -3,
+    "editorGroup": true,
+    "movable": false,
+    "id": "wse2"
+  },
+  "bjw6": {
+    "parent": null,
+    "x": 19,
+    "y": 372,
+    "width": 300,
+    "height": 274,
+    "layer": -3,
+    "editorGroup": true,
+    "movable": false,
+    "id": "bjw6"
+  },
+  "921i": {
+    "parent": null,
+    "x": 693,
+    "y": 372,
+    "width": 300,
+    "height": 278,
+    "layer": -3,
+    "editorGroup": true,
+    "movable": false,
+    "id": "921i"
+  },
+  "2vs1": {
+    "parent": null,
+    "x": 356,
+    "y": 372,
+    "width": 300,
+    "height": 284,
+    "layer": -3,
+    "editorGroup": true,
+    "movable": false,
+    "id": "2vs1"
+  },
+  "r3kz": {
+    "parent": "2vs1",
+    "x": 50,
+    "y": 88,
+    "width": 199,
+    "height": 80,
+    "layer": -3,
+    "editorGroup": true,
+    "movable": false,
+    "id": "r3kz"
+  },
+  "fcze": {
+    "parent": "2vs1",
+    "x": 37,
+    "y": 21,
+    "width": 225,
+    "height": 50,
+    "layer": -3,
+    "editorGroup": true,
+    "movable": false,
+    "id": "fcze"
+  },
+  "scoreU": {
+    "type": "button",
+    "id": "scoreU",
+    "parent": "score",
+    "fixedParent": true,
+    "x": 169,
+    "y": 57,
+    "width": 36,
+    "height": 36,
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": "font-size: 28px",
+    "text": "add",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 1
+      }
+    ]
+  },
+  "scoreD": {
+    "type": "button",
+    "id": "scoreD",
+    "parent": "score",
+    "fixedParent": true,
+    "x": 95,
+    "y": 57,
+    "width": 36,
+    "height": 36,
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": "font-size: 28px",
+    "text": "remove",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 1
+      }
+    ]
+  },
+  "scoreD1": {
+    "type": "button",
+    "id": "scoreD1",
+    "parent": "score",
+    "fixedParent": true,
+    "y": 57,
+    "width": 36,
+    "height": 36,
+    "movableInEdit": false,
+    "css": "font-size: 20px;line-height:1;",
+    "text": "-5",
     "clickRoutine": [
       {
         "func": "FOREACH",
         "range": [
-          10
+          1,
+          5
         ],
         "loopRoutine": [
           {
-            "func": "MOVE",
-            "from": "deckHolder",
-            "to": "holder",
-            "face": 1
+            "func": "CLICK",
+            "collection": [
+              "scoreD"
+            ]
           },
           {
             "func": "DELAY",
-            "milliseconds": 500
+            "milliseconds": 25
           }
         ]
       }
     ],
-    "text": "Deal",
-    "layer": -4
+    "x": 50
   },
-  "holder": {
-    "type": "holder",
-    "id": "holder",
-    "x": 975,
-    "y": 330,
-    "width": 600,
-    "z": 130,
-    "stackOffsetX": 40
+  "scoreD2": {
+    "type": "button",
+    "id": "scoreD2",
+    "parent": "score",
+    "fixedParent": true,
+    "y": 57,
+    "width": 45,
+    "height": 36,
+    "movableInEdit": false,
+    "css": "font-size: 20px;line-height:1;",
+    "text": "-10",
+    "clickRoutine": [
+      {
+        "func": "FOREACH",
+        "range": [
+          1,
+          10
+        ],
+        "loopRoutine": [
+          {
+            "func": "CLICK",
+            "collection": [
+              "scoreD"
+            ]
+          },
+          {
+            "func": "DELAY",
+            "milliseconds": 25
+          }
+        ]
+      }
+    ]
   },
-  "dzk1": {
-    "type": "pile",
-    "width": 103,
-    "height": 160,
-    "id": "dzk1",
-    "z": 1922,
-    "parent": "deckHolder"
+  "scoreD3": {
+    "type": "button",
+    "id": "scoreD3",
+    "parent": "score",
+    "fixedParent": true,
+    "x": 214,
+    "y": 57,
+    "width": 36,
+    "height": 36,
+    "movableInEdit": false,
+    "css": "font-size: 20px;line-height:1;",
+    "text": "+5",
+    "clickRoutine": [
+      {
+        "func": "FOREACH",
+        "range": [
+          1,
+          5
+        ],
+        "loopRoutine": [
+          {
+            "func": "CLICK",
+            "collection": [
+              "scoreU"
+            ]
+          },
+          {
+            "func": "DELAY",
+            "milliseconds": 25
+          }
+        ]
+      }
+    ]
+  },
+  "scoreD4": {
+    "type": "button",
+    "id": "scoreD4",
+    "parent": "score",
+    "fixedParent": true,
+    "x": 255,
+    "y": 57,
+    "width": 45,
+    "height": 36,
+    "movableInEdit": false,
+    "css": "font-size: 20px;line-height:1;",
+    "text": "+10",
+    "clickRoutine": [
+      {
+        "func": "FOREACH",
+        "range": [
+          1,
+          10
+        ],
+        "loopRoutine": [
+          {
+            "func": "CLICK",
+            "collection": [
+              "scoreU"
+            ]
+          },
+          {
+            "func": "DELAY",
+            "milliseconds": 25
+          }
+        ]
+      }
+    ]
+  },
+  "score": {
+    "type": "label",
+    "id": "score",
+    "width": 300,
+    "height": 70,
+    "css": "font-size: 60px;line-height:1;font-weight:bold;",
+    "editable": true,
+    "text": 0,
+    "z": 2,
+    "parent": "921i",
+    "y": 21
+  },
+  "text2": {
+    "id": "text2",
+    "y": 195,
+    "width": 300,
+    "z": 121,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "22px"
+    },
+    "html": "The score counter has extra buttons that increment and decriment by 5 and 10. A small DELAY is used to show the score changing to give extra feedback to all users who may miss the sudden jumps.",
+    "parent": "921i"
+  },
+  "_meta": {
+    "version": 18,
+    "gameSettings": {
+      "legacyModes": {}
+    },
+    "info": {
+      "name": "Functions - DELAY",
+      "image": "/assets/-892212102_3618",
+      "rules": "",
+      "bgg": "",
+      "year": "",
+      "mode": "Tutorial",
+      "time": "",
+      "attribution": "",
+      "lastUpdate": 1761328501043,
+      "showName": false,
+      "skill": "",
+      "description": "",
+      "similarImage": "",
+      "similarName": "",
+      "similarDesigner": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": "",
+      "variantImage": "",
+      "variant": "",
+      "language": "en-US",
+      "players": "1"
+    }
   }
 }
