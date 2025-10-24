@@ -144,6 +144,9 @@ class Holder extends Widget {
   }
 
   async receiveCard(card, pos) {
+    if(this.usesSmartRearrange())
+      return await this.receiveCard_smart(card, pos);
+
     const soX = this.get('stackOffsetX');
     const soY = this.get('stackOffsetY');
     // get children sorted by X or Y position
@@ -154,6 +157,34 @@ class Holder extends Widget {
       return (soY == 'auto' ? 1 : soY) * ((a == card ? pos[1] : a.get('y')) - (b == card ? pos[1] : b.get('y')));
     });
     await this.rearrangeChildren(children, card);
+  }
+
+  async receiveCard_smart(card, pos) {
+    const children = this.childrenOwned();
+    
+    // Find the nearest y value from existing children to snap to the correct row
+    const existingYValues = children.filter(c => c !== card).map(c => c.get('y'));
+    let snappedY = 0;
+    if(card && pos) {
+      snappedY = pos[1];
+
+      if(existingYValues.length > 0) {
+        snappedY = existingYValues.reduce((nearest, y) => 
+          Math.abs(y - pos[1]) < Math.abs(nearest - pos[1]) ? y : nearest
+        );
+      }
+    }
+    
+    const sortedChildren = children.sort((a, b)=>{
+      const aX = a == card ? pos[0] : a.get('x');
+      const aY = a == card ? snappedY : a.get('y');
+      const bX = b == card ? pos[0] : b.get('x');
+      const bY = b == card ? snappedY : b.get('y');
+      if(aY == bY)
+        return aX - bX;
+      return aY - bY;
+    });
+    await this.rearrangeChildren(sortedChildren, card);
   }
 
   async rearrangeChildren(children, card) {
