@@ -186,6 +186,100 @@ class WidgetsModule extends SidebarModule {
       item.addEventListener('dragstart', e => {
         e.dataTransfer.setData('text/plain', JSON.stringify({id: widgetId, source}));
         e.dataTransfer.effectAllowed = 'copy';
+
+        const widgetBuffer = JSON.parse(JSON.stringify(state.widgets));
+        if (!widgetBuffer || widgetBuffer.length === 0) return;
+
+        const previewContainer = document.createElement('div');
+        previewContainer.style.position = 'absolute';
+        previewContainer.style.left = '-9999px';
+
+        const idMap = new Map();
+        const tempWidgetInstances = new Map();
+        const cards = [];
+        const others = [];
+
+        for (const s of widgetBuffer) {
+            if (s.type === 'card') {
+                cards.push(s);
+            } else {
+                others.push(s);
+            }
+        }
+
+        const rootWidgets = widgetBuffer.filter(s => !s.parent || !widgetBuffer.some(p => p.id === s.parent));
+        let minX = rootWidgets.length > 0 ? Infinity : 0;
+        let minY = rootWidgets.length > 0 ? Infinity : 0;
+        for (const s of rootWidgets) {
+            minX = Math.min(minX, s.x || 0);
+            minY = Math.min(minY, s.y || 0);
+        }
+
+        const createInstances = (statesToProcess) => {
+            for (const s of statesToProcess) {
+                const tempId = `drag-preview-${Date.now()}-${Math.random()}`;
+                idMap.set(s.id, tempId);
+                let previewWidget;
+                switch (s.type) {
+                    case 'button': previewWidget = new Button(tempId); break;
+                    case 'canvas': previewWidget = new Canvas(tempId); break;
+                    case 'card': previewWidget = new Card(tempId); break;
+                    case 'deck': previewWidget = new Deck(tempId); break;
+                    case 'dice': previewWidget = new Dice(tempId); break;
+                    case 'holder': previewWidget = new Holder(tempId); break;
+                    case 'label': previewWidget = new Label(tempId); break;
+                    case 'pile': previewWidget = new Pile(tempId); break;
+                    case 'scoreboard': previewWidget = new Scoreboard(tempId); break;
+                    case 'seat': previewWidget = new Seat(tempId); break;
+                    case 'spinner': previewWidget = new Spinner(tempId); break;
+                    case 'timer': previewWidget = new Timer(tempId); break;
+                    default: previewWidget = new BasicWidget(tempId); break;
+                }
+                tempWidgetInstances.set(tempId, previewWidget);
+            }
+        };
+
+        const applyDeltasAndRender = (statesToProcess) => {
+            for (const s of statesToProcess) {
+                const tempId = idMap.get(s.id);
+                const previewWidget = tempWidgetInstances.get(tempId);
+                widgets.set(tempId, previewWidget);
+
+                const tempState = JSON.parse(JSON.stringify(s));
+                tempState.id = tempId;
+                
+                const parentId = tempState.parent ? idMap.get(tempState.parent) : null;
+                if (parentId) {
+                    tempState.parent = parentId;
+                } else {
+                    tempState.x = (s.x || 0) - minX;
+                    tempState.y = (s.y || 0) - minY;
+                }
+                if (tempState.deck) tempState.deck = idMap.get(tempState.deck);
+
+                previewWidget.applyInitialDelta(tempState);
+
+                if (!parentId) {
+                    previewContainer.appendChild(previewWidget.domElement);
+                }
+            }
+        };
+
+        createInstances(others);
+        createInstances(cards);
+
+        applyDeltasAndRender(others);
+        applyDeltasAndRender(cards);
+        
+        document.body.appendChild(previewContainer);
+        e.dataTransfer.setDragImage(previewContainer, e.offsetX, e.offsetY);
+
+        setTimeout(() => {
+            for (const tempId of tempWidgetInstances.keys()) {
+                widgets.delete(tempId);
+            }
+            document.body.removeChild(previewContainer);
+        }, 0);
       });
 
       const input = item.querySelector('input');
@@ -253,7 +347,7 @@ class WidgetsModule extends SidebarModule {
       .then(() => this.renderWidgetBuffer());
   }
 
-  async button_loadWidgetFromBuffer(widgetData) {
+  async placeWidgetFromBuffer(widgetData, coords) {
     const widgetBuffer = JSON.parse(JSON.stringify(widgetData.widgets));
     const idMap = {};
 
@@ -285,6 +379,7 @@ class WidgetsModule extends SidebarModule {
     batchStart();
     setDeltaCause(`${getPlayerDetails().playerName} loaded widgets from the widget buffer in editor`);
 
+    const newRootWidgetIds = [];
     const cards = [];
     const others = [];
     for (const state of widgetBuffer) {
@@ -295,17 +390,43 @@ class WidgetsModule extends SidebarModule {
       }
     }
 
+    const rootWidgets = widgetBuffer.filter(state => !widgetBuffer.some(w => w.id === state.parent) && !widgets.has(state.parent));
+    let offsetX = 0;
+    let offsetY = 0;
+
+    if (coords && rootWidgets.length > 0) {
+        let minX = Infinity;
+        let minY = Infinity;
+        for (const w of rootWidgets) {
+            minX = Math.min(minX, w.x || 0);
+            minY = Math.min(minY, w.y || 0);
+        }
+        offsetX = coords.x - minX;
+        offsetY = coords.y - minY;
+    }
+
     const processWidgets = async (widgetsToProcess) => {
       for (const state of widgetsToProcess) {
-        if (!widgetBuffer.some(w => w.id === state.parent) && !widgets.has(state.parent)) {
+        const isRoot = !widgetBuffer.some(w => w.id === state.parent) && !widgets.has(state.parent);
+
+        if (isRoot) {
+          if (coords) {
+            state.x = (state.x || 0) + offsetX;
+            state.y = (state.y || 0) + offsetY;
+          } else {
+            delete state.x;
+            delete state.y;
+          }
           delete state.parent;
-          delete state.x;
-          delete state.y;
         }
+
         if (state.type === 'card' && !widgetBuffer.some(w => w.id === state.deck) && !widgets.has(state.deck)) {
           console.error(`Widget ${state.id} references a deck that is not in the buffer and is not already in the room. It will not be loaded.`);
         } else {
-          await addWidgetLocal(state);
+          const newId = await addWidgetLocal(state);
+          if (isRoot) {
+            newRootWidgetIds.push(newId);
+          }
         }
       }
     };
@@ -314,5 +435,10 @@ class WidgetsModule extends SidebarModule {
     await processWidgets(cards);
 
     batchEnd();
+    return newRootWidgetIds;
+  }
+
+  async button_loadWidgetFromBuffer(widgetData) {
+    this.placeWidgetFromBuffer(widgetData);
   }
 }

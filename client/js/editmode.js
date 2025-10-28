@@ -1380,6 +1380,25 @@ async function duplicateWidget(widget, recursive, inheritFrom, inheritProperties
   return clonedWidgets;
 }
 
+async function placeWidget(widgetId, source, coords) {
+  const widgetsModule = sidebarModules.find(m => m instanceof WidgetsModule);
+  if (!widgetsModule) {
+    console.error('WidgetsModule not found.');
+    return;
+  }
+
+  const allWidgets = await widgetsModule.getWidgets(source);
+  const widgetData = allWidgets.find(w => w.id === widgetId);
+
+  if (widgetData) {
+    const newWidgetIds = await widgetsModule.placeWidgetFromBuffer(widgetData, coords);
+    const newWidgets = newWidgetIds.map(id => widgets.get(id)).filter(Boolean);
+    setSelection(newWidgets);
+  } else {
+    console.error(`Widget with id ${widgetId} not found in ${source}.`);
+  }
+}
+
 export function initializeEditMode(currentMetaData) {
   const div = document.createElement('div');
   div.innerHTML = ' //*** HTML ***// ';
@@ -1395,6 +1414,25 @@ export function initializeEditMode(currentMetaData) {
   jeInitEventListeners();
   initializeTraceViewer();
   initializeEditor(currentMetaData);
+
+  $('#roomArea').addEventListener('drop', async e => {
+    e.preventDefault();
+    const data = e.dataTransfer.getData('text/plain');
+    if (!data) return;
+
+    try {
+      const { id, source } = JSON.parse(data);
+      const coords = eventCoords('drop', e);
+      await placeWidget(id, source, coords);
+    } catch (error) {
+      console.error('Failed to parse widget data on drop:', error);
+    }
+  });
+
+  $('#roomArea').addEventListener('dragover', e => {
+    e.preventDefault();
+    e.dataTransfer.dropEffect = 'copy';
+  });
 
   // This now adds an empty basic widget
   on('#addBasicWidget', 'click', async function() {
