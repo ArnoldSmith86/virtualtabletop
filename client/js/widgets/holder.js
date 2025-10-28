@@ -78,6 +78,31 @@ class Holder extends Widget {
       await this.evaluateRoutine('leaveRoutine', {}, { child: [ card ] });
   }
 
+  get(property) {
+    if(property == 'dropOffsetX') {
+      if(this.usesSmartRearrange() && this.supportsPiles_smart()) {
+        const children = this.children();
+        const biggestWidth = Math.max(...children.map(c=>c.get('width')));
+        return (super.get('width') - biggestWidth) / 2;
+      }
+      return super.get(property);
+    }
+    if(property == 'dropOffsetY') {
+      if(this.usesSmartRearrange() && this.supportsPiles_smart()) {
+        const children = this.children();
+        const biggestHeight = Math.max(...children.map(c=>c.get('height')));
+        return (super.get('height') - biggestHeight) / 2;
+      }
+      return super.get(property);
+    }
+    if(property == 'stackOffsetX' || property == 'stackOffsetY') {
+      if(this.usesSmartRearrange() && this.supportsPiles_smart())
+        return 0;
+      return super.get(property);
+    }
+    return super.get(property);
+  }
+
   async onChildAdd(child, oldParentID) {
     await super.onChildAdd(child, oldParentID);
     if(child.get('type') == 'deck')
@@ -126,6 +151,9 @@ class Holder extends Widget {
       return true;
     }
 
+    if(this.usesSmartRearrange())
+      await this.updatePile_smart(false);
+
     if(!this.get('alignChildren') || !this.get('stackOffsetX') && !this.get('stackOffsetY'))
       await super.onChildAddAlign(child, oldParentID);
     else if(child.movedByButton)
@@ -137,8 +165,12 @@ class Holder extends Widget {
   async onPropertyChange(property, oldValue, newValue) {
     await super.onPropertyChange(property, oldValue, newValue);
     if(property == 'dropOffsetX' || property == 'dropOffsetY' || property == 'stackOffsetX' || property == 'stackOffsetY') {
+      if(this.usesSmartRearrange())
+        await this.updatePile_smart(true);
       await this.updateAfterShuffle();
     } else if((property == 'width' || property == 'height') && this.usesSmartRearrange()) {
+      if(this.usesSmartRearrange())
+        await this.updatePile_smart(true);
       await this.updateAfterShuffle();
     }
   }
@@ -229,13 +261,6 @@ class Holder extends Widget {
     const useMultipleColumns = biggestWidth *1.5 < this.get('width' ) && this.get('stackOffsetX');
     const useMultipleRows    = biggestHeight*1.5 < this.get('height') && this.get('stackOffsetY');
 
-    if((useMultipleColumns || useMultipleRows) && this.smartPile) {
-      this.smartPile = false;
-      // dissolve pile
-      for(const child of children)
-        await child.set('parent', this.get('id'));
-    }
-
     if(useMultipleColumns && useMultipleRows) {
       // Calculate optimal number of rows to maximize visible area per card
       const padding = 4;
@@ -318,24 +343,22 @@ class Holder extends Widget {
         yOffset += offsetY;
       }
     }
-
-    if(!useMultipleColumns && !useMultipleRows && !this.smartPile) {
-      this.smartPile = true;
-      let z = 1;
-      for(const child of children) {
-        //await child.setPosition((this.get('width') - biggestWidth) / 2, (this.get('height') - biggestHeight) / 2, z++);
-        await child.setPosition(0, 0, z++);
-        await child.updatePiles();
-      }
-    }
   }
 
   supportsPiles() {
-    return !this.get('preventPiles') && (!this.get('alignChildren') || !this.get('stackOffsetX') && !this.get('stackOffsetY') || this.usesSmartRearrange() && this.supportsPiles_smart());
+    return !this.get('preventPiles') && (!this.get('alignChildren') || !this.get('stackOffsetX') && !this.get('stackOffsetY'));
   }
 
   supportsPiles_smart() {
-    return this.smartPile;
+    let biggestWidth = 0;
+    let biggestHeight = 0;
+    for(const child of this.children()) {
+      if(child.get('width') > biggestWidth)
+        biggestWidth = child.get('width');
+      if(child.get('height') > biggestHeight)
+        biggestHeight = child.get('height');
+    }
+    return biggestWidth*1.5 >= super.get('width') && biggestHeight*1.5 >= super.get('height');
   }
 
   async updateAfterShuffle() {
@@ -350,7 +373,38 @@ class Holder extends Widget {
     }
   }
 
+  async updatePile_smart(formPiles) {
+    const children = this.children();
+    const widths = children.map(c=>c.get('width'));
+    const heights = children.map(c=>c.get('height'));
+    const biggestWidth  = Math.max(...widths);
+    const biggestHeight = Math.max(...heights);
+    const useMultipleColumns = biggestWidth *1.5 < this.get('width' ) && this.get('stackOffsetX');
+    const useMultipleRows    = biggestHeight*1.5 < this.get('height') && this.get('stackOffsetY');
+
+    if((useMultipleColumns || useMultipleRows) && super.children().filter(c=>c.get('type') == 'pile').length) {
+      // dissolve pile when there is enough space to arrange cards
+      for(const child of children)
+        await child.set('parent', this.get('id'));
+    }
+
+    if(formPiles && !useMultipleColumns && !useMultipleRows && !super.children().filter(c=>c.get('type') == 'pile').length) {
+      // form pile when there is not enough space to arrange cards
+      let z = 1;
+      for(const child of children) {
+        await child.setPosition(0, 0, z++);
+        await child.updatePiles();
+      }
+    }
+
+    if(!useMultipleColumns && !useMultipleRows) {
+      const pile = super.children().filter(c=>c.get('type') == 'pile')[0];
+      if(pile)
+        pile.setPosition(this.get('dropOffsetX'), this.get('dropOffsetY'), pile.get('z'));
+    }
+  }
+
   usesSmartRearrange() {
-    return [ 'left', 'center', 'right' ].includes(this.get('dropOffsetX')) || [ 'top', 'center', 'bottom' ].includes(this.get('dropOffsetY')) || this.get('stackOffsetX') == 'auto' || this.get('stackOffsetY') == 'auto';
+    return [ 'left', 'center', 'right' ].includes(super.get('dropOffsetX')) || [ 'top', 'center', 'bottom' ].includes(super.get('dropOffsetY')) || super.get('stackOffsetX') == 'auto' || super.get('stackOffsetY') == 'auto';
   }
 }
