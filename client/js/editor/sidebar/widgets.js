@@ -26,14 +26,7 @@ class WidgetsModule extends SidebarModule {
     $('#editWidgetsButton', d).onclick = e => {
         this.currentContents.classList.toggle('editing');
         e.currentTarget.classList.toggle('active');
-        const isEditing = this.currentContents.classList.contains('editing');
-        for (const li of this.currentContents.querySelectorAll('li')) {
-            const source = li.dataset.source;
-            const isServerWidgetReadonly = source === 'server' && !config.allowPublicLibraryEdits;
-            for (const input of li.querySelectorAll('input')) {
-                input.readOnly = isServerWidgetReadonly || !isEditing;
-            }
-        }
+        this.renderWidgetBuffer($('#widgetFilter', d).value);
     };
     $('#saveWidgetsToBuffer', d).onclick = e => this.button_saveWidgetsToBuffer();
     $('#saveWidgetsToBuffer', d).disabled = !selectedWidgets.length;
@@ -136,7 +129,7 @@ class WidgetsModule extends SidebarModule {
     for(const state of filteredWidgets) {
       const widgetTypes = [...new Set(state.widgets.map(w => w.type || 'basic'))].join(', ');
       list += `
-        <li data-id="${state.id}" data-source="${source}" draggable="${source === 'local' || config.allowPublicLibraryEdits}">
+        <li data-id="${state.id}" data-source="${source}">
           <span class="drag-handle"></span>
           <div class="widget-info">
             <input value="${html(state.name || state.id)}" readonly>
@@ -174,6 +167,8 @@ class WidgetsModule extends SidebarModule {
       </div>
     `;
 
+    const isEditing = this.currentContents.classList.contains('editing');
+
     for(const item of this.currentContents.querySelectorAll('li')) {
       const widgetId = item.dataset.id;
       const source = item.dataset.source;
@@ -183,112 +178,164 @@ class WidgetsModule extends SidebarModule {
         item.classList.add('readonly');
       }
 
+      const input = item.querySelector('input');
+      input.readOnly = (source === 'server' && !config.allowPublicLibraryEdits) || !isEditing;
+      item.draggable = isEditing || source === 'local' || config.allowPublicLibraryEdits;
+
       item.addEventListener('dragstart', e => {
-        e.dataTransfer.setData('text/plain', JSON.stringify({id: widgetId, source}));
-        e.dataTransfer.effectAllowed = 'copy';
+        if (isEditing) {
+            e.dataTransfer.setData('text/plain', JSON.stringify({ id: widgetId, source, action: 'reorder' }));
+            e.dataTransfer.effectAllowed = 'move';
+            item.classList.add('dragging');
+        } else {
+            e.dataTransfer.setData('text/plain', JSON.stringify({id: widgetId, source}));
+            e.dataTransfer.effectAllowed = 'copy';
 
-        const widgetBuffer = JSON.parse(JSON.stringify(state.widgets));
-        if (!widgetBuffer || widgetBuffer.length === 0) return;
+            const widgetBuffer = JSON.parse(JSON.stringify(state.widgets));
+            if (!widgetBuffer || widgetBuffer.length === 0) return;
 
-        const previewContainer = document.createElement('div');
-        previewContainer.style.position = 'absolute';
-        previewContainer.style.left = '-9999px';
+            const previewContainer = document.createElement('div');
+            previewContainer.style.position = 'absolute';
+            previewContainer.style.left = '-9999px';
 
-        const idMap = new Map();
-        const tempWidgetInstances = new Map();
-        const cards = [];
-        const others = [];
+            const idMap = new Map();
+            const tempWidgetInstances = new Map();
+            const cards = [];
+            const others = [];
 
-        for (const s of widgetBuffer) {
-            if (s.type === 'card') {
-                cards.push(s);
-            } else {
-                others.push(s);
-            }
-        }
-
-        const rootWidgets = widgetBuffer.filter(s => !s.parent || !widgetBuffer.some(p => p.id === s.parent));
-        let minX = rootWidgets.length > 0 ? Infinity : 0;
-        let minY = rootWidgets.length > 0 ? Infinity : 0;
-        for (const s of rootWidgets) {
-            minX = Math.min(minX, s.x || 0);
-            minY = Math.min(minY, s.y || 0);
-        }
-
-        const createInstances = (statesToProcess) => {
-            for (const s of statesToProcess) {
-                const tempId = `drag-preview-${Date.now()}-${Math.random()}`;
-                idMap.set(s.id, tempId);
-                let previewWidget;
-                switch (s.type) {
-                    case 'button': previewWidget = new Button(tempId); break;
-                    case 'canvas': previewWidget = new Canvas(tempId); break;
-                    case 'card': previewWidget = new Card(tempId); break;
-                    case 'deck': previewWidget = new Deck(tempId); break;
-                    case 'dice': previewWidget = new Dice(tempId); break;
-                    case 'holder': previewWidget = new Holder(tempId); break;
-                    case 'label': previewWidget = new Label(tempId); break;
-                    case 'pile': previewWidget = new Pile(tempId); break;
-                    case 'scoreboard': previewWidget = new Scoreboard(tempId); break;
-                    case 'seat': previewWidget = new Seat(tempId); break;
-                    case 'spinner': previewWidget = new Spinner(tempId); break;
-                    case 'timer': previewWidget = new Timer(tempId); break;
-                    default: previewWidget = new BasicWidget(tempId); break;
-                }
-                tempWidgetInstances.set(tempId, previewWidget);
-            }
-        };
-
-        const applyDeltasAndRender = (statesToProcess) => {
-            for (const s of statesToProcess) {
-                const tempId = idMap.get(s.id);
-                const previewWidget = tempWidgetInstances.get(tempId);
-                widgets.set(tempId, previewWidget);
-
-                const tempState = JSON.parse(JSON.stringify(s));
-                tempState.id = tempId;
-                
-                const parentId = tempState.parent ? idMap.get(tempState.parent) : null;
-                if (parentId) {
-                    tempState.parent = parentId;
+            for (const s of widgetBuffer) {
+                if (s.type === 'card') {
+                    cards.push(s);
                 } else {
-                    tempState.x = (s.x || 0) - minX;
-                    tempState.y = (s.y || 0) - minY;
-                }
-                if (tempState.deck) tempState.deck = idMap.get(tempState.deck);
-
-                previewWidget.applyInitialDelta(tempState);
-
-                if (!parentId) {
-                    previewContainer.appendChild(previewWidget.domElement);
+                    others.push(s);
                 }
             }
-        };
 
-        createInstances(others);
-        createInstances(cards);
-
-        applyDeltasAndRender(others);
-        applyDeltasAndRender(cards);
-        
-        document.body.appendChild(previewContainer);
-        e.dataTransfer.setDragImage(previewContainer, 0, 0);
-
-        setTimeout(() => {
-            for (const tempId of tempWidgetInstances.keys()) {
-                widgets.delete(tempId);
+            const rootWidgets = widgetBuffer.filter(s => !s.parent || !widgetBuffer.some(p => p.id === s.parent));
+            let minX = rootWidgets.length > 0 ? Infinity : 0;
+            let minY = rootWidgets.length > 0 ? Infinity : 0;
+            for (const s of rootWidgets) {
+                minX = Math.min(minX, s.x || 0);
+                minY = Math.min(minY, s.y || 0);
             }
-            document.body.removeChild(previewContainer);
-        }, 0);
+
+            const createInstances = (statesToProcess) => {
+                for (const s of statesToProcess) {
+                    const tempId = `drag-preview-${Date.now()}-${Math.random()}`;
+                    idMap.set(s.id, tempId);
+                    let previewWidget;
+                    switch (s.type) {
+                        case 'button': previewWidget = new Button(tempId); break;
+                        case 'canvas': previewWidget = new Canvas(tempId); break;
+                        case 'card': previewWidget = new Card(tempId); break;
+                        case 'deck': previewWidget = new Deck(tempId); break;
+                        case 'dice': previewWidget = new Dice(tempId); break;
+                        case 'holder': previewWidget = new Holder(tempId); break;
+                        case 'label': previewWidget = new Label(tempId); break;
+                        case 'pile': previewWidget = new Pile(tempId); break;
+                        case 'scoreboard': previewWidget = new Scoreboard(tempId); break;
+                        case 'seat': previewWidget = new Seat(tempId); break;
+                        case 'spinner': previewWidget = new Spinner(tempId); break;
+                        case 'timer': previewWidget = new Timer(tempId); break;
+                        default: previewWidget = new BasicWidget(tempId); break;
+                    }
+                    tempWidgetInstances.set(tempId, previewWidget);
+                }
+            };
+
+            const applyDeltasAndRender = (statesToProcess) => {
+                for (const s of statesToProcess) {
+                    const tempId = idMap.get(s.id);
+                    const previewWidget = tempWidgetInstances.get(tempId);
+                    widgets.set(tempId, previewWidget);
+
+                    const tempState = JSON.parse(JSON.stringify(s));
+                    tempState.id = tempId;
+                    
+                    const parentId = tempState.parent ? idMap.get(tempState.parent) : null;
+                    if (parentId) {
+                        tempState.parent = parentId;
+                    } else {
+                        tempState.x = (s.x || 0) - minX;
+                        tempState.y = (s.y || 0) - minY;
+                    }
+                    if (tempState.deck) tempState.deck = idMap.get(tempState.deck);
+
+                    previewWidget.applyInitialDelta(tempState);
+
+                    if (!parentId) {
+                        previewContainer.appendChild(previewWidget.domElement);
+                    }
+                }
+            };
+
+            createInstances(others);
+            createInstances(cards);
+
+            applyDeltasAndRender(others);
+            applyDeltasAndRender(cards);
+            
+            document.body.appendChild(previewContainer);
+            e.dataTransfer.setDragImage(previewContainer, 0, 0);
+
+            setTimeout(() => {
+                for (const tempId of tempWidgetInstances.keys()) {
+                    widgets.delete(tempId);
+                }
+                document.body.removeChild(previewContainer);
+            }, 0);
+        }
       });
 
-      const input = item.querySelector('input');
+      item.addEventListener('dragend', e => {
+          item.classList.remove('dragging');
+      });
+
+      item.addEventListener('dragover', e => {
+          if (isEditing) {
+              e.preventDefault();
+              item.classList.add('drag-over');
+          }
+      });
+
+      item.addEventListener('dragleave', e => {
+          if (isEditing) {
+              item.classList.remove('drag-over');
+          }
+      });
+
+      item.addEventListener('drop', async e => {
+          if (isEditing) {
+              e.preventDefault();
+              e.stopPropagation();
+              item.classList.remove('drag-over');
+              const data = JSON.parse(e.dataTransfer.getData('text/plain'));
+              if (data.action !== 'reorder') return;
+
+              const draggedId = data.id;
+              const targetId = item.dataset.id;
+              const source = data.source;
+
+              if (draggedId === targetId) return;
+
+              const widgets = await this.getWidgets(source);
+              const draggedIndex = widgets.findIndex(w => w.id === draggedId);
+              const targetIndex = widgets.findIndex(w => w.id === targetId);
+
+              if (draggedIndex !== -1 && targetIndex !== -1) {
+                  const [draggedWidget] = widgets.splice(draggedIndex, 1);
+                  widgets.splice(targetIndex, 0, draggedWidget);
+                  await this.updateAllWidgets(widgets, source);
+                  this.renderWidgetBuffer(filter);
+              }
+          }
+      });
+
       input.onchange = e => {
         if (source === 'server' && !config.allowPublicLibraryEdits) return;
         state.name = e.target.value;
         this.updateWidget(state, source);
       };
-      input.readOnly = !this.currentContents.classList.contains('editing');
       item.querySelector('[icon=add]').onclick = e => this.button_loadWidgetFromBuffer(state);
       const deleteButton = item.querySelector('[icon=delete]');
       if (source === 'server' && !config.allowPublicLibraryEdits) {
@@ -311,12 +358,18 @@ class WidgetsModule extends SidebarModule {
     for (const list of this.currentContents.querySelectorAll('.widget-list')) {
       list.addEventListener('dragover', e => {
         e.preventDefault();
-        e.dataTransfer.dropEffect = 'copy';
+        if (isEditing) {
+            e.dataTransfer.dropEffect = 'move';
+        } else {
+            e.dataTransfer.dropEffect = 'copy';
+        }
       });
 
       list.addEventListener('drop', async e => {
         e.preventDefault();
-        const { id, source } = JSON.parse(e.dataTransfer.getData('text/plain'));
+        const data = JSON.parse(e.dataTransfer.getData('text/plain'));
+        if (data.action === 'reorder') return;
+        const { id, source } = data;
         const targetList = e.currentTarget.classList.contains('server-list') ? 'server' : 'local';
 
         if (source === targetList) return;
@@ -342,7 +395,7 @@ class WidgetsModule extends SidebarModule {
       addRecursively(widget, widgetBuffer);
     
     const defaultTarget = config.allowPublicLibraryEdits ? 'server' : 'local';
-    const name = selectedWidgets.length === 1 ? selectedWidgets[0].id : undefined;
+    const name = selectedWidgets.length === 1 ? selectedWidgets.id : undefined;
     this.createWidget({name, widgets: widgetBuffer}, defaultTarget)
       .then(() => this.renderWidgetBuffer());
   }

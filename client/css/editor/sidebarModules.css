@@ -372,6 +372,15 @@
 .inventory.editorModule li.dragging {
   opacity: 0.5;
 }
+.inventory.editorModule li.drag-over {
+  background-color: var(--backgroundHighlightColor2);
+}
+.inventory.editorModule li.drag-over {
+  background-color: var(--backgroundHighlightColor2);
+}
+.inventory.editorModule li.drag-over {
+  background-color: var(--backgroundHighlightColor2);
+}
 
 .inventory.editorModule ul {
   list-style: none;
