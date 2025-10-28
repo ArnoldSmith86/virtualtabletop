@@ -184,6 +184,7 @@ class WidgetsModule extends SidebarModule {
 
       const input = item.querySelector('input');
       input.onchange = e => {
+        if (source === 'server' && !config.allowPublicLibraryEdits) return;
         state.name = e.target.value;
         this.updateWidget(state, source);
       };
@@ -201,6 +202,7 @@ class WidgetsModule extends SidebarModule {
       };
 
       item.querySelector('.unique-widget-label input').onchange = e => {
+        if (source === 'server' && !config.allowPublicLibraryEdits) return;
         state.unique = e.target.checked;
         this.updateWidget(state, source);
       };
