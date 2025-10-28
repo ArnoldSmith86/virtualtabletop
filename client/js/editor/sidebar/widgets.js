@@ -17,8 +17,8 @@ class WidgetsModule extends SidebarModule {
     const d = div(target, '', `
       <div class="buttonBar" style="display: flex; align-items: center; margin-bottom: 10px;">
         <input type="text" id="widgetFilter" placeholder="Filter..." style="flex-grow: 1;flex-shrink: 1;margin-right: 5px;">
-        <button icon="add" id="saveWidgetsToBuffer"></button>
-        <button icon="edit" id="editWidgetsButton"></button>
+        <button icon="add" id="saveWidgetsToBuffer" class="sidebarButton"><span>Save selected widgets to here</span></button>
+        <button icon="edit" id="editWidgetsButton" class="sidebarButton"><span>Edit widgets</span></button>
       </div>
     `);
     
@@ -144,8 +144,8 @@ class WidgetsModule extends SidebarModule {
           </div>
           <div class="actions">
             <label class="unique-widget-label"><input type="checkbox" ${state.unique ? 'checked' : ''}> Unique</label>
-            <button icon="add"></button>
-            <button icon="delete"></button>
+            <button icon="add" class="sidebarButton"><span>Add widget to room</span></button>
+            <button icon="delete" class="sidebarButton"><span>Delete widget</span></button>
           </div>
         </li>`;
     }

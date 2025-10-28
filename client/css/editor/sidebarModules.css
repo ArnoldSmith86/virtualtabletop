@@ -22,9 +22,9 @@
 /* properties */
 
 .editorModule .widgetSelectionButton {
-  height: 150px;
-  width: 150px;
-  margin: 3px;
+  height: 125px;
+  width: 125px;
+  margin: 5px;
   position: relative;
   display: inline-flex;
   background: linear-gradient(45deg, rgba(0, 0, 0, 0.0980392) 25%, transparent 25%, transparent 75%, rgba(0, 0, 0, 0.0980392) 75%, rgba(0, 0, 0, 0.0980392) 0), linear-gradient(45deg, rgba(0, 0, 0, 0.0980392) 25%, transparent 25%, transparent 75%, rgba(0, 0, 0, 0.0980392) 75%, rgba(0, 0, 0, 0.0980392) 0), white;
@@ -41,7 +41,8 @@
 }
 .editorModule .widgetSelectionButton.selected::after {
   font-family: 'Material Symbols';
-  line-height: 1.25em;
+  font-size: 1.2em;
+  line-height: 1.2em;
   text-align: center;
   height: 1.25em;
   width: 1.25em;
@@ -53,8 +54,8 @@
   border-bottom-left-radius: 50%;
   content: 'check';
   position: absolute;
-  top: -3px;
-  right: -3px;
+  top: -2px;
+  right: -2px;
 }
 .editorModule .widgetSelectionButton .spinner > svg.background {
   left: 0;
@@ -75,7 +76,7 @@
 
 
 .tune.editorModule .suitProperties {
-  height: 160px;
+  height: 135px;
 }
 
 .tune.editorModule .suitProperties > button.widgetSelectionButton {
@@ -83,7 +84,7 @@
 }
 
 .tune.editorModule .suitProperties > div {
-  margin-left: 170px;
+  margin-left: 140px;
 }
 
 .tune.editorModule .suitProperties label {
@@ -297,9 +298,9 @@
 }
 
 .image.editorModule .externalLink img {
-  height: 100px;
-  width: 100px;
-  min-width: 100px;
+  height: 75px;
+  width: 75px;
+  min-width: 75px;
   object-fit: contain;
 }
 
@@ -315,7 +316,7 @@
 }
 .image.editorModule td > img {
   display: block;
-  width: 100px;
+  width: 75px;
   background: linear-gradient(45deg, rgba(0, 0, 0, 0.1) 25%, transparent 25%, transparent 75%, rgba(0, 0, 0, 0.1) 75%, rgba(0, 0, 0, 0.1) 0), linear-gradient(45deg, rgba(0, 0, 0, 0.1) 25%, transparent 25%, transparent 75%, rgba(0, 0, 0, 0.1) 75%, rgba(0, 0, 0, 0.1) 0), white;
   background-position: 0px 0, 5px 5px;
   background-size: 10px 10px, 10px 10px;
@@ -382,13 +383,13 @@
 .inventory.editorModule li {
   display: flex;
   align-items: center;
-  padding: 5px;
+  padding: 5px 0;
   border-bottom: 1px solid #ccc;
 }
 
 .inventory.editorModule li .widget-info {
   flex-grow: 1;
-  margin-left: 5px;
+  margin-left: 10px;
 }
 
 .inventory.editorModule li .widget-info .widget-type {
@@ -433,4 +434,43 @@
 .inventory.editorModule li.readonly input {
   pointer-events: none;
   border: none;
+}
+
+.sidebarButton {
+  position: relative;
+}
+
+.sidebarButton[icon] {
+  padding-right: 0px;
+}
+
+.sidebarButton span {
+  display: none;
+  position: absolute;
+  bottom: 100%;
+  left: auto;
+  right: 0;
+  transform: translateX(0);
+  margin-bottom: 5px;
+  background: var(--VTTblueDark);
+  color: white;
+  padding: 5px 10px;
+  border-radius: 5px;
+  text-transform: none;
+  z-index: 10;
+  white-space: nowrap;
+}
+
+.sidebarButton span::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  right: 10px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: var(--VTTblueDark) transparent transparent transparent;
+}
+
+.sidebarButton:hover span {
+  display: block;
 }
