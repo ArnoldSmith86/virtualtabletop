@@ -242,7 +242,8 @@ class WidgetsModule extends SidebarModule {
       addRecursively(widget, widgetBuffer);
     
     const defaultTarget = config.allowPublicLibraryEdits ? 'server' : 'local';
-    this.createWidget({widgets: widgetBuffer}, defaultTarget)
+    const name = selectedWidgets.length === 1 ? selectedWidgets.id : undefined;
+    this.createWidget({name, widgets: widgetBuffer}, defaultTarget)
       .then(() => this.renderWidgetBuffer());
   }
 
