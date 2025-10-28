@@ -48,7 +48,13 @@ class WidgetsModule extends SidebarModule {
       return await response.json();
     } else {
       const data = localStorage.getItem('customWidgets');
-      return data ? JSON.parse(data) : [];
+      if (!data) return [];
+      try {
+        const widgets = JSON.parse(data);
+        return Array.isArray(widgets) ? widgets : [];
+      } catch (e) {
+        return [];
+      }
     }
   }
 
