@@ -1,6 +1,6 @@
 class WidgetsModule extends SidebarModule {
   constructor() {
-    super('inventory', 'Widgets', 'Manage custom widgets.');
+    super('widgets', 'Widgets', 'Manage custom widgets.');
   }
 
   onSelectionChangedWhileActive(newSelection) {
