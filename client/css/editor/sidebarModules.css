@@ -391,6 +391,10 @@
   margin-left: 5px;
 }
 
+.darkMode .inventory.editorModule li .widget-info {
+  color: black;
+}
+
 .inventory.editorModule li .widget-info .widget-type {
   font-size: 0.8em;
   color: #666;
