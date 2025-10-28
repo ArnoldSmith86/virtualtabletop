@@ -272,7 +272,7 @@ class WidgetsModule extends SidebarModule {
         applyDeltasAndRender(cards);
         
         document.body.appendChild(previewContainer);
-        e.dataTransfer.setDragImage(previewContainer, e.offsetX, e.offsetY);
+        e.dataTransfer.setDragImage(previewContainer, 0, 0);
 
         setTimeout(() => {
             for (const tempId of tempWidgetInstances.keys()) {
