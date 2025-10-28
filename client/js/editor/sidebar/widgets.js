@@ -336,7 +336,7 @@ class WidgetsModule extends SidebarModule {
         state.name = e.target.value;
         this.updateWidget(state, source);
       };
-      item.querySelector('[icon=add]').onclick = e => this.button_loadWidgetFromBuffer(state);
+      item.querySelector('[icon=add]').onclick = e => window.placeWidget(state.id, source);
       const deleteButton = item.querySelector('[icon=delete]');
       if (source === 'server' && !config.allowPublicLibraryEdits) {
         deleteButton.style.display = 'none';

@@ -1380,7 +1380,7 @@ async function duplicateWidget(widget, recursive, inheritFrom, inheritProperties
   return clonedWidgets;
 }
 
-async function placeWidget(widgetId, source, coords) {
+window.placeWidget = async function(widgetId, source, coords) {
   const widgetsModule = sidebarModules.find(m => m instanceof WidgetsModule);
   if (!widgetsModule) {
     console.error('WidgetsModule not found.');
