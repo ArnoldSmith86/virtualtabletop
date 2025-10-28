@@ -431,7 +431,6 @@
 }
 
 .inventory.editorModule li.readonly input {
-  background-color: #eee;
-  color: #999;
   pointer-events: none;
+  border: none;
 }
