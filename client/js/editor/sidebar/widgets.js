@@ -36,20 +36,82 @@ class WidgetsModule extends SidebarModule {
     this.renderWidgetBuffer();
   }
 
-  async renderWidgetBuffer(filter = '') {
-    const response = await fetch('/api/widgets');
-    let customWidgets = await response.json();
-    if (!Array.isArray(customWidgets)) {
-      customWidgets = Object.values(customWidgets);
+  async getWidgets(source) {
+    if (source === 'server') {
+      const response = await fetch('/api/widgets');
+      return await response.json();
+    } else {
+      const data = localStorage.getItem('customWidgets');
+      return data ? JSON.parse(data) : [];
     }
+  }
+
+  async createWidget(widgetData, target) {
+    if (target === 'server') {
+      if (!config.allowPublicLibraryEdits) return;
+      return fetch('/api/widgets', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(widgetData)
+      });
+    } else {
+      const widgets = await this.getWidgets('local');
+      const newId = `local-${Date.now()}`;
+      const newWidget = { ...widgetData, id: newId };
+      widgets.push(newWidget);
+      localStorage.setItem('customWidgets', JSON.stringify(widgets));
+      return Promise.resolve(newWidget);
+    }
+  }
+
+  async updateWidget(widget, source) {
+    if (source === 'server') {
+      if (!config.allowPublicLibraryEdits) return;
+      return fetch(`/api/widgets/${widget.id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(widget)
+      });
+    } else {
+      let widgets = await this.getWidgets('local');
+      const index = widgets.findIndex(w => w.id === widget.id);
+      if (index !== -1) {
+        widgets[index] = widget;
+        localStorage.setItem('customWidgets', JSON.stringify(widgets));
+      }
+    }
+  }
+
+  async updateAllWidgets(widgets, source) {
+    if (source === 'server') {
+      if (!config.allowPublicLibraryEdits) return;
+      return fetch('/api/widgets', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(widgets)
+      });
+    } else {
+      localStorage.setItem('customWidgets', JSON.stringify(widgets));
+    }
+  }
+
+  async deleteWidget(widgetId, source) {
+    if (source === 'server') {
+      if (!config.allowPublicLibraryEdits) return;
+      return fetch(`/api/widgets/${widgetId}`, { method: 'DELETE' });
+    } else {
+      let widgets = await this.getWidgets('local');
+      widgets = widgets.filter(w => w.id !== widgetId);
+      localStorage.setItem('customWidgets', JSON.stringify(widgets));
+    }
+  }
+
+  renderList(widgets, source, filter) {
     const lowerCaseFilter = filter.toLowerCase();
-
-    const filteredWidgets = Object.values(customWidgets).filter(widgetData => {
+    const filteredWidgets = Object.values(widgets).filter(widgetData => {
       if (!filter) return true;
-
       const nameMatch = (widgetData.name || widgetData.id || '').toLowerCase().includes(lowerCaseFilter);
       if (nameMatch) return true;
-
       if (widgetData.widgets && Array.isArray(widgetData.widgets)) {
         return widgetData.widgets.some(subWidget =>
           (subWidget.type || 'basic').toLowerCase().includes(lowerCaseFilter)
@@ -57,12 +119,12 @@ class WidgetsModule extends SidebarModule {
       }
       return false;
     });
-    
+
     let list = '';
     for(const state of filteredWidgets) {
       const widgetTypes = [...new Set(state.widgets.map(w => w.type || 'basic'))].join(', ');
       list += `
-        <li data-id="${state.id}" draggable="true">
+        <li data-id="${state.id}" data-source="${source}" draggable="true">
           <span class="drag-handle"></span>
           <div class="widget-info">
             <input value="${html(state.name || state.id)}" readonly>
@@ -75,73 +137,83 @@ class WidgetsModule extends SidebarModule {
           </div>
         </li>`;
     }
-    this.currentContents.innerHTML = `<ul>${list}</ul>`;
+    return `<ul>${list}</ul>`;
+  }
+
+  async renderWidgetBuffer(filter = '') {
+    const serverWidgets = await this.getWidgets('server');
+    const localWidgets = await this.getWidgets('local');
+
+    let serverListHTML = '';
+    if (config.allowPublicLibraryEdits || serverWidgets.length > 0) {
+      serverListHTML = `
+        <div class="widget-list-container">
+          <div class="widget-list-header">On The Server</div>
+          <div class="widget-list server-list">${this.renderList(serverWidgets, 'server', filter)}</div>
+        </div>
+      `;
+    }
+
+    this.currentContents.innerHTML = `
+      ${serverListHTML}
+      <div class="widget-list-container">
+        <div class="widget-list-header">In Local Storage</div>
+        <div class="widget-list local-list">${this.renderList(localWidgets, 'local', filter)}</div>
+      </div>
+    `;
 
     for(const item of this.currentContents.querySelectorAll('li')) {
       const widgetId = item.dataset.id;
-      const state = customWidgets.find(w => w.id === widgetId);
+      const source = item.dataset.source;
+      const allWidgets = source === 'server' ? serverWidgets : localWidgets;
+      const state = allWidgets.find(w => w.id === widgetId);
 
       item.addEventListener('dragstart', e => {
-        e.dataTransfer.setData('text/plain', widgetId);
-        e.dataTransfer.effectAllowed = 'move';
-      });
-
-      item.addEventListener('dragover', e => {
-        e.preventDefault();
-        const dragging = document.querySelector('.dragging');
-        if (dragging !== item) {
-          const rect = item.getBoundingClientRect();
-          const y = e.clientY - rect.top;
-          if (y < rect.height / 2) {
-            item.parentNode.insertBefore(dragging, item);
-          } else {
-            item.parentNode.insertBefore(dragging, item.nextSibling);
-          }
-        }
+        e.dataTransfer.setData('text/plain', JSON.stringify({id: widgetId, source}));
+        e.dataTransfer.effectAllowed = 'copy';
       });
 
       const input = item.querySelector('input');
       input.onchange = e => {
         state.name = e.target.value;
-        fetch(`/api/widgets/${state.id}`, {
-          method: 'PUT',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(state)
-        });
+        this.updateWidget(state, source);
       };
       input.readOnly = !this.currentContents.classList.contains('editing');
       item.querySelector('[icon=add]').onclick = e => this.button_loadWidgetFromBuffer(state);
       item.querySelector('[icon=delete]').onclick = async e => {
         if (confirm(`Are you sure you want to delete the widget "${state.name || state.id}"?`)) {
-          await fetch(`/api/widgets/${state.id}`, { method: 'DELETE' });
-          const currentFilter = document.getElementById('widgetFilter')?.value || '';
-          this.renderWidgetBuffer(currentFilter);
+          await this.deleteWidget(state.id, source);
+          this.renderWidgetBuffer(filter);
         }
       };
 
       item.querySelector('.unique-widget-label input').onchange = e => {
         state.unique = e.target.checked;
-        fetch(`/api/widgets/${state.id}`, {
-          method: 'PUT',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(state)
-        });
+        this.updateWidget(state, source);
       };
     }
 
-    this.currentContents.addEventListener('dragstart', e => {
-      e.target.classList.add('dragging');
-    });
-
-    this.currentContents.addEventListener('dragend', e => {
-      e.target.classList.remove('dragging');
-      const newOrder = [...this.currentContents.querySelectorAll('li')].map(item => customWidgets.find(w => w.id === item.dataset.id));
-      fetch('/api/widgets', {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(newOrder)
+    for (const list of this.currentContents.querySelectorAll('.widget-list')) {
+      list.addEventListener('dragover', e => {
+        e.preventDefault();
+        e.dataTransfer.dropEffect = 'copy';
       });
-    });
+
+      list.addEventListener('drop', async e => {
+        e.preventDefault();
+        const { id, source } = JSON.parse(e.dataTransfer.getData('text/plain'));
+        const targetList = e.currentTarget.classList.contains('server-list') ? 'server' : 'local';
+
+        if (source === targetList) return;
+        if (targetList === 'server' && !config.allowPublicLibraryEdits) return;
+
+        const allWidgets = source === 'server' ? serverWidgets : localWidgets;
+        const widgetData = allWidgets.find(w => w.id === id);
+        
+        await this.createWidget(widgetData, targetList);
+        this.renderWidgetBuffer(filter);
+      });
+    }
   }
 
   button_saveWidgetsToBuffer() {
@@ -154,11 +226,9 @@ class WidgetsModule extends SidebarModule {
     for(const widget of selectedWidgets)
       addRecursively(widget, widgetBuffer);
     
-    fetch('/api/widgets', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({name: 'New Widget', widgets: widgetBuffer})
-    }).then(() => this.renderWidgetBuffer());
+    const defaultTarget = config.allowPublicLibraryEdits ? 'server' : 'local';
+    this.createWidget({name: 'New Widget', widgets: widgetBuffer}, defaultTarget)
+      .then(() => this.renderWidgetBuffer());
   }
 
   async button_loadWidgetFromBuffer(widgetData) {

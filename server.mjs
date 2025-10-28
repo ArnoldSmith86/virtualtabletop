@@ -26,7 +26,7 @@ const router = express.Router();
 const savedir = Config.directory('save');
 const assetsdir = Config.directory('assets');
 const sharedLinks = fs.existsSync(savedir + '/shares.json') ? JSON.parse(fs.readFileSync(savedir + '/shares.json')) : {};
-let customWidgets = fs.existsSync(savedir + '/widgets.json') ? JSON.parse(fs.readFileSync(savedir + '/widgets.json')) : [];
+let customWidgets = fs.existsSync('library/widgets.json') ? JSON.parse(fs.readFileSync('library/widgets.json')) : [];
 
 const serverStart = +new Date();
 
@@ -304,6 +304,7 @@ MinifyHTML().then(function(result) {
   });
 
   router.post('/api/widgets', bodyParser.json({ limit: '10mb' }), function(req, res, next) {
+    if (!Config.get('allowPublicLibraryEdits')) return res.status(403).send('Public library edits are disabled.');
     const widget = req.body;
     let id;
     do {
@@ -311,29 +312,32 @@ MinifyHTML().then(function(result) {
     } while (customWidgets.find(w => w.id === id));
     widget.id = id;
     customWidgets.push(widget);
-    fs.writeFileSync(savedir + '/widgets.json', JSON.stringify(customWidgets, null, 2));
+    fs.writeFileSync('library/widgets.json', JSON.stringify(customWidgets, null, 2));
     res.send({ id });
   });
 
   router.put('/api/widgets', bodyParser.json({ limit: '10mb' }), function(req, res, next) {
+    if (!Config.get('allowPublicLibraryEdits')) return res.status(403).send('Public library edits are disabled.');
     customWidgets = req.body;
-    fs.writeFileSync(savedir + '/widgets.json', JSON.stringify(customWidgets, null, 2));
+    fs.writeFileSync('library/widgets.json', JSON.stringify(customWidgets, null, 2));
     res.send('OK');
   });
 
   router.put('/api/widgets/:id', bodyParser.json({ limit: '10mb' }), function(req, res, next) {
+    if (!Config.get('allowPublicLibraryEdits')) return res.status(403).send('Public library edits are disabled.');
     const widget = req.body;
     const index = customWidgets.findIndex(w => w.id === req.params.id);
     if (index !== -1) {
       customWidgets[index] = widget;
     }
-    fs.writeFileSync(savedir + '/widgets.json', JSON.stringify(customWidgets, null, 2));
+    fs.writeFileSync('library/widgets.json', JSON.stringify(customWidgets, null, 2));
     res.send('OK');
   });
 
   router.delete('/api/widgets/:id', function(req, res, next) {
+    if (!Config.get('allowPublicLibraryEdits')) return res.status(403).send('Public library edits are disabled.');
     customWidgets = customWidgets.filter(w => w.id !== req.params.id);
-    fs.writeFileSync(savedir + '/widgets.json', JSON.stringify(customWidgets, null, 2));
+    fs.writeFileSync('library/widgets.json', JSON.stringify(customWidgets, null, 2));
     res.send('OK');
   });
 
