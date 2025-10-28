@@ -354,7 +354,7 @@
     pointer-events: auto;
     border: 1px solid #ccc;
     font-weight: normal;
-    background: #fff;
+    background: transparent;
     padding: 1px;
 }
 
@@ -389,10 +389,6 @@
 .inventory.editorModule li .widget-info {
   flex-grow: 1;
   margin-left: 5px;
-}
-
-.darkMode .inventory.editorModule li .widget-info input {
-  color: black;
 }
 
 .inventory.editorModule li .widget-info .widget-type {
