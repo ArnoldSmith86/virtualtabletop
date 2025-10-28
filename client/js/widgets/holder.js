@@ -95,10 +95,8 @@ class Holder extends Widget {
       }
       return super.get(property);
     }
-    if(property == 'stackOffsetX' || property == 'stackOffsetY') {
-      if(this.usesSmartRearrange() && this.supportsPiles_smart())
-        return 0;
-      return super.get(property);
+    if((property == 'stackOffsetX' || property == 'stackOffsetY') && this.usesSmartRearrange()) {
+      return this.supportsPiles_smart() ? 0 : 1;
     }
     return super.get(property);
   }
