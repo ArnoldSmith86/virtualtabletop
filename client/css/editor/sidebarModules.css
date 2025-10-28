@@ -391,7 +391,7 @@
   margin-left: 5px;
 }
 
-.darkMode .inventory.editorModule li .widget-info {
+.darkMode .inventory.editorModule li .widget-info input {
   color: black;
 }
 
