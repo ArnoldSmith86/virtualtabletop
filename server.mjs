@@ -26,6 +26,7 @@ const router = express.Router();
 const savedir = Config.directory('save');
 const assetsdir = Config.directory('assets');
 const sharedLinks = fs.existsSync(savedir + '/shares.json') ? JSON.parse(fs.readFileSync(savedir + '/shares.json')) : {};
+let customWidgets = fs.existsSync(savedir + '/widgets.json') ? JSON.parse(fs.readFileSync(savedir + '/widgets.json')) : [];
 
 const serverStart = +new Date();
 
@@ -295,6 +296,45 @@ MinifyHTML().then(function(result) {
     } catch(e) {
       return res.status(404).send('Invalid share.');
     }
+  });
+
+  router.get('/api/widgets', function(req, res, next) {
+    res.setHeader('Content-Type', 'application/json');
+    res.send(JSON.stringify(customWidgets));
+  });
+
+  router.post('/api/widgets', bodyParser.json({ limit: '10mb' }), function(req, res, next) {
+    const widget = req.body;
+    let id;
+    do {
+      id = Math.random().toString(36).substring(2, 10);
+    } while (customWidgets.find(w => w.id === id));
+    widget.id = id;
+    customWidgets.push(widget);
+    fs.writeFileSync(savedir + '/widgets.json', JSON.stringify(customWidgets, null, 2));
+    res.send({ id });
+  });
+
+  router.put('/api/widgets', bodyParser.json({ limit: '10mb' }), function(req, res, next) {
+    customWidgets = req.body;
+    fs.writeFileSync(savedir + '/widgets.json', JSON.stringify(customWidgets, null, 2));
+    res.send('OK');
+  });
+
+  router.put('/api/widgets/:id', bodyParser.json({ limit: '10mb' }), function(req, res, next) {
+    const widget = req.body;
+    const index = customWidgets.findIndex(w => w.id === req.params.id);
+    if (index !== -1) {
+      customWidgets[index] = widget;
+    }
+    fs.writeFileSync(savedir + '/widgets.json', JSON.stringify(customWidgets, null, 2));
+    res.send('OK');
+  });
+
+  router.delete('/api/widgets/:id', function(req, res, next) {
+    customWidgets = customWidgets.filter(w => w.id !== req.params.id);
+    fs.writeFileSync(savedir + '/widgets.json', JSON.stringify(customWidgets, null, 2));
+    res.send('OK');
   });
 
   router.get('/s/:link/:junk', function(req, res, next) {

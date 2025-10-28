@@ -328,3 +328,89 @@
   white-space: pre;
   display: inline-block;
 }
+
+.inventory.editorModule .editing [icon=delete] {
+  display: inline-block;
+}
+
+.inventory.editorModule [icon=delete] {
+  display: none;
+}
+
+.inventory.editorModule .editing [icon=add] {
+    display: none;
+}
+
+.inventory.editorModule li input {
+    pointer-events: none;
+    border: none;
+    font-weight: bold;
+    background: transparent;
+    padding: 2px 0;
+    color: var(--textColor);
+}
+
+.inventory.editorModule .editing li input {
+    pointer-events: auto;
+    border: 1px solid #ccc;
+    font-weight: normal;
+    background: #fff;
+    padding: 1px;
+}
+
+.inventory.editorModule .drag-handle {
+  display: none;
+  cursor: grab;
+  margin-right: 5px;
+}
+
+.inventory.editorModule .editing .drag-handle {
+  display: inline-block;
+}
+
+.inventory.editorModule li.dragging {
+  opacity: 0.5;
+}
+
+.inventory.editorModule ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  border-top: 1px solid #ccc;
+}
+
+.inventory.editorModule li {
+  display: flex;
+  align-items: center;
+  padding: 5px;
+  border-bottom: 1px solid #ccc;
+}
+
+.inventory.editorModule li .widget-info {
+  flex-grow: 1;
+  margin-left: 5px;
+}
+
+.inventory.editorModule li .widget-info .widget-type {
+  font-size: 0.8em;
+  color: #666;
+}
+
+.inventory.editorModule li .actions {
+  display: flex;
+  align-items: center;
+}
+
+.inventory.editorModule #editWidgetsButton.active {
+  color: #ff0;
+}
+
+.inventory.editorModule .unique-widget-label {
+  display: none;
+}
+
+.inventory.editorModule .editing .unique-widget-label {
+  display: inline-flex;
+  align-items: center;
+  margin-right: 5px;
+}
