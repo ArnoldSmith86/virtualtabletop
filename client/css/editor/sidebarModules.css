@@ -330,19 +330,19 @@
   display: inline-block;
 }
 
-.inventory.editorModule .editing [icon=delete] {
+.widgets.editorModule .editing [icon=delete] {
   display: inline-block;
 }
 
-.inventory.editorModule [icon=delete] {
+.widgets.editorModule [icon=delete] {
   display: none;
 }
 
-.inventory.editorModule .editing [icon=add] {
+.widgets.editorModule .editing [icon=add] {
     display: none;
 }
 
-.inventory.editorModule li input {
+.widgets.editorModule li input {
     pointer-events: none;
     border: none;
     font-weight: bold;
@@ -351,7 +351,7 @@
     color: var(--textColor);
 }
 
-.inventory.editorModule .editing li input {
+.widgets.editorModule .editing li input {
     pointer-events: auto;
     border: 1px solid #ccc;
     font-weight: normal;
@@ -359,67 +359,67 @@
     padding: 1px;
 }
 
-.inventory.editorModule .drag-handle {
+.widgets.editorModule .drag-handle {
   display: none;
   cursor: grab;
   margin-right: 5px;
 }
 
-.inventory.editorModule .editing .drag-handle {
+.widgets.editorModule .editing .drag-handle {
   display: inline-block;
 }
 
-.inventory.editorModule li.dragging {
+.widgets.editorModule li.dragging {
   opacity: 0.5;
 }
-.inventory.editorModule li.drag-over {
+.widgets.editorModule li.drag-over {
   background-color: var(--backgroundHighlightColor2);
 }
-.inventory.editorModule li.drag-over {
+.widgets.editorModule li.drag-over {
   background-color: var(--backgroundHighlightColor2);
 }
-.inventory.editorModule li.drag-over {
+.widgets.editorModule li.drag-over {
   background-color: var(--backgroundHighlightColor2);
 }
 
-.inventory.editorModule ul {
+.widgets.editorModule ul {
   list-style: none;
   padding: 0;
   margin: 0;
   border-top: 1px solid #ccc;
 }
 
-.inventory.editorModule li {
+.widgets.editorModule li {
   display: flex;
   align-items: center;
   padding: 5px 0;
   border-bottom: 1px solid #ccc;
 }
 
-.inventory.editorModule li .widget-info {
+.widgets.editorModule li .widget-info {
   flex-grow: 1;
   margin-left: 10px;
 }
 
-.inventory.editorModule li .widget-info .widget-type {
+.widgets.editorModule li .widget-info .widget-type {
   font-size: 0.8em;
   color: #666;
 }
 
-.inventory.editorModule li .actions {
+.widgets.editorModule li .actions {
   display: flex;
   align-items: center;
 }
 
-.inventory.editorModule #editWidgetsButton.active {
+.widgets.editorModule #editWidgetsButton.active {
   color: #ff0;
 }
 
-.inventory.editorModule .unique-widget-label {
+.widgets.editorModule .unique-widget-label {
   display: none;
 }
 
-.inventory.editorModule .editing .unique-widget-label {
+.widgets.editorModule .editing .unique-widget-label {
   display: inline-flex;
   align-items: center;
   margin-right: 5px;
@@ -436,11 +436,11 @@
   border-radius: 5px 5px 0 0;
 }
 
-.inventory.editorModule li.readonly .unique-widget-label {
+.widgets.editorModule li.readonly .unique-widget-label {
   display: none;
 }
 
-.inventory.editorModule li.readonly input {
+.widgets.editorModule li.readonly input {
   pointer-events: none;
   border: none;
 }
