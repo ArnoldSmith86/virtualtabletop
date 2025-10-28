@@ -311,6 +311,9 @@ MinifyHTML().then(function(result) {
       id = Math.random().toString(36).substring(2, 10);
     } while (customWidgets.find(w => w.id === id));
     widget.id = id;
+    if (!widget.name) {
+      widget.name = id;
+    }
     customWidgets.push(widget);
     fs.writeFileSync('library/widgets.json', JSON.stringify(customWidgets, null, 2));
     res.send({ id });
