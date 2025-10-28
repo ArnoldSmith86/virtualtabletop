@@ -414,3 +414,24 @@
   align-items: center;
   margin-right: 5px;
 }
+
+.widget-list-container{
+  margin-bottom: 1em;
+}
+
+.widget-list-header {
+  background: var(--VTTblue);
+  color: white;
+  padding: 0 10px;
+  border-radius: 5px 5px 0 0;
+}
+
+.inventory.editorModule li.readonly .unique-widget-label {
+  display: none;
+}
+
+.inventory.editorModule li.readonly input {
+  background-color: #eee;
+  color: #999;
+  pointer-events: none;
+}

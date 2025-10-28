@@ -173,6 +173,9 @@ class WidgetsModule extends SidebarModule {
       const source = item.dataset.source;
       const allWidgets = source === 'server' ? serverWidgets : localWidgets;
       const state = allWidgets.find(w => w.id === widgetId);
+      if (source === 'server' && !config.allowPublicLibraryEdits) {
+        item.classList.add('readonly');
+      }
 
       item.addEventListener('dragstart', e => {
         e.dataTransfer.setData('text/plain', JSON.stringify({id: widgetId, source}));
