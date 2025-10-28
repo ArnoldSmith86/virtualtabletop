@@ -138,6 +138,7 @@ class WidgetsModule extends SidebarModule {
           <div class="actions">
             <label class="unique-widget-label"><input type="checkbox" ${state.unique ? 'checked' : ''}> Unique</label>
             <button icon="add" class="sidebarButton"><span>Add widget to room</span></button>
+            <button icon="data_object" class="sidebarButton edit-json"><span>Edit JSON</span></button>
             <button icon="delete" class="sidebarButton"><span>Delete widget</span></button>
           </div>
         </li>`;
@@ -337,6 +338,7 @@ class WidgetsModule extends SidebarModule {
         this.updateWidget(state, source);
       };
       item.querySelector('[icon=add]').onclick = e => window.placeWidget(state.id, source);
+      item.querySelector('.edit-json').onclick = e => this.editWidgetJson(state, source);
       const deleteButton = item.querySelector('[icon=delete]');
       if (source === 'server' && !config.allowPublicLibraryEdits) {
         deleteButton.style.display = 'none';
@@ -398,6 +400,48 @@ class WidgetsModule extends SidebarModule {
     const name = selectedWidgets.length === 1 ? selectedWidgets.id : undefined;
     this.createWidget({name, widgets: widgetBuffer}, defaultTarget)
       .then(() => this.renderWidgetBuffer());
+  }
+
+  async updateWidgetFromBuffer() {
+    const textarea = $('#editWidgetJSON');
+    const source = textarea.dataset.source;
+    const previousState = JSON.parse(textarea.dataset.previousState);
+    let currentState;
+    try {
+      currentState = JSON.parse(textarea.value);
+    } catch(e) {
+      alert(e.toString());
+      return;
+    }
+
+    if (currentState.id !== previousState.id) {
+      // ID has changed, this is tricky. We need to delete the old one and create a new one.
+      // For simplicity, we'll prevent ID changes in this editor for now.
+      alert("Changing the widget ID is not supported here. Please create a new widget instead.");
+      textarea.value = JSON.stringify(previousState, null, 2);
+      return;
+    }
+
+    await window.updateWidget(JSON.stringify(currentState), JSON.stringify(previousState));
+    this.renderWidgetBuffer();
+    showOverlay(); // hide overlay
+  }
+
+  editWidgetJson(state, source) {
+    const textarea = $('#editWidgetJSON');
+    const widgetData = JSON.stringify(state, null, 2);
+    textarea.value = widgetData;
+    textarea.dataset.previousState = widgetData;
+    textarea.dataset.source = source;
+
+    // Monkey-patch the save button's onclick
+    const saveButton = $('#editJSONoverlay .custom-json-editor-buttons > button[icon=save]');
+    saveButton.onclick = () => this.updateWidgetFromBuffer();
+
+    const cancelButton = $('#editJSONoverlay .custom-json-editor-buttons > button[icon=close]');
+    cancelButton.onclick = () => showOverlay();
+
+    showOverlay('editJSONoverlay');
   }
 
   async placeWidgetFromBuffer(widgetData, coords) {

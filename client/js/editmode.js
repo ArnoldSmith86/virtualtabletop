@@ -1227,58 +1227,8 @@ function uploadWidget(preset) {
   });
 }
 
-async function updateWidget(currentState, oldState, applyChangesFromUI) {
-  batchStart();
-
-  const previousState = JSON.parse(oldState);
-  try {
-    var widget = JSON.parse(currentState);
-    setDeltaCause(`${getPlayerDetails().playerName} updated ${widget.id} in editor`);
-  } catch(e) {
-    alert(e.toString());
-    batchEnd();
-    return;
-  }
-
-  for(const key in widget)
-    if(widget[key] === null)
-      delete widget[key];
-
-  if(widget.parent !== undefined && !widgets.has(widget.parent)) {
-    alert(`Parent widget ${widget.parent} does not exist.`);
-    batchEnd();
-    return;
-  }
-
-  if(applyChangesFromUI)
-    await applyEditOptions(widget);
-
-  if(widget.id !== previousState.id) {
-    await updateWidgetId(widget, previousState.id);
-  } else if (widget.type !== previousState.type) {
-    await removeWidgetLocal(previousState.id, true);
-    const id = await addWidgetLocal(widget);
-
-    // Handle special case where type is removed
-    if(widget.type === undefined)
-      sendPropertyUpdate(id, 'type', null);
-  } else {
-    for(const key in previousState)
-      if(widget[key] === undefined)
-        widget[key] = null;
-    for(const key in widget) {
-      if(widget[key] !== previousState[key] && JSON.stringify(widget[key]) !== JSON.stringify(previousState[key])) {
-        widgets.get(widget.id).state[key] = widget[key];
-        sendPropertyUpdate(widget.id, key, widget[key]);
-      }
-    }
-  }
-
-  batchEnd();
-}
-
 async function onClickUpdateWidget(applyChangesFromUI) {
-  await updateWidget($('#editWidgetJSON').value, $('#editWidgetJSON').dataset.previousState, applyChangesFromUI);
+  await window.updateWidget($('#editWidgetJSON').value, $('#editWidgetJSON').dataset.previousState, applyChangesFromUI);
 
   showOverlay();
 }
