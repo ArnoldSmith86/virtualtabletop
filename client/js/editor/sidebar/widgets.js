@@ -44,7 +44,7 @@ class WidgetsModule extends SidebarModule {
 
   async getWidgets(source) {
     if (source === 'server') {
-      const response = await fetch('/api/widgets');
+      const response = await fetch(`${config.urlPrefix}/api/widgets`);
       return await response.json();
     } else {
       const data = localStorage.getItem('customWidgets');
@@ -55,7 +55,7 @@ class WidgetsModule extends SidebarModule {
   async createWidget(widgetData, target) {
     if (target === 'server') {
       if (!config.allowPublicLibraryEdits) return;
-      return fetch('/api/widgets', {
+      return fetch(`${config.urlPrefix}/api/widgets`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(widgetData)
@@ -73,7 +73,7 @@ class WidgetsModule extends SidebarModule {
   async updateWidget(widget, source) {
     if (source === 'server') {
       if (!config.allowPublicLibraryEdits) return;
-      return fetch(`/api/widgets/${widget.id}`, {
+      return fetch(`${config.urlPrefix}/api/widgets/${widget.id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(widget)
@@ -91,7 +91,7 @@ class WidgetsModule extends SidebarModule {
   async updateAllWidgets(widgets, source) {
     if (source === 'server') {
       if (!config.allowPublicLibraryEdits) return;
-      return fetch('/api/widgets', {
+      return fetch(`${config.urlPrefix}/api/widgets`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(widgets)
@@ -104,7 +104,7 @@ class WidgetsModule extends SidebarModule {
   async deleteWidget(widgetId, source) {
     if (source === 'server') {
       if (!config.allowPublicLibraryEdits) return;
-      return fetch(`/api/widgets/${widgetId}`, { method: 'DELETE' });
+      return fetch(`${config.urlPrefix}/api/widgets/${widgetId}`, { method: 'DELETE' });
     } else {
       let widgets = await this.getWidgets('local');
       widgets = widgets.filter(w => w.id !== widgetId);
