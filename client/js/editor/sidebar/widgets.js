@@ -26,8 +26,14 @@ class WidgetsModule extends SidebarModule {
     $('#editWidgetsButton', d).onclick = e => {
         this.currentContents.classList.toggle('editing');
         e.currentTarget.classList.toggle('active');
-        for(const input of this.currentContents.querySelectorAll('input'))
-            input.readOnly = !this.currentContents.classList.contains('editing');
+        const isEditing = this.currentContents.classList.contains('editing');
+        for (const li of this.currentContents.querySelectorAll('li')) {
+            const source = li.dataset.source;
+            const isServerWidgetReadonly = source === 'server' && !config.allowPublicLibraryEdits;
+            for (const input of li.querySelectorAll('input')) {
+                input.readOnly = isServerWidgetReadonly || !isEditing;
+            }
+        }
     };
     $('#saveWidgetsToBuffer', d).onclick = e => this.button_saveWidgetsToBuffer();
     $('#saveWidgetsToBuffer', d).disabled = !selectedWidgets.length;
@@ -124,7 +130,7 @@ class WidgetsModule extends SidebarModule {
     for(const state of filteredWidgets) {
       const widgetTypes = [...new Set(state.widgets.map(w => w.type || 'basic'))].join(', ');
       list += `
-        <li data-id="${state.id}" data-source="${source}" draggable="true">
+        <li data-id="${state.id}" data-source="${source}" draggable="${source === 'local' || config.allowPublicLibraryEdits}">
           <span class="drag-handle"></span>
           <div class="widget-info">
             <input value="${html(state.name || state.id)}" readonly>
@@ -180,7 +186,11 @@ class WidgetsModule extends SidebarModule {
       };
       input.readOnly = !this.currentContents.classList.contains('editing');
       item.querySelector('[icon=add]').onclick = e => this.button_loadWidgetFromBuffer(state);
-      item.querySelector('[icon=delete]').onclick = async e => {
+      const deleteButton = item.querySelector('[icon=delete]');
+      if (source === 'server' && !config.allowPublicLibraryEdits) {
+        deleteButton.style.display = 'none';
+      }
+      deleteButton.onclick = async e => {
         if (confirm(`Are you sure you want to delete the widget "${state.name || state.id}"?`)) {
           await this.deleteWidget(state.id, source);
           this.renderWidgetBuffer(filter);
