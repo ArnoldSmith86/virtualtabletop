@@ -189,7 +189,9 @@ class WidgetsModule extends SidebarModule {
       list += `<ul>${filteredUngroupedWidgets.map(renderWidget).join('')}</ul>`;
     }
 
-    list += `<div class="new-group-drop-target" data-source="${source}"></div>`;
+    if (source === 'local' || config.allowPublicLibraryEdits) {
+      list += `<div class="new-group-drop-target" data-source="${source}"></div>`;
+    }
 
     return list;
   }
@@ -200,7 +202,7 @@ class WidgetsModule extends SidebarModule {
 
     const isEditing = this.currentContents.classList.contains('editing');
     let serverListHTML = '';
-    if (config.allowPublicLibraryEdits || serverWidgets.length > 0) {
+    if (serverWidgets.length > 0) {
       serverListHTML = `
         <div class="widget-list-container">
           <div class="widget-list-header">
@@ -253,10 +255,10 @@ class WidgetsModule extends SidebarModule {
       if (!isEditing) {
         input.disabled = true;
       }
-      item.draggable = isEditing || source === 'local' || config.allowPublicLibraryEdits;
+      item.draggable = true;
 
       item.addEventListener('dragstart', e => {
-        if (isEditing) {
+        if (isEditing && (source === 'local' || config.allowPublicLibraryEdits)) {
           e.dataTransfer.setData('text/plain', JSON.stringify({ id: widgetId, source, action: 'reorder' }));
           e.dataTransfer.effectAllowed = 'move';
           item.classList.add('dragging');
@@ -514,6 +516,15 @@ class WidgetsModule extends SidebarModule {
         if (e.target.classList.contains('group-name-input')) return;
         const groupName = groupHeader.parentElement.dataset.groupName;
         const source = groupHeader.parentElement.dataset.source;
+
+        if (source === 'server' && !config.allowPublicLibraryEdits) {
+          const groupBody = groupHeader.nextElementSibling;
+          const isCollapsed = groupBody.style.display === 'none';
+          groupBody.style.display = isCollapsed ? '' : 'none';
+          groupHeader.querySelector('.collapse-arrow').textContent = isCollapsed ? '▼' : '▶';
+          return;
+        }
+
         const { widgets, groups } = await this.getWidgets(source);
         const group = groups.find(g => g.name === groupName);
         if (group) {
