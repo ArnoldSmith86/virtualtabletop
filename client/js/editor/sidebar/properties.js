@@ -227,6 +227,10 @@ class PropertiesModule extends SidebarModule {
     };
   }
 
+  addDeltaListener(updater) {
+    this.globalInputUpdaters.push(updater);
+  }
+
   addPropertyListener(widget, property, updater) {
     updater(widget);
 
@@ -249,11 +253,14 @@ class PropertiesModule extends SidebarModule {
           if(this.inputUpdaters[widgetID][property])
             for(const updater of this.inputUpdaters[widgetID][property])
               updater(delta.s[widgetID][property]);
+    for(const updater of this.globalInputUpdaters)
+      updater(delta.s);
   }
 
   onSelectionChangedWhileActive(newSelection) {
     this.moduleDOM.innerHTML = '';
     this.inputUpdaters = {};
+    this.globalInputUpdaters = [];
 
     for(const widget of newSelection) {
       this.inputUpdaters[widget.id] = {};
@@ -1229,6 +1236,12 @@ class PropertiesModule extends SidebarModule {
         input.setValue(cardCount);
         setCardCount(deck, cardType, cardCount);
       }
+
+      this.addDeltaListener(delta => {
+        for(const props of Object.values(delta))
+          if(props === null || props.deck || props.cardType)
+            return input.setValue(widgetFilter(w => w.get('deck') == deck.id && w.get('cardType') == cardType).length);
+      });
 
       $('[icon=remove]', cardTypeDiv).onclick = e => updateCount(-1);
       $('[icon=add]', cardTypeDiv).onclick = e => updateCount(1);

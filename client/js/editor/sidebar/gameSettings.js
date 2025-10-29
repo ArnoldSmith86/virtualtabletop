@@ -153,7 +153,7 @@ class GameSettingsModule extends SidebarModule {
     target.append(p2);
 
     const p3 = document.createElement('p');
-    p3.textContent = 'We highly recommended you build and test your games with all of these settings disabled (boxes unchecked) to avoid obscure bugs. If you are working on a game and these settings are checked, review the VTT wiki documentation before making changes to routines.';
+    p3.textContent = 'We highly recommended you build and test your games with all of these settings disabled (boxes unchecked) to avoid obscure bugs. If you are working on a game and these settings are checked, review the VTT wiki documentation before making changes to routines. If there are no checkboxes below, legacy mode is not applicable for your game.';
     target.append(p3);
 
     this.addCheckbox('Convert numeric var parameters to numbers', 'convertNumericVarParametersToNumbers', `
