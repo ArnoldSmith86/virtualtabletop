@@ -22,7 +22,7 @@ onMessage('zoom', function({ level, panX, panY, prompt }) {
   }
 
   setZoomLevel(Math.max(1, Math.min(10, Math.round(numericLevel))));
-  setPan(numericPanX, numericPanY);
+  setPan(numericPanX*scale, numericPanY*scale);
 });
 
 export function setZoomLevel(zoomLevel) {

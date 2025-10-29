@@ -2154,11 +2154,6 @@ export class Widget extends StateManaged {
           problems.push('ZOOM: level must be a number between 1 and 10.');
         } else {
           const boardDimensions = { width: 1600, height: 1000 };
-          const pxPerUnit = scale;
-          const boardPx = {
-            width: boardDimensions.width * pxPerUnit,
-            height: boardDimensions.height * pxPerUnit,
-          };
           const visibleUnits = {
             width: boardDimensions.width / numericLevel,
             height: boardDimensions.height / numericLevel,
@@ -2176,21 +2171,9 @@ export class Widget extends StateManaged {
           if (!Number.isFinite(targetUnits.left) || !Number.isFinite(targetUnits.top)) {
             problems.push('ZOOM: panX and panY must be numbers.');
           } else {
-            const maxPanPx = {
-              x: boardPx.width * numericLevel - boardPx.width,
-              y: boardPx.height * numericLevel - boardPx.height,
-            };
-            const maxUnits = {
-              left: boardDimensions.width - visibleUnits.width,
-              top: boardDimensions.height - visibleUnits.height,
-            };
-            const clampedUnits = {
-              left: Math.max(0, Math.min(maxUnits.left, targetUnits.left)),
-              top: Math.max(0, Math.min(maxUnits.top, targetUnits.top)),
-            };
             const resolvedPan = {
-              x: Math.max(-maxPanPx.x, Math.min(0, -clampedUnits.left * pxPerUnit * numericLevel)),
-              y: Math.max(-maxPanPx.y, Math.min(0, -clampedUnits.top * pxPerUnit * numericLevel)),
+              x: -targetUnits.left * numericLevel,
+              y: -targetUnits.top  * numericLevel,
             };
 
             toServer('zoom', {
@@ -2208,7 +2191,7 @@ export class Widget extends StateManaged {
               const isLocked = localStorage.getItem('zoomLocked') === 'true';
               if(!(typeof a.prompt === 'string' && isLocked)) {
                 setZoomLevel(numericLevel);
-                setPan(resolvedPan.x, resolvedPan.y);
+                setPan(resolvedPan.x*scale, resolvedPan.y*scale);
               }
               if(jeRoutineLogging)
                 jeLoggingRoutineOperationSummary(
