@@ -61,8 +61,9 @@ class WidgetsModule extends SidebarModule {
       });
     } else {
       const widgets = await this.getWidgets('local');
-      const newId = `local-${Date.now()}`;
-      const newWidget = { ...widgetData, id: newId };
+      const newId = `local-${Date.now()}-${Math.random().toString(36).substring(2, 11)}`;
+      const newWidget = JSON.parse(JSON.stringify(widgetData));
+      newWidget.id = newId;
       widgets.push(newWidget);
       localStorage.setItem('customWidgets', JSON.stringify(widgets));
       return Promise.resolve(newWidget);
@@ -154,7 +155,13 @@ class WidgetsModule extends SidebarModule {
     if (config.allowPublicLibraryEdits || serverWidgets.length > 0) {
       serverListHTML = `
         <div class="widget-list-container">
-          <div class="widget-list-header">On The Server</div>
+          <div class="widget-list-header">
+            <span>On The Server</span>
+            <div class="widget-list-actions">
+              ${config.allowPublicLibraryEdits ? `<button icon="upload" class="sidebarButton import-widgets" data-source="server"><span>Import Server-Wide</span></button>` : ''}
+              <button icon="download" class="sidebarButton export-widgets" data-source="server"><span>Download Custom Widgets</span></button>
+            </div>
+          </div>
           <div class="widget-list server-list">${this.renderList(serverWidgets, 'server', filter)}</div>
         </div>
       `;
@@ -163,10 +170,23 @@ class WidgetsModule extends SidebarModule {
     this.currentContents.innerHTML = `
       ${serverListHTML}
       <div class="widget-list-container">
-        <div class="widget-list-header">In Local Storage</div>
+        <div class="widget-list-header">
+          <span>In Local Storage</span>
+          <div class="widget-list-actions">
+            <button icon="upload" class="sidebarButton import-widgets" data-source="local"><span>Import to Local Storage</span></button>
+            <button icon="download" class="sidebarButton export-widgets" data-source="local"><span>Download Custom Widgets</span></button>
+          </div>
+        </div>
         <div class="widget-list local-list">${this.renderList(localWidgets, 'local', filter)}</div>
       </div>
     `;
+
+    for(const button of this.currentContents.querySelectorAll('.export-widgets')) {
+      button.onclick = e => this.exportWidgets(e.currentTarget.dataset.source);
+    }
+    for(const button of this.currentContents.querySelectorAll('.import-widgets')) {
+      button.onclick = e => this.importWidgets(e.currentTarget.dataset.source);
+    }
 
     const isEditing = this.currentContents.classList.contains('editing');
 
@@ -537,5 +557,76 @@ class WidgetsModule extends SidebarModule {
 
   async button_loadWidgetFromBuffer(widgetData) {
     this.placeWidgetFromBuffer(widgetData);
+  }
+
+  async exportWidgets(source) {
+    const widgets = await this.getWidgets(source);
+    const json = JSON.stringify(widgets, null, 2);
+    const blob = new Blob([json], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `widgets-${source}.json`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  }
+
+  async importWidgets(source) {
+    const fileInput = document.createElement('input');
+    fileInput.type = 'file';
+    fileInput.accept = '.json';
+    fileInput.onchange = async e => {
+      const files = e.target.files;
+      if (!files || files.length === 0) return;
+      const file = files[0];
+
+      const reader = new FileReader();
+      reader.onload = async event => {
+        try {
+          const newWidgets = JSON.parse(event.target.result);
+          if (!Array.isArray(newWidgets)) {
+            throw new Error('Invalid JSON format: expected an array of widgets.');
+          }
+
+          const existingWidgets = await this.getWidgets(source);
+          const existingIds = new Set(existingWidgets.map(w => w.id));
+          const importedWidgets = [];
+
+          for (const widget of newWidgets) {
+            if (typeof widget !== 'object' || widget === null || !Array.isArray(widget.widgets)) {
+              console.warn('Skipping invalid widget:', widget);
+              continue;
+            }
+            
+            let newWidget = JSON.parse(JSON.stringify(widget));
+
+            if (!newWidget.id || existingIds.has(newWidget.id)) {
+              const newId = `local-${Date.now()}-${Math.random().toString(36).substring(2, 11)}`;
+              newWidget.id = newId;
+            }
+            
+            await this.createWidget(newWidget, source);
+            existingIds.add(newWidget.id);
+            importedWidgets.push(newWidget);
+          }
+
+          await this.renderWidgetBuffer();
+
+          for (const importedWidget of importedWidgets) {
+            const newWidgetElement = this.currentContents.querySelector(`li[data-id="${importedWidget.id}"]`);
+            if (newWidgetElement) {
+              newWidgetElement.classList.add('flash');
+              setTimeout(() => newWidgetElement.classList.remove('flash'), 1000);
+            }
+          }
+        } catch (error) {
+          alert(`Error importing widgets: ${error.message}`);
+        }
+      };
+      reader.readAsText(file);
+    };
+    fileInput.click();
   }
 }

@@ -306,6 +306,9 @@ MinifyHTML().then(function(result) {
   router.post('/api/widgets', bodyParser.json({ limit: '10mb' }), function(req, res, next) {
     if (!Config.get('allowPublicLibraryEdits')) return res.status(403).send('Public library edits are disabled.');
     const widget = req.body;
+    if (typeof widget !== 'object' || widget === null || !Array.isArray(widget.widgets)) {
+      return res.status(400).send('Invalid widget format.');
+    }
     let id;
     do {
       id = Math.random().toString(36).substring(2, 10);
@@ -329,6 +332,9 @@ MinifyHTML().then(function(result) {
   router.put('/api/widgets/:id', bodyParser.json({ limit: '10mb' }), function(req, res, next) {
     if (!Config.get('allowPublicLibraryEdits')) return res.status(403).send('Public library edits are disabled.');
     const widget = req.body;
+    if (typeof widget !== 'object' || widget === null || !widget.id || !Array.isArray(widget.widgets)) {
+      return res.status(400).send('Invalid widget format.');
+    }
     const index = customWidgets.findIndex(w => w.id === req.params.id);
     if (index !== -1) {
       customWidgets[index] = widget;

@@ -1,3 +1,12 @@
+@keyframes flash {
+  0% { background-color: rgba(0, 150, 255, 0.3); }
+  100% { background-color: transparent; }
+}
+
+.flash {
+  animation: flash 1s ease-out;
+}
+
 .editorModule h1 {
   color: var(--VTTblue);
   text-align: center;
@@ -430,10 +439,18 @@
 }
 
 .widget-list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   background: var(--VTTblue);
   color: white;
-  padding: 0 10px;
+  padding: 0 0 0 10px;
   border-radius: 5px 5px 0 0;
+}
+
+.widget-list-actions {
+  display: flex;
+  gap: 5px;
 }
 
 .widgets.editorModule li.readonly .unique-widget-label {
