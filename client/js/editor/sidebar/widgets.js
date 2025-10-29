@@ -629,7 +629,7 @@ class WidgetsModule extends SidebarModule {
       addRecursively(widget, widgetBuffer);
 
     const defaultTarget = config.allowPublicLibraryEdits ? 'server' : 'local';
-    const name = selectedWidgets.length > 0 ? selectedWidgets[0].id : undefined;
+    const name = selectedWidgets.length > 0 ? selectedWidgets.id : undefined;
     this.createWidget({ name, widgets: widgetBuffer }, defaultTarget)
       .then(() => this.renderWidgetBuffer());
   }
@@ -782,8 +782,8 @@ class WidgetsModule extends SidebarModule {
   }
 
   async exportWidgets(source) {
-    const widgets = await this.getWidgets(source);
-    const json = JSON.stringify(widgets, null, 2);
+    const data = await this.getWidgets(source);
+    const json = JSON.stringify(data, null, 2);
     const blob = new Blob([json], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
@@ -807,14 +807,15 @@ class WidgetsModule extends SidebarModule {
       const reader = new FileReader();
       reader.onload = async event => {
         try {
-          let newWidgets = JSON.parse(event.target.result);
+          const newData = JSON.parse(event.target.result);
+          const { widgets: newWidgets, groups: newGroups } = newData;
+
           if (!Array.isArray(newWidgets)) {
-            newWidgets = [newWidgets];
+            throw new Error('Invalid file format: "widgets" property must be an array.');
           }
 
-          const existingWidgets = await this.getWidgets(source);
+          const { widgets: existingWidgets, groups: existingGroups } = await this.getWidgets(source);
           const existingIds = new Set(existingWidgets.map(w => w.id));
-          const importedWidgets = [];
 
           for (const widget of newWidgets) {
             if (typeof widget !== 'object' || widget === null || !Array.isArray(widget.widgets)) {
@@ -828,21 +829,24 @@ class WidgetsModule extends SidebarModule {
               const newId = `local-${Date.now()}-${Math.random().toString(36).substring(2, 11)}`;
               newWidget.id = newId;
             }
-
-            await this.createWidget(newWidget, source);
+            existingWidgets.push(newWidget);
             existingIds.add(newWidget.id);
-            importedWidgets.push(newWidget);
           }
 
-          await this.renderWidgetBuffer();
-
-          for (const importedWidget of importedWidgets) {
-            const newWidgetElement = this.currentContents.querySelector(`li[data-id="${importedWidget.id}"]`);
-            if (newWidgetElement) {
-              newWidgetElement.classList.add('flash');
-              setTimeout(() => newWidgetElement.classList.remove('flash'), 1000);
+          if (Array.isArray(newGroups)) {
+            for (const group of newGroups) {
+              const existingGroup = existingGroups.find(g => g.name === group.name);
+              if (existingGroup) {
+                existingGroup.widgets.push(...group.widgets);
+              } else {
+                existingGroups.push(group);
+              }
             }
           }
+
+          await this.updateAllWidgets({ widgets: existingWidgets, groups: existingGroups }, source);
+          await this.renderWidgetBuffer();
+
         } catch (error) {
           alert(`Error importing widgets: ${error.message}`);
         }
