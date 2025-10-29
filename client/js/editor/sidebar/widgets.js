@@ -139,7 +139,7 @@ class WidgetsModule extends SidebarModule {
           <div class="actions">
             <label class="unique-widget-label"><input type="checkbox" ${state.unique ? 'checked' : ''}> Unique</label>
             <button icon="add" class="sidebarButton"><span>Add widget to room</span></button>
-            <button icon="data_object" class="sidebarButton edit-json"><span>Edit JSON</span></button>
+            <button icon="download" class="sidebarButton download-json"><span>Download</span></button>
             <button icon="delete" class="sidebarButton"><span>Delete widget</span></button>
           </div>
         </li>`;
@@ -360,7 +360,7 @@ class WidgetsModule extends SidebarModule {
         this.updateWidget(state, source);
       };
       item.querySelector('[icon=add]').onclick = e => window.placeWidget(state.id, source);
-      item.querySelector('.edit-json').onclick = e => this.editWidgetJson(state, source);
+      item.querySelector('.download-json').onclick = e => this.exportWidgetJson(state);
       const deleteButton = item.querySelector('[icon=delete]');
       if (source === 'server' && !config.allowPublicLibraryEdits) {
         deleteButton.style.display = 'none';
@@ -558,6 +558,19 @@ class WidgetsModule extends SidebarModule {
     this.placeWidgetFromBuffer(widgetData);
   }
 
+  exportWidgetJson(widgetData) {
+    const json = JSON.stringify(widgetData, null, 2);
+    const blob = new Blob([json], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `${widgetData.name || widgetData.id}.json`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  }
+
   async exportWidgets(source) {
     const widgets = await this.getWidgets(source);
     const json = JSON.stringify(widgets, null, 2);
@@ -584,9 +597,9 @@ class WidgetsModule extends SidebarModule {
       const reader = new FileReader();
       reader.onload = async event => {
         try {
-          const newWidgets = JSON.parse(event.target.result);
+          let newWidgets = JSON.parse(event.target.result);
           if (!Array.isArray(newWidgets)) {
-            throw new Error('Invalid JSON format: expected an array of widgets.');
+            newWidgets = [newWidgets];
           }
 
           const existingWidgets = await this.getWidgets(source);
