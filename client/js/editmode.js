@@ -1343,6 +1343,12 @@ window.placeWidget = async function(widgetId, source, coords) {
   if (widgetData) {
     const newWidgetIds = await widgetsModule.placeWidgetFromBuffer(widgetData, coords);
     const newWidgets = newWidgetIds.map(id => widgets.get(id)).filter(Boolean);
+    for (const widget of newWidgets) {
+      if (widget.get('addToRoomRoutine')) {
+        widget.evaluateRoutine('addToRoomRoutine');
+        widget.set('addToRoomRoutine', undefined);
+      }
+    }
     setSelection(newWidgets);
   } else {
     console.error(`Widget with id ${widgetId} not found in ${source}.`);
