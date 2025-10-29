@@ -1,6 +1,6 @@
 class WidgetsModule extends SidebarModule {
   constructor() {
-    super('widgets', 'Widgets', 'Manage custom widgets.');
+    super('widgets', 'Widgets', 'Manage widgets.');
   }
 
   onSelectionChangedWhileActive(newSelection) {
@@ -12,7 +12,7 @@ class WidgetsModule extends SidebarModule {
   renderModule(target) {
     target.innerHTML = '';
     super.renderModule(target);
-    this.addHeader('Custom Widgets');
+    this.addHeader('Widgets');
 
     const d = div(target, '', `
       <div class="buttonBar" style="display: flex; align-items: center; margin-bottom: 10px;">
