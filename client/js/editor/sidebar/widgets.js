@@ -532,9 +532,6 @@ class WidgetsModule extends SidebarModule {
           if (coords) {
             state.x = (state.x || 0) + offsetX;
             state.y = (state.y || 0) + offsetY;
-          } else {
-            delete state.x;
-            delete state.y;
           }
           delete state.parent;
         }
