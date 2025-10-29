@@ -143,12 +143,13 @@ class WidgetsModule extends SidebarModule {
 
     const renderWidget = (state) => {
       const widgetTypes = [...new Set(state.widgets.map(w => w.type || 'basic'))].join(', ');
+      const hasAddToRoomRoutine = state.widgets.some(w => w.addToRoomRoutine);
       return `
             <li data-id="${state.id}" data-source="${source}" draggable="${isEditing}">
                 <span class="drag-handle"></span>
                 <div class="widget-info">
                     <input value="${html(state.name || state.id)}" readonly>
-                    <div class="widget-type">${widgetTypes}</div>
+                    <div class="widget-type">${widgetTypes}${hasAddToRoomRoutine ? '<span class="extra symbols">subproperty</span>' : ''}${state.unique ? '<span class="extra symbols">triangle</span>' : ''}</div>
                 </div>
                 <div class="actions">
                     <label class="unique-widget-label"><input type="checkbox" ${state.unique ? 'checked' : ''}> Unique</label>
