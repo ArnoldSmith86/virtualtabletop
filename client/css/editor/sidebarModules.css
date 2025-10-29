@@ -410,19 +410,6 @@
   margin-left: 10px;
 }
 
-.widgets.editorModule li .widget-preview {
-  width: 46px;
-  height: 46px;
-  margin-right: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  border: 1px solid #ccc;
-  background: #f0f0f0;
-  pointer-events: none;
-}
-
 .widgets.editorModule li .widget-info .widget-type {
   font-size: 0.8em;
   color: #666;

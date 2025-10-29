@@ -328,21 +328,3 @@ body.lightsOff #editorModules {
 #editorSidebar button[data-badge=""]::after {
   display: none;
 }
-
-.widget-preview {
-  border: 1px solid var(--VTTblue);
-  border-radius: 5px;
-  width: calc(100% - 20px);
-  height: calc(100% - 20px);
-  box-sizing: border-box;
-}
-.widget.separator {
-  background: #ccc;
-  border-radius: 5px;
-  color: #333;
-  font-weight: bold;
-  text-align: center;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
