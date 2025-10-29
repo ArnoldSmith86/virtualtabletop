@@ -254,6 +254,7 @@ class PropertiesModule extends SidebarModule {
   onSelectionChangedWhileActive(newSelection) {
     this.moduleDOM.innerHTML = '';
     this.inputUpdaters = {};
+    this.cardCountInputs = {};
 
     for(const widget of newSelection) {
       this.inputUpdaters[widget.id] = {};
@@ -1189,6 +1190,9 @@ class PropertiesModule extends SidebarModule {
 
     this.cardTypeCards = [];
 
+    if(!this.cardCountInputs[deck.id])
+      this.cardCountInputs[deck.id] = {};
+
     for(const cardType in cardTypes) {
       if(onlyCardType !== null && onlyCardType != cardType)
         continue;
@@ -1222,6 +1226,7 @@ class PropertiesModule extends SidebarModule {
 
       let cardCount = widgetFilter(w => w.get('deck') == deck.id && w.get('cardType') == cardType).length;
       const input = this.addInput('Card Count', cardCount, v=>updateCount(0, v), $('.cardCountDiv', cardTypeDiv), 'number');
+      this.cardCountInputs[deck.id][cardType] = input;
 
       function updateCount(delta, setValue) {
         // Parse the value, ensure it's non-negative
@@ -1318,8 +1323,12 @@ class PropertiesModule extends SidebarModule {
       setDeltaCause(`${getPlayerDetails().playerName} removed one card of each type from deck ${widget.id} in editor`);
       for(const cardType in widget.get('cardTypes')) {
         const cards = widgetFilter(w=>w.get('deck')==widget.id&&w.get('cardType')==cardType);
-        if(cards.length)
-          await setCardCount(widget, cardType, cards.length - 1);
+        if(cards.length) {
+          const newCount = cards.length - 1;
+          await setCardCount(widget, cardType, newCount);
+          const input = this.cardCountInputs?.[widget.id]?.[cardType];
+          if(input) input.setValue(newCount);
+        }
       }
       batchEnd();
     };
@@ -1328,7 +1337,10 @@ class PropertiesModule extends SidebarModule {
       setDeltaCause(`${getPlayerDetails().playerName} added one card of each type to deck ${widget.id} in editor`);
       for(const cardType in widget.get('cardTypes')) {
         const cards = widgetFilter(w=>w.get('deck')==widget.id&&w.get('cardType')==cardType);
-        await setCardCount(widget, cardType, cards.length + 1);
+        const newCount = cards.length + 1;
+        await setCardCount(widget, cardType, newCount);
+        const input = this.cardCountInputs?.[widget.id]?.[cardType];
+        if(input) input.setValue(newCount);
       }
       batchEnd();
     };
