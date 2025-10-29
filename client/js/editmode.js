@@ -318,6 +318,7 @@ function addCompositeWidgetToAddWidgetOverlay(widgetsToAdd, onClick) {
     if(wi.type == 'holder') w = new Holder(wi.id);
     if(wi.type == 'label')  w = new Label(wi.id);
     if(wi.type == 'pile')   w = new Pile(wi.id);
+    if(wi.type == 'separator') w = new Separator(wi.id);
     if(wi.type == 'timer')  w = new Timer(wi.id);
     widgets.set(wi.id, w);
     w.applyInitialDelta(wi);

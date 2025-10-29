@@ -18,6 +18,7 @@ class WidgetsModule extends SidebarModule {
       <div class="buttonBar" style="display: flex; align-items: center; margin-bottom: 10px;">
         <input type="text" id="widgetFilter" placeholder="Filter..." style="flex-grow: 1;flex-shrink: 1;margin-right: 5px;">
         <button icon="add" id="saveWidgetsToBuffer" class="sidebarButton"><span>Save selected widgets</span></button>
+        <button icon="add" id="addSeparatorButton" class="sidebarButton"><span>Add separator</span></button>
         <button icon="edit" id="editWidgetsButton" class="sidebarButton"><span>Edit widgets</span></button>
       </div>
     `);
@@ -28,6 +29,7 @@ class WidgetsModule extends SidebarModule {
         e.currentTarget.classList.toggle('active');
         this.renderWidgetBuffer($('#widgetFilter', d).value);
     };
+    $('#addSeparatorButton', d).onclick = e => this.button_addSeparator();
     $('#saveWidgetsToBuffer', d).onclick = e => this.button_saveWidgetsToBuffer();
     $('#saveWidgetsToBuffer', d).disabled = !selectedWidgets.length;
     
@@ -112,6 +114,55 @@ class WidgetsModule extends SidebarModule {
     }
   }
 
+  async createWidgetPreview(widgetData) {
+    const propertiesModule = sidebar.modules.find(m => m instanceof PropertiesModule);
+    if (!propertiesModule) return null;
+  
+    // Create a temporary container for the preview
+    const tempContainer = document.createElement('div');
+    
+    // Use a representative widget from the buffer for rendering, or a BasicWidget if empty
+    const representativeWidgetState = widgetData.widgets && widgetData.widgets.length > 0
+      ? widgetData.widgets
+      : { type: 'basic' };
+  
+    let widgetInstance;
+    switch (representativeWidgetState.type) {
+      case 'deck':
+        widgetInstance = new Deck(representativeWidgetState);
+        break;
+      default:
+        widgetInstance = new BasicWidget(representativeWidgetState);
+        break;
+    }
+  
+    // Pass the entire widgetData (which includes the 'widgets' array) as the state
+    const button = propertiesModule.renderWidgetButton(widgetInstance, widgetData, tempContainer);
+    
+    button.style.width = '46px';
+    button.style.height = '46px';
+    button.style.margin = '0';
+    button.style.border = 'none';
+  
+    // The renderWidgetButton function creates a child div that contains the rendered widget
+    const child = button.querySelector('.renderedWidget') || button.children;
+  
+    if (child) {
+      // Use a timeout to allow the browser to render the elements before measuring them
+      await new Promise(resolve => setTimeout(resolve, 0));
+      
+      const rect = getBoundingClientRectWithAbsoluteChildren(child);
+      
+      if (rect.width > 0 && rect.height > 0) {
+        const scale = Math.min(1, 46 / rect.width, 46 / rect.height);
+        child.style.transform = `scale(${scale})`;
+        centerElementInClientRect(child, button.getBoundingClientRect());
+      }
+    }
+    
+    return button;
+  }
+
   renderList(widgets, source, filter) {
     const lowerCaseFilter = filter.toLowerCase();
     const filteredWidgets = Object.values(widgets).filter(widgetData => {
@@ -131,6 +182,7 @@ class WidgetsModule extends SidebarModule {
       const widgetTypes = [...new Set(state.widgets.map(w => w.type || 'basic'))].join(', ');
       list += `
         <li data-id="${state.id}" data-source="${source}">
+          <div class="widget-preview"></div>
           <span class="drag-handle"></span>
           <div class="widget-info">
             <input value="${html(state.name || state.id)}" readonly>
@@ -197,6 +249,14 @@ class WidgetsModule extends SidebarModule {
       const source = item.dataset.source;
       const allWidgets = source === 'server' ? serverWidgets : localWidgets;
       const state = allWidgets.find(w => w.id === widgetId);
+
+      const previewContainer = item.querySelector('.widget-preview');
+      this.createWidgetPreview(state).then(preview => {
+        if (preview) {
+          previewContainer.appendChild(preview);
+        }
+      });
+
       if (source === 'server' && !config.allowPublicLibraryEdits) {
         item.classList.add('readonly');
       }
@@ -256,6 +316,7 @@ class WidgetsModule extends SidebarModule {
                         case 'holder': previewWidget = new Holder(tempId); break;
                         case 'label': previewWidget = new Label(tempId); break;
                         case 'pile': previewWidget = new Pile(tempId); break;
+                        case 'separator': previewWidget = new Separator(tempId); break;
                         case 'scoreboard': previewWidget = new Scoreboard(tempId); break;
                         case 'seat': previewWidget = new Seat(tempId); break;
                         case 'spinner': previewWidget = new Spinner(tempId); break;
@@ -423,6 +484,15 @@ class WidgetsModule extends SidebarModule {
     this.createWidget({name, widgets: widgetBuffer}, defaultTarget)
       .then(() => this.renderWidgetBuffer());
   }
+
+  button_addSeparator() {
+   const separator = {
+     type: 'separator',
+     name: 'Separator'
+   };
+   this.createWidget({name: 'Separator', widgets: [separator]}, 'local')
+     .then(() => this.renderWidgetBuffer());
+ }
 
   async updateWidgetFromBuffer() {
     const textarea = $('#editWidgetJSON');

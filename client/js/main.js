@@ -491,7 +491,7 @@ async function loadEditMode() {
       uploadAsset, _uploadAsset, mapAssetURLs, pickSymbol, selectFile, triggerDownload,
       config, getPlayerDetails, roomID, getDeltaID, widgets, widgetFilter, isOverlayActive,
       html, formField,
-      Widget, BasicWidget, Button, Canvas, Card, Deck, Dice, Holder, Label, Pile, Scoreboard, Seat, Spinner, Timer,
+      Widget, BasicWidget, Button, Canvas, Card, Deck, Dice, Holder, Label, Pile, Scoreboard, Seat, Spinner, Timer, Separator,
       toHex, contrastAnyColor,
       asArray, compute_ops,
       eventCoords,
