@@ -116,11 +116,12 @@ class WidgetsModule extends SidebarModule {
     const { widgets, groups } = await this.getWidgets(source);
     const updatedWidgets = widgets.filter(w => w.id !== widgetId);
 
-    for (const group of groups) {
-      group.widgets = group.widgets.filter(id => id !== widgetId);
-    }
+    const updatedGroups = groups.map(g => {
+      g.widgets = g.widgets.filter(id => id !== widgetId);
+      return g;
+    }).filter(g => g.widgets.length > 0);
 
-    await this.updateAllWidgets({ widgets: updatedWidgets, groups }, source);
+    await this.updateAllWidgets({ widgets: updatedWidgets, groups: updatedGroups }, source);
   }
 
   renderList(widgets, groups, source, filter, isEditing) {
@@ -615,6 +616,9 @@ class WidgetsModule extends SidebarModule {
           const sourceGroup = groups.find(g => g.widgets.includes(id));
           if (sourceGroup) {
             sourceGroup.widgets = sourceGroup.widgets.filter(wid => wid !== id);
+            if (sourceGroup.widgets.length === 0) {
+              groups.splice(groups.indexOf(sourceGroup), 1);
+            }
           }
 
           const targetGroup = groups.find(g => g.name === targetGroupName);
