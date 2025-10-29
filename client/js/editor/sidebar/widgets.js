@@ -17,7 +17,7 @@ class WidgetsModule extends SidebarModule {
     const d = div(target, '', `
       <div class="buttonBar" style="display: flex; align-items: center; margin-bottom: 10px;">
         <input type="text" id="widgetFilter" placeholder="Filter..." style="flex-grow: 1;flex-shrink: 1;margin-right: 5px;">
-        <button icon="add" id="saveWidgetsToBuffer" class="sidebarButton"><span>Save selected widgets to here</span></button>
+        <button icon="add" id="saveWidgetsToBuffer" class="sidebarButton"><span>Save selected widgets</span></button>
         <button icon="edit" id="editWidgetsButton" class="sidebarButton"><span>Edit widgets</span></button>
       </div>
     `);
@@ -177,7 +177,9 @@ class WidgetsModule extends SidebarModule {
             <button icon="download" class="sidebarButton export-widgets" data-source="local"><span>Download Custom Widgets</span></button>
           </div>
         </div>
-        <div class="widget-list local-list">${this.renderList(localWidgets, 'local', filter)}</div>
+        <div class="widget-list local-list">
+          ${localWidgets.length === 0 ? '<div class="explainer-text">Select a widget in the room and press "+" (Save selected widgets) to create a reusable widget.</div>' : this.renderList(localWidgets, 'local', filter)}
+        </div>
       </div>
     `;
 
@@ -417,7 +419,7 @@ class WidgetsModule extends SidebarModule {
       addRecursively(widget, widgetBuffer);
     
     const defaultTarget = config.allowPublicLibraryEdits ? 'server' : 'local';
-    const name = selectedWidgets.length === 1 ? selectedWidgets.id : undefined;
+    const name = selectedWidgets.length > 0 ? selectedWidgets[0].id : undefined;
     this.createWidget({name, widgets: widgetBuffer}, defaultTarget)
       .then(() => this.renderWidgetBuffer());
   }

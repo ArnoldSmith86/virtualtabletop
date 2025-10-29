@@ -450,7 +450,7 @@
 
 .widget-list-actions {
   display: flex;
-  gap: 5px;
+  gap: 0px;
 }
 
 .widgets.editorModule li.readonly .unique-widget-label {
@@ -499,4 +499,11 @@
 
 .sidebarButton:hover span {
   display: block;
+}
+
+.explainer-text {
+  padding: 10px;
+  color: #666;
+  font-style: italic;
+  text-align: center;
 }
