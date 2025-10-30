@@ -2986,7 +2986,7 @@
           "id": "seatWithCounter"
         },
         {
-          "id": "b6viC",
+          "id": "seatCounter",
           "parent": "seatWithCounter",
           "fixedParent": true,
           "x": -20,
@@ -3119,8 +3119,7 @@
           "value": "6"
         }
       ],
-      "id": "spinner",
-      "unique": false
+      "id": "spinner"
     },
     {
       "name": "Button",
@@ -3152,7 +3151,7 @@
           "text": 0
         },
         {
-          "id": "pxgzD",
+          "id": "decCounter",
           "parent": "counter",
           "fixedParent": true,
           "x": -38,
@@ -3174,7 +3173,7 @@
           ]
         },
         {
-          "id": "pxgzU",
+          "id": "incCounter",
           "parent": "counter",
           "fixedParent": true,
           "x": 68,
@@ -3210,7 +3209,7 @@
         {
           "parent": "timer",
           "fixedParent": true,
-          "id": "9zmsP",
+          "id": "pauseTimer",
           "x": 120,
           "y": -3,
           "width": 36,
@@ -3230,7 +3229,7 @@
         {
           "parent": "timer",
           "fixedParent": true,
-          "id": "9zmsR",
+          "id": "resetTimer",
           "x": 80,
           "y": -3,
           "width": 36,
