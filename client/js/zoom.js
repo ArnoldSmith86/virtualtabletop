@@ -17,6 +17,7 @@ function applyServerZoomSetting(gs) {
     setZoomLevel(zl);
     setPan(Number(target.panX)*scale, Number(target.panY)*scale);
   }
+  updateZoomUIState();
 }
 
 onMessage('meta', args=>applyServerZoomSetting(args.meta.gameSettings));
