@@ -637,8 +637,24 @@ class WidgetsModule extends SidebarModule {
   }
 
   button_saveWidgetsToBuffer() {
+    const selectedWidgetAndChildrenIds = new Set();
+    function getAllDescendants(widget) {
+      selectedWidgetAndChildrenIds.add(widget.id);
+      for (const w of widgetFilter(w => w.get('parent') == widget.id)) {
+        getAllDescendants(w);
+      }
+    }
+
+    for (const widget of selectedWidgets) {
+      getAllDescendants(widget);
+    }
+
     function addRecursively(widget, buffer) {
-      buffer.push(JSON.parse(JSON.stringify(widget.state)));
+      const state = JSON.parse(JSON.stringify(widget.state));
+      if (state.parent && !selectedWidgetAndChildrenIds.has(state.parent)) {
+        delete state.parent;
+      }
+      buffer.push(state);
       for (const w of widgetFilter(w => w.get('parent') == widget.id))
         addRecursively(w, buffer);
     }
@@ -826,7 +842,7 @@ class WidgetsModule extends SidebarModule {
     fileInput.onchange = async e => {
       const files = e.target.files;
       if (!files || files.length === 0) return;
-      const file = files[0];
+      const file = files;
 
       const reader = new FileReader();
       reader.onload = async event => {
