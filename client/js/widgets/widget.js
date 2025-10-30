@@ -2143,7 +2143,7 @@ export class Widget extends StateManaged {
       }
 
       if(a.func == 'ZOOM') {
-        setDefaults(a, { level: 1, panX: null, panY: null, player: playerName, prompt: "This game wants to override your locked zoom settings and change the view. Do you agree?" });
+        setDefaults(a, { level: 1, panX: null, panY: null, player: playerName });
 
         const normalizedTargets = Array.from(new Set(asArray(a.player).filter(p=>p).map(p=>`${p}`)));
         const isTargetedPlayer = !normalizedTargets.length || normalizedTargets.includes(playerName);
@@ -2180,7 +2180,6 @@ export class Widget extends StateManaged {
               panX: resolvedPan.x,
               panY: resolvedPan.y,
               players: normalizedTargets,
-              prompt: typeof a.prompt === 'string' ? a.prompt : null,
             });
 
             if(isTargetedPlayer) {
