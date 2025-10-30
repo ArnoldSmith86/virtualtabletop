@@ -694,20 +694,20 @@ class WidgetsModule extends SidebarModule {
     const widgetBuffer = JSON.parse(JSON.stringify(widgetData.widgets));
     const idMap = {};
 
-    const duplicates = widgetBuffer.filter(state => widgets.has(state.id)).map(state => state.id);
-    if (duplicates.length) {
-      if (widgetData.unique) {
+    if (widgetData.unique) {
+      const duplicates = widgetBuffer.filter(state => widgets.has(state.id)).map(state => state.id);
+      if (duplicates.length > 0) {
         const duplicatesList = duplicates.join(', ');
         const overwriteAll = confirm(`The following widget IDs already exist: ${duplicatesList}\n\nPress OK to overwrite these widgets, or Cancel to abort loading.`);
-        if (!overwriteAll) return;
-      } else {
-        const randomSuffix = '-' + Math.random().toString(36).substring(2, 6);
-        for (const widget of widgetBuffer) {
-          idMap[widget.id] = widget.id + randomSuffix;
-        }
-        for (const widget of widgetBuffer) {
-          widget.id = idMap[widget.id];
-        }
+        if (!overwriteAll) return [];
+      }
+    } else {
+      const randomSuffix = '-' + Math.random().toString(36).substring(2, 6);
+      for (const widget of widgetBuffer) {
+        idMap[widget.id] = widget.id + randomSuffix;
+      }
+      for (const widget of widgetBuffer) {
+        widget.id = idMap[widget.id];
       }
     }
 
