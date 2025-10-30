@@ -1,7 +1,12 @@
 #loadingRoomIndicator {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   text-align: center;
-  margin-top: 485px;
   color: var(--VTTblue);
+  z-index: 2;
+  pointer-events: none;
 }
 #loadingRoomIndicator + div button {
   margin: auto;
