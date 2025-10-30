@@ -463,8 +463,8 @@
         "collection": [
           "scoreboard"
         ],
-        "property": "y",
-        "value": -1000
+        "property": "display",
+        "value": false
       },
       {
         "func": "CALL",
