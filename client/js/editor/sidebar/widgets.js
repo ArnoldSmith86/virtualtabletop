@@ -714,27 +714,18 @@ class WidgetsModule extends SidebarModule {
     const widgetBuffer = JSON.parse(JSON.stringify(widgetData.widgets));
     const idMap = {};
 
-    if (widgetData.unique) {
-      const duplicates = widgetBuffer.filter(state => widgets.has(state.id)).map(state => state.id);
-      if (duplicates.length > 0) {
-        const duplicatesList = duplicates.join(', ');
-        const overwriteAll = confirm(`The following widget IDs already exist: ${duplicatesList}\n\nPress OK to overwrite these widgets, or Cancel to abort loading.`);
-        if (!overwriteAll) return [];
-      }
-    } else {
-      const newIds = new Set();
-      for (const widget of widgetBuffer) {
-        let i = 1;
-        let newId;
-        do {
-          newId = `${widget.id}_${i++}`;
-        } while (widgets.has(newId) || newIds.has(newId));
-        idMap[widget.id] = newId;
-        newIds.add(newId);
-      }
-      for (const widget of widgetBuffer) {
-        widget.id = idMap[widget.id];
-      }
+    const newIds = new Set();
+    for (const widget of widgetBuffer) {
+      let i = 1;
+      let newId;
+      do {
+        newId = `${widget.id}_${i++}`;
+      } while (widgets.has(newId) || newIds.has(newId));
+      idMap[widget.id] = newId;
+      newIds.add(newId);
+    }
+    for (const widget of widgetBuffer) {
+      widget.id = idMap[widget.id];
     }
 
     for (const widget of widgetBuffer) {
