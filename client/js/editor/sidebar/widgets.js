@@ -196,7 +196,7 @@ class WidgetsModule extends SidebarModule {
     }
 
     if (source === 'local' || config.allowPublicLibraryEdits) {
-      list += `<div class="new-group-drop-target" data-source="${source}"></div>`;
+      list += `<div class="new-group-drop-target" data-source="${source}"> New Group</div>`;
     }
 
     return list;

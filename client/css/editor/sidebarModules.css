@@ -572,3 +572,27 @@ body.darkMode .widget-group-header {
     width: 1.2em;
     text-align: center;
 }
+
+.widget-list .new-group-drop-target {
+  border: 2px dashed lightgray;
+  color: lightgray;
+  padding: 20px;
+  text-align: center;
+  margin-top: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  line-height: 1;
+  font-size: 14px;
+  font-style: italic;
+  height: auto;
+}
+
+.widget-list .new-group-drop-target::before {
+  content: '+';
+  font-style: normal;
+}
+
+.widget-list .new-group-drop-target.drag-over {
+  background-color: var(--backgroundHighlightColor1);
+  color: white;
+}
