@@ -10,7 +10,7 @@
       "mode": "vs",
       "time": "60",
       "attribution": "Game layout and scripting by Andy Pymont, released to the public domain under CC0.\n\nLibrary image is a photograph by George Hodan: https://www.publicdomainpictures.net/en/view-image.php?image=498782 which is CC0 / public domain.\n\nTile graphics are from https://game-icons.net/ and https://thenounproject.com/ and are used under the CC BY 3.0 license:\n\nDelapouite\n• City buildings https://game-icons.net/1x1/delapouite/modern-city.html\n• Delivery truck https://game-icons.net/1x1/delapouite/truck.html\n• Donut https://game-icons.net/1x1/delapouite/donut.html\n• Fish https://game-icons.net/1x1/delapouite/double-fish.html\n• Meeple https://game-icons.net/1x1/delapouite/meeple.html\n• Sandwich https://game-icons.net/1x1/delapouite/sandwich.html\n\nUmer Younas\n• Bank Note https://thenounproject.com/icon/bank-note-3947508",
-      "lastUpdate": 1748467583413,
+      "lastUpdate": 1761822920000,
       "id": "blr8",
       "showName": true,
       "skill": "",
@@ -551,7 +551,8 @@
                 "func": "SET",
                 "property": "display",
                 "value": true
-              }
+              },
+              "var board = ${value}"
             ],
             "elseRoutine": [
               {
