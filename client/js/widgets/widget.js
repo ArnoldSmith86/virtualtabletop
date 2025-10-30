@@ -2143,33 +2143,32 @@ export class Widget extends StateManaged {
       }
 
       if(a.func == 'ZOOM') {
-        setDefaults(a, { level: 1, panX: null, panY: null, player: variables.playerName, prompt: "This game wants to override your locked zoom settings and change the view. Do you agree?" });
+        setDefaults(a, { level: 1, panX: null, panY: null, player: playerName, prompt: "This game wants to override your locked zoom settings and change the view. Do you agree?" });
 
-        const targets = asArray(a.player).filter(p=>p !== undefined && p !== null && p !== '');
-        const normalizedTargets = Array.from(new Set(targets.map(p=>`${p}`)));
-        const isTargetedPlayer = !normalizedTargets.length || !playerName || normalizedTargets.includes(playerName);
+        const normalizedTargets = Array.from(new Set(asArray(a.player).filter(p=>p).map(p=>`${p}`)));
+        const isTargetedPlayer = !normalizedTargets.length || normalizedTargets.includes(playerName);
 
         const numericLevel = Number(a.level);
         if (!Number.isFinite(numericLevel) || numericLevel < 1 || numericLevel > 10) {
-          problems.push('ZOOM: level must be a number between 1 and 10.');
+          problems.push('Level must be a number between 1 and 10.');
         } else {
           const boardDimensions = { width: 1600, height: 1000 };
           const visibleUnits = {
-            width: boardDimensions.width / numericLevel,
-            height: boardDimensions.height / numericLevel,
+            width:  boardDimensions.width  / numericLevel,
+            height: boardDimensions.height / numericLevel
           };
           const defaultUnits = {
-            left: (boardDimensions.width - visibleUnits.width) / 2,
-            top: (boardDimensions.height - visibleUnits.height) / 2,
+            left: (boardDimensions.width  - visibleUnits.width ) / 2,
+            top:  (boardDimensions.height - visibleUnits.height) / 2
           };
 
           const targetUnits = {
-            left: a.panX !== undefined && a.panX !== null ? Number(a.panX) : defaultUnits.left,
-            top: a.panY !== undefined && a.panY !== null ? Number(a.panY) : defaultUnits.top,
+            left: Math.round(a.panX !== null ? Number(a.panX) : defaultUnits.left),
+            top:  Math.round(a.panY !== null ? Number(a.panY) : defaultUnits.top)
           };
 
           if (!Number.isFinite(targetUnits.left) || !Number.isFinite(targetUnits.top)) {
-            problems.push('ZOOM: panX and panY must be numbers.');
+            problems.push('panX and panY must be numbers.');
           } else {
             const resolvedPan = {
               x: -targetUnits.left * numericLevel,
@@ -2184,8 +2183,6 @@ export class Widget extends StateManaged {
               prompt: typeof a.prompt === 'string' ? a.prompt : null,
             });
 
-            const targetsLabel = normalizedTargets.length ? normalizedTargets.join(', ') : 'all players';
-
             if(isTargetedPlayer) {
               // If prompt is provided and zoom is locked, defer handling to the server echo
               const isLocked = localStorage.getItem('zoomLocked') === 'true';
@@ -2193,15 +2190,11 @@ export class Widget extends StateManaged {
                 setZoomLevel(numericLevel);
                 setPan(resolvedPan.x*scale, resolvedPan.y*scale);
               }
-              if(jeRoutineLogging)
-                jeLoggingRoutineOperationSummary(
-                  `level=${numericLevel}`,
-                  `topLeft=(${clampedUnits.left.toFixed(2)},${clampedUnits.top.toFixed(2)})`,
-                  `pan=(${resolvedPan.x},${resolvedPan.y})`,
-                  `targets=${targetsLabel}`
-                );
-            } else if(jeRoutineLogging) {
-              jeLoggingRoutineOperationSummary('Sent ZOOM to other players', `targets=${targetsLabel}`);
+            }
+
+            if(jeRoutineLogging) {
+              const targetsLabel = normalizedTargets.length ? `player(s) ${normalizedTargets.join(', ')}` : 'all players';
+              jeLoggingRoutineOperationSummary(`Zoomed ${targetsLabel} ${numericLevel}x and panned to (${targetUnits.left},${targetUnits.top})`);
             }
           }
         }
