@@ -701,9 +701,9 @@ class WidgetsModule extends SidebarModule {
         const overwriteAll = confirm(`The following widget IDs already exist: ${duplicatesList}\n\nPress OK to overwrite these widgets, or Cancel to abort loading.`);
         if (!overwriteAll) return;
       } else {
+        const randomSuffix = '-' + Math.random().toString(36).substring(2, 6);
         for (const widget of widgetBuffer) {
-          const newId = generateUniqueWidgetID();
-          idMap[widget.id] = newId;
+          idMap[widget.id] = widget.id + randomSuffix;
         }
         for (const widget of widgetBuffer) {
           widget.id = idMap[widget.id];

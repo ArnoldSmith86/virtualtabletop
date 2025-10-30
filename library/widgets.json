@@ -4,7 +4,7 @@
       "name": "Pawn",
       "widgets": [
         {
-          "id": "Pawn",
+          "id": "pawn",
           "x": 390,
           "y": 79,
           "width": 50.4,
@@ -41,13 +41,13 @@
           ]
         }
       ],
-      "id": "local-1761759968988-eqeml7146"
+      "id": "local1761759968988Eqeml7146"
     },
     {
       "name": "Pin",
       "widgets": [
         {
-          "id": "Pin",
+          "id": "pin",
           "x": 465,
           "y": 111,
           "width": 35,
@@ -84,13 +84,13 @@
           ]
         }
       ],
-      "id": "local-1761760150045-p6kbjp4ez"
+      "id": "local1761760150045P6kbjp4ez"
     },
     {
       "name": "Marble",
       "widgets": [
         {
-          "id": "Marble",
+          "id": "marble",
           "x": 540,
           "y": 114,
           "width": 35,
@@ -129,13 +129,13 @@
           ]
         }
       ],
-      "id": "local-1761760152721-6d2nqaryf"
+      "id": "local17617601527216d2nqaryf"
     },
     {
       "name": "Cube",
       "widgets": [
         {
-          "id": "Cube",
+          "id": "cube",
           "x": 615,
           "y": 110,
           "width": 36,
@@ -174,13 +174,13 @@
           ]
         }
       ],
-      "id": "local-1761760155084-k7sx9jeoy"
+      "id": "local1761760155084K7sx9jeoy"
     },
     {
       "name": "Settlement",
       "widgets": [
         {
-          "id": "Settlement",
+          "id": "settlement",
           "x": 390,
           "y": 494,
           "width": 69,
@@ -217,13 +217,13 @@
           ]
         }
       ],
-      "id": "local-1761760702861-vdu1x480h"
+      "id": "local1761760702861Vdu1x480h"
     },
     {
       "name": "Checker",
       "widgets": [
         {
-          "id": "Checker",
+          "id": "checker",
           "x": 445,
           "y": 190,
           "width": 75,
@@ -273,13 +273,13 @@
           ]
         }
       ],
-      "id": "local-1761760157492-p1sil6gvj"
+      "id": "local1761760157492P1sil6gvj"
     },
     {
       "name": "Checker (3D)",
       "widgets": [
         {
-          "id": "Checker (3D)",
+          "id": "checker3D",
           "x": 545,
           "y": 200,
           "width": 75,
@@ -329,13 +329,13 @@
           ]
         }
       ],
-      "id": "local-1761760159517-o5l4tfcac"
+      "id": "local1761760159517O5l4tfcac"
     },
     {
       "name": "Meeple (3D)",
       "widgets": [
         {
-          "id": "Meeple (3D)",
+          "id": "meeple3D",
           "x": 550,
           "y": 300,
           "width": 66.5,
@@ -385,13 +385,13 @@
           ]
         }
       ],
-      "id": "local-1761760164384-t6w64xg60"
+      "id": "local1761760164384T6w64xg60"
     },
     {
       "name": "Piggy",
       "widgets": [
         {
-          "id": "Piggy",
+          "id": "piggy",
           "x": 450,
           "y": 412,
           "width": 68.56,
@@ -428,13 +428,13 @@
           ]
         }
       ],
-      "id": "local-1761760166506-6iseif7up"
+      "id": "local17617601665066iseif7up"
     },
     {
       "name": "Meeple",
       "widgets": [
         {
-          "id": "Meeple",
+          "id": "meeple",
           "x": 450,
           "y": 303,
           "width": 56,
@@ -471,13 +471,13 @@
           ]
         }
       ],
-      "id": "local-1761760162472-fr0a3dz0j"
+      "id": "local1761760162472Fr0a3dz0j"
     },
     {
       "name": "Piggy (3D)",
       "widgets": [
         {
-          "id": "Piggy (3D)",
+          "id": "piggy3D",
           "x": 550,
           "y": 408,
           "width": 85.7,
@@ -514,13 +514,13 @@
           ]
         }
       ],
-      "id": "local-1761760168435-ssp508mw3"
+      "id": "local1761760168435Ssp508mw3"
     },
     {
       "name": "House",
       "widgets": [
         {
-          "id": "House",
+          "id": "house",
           "x": 490,
           "y": 507,
           "width": 60,
@@ -558,13 +558,13 @@
           ]
         }
       ],
-      "id": "local-1761760704758-re5yyhj65"
+      "id": "local1761760704758Re5yyhj65"
     },
     {
       "name": "Beam",
       "widgets": [
         {
-          "id": "Beam",
+          "id": "beam",
           "x": 610,
           "y": 480,
           "width": 26,
@@ -620,13 +620,13 @@
           ]
         }
       ],
-      "id": "local-1761760707497-2jg1vqg2p"
+      "id": "local17617607074972jg1vqg2p"
     },
     {
       "name": "Hex (flat)",
       "widgets": [
         {
-          "id": "Hex (flat)",
+          "id": "hexFlat",
           "x": 390,
           "y": 600,
           "width": 50,
@@ -663,13 +663,13 @@
           ]
         }
       ],
-      "id": "local-1761760710144-rgvghacx3"
+      "id": "local1761760710144Rgvghacx3"
     },
     {
       "name": "Hex (point)",
       "widgets": [
         {
-          "id": "Hex (point)",
+          "id": "hexPoint",
           "x": 465,
           "y": 600,
           "width": 50,
@@ -706,13 +706,13 @@
           ]
         }
       ],
-      "id": "local-1761760712392-zz47cflf9"
+      "id": "local1761760712392Zz47cflf9"
     },
     {
       "name": "Hex (zoom in)",
       "widgets": [
         {
-          "id": "Hex (zoom in)",
+          "id": "hexZoomIn",
           "x": 540,
           "y": 600,
           "width": 50,
@@ -756,13 +756,13 @@
           ]
         }
       ],
-      "id": "local-1761760714381-kctoiwbq4"
+      "id": "local1761760714381Kctoiwbq4"
     },
     {
       "name": "Hex (zoom out)",
       "widgets": [
         {
-          "id": "Hex (zoom out)",
+          "id": "hexZoomOut",
           "x": 615,
           "y": 600,
           "width": 50,
@@ -806,13 +806,13 @@
           ]
         }
       ],
-      "id": "local-1761760717047-nnmp7hslx"
+      "id": "local1761760717047Nnmp7hslx"
     },
     {
       "name": "Chip",
       "widgets": [
         {
-          "id": "Chip",
+          "id": "chip",
           "x": 920,
           "y": 114,
           "width": 73,
@@ -834,13 +834,13 @@
           "labelColor": "#00000022"
         }
       ],
-      "id": "local-1761760751971-1tv8qi9lm"
+      "id": "local17617607519711tv8qi9lm"
     },
     {
       "name": "Chip (3D)",
       "widgets": [
         {
-          "id": "Chip (3D)",
+          "id": "chip3D",
           "x": 1010,
           "y": 123,
           "width": 75,
@@ -863,13 +863,13 @@
           "labelColor": "#00000022"
         }
       ],
-      "id": "local-1761760754325-3tp7h08dz"
+      "id": "local17617607543253tp7h08dz"
     },
     {
       "name": "Dealer Chip",
       "widgets": [
         {
-          "id": "Dealer Chip",
+          "id": "dealerChip",
           "x": 920,
           "y": 207,
           "width": 73,
@@ -894,13 +894,13 @@
           "primaryColor": "#55bb66"
         }
       ],
-      "id": "local-1761760756320-2flm956ae"
+      "id": "local17617607563202flm956ae"
     },
     {
       "name": "Dealer Chip (3D)",
       "widgets": [
         {
-          "id": "Dealer Chip (3D)",
+          "id": "dealerChip3D",
           "x": 1010,
           "y": 216,
           "width": 75,
@@ -926,14 +926,14 @@
           "primaryColor": "#55bb66"
         }
       ],
-      "id": "local-1761760758307-4qnia66dm"
+      "id": "local17617607583074qnia66dm"
     },
     {
       "name": "Stacks of Chips",
       "widgets": [
         {
           "type": "holder",
-          "id": "Stacks of Chips",
+          "id": "stacksOfChips",
           "x": 916,
           "y": 300,
           "width": 81,
@@ -1232,14 +1232,14 @@
           ]
         }
       ],
-      "id": "local-1761760768913-nua29jniv"
+      "id": "local1761760768913Nua29jniv"
     },
     {
       "name": "Stacks of Chips (3D)",
       "widgets": [
         {
           "type": "holder",
-          "id": "Stacks of Chips (3D)",
+          "id": "stacksOfChips3D",
           "x": 1010,
           "y": 309,
           "width": 81,
@@ -1540,14 +1540,14 @@
           ]
         }
       ],
-      "id": "local-1761760779714-g1stew3hz"
+      "id": "local1761760779714G1stew3hz"
     },
     {
       "name": "Die",
       "widgets": [
         {
           "type": "dice",
-          "id": "Die",
+          "id": "die",
           "x": 930,
           "y": 455,
           "z": 15,
@@ -1561,14 +1561,14 @@
           ]
         }
       ],
-      "id": "local-1761760783231-9bqj4dlfw"
+      "id": "local17617607832319bqj4dlfw"
     },
     {
       "name": "Die (3D)",
       "widgets": [
         {
           "type": "dice",
-          "id": "Die 2",
+          "id": "die2",
           "x": 1020,
           "y": 455,
           "z": 17,
@@ -1586,14 +1586,14 @@
           "shape3d": true
         }
       ],
-      "id": "local-1761760785510-t9c6gwwwk"
+      "id": "local1761760785510T9c6gwwwk"
     },
     {
       "name": "Die (image)",
       "widgets": [
         {
           "type": "dice",
-          "id": "Die (3D)",
+          "id": "die3D",
           "x": 930,
           "y": 525,
           "z": 18,
@@ -1710,14 +1710,14 @@
           "cT": "#ffffff"
         }
       ],
-      "id": "local-1761760787843-mke4xpz2v"
+      "id": "local1761760787843Mke4xpz2v"
     },
     {
       "name": "Holder & Standard Deck",
       "widgets": [
         {
           "type": "holder",
-          "id": "Holder & Standard Deck of Cards",
+          "id": "holderStandardDeckOfCards",
           "x": 115,
           "y": 570,
           "dropTarget": {
@@ -1758,364 +1758,364 @@
           "height": 160
         },
         {
-          "id": "f9gi_A_C",
+          "id": "f9giAC",
           "parent": "f9giP",
           "deck": "f9giD",
           "type": "card",
           "cardType": "C 01"
         },
         {
-          "id": "f9gi_2_C",
+          "id": "f9gi2C",
           "parent": "f9giP",
           "deck": "f9giD",
           "type": "card",
           "cardType": "C 02"
         },
         {
-          "id": "f9gi_3_C",
+          "id": "f9gi3C",
           "parent": "f9giP",
           "deck": "f9giD",
           "type": "card",
           "cardType": "C 03"
         },
         {
-          "id": "f9gi_4_C",
+          "id": "f9gi4C",
           "parent": "f9giP",
           "deck": "f9giD",
           "type": "card",
           "cardType": "C 04"
         },
         {
-          "id": "f9gi_5_C",
+          "id": "f9gi5C",
           "parent": "f9giP",
           "deck": "f9giD",
           "type": "card",
           "cardType": "C 05"
         },
         {
-          "id": "f9gi_6_C",
+          "id": "f9gi6C",
           "parent": "f9giP",
           "deck": "f9giD",
           "type": "card",
           "cardType": "C 06"
         },
         {
-          "id": "f9gi_7_C",
+          "id": "f9gi7C",
           "parent": "f9giP",
           "deck": "f9giD",
           "type": "card",
           "cardType": "C 07"
         },
         {
-          "id": "f9gi_8_C",
+          "id": "f9gi8C",
           "parent": "f9giP",
           "deck": "f9giD",
           "type": "card",
           "cardType": "C 08"
         },
         {
-          "id": "f9gi_9_C",
+          "id": "f9gi9C",
           "parent": "f9giP",
           "deck": "f9giD",
           "type": "card",
           "cardType": "C 09"
         },
         {
-          "id": "f9gi_T_C",
+          "id": "f9giTC",
           "parent": "f9giP",
           "deck": "f9giD",
           "type": "card",
           "cardType": "C 10"
         },
         {
-          "id": "f9gi_J_C",
+          "id": "f9giJC",
           "parent": "f9giP",
           "deck": "f9giD",
           "type": "card",
           "cardType": "C 2J"
         },
         {
-          "id": "f9gi_Q_C",
+          "id": "f9giQC",
           "parent": "f9giP",
           "deck": "f9giD",
           "type": "card",
           "cardType": "C 3Q"
         },
         {
-          "id": "f9gi_K_C",
+          "id": "f9giKC",
           "parent": "f9giP",
           "deck": "f9giD",
           "type": "card",
           "cardType": "C 4K"
         },
         {
-          "id": "f9gi_A_D",
+          "id": "f9giAD",
           "parent": "f9giP",
           "deck": "f9giD",
           "type": "card",
           "cardType": "D 01"
         },
         {
-          "id": "f9gi_2_D",
+          "id": "f9gi2D",
           "parent": "f9giP",
           "deck": "f9giD",
           "type": "card",
           "cardType": "D 02"
         },
         {
-          "id": "f9gi_3_D",
+          "id": "f9gi3D",
           "parent": "f9giP",
           "deck": "f9giD",
           "type": "card",
           "cardType": "D 03"
         },
         {
-          "id": "f9gi_4_D",
+          "id": "f9gi4D",
           "parent": "f9giP",
           "deck": "f9giD",
           "type": "card",
           "cardType": "D 04"
         },
         {
-          "id": "f9gi_5_D",
+          "id": "f9gi5D",
           "parent": "f9giP",
           "deck": "f9giD",
           "type": "card",
           "cardType": "D 05"
         },
         {
-          "id": "f9gi_6_D",
+          "id": "f9gi6D",
           "parent": "f9giP",
           "deck": "f9giD",
           "type": "card",
           "cardType": "D 06"
         },
         {
-          "id": "f9gi_7_D",
+          "id": "f9gi7D",
           "parent": "f9giP",
           "deck": "f9giD",
           "type": "card",
           "cardType": "D 07"
         },
         {
-          "id": "f9gi_8_D",
+          "id": "f9gi8D",
           "parent": "f9giP",
           "deck": "f9giD",
           "type": "card",
           "cardType": "D 08"
         },
         {
-          "id": "f9gi_9_D",
+          "id": "f9gi9D",
           "parent": "f9giP",
           "deck": "f9giD",
           "type": "card",
           "cardType": "D 09"
         },
         {
-          "id": "f9gi_T_D",
+          "id": "f9giTD",
           "parent": "f9giP",
           "deck": "f9giD",
           "type": "card",
           "cardType": "D 10"
         },
         {
-          "id": "f9gi_J_D",
+          "id": "f9giJD",
           "parent": "f9giP",
           "deck": "f9giD",
           "type": "card",
           "cardType": "D 2J"
         },
         {
-          "id": "f9gi_Q_D",
+          "id": "f9giQD",
           "parent": "f9giP",
           "deck": "f9giD",
           "type": "card",
           "cardType": "D 3Q"
         },
         {
-          "id": "f9gi_K_D",
+          "id": "f9giKD",
           "parent": "f9giP",
           "deck": "f9giD",
           "type": "card",
           "cardType": "D 4K"
         },
         {
-          "id": "f9gi_A_H",
+          "id": "f9giAH",
           "parent": "f9giP",
           "deck": "f9giD",
           "type": "card",
           "cardType": "H 01"
         },
         {
-          "id": "f9gi_2_H",
+          "id": "f9gi2H",
           "parent": "f9giP",
           "deck": "f9giD",
           "type": "card",
           "cardType": "H 02"
         },
         {
-          "id": "f9gi_3_H",
+          "id": "f9gi3H",
           "parent": "f9giP",
           "deck": "f9giD",
           "type": "card",
           "cardType": "H 03"
         },
         {
-          "id": "f9gi_4_H",
+          "id": "f9gi4H",
           "parent": "f9giP",
           "deck": "f9giD",
           "type": "card",
           "cardType": "H 04"
         },
         {
-          "id": "f9gi_5_H",
+          "id": "f9gi5H",
           "parent": "f9giP",
           "deck": "f9giD",
           "type": "card",
           "cardType": "H 05"
         },
         {
-          "id": "f9gi_6_H",
+          "id": "f9gi6H",
           "parent": "f9giP",
           "deck": "f9giD",
           "type": "card",
           "cardType": "H 06"
         },
         {
-          "id": "f9gi_7_H",
+          "id": "f9gi7H",
           "parent": "f9giP",
           "deck": "f9giD",
           "type": "card",
           "cardType": "H 07"
         },
         {
-          "id": "f9gi_8_H",
+          "id": "f9gi8H",
           "parent": "f9giP",
           "deck": "f9giD",
           "type": "card",
           "cardType": "H 08"
         },
         {
-          "id": "f9gi_9_H",
+          "id": "f9gi9H",
           "parent": "f9giP",
           "deck": "f9giD",
           "type": "card",
           "cardType": "H 09"
         },
         {
-          "id": "f9gi_T_H",
+          "id": "f9giTH",
           "parent": "f9giP",
           "deck": "f9giD",
           "type": "card",
           "cardType": "H 10"
         },
         {
-          "id": "f9gi_J_H",
+          "id": "f9giJH",
           "parent": "f9giP",
           "deck": "f9giD",
           "type": "card",
           "cardType": "H 2J"
         },
         {
-          "id": "f9gi_Q_H",
+          "id": "f9giQH",
           "parent": "f9giP",
           "deck": "f9giD",
           "type": "card",
           "cardType": "H 3Q"
         },
         {
-          "id": "f9gi_K_H",
+          "id": "f9giKH",
           "parent": "f9giP",
           "deck": "f9giD",
           "type": "card",
           "cardType": "H 4K"
         },
         {
-          "id": "f9gi_A_S",
+          "id": "f9giAS",
           "parent": "f9giP",
           "deck": "f9giD",
           "type": "card",
           "cardType": "S 01"
         },
         {
-          "id": "f9gi_2_S",
+          "id": "f9gi2S",
           "parent": "f9giP",
           "deck": "f9giD",
           "type": "card",
           "cardType": "S 02"
         },
         {
-          "id": "f9gi_3_S",
+          "id": "f9gi3S",
           "parent": "f9giP",
           "deck": "f9giD",
           "type": "card",
           "cardType": "S 03"
         },
         {
-          "id": "f9gi_4_S",
+          "id": "f9gi4S",
           "parent": "f9giP",
           "deck": "f9giD",
           "type": "card",
           "cardType": "S 04"
         },
         {
-          "id": "f9gi_5_S",
+          "id": "f9gi5S",
           "parent": "f9giP",
           "deck": "f9giD",
           "type": "card",
           "cardType": "S 05"
         },
         {
-          "id": "f9gi_6_S",
+          "id": "f9gi6S",
           "parent": "f9giP",
           "deck": "f9giD",
           "type": "card",
           "cardType": "S 06"
         },
         {
-          "id": "f9gi_7_S",
+          "id": "f9gi7S",
           "parent": "f9giP",
           "deck": "f9giD",
           "type": "card",
           "cardType": "S 07"
         },
         {
-          "id": "f9gi_8_S",
+          "id": "f9gi8S",
           "parent": "f9giP",
           "deck": "f9giD",
           "type": "card",
           "cardType": "S 08"
         },
         {
-          "id": "f9gi_9_S",
+          "id": "f9gi9S",
           "parent": "f9giP",
           "deck": "f9giD",
           "type": "card",
           "cardType": "S 09"
         },
         {
-          "id": "f9gi_T_S",
+          "id": "f9giTS",
           "parent": "f9giP",
           "deck": "f9giD",
           "type": "card",
           "cardType": "S 10"
         },
         {
-          "id": "f9gi_J_S",
+          "id": "f9giJS",
           "parent": "f9giP",
           "deck": "f9giD",
           "type": "card",
           "cardType": "S 2J"
         },
         {
-          "id": "f9gi_Q_S",
+          "id": "f9giQS",
           "parent": "f9giP",
           "deck": "f9giD",
           "type": "card",
           "cardType": "S 3Q"
         },
         {
-          "id": "f9gi_K_S",
+          "id": "f9giKS",
           "parent": "f9giP",
           "deck": "f9giD",
           "type": "card",
@@ -2669,14 +2669,14 @@
           ]
         }
       ],
-      "id": "local-1761760954201-u01n8crew"
+      "id": "local1761760954201U01n8crew"
     },
     {
       "name": "Holder & Blank Deck",
       "widgets": [
         {
           "type": "holder",
-          "id": "Holder & Blank Deck of Cards",
+          "id": "holderBlankDeckOfCards",
           "x": 115,
           "y": 340,
           "dropTarget": {
@@ -2752,20 +2752,20 @@
           ]
         }
       ],
-      "id": "local-1761760958992-tk7yck44o"
+      "id": "local1761760958992Tk7yck44o"
     },
     {
       "name": "Holder",
       "widgets": [
         {
           "type": "holder",
-          "id": "Holder",
+          "id": "holder",
           "x": 115,
           "y": 150,
           "z": 1
         }
       ],
-      "id": "local-1761760961355-mp89p42ws"
+      "id": "local1761760961355Mp89p42ws"
     },
     {
       "name": "Hand",
@@ -2791,7 +2791,7 @@
           "id": "hand"
         }
       ],
-      "id": "local-1761760963848-4rkngiiiw",
+      "id": "local17617609638484rkngiiiw",
       "unique": true
     },
     {
@@ -2799,7 +2799,7 @@
       "widgets": [
         {
           "type": "canvas",
-          "id": "Canvas",
+          "id": "canvas",
           "x": 400,
           "y": 100,
           "width": 800,
@@ -2846,7 +2846,7 @@
         },
         {
           "type": "button",
-          "id": "2a0z-Reset",
+          "id": "2a0zReset",
           "parent": "Canvas",
           "fixedParent": true,
           "x": -50,
@@ -2868,7 +2868,7 @@
         },
         {
           "type": "button",
-          "id": "2a0z-Color",
+          "id": "2a0zColor",
           "parent": "Canvas",
           "fixedParent": true,
           "x": -50,
@@ -2898,7 +2898,7 @@
           "borderRadius": "0% 0% 0% 50%"
         }
       ],
-      "id": "local-1761761068950-3wmsqif2d"
+      "id": "local17617610689503wmsqif2d"
     },
     {
       "name": "Seat with Counter",
@@ -2960,7 +2960,7 @@
           ]
         }
       ],
-      "id": "local-1761761078286-fppdn2dnj"
+      "id": "local1761761078286Fppdn2dnj"
     },
     {
       "name": "Seat",
@@ -2973,26 +2973,26 @@
           "id": "48o9"
         }
       ],
-      "id": "local-1761761094435-6ivilei6n"
+      "id": "local17617610944356ivilei6n"
     },
     {
       "name": "Scoreboard",
       "widgets": [
         {
           "type": "scoreboard",
-          "id": "Scoreboard",
+          "id": "scoreboard",
           "x": 1000,
           "y": 660
         }
       ],
-      "id": "local-1761761121555-mw6awkmbc"
+      "id": "local1761761121555Mw6awkmbc"
     },
     {
       "name": "Spinner",
       "widgets": [
         {
           "type": "spinner",
-          "id": "Spinner",
+          "id": "spinner",
           "x": 450,
           "y": 835,
           "z": 1,
@@ -3007,7 +3007,7 @@
           "value": "6"
         }
       ],
-      "id": "local-1761761198392-hqorobw11",
+      "id": "local1761761198392Hqorobw11",
       "unique": true
     },
     {
@@ -3015,7 +3015,7 @@
       "widgets": [
         {
           "type": "button",
-          "id": "Button",
+          "id": "button",
           "x": 750,
           "y": 860,
           "z": 2,
@@ -3023,14 +3023,14 @@
           "clickRoutine": []
         }
       ],
-      "id": "local-1761761200522-4fp9penxr"
+      "id": "local17617612005224fp9penxr"
     },
     {
       "name": "Counter",
       "widgets": [
         {
           "type": "label",
-          "id": "Counter",
+          "id": "counter",
           "x": 1058,
           "y": 890,
           "width": 65,
@@ -3084,14 +3084,14 @@
           ]
         }
       ],
-      "id": "local-1761761204909-rwp4br0pj"
+      "id": "local1761761204909Rwp4br0pj"
     },
     {
       "name": "Timer",
       "widgets": [
         {
           "type": "timer",
-          "id": "Timer",
+          "id": "timer",
           "x": 1005,
           "y": 825
         },
@@ -3137,28 +3137,28 @@
           "text": "reload"
         }
       ],
-      "id": "local-1761761207369-7bj6lks6m"
+      "id": "local17617612073697bj6lks6m"
     },
     {
       "name": "Label",
       "widgets": [
         {
           "type": "label",
-          "id": "Label",
+          "id": "label",
           "x": 1385,
           "y": 100,
           "z": 2,
           "text": "Label"
         }
       ],
-      "id": "local-1761761301959-xywoxauv8"
+      "id": "local1761761301959Xywoxauv8"
     },
     {
       "name": "Heading",
       "widgets": [
         {
           "type": "label",
-          "id": "Heading",
+          "id": "heading",
           "x": 1335,
           "y": 150,
           "width": 200,
@@ -3168,13 +3168,13 @@
           "text": "Heading"
         }
       ],
-      "id": "local-1761761304359-w9f8govv1"
+      "id": "local1761761304359W9f8govv1"
     },
     {
       "name": "Horizontal Rule",
       "widgets": [
         {
-          "id": "Horizontal Rule",
+          "id": "horizontalRule",
           "x": 1300,
           "y": 325,
           "width": 200,
@@ -3186,13 +3186,13 @@
           }
         }
       ],
-      "id": "local-1761761307636-h98ek6rk9"
+      "id": "local1761761307636H98ek6rk9"
     },
     {
       "name": "Vertical Rule",
       "widgets": [
         {
-          "id": "Vertical Rule",
+          "id": "verticalRule",
           "x": 1535,
           "y": 190,
           "width": 0,
@@ -3204,7 +3204,7 @@
           }
         }
       ],
-      "id": "local-1761761310621-yd97ez427"
+      "id": "local1761761310621Yd97ez427"
     },
     {
       "name": "Basic Widget",
@@ -3216,7 +3216,7 @@
           "x": 509
         }
       ],
-      "id": "local-1761761365694-krw70xfyz"
+      "id": "local1761761365694Krw70xfyz"
     }
   ],
   "groups": [

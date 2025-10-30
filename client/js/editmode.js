@@ -1354,7 +1354,28 @@ window.placeWidget = async function (widgetId, source, coords) {
   const widgetData = allWidgets.find(w => w.id === widgetId);
 
   if (widgetData) {
-    const newWidgetIds = await widgetsModule.placeWidgetFromBuffer(widgetData, coords);
+    const widgetDataCopy = JSON.parse(JSON.stringify(widgetData));
+
+    if (!widgetDataCopy.unique) {
+      const randomSuffix = '-' + Math.random().toString(36).substring(2, 6);
+      const idMap = {};
+
+      for (const widget of widgetDataCopy.widgets) {
+        idMap[widget.id] = widget.id + randomSuffix;
+      }
+
+      for (const widget of widgetDataCopy.widgets) {
+        widget.id = idMap[widget.id];
+        if (widget.parent && idMap[widget.parent]) {
+          widget.parent = idMap[widget.parent];
+        }
+        if (widget.type === 'card' && widget.deck && idMap[widget.deck]) {
+          widget.deck = idMap[widget.deck];
+        }
+      }
+    }
+
+    const newWidgetIds = await widgetsModule.placeWidgetFromBuffer(widgetDataCopy, coords);
     const newWidgets = newWidgetIds.map(id => widgets.get(id)).filter(Boolean);
     for (const widget of newWidgets) {
       if (widget.get('addToRoomRoutine')) {
