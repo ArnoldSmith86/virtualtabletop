@@ -880,12 +880,19 @@ class WidgetsModule extends SidebarModule {
           }
 
           if (Array.isArray(newGroups)) {
-            for (const group of newGroups) {
-              const existingGroup = existingGroups.find(g => g.name === group.name);
+            const newWidgetIds = new Set(newWidgets.map(w => w.id));
+
+            for (const existingGroup of existingGroups) {
+              existingGroup.widgets = existingGroup.widgets.filter(id => !newWidgetIds.has(id));
+            }
+
+            for (const newGroup of newGroups) {
+              const existingGroup = existingGroups.find(g => g.name === newGroup.name);
               if (existingGroup) {
-                existingGroup.widgets.push(...group.widgets);
+                const uniqueNewWidgets = newGroup.widgets.filter(id => !existingGroup.widgets.includes(id));
+                existingGroup.widgets.push(...uniqueNewWidgets);
               } else {
-                existingGroups.push(group);
+                existingGroups.push(JSON.parse(JSON.stringify(newGroup)));
               }
             }
           }
