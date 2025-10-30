@@ -16,12 +16,10 @@ onMessage('zoom', function({ level, panX, panY, prompt }) {
 
   // If a prompt was provided and zoom is locked, ask the user once.
   // On confirmation, apply the requested zoom/pan; on cancel, do nothing.
-  if(typeof prompt === 'string' && zoomLocked) {
-    if(!confirmedZoomPrompts.has(prompt)) {
-      if(!confirm(prompt))
-        return;
-      confirmedZoomPrompts.add(prompt);
-    }
+  if(typeof prompt === 'string' && zoomLocked && !confirmedZoomPrompts.has(prompt)) {
+    if(!confirm(prompt))
+      return;
+    confirmedZoomPrompts.add(prompt);
   }
 
   setZoomLevel(Math.max(1, Math.min(10, numericLevel)));
