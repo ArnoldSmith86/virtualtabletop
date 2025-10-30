@@ -21,7 +21,7 @@ class WidgetsModule extends SidebarModule {
       </div>
       <div class="buttonBar" style="display: flex; align-items: center; margin-bottom: 10px;">
         <input type="text" id="widgetFilter" placeholder="Filter..." style="flex-grow: 1;flex-shrink: 1;margin-right: 5px;">
-        <button icon="add" id="saveWidgetsToBuffer" class="sidebarButton"><span>Save selected widgets</span></button>
+        <button icon="bookmark_add" id="saveWidgetsToBuffer" class="sidebarButton"><span>Save selected widgets</span></button>
         <button icon="edit" id="editWidgetsButton" class="sidebarButton"><span>Edit widgets</span></button>
       </div>
     `);
@@ -234,7 +234,7 @@ class WidgetsModule extends SidebarModule {
           </div>
         </div>
         <div class="widget-list local-list">
-          ${(localWidgets.length === 0 && localGroups.length == 0) ? '<div class="explainer-text">Select a widget in the room and press "+" (Save selected widgets) to create a reusable widget.</div>' : this.renderList(localWidgets, localGroups, 'local', filter, isEditing)}
+          ${(localWidgets.length === 0 && localGroups.length == 0) ? '<div class="explainer-text">Select a widget in the room and press <span class="material-symbols" style="font-style: normal;vertical-align: middle;">bookmark_add</span> (Save selected widgets) to create a reusable widget.</div>' : this.renderList(localWidgets, localGroups, 'local', filter, isEditing)}
         </div>
       </div>
     `;
