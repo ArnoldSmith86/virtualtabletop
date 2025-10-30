@@ -36,6 +36,7 @@ function updateZoomUIState() {
   const override = isGameOverrideActive();
   $('#zoomOverrideMsg').style.display = override ? '' : 'none';
   $('#zoomSlider').disabled = override;
+  $('body').classList.toggle('noPanning', override);
 }
 
 export function setZoomLevel(zoomLevel) {

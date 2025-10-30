@@ -834,7 +834,7 @@ body.panning #roomArea {
   cursor: grabbing;
 }
 
-body.zoom2x .movable.widget, body.zoom2x .canvas.widget, body.zoom2x.edit #roomArea, body.zoom2x.overlayActive #roomArea {
+body.zoom2x .movable.widget, body.zoom2x .canvas.widget, body.zoom2x.edit #roomArea, body.zoom2x.overlayActive #roomArea, body.zoom2x.noPanning #roomArea {
   cursor: default;
 }
 
