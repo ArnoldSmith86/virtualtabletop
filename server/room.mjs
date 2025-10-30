@@ -1216,6 +1216,8 @@ export default class Room {
       this.state._meta.gameSettings.zoom = { perPlayer: {}, all: null };
 
     const payload = { level: args.level, panX: args.panX, panY: args.panY };
+    if(args.disableUserControls !== undefined)
+      payload.disableUserControls = args.disableUserControls !== false;
     if(players.length === 0) {
       this.state._meta.gameSettings.zoom.all = payload;
       // Clearing all individual overrides when applying to all players

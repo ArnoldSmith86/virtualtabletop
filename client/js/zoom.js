@@ -17,7 +17,7 @@ function applyServerZoomSetting(gs) {
     setZoomLevel(zl);
     setPan(Number(target.panX)*scale, Number(target.panY)*scale);
   }
-  updateZoomUIState();
+  updateZoomUIState(gs);
 }
 
 onMessage('meta', args=>applyServerZoomSetting(args.meta.gameSettings));
@@ -29,11 +29,29 @@ function isGameOverrideActive() {
   const gs = getCurrentGameSettings() || {};
   const zoomSettings = gs.zoom || {};
   const perPlayer = zoomSettings.perPlayer || {};
-  return !!(perPlayer[playerName] || zoomSettings.all);
+  const target = perPlayer[playerName] || zoomSettings.all;
+  if(!target)
+    return false;
+  return target.disableUserControls !== false;
 }
 
-function updateZoomUIState() {
-  const override = isGameOverrideActive();
+function updateZoomUIState(gs) {
+  let override = isGameOverrideActive();
+  if(gs) {
+    const zoomSettings = gs.zoom || {};
+    const target = (zoomSettings.perPlayer || {})[playerName] || zoomSettings.all;
+    if(target) {
+      const disableUserControls = target.disableUserControls !== false;
+      if(!disableUserControls) {
+        $('#zoomOverrideMsg').style.display = 'none';
+        $('#zoomSlider').disabled = false;
+        $('body').classList.remove('noPanning');
+        return;
+      } else {
+        override = true;
+      }
+    }
+  }
   $('#zoomOverrideMsg').style.display = override ? '' : 'none';
   $('#zoomSlider').disabled = override;
   $('body').classList.toggle('noPanning', override);
@@ -164,11 +182,11 @@ onLoad(function() {
     localStorage.setItem('allowGameZoomControl', allowGameZoomControl);
     if(allowGameZoomControl)
       applyServerZoomSetting(getCurrentGameSettings());
-    updateZoomUIState();
+    updateZoomUIState(getCurrentGameSettings());
   });
 
   // Initial UI state
-  updateZoomUIState();
+  updateZoomUIState(getCurrentGameSettings());
 
   // Scroll wheel zoom with zoom-to-cursor (relative to #room)
   on('#roomArea', 'wheel', function(e){
