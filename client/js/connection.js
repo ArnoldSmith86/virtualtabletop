@@ -60,7 +60,7 @@ export function startWebSocket() {
   };
 }
 
-function onMessage(func, callback) {
+export function onMessage(func, callback) {
   if(!messageCallbacks[func])
     messageCallbacks[func] = [];
   messageCallbacks[func].push(callback);

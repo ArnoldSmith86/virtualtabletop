@@ -1,3 +1,6 @@
+import { onMessage } from './connection.js';
+import { onLoad } from './domhelpers.js';
+
 let zoomScale = 1;
 let zoomLocked = localStorage.getItem('zoomLocked') === 'true';
 // Session-scoped cache of prompts the user has already confirmed.
