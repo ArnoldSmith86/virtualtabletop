@@ -339,11 +339,11 @@
   display: inline-block;
 }
 
-.widgets.editorModule .editing [icon=delete] {
+.widgets.editorModule .editing [icon=delete], .widgets.editorModule .editing [icon=download], .widgets.editorModule .editing [icon=upload] {
   display: inline-block;
 }
 
-.widgets.editorModule [icon=delete] {
+.widgets.editorModule [icon=delete], .widgets.editorModule [icon=download], .widgets.editorModule [icon=upload] {
   display: none;
 }
 
@@ -418,9 +418,9 @@
   color: #666;
 }
 
-.explainer-text {
+.legend-text {
   font-size: 0.9em;
-  margin-top: -2em;
+  margin-top: -1.5em;
 }
 
 .widgets.editorModule li .widget-info .widget-type svg{
@@ -431,7 +431,7 @@
   margin: 0 5px;
 }
 
-.explainer-text svg{
+.explainer-text svg, .legend-text svg{
   vertical-align: middle;
   width: 18px;
   height: 18px;
@@ -439,11 +439,11 @@
   margin: 0;
 }
 
-.widgets.editorModule li .widget-info .widget-type svg.hasRoutine, .explainer-text svg.hasRoutine{
+.widgets.editorModule li .widget-info .widget-type svg.hasRoutine, .legend-text svg.hasRoutine{
   color: orange;
 }
 
-.widgets.editorModule li .widget-info .widget-type svg.isUnique, .explainer-text svg.isUnique{
+.widgets.editorModule li .widget-info .widget-type svg.isUnique, .legend-text svg.isUnique{
   color: red;
 }
 
@@ -477,7 +477,8 @@
   background: var(--VTTblue);
   color: white;
   padding: 0 0 0 10px;
-  border-radius: 5px 5px 0 0;
+  border-radius: 5px 5px 0 0;,
+  min-height: 40px;
 }
 
 .widget-list-actions {
