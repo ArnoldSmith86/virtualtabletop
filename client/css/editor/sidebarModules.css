@@ -418,18 +418,32 @@
   color: #666;
 }
 
+.explainer-text {
+  font-size: 0.9em;
+  margin-top: -2em;
+}
+
 .widgets.editorModule li .widget-info .widget-type svg{
   vertical-align: middle;
   width: 18px;
   height: 18px;
   fill: currentColor;
+  margin: 0 5px;
 }
 
-.widgets.editorModule li .widget-info .widget-type svg.hasRoutine{
+.explainer-text svg{
+  vertical-align: middle;
+  width: 18px;
+  height: 18px;
+  fill: currentColor;
+  margin: 0;
+}
+
+.widgets.editorModule li .widget-info .widget-type svg.hasRoutine, .explainer-text svg.hasRoutine{
   color: orange;
 }
 
-.widgets.editorModule li .widget-info .widget-type svg.isUnique{
+.widgets.editorModule li .widget-info .widget-type svg.isUnique, .explainer-text svg.isUnique{
   color: red;
 }
 
