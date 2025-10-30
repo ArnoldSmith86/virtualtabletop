@@ -863,14 +863,20 @@ class WidgetsModule extends SidebarModule {
               continue;
             }
 
-            let newWidget = JSON.parse(JSON.stringify(widget));
+            const newWidget = JSON.parse(JSON.stringify(widget));
 
-            if (!newWidget.id || existingIds.has(newWidget.id)) {
-              const newId = `local-${Date.now()}-${Math.random().toString(36).substring(2, 11)}`;
-              newWidget.id = newId;
+            if (newWidget.id && existingIds.has(newWidget.id)) {
+              const index = existingWidgets.findIndex(w => w.id === newWidget.id);
+              if (index !== -1) {
+                existingWidgets[index] = newWidget;
+              }
+            } else {
+              if (!newWidget.id) {
+                newWidget.id = `local-${Date.now()}-${Math.random().toString(36).substring(2, 11)}`;
+              }
+              existingWidgets.push(newWidget);
+              existingIds.add(newWidget.id);
             }
-            existingWidgets.push(newWidget);
-            existingIds.add(newWidget.id);
           }
 
           if (Array.isArray(newGroups)) {
