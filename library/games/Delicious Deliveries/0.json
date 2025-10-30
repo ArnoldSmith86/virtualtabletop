@@ -49,8 +49,6 @@
     "type": "deck",
     "x": 0,
     "y": 0,
-    "width": 95,
-    "height": 95,
     "faceTemplates": [
       {
         "objects": [
@@ -173,8 +171,6 @@
     "type": "deck",
     "x": 0,
     "y": 0,
-    "width": 95,
-    "height": 95,
     "faceTemplates": [
       {
         "objects": [
@@ -260,8 +256,6 @@
     "parent": "holder-tiles",
     "x": 0,
     "y": 0,
-    "width": 95,
-    "height": 95,
     "faceTemplates": [
       {
         "objects": [
@@ -1034,8 +1028,6 @@
     "parent": "holder-cubes-p1",
     "x": 0,
     "y": 0,
-    "width": 48,
-    "height": 48,
     "faceTemplates": [
       {
         "border": false,
