@@ -34,7 +34,14 @@
     <div id="optionsAnchor"><div id="options" class="hidden"><button id="muteButton" class="toolbarButton"></button><input id="volume" type="range" min="0" max="100" value="30"></div></div>
     <button id="optionsButton" class="toolbarButton"><span class="tooltip">Sound</span></button>
     <button id="lightsButton" class="toolbarButton"><span class="tooltip">Lights</span></button>
-    <div id="zoomAnchor"><div id="zoomControls" class="hidden"><button id="lockZoomButton" class="toolbarButton"></button><input id="zoomSlider" type="range" min="10" max="50" value="10" step="1"></div></div>
+    <div id="zoomAnchor">
+      <div id="zoomControls" class="hidden">
+        <input id="zoomSlider" type="range" min="10" max="50" value="10" step="1">
+        <label><input id="enableUserZoom" type="checkbox"> Enable mouse wheel and pinch to zoom</label>
+        <label><input id="allowGameZoomControl" type="checkbox"> Allow game to override</label>
+        <span id="zoomOverrideMsg" style="display:none;">Game override active</span>
+      </div>
+    </div>
     <button id="zoom2xButton" class="toolbarButton"><span class="tooltip">1x Zoom</span></button>
     <button id="fullscreenButton" class="toolbarButton"><span class="tooltip">Fullscreen</span></button>
     <button id="hideToolbarButton" class="toolbarButton"><span class="tooltip">Hide Toolbar</span></button>

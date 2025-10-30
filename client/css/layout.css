@@ -673,14 +673,38 @@ body.aspectTooGood.hiddenToolbar {
 
     #zoomControls {
       display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 4px;
       left: calc(var(--toolbarSize) + 4px);
-      top: -2px;
-      padding: 2px;
+      top: -25px;
+      padding: 8px;
       pointer-events: unset;
     }
 
     #zoomControls.hidden {
       display: none;
+    }
+
+    #zoomSlider {
+      width: 100%;
+    }
+
+    #zoomOverrideMsg {
+      position: absolute;
+      left: 0;
+      top: 0;
+      font-size: 12px;
+      font-weight: bold;
+      text-align: center;
+      text-shadow: 0 0 5px #0005;
+      pointer-events: none;
+      transition: color 0.3s ease;
+      background: var(--toolbarColor);
+      padding: 20px;
+      border-radius: 4px;
+      width: 100%;
+      box-sizing: border-box;
     }
 
     #lockZoomButton {
@@ -697,7 +721,7 @@ body.aspectTooGood.hiddenToolbar {
     }
 
     body.horizontalToolbar #zoomControls {
-      top: -42px;
+      top: -91px;
       left: unset;
       right: -32px;
     }

@@ -2184,9 +2184,9 @@ export class Widget extends StateManaged {
             });
 
             if(isTargetedPlayer) {
-              // If prompt is provided and zoom is locked, defer handling to the server echo
-              const isLocked = localStorage.getItem('zoomLocked') === 'true';
-              if(!(typeof a.prompt === 'string' && isLocked)) {
+              // Respect user's override preference
+              const allowOverride = localStorage.getItem('allowGameZoomControl') !== 'false';
+              if(allowOverride) {
                 setZoomLevel(numericLevel);
                 setPan(resolvedPan.x*scale, resolvedPan.y*scale);
               }

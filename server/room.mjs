@@ -1208,8 +1208,23 @@ export default class Room {
 
   zoom(args) {
     const players = Array.isArray(args.players) ? args.players.map(p=>`${p}`) : [];
-    for(const player of this.players)
-      if(players.length === 0 || players.includes(player.name))
-        player.send('zoom', args);
+
+    // Persist zoom settings into gameSettings (per-player or for all)
+    if(!this.state._meta.gameSettings)
+      this.state._meta.gameSettings = {};
+    if(!this.state._meta.gameSettings.zoom)
+      this.state._meta.gameSettings.zoom = { perPlayer: {}, all: null };
+
+    const payload = { level: args.level, panX: args.panX, panY: args.panY };
+    if(players.length === 0) {
+      this.state._meta.gameSettings.zoom.all = payload;
+      // Clearing all individual overrides when applying to all players
+      this.state._meta.gameSettings.zoom.perPlayer = {};
+    } else {
+      for(const p of players)
+        this.state._meta.gameSettings.zoom.perPlayer[p] = payload;
+    }
+
+    this.sendMetaUpdate();
   }
 }
