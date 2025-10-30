@@ -691,13 +691,6 @@ export default class Room {
         player.send('audio', args);
   }
 
-  zoom(args) {
-    const players = Array.isArray(args.players) ? args.players.map(p=>`${p}`) : [];
-    for(const player of this.players)
-      if(players.length === 0 || players.includes(player.name))
-        player.send('zoom', args);
-  }
-
   receiveDelta(player, delta) {
     for(const widgetID in delta.s) {
       if(delta.s[widgetID] === null) {
@@ -1211,5 +1204,12 @@ export default class Room {
       return Config.directory('library') + `/${Room.publicLibrary[stateID].publicLibrary}/${variantID}.json`;
     else
       return Config.directory('save') + '/states/' + this.id + '-' + stateID.replace(/[^a-z0-9]/g, '_') + '-' + String(variantID).replace(/[^a-z0-9]/g, '_') + '.json';
+  }
+
+  zoom(args) {
+    const players = Array.isArray(args.players) ? args.players.map(p=>`${p}`) : [];
+    for(const player of this.players)
+      if(players.length === 0 || players.includes(player.name))
+        player.send('zoom', args);
   }
 }
