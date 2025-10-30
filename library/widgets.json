@@ -945,8 +945,8 @@
         },
         {
           "type": "button",
-          "id": "p55kB",
-          "parent": "Stacks of Chips",
+          "id": "od8mB",
+          "parent": "stacksOfChips",
           "fixedParent": true,
           "y": 83,
           "width": 81,
@@ -971,10 +971,11 @@
         },
         {
           "type": "pile",
-          "id": "p55kP",
-          "parent": "Stacks of Chips",
+          "id": "od8mP",
+          "parent": "stacksOfChips",
           "width": 73,
           "height": 73,
+          "y": 4,
           "text": 1641,
           "enterRoutine": [
             {
@@ -1011,71 +1012,71 @@
         },
         {
           "type": "card",
-          "id": "p55kC1000",
-          "parent": "p55kP",
-          "deck": "p55kD",
+          "id": "od8mC1000",
+          "parent": "od8mP",
+          "deck": "od8mD",
           "cardType": 1000,
           "x": 0,
           "y": 0
         },
         {
           "type": "card",
-          "id": "p55kC500",
-          "parent": "p55kP",
-          "deck": "p55kD",
+          "id": "od8mC500",
+          "parent": "od8mP",
+          "deck": "od8mD",
           "cardType": 500,
           "x": 0,
           "y": 0
         },
         {
           "type": "card",
-          "id": "p55kC100",
-          "parent": "p55kP",
-          "deck": "p55kD",
+          "id": "od8mC100",
+          "parent": "od8mP",
+          "deck": "od8mD",
           "cardType": 100,
           "x": 0,
           "y": 0
         },
         {
           "type": "card",
-          "id": "p55kC25",
-          "parent": "p55kP",
-          "deck": "p55kD",
+          "id": "od8mC25",
+          "parent": "od8mP",
+          "deck": "od8mD",
           "cardType": 25,
           "x": 0,
           "y": 0
         },
         {
           "type": "card",
-          "id": "p55kC10",
-          "parent": "p55kP",
-          "deck": "p55kD",
+          "id": "od8mC10",
+          "parent": "od8mP",
+          "deck": "od8mD",
           "cardType": 10,
           "x": 0,
           "y": 0
         },
         {
           "type": "card",
-          "id": "p55kC5",
-          "parent": "p55kP",
-          "deck": "p55kD",
+          "id": "od8mC5",
+          "parent": "od8mP",
+          "deck": "od8mD",
           "cardType": 5,
           "x": 0,
           "y": 0
         },
         {
           "type": "card",
-          "id": "p55kC1",
-          "parent": "p55kP",
-          "deck": "p55kD",
+          "id": "od8mC1",
+          "parent": "od8mP",
+          "deck": "od8mD",
           "cardType": 1,
           "x": 0,
           "y": 0
         },
         {
           "type": "deck",
-          "id": "p55kD",
-          "parent": "Stacks of Chips",
+          "id": "od8mD",
+          "parent": "stacksOfChips",
           "x": -2,
           "y": -2,
           "scale": 0.5,
@@ -1230,7 +1231,7 @@
               ]
             }
           ]
-        }
+        }    
       ],
       "id": "local1761760768913Nua29jniv"
     },
@@ -1252,8 +1253,8 @@
         },
         {
           "type": "button",
-          "id": "q2ngB",
-          "parent": "Stacks of Chips (3D)",
+          "id": "udguB",
+          "parent": "stacksOfChips3D",
           "fixedParent": true,
           "y": 56,
           "width": 81,
@@ -1278,8 +1279,8 @@
         },
         {
           "type": "pile",
-          "id": "q2ngP",
-          "parent": "Stacks of Chips (3D)",
+          "id": "udguP",
+          "parent": "stacksOfChips3D",
           "width": 73,
           "height": 73,
           "y": -6,
@@ -1319,71 +1320,71 @@
         },
         {
           "type": "card",
-          "id": "q2ngC1000",
-          "parent": "q2ngP",
-          "deck": "q2ngD",
+          "id": "udguC1000",
+          "parent": "udguP",
+          "deck": "udguD",
           "cardType": 1000,
           "x": 0,
           "y": 0
         },
         {
           "type": "card",
-          "id": "q2ngC500",
-          "parent": "q2ngP",
-          "deck": "q2ngD",
+          "id": "udguC500",
+          "parent": "udguP",
+          "deck": "udguD",
           "cardType": 500,
           "x": 0,
           "y": 0
         },
         {
           "type": "card",
-          "id": "q2ngC100",
-          "parent": "q2ngP",
-          "deck": "q2ngD",
+          "id": "udguC100",
+          "parent": "udguP",
+          "deck": "udguD",
           "cardType": 100,
           "x": 0,
           "y": 0
         },
         {
           "type": "card",
-          "id": "q2ngC25",
-          "parent": "q2ngP",
-          "deck": "q2ngD",
+          "id": "udguC25",
+          "parent": "udguP",
+          "deck": "udguD",
           "cardType": 25,
           "x": 0,
           "y": 0
         },
         {
           "type": "card",
-          "id": "q2ngC10",
-          "parent": "q2ngP",
-          "deck": "q2ngD",
+          "id": "udguC10",
+          "parent": "udguP",
+          "deck": "udguD",
           "cardType": 10,
           "x": 0,
           "y": 0
         },
         {
           "type": "card",
-          "id": "q2ngC5",
-          "parent": "q2ngP",
-          "deck": "q2ngD",
+          "id": "udguC5",
+          "parent": "udguP",
+          "deck": "udguD",
           "cardType": 5,
           "x": 0,
           "y": 0
         },
         {
           "type": "card",
-          "id": "q2ngC1",
-          "parent": "q2ngP",
-          "deck": "q2ngD",
+          "id": "udguC1",
+          "parent": "udguP",
+          "deck": "udguD",
           "cardType": 1,
           "x": 0,
           "y": 0
         },
         {
           "type": "deck",
-          "id": "q2ngD",
-          "parent": "Stacks of Chips (3D)",
+          "id": "udguD",
+          "parent": "stacksOfChips3D",
           "x": -2,
           "y": -2,
           "scale": 0.5,
@@ -1538,7 +1539,7 @@
               ]
             }
           ]
-        }
+        }    
       ],
       "id": "local1761760779714G1stew3hz"
     },
@@ -1725,8 +1726,8 @@
           }
         },
         {
-          "id": "f9giB",
-          "parent": "Holder & Standard Deck of Cards",
+          "id": "mnznB",
+          "parent": "holderStandardDeckOfCards",
           "fixedParent": true,
           "y": 171.36,
           "width": 111,
@@ -1752,379 +1753,379 @@
         },
         {
           "type": "pile",
-          "id": "f9giP",
-          "parent": "Holder & Standard Deck of Cards",
+          "id": "mnznP",
+          "parent": "holderStandardDeckOfCards",
           "width": 103,
           "height": 160
         },
         {
-          "id": "f9giAC",
-          "parent": "f9giP",
-          "deck": "f9giD",
+          "id": "mnzn_A_C",
+          "parent": "mnznP",
+          "deck": "mnznD",
           "type": "card",
           "cardType": "C 01"
         },
         {
-          "id": "f9gi2C",
-          "parent": "f9giP",
-          "deck": "f9giD",
+          "id": "mnzn_2_C",
+          "parent": "mnznP",
+          "deck": "mnznD",
           "type": "card",
           "cardType": "C 02"
         },
         {
-          "id": "f9gi3C",
-          "parent": "f9giP",
-          "deck": "f9giD",
+          "id": "mnzn_3_C",
+          "parent": "mnznP",
+          "deck": "mnznD",
           "type": "card",
           "cardType": "C 03"
         },
         {
-          "id": "f9gi4C",
-          "parent": "f9giP",
-          "deck": "f9giD",
+          "id": "mnzn_4_C",
+          "parent": "mnznP",
+          "deck": "mnznD",
           "type": "card",
           "cardType": "C 04"
         },
         {
-          "id": "f9gi5C",
-          "parent": "f9giP",
-          "deck": "f9giD",
+          "id": "mnzn_5_C",
+          "parent": "mnznP",
+          "deck": "mnznD",
           "type": "card",
           "cardType": "C 05"
         },
         {
-          "id": "f9gi6C",
-          "parent": "f9giP",
-          "deck": "f9giD",
+          "id": "mnzn_6_C",
+          "parent": "mnznP",
+          "deck": "mnznD",
           "type": "card",
           "cardType": "C 06"
         },
         {
-          "id": "f9gi7C",
-          "parent": "f9giP",
-          "deck": "f9giD",
+          "id": "mnzn_7_C",
+          "parent": "mnznP",
+          "deck": "mnznD",
           "type": "card",
           "cardType": "C 07"
         },
         {
-          "id": "f9gi8C",
-          "parent": "f9giP",
-          "deck": "f9giD",
+          "id": "mnzn_8_C",
+          "parent": "mnznP",
+          "deck": "mnznD",
           "type": "card",
           "cardType": "C 08"
         },
         {
-          "id": "f9gi9C",
-          "parent": "f9giP",
-          "deck": "f9giD",
+          "id": "mnzn_9_C",
+          "parent": "mnznP",
+          "deck": "mnznD",
           "type": "card",
           "cardType": "C 09"
         },
         {
-          "id": "f9giTC",
-          "parent": "f9giP",
-          "deck": "f9giD",
+          "id": "mnzn_T_C",
+          "parent": "mnznP",
+          "deck": "mnznD",
           "type": "card",
           "cardType": "C 10"
         },
         {
-          "id": "f9giJC",
-          "parent": "f9giP",
-          "deck": "f9giD",
+          "id": "mnzn_J_C",
+          "parent": "mnznP",
+          "deck": "mnznD",
           "type": "card",
           "cardType": "C 2J"
         },
         {
-          "id": "f9giQC",
-          "parent": "f9giP",
-          "deck": "f9giD",
+          "id": "mnzn_Q_C",
+          "parent": "mnznP",
+          "deck": "mnznD",
           "type": "card",
           "cardType": "C 3Q"
         },
         {
-          "id": "f9giKC",
-          "parent": "f9giP",
-          "deck": "f9giD",
+          "id": "mnzn_K_C",
+          "parent": "mnznP",
+          "deck": "mnznD",
           "type": "card",
           "cardType": "C 4K"
         },
         {
-          "id": "f9giAD",
-          "parent": "f9giP",
-          "deck": "f9giD",
+          "id": "mnzn_A_D",
+          "parent": "mnznP",
+          "deck": "mnznD",
           "type": "card",
           "cardType": "D 01"
         },
         {
-          "id": "f9gi2D",
-          "parent": "f9giP",
-          "deck": "f9giD",
+          "id": "mnzn_2_D",
+          "parent": "mnznP",
+          "deck": "mnznD",
           "type": "card",
           "cardType": "D 02"
         },
         {
-          "id": "f9gi3D",
-          "parent": "f9giP",
-          "deck": "f9giD",
+          "id": "mnzn_3_D",
+          "parent": "mnznP",
+          "deck": "mnznD",
           "type": "card",
           "cardType": "D 03"
         },
         {
-          "id": "f9gi4D",
-          "parent": "f9giP",
-          "deck": "f9giD",
+          "id": "mnzn_4_D",
+          "parent": "mnznP",
+          "deck": "mnznD",
           "type": "card",
           "cardType": "D 04"
         },
         {
-          "id": "f9gi5D",
-          "parent": "f9giP",
-          "deck": "f9giD",
+          "id": "mnzn_5_D",
+          "parent": "mnznP",
+          "deck": "mnznD",
           "type": "card",
           "cardType": "D 05"
         },
         {
-          "id": "f9gi6D",
-          "parent": "f9giP",
-          "deck": "f9giD",
+          "id": "mnzn_6_D",
+          "parent": "mnznP",
+          "deck": "mnznD",
           "type": "card",
           "cardType": "D 06"
         },
         {
-          "id": "f9gi7D",
-          "parent": "f9giP",
-          "deck": "f9giD",
+          "id": "mnzn_7_D",
+          "parent": "mnznP",
+          "deck": "mnznD",
           "type": "card",
           "cardType": "D 07"
         },
         {
-          "id": "f9gi8D",
-          "parent": "f9giP",
-          "deck": "f9giD",
+          "id": "mnzn_8_D",
+          "parent": "mnznP",
+          "deck": "mnznD",
           "type": "card",
           "cardType": "D 08"
         },
         {
-          "id": "f9gi9D",
-          "parent": "f9giP",
-          "deck": "f9giD",
+          "id": "mnzn_9_D",
+          "parent": "mnznP",
+          "deck": "mnznD",
           "type": "card",
           "cardType": "D 09"
         },
         {
-          "id": "f9giTD",
-          "parent": "f9giP",
-          "deck": "f9giD",
+          "id": "mnzn_T_D",
+          "parent": "mnznP",
+          "deck": "mnznD",
           "type": "card",
           "cardType": "D 10"
         },
         {
-          "id": "f9giJD",
-          "parent": "f9giP",
-          "deck": "f9giD",
+          "id": "mnzn_J_D",
+          "parent": "mnznP",
+          "deck": "mnznD",
           "type": "card",
           "cardType": "D 2J"
         },
         {
-          "id": "f9giQD",
-          "parent": "f9giP",
-          "deck": "f9giD",
+          "id": "mnzn_Q_D",
+          "parent": "mnznP",
+          "deck": "mnznD",
           "type": "card",
           "cardType": "D 3Q"
         },
         {
-          "id": "f9giKD",
-          "parent": "f9giP",
-          "deck": "f9giD",
+          "id": "mnzn_K_D",
+          "parent": "mnznP",
+          "deck": "mnznD",
           "type": "card",
           "cardType": "D 4K"
         },
         {
-          "id": "f9giAH",
-          "parent": "f9giP",
-          "deck": "f9giD",
+          "id": "mnzn_A_H",
+          "parent": "mnznP",
+          "deck": "mnznD",
           "type": "card",
           "cardType": "H 01"
         },
         {
-          "id": "f9gi2H",
-          "parent": "f9giP",
-          "deck": "f9giD",
+          "id": "mnzn_2_H",
+          "parent": "mnznP",
+          "deck": "mnznD",
           "type": "card",
           "cardType": "H 02"
         },
         {
-          "id": "f9gi3H",
-          "parent": "f9giP",
-          "deck": "f9giD",
+          "id": "mnzn_3_H",
+          "parent": "mnznP",
+          "deck": "mnznD",
           "type": "card",
           "cardType": "H 03"
         },
         {
-          "id": "f9gi4H",
-          "parent": "f9giP",
-          "deck": "f9giD",
+          "id": "mnzn_4_H",
+          "parent": "mnznP",
+          "deck": "mnznD",
           "type": "card",
           "cardType": "H 04"
         },
         {
-          "id": "f9gi5H",
-          "parent": "f9giP",
-          "deck": "f9giD",
+          "id": "mnzn_5_H",
+          "parent": "mnznP",
+          "deck": "mnznD",
           "type": "card",
           "cardType": "H 05"
         },
         {
-          "id": "f9gi6H",
-          "parent": "f9giP",
-          "deck": "f9giD",
+          "id": "mnzn_6_H",
+          "parent": "mnznP",
+          "deck": "mnznD",
           "type": "card",
           "cardType": "H 06"
         },
         {
-          "id": "f9gi7H",
-          "parent": "f9giP",
-          "deck": "f9giD",
+          "id": "mnzn_7_H",
+          "parent": "mnznP",
+          "deck": "mnznD",
           "type": "card",
           "cardType": "H 07"
         },
         {
-          "id": "f9gi8H",
-          "parent": "f9giP",
-          "deck": "f9giD",
+          "id": "mnzn_8_H",
+          "parent": "mnznP",
+          "deck": "mnznD",
           "type": "card",
           "cardType": "H 08"
         },
         {
-          "id": "f9gi9H",
-          "parent": "f9giP",
-          "deck": "f9giD",
+          "id": "mnzn_9_H",
+          "parent": "mnznP",
+          "deck": "mnznD",
           "type": "card",
           "cardType": "H 09"
         },
         {
-          "id": "f9giTH",
-          "parent": "f9giP",
-          "deck": "f9giD",
+          "id": "mnzn_T_H",
+          "parent": "mnznP",
+          "deck": "mnznD",
           "type": "card",
           "cardType": "H 10"
         },
         {
-          "id": "f9giJH",
-          "parent": "f9giP",
-          "deck": "f9giD",
+          "id": "mnzn_J_H",
+          "parent": "mnznP",
+          "deck": "mnznD",
           "type": "card",
           "cardType": "H 2J"
         },
         {
-          "id": "f9giQH",
-          "parent": "f9giP",
-          "deck": "f9giD",
+          "id": "mnzn_Q_H",
+          "parent": "mnznP",
+          "deck": "mnznD",
           "type": "card",
           "cardType": "H 3Q"
         },
         {
-          "id": "f9giKH",
-          "parent": "f9giP",
-          "deck": "f9giD",
+          "id": "mnzn_K_H",
+          "parent": "mnznP",
+          "deck": "mnznD",
           "type": "card",
           "cardType": "H 4K"
         },
         {
-          "id": "f9giAS",
-          "parent": "f9giP",
-          "deck": "f9giD",
+          "id": "mnzn_A_S",
+          "parent": "mnznP",
+          "deck": "mnznD",
           "type": "card",
           "cardType": "S 01"
         },
         {
-          "id": "f9gi2S",
-          "parent": "f9giP",
-          "deck": "f9giD",
+          "id": "mnzn_2_S",
+          "parent": "mnznP",
+          "deck": "mnznD",
           "type": "card",
           "cardType": "S 02"
         },
         {
-          "id": "f9gi3S",
-          "parent": "f9giP",
-          "deck": "f9giD",
+          "id": "mnzn_3_S",
+          "parent": "mnznP",
+          "deck": "mnznD",
           "type": "card",
           "cardType": "S 03"
         },
         {
-          "id": "f9gi4S",
-          "parent": "f9giP",
-          "deck": "f9giD",
+          "id": "mnzn_4_S",
+          "parent": "mnznP",
+          "deck": "mnznD",
           "type": "card",
           "cardType": "S 04"
         },
         {
-          "id": "f9gi5S",
-          "parent": "f9giP",
-          "deck": "f9giD",
+          "id": "mnzn_5_S",
+          "parent": "mnznP",
+          "deck": "mnznD",
           "type": "card",
           "cardType": "S 05"
         },
         {
-          "id": "f9gi6S",
-          "parent": "f9giP",
-          "deck": "f9giD",
+          "id": "mnzn_6_S",
+          "parent": "mnznP",
+          "deck": "mnznD",
           "type": "card",
           "cardType": "S 06"
         },
         {
-          "id": "f9gi7S",
-          "parent": "f9giP",
-          "deck": "f9giD",
+          "id": "mnzn_7_S",
+          "parent": "mnznP",
+          "deck": "mnznD",
           "type": "card",
           "cardType": "S 07"
         },
         {
-          "id": "f9gi8S",
-          "parent": "f9giP",
-          "deck": "f9giD",
+          "id": "mnzn_8_S",
+          "parent": "mnznP",
+          "deck": "mnznD",
           "type": "card",
           "cardType": "S 08"
         },
         {
-          "id": "f9gi9S",
-          "parent": "f9giP",
-          "deck": "f9giD",
+          "id": "mnzn_9_S",
+          "parent": "mnznP",
+          "deck": "mnznD",
           "type": "card",
           "cardType": "S 09"
         },
         {
-          "id": "f9giTS",
-          "parent": "f9giP",
-          "deck": "f9giD",
+          "id": "mnzn_T_S",
+          "parent": "mnznP",
+          "deck": "mnznD",
           "type": "card",
           "cardType": "S 10"
         },
         {
-          "id": "f9giJS",
-          "parent": "f9giP",
-          "deck": "f9giD",
+          "id": "mnzn_J_S",
+          "parent": "mnznP",
+          "deck": "mnznD",
           "type": "card",
           "cardType": "S 2J"
         },
         {
-          "id": "f9giQS",
-          "parent": "f9giP",
-          "deck": "f9giD",
+          "id": "mnzn_Q_S",
+          "parent": "mnznP",
+          "deck": "mnznD",
           "type": "card",
           "cardType": "S 3Q"
         },
         {
-          "id": "f9giKS",
-          "parent": "f9giP",
-          "deck": "f9giD",
+          "id": "mnzn_K_S",
+          "parent": "mnznP",
+          "deck": "mnznD",
           "type": "card",
           "cardType": "S 4K"
         },
         {
           "type": "deck",
-          "id": "f9giD",
-          "parent": "Holder & Standard Deck of Cards",
+          "id": "mnznD",
+          "parent": "holderStandardDeckOfCards",
           "x": 12,
           "y": 41,
           "cardTypes": {
@@ -2668,7 +2669,7 @@
             }
           ]
         }
-      ],
+      ],    
       "id": "local1761760954201U01n8crew"
     },
     {
@@ -2684,8 +2685,8 @@
           }
         },
         {
-          "id": "ccdhB",
-          "parent": "Holder & Blank Deck of Cards",
+          "id": "a5f4B",
+          "parent": "holderBlankDeckOfCards",
           "fixedParent": true,
           "y": 171.36,
           "width": 111,
@@ -2711,8 +2712,8 @@
         },
         {
           "type": "deck",
-          "id": "ccdhD",
-          "parent": "Holder & Blank Deck of Cards",
+          "id": "a5f4D",
+          "parent": "holderBlankDeckOfCards",
           "x": 12,
           "y": 41,
           "cardTypes": {},
@@ -2751,7 +2752,7 @@
             }
           ]
         }
-      ],
+      ],    
       "id": "local1761760958992Tk7yck44o"
     },
     {
@@ -2846,8 +2847,8 @@
         },
         {
           "type": "button",
-          "id": "2a0zReset",
-          "parent": "Canvas",
+          "id": "oqcf-Reset",
+          "parent": "canvas",
           "fixedParent": true,
           "x": -50,
           "y": 0,
@@ -2868,8 +2869,8 @@
         },
         {
           "type": "button",
-          "id": "2a0zColor",
-          "parent": "Canvas",
+          "id": "oqcf-Color",
+          "parent": "canvas",
           "fixedParent": true,
           "x": -50,
           "y": 50,
@@ -3041,8 +3042,8 @@
           "text": 0
         },
         {
-          "id": "4r7jD",
-          "parent": "Counter",
+          "id": "pxgzD",
+          "parent": "counter",
           "fixedParent": true,
           "x": -38,
           "y": 1,
@@ -3063,8 +3064,8 @@
           ]
         },
         {
-          "id": "4r7jU",
-          "parent": "Counter",
+          "id": "pxgzU",
+          "parent": "counter",
           "fixedParent": true,
           "x": 68,
           "y": 1,
@@ -3097,9 +3098,9 @@
           "y": 825
         },
         {
-          "parent": "Timer",
+          "parent": "timer",
           "fixedParent": true,
-          "id": "zlcnP",
+          "id": "9zmsP",
           "x": 120,
           "y": -3,
           "width": 36,
@@ -3117,9 +3118,9 @@
           "text": "play_pause"
         },
         {
-          "parent": "Timer",
+          "parent": "timer",
           "fixedParent": true,
-          "id": "zlcnR",
+          "id": "9zmsR",
           "x": 80,
           "y": -3,
           "width": 36,
