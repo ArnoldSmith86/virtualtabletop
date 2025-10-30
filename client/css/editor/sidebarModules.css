@@ -391,11 +391,14 @@
   background-color: var(--backgroundHighlightColor2);
 }
 
+.widgets.editorModule > ul {
+  border-top: 1px solid #ccc;
+}
+
 .widgets.editorModule ul {
   list-style: none;
   padding: 0;
   margin: 0;
-  border-top: 1px solid #ccc;
 }
 
 .widgets.editorModule li {
@@ -413,6 +416,21 @@
 .widgets.editorModule li .widget-info .widget-type {
   font-size: 0.8em;
   color: #666;
+}
+
+.widgets.editorModule li .widget-info .widget-type svg{
+  vertical-align: middle;
+  width: 18px;
+  height: 18px;
+  fill: currentColor;
+}
+
+.widgets.editorModule li .widget-info .widget-type svg.hasRoutine{
+  color: orange;
+}
+
+.widgets.editorModule li .widget-info .widget-type svg.isUnique{
+  color: red;
 }
 
 .widgets.editorModule li .actions {
@@ -506,4 +524,32 @@
   color: #666;
   font-style: italic;
   text-align: center;
+}
+
+.widget-group-header {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.widget-group-header .group-name-input {
+    flex-grow: 1;
+    border: none;
+    background: transparent;
+    font-weight: bold;
+    color: var(--textColor);
+    padding: 0;
+    pointer-events: none;
+}
+
+.editing .widget-group-header .group-name-input {
+    pointer-events: auto;
+    border: 1px solid #ccc;
+    font-weight: normal;
+    padding: 1px;
+}
+
+.widget-group-header .collapse-arrow {
+    width: 1.2em;
+    text-align: center;
 }
