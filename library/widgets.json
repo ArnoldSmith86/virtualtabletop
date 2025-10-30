@@ -2909,11 +2909,11 @@
           "index": 2,
           "x": 840,
           "y": 90,
-          "id": "b6vi"
+          "id": "seatWithCounter"
         },
         {
           "id": "b6viC",
-          "parent": "b6vi",
+          "parent": "seatWithCounter",
           "fixedParent": true,
           "x": -20,
           "y": -20,
@@ -2971,7 +2971,7 @@
           "index": 1,
           "x": 840,
           "y": 90,
-          "id": "48o9"
+          "id": "seat"
         }
       ],
       "id": "local17617610944356ivilei6n"

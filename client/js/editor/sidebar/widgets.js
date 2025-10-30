@@ -702,9 +702,15 @@ class WidgetsModule extends SidebarModule {
         if (!overwriteAll) return [];
       }
     } else {
-      const randomSuffix = '-' + Math.random().toString(36).substring(2, 6);
+      const newIds = new Set();
       for (const widget of widgetBuffer) {
-        idMap[widget.id] = widget.id + randomSuffix;
+        let i = 1;
+        let newId;
+        do {
+          newId = `${widget.id}_${i++}`;
+        } while (widgets.has(newId) || newIds.has(newId));
+        idMap[widget.id] = newId;
+        newIds.add(newId);
       }
       for (const widget of widgetBuffer) {
         widget.id = idMap[widget.id];
