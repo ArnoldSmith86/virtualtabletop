@@ -82,7 +82,7 @@ class WidgetsModule extends SidebarModule {
       return fetch(`${config.urlPrefix}/api/widgets`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ widgets, groups })
+        body: JSON.stringify(newWidget)
       });
     } else {
       localStorage.setItem('customWidgets', JSON.stringify({ widgets, groups }));
