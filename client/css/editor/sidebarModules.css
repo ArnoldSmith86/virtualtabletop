@@ -526,6 +526,10 @@
   text-align: center;
 }
 
+body.darkMode .widget-group-header {
+    background: #666;
+}
+
 .widget-group-header {
     display: flex;
     align-items: center;
