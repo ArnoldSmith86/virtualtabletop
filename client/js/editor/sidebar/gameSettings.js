@@ -106,6 +106,33 @@ class GameSettingsModule extends SidebarModule {
     target.append(tile);
   }
 
+  addCssEditor(target) {
+    this.addSubHeader('Global Room CSS');
+
+    const p1 = document.createElement('p');
+    p1.textContent = 'You can add custom CSS to your room. This is an advanced feature and should be used with care.';
+    target.append(p1);
+
+    const currentCss = getCurrentGameSettings()?.globalCss || '';
+    const textarea = document.createElement('textarea');
+    textarea.value = currentCss;
+    textarea.spellcheck = false;
+    textarea.style.cssText = `
+      width: 100%;
+      min-height: 200px;
+      white-space: pre;
+      font-family: monospace;
+      border-width: 1px 0;
+    `;
+    target.append(textarea);
+
+    textarea.addEventListener('input', () => {
+      const gameSettings = getCurrentGameSettings();
+      gameSettings.globalCss = textarea.value;
+      toServer('setGameSettings', gameSettings);
+    });
+  }
+
   removeLegacyMode(name) {
     const gameSettings = getCurrentGameSettings();
     if (gameSettings && gameSettings.legacyModes) {
@@ -143,18 +170,20 @@ class GameSettingsModule extends SidebarModule {
     target.innerHTML = '';
     this.addHeader('Game Settings');
 
-    this.addSubHeader('Legacy Modes');
-    const p1 = document.createElement('p');
-    p1.textContent = 'We try our best not to break existing games, but some bugs can only be fixed by changing game behavior.';
-    target.append(p1);
+    if (Object.keys(getCurrentGameSettings()?.legacyModes || {}).length > 0) {
+      this.addSubHeader('Legacy Modes');
+      const p1 = document.createElement('p');
+      p1.textContent = 'We try our best not to break existing games, but some bugs can only be fixed by changing game behavior.';
+      target.append(p1);
 
-    const p2 = document.createElement('p');
-    p2.textContent = 'For those occasions, we have introduced legacy modes. When active, each setting below will change certain things about VTT to former - usually buggy - behavior.';
-    target.append(p2);
+      const p2 = document.createElement('p');
+      p2.textContent = 'For those occasions, we have introduced legacy modes. When active, each setting below will change certain things about VTT to former - usually buggy - behavior.';
+      target.append(p2);
 
-    const p3 = document.createElement('p');
-    p3.textContent = 'We highly recommended you build and test your games with all of these settings disabled (boxes unchecked) to avoid obscure bugs. If you are working on a game and these settings are checked, review the VTT wiki documentation before making changes to routines. If there are no checkboxes below, legacy mode is not applicable for your game.';
-    target.append(p3);
+      const p3 = document.createElement('p');
+      p3.textContent = 'We highly recommended you build and test your games with all of these settings disabled (boxes unchecked) to avoid obscure bugs. If you are working on a game and these settings are checked, review the VTT wiki documentation before making changes to routines. If there are no checkboxes below, legacy mode is not applicable for your game.';
+      target.append(p3);
+    }
 
     this.addCheckbox('Convert numeric var parameters to numbers', 'convertNumericVarParametersToNumbers', `
       <b>Problem</b>: Whenever you used a string in a var expression that consisted of only digits, it was converted to a number.
@@ -184,6 +213,8 @@ class GameSettingsModule extends SidebarModule {
       <br><br>
       See <a href="https://github.com/ArnoldSmith86/virtualtabletop/pull/2581">pull request #2581</a> for technical details. Also see the <a href="https://github.com/ArnoldSmith86/virtualtabletop/wiki/Legacy-Mode">Legacy Mode wiki</a> page.
       `, target);
+
+   this.addCssEditor(target);
   }
 
   updateBadge() {

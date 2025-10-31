@@ -20,6 +20,20 @@ let triggerGameStartRoutineOnNextStateLoad = false;
 
 let undoProtocol = [];
 
+function applyCustomCss(gameSettings) {
+  let style = document.getElementById('globalCss');
+  if (gameSettings && gameSettings.globalCss) {
+    if (!style) {
+      style = document.createElement('style');
+      style.id = 'globalCss';
+      document.head.appendChild(style);
+    }
+    style.innerHTML = gameSettings.globalCss;
+  } else if (style) {
+    style.innerHTML = '';
+  }
+}
+
 function generateUniqueWidgetID() {
   let id;
   do {
@@ -484,6 +498,9 @@ function receiveStateFromServer(args) {
 
   resetZoomAndPan();
 
+  applyCustomCss(args._meta.gameSettings);
+
+
   if(isLoading) {
     $('#loadingRoomIndicator').remove();
     $('body').classList.remove('loading');
@@ -594,5 +611,10 @@ export function widgetFilter(callback) {
 onLoad(function() {
   onMessage('delta', receiveDeltaFromServer);
   onMessage('state', receiveStateFromServer);
+  onMessage('meta', (args) => {
+    if (args.meta) {
+      applyCustomCss(args.meta.gameSettings);
+    }
+  });
   setScale();
 });
