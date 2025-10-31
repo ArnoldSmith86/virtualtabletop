@@ -67,11 +67,11 @@ function initializeEditor(currentMetaData) {
     new PropertiesModule(),
     new UndoModule(),
     new JsonModule(),
+    new WidgetsModule(),
     new TreeModule(),
     new DebugModule(),
     new AssetsModule(),
     new ToolboxModule(),
-    new WidgetsModule(),
     new GameSettingsModule()
   ]);
 
