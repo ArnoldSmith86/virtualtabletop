@@ -325,9 +325,9 @@ class GameSettingsModule extends SidebarModule {
       `, target);
 
    this.addDropdown('Cursor Visibility', 'cursorVisibility', 'Changes the visibility of the cursor in the room.', [
-     { value: 'translucent', text: 'Translucent (VTT default)' },
-     { value: 'solid-no-name', text: 'Solid - No Name' },
-     { value: 'solid-player-name', text: 'Solid & Player Name (don\'t use spaces in name)' },
+     { value: 'translucent', text: 'Translucent (default)' },
+     { value: 'solid-no-name', text: 'Solid' },
+     { value: 'solid-player-name', text: 'Solid + Player Name' },
      { value: 'invisible', text: 'Invisible' },
    ], target);
 
