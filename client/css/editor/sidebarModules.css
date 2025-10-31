@@ -436,7 +436,7 @@
   width: 18px;
   height: 18px;
   fill: currentColor;
-  margin: 0 5px;
+  margin: 0 0 0 3px;
 }
 
 .explainer-text svg, .legend-text svg{
