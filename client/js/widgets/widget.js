@@ -2051,9 +2051,16 @@ export class Widget extends StateManaged {
 
       if(a.func == 'UPLOAD') {
         setDefaults(a, { variable: 'UPLOAD' });
-        variables[a.variable] = await uploadAsset();
-        if(jeRoutineLogging)
-          jeLoggingRoutineOperationSummary(`'${a.variable}'`, `${JSON.stringify(variables[a.variable])}`)
+        const uploadedAsset = await uploadAsset();
+        if(uploadedAsset === null) {
+          abortRoutine = true;
+          if(jeRoutineLogging)
+            jeLoggingRoutineOperationSummary("UPLOAD cancelled");
+        } else {
+          variables[a.variable] = uploadedAsset;
+          if(jeRoutineLogging)
+            jeLoggingRoutineOperationSummary(`'${a.variable}'`, `${JSON.stringify(variables[a.variable])}`)
+        }
       }
 
       if(a.func == 'TURN') {
