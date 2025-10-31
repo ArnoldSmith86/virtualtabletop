@@ -197,6 +197,7 @@ class GameSettingsModule extends SidebarModule {
           left: 19px;
           font-size: 15px;
           color: var(--playerColor);
+          white-space: nowrap;
         }
         `;
       } else if (select.value === 'invisible') {
