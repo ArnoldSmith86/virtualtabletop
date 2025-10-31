@@ -173,7 +173,13 @@ class WidgetsModule extends SidebarModule {
 
       if (filter && filteredGroupWidgets.length === 0) continue;
 
-      const isCollapsed = filter ? false : group.collapsed;
+      let isCollapsed;
+      if (source === 'server') {
+        const storedState = localStorage.getItem(`vtt-widget-group-collapsed-server-${group.name}`);
+        isCollapsed = storedState !== null ? storedState === 'true' : (filter ? false : group.collapsed);
+      } else {
+        isCollapsed = filter ? false : group.collapsed;
+      }
       list += `
           <div class="widget-group" data-group-name="${html(group.name)}" data-source="${source}">
               <div class="widget-group-header" draggable="${isEditing}">
@@ -531,19 +537,24 @@ class WidgetsModule extends SidebarModule {
     for (const groupHeader of this.currentContents.querySelectorAll('.widget-group-header')) {
       groupHeader.addEventListener('click', async e => {
         if (e.target.classList.contains('group-name-input') && !e.target.readOnly) return;
-        const groupName = groupHeader.parentElement.dataset.groupName;
+        const groupNameHTML = groupHeader.parentElement.dataset.groupName;
         const source = groupHeader.parentElement.dataset.source;
 
-        if (source === 'server' && !config.allowPublicLibraryEdits) {
-          const groupBody = groupHeader.nextElementSibling;
-          const isCollapsed = groupBody.style.display === 'none';
-          groupBody.style.display = isCollapsed ? '' : 'none';
-          groupHeader.querySelector('.collapse-arrow').textContent = isCollapsed ? '▼' : '▶';
+        const { widgets, groups } = await this.getWidgets(source);
+        const group = groups.find(g => html(g.name) === groupNameHTML);
+        if (!group) return;
+        const groupName = group.name;
+
+        if (source === 'server') {
+          const key = `vtt-widget-group-collapsed-server-${groupName}`;
+          const currentState = localStorage.getItem(key);
+          const defaultState = group.collapsed;
+          const isCollapsed = currentState !== null ? currentState === 'true' : defaultState;
+          localStorage.setItem(key, !isCollapsed);
+          this.renderWidgetBuffer(filter);
           return;
         }
 
-        const { widgets, groups } = await this.getWidgets(source);
-        const group = groups.find(g => g.name === groupName);
         if (group) {
           group.collapsed = !group.collapsed;
           await this.updateAllWidgets({ widgets, groups }, source);
