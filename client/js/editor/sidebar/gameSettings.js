@@ -106,6 +106,115 @@ class GameSettingsModule extends SidebarModule {
     target.append(tile);
   }
 
+  addDropdown(text, name, description, options, target) {
+    const tile = document.createElement('div');
+    tile.className = 'settings-tile';
+    tile.style.cssText = `
+      border: 1px solid var(--modalBorderColor);
+      border-radius: 4px;
+      padding: 12px;
+      margin: 8px 0;
+      background: var(--backgroundColor);
+      color: var(--textColor);
+      margin: 20px;
+    `;
+
+    const header = document.createElement('div');
+    header.style.cssText = `
+      display: flex;
+      align-items: center;
+      margin-bottom: 8px;
+    `;
+
+    const label = document.createElement('label');
+    label.htmlFor = name;
+    label.textContent = text;
+    label.style.fontWeight = 'bold';
+
+    header.append(label);
+    tile.append(header);
+
+    const desc = document.createElement('div');
+    desc.innerHTML = description;
+    desc.style.fontSize = '0.9em';
+    desc.style.color = 'var(--textColor)';
+    
+    tile.append(desc);
+
+    const select = document.createElement('select');
+    select.name = name;
+    select.id = name;
+    select.style.width = '100%';
+    select.style.padding = '8px';
+    select.style.marginTop = '8px';
+
+    for (const option of options) {
+      const opt = document.createElement('option');
+      opt.value = option.value;
+      opt.textContent = option.text;
+      select.append(opt);
+    }
+
+    const gameSettings = getCurrentGameSettings();
+    select.value = gameSettings[name] || 'translucent';
+
+    tile.append(select);
+
+    select.addEventListener('change', () => {
+      const gameSettings = getCurrentGameSettings();
+      gameSettings[name] = select.value;
+
+      let css = '';
+      if (select.value === 'translucent') {
+        css = `
+          
+        `;
+      } else if (select.value === 'solid-no-name') {
+        css = `
+        #playerCursors {
+          --cursorActiveOpacity: 1;
+          --cursorPressedOpacity: 1;
+          --cursorActiveDuration: 9999;
+        }
+        .cursor.pressed {
+          border: 4px solid var(--playerColor);
+        }
+        `;
+      } else if (select.value === 'solid-player-name') {
+        css = `
+        #playerCursors {
+          --cursorActiveOpacity: 1;
+          --cursorPressedOpacity: 1;
+          --cursorActiveDuration: 9999;
+        }
+        .cursor.pressed {
+          border: 4px solid var(--playerColor);
+        }
+        .cursor::before {
+          content: attr(data-player);
+          position: relative;
+          top: -5px;
+          left: 19px;
+          font-size: 15px;
+          color: var(--playerColor);
+        }
+        `;
+      } else if (select.value === 'invisible') {
+        css = `
+        .cursor {
+          display: none;
+        }
+        `;
+      }
+      gameSettings.cursorCss = css;
+      $('#gameSettingsCss').textContent = css;
+
+      toServer('setGameSettings', gameSettings);
+    });
+
+    target.append(tile);
+  }
+
   addCssEditor(target) {
     this.addSubHeader('Global Room CSS');
 
@@ -213,6 +322,13 @@ class GameSettingsModule extends SidebarModule {
       <br><br>
       See <a href="https://github.com/ArnoldSmith86/virtualtabletop/pull/2581">pull request #2581</a> for technical details. Also see the <a href="https://github.com/ArnoldSmith86/virtualtabletop/wiki/Legacy-Mode">Legacy Mode wiki</a> page.
       `, target);
+
+   this.addDropdown('Cursor Visibility', 'cursorVisibility', 'Changes the visibility of the cursor in the room.', [
+     { value: 'translucent', text: 'Translucent (VTT default)' },
+     { value: 'solid-no-name', text: 'Solid - No Name' },
+     { value: 'solid-player-name', text: 'Solid & Player Name (don\'t use spaces in name)' },
+     { value: 'invisible', text: 'Invisible' },
+   ], target);
 
    this.addCssEditor(target);
   }

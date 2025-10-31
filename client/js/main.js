@@ -658,13 +658,18 @@ onLoad(function() {
     showOverlay('internalErrorOverlay');
   });
   let checkedOnce = false;
-  onMessage('meta', function() {
+  onMessage('meta', function(data) {
     if(!checkedOnce)
       checkURLproperties(true);
     checkedOnce = true;
     let tabSuffix = config.customTab || config.serverName || 'VirtualTabletop.io';
     document.title = `${document.location.pathname.split('/').pop()} - ${tabSuffix}`;
     $('#playerInviteURL').innerText = location.href;
+
+    const style = document.createElement('style');
+    style.id = 'gameSettingsCss';
+    style.textContent = data.meta.gameSettings?.cursorCss || '';
+    document.head.append(style);
   });
 });
 
