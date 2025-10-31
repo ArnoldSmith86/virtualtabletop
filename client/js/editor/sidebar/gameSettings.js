@@ -18,7 +18,6 @@ class GameSettingsModule extends SidebarModule {
       color: var(--textColor);
       cursor: pointer;
       transition: all 0.2s ease;
-      margin: 20px;
     `;
 
     const header = document.createElement('div');
@@ -116,7 +115,6 @@ class GameSettingsModule extends SidebarModule {
       margin: 8px 0;
       background: var(--backgroundColor);
       color: var(--textColor);
-      margin: 20px;
     `;
 
     const header = document.createElement('div');
