@@ -300,13 +300,6 @@ class WidgetsModule extends SidebarModule {
             minY = Math.min(minY, s.y || 0);
           }
 
-          try {
-            const cs = getComputedStyle(document.documentElement);
-            const baseScale = parseFloat(cs.getPropertyValue('--scale')) || 1;
-            const zoomScale = parseFloat(cs.getPropertyValue('--zoom')) || 1;
-            dragScale = baseScale * zoomScale;
-          } catch (_) {}
-
           const createInstances = (statesToProcess) => {
             for (const s of statesToProcess) {
               const tempId = `drag-preview-${Date.now()}-${Math.random()}`;
@@ -341,19 +334,19 @@ class WidgetsModule extends SidebarModule {
               tempState.id = tempId;
 
               const parentId = tempState.parent ? idMap.get(tempState.parent) : null;
-              tempState.parent = parentId;
-
-              const offsetX = parentId ? 0 : -minX;
-              const offsetY = parentId ? 0 : -minY;
-              tempState.x = ((s.x || 0) + offsetX) * dragScale;
-              tempState.y = ((s.y || 0) + offsetY) * dragScale;
-              ['width', 'height'].forEach(dim => {
-                if (typeof tempState[dim] === 'number') {
-                  tempState[dim] *= dragScale;
-                }
-              });
-
+              if (parentId) {
+                tempState.parent = parentId;
+              } else {
+                tempState.x = (s.x || 0) - minX;
+                tempState.y = (s.y || 0) - minY;
+              }
               if (tempState.deck) tempState.deck = idMap.get(tempState.deck);
+
+              previewWidget.applyInitialDelta(tempState);
+
+              if (!parentId) {
+                previewContainer.appendChild(previewWidget.domElement);
+              }
             }
           };
 
