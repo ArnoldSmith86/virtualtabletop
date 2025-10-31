@@ -3046,7 +3046,17 @@
           "index": 1,
           "x": 840,
           "y": 90,
-          "id": "seat"
+          "id": "seat",
+          "addToRoomRoutine": [
+            "var thisSeat = ${PROPERTY id} split '_'",
+            "var newIndex = ${thisSeat.1} * 1",
+            {
+              "func": "SET",
+              "property": "index",
+              "value": "${newIndex}",
+              "collection": "thisButton"
+            }
+          ]
         }
       ]
     },
