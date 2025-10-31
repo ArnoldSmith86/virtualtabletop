@@ -489,6 +489,10 @@
   min-height: 40px;
 }
 
+.collapsed .widget-list-header{
+  border-radius: 5px;
+}
+
 .widget-list-actions {
   display: flex;
   gap: 0px;
@@ -576,7 +580,7 @@ body.darkMode .widget-group-header {
     padding: 1px;
 }
 
-.widget-group-header .collapse-arrow {
+.widget-group-header .collapse-arrow, .widget-list-header .collapse-arrow {
     width: 1.2em;
     height: 1.2em;
     text-align: center;
@@ -604,4 +608,18 @@ body.darkMode .widget-group-header {
 .widget-list .new-group-drop-target.drag-over {
   background-color: var(--backgroundHighlightColor1);
   color: white;
+}
+
+.widget-list-header {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.widget-list-container.collapsed .widget-list {
+  display: none;
+}
+
+.widget-list-header-text {
+  flex-grow: 1;
 }

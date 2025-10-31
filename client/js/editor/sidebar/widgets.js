@@ -212,7 +212,8 @@ class WidgetsModule extends SidebarModule {
       serverListHTML = `
         <div class="widget-list-container">
           <div class="widget-list-header">
-            <span>On The Server</span>
+            <span class="collapse-arrow">▼</span>
+            <span class="widget-list-header-text">On The Server</span>
             <div class="widget-list-actions">
               ${config.allowPublicLibraryEdits ? `<button icon="upload" class="sidebarButton import-widgets" data-source="server"><span>Import Server-Wide</span></button>` : ''}
               <button icon="download" class="sidebarButton export-widgets" data-source="server"><span>Download Custom Widgets</span></button>
@@ -227,7 +228,8 @@ class WidgetsModule extends SidebarModule {
       ${serverListHTML}
       <div class="widget-list-container">
         <div class="widget-list-header">
-          <span>In Local Storage</span>
+          <span class="collapse-arrow">▼</span>
+          <span class="widget-list-header-text">In Local Storage</span>
           <div class="widget-list-actions">
             <button icon="upload" class="sidebarButton import-widgets" data-source="local"><span>Import to Local Storage</span></button>
             <button icon="download" class="sidebarButton export-widgets" data-source="local"><span>Download Custom Widgets</span></button>
@@ -238,6 +240,15 @@ class WidgetsModule extends SidebarModule {
         </div>
       </div>
     `;
+
+    for (const header of this.currentContents.querySelectorAll('.widget-list-header')) {
+      header.onclick = e => {
+        const container = header.parentElement;
+        container.classList.toggle('collapsed');
+        const arrow = header.querySelector('.collapse-arrow');
+        arrow.textContent = container.classList.contains('collapsed') ? '▶' : '▼';
+      };
+    }
 
     for (const button of this.currentContents.querySelectorAll('.export-widgets')) {
       button.onclick = e => this.exportWidgets(e.currentTarget.dataset.source);
