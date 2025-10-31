@@ -3326,6 +3326,53 @@
           "id": "basicWidget"
         }
       ]
+    },
+    {
+      "name": "Upload Token",
+      "id": "uploadToken",
+      "widgets": [
+        {
+          "id": "customToken",
+          "addToRoomRoutine": [
+            {
+              "func": "UPLOAD",
+              "variable": "newfilename"
+            },
+            {
+              "func": "SET",
+              "property": "image",
+              "value": "${newfilename}",
+              "collection": "thisButton"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Upload Board",
+      "id": "uploadBoard",
+      "widgets": [
+        {
+          "id": "board",
+          "width": 1600,
+          "height": 1000,
+          "layer": -4,
+          "movable": false,
+          "addToRoomRoutine": [
+            {
+              "func": "UPLOAD",
+              "variable": "newfilename"
+            },
+            {
+              "func": "SET",
+              "property": "image",
+              "value": "${newfilename}",
+              "collection": "thisButton"
+            }
+          ]
+        }
+      ],
+      "unique": true
     }
   ],
   "groups": [
@@ -3392,6 +3439,15 @@
         "button",
         "counter",
         "timer"
+      ],
+      "collapsed": true
+    },
+    {
+      "name": "Custom",
+      "widgets": [
+        "uploadBoard",
+        "uploadToken",
+        "basicWidget"
       ],
       "collapsed": true
     }
