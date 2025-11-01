@@ -2045,8 +2045,8 @@ export class Widget extends StateManaged {
       }
 
       if(a.func == 'UPLOAD') {
-        setDefaults(a, { variable: 'UPLOAD' });
-        const uploadedAsset = await uploadAsset();
+        setDefaults(a, { variable: 'uploadedFileName', fileTypes: [ '.png', '.jpg', '.jpeg', '.gif', '.svg', '.webp', '.json' ] });
+        const uploadedAsset = await uploadAsset(null, a.fileTypes);
         if(uploadedAsset === null) {
           variables[a.variable] = false;
           if(jeRoutineLogging)
@@ -2136,6 +2136,37 @@ export class Widget extends StateManaged {
             } else {
               jeLoggingRoutineOperationSummary(`All seats in collection '${a.source}' have 'skipTurn' set to true. No turn change.`);
             }
+          }
+        }
+      }
+
+      if(a.func == 'UPLOAD') {
+        setDefaults(a, { variable: 'uploadedURL' });
+        const uploadedAsset = await uploadAsset();
+        if(uploadedAsset === null) {
+          variables[a.variable] = false;
+          if(jeRoutineLogging)
+            jeLoggingRoutineOperationSummary("UPLOAD cancelled");
+        } else {
+          variables[a.variable] = uploadedAsset;
+          if(jeRoutineLogging)
+            jeLoggingRoutineOperationSummary(`'${a.variable}'`, `${JSON.stringify(variables[a.variable])}`)
+        }
+      }
+
+      if(a.func == 'UPLOADIMAGE') {
+        setDefaults(a, { widget: null, property: 'image' });
+        if(this.isValidID(a.widget, problems)) {
+          const uploadedAsset = await uploadAsset();
+          if(uploadedAsset !== null) {
+            await w(a.widget, async widget=>{
+              await widget.set(a.property, uploadedAsset);
+            });
+            if(jeRoutineLogging)
+              jeLoggingRoutineOperationSummary(`widget '${a.widget}' property '${a.property}'`, `${JSON.stringify(uploadedAsset)}`);
+          } else {
+            if(jeRoutineLogging)
+              jeLoggingRoutineOperationSummary("UPLOADIMAGE cancelled");
           }
         }
       }

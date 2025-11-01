@@ -474,11 +474,12 @@ export function onLoad(callback) {
   window.addEventListener('DOMContentLoaded', callback);
 }
 
-export function selectFile(getContents, multipleCallback) {
+export function selectFile(getContents, multipleCallback, fileTypes) {
   return new Promise((resolve, reject) => {
     const upload = document.createElement('input');
     upload.type = 'file';
     if (typeof multipleCallback === 'function') upload.setAttribute('multiple', true);
+    if (Array.isArray(fileTypes)) upload.setAttribute('accept', fileTypes.join(','));
 
     const cancelHandler = () => {
       window.removeEventListener('focus', cancelHandler);

@@ -394,7 +394,7 @@ export async function sortWidgets(collection, keys, reverse, locales, options, r
   }
 }
 
-async function uploadAsset(multipleCallback) {
+async function uploadAsset(multipleCallback, fileTypes) {
   if(typeof(multipleCallback) === "function") {
     return selectFile('BINARY', async function (f) {
       let uploadPath = await _uploadAsset(f).catch(e=>{
@@ -405,7 +405,7 @@ async function uploadAsset(multipleCallback) {
     });
   }
   else {
-    return selectFile('BINARY').then(_uploadAsset).catch(e=>{
+    return selectFile('BINARY', null, fileTypes).then(_uploadAsset).catch(e=>{
       console.error(`Uploading failed: ${e.toString()}`);
       return null;
     });
