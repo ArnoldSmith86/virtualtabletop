@@ -8,7 +8,7 @@ let enableUserZoom = localStorage.getItem('enableUserZoom') !== 'false';
 let allowGameZoomControl = localStorage.getItem('allowGameZoomControl') !== 'false';
 
 function applyServerZoomSetting(gs) {
-  if(!allowGameZoomControl)
+  if(edit || !allowGameZoomControl)
     return;
   const zoomSettings = gs.zoom || {};
   const target = (zoomSettings.perPlayer || {})[playerName] || zoomSettings.all;
@@ -24,7 +24,7 @@ onMessage('meta', args=>applyServerZoomSetting(args.meta.gameSettings));
 onMessage('state', args=>applyServerZoomSetting(args._meta.gameSettings));
 
 function isGameOverrideActive() {
-  if(!allowGameZoomControl)
+  if(edit || !allowGameZoomControl)
     return false;
   const gs = getCurrentGameSettings() || {};
   const zoomSettings = gs.zoom || {};
