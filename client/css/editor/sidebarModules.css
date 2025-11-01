@@ -498,6 +498,10 @@
   gap: 0px;
 }
 
+.sidebarButton.sort-widgets:hover {
+  background: var(--VTTblueDark) !important;
+}
+
 .widgets.editorModule li.readonly .unique-widget-label {
   display: none;
 }

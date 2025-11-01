@@ -145,8 +145,64 @@ class WidgetsModule extends SidebarModule {
       });
     };
 
+    //Sort local storage widgets
+    const getWidgetTypesString = (state) => {
+      return [...new Set(state.widgets.map(w => w.type || 'basic'))].join(', ');
+    };
+
+    const parseLocalTimestamp = (id) => {
+      if (typeof id !== 'string') return 0;
+      if (id.startsWith('local-')) {
+        const parts = id.split('-');
+        if (parts.length >= 3) {
+          const ts = parseInt(parts[1], 10);
+          return isNaN(ts) ? 0 : ts;
+        }
+      }
+      return 0;
+    };
+
+    const localSort = this.localSort || { by: 'time', dir: 'desc' };
+    const compare = (a, b) => {
+      const getValue = (widget, key) => {
+        switch (key) {
+          case 'id':
+            return widget.name || widget.id || '';
+          case 'type':
+            return getWidgetTypesString(widget);
+          case 'time':
+          default:
+            return parseLocalTimestamp(widget.id);
+        }
+      };
+
+      const va = getValue(a, localSort.by);
+      const vb = getValue(b, localSort.by);
+
+      let cmp = typeof va === 'number' && typeof vb === 'number'
+        ? va - vb
+        : String(va).toLowerCase().localeCompare(String(vb).toLowerCase());
+
+      // Secondary sort by name if types match
+      if (localSort.by === 'type' && cmp === 0) {
+        cmp = (a.name || a.id || '').toLowerCase().localeCompare((b.name || b.id || '').toLowerCase());
+      }
+
+      // Tertiary sort by ID if all else matches
+      if (cmp === 0) {
+        cmp = String(a.id || '').localeCompare(String(b.id || ''));
+      }
+
+      return localSort.dir === 'desc' ? -cmp : cmp;
+    };
+
+    const maybeSort = (arr) => {
+      if (source !== 'local') return arr;
+      return [...arr].sort(compare);
+    };
+
     const renderWidget = (state) => {
-      const widgetTypes = [...new Set(state.widgets.map(w => w.type || 'basic'))].join(', ');
+      const widgetTypes = getWidgetTypesString(state);
       const hasAddToRoomRoutine = state.widgets.some(w => w.addToRoomRoutine);
       return `
             <li data-id="${state.id}" data-source="${source}" draggable="${isEditing}">
@@ -167,9 +223,36 @@ class WidgetsModule extends SidebarModule {
     let list = '';
     const groupedWidgetIds = new Set(groups.flatMap(g => g.widgets));
 
-    for (const group of groups) {
+    // Determine group ordering for local view
+    const groupsToRender = [...groups];
+
+    if (source === 'local') {
+      const sortBy = this.localSort?.by;
+      if (sortBy === 'type') {
+      } else {
+      const getOldestTimestamp = (group) =>
+        group.widgets?.length
+          ? Math.min(...group.widgets.map((id) => parseLocalTimestamp(widgets.find((w) => w.id === id)?.id || '')))
+          : Number.POSITIVE_INFINITY;
+
+      groupsToRender.sort((ga, gb) => {
+        const oldestA = getOldestTimestamp(ga);
+        const oldestB = getOldestTimestamp(gb);
+        const nameA = (ga.name || '').toLowerCase();
+        const nameB = (gb.name || '').toLowerCase();
+
+        const primarySort = (sortBy === 'time') ? oldestA - oldestB : nameA.localeCompare(nameB);
+        const secondarySort = (sortBy === 'time') ? nameA.localeCompare(nameB) : oldestA - oldestB;
+
+        const cmp = primarySort || secondarySort;
+        return (this.localSort?.dir === 'desc') ? -cmp : cmp;
+      });
+      }
+    }
+
+    for (const group of groupsToRender) {
       const groupWidgets = group.widgets.map(id => widgets.find(w => w.id === id)).filter(Boolean);
-      const filteredGroupWidgets = filterWidgets(groupWidgets);
+      const filteredGroupWidgets = maybeSort(filterWidgets(groupWidgets));
 
       if (filter && filteredGroupWidgets.length === 0) continue;
 
@@ -195,7 +278,7 @@ class WidgetsModule extends SidebarModule {
     }
 
     const ungroupedWidgets = widgets.filter(w => !groupedWidgetIds.has(w.id));
-    const filteredUngroupedWidgets = filterWidgets(ungroupedWidgets);
+    const filteredUngroupedWidgets = maybeSort(filterWidgets(ungroupedWidgets));
 
     if (filteredUngroupedWidgets.length > 0) {
       list += `<ul>${filteredUngroupedWidgets.map(renderWidget).join('')}</ul>`;
@@ -213,6 +296,27 @@ class WidgetsModule extends SidebarModule {
     const { widgets: localWidgets, groups: localGroups } = await this.getWidgets('local');
 
     const isEditing = this.currentContents.classList.contains('editing');
+    
+    // Preserve viewport position and internal scroll during rerender
+    const preserveScrollPosition = (containerEl) => ({
+      prevRectTop: containerEl.getBoundingClientRect().top,
+      prevScrollTop: containerEl.scrollTop,
+      scrollElem: document.scrollingElement || document.documentElement || document.body,
+    });
+
+    const scrollState = preserveScrollPosition(this.currentContents);
+    const sortState = this.localSort || { by: 'time', dir: 'desc' };
+    const createSortButton = (by, label, sortState) => {
+      const active = sortState.by === by;
+      const isDesc = active && sortState.dir === 'desc';
+      return `
+        <button class="sidebarButton sort-widgets" data-by="${by}" aria-label="Sort by ${label}"
+                style="display:inline-flex;flex-direction:column;align-items:center;gap:2px;line-height:1;margin:2px 6px;padding:6px 10px;border-radius:6px;background:${active ? 'var(--VTTblueDark)' : 'transparent'};color:#fff;">
+          <div class="sort-label" style="font-size:10px;">${label}</div>
+          <i class="material-symbols sort-glyph" style="font-size:18px;transform:${isDesc ? 'scaleY(-1)' : 'none'};">sort</i>
+        </button>`;
+    };
+
     let serverListHTML = '';
     if (serverWidgets.length > 0) {
       serverListHTML = `
@@ -237,6 +341,9 @@ class WidgetsModule extends SidebarModule {
           <span class="collapse-arrow">▼</span>
           <span class="widget-list-header-text">In Local Storage</span>
           <div class="widget-list-actions">
+            ${createSortButton('time', 'time', sortState)}
+            ${createSortButton('id', 'name', sortState)}
+            ${createSortButton('type', 'type', sortState)}
             <button icon="upload" class="sidebarButton import-widgets" data-source="local"><span>Import to Local Storage</span></button>
             <button icon="download" class="sidebarButton export-widgets" data-source="local"><span>Download Custom Widgets</span></button>
           </div>
@@ -246,6 +353,16 @@ class WidgetsModule extends SidebarModule {
         </div>
       </div>
     `;
+
+    // Restore scroll positions
+    try {
+      this.currentContents.scrollTop = scrollState.prevScrollTop;
+      const newTop = this.currentContents.getBoundingClientRect().top;
+      const delta = newTop - scrollState.prevRectTop;
+      if (delta !== 0 && scrollState.scrollElem) {
+        scrollState.scrollElem.scrollTop += delta;
+      }
+    } catch (_) {}
 
     for (const header of this.currentContents.querySelectorAll('.widget-list-header')) {
       header.onclick = e => {
@@ -258,6 +375,20 @@ class WidgetsModule extends SidebarModule {
 
     for (const button of this.currentContents.querySelectorAll('.export-widgets')) {
       button.onclick = e => this.exportWidgets(e.currentTarget.dataset.source);
+    }
+    for (const button of this.currentContents.querySelectorAll('.sort-widgets')) {
+      button.onclick = e => {
+        e.preventDefault();
+        e.stopPropagation();
+        const by = e.currentTarget.dataset.by;
+        if (!this.localSort) this.localSort = { by: 'time', dir: 'desc' };
+        if (this.localSort.by === by) {
+          this.localSort.dir = this.localSort.dir === 'asc' ? 'desc' : 'asc';
+        } else {
+          this.localSort = { by, dir: 'asc' };
+        }
+        this.renderWidgetBuffer(filter);
+      };
     }
     for (const button of this.currentContents.querySelectorAll('.import-widgets')) {
       button.onclick = e => this.importWidgets(e.currentTarget.dataset.source);
