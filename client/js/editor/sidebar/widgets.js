@@ -480,6 +480,7 @@ class WidgetsModule extends SidebarModule {
 
               const tempState = JSON.parse(JSON.stringify(s));
               tempState.id = tempId;
+              tempState.scale = (tempState.scale || 1) * getScale();
 
               const parentId = tempState.parent ? idMap.get(tempState.parent) : null;
               if (parentId) {
