@@ -497,32 +497,37 @@ export function selectFile(getContents, multipleCallback, fileTypes) {
         return reject(new Error('File selection cancelled.'));
       }
 
-      if(!getContents && typeof multipleCallback !== 'function')
-        return resolve(e.target.files);
-
-      for(const file of e.target.files) {
-        if(!getContents && typeof multipleCallback === 'function') {
-          multipleCallback(file);
-          continue;
+      if (typeof multipleCallback === 'function') {
+        for (const file of e.target.files) {
+          const reader = new FileReader();
+          reader.onload = (event) => {
+            multipleCallback({ content: event.target.result, name: file.name });
+          };
+          if (getContents === 'BINARY') {
+            reader.readAsArrayBuffer(file);
+          } else if (getContents === 'TEXT') {
+            reader.readAsText(file);
+          } else {
+            reader.readAsDataURL(file);
+          }
         }
-
-        const name = file.name;
+        resolve(); // Resolve the promise once all files are being processed
+      } else {
+        const file = e.target.files[0];
         const reader = new FileReader();
-        reader.addEventListener('load', function(e) {
-          if(typeof multipleCallback === 'function')
-            multipleCallback({ content: e.target.result, name });
-          else
-            resolve({ content: e.target.result, name });
-        });
-        if(getContents == 'BINARY')
+        reader.onload = (event) => {
+          resolve({ content: event.target.result, name: file.name });
+        };
+        if (getContents === 'BINARY') {
           reader.readAsArrayBuffer(file);
-        else if(getContents == 'TEXT')
+        } else if (getContents === 'TEXT') {
           reader.readAsText(file);
-        else
+        } else {
           reader.readAsDataURL(file);
+        }
       }
     });
-    upload.dispatchEvent(new MouseEvent('click', {bubbles: true}));
+    upload.dispatchEvent(new MouseEvent('click', { bubbles: true }));
   });
 }
 

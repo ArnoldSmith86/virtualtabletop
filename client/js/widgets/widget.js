@@ -2045,7 +2045,7 @@ export class Widget extends StateManaged {
       }
 
       if(a.func == 'UPLOAD') {
-        setDefaults(a, { variable: 'uploadedFileName', fileTypes: [ '.png', '.jpg', '.jpeg', '.gif', '.svg', '.webp', '.json' ] });
+        setDefaults(a, { variable: 'uploadedFileName', fileTypes: null });
         const uploadedAsset = await uploadAsset(null, a.fileTypes);
         if(uploadedAsset === null) {
           variables[a.variable] = false;
@@ -2140,19 +2140,6 @@ export class Widget extends StateManaged {
         }
       }
 
-      if(a.func == 'UPLOAD') {
-        setDefaults(a, { variable: 'uploadedURL' });
-        const uploadedAsset = await uploadAsset();
-        if(uploadedAsset === null) {
-          variables[a.variable] = false;
-          if(jeRoutineLogging)
-            jeLoggingRoutineOperationSummary("UPLOAD cancelled");
-        } else {
-          variables[a.variable] = uploadedAsset;
-          if(jeRoutineLogging)
-            jeLoggingRoutineOperationSummary(`'${a.variable}'`, `${JSON.stringify(variables[a.variable])}`)
-        }
-      }
 
       if(a.func == 'UPLOADIMAGE') {
         setDefaults(a, { widget: null, property: 'image' });
