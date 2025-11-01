@@ -1,3 +1,5 @@
+import { onLoad } from './domhelpers.js';
+
 let currentGameSettings = {};
 
 export function legacyMode(name, value) {
@@ -24,10 +26,8 @@ export function getCurrentGameSettings() {
 onLoad(function() {
   onMessage('state', args=>{
     currentGameSettings = args._meta.gameSettings || {};
-    console.log('state currentGameSettings', currentGameSettings);
   });
   onMessage('meta', args=>{
     currentGameSettings = args.meta.gameSettings || {};
-    console.log('meta currentGameSettings', currentGameSettings);
   });
 });

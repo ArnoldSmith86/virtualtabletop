@@ -1205,4 +1205,28 @@ export default class Room {
     else
       return Config.directory('save') + '/states/' + this.id + '-' + stateID.replace(/[^a-z0-9]/g, '_') + '-' + String(variantID).replace(/[^a-z0-9]/g, '_') + '.json';
   }
+
+  zoom(args) {
+    const players = Array.isArray(args.players) ? args.players.map(p=>`${p}`) : [];
+
+    // Persist zoom settings into gameSettings (per-player or for all)
+    if(!this.state._meta.gameSettings)
+      this.state._meta.gameSettings = {};
+    if(!this.state._meta.gameSettings.zoom)
+      this.state._meta.gameSettings.zoom = { perPlayer: {}, all: null };
+
+    const payload = { level: args.level, panX: args.panX, panY: args.panY };
+    if(args.disableUserControls !== undefined)
+      payload.disableUserControls = args.disableUserControls !== false;
+    if(players.length === 0) {
+      this.state._meta.gameSettings.zoom.all = payload;
+      // Clearing all individual overrides when applying to all players
+      this.state._meta.gameSettings.zoom.perPlayer = {};
+    } else {
+      for(const p of players)
+        this.state._meta.gameSettings.zoom.perPlayer[p] = payload;
+    }
+
+    this.sendMetaUpdate();
+  }
 }

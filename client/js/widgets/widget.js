@@ -2,10 +2,11 @@ import { $, removeFromDOM, asArray, escapeID, mapAssetURLs } from '../domhelpers
 import { StateManaged } from '../statemanaged.js';
 import { playerName, playerColor, activePlayers, activeColors, mouseCoords } from '../overlays/players.js';
 import { batchStart, batchEnd, widgetFilter, widgets, flushDelta } from '../serverstate.js';
-import { showOverlay, shuffleWidgets, sortWidgets } from '../main.js';
+import { showOverlay, shuffleWidgets, sortWidgets, scale } from '../main.js';
 import { tracingEnabled } from '../tracing.js';
 import { toHex } from '../color.js';
 import { center, distance, overlap, getOffset, getElementTransform, getScreenTransform, getPointOnPlane, dehomogenize, getElementTransformRelativeTo, getTransformOrigin } from '../geometry.js';
+import { setZoomLevel, setPan, } from '../zoom.js';
 
 const readOnlyProperties = new Set([
   '_absoluteRotation',
@@ -2138,6 +2139,67 @@ export class Widget extends StateManaged {
 
         if(jeRoutineLogging) {
           jeLoggingRoutineOperationSummary(`${Object.entries(a.variables||{}).map(e=>`${e[0]}=${JSON.stringify(e[1])}`).join(', ')}`);
+        }
+      }
+
+      if(a.func == 'ZOOM') {
+        setDefaults(a, { level: 1, panX: null, panY: null, player: playerName, prompt: "This game wants to override your locked zoom settings and change the view. Do you agree?", disableUserControls: true });
+
+        const normalizedTargets = Array.from(new Set(asArray(a.player).filter(p=>p).map(p=>`${p}`)));
+        const isTargetedPlayer = !normalizedTargets.length || normalizedTargets.includes(playerName);
+
+        const numericLevel = Number(a.level);
+        if (!Number.isFinite(numericLevel) || numericLevel < 1 || numericLevel > 10) {
+          problems.push('Level must be a number between 1 and 10.');
+        } else {
+          const boardDimensions = { width: 1600, height: 1000 };
+          const visibleUnits = {
+            width:  boardDimensions.width  / numericLevel,
+            height: boardDimensions.height / numericLevel
+          };
+          const defaultUnits = {
+            left: (boardDimensions.width  - visibleUnits.width ) / 2,
+            top:  (boardDimensions.height - visibleUnits.height) / 2
+          };
+
+          const targetUnits = {
+            left: Math.round(a.panX !== null ? Number(a.panX) : defaultUnits.left),
+            top:  Math.round(a.panY !== null ? Number(a.panY) : defaultUnits.top)
+          };
+
+          if (!Number.isFinite(targetUnits.left) || !Number.isFinite(targetUnits.top)) {
+            problems.push('panX and panY must be numbers.');
+          } else {
+            const resolvedPan = {
+              x: -targetUnits.left * numericLevel,
+              y: -targetUnits.top  * numericLevel,
+            };
+
+            const disableUserControls = a.disableUserControls !== false;
+
+            toServer('zoom', {
+              level: numericLevel,
+              panX: resolvedPan.x,
+              panY: resolvedPan.y,
+              players: normalizedTargets,
+              prompt: typeof a.prompt === 'string' ? a.prompt : null,
+              disableUserControls: disableUserControls,
+            });
+
+            if(isTargetedPlayer) {
+              // Respect user's override preference
+              const allowOverride = localStorage.getItem('allowGameZoomControl') !== 'false';
+              if(allowOverride) {
+                setZoomLevel(numericLevel);
+                setPan(resolvedPan.x*scale, resolvedPan.y*scale);
+              }
+            }
+
+            if(jeRoutineLogging) {
+              const targetsLabel = normalizedTargets.length ? `player(s) ${normalizedTargets.join(', ')}` : 'all players';
+              jeLoggingRoutineOperationSummary(`Zoomed ${targetsLabel} ${numericLevel}x and panned to (${targetUnits.left},${targetUnits.top})`);
+            }
+          }
         }
       }
 
