@@ -1360,11 +1360,16 @@ window.placeWidget = async function (widgetId, source, coords) {
     const newWidgets = newWidgetIds.map(id => widgets.get(id)).filter(Boolean);
     for (const widget of newWidgets) {
       if (widget.get('addToRoomRoutine')) {
-        widget.evaluateRoutine('addToRoomRoutine');
-        widget.set('addToRoomRoutine', undefined);
+        await widget.evaluateRoutine('addToRoomRoutine');
+        if (widgets.has(widget.id)) {
+          widget.set('addToRoomRoutine', undefined);
+        }
       }
     }
-    setSelection(newWidgets);
+    const existingNewWidgets = newWidgets.filter(w => widgets.has(w.id));
+    if (existingNewWidgets.length > 0) {
+      setSelection(existingNewWidgets);
+    }
   } else {
     console.error(`Widget with id ${widgetId} not found in ${source}.`);
   }

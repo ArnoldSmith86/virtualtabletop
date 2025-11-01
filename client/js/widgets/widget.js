@@ -1260,11 +1260,13 @@ export class Widget extends StateManaged {
         setDefaults(a, { collection: 'DEFAULT' });
         const collection = getCollection(a.collection);
         if(collection) {
+          const promises = [];
           for(const w of collections[collection]) {
-            await removeWidgetLocal(w.get('id'));
+            promises.push(removeWidgetLocal(w.get('id')));
             for(const c in collections)
               collections[c] = collections[c].filter(x=>x!=w);
           }
+          await Promise.all(promises);
           if(jeRoutineLogging)
             jeLoggingRoutineOperationSummary( `'${a.collection}'`)
         }
@@ -2046,12 +2048,13 @@ export class Widget extends StateManaged {
         setDefaults(a, { variable: 'UPLOAD' });
         const uploadedAsset = await uploadAsset();
         if(uploadedAsset === null) {
+          variables[a.variable] = false;
           if(jeRoutineLogging)
-            jeLoggingRoutineOperationSummary("UPLOAD cancelled");
+        jeLoggingRoutineOperationSummary("UPLOAD cancelled");
         } else {
           variables[a.variable] = uploadedAsset;
           if(jeRoutineLogging)
-            jeLoggingRoutineOperationSummary(`'${a.variable}'`, `${JSON.stringify(variables[a.variable])}`)
+        jeLoggingRoutineOperationSummary(`'${a.variable}'`, `${JSON.stringify(variables[a.variable])}`)
         }
       }
 
