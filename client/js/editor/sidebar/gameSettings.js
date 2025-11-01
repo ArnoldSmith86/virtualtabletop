@@ -157,7 +157,7 @@ class GameSettingsModule extends SidebarModule {
     this.addHeader('Game Settings');
 
     const gameSettings = getCurrentGameSettings();
-    const zoomSettings = gameSettings?.zoom || {};
+    const zoomSettings = gameSettings.zoom || {};
     const hasZoomOverrides = (zoomSettings.all !== null && zoomSettings.all !== undefined) || 
                              (zoomSettings.perPlayer && Object.keys(zoomSettings.perPlayer).length > 0);
 
