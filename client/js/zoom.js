@@ -48,7 +48,7 @@ function updateZoomUIState(gs) {
         $('body').classList.remove('noPanning');
         return;
       } else {
-        override = true;
+        override = allowGameZoomControl;
       }
     }
   }
