@@ -479,9 +479,25 @@ export function selectFile(getContents, multipleCallback) {
     const upload = document.createElement('input');
     upload.type = 'file';
     if (typeof multipleCallback === 'function') upload.setAttribute('multiple', true);
+
+    const cancelHandler = () => {
+      window.removeEventListener('focus', cancelHandler);
+      setTimeout(() => {
+        if (upload.files.length === 0) {
+          reject(new Error('File selection cancelled.'));
+        }
+      }, 300);
+    };
+    window.addEventListener('focus', cancelHandler);
+
     upload.addEventListener('change', function(e) {
+      window.removeEventListener('focus', cancelHandler);
+      if (e.target.files.length === 0) {
+        return reject(new Error('File selection cancelled.'));
+      }
+
       if(!getContents && typeof multipleCallback !== 'function')
-        return resolve(e.target.files[0]);
+        return resolve(e.target.files);
 
       for(const file of e.target.files) {
         if(!getContents && typeof multipleCallback === 'function') {

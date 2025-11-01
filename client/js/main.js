@@ -397,12 +397,18 @@ export async function sortWidgets(collection, keys, reverse, locales, options, r
 async function uploadAsset(multipleCallback) {
   if(typeof(multipleCallback) === "function") {
     return selectFile('BINARY', async function (f) {
-      let uploadPath = await _uploadAsset(f).catch(e=>alert(`Uploading failed: ${e.toString()}`));
+      let uploadPath = await _uploadAsset(f).catch(e=>{
+        console.error(`Uploading failed: ${e.toString()}`);
+        return null;
+      });
       multipleCallback(uploadPath, f.name)
     });
   }
   else {
-    return selectFile('BINARY').then(_uploadAsset).catch(e=>alert(`Uploading failed: ${e.toString()}`));
+    return selectFile('BINARY').then(_uploadAsset).catch(e=>{
+      console.error(`Uploading failed: ${e.toString()}`);
+      return null;
+    });
   }
 }
 
