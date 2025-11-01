@@ -3349,10 +3349,22 @@
               "variable": "newfilename"
             },
             {
-              "func": "SET",
-              "property": "image",
-              "value": "${newfilename}",
-              "collection": "thisButton"
+              "func": "IF",
+              "condition": "${newfilename}",
+              "thenRoutine": [
+                {
+                  "func": "SET",
+                  "property": "image",
+                  "value": "${newfilename}",
+                  "collection": "thisButton"
+                }
+              ],
+              "elseRoutine": [
+                {
+                  "func": "DELETE",
+                  "collection": "thisButton"
+                }
+              ]
             }
           ]
         }
@@ -3374,10 +3386,22 @@
               "variable": "newfilename"
             },
             {
-              "func": "SET",
-              "property": "image",
-              "value": "${newfilename}",
-              "collection": "thisButton"
+              "func": "IF",
+              "condition": "${newfilename}",
+              "thenRoutine": [
+                {
+                  "func": "SET",
+                  "property": "image",
+                  "value": "${newfilename}",
+                  "collection": "thisButton"
+                }
+              ],
+              "elseRoutine": [
+                {
+                  "func": "DELETE",
+                  "collection": "thisButton"
+                }
+              ]
             }
           ]
         }

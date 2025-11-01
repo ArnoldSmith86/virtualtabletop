@@ -2053,7 +2053,6 @@ export class Widget extends StateManaged {
         setDefaults(a, { variable: 'UPLOAD' });
         const uploadedAsset = await uploadAsset();
         if(uploadedAsset === null) {
-          abortRoutine = true;
           if(jeRoutineLogging)
             jeLoggingRoutineOperationSummary("UPLOAD cancelled");
         } else {
