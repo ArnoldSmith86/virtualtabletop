@@ -493,7 +493,7 @@ async function loadEditMode() {
       toServer, batchStart, batchEnd, setDeltaCause, sendPropertyUpdate, getUndoProtocol, setUndoProtocol, sendRawDelta, getDelta,
       addWidgetLocal, updateWidget, updateWidgetId, removeWidgetLocal,
       loadJSZip, waitForJSZip,
-      generateUniqueWidgetID, unescapeID, regexEscape, setScale, getScale, getRoomRectangle, getMaxZ,
+      generateUniqueWidgetID, unescapeID, regexEscape, setScale, getScale, getRoomRectangle, getMaxZ, getZoomLevel,
       uploadAsset, _uploadAsset, mapAssetURLs, pickSymbol, selectFile, triggerDownload, uploadAsset,
       config, getPlayerDetails, roomID, getDeltaID, widgets, widgetFilter, isOverlayActive,
       html, formField,

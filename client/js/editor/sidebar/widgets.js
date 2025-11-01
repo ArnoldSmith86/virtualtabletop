@@ -426,6 +426,7 @@ class WidgetsModule extends SidebarModule {
           const previewContainer = document.createElement('div');
           previewContainer.style.position = 'absolute';
           previewContainer.style.left = '-9999px';
+          previewContainer.style.scale = getScale() * getZoomLevel();
 
           const idMap = new Map();
           const tempWidgetInstances = new Map();
@@ -480,7 +481,6 @@ class WidgetsModule extends SidebarModule {
 
               const tempState = JSON.parse(JSON.stringify(s));
               tempState.id = tempId;
-              tempState.scale = (tempState.scale || 1) * getScale();
 
               const parentId = tempState.parent ? idMap.get(tempState.parent) : null;
               if (parentId) {
