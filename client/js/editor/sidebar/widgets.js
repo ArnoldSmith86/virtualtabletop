@@ -1,6 +1,7 @@
 class WidgetsModule extends SidebarModule {
   constructor() {
     super('widgets', 'Widgets', 'Manage widgets.');
+    this.openedWidgetRooms = new Map();
   }
 
   onSelectionChangedWhileActive(newSelection) {
@@ -204,6 +205,21 @@ class WidgetsModule extends SidebarModule {
     const renderWidget = (state) => {
       const widgetTypes = getWidgetTypesString(state);
       const hasAddToRoomRoutine = state.widgets.some(w => w.addToRoomRoutine);
+      const widgetKey = `${source}-${state.id}`;
+      const isOpened = this.openedWidgetRooms.has(widgetKey);
+      
+      let actionButtons = '';
+      if (isEditing) {
+        if (isOpened) {
+          actionButtons = `
+            <button icon="check" class="sidebarButton widget-save-checkmark"><span>Save</span></button>
+            <button icon="close" class="sidebarButton widget-discard-cross"><span>Discard</span></button>
+          `;
+        } else {
+          actionButtons = '<button icon="open_in_new" class="sidebarButton open-in-new-tab"><span>Open in new tab</span></button>';
+        }
+      }
+      
       return `
             <li data-id="${state.id}" data-source="${source}" draggable="${isEditing}">
                 <span class="drag-handle"></span>
@@ -214,6 +230,7 @@ class WidgetsModule extends SidebarModule {
                 <div class="actions">
                     <label class="unique-widget-label"><input type="checkbox" ${state.unique ? 'checked' : ''}> Unique</label>
                     <button icon="add" class="sidebarButton"><span>Add widget to room</span></button>
+                    ${actionButtons}
                     <button icon="download" class="sidebarButton download-json"><span>Download</span></button>
                     <button icon="delete" class="sidebarButton"><span>Delete widget</span></button>
                 </div>
@@ -584,6 +601,18 @@ class WidgetsModule extends SidebarModule {
         this.updateWidget(state, source);
       };
       item.querySelector('[icon=add]').onclick = e => window.placeWidget(state.id, source);
+      const openInNewTabButton = item.querySelector('.open-in-new-tab');
+      if (openInNewTabButton) {
+        openInNewTabButton.onclick = e => this.openWidgetInNewTab(state, source);
+      }
+      const saveCheckmarkButton = item.querySelector('.widget-save-checkmark');
+      if (saveCheckmarkButton) {
+        saveCheckmarkButton.onclick = e => this.saveWidgetFromNewTab(state, source);
+      }
+      const discardCrossButton = item.querySelector('.widget-discard-cross');
+      if (discardCrossButton) {
+        discardCrossButton.onclick = e => this.discardWidgetNewTab(state, source);
+      }
       item.querySelector('.download-json').onclick = e => this.exportWidgetJson(state);
       const deleteButton = item.querySelector('[icon=delete]');
       if (source === 'server' && !config.allowPublicLibraryEdits) {
@@ -1053,5 +1082,229 @@ class WidgetsModule extends SidebarModule {
       reader.readAsText(file);
     };
     fileInput.click();
+  }
+
+  async openWidgetInNewTab(widgetData, source) {
+    const currentRoomID = self.location.pathname.replace(/.*\//, '');
+    const newRoomID = `${currentRoomID}-${widgetData.id}`;
+    
+    const widgetBuffer = JSON.parse(JSON.stringify(widgetData.widgets));
+    
+    const state = {};
+    for (const widget of widgetBuffer) {
+      state[widget.id] = widget;
+    }
+    
+    const instructionLabelId = `label-${Date.now()}`;
+    
+    state[instructionLabelId] = {
+      id: instructionLabelId,
+      type: 'label',
+      text: 'Edit the widgets here. Use the checkmark icon (✓) or cross icon (✕) in the original room to save or discard changes.',
+      x: 50,
+      y: 50,
+      width: 1800,
+      height: 100,
+      css: 'background: rgba(31, 92, 166, 0.9); color: white; padding: 10px; border-radius: 10px; font-size: 18px; border: 2px solid #1f5ca6;',
+      movable: false,
+      movableInEdit: false,
+      layer: 9999,
+      z: 999999
+    };
+    
+    state._meta = {
+      version: 18,
+      metaVersion: 1,
+      players: {},
+      states: {},
+      starred: {},
+      gameSettings: {
+        legacyModes: {}
+      },
+      widgetEditInfo: {
+        originalWidgetId: widgetData.id,
+        originalSource: source,
+        originalRoomID: currentRoomID
+      }
+    };
+    
+    try {
+      const response = await fetch(`${config.urlPrefix || ''}/state/${newRoomID}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(state)
+      });
+      
+      if (response.ok) {
+        const widgetKey = `${source}-${widgetData.id}`;
+        this.openedWidgetRooms.set(widgetKey, {
+          newRoomID: newRoomID,
+          originalWidgetId: widgetData.id,
+          originalSource: source
+        });
+        const baseURL = `${location.origin}${config.urlPrefix || ''}`;
+        window.open(`${baseURL}/${newRoomID}`, '_blank');
+        const filterValue = document.querySelector('#widgetFilter')?.value || '';
+        this.renderWidgetBuffer(filterValue);
+      } else {
+        const errorText = await response.text();
+        alert(`Failed to create room: ${response.status} ${errorText}`);
+      }
+    } catch (error) {
+      alert(`Error opening widget in new tab: ${error.message}`);
+    }
+  }
+
+  async saveWidgetFromNewTab(widgetData, source) {
+    const widgetKey = `${source}-${widgetData.id}`;
+    const roomInfo = this.openedWidgetRooms.get(widgetKey);
+    if (!roomInfo) {
+      alert('Could not find room information.');
+      return;
+    }
+
+    try {
+      const urlPrefix = typeof config !== 'undefined' ? config.urlPrefix : '';
+      const response = await fetch(`${urlPrefix}/state/${roomInfo.newRoomID}/false`);
+      if (!response.ok) {
+        alert(`Failed to fetch room state: ${response.status}`);
+        return;
+      }
+      
+      const roomState = await response.json();
+      
+      const instructionLabels = [];
+      
+      for (const widgetID in roomState) {
+        if (widgetID === '_meta') continue;
+        const widget = roomState[widgetID];
+        const z = widget.z || 0;
+        if (z > 999000 && widget.type === 'label') {
+          instructionLabels.push(widgetID);
+        }
+      }
+
+      const widgetsToSave = [];
+      for (const widgetID in roomState) {
+        if (widgetID === '_meta') continue;
+        const widget = roomState[widgetID];
+        const z = widget.z || 0;
+        if (z < 999000 && !instructionLabels.includes(widgetID)) {
+          widgetsToSave.push(widget);
+        }
+      }
+
+      const widgetBuffer = [];
+      function addRecursively(widget) {
+        widgetBuffer.push(widget);
+        const children = widgetsToSave.filter(w => w.parent === widget.id);
+        for (const child of children) {
+          addRecursively(child);
+        }
+      }
+
+      const rootWidgets = widgetsToSave.filter(w => !w.parent || !widgetsToSave.some(p => p.id === w.parent));
+      for (const widget of rootWidgets) {
+        addRecursively(widget);
+      }
+
+      if (roomInfo.originalSource === 'server') {
+        const urlPrefix = typeof config !== 'undefined' ? config.urlPrefix : '';
+        const widgetsResponse = await fetch(`${urlPrefix}/api/widgets`);
+        const data = await widgetsResponse.json();
+        const widgets = Array.isArray(data) ? data : (data.widgets || []);
+        const groups = Array.isArray(data) ? [] : (data.groups || []);
+        
+        const widgetIndex = widgets.findIndex(w => w.id === roomInfo.originalWidgetId);
+        if (widgetIndex !== -1) {
+          widgets[widgetIndex].widgets = widgetBuffer;
+          const updateResponse = await fetch(`${urlPrefix}/api/widgets`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ widgets, groups })
+          });
+          
+          if (updateResponse.ok) {
+            alert('Widgets saved successfully!');
+            this.openedWidgetRooms.delete(widgetKey);
+            const filterValue = document.querySelector('#widgetFilter')?.value || '';
+            this.renderWidgetBuffer(filterValue);
+            
+            const clearResponse = await fetch(`${urlPrefix}/state/${roomInfo.newRoomID}`, {
+              method: 'PUT',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ _meta: { version: 1, metaVersion: 1, players: {}, states: {}, starred: {}, gameSettings: { legacyModes: {} } } })
+            });
+          } else {
+            alert('Failed to save widgets to server.');
+          }
+        } else {
+          alert('Could not find original widget to update.');
+        }
+      } else {
+        const rawData = localStorage.getItem('customWidgets');
+        let customWidgets = { widgets: [], groups: [] };
+        if (rawData) {
+          try {
+            customWidgets = JSON.parse(rawData);
+            if (!Array.isArray(customWidgets.widgets)) customWidgets.widgets = [];
+            if (!Array.isArray(customWidgets.groups)) customWidgets.groups = [];
+          } catch (e) {
+            customWidgets = { widgets: [], groups: [] };
+          }
+        }
+
+        const widgetIndex = customWidgets.widgets.findIndex(w => w.id === roomInfo.originalWidgetId);
+        if (widgetIndex !== -1) {
+          customWidgets.widgets[widgetIndex].widgets = widgetBuffer;
+          localStorage.setItem('customWidgets', JSON.stringify(customWidgets));
+          alert('Widgets saved successfully!');
+          this.openedWidgetRooms.delete(widgetKey);
+          const filterValue = document.querySelector('#widgetFilter')?.value || '';
+          this.renderWidgetBuffer(filterValue);
+          
+          const urlPrefix = typeof config !== 'undefined' ? config.urlPrefix : '';
+          const clearResponse = await fetch(`${urlPrefix}/state/${roomInfo.newRoomID}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ _meta: { version: 1, metaVersion: 1, players: {}, states: {}, starred: {}, gameSettings: { legacyModes: {} } } })
+          });
+        } else {
+          alert('Could not find original widget to update.');
+        }
+      }
+    } catch (error) {
+      alert(`Error saving widgets: ${error.message}`);
+    }
+  }
+
+  async discardWidgetNewTab(widgetData, source) {
+    const widgetKey = `${source}-${widgetData.id}`;
+    const roomInfo = this.openedWidgetRooms.get(widgetKey);
+    if (!roomInfo) {
+      alert('Could not find room information.');
+      return;
+    }
+
+    if (confirm('Discard changes and remove the temporary room?')) {
+      try {
+        const urlPrefix = typeof config !== 'undefined' ? config.urlPrefix : '';
+        const response = await fetch(`${urlPrefix}/state/${roomInfo.newRoomID}`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ _meta: { version: 1, metaVersion: 1, players: {}, states: {}, starred: {}, gameSettings: { legacyModes: {} } } })
+        });
+        
+        if (response.ok) {
+          this.openedWidgetRooms.delete(widgetKey);
+          const filterValue = document.querySelector('#widgetFilter')?.value || '';
+          this.renderWidgetBuffer(filterValue);
+        } else {
+          alert('Failed to discard room.');
+        }
+      } catch (error) {
+        alert(`Error discarding room: ${error.message}`);
+      }
+    }
   }
 }

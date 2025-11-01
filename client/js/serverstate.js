@@ -514,6 +514,7 @@ function receiveStateFromServer(args) {
       batchEnd();
     })();
   }
+
 }
 
 function cancelInputOverlay() {
