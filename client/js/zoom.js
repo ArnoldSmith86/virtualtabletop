@@ -97,6 +97,19 @@ export function setPan(x, y) {
   refreshIgnoreZoomWidgets();
 }
 
+export function recalculatePanForScaleChange(oldScale, newScale) {
+  if (oldScale === newScale || oldScale === 0) return;
+  
+  const currentPanX = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--roomPanX')) || 0;
+  const currentPanY = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--roomPanY')) || 0;
+  
+  const scaleRatio = newScale / oldScale;
+  const newPanX = currentPanX * scaleRatio;
+  const newPanY = currentPanY * scaleRatio;
+  
+  setPan(newPanX, newPanY);
+}
+
 export function getZoomScale() {
   return zoomScale;
 }

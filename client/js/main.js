@@ -1,5 +1,6 @@
 import { $, $a, onLoad, selectFile, asArray } from './domhelpers.js';
 import { startWebSocket, toServer } from './connection.js';
+import { recalculatePanForScaleChange } from './zoom.js';
 
 
 export let scale = 1;
@@ -184,6 +185,7 @@ function setZoomAndOffset(newZoom, xOffset, yOffset) {
 }
 
 function setScale() {
+  const oldScale = scale;
   const w = window.innerWidth;
   const h = window.innerHeight;
   let vh = window.innerHeight * 0.01;
@@ -225,6 +227,10 @@ function setScale() {
       $('body').classList.add('horizontalToolbar');
   }
   document.documentElement.style.setProperty('--scale', scale);
+  
+  if(oldScale !== scale)
+    recalculatePanForScaleChange(oldScale, scale);
+  
   roomRectangle = $('#roomArea').getBoundingClientRect();
   if(edit)
     scaleHasChanged(scale);
