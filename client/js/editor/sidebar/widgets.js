@@ -871,10 +871,24 @@ class WidgetsModule extends SidebarModule {
 
     const newIds = new Set();
     for (const widget of widgetBuffer) {
-      let i = 1;
+      // Find the base name by removing any trailing number and optional underscore
+      const baseName = widget.id.replace(/_?\d+$/, '');
+      let i = 0;
+
+      // Find the highest existing number for this baseName among ALL widgets (in room and being added)
+      for (const existingId of [...widgets.keys(), ...newIds]) {
+          if (existingId.startsWith(baseName)) {
+              const numStr = existingId.substring(baseName.length);
+              if (/^\d+$/.test(numStr)) {
+                  i = Math.max(i, parseInt(numStr, 10));
+              }
+          }
+      }
+      
       let newId;
       do {
-        newId = `${widget.id}_${i++}`;
+        i++;
+        newId = `${baseName}${i}`;
       } while (widgets.has(newId) || newIds.has(newId));
       idMap[widget.id] = newId;
       newIds.add(newId);
