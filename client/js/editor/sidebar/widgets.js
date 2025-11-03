@@ -1,46 +1,40 @@
 function deepReplace(obj, idMap) {
-  // Primitives and nulls can't be recursed into.
   if (typeof obj !== 'object' || obj === null) {
     return;
   }
 
-  // If it's an array, recurse on each item.
   if (Array.isArray(obj)) {
     for (let i = 0; i < obj.length; i++) {
       const item = obj[i];
       if (typeof item === 'string' && idMap[item]) {
-        obj[i] = idMap[item]; // Replace string value if it's an ID
+        obj[i] = idMap[item];
       } else {
-        deepReplace(item, idMap); // Recurse if it's an object/array
+        deepReplace(item, idMap);
       }
     }
     return;
   }
 
-  // It's an object. First, collect keys that need to be renamed.
-  const keysToReplace = [];
-  for (const key in obj) {
-    if (Object.prototype.hasOwnProperty.call(obj, key) && idMap[key]) {
-      keysToReplace.push(key);
-    }
-  }
-
-  // Rename the keys.
-  for (const oldKey of keysToReplace) {
-    const newKey = idMap[oldKey];
-    obj[newKey] = obj[oldKey];
-    delete obj[oldKey];
-  }
-
-  // Now, recurse on all values.
+  // It's an object.
+  // First, recurse on all values.
   for (const key in obj) {
     if (Object.prototype.hasOwnProperty.call(obj, key)) {
       const value = obj[key];
       if (typeof value === 'string' && idMap[value]) {
-        obj[key] = idMap[value]; // Replace string value if it's an ID
+        obj[key] = idMap[value];
       } else {
-        deepReplace(value, idMap); // Recurse if it's an object/array
+        deepReplace(value, idMap);
       }
+    }
+  }
+
+  // Then, rename keys. This is safer after values are processed.
+  const keysToRename = Object.keys(obj).filter(key => idMap[key]);
+  for (const oldKey of keysToRename) {
+    const newKey = idMap[oldKey];
+    if (oldKey !== newKey) {
+      obj[newKey] = obj[oldKey];
+      delete obj[oldKey];
     }
   }
 }
@@ -52,7 +46,7 @@ class WidgetsModule extends SidebarModule {
 
   onSelectionChangedWhileActive(newSelection) {
     if (this.moduleDOM) {
-      $('#saveWidgetsToBuffer', this.moduleDOM).disabled = !newSelection.length;
+      $('#saveWidgetsToBuffer', this.moduleDOM).disabled = newSelection.length !== 1;
     }
   }
 
@@ -85,7 +79,7 @@ class WidgetsModule extends SidebarModule {
       this.renderWidgetBuffer($('#widgetFilter', d).value);
     };
     $('#saveWidgetsToBuffer', d).onclick = e => this.button_saveWidgetsToBuffer();
-    $('#saveWidgetsToBuffer', d).disabled = !selectedWidgets.length;
+    $('#saveWidgetsToBuffer', d).disabled = selectedWidgets.length !== 1;
 
     this.currentContents = div(target);
     this.renderWidgetBuffer();
@@ -944,66 +938,91 @@ class WidgetsModule extends SidebarModule {
       newIds.add(newId);
     }
     for (const widget of widgetBuffer) {
+      // Update the widget's own ID first.
       widget.id = idMap[widget.id];
-    }
-
-    for (const widget of widgetBuffer) {
+      // Then, update all references within the widget.
       deepReplace(widget, idMap);
     }
     batchStart();
     setDeltaCause(`${getPlayerDetails().playerName} loaded widgets from the widget buffer in editor`);
 
     const newRootWidgetIds = [];
-    const cards = [];
-    const others = [];
-    for (const state of widgetBuffer) {
-      if (state.type === 'card') {
-        cards.push(state);
-      } else {
-        others.push(state);
-      }
-    }
-
-    const rootWidgets = widgetBuffer.filter(state => !widgetBuffer.some(w => w.id === state.parent) && !widgets.has(state.parent));
+    const rootWidgets = widgetBuffer.filter(state => !state.parent || !widgetBuffer.some(w => w.id === state.parent));
     let offsetX = 0;
     let offsetY = 0;
 
     if (coords && rootWidgets.length > 0) {
-      let minX = Infinity;
-      let minY = Infinity;
-      for (const w of rootWidgets) {
-        minX = Math.min(minX, w.x || 0);
-        minY = Math.min(minY, w.y || 0);
-      }
-      offsetX = coords.x - minX;
-      offsetY = coords.y - minY;
+        let minX = Infinity;
+        let minY = Infinity;
+        for (const w of rootWidgets) {
+            minX = Math.min(minX, w.x || 0);
+            minY = Math.min(minY, w.y || 0);
+        }
+        offsetX = coords.x - minX;
+        offsetY = coords.y - minY;
     }
 
-    const processWidgets = async (widgetsToProcess) => {
-      for (const state of widgetsToProcess) {
-        const isRoot = !widgetBuffer.some(w => w.id === state.parent) && !widgets.has(state.parent);
+    const widgetStates = new Map(widgetBuffer.map(w => [w.id, w]));
+    const sortedWidgets = [];
+    const visited = new Set();
+
+    function topologicalSort(widgetId) {
+        if (visited.has(widgetId)) {
+            return;
+        }
+        const state = widgetStates.get(widgetId);
+        if (!state) return;
+
+        // Recurse for parent dependency
+        if (state.parent && widgetStates.has(state.parent)) {
+            topologicalSort(state.parent);
+        }
+
+        // Recurse for deck dependency
+        if (state.deck && widgetStates.has(state.deck)) {
+            topologicalSort(state.deck);
+        }
+
+        // Recurse for inheritFrom dependencies
+        if (state.inheritFrom) {
+            for (const idToInheritFrom of Object.keys(state.inheritFrom)) {
+                if (widgetStates.has(idToInheritFrom)) {
+                    topologicalSort(idToInheritFrom);
+                }
+            }
+        }
+
+        if (!visited.has(widgetId)) {
+            sortedWidgets.push(state);
+            visited.add(widgetId);
+        }
+    }
+
+    for (const state of widgetBuffer) {
+        topologicalSort(state.id);
+    }
+
+    for (const state of sortedWidgets) {
+        const isRoot = rootWidgets.some(w => w.id === state.id);
 
         if (isRoot) {
-          if (coords) {
-            state.x = (state.x || 0) + offsetX;
-            state.y = (state.y || 0) + offsetY;
-          }
-          delete state.parent;
+            if (coords) {
+                state.x = (state.x || 0) + offsetX;
+                state.y = (state.y || 0) + offsetY;
+            }
+            delete state.parent;
         }
 
-        if (state.type === 'card' && !widgetBuffer.some(w => w.id === state.deck) && !widgets.has(state.deck)) {
-          console.error(`Widget ${state.id} references a deck that is not in the buffer and is not already in the room. It will not be loaded.`);
-        } else {
-          const newId = await addWidgetLocal(state);
-          if (isRoot) {
+        if (state.type === 'card' && state.deck && !widgetBuffer.some(w => w.id === state.deck) && !widgets.has(state.deck)) {
+            console.error(`Widget ${state.id} references a deck ${state.deck} that is not in the buffer and is not already in the room. It will not be loaded.`);
+            continue;
+        }
+
+        const newId = await addWidgetLocal(state);
+        if (isRoot) {
             newRootWidgetIds.push(newId);
-          }
         }
-      }
-    };
-
-    await processWidgets(others);
-    await processWidgets(cards);
+    }
 
     batchEnd();
     return newRootWidgetIds;
