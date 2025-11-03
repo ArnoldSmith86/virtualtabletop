@@ -235,7 +235,8 @@ class GameSettingsModule extends SidebarModule {
     p1.textContent = 'You can add custom CSS to your room. This is an advanced feature and should be used with care.';
     target.append(p1);
 
-    const currentCss = getCurrentGameSettings()?.globalCss || '';
+    const gameSettings = getCurrentGameSettings();
+    const currentCss = gameSettings ? gameSettings.globalCss : '';
     const textarea = document.createElement('textarea');
     textarea.value = currentCss;
     textarea.spellcheck = false;
@@ -292,7 +293,8 @@ class GameSettingsModule extends SidebarModule {
     target.innerHTML = '';
     this.addHeader('Game Settings');
 
-    if (Object.keys(getCurrentGameSettings()?.legacyModes || {}).length > 0) {
+    const gameSettings = getCurrentGameSettings();
+    if (Object.keys(gameSettings ? gameSettings.legacyModes : {}).length > 0) {
       this.addSubHeader('Legacy Modes');
       const p1 = document.createElement('p');
       p1.textContent = 'We try our best not to break existing games, but some bugs can only be fixed by changing game behavior.';
