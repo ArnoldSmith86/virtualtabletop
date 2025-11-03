@@ -871,25 +871,28 @@ class WidgetsModule extends SidebarModule {
 
     const newIds = new Set();
     for (const widget of widgetBuffer) {
-      // Find the base name by removing any trailing number and optional underscore
-      const baseName = widget.id.replace(/_?\d+$/, '');
-      let i = 0;
+      let newId = widget.id;
+      // If the widget ID already exists, find a new one.
+      if (widgets.has(newId) || newIds.has(newId)) {
+        // Find the base name by removing any trailing number and optional underscore
+        const baseName = widget.id.replace(/_?\d+$/, '');
+        let i = 0;
 
-      // Find the highest existing number for this baseName among ALL widgets (in room and being added)
-      for (const existingId of [...widgets.keys(), ...newIds]) {
-          if (existingId.startsWith(baseName)) {
-              const numStr = existingId.substring(baseName.length);
-              if (/^\d+$/.test(numStr)) {
-                  i = Math.max(i, parseInt(numStr, 10));
-              }
-          }
+        // Find the highest existing number for this baseName among ALL widgets (in room and being added)
+        for (const existingId of [...widgets.keys(), ...newIds]) {
+            if (existingId.startsWith(baseName)) {
+                const numStr = existingId.substring(baseName.length);
+                if (/^\d+$/.test(numStr)) {
+                    i = Math.max(i, parseInt(numStr, 10));
+                }
+            }
+        }
+        
+        do {
+          i++;
+          newId = `${baseName}${i}`;
+        } while (widgets.has(newId) || newIds.has(newId));
       }
-      
-      let newId;
-      do {
-        i++;
-        newId = `${baseName}${i}`;
-      } while (widgets.has(newId) || newIds.has(newId));
       idMap[widget.id] = newId;
       newIds.add(newId);
     }
