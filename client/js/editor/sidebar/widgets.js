@@ -1,9 +1,46 @@
 function deepReplace(obj, idMap) {
+  // Primitives and nulls can't be recursed into.
+  if (typeof obj !== 'object' || obj === null) {
+    return;
+  }
+
+  // If it's an array, recurse on each item.
+  if (Array.isArray(obj)) {
+    for (let i = 0; i < obj.length; i++) {
+      const item = obj[i];
+      if (typeof item === 'string' && idMap[item]) {
+        obj[i] = idMap[item]; // Replace string value if it's an ID
+      } else {
+        deepReplace(item, idMap); // Recurse if it's an object/array
+      }
+    }
+    return;
+  }
+
+  // It's an object. First, collect keys that need to be renamed.
+  const keysToReplace = [];
   for (const key in obj) {
-    if (typeof obj[key] === 'string' && idMap[obj[key]]) {
-      obj[key] = idMap[obj[key]];
-    } else if (typeof obj[key] === 'object' && obj[key] !== null) {
-      deepReplace(obj[key], idMap);
+    if (Object.prototype.hasOwnProperty.call(obj, key) && idMap[key]) {
+      keysToReplace.push(key);
+    }
+  }
+
+  // Rename the keys.
+  for (const oldKey of keysToReplace) {
+    const newKey = idMap[oldKey];
+    obj[newKey] = obj[oldKey];
+    delete obj[oldKey];
+  }
+
+  // Now, recurse on all values.
+  for (const key in obj) {
+    if (Object.prototype.hasOwnProperty.call(obj, key)) {
+      const value = obj[key];
+      if (typeof value === 'string' && idMap[value]) {
+        obj[key] = idMap[value]; // Replace string value if it's an ID
+      } else {
+        deepReplace(value, idMap); // Recurse if it's an object/array
+      }
     }
   }
 }
