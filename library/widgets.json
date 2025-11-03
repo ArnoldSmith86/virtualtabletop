@@ -2997,7 +2997,6 @@
               "collection": "numSeats",
               "variable": "numSeats"
             },
-            "var numSeats = ${numSeats} + 1",
             {
               "func": "SET",
               "property": "index",
@@ -3079,7 +3078,6 @@
               "collection": "numSeats",
               "variable": "numSeats"
             },
-            "var numSeats = ${numSeats} + 1",
             {
               "func": "SET",
               "property": "index",
