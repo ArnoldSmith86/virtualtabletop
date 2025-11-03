@@ -668,7 +668,7 @@ onLoad(function() {
 
     const style = document.createElement('style');
     style.id = 'gameSettingsCss';
-    style.textContent = data.meta.gameSettings?.cursorCss || '';
+    style.textContent = data.meta.gameSettings.cursorCss || '';
     document.head.append(style);
   });
 });
