@@ -18,10 +18,6 @@ class Card extends BasicWidget {
     this.deck = null;
   }
 
-  get(property) {
-    return Widget.prototype.get.call(this, property);
-  }
-
   applyDeltaToDOM(delta) {
     if(delta.deck !== undefined) {
       if(this.deck) {
@@ -48,7 +44,10 @@ class Card extends BasicWidget {
     }
 
     if (this.deck && (delta.deck !== undefined || delta.cardType !== undefined)) {
-        delta.faces = this.generateFaces();
+        this.state.faces = this.generateFaces();
+        delta.html = this.state.faces[this.getActiveFace()].html;
+    } else if (delta.activeFace !== undefined) {
+        delta.html = this.state.faces[this.getActiveFace()].html;
     }
 
     super.applyDeltaToDOM(delta);
@@ -86,7 +85,7 @@ class Card extends BasicWidget {
   }
 
   getActiveFace() {
-    const face = +this.get('activeFace');
+    const face = +(this.state.activeFace !== undefined ? this.state.activeFace : this.defaults.activeFace);
     const count = this.getFaceCount();
     return (face % count + count) % count;
   }
@@ -179,11 +178,13 @@ class Card extends BasicWidget {
 
   getDefaultValue(property) {
     if(this.deck && property != 'cardType' && property != 'activeFace') {
-      const d = this.deck.cardPropertyGet(this.get('cardType'), this.get('activeFace'), property);
+      const cardType = this.state.cardType !== undefined ? this.state.cardType : this.defaults.cardType;
+      const d = this.deck.cardPropertyGet(cardType, this.getActiveFace(), property);
       if(d !== undefined)
         return d;
     }
-    return super.getDefaultValue(property);
+    // We don't want to call super.getDefaultValue because BasicWidget's get() will cause infinite recursion
+    return this.defaults[property];
   }
 
   getFaceCount() {
