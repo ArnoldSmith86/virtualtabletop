@@ -45,8 +45,9 @@ class Card extends BasicWidget {
 
     if (this.deck && (delta.deck !== undefined || delta.cardType !== undefined)) {
         this.state.faces = this.generateFaces();
-        delta.html = this.state.faces[this.getActiveFace()].html;
-    } else if (delta.activeFace !== undefined) {
+    }
+
+    if (this.state.faces && (delta.deck !== undefined || delta.cardType !== undefined || delta.activeFace !== undefined)) {
         delta.html = this.state.faces[this.getActiveFace()].html;
     }
 
@@ -87,6 +88,7 @@ class Card extends BasicWidget {
   getActiveFace() {
     const face = +(this.state.activeFace !== undefined ? this.state.activeFace : this.defaults.activeFace);
     const count = this.getFaceCount();
+    if (count === 0) return 0;
     return (face % count + count) % count;
   }
 
@@ -188,6 +190,7 @@ class Card extends BasicWidget {
   }
 
   getFaceCount() {
+    if (!this.deck) return 0;
     const faceTemplates = this.deck.get('faceTemplates');
     if(Array.isArray(faceTemplates))
       return faceTemplates.length;
