@@ -165,30 +165,38 @@ class GameSettingsModule extends SidebarModule {
       let css = '';
       if (select.value === 'translucent') {
         css = `
-          
+        .cursor {
+          opacity: 0.3;
+        }
+        .cursor.pressed {
+          background-color: var(--playerColor);
+        }
+        .cursor::before {
+          display: none;
+        }
         `;
       } else if (select.value === 'solid-no-name') {
         css = `
-        #playerCursors {
-          --cursorActiveOpacity: 1;
-          --cursorPressedOpacity: 1;
-          --cursorActiveDuration: 9999;
+        .cursor {
+          opacity: 1;
         }
         .cursor.pressed {
-          border: 4px solid var(--playerColor);
+          background-color: var(--playerColor);
+        }
+        .cursor::before {
+          display: none;
         }
         `;
       } else if (select.value === 'solid-player-name') {
         css = `
-        #playerCursors {
-          --cursorActiveOpacity: 1;
-          --cursorPressedOpacity: 1;
-          --cursorActiveDuration: 9999;
+        .cursor {
+          opacity: 1;
         }
         .cursor.pressed {
-          border: 4px solid var(--playerColor);
+          background-color: var(--playerColor);
         }
         .cursor::before {
+          display: block;
           content: attr(data-player);
           position: relative;
           top: -5px;
@@ -201,6 +209,12 @@ class GameSettingsModule extends SidebarModule {
       } else if (select.value === 'invisible') {
         css = `
         .cursor {
+          opacity: 0;
+        }
+        .cursor.pressed {
+          background-color: var(--playerColor);
+        }
+        .cursor::before {
           display: none;
         }
         `;
