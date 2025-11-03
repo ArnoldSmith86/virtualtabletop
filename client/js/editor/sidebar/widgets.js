@@ -268,12 +268,15 @@ class WidgetsModule extends SidebarModule {
     const groupsToRender = [...groups];
 
     if (source === 'local') {
-      const sortBy = this.localSort?.by;
+      const sortBy = this.localSort ? this.localSort.by : undefined;
       if (sortBy === 'type') {
       } else {
       const getOldestTimestamp = (group) =>
-        group.widgets?.length
-          ? Math.min(...group.widgets.map((id) => parseLocalTimestamp(widgets.find((w) => w.id === id)?.id || '')))
+        (group.widgets && group.widgets.length)
+          ? Math.min(...group.widgets.map((id) => {
+            const widget = widgets.find((w) => w.id === id);
+            return parseLocalTimestamp(widget ? (widget.id || '') : '');
+          }))
           : Number.POSITIVE_INFINITY;
 
       groupsToRender.sort((ga, gb) => {
@@ -286,7 +289,7 @@ class WidgetsModule extends SidebarModule {
         const secondarySort = (sortBy === 'time') ? nameA.localeCompare(nameB) : oldestA - oldestB;
 
         const cmp = primarySort || secondarySort;
-        return (this.localSort?.dir === 'desc') ? -cmp : cmp;
+        return (this.localSort && this.localSort.dir === 'desc') ? -cmp : cmp;
       });
       }
     }
