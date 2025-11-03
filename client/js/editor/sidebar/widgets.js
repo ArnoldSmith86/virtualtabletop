@@ -1,3 +1,13 @@
+function deepReplace(obj, idMap) {
+  for (const key in obj) {
+    if (typeof obj[key] === 'string' && idMap[obj[key]]) {
+      obj[key] = idMap[obj[key]];
+    } else if (typeof obj[key] === 'object' && obj[key] !== null) {
+      deepReplace(obj[key], idMap);
+    }
+  }
+}
+
 class WidgetsModule extends SidebarModule {
   constructor() {
     super('widgets', 'Widgets', 'Manage widgets.');
@@ -901,12 +911,7 @@ class WidgetsModule extends SidebarModule {
     }
 
     for (const widget of widgetBuffer) {
-      if (widget.parent && idMap[widget.parent]) {
-        widget.parent = idMap[widget.parent];
-      }
-      if (widget.type === 'card' && widget.deck && idMap[widget.deck]) {
-        widget.deck = idMap[widget.deck];
-      }
+      deepReplace(widget, idMap);
     }
     batchStart();
     setDeltaCause(`${getPlayerDetails().playerName} loaded widgets from the widget buffer in editor`);
