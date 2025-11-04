@@ -166,7 +166,8 @@ class GameSettingsModule extends SidebarModule {
       if (select.value === 'translucent') {
         css = `
         .cursor {
-          opacity: 0.3;
+          --cursorActiveOpacity: 0.3;
+          --cursorPressedOpacity: 0.3;
         }
         .cursor.pressed {
           background-color: var(--playerColor);
@@ -178,7 +179,8 @@ class GameSettingsModule extends SidebarModule {
       } else if (select.value === 'solid-no-name') {
         css = `
         .cursor {
-          opacity: 1;
+          --cursorActiveOpacity: 1;
+          --cursorPressedOpacity: 1;
         }
         .cursor.pressed {
           background-color: var(--playerColor);
@@ -190,7 +192,8 @@ class GameSettingsModule extends SidebarModule {
       } else if (select.value === 'solid-player-name') {
         css = `
         .cursor {
-          opacity: 1;
+          --cursorActiveOpacity: 1;
+          --cursorPressedOpacity: 1;
         }
         .cursor.pressed {
           background-color: var(--playerColor);
@@ -209,7 +212,8 @@ class GameSettingsModule extends SidebarModule {
       } else if (select.value === 'invisible') {
         css = `
         .cursor {
-          opacity: 0;
+          --cursorActiveOpacity: 0;
+          --cursorPressedOpacity: 0;
         }
         .cursor.pressed {
           background-color: var(--playerColor);
