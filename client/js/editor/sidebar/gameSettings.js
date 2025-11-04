@@ -253,10 +253,14 @@ class GameSettingsModule extends SidebarModule {
     `;
     target.append(textarea);
 
+    let debounceTimeout;
     textarea.addEventListener('input', () => {
-      const gameSettings = getCurrentGameSettings();
-      gameSettings.globalCss = textarea.value;
-      toServer('setGameSettings', gameSettings);
+      clearTimeout(debounceTimeout);
+      debounceTimeout = setTimeout(() => {
+        const gameSettings = getCurrentGameSettings();
+        gameSettings.globalCss = textarea.value;
+        toServer('setGameSettings', gameSettings);
+      }, 500);
     });
   }
 
@@ -312,7 +316,7 @@ class GameSettingsModule extends SidebarModule {
       p3.textContent = 'We highly recommended you build and test your games with all of these settings disabled (boxes unchecked) to avoid obscure bugs. If you are working on a game and these settings are checked, review the VTT wiki documentation before making changes to routines. If there are no checkboxes below, legacy mode is not applicable for your game.';
       target.append(p3);
     }
-
+ 
     this.addCheckbox('Convert numeric var parameters to numbers', 'convertNumericVarParametersToNumbers', `
       <b>Problem</b>: Whenever you used a string in a var expression that consisted of only digits, it was converted to a number.
       <br><br>
