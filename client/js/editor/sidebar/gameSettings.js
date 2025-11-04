@@ -154,7 +154,7 @@ class GameSettingsModule extends SidebarModule {
     }
 
     const gameSettings = getCurrentGameSettings();
-    select.value = gameSettings[name] || 'translucent';
+    select.value = gameSettings[name] || 'default';
 
     tile.append(select);
 
@@ -163,68 +163,76 @@ class GameSettingsModule extends SidebarModule {
       gameSettings[name] = select.value;
 
       let css = '';
-      if (select.value === 'translucent') {
+      const duration = select.value.includes('noFade') ? 9999 : 100;
+
+      if (select.value === 'default') {
+        css = '';
+      } else if (select.value.includes('translucent')) {
         css = `
-        .cursor {
-          --cursorActiveOpacity: 0.3;
-          --cursorPressedOpacity: 0.3;
-        }
-        .cursor.pressed {
-          background-color: var(--playerColor);
-        }
-        .cursor::before {
-          display: none;
-        }
+          .cursor {
+            --cursorActiveOpacity: 0.3;
+            --cursorPressedOpacity: 0.3;
+            --cursorActiveDuration: ${duration}s;
+          }
+          .cursor.pressed {
+            background-color: var(--playerColor);
+          }
+          .cursor::before {
+            display: none;
+          }
         `;
-      } else if (select.value === 'solid-no-name') {
+      } else if (select.value.includes('solid-no-name')) {
         css = `
-        .cursor {
-          --cursorActiveOpacity: 1;
-          --cursorPressedOpacity: 1;
-        }
-        .cursor.pressed {
-          background-color: var(--playerColor);
-        }
-        .cursor::before {
-          display: none;
-        }
+          .cursor {
+            --cursorActiveOpacity: 1;
+            --cursorPressedOpacity: 1;
+            --cursorActiveDuration: ${duration}s;
+          }
+          .cursor.pressed {
+            background-color: var(--playerColor);
+          }
+          .cursor::before {
+            display: none;
+          }
         `;
-      } else if (select.value === 'solid-player-name') {
+      } else if (select.value.includes('solid-player-name')) {
         css = `
-        .cursor {
-          --cursorActiveOpacity: 1;
-          --cursorPressedOpacity: 1;
-        }
-        .cursor.pressed {
-          background-color: var(--playerColor);
-        }
-        .cursor::before {
-          display: block;
-          content: attr(data-player);
-          position: relative;
-          top: -5px;
-          left: 19px;
-          font-size: 15px;
-          color: var(--playerColor);
-          white-space: nowrap;
-        }
+          .cursor {
+            --cursorActiveOpacity: 1;
+            --cursorPressedOpacity: 1;
+            --cursorActiveDuration: ${duration}s;
+          }
+          .cursor.pressed {
+            background-color: var(--playerColor);
+          }
+          .cursor::before {
+            display: block;
+            content: attr(data-player);
+            position: relative;
+            top: -5px;
+            left: 19px;
+            font-size: 15px;
+            color: var(--playerColor);
+            white-space: nowrap;
+          }
         `;
       } else if (select.value === 'invisible') {
         css = `
-        .cursor {
-          --cursorActiveOpacity: 0;
-          --cursorPressedOpacity: 0;
-        }
-        .cursor.pressed {
-          background-color: var(--playerColor);
-        }
-        .cursor::before {
-          display: none;
-        }
+          .cursor {
+            --cursorActiveOpacity: 0;
+            --cursorPressedOpacity: 0;
+          }
+          .cursor.pressed {
+            background-color: var(--playerColor);
+          }
+          .cursor::before {
+            display: none;
+          }
         `;
       }
+
       gameSettings.cursorCss = css;
-      $('#gameSettingsCss').textContent = css;
+      document.querySelectorAll('style#gameSettingsCss').forEach(el => el.textContent = css);
 
       toServer('setGameSettings', gameSettings);
     });
@@ -343,9 +351,13 @@ class GameSettingsModule extends SidebarModule {
       `, target);
 
    this.addDropdown('Cursor Visibility', 'cursorVisibility', 'Changes the visibility of the cursor in the room.', [
-     { value: 'translucent', text: 'Translucent (default)' },
-     { value: 'solid-no-name', text: 'Solid' },
-     { value: 'solid-player-name', text: 'Solid + Player Name' },
+     { value: 'default', text: 'Default (Can modify in JSON)' },
+     { value: 'translucent-fade', text: 'Translucent (fadeout)' },
+     { value: 'solid-no-name-fade', text: 'Solid (fadeout)' },
+     { value: 'solid-player-name-fade', text: 'Solid + Player Name (fadeout)' },
+     { value: 'translucent-noFade', text: 'Translucent (indefinite)' },
+     { value: 'solid-no-name-noFade', text: 'Solid (indefinite)' },
+     { value: 'solid-player-name-noFade', text: 'Solid + Player Name (indefinite)' },
      { value: 'invisible', text: 'Invisible' },
    ], target);
 
