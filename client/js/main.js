@@ -666,10 +666,23 @@ onLoad(function() {
     document.title = `${document.location.pathname.split('/').pop()} - ${tabSuffix}`;
     $('#playerInviteURL').innerText = location.href;
 
-    const style = document.createElement('style');
-    style.id = 'gameSettingsCss';
+    // Ensure a single reusable style element for game settings CSS
+    // Avoid appending multiple <style id="gameSettingsCss"> which would override updates
+    let style = document.getElementById('gameSettingsCss');
+    if(!style) {
+      style = document.createElement('style');
+      style.id = 'gameSettingsCss';
+      document.head.append(style);
+    }
     style.textContent = data.meta.gameSettings.cursorCss || '';
-    document.head.append(style);
+
+    // Clean up any accidental duplicates from older sessions
+    const duplicates = document.querySelectorAll('style#gameSettingsCss');
+    if(duplicates.length > 1) {
+      // Keep the first (the one getElementById would return) and remove the rest
+      for(let i = 1; i < duplicates.length; i++)
+        duplicates[i].remove();
+    }
   });
 });
 
