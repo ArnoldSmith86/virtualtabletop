@@ -231,16 +231,24 @@
   font-family: "Material Symbols";
   font-style: normal;
   font-weight: 400;
-  src: url("i/fonts/MaterialSymbols-Outlined-Fill.woff2") format("woff2");
+  src: url("i/fonts/MaterialSymbols-Outlined.woff2") format("woff2");
   font-display: block;
+  font-variation-settings: 'FILL' 1, /* Sets the icon to filled */
+  'wght' 400,
+  'GRAD' 0,
+  'opsz' 24;
 }
 
 @font-face {
   font-family: "Material Symbols NoFill";
   font-style: normal;
   font-weight: 400;
-  src: url("i/fonts/MaterialSymbols-Outlined-NoFill.woff2") format("woff2");
+  src: url("i/fonts/MaterialSymbols-Outlined.woff2") format("woff2");
   font-display: block;
+  font-variation-settings: 'FILL' 0, /* Sets the icon to filled */
+  'wght' 400,
+  'GRAD' 0,
+  'opsz' 24;
 }
 
 

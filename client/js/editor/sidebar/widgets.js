@@ -42,6 +42,9 @@ function deepReplace(obj, idMap) {
 class WidgetsModule extends SidebarModule {
   constructor() {
     super('widgets', 'Widgets', 'Manage widgets.');
+    this.viewMode = localStorage.getItem('vtt-widget-view-mode') || 'list';
+    this.listViewButton = null;
+    this.gridViewButton = null;
   }
 
   onSelectionChangedWhileActive(newSelection) {
@@ -62,17 +65,36 @@ class WidgetsModule extends SidebarModule {
       </div>
       <div class="buttonBar" style="display: flex; align-items: center; margin-bottom: 10px;">
         <input type="text" id="widgetFilter" placeholder="Filter..." style="flex-grow: 1;flex-shrink: 1;margin-right: 5px;">
+        <div class="segmented-control">
+          <button id="listViewButton" class="sidebarButton active" icon="list"><span>List</span></button>
+          <button id="gridViewButton" class="sidebarButton" icon="grid_view"><span>Grid</span></button>
+        </div>
         <button icon="bookmark_add" id="saveWidgetsToBuffer" class="sidebarButton"><span>Save selected widgets</span></button>
         <button icon="edit" id="editWidgetsButton" class="sidebarButton"><span>Edit widgets</span></button>
       </div>
     `);
 
     $('#widgetFilter', d).onkeyup = e => this.renderWidgetBuffer(e.target.value);
+    this.listViewButton = $('#listViewButton', d);
+    this.gridViewButton = $('#gridViewButton', d);
+    this.listViewButton.onclick = () => {
+      if (this.viewMode === 'list') return;
+      this.viewMode = 'list';
+      localStorage.setItem('vtt-widget-view-mode', 'list');
+      this.renderWidgetBuffer($('#widgetFilter', d).value);
+    };
+    this.gridViewButton.onclick = () => {
+      if (this.viewMode === 'grid') return;
+      this.viewMode = 'grid';
+      localStorage.setItem('vtt-widget-view-mode', 'grid');
+      this.renderWidgetBuffer($('#widgetFilter', d).value);
+    };
     $('#editWidgetsButton', d).onclick = e => {
       this.currentContents.classList.toggle('editing');
       e.currentTarget.classList.toggle('active');
       if (this.currentContents.classList.contains('editing')) {
         this.currentContents.classList.add('editing-widgets');
+        this.viewMode = 'list';
       } else {
         this.currentContents.classList.remove('editing-widgets');
       }
@@ -196,7 +218,7 @@ class WidgetsModule extends SidebarModule {
       if (id.startsWith('local-')) {
         const parts = id.split('-');
         if (parts.length >= 3) {
-          const ts = parseInt(parts[1], 10);
+          const ts = parseInt(parts, 10);
           return isNaN(ts) ? 0 : ts;
         }
       }
@@ -242,24 +264,9 @@ class WidgetsModule extends SidebarModule {
       return [...arr].sort(compare);
     };
 
-    const renderWidget = (state) => {
-      const widgetTypes = getWidgetTypesString(state);
-      const hasAddToRoomRoutine = state.widgets.some(w => w.addToRoomRoutine);
-      return `
-            <li data-id="${state.id}" data-source="${source}" draggable="${isEditing}">
-                <span class="drag-handle"></span>
-                <div class="widget-info">
-                    <input value="${html(state.name || state.id)}" readonly>
-                    <div class="widget-type">${widgetTypes}${hasAddToRoomRoutine ? '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" class="hasRoutine" fill="currentColor"><path d="M480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Zm-24 60v137q0 16 15 19.5t23-10.5l121-237q5-10-1-19.5t-17-9.5h-87v-139q0-16-15-20t-23 10L346-449q-5 11 .5 20t16.5 9h93Z"/></svg>' : ''}${state.unique ? '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" class="isUnique" fill="currentColor"><path d="M760-360q12-12 28.5-12t28.5 12l63 64q12 12 12 28t-12 28q-12 12-28 12t-28-12l-64-63q-12-12-12-28.5t12-28.5Zm40-480q12 12 12 28.5T800-783l-63 63q-12 12-28.5 12T680-720q-12-12-12-28.5t12-28.5l64-63q12-12 28-12t28 12Zm-640 0q12-12 28.5-12t28.5 12l63 64q12 12 12 28t-12 28q-12 12-28.5 12T223-720l-63-63q-12-12-12-28.5t12-28.5Zm40 480q12 12 12 28.5T200-303l-63 63q-12 12-28.5 12T80-240q-12-12-12-28.5T80-297l64-63q12-12 28-12t28 12Zm154 73 126-76 126 77-33-144 111-96-146-13-58-136-58 135-146 13 111 97-33 143Zm126-194Zm0 212L314-169q-11 7-23 6t-21-8q-9-7-14-17.5t-2-23.5l44-189-147-127q-10-9-12.5-20.5T140-571q4-11 12-18t22-9l194-17 75-178q5-12 15.5-18t21.5-6q11 0 21.5 6t15.5 18l75 178 194 17q14 2 22 9t12 18q4 11 1.5 22.5T809-528L662-401l44 189q3 13-2 23.5T690-171q-9 7-21 8t-23-6L480-269Z"/></svg>' : ''}</div>
-                </div>
-                <div class="actions">
-                    <label class="unique-widget-label"><input type="checkbox" ${state.unique ? 'checked' : ''}> Unique</label>
-                    <button icon="add" class="sidebarButton"><span>Add widget to room</span></button>
-                    <button icon="download" class="sidebarButton download-json"><span>Download</span></button>
-                    <button icon="delete" class="sidebarButton"><span>Delete widget</span></button>
-                </div>
-            </li>`;
-    };
+    const renderWidget = this.viewMode === 'grid'
+      ? (state, source, isEditing) => this.renderGridWidget(state, source, isEditing)
+      : (state, source, isEditing) => this.renderListWidget(state, source, isEditing);
 
     let list = '';
     const groupedWidgetIds = new Set(groups.flatMap(g => g.widgets));
@@ -307,25 +314,43 @@ class WidgetsModule extends SidebarModule {
       } else {
         isCollapsed = filter ? false : group.collapsed;
       }
-      list += `
+      if (this.viewMode === 'grid') {
+        list += `
           <div class="widget-group" data-group-name="${html(group.name)}" data-source="${source}">
-              <div class="widget-group-header" draggable="${isEditing}">
-                  <span class="drag-handle"></span>
-                  <span class="collapse-arrow">${isCollapsed ? '▶' : '▼'}</span>
+              <div class="widget-group-header">
+                  <span class="collapse-arrow material-symbols">${isCollapsed ? 'expand_less' : 'expand_more'}</span>
                   <input class="group-name-input" value="${html(group.name)}" readonly>
               </div>
-              <ul class="widget-group-body" ${isCollapsed ? 'style="display: none;"' : ''}>
-                  ${filteredGroupWidgets.map(renderWidget).join('')}
-              </ul>
+              <div class="widget-grid" ${isCollapsed ? 'style="display: none;"' : ''}>
+                  ${filteredGroupWidgets.map(state => renderWidget(state, source, isEditing)).join('')}
+              </div>
           </div>
-      `;
+        `;
+      } else {
+        list += `
+            <div class="widget-group" data-group-name="${html(group.name)}" data-source="${source}">
+                <div class="widget-group-header" draggable="${isEditing}">
+                    <span class="drag-handle"></span>
+                    <span class="collapse-arrow material-symbols">${isCollapsed ? 'expand_less' : 'expand_more'}</span>
+                    <input class="group-name-input" value="${html(group.name)}" readonly>
+                </div>
+                <ul class="widget-group-body" ${isCollapsed ? 'style="display: none;"' : ''}>
+                    ${filteredGroupWidgets.map(state => renderWidget(state, source, isEditing)).join('')}
+                </ul>
+            </div>
+        `;
+      }
     }
 
     const ungroupedWidgets = widgets.filter(w => !groupedWidgetIds.has(w.id));
     const filteredUngroupedWidgets = maybeSort(filterWidgets(ungroupedWidgets));
 
     if (filteredUngroupedWidgets.length > 0) {
-      list += `<ul>${filteredUngroupedWidgets.map(renderWidget).join('')}</ul>`;
+      if (this.viewMode === 'grid') {
+        list += `<div class="widget-grid">${filteredUngroupedWidgets.map(state => renderWidget(state, source, isEditing)).join('')}</div>`;
+      } else {
+        list += `<ul>${filteredUngroupedWidgets.map(state => renderWidget(state, source, isEditing)).join('')}</ul>`;
+      }
     }
 
     if (source === 'local' || config.allowPublicLibraryEdits) {
@@ -354,8 +379,8 @@ class WidgetsModule extends SidebarModule {
       const active = sortState.by === by;
       const isDesc = active && sortState.dir === 'desc';
       return `
-        <button class="sidebarButton sort-widgets" data-by="${by}" aria-label="Sort by ${label}"
-                style="display:inline-flex;flex-direction:column;align-items:center;gap:2px;line-height:1;margin:2px 6px;padding:6px 10px;border-radius:6px;background:${active ? 'var(--VTTblueDark)' : 'transparent'};color:#fff;">
+        <button class="sidebarButton sort-widgets ${active ? 'selected' : ''}" data-by="${by}" aria-label="Sort by ${label}"
+            style="background:;color:#fff;">
           <div class="sort-label" style="font-size:10px;">${label}</div>
           <i class="material-symbols sort-glyph" style="font-size:18px;transform:${isDesc ? 'scaleY(-1)' : 'none'};">sort</i>
         </button>`;
@@ -363,10 +388,11 @@ class WidgetsModule extends SidebarModule {
 
     let serverListHTML = '';
     if (serverWidgets.length > 0) {
+      const isServerListCollapsed = localStorage.getItem('vtt-widget-list-collapsed-server') === 'true';
       serverListHTML = `
-        <div class="widget-list-container">
+        <div class="widget-list-container ${isServerListCollapsed ? 'collapsed' : ''}" data-list-key="server">
           <div class="widget-list-header">
-            <span class="collapse-arrow">▼</span>
+          <span class="collapse-arrow material-symbols">${isServerListCollapsed ? 'expand_less' : 'expand_more'}</span>
             <span class="widget-list-header-text">On The Server</span>
             <div class="widget-list-actions">
               ${config.allowPublicLibraryEdits ? `<button icon="upload" class="sidebarButton import-widgets" data-source="server"><span>Import Server-Wide</span></button>` : ''}
@@ -378,16 +404,19 @@ class WidgetsModule extends SidebarModule {
       `;
     }
 
+    const isLocalListCollapsed = localStorage.getItem('vtt-widget-list-collapsed-local') === 'true';
     this.currentContents.innerHTML = `
       ${serverListHTML}
-      <div class="widget-list-container">
+      <div class="widget-list-container ${isLocalListCollapsed ? 'collapsed' : ''}" data-list-key="local">
         <div class="widget-list-header">
-          <span class="collapse-arrow">▼</span>
+          <span class="collapse-arrow material-symbols">${isLocalListCollapsed ? 'expand_less' : 'expand_more'}</span>
           <span class="widget-list-header-text">In Local Storage</span>
           <div class="widget-list-actions">
-            ${createSortButton('time', 'time', sortState)}
-            ${createSortButton('id', 'name', sortState)}
-            ${createSortButton('type', 'type', sortState)}
+            <div class="segmented-control sort-control">
+              ${createSortButton('time', 'time', sortState)}
+              ${createSortButton('id', 'name', sortState)}
+              ${createSortButton('type', 'type', sortState)}
+            </div>
             <button icon="upload" class="sidebarButton import-widgets" data-source="local"><span>Import to Local Storage</span></button>
             <button icon="download" class="sidebarButton export-widgets" data-source="local"><span>Download Custom Widgets</span></button>
           </div>
@@ -408,12 +437,25 @@ class WidgetsModule extends SidebarModule {
       }
     } catch (_) {}
 
+    if (this.viewMode === 'grid') {
+      this.gridViewButton.classList.add('active');
+      this.listViewButton.classList.remove('active');
+      this.currentContents.classList.add('grid-view');
+    } else {
+      this.listViewButton.classList.add('active');
+      this.gridViewButton.classList.remove('active');
+      this.currentContents.classList.remove('grid-view');
+    }
+
     for (const header of this.currentContents.querySelectorAll('.widget-list-header')) {
       header.onclick = e => {
         const container = header.parentElement;
-        container.classList.toggle('collapsed');
+        const listKey = container.dataset.listKey;
+        if (!listKey) return;
+        const isCollapsed = container.classList.toggle('collapsed');
+        localStorage.setItem(`vtt-widget-list-collapsed-${listKey}`, isCollapsed);
         const arrow = header.querySelector('.collapse-arrow');
-        arrow.textContent = container.classList.contains('collapsed') ? '▶' : '▼';
+        arrow.textContent = isCollapsed ? 'expand_less' : 'expand_more';
       };
     }
 
@@ -443,7 +485,7 @@ class WidgetsModule extends SidebarModule {
       const source = item.dataset.source;
       const allWidgets = source === 'server' ? serverWidgets : localWidgets;
       const state = allWidgets.find(w => w.id === widgetId);
-      if (!state) return;
+      if (!state) continue;
       if (source === 'server' && !config.allowPublicLibraryEdits) {
         item.classList.add('readonly');
       }
@@ -680,9 +722,172 @@ class WidgetsModule extends SidebarModule {
         state.unique = e.target.checked;
         this.updateWidget(state, source);
       };
+      item.querySelector('.preview-widget-label').style.display = isEditing ? 'inline-block' : 'none';
+      const previewInput = item.querySelector('.preview-url-input');
+      previewInput.onchange = e => {
+        if (source === 'server' && !config.allowPublicLibraryEdits) return;
+        state.preview = e.target.value;
+        this.updateWidget(state, source);
+        const previewContainer = item.querySelector('.widget-preview');
+        if (previewContainer) {
+          previewContainer.innerHTML = state.preview ? `<img src="${state.preview}" style="max-width: 100%; max-height: 100%; object-fit: contain;">` : '';
+        }
+      };
     }
 
-    for (const list of this.currentContents.querySelectorAll('.widget-list')) {
+    for (const item of this.currentContents.querySelectorAll('.widget-grid-item')) {
+      const widgetId = item.dataset.id;
+      const source = item.dataset.source;
+      const allWidgets = source === 'server' ? serverWidgets : localWidgets;
+      const state = allWidgets.find(w => w.id === widgetId);
+      if (!state) continue;
+
+      item.draggable = true;
+
+      item.addEventListener('dragstart', e => {
+        e.dataTransfer.setData('text/plain', JSON.stringify({ id: widgetId, source }));
+        e.dataTransfer.effectAllowed = 'copy';
+
+        const widgetBuffer = JSON.parse(JSON.stringify(state.widgets));
+        if (!widgetBuffer || widgetBuffer.length === 0) return;
+
+        const previewContainer = document.createElement('div');
+        previewContainer.style.position = 'absolute';
+        previewContainer.style.left = '-9999px';
+
+        const idMap = new Map();
+        const tempWidgetInstances = new Map();
+        const cards = [];
+        const others = [];
+
+        for (const s of widgetBuffer) {
+          if (s.type === 'card') {
+            cards.push(s);
+          } else {
+            others.push(s);
+          }
+        }
+
+        const widgetMap = new Map(widgetBuffer.map(s => [s.id, s]));
+        const absolutePositions = new Map();
+
+        function calculateAbsolutePosition(widgetId) {
+          if (absolutePositions.has(widgetId)) {
+            return absolutePositions.get(widgetId);
+          }
+
+          const widget = widgetMap.get(widgetId);
+          if (!widget) {
+            return { x: 0, y: 0 };
+          }
+
+          if (!widget.parent || !widgetMap.has(widget.parent)) {
+            const pos = { x: widget.x || 0, y: widget.y || 0 };
+            absolutePositions.set(widgetId, pos);
+            return pos;
+          }
+
+          const parentPos = calculateAbsolutePosition(widget.parent);
+          const pos = {
+            x: parentPos.x + (widget.x || 0),
+            y: parentPos.y + (widget.y || 0)
+          };
+          absolutePositions.set(widgetId, pos);
+          return pos;
+        }
+
+        for (const widget of widgetBuffer) {
+          calculateAbsolutePosition(widget.id);
+        }
+
+        let minX = widgetBuffer.length > 0 ? Infinity : 0;
+        let minY = widgetBuffer.length > 0 ? Infinity : 0;
+
+        if (widgetBuffer.length > 0) {
+          for (const pos of absolutePositions.values()) {
+            minX = Math.min(minX, pos.x);
+            minY = Math.min(minY, pos.y);
+          }
+        }
+
+        const createInstances = (statesToProcess) => {
+          for (const s of statesToProcess) {
+            const tempId = `drag-preview-${Date.now()}-${Math.random()}`;
+            idMap.set(s.id, tempId);
+            let previewWidget;
+            switch (s.type) {
+              case 'button': previewWidget = new Button(tempId); break;
+              case 'canvas': previewWidget = new Canvas(tempId); break;
+              case 'card': previewWidget = new Card(tempId); break;
+              case 'deck': previewWidget = new Deck(tempId); break;
+              case 'dice': previewWidget = new Dice(tempId); break;
+              case 'holder': previewWidget = new Holder(tempId); break;
+              case 'label': previewWidget = new Label(tempId); break;
+              case 'pile': previewWidget = new Pile(tempId); break;
+              case 'scoreboard': previewWidget = new Scoreboard(tempId); break;
+              case 'seat': previewWidget = new Seat(tempId); break;
+              case 'spinner': previewWidget = new Spinner(tempId); break;
+              case 'timer': previewWidget = new Timer(tempId); break;
+              default: previewWidget = new BasicWidget(tempId); break;
+            }
+            previewWidget.domElement.style.transformOrigin = 'top left';
+            tempWidgetInstances.set(tempId, previewWidget);
+          }
+        };
+
+        const applyDeltasAndRender = (statesToProcess) => {
+          for (const s of statesToProcess) {
+            const tempId = idMap.get(s.id);
+            const previewWidget = tempWidgetInstances.get(tempId);
+            widgets.set(tempId, previewWidget);
+
+            const tempState = JSON.parse(JSON.stringify(s));
+            tempState.id = tempId;
+            if(!tempState.parent)
+              tempState.scale = (tempState.scale || 1) * getScale() * getZoomLevel();
+
+            const parentId = tempState.parent ? idMap.get(tempState.parent) : null;
+            if (parentId) {
+              tempState.parent = parentId;
+            } else {
+              tempState.x = (s.x || 0) - minX;
+              tempState.y = (s.y || 0) - minY;
+            }
+            if (tempState.deck) tempState.deck = idMap.get(tempState.deck);
+
+            previewWidget.applyInitialDelta(tempState);
+
+            if (!parentId) {
+              previewContainer.appendChild(previewWidget.domElement);
+            }
+          }
+        };
+
+        createInstances(others);
+        createInstances(cards);
+
+        applyDeltasAndRender(others);
+        applyDeltasAndRender(cards);
+
+        document.body.appendChild(previewContainer);
+        e.dataTransfer.setDragImage(previewContainer, 0, 0);
+
+        setTimeout(() => {
+          for (const tempId of tempWidgetInstances.keys()) {
+            widgets.delete(tempId);
+          }
+          document.body.removeChild(previewContainer);
+        }, 0);
+      });
+
+      item.addEventListener('dragend', e => {
+        item.classList.remove('dragging');
+      });
+
+      item.querySelector('.add-to-room-grid').onclick = e => window.placeWidget(state.id, source);
+    }
+
+    for (const list of this.currentContents.querySelectorAll('.widget-list, .widget-grid')) {
       list.addEventListener('dragover', e => {
         e.preventDefault();
         if (isEditing) {
@@ -870,6 +1075,44 @@ class WidgetsModule extends SidebarModule {
     }
   }
 
+  renderListWidget(state, source, isEditing) {
+    const getWidgetTypesString = (state) => {
+      return [...new Set(state.widgets.map(w => w.type || 'basic'))].join(', ');
+    };
+    const widgetTypes = getWidgetTypesString(state);
+    const hasAddToRoomRoutine = state.widgets.some(w => w.addToRoomRoutine);
+    return `
+          <li data-id="${state.id}" data-source="${source}" draggable="${isEditing}" style="display: flex; align-items: center; margin-bottom: 5px;">
+              <span class="drag-handle"></span>
+              <div class="widget-preview" style="width: 64px; height: 64px; flex-shrink: 0; margin-right: 10px; background-color: #222; border: 1px solid #555; display: flex; justify-content: center; align-items: center;">
+                ${state.preview ? `<img src="${state.preview}" style="max-width: 100%; max-height: 100%; object-fit: contain;">` : ''}
+              </div>
+              <div class="widget-info" style="flex-grow: 1;">
+                  <label class="name-widget-label widget-label"><span style="font-size: 10px; color: #ccc;">Name</span><input value="${html(state.name || state.id)}" readonly></label>
+                  <div class="widget-type">${widgetTypes}${hasAddToRoomRoutine ? '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" class="hasRoutine" fill="currentColor"><path d="M480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Zm-24 60v137q0 16 15 19.5t23-10.5l121-237q5-10-1-19.5t-17-9.5h-87v-139q0-16-15-20t-23 10L346-449q-5 11 .5 20t16.5 9h93Z"/></svg>' : ''}${state.unique ? '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" class="isUnique" fill="currentColor"><path d="M760-360q12-12 28.5-12t28.5 12l63 64q12 12 12 28t-12 28q-12 12-28 12t-28-12l-64-63q-12-12-12-28.5t12-28.5Zm40-480q12 12 12 28.5T800-783l-63 63q-12 12-28.5 12T680-720q-12-12-12-28.5t12-28.5l64-63q12-12 28-12t28 12Zm-640 0q12-12 28.5-12t28.5 12l63 64q12 12 12 28t-12 28q-12 12-28.5 12T223-720l-63-63q-12-12-12-28.5t12-28.5Zm40 480q12 12 12 28.5T200-303l-63 63q-12 12-28.5 12T80-240q-12-12-12-28.5T80-297l64-63q12-12 28-12t28 12Zm154 73 126-76 126 77-33-144 111-96-146-13-58-136-58 135-146 13 111 97-33 143Zm126-194Zm0 212L314-169q-11 7-23 6t-21-8q-9-7-14-17.5t-2-23.5l44-189-147-127q-10-9-12.5-20.5T140-571q4-11 12-18t22-9l194-17 75-178q5-12 15.5-18t21.5-6q11 0 21.5 6t15.5 18l75 178 194 17q14 2 22 9t12 18q4 11 1.5 22.5T809-528L662-401l44 189q3 13-2 23.5T690-171q-9 7-21 8t-23-6L480-269Z"/></svg>' : ''}</div>
+                  <label class="preview-widget-label widget-label" style="display: none;"><span style="font-size: 10px; color: #ccc;">Preview URL</span><input class="preview-url-input" type="text" value="${html(state.preview || '')}" placeholder="https://..."></label>
+                  <label class="unique-widget-label"><input type="checkbox" ${state.unique ? 'checked' : ''}> Unique</label>
+              </div>
+              <div class="actions">
+                  <button icon="add" class="sidebarButton"><span>Add widget to room</span></button>
+                  <button icon="download" class="sidebarButton download-json"><span>Download</span></button>
+                  <button icon="delete" class="sidebarButton"><span>Delete widget</span></button>
+              </div>
+          </li>`;
+  }
+
+  renderGridWidget(state, source, isEditing) {
+    return `
+      <div class="widget-grid-item" data-id="${state.id}" data-source="${source}" draggable="true">
+        <div class="widget-preview">
+          ${state.preview ? `<img src="${state.preview}">` : ''}
+          <button icon="add" class="sidebarButton add-to-room-grid"><span>Add widget to room</span></button>
+        </div>
+        <div class="widget-name">${html(state.name || state.id)}</div>
+      </div>
+    `;
+  }
+
   button_saveWidgetsToBuffer() {
     const selectedWidgetAndChildrenIds = new Set();
     function getAllDescendants(widget) {
@@ -897,7 +1140,7 @@ class WidgetsModule extends SidebarModule {
       addRecursively(widget, widgetBuffer);
 
     const defaultTarget = config.allowPublicLibraryEdits ? 'server' : 'local';
-    const name = selectedWidgets.length > 0 ? selectedWidgets[0].id : undefined;
+    const name = selectedWidgets.length > 0 ? selectedWidgets.id : undefined;
     this.createWidget({ name, widgets: widgetBuffer }, defaultTarget)
       .then(() => this.renderWidgetBuffer());
   }
@@ -1137,7 +1380,7 @@ class WidgetsModule extends SidebarModule {
     fileInput.onchange = async e => {
       const files = e.target.files;
       if (!files || files.length === 0) return;
-      const file = files[0];
+      const file = files;
 
       const reader = new FileReader();
       reader.onload = async event => {

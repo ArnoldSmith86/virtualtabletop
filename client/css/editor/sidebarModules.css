@@ -30,6 +30,11 @@
 
 /* properties */
 
+.editorModule .segmented-control button.selected {
+  background:var(--VTTblueDark);
+  color:#fff;
+}
+
 .editorModule .widgetSelectionButton {
   height: 125px;
   width: 125px;
@@ -343,11 +348,11 @@
   display: inline-block;
 }
 
-.widgets.editorModule [icon=delete], .widgets.editorModule [icon=download], .widgets.editorModule [icon=upload] {
-  display: none;
-}
-
-.widgets.editorModule .editing [icon=add] {
+.widgets.editorModule [icon=delete], 
+.widgets.editorModule [icon=download], 
+.widgets.editorModule [icon=upload],
+.widgets.editorModule .editing [icon=add], 
+.widgets.editorModule .editing .widget-type {
     display: none;
 }
 
@@ -362,7 +367,7 @@
 
 .widgets.editorModule .editing li input {
     pointer-events: auto;
-    border: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
     font-weight: normal;
     background: transparent;
     padding: 1px;
@@ -464,8 +469,16 @@
   color: #ff0;
 }
 
-.widgets.editorModule .unique-widget-label {
+.widgets.editorModule .unique-widget-label, .widgets.editorModule .name-widget-label span {
   display: none;
+}
+
+.widgets.editorModule .editing .name-widget-label span {
+  display: block;
+}
+
+.widget-label > span {
+  margin-bottom: -2px;
 }
 
 .widgets.editorModule .editing .unique-widget-label {
@@ -484,7 +497,7 @@
   align-items: center;
   background: var(--VTTblue);
   color: white;
-  padding: 0 0 0 5px;
+  padding: 0 5px;
   border-radius: 5px 5px 0 0;
   min-height: 40px;
 }
@@ -586,7 +599,7 @@ body.darkMode .widget-group-header {
 
 .widget-group-header .collapse-arrow, .widget-list-header .collapse-arrow {
     width: 1.2em;
-    height: 1.2em;
+    height: 1em;
     text-align: center;
 }
 
@@ -626,4 +639,125 @@ body.darkMode .widget-group-header {
 
 .widget-list-header-text {
   flex-grow: 1;
+}
+
+
+.editing .sort-control {
+  display: none;
+}
+
+.widget-list-actions {
+  margin: 3px 0;
+}
+
+div.widget-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 5px;
+}
+
+div.widget-grid-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 1px solid #555;
+  background-color: #222;
+  border-radius: 3px;
+  flex-basis: 100px;
+  flex-grow: 0;
+  flex-shrink: 0;
+  position: relative;
+  height: 64px;
+  width: 64px;
+  max-width: 64px;
+}
+
+div.widget-name {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  font-size: 12px;
+  padding: 0 5px;
+  box-sizing: border-box;
+}
+
+.widget-grid-item .widget-preview {
+  height: 64px;
+  width: 64px;
+  max-width: 64px;
+  background-color: #333;
+  border-radius: 3px;
+  position: relative;
+}
+
+.widget-grid-item .widget-preview img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.widget-preview .add-to-room-grid {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  height: 24px;
+  width: 24px;
+  padding: 0;
+}
+
+.segmented-control {
+  display: flex;
+  border-radius: 5px;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #fff5 #0005 #0005 #fff5;
+}
+
+.segmented-control button{
+  margin: 0;
+  border-radius: 0;
+  border-left: 1px solid #fff5;
+  border-right: 1px solid #0005;
+  flex-basis: 33px;
+  min-width: 33px;
+  flex-shrink: 0;
+}
+
+.segmented-control.sort-control button{
+  padding: 0 5px;
+  max-height: 32px;
+}
+
+.collapsed .sort-control {
+  display: none;
+}
+
+.segmented-control.sort-control .sort-label {
+  padding-top: 2px;
+  margin-bottom: -2px;
+}
+
+
+
+.segmented-control button:first-child {
+  border-top-left-radius: 3px;
+  border-bottom-left-radius: 3px;
+  border-left: none;
+}
+
+.segmented-control button:last-child {
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 3px;
+  border-right: none;
+}
+
+.editing-widgets .widget-list li .preview-widget-label {
+  display: flex;
+  align-items: center;
+  font-size: 10px;
+  color: #ccc;
+  margin-right: 5px;
+  border-top: 1px solid #ccc;
 }
