@@ -1,4 +1,5 @@
 import { onLoad } from './domhelpers.js';
+import { topSurface } from './serverstate.js';
 
 export let tracingEnabled = false;
 
@@ -42,8 +43,8 @@ onLoad(function() {
   const errorHandler = function(error) {
     const details = {
       error: String(error.message) + '\n' + String(error.stack),
-      undoProtocol,
-      delta,
+      undoProtocol: topSurface.undoProtocol,
+      delta: topSurface.delta,
       mouseStatus,
       mouseTarget,
       jeLoggingData: typeof jeLoggingRoutineGetData == 'function' ? jeLoggingRoutineGetData() : null,
@@ -52,7 +53,7 @@ onLoad(function() {
       activeOverlay: [...$a('.overlay')].filter(o=>o.style.display!='none').map(o=>o.id),
       jsonEditor: $('#jeText') && $('#jeText').innerText,
       activeButtons: [...$a('button.active')].map(b=>b.getAttribute('icon') || b.id),
-      widgetsState: [...widgets.keys()].map(id=>widgets.get(id).state),
+      widgetsState: [...topSurface.widgets.keys()].map(id=>topSurface.widgets.get(id).state),
       url: location.href,
       userAgent: navigator.userAgent,
       playerName,

@@ -218,7 +218,7 @@ async function saveState(e) {
   if(e.target == $('#updateSaveState'))
     return toServer('saveState', { players: $('#stateSaveOverlay input').value, updateCurrentSave: true });
 
-  $('#stateSaveOverlay input').value = [...new Set(widgetFilter(w=>w.get('type')=='seat'&&w.get('player')).map(w=>w.get('player')))].sort().join(', ');
+  $('#stateSaveOverlay input').value = [...new Set(topSurface.widgetFilter(w=>w.get('type')=='seat'&&w.get('player')).map(w=>w.get('player')))].sort().join(', ');
   if(!$('#stateSaveOverlay input').value)
     $('#stateSaveOverlay input').value = activePlayers.sort().join(', ');
   showStatesOverlay('stateSaveOverlay');
@@ -315,7 +315,7 @@ function parsePlayers(players) {
 
 let loadedFromURLproperties = false;
 function loadGameFromURLproperties(states) {
-  if(widgets.size || !urlProperties.load)
+  if(topSurface.widgets.size || !urlProperties.load)
     return;
 
   const match = String(urlProperties.load).match(`^${regexEscape(getBaseURL())}/library/(.*?)(#VTT/([0-9]+)(\\.json)?)?$`);

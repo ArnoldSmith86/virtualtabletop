@@ -118,7 +118,7 @@ class DebugModule extends SidebarModule {
   button_validationProblem(problem) {
     if(!jeEnabled)
       return;
-    setSelection([widgets.get(problem.widget)]);
+    setSelection([topSurface.widgets.get(problem.widget)]);
     const property = [...problem.property];
     const lastProperty = property.pop();
     let currentParent = jeStateNow;
@@ -193,7 +193,7 @@ class DebugModule extends SidebarModule {
       return;
     }
 
-    const state = Object.fromEntries([...widgets].map(([id, w])=>[id, w.unalteredState]));
+    const state = Object.fromEntries([...topSurface.widgets].map(([id, w])=>[id, w.unalteredState]));
     
     // Hide manual validation controls
     const controls = $('.validation-controls', this.moduleDOM);

@@ -1,6 +1,6 @@
 class BasicWidget extends ImageWidget {
-  constructor(id) {
-    super(id);
+  constructor(surface, id) {
+    super(surface, id);
 
     this.addDefaults({
       typeClasses: 'widget basic',

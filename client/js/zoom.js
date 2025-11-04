@@ -38,7 +38,7 @@ function setPan(x, y) {
 
 function elementIsMovableWidget(el) {
   while(el) {
-    if(el.id && el.id.slice(0,2) == 'w_' && el.classList && (el.classList.contains('movable') || el.classList.contains('canvas')) && widgets.has(unescapeID(el.id.slice(2))))
+    if(el.id && el.id.slice(0,2) == 'w_' && el.classList && (el.classList.contains('movable') || el.classList.contains('canvas')) && topSurface.widgets.has(unescapeID(el.id.slice(2))))
       return true;
     el = el.parentNode;
   }
@@ -76,7 +76,7 @@ function setZoomAroundCenter(newZoomLevel) {
 }
 
 function refreshIgnoreZoomWidgets() {
-  for(const widget of widgetFilter(w => w.get('ignoreZoom')))
+  for(const widget of topSurface.widgetFilter(w => w.get('ignoreZoom')))
     widget.applyCSS({ ignoreZoom: true });
 }
 

@@ -1,6 +1,6 @@
 class Card extends Widget {
-  constructor(id) {
-    super(id);
+  constructor(surface, id) {
+    super(surface, id);
 
     this.addDefaults({
       width: 103,
@@ -26,7 +26,7 @@ class Card extends Widget {
         this.deck.removeCard(this);
       }
       if(delta.deck) {
-        this.deck = widgets.get(delta.deck);
+        this.deck = this.widgets.get(delta.deck);
         this.deck.addCard(this);
         const faceTemplates = this.deck.get('faceTemplates');
         this.createFaces(Array.isArray(faceTemplates) ? faceTemplates : []);
@@ -84,9 +84,9 @@ class Card extends Widget {
       throw `card "${delta.id}" requires property deck`;
     if(!delta.cardType)
       throw `card "${delta.id}" requires property cardType`;
-    if(!(widgets.get(delta.deck) instanceof Deck))
+    if(!(this.widgets.get(delta.deck) instanceof Deck))
       throw `card "${delta.id}" has "${delta.deck}" as a deck which is not a deck`;
-    if(!widgets.get(delta.deck).get('cardTypes')[delta.cardType])
+    if(!this.widgets.get(delta.deck).get('cardTypes')[delta.cardType])
       throw `card type "${delta.cardType}" not found in deck "${delta.deck}"`;
   }
 

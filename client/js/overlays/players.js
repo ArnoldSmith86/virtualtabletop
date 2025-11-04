@@ -105,8 +105,8 @@ onLoad(function() {
           playerCursors[args.player].classList.remove('pressed');
         }
         let foreign = false;
-        if(args.mouseState.target !== null && widgets.has(args.mouseState.target)) {
-          const owner = widgets.get(args.mouseState.target).get('owner');
+        if(args.mouseState.target !== null && topSurface.widgets.has(args.mouseState.target)) {
+          const owner = topSurface.widgets.get(args.mouseState.target).get('owner');
           if(owner !== null)
             foreign = !asArray(owner).includes(playerName);
         }
@@ -122,7 +122,7 @@ onLoad(function() {
     const oldName = playerName;
     playerName = args;
     localStorage.setItem('playerName', playerName);
-    for(const [ id, widget ] of widgets)
+    for(const [ id, widget ] of topSurface.widgets)
       widget.updateOwner();
   });
 

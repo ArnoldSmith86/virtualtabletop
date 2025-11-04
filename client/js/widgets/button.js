@@ -1,6 +1,6 @@
 export class Button extends ImageWidget {
-  constructor(id) {
-    super(id);
+  constructor(surface, id) {
+    super(surface, id);
 
     this.addDefaults({
       width: 80,

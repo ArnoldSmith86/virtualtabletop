@@ -15,9 +15,6 @@ let jeRoutineLogging = false;
 
 let urlProperties = {};
 
-let maxZ = {};
-export const dropTargets = new Map();
-
 export const clientPointer = $('#clientPointer');
 
 function compareDropTarget(widget, t, exclude){
@@ -38,7 +35,7 @@ function compareDropTarget(widget, t, exclude){
 
 function getValidDropTargets(widget) {
   const targets = [];
-  for(const [ _, t ] of dropTargets) {
+  for(const [ _, t ] of widget.surface.dropTargets) {
     // if the holder has a drop limit and it's reached, skip the holder
     if(t.get('dropLimit') > -1 && t.get('dropLimit') <= t.children().length)
       // don't skip it if the dragged widget is already its child
@@ -55,7 +52,7 @@ function getValidDropTargets(widget) {
       }
 
       if(tt.get('parent'))
-        tt = widgets.get(tt.get('parent'));
+        tt = widget.widgets.get(tt.get('parent'));
       else
         break;
     }
@@ -69,18 +66,18 @@ function getValidDropTargets(widget) {
   return targets;
 }
 
-function getMaxZ(layer) {
-  return maxZ[layer] || 0;
+function getMaxZ(surface, layer) {
+  return surface.maxZ[layer] || 0;
 }
 
-async function resetMaxZ(layer) {
-  maxZ[layer] = 0;
-  for(const w of widgetFilter(w=>w.get('layer')==layer&&w.state.z).sort((a,b)=>a.get('z')-b.get('z')))
-    await w.set('z', ++maxZ[layer]);
+async function resetMaxZ(surface, layer) {
+  surface.maxZ[layer] = 0;
+  for(const w of surface.widgetFilter(w=>w.get('layer')==layer&&w.state.z).sort((a,b)=>a.get('z')-b.get('z')))
+    await w.set('z', ++surface.maxZ[layer]);
 }
 
-function updateMaxZ(layer, z) {
-  maxZ[layer] = Math.max(maxZ[layer] || 0, z);
+function updateMaxZ(surface, layer, z) {
+  surface.maxZ[layer] = Math.max(surface.maxZ[layer] || 0, z);
 }
 
 export function showOverlay(id, forced) {
@@ -484,12 +481,11 @@ async function loadEditMode() {
     Object.assign(window, {
       $, $a, $c, div, progressButton, loadImage, on, onMessage, showOverlay, sleep, rand, shuffleArray,
       setJEenabled, setJEroutineLogging, setZoomAndOffset, resetZoomAndPan, toggleEditMode, getEdit,
-      toServer, batchStart, batchEnd, setDeltaCause, sendPropertyUpdate, getUndoProtocol, setUndoProtocol, sendRawDelta, getDelta,
-      addWidgetLocal, updateWidgetId, removeWidgetLocal,
+      toServer, batchStart, batchEnd, setDeltaCause, getUndoProtocol, setUndoProtocol, sendRawDelta, getDelta,
       loadJSZip, waitForJSZip,
-      generateUniqueWidgetID, unescapeID, regexEscape, setScale, getScale, getRoomRectangle, getMaxZ,
+      unescapeID, regexEscape, setScale, getScale, getRoomRectangle,
       uploadAsset, _uploadAsset, mapAssetURLs, pickSymbol, selectFile, triggerDownload,
-      config, getPlayerDetails, roomID, getDeltaID, widgets, widgetFilter, isOverlayActive,
+      config, getPlayerDetails, roomID, getDeltaID, Surface, topSurface, isOverlayActive,
       html, formField,
       Widget, BasicWidget, Button, Canvas, Card, Deck, Dice, Holder, Label, Pile, Scoreboard, Seat, Spinner, Timer,
       toHex, contrastAnyColor,

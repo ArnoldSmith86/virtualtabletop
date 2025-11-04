@@ -46,6 +46,7 @@ export default async function minifyHTML() {
 
     'client/js/domhelpers.js',
     'client/js/connection.js',
+    'client/js/surface.js',
     'client/js/serverstate.js',
     'client/js/legacymodes.js',
     'client/js/geometry.js',

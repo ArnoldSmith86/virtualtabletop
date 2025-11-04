@@ -1,5 +1,3 @@
-import { dropTargets } from './main.js';
-import { sendPropertyUpdate } from './serverstate.js';
 import { tracingEnabled } from './tracing.js';
 
 export class StateManaged {
@@ -28,15 +26,15 @@ export class StateManaged {
     this.applyDeltaToDOM(deltaForDOM);
 
     if(delta.z)
-      updateMaxZ(this.get('layer'), delta.z);
+      this.surface.updateMaxZ(this.get('layer'), delta.z);
   }
 
   applyDeltaToDOM(delta) {
     if(delta.dropTarget !== undefined) {
       if(this.get('dropTarget'))
-        dropTargets.set(this.id, this);
+        this.surface.dropTargets.set(this.id, this);
       else
-        dropTargets.delete(this.id);
+        this.surface.dropTargets.delete(this.id);
     }
   }
 
@@ -48,8 +46,8 @@ export class StateManaged {
   getDefaultValue(key) {
     if(this.inheritedProperties)
       for(const [ id, properties ] of Object.entries(this.inheritFrom()))
-        if(this.inheritedProperties[key] && this.inheritFromIsValid(properties, key) && widgets.has(id) && widgets.get(id).get(key) !== undefined)
-          return widgets.get(id).get(key);
+        if(this.inheritedProperties[key] && this.inheritFromIsValid(properties, key) && this.widgets.has(id) && this.widgets.get(id).get(key) !== undefined)
+          return this.widgets.get(id).get(key);
     return this.defaults[key];
   }
 
@@ -67,8 +65,8 @@ export class StateManaged {
   }
 
   globalUpdateListenersUnregister() {
-    for(const property in StateManaged.globalUpdateListeners)
-      StateManaged.globalUpdateListeners[property] = StateManaged.globalUpdateListeners[property].filter(i=>i[0]!=this);
+    for(const property in this.surface.globalUpdateListeners)
+      this.surface.globalUpdateListeners[property] = this.surface.globalUpdateListeners[property].filter(i=>i[0]!=this);
   }
 
   inheritFrom() {
@@ -100,8 +98,8 @@ export class StateManaged {
   }
 
   inheritFromUnregister() {
-    for(const wID in StateManaged.inheritFromMapping)
-      StateManaged.inheritFromMapping[wID] = StateManaged.inheritFromMapping[wID].filter(i=>i!=this);
+    for(const wID in this.surface.inheritFromMapping)
+      this.surface.inheritFromMapping[wID] = this.surface.inheritFromMapping[wID].filter(i=>i!=this);
   }
 
   async set(property, value) {
@@ -115,9 +113,9 @@ export class StateManaged {
       return;
 
     if(property == 'z') {
-      updateMaxZ(this.get('layer'), value);
+      this.surface.updateMaxZ(this.get('layer'), value);
       if(value > 90000)
-        return await resetMaxZ(this.get('layer'));
+        return await this.surface.resetMaxZ(this.get('layer'));
     }
 
     const oldValue = this.state[property];
@@ -125,7 +123,7 @@ export class StateManaged {
       delete this.state[property];
     else
       this.state[property] = JSON.parse(JSONvalue);
-    sendPropertyUpdate(this.get('id'), property, value);
+    this.surface.sendPropertyUpdate(this.get('id'), property, value);
     await this.onPropertyChange(property, oldValue, value);
 
     if(Array.isArray(this.get(`${property}ChangeRoutine`)))
@@ -133,13 +131,13 @@ export class StateManaged {
     if(Array.isArray(this.get('changeRoutine')))
       await this.evaluateRoutine('changeRoutine', { property, oldValue, value }, {});
 
-    if(!StateManaged.isInGlobalUpdateRoutine) {
-      StateManaged.isInGlobalUpdateRoutine = true;
-      for(const [ widget, routine ] of StateManaged.globalUpdateListeners[property] || [])
+    if(!this.surface.isInGlobalUpdateRoutine) {
+      this.surface.isInGlobalUpdateRoutine = true;
+      for(const [ widget, routine ] of this.surface.globalUpdateListeners[property] || [])
         await widget.evaluateRoutine(routine, { widgetID: this.id, oldValue, value }, { widget: [ this ] });
-      for(const [ widget, routine ] of StateManaged.globalUpdateListeners['*'] || [])
+      for(const [ widget, routine ] of this.surface.globalUpdateListeners['*'] || [])
         await widget.evaluateRoutine(routine, { widgetID: this.id, property, oldValue, value }, { widget: [ this ] });
-      StateManaged.isInGlobalUpdateRoutine = false;
+      this.surface.isInGlobalUpdateRoutine = false;
     }
   }
 
@@ -149,6 +147,3 @@ export class StateManaged {
     await this.set('z', z);
   }
 }
-
-StateManaged.globalUpdateListeners = {};
-StateManaged.inheritFromMapping = {};

@@ -43,7 +43,7 @@ function getAssetTargetSize(asset, originalWidth, originalHeight) {
 
     for (const use of asset.uses) {
         if(use.type == 'deck') {
-            const deck = widgets.get(use.widget);
+            const deck = topSurface.widgets.get(use.widget);
 
             let key = null;
             let objects = [];
@@ -70,7 +70,7 @@ function getAssetTargetSize(asset, originalWidth, originalHeight) {
                 targetHeight = Math.max(targetHeight, targetObject.height * enlarge || originalHeight);
             }
         } else {
-            const targetWidget = widgets.get(use.widget);
+            const targetWidget = topSurface.widgets.get(use.widget);
             if(targetWidget) {
                 targetWidth  = Math.max(targetWidth,  targetWidget.get('width')  * (targetWidget.get('enlarge') || 1));
                 targetHeight = Math.max(targetHeight, targetWidget.get('height') * (targetWidget.get('enlarge') || 1));
@@ -150,7 +150,7 @@ class AssetsModule extends SidebarModule {
         } else {
           try {
             const keys = tokens[2].split(' - ');
-            const widget = widgets.get(keys.shift());
+            const widget = topSurface.widgets.get(keys.shift());
             const propertyName = keys.shift();
             const property = JSON.parse(JSON.stringify(widget.get(propertyName)));
 
@@ -364,7 +364,7 @@ class AssetsModule extends SidebarModule {
   renderModule(target) {
     this.urlMap = {};
     this.urlDIVs = {};
-    for(const widget of widgets.values()) {
+    for(const widget of topSurface.widgets.values()) {
       for(const url of JSON.stringify(widget.state).match(/https?:\/\/[^'") ]+/g) || []) {
         if(!this.urlMap[url])
           this.urlMap[url] = [];
@@ -415,14 +415,14 @@ class AssetsModule extends SidebarModule {
 
   async replaceAsset(asset, newAsset) {
     for(const use of asset.uses) {
-      const property = widgets.get(use.widget).get(use.keys[0]);
+      const property = topSurface.widgets.get(use.widget).get(use.keys[0]);
       const newValue = JSON.parse(JSON.stringify(property).replaceAll(asset.asset, newAsset));
-      await widgets.get(use.widget).set(use.keys[0], newValue);
+      await topSurface.widgets.get(use.widget).set(use.keys[0], newValue);
     }
   }
 
   async replaceLinkInWidget(widgetID, oldLink, newLink) {
-    const widget = widgets.get(widgetID);
+    const widget = topSurface.widgets.get(widgetID);
     for(const propertyName in widget.state) {
       const property = JSON.stringify(widget.get(propertyName));
       if(property.includes(oldLink))

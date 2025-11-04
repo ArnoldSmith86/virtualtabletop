@@ -1,8 +1,8 @@
 import { contrastAnyColor } from '../color.js';
 
 class Dice extends Widget {
-  constructor(id) {
-    super(id);
+  constructor(surface, id) {
+    super(surface, id);
 
     this.facesElement = document.createElement('div');
     this.facesElement.className = 'diceFaces';

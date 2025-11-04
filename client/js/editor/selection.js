@@ -36,7 +36,7 @@ export function editInputHandler(name, e) {
 
     selectionRectangleStart = coords;
     selectionRectangleEnd = coords;
-    widgetRectangles = [...widgets.values()].map(w=>[w,w.domElement.getBoundingClientRect()]);
+    widgetRectangles = [...topSurface.widgets.values()].map(w=>[w,w.domElement.getBoundingClientRect()]);
     showSelectionRectangle();
   } else if(name == 'mouseup' || name == 'touchend' || name == 'touchcancel') {
     if(selectionRectangleActive) {
@@ -88,7 +88,7 @@ function showSelectionRectangle() {
     if(rect.left >= s.left && rect.top >= s.top && rect.right <= s.right && rect.bottom <= s.bottom)
       selectedWidgetsPreview.push(widget);
 
-  selectedWidgetsPreview = selectedWidgetsPreview.filter(w=>selectedWidgetsPreview.indexOf(widgets.get(w.get('parent'))) == -1);
+  selectedWidgetsPreview = selectedWidgetsPreview.filter(w=>selectedWidgetsPreview.indexOf(topSurface.widgets.get(w.get('parent'))) == -1);
 
   for(const widget of selectedWidgetsPreview)
     widget.domElement.classList.add('selectedInEditPreview');
@@ -126,7 +126,7 @@ function applySelectionRectangle(addToSelection) {
 
   let newlySelected = [];
   if(s.right - s.left < 5 || s.bottom - s.top < 5) {
-    const clicked = document.elementsFromPoint(s.left, s.top).map(el => widgets.get(unescapeID(el.id.slice(2)))).filter(w => w);
+    const clicked = document.elementsFromPoint(s.left, s.top).map(el => topSurface.widgets.get(unescapeID(el.id.slice(2)))).filter(w => w);
     if(clicked.length)
       newlySelected = [ clicked[0] ];
   } else {
