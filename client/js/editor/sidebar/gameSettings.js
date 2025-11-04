@@ -163,7 +163,10 @@ class GameSettingsModule extends SidebarModule {
       gameSettings[name] = select.value;
 
       let css = '';
-      const duration = select.value.includes('noFade') ? 9999 : 100;
+      let duration = 100;
+      if (select.value.includes('noFade')) {
+        duration = 9999;
+      }
 
       if (select.value === 'default') {
         css = '';
