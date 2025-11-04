@@ -164,8 +164,13 @@ class GameSettingsModule extends SidebarModule {
 
       let css = '';
       let duration = 100;
-      if (select.value.includes('noFade')) {
-        duration = 9999;
+      const noFade = select.value.includes('noFade');
+      if (noFade) {
+        duration = 0;
+      }
+      let noFadeCss = '';
+      if (noFade) {
+        noFadeCss = 'transition: none; --cursorOpacity: var(--cursorActiveOpacity);';
       }
 
       if (select.value === 'default') {
@@ -175,7 +180,8 @@ class GameSettingsModule extends SidebarModule {
           .cursor {
             --cursorActiveOpacity: 0.3;
             --cursorPressedOpacity: 0.3;
-            --cursorActiveDuration: ${duration}s;
+            --cursorActiveDuration: ${duration};
+            ${noFadeCss}
           }
           .cursor.pressed {
             background-color: var(--playerColor);
@@ -189,7 +195,8 @@ class GameSettingsModule extends SidebarModule {
           .cursor {
             --cursorActiveOpacity: 1;
             --cursorPressedOpacity: 1;
-            --cursorActiveDuration: ${duration}s;
+            --cursorActiveDuration: ${duration};
+            ${noFadeCss}
           }
           .cursor.pressed {
             background-color: var(--playerColor);
@@ -203,7 +210,8 @@ class GameSettingsModule extends SidebarModule {
           .cursor {
             --cursorActiveOpacity: 1;
             --cursorPressedOpacity: 1;
-            --cursorActiveDuration: ${duration}s;
+            --cursorActiveDuration: ${duration};
+            ${noFadeCss}
           }
           .cursor.pressed {
             background-color: var(--playerColor);
