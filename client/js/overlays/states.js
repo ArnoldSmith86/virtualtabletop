@@ -703,7 +703,7 @@ function fillStateDetails(states, state, dom) {
       let switchToActiveGame = true;
       let loadNewState = true;
 
-      if(widgets.size) {
+      if(topSurface.widgets.size) {
         if(state.savePlayers)
           loadNewState = await confirmOverlay('Switch game', 'Are you sure you want to switch games? You will lose all unsaved progress in the current game.', ' Load in-progress game', 'Return to active game', 'play_arrow', 'undo');
         else
