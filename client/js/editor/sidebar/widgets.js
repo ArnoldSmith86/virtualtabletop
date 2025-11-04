@@ -1078,8 +1078,8 @@ class WidgetsModule extends SidebarModule {
 
         if (isRoot) {
             if (coords) {
-                state.x = (state.x || 0) + offsetX;
-                state.y = (state.y || 0) + offsetY;
+                state.x = Math.round(((state.x || 0) + offsetX) * 2) / 2;
+                state.y = Math.round(((state.y || 0) + offsetY) * 2) / 2;
             }
             delete state.parent;
         }
