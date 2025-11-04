@@ -163,17 +163,14 @@ class GameSettingsModule extends SidebarModule {
       gameSettings[name] = select.value;
 
       let css = '';
-      let duration = 100;
-      const noFade = select.value.includes('noFade');
-      if (noFade) {
-        duration = 0;
-      }
       let noFadeCss = '';
-      if (noFade) {
+      let duration = 100;
+      if(select.value.includes('noFade')) {
+        duration = 0;
         noFadeCss = 'transition: none; --cursorOpacity: var(--cursorActiveOpacity);';
       }
 
-      if (select.value === 'default') {
+      if(select.value === 'default') {
         css = '';
       } else if (select.value.includes('translucent')) {
         css = `
