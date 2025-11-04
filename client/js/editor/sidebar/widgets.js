@@ -484,12 +484,46 @@ class WidgetsModule extends SidebarModule {
             }
           }
 
-          const rootWidgets = widgetBuffer.filter(s => !s.parent || !widgetBuffer.some(p => p.id === s.parent));
-          let minX = rootWidgets.length > 0 ? Infinity : 0;
-          let minY = rootWidgets.length > 0 ? Infinity : 0;
-          for (const s of rootWidgets) {
-            minX = Math.min(minX, s.x || 0);
-            minY = Math.min(minY, s.y || 0);
+          const widgetMap = new Map(widgetBuffer.map(s => [s.id, s]));
+          const absolutePositions = new Map();
+
+          function calculateAbsolutePosition(widgetId) {
+            if (absolutePositions.has(widgetId)) {
+              return absolutePositions.get(widgetId);
+            }
+
+            const widget = widgetMap.get(widgetId);
+            if (!widget) {
+              return { x: 0, y: 0 };
+            }
+
+            if (!widget.parent || !widgetMap.has(widget.parent)) {
+              const pos = { x: widget.x || 0, y: widget.y || 0 };
+              absolutePositions.set(widgetId, pos);
+              return pos;
+            }
+
+            const parentPos = calculateAbsolutePosition(widget.parent);
+            const pos = {
+              x: parentPos.x + (widget.x || 0),
+              y: parentPos.y + (widget.y || 0)
+            };
+            absolutePositions.set(widgetId, pos);
+            return pos;
+          }
+
+          for (const widget of widgetBuffer) {
+            calculateAbsolutePosition(widget.id);
+          }
+
+          let minX = widgetBuffer.length > 0 ? Infinity : 0;
+          let minY = widgetBuffer.length > 0 ? Infinity : 0;
+
+          if (widgetBuffer.length > 0) {
+            for (const pos of absolutePositions.values()) {
+              minX = Math.min(minX, pos.x);
+              minY = Math.min(minY, pos.y);
+            }
           }
 
           const createInstances = (statesToProcess) => {
@@ -512,6 +546,7 @@ class WidgetsModule extends SidebarModule {
                 case 'timer': previewWidget = new Timer(tempId); break;
                 default: previewWidget = new BasicWidget(tempId); break;
               }
+              previewWidget.domElement.style.transformOrigin = 'top left';
               tempWidgetInstances.set(tempId, previewWidget);
             }
           };
@@ -955,11 +990,44 @@ class WidgetsModule extends SidebarModule {
     let offsetY = 0;
 
     if (coords && rootWidgets.length > 0) {
+        const widgetMap = new Map(widgetBuffer.map(s => [s.id, s]));
+        const absolutePositions = new Map();
+
+        function calculateAbsolutePosition(widgetId) {
+          if (absolutePositions.has(widgetId)) {
+            return absolutePositions.get(widgetId);
+          }
+
+          const widget = widgetMap.get(widgetId);
+          if (!widget) {
+            return { x: 0, y: 0 };
+          }
+
+          if (!widget.parent || !widgetMap.has(widget.parent)) {
+            const pos = { x: widget.x || 0, y: widget.y || 0 };
+            absolutePositions.set(widgetId, pos);
+            return pos;
+          }
+
+          const parentPos = calculateAbsolutePosition(widget.parent);
+          const pos = {
+            x: parentPos.x + (widget.x || 0),
+            y: parentPos.y + (widget.y || 0)
+          };
+          absolutePositions.set(widgetId, pos);
+          return pos;
+        }
+
+        for (const widget of widgetBuffer) {
+          calculateAbsolutePosition(widget.id);
+        }
+
         let minX = Infinity;
         let minY = Infinity;
-        for (const w of rootWidgets) {
-            minX = Math.min(minX, w.x || 0);
-            minY = Math.min(minY, w.y || 0);
+
+        for (const pos of absolutePositions.values()) {
+          minX = Math.min(minX, pos.x);
+          minY = Math.min(minY, pos.y);
         }
         offsetX = coords.x - minX;
         offsetY = coords.y - minY;
